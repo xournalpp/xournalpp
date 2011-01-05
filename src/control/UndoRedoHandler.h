@@ -177,8 +177,32 @@ private:
 
 private:
 	bool inserted;
-	XojPage * page;
 	int pagePos;
+};
+
+class PageBackgroundChangedUndoAction: public UndoAction {
+public:
+	PageBackgroundChangedUndoAction(XojPage * page, BackgroundType origType, int origPdfPage,
+			BackgroundImage origBackgroundImage, double origW, double origH);
+	~PageBackgroundChangedUndoAction();
+
+	virtual bool undo(Control * control);
+	virtual bool redo(Control * control);
+
+	virtual String getText();
+
+private:
+	BackgroundType origType;
+	int origPdfPage;
+	BackgroundImage origBackgroundImage;
+	double origW;
+	double origH;
+
+	BackgroundType newType;
+	int newPdfPage;
+	BackgroundImage newBackgroundImage;
+	double newW;
+	double newH;
 };
 
 class UndoRedoHandler {

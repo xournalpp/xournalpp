@@ -1,5 +1,6 @@
 #include "ToolHandler.h"
 #include <stdio.h>
+#include "../util/Util.h"
 
 #include <gtk/gtk.h>
 
@@ -208,11 +209,7 @@ int ToolHandler::getColor() {
 }
 
 GdkColor ToolHandler::getGdkColor() {
-	GdkColor color = { 0, 0, 0, 0 };
-	color.red = (current->color >> 8) & 0xff00;
-	color.green = (current->color >> 0) & 0xff00;
-	color.blue = (current->color << 8) & 0xff00;
-	return color;
+	return Util::intToGdkColor(current->color);
 }
 
 void ToolHandler::setColorFound() {

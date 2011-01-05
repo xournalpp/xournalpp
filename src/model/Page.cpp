@@ -116,7 +116,13 @@ bool XojPage::isAnnotated() {
 
 void XojPage::setBackgroundType(BackgroundType bgType) {
 	this->bgType = bgType;
-	pdfBackgroundPage = -1;
+
+	if (bgType != BACKGROUND_TYPE_PDF) {
+		pdfBackgroundPage = -1;
+	}
+	if (bgType != BACKGROUND_TYPE_IMAGE) {
+		backgroundImage.free();
+	}
 }
 
 BackgroundType XojPage::getBackgroundType() {
@@ -134,5 +140,135 @@ Layer * XojPage::getSelectedLayer() {
 	}
 
 	return (Layer *) g_list_nth(this->layer, layer)->data;
+}
+
+////////////////////////////////////////////////////////
+
+class BackgroundImageContents {
+public:
+	BackgroundImageContents(String filename, GError ** error) {
+		this->filename = filename;
+		this->ref = 1;
+		this->pageId = -1;
+		this->attach = false;
+		this->pixbuf = gdk_pixbuf_new_from_file(filename.c_str(), error);
+	}
+
+private:
+	~BackgroundImageContents() {
+		gdk_pixbuf_unref(this->pixbuf);
+	}
+
+	void unreference() {
+		this->ref--;
+		if (this->ref < 0) {
+			delete this;
+		}
+	}
+
+	void reference() {
+		this->ref++;
+	}
+private:
+	int ref;
+	String filename;
+	bool attach;
+	int pageId;
+	GdkPixbuf * pixbuf;
+
+	friend class BackgroundImage;
+};
+
+BackgroundImage::BackgroundImage() {
+	this->img = NULL;
+}
+
+BackgroundImage::~BackgroundImage() {
+	if (this->img) {
+		BackgroundImageContents * img = (BackgroundImageContents *) this->img;
+		img->unreference();
+	}
+}
+
+String BackgroundImage::getFilename() {
+	if (this->img != NULL) {
+		return ((BackgroundImageContents *) this->img)->filename;
+	}
+	return NULL;
+}
+
+void BackgroundImage::loadFile(String filename, GError ** error) {
+	if (this->img != NULL) {
+		((BackgroundImageContents *) this->img)->unreference();
+	}
+	this->img = new BackgroundImageContents(filename, error);
+}
+
+void BackgroundImage::setAttach(bool attach) {
+	if (this->img != NULL) {
+		((BackgroundImageContents *) this->img)->attach = true;
+	} else {
+		g_warning("BackgroundImage::setAttach:please load first an image before call setAttach!");
+	}
+}
+
+void BackgroundImage::operator =(BackgroundImage & img) {
+	if (this->img) {
+		((BackgroundImageContents *) this->img)->unreference();
+	}
+	this->img = img.img;
+	if (this->img) {
+		((BackgroundImageContents *) this->img)->reference();
+	}
+}
+
+bool BackgroundImage::operator ==(const BackgroundImage & img) {
+	return this->img == img.img;
+}
+
+void BackgroundImage::free() {
+	if (this->img) {
+		((BackgroundImageContents *) this->img)->unreference();
+	}
+	this->img = NULL;
+}
+
+void BackgroundImage::clearSaveState() {
+	if (this->img) {
+		((BackgroundImageContents *) this->img)->pageId = -1;
+	}
+}
+
+int BackgroundImage::getCloneId() {
+	if (this->img) {
+		return ((BackgroundImageContents *) this->img)->pageId;
+	}
+	return -1;
+}
+
+void BackgroundImage::setCloneId(int id) {
+	if (this->img) {
+		((BackgroundImageContents *) this->img)->pageId = id;
+	}
+}
+
+void BackgroundImage::setFilename(String filename) {
+	if (this->img) {
+		((BackgroundImageContents *) this->img)->filename = filename;
+	}
+}
+
+bool BackgroundImage::isAttached() {
+	if (this->img) {
+		return ((BackgroundImageContents *) this->img)->attach;
+	}
+	return false;
+}
+
+GdkPixbuf * BackgroundImage::getPixbuf() {
+	if (this->img) {
+		return ((BackgroundImageContents *) this->img)->pixbuf;
+	}
+	return NULL;
 }
 

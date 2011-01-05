@@ -2,8 +2,8 @@
 <glade-interface>
   <!-- interface-requires gtk+ 2.6 -->
   <!-- interface-naming-policy project-wide -->
-  <widget class="GtkDialog" id="pdfPagesDialog">
-    <property name="title" translatable="yes">Select PDF Page</property>
+  <widget class="GtkDialog" id="ImagesDialog">
+    <property name="title" translatable="yes">Select Image</property>
     <property name="modal">True</property>
     <property name="window_position">center</property>
     <property name="icon">pixmaps/xournal.svg</property>
@@ -18,17 +18,26 @@
             <property name="visible">True</property>
             <property name="orientation">vertical</property>
             <child>
-              <widget class="GtkCheckButton" id="cbOnlyNotUsed">
-                <property name="label" translatable="yes">Show only not used pages
-THIS TEXT IS A PLACEHOLDER!</property>
+              <widget class="GtkButton" id="btFilechooser">
+                <property name="label" translatable="yes">Load file</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
-                <property name="receives_default">False</property>
-                <property name="draw_indicator">True</property>
+                <property name="receives_default">True</property>
               </widget>
               <packing>
                 <property name="expand">False</property>
                 <property name="position">0</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="GtkLabel" id="label1">
+                <property name="visible">True</property>
+                <property name="label" translatable="yes">&lt;b&gt;... or select already used Image:&lt;/b&gt;</property>
+                <property name="use_markup">True</property>
+              </widget>
+              <packing>
+                <property name="expand">False</property>
+                <property name="position">1</property>
               </packing>
             </child>
             <child>

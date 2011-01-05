@@ -220,11 +220,19 @@ public:
 	String getFullscreenHideElements();
 	void setFullscreenHideElements(String elements);
 
+	String getPresentationHideElements();
+	void setPresentationHideElements(String elements);
+
+
 	PageInsertType getPageInsertType();
 	void setPageInsertType(PageInsertType type);
 
 	int getPageBackgroundColor();
 	void setPageBackgroundColor(int color);
+
+	int getSelectionColor();
+	void setSelectionColor(int color);
+
 public:
 	// Custom settings
 	SElement & getElement(String name);
@@ -362,6 +370,7 @@ private:
 	 * Which gui elements are hidden if you are in Fullscreen mode, separated by a colon (,)
 	 */
 	String fullscreenHideElements;
+	String presentationHideElements;
 
 	/**
 	 * If you insert a page, which type will be selected? Plain, Lined, Copy current page...
@@ -372,6 +381,11 @@ private:
 	 * The background color of a new inserted page
 	 */
 	int pageBackgroundColor;
+
+	/**
+	 * The color to draw borders on selected elements (Page, insert image selection etc.)
+	 */
+	int selectionColor;
 };
 
 #endif /* __SETTINGS_H__ */

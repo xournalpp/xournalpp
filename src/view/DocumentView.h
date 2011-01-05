@@ -34,6 +34,7 @@ private:
 	void drawText(cairo_t *cr, Text * t);
 	void drawLayer(cairo_t *cr, Layer * l);
 
+	void paintBackgroundImage();
 	void paintBackgroundColor();
 	void paintBackgroundGraph();
 	void paintBackgroundLined();

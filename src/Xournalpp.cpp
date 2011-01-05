@@ -97,8 +97,18 @@ int main(int argc, char *argv[]) {
 	MainWindow * win = new MainWindow(control);
 	control->initWindow(win);
 
-	// TODO: open file from argv
-	control->newFile();
+	bool opened = false;
+	if (argc > 1) {
+		GFile * file = g_file_new_for_commandline_arg(argv[1]);
+		char * uri = g_file_get_uri(file);
+		opened = control->openFile(uri);
+		g_free(uri);
+		g_object_unref(file);
+	}
+
+	if (!opened) {
+		control->newFile();
+	}
 
 	win->show();
 

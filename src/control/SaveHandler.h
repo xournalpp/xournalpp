@@ -23,10 +23,10 @@ public:
 
 public:
 	void prepareSave(Document * doc);
-	void saveTo(OutputStream * out);
+	void saveTo(OutputStream * out, String filename);
 
 private:
-	void visitPage(XmlNode * root, XojPage * p, Document * doc);
+	void visitPage(XmlNode * root, XojPage * p, Document * doc, int id);
 	String getSolidBgStr(BackgroundType type);
 	String getColorStr(int c);
 	void visitLayer(XmlNode * page, Layer * l);
@@ -34,6 +34,9 @@ private:
 private:
 	XmlNode * root;
 	bool firstPdfPageVisited;
+	int attachBgId;
+
+	GList * backgroundImages;
 };
 
 #endif /* __SAVEHANDLER_H__ */

@@ -4,6 +4,7 @@
 #include "../gui/ExportDialog.h"
 #include "../gui/SettingsDialog.h"
 #include "../gui/PdfPagesDialog.h"
+#include "../gui/ImagesDialog.h"
 #include "../gui/SelectBackgroundColorDialog.h"
 #include "../cfg.h"
 #include "LoadHandler.h"
@@ -117,6 +118,7 @@ Control::Control() {
 	searchBar = NULL;
 
 	this->hiddenFullscreenWidgets = NULL;
+	this->sidebarHidden = false;
 
 	// Init Metadata Manager
 	ev_metadata_manager_init();
@@ -131,6 +133,9 @@ Control::Control() {
 
 	this->cursor = new Cursor(this);
 
+	/**
+	 * This is needed to update the previews
+	 */
 	this->changeTimout = g_timeout_add_seconds(10, (GSourceFunc) checkChangedDocument, this);
 	this->changedPages = NULL;
 }
@@ -178,7 +183,7 @@ void Control::saveSettings() {
 
 	gint width = 0;
 	gint height = 0;
-	gtk_window_get_size(GTK_WINDOW(win->getWindow()), &width, &height);
+	gtk_window_get_size((GtkWindow*) *win, &width, &height);
 
 	if (!win->isMaximized()) {
 		settings->setMainWndSize(width, height);
@@ -520,10 +525,18 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent *even
 	case ACTION_RULER:
 		this->toolHandler->setRuler(enabled);
 		fireActionSelected(GROUP_RULER, enabled ? ACTION_RULER : ACTION_NONE);
+		if (enabled) {
+			this->toolHandler->setShapeRecognizer(false);
+			fireActionSelected(GROUP_SHAPE_RECOGNIZER, ACTION_NONE);
+		}
 		break;
 	case ACTION_SHAPE_RECOGNIZER:
 		this->toolHandler->setShapeRecognizer(enabled);
 		fireActionSelected(GROUP_SHAPE_RECOGNIZER, enabled ? ACTION_SHAPE_RECOGNIZER : ACTION_NONE);
+		if (enabled) {
+			this->toolHandler->setRuler(false);
+			fireActionSelected(GROUP_RULER, ACTION_NONE);
+		}
 		break;
 	case ACTION_SIZE_VERY_THIN:
 		if (enabled) {
@@ -714,23 +727,33 @@ void Control::firePageSelected(int page) {
 	DocumentHandler::firePageSelected(page);
 }
 
-void Control::enableFullscreen(bool enabled) {
+void Control::enableFullscreen(bool enabled, bool presentation) {
 	if (enabled) {
 		gtk_window_fullscreen((GtkWindow*) *win);
 
-		String e = settings->getFullscreenHideElements();
+		String e;
+		if (presentation) {
+			e = settings->getPresentationHideElements();
+		} else {
+			e = settings->getFullscreenHideElements();
+		}
 		char * str = g_strdup(e.c_str());
 
 		char * part = strtok(str, ",");
 
 		while (part) {
-			GtkWidget * w = win->get(part);
-			if (w == NULL) {
-				g_warning("Fullscreen: Try to hide \"%s\", but coulden't find it. Wrong entry in ~/" CONFIG_DIR "/" SETTINGS_XML_FILE "?", part);
+			if (!strcmp("sidebarContents", part) && settings->isSidebarVisible()) {
+				this->sidebarHidden = true;
+				win->setSidebarVisible(false);
 			} else {
-				if (gtk_widget_get_visible(w)) {
-					gtk_widget_hide(w);
-					this->hiddenFullscreenWidgets = g_list_append(this->hiddenFullscreenWidgets, w);
+				GtkWidget * w = win->get(part);
+				if (w == NULL) {
+					g_warning("Fullscreen: Try to hide \"%s\", but coulden't find it. Wrong entry in ~/" CONFIG_DIR "/" SETTINGS_XML_FILE "?", part);
+				} else {
+					if (gtk_widget_get_visible(w)) {
+						gtk_widget_hide(w);
+						this->hiddenFullscreenWidgets = g_list_append(this->hiddenFullscreenWidgets, w);
+					}
 				}
 			}
 
@@ -744,6 +767,12 @@ void Control::enableFullscreen(bool enabled) {
 		for (GList * l = this->hiddenFullscreenWidgets; l != NULL; l = l->next) {
 			gtk_widget_show(GTK_WIDGET(l->data));
 		}
+
+		if (this->sidebarHidden) {
+			this->sidebarHidden = false;
+			win->setSidebarVisible(true);
+		}
+
 		g_list_free(this->hiddenFullscreenWidgets);
 		this->hiddenFullscreenWidgets = NULL;
 	}
@@ -781,7 +810,8 @@ void Control::updateDeletePageButton() {
 }
 
 void Control::deletePage() {
-	// don't allow delete pages if we have less than 2 pages, so we can be (more or less) sure there is at least one page.
+	// don't allow delete pages if we have less than 2 pages,
+	// so we can be (more or less) sure there is at least one page.
 	if (doc->getPageCount() < 2) {
 		return;
 	}
@@ -831,14 +861,14 @@ void Control::insertNewPage(int position) {
 			if (bg == BACKGROUND_TYPE_PDF) {
 				page->setBackgroundPdfPageNr(current->getPdfPageNr());
 			} else if (bg == BACKGROUND_TYPE_IMAGE) {
-				// TODO: copy background image!
+				page->backgroundImage = current->backgroundImage;
 			} else {
 				page->setBackgroundColor(current->getBackgroundColor());
 			}
 		}
 	} else if (PAGE_INSERT_TYPE_PDF_BACKGROUND == type) {
 		if (doc->getPdfPageCount() == 0) {
-			GtkWidget * dialog = gtk_message_dialog_new(GTK_WINDOW(win->getWindow()), GTK_DIALOG_DESTROY_WITH_PARENT,
+			GtkWidget * dialog = gtk_message_dialog_new((GtkWindow*) *win, GTK_DIALOG_DESTROY_WITH_PARENT,
 					GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
 					_("You don't have any PDF pages to select from. Cancel operation,\n"
 							"Please select another background type: Menu \"Journal\" / \"Insert Page Type\"."));
@@ -849,7 +879,7 @@ void Control::insertNewPage(int position) {
 			page->unreference();
 			return;
 		} else {
-			PdfPagesDialog * dlg = new PdfPagesDialog(this->doc);
+			PdfPagesDialog * dlg = new PdfPagesDialog(this->doc, this->settings);
 			for (int i = 0; i < doc->getPageCount(); i++) {
 				XojPage * p = doc->getPage(i);
 				if (p->getBackgroundType() == BACKGROUND_TYPE_PDF && p->getPdfPageNr() >= 0) {
@@ -907,9 +937,20 @@ void Control::addNewLayer() {
 void Control::setPageBackground(ActionType type) {
 	XojPage * page = getCurrentPage();
 
-	if(page == NULL) {
+	if (page == NULL) {
 		return;
 	}
+
+	int pageNr = doc->indexOf(page);
+	if (pageNr == -1) {
+		return; // should not happen...
+	}
+
+	int origPdfPage = page->getPdfPageNr();
+	BackgroundType origType = page->getBackgroundType();
+	BackgroundImage origBackgroundImage = page->backgroundImage;
+	double origW = page->getWidth();
+	double origH = page->getHeight();
 
 	if (ACTION_SET_PAPER_BACKGROUND_PLAIN == type) {
 		page->setBackgroundType(BACKGROUND_TYPE_NONE);
@@ -920,10 +961,128 @@ void Control::setPageBackground(ActionType type) {
 	} else if (ACTION_SET_PAPER_BACKGROUND_GRAPH == type) {
 		page->setBackgroundType(BACKGROUND_TYPE_GRAPH);
 	} else if (ACTION_SET_PAPER_BACKGROUND_IMAGE == type) {
-		// TODO: copy background image!
+		ImagesDialog * dlg = new ImagesDialog(this->doc, this->settings);
+		dlg->show();
+		BackgroundImage * img = dlg->getSelectedImage();
+		if (img) {
+			printf("image selected\n");
+			page->backgroundImage = *img;
+			page->setBackgroundType(BACKGROUND_TYPE_IMAGE);
+		} else if (dlg->shouldShowFilechooser()) {
+			printf("should show filechooser\n");
+
+			GtkWidget *dialog = gtk_file_chooser_dialog_new(_("Open Image"), (GtkWindow*) *win,
+					GTK_FILE_CHOOSER_ACTION_OPEN, GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL, GTK_STOCK_OPEN,
+					GTK_RESPONSE_OK, NULL);
+			gtk_file_chooser_set_local_only(GTK_FILE_CHOOSER(dialog), false);
+
+			GtkFileFilter *filterSupported = gtk_file_filter_new();
+			gtk_file_filter_set_name(filterSupported, _("Images"));
+			gtk_file_filter_add_pixbuf_formats(filterSupported);
+			gtk_file_chooser_add_filter(GTK_FILE_CHOOSER(dialog), filterSupported);
+
+			GtkFileFilter *filterAll = gtk_file_filter_new();
+			gtk_file_filter_set_name(filterAll, _("All files"));
+			gtk_file_filter_add_pattern(filterAll, "*");
+			gtk_file_chooser_add_filter(GTK_FILE_CHOOSER(dialog), filterAll);
+
+			if (!settings->getLastSavePath().isEmpty()) {
+				gtk_file_chooser_set_current_folder_uri(GTK_FILE_CHOOSER(dialog), settings->getLastSavePath().c_str());
+			}
+
+			GtkWidget * attach_opt = gtk_check_button_new_with_label(_("Attach file to the journal"));
+			gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(attach_opt), false);
+			gtk_file_chooser_set_extra_widget(GTK_FILE_CHOOSER (dialog), attach_opt);
+
+			if (gtk_dialog_run(GTK_DIALOG(dialog)) != GTK_RESPONSE_OK) {
+				gtk_widget_destroy(dialog);
+				return;
+			}
+			char *name = gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(dialog));
+			bool attach = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(attach_opt));
+
+			String filename = name;
+			char * folder = gtk_file_chooser_get_current_folder_uri(GTK_FILE_CHOOSER(dialog));
+			settings->setLastSavePath(folder);
+			g_free(folder);
+			g_free(name);
+
+			gtk_widget_destroy(dialog);
+
+			BackgroundImage newImg;
+			GError * err = NULL;
+			newImg.loadFile(filename, &err);
+			newImg.setAttach(attach);
+			if (err) {
+				GtkWidget * dialog = gtk_message_dialog_new((GtkWindow*) *win, GTK_DIALOG_DESTROY_WITH_PARENT,
+						GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, _("This image could not be loaded. Error message: %s"),
+						err->message);
+				gtk_dialog_run(GTK_DIALOG(dialog));
+				gtk_widget_destroy(dialog);
+				return;
+			} else {
+				page->backgroundImage = newImg;
+				page->setBackgroundType(BACKGROUND_TYPE_IMAGE);
+			}
+		}
+
+		GdkPixbuf * pixbuf = page->backgroundImage.getPixbuf();
+		if (pixbuf) {
+			page->setSize(gdk_pixbuf_get_width(pixbuf), gdk_pixbuf_get_height(pixbuf));
+			firePageSizeChanged(pageNr);
+		}
+
+		/**
+		 // TODO: create preview for images, also previews for all other filechoosers!
+
+		 image = gtk_image_new ();
+		 gtk_file_chooser_set_preview_widget (chooser_dialog, image);
+		 g_signal_connect (chooser_dialog, "update-preview",
+		 G_CALLBACK (avatar_chooser_update_preview_cb),
+		 chooser);
+		 static void
+		 avatar_chooser_update_preview_cb (GtkFileChooser       *file_chooser,
+		 EmpathyAvatarChooser *chooser)
+		 {
+		 gchar *filename;
+
+		 filename = gtk_file_chooser_get_preview_filename (file_chooser);
+
+		 if (filename) {
+		 GtkWidget *image;
+		 GdkPixbuf *pixbuf = NULL;
+		 GdkPixbuf *scaled_pixbuf;
+
+		 pixbuf = gdk_pixbuf_new_from_file (filename, NULL);
+
+		 image = gtk_file_chooser_get_preview_widget (file_chooser);
+
+		 if (pixbuf) {
+		 scaled_pixbuf = empathy_pixbuf_scale_down_if_necessary (pixbuf, AVATAR_SIZE_SAVE);
+		 gtk_image_set_from_pixbuf (GTK_IMAGE (image), scaled_pixbuf);
+		 g_object_unref (scaled_pixbuf);
+		 g_object_unref (pixbuf);
+		 } else {
+		 gtk_image_set_from_stock (GTK_IMAGE (image),
+		 "gtk-dialog-question",
+		 GTK_ICON_SIZE_DIALOG);
+		 }
+
+		 g_free (filename);
+		 }
+
+		 gtk_file_chooser_set_preview_widget_active (file_chooser, TRUE);
+		 }
+
+
+
+
+		 */
+
+		delete dlg;
 	} else if (ACTION_SET_PAPER_BACKGROUND_PDF == type) {
 		if (doc->getPdfPageCount() == 0) {
-			GtkWidget * dialog = gtk_message_dialog_new(GTK_WINDOW(win->getWindow()), GTK_DIALOG_DESTROY_WITH_PARENT,
+			GtkWidget * dialog = gtk_message_dialog_new((GtkWindow*) *win, GTK_DIALOG_DESTROY_WITH_PARENT,
 					GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
 					_("You don't have any PDF pages to select from. Cancel operation,\n"
 							"Please select another background type: Menu \"Journal\" / \"Insert Page Type\"."));
@@ -931,7 +1090,7 @@ void Control::setPageBackground(ActionType type) {
 			gtk_widget_destroy(dialog);
 			return;
 		} else {
-			PdfPagesDialog * dlg = new PdfPagesDialog(this->doc);
+			PdfPagesDialog * dlg = new PdfPagesDialog(this->doc, this->settings);
 			for (int i = 0; i < doc->getPageCount(); i++) {
 				XojPage * p = doc->getPage(i);
 				if (p->getBackgroundType() == BACKGROUND_TYPE_PDF && p->getPdfPageNr() >= 0) {
@@ -953,7 +1112,32 @@ void Control::setPageBackground(ActionType type) {
 		}
 	}
 
-	firePageChanged(doc->indexOf(page));
+	firePageChanged(pageNr);
+	updateBackgroundSizeButton();
+
+	undoRedo->addUndoAction(new PageBackgroundChangedUndoAction(page, origType, origPdfPage, origBackgroundImage,
+			origW, origH));
+}
+
+void Control::updateBackgroundSizeButton() {
+	// Update paper color button
+	XojPage * p = getCurrentPage();
+	if (p == NULL || win == NULL) {
+		return;
+	}
+	BackgroundType bg = p->getBackgroundType();
+	GtkWidget * paperColor = win->get("menuJournalPaperColor");
+	GtkWidget * pageSize = win->get("menuJournalPaperFormat");
+
+	if (BACKGROUND_TYPE_NONE != bg && BACKGROUND_TYPE_LINED != bg && BACKGROUND_TYPE_RULED != bg
+			&& BACKGROUND_TYPE_GRAPH != bg) {
+		gtk_widget_set_sensitive(paperColor, false);
+	} else {
+		gtk_widget_set_sensitive(paperColor, true);
+	}
+
+	// PDF page size is defined, you cannot change it
+	gtk_widget_set_sensitive(pageSize, bg != BACKGROUND_TYPE_PDF);
 }
 
 void Control::changePageBackgroundColor() {
@@ -967,16 +1151,6 @@ void Control::changePageBackgroundColor() {
 	BackgroundType bg = p->getBackgroundType();
 	if (BACKGROUND_TYPE_NONE != bg && BACKGROUND_TYPE_LINED != bg && BACKGROUND_TYPE_RULED != bg
 			&& BACKGROUND_TYPE_GRAPH != bg) {
-		GtkWidget * dialog = gtk_message_dialog_new(GTK_WINDOW(win->getWindow()), GTK_DIALOG_DESTROY_WITH_PARENT,
-				GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, _("You cannot set the background color for this page.\n"
-						"The page type has to be one of this:\n"
-						"- Plain\n"
-						"- Line\n"
-						"- Ruled\n"
-						"- Graph"));
-		gtk_dialog_run(GTK_DIALOG(dialog));
-		gtk_widget_destroy(dialog);
-
 		return;
 	}
 
@@ -1304,12 +1478,17 @@ void Control::setCustomColorSelected() {
 
 void Control::showSettings() {
 	bool xeventEnabled = settings->isUseXInput();
+	int selectionColor = settings->getSelectionColor();
 
 	SettingsDialog * dlg = new SettingsDialog(settings);
 	dlg->show();
 
 	if (xeventEnabled != settings->isUseXInput()) {
 		win->getXournal()->updateXEvents();
+	}
+
+	if (selectionColor != settings->getSelectionColor()) {
+		win->getXournal()->forceUpdatePagenumbers();
 	}
 
 	win->updateScrollbarSidebarPosition();
@@ -1345,36 +1524,24 @@ MainWindow * Control::getWindow() {
 }
 
 String Control::showOpenDialog(bool pdf, bool & attachPdf) {
-	String filename;
+	GtkWidget *dialog = gtk_file_chooser_dialog_new(_("Open File"), (GtkWindow*) *win, GTK_FILE_CHOOSER_ACTION_OPEN,
+			GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL, GTK_STOCK_OPEN, GTK_RESPONSE_OK, NULL);
+	gtk_file_chooser_set_local_only(GTK_FILE_CHOOSER(dialog), true);
 
-	GtkWidget *dialog;
-	GtkFileFilter *filterAll;
-	GtkFileFilter *filterPdf;
-	GtkFileFilter *filterXoj;
-	GtkFileFilter *filterSupported;
-
-	char *name;
-	int file_domain;
-	gboolean success;
-
-	dialog = gtk_file_chooser_dialog_new(_("Open File"), GTK_WINDOW(this->win->getWindow()),
-			GTK_FILE_CHOOSER_ACTION_OPEN, GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL, GTK_STOCK_OPEN, GTK_RESPONSE_OK, NULL);
-	gtk_file_chooser_set_local_only(GTK_FILE_CHOOSER(dialog), false);
-
-	filterAll = gtk_file_filter_new();
+	GtkFileFilter *filterAll = gtk_file_filter_new();
 	gtk_file_filter_set_name(filterAll, _("All files"));
 	gtk_file_filter_add_pattern(filterAll, "*");
 
-	filterXoj = gtk_file_filter_new();
+	GtkFileFilter *filterXoj = gtk_file_filter_new();
 	gtk_file_filter_set_name(filterXoj, _("Xournal files"));
 	gtk_file_filter_add_pattern(filterXoj, "*.xoj");
 
-	filterPdf = gtk_file_filter_new();
+	GtkFileFilter *filterPdf = gtk_file_filter_new();
 	gtk_file_filter_set_name(filterPdf, _("PDF files"));
 	gtk_file_filter_add_pattern(filterPdf, "*.pdf");
 	gtk_file_filter_add_pattern(filterPdf, "*.PDF");
 
-	filterSupported = gtk_file_filter_new();
+	GtkFileFilter *filterSupported = gtk_file_filter_new();
 	gtk_file_filter_set_name(filterSupported, _("Supported files"));
 	gtk_file_filter_add_pattern(filterSupported, "*.xoj");
 	gtk_file_filter_add_pattern(filterSupported, "*.pdf");
@@ -1402,13 +1569,14 @@ String Control::showOpenDialog(bool pdf, bool & attachPdf) {
 		gtk_widget_destroy(dialog);
 		return NULL;
 	}
-	name = gtk_file_chooser_get_uri(GTK_FILE_CHOOSER(dialog));
+	char *name = gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(dialog));
 
 	if (attachOpt) {
+		// TODO: handle attach
 		attachPdf = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(attachOpt));
 	}
 
-	filename = name;
+	String filename = name;
 	char * folder = gtk_file_chooser_get_current_folder_uri(GTK_FILE_CHOOSER(dialog));
 	settings->setLastSavePath(folder);
 	g_free(folder);
@@ -1469,22 +1637,27 @@ bool Control::openFile(String filename) {
 
 	String lower = filename.toLowerCase();
 	if (filename.toLowerCase().endsWith(".pdf")) {
+		printf("test1\n");
 		if (settings->isAutloadPdfXoj()) {
 			String f = filename;
 			f += ".xoj";
 			if (h.loadDocument(f, doc)) {
+				printf("test2\n");
 				fileLoaded();
 				return true;
 			}
+			printf("test3\n");
 		}
+		printf("test4\n");
 
 		bool an = annotatePdf(filename, false);
+		printf("test5:%i\n", an);
 		fileLoaded();
 		return an;
 	}
 
 	if (!h.loadDocument(filename, doc)) {
-		GtkWidget * dialog = gtk_message_dialog_new(GTK_WINDOW(win->getWindow()), GTK_DIALOG_DESTROY_WITH_PARENT,
+		GtkWidget * dialog = gtk_message_dialog_new((GtkWindow*) *win, GTK_DIALOG_DESTROY_WITH_PARENT,
 				GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, _("Error opening file '%s'\n%s"), filename.c_str(),
 				h.getLastError().c_str());
 		gtk_dialog_run(GTK_DIALOG(dialog));
@@ -1547,7 +1720,7 @@ bool Control::annotatePdf(String filename, bool attachPdf) {
 		}
 		scrollToPage(page);
 	} else {
-		GtkWidget * dialog = gtk_message_dialog_new(GTK_WINDOW(win->getWindow()), GTK_DIALOG_DESTROY_WITH_PARENT,
+		GtkWidget * dialog = gtk_message_dialog_new((GtkWindow*) *win, GTK_DIALOG_DESTROY_WITH_PARENT,
 				GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, _("Error annotate PDF file '%s'\n%s"), filename.c_str(),
 				doc->getLastErrorMsg().c_str());
 		gtk_dialog_run(GTK_DIALOG(dialog));
@@ -1560,31 +1733,7 @@ bool Control::annotatePdf(String filename, bool attachPdf) {
 
 	printf("annotate pdf %s\n", filename.c_str());
 
-	//
-	//		ui.saved = TRUE; // force close_journal to work
-	//		control->close_journal();
-	//		while (bgpdf.status != STATUS_NOT_INIT) {
-	//			// waiting for pdf processes to finish dying
-	//			gtk_main_iteration();
-	//		}
-	//		control->new_journal();
-	//		ui.zoom = ui.startup_zoom;
-	//		gnome_canvas_set_pixels_per_unit(canvas, ui.zoom);
-	//		control->update_page_stuff();
-	//		success = init_bgpdf(filename, TRUE, file_domain);
-	//		set_cursor_busy(FALSE);
-	//		if (success) {
-	//			g_free(filename);
-	//			return;
-	//		}
-	//
-	//		/* open failed */
-	//		dialog = gtk_message_dialog_new(GTK_WINDOW(winMain), GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR,
-	//				GTK_BUTTONS_OK, _("Error opening file '%s'"), filename);
-	//		gtk_dialog_run(GTK_DIALOG(dialog));
-	//		gtk_widget_destroy(dialog);
-
-
+	return true;
 }
 
 void Control::print() {
@@ -1645,7 +1794,7 @@ bool Control::save() {
 		return false;
 	}
 
-	h.saveTo(out);
+	h.saveTo(out, doc->getFilename());
 	out->close();
 
 	if (!out->getLastError().isEmpty()) {
@@ -1678,9 +1827,9 @@ bool Control::showSaveDialog() {
 	int file_domain;
 	gboolean success;
 
-	dialog = gtk_file_chooser_dialog_new(_("Save File"), GTK_WINDOW(this->win->getWindow()),
-			GTK_FILE_CHOOSER_ACTION_SAVE, GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL, GTK_STOCK_SAVE, GTK_RESPONSE_OK, NULL);
-	gtk_file_chooser_set_local_only(GTK_FILE_CHOOSER(dialog), false);
+	dialog = gtk_file_chooser_dialog_new(_("Save File"), (GtkWindow*) *win, GTK_FILE_CHOOSER_ACTION_SAVE,
+			GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL, GTK_STOCK_SAVE, GTK_RESPONSE_OK, NULL);
+	gtk_file_chooser_set_local_only(GTK_FILE_CHOOSER(dialog), true);
 
 	filterXoj = gtk_file_filter_new();
 	gtk_file_filter_set_name(filterXoj, _("Xournal files"));
@@ -1713,7 +1862,7 @@ bool Control::showSaveDialog() {
 		return false;
 	}
 
-	name = gtk_file_chooser_get_uri(GTK_FILE_CHOOSER(dialog));
+	name = gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(dialog));
 
 	String filename = name;
 	char * folder = gtk_file_chooser_get_current_folder_uri(GTK_FILE_CHOOSER(dialog));
@@ -1763,7 +1912,7 @@ public:
 	virtual bool run(bool * cancel) {
 		PdfExport pdf(control->getDocument());
 		printf("export as pdf\n");
-		if (!pdf.createPdf("file:///home/andreas/tmp/pdffile.pdf", cancel)) {
+		if (!pdf.createPdf("/home/andreas/tmp/pdffile.pdf", cancel)) {
 			printf("create pdf failed\n");
 			printf("error: %s\n", pdf.getLastError().c_str());
 		}
@@ -1803,6 +1952,7 @@ void Control::saveAs() {
 	if (doc->getFilename().isEmpty()) {
 		return;
 	}
+	doc->setCreateBackupOnSave(false);
 	save();
 }
 

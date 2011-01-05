@@ -113,13 +113,14 @@ public:
 
 	bool copy(String source, String target);
 
-	void enableFullscreen(bool enabled);
+	void enableFullscreen(bool enabled, bool presentation = false);
 
 	void addNewLayer();
 	void deleteCurrentLayer();
 
 	void changePageBackgroundColor();
 	void setPageBackground(ActionType type);
+	void updateBackgroundSizeButton();
 
 	bool isFullscreen();
 
@@ -193,6 +194,7 @@ private:
 	String copyError;
 
 	GList * hiddenFullscreenWidgets;
+	bool sidebarHidden;
 
 	BackgroundThreadHandler * background;
 

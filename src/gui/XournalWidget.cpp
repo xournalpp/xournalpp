@@ -4,6 +4,7 @@
 #include <math.h>
 #include "../control/ev-metadata-manager.h"
 #include "Shadow.h"
+#include "../util/Util.h"
 
 XournalWidget::XournalWidget(GtkWidget * parent, Control * control) {
 	this->control = control;
@@ -35,8 +36,8 @@ XournalWidget::XournalWidget(GtkWidget * parent, Control * control) {
 	g_signal_connect(adj, "value-changed", G_CALLBACK( onVscrollChanged), this);
 
 	gtk_widget_set_events(widget, GDK_EXPOSURE_MASK | GDK_KEY_PRESS_MASK);
-	gtk_signal_connect (GTK_OBJECT(widget), "key_press_event", GTK_SIGNAL_FUNC(onKeyPressCallback), this);
-	gtk_signal_connect (GTK_OBJECT(widget), "key_release_event", GTK_SIGNAL_FUNC(onKeyReleaseCallback), this);
+	gtk_signal_connect(GTK_OBJECT(widget), "key_press_event", GTK_SIGNAL_FUNC(onKeyPressCallback), this);
+	gtk_signal_connect(GTK_OBJECT(widget), "key_release_event", GTK_SIGNAL_FUNC(onKeyReleaseCallback), this);
 
 	control->getZoomControl()->addZoomListener(this);
 
@@ -80,6 +81,14 @@ bool XournalWidget::onKeyPressEvent(GtkWidget *widget, GdkEventKey *event) {
 	if (event->keyval == GDK_Escape || event->keyval == GDK_F11) {
 		if (control->isFullscreen()) {
 			control->enableFullscreen(false);
+			return true;
+		}
+	}
+
+	// F5 starts presentation modus
+	if (event->keyval == GDK_F5) {
+		if (!control->isFullscreen()) {
+			control->enableFullscreen(true, true);
 			return true;
 		}
 	}
@@ -203,7 +212,7 @@ void XournalWidget::paintBorder(GtkWidget *widget, GdkEventExpose *event) {
 			Shadow::drawShadow(cr, alloc.x - 2, alloc.y - 2, alloc.width + 4, alloc.height + 4, r, g, b);
 
 			// Draw border
-			cairo_set_source_rgb(cr, 1, 0, 0);
+			Util::cairo_set_source_rgbi(cr, control->getSettings()->getSelectionColor());
 			cairo_set_line_width(cr, 4.0);
 			cairo_set_line_cap(cr, CAIRO_LINE_CAP_BUTT);
 			cairo_set_line_join(cr, CAIRO_LINE_JOIN_BEVEL);
@@ -244,6 +253,8 @@ void XournalWidget::pageSelected(int page) {
 	}
 
 	control->updatePageNumbers(currentPage, pdfPage);
+
+	control->updateBackgroundSizeButton();
 }
 
 Control * XournalWidget::getControl() {
@@ -444,9 +455,9 @@ void XournalWidget::zoomChanged(double lastZoom) {
 }
 
 void XournalWidget::pageSizeChanged(int page) {
+	PageView * v = this->viewPages[page];
+	v->updateSize();
 	layoutPages();
-
-	// TODO: update page
 }
 
 void XournalWidget::pageChanged(int page) {
@@ -613,8 +624,10 @@ void XournalWidget::clearSelection() {
 }
 
 void XournalWidget::updateBackground() {
-	gdk_window_set_background(GTK_LAYOUT(widget)->bin_window, &widget->style->dark[GTK_STATE_NORMAL]);
-	gtk_widget_queue_draw(GTK_WIDGET(widget));
+	if (GDK_IS_WINDOW(GTK_LAYOUT(widget)->bin_window)) {
+		gdk_window_set_background(GTK_LAYOUT(widget)->bin_window, &widget->style->dark[GTK_STATE_NORMAL]);
+		gtk_widget_queue_draw(GTK_WIDGET(widget));
+	}
 }
 
 void XournalWidget::documentChanged(DocumentChangeType type) {

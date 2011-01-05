@@ -321,6 +321,7 @@
                                 <property name="visible">True</property>
                                 <property name="label" translatable="yes">Plain</property>
                                 <property name="use_underline">True</property>
+                                <property name="draw_as_radio">True</property>
                               </widget>
                             </child>
                             <child>
@@ -328,6 +329,7 @@
                                 <property name="visible">True</property>
                                 <property name="label" translatable="yes">Lined</property>
                                 <property name="use_underline">True</property>
+                                <property name="draw_as_radio">True</property>
                               </widget>
                             </child>
                             <child>
@@ -335,6 +337,7 @@
                                 <property name="visible">True</property>
                                 <property name="label" translatable="yes">Ruled</property>
                                 <property name="use_underline">True</property>
+                                <property name="draw_as_radio">True</property>
                               </widget>
                             </child>
                             <child>
@@ -342,6 +345,7 @@
                                 <property name="visible">True</property>
                                 <property name="label" translatable="yes">Graph</property>
                                 <property name="use_underline">True</property>
+                                <property name="draw_as_radio">True</property>
                               </widget>
                             </child>
                             <child>
@@ -357,6 +361,7 @@
                                 <property name="visible">True</property>
                                 <property name="label" translatable="yes">With PDF background</property>
                                 <property name="use_underline">True</property>
+                                <property name="draw_as_radio">True</property>
                               </widget>
                             </child>
                           </widget>
@@ -805,8 +810,8 @@
                         <property name="visible">True</property>
                         <property name="use_underline">True</property>
                         <property name="use_stock">True</property>
-                        <accelerator key="KP_Add" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                         <accelerator key="plus" signal="activate" modifiers="GDK_CONTROL_MASK"/>
+                        <accelerator key="KP_Add" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                       </widget>
                     </child>
                     <child>
@@ -815,8 +820,8 @@
                         <property name="visible">True</property>
                         <property name="use_underline">True</property>
                         <property name="use_stock">True</property>
-                        <accelerator key="minus" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                         <accelerator key="KP_Subtract" signal="activate" modifiers="GDK_CONTROL_MASK"/>
+                        <accelerator key="minus" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                       </widget>
                     </child>
                     <child>

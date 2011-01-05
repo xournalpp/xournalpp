@@ -32,6 +32,8 @@ private:
 	void loadCheckbox(const char * name, gboolean value);
 	gboolean getCheckbox(const char * name);
 
+	String updateHideString(String hidden, bool hideMenubar, bool hideSidebar);
+
 	void initMouseButtonEvents();
 	void initMouseButtonEvents(const char * hbox, int button, bool withDevice = false);
 
