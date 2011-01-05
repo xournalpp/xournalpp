@@ -14,14 +14,23 @@
 #include "SaveHandlerHelper.h"
 #include "../model/Document.h"
 #include "SaveHandler.h"
+#include <config.h>
 
 SaveHandler::SaveHandler() {
 	root = NULL;
 	firstPdfPageVisited = false;
+	attachBgId = 1;
+	this->backgroundImages = NULL;
 }
 
 SaveHandler::~SaveHandler() {
 	delete root;
+
+	for (GList * l = this->backgroundImages; l != NULL; l = l->next) {
+		delete (BackgroundImage *) l->data;
+	}
+	g_list_free(this->backgroundImages);
+	this->backgroundImages = NULL;
 }
 
 void SaveHandler::prepareSave(Document * doc) {
@@ -29,18 +38,51 @@ void SaveHandler::prepareSave(Document * doc) {
 		// cleanup old data
 		delete root;
 		root = NULL;
+
+		for (GList * l = this->backgroundImages; l != NULL; l = l->next) {
+			delete (BackgroundImage *) l->data;
+		}
+		g_list_free(this->backgroundImages);
+		this->backgroundImages = NULL;
 	}
+
 	this->firstPdfPageVisited = false;
+	this->attachBgId = 1;
 
 	root = new XmlNode("xournal");
-	root->setAttrib("version", "0.4.5");
-	root->setAttrib("extended", "true");
+	root->setAttrib("creator", "Xournal++ " VERSION);
+	root->setAttrib("fileversion", "2");
 
-	root->addChild(new XmlTextNode("title", "Xournal document - see http://math.mit.edu/~auroux/software/xournal/"));
+	root->addChild(new XmlTextNode("title", "Xournal document - see http://xournal.sourceforge.net/"));
+	//root->addChild(new XmlTextNode("preview", "Xournal document - see http://xournal.sourceforge.net/"));
+	/*
+	 +   gchar *base64_str;
+	 +   GError **error;
+	 +
+	 +   error = NULL;
+	 +
+	 +   if (item->image_png == NULL) {
+	 +     if (!pixbuf_to_buffer(item->image, &item->image_png, &item->image_png_len, "png")) {
+	 +       item->image_png_len = 0;       // failed for some reason, so forget it
+	 +       return FALSE;
+	 +     }
+	 +   }
+	 +
+	 +   base64_str = g_base64_encode(item->image_png, item->image_png_len);
+	 +
+	 +   gzputs(f, base64_str);
+	 +
+	 +   g_free(base64_str);
+
+	 */
+	for (int i = 0; i < doc->getPageCount(); i++) {
+		XojPage * p = doc->getPage(i);
+		p->backgroundImage.clearSaveState();
+	}
 
 	for (int i = 0; i < doc->getPageCount(); i++) {
 		XojPage * p = doc->getPage(i);
-		visitPage(root, p, doc);
+		visitPage(root, p, doc, i);
 	}
 }
 
@@ -150,7 +192,7 @@ void SaveHandler::visitLayer(XmlNode * page, Layer * l) {
 	}
 }
 
-void SaveHandler::visitPage(XmlNode * root, XojPage * p, Document * doc) {
+void SaveHandler::visitPage(XmlNode * root, XojPage * p, Document * doc, int id) {
 	XmlNode * page = new XmlNode("page");
 	root->addChild(page);
 	page->setAttrib("width", p->getWidth());
@@ -172,11 +214,6 @@ void SaveHandler::visitPage(XmlNode * root, XojPage * p, Document * doc) {
 			firstPdfPageVisited = true;
 			background->setAttrib("domain", "absolute");
 			String pdfName = doc->getPdfFilename();
-			if (pdfName.startsWith("file://")) {
-				pdfName = pdfName.substring(7);
-			} else {
-				// TODO: Copy the PDF to te target directory
-			}
 			background->setAttrib("filename", pdfName);
 		}
 		background->setAttrib("pageno", p->getPdfPageNr() + 1);
@@ -190,7 +227,32 @@ void SaveHandler::visitPage(XmlNode * root, XojPage * p, Document * doc) {
 		background->setAttrib("style", getSolidBgStr(p->getBackgroundType()));
 		break;
 	case BACKGROUND_TYPE_IMAGE:
-		// TODO: impelement
+		background->setAttrib("type", "pixmap");
+
+		int cloneId = p->backgroundImage.getCloneId();
+		if (cloneId != -1) {
+			background->setAttrib("domain", "clone");
+			char * filename = g_strdup_printf("%i", cloneId);
+			background->setAttrib("filename", filename);
+			g_free(filename);
+		} else if (p->backgroundImage.isAttached() && p->backgroundImage.getPixbuf()) {
+			char * filename = g_strdup_printf("bg_%d.png", this->attachBgId++);
+			background->setAttrib("domain", "attach");
+			background->setAttrib("filename", filename);
+			p->backgroundImage.setFilename(filename);
+
+			BackgroundImage * img = new BackgroundImage();
+			*img = p->backgroundImage;
+			this->backgroundImages = g_list_append(this->backgroundImages, img);
+
+			g_free(filename);
+			p->backgroundImage.setCloneId(id);
+		} else {
+			background->setAttrib("domain", "absolute");
+			background->setAttrib("filename", p->backgroundImage.getFilename());
+			p->backgroundImage.setCloneId(id);
+		}
+
 		break;
 	}
 
@@ -200,8 +262,18 @@ void SaveHandler::visitPage(XmlNode * root, XojPage * p, Document * doc) {
 	}
 }
 
-void SaveHandler::saveTo(OutputStream * out) {
+void SaveHandler::saveTo(OutputStream * out, String filename) {
 	out->write("<?xml version=\"1.0\" standalone=\"no\"?>\n");
 	root->writeOut(out);
+
+	for (GList * l = this->backgroundImages; l != NULL; l = l->next) {
+		BackgroundImage * img = (BackgroundImage *) l->data;
+
+		char * tmpfn = g_strdup_printf("%s.%s", filename.c_str(), img->getFilename().c_str());
+		if (!gdk_pixbuf_save(img->getPixbuf(), tmpfn, "png", NULL, NULL)) {
+			g_warning("Could not write background '%s'. Continuing anyway.", tmpfn);
+		}
+		g_free(tmpfn);
+	}
 }
 

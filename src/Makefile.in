@@ -64,6 +64,7 @@ am_xournalpp_OBJECTS = xournalpp-Page.$(OBJEXT) \
 	xournalpp-SearchControl.$(OBJEXT) xournalpp-GladeGui.$(OBJEXT) \
 	xournalpp-AboutDialog.$(OBJEXT) \
 	xournalpp-PdfPagesDialog.$(OBJEXT) \
+	xournalpp-ImagesDialog.$(OBJEXT) \
 	xournalpp-ExportDialog.$(OBJEXT) \
 	xournalpp-ZoomCallib.$(OBJEXT) xournalpp-SelectColor.$(OBJEXT) \
 	xournalpp-gtkmenutooltogglebutton.$(OBJEXT) \
@@ -79,7 +80,7 @@ am_xournalpp_OBJECTS = xournalpp-Page.$(OBJEXT) \
 	xournalpp-Actions.$(OBJEXT) xournalpp-Tool.$(OBJEXT) \
 	xournalpp-ToolHandler.$(OBJEXT) xournalpp-Control.$(OBJEXT) \
 	xournalpp-RecentManager.$(OBJEXT) \
-	xournalpp-UndoRedoHandler.$(OBJEXT) \
+	xournalpp-UndoRedoHandler.$(OBJEXT) xournalpp-Util.$(OBJEXT) \
 	xournalpp-OutputStream.$(OBJEXT) \
 	xournalpp-CrashHandler.$(OBJEXT) xournalpp-PdfExport.$(OBJEXT) \
 	xournalpp-PopplerGlibExtension.$(OBJEXT) \
@@ -241,6 +242,7 @@ xournalpp_SOURCES = \
 	gui/GladeGui.cpp \
 	gui/AboutDialog.cpp \
 	gui/PdfPagesDialog.cpp \
+	gui/ImagesDialog.cpp \
 	gui/ExportDialog.cpp \
 	gui/widgets/ZoomCallib.cpp \
 	gui/widgets/SelectColor.cpp \
@@ -264,6 +266,7 @@ xournalpp_SOURCES = \
 	control/Control.cpp \
 	control/RecentManager.cpp \
 	control/UndoRedoHandler.cpp \
+	util/Util.cpp \
 	util/OutputStream.cpp \
 	util/CrashHandler.cpp \
 	pdf/PdfExport.cpp \
@@ -365,6 +368,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-ExportDialog.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-GladeGui.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-Image.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-ImagesDialog.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-Layer.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-LinkDestination.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-LoadHandler.Po@am__quote@
@@ -398,6 +402,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-ToolHandler.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-ToolMenuHandler.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-UndoRedoHandler.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-Util.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-XFont.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-XournalWidget.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-Xournalpp.Po@am__quote@
@@ -756,6 +761,20 @@ xournalpp-PdfPagesDialog.obj: gui/PdfPagesDialog.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-PdfPagesDialog.obj `if test -f 'gui/PdfPagesDialog.cpp'; then $(CYGPATH_W) 'gui/PdfPagesDialog.cpp'; else $(CYGPATH_W) '$(srcdir)/gui/PdfPagesDialog.cpp'; fi`
 
+xournalpp-ImagesDialog.o: gui/ImagesDialog.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-ImagesDialog.o -MD -MP -MF $(DEPDIR)/xournalpp-ImagesDialog.Tpo -c -o xournalpp-ImagesDialog.o `test -f 'gui/ImagesDialog.cpp' || echo '$(srcdir)/'`gui/ImagesDialog.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-ImagesDialog.Tpo $(DEPDIR)/xournalpp-ImagesDialog.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='gui/ImagesDialog.cpp' object='xournalpp-ImagesDialog.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-ImagesDialog.o `test -f 'gui/ImagesDialog.cpp' || echo '$(srcdir)/'`gui/ImagesDialog.cpp
+
+xournalpp-ImagesDialog.obj: gui/ImagesDialog.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-ImagesDialog.obj -MD -MP -MF $(DEPDIR)/xournalpp-ImagesDialog.Tpo -c -o xournalpp-ImagesDialog.obj `if test -f 'gui/ImagesDialog.cpp'; then $(CYGPATH_W) 'gui/ImagesDialog.cpp'; else $(CYGPATH_W) '$(srcdir)/gui/ImagesDialog.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-ImagesDialog.Tpo $(DEPDIR)/xournalpp-ImagesDialog.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='gui/ImagesDialog.cpp' object='xournalpp-ImagesDialog.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-ImagesDialog.obj `if test -f 'gui/ImagesDialog.cpp'; then $(CYGPATH_W) 'gui/ImagesDialog.cpp'; else $(CYGPATH_W) '$(srcdir)/gui/ImagesDialog.cpp'; fi`
+
 xournalpp-ExportDialog.o: gui/ExportDialog.cpp
 @am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-ExportDialog.o -MD -MP -MF $(DEPDIR)/xournalpp-ExportDialog.Tpo -c -o xournalpp-ExportDialog.o `test -f 'gui/ExportDialog.cpp' || echo '$(srcdir)/'`gui/ExportDialog.cpp
 @am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-ExportDialog.Tpo $(DEPDIR)/xournalpp-ExportDialog.Po
@@ -1077,6 +1096,20 @@ xournalpp-UndoRedoHandler.obj: control/UndoRedoHandler.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='control/UndoRedoHandler.cpp' object='xournalpp-UndoRedoHandler.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-UndoRedoHandler.obj `if test -f 'control/UndoRedoHandler.cpp'; then $(CYGPATH_W) 'control/UndoRedoHandler.cpp'; else $(CYGPATH_W) '$(srcdir)/control/UndoRedoHandler.cpp'; fi`
+
+xournalpp-Util.o: util/Util.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-Util.o -MD -MP -MF $(DEPDIR)/xournalpp-Util.Tpo -c -o xournalpp-Util.o `test -f 'util/Util.cpp' || echo '$(srcdir)/'`util/Util.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-Util.Tpo $(DEPDIR)/xournalpp-Util.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='util/Util.cpp' object='xournalpp-Util.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-Util.o `test -f 'util/Util.cpp' || echo '$(srcdir)/'`util/Util.cpp
+
+xournalpp-Util.obj: util/Util.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-Util.obj -MD -MP -MF $(DEPDIR)/xournalpp-Util.Tpo -c -o xournalpp-Util.obj `if test -f 'util/Util.cpp'; then $(CYGPATH_W) 'util/Util.cpp'; else $(CYGPATH_W) '$(srcdir)/util/Util.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-Util.Tpo $(DEPDIR)/xournalpp-Util.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='util/Util.cpp' object='xournalpp-Util.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-Util.obj `if test -f 'util/Util.cpp'; then $(CYGPATH_W) 'util/Util.cpp'; else $(CYGPATH_W) '$(srcdir)/util/Util.cpp'; fi`
 
 xournalpp-OutputStream.o: util/OutputStream.cpp
 @am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-OutputStream.o -MD -MP -MF $(DEPDIR)/xournalpp-OutputStream.Tpo -c -o xournalpp-OutputStream.o `test -f 'util/OutputStream.cpp' || echo '$(srcdir)/'`util/OutputStream.cpp

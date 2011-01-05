@@ -29,6 +29,7 @@ xournalpp_SOURCES = \
 	gui/GladeGui.cpp \
 	gui/AboutDialog.cpp \
 	gui/PdfPagesDialog.cpp \
+	gui/ImagesDialog.cpp \
 	gui/ExportDialog.cpp \
 	gui/widgets/ZoomCallib.cpp \
 	gui/widgets/SelectColor.cpp \
@@ -52,6 +53,7 @@ xournalpp_SOURCES = \
 	control/Control.cpp \
 	control/RecentManager.cpp \
 	control/UndoRedoHandler.cpp \
+	util/Util.cpp \
 	util/OutputStream.cpp \
 	util/CrashHandler.cpp \
 	pdf/PdfExport.cpp \

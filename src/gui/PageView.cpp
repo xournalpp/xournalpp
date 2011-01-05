@@ -232,7 +232,8 @@ void PageView::endText() {
 	} else {
 		// new element
 		if (layer->indexOf(txt) == -1) {
-			undo->addUndoActionBefore(new InsertUndoAction(page, layer, txt, this), this->textEditor->getFirstUndoAction());
+			undo->addUndoActionBefore(new InsertUndoAction(page, layer, txt, this),
+					this->textEditor->getFirstUndoAction());
 			layer->addElement(txt);
 			this->textEditor->textCopyed();
 			this->repaint();
@@ -631,6 +632,62 @@ GdkColor PageView::getSelectionColor() {
 	return widget->style->base[GTK_STATE_SELECTED];
 }
 
+//gboolean
+//on_canvas_enter_notify_event           (GtkWidget       *widget,
+//                                        GdkEventCrossing *event,
+//                                        gpointer         user_data)
+//{
+//  GList *dev_list;
+//  GdkDevice *dev;
+//
+//#ifdef INPUT_DEBUG
+//  printf("DEBUG: enter notify\n");
+//#endif
+//    /* re-enable input devices after they've been emergency-disabled
+//       by leave_notify */
+//  if (!gtk_check_version(2, 17, 0)) {
+//    gdk_flush();
+//    gdk_error_trap_push();
+//    for (dev_list = gdk_devices_list(); dev_list != NULL; dev_list = dev_list->next) {
+//      dev = GDK_DEVICE(dev_list->data);
+//      gdk_device_set_mode(dev, GDK_MODE_SCREEN);
+//    }
+//    ui.is_corestroke = ui.saved_is_corestroke;
+//    gdk_flush();
+//    gdk_error_trap_pop();
+//  }
+//  return FALSE;
+//}
+//
+//gboolean
+//on_canvas_leave_notify_event           (GtkWidget       *widget,
+//                                        GdkEventCrossing *event,
+//                                        gpointer         user_data)
+//{
+//  GList *dev_list;
+//  GdkDevice *dev;
+//
+//#ifdef INPUT_DEBUG
+//  printf("DEBUG: leave notify (mode=%d, details=%d)\n", event->mode, event->detail);
+//#endif
+//    /* emergency disable XInput to avoid segfaults (GTK+ 2.17) or
+//       interface non-responsiveness (GTK+ 2.18) */
+//  if (!gtk_check_version(2, 17, 0)) {
+//    gdk_flush();
+//    gdk_error_trap_push();
+//    for (dev_list = gdk_devices_list(); dev_list != NULL; dev_list = dev_list->next) {
+//      dev = GDK_DEVICE(dev_list->data);
+//      gdk_device_set_mode(dev, GDK_MODE_DISABLED);
+//    }
+//    ui.saved_is_corestroke = ui.is_corestroke;
+//    ui.is_corestroke = TRUE;
+//    gdk_flush();
+//    gdk_error_trap_pop();
+//  }
+//  return FALSE;
+//}
+
+
 gboolean PageView::onMotionNotifyEventCallback(GtkWidget *widget, GdkEventMotion *event, PageView * view) {
 	return view->onMotionNotifyEvent(widget, event);
 }
@@ -701,6 +758,8 @@ void PageView::doScroll(GdkEventMotion *event) {
 bool PageView::onButtonReleaseEventCallback(GtkWidget *widget, GdkEventButton *event, PageView * view) {
 	return view->onButtonReleaseEvent(widget, event);
 }
+
+// TODO: if you rotate the screen the events dont match the pointer coordinates, this is may a GTK Bug, but has to be fixed!
 
 bool PageView::onButtonReleaseEvent(GtkWidget *widget, GdkEventButton *event) {
 #ifdef INPUT_DEBUG
@@ -904,19 +963,17 @@ void PageView::setSelected(bool selected) {
 	if (selected) {
 		gtk_widget_grab_focus(widget);
 	}
-
-	//TODO: optizmize: gtk_widget_queue_draw_area(parent, alloc.x - 6, alloc.y - 6, alloc.width + 16, alloc.height + 16);
 }
 
 void PageView::firstPaint() {
-	if (!GDK_IS_WINDOW(GTK_WIDGET(widget)->window)) {
+	if (!GDK_IS_WINDOW(this->widget->window)) {
 		return;
 	}
 
 	this->firstPainted = true;
 
-	gdk_window_set_background(GTK_WIDGET(widget)->window, &widget->style->white);
-	gtk_widget_queue_draw(GTK_WIDGET(widget));
+	gdk_window_set_background(this->widget->window, &this->widget->style->white);
+	gtk_widget_queue_draw(this->widget);
 }
 
 bool PageView::repaintCallback(PageView * view) {
@@ -975,10 +1032,10 @@ void PageView::actionDelete() {
 	}
 }
 
-
 bool PageView::paintPage(GtkWidget *widget, GdkEventExpose *event) {
 	if (!firstPainted) {
 		firstPaint();
+		return true;
 	}
 
 	cairo_t *cr;

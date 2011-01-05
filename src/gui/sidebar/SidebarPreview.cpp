@@ -1,6 +1,7 @@
 #include "SidebarPreview.h"
 #include "../Shadow.h"
 #include "Sidebar.h"
+#include "../../util/Util.h"
 
 SidebarPreview::SidebarPreview(Sidebar * sidebar, XojPage * page) {
 	this->widget = gtk_drawing_area_new();
@@ -10,6 +11,7 @@ SidebarPreview::SidebarPreview(Sidebar * sidebar, XojPage * page) {
 	this->page = page;
 	this->view = new DocumentView();
 	this->selected = false;
+	this->firstPainted = false;
 
 	updateSize();
 	gtk_widget_set_events(widget, GDK_EXPOSURE_MASK | GDK_BUTTON_PRESS_MASK);
@@ -58,6 +60,17 @@ void SidebarPreview::repaint() {
 void SidebarPreview::paint() {
 	sidebar->setBackgroundWhite();
 
+	if (!this->firstPainted) {
+		if (!GDK_IS_WINDOW(widget->window)) {
+			return;
+		}
+
+		this->firstPainted = true;
+		gdk_window_set_background(widget->window, &widget->style->white);
+		gtk_widget_queue_draw(this->widget);
+		return;
+	}
+
 	GtkAllocation alloc;
 	gtk_widget_get_allocation(widget, &alloc);
 
@@ -100,22 +113,23 @@ void SidebarPreview::paint() {
 				Shadow::getShadowBottomRightSize() + 2);
 		cairo_fill(cr2);
 
-		cairo_set_operator(cr2, CAIRO_OPERATOR_ATOP);
-
 		if (this->selected) {
 			// Draw border
-			cairo_set_source_rgb(cr2, 1, 0, 0);
-			cairo_set_line_width(cr2, 2.0);
+			Util::cairo_set_source_rgbi(cr2, sidebar->getControl()->getSettings()->getSelectionColor());
+			cairo_set_line_width(cr2, 2);
 			cairo_set_line_cap(cr2, CAIRO_LINE_CAP_BUTT);
 			cairo_set_line_join(cr2, CAIRO_LINE_JOIN_BEVEL);
 
-			cairo_rectangle(cr2, Shadow::getShadowTopLeftSize(), Shadow::getShadowTopLeftSize(), width + 3, height + 3);
+			cairo_rectangle(cr2, Shadow::getShadowTopLeftSize() + 0.5, Shadow::getShadowTopLeftSize() + 0.5, width + 3,
+					height + 3);
 
 			cairo_stroke(cr2);
 
+			cairo_set_operator(cr2, CAIRO_OPERATOR_ATOP);
 			Shadow::drawShadow(cr2, Shadow::getShadowTopLeftSize(), Shadow::getShadowTopLeftSize(), width + 4, height
 					+ 4, 0, 0, 0);
 		} else {
+			cairo_set_operator(cr2, CAIRO_OPERATOR_ATOP);
 			Shadow::drawShadow(cr2, Shadow::getShadowTopLeftSize() + 2, Shadow::getShadowTopLeftSize() + 2, width,
 					height, 0, 0, 0);
 		}

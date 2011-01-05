@@ -11,6 +11,7 @@
     <property name="window_position">center</property>
     <property name="icon_name">dialog-information</property>
     <property name="type_hint">dialog</property>
+    <property name="urgency_hint">True</property>
     <child internal-child="vbox">
       <widget class="GtkVBox" id="dialog-vbox2">
         <property name="visible">True</property>

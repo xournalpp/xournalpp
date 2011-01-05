@@ -65,7 +65,7 @@ private:
 	static void parserStartElement(GMarkupParseContext *context, const gchar *element_name,
 			const gchar **attribute_names, const gchar **attribute_values, gpointer userdata, GError **error);
 
-	const char * getAttrib(const char * name);
+	const char * getAttrib(const char * name, bool optional = false);
 	double getAttribDouble(const char * name);
 	int getAttribInt(const char * name);
 
@@ -76,10 +76,12 @@ private:
 private:
 	String lastError;
 
+	String filename;
+
 	ParserPosition pos;
 
-	String creatorVersion;
-	bool isXournalExtended;
+	String creator;
+	int fileversion;
 
 	gzFile fp;
 

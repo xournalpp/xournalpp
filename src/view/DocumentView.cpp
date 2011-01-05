@@ -1,6 +1,7 @@
 #include "DocumentView.h"
 #include "TextView.h"
 #include "../gettext.h"
+#include <gdk/gdk.h>
 
 //#define SHOW_ELEMENT_BOUNDS
 
@@ -131,7 +132,7 @@ void DocumentView::drawStroke(cairo_t *cr, Stroke * s, int startPoint) {
 }
 
 void DocumentView::drawText(cairo_t *cr, Text * t) {
-	if(t->isInEditing()) {
+	if (t->isInEditing()) {
 		return;
 	}
 	applyColor(cr, t);
@@ -150,7 +151,6 @@ void DocumentView::drawLayer(cairo_t *cr, Layer * l) {
 		cairo_rectangle(cr, e->getX(), e->getY(), e->getElementWidth(), e->getElementHeight());
 		cairo_stroke(cr);
 #endif // SHOW_ELEMENT_BOUNDS
-
 		cairo_new_path(cr);
 
 		if (e->getType() == ELEMENT_STROKE) {
@@ -158,6 +158,27 @@ void DocumentView::drawLayer(cairo_t *cr, Layer * l) {
 		} else if (e->getType() == ELEMENT_TEXT) {
 			drawText(cr, (Text *) e);
 		}
+	}
+}
+
+void DocumentView::paintBackgroundImage() {
+	GdkPixbuf * pixbuff = page->backgroundImage.getPixbuf();
+	if (pixbuff) {
+		cairo_matrix_t matrix = { 0 };
+		cairo_get_matrix(cr, &matrix);
+
+		int width = gdk_pixbuf_get_width(pixbuff);
+		int height = gdk_pixbuf_get_height(pixbuff);
+
+		double sx = page->getWidth() / width;
+		double sy = page->getHeight() / height;
+
+		cairo_scale(cr, sx, sy);
+
+		gdk_cairo_set_source_pixbuf(cr, pixbuff, 0, 0);
+		cairo_paint(cr);
+
+		cairo_set_matrix(cr, &matrix);
 	}
 }
 
@@ -242,7 +263,7 @@ void DocumentView::drawPage(XojPage * page, PopplerPage * popplerPage, cairo_t *
 			cairo_show_text(cr, loading);
 		}
 	} else if (page->getBackgroundType() == BACKGROUND_TYPE_IMAGE) {
-		// TODO: implementieren
+		paintBackgroundImage();
 	} else if (page->getBackgroundType() == BACKGROUND_TYPE_GRAPH) {
 		paintBackgroundColor();
 		paintBackgroundGraph();

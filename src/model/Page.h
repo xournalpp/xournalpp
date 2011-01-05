@@ -14,6 +14,7 @@
 
 #include "Layer.h"
 #include "../util/ListIterator.h"
+#include "../model/String.h"
 
 enum BackgroundType {
 	BACKGROUND_TYPE_NONE = 1,
@@ -22,6 +23,34 @@ enum BackgroundType {
 	BACKGROUND_TYPE_LINED,
 	BACKGROUND_TYPE_RULED,
 	BACKGROUND_TYPE_GRAPH
+};
+
+class BackgroundImage {
+public:
+	BackgroundImage();
+	~BackgroundImage();
+
+	String getFilename();
+	void loadFile(String filename, GError ** error);
+
+	void setAttach(bool attach);
+
+	void operator =(BackgroundImage & img);
+	bool operator == (const BackgroundImage & img);
+
+	void free();
+
+	void clearSaveState();
+	int getCloneId();
+	void setCloneId(int id);
+
+	void setFilename(String filename);
+
+	bool isAttached();
+
+	GdkPixbuf * getPixbuf();
+private:
+	void * img;
 };
 
 class XojPage {
@@ -67,6 +96,13 @@ public:
 	void setSelectedLayerId(int id);
 
 	Layer * getSelectedLayer();
+
+public:
+	/**
+	 * Background image, if background type is IMAGE, public because the oprator= is overloaded
+	 */
+	BackgroundImage backgroundImage;
+
 private:
 	int ref;
 

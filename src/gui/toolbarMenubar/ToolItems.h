@@ -19,6 +19,7 @@
 #include "../../model/String.h"
 #include "../GladeGui.h"
 #include "../widgets/gtkmenutooltogglebutton.h"
+#include "../../util/Util.h"
 
 #include <stdlib.h>
 
@@ -317,7 +318,7 @@ public:
 		GtkWidget* cw = gtk_color_selection_dialog_get_color_selection(GTK_COLOR_SELECTION_DIALOG(colorDlg));
 		gtk_color_selection_get_current_color(GTK_COLOR_SELECTION(cw), &color);
 
-		this->color = (color.red / 256) << 16 | (color.green / 256) << 8 | (color.blue / 256);
+		this->color =Util::gdkColorToInt(color);
 	}
 
 	bool colorEqualsMoreOreLess(int color) {
@@ -350,11 +351,7 @@ public:
 					(GTK_COLOR_SELECTION_DIALOG(colorDlg)->ok_button),
 					"clicked", G_CALLBACK(&customColorSelected), this);
 
-			GdkColor color = { 0 };
-
-			color.red = ((this->color & 0xff0000) >> 16) * 256;
-			color.green = ((this->color & 0xff00) >> 8) * 256;
-			color.blue = ((this->color & 0xff)) * 256;
+			GdkColor color = Util::intToGdkColor(this->color);
 
 			GtkWidget* cw = gtk_color_selection_dialog_get_color_selection(GTK_COLOR_SELECTION_DIALOG(colorDlg));
 			gtk_color_selection_set_current_color(GTK_COLOR_SELECTION(cw), &color);

@@ -69,7 +69,7 @@ public:
 	Document(DocumentHandler * handler);
 	virtual ~Document();
 
-	bool readPdf(String uri, bool initPages);
+	bool readPdf(String filename, bool initPages);
 
 	int getPageCount();
 	int getPdfPageCount();

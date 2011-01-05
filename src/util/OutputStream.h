@@ -1,8 +1,12 @@
 /*
- * OutputStream.h
+ * Xournal++
  *
- *  Created on: 14.11.2010
- *      Author: andreas
+ * Output streams for writing
+ *
+ * @author Xournal Team
+ * http://xournal.sf.net
+ *
+ * @license GPL
  */
 
 #ifndef OUTPUTSTREAM_H_

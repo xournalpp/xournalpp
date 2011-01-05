@@ -64,7 +64,7 @@ void Cursor::setCursorBusy(bool busy) {
 		return;
 	}
 
-	if(this->busy == busy) {
+	if (this->busy == busy) {
 		return;
 	}
 
@@ -74,7 +74,7 @@ void Cursor::setCursorBusy(bool busy) {
 }
 
 void Cursor::setInvisible(bool invisible) {
-	if(this->invisible == invisible) {
+	if (this->invisible == invisible) {
 		return;
 	}
 
@@ -82,7 +82,6 @@ void Cursor::setInvisible(bool invisible) {
 
 	updateCursor();
 }
-
 
 void Cursor::updateCursor() {
 	MainWindow * win = control->getWindow();
@@ -181,7 +180,9 @@ void Cursor::updateCursor() {
 
 	while (it.hasNext()) {
 		PageView * p = it.next();
-		gdk_window_set_cursor(p->getWidget()->window, cursor);
+		if (GDK_IS_WINDOW(p->getWidget()->window)) {
+			gdk_window_set_cursor(p->getWidget()->window, cursor);
+		}
 	}
 
 	gdk_display_sync(gdk_display_get_default());

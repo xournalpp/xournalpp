@@ -84,9 +84,12 @@ void Settings::loadDefault() {
 	buttonConfig[3] = new ButtonConfig(TOOL_NONE, 0, TOOL_SIZE_NONE, false, false, ERASER_TYPE_NONE);
 
 	fullscreenHideElements = "mainMenubar";
+	presentationHideElements = "mainMenubar,sidebarContents";
 
 	this->pageInsertType = PAGE_INSERT_TYPE_COPY;
 	this->pageBackgroundColor = 0xffffff; //white
+
+	this->selectionColor = 0xff0000;
 }
 
 void Settings::parseData(xmlNodePtr cur, SElement & elem) {
@@ -249,10 +252,14 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
 		autosaveTimeout = g_ascii_strtoll((const char *) value, NULL, 10);
 	} else if (xmlStrcmp(name, (const xmlChar *) "fullscreenHideElements") == 0) {
 		this->fullscreenHideElements = (const char *) value;
+	} else if (xmlStrcmp(name, (const xmlChar *) "presentationHideElements") == 0) {
+		this->presentationHideElements = (const char *) value;
 	} else if (xmlStrcmp(name, (const xmlChar *) "pageInsertType") == 0) {
 		this->pageInsertType = pageInsertTypeFromString((const char *) value);
 	} else if (xmlStrcmp(name, (const xmlChar *) "pageBackgroundColor") == 0) {
 		this->pageBackgroundColor = g_ascii_strtoll((const char *) value, NULL, 10);
+	} else if (xmlStrcmp(name, (const xmlChar *) "selectionColor") == 0) {
+		this->selectionColor = g_ascii_strtoll((const char *) value, NULL, 10);
 	}
 
 	xmlFree(name);
@@ -483,6 +490,9 @@ void Settings::save() {
 	WRITE_STRING_PROP(fullscreenHideElements);
 	WRITE_COMMENT("Which gui elements are hidden if you are in Fullscreen mode, separated by a colon (,)");
 
+	WRITE_STRING_PROP(presentationHideElements);
+	WRITE_COMMENT("Which gui elements are hidden if you are in Presentation mode, separated by a colon (,)");
+
 	WRITE_BOOL_PROP(autoloadPdfXoj);
 	WRITE_STRING_PROP(defaultSaveName);
 
@@ -493,6 +503,7 @@ void Settings::save() {
 	WRITE_STRING_PROP(pageInsertType);
 
 	WRITE_INT_PROP(pageBackgroundColor);
+	WRITE_INT_PROP(selectionColor);
 
 	WRITE_DOUBLE_PROP(widthMinimumMultiplier);
 	WRITE_COMMENT("The multiplier for the presure sensitivity of the pen");
@@ -846,6 +857,15 @@ void Settings::setFullscreenHideElements(String elements) {
 	saveTimeout();
 }
 
+String Settings::getPresentationHideElements() {
+	return presentationHideElements;
+}
+
+void Settings::setPresentationHideElements(String elements) {
+	this->presentationHideElements = elements;
+	saveTimeout();
+}
+
 PageInsertType Settings::getPageInsertType() {
 	return this->pageInsertType;
 }
@@ -867,6 +887,18 @@ void Settings::setPageBackgroundColor(int color) {
 		return;
 	}
 	this->pageBackgroundColor = color;
+	saveTimeout();
+}
+
+int Settings::getSelectionColor() {
+	return this->selectionColor;
+}
+
+void Settings::setSelectionColor(int color) {
+	if (this->selectionColor == color) {
+		return;
+	}
+	this->selectionColor = color;
 	saveTimeout();
 }
 

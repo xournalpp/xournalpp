@@ -350,11 +350,11 @@ void Document::updateIndexPageNumbers() {
 	}
 }
 
-bool Document::readPdf(String uri, bool initPages) {
+bool Document::readPdf(String filename, bool initPages) {
 	GError *poppler_error = NULL;
 	PopplerDocument * oldDoc = pdfDocument;
 
-	pdfDocument = poppler_document_new_from_file(uri.c_str(), password.c_str(), &poppler_error);
+	pdfDocument = poppler_document_new_from_file(filename.c_str(), password.c_str(), &poppler_error);
 
 	if (pdfDocument == NULL) {
 		char * txt = g_strdup_printf("Document == NULL! (%s)", filename.c_str());
@@ -363,7 +363,7 @@ bool Document::readPdf(String uri, bool initPages) {
 		return false;
 	}
 
-	pdfFilename = uri;
+	pdfFilename = filename;
 
 	lastError = NULL;
 	if (oldDoc) {

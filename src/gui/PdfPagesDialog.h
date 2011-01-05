@@ -13,10 +13,11 @@
 
 #include "GladeGui.h"
 #include "../model/Document.h"
+#include "../control/Settings.h"
 
 class PdfPagesDialog: public GladeGui {
 public:
-	PdfPagesDialog(Document * doc);
+	PdfPagesDialog(Document * doc, Settings * settings);
 	virtual ~PdfPagesDialog();
 
 	void show();
@@ -28,6 +29,8 @@ public:
 	void setPageUsed(int page);
 
 	int getSelectedPage();
+
+	Settings * getSettings();
 private:
 	void layout();
 	void updateOkButton();
@@ -41,6 +44,8 @@ private:
 
 	int selected;
 	int lastWidth;
+
+	Settings * settings;
 
 	int selectedPage;
 

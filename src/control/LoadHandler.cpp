@@ -33,6 +33,7 @@ String LoadHandler::getLastError() {
 }
 
 bool LoadHandler::openFile(String filename) {
+	this->filename = filename;
 	fp = gzopen(filename.c_str(), "r");
 	if (!fp) {
 		lastError = _("Could not open file");
@@ -40,35 +41,6 @@ bool LoadHandler::openFile(String filename) {
 	}
 	return true;
 }
-
-// TODO: use this
-//GFile * file = g_file_new_for_uri(filename.c_str());
-//if (!file) {
-//	lastError = _("Could not open file");
-//	return false;
-//}
-//if (!g_file_query_exists(file, NULL)) {
-//	lastError = _("File does not exists!");
-//	return false;
-//}
-//
-//fileContents = NULL;
-//fileLength = 0;
-//GError * error = NULL;
-//
-//bool read = g_file_load_contents(file, NULL, (char **)&fileContents, &fileLength, NULL, &error);
-//if (!read) {
-//	lastError = _("Could not read file: \"");
-//	lastError += error->message;
-//	lastError += "\"";
-//	g_error_free(error);
-//	g_object_unref(file);
-//	return false;
-//}
-//
-//g_object_unref(file);
-//
-//return true;
 
 bool LoadHandler::closeFile() {
 	return gzclose(fp);
@@ -84,7 +56,7 @@ int LoadHandler::readFile(char * buffer, int len) {
 #define error2(var, ...) if(var == NULL) var = g_error_new(G_MARKUP_ERROR, G_MARKUP_ERROR_INVALID_CONTENT, __VA_ARGS__);
 #define error(...) if(error == NULL) error = g_error_new(G_MARKUP_ERROR, G_MARKUP_ERROR_INVALID_CONTENT, __VA_ARGS__);
 
-const char * LoadHandler::getAttrib(const char * name) {
+const char * LoadHandler::getAttrib(const char * name, bool optional) {
 	const gchar ** aName = attributeNames;
 	const gchar ** aValue = attributeValues;
 
@@ -96,7 +68,9 @@ const char * LoadHandler::getAttrib(const char * name) {
 		aValue++;
 	}
 
-	g_warning("Parser: attribute %s not found!", name);
+	if (!optional) {
+		g_warning("Parser: attribute %s not found!", name);
+	}
 	return NULL;
 }
 
@@ -136,20 +110,21 @@ int LoadHandler::getAttribInt(const char * name) {
 
 void LoadHandler::parseStart() {
 	if (strcmp(elementName, "xournal") == 0) {
-		// Read the document version, and if its an extended file
+		// Read the document version
 
-		const char * version = getAttrib("version");
+		const char * version = getAttrib("version", true);
 		if (version) {
-			this->creatorVersion = version;
-		} else {
-			error("<xournal> without attribute version!");
+			this->creator = "Xournal ";
+			this->creator += version;
 		}
 
-		const char * extended = getAttrib("extended");
-		if (extended) {
-			// Overwrite xournal version, don't matter in this case...
-			this->creatorVersion = extended;
-			this->isXournalExtended = true;
+		const char * fileversion = getAttrib("fileversion");
+		if (fileversion) {
+			this->fileversion = atoi(fileversion);
+		}
+		const char * creator = getAttrib("creator");
+		if (creator) {
+			this->creator = creator;
 		}
 
 		this->pos = PARSER_POS_STARTED;
@@ -220,8 +195,43 @@ void LoadHandler::parseBgSolid() {
 }
 
 void LoadHandler::parseBgPixmap() {
-	//TODO:
+	const char * domain = getAttrib("domain");
+	const char * filename = getAttrib("filename");
 
+	String fileToLoad;
+	bool loadFile = false;
+
+	if (!strcmp(domain, "absolute")) {
+		fileToLoad = filename;
+		loadFile = true;
+	} else if (!strcmp(domain, "attach")) {
+		fileToLoad = this->filename;
+		fileToLoad += ".";
+		fileToLoad += filename;
+		loadFile = true;
+	}
+
+	if (loadFile) {
+		GError * error = NULL;
+		BackgroundImage img;
+		img.loadFile(fileToLoad, &error);
+
+		if (error) {
+			error("could not read image: %s, Error message: %s", fileToLoad.c_str(), error->message);
+			g_error_free(error);
+		}
+
+		this->page->backgroundImage = img;
+	} else if (!strcmp(domain, "clone")) {
+		XojPage * p = doc.getPage(atoi(filename));
+
+		if (p != NULL) {
+			this->page->backgroundImage = p->backgroundImage;
+		}
+	} else {
+		error("Unknown pixmap::domain type: %s", domain);
+	}
+	page->setBackgroundType(BACKGROUND_TYPE_IMAGE);
 }
 
 void LoadHandler::parseBgPdf() {
@@ -241,12 +251,7 @@ void LoadHandler::parseBgPdf() {
 
 		if (!strcmp("absolute", domain)) { // Absolute OR relative path
 			if (!g_file_test(sFilename, G_FILE_TEST_EXISTS)) {
-				gchar * dirname = NULL;
-				if (xournalFilename.startsWith("file://")) {
-					dirname = g_path_get_dirname(xournalFilename.substring(7).c_str());
-				} else {
-					dirname = g_path_get_dirname(xournalFilename.c_str());
-				}
+				gchar * dirname = g_path_get_dirname(xournalFilename.c_str());
 				gchar * file = g_path_get_basename(sFilename);
 
 				gchar * tmpFilename = g_build_path(G_DIR_SEPARATOR_S, dirname, file, NULL);
@@ -273,9 +278,7 @@ void LoadHandler::parseBgPdf() {
 		}
 
 		if (g_file_test(filename.c_str(), G_FILE_TEST_EXISTS)) {
-			gchar * uri = g_strdup_printf("file://%s", filename.c_str());
-			doc.readPdf(uri, false);
-			g_free(uri);
+			doc.readPdf(filename, false);
 		} else {
 			if (!strcmp("attach", domain)) {
 				attachPdfFileNotFound = "Attached PDF";
@@ -289,7 +292,6 @@ void LoadHandler::parseBgPdf() {
 }
 
 void LoadHandler::parsePage() {
-
 	if (!strcmp(elementName, "background")) {
 		const char * type = getAttrib("type");
 
@@ -307,55 +309,6 @@ void LoadHandler::parsePage() {
 		this->layer = new Layer();
 		this->page->addLayer(this->layer);
 	}
-
-	// TODO: check special chars
-	// TODO: add recent items to gtk list
-
-	//			} else if (!strcmp(*attribute_names, "filename")) {
-	//				if (tmpPage->bg->type <= BG_SOLID || (has_attr != 9)) {
-	//					*error = xoj_invalid();
-	//					return;
-	//				}
-	//				if (tmpPage->bg->file_domain == DOMAIN_CLONE) {
-	//					// filename is a page number
-	//					i = strtol(*attribute_values, &ptr, 10);
-	//					if (ptr == *attribute_values || i < 0 || i > tmpJournal->getPageCount() - 2) {
-	//						*error = xoj_invalid();
-	//						return;
-	//					}
-	//					tmpbg = (control->getJournal()->getPage(i))->bg;
-	//					if (tmpbg->type != tmpPage->bg->type) {
-	//						*error = xoj_invalid();
-	//						return;
-	//					}
-	//					tmpPage->bg->filename = tmpbg->filename;
-	//					tmpPage->bg->pixbuf = tmpbg->pixbuf;
-	//					if (tmpbg->pixbuf != NULL)
-	//						gdk_pixbuf_ref(tmpbg->pixbuf);
-	//					tmpPage->bg->file_domain = tmpbg->file_domain;
-	//				} else {
-	//					tmpPage->bg->filename = *attribute_values;
-	//					if (tmpPage->bg->type == BG_PIXMAP) {
-	//						if (tmpPage->bg->file_domain == DOMAIN_ATTACH) {
-	//							tmpbg_filename = g_strdup_printf("%s.%s", tmpFilename, *attribute_values);
-	//							if (sscanf(*attribute_values, "bg_%d.png", &i) == 1)
-	//								control->getJournal()->setMinAttachmentNo(i);
-	//						} else
-	//							tmpbg_filename = g_strdup(*attribute_values);
-	//						tmpPage->bg->pixbuf = gdk_pixbuf_new_from_file(tmpbg_filename, NULL);
-	//						if (tmpPage->bg->pixbuf == NULL) {
-	//							dialog = gtk_message_dialog_new(GTK_WINDOW(winMain), GTK_DIALOG_MODAL, GTK_MESSAGE_WARNING,
-	//									GTK_BUTTONS_OK, _("Could not open background '%s'. Setting background to white."),
-	//									tmpbg_filename);
-	//							gtk_dialog_run(GTK_DIALOG(dialog));
-	//							gtk_widget_destroy(dialog);
-	//							tmpPage->bg->pixbuf = gdk_pixbuf_new(GDK_COLORSPACE_RGB, FALSE, 8, 1, 1);
-	//							gdk_pixbuf_fill(tmpPage->bg->pixbuf, 0xffffffff); // solid white
-	//						}
-	//						g_free(tmpbg_filename);
-	//					}
-	//				}
-	//				has_attr |= 16;
 }
 
 bool LoadHandler::parseColor(const char * text, int & color) {
@@ -430,13 +383,6 @@ void LoadHandler::parseStroke() {
 	} else {
 		g_warning("Unknown stroke type: \"%s\", assume pen", tool);
 	}
-
-	// TODO: implementieren
-
-	//		if (tmpItem->brush.tool_type == TOOL_HIGHLIGHTER) {
-	//			if (tmpItem->brush.color_no >= 0)
-	//				tmpItem->brush.color_rgba &= ui.hiliter_alpha_mask;
-	//		}
 }
 
 void LoadHandler::parseText() {
@@ -657,7 +603,8 @@ bool LoadHandler::parseXml() {
 	gboolean valid = true;
 
 	this->pos = PARSER_POS_NOT_STARTED;
-	this->isXournalExtended = false;
+	this->creator = "Unknown";
+	this->fileversion = 1;
 
 	char buffer[1024];
 	int len;
@@ -697,19 +644,14 @@ bool LoadHandler::parseXml() {
 		return false;
 	}
 
-	printf("parsed version: %s::extended? %i\n", this->creatorVersion.c_str(), this->isXournalExtended);
-	doc.setCreateBackupOnSave(!this->isXournalExtended);
+	printf("parsed creator: %s::version: %i\n", this->creator.c_str(), this->fileversion);
+	doc.setCreateBackupOnSave(!this->fileversion < 2);
 
 	return valid;
 }
 
 bool LoadHandler::loadDocument(String filename, Document * doc) {
-	if (filename.startsWith("file://")) {
-		if (!openFile(filename.substring(7))) {
-			return false;
-		}
-	} else {
-		lastError = "Can only open file://";
+	if (!openFile(filename.substring(7))) {
 		return false;
 	}
 

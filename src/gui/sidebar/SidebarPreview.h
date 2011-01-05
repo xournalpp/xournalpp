@@ -43,6 +43,8 @@ private:
 
 	bool selected;
 
+	bool firstPainted;
+
 	Sidebar * sidebar;
 	XojPage * page;
 

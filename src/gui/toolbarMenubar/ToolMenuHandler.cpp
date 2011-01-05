@@ -431,6 +431,8 @@ void ToolMenuHandler::initToolItems() {
 
 	tbInsertNewPage->setPopupMenu(newPagePopup);
 
+	// TODO: check for Stock icons (Mail from 04.01.2010 to Xournal mailinglist)
+
 	addToolItem(new ToolButton(listener, gui, "HILIGHTER", ACTION_TOOL_HILIGHTER, GROUP_TOOL, "tool_highlighter.png",
 			_("Hilighter"), gui->get("menuToolsHighlighter")));
 	addToolItem(new ToolButton(listener, gui, "TEXT", ACTION_TOOL_TEXT, GROUP_TOOL, "tool_text.png", _("Text"),
