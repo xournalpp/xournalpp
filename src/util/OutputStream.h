@@ -21,24 +21,18 @@ public:
 	virtual ~OutputStream();
 
 public:
-	virtual void write(const char * data) = 0;
+	virtual void write(const char * data);
+	virtual void write(const char * data, int len) = 0;
 	virtual void write(const String & str);
 
 	virtual void close() = 0;
-};
-
-class StdOutputStream : public OutputStream {
-public:
-	virtual void write(const char * data);
-
-	virtual void close();
 };
 
 class GzOutputStream : public OutputStream {
 public:
 	GzOutputStream(String filename);
 
-	virtual void write(const char * data);
+	virtual void write(const char * data, int len);
 
 	virtual void close();
 

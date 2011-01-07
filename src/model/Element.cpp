@@ -83,3 +83,20 @@ bool Element::intersectsArea(const GdkRectangle * src) {
 	return gdk_rectangle_intersect(src, &rect, NULL);
 }
 
+bool Element::isInSelection(ShapeContainer * container) {
+	if (!container->contains(getX(), getY())) {
+		return false;
+	}
+	if (!container->contains(getX() + getElementWidth(), getY())) {
+		return false;
+	}
+	if (!container->contains(getX(), getY() + getElementHeight())) {
+		return false;
+	}
+	if (!container->contains(getX() + getElementWidth(), getY() + getElementHeight())) {
+		return false;
+	}
+
+	return true;
+}
+

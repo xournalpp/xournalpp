@@ -13,6 +13,7 @@
 #define __RECENTMANAGER_H__
 
 #include <gtk/gtk.h>
+#include "../model/String.h"
 
 class RecentManagerListener {
 public:
@@ -24,8 +25,10 @@ public:
 	RecentManager();
 	virtual ~RecentManager();
 
-	void addRecentFile(const char * uri);
-	void removeRecentFile(const char * uri);
+	void addRecentFileFilename(const char * filename);
+	void addRecentFileUri(const char * uri);
+	void removeRecentFileFilename(const char * filename);
+	void removeRecentFileUri(const char * uri);
 
 	void freeOldMenus();
 	void updateMenu();
@@ -33,7 +36,7 @@ public:
 	int getMaxRecent();
 	void setMaxRecent(int maxRecent);
 
-	void openRecent(const char * uri);
+	void openRecent(String uri);
 
 	GtkWidget * getMenu();
 

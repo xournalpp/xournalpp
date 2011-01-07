@@ -13,6 +13,7 @@
 #define __ELEMENT_H__
 
 #include <gtk/gtk.h>
+#include "../util/Util.h"
 
 enum ElementType {
 	ELEMENT_STROKE = 1, ELEMENT_IMAGE, ELEMENT_TEXT
@@ -23,7 +24,7 @@ public:
 	virtual bool contains(double x, double y) = 0;
 };
 
-class Element {
+class Element: public DebugObject {
 protected:
 	Element(ElementType type);
 
@@ -48,7 +49,7 @@ public:
 
 	virtual bool intersectsArea(const GdkRectangle * src);
 
-	virtual bool isInSelection(ShapeContainer * container) = 0;
+	virtual bool isInSelection(ShapeContainer * container);
 protected:
 	// The position on the screen
 	double x;

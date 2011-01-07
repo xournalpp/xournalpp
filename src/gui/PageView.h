@@ -24,12 +24,11 @@
 #include "../view/DocumentView.h"
 #include "../gui/TextEditor.h"
 
-
 class XournalWidget;
 class DeleteUndoAction;
 class EraseUndoAction;
 
-class PageView : public Redrawable {
+class PageView: public Redrawable {
 public:
 	PageView(XournalWidget * xournal, XojPage * page);
 	virtual ~PageView();
@@ -76,7 +75,8 @@ public:
 	void paste();
 
 	void actionDelete();
-public: // Redrawable
+public:
+	// Redrawable
 	void redrawDocumentRegion(double x1, double y1, double x2, double y2);
 	GdkColor getSelectionColor();
 private:
@@ -87,6 +87,9 @@ private:
 	bool onButtonReleaseEvent(GtkWidget *widget, GdkEventButton *event);
 	static gboolean onMotionNotifyEventCallback(GtkWidget *widget, GdkEventMotion *event, PageView * view);
 	gboolean onMotionNotifyEvent(GtkWidget *widget, GdkEventMotion *event);
+
+	static gboolean onMouseEnterNotifyEvent(GtkWidget *widget, GdkEventCrossing *event, gpointer user_data);
+	static gboolean onMouseLeaveNotifyEvent(GtkWidget *widget, GdkEventCrossing *event, gpointer user_data);
 
 	void handleScrollEvent(GdkEventButton *event);
 

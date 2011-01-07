@@ -21,10 +21,7 @@ RecentManager::RecentManager() {
 
 	GtkRecentManager *recentManager;
 	recentManager = gtk_recent_manager_get_default();
-	recentHandlerId = g_signal_connect (recentManager,
-			"changed",
-			G_CALLBACK (recent_manager_changed),
-			this);
+	recentHandlerId = g_signal_connect (recentManager, "changed", G_CALLBACK (recent_manager_changed), this);
 
 	updateMenu();
 }
@@ -44,7 +41,15 @@ void RecentManager::addListener(RecentManagerListener * listener) {
 	this->listener = g_list_append(this->listener, listener);
 }
 
-void RecentManager::addRecentFile(const char * uri) {
+void RecentManager::addRecentFileFilename(const char * filename) {
+	GFile * file = g_file_new_for_path(filename);
+
+	addRecentFileUri(g_file_get_uri(file));
+
+	g_object_unref(file);
+}
+
+void RecentManager::addRecentFileUri(const char * uri) {
 	GtkRecentManager *recentManager;
 	GtkRecentData *recentData;
 
@@ -57,7 +62,7 @@ void RecentManager::addRecentFile(const char * uri) {
 	recentData->display_name = NULL;
 	recentData->description = NULL;
 
-	if(g_str_has_suffix(uri, ".pdf")) {
+	if (g_str_has_suffix(uri, ".pdf")) {
 		recentData->mime_type = (gchar *) g_strdup(MIME_PDF);
 	} else {
 		recentData->mime_type = (gchar *) g_strdup(MIME);
@@ -68,7 +73,6 @@ void RecentManager::addRecentFile(const char * uri) {
 	recentData->groups = groups;
 	recentData->is_private = FALSE;
 
-
 	gtk_recent_manager_add_full(recentManager, uri, recentData);
 
 	g_free(recentData->app_exec);
@@ -76,7 +80,16 @@ void RecentManager::addRecentFile(const char * uri) {
 	g_slice_free(GtkRecentData, recentData);
 }
 
-void RecentManager::removeRecentFile(const char * uri) {
+
+void RecentManager::removeRecentFileFilename(const char * filename) {
+	GFile * file = g_file_new_for_path(filename);
+
+	removeRecentFileUri(g_file_get_uri(file));
+
+	g_object_unref(file);
+}
+
+void RecentManager::removeRecentFileUri(const char * uri) {
 	GtkRecentManager *recentManager;
 	recentManager = gtk_recent_manager_get_default();
 	gtk_recent_manager_remove_item(recentManager, uri, NULL);
@@ -94,10 +107,18 @@ void RecentManager::setMaxRecent(int maxRecent) {
 	this->maxRecent = maxRecent;
 }
 
-void RecentManager::openRecent(const char * uri) {
+void RecentManager::openRecent(String uri) {
+	if (uri.startsWith("file://")) {
+		uri = uri.substring(7);
+	}
+	if (!uri.startsWith("/")) {
+		g_warning("could not handle URI: %s", uri.c_str());
+		return;
+	}
+
 	for (GList * l = this->listener; l != NULL; l = l->next) {
 		RecentManagerListener * listener = (RecentManagerListener *) l->data;
-		listener->fileOpened(uri);
+		listener->fileOpened(uri.c_str());
 	}
 }
 
@@ -240,6 +261,11 @@ GList * RecentManager::filterRecent(GList * items, bool xoj) {
 	for (GList *l = items; l != NULL; l = l->next) {
 		GtkRecentInfo *info = (GtkRecentInfo *) l->data;
 		const gchar * uri = gtk_recent_info_get_uri(info);
+
+		// Skip remote files
+		if(!g_str_has_prefix(uri, "file://")) {
+			continue;
+		}
 
 		if (xoj) {
 			if (g_str_has_suffix(uri, ".xoj")) {

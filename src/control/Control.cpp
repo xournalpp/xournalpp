@@ -1637,26 +1637,25 @@ bool Control::openFile(String filename) {
 
 	String lower = filename.toLowerCase();
 	if (filename.toLowerCase().endsWith(".pdf")) {
-		printf("test1\n");
 		if (settings->isAutloadPdfXoj()) {
 			String f = filename;
 			f += ".xoj";
-			if (h.loadDocument(f, doc)) {
-				printf("test2\n");
+			Document * tmp = h.loadDocument(f);
+			if (tmp) {
+				doc->clearDocument();
+				*doc = *tmp;
 				fileLoaded();
 				return true;
 			}
-			printf("test3\n");
 		}
-		printf("test4\n");
 
 		bool an = annotatePdf(filename, false);
-		printf("test5:%i\n", an);
 		fileLoaded();
 		return an;
 	}
 
-	if (!h.loadDocument(filename, doc)) {
+	Document * tmp = h.loadDocument(filename);
+	if (!tmp) {
 		GtkWidget * dialog = gtk_message_dialog_new((GtkWindow*) *win, GTK_DIALOG_DESTROY_WITH_PARENT,
 				GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, _("Error opening file '%s'\n%s"), filename.c_str(),
 				h.getLastError().c_str());
@@ -1664,6 +1663,9 @@ bool Control::openFile(String filename) {
 		gtk_widget_destroy(dialog);
 		fileLoaded();
 		return false;
+	} else {
+		doc->clearDocument();
+		*doc = *tmp;
 	}
 
 	GValue value = { 0 };
@@ -1677,9 +1679,8 @@ bool Control::openFile(String filename) {
 		if (ev_metadata_manager_get(file, "page", &value, TRUE) && G_VALUE_TYPE(&value) == G_TYPE_INT) {
 			scrollToPage(g_value_get_int(&value));
 		}
+		recent->addRecentFileFilename(file);
 	}
-
-	recent->addRecentFile(file);
 
 	fileLoaded();
 	return true;
@@ -1712,7 +1713,7 @@ bool Control::annotatePdf(String filename, bool attachPdf) {
 		int page = 0;
 		GValue value = { 0 };
 
-		recent->addRecentFile(filename.c_str());
+		recent->addRecentFileFilename(filename.c_str());
 
 		const char * file = doc->getEvMetadataFilename();
 		if (file && ev_metadata_manager_get(file, "page", &value, TRUE) && G_VALUE_TYPE(&value) == G_TYPE_INT) {
@@ -1765,12 +1766,54 @@ bool Control::copy(String source, String target) {
 	return ok;
 }
 
+void Control::updatePreview() {
+	const int previewSize = 128;
+
+	if (doc->getPageCount() > 0) {
+		XojPage * page = doc->getPage(0);
+
+		double width = page->getWidth();
+		double height = page->getHeight();
+
+		double zoom = 1;
+
+		if (width < height) {
+			zoom = previewSize / height;
+		} else {
+			zoom = previewSize / width;
+		}
+		width *= zoom;
+		height *= zoom;
+
+		cairo_surface_t * crBuffer = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, width, height);
+
+		cairo_t * cr = cairo_create(crBuffer);
+		cairo_scale(cr, zoom, zoom);
+		PopplerPage * popplerPage = NULL;
+
+		if (page->getBackgroundType() == BACKGROUND_TYPE_PDF) {
+			int pgNo = page->getPdfPageNr();
+			popplerPage = sidebar->getDocument()->getPdfPage(pgNo);
+		}
+
+		DocumentView view;
+		view.drawPage(page, popplerPage, cr);
+		cairo_destroy(cr);
+		doc->setPreview(crBuffer);
+		cairo_surface_destroy(crBuffer);
+	} else {
+		doc->setPreview(NULL);
+	}
+}
+
 bool Control::save() {
 	if (doc->getFilename().isEmpty()) {
 		if (!showSaveDialog()) {
 			return false;
 		}
 	}
+
+	updatePreview();
 
 	SaveHandler h;
 	h.prepareSave(doc);
@@ -1804,7 +1847,7 @@ bool Control::save() {
 
 	delete out;
 
-	recent->addRecentFile(doc->getFilename().c_str());
+	recent->addRecentFileFilename(doc->getFilename().c_str());
 	return true;
 }
 

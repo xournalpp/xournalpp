@@ -19,7 +19,22 @@ public:
 	static GdkColor intToGdkColor(int c);
 	static int gdkColorToInt(const GdkColor & c);
 
-	static void	cairo_set_source_rgbi(cairo_t *cr, int color);
+	static void cairo_set_source_rgbi(cairo_t *cr, int color);
+};
+
+/**
+ * Used for testing memory violations
+ */
+
+class DebugObject {
+public:
+	DebugObject();
+
+	void debugTestIsOk();
+private:
+	int d1;
+	int d2;
+	int d3;
 };
 
 #endif /* __UTIL_H__ */

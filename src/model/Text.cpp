@@ -46,21 +46,3 @@ void Text::setInEditing(bool inEditing) {
 bool Text::isInEditing() {
 	return this->inEditing;
 }
-
-bool Text::isInSelection(ShapeContainer * container) {
-	if (!container->contains(getX(), getY())) {
-		return false;
-	}
-	if (!container->contains(getX() + getElementWidth(), getY())) {
-		return false;
-	}
-	if (!container->contains(getX(), getY() + getElementHeight())) {
-		return false;
-	}
-	if (!container->contains(getX() + getElementWidth(), getY() + getElementHeight())) {
-		return false;
-	}
-
-	return true;
-
-}

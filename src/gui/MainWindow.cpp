@@ -39,7 +39,7 @@ MainWindow::MainWindow(Control * control) :
 		if (!this->toolbar->writeDefault(file) || !this->toolbar->parse(file)) {
 			GtkWidget* dlg = gtk_message_dialog_new(GTK_WINDOW(this->window), GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR,
 					GTK_BUTTONS_OK,
-					"Could not create toolbar config file: %s\nCheck write permission, no Toolbars will be available",
+					_("Could not create toolbar config file: %s\nCheck write permission, no Toolbars will be available"),
 					file);
 
 			gtk_dialog_run(GTK_DIALOG(dlg));
@@ -212,7 +212,7 @@ void MainWindow::toolbarSelected(ToolbarData * d) {
 	}
 
 	Settings * settings = control->getSettings();
-	settings->setSelectedToolbar(d->getName());
+	settings->setSelectedToolbar(d->getId());
 
 	if (selectedToolbar != NULL) {
 		this->toolbar->unloadToolbar(this->tbTop1);
@@ -266,7 +266,7 @@ void MainWindow::initToolbar() {
 	ToolbarData * selectedData = NULL;
 
 	Settings * settings = control->getSettings();
-	String selectedName = settings->getSelectedToolbar();
+	String selectedId = settings->getSelectedToolbar();
 
 	while (it.hasNext()) {
 		d = it.next();
@@ -284,7 +284,7 @@ void MainWindow::initToolbar() {
 
 		this->toolbarMenuitem = g_list_append(this->toolbarMenuitem, data);
 
-		if (selectedName == d->getName()) {
+		if (selectedId == d->getId()) {
 			selectedData = d;
 			selectedItem = item;
 		}

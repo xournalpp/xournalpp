@@ -1,5 +1,6 @@
 #include "OutputStream.h"
 #include <stdlib.h>
+#include <string.h>
 
 OutputStream::OutputStream() {
 }
@@ -8,18 +9,11 @@ OutputStream::~OutputStream() {
 }
 
 void OutputStream::write(const String & str) {
-	write(str.c_str());
+	write(str.c_str(), str.length());
 }
 
-////////////////////////////////////////////////////////
-/// StdOutputStream ////////////////////////////////////
-////////////////////////////////////////////////////////
-
-void StdOutputStream::write(const char * data) {
-	printf("%s", data);
-}
-
-void StdOutputStream::close() {
+void OutputStream::write(const char * str) {
+	write(str, strlen(str));
 }
 
 ////////////////////////////////////////////////////////
@@ -41,8 +35,8 @@ String GzOutputStream::getLastError() {
 	return this->error;
 }
 
-void GzOutputStream::write(const char * data) {
-	gzprintf(this->fp, "%s", data);
+void GzOutputStream::write(const char * data, int len) {
+	gzwrite(this->fp, data, len);
 }
 
 void GzOutputStream::close() {

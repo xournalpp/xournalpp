@@ -9,6 +9,7 @@ SidebarPreview::SidebarPreview(Sidebar * sidebar, XojPage * page) {
 	this->crBuffer = NULL;
 	this->sidebar = sidebar;
 	this->page = page;
+	page->debugTestIsOk();
 	this->view = new DocumentView();
 	this->selected = false;
 	this->firstPainted = false;
@@ -31,6 +32,7 @@ SidebarPreview::~SidebarPreview() {
 }
 
 gboolean SidebarPreview::exposeEventCallback(GtkWidget *widget, GdkEventExpose *event, SidebarPreview * preview) {
+	preview->debugTestIsOk();
 	preview->paint();
 	return true;
 }
@@ -59,6 +61,8 @@ void SidebarPreview::repaint() {
 
 void SidebarPreview::paint() {
 	sidebar->setBackgroundWhite();
+
+	page->debugTestIsOk();
 
 	if (!this->firstPainted) {
 		if (!GDK_IS_WINDOW(widget->window)) {

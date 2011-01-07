@@ -23,6 +23,7 @@ LoadHandler::LoadHandler() :
 	layer = NULL;
 	stroke = NULL;
 	image = NULL;
+	text = NULL;
 }
 
 LoadHandler::~LoadHandler() {
@@ -36,7 +37,9 @@ bool LoadHandler::openFile(String filename) {
 	this->filename = filename;
 	fp = gzopen(filename.c_str(), "r");
 	if (!fp) {
-		lastError = _("Could not open file");
+		lastError = _("Could not open file: \"");
+		lastError += filename;
+		lastError += "\"";
 		return false;
 	}
 	return true;
@@ -118,11 +121,11 @@ void LoadHandler::parseStart() {
 			this->creator += version;
 		}
 
-		const char * fileversion = getAttrib("fileversion");
+		const char * fileversion = getAttrib("fileversion", true);
 		if (fileversion) {
 			this->fileversion = atoi(fileversion);
 		}
-		const char * creator = getAttrib("creator");
+		const char * creator = getAttrib("creator", true);
 		if (creator) {
 			this->creator = creator;
 		}
@@ -417,58 +420,17 @@ void LoadHandler::parseText() {
 }
 
 void LoadHandler::parseImage() {
-	//		tmpItem = (struct Item *) g_malloc0(sizeof(struct Item));
-	//		tmpItem->type = ITEM_IMAGE;
-	//		tmpItem->canvas_item = NULL;
-	//		tmpItem->image = NULL;
-	//		tmpItem->image_scaled = NULL;
-	//		tmpItem->image_png = NULL;
-	//		tmpItem->image_png_len = 0;
-	//		tmpLayer->items = g_list_append(tmpLayer->items, tmpItem);
-	//		tmpLayer->nitems++;
-	//		// scan for x, y
-	//		has_attr = 0;
-	//		while (*attribute_names != NULL) {
-	//			if (!strcmp(*attribute_names, "left")) {
-	//				if (has_attr & 1)
-	//					*error = xoj_invalid();
-	//				cleanup_numeric((gchar *) *attribute_values);
-	//				tmpItem->bbox.left = g_ascii_strtod(*attribute_values, &ptr);
-	//				if (ptr == *attribute_values)
-	//					*error = xoj_invalid();
-	//				has_attr |= 1;
-	//			} else if (!strcmp(*attribute_names, "top")) {
-	//				if (has_attr & 2)
-	//					*error = xoj_invalid();
-	//				cleanup_numeric((gchar *) *attribute_values);
-	//				tmpItem->bbox.top = g_ascii_strtod(*attribute_values, &ptr);
-	//				if (ptr == *attribute_values)
-	//					*error = xoj_invalid();
-	//				has_attr |= 2;
-	//			} else if (!strcmp(*attribute_names, "right")) {
-	//				if (has_attr & 4)
-	//					*error = xoj_invalid();
-	//				cleanup_numeric((gchar *) *attribute_values);
-	//				tmpItem->bbox.right = g_ascii_strtod(*attribute_values, &ptr);
-	//				if (ptr == *attribute_values)
-	//					*error = xoj_invalid();
-	//				has_attr |= 4;
-	//			} else if (!strcmp(*attribute_names, "bottom")) {
-	//				if (has_attr & 8)
-	//					*error = xoj_invalid();
-	//				cleanup_numeric((gchar *) *attribute_values);
-	//				tmpItem->bbox.bottom = g_ascii_strtod(*attribute_values, &ptr);
-	//				if (ptr == *attribute_values)
-	//					*error = xoj_invalid();
-	//				has_attr |= 8;
-	//			} else
-	//				*error = xoj_invalid();
-	//			attribute_names++;
-	//			attribute_values++;
-	//		}
-	//		if (has_attr != 15)
-	//			*error = xoj_invalid();
-	//	}
+	double left = getAttribDouble("left");
+	double top = getAttribDouble("top");
+	double right = getAttribDouble("right");
+	double bottom = getAttribDouble("bottom");
+
+	this->image = new Image();
+	this->layer->addElement(this->image);
+	this->image->setX(left);
+	this->image->setY(top);
+	this->image->setWidth(right - left);
+	this->image->setHeight(bottom - top);
 }
 
 void LoadHandler::parseLayer() {
@@ -591,8 +553,21 @@ void LoadHandler::parserText(GMarkupParseContext *context, const gchar *text, gs
 		handler->text->setText(txt);
 		g_free(txt);
 	} else if (handler->pos == PARSER_POS_IN_IMAGE) {
-		//		tmpItem->image = read_pixbuf(text, text_len);
+		handler->readImage(text, textLen);
 	}
+}
+
+void LoadHandler::readImage(const gchar * base64_str, gsize base64_strlen) {
+	gsize png_buflen;
+
+	// We have to copy the string in order to null terminate it, sigh.
+	gchar * base64_str2 = (gchar*) g_memdup(base64_str, base64_strlen + 1);
+	base64_str2[base64_strlen] = '\0';
+
+	guchar * png_buf = g_base64_decode(base64_str2, &png_buflen);
+	g_free(base64_str2);
+
+	this->image->setImage(png_buf, png_buflen);
 }
 
 bool LoadHandler::parseXml() {
@@ -650,22 +625,21 @@ bool LoadHandler::parseXml() {
 	return valid;
 }
 
-bool LoadHandler::loadDocument(String filename, Document * doc) {
-	if (!openFile(filename.substring(7))) {
-		return false;
+Document * LoadHandler::loadDocument(String filename) {
+	if (!openFile(filename)) {
+		return NULL;
 	}
 
 	xournalFilename = filename;
 
 	if (!parseXml()) {
 		closeFile();
-		return false;
+		return NULL;
 	}
-	doc->setFilename(filename.c_str());
+	doc.setFilename(filename.c_str());
 
 	closeFile();
 
-	*doc = this->doc;
-	return true;
+	return &this->doc;
 }
 

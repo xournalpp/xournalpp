@@ -18,11 +18,8 @@
 #include "gui/MainWindow.h"
 #include "util/CrashHandler.h"
 #include "control/Control.h"
-#include <config.h>
+#include "gettext.h"
 #include "cfg.h"
-#ifdef ENABLE_NLS
-#include <libintl.h>
-#endif
 
 #include "control/ev-metadata-manager.h"
 
@@ -76,15 +73,28 @@ void initPath(const char * argv0) {
 	g_free(searchPath);
 }
 
+char hexValue(char c) {
+	if (c <= '9') {
+		return c - '0';
+	}
+	if (c <= 'f') {
+		return c - 'a';
+	}
+	if (c <= 'F') {
+		return c - 'A';
+	}
+	return 0;
+}
+
 int main(int argc, char *argv[]) {
 	installCrashHandlers();
 
-#ifdef ENABLE_NLS
-	const char * folder = bindtextdomain(GETTEXT_PACKAGE, PACKAGE_LOCALE_DIR);
-	printf("bindtextdomain=%s\n", folder);
-	bind_textdomain_codeset(GETTEXT_PACKAGE, "UTF-8");
-	textdomain(GETTEXT_PACKAGE);
-#endif
+//#ifdef ENABLE_NLS
+//	const char * folder = bindtextdomain(GETTEXT_PACKAGE, PACKAGE_LOCALE_DIR);
+//	printf("bindtextdomain=%s\n", folder);
+//	bind_textdomain_codeset(GETTEXT_PACKAGE, "UTF-8");
+//	textdomain(GETTEXT_PACKAGE);
+//#endif
 
 	gtk_init(&argc, &argv);
 
@@ -101,9 +111,44 @@ int main(int argc, char *argv[]) {
 	if (argc > 1) {
 		GFile * file = g_file_new_for_commandline_arg(argv[1]);
 		char * uri = g_file_get_uri(file);
-		opened = control->openFile(uri);
+		String sUri = uri;
 		g_free(uri);
 		g_object_unref(file);
+
+		if (sUri.startsWith("file://")) {
+			String path = "";
+			StringTokenizer token(sUri.substring(7), '%', true);
+
+			const char * tmp = token.next();
+			bool special = false;
+			while (tmp) {
+				if (!strcmp("%", tmp)) {
+					special = true;
+				} else {
+					if (special) {
+						special = false;
+						String t = tmp;
+						if (t.length() > 1) {
+							char x[2] = { 0 };
+							x[0] = hexValue(tmp[0]) << 4 + hexValue(tmp[1]);
+							path += x;
+							path += t.substring(2);
+						}
+					} else {
+						path += tmp;
+					}
+				}
+
+				tmp = token.next();
+			}
+			opened = control->openFile(path);
+		} else {
+			GtkWidget * dialog = gtk_message_dialog_new((GtkWindow*) *win, GTK_DIALOG_DESTROY_WITH_PARENT,
+					GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, _("Sorry, Xournal cannot open remote files at the moment.\n"
+						"You have to copy the file to a local directory."));
+			gtk_dialog_run(GTK_DIALOG(dialog));
+			gtk_widget_destroy(dialog);
+		}
 	}
 
 	if (!opened) {

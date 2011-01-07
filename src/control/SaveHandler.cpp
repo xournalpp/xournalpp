@@ -11,6 +11,7 @@
 
 #include "../model/Stroke.h"
 #include "../model/Text.h"
+#include "../model/Image.h"
 #include "SaveHandlerHelper.h"
 #include "../model/Document.h"
 #include "SaveHandler.h"
@@ -54,27 +55,13 @@ void SaveHandler::prepareSave(Document * doc) {
 	root->setAttrib("fileversion", "2");
 
 	root->addChild(new XmlTextNode("title", "Xournal document - see http://xournal.sourceforge.net/"));
-	//root->addChild(new XmlTextNode("preview", "Xournal document - see http://xournal.sourceforge.net/"));
-	/*
-	 +   gchar *base64_str;
-	 +   GError **error;
-	 +
-	 +   error = NULL;
-	 +
-	 +   if (item->image_png == NULL) {
-	 +     if (!pixbuf_to_buffer(item->image, &item->image_png, &item->image_png_len, "png")) {
-	 +       item->image_png_len = 0;       // failed for some reason, so forget it
-	 +       return FALSE;
-	 +     }
-	 +   }
-	 +
-	 +   base64_str = g_base64_encode(item->image_png, item->image_png_len);
-	 +
-	 +   gzputs(f, base64_str);
-	 +
-	 +   g_free(base64_str);
+	cairo_surface_t * preview = doc->getPreview();
+	if (preview) {
+		XmlImageNode * image = new XmlImageNode("preview");
+		image->setImage(preview);
+		root->addChild(image);
+	}
 
-	 */
 	for (int i = 0; i < doc->getPageCount(); i++) {
 		XojPage * p = doc->getPage(i);
 		p->backgroundImage.clearSaveState();
@@ -188,6 +175,17 @@ void SaveHandler::visitLayer(XmlNode * page, Layer * l) {
 			text->setAttrib("x", t->getX());
 			text->setAttrib("y", t->getY());
 			text->setAttrib("color", getColorStr(t->getColor()));
+		} else if (e->getType() == ELEMENT_IMAGE) {
+			Image * i = (Image *) e;
+			XmlImageNode * image = new XmlImageNode("image");
+			layer->addChild(image);
+
+			image->setImage(i->getImage());
+
+			image->setAttrib("left", i->getX());
+			image->setAttrib("top", i->getY());
+			image->setAttrib("right", i->getX() + i->getElementWidth());
+			image->setAttrib("bottom", i->getY() + i->getElementHeight());
 		}
 	}
 }

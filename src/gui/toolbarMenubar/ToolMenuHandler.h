@@ -26,9 +26,11 @@
 class ToolbarData {
 public:
 	String getName();
+	String getId();
 
 	void load(GKeyFile * config, const char * group);
 private:
+	String id;
 	String name;
 	std::vector<ToolbarEntry> contents;
 
@@ -100,6 +102,9 @@ private:
 	ZoomControl * zoom;
 	GladeGui * gui;
 	ToolHandler * toolHandler;
+
+	bool autoupdate;
+	String version;
 };
 
 #endif /* EDITABLETOOLBAR_H_ */
