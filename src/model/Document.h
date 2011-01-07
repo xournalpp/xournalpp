@@ -103,8 +103,13 @@ public:
 
 	void setCreateBackupOnSave(bool backup);
 	bool shouldCreateBackupOnSave();
-private:
+
 	void clearDocument(bool destroy = false);
+
+
+	cairo_surface_t * getPreview();
+	void setPreview(cairo_surface_t * preview);
+private:
 	void updatePageSize(XojPage * p);
 
 	void buildContentsModel();
@@ -139,7 +144,15 @@ private:
 
 	GtkTreeModel * contentsModel;
 
+	/**
+	 * create a backup before save, becaus the original file was an older fileversion
+	 */
 	bool createBackupOnSave;
+
+	/**
+	 * The preview for the file
+	 */
+	cairo_surface_t * preview;
 };
 
 #endif /* __DOCUMENT_H__ */

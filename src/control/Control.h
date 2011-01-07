@@ -169,6 +169,7 @@ protected:
 
 	static bool checkChangedDocument(Control * control);
 
+	void updatePreview();
 private:
 	RecentManager * recent;
 	UndoRedoHandler * undoRedo;

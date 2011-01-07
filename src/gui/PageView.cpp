@@ -56,6 +56,8 @@ PageView::PageView(XournalWidget * xournal, XojPage * page) {
 	g_signal_connect(widget, "button_press_event", G_CALLBACK(onButtonPressEventCallback), this);
 	g_signal_connect(widget, "button_release_event", G_CALLBACK(onButtonReleaseEventCallback), this);
 	g_signal_connect(widget, "motion_notify_event", G_CALLBACK(onMotionNotifyEventCallback), this);
+	g_signal_connect (widget, "enter_notify_event", G_CALLBACK(onMouseEnterNotifyEvent), NULL);
+	g_signal_connect (widget, "leave_notify_event", G_CALLBACK(onMouseLeaveNotifyEvent), NULL);
 
 	g_signal_connect(G_OBJECT(widget), "expose_event", G_CALLBACK(exposeEventCallback), this);
 
@@ -431,8 +433,8 @@ void PageView::onButtonPressEvent(GtkWidget *widget, GdkEventButton *event) {
 	 */
 	gboolean isCore = (event->device == gdk_device_get_core_pointer());
 
-	printf("DEBUG: ButtonPress (%s) (x,y)=(%.2f,%.2f), button %d, modifier %x, isCore %i\n", event->device->name,
-			event->xScreen, event->yScreen, event->button, event->state, isCore);
+	//	printf("DEBUG: ButtonPress (%s) (x,y)=(%.2f,%.2f), button %d, modifier %x, isCore %i\n", event->device->name,
+	//			event->xScreen, event->yScreen, event->button, event->state, isCore);
 #endif
 
 	xournal->resetFocus();
@@ -632,61 +634,49 @@ GdkColor PageView::getSelectionColor() {
 	return widget->style->base[GTK_STATE_SELECTED];
 }
 
-//gboolean
-//on_canvas_enter_notify_event           (GtkWidget       *widget,
-//                                        GdkEventCrossing *event,
-//                                        gpointer         user_data)
-//{
-//  GList *dev_list;
-//  GdkDevice *dev;
-//
-//#ifdef INPUT_DEBUG
-//  printf("DEBUG: enter notify\n");
-//#endif
-//    /* re-enable input devices after they've been emergency-disabled
-//       by leave_notify */
-//  if (!gtk_check_version(2, 17, 0)) {
-//    gdk_flush();
-//    gdk_error_trap_push();
-//    for (dev_list = gdk_devices_list(); dev_list != NULL; dev_list = dev_list->next) {
-//      dev = GDK_DEVICE(dev_list->data);
-//      gdk_device_set_mode(dev, GDK_MODE_SCREEN);
-//    }
-//    ui.is_corestroke = ui.saved_is_corestroke;
-//    gdk_flush();
-//    gdk_error_trap_pop();
-//  }
-//  return FALSE;
-//}
-//
-//gboolean
-//on_canvas_leave_notify_event           (GtkWidget       *widget,
-//                                        GdkEventCrossing *event,
-//                                        gpointer         user_data)
-//{
-//  GList *dev_list;
-//  GdkDevice *dev;
-//
-//#ifdef INPUT_DEBUG
-//  printf("DEBUG: leave notify (mode=%d, details=%d)\n", event->mode, event->detail);
-//#endif
-//    /* emergency disable XInput to avoid segfaults (GTK+ 2.17) or
-//       interface non-responsiveness (GTK+ 2.18) */
-//  if (!gtk_check_version(2, 17, 0)) {
-//    gdk_flush();
-//    gdk_error_trap_push();
-//    for (dev_list = gdk_devices_list(); dev_list != NULL; dev_list = dev_list->next) {
-//      dev = GDK_DEVICE(dev_list->data);
-//      gdk_device_set_mode(dev, GDK_MODE_DISABLED);
-//    }
-//    ui.saved_is_corestroke = ui.is_corestroke;
-//    ui.is_corestroke = TRUE;
-//    gdk_flush();
-//    gdk_error_trap_pop();
-//  }
-//  return FALSE;
-//}
+gboolean PageView::onMouseEnterNotifyEvent(GtkWidget *widget, GdkEventCrossing *event, gpointer user_data) {
+	GList *dev_list;
+	GdkDevice *dev;
 
+#ifdef INPUT_DEBUG
+	printf("DEBUG: enter notify\n");
+#endif
+	/* re-enable input devices after they've been emergency-disabled
+	 by leave_notify */
+	if (!gtk_check_version(2, 17, 0)) {
+		gdk_flush();
+		gdk_error_trap_push();
+		for (dev_list = gdk_devices_list(); dev_list != NULL; dev_list = dev_list->next) {
+			dev = GDK_DEVICE(dev_list->data);
+			gdk_device_set_mode(dev, GDK_MODE_SCREEN);
+		}
+		gdk_flush();
+		gdk_error_trap_pop();
+	}
+	return FALSE;
+}
+
+gboolean PageView::onMouseLeaveNotifyEvent(GtkWidget *widget, GdkEventCrossing *event, gpointer user_data) {
+	GList *dev_list;
+	GdkDevice *dev;
+
+#ifdef INPUT_DEBUG
+	printf("DEBUG: leave notify (mode=%d, details=%d)\n", event->mode, event->detail);
+#endif
+	/* emergency disable XInput to avoid segfaults (GTK+ 2.17) or
+	 interface non-responsiveness (GTK+ 2.18) */
+	if (!gtk_check_version(2, 17, 0)) {
+		gdk_flush();
+		gdk_error_trap_push();
+		for (dev_list = gdk_devices_list(); dev_list != NULL; dev_list = dev_list->next) {
+			dev = GDK_DEVICE(dev_list->data);
+			gdk_device_set_mode(dev, GDK_MODE_DISABLED);
+		}
+		gdk_flush();
+		gdk_error_trap_pop();
+	}
+	return FALSE;
+}
 
 gboolean PageView::onMotionNotifyEventCallback(GtkWidget *widget, GdkEventMotion *event, PageView * view) {
 	return view->onMotionNotifyEvent(widget, event);
@@ -695,8 +685,8 @@ gboolean PageView::onMotionNotifyEventCallback(GtkWidget *widget, GdkEventMotion
 gboolean PageView::onMotionNotifyEvent(GtkWidget *widget, GdkEventMotion *event) {
 	bool is_core = (event->device == gdk_device_get_core_pointer());
 #ifdef INPUT_DEBUG
-	printf("DEBUG: MotionNotify (%s) (x,y)=(%.2f,%.2f), modifier %x\n", is_core ? "core" : "xinput", event->xScreen,
-			event->yScreen, event->state);
+	//	printf("DEBUG: MotionNotify (%s) (x,y)=(%.2f,%.2f), modifier %x\n", is_core ? "core" : "xinput", event->xScreen,
+	//			event->yScreen, event->state);
 #endif
 
 	double zoom = xournal->getZoom();
@@ -764,8 +754,8 @@ bool PageView::onButtonReleaseEventCallback(GtkWidget *widget, GdkEventButton *e
 bool PageView::onButtonReleaseEvent(GtkWidget *widget, GdkEventButton *event) {
 #ifdef INPUT_DEBUG
 	gboolean isCore = (event->device == gdk_device_get_core_pointer());
-	printf("DEBUG: ButtonRelease (%s) (x,y)=(%.2f,%.2f), button %d, modifier %x, isCore %i\n", event->device->name,
-			event->xScreen, event->yScreen, event->button, event->state, isCore);
+	//	printf("DEBUG: ButtonRelease (%s) (x,y)=(%.2f,%.2f), button %d, modifier %x, isCore %i\n", event->device->name,
+	//			event->xScreen, event->yScreen, event->button, event->state, isCore);
 #endif
 
 	//	if (event->button != ui.which_mouse_button && event->button != ui.which_unswitch_button)

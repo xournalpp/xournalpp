@@ -22,14 +22,15 @@
 
 enum ParserPosition {
 	PARSER_POS_NOT_STARTED = 1, // Waiting for opening <xounal> tag
-	PARSER_POS_STARTED,         // Waiting for Metainfo or contents like <page>
-	PARSER_POS_IN_PAGE,         // Starting page tag read
-	PARSER_POS_IN_LAYER,        // Starting layer tag read
-	PARSER_POS_IN_STROKE,       // Starting layer tag read
-	PARSER_POS_IN_TEXT,         // Starting text tag read
-	PARSER_POS_IN_IMAGE,        // Starting image tag read
+	PARSER_POS_STARTED, // Waiting for Metainfo or contents like <page>
+	PARSER_POS_IN_PAGE, // Starting page tag read
+	PARSER_POS_IN_LAYER, // Starting layer tag read
+	PARSER_POS_IN_STROKE, // Starting layer tag read
+	PARSER_POS_IN_TEXT, // Starting text tag read
+	PARSER_POS_IN_IMAGE, // Starting image tag read
 
-	PASER_POS_FINISHED          // Document is parsed
+	PASER_POS_FINISHED
+// Document is parsed
 };
 
 class LoadHandler {
@@ -38,7 +39,7 @@ public:
 	virtual ~LoadHandler();
 
 public:
-	bool loadDocument(String filename, Document * doc);
+	Document * loadDocument(String filename);
 	String getLastError();
 
 	void parseStart();
@@ -73,6 +74,8 @@ private:
 	void parseBgPixmap();
 	void parseBgPdf();
 
+	void readImage(const gchar * base64_str, gsize base64_strlen);
+
 private:
 	String lastError;
 
@@ -84,7 +87,6 @@ private:
 	int fileversion;
 
 	gzFile fp;
-
 
 	XojPage * page;
 	Layer * layer;

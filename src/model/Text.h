@@ -29,8 +29,6 @@ public:
 	String getText();
 	void setText(String text);
 
-	virtual bool isInSelection(ShapeContainer * container);
-
 	void setWidth(double width);
 	void setHeight(double height);
 

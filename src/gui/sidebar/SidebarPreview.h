@@ -14,10 +14,11 @@
 #include <gtk/gtk.h>
 #include "../../model/Page.h"
 #include "../../view/DocumentView.h"
+#include "../../util/Util.h"
 
 class Sidebar;
 
-class SidebarPreview {
+class SidebarPreview : public DebugObject {
 public:
 	SidebarPreview(Sidebar * sidebar, XojPage * page);
 	virtual ~SidebarPreview();

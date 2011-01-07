@@ -21,6 +21,7 @@ Document::Document(DocumentHandler * handler) {
 	this->pages = NULL;
 	this->pageCount = 0;
 	this->pagesArrayLen = 0;
+	this->preview = NULL;
 }
 
 Document::~Document() {
@@ -35,6 +36,11 @@ Document::~Document() {
 void Document::clearDocument(bool destroy) {
 	int count = pdfPageCount;
 	pdfPageCount = 0;
+
+	if (this->preview) {
+		cairo_surface_destroy(this->preview);
+		this->preview = NULL;
+	}
 
 	if (!destroy) {
 		handler->fireDocumentChanged(DOCUMENT_CHANGE_CLEARED);
@@ -81,6 +87,22 @@ String Document::getFilename() {
 
 String Document::getPdfFilename() {
 	return pdfFilename;
+}
+
+cairo_surface_t * Document::getPreview() {
+	return this->preview;
+}
+
+void Document::setPreview(cairo_surface_t * preview) {
+	if (this->preview) {
+		cairo_surface_destroy(this->preview);
+	}
+	if (preview) {
+		this->preview = cairo_surface_reference(preview);
+	} else {
+		this->preview = NULL;
+	}
+
 }
 
 const char * Document::getEvMetadataFilename() {
@@ -542,6 +564,7 @@ void Document::operator=(const Document & doc) {
 	this->pdfPageCount = doc.pdfPageCount;
 	this->createBackupOnSave = doc.createBackupOnSave;
 	this->pdfFilename = doc.pdfFilename;
+	this->filename = doc.filename;
 
 	pdfPages = new PopplerPage *[pdfPageCount];
 	for (int i = 0; i < pdfPageCount; i++) {

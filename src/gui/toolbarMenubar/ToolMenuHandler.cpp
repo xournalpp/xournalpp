@@ -26,6 +26,10 @@ String ToolbarData::getName() {
 	return this->name;
 }
 
+String ToolbarData::getId() {
+	return this->id;
+}
+
 void ToolbarData::load(GKeyFile * config, const char * group) {
 	gsize length = 0;
 	gchar ** keys = g_key_file_get_keys(config, group, &length, NULL);
@@ -76,6 +80,7 @@ ToolMenuHandler::ToolMenuHandler(ActionHandler * listener, ZoomControl * zoom, G
 	this->redoButton = NULL;
 	this->toolPageSpinner = NULL;
 	this->toolPageLayer = NULL;
+	this->autoupdate = true;
 
 	initToolItems();
 }
@@ -92,6 +97,7 @@ ToolMenuHandler::~ToolMenuHandler() {
 void ToolMenuHandler::parseGroup(GKeyFile * config, const char * group) {
 	ToolbarData * data = new ToolbarData();
 	data->name = group;
+	data->id = group;
 
 	data->load(config, group);
 
@@ -111,6 +117,9 @@ bool ToolMenuHandler::parse(const char * file) {
 
 	for (gsize i = 0; i < lenght; i++) {
 		if (strcmp(groups[i], "general") == 0) {
+			this->autoupdate = g_key_file_get_boolean(config, "general", "autoupdate", NULL);
+			this->version = g_key_file_get_string(config, "general", "version", NULL);
+
 			continue;
 		}
 		parseGroup(config, groups[i]);
@@ -125,8 +134,15 @@ bool ToolMenuHandler::parse(const char * file) {
  * A new file should be writen
  */
 bool ToolMenuHandler::shouldRecreate() {
-	// TODO: version prüfen
-	return false;
+	if(!this->autoupdate) {
+		return false;
+	}
+
+	if(!this->version.isEmpty() && !strcmp(TOOLBAR_VERSION, this->version.c_str())) {
+		return false;
+	}
+
+	return true;
 }
 
 bool ToolMenuHandler::writeDefault(const char * file) {

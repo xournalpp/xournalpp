@@ -18,6 +18,7 @@
 #include "../model/Stroke.h"
 #include "../model/Text.h"
 #include "../model/Page.h"
+#include "../model/Image.h"
 
 class DocumentView {
 public:
@@ -32,6 +33,8 @@ public:
 
 private:
 	void drawText(cairo_t *cr, Text * t);
+	void drawImage(cairo_t *cr, Image * i);
+
 	void drawLayer(cairo_t *cr, Layer * l);
 
 	void paintBackgroundImage();

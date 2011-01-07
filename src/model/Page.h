@@ -14,6 +14,7 @@
 
 #include "Layer.h"
 #include "../util/ListIterator.h"
+#include "../util/Util.h"
 #include "../model/String.h"
 
 enum BackgroundType {
@@ -53,7 +54,7 @@ private:
 	void * img;
 };
 
-class XojPage {
+class XojPage : public DebugObject {
 public:
 	XojPage();
 	void reference();

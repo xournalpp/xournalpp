@@ -16,8 +16,9 @@
 
 #include "Element.h"
 #include "../util/ListIterator.h"
+#include "../util/Util.h"
 
-class Layer {
+class Layer : public DebugObject {
 public:
 	Layer();
 	virtual ~Layer();

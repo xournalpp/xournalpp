@@ -50,8 +50,6 @@ public:
 			}
 			this->width *= zoom;
 			this->height *= zoom;
-
-			printf("size: %i/%i\n", this->width, this->height);
 		}
 	}
 
@@ -243,7 +241,7 @@ ImagesDialog::ImagesDialog(Document * doc, Settings * settings) :
 		}
 	}
 
-	if (this->images != 0) {
+	if (this->images != NULL) {
 		setSelected(0);
 	}
 
@@ -303,8 +301,12 @@ void ImagesDialog::sizeAllocate(GtkWidget *widget, GtkRequisition *requisition, 
 }
 
 void ImagesDialog::show() {
-	gtk_dialog_run(GTK_DIALOG(this->window));
-	gtk_widget_hide(this->window);
+	if (this->images == NULL) {
+		this->selectedPage = -2;
+	} else {
+		gtk_dialog_run(GTK_DIALOG(this->window));
+		gtk_widget_hide(this->window);
+	}
 }
 
 void ImagesDialog::setBackgroundWhite() {

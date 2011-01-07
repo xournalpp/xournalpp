@@ -140,10 +140,34 @@ void DocumentView::drawText(cairo_t *cr, Text * t) {
 	TextView::drawText(cr, t);
 }
 
+void DocumentView::drawImage(cairo_t *cr, Image * i) {
+	cairo_matrix_t defaultMatrix = { 0 };
+	cairo_get_matrix(cr, &defaultMatrix);
+
+	cairo_surface_t * img = i->getImage();
+	int width = cairo_image_surface_get_width(img);
+	int height = cairo_image_surface_get_height(img);
+
+	cairo_set_operator(cr, CAIRO_OPERATOR_OVER);
+
+	double xFactor = i->getElementWidth() / width;
+	double yFactor = i->getElementHeight() / height;
+
+	cairo_scale(cr, xFactor, yFactor);
+
+	cairo_set_source_surface(cr, img, i->getX()/xFactor, i->getY()/yFactor);
+	cairo_paint(cr);
+
+	cairo_set_matrix(cr, &defaultMatrix);
+}
+
 void DocumentView::drawLayer(cairo_t *cr, Layer * l) {
+	printf("draw layer\n");
+
 	ListIterator<Element *> it = l->elementIterator();
 	while (it.hasNext()) {
 		Element * e = it.next();
+		e->debugTestIsOk();
 
 #ifdef SHOW_ELEMENT_BOUNDS
 		cairo_set_source_rgb(cr, 1, 0, 0);
@@ -157,8 +181,12 @@ void DocumentView::drawLayer(cairo_t *cr, Layer * l) {
 			drawStroke(cr, (Stroke *) e);
 		} else if (e->getType() == ELEMENT_TEXT) {
 			drawText(cr, (Text *) e);
+		} else if (e->getType() == ELEMENT_IMAGE) {
+			drawImage(cr, (Image *) e);
 		}
 	}
+
+	printf("draw layer end\n");
 }
 
 void DocumentView::paintBackgroundImage() {
@@ -241,6 +269,8 @@ void DocumentView::drawPage(XojPage * page, PopplerPage * popplerPage, cairo_t *
 	this->width = page->getWidth();
 	this->height = page->getHeight();
 
+	page->debugTestIsOk();
+
 	if (page->getBackgroundType() == BACKGROUND_TYPE_PDF) {
 		if (popplerPage) {
 			//			cairo_rotate (cr, rc->rotation * G_PI / 180.0);
@@ -284,6 +314,7 @@ void DocumentView::drawPage(XojPage * page, PopplerPage * popplerPage, cairo_t *
 	ListIterator<Layer *> it = page->layerIterator();
 	while (it.hasNext() && layer < page->getSelectedLayerId()) {
 		Layer * l = it.next();
+		l->debugTestIsOk();
 		drawLayer(cr, l);
 		layer++;
 	}
