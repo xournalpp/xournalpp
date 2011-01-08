@@ -162,8 +162,6 @@ void DocumentView::drawImage(cairo_t *cr, Image * i) {
 }
 
 void DocumentView::drawLayer(cairo_t *cr, Layer * l) {
-	printf("draw layer\n");
-
 	ListIterator<Element *> it = l->elementIterator();
 	while (it.hasNext()) {
 		Element * e = it.next();
@@ -185,8 +183,6 @@ void DocumentView::drawLayer(cairo_t *cr, Layer * l) {
 			drawImage(cr, (Image *) e);
 		}
 	}
-
-	printf("draw layer end\n");
 }
 
 void DocumentView::paintBackgroundImage() {

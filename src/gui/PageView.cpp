@@ -11,6 +11,9 @@
 #define PIXEL_MOTION_THRESHOLD 0.3
 
 //#define INPUT_DEBUG
+#define ENABLE_XINPUT_BUGFIX
+
+#define EPSILON 1E-7
 
 PageView::PageView(XournalWidget * xournal, XojPage * page) {
 	this->page = page;
@@ -34,6 +37,7 @@ PageView::PageView(XournalWidget * xournal, XojPage * page) {
 	this->inEraser = false;
 	this->eraseDeleteUndoAction = NULL;
 	this->eraseUndoAction = NULL;
+
 
 	this->extendedWarningDisplayd = false;
 
@@ -295,7 +299,7 @@ void PageView::startText(double x, double y) {
 	}
 }
 
-void PageView::selectObjectOn(double x, double y) {
+void PageView::selectObjectAt(double x, double y) {
 	int selected = page->getSelectedLayerId();
 	GdkRectangle matchRect = { x - 10, y - 10, 20, 20 };
 
@@ -437,6 +441,8 @@ void PageView::onButtonPressEvent(GtkWidget *widget, GdkEventButton *event) {
 	//			event->xScreen, event->yScreen, event->button, event->state, isCore);
 #endif
 
+	fixXInputCoords((GdkEvent*) event);
+
 	xournal->resetFocus();
 
 	if (event->type != GDK_BUTTON_PRESS) {
@@ -574,6 +580,7 @@ void PageView::onButtonPressEvent(GtkWidget *widget, GdkEventButton *event) {
 			this->inEraser = true;
 		}
 	} else if (h->getToolType() == TOOL_VERTICAL_SPACE) {
+		// TODO: vertical tool
 		//		start_vertspace((GdkEvent *) event);
 
 
@@ -584,7 +591,8 @@ void PageView::onButtonPressEvent(GtkWidget *widget, GdkEventButton *event) {
 		//	if (start_movesel((GdkEvent *) event))
 		//		return FALSE;
 
-	} else if (h->getToolType() == TOOL_SELECT_RECT || h->getToolType() == TOOL_SELECT_REGION) {
+	} else if (h->getToolType() == TOOL_SELECT_RECT || h->getToolType() == TOOL_SELECT_REGION || h->getToolType()
+			== TOOL_SELECT_OBJECT) {
 		if (this->selection) {
 			CursorSelectionType selType = this->selection->getSelectionTypeForPos(event->x, event->y, zoom);
 			if (selType) {
@@ -606,17 +614,131 @@ void PageView::onButtonPressEvent(GtkWidget *widget, GdkEventButton *event) {
 				this->selectionEdit = NULL;
 			}
 			this->selectionEdit = new RegionSelect(x, y, this);
+		} else if (h->getToolType() == TOOL_SELECT_OBJECT) {
+			selectObjectAt(x, y);
 		}
-	} else if (h->getToolType() == TOOL_SELECT_OBJECT) {
-		selectObjectOn(x, y);
 	} else if (h->getToolType() == TOOL_TEXT) {
 		startText(x, y);
 	} else if (h->getToolType() == TOOL_IMAGE) {
-		//		insert_image((GdkEvent *) event, NULL);
+		insertImage(x, y);
 	}
 
 	Cursor * cursor = xournal->getControl()->getCursor();
 	cursor->setMouseDown(true);
+}
+
+class InsertImageRunnable: public Runnable {
+public:
+	InsertImageRunnable(PageView * view, GFile * file, double x, double y) {
+		this->view = view;
+		this->x = x;
+		this->y = y;
+		this->file = file;
+	}
+	~InsertImageRunnable() {
+		g_object_unref(file);
+	}
+
+	bool run(bool * cancel) {
+		GError * err = NULL;
+		GFileInputStream * in = g_file_read(file, NULL, &err);
+		GdkPixbuf * pixbuf = NULL;
+
+		if (!err) {
+			pixbuf = gdk_pixbuf_new_from_stream(G_INPUT_STREAM(in), NULL, &err);
+			g_input_stream_close(G_INPUT_STREAM(in), NULL, NULL);
+		}
+
+		if (err) {
+			GtkWidget * dialog = gtk_message_dialog_new((GtkWindow*) *view->xournal->getControl()->getWindow(),
+					GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
+					_("This image could not be loaded. Error message: %s"), err->message);
+			gtk_dialog_run(GTK_DIALOG(dialog));
+			gtk_widget_destroy(dialog);
+			g_error_free(err);
+			return false;
+		}
+		gchar * buffer = NULL;
+		gsize len = 0;
+
+		if (!gdk_pixbuf_save_to_buffer(pixbuf, &buffer, &len, "png", &err, NULL)) {
+			GtkWidget * dialog = gtk_message_dialog_new((GtkWindow*) *view->xournal->getControl()->getWindow(),
+					GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
+					_("This image could not be loaded (Internal convert error).\n"
+							"Error message: %s"), err->message);
+			gtk_dialog_run(GTK_DIALOG(dialog));
+			gtk_widget_destroy(dialog);
+			g_error_free(err);
+			return false;
+		}
+
+		Image * img = new Image();
+		img->setX(x);
+		img->setY(y);
+		img->setImage((unsigned char *) buffer, len);
+
+		int width = gdk_pixbuf_get_width(pixbuf);
+		int height = gdk_pixbuf_get_height(pixbuf);
+		gdk_pixbuf_unref(pixbuf);
+
+		double zoom = 1;
+
+		if (x + width > view->page->getWidth() || y + height > view->page->getHeight()) {
+			double maxZoomX = (view->page->getWidth() - x) / width;
+			double maxZoomY = (view->page->getHeight() - y) / height;
+
+			if (maxZoomX < maxZoomY) {
+				zoom = maxZoomX;
+			} else {
+				zoom = maxZoomY;
+			}
+		}
+
+		img->setWidth(width * zoom);
+		img->setHeight(height * zoom);
+
+		printf("set size: %lf / %lf:: %i, %i\n", width * zoom, height * zoom, width, height);
+
+		view->page->getSelectedLayer()->addElement(img);
+		view->repaint();
+	}
+
+private:
+	PageView * view;
+	double x;
+	double y;
+	GFile * file;
+};
+
+void PageView::insertImage(double x, double y) {
+	GtkWidget *dialog = gtk_file_chooser_dialog_new(_("Open Image"), (GtkWindow*) *xournal->getControl()->getWindow(),
+			GTK_FILE_CHOOSER_ACTION_OPEN, GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL, GTK_STOCK_OPEN, GTK_RESPONSE_OK, NULL);
+
+	// here we can handle remote files without problems with backward compatibility
+	gtk_file_chooser_set_local_only(GTK_FILE_CHOOSER(dialog), false);
+
+	GtkFileFilter *filterSupported = gtk_file_filter_new();
+	gtk_file_filter_set_name(filterSupported, _("Images"));
+	gtk_file_filter_add_pixbuf_formats(filterSupported);
+	gtk_file_chooser_add_filter(GTK_FILE_CHOOSER(dialog), filterSupported);
+
+	if (!settings->getLastSavePath().isEmpty()) {
+		gtk_file_chooser_set_current_folder_uri(GTK_FILE_CHOOSER(dialog), settings->getLastSavePath().c_str());
+	}
+
+	if (gtk_dialog_run(GTK_DIALOG(dialog)) != GTK_RESPONSE_OK) {
+		gtk_widget_destroy(dialog);
+		return;
+	}
+	GFile * file = gtk_file_chooser_get_file(GTK_FILE_CHOOSER(dialog));
+
+	char * folder = gtk_file_chooser_get_current_folder_uri(GTK_FILE_CHOOSER(dialog));
+	settings->setLastSavePath(folder);
+	g_free(folder);
+
+	gtk_widget_destroy(dialog);
+
+	xournal->getControl()->runInBackground(new InsertImageRunnable(this, file, x, y));
 }
 
 void PageView::clearSelection() {
@@ -689,6 +811,8 @@ gboolean PageView::onMotionNotifyEvent(GtkWidget *widget, GdkEventMotion *event)
 	//			event->yScreen, event->state);
 #endif
 
+	fixXInputCoords((GdkEvent*) event);
+
 	double zoom = xournal->getZoom();
 	double x = event->x / zoom;
 	double y = event->y / zoom;
@@ -757,6 +881,8 @@ bool PageView::onButtonReleaseEvent(GtkWidget *widget, GdkEventButton *event) {
 	//	printf("DEBUG: ButtonRelease (%s) (x,y)=(%.2f,%.2f), button %d, modifier %x, isCore %i\n", event->device->name,
 	//			event->xScreen, event->yScreen, event->button, event->state, isCore);
 #endif
+
+	fixXInputCoords((GdkEvent*) event);
 
 	//	if (event->button != ui.which_mouse_button && event->button != ui.which_unswitch_button)
 	//		return FALSE;
@@ -1104,5 +1230,69 @@ bool PageView::paintPage(GtkWidget *widget, GdkEventExpose *event) {
 
 	cairo_destroy(cr);
 	return true;
+}
+
+void PageView::fixXInputCoords(GdkEvent *event) {
+	double *axes, *px, *py;
+	GdkDevice *device;
+	int wx, wy, ix, iy;
+
+	if (event->type == GDK_BUTTON_PRESS || event->type == GDK_BUTTON_RELEASE) {
+		axes = event->button.axes;
+		px = &(event->button.x);
+		py = &(event->button.y);
+		device = event->button.device;
+	} else if (event->type == GDK_MOTION_NOTIFY) {
+		axes = event->motion.axes;
+		px = &(event->motion.x);
+		py = &(event->motion.y);
+		device = event->motion.device;
+	} else {
+		return; // nothing we know how to do
+	}
+
+#ifdef ENABLE_XINPUT_BUGFIX
+	if(axes == NULL) {
+		return;
+	}
+
+	// fix broken events with the core pointer's location
+	if (!finite(axes[0]) || !finite(axes[1]) || (axes[0] == 0. && axes[1] == 0.)) {
+		gdk_window_get_pointer(widget->window, &ix, &iy, NULL);
+		*px = ix;
+		*py = iy;
+	} else {
+		GdkScreen * screen = gtk_widget_get_screen(xournal->getWidget());
+		int screenWidth = gdk_screen_get_width(screen);
+		int screenHeight = gdk_screen_get_height(screen);
+
+		printf("screen size: %i/%i\n", screenWidth, screenHeight);
+		printf("axes: %lf/%lf\n", axes[0],axes[1]);
+
+		gdk_window_get_origin(widget->window, &wx, &wy);
+		double axisWidth = device->axes[0].max - device->axes[0].min;
+
+
+		printf("test: %0.10lf:%0.10lf\n",device->axes[0].max, axisWidth);
+
+		if (axisWidth > EPSILON) {
+		printf("correct x\n");
+			*px = (axes[0] / axisWidth) * screenWidth - wx;
+		}
+		axisWidth = device->axes[1].max - device->axes[1].min;
+		if (axisWidth > EPSILON) {
+			printf("correct y\n");
+			*py = (axes[1] / axisWidth) * screenHeight - wy;
+		}
+
+
+	}
+#else
+	if (!finite(*px) || !finite(*py) || (*px == 0. && *py == 0.)) {
+		gdk_window_get_pointer(widget->window, &ix, &iy, NULL);
+		*px = ix;
+		*py = iy;
+	}
+#endif
 }
 

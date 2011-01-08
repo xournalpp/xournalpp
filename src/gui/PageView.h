@@ -98,13 +98,17 @@ private:
 
 	void doErase(double x, double y);
 	void startText(double x, double y);
-	void selectObjectOn(double x, double y);
+	void selectObjectAt(double x, double y);
 
 	void doScroll(GdkEventMotion *event);
 
 	void drawTmpStroke();
 	void repaintLater();
 	static bool repaintCallback(PageView * view);
+
+	void insertImage(double x, double y);
+
+	void fixXInputCoords(GdkEvent *event);
 private:
 	XojPage * page;
 	GtkWidget * widget;
@@ -170,6 +174,8 @@ private:
 	 * Search handling
 	 */
 	SearchControl * search;
+
+	friend class InsertImageRunnable;
 };
 
 #endif /* __PAGEVIEW_H__ */
