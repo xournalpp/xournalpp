@@ -969,22 +969,15 @@ void Control::setPageBackground(ActionType type) {
 			page->backgroundImage = *img;
 			page->setBackgroundType(BACKGROUND_TYPE_IMAGE);
 		} else if (dlg->shouldShowFilechooser()) {
-			printf("should show filechooser\n");
-
 			GtkWidget *dialog = gtk_file_chooser_dialog_new(_("Open Image"), (GtkWindow*) *win,
 					GTK_FILE_CHOOSER_ACTION_OPEN, GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL, GTK_STOCK_OPEN,
 					GTK_RESPONSE_OK, NULL);
-			gtk_file_chooser_set_local_only(GTK_FILE_CHOOSER(dialog), false);
+			gtk_file_chooser_set_local_only(GTK_FILE_CHOOSER(dialog), true);
 
 			GtkFileFilter *filterSupported = gtk_file_filter_new();
 			gtk_file_filter_set_name(filterSupported, _("Images"));
 			gtk_file_filter_add_pixbuf_formats(filterSupported);
 			gtk_file_chooser_add_filter(GTK_FILE_CHOOSER(dialog), filterSupported);
-
-			GtkFileFilter *filterAll = gtk_file_filter_new();
-			gtk_file_filter_set_name(filterAll, _("All files"));
-			gtk_file_filter_add_pattern(filterAll, "*");
-			gtk_file_chooser_add_filter(GTK_FILE_CHOOSER(dialog), filterAll);
 
 			if (!settings->getLastSavePath().isEmpty()) {
 				gtk_file_chooser_set_current_folder_uri(GTK_FILE_CHOOSER(dialog), settings->getLastSavePath().c_str());
@@ -1019,6 +1012,7 @@ void Control::setPageBackground(ActionType type) {
 						err->message);
 				gtk_dialog_run(GTK_DIALOG(dialog));
 				gtk_widget_destroy(dialog);
+				g_error_free(err);
 				return;
 			} else {
 				page->backgroundImage = newImg;
@@ -1967,6 +1961,10 @@ private:
 
 void Control::exportAsPdf() {
 	background->run(new PdfExportRunnable(this));
+}
+
+void Control::runInBackground(Runnable * runnable) {
+	background->run(runnable);
 }
 
 void Control::exportAs() {

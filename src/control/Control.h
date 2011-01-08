@@ -143,6 +143,8 @@ public:
 	 */
 	void updateDeletePageButton();
 
+	void runInBackground(Runnable * runnable);
+
 public:
 	// UndoRedoListener interface
 	void undoRedoChanged();

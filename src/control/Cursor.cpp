@@ -132,9 +132,7 @@ void Cursor::updateCursor() {
 			cursor = gdk_cursor_new(GDK_XTERM);
 		} else if (type == TOOL_IMAGE) {
 			// No specail cursor needed
-		} else if (type == TOOL_SELECT_OBJECT) {
-			// No specail cursor needed
-		} else if (type == TOOL_SELECT_RECT || type == TOOL_SELECT_REGION) {
+		} else if (type == TOOL_SELECT_RECT || type == TOOL_SELECT_REGION || type == TOOL_SELECT_OBJECT) {
 			if (this->selectionType) {
 				switch (this->selectionType) {
 				case CURSOR_SELECTION_MOVE:
@@ -161,7 +159,7 @@ void Cursor::updateCursor() {
 					cursor = gdk_cursor_new(GDK_SB_V_DOUBLE_ARROW);
 					break;
 				}
-			} else {
+			} else if (type != TOOL_SELECT_OBJECT) {
 				cursor = gdk_cursor_new(GDK_TCROSS);
 			}
 		} else if (type == TOOL_VERTICAL_SPACE) {
