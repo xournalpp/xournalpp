@@ -19,16 +19,17 @@
 #include "../model/Text.h"
 
 #include "../control/Settings.h"
-#include "../control/Selection.h"
 #include "../control/SearchControl.h"
 #include "../view/DocumentView.h"
 #include "../gui/TextEditor.h"
+#include "../util/Util.h"
 
 class XournalWidget;
 class DeleteUndoAction;
 class EraseUndoAction;
+class Selection;
 
-class PageView: public Redrawable {
+class PageView: public Redrawable, public MemoryCheckObject {
 public:
 	PageView(XournalWidget * xournal, XojPage * page);
 	virtual ~PageView();
@@ -45,7 +46,8 @@ public:
 	bool paintPage(GtkWidget *widget, GdkEventExpose *event);
 
 	void repaint();
-	void repaint(int x, int y, int width, int heigth);
+	void repaint(Element * e);
+	void repaint(double x, double y, double width, double heigth);
 
 	void updateSize();
 
@@ -62,7 +64,6 @@ public:
 
 	bool isSelected();
 
-	void clearSelection();
 	void endText();
 
 	bool searchTextOnPage(const char * text, int * occures, double * top);
@@ -70,11 +71,11 @@ public:
 	bool onKeyPressEvent(GdkEventKey *event);
 	bool onKeyReleaseEvent(GdkEventKey *event);
 
-	void cut();
-	void copy();
-	void paste();
+	bool cut();
+	bool copy();
+	bool paste();
 
-	void actionDelete();
+	bool actionDelete();
 public:
 	// Redrawable
 	void redrawDocumentRegion(double x1, double y1, double x2, double y2);
@@ -129,11 +130,6 @@ private:
 	 * The selected (while selection)
 	 */
 	Selection * selectionEdit;
-
-	/**
-	 * Selected content
-	 */
-	EditSelection * selection;
 
 	/**
 	 * The last Mouse Position, for scrolling

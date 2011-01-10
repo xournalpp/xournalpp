@@ -27,6 +27,7 @@ public:
 	String& operator=(const char * str);
 
 	gboolean operator ==(const String & str) const;
+	gboolean operator !=(const String & str) const;
 	bool operator <(const String & str) const;
 	bool operator >(const String & str) const;
 

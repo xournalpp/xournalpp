@@ -54,7 +54,7 @@ private:
 	void * img;
 };
 
-class XojPage : public DebugObject {
+class XojPage : public MemoryCheckObject {
 public:
 	XojPage();
 	void reference();

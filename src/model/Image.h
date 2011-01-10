@@ -23,6 +23,7 @@ public:
 	void setHeight(double height);
 
 	void setImage(unsigned char * data, int len);
+	void setImage(cairo_surface_t * image);
 	cairo_surface_t * getImage();
 
 private:

@@ -7,6 +7,7 @@
 #include "../control/Control.h"
 #include "../view/TextView.h"
 #include "../control/ShapeRecognizer.h"
+#include "../util/pixbuf-utils.h"
 
 #define PIXEL_MOTION_THRESHOLD 0.3
 
@@ -38,11 +39,9 @@ PageView::PageView(XournalWidget * xournal, XojPage * page) {
 	this->eraseDeleteUndoAction = NULL;
 	this->eraseUndoAction = NULL;
 
-
 	this->extendedWarningDisplayd = false;
 
 	this->selectionEdit = NULL;
-	this->selection = NULL;
 	widget = gtk_drawing_area_new();
 	gtk_widget_show(widget);
 
@@ -309,7 +308,7 @@ void PageView::selectObjectAt(double x, double y) {
 	Element * elementMatch = NULL;
 
 	// clear old selection anyway
-	clearSelection();
+	xournal->getControl()->clearSelection();
 
 	ListIterator<Layer*> it = page->layerIterator();
 	while (it.hasNext() && selected) {
@@ -344,7 +343,7 @@ void PageView::selectObjectAt(double x, double y) {
 	}
 
 	if (elementMatch) {
-		this->selection = new EditSelection(elementMatch, this, page);
+		xournal->getControl()->setSelection(new EditSelection(elementMatch, this, page));
 		gtk_widget_queue_draw(this->widget);
 	}
 }
@@ -583,7 +582,6 @@ void PageView::onButtonPressEvent(GtkWidget *widget, GdkEventButton *event) {
 		// TODO: vertical tool
 		//		start_vertspace((GdkEvent *) event);
 
-
 		//
 		//	// if this can be a selection move or resize, then it takes precedence over anything else
 		//	if (start_resizesel((GdkEvent *) event))
@@ -593,13 +591,14 @@ void PageView::onButtonPressEvent(GtkWidget *widget, GdkEventButton *event) {
 
 	} else if (h->getToolType() == TOOL_SELECT_RECT || h->getToolType() == TOOL_SELECT_REGION || h->getToolType()
 			== TOOL_SELECT_OBJECT) {
-		if (this->selection) {
-			CursorSelectionType selType = this->selection->getSelectionTypeForPos(event->x, event->y, zoom);
+		if (xournal->getControl()->getSelectionFor(this)) {
+			EditSelection * selection = xournal->getControl()->getSelectionFor(this);
+			CursorSelectionType selType = selection->getSelectionTypeForPos(event->x, event->y, zoom);
 			if (selType) {
-				this->selection->setEditMode(selType, event->x / zoom, event->y / zoom);
+				selection->setEditMode(selType, event->x / zoom, event->y / zoom);
 				return;
 			} else {
-				clearSelection();
+				xournal->getControl()->clearSelection();
 			}
 		}
 		if (h->getToolType() == TOOL_SELECT_RECT) {
@@ -658,24 +657,11 @@ public:
 			g_error_free(err);
 			return false;
 		}
-		gchar * buffer = NULL;
-		gsize len = 0;
-
-		if (!gdk_pixbuf_save_to_buffer(pixbuf, &buffer, &len, "png", &err, NULL)) {
-			GtkWidget * dialog = gtk_message_dialog_new((GtkWindow*) *view->xournal->getControl()->getWindow(),
-					GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
-					_("This image could not be loaded (Internal convert error).\n"
-							"Error message: %s"), err->message);
-			gtk_dialog_run(GTK_DIALOG(dialog));
-			gtk_widget_destroy(dialog);
-			g_error_free(err);
-			return false;
-		}
 
 		Image * img = new Image();
 		img->setX(x);
 		img->setY(y);
-		img->setImage((unsigned char *) buffer, len);
+		img->setImage(f_pixbuf_to_cairo_surface(pixbuf));
 
 		int width = gdk_pixbuf_get_width(pixbuf);
 		int height = gdk_pixbuf_get_height(pixbuf);
@@ -696,8 +682,6 @@ public:
 
 		img->setWidth(width * zoom);
 		img->setHeight(height * zoom);
-
-		printf("set size: %lf / %lf:: %i, %i\n", width * zoom, height * zoom, width, height);
 
 		view->page->getSelectedLayer()->addElement(img);
 		view->repaint();
@@ -739,11 +723,6 @@ void PageView::insertImage(double x, double y) {
 	gtk_widget_destroy(dialog);
 
 	xournal->getControl()->runInBackground(new InsertImageRunnable(this, file, x, y));
-}
-
-void PageView::clearSelection() {
-	delete this->selection;
-	this->selection = NULL;
 }
 
 void PageView::redrawDocumentRegion(double x1, double y1, double x2, double y2) {
@@ -801,6 +780,7 @@ gboolean PageView::onMouseLeaveNotifyEvent(GtkWidget *widget, GdkEventCrossing *
 }
 
 gboolean PageView::onMotionNotifyEventCallback(GtkWidget *widget, GdkEventMotion *event, PageView * view) {
+	CHECK_MEMORY(view);
 	return view->onMotionNotifyEvent(widget, event);
 }
 
@@ -828,13 +808,14 @@ gboolean PageView::onMotionNotifyEvent(GtkWidget *widget, GdkEventMotion *event)
 			addPointToTmpStroke(event);
 		} else if (this->selectionEdit) {
 			this->selectionEdit->currentPos(x, y);
-		} else if (this->selection) {
-			if (this->selection->getEditMode()) {
-				this->selection->move(x, y, this, xournal);
+		} else if (xournal->getControl()->getSelectionFor(this)) {
+			EditSelection * selection = xournal->getControl()->getSelectionFor(this);
+			if (selection->getEditMode()) {
+				selection->move(x, y, this, xournal);
 			} else {
 				Cursor * cursor = xournal->getControl()->getCursor();
 
-				CursorSelectionType selType = this->selection->getSelectionTypeForPos(event->x, event->y, zoom);
+				CursorSelectionType selType = selection->getSelectionTypeForPos(event->x, event->y, zoom);
 				cursor->setMouseSelectionType(selType);
 			}
 		} else if (this->textEditor) {
@@ -870,6 +851,7 @@ void PageView::doScroll(GdkEventMotion *event) {
 }
 
 bool PageView::onButtonReleaseEventCallback(GtkWidget *widget, GdkEventButton *event, PageView * view) {
+	CHECK_MEMORY(view);
 	return view->onButtonReleaseEvent(widget, event);
 }
 
@@ -883,6 +865,7 @@ bool PageView::onButtonReleaseEvent(GtkWidget *widget, GdkEventButton *event) {
 #endif
 
 	fixXInputCoords((GdkEvent*) event);
+	Control * control = xournal->getControl();
 
 	//	if (event->button != ui.which_mouse_button && event->button != ui.which_unswitch_button)
 	//		return FALSE;
@@ -907,24 +890,24 @@ bool PageView::onButtonReleaseEvent(GtkWidget *widget, GdkEventButton *event) {
 			// This creates a layer if none exists
 			page->getSelectedLayer();
 			page->setSelectedLayerId(1);
-			xournal->getControl()->getWindow()->updateLayerCombobox();
+			control->getWindow()->updateLayerCombobox();
 			repaint();
 		}
 
 		Layer * layer = page->getSelectedLayer();
 
-		UndoRedoHandler * undo = xournal->getControl()->getUndoRedoHandler();
+		UndoRedoHandler * undo = control->getUndoRedoHandler();
 
 		undo->addUndoAction(new InsertUndoAction(page, layer, tmpStroke, this));
 
-		ToolHandler * h = xournal->getControl()->getToolHandler();
+		ToolHandler * h = control->getToolHandler();
 		if (h->isShapeRecognizer()) {
 			ShapeRecognizer reco;
 
 			Stroke * s = reco.recognizePatterns(tmpStroke);
 
 			if (s != NULL) {
-				UndoRedoHandler * undo = xournal->getControl()->getUndoRedoHandler();
+				UndoRedoHandler * undo = control->getUndoRedoHandler();
 
 				undo->addUndoAction(new RecognizerUndoAction(page, this, layer, tmpStroke, s));
 
@@ -933,12 +916,11 @@ bool PageView::onButtonReleaseEvent(GtkWidget *widget, GdkEventButton *event) {
 				repaint();
 			} else {
 				layer->addElement(tmpStroke);
-				repaint(tmpStroke->getX(), tmpStroke->getY(), tmpStroke->getElementWidth(),
-						tmpStroke->getElementHeight());
+				repaint(tmpStroke);
 			}
 		} else {
 			layer->addElement(tmpStroke);
-			repaint(tmpStroke->getX(), tmpStroke->getY(), tmpStroke->getElementWidth(), tmpStroke->getElementHeight());
+			repaint(tmpStroke);
 		}
 
 		tmpStroke = NULL;
@@ -948,10 +930,10 @@ bool PageView::onButtonReleaseEvent(GtkWidget *widget, GdkEventButton *event) {
 		}
 	}
 
-	ToolHandler * h = xournal->getControl()->getToolHandler();
+	ToolHandler * h = control->getToolHandler();
 	h->restoreLastConfig();
 
-	Cursor * cursor = xournal->getControl()->getCursor();
+	Cursor * cursor = control->getCursor();
 	cursor->setMouseDown(false);
 
 	this->inScrolling = false;
@@ -978,15 +960,24 @@ bool PageView::onButtonReleaseEvent(GtkWidget *widget, GdkEventButton *event) {
 		eraseUndoAction = NULL;
 	}
 
+	EditSelection * sel = control->getSelectionFor(this);
+
 	if (this->selectionEdit) {
 		if (this->selectionEdit->finnalize(this->page)) {
-			delete selection;
-			selection = new EditSelection(this->selectionEdit, this);
+			control->setSelection(new EditSelection(this->selectionEdit, this));
 		}
 		delete this->selectionEdit;
 		this->selectionEdit = NULL;
-	} else if (this->selection) {
-		this->selection->finalizeEditing();
+	} else if (sel) {
+		CHECK_MEMORY(sel);
+
+		sel->finalizeEditing();
+		UndoAction * undo = sel->getUndoAction();
+		if (undo) {
+			UndoRedoHandler * undoRedoHandler = control->getUndoRedoHandler();
+			undoRedoHandler->isMemoryCorrupted();
+			undoRedoHandler->addUndoAction(undo);
+		}
 	} else if (this->textEditor) {
 		this->textEditor->mouseReleased();
 	}
@@ -1000,6 +991,9 @@ bool PageView::onKeyPressEvent(GdkEventKey *event) {
 		if (this->textEditor) {
 			endText();
 			return true;
+		} else if (xournal->getControl()->getSelection()) {
+			xournal->getControl()->clearSelection();
+			return true;
 		} else {
 			return false;
 		}
@@ -1007,6 +1001,23 @@ bool PageView::onKeyPressEvent(GdkEventKey *event) {
 
 	if (this->textEditor && this->textEditor->onKeyPressEvent(event)) {
 		return true;
+	}
+
+	EditSelection * selection = xournal->getControl()->getSelectionFor(this);
+	if (selection) {
+		if (event->keyval == GDK_Left) {
+			selection->doMove(-1, 0, this, xournal);
+			return true;
+		} else if (event->keyval == GDK_Up) {
+			selection->doMove(0, -1, this, xournal);
+			return true;
+		} else if (event->keyval == GDK_Right) {
+			selection->doMove(1, 0, this, xournal);
+			return true;
+		} else if (event->keyval == GDK_Down) {
+			selection->doMove(0, 1, this, xournal);
+			return true;
+		}
 	}
 
 	return false;
@@ -1057,10 +1068,14 @@ void PageView::repaint() {
 	gtk_widget_queue_draw(widget);
 }
 
-void PageView::repaint(int x, int y, int width, int heigth) {
+void PageView::repaint(Element * e) {
+	repaint(e->getX(), e->getY(), e->getElementWidth(), e->getElementHeight());
+}
+
+void PageView::repaint(double x, double y, double width, double heigth) {
 	deleteViewBuffer();
 	double zoom = xournal->getZoom();
-	gtk_widget_queue_draw_area(widget, x * zoom, y * zoom, width * zoom, heigth * zoom);
+	gtk_widget_queue_draw_area(widget, x * zoom - 10, y * zoom - 10, width * zoom + 20, heigth * zoom + 20);
 }
 
 void PageView::updateSize() {
@@ -1124,28 +1139,36 @@ bool PageView::isSelected() {
 	return selected;
 }
 
-void PageView::cut() {
+bool PageView::cut() {
 	if (this->textEditor) {
 		this->textEditor->cutToClipboard();
+		return true;
 	}
+	return false;
 }
 
-void PageView::copy() {
+bool PageView::copy() {
 	if (this->textEditor) {
 		this->textEditor->copyToCliboard();
+		return true;
 	}
+	return false;
 }
 
-void PageView::paste() {
+bool PageView::paste() {
 	if (this->textEditor) {
 		this->textEditor->pasteFromClipboard();
+		return true;
 	}
+	return false;
 }
 
-void PageView::actionDelete() {
+bool PageView::actionDelete() {
 	if (this->textEditor) {
 		this->textEditor->deleteFromCursor(GTK_DELETE_CHARS, 1);
+		return true;
 	}
+	return false;
 }
 
 bool PageView::paintPage(GtkWidget *widget, GdkEventExpose *event) {
@@ -1216,9 +1239,10 @@ bool PageView::paintPage(GtkWidget *widget, GdkEventExpose *event) {
 	if (this->selectionEdit) {
 		this->selectionEdit->paint(cr, event, xournal->getZoom());
 	}
-	if (this->selection) {
-		this->selection->paint(cr, event, xournal->getZoom());
-	}
+	Control * control = xournal->getControl();
+
+	control->paintSelection(cr, event, xournal->getZoom(), this);
+
 	if (this->search) {
 		this->search->paint(cr, event, xournal->getZoom(), getSelectionColor());
 	}
@@ -1252,7 +1276,7 @@ void PageView::fixXInputCoords(GdkEvent *event) {
 	}
 
 #ifdef ENABLE_XINPUT_BUGFIX
-	if(axes == NULL) {
+	if (axes == NULL) {
 		return;
 	}
 
@@ -1267,16 +1291,15 @@ void PageView::fixXInputCoords(GdkEvent *event) {
 		int screenHeight = gdk_screen_get_height(screen);
 
 		printf("screen size: %i/%i\n", screenWidth, screenHeight);
-		printf("axes: %lf/%lf\n", axes[0],axes[1]);
+		printf("axes: %lf/%lf\n", axes[0], axes[1]);
 
 		gdk_window_get_origin(widget->window, &wx, &wy);
 		double axisWidth = device->axes[0].max - device->axes[0].min;
 
-
-		printf("test: %0.10lf:%0.10lf\n",device->axes[0].max, axisWidth);
+		printf("test: %0.10lf:%0.10lf\n", device->axes[0].max, axisWidth);
 
 		if (axisWidth > EPSILON) {
-		printf("correct x\n");
+			printf("correct x\n");
 			*px = (axes[0] / axisWidth) * screenWidth - wx;
 		}
 		axisWidth = device->axes[1].max - device->axes[1].min;
@@ -1284,7 +1307,6 @@ void PageView::fixXInputCoords(GdkEvent *event) {
 			printf("correct y\n");
 			*py = (axes[1] / axisWidth) * screenHeight - wy;
 		}
-
 
 	}
 #else

@@ -12,6 +12,8 @@
 #ifndef __REDRAWABLE_H__
 #define __REDRAWABLE_H__
 
+class Element;
+
 class Redrawable {
 public:
 	virtual void redrawDocumentRegion(double x1, double y1, double x2, double y2) = 0;

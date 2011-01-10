@@ -1,5 +1,6 @@
 #include "Selection.h"
 #include "../gui/XournalWidget.h"
+#include "../gettext.h"
 
 Selection::Selection(Redrawable * view) {
 	this->view = view;
@@ -360,16 +361,20 @@ EditSelection::EditSelection(Selection * selection, Redrawable * view) {
 	this->selected = g_list_copy(selection->selectedElements);
 	this->page = selection->page;
 	this->view = view;
+	this->inputView = view;
 
 	this->selType = CURSOR_SELECTION_NONE;
 	this->selX = 0;
 	this->selY = 0;
+
+	this->undo = NULL;
 }
 
 EditSelection::EditSelection(Element * e, Redrawable * view, XojPage * page) {
 	this->selected = g_list_append(NULL, e);
 	this->page = page;
 	this->view = view;
+	this->inputView = view;
 
 	this->x = e->getX();
 	this->y = e->getY();
@@ -379,6 +384,8 @@ EditSelection::EditSelection(Element * e, Redrawable * view, XojPage * page) {
 	this->selType = CURSOR_SELECTION_NONE;
 	this->selX = 0;
 	this->selY = 0;
+
+	this->undo = NULL;
 }
 
 EditSelection::~EditSelection() {
@@ -398,6 +405,22 @@ void EditSelection::finalizeEditing() {
 	}
 
 	this->selType = CURSOR_SELECTION_NONE;
+
+	this->inputView = this->view;
+
+	if (this->undo) {
+		this->undo->finalize(this);
+	}
+}
+
+MoveUndoAction * EditSelection::getUndoAction() {
+	MoveUndoAction * u = this->undo;
+	this->undo = NULL;
+	return u;
+}
+
+GList * EditSelection::getElements() {
+	return this->selected;
 }
 
 void EditSelection::setEditMode(CursorSelectionType selType, double x, double y) {
@@ -406,53 +429,108 @@ void EditSelection::setEditMode(CursorSelectionType selType, double x, double y)
 	this->selY = y;
 }
 
-void EditSelection::move(double x, double y, PageView * view, XournalWidget * xournal) {
+/**
+ * TODO: it should not be possible to move a object out of a page, but at the moment its possible
+ * I know it's the same on the original xournal, but it's not user friendly if an object can be lost...
+ */
+void EditSelection::doMove(double dx, double dy, Redrawable * view, XournalWidget * xournal) {
+	if (this->undo == NULL) {
+		this->undo = new MoveUndoAction(this->page, this);
+	}
+
+	double x1 = this->x;
+	double x2 = this->x + this->width;
+	double y1 = this->y;
+	double y2 = this->y + this->height;
+
+	GtkAllocation alloc = { 0 };
+	gtk_widget_get_allocation(view->getWidget(), &alloc);
+
+	this->x += dx;
+	this->y += dy;
+
+	double zoom = xournal->getZoom();
+
+	// Test if the selection is moved to another page
+	int xPos = x * zoom + alloc.x;
+	int yPos = y * zoom + alloc.y;
+
+	PageView * v = xournal->getViewAt(xPos, yPos);
+	Redrawable * lastView = NULL;
+	if (v != NULL && this->view != v) {
+		moveSelectionToPage(v->getPage());
+		lastView = this->view;
+		this->view = v;
+
+		GtkAllocation alloc1 = { 0 };
+		gtk_widget_get_allocation(lastView->getWidget(), &alloc1);
+		GtkAllocation alloc2 = { 0 };
+		gtk_widget_get_allocation(this->view->getWidget(), &alloc2);
+
+		double zoom = xournal->getZoom();
+
+		double xOffset = alloc2.x - alloc1.x;
+		double yOffset = alloc2.y - alloc1.y;
+
+		if (xOffset > 1 || xOffset < -1) {
+			if (xOffset > 1) {
+				xOffset = page->getWidth() + XOURNAL_PADDING / zoom;
+			} else {
+				xOffset = -page->getWidth() - XOURNAL_PADDING / zoom;
+			}
+		}
+		if (yOffset > 1 || yOffset < -1) {
+			if (yOffset > 1) {
+				yOffset = page->getHeight() + XOURNAL_PADDING / zoom;
+			} else {
+				yOffset = -page->getHeight() - XOURNAL_PADDING / zoom;
+			}
+		}
+
+		this->x -= xOffset;
+		this->y -= yOffset;
+
+		dx -= xOffset;
+		dy -= yOffset;
+
+		page = v->getPage();
+	}
+
+	x1 = MIN(x1, this->x);
+	y1 = MIN(y1, this->y);
+
+	x2 = MAX(x2, this->x + this->width);
+	y2 = MAX(y2, this->y + this->height);
+
+	for (GList * l = this->selected; l != NULL; l = l->next) {
+		Element * e = (Element *) l->data;
+		e->move(dx, dy);
+	}
+
+	if (lastView) {
+		lastView->deleteViewBuffer();
+		lastView->redrawDocumentRegion(x1, y1, x2, y2);
+	}
+	this->view->deleteViewBuffer();
+	this->view->redrawDocumentRegion(x1, y1, x2, y2);
+}
+
+void EditSelection::move(double x, double y, Redrawable * view, XournalWidget * xournal) {
 	if (this->selType == CURSOR_SELECTION_MOVE) {
 		double dx = x - this->selX;
 		double dy = y - this->selY;
 		this->selX = x;
 		this->selY = y;
 
-		double x1 = this->x;
-		double x2 = this->x + this->width;
-		double y1 = this->y;
-		double y2 = this->y + this->height;
+		doMove(dx, dy, view, xournal);
+	}
+}
 
-		GtkAllocation alloc = { 0 };
-		gtk_widget_get_allocation(view->getWidget(), &alloc);
-
-		this->x += dx;
-		this->y += dy;
-
-		double zoom = xournal->getZoom();
-
-		// Test if the selection is moved to another page
-		int xPos = x * zoom + alloc.x;
-		int yPos = y * zoom + alloc.y;
-
-		PageView * v = xournal->getViewAt(xPos, yPos);
-		if (v != NULL && view != v) {
-			int pid = xournal->getDocument()->indexOf(v->getPage());
-			printf("moved to page id: %i\n", pid);
-		}
-
-
-
-
-
-		x1 = MIN(x1, this->x);
-		y1 = MIN(y1, this->y);
-
-		x2 = MAX(x2, this->x + this->width);
-		y2 = MAX(y2, this->y + this->height);
-
-		for (GList * l = this->selected; l != NULL; l = l->next) {
-			Element * e = (Element *) l->data;
-			e->move(dx, dy);
-		}
-
-		view->deleteViewBuffer();
-		view->redrawDocumentRegion(x1, y1, x2, y2);
+void EditSelection::moveSelectionToPage(XojPage * page) {
+	for (GList * l = this->selected; l != NULL; l = l->next) {
+		Element * e = (Element *) l->data;
+		this->page->getSelectedLayer()->removeElement(e, false);
+		page->getSelectedLayer()->addElement(e);
 	}
 }
 
@@ -539,8 +617,185 @@ void EditSelection::paint(cairo_t * cr, GdkEventExpose *event, double zoom) {
 	drawAnchorRect(cr, x, y, zoom);
 	// top right
 	drawAnchorRect(cr, x + width, y, zoom);
-	//	// bottom left
+	// bottom left
 	drawAnchorRect(cr, x, y + height, zoom);
-	//	// bottom right
+	// bottom right
 	drawAnchorRect(cr, x + width, y + height, zoom);
 }
+
+Redrawable * EditSelection::getInputView() {
+	return inputView;
+}
+
+Redrawable * EditSelection::getView() {
+	return this->view;
+}
+
+XojPage * EditSelection::getPage() {
+	return this->page;
+}
+
+void EditSelection::fillUndoItemAndDelete(DeleteUndoAction * undo) {
+	Layer * layer = this->page->getSelectedLayer();
+	for (GList * l = this->selected; l != NULL; l = l->next) {
+		Element * e = (Element *) l->data;
+		undo->addElement(layer, e, layer->indexOf(e));
+		layer->removeElement(e, false);
+	}
+}
+
+double EditSelection::getX() {
+	return this->x;
+}
+
+double EditSelection::getY() {
+	return this->y;
+}
+
+double EditSelection::getWidth() {
+	return this->width;
+}
+
+double EditSelection::getHeight() {
+	return this->height;
+}
+
+//////////////////////////////////////////////////////////////////////
+
+class MoveUndoEntry {
+public:
+	MoveUndoEntry(Element * e, double x, double y) {
+		this->e = e;
+		this->x = x;
+		this->y = y;
+	}
+
+	Element * e;
+	double x;
+	double y;
+};
+
+MoveUndoAction::MoveUndoAction(XojPage * page, EditSelection * selection) {
+	this->page = page;
+	this->newPage = NULL;
+	this->originalPos = NULL;
+	this->newPos = NULL;
+	this->oldLayer = page->getSelectedLayer();
+	this->newLayer = NULL;
+	this->origView = selection->view;
+	this->newView = NULL;
+
+	for (GList * l = selection->selected; l != NULL; l = l->next) {
+		Element * e = (Element *) l->data;
+		this->originalPos = g_list_append(this->originalPos, new MoveUndoEntry(e, e->getX(), e->getY()));
+	}
+}
+
+MoveUndoAction::~MoveUndoAction() {
+	for (GList * l = this ->originalPos; l != NULL; l = l->next) {
+		MoveUndoEntry * u = (MoveUndoEntry *) l->data;
+		delete u;
+	}
+	for (GList * l = this->newPos; l != NULL; l = l->next) {
+		MoveUndoEntry * u = (MoveUndoEntry *) l->data;
+		delete u;
+	}
+	g_list_free(this->originalPos);
+}
+
+void MoveUndoAction::finalize(EditSelection * selection) {
+	for (GList * l = selection->selected; l != NULL; l = l->next) {
+		Element * e = (Element *) l->data;
+		this->newPos = g_list_append(this->newPos, new MoveUndoEntry(e, e->getX(), e->getY()));
+	}
+
+	if (this->page != selection->page) {
+		this->newPage = selection->page;
+		this->newLayer = this->newPage->getSelectedLayer();
+		this->newView = selection->view;
+	}
+}
+
+bool MoveUndoAction::undo(Control * control) {
+	if (this->oldLayer != this->newLayer) {
+		switchLayer(this->originalPos, this->newLayer, this->oldLayer);
+	}
+
+	acceptPositions(this->originalPos);
+
+	repaint();
+
+	return true;
+}
+
+bool MoveUndoAction::redo(Control * control) {
+	if (this->oldLayer != this->newLayer) {
+		switchLayer(this->originalPos, this->oldLayer, this->newLayer);
+	}
+
+	acceptPositions(this->newPos);
+
+	repaint();
+
+	return true;
+}
+
+void MoveUndoAction::acceptPositions(GList * pos) {
+	for (GList * l = pos; l != NULL; l = l->next) {
+		MoveUndoEntry * u = (MoveUndoEntry *) l->data;
+		u->e->setX(u->x);
+		u->e->setY(u->y);
+	}
+}
+
+void MoveUndoAction::switchLayer(GList * entries, Layer * oldLayer, Layer * newLayer) {
+	for (GList * l = this->originalPos; l != NULL; l = l->next) {
+		MoveUndoEntry * u = (MoveUndoEntry *) l->data;
+		oldLayer->removeElement(u->e, false);
+		newLayer->addElement(u->e);
+	}
+}
+
+void MoveUndoAction::repaint() {
+	Element * e = NULL;
+
+	if (!this->originalPos) {
+		return;
+	}
+
+	e = (Element *) this->originalPos->data;
+
+	double x1 = e->getX();
+	double x2 = e->getX() + e->getElementWidth();
+	double y1 = e->getY();
+	double y2 = e->getY() + e->getElementHeight();
+
+	for (GList * l = this->originalPos->next; l != NULL; l = l->next) {
+		e = (Element *) l->data;
+		x1 = MIN(x1, e->getX());
+		x2 = MAX(x2, e->getX()+ e->getElementWidth());
+		y1 = MIN(y1, e->getY());
+		y2 = MAX(y2, e->getY()+ e->getElementHeight());
+	}
+
+	origView->deleteViewBuffer();
+	origView->redrawDocumentRegion(x1, y1, x2, y2);
+
+	if (newView) {
+		newView->deleteViewBuffer();
+		newView->redrawDocumentRegion(x1, y1, x2, y2);
+	}
+}
+
+XojPage ** MoveUndoAction::getPages() {
+	XojPage ** pages = new XojPage *[3];
+	pages[0] = this->page;
+	pages[1] = this->newPage;
+	pages[2] = NULL;
+	return pages;
+}
+
+String MoveUndoAction::getText() {
+	return _("Move");
+}
+

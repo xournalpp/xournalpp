@@ -56,7 +56,6 @@ public:
 
 	void setControlTmpDisabled(bool disabled);
 
-	void clearSelection();
 private:
 	void initToolbar();
 

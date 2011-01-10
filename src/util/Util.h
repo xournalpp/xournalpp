@@ -13,6 +13,7 @@
 #define __UTIL_H__
 
 #include <gtk/gtk.h>
+#include <assert.h>
 
 class Util {
 public:
@@ -22,15 +23,22 @@ public:
 	static void cairo_set_source_rgbi(cairo_t *cr, int color);
 };
 
+#define CHECK_MEMORY(obj) {	bool corrupted = obj->isMemoryCorrupted(); \
+	if(corrupted) { \
+		fprintf(stderr, "%s:%i\tMemory corrupted!\n", __FILE__, __LINE__); \
+	} \
+	assert(!corrupted); }
+
+
 /**
  * Used for testing memory violations
  */
 
-class DebugObject {
+class MemoryCheckObject {
 public:
-	DebugObject();
+	MemoryCheckObject();
 
-	void debugTestIsOk();
+	bool isMemoryCorrupted();
 private:
 	int d1;
 	int d2;

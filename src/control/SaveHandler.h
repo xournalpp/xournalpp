@@ -14,6 +14,7 @@
 #define __SAVEHANDLER_H__
 
 #include "../util/OutputStream.h"
+#include "../model/Page.h"
 class XmlNode;
 
 class SaveHandler {

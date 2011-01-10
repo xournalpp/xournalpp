@@ -26,6 +26,7 @@ xournalpp_SOURCES = \
 	control/BackgroundThreadHandler.cpp \
 	control/Selection.cpp \
 	control/SearchControl.cpp \
+	control/ClipboardHandler.cpp \
 	gui/GladeGui.cpp \
 	gui/AboutDialog.cpp \
 	gui/PdfPagesDialog.cpp \
@@ -56,6 +57,7 @@ xournalpp_SOURCES = \
 	util/Util.cpp \
 	util/OutputStream.cpp \
 	util/CrashHandler.cpp \
+	util/pixbuf-utils.cpp \
 	pdf/PdfExport.cpp \
 	pdf/popplerGlibExt/PopplerGlibExtension.cpp \
 	Xournalpp.cpp

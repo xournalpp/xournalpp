@@ -15,8 +15,9 @@
 #include "RecentManager.h"
 #include "../gui/MainWindow.h"
 #include "Actions.h"
-#include "../control/UndoRedoHandler.h"
-#include "../control/BackgroundThreadHandler.h"
+#include "UndoRedoHandler.h"
+#include "BackgroundThreadHandler.h"
+#include "ClipboardHandler.h"
 #include "Settings.h"
 #include "ToolHandler.h"
 #include "../model/Document.h"
@@ -29,12 +30,15 @@
 class Sidebar;
 class Cursor;
 class CallbackData;
+class PageView;
+class EditSelection;
 
 class Control: public ActionHandler,
 		public ToolListener,
 		public DocumentHandler,
 		public RecentManagerListener,
-		public UndoRedoListener {
+		public UndoRedoListener,
+		public ClipboardListener {
 public:
 	Control();
 	virtual ~Control();
@@ -145,10 +149,25 @@ public:
 
 	void runInBackground(Runnable * runnable);
 
+	// selection handling
+	void clearSelection();
+	EditSelection * getSelectionFor(PageView * view);
+	EditSelection * getSelection();
+	void setSelection(EditSelection * selection);
+	void paintSelection(cairo_t * cr, GdkEventExpose *event, double zoom, PageView * view);
+
+	void setCopyPasteEnabled(bool enabled);
 public:
 	// UndoRedoListener interface
 	void undoRedoChanged();
 	void undoRedoPageChanged(XojPage * page);
+
+public:
+	// ClipboardListener interface
+	void clipboardCutCopyEnabled(bool enabled);
+	void clipboardPasteEnabled(bool enabled);
+	void clipboardPasteText(String text);
+	void deleteSelection();
 
 protected:
 	String showOpenDialog(bool pdf, bool & attachPdf);
@@ -210,6 +229,16 @@ private:
 	 * The pages wihch has changed since the last update (for preview update)
 	 */
 	GList * changedPages;
+
+	/**
+	 * Our clipboard abstraction
+	 */
+	ClipboardHandler * clipboardHandler;
+
+	/**
+	 * Selected content, if any
+	 */
+	EditSelection * selection;
 };
 
 class CallbackData {

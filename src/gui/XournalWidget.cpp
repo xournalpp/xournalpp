@@ -162,6 +162,13 @@ void XournalWidget::forceUpdatePagenumbers() {
 	control->firePageSelected(p);
 }
 
+PageView * XournalWidget::getViewFor(int pageNr) {
+	if (pageNr < 0 || pageNr >= this->viewPagesLen) {
+		return NULL;
+	}
+	return viewPages[pageNr];
+}
+
 PageView * XournalWidget::getViewAt(int x, int y) {
 	for (int page = 0; page < viewPagesLen; page++) {
 		PageView * p = viewPages[page];
@@ -382,8 +389,30 @@ void XournalWidget::onScrolled() {
 	}
 }
 
+void XournalWidget::endTextSelection() {
+	for (int i = 0; i < viewPagesLen; i++) {
+		PageView * v = viewPages[i];
+		v->endText();
+	}
+}
+
 void XournalWidget::layerChanged(int page) {
 	viewPages[page]->repaint();
+}
+
+void XournalWidget::getPasteTarget(double & x, double & y) {
+	int pageNo = getCurrentPage();
+	if (pageNo == -1) {
+		return;
+	}
+	XojPage * page = control->getDocument()->getPage(pageNo);
+
+	// TODO: calculate the visible rect and paste in the center of the visible rect of the page!
+
+	if (page) {
+		x = page->getWidth() / 2;
+		y = page->getHeight() / 2;
+	}
 }
 
 void XournalWidget::sizeAllocate(GtkWidget *widget, GtkRequisition *requisition, XournalWidget * xournal) {
@@ -617,12 +646,6 @@ bool XournalWidget::widgetRepaintCallback(GtkWidget * widget) {
 	return false;
 }
 
-void XournalWidget::clearSelection() {
-	for (int i = 0; i < viewPagesLen; i++) {
-		viewPages[i]->clearSelection();
-	}
-}
-
 void XournalWidget::updateBackground() {
 	if (GDK_IS_WINDOW(GTK_LAYOUT(widget)->bin_window)) {
 		gdk_window_set_background(GTK_LAYOUT(widget)->bin_window, &widget->style->dark[GTK_STATE_NORMAL]);
@@ -655,44 +678,44 @@ void XournalWidget::documentChanged(DocumentChangeType type) {
 	layoutPages();
 }
 
-void XournalWidget::cut() {
+bool XournalWidget::cut() {
 	int p = getCurrentPage();
 	if (p < 0 || p >= viewPagesLen) {
-		return;
+		return false;
 	}
 
 	PageView * page = viewPages[p];
-	page->cut();
+	return page->cut();
 }
 
-void XournalWidget::copy() {
+bool XournalWidget::copy() {
 	int p = getCurrentPage();
 	if (p < 0 || p >= viewPagesLen) {
-		return;
+		return false;
 	}
 
 	PageView * page = viewPages[p];
-	page->copy();
+	return page->copy();
 }
 
-void XournalWidget::paste() {
+bool XournalWidget::paste() {
 	int p = getCurrentPage();
 	if (p < 0 || p >= viewPagesLen) {
-		return;
+		return false;
 	}
 
 	PageView * page = viewPages[p];
-	page->paste();
+	return page->paste();
 }
 
-void XournalWidget::actionDelete() {
+bool XournalWidget::actionDelete() {
 	int p = getCurrentPage();
 	if (p < 0 || p >= viewPagesLen) {
-		return;
+		return false;
 	}
 
 	PageView * page = viewPages[p];
-	page->actionDelete();
+	return page->actionDelete();
 }
 
 Document * XournalWidget::getDocument() {

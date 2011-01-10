@@ -11,13 +11,14 @@
 #include "../gettext.h"
 #include "ev-metadata-manager.h"
 #include "../pdf/PdfExport.h"
+#include "../util/CrashHandler.h"
 
 #include <stdio.h>
 #include <string.h>
 
 #include "SaveHandler.h"
 
-// TODO: Check for error log on startup
+// TODO: Check for error log on startup, also check for emergency save document!
 
 
 /*
@@ -119,11 +120,15 @@ Control::Control() {
 
 	this->hiddenFullscreenWidgets = NULL;
 	this->sidebarHidden = false;
+	this->selection = NULL;
 
 	// Init Metadata Manager
 	ev_metadata_manager_init();
 
 	doc = new Document(this);
+
+	// for crashhandling
+	setEmergencyDocument(doc);
 
 	this->zoom = new ZoomControl();
 	this->zoom->setZoom100(settings->getDisplayDpi() / 72.0);
@@ -138,11 +143,15 @@ Control::Control() {
 	 */
 	this->changeTimout = g_timeout_add_seconds(10, (GSourceFunc) checkChangedDocument, this);
 	this->changedPages = NULL;
+
+	this->clipboardHandler = NULL;
 }
 
 Control::~Control() {
 	g_source_remove(this->changeTimout);
 
+	delete this->clipboardHandler;
+	this->clipboardHandler = NULL;
 	delete recent;
 	recent = NULL;
 	delete undoRedo;
@@ -215,6 +224,8 @@ void Control::initWindow(MainWindow * win) {
 	eraserSizeChanged();
 	hilighterSizeChanged();
 	updateDeletePageButton();
+
+	this->clipboardHandler = new ClipboardHandler(this, win->getXournal()->getWidget());
 }
 
 ZoomControl * Control::getZoomControl() {
@@ -349,19 +360,27 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent *even
 		undoRedo->redo();
 		break;
 	case ACTION_CUT:
-		win->getXournal()->cut();
+		if (!win->getXournal()->cut()) {
+			clipboardHandler->cut();
+		}
 		break;
 	case ACTION_COPY:
-		win->getXournal()->copy();
+		if (!win->getXournal()->copy()) {
+			clipboardHandler->copy();
+		}
 		break;
 	case ACTION_PASTE:
-		win->getXournal()->paste();
+		if (!win->getXournal()->paste()) {
+			clipboardHandler->paste();
+		}
 		break;
 	case ACTION_SEARCH:
 		searchBar->showSearchBar(true);
 		break;
 	case ACTION_DELETE:
-		win->getXournal()->actionDelete();
+		if (!win->getXournal()->actionDelete()) {
+			deleteSelection();
+		}
 		break;
 	case ACTION_SETTINGS:
 		showSettings();
@@ -1378,9 +1397,11 @@ void Control::toolChanged() {
 
 	cursor->updateCursor();
 
-	if (type != TOOL_SELECT_RECT && type != TOOL_SELECT_REGION) {
+	if (type != TOOL_SELECT_RECT && type != TOOL_SELECT_REGION && type != TOOL_SELECT_OBJECT) {
+		clearSelection();
+	} else if (type != TOOL_TEXT) {
 		if (win) {
-			win->clearSelection();
+			win->getXournal()->endTextSelection();
 		}
 	}
 }
@@ -1828,6 +1849,7 @@ bool Control::save() {
 
 	if (!out->getLastError().isEmpty()) {
 		printf("error: %s\n", out->getLastError().c_str());
+		delete out;
 		return false;
 	}
 
@@ -1836,6 +1858,7 @@ bool Control::save() {
 
 	if (!out->getLastError().isEmpty()) {
 		printf("error: %s\n", out->getLastError().c_str());
+		delete out;
 		return false;
 	}
 
@@ -2036,3 +2059,101 @@ void Control::showAbout() {
 Settings * Control::getSettings() {
 	return settings;
 }
+
+void Control::clipboardCutCopyEnabled(bool enabled) {
+	fireEnableAction(ACTION_CUT, enabled);
+	fireEnableAction(ACTION_COPY, enabled);
+}
+
+void Control::clipboardPasteEnabled(bool enabled) {
+	fireEnableAction(ACTION_PASTE, enabled);
+}
+
+void Control::clipboardPasteText(String text) {
+	double x = 0;
+	double y = 0;
+	int pageNr = getCurrentPageNo();
+	if (pageNr == -1) {
+		return;
+	}
+	PageView * view = win->getXournal()->getViewFor(pageNr);
+	if (view == NULL) {
+		return;
+	}
+
+	XojPage * page = doc->getPage(pageNr);
+	Layer * layer = page->getSelectedLayer();
+	win->getXournal()->getPasteTarget(x, y);
+
+	Text * t = new Text();
+	t->setText(text);
+	t->setColor(toolHandler->getColor());
+	// TODO: handle font
+	//	t->setFont()
+	double width = t->getElementWidth();
+	double height = t->getElementHeight();
+
+	t->setX(x - width / 2);
+	t->setY(y - height / 2);
+	layer->addElement(t);
+	undoRedo->addUndoAction(new InsertUndoAction(page, layer, t, view));
+
+	EditSelection * selection = new EditSelection(t, view, page);
+	setSelection(selection);
+	view->repaint(t);
+}
+
+void Control::deleteSelection() {
+	if (this->selection) {
+		PageView * view = (PageView *) this->selection->getView();
+		DeleteUndoAction * undo = new DeleteUndoAction(this->selection->getPage(), view, false);
+		this->selection->fillUndoItemAndDelete(undo);
+		this->undoRedo->addUndoAction(undo);
+
+		clearSelection();
+
+		view->repaint();
+	}
+}
+
+void Control::clearSelection() {
+	delete this->selection;
+	this->selection = NULL;
+
+	if (this->clipboardHandler) {
+		this->clipboardHandler->setSelection(this->selection);
+	}
+
+	cursor->setMouseSelectionType(CURSOR_SELECTION_NONE);
+}
+
+void Control::setSelection(EditSelection * selection) {
+	clearSelection();
+	this->selection = selection;
+
+	if (this->clipboardHandler) {
+		this->clipboardHandler->setSelection(this->selection);
+	}
+}
+
+EditSelection * Control::getSelection() {
+	return this->selection;
+}
+
+EditSelection * Control::getSelectionFor(PageView * view) {
+	if (this->selection && this->selection->getInputView() == view) {
+		return this->selection;
+	}
+	return NULL;
+}
+
+void Control::paintSelection(cairo_t * cr, GdkEventExpose *event, double zoom, PageView * view) {
+	if (this->selection && this->selection->getView() == view) {
+		this->selection->paint(cr, event, zoom);
+	}
+}
+
+void Control::setCopyPasteEnabled(bool enabled) {
+	this->clipboardHandler->setCopyPasteEnabled(enabled);
+}
+

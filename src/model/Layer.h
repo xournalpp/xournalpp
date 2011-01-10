@@ -18,7 +18,7 @@
 #include "../util/ListIterator.h"
 #include "../util/Util.h"
 
-class Layer : public DebugObject {
+class Layer : public MemoryCheckObject {
 public:
 	Layer();
 	virtual ~Layer();
@@ -26,7 +26,7 @@ public:
 	void addElement(Element * e);
 	void insertElement(Element * e, int pos);
 	int indexOf(Element * e);
-	int removeElement(Element * e, bool free = true);
+	int removeElement(Element * e, bool free);
 
 	ListIterator<Element *> elementIterator();
 

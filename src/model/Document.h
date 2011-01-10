@@ -64,7 +64,7 @@ private:
 	DocumentHandler * handler;
 };
 
-class Document {
+class Document : public MemoryCheckObject {
 public:
 	Document(DocumentHandler * handler);
 	virtual ~Document();
@@ -145,7 +145,7 @@ private:
 	GtkTreeModel * contentsModel;
 
 	/**
-	 * create a backup before save, becaus the original file was an older fileversion
+	 * create a backup before save, because the original file was an older fileversion
 	 */
 	bool createBackupOnSave;
 

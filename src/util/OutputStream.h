@@ -9,8 +9,8 @@
  * @license GPL
  */
 
-#ifndef OUTPUTSTREAM_H_
-#define OUTPUTSTREAM_H_
+#ifndef __OUTPUTSTREAM_H__
+#define __OUTPUTSTREAM_H__
 
 #include "../model/String.h"
 #include <zlib.h>
@@ -48,4 +48,4 @@ private:
 };
 
 
-#endif /* OUTPUTSTREAM_H_ */
+#endif /* __OUTPUTSTREAM_H__ */

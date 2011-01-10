@@ -61,8 +61,9 @@ am_xournalpp_OBJECTS = xournalpp-Page.$(OBJEXT) \
 	xournalpp-ShapeRecognizer.$(OBJEXT) \
 	xournalpp-BackgroundThreadHandler.$(OBJEXT) \
 	xournalpp-Selection.$(OBJEXT) \
-	xournalpp-SearchControl.$(OBJEXT) xournalpp-GladeGui.$(OBJEXT) \
-	xournalpp-AboutDialog.$(OBJEXT) \
+	xournalpp-SearchControl.$(OBJEXT) \
+	xournalpp-ClipboardHandler.$(OBJEXT) \
+	xournalpp-GladeGui.$(OBJEXT) xournalpp-AboutDialog.$(OBJEXT) \
 	xournalpp-PdfPagesDialog.$(OBJEXT) \
 	xournalpp-ImagesDialog.$(OBJEXT) \
 	xournalpp-ExportDialog.$(OBJEXT) \
@@ -82,7 +83,8 @@ am_xournalpp_OBJECTS = xournalpp-Page.$(OBJEXT) \
 	xournalpp-RecentManager.$(OBJEXT) \
 	xournalpp-UndoRedoHandler.$(OBJEXT) xournalpp-Util.$(OBJEXT) \
 	xournalpp-OutputStream.$(OBJEXT) \
-	xournalpp-CrashHandler.$(OBJEXT) xournalpp-PdfExport.$(OBJEXT) \
+	xournalpp-CrashHandler.$(OBJEXT) \
+	xournalpp-pixbuf-utils.$(OBJEXT) xournalpp-PdfExport.$(OBJEXT) \
 	xournalpp-PopplerGlibExtension.$(OBJEXT) \
 	xournalpp-Xournalpp.$(OBJEXT)
 xournalpp_OBJECTS = $(am_xournalpp_OBJECTS)
@@ -239,6 +241,7 @@ xournalpp_SOURCES = \
 	control/BackgroundThreadHandler.cpp \
 	control/Selection.cpp \
 	control/SearchControl.cpp \
+	control/ClipboardHandler.cpp \
 	gui/GladeGui.cpp \
 	gui/AboutDialog.cpp \
 	gui/PdfPagesDialog.cpp \
@@ -269,6 +272,7 @@ xournalpp_SOURCES = \
 	util/Util.cpp \
 	util/OutputStream.cpp \
 	util/CrashHandler.cpp \
+	util/pixbuf-utils.cpp \
 	pdf/PdfExport.cpp \
 	pdf/popplerGlibExt/PopplerGlibExtension.cpp \
 	Xournalpp.cpp
@@ -359,6 +363,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-AboutDialog.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-Actions.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-BackgroundThreadHandler.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-ClipboardHandler.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-Control.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-CrashHandler.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-Cursor.Po@am__quote@
@@ -410,6 +415,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-ZoomControl.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-ev-metadata-manager.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-gtkmenutooltogglebutton.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-pixbuf-utils.Po@am__quote@
 
 .cpp.o:
 @am__fastdepCXX_TRUE@	$(CXXCOMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
@@ -718,6 +724,20 @@ xournalpp-SearchControl.obj: control/SearchControl.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='control/SearchControl.cpp' object='xournalpp-SearchControl.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-SearchControl.obj `if test -f 'control/SearchControl.cpp'; then $(CYGPATH_W) 'control/SearchControl.cpp'; else $(CYGPATH_W) '$(srcdir)/control/SearchControl.cpp'; fi`
+
+xournalpp-ClipboardHandler.o: control/ClipboardHandler.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-ClipboardHandler.o -MD -MP -MF $(DEPDIR)/xournalpp-ClipboardHandler.Tpo -c -o xournalpp-ClipboardHandler.o `test -f 'control/ClipboardHandler.cpp' || echo '$(srcdir)/'`control/ClipboardHandler.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-ClipboardHandler.Tpo $(DEPDIR)/xournalpp-ClipboardHandler.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='control/ClipboardHandler.cpp' object='xournalpp-ClipboardHandler.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-ClipboardHandler.o `test -f 'control/ClipboardHandler.cpp' || echo '$(srcdir)/'`control/ClipboardHandler.cpp
+
+xournalpp-ClipboardHandler.obj: control/ClipboardHandler.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-ClipboardHandler.obj -MD -MP -MF $(DEPDIR)/xournalpp-ClipboardHandler.Tpo -c -o xournalpp-ClipboardHandler.obj `if test -f 'control/ClipboardHandler.cpp'; then $(CYGPATH_W) 'control/ClipboardHandler.cpp'; else $(CYGPATH_W) '$(srcdir)/control/ClipboardHandler.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-ClipboardHandler.Tpo $(DEPDIR)/xournalpp-ClipboardHandler.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='control/ClipboardHandler.cpp' object='xournalpp-ClipboardHandler.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-ClipboardHandler.obj `if test -f 'control/ClipboardHandler.cpp'; then $(CYGPATH_W) 'control/ClipboardHandler.cpp'; else $(CYGPATH_W) '$(srcdir)/control/ClipboardHandler.cpp'; fi`
 
 xournalpp-GladeGui.o: gui/GladeGui.cpp
 @am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-GladeGui.o -MD -MP -MF $(DEPDIR)/xournalpp-GladeGui.Tpo -c -o xournalpp-GladeGui.o `test -f 'gui/GladeGui.cpp' || echo '$(srcdir)/'`gui/GladeGui.cpp
@@ -1138,6 +1158,20 @@ xournalpp-CrashHandler.obj: util/CrashHandler.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='util/CrashHandler.cpp' object='xournalpp-CrashHandler.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-CrashHandler.obj `if test -f 'util/CrashHandler.cpp'; then $(CYGPATH_W) 'util/CrashHandler.cpp'; else $(CYGPATH_W) '$(srcdir)/util/CrashHandler.cpp'; fi`
+
+xournalpp-pixbuf-utils.o: util/pixbuf-utils.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-pixbuf-utils.o -MD -MP -MF $(DEPDIR)/xournalpp-pixbuf-utils.Tpo -c -o xournalpp-pixbuf-utils.o `test -f 'util/pixbuf-utils.cpp' || echo '$(srcdir)/'`util/pixbuf-utils.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-pixbuf-utils.Tpo $(DEPDIR)/xournalpp-pixbuf-utils.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='util/pixbuf-utils.cpp' object='xournalpp-pixbuf-utils.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-pixbuf-utils.o `test -f 'util/pixbuf-utils.cpp' || echo '$(srcdir)/'`util/pixbuf-utils.cpp
+
+xournalpp-pixbuf-utils.obj: util/pixbuf-utils.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-pixbuf-utils.obj -MD -MP -MF $(DEPDIR)/xournalpp-pixbuf-utils.Tpo -c -o xournalpp-pixbuf-utils.obj `if test -f 'util/pixbuf-utils.cpp'; then $(CYGPATH_W) 'util/pixbuf-utils.cpp'; else $(CYGPATH_W) '$(srcdir)/util/pixbuf-utils.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-pixbuf-utils.Tpo $(DEPDIR)/xournalpp-pixbuf-utils.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='util/pixbuf-utils.cpp' object='xournalpp-pixbuf-utils.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-pixbuf-utils.obj `if test -f 'util/pixbuf-utils.cpp'; then $(CYGPATH_W) 'util/pixbuf-utils.cpp'; else $(CYGPATH_W) '$(srcdir)/util/pixbuf-utils.cpp'; fi`
 
 xournalpp-PdfExport.o: pdf/PdfExport.cpp
 @am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-PdfExport.o -MD -MP -MF $(DEPDIR)/xournalpp-PdfExport.Tpo -c -o xournalpp-PdfExport.o `test -f 'pdf/PdfExport.cpp' || echo '$(srcdir)/'`pdf/PdfExport.cpp

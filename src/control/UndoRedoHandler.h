@@ -17,6 +17,7 @@
 #include "../model/Page.h"
 #include "../gui/PageView.h"
 #include "../gui/TextEditor.h"
+#include "../util/Util.h"
 
 class Control;
 
@@ -35,10 +36,12 @@ public:
 
 	virtual String getText() = 0;
 
-	XojPage * getPage();
+	/**
+	 * Get the affected pages, the Array is terminated with NULL and should be freed with delete[]
+	 */
+	virtual XojPage ** getPages();
 protected:
 	XojPage * page;
-
 	bool undone;
 };
 
@@ -205,7 +208,7 @@ private:
 	double newH;
 };
 
-class UndoRedoHandler {
+class UndoRedoHandler : public MemoryCheckObject {
 public:
 	UndoRedoHandler(Control * control);
 	virtual ~UndoRedoHandler();
@@ -225,7 +228,7 @@ public:
 
 	void clearContents();
 
-	void fireUpdateUndoRedoButtons(XojPage * page);
+	void fireUpdateUndoRedoButtons(XojPage ** pages);
 	void addUndoRedoListener(UndoRedoListener * listener);
 
 	bool isChanged();

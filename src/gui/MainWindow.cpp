@@ -102,10 +102,6 @@ Control * MainWindow::getControl() {
 	return control;
 }
 
-void MainWindow::clearSelection() {
-	xournal->clearSelection();
-}
-
 void MainWindow::updateScrollbarSidebarPosition() {
 	GtkWidget * panelMainContents = get("panelMainContents");
 	GtkWidget * sidebarContents = get("sidebarContents");

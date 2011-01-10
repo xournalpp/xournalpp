@@ -46,6 +46,20 @@ void Image::setImage(unsigned char * data, int len) {
 	this->dLen = len;
 }
 
+void Image::setImage(cairo_surface_t * image) {
+	if (this->image) {
+		cairo_surface_destroy(this->image);
+		this->image = NULL;
+	}
+	if (this->data) {
+		g_free(this->data);
+	}
+	this->data = NULL;
+	this->dLen = 0;
+
+	this->image = image;
+}
+
 cairo_surface_t * Image::getImage() {
 	if (this->image == NULL && this->dLen != 0) {
 		this->read = 0;
