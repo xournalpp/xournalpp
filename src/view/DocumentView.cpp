@@ -2,6 +2,7 @@
 #include "TextView.h"
 #include "../gettext.h"
 #include <gdk/gdk.h>
+#include "../control/Selection.h"
 
 //#define SHOW_ELEMENT_BOUNDS
 
@@ -155,17 +156,27 @@ void DocumentView::drawImage(cairo_t *cr, Image * i) {
 
 	cairo_scale(cr, xFactor, yFactor);
 
-	cairo_set_source_surface(cr, img, i->getX()/xFactor, i->getY()/yFactor);
+	cairo_set_source_surface(cr, img, i->getX() / xFactor, i->getY() / yFactor);
 	cairo_paint(cr);
 
 	cairo_set_matrix(cr, &defaultMatrix);
+}
+
+void DocumentView::drawElement(cairo_t *cr, Element * e) {
+	if (e->getType() == ELEMENT_STROKE) {
+		drawStroke(cr, (Stroke *) e);
+	} else if (e->getType() == ELEMENT_TEXT) {
+		drawText(cr, (Text *) e);
+	} else if (e->getType() == ELEMENT_IMAGE) {
+		drawImage(cr, (Image *) e);
+	}
 }
 
 void DocumentView::drawLayer(cairo_t *cr, Layer * l) {
 	ListIterator<Element *> it = l->elementIterator();
 	while (it.hasNext()) {
 		Element * e = it.next();
-		e->debugTestIsOk();
+		CHECK_MEMORY(e);
 
 #ifdef SHOW_ELEMENT_BOUNDS
 		cairo_set_source_rgb(cr, 1, 0, 0);
@@ -173,15 +184,9 @@ void DocumentView::drawLayer(cairo_t *cr, Layer * l) {
 		cairo_rectangle(cr, e->getX(), e->getY(), e->getElementWidth(), e->getElementHeight());
 		cairo_stroke(cr);
 #endif // SHOW_ELEMENT_BOUNDS
-		cairo_new_path(cr);
+		//cairo_new_path(cr);
 
-		if (e->getType() == ELEMENT_STROKE) {
-			drawStroke(cr, (Stroke *) e);
-		} else if (e->getType() == ELEMENT_TEXT) {
-			drawText(cr, (Text *) e);
-		} else if (e->getType() == ELEMENT_IMAGE) {
-			drawImage(cr, (Image *) e);
-		}
+		drawElement(cr, e);
 	}
 }
 
@@ -259,13 +264,22 @@ void DocumentView::paintBackgroundRuled() {
 	cairo_stroke(cr);
 }
 
+void DocumentView::drawSelection(cairo_t * cr, EditSelection * selection) {
+	cairo_translate(cr, -selection->getX(), -selection->getY());
+
+	for (GList * l = selection->getElements(); l != NULL; l = l->next) {
+		Element * e = (Element *) l->data;
+		drawElement(cr, e);
+	}
+}
+
 void DocumentView::drawPage(XojPage * page, PopplerPage * popplerPage, cairo_t *cr) {
 	this->cr = cr;
 	this->page = page;
 	this->width = page->getWidth();
 	this->height = page->getHeight();
 
-	page->debugTestIsOk();
+	CHECK_MEMORY(page);
 
 	if (page->getBackgroundType() == BACKGROUND_TYPE_PDF) {
 		if (popplerPage) {
@@ -310,7 +324,7 @@ void DocumentView::drawPage(XojPage * page, PopplerPage * popplerPage, cairo_t *
 	ListIterator<Layer *> it = page->layerIterator();
 	while (it.hasNext() && layer < page->getSelectedLayerId()) {
 		Layer * l = it.next();
-		l->debugTestIsOk();
+		l->isMemoryCorrupted();
 		drawLayer(cr, l);
 		layer++;
 	}

@@ -18,7 +18,7 @@
 
 class Sidebar;
 
-class SidebarPreview : public DebugObject {
+class SidebarPreview : public MemoryCheckObject {
 public:
 	SidebarPreview(Sidebar * sidebar, XojPage * page);
 	virtual ~SidebarPreview();

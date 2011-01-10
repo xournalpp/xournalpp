@@ -64,17 +64,20 @@ public:
 
 	void forceUpdatePagenumbers();
 
-	void clearSelection();
-
+	PageView * getViewFor(int pageNr);
 	PageView * getViewAt(int x, int y);
 
 	bool searchTextOnPage(const char * text, int p, int * occures, double * top);
 
-	void cut();
-	void copy();
-	void paste();
+	bool cut();
+	bool copy();
+	bool paste();
 
-	void actionDelete();
+	void getPasteTarget(double & x, double & y);
+
+	bool actionDelete();
+
+	void endTextSelection();
 
 public:
 	//ZoomListener interface

@@ -41,8 +41,6 @@ public:
 	GList * charContents;
 };
 
-// TODO: enable / disable copy paste buttons
-
 TextEditor::TextEditor(PageView * gui, Text * text, bool ownText) {
 	this->gui = gui;
 	this->text = text;
@@ -96,6 +94,9 @@ TextEditor::TextEditor(PageView * gui, Text * text, bool ownText) {
 
 TextEditor::~TextEditor() {
 	this->text->setInEditing(false);
+
+	Control * control = gui->getXournal()->getControl();
+	control->setCopyPasteEnabled(false);
 
 	this->contentsChanged(true);
 
@@ -586,10 +587,14 @@ void TextEditor::calcVirtualCursor() {
 }
 
 void TextEditor::moveCursor(const GtkTextIter *new_location, gboolean extend_selection) {
+	Control * control = gui->getXournal()->getControl();
+
 	if (extend_selection) {
 		gtk_text_buffer_move_mark_by_name(this->buffer, "insert", new_location);
+		control->setCopyPasteEnabled(true);
 	} else {
 		gtk_text_buffer_place_cursor(this->buffer, new_location);
+		control->setCopyPasteEnabled(false);
 	}
 }
 

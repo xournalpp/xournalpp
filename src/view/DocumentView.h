@@ -20,6 +20,8 @@
 #include "../model/Page.h"
 #include "../model/Image.h"
 
+class EditSelection;
+
 class DocumentView {
 public:
 	DocumentView();
@@ -31,10 +33,13 @@ public:
 	static void applyColor(cairo_t *cr, int c, int alpha = 255);
 	static void applyColor(cairo_t *cr, Element * e, int alpha = 255);
 
+	void drawSelection(cairo_t * cr, EditSelection * selection);
+
 private:
 	void drawText(cairo_t *cr, Text * t);
 	void drawImage(cairo_t *cr, Image * i);
 
+	void drawElement(cairo_t *cr, Element * e);
 	void drawLayer(cairo_t *cr, Layer * l);
 
 	void paintBackgroundImage();

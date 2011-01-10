@@ -57,7 +57,7 @@ void UndoRedoHandler::undo() {
 
 	redoList = g_list_append(redoList, undo);
 	undoList = g_list_remove(undoList, e->data);
-	fireUpdateUndoRedoButtons(undo->getPage());
+	fireUpdateUndoRedoButtons(undo->getPages());
 }
 
 void UndoRedoHandler::redo() {
@@ -83,7 +83,7 @@ void UndoRedoHandler::redo() {
 
 	undoList = g_list_append(undoList, redo);
 	redoList = g_list_remove(redoList, e->data);
-	fireUpdateUndoRedoButtons(redo->getPage());
+	fireUpdateUndoRedoButtons(redo->getPages());
 }
 
 bool UndoRedoHandler::canUndo() {
@@ -97,7 +97,7 @@ bool UndoRedoHandler::canRedo() {
 void UndoRedoHandler::addUndoAction(UndoAction * action) {
 	undoList = g_list_append(undoList, action);
 	clearRedo();
-	fireUpdateUndoRedoButtons(action->getPage());
+	fireUpdateUndoRedoButtons(action->getPages());
 }
 
 void UndoRedoHandler::addUndoActionBefore(UndoAction * action, UndoAction * before) {
@@ -108,7 +108,7 @@ void UndoRedoHandler::addUndoActionBefore(UndoAction * action, UndoAction * befo
 	}
 	undoList = g_list_insert_before(undoList, data, action);
 	clearRedo();
-	fireUpdateUndoRedoButtons(action->getPage());
+	fireUpdateUndoRedoButtons(action->getPages());
 }
 
 bool UndoRedoHandler::removeUndoAction(UndoAction * action) {
@@ -119,7 +119,7 @@ bool UndoRedoHandler::removeUndoAction(UndoAction * action) {
 
 	undoList = g_list_remove_link(undoList, l);
 	clearRedo();
-	fireUpdateUndoRedoButtons(action->getPage());
+	fireUpdateUndoRedoButtons(action->getPages());
 	return true;
 }
 
@@ -149,16 +149,17 @@ String UndoRedoHandler::redoDescription() {
 	return _("Redo");
 }
 
-void UndoRedoHandler::fireUpdateUndoRedoButtons(XojPage * page) {
+void UndoRedoHandler::fireUpdateUndoRedoButtons(XojPage ** pages) {
 	for (GList * l = this->listener; l != NULL; l = l->next) {
 		((UndoRedoListener *) l->data)->undoRedoChanged();
 	}
 
-	if (page) {
+	for (int i = 0; pages[i]; i++) {
 		for (GList * l = this->listener; l != NULL; l = l->next) {
-			((UndoRedoListener *) l->data)->undoRedoPageChanged(page);
+			((UndoRedoListener *) l->data)->undoRedoPageChanged(pages[i]);
 		}
 	}
+	delete[] pages;
 }
 
 void UndoRedoHandler::addUndoRedoListener(UndoRedoListener * listener) {
@@ -175,8 +176,11 @@ UndoAction::UndoAction() {
 	this->undone = false;
 }
 
-XojPage * UndoAction::getPage() {
-	return page;
+XojPage ** UndoAction::getPages() {
+	XojPage ** pages = new XojPage *[2];
+	pages[0] = this->page;
+	pages[1] = NULL;
+	return pages;
 }
 
 //////////////////////////////////////////////////////////////

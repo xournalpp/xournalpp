@@ -15,6 +15,8 @@
 #include <gtk/gtk.h>
 #include "../model/Page.h"
 #include "Redrawable.h"
+#include "UndoRedoHandler.h"
+#include "../util/Util.h"
 
 enum CursorSelectionType {
 	CURSOR_SELECTION_NONE = 0,
@@ -92,10 +94,10 @@ private:
 	GList * points;
 };
 
-class PageView;
 class XournalWidget;
+class MoveUndoAction;
 
-class EditSelection {
+class EditSelection: public MemoryCheckObject {
 public:
 	EditSelection(Selection * selection, Redrawable * view);
 	EditSelection(Element * e, Redrawable * view, XojPage * page);
@@ -104,12 +106,32 @@ public:
 
 	CursorSelectionType getSelectionTypeForPos(double x, double y, double zoom);
 	void setEditMode(CursorSelectionType selType, double x, double y);
-	void move(double x, double y, PageView * view, XournalWidget * xournal);
+	void move(double x, double y, Redrawable * view, XournalWidget * xournal);
+	void doMove(double dx, double dy, Redrawable * view, XournalWidget * xournal);
 	CursorSelectionType getEditMode();
 	void finalizeEditing();
 
+	Redrawable * getInputView();
+	Redrawable * getView();
+	XojPage * getPage();
+
+	void fillUndoItemAndDelete(DeleteUndoAction * undo);
+
+	MoveUndoAction * getUndoAction();
+
+	/**
+	 * Gets the selected objects, this should not be edited or freed
+	 */
+	GList * getElements();
+
+	double getX();
+	double getY();
+	double getWidth();
+	double getHeight();
 private:
 	void drawAnchorRect(cairo_t * cr, double x, double y, double zoom);
+	void moveSelectionToPage(XojPage * page);
+
 private:
 	double x;
 	double y;
@@ -120,10 +142,44 @@ private:
 	double selX;
 	double selY;
 
+	Redrawable * inputView;
 	Redrawable * view;
+
+	MoveUndoAction * undo;
 
 	GList * selected;
 	XojPage * page;
+
+	friend class MoveUndoAction;
+};
+
+class MoveUndoAction: public UndoAction {
+public:
+	MoveUndoAction(XojPage * page, EditSelection * selection);
+	~MoveUndoAction();
+
+	void finalize(EditSelection * selection);
+
+	virtual bool undo(Control * control);
+	virtual bool redo(Control * control);
+	XojPage ** getPages();
+	virtual String getText();
+
+private:
+	void acceptPositions(GList * pos);
+	void switchLayer(GList * entries, Layer * oldLayer, Layer * newLayer);
+	void repaint();
+private:
+	GList * originalPos;
+	GList * newPos;
+	XojPage * newPage;
+
+	Layer * oldLayer;
+	Layer * newLayer;
+
+	Redrawable * origView;
+	Redrawable * newView;
+
 };
 
 #endif /* __SELECTION_H__ */

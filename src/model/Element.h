@@ -24,7 +24,7 @@ public:
 	virtual bool contains(double x, double y) = 0;
 };
 
-class Element: public DebugObject {
+class Element: public MemoryCheckObject {
 protected:
 	Element(ElementType type);
 

@@ -262,8 +262,12 @@ String& String::operator=(const String &str) {
 	this->data->reference();
 }
 
-gboolean String::operator ==(const String & str) const {
+gboolean String::operator==(const String & str) const {
 	return equals(str.c_str());
+}
+
+gboolean String::operator!=(const String & str) const {
+	return !equals(str.c_str());
 }
 
 void String::operator +=(const String & str) {
