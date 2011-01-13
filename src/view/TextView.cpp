@@ -40,6 +40,11 @@ void TextView::drawText(cairo_t *cr, Text * t) {
 
 	cairo_font_extents(cr, &fe);
 
+	// TODO: with "Hallo                                            Test           X" this went wrong on some zoom factors...
+	//	printf("fe height: %lf\n", fe.height);
+	// this is because cairo fonts are not always the same size on different zoom levels!!
+
+
 	while (str) {
 		y += fe.height - fe.descent;
 
@@ -49,9 +54,9 @@ void TextView::drawText(cairo_t *cr, Text * t) {
 		double x = 0;
 
 		while (strTab) {
-			if(strcmp(strTab, "\t") == 0) {
+			if (strcmp(strTab, "\t") == 0) {
 				int tab = x / TextView::TAB_INDEX + 1;
-				x = tab * TextView::TAB_INDEX ;
+				x = tab * TextView::TAB_INDEX;
 			} else {
 				cairo_move_to(cr, t->getX() + x, y);
 				cairo_show_text(cr, strTab);
@@ -88,9 +93,7 @@ void TextView::drawText(cairo_t *cr, Text * t) {
 GList * TextView::findText(Text * t, const char * search) {
 	GList * list = NULL;
 	cairo_surface_t * surface = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, 1, 1);
-	cairo_t *cr;
-
-	cr = cairo_create(surface);
+	cairo_t * cr = cairo_create(surface);
 
 	initCairo(cr, t);
 
@@ -103,8 +106,6 @@ GList * TextView::findText(Text * t, const char * search) {
 	int searchlen = strlen(search);
 
 	cairo_font_extents(cr, &fe);
-
-	// TODO: with "Hallo                                            Test           X" this went wrong on some zoom factors...
 
 	while (str) {
 		String line = str;

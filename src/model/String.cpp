@@ -274,6 +274,12 @@ void String::operator +=(const String & str) {
 	*this += str.c_str();
 }
 
+void String::operator +=(int i) {
+	char * tmp = g_strdup_printf("%i", i);
+	*this += tmp;
+	g_free(tmp);
+}
+
 void String::operator +=(const char * str) {
 	gchar * data = g_strconcat(c_str(), str, NULL);
 	this->data->unreference();
@@ -322,6 +328,14 @@ int String::length() const {
 }
 
 String String::substring(int start) const {
+	if (start < 0) {
+		start = length() + start;
+		if (start < 0) {
+			return NULL;
+		}
+		return substring(start);
+	}
+
 	return substring(start, length() - start);
 }
 
@@ -330,7 +344,7 @@ String String::substring(int start, int length) const {
 		length = this->length() - start + length;
 	}
 
-	if (start + length > this->length() || start < 0) {
+	if (start + length > this->length() || start < 0 || length < 0) {
 		g_critical("substring \"%s\" (%i, %i) out of bounds", c_str(), start, length);
 		return "";
 	}

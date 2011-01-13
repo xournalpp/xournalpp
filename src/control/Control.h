@@ -32,6 +32,7 @@ class Cursor;
 class CallbackData;
 class PageView;
 class EditSelection;
+class SaveHandler;
 
 class Control: public ActionHandler,
 		public ToolListener,
@@ -122,6 +123,7 @@ public:
 	void addNewLayer();
 	void deleteCurrentLayer();
 
+	void paperFormat();
 	void changePageBackgroundColor();
 	void setPageBackground(ActionType type);
 	void updateBackgroundSizeButton();
@@ -157,6 +159,10 @@ public:
 	void paintSelection(cairo_t * cr, GdkEventExpose *event, double zoom, PageView * view);
 
 	void setCopyPasteEnabled(bool enabled);
+
+	void enableAutosave(bool enable);
+
+	void getDefaultPagesize(double & width, double & height);
 public:
 	// UndoRedoListener interface
 	void undoRedoChanged();
@@ -189,6 +195,8 @@ protected:
 	static void copyProgressCallback(goffset current_num_bytes, goffset total_num_bytes, Control * control);
 
 	static bool checkChangedDocument(Control * control);
+	static bool autosaveCallback(Control * control);
+	static gpointer autosaveThread(Control * control);
 
 	void updatePreview();
 private:
@@ -239,6 +247,19 @@ private:
 	 * Selected content, if any
 	 */
 	EditSelection * selection;
+
+	/**
+	 * The autosave handler ID
+	 */
+	int autosaveTimeout;
+	SaveHandler * autosaveHandler;
+	String lastAutosaveFilename;
+
+	/**
+	 * Default page size
+	 */
+	double defaultWidth;
+	double defaultHeight;
 };
 
 class CallbackData {

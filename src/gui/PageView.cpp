@@ -4,15 +4,16 @@
 #include <stdlib.h>
 #include <math.h>
 #include <gdk/gdkkeysyms.h>
+#include <glib.h>
 #include "../control/Control.h"
 #include "../view/TextView.h"
 #include "../control/ShapeRecognizer.h"
 #include "../util/pixbuf-utils.h"
+#include "../cfg.h"
 
 #define PIXEL_MOTION_THRESHOLD 0.3
 
 //#define INPUT_DEBUG
-#define ENABLE_XINPUT_BUGFIX
 
 #define EPSILON 1E-7
 
@@ -24,6 +25,7 @@ PageView::PageView(XournalWidget * xournal, XojPage * page) {
 	this->tmpStrokeDrawElem = 0;
 	this->settings = xournal->getControl()->getSettings();
 	this->view = new DocumentView();
+	this->lastVisibelTime = -1;
 
 	this->lastMousePositionX = 0;
 	this->lastMousePositionY = 0;
@@ -72,6 +74,27 @@ PageView::~PageView() {
 	delete this->view;
 	endText();
 	deleteViewBuffer();
+}
+
+int PageView::getLastVisibelTime() {
+	return this->lastVisibelTime;
+}
+
+int PageView::getBufferPixels() {
+	if(crBuffer) {
+		return cairo_image_surface_get_width(crBuffer) * cairo_image_surface_get_height(crBuffer);
+	}
+	return 0;
+}
+
+void PageView::setIsVisibel(bool visibel) {
+	if (visibel) {
+		this->lastVisibelTime = -1;
+	} else if (this->lastVisibelTime == -1) {
+		GTimeVal val;
+		g_get_current_time(&val);
+		this->lastVisibelTime = val.tv_sec;
+	}
 }
 
 void PageView::deleteViewBuffer() {
@@ -321,13 +344,11 @@ void PageView::selectObjectAt(double x, double y) {
 				if (e->getType() == ELEMENT_STROKE) {
 					Stroke * s = (Stroke *) e;
 					double tmpGap = 0;
-					if (s->intersects(x, y, 20, &tmpGap)) {
+					if (s->intersects(x, y, 5, &tmpGap)) {
 						if (gap > tmpGap) {
 							gap = tmpGap;
 							strokeMatch = s;
 						}
-					} else {
-						printf("intersects == false\n");
 					}
 				} else {
 					elementMatch = e;
@@ -1171,14 +1192,13 @@ bool PageView::actionDelete() {
 	return false;
 }
 
-bool PageView::paintPage(GtkWidget *widget, GdkEventExpose *event) {
+bool PageView::paintPage(GtkWidget * widget, GdkEventExpose * event) {
 	if (!firstPainted) {
 		firstPaint();
 		return true;
 	}
 
-	cairo_t *cr;
-	cr = gdk_cairo_create(widget->window);
+	cairo_t * cr = gdk_cairo_create(widget->window);
 
 	GtkAllocation alloc;
 	gtk_widget_get_allocation(widget, &alloc);
@@ -1223,14 +1243,19 @@ bool PageView::paintPage(GtkWidget *widget, GdkEventExpose *event) {
 		cairo_set_matrix(cr, &defaultMatrix);
 
 		repaintLater();
+
+		event = NULL;
 	} else {
 		cairo_set_source_surface(cr, crBuffer, 0, 0);
 	}
 
-	cairo_paint(cr);
+	if (event) {
+		cairo_rectangle(cr, event->area.x, event->area.y, event->area.width, event->area.height);
+		cairo_fill(cr);
+	} else {
+		cairo_paint(cr);
+	}
 
-	cairo_matrix_t defaultMatrix = { 0 };
-	cairo_get_matrix(cr, &defaultMatrix);
 	cairo_scale(cr, xournal->getZoom(), xournal->getZoom());
 
 	if (this->textEditor) {
@@ -1249,8 +1274,6 @@ bool PageView::paintPage(GtkWidget *widget, GdkEventExpose *event) {
 	if (this->tmpStroke) {
 		view->drawStroke(cr, this->tmpStroke);
 	}
-
-	cairo_set_matrix(cr, &defaultMatrix);
 
 	cairo_destroy(cr);
 	return true;
@@ -1290,21 +1313,14 @@ void PageView::fixXInputCoords(GdkEvent *event) {
 		int screenWidth = gdk_screen_get_width(screen);
 		int screenHeight = gdk_screen_get_height(screen);
 
-		printf("screen size: %i/%i\n", screenWidth, screenHeight);
-		printf("axes: %lf/%lf\n", axes[0], axes[1]);
-
 		gdk_window_get_origin(widget->window, &wx, &wy);
 		double axisWidth = device->axes[0].max - device->axes[0].min;
 
-		printf("test: %0.10lf:%0.10lf\n", device->axes[0].max, axisWidth);
-
 		if (axisWidth > EPSILON) {
-			printf("correct x\n");
 			*px = (axes[0] / axisWidth) * screenWidth - wx;
 		}
 		axisWidth = device->axes[1].max - device->axes[1].min;
 		if (axisWidth > EPSILON) {
-			printf("correct y\n");
 			*py = (axes[1] / axisWidth) * screenHeight - wy;
 		}
 

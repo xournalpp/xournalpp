@@ -106,11 +106,14 @@ void Document::setPreview(cairo_surface_t * preview) {
 }
 
 const char * Document::getEvMetadataFilename() {
+	String uri = "file://";
 	if (filename.c_str() != NULL) {
-		return filename.c_str();
+		uri += filename;
+		return uri.c_str();
 	}
 	if (pdfFilename.c_str() != NULL) {
-		return pdfFilename.c_str();
+		uri += pdfFilename;
+		return uri.c_str();
 	}
 	return NULL;
 }
@@ -376,7 +379,10 @@ bool Document::readPdf(String filename, bool initPages) {
 	GError *poppler_error = NULL;
 	PopplerDocument * oldDoc = pdfDocument;
 
-	pdfDocument = poppler_document_new_from_file(filename.c_str(), password.c_str(), &poppler_error);
+	String uri = "file://";
+	uri += filename;
+
+	pdfDocument = poppler_document_new_from_file(uri.c_str(), password.c_str(), &poppler_error);
 
 	if (pdfDocument == NULL) {
 		char * txt = g_strdup_printf("Document == NULL! (%s)", filename.c_str());
@@ -420,10 +426,12 @@ bool Document::readPdf(String filename, bool initPages) {
 
 	if (initPages) {
 		for (int i = 0; i < pdfPageCount; i++) {
-			XojPage * p = new XojPage();
-			p->setBackgroundPdfPageNr(i);
-			updatePageSize(p);
+			double width = 0;
+			double height = 0;
+			poppler_page_get_size(pdfPages[i], &width, &height);
 
+			XojPage * p = new XojPage(width, height);
+			p->setBackgroundPdfPageNr(i);
 			addPage(p);
 		}
 	}
@@ -534,22 +542,6 @@ PopplerPage * Document::getPdfPage(int page) {
 	}
 
 	return p;
-}
-
-void Document::updatePageSize(XojPage * p) {
-	int nr = p->getPdfPageNr();
-	if (nr < 0) {
-		return;
-	}
-
-	double width = 0;
-	double height = 0;
-
-	PopplerPage * popplerPage = getPdfPage(nr);
-	if (popplerPage) {
-		poppler_page_get_size(popplerPage, &width, &height);
-		setPageSize(p, width, height);
-	}
 }
 
 void Document::operator=(const Document & doc) {

@@ -31,6 +31,7 @@ public:
 class GzOutputStream : public OutputStream {
 public:
 	GzOutputStream(String filename);
+	~GzOutputStream();
 
 	virtual void write(const char * data, int len);
 

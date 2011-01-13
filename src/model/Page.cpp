@@ -2,19 +2,16 @@
 
 #include "Document.h"
 
-XojPage::XojPage() {
-	pdfBackgroundPage = -1;
+XojPage::XojPage(double width, double heigth) {
+	this->pdfBackgroundPage = -1;
+	this->bgType = BACKGROUND_TYPE_LINED;
 
-	bgType = BACKGROUND_TYPE_LINED;
+	this->width = width;
+	this->height = heigth;
 
-	width = 595.00;
-	height = 842.00;
-
-	layer = NULL;
-
-	ref = 0;
-
-	currentLayer = -1;
+	this->layer = NULL;
+	this->ref = 0;
+	this->currentLayer = -1;
 }
 
 void XojPage::reference() {

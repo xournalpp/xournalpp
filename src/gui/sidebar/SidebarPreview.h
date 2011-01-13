@@ -52,6 +52,12 @@ private:
 	GtkWidget * widget;
 
 	cairo_surface_t * crBuffer;
+
+	/**
+	 * callback IDs
+	 */
+	gulong exposeId;
+	gulong pressId;
 };
 
 #endif /* __SIDEBARPREVIEW_H__ */

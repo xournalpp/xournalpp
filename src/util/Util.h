@@ -14,6 +14,7 @@
 
 #include <gtk/gtk.h>
 #include <assert.h>
+#include "../model/String.h"
 
 class Util {
 public:
@@ -21,6 +22,11 @@ public:
 	static int gdkColorToInt(const GdkColor & c);
 
 	static void cairo_set_source_rgbi(cairo_t *cr, int color);
+
+	static String getAutosaveFilename();
+
+private:
+	static String getSettingsSubfolder(String subfolder);
 };
 
 #define CHECK_MEMORY(obj) {	bool corrupted = obj->isMemoryCorrupted(); \

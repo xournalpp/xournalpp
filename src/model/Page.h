@@ -56,7 +56,7 @@ private:
 
 class XojPage : public MemoryCheckObject {
 public:
-	XojPage();
+	XojPage(double width, double heigth);
 	void reference();
 	void unreference();
 

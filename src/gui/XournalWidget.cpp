@@ -45,9 +45,52 @@ XournalWidget::XournalWidget(GtkWidget * parent, Control * control) {
 	gtk_widget_grab_default(widget);
 
 	gtk_widget_grab_focus(widget);
+
+	this->cleanupTimeout = g_timeout_add_seconds(5, (GSourceFunc) clearMemoryTimer, this);
 }
 
 XournalWidget::~XournalWidget() {
+	g_source_remove(this->cleanupTimeout);
+}
+
+gint pageViewCmpSize(PageView * a, PageView * b) {
+	return a->getLastVisibelTime() - b->getLastVisibelTime();
+}
+
+gboolean XournalWidget::clearMemoryTimer(XournalWidget * widget) {
+	GList * list = NULL;
+
+	for (int i = 0; i < widget->viewPagesLen; i++) {
+		PageView * v = widget->viewPages[i];
+		if (v->getLastVisibelTime() > 0) {
+			list = g_list_insert_sorted(list, v, (GCompareFunc) pageViewCmpSize);
+		}
+	}
+
+	int pixel = 2884560;
+	int firstPages = 4;
+
+	int i = 0;
+
+	for (GList * l = list; l != NULL; l = l->next) {
+		if (firstPages) {
+			firstPages--;
+		} else {
+			PageView * v = (PageView *) l->data;
+
+			if (pixel <= 0) {
+				v->deleteViewBuffer();
+			} else {
+				pixel -= v->getBufferPixels();
+			}
+		}
+		i++;
+	}
+
+	g_list_free(list);
+
+	// call again
+	return true;
 }
 
 void XournalWidget::onVscrollChanged(GtkAdjustment *adjustment, XournalWidget * xournal) {
@@ -244,6 +287,11 @@ void XournalWidget::pageSelected(int page) {
 		return;
 	}
 
+	const char * file = control->getDocument()->getEvMetadataFilename();
+	if (file) {
+		ev_metadata_manager_set_int(file, "page", page);
+	}
+
 	if (lastSelectedPage >= 0 && lastSelectedPage < viewPagesLen) {
 		viewPages[lastSelectedPage]->setSelected(false);
 	}
@@ -318,14 +366,24 @@ void XournalWidget::onScrolled() {
 
 	int viewHeight = allocation.height;
 
+	bool twoPages = getControl()->getSettings()->isShowTwoPages();
+
 	if (scrollY < 1) {
-		control->firePageSelected(0);
-		viewPages[0]->deleteViewBuffer();
+		if (twoPages && viewPagesLen > 1 && viewPages[1]->isSelected()) {
+			// page 2 already selected
+		} else {
+			control->firePageSelected(0);
+		}
 		return;
 	}
 
 	int mostPageNr = 0;
 	double mostPagePercent = 0;
+
+	// next four pages are not marked as invisible,
+	// because usually you scroll forward
+
+	int visibelPageAdd = 4;
 
 	for (int page = 0; page < viewPagesLen; page++) {
 		PageView * p = viewPages[page];
@@ -338,10 +396,10 @@ void XournalWidget::onScrolled() {
 		int pageHeight = p->getDisplayHeight();
 
 		if (y > scrollY + viewHeight) {
-			p->deleteViewBuffer();
+			p->setIsVisibel(false);
 			for (; page < viewPagesLen; page++) {
 				p = viewPages[page];
-				p->deleteViewBuffer();
+				p->setIsVisibel(false);
 			}
 
 			break;
@@ -362,12 +420,14 @@ void XournalWidget::onScrolled() {
 				mostPagePercent = percent;
 				mostPageNr = page;
 			}
+
+			p->setIsVisibel(true);
 		} else {
-			p->deleteViewBuffer();
+			p->setIsVisibel(false);
 		}
 	}
 
-	if (getControl()->getSettings()->isShowTwoPages() && mostPageNr < viewPagesLen - 1) {
+	if (twoPages && mostPageNr < viewPagesLen - 1) {
 		GValue pY1 = { 0 };
 		g_value_init(&pY1, G_TYPE_INT);
 		GValue pY2 = { 0 };
@@ -378,7 +438,6 @@ void XournalWidget::onScrolled() {
 		gtk_container_child_get_property(GTK_CONTAINER(widget), viewPages[mostPageNr + 1]->getWidget(), "y", &pY2);
 		int y2 = g_value_get_int(&pY2);
 
-		// TODO: does not work for first and second page... why?
 		if (y1 != y2 || !viewPages[mostPageNr + 1]->isSelected()) {
 			// if the second page is selected DON'T select the first page.
 			// Only select the first page if none is selected

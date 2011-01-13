@@ -62,6 +62,8 @@ public:
 
 	virtual void deleteViewBuffer();
 
+	void setIsVisibel(bool visibel);
+
 	bool isSelected();
 
 	void endText();
@@ -76,6 +78,10 @@ public:
 	bool paste();
 
 	bool actionDelete();
+
+	int getLastVisibelTime();
+
+	int getBufferPixels();
 public:
 	// Redrawable
 	void redrawDocumentRegion(double x1, double y1, double x2, double y2);
@@ -170,6 +176,11 @@ private:
 	 * Search handling
 	 */
 	SearchControl * search;
+
+	/**
+	 * Unixtimestam when the page was last time in the visibel area
+	 */
+	int lastVisibelTime;
 
 	friend class InsertImageRunnable;
 };

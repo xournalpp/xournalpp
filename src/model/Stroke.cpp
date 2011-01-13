@@ -260,6 +260,9 @@ bool Stroke::intersects(double x, double y, double halfEraserSize, double * gap)
 
 		if (px >= x1 && py >= y1 && px <= x2 && py <= y2) {
 			this->splitIndex = i;
+			if (gap) {
+				*gap = 0;
+			}
 			return true;
 		}
 
@@ -279,6 +282,12 @@ bool Stroke::intersects(double x, double y, double halfEraserSize, double * gap)
 				double centerX = (lastX + x) / 2;
 				double centerY = (lastY + y) / 2;
 				double distance = hypot(x - centerX, y - centerY);
+
+				// we should calculate the length of the line within the rectangle, to find out
+				// the distance from the border to the point, but the stroken are not rectangular
+				// so we can do it simpler
+				distance -= hypot((x2 - x1) / 2, (y2 - y1) / 2);
+
 				if (distance <= (len / 2) + 0.1) {
 					this->splitIndex = i;
 

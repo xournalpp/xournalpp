@@ -31,6 +31,12 @@ GzOutputStream::GzOutputStream(String filename) {
 	}
 }
 
+GzOutputStream::~GzOutputStream() {
+	if (this->fp) {
+		close();
+	}
+}
+
 String GzOutputStream::getLastError() {
 	return this->error;
 }
@@ -42,6 +48,7 @@ void GzOutputStream::write(const char * data, int len) {
 void GzOutputStream::close() {
 	if (this->fp) {
 		gzclose(this->fp);
+		this->fp = NULL;
 	}
 }
 

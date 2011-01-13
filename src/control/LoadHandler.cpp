@@ -18,6 +18,7 @@ LoadHandler::LoadHandler() :
 	attributeNames = NULL;
 	attributeValues = NULL;
 	elementName = NULL;
+	this->pdfFilenameParsed = false;
 
 	page = NULL;
 	layer = NULL;
@@ -139,13 +140,12 @@ void LoadHandler::parseStart() {
 void LoadHandler::parseContents() {
 	if (strcmp(elementName, "page") == 0) {
 		this->pos = PARSER_POS_IN_PAGE;
-		this->page = new XojPage();
-		this->page->reference();
 
 		double width = getAttribDouble("width");
 		double height = getAttribDouble("height");
 
-		this->doc.setPageSize(page, width, height);
+		this->page = new XojPage(width, height);
+		this->page->reference();
 
 		this->doc.addPage(this->page);
 	} else if (strcmp(elementName, "title") == 0) {
@@ -240,7 +240,11 @@ void LoadHandler::parseBgPixmap() {
 void LoadHandler::parseBgPdf() {
 	int pageno = getAttribInt("pageno");
 
-	if (!doc.isPdfDocumentLoaded()) {
+
+	page->setBackgroundPdfPageNr(pageno - 1);
+
+
+	if (!this->pdfFilenameParsed) {
 		const char * domain = getAttrib("domain");
 		const char * sFilename = getAttrib("filename");
 		String filename;
@@ -251,6 +255,8 @@ void LoadHandler::parseBgPdf() {
 		}
 
 		filename = sFilename;
+
+		this->pdfFilenameParsed = true;
 
 		if (!strcmp("absolute", domain)) { // Absolute OR relative path
 			if (!g_file_test(sFilename, G_FILE_TEST_EXISTS)) {
@@ -282,16 +288,17 @@ void LoadHandler::parseBgPdf() {
 
 		if (g_file_test(filename.c_str(), G_FILE_TEST_EXISTS)) {
 			doc.readPdf(filename, false);
+			if(!doc.getLastErrorMsg().isEmpty()) {
+				error("Error reading PDF: %s", doc.getLastErrorMsg().c_str());
+			}
 		} else {
 			if (!strcmp("attach", domain)) {
-				attachPdfFileNotFound = "Attached PDF";
+				error("Attached PDF not found");
 			} else {
-				attachPdfFileNotFound = filename;
+				error("PDF not found: \"%s\"", filename.c_str());
 			}
 		}
 	}
-
-	page->setBackgroundPdfPageNr(pageno - 1);
 }
 
 void LoadHandler::parsePage() {
@@ -594,6 +601,8 @@ bool LoadHandler::parseXml() {
 
 		if (error) {
 			g_warning("error: %s\n", error->message);
+			valid = false;
+			break;
 		}
 	} while (len >= 0 && valid && !error);
 
@@ -631,6 +640,8 @@ Document * LoadHandler::loadDocument(String filename) {
 	}
 
 	xournalFilename = filename;
+
+	this->pdfFilenameParsed = false;
 
 	if (!parseXml()) {
 		closeFile();

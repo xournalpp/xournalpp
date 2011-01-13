@@ -183,13 +183,37 @@ stroken are not drawn under the cursor &lt;/i&gt;</property>
                   </packing>
                 </child>
                 <child>
+                  <widget class="GtkHBox" id="hbox20">
+                    <property name="visible">True</property>
+                    <child>
+                      <widget class="GtkLabel" id="label25">
+                        <property name="visible">True</property>
+                        <property name="label" translatable="yes">&lt;b&gt;Autosave Folder&lt;/b&gt;
+If the document already was saved you can find it in the same folder
+with the extension .autosave.xoj
+It the file was not saved you can find it in your home folder, in
+~/.xournalpp/autosave</property>
+                        <property name="use_markup">True</property>
+                      </widget>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="position">0</property>
+                      </packing>
+                    </child>
+                  </widget>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="position">2</property>
+                  </packing>
+                </child>
+                <child>
                   <widget class="GtkHSeparator" id="hseparator1">
                     <property name="visible">True</property>
                   </widget>
                   <packing>
                     <property name="expand">False</property>
                     <property name="padding">5</property>
-                    <property name="position">2</property>
+                    <property name="position">3</property>
                   </packing>
                 </child>
                 <child>
@@ -210,7 +234,7 @@ stroken are not drawn under the cursor &lt;/i&gt;</property>
                   <packing>
                     <property name="expand">False</property>
                     <property name="padding">5</property>
-                    <property name="position">3</property>
+                    <property name="position">4</property>
                   </packing>
                 </child>
                 <child>
@@ -230,7 +254,7 @@ stroken are not drawn under the cursor &lt;/i&gt;</property>
                   </widget>
                   <packing>
                     <property name="expand">False</property>
-                    <property name="position">4</property>
+                    <property name="position">5</property>
                   </packing>
                 </child>
                 <child>
@@ -241,7 +265,7 @@ stroken are not drawn under the cursor &lt;/i&gt;</property>
                   </widget>
                   <packing>
                     <property name="expand">False</property>
-                    <property name="position">5</property>
+                    <property name="position">6</property>
                   </packing>
                 </child>
                 <child>
@@ -309,7 +333,7 @@ stroken are not drawn under the cursor &lt;/i&gt;</property>
                   <packing>
                     <property name="expand">False</property>
                     <property name="padding">10</property>
-                    <property name="position">6</property>
+                    <property name="position">7</property>
                   </packing>
                 </child>
                 <child>
@@ -341,11 +365,8 @@ stroken are not drawn under the cursor &lt;/i&gt;</property>
                   </widget>
                   <packing>
                     <property name="expand">False</property>
-                    <property name="position">7</property>
+                    <property name="position">8</property>
                   </packing>
-                </child>
-                <child>
-                  <placeholder/>
                 </child>
                 <child>
                   <widget class="GtkHSeparator" id="hseparator2">

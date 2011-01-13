@@ -110,7 +110,6 @@ public:
 	cairo_surface_t * getPreview();
 	void setPreview(cairo_surface_t * preview);
 private:
-	void updatePageSize(XojPage * p);
 
 	void buildContentsModel();
 	void buildTreeContentsModel(GtkTreeIter *parent, PopplerIndexIter *iter);
