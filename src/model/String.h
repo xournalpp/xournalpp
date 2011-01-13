@@ -33,6 +33,7 @@ public:
 
 	void operator +=(const String & str);
 	void operator +=(const char * str);
+	void operator +=(int i);
 
 	String replace(String search, String replace) const;
 

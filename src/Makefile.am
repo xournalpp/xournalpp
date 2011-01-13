@@ -16,6 +16,7 @@ xournalpp_SOURCES = \
 	model/StringBuffer.cpp \
 	model/XFont.cpp \
 	model/LinkDestination.cpp \
+	model/FormatDefinitions.cpp \
 	control/Settings.cpp \
 	control/LoadHandler.cpp \
 	control/SaveHandler.cpp \
@@ -32,6 +33,7 @@ xournalpp_SOURCES = \
 	gui/PdfPagesDialog.cpp \
 	gui/ImagesDialog.cpp \
 	gui/ExportDialog.cpp \
+	gui/FormatDialog.cpp \
 	gui/widgets/ZoomCallib.cpp \
 	gui/widgets/SelectColor.cpp \
 	gui/widgets/gtkmenutooltogglebutton.cpp \

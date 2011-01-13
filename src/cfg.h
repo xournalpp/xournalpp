@@ -19,6 +19,9 @@
 #define METADATA_FILE 	    "xo-metadata.xml"
 #define METADATA_MAX_ITEMS	50
 
+#define ENABLE_XINPUT_BUGFIX
+
+
 #define ENABLE_NLS
 
 #endif /* __CONFIG_H__ */

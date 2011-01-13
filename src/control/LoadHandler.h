@@ -81,6 +81,8 @@ private:
 
 	String filename;
 
+	bool pdfFilenameParsed;
+
 	ParserPosition pos;
 
 	String creator;
@@ -95,7 +97,6 @@ private:
 	Image * image;
 
 	String xournalFilename;
-	String attachPdfFileNotFound;
 
 	GError * error;
 	const gchar **attributeNames;

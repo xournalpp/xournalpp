@@ -112,6 +112,8 @@ private:
 	static bool onKeyReleaseCallback(GtkWidget *widget, GdkEventKey *event, XournalWidget * xournal);
 	bool onKeyPressEvent(GtkWidget *widget, GdkEventKey *event);
 	bool onKeyReleaseEvent(GdkEventKey *event);
+
+	static gboolean clearMemoryTimer(XournalWidget * widget);
 private:
 	GtkWidget * widget;
 	double margin;
@@ -125,6 +127,12 @@ private:
 
 	int currentPage;
 	int lastSelectedPage;
+
+
+	/**
+	 * Memory cleanup timeout
+	 */
+	int cleanupTimeout;
 };
 
 #endif /* __XOURNALWIDGET_H__ */

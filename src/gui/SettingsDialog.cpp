@@ -255,7 +255,6 @@ void SettingsDialog::save() {
 	settings->setScrollbarOnLeft(getCheckbox("cbShowScrollbarLeft"));
 	settings->setAutoloadPdfXoj(getCheckbox("cbAutoloadXoj"));
 	settings->setAutosaveEnabled(getCheckbox("cbAutosave"));
-	// TODO: enable autosave
 
 	GtkWidget * colorBorder = get("colorBorder");
 	GdkColor color = { 0 };

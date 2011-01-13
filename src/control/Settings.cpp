@@ -109,6 +109,9 @@ void Settings::parseData(xmlNodePtr cur, SElement & elem) {
 			if (sType.equals("int")) {
 				int i = atoi((const char *) value);
 				elem.setInt((const char *) name, i);
+			} else if (sType.equals("double")) {
+				double d = atof((const char *) value);
+				elem.setDouble((const char *) name, d);
 			} else if (sType.equals("hex")) {
 				int i = 0;
 				if (sscanf((const char *) value, "%x", &i)) {
@@ -557,6 +560,12 @@ void Settings::saveData(xmlNodePtr root, String name, SElement & elem) {
 			char * tmp = g_strdup_printf("%i", attrib.iValue);
 			value = tmp;
 			g_free(tmp);
+		} else if (attrib.type == ATTRIBUTE_TYPE_DOUBLE) {
+			type = "double";
+
+			char * tmp = g_strdup_printf("%lf", attrib.dValue);
+			value = tmp;
+			g_free(tmp);
 		} else if (attrib.type == ATTRIBUTE_TYPE_INT_HEX) {
 			type = "hex";
 
@@ -577,6 +586,11 @@ void Settings::saveData(xmlNodePtr root, String name, SElement & elem) {
 		xmlSetProp(at, (const xmlChar *) "name", (const xmlChar *) aname.c_str());
 		xmlSetProp(at, (const xmlChar *) "type", (const xmlChar *) type.c_str());
 		xmlSetProp(at, (const xmlChar *) "value", (const xmlChar *) value.c_str());
+
+		if (!attrib.comment.isEmpty()) {
+			xmlNodePtr com = xmlNewComment((const xmlChar *) attrib.comment.c_str());
+			xmlAddPrevSibling(xmlNode, com);
+		}
 	}
 
 	std::map<String, SElement>::iterator i;
@@ -749,9 +763,8 @@ void Settings::checkCanXInput() {
 	while (devList != NULL) {
 		device = (GdkDevice *) devList->data;
 		if (device != gdk_device_get_core_pointer()) {
-			/* get around a GDK bug: map the valuator range CORRECTLY to [0,1] */
 
-			// TODO: TEsten
+			// get around a GDK bug: map the valuator range CORRECTLY to [0,1]
 #ifdef ENABLE_XINPUT_BUGFIX
 			gdk_device_set_axis_use(device, 0, GDK_AXIS_IGNORE);
 			gdk_device_set_axis_use(device, 1, GDK_AXIS_IGNORE);
@@ -977,6 +990,11 @@ SElement & SElement::child(String name) {
 	return this->element->children[name];
 }
 
+void SElement::setComment(const String name, const String comment) {
+	SAttribute & attrib = this->element->attributes[name];
+	attrib.comment = comment;
+}
+
 void SElement::setIntHex(const String name, const int value) {
 	SAttribute & attrib = this->element->attributes[name];
 	attrib.iValue = value;
@@ -999,6 +1017,28 @@ void SElement::setString(const String name, const String value) {
 	SAttribute & attrib = this->element->attributes[name];
 	attrib.sValue = value;
 	attrib.type = ATTRIBUTE_TYPE_STRING;
+}
+
+void SElement::setDouble(const String name, const double value) {
+	SAttribute & attrib = this->element->attributes[name];
+	attrib.dValue = value;
+	attrib.type = ATTRIBUTE_TYPE_DOUBLE;
+}
+
+bool SElement::getDouble(const String name, double & value) {
+	SAttribute & attrib = this->element->attributes[name];
+	if (attrib.type == ATTRIBUTE_TYPE_NONE) {
+		this->element->attributes.erase(name);
+		return false;
+	}
+
+	if (attrib.type != ATTRIBUTE_TYPE_DOUBLE) {
+		return false;
+	}
+
+	value = attrib.dValue;
+
+	return true;
 }
 
 bool SElement::getInt(const String name, int & value) {

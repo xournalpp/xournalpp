@@ -5,6 +5,7 @@
 #include "../gui/SettingsDialog.h"
 #include "../gui/PdfPagesDialog.h"
 #include "../gui/ImagesDialog.h"
+#include "../gui/FormatDialog.h"
 #include "../gui/SelectBackgroundColorDialog.h"
 #include "../cfg.h"
 #include "LoadHandler.h"
@@ -12,6 +13,7 @@
 #include "ev-metadata-manager.h"
 #include "../pdf/PdfExport.h"
 #include "../util/CrashHandler.h"
+#include "../model/FormatDefinitions.h"
 
 #include <stdio.h>
 #include <string.h>
@@ -21,80 +23,6 @@
 // TODO: Check for error log on startup, also check for emergency save document!
 
 
-/*
- // the paper sizes dialog
-
- GtkWidget *papersize_dialog;
- int papersize_std, papersize_unit;
- double papersize_width, papersize_height;
- gboolean papersize_need_init, papersize_width_valid, papersize_height_valid;
-
- #define STD_SIZE_A4 0
- #define STD_SIZE_A4R 1
- #define STD_SIZE_LETTER 2
- #define STD_SIZE_LETTER_R 3
- #define STD_SIZE_CUSTOM 4
-
- double unit_sizes[4] = {28.346, 72., 72./DISPLAY_DPI_DEFAULT, 1.};
- double std_widths[STD_SIZE_CUSTOM] =  {595.27, 841.89, 612., 792.};
- double std_heights[STD_SIZE_CUSTOM] = {841.89, 595.27, 792., 612.};
- double std_units[STD_SIZE_CUSTOM] = {UNIT_CM, UNIT_CM, UNIT_IN, UNIT_IN};
-
- void
- on_journalPaperSize_activate           (GtkMenuItem     *menuitem,
- gpointer         user_data)
- {
- int i, response;
- struct Page *pg;
- GList *pglist;
-
- end_text();
- papersize_dialog = create_papersizeDialog();
- papersize_width = ui.cur_page->width;
- papersize_height = ui.cur_page->height;
- papersize_unit = ui.default_unit;
- unit_sizes[UNIT_PX] = 1./DEFAULT_ZOOM;
- //  if (ui.cur_page->bg->type == BG_PIXMAP) papersize_unit = UNIT_PX;
- papersize_std = STD_SIZE_CUSTOM;
- for (i=0;i<STD_SIZE_CUSTOM;i++)
- if (fabs(papersize_width - std_widths[i])<0.1 &&
- fabs(papersize_height - std_heights[i])<0.1)
- { papersize_std = i; papersize_unit = std_units[i]; }
- papersize_need_init = TRUE;
- papersize_width_valid = papersize_height_valid = TRUE;
-
- gtk_widget_show(papersize_dialog);
- on_comboStdSizes_changed(GTK_COMBO_BOX(g_object_get_data(
- G_OBJECT(papersize_dialog), "comboStdSizes")), NULL);
- gtk_dialog_set_default_response(GTK_DIALOG(papersize_dialog), GTK_RESPONSE_OK);
-
- response = gtk_dialog_run(GTK_DIALOG(papersize_dialog));
- gtk_widget_destroy(papersize_dialog);
- if (response != GTK_RESPONSE_OK) return;
-
- pg = ui.cur_page;
- for (pglist = journal.pages; pglist!=NULL; pglist = pglist->next) {
- if (ui.bg_apply_all_pages) pg = (struct Page *)pglist->data;
- prepare_new_undo();
- if (ui.bg_apply_all_pages) {
- if (pglist->next!=NULL) undo->multiop |= MULTIOP_CONT_REDO;
- if (pglist->prev!=NULL) undo->multiop |= MULTIOP_CONT_UNDO;
- }
- undo->type = ITEM_PAPER_RESIZE;
- undo->page = pg;
- undo->val_x = pg->width;
- undo->val_y = pg->height;
- if (papersize_width_valid) pg->width = papersize_width;
- if (papersize_height_valid) pg->height = papersize_height;
- make_page_clipbox(pg);
- update_canvas_bg(pg);
- if (!ui.bg_apply_all_pages) break;
- }
- do_switch_page(ui.pageno, TRUE, TRUE);
- }
-
-
- */
 Control::Control() {
 	this->win = NULL;
 	recent = new RecentManager();
@@ -121,6 +49,11 @@ Control::Control() {
 	this->hiddenFullscreenWidgets = NULL;
 	this->sidebarHidden = false;
 	this->selection = NULL;
+	this->autosaveTimeout = 0;
+	this->autosaveHandler = NULL;
+
+	this->defaultWidth = -1;
+	this->defaultHeight = -1;
 
 	// Init Metadata Manager
 	ev_metadata_manager_init();
@@ -149,6 +82,13 @@ Control::Control() {
 
 Control::~Control() {
 	g_source_remove(this->changeTimout);
+	this->enableAutosave(false);
+
+	if (!this->lastAutosaveFilename.isEmpty()) {
+		// delete old autosave file
+		GFile * file = g_file_new_for_path(this->lastAutosaveFilename.c_str());
+		g_file_delete(file, NULL, NULL);
+	}
 
 	delete this->clipboardHandler;
 	this->clipboardHandler = NULL;
@@ -226,6 +166,8 @@ void Control::initWindow(MainWindow * win) {
 	updateDeletePageButton();
 
 	this->clipboardHandler = new ClipboardHandler(this, win->getXournal()->getWidget());
+
+	this->enableAutosave(settings->isAutosaveEnabled());
 }
 
 ZoomControl * Control::getZoomControl() {
@@ -234,6 +176,59 @@ ZoomControl * Control::getZoomControl() {
 
 Cursor * Control::getCursor() {
 	return cursor;
+}
+
+gpointer Control::autosaveThread(Control * control) {
+	String filename = control->doc->getFilename();
+	if (filename.isEmpty()) {
+		filename = Util::getAutosaveFilename();
+	} else {
+		if (filename.length() > 5 && filename.substring(-4) == ".xoj") {
+			filename = filename.substring(0, -4);
+		}
+		filename += ".autosave.xoj";
+	}
+
+	if (!control->lastAutosaveFilename.isEmpty() && control->lastAutosaveFilename != filename) {
+		GFile * file = g_file_new_for_path(control->lastAutosaveFilename.c_str());
+		g_file_delete(file, NULL, NULL);
+	}
+	control->lastAutosaveFilename = filename;
+
+	GzOutputStream * out = new GzOutputStream(filename);
+	control->autosaveHandler->saveTo(out, filename);
+
+	delete control->autosaveHandler;
+	control->autosaveHandler = NULL;
+	delete out;
+
+	return 0;
+}
+
+bool Control::autosaveCallback(Control * control) {
+	printf("Info: autosave document...\n");
+
+	if (control->autosaveHandler) {
+		delete control->autosaveHandler;
+	}
+	control->autosaveHandler = new SaveHandler();
+	control->autosaveHandler->prepareSave(control->doc);
+
+	g_thread_create((GThreadFunc) autosaveThread, control, false, NULL);
+
+	return true;
+}
+
+void Control::enableAutosave(bool enable) {
+	if (this->autosaveTimeout) {
+		g_source_remove(this->autosaveTimeout);
+		this->autosaveTimeout = 0;
+	}
+
+	if (enable) {
+		int timeout = settings->getAutosaveTimeout() * 60;
+		this->autosaveTimeout = g_timeout_add_seconds(timeout, (GSourceFunc) autosaveCallback, this);
+	}
 }
 
 void Control::updatePageNumbers(int page, int pdfPage) {
@@ -426,7 +421,7 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent *even
 		deleteCurrentLayer();
 		break;
 	case ACTION_PAPER_FORMAT:
-		xxxxx();
+		paperFormat();
 		break;
 	case ACTION_PAPER_BACKGROUND_COLOR:
 		changePageBackgroundColor();
@@ -803,7 +798,12 @@ void Control::enableFullscreen(bool enabled, bool presentation) {
 void Control::addDefaultPage() {
 	PageInsertType type = settings->getPageInsertType();
 
-	XojPage * page = new XojPage();
+	double width = 0;
+	double heigth = 0;
+
+	getDefaultPagesize(width, heigth);
+
+	XojPage * page = new XojPage(width, heigth);
 	page->setBackgroundColor(settings->getPageBackgroundColor());
 
 	if (PAGE_INSERT_TYPE_PLAIN == type) {
@@ -819,6 +819,65 @@ void Control::addDefaultPage() {
 	doc->addPage(page);
 
 	updateDeletePageButton();
+}
+
+void Control::getDefaultPagesize(double & width, double & height) {
+	if (this->defaultHeight < 0) {
+		// try to load /etc/papersize, TODO: solution for other operating systems
+
+		GFile * papersize = g_file_new_for_path("/etc/papersize");
+
+		char * contents;
+		gsize length = 0;
+		String paper = "A4";
+
+		if (g_file_load_contents(papersize, NULL, &contents, &length, NULL, NULL)) {
+			paper = contents;
+			g_free(contents);
+		}
+		g_object_unref(papersize);
+
+		SElement & format = settings->getElement("format");
+		format.setComment("paperformat",
+				"Available values are: system, A4, Letter, Custom: For custom you have to create the tags width and height.");
+		String settingsPaperFormat;
+
+		double w = 0;
+		double h = 0;
+
+		if (format.getString("paperformat", settingsPaperFormat)) {
+			if (settingsPaperFormat == "system") {
+				// nothing to do
+			} else if (settingsPaperFormat == "Custom") {
+				if (format.getDouble("width", w) && format.getDouble("height", h)) {
+					width = w;
+					height = h;
+					this->defaultHeight = h;
+					this->defaultWidth = w;
+					return;
+				}
+			} else {
+				paper = settingsPaperFormat;
+			}
+		} else {
+			format.setString("paperformat", "system");
+		}
+
+		int id = 0;
+
+		for (int i = 0; i < XOJ_FORMAT_COUNT; i++) {
+			if (paper == XOJ_FORMATS[i].name) {
+				id = i;
+				break;
+			}
+		}
+
+		this->defaultWidth = XOJ_FORMATS[id].width;
+		this->defaultHeight = XOJ_FORMATS[id].height;
+	}
+
+	width = this->defaultWidth;
+	height = this->defaultHeight;
 }
 
 void Control::updateDeletePageButton() {
@@ -859,7 +918,11 @@ void Control::insertNewPage(int position) {
 		position = doc->getPageCount();
 	}
 
-	XojPage * page = new XojPage();
+	double width = 0;
+	double height = 0;
+	getDefaultPagesize(width, height);
+
+	XojPage * page = new XojPage(width, height);
 	page->setBackgroundColor(settings->getPageBackgroundColor());
 
 	if (PAGE_INSERT_TYPE_PLAIN == type) {
@@ -919,6 +982,9 @@ void Control::insertNewPage(int position) {
 
 			// no need to set a type, if we set the page number the type is also set
 			page->setBackgroundPdfPageNr(selected);
+
+			poppler_page_get_size(doc->getPdfPage(selected), &width, &height);
+			page->setSize(width, height);
 		}
 	}
 
@@ -1151,6 +1217,25 @@ void Control::updateBackgroundSizeButton() {
 
 	// PDF page size is defined, you cannot change it
 	gtk_widget_set_sensitive(pageSize, bg != BACKGROUND_TYPE_PDF);
+}
+
+void Control::paperFormat() {
+	XojPage * page = getCurrentPage();
+	if (!page || page->getBackgroundType() == BACKGROUND_TYPE_PDF) {
+		return;
+	}
+
+	FormatDialog * dlg = new FormatDialog(settings, page->getWidth(), page->getHeight());
+	dlg->show();
+
+	double width = dlg->getWidth();
+	double height = dlg->getHeight();
+
+	if (width > 0) {
+		doc->setPageSize(page, width, height);
+	}
+
+	delete dlg;
 }
 
 void Control::changePageBackgroundColor() {
@@ -1399,7 +1484,8 @@ void Control::toolChanged() {
 
 	if (type != TOOL_SELECT_RECT && type != TOOL_SELECT_REGION && type != TOOL_SELECT_OBJECT) {
 		clearSelection();
-	} else if (type != TOOL_TEXT) {
+	}
+	if (type != TOOL_TEXT) {
 		if (win) {
 			win->getXournal()->endTextSelection();
 		}
@@ -1507,6 +1593,8 @@ void Control::showSettings() {
 	}
 
 	win->updateScrollbarSidebarPosition();
+
+	enableAutosave(settings->isAutosaveEnabled());
 
 	this->zoom->setZoom100(settings->getDisplayDpi() / 72.0);
 	delete dlg;

@@ -17,11 +17,12 @@
 #include <glib.h>
 #include "../model/XFont.h"
 #include "Tool.h"
+#include "../cfg.h"
 
 #include <map>
 
 enum AttributeType {
-	ATTRIBUTE_TYPE_NONE, ATTRIBUTE_TYPE_STRING, ATTRIBUTE_TYPE_INT, ATTRIBUTE_TYPE_INT_HEX, ATTRIBUTE_TYPE_BOOLEAN,
+	ATTRIBUTE_TYPE_NONE, ATTRIBUTE_TYPE_STRING, ATTRIBUTE_TYPE_INT, ATTRIBUTE_TYPE_DOUBLE, ATTRIBUTE_TYPE_INT_HEX, ATTRIBUTE_TYPE_BOOLEAN,
 };
 
 class SAttribute {
@@ -31,8 +32,11 @@ public:
 public:
 	String sValue;
 	int iValue;
+	double dValue;
 
 	AttributeType type;
+
+	String comment;
 };
 
 class SElement;
@@ -67,10 +71,15 @@ public:
 
 	void setIntHex(const String name, const int value);
 	void setInt(const String name, const int value);
+	void setDouble(const String name, const double value);
 	void setBool(const String name, const bool value);
 	void setString(const String name, const String value);
 
+	void setComment(const String name, const String comment);
+
+
 	bool getInt(const String name, int & value);
+	bool getDouble(const String name, double & value);
 	bool getBool(const String name, bool & value);
 	bool getString(const String name, String & value);
 
