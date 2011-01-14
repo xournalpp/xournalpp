@@ -3,6 +3,7 @@
 #include "../gettext.h"
 #include <gdk/gdk.h>
 #include "../control/Selection.h"
+#include "../control/EditSelection.h"
 
 //#define SHOW_ELEMENT_BOUNDS
 
@@ -265,8 +266,6 @@ void DocumentView::paintBackgroundRuled() {
 }
 
 void DocumentView::drawSelection(cairo_t * cr, EditSelection * selection) {
-	cairo_translate(cr, -selection->getX(), -selection->getY());
-
 	for (GList * l = selection->getElements(); l != NULL; l = l->next) {
 		Element * e = (Element *) l->data;
 		drawElement(cr, e);

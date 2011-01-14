@@ -92,7 +92,7 @@ private:
 	double syy;
 };
 
-// TODO: line funktioniert nicht immer korrekt
+// TODO:recognizer does not always work corret, circle is OK, but lines are usually to long
 
 ShapeRecognizer::ShapeRecognizer() {
 	resetRecognizer();

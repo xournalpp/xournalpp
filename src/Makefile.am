@@ -14,7 +14,7 @@ xournalpp_SOURCES = \
 	model/Stroke.cpp \
 	model/String.cpp \
 	model/StringBuffer.cpp \
-	model/XFont.cpp \
+	model/Font.cpp \
 	model/LinkDestination.cpp \
 	model/FormatDefinitions.cpp \
 	control/Settings.cpp \
@@ -26,6 +26,7 @@ xournalpp_SOURCES = \
 	control/ShapeRecognizer.cpp \
 	control/BackgroundThreadHandler.cpp \
 	control/Selection.cpp \
+	control/EditSelection.cpp \
 	control/SearchControl.cpp \
 	control/ClipboardHandler.cpp \
 	gui/GladeGui.cpp \

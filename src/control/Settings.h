@@ -15,7 +15,7 @@
 #include <libxml/xmlreader.h>
 #include <gtk/gtk.h>
 #include <glib.h>
-#include "../model/XFont.h"
+#include "../model/Font.h"
 #include "Tool.h"
 #include "../cfg.h"
 
@@ -166,8 +166,8 @@ public:
 	/**
 	 * The last used font
 	 */
-	XFont & getFont();
-	void setFont(const XFont & font);
+	XojFont & getFont();
+	void setFont(const XojFont & font);
 
 	/**
 	 * The selected Toolbar
@@ -311,7 +311,7 @@ private:
 	/**
 	 * The last used font
 	 */
-	XFont font;
+	XojFont font;
 
 	/**
 	 * The display resolution, in pixels per inch

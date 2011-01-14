@@ -318,10 +318,14 @@ public:
 		GtkWidget* cw = gtk_color_selection_dialog_get_color_selection(GTK_COLOR_SELECTION_DIALOG(colorDlg));
 		gtk_color_selection_get_current_color(GTK_COLOR_SELECTION(cw), &color);
 
-		this->color =Util::gdkColorToInt(color);
+		this->color = Util::gdkColorToInt(color);
 	}
 
 	bool colorEqualsMoreOreLess(int color) {
+		if (color == -1) {
+			return false;
+		}
+
 		int r1 = (color & 0xff0000) >> 16;
 		int g1 = (color & 0xff00) >> 8;
 		int b1 = (color & 0xff);
@@ -833,15 +837,34 @@ public:
 	}
 
 	virtual void activated(GdkEvent *event, GtkMenuItem *menuitem, GtkToolButton *toolbutton) {
-		printf("font selected\n");
-		// TODO: implement font handling
-		//		GTK_FONT_BUTTON(fontButton)
-		//		gtk_font_button_get_font_name
-		//
-		//		printf();
+		GtkFontButton * button = GTK_FONT_BUTTON(fontButton);
+
+		String name = gtk_font_button_get_font_name(button);
+
+		int pos = name.lastIndexOf(" ");
+		this->font.setName(name.substring(0, pos));
+		this->font.setSize(atof(name.substring(pos+1).c_str()));
+
+		handler->actionPerformed(ACTION_SELECT_FONT, GROUP_NOGROUP, event, menuitem, NULL, true);
 	}
 
 	virtual ~FontButton() {
+	}
+
+
+	void setFont(XojFont & font) {
+		this->font = font;
+		GtkFontButton * button = GTK_FONT_BUTTON(fontButton);
+
+		String txt = font.getName();
+		txt += " ";
+		txt += font.getSize();
+
+		gtk_font_button_set_font_name(button, txt.c_str());
+	}
+
+	XojFont getFont() {
+		return font;
 	}
 
 protected:
@@ -881,6 +904,8 @@ private:
 	GtkWidget * fontButton;
 	GladeGui * gui;
 	String description;
+
+	XojFont font;
 };
 
 #endif /* __TOOLITEMS_H__ */

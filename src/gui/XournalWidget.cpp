@@ -565,6 +565,17 @@ void XournalWidget::pageDeleted(int page) {
 	layoutPages();
 }
 
+TextEditor * XournalWidget::getTextEditor() {
+	for (int i = 0; i < this->viewPagesLen; i++) {
+		PageView * v = this->viewPages[i];
+		if (v->getTextEditor()) {
+			return v->getTextEditor();
+		}
+	}
+
+	return NULL;
+}
+
 void XournalWidget::pageInserted(int page) {
 	PageView ** lastViewPages = this->viewPages;
 

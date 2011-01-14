@@ -34,6 +34,7 @@ public:
 	void operator +=(const String & str);
 	void operator +=(const char * str);
 	void operator +=(int i);
+	void operator +=(double d);
 
 	String replace(String search, String replace) const;
 

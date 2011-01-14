@@ -14,7 +14,7 @@
 
 #include <gtk/gtk.h>
 #include "../model/String.h"
-#include "Selection.h"
+#include "EditSelection.h"
 
 class ClipboardListener {
 public:

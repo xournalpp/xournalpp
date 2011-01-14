@@ -311,6 +311,14 @@ int MainWindow::getCurrentLayer() {
 	return toolbar->getSelectedLayer();
 }
 
+void MainWindow::setFontButtonFont(XojFont & font) {
+	toolbar->setFontButtonFont(font);
+}
+
+XojFont MainWindow::getFontButtonFont() {
+	return toolbar->getFontButtonFont();
+}
+
 void MainWindow::updatePageNumbers(int page, int pagecount, int pdfpage) {
 	GtkWidget * spinPageNo = getSpinPageNo();
 

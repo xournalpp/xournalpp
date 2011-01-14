@@ -14,7 +14,7 @@
 
 #include "Element.h"
 #include "String.h"
-#include "XFont.h"
+#include "Font.h"
 #include <gtk/gtk.h>
 
 class Text: public Element {
@@ -23,8 +23,8 @@ public:
 	virtual ~Text();
 
 public:
-	void setFont(PangoFontDescription * font);
-	XFont & getFont();
+	void setFont(XojFont & font);
+	XojFont & getFont();
 
 	String getText();
 	void setText(String text);
@@ -37,7 +37,7 @@ public:
 protected:
 	virtual void calcSize();
 private:
-	XFont font;
+	XojFont font;
 
 	String text;
 

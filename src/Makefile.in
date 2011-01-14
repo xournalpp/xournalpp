@@ -53,7 +53,7 @@ am_xournalpp_OBJECTS = xournalpp-Page.$(OBJEXT) \
 	xournalpp-Text.$(OBJEXT) xournalpp-Image.$(OBJEXT) \
 	xournalpp-Element.$(OBJEXT) xournalpp-Stroke.$(OBJEXT) \
 	xournalpp-String.$(OBJEXT) xournalpp-StringBuffer.$(OBJEXT) \
-	xournalpp-XFont.$(OBJEXT) xournalpp-LinkDestination.$(OBJEXT) \
+	xournalpp-Font.$(OBJEXT) xournalpp-LinkDestination.$(OBJEXT) \
 	xournalpp-FormatDefinitions.$(OBJEXT) \
 	xournalpp-Settings.$(OBJEXT) xournalpp-LoadHandler.$(OBJEXT) \
 	xournalpp-SaveHandler.$(OBJEXT) \
@@ -62,6 +62,7 @@ am_xournalpp_OBJECTS = xournalpp-Page.$(OBJEXT) \
 	xournalpp-ShapeRecognizer.$(OBJEXT) \
 	xournalpp-BackgroundThreadHandler.$(OBJEXT) \
 	xournalpp-Selection.$(OBJEXT) \
+	xournalpp-EditSelection.$(OBJEXT) \
 	xournalpp-SearchControl.$(OBJEXT) \
 	xournalpp-ClipboardHandler.$(OBJEXT) \
 	xournalpp-GladeGui.$(OBJEXT) xournalpp-AboutDialog.$(OBJEXT) \
@@ -231,7 +232,7 @@ xournalpp_SOURCES = \
 	model/Stroke.cpp \
 	model/String.cpp \
 	model/StringBuffer.cpp \
-	model/XFont.cpp \
+	model/Font.cpp \
 	model/LinkDestination.cpp \
 	model/FormatDefinitions.cpp \
 	control/Settings.cpp \
@@ -243,6 +244,7 @@ xournalpp_SOURCES = \
 	control/ShapeRecognizer.cpp \
 	control/BackgroundThreadHandler.cpp \
 	control/Selection.cpp \
+	control/EditSelection.cpp \
 	control/SearchControl.cpp \
 	control/ClipboardHandler.cpp \
 	gui/GladeGui.cpp \
@@ -373,8 +375,10 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-Cursor.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-Document.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-DocumentView.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-EditSelection.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-Element.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-ExportDialog.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-Font.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-FormatDefinitions.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-FormatDialog.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-GladeGui.Po@am__quote@
@@ -414,7 +418,6 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-ToolMenuHandler.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-UndoRedoHandler.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-Util.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-XFont.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-XournalWidget.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-Xournalpp.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-ZoomCallib.Po@am__quote@
@@ -563,19 +566,19 @@ xournalpp-StringBuffer.obj: model/StringBuffer.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-StringBuffer.obj `if test -f 'model/StringBuffer.cpp'; then $(CYGPATH_W) 'model/StringBuffer.cpp'; else $(CYGPATH_W) '$(srcdir)/model/StringBuffer.cpp'; fi`
 
-xournalpp-XFont.o: model/XFont.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-XFont.o -MD -MP -MF $(DEPDIR)/xournalpp-XFont.Tpo -c -o xournalpp-XFont.o `test -f 'model/XFont.cpp' || echo '$(srcdir)/'`model/XFont.cpp
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-XFont.Tpo $(DEPDIR)/xournalpp-XFont.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='model/XFont.cpp' object='xournalpp-XFont.o' libtool=no @AMDEPBACKSLASH@
+xournalpp-Font.o: model/Font.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-Font.o -MD -MP -MF $(DEPDIR)/xournalpp-Font.Tpo -c -o xournalpp-Font.o `test -f 'model/Font.cpp' || echo '$(srcdir)/'`model/Font.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-Font.Tpo $(DEPDIR)/xournalpp-Font.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='model/Font.cpp' object='xournalpp-Font.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-XFont.o `test -f 'model/XFont.cpp' || echo '$(srcdir)/'`model/XFont.cpp
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-Font.o `test -f 'model/Font.cpp' || echo '$(srcdir)/'`model/Font.cpp
 
-xournalpp-XFont.obj: model/XFont.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-XFont.obj -MD -MP -MF $(DEPDIR)/xournalpp-XFont.Tpo -c -o xournalpp-XFont.obj `if test -f 'model/XFont.cpp'; then $(CYGPATH_W) 'model/XFont.cpp'; else $(CYGPATH_W) '$(srcdir)/model/XFont.cpp'; fi`
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-XFont.Tpo $(DEPDIR)/xournalpp-XFont.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='model/XFont.cpp' object='xournalpp-XFont.obj' libtool=no @AMDEPBACKSLASH@
+xournalpp-Font.obj: model/Font.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-Font.obj -MD -MP -MF $(DEPDIR)/xournalpp-Font.Tpo -c -o xournalpp-Font.obj `if test -f 'model/Font.cpp'; then $(CYGPATH_W) 'model/Font.cpp'; else $(CYGPATH_W) '$(srcdir)/model/Font.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-Font.Tpo $(DEPDIR)/xournalpp-Font.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='model/Font.cpp' object='xournalpp-Font.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-XFont.obj `if test -f 'model/XFont.cpp'; then $(CYGPATH_W) 'model/XFont.cpp'; else $(CYGPATH_W) '$(srcdir)/model/XFont.cpp'; fi`
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-Font.obj `if test -f 'model/Font.cpp'; then $(CYGPATH_W) 'model/Font.cpp'; else $(CYGPATH_W) '$(srcdir)/model/Font.cpp'; fi`
 
 xournalpp-LinkDestination.o: model/LinkDestination.cpp
 @am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-LinkDestination.o -MD -MP -MF $(DEPDIR)/xournalpp-LinkDestination.Tpo -c -o xournalpp-LinkDestination.o `test -f 'model/LinkDestination.cpp' || echo '$(srcdir)/'`model/LinkDestination.cpp
@@ -730,6 +733,20 @@ xournalpp-Selection.obj: control/Selection.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='control/Selection.cpp' object='xournalpp-Selection.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-Selection.obj `if test -f 'control/Selection.cpp'; then $(CYGPATH_W) 'control/Selection.cpp'; else $(CYGPATH_W) '$(srcdir)/control/Selection.cpp'; fi`
+
+xournalpp-EditSelection.o: control/EditSelection.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-EditSelection.o -MD -MP -MF $(DEPDIR)/xournalpp-EditSelection.Tpo -c -o xournalpp-EditSelection.o `test -f 'control/EditSelection.cpp' || echo '$(srcdir)/'`control/EditSelection.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-EditSelection.Tpo $(DEPDIR)/xournalpp-EditSelection.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='control/EditSelection.cpp' object='xournalpp-EditSelection.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-EditSelection.o `test -f 'control/EditSelection.cpp' || echo '$(srcdir)/'`control/EditSelection.cpp
+
+xournalpp-EditSelection.obj: control/EditSelection.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-EditSelection.obj -MD -MP -MF $(DEPDIR)/xournalpp-EditSelection.Tpo -c -o xournalpp-EditSelection.obj `if test -f 'control/EditSelection.cpp'; then $(CYGPATH_W) 'control/EditSelection.cpp'; else $(CYGPATH_W) '$(srcdir)/control/EditSelection.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-EditSelection.Tpo $(DEPDIR)/xournalpp-EditSelection.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='control/EditSelection.cpp' object='xournalpp-EditSelection.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-EditSelection.obj `if test -f 'control/EditSelection.cpp'; then $(CYGPATH_W) 'control/EditSelection.cpp'; else $(CYGPATH_W) '$(srcdir)/control/EditSelection.cpp'; fi`
 
 xournalpp-SearchControl.o: control/SearchControl.cpp
 @am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-SearchControl.o -MD -MP -MF $(DEPDIR)/xournalpp-SearchControl.Tpo -c -o xournalpp-SearchControl.o `test -f 'control/SearchControl.cpp' || echo '$(srcdir)/'`control/SearchControl.cpp

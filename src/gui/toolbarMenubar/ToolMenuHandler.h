@@ -41,6 +41,8 @@ class AbstractToolItem;
 class ToolButton;
 class ToolPageSpinner;
 class ToolPageLayer;
+class FontButton;
+
 
 class ToolMenuHandler {
 public:
@@ -78,6 +80,10 @@ public:
 	int getSelectedLayer();
 	void setLayerCount(int count, int selected);
 
+	void setFontButtonFont(XojFont & font);
+	XojFont getFontButtonFont();
+
+
 	void setTmpDisabled(bool disabled);
 private:
 	void addToolItem(AbstractToolItem * it);
@@ -97,6 +103,7 @@ private:
 
 	ToolPageSpinner * toolPageSpinner;
 	ToolPageLayer * toolPageLayer;
+	FontButton * fontButton;
 
 	ActionHandler * listener;
 	ZoomControl * zoom;

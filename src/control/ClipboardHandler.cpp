@@ -142,6 +142,7 @@ void ClipboardHandler::copy() {
 	cairo_t * crPng = cairo_create(surfacePng);
 	cairo_scale(crPng, dpiFactor, dpiFactor);
 
+	cairo_translate(crPng, -selection->getX(), -selection->getY());
 	view.drawSelection(crPng, this->selection);
 
 	cairo_destroy(crPng);

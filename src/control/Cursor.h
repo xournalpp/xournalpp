@@ -13,7 +13,7 @@
 #define __CURSOR_H__
 
 #include "Control.h"
-#include "Selection.h"
+#include "EditSelection.h"
 
 class Cursor {
 public:

@@ -56,7 +56,7 @@ void UndoRedoHandler::undo() {
 	}
 
 	redoList = g_list_append(redoList, undo);
-	undoList = g_list_remove(undoList, e->data);
+	undoList = g_list_remove_link(undoList, e);
 	fireUpdateUndoRedoButtons(undo->getPages());
 }
 
@@ -82,7 +82,7 @@ void UndoRedoHandler::redo() {
 	}
 
 	undoList = g_list_append(undoList, redo);
-	redoList = g_list_remove(redoList, e->data);
+	redoList = g_list_remove_link(redoList, e);
 	fireUpdateUndoRedoButtons(redo->getPages());
 }
 
@@ -126,7 +126,7 @@ bool UndoRedoHandler::removeUndoAction(UndoAction * action) {
 String UndoRedoHandler::undoDescription() {
 	if (undoList) {
 		GList * l = g_list_last(undoList);
-		UndoAction * a = (UndoAction *) undoList->data;
+		UndoAction * a = (UndoAction *) l->data;
 		if (!a->getText().isEmpty()) {
 			String txt = _("Undo: ");
 			txt += a->getText();
@@ -139,10 +139,11 @@ String UndoRedoHandler::undoDescription() {
 String UndoRedoHandler::redoDescription() {
 	if (redoList) {
 		GList * l = g_list_last(redoList);
-		UndoAction * a = (UndoAction *) redoList->data;
+		UndoAction * a = (UndoAction *) l->data;
 		if (!a->getText().isEmpty()) {
 			String txt = _("Redo: ");
 			txt += a->getText();
+
 			return txt;
 		}
 	}

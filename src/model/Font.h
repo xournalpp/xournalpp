@@ -16,22 +16,18 @@
 #include <gtk/gtk.h>
 
 
-class XFont {
+class XojFont {
 public:
-	XFont();
-	virtual ~XFont();
+	XojFont();
+	virtual ~XojFont();
 
 	String getName();
 	void setName(String name);
 
-	bool isItalic();
-	bool isBold();
-
-	void setItalic(bool italic);
-	void setBold(bool bold);
-
 	double getSize();
 	void setSize(double size);
+
+	void operator =(const XojFont & font);
 private:
 	void updateFontDesc();
 
@@ -39,9 +35,6 @@ private:
 private:
 	String name;
 	double size;
-
-	bool italic;
-	bool bold;
 };
 
 #endif /* __XFONT_H__ */

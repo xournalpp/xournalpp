@@ -29,7 +29,7 @@ class DeleteUndoAction;
 class EraseUndoAction;
 class Selection;
 
-class PageView: public Redrawable, public MemoryCheckObject {
+class PageView: public Redrawable, public virtual MemoryCheckObject {
 public:
 	PageView(XournalWidget * xournal, XojPage * page);
 	virtual ~PageView();
@@ -82,6 +82,9 @@ public:
 	int getLastVisibelTime();
 
 	int getBufferPixels();
+
+	TextEditor * getTextEditor();
+
 public:
 	// Redrawable
 	void redrawDocumentRegion(double x1, double y1, double x2, double y2);

@@ -7,6 +7,7 @@
 #include <glib.h>
 #include "../control/Control.h"
 #include "../view/TextView.h"
+#include "../control/Selection.h"
 #include "../control/ShapeRecognizer.h"
 #include "../util/pixbuf-utils.h"
 #include "../cfg.h"
@@ -81,7 +82,7 @@ int PageView::getLastVisibelTime() {
 }
 
 int PageView::getBufferPixels() {
-	if(crBuffer) {
+	if (crBuffer) {
 		return cairo_image_surface_get_width(crBuffer) * cairo_image_surface_get_height(crBuffer);
 	}
 	return 0;
@@ -300,8 +301,7 @@ void PageView::startText(double x, double y) {
 			text->setX(x);
 			text->setY(y);
 			text->setColor(h->getColor());
-			// TODO: add font handling
-			//			text->setFont();
+			text->setFont(settings->getFont());
 		}
 
 		this->textEditor = new TextEditor(this, text, ownText);
@@ -756,6 +756,10 @@ GdkColor PageView::getSelectionColor() {
 	return widget->style->base[GTK_STATE_SELECTED];
 }
 
+TextEditor * PageView::getTextEditor() {
+	return textEditor;
+}
+
 gboolean PageView::onMouseEnterNotifyEvent(GtkWidget *widget, GdkEventCrossing *event, gpointer user_data) {
 	GList *dev_list;
 	GdkDevice *dev;
@@ -1026,17 +1030,23 @@ bool PageView::onKeyPressEvent(GdkEventKey *event) {
 
 	EditSelection * selection = xournal->getControl()->getSelectionFor(this);
 	if (selection) {
+		int d = 10;
+
+		if (event->state & GDK_MOD1_MASK || event->state & GDK_SHIFT_MASK) {
+			d = 1;
+		}
+
 		if (event->keyval == GDK_Left) {
-			selection->doMove(-1, 0, this, xournal);
+			selection->doMove(-d, 0, this, xournal);
 			return true;
 		} else if (event->keyval == GDK_Up) {
-			selection->doMove(0, -1, this, xournal);
+			selection->doMove(0, -d, this, xournal);
 			return true;
 		} else if (event->keyval == GDK_Right) {
-			selection->doMove(1, 0, this, xournal);
+			selection->doMove(d, 0, this, xournal);
 			return true;
 		} else if (event->keyval == GDK_Down) {
-			selection->doMove(0, 1, this, xournal);
+			selection->doMove(0, d, this, xournal);
 			return true;
 		}
 	}

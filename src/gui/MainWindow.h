@@ -36,6 +36,9 @@ public:
 	void updatePageNumbers(int page, int pagecount, int pdfpage);
 	int getCurrentLayer();
 
+	void setFontButtonFont(XojFont & font);
+	XojFont getFontButtonFont();
+
 	void setMaximized(bool maximized);
 	bool isMaximized();
 

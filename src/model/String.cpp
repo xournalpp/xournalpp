@@ -280,6 +280,12 @@ void String::operator +=(int i) {
 	g_free(tmp);
 }
 
+void String::operator +=(double d) {
+	char * tmp = g_strdup_printf("%0.2lf", d);
+	*this += tmp;
+	g_free(tmp);
+}
+
 void String::operator +=(const char * str) {
 	gchar * data = g_strconcat(c_str(), str, NULL);
 	this->data->unreference();

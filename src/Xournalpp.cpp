@@ -163,7 +163,7 @@ int main(int argc, char *argv[]) {
 	control->saveSettings();
 
 	delete win;
-	delete control;
+//	delete control;
 
 	return 0;
 }

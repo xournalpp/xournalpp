@@ -14,7 +14,7 @@
 
 #include "../model/String.h"
 
-#define TOOL_COUNT 9
+#define TOOL_COUNT 10
 
 // Has to be in the same order as in Action.h: ActionType!
 enum ToolType {
@@ -40,6 +40,7 @@ enum ToolSize {
 	TOOL_SIZE_MEDIUM,
 	TOOL_SIZE_THICK,
 	TOOL_SIZE_VERY_THICK,
+	// None has to be at the end, because this enum is used as memory offset
 	TOOL_SIZE_NONE
 };
 

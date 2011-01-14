@@ -10,11 +10,22 @@ TextView::~TextView() {
 }
 
 void TextView::initCairo(cairo_t *cr, Text * t) {
-	XFont & font = t->getFont();
+	XojFont & font = t->getFont();
 
-	cairo_select_font_face(cr, font.getName().c_str(), font.isItalic() ? CAIRO_FONT_SLANT_ITALIC
-			: CAIRO_FONT_SLANT_NORMAL, font.isBold() ? CAIRO_FONT_WEIGHT_BOLD : CAIRO_FONT_WEIGHT_NORMAL);
+	PangoFontDescription * desc = pango_font_description_from_string(font.getName().c_str());
+	pango_font_description_set_size(desc, font.getSize());
+
+	bool italic = pango_font_description_get_style(desc) != PANGO_STYLE_NORMAL ;
+	bool bold = pango_font_description_get_weight(desc) == PANGO_WEIGHT_BOLD;
+
+	cairo_select_font_face(cr, pango_font_description_get_family(desc), italic? CAIRO_FONT_SLANT_ITALIC
+			: CAIRO_FONT_SLANT_NORMAL, bold ? CAIRO_FONT_WEIGHT_BOLD : CAIRO_FONT_WEIGHT_NORMAL);
 	cairo_set_font_size(cr, font.getSize());
+
+	pango_font_description_free(desc);
+
+
+	// TODO: use http://library.gnome.org/devel/pango/stable/pango-Cairo-Rendering.html
 
 	//	double size = font.getSize();
 	//	cairo_matrix_t m;

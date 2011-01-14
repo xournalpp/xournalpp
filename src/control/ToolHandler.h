@@ -76,6 +76,10 @@ public:
 	void restoreLastConfig();
 
 	ArrayIterator<Tool *> iterator();
+
+	void setSelectionEditTools(bool setColor, bool setSize);
+
+	const double * getToolThikness(ToolType type);
 protected:
 	void initTools();
 
