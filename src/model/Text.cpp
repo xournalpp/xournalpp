@@ -13,8 +13,12 @@ Text::Text() :
 Text::~Text() {
 }
 
-XFont & Text::getFont() {
+XojFont & Text::getFont() {
 	return font;
+}
+
+void Text::setFont(XojFont & font) {
+	this->font = font;
 }
 
 String Text::getText() {

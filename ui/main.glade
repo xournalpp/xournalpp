@@ -66,6 +66,7 @@
                         <property name="visible">True</property>
                         <property name="use_underline">True</property>
                         <property name="use_stock">True</property>
+                        <accelerator key="u" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                       </widget>
                     </child>
                     <child>
@@ -78,6 +79,7 @@
                         <property name="visible">True</property>
                         <property name="label" translatable="yes">_Export as PDF</property>
                         <property name="use_underline">True</property>
+                        <accelerator key="e" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                       </widget>
                     </child>
                     <child>
@@ -108,6 +110,7 @@
                         <property name="visible">True</property>
                         <property name="use_underline">True</property>
                         <property name="use_stock">True</property>
+                        <accelerator key="p" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                       </widget>
                     </child>
                     <child>
@@ -247,6 +250,7 @@
                         <property name="visible">True</property>
                         <property name="label" translatable="yes">_Next Page</property>
                         <property name="use_underline">True</property>
+                        <accelerator key="Page_Down" signal="activate"/>
                       </widget>
                     </child>
                     <child>
@@ -254,6 +258,7 @@
                         <property name="visible">True</property>
                         <property name="label" translatable="yes">_Last Page</property>
                         <property name="use_underline">True</property>
+                        <accelerator key="Page_Up" signal="activate"/>
                       </widget>
                     </child>
                     <child>
@@ -266,6 +271,7 @@
                         <property name="visible">True</property>
                         <property name="label" translatable="yes">N_ext Annotated Page</property>
                         <property name="use_underline">True</property>
+                        <accelerator key="Page_Down" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                       </widget>
                     </child>
                     <child>
@@ -273,6 +279,7 @@
                         <property name="visible">True</property>
                         <property name="label" translatable="yes">P_revious Annotated Page</property>
                         <property name="use_underline">True</property>
+                        <accelerator key="Page_Up" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                       </widget>
                     </child>
                   </widget>
@@ -299,6 +306,7 @@
                         <property name="visible">True</property>
                         <property name="label" translatable="yes">New Page _After</property>
                         <property name="use_underline">True</property>
+                        <accelerator key="o" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                       </widget>
                     </child>
                     <child>
@@ -522,6 +530,7 @@
                         <property name="label" translatable="yes">_Image</property>
                         <property name="use_underline">True</property>
                         <property name="draw_as_radio">True</property>
+                        <accelerator key="i" signal="activate" modifiers="GDK_SHIFT_MASK | GDK_CONTROL_MASK"/>
                       </widget>
                     </child>
                     <child>

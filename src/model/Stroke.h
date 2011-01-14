@@ -86,6 +86,7 @@ private:
 	StrokeTool toolType;
 
 	bool moved;
+
 	double dx;
 	double dy;
 

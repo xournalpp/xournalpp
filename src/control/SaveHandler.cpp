@@ -158,20 +158,10 @@ void SaveHandler::visitLayer(XmlNode * page, Layer * l) {
 			XmlTextNode * text = new XmlTextNode("text", t->getText());
 			layer->addChild(text);
 
-			XFont & f = t->getFont();
+			XojFont & f = t->getFont();
 
-			PangoFontDescription * desc = pango_font_description_new();
-			pango_font_description_set_family(desc, f.getName().c_str());
-			pango_font_description_set_style(desc, f.isItalic() ? PANGO_STYLE_ITALIC : PANGO_STYLE_NORMAL);
-			pango_font_description_set_weight(desc, f.isBold() ? PANGO_WEIGHT_BOLD : PANGO_WEIGHT_NORMAL);
-			char * sFont = pango_font_description_to_string(desc);
-
-			text->setAttrib("font", sFont);
-
-			pango_font_description_free(desc);
-			g_free(sFont);
-
-			text->setAttrib("size", t->getFont().getSize());
+			text->setAttrib("font", f.getName());
+			text->setAttrib("size", f.getSize());
 			text->setAttrib("x", t->getX());
 			text->setAttrib("y", t->getY());
 			text->setAttrib("color", getColorStr(t->getColor()));

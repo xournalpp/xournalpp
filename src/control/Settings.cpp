@@ -175,8 +175,6 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
 		xmlFree(name);
 		xmlChar *font;
 		xmlChar *size;
-		xmlChar *bold;
-		xmlChar *italic;
 
 		font = xmlGetProp(cur, (const xmlChar *) "font");
 		if (font) {
@@ -192,18 +190,6 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
 			}
 
 			xmlFree(size);
-		}
-
-		bold = xmlGetProp(cur, (const xmlChar *) "bold");
-		if (bold) {
-			this->font.setBold(xmlStrcmp(bold, (const xmlChar *) "true") == 0);
-			xmlFree(bold);
-		}
-
-		italic = xmlGetProp(cur, (const xmlChar *) "italic");
-		if (bold) {
-			this->font.setItalic(xmlStrcmp(italic, (const xmlChar *) "true") == 0);
-			xmlFree(italic);
 		}
 
 		return;
@@ -520,8 +506,6 @@ void Settings::save() {
 	gchar * sSize = g_strdup_printf("%0.1lf", this->font.getSize());
 	xmlSetProp(xmlFont, (const xmlChar *) "size", (const xmlChar *) sSize);
 	g_free(sSize);
-	xmlSetProp(xmlFont, (const xmlChar *) "bold", (const xmlChar *) (this->font.isBold() ? "true" : "false"));
-	xmlSetProp(xmlFont, (const xmlChar *) "italic", (const xmlChar *) (this->font.isItalic() ? "true" : "false"));
 
 	std::map<String, SElement>::iterator it;
 	for (it = data.begin(); it != data.end(); it++) {
@@ -913,6 +897,14 @@ void Settings::setSelectionColor(int color) {
 	}
 	this->selectionColor = color;
 	saveTimeout();
+}
+
+XojFont & Settings::getFont() {
+	return this->font;
+}
+
+void Settings::setFont(const XojFont & font) {
+	this->font = font;
 }
 
 //////////////////////////////////////////////////

@@ -168,6 +168,8 @@ void Control::initWindow(MainWindow * win) {
 	this->clipboardHandler = new ClipboardHandler(this, win->getXournal()->getWidget());
 
 	this->enableAutosave(settings->isAutosaveEnabled());
+
+	win->setFontButtonFont(settings->getFont());
 }
 
 ZoomControl * Control::getZoomControl() {
@@ -317,12 +319,15 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent *even
 	switch (type) {
 	// Menu File
 	case ACTION_NEW:
+		clearSelectionEndText();
 		newFile();
 		break;
 	case ACTION_OPEN:
+		clearSelectionEndText();
 		openFile();
 		break;
 	case ACTION_ANNOTATE_PDF:
+		clearSelectionEndText();
 		annotatePdf(NULL, false);
 		break;
 	case ACTION_SAVE:
@@ -349,27 +354,33 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent *even
 
 		// Menu Edit
 	case ACTION_UNDO:
+		this->clearSelection();
 		undoRedo->undo();
 		break;
 	case ACTION_REDO:
+		this->clearSelection();
 		undoRedo->redo();
 		break;
 	case ACTION_CUT:
+		clearSelectionEndText();
 		if (!win->getXournal()->cut()) {
 			clipboardHandler->cut();
 		}
 		break;
 	case ACTION_COPY:
+		clearSelectionEndText();
 		if (!win->getXournal()->copy()) {
 			clipboardHandler->copy();
 		}
 		break;
 	case ACTION_PASTE:
+		clearSelectionEndText();
 		if (!win->getXournal()->paste()) {
 			clipboardHandler->paste();
 		}
 		break;
 	case ACTION_SEARCH:
+		clearSelectionEndText();
 		searchBar->showSearchBar(true);
 		break;
 	case ACTION_DELETE:
@@ -433,35 +444,42 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent *even
 	case ACTION_SET_PAPER_BACKGROUND_GRAPH:
 	case ACTION_SET_PAPER_BACKGROUND_IMAGE:
 	case ACTION_SET_PAPER_BACKGROUND_PDF:
+		clearSelectionEndText();
 		setPageBackground(type);
 		break;
 
 	case ACTION_NEW_PAGE_PLAIN:
+		clearSelectionEndText();
 		if (enabled) {
 			setPageInsertType(PAGE_INSERT_TYPE_PLAIN);
 		}
 		break;
 	case ACTION_NEW_PAGE_LINED:
+		clearSelectionEndText();
 		if (enabled) {
 			setPageInsertType(PAGE_INSERT_TYPE_LINED);
 		}
 		break;
 	case ACTION_NEW_PAGE_RULED:
+		clearSelectionEndText();
 		if (enabled) {
 			setPageInsertType(PAGE_INSERT_TYPE_RULED);
 		}
 		break;
 	case ACTION_NEW_PAGE_GRAPH:
+		clearSelectionEndText();
 		if (enabled) {
 			setPageInsertType(PAGE_INSERT_TYPE_GRAPH);
 		}
 		break;
 	case ACTION_NEW_PAGE_COPY:
+		clearSelectionEndText();
 		if (enabled) {
 			setPageInsertType(PAGE_INSERT_TYPE_COPY);
 		}
 		break;
 	case ACTION_NEW_PAGE_PDF_BACKGROUND:
+		clearSelectionEndText();
 		if (enabled) {
 			setPageInsertType(PAGE_INSERT_TYPE_PDF_BACKGROUND);
 		}
@@ -554,27 +572,27 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent *even
 		break;
 	case ACTION_SIZE_VERY_THIN:
 		if (enabled) {
-			this->toolHandler->setSize(TOOL_SIZE_VERY_FINE);
+			setToolSize(TOOL_SIZE_VERY_FINE);
 		}
 		break;
 	case ACTION_SIZE_FINE:
 		if (enabled) {
-			this->toolHandler->setSize(TOOL_SIZE_FINE);
+			setToolSize(TOOL_SIZE_FINE);
 		}
 		break;
 	case ACTION_SIZE_MEDIUM:
 		if (enabled) {
-			this->toolHandler->setSize(TOOL_SIZE_MEDIUM);
+			setToolSize(TOOL_SIZE_MEDIUM);
 		}
 		break;
 	case ACTION_SIZE_THICK:
 		if (enabled) {
-			this->toolHandler->setSize(TOOL_SIZE_THICK);
+			setToolSize(TOOL_SIZE_THICK);
 		}
 		break;
 	case ACTION_SIZE_VERY_THICK:
 		if (enabled) {
-			this->toolHandler->setSize(TOOL_SIZE_VERY_THICK);
+			setToolSize(TOOL_SIZE_VERY_THICK);
 		}
 		break;
 
@@ -646,7 +664,7 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent *even
 		break;
 
 	case ACTION_SELECT_FONT:
-		xxxxx();
+		fontChanged();
 		break;
 
 		// Used for all colors
@@ -668,6 +686,7 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent *even
 		break;
 
 	case ACTION_FOOTER_LAYER: {
+		clearSelectionEndText();
 		XojPage * p = getCurrentPage();
 		if (p) {
 			p->setSelectedLayerId(win->getCurrentLayer());
@@ -710,6 +729,13 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent *even
 		if (type == at && !enabled) {
 			fireActionSelected(GROUP_TOOL, at);
 		}
+	}
+}
+
+void Control::clearSelectionEndText() {
+	clearSelection();
+	if (win) {
+		win->getXournal()->endTextSelection();
 	}
 }
 
@@ -888,6 +914,7 @@ void Control::updateDeletePageButton() {
 }
 
 void Control::deletePage() {
+	clearSelectionEndText();
 	// don't allow delete pages if we have less than 2 pages,
 	// so we can be (more or less) sure there is at least one page.
 	if (doc->getPageCount() < 2) {
@@ -912,6 +939,7 @@ void Control::deletePage() {
 }
 
 void Control::insertNewPage(int position) {
+	clearSelectionEndText();
 	PageInsertType type = settings->getPageInsertType();
 
 	if (position > doc->getPageCount()) {
@@ -1005,6 +1033,7 @@ bool Control::isFullscreen() {
 }
 
 void Control::addNewLayer() {
+	clearSelectionEndText();
 	XojPage * p = getCurrentPage();
 	if (p == NULL) {
 		return;
@@ -1224,6 +1253,7 @@ void Control::paperFormat() {
 	if (!page || page->getBackgroundType() == BACKGROUND_TYPE_PDF) {
 		return;
 	}
+	clearSelectionEndText();
 
 	FormatDialog * dlg = new FormatDialog(settings, page->getWidth(), page->getHeight());
 	dlg->show();
@@ -1245,6 +1275,8 @@ void Control::changePageBackgroundColor() {
 	if (p == NULL) {
 		return;
 	}
+
+	clearSelectionEndText();
 
 	BackgroundType bg = p->getBackgroundType();
 	if (BACKGROUND_TYPE_NONE != bg && BACKGROUND_TYPE_LINED != bg && BACKGROUND_TYPE_RULED != bg
@@ -1271,6 +1303,7 @@ void Control::changePageBackgroundColor() {
 }
 
 void Control::deleteCurrentLayer() {
+	clearSelectionEndText();
 	XojPage * p = getCurrentPage();
 	int pId = getCurrentPageNo();
 	if (p == NULL) {
@@ -1550,6 +1583,9 @@ void Control::toolSizeChanged() {
 	}
 
 	switch (toolHandler->getSize()) {
+	case TOOL_SIZE_NONE:
+		fireActionSelected(GROUP_SIZE, ACTION_NONE);
+		break;
 	case TOOL_SIZE_VERY_FINE:
 		fireActionSelected(GROUP_SIZE, ACTION_SIZE_VERY_THICK);
 		break;
@@ -1571,6 +1607,13 @@ void Control::toolSizeChanged() {
 void Control::toolColorChanged() {
 	fireActionSelected(GROUP_COLOR, ACTION_SELECT_COLOR);
 	cursor->updateCursor();
+
+	if (this->selection && toolHandler->getColor() != -1) {
+		UndoAction * undo = this->selection->setColor(toolHandler->getColor());
+		if (undo) {
+			undoRedo->addUndoAction(undo);
+		}
+	}
 }
 
 void Control::setCustomColorSelected() {
@@ -2175,9 +2218,9 @@ void Control::clipboardPasteText(String text) {
 
 	Text * t = new Text();
 	t->setText(text);
+	t->setFont(settings->getFont());
 	t->setColor(toolHandler->getColor());
-	// TODO: handle font
-	//	t->setFont()
+
 	double width = t->getElementWidth();
 	double height = t->getElementHeight();
 
@@ -2213,6 +2256,7 @@ void Control::clearSelection() {
 	}
 
 	cursor->setMouseSelectionType(CURSOR_SELECTION_NONE);
+	toolHandler->setSelectionEditTools(false, false);
 }
 
 void Control::setSelection(EditSelection * selection) {
@@ -2222,6 +2266,28 @@ void Control::setSelection(EditSelection * selection) {
 	if (this->clipboardHandler) {
 		this->clipboardHandler->setSelection(this->selection);
 	}
+
+	bool canChangeSize = false;
+	bool canChangeColor = false;
+
+	for (GList * l = this->selection->getElements(); l != NULL; l = l->next) {
+		Element * e = (Element *) l->data;
+		if (e->getType() == ELEMENT_TEXT) {
+			canChangeColor = true;
+		} else if (e->getType() == ELEMENT_STROKE) {
+			Stroke * s = (Stroke *) e;
+			if (s->getToolType() != STROKE_TOOL_ERASER) {
+				canChangeColor = true;
+			}
+			canChangeSize = true;
+		}
+
+		if (canChangeColor && canChangeSize) {
+			break;
+		}
+	}
+
+	toolHandler->setSelectionEditTools(canChangeColor, canChangeSize);
 }
 
 EditSelection * Control::getSelection() {
@@ -2245,3 +2311,40 @@ void Control::setCopyPasteEnabled(bool enabled) {
 	this->clipboardHandler->setCopyPasteEnabled(enabled);
 }
 
+void Control::setToolSize(ToolSize size) {
+	if (this->selection) {
+		UndoAction * undo = this->selection->setSize(size, toolHandler->getToolThikness(TOOL_PEN),
+				toolHandler->getToolThikness(TOOL_HILIGHTER), toolHandler->getToolThikness(TOOL_ERASER));
+		if (undo) {
+			undoRedo->addUndoAction(undo);
+		}
+	}
+	this->toolHandler->setSize(size);
+}
+
+TextEditor * Control::getTextEditor() {
+	if (win) {
+		return win->getXournal()->getTextEditor();
+	}
+	return NULL;
+}
+
+void Control::fontChanged() {
+	XojFont font = win->getFontButtonFont();
+	settings->setFont(font);
+
+	if (this->selection) {
+		UndoAction * undo = this->selection->setFont(font);
+		if (undo) {
+			undoRedo->addUndoAction(undo);
+		}
+	}
+
+	TextEditor * editor = getTextEditor();
+	if (editor) {
+
+	}
+
+	printf("font changed\n");
+
+}

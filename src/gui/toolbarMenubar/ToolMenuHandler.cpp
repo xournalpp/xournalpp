@@ -134,11 +134,11 @@ bool ToolMenuHandler::parse(const char * file) {
  * A new file should be writen
  */
 bool ToolMenuHandler::shouldRecreate() {
-	if(!this->autoupdate) {
+	if (!this->autoupdate) {
 		return false;
 	}
 
-	if(!this->version.isEmpty() && !strcmp(TOOLBAR_VERSION, this->version.c_str())) {
+	if (!this->version.isEmpty() && !strcmp(TOOLBAR_VERSION, this->version.c_str())) {
 		return false;
 	}
 
@@ -475,7 +475,8 @@ void ToolMenuHandler::initToolItems() {
 			_("Medium")));
 	addToolItem(new ToolButton(listener, gui, "THICK", ACTION_SIZE_THICK, GROUP_SIZE, "thickness_thick.png", _("Thik")));
 
-	addToolItem(new FontButton(listener, gui, "SELECT_FONT", ACTION_SELECT_FONT, _("Select Font")));
+	fontButton = new FontButton(listener, gui, "SELECT_FONT", ACTION_SELECT_FONT, _("Select Font"));
+	addToolItem(fontButton);
 
 	// Footer tools
 	toolPageSpinner = new ToolPageSpinner(listener, "PAGE_SPIN", ACTION_FOOTER_PAGESPIN);
@@ -542,6 +543,14 @@ void ToolMenuHandler::initToolItems() {
 	registerMenupoint(gui->get("menuHelpAbout"), ACTION_ABOUT);
 	registerMenupoint(gui->get("menuHelpHelp"), ACTION_HELP);
 
+}
+
+void ToolMenuHandler::setFontButtonFont(XojFont & font) {
+	fontButton->setFont(font);
+}
+
+XojFont ToolMenuHandler::getFontButtonFont() {
+	return fontButton->getFont();
 }
 
 ToolSelectCombocontrol::ToolSelectCombocontrol(ToolMenuHandler * th, ActionHandler * handler, GladeGui *gui, String id) :

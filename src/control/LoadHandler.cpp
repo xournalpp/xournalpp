@@ -407,18 +407,8 @@ void LoadHandler::parseText() {
 	this->text->setX(x);
 	this->text->setY(y);
 
-	XFont & f = text->getFont();
-	if (sFont) {
-		PangoFontDescription * desc;
-		desc = pango_font_description_from_string(sFont);
-
-		f.setName(pango_font_description_get_family(desc));
-		f.setItalic(pango_font_description_get_style(desc) != PANGO_STYLE_NORMAL);
-		f.setBold(pango_font_description_get_weight(desc) == PANGO_WEIGHT_BOLD);
-
-		pango_font_description_free(desc);
-	}
-
+	XojFont & f = text->getFont();
+	f.setName(sFont);
 	f.setSize(fontSize);
 	const char * sColor = getAttrib("color");
 	int color = 0;
@@ -495,8 +485,6 @@ void LoadHandler::parserEndElement(GMarkupParseContext *context, const gchar *el
 		handler->pos = PARSER_POS_STARTED;
 		handler->page->unreference();
 		handler->page = NULL;
-		//		if (tmpPage->getLayerCount() == 0 || tmpPage->bg->type < 0)
-		//			*error = xoj_invalid();
 	} else if (handler->pos == PARSER_POS_IN_LAYER && strcmp(element_name, "layer") == 0) {
 		handler->pos = PARSER_POS_IN_PAGE;
 		handler->layer = NULL;

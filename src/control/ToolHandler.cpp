@@ -293,7 +293,7 @@ void ToolHandler::loadSettings() {
 		SElement & st = s.child(t->getName());
 
 		if (selectedTool == t->getName()) {
-			this->current= t;
+			this->current = t;
 		}
 
 		int color = 0;
@@ -361,3 +361,23 @@ void ToolHandler::restoreLastConfig() {
 	listener->toolChanged();
 }
 
+const double * ToolHandler::getToolThikness(ToolType type) {
+	return tools[type - TOOL_PEN]->thikness;
+}
+
+void ToolHandler::setSelectionEditTools(bool setColor, bool setSize) {
+	for (int i = TOOL_SELECT_RECT - TOOL_PEN; i <= TOOL_SELECT_OBJECT - TOOL_PEN; i++) {
+		Tool * t = tools[i];
+		t->enableColor = setColor;
+		t->enableSize = setSize;
+		t->size = TOOL_SIZE_NONE;
+		t->color = -1;
+	}
+
+	if (this->current->type == TOOL_SELECT_RECT || this->current->type == TOOL_SELECT_RECT || this->current->type
+			== TOOL_SELECT_OBJECT) {
+		listener->toolColorChanged();
+		listener->toolSizeChanged();
+		listener->toolChanged();
+	}
+}

@@ -163,6 +163,12 @@ public:
 	void enableAutosave(bool enable);
 
 	void getDefaultPagesize(double & width, double & height);
+
+	void clearSelectionEndText();
+
+	void setToolSize(ToolSize size);
+
+	TextEditor * getTextEditor();
 public:
 	// UndoRedoListener interface
 	void undoRedoChanged();
@@ -199,6 +205,8 @@ protected:
 	static gpointer autosaveThread(Control * control);
 
 	void updatePreview();
+
+	void fontChanged();
 private:
 	RecentManager * recent;
 	UndoRedoHandler * undoRedo;

@@ -79,6 +79,7 @@ public:
 
 	void endTextSelection();
 
+	TextEditor * getTextEditor();
 public:
 	//ZoomListener interface
 	void zoomChanged(double lastZoom);
