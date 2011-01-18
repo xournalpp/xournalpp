@@ -14,9 +14,9 @@
 #include "String.h"
 
 #include <gtk/gtk.h>
+#include "../util/Serializeable.h"
 
-
-class XojFont {
+class XojFont: public Serializeable {
 public:
 	XojFont();
 	virtual ~XojFont();
@@ -28,9 +28,14 @@ public:
 	void setSize(double size);
 
 	void operator =(const XojFont & font);
+
+public:
+	// Serialize interface
+	void serialize(ObjectOutputStream & out);
+	void readSerialized(ObjectInputStream & in) throw (InputStreamException);
+
 private:
 	void updateFontDesc();
-
 
 private:
 	String name;

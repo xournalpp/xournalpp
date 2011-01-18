@@ -272,7 +272,7 @@ void DocumentView::drawSelection(cairo_t * cr, EditSelection * selection) {
 	}
 }
 
-void DocumentView::drawPage(XojPage * page, PopplerPage * popplerPage, cairo_t *cr) {
+void DocumentView::drawPage(XojPage * page, PopplerPage * popplerPage, cairo_t * cr) {
 	this->cr = cr;
 	this->page = page;
 	this->width = page->getWidth();
@@ -282,8 +282,6 @@ void DocumentView::drawPage(XojPage * page, PopplerPage * popplerPage, cairo_t *
 
 	if (page->getBackgroundType() == BACKGROUND_TYPE_PDF) {
 		if (popplerPage) {
-			//			cairo_rotate (cr, rc->rotation * G_PI / 180.0);
-
 			poppler_page_render(popplerPage, cr);
 			cairo_set_operator(cr, CAIRO_OPERATOR_DEST_OVER);
 			cairo_set_source_rgb(cr, 1., 1., 1.);
@@ -295,7 +293,7 @@ void DocumentView::drawPage(XojPage * page, PopplerPage * popplerPage, cairo_t *
 			cairo_set_source_rgb(cr, 0.8, 0.8, 0.8);
 
 			cairo_text_extents_t extents = { 0 };
-			const char * loading = _("Loading...");
+			const char * loading = _("PDF Background missing");
 
 			cairo_text_extents(cr, loading, &extents);
 			cairo_move_to(cr, this->width / 2 - extents.width / 2, this->height / 2 - extents.height / 2);

@@ -34,8 +34,15 @@ public:
 
 	void setInEditing(bool inEditing);
 	bool isInEditing();
+
+public:
+	// Serialize interface
+	void serialize(ObjectOutputStream & out);
+	void readSerialized(ObjectInputStream & in) throw (InputStreamException);
+
 protected:
 	virtual void calcSize();
+
 private:
 	XojFont font;
 

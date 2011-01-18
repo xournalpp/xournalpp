@@ -179,6 +179,7 @@ public:
 	void clipboardCutCopyEnabled(bool enabled);
 	void clipboardPasteEnabled(bool enabled);
 	void clipboardPasteText(String text);
+	void clipboardPasteXournal(ObjectInputStream & in);
 	void deleteSelection();
 
 protected:

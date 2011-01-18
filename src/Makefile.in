@@ -86,6 +86,7 @@ am_xournalpp_OBJECTS = xournalpp-Page.$(OBJEXT) \
 	xournalpp-RecentManager.$(OBJEXT) \
 	xournalpp-UndoRedoHandler.$(OBJEXT) xournalpp-Util.$(OBJEXT) \
 	xournalpp-OutputStream.$(OBJEXT) \
+	xournalpp-ObjectStream.$(OBJEXT) \
 	xournalpp-CrashHandler.$(OBJEXT) \
 	xournalpp-pixbuf-utils.$(OBJEXT) xournalpp-PdfExport.$(OBJEXT) \
 	xournalpp-PopplerGlibExtension.$(OBJEXT) \
@@ -277,6 +278,7 @@ xournalpp_SOURCES = \
 	control/UndoRedoHandler.cpp \
 	util/Util.cpp \
 	util/OutputStream.cpp \
+	util/ObjectStream.cpp \
 	util/CrashHandler.cpp \
 	util/pixbuf-utils.cpp \
 	pdf/PdfExport.cpp \
@@ -388,6 +390,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-LinkDestination.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-LoadHandler.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-MainWindow.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-ObjectStream.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-OutputStream.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-Page.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-PageView.Po@am__quote@
@@ -1195,6 +1198,20 @@ xournalpp-OutputStream.obj: util/OutputStream.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='util/OutputStream.cpp' object='xournalpp-OutputStream.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-OutputStream.obj `if test -f 'util/OutputStream.cpp'; then $(CYGPATH_W) 'util/OutputStream.cpp'; else $(CYGPATH_W) '$(srcdir)/util/OutputStream.cpp'; fi`
+
+xournalpp-ObjectStream.o: util/ObjectStream.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-ObjectStream.o -MD -MP -MF $(DEPDIR)/xournalpp-ObjectStream.Tpo -c -o xournalpp-ObjectStream.o `test -f 'util/ObjectStream.cpp' || echo '$(srcdir)/'`util/ObjectStream.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-ObjectStream.Tpo $(DEPDIR)/xournalpp-ObjectStream.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='util/ObjectStream.cpp' object='xournalpp-ObjectStream.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-ObjectStream.o `test -f 'util/ObjectStream.cpp' || echo '$(srcdir)/'`util/ObjectStream.cpp
+
+xournalpp-ObjectStream.obj: util/ObjectStream.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-ObjectStream.obj -MD -MP -MF $(DEPDIR)/xournalpp-ObjectStream.Tpo -c -o xournalpp-ObjectStream.obj `if test -f 'util/ObjectStream.cpp'; then $(CYGPATH_W) 'util/ObjectStream.cpp'; else $(CYGPATH_W) '$(srcdir)/util/ObjectStream.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-ObjectStream.Tpo $(DEPDIR)/xournalpp-ObjectStream.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='util/ObjectStream.cpp' object='xournalpp-ObjectStream.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-ObjectStream.obj `if test -f 'util/ObjectStream.cpp'; then $(CYGPATH_W) 'util/ObjectStream.cpp'; else $(CYGPATH_W) '$(srcdir)/util/ObjectStream.cpp'; fi`
 
 xournalpp-CrashHandler.o: util/CrashHandler.cpp
 @am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-CrashHandler.o -MD -MP -MF $(DEPDIR)/xournalpp-CrashHandler.Tpo -c -o xournalpp-CrashHandler.o `test -f 'util/CrashHandler.cpp' || echo '$(srcdir)/'`util/CrashHandler.cpp

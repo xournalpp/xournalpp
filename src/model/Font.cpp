@@ -1,4 +1,5 @@
 #include "Font.h"
+#include "../util/ObjectStream.h"
 
 XojFont::XojFont() {
 	this->size = 0;
@@ -26,5 +27,23 @@ void XojFont::setSize(double size) {
 void XojFont::operator =(const XojFont & font) {
 	this->name = font.name;
 	this->size = font.size;
+}
+
+void XojFont::serialize(ObjectOutputStream & out) {
+	out.writeObject("XojFont");
+
+	out.writeString(this->name);
+	out.writeDouble(this->size);
+
+	out.endObject();
+}
+
+void XojFont::readSerialized(ObjectInputStream & in) throw (InputStreamException) {
+	in.readObject("XojFont");
+
+	this->name = in.readString();
+	this->size = in.readDouble();
+
+	in.endObject();
 }
 

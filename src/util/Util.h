@@ -25,6 +25,8 @@ public:
 
 	static String getAutosaveFilename();
 
+	static int getPid();
+
 private:
 	static String getSettingsSubfolder(String subfolder);
 };

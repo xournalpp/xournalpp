@@ -26,6 +26,11 @@ public:
 	void setImage(cairo_surface_t * image);
 	cairo_surface_t * getImage();
 
+public:
+	// Serialize interface
+	void serialize(ObjectOutputStream & out);
+	void readSerialized(ObjectInputStream & in) throw (InputStreamException);
+
 private:
 	virtual void calcSize();
 

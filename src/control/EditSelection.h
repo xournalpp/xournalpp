@@ -38,6 +38,7 @@ class MoveUndoAction;
 
 class EditSelection: public MemoryCheckObject {
 public:
+	EditSelection(double x, double y, double width, double height, XojPage * page, Redrawable * view);
 	EditSelection(Selection * selection, Redrawable * view);
 	EditSelection(Element * e, Redrawable * view, XojPage * page);
 	~EditSelection();
@@ -75,10 +76,12 @@ public:
 
 	UndoAction * setFont(XojFont & font);
 
+	void addElement(Element * e);
+
 private:
 	void drawAnchorRect(cairo_t * cr, double x, double y, double zoom);
 
-	void addElement(Element * e);
+	void addElementInt(Element * e);
 
 private:
 	double x;

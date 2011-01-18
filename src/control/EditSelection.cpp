@@ -4,6 +4,34 @@
 #include "../gettext.h"
 #include <math.h>
 
+EditSelection::EditSelection(double x, double y, double width, double height, XojPage * page, Redrawable * view) {
+	this->x = x;
+	this->y = y;
+	this->width = width;
+	this->height = height;
+	this->selected = NULL;
+	this->page = page;
+	this->layer = this->page->getSelectedLayer();
+	this->view = view;
+	this->inputView = view;
+
+	this->relativeX = x;
+	this->relativeY = y;
+	this->mouseX = 0;
+	this->mouseY = 0;
+	this->offsetX = 0;
+	this->offsetY = 0;
+
+	this->documentView = new DocumentView();
+
+	this->selType = CURSOR_SELECTION_NONE;
+	this->selX = 0;
+	this->selY = 0;
+
+	this->undo = NULL;
+	this->lastUndoAction = NULL;
+}
+
 EditSelection::EditSelection(Selection * selection, Redrawable * view) {
 	selection->getSelectedRect(this->x, this->y, this->width, this->height);
 	this->selected = NULL;
@@ -29,7 +57,7 @@ EditSelection::EditSelection(Selection * selection, Redrawable * view) {
 	this->lastUndoAction = NULL;
 
 	for (GList * l = selection->selectedElements; l != NULL; l = l->next) {
-		addElement((Element *) l->data);
+		addElementInt((Element *) l->data);
 	}
 
 	this->view->deleteViewBuffer();
@@ -64,7 +92,7 @@ EditSelection::EditSelection(Element * e, Redrawable * view, XojPage * page) {
 	this->selX = 0;
 	this->selY = 0;
 
-	addElement(e);
+	addElementInt(e);
 
 	this->view->deleteViewBuffer();
 }
@@ -84,8 +112,12 @@ EditSelection::~EditSelection() {
 	delete this->documentView;
 }
 
-void EditSelection::addElement(Element * e) {
+void EditSelection::addElementInt(Element * e) {
 	layer->removeElement(e, false);
+	this->selected = g_list_append(this->selected, e);
+}
+
+void EditSelection::addElement(Element * e) {
 	this->selected = g_list_append(this->selected, e);
 }
 

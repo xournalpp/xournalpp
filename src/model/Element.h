@@ -14,6 +14,7 @@
 
 #include <gtk/gtk.h>
 #include "../util/Util.h"
+#include "../util/Serializeable.h"
 
 enum ElementType {
 	ELEMENT_STROKE = 1, ELEMENT_IMAGE, ELEMENT_TEXT
@@ -24,7 +25,7 @@ public:
 	virtual bool contains(double x, double y) = 0;
 };
 
-class Element: public MemoryCheckObject {
+class Element: public MemoryCheckObject, public Serializeable {
 protected:
 	Element(ElementType type);
 
@@ -59,6 +60,9 @@ protected:
 
 	double width;
 	double height;
+
+	void serializeElement(ObjectOutputStream & out);
+	void readSerializedElement(ObjectInputStream & in) throw (InputStreamException);
 
 protected:
 	// If the size has been calculated
