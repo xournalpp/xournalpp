@@ -70,6 +70,12 @@ public:
 	bool isMoved();
 	double getDx();
 	double getDy();
+
+public:
+	// Serialize interface
+	void serialize(ObjectOutputStream & out);
+	void readSerialized(ObjectInputStream & in) throw (InputStreamException);
+
 protected:
 	virtual void calcSize();
 	void allocPointSize(int size);

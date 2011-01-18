@@ -24,11 +24,15 @@ void Util::cairo_set_source_rgbi(cairo_t *cr, int c) {
 	cairo_set_source_rgb(cr, r, g, b);
 }
 
+int Util::getPid() {
+	pid_t pid = getpid();
+	return (int) pid;
+}
+
 String Util::getAutosaveFilename() {
 	String path = getSettingsSubfolder("autosave");
 
-	pid_t pid = getpid();
-	path += (int) pid;
+	path += getPid();
 	path += ".xoj";
 
 	return path;

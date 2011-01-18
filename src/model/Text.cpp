@@ -2,6 +2,7 @@
 
 // Hack: Needed to calculate the view size
 #include "../view/TextView.h"
+#include "../util/ObjectStream.h"
 
 Text::Text() :
 	Element(ELEMENT_TEXT) {
@@ -50,3 +51,29 @@ void Text::setInEditing(bool inEditing) {
 bool Text::isInEditing() {
 	return this->inEditing;
 }
+
+void Text::serialize(ObjectOutputStream & out) {
+	out.writeObject("Text");
+
+	serializeElement(out);
+
+	out.writeString(this->text);
+
+	font.serialize(out);
+
+	out.endObject();
+}
+
+void Text::readSerialized(ObjectInputStream & in) throw (InputStreamException) {
+	in.readObject("Text");
+
+	readSerialized(in);
+
+	this->text = in.readString();
+
+	font.readSerialized(in);
+
+	in.endObject();
+}
+
+

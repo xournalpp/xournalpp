@@ -1104,9 +1104,9 @@ void PageView::repaint(Element * e) {
 }
 
 void PageView::repaint(double x, double y, double width, double heigth) {
-	deleteViewBuffer();
 	double zoom = xournal->getZoom();
-	gtk_widget_queue_draw_area(widget, x * zoom - 10, y * zoom - 10, width * zoom + 20, heigth * zoom + 20);
+	deleteViewBuffer();
+	gtk_widget_queue_draw_area(widget, (x - 10) * zoom, (y - 10) * zoom, (width + 20) * zoom, (heigth + 20) * zoom);
 }
 
 void PageView::updateSize() {
@@ -1215,9 +1215,7 @@ bool PageView::paintPage(GtkWidget * widget, GdkEventExpose * event) {
 
 	if (crBuffer == NULL) {
 		crBuffer = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, alloc.width, alloc.height);
-
-		cairo_t *cr2;
-		cr2 = cairo_create(crBuffer);
+		cairo_t * cr2 = cairo_create(crBuffer);
 
 		this->tmpStrokeDrawElem = 0;
 
@@ -1232,10 +1230,6 @@ bool PageView::paintPage(GtkWidget * widget, GdkEventExpose * event) {
 
 		view->drawPage(page, popplerPage, cr2);
 
-		if (popplerPage == NULL) {
-			//TODO: add request for page
-		}
-
 		cairo_destroy(cr2);
 	}
 
@@ -1244,13 +1238,12 @@ bool PageView::paintPage(GtkWidget * widget, GdkEventExpose * event) {
 		double scale = ((double) alloc.width) / ((double) width);
 
 		// Scale current image to fit the zoom level
-		cairo_matrix_t defaultMatrix = { 0 };
-		cairo_get_matrix(cr, &defaultMatrix);
+		cairo_save(cr);
 
 		cairo_scale(cr, scale, scale);
 		cairo_set_source_surface(cr, crBuffer, 0, 0);
 
-		cairo_set_matrix(cr, &defaultMatrix);
+		cairo_restore(cr);
 
 		repaintLater();
 

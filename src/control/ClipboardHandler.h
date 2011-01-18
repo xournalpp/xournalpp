@@ -16,11 +16,14 @@
 #include "../model/String.h"
 #include "EditSelection.h"
 
+class ObjectInputStream;
+
 class ClipboardListener {
 public:
 	virtual void clipboardCutCopyEnabled(bool enabled) = 0;
 	virtual void clipboardPasteEnabled(bool enabled) = 0;
 	virtual void clipboardPasteText(String text) = 0;
+	virtual void clipboardPasteXournal(ObjectInputStream & in) = 0;
 	virtual void deleteSelection() = 0;
 };
 
@@ -54,6 +57,7 @@ private:
 	EditSelection * selection;
 
 	bool containsText;
+	bool containsXournal;
 };
 
 #endif /* __CLIPBOARDHANDLER_H__ */

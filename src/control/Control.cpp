@@ -13,6 +13,7 @@
 #include "ev-metadata-manager.h"
 #include "../pdf/PdfExport.h"
 #include "../util/CrashHandler.h"
+#include "../util/ObjectStream.h"
 #include "../model/FormatDefinitions.h"
 
 #include <stdio.h>
@@ -362,19 +363,16 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent *even
 		undoRedo->redo();
 		break;
 	case ACTION_CUT:
-		clearSelectionEndText();
 		if (!win->getXournal()->cut()) {
 			clipboardHandler->cut();
 		}
 		break;
 	case ACTION_COPY:
-		clearSelectionEndText();
 		if (!win->getXournal()->copy()) {
 			clipboardHandler->copy();
 		}
 		break;
 	case ACTION_PASTE:
-		clearSelectionEndText();
 		if (!win->getXournal()->paste()) {
 			clipboardHandler->paste();
 		}
@@ -2232,6 +2230,80 @@ void Control::clipboardPasteText(String text) {
 	EditSelection * selection = new EditSelection(t, view, page);
 	setSelection(selection);
 	view->repaint(t);
+}
+
+void Control::clipboardPasteXournal(ObjectInputStream & in) {
+	int pNr = getCurrentPageNo();
+	if (pNr == -1 && win != NULL) {
+		return;
+	}
+
+	XojPage * page = doc->getPage(pNr);
+	PageView * view = win->getXournal()->getViewFor(pNr);
+
+	if (!view || !page) {
+		return;
+	}
+
+	EditSelection * selection = NULL;
+	Element * element = NULL;
+	try {
+		String version = in.readString();
+		if (version != PACKAGE_STRING) {
+			g_warning("Paste from Xournal Version %s to Xournal Version %s", version.c_str(), PACKAGE_STRING);
+		}
+
+		in.readObject("Selection");
+		double x = in.readDouble();
+		double y = in.readDouble();
+		double width = in.readDouble();
+		double height = in.readDouble();
+
+		selection = new EditSelection(x, y, width, height, page, view);
+
+		int count = in.readInt();
+
+		in.endObject();
+
+		for (int i = 0; i < count; i++) {
+			String name = in.getNextObjectName();
+			element = NULL;
+
+			if (name == "Stroke") {
+				element = new Stroke();
+			} else if (name == "Image") {
+				element = new Image();
+			} else if (name == "Text") {
+				element = new Text();
+			} else {
+				throw INPUT_STREAM_EXCEPTION("Get unknown object %s", name.c_str());
+			}
+
+			in >> element;
+
+			selection->addElement(element);
+			element = NULL;
+		}
+
+		setSelection(selection);
+		view->redrawDocumentRegion(x, y, x + width, y + height);
+
+	} catch (std::exception & e) {
+		g_warning("could not paste, Exception occurred: %s", e.what());
+
+		// cleanup
+		if (element) {
+			delete element;
+		}
+
+		if (selection) {
+			for (GList * l = selection->getElements(); l != NULL; l = l->next) {
+				delete (Element *) l->data;
+			}
+
+			delete selection;
+		}
+	}
 }
 
 void Control::deleteSelection() {

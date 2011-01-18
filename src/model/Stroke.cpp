@@ -2,6 +2,7 @@
 #include <gtk/gtk.h>
 #include <math.h>
 #include <string.h>
+#include "../util/ObjectStream.h"
 
 Point::Point() {
 	this->x = 0;
@@ -53,6 +54,50 @@ Stroke * Stroke::clone() const {
 	s->widthCount = this->widthCount;
 
 	return s;
+}
+
+void Stroke::serialize(ObjectOutputStream & out) {
+	out.writeObject("Stroke");
+
+	serializeElement(out);
+
+	out.writeDouble(this->width);
+
+	out.writeData(this->widths, this->widthCount, sizeof(double));
+
+	out.writeInt(this->toolType);
+
+	out.writeData(this->points, this->pointCount, sizeof(Point));
+
+	out.endObject();
+}
+
+void Stroke::readSerialized(ObjectInputStream & in) throw (InputStreamException) {
+	in.readObject("Stroke");
+
+	readSerializedElement(in);
+
+	this->width = in.readDouble();
+
+	if (this->widths) {
+		g_free(this->widths);
+	}
+	this->widths = NULL;
+	this->widthCount = 0;
+
+	in.readData((void **)&this->widths, &this->widthCount);
+
+	this->toolType = (StrokeTool) in.readInt();
+
+	if (this->points) {
+		g_free(this->points);
+	}
+	this->points = NULL;
+	this->pointCount = 0;
+
+	in.readData((void **)&this->points, &this->pointCount);
+
+	in.endObject();
 }
 
 void Stroke::setWidth(double width) {

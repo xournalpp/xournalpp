@@ -86,15 +86,22 @@ char hexValue(char c) {
 	return 0;
 }
 
+static bool optNoWarnSVN = false;
+static const gchar * optFilename;
+
+static GOptionEntry options[] = { { "no-warn-svn", 'w', 0, G_OPTION_ARG_NONE, &optNoWarnSVN,
+		"Do not warn this is a development release", NULL }, { G_OPTION_REMAINING, 0, 0, G_OPTION_ARG_FILENAME,
+		&optFilename, NULL, "<input>" }, { NULL } };
+
 int main(int argc, char *argv[]) {
 	installCrashHandlers();
 
-//#ifdef ENABLE_NLS
-//	const char * folder = bindtextdomain(GETTEXT_PACKAGE, PACKAGE_LOCALE_DIR);
-//	printf("bindtextdomain=%s\n", folder);
-//	bind_textdomain_codeset(GETTEXT_PACKAGE, "UTF-8");
-//	textdomain(GETTEXT_PACKAGE);
-//#endif
+	//#ifdef ENABLE_NLS
+	//	const char * folder = bindtextdomain(GETTEXT_PACKAGE, PACKAGE_LOCALE_DIR);
+	//	printf("bindtextdomain=%s\n", folder);
+	//	bind_textdomain_codeset(GETTEXT_PACKAGE, "UTF-8");
+	//	textdomain(GETTEXT_PACKAGE);
+	//#endif
 
 	gtk_init(&argc, &argv);
 
@@ -102,14 +109,44 @@ int main(int argc, char *argv[]) {
 
 	initPath(argv[0]);
 
+	GError *error = NULL;
+	GOptionContext * context = context = g_option_context_new("[options] FILE");
+	g_option_context_add_main_entries(context, options, GETTEXT_PACKAGE);
+	g_option_context_add_group(context, gtk_get_option_group(true));
+	if (!g_option_context_parse(context, &argc, &argv, &error)) {
+		g_printerr("%s\n", error->message);
+		g_error_free(error);
+		gchar * help = g_option_context_get_help(context, true, NULL);
+		g_print("%s", help);
+		g_free(help);
+		error = NULL;
+	}
+	g_option_context_free(context);
+
+	if (!optNoWarnSVN) {
+		GtkWidget * dialog = gtk_message_dialog_new(NULL, GTK_DIALOG_MODAL,
+				GTK_MESSAGE_WARNING, GTK_BUTTONS_YES_NO, _("You are using a development release of Xournal\n"
+						"DO NOT USE THIS RELEASE FOR PRODUCTIVE ENVIRONMENT!\n"
+						"If you don't want to show this warning, you can run\n"
+						"\"xournal --help\"\n"
+						"Are you sure you wish to start this release?"));
+
+		int result = gtk_dialog_run(GTK_DIALOG(dialog));
+		gtk_widget_destroy(dialog);
+
+		if(result == -9) {
+			exit(-1);
+		}
+	}
+
 	Control * control = new Control();
 
 	MainWindow * win = new MainWindow(control);
 	control->initWindow(win);
 
 	bool opened = false;
-	if (argc > 1) {
-		GFile * file = g_file_new_for_commandline_arg(argv[1]);
+	if (optFilename) {
+		GFile * file = g_file_new_for_commandline_arg(optFilename);
 		char * uri = g_file_get_uri(file);
 		String sUri = uri;
 		g_free(uri);
@@ -145,7 +182,7 @@ int main(int argc, char *argv[]) {
 		} else {
 			GtkWidget * dialog = gtk_message_dialog_new((GtkWindow*) *win, GTK_DIALOG_DESTROY_WITH_PARENT,
 					GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, _("Sorry, Xournal cannot open remote files at the moment.\n"
-						"You have to copy the file to a local directory."));
+							"You have to copy the file to a local directory."));
 			gtk_dialog_run(GTK_DIALOG(dialog));
 			gtk_widget_destroy(dialog);
 		}
@@ -163,7 +200,7 @@ int main(int argc, char *argv[]) {
 	control->saveSettings();
 
 	delete win;
-//	delete control;
+	//	delete control;
 
 	return 0;
 }

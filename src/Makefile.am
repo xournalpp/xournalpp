@@ -59,6 +59,7 @@ xournalpp_SOURCES = \
 	control/UndoRedoHandler.cpp \
 	util/Util.cpp \
 	util/OutputStream.cpp \
+	util/ObjectStream.cpp \
 	util/CrashHandler.cpp \
 	util/pixbuf-utils.cpp \
 	pdf/PdfExport.cpp \

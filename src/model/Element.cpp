@@ -1,7 +1,5 @@
 #include "Element.h"
-
-//#define MAX(x, y) ( x > y ) ? x : y
-//#define MIN(x, y) ( x < y ) ? x : y
+#include "../util/ObjectStream.h"
 
 Element::Element(ElementType type) {
 	this->type = type;
@@ -98,5 +96,25 @@ bool Element::isInSelection(ShapeContainer * container) {
 	}
 
 	return true;
+}
+
+void Element::serializeElement(ObjectOutputStream & out) {
+	out.writeObject("Element");
+
+	out.writeDouble(this->x);
+	out.writeDouble(this->y);
+	out.writeInt(this->color);
+
+	out.endObject();
+}
+
+void Element::readSerializedElement(ObjectInputStream & in) throw (InputStreamException) {
+	in.readObject("Element");
+
+	this->x = in.readDouble();
+	this->y = in.readDouble();
+	this->color = in.readInt();
+
+	in.endObject();
 }
 

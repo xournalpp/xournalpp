@@ -1,4 +1,5 @@
 #include "Image.h"
+#include "../util/ObjectStream.h"
 
 Image::Image() :
 	Element(ELEMENT_IMAGE) {
@@ -70,6 +71,37 @@ cairo_surface_t * Image::getImage() {
 	}
 
 	return this->image;
+}
+
+void Image::serialize(ObjectOutputStream & out) {
+	out.writeObject("Image");
+
+	serializeElement(out);
+
+	out.writeDouble(this->width);
+	out.writeDouble(this->height);
+
+	out.writeImage(this->image);
+
+	out.endObject();
+}
+
+void Image::readSerialized(ObjectInputStream & in) throw (InputStreamException) {
+	in.readObject("Image");
+
+	readSerializedElement(in);
+
+	this->width = in.readDouble();
+	this->height = in.readDouble();
+
+	if (this->image) {
+		cairo_surface_destroy(this->image);
+		this->image = NULL;
+	}
+
+	this->image = in.readImage();
+
+	in.endObject();
 }
 
 void Image::calcSize() {
