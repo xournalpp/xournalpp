@@ -76,7 +76,7 @@ static void zoomcallib_size_request(GtkWidget *widget, GtkRequisition *requisiti
 	g_return_if_fail(requisition != NULL);
 
 	requisition->width = 200;
-	requisition->height = 50;
+	requisition->height = 75;
 }
 
 static void zoomcallib_size_allocate(GtkWidget *widget, GtkAllocation *allocation) {

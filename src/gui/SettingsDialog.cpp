@@ -24,7 +24,6 @@ SettingsDialog::SettingsDialog(Settings * settings) :
 	this->buttonConfigs = NULL;
 
 	GtkWidget * btSettingsOk = get("btSettingsOk");
-	g_signal_connect(btSettingsOk, "clicked", G_CALLBACK(&btSettingsOkClicked), this);
 
 	GtkWidget * vbox = get("zoomVBox");
 	g_return_if_fail(vbox != NULL);
@@ -37,8 +36,7 @@ SettingsDialog::SettingsDialog(Settings * settings) :
 	g_signal_connect(get("cbSettingPresureSensitivity"), "toggled", G_CALLBACK(&toolboxToggledCallback), this);
 	g_signal_connect(get("cbAutosave"), "toggled", G_CALLBACK(&toolboxToggledCallback), this);
 
-
-	gtk_box_pack_start(GTK_BOX(vbox), callib, true, true, 0);
+	gtk_box_pack_start(GTK_BOX(vbox), callib, false, true, 0);
 	gtk_widget_show(callib);
 
 	initMouseButtonEvents();
@@ -52,10 +50,6 @@ SettingsDialog::~SettingsDialog() {
 
 	// DO NOT delete settings!
 	this->settings = NULL;
-}
-
-void SettingsDialog::btSettingsOkClicked(GtkButton * button, SettingsDialog * dlg) {
-	dlg->save();
 }
 
 gboolean SettingsDialog::zoomcallibSliderChanged(GtkRange *range, GtkScrollType scroll, gdouble value,
@@ -91,9 +85,9 @@ void SettingsDialog::show() {
 
 	int res = gtk_dialog_run(GTK_DIALOG(this->window));
 
-	//	if (res == GTK_RESPONSE_DELETE_EVENT) {
-	// Do nothing on close, don't save the settings
-	//	}
+	if (res == 1) {
+		this->save();
+	}
 
 	gtk_widget_hide(this->window);
 }
@@ -142,6 +136,9 @@ void SettingsDialog::load() {
 	loadCheckbox("cbShowScrollbarLeft", settings->isScrollbarOnLeft());
 	loadCheckbox("cbAutoloadXoj", settings->isAutloadPdfXoj());
 	loadCheckbox("cbAutosave", settings->isAutosaveEnabled());
+	loadCheckbox("cbSettingScrollOutside", settings->isAllowScrollOutsideThePage());
+
+
 
 	GtkWidget * txtDefaultSaveName = get("txtDefaultSaveName");
 	const char * txt = settings->getDefaultSaveName().c_str();
@@ -255,6 +252,8 @@ void SettingsDialog::save() {
 	settings->setScrollbarOnLeft(getCheckbox("cbShowScrollbarLeft"));
 	settings->setAutoloadPdfXoj(getCheckbox("cbAutoloadXoj"));
 	settings->setAutosaveEnabled(getCheckbox("cbAutosave"));
+	settings->setAllowScrollOutsideThePage(getCheckbox("cbSettingScrollOutside"));
+
 
 	GtkWidget * colorBorder = get("colorBorder");
 	GdkColor color = { 0 };

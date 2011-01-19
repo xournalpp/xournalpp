@@ -40,7 +40,6 @@ private:
 	SettingsDialog(const SettingsDialog & dlg);
 	void operator=(const SettingsDialog & dlg);
 
-	static void btSettingsOkClicked(GtkButton * button, SettingsDialog * dlg);
 	static gboolean zoomcallibSliderChanged(GtkRange *range, GtkScrollType scroll, gdouble value, SettingsDialog * dlg);
 
 	static void toolboxToggledCallback(GtkToggleButton *togglebutton, SettingsDialog * sd);
