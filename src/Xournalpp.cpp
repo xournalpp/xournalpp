@@ -124,17 +124,19 @@ int main(int argc, char *argv[]) {
 	g_option_context_free(context);
 
 	if (!optNoWarnSVN) {
-		GtkWidget * dialog = gtk_message_dialog_new(NULL, GTK_DIALOG_MODAL,
-				GTK_MESSAGE_WARNING, GTK_BUTTONS_YES_NO, _("You are using a development release of Xournal\n"
+		GtkWidget * dialog = gtk_message_dialog_new(NULL, GTK_DIALOG_MODAL, GTK_MESSAGE_WARNING, GTK_BUTTONS_YES_NO,
+				_("You are using a development release of Xournal\n"
+						"You can find the current release in CVS!\n"
 						"DO NOT USE THIS RELEASE FOR PRODUCTIVE ENVIRONMENT!\n"
+						"Are you sure you wish to start this release?\n\n\n"
 						"If you don't want to show this warning, you can run\n"
 						"\"xournal --help\"\n"
-						"Are you sure you wish to start this release?"));
+				));
 
 		int result = gtk_dialog_run(GTK_DIALOG(dialog));
 		gtk_widget_destroy(dialog);
 
-		if(result == -9) {
+		if (result == -9) {
 			exit(-1);
 		}
 	}

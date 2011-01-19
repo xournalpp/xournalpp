@@ -216,6 +216,9 @@ public:
 	bool isAutosaveEnabled();
 	void setAutosaveEnabled(bool autosave);
 
+	bool isAllowScrollOutsideThePage();
+	void setAllowScrollOutsideThePage(bool outside);
+
 	String getDefaultSaveName();
 	void setDefaultSaveName(String name);
 
@@ -359,6 +362,11 @@ private:
 	 */
 	int autosaveTimeout;
 	bool autosaveEnabled;
+
+	/**
+	 * allow scroll outside the page
+	 */
+	bool allowScrollOutsideThePage;
 
 	/**
 	 * Default name if you save a new document

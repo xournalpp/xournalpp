@@ -1340,7 +1340,6 @@ void Control::calcZoomFitSize() {
 
 		GtkAllocation allocation = { 0 };
 		GtkWidget * w = win->get("scrolledwindowMain");
-		GtkWidget * scrol = gtk_scrolled_window_get_vscrollbar(GTK_SCROLLED_WINDOW(w));
 
 		gtk_widget_get_allocation(w, &allocation);
 		double factor = ((double) allocation.width - 20) / width;
@@ -1621,6 +1620,7 @@ void Control::setCustomColorSelected() {
 void Control::showSettings() {
 	bool xeventEnabled = settings->isUseXInput();
 	int selectionColor = settings->getSelectionColor();
+	bool allowScrollOutside = settings->isAllowScrollOutsideThePage();
 
 	SettingsDialog * dlg = new SettingsDialog(settings);
 	dlg->show();
@@ -1631,6 +1631,10 @@ void Control::showSettings() {
 
 	if (selectionColor != settings->getSelectionColor()) {
 		win->getXournal()->forceUpdatePagenumbers();
+	}
+
+	if (allowScrollOutside != settings->isAllowScrollOutsideThePage()) {
+		win->getXournal()->layoutPages();
 	}
 
 	win->updateScrollbarSidebarPosition();

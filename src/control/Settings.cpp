@@ -72,6 +72,8 @@ void Settings::loadDefault() {
 	this->autosaveTimeout = 1;
 	this->autosaveEnabled = true;
 
+	this->allowScrollOutsideThePage = false;
+
 	this->defaultSaveName = _("%F-Note-%H-%M.xoj");
 
 	// Eraser
@@ -249,6 +251,8 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
 		this->pageBackgroundColor = g_ascii_strtoll((const char *) value, NULL, 10);
 	} else if (xmlStrcmp(name, (const xmlChar *) "selectionColor") == 0) {
 		this->selectionColor = g_ascii_strtoll((const char *) value, NULL, 10);
+	} else if (xmlStrcmp(name, (const xmlChar *) "allowScrollOutsideThePage") == 0) {
+		allowScrollOutsideThePage = xmlStrcmp(value, (const xmlChar *) "true") ? false : true;
 	}
 
 	xmlFree(name);
@@ -488,6 +492,8 @@ void Settings::save() {
 	WRITE_BOOL_PROP(autosaveEnabled);
 	WRITE_INT_PROP(autosaveTimeout);
 
+	WRITE_BOOL_PROP(allowScrollOutsideThePage);
+
 	String pageInsertType = pageInsertTypeToString(this->pageInsertType);
 	WRITE_STRING_PROP(pageInsertType);
 
@@ -644,6 +650,16 @@ void Settings::setAutosaveEnabled(bool autosave) {
 	}
 
 	this->autosaveEnabled = autosave;
+
+	saveTimeout();
+}
+
+bool Settings::isAllowScrollOutsideThePage() {
+	return this->allowScrollOutsideThePage;
+}
+
+void Settings::setAllowScrollOutsideThePage(bool outside) {
+	this->allowScrollOutsideThePage = outside;
 
 	saveTimeout();
 }
