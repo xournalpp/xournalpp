@@ -245,9 +245,10 @@ public:
 	int getSelectionColor();
 	void setSelectionColor(int color);
 
+	String getVisiblePageFormats();
 public:
 	// Custom settings
-	SElement & getElement(String name);
+	SElement & getCustomElement(String name);
 
 	/**
 	 * Call this after you have done all custom settings changes
@@ -403,6 +404,11 @@ private:
 	 * The color to draw borders on selected elements (Page, insert image selection etc.)
 	 */
 	int selectionColor;
+
+	/**
+	 * The page format wich are visibel
+	 */
+	String visiblePageFormats;
 };
 
 #endif /* __SETTINGS_H__ */

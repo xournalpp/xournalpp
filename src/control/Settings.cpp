@@ -76,6 +76,9 @@ void Settings::loadDefault() {
 
 	this->defaultSaveName = _("%F-Note-%H-%M.xoj");
 
+	this->visiblePageFormats
+			= GTK_PAPER_NAME_A4 "," GTK_PAPER_NAME_A5 "," GTK_PAPER_NAME_LETTER ","GTK_PAPER_NAME_LEGAL;
+
 	// Eraser
 	buttonConfig[0] = new ButtonConfig(TOOL_ERASER, 0, TOOL_SIZE_NONE, false, false, ERASER_TYPE_NONE);
 	// Middle button
@@ -237,6 +240,8 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
 		autoloadPdfXoj = xmlStrcmp(value, (const xmlChar *) "true") ? false : true;
 	} else if (xmlStrcmp(name, (const xmlChar *) "defaultSaveName") == 0) {
 		this->defaultSaveName = (const char *) value;
+	} else if (xmlStrcmp(name, (const xmlChar *) "visiblePageFormats") == 0) {
+		this->visiblePageFormats = (const char *) value;
 	} else if (xmlStrcmp(name, (const xmlChar *) "autosaveEnabled") == 0) {
 		autosaveEnabled = xmlStrcmp(value, (const xmlChar *) "true") ? false : true;
 	} else if (xmlStrcmp(name, (const xmlChar *) "autosaveTimeout") == 0) {
@@ -260,7 +265,7 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
 }
 
 void Settings::loadButtonConfig() {
-	SElement & s = getElement("buttonConfig");
+	SElement & s = getCustomElement("buttonConfig");
 
 	const char * BUTTON_NAMES[] = { "middle", "right", "eraser", "touch" };
 
@@ -403,7 +408,7 @@ xmlNodePtr Settings::saveProperty(const gchar *key, const gchar *value, xmlNodeP
 }
 
 void Settings::saveButtonConfig() {
-	SElement & s = getElement("buttonConfig");
+	SElement & s = getCustomElement("buttonConfig");
 	s.clear();
 
 	const char * BUTTON_NAMES[] = { "middle", "right", "eraser", "touch" };
@@ -488,6 +493,9 @@ void Settings::save() {
 
 	WRITE_BOOL_PROP(autoloadPdfXoj);
 	WRITE_STRING_PROP(defaultSaveName);
+
+	WRITE_STRING_PROP(visiblePageFormats);
+	WRITE_COMMENT("This paper format is visible in the paper format dialog, separated by a colon");
 
 	WRITE_BOOL_PROP(autosaveEnabled);
 	WRITE_INT_PROP(autosaveTimeout);
@@ -690,6 +698,10 @@ void Settings::setDefaultSaveName(String name) {
 	saveTimeout();
 }
 
+String Settings::getVisiblePageFormats() {
+	return this->visiblePageFormats;
+}
+
 void Settings::setShowTwoPages(bool showTwoPages) {
 	if (this->showTwoPages == showTwoPages) {
 		return;
@@ -833,7 +845,7 @@ String Settings::getSelectedToolbar() {
 	return selectedToolbar;
 }
 
-SElement & Settings::getElement(String name) {
+SElement & Settings::getCustomElement(String name) {
 	return data[name];
 }
 

@@ -40,6 +40,8 @@ private:
 private:
 	Settings * settings;
 
+	GList * list;
+
 	Orientation orientation;
 	double scale;
 	int selectedScale;

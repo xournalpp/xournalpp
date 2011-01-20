@@ -6,11 +6,10 @@
 FormatDialog::FormatDialog(Settings * settings, double width, double heigth) :
 	GladeGui("pagesize.glade", "pagesizeDialog") {
 	this->orientation = ORIENTATION_NOT_DEFINED;
-	setOrientation(ORIENTATION_PORTRAIT);
 	this->selectedScale = 0;
 	this->settings = settings;
 
-	SElement & format = settings->getElement("format");
+	SElement & format = settings->getCustomElement("format");
 	String unit;
 
 	if (format.getString("unit", unit)) {
@@ -47,7 +46,7 @@ FormatDialog::FormatDialog(Settings * settings, double width, double heigth) :
 	gtk_combo_box_set_active(GTK_COMBO_BOX(cbUnit), this->selectedScale);
 
 	GtkWidget * cbTemplate = get("cbTemplate");
-	store = gtk_list_store_new(1, G_TYPE_STRING);
+	store = gtk_list_store_new(2, G_TYPE_STRING, G_TYPE_POINTER);
 	gtk_combo_box_set_model(GTK_COMBO_BOX(cbTemplate), GTK_TREE_MODEL(store));
 	g_object_unref(store);
 
@@ -55,14 +54,62 @@ FormatDialog::FormatDialog(Settings * settings, double width, double heigth) :
 	gtk_cell_layout_pack_start(GTK_CELL_LAYOUT (cbTemplate), cell, TRUE);
 	gtk_cell_layout_set_attributes(GTK_CELL_LAYOUT (cbTemplate), cell, "text", 0, NULL);
 
-	int selectedFormat = XOJ_FORMAT_CUSTOM_ID;
-	for (int i = 0; i < XOJ_FORMAT_COUNT; i++) {
-		gtk_combo_box_append_text(GTK_COMBO_BOX(cbTemplate), XOJ_FORMATS[i].name);
-		if (((int) (XOJ_FORMATS[i].width - width) * 10) == 0 && ((int) (XOJ_FORMATS[i].height - heigth) * 10) == 0) {
+	int selectedFormat = -1;
+
+	String formatlist = settings->getVisiblePageFormats();
+
+	if (heigth < width) {
+		double tmp = width;
+		width = heigth;
+		heigth = tmp;
+	}
+
+	this->list = gtk_paper_size_get_paper_sizes(false);
+	int i = 0;
+	GList * next = NULL;
+	for (GList * l = list; l != NULL; l = next) {
+		GtkPaperSize * s = (GtkPaperSize *) l->data;
+		next = l->next;
+
+		double w = gtk_paper_size_get_width(s, GTK_UNIT_POINTS);
+		double h = gtk_paper_size_get_height(s, GTK_UNIT_POINTS);
+
+		bool visible = false;
+
+		if (((int) (w - width) * 10) == 0 && ((int) (h - heigth) * 10) == 0) {
 			selectedFormat = i;
+			visible = true;
+		}
+
+		if (formatlist.indexOf(gtk_paper_size_get_name(s)) != -1) {
+			visible = true;
+		}
+
+		if (visible) {
+			GtkTreeIter iter;
+			gtk_list_store_append(store, &iter);
+			gtk_list_store_set(store, &iter, 0, gtk_paper_size_get_display_name(s), -1);
+			gtk_list_store_set(store, &iter, 1, s, -1);
+			i++;
+		} else {
+			gtk_paper_size_free(s);
+			this->list = g_list_remove_link(this->list, l);
 		}
 	}
+
+	GtkTreeIter iter;
+	gtk_list_store_append(store, &iter);
+	gtk_list_store_set(store, &iter, 0, _("Custom"), -1);
+	gtk_list_store_set(store, &iter, 1, NULL, -1);
+
+	// not found, select custom format
+	if (selectedFormat == -1) {
+		selectedFormat = i;
+	}
+
 	gtk_combo_box_set_active(GTK_COMBO_BOX(cbTemplate), selectedFormat);
+
+	spinValueChangedCb(NULL, this);
 
 	g_signal_connect(get("btLandscape"), "toggled", G_CALLBACK(landscapeSelectedCb), this);
 	g_signal_connect(get("btPortrait"), "toggled", G_CALLBACK(portraitSelectedCb), this);
@@ -74,6 +121,14 @@ FormatDialog::FormatDialog(Settings * settings, double width, double heigth) :
 }
 
 FormatDialog::~FormatDialog() {
+	for (GList * l = this->list; l != NULL; l = l->next) {
+		if (l->data) {
+			GtkPaperSize * s = (GtkPaperSize *) l->data;
+			gtk_paper_size_free(s);
+		}
+	}
+
+	g_list_free(this->list);
 }
 
 double FormatDialog::getWidth() {
@@ -98,8 +153,8 @@ void FormatDialog::setOrientation(Orientation orientation) {
 }
 
 void FormatDialog::spinValueChangedCb(GtkSpinButton * spinbutton, FormatDialog * dlg) {
-	double width = gtk_spin_button_get_value(GTK_SPIN_BUTTON(dlg->get("spinWidth")));
-	double height = gtk_spin_button_get_value(GTK_SPIN_BUTTON(dlg->get("spinHeight")));
+	double width = gtk_spin_button_get_value(GTK_SPIN_BUTTON(dlg->get("spinWidth"))) * dlg->scale;
+	double height = gtk_spin_button_get_value(GTK_SPIN_BUTTON(dlg->get("spinHeight"))) * dlg->scale;
 
 	if (width < height) {
 		dlg->setOrientation(ORIENTATION_PORTRAIT);
@@ -108,6 +163,21 @@ void FormatDialog::spinValueChangedCb(GtkSpinButton * spinbutton, FormatDialog *
 	} else {
 		dlg->setOrientation(ORIENTATION_NOT_DEFINED);
 	}
+
+	int i = 0;
+	for (GList * l = dlg->list; l != NULL; l = l->next) {
+		GtkPaperSize * s = (GtkPaperSize *) l->data;
+		double w = gtk_paper_size_get_width(s, GTK_UNIT_POINTS);
+		double h = gtk_paper_size_get_height(s, GTK_UNIT_POINTS);
+
+		if (((int) (w - width) * 10) == 0 && ((int) (h - height) * 10) == 0) {
+			gtk_combo_box_set_active(GTK_COMBO_BOX(dlg->get("cbTemplate")), i);
+			return;
+		}
+		i++;
+	}
+
+	gtk_combo_box_set_active(GTK_COMBO_BOX(dlg->get("cbTemplate")), i);
 }
 
 void FormatDialog::cbUnitChanged(GtkComboBox * widget, FormatDialog * dlg) {
@@ -130,21 +200,35 @@ void FormatDialog::cbUnitChanged(GtkComboBox * widget, FormatDialog * dlg) {
 }
 
 void FormatDialog::cbFormatChangedCb(GtkComboBox * widget, FormatDialog * dlg) {
-	int selected = gtk_combo_box_get_active(widget);
-	if (selected != XOJ_FORMAT_CUSTOM_ID) {
-		double width = XOJ_FORMATS[selected].width;
-		double height = XOJ_FORMATS[selected].height;
+	GtkTreeIter iter;
 
-		if (dlg->orientation == ORIENTATION_LANDSCAPE) {
-			double tmp = width;
-			width = height;
-			height = tmp;
-		} else {
-			dlg->setOrientation(ORIENTATION_PORTRAIT);
+	if (gtk_combo_box_get_active_iter(widget, &iter)) {
+		GtkTreeModel * model = gtk_combo_box_get_model(widget);
+
+		GValue value = { 0 };
+		gtk_tree_model_get_value(model, &iter, 1, &value);
+
+		if (G_VALUE_HOLDS_POINTER(&value)) {
+			GtkPaperSize * s = (GtkPaperSize *) g_value_get_pointer(&value);
+
+			if (s == NULL) {
+				return;
+			}
+
+			double width = gtk_paper_size_get_width(s, GTK_UNIT_POINTS) / dlg->scale;
+			double height = gtk_paper_size_get_height(s, GTK_UNIT_POINTS) / dlg->scale;
+
+			if (dlg->orientation == ORIENTATION_LANDSCAPE) {
+				double tmp = width;
+				width = height;
+				height = tmp;
+			} else {
+				dlg->setOrientation(ORIENTATION_PORTRAIT);
+			}
+
+			gtk_spin_button_set_value(GTK_SPIN_BUTTON(dlg->get("spinWidth")), width);
+			gtk_spin_button_set_value(GTK_SPIN_BUTTON(dlg->get("spinHeight")), height);
 		}
-
-		gtk_spin_button_set_value(GTK_SPIN_BUTTON(dlg->get("spinWidth")), width);
-		gtk_spin_button_set_value(GTK_SPIN_BUTTON(dlg->get("spinHeight")), height);
 	}
 }
 
@@ -188,12 +272,12 @@ void FormatDialog::show() {
 		ret = gtk_dialog_run(GTK_DIALOG(this->window));
 		if (ret == 0) {
 			gtk_spin_button_set_value(GTK_SPIN_BUTTON(get("spinWidth")), this->origWidth / this->scale);
-			gtk_spin_button_set_value(GTK_SPIN_BUTTON(get("spinHeight")), this->origHeight/ this->scale);
+			gtk_spin_button_set_value(GTK_SPIN_BUTTON(get("spinHeight")), this->origHeight / this->scale);
 		}
 	}
 
 	if (ret == 1) { //OK
-		SElement & format = settings->getElement("format");
+		SElement & format = settings->getCustomElement("format");
 		format.setString("unit", XOJ_UNITS[this->selectedScale].name);
 		settings->customSettingsChanged();
 

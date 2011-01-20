@@ -65,7 +65,8 @@ am_xournalpp_OBJECTS = xournalpp-Page.$(OBJEXT) \
 	xournalpp-EditSelection.$(OBJEXT) \
 	xournalpp-SearchControl.$(OBJEXT) \
 	xournalpp-ClipboardHandler.$(OBJEXT) \
-	xournalpp-GladeGui.$(OBJEXT) xournalpp-AboutDialog.$(OBJEXT) \
+	xournalpp-PrintHandler.$(OBJEXT) xournalpp-GladeGui.$(OBJEXT) \
+	xournalpp-AboutDialog.$(OBJEXT) \
 	xournalpp-PdfPagesDialog.$(OBJEXT) \
 	xournalpp-ImagesDialog.$(OBJEXT) \
 	xournalpp-ExportDialog.$(OBJEXT) \
@@ -248,6 +249,7 @@ xournalpp_SOURCES = \
 	control/EditSelection.cpp \
 	control/SearchControl.cpp \
 	control/ClipboardHandler.cpp \
+	control/PrintHandler.cpp \
 	gui/GladeGui.cpp \
 	gui/AboutDialog.cpp \
 	gui/PdfPagesDialog.cpp \
@@ -397,6 +399,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-PdfExport.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-PdfPagesDialog.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-PopplerGlibExtension.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-PrintHandler.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-RecentManager.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-SaveHandler.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-SearchBar.Po@am__quote@
@@ -778,6 +781,20 @@ xournalpp-ClipboardHandler.obj: control/ClipboardHandler.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='control/ClipboardHandler.cpp' object='xournalpp-ClipboardHandler.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-ClipboardHandler.obj `if test -f 'control/ClipboardHandler.cpp'; then $(CYGPATH_W) 'control/ClipboardHandler.cpp'; else $(CYGPATH_W) '$(srcdir)/control/ClipboardHandler.cpp'; fi`
+
+xournalpp-PrintHandler.o: control/PrintHandler.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-PrintHandler.o -MD -MP -MF $(DEPDIR)/xournalpp-PrintHandler.Tpo -c -o xournalpp-PrintHandler.o `test -f 'control/PrintHandler.cpp' || echo '$(srcdir)/'`control/PrintHandler.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-PrintHandler.Tpo $(DEPDIR)/xournalpp-PrintHandler.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='control/PrintHandler.cpp' object='xournalpp-PrintHandler.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-PrintHandler.o `test -f 'control/PrintHandler.cpp' || echo '$(srcdir)/'`control/PrintHandler.cpp
+
+xournalpp-PrintHandler.obj: control/PrintHandler.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-PrintHandler.obj -MD -MP -MF $(DEPDIR)/xournalpp-PrintHandler.Tpo -c -o xournalpp-PrintHandler.obj `if test -f 'control/PrintHandler.cpp'; then $(CYGPATH_W) 'control/PrintHandler.cpp'; else $(CYGPATH_W) '$(srcdir)/control/PrintHandler.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-PrintHandler.Tpo $(DEPDIR)/xournalpp-PrintHandler.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='control/PrintHandler.cpp' object='xournalpp-PrintHandler.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-PrintHandler.obj `if test -f 'control/PrintHandler.cpp'; then $(CYGPATH_W) 'control/PrintHandler.cpp'; else $(CYGPATH_W) '$(srcdir)/control/PrintHandler.cpp'; fi`
 
 xournalpp-GladeGui.o: gui/GladeGui.cpp
 @am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-GladeGui.o -MD -MP -MF $(DEPDIR)/xournalpp-GladeGui.Tpo -c -o xournalpp-GladeGui.o `test -f 'gui/GladeGui.cpp' || echo '$(srcdir)/'`gui/GladeGui.cpp

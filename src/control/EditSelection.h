@@ -79,6 +79,8 @@ public:
 	void addElement(Element * e);
 
 private:
+	void initAttributes();
+
 	void drawAnchorRect(cairo_t * cr, double x, double y, double zoom);
 
 	void addElementInt(Element * e);

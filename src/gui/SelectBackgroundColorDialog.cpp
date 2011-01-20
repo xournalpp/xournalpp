@@ -59,7 +59,7 @@ SelectBackgroundColorDialog::SelectBackgroundColorDialog(Control * control) :
 	toolbar = get("tbLastUsedColors");
 
 	Settings * settings = control->getSettings();
-	SElement & el = settings->getElement("lastUsedPageBgColor");
+	SElement & el = settings->getCustomElement("lastUsedPageBgColor");
 
 	int count = 0;
 	el.getInt("count", count);
@@ -128,7 +128,7 @@ void SelectBackgroundColorDialog::updateLastUsedColors() {
 	}
 
 	Settings * settings = control->getSettings();
-	SElement & el = settings->getElement("lastUsedPageBgColor");
+	SElement & el = settings->getCustomElement("lastUsedPageBgColor");
 
 	int count = 0;
 	el.getInt("count", count);

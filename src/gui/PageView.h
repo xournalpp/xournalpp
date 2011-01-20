@@ -143,8 +143,8 @@ private:
 	/**
 	 * The last Mouse Position, for scrolling
 	 */
-	double lastMousePositionX;
-	double lastMousePositionY;
+	int lastMousePositionX;
+	int lastMousePositionY;
 
 	bool inScrolling;
 
@@ -184,6 +184,11 @@ private:
 	 * Unixtimestam when the page was last time in the visibel area
 	 */
 	int lastVisibelTime;
+
+	/**
+	 * Wich mouse button is pressed
+	 */
+	int downButton;
 
 	friend class InsertImageRunnable;
 };

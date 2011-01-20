@@ -42,6 +42,13 @@ void RecentManager::addListener(RecentManagerListener * listener) {
 }
 
 void RecentManager::addRecentFileFilename(const char * filename) {
+	printf("addRecentFileFilename: %s\n", filename);
+
+	if(strncmp(filename, "file://", 7)==0) {
+		addRecentFileUri(filename);
+		return;
+	}
+
 	GFile * file = g_file_new_for_path(filename);
 
 	addRecentFileUri(g_file_get_uri(file));
@@ -50,6 +57,9 @@ void RecentManager::addRecentFileFilename(const char * filename) {
 }
 
 void RecentManager::addRecentFileUri(const char * uri) {
+	printf("addRecentFileUri: %s\n", uri);
+
+
 	GtkRecentManager *recentManager;
 	GtkRecentData *recentData;
 
@@ -108,6 +118,8 @@ void RecentManager::setMaxRecent(int maxRecent) {
 }
 
 void RecentManager::openRecent(String uri) {
+	printf("openRecent: %s\n", uri.c_str());
+
 	if (uri.startsWith("file://")) {
 		uri = uri.substring(7);
 	}
