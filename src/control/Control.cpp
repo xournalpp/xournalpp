@@ -9,6 +9,8 @@
 #include "../gui/SelectBackgroundColorDialog.h"
 #include "../cfg.h"
 #include "LoadHandler.h"
+#include "SaveHandler.h"
+#include "PrintHandler.h"
 #include "../gettext.h"
 #include "ev-metadata-manager.h"
 #include "../pdf/PdfExport.h"
@@ -18,8 +20,6 @@
 
 #include <stdio.h>
 #include <string.h>
-
-#include "SaveHandler.h"
 
 // TODO: Check for error log on startup, also check for emergency save document!
 
@@ -346,8 +346,10 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent *even
 	case ACTION_DOCUMENT_PROPERTIES:
 		// TODO: not implemented, but menupoint is hidden...
 		break;
-	case ACTION_PRINT:
-		xxxxx();
+	case ACTION_PRINT: {
+		PrintHandler print;
+		print.print(this->doc);
+	}
 		break;
 	case ACTION_QUIT:
 		quit();
@@ -847,27 +849,15 @@ void Control::addDefaultPage() {
 
 void Control::getDefaultPagesize(double & width, double & height) {
 	if (this->defaultHeight < 0) {
-		// try to load /etc/papersize, TODO: solution for other operating systems
-
-		GFile * papersize = g_file_new_for_path("/etc/papersize");
-
-		char * contents;
-		gsize length = 0;
-		String paper = "A4";
-
-		if (g_file_load_contents(papersize, NULL, &contents, &length, NULL, NULL)) {
-			paper = contents;
-			g_free(contents);
-		}
-		g_object_unref(papersize);
-
-		SElement & format = settings->getElement("format");
+		SElement & format = settings->getCustomElement("format");
 		format.setComment("paperformat",
 				"Available values are: system, A4, Letter, Custom: For custom you have to create the tags width and height.");
 		String settingsPaperFormat;
 
 		double w = 0;
 		double h = 0;
+
+		String paper;
 
 		if (format.getString("paperformat", settingsPaperFormat)) {
 			if (settingsPaperFormat == "system") {
@@ -887,17 +877,31 @@ void Control::getDefaultPagesize(double & width, double & height) {
 			format.setString("paperformat", "system");
 		}
 
-		int id = 0;
+		GtkPaperSize * size = NULL;
 
-		for (int i = 0; i < XOJ_FORMAT_COUNT; i++) {
-			if (paper == XOJ_FORMATS[i].name) {
-				id = i;
-				break;
+		if (paper != NULL) {
+			GList * list = gtk_paper_size_get_paper_sizes(false);
+			for (GList * l = list; l != NULL; l = l->next) {
+				GtkPaperSize * s = (GtkPaperSize *) l->data;
+
+				if (paper.equalsIgnorCase(gtk_paper_size_get_display_name(s))) {
+					size = s;
+				} else {
+					gtk_paper_size_free(s);
+				}
 			}
+
+			g_list_free(list);
 		}
 
-		this->defaultWidth = XOJ_FORMATS[id].width;
-		this->defaultHeight = XOJ_FORMATS[id].height;
+		if (size == NULL) {
+			size = gtk_paper_size_new(NULL);
+		}
+
+		this->defaultWidth = gtk_paper_size_get_width(size, GTK_UNIT_POINTS);
+		this->defaultHeight = gtk_paper_size_get_height(size, GTK_UNIT_POINTS);
+
+		gtk_paper_size_free(size);
 	}
 
 	width = this->defaultWidth;

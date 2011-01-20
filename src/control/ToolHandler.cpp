@@ -221,7 +221,7 @@ ArrayIterator<Tool *> ToolHandler::iterator() {
 }
 
 void ToolHandler::saveSettings() {
-	SElement & s = settings->getElement("tools");
+	SElement & s = settings->getCustomElement("tools");
 	s.clear();
 
 	s.setString("current", this->current->getName());
@@ -281,7 +281,7 @@ void ToolHandler::saveSettings() {
 }
 
 void ToolHandler::loadSettings() {
-	SElement & s = settings->getElement("tools");
+	SElement & s = settings->getCustomElement("tools");
 
 	String selectedTool;
 	s.getString("current", selectedTool);

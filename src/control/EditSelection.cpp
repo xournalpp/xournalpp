@@ -9,52 +9,22 @@ EditSelection::EditSelection(double x, double y, double width, double height, Xo
 	this->y = y;
 	this->width = width;
 	this->height = height;
-	this->selected = NULL;
 	this->page = page;
 	this->layer = this->page->getSelectedLayer();
 	this->view = view;
 	this->inputView = view;
 
-	this->relativeX = x;
-	this->relativeY = y;
-	this->mouseX = 0;
-	this->mouseY = 0;
-	this->offsetX = 0;
-	this->offsetY = 0;
-
-	this->documentView = new DocumentView();
-
-	this->selType = CURSOR_SELECTION_NONE;
-	this->selX = 0;
-	this->selY = 0;
-
-	this->undo = NULL;
-	this->lastUndoAction = NULL;
+	initAttributes();
 }
 
 EditSelection::EditSelection(Selection * selection, Redrawable * view) {
 	selection->getSelectedRect(this->x, this->y, this->width, this->height);
-	this->selected = NULL;
 	this->page = selection->page;
 	this->layer = this->page->getSelectedLayer();
 	this->view = view;
 	this->inputView = view;
 
-	this->relativeX = x;
-	this->relativeY = y;
-	this->mouseX = 0;
-	this->mouseY = 0;
-	this->offsetX = 0;
-	this->offsetY = 0;
-
-	this->documentView = new DocumentView();
-
-	this->selType = CURSOR_SELECTION_NONE;
-	this->selX = 0;
-	this->selY = 0;
-
-	this->undo = NULL;
-	this->lastUndoAction = NULL;
+	initAttributes();
 
 	for (GList * l = selection->selectedElements; l != NULL; l = l->next) {
 		addElementInt((Element *) l->data);
@@ -64,37 +34,42 @@ EditSelection::EditSelection(Selection * selection, Redrawable * view) {
 }
 
 EditSelection::EditSelection(Element * e, Redrawable * view, XojPage * page) {
-	this->selected = NULL;
 	this->page = page;
 	this->layer = this->page->getSelectedLayer();
 	this->view = view;
 	this->inputView = view;
 
-	this->documentView = new DocumentView();
-
 	this->x = e->getX();
 	this->y = e->getY();
+	this->width = e->getElementWidth();
+	this->height = e->getElementHeight();
 
-	this->relativeX = x;
-	this->relativeY = y;
+	initAttributes();
+
+
+	addElementInt(e);
+
+	this->view->deleteViewBuffer();
+}
+
+void EditSelection::initAttributes() {
+	this->selected = NULL;
+
+	this->relativeX = this->x;
+	this->relativeY = this->y;
 	this->mouseX = 0;
 	this->mouseY = 0;
 	this->offsetX = 0;
 	this->offsetY = 0;
 
-	this->width = e->getElementWidth();
-	this->height = e->getElementHeight();
-
-	this->undo = NULL;
-	this->lastUndoAction = NULL;
+	this->documentView = new DocumentView();
 
 	this->selType = CURSOR_SELECTION_NONE;
 	this->selX = 0;
 	this->selY = 0;
 
-	addElementInt(e);
-
-	this->view->deleteViewBuffer();
+	this->undo = NULL;
+	this->lastUndoAction = NULL;
 }
 
 EditSelection::~EditSelection() {

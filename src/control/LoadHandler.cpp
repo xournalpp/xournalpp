@@ -150,6 +150,8 @@ void LoadHandler::parseContents() {
 		this->doc.addPage(this->page);
 	} else if (strcmp(elementName, "title") == 0) {
 		// Ignore this tag, it says nothing...
+	} else if (strcmp(elementName, "preview") == 0) {
+		// Ignore this tag, we don't need a preview
 	} else {
 		error("Unexpected tag in document: \"%s\"", elementName);
 	}
@@ -240,9 +242,7 @@ void LoadHandler::parseBgPixmap() {
 void LoadHandler::parseBgPdf() {
 	int pageno = getAttribInt("pageno");
 
-
 	page->setBackgroundPdfPageNr(pageno - 1);
-
 
 	if (!this->pdfFilenameParsed) {
 		const char * domain = getAttrib("domain");
@@ -288,7 +288,7 @@ void LoadHandler::parseBgPdf() {
 
 		if (g_file_test(filename.c_str(), G_FILE_TEST_EXISTS)) {
 			doc.readPdf(filename, false);
-			if(!doc.getLastErrorMsg().isEmpty()) {
+			if (!doc.getLastErrorMsg().isEmpty()) {
 				error("Error reading PDF: %s", doc.getLastErrorMsg().c_str());
 			}
 		} else {

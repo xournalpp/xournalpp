@@ -408,11 +408,15 @@ gboolean String::endsWith(const String & s) const {
 	return endsWith(s.c_str());
 }
 
+gboolean String::equalsIgnorCase(const String & s) {
+	return this->toLowerCase().equals(s.toLowerCase());
+}
+
 gboolean String::endsWith(const char * s) const {
 	return g_str_has_suffix(c_str(), s);
 }
 
-String String::toLowerCase() {
+String String::toLowerCase() const {
 	String s = c_str();
 
 	char * data = s.data->c_str();
@@ -424,7 +428,7 @@ String String::toLowerCase() {
 	return s;
 }
 
-String String::toUpperCase() {
+String String::toUpperCase() const {
 	String s = c_str();
 
 	char * data = s.data->c_str();

@@ -57,13 +57,15 @@ public:
 	gboolean endsWith(const String & s) const;
 	gboolean endsWith(const char * s) const;
 
+	gboolean equalsIgnorCase(const String & s);
+
 	int length() const;
 	String substring(int start, int length) const;
 	String substring(int start) const;
 	String trim();
 
-	String toLowerCase();
-	String toUpperCase();
+	String toLowerCase() const;
+	String toUpperCase() const;
 private:
 	_RefStrInternal * data;
 };

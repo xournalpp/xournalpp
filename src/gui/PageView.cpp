@@ -38,6 +38,8 @@ PageView::PageView(XournalWidget * xournal, XojPage * page) {
 
 	this->idleRepaintId = 0;
 
+	this->downButton = 0;
+
 	this->inEraser = false;
 	this->eraseDeleteUndoAction = NULL;
 	this->eraseUndoAction = NULL;
@@ -481,6 +483,8 @@ void PageView::onButtonPressEvent(GtkWidget *widget, GdkEventButton *event) {
 		return;
 	}
 
+	this->downButton = event->button;
+
 	// Change the tool depending on the key or device
 
 	ToolHandler * h = xournal->getControl()->getToolHandler();
@@ -577,7 +581,7 @@ void PageView::onButtonPressEvent(GtkWidget *widget, GdkEventButton *event) {
 		this->lastMousePositionX = 0;
 		this->lastMousePositionY = 0;
 		this->inScrolling = true;
-		gdk_event_get_coords((GdkEvent *) event, &this->lastMousePositionX, &this->lastMousePositionY);
+		gtk_widget_get_pointer(widget, &this->lastMousePositionX, &this->lastMousePositionY);
 	} else if (h->getToolType() == TOOL_HILIGHTER) {
 		if (tmpStroke == NULL) {
 			currentInputDevice = event->device;
@@ -810,13 +814,42 @@ gboolean PageView::onMotionNotifyEventCallback(GtkWidget *widget, GdkEventMotion
 }
 
 gboolean PageView::onMotionNotifyEvent(GtkWidget *widget, GdkEventMotion *event) {
-	bool is_core = (event->device == gdk_device_get_core_pointer());
 #ifdef INPUT_DEBUG
+	bool is_core = (event->device == gdk_device_get_core_pointer());
 	//	printf("DEBUG: MotionNotify (%s) (x,y)=(%.2f,%.2f), modifier %x\n", is_core ? "core" : "xinput", event->xScreen,
 	//			event->yScreen, event->state);
 #endif
 
 	fixXInputCoords((GdkEvent*) event);
+
+	// TODO: on scroll with the hand tool there is sometimes no mouse release event
+//	if (this->currentInputDevice) {
+//		bool looksWrong = !(event->state & (1 << (7 + this->downButton)));
+//		if (looksWrong) {
+//			GdkModifierType mask;
+//			gdk_device_get_state(this->currentInputDevice, event->window, NULL, &mask);
+//			looksWrong = !(mask & (1 << (7 + this->downButton)));
+//		}
+//
+//		if (looksWrong) {
+//			GdkEventButton e;
+//			e.type = GDK_BUTTON_RELEASE;
+//			e.window = event->window;
+//			e.send_event = event->send_event;
+//			e.time = event->time;
+//			e.x = event->x;
+//			e.y = event->y;
+//			e.axes = event->axes;
+//			e.state = event->state;
+//			e.button = this->downButton;
+//			e.device = event->device;
+//			e.x_root = event->x_root;
+//			e.y_root = event->y_root;
+//
+//			onButtonReleaseEvent(widget, &e);
+//			return false;
+//		}
+//	}
 
 	double zoom = xournal->getZoom();
 	double x = event->x / zoom;
@@ -856,23 +889,15 @@ gboolean PageView::onMotionNotifyEvent(GtkWidget *widget, GdkEventMotion *event)
 }
 
 void PageView::doScroll(GdkEventMotion *event) {
-	double x = 0;
-	double y = 0;
+	int x = 0;
+	int y = 0;
+	gtk_widget_get_pointer(widget, &x, &y);
 
-	gdk_event_get_coords((GdkEvent *) event, &x, &y);
-
-	if (ABS(this->lastMousePositionX-x) < 3 && ABS(this->lastMousePositionY-y) < 3) {
+	if (this->lastMousePositionX - x == 0 && this->lastMousePositionY - y == 0) {
 		return;
 	}
 
 	xournal->getControl()->scrollRelative(this->lastMousePositionX - x, this->lastMousePositionY - y);
-
-	gint ix = 0;
-	gint iy = 0;
-	gtk_widget_get_pointer(widget, &ix, &iy);
-
-	this->lastMousePositionX = ix;
-	this->lastMousePositionY = iy;
 }
 
 bool PageView::onButtonReleaseEventCallback(GtkWidget *widget, GdkEventButton *event, PageView * view) {
@@ -880,17 +905,17 @@ bool PageView::onButtonReleaseEventCallback(GtkWidget *widget, GdkEventButton *e
 	return view->onButtonReleaseEvent(widget, event);
 }
 
-// TODO: if you rotate the screen the events dont match the pointer coordinates, this is may a GTK Bug, but has to be fixed!
-
 bool PageView::onButtonReleaseEvent(GtkWidget *widget, GdkEventButton *event) {
-#ifdef INPUT_DEBUG
 	gboolean isCore = (event->device == gdk_device_get_core_pointer());
+#ifdef INPUT_DEBUG
 	//	printf("DEBUG: ButtonRelease (%s) (x,y)=(%.2f,%.2f), button %d, modifier %x, isCore %i\n", event->device->name,
 	//			event->xScreen, event->yScreen, event->button, event->state, isCore);
 #endif
 
 	fixXInputCoords((GdkEvent*) event);
 	Control * control = xournal->getControl();
+
+	this->downButton = 0;
 
 	//	if (event->button != ui.which_mouse_button && event->button != ui.which_unswitch_button)
 	//		return FALSE;

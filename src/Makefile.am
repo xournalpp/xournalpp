@@ -29,6 +29,7 @@ xournalpp_SOURCES = \
 	control/EditSelection.cpp \
 	control/SearchControl.cpp \
 	control/ClipboardHandler.cpp \
+	control/PrintHandler.cpp \
 	gui/GladeGui.cpp \
 	gui/AboutDialog.cpp \
 	gui/PdfPagesDialog.cpp \
