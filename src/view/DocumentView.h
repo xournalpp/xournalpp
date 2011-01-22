@@ -11,7 +11,6 @@
 
 #ifndef __DOCUMENTVIEW_H__
 #define __DOCUMENTVIEW_H__
-#include <poppler-page.h>
 
 #include <gtk/gtk.h>
 #include "../model/Element.h"
@@ -19,6 +18,7 @@
 #include "../model/Text.h"
 #include "../model/Page.h"
 #include "../model/Image.h"
+#include "../pdf/poppler/XojPopplerPage.h"
 
 class EditSelection;
 
@@ -28,7 +28,7 @@ public:
 	virtual ~DocumentView();
 
 public:
-	void drawPage(XojPage * page, PopplerPage * popplerPage, cairo_t *cr);
+	void drawPage(XojPage * page, XojPopplerPage * popplerPage, cairo_t *cr, bool forPrinting = false);
 	void drawStroke(cairo_t *cr, Stroke * s, int startPoint = 0);
 	static void applyColor(cairo_t *cr, int c, int alpha = 255);
 	static void applyColor(cairo_t *cr, Element * e, int alpha = 255);

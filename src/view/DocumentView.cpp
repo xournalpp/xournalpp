@@ -272,7 +272,7 @@ void DocumentView::drawSelection(cairo_t * cr, EditSelection * selection) {
 	}
 }
 
-void DocumentView::drawPage(XojPage * page, PopplerPage * popplerPage, cairo_t * cr) {
+void DocumentView::drawPage(XojPage * page, XojPopplerPage * popplerPage, cairo_t * cr, bool forPrinting) {
 	this->cr = cr;
 	this->page = page;
 	this->width = page->getWidth();
@@ -282,11 +282,12 @@ void DocumentView::drawPage(XojPage * page, PopplerPage * popplerPage, cairo_t *
 
 	if (page->getBackgroundType() == BACKGROUND_TYPE_PDF) {
 		if (popplerPage) {
-			poppler_page_render(popplerPage, cr);
+			popplerPage->render(cr, forPrinting);
+
 			cairo_set_operator(cr, CAIRO_OPERATOR_DEST_OVER);
 			cairo_set_source_rgb(cr, 1., 1., 1.);
 			cairo_paint(cr);
-		} else {
+		} else if (!forPrinting) {
 			cairo_select_font_face(cr, "Sans", CAIRO_FONT_SLANT_NORMAL, CAIRO_FONT_WEIGHT_BOLD);
 			cairo_set_font_size(cr, 26);
 

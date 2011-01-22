@@ -50,6 +50,7 @@ String Util::getSettingsSubfolder(String subfolder) {
 	return path;
 }
 
+
 MemoryCheckObject::MemoryCheckObject() {
 	this->d1 = 0xffff0000;
 	this->d2 = 465456;

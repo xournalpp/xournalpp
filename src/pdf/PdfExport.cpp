@@ -4,75 +4,66 @@
 #include <string.h>
 #include <config.h>
 #include <stdlib.h>
-#include "../view/DocumentView.h"
+#include "../util/GzHelper.h"
+#include "cairo/CairoPdf.h"
 
-/*
- * Find the first occurrence of find in s, where the search is limited to the
- * first slen characters of s.
+/**
+ * This class uses some inspiration from FPDF (PHP Class)
  */
-const char * strnstr(const char *s, const char *find, size_t slen) {
-	char c, sc;
-	size_t len;
-
-	if ((c = *find++) != '\0') {
-		len = strlen(find);
-		do {
-			do {
-				if (slen-- < 1 || (sc = *s++) == '\0')
-					return (NULL);
-			} while (sc != c);
-			if (len > slen)
-				return (NULL);
-		} while (strncmp(s, find, len) != 0);
-		s--;
-	}
-	return ((char *) s);
-}
 
 PdfExport::PdfExport(Document * doc) {
 	this->doc = doc;
 	this->out = NULL;
-	this->inPagesEnd = false;
-	this->inSavestream = false;
-	this->inFooter = false;
-	this->end = g_string_new_len("", 1024);
-	this->end->len = 0;
 
-	this->objectId = 0;
+	// TODO: enable compression
+	this->compressOutput = false;
+
+	this->objectId = 3;
 	this->xref = NULL;
 	this->xrefLenght = 0;
 	this->xrefNr = 0;
 	this->dataCount = 0;
 	this->dataXrefStart = 0;
 
+	this->pageCount = 0;
+
+	this->inStream = false;
+	this->stream = NULL;
+
+	addXref(0);
+	addXref(0);
+
 	this->outlineRoot = 0;
 }
 
 PdfExport::~PdfExport() {
-	if (this->out) {
-		g_object_unref(this->out);
-	}
-
-	g_string_free(this->end, true);
-
 	g_free(xref);
+
+	if (this->stream) {
+		g_string_free(this->stream, true);
+	}
 }
 
 bool PdfExport::write(const char * data) {
-	return write(data, strlen(data));
+	return writeLen(data, strlen(data));
 }
 
-bool PdfExport::write(int data) {
-	char * str = g_strdup_printf("%i", data);
-	bool res = write(str);
-	g_free(str);
-
+bool PdfExport::writef(const char * format, ...) {
+	va_list args;
+	va_start (args, format);
+	char * data = g_strdup_vprintf(format, args);
+	bool res = writeLen(data, strlen(data));
+	g_free(data);
 	return res;
 }
 
+bool PdfExport::write(int data) {
+	return writef("%i", data);;
+}
+
 bool PdfExport::writeTxt(const char * data) {
-	GString * str = g_string_new_len("(", strlen(data) + 100);
-	str->len = 1;
+	GString * str = g_string_sized_new(strlen(data) + 100);
+	g_string_append(str, "(");
 
 	while (*data) {
 		if (*data == '\\' || *data == '(' || *data == ')' || *data == '\r') {
@@ -83,12 +74,17 @@ bool PdfExport::writeTxt(const char * data) {
 	}
 
 	g_string_append_c(str, ')');
-	return write(str->str, str->len);
+	return writeLen(str->str, str->len);
 
 	g_string_free(str, true);
 }
 
-bool PdfExport::write(const char * data, int len) {
+bool PdfExport::writeLen(const char * data, int len) {
+	if (this->inStream) {
+		g_string_append_len(this->stream, data, len);
+		return true;
+	}
+
 	GError * err = NULL;
 
 	g_output_stream_write(G_OUTPUT_STREAM(this->out), data, len, NULL, &err);
@@ -107,31 +103,6 @@ bool PdfExport::write(const char * data, int len) {
 	return true;
 }
 
-cairo_status_t PdfExport::writeOut(PdfExport *pdf, unsigned char *data, unsigned int length) {
-	unsigned char * tmp = NULL;
-
-	if (pdf->inSavestream) {
-		g_string_append_len(pdf->end, (char *) data, length);
-		return CAIRO_STATUS_SUCCESS;
-	}
-
-	if (pdf->inFooter) {
-		if (strnstr((char *) data, "<< /Type /Pages\n", length) != NULL) {
-			pdf->inPagesEnd = true;
-		} else if (pdf->inPagesEnd && strnstr((char *) data, "endobj", length) != NULL) {
-			pdf->inPagesEnd = false;
-
-			pdf->inSavestream = true;
-		}
-	}
-
-	if (!pdf->write((char*) data, length)) {
-		return CAIRO_STATUS_WRITE_ERROR;
-	}
-
-	return CAIRO_STATUS_SUCCESS;
-}
-
 void PdfExport::addXref(int ref) {
 	if (xrefLenght < xrefNr + 1) {
 		xrefLenght += 100;
@@ -141,83 +112,54 @@ void PdfExport::addXref(int ref) {
 	this->xref[xrefNr++] = ref;
 }
 
-bool PdfExport::parseFooter() {
-	char * ptr = NULL;
-
-	this->objectId = strtol(this->end->str, &ptr, 10);
-	if (ptr == this->end->str) {
-		this->lastError = "Internal PDF error #1";
-		return false;
-	}
-
-	const char * xref = strnstr(this->end->str, "xref", this->end->len);
-
-	if (xref == NULL) {
-		this->lastError = "Internal PDF error #2";
-		return false;
-	}
-
-	// End of line
-	xref = strnstr(xref, "\n", this->end->len) + 1;
-
-	if (xref == NULL) {
-		this->lastError = "Internal PDF error #3";
-		return false;
-	}
-
-	// End of object id
-	xref = strnstr(xref, "\n", this->end->len) + 1;
-
-	if (xref == NULL) {
-		this->lastError = "Internal PDF error #4";
-		return false;
-	}
-
-	// End of 0000000000 65535 f
-	xref = strnstr(xref, "\n", this->end->len);
-
-	if (xref == NULL) {
-		this->lastError = "Internal PDF error #5";
-		return false;
-	}
-
-	const char * xrefEnd = strnstr(xref, "trailer\n", this->end->len);
-
-	if (xrefEnd == NULL) {
-		this->lastError = "Internal PDF error #6";
-		return false;
-	}
-
-	for (const char * i = xref; i < xrefEnd; i++) {
-		int addr = strtol(i, &ptr, 10);
-		if (ptr == i) {
-			this->lastError = "Internal PDF error #7";
-			return false;
-		}
-		addXref(addr);
-
-		//skip the rest of the line
-		while (*i != '\n') {
-			i++;
-		}
-	}
-
-	return true;
-}
-
 bool PdfExport::writeObj() {
 	bool res;
-	char * obj = g_strdup_printf("%i 0 obj\n", this->objectId++);
-	res = this->write(obj);
-	g_free(obj);
-
 	addXref(this->dataCount);
-
+	res = this->writef("%i 0 obj\n", this->objectId++);
 	if (!res) {
 		this->lastError = "Internal PDF error #8";
 	}
 
 	return res;
+}
+
+void PdfExport::startStream() {
+	this->inStream = true;
+	if (this->stream == NULL) {
+		this->stream = g_string_new("");
+	}
+}
+
+void PdfExport::endStream() {
+	this->inStream = false;
+
+	GString * data = NULL;
+	GString * compressed = NULL;
+
+	if (this->compressOutput) {
+		compressed = GzHelper::gzcompress(this->stream);
+	}
+
+	const char * filter = "";
+	if (compressed) {
+		filter = "/Filter /FlateDecode ";
+		data = compressed;
+	} else {
+		data = this->stream;
+	}
+
+	writef("<<%s/Length %i>>\n", filter, this->stream->len);
+	write("stream\n");
+
+	writeLen(data->str, data->len);
+
+	write("\nendstream\n");
+
+	if (compressed) {
+		g_string_free(compressed, true);
+	}
+
+	this->stream->len = 0;
 }
 
 bool PdfExport::writeInfo() {
@@ -228,21 +170,25 @@ bool PdfExport::writeInfo() {
 	write("<<\n");
 
 	write("/Producer ");
-	char * producer = g_strdup_printf("cairo %s (http://cairographics.org)", cairo_version_string());
-	writeTxt(producer);
-	g_free(producer);
+	writeTxt("Xournal++");
 	write("\n");
 
-	//		write("/Title ");
-	//		writeTxt(doc->getFilename());
-	//		write("\n");
+	String title = doc->getFilename();
+	if (!title.isEmpty()) {
+		write("/Title ");
+		if (title.length() > 4 && title.substring(-4, 1) == ".") {
+			title = title.substring(0, -4);
+		}
+		writeTxt(title.c_str());
+		write("\n");
+	}
 
 	write("/Author ");
 	writeTxt(getenv("USERNAME"));
 	write("\n");
 
 	write("/Creator ");
-	writeTxt("Xournal++ " VERSION);
+	writeTxt("Cairo / Poppler " VERSION);
 	write("\n");
 
 	time_t curtime = time(NULL);
@@ -268,7 +214,8 @@ bool PdfExport::writeCatalog() {
 	write("/Type /Catalog\n");
 	write("/Pages 1 0 R\n");
 
-	write("/OpenAction [3 0 R /Fit]\n");
+	write("/OpenAction [3 0 R /FitH null]\n");
+	//write("/OpenAction [3 0 R /Fit]\n");
 
 	//	if($this->ZoomMode=='fullpage')
 	//		$this->_out('/OpenAction [3 0 R /Fit]');
@@ -348,14 +295,19 @@ public:
 };
 
 void PdfExport::createBookmarks(GtkTreeModel * model, GList * &data, GtkTreeIter * iter, int level) {
-	LinkDest * link = NULL;
+	XojLinkDest * link = NULL;
 	LinkDestination * dest = NULL;
 
 	do {
 		gtk_tree_model_get(model, iter, DOCUMENT_LINKS_COLUMN_LINK, &link, -1);
 		dest = link->dest;
 
-		data = g_list_append(data, new Bookmark(dest->getName(), level, dest->getPage(), dest->getTop()));
+		int page = doc->findPdfPage(dest->getPdfPage());
+		if (page == -1) {
+			continue;
+		}
+
+		data = g_list_append(data, new Bookmark(dest->getName(), level, page, dest->getTop()));
 
 		GtkTreeIter children = { 0 };
 
@@ -376,6 +328,27 @@ GList * PdfExport::exportBookmarksFromTreeModel(GtkTreeModel * model) {
 	createBookmarks(model, data, &iter, 0);
 
 	return data;
+}
+
+bool PdfExport::writePagesindex() {
+	this->xref[0] = this->dataCount;
+	//Pages root
+	write("1 0 obj\n");
+	write("<</Type /Pages\n");
+	write("/Kids [");
+
+	for (int i = 0; i < this->pageCount; i++) {
+		writef("%i 0 R ", 3 + 2 * i);
+	}
+	write("]\n");
+	writef("/Count %i\n", this->pageCount);
+
+	XojPage * page = doc->getPage(0);
+
+	writef("/MediaBox [0 0 %.2F %.2F]\n", page->getWidth(), page->getHeight());
+	write(">>\n");
+	write("endobj\n");
+
 }
 
 bool PdfExport::writeOutlines() {
@@ -512,32 +485,67 @@ bool PdfExport::writeTrailer() {
 	write("trailer\n");
 	write("<<\n");
 
-	char * tmp;
-
-	tmp = g_strdup_printf("/Size %i\n", this->objectId);
-	write(tmp);
-	g_free(tmp);
-
-	tmp = g_strdup_printf("/Root %i 0 R\n", this->objectId - 1);
-	write(tmp);
-	g_free(tmp);
-
-	tmp = g_strdup_printf("/Info %i 0 R\n", this->objectId - 2);
-	write(tmp);
-	g_free(tmp);
-
+	writef("/Size %i\n", this->objectId);
+	writef("/Root %i 0 R\n", this->objectId - 1);
+	writef("/Info %i 0 R\n", this->objectId - 2);
 	write(">>\n");
 	write("startxref\n");
 
-	char * startxref = g_strdup_printf("%i\n", this->dataXrefStart);
-	write(startxref);
-	g_free(startxref);
+	writef("%i\n", this->dataXrefStart);
 	write("%%EOF\n");
 
 	return this->lastError.isEmpty();
 }
 
+bool PdfExport::writeXobjectdict() {
+	//	foreach($this->images as $image)
+	//		$this->_out('/I'.$image['i'].' '.$image['n'].' 0 R');
+
+	return true;
+}
+
+bool PdfExport::writeResourcedict() {
+	write("/ProcSet [/PDF /Text /ImageB /ImageC /ImageI]\n");
+	write("/Font <<\n");
+	//		foreach($this->fonts as $font)
+	//			$this->_out('/F'.$font['i'].' '.$font['n'].' 0 R');
+	write(">>\n");
+	write("/XObject <<\n");
+	if (!writeXobjectdict()) {
+		return false;
+	}
+	write(">>\n");
+	return true;
+}
+
+bool PdfExport::writeResources() {
+	//	$this->_putfonts();
+	//	$this->_putimages();
+	//Resource dictionary
+	this->xref[1] = this->dataCount;
+
+	write("2 0 obj\n");
+	write("<<\n");
+	if (!writeResourcedict()) {
+		return false;
+	}
+	write(">>\n");
+	write("endobj\n");
+
+	return true;
+}
+
 bool PdfExport::writeFooter() {
+	if (!writePagesindex()) {
+		g_warning("failed to write outlines");
+		return false;
+	}
+
+	if (!writeResources()) {
+		g_warning("failed to write resources");
+		return false;
+	}
+
 	if (!writeOutlines()) {
 		g_warning("failed to write outlines");
 		return false;
@@ -570,65 +578,158 @@ String PdfExport::getLastError() {
 	return lastError;
 }
 
+void printPopplerObjectType(Object * o) {
+	ObjType type = o->getType();
+	if (type == objBool) {
+		printf("pdf::bool: %i\n", o->getBool());
+	} else if (type == objInt) {
+		printf("pdf::int: %i\n", o->getInt());
+	} else if (type == objReal) {
+		printf("pdf::int: %lf\n", o->getReal());
+	} else if (type == objString) {
+		printf("pdf::string: %s\n", o->getString()->getCString());
+	} else if (type == objName) {
+		printf("pdf::name: %s\n", o->getName());
+	} else if (type == objNull) {
+		printf("pdf::null\n");
+	} else if (type == objArray) {
+		printf("pdf::array:\n");
+	} else if (type == objDict) {
+		printf("pdf::dict:\n");
+	} else if (type == objStream) {
+		printf("pdf::stream:\n");
+	} else if (type == objRef) {
+		printf("pdf::ref:\n");
+	} else if (type == objCmd) {
+		printf("pdf::cmd:\n");
+	} else if (type == objError) {
+		printf("pdf::error:\n");
+	} else if (type == objEOF) {
+		printf("pdf::eof:\n");
+	} else if (type == objNone) {
+		printf("pdf::none:\n");
+	}
+}
+
+bool PdfExport::addPopplerPage(XojPopplerPage * pdf) {
+	Page * page = pdf->getPage();
+
+	Object * o = new Object();
+	page->getContents(o);
+
+	ObjType type = o->getType();
+	printPopplerObjectType(o);
+
+	if (type != objStream) {
+		delete o;
+		return false;
+	}
+	Stream * s = o->getStream();
+	s->reset();
+
+	char buffer[512];
+	while (s->lookChar() != EOF) {
+		int i = 0;
+		for (i = 0; i < sizeof(buffer) && s->lookChar() != EOF; i++) {
+			buffer[i] = s->getChar();
+		}
+		writeLen(buffer, i);
+	}
+
+	delete o;
+	return true;
+}
+
+bool PdfExport::writePage(int pageNr) {
+	XojPage * page = doc->getPage(pageNr);
+
+	if (!page) {
+		return false;
+	}
+
+	this->pageCount++;
+
+	writeObj();
+	write("<</Type /Page\n");
+	write("/Parent 1 0 R\n");
+
+	writef("/MediaBox [0 0 %.2F %.2F]\n", page->getWidth(), page->getHeight());
+	write("/Resources 2 0 R\n");
+	//	if (isset($this->PageLinks[$n])) {
+	//		//Links
+	//		$annots = '/Annots [';
+	//foreach	($this->PageLinks[$n] as $pl)
+	//	{
+	//		$rect=sprintf('%.2F %.2F %.2F %.2F',$pl[0],$pl[1],$pl[0]+$pl[2],$pl[1]-$pl[3]);
+	//		$annots.='<</Type /Annot /Subtype /Link /Rect ['.$rect.'] /Border [0 0 0] ';
+	//		if(is_string($pl[4]))
+	//		$annots.='/A <</S /URI /URI '.$this->_textstring($pl[4]).'>>>>';
+	//		else
+	//		{
+	//			$l=$this->links[$pl[4]];
+	//			$h=isset($this->PageSizes[$l[0]]) ? $this->PageSizes[$l[0]][1] : $hPt;
+	//			$annots.=sprintf('/Dest [%d 0 R /XYZ 0 %.2F null]>>',1+2*$l[0],$h-$l[1]*$this->k);
+	//		}
+	//	}
+	//	$this->_out($annots.']');
+	//}
+	writef("/Contents %i 0 R>>\n", this->objectId);
+	write("endobj\n");
+	//Page content
+	writeObj();
+
+	startStream();
+
+	if (page->getBackgroundType() == BACKGROUND_TYPE_PDF) {
+		XojPopplerPage * pdf = doc->getPdfPage(page->getPdfPageNr());
+		if (!addPopplerPage(pdf)) {
+			return false;
+		}
+	}
+
+	CairoPdf cPdf;
+	cPdf.drawPage(page);
+	if (!addPopplerPage(cPdf.getPage())) {
+		return false;
+	}
+
+	endStream();
+
+	write("endobj\n");
+
+	return true;
+}
+
 bool PdfExport::createPdf(String uri, bool * cancel) {
+	if (doc->getPageCount() < 1) {
+		lastError = "No pages to export!";
+		return false;
+	}
+
 	GError * error = NULL;
 
 	GFile * file = g_file_new_for_uri(uri.c_str());
-	this->out = g_file_replace(file, NULL, false, G_FILE_CREATE_NONE, NULL, &error);
+	this->out = g_file_replace(file, NULL, false, (GFileCreateFlags) 0, NULL, &error);
 
 	g_object_unref(file);
 
 	if (error) {
 		lastError = "Error opening file for writing: ";
 		lastError += error->message;
+		lastError += ", File: ";
+		lastError += uri;
 		g_warning("error opening file");
 		return false;
 	}
 
-	cairo_surface_t *surface;
-	cairo_t *cr;
-	surface = cairo_pdf_surface_create_for_stream((cairo_write_func_t) writeOut, this, 504, 648);
+	write("%PDF-1.4\n");
 
-	cr = cairo_create(surface);
-
-	DocumentView view;
-
-	for (int i = 0; i < doc->getPageCount() && !*cancel; i++) {
-		XojPage * page = doc->getPage(i);
-
-		PopplerPage * popplerPage = NULL;
-
-//		if (page->getBackgroundType() == BACKGROUND_TYPE_PDF) {
-//			int pgNo = page->getPdfPageNr();
-//			popplerPage = doc->getPdfPage(pgNo);
-//		}
-
-		cairo_pdf_surface_set_size(surface, page->getWidth(), page->getHeight());
-
-		view.drawPage(page, popplerPage, cr);
-
-		cairo_show_page(cr);
-
-		printf("page: %i\n", i);
+	for (int i = 0; i < doc->getPageCount(); i++) {
+		if (!writePage(i)) {
+			g_warning("error writing page %i", i + 1);
+			return false;
+		}
 	}
-
-	this->inFooter = true;
-
-	cairo_surface_destroy(surface);
-	cairo_destroy(cr);
-
-	for (int i = 0; i < this->end->len; i++) {
-		printf("%c", this->end->str[i]);
-	}
-
-	// Parse existing PDF Footer
-	if (!parseFooter()) {
-		g_warning("error parsing footer");
-		return false;
-	}
-
-	this->dataCount = xref[this->objectId];
-	this->xrefNr = this->objectId;
 
 	// Write our own footer
 	if (!writeFooter()) {

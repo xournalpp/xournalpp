@@ -89,8 +89,12 @@ am_xournalpp_OBJECTS = xournalpp-Page.$(OBJEXT) \
 	xournalpp-OutputStream.$(OBJEXT) \
 	xournalpp-ObjectStream.$(OBJEXT) \
 	xournalpp-CrashHandler.$(OBJEXT) \
-	xournalpp-pixbuf-utils.$(OBJEXT) xournalpp-PdfExport.$(OBJEXT) \
-	xournalpp-PopplerGlibExtension.$(OBJEXT) \
+	xournalpp-pixbuf-utils.$(OBJEXT) xournalpp-GzHelper.$(OBJEXT) \
+	xournalpp-PdfExport.$(OBJEXT) xournalpp-CairoPdf.$(OBJEXT) \
+	xournalpp-XojPopplerDocument.$(OBJEXT) \
+	xournalpp-XojPopplerPage.$(OBJEXT) \
+	xournalpp-XojPopplerIter.$(OBJEXT) \
+	xournalpp-XojPopplerAction.$(OBJEXT) \
 	xournalpp-Xournalpp.$(OBJEXT)
 xournalpp_OBJECTS = $(am_xournalpp_OBJECTS)
 xournalpp_DEPENDENCIES =
@@ -283,8 +287,13 @@ xournalpp_SOURCES = \
 	util/ObjectStream.cpp \
 	util/CrashHandler.cpp \
 	util/pixbuf-utils.cpp \
+	util/GzHelper.cpp \
 	pdf/PdfExport.cpp \
-	pdf/popplerGlibExt/PopplerGlibExtension.cpp \
+	pdf/cairo/CairoPdf.cpp \
+	pdf/poppler/XojPopplerDocument.cpp \
+	pdf/poppler/XojPopplerPage.cpp \
+	pdf/poppler/XojPopplerIter.cpp \
+	pdf/poppler/XojPopplerAction.cpp \
 	Xournalpp.cpp
 
 xournalpp_CXXFLAGS = -g -rdynamic -DXOURNAL_FLAGS
@@ -373,6 +382,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-AboutDialog.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-Actions.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-BackgroundThreadHandler.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-CairoPdf.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-ClipboardHandler.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-Control.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-CrashHandler.Po@am__quote@
@@ -386,6 +396,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-FormatDefinitions.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-FormatDialog.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-GladeGui.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-GzHelper.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-Image.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-ImagesDialog.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-Layer.Po@am__quote@
@@ -398,7 +409,6 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-PageView.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-PdfExport.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-PdfPagesDialog.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-PopplerGlibExtension.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-PrintHandler.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-RecentManager.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-SaveHandler.Po@am__quote@
@@ -424,6 +434,10 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-ToolMenuHandler.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-UndoRedoHandler.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-Util.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-XojPopplerAction.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-XojPopplerDocument.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-XojPopplerIter.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-XojPopplerPage.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-XournalWidget.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-Xournalpp.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-ZoomCallib.Po@am__quote@
@@ -1258,6 +1272,20 @@ xournalpp-pixbuf-utils.obj: util/pixbuf-utils.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-pixbuf-utils.obj `if test -f 'util/pixbuf-utils.cpp'; then $(CYGPATH_W) 'util/pixbuf-utils.cpp'; else $(CYGPATH_W) '$(srcdir)/util/pixbuf-utils.cpp'; fi`
 
+xournalpp-GzHelper.o: util/GzHelper.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-GzHelper.o -MD -MP -MF $(DEPDIR)/xournalpp-GzHelper.Tpo -c -o xournalpp-GzHelper.o `test -f 'util/GzHelper.cpp' || echo '$(srcdir)/'`util/GzHelper.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-GzHelper.Tpo $(DEPDIR)/xournalpp-GzHelper.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='util/GzHelper.cpp' object='xournalpp-GzHelper.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-GzHelper.o `test -f 'util/GzHelper.cpp' || echo '$(srcdir)/'`util/GzHelper.cpp
+
+xournalpp-GzHelper.obj: util/GzHelper.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-GzHelper.obj -MD -MP -MF $(DEPDIR)/xournalpp-GzHelper.Tpo -c -o xournalpp-GzHelper.obj `if test -f 'util/GzHelper.cpp'; then $(CYGPATH_W) 'util/GzHelper.cpp'; else $(CYGPATH_W) '$(srcdir)/util/GzHelper.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-GzHelper.Tpo $(DEPDIR)/xournalpp-GzHelper.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='util/GzHelper.cpp' object='xournalpp-GzHelper.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-GzHelper.obj `if test -f 'util/GzHelper.cpp'; then $(CYGPATH_W) 'util/GzHelper.cpp'; else $(CYGPATH_W) '$(srcdir)/util/GzHelper.cpp'; fi`
+
 xournalpp-PdfExport.o: pdf/PdfExport.cpp
 @am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-PdfExport.o -MD -MP -MF $(DEPDIR)/xournalpp-PdfExport.Tpo -c -o xournalpp-PdfExport.o `test -f 'pdf/PdfExport.cpp' || echo '$(srcdir)/'`pdf/PdfExport.cpp
 @am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-PdfExport.Tpo $(DEPDIR)/xournalpp-PdfExport.Po
@@ -1272,19 +1300,75 @@ xournalpp-PdfExport.obj: pdf/PdfExport.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-PdfExport.obj `if test -f 'pdf/PdfExport.cpp'; then $(CYGPATH_W) 'pdf/PdfExport.cpp'; else $(CYGPATH_W) '$(srcdir)/pdf/PdfExport.cpp'; fi`
 
-xournalpp-PopplerGlibExtension.o: pdf/popplerGlibExt/PopplerGlibExtension.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-PopplerGlibExtension.o -MD -MP -MF $(DEPDIR)/xournalpp-PopplerGlibExtension.Tpo -c -o xournalpp-PopplerGlibExtension.o `test -f 'pdf/popplerGlibExt/PopplerGlibExtension.cpp' || echo '$(srcdir)/'`pdf/popplerGlibExt/PopplerGlibExtension.cpp
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-PopplerGlibExtension.Tpo $(DEPDIR)/xournalpp-PopplerGlibExtension.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='pdf/popplerGlibExt/PopplerGlibExtension.cpp' object='xournalpp-PopplerGlibExtension.o' libtool=no @AMDEPBACKSLASH@
+xournalpp-CairoPdf.o: pdf/cairo/CairoPdf.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-CairoPdf.o -MD -MP -MF $(DEPDIR)/xournalpp-CairoPdf.Tpo -c -o xournalpp-CairoPdf.o `test -f 'pdf/cairo/CairoPdf.cpp' || echo '$(srcdir)/'`pdf/cairo/CairoPdf.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-CairoPdf.Tpo $(DEPDIR)/xournalpp-CairoPdf.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='pdf/cairo/CairoPdf.cpp' object='xournalpp-CairoPdf.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-PopplerGlibExtension.o `test -f 'pdf/popplerGlibExt/PopplerGlibExtension.cpp' || echo '$(srcdir)/'`pdf/popplerGlibExt/PopplerGlibExtension.cpp
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-CairoPdf.o `test -f 'pdf/cairo/CairoPdf.cpp' || echo '$(srcdir)/'`pdf/cairo/CairoPdf.cpp
 
-xournalpp-PopplerGlibExtension.obj: pdf/popplerGlibExt/PopplerGlibExtension.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-PopplerGlibExtension.obj -MD -MP -MF $(DEPDIR)/xournalpp-PopplerGlibExtension.Tpo -c -o xournalpp-PopplerGlibExtension.obj `if test -f 'pdf/popplerGlibExt/PopplerGlibExtension.cpp'; then $(CYGPATH_W) 'pdf/popplerGlibExt/PopplerGlibExtension.cpp'; else $(CYGPATH_W) '$(srcdir)/pdf/popplerGlibExt/PopplerGlibExtension.cpp'; fi`
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-PopplerGlibExtension.Tpo $(DEPDIR)/xournalpp-PopplerGlibExtension.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='pdf/popplerGlibExt/PopplerGlibExtension.cpp' object='xournalpp-PopplerGlibExtension.obj' libtool=no @AMDEPBACKSLASH@
+xournalpp-CairoPdf.obj: pdf/cairo/CairoPdf.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-CairoPdf.obj -MD -MP -MF $(DEPDIR)/xournalpp-CairoPdf.Tpo -c -o xournalpp-CairoPdf.obj `if test -f 'pdf/cairo/CairoPdf.cpp'; then $(CYGPATH_W) 'pdf/cairo/CairoPdf.cpp'; else $(CYGPATH_W) '$(srcdir)/pdf/cairo/CairoPdf.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-CairoPdf.Tpo $(DEPDIR)/xournalpp-CairoPdf.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='pdf/cairo/CairoPdf.cpp' object='xournalpp-CairoPdf.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-PopplerGlibExtension.obj `if test -f 'pdf/popplerGlibExt/PopplerGlibExtension.cpp'; then $(CYGPATH_W) 'pdf/popplerGlibExt/PopplerGlibExtension.cpp'; else $(CYGPATH_W) '$(srcdir)/pdf/popplerGlibExt/PopplerGlibExtension.cpp'; fi`
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-CairoPdf.obj `if test -f 'pdf/cairo/CairoPdf.cpp'; then $(CYGPATH_W) 'pdf/cairo/CairoPdf.cpp'; else $(CYGPATH_W) '$(srcdir)/pdf/cairo/CairoPdf.cpp'; fi`
+
+xournalpp-XojPopplerDocument.o: pdf/poppler/XojPopplerDocument.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-XojPopplerDocument.o -MD -MP -MF $(DEPDIR)/xournalpp-XojPopplerDocument.Tpo -c -o xournalpp-XojPopplerDocument.o `test -f 'pdf/poppler/XojPopplerDocument.cpp' || echo '$(srcdir)/'`pdf/poppler/XojPopplerDocument.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-XojPopplerDocument.Tpo $(DEPDIR)/xournalpp-XojPopplerDocument.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='pdf/poppler/XojPopplerDocument.cpp' object='xournalpp-XojPopplerDocument.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-XojPopplerDocument.o `test -f 'pdf/poppler/XojPopplerDocument.cpp' || echo '$(srcdir)/'`pdf/poppler/XojPopplerDocument.cpp
+
+xournalpp-XojPopplerDocument.obj: pdf/poppler/XojPopplerDocument.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-XojPopplerDocument.obj -MD -MP -MF $(DEPDIR)/xournalpp-XojPopplerDocument.Tpo -c -o xournalpp-XojPopplerDocument.obj `if test -f 'pdf/poppler/XojPopplerDocument.cpp'; then $(CYGPATH_W) 'pdf/poppler/XojPopplerDocument.cpp'; else $(CYGPATH_W) '$(srcdir)/pdf/poppler/XojPopplerDocument.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-XojPopplerDocument.Tpo $(DEPDIR)/xournalpp-XojPopplerDocument.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='pdf/poppler/XojPopplerDocument.cpp' object='xournalpp-XojPopplerDocument.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-XojPopplerDocument.obj `if test -f 'pdf/poppler/XojPopplerDocument.cpp'; then $(CYGPATH_W) 'pdf/poppler/XojPopplerDocument.cpp'; else $(CYGPATH_W) '$(srcdir)/pdf/poppler/XojPopplerDocument.cpp'; fi`
+
+xournalpp-XojPopplerPage.o: pdf/poppler/XojPopplerPage.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-XojPopplerPage.o -MD -MP -MF $(DEPDIR)/xournalpp-XojPopplerPage.Tpo -c -o xournalpp-XojPopplerPage.o `test -f 'pdf/poppler/XojPopplerPage.cpp' || echo '$(srcdir)/'`pdf/poppler/XojPopplerPage.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-XojPopplerPage.Tpo $(DEPDIR)/xournalpp-XojPopplerPage.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='pdf/poppler/XojPopplerPage.cpp' object='xournalpp-XojPopplerPage.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-XojPopplerPage.o `test -f 'pdf/poppler/XojPopplerPage.cpp' || echo '$(srcdir)/'`pdf/poppler/XojPopplerPage.cpp
+
+xournalpp-XojPopplerPage.obj: pdf/poppler/XojPopplerPage.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-XojPopplerPage.obj -MD -MP -MF $(DEPDIR)/xournalpp-XojPopplerPage.Tpo -c -o xournalpp-XojPopplerPage.obj `if test -f 'pdf/poppler/XojPopplerPage.cpp'; then $(CYGPATH_W) 'pdf/poppler/XojPopplerPage.cpp'; else $(CYGPATH_W) '$(srcdir)/pdf/poppler/XojPopplerPage.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-XojPopplerPage.Tpo $(DEPDIR)/xournalpp-XojPopplerPage.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='pdf/poppler/XojPopplerPage.cpp' object='xournalpp-XojPopplerPage.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-XojPopplerPage.obj `if test -f 'pdf/poppler/XojPopplerPage.cpp'; then $(CYGPATH_W) 'pdf/poppler/XojPopplerPage.cpp'; else $(CYGPATH_W) '$(srcdir)/pdf/poppler/XojPopplerPage.cpp'; fi`
+
+xournalpp-XojPopplerIter.o: pdf/poppler/XojPopplerIter.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-XojPopplerIter.o -MD -MP -MF $(DEPDIR)/xournalpp-XojPopplerIter.Tpo -c -o xournalpp-XojPopplerIter.o `test -f 'pdf/poppler/XojPopplerIter.cpp' || echo '$(srcdir)/'`pdf/poppler/XojPopplerIter.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-XojPopplerIter.Tpo $(DEPDIR)/xournalpp-XojPopplerIter.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='pdf/poppler/XojPopplerIter.cpp' object='xournalpp-XojPopplerIter.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-XojPopplerIter.o `test -f 'pdf/poppler/XojPopplerIter.cpp' || echo '$(srcdir)/'`pdf/poppler/XojPopplerIter.cpp
+
+xournalpp-XojPopplerIter.obj: pdf/poppler/XojPopplerIter.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-XojPopplerIter.obj -MD -MP -MF $(DEPDIR)/xournalpp-XojPopplerIter.Tpo -c -o xournalpp-XojPopplerIter.obj `if test -f 'pdf/poppler/XojPopplerIter.cpp'; then $(CYGPATH_W) 'pdf/poppler/XojPopplerIter.cpp'; else $(CYGPATH_W) '$(srcdir)/pdf/poppler/XojPopplerIter.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-XojPopplerIter.Tpo $(DEPDIR)/xournalpp-XojPopplerIter.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='pdf/poppler/XojPopplerIter.cpp' object='xournalpp-XojPopplerIter.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-XojPopplerIter.obj `if test -f 'pdf/poppler/XojPopplerIter.cpp'; then $(CYGPATH_W) 'pdf/poppler/XojPopplerIter.cpp'; else $(CYGPATH_W) '$(srcdir)/pdf/poppler/XojPopplerIter.cpp'; fi`
+
+xournalpp-XojPopplerAction.o: pdf/poppler/XojPopplerAction.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-XojPopplerAction.o -MD -MP -MF $(DEPDIR)/xournalpp-XojPopplerAction.Tpo -c -o xournalpp-XojPopplerAction.o `test -f 'pdf/poppler/XojPopplerAction.cpp' || echo '$(srcdir)/'`pdf/poppler/XojPopplerAction.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-XojPopplerAction.Tpo $(DEPDIR)/xournalpp-XojPopplerAction.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='pdf/poppler/XojPopplerAction.cpp' object='xournalpp-XojPopplerAction.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-XojPopplerAction.o `test -f 'pdf/poppler/XojPopplerAction.cpp' || echo '$(srcdir)/'`pdf/poppler/XojPopplerAction.cpp
+
+xournalpp-XojPopplerAction.obj: pdf/poppler/XojPopplerAction.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-XojPopplerAction.obj -MD -MP -MF $(DEPDIR)/xournalpp-XojPopplerAction.Tpo -c -o xournalpp-XojPopplerAction.obj `if test -f 'pdf/poppler/XojPopplerAction.cpp'; then $(CYGPATH_W) 'pdf/poppler/XojPopplerAction.cpp'; else $(CYGPATH_W) '$(srcdir)/pdf/poppler/XojPopplerAction.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-XojPopplerAction.Tpo $(DEPDIR)/xournalpp-XojPopplerAction.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='pdf/poppler/XojPopplerAction.cpp' object='xournalpp-XojPopplerAction.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-XojPopplerAction.obj `if test -f 'pdf/poppler/XojPopplerAction.cpp'; then $(CYGPATH_W) 'pdf/poppler/XojPopplerAction.cpp'; else $(CYGPATH_W) '$(srcdir)/pdf/poppler/XojPopplerAction.cpp'; fi`
 
 xournalpp-Xournalpp.o: Xournalpp.cpp
 @am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-Xournalpp.o -MD -MP -MF $(DEPDIR)/xournalpp-Xournalpp.Tpo -c -o xournalpp-Xournalpp.o `test -f 'Xournalpp.cpp' || echo '$(srcdir)/'`Xournalpp.cpp

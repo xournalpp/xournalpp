@@ -171,7 +171,7 @@ bool PageView::searchTextOnPage(const char * text, int * occures, double * top) 
 		}
 
 		int pNr = page->getPdfPageNr();
-		PopplerPage * pdf = NULL;
+		XojPopplerPage * pdf = NULL;
 		if (pNr != -1) {
 			pdf = xournal->getControl()->getDocument()->getPdfPage(pNr);
 		}
@@ -1246,7 +1246,7 @@ bool PageView::paintPage(GtkWidget * widget, GdkEventExpose * event) {
 
 		cairo_scale(cr2, xournal->getZoom(), xournal->getZoom());
 
-		PopplerPage * popplerPage = NULL;
+		XojPopplerPage * popplerPage = NULL;
 
 		if (page->getBackgroundType() == BACKGROUND_TYPE_PDF) {
 			int pgNo = page->getPdfPageNr();

@@ -4,9 +4,9 @@ struct _LinkDestClass {
 	GObjectClass base_class;
 };
 
-G_DEFINE_TYPE (LinkDest, link_dest, G_TYPE_OBJECT)
+G_DEFINE_TYPE (XojLinkDest, link_dest, G_TYPE_OBJECT)
 
-static void link_dest_init(LinkDest *linkAction) {
+static void link_dest_init(XojLinkDest *linkAction) {
 	linkAction->dest = NULL;
 }
 
@@ -15,7 +15,7 @@ static void link_dest_finalize(GObject *object) {
 	G_OBJECT_CLASS (object)->finalize(object);
 }
 
-static void link_dest_class_init(LinkDestClass *linkClass) {
+static void link_dest_class_init(XojLinkDestClass *linkClass) {
 	GObjectClass *g_object_class;
 
 	g_object_class = G_OBJECT_CLASS (linkClass);
@@ -23,7 +23,7 @@ static void link_dest_class_init(LinkDestClass *linkClass) {
 	g_object_class->finalize = link_dest_finalize;
 }
 
-LinkDest * link_dest_new() {
+XojLinkDest * link_dest_new() {
 	return LINK_DEST (g_object_new (TYPE_LINK_DEST,
 					NULL));
 }
@@ -38,11 +38,11 @@ LinkDestination::LinkDestination() {
 	this->top = 0;
 }
 
-int LinkDestination::getPage() {
+int LinkDestination::getPdfPage() {
 	return this->page;
 }
 
-void LinkDestination::setPage(int page) {
+void LinkDestination::setPdfPage(int page) {
 	this->page = page;
 }
 

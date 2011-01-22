@@ -1,7 +1,7 @@
 #include "TextView.h"
 #include "../model/Text.h"
 #include <string.h>
-#include <poppler.h>
+#include "../pdf/poppler/XojPopplerPage.h"
 
 TextView::TextView() {
 }
@@ -127,27 +127,18 @@ GList * TextView::findText(Text * t, const char * search) {
 			pos = line.indexOfCaseInsensitiv(search, pos + 1);
 			if (pos != -1) {
 				cairo_text_extents(cr, line.substring(0, pos).c_str(), &extents);
-				PopplerRectangle * rect = g_new(PopplerRectangle, 1);
+				XojPopplerRectangle * rect = new XojPopplerRectangle();
 				rect->x1 = x + extents.x_advance;
 				rect->y1 = y;
 
-				//				printf("->\"%s\": w:%lf h:%lf xa:%lf ya:%lf xb:%lf yb:%lf\n", line.substring(0, pos).c_str(),
-				//						extents.width, extents.height, extents.x_advance, extents.y_advance, extents.x_bearing,
-				//						extents.y_bearing);
-
-				// because of case insensitive search, TEST and test may have different sizes (depeding of the font)
+				// because of case insensitive search, TEST and test may have different sizes (depending of the font)
 				cairo_text_extents(cr, line.substring(pos, searchlen).c_str(), &extents);
-
-				//				printf("->\"%s\": w:%lf h:%lf xa:%lf ya:%lf xb:%lf yb:%lf\n", line.substring(pos, searchlen).c_str(),
-				//						extents.width, extents.height, extents.x_advance, extents.y_advance, extents.x_bearing,
-				//						extents.y_bearing);
 
 				rect->x1 += extents.x_bearing;
 				rect->y1 += extents.y_bearing;
 				rect->x2 = rect->x1 + extents.x_advance;
 				rect->y2 = rect->y1 + extents.height;
 
-				//				printf("found text pos: %i::: %lf %lf %lf %lf\n\n", pos, rect->x1, rect->y1, rect->x2, rect->y2);
 				list = g_list_append(list, rect);
 			}
 

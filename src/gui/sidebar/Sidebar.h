@@ -31,7 +31,7 @@ public:
 	void pageSelected(int page);
 
 public:
-	bool selectPageNr(int page, GtkTreeIter * iter = NULL);
+	bool selectPageNr(int page, int pdfPage, GtkTreeIter * iter = NULL);
 	void setBackgroundWhite();
 	Document * getDocument();
 	Control * getControl();
@@ -42,8 +42,11 @@ private:
 	static bool treeClickedCallback(GtkWidget *treeview, GdkEventButton *event, Sidebar *sidebar);
 	static gboolean treeSearchFunction(GtkTreeModel *model, gint column, const gchar *key, GtkTreeIter *iter,
 			Sidebar * sidebar);
+
 	static void cbChangedCallback(GtkComboBox * widget, Sidebar * sidebar);
 	static bool scrollTopreview(Sidebar * sidebar);
+
+	void askInsertPdfPage(int pdfPage);
 
 	void layout();
 	void updatePreviews();

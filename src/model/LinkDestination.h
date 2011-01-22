@@ -15,15 +15,15 @@
 #include <gtk/gtk.h>
 #include "String.h"
 
-typedef struct _LinkDest LinkDest;
-typedef struct _LinkDestClass LinkDestClass;
+typedef struct _LinkDest XojLinkDest;
+typedef struct _LinkDestClass XojLinkDestClass;
 
 class LinkDestination {
 public:
 	LinkDestination();
 
-	int getPage();
-	void setPage(int page);
+	int getPdfPage();
+	void setPdfPage(int page);
 
 	void setExpand(bool expand);
 	bool getExpand();
@@ -70,13 +70,13 @@ enum {
 };
 
 #define TYPE_LINK_DEST              (link_dest_get_type())
-#define LINK_DEST(object)           (G_TYPE_CHECK_INSTANCE_CAST((object), TYPE_LINK_DEST, LinkDest))
-#define LINK_DEST_CLASS(klass)      (G_TYPE_CHECK_CLASS_CAST((klass), TYPE_LINK_DEST, LinkDestClass))
+#define LINK_DEST(object)           (G_TYPE_CHECK_INSTANCE_CAST((object), TYPE_LINK_DEST, XojLinkDest))
+#define LINK_DEST_CLASS(klass)      (G_TYPE_CHECK_CLASS_CAST((klass), TYPE_LINK_DEST, XojLinkDestClass))
 #define IS_LINK_DEST(object)        (G_TYPE_CHECK_INSTANCE_TYPE((object), TYPE_LINK_DEST))
 #define IS_LINK_DEST_CLASS(klass)   (G_TYPE_CHECK_CLASS_TYPE((klass), TYPE_LINK_DEST))
-#define LINK_DEST_GET_CLASS(object) (G_TYPE_INSTANCE_GET_CLASS((object), TYPE_LINK_DEST, LinkDestClass))
+#define LINK_DEST_GET_CLASS(object) (G_TYPE_INSTANCE_GET_CLASS((object), TYPE_LINK_DEST, XojLinkDestClass))
 
 GType link_dest_get_type(void) G_GNUC_CONST;
-LinkDest * link_dest_new();
+XojLinkDest * link_dest_new();
 
 #endif /* __LINKDESTINATION_H__ */

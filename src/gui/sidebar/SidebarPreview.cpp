@@ -96,7 +96,7 @@ void SidebarPreview::paint() {
 
 		cairo_scale(cr2, zoom, zoom);
 
-		PopplerPage * popplerPage = NULL;
+		XojPopplerPage * popplerPage = NULL;
 
 		if (page->getBackgroundType() == BACKGROUND_TYPE_PDF) {
 			int pgNo = page->getPdfPageNr();

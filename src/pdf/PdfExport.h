@@ -1,7 +1,7 @@
 /*
  * Xournal++
  *
- * Handlers PDF Export
+ * Handles PDF Export
  *
  * @author Xournal Team
  * http://xournal.sf.net
@@ -25,34 +25,44 @@ public:
 	String getLastError();
 
 private:
-	static cairo_status_t writeOut(PdfExport *pdf, unsigned char *data, unsigned int length);
-	bool write(const char * data, int len);
+	bool writeLen(const char * data, int len);
 	bool write(const char * data);
+	bool writef(const char * data, ...);
 	bool writeTxt(const char * data);
 	bool write(int data);
+
+	bool addPopplerPage(XojPopplerPage * pdf);
+	bool writePage(int page);
 
 	bool parseFooter();
 	bool writeInfo();
 	bool writeFooter();
 
+	void startStream();
+	void endStream();
+
 	GList * exportBookmarksFromTreeModel(GtkTreeModel * model);
 	void createBookmarks(GtkTreeModel * model, GList * &data, GtkTreeIter * iter, int level);
 
+	bool writePagesindex();
 	bool writeOutlines();
 	bool writeCatalog();
 	bool writeCrossRef();
 	bool writeTrailer();
+	bool writeXobjectdict();
+	bool writeResourcedict();
+	bool writeResources();
 	bool writeObj();
 	void addXref(int ref);
 
 private:
 	Document * doc;
 
+	bool compressOutput;
+
 	String lastError;
 
 	GFileOutputStream * out;
-
-	GString * end;
 
 	int objectId;
 	int * xref;
@@ -61,11 +71,12 @@ private:
 	int dataCount;
 	int dataXrefStart;
 
+	int pageCount;
+
 	int outlineRoot;
 
-	bool inPagesEnd;
-	bool inSavestream;
-	bool inFooter;
+	bool inStream;
+	GString * stream;
 };
 
 class PdfPageDesc {
