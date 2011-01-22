@@ -5,6 +5,7 @@
 #include "../view/TextView.h"
 #include <gdk/gdkkeysyms.h>
 #include "../control/Control.h"
+#include <string.h>
 
 #include "TextEditorWidget.h"
 

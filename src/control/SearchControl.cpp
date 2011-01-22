@@ -1,9 +1,8 @@
 #include "SearchControl.h"
 #include "../model/Text.h"
 #include "../view/TextView.h"
-#include "../pdf/popplerGlibExt/PopplerGlibExtension.h"
 
-SearchControl::SearchControl(XojPage * page, PopplerPage * pdf) {
+SearchControl::SearchControl(XojPage * page, XojPopplerPage * pdf) {
 	this->page = page;
 	this->pdf = pdf;
 	this->results = NULL;
@@ -15,7 +14,9 @@ SearchControl::~SearchControl() {
 
 void SearchControl::freeSearchResults() {
 	if (this->results) {
-		g_list_foreach(this->results, (GFunc) g_free, NULL);
+		for (GList * l = this->results; l != NULL; l = l->next) {
+			delete (XojPopplerRectangle*) l->data;
+		}
 		g_list_free(this->results);
 		this->results = NULL;
 	}
@@ -26,7 +27,7 @@ void SearchControl::paint(cairo_t * cr, GdkEventExpose *event, double zoom, GdkC
 	cairo_set_line_width(cr, 1 / zoom);
 
 	for (GList * l = this->results; l != NULL; l = l->next) {
-		PopplerRectangle * rect = (PopplerRectangle *) l->data;
+		XojPopplerRectangle * rect = (XojPopplerRectangle *) l->data;
 		cairo_rectangle(cr, rect->x1, rect->y1, rect->x2 - rect->x1, rect->y2 - rect->y1);
 		cairo_set_source_rgb(cr, color.red / 65536.0, color.green / 65536.0, color.blue / 65536.0);
 		cairo_stroke_preserve(cr);
@@ -43,7 +44,7 @@ bool SearchControl::search(const char * text, int * occures, double * top) {
 	}
 
 	if (pdf) {
-		this->results = poppler_page_find_text_xoj(pdf, text);
+		this->results = pdf->findText(text);
 	}
 
 	int selected = page->getSelectedLayerId();
@@ -75,9 +76,9 @@ bool SearchControl::search(const char * text, int * occures, double * top) {
 			*top = 0;
 		} else {
 
-			double min = ((PopplerRectangle *) this->results->data)->y1;
+			double min = ((XojPopplerRectangle *) this->results->data)->y1;
 			for (GList * l = this->results->next; l != NULL; l = l->next) {
-				PopplerRectangle * rect = (PopplerRectangle *) l->data;
+				XojPopplerRectangle * rect = (XojPopplerRectangle *) l->data;
 				min = MIN(min, rect->y1);
 			}
 

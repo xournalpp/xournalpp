@@ -142,6 +142,7 @@ public:
 
 	void addDefaultPage();
 	void insertNewPage(int position);
+	void insertPage(XojPage * page, int position);
 	void deletePage();
 
 	/**

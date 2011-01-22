@@ -30,14 +30,14 @@ void PrintHandler::drawPage(GtkPrintOperation * operation, GtkPrintContext * con
 		cairo_translate(cr, 0, -height);
 	}
 
-	PopplerPage * popplerPage = NULL;
+	XojPopplerPage * popplerPage = NULL;
 
 	if (page->getBackgroundType() == BACKGROUND_TYPE_PDF) {
 		int pgNo = page->getPdfPageNr();
 		popplerPage = handler->doc->getPdfPage(pgNo);
 	}
 
-	handler->view->drawPage(page, popplerPage, cr);
+	handler->view->drawPage(page, popplerPage, cr, true);
 }
 
 void PrintHandler::requestPageSetup(GtkPrintOperation * operation, GtkPrintContext * context, gint pageNr,

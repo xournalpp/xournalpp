@@ -169,35 +169,82 @@ void Sidebar::cbChangedCallback(GtkComboBox * widget, Sidebar * sidebar) {
 	}
 }
 
+void Sidebar::askInsertPdfPage(int pdfPage) {
+	GtkWidget
+			* dialog =
+					gtk_message_dialog_new(
+							(GtkWindow*) *control->getWindow(),
+							GTK_DIALOG_DESTROY_WITH_PARENT,
+							GTK_MESSAGE_QUESTION,
+							GTK_BUTTONS_NONE,
+							_("Your current document does not contain PDF Page %i\n"
+									"Would you insert this page?\n\nTipp: You can select Journal / Paper Background / PDF Background to insert a PDF page."),
+							pdfPage + 1);
+
+	gtk_dialog_add_button(GTK_DIALOG(dialog), "Cancel", 1);
+	gtk_dialog_add_button(GTK_DIALOG(dialog), "Insert after", 2);
+	gtk_dialog_add_button(GTK_DIALOG(dialog), "Insert at end", 3);
+
+	int res = gtk_dialog_run(GTK_DIALOG(dialog));
+	gtk_widget_destroy(dialog);
+	if (res == 1) {
+		return;
+	}
+
+	int position = 0;
+	if (res == 2) {
+		position = control->getCurrentPageNo() + 1;
+	} else if (res == 3) {
+		position = control->getDocument()->getPageCount();
+	}
+
+	XojPopplerPage * pdf = control->getDocument()->getPdfPage(pdfPage);
+	if (pdf) {
+		XojPage * page = new XojPage(pdf->getWidth(), pdf->getHeight());
+		page->setBackgroundPdfPageNr(pdfPage);
+		control->insertPage(page, position);
+	}
+}
+
 bool Sidebar::treeClickedCallback(GtkWidget *treeview, GdkEventButton *event, Sidebar *sidebar) {
 	GtkTreePath * path = NULL;
 	sidebar->typeSelected = true;
 
-	gtk_widget_grab_focus(GTK_WIDGET (treeview));
+	gtk_widget_grab_focus(GTK_WIDGET(treeview));
 
-	if (gtk_tree_view_get_path_at_pos(GTK_TREE_VIEW (treeview), event->x, event->y, &path, NULL, NULL, NULL)) {
+	if (gtk_tree_view_get_path_at_pos(GTK_TREE_VIEW(treeview), event->x, event->y, &path, NULL, NULL, NULL)) {
 		// Not editable
-		gtk_tree_view_set_cursor(GTK_TREE_VIEW (treeview), path, NULL, FALSE);
+		gtk_tree_view_set_cursor(GTK_TREE_VIEW(treeview), path, NULL, FALSE);
 		gtk_tree_path_free(path);
 
 		GtkTreeModel *model = NULL;
 		GtkTreeIter iter = { 0 };
 
-		GtkTreeSelection *selection = gtk_tree_view_get_selection(GTK_TREE_VIEW (treeview));
+		GtkTreeSelection *selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(treeview));
 
 		if (gtk_tree_selection_get_selected(selection, &model, &iter)) {
-			LinkDest * link = NULL;
+			XojLinkDest * link = NULL;
 			int first_page, last_page = -1;
 
 			gtk_tree_model_get(model, &iter, DOCUMENT_LINKS_COLUMN_LINK, &link, -1);
 			if (link && link->dest) {
 				LinkDestination *dest = link->dest;
-				if (dest->getPage() >= 0) {
-					if (dest->shouldChangeTop()) {
-						sidebar->control->scrollToPage(dest->getPage(), dest->getTop());
+
+				int pdfPage = dest->getPdfPage();
+
+				if (pdfPage >= 0) {
+					Document * doc = sidebar->control->getDocument();
+					int page = doc->findPdfPage(pdfPage);
+
+					if (page == -1) {
+						sidebar->askInsertPdfPage(pdfPage);
 					} else {
-						if (sidebar->control->getCurrentPageNo() != dest->getPage()) {
-							sidebar->control->scrollToPage(dest->getPage());
+						if (dest->shouldChangeTop()) {
+							sidebar->control->scrollToPage(page, dest->getTop());
+						} else {
+							if (sidebar->control->getCurrentPageNo() != page) {
+								sidebar->control->scrollToPage(page);
+							}
 						}
 					}
 
@@ -213,7 +260,7 @@ bool Sidebar::treeClickedCallback(GtkWidget *treeview, GdkEventButton *event, Si
 
 int Sidebar::expandOpenLinks(GtkTreeModel *model, GtkTreeIter *parent) {
 	GtkTreeIter iter = { 0 };
-	LinkDest * link = NULL;
+	XojLinkDest * link = NULL;
 	if (model == NULL) {
 		return 0;
 	}
@@ -237,26 +284,45 @@ int Sidebar::expandOpenLinks(GtkTreeModel *model, GtkTreeIter *parent) {
 	return count;
 }
 
-bool Sidebar::selectPageNr(int page, GtkTreeIter * parent) {
+bool Sidebar::selectPageNr(int page, int pdfPage, GtkTreeIter * parent) {
 	GtkTreeIter iter;
 	GtkTreeModel * model = control->getDocument()->getContentsModel();
 	if (model == NULL) {
 		return false;
 	}
 
+	if (parent == NULL) {
+		// check if there is already the current page selected
+		GtkTreeSelection *selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(treeViewBookmarks));
+		if (gtk_tree_selection_get_selected(selection, &model, &iter)) {
+			XojLinkDest * link = NULL;
+			int first_page, last_page = -1;
+
+			gtk_tree_model_get(model, &iter, DOCUMENT_LINKS_COLUMN_LINK, &link, -1);
+			if (link && link->dest) {
+				LinkDestination *dest = link->dest;
+
+				if (dest->getPdfPage() == pdfPage) {
+					// already bookmak from this page selected
+					return true;
+				}
+			}
+		}
+	}
+
 	gboolean valid = gtk_tree_model_iter_children(model, &iter, parent);
 
 	while (valid) {
-		LinkDest * link = NULL;
+		XojLinkDest * link = NULL;
 
 		gtk_tree_model_get(model, &iter, DOCUMENT_LINKS_COLUMN_LINK, &link, -1);
 
-		if (link->dest->getPage() == page) {
+		if (link->dest->getPdfPage() == pdfPage) {
 			GtkTreeSelection * selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(treeViewBookmarks));
 			gtk_tree_selection_select_iter(selection, &iter);
 			return true;
 		} else {
-			if (selectPageNr(page, &iter)) {
+			if (selectPageNr(page, pdfPage, &iter)) {
 				return true;
 			} else {
 				valid = gtk_tree_model_iter_next(model, &iter);

@@ -13,11 +13,14 @@
 #define __DOCUMENT_H__
 
 #include "String.h"
-#include <poppler.h>
 
 #include "Page.h"
 #include "LinkDestination.h"
-#include <poppler/TextOutputDev.h>
+
+#include "../pdf/poppler/XojPopplerDocument.h"
+#include "../pdf/poppler/XojPopplerPage.h"
+#include "../pdf/poppler/XojPopplerIter.h"
+#include "../pdf/poppler/XojPopplerAction.h"
 
 class DocumentListener;
 
@@ -73,8 +76,7 @@ public:
 
 	int getPageCount();
 	int getPdfPageCount();
-	PopplerPage * getPdfPage(int page);
-	TextPage * getTextPage(int page);
+	XojPopplerPage * getPdfPage(int page);
 
 	void insertPage(XojPage * p, int position);
 	void addPage(XojPage * p);
@@ -90,8 +92,9 @@ public:
 	String getLastErrorMsg();
 
 	bool isPdfDocumentLoaded();
+	int findPdfPage(int pdfPage);
 
-	void operator=(const Document & doc);
+	void operator=(Document & doc);
 
 	void setFilename(String filename);
 	String getFilename();
@@ -112,20 +115,14 @@ public:
 private:
 
 	void buildContentsModel();
-	void buildTreeContentsModel(GtkTreeIter *parent, PopplerIndexIter *iter);
+	void buildTreeContentsModel(GtkTreeIter *parent, XojPopplerIter *iter);
 	void updateIndexPageNumbers();
-	LinkDest * linkFromAction(PopplerAction *action);
 	static bool fillPageLabels(GtkTreeModel *tree_model, GtkTreePath *path, GtkTreeIter *iter, Document *doc);
-	void linkFromDest(LinkDestination *link, PopplerDest *dest);
-	void translatePdfPageToXournal(LinkDestination *dest);
 
 private:
-	int pdfPageCount;
-
 	DocumentHandler * handler;
 
-	PopplerDocument * pdfDocument;
-	PopplerPage ** pdfPages;
+	XojPopplerDocument pdfDocument;
 
 	String filename;
 	String pdfFilename;

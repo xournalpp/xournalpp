@@ -72,7 +72,7 @@ static cairo_status_t cairoWriteFunction(GString * string, const unsigned char *
 }
 
 void ObjectOutputStream::writeImage(cairo_surface_t * img) {
-	GString * imgStr = g_string_new_len("", 102400);
+	GString * imgStr = g_string_sized_new(102400);
 
 	cairo_surface_write_to_png_stream(img, (cairo_write_func_t) &cairoWriteFunction, imgStr);
 
@@ -125,6 +125,8 @@ bool ObjectInputStream::read(const char * data, int len) throw (InputStreamExcep
 	this->str = g_string_new_len(data, len);
 	this->pos = 0;
 
+
+	// TODO: clipboad debug
 	FILE * fp = fopen("/home/andreas/tmp/xoj/clipboard.bin", "w");
 	fwrite(str->str, len, 1, fp);
 	fclose(fp);

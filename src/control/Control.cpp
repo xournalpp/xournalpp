@@ -236,7 +236,7 @@ void Control::enableAutosave(bool enable) {
 
 void Control::updatePageNumbers(int page, int pdfPage) {
 	this->win->updatePageNumbers(page, doc->getPageCount(), pdfPage);
-	this->sidebar->selectPageNr(page);
+	this->sidebar->selectPageNr(page, pdfPage);
 
 	const char * file = doc->getEvMetadataFilename();
 	if (file) {
@@ -936,7 +936,6 @@ void Control::deletePage() {
 	doc->deletePage(pNr);
 
 	updateDeletePageButton();
-
 	undoRedo->addUndoAction(new InsertDeletePageUndoAction(page, pNr, false));
 }
 
@@ -1013,11 +1012,15 @@ void Control::insertNewPage(int position) {
 			// no need to set a type, if we set the page number the type is also set
 			page->setBackgroundPdfPageNr(selected);
 
-			poppler_page_get_size(doc->getPdfPage(selected), &width, &height);
-			page->setSize(width, height);
+			XojPopplerPage * p = doc->getPdfPage(selected);
+			page->setSize(p->getWidth(), p->getHeight());
 		}
 	}
 
+	insertPage(page, position);
+}
+
+void Control::insertPage(XojPage * page, int position) {
 	doc->insertPage(page, position);
 	firePageInserted(position);
 
@@ -1941,7 +1944,7 @@ void Control::updatePreview() {
 
 		cairo_t * cr = cairo_create(crBuffer);
 		cairo_scale(cr, zoom, zoom);
-		PopplerPage * popplerPage = NULL;
+		XojPopplerPage * popplerPage = NULL;
 
 		if (page->getBackgroundType() == BACKGROUND_TYPE_PDF) {
 			int pgNo = page->getPdfPageNr();
@@ -2109,7 +2112,7 @@ public:
 	virtual bool run(bool * cancel) {
 		PdfExport pdf(control->getDocument());
 		printf("export as pdf\n");
-		if (!pdf.createPdf("/home/andreas/tmp/pdffile.pdf", cancel)) {
+		if (!pdf.createPdf("file:///home/andreas/tmp/pdf/pdffile.pdf", cancel)) {
 			printf("create pdf failed\n");
 			printf("error: %s\n", pdf.getLastError().c_str());
 		}
@@ -2422,7 +2425,7 @@ void Control::fontChanged() {
 
 	TextEditor * editor = getTextEditor();
 	if (editor) {
-
+// TODO font
 	}
 
 	printf("font changed\n");

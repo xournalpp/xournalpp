@@ -63,8 +63,13 @@ xournalpp_SOURCES = \
 	util/ObjectStream.cpp \
 	util/CrashHandler.cpp \
 	util/pixbuf-utils.cpp \
+	util/GzHelper.cpp \
 	pdf/PdfExport.cpp \
-	pdf/popplerGlibExt/PopplerGlibExtension.cpp \
+	pdf/cairo/CairoPdf.cpp \
+	pdf/poppler/XojPopplerDocument.cpp \
+	pdf/poppler/XojPopplerPage.cpp \
+	pdf/poppler/XojPopplerIter.cpp \
+	pdf/poppler/XojPopplerAction.cpp \
 	Xournalpp.cpp
 
 xournalpp_CXXFLAGS = -g -rdynamic -DXOURNAL_FLAGS

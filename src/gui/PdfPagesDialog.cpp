@@ -6,7 +6,7 @@
 
 class PdfPage {
 public:
-	PdfPage(PopplerPage * page, int index, PdfPagesDialog * dlg) {
+	PdfPage(XojPopplerPage * page, int index, PdfPagesDialog * dlg) {
 		this->widget = gtk_drawing_area_new();
 		gtk_widget_show(this->widget);
 		this->crBuffer = NULL;
@@ -36,15 +36,13 @@ public:
 	}
 
 	int getWidth() {
-		double width = 0;
-		poppler_page_get_size(page, &width, NULL);
-		return width * dlg->getZoom() + Shadow::getShadowBottomRightSize() + Shadow::getShadowTopLeftSize() + 4;
+		return page->getWidth() * dlg->getZoom() + Shadow::getShadowBottomRightSize() + Shadow::getShadowTopLeftSize()
+				+ 4;
 	}
 
 	int getHeight() {
-		double height = 0;
-		poppler_page_get_size(page, NULL, &height);
-		return height * dlg->getZoom() + Shadow::getShadowBottomRightSize() + Shadow::getShadowTopLeftSize() + 4;
+		return page->getHeight() * dlg->getZoom() + Shadow::getShadowBottomRightSize() + Shadow::getShadowTopLeftSize()
+				+ 4;
 	}
 
 	void setSelected(bool selected) {
@@ -97,7 +95,7 @@ private:
 
 			cairo_scale(cr2, zoom, zoom);
 
-			poppler_page_render(page, cr2);
+			page->render(cr2);
 			cairo_set_operator(cr2, CAIRO_OPERATOR_DEST_OVER);
 			cairo_set_source_rgb(cr2, 1., 1., 1.);
 			cairo_paint(cr2);
@@ -106,9 +104,8 @@ private:
 
 			cairo_set_matrix(cr2, &defaultMatrix);
 
-			double height = 0;
-			double width = 0;
-			poppler_page_get_size(page, &width, &height);
+			double height = page->getWidth();
+			double width = page->getHeight();
 			width *= zoom;
 			height *= zoom;
 
@@ -137,8 +134,8 @@ private:
 				cairo_set_line_cap(cr2, CAIRO_LINE_CAP_BUTT);
 				cairo_set_line_join(cr2, CAIRO_LINE_JOIN_BEVEL);
 
-				cairo_rectangle(cr2, Shadow::getShadowTopLeftSize(), Shadow::getShadowTopLeftSize(), width + 3.5, height
-						+ 3.5);
+				cairo_rectangle(cr2, Shadow::getShadowTopLeftSize(), Shadow::getShadowTopLeftSize(), width + 3.5,
+						height + 3.5);
 
 				cairo_stroke(cr2);
 
@@ -202,7 +199,7 @@ private:
 	bool selected;
 	int pageNr;
 
-	PopplerPage * page;
+	XojPopplerPage * page;
 
 	PdfPagesDialog * dlg;
 
@@ -245,7 +242,7 @@ PdfPagesDialog::PdfPagesDialog(Document * doc, Settings * settings) :
 	g_signal_connect(this->window, "size-allocate", G_CALLBACK(sizeAllocate), this);
 
 	for (int i = 0; i < doc->getPdfPageCount(); i++) {
-		PopplerPage * p = doc->getPdfPage(i);
+		XojPopplerPage * p = doc->getPdfPage(i);
 		PdfPage * page = new PdfPage(p, i, this);
 		gtk_layout_put(GTK_LAYOUT(this->widget), page->getWidget(), 0, 0);
 
