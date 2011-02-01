@@ -322,6 +322,10 @@ XojPopplerPage * Document::getPdfPage(int page) {
 	return pdfDocument.getPage(page);
 }
 
+XojPopplerDocument & Document::getPdfDocument() {
+	return pdfDocument;
+}
+
 void Document::operator=(Document & doc) {
 	clearDocument();
 

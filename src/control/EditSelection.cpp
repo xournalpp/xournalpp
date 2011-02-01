@@ -211,7 +211,7 @@ void EditSelection::setEditMode(CursorSelectionType selType, double x, double y)
 }
 
 /**
- * TODO: it should not be possible to move a object out of a page, but at the moment its possible
+ * TODO LOW PRIO: it should not be possible to move a object out of a page, but at the moment its possible
  * I know it's the same on the original xournal, but it's not user friendly if an object can be lost...
  */
 void EditSelection::doMove(double dx, double dy, Redrawable * view, XournalWidget * xournal) {

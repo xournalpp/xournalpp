@@ -170,6 +170,8 @@ public:
 	void setToolSize(ToolSize size);
 
 	TextEditor * getTextEditor();
+
+	void setSidebarTmpDisabled(bool disabled);
 public:
 	// UndoRedoListener interface
 	void undoRedoChanged();

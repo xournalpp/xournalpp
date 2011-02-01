@@ -3,6 +3,7 @@
 #include <poppler/CairoOutputDev.h>
 #include <poppler/PDFDoc.h>
 #include <poppler/Gfx.h>
+#include <poppler/OutputDev.h>
 
 XojPopplerPage::XojPopplerPage(PDFDoc * doc, CairoOutputDev * outputDev, Page * page, int index) {
 	this->doc = doc;
@@ -146,3 +147,11 @@ XojPopplerRectangle::XojPopplerRectangle() {
 	this->y2 = -1;
 }
 
+////////////////////////////////////////////////
+
+
+XojPopplerImage::XojPopplerImage() {
+}
+
+XojPopplerImage::~XojPopplerImage() {
+}

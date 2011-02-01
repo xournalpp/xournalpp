@@ -31,6 +31,7 @@ int BackgroundThreadHandler::threadCallback(BackgroundThreadHandler * th) {
 bool BackgroundThreadHandler::finished(BackgroundThreadHandler * th) {
 	th->control->getWindow()->setControlTmpDisabled(false);
 	th->control->getCursor()->setCursorBusy(false);
+	th->control->setSidebarTmpDisabled(false);
 
 	// Do not call again
 	return false;
@@ -53,6 +54,7 @@ void BackgroundThreadHandler::run(Runnable * runnable) {
 	// Disable all gui Control, to get full controll over the application
 	control->getWindow()->setControlTmpDisabled(true);
 	control->getCursor()->setCursorBusy(true);
+	control->setSidebarTmpDisabled(true);
 
 	this->thread = g_thread_create((GThreadFunc) threadCallback, this, false, NULL);
 

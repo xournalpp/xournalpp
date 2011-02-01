@@ -24,9 +24,7 @@ AboutDialog::AboutDialog() :
 	AUTOHOR("Andreas Butti");
 
 	// Contributors, please insert in alphabetically order
-	// TODO: insert contributors
-	CONTRIBUTOR("Test1");
-	CONTRIBUTOR("Test2");
+	CONTRIBUTOR("D M German");
 
 	w = get("lbAuthors");
 	gtk_label_set_text(GTK_LABEL(w), authors.c_str());

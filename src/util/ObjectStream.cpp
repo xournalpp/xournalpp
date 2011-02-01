@@ -126,10 +126,10 @@ bool ObjectInputStream::read(const char * data, int len) throw (InputStreamExcep
 	this->pos = 0;
 
 
-	// TODO: clipboad debug
-	FILE * fp = fopen("/home/andreas/tmp/xoj/clipboard.bin", "w");
-	fwrite(str->str, len, 1, fp);
-	fclose(fp);
+//	//clipboad debug
+//	FILE * fp = fopen("/home/andreas/tmp/xoj/clipboard.bin", "w");
+//	fwrite(str->str, len, 1, fp);
+//	fclose(fp);
 
 	try {
 		String version = readString();

@@ -110,7 +110,9 @@ XojPopplerDocument::XojPopplerDocument() {
 
 XojPopplerDocument::XojPopplerDocument(const XojPopplerDocument & doc) {
 	this->data = doc.data;
-	this->data->reference();
+	if (this->data) {
+		this->data->reference();
+	}
 }
 
 XojPopplerDocument::~XojPopplerDocument() {
@@ -119,6 +121,10 @@ XojPopplerDocument::~XojPopplerDocument() {
 	}
 
 	this->data = NULL;
+}
+
+bool XojPopplerDocument::operator==(XojPopplerDocument & doc) {
+	return this->data == doc.data;
 }
 
 void XojPopplerDocument::operator=(XojPopplerDocument & doc) {
@@ -180,7 +186,6 @@ void XojPopplerDocument::load(char *data, int length) {
 	// create stream
 	obj.initNull();
 	MemStream *str = new MemStream(data, 0, length, &obj);
-
 
 	PDFDoc *newDoc = new PDFDoc(str, NULL, NULL);
 
@@ -282,4 +287,9 @@ PDFDoc * XojPopplerDocument::getDoc() {
 	}
 	return NULL;
 }
+
+gsize XojPopplerDocument::getId() {
+	return (gsize)this->data;
+}
+
 

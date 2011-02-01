@@ -344,12 +344,10 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent *even
 		exportAs();
 		break;
 	case ACTION_DOCUMENT_PROPERTIES:
-		// TODO: not implemented, but menupoint is hidden...
+		// TODO LOW PRIO: not implemented, but menupoint is hidden...
 		break;
-	case ACTION_PRINT: {
-		PrintHandler print;
-		print.print(this->doc);
-	}
+	case ACTION_PRINT:
+		print();
 		break;
 	case ACTION_QUIT:
 		quit();
@@ -713,7 +711,7 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent *even
 
 		// Menu Help
 	case ACTION_HELP:
-		// TODO: implement help
+		// TODO LOW PRIO: implement help
 		xxxxx();
 		break;
 	case ACTION_ABOUT:
@@ -819,6 +817,10 @@ void Control::enableFullscreen(bool enabled, bool presentation) {
 
 	fireActionSelected(GROUP_FULLSCREEN, enabled ? ACTION_FULLSCREEN : ACTION_NONE);
 	this->fullscreen = enabled;
+}
+
+void Control::setSidebarTmpDisabled(bool disabled) {
+	this->sidebar->setTmpDisabled(disabled);
 }
 
 void Control::addDefaultPage() {
@@ -1146,7 +1148,7 @@ void Control::setPageBackground(ActionType type) {
 		}
 
 		/**
-		 // TODO: create preview for images, also previews for all other filechoosers!
+		 // TODO LOW PRIO: create preview for images, also previews for all other filechoosers!
 
 		 image = gtk_image_new ();
 		 gtk_file_chooser_set_preview_widget (chooser_dialog, image);
@@ -1893,7 +1895,8 @@ bool Control::annotatePdf(String filename, bool attachPdf) {
 }
 
 void Control::print() {
-	printf("print\n");
+	PrintHandler print;
+	print.print(this->doc);
 }
 
 void Control::copyProgressCallback(goffset current_num_bytes, goffset total_num_bytes, Control * control) {
@@ -2425,9 +2428,6 @@ void Control::fontChanged() {
 
 	TextEditor * editor = getTextEditor();
 	if (editor) {
-// TODO font
+		editor->setFont(font);
 	}
-
-	printf("font changed\n");
-
 }

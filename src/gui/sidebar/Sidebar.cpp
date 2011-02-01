@@ -248,7 +248,7 @@ bool Sidebar::treeClickedCallback(GtkWidget *treeview, GdkEventButton *event, Si
 						}
 					}
 
-					// TODO: Manage scroll to left coordinate and change zoom if dest->shouldChangeZoom()
+					// TODO LOW PRIO / OPTIONAL?: Manage scroll to left coordinate and change zoom if dest->shouldChangeZoom()
 				}
 			}
 
@@ -330,6 +330,26 @@ bool Sidebar::selectPageNr(int page, int pdfPage, GtkTreeIter * parent) {
 		}
 	}
 	return false;
+}
+
+void Sidebar::setTmpDisabled(bool disabled) {
+	gtk_widget_set_sensitive(treeViewBookmarks, !disabled);
+	gtk_widget_set_sensitive(iconViewPreview, !disabled);
+
+	GdkCursor *cursor = NULL;
+
+	if (disabled) {
+		cursor = gdk_cursor_new(GDK_WATCH);
+	}
+
+	gdk_window_set_cursor(treeViewBookmarks->window, cursor);
+	gdk_window_set_cursor(iconViewPreview->window, cursor);
+
+	gdk_display_sync(gdk_display_get_default());
+
+	if (cursor) {
+		gdk_cursor_unref(cursor);
+	}
 }
 
 void Sidebar::layout() {

@@ -323,7 +323,7 @@ void XournalWidget::scrollTo(int pageNo, double y) {
 	if (pageNo < 0 || pageNo >= viewPagesLen) {
 		return;
 	}
-	// TODO: handle horizontal scrolling (dual page view)
+	// TODO LOW PRIO: handle horizontal scrolling (dual page view)
 
 	GtkAdjustment* h = gtk_layout_get_vadjustment(GTK_LAYOUT(widget));
 
@@ -466,7 +466,7 @@ void XournalWidget::getPasteTarget(double & x, double & y) {
 	}
 	XojPage * page = control->getDocument()->getPage(pageNo);
 
-	// TODO: calculate the visible rect and paste in the center of the visible rect of the page!
+	// TODO LOW PRIO: calculate the visible rect and paste in the center of the visible rect of the page!
 
 	if (page) {
 		x = page->getWidth() / 2;
@@ -629,7 +629,7 @@ void XournalWidget::layoutPages() {
 		int width = alloc.width;
 		int height = XOURNAL_PADDING_TOP_LEFT;
 
-		// TODO: handle single landscape page better
+		// TODO LOW PRIO: handle single landscape page better
 		// If there is a landscape page, display them on a single line, not with another page
 
 		// calc size for the widget

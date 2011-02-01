@@ -22,6 +22,8 @@ private:
 
 public:
 	static GString * gzcompress(GString* str, int level = -1);
+	static GString * gzuncompress(GString* str);
+	static GString * gzuncompress(const char * str, gsize len);
 
 };
 

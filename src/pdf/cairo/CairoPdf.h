@@ -25,6 +25,7 @@ public:
 public:
 	void drawPage(XojPage * page);
 	XojPopplerPage * getPage();
+	XojPopplerDocument & getDocument();
 
 private:
 	static cairo_status_t writeOut(CairoPdf *pdf, unsigned char *data, unsigned int length);

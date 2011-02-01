@@ -77,6 +77,7 @@ public:
 	int getPageCount();
 	int getPdfPageCount();
 	XojPopplerPage * getPdfPage(int page);
+	XojPopplerDocument & getPdfDocument();
 
 	void insertPage(XojPage * p, int position);
 	void addPage(XojPage * p);

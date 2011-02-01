@@ -30,6 +30,10 @@ PageView::PageView(XournalWidget * xournal, XojPage * page) {
 
 	this->lastMousePositionX = 0;
 	this->lastMousePositionY = 0;
+
+	this->scrollOffsetX = 0;
+	this->scrollOffsetY = 0;
+
 	this->inScrolling = false;
 
 	this->firstPainted = false;
@@ -822,35 +826,6 @@ gboolean PageView::onMotionNotifyEvent(GtkWidget *widget, GdkEventMotion *event)
 
 	fixXInputCoords((GdkEvent*) event);
 
-	// TODO: on scroll with the hand tool there is sometimes no mouse release event
-//	if (this->currentInputDevice) {
-//		bool looksWrong = !(event->state & (1 << (7 + this->downButton)));
-//		if (looksWrong) {
-//			GdkModifierType mask;
-//			gdk_device_get_state(this->currentInputDevice, event->window, NULL, &mask);
-//			looksWrong = !(mask & (1 << (7 + this->downButton)));
-//		}
-//
-//		if (looksWrong) {
-//			GdkEventButton e;
-//			e.type = GDK_BUTTON_RELEASE;
-//			e.window = event->window;
-//			e.send_event = event->send_event;
-//			e.time = event->time;
-//			e.x = event->x;
-//			e.y = event->y;
-//			e.axes = event->axes;
-//			e.state = event->state;
-//			e.button = this->downButton;
-//			e.device = event->device;
-//			e.x_root = event->x_root;
-//			e.y_root = event->y_root;
-//
-//			onButtonReleaseEvent(widget, &e);
-//			return false;
-//		}
-//	}
-
 	double zoom = xournal->getZoom();
 	double x = event->x / zoom;
 	double y = event->y / zoom;
@@ -888,6 +863,15 @@ gboolean PageView::onMotionNotifyEvent(GtkWidget *widget, GdkEventMotion *event)
 	return false;
 }
 
+bool PageView::scrollCallback(PageView * view) {
+	view->xournal->getControl()->scrollRelative(view->scrollOffsetX, view->scrollOffsetY);
+
+	view->scrollOffsetX = 0;
+	view->scrollOffsetY = 0;
+
+	return false;
+}
+
 void PageView::doScroll(GdkEventMotion *event) {
 	int x = 0;
 	int y = 0;
@@ -897,7 +881,12 @@ void PageView::doScroll(GdkEventMotion *event) {
 		return;
 	}
 
-	xournal->getControl()->scrollRelative(this->lastMousePositionX - x, this->lastMousePositionY - y);
+	if (this->scrollOffsetX == 0 && this->scrollOffsetY == 0) {
+		g_idle_add((GSourceFunc)scrollCallback, this);
+	}
+
+	this->scrollOffsetX = this->lastMousePositionX - x;
+	this->scrollOffsetY = this->lastMousePositionY - y;
 }
 
 bool PageView::onButtonReleaseEventCallback(GtkWidget *widget, GdkEventButton *event, PageView * view) {

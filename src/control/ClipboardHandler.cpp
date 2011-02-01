@@ -77,29 +77,16 @@ public:
 
 		if (selection->target == gdk_atom_intern_static_string("UTF8_STRING")) {
 			gtk_selection_data_set_text(selection, contents->text.c_str(), -1);
-			// TODO: debug output
-			printf("get Text\n");
 		} else if (selection->target == gdk_atom_intern_static_string("image/png") || selection->target
 				== gdk_atom_intern_static_string("image/jpeg") || selection->target == gdk_atom_intern_static_string(
 				"image/gif")) {
 			gtk_selection_data_set_pixbuf(selection, contents->image);
-			// TODO: debug output
-			printf("get image\n");
 		} else if (atomSvg1 == selection->target || atomSvg2 == selection->target) {
-			// TODO: debug output
-			printf("get SVG\n");
 			gtk_selection_data_set(selection, selection->target, 8, (guchar *) contents->svg.c_str(),
 					contents->svg.length());
 		} else if (atomXournal == selection->target) {
-			// TODO: debug output
-			printf("get Xournal\n");
 			gtk_selection_data_set(selection, selection->target, 8, (guchar *) contents->str->str, contents->str->len);
 		}
-
-		char * target = gdk_atom_name(selection->target);
-		printf("target: %s\n", target);
-		g_free(target);
-
 	}
 
 	static void clearFunction(GtkClipboard *clipboard, ClipboardContents * contents) {
