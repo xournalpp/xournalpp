@@ -265,8 +265,8 @@ void DocumentView::paintBackgroundRuled() {
 	cairo_stroke(cr);
 }
 
-void DocumentView::drawSelection(cairo_t * cr, EditSelection * selection) {
-	for (GList * l = selection->getElements(); l != NULL; l = l->next) {
+void DocumentView::drawSelection(cairo_t * cr, ElementContainer * container) {
+	for (GList * l = container->getElements(); l != NULL; l = l->next) {
 		Element * e = (Element *) l->data;
 		drawElement(cr, e);
 	}

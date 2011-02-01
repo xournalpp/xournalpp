@@ -225,7 +225,6 @@ void ToolHandler::saveSettings() {
 	s.clear();
 
 	s.setString("current", this->current->getName());
-	printf("current: %s\n", this->current->getName().c_str());
 
 	ArrayIterator<Tool *> it = iterator();
 

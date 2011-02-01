@@ -20,6 +20,8 @@
 #include "../model/Image.h"
 #include "../pdf/poppler/XojPopplerPage.h"
 
+#include "ElementContainer.h"
+
 class EditSelection;
 
 class DocumentView {
@@ -33,7 +35,7 @@ public:
 	static void applyColor(cairo_t *cr, int c, int alpha = 255);
 	static void applyColor(cairo_t *cr, Element * e, int alpha = 255);
 
-	void drawSelection(cairo_t * cr, EditSelection * selection);
+	void drawSelection(cairo_t * cr, ElementContainer * container);
 
 private:
 	void drawText(cairo_t *cr, Text * t);

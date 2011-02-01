@@ -45,7 +45,7 @@ void Cursor::setMouseDown(bool mouseDown) {
 	ToolType type = handler->getToolType();
 
 	// Not always an update is needed
-	if (type == TOOL_HAND) {
+	if (type == TOOL_HAND || type == TOOL_VERTICAL_SPACE) {
 		updateCursor();
 	}
 }
@@ -163,7 +163,9 @@ void Cursor::updateCursor() {
 				cursor = gdk_cursor_new(GDK_TCROSS);
 			}
 		} else if (type == TOOL_VERTICAL_SPACE) {
-
+			if(this->mouseDown) {
+				cursor = gdk_cursor_new(GDK_SB_V_DOUBLE_ARROW);
+			}
 		} else if (type == TOOL_HAND) {
 			if (this->mouseDown) {
 				cursor = gdk_cursor_new(GDK_FLEUR);

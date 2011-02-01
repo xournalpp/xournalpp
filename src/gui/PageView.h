@@ -20,6 +20,7 @@
 
 #include "../control/Settings.h"
 #include "../control/SearchControl.h"
+#include "../control/VerticalToolHandler.h"
 #include "../view/DocumentView.h"
 #include "../gui/TextEditor.h"
 #include "../util/Util.h"
@@ -178,6 +179,9 @@ private:
 	EraseUndoAction * eraseUndoAction;
 
 	bool extendedWarningDisplayd;
+
+	// Vertical Space
+	VerticalToolHandler * verticalSpace;
 
 	/**
 	 * Search handling

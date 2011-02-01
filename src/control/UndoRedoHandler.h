@@ -208,6 +208,40 @@ private:
 	double newH;
 };
 
+class MoveUndoAction: public UndoAction {
+public:
+	MoveUndoAction(XojPage * page, EditSelection * selection);
+	MoveUndoAction(XojPage * page, VerticalToolHandler * handler);
+	~MoveUndoAction();
+
+	void finalize(EditSelection * selection);
+	void finalize(VerticalToolHandler * handler);
+
+	virtual bool undo(Control * control);
+	virtual bool redo(Control * control);
+	XojPage ** getPages();
+	virtual String getText();
+
+private:
+	void acceptPositions(GList * pos);
+	void switchLayer(GList * entries, Layer * oldLayer, Layer * newLayer);
+	void repaint();
+private:
+	GList * originalPos;
+	GList * newPos;
+	XojPage * newPage;
+
+	Layer * oldLayer;
+	Layer * newLayer;
+
+	Redrawable * origView;
+	Redrawable * newView;
+
+	String text;
+
+	friend class EditSelection;
+};
+
 class UndoRedoHandler : public MemoryCheckObject {
 public:
 	UndoRedoHandler(Control * control);

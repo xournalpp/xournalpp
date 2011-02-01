@@ -50,6 +50,8 @@ PageView::PageView(XournalWidget * xournal, XojPage * page) {
 
 	this->extendedWarningDisplayd = false;
 
+	this->verticalSpace = NULL;
+
 	this->selectionEdit = NULL;
 	widget = gtk_drawing_area_new();
 	gtk_widget_show(widget);
@@ -105,9 +107,9 @@ void PageView::setIsVisibel(bool visibel) {
 }
 
 void PageView::deleteViewBuffer() {
-	if (crBuffer) {
-		cairo_surface_destroy(crBuffer);
-		crBuffer = NULL;
+	if (this->crBuffer) {
+		cairo_surface_destroy(this->crBuffer);
+		this->crBuffer = NULL;
 	}
 }
 
@@ -608,16 +610,7 @@ void PageView::onButtonPressEvent(GtkWidget *widget, GdkEventButton *event) {
 			this->inEraser = true;
 		}
 	} else if (h->getToolType() == TOOL_VERTICAL_SPACE) {
-		// TODO: vertical tool
-		//		start_vertspace((GdkEvent *) event);
-
-		//
-		//	// if this can be a selection move or resize, then it takes precedence over anything else
-		//	if (start_resizesel((GdkEvent *) event))
-		//		return FALSE;
-		//	if (start_movesel((GdkEvent *) event))
-		//		return FALSE;
-
+		this->verticalSpace = new VerticalToolHandler(this, this->page, y, zoom);
 	} else if (h->getToolType() == TOOL_SELECT_RECT || h->getToolType() == TOOL_SELECT_REGION || h->getToolType()
 			== TOOL_SELECT_OBJECT) {
 		if (xournal->getControl()->getSelectionFor(this)) {
@@ -841,6 +834,8 @@ gboolean PageView::onMotionNotifyEvent(GtkWidget *widget, GdkEventMotion *event)
 			addPointToTmpStroke(event);
 		} else if (this->selectionEdit) {
 			this->selectionEdit->currentPos(x, y);
+		} else if (this->verticalSpace) {
+			this->verticalSpace->currentPos(x, y);
 		} else if (xournal->getControl()->getSelectionFor(this)) {
 			EditSelection * selection = xournal->getControl()->getSelectionFor(this);
 			if (selection->getEditMode()) {
@@ -882,7 +877,7 @@ void PageView::doScroll(GdkEventMotion *event) {
 	}
 
 	if (this->scrollOffsetX == 0 && this->scrollOffsetY == 0) {
-		g_idle_add((GSourceFunc)scrollCallback, this);
+		g_idle_add((GSourceFunc) scrollCallback, this);
 	}
 
 	this->scrollOffsetX = this->lastMousePositionX - x;
@@ -997,6 +992,14 @@ bool PageView::onButtonReleaseEvent(GtkWidget *widget, GdkEventButton *event) {
 		}
 
 		eraseUndoAction = NULL;
+	}
+
+	if (this->verticalSpace) {
+		// TODO:
+		MoveUndoAction * undo = this->verticalSpace->finnalize();
+		delete this->verticalSpace;
+		this->verticalSpace = NULL;
+//		control->getUndoRedoHandler()->addUndoAction(undo);
 	}
 
 	EditSelection * sel = control->getSelectionFor(this);
@@ -1281,6 +1284,10 @@ bool PageView::paintPage(GtkWidget * widget, GdkEventExpose * event) {
 	if (this->selectionEdit) {
 		this->selectionEdit->paint(cr, event, xournal->getZoom());
 	}
+	if (this->verticalSpace) {
+		this->verticalSpace->paint(cr, event, xournal->getZoom());
+	}
+
 	Control * control = xournal->getControl();
 
 	control->paintSelection(cr, event, xournal->getZoom(), this);
