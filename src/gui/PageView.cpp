@@ -995,11 +995,10 @@ bool PageView::onButtonReleaseEvent(GtkWidget *widget, GdkEventButton *event) {
 	}
 
 	if (this->verticalSpace) {
-		// TODO:
 		MoveUndoAction * undo = this->verticalSpace->finnalize();
 		delete this->verticalSpace;
 		this->verticalSpace = NULL;
-//		control->getUndoRedoHandler()->addUndoAction(undo);
+		control->getUndoRedoHandler()->addUndoAction(undo);
 	}
 
 	EditSelection * sel = control->getSelectionFor(this);
