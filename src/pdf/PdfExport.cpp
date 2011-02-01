@@ -7,10 +7,36 @@
 #include "../util/GzHelper.h"
 #include "cairo/CairoPdf.h"
 
+#include "PdfExportImage.h"
+#include "PdfFont.h"
+
+// A '1' in this array means the character is white space.  A '1' or
+// '2' means the character ends a name or command.
+static const char specialChars[256] = { 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 1, 0, 0, // 0x
+		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 1x
+		1, 0, 0, 0, 0, 2, 0, 0, 2, 2, 0, 0, 0, 0, 0, 2, // 2x
+		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 2, 0, // 3x
+		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 4x
+		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 2, 0, 0, // 5x
+		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 6x
+		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 2, 0, 0, // 7x
+		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 8x
+		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 9x
+		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // ax
+		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // bx
+		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // cx
+		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // dx
+		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // ex
+		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 // fx
+		};
+
+void destroyDelete(gpointer data) {
+	delete data;
+}
+
 /**
  * This class uses some inspiration from FPDF (PHP Class)
  */
-
 PdfExport::PdfExport(Document * doc) {
 	this->doc = doc;
 	this->out = NULL;
@@ -29,6 +55,17 @@ PdfExport::PdfExport(Document * doc) {
 
 	this->inStream = false;
 	this->stream = NULL;
+	this->images = NULL;
+
+	this->fonts = NULL;
+	this->fontId = 1;
+
+	this->documents = NULL;
+
+	this->resources = NULL;
+
+	this->updatedReferenced = g_hash_table_new_full((GHashFunc) UpdateRefKey::hashFunction,
+			(GEqualFunc) UpdateRefKey::equalFunction, (GDestroyNotify) destroyDelete, (GDestroyNotify) destroyDelete);
 
 	addXref(0);
 	addXref(0);
@@ -42,6 +79,30 @@ PdfExport::~PdfExport() {
 	if (this->stream) {
 		g_string_free(this->stream, true);
 	}
+
+	for (GList * l = this->images; l != NULL; l = l->next) {
+		PdfExportImage * img = (PdfExportImage *) l->data;
+		delete img;
+	}
+	g_list_free(this->images);
+
+	for (GList * l = this->documents; l != NULL; l = l->next) {
+		XojPopplerDocument * doc = (XojPopplerDocument *) l->data;
+		delete doc;
+	}
+	g_list_free(this->documents);
+
+	for (GList * l = this->fonts; l != NULL; l = l->next) {
+		PdfFont * font = (PdfFont *) l->data;
+		delete font;
+	}
+	g_list_free(this->fonts);
+
+	g_hash_table_destroy(this->updatedReferenced);
+
+	this->fonts = NULL;
+	this->images = NULL;
+	this->documents = NULL;
 }
 
 bool PdfExport::write(const char * data) {
@@ -498,8 +559,13 @@ bool PdfExport::writeTrailer() {
 }
 
 bool PdfExport::writeXobjectdict() {
-	//	foreach($this->images as $image)
-	//		$this->_out('/I'.$image['i'].' '.$image['n'].' 0 R');
+	int i = 1;
+	for (GList * l = this->images; l != NULL; l = l->next) {
+		PdfExportImage * img = (PdfExportImage *) l->data;
+		writef("/I%i %i 0 R\n", i, img->getObjectId());
+
+		i++;
+	}
 
 	return true;
 }
@@ -507,8 +573,11 @@ bool PdfExport::writeXobjectdict() {
 bool PdfExport::writeResourcedict() {
 	write("/ProcSet [/PDF /Text /ImageB /ImageC /ImageI]\n");
 	write("/Font <<\n");
-	//		foreach($this->fonts as $font)
-	//			$this->_out('/F'.$font['i'].' '.$font['n'].' 0 R');
+
+	for (GList * l = this->fonts; l != NULL; l = l->next) {
+		PdfFont * font = (PdfFont *) l->data;
+		writef("/F%i %i 0 R\n", font->id, font->objectId);
+	}
 	write(">>\n");
 	write("/XObject <<\n");
 	if (!writeXobjectdict()) {
@@ -518,9 +587,90 @@ bool PdfExport::writeResourcedict() {
 	return true;
 }
 
+//void PdfExport::writeUpdateDict(Dict * dict, XojPopplerDocument doc) {
+//	for (int i = 0; i < dict->getLength(); i++) {
+//		Object o;
+//		dict->getValNF(i, &o);
+//
+//		if (o.isArray()) {
+//			Array * arr = o.getArray();
+//			for (int u = 0; u < arr->getLength(); u++) {
+//				Object o2;
+//				arr->getNF(u, &o2);
+//				if (o2.isRef()) {
+////					Ref ref = o2.getRef();
+////					Object data;
+////					dict->getVal(i, &data);
+////					g_hash_table_insert(this->updatedReferenced, new UpdateRefKey(ref, doc), new UpdateRef(
+////							this->objectId));
+////					writeObj();
+////					writeObject(&data, doc);
+////					write("\nendobj\n");
+//				} else if (o2.isDict()) {
+////					writeUpdateDict(o2.getDict(), doc);
+//				} else {
+//					printf("array entry type: %i\n", o2.getType());
+//				}
+//			}
+//		} else if (o.isRef()) {
+//			Ref ref = o.getRef();
+//			Object data;
+//			dict->getVal(i, &data);
+//			g_hash_table_insert(this->updatedReferenced, new UpdateRefKey(ref, doc), new UpdateRef(this->objectId));
+//			writeObj();
+//			writeObject(&data, doc);
+//			write("\nendobj\n");
+//		}
+//	}
+//}
+
+bool PdfExport::writeFonts() {
+	for (GList * l = this->fonts; l != NULL; l = l->next) {
+		PdfFont * font = (PdfFont *) l->data;
+
+		writeObj();
+		font->objectId = this->objectId - 1;
+		writeObject(font->object, font->doc);
+		write("\nendobj\n");
+	}
+
+	bool allWritten = false;
+	while (!allWritten) {
+		allWritten = true;
+		for (GList * l = g_hash_table_get_values(this->updatedReferenced); l != NULL; l = l->next) {
+			UpdateRef * uref = (UpdateRef *) l->data;
+			if (!uref->wroteOut) {
+				this->xref[uref->objectId - 1] = this->dataCount;
+				this->writef("%i 0 obj\n", uref->objectId);
+				writeObject(&uref->object, uref->doc);
+				write("endobj\n");
+				uref->wroteOut = true;
+				break;
+			}
+		}
+		for (GList * l = g_hash_table_get_values(this->updatedReferenced); l != NULL; l = l->next) {
+			UpdateRef * uref = (UpdateRef *) l->data;
+			if (!uref->wroteOut) {
+				allWritten = false;
+			}
+		}
+	}
+
+	return true;
+}
+
+bool PdfExport::writeImages() {
+	return true;
+}
+
 bool PdfExport::writeResources() {
-	//	$this->_putfonts();
-	//	$this->_putimages();
+	if (!writeFonts()) {
+		return false;
+	}
+	if (!writeImages()) {
+		return false;
+	}
+
 	//Resource dictionary
 	this->xref[1] = this->dataCount;
 
@@ -578,65 +728,355 @@ String PdfExport::getLastError() {
 	return lastError;
 }
 
-void printPopplerObjectType(Object * o) {
-	ObjType type = o->getType();
-	if (type == objBool) {
-		printf("pdf::bool: %i\n", o->getBool());
-	} else if (type == objInt) {
-		printf("pdf::int: %i\n", o->getInt());
-	} else if (type == objReal) {
-		printf("pdf::int: %lf\n", o->getReal());
-	} else if (type == objString) {
-		printf("pdf::string: %s\n", o->getString()->getCString());
-	} else if (type == objName) {
-		printf("pdf::name: %s\n", o->getName());
-	} else if (type == objNull) {
-		printf("pdf::null\n");
-	} else if (type == objArray) {
-		printf("pdf::array:\n");
-	} else if (type == objDict) {
-		printf("pdf::dict:\n");
-	} else if (type == objStream) {
-		printf("pdf::stream:\n");
-	} else if (type == objRef) {
-		printf("pdf::ref:\n");
-	} else if (type == objCmd) {
-		printf("pdf::cmd:\n");
-	} else if (type == objError) {
-		printf("pdf::error:\n");
-	} else if (type == objEOF) {
-		printf("pdf::eof:\n");
-	} else if (type == objNone) {
-		printf("pdf::none:\n");
+void PdfExport::writeObject(Object* obj, XojPopplerDocument doc) {
+	Array *array;
+	Object obj1;
+	int tmp;
+
+	switch (obj->getType()) {
+	case objBool:
+		writef("%s ", obj->getBool() ? "true" : "false");
+		break;
+	case objInt:
+		writef("%i ", obj->getInt());
+		break;
+	case objReal:
+		writef("%g ", obj->getReal());
+		break;
+	case objString:
+		writeString(obj->getString());
+		break;
+	case objName: {
+		GooString name(obj->getName());
+		GooString *nameToPrint = name.sanitizedName(gFalse /* non ps mode */);
+		writef("/%s ", nameToPrint->getCString());
+		delete nameToPrint;
+		break;
+	}
+	case objNull:
+		write("null");
+		break;
+	case objArray:
+		array = obj->getArray();
+		write("[");
+		for (int i = 0; i < array->getLength(); i++) {
+			writeObject(array->getNF(i, &obj1), doc);
+			obj1.free();
+		}
+		write("] ");
+		break;
+	case objDict:
+		writeDictionnary(obj->getDict(), doc);
+		break;
+	case objStream: {
+		// Poppler: We can't modify stream with the current implementation (no write functions in Stream API)
+		// Poppler: => the only type of streams which that have been modified are internal streams (=strWeird)
+		Stream *stream = obj->getStream();
+		if (stream->getKind() == strWeird) {
+			//we write the stream unencoded
+			stream->reset();
+			//recalculate stream length
+			tmp = 0;
+			for (int c = stream->getChar(); c != EOF; c = stream->getChar()) {
+				tmp++;
+			}
+			obj1.initInt(tmp);
+			stream->getDict()->set("Length", &obj1);
+
+			//Remove Stream encoding
+			stream->getDict()->remove("Filter");
+			stream->getDict()->remove("DecodeParms");
+
+			writeDictionnary(stream->getDict(), doc);
+			writeStream(stream);
+			obj1.free();
+		} else {
+			//raw stream copy
+			writeDictionnary(stream->getDict(), doc);
+			writeRawStream(stream, doc);
+		}
+		break;
+	}
+	case objRef: {
+		UpdateRefKey key(obj->getRef(), doc);
+		UpdateRef * uref = (UpdateRef *) g_hash_table_lookup(this->updatedReferenced, &key);
+		if (uref) {
+			printf("->ref updated\n");
+			writef("%i %i R ", uref->objectId, 0);
+		} else {
+			UpdateRef * uref = new UpdateRef(this->objectId++, doc);
+			addXref(0);
+
+			obj->fetch(doc.getDoc()->getXRef(), &uref->object);
+
+			g_hash_table_insert(this->updatedReferenced, new UpdateRefKey(obj->getRef(), doc), uref);
+		}
+	}
+		break;
+	case objCmd:
+		write("cmd\r\n");
+		break;
+	case objError:
+		write("error\r\n");
+		break;
+	case objEOF:
+		write("eof\r\n");
+		break;
+	case objNone:
+		write("none\r\n");
+		break;
+	default:
+		g_error("Unhandled objType : %i, please report a bug with a testcase\r\n", obj->getType());
+		break;
 	}
 }
 
-bool PdfExport::addPopplerPage(XojPopplerPage * pdf) {
+void PdfExport::writeRawStream(Stream* str, XojPopplerDocument doc) {
+	Object obj1;
+	str->getDict()->lookup("Length", &obj1);
+	if (!obj1.isInt()) {
+		error(-1, "PDFDoc::writeRawStream, no Length in stream dict");
+		return;
+	}
+
+	const int length = obj1.getInt();
+	obj1.free();
+
+	write("stream\r\n");
+	str->unfilteredReset();
+	for (int i = 0; i < length; i++) {
+		int c = str->getUnfilteredChar();
+		writef("%c", c);
+	}
+	str->reset();
+	write("\nendstream\n");
+}
+
+void PdfExport::writeString(GooString* s) {
+	if (s->hasUnicodeMarker()) {
+		//unicode string don't necessary end with \0
+		const char* c = s->getCString();
+		write("(");
+		for (int i = 0; i < s->getLength(); i++) {
+			char unescaped = *(c + i) & 0x000000ff;
+			//escape if needed
+			if (unescaped == '(' || unescaped == ')' || unescaped == '\\') {
+				writef("%c", '\\');
+			}
+			writef("%c", unescaped);
+		}
+		write(") ");
+	} else {
+		const char* c = s->getCString();
+		write("(");
+		while (*c != '\0') {
+			char unescaped = (*c) & 0x000000ff;
+			//escape if needed
+			if (unescaped == '(' || unescaped == ')' || unescaped == '\\') {
+				writef("%c", '\\');
+			}
+			writef("%c", unescaped);
+			c++;
+		}
+		write(") ");
+	}
+}
+
+void PdfExport::writeDictionnary(Dict* dict, XojPopplerDocument doc) {
+	Object obj1;
+	write("<<");
+	for (int i = 0; i < dict->getLength(); i++) {
+		GooString keyName(dict->getKey(i));
+		GooString *keyNameToPrint = keyName.sanitizedName(gFalse /* non ps mode */);
+		writef("/%s ", keyNameToPrint->getCString());
+		delete keyNameToPrint;
+		writeObject(dict->getValNF(i, &obj1), doc);
+		obj1.free();
+	}
+	write(">> ");
+}
+
+void PdfExport::writeStream(Stream* str) {
+	write("stream\r\n");
+	str->reset();
+	for (int c = str->getChar(); c != EOF; c = str->getChar()) {
+		writef("%c", c);
+	}
+	write("\r\nendstream\r\n");
+}
+
+void PdfExport::writeGzStream(Stream* str) {
+	Object obj1;
+	str->getDict()->lookup("Length", &obj1);
+	if (!obj1.isInt()) {
+		g_error("PDFDoc::writeGzStream, no Length in stream dict");
+		return;
+	}
+
+	const int length = obj1.getInt();
+	obj1.free();
+
+	char * buffer = new char[length];
+
+	str->unfilteredReset();
+	for (int i = 0; i < length; i++) {
+		int c = str->getUnfilteredChar();
+		buffer[i] = c;
+	}
+	GString * text = GzHelper::gzuncompress(buffer, length);
+	writeStreamLine(text->str, text->len);
+
+	g_string_free(text, true);
+
+	delete buffer;
+
+	str->reset();
+}
+
+int PdfExport::lookupFont(String name) {
+	for (GList * l = this->fonts; l != NULL; l = l->next) {
+		PdfFont * font = (PdfFont *) l->data;
+		if (font->doc == currentPdfDoc && font->originalName == name) {
+			return font->id;
+		}
+	}
+
+	Object fonts;
+	this->resources->lookup("Font", &fonts);
+
+	if (!fonts.isDict()) {
+		g_warning("PdfExport::Font is not a dictionary!");
+		return 1;
+	}
+
+	Dict * d = fonts.getDict();
+	Object * f = new Object();
+
+	char * tmp = g_strdup(name.c_str());
+	d->lookup(tmp, f);
+	g_free(tmp);
+
+	PdfFont * font = new PdfFont(currentPdfDoc, name, fontId++, f);
+	this->fonts = g_list_append(this->fonts, font);
+
+	return font->id;
+}
+
+void PdfExport::writeStreamLine(char * line, int len) {
+	bool inBt = false;
+	int start = 0;
+
+	for (int i = 0; i < len - 1; i++) {
+		bool lastCharWhitespace = i == 0 || isWhitespace(line[i - 1]);
+
+		if (!inBt && lastCharWhitespace && line[i] == 'B' && line[i + 1] == 'T') {
+			inBt = true;
+			i++;
+		} else if (inBt && lastCharWhitespace && line[i] == '/' && (line[i + 1] == 'f' || line[i + 1] == 'F')) {
+			i++;
+			writeLen(line + start, i - start);
+			start = i;
+
+			int p = 0;
+			char buffer[512];
+
+			while (i < len && p < 511 && line[i] && !isWhitespace(line[i])) {
+				buffer[p++] = line[i++];
+			}
+			buffer[p] = 0;
+			start = i;
+
+			int font = lookupFont(buffer);
+			writef("F%i", font);
+
+			inBt = false;
+		} else if (inBt && lastCharWhitespace && line[i] == 'T' && (line[i + 1] == 'f' || line[i + 1] == 'F')) {
+			inBt = false;
+		} else if (inBt && lastCharWhitespace && line[i] == 'E' && line[i + 1] == 'T') {
+			inBt = false;
+		}
+	}
+
+	writeLen(line + start, len - start);
+	printf("->%s\n", line);
+}
+
+void PdfExport::writePlainStream(Stream* str) {
+	Object obj1;
+	str->getDict()->lookup("Length", &obj1);
+	if (!obj1.isInt()) {
+		g_error("PDFDoc::writeRawStream, no Length in stream dict");
+		return;
+	}
+
+	const int length = obj1.getInt();
+	obj1.free();
+
+	str->unfilteredReset();
+
+	char buffer[1024];
+	int x = 0;
+
+	for (int i = 0; i < length; i++) {
+		int c = str->getUnfilteredChar();
+		buffer[x++] = c;
+
+		if (c == '\n' || x == 1023 || (x > 800 && c == ' ')) {
+			buffer[x] = 0;
+			writeStreamLine(buffer, x);
+			x = 0;
+		}
+	}
+	str->reset();
+}
+
+void PdfExport::addPopplerDocument(XojPopplerDocument doc) {
+	for (GList * l = this->documents; l != NULL; l = l->next) {
+		XojPopplerDocument * d = (XojPopplerDocument *) l->data;
+		if (*d == doc) {
+			return;
+		}
+	}
+
+	XojPopplerDocument * d = new XojPopplerDocument();
+	*d = doc;
+
+	this->documents = g_list_append(this->documents, d);
+}
+
+bool PdfExport::addPopplerPage(XojPopplerPage * pdf, XojPopplerDocument doc) {
 	Page * page = pdf->getPage();
 
 	Object * o = new Object();
 	page->getContents(o);
 
-	ObjType type = o->getType();
-	printPopplerObjectType(o);
+	this->resources = page->getResourceDict();
 
-	if (type != objStream) {
-		delete o;
-		return false;
-	}
-	Stream * s = o->getStream();
-	s->reset();
+	if (o->getType() == objStream) {
+		Dict * dict = o->getStream()->getDict();
 
-	char buffer[512];
-	while (s->lookChar() != EOF) {
-		int i = 0;
-		for (i = 0; i < sizeof(buffer) && s->lookChar() != EOF; i++) {
-			buffer[i] = s->getChar();
+		Object filter;
+		dict->lookup("Filter", &filter);
+		//			// this may would be better, but not working...:-/
+		//			Object oDict;
+		//			oDict.initDict(dict);
+		//			Stream * txtStream = stream->addFilters(oDict);
+		//			writePlainStream(txtStream);
+
+		if (filter.isNull()) {
+			writePlainStream(o->getStream());
+		} else if (filter.isName("FlateDecode")) {
+			writeGzStream(o->getStream());
+		} else if (filter.isName()) {
+			g_warning("Unhandled stream filter: %s\n", filter.getName());
 		}
-		writeLen(buffer, i);
+	} else {
+		printf("other poppler type: %i\n", o->getType());
 	}
 
 	delete o;
+	this->resources = NULL;
+
 	return true;
 }
 
@@ -680,16 +1120,21 @@ bool PdfExport::writePage(int pageNr) {
 
 	startStream();
 
+	addPopplerDocument(doc->getPdfDocument());
+	currentPdfDoc = doc->getPdfDocument();
+
 	if (page->getBackgroundType() == BACKGROUND_TYPE_PDF) {
 		XojPopplerPage * pdf = doc->getPdfPage(page->getPdfPageNr());
-		if (!addPopplerPage(pdf)) {
+		if (!addPopplerPage(pdf, currentPdfDoc)) {
 			return false;
 		}
 	}
 
 	CairoPdf cPdf;
 	cPdf.drawPage(page);
-	if (!addPopplerPage(cPdf.getPage())) {
+	currentPdfDoc = cPdf.getDocument();
+	addPopplerDocument(currentPdfDoc);
+	if (!addPopplerPage(cPdf.getPage(), currentPdfDoc)) {
 		return false;
 	}
 
@@ -740,5 +1185,17 @@ bool PdfExport::createPdf(String uri, bool * cancel) {
 	g_output_stream_close(G_OUTPUT_STREAM(this->out), NULL, NULL);
 
 	return true;
+}
+
+bool PdfExport::isWhitespace(int c) {
+	return c >= 0 && c <= 0xff && specialChars[c] == 1;
+}
+
+guint UpdateRefKey::hashFunction(UpdateRefKey * key) {
+	return key->ref.num + key->ref.gen * 13 + key->doc.getId() * 23;
+}
+
+bool UpdateRefKey::equalFunction(UpdateRefKey * a, UpdateRefKey * b) {
+	return a->ref.gen == b->ref.gen && a->ref.num == b->ref.num && a->doc == b->doc;
 }
 

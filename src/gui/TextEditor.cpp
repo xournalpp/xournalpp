@@ -155,6 +155,11 @@ void TextEditor::setText(String text) {
 	gtk_text_buffer_place_cursor(this->buffer, &first);
 }
 
+void TextEditor::setFont(XojFont font) {
+	this->text->setFont(font);
+	this->redrawEditor();
+}
+
 void TextEditor::textCopyed() {
 	this->ownText = false;
 }
@@ -844,7 +849,7 @@ void TextEditor::drawCursor(cairo_t * cr, double & x0, double & x, double & y, c
 		cw *= 2;
 	}
 
-	// TODO: with newer cairo use: CAIRO_OPERATOR_DIFFERENCE
+	// TODO LOW PRIO: with newer cairo use: CAIRO_OPERATOR_DIFFERENCE
 
 	// Not draw cursor if a move is pending
 	if (!this->markPosQueue) {

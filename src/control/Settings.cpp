@@ -27,7 +27,7 @@
 
 Settings::Settings(String filename) {
 	this->filename = filename;
-	this->timeoutId = 1;
+	this->timeoutId = 0;
 	this->saved = true;
 
 	loadDefault();

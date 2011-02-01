@@ -50,6 +50,7 @@ public:
 	UndoAction * getFirstUndoAction();
 
 	void setText(String text);
+	void setFont(XojFont font);
 private:
 	void redrawEditor();
 	void drawCursor(cairo_t * cr, double & x0, double & x, double & y, cairo_font_extents_t & fe, double zoom);

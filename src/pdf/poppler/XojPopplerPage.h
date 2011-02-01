@@ -25,6 +25,7 @@
 class Page;
 class TextPage;
 class Annots;
+class XojPopplerImage;
 
 class XojPopplerPage {
 private:
@@ -39,6 +40,7 @@ public:
 	GList * findText(const char * text);
 
 	Page * getPage();
+
 private:
 	void initTextPage();
 
@@ -63,6 +65,15 @@ public:
 	double y1;
 	double x2;
 	double y2;
+};
+
+class XojPopplerImage {
+public:
+	XojPopplerImage();
+	~XojPopplerImage();
+
+public:
+
 };
 
 #endif /* __XOJ_POPPLERPAGE_H__ */

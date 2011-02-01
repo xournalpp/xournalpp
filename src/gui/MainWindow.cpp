@@ -247,8 +247,6 @@ void MainWindow::setControlTmpDisabled(bool disabled) {
 
 	GtkWidget * w = get("cbSelectSidebar");
 	gtk_widget_set_sensitive(w, !disabled);
-
-	// TODO: this->sidebar setTmpDisabled
 }
 
 void MainWindow::initToolbar() {

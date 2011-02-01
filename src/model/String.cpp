@@ -350,6 +350,10 @@ String String::substring(int start, int length) const {
 		length = this->length() - start + length;
 	}
 
+	if(start < 0) {
+		start = this->length() - start;
+	}
+
 	if (start + length > this->length() || start < 0 || length < 0) {
 		g_critical("substring \"%s\" (%i, %i) out of bounds", c_str(), start, length);
 		return "";

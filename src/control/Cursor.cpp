@@ -131,7 +131,7 @@ void Cursor::updateCursor() {
 
 			cursor = gdk_cursor_new(GDK_XTERM);
 		} else if (type == TOOL_IMAGE) {
-			// No specail cursor needed
+			// No special cursor needed
 		} else if (type == TOOL_SELECT_RECT || type == TOOL_SELECT_REGION || type == TOOL_SELECT_OBJECT) {
 			if (this->selectionType) {
 				switch (this->selectionType) {
@@ -180,6 +180,8 @@ void Cursor::updateCursor() {
 		PageView * p = it.next();
 		if (GDK_IS_WINDOW(p->getWidget()->window)) {
 			gdk_window_set_cursor(p->getWidget()->window, cursor);
+
+			gtk_widget_set_sensitive(p->getWidget(), !this->busy);
 		}
 	}
 

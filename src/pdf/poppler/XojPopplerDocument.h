@@ -25,6 +25,7 @@ public:
 
 public:
 	void operator=(XojPopplerDocument & doc);
+	bool operator==(XojPopplerDocument & doc);
 
 	XojPopplerIter * getContentsIter();
 
@@ -38,6 +39,8 @@ public:
 	bool load(const char *uri, const char *password, GError **error);
 
 	PDFDoc * getDoc();
+
+	gsize getId();
 
 private:
 	_IntPopplerDocument * data;

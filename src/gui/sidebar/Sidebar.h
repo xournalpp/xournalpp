@@ -36,6 +36,7 @@ public:
 	Document * getDocument();
 	Control * getControl();
 	double getZoom();
+	void setTmpDisabled(bool disabled);
 
 private:
 	int expandOpenLinks(GtkTreeModel *model, GtkTreeIter *parent);

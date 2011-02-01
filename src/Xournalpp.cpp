@@ -87,11 +87,13 @@ char hexValue(char c) {
 }
 
 static bool optNoWarnSVN = false;
-static const gchar * optFilename;
+static gchar ** optFilename = NULL;
 
-static GOptionEntry options[] = { { "no-warn-svn", 'w', 0, G_OPTION_ARG_NONE, &optNoWarnSVN,
-		"Do not warn this is a development release", NULL }, { G_OPTION_REMAINING, 0, 0, G_OPTION_ARG_FILENAME,
-		&optFilename, NULL, "<input>" }, { NULL } };
+static GOptionEntry options[] = {
+	{ "no-warn-svn",    'w', 0, G_OPTION_ARG_NONE,           &optNoWarnSVN, "Do not warn this is a development release", NULL },
+	{ G_OPTION_REMAINING, 0, 0, G_OPTION_ARG_FILENAME_ARRAY, &optFilename, "<input>" , NULL},
+	{ NULL }
+};
 
 int main(int argc, char *argv[]) {
 	installCrashHandlers();
@@ -148,7 +150,16 @@ int main(int argc, char *argv[]) {
 
 	bool opened = false;
 	if (optFilename) {
-		GFile * file = g_file_new_for_commandline_arg(optFilename);
+		if (g_strv_length(optFilename) != 1) {
+			GtkWidget * dialog = gtk_message_dialog_new((GtkWindow*) *win, GTK_DIALOG_DESTROY_WITH_PARENT,
+					GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
+					_("Sorry, Xournal can only open one file from the command line.\n"
+							"Others are ignored."));
+			gtk_dialog_run(GTK_DIALOG(dialog));
+			gtk_widget_destroy(dialog);
+		}
+
+		GFile * file = g_file_new_for_commandline_arg(optFilename[0]);
 		char * uri = g_file_get_uri(file);
 		String sUri = uri;
 		g_free(uri);
@@ -202,7 +213,7 @@ int main(int argc, char *argv[]) {
 	control->saveSettings();
 
 	delete win;
-	//	delete control;
+	delete control;
 
 	return 0;
 }

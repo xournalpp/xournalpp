@@ -111,6 +111,7 @@ private:
 	void selectObjectAt(double x, double y);
 
 	void doScroll(GdkEventMotion *event);
+	static bool scrollCallback(PageView * view);
 
 	void drawTmpStroke();
 	void repaintLater();
@@ -145,6 +146,9 @@ private:
 	 */
 	int lastMousePositionX;
 	int lastMousePositionY;
+
+	int scrollOffsetX;
+	int scrollOffsetY;
 
 	bool inScrolling;
 

@@ -45,3 +45,8 @@ void CairoPdf::drawPage(XojPage * page) {
 XojPopplerPage * CairoPdf::getPage() {
 	return doc.getPage(0);
 }
+
+XojPopplerDocument & CairoPdf::getDocument() {
+	return doc;
+}
+
