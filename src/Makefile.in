@@ -65,8 +65,9 @@ am_xournalpp_OBJECTS = xournalpp-Page.$(OBJEXT) \
 	xournalpp-EditSelection.$(OBJEXT) \
 	xournalpp-SearchControl.$(OBJEXT) \
 	xournalpp-ClipboardHandler.$(OBJEXT) \
-	xournalpp-PrintHandler.$(OBJEXT) xournalpp-GladeGui.$(OBJEXT) \
-	xournalpp-AboutDialog.$(OBJEXT) \
+	xournalpp-PrintHandler.$(OBJEXT) \
+	xournalpp-VerticalToolHandler.$(OBJEXT) \
+	xournalpp-GladeGui.$(OBJEXT) xournalpp-AboutDialog.$(OBJEXT) \
 	xournalpp-PdfPagesDialog.$(OBJEXT) \
 	xournalpp-ImagesDialog.$(OBJEXT) \
 	xournalpp-ExportDialog.$(OBJEXT) \
@@ -254,6 +255,7 @@ xournalpp_SOURCES = \
 	control/SearchControl.cpp \
 	control/ClipboardHandler.cpp \
 	control/PrintHandler.cpp \
+	control/VerticalToolHandler.cpp \
 	gui/GladeGui.cpp \
 	gui/AboutDialog.cpp \
 	gui/PdfPagesDialog.cpp \
@@ -434,6 +436,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-ToolMenuHandler.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-UndoRedoHandler.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-Util.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-VerticalToolHandler.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-XojPopplerAction.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-XojPopplerDocument.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-XojPopplerIter.Po@am__quote@
@@ -809,6 +812,20 @@ xournalpp-PrintHandler.obj: control/PrintHandler.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='control/PrintHandler.cpp' object='xournalpp-PrintHandler.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-PrintHandler.obj `if test -f 'control/PrintHandler.cpp'; then $(CYGPATH_W) 'control/PrintHandler.cpp'; else $(CYGPATH_W) '$(srcdir)/control/PrintHandler.cpp'; fi`
+
+xournalpp-VerticalToolHandler.o: control/VerticalToolHandler.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-VerticalToolHandler.o -MD -MP -MF $(DEPDIR)/xournalpp-VerticalToolHandler.Tpo -c -o xournalpp-VerticalToolHandler.o `test -f 'control/VerticalToolHandler.cpp' || echo '$(srcdir)/'`control/VerticalToolHandler.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-VerticalToolHandler.Tpo $(DEPDIR)/xournalpp-VerticalToolHandler.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='control/VerticalToolHandler.cpp' object='xournalpp-VerticalToolHandler.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-VerticalToolHandler.o `test -f 'control/VerticalToolHandler.cpp' || echo '$(srcdir)/'`control/VerticalToolHandler.cpp
+
+xournalpp-VerticalToolHandler.obj: control/VerticalToolHandler.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-VerticalToolHandler.obj -MD -MP -MF $(DEPDIR)/xournalpp-VerticalToolHandler.Tpo -c -o xournalpp-VerticalToolHandler.obj `if test -f 'control/VerticalToolHandler.cpp'; then $(CYGPATH_W) 'control/VerticalToolHandler.cpp'; else $(CYGPATH_W) '$(srcdir)/control/VerticalToolHandler.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-VerticalToolHandler.Tpo $(DEPDIR)/xournalpp-VerticalToolHandler.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='control/VerticalToolHandler.cpp' object='xournalpp-VerticalToolHandler.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-VerticalToolHandler.obj `if test -f 'control/VerticalToolHandler.cpp'; then $(CYGPATH_W) 'control/VerticalToolHandler.cpp'; else $(CYGPATH_W) '$(srcdir)/control/VerticalToolHandler.cpp'; fi`
 
 xournalpp-GladeGui.o: gui/GladeGui.cpp
 @am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-GladeGui.o -MD -MP -MF $(DEPDIR)/xournalpp-GladeGui.Tpo -c -o xournalpp-GladeGui.o `test -f 'gui/GladeGui.cpp' || echo '$(srcdir)/'`gui/GladeGui.cpp

@@ -36,7 +36,7 @@ enum CursorSelectionType {
 class XournalWidget;
 class MoveUndoAction;
 
-class EditSelection: public MemoryCheckObject {
+class EditSelection: public MemoryCheckObject, public ElementContainer {
 public:
 	EditSelection(double x, double y, double width, double height, XojPage * page, Redrawable * view);
 	EditSelection(Selection * selection, Redrawable * view);
@@ -117,36 +117,6 @@ private:
 	DocumentView * documentView;
 
 	friend class MoveUndoAction;
-};
-
-class MoveUndoAction: public UndoAction {
-public:
-	MoveUndoAction(XojPage * page, EditSelection * selection);
-	~MoveUndoAction();
-
-	void finalize(EditSelection * selection);
-
-	virtual bool undo(Control * control);
-	virtual bool redo(Control * control);
-	XojPage ** getPages();
-	virtual String getText();
-
-private:
-	void acceptPositions(GList * pos);
-	void switchLayer(GList * entries, Layer * oldLayer, Layer * newLayer);
-	void repaint();
-private:
-	GList * originalPos;
-	GList * newPos;
-	XojPage * newPage;
-
-	Layer * oldLayer;
-	Layer * newLayer;
-
-	Redrawable * origView;
-	Redrawable * newView;
-
-	friend class EditSelection;
 };
 
 class SizeUndoAction: public UndoAction {

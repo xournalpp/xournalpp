@@ -784,3 +784,192 @@ void EraseUndoAction::cleanup() {
 String EraseUndoAction::getText() {
 	return _("Erase stroke");
 }
+
+//////////////////////////////////////////////////////////////////////
+
+class MoveUndoEntry {
+public:
+	MoveUndoEntry(Element * e, double x, double y) {
+		this->e = e;
+		this->x = x;
+		this->y = y;
+	}
+
+	Element * e;
+	double x;
+	double y;
+};
+
+MoveUndoAction::MoveUndoAction(XojPage * page, EditSelection * selection) {
+	this->page = page;
+	this->newPage = NULL;
+	this->originalPos = NULL;
+	this->newPos = NULL;
+	this->oldLayer = selection->layer;
+	this->newLayer = NULL;
+	this->origView = selection->view;
+	this->newView = NULL;
+	this->text = _("Move");
+
+	if (selection->lastUndoAction) {
+		selection->lastUndoAction->newLayer = selection->layer;
+	}
+
+	for (GList * l = selection->selected; l != NULL; l = l->next) {
+		Element * e = (Element *) l->data;
+		this->originalPos = g_list_append(this->originalPos, new MoveUndoEntry(e, e->getX(), e->getY()));
+	}
+}
+
+MoveUndoAction::MoveUndoAction(XojPage * page, VerticalToolHandler * handler) {
+	this->page = page;
+	this->newPage = NULL;
+	this->originalPos = NULL;
+	this->newPos = NULL;
+	this->oldLayer = handler->layer;
+	this->newLayer = NULL;
+	this->origView = handler->view;
+	this->newView = NULL;
+	this->text = _("Vertical Space");
+
+	for (GList * l = handler->getElements(); l != NULL; l = l->next) {
+		Element * e = (Element *) l->data;
+		this->originalPos = g_list_append(this->originalPos, new MoveUndoEntry(e, e->getX(), e->getY()));
+	}
+}
+
+MoveUndoAction::~MoveUndoAction() {
+	for (GList * l = this ->originalPos; l != NULL; l = l->next) {
+		MoveUndoEntry * u = (MoveUndoEntry *) l->data;
+		delete u;
+	}
+	for (GList * l = this->newPos; l != NULL; l = l->next) {
+		MoveUndoEntry * u = (MoveUndoEntry *) l->data;
+		delete u;
+	}
+	g_list_free(this->originalPos);
+}
+
+void MoveUndoAction::finalize(EditSelection * selection) {
+	for (GList * l = selection->selected; l != NULL; l = l->next) {
+		Element * e = (Element *) l->data;
+		this->newPos = g_list_append(this->newPos, new MoveUndoEntry(e,
+				e->getX() + selection->x - selection->relativeX, e->getY() + selection->y - selection->relativeY));
+	}
+
+	if (this->page != selection->page) {
+		this->newPage = selection->page;
+		this->newLayer = selection->layer;
+		this->newView = selection->view;
+	}
+}
+
+void MoveUndoAction::finalize(VerticalToolHandler * handler) {
+	for (GList * l = handler->getElements(); l != NULL; l = l->next) {
+		Element * e = (Element *) l->data;
+		this ->newPos = g_list_append(this->newPos, new MoveUndoEntry(e, e->getX(), e->getY()));
+	}
+
+	//		if (this->page != selection->page) {
+	//			this->newPage = selection->page;
+	//			this->newLayer = selection->layer;
+	//			this->newView = selection->view;
+	//		}
+}
+
+bool MoveUndoAction::undo(Control * control) {
+	if (this->oldLayer != this->newLayer && this->newLayer != NULL) {
+		switchLayer(this->originalPos, this->newLayer, this->oldLayer);
+	}
+
+	acceptPositions(this->originalPos);
+
+	repaint();
+
+	return true;
+}
+
+bool MoveUndoAction::redo(Control * control) {
+	if (this->oldLayer != this->newLayer && this->newLayer != NULL) {
+		switchLayer(this->originalPos, this->oldLayer, this->newLayer);
+	}
+
+	acceptPositions(this->newPos);
+
+	repaint();
+
+	return true;
+}
+
+void MoveUndoAction::acceptPositions(GList * pos) {
+	for (GList * l = pos; l != NULL; l = l->next) {
+		MoveUndoEntry * u = (MoveUndoEntry *) l->data;
+		Element * e = u->e;
+		CHECK_MEMORY(e);
+
+		e->move(u->x - e->getX(), u->y - e->getY());
+		e->finalizeMove();
+	}
+}
+
+void MoveUndoAction::switchLayer(GList * entries, Layer * oldLayer, Layer * newLayer) {
+	for (GList * l = this->originalPos; l != NULL; l = l->next) {
+		MoveUndoEntry * u = (MoveUndoEntry *) l->data;
+		oldLayer->removeElement(u->e, false);
+		newLayer->addElement(u->e);
+	}
+}
+
+void MoveUndoAction::repaint() {
+	if (!this->originalPos) {
+		return;
+	}
+
+	//		MoveUndoEntry * u = (MoveUndoEntry *) this->originalPos->data;
+	//		CHECK_MEMORY(u->e);
+	//
+	//		double x1 = u->e->getX();
+	//		double x2 = u->e->getX() + u->e->getElementWidth();
+	//		double y1 = u->e->getY();
+	//		double y2 = u->e->getY() + u->e->getElementHeight();
+	//
+	//		for (GList * l = this->originalPos->next; l != NULL; l = l->next) {
+	//			u = (MoveUndoEntry *) l->data;
+	//			CHECK_MEMORY(u->e);
+	//			x1 = MIN(x1, u->e->getX());
+	//			x2 = MAX(x2, u->e->getX()+ u->e->getElementWidth());
+	//			y1 = MIN(y1, u->e->getY());
+	//			y2 = MAX(y2, u->e->getY()+ u->e->getElementHeight());
+	//		}
+	//
+	//		CHECK_MEMORY(origView);
+	//		origView->deleteViewBuffer();
+	//		origView->redrawDocumentRegion(x1, y1, x2, y2);
+	//
+	//		if (newView) {
+	//			CHECK_MEMORY(newView);
+	//			newView->deleteViewBuffer();
+	//			newView->redrawDocumentRegion(x1, y1, x2, y2);
+	//		}
+
+	origView->deleteViewBuffer();
+	gtk_widget_queue_draw(origView->getWidget());
+	if (newView) {
+		CHECK_MEMORY(newView);
+		newView->deleteViewBuffer();
+		gtk_widget_queue_draw(newView->getWidget());
+	}
+
+}
+
+XojPage ** MoveUndoAction::getPages() {
+	XojPage ** pages = new XojPage *[3];
+	pages[0] = this->page;
+	pages[1] = this->newPage;
+	pages[2] = NULL;
+	return pages;
+}
+
+String MoveUndoAction::getText() {
+	return text;
+}
