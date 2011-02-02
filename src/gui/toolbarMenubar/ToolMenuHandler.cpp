@@ -223,7 +223,7 @@ void ToolMenuHandler::load(ToolbarData * d, GtkWidget * toolbar, const char * to
 
 					continue;
 				}
-				if (name.startsWith("COLOR(") && name.length() == 15) {
+				if (name.startsWith("COLOR(") && name.size() == 15) {
 					String color = name.substring(6, 8);
 					if (!color.startsWith("0x")) {
 						g_warning("Toolbar:COLOR(...) has to start with 0x, get color: %s", color.c_str());

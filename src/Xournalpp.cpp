@@ -178,7 +178,7 @@ int main(int argc, char *argv[]) {
 					if (special) {
 						special = false;
 						String t = tmp;
-						if (t.length() > 1) {
+						if (t.size() > 1) {
 							char x[2] = { 0 };
 							x[0] = hexValue(tmp[0]) << 4 + hexValue(tmp[1]);
 							path += x;
@@ -201,11 +201,11 @@ int main(int argc, char *argv[]) {
 		}
 	}
 
+	win->show();
+
 	if (!opened) {
 		control->newFile();
 	}
-
-	win->show();
 
 	gtk_main();
 	ev_metadata_manager_shutdown();

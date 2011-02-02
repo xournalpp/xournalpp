@@ -97,11 +97,14 @@ void ZoomControl::zoomOut() {
 }
 
 bool ZoomControl::onScrolledwindowMainScrollEvent(GtkWidget *widget, GdkEventScroll *event, ZoomControl * zoom) {
-	guint state;
+	guint state = event->state & gtk_accelerator_get_default_mod_mask();
 
-	state = event->state & gtk_accelerator_get_default_mod_mask();
+	// do not handle e.g. ALT + Scroll (e.g. Compiz use this shortcut for setting transparency...)
+	if (state != 0 && state & ~(GDK_CONTROL_MASK | GDK_SHIFT_MASK)) {
+		return true;
+	}
 
-	if (state == GDK_CONTROL_MASK) {
+	if (state & GDK_CONTROL_MASK) {
 		if (event->direction == GDK_SCROLL_UP || event->direction == GDK_SCROLL_LEFT) {
 			zoom->zoomIn();
 		} else {

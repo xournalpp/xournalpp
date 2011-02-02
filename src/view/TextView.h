@@ -25,8 +25,7 @@ public:
 	static void calcSize(Text * t, double & width, double & height);
 	static void drawText(cairo_t *cr, Text * t);
 	static GList * findText(Text * t, const char * text);
-	static void initCairo(cairo_t *cr, Text * t);
-	static const int TAB_INDEX = 30;
+	static PangoLayout * initPango(cairo_t *cr, Text * t);
 };
 
 #endif /* __TEXTVIEW_H__ */

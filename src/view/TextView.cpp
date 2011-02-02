@@ -9,145 +9,71 @@ TextView::TextView() {
 TextView::~TextView() {
 }
 
-void TextView::initCairo(cairo_t *cr, Text * t) {
-	XojFont & font = t->getFont();
+PangoLayout * TextView::initPango(cairo_t *cr, Text * t) {
+	PangoLayout * layout = pango_cairo_create_layout(cr);
+	PangoFontDescription * desc = pango_font_description_from_string(t->getFont().getName().c_str());
+	pango_font_description_set_absolute_size(desc, t->getFont().getSize() * PANGO_SCALE);
 
-	PangoFontDescription * desc = pango_font_description_from_string(font.getName().c_str());
-	pango_font_description_set_size(desc, font.getSize());
-
-	bool italic = pango_font_description_get_style(desc) != PANGO_STYLE_NORMAL ;
-	bool bold = pango_font_description_get_weight(desc) == PANGO_WEIGHT_BOLD;
-
-	cairo_select_font_face(cr, pango_font_description_get_family(desc), italic? CAIRO_FONT_SLANT_ITALIC
-			: CAIRO_FONT_SLANT_NORMAL, bold ? CAIRO_FONT_WEIGHT_BOLD : CAIRO_FONT_WEIGHT_NORMAL);
-	cairo_set_font_size(cr, font.getSize());
-
+	pango_layout_set_font_description(layout, desc);
 	pango_font_description_free(desc);
 
+	// TODO LOW PRIO: add autowrap and text field size for the next xournal release (with new fileformat...)
+	//pango_layout_set_wrap
 
-	// TODO: use http://library.gnome.org/devel/pango/stable/pango-Cairo-Rendering.html
-
-	//	double size = font.getSize();
-	//	cairo_matrix_t m;
-	//	cairo_matrix_init_scale(&m, size, size);
-	//
-	//	printf("size: %lf, x0 = %lf, xx = %lf, xy = %lf, y0 = %lf, yx = %lf, yy = %lf\n", size, m.x0, m.xx, m.xy, m.y0, m.yx, m.yy);
-	//
-	//	cairo_set_font_matrix(cr, &m);
+	return layout;
 }
 
-void TextView::drawText(cairo_t *cr, Text * t) {
-	initCairo(cr, t);
+void TextView::drawText(cairo_t * cr, Text * t) {
+	cairo_save(cr);
 
-	cairo_text_extents_t extents = { 0 };
-	cairo_font_extents_t fe = { 0 };
+	cairo_translate(cr, t->getX(), t->getY());
 
-	// This need to be here, why...? I don't know, the size should be calculated anyway if t->getX() is called...
-	t->getElementWidth();
+	PangoLayout * layout = initPango(cr, t);
+	String str = t->getText();
+	pango_layout_set_text(layout, str.c_str(), str.size());
 
-	double y = 3 + t->getY();
-	StringTokenizer token(t->getText(), '\n');
-	const char * str = token.next();
+	pango_cairo_show_layout(cr, layout);
 
-	cairo_font_extents(cr, &fe);
+	g_object_unref(layout);
 
-	// TODO: with "Hallo                                            Test           X" this went wrong on some zoom factors...
-	//	printf("fe height: %lf\n", fe.height);
-	// this is because cairo fonts are not always the same size on different zoom levels!!
-
-
-	while (str) {
-		y += fe.height - fe.descent;
-
-		StringTokenizer tokenTab(str, '\t', true);
-		const char * strTab = tokenTab.next();
-
-		double x = 0;
-
-		while (strTab) {
-			if (strcmp(strTab, "\t") == 0) {
-				int tab = x / TextView::TAB_INDEX + 1;
-				x = tab * TextView::TAB_INDEX;
-			} else {
-				cairo_move_to(cr, t->getX() + x, y);
-				cairo_show_text(cr, strTab);
-
-				cairo_text_extents(cr, strTab, &extents);
-				x += extents.x_advance;
-			}
-
-			strTab = tokenTab.next();
-		}
-		y += fe.height * 0.25;
-
-		//		double x = t->getX();
-		//		for (char * c = str; *c; c++) {
-		//			char tmp[2] = { 0, 0 };
-		//			tmp[0] = *c;
-		//			cairo_text_extents_t ex = { 0 };
-		//			cairo_text_extents(cr, tmp, &ex);
-		//
-		//			printf("->\"%s\": w:%lf h:%lf xa:%lf ya:%lf xb:%lf yb:%lf\n", tmp, ex.width, ex.height, ex.x_advance,
-		//					ex.y_advance, ex.x_bearing, ex.y_bearing);
-		//			cairo_rectangle(cr, x + ex.x_bearing, y + ex.y_bearing, ex.width, ex.height);
-		//			x += ex.x_advance;
-		//
-		//			cairo_stroke(cr);
-		//		}
-		//		printf("--------\n\n");
-
-		//		printf("->\"%s\"\n", str);
-		str = token.next();
-	}
+	cairo_restore(cr);
 }
 
 GList * TextView::findText(Text * t, const char * search) {
-	GList * list = NULL;
 	cairo_surface_t * surface = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, 1, 1);
 	cairo_t * cr = cairo_create(surface);
 
-	initCairo(cr, t);
+	GList * list = NULL;
 
-	cairo_text_extents_t extents = { 0 };
-	cairo_font_extents_t fe = { 0 };
-	StringTokenizer token(t->getText(), '\n');
-	const char * str = token.next();
-	double y = 3 + t->getY();
-	double x = t->getX();
-	int searchlen = strlen(search);
+	PangoLayout * layout = initPango(cr, t);
+	String str = t->getText();
+	pango_layout_set_text(layout, str.c_str(), str.size());
 
-	cairo_font_extents(cr, &fe);
 
-	while (str) {
-		String line = str;
-		int pos = -1;
-		y += fe.height - fe.descent;
+	int pos = -1;
 
-		do {
-			pos = line.indexOfCaseInsensitiv(search, pos + 1);
-			if (pos != -1) {
-				cairo_text_extents(cr, line.substring(0, pos).c_str(), &extents);
-				XojPopplerRectangle * rect = new XojPopplerRectangle();
-				rect->x1 = x + extents.x_advance;
-				rect->y1 = y;
+	String text = t->getText();
 
-				// because of case insensitive search, TEST and test may have different sizes (depending of the font)
-				cairo_text_extents(cr, line.substring(pos, searchlen).c_str(), &extents);
+	String srch = search;
 
-				rect->x1 += extents.x_bearing;
-				rect->y1 += extents.y_bearing;
-				rect->x2 = rect->x1 + extents.x_advance;
-				rect->y2 = rect->y1 + extents.height;
+	do {
+		pos = text.indexOfCaseInsensitiv(srch, pos + 1);
+		if (pos != -1) {
+			XojPopplerRectangle * mark = new XojPopplerRectangle();
+			PangoRectangle rect = { 0 };
+			pango_layout_index_to_pos(layout, pos, &rect);
+			mark->x1 = ((double)rect.x) / PANGO_SCALE + t->getX();
+			mark->y1 = ((double)rect.y) / PANGO_SCALE + t->getY();
 
-				list = g_list_append(list, rect);
-			}
+			pango_layout_index_to_pos(layout, pos + srch.length(), &rect);
+			mark->x2 = ((double)rect.x + rect.width) / PANGO_SCALE + t->getX();
+			mark->y2 = ((double)rect.y + rect.height) / PANGO_SCALE + t->getY();
 
-		} while (pos != -1);
+			list = g_list_append(list, mark);
+		}
+	} while (pos != -1);
 
-		str = token.next();
-		y += fe.height * 0.25;
-	}
-
+	g_object_unref(layout);
 	cairo_surface_destroy(surface);
 	cairo_destroy(cr);
 
@@ -156,33 +82,17 @@ GList * TextView::findText(Text * t, const char * search) {
 
 void TextView::calcSize(Text * t, double & width, double & height) {
 	cairo_surface_t * surface = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, 1, 1);
-	cairo_t *cr;
+	cairo_t * cr = cairo_create(surface);
 
-	cr = cairo_create(surface);
-
-	initCairo(cr, t);
-
-	cairo_text_extents_t extents = { 0 };
-	cairo_font_extents_t fe = { 0 };
-	cairo_font_extents(cr, &fe);
-
-	height = 3;
-	width = 0;
-	StringTokenizer token(t->getText(), '\n');
-	const char * str = token.next();
-
-	while (str) {
-		cairo_text_extents(cr, str, &extents);
-
-		height += fe.height * 1.25 - fe.descent;
-
-		width = MAX(width, extents.x_advance);
-
-		str = token.next();
-		if (!str) {
-			height -= fe.height * 0.25;
-		}
-	}
+	PangoLayout * layout = initPango(cr, t);
+	String str = t->getText();
+	pango_layout_set_text(layout, str.c_str(), str.size());
+	int w = 0;
+	int h = 0;
+	pango_layout_get_size(layout, &w, &h);
+	width = ((double) w) / PANGO_SCALE;
+	height = ((double) h) / PANGO_SCALE;
+	g_object_unref(layout);
 
 	cairo_surface_destroy(surface);
 	cairo_destroy(cr);

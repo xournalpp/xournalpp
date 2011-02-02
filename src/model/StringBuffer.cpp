@@ -14,7 +14,7 @@ StringBuffer::~StringBuffer() {
 }
 
 void StringBuffer::append(String s) {
-	append(s.c_str(), s.length());
+	append(s.c_str(), s.size());
 }
 
 void StringBuffer::append(const char * str) {
