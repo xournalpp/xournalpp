@@ -13,14 +13,27 @@
 #include <string.h>
 #include <ctype.h>
 
+/**
+ * This code is a modified version of what SQLite uses.
+ */
+#define SKIP_MULTI_BYTE_SEQUENCE(input) {              \
+    if( (*(input++)) >= 0xc0 ) {                       \
+    while( (*input & 0xc0) == 0x80 ){ input++; }       \
+  }                                                    \
+}
+
+#define utf8 unsigned char *
+
 class _RefStrInternal {
 public:
-	_RefStrInternal(gchar * str) {
+	_RefStrInternal(char * str) {
 		this->s = str;
 		if (str == NULL) {
-			this->length = 0;
+			this->size = 0;
+			this->len = 0;
 		} else {
-			this->length = strlen(str);
+			this->size = strlen(str);
+			this->len = length((utf8)str);
 		}
 	}
 
@@ -39,12 +52,26 @@ public:
 		}
 	}
 
-	gchar * c_str() {
+	int length(const utf8 string) {
+		int len;
+		len = 0;
+		while (*string) {
+			++len;
+			SKIP_MULTI_BYTE_SEQUENCE(string);
+		}
+		return len;
+	}
+
+	char * c_str() {
 		return s;
 	}
 
 	int getLength() const {
-		return length;
+		return this->len;
+	}
+
+	int getSize() const {
+		return this->size;
 	}
 private:
 	_RefStrInternal(const _RefStrInternal & str) {
@@ -55,8 +82,9 @@ private:
 private:
 	int nref;
 
-	gchar *s;
-	int length;
+	char * s;
+	int size;
+	int len;
 };
 
 String::String() {
@@ -73,7 +101,7 @@ String::String(const char * str) {
 	this->data->reference();
 }
 
-String::String(char * str, gboolean freeAutomatically) {
+String::String(char * str, bool freeAutomatically) {
 	if (freeAutomatically) {
 		this->data = new _RefStrInternal(str);
 	} else {
@@ -92,8 +120,8 @@ int String::indexOfCaseInsensitiv(String substr, int fromIndex) const {
 	if (source == NULL || target == NULL) {
 		return -1;
 	}
-	int sourceCount = length();
-	int targetCount = substr.length();
+	int sourceCount = size();
+	int targetCount = substr.size();
 
 	if (fromIndex >= sourceCount) {
 		return (targetCount == 0 ? sourceCount : -1);
@@ -140,8 +168,8 @@ int String::indexOf(String substr, int fromIndex) const {
 	if (source == NULL || target == NULL) {
 		return -1;
 	}
-	int sourceCount = length();
-	int targetCount = substr.length();
+	int sourceCount = size();
+	int targetCount = substr.size();
 
 	if (fromIndex >= sourceCount) {
 		return (targetCount == 0 ? sourceCount : -1);
@@ -183,7 +211,7 @@ int String::indexOf(String substr, int fromIndex) const {
 }
 
 int String::lastIndexOf(String substr) const {
-	return lastIndexOf(substr, length() - 1);
+	return lastIndexOf(substr, size() - 1);
 }
 
 int String::lastIndexOf(String substr, int fromIndex) const {
@@ -192,8 +220,8 @@ int String::lastIndexOf(String substr, int fromIndex) const {
 	if (source == NULL || target == NULL) {
 		return -1;
 	}
-	int sourceCount = length();
-	int targetCount = substr.length();
+	int sourceCount = size();
+	int targetCount = substr.size();
 
 	if (fromIndex <= 0) {
 		return (targetCount == 0 ? 0 : -1);
@@ -230,14 +258,14 @@ int String::lastIndexOf(String substr, int fromIndex) const {
 	return -1;
 }
 
-gboolean String::contains(const gchar * substr) const {
+bool String::contains(const char * substr) const {
 	if (c_str() == NULL || substr == NULL) {
 		return false;
 	}
 	return g_strrstr(c_str(), substr) != NULL;
 }
 
-gboolean String::equals(const gchar * other) const {
+bool String::equals(const char * other) const {
 	if (other == c_str()) {
 		return true;
 	}
@@ -247,7 +275,7 @@ gboolean String::equals(const gchar * other) const {
 	return strcmp(c_str(), other) == 0;
 }
 
-gboolean String::equals(const String & s) const {
+bool String::equals(const String & s) const {
 	return equals(s.c_str());
 }
 
@@ -257,16 +285,16 @@ String& String::operator=(const char * str) {
 	this->data->reference();
 }
 
-String& String::operator=(const String &str) {
+String& String::operator=(const String & str) {
 	this->data = str.data;
 	this->data->reference();
 }
 
-gboolean String::operator==(const String & str) const {
+bool String::operator==(const String & str) const {
 	return equals(str.c_str());
 }
 
-gboolean String::operator!=(const String & str) const {
+bool String::operator!=(const String & str) const {
 	return !equals(str.c_str());
 }
 
@@ -287,7 +315,7 @@ void String::operator +=(double d) {
 }
 
 void String::operator +=(const char * str) {
-	gchar * data = g_strconcat(c_str(), str, NULL);
+	char * data = g_strconcat(c_str(), str, NULL);
 	this->data->unreference();
 	this->data = new _RefStrInternal(data);
 	this->data->reference();
@@ -321,16 +349,27 @@ bool String::operator >(const String & str) const {
 	return strcmp(c_str(), str.c_str()) > 0;
 }
 
-const gchar * String::c_str() const {
+const char * String::c_str() const {
 	return data->c_str();
 }
 
-gboolean String::isEmpty() const {
+bool String::isEmpty() const {
 	return this->c_str() == NULL || *c_str() == 0;
 }
 
+/**
+ * the lengths is the count of chars which this string contains,
+ * this is may smaller than the size, if there are multibyte UTF8 chars
+ */
 int String::length() const {
 	return this->data->getLength();
+}
+
+/**
+ * The size is the count of bytes which this string contains
+ */
+int String::size() const {
+	return this->data->getSize();
 }
 
 String String::substring(int start) const {
@@ -345,12 +384,35 @@ String String::substring(int start) const {
 	return substring(start, length() - start);
 }
 
+//String oldSubstring(String str, int start, int length) {
+//	if (length < 0) {
+//		length = str.length() - start + length;
+//	}
+//
+//	if(start < 0) {
+//		start = str.length() - start;
+//	}
+//
+//	if (start + length > str.length() || start < 0 || length < 0) {
+//		g_critical("substring \"%s\" (%i, %i) out of bounds", str.c_str(), start, length);
+//		return "";
+//	}
+//
+//	const char * orig = str.c_str();
+//	char * d = (char *) g_malloc(length + 1);
+//	strncpy(d, &orig[start], length);
+//	d[length] = 0;
+//
+//	String substr(d, true);
+//	return substr;
+//}
+
 String String::substring(int start, int length) const {
 	if (length < 0) {
 		length = this->length() - start + length;
 	}
 
-	if(start < 0) {
+	if (start < 0) {
 		start = this->length() - start;
 	}
 
@@ -359,12 +421,40 @@ String String::substring(int start, int length) const {
 		return "";
 	}
 
-	const char * orig = c_str();
-	char * d = (char *) g_malloc(length + 1);
-	strncpy(d, &orig[start], length);
-	d[length] = 0;
+	const utf8 string = (utf8)c_str();
+	int s = start;
+	while (*string && s) {
+		SKIP_MULTI_BYTE_SEQUENCE(string);
+		--s;
+	}
 
-	String substr(d, true);
+	const utf8 str2;
+	int l = length;
+	for (str2 = string; *str2 && l; l--) {
+		SKIP_MULTI_BYTE_SEQUENCE(str2);
+	}
+
+	int bytes = (int) (str2 - string);
+
+	char * substring = (char *) g_malloc(bytes + 1);
+	char * output = substring;
+
+	for (int i = 0; i < bytes; i++) {
+		*output++ = *string++;
+	}
+	*output = '\0';
+
+//	String old = oldSubstring(*this, start, length);
+//
+//	const char * error = "";
+//
+//	if(old != substring) {
+//		error = "\nMISSMATCH!";
+//	}
+//
+//	printf("substring(\"%s\", %i, %i) =\n\"%s\"\n\"%s\"%s\n\n", this->c_str(), start, length, substring, old.c_str(),error);
+
+	String substr(substring, true);
 	return substr;
 }
 
@@ -382,7 +472,7 @@ String String::trim() {
 		}
 	}
 
-	len = length() - start;
+	len = size() - start;
 
 	while (len != 0) {
 		char tmp = s[start + len - 1];
@@ -393,30 +483,30 @@ String String::trim() {
 		}
 	}
 
-	if (start == 0 && len == length()) {
+	if (start == 0 && len == size()) {
 		return *this;
 	}
 
 	return substring(start, len);
 }
 
-gboolean String::startsWith(const String & s) const {
+bool String::startsWith(const String & s) const {
 	return startsWith(s.c_str());
 }
 
-gboolean String::startsWith(const char * s) const {
+bool String::startsWith(const char * s) const {
 	return g_str_has_prefix(c_str(), s);
 }
 
-gboolean String::endsWith(const String & s) const {
+bool String::endsWith(const String & s) const {
 	return endsWith(s.c_str());
 }
 
-gboolean String::equalsIgnorCase(const String & s) {
+bool String::equalsIgnorCase(const String & s) {
 	return this->toLowerCase().equals(s.toLowerCase());
 }
 
-gboolean String::endsWith(const char * s) const {
+bool String::endsWith(const char * s) const {
 	return g_str_has_suffix(c_str(), s);
 }
 
@@ -425,7 +515,7 @@ String String::toLowerCase() const {
 
 	char * data = s.data->c_str();
 
-	for (int i = 0; i < s.length(); i++) {
+	for (int i = 0; i < s.size(); i++) {
 		data[i] = tolower(data[i]);
 	}
 
@@ -437,22 +527,25 @@ String String::toUpperCase() const {
 
 	char * data = s.data->c_str();
 
-	for (int i = 0; i < s.length(); i++) {
+	for (int i = 0; i < s.size(); i++) {
 		data[i] = toupper(data[i]);
 	}
 
 	return s;
 }
 
+/**
+ * TODO: this has some bugs!!
+ */
 String String::replace(String search, String replace) const {
 	char const * const original = c_str();
 	char const * const pattern = search.c_str();
 	char const * const replacement = replace.c_str();
-	size_t const replen = replace.length();
-	size_t const patlen = search.length();
-	size_t const orilen = length();
+	int const replen = replace.size();
+	int const patlen = search.size();
+	int const orilen = size();
 
-	size_t patcnt = 0;
+	int patcnt = 0;
 	const char * oriptr;
 	const char * patloc;
 
@@ -466,7 +559,7 @@ String String::replace(String search, String replace) const {
 	}
 
 	// allocate memory for the new string
-	size_t const retlen = orilen + patcnt * (replen - patlen);
+	int const retlen = orilen + patcnt * (replen - patlen);
 	char * const returned = (char *) g_malloc(sizeof(char) * (retlen + 1));
 
 	if (returned != NULL) {
@@ -474,7 +567,7 @@ String String::replace(String search, String replace) const {
 		// replacing all the instances of the pattern
 		char * retptr = returned;
 		for (oriptr = original; patloc = strstr(oriptr, pattern); oriptr = patloc + patlen) {
-			size_t const skplen = patloc - oriptr;
+			int const skplen = patloc - oriptr;
 			// copy the section until the occurence of the pattern
 			strncpy(retptr, oriptr, skplen);
 			retptr += skplen;
@@ -489,6 +582,11 @@ String String::replace(String search, String replace) const {
 	return String(returned, true);
 }
 
+/**
+ * String tokenizer
+ *
+ * THIS CLASS IS NOT UTF8 SAVE
+ */
 StringTokenizer::StringTokenizer(String s, char token, bool returnToken) {
 	this->str = g_strdup(s.c_str());
 	this->token = token;
@@ -497,7 +595,7 @@ StringTokenizer::StringTokenizer(String s, char token, bool returnToken) {
 	this->returnToken = returnToken;
 	this->lastWasToken = false;
 	this->x = 0;
-	this->len = s.length();
+	this->len = s.size();
 }
 
 StringTokenizer::~StringTokenizer() {

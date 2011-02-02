@@ -47,7 +47,7 @@ void ObjectOutputStream::writeString(const char * str) {
 
 void ObjectOutputStream::writeString(const String & s) {
 	g_string_append(this->data, "_s");
-	int len = s.length();
+	int len = s.size();
 	char * c = (char *) &len;
 	g_string_append_len(this->data, c, sizeof(int));
 	g_string_append_len(this->data, s.c_str(), len);

@@ -20,14 +20,14 @@ public:
 	String();
 	String(const String & str);
 	String(const char * data);
-	String(char * data, gboolean freeAutomatically);
+	String(char * data, bool freeAutomatically);
 	~String();
 
-	String& operator=(const String &str);
+	String& operator=(const String & str);
 	String& operator=(const char * str);
 
-	gboolean operator ==(const String & str) const;
-	gboolean operator !=(const String & str) const;
+	bool operator ==(const String & str) const;
+	bool operator !=(const String & str) const;
 	bool operator <(const String & str) const;
 	bool operator >(const String & str) const;
 
@@ -38,7 +38,7 @@ public:
 
 	String replace(String search, String replace) const;
 
-	const gchar * c_str() const;
+	const char * c_str() const;
 
 	//	gchar * reserveBuffer(int buffer);
 
@@ -47,19 +47,20 @@ public:
 	int lastIndexOf(String substr) const;
 	int lastIndexOf(String substr, int fromIndex) const;
 
-	gboolean contains(const gchar * substr) const;
+	bool contains(const char * substr) const;
 
-	gboolean equals(const gchar * other) const;
-	gboolean equals(const String & s) const;
-	gboolean isEmpty() const;
-	gboolean startsWith(const String & s) const;
-	gboolean startsWith(const char * s) const;
-	gboolean endsWith(const String & s) const;
-	gboolean endsWith(const char * s) const;
+	bool equals(const char * other) const;
+	bool equals(const String & s) const;
+	bool isEmpty() const;
+	bool startsWith(const String & s) const;
+	bool startsWith(const char * s) const;
+	bool endsWith(const String & s) const;
+	bool endsWith(const char * s) const;
 
-	gboolean equalsIgnorCase(const String & s);
+	bool equalsIgnorCase(const String & s);
 
 	int length() const;
+	int size() const;
 	String substring(int start, int length) const;
 	String substring(int start) const;
 	String trim();

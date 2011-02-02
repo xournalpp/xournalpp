@@ -225,17 +225,17 @@ bool XojPopplerDocument::load(const char *uri, const char *password, GError **er
 
 #ifdef G_OS_WIN32
 	wchar_t *filenameW;
-	int length;
+	int xxxxxxxxxxxx;
 
-	length = MultiByteToWideChar(CP_UTF8, 0, filename, -1, NULL, 0);
+	xxxxxxxxxxxx = MultiByteToWideChar(CP_UTF8, 0, filename, -1, NULL, 0);
 
-	filenameW = new WCHAR[length];
+	filenameW = new WCHAR[xxxxxxxxxxxx];
 	if (!filenameW)
 	return NULL;
 
-	length = MultiByteToWideChar(CP_UTF8, 0, filename, -1, filenameW, length);
+	xxxxxxxxxxxx = MultiByteToWideChar(CP_UTF8, 0, filename, -1, filenameW, xxxxxxxxxxxx);
 
-	newDoc = new PDFDoc(filenameW, length, password_g, password_g);
+	newDoc = new PDFDoc(filenameW, xxxxxxxxxxxx, password_g, password_g);
 	delete filenameW;
 #else
 	filename_g = new GooString(filename);

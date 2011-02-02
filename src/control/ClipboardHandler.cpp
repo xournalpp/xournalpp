@@ -83,7 +83,7 @@ public:
 			gtk_selection_data_set_pixbuf(selection, contents->image);
 		} else if (atomSvg1 == selection->target || atomSvg2 == selection->target) {
 			gtk_selection_data_set(selection, selection->target, 8, (guchar *) contents->svg.c_str(),
-					contents->svg.length());
+					contents->svg.size());
 		} else if (atomXournal == selection->target) {
 			gtk_selection_data_set(selection, selection->target, 8, (guchar *) contents->str->str, contents->str->len);
 		}
@@ -199,7 +199,6 @@ void ClipboardHandler::copy() {
 	GtkTargetList * list = gtk_target_list_new(NULL, 0);
 	GtkTargetEntry *targets;
 	int n_targets;
-	int len = text.length();
 
 	// if we have text elements...
 	if (!text.isEmpty()) {

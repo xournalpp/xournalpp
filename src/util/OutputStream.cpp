@@ -9,7 +9,7 @@ OutputStream::~OutputStream() {
 }
 
 void OutputStream::write(const String & str) {
-	write(str.c_str(), str.length());
+	write(str.c_str(), str.size());
 }
 
 void OutputStream::write(const char * str) {

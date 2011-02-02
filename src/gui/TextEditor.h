@@ -39,7 +39,6 @@ public:
 	void pasteFromClipboard();
 	String getSelection();
 
-
 	Text * getText();
 	void textCopyed();
 
@@ -53,7 +52,7 @@ public:
 	void setFont(XojFont font);
 private:
 	void redrawEditor();
-	void drawCursor(cairo_t * cr, double & x0, double & x, double & y, cairo_font_extents_t & fe, double zoom);
+	void drawCursor(cairo_t * cr, double x, double y, double height, double zoom);
 	void redrawCursor();
 	void resetImContext();
 
@@ -81,16 +80,13 @@ private:
 
 	GtkWidget *textWidget;
 
-	GtkIMContext *im_context;
+	GtkIMContext *imContext;
 	String preeditString;
 	bool needImReset;
 	GtkTextBuffer * buffer;
 	double virtualCursor;
 
-	bool fContentsChanged;
 	GList * undoActions;
-
-	GList * contents;
 
 	double markPosX;
 	double markPosY;
@@ -102,6 +98,8 @@ private:
 	bool mouseDown;
 
 	String lastText;
+
+	PangoLayout * layout;
 
 	int cursorBlinkTime;
 	int cursorBlinkTimeout;
