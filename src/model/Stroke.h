@@ -19,9 +19,16 @@ class Point {
 public:
 	Point();
 	Point(double x, double y);
+	Point(double x, double y, double z);
 
 	double x;
 	double y;
+
+	// pressure
+	double z;
+
+
+	static const double NO_PRESURE = -1;
 };
 
 enum StrokeTool {
@@ -38,12 +45,6 @@ public:
 	void setWidth(double width);
 	double getWidth() const;
 
-	void addWidthValue(double value);
-	int getWidthCount() const;
-	void freeUnusedWidthItems();
-	ArrayIterator<double> widthIterator() const;
-	void clearWidths();
-
 	void addPoint(Point p);
 	int getPointCount() const;
 	void freeUnusedPointItems();
@@ -58,6 +59,13 @@ public:
 
 	bool intersects(double x, double y, double halfSize, double * gap = NULL);
 	Stroke * splitOnLastIntersects();
+
+	void setPressure(const double * data);
+	void setLastPressure(double pressure);
+	void clearPressure();
+	void scalePressure(double factor);
+
+	bool hasPressure();
 
 	void setCopyed(bool copyed);
 	bool isCopyed();
@@ -79,15 +87,9 @@ public:
 protected:
 	virtual void calcSize();
 	void allocPointSize(int size);
-	void allocWidthSize(int size);
 private:
 	// The stroke width
 	double width;
-
-	// The array with the thinkess variable width is activated
-	double * widths;
-	int widthCount;
-	int widthAllocCount;
 
 	StrokeTool toolType;
 

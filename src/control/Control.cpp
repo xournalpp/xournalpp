@@ -1889,8 +1889,6 @@ bool Control::annotatePdf(String filename, bool attachPdf) {
 	fireDocumentChanged(DOCUMENT_CHANGE_COMPLETE);
 	cursor->updateCursor();
 
-	printf("annotate pdf %s\n", filename.c_str());
-
 	return true;
 }
 
@@ -1903,12 +1901,13 @@ void Control::copyProgressCallback(goffset current_num_bytes, goffset total_num_
 	printf("copyProgressCallback: %i, %i\n", (int) current_num_bytes, (int) total_num_bytes);
 }
 
-bool Control::copy(String source, String target) {
-	GFile * src = g_file_new_for_uri(source.c_str());
-	GFile * trg = g_file_new_for_uri(target.c_str());
+bool Control::copyFile(String source, String target) {
+  
+  // we need to build the GFile from a path.
+  // But if future versions support URIs, this has to be changed
+	GFile * src = g_file_new_for_path(source.c_str());
+	GFile * trg = g_file_new_for_path(target.c_str());
 	GError * err = NULL;
-
-	printf("copy: %s to %s\n", source .c_str(), target.c_str());
 
 	bool ok = g_file_copy(src, trg, G_FILE_COPY_OVERWRITE, NULL, (GFileProgressCallback) &copyProgressCallback, this,
 			&err);
@@ -1979,7 +1978,7 @@ bool Control::save() {
 	if (doc->shouldCreateBackupOnSave()) {
 		String backup = doc->getFilename();
 		backup += ".bak";
-		if (!copy(doc->getFilename(), backup)) {
+		if (!copyFile(doc->getFilename(), backup)) {
 			//TODO: show error!
 			printf("error: could not create backup!\n%s\n", this->copyError.c_str());
 			return false;

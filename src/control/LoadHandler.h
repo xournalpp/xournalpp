@@ -33,6 +33,22 @@ enum ParserPosition {
 // Document is parsed
 };
 
+class DoubleArrayBuffer {
+public:
+	DoubleArrayBuffer();
+	~DoubleArrayBuffer();
+
+	void clear();
+	const double * getData();
+	int size();
+	void add(double d);
+private:
+
+	double * data;
+	int len;
+	int allocCount;
+};
+
 class LoadHandler {
 public:
 	LoadHandler();
@@ -89,6 +105,8 @@ private:
 	int fileversion;
 
 	gzFile fp;
+
+	DoubleArrayBuffer pressureBuffer;
 
 	XojPage * page;
 	Layer * layer;

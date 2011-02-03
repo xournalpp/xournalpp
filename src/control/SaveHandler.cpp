@@ -121,38 +121,27 @@ void SaveHandler::visitLayer(XmlNode * page, Layer * l) {
 
 			stroke->setAttrib("color", getColorStr(s->getColor()));
 
-			int width = s->getWidth() * 100;
 			bool hasPresureSensitivity = false;
-			ArrayIterator<double> it = s->widthIterator();
-			while (it.hasNext()) {
-				double d = it.next();
-				if ((int) (d * 100) != width) {
-					hasPresureSensitivity = true;
-					break;
-				}
+			int pointCount = s->getPointCount();
+			Point * points = new Point[pointCount];
+			for (int i = 0; i < pointCount; i++) {
+				points[i] = s->getPoint(i);
 			}
 
-			if (hasPresureSensitivity) {
-				int count = s->getWidthCount() + 1;
-				double * values = new double[count];
+			stroke->setPoints(points, pointCount);
+
+			if (s->hasPressure()) {
+				double * values = new double[pointCount];
 				values[0] = s->getWidth();
-				const double * source = s->getWidths();
-				for (int i = 1; i < count; i++) {
-					values[i] = source[i - 1];
+				for (int i = 0; i < pointCount - 1; i++) {
+					values[i + 1] = points[i].z;
 				}
 
-				stroke->setAttrib("width", values, count);
+				stroke->setAttrib("width", values, pointCount);
 			} else {
 				stroke->setAttrib("width", s->getWidth());
 			}
 
-			int c = s->getPointCount();
-			Point * points = new Point[c];
-			for (int i = 0; i < c; i++) {
-				points[i] = s->getPoint(i);
-			}
-
-			stroke->setPoints(points, c);
 		} else if (e->getType() == ELEMENT_TEXT) {
 			Text * t = (Text *) e;
 			XmlTextNode * text = new XmlTextNode("text", t->getText());

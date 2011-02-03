@@ -98,6 +98,10 @@ bool Element::isInSelection(ShapeContainer * container) {
 	return true;
 }
 
+bool Element::rescaleOnlyAspectRatio() {
+	return false;
+}
+
 void Element::serializeElement(ObjectOutputStream & out) {
 	out.writeObject("Element");
 

@@ -46,7 +46,6 @@ EditSelection::EditSelection(Element * e, Redrawable * view, XojPage * page) {
 
 	initAttributes();
 
-
 	addElementInt(e);
 
 	this->view->deleteViewBuffer();
@@ -61,6 +60,7 @@ void EditSelection::initAttributes() {
 	this->mouseY = 0;
 	this->offsetX = 0;
 	this->offsetY = 0;
+	this->aspectRatio = false;
 
 	this->documentView = new DocumentView();
 
@@ -89,11 +89,15 @@ EditSelection::~EditSelection() {
 
 void EditSelection::addElementInt(Element * e) {
 	layer->removeElement(e, false);
-	this->selected = g_list_append(this->selected, e);
+	addElement(e);
 }
 
 void EditSelection::addElement(Element * e) {
 	this->selected = g_list_append(this->selected, e);
+
+	if (e->rescaleOnlyAspectRatio()) {
+		this->aspectRatio = true;
+	}
 }
 
 void EditSelection::finalizeEditing() {
@@ -162,6 +166,9 @@ UndoAction * EditSelection::setSize(ToolSize size, const double * thiknessPen, c
 
 			double originalWidth = s->getWidth();
 
+			int pointCount = s->getPointCount();
+			double * originalPressure = SizeUndoAction::getPressure(s);
+
 			if (tool == STROKE_TOOL_PEN) {
 				s->setWidth(thiknessPen[size]);
 			} else if (tool == STROKE_TOOL_HIGHLIGHTER) {
@@ -170,8 +177,15 @@ UndoAction * EditSelection::setSize(ToolSize size, const double * thiknessPen, c
 				s->setWidth(thiknessEraser[size]);
 			}
 
+			// scale the stroke
+			double factor = s->getWidth() / originalWidth;
+			s->scalePressure(factor);
+
+			// save the new pressure
+			double * newPressure = SizeUndoAction::getPressure(s);
+
+			undo->addStroke(s, originalWidth, s->getWidth(), originalPressure, newPressure, pointCount);
 			found = true;
-			undo->addStroke(s, originalWidth, s->getWidth());
 		}
 	}
 
@@ -301,6 +315,28 @@ void EditSelection::move(double x, double y, Redrawable * view, XournalWidget * 
 		this->selY = y;
 
 		doMove(dx, dy, view, xournal);
+	} else if (this->selType == CURSOR_SELECTION_TOP_LEFT) {
+	} else if (this->selType == CURSOR_SELECTION_TOP_RIGHT) {
+	} else if (this->selType == CURSOR_SELECTION_BOTTOM_LEFT) {
+	} else if (this->selType == CURSOR_SELECTION_BOTTOM_RIGHT) {
+		double dx = x - this->x - this->width;
+		double dy = y - this->y - this->height;
+		double dz;
+		if (ABS(dy) < ABS(dx)) {
+			dz = dy;
+		} else {
+			dz = dx;
+		}
+
+		this->width += dz;
+		this->height += dz;
+
+		gtk_widget_queue_draw(this->view->getWidget());
+	} else if (this->selType == CURSOR_SELECTION_TOP) {
+	} else if (this->selType == CURSOR_SELECTION_BOTTOM) {
+	} else if (this->selType == CURSOR_SELECTION_LEFT) {
+	} else if (this->selType == CURSOR_SELECTION_RIGHT) {
+
 	}
 }
 
@@ -324,36 +360,41 @@ CursorSelectionType EditSelection::getSelectionTypeForPos(double x, double y, do
 	double y1 = this->y * zoom;
 	double y2 = (this->y + this->height) * zoom;
 
-	if (x1 - 3 <= x && x <= x1 + 3 && y1 - 3 <= y && y <= y1 + 3) {
+	const int EDGE_PADDING = 5;
+	const int BORDER_PADDING = 3;
+
+	if (x1 - EDGE_PADDING <= x && x <= x1 + EDGE_PADDING && y1 - EDGE_PADDING <= y && y <= y1 + EDGE_PADDING) {
 		return CURSOR_SELECTION_TOP_LEFT;
 	}
 
-	if (x2 - 3 <= x && x <= x2 + 3 && y1 - 3 <= y && y <= y1 + 3) {
+	if (x2 - EDGE_PADDING <= x && x <= x2 + EDGE_PADDING && y1 - EDGE_PADDING <= y && y <= y1 + EDGE_PADDING) {
 		return CURSOR_SELECTION_TOP_RIGHT;
 	}
 
-	if (x1 - 3 <= x && x <= x1 + 3 && y2 - 3 <= y && y <= y2 + 3) {
+	if (x1 - EDGE_PADDING <= x && x <= x1 + EDGE_PADDING && y2 - EDGE_PADDING <= y && y <= y2 + EDGE_PADDING) {
 		return CURSOR_SELECTION_BOTTOM_LEFT;
 	}
 
-	if (x2 - 3 <= x && x <= x2 + 3 && y2 - 3 <= y && y <= y2 + 3) {
+	if (x2 - EDGE_PADDING <= x && x <= x2 + EDGE_PADDING && y2 - EDGE_PADDING <= y && y <= y2 + EDGE_PADDING) {
 		return CURSOR_SELECTION_BOTTOM_RIGHT;
 	}
 
-	if (y1 - 2 <= y && y <= y1 + 2) {
-		return CURSOR_SELECTION_TOP;
-	}
+	if (!this->aspectRatio) {
+		if (y1 - BORDER_PADDING <= y && y <= y1 + BORDER_PADDING) {
+			return CURSOR_SELECTION_TOP;
+		}
 
-	if (y2 - 2 <= y && y <= y2 + 2) {
-		return CURSOR_SELECTION_BOTTOM;
-	}
+		if (y2 - BORDER_PADDING <= y && y <= y2 + BORDER_PADDING) {
+			return CURSOR_SELECTION_BOTTOM;
+		}
 
-	if (x1 - 2 <= x && x <= x1 + 2) {
-		return CURSOR_SELECTION_LEFT;
-	}
+		if (x1 - BORDER_PADDING <= x && x <= x1 + BORDER_PADDING) {
+			return CURSOR_SELECTION_LEFT;
+		}
 
-	if (x2 - 2 <= x && x <= x2 + 2) {
-		return CURSOR_SELECTION_RIGHT;
+		if (x2 - BORDER_PADDING <= x && x <= x2 + BORDER_PADDING) {
+			return CURSOR_SELECTION_RIGHT;
+		}
 	}
 
 	if (x1 <= x && x <= x2 && y1 <= y && y <= y2) {
@@ -369,6 +410,8 @@ void EditSelection::paint(cairo_t * cr, GdkEventExpose *event, double zoom) {
 
 	cairo_save(cr);
 	cairo_translate(cr, -this->relativeX + x, -this->relativeY + y);
+
+	// TODO use Buffer
 	this->documentView->drawSelection(cr, this);
 	cairo_restore(cr);
 
@@ -392,6 +435,17 @@ void EditSelection::paint(cairo_t * cr, GdkEventExpose *event, double zoom) {
 	cairo_fill(cr);
 
 	cairo_set_dash(cr, NULL, 0, 0);
+
+	if (!this->aspectRatio) {
+		// top
+		drawAnchorRect(cr, x + width / 2, y, zoom);
+		// bottom
+		drawAnchorRect(cr, x + width / 2, y + height, zoom);
+		// left
+		drawAnchorRect(cr, x, y + height / 2, zoom);
+		// right
+		drawAnchorRect(cr, x + width, y + height / 2, zoom);
+	}
 
 	// top left
 	drawAnchorRect(cr, x, y, zoom);
@@ -491,15 +545,28 @@ double EditSelection::getHeight() {
 
 class SizeUndoActionEntry {
 public:
-	SizeUndoActionEntry(Stroke * s, double orignalWidth, double newWidth) {
+	SizeUndoActionEntry(Stroke * s, double orignalWidth, double newWidth, double * originalPressure,
+			double * newPressure, int pressureCount) {
 		this->s = s;
 		this->orignalWidth = orignalWidth;
 		this->newWidth = newWidth;
+		this->originalPressure = originalPressure;
+		this->newPressure = newPressure;
+		this->pressureCount = pressureCount;
+	}
+
+	~SizeUndoActionEntry() {
+		delete this->originalPressure;
+		delete this->newPressure;
 	}
 
 	Stroke * s;
 	double orignalWidth;
 	double newWidth;
+
+	double * originalPressure;
+	double * newPressure;
+	int pressureCount;
 };
 
 SizeUndoAction::SizeUndoAction(XojPage * page, Layer * layer, Redrawable * view) {
@@ -518,8 +585,20 @@ SizeUndoAction::~SizeUndoAction() {
 	g_list_free(this->data);
 }
 
-void SizeUndoAction::addStroke(Stroke * s, double originalWidth, double newWidt) {
-	this->data = g_list_append(this->data, new SizeUndoActionEntry(s, originalWidth, newWidt));
+double * SizeUndoAction::getPressure(Stroke * s) {
+	int count = s->getPointCount();
+	double * data = new double[count];
+	for (int i = 0; i < count; i++) {
+		data[i] = s->getPoint(i).z;
+	}
+
+	return data;
+}
+
+void SizeUndoAction::addStroke(Stroke * s, double originalWidth, double newWidt, double * originalPressure,
+		double * newPressure, int pressureCount) {
+	this->data = g_list_append(this->data, new SizeUndoActionEntry(s, originalWidth, newWidt, originalPressure,
+			newPressure, pressureCount));
 }
 
 bool SizeUndoAction::undo(Control * control) {
@@ -536,6 +615,7 @@ bool SizeUndoAction::undo(Control * control) {
 	for (GList * l = this->data; l != NULL; l = l->next) {
 		SizeUndoActionEntry * e = (SizeUndoActionEntry *) l->data;
 		e->s->setWidth(e->orignalWidth);
+		e->s->setPressure(e->originalPressure);
 
 		x1 = MIN(x1, e->s->getX());
 		x2 = MAX(x2, e->s->getX()+ e->s->getElementWidth());
@@ -563,6 +643,7 @@ bool SizeUndoAction::redo(Control * control) {
 	for (GList * l = this->data; l != NULL; l = l->next) {
 		SizeUndoActionEntry * e = (SizeUndoActionEntry *) l->data;
 		e->s->setWidth(e->newWidth);
+		e->s->setPressure(e->newPressure);
 
 		x1 = MIN(x1, e->s->getX());
 		x2 = MAX(x2, e->s->getX()+ e->s->getElementWidth());

@@ -371,9 +371,8 @@ void LoadHandler::parseStroke() {
 			break;
 		}
 		ptr = tmpptr;
-		stroke->addWidthValue(val);
+		this->pressureBuffer.add(val);
 	}
-	stroke->freeUnusedWidthItems();
 
 	int color = 0;
 	const char * sColor = getAttrib("color");
@@ -539,10 +538,19 @@ void LoadHandler::parserText(GMarkupParseContext *context, const gchar *text, gs
 			error2(*error, "Wrong count of points (%i)", n);
 			return;
 		}
-		if (handler->stroke->getWidthCount() != 0 && n / 2 != handler->stroke->getWidthCount() + 1) {
-			error2(*error, "Wrong count of points, get %i, excpected %i", n, handler->stroke->getWidthCount());
-			return;
+
+		if (handler->pressureBuffer.size() != 0) {
+			// the last width is 0, because the last width is anyway not used
+			handler->pressureBuffer.add(0);
+			if (handler->pressureBuffer.size() == handler->stroke->getPointCount()) {
+				const double * data = handler->pressureBuffer.getData();
+				handler->stroke->setPressure(data);
+				handler->pressureBuffer.clear();
+			} else {
+				g_warning("Wrong count of points, get %i, expected %i", handler->pressureBuffer.size()-1,handler->stroke->getPointCount()-1);
+			}
 		}
+		handler->pressureBuffer.clear();
 	} else if (handler->pos == PARSER_POS_IN_TEXT) {
 		gchar * txt = g_strndup(text, textLen);
 		handler->text->setText(txt);
@@ -606,7 +614,7 @@ bool LoadHandler::parseXml() {
 		} else {
 			this->lastError = _("Uknonwn parser error");
 		}
-		printf("error: %s\n", this->lastError.c_str());
+		g_warning("LoadHandler::parseXml: %s\n", this->lastError.c_str());
 	}
 
 	g_markup_parse_context_free(context);
@@ -640,5 +648,39 @@ Document * LoadHandler::loadDocument(String filename) {
 	closeFile();
 
 	return &this->doc;
+}
+
+DoubleArrayBuffer::DoubleArrayBuffer() {
+	this->data = NULL;
+	this->len = 0;
+	this->allocCount = 0;
+}
+
+DoubleArrayBuffer::~DoubleArrayBuffer() {
+	g_free(this->data);
+	this->data = NULL;
+	this->len = 0;
+	this->allocCount = 0;
+}
+
+void DoubleArrayBuffer::clear() {
+	this->len = 0;
+}
+
+const double * DoubleArrayBuffer::getData() {
+	return this->data;
+}
+
+int DoubleArrayBuffer::size() {
+	return this->len;
+}
+
+void DoubleArrayBuffer::add(double d) {
+	if (this->len >= this->allocCount) {
+		this->allocCount += 1024;
+		this->data = (double *) g_realloc(this->data, this->allocCount * sizeof(double));
+	}
+
+	this->data[this->len++] = d;
 }
 

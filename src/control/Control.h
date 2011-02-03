@@ -116,7 +116,7 @@ public:
 
 	void setPageInsertType(PageInsertType type);
 
-	bool copy(String source, String target);
+	bool copyFile(String source, String target);
 
 	void enableFullscreen(bool enabled, bool presentation = false);
 
