@@ -52,6 +52,10 @@ bool Text::isInEditing() {
 	return this->inEditing;
 }
 
+bool Text::rescaleOnlyAspectRatio() {
+	return true;
+}
+
 void Text::serialize(ObjectOutputStream & out) {
 	out.writeObject("Text");
 

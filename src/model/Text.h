@@ -35,6 +35,9 @@ public:
 	void setInEditing(bool inEditing);
 	bool isInEditing();
 
+
+	virtual bool rescaleOnlyAspectRatio();
+
 public:
 	// Serialize interface
 	void serialize(ObjectOutputStream & out);

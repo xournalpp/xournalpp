@@ -51,6 +51,8 @@ public:
 	virtual bool intersectsArea(const GdkRectangle * src);
 
 	virtual bool isInSelection(ShapeContainer * container);
+
+	virtual bool rescaleOnlyAspectRatio();
 protected:
 	// The position on the screen
 	double x;

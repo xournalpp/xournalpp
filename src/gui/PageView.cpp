@@ -204,16 +204,18 @@ void PageView::addPointToTmpStroke(GdkEventMotion *event) {
 		}
 	}
 
-	tmpStroke->addPoint(Point(x, y));
-
 	ToolHandler * h = xournal->getControl()->getToolHandler();
-
+	double pressure = Point::NO_PRESURE;
 	if (h->getToolType() == TOOL_PEN) {
-		double presure;
-		if (getPressureMultiplier((GdkEvent *) event, presure)) {
-			tmpStroke->addWidthValue(tmpStroke->getWidth() * presure);
+		if (getPressureMultiplier((GdkEvent *) event, pressure)) {
+			pressure = pressure * tmpStroke->getWidth();
+		} else {
+			pressure = Point::NO_PRESURE;
 		}
 	}
+
+	tmpStroke->setLastPressure(pressure);
+	tmpStroke->addPoint(Point(x, y));
 
 	drawTmpStroke();
 }
@@ -914,11 +916,10 @@ bool PageView::onButtonReleaseEvent(GtkWidget *widget, GdkEventButton *event) {
 				tmpStroke->addPoint(it.next());
 			}
 			// No Presure sensitivity
-			tmpStroke->clearWidths();
+			tmpStroke->clearPressure();
 		}
 
 		tmpStroke->freeUnusedPointItems();
-		tmpStroke->freeUnusedWidthItems();
 
 		if (page->getSelectedLayerId() < 1) {
 			// This creates a layer if none exists
@@ -986,7 +987,6 @@ bool PageView::onButtonReleaseEvent(GtkWidget *widget, GdkEventButton *event) {
 					Stroke * s = (Stroke *) e;
 					s->setCopyed(false);
 					s->freeUnusedPointItems();
-					s->freeUnusedWidthItems();
 				}
 			}
 		}
@@ -1163,10 +1163,11 @@ bool PageView::repaintCallback(PageView * view) {
 }
 
 void PageView::repaintLater() {
-	if (idleRepaintId) {
+	if (this->idleRepaintId) {
 		return;
 	}
-	idleRepaintId = g_idle_add_full(G_PRIORITY_LOW, (GSourceFunc) &repaintCallback, this, NULL);
+
+	this->idleRepaintId = g_idle_add((GSourceFunc) &repaintCallback, this);
 }
 
 void PageView::drawTmpStroke() {
@@ -1229,9 +1230,9 @@ bool PageView::paintPage(GtkWidget * widget, GdkEventExpose * event) {
 	GtkAllocation alloc;
 	gtk_widget_get_allocation(widget, &alloc);
 
-	if (crBuffer == NULL) {
-		crBuffer = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, alloc.width, alloc.height);
-		cairo_t * cr2 = cairo_create(crBuffer);
+	if (this->crBuffer == NULL) {
+		this->crBuffer = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, alloc.width, alloc.height);
+		cairo_t * cr2 = cairo_create(this->crBuffer);
 
 		this->tmpStrokeDrawElem = 0;
 
@@ -1249,23 +1250,21 @@ bool PageView::paintPage(GtkWidget * widget, GdkEventExpose * event) {
 		cairo_destroy(cr2);
 	}
 
-	double width = cairo_image_surface_get_width(crBuffer);
+	cairo_save(cr);
+
+	double width = cairo_image_surface_get_width(this->crBuffer);
 	if (width != alloc.width) {
 		double scale = ((double) alloc.width) / ((double) width);
 
 		// Scale current image to fit the zoom level
-		cairo_save(cr);
-
 		cairo_scale(cr, scale, scale);
-		cairo_set_source_surface(cr, crBuffer, 0, 0);
-
-		cairo_restore(cr);
+		cairo_set_source_surface(cr, this->crBuffer, 0, 0);
 
 		repaintLater();
 
 		event = NULL;
 	} else {
-		cairo_set_source_surface(cr, crBuffer, 0, 0);
+		cairo_set_source_surface(cr, this->crBuffer, 0, 0);
 	}
 
 	if (event) {
@@ -1274,6 +1273,8 @@ bool PageView::paintPage(GtkWidget * widget, GdkEventExpose * event) {
 	} else {
 		cairo_paint(cr);
 	}
+
+	cairo_restore(cr);
 
 	cairo_scale(cr, xournal->getZoom(), xournal->getZoom());
 

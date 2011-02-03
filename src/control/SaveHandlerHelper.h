@@ -82,7 +82,7 @@ public:
 			g_free(str);
 		}
 
-		for (int i = 0; i < this->count; i++) {
+		for (int i = 1; i < this->count; i++) {
 			char * str = g_strdup_printf(" %0.2lf", this->values[i]);
 			out->write(str);
 			g_free(str);

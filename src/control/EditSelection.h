@@ -104,6 +104,8 @@ private:
 	double offsetX;
 	double offsetY;
 
+	bool aspectRatio;
+
 	Redrawable * inputView;
 	Redrawable * view;
 
@@ -128,7 +130,11 @@ public:
 	virtual bool redo(Control * control);
 	virtual String getText();
 
-	void addStroke(Stroke * s, double originalWidth, double newWidt);
+	void addStroke(Stroke * s, double originalWidth, double newWidt, double * originalPressure, double * newPressure, int pressureCount);
+
+public:
+	static double * getPressure(Stroke * s);
+
 private:
 	GList * data;
 

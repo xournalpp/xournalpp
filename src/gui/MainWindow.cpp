@@ -3,6 +3,10 @@
 #include "../cfg.h"
 #include "../gettext.h"
 
+// TODO: Debug
+#include <gdk/gdkkeysyms.h>
+
+
 MainWindow::MainWindow(Control * control) :
 	GladeGui("main.glade", "mainWindow") {
 	this->control = control;
@@ -64,7 +68,7 @@ MainWindow::MainWindow(Control * control) :
 	if (control->getSettings()->isMainWndMaximized()) {
 		gtk_window_maximize(GTK_WINDOW(window));
 	} else {
-		gtk_window_unmaximize(GTK_WINDOW (window));
+		gtk_window_unmaximize(GTK_WINDOW(window));
 	}
 }
 

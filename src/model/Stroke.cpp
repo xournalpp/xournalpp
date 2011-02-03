@@ -7,19 +7,24 @@
 Point::Point() {
 	this->x = 0;
 	this->y = 0;
+	this->z = NO_PRESURE;
 }
 
 Point::Point(double x, double y) {
 	this->x = x;
 	this->y = y;
+	this->z = NO_PRESURE;
+}
+
+Point::Point(double x, double y, double z) {
+	this->x = x;
+	this->y = y;
+	this->z = z;
 }
 
 Stroke::Stroke() :
 	Element(ELEMENT_STROKE) {
 	width = 0;
-	widths = NULL;
-	widthAllocCount = 0;
-	widthCount = 0;
 
 	this->pointAllocCount = 0;
 	this->pointCount = 0;
@@ -36,7 +41,6 @@ Stroke::Stroke() :
 
 Stroke::~Stroke() {
 	g_free(this->points);
-	g_free(this->widths);
 }
 
 Stroke * Stroke::clone() const {
@@ -49,10 +53,6 @@ Stroke * Stroke::clone() const {
 	memcpy(s->points, this->points, this->pointCount * sizeof(Point));
 	s->pointCount = this->pointCount;
 
-	s->allocWidthSize(this->widthCount);
-	memcpy(s->widths, this->widths, this->widthCount * sizeof(double));
-	s->widthCount = this->widthCount;
-
 	return s;
 }
 
@@ -62,8 +62,6 @@ void Stroke::serialize(ObjectOutputStream & out) {
 	serializeElement(out);
 
 	out.writeDouble(this->width);
-
-	out.writeData(this->widths, this->widthCount, sizeof(double));
 
 	out.writeInt(this->toolType);
 
@@ -79,14 +77,6 @@ void Stroke::readSerialized(ObjectInputStream & in) throw (InputStreamException)
 
 	this->width = in.readDouble();
 
-	if (this->widths) {
-		g_free(this->widths);
-	}
-	this->widths = NULL;
-	this->widthCount = 0;
-
-	in.readData((void **)&this->widths, &this->widthCount);
-
 	this->toolType = (StrokeTool) in.readInt();
 
 	if (this->points) {
@@ -95,7 +85,7 @@ void Stroke::readSerialized(ObjectInputStream & in) throw (InputStreamException)
 	this->points = NULL;
 	this->pointCount = 0;
 
-	in.readData((void **)&this->points, &this->pointCount);
+	in.readData((void **) &this->points, &this->pointCount);
 
 	in.endObject();
 }
@@ -142,11 +132,6 @@ void Stroke::allocPointSize(int size) {
 	this->points = (Point *) g_realloc(this->points, this->pointAllocCount * sizeof(Point));
 }
 
-void Stroke::allocWidthSize(int size) {
-	this->widthAllocCount = size;
-	this->widths = (double *) g_realloc(this->widths, this->widthAllocCount * sizeof(double));
-}
-
 int Stroke::getPointCount() const {
 	return pointCount;
 }
@@ -158,7 +143,7 @@ ArrayIterator<Point> Stroke::pointIterator() const {
 Point Stroke::getPoint(int index) const {
 	if (index < 0 || index >= pointCount) {
 		g_warning("Stroke::getPoint(%i) out of bounds!", index);
-		return Point(0, 0);
+		return Point(0, 0, Point::NO_PRESURE);
 	}
 	return points[index];
 }
@@ -173,37 +158,6 @@ void Stroke::freeUnusedPointItems() {
 	}
 	this->pointAllocCount = this->pointCount;
 	this->points = (Point *) g_realloc(this->points, this->pointAllocCount * sizeof(Point));
-}
-
-void Stroke::addWidthValue(double value) {
-	if (this->widthCount >= this->widthAllocCount) {
-		this->allocWidthSize(this->widthAllocCount + 100);
-	}
-	this->widths[this->widthCount++] = value;
-}
-
-void Stroke::freeUnusedWidthItems() {
-	if (this->widthAllocCount == this->widthCount) {
-		return;
-	}
-	this->widthAllocCount = this->widthCount;
-	this->widths = (double *) g_realloc(this->widths, this->widthAllocCount * sizeof(double));
-}
-
-ArrayIterator<double> Stroke::widthIterator() const {
-	return ArrayIterator<double> (widths, widthCount);
-}
-
-const double * Stroke::getWidths() const {
-	return this->widths;
-}
-
-int Stroke::getWidthCount() const {
-	return this->widthCount;
-}
-
-void Stroke::clearWidths() {
-	this->widthCount = 0;
 }
 
 void Stroke::setToolType(StrokeTool type) {
@@ -244,6 +198,43 @@ double Stroke::getDy() {
 	return this->dy;
 }
 
+bool Stroke::hasPressure() {
+	if (this->pointCount > 0) {
+		return this->points[0].z != Point::NO_PRESURE;
+	}
+	return false;
+}
+
+void Stroke::scalePressure(double factor) {
+	if (!hasPressure()) {
+		return;
+	}
+	for (int i = 0; i < this->pointCount; i++) {
+		this->points[i].z *= factor;
+	}
+}
+
+void Stroke::clearPressure() {
+	for (int i = 0; i < this->pointCount; i++) {
+		this->points[i].z = Point::NO_PRESURE;
+	}
+}
+
+void Stroke::setLastPressure(double pressure) {
+	if (this->pointCount > 0) {
+		this->points[this->pointCount - 1].z = pressure;
+	}
+}
+
+void Stroke::setPressure(const double * data) {
+	if (data == NULL) {
+		return;
+	}
+	for (int i = 0; i < this->pointCount; i++) {
+		this->points[i].z = data[i];
+	}
+}
+
 Stroke * Stroke::splitOnLastIntersects() {
 	if (this->splitIndex == -1) {
 		// Nothing to split
@@ -275,10 +266,6 @@ Stroke * Stroke::splitOnLastIntersects() {
 	s->setWidth(this->getWidth());
 	for (int i = this->splitIndex + 1; i < this->pointCount; i++) {
 		s->addPoint(this->points[i]);
-	}
-
-	for (int i = this->splitIndex + 1; i < this->widthCount; i++) {
-		s->addWidthValue(this->widths[i]);
 	}
 
 	this->pointCount = this->splitIndex;

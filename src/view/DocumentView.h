@@ -47,8 +47,8 @@ private:
 	void paintBackgroundImage();
 	void paintBackgroundColor();
 	void paintBackgroundGraph();
-	void paintBackgroundLined();
 	void paintBackgroundRuled();
+	void paintBackgroundLined();
 
 private:
 	cairo_t * cr;

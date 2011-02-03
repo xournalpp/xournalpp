@@ -30,7 +30,6 @@ void DocumentView::applyColor(cairo_t *cr, int c, int alpha) {
 
 void DocumentView::drawStroke(cairo_t *cr, Stroke * s, int startPoint) {
 	ArrayIterator<Point> points = s->pointIterator();
-	ArrayIterator<double> widths = s->widthIterator();
 
 	if (!points.hasNext()) {
 		// Empty stroke... Should not happen
@@ -54,7 +53,7 @@ void DocumentView::drawStroke(cairo_t *cr, Stroke * s, int startPoint) {
 	double width = s->getWidth();
 
 	// No presure sensitivity, easy draw a line...
-	if (!widths.hasNext()) {
+	if (!s->hasPressure()) {
 		// Set width
 		cairo_set_line_width(cr, width);
 
@@ -98,8 +97,8 @@ void DocumentView::drawStroke(cairo_t *cr, Stroke * s, int startPoint) {
 
 		while (points.hasNext()) {
 			Point p = points.next();
-			if (widths.hasNext()) {
-				width = widths.next();
+			if (p.z != Point::NO_PRESURE) {
+				width = p.z;
 			}
 			if (startPoint <= count) {
 				cairo_set_line_width(cr, width);
@@ -114,8 +113,8 @@ void DocumentView::drawStroke(cairo_t *cr, Stroke * s, int startPoint) {
 	} else {
 		while (points.hasNext()) {
 			Point p = points.next();
-			if (widths.hasNext()) {
-				width = widths.next();
+			if (p.z != Point::NO_PRESURE) {
+				width = p.z;
 			}
 			if (startPoint <= count) {
 				cairo_set_line_width(cr, width);
@@ -241,7 +240,7 @@ void DocumentView::paintBackgroundGraph() {
 
 const double roulingSize = 24;
 
-void DocumentView::paintBackgroundLined() {
+void DocumentView::paintBackgroundRuled() {
 	applyColor(cr, 0x40A0FF);
 
 	cairo_set_line_width(cr, 0.5);
@@ -254,7 +253,7 @@ void DocumentView::paintBackgroundLined() {
 	cairo_stroke(cr);
 }
 
-void DocumentView::paintBackgroundRuled() {
+void DocumentView::paintBackgroundLined() {
 	applyColor(cr, 0x40A0FF);
 
 	cairo_set_line_width(cr, 0.5);
