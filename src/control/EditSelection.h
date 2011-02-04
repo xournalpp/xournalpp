@@ -38,9 +38,10 @@ class MoveUndoAction;
 
 class EditSelection: public MemoryCheckObject, public ElementContainer {
 public:
-	EditSelection(double x, double y, double width, double height, XojPage * page, Redrawable * view);
-	EditSelection(Selection * selection, Redrawable * view);
-	EditSelection(Element * e, Redrawable * view, XojPage * page);
+	EditSelection(UndoRedoHandler * undo, double x, double y, double width, double height, XojPage * page,
+			Redrawable * view);
+	EditSelection(UndoRedoHandler * undo, Selection * selection, Redrawable * view);
+	EditSelection(UndoRedoHandler * undo, Element * e, Redrawable * view, XojPage * page);
 	~EditSelection();
 	void paint(cairo_t * cr, GdkEventExpose *event, double zoom);
 
@@ -56,8 +57,6 @@ public:
 	XojPage * getPage();
 
 	void fillUndoItemAndDelete(DeleteUndoAction * undo);
-
-	MoveUndoAction * getUndoAction();
 
 	/**
 	 * Gets the selected objects, this should not be edited or freed
@@ -79,17 +78,24 @@ public:
 	void addElement(Element * e);
 
 private:
+	void deleteViewBuffer();
+
 	void initAttributes();
 
 	void drawAnchorRect(cairo_t * cr, double x, double y, double zoom);
 
 	void addElementInt(Element * e);
 
+	static bool repaintSelection(EditSelection * selection);
+
 private:
 	double x;
 	double y;
 	double width;
 	double height;
+
+	double originalWidth;
+	double originalHeight;
 
 	double relativeX;
 	double relativeY;
@@ -109,14 +115,17 @@ private:
 	Redrawable * inputView;
 	Redrawable * view;
 
-	MoveUndoAction * undo;
-	MoveUndoAction * lastUndoAction;
+	UndoRedoHandler * undo;
+	MoveUndoAction * moveUndoAction;
 
 	GList * selected;
 	XojPage * page;
 	Layer * layer;
 
 	DocumentView * documentView;
+
+	cairo_surface_t * crBuffer;
+	int rescaleId;
 
 	friend class MoveUndoAction;
 };
@@ -130,7 +139,8 @@ public:
 	virtual bool redo(Control * control);
 	virtual String getText();
 
-	void addStroke(Stroke * s, double originalWidth, double newWidt, double * originalPressure, double * newPressure, int pressureCount);
+	void addStroke(Stroke * s, double originalWidth, double newWidt, double * originalPressure, double * newPressure,
+			int pressureCount);
 
 public:
 	static double * getPressure(Stroke * s);
@@ -141,7 +151,6 @@ private:
 	Layer * layer;
 	Redrawable * view;
 };
-
 
 class ColorUndoAction: public UndoAction {
 public:

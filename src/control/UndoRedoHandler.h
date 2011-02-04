@@ -242,7 +242,30 @@ private:
 	friend class EditSelection;
 };
 
-class UndoRedoHandler : public MemoryCheckObject {
+class ScaleUndoAction: public UndoAction {
+public:
+	ScaleUndoAction(XojPage * page, Redrawable * view, GList * elements, double x0, double y0, double fx, double fy);
+	~ScaleUndoAction();
+
+	virtual bool undo(Control * control);
+	virtual bool redo(Control * control);
+	virtual String getText();
+
+private:
+	void applayScale(double fx, double fy);
+
+private:
+	XojPage * page;
+	Redrawable * view;
+	GList * elements;
+
+	double x0;
+	double y0;
+	double fx;
+	double fy;
+};
+
+class UndoRedoHandler: public MemoryCheckObject {
 public:
 	UndoRedoHandler(Control * control);
 	virtual ~UndoRedoHandler();

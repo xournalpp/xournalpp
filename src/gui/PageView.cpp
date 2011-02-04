@@ -374,7 +374,8 @@ void PageView::selectObjectAt(double x, double y) {
 	}
 
 	if (elementMatch) {
-		xournal->getControl()->setSelection(new EditSelection(elementMatch, this, page));
+		Control * control = xournal->getControl();
+		control->setSelection(new EditSelection(control->getUndoRedoHandler(), elementMatch, this, page));
 		gtk_widget_queue_draw(this->widget);
 	}
 }
@@ -1005,7 +1006,7 @@ bool PageView::onButtonReleaseEvent(GtkWidget *widget, GdkEventButton *event) {
 
 	if (this->selectionEdit) {
 		if (this->selectionEdit->finnalize(this->page)) {
-			control->setSelection(new EditSelection(this->selectionEdit, this));
+			control->setSelection(new EditSelection(control->getUndoRedoHandler(), this->selectionEdit, this));
 		}
 		delete this->selectionEdit;
 		this->selectionEdit = NULL;
@@ -1013,12 +1014,6 @@ bool PageView::onButtonReleaseEvent(GtkWidget *widget, GdkEventButton *event) {
 		CHECK_MEMORY(sel);
 
 		sel->finalizeEditing();
-		UndoAction * undo = sel->getUndoAction();
-		if (undo) {
-			UndoRedoHandler * undoRedoHandler = control->getUndoRedoHandler();
-			undoRedoHandler->isMemoryCorrupted();
-			undoRedoHandler->addUndoAction(undo);
-		}
 	} else if (this->textEditor) {
 		this->textEditor->mouseReleased();
 	}

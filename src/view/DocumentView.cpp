@@ -57,25 +57,12 @@ void DocumentView::drawStroke(cairo_t *cr, Stroke * s, int startPoint) {
 		// Set width
 		cairo_set_line_width(cr, width);
 
-		if (s->isMoved()) { // in moving, special case
-			double dx = s->getDx();
-			double dy = s->getDy();
-
-			while (points.hasNext()) {
-				Point p = points.next();
-				if (startPoint <= count) {
-					cairo_line_to(cr, p.x + dx, p.y + dy);
-				}
-				count++;
+		while (points.hasNext()) {
+			Point p = points.next();
+			if (startPoint <= count) {
+				cairo_line_to(cr, p.x, p.y);
 			}
-		} else {
-			while (points.hasNext()) {
-				Point p = points.next();
-				if (startPoint <= count) {
-					cairo_line_to(cr, p.x, p.y);
-				}
-				count++;
-			}
+			count++;
 		}
 
 		cairo_stroke(cr);
@@ -91,41 +78,20 @@ void DocumentView::drawStroke(cairo_t *cr, Stroke * s, int startPoint) {
 	lastPoint1 = points.next();
 	double lastWidth = width;
 
-	if (s->isMoved()) { // in moving, special case
-		double dx = s->getDx();
-		double dy = s->getDy();
-
-		while (points.hasNext()) {
-			Point p = points.next();
-			if (p.z != Point::NO_PRESURE) {
-				width = p.z;
-			}
-			if (startPoint <= count) {
-				cairo_set_line_width(cr, width);
-
-				cairo_move_to(cr, lastPoint1.x + dx, lastPoint1.y + dy);
-				cairo_line_to(cr, p.x + dx, p.y + dy);
-				cairo_stroke(cr);
-			}
-			count++;
-			lastPoint1 = p;
+	while (points.hasNext()) {
+		Point p = points.next();
+		if (p.z != Point::NO_PRESURE) {
+			width = p.z;
 		}
-	} else {
-		while (points.hasNext()) {
-			Point p = points.next();
-			if (p.z != Point::NO_PRESURE) {
-				width = p.z;
-			}
-			if (startPoint <= count) {
-				cairo_set_line_width(cr, width);
+		if (startPoint <= count) {
+			cairo_set_line_width(cr, width);
 
-				cairo_move_to(cr, lastPoint1.x, lastPoint1.y);
-				cairo_line_to(cr, p.x, p.y);
-				cairo_stroke(cr);
-			}
-			count++;
-			lastPoint1 = p;
+			cairo_move_to(cr, lastPoint1.x, lastPoint1.y);
+			cairo_line_to(cr, p.x, p.y);
+			cairo_stroke(cr);
 		}
+		count++;
+		lastPoint1 = p;
 	}
 
 	cairo_stroke(cr);

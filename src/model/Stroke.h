@@ -71,13 +71,9 @@ public:
 	bool isCopyed();
 
 	virtual void move(double dx, double dy);
-	virtual void finalizeMove();
+	virtual void scale(double x0, double y0, double fx, double fy);
 
 	virtual bool isInSelection(ShapeContainer * container);
-
-	bool isMoved();
-	double getDx();
-	double getDy();
 
 public:
 	// Serialize interface
@@ -92,11 +88,6 @@ private:
 	double width;
 
 	StrokeTool toolType;
-
-	bool moved;
-
-	double dx;
-	double dy;
 
 	// Split point for eraser
 	int splitIndex;
