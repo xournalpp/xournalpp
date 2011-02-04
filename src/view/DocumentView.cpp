@@ -6,11 +6,15 @@
 #include "../control/EditSelection.h"
 
 //#define SHOW_ELEMENT_BOUNDS
-
+#define SHOW_REPAINT_BOUNDS
 
 DocumentView::DocumentView() {
 	this->page = NULL;
 	this->cr = NULL;
+	this->lX = -1;
+	this->lY = -1;
+	this->lWidth = -1;
+	this->lHeight = -1;
 }
 
 DocumentView::~DocumentView() {
@@ -140,6 +144,10 @@ void DocumentView::drawElement(cairo_t *cr, Element * e) {
 
 void DocumentView::drawLayer(cairo_t *cr, Layer * l) {
 	ListIterator<Element *> it = l->elementIterator();
+
+	int drawed = 0;
+	int notDrawed = 0;
+
 	while (it.hasNext()) {
 		Element * e = it.next();
 		CHECK_MEMORY(e);
@@ -152,8 +160,22 @@ void DocumentView::drawLayer(cairo_t *cr, Layer * l) {
 #endif // SHOW_ELEMENT_BOUNDS
 		//cairo_new_path(cr);
 
-		drawElement(cr, e);
+		if (this->lX != -1) {
+			if (e->intersectsArea(this->lX, this->lY, this->width, this->height)) {
+				drawElement(cr, e);
+				drawed++;
+			} else {
+				notDrawed++;
+			}
+
+		} else {
+			drawed++;
+			drawElement(cr, e);
+		}
 	}
+
+	// TODO: debug
+	printf("DocumentView: draw %i / not draw %i\n", drawed, notDrawed);
 }
 
 void DocumentView::paintBackgroundImage() {
@@ -237,6 +259,13 @@ void DocumentView::drawSelection(cairo_t * cr, ElementContainer * container) {
 	}
 }
 
+void DocumentView::limitArea(double x, double y, double width, double heigth) {
+	this->lX = x;
+	this->lY = y;
+	this->lWidth = width;
+	this->lHeight = heigth;
+}
+
 void DocumentView::drawPage(XojPage * page, XojPopplerPage * popplerPage, cairo_t * cr, bool forPrinting) {
 	this->cr = cr;
 	this->page = page;
@@ -291,6 +320,22 @@ void DocumentView::drawPage(XojPage * page, XojPopplerPage * popplerPage, cairo_
 		drawLayer(cr, l);
 		layer++;
 	}
+
+#ifdef SHOW_REPAINT_BOUNDS
+	if (this->lX != -1) {
+		printf("repaint area\n");
+		cairo_set_source_rgb(cr, 1, 0, 0);
+		cairo_set_line_width(cr, 1);
+		cairo_rectangle(cr, this->lX + 3, this->lY + 3, this->lWidth - 6, this->lHeight - 6);
+		cairo_stroke(cr);
+	} else {
+		printf("repaint complete\n");
+	}
+#endif //SHOW_REPAINT_BOUNDS
+	this->lX = -1;
+	this->lY = -1;
+	this->lWidth = -1;
+	this->lHeight = -1;
 
 	this->page = NULL;
 	this->cr = NULL;

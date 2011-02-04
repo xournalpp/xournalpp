@@ -49,6 +49,7 @@ public:
 	double getElementHeight();
 
 	virtual bool intersectsArea(const GdkRectangle * src);
+	virtual bool intersectsArea(double x, double y, double width, double height);
 
 	virtual bool isInSelection(ShapeContainer * container);
 

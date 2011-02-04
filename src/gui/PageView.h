@@ -193,6 +193,11 @@ private:
 	 */
 	int lastVisibelTime;
 
+	double repaintX;
+	double repaintY;
+	double repaintWidth;
+	double repaintHeight;
+
 	/**
 	 * Wich mouse button is pressed
 	 */
