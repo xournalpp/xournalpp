@@ -40,7 +40,7 @@ public:
 	double getY();
 
 	virtual void move(double dx, double dy);
-	virtual void finalizeMove();
+	virtual void scale(double x0, double y0, double fx, double fy) = 0;
 
 	void setColor(int color);
 	int getColor() const;

@@ -26,6 +26,8 @@ public:
 	void setImage(cairo_surface_t * image);
 	cairo_surface_t * getImage();
 
+	virtual void scale(double x0, double y0, double fx, double fy);
+
 public:
 	// Serialize interface
 	void serialize(ObjectOutputStream & out);

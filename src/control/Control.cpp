@@ -1902,9 +1902,9 @@ void Control::copyProgressCallback(goffset current_num_bytes, goffset total_num_
 }
 
 bool Control::copyFile(String source, String target) {
-  
-  // we need to build the GFile from a path.
-  // But if future versions support URIs, this has to be changed
+
+	// we need to build the GFile from a path.
+	// But if future versions support URIs, this has to be changed
 	GFile * src = g_file_new_for_path(source.c_str());
 	GFile * trg = g_file_new_for_path(target.c_str());
 	GError * err = NULL;
@@ -2240,7 +2240,7 @@ void Control::clipboardPasteText(String text) {
 	layer->addElement(t);
 	undoRedo->addUndoAction(new InsertUndoAction(page, layer, t, view));
 
-	EditSelection * selection = new EditSelection(t, view, page);
+	EditSelection * selection = new EditSelection(this->undoRedo, t, view, page);
 	setSelection(selection);
 	view->repaint(t);
 }
@@ -2272,7 +2272,7 @@ void Control::clipboardPasteXournal(ObjectInputStream & in) {
 		double width = in.readDouble();
 		double height = in.readDouble();
 
-		selection = new EditSelection(x, y, width, height, page, view);
+		selection = new EditSelection(this->undoRedo, x, y, width, height, page, view);
 
 		int count = in.readInt();
 

@@ -33,10 +33,6 @@ Stroke::Stroke() :
 
 	this->splitIndex = -1;
 	this->copyed = false;
-
-	this->moved = false;
-	this->dx = 0;
-	this->dy = 0;
 }
 
 Stroke::~Stroke() {
@@ -169,33 +165,35 @@ StrokeTool Stroke::getToolType() const {
 }
 
 void Stroke::move(double dx, double dy) {
-	this->moved = true;
-	this->dx += dx;
-	this->dy += dy;
-}
-
-void Stroke::finalizeMove() {
 	for (int i = 0; i < pointCount; i++) {
-		points[i].x += this->dx;
-		points[i].y += this->dy;
+		points[i].x += dx;
+		points[i].y += dy;
 	}
 
-	this->moved = false;
-	this->dx = 0;
-	this->dy = 0;
 	this->sizeCalculated = false;
 }
 
-bool Stroke::isMoved() {
-	return this->moved;
-}
+void Stroke::scale(double x0, double y0, double fx, double fy) {
+	double fz = (fx + fy) / 2;
 
-double Stroke::getDx() {
-	return this->dx;
-}
+	for (int i = 0; i < this->pointCount; i++) {
+		Point & p = this->points[i];
 
-double Stroke::getDy() {
-	return this->dy;
+		p.x -= x0;
+		p.x *= fx;
+		p.x += x0;
+
+		p.y -= y0;
+		p.y *= fy;
+		p.y += y0;
+
+		if (p.z != Point::NO_PRESURE) {
+			p.z *= fz;
+		}
+	}
+	this->width *= fz;
+
+	this->sizeCalculated = false;
 }
 
 bool Stroke::hasPressure() {

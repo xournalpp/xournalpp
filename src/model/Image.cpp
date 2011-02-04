@@ -73,6 +73,18 @@ cairo_surface_t * Image::getImage() {
 	return this->image;
 }
 
+void Image::scale(double x0, double y0, double fx, double fy) {
+	this->x -= x0;
+	this->x *= fx;
+	this->x += x0;
+	this->y -= y0;
+	this->y *= fy;
+	this->y += y0;
+
+	this->width *= fx;
+	this->height *= fy;
+}
+
 void Image::serialize(ObjectOutputStream & out) {
 	out.writeObject("Image");
 

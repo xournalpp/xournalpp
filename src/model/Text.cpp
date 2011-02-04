@@ -48,6 +48,25 @@ void Text::setInEditing(bool inEditing) {
 	this->inEditing = inEditing;
 }
 
+void Text::scale(double x0, double y0, double fx, double fy) {
+	// only proportional scale allowed...
+	if (fx != fy) {
+		g_warning("rescale font with fx != fy not supported: %lf / %lf", fx, fy);
+	}
+
+	this->x -= x0;
+	this->x *= fx;
+	this->x += x0;
+	this->y -= y0;
+	this->y *= fy;
+	this->y += y0;
+
+	double size = this->font.getSize() * fx;
+	this->font.setSize(size);
+
+	this->sizeCalculated = false;
+}
+
 bool Text::isInEditing() {
 	return this->inEditing;
 }
@@ -79,5 +98,4 @@ void Text::readSerialized(ObjectInputStream & in) throw (InputStreamException) {
 
 	in.endObject();
 }
-
 

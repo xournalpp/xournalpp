@@ -35,6 +35,7 @@ public:
 	void setInEditing(bool inEditing);
 	bool isInEditing();
 
+	virtual void scale(double x0, double y0, double fx, double fy);
 
 	virtual bool rescaleOnlyAspectRatio();
 

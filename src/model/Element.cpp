@@ -48,9 +48,6 @@ void Element::move(double dx, double dy) {
 	this->y += dy;
 }
 
-void Element::finalizeMove() {
-}
-
 double Element::getElementWidth() {
 	if (!sizeCalculated) {
 		sizeCalculated = true;

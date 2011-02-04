@@ -124,7 +124,6 @@ MoveUndoAction * VerticalToolHandler::finnalize() {
 	for (GList * l = this->elements; l != NULL; l = l->next) {
 		Element * e = (Element *) l->data;
 		e->move(0, dY);
-		e->finalizeMove();
 
 		this->layer->addElement(e);
 	}

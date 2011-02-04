@@ -4,25 +4,36 @@
 #include "../gettext.h"
 #include <math.h>
 
-EditSelection::EditSelection(double x, double y, double width, double height, XojPage * page, Redrawable * view) {
+EditSelection::EditSelection(UndoRedoHandler * undo, double x, double y, double width, double height, XojPage * page,
+		Redrawable * view) {
 	this->x = x;
 	this->y = y;
 	this->width = width;
 	this->height = height;
+
+	this->originalWidth = width;
+	this->originalHeight = height;
+
 	this->page = page;
 	this->layer = this->page->getSelectedLayer();
 	this->view = view;
 	this->inputView = view;
+	this->undo = undo;
 
 	initAttributes();
 }
 
-EditSelection::EditSelection(Selection * selection, Redrawable * view) {
+EditSelection::EditSelection(UndoRedoHandler * undo, Selection * selection, Redrawable * view) {
 	selection->getSelectedRect(this->x, this->y, this->width, this->height);
 	this->page = selection->page;
 	this->layer = this->page->getSelectedLayer();
 	this->view = view;
 	this->inputView = view;
+
+	this->originalWidth = this->width;
+	this->originalHeight = this->height;
+
+	this->undo = undo;
 
 	initAttributes();
 
@@ -33,16 +44,19 @@ EditSelection::EditSelection(Selection * selection, Redrawable * view) {
 	this->view->deleteViewBuffer();
 }
 
-EditSelection::EditSelection(Element * e, Redrawable * view, XojPage * page) {
+EditSelection::EditSelection(UndoRedoHandler * undo, Element * e, Redrawable * view, XojPage * page) {
 	this->page = page;
 	this->layer = this->page->getSelectedLayer();
 	this->view = view;
 	this->inputView = view;
+	this->undo = undo;
 
 	this->x = e->getX();
 	this->y = e->getY();
 	this->width = e->getElementWidth();
 	this->height = e->getElementHeight();
+	this->originalWidth = this->width;
+	this->originalHeight = this->height;
 
 	initAttributes();
 
@@ -68,16 +82,38 @@ void EditSelection::initAttributes() {
 	this->selX = 0;
 	this->selY = 0;
 
-	this->undo = NULL;
-	this->lastUndoAction = NULL;
+	this->moveUndoAction = NULL;
+	this->crBuffer = NULL;
+	this->rescaleId = 0;
 }
 
 EditSelection::~EditSelection() {
+	double fx = this->width / this->originalWidth;
+	double fy = this->height / this->originalHeight;
+
+	bool scale = false;
+	if (this->aspectRatio) {
+		double f = (fx + fy) / 2;
+		fx = f;
+		fy = f;
+	}
+	if (this->width != this->originalWidth || this->height != this->originalHeight) {
+		scale = true;
+	}
+
 	for (GList * l = this->selected; l != NULL; l = l->next) {
 		Element * e = (Element *) l->data;
-		e->move(-this->relativeX + this->x, -this->relativeY + this->y);
-		e->finalizeMove();
+		e->move(this->x - this->relativeX, this->y - this->relativeY);
+		if (scale) {
+			e->scale(this->x, this->y, fx, fy);
+		}
 		this->layer->addElement(e);
+	}
+
+	if (scale) {
+		ScaleUndoAction * scaleUndo = new ScaleUndoAction(this->page, this->view, this->selected, this->x, this->y, fx,
+				fy);
+		this->undo->addUndoAction(scaleUndo);
 	}
 
 	view->deleteViewBuffer();
@@ -85,6 +121,15 @@ EditSelection::~EditSelection() {
 	g_list_free(this->selected);
 
 	delete this->documentView;
+
+	deleteViewBuffer();
+}
+
+void EditSelection::deleteViewBuffer() {
+	if (this->crBuffer) {
+		cairo_surface_destroy(this->crBuffer);
+		this->crBuffer = NULL;
+	}
 }
 
 void EditSelection::addElementInt(Element * e) {
@@ -115,8 +160,10 @@ void EditSelection::finalizeEditing() {
 
 	this->inputView = this->view;
 
-	if (this->undo) {
-		this->undo->finalize(this);
+	if (this->moveUndoAction) {
+		this->moveUndoAction->finalize(this);
+		undo->addUndoAction(this->moveUndoAction);
+		this->moveUndoAction = NULL;
 	}
 }
 
@@ -142,6 +189,7 @@ UndoAction * EditSelection::setColor(int color) {
 		double y1 = this->y;
 		double y2 = this->y + this->height;
 
+		this->deleteViewBuffer();
 		this->view->redrawDocumentRegion(x1 - this->offsetX, y1 - this->offsetY, x2, y2);
 
 		return undo;
@@ -195,6 +243,7 @@ UndoAction * EditSelection::setSize(ToolSize size, const double * thiknessPen, c
 		double y1 = this->y;
 		double y2 = this->y + this->height;
 
+		this->deleteViewBuffer();
 		this->view->redrawDocumentRegion(x1 - this->offsetX, y1 - this->offsetY, x2, y2);
 
 		return undo;
@@ -202,12 +251,6 @@ UndoAction * EditSelection::setSize(ToolSize size, const double * thiknessPen, c
 		delete undo;
 		return NULL;
 	}
-}
-
-MoveUndoAction * EditSelection::getUndoAction() {
-	this->lastUndoAction = this->undo;
-	this->undo = NULL;
-	return this->lastUndoAction;
 }
 
 GList * EditSelection::getElements() {
@@ -229,8 +272,8 @@ void EditSelection::setEditMode(CursorSelectionType selType, double x, double y)
  * I know it's the same on the original xournal, but it's not user friendly if an object can be "lost"...
  */
 void EditSelection::doMove(double dx, double dy, Redrawable * view, XournalWidget * xournal) {
-	if (this->undo == NULL) {
-		this->undo = new MoveUndoAction(this->page, this);
+	if (this->moveUndoAction == NULL) {
+		this->moveUndoAction = new MoveUndoAction(this->page, this);
 	}
 
 	double x1 = this->x;
@@ -316,27 +359,91 @@ void EditSelection::move(double x, double y, Redrawable * view, XournalWidget * 
 
 		doMove(dx, dy, view, xournal);
 	} else if (this->selType == CURSOR_SELECTION_TOP_LEFT) {
+		double dx = x - this->x;
+		double dy = y - this->y;
+		double f;
+		if (ABS(dy) < ABS(dx)) {
+			f = (this->height + dy) / this->height;
+		} else {
+			f = (this->width + dx) / this->width;
+		}
+
+		double oldW = this->width;
+		double oldH = this->height;
+		this->width /= f;
+		this->height /= f;
+
+		this->x += oldW - this->width;
+		this->y += oldH - this->height;
+
+		gtk_widget_queue_draw(this->view->getWidget());
 	} else if (this->selType == CURSOR_SELECTION_TOP_RIGHT) {
+		double dx = x - this->x - this->width;
+		double dy = y - this->y;
+		double f;
+		if (ABS(dy) < ABS(dx)) {
+			f = this->height / (this->height + dy);
+		} else {
+			f = (this->width + dx) / this->width;
+		}
+
+		double oldH = this->height;
+		this->width *= f;
+		this->height *= f;
+
+		this->y += oldH - this->height;
+
+		gtk_widget_queue_draw(this->view->getWidget());
 	} else if (this->selType == CURSOR_SELECTION_BOTTOM_LEFT) {
+		double dx = x - this->x;
+		double dy = y - this->y - this->height;
+		double f;
+		if (ABS(dy) < ABS(dx)) {
+			f = (this->height + dy) / this->height;
+		} else {
+			f = this->width / (this->width + dx);
+		}
+
+		double oldW = this->width;
+		this->width *= f;
+		this->height *= f;
+
+		this->x += oldW - this->width;
+
+		gtk_widget_queue_draw(this->view->getWidget());
 	} else if (this->selType == CURSOR_SELECTION_BOTTOM_RIGHT) {
 		double dx = x - this->x - this->width;
 		double dy = y - this->y - this->height;
-		double dz;
+		double f;
 		if (ABS(dy) < ABS(dx)) {
-			dz = dy;
+			f = (this->height + dy) / this->height;
 		} else {
-			dz = dx;
+			f = (this->width + dx) / this->width;
 		}
 
-		this->width += dz;
-		this->height += dz;
+		this->width *= f;
+		this->height *= f;
 
 		gtk_widget_queue_draw(this->view->getWidget());
 	} else if (this->selType == CURSOR_SELECTION_TOP) {
+		double dy = y - this->y;
+		this->height -= dy;
+		this->y += dy;
+		gtk_widget_queue_draw(this->view->getWidget());
 	} else if (this->selType == CURSOR_SELECTION_BOTTOM) {
+		double dy = y - this->y - this->height;
+		this->height += dy;
+		gtk_widget_queue_draw(this->view->getWidget());
 	} else if (this->selType == CURSOR_SELECTION_LEFT) {
-	} else if (this->selType == CURSOR_SELECTION_RIGHT) {
+		double dx = x - this->x;
+		this->width -= dx;
+		this->x += dx;
 
+		gtk_widget_queue_draw(this->view->getWidget());
+	} else if (this->selType == CURSOR_SELECTION_RIGHT) {
+		double dx = x - this->x - this->width;
+		this->width += dx;
+		gtk_widget_queue_draw(this->view->getWidget());
 	}
 }
 
@@ -404,15 +511,45 @@ CursorSelectionType EditSelection::getSelectionTypeForPos(double x, double y, do
 	return CURSOR_SELECTION_NONE;
 }
 
+bool EditSelection::repaintSelection(EditSelection * selection) {
+	selection->deleteViewBuffer();
+	gtk_widget_queue_draw(selection->view->getWidget());
+	selection->rescaleId = 0;
+	return false;
+}
+
 void EditSelection::paint(cairo_t * cr, GdkEventExpose *event, double zoom) {
 	double x = this->x - this->offsetX;
 	double y = this->y - this->offsetY;
 
-	cairo_save(cr);
-	cairo_translate(cr, -this->relativeX + x, -this->relativeY + y);
+	double fx = this->width / this->originalWidth;
+	double fy = this->height / this->originalHeight;
 
-	// TODO use Buffer
-	this->documentView->drawSelection(cr, this);
+	if (this->crBuffer == NULL) {
+		this->crBuffer = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, this->width * zoom, this->height * zoom);
+		cairo_t * cr2 = cairo_create(this->crBuffer);
+
+		cairo_scale(cr2, zoom * fx, zoom * fy);
+		cairo_translate(cr2, -this->relativeX, -this->relativeY);
+		this->documentView->drawSelection(cr2, this);
+
+		cairo_destroy(cr2);
+	}
+
+	cairo_save(cr);
+
+	if ((int) (this->width * zoom) != (int) cairo_image_surface_get_width(this->crBuffer)
+			|| (int) (this->height * zoom) != (int) cairo_image_surface_get_height(this->crBuffer)) {
+		if (!this->rescaleId) {
+			this->rescaleId = g_idle_add((GSourceFunc) repaintSelection, this);
+		}
+	}
+
+	cairo_scale(cr, 1 / zoom, 1 / zoom);
+
+	cairo_set_source_surface(cr, this->crBuffer, x, y);
+	cairo_paint(cr);
+
 	cairo_restore(cr);
 
 	cairo_set_operator(cr, CAIRO_OPERATOR_OVER);
@@ -509,6 +646,7 @@ UndoAction * EditSelection::setFont(XojFont & font) {
 	}
 
 	if (!isnan(x1)) {
+		this->deleteViewBuffer();
 		this->view->redrawDocumentRegion(x1, y1, x2, y2);
 		return undo;
 	}
