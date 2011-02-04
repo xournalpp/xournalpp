@@ -35,6 +35,8 @@ public:
 	static void applyColor(cairo_t *cr, int c, int alpha = 255);
 	static void applyColor(cairo_t *cr, Element * e, int alpha = 255);
 
+	void limitArea(double x, double y, double width, double heigth);
+
 	void drawSelection(cairo_t * cr, ElementContainer * container);
 
 private:
@@ -55,6 +57,11 @@ private:
 	XojPage * page;
 	double width;
 	double height;
+
+	double lX;
+	double lY;
+	double lWidth;
+	double lHeight;
 };
 
 #endif /* __DOCUMENTVIEW_H__ */

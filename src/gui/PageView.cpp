@@ -31,6 +31,11 @@ PageView::PageView(XournalWidget * xournal, XojPage * page) {
 	this->lastMousePositionX = 0;
 	this->lastMousePositionY = 0;
 
+	this->repaintX = -1;
+	this->repaintY = -1;
+	this->repaintWidth = -1;
+	this->repaintHeight = -1;
+
 	this->scrollOffsetX = 0;
 	this->scrollOffsetY = 0;
 
@@ -407,7 +412,7 @@ void PageView::doErase(double x, double y) {
 							if (pos == -1) {
 								continue;
 							}
-							repaint();
+							repaint(e);
 
 							if (!eraseDeleteUndoAction) {
 								UndoRedoHandler * undo = xournal->getControl()->getUndoRedoHandler();
@@ -427,6 +432,11 @@ void PageView::doErase(double x, double y) {
 								eraseUndoAction = new EraseUndoAction(page, this);
 								undo->addUndoAction(eraseUndoAction);
 							}
+
+							double x = s->getX();
+							double y = s->getY();
+							double width = s->getElementWidth();
+							double height = s->getElementHeight();
 
 							if (!s->isCopyed()) {
 								Stroke * copy = s->clone();
@@ -450,7 +460,7 @@ void PageView::doErase(double x, double y) {
 								part->setCopyed(true);
 							}
 
-							repaint();
+							repaint(x, y, width, height);
 						}
 					}
 				}
@@ -927,7 +937,6 @@ bool PageView::onButtonReleaseEvent(GtkWidget *widget, GdkEventButton *event) {
 			page->getSelectedLayer();
 			page->setSelectedLayerId(1);
 			control->getWindow()->updateLayerCombobox();
-			repaint();
 		}
 
 		Layer * layer = page->getSelectedLayer();
@@ -1116,8 +1125,14 @@ void PageView::repaint(Element * e) {
 
 void PageView::repaint(double x, double y, double width, double heigth) {
 	double zoom = xournal->getZoom();
-	deleteViewBuffer();
-	gtk_widget_queue_draw_area(widget, (x - 10) * zoom, (y - 10) * zoom, (width + 20) * zoom, (heigth + 20) * zoom);
+
+	this->repaintX = MAX(x - 10,0);
+	this->repaintY = MAX( y - 10,0);
+	this->repaintWidth = width + 20;
+	this->repaintHeight = heigth + 20;
+
+	gtk_widget_queue_draw_area(widget, this->repaintX * zoom, this->repaintY * zoom, this->repaintWidth * zoom,
+			this->repaintHeight * zoom);
 }
 
 void PageView::updateSize() {
@@ -1243,6 +1258,50 @@ bool PageView::paintPage(GtkWidget * widget, GdkEventExpose * event) {
 		view->drawPage(page, popplerPage, cr2);
 
 		cairo_destroy(cr2);
+
+		this->repaintX = -1;
+		this->repaintY = -1;
+		this->repaintWidth = -1;
+		this->repaintHeight = -1;
+	}
+
+	if (this->repaintX != -1) {
+		cairo_t * crPageBuffer = cairo_create(this->crBuffer);
+
+		this->tmpStrokeDrawElem = 0;
+
+		cairo_scale(crPageBuffer, xournal->getZoom(), xournal->getZoom());
+
+		XojPopplerPage * popplerPage = NULL;
+
+		if (page->getBackgroundType() == BACKGROUND_TYPE_PDF) {
+			int pgNo = page->getPdfPageNr();
+			popplerPage = xournal->getDocument()->getPdfPage(pgNo);
+		}
+
+		cairo_surface_t * rectBuffer = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, this->repaintWidth,
+				this->repaintHeight);
+		cairo_t * crRect = cairo_create(rectBuffer);
+		cairo_translate(crRect, -this->repaintX, -this->repaintY);
+
+		view->limitArea(this->repaintX, this->repaintY, this->repaintWidth, this->repaintHeight);
+		view->drawPage(page, popplerPage, crRect);
+
+		cairo_destroy(crRect);
+
+		cairo_set_operator(crPageBuffer, CAIRO_OPERATOR_SOURCE);
+		cairo_set_source_surface(crPageBuffer, rectBuffer, this->repaintX, this->repaintY);
+		cairo_rectangle(crPageBuffer, this->repaintX, this->repaintY, this->repaintWidth, this->repaintHeight);
+		cairo_fill(crPageBuffer);
+
+		cairo_destroy(crPageBuffer);
+
+		cairo_surface_destroy(rectBuffer);
+
+		this->repaintX = -1;
+		this->repaintY = -1;
+		this->repaintWidth = -1;
+		this->repaintHeight = -1;
 	}
 
 	cairo_save(cr);
