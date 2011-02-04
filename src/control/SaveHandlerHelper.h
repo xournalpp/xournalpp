@@ -15,7 +15,7 @@
 #include "../util/OutputStream.h"
 #include <vector>
 
-class Attribute {
+class Attribute : public MemoryCheckObject {
 public:
 	Attribute(String name) {
 		this->name = name;
@@ -181,6 +181,7 @@ public:
 
 protected:
 	void putAttrib(Attribute * a) {
+		CHECK_MEMORY(a);
 		std::vector<Attribute *>::iterator it;
 		for (it = attributes.begin(); it != attributes.end(); it++) {
 			if ((*it)->getName() == a->getName()) {

@@ -6,7 +6,7 @@
 #include "../control/EditSelection.h"
 
 //#define SHOW_ELEMENT_BOUNDS
-#define SHOW_REPAINT_BOUNDS
+//#define SHOW_REPAINT_BOUNDS
 
 DocumentView::DocumentView() {
 	this->page = NULL;
