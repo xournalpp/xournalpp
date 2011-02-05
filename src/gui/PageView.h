@@ -18,16 +18,16 @@
 #include "../model/Stroke.h"
 #include "../model/Text.h"
 
-#include "../control/Settings.h"
+#include "../control/settings/Settings.h"
 #include "../control/SearchControl.h"
-#include "../control/VerticalToolHandler.h"
+#include "../control/tools/VerticalToolHandler.h"
+#include "../control/tools/EraseHandler.h"
 #include "../view/DocumentView.h"
 #include "../gui/TextEditor.h"
 #include "../util/Util.h"
 
 class XournalWidget;
 class DeleteUndoAction;
-class EraseUndoAction;
 class Selection;
 
 class PageView: public Redrawable, public virtual MemoryCheckObject {
@@ -48,7 +48,10 @@ public:
 
 	void repaint();
 	void repaint(Element * e);
+	void repaint(Range & r);
 	void repaint(double x, double y, double width, double heigth);
+
+	void redraw();
 
 	void updateSize();
 
@@ -107,7 +110,6 @@ private:
 	void addPointToTmpStroke(GdkEventMotion *event);
 	bool getPressureMultiplier(GdkEvent *event, double & presure);
 
-	void doErase(double x, double y);
 	void startText(double x, double y);
 	void selectObjectAt(double x, double y);
 
@@ -126,6 +128,7 @@ private:
 	GtkWidget * widget;
 	XournalWidget * xournal;
 	Settings * settings;
+	EraseHandler * eraser;
 
 	/**
 	 * If you are drawing on the document
@@ -175,8 +178,6 @@ private:
 	int idleRepaintId;
 
 	bool inEraser;
-	DeleteUndoAction * eraseDeleteUndoAction;
-	EraseUndoAction * eraseUndoAction;
 
 	bool extendedWarningDisplayd;
 

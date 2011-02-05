@@ -13,11 +13,11 @@
 #define __TEXTEDITOR_H__
 
 #include <gtk/gtk.h>
-#include "../control/Redrawable.h"
+#include "../gui/Redrawable.h"
 #include "../model/Text.h"
+#include "../undo/UndoAction.h"
 
 class PageView;
-class UndoAction;
 
 class TextEditor {
 public:

@@ -15,7 +15,7 @@
 #include "Layer.h"
 #include "../util/ListIterator.h"
 #include "../util/Util.h"
-#include "../model/String.h"
+#include "../util/String.h"
 
 enum BackgroundType {
 	BACKGROUND_TYPE_NONE = 1,

@@ -2,7 +2,7 @@
 #include <gdk/gdkkeysyms.h>
 #include "../control/Control.h"
 #include <math.h>
-#include "../control/ev-metadata-manager.h"
+#include "../control/settings/ev-metadata-manager.h"
 #include "Shadow.h"
 #include "../util/Util.h"
 

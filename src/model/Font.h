@@ -11,7 +11,7 @@
 
 #ifndef __XFONT_H__
 #define __XFONT_H__
-#include "String.h"
+#include "../util/String.h"
 
 #include <gtk/gtk.h>
 #include "../util/Serializeable.h"

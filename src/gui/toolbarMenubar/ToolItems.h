@@ -16,7 +16,7 @@
 #include "../../control/ToolHandler.h"
 #include "../../control/Actions.h"
 #include "../../control/ZoomControl.h"
-#include "../../model/String.h"
+#include "../../util/String.h"
 #include "../GladeGui.h"
 #include "../widgets/gtkmenutooltogglebutton.h"
 #include "../../util/Util.h"

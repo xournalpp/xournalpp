@@ -13,7 +13,7 @@
 #define __OBJECTSTREAM_H__
 
 #include <gtk/gtk.h>
-#include "../model/String.h"
+#include "../util/String.h"
 #include "../util/Serializeable.h"
 
 class Serializeable;

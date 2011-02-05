@@ -1,26 +1,8 @@
 #include "Stroke.h"
-#include <gtk/gtk.h>
+#include <glib.h>
 #include <math.h>
 #include <string.h>
 #include "../util/ObjectStream.h"
-
-Point::Point() {
-	this->x = 0;
-	this->y = 0;
-	this->z = NO_PRESURE;
-}
-
-Point::Point(double x, double y) {
-	this->x = x;
-	this->y = y;
-	this->z = NO_PRESURE;
-}
-
-Point::Point(double x, double y, double z) {
-	this->x = x;
-	this->y = y;
-	this->z = z;
-}
 
 Stroke::Stroke() :
 	Element(ELEMENT_STROKE) {
@@ -242,7 +224,7 @@ void Stroke::setPressure(const double * data) {
 	}
 }
 
-Stroke * Stroke::splitOnLastIntersects() {
+Stroke * Stroke::splitOnLastIntersects(Point & removedPoint) {
 	if (this->splitIndex == -1) {
 		// Nothing to split
 		return NULL;
@@ -252,11 +234,15 @@ Stroke * Stroke::splitOnLastIntersects() {
 		this->pointCount--;
 		this->sizeCalculated = false;
 
+		removedPoint = this->points[this->pointCount];
+
 		// No new element, only the tail of this is removed
 		return NULL;
 	}
 
 	if (splitIndex == 0) {
+		removedPoint = this->points[0];
+
 		for (int i = 0; i < this->pointCount - 1; i++) {
 			this->points[i] = this->points[i - 1];
 		}
@@ -277,12 +263,6 @@ Stroke * Stroke::splitOnLastIntersects() {
 
 	this->pointCount = this->splitIndex;
 	this->sizeCalculated = false;
-
-	if (s->getPointCount() < 2) {
-		delete s;
-		return NULL;
-	}
-
 	return s;
 }
 
@@ -320,7 +300,6 @@ bool Stroke::intersects(double x, double y, double halfEraserSize, double * gap)
 			// The space to the line is in the range, but it can also be parallel
 			// and not enough close, so calculate a "circle" with the center on the
 			// center of the line
-
 
 			if (p <= halfEraserSize) {
 				double centerX = (lastX + x) / 2;

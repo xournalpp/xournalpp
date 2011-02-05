@@ -21,7 +21,7 @@
 #include "gettext.h"
 #include "cfg.h"
 
-#include "control/ev-metadata-manager.h"
+#include "control/settings/ev-metadata-manager.h"
 
 // TODO: use gettext:
 // http://www.gnu.org/software/hello/manual/automake/gettext.html

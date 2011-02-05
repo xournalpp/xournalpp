@@ -1,7 +1,7 @@
 /*
  * Xournal++
  *
- * An element on the document
+ * A stroke on the document
  *
  * @author Xournal Team
  * http://xournal.sf.net
@@ -14,22 +14,7 @@
 
 #include "Element.h"
 #include "../util/Arrayiterator.h"
-
-class Point {
-public:
-	Point();
-	Point(double x, double y);
-	Point(double x, double y, double z);
-
-	double x;
-	double y;
-
-	// pressure
-	double z;
-
-
-	static const double NO_PRESURE = -1;
-};
+#include "Point.h"
 
 enum StrokeTool {
 	STROKE_TOOL_PEN, STROKE_TOOL_ERASER, STROKE_TOOL_HIGHLIGHTER
@@ -59,7 +44,7 @@ public:
 	const double * getWidths() const;
 
 	bool intersects(double x, double y, double halfSize, double * gap = NULL);
-	Stroke * splitOnLastIntersects();
+	Stroke * splitOnLastIntersects(Point & removedPoint);
 
 	void setPressure(const double * data);
 	void setLastPressure(double pressure);

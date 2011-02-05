@@ -12,9 +12,9 @@
 #ifndef __UTIL_H__
 #define __UTIL_H__
 
-#include <gtk/gtk.h>
+#include <glib.h>
 #include <assert.h>
-#include "../model/String.h"
+#include "../util/String.h"
 
 class Util {
 public:

@@ -1,5 +1,5 @@
 #include "Shadow.h"
-#include "shadowCode.c"
+#include "ShadowCode.c"
 
 int Shadow::getShadowBottomRightSize() {
 	return shadowBottomRightSize;
