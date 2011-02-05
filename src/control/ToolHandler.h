@@ -14,7 +14,7 @@
 
 #include "Tool.h"
 #include "../util/Arrayiterator.h"
-#include "Settings.h"
+#include "settings/Settings.h"
 
 class ToolListener {
 public:

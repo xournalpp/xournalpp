@@ -11,7 +11,7 @@
 #ifndef __SAVEHANDLERHELPER_H__
 #define __SAVEHANDLERHELPER_H__
 
-#include "../model/String.h"
+#include "../util/String.h"
 #include "../util/OutputStream.h"
 #include <vector>
 

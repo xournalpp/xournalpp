@@ -1,6 +1,6 @@
 #include "PrintHandler.h"
 #include "../model/Document.h"
-#include "../control/Settings.h"
+#include "../control/settings/Settings.h"
 #include "../view/DocumentView.h"
 
 #include <math.h>

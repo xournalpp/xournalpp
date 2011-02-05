@@ -11,7 +11,7 @@
 #ifndef __BACKGROUNDTHREADHANDLER_H__
 #define __BACKGROUNDTHREADHANDLER_H__
 
-#include <gtk/gtk.h>
+#include <glib.h>
 
 class Runnable;
 class Control;

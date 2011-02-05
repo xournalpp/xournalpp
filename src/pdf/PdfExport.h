@@ -13,8 +13,8 @@
 #define PDFEXPORT_H_
 
 #include "../model/Document.h"
-#include "../model/String.h"
-#include <gtk/gtk.h>
+#include "../util/String.h"
+#include <glib.h>
 
 class PdfExport {
 public:

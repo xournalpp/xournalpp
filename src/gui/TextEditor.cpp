@@ -8,6 +8,7 @@
 #include <string.h>
 
 #include "TextEditorWidget.h"
+#include "../undo/TextUndoAction.h"
 
 // TODO: implement drag & drop
 

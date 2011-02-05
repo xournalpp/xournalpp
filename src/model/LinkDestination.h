@@ -12,8 +12,8 @@
 #ifndef __LINKDESTINATION_H__
 #define __LINKDESTINATION_H__
 
-#include <gtk/gtk.h>
-#include "String.h"
+#include <glib.h>
+#include "../util/String.h"
 
 typedef struct _LinkDest XojLinkDest;
 typedef struct _LinkDestClass XojLinkDestClass;

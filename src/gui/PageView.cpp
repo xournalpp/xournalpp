@@ -7,11 +7,13 @@
 #include <glib.h>
 #include "../control/Control.h"
 #include "../view/TextView.h"
-#include "../control/Selection.h"
-#include "../control/ShapeRecognizer.h"
+#include "../control/tools/Selection.h"
+#include "../control/tools/ShapeRecognizer.h"
 #include "../util/pixbuf-utils.h"
 #include "../util/Range.h"
 #include "../cfg.h"
+#include "../undo/InsertUndoAction.h"
+#include "../undo/RecognizerUndoAction.h"
 
 #define PIXEL_MOTION_THRESHOLD 0.3
 
@@ -51,8 +53,6 @@ PageView::PageView(XournalWidget * xournal, XojPage * page) {
 	this->downButton = 0;
 
 	this->inEraser = false;
-	this->eraseDeleteUndoAction = NULL;
-	this->eraseUndoAction = NULL;
 
 	this->extendedWarningDisplayd = false;
 
@@ -65,6 +65,9 @@ PageView::PageView(XournalWidget * xournal, XojPage * page) {
 	this->textEditor = NULL;
 
 	this->search = NULL;
+
+	this->eraser = new EraseHandler(xournal->getControl()->getUndoRedoHandler(), this->page,
+			xournal->getControl()->getToolHandler(), this);
 
 	updateSize();
 
@@ -87,6 +90,7 @@ PageView::PageView(XournalWidget * xournal, XojPage * page) {
 PageView::~PageView() {
 	gtk_widget_destroy(widget);
 	delete this->view;
+	delete this->eraser;
 	endText();
 	deleteViewBuffer();
 }
@@ -405,98 +409,6 @@ void PageView::selectObjectAt(double x, double y) {
 	}
 }
 
-/**
- * Handle eraser event: Delete Stroke and Standard, Whiteout is not handled here
- */
-void PageView::doErase(double x, double y) {
-	ListIterator<Layer*> it = page->layerIterator();
-
-	int selected = page->getSelectedLayerId();
-	ToolHandler * h = xournal->getControl()->getToolHandler();
-
-	double halfEraserSize = h->getThikness();
-	GdkRectangle eraserRect = { x - halfEraserSize, y - halfEraserSize, halfEraserSize * 2, halfEraserSize * 2 };
-
-	while (it.hasNext() && selected) {
-		Layer * l = it.next();
-
-		ListIterator<Element *> eit = l->elementIterator();
-		while (eit.hasNext()) {
-			Element * e = eit.next();
-			if (e->intersectsArea(&eraserRect)) {
-				if (e->getType() == ELEMENT_STROKE) {
-					Stroke * s = (Stroke *) e;
-					if (s->intersects(x, y, halfEraserSize)) {
-						if (h->getEraserType() == ERASER_TYPE_DELETE_STROKE) {
-							int pos = l->removeElement(e, false);
-							if (pos == -1) {
-								continue;
-							}
-							repaint(e);
-
-							if (!eraseDeleteUndoAction) {
-								UndoRedoHandler * undo = xournal->getControl()->getUndoRedoHandler();
-								eraseDeleteUndoAction = new DeleteUndoAction(page, this, true);
-								undo->addUndoAction(eraseDeleteUndoAction);
-							}
-
-							eraseDeleteUndoAction->addElement(l, e, pos);
-						} else { // Default
-							int pos = l->indexOf(e);
-							if (pos == -1) {
-								continue;
-							}
-
-							if (eraseUndoAction == NULL) {
-								UndoRedoHandler * undo = xournal->getControl()->getUndoRedoHandler();
-								eraseUndoAction = new EraseUndoAction(page, this);
-								undo->addUndoAction(eraseUndoAction);
-							}
-
-							double x = s->getX();
-							double y = s->getY();
-							double width = s->getElementWidth();
-							double height = s->getElementHeight();
-
-							if (!s->isCopyed()) {
-								Stroke * copy = s->clone();
-								eraseUndoAction->addOriginal(l, s, pos);
-								eraseUndoAction->addEdited(l, copy, pos);
-								copy->setCopyed(true);
-
-								// Because of undo / redo handling:
-								// Remove the original and add the copy
-								// if we undo this we need the original on the layer, els it can not be identified
-								int spos = l->removeElement(s, false);
-								l->insertElement(copy, spos);
-								s = copy;
-							}
-
-							Stroke * part = s->splitOnLastIntersects();
-
-							// todo split the stroken up into tow shorter
-
-							if (s->getPointCount() < 2) {
-								// TODO: handle
-							}
-
-							if (part) {
-								l->insertElement(part, pos);
-								eraseUndoAction->addEdited(l, part, pos);
-								part->setCopyed(true);
-							}
-
-							repaint(x, y, width, height);
-						}
-					}
-				}
-			}
-		}
-
-		selected--;
-	}
-}
-
 void PageView::onButtonPressEvent(GtkWidget *widget, GdkEventButton *event) {
 #ifdef INPUT_DEBUG
 	/**
@@ -645,7 +557,7 @@ void PageView::onButtonPressEvent(GtkWidget *widget, GdkEventButton *event) {
 			tmpStroke->setToolType(STROKE_TOOL_ERASER);
 			tmpStroke->addPoint(Point(x, y));
 		} else {
-			doErase(x, y);
+			this->eraser->erase(x, y);
 			this->inEraser = true;
 		}
 	} else if (h->getToolType() == TOOL_VERTICAL_SPACE) {
@@ -867,7 +779,7 @@ gboolean PageView::onMotionNotifyEvent(GtkWidget *widget, GdkEventMotion *event)
 			doScroll(event);
 		}
 	} else if (h->getToolType() == TOOL_ERASER && h->getEraserType() != ERASER_TYPE_WHITEOUT && this->inEraser) {
-		doErase(x, y);
+		this->eraser->erase(x, y);
 	} else {
 		if (tmpStroke != NULL && currentInputDevice == event->device) {
 			addPointToTmpStroke(event);
@@ -1008,26 +920,10 @@ bool PageView::onButtonReleaseEvent(GtkWidget *widget, GdkEventButton *event) {
 	cursor->setMouseDown(false);
 
 	this->inScrolling = false;
-	this->inEraser = false;
-	this->eraseDeleteUndoAction = false;
 
-	if (eraseUndoAction) {
-		eraseUndoAction->cleanup();
-		ListIterator<Layer*> pit = page->layerIterator();
-		while (pit.hasNext()) {
-			Layer * l = pit.next();
-			ListIterator<Element *> lit = l->elementIterator();
-			while (lit.hasNext()) {
-				Element * e = lit.next();
-				if (e->getType() == ELEMENT_STROKE) {
-					Stroke * s = (Stroke *) e;
-					s->setCopyed(false);
-					s->freeUnusedPointItems();
-				}
-			}
-		}
-
-		eraseUndoAction = NULL;
+	if (this->inEraser) {
+		this->inEraser = false;
+		this->eraser->cleanup();
 	}
 
 	if (this->verticalSpace) {
@@ -1143,6 +1039,14 @@ XojPage * PageView::getPage() {
 void PageView::repaint() {
 	deleteViewBuffer();
 	gtk_widget_queue_draw(widget);
+}
+
+void PageView::redraw() {
+	gtk_widget_queue_draw(widget);
+}
+
+void PageView::repaint(Range & r) {
+	repaint(r.getX(), r.getY(), r.getWidth(), r.getHeight());
 }
 
 void PageView::repaint(Element * e) {
@@ -1316,7 +1220,8 @@ bool PageView::paintPage(GtkWidget * widget, GdkEventExpose * event, double zoom
 
 		cairo_set_operator(crPageBuffer, CAIRO_OPERATOR_SOURCE);
 		cairo_set_source_surface(crPageBuffer, rectBuffer, this->repaintX * zoom, this->repaintY * zoom);
-		cairo_rectangle(crPageBuffer, this->repaintX* zoom, this->repaintY* zoom, this->repaintWidth* zoom, this->repaintHeight* zoom);
+		cairo_rectangle(crPageBuffer, this->repaintX * zoom, this->repaintY * zoom, this->repaintWidth * zoom,
+				this->repaintHeight * zoom);
 		cairo_fill(crPageBuffer);
 
 		cairo_destroy(crPageBuffer);

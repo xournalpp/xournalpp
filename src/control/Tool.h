@@ -12,7 +12,7 @@
 #ifndef __TOOL_H__
 #define __TOOL_H__
 
-#include "../model/String.h"
+#include "../util/String.h"
 
 #define TOOL_COUNT 10
 

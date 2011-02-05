@@ -12,7 +12,7 @@
 #ifndef __OUTPUTSTREAM_H__
 #define __OUTPUTSTREAM_H__
 
-#include "../model/String.h"
+#include "../util/String.h"
 #include <zlib.h>
 
 class OutputStream {

@@ -15,20 +15,19 @@
 #include "RecentManager.h"
 #include "../gui/MainWindow.h"
 #include "Actions.h"
-#include "UndoRedoHandler.h"
+#include "../undo/UndoRedoHandler.h"
 #include "BackgroundThreadHandler.h"
 #include "ClipboardHandler.h"
-#include "Settings.h"
+#include "settings/Settings.h"
 #include "ToolHandler.h"
 #include "../model/Document.h"
 #include "ZoomControl.h"
 
 #include "../gui/sidebar/Sidebar.h"
 #include "../gui/SearchBar.h"
-#include "Cursor.h"
+#include "../gui/Cursor.h"
 
 class Sidebar;
-class Cursor;
 class CallbackData;
 class PageView;
 class EditSelection;

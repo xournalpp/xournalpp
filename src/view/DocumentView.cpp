@@ -2,8 +2,8 @@
 #include "TextView.h"
 #include "../gettext.h"
 #include <gdk/gdk.h>
-#include "../control/Selection.h"
-#include "../control/EditSelection.h"
+#include "../control/tools/Selection.h"
+#include "../control/tools/EditSelection.h"
 
 //#define SHOW_ELEMENT_BOUNDS
 //#define SHOW_REPAINT_BOUNDS

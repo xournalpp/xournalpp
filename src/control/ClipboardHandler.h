@@ -13,8 +13,8 @@
 #define __CLIPBOARDHANDLER_H__
 
 #include <gtk/gtk.h>
-#include "../model/String.h"
-#include "EditSelection.h"
+#include "../util/String.h"
+#include "tools/EditSelection.h"
 
 class ObjectInputStream;
 

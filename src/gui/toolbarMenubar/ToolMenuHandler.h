@@ -12,12 +12,11 @@
 #define EDITABLETOOLBAR_H_
 
 #include <gtk/gtk.h>
-#include <glib.h>
 
 #include "../../util/ListIterator.h"
 #include "../../control/Actions.h"
 #include "../../control/ZoomControl.h"
-#include "../../model/String.h"
+#include "../../util/String.h"
 #include "../GladeGui.h"
 #include <vector>
 #include "ToolbarEntry.h"

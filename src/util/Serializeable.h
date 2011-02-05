@@ -12,7 +12,7 @@
 #ifndef __SERIALIZEABLE_H__
 #define __SERIALIZEABLE_H__
 
-#include "../model/String.h"
+#include "../util/String.h"
 #include <exception>
 
 #define INPUT_STREAM_EXCEPTION(description, ...) \
