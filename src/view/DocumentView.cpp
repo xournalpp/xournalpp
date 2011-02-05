@@ -145,8 +145,10 @@ void DocumentView::drawElement(cairo_t *cr, Element * e) {
 void DocumentView::drawLayer(cairo_t *cr, Layer * l) {
 	ListIterator<Element *> it = l->elementIterator();
 
+#ifdef SHOW_REPAINT_BOUNDS
 	int drawed = 0;
 	int notDrawed = 0;
+#endif //SHOW_REPAINT_BOUNDS
 
 	while (it.hasNext()) {
 		Element * e = it.next();
@@ -163,19 +165,26 @@ void DocumentView::drawLayer(cairo_t *cr, Layer * l) {
 		if (this->lX != -1) {
 			if (e->intersectsArea(this->lX, this->lY, this->width, this->height)) {
 				drawElement(cr, e);
+#ifdef SHOW_REPAINT_BOUNDS
 				drawed++;
+#endif //SHOW_REPAINT_BOUNDS
 			} else {
+#ifdef SHOW_REPAINT_BOUNDS
 				notDrawed++;
+#endif //SHOW_REPAINT_BOUNDS
 			}
 
 		} else {
+#ifdef SHOW_REPAINT_BOUNDS
 			drawed++;
+#endif //SHOW_REPAINT_BOUNDS
 			drawElement(cr, e);
 		}
 	}
 
-	// TODO: debug
+#ifdef SHOW_REPAINT_BOUNDS
 	printf("DocumentView: draw %i / not draw %i\n", drawed, notDrawed);
+#endif //SHOW_REPAINT_BOUNDS
 }
 
 void DocumentView::paintBackgroundImage() {

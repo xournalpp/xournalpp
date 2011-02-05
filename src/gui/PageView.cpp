@@ -10,6 +10,7 @@
 #include "../control/Selection.h"
 #include "../control/ShapeRecognizer.h"
 #include "../util/pixbuf-utils.h"
+#include "../util/Range.h"
 #include "../cfg.h"
 
 #define PIXEL_MOTION_THRESHOLD 0.3
@@ -210,6 +211,25 @@ void PageView::addPointToTmpStroke(GdkEventMotion *event) {
 	}
 
 	ToolHandler * h = xournal->getControl()->getToolHandler();
+
+	if (h->isRuler()) {
+		Range range(x, y);
+
+		int count = tmpStroke->getPointCount();
+		if (count < 2) {
+			tmpStroke->addPoint(Point(x, y));
+		} else {
+			Point p = tmpStroke->getPoint(tmpStroke->getPointCount() - 1);
+			range.addPoint(p.x, p.y);
+			tmpStroke->setLastPoint(x, y);
+		}
+		Point p = tmpStroke->getPoint(0);
+		range.addPoint(p.x, p.y);
+
+		repaint(range.getX(), range.getY(), range.getWidth(), range.getHeight());
+		return;
+	}
+
 	double pressure = Point::NO_PRESURE;
 	if (h->getToolType() == TOOL_PEN) {
 		if (getPressureMultiplier((GdkEvent *) event, pressure)) {
@@ -453,6 +473,12 @@ void PageView::doErase(double x, double y) {
 							}
 
 							Stroke * part = s->splitOnLastIntersects();
+
+							// todo split the stroken up into tow shorter
+
+							if (s->getPointCount() < 2) {
+								// TODO: handle
+							}
 
 							if (part) {
 								l->insertElement(part, pos);
@@ -1107,7 +1133,7 @@ int PageView::getDisplayHeight() {
 }
 
 gboolean PageView::exposeEventCallback(GtkWidget *widget, GdkEventExpose *event, PageView * page) {
-	return page->paintPage(widget, event);
+	return page->paintPage(widget, event, page->getXournal()->getZoom());
 }
 
 XojPage * PageView::getPage() {
@@ -1168,7 +1194,7 @@ bool PageView::repaintCallback(PageView * view) {
 	view->idleRepaintId = 0;
 
 	view->deleteViewBuffer();
-	view->paintPage(view->widget, NULL);
+	view->paintPage(view->widget, NULL, view->getXournal()->getZoom());
 	return false;
 }
 
@@ -1229,7 +1255,7 @@ bool PageView::actionDelete() {
 	return false;
 }
 
-bool PageView::paintPage(GtkWidget * widget, GdkEventExpose * event) {
+bool PageView::paintPage(GtkWidget * widget, GdkEventExpose * event, double zoom) {
 	if (!firstPainted) {
 		firstPaint();
 		return true;
@@ -1270,8 +1296,6 @@ bool PageView::paintPage(GtkWidget * widget, GdkEventExpose * event) {
 
 		this->tmpStrokeDrawElem = 0;
 
-		cairo_scale(crPageBuffer, xournal->getZoom(), xournal->getZoom());
-
 		XojPopplerPage * popplerPage = NULL;
 
 		if (page->getBackgroundType() == BACKGROUND_TYPE_PDF) {
@@ -1279,9 +1303,10 @@ bool PageView::paintPage(GtkWidget * widget, GdkEventExpose * event) {
 			popplerPage = xournal->getDocument()->getPdfPage(pgNo);
 		}
 
-		cairo_surface_t * rectBuffer = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, this->repaintWidth,
-				this->repaintHeight);
+		cairo_surface_t * rectBuffer = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, this->repaintWidth * zoom,
+				this->repaintHeight * zoom);
 		cairo_t * crRect = cairo_create(rectBuffer);
+		cairo_scale(crRect, zoom, zoom);
 		cairo_translate(crRect, -this->repaintX, -this->repaintY);
 
 		view->limitArea(this->repaintX, this->repaintY, this->repaintWidth, this->repaintHeight);
@@ -1290,8 +1315,8 @@ bool PageView::paintPage(GtkWidget * widget, GdkEventExpose * event) {
 		cairo_destroy(crRect);
 
 		cairo_set_operator(crPageBuffer, CAIRO_OPERATOR_SOURCE);
-		cairo_set_source_surface(crPageBuffer, rectBuffer, this->repaintX, this->repaintY);
-		cairo_rectangle(crPageBuffer, this->repaintX, this->repaintY, this->repaintWidth, this->repaintHeight);
+		cairo_set_source_surface(crPageBuffer, rectBuffer, this->repaintX * zoom, this->repaintY * zoom);
+		cairo_rectangle(crPageBuffer, this->repaintX* zoom, this->repaintY* zoom, this->repaintWidth* zoom, this->repaintHeight* zoom);
 		cairo_fill(crPageBuffer);
 
 		cairo_destroy(crPageBuffer);

@@ -46,6 +46,7 @@ public:
 	double getWidth() const;
 
 	void addPoint(Point p);
+	void setLastPoint(double x, double y);
 	int getPointCount() const;
 	void freeUnusedPointItems();
 	ArrayIterator<Point> pointIterator() const;
