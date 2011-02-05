@@ -44,7 +44,7 @@ public:
 	void updatePageSize(double width, double height);
 
 	void firstPaint();
-	bool paintPage(GtkWidget *widget, GdkEventExpose *event);
+	bool paintPage(GtkWidget *widget, GdkEventExpose *event, double zoom);
 
 	void repaint();
 	void repaint(Element * e);

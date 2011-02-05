@@ -115,6 +115,15 @@ bool Stroke::isInSelection(ShapeContainer * container) {
 	return true;
 }
 
+void Stroke::setLastPoint(double x, double y) {
+	if (this->pointCount > 0) {
+		Point & p = this->points[this->pointCount - 1];
+		p.x = x;
+		p.y = y;
+		this->sizeCalculated = false;
+	}
+}
+
 void Stroke::addPoint(Point p) {
 	if (this->pointCount >= this->pointAllocCount) {
 		this->allocPointSize(this->pointAllocCount + 100);
@@ -268,6 +277,11 @@ Stroke * Stroke::splitOnLastIntersects() {
 
 	this->pointCount = this->splitIndex;
 	this->sizeCalculated = false;
+
+	if (s->getPointCount() < 2) {
+		delete s;
+		return NULL;
+	}
 
 	return s;
 }

@@ -65,6 +65,7 @@ xournalpp_SOURCES = \
 	util/CrashHandler.cpp \
 	util/pixbuf-utils.cpp \
 	util/GzHelper.cpp \
+	util/Range.cpp \
 	pdf/PdfExport.cpp \
 	pdf/cairo/CairoPdf.cpp \
 	pdf/poppler/XojPopplerDocument.cpp \

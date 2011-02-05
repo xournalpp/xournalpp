@@ -263,10 +263,6 @@ ToolHandler * Control::getToolHandler() {
 	return toolHandler;
 }
 
-void xxxxx() {
-	printf("This action is not yet implemented\n");
-}
-
 /**
  * If we change the state of a toggle button it will send an event,
  * to prevent our application to get in an endless loop we need to catch this events
@@ -712,7 +708,6 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent *even
 		// Menu Help
 	case ACTION_HELP:
 		// TODO LOW PRIO: implement help
-		xxxxx();
 		break;
 	case ACTION_ABOUT:
 		showAbout();

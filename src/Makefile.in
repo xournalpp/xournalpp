@@ -91,7 +91,8 @@ am_xournalpp_OBJECTS = xournalpp-Page.$(OBJEXT) \
 	xournalpp-ObjectStream.$(OBJEXT) \
 	xournalpp-CrashHandler.$(OBJEXT) \
 	xournalpp-pixbuf-utils.$(OBJEXT) xournalpp-GzHelper.$(OBJEXT) \
-	xournalpp-PdfExport.$(OBJEXT) xournalpp-CairoPdf.$(OBJEXT) \
+	xournalpp-Range.$(OBJEXT) xournalpp-PdfExport.$(OBJEXT) \
+	xournalpp-CairoPdf.$(OBJEXT) \
 	xournalpp-XojPopplerDocument.$(OBJEXT) \
 	xournalpp-XojPopplerPage.$(OBJEXT) \
 	xournalpp-XojPopplerIter.$(OBJEXT) \
@@ -290,6 +291,7 @@ xournalpp_SOURCES = \
 	util/CrashHandler.cpp \
 	util/pixbuf-utils.cpp \
 	util/GzHelper.cpp \
+	util/Range.cpp \
 	pdf/PdfExport.cpp \
 	pdf/cairo/CairoPdf.cpp \
 	pdf/poppler/XojPopplerDocument.cpp \
@@ -412,6 +414,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-PdfExport.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-PdfPagesDialog.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-PrintHandler.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-Range.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-RecentManager.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-SaveHandler.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-SearchBar.Po@am__quote@
@@ -1302,6 +1305,20 @@ xournalpp-GzHelper.obj: util/GzHelper.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='util/GzHelper.cpp' object='xournalpp-GzHelper.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-GzHelper.obj `if test -f 'util/GzHelper.cpp'; then $(CYGPATH_W) 'util/GzHelper.cpp'; else $(CYGPATH_W) '$(srcdir)/util/GzHelper.cpp'; fi`
+
+xournalpp-Range.o: util/Range.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-Range.o -MD -MP -MF $(DEPDIR)/xournalpp-Range.Tpo -c -o xournalpp-Range.o `test -f 'util/Range.cpp' || echo '$(srcdir)/'`util/Range.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-Range.Tpo $(DEPDIR)/xournalpp-Range.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='util/Range.cpp' object='xournalpp-Range.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-Range.o `test -f 'util/Range.cpp' || echo '$(srcdir)/'`util/Range.cpp
+
+xournalpp-Range.obj: util/Range.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-Range.obj -MD -MP -MF $(DEPDIR)/xournalpp-Range.Tpo -c -o xournalpp-Range.obj `if test -f 'util/Range.cpp'; then $(CYGPATH_W) 'util/Range.cpp'; else $(CYGPATH_W) '$(srcdir)/util/Range.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-Range.Tpo $(DEPDIR)/xournalpp-Range.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='util/Range.cpp' object='xournalpp-Range.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-Range.obj `if test -f 'util/Range.cpp'; then $(CYGPATH_W) 'util/Range.cpp'; else $(CYGPATH_W) '$(srcdir)/util/Range.cpp'; fi`
 
 xournalpp-PdfExport.o: pdf/PdfExport.cpp
 @am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-PdfExport.o -MD -MP -MF $(DEPDIR)/xournalpp-PdfExport.Tpo -c -o xournalpp-PdfExport.o `test -f 'pdf/PdfExport.cpp' || echo '$(srcdir)/'`pdf/PdfExport.cpp

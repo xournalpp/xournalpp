@@ -76,7 +76,7 @@ public:
 		this->sxy += dm * p1.x * p1.y;
 	}
 
-	void calc(const Point *pt, int start, int end) {
+	void calc(const Point * pt, int start, int end) {
 		this->mass = this->sx = this->sy = this->sxx = this->sxy = this->syy = 0.;
 		for (int i = start; i < end - 1; i++) {
 			this->increase(pt[i], pt[i + 1], 1);
@@ -92,7 +92,7 @@ private:
 	double syy;
 };
 
-// TODO:recognizer does not always work corret, circle is OK, but lines are usually to long
+// TODO:recognizer does not always work correct, circle is OK, but lines are usually to long
 
 ShapeRecognizer::ShapeRecognizer() {
 	resetRecognizer();
@@ -237,7 +237,7 @@ Stroke * ShapeRecognizer::tryArrow() {
 		return NULL;
 	}
 
-	RecoSegment *rs = queue + queueLength - 3;
+	RecoSegment * rs = queue + queueLength - 3;
 	if (rs->startpt != 0) {
 		TRACELINE();
 		return NULL;
