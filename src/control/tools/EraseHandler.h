@@ -1,7 +1,7 @@
 /*
  * Xournal Extended
  *
- * Handles the erase of stroken, in special split into different parts etc.
+ * Handles the erase of stroke, in special split into different parts etc.
  *
  * @author Xournal Team
  * http://xournal.sf.net
@@ -30,7 +30,7 @@ public:
 
 public:
 	void erase(double x, double y);
-	void cleanup();
+	void finalize();
 
 private:
 	void eraseStroke(Layer * l, Stroke * s, double x, double y);

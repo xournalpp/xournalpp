@@ -116,7 +116,7 @@ GList * VerticalToolHandler::getElements() {
 	return this->elements;
 }
 
-MoveUndoAction * VerticalToolHandler::finnalize() {
+MoveUndoAction * VerticalToolHandler::finalize() {
 	double dY = this->endY - this->startY;
 
 	MoveUndoAction * undo = new MoveUndoAction(this->page, this);

@@ -93,7 +93,8 @@ FormatDialog::FormatDialog(Settings * settings, double width, double heigth) :
 			i++;
 		} else {
 			gtk_paper_size_free(s);
-			this->list = g_list_remove_link(this->list, l);
+			this->list = g_list_delete_link(this->list, l);
+
 		}
 	}
 

@@ -13,8 +13,7 @@ Stroke::Stroke() :
 	this->points = NULL;
 	this->toolType = STROKE_TOOL_PEN;
 
-	this->splitIndex = -1;
-	this->copyed = false;
+	this->eraseable = NULL;
 }
 
 Stroke::~Stroke() {
@@ -76,14 +75,6 @@ double Stroke::getWidth() const {
 	return width;
 }
 
-void Stroke::setCopyed(bool copyed) {
-	this->copyed = copyed;
-}
-
-bool Stroke::isCopyed() {
-	return this->copyed;
-}
-
 bool Stroke::isInSelection(ShapeContainer * container) {
 	for (int i = 1; i < pointCount; i++) {
 		double px = points[i].x;
@@ -111,7 +102,7 @@ void Stroke::addPoint(Point p) {
 		this->allocPointSize(this->pointAllocCount + 100);
 	}
 	this->points[this->pointCount++] = p;
-	sizeCalculated = false;
+	this->sizeCalculated = false;
 }
 
 void Stroke::allocPointSize(int size) {
@@ -125,6 +116,28 @@ int Stroke::getPointCount() const {
 
 ArrayIterator<Point> Stroke::pointIterator() const {
 	return ArrayIterator<Point> (points, pointCount);
+}
+
+void Stroke::deletePointsFrom(int index) {
+	if (this->pointCount <= index) {
+		return;
+	}
+	this->pointCount = index;
+}
+
+void Stroke::deletePoint(int index) {
+	if (this->pointCount <= index) {
+		return;
+	}
+
+	for (int i = 0; i < this->pointCount; i++) {
+		if (i < index) {
+			this->points[i] = this->points[i];
+		} else {
+			this->points[i] = this->points[i + 1];
+		}
+	}
+	this->pointCount--;
 }
 
 Point Stroke::getPoint(int index) const {
@@ -224,48 +237,9 @@ void Stroke::setPressure(const double * data) {
 	}
 }
 
-Stroke * Stroke::splitOnLastIntersects(Point & removedPoint) {
-	if (this->splitIndex == -1) {
-		// Nothing to split
-		return NULL;
-	}
-
-	if (splitIndex == this->pointCount - 1) {
-		this->pointCount--;
-		this->sizeCalculated = false;
-
-		removedPoint = this->points[this->pointCount];
-
-		// No new element, only the tail of this is removed
-		return NULL;
-	}
-
-	if (splitIndex == 0) {
-		removedPoint = this->points[0];
-
-		for (int i = 0; i < this->pointCount - 1; i++) {
-			this->points[i] = this->points[i - 1];
-		}
-
-		this->sizeCalculated = false;
-
-		// No new element, only the head of this is removed
-		return NULL;
-	}
-
-	Stroke * s = new Stroke();
-	s->setColor(this->getColor());
-	s->setToolType(this->getToolType());
-	s->setWidth(this->getWidth());
-	for (int i = this->splitIndex + 1; i < this->pointCount; i++) {
-		s->addPoint(this->points[i]);
-	}
-
-	this->pointCount = this->splitIndex;
-	this->sizeCalculated = false;
-	return s;
-}
-
+/**
+ * split index is the split point, minimimum is 1 NOT 0
+ */
 bool Stroke::intersects(double x, double y, double halfEraserSize, double * gap) {
 	if (pointCount < 1) {
 		return false;
@@ -283,7 +257,6 @@ bool Stroke::intersects(double x, double y, double halfEraserSize, double * gap)
 		double py = points[i].y;
 
 		if (px >= x1 && py >= y1 && px <= x2 && py <= y2) {
-			this->splitIndex = i;
 			if (gap) {
 				*gap = 0;
 			}
@@ -312,8 +285,6 @@ bool Stroke::intersects(double x, double y, double halfEraserSize, double * gap)
 				distance -= hypot((x2 - x1) / 2, (y2 - y1) / 2);
 
 				if (distance <= (len / 2) + 0.1) {
-					this->splitIndex = i;
-
 					if (gap) {
 						*gap = distance;
 					}
@@ -326,7 +297,6 @@ bool Stroke::intersects(double x, double y, double halfEraserSize, double * gap)
 		lastY = py;
 	}
 
-	this->splitIndex = -1;
 	return false;
 }
 
@@ -371,3 +341,21 @@ void Stroke::calcSize() {
 	Element::height = maxY - minY + 4 + width;
 }
 
+EraseableStroke * Stroke::getEraseable() {
+	return this->eraseable;
+}
+
+void Stroke::setEraseable(EraseableStroke * eraseable) {
+	this->eraseable = eraseable;
+}
+
+void Stroke::debugPrint() {
+	printf("Stroke %ld\n", (long)this);
+
+	for(int i = 0; i < this->pointCount;i++) {
+		Point p = this->points[i];
+		printf("%lf/%lf ", p.x, p.y);
+	}
+
+	printf("\n");
+}

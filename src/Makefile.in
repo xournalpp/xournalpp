@@ -50,7 +50,8 @@ am__installdirs = "$(DESTDIR)$(bindir)"
 PROGRAMS = $(bin_PROGRAMS)
 am_xournalpp_OBJECTS = xournalpp-ev-metadata-manager.$(OBJEXT) \
 	xournalpp-Settings.$(OBJEXT) xournalpp-EditSelection.$(OBJEXT) \
-	xournalpp-EraseHandler.$(OBJEXT) xournalpp-Selection.$(OBJEXT) \
+	xournalpp-EraseHandler.$(OBJEXT) \
+	xournalpp-InputHandler.$(OBJEXT) xournalpp-Selection.$(OBJEXT) \
 	xournalpp-ShapeRecognizer.$(OBJEXT) \
 	xournalpp-VerticalToolHandler.$(OBJEXT) \
 	xournalpp-Actions.$(OBJEXT) \
@@ -79,7 +80,8 @@ am_xournalpp_OBJECTS = xournalpp-ev-metadata-manager.$(OBJEXT) \
 	xournalpp-SearchBar.$(OBJEXT) xournalpp-Shadow.$(OBJEXT) \
 	xournalpp-TextEditor.$(OBJEXT) \
 	xournalpp-XournalWidget.$(OBJEXT) xournalpp-Document.$(OBJEXT) \
-	xournalpp-Element.$(OBJEXT) xournalpp-Font.$(OBJEXT) \
+	xournalpp-Element.$(OBJEXT) \
+	xournalpp-EraseableStroke.$(OBJEXT) xournalpp-Font.$(OBJEXT) \
 	xournalpp-FormatDefinitions.$(OBJEXT) \
 	xournalpp-Image.$(OBJEXT) xournalpp-Layer.$(OBJEXT) \
 	xournalpp-LinkDestination.$(OBJEXT) xournalpp-Page.$(OBJEXT) \
@@ -250,6 +252,7 @@ xournalpp_SOURCES = \
 	control/settings/Settings.cpp \
 	control/tools/EditSelection.cpp \
 	control/tools/EraseHandler.cpp \
+	control/tools/InputHandler.cpp \
 	control/tools/Selection.cpp \
 	control/tools/ShapeRecognizer.cpp \
 	control/tools/VerticalToolHandler.cpp \
@@ -288,6 +291,7 @@ xournalpp_SOURCES = \
 	gui/XournalWidget.cpp \
 	model/Document.cpp \
 	model/Element.cpp \
+	model/EraseableStroke.cpp \
 	model/Font.cpp \
 	model/FormatDefinitions.cpp \
 	model/Image.cpp \
@@ -431,6 +435,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-Element.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-EraseHandler.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-EraseUndoAction.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-EraseableStroke.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-ExportDialog.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-Font.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-FontUndoAction.Po@am__quote@
@@ -440,6 +445,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-GzHelper.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-Image.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-ImagesDialog.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-InputHandler.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-InsertDeletePageUndoAction.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-InsertLayerUndoAction.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-InsertUndoAction.Po@am__quote@
@@ -570,6 +576,20 @@ xournalpp-EraseHandler.obj: control/tools/EraseHandler.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='control/tools/EraseHandler.cpp' object='xournalpp-EraseHandler.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-EraseHandler.obj `if test -f 'control/tools/EraseHandler.cpp'; then $(CYGPATH_W) 'control/tools/EraseHandler.cpp'; else $(CYGPATH_W) '$(srcdir)/control/tools/EraseHandler.cpp'; fi`
+
+xournalpp-InputHandler.o: control/tools/InputHandler.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-InputHandler.o -MD -MP -MF $(DEPDIR)/xournalpp-InputHandler.Tpo -c -o xournalpp-InputHandler.o `test -f 'control/tools/InputHandler.cpp' || echo '$(srcdir)/'`control/tools/InputHandler.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-InputHandler.Tpo $(DEPDIR)/xournalpp-InputHandler.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='control/tools/InputHandler.cpp' object='xournalpp-InputHandler.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-InputHandler.o `test -f 'control/tools/InputHandler.cpp' || echo '$(srcdir)/'`control/tools/InputHandler.cpp
+
+xournalpp-InputHandler.obj: control/tools/InputHandler.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-InputHandler.obj -MD -MP -MF $(DEPDIR)/xournalpp-InputHandler.Tpo -c -o xournalpp-InputHandler.obj `if test -f 'control/tools/InputHandler.cpp'; then $(CYGPATH_W) 'control/tools/InputHandler.cpp'; else $(CYGPATH_W) '$(srcdir)/control/tools/InputHandler.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-InputHandler.Tpo $(DEPDIR)/xournalpp-InputHandler.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='control/tools/InputHandler.cpp' object='xournalpp-InputHandler.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-InputHandler.obj `if test -f 'control/tools/InputHandler.cpp'; then $(CYGPATH_W) 'control/tools/InputHandler.cpp'; else $(CYGPATH_W) '$(srcdir)/control/tools/InputHandler.cpp'; fi`
 
 xournalpp-Selection.o: control/tools/Selection.cpp
 @am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-Selection.o -MD -MP -MF $(DEPDIR)/xournalpp-Selection.Tpo -c -o xournalpp-Selection.o `test -f 'control/tools/Selection.cpp' || echo '$(srcdir)/'`control/tools/Selection.cpp
@@ -1102,6 +1122,20 @@ xournalpp-Element.obj: model/Element.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='model/Element.cpp' object='xournalpp-Element.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-Element.obj `if test -f 'model/Element.cpp'; then $(CYGPATH_W) 'model/Element.cpp'; else $(CYGPATH_W) '$(srcdir)/model/Element.cpp'; fi`
+
+xournalpp-EraseableStroke.o: model/EraseableStroke.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-EraseableStroke.o -MD -MP -MF $(DEPDIR)/xournalpp-EraseableStroke.Tpo -c -o xournalpp-EraseableStroke.o `test -f 'model/EraseableStroke.cpp' || echo '$(srcdir)/'`model/EraseableStroke.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-EraseableStroke.Tpo $(DEPDIR)/xournalpp-EraseableStroke.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='model/EraseableStroke.cpp' object='xournalpp-EraseableStroke.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-EraseableStroke.o `test -f 'model/EraseableStroke.cpp' || echo '$(srcdir)/'`model/EraseableStroke.cpp
+
+xournalpp-EraseableStroke.obj: model/EraseableStroke.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-EraseableStroke.obj -MD -MP -MF $(DEPDIR)/xournalpp-EraseableStroke.Tpo -c -o xournalpp-EraseableStroke.obj `if test -f 'model/EraseableStroke.cpp'; then $(CYGPATH_W) 'model/EraseableStroke.cpp'; else $(CYGPATH_W) '$(srcdir)/model/EraseableStroke.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-EraseableStroke.Tpo $(DEPDIR)/xournalpp-EraseableStroke.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='model/EraseableStroke.cpp' object='xournalpp-EraseableStroke.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-EraseableStroke.obj `if test -f 'model/EraseableStroke.cpp'; then $(CYGPATH_W) 'model/EraseableStroke.cpp'; else $(CYGPATH_W) '$(srcdir)/model/EraseableStroke.cpp'; fi`
 
 xournalpp-Font.o: model/Font.cpp
 @am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-Font.o -MD -MP -MF $(DEPDIR)/xournalpp-Font.Tpo -c -o xournalpp-Font.o `test -f 'model/Font.cpp' || echo '$(srcdir)/'`model/Font.cpp

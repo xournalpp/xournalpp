@@ -1,7 +1,7 @@
 /*
  * Xournal Extended
  *
- * Control to display a single color button
+ * Control to zoom (DPI) callibration (rouler)
  *
  * @author Xournal Team
  * http://xournal.sf.net

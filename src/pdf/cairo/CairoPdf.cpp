@@ -34,6 +34,7 @@ void CairoPdf::drawPage(XojPage * page) {
 	cairo_destroy(cr);
 	cairo_surface_destroy(surface);
 
+	// TODO: debug
 	FILE * fp = fopen("/home/andreas/tmp/pdf/cairo.pdf", "w");
 	fwrite(this->data->str, 1, this->data->len, fp);
 	fclose(fp);

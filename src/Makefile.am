@@ -9,6 +9,7 @@ xournalpp_SOURCES = \
 	control/settings/Settings.cpp \
 	control/tools/EditSelection.cpp \
 	control/tools/EraseHandler.cpp \
+	control/tools/InputHandler.cpp \
 	control/tools/Selection.cpp \
 	control/tools/ShapeRecognizer.cpp \
 	control/tools/VerticalToolHandler.cpp \
@@ -47,6 +48,7 @@ xournalpp_SOURCES = \
 	gui/XournalWidget.cpp \
 	model/Document.cpp \
 	model/Element.cpp \
+	model/EraseableStroke.cpp \
 	model/Font.cpp \
 	model/FormatDefinitions.cpp \
 	model/Image.cpp \

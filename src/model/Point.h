@@ -15,12 +15,14 @@
 class Point {
 public:
 	Point();
+	Point(const Point & p);
 	Point(double x, double y);
 	Point(double x, double y, double z);
 
 public:
 	double lineLengthTo(const Point p);
 	Point lineTo(const Point p, double length);
+	bool equalsPos(const Point p);
 
 public:
 	double x;

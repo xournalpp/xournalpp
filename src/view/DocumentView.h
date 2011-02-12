@@ -31,9 +31,10 @@ public:
 
 public:
 	void drawPage(XojPage * page, XojPopplerPage * popplerPage, cairo_t *cr, bool forPrinting = false);
-	void drawStroke(cairo_t *cr, Stroke * s, int startPoint = 0);
-	static void applyColor(cairo_t *cr, int c, int alpha = 255);
-	static void applyColor(cairo_t *cr, Element * e, int alpha = 255);
+	void drawStroke(cairo_t * cr, Stroke * s, int startPoint = 0);
+	void drawEraseableStroke(cairo_t * cr, Stroke * s);
+	static void applyColor(cairo_t * cr, int c, int alpha = 255);
+	static void applyColor(cairo_t * cr, Element * e, int alpha = 255);
 
 	void limitArea(double x, double y, double width, double heigth);
 

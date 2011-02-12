@@ -24,9 +24,26 @@ public:
 			this->data = data;
 		}
 		this->reverse = reverse;
+		this->copied = false;
 	}
 
 	virtual ~ListIterator() {
+		if (this->copied) {
+			g_list_free(this->data);
+		}
+		this->copied = false;
+		this->data = NULL;
+	}
+
+	/**
+	 * If the source changes while you are using the iterator nothing happens
+	 */
+	void freeze() {
+		if (this->copied) {
+			return;
+		}
+		this->copied = true;
+		this->data = g_list_copy(this->data);
 	}
 
 	bool hasNext() {
@@ -46,6 +63,7 @@ public:
 private:
 	GList * data;
 	bool reverse;
+	bool copied;
 };
 
 #endif /* __LISTITERATOR_H__ */

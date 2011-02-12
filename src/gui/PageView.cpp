@@ -8,14 +8,10 @@
 #include "../control/Control.h"
 #include "../view/TextView.h"
 #include "../control/tools/Selection.h"
-#include "../control/tools/ShapeRecognizer.h"
 #include "../util/pixbuf-utils.h"
 #include "../util/Range.h"
 #include "../cfg.h"
 #include "../undo/InsertUndoAction.h"
-#include "../undo/RecognizerUndoAction.h"
-
-#define PIXEL_MOTION_THRESHOLD 0.3
 
 //#define INPUT_DEBUG
 
@@ -25,8 +21,6 @@ PageView::PageView(XournalWidget * xournal, XojPage * page) {
 	this->page = page;
 	this->xournal = xournal;
 	this->selected = false;
-	this->tmpStroke = NULL;
-	this->tmpStrokeDrawElem = 0;
 	this->settings = xournal->getControl()->getSettings();
 	this->view = new DocumentView();
 	this->lastVisibelTime = -1;
@@ -50,8 +44,6 @@ PageView::PageView(XournalWidget * xournal, XojPage * page) {
 
 	this->idleRepaintId = 0;
 
-	this->downButton = 0;
-
 	this->inEraser = false;
 
 	this->extendedWarningDisplayd = false;
@@ -59,8 +51,8 @@ PageView::PageView(XournalWidget * xournal, XojPage * page) {
 	this->verticalSpace = NULL;
 
 	this->selectionEdit = NULL;
-	widget = gtk_drawing_area_new();
-	gtk_widget_show(widget);
+	this->widget = gtk_drawing_area_new();
+	gtk_widget_show(this->widget);
 
 	this->textEditor = NULL;
 
@@ -68,6 +60,8 @@ PageView::PageView(XournalWidget * xournal, XojPage * page) {
 
 	this->eraser = new EraseHandler(xournal->getControl()->getUndoRedoHandler(), this->page,
 			xournal->getControl()->getToolHandler(), this);
+
+	this->inputHandler = new InputHandler(xournal, this->widget, this);
 
 	updateSize();
 
@@ -91,6 +85,7 @@ PageView::~PageView() {
 	gtk_widget_destroy(widget);
 	delete this->view;
 	delete this->eraser;
+	delete this->inputHandler;
 	endText();
 	deleteViewBuffer();
 }
@@ -199,83 +194,6 @@ bool PageView::searchTextOnPage(const char * text, int * occures, double * top) 
 	gtk_widget_queue_draw(widget);
 
 	return found;
-}
-
-void PageView::addPointToTmpStroke(GdkEventMotion *event) {
-	double zoom = xournal->getZoom();
-	double x = event->x / zoom;
-	double y = event->y / zoom;
-
-	if (tmpStroke->getPointCount() > 0) {
-		Point p = tmpStroke->getPoint(tmpStroke->getPointCount() - 1);
-
-		if (hypot(p.x - x, p.y - y) < PIXEL_MOTION_THRESHOLD) {
-			return; // not a meaningful motion
-		}
-	}
-
-	ToolHandler * h = xournal->getControl()->getToolHandler();
-
-	if (h->isRuler()) {
-		Range range(x, y);
-
-		int count = tmpStroke->getPointCount();
-		if (count < 2) {
-			tmpStroke->addPoint(Point(x, y));
-		} else {
-			Point p = tmpStroke->getPoint(tmpStroke->getPointCount() - 1);
-			range.addPoint(p.x, p.y);
-			tmpStroke->setLastPoint(x, y);
-		}
-		Point p = tmpStroke->getPoint(0);
-		range.addPoint(p.x, p.y);
-
-		repaint(range.getX(), range.getY(), range.getWidth(), range.getHeight());
-		return;
-	}
-
-	double pressure = Point::NO_PRESURE;
-	if (h->getToolType() == TOOL_PEN) {
-		if (getPressureMultiplier((GdkEvent *) event, pressure)) {
-			pressure = pressure * tmpStroke->getWidth();
-		} else {
-			pressure = Point::NO_PRESURE;
-		}
-	}
-
-	tmpStroke->setLastPressure(pressure);
-	tmpStroke->addPoint(Point(x, y));
-
-	drawTmpStroke();
-}
-
-bool PageView::getPressureMultiplier(GdkEvent *event, double & presure) {
-	double *axes;
-	double rawpressure;
-	GdkDevice *device;
-
-	if (event->type == GDK_MOTION_NOTIFY) {
-		axes = event->motion.axes;
-		device = event->motion.device;
-	} else {
-		axes = event->button.axes;
-		device = event->button.device;
-	}
-
-	if (device == gdk_device_get_core_pointer() || device->num_axes <= 2) {
-		presure = 1.0;
-		return false;
-	}
-
-	rawpressure = axes[2] / (device->axes[2].max - device->axes[2].min);
-	if (!finite(rawpressure)) {
-		presure = 1.0;
-		return false;
-	}
-
-	presure = ((1 - rawpressure) * settings->getWidthMinimumMultiplier() + rawpressure
-			* settings->getWidthMaximumMultiplier());
-	return true;
 }
 
 void PageView::endText() {
@@ -409,7 +327,7 @@ void PageView::selectObjectAt(double x, double y) {
 	}
 }
 
-void PageView::onButtonPressEvent(GtkWidget *widget, GdkEventButton *event) {
+void PageView::onButtonPressEvent(GtkWidget * widget, GdkEventButton * event) {
 #ifdef INPUT_DEBUG
 	/**
 	 * true: Core event, false: XInput event
@@ -439,8 +357,6 @@ void PageView::onButtonPressEvent(GtkWidget *widget, GdkEventButton *event) {
 	if ((event->state & (GDK_CONTROL_MASK | GDK_MOD1_MASK)) != 0) {
 		return;
 	}
-
-	this->downButton = event->button;
 
 	// Change the tool depending on the key or device
 
@@ -526,36 +442,18 @@ void PageView::onButtonPressEvent(GtkWidget *widget, GdkEventButton *event) {
 	y /= zoom;
 
 	if (h->getToolType() == TOOL_PEN) {
-		if (tmpStroke == NULL) {
-			currentInputDevice = event->device;
-			tmpStroke = new Stroke();
-			tmpStroke->setWidth(h->getThikness());
-			tmpStroke->setColor(h->getColor());
-			tmpStroke->setToolType(STROKE_TOOL_PEN);
-			tmpStroke->addPoint(Point(x, y));
-		}
+		this->inputHandler->startStroke(event, STROKE_TOOL_PEN, x, y);
 	} else if (h->getToolType() == TOOL_HAND) {
 		this->lastMousePositionX = 0;
 		this->lastMousePositionY = 0;
 		this->inScrolling = true;
 		gtk_widget_get_pointer(widget, &this->lastMousePositionX, &this->lastMousePositionY);
 	} else if (h->getToolType() == TOOL_HILIGHTER) {
-		if (tmpStroke == NULL) {
-			currentInputDevice = event->device;
-			tmpStroke = new Stroke();
-			tmpStroke->setWidth(h->getThikness());
-			tmpStroke->setColor(h->getColor());
-			tmpStroke->setToolType(STROKE_TOOL_HIGHLIGHTER);
-			tmpStroke->addPoint(Point(x, y));
-		}
+		this->inputHandler->startStroke(event, STROKE_TOOL_HIGHLIGHTER, x, y);
 	} else if (h->getToolType() == TOOL_ERASER) {
 		if (h->getEraserType() == ERASER_TYPE_WHITEOUT) {
-			currentInputDevice = event->device;
-			tmpStroke = new Stroke();
-			tmpStroke->setWidth(h->getThikness());
-			tmpStroke->setColor(0xffffff); // White
-			tmpStroke->setToolType(STROKE_TOOL_ERASER);
-			tmpStroke->addPoint(Point(x, y));
+			this->inputHandler->startStroke(event, STROKE_TOOL_ERASER, x, y);
+			this->inputHandler->getTmpStroke()->setColor(0xffffff); // White
 		} else {
 			this->eraser->erase(x, y);
 			this->inEraser = true;
@@ -761,7 +659,7 @@ gboolean PageView::onMotionNotifyEventCallback(GtkWidget *widget, GdkEventMotion
 	return view->onMotionNotifyEvent(widget, event);
 }
 
-gboolean PageView::onMotionNotifyEvent(GtkWidget *widget, GdkEventMotion *event) {
+gboolean PageView::onMotionNotifyEvent(GtkWidget * widget, GdkEventMotion * event) {
 #ifdef INPUT_DEBUG
 	bool is_core = (event->device == gdk_device_get_core_pointer());
 	//	printf("DEBUG: MotionNotify (%s) (x,y)=(%.2f,%.2f), modifier %x\n", is_core ? "core" : "xinput", event->xScreen,
@@ -781,8 +679,7 @@ gboolean PageView::onMotionNotifyEvent(GtkWidget *widget, GdkEventMotion *event)
 	} else if (h->getToolType() == TOOL_ERASER && h->getEraserType() != ERASER_TYPE_WHITEOUT && this->inEraser) {
 		this->eraser->erase(x, y);
 	} else {
-		if (tmpStroke != NULL && currentInputDevice == event->device) {
-			addPointToTmpStroke(event);
+		if (this->inputHandler->onMotionNotifyEvent(event)) {
 		} else if (this->selectionEdit) {
 			this->selectionEdit->currentPos(x, y);
 		} else if (this->verticalSpace) {
@@ -818,7 +715,7 @@ bool PageView::scrollCallback(PageView * view) {
 	return false;
 }
 
-void PageView::doScroll(GdkEventMotion *event) {
+void PageView::doScroll(GdkEventMotion * event) {
 	int x = 0;
 	int y = 0;
 	gtk_widget_get_pointer(widget, &x, &y);
@@ -835,12 +732,12 @@ void PageView::doScroll(GdkEventMotion *event) {
 	this->scrollOffsetY = this->lastMousePositionY - y;
 }
 
-bool PageView::onButtonReleaseEventCallback(GtkWidget *widget, GdkEventButton *event, PageView * view) {
+bool PageView::onButtonReleaseEventCallback(GtkWidget * widget, GdkEventButton * event, PageView * view) {
 	CHECK_MEMORY(view);
 	return view->onButtonReleaseEvent(widget, event);
 }
 
-bool PageView::onButtonReleaseEvent(GtkWidget *widget, GdkEventButton *event) {
+bool PageView::onButtonReleaseEvent(GtkWidget * widget, GdkEventButton * event) {
 	gboolean isCore = (event->device == gdk_device_get_core_pointer());
 #ifdef INPUT_DEBUG
 	//	printf("DEBUG: ButtonRelease (%s) (x,y)=(%.2f,%.2f), button %d, modifier %x, isCore %i\n", event->device->name,
@@ -850,68 +747,7 @@ bool PageView::onButtonReleaseEvent(GtkWidget *widget, GdkEventButton *event) {
 	fixXInputCoords((GdkEvent*) event);
 	Control * control = xournal->getControl();
 
-	this->downButton = 0;
-
-	//	if (event->button != ui.which_mouse_button && event->button != ui.which_unswitch_button)
-	//		return FALSE;
-	//
-	if (tmpStroke) {
-		// Backward compatibility and also easyer to handle for me;-)
-		// I cannont draw a line with one point, to draw a visible line I need two points,
-		// twice the same Point is also OK
-		if (tmpStroke->getPointCount() == 1) {
-			ArrayIterator<Point> it = tmpStroke->pointIterator();
-			if (it.hasNext()) {
-				tmpStroke->addPoint(it.next());
-			}
-			// No Presure sensitivity
-			tmpStroke->clearPressure();
-		}
-
-		tmpStroke->freeUnusedPointItems();
-
-		if (page->getSelectedLayerId() < 1) {
-			// This creates a layer if none exists
-			page->getSelectedLayer();
-			page->setSelectedLayerId(1);
-			control->getWindow()->updateLayerCombobox();
-		}
-
-		Layer * layer = page->getSelectedLayer();
-
-		UndoRedoHandler * undo = control->getUndoRedoHandler();
-
-		undo->addUndoAction(new InsertUndoAction(page, layer, tmpStroke, this));
-
-		ToolHandler * h = control->getToolHandler();
-		if (h->isShapeRecognizer()) {
-			ShapeRecognizer reco;
-
-			Stroke * s = reco.recognizePatterns(tmpStroke);
-
-			if (s != NULL) {
-				UndoRedoHandler * undo = control->getUndoRedoHandler();
-
-				undo->addUndoAction(new RecognizerUndoAction(page, this, layer, tmpStroke, s));
-
-				layer->addElement(s);
-
-				repaint();
-			} else {
-				layer->addElement(tmpStroke);
-				repaint(tmpStroke);
-			}
-		} else {
-			layer->addElement(tmpStroke);
-			repaint(tmpStroke);
-		}
-
-		tmpStroke = NULL;
-
-		if (currentInputDevice == event->device) {
-			currentInputDevice = NULL;
-		}
-	}
+	this->inputHandler->onButtonReleaseEvent(event, this->page);
 
 	ToolHandler * h = control->getToolHandler();
 	h->restoreLastConfig();
@@ -923,11 +759,11 @@ bool PageView::onButtonReleaseEvent(GtkWidget *widget, GdkEventButton *event) {
 
 	if (this->inEraser) {
 		this->inEraser = false;
-		this->eraser->cleanup();
+		this->eraser->finalize();
 	}
 
 	if (this->verticalSpace) {
-		MoveUndoAction * undo = this->verticalSpace->finnalize();
+		MoveUndoAction * undo = this->verticalSpace->finalize();
 		delete this->verticalSpace;
 		this->verticalSpace = NULL;
 		control->getUndoRedoHandler()->addUndoAction(undo);
@@ -936,7 +772,7 @@ bool PageView::onButtonReleaseEvent(GtkWidget *widget, GdkEventButton *event) {
 	EditSelection * sel = control->getSelectionFor(this);
 
 	if (this->selectionEdit) {
-		if (this->selectionEdit->finnalize(this->page)) {
+		if (this->selectionEdit->finalize(this->page)) {
 			control->setSelection(new EditSelection(control->getUndoRedoHandler(), this->selectionEdit, this));
 		}
 		delete this->selectionEdit;
@@ -1057,7 +893,7 @@ void PageView::repaint(double x, double y, double width, double heigth) {
 	double zoom = xournal->getZoom();
 
 	this->repaintX = MAX(x - 10,0);
-	this->repaintY = MAX( y - 10,0);
+	this->repaintY = MAX(y - 10,0);
 	this->repaintWidth = width + 20;
 	this->repaintHeight = heigth + 20;
 
@@ -1108,19 +944,6 @@ void PageView::repaintLater() {
 	}
 
 	this->idleRepaintId = g_idle_add((GSourceFunc) &repaintCallback, this);
-}
-
-void PageView::drawTmpStroke() {
-	if (tmpStroke) {
-		cairo_t *cr;
-		cr = gdk_cairo_create(widget->window);
-
-		cairo_scale(cr, xournal->getZoom(), xournal->getZoom());
-
-		view->drawStroke(cr, tmpStroke, tmpStrokeDrawElem);
-		tmpStrokeDrawElem = tmpStroke->getPointCount() - 1;
-		cairo_destroy(cr);
-	}
 }
 
 bool PageView::isSelected() {
@@ -1174,8 +997,6 @@ bool PageView::paintPage(GtkWidget * widget, GdkEventExpose * event, double zoom
 		this->crBuffer = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, alloc.width, alloc.height);
 		cairo_t * cr2 = cairo_create(this->crBuffer);
 
-		this->tmpStrokeDrawElem = 0;
-
 		cairo_scale(cr2, xournal->getZoom(), xournal->getZoom());
 
 		XojPopplerPage * popplerPage = NULL;
@@ -1197,8 +1018,6 @@ bool PageView::paintPage(GtkWidget * widget, GdkEventExpose * event, double zoom
 
 	if (this->repaintX != -1) {
 		cairo_t * crPageBuffer = cairo_create(this->crBuffer);
-
-		this->tmpStrokeDrawElem = 0;
 
 		XojPopplerPage * popplerPage = NULL;
 
@@ -1279,15 +1098,13 @@ bool PageView::paintPage(GtkWidget * widget, GdkEventExpose * event, double zoom
 	if (this->search) {
 		this->search->paint(cr, event, xournal->getZoom(), getSelectionColor());
 	}
-	if (this->tmpStroke) {
-		view->drawStroke(cr, this->tmpStroke);
-	}
+	this->inputHandler->draw(cr);
 
 	cairo_destroy(cr);
 	return true;
 }
 
-void PageView::fixXInputCoords(GdkEvent *event) {
+void PageView::fixXInputCoords(GdkEvent * event) {
 	double *axes, *px, *py;
 	GdkDevice *device;
 	int wx, wy, ix, iy;

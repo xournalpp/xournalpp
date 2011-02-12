@@ -6,10 +6,26 @@
 #include <string.h>
 #include <stdlib.h>
 
-const char *color_names[COLOR_MAX] = { "black", "blue", "red", "green", "gray", "lightblue", "lightgreen", "magenta",
-		"orange", "yellow", "white" };
-unsigned int predef_colors_rgba[COLOR_MAX] = { 0x000000, 0x3333cc, 0xff0000, 0x008000, 0x808080, 0x00c0ff, 0x00ff00,
-		0xff00ff, 0xff8000, 0xffff00, 0xffffff };
+typedef struct {
+	const char * name;
+	const int rgb;
+} PredefinedColor;
+
+PredefinedColor PREDEFINED_COLORS[] = {
+		{ "black", 0x000000 },
+		{ "blue", 0x3333cc },
+		{ "red", 0xff0000 },
+		{ "green", 0x008000 },
+		{ "gray", 0x808080 },
+		{ "lightblue", 0x00c0ff },
+		{ "lightgreen", 0x00ff00 },
+		{ "magenta", 0xff00ff },
+		{ "orange", 0xff8000 },
+		{ "yellow", 0xffff00 },
+		{ "white", 0xffffff }
+};
+
+const int COLOR_COUNT = sizeof(PREDEFINED_COLORS) / sizeof(PredefinedColor);
 
 LoadHandler::LoadHandler() :
 	doc(&dHanlder) {
@@ -339,9 +355,9 @@ bool LoadHandler::parseColor(const char * text, int & color) {
 
 		return true;
 	} else {
-		for (int i = 0; i < COLOR_MAX; i++) {
-			if (!strcmp(text, color_names[i])) {
-				color = predef_colors_rgba[i];
+		for (int i = 0; i < COLOR_COUNT; i++) {
+			if (!strcmp(text, PREDEFINED_COLORS[i].name)) {
+				color = PREDEFINED_COLORS[i].rgb;
 				return true;
 			}
 		}

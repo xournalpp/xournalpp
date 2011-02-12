@@ -51,7 +51,7 @@ void BackgroundThreadHandler::run(Runnable * runnable) {
 
 	this->runnable = runnable;
 
-	// Disable all gui Control, to get full controll over the application
+	// Disable all gui Control, to get full control over the application
 	control->getWindow()->setControlTmpDisabled(true);
 	control->getCursor()->setCursorBusy(true);
 	control->setSidebarTmpDisabled(true);

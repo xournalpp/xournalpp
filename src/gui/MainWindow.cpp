@@ -3,10 +3,6 @@
 #include "../cfg.h"
 #include "../gettext.h"
 
-// TODO: Debug
-#include <gdk/gdkkeysyms.h>
-
-
 MainWindow::MainWindow(Control * control) :
 	GladeGui("main.glade", "mainWindow") {
 	this->control = control;

@@ -12,8 +12,6 @@
 #ifndef __LOADHANDLER_H__
 #define __LOADHANDLER_H__
 
-#include "XojConstants.h"
-
 #include "../model/Document.h"
 #include "../model/Stroke.h"
 #include "../model/Text.h"

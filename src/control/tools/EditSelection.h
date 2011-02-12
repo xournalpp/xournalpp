@@ -1,7 +1,8 @@
 /*
  * Xournal Extended
  *
- * A selection while you are selection, not for editing, only for selection
+ * A selection for editing, every selection (Rect, Lasso...) is
+ * converted to this one if the selection is finished
  *
  * @author Xournal Team
  * http://xournal.sf.net

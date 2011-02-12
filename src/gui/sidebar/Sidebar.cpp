@@ -5,8 +5,8 @@
 
 Sidebar::Sidebar(GladeGui * gui, Control * control) {
 	this->control = control;
-	treeViewBookmarks = gtk_tree_view_new();
-	iconViewPreview = gtk_layout_new(NULL, NULL);
+	this->treeViewBookmarks = gtk_tree_view_new();
+	this->iconViewPreview = gtk_layout_new(NULL, NULL);
 	this->typeSelected = false;
 	this->selectedPage = -1;
 
