@@ -49,10 +49,13 @@ CONFIG_CLEAN_VPATH_FILES =
 am__installdirs = "$(DESTDIR)$(bindir)"
 PROGRAMS = $(bin_PROGRAMS)
 am_xournalpp_OBJECTS = xournalpp-ev-metadata-manager.$(OBJEXT) \
-	xournalpp-Settings.$(OBJEXT) xournalpp-EditSelection.$(OBJEXT) \
+	xournalpp-Settings.$(OBJEXT) \
+	xournalpp-CircleRecognizer.$(OBJEXT) \
+	xournalpp-Inertia.$(OBJEXT) xournalpp-RecoSegment.$(OBJEXT) \
+	xournalpp-ShapeRecognizer.$(OBJEXT) \
+	xournalpp-EditSelection.$(OBJEXT) \
 	xournalpp-EraseHandler.$(OBJEXT) \
 	xournalpp-InputHandler.$(OBJEXT) xournalpp-Selection.$(OBJEXT) \
-	xournalpp-ShapeRecognizer.$(OBJEXT) \
 	xournalpp-VerticalToolHandler.$(OBJEXT) \
 	xournalpp-Actions.$(OBJEXT) \
 	xournalpp-BackgroundThreadHandler.$(OBJEXT) \
@@ -250,11 +253,14 @@ INCLUDES = \
 xournalpp_SOURCES = \
 	control/settings/ev-metadata-manager.cpp \
 	control/settings/Settings.cpp \
+	control/shaperecognizer/CircleRecognizer.cpp \
+	control/shaperecognizer/Inertia.cpp \
+	control/shaperecognizer/RecoSegment.cpp \
+	control/shaperecognizer/ShapeRecognizer.cpp \
 	control/tools/EditSelection.cpp \
 	control/tools/EraseHandler.cpp \
 	control/tools/InputHandler.cpp \
 	control/tools/Selection.cpp \
-	control/tools/ShapeRecognizer.cpp \
 	control/tools/VerticalToolHandler.cpp \
 	control/Actions.cpp \
 	control/BackgroundThreadHandler.cpp \
@@ -423,6 +429,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-Actions.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-BackgroundThreadHandler.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-CairoPdf.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-CircleRecognizer.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-ClipboardHandler.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-ColorUndoAction.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-Control.Po@am__quote@
@@ -445,6 +452,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-GzHelper.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-Image.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-ImagesDialog.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-Inertia.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-InputHandler.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-InsertDeletePageUndoAction.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-InsertLayerUndoAction.Po@am__quote@
@@ -465,6 +473,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-PrintHandler.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-Range.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-RecentManager.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-RecoSegment.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-RecognizerUndoAction.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-RemoveLayerUndoAction.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-SaveHandler.Po@am__quote@
@@ -549,6 +558,62 @@ xournalpp-Settings.obj: control/settings/Settings.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-Settings.obj `if test -f 'control/settings/Settings.cpp'; then $(CYGPATH_W) 'control/settings/Settings.cpp'; else $(CYGPATH_W) '$(srcdir)/control/settings/Settings.cpp'; fi`
 
+xournalpp-CircleRecognizer.o: control/shaperecognizer/CircleRecognizer.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-CircleRecognizer.o -MD -MP -MF $(DEPDIR)/xournalpp-CircleRecognizer.Tpo -c -o xournalpp-CircleRecognizer.o `test -f 'control/shaperecognizer/CircleRecognizer.cpp' || echo '$(srcdir)/'`control/shaperecognizer/CircleRecognizer.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-CircleRecognizer.Tpo $(DEPDIR)/xournalpp-CircleRecognizer.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='control/shaperecognizer/CircleRecognizer.cpp' object='xournalpp-CircleRecognizer.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-CircleRecognizer.o `test -f 'control/shaperecognizer/CircleRecognizer.cpp' || echo '$(srcdir)/'`control/shaperecognizer/CircleRecognizer.cpp
+
+xournalpp-CircleRecognizer.obj: control/shaperecognizer/CircleRecognizer.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-CircleRecognizer.obj -MD -MP -MF $(DEPDIR)/xournalpp-CircleRecognizer.Tpo -c -o xournalpp-CircleRecognizer.obj `if test -f 'control/shaperecognizer/CircleRecognizer.cpp'; then $(CYGPATH_W) 'control/shaperecognizer/CircleRecognizer.cpp'; else $(CYGPATH_W) '$(srcdir)/control/shaperecognizer/CircleRecognizer.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-CircleRecognizer.Tpo $(DEPDIR)/xournalpp-CircleRecognizer.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='control/shaperecognizer/CircleRecognizer.cpp' object='xournalpp-CircleRecognizer.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-CircleRecognizer.obj `if test -f 'control/shaperecognizer/CircleRecognizer.cpp'; then $(CYGPATH_W) 'control/shaperecognizer/CircleRecognizer.cpp'; else $(CYGPATH_W) '$(srcdir)/control/shaperecognizer/CircleRecognizer.cpp'; fi`
+
+xournalpp-Inertia.o: control/shaperecognizer/Inertia.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-Inertia.o -MD -MP -MF $(DEPDIR)/xournalpp-Inertia.Tpo -c -o xournalpp-Inertia.o `test -f 'control/shaperecognizer/Inertia.cpp' || echo '$(srcdir)/'`control/shaperecognizer/Inertia.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-Inertia.Tpo $(DEPDIR)/xournalpp-Inertia.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='control/shaperecognizer/Inertia.cpp' object='xournalpp-Inertia.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-Inertia.o `test -f 'control/shaperecognizer/Inertia.cpp' || echo '$(srcdir)/'`control/shaperecognizer/Inertia.cpp
+
+xournalpp-Inertia.obj: control/shaperecognizer/Inertia.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-Inertia.obj -MD -MP -MF $(DEPDIR)/xournalpp-Inertia.Tpo -c -o xournalpp-Inertia.obj `if test -f 'control/shaperecognizer/Inertia.cpp'; then $(CYGPATH_W) 'control/shaperecognizer/Inertia.cpp'; else $(CYGPATH_W) '$(srcdir)/control/shaperecognizer/Inertia.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-Inertia.Tpo $(DEPDIR)/xournalpp-Inertia.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='control/shaperecognizer/Inertia.cpp' object='xournalpp-Inertia.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-Inertia.obj `if test -f 'control/shaperecognizer/Inertia.cpp'; then $(CYGPATH_W) 'control/shaperecognizer/Inertia.cpp'; else $(CYGPATH_W) '$(srcdir)/control/shaperecognizer/Inertia.cpp'; fi`
+
+xournalpp-RecoSegment.o: control/shaperecognizer/RecoSegment.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-RecoSegment.o -MD -MP -MF $(DEPDIR)/xournalpp-RecoSegment.Tpo -c -o xournalpp-RecoSegment.o `test -f 'control/shaperecognizer/RecoSegment.cpp' || echo '$(srcdir)/'`control/shaperecognizer/RecoSegment.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-RecoSegment.Tpo $(DEPDIR)/xournalpp-RecoSegment.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='control/shaperecognizer/RecoSegment.cpp' object='xournalpp-RecoSegment.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-RecoSegment.o `test -f 'control/shaperecognizer/RecoSegment.cpp' || echo '$(srcdir)/'`control/shaperecognizer/RecoSegment.cpp
+
+xournalpp-RecoSegment.obj: control/shaperecognizer/RecoSegment.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-RecoSegment.obj -MD -MP -MF $(DEPDIR)/xournalpp-RecoSegment.Tpo -c -o xournalpp-RecoSegment.obj `if test -f 'control/shaperecognizer/RecoSegment.cpp'; then $(CYGPATH_W) 'control/shaperecognizer/RecoSegment.cpp'; else $(CYGPATH_W) '$(srcdir)/control/shaperecognizer/RecoSegment.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-RecoSegment.Tpo $(DEPDIR)/xournalpp-RecoSegment.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='control/shaperecognizer/RecoSegment.cpp' object='xournalpp-RecoSegment.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-RecoSegment.obj `if test -f 'control/shaperecognizer/RecoSegment.cpp'; then $(CYGPATH_W) 'control/shaperecognizer/RecoSegment.cpp'; else $(CYGPATH_W) '$(srcdir)/control/shaperecognizer/RecoSegment.cpp'; fi`
+
+xournalpp-ShapeRecognizer.o: control/shaperecognizer/ShapeRecognizer.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-ShapeRecognizer.o -MD -MP -MF $(DEPDIR)/xournalpp-ShapeRecognizer.Tpo -c -o xournalpp-ShapeRecognizer.o `test -f 'control/shaperecognizer/ShapeRecognizer.cpp' || echo '$(srcdir)/'`control/shaperecognizer/ShapeRecognizer.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-ShapeRecognizer.Tpo $(DEPDIR)/xournalpp-ShapeRecognizer.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='control/shaperecognizer/ShapeRecognizer.cpp' object='xournalpp-ShapeRecognizer.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-ShapeRecognizer.o `test -f 'control/shaperecognizer/ShapeRecognizer.cpp' || echo '$(srcdir)/'`control/shaperecognizer/ShapeRecognizer.cpp
+
+xournalpp-ShapeRecognizer.obj: control/shaperecognizer/ShapeRecognizer.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-ShapeRecognizer.obj -MD -MP -MF $(DEPDIR)/xournalpp-ShapeRecognizer.Tpo -c -o xournalpp-ShapeRecognizer.obj `if test -f 'control/shaperecognizer/ShapeRecognizer.cpp'; then $(CYGPATH_W) 'control/shaperecognizer/ShapeRecognizer.cpp'; else $(CYGPATH_W) '$(srcdir)/control/shaperecognizer/ShapeRecognizer.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-ShapeRecognizer.Tpo $(DEPDIR)/xournalpp-ShapeRecognizer.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='control/shaperecognizer/ShapeRecognizer.cpp' object='xournalpp-ShapeRecognizer.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-ShapeRecognizer.obj `if test -f 'control/shaperecognizer/ShapeRecognizer.cpp'; then $(CYGPATH_W) 'control/shaperecognizer/ShapeRecognizer.cpp'; else $(CYGPATH_W) '$(srcdir)/control/shaperecognizer/ShapeRecognizer.cpp'; fi`
+
 xournalpp-EditSelection.o: control/tools/EditSelection.cpp
 @am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-EditSelection.o -MD -MP -MF $(DEPDIR)/xournalpp-EditSelection.Tpo -c -o xournalpp-EditSelection.o `test -f 'control/tools/EditSelection.cpp' || echo '$(srcdir)/'`control/tools/EditSelection.cpp
 @am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-EditSelection.Tpo $(DEPDIR)/xournalpp-EditSelection.Po
@@ -604,20 +669,6 @@ xournalpp-Selection.obj: control/tools/Selection.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='control/tools/Selection.cpp' object='xournalpp-Selection.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-Selection.obj `if test -f 'control/tools/Selection.cpp'; then $(CYGPATH_W) 'control/tools/Selection.cpp'; else $(CYGPATH_W) '$(srcdir)/control/tools/Selection.cpp'; fi`
-
-xournalpp-ShapeRecognizer.o: control/tools/ShapeRecognizer.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-ShapeRecognizer.o -MD -MP -MF $(DEPDIR)/xournalpp-ShapeRecognizer.Tpo -c -o xournalpp-ShapeRecognizer.o `test -f 'control/tools/ShapeRecognizer.cpp' || echo '$(srcdir)/'`control/tools/ShapeRecognizer.cpp
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-ShapeRecognizer.Tpo $(DEPDIR)/xournalpp-ShapeRecognizer.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='control/tools/ShapeRecognizer.cpp' object='xournalpp-ShapeRecognizer.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-ShapeRecognizer.o `test -f 'control/tools/ShapeRecognizer.cpp' || echo '$(srcdir)/'`control/tools/ShapeRecognizer.cpp
-
-xournalpp-ShapeRecognizer.obj: control/tools/ShapeRecognizer.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-ShapeRecognizer.obj -MD -MP -MF $(DEPDIR)/xournalpp-ShapeRecognizer.Tpo -c -o xournalpp-ShapeRecognizer.obj `if test -f 'control/tools/ShapeRecognizer.cpp'; then $(CYGPATH_W) 'control/tools/ShapeRecognizer.cpp'; else $(CYGPATH_W) '$(srcdir)/control/tools/ShapeRecognizer.cpp'; fi`
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-ShapeRecognizer.Tpo $(DEPDIR)/xournalpp-ShapeRecognizer.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='control/tools/ShapeRecognizer.cpp' object='xournalpp-ShapeRecognizer.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-ShapeRecognizer.obj `if test -f 'control/tools/ShapeRecognizer.cpp'; then $(CYGPATH_W) 'control/tools/ShapeRecognizer.cpp'; else $(CYGPATH_W) '$(srcdir)/control/tools/ShapeRecognizer.cpp'; fi`
 
 xournalpp-VerticalToolHandler.o: control/tools/VerticalToolHandler.cpp
 @am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-VerticalToolHandler.o -MD -MP -MF $(DEPDIR)/xournalpp-VerticalToolHandler.Tpo -c -o xournalpp-VerticalToolHandler.o `test -f 'control/tools/VerticalToolHandler.cpp' || echo '$(srcdir)/'`control/tools/VerticalToolHandler.cpp

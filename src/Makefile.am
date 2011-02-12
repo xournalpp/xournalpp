@@ -7,11 +7,14 @@ bin_PROGRAMS = xournalpp
 xournalpp_SOURCES = \
 	control/settings/ev-metadata-manager.cpp \
 	control/settings/Settings.cpp \
+	control/shaperecognizer/CircleRecognizer.cpp \
+	control/shaperecognizer/Inertia.cpp \
+	control/shaperecognizer/RecoSegment.cpp \
+	control/shaperecognizer/ShapeRecognizer.cpp \
 	control/tools/EditSelection.cpp \
 	control/tools/EraseHandler.cpp \
 	control/tools/InputHandler.cpp \
 	control/tools/Selection.cpp \
-	control/tools/ShapeRecognizer.cpp \
 	control/tools/VerticalToolHandler.cpp \
 	control/Actions.cpp \
 	control/BackgroundThreadHandler.cpp \
