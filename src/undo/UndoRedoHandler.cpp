@@ -3,6 +3,8 @@
 #include "../gettext.h"
 #include "../control/Control.h"
 
+// TODO: add memory limit
+
 UndoRedoHandler::UndoRedoHandler(Control * control) {
 	undoList = NULL;
 	redoList = NULL;

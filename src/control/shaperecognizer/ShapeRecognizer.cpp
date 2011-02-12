@@ -1,103 +1,16 @@
 #include "ShapeRecognizer.h"
-#include <math.h>
-#include <string.h>
+#include "Inertia.h"
+#include "CircleRecognizer.h"
+
 #include "../../model/Stroke.h"
 
-#define TRACELINE() printf("trace:: %i\n", __LINE__);
-
-class Inertia {
-public:
-	/* compute normalized quantities */
-	inline double centerX() {
-		return this->sx / this->mass;
-	}
-
-	inline double centerY() {
-		return this->sy / this->mass;
-	}
-
-	inline double xx() {
-		if (this->mass <= 0.0) {
-			return 0.0;
-		}
-		return (this->sxx - this->sx * this->sx / this->mass) / this->mass;
-	}
-
-	inline double xy() {
-		if (this->mass <= 0.0) {
-			return 0.0;
-		}
-		return (this->sxy - this->sx * this->sy / this->mass) / this->mass;
-	}
-
-	inline double yy() {
-		if (this->mass <= 0.0) {
-			return 0.0;
-		}
-		return (this->syy - this->sy * this->sy / this->mass) / this->mass;
-	}
-
-	inline double rad() {
-		double ixx = this->xx();
-		double iyy = this->yy();
-		if (ixx + iyy <= 0.0) {
-			return 0.0;
-		}
-		return sqrt(ixx + iyy);
-	}
-
-	inline double det() {
-		double ixx = this->xx();
-		double iyy = this->yy();
-		double ixy = this->xy();
-		if (this->mass <= 0.0) {
-			return 0.0;
-		}
-
-		if (ixx + iyy <= 0.0) {
-			return 0.0;
-		}
-
-		return 4 * (ixx * iyy - ixy * ixy) / (ixx + iyy) / (ixx + iyy);
-	}
-
-	double getMass() {
-		return mass;
-	}
-
-	/* compute mass and moments of a stroke */
-	void increase(Point p1, Point p2, int coef) {
-		double dm = coef * hypot(p2.x - p1.x, p2.y - p1.y);
-		this->mass += dm;
-		this->sx += dm * p1.x;
-		this->sy += dm * p1.y;
-		this->sxx += dm * p1.x * p1.x;
-		this->syy += dm * p1.y * p1.y;
-		this->sxy += dm * p1.x * p1.y;
-	}
-
-	void calc(const Point * pt, int start, int end) {
-		this->mass = this->sx = this->sy = this->sxx = this->sxy = this->syy = 0.;
-		for (int i = start; i < end - 1; i++) {
-			this->increase(pt[i], pt[i + 1], 1);
-		}
-	}
-
-private:
-	double mass;
-	double sx;
-	double sy;
-	double sxx;
-	double sxy;
-	double syy;
-};
-
-// TODO:recognizer does not always work correct, circle is OK, but lines are usually to long
+#include <math.h>
+#include <string.h>
 
 ShapeRecognizer::ShapeRecognizer() {
 	resetRecognizer();
 	this->stroke = NULL;
-	queueLength = 0;
+	this->queueLength = 0;
 }
 
 ShapeRecognizer::~ShapeRecognizer() {
@@ -105,7 +18,7 @@ ShapeRecognizer::~ShapeRecognizer() {
 }
 
 void ShapeRecognizer::resetRecognizer() {
-	queueLength = 0;
+	this->queueLength = 0;
 }
 
 /*
@@ -159,13 +72,11 @@ Stroke * ShapeRecognizer::tryRectangle() {
 
 	// first, we need whole strokes to combine to 4 segments...
 	if (queueLength < 4) {
-		TRACELINE();
 		return NULL;
 	}
 
 	rs = queue + queueLength - 4;
 	if (rs->startpt != 0) {
-		TRACELINE();
 		return NULL;
 	}
 
@@ -233,20 +144,17 @@ Stroke * ShapeRecognizer::tryArrow() {
 
 	// first, we need whole strokes to combine to nsides segments...
 	if (queueLength < 3) {
-		TRACELINE();
 		return NULL;
 	}
 
 	RecoSegment * rs = queue + queueLength - 3;
 	if (rs->startpt != 0) {
-		TRACELINE();
 		return NULL;
 	}
 
 	// check arrow head not too big, and orient main segment
 	for (int i = 1; i <= 2; i++) {
 		if (rs[i].radius > ARROW_MAXSIZE * rs[0].radius) {
-			TRACELINE();
 			return NULL;
 		}
 
@@ -255,7 +163,6 @@ Stroke * ShapeRecognizer::tryArrow() {
 	}
 
 	if (rev[1] != rev[2]) {
-		TRACELINE();
 		return NULL;
 	}
 
@@ -285,28 +192,22 @@ Stroke * ShapeRecognizer::tryArrow() {
 			alpha[i] -= M_PI;
 			rs[i].reversed = !rs[i].reversed;
 		}
-#ifdef RECOGNIZER_DEBUG
-		printf("DEBUG: arrow: alpha[%d] = %.1f degrees\n", i, alpha[i] * 180 / M_PI);
-#endif
+		RDEBUG("arrow: alpha[%d] = %.1f degrees\n", i, alpha[i] * 180 / M_PI);
 		if (fabs(alpha[i]) < ARROW_ANGLE_MIN || fabs(alpha[i]) > ARROW_ANGLE_MAX) {
-			TRACELINE();
 			return NULL;
 		}
 	}
 
 	// check arrow head segments are roughly symmetric
 	if (alpha[1] * alpha[2] > 0 || fabs(alpha[1] + alpha[2]) > ARROW_ASYMMETRY_MAX_ANGLE) {
-		TRACELINE();
 		return NULL;
 	}
 
 	if (rs[1].radius / rs[2].radius > 1 + ARROW_ASYMMETRY_MAX_LINEAR) {
-		TRACELINE();
 		return NULL;
 	}
 
 	if (rs[2].radius / rs[1].radius > 1 + ARROW_ASYMMETRY_MAX_LINEAR) {
-		TRACELINE();
 		return NULL;
 	}
 
@@ -314,11 +215,8 @@ Stroke * ShapeRecognizer::tryArrow() {
 	Point pt = calcEdgeIsect(rs + 1, rs + 2);
 	for (int j = 1; j <= 2; j++) {
 		dist = hypot(pt.x - (rs[j].reversed ? rs[j].x1 : rs[j].x2), pt.y - (rs[j].reversed ? rs[j].y1 : rs[j].y2));
-#ifdef RECOGNIZER_DEBUG
-		printf("DEBUG: linear tolerance: tip[%d] = %.2f\n", j, dist / rs[j].radius);
-#endif
+		RDEBUG("linear tolerance: tip[%d] = %.2f\n", j, dist / rs[j].radius);
 		if (dist > ARROW_TIP_LINEAR_TOLERANCE * rs[j].radius) {
-			TRACELINE();
 			return NULL;
 		}
 	}
@@ -326,24 +224,18 @@ Stroke * ShapeRecognizer::tryArrow() {
 	dist = (pt.x - x2) * sin(angle) - (pt.y - y2) * cos(angle);
 	dist /= rs[1].radius + rs[2].radius;
 
-#ifdef RECOGNIZER_DEBUG
-	printf("DEBUG: sideways gap tolerance = %.2f\n", dist);
-#endif
+	RDEBUG("sideways gap tolerance = %.2f\n", dist);
 
 	if (fabs(dist) > ARROW_SIDEWAYS_GAP_TOLERANCE) {
-		TRACELINE();
 		return NULL;
 	}
 
 	dist = (pt.x - x2) * cos(angle) + (pt.y - y2) * sin(angle);
 	dist /= rs[1].radius + rs[2].radius;
 
-#ifdef RECOGNIZER_DEBUG
-	printf("DEBUG: main linear gap = %.2f\n", dist);
-#endif
+	RDEBUG("main linear gap = %.2f\n", dist);
 
 	if (dist < ARROW_MAIN_LINEAR_GAP_MIN || dist > ARROW_MAIN_LINEAR_GAP_MAX) {
-		TRACELINE();
 		return NULL;
 	}
 
@@ -378,64 +270,6 @@ Stroke * ShapeRecognizer::tryArrow() {
 	s->addPoint(Point(x2, y2));
 
 	s->addPoint(Point(x2 - dist * cos(angle - delta), y2 - dist * sin(angle - delta)));
-
-	TRACELINE();
-	return s;
-}
-
-/*
- *  test if we have a circle; inertia has been precomputed by caller
- */
-double ShapeRecognizer::scoreCircle(Inertia * s) {
-	if (s->getMass() == 0.0) {
-		return 0;
-	}
-
-	double sum = 0.0;
-	double x0 = s->centerX();
-	double y0 = s->centerY();
-	double r0 = s->rad();
-
-	ArrayIterator<Point> it = this->stroke->pointIterator();
-
-	if (!it.hasNext()) {
-		return 0;
-	}
-
-	Point p1 = it.next();
-
-	while (it.hasNext()) {
-		Point p2 = it.next();
-
-		double dm = hypot(p2.x - p1.x, p2.y - p1.y);
-		double deltar = hypot(p1.x - x0, p1.y - y0) - r0;
-		sum += dm * fabs(deltar);
-
-		p1 = p2;
-	}
-
-	return sum / (s->getMass() * r0);
-}
-
-/*
- * replace strokes by various shapes
- */
-Stroke * ShapeRecognizer::makeCircleShape(double x0, double y0, double r) {
-	int npts = (int) (2 * r);
-	if (npts < 12) {
-		npts = 12; // min. number of points
-	}
-
-	Stroke * s = new Stroke();
-	s->setWidth(this->stroke->getWidth());
-	s->setToolType(this->stroke->getToolType());
-	s->setColor(this->stroke->getColor());
-
-	for (int i = 0; i <= npts; i++) {
-		double x = x0 + r * cos((2 * M_PI * i) / npts);
-		double y = y0 + r * sin((2 * M_PI * i) / npts);
-		s->addPoint(Point(x, y));
-	}
 
 	return s;
 }
@@ -635,17 +469,9 @@ Stroke * ShapeRecognizer::tryClosedPolygon(int nsides) {
  * the main pattern recognition function
  */
 Stroke * ShapeRecognizer::recognizePatterns(Stroke * stroke) {
-	Inertia s;
-
 	resetRecognizer();
 	this->stroke = stroke;
 
-	s.calc(stroke->getPoints(), 0, stroke->getPointCount());
-
-#ifdef RECOGNIZER_DEBUG
-	printf("DEBUG: Mass=%.0f, Center=(%.1f,%.1f), I=(%.0f,%.0f, %.0f), "
-		"Rad=%.2f, Det=%.4f \n", s.getMass(), s.centerX(), s.centerY(), s.xx(), s.yy(), s.xy(), s.rad(), s.det());
-#endif
 	Inertia ss[4];
 	int brk[5] = { 0 };
 
@@ -655,9 +481,9 @@ Stroke * ShapeRecognizer::recognizePatterns(Stroke * stroke) {
 		optimizePolygonal(stroke->getPoints(), n, brk, ss);
 #ifdef RECOGNIZER_DEBUG
 		printf("\n");
-		printf("DEBUG: Polygon, %d edges:\n", n);
+		printf("ShapeReco:: Polygon, %d edges:\n", n);
 		for (int i = 0; i < n; i++) {
-			printf("DEBUG:      %d-%d (M=%.0f, det=%.4f)\n", brk[i], brk[i + 1], ss[i].getMass(), ss[i].det());
+			printf("ShapeReco::      %d-%d (M=%.0f, det=%.4f)\n", brk[i], brk[i + 1], ss[i].getMass(), ss[i].det());
 		}
 		printf("\n");
 #endif
@@ -671,9 +497,7 @@ Stroke * ShapeRecognizer::recognizePatterns(Stroke * stroke) {
 			g_memmove(queue, queue+i, queueLength * sizeof(RecoSegment));
 		}
 
-#ifdef RECOGNIZER_DEBUG
-		printf("DEBUG: Queue now has %d + %d edges\n", queueLength, n);
-#endif
+		RDEBUG("Queue now has %d + %d edges\n", queueLength, n);
 
 		RecoSegment *rs = queue + queueLength;
 		queueLength += n;
@@ -729,18 +553,7 @@ Stroke * ShapeRecognizer::recognizePatterns(Stroke * stroke) {
 		}
 	}
 
+
 	// not a polygon: maybe a circle ?
-	resetRecognizer();
-
-	if (s.det() > CIRCLE_MIN_DET) {
-		double score = scoreCircle(&s);
-#ifdef RECOGNIZER_DEBUG
-		printf("DEBUG: Circle score: %.2f\n", score);
-#endif
-		if (score < CIRCLE_MAX_SCORE) {
-			return makeCircleShape(s.centerX(), s.centerY(), s.rad());
-		}
-	}
-
-	return NULL;
+	return CircleRecognizer::recognize(stroke);
 }

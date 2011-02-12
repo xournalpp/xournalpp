@@ -1,6 +1,6 @@
 #include "InputHandler.h"
 #include "../../gui/XournalWidget.h"
-#include "../tools/ShapeRecognizer.h"
+#include "../shaperecognizer/ShapeRecognizer.h"
 #include "../Control.h"
 #include "../../undo/InsertUndoAction.h"
 #include "../../undo/RecognizerUndoAction.h"
