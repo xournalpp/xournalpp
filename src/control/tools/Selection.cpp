@@ -34,7 +34,7 @@ void RectSelection::getSelectedRect(double & x, double & y, double & width, doub
 	height = this->ey - this->sy;
 }
 
-bool RectSelection::finnalize(XojPage * page) {
+bool RectSelection::finalize(XojPage * page) {
 	x1 = MIN(this->sx, this->ex);
 	x2 = MAX(this->sx, this->ex);
 
@@ -314,7 +314,7 @@ bool RegionSelect::contains(double x, double y) {
 	return ((hits & 1) != 0);
 }
 
-bool RegionSelect::finnalize(XojPage * page) {
+bool RegionSelect::finalize(XojPage * page) {
 	this->page = page;
 
 	x1Box = 0;

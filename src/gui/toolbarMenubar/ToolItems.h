@@ -26,7 +26,7 @@
 class AbstractItem;
 
 /**
- * An abstact action item, may with a menuitem
+ * An abstract action item, may with a menuitem
  */
 class AbstractItem: public ActionEnabledListener, public ActionSelectionListener {
 public:

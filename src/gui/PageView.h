@@ -22,6 +22,7 @@
 #include "../control/SearchControl.h"
 #include "../control/tools/VerticalToolHandler.h"
 #include "../control/tools/EraseHandler.h"
+#include "../control/tools/InputHandler.h"
 #include "../view/DocumentView.h"
 #include "../gui/TextEditor.h"
 #include "../util/Util.h"
@@ -94,51 +95,38 @@ public:
 	void redrawDocumentRegion(double x1, double y1, double x2, double y2);
 	GdkColor getSelectionColor();
 private:
-	static gboolean exposeEventCallback(GtkWidget *widget, GdkEventExpose *event, PageView * page);
-	static gboolean onButtonPressEventCallback(GtkWidget *widget, GdkEventButton *event, PageView * view);
-	void onButtonPressEvent(GtkWidget *widget, GdkEventButton *event);
-	static bool onButtonReleaseEventCallback(GtkWidget *widget, GdkEventButton *event, PageView * view);
-	bool onButtonReleaseEvent(GtkWidget *widget, GdkEventButton *event);
-	static gboolean onMotionNotifyEventCallback(GtkWidget *widget, GdkEventMotion *event, PageView * view);
-	gboolean onMotionNotifyEvent(GtkWidget *widget, GdkEventMotion *event);
+	static gboolean exposeEventCallback(GtkWidget * widget, GdkEventExpose * event, PageView * page);
+	static gboolean onButtonPressEventCallback(GtkWidget * widget, GdkEventButton * event, PageView * view);
+	void onButtonPressEvent(GtkWidget * widget, GdkEventButton * event);
+	static bool onButtonReleaseEventCallback(GtkWidget * widget, GdkEventButton * event, PageView * view);
+	bool onButtonReleaseEvent(GtkWidget * widget, GdkEventButton * event);
+	static gboolean onMotionNotifyEventCallback(GtkWidget * widget, GdkEventMotion * event, PageView * view);
+	gboolean onMotionNotifyEvent(GtkWidget * widget, GdkEventMotion * event);
 
-	static gboolean onMouseEnterNotifyEvent(GtkWidget *widget, GdkEventCrossing *event, gpointer user_data);
-	static gboolean onMouseLeaveNotifyEvent(GtkWidget *widget, GdkEventCrossing *event, gpointer user_data);
+	static gboolean onMouseEnterNotifyEvent(GtkWidget * widget, GdkEventCrossing * event, gpointer user_data);
+	static gboolean onMouseLeaveNotifyEvent(GtkWidget * widget, GdkEventCrossing * event, gpointer user_data);
 
-	void handleScrollEvent(GdkEventButton *event);
-
-	void addPointToTmpStroke(GdkEventMotion *event);
-	bool getPressureMultiplier(GdkEvent *event, double & presure);
+	void handleScrollEvent(GdkEventButton * event);
 
 	void startText(double x, double y);
 	void selectObjectAt(double x, double y);
 
-	void doScroll(GdkEventMotion *event);
+	void doScroll(GdkEventMotion * event);
 	static bool scrollCallback(PageView * view);
 
-	void drawTmpStroke();
 	void repaintLater();
 	static bool repaintCallback(PageView * view);
 
 	void insertImage(double x, double y);
 
-	void fixXInputCoords(GdkEvent *event);
+	void fixXInputCoords(GdkEvent * event);
 private:
 	XojPage * page;
 	GtkWidget * widget;
 	XournalWidget * xournal;
 	Settings * settings;
 	EraseHandler * eraser;
-
-	/**
-	 * If you are drawing on the document
-	 */
-	Stroke * tmpStroke;
-
-	/**
-	 * What has already be drawed, only draw the new part
-	 */
-	int tmpStrokeDrawElem;
+	InputHandler * inputHandler;
 
 	/**
 	 * The selected (while selection)
@@ -165,11 +153,6 @@ private:
 	 * The text editor View
 	 */
 	TextEditor * textEditor;
-
-	/**
-	 * The current input device for stroken, do not react on other devices (linke mices)
-	 */
-	GdkDevice * currentInputDevice;
 
 	bool firstPainted;
 	bool selected;
@@ -198,11 +181,6 @@ private:
 	double repaintY;
 	double repaintWidth;
 	double repaintHeight;
-
-	/**
-	 * Wich mouse button is pressed
-	 */
-	int downButton;
 
 	friend class InsertImageRunnable;
 };

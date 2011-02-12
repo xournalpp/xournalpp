@@ -2,6 +2,7 @@
 #include "../gui/Redrawable.h"
 #include "../model/Stroke.h"
 #include "../model/Layer.h"
+#include "../model/EraseableStroke.h"
 
 #include "PageLayerPosEntry.h"
 
@@ -43,28 +44,44 @@ void EraseUndoAction::addEdited(Layer * layer, Stroke * element, int pos) {
 }
 
 void EraseUndoAction::removeEdited(Stroke * element) {
-	for (GList * l = this->edited; l != NULL;) {
+	for (GList * l = this->edited; l != NULL; l = l->next) {
 		PageLayerPosEntry<Stroke> * p = (PageLayerPosEntry<Stroke> *) l->data;
 		if (p->element == element) {
-			g_list_remove_link(this->edited, l);
+			this->edited = g_list_delete_link(this->edited, l);
 			delete p;
 			return;
 		}
 	}
 }
 
-void EraseUndoAction::cleanup() {
-	for (GList * l = this->edited; l != NULL;) {
+void EraseUndoAction::finalize() {
+	for (GList * l = this->original; l != NULL;) {
 		PageLayerPosEntry<Stroke> * p = (PageLayerPosEntry<Stroke> *) l->data;
-		if (p->element->getPointCount() == 0) {
-			GList * del = l;
-			l = l->next;
-			this->edited = g_list_remove_link(this->edited, del);
-			continue;
-		}
-
+		GList * del = l;
 		l = l->next;
+
+		if (p->element->getPointCount() == 0) {
+			this->edited = g_list_delete_link(this->edited, del);
+			delete p;
+		} else {
+
+			// Remove the original and add the copy
+			int pos = p->layer->removeElement(p->element, false);
+
+			EraseableStroke * e = p->element->getEraseable();
+			GList * stroke = e->getStroke(p->element);
+			for (GList * ls = stroke; ls != NULL; ls = ls->next) {
+				Stroke * copy = (Stroke *) ls->data;
+				p->layer->insertElement(copy, pos);
+				this->addEdited(p->layer, copy, pos);
+				pos++;
+			}
+
+			delete e;
+			p->element->setEraseable(NULL);
+		}
 	}
+	view->repaint();
 }
 
 String EraseUndoAction::getText() {

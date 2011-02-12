@@ -1,4 +1,5 @@
 #include "EraseHandler.h"
+#include "../../model/EraseableStroke.h"
 #include <math.h>
 
 EraseHandler::EraseHandler(UndoRedoHandler * undo, XojPage * page, ToolHandler * handler, Redrawable * view) {
@@ -15,7 +16,7 @@ EraseHandler::EraseHandler(UndoRedoHandler * undo, XojPage * page, ToolHandler *
 
 EraseHandler::~EraseHandler() {
 	if (this->eraseDeleteUndoAction) {
-		this->cleanup();
+		this->finalize();
 	}
 }
 
@@ -34,6 +35,7 @@ void EraseHandler::erase(double x, double y) {
 		Layer * l = it.next();
 
 		ListIterator<Element *> eit = l->elementIterator();
+		eit.freeze();
 		while (eit.hasNext()) {
 			Element * e = eit.next();
 			if (e->getType() == ELEMENT_STROKE && e->intersectsArea(&eraserRect)) {
@@ -81,82 +83,24 @@ void EraseHandler::eraseStroke(Layer * l, Stroke * s, double x, double y) {
 		double repaintWidth = s->getElementWidth();
 		double repaintHeight = s->getElementHeight();
 
-		if (!s->isCopyed()) {
-			Stroke * copy = s->clone();
+		EraseableStroke * eraseable = NULL;
+		if (s->getEraseable() == NULL) {
+			eraseable = new EraseableStroke(s);
+			s->setEraseable(eraseable);
 			eraseUndoAction->addOriginal(l, s, pos);
-			eraseUndoAction->addEdited(l, copy, pos);
-			copy->setCopyed(true);
-
-			// Because of undo / redo handling:
-			// Remove the original and add the copy
-			// if we undo this we need the original on the layer, else it can not be identified
-			int spos = l->removeElement(s, false);
-			l->insertElement(copy, spos);
-			s = copy;
-		}
-
-		Point removedPoint(NAN, NAN);
-
-		Stroke * part = s->splitOnLastIntersects(removedPoint);
-		if (s->getPointCount() == 0) {
-			eraseUndoAction->removeEdited(s);
-			l->removeElement(s, true);
-			this->view->repaint(repaintX, repaintY, repaintWidth, repaintHeight);
-			return;
-		}
-
-		if (part) {
-			l->insertElement(part, pos);
-			eraseUndoAction->addEdited(l, part, pos);
-			part->setCopyed(true);
-		}
-
-		Point first = s->getPoint(s->getPointCount() - 1);
-		Point second;
-		if (part) {
-			second = part->getPoint(0);
 		} else {
-			second = removedPoint;
-		}
-		if (!isnan(second.x)) {
-			double space = first.lineLengthTo(second);
-			double toEraser = first.lineLengthTo(Point(x, y));
-			if (space > 1.2 * halfEraserSize) {
-				// TODO: this is not finished...
-				printf("test %lf %lf\n", space, halfEraserSize);
-
-				if (toEraser - halfEraserSize > space) {
-					s->addPoint(second);
-				} else {
-					s->addPoint(first.lineTo(second, toEraser - halfEraserSize));
-				}
-			}
+			eraseable = s->getEraseable();
 		}
 
-		this->view->repaint(repaintX, repaintY, repaintWidth, repaintHeight);
+		if (eraseable->erase(x, y, halfEraserSize)) {
+			this->view->repaint(s);
+		}
 	}
-
-	printf("\n\n\n\n");
-
 }
 
-void EraseHandler::cleanup() {
+void EraseHandler::finalize() {
 	if (this->eraseUndoAction) {
-		this->eraseUndoAction->cleanup();
-		ListIterator<Layer*> pit = page->layerIterator();
-		while (pit.hasNext()) {
-			Layer * l = pit.next();
-			ListIterator<Element *> lit = l->elementIterator();
-			while (lit.hasNext()) {
-				Element * e = lit.next();
-				if (e->getType() == ELEMENT_STROKE) {
-					Stroke * s = (Stroke *) e;
-					s->setCopyed(false);
-					s->freeUnusedPointItems();
-				}
-			}
-		}
-
+		this->eraseUndoAction->finalize();
 		this->eraseUndoAction = NULL;
 	}
 }

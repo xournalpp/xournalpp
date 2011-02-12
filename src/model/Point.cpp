@@ -8,6 +8,11 @@ Point::Point() {
 	this->y = 0;
 	this->z = NO_PRESURE;
 }
+Point::Point(const Point & p) {
+	this->x = p.x;
+	this->y = p.y;
+	this->z = p.z;
+}
 
 Point::Point(double x, double y) {
 	this->x = x;
@@ -29,8 +34,6 @@ Point Point::lineTo(const Point p, double length) {
 	double factor = lineLengthTo(p);
 	factor = length / factor;
 
-	printf("factor = %lf\n", factor);
-
 	double x = p.x - this->x;
 	double y = p.y - this->y;
 	x *= factor;
@@ -39,5 +42,9 @@ Point Point::lineTo(const Point p, double length) {
 	y += this->y;
 
 	return Point(x, y);
+}
+
+bool Point::equalsPos(const Point p) {
+	return this->x == p.x && this->y == p.y;
 }
 

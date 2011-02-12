@@ -47,7 +47,7 @@ public:
 	virtual void repaint(Range & r) = 0;
 
 	/**
-	 * This updated the view buffer and then redraw the the reagion, call this if you changed the document
+	 * This updated the view buffer and then redraw the the region, call this if you changed the document
 	 */
 	virtual void repaint(double x, double y, double width, double heigth) = 0;
 

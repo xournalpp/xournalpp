@@ -27,7 +27,7 @@ public:
 	void paint(cairo_t * cr, GdkEventExpose *event, double zoom);
 	void currentPos(double x, double y);
 
-	MoveUndoAction * finnalize();
+	MoveUndoAction * finalize();
 
 	GList * getElements();
 private:

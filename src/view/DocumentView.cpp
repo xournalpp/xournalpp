@@ -4,6 +4,7 @@
 #include <gdk/gdk.h>
 #include "../control/tools/Selection.h"
 #include "../control/tools/EditSelection.h"
+#include "../model/EraseableStroke.h"
 
 //#define SHOW_ELEMENT_BOUNDS
 //#define SHOW_REPAINT_BOUNDS
@@ -20,11 +21,11 @@ DocumentView::DocumentView() {
 DocumentView::~DocumentView() {
 }
 
-void DocumentView::applyColor(cairo_t *cr, Element * e, int alpha) {
+void DocumentView::applyColor(cairo_t * cr, Element * e, int alpha) {
 	applyColor(cr, e->getColor(), alpha);
 }
 
-void DocumentView::applyColor(cairo_t *cr, int c, int alpha) {
+void DocumentView::applyColor(cairo_t * cr, int c, int alpha) {
 	double r = ((c >> 16) & 0xff) / 255.0;
 	double g = ((c >> 8) & 0xff) / 255.0;
 	double b = (c & 0xff) / 255.0;
@@ -32,7 +33,33 @@ void DocumentView::applyColor(cairo_t *cr, int c, int alpha) {
 	cairo_set_source_rgba(cr, r, g, b, alpha / 255.0);
 }
 
-void DocumentView::drawStroke(cairo_t *cr, Stroke * s, int startPoint) {
+void DocumentView::drawEraseableStroke(cairo_t * cr, Stroke * s) {
+	EraseableStroke * e = s->getEraseable();
+
+	double width = s->getWidth();
+
+	for (GList * l = e->getParts(); l != NULL; l = l->next) {
+		EraseableStrokePart * part = (EraseableStrokePart *) l->data;
+		if (part->getWidth() == Point::NO_PRESURE) {
+			cairo_set_line_width(cr, width);
+		} else {
+			cairo_set_line_width(cr, part->getWidth());
+		}
+
+		GList * pl = part->getPoints();
+		Point * p = (Point *) pl->data;
+		cairo_move_to(cr, p->x, p->y);
+
+		pl = pl->next;
+		for (; pl != NULL; pl = pl->next) {
+			Point * p = (Point *) pl->data;
+			cairo_line_to(cr, p->x, p->y);
+		}
+		cairo_stroke(cr);
+	}
+}
+
+void DocumentView::drawStroke(cairo_t * cr, Stroke * s, int startPoint) {
 	ArrayIterator<Point> points = s->pointIterator();
 
 	if (!points.hasNext()) {
@@ -52,6 +79,11 @@ void DocumentView::drawStroke(cairo_t *cr, Stroke * s, int startPoint) {
 
 	cairo_set_line_join(cr, CAIRO_LINE_JOIN_ROUND);
 	cairo_set_line_cap(cr, CAIRO_LINE_CAP_ROUND);
+
+	if (s->getEraseable()) {
+		drawEraseableStroke(cr, s);
+		return;
+	}
 
 	int count = 0;
 	double width = s->getWidth();
@@ -149,7 +181,6 @@ void DocumentView::drawLayer(cairo_t *cr, Layer * l) {
 	int drawed = 0;
 	int notDrawed = 0;
 #endif //SHOW_REPAINT_BOUNDS
-
 	while (it.hasNext()) {
 		Element * e = it.next();
 		CHECK_MEMORY(e);

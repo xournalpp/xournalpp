@@ -49,7 +49,7 @@ int Layer::removeElement(Element * e, bool free) {
 	}
 
 	int pos = g_list_position(this->elements, elem);
-	this->elements = g_list_remove_link(this->elements, elem);
+	this->elements = g_list_delete_link(this->elements, elem);
 
 	if (free) {
 		delete e;

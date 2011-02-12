@@ -31,7 +31,7 @@ public:
 	void addEdited(Layer * layer, Stroke * element, int pos);
 	void removeEdited(Stroke * element);
 
-	void cleanup();
+	void finalize();
 
 	virtual String getText();
 private:

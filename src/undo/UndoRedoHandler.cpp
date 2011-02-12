@@ -56,7 +56,7 @@ void UndoRedoHandler::undo() {
 	}
 
 	redoList = g_list_append(redoList, undo);
-	undoList = g_list_remove_link(undoList, e);
+	undoList = g_list_delete_link(undoList, e);
 	fireUpdateUndoRedoButtons(undo->getPages());
 }
 
@@ -82,7 +82,7 @@ void UndoRedoHandler::redo() {
 	}
 
 	undoList = g_list_append(undoList, redo);
-	redoList = g_list_remove_link(redoList, e);
+	redoList = g_list_delete_link(redoList, e);
 	fireUpdateUndoRedoButtons(redo->getPages());
 }
 
@@ -117,7 +117,7 @@ bool UndoRedoHandler::removeUndoAction(UndoAction * action) {
 		return false;
 	}
 
-	undoList = g_list_remove_link(undoList, l);
+	undoList = g_list_delete_link(undoList, l);
 	clearRedo();
 	fireUpdateUndoRedoButtons(action->getPages());
 	return true;

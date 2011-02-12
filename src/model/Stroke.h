@@ -20,6 +20,8 @@ enum StrokeTool {
 	STROKE_TOOL_PEN, STROKE_TOOL_ERASER, STROKE_TOOL_HIGHLIGHTER
 };
 
+class EraseableStroke;
+
 class Stroke: public Element {
 public:
 	Stroke();
@@ -38,13 +40,15 @@ public:
 	Point getPoint(int index) const;
 	const Point * getPoints() const;
 
+	void deletePoint(int index);
+	void deletePointsFrom(int index);
+
 	void setToolType(StrokeTool type);
 	StrokeTool getToolType() const;
 
 	const double * getWidths() const;
 
 	bool intersects(double x, double y, double halfSize, double * gap = NULL);
-	Stroke * splitOnLastIntersects(Point & removedPoint);
 
 	void setPressure(const double * data);
 	void setLastPressure(double pressure);
@@ -53,14 +57,15 @@ public:
 
 	bool hasPressure();
 
-	void setCopyed(bool copyed);
-	bool isCopyed();
-
 	virtual void move(double dx, double dy);
 	virtual void scale(double x0, double y0, double fx, double fy);
 
 	virtual bool isInSelection(ShapeContainer * container);
 
+	EraseableStroke * getEraseable();
+	void setEraseable(EraseableStroke * eraseable);
+
+	void debugPrint();
 public:
 	// Serialize interface
 	void serialize(ObjectOutputStream & out);
@@ -75,14 +80,13 @@ private:
 
 	StrokeTool toolType;
 
-	// Split point for eraser
-	int splitIndex;
-	bool copyed;
-
 	// The array with the points
 	Point * points;
 	int pointCount;
 	int pointAllocCount;
+
+	EraseableStroke * eraseable;
 };
+
 
 #endif /* __STROKE_H__ */

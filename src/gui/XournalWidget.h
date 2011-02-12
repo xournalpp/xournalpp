@@ -18,13 +18,14 @@
 #include "PageView.h"
 #include "../control/ZoomControl.h"
 #include "../util/Arrayiterator.h"
+#include "../util/Util.h"
 
 const int XOURNAL_PADDING = 20;
 const int XOURNAL_PADDING_TOP_LEFT = 10;
 
 class Control;
 
-class XournalWidget: public DocumentListener, public ZoomListener {
+class XournalWidget: public DocumentListener, public ZoomListener, public MemoryCheckObject {
 public:
 	XournalWidget(GtkWidget * parent, Control * control);
 	virtual ~XournalWidget();
