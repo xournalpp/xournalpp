@@ -68,7 +68,7 @@ void DocumentView::drawStroke(cairo_t * cr, Stroke * s, int startPoint) {
 	}
 
 	if (s->getToolType() == STROKE_TOOL_HIGHLIGHTER) {
-		cairo_set_operator(cr, CAIRO_OPERATOR_ATOP);
+		cairo_set_operator(cr, CAIRO_OPERATOR_OVER);
 		// Set the color
 		applyColor(cr, s, 120);
 	} else {
@@ -116,10 +116,11 @@ void DocumentView::drawStroke(cairo_t * cr, Stroke * s, int startPoint) {
 
 	while (points.hasNext()) {
 		Point p = points.next();
-		if (p.z != Point::NO_PRESURE) {
-			width = p.z;
-		}
 		if (startPoint <= count) {
+			if (lastPoint1.z != Point::NO_PRESURE) {
+				width = lastPoint1.z;
+			}
+
 			cairo_set_line_width(cr, width);
 
 			cairo_move_to(cr, lastPoint1.x, lastPoint1.y);

@@ -57,7 +57,15 @@ am_xournalpp_OBJECTS = xournalpp-ev-metadata-manager.$(OBJEXT) \
 	xournalpp-EraseHandler.$(OBJEXT) \
 	xournalpp-InputHandler.$(OBJEXT) xournalpp-Selection.$(OBJEXT) \
 	xournalpp-VerticalToolHandler.$(OBJEXT) \
-	xournalpp-Actions.$(OBJEXT) \
+	xournalpp-Attribute.$(OBJEXT) \
+	xournalpp-DoubleArrayAttribute.$(OBJEXT) \
+	xournalpp-DoubleAttribute.$(OBJEXT) \
+	xournalpp-IntAttribute.$(OBJEXT) \
+	xournalpp-TextAttribute.$(OBJEXT) \
+	xournalpp-XmlImageNode.$(OBJEXT) xournalpp-XmlNode.$(OBJEXT) \
+	xournalpp-XmlPointNode.$(OBJEXT) \
+	xournalpp-XmlStrokeNode.$(OBJEXT) \
+	xournalpp-XmlTextNode.$(OBJEXT) xournalpp-Actions.$(OBJEXT) \
 	xournalpp-BackgroundThreadHandler.$(OBJEXT) \
 	xournalpp-ClipboardHandler.$(OBJEXT) \
 	xournalpp-Control.$(OBJEXT) xournalpp-LoadHandler.$(OBJEXT) \
@@ -262,6 +270,16 @@ xournalpp_SOURCES = \
 	control/tools/InputHandler.cpp \
 	control/tools/Selection.cpp \
 	control/tools/VerticalToolHandler.cpp \
+	control/xml/Attribute.cpp \
+	control/xml/DoubleArrayAttribute.cpp \
+	control/xml/DoubleAttribute.cpp \
+	control/xml/IntAttribute.cpp \
+	control/xml/TextAttribute.cpp \
+	control/xml/XmlImageNode.cpp \
+	control/xml/XmlNode.cpp \
+	control/xml/XmlPointNode.cpp \
+	control/xml/XmlStrokeNode.cpp \
+	control/xml/XmlTextNode.cpp \
 	control/Actions.cpp \
 	control/BackgroundThreadHandler.cpp \
 	control/ClipboardHandler.cpp \
@@ -427,6 +445,7 @@ distclean-compile:
 
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-AboutDialog.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-Actions.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-Attribute.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-BackgroundThreadHandler.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-CairoPdf.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-CircleRecognizer.Po@am__quote@
@@ -438,6 +457,8 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-DeleteUndoAction.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-Document.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-DocumentView.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-DoubleArrayAttribute.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-DoubleAttribute.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-EditSelection.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-Element.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-EraseHandler.Po@am__quote@
@@ -457,6 +478,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-InsertDeletePageUndoAction.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-InsertLayerUndoAction.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-InsertUndoAction.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-IntAttribute.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-Layer.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-LinkDestination.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-LoadHandler.Po@am__quote@
@@ -494,6 +516,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-StringBuffer.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-Stroke.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-Text.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-TextAttribute.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-TextEditor.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-TextUndoAction.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-TextView.Po@am__quote@
@@ -504,6 +527,11 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-UndoRedoHandler.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-Util.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-VerticalToolHandler.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-XmlImageNode.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-XmlNode.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-XmlPointNode.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-XmlStrokeNode.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-XmlTextNode.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-XojPopplerAction.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-XojPopplerDocument.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-XojPopplerIter.Po@am__quote@
@@ -683,6 +711,146 @@ xournalpp-VerticalToolHandler.obj: control/tools/VerticalToolHandler.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='control/tools/VerticalToolHandler.cpp' object='xournalpp-VerticalToolHandler.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-VerticalToolHandler.obj `if test -f 'control/tools/VerticalToolHandler.cpp'; then $(CYGPATH_W) 'control/tools/VerticalToolHandler.cpp'; else $(CYGPATH_W) '$(srcdir)/control/tools/VerticalToolHandler.cpp'; fi`
+
+xournalpp-Attribute.o: control/xml/Attribute.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-Attribute.o -MD -MP -MF $(DEPDIR)/xournalpp-Attribute.Tpo -c -o xournalpp-Attribute.o `test -f 'control/xml/Attribute.cpp' || echo '$(srcdir)/'`control/xml/Attribute.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-Attribute.Tpo $(DEPDIR)/xournalpp-Attribute.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='control/xml/Attribute.cpp' object='xournalpp-Attribute.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-Attribute.o `test -f 'control/xml/Attribute.cpp' || echo '$(srcdir)/'`control/xml/Attribute.cpp
+
+xournalpp-Attribute.obj: control/xml/Attribute.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-Attribute.obj -MD -MP -MF $(DEPDIR)/xournalpp-Attribute.Tpo -c -o xournalpp-Attribute.obj `if test -f 'control/xml/Attribute.cpp'; then $(CYGPATH_W) 'control/xml/Attribute.cpp'; else $(CYGPATH_W) '$(srcdir)/control/xml/Attribute.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-Attribute.Tpo $(DEPDIR)/xournalpp-Attribute.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='control/xml/Attribute.cpp' object='xournalpp-Attribute.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-Attribute.obj `if test -f 'control/xml/Attribute.cpp'; then $(CYGPATH_W) 'control/xml/Attribute.cpp'; else $(CYGPATH_W) '$(srcdir)/control/xml/Attribute.cpp'; fi`
+
+xournalpp-DoubleArrayAttribute.o: control/xml/DoubleArrayAttribute.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-DoubleArrayAttribute.o -MD -MP -MF $(DEPDIR)/xournalpp-DoubleArrayAttribute.Tpo -c -o xournalpp-DoubleArrayAttribute.o `test -f 'control/xml/DoubleArrayAttribute.cpp' || echo '$(srcdir)/'`control/xml/DoubleArrayAttribute.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-DoubleArrayAttribute.Tpo $(DEPDIR)/xournalpp-DoubleArrayAttribute.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='control/xml/DoubleArrayAttribute.cpp' object='xournalpp-DoubleArrayAttribute.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-DoubleArrayAttribute.o `test -f 'control/xml/DoubleArrayAttribute.cpp' || echo '$(srcdir)/'`control/xml/DoubleArrayAttribute.cpp
+
+xournalpp-DoubleArrayAttribute.obj: control/xml/DoubleArrayAttribute.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-DoubleArrayAttribute.obj -MD -MP -MF $(DEPDIR)/xournalpp-DoubleArrayAttribute.Tpo -c -o xournalpp-DoubleArrayAttribute.obj `if test -f 'control/xml/DoubleArrayAttribute.cpp'; then $(CYGPATH_W) 'control/xml/DoubleArrayAttribute.cpp'; else $(CYGPATH_W) '$(srcdir)/control/xml/DoubleArrayAttribute.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-DoubleArrayAttribute.Tpo $(DEPDIR)/xournalpp-DoubleArrayAttribute.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='control/xml/DoubleArrayAttribute.cpp' object='xournalpp-DoubleArrayAttribute.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-DoubleArrayAttribute.obj `if test -f 'control/xml/DoubleArrayAttribute.cpp'; then $(CYGPATH_W) 'control/xml/DoubleArrayAttribute.cpp'; else $(CYGPATH_W) '$(srcdir)/control/xml/DoubleArrayAttribute.cpp'; fi`
+
+xournalpp-DoubleAttribute.o: control/xml/DoubleAttribute.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-DoubleAttribute.o -MD -MP -MF $(DEPDIR)/xournalpp-DoubleAttribute.Tpo -c -o xournalpp-DoubleAttribute.o `test -f 'control/xml/DoubleAttribute.cpp' || echo '$(srcdir)/'`control/xml/DoubleAttribute.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-DoubleAttribute.Tpo $(DEPDIR)/xournalpp-DoubleAttribute.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='control/xml/DoubleAttribute.cpp' object='xournalpp-DoubleAttribute.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-DoubleAttribute.o `test -f 'control/xml/DoubleAttribute.cpp' || echo '$(srcdir)/'`control/xml/DoubleAttribute.cpp
+
+xournalpp-DoubleAttribute.obj: control/xml/DoubleAttribute.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-DoubleAttribute.obj -MD -MP -MF $(DEPDIR)/xournalpp-DoubleAttribute.Tpo -c -o xournalpp-DoubleAttribute.obj `if test -f 'control/xml/DoubleAttribute.cpp'; then $(CYGPATH_W) 'control/xml/DoubleAttribute.cpp'; else $(CYGPATH_W) '$(srcdir)/control/xml/DoubleAttribute.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-DoubleAttribute.Tpo $(DEPDIR)/xournalpp-DoubleAttribute.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='control/xml/DoubleAttribute.cpp' object='xournalpp-DoubleAttribute.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-DoubleAttribute.obj `if test -f 'control/xml/DoubleAttribute.cpp'; then $(CYGPATH_W) 'control/xml/DoubleAttribute.cpp'; else $(CYGPATH_W) '$(srcdir)/control/xml/DoubleAttribute.cpp'; fi`
+
+xournalpp-IntAttribute.o: control/xml/IntAttribute.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-IntAttribute.o -MD -MP -MF $(DEPDIR)/xournalpp-IntAttribute.Tpo -c -o xournalpp-IntAttribute.o `test -f 'control/xml/IntAttribute.cpp' || echo '$(srcdir)/'`control/xml/IntAttribute.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-IntAttribute.Tpo $(DEPDIR)/xournalpp-IntAttribute.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='control/xml/IntAttribute.cpp' object='xournalpp-IntAttribute.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-IntAttribute.o `test -f 'control/xml/IntAttribute.cpp' || echo '$(srcdir)/'`control/xml/IntAttribute.cpp
+
+xournalpp-IntAttribute.obj: control/xml/IntAttribute.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-IntAttribute.obj -MD -MP -MF $(DEPDIR)/xournalpp-IntAttribute.Tpo -c -o xournalpp-IntAttribute.obj `if test -f 'control/xml/IntAttribute.cpp'; then $(CYGPATH_W) 'control/xml/IntAttribute.cpp'; else $(CYGPATH_W) '$(srcdir)/control/xml/IntAttribute.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-IntAttribute.Tpo $(DEPDIR)/xournalpp-IntAttribute.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='control/xml/IntAttribute.cpp' object='xournalpp-IntAttribute.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-IntAttribute.obj `if test -f 'control/xml/IntAttribute.cpp'; then $(CYGPATH_W) 'control/xml/IntAttribute.cpp'; else $(CYGPATH_W) '$(srcdir)/control/xml/IntAttribute.cpp'; fi`
+
+xournalpp-TextAttribute.o: control/xml/TextAttribute.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-TextAttribute.o -MD -MP -MF $(DEPDIR)/xournalpp-TextAttribute.Tpo -c -o xournalpp-TextAttribute.o `test -f 'control/xml/TextAttribute.cpp' || echo '$(srcdir)/'`control/xml/TextAttribute.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-TextAttribute.Tpo $(DEPDIR)/xournalpp-TextAttribute.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='control/xml/TextAttribute.cpp' object='xournalpp-TextAttribute.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-TextAttribute.o `test -f 'control/xml/TextAttribute.cpp' || echo '$(srcdir)/'`control/xml/TextAttribute.cpp
+
+xournalpp-TextAttribute.obj: control/xml/TextAttribute.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-TextAttribute.obj -MD -MP -MF $(DEPDIR)/xournalpp-TextAttribute.Tpo -c -o xournalpp-TextAttribute.obj `if test -f 'control/xml/TextAttribute.cpp'; then $(CYGPATH_W) 'control/xml/TextAttribute.cpp'; else $(CYGPATH_W) '$(srcdir)/control/xml/TextAttribute.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-TextAttribute.Tpo $(DEPDIR)/xournalpp-TextAttribute.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='control/xml/TextAttribute.cpp' object='xournalpp-TextAttribute.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-TextAttribute.obj `if test -f 'control/xml/TextAttribute.cpp'; then $(CYGPATH_W) 'control/xml/TextAttribute.cpp'; else $(CYGPATH_W) '$(srcdir)/control/xml/TextAttribute.cpp'; fi`
+
+xournalpp-XmlImageNode.o: control/xml/XmlImageNode.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-XmlImageNode.o -MD -MP -MF $(DEPDIR)/xournalpp-XmlImageNode.Tpo -c -o xournalpp-XmlImageNode.o `test -f 'control/xml/XmlImageNode.cpp' || echo '$(srcdir)/'`control/xml/XmlImageNode.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-XmlImageNode.Tpo $(DEPDIR)/xournalpp-XmlImageNode.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='control/xml/XmlImageNode.cpp' object='xournalpp-XmlImageNode.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-XmlImageNode.o `test -f 'control/xml/XmlImageNode.cpp' || echo '$(srcdir)/'`control/xml/XmlImageNode.cpp
+
+xournalpp-XmlImageNode.obj: control/xml/XmlImageNode.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-XmlImageNode.obj -MD -MP -MF $(DEPDIR)/xournalpp-XmlImageNode.Tpo -c -o xournalpp-XmlImageNode.obj `if test -f 'control/xml/XmlImageNode.cpp'; then $(CYGPATH_W) 'control/xml/XmlImageNode.cpp'; else $(CYGPATH_W) '$(srcdir)/control/xml/XmlImageNode.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-XmlImageNode.Tpo $(DEPDIR)/xournalpp-XmlImageNode.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='control/xml/XmlImageNode.cpp' object='xournalpp-XmlImageNode.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-XmlImageNode.obj `if test -f 'control/xml/XmlImageNode.cpp'; then $(CYGPATH_W) 'control/xml/XmlImageNode.cpp'; else $(CYGPATH_W) '$(srcdir)/control/xml/XmlImageNode.cpp'; fi`
+
+xournalpp-XmlNode.o: control/xml/XmlNode.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-XmlNode.o -MD -MP -MF $(DEPDIR)/xournalpp-XmlNode.Tpo -c -o xournalpp-XmlNode.o `test -f 'control/xml/XmlNode.cpp' || echo '$(srcdir)/'`control/xml/XmlNode.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-XmlNode.Tpo $(DEPDIR)/xournalpp-XmlNode.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='control/xml/XmlNode.cpp' object='xournalpp-XmlNode.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-XmlNode.o `test -f 'control/xml/XmlNode.cpp' || echo '$(srcdir)/'`control/xml/XmlNode.cpp
+
+xournalpp-XmlNode.obj: control/xml/XmlNode.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-XmlNode.obj -MD -MP -MF $(DEPDIR)/xournalpp-XmlNode.Tpo -c -o xournalpp-XmlNode.obj `if test -f 'control/xml/XmlNode.cpp'; then $(CYGPATH_W) 'control/xml/XmlNode.cpp'; else $(CYGPATH_W) '$(srcdir)/control/xml/XmlNode.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-XmlNode.Tpo $(DEPDIR)/xournalpp-XmlNode.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='control/xml/XmlNode.cpp' object='xournalpp-XmlNode.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-XmlNode.obj `if test -f 'control/xml/XmlNode.cpp'; then $(CYGPATH_W) 'control/xml/XmlNode.cpp'; else $(CYGPATH_W) '$(srcdir)/control/xml/XmlNode.cpp'; fi`
+
+xournalpp-XmlPointNode.o: control/xml/XmlPointNode.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-XmlPointNode.o -MD -MP -MF $(DEPDIR)/xournalpp-XmlPointNode.Tpo -c -o xournalpp-XmlPointNode.o `test -f 'control/xml/XmlPointNode.cpp' || echo '$(srcdir)/'`control/xml/XmlPointNode.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-XmlPointNode.Tpo $(DEPDIR)/xournalpp-XmlPointNode.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='control/xml/XmlPointNode.cpp' object='xournalpp-XmlPointNode.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-XmlPointNode.o `test -f 'control/xml/XmlPointNode.cpp' || echo '$(srcdir)/'`control/xml/XmlPointNode.cpp
+
+xournalpp-XmlPointNode.obj: control/xml/XmlPointNode.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-XmlPointNode.obj -MD -MP -MF $(DEPDIR)/xournalpp-XmlPointNode.Tpo -c -o xournalpp-XmlPointNode.obj `if test -f 'control/xml/XmlPointNode.cpp'; then $(CYGPATH_W) 'control/xml/XmlPointNode.cpp'; else $(CYGPATH_W) '$(srcdir)/control/xml/XmlPointNode.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-XmlPointNode.Tpo $(DEPDIR)/xournalpp-XmlPointNode.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='control/xml/XmlPointNode.cpp' object='xournalpp-XmlPointNode.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-XmlPointNode.obj `if test -f 'control/xml/XmlPointNode.cpp'; then $(CYGPATH_W) 'control/xml/XmlPointNode.cpp'; else $(CYGPATH_W) '$(srcdir)/control/xml/XmlPointNode.cpp'; fi`
+
+xournalpp-XmlStrokeNode.o: control/xml/XmlStrokeNode.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-XmlStrokeNode.o -MD -MP -MF $(DEPDIR)/xournalpp-XmlStrokeNode.Tpo -c -o xournalpp-XmlStrokeNode.o `test -f 'control/xml/XmlStrokeNode.cpp' || echo '$(srcdir)/'`control/xml/XmlStrokeNode.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-XmlStrokeNode.Tpo $(DEPDIR)/xournalpp-XmlStrokeNode.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='control/xml/XmlStrokeNode.cpp' object='xournalpp-XmlStrokeNode.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-XmlStrokeNode.o `test -f 'control/xml/XmlStrokeNode.cpp' || echo '$(srcdir)/'`control/xml/XmlStrokeNode.cpp
+
+xournalpp-XmlStrokeNode.obj: control/xml/XmlStrokeNode.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-XmlStrokeNode.obj -MD -MP -MF $(DEPDIR)/xournalpp-XmlStrokeNode.Tpo -c -o xournalpp-XmlStrokeNode.obj `if test -f 'control/xml/XmlStrokeNode.cpp'; then $(CYGPATH_W) 'control/xml/XmlStrokeNode.cpp'; else $(CYGPATH_W) '$(srcdir)/control/xml/XmlStrokeNode.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-XmlStrokeNode.Tpo $(DEPDIR)/xournalpp-XmlStrokeNode.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='control/xml/XmlStrokeNode.cpp' object='xournalpp-XmlStrokeNode.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-XmlStrokeNode.obj `if test -f 'control/xml/XmlStrokeNode.cpp'; then $(CYGPATH_W) 'control/xml/XmlStrokeNode.cpp'; else $(CYGPATH_W) '$(srcdir)/control/xml/XmlStrokeNode.cpp'; fi`
+
+xournalpp-XmlTextNode.o: control/xml/XmlTextNode.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-XmlTextNode.o -MD -MP -MF $(DEPDIR)/xournalpp-XmlTextNode.Tpo -c -o xournalpp-XmlTextNode.o `test -f 'control/xml/XmlTextNode.cpp' || echo '$(srcdir)/'`control/xml/XmlTextNode.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-XmlTextNode.Tpo $(DEPDIR)/xournalpp-XmlTextNode.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='control/xml/XmlTextNode.cpp' object='xournalpp-XmlTextNode.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-XmlTextNode.o `test -f 'control/xml/XmlTextNode.cpp' || echo '$(srcdir)/'`control/xml/XmlTextNode.cpp
+
+xournalpp-XmlTextNode.obj: control/xml/XmlTextNode.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-XmlTextNode.obj -MD -MP -MF $(DEPDIR)/xournalpp-XmlTextNode.Tpo -c -o xournalpp-XmlTextNode.obj `if test -f 'control/xml/XmlTextNode.cpp'; then $(CYGPATH_W) 'control/xml/XmlTextNode.cpp'; else $(CYGPATH_W) '$(srcdir)/control/xml/XmlTextNode.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-XmlTextNode.Tpo $(DEPDIR)/xournalpp-XmlTextNode.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='control/xml/XmlTextNode.cpp' object='xournalpp-XmlTextNode.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-XmlTextNode.obj `if test -f 'control/xml/XmlTextNode.cpp'; then $(CYGPATH_W) 'control/xml/XmlTextNode.cpp'; else $(CYGPATH_W) '$(srcdir)/control/xml/XmlTextNode.cpp'; fi`
 
 xournalpp-Actions.o: control/Actions.cpp
 @am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-Actions.o -MD -MP -MF $(DEPDIR)/xournalpp-Actions.Tpo -c -o xournalpp-Actions.o `test -f 'control/Actions.cpp' || echo '$(srcdir)/'`control/Actions.cpp

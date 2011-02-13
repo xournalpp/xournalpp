@@ -16,6 +16,16 @@ xournalpp_SOURCES = \
 	control/tools/InputHandler.cpp \
 	control/tools/Selection.cpp \
 	control/tools/VerticalToolHandler.cpp \
+	control/xml/Attribute.cpp \
+	control/xml/DoubleArrayAttribute.cpp \
+	control/xml/DoubleAttribute.cpp \
+	control/xml/IntAttribute.cpp \
+	control/xml/TextAttribute.cpp \
+	control/xml/XmlImageNode.cpp \
+	control/xml/XmlNode.cpp \
+	control/xml/XmlPointNode.cpp \
+	control/xml/XmlStrokeNode.cpp \
+	control/xml/XmlTextNode.cpp \
 	control/Actions.cpp \
 	control/BackgroundThreadHandler.cpp \
 	control/ClipboardHandler.cpp \

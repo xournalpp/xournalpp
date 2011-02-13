@@ -39,6 +39,7 @@ public:
 private:
 	void acceptPositions(GList * pos);
 	void switchLayer(GList * entries, Layer * oldLayer, Layer * newLayer);
+	void repaint(Redrawable * view, GList * list);
 	void repaint();
 private:
 	GList * originalPos;

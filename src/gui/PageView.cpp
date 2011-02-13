@@ -28,10 +28,7 @@ PageView::PageView(XournalWidget * xournal, XojPage * page) {
 	this->lastMousePositionX = 0;
 	this->lastMousePositionY = 0;
 
-	this->repaintX = -1;
-	this->repaintY = -1;
-	this->repaintWidth = -1;
-	this->repaintHeight = -1;
+	this->repaintRect = NULL;
 
 	this->scrollOffsetX = 0;
 	this->scrollOffsetY = 0;
@@ -892,13 +889,42 @@ void PageView::repaint(Element * e) {
 void PageView::repaint(double x, double y, double width, double heigth) {
 	double zoom = xournal->getZoom();
 
-	this->repaintX = MAX(x - 10,0);
-	this->repaintY = MAX(y - 10,0);
-	this->repaintWidth = width + 20;
-	this->repaintHeight = heigth + 20;
+	int rx = (int) MAX(x - 10,0);
+	int ry = (int) MAX(y - 10,0);
+	int rwidth = (int) (width + 20);
+	int rheight = (int) (heigth + 20);
 
-	gtk_widget_queue_draw_area(widget, this->repaintX * zoom, this->repaintY * zoom, this->repaintWidth * zoom,
-			this->repaintHeight * zoom);
+	addRepaintRect(rx, ry, rwidth, rheight);
+
+	gtk_widget_queue_draw_area(widget, rx * zoom, ry * zoom, rwidth * zoom, rheight * zoom);
+}
+
+void PageView::addRepaintRect(int x, int y, int width, int height) {
+	GdkRectangle * rect = g_new(GdkRectangle, 1);
+
+	rect->x = x;
+	rect->y = y;
+	rect->width = width;
+	rect->height = height;
+
+	GdkRectangle dest;
+
+	for (GList * l = this->repaintRect; l != NULL; l = l->next) {
+		GdkRectangle * r = (GdkRectangle *) l->data;
+
+		// its better to redraw only one rect than repaint twice the same area
+		if (gdk_rectangle_intersect(r, rect, &dest)) {
+			r->x = dest.x;
+			r->y = dest.y;
+			r->width = dest.width;
+			r->height = dest.height;
+
+			delete rect;
+			return;
+		}
+	}
+
+	this->repaintRect = g_list_append(this->repaintRect, rect);
 }
 
 void PageView::updateSize() {
@@ -982,6 +1008,38 @@ bool PageView::actionDelete() {
 	return false;
 }
 
+void PageView::repaintRectangle(GdkRectangle * rect, double zoom) {
+	cairo_t * crPageBuffer = cairo_create(this->crBuffer);
+
+	XojPopplerPage * popplerPage = NULL;
+
+	if (page->getBackgroundType() == BACKGROUND_TYPE_PDF) {
+		int pgNo = page->getPdfPageNr();
+		popplerPage = xournal->getDocument()->getPdfPage(pgNo);
+	}
+
+	cairo_surface_t * rectBuffer = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, rect->width * zoom,
+			rect->height * zoom);
+	cairo_t * crRect = cairo_create(rectBuffer);
+	cairo_scale(crRect, zoom, zoom);
+	cairo_translate(crRect, -rect->x, -rect->y);
+
+	view->limitArea(rect->x, rect->y, rect->width, rect->height);
+	view->drawPage(page, popplerPage, crRect);
+
+	cairo_destroy(crRect);
+
+	cairo_set_operator(crPageBuffer, CAIRO_OPERATOR_SOURCE);
+	cairo_set_source_surface(crPageBuffer, rectBuffer, rect->x * zoom, rect->y * zoom);
+	cairo_rectangle(crPageBuffer, rect->x * zoom, rect->y * zoom, rect->width * zoom,
+			rect->height * zoom);
+	cairo_fill(crPageBuffer);
+
+	cairo_destroy(crPageBuffer);
+
+	cairo_surface_destroy(rectBuffer);
+}
+
 bool PageView::paintPage(GtkWidget * widget, GdkEventExpose * event, double zoom) {
 	if (!firstPainted) {
 		firstPaint();
@@ -1010,48 +1068,20 @@ bool PageView::paintPage(GtkWidget * widget, GdkEventExpose * event, double zoom
 
 		cairo_destroy(cr2);
 
-		this->repaintX = -1;
-		this->repaintY = -1;
-		this->repaintWidth = -1;
-		this->repaintHeight = -1;
-	}
-
-	if (this->repaintX != -1) {
-		cairo_t * crPageBuffer = cairo_create(this->crBuffer);
-
-		XojPopplerPage * popplerPage = NULL;
-
-		if (page->getBackgroundType() == BACKGROUND_TYPE_PDF) {
-			int pgNo = page->getPdfPageNr();
-			popplerPage = xournal->getDocument()->getPdfPage(pgNo);
+		for (GList * l = this->repaintRect; l != NULL; l = l->next) {
+			GdkRectangle * rect = (GdkRectangle *) l->data;
+			g_free(rect);
 		}
-
-		cairo_surface_t * rectBuffer = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, this->repaintWidth * zoom,
-				this->repaintHeight * zoom);
-		cairo_t * crRect = cairo_create(rectBuffer);
-		cairo_scale(crRect, zoom, zoom);
-		cairo_translate(crRect, -this->repaintX, -this->repaintY);
-
-		view->limitArea(this->repaintX, this->repaintY, this->repaintWidth, this->repaintHeight);
-		view->drawPage(page, popplerPage, crRect);
-
-		cairo_destroy(crRect);
-
-		cairo_set_operator(crPageBuffer, CAIRO_OPERATOR_SOURCE);
-		cairo_set_source_surface(crPageBuffer, rectBuffer, this->repaintX * zoom, this->repaintY * zoom);
-		cairo_rectangle(crPageBuffer, this->repaintX * zoom, this->repaintY * zoom, this->repaintWidth * zoom,
-				this->repaintHeight * zoom);
-		cairo_fill(crPageBuffer);
-
-		cairo_destroy(crPageBuffer);
-
-		cairo_surface_destroy(rectBuffer);
-
-		this->repaintX = -1;
-		this->repaintY = -1;
-		this->repaintWidth = -1;
-		this->repaintHeight = -1;
+		g_list_free(this->repaintRect);
+		this->repaintRect = NULL;
 	}
+
+	for (GList * l = this->repaintRect; l != NULL; l = l->next) {
+		GdkRectangle * rect = (GdkRectangle *) l->data;
+		repaintRectangle(rect, zoom);
+	}
+	g_list_free(this->repaintRect);
+	this->repaintRect = NULL;
 
 	cairo_save(cr);
 
@@ -1079,24 +1109,24 @@ bool PageView::paintPage(GtkWidget * widget, GdkEventExpose * event, double zoom
 
 	cairo_restore(cr);
 
-	cairo_scale(cr, xournal->getZoom(), xournal->getZoom());
+	cairo_scale(cr, zoom, zoom);
 
 	if (this->textEditor) {
-		this->textEditor->paint(cr, event, xournal->getZoom());
+		this->textEditor->paint(cr, event, zoom);
 	}
 	if (this->selectionEdit) {
-		this->selectionEdit->paint(cr, event, xournal->getZoom());
+		this->selectionEdit->paint(cr, event, zoom);
 	}
 	if (this->verticalSpace) {
-		this->verticalSpace->paint(cr, event, xournal->getZoom());
+		this->verticalSpace->paint(cr, event, zoom);
 	}
 
 	Control * control = xournal->getControl();
 
-	control->paintSelection(cr, event, xournal->getZoom(), this);
+	control->paintSelection(cr, event, zoom, this);
 
 	if (this->search) {
-		this->search->paint(cr, event, xournal->getZoom(), getSelectionColor());
+		this->search->paint(cr, event, zoom, getSelectionColor());
 	}
 	this->inputHandler->draw(cr);
 
