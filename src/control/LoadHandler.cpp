@@ -556,14 +556,12 @@ void LoadHandler::parserText(GMarkupParseContext *context, const gchar *text, gs
 		}
 
 		if (handler->pressureBuffer.size() != 0) {
-			// the last width is 0, because the last width is anyway not used
-			handler->pressureBuffer.add(0);
 			if (handler->pressureBuffer.size() == handler->stroke->getPointCount()) {
 				const double * data = handler->pressureBuffer.getData();
 				handler->stroke->setPressure(data);
 				handler->pressureBuffer.clear();
 			} else {
-				g_warning("Wrong count of points, get %i, expected %i", handler->pressureBuffer.size()-1,handler->stroke->getPointCount()-1);
+				g_warning("Wrong count of points, get %i, expected %i", handler->pressureBuffer.size() - 1,handler->stroke->getPointCount() - 1);
 			}
 		}
 		handler->pressureBuffer.clear();
@@ -628,7 +626,7 @@ bool LoadHandler::parseXml() {
 
 			g_error_free(error);
 		} else {
-			this->lastError = _("Uknonwn parser error");
+			this->lastError = _("Unknown parser error");
 		}
 		g_warning("LoadHandler::parseXml: %s\n", this->lastError.c_str());
 	}

@@ -9,7 +9,6 @@
 #include "../../undo/SizeUndoAction.h"
 #include "../../undo/FontUndoAction.h"
 
-
 EditSelection::EditSelection(UndoRedoHandler * undo, double x, double y, double width, double height, XojPage * page,
 		Redrawable * view) {
 	this->x = x;
@@ -341,18 +340,25 @@ void EditSelection::doMove(double dx, double dy, Redrawable * view, XournalWidge
 		this->layer = page->getSelectedLayer();
 	}
 
-	//	x1 = MIN(x1, this->x);
-	//	y1 = MIN(y1, this->y);
-	//
-	//	x2 = MAX(x2, this->x + this->width);
-	//	y2 = MAX(y2, this->y + this->height);
-
 	if (lastView) {
+		//		lastView->redrawDocumentRegion(x1, y1, x2, y2);
 		lastView->redraw();
+
+		//		x1 = this->x;
+		//		y1 = this->y;
+		//
+		//		x2 = this->x + this->width;
+		//		y2 = this->y + this->height;
+	} else {
+		//		x1 = MIN(x1, this->x);
+		//		y1 = MIN(y1, this->y);
+		//
+		//		x2 = MAX(x2, this->x + this->width);
+		//		y2 = MAX(y2, this->y + this->height);
 	}
 	//this->view->redrawDocumentRegion(x1 - this->offsetX, y1 - this->offsetY, x2, y2);
+	//this->view->redrawDocumentRegion(x1, y1, x2, y2);
 
-	this->view->redraw();
 	this->view->redraw();
 }
 
@@ -493,20 +499,24 @@ CursorSelectionType EditSelection::getSelectionTypeForPos(double x, double y, do
 	}
 
 	if (!this->aspectRatio) {
-		if (y1 - BORDER_PADDING <= y && y <= y1 + BORDER_PADDING) {
-			return CURSOR_SELECTION_TOP;
+		if (x1 <= x && x2 >= x) {
+			if (y1 - BORDER_PADDING <= y && y <= y1 + BORDER_PADDING) {
+				return CURSOR_SELECTION_TOP;
+			}
+
+			if (y2 - BORDER_PADDING <= y && y <= y2 + BORDER_PADDING) {
+				return CURSOR_SELECTION_BOTTOM;
+			}
 		}
 
-		if (y2 - BORDER_PADDING <= y && y <= y2 + BORDER_PADDING) {
-			return CURSOR_SELECTION_BOTTOM;
-		}
+		if (y1 <= y && y2 >= y) {
+			if (x1 - BORDER_PADDING <= x && x <= x1 + BORDER_PADDING) {
+				return CURSOR_SELECTION_LEFT;
+			}
 
-		if (x1 - BORDER_PADDING <= x && x <= x1 + BORDER_PADDING) {
-			return CURSOR_SELECTION_LEFT;
-		}
-
-		if (x2 - BORDER_PADDING <= x && x <= x2 + BORDER_PADDING) {
-			return CURSOR_SELECTION_RIGHT;
+			if (x2 - BORDER_PADDING <= x && x <= x2 + BORDER_PADDING) {
+				return CURSOR_SELECTION_RIGHT;
+			}
 		}
 	}
 
@@ -534,6 +544,9 @@ void EditSelection::paint(cairo_t * cr, GdkEventExpose *event, double zoom) {
 	if (this->crBuffer == NULL) {
 		this->crBuffer = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, this->width * zoom, this->height * zoom);
 		cairo_t * cr2 = cairo_create(this->crBuffer);
+		//		cairo_set_source_rgb(cr2, 1, 0, 0);
+		//		cairo_rectangle(cr2, 0, 0, 100, 100);
+		//		cairo_fill(cr2);
 
 		cairo_scale(cr2, zoom * fx, zoom * fy);
 		cairo_translate(cr2, -this->relativeX, -this->relativeY);
@@ -553,7 +566,7 @@ void EditSelection::paint(cairo_t * cr, GdkEventExpose *event, double zoom) {
 
 	cairo_scale(cr, 1 / zoom, 1 / zoom);
 
-	cairo_set_source_surface(cr, this->crBuffer, x, y);
+	cairo_set_source_surface(cr, this->crBuffer, x * zoom, y * zoom);
 	cairo_paint(cr);
 
 	cairo_restore(cr);
@@ -684,5 +697,4 @@ double EditSelection::getWidth() {
 double EditSelection::getHeight() {
 	return this->height;
 }
-
 

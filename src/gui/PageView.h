@@ -46,6 +46,7 @@ public:
 
 	void firstPaint();
 	bool paintPage(GtkWidget *widget, GdkEventExpose *event, double zoom);
+	void repaintRectangle(GdkRectangle * rect, double zoom);
 
 	void repaint();
 	void repaint(Element * e);
@@ -120,6 +121,8 @@ private:
 	void insertImage(double x, double y);
 
 	void fixXInputCoords(GdkEvent * event);
+
+	void addRepaintRect(int x, int y, int width, int height);
 private:
 	XojPage * page;
 	GtkWidget * widget;
@@ -177,10 +180,7 @@ private:
 	 */
 	int lastVisibelTime;
 
-	double repaintX;
-	double repaintY;
-	double repaintWidth;
-	double repaintHeight;
+	GList * repaintRect;
 
 	friend class InsertImageRunnable;
 };

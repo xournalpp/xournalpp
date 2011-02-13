@@ -12,9 +12,14 @@
 #include "../model/Stroke.h"
 #include "../model/Text.h"
 #include "../model/Image.h"
-#include "SaveHandlerHelper.h"
 #include "../model/Document.h"
 #include "SaveHandler.h"
+
+#include "xml/XmlNode.h"
+#include "xml/XmlTextNode.h"
+#include "xml/XmlImageNode.h"
+#include "xml/XmlPointNode.h"
+
 #include <config.h>
 
 SaveHandler::SaveHandler() {
@@ -119,7 +124,7 @@ void SaveHandler::visitLayer(XmlNode * page, Layer * l) {
 				stroke->setAttrib("tool", "pen");
 			}
 
-			stroke->setAttrib("color", getColorStr(s->getColor()));
+			stroke->setAttrib("color", getColorStr(s->getColor()).c_str());
 
 			bool hasPresureSensitivity = false;
 			int pointCount = s->getPointCount();
@@ -131,29 +136,29 @@ void SaveHandler::visitLayer(XmlNode * page, Layer * l) {
 			stroke->setPoints(points, pointCount);
 
 			if (s->hasPressure()) {
-				double * values = new double[pointCount];
+				double * values = new double[pointCount + 1];
 				values[0] = s->getWidth();
-				for (int i = 0; i < pointCount - 1; i++) {
+				for (int i = 0; i < pointCount; i++) {
 					values[i + 1] = points[i].z;
 				}
 
-				stroke->setAttrib("width", values, pointCount);
+				stroke->setAttrib("width", values, pointCount + 1);
 			} else {
 				stroke->setAttrib("width", s->getWidth());
 			}
 
 		} else if (e->getType() == ELEMENT_TEXT) {
 			Text * t = (Text *) e;
-			XmlTextNode * text = new XmlTextNode("text", t->getText());
+			XmlTextNode * text = new XmlTextNode("text", t->getText().c_str());
 			layer->addChild(text);
 
 			XojFont & f = t->getFont();
 
-			text->setAttrib("font", f.getName());
+			text->setAttrib("font", f.getName().c_str());
 			text->setAttrib("size", f.getSize());
 			text->setAttrib("x", t->getX());
 			text->setAttrib("y", t->getY());
-			text->setAttrib("color", getColorStr(t->getColor()));
+			text->setAttrib("color", getColorStr(t->getColor()).c_str());
 		} else if (e->getType() == ELEMENT_IMAGE) {
 			Image * i = (Image *) e;
 			XmlImageNode * image = new XmlImageNode("image");
@@ -191,7 +196,7 @@ void SaveHandler::visitPage(XmlNode * root, XojPage * p, Document * doc, int id)
 			firstPdfPageVisited = true;
 			background->setAttrib("domain", "absolute");
 			String pdfName = doc->getPdfFilename();
-			background->setAttrib("filename", pdfName);
+			background->setAttrib("filename", pdfName.c_str());
 		}
 		background->setAttrib("pageno", p->getPdfPageNr() + 1);
 		break;
@@ -200,8 +205,8 @@ void SaveHandler::visitPage(XmlNode * root, XojPage * p, Document * doc, int id)
 	case BACKGROUND_TYPE_RULED:
 	case BACKGROUND_TYPE_GRAPH:
 		background->setAttrib("type", "solid");
-		background->setAttrib("color", getColorStr(p->getBackgroundColor()));
-		background->setAttrib("style", getSolidBgStr(p->getBackgroundType()));
+		background->setAttrib("color", getColorStr(p->getBackgroundColor()).c_str());
+		background->setAttrib("style", getSolidBgStr(p->getBackgroundType()).c_str());
 		break;
 	case BACKGROUND_TYPE_IMAGE:
 		background->setAttrib("type", "pixmap");
@@ -226,7 +231,7 @@ void SaveHandler::visitPage(XmlNode * root, XojPage * p, Document * doc, int id)
 			p->backgroundImage.setCloneId(id);
 		} else {
 			background->setAttrib("domain", "absolute");
-			background->setAttrib("filename", p->backgroundImage.getFilename());
+			background->setAttrib("filename", p->backgroundImage.getFilename().c_str());
 			p->backgroundImage.setCloneId(id);
 		}
 

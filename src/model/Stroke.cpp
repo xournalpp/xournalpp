@@ -350,7 +350,7 @@ void Stroke::setEraseable(EraseableStroke * eraseable) {
 }
 
 void Stroke::debugPrint() {
-	printf("Stroke %ld\n", (long)this);
+	printf("Stroke %ld / hasPressure() = %i\n", (long)this, this->hasPressure());
 
 	for(int i = 0; i < this->pointCount;i++) {
 		Point p = this->points[i];

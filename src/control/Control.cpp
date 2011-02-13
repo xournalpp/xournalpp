@@ -1964,6 +1964,25 @@ void Control::updatePreview() {
 	}
 }
 
+class SaveRunnable: public Runnable {
+public:
+	SaveRunnable(Control * control) {
+		this->control = control;
+	}
+
+	virtual bool run(bool * cancel) {
+		PdfExport pdf(control->getDocument());
+		printf("export as pdf\n");
+		if (!pdf.createPdf("file:///home/andreas/tmp/pdf/pdffile.pdf", cancel)) {
+			printf("create pdf failed\n");
+			printf("error: %s\n", pdf.getLastError().c_str());
+		}
+	}
+
+private:
+	Control * control;
+};
+
 bool Control::save() {
 	if (doc->getFilename().isEmpty()) {
 		if (!showSaveDialog()) {
@@ -1971,43 +1990,50 @@ bool Control::save() {
 		}
 	}
 
+	cursor->setCursorBusy(true);
+
 	updatePreview();
 
 	SaveHandler h;
-	h.prepareSave(doc);
+	h.prepareSave(this->doc);
 
-	if (doc->shouldCreateBackupOnSave()) {
+	if (this->doc->shouldCreateBackupOnSave()) {
 		String backup = doc->getFilename();
 		backup += ".bak";
 		if (!copyFile(doc->getFilename(), backup)) {
 			//TODO: show error!
 			printf("error: could not create backup!\n%s\n", this->copyError.c_str());
+			cursor->setCursorBusy(false);
 			return false;
 		}
 
-		doc->setCreateBackupOnSave(false);
+		this->doc->setCreateBackupOnSave(false);
 	}
 
-	GzOutputStream * out = new GzOutputStream(doc->getFilename());
+	GzOutputStream * out = new GzOutputStream(this->doc->getFilename());
 
 	if (!out->getLastError().isEmpty()) {
 		printf("error: %s\n", out->getLastError().c_str());
 		delete out;
+		cursor->setCursorBusy(false);
 		return false;
 	}
 
-	h.saveTo(out, doc->getFilename());
+	// TODO: this should be asynchron
+	h.saveTo(out, this->doc->getFilename());
 	out->close();
 
 	if (!out->getLastError().isEmpty()) {
 		printf("error: %s\n", out->getLastError().c_str());
 		delete out;
+		cursor->setCursorBusy(false);
 		return false;
 	}
 
 	delete out;
 
 	recent->addRecentFileFilename(doc->getFilename().c_str());
+	cursor->setCursorBusy(false);
 	return true;
 }
 

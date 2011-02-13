@@ -88,12 +88,6 @@ void MoveUndoAction::finalize(VerticalToolHandler * handler) {
 		Element * e = (Element *) l->data;
 		this ->newPos = g_list_append(this->newPos, new MoveUndoEntry(e, e->getX(), e->getY()));
 	}
-
-	//		if (this->page != selection->page) {
-	//			this->newPage = selection->page;
-	//			this->newLayer = selection->layer;
-	//			this->newView = selection->view;
-	//		}
 }
 
 bool MoveUndoAction::undo(Control * control) {
@@ -138,40 +132,30 @@ void MoveUndoAction::switchLayer(GList * entries, Layer * oldLayer, Layer * newL
 	}
 }
 
+void MoveUndoAction::repaint(Redrawable * view, GList * list) {
+	MoveUndoEntry * u = (MoveUndoEntry *) list->data;
+	CHECK_MEMORY(u->e);
+
+	Range range(u->x, u->y);
+
+	for (GList * l = list; l != NULL; l = l->next) {
+		u = (MoveUndoEntry *) l->data;
+		CHECK_MEMORY(u->e);
+		range.addPoint(u->x, u->y);
+		range.addPoint(u->x + u->e->getElementWidth(), u->y + u->e->getElementHeight());
+	}
+
+	CHECK_MEMORY(view);
+	view->repaint(range);
+}
+
 void MoveUndoAction::repaint() {
 	if (!this->originalPos) {
 		return;
 	}
 
-	MoveUndoEntry * u = (MoveUndoEntry *) this->originalPos->data;
-	CHECK_MEMORY(u->e);
-
-	Range range(u->e->getX(), u->e->getY());
-
-	for (GList * l = this->originalPos; l != NULL; l = l->next) {
-		u = (MoveUndoEntry *) l->data;
-		CHECK_MEMORY(u->e);
-		range.addPoint(u->e->getX(),u->e->getY());
-		range.addPoint(u->e->getX()+ u->e->getElementWidth(),u->e->getY()+ u->e->getElementHeight());
-	}
-
-	CHECK_MEMORY(origView);
-	origView->repaint(range);
-
-	if (newView) {
-		Range range(u->e->getX(), u->e->getY());
-
-		for (GList * l = this->newPos; l != NULL; l = l->next) {
-			u = (MoveUndoEntry *) l->data;
-			CHECK_MEMORY(u->e);
-			range.addPoint(u->e->getX(),u->e->getY());
-			range.addPoint(u->e->getX()+ u->e->getElementWidth(),u->e->getY()+ u->e->getElementHeight());
-		}
-
-
-		CHECK_MEMORY(newView);
-		newView->repaint(range);
-	}
+	repaint(this->origView, this->originalPos);
+	repaint(this->newView != NULL ? this->newView : this->origView, this->newPos);
 }
 
 XojPage ** MoveUndoAction::getPages() {
