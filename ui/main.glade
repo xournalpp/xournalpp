@@ -16,7 +16,7 @@
             <child>
               <widget class="GtkMenuItem" id="menuitemFile">
                 <property name="visible">True</property>
-                <property name="label" translatable="yes">_Datei</property>
+                <property name="label" translatable="yes">_File</property>
                 <property name="use_underline">True</property>
                 <child>
                   <widget class="GtkMenu" id="menuFile">
@@ -128,7 +128,7 @@
             <child>
               <widget class="GtkMenuItem" id="menuitemEdit">
                 <property name="visible">True</property>
-                <property name="label" translatable="yes">_Bearbeiten</property>
+                <property name="label" translatable="yes">_Edit</property>
                 <property name="use_underline">True</property>
                 <child>
                   <widget class="GtkMenu" id="menuEdit">
@@ -269,7 +269,7 @@
                     <child>
                       <widget class="GtkMenuItem" id="menuNavigationNextAnnotatedPage">
                         <property name="visible">True</property>
-                        <property name="label" translatable="yes">N_ext Annotated Page</property>
+                        <property name="label" translatable="yes">N_ext annotated page</property>
                         <property name="use_underline">True</property>
                         <accelerator key="Page_Down" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                       </widget>
@@ -277,7 +277,7 @@
                     <child>
                       <widget class="GtkMenuItem" id="menuNavigationPreviousAnnotatedPage">
                         <property name="visible">True</property>
-                        <property name="label" translatable="yes">P_revious Annotated Page</property>
+                        <property name="label" translatable="yes">P_revious annotated page</property>
                         <property name="use_underline">True</property>
                         <accelerator key="Page_Up" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                       </widget>
@@ -425,7 +425,7 @@
                     <child>
                       <widget class="GtkMenuItem" id="menuJournalPaperBackground">
                         <property name="visible">True</property>
-                        <property name="label" translatable="yes">Paper B_ackground</property>
+                        <property name="label" translatable="yes">Paper b_ackground</property>
                         <property name="use_underline">True</property>
                         <child>
                           <widget class="GtkMenu" id="menu2">
@@ -718,7 +718,7 @@
                     <child>
                       <widget class="GtkMenuItem" id="menuToolsHighlighterOptions">
                         <property name="visible">True</property>
-                        <property name="label" translatable="yes">Highlighter Opt_ions</property>
+                        <property name="label" translatable="yes">Highlighter opt_ions</property>
                         <property name="use_underline">True</property>
                         <child>
                           <widget class="GtkMenu" id="toolsHighlighterOptions_menu">
@@ -764,7 +764,7 @@
             <child>
               <widget class="GtkMenuItem" id="menuitemView">
                 <property name="visible">True</property>
-                <property name="label" translatable="yes">_Ansicht</property>
+                <property name="label" translatable="yes">_View</property>
                 <property name="use_underline">True</property>
                 <child>
                   <widget class="GtkMenu" id="menuView">
@@ -856,7 +856,7 @@
             <child>
               <widget class="GtkMenuItem" id="menuitemHelp">
                 <property name="visible">True</property>
-                <property name="label" translatable="yes">_Hilfe</property>
+                <property name="label" translatable="yes">_Help</property>
                 <property name="use_underline">True</property>
                 <child>
                   <widget class="GtkMenu" id="menuHelp">
@@ -957,7 +957,7 @@
                           <widget class="GtkToolButton" id="buttonCloseSidebar">
                             <property name="visible">True</property>
                             <property name="has_tooltip">True</property>
-                            <property name="tooltip" translatable="yes">Zoom Out</property>
+                            <property name="tooltip" translatable="yes">Zoom out</property>
                             <property name="stock_id">gtk-close</property>
                           </widget>
                           <packing>

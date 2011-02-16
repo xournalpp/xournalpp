@@ -1,0 +1,1159 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Xournalpp 0.9\n"
+"Report-Msgid-Bugs-To: Xournal Mailinglist\n"
+"POT-Creation-Date: 2011-02-16 18:16+0100\n"
+"PO-Revision-Date: 2011-02-16 18:16+0100\n"
+"Last-Translator: Andreas Butti <andreasbutti@gmail.com>\n"
+"Language-Team: DE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../src/undo/DeleteUndoAction.cpp:82
+msgid " elements"
+msgstr " Elemente"
+
+#: ../src/undo/DeleteUndoAction.cpp:92
+msgid " image"
+msgstr " Bilder"
+
+#: ../src/undo/DeleteUndoAction.cpp:88
+msgid " stroke"
+msgstr " Linie"
+
+#: ../src/undo/DeleteUndoAction.cpp:90
+msgid " text"
+msgstr " Text"
+
+#: ../src/control/settings/Settings.cpp:77 ../ui/settings.glade:448
+msgid "%F-Note-%H-%M.xoj"
+msgstr "Notiz-%d-%m-%Y-%H-%M.xoj"
+
+#: ../ui/settings.glade:477
+msgid ""
+"%a\tAbbreviated weekday name \t(e.g. Thu)\n"
+"%A\tFull weekday name (e.g. Thursday)\n"
+"%b\tAbbreviated month name (e.g. Aug)\n"
+"%B\tFull month name (e.g. August)\n"
+"%c\tDate and time representation (e.g. Thu Aug 23 14:55:02 2001)\n"
+"%d\tDay of the month (01-31)\n"
+"%H\tHour in 24h format (00-23)\n"
+"%I\tHour in 12h format (01-12)\n"
+"%j\tDay of the year (001-366)\n"
+"%m\tMonth as a decimal number (01-12)\n"
+"%M\tMinute (00-59)\n"
+"%p\tAM or PM designation (e.g. PM)\n"
+"%S\tSecond (00-61)\n"
+"%U\tWeek number with the first Sunday as the first day of week one (00-53)\n"
+"%w\tWeekday as a decimal number with Sunday as 0 (0-6)\n"
+"%W\tWeek number with the first Monday as the first day of week one (00-53)\n"
+"%x\tDate representation (e.g. 08/23/01\n"
+"%X\tTime representation (e.g. 14:55:02\n"
+"%y\tYear, last two digits (00-99)\n"
+"%Y\tYear\t(e.g. 2001)\n"
+"%Z\tTimezone name or abbreviation (e.g. CDT\n"
+"%%\tA % sign"
+msgstr ""
+
+#: ../src/gui/MainWindow.cpp:343
+#, c-format
+msgid ", PDF Page %i"
+msgstr ", PDF Seite %i"
+
+#: ../ui/images.glade:35
+msgid "<b>... or select already used Image:</b>"
+msgstr "<b>... oder wählen Sie ein bereits verwendetes Bild:</b>"
+
+#: ../ui/settings.glade:157
+msgid "<b>Allow scroll outside the page</b>"
+msgstr "<b>Scrollen über die Seitenränder hinaus erlauben</b>"
+
+#: ../ui/about.glade:47
+msgid "<b>Authors:</b>"
+msgstr "<b>Autoren:</b>"
+
+#: ../ui/settings.glade:606
+msgid "<b>Autoload .pdf.xoj</b>"
+msgstr "<b>Automatisch .pdf.xoj laden</b>"
+
+#: ../ui/settings.glade:314
+msgid ""
+"<b>Autosave Folder</b>\n"
+"<i>If the document already was saved you can find it in the same folder\n"
+"with the extension .autosave.xoj\n"
+"It the file was not saved you can find it in your home folder, in\n"
+"~/.xournalpp/autosave</i>"
+msgstr ""
+"<b>Autospeichern Ordner</b>\n"
+"<i>Wenn das Dokument bereits gespeichert wurde finden Sie die\n"
+"Datei im gleichen Ordner mit der Endung .autosave.xoj\n"
+"Wenn die Datei noch nicht gespeichert wurde finden Sie das Dokument in\n"
+"~/.xournalpp/autosave</i>"
+
+#: ../ui/settings.glade:242
+msgid "<b>Autosave</b>"
+msgstr "<b>Automatisch speichern</b>"
+
+#: ../ui/about.glade:70
+msgid "<b>Contributors:</b>"
+msgstr "<b>Mitwirkende:</b>"
+
+#: ../ui/page-background-color.glade:90
+msgid "<b>Custom color</b>"
+msgstr "<b>Selbstdefinierte farbe</b>"
+
+#: ../ui/settings.glade:437
+msgid "<b>Default name:</b>"
+msgstr "<b>Standard Name:</b>"
+
+#: ../ui/settings.glade:365
+msgid "<b>Default save name</b>"
+msgstr "<b>Standard Dateiname</b>"
+
+#: ../ui/settings.glade:896
+msgid "<b>Eraser</b>"
+msgstr "<b>Radierer</b>"
+
+#: ../ui/settings.glade:35
+msgid "<b>Extended Input</b>"
+msgstr "<b>Extended Input</b>"
+
+#: ../ui/settings.glade:1196
+msgid "<b>Fullscreen</b>"
+msgstr "<b>Vollbild</b>"
+
+#: ../ui/settings.glade:517
+msgid "<b>Help</b> (Placeholders)"
+msgstr "<b>Hilfe</b> (Platzhalter)"
+
+#: ../ui/page-background-color.glade:60
+msgid "<b>Last used</b>"
+msgstr "<b>Zuletzt benutzt</b>"
+
+#: ../ui/settings.glade:1015
+msgid "<b>Left / Right</b>"
+msgstr "<b>Links / Rechts</b>"
+
+#: ../ui/settings.glade:783
+msgid "<b>Middle Mouse Button</b>"
+msgstr "<b>Mittlere Maustaste</b>"
+
+#: ../ui/pagesize.glade:58
+msgid "<b>Pagesize</b>"
+msgstr "<b>Seitengrösse</b>"
+
+#: ../ui/page-background-color.glade:29
+msgid "<b>Predefined colors</b>"
+msgstr "<b>Vordefinierte Farben</b>"
+
+#: ../ui/settings.glade:1281
+msgid "<b>Presentation</b> Another Fullscreen Modus, <i>Start with F5</i>"
+msgstr "<b>Präsentationsmodus</b> <i>Starten mit F5</i>"
+
+#: ../ui/settings.glade:95
+msgid "<b>Presure sensitivity</b>"
+msgstr "<b>Druck Empfindlichkeit</b>"
+
+#: ../ui/settings.glade:826
+msgid "<b>Right Mouse Button</b>"
+msgstr "<b>Rechte Maustaste</b>"
+
+#: ../ui/settings.glade:1100
+msgid "<b>Selection Border</b>"
+msgstr "<b>Seitemumrahumg (Ausgewählte Seite)</b>"
+
+#: ../ui/settings.glade:939
+msgid ""
+"<b>Touch Screen</b> <i>You can also configure other device like mice</i>"
+msgstr ""
+"<b>Touch Screen</b> <i>Sie können auch andere Geräte konfigurieren</i>"
+
+#: ../ui/settings.glade:877
+msgid ""
+"<i>Here can you define wich tools will be selected If you\n"
+"use the eraser or other device.\n"
+"Here you can disable your touchscreen.</i>"
+msgstr ""
+"<i>Hier können Sie definieren welche Tools dem Radierer (Stift)\n"
+"oder anderen Geräten zugeordnet werden.\n"
+"Hier können Sie den Touchscreen deaktivieren.</i>"
+
+#: ../ui/settings.glade:758
+msgid ""
+"<i>Here can you define wich tools will be selected if you press\n"
+"a button, after you release the button the previous selected\n"
+"tool will be selected</i>"
+msgstr ""
+"<i>Hier können Sie wählen welches Tool selektiert wird wenn\n"
+"Sie eine Maustaste drücken, beim loslassen wird wider\n"
+"das vorherige Tool gewählt</i>"
+
+#: ../ui/settings.glade:69
+msgid ""
+"<i>If you enable <b>Extended Input</b> you get more precise\n"
+"inputif you have a supported Tablet Device\n"
+"Disable if you use a Mouse or Touchpad and\n"
+"stroken are not drawn under the cursor </i>"
+msgstr ""
+"<i>Wenn Sie <b>Extended Input</b> aktivieren\n"
+"erhalten Sie genauere Eingaben von z.B. Stiften\n"
+"Deaktivieren Sie dies wenn Sie die Maus oder ein Touchpad\n"
+"Benutzen, und die eingabe am falschen Ort erscheint</i>"
+
+#: ../ui/settings.glade:191
+msgid ""
+"<i>If you enable this you can move the border of a page to the\n"
+"center of the screen.</i>"
+msgstr ""
+"<i>Wenn sie dies aktivieren können Sie den Seitenrand bis in\n"
+"die Mitte des Bildschirmes bewegen.</i>"
+
+#: ../ui/settings.glade:112
+msgid "<i>If you have a tablet pen you get a different width of the line</i>"
+msgstr "<i>Wenn Sie eine Tablet Stift verwenden reagieren die linien auf den Druck</i>"
+
+#: ../ui/settings.glade:643
+msgid ""
+"<i>If you open a PDF and there is a\n"
+"Xournal file with the same name it will open it</i>"
+msgstr ""
+"<i>Wenn Sie ein PDF öffnen, wird auch ein dazugehöriges Xournaldokument\n"
+"geöffnet, falls vorhanden.</i>"
+
+#: ../ui/settings.glade:707
+msgid ""
+"<i>Put a rouler on your screen to callibrate the zoom level to fit your "
+"screen\n"
+"The units are cm for the rouler, dpi for the slider</i>"
+msgstr ""
+"<i>Legen Sie einen Massstab auf den Bildschirm um die\n"
+"Bildschirm DPI zu kallibrieren</i>"
+
+#: ../ui/settings.glade:403
+msgid "<i>This name will be proposed if you save a new document</i>"
+msgstr "<i>Dieser Name wird vorgeschlagen wenn Sie ein neues Dokument speichern</i>"
+
+#: ../ui/about.glade:29
+msgid "<span size=\"xx-large\" weight=\"bold\">Xournal++</span>"
+msgstr "<span size=\"xx-large\" weight=\"bold\">Xournal++</span>"
+
+#: ../ui/about.glade:7
+msgid "About Xournal++"
+msgstr "Über Xournal++"
+
+#: ../src/control/Control.cpp:1693
+msgid "All files"
+msgstr "Alle Dateien"
+
+#: ../src/control/Control.cpp:1111 ../src/control/Control.cpp:1724
+msgid "Attach file to the journal"
+msgstr "Datei ans .xoj anhängen"
+
+#: ../ui/settings.glade:279
+msgid "Autosave every ... minute:"
+msgstr "Alle ... automatisch speichern:"
+
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:371 ../ui/main.glade:1086
+msgid "Back"
+msgstr "Zurück"
+
+#: ../src/gui/sidebar/Sidebar.cpp:84
+msgid "Bookmarks"
+msgstr "Lesezeichen"
+
+#: ../ui/settings.glade:1149
+msgid "Border color"
+msgstr "Rahmenfarbe"
+
+#: ../ui/settings.glade:1137
+msgid "Border color for current page and other selections"
+msgstr "Rahmenfarbe der selektierten Seite und anderen Selektionen"
+
+#: ../src/undo/ColorUndoAction.cpp:92
+msgid "Change color"
+msgstr "Farbe ändern"
+
+#: ../src/undo/FontUndoAction.cpp:109
+msgid "Change font"
+msgstr "Schrift ändern"
+
+#: ../src/undo/SizeUndoAction.cpp:110
+msgid "Change stroke width"
+msgstr "Liniendicke ändern"
+
+#: ../ui/main.glade:1137
+msgid "Close"
+msgstr "Schliessen"
+
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:358
+msgid "Copy"
+msgstr "Kopieren"
+
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:435 ../ui/main.glade:362
+msgid "Copy current"
+msgstr "Aktuellen Hintergrund kopieren"
+
+#: ../src/gui/MainWindow.cpp:45
+#, c-format
+msgid ""
+"Could not create toolbar config file: %s\n"
+"Check write permission, no Toolbars will be available"
+msgstr ""
+"Konnte die Toolbarkonfigurationsdatei nicht erstellen: %s\n"
+"Prüfen Sie ob Sie über Schreibberechtigungen ferfügen"
+
+#: ../src/control/LoadHandler.cpp:59
+msgid "Could not open file: \""
+msgstr "Konnte die Datei nicht öffnen: \""
+
+#: ../src/undo/UndoRedoHandler.cpp:82
+#, c-format
+msgid ""
+"Could not redo '%s'\n"
+"Something went wrong... Please write a bug report..."
+msgstr ""
+"Rückgängig ist fehlgeschlagen '%s'\n"
+"Etwas ist schief gelaufen... Bitte Erstellen Sie einen Bugreport..."
+
+#: ../src/undo/UndoRedoHandler.cpp:56
+#, c-format
+msgid ""
+"Could not undo '%s'\n"
+"Something went wrong... Please write a bug report..."
+msgstr ""
+"Widerherstellen ist fehlgeschlagen '%s'\n"
+"Etwas ist schief gelaufen... Bitte Erstellen Sie einen Bugreport..."
+
+#: ../src/gui/GladeGui.cpp:60
+#, c-format
+msgid "Couldn't find pixmap file: %s"
+msgstr "Konnte das Bild nicht finden: %s"
+
+#: ../src/gui/dialog/FormatDialog.cpp:105
+msgid "Custom"
+msgstr "Benutzerdefiniert"
+
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:357
+msgid "Cut"
+msgstr "Ausschneiden"
+
+#: ../src/undo/DeleteUndoAction.cpp:74
+msgid "Delete"
+msgstr "Löschen"
+
+#: ../ui/main.glade:402
+msgid "Delete La_yer"
+msgstr "Layer löschen"
+
+#: ../src/control/LoadHandler.cpp:639
+msgid "Document is not complete (may the end is cut off?)"
+msgstr "Dokument ist nicht komplett (z.B. nicht komplett übertragen?)"
+
+#: ../src/undo/InsertUndoAction.cpp:23
+msgid "Draw stroke"
+msgstr "Linie zeichen"
+
+#: ../ui/export.glade:259
+msgid "EPS"
+msgstr "EPS"
+
+#: ../src/undo/DeleteUndoAction.cpp:72
+msgid "Erase Stroke"
+msgstr "Linie löschen"
+
+#: ../src/undo/EraseUndoAction.cpp:88
+msgid "Erase stroke"
+msgstr "Linie löschen"
+
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:321
+msgid "Eraser"
+msgstr "Radierer"
+
+#: ../ui/main.glade:657
+msgid "Eraser Optio_ns"
+msgstr "Radierer Optionen"
+
+#: ../src/control/Control.cpp:1886
+#, c-format
+msgid ""
+"Error annotate PDF file '%s'\n"
+"%s"
+msgstr ""
+"Fehler beim öffnen des PDFs '%s'\n"
+"%s"
+
+#: ../src/control/Control.cpp:1821
+#, c-format
+msgid ""
+"Error opening file '%s'\n"
+"%s"
+msgstr ""
+"Fehler beim öffnen der Date '%s'\n"
+"%s"
+
+#: ../ui/export.glade:294
+msgid "Export"
+msgstr "Exportieren"
+
+#: ../ui/export.glade:6 ../ui/page-background-color.glade:8
+msgid "Export as"
+msgstr "Exportieren als"
+
+#: ../ui/main.glade:88
+msgid "Export as..."
+msgstr "Exportieren als..."
+
+#: ../ui/main.glade:782
+msgid "Fullscreen"
+msgstr "Vollbild"
+
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:369
+msgid "Go to first page"
+msgstr "Gehen zur ersten Seite"
+
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:375
+msgid "Go to last page"
+msgstr "Gehen zur letzten Seite"
+
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:428 ../ui/main.glade:354
+msgid "Graph"
+msgstr "Kariert"
+
+#: ../ui/main.glade:592
+msgid "H_and Tool"
+msgstr "Hand Tool"
+
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:467
+msgid "Hand"
+msgstr "Hand"
+
+#: ../ui/pagesize.glade:118
+msgid "Height:"
+msgstr "Höhe:"
+
+#: ../ui/settings.glade:1229 ../ui/settings.glade:1314
+msgid "Hide Menubar"
+msgstr "Menüleiste ausblenden"
+
+#: ../ui/settings.glade:1241 ../ui/settings.glade:1326
+msgid "Hide Sidebar"
+msgstr "Seitenleiste ausblenden"
+
+#: ../ui/main.glade:721
+msgid "Highlighter opt_ions"
+msgstr "Leuchtstift Optionen"
+
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:455
+msgid "Hilighter"
+msgstr "Leuchtstift"
+
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:458
+msgid "Image"
+msgstr "Bild"
+
+#: ../src/gui/PageView.cpp:576 ../src/control/Control.cpp:1103
+msgid "Images"
+msgstr "Bilder"
+
+#: ../ui/settings.glade:222
+msgid "Input"
+msgstr "Eingabe"
+
+#: ../ui/settings.glade:997
+msgid "Input Device"
+msgstr "Eingabegerät"
+
+#: ../ui/main.glade:322
+msgid "Insert Page Type"
+msgstr "Hintergrund neuer Seiten"
+
+#: ../src/undo/InsertUndoAction.cpp:27
+msgid "Insert image"
+msgstr "Bild einfügen"
+
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:403
+msgid "Insert page"
+msgstr "Seite einfügen"
+
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:414 ../ui/main.glade:338
+msgid "Lined"
+msgstr "Liniert"
+
+#: ../ui/settings.glade:692
+msgid "Load / Save"
+msgstr "Laden / Speichern"
+
+#: ../ui/images.glade:22
+msgid "Load file"
+msgstr "Datei laden"
+
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:477
+msgid "Medium"
+msgstr "Mittel"
+
+#: ../ui/settings.glade:862
+msgid "Mouse Button"
+msgstr "Maustaste"
+
+#: ../src/undo/MoveUndoAction.cpp:32
+msgid "Move"
+msgstr "Verschieben"
+
+#: ../ui/main.glade:272
+msgid "N_ext annotated page"
+msgstr "Nächste b_eschriftete Seite"
+
+#: ../ui/main.glade:307
+msgid "New Page _After"
+msgstr "Neue Seite danach"
+
+#: ../ui/main.glade:300
+msgid "New Page _Before"
+msgstr "Neue Seite davor"
+
+#: ../ui/main.glade:315
+msgid "New Page at _End"
+msgstr ""
+
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:352
+msgid "New Xournal"
+msgstr "Neuex Xournal"
+
+#: ../ui/main.glade:394
+msgid "New _Layer"
+msgstr "Neuer Layer"
+
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:373 ../ui/main.glade:1098
+msgid "Next"
+msgstr "Nächste Seite"
+
+#: ../ui/settings.glade:960
+msgid ""
+"Notice: <i>You need to enable XInput (Page \"Input\") else it won't work.</i>"
+msgstr ""
+"Anmerkung: <i>Sie müssen XInput aktivieren (Tab \"Eingabe\") sonst funktioniert es nicht.</i>"
+
+#: ../src/control/RecentManager.cpp:327
+#, c-format
+msgid "Open '%s'"
+msgstr "Öffne '%s'"
+
+#: ../src/gui/PageView.cpp:569 ../src/control/Control.cpp:1097
+msgid "Open Image"
+msgstr "Öffne Bild"
+
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:355
+msgid "Open file"
+msgstr "Öffne Datei"
+
+#: ../ui/export.glade:61
+msgid "PDF"
+msgstr "PDF"
+
+#: ../src/view/DocumentView.cpp:335
+msgid "PDF background missing"
+msgstr "PDF Hingergrund fehlt"
+
+#: ../src/control/Control.cpp:1701
+msgid "PDF files"
+msgstr "PDF Dateien"
+
+#: ../ui/export.glade:145
+msgid "PNG"
+msgstr "PNG"
+
+#: ../ui/main.glade:471
+msgid "P_DF Background"
+msgstr "P_DF Hingergrund"
+
+#: ../ui/main.glade:280
+msgid "P_revious annotated page"
+msgstr "Vorherige beschriftete Seite"
+
+#: ../ui/export.glade:78 ../ui/export.glade:163 ../ui/export.glade:220
+msgid "Page"
+msgstr "Seite"
+
+#: ../src/undo/PageBackgroundChangedUndoAction.cpp:71
+msgid "Page background changed"
+msgstr "Seitenhintergrund geändert"
+
+#: ../src/undo/InsertDeletePageUndoAction.cpp:70
+msgid "Page deleted"
+msgstr "Datei gelöscht"
+
+#: ../src/undo/InsertDeletePageUndoAction.cpp:68
+msgid "Page inserted"
+msgstr "Datei hinzugefügt"
+
+#: ../ui/export.glade:28
+msgid "Pages"
+msgstr "Seiten"
+
+#: ../ui/main.glade:428
+msgid "Paper b_ackground"
+msgstr "Seitenhingergrund"
+
+#: ../ui/pagesize.glade:6
+msgid "Paper Format"
+msgstr "Seitenformat"
+
+#: ../ui/main.glade:421
+msgid "Paper _Color"
+msgstr "Seite Hintergrundfarbe"
+
+#: ../ui/main.glade:414
+msgid "Paper _Format"
+msgstr "Seitenformat"
+
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:359
+msgid "Paste"
+msgstr "Einfügen"
+
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:395
+msgid "Pen"
+msgstr "Strift"
+
+#: ../ui/main.glade:606
+msgid "Pen _Options"
+msgstr "Stift Optionen"
+
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:407 ../ui/main.glade:330
+msgid "Plain"
+msgstr "Einfarbig"
+
+#: ../ui/main.glade:218
+msgid "Preferences"
+msgstr "Einstellungen"
+
+#: ../src/gui/sidebar/Sidebar.cpp:85
+msgid "Preview"
+msgstr "Vorschau"
+
+#: ../ui/main.glade:43
+msgid "Recent _Documents"
+msgstr "Zuletzt geöffnete Dokumente"
+
+#: ../src/undo/UndoRedoHandler.cpp:154
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:365
+msgid "Redo"
+msgstr "Widerherstellen"
+
+#: ../src/undo/UndoRedoHandler.cpp:148
+msgid "Redo: "
+msgstr "Widerherstellen: "
+
+#: ../ui/export.glade:109
+msgid "Resolution"
+msgstr "Auflösung"
+
+#: ../ui/main.glade:552
+msgid "Ru_ler"
+msgstr "Radierer"
+
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:421 ../ui/main.glade:346
+msgid "Ruled"
+msgstr "Block"
+
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:472
+msgid "Ruler"
+msgstr "Masstab"
+
+#: ../ui/export.glade:202
+msgid "SVG"
+msgstr "SVG"
+
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:351
+msgid "Save"
+msgstr "Speichern"
+
+#: ../src/control/Control.cpp:2062
+msgid "Save File"
+msgstr "Speichere Datei"
+
+#: ../src/undo/ScaleUndoAction.cpp:45
+msgid "Scale"
+msgstr "Skalieren"
+
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:361
+msgid "Search"
+msgstr "Suchen"
+
+#: ../ui/main.glade:1057
+msgid "Search:"
+msgstr "Suchen:"
+
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:480
+msgid "Select Font"
+msgstr "Schrift wählen"
+
+#: ../ui/images.glade:6
+msgid "Select Image"
+msgstr "Bild wählen"
+
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:588
+msgid "Select Object"
+msgstr "Wähle Objekt"
+
+#: ../ui/pdfpages.glade:6
+msgid "Select PDF Page"
+msgstr "Wähle PDF Seite"
+
+#: ../ui/main.glade:565
+msgid "Select Re_gion"
+msgstr "Wähle Bereich"
+
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:464
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:559
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:574
+msgid "Select Rectangle"
+msgstr "Wähle Rechteck"
+
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:462
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:581
+msgid "Select Region"
+msgstr "Wähle Bereich"
+
+#: ../ui/main.glade:574
+msgid "Select _Rectangle"
+msgstr "Wähle Rechteck"
+
+#: ../src/gui/dialog/SelectBackgroundColorDialog.cpp:108
+#: ../ui/page-background-color.glade:101
+msgid "Select color"
+msgstr "Wähle Farbe"
+
+#: ../ui/settings.glade:1341
+msgid "Select toolbar:"
+msgstr "Wähle Toolbar:"
+
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:471
+msgid "Shape Recognizer"
+msgstr "Figurenerkennung"
+
+#: ../ui/pdfpages.glade:22
+msgid ""
+"Show only not used pages\n"
+"THIS TEXT IS A PLACEHOLDER!"
+msgstr ""
+"Show only not used pages\n"
+"THIS TEXT IS A PLACEHOLDER!"
+
+#: ../src/gui/dialog/PdfPagesDialog.cpp:338
+#, c-format
+msgid "Show only not used pages (%i unused pages)"
+msgstr "Nur noch nicht benutze Seiten anzeigen (%i nicht benutze Seiten)"
+
+#: ../src/gui/dialog/PdfPagesDialog.cpp:336
+msgid "Show only not used pages (one unused page)"
+msgstr "Nur noch nicht benutze Seiten anzeigen (eine nicht benutze Seiten)"
+
+#: ../ui/main.glade:789
+msgid "Show sidebar"
+msgstr "Seitenleiste anzeigen"
+
+#: ../ui/settings.glade:1048
+msgid "Show sidebar on the right side"
+msgstr "Seitenleiste auf der rechten Seite anzeigen"
+
+#: ../ui/settings.glade:1060
+msgid "Show vertical scrollbar on the left side"
+msgstr "Vertikale Scrollbar auf der linken Seite anzeigen"
+
+#: ../src/Xournalpp.cpp:155
+msgid ""
+"Sorry, Xournal can only open one file from the command line.\n"
+"Others are ignored."
+msgstr ""
+"Entschuldigung, Xournal kann nur eine Datei von der Kommandozeile öffnen.\n"
+"Alle weiteren werden ignoriert."
+
+#: ../src/Xournalpp.cpp:196
+msgid ""
+"Sorry, Xournal cannot open remote files at the moment.\n"
+"You have to copy the file to a local directory."
+msgstr ""
+"Entschuldigung, Xournal kann keine entfernten Dateien öffnen im Moment.\n"
+"Kopieren Sie die Datei in einen lokalen Ordner."
+
+#: ../src/undo/RecognizerUndoAction.cpp:47
+msgid "Stroke recognizer"
+msgstr "Figurenerkennung"
+
+#: ../src/control/Control.cpp:1706
+msgid "Supported files"
+msgstr "Unterstützte Dateien"
+
+#: ../ui/main.glade:802
+msgid "T_oolbars"
+msgstr "T_oolbars"
+
+#: ../ui/pagesize.glade:25
+msgid "Template:"
+msgstr "Vorlagen:"
+
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:456
+msgid "Text"
+msgstr "Text"
+
+#: ../src/gui/SearchBar.cpp:117 ../src/gui/SearchBar.cpp:166
+#, c-format
+msgid "Text %i times found on page %i"
+msgstr "Text %i mal gefunden auf der Seite %i"
+
+#: ../src/gui/SearchBar.cpp:56
+#, c-format
+msgid "Text %i times found on this page"
+msgstr "Text %i mal gefunden auf dieser Seite"
+
+#: ../ui/main.glade:756
+msgid "Text Font..."
+msgstr "Schrift..."
+
+#: ../src/gui/SearchBar.cpp:54
+msgid "Text found on this page"
+msgstr "Text auf dieser Seite gefunden"
+
+#: ../src/gui/SearchBar.cpp:61
+msgid "Text not found"
+msgstr "Text nicht gefunden"
+
+#: ../src/gui/SearchBar.cpp:130 ../src/gui/SearchBar.cpp:179
+msgid "Text not found, searched on all pages"
+msgstr "Text nicht gefunden, auf allen Seiten gesucht"
+
+#: ../src/gui/SearchBar.cpp:115 ../src/gui/SearchBar.cpp:164
+#, c-format
+msgid "Text once found on page %i"
+msgstr "Text einmal gefunden auf Seite %i"
+
+#: ../src/control/Control.cpp:2201
+msgid "There is still an operation running, exit anyway?"
+msgstr "Es läuft gerade noch eine Aktion, trozdem beenden?"
+
+#: ../src/gui/PageView.cpp:425
+msgid ""
+"There was a wrong input event, input is not working.\n"
+"Do you want to disable \"Extended Input\"?"
+msgstr ""
+
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:478
+msgid "Thik"
+msgstr "Dick"
+
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:475
+msgid "Thin"
+msgstr "Dünn"
+
+#: ../src/gui/PageView.cpp:525 ../src/control/Control.cpp:1136
+#, c-format
+msgid "This image could not be loaded. Error message: %s"
+msgstr "Das Bild könnte nicht geladen werden. Fehlermeldung: %s"
+
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:391
+msgid "Toggle fullscreen"
+msgstr "Vollbild umschalten"
+
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:491
+msgid "Two pages"
+msgstr "Zwei Seiten"
+
+#: ../src/undo/UndoRedoHandler.cpp:140
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:364
+msgid "Undo"
+msgstr "Rückgängig"
+
+#: ../src/undo/UndoRedoHandler.cpp:135
+msgid "Undo: "
+msgstr "Rückgängig: "
+
+#: ../src/control/LoadHandler.cpp:631
+msgid "Unknown parser error"
+msgstr "Unbekannter parser Fehler"
+
+#: ../src/control/Control.cpp:2118
+msgid "Unsaved Document"
+msgstr "Ungespeichertes Dokument"
+
+#: ../src/undo/MoveUndoAction.cpp:52
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:466
+msgid "Vertical Space"
+msgstr "Vertical Space"
+
+#: ../ui/settings.glade:1378
+msgid "View"
+msgstr "Ansicht"
+
+#: ../ui/pagesize.glade:98
+msgid "Width:"
+msgstr "Breite:"
+
+#: ../ui/main.glade:370
+msgid "With PDF background"
+msgstr "Mit PDF Hintergrund"
+
+#: ../src/undo/InsertUndoAction.cpp:25
+msgid "Write text"
+msgstr "Tescht schreiben"
+
+#: ../src/control/LoadHandler.cpp:625
+#, c-format
+msgid "XML Parser error: %s"
+msgstr "XML Parser error: %s"
+
+#: ../src/control/Control.cpp:1697 ../src/control/Control.cpp:2067
+msgid "Xournal files"
+msgstr "Xournal Dateien"
+
+#: ../ui/main.glade:6
+msgid "Xournal++"
+msgstr "Xournal++"
+
+#: ../ui/settings.glade:7
+msgid "Xournal++ Preferences"
+msgstr "Xournal++ Einstellungen"
+
+#: ../src/Xournalpp.cpp:129
+msgid ""
+"You are using a development release of Xournal\n"
+"You can find the current release in CVS!\n"
+"DO NOT USE THIS RELEASE FOR PRODUCTIVE ENVIRONMENT!\n"
+"Are you sure you wish to start this release?\n"
+"\n"
+"\n"
+"If you don't want to show this warning, you can run\n"
+"\"xournalpp --help\"\n"
+msgstr ""
+"Sie verwenden eine Entwicklerversion von Xournal\n"
+"Sie finden das aktuelle Release im CVS!\n"
+"VERWENDEN SIE DIESE VERSION NICHT FÜR PRODUKTIVE ARBEIT!\n"
+"Wollen Sie diese Version wirklich starten?\n"
+"\n"
+"\n"
+"Wenn Sie diese Warnung nicht mehr sehen wollen, starten Sie\n"
+"\"xournalpp --help\"\n"
+
+#: ../src/control/Control.cpp:990 ../src/control/Control.cpp:1206
+msgid ""
+"You don't have any PDF pages to select from. Cancel operation,\n"
+"Please select another background type: Menu \"Journal\" / \"Insert Page Type"
+"\"."
+msgstr ""
+"Es gibt keine PDF Seiten zum auswählen. Abbruch.\n"
+"Bitte wählen Sie einen anderen Hintergrundtyp: Menü \"Journal\" / \"Hintergrund neuer Seiten"
+"\"."
+
+#: ../src/gui/sidebar/Sidebar.cpp:182
+#, c-format
+msgid ""
+"Your current document does not contain PDF Page %i\n"
+"Would you insert this page?\n"
+"\n"
+"Tipp: You can select Journal / Paper Background / PDF Background to insert a "
+"PDF page."
+msgstr ""
+"Ihr aktuelles Dokument beinhaltet die PDF Seite %i nicht\n"
+"Möchten Sie diese Seite einfügen?\n"
+"\n"
+"Tipp: Sie können im Menü Journal / Seitenhintergrund / PDF Hintergrund eine beliebige PDF Seite infügen."
+
+#: ../ui/settings.glade:743
+msgid "Zoom"
+msgstr "Zoom"
+
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:385
+msgid "Zoom fit to screen"
+msgstr "Passend zoomen"
+
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:383
+msgid "Zoom in"
+msgstr "Hereinzoomen"
+
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:381
+msgid "Zoom out"
+msgstr "Herauszoomen"
+
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:387
+msgid "Zoom to 100%"
+msgstr "Zoom 100%"
+
+#: ../ui/main.glade:50
+msgid "_Annotate PDF"
+msgstr "PDF Beschriften"
+
+#: ../ui/main.glade:767
+msgid "_View"
+msgstr "_Ansicht"
+
+#: ../ui/main.glade:131
+msgid "_Edit"
+msgstr "_Bearbeiten"
+
+#: ../ui/main.glade:19
+msgid "_File"
+msgstr "_Datei"
+
+#: ../ui/main.glade:382
+msgid "_Delete Page"
+msgstr "Seite löschen"
+
+#: ../ui/main.glade:503
+msgid "_Eraser"
+msgstr "Radierer"
+
+#: ../ui/main.glade:80
+msgid "_Export as PDF"
+msgstr "_Exportieren als PDF"
+
+#: ../ui/main.glade:237
+msgid "_First Page"
+msgstr "Erste Seite"
+
+#: ../ui/main.glade:457
+msgid "_Graph"
+msgstr "_Kariert"
+
+#: ../ui/main.glade:512
+msgid "_Highlighter"
+msgstr "_Leuchtstift"
+
+#: ../ui/main.glade:859
+msgid "_Help"
+msgstr "_Hilfe"
+
+#: ../ui/main.glade:464 ../ui/main.glade:530
+msgid "_Image"
+msgstr "_Bild"
+
+#: ../ui/main.glade:292
+msgid "_Journal"
+msgstr "_Journal"
+
+#: ../ui/main.glade:259
+msgid "_Last Page"
+msgstr "_Letzte Seite"
+
+#: ../ui/main.glade:443
+msgid "_Lined"
+msgstr "_Liniert"
+
+#: ../ui/main.glade:229
+msgid "_Navigation"
+msgstr "_Navigation"
+
+#: ../ui/main.glade:251
+msgid "_Next Page"
+msgstr "_Nächste Seite"
+
+#: ../ui/main.glade:493
+msgid "_Pen"
+msgstr "_Stift"
+
+#: ../ui/main.glade:436
+msgid "_Plain"
+msgstr "_Einfarbig"
+
+#: ../ui/main.glade:244
+msgid "_Previous Page"
+msgstr "_Vorherige Seite"
+
+#: ../ui/main.glade:450
+msgid "_Ruled"
+msgstr "_Block"
+
+#: ../ui/main.glade:544
+msgid "_Shape Recognizer"
+msgstr "_Figurenerkennung"
+
+#: ../ui/main.glade:521
+msgid "_Text"
+msgstr "_Text"
+
+#: ../ui/main.glade:486
+msgid "_Tools"
+msgstr "_Tools"
+
+#: ../ui/main.glade:775
+msgid "_Two Pages"
+msgstr "_Zwei seiten"
+
+#: ../ui/main.glade:583
+msgid "_Vertical Space"
+msgstr "_Vertical Space"
+
+#: ../ui/main.glade:709
+msgid "_delete strokes"
+msgstr "_linie löschen"
+
+#: ../ui/main.glade:621 ../ui/main.glade:664 ../ui/main.glade:728
+msgid "_fine"
+msgstr "_dünn"
+
+#: ../ui/main.glade:629 ../ui/main.glade:672 ../ui/main.glade:736
+msgid "_medium"
+msgstr "_mittel"
+
+#: ../ui/main.glade:693
+msgid "_standard"
+msgstr "_standard"
+
+#: ../ui/main.glade:637 ../ui/main.glade:680 ../ui/main.glade:744
+msgid "_thick"
+msgstr "_dick"
+
+#: ../ui/main.glade:613
+msgid "_very fine"
+msgstr "_sehr dünn"
+
+#: ../ui/main.glade:701
+msgid "_whiteout"
+msgstr "aus_weissen"
+
+#: ../src/model/FormatDefinitions.cpp:7
+msgid "cm"
+msgstr "cm"
+
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:338
+msgid "delete stroke"
+msgstr "linie löschen"
+
+#: ../src/model/FormatDefinitions.cpp:8
+msgid "in"
+msgstr "in"
+
+#: ../src/gui/MainWindow.cpp:346
+#, c-format
+msgid "of %i%s"
+msgstr "von %i%s"
+
+#: ../src/model/FormatDefinitions.cpp:9
+msgid "points"
+msgstr "Punkte"
+
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:324
+msgid "standard"
+msgstr "standard"
+
+#: ../ui/pagesize.glade:185
+msgid "toolbutton1"
+msgstr "toolbutton1"
+
+#: ../ui/pagesize.glade:197
+msgid "toolbutton2"
+msgstr "toolbutton2"
+
+#: ../ui/main.glade:645
+msgid "ver_y thick"
+msgstr "sehr dick"
+
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:331
+msgid "whiteout"
+msgstr "ausweissen"
+
