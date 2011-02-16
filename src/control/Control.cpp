@@ -11,7 +11,6 @@
 #include "LoadHandler.h"
 #include "SaveHandler.h"
 #include "PrintHandler.h"
-#include "../gettext.h"
 #include "settings/ev-metadata-manager.h"
 #include "../pdf/PdfExport.h"
 #include "../util/CrashHandler.h"
@@ -23,6 +22,10 @@
 #include "../undo/PageBackgroundChangedUndoAction.h"
 #include "../undo/InsertUndoAction.h"
 #include "../undo/RemoveLayerUndoAction.h"
+
+#include <config.h>
+#include <glib/gi18n-lib.h>
+
 
 #include <stdio.h>
 #include <string.h>
@@ -1682,7 +1685,7 @@ MainWindow * Control::getWindow() {
 }
 
 String Control::showOpenDialog(bool pdf, bool & attachPdf) {
-	GtkWidget *dialog = gtk_file_chooser_dialog_new(_("Open File"), (GtkWindow*) *win, GTK_FILE_CHOOSER_ACTION_OPEN,
+	GtkWidget *dialog = gtk_file_chooser_dialog_new(_("Open file"), (GtkWindow*) *win, GTK_FILE_CHOOSER_ACTION_OPEN,
 			GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL, GTK_STOCK_OPEN, GTK_RESPONSE_OK, NULL);
 	gtk_file_chooser_set_local_only(GTK_FILE_CHOOSER(dialog), true);
 

@@ -1,7 +1,9 @@
 #include "Sidebar.h"
 #include "../../model/LinkDestination.h"
-#include "../../gettext.h"
 #include <string.h>
+
+#include <config.h>
+#include <glib/gi18n-lib.h>
 
 Sidebar::Sidebar(GladeGui * gui, Control * control) {
 	this->control = control;

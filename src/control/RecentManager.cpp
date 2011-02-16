@@ -1,8 +1,10 @@
 #include <gtk/gtk.h>
 #include <string.h>
-#include "../gettext.h"
-
 #include "RecentManager.h"
+
+#include <config.h>
+#include <glib/gi18n-lib.h>
+
 
 #define MIME "application/x-xoj"
 #define MIME_PDF "application/x-pdf"

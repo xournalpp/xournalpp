@@ -1,7 +1,9 @@
 #include <stdio.h>
 #include "UndoRedoHandler.h"
-#include "../gettext.h"
 #include "../control/Control.h"
+
+#include <config.h>
+#include <glib/gi18n-lib.h>
 
 // TODO: add memory limit
 

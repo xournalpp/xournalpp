@@ -1,6 +1,5 @@
 #include "PageView.h"
 #include "XournalWidget.h"
-#include "../gettext.h"
 #include <stdlib.h>
 #include <math.h>
 #include <gdk/gdkkeysyms.h>
@@ -12,6 +11,10 @@
 #include "../util/Range.h"
 #include "../cfg.h"
 #include "../undo/InsertUndoAction.h"
+
+#include <config.h>
+#include <glib/gi18n-lib.h>
+
 
 //#define INPUT_DEBUG
 
@@ -1046,6 +1049,12 @@ bool PageView::paintPage(GtkWidget * widget, GdkEventExpose * event, double zoom
 		return true;
 	}
 
+	if(event == NULL) {
+		printf("paint page: null\n");
+	} else {
+		printf("paint page: %i / %i : %i / %i\n", event->area.x, event->area.y, event->area.width, event->area.height);
+	}
+
 	cairo_t * cr = gdk_cairo_create(widget->window);
 
 	GtkAllocation alloc;
@@ -1079,6 +1088,7 @@ bool PageView::paintPage(GtkWidget * widget, GdkEventExpose * event, double zoom
 	for (GList * l = this->repaintRect; l != NULL; l = l->next) {
 		GdkRectangle * rect = (GdkRectangle *) l->data;
 		repaintRectangle(rect, zoom);
+		g_free(rect);
 	}
 	g_list_free(this->repaintRect);
 	this->repaintRect = NULL;

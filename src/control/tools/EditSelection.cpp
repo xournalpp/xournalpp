@@ -1,13 +1,15 @@
 #include "EditSelection.h"
 #include "Selection.h"
 #include "../../gui/XournalWidget.h"
-#include "../../gettext.h"
 #include <math.h>
 #include "../../undo/UndoRedoHandler.h"
 #include "../../undo/ScaleUndoAction.h"
 #include "../../undo/ColorUndoAction.h"
 #include "../../undo/SizeUndoAction.h"
 #include "../../undo/FontUndoAction.h"
+
+#include <config.h>
+#include <glib/gi18n-lib.h>
 
 EditSelection::EditSelection(UndoRedoHandler * undo, double x, double y, double width, double height, XojPage * page,
 		Redrawable * view) {

@@ -1,10 +1,13 @@
 #include "DocumentView.h"
 #include "TextView.h"
-#include "../gettext.h"
 #include <gdk/gdk.h>
 #include "../control/tools/Selection.h"
 #include "../control/tools/EditSelection.h"
 #include "../model/EraseableStroke.h"
+
+#include <config.h>
+#include <glib/gi18n-lib.h>
+
 
 //#define SHOW_ELEMENT_BOUNDS
 //#define SHOW_REPAINT_BOUNDS
@@ -329,7 +332,7 @@ void DocumentView::drawPage(XojPage * page, XojPopplerPage * popplerPage, cairo_
 			cairo_set_source_rgb(cr, 0.8, 0.8, 0.8);
 
 			cairo_text_extents_t extents = { 0 };
-			const char * loading = _("PDF Background missing");
+			const char * loading = _("PDF background missing");
 
 			cairo_text_extents(cr, loading, &extents);
 			cairo_move_to(cr, this->width / 2 - extents.width / 2, this->height / 2 - extents.height / 2);
