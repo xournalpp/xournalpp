@@ -1,8 +1,10 @@
 #include "ImagesDialog.h"
 #include "../Shadow.h"
 #include <math.h>
-#include "../../gettext.h"
 #include "../../util/Util.h"
+
+#include <config.h>
+#include <glib/gi18n-lib.h>
 
 class ImageView {
 public:

@@ -106,7 +106,7 @@ xournalpp_SOURCES = \
 	view/TextView.cpp \
 	Xournalpp.cpp
 
-xournalpp_CXXFLAGS = -g -rdynamic -DXOURNAL_FLAGS
+xournalpp_CXXFLAGS = -g -rdynamic
 
 xournalpp_LDADD = @PACKAGE_LIBS@ $(INTLLIBS)
 

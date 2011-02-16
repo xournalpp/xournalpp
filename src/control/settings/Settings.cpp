@@ -9,9 +9,11 @@
  * @license GPL
  */
 #include <stdlib.h>
-#include "../../gettext.h"
 #include <string.h>
 #include "Settings.h"
+
+#include <config.h>
+#include <glib/gi18n-lib.h>
 
 #define DEFAULT_FONT "Sans"
 #define DEFAULT_FONT_SIZE 12

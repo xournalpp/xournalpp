@@ -12,7 +12,9 @@
 #include <string.h>
 #include <glib.h>
 #include <glade/glade-xml.h>
-#include "../../gettext.h"
+
+#include <config.h>
+#include <glib/gi18n-lib.h>
 
 #include "ToolItems.h"
 #include <config.h>
@@ -374,7 +376,7 @@ void ToolMenuHandler::initToolItems() {
 			gui->get("menuNavigationLastPage")));
 
 	addToolItem(new ToolButton(listener, gui, "GOTO_NEXT_ANNOTATED_PAGE", ACTION_GOTO_NEXT_ANNOTATED_PAGE,
-			"nextAnnotatedPage.png", _("Next annotated Page"), gui->get("menuNavigationNextAnnotatedPage")));
+			"nextAnnotatedPage.png", _("Next annotated page"), gui->get("menuNavigationNextAnnotatedPage")));
 
 	addToolItem(new ToolButton(listener, "ZOOM_OUT", ACTION_ZOOM_OUT, GTK_STOCK_ZOOM_OUT, _("Zoom out"), gui->get(
 			"menuViewZoomOut")));
@@ -437,7 +439,7 @@ void ToolMenuHandler::initToolItems() {
 	registerMenupoint(newPagePopupCopyCurrent, ACTION_NEW_PAGE_COPY, GROUP_PAGE_INSERT_TYPE);
 	registerMenupoint(gui->get("menuJournalNewPageAfterCopy"), ACTION_NEW_PAGE_COPY, GROUP_PAGE_INSERT_TYPE);
 
-	GtkWidget *newPagePopupWithPDFBackground = gtk_check_menu_item_new_with_label(_("With PDF Background"));
+	GtkWidget *newPagePopupWithPDFBackground = gtk_check_menu_item_new_with_label(_("With PDF background"));
 	gtk_widget_show(newPagePopupWithPDFBackground);
 	gtk_container_add(GTK_CONTAINER (newPagePopup), newPagePopupWithPDFBackground);
 	gtk_check_menu_item_set_draw_as_radio(GTK_CHECK_MENU_ITEM(newPagePopupWithPDFBackground), true);

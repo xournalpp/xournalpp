@@ -12,7 +12,9 @@
 #include "SelectBackgroundColorDialog.h"
 #include "../../control/Control.h"
 #include "../widgets/SelectColor.h"
-#include "../../gettext.h"
+
+#include <config.h>
+#include <glib/gi18n-lib.h>
 
 class ColorEntry {
 public:

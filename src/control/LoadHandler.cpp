@@ -2,9 +2,11 @@
 #include <gtk/gtk.h>
 #include <glib.h>
 #include <glib/gstdio.h>
-#include "../gettext.h"
 #include <string.h>
 #include <stdlib.h>
+
+#include <config.h>
+#include <glib/gi18n-lib.h>
 
 typedef struct {
 	const char * name;

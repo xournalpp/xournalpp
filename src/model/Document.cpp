@@ -5,7 +5,9 @@
 #include <libxml/xpath.h>
 #include <libxml/xpathInternals.h>
 #include "LinkDestination.h"
-#include "../gettext.h"
+
+#include <config.h>
+#include <glib/gi18n-lib.h>
 
 #include <string.h>
 

@@ -13,7 +13,9 @@
 #define __UNDOACTION_H__
 
 #include "../util/String.h"
-#include "../gettext.h"
+
+#include <config.h>
+#include <glib/gi18n-lib.h>
 
 class Control;
 class XojPage;

@@ -69,7 +69,7 @@ String DeleteUndoAction::getText() {
 	String text;
 
 	if (eraser) {
-		text = _("Erase Stroke");
+		text = _("Erase stroke");
 	} else {
 		text = _("Delete");
 

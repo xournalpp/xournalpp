@@ -1,7 +1,10 @@
 #include "../control/Control.h"
 #include "MainWindow.h"
 #include "../cfg.h"
-#include "../gettext.h"
+
+#include <config.h>
+#include <glib/gi18n-lib.h>
+
 
 MainWindow::MainWindow(Control * control) :
 	GladeGui("main.glade", "mainWindow") {

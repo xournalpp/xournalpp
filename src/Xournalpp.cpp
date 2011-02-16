@@ -18,14 +18,12 @@
 #include "gui/MainWindow.h"
 #include "util/CrashHandler.h"
 #include "control/Control.h"
-#include "gettext.h"
 #include "cfg.h"
 
-#include "control/settings/ev-metadata-manager.h"
+#include <config.h>
+#include <glib/gi18n-lib.h>
 
-// TODO: use gettext:
-// http://www.gnu.org/software/hello/manual/automake/gettext.html
-// http://oriya.sarovar.org/docs/gettext_single.html
+#include "control/settings/ev-metadata-manager.h"
 
 void initPath(const char * argv0) {
 	gchar * path;
@@ -98,12 +96,13 @@ static GOptionEntry options[] = {
 int main(int argc, char *argv[]) {
 	installCrashHandlers();
 
-	//#ifdef ENABLE_NLS
-	//	const char * folder = bindtextdomain(GETTEXT_PACKAGE, PACKAGE_LOCALE_DIR);
-	//	printf("bindtextdomain=%s\n", folder);
-	//	bind_textdomain_codeset(GETTEXT_PACKAGE, "UTF-8");
-	//	textdomain(GETTEXT_PACKAGE);
-	//#endif
+#ifdef ENABLE_NLS
+	setlocale( LC_ALL, "" );
+	bindtextdomain(GETTEXT_PACKAGE, PACKAGE_LOCALE_DIR);
+	textdomain(GETTEXT_PACKAGE);
+	printf("%s%s\n",gettext( "Hello, world!\n" ), PACKAGE_LOCALE_DIR);
+
+#endif
 
 	gtk_init(&argc, &argv);
 
@@ -132,7 +131,7 @@ int main(int argc, char *argv[]) {
 						"DO NOT USE THIS RELEASE FOR PRODUCTIVE ENVIRONMENT!\n"
 						"Are you sure you wish to start this release?\n\n\n"
 						"If you don't want to show this warning, you can run\n"
-						"\"xournal --help\"\n"
+						"\"xournalpp --help\"\n"
 				));
 
 		int result = gtk_dialog_run(GTK_DIALOG(dialog));

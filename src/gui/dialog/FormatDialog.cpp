@@ -1,7 +1,9 @@
 #include "FormatDialog.h"
-#include "../../gettext.h"
 
 #include "../../model/FormatDefinitions.h"
+
+#include <config.h>
+#include <glib/gi18n-lib.h>
 
 FormatDialog::FormatDialog(Settings * settings, double width, double heigth) :
 	GladeGui("pagesize.glade", "pagesizeDialog") {

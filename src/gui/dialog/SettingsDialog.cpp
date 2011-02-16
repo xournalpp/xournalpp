@@ -9,9 +9,11 @@
  *
  * @license GPL
  */
+#include <config.h>
+#include <glib/gi18n-lib.h>
+
 #include "SettingsDialog.h"
 #include "../widgets/ZoomCallib.h"
-#include "../../gettext.h"
 #include "ButtonConfig.h"
 #include "../../util/Util.h"
 #include <string.h>

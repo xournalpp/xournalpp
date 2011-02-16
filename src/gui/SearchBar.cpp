@@ -1,7 +1,9 @@
 #include "SearchBar.h"
 #include "../control/Control.h"
 #include <string.h>
-#include "../gettext.h"
+
+#include <config.h>
+#include <glib/gi18n-lib.h>
 
 SearchBar::SearchBar(Control * control) {
 	this->control = control;

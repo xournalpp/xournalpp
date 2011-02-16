@@ -20,9 +20,9 @@
 #define METADATA_FILE 	    "xo-metadata.xml"
 #define METADATA_MAX_ITEMS	50
 
+/**
+ * This should be enabled, else after screen rotation pen support does not work anymore
+ */
 #define ENABLE_XINPUT_BUGFIX
-
-
-#define ENABLE_NLS
 
 #endif /* __CONFIG_H__ */
