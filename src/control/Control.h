@@ -48,14 +48,16 @@ public:
 	// Menu File
 	void newFile();
 	bool openFile(String filename = NULL);
-	bool annotatePdf(String filename, bool attachPdf);
+	bool annotatePdf(String filename, bool attachPdf, bool attachToDocument);
 	void print();
 	void exportAsPdf();
 	void exportAs();
-	bool save();
+	bool save(bool asynchron);
 	void saveAs();
 	void quit();
 	bool close();
+
+	void resetShapeRecognizer();
 
 	// Menu edit
 	void showSettings();
@@ -102,6 +104,10 @@ public:
 	MainWindow * getWindow();
 
 	Cursor * getCursor();
+
+	RecentManager * getRecentManager();
+
+	void updateWindowTitle();
 
 	void scrollRelative(double x, double y);
 	void scrollToSpinPange();
@@ -171,6 +177,7 @@ public:
 	TextEditor * getTextEditor();
 
 	void setSidebarTmpDisabled(bool disabled);
+
 public:
 	// UndoRedoListener interface
 	void undoRedoChanged();
@@ -194,7 +201,6 @@ protected:
 
 	bool showSaveDialog();
 
-	void updateDocName();
 	void fileLoaded();
 
 	void eraserSizeChanged();

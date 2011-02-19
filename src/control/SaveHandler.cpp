@@ -21,6 +21,9 @@
 #include "xml/XmlPointNode.h"
 
 #include <config.h>
+#include <glib/gi18n-lib.h>
+
+#include <config.h>
 
 SaveHandler::SaveHandler() {
 	root = NULL;
@@ -194,9 +197,35 @@ void SaveHandler::visitPage(XmlNode * root, XojPage * p, Document * doc, int id)
 		background->setAttrib("type", "pdf");
 		if (!firstPdfPageVisited) {
 			firstPdfPageVisited = true;
-			background->setAttrib("domain", "absolute");
-			String pdfName = doc->getPdfFilename();
-			background->setAttrib("filename", pdfName.c_str());
+
+			if (doc->isAttachPdf()) {
+				printf("doc->isAttachPdf()\n");
+				background->setAttrib("domain", "attach");
+				String filename = doc->getFilename();
+				filename += ".";
+				filename += "bg.pdf";
+				background->setAttrib("filename", filename.c_str());
+
+				GError * error = NULL;
+				doc->getPdfDocument().save(filename, &error);
+
+				if (error) {
+					if (!this->errorMessage.isEmpty()) {
+						this->errorMessage += "\n";
+					}
+
+					char * msg = g_strdup_printf(_("Could not write background \"%s\", %s"), filename.c_str(),
+							error->message);
+					this->errorMessage += msg;
+					g_free(msg);
+
+					g_error_free(error);
+				}
+			} else {
+				background->setAttrib("domain", "absolute");
+				String pdfName = doc->getPdfFilename();
+				background->setAttrib("filename", pdfName.c_str());
+			}
 		}
 		background->setAttrib("pageno", p->getPdfPageNr() + 1);
 		break;
@@ -253,9 +282,20 @@ void SaveHandler::saveTo(OutputStream * out, String filename) {
 
 		char * tmpfn = g_strdup_printf("%s.%s", filename.c_str(), img->getFilename().c_str());
 		if (!gdk_pixbuf_save(img->getPixbuf(), tmpfn, "png", NULL, NULL)) {
-			g_warning("Could not write background '%s'. Continuing anyway.", tmpfn);
+			char * msg = g_strdup_printf(_("Could not write background \"%s\". Continuing anyway."), tmpfn);
+
+			if (!this->errorMessage.isEmpty()) {
+				this->errorMessage += "\n";
+			}
+
+			this->errorMessage += msg;
+			g_free(msg);
 		}
 		g_free(tmpfn);
 	}
+}
+
+String SaveHandler::getErrorMessage() {
+	return this->errorMessage;
 }
 

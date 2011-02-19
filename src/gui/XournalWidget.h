@@ -81,6 +81,9 @@ public:
 	void endTextSelection();
 
 	TextEditor * getTextEditor();
+
+	void resetShapeRecognizer();
+
 public:
 	//ZoomListener interface
 	void zoomChanged(double lastZoom);

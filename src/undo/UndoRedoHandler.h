@@ -47,12 +47,20 @@ public:
 	void addUndoRedoListener(UndoRedoListener * listener);
 
 	bool isChanged();
+	bool isChangedAutosave();
+	void documentAutosaved();
+	void documentSaved();
+
 private:
 	void clearRedo();
 
 private:
 	GList * undoList;
 	GList * redoList;
+
+	GList * savedUndoList;
+	GList * autosavedUndoList;
+
 
 	GList * listener;
 

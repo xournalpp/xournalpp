@@ -12,41 +12,44 @@ XournalWidget::XournalWidget(GtkWidget * parent, Control * control) {
 
 	initScrollHandler(parent);
 
-	widget = gtk_layout_new(NULL, NULL);
+	this->widget = gtk_layout_new(NULL, NULL);
 	GTK_WIDGET_SET_FLAGS(widget, GTK_CAN_FOCUS);
 
 	gtk_container_add(GTK_CONTAINER(parent), widget);
 	gtk_widget_show(widget);
 
-	viewPages = NULL;
-	viewPagesLen = 0;
-	margin = 75;
-	currentPage = 0;
-	lastSelectedPage = -1;
-	lastWidgetSize = 0;
+	this->viewPages = NULL;
+	this->viewPagesLen = 0;
+	this->margin = 75;
+	this->currentPage = 0;
+	this->lastSelectedPage = -1;
+	this->lastWidgetSize = 0;
 
-	gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(parent), GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
-	g_signal_connect(widget, "size-allocate", G_CALLBACK(sizeAllocate), this);
-	g_signal_connect(widget, "button_press_event", G_CALLBACK(onButtonPressEventCallback), this);
-	gtk_widget_set_events(widget, GDK_BUTTON_PRESS_MASK);
+	gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(parent),
+			GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
+	g_signal_connect(this->widget, "size-allocate", G_CALLBACK(sizeAllocate), this);
+	g_signal_connect(this->widget, "button_press_event", G_CALLBACK(onButtonPressEventCallback), this);
+	gtk_widget_set_events(this->widget, GDK_BUTTON_PRESS_MASK);
 
-	g_signal_connect(G_OBJECT(widget), "expose_event", G_CALLBACK(exposeEventCallback), this);
+	g_signal_connect(G_OBJECT(this->widget), "expose_event", G_CALLBACK(exposeEventCallback), this);
 
-	GtkAdjustment* adj = gtk_scrolled_window_get_vadjustment(GTK_SCROLLED_WINDOW(parent));
+	GtkAdjustment* adj = gtk_scrolled_window_get_vadjustment(
+			GTK_SCROLLED_WINDOW(parent));
 	g_signal_connect(adj, "value-changed", G_CALLBACK( onVscrollChanged), this);
 
-	gtk_widget_set_events(widget, GDK_EXPOSURE_MASK | GDK_KEY_PRESS_MASK);
-	gtk_signal_connect(GTK_OBJECT(widget), "key_press_event", GTK_SIGNAL_FUNC(onKeyPressCallback), this);
-	gtk_signal_connect(GTK_OBJECT(widget), "key_release_event", GTK_SIGNAL_FUNC(onKeyReleaseCallback), this);
+	gtk_widget_set_events(this->widget, GDK_EXPOSURE_MASK | GDK_KEY_PRESS_MASK);
+	gtk_signal_connect(GTK_OBJECT(this->widget), "key_press_event", GTK_SIGNAL_FUNC(onKeyPressCallback), this);
+	gtk_signal_connect(GTK_OBJECT(this->widget), "key_release_event", GTK_SIGNAL_FUNC(onKeyReleaseCallback), this);
 
 	control->getZoomControl()->addZoomListener(this);
 
-	gtk_widget_set_can_default(widget, true);
-	gtk_widget_grab_default(widget);
+	gtk_widget_set_can_default(this->widget, true);
+	gtk_widget_grab_default(this->widget);
 
-	gtk_widget_grab_focus(widget);
+	gtk_widget_grab_focus(this->widget);
 
-	this->cleanupTimeout = g_timeout_add_seconds(5, (GSourceFunc) clearMemoryTimer, this);
+	this->cleanupTimeout = g_timeout_add_seconds(5,
+			(GSourceFunc) clearMemoryTimer, this);
 }
 
 XournalWidget::~XournalWidget() {
@@ -63,7 +66,9 @@ gboolean XournalWidget::clearMemoryTimer(XournalWidget * widget) {
 	for (int i = 0; i < widget->viewPagesLen; i++) {
 		PageView * v = widget->viewPages[i];
 		if (v->getLastVisibelTime() > 0) {
-			list = g_list_insert_sorted(list, v, (GCompareFunc) pageViewCmpSize);
+			list
+					= g_list_insert_sorted(list, v,
+							(GCompareFunc) pageViewCmpSize);
 		}
 	}
 
@@ -93,7 +98,8 @@ gboolean XournalWidget::clearMemoryTimer(XournalWidget * widget) {
 	return true;
 }
 
-void XournalWidget::onVscrollChanged(GtkAdjustment *adjustment, XournalWidget * xournal) {
+void XournalWidget::onVscrollChanged(GtkAdjustment *adjustment,
+		XournalWidget * xournal) {
 	xournal->onScrolled();
 }
 
@@ -101,11 +107,13 @@ int XournalWidget::getCurrentPage() {
 	return currentPage;
 }
 
-bool XournalWidget::onKeyPressCallback(GtkWidget *widget, GdkEventKey *event, XournalWidget * xournal) {
+bool XournalWidget::onKeyPressCallback(GtkWidget *widget, GdkEventKey *event,
+		XournalWidget * xournal) {
 	return xournal->onKeyPressEvent(widget, event);
 }
 
-bool XournalWidget::onKeyReleaseCallback(GtkWidget *widget, GdkEventKey *event, XournalWidget * xournal) {
+bool XournalWidget::onKeyReleaseCallback(GtkWidget *widget, GdkEventKey *event,
+		XournalWidget * xournal) {
 	return xournal->onKeyReleaseEvent(event);
 }
 
@@ -136,13 +144,30 @@ bool XournalWidget::onKeyPressEvent(GtkWidget *widget, GdkEventKey *event) {
 		}
 	}
 
-	if (event->keyval == GDK_Page_Down) {
-		control->goToNextPage();
-		return true;
-	}
-	if (event->keyval == GDK_Page_Up) {
-		control->goToPreviousPage();
-		return true;
+	guint state = event->state & gtk_accelerator_get_default_mod_mask();
+
+	if (state & GDK_SHIFT_MASK) {
+		if (event->keyval == GDK_Page_Down) {
+			control->goToNextPage();
+			return true;
+		}
+		if (event->keyval == GDK_Page_Up) {
+			control->goToPreviousPage();
+			return true;
+		}
+	} else {
+		GtkAllocation alloc = { 0 };
+		gtk_widget_get_allocation(gtk_widget_get_parent(this->widget), &alloc);
+		int windowHeight = alloc.height - scrollKeySize;
+
+		if (event->keyval == GDK_Page_Down) {
+			control->scrollRelative(0, windowHeight);
+			return true;
+		}
+		if (event->keyval == GDK_Page_Up) {
+			control->scrollRelative(0, -windowHeight);
+			return true;
+		}
 	}
 
 	if (event->keyval == GDK_Up) {
@@ -180,7 +205,8 @@ bool XournalWidget::onKeyReleaseEvent(GdkEventKey *event) {
 	return false;
 }
 
-gboolean XournalWidget::onButtonPressEventCallback(GtkWidget *widget, GdkEventButton *event, XournalWidget * xournal) {
+gboolean XournalWidget::onButtonPressEventCallback(GtkWidget *widget,
+		GdkEventButton *event, XournalWidget * xournal) {
 	xournal->resetFocus();
 	return false;
 }
@@ -190,7 +216,8 @@ void XournalWidget::resetFocus() {
 	gtk_widget_grab_focus(widget);
 }
 
-bool XournalWidget::searchTextOnPage(const char * text, int p, int * occures, double * top) {
+bool XournalWidget::searchTextOnPage(const char * text, int p, int * occures,
+		double * top) {
 	if (p < 0 || p >= this->viewPagesLen) {
 		return false;
 	}
@@ -218,7 +245,8 @@ PageView * XournalWidget::getViewAt(int x, int y) {
 		GtkAllocation alloc = { 0 };
 		gtk_widget_get_allocation(p->getWidget(), &alloc);
 
-		if (alloc.x <= x && alloc.x + alloc.width >= x && alloc.y <= y && alloc.y + alloc.height >= y) {
+		if (alloc.x <= x && alloc.x + alloc.width >= x && alloc.y <= y
+				&& alloc.y + alloc.height >= y) {
 			return p;
 		}
 	}
@@ -226,7 +254,8 @@ PageView * XournalWidget::getViewAt(int x, int y) {
 	return NULL;
 }
 
-bool XournalWidget::exposeEventCallback(GtkWidget *widget, GdkEventExpose *event, XournalWidget * xournal) {
+bool XournalWidget::exposeEventCallback(GtkWidget *widget,
+		GdkEventExpose *event, XournalWidget * xournal) {
 	xournal->paintBorder(widget, event);
 
 	return true;
@@ -247,10 +276,12 @@ void XournalWidget::paintBorder(GtkWidget *widget, GdkEventExpose *event) {
 		GtkAllocation alloc = { 0 };
 		gtk_widget_get_allocation(w, &alloc);
 
-		if (scrollY > alloc.y + Shadow::getShadowBottomRightSize() + alloc.height) {
+		if (scrollY > alloc.y + Shadow::getShadowBottomRightSize()
+				+ alloc.height) {
 			continue;
 		}
-		if (scrollY + displaySize.height < alloc.y - Shadow::getShadowTopLeftSize()) {
+		if (scrollY + displaySize.height < alloc.y
+				- Shadow::getShadowTopLeftSize()) {
 			break;
 		}
 
@@ -259,10 +290,12 @@ void XournalWidget::paintBorder(GtkWidget *widget, GdkEventExpose *event) {
 		double b = 0;
 
 		if (p->isSelected()) {
-			Shadow::drawShadow(cr, alloc.x - 2, alloc.y - 2, alloc.width + 4, alloc.height + 4, r, g, b);
+			Shadow::drawShadow(cr, alloc.x - 2, alloc.y - 2, alloc.width + 4,
+					alloc.height + 4, r, g, b);
 
 			// Draw border
-			Util::cairo_set_source_rgbi(cr, control->getSettings()->getSelectionColor());
+			Util::cairo_set_source_rgbi(cr,
+					control->getSettings()->getSelectionColor());
 			cairo_set_line_width(cr, 4.0);
 			cairo_set_line_cap(cr, CAIRO_LINE_CAP_BUTT);
 			cairo_set_line_join(cr, CAIRO_LINE_JOIN_BEVEL);
@@ -275,7 +308,8 @@ void XournalWidget::paintBorder(GtkWidget *widget, GdkEventExpose *event) {
 
 			cairo_stroke(cr);
 		} else {
-			Shadow::drawShadow(cr, alloc.x, alloc.y, alloc.width, alloc.height, r, g, b);
+			Shadow::drawShadow(cr, alloc.x, alloc.y, alloc.width, alloc.height,
+					r, g, b);
 		}
 	}
 
@@ -334,7 +368,8 @@ void XournalWidget::scrollTo(int pageNo, double y) {
 	GValue pY = { 0 };
 	g_value_init(&pY, G_TYPE_INT);
 
-	gtk_container_child_get_property(GTK_CONTAINER(widget), p->getWidget(), "y", &pY);
+	gtk_container_child_get_property(GTK_CONTAINER(widget), p->getWidget(),
+			"y", &pY);
 	int pos = g_value_get_int(&pY);
 
 	control->firePageSelected(pageNo);
@@ -346,7 +381,8 @@ void XournalWidget::scrollTo(int pageNo, double y) {
 	}
 
 	double v = (double) pos + y;
-	double upper = gtk_adjustment_get_upper(h) - gtk_adjustment_get_page_size(h);
+	double upper = gtk_adjustment_get_upper(h)
+			- gtk_adjustment_get_page_size(h);
 
 	if (upper < v) {
 		v = upper;
@@ -390,7 +426,8 @@ void XournalWidget::onScrolled() {
 		GValue pY = { 0 };
 		g_value_init(&pY, G_TYPE_INT);
 
-		gtk_container_child_get_property(GTK_CONTAINER(widget), p->getWidget(), "y", &pY);
+		gtk_container_child_get_property(GTK_CONTAINER(widget), p->getWidget(),
+				"y", &pY);
 		int y = g_value_get_int(&pY);
 
 		int pageHeight = p->getDisplayHeight();
@@ -433,9 +470,11 @@ void XournalWidget::onScrolled() {
 		GValue pY2 = { 0 };
 		g_value_init(&pY2, G_TYPE_INT);
 
-		gtk_container_child_get_property(GTK_CONTAINER(widget), viewPages[mostPageNr]->getWidget(), "y", &pY1);
+		gtk_container_child_get_property(GTK_CONTAINER(widget),
+				viewPages[mostPageNr]->getWidget(), "y", &pY1);
 		int y1 = g_value_get_int(&pY1);
-		gtk_container_child_get_property(GTK_CONTAINER(widget), viewPages[mostPageNr + 1]->getWidget(), "y", &pY2);
+		gtk_container_child_get_property(GTK_CONTAINER(widget),
+				viewPages[mostPageNr + 1]->getWidget(), "y", &pY2);
 		int y2 = g_value_get_int(&pY2);
 
 		if (y1 != y2 || !viewPages[mostPageNr + 1]->isSelected()) {
@@ -474,7 +513,8 @@ void XournalWidget::getPasteTarget(double & x, double & y) {
 	}
 }
 
-void XournalWidget::sizeAllocate(GtkWidget *widget, GtkRequisition *requisition, XournalWidget * xournal) {
+void XournalWidget::sizeAllocate(GtkWidget *widget,
+		GtkRequisition *requisition, XournalWidget * xournal) {
 	GtkAllocation alloc = { 0 };
 	gtk_widget_get_allocation(widget, &alloc);
 
@@ -493,22 +533,30 @@ void XournalWidget::initScrollHandler(GtkWidget * parent) {
 	GtkBindingSet *bindingSet;
 
 	bindingSet = gtk_binding_set_by_class(G_OBJECT_GET_CLASS(parent));
-	gtk_binding_entry_add_signal(bindingSet, GDK_Up, (GdkModifierType) 0, "scroll_child", 2, GTK_TYPE_SCROLL_TYPE,
-			GTK_SCROLL_STEP_BACKWARD, G_TYPE_BOOLEAN, FALSE);
-	gtk_binding_entry_add_signal(bindingSet, GDK_KP_Up, (GdkModifierType) 0, "scroll_child", 2, GTK_TYPE_SCROLL_TYPE,
-			GTK_SCROLL_STEP_BACKWARD, G_TYPE_BOOLEAN, FALSE);
-	gtk_binding_entry_add_signal(bindingSet, GDK_Down, (GdkModifierType) 0, "scroll_child", 2, GTK_TYPE_SCROLL_TYPE,
-			GTK_SCROLL_STEP_FORWARD, G_TYPE_BOOLEAN, FALSE);
-	gtk_binding_entry_add_signal(bindingSet, GDK_KP_Down, (GdkModifierType) 0, "scroll_child", 2, GTK_TYPE_SCROLL_TYPE,
-			GTK_SCROLL_STEP_FORWARD, G_TYPE_BOOLEAN, FALSE);
-	gtk_binding_entry_add_signal(bindingSet, GDK_Left, (GdkModifierType) 0, "scroll_child", 2, GTK_TYPE_SCROLL_TYPE,
-			GTK_SCROLL_STEP_BACKWARD, G_TYPE_BOOLEAN, TRUE);
-	gtk_binding_entry_add_signal(bindingSet, GDK_KP_Left, (GdkModifierType) 0, "scroll_child", 2, GTK_TYPE_SCROLL_TYPE,
-			GTK_SCROLL_STEP_BACKWARD, G_TYPE_BOOLEAN, TRUE);
-	gtk_binding_entry_add_signal(bindingSet, GDK_Right, (GdkModifierType) 0, "scroll_child", 2, GTK_TYPE_SCROLL_TYPE,
-			GTK_SCROLL_STEP_FORWARD, G_TYPE_BOOLEAN, TRUE);
-	gtk_binding_entry_add_signal(bindingSet, GDK_KP_Right, (GdkModifierType) 0, "scroll_child", 2,
-			GTK_TYPE_SCROLL_TYPE, GTK_SCROLL_STEP_FORWARD, G_TYPE_BOOLEAN, TRUE);
+	gtk_binding_entry_add_signal(bindingSet, GDK_Up, (GdkModifierType) 0,
+			"scroll_child", 2, GTK_TYPE_SCROLL_TYPE, GTK_SCROLL_STEP_BACKWARD,
+			G_TYPE_BOOLEAN, FALSE);
+	gtk_binding_entry_add_signal(bindingSet, GDK_KP_Up, (GdkModifierType) 0,
+			"scroll_child", 2, GTK_TYPE_SCROLL_TYPE, GTK_SCROLL_STEP_BACKWARD,
+			G_TYPE_BOOLEAN, FALSE);
+	gtk_binding_entry_add_signal(bindingSet, GDK_Down, (GdkModifierType) 0,
+			"scroll_child", 2, GTK_TYPE_SCROLL_TYPE, GTK_SCROLL_STEP_FORWARD,
+			G_TYPE_BOOLEAN, FALSE);
+	gtk_binding_entry_add_signal(bindingSet, GDK_KP_Down, (GdkModifierType) 0,
+			"scroll_child", 2, GTK_TYPE_SCROLL_TYPE, GTK_SCROLL_STEP_FORWARD,
+			G_TYPE_BOOLEAN, FALSE);
+	gtk_binding_entry_add_signal(bindingSet, GDK_Left, (GdkModifierType) 0,
+			"scroll_child", 2, GTK_TYPE_SCROLL_TYPE, GTK_SCROLL_STEP_BACKWARD,
+			G_TYPE_BOOLEAN, TRUE);
+	gtk_binding_entry_add_signal(bindingSet, GDK_KP_Left, (GdkModifierType) 0,
+			"scroll_child", 2, GTK_TYPE_SCROLL_TYPE, GTK_SCROLL_STEP_BACKWARD,
+			G_TYPE_BOOLEAN, TRUE);
+	gtk_binding_entry_add_signal(bindingSet, GDK_Right, (GdkModifierType) 0,
+			"scroll_child", 2, GTK_TYPE_SCROLL_TYPE, GTK_SCROLL_STEP_FORWARD,
+			G_TYPE_BOOLEAN, TRUE);
+	gtk_binding_entry_add_signal(bindingSet, GDK_KP_Right, (GdkModifierType) 0,
+			"scroll_child", 2, GTK_TYPE_SCROLL_TYPE, GTK_SCROLL_STEP_FORWARD,
+			G_TYPE_BOOLEAN, TRUE);
 }
 
 void XournalWidget::zoomIn() {
@@ -534,7 +582,8 @@ void XournalWidget::zoomChanged(double lastZoom) {
 	}
 
 	double zoom = control->getZoomControl()->getZoom();
-	gtk_adjustment_set_value(h, scrollY / lastZoom * control->getZoomControl()->getZoom());
+	gtk_adjustment_set_value(h, scrollY / lastZoom
+			* control->getZoomControl()->getZoom());
 
 	const char * file = control->getDocument()->getEvMetadataFilename();
 	if (file) {
@@ -574,6 +623,13 @@ TextEditor * XournalWidget::getTextEditor() {
 	}
 
 	return NULL;
+}
+
+void XournalWidget::resetShapeRecognizer() {
+	for (int i = 0; i < this->viewPagesLen; i++) {
+		PageView * v = this->viewPages[i];
+		v->resetShapeRecognizer();
+	}
 }
 
 void XournalWidget::pageInserted(int page) {
@@ -634,7 +690,8 @@ void XournalWidget::layoutPages() {
 
 		// calc size for the widget
 		for (int i = 0; i < viewPagesLen; i++) {
-			int w = viewPages[i]->getDisplayWidth() + XOURNAL_PADDING_TOP_LEFT + XOURNAL_PADDING;
+			int w = viewPages[i]->getDisplayWidth() + XOURNAL_PADDING_TOP_LEFT
+					+ XOURNAL_PADDING;
 			int h = viewPages[i]->getDisplayHeight();
 			if (i < viewPagesLen - 1) {
 
@@ -653,7 +710,7 @@ void XournalWidget::layoutPages() {
 		int y = XOURNAL_PADDING_TOP_LEFT;
 
 		int additionalHeight = 0;
-		if(viewPagesLen > 0) {
+		if (viewPagesLen > 0) {
 			additionalHeight = viewPages[0]->getHeight();
 		}
 
@@ -668,11 +725,13 @@ void XournalWidget::layoutPages() {
 			int x = 0;
 			int h = viewPages[i]->getDisplayHeight();
 			if (i < viewPagesLen - 1) {
-				x = width - viewPages[i]->getDisplayWidth() - viewPages[i + 1]->getDisplayWidth() - XOURNAL_PADDING
+				x = width - viewPages[i]->getDisplayWidth()
+						- viewPages[i + 1]->getDisplayWidth() - XOURNAL_PADDING
 						- +XOURNAL_PADDING_TOP_LEFT;
 				x /= 2;
 
-				gtk_layout_move(GTK_LAYOUT(widget), viewPages[i]->getWidget(), x, y);
+				gtk_layout_move(GTK_LAYOUT(widget), viewPages[i]->getWidget(),
+						x, y);
 
 				x += viewPages[i]->getDisplayWidth() + XOURNAL_PADDING;
 
@@ -692,12 +751,13 @@ void XournalWidget::layoutPages() {
 		this->lastWidgetSize = width;
 		gtk_layout_set_size(GTK_LAYOUT(widget), width, height);
 
-
 		if (allowScrollOutsideThePage) {
-			GtkAdjustment * hadj = gtk_scrolled_window_get_hadjustment(GTK_SCROLLED_WINDOW(gtk_widget_get_parent(widget)));
+			GtkAdjustment * hadj = gtk_scrolled_window_get_hadjustment(
+					GTK_SCROLLED_WINDOW(gtk_widget_get_parent(widget)));
 			gtk_adjustment_set_value(hadj, width / 4);
 
-			GtkAdjustment * vadj = gtk_scrolled_window_get_vadjustment(GTK_SCROLLED_WINDOW(gtk_widget_get_parent(widget)));
+			GtkAdjustment * vadj = gtk_scrolled_window_get_vadjustment(
+					GTK_SCROLLED_WINDOW(gtk_widget_get_parent(widget)));
 			gtk_adjustment_set_value(vadj, additionalHeight / 2);
 		}
 	} else {
@@ -719,7 +779,7 @@ void XournalWidget::layoutPages() {
 		int x = XOURNAL_PADDING_TOP_LEFT;
 
 		int additionalHeight = 0;
-		if(viewPagesLen > 0) {
+		if (viewPagesLen > 0) {
 			additionalHeight = viewPages[0]->getHeight();
 		}
 
@@ -746,10 +806,12 @@ void XournalWidget::layoutPages() {
 		}
 
 		if (allowScrollOutsideThePage) {
-			GtkAdjustment * hadj = gtk_scrolled_window_get_hadjustment(GTK_SCROLLED_WINDOW(gtk_widget_get_parent(widget)));
+			GtkAdjustment * hadj = gtk_scrolled_window_get_hadjustment(
+					GTK_SCROLLED_WINDOW(gtk_widget_get_parent(widget)));
 			gtk_adjustment_set_value(hadj, width / 4);
 
-			GtkAdjustment * vadj = gtk_scrolled_window_get_vadjustment(GTK_SCROLLED_WINDOW(gtk_widget_get_parent(widget)));
+			GtkAdjustment * vadj = gtk_scrolled_window_get_vadjustment(
+					GTK_SCROLLED_WINDOW(gtk_widget_get_parent(widget)));
 			gtk_adjustment_set_value(vadj, additionalHeight / 2);
 		}
 	}
@@ -765,7 +827,8 @@ bool XournalWidget::widgetRepaintCallback(GtkWidget * widget) {
 
 void XournalWidget::updateBackground() {
 	if (GDK_IS_WINDOW(GTK_LAYOUT(widget)->bin_window)) {
-		gdk_window_set_background(GTK_LAYOUT(widget)->bin_window, &widget->style->dark[GTK_STATE_NORMAL]);
+		gdk_window_set_background(GTK_LAYOUT(widget)->bin_window,
+				&widget->style->dark[GTK_STATE_NORMAL]);
 		gtk_widget_queue_draw(GTK_WIDGET(widget));
 	}
 }
@@ -843,13 +906,13 @@ ArrayIterator<PageView *> XournalWidget::pageViewIterator() {
 	return ArrayIterator<PageView *> (viewPages, viewPagesLen);
 }
 
-static gboolean onScrolledwindowMainScrollEvent(GtkWidget *widget, GdkEventScroll *event, XournalWidget * xournal) {
-	guint state;
-
-	state = event->state & gtk_accelerator_get_default_mod_mask();
+static gboolean onScrolledwindowMainScrollEvent(GtkWidget *widget,
+		GdkEventScroll *event, XournalWidget * xournal) {
+	guint state = event->state & gtk_accelerator_get_default_mod_mask();
 
 	if (state == GDK_CONTROL_MASK) {
-		if (event->direction == GDK_SCROLL_UP || event->direction == GDK_SCROLL_LEFT) {
+		if (event->direction == GDK_SCROLL_UP || event->direction
+				== GDK_SCROLL_LEFT) {
 			xournal->zoomIn();
 		} else {
 			xournal->zoomOut();

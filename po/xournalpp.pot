@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-02-16 18:16+0100\n"
+"POT-Creation-Date: 2011-02-18 20:49+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -226,16 +226,22 @@ msgstr ""
 msgid "About Xournal++"
 msgstr ""
 
-#: ../src/control/Control.cpp:1693
+#: ../src/control/Control.cpp:1693 ../src/control/Control.cpp:1774
 msgid "All files"
 msgstr ""
 
 #: ../src/control/Control.cpp:1111 ../src/control/Control.cpp:1724
+#: ../src/control/Control.cpp:1159 ../src/control/Control.cpp:1807
 msgid "Attach file to the journal"
 msgstr ""
 
 #: ../ui/settings.glade:279
 msgid "Autosave every ... minute:"
+msgstr ""
+
+#: ../src/control/Control.cpp:222
+#, c-format
+msgid "Autosave: %s"
 msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:371 ../ui/main.glade:1086
@@ -252,6 +258,10 @@ msgstr ""
 
 #: ../ui/settings.glade:1137
 msgid "Border color for current page and other selections"
+msgstr ""
+
+#: ../src/control/Control.cpp:2352
+msgid "Cancel"
 msgstr ""
 
 #: ../src/undo/ColorUndoAction.cpp:92
@@ -289,18 +299,28 @@ msgstr ""
 msgid "Could not open file: \""
 msgstr ""
 
-#: ../src/undo/UndoRedoHandler.cpp:82
+#: ../src/undo/UndoRedoHandler.cpp:82 ../src/undo/UndoRedoHandler.cpp:84
 #, c-format
 msgid ""
 "Could not redo '%s'\n"
 "Something went wrong... Please write a bug report..."
 msgstr ""
 
-#: ../src/undo/UndoRedoHandler.cpp:56
+#: ../src/undo/UndoRedoHandler.cpp:56 ../src/undo/UndoRedoHandler.cpp:58
 #, c-format
 msgid ""
 "Could not undo '%s'\n"
 "Something went wrong... Please write a bug report..."
+msgstr ""
+
+#: ../src/control/SaveHandler.cpp:217
+#, c-format
+msgid "Could not write background \"%s\", %s"
+msgstr ""
+
+#: ../src/control/SaveHandler.cpp:285
+#, c-format
+msgid "Could not write background '%s'. Continuing anyway."
 msgstr ""
 
 #: ../src/gui/GladeGui.cpp:60
@@ -324,7 +344,15 @@ msgstr ""
 msgid "Delete La_yer"
 msgstr ""
 
-#: ../src/control/LoadHandler.cpp:639
+#: ../src/control/Control.cpp:2351
+msgid "Discard"
+msgstr ""
+
+#: ../src/pdf/poppler/XojPopplerDocument.cpp:317
+msgid "Document is encrypted"
+msgstr ""
+
+#: ../src/control/LoadHandler.cpp:639 ../src/control/LoadHandler.cpp:642
 msgid "Document is not complete (may the end is cut off?)"
 msgstr ""
 
@@ -340,7 +368,7 @@ msgstr ""
 msgid "Erase Stroke"
 msgstr ""
 
-#: ../src/undo/EraseUndoAction.cpp:88
+#: ../src/undo/EraseUndoAction.cpp:88 ../src/undo/DeleteUndoAction.cpp:72
 msgid "Erase stroke"
 msgstr ""
 
@@ -352,14 +380,14 @@ msgstr ""
 msgid "Eraser Optio_ns"
 msgstr ""
 
-#: ../src/control/Control.cpp:1886
+#: ../src/control/Control.cpp:1886 ../src/control/Control.cpp:1976
 #, c-format
 msgid ""
 "Error annotate PDF file '%s'\n"
 "%s"
 msgstr ""
 
-#: ../src/control/Control.cpp:1821
+#: ../src/control/Control.cpp:1821 ../src/control/Control.cpp:1907
 #, c-format
 msgid ""
 "Error opening file '%s'\n"
@@ -376,6 +404,14 @@ msgstr ""
 
 #: ../ui/main.glade:88
 msgid "Export as..."
+msgstr ""
+
+#: ../src/pdf/poppler/XojPopplerDocument.cpp:314
+msgid "Failed to open file for writing"
+msgstr ""
+
+#: ../src/pdf/poppler/XojPopplerDocument.cpp:320
+msgid "Failed to save document"
 msgstr ""
 
 #: ../ui/main.glade:782
@@ -422,6 +458,10 @@ msgstr ""
 msgid "Highlighter Opt_ions"
 msgstr ""
 
+#: ../ui/main.glade:721
+msgid "Highlighter opt_ions"
+msgstr ""
+
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:455
 msgid "Hilighter"
 msgstr ""
@@ -431,7 +471,18 @@ msgid "Image"
 msgstr ""
 
 #: ../src/gui/PageView.cpp:576 ../src/control/Control.cpp:1103
+#: ../src/gui/PageView.cpp:575 ../src/control/Control.cpp:1147
 msgid "Images"
+msgstr ""
+
+#: ../src/control/Control.cpp:241
+#, c-format
+msgid "Info: autosave document...\n"
+msgstr ""
+
+#: ../src/control/Control.cpp:237
+#, c-format
+msgid "Info: autosave not necessary, nothing changed...\n"
 msgstr ""
 
 #: ../ui/settings.glade:222
@@ -482,6 +533,10 @@ msgstr ""
 msgid "N_ext Annotated Page"
 msgstr ""
 
+#: ../ui/main.glade:272
+msgid "N_ext annotated page"
+msgstr ""
+
 #: ../ui/main.glade:307
 msgid "New Page _After"
 msgstr ""
@@ -510,6 +565,10 @@ msgstr ""
 msgid "Next annotated Page"
 msgstr ""
 
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:379
+msgid "Next annotated page"
+msgstr ""
+
 #: ../ui/settings.glade:960
 msgid ""
 "Notice: <i>You need to enable XInput (Page \"Input\") else it won't work.</i>"
@@ -525,11 +584,23 @@ msgid "Open File"
 msgstr ""
 
 #: ../src/gui/PageView.cpp:569 ../src/control/Control.cpp:1097
+#: ../src/gui/PageView.cpp:568 ../src/control/Control.cpp:1140
 msgid "Open Image"
 msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:355
+#: ../src/control/Control.cpp:1768
 msgid "Open file"
+msgstr ""
+
+#: ../src/control/Control.cpp:2139
+#, c-format
+msgid "Open file error: %s"
+msgstr ""
+
+#: ../src/control/Control.cpp:2085
+#, c-format
+msgid "Output stream error: %s"
 msgstr ""
 
 #: ../ui/export.glade:61
@@ -540,7 +611,11 @@ msgstr ""
 msgid "PDF Background missing"
 msgstr ""
 
-#: ../src/control/Control.cpp:1701
+#: ../src/view/DocumentView.cpp:335
+msgid "PDF background missing"
+msgstr ""
+
+#: ../src/control/Control.cpp:1701 ../src/control/Control.cpp:1782
 msgid "PDF files"
 msgstr ""
 
@@ -554,6 +629,10 @@ msgstr ""
 
 #: ../ui/main.glade:280
 msgid "P_revious Annotated Page"
+msgstr ""
+
+#: ../ui/main.glade:280
+msgid "P_revious annotated page"
 msgstr ""
 
 #: ../ui/export.glade:78 ../ui/export.glade:163 ../ui/export.glade:220
@@ -592,6 +671,10 @@ msgstr ""
 msgid "Paper _Format"
 msgstr ""
 
+#: ../ui/main.glade:428
+msgid "Paper b_ackground"
+msgstr ""
+
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:359
 msgid "Paste"
 msgstr ""
@@ -622,10 +705,11 @@ msgstr ""
 
 #: ../src/undo/UndoRedoHandler.cpp:154
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:365
+#: ../src/undo/UndoRedoHandler.cpp:156
 msgid "Redo"
 msgstr ""
 
-#: ../src/undo/UndoRedoHandler.cpp:148
+#: ../src/undo/UndoRedoHandler.cpp:148 ../src/undo/UndoRedoHandler.cpp:150
 msgid "Redo: "
 msgstr ""
 
@@ -650,10 +734,11 @@ msgid "SVG"
 msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:351
+#: ../src/control/Control.cpp:2350
 msgid "Save"
 msgstr ""
 
-#: ../src/control/Control.cpp:2062
+#: ../src/control/Control.cpp:2062 ../src/control/Control.cpp:2181
 msgid "Save File"
 msgstr ""
 
@@ -744,13 +829,13 @@ msgstr ""
 msgid "Show vertical scrollbar on the left side"
 msgstr ""
 
-#: ../src/Xournalpp.cpp:155
+#: ../src/Xournalpp.cpp:155 ../src/Xournalpp.cpp:153
 msgid ""
 "Sorry, Xournal can only open one file from the command line.\n"
 "Others are ignored."
 msgstr ""
 
-#: ../src/Xournalpp.cpp:196
+#: ../src/Xournalpp.cpp:196 ../src/Xournalpp.cpp:194
 msgid ""
 "Sorry, Xournal cannot open remote files at the moment.\n"
 "You have to copy the file to a local directory."
@@ -760,7 +845,7 @@ msgstr ""
 msgid "Stroke recognizer"
 msgstr ""
 
-#: ../src/control/Control.cpp:1706
+#: ../src/control/Control.cpp:1706 ../src/control/Control.cpp:1787
 msgid "Supported files"
 msgstr ""
 
@@ -807,7 +892,7 @@ msgstr ""
 msgid "Text once found on page %i"
 msgstr ""
 
-#: ../src/control/Control.cpp:2201
+#: ../src/control/Control.cpp:2201 ../src/control/Control.cpp:2326
 msgid "There is still an operation running, exit anyway?"
 msgstr ""
 
@@ -825,7 +910,12 @@ msgstr ""
 msgid "Thin"
 msgstr ""
 
+#: ../src/control/Control.cpp:2348
+msgid "This document is not saved yet."
+msgstr ""
+
 #: ../src/gui/PageView.cpp:525 ../src/control/Control.cpp:1136
+#: ../src/control/Control.cpp:1194
 #, c-format
 msgid "This image could not be loaded. Error message: %s"
 msgstr ""
@@ -840,18 +930,19 @@ msgstr ""
 
 #: ../src/undo/UndoRedoHandler.cpp:140
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:364
+#: ../src/undo/UndoRedoHandler.cpp:142
 msgid "Undo"
 msgstr ""
 
-#: ../src/undo/UndoRedoHandler.cpp:135
+#: ../src/undo/UndoRedoHandler.cpp:135 ../src/undo/UndoRedoHandler.cpp:137
 msgid "Undo: "
 msgstr ""
 
-#: ../src/control/LoadHandler.cpp:631
+#: ../src/control/LoadHandler.cpp:631 ../src/control/LoadHandler.cpp:634
 msgid "Unknown parser error"
 msgstr ""
 
-#: ../src/control/Control.cpp:2118
+#: ../src/control/Control.cpp:2118 ../src/control/Control.cpp:2241
 msgid "Unsaved Document"
 msgstr ""
 
@@ -872,7 +963,7 @@ msgstr ""
 msgid "With PDF Background"
 msgstr ""
 
-#: ../ui/main.glade:370
+#: ../ui/main.glade:370 ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:442
 msgid "With PDF background"
 msgstr ""
 
@@ -880,12 +971,13 @@ msgstr ""
 msgid "Write text"
 msgstr ""
 
-#: ../src/control/LoadHandler.cpp:625
+#: ../src/control/LoadHandler.cpp:625 ../src/control/LoadHandler.cpp:628
 #, c-format
 msgid "XML Parser error: %s"
 msgstr ""
 
 #: ../src/control/Control.cpp:1697 ../src/control/Control.cpp:2067
+#: ../src/control/Control.cpp:1778 ../src/control/Control.cpp:2187
 msgid "Xournal files"
 msgstr ""
 
@@ -909,7 +1001,20 @@ msgid ""
 "\"xournal --help\"\n"
 msgstr ""
 
+#: ../src/Xournalpp.cpp:127
+msgid ""
+"You are using a development release of Xournal\n"
+"You can find the current release in CVS!\n"
+"DO NOT USE THIS RELEASE FOR PRODUCTIVE ENVIRONMENT!\n"
+"Are you sure you wish to start this release?\n"
+"\n"
+"\n"
+"If you don't want to show this warning, you can run\n"
+"\"xournalpp --help\"\n"
+msgstr ""
+
 #: ../src/control/Control.cpp:990 ../src/control/Control.cpp:1206
+#: ../src/control/Control.cpp:1030 ../src/control/Control.cpp:1270
 msgid ""
 "You don't have any PDF pages to select from. Cancel operation,\n"
 "Please select another background type: Menu \"Journal\" / \"Insert Page Type"
@@ -942,7 +1047,7 @@ msgstr ""
 msgid "Zoom in"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:381
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:381 ../ui/main.glade:960
 msgid "Zoom out"
 msgstr ""
 
@@ -970,6 +1075,10 @@ msgstr ""
 msgid "_Delete Page"
 msgstr ""
 
+#: ../ui/main.glade:131
+msgid "_Edit"
+msgstr ""
+
 #: ../ui/main.glade:503
 msgid "_Eraser"
 msgstr ""
@@ -978,12 +1087,20 @@ msgstr ""
 msgid "_Export as PDF"
 msgstr ""
 
+#: ../ui/main.glade:19
+msgid "_File"
+msgstr ""
+
 #: ../ui/main.glade:237
 msgid "_First Page"
 msgstr ""
 
 #: ../ui/main.glade:457
 msgid "_Graph"
+msgstr ""
+
+#: ../ui/main.glade:859
+msgid "_Help"
 msgstr ""
 
 #: ../ui/main.glade:512
@@ -1052,6 +1169,10 @@ msgstr ""
 
 #: ../ui/main.glade:583
 msgid "_Vertical Space"
+msgstr ""
+
+#: ../ui/main.glade:767
+msgid "_View"
 msgstr ""
 
 #: ../ui/main.glade:709

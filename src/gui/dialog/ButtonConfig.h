@@ -67,16 +67,16 @@ public:
 		GtkListStore * typeModel = gtk_list_store_new(3, GDK_TYPE_PIXBUF, G_TYPE_STRING, G_TYPE_INT);
 		GtkTreeIter iter;
 
-		ADD_TYPE_CB("empty.png", "Don't change", TOOL_NONE);
-		ADD_TYPE_CB("tool_pencil.png", "Pen", TOOL_PEN);
-		ADD_TYPE_CB("tool_eraser.png", "Eraser", TOOL_ERASER);
-		ADD_TYPE_CB("tool_highlighter.png", "Hilighter", TOOL_HILIGHTER);
-		ADD_TYPE_CB("tool_text.png", "Text", TOOL_TEXT);
-		ADD_TYPE_CB("tool_image.png", "Insert image", TOOL_IMAGE);
-		ADD_TYPE_CB("stretch.png", "Vertical space", TOOL_VERTICAL_SPACE);
-		ADD_TYPE_CB("lasso.png", "Select region", TOOL_SELECT_REGION);
-		ADD_TYPE_CB("rect-select.png", "Select rectangle", TOOL_SELECT_RECT);
-		ADD_TYPE_CB("hand.png", "Hand", TOOL_HAND);
+		ADD_TYPE_CB("empty.png", _("Don't change"), TOOL_NONE);
+		ADD_TYPE_CB("tool_pencil.png", _("Pen"), TOOL_PEN);
+		ADD_TYPE_CB("tool_eraser.png", _("Eraser"), TOOL_ERASER);
+		ADD_TYPE_CB("tool_highlighter.png", _("Hilighter"), TOOL_HILIGHTER);
+		ADD_TYPE_CB("tool_text.png", _("Text"), TOOL_TEXT);
+		ADD_TYPE_CB("tool_image.png", _("Insert image"), TOOL_IMAGE);
+		ADD_TYPE_CB("stretch.png", _("Vertical space"), TOOL_VERTICAL_SPACE);
+		ADD_TYPE_CB("lasso.png", _("Select region"), TOOL_SELECT_REGION);
+		ADD_TYPE_CB("rect-select.png", _("Select rectangle"), TOOL_SELECT_RECT);
+		ADD_TYPE_CB("hand.png", _("Hand"), TOOL_HAND);
 
 		GtkCellRenderer *renderer;
 

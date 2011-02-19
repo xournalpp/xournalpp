@@ -5,12 +5,14 @@
 #include <config.h>
 #include <glib/gi18n-lib.h>
 
-// TODO: add memory limit
+// TODO: low prio: add memory limit
 
 UndoRedoHandler::UndoRedoHandler(Control * control) {
-	undoList = NULL;
-	redoList = NULL;
-	listener = NULL;
+	this->undoList = NULL;
+	this->savedUndoList = NULL;
+	this->autosavedUndoList = NULL;
+	this->redoList = NULL;
+	this->listener = NULL;
 	this->control = control;
 }
 
@@ -172,6 +174,17 @@ void UndoRedoHandler::addUndoRedoListener(UndoRedoListener * listener) {
 }
 
 bool UndoRedoHandler::isChanged() {
-	return true;
+	return this->savedUndoList != g_list_last(this->undoList);
 }
 
+bool UndoRedoHandler::isChangedAutosave() {
+	return this->autosavedUndoList != g_list_last(this->undoList);
+}
+
+void UndoRedoHandler::documentAutosaved() {
+	this->autosavedUndoList = g_list_last(this->undoList);
+}
+
+void UndoRedoHandler::documentSaved() {
+	this->savedUndoList = g_list_last(this->undoList);
+}

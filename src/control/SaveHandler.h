@@ -25,6 +25,7 @@ public:
 public:
 	void prepareSave(Document * doc);
 	void saveTo(OutputStream * out, String filename);
+	String getErrorMessage();
 
 private:
 	void visitPage(XmlNode * root, XojPage * p, Document * doc, int id);
@@ -36,6 +37,8 @@ private:
 	XmlNode * root;
 	bool firstPdfPageVisited;
 	int attachBgId;
+
+	String errorMessage;
 
 	GList * backgroundImages;
 };

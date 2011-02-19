@@ -18,12 +18,24 @@ void Layer::addElement(Element * e) {
 		return;
 	}
 
+	// TODO: Debug
+	GList * elem2 = g_list_find(this->elements, e);
+	if (elem2) {
+		printf("ADD: Element ist bereits auf dem Layer!\n");
+	}
+
 	this->elements = g_list_append(this->elements, e);
 }
 
 void Layer::insertElement(Element * e, int pos) {
 	if (e == NULL) {
 		g_warning("insertElement(NULL)!");
+		return;
+	}
+
+	GList * elem2 = g_list_find(this->elements, e);
+	if (elem2) {
+		g_warning("Layer::insertElement() try to add an element twice!");
 		return;
 	}
 

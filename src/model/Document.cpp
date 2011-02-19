@@ -18,6 +18,7 @@ Document::Document(DocumentHandler * handler) {
 	this->pageCount = 0;
 	this->pagesArrayLen = 0;
 	this->preview = NULL;
+	this->attachPdf = false;
 }
 
 Document::~Document() {
@@ -99,6 +100,10 @@ const char * Document::getEvMetadataFilename() {
 
 bool Document::isPdfDocumentLoaded() {
 	return pdfDocument.isLoaded();
+}
+
+bool Document::isAttachPdf() {
+	return this->attachPdf;
 }
 
 int Document::findPdfPage(int pdfPage) {
@@ -198,7 +203,7 @@ void Document::updateIndexPageNumbers() {
 	}
 }
 
-bool Document::readPdf(String filename, bool initPages) {
+bool Document::readPdf(String filename, bool initPages, bool attachToDocument) {
 	GError *popplerError = NULL;
 	String uri = "file://";
 	uri += filename;
@@ -211,7 +216,10 @@ bool Document::readPdf(String filename, bool initPages) {
 		return false;
 	}
 
-	pdfFilename = filename;
+	printf("attachToDocument: %i\n", attachToDocument);
+
+	this->pdfFilename = filename;
+	this->attachPdf = attachToDocument;
 
 	lastError = NULL;
 

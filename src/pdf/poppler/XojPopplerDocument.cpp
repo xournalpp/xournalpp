@@ -2,11 +2,15 @@
 #include "XojPopplerIter.h"
 
 #include <glib.h>
+#include <poppler.h>
 #include <poppler/PDFDoc.h>
 #include <poppler/CairoOutputDev.h>
 #include <poppler/GlobalParams.h>
 #include <poppler/ErrorCodes.h>
 #include <poppler/Outline.h>
+
+#include <config.h>
+#include <glib/gi18n-lib.h>
 
 class _IntPopplerDocument {
 public:
@@ -91,11 +95,11 @@ private:
 	//	}
 
 public:
-	PDFDoc *doc;
+	PDFDoc * doc;
 
 	//	GList *layers;
-	GList *layers_rbgroups;
-	CairoOutputDev *output_dev;
+	GList * layers_rbgroups;
+	CairoOutputDev * output_dev;
 
 	XojPopplerPage ** pages;
 
@@ -289,7 +293,33 @@ PDFDoc * XojPopplerDocument::getDoc() {
 }
 
 gsize XojPopplerDocument::getId() {
-	return (gsize)this->data;
+	return (gsize) this->data;
 }
 
+bool XojPopplerDocument::save(String filename, GError ** error) {
+	if (this->data == NULL) {
+		return false;
+	}
+
+	bool retval = false;
+
+	GooString * fname = new GooString(filename.c_str());
+	int err_code = this->data->doc->saveAs(fname);
+	delete fname;
+
+	switch (err_code) {
+	case errNone:
+		break;
+	case errOpenFile:
+		g_set_error(error, 0, POPPLER_ERROR_OPEN_FILE, _("Failed to open file for writing"));
+		break;
+	case errEncrypted:
+		g_set_error(error, 0, POPPLER_ERROR_ENCRYPTED, _("Document is encrypted"));
+		break;
+	default:
+		g_set_error(error, 0, POPPLER_ERROR_INVALID, _("Failed to save document"));
+	}
+
+	return err_code == errNone;
+}
 

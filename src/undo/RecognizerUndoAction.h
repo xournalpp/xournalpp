@@ -16,13 +16,16 @@
 
 class XojPage;
 class Redrawable;
-class Element;
+class Stroke;
 class Layer;
 
 class RecognizerUndoAction: public UndoAction {
 public:
-	RecognizerUndoAction(XojPage * page, Redrawable * view, Layer * layer, Element * original, Element * recognized);
+	RecognizerUndoAction(XojPage * page, Redrawable * view, Layer * layer, Stroke * original, Stroke * recognized);
 	~RecognizerUndoAction();
+
+public:
+	void addSourceElement(Stroke * s);
 
 	virtual bool undo(Control * control);
 	virtual bool redo(Control * control);
@@ -31,8 +34,8 @@ public:
 private:
 	Redrawable * view;
 	Layer * layer;
-	Element * original;
-	Element * recognized;
+	Stroke * recognized;
+	GList * original;
 };
 
 #endif /* __RECOGNIZERUNDOACTION_H__ */

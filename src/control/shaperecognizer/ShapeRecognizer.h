@@ -16,18 +16,20 @@
 #include "ShapeRecognizerConfig.h"
 #include "CircleRecognizer.h"
 
+#include <glib.h>
+
 class Stroke;
 class Point;
+class ShapeRecognizerResult;
 
 class ShapeRecognizer {
 public:
 	ShapeRecognizer();
 	virtual ~ShapeRecognizer();
 
-	Stroke * recognizePatterns(Stroke * stroke);
-private:
+	ShapeRecognizerResult * recognizePatterns(Stroke * stroke);
 	void resetRecognizer();
-	Point calcEdgeIsect(RecoSegment *r1, RecoSegment *r2);
+private:
 	Stroke * tryRectangle();
 	Stroke * tryArrow();
 
@@ -36,13 +38,27 @@ private:
 
 	int findPolygonal(const Point * pt, int start, int end, int nsides, int * breaks, Inertia * ss);
 
-	void getSegmentGeometry(const Point * pt, int start, int end, Inertia * s, RecoSegment * r);
 private:
-
 	RecoSegment queue[MAX_POLYGON_SIDES + 1];
 	int queueLength;
 
 	Stroke * stroke;
+
+	friend class ShapeRecognizerResult;
+};
+
+class ShapeRecognizerResult {
+public:
+	ShapeRecognizerResult(Stroke * result);
+	ShapeRecognizerResult(Stroke * result, ShapeRecognizer * recognizer);
+	~ShapeRecognizerResult();
+
+public:
+	void addSourceStroke(Stroke * s);
+
+public:
+	Stroke * recognized;
+	GList * source;
 };
 
 #endif /* __SHAPERECOGNIZER_H__ */

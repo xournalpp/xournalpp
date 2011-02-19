@@ -79,8 +79,8 @@ int LoadHandler::readFile(char * buffer, int len) {
 #define error(...) if(error == NULL) error = g_error_new(G_MARKUP_ERROR, G_MARKUP_ERROR_INVALID_CONTENT, __VA_ARGS__);
 
 const char * LoadHandler::getAttrib(const char * name, bool optional) {
-	const gchar ** aName = attributeNames;
-	const gchar ** aValue = attributeValues;
+	const char ** aName = attributeNames;
+	const char ** aValue = attributeValues;
 
 	while (*aName != NULL) {
 		if (!strcmp(*aName, name)) {
@@ -276,12 +276,14 @@ void LoadHandler::parseBgPdf() {
 
 		this->pdfFilenameParsed = true;
 
+		bool attachToDocument = false;
+
 		if (!strcmp("absolute", domain)) { // Absolute OR relative path
 			if (!g_file_test(sFilename, G_FILE_TEST_EXISTS)) {
-				gchar * dirname = g_path_get_dirname(xournalFilename.c_str());
-				gchar * file = g_path_get_basename(sFilename);
+				char * dirname = g_path_get_dirname(xournalFilename.c_str());
+				char * file = g_path_get_basename(sFilename);
 
-				gchar * tmpFilename = g_build_path(G_DIR_SEPARATOR_S, dirname, file, NULL);
+				char * tmpFilename = g_build_path(G_DIR_SEPARATOR_S, dirname, file, NULL);
 
 				if (g_file_test(tmpFilename, G_FILE_TEST_EXISTS)) {
 					filename = tmpFilename;
@@ -292,7 +294,8 @@ void LoadHandler::parseBgPdf() {
 				g_free(file);
 			}
 		} else if (!strcmp("attach", domain)) {
-			gchar * tmpFilename = g_strdup_printf("%s.bg.pdf", xournalFilename.c_str());
+			attachToDocument = true;
+			char * tmpFilename = g_strdup_printf("%s.%s", xournalFilename.c_str(), sFilename);
 
 			if (g_file_test(tmpFilename, G_FILE_TEST_EXISTS)) {
 				filename = tmpFilename;
@@ -305,12 +308,12 @@ void LoadHandler::parseBgPdf() {
 		}
 
 		if (g_file_test(filename.c_str(), G_FILE_TEST_EXISTS)) {
-			doc.readPdf(filename, false);
+			doc.readPdf(filename, false, attachToDocument);
 			if (!doc.getLastErrorMsg().isEmpty()) {
 				error("Error reading PDF: %s", doc.getLastErrorMsg().c_str());
 			}
 		} else {
-			if (!strcmp("attach", domain)) {
+			if (attachToDocument) {
 				error("Attached PDF not found");
 			} else {
 				error("PDF not found: \"%s\"", filename.c_str());

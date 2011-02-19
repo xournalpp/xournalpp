@@ -1,6 +1,5 @@
 #include "InputHandler.h"
 #include "../../gui/XournalWidget.h"
-#include "../shaperecognizer/ShapeRecognizer.h"
 #include "../Control.h"
 #include "../../undo/InsertUndoAction.h"
 #include "../../undo/RecognizerUndoAction.h"
@@ -16,6 +15,7 @@ InputHandler::InputHandler(XournalWidget * xournal, GtkWidget * widget, Redrawab
 	this->view = new DocumentView();
 	this->redrawable = redrawable;
 	this->xournal = xournal;
+	this->reco = NULL;
 }
 
 InputHandler::~InputHandler() {
@@ -98,8 +98,7 @@ bool InputHandler::getPressureMultiplier(GdkEvent *event, double & presure) {
 
 	Settings * settings = xournal->getControl()->getSettings();
 
-	presure = ((1 - rawpressure) * settings->getWidthMinimumMultiplier() + rawpressure
-			* settings->getWidthMaximumMultiplier());
+	presure = ((1 - rawpressure) * settings->getWidthMinimumMultiplier() + rawpressure * settings->getWidthMaximumMultiplier());
 	return true;
 }
 
@@ -122,23 +121,23 @@ void InputHandler::draw(cairo_t * cr) {
 }
 
 void InputHandler::onButtonReleaseEvent(GdkEventButton * event, XojPage * page) {
-	if(!this->tmpStroke) {
+	if (!this->tmpStroke) {
 		return;
 	}
 
 	// Backward compatibility and also easier to handle for me;-)
 	// I cannot draw a line with one point, to draw a visible line I need two points,
 	// twice the same Point is also OK
-	if (tmpStroke->getPointCount() == 1) {
-		ArrayIterator<Point> it = tmpStroke->pointIterator();
+	if (this->tmpStroke->getPointCount() == 1) {
+		ArrayIterator<Point> it = this->tmpStroke->pointIterator();
 		if (it.hasNext()) {
-			tmpStroke->addPoint(it.next());
+			this->tmpStroke->addPoint(it.next());
 		}
 		// No pressure sensitivity
-		tmpStroke->clearPressure();
+		this->tmpStroke->clearPressure();
 	}
 
-	tmpStroke->freeUnusedPointItems();
+	this->tmpStroke->freeUnusedPointItems();
 
 	if (page->getSelectedLayerId() < 1) {
 		// This creates a layer if none exists
@@ -151,33 +150,51 @@ void InputHandler::onButtonReleaseEvent(GdkEventButton * event, XojPage * page) 
 
 	UndoRedoHandler * undo = xournal->getControl()->getUndoRedoHandler();
 
-	undo->addUndoAction(new InsertUndoAction(page, layer, tmpStroke, this->redrawable));
+	undo->addUndoAction(new InsertUndoAction(page, layer, this->tmpStroke, this->redrawable));
 
 	ToolHandler * h = xournal->getControl()->getToolHandler();
 	if (h->isShapeRecognizer()) {
-		ShapeRecognizer reco;
+		if (this->reco == NULL) {
+			this->reco = new ShapeRecognizer();
+		}
+		ShapeRecognizerResult * result = this->reco->recognizePatterns(this->tmpStroke);
 
-		Stroke * s = reco.recognizePatterns(tmpStroke);
-
-		if (s != NULL) {
+		if (result != NULL) {
 			UndoRedoHandler * undo = xournal->getControl()->getUndoRedoHandler();
-			undo->addUndoAction(new RecognizerUndoAction(page, this->redrawable, layer, tmpStroke, s));
-			layer->addElement(s);
+			RecognizerUndoAction * recognizerUndo = new RecognizerUndoAction(page, this->redrawable, layer, this->tmpStroke, result->recognized);
+			undo->addUndoAction(recognizerUndo);
+			layer->addElement(result->recognized);
 
-			Range range(s->getX(), s->getY());
-			range.addPoint(s->getX() + s->getElementWidth(), s->getY() + s->getElementHeight());
-			range.addPoint(tmpStroke->getX(), tmpStroke->getY());
-			range.addPoint(tmpStroke->getX() + tmpStroke->getElementWidth(), tmpStroke->getY()
-					+ tmpStroke->getElementHeight());
+			Range range(result->recognized->getX(), result->recognized->getY());
+			range.addPoint(result->recognized->getX() + result->recognized->getElementWidth(), result->recognized->getY()
+					+ result->recognized->getElementHeight());
+
+			range.addPoint(this->tmpStroke->getX(), this->tmpStroke->getY());
+			range.addPoint(this->tmpStroke->getX() + this->tmpStroke->getElementWidth(), this->tmpStroke->getY() + this->tmpStroke->getElementHeight());
+
+			for (GList * l = result->source; l != NULL; l = l->next) {
+				Stroke * s = (Stroke *) l->data;
+
+				layer->removeElement(s, false);
+
+				recognizerUndo->addSourceElement(s);
+
+				range.addPoint(s->getX(), s->getY());
+				range.addPoint(s->getX() + s->getElementWidth(), s->getY() + s->getElementHeight());
+			}
 
 			this->redrawable->repaint(range);
+
+			// delete the result object, this is not needed anymore, the stroke are not deleted with this
+			delete result;
 		} else {
-			layer->addElement(tmpStroke);
-			this->redrawable->repaint(tmpStroke);
+			layer->addElement(this->tmpStroke);
+			this->redrawable->repaint(this->tmpStroke);
 		}
+
 	} else {
-		layer->addElement(tmpStroke);
-		this->redrawable->repaint(tmpStroke);
+		layer->addElement(this->tmpStroke);
+		this->redrawable->repaint(this->tmpStroke);
 	}
 
 	this->tmpStroke = NULL;
@@ -214,3 +231,9 @@ Stroke * InputHandler::getTmpStroke() {
 	return tmpStroke;
 }
 
+void InputHandler::resetShapeRecognizer() {
+	if (this->reco) {
+		delete this->reco;
+		this->reco = NULL;
+	}
+}

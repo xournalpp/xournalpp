@@ -17,13 +17,15 @@
 #include "../../model/Page.h"
 #include "../../gui/Redrawable.h"
 #include "../../util/Util.h"
+#include "../shaperecognizer/ShapeRecognizer.h"
 
 class DocumentView;
 class XournalWidget;
 
-class InputHandler : public MemoryCheckObject {
+class InputHandler: public MemoryCheckObject {
 public:
-	InputHandler(XournalWidget * xournal, GtkWidget * widget, Redrawable * redrawable);
+	InputHandler(XournalWidget * xournal, GtkWidget * widget,
+			Redrawable * redrawable);
 	virtual ~InputHandler();
 
 public:
@@ -31,10 +33,12 @@ public:
 	void draw(cairo_t * cr);
 	void onButtonReleaseEvent(GdkEventButton * event, XojPage * page);
 	bool onMotionNotifyEvent(GdkEventMotion * event);
-	void startStroke(GdkEventButton * event, StrokeTool tool, double x, double y);
+	void startStroke(GdkEventButton * event, StrokeTool tool, double x,
+			double y);
 
 	Stroke * getTmpStroke();
 
+	void resetShapeRecognizer();
 private:
 	bool getPressureMultiplier(GdkEvent * event, double & presure);
 	void drawTmpStroke();
@@ -71,6 +75,11 @@ private:
 	 * The view which should be refreshed
 	 */
 	Redrawable * redrawable;
+
+	/**
+	 * Xournal shape recognizer, one instance per page
+	 */
+	ShapeRecognizer * reco;
 };
 
 #endif /* __INPUTHANDLER_H__ */
