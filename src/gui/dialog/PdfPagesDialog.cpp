@@ -106,8 +106,8 @@ private:
 
 			cairo_set_matrix(cr2, &defaultMatrix);
 
-			double height = page->getWidth();
-			double width = page->getHeight();
+			double width = page->getWidth();
+			double height = page->getHeight();
 			width *= zoom;
 			height *= zoom;
 

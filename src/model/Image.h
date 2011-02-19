@@ -19,6 +19,7 @@ public:
 	Image();
 	virtual ~Image();
 
+public:
 	void setWidth(double width);
 	void setHeight(double height);
 

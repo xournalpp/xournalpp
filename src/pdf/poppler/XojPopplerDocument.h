@@ -13,6 +13,7 @@
 #define __XOJ_POPPLERDOCUMENT_H__
 
 #include "XojPopplerPage.h"
+#include "../../util/String.h"
 
 class _IntPopplerDocument;
 class XojPopplerIter;
@@ -41,6 +42,8 @@ public:
 	PDFDoc * getDoc();
 
 	gsize getId();
+
+	bool save(String filename, GError ** error);
 
 private:
 	_IntPopplerDocument * data;

@@ -13,11 +13,22 @@
 #define __RECOSEGMENT_H__
 
 class Stroke;
+class Inertia;
+
+#include "../../model/Point.h"
 
 class RecoSegment {
 public:
 	RecoSegment();
 	virtual ~RecoSegment();
+
+public:
+	Point calcEdgeIsect(RecoSegment * r2);
+
+	/*
+	 * find the geometry of a recognized segment
+	 */
+	void calcSegmentGeometry(const Point * pt, int start, int end, Inertia * s);
 
 public:
 	Stroke * stroke;

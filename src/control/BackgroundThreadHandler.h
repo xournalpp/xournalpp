@@ -44,7 +44,7 @@ private:
 
 class Runnable {
 public:
-	virtual bool run(bool * cancel) = 0;
+	virtual void run(bool * cancel) = 0;
 
 };
 

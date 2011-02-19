@@ -72,7 +72,7 @@ public:
 	Document(DocumentHandler * handler);
 	virtual ~Document();
 
-	bool readPdf(String filename, bool initPages);
+	bool readPdf(String filename, bool initPages, bool attachToDocument);
 
 	int getPageCount();
 	int getPdfPageCount();
@@ -110,6 +110,7 @@ public:
 
 	void clearDocument(bool destroy = false);
 
+	bool isAttachPdf();
 
 	cairo_surface_t * getPreview();
 	void setPreview(cairo_surface_t * preview);
@@ -127,6 +128,7 @@ private:
 
 	String filename;
 	String pdfFilename;
+	bool attachPdf;
 
 	/**
 	 * Password: not handled yet

@@ -27,6 +27,7 @@ public:
 	Stroke();
 	virtual ~Stroke();
 
+public:
 	Stroke * clone() const;
 
 	void setWidth(double width);
@@ -87,6 +88,5 @@ private:
 
 	EraseableStroke * eraseable;
 };
-
 
 #endif /* __STROKE_H__ */

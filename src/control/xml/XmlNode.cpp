@@ -41,21 +41,18 @@ void XmlNode::setAttrib(const char * attrib, const char * value) {
 	if (value == NULL) {
 		value = "";
 	}
-	printf("setAttrib(%s) String\n", attrib);
 	putAttrib(new TextAttribute(attrib, value));
 }
 
 void XmlNode::setAttrib(const char * attrib, double value) {
 	CHECK_MEMORY(this);
 
-	printf("setAttrib(%s) double\n", attrib);
 	putAttrib(new DoubleAttribute(attrib, value));
 }
 
 void XmlNode::setAttrib(const char * attrib, int value) {
 	CHECK_MEMORY(this);
 
-	printf("setAttrib(%s) int\n", attrib);
 	putAttrib(new IntAttribute(attrib, value));
 }
 
@@ -65,7 +62,6 @@ void XmlNode::setAttrib(const char * attrib, int value) {
 void XmlNode::setAttrib(const char * attrib, double * value, int count) {
 	CHECK_MEMORY(this);
 
-	printf("setAttrib(%s) double[]\n", attrib);
 	putAttrib(new DoubleArrayAttribute(attrib, value, count));
 }
 
@@ -104,12 +100,10 @@ void XmlNode::putAttrib(Attribute * a) {
 	CHECK_MEMORY(this);
 
 	CHECK_MEMORY(a);
-	printf("putAttrib(%s)\n", a->getName());
 
 	for (GList * l = this->attributes; l != NULL; l = l->next) {
 		Attribute * attrib = (Attribute *) l->data;
 		CHECK_MEMORY(attrib);
-		printf("->%s\n", attrib->getName());
 
 		if (strcmp(attrib->getName(), a->getName())==0) {
 			delete attrib;

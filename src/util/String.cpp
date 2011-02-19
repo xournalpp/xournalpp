@@ -33,7 +33,7 @@ public:
 			this->len = 0;
 		} else {
 			this->size = strlen(str);
-			this->len = length((utf8)str);
+			this->len = length((utf8) str);
 		}
 	}
 
@@ -315,10 +315,21 @@ void String::operator +=(double d) {
 }
 
 void String::operator +=(const char * str) {
-	char * data = g_strconcat(c_str(), str, NULL);
-	this->data->unreference();
-	this->data = new _RefStrInternal(data);
-	this->data->reference();
+	if (str == NULL) {
+		return;
+	}
+
+	char * data = NULL;
+	if (c_str() == NULL) {
+		this->data->unreference();
+		this->data = new _RefStrInternal(g_strdup(str));
+		this->data->reference();
+	} else {
+		char * data = g_strconcat(c_str(), str, NULL);
+		this->data->unreference();
+		this->data = new _RefStrInternal(data);
+		this->data->reference();
+	}
 }
 
 bool String::operator <(const String & str) const {
@@ -421,7 +432,7 @@ String String::substring(int start, int length) const {
 		return "";
 	}
 
-	const utf8 string = (utf8)c_str();
+	const utf8 string = (utf8) c_str();
 	int s = start;
 	while (*string && s) {
 		SKIP_MULTI_BYTE_SEQUENCE(string);
@@ -444,15 +455,15 @@ String String::substring(int start, int length) const {
 	}
 	*output = '\0';
 
-//	String old = oldSubstring(*this, start, length);
-//
-//	const char * error = "";
-//
-//	if(old != substring) {
-//		error = "\nMISSMATCH!";
-//	}
-//
-//	printf("substring(\"%s\", %i, %i) =\n\"%s\"\n\"%s\"%s\n\n", this->c_str(), start, length, substring, old.c_str(),error);
+	//	String old = oldSubstring(*this, start, length);
+	//
+	//	const char * error = "";
+	//
+	//	if(old != substring) {
+	//		error = "\nMISSMATCH!";
+	//	}
+	//
+	//	printf("substring(\"%s\", %i, %i) =\n\"%s\"\n\"%s\"%s\n\n", this->c_str(), start, length, substring, old.c_str(),error);
 
 	String substr(substring, true);
 	return substr;

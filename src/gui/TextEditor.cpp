@@ -10,7 +10,7 @@
 #include "TextEditorWidget.h"
 #include "../undo/TextUndoAction.h"
 
-// TODO: implement drag & drop
+// TODO: LOW PRIO: implement drag & drop
 
 TextEditor::TextEditor(PageView * gui, Text * text, bool ownText) {
 	this->gui = gui;

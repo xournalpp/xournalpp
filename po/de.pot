@@ -61,6 +61,28 @@ msgid ""
 "%Z\tTimezone name or abbreviation (e.g. CDT\n"
 "%%\tA % sign"
 msgstr ""
+"%a\tAbgekürtzer Wochentag \t(z.B. Mit)\n"
+"%A\tWochentag (z.B. Mittwoch)\n"
+"%b\tAbgekürtzer Monat (z.B. Aug)\n"
+"%B\tMonatsname (z.B. August)\n"
+"%c\tDatum und Zeit (z.B. Mit 16 Feb 2011 21:05:24 CET)\n"
+"%d\tTag des Monats (01-31)\n"
+"%H\tStunde in 24h Format (00-23)\n"
+"%I\tStunde in 12h Format (01-12)\n"
+"%j\tTag des Jares (001-366)\n"
+"%m\tMonat als Zahl (01-12)\n"
+"%M\tMinute (00-59)\n"
+"%p\tAM oder PM (z.B. PM)\n"
+"%S\tSkunde (00-61)\n"
+"%U\tWochennummer mit Sonntag als den ersten Tag der Woche (00-53)\n"
+"%w\tWochentag als Nummer mit Sonntag als 0 (0-6)\n"
+"%W\ttWochennummer mit Montag als den ersten Tag der Woche (00-53)\n"
+"%x\tDatum (z.B. 16.02.2011)\n"
+"%X\tZeit (e.g. 14:55:02\n"
+"%y\tJahr, Zweistellig (00-99)\n"
+"%Y\tJahr\t(z.B. 2011)\n"
+"%Z\tZeitzone (z.B. CDT)\n"
+"%%\tein % Zeichen"
 
 #: ../src/gui/MainWindow.cpp:343
 #, c-format
@@ -172,8 +194,7 @@ msgstr "<b>Seitemumrahumg (Ausgewählte Seite)</b>"
 #: ../ui/settings.glade:939
 msgid ""
 "<b>Touch Screen</b> <i>You can also configure other device like mice</i>"
-msgstr ""
-"<b>Touch Screen</b> <i>Sie können auch andere Geräte konfigurieren</i>"
+msgstr "<b>Touch Screen</b> <i>Sie können auch andere Geräte konfigurieren</i>"
 
 #: ../ui/settings.glade:877
 msgid ""
@@ -217,7 +238,9 @@ msgstr ""
 
 #: ../ui/settings.glade:112
 msgid "<i>If you have a tablet pen you get a different width of the line</i>"
-msgstr "<i>Wenn Sie eine Tablet Stift verwenden reagieren die linien auf den Druck</i>"
+msgstr ""
+"<i>Wenn Sie eine Tablet Stift verwenden reagieren die linien auf den Druck</"
+"i>"
 
 #: ../ui/settings.glade:643
 msgid ""
@@ -238,7 +261,8 @@ msgstr ""
 
 #: ../ui/settings.glade:403
 msgid "<i>This name will be proposed if you save a new document</i>"
-msgstr "<i>Dieser Name wird vorgeschlagen wenn Sie ein neues Dokument speichern</i>"
+msgstr ""
+"<i>Dieser Name wird vorgeschlagen wenn Sie ein neues Dokument speichern</i>"
 
 #: ../ui/about.glade:29
 msgid "<span size=\"xx-large\" weight=\"bold\">Xournal++</span>"
@@ -248,17 +272,23 @@ msgstr "<span size=\"xx-large\" weight=\"bold\">Xournal++</span>"
 msgid "About Xournal++"
 msgstr "Über Xournal++"
 
-#: ../src/control/Control.cpp:1693
+#: ../src/control/Control.cpp:1693 ../src/control/Control.cpp:1774
 msgid "All files"
 msgstr "Alle Dateien"
 
 #: ../src/control/Control.cpp:1111 ../src/control/Control.cpp:1724
+#: ../src/control/Control.cpp:1159 ../src/control/Control.cpp:1807
 msgid "Attach file to the journal"
 msgstr "Datei ans .xoj anhängen"
 
 #: ../ui/settings.glade:279
 msgid "Autosave every ... minute:"
 msgstr "Alle ... automatisch speichern:"
+
+#: ../src/control/Control.cpp:222
+#, c-format
+msgid "Autosave: %s"
+msgstr "Autospeichern: %s"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:371 ../ui/main.glade:1086
 msgid "Back"
@@ -275,6 +305,10 @@ msgstr "Rahmenfarbe"
 #: ../ui/settings.glade:1137
 msgid "Border color for current page and other selections"
 msgstr "Rahmenfarbe der selektierten Seite und anderen Selektionen"
+
+#: ../src/control/Control.cpp:2352
+msgid "Cancel"
+msgstr "Abbrechen"
 
 #: ../src/undo/ColorUndoAction.cpp:92
 msgid "Change color"
@@ -313,7 +347,7 @@ msgstr ""
 msgid "Could not open file: \""
 msgstr "Konnte die Datei nicht öffnen: \""
 
-#: ../src/undo/UndoRedoHandler.cpp:82
+#: ../src/undo/UndoRedoHandler.cpp:82 ../src/undo/UndoRedoHandler.cpp:84
 #, c-format
 msgid ""
 "Could not redo '%s'\n"
@@ -322,7 +356,7 @@ msgstr ""
 "Rückgängig ist fehlgeschlagen '%s'\n"
 "Etwas ist schief gelaufen... Bitte Erstellen Sie einen Bugreport..."
 
-#: ../src/undo/UndoRedoHandler.cpp:56
+#: ../src/undo/UndoRedoHandler.cpp:56 ../src/undo/UndoRedoHandler.cpp:58
 #, c-format
 msgid ""
 "Could not undo '%s'\n"
@@ -330,6 +364,16 @@ msgid ""
 msgstr ""
 "Widerherstellen ist fehlgeschlagen '%s'\n"
 "Etwas ist schief gelaufen... Bitte Erstellen Sie einen Bugreport..."
+
+#: ../src/control/SaveHandler.cpp:217
+#, c-format
+msgid "Could not write background \"%s\", %s"
+msgstr "Konnte Hintergrund \"%s\" nicht speichern, %s"
+
+#: ../src/control/SaveHandler.cpp:285
+#, c-format
+msgid "Could not write background \"%s\". Continuing anyway."
+msgstr "Konnte Hintergrund nicht speichern \"%s\". Fahre trotzdem weiter."
 
 #: ../src/gui/GladeGui.cpp:60
 #, c-format
@@ -352,7 +396,15 @@ msgstr "Löschen"
 msgid "Delete La_yer"
 msgstr "Layer löschen"
 
-#: ../src/control/LoadHandler.cpp:639
+#: ../src/control/Control.cpp:2351
+msgid "Discard"
+msgstr "Verwerfen"
+
+#: ../src/pdf/poppler/XojPopplerDocument.cpp:317
+msgid "Document is encrypted"
+msgstr "Dokument ist verschlüsselt"
+
+#: ../src/control/LoadHandler.cpp:639 ../src/control/LoadHandler.cpp:642
 msgid "Document is not complete (may the end is cut off?)"
 msgstr "Dokument ist nicht komplett (z.B. nicht komplett übertragen?)"
 
@@ -368,7 +420,7 @@ msgstr "EPS"
 msgid "Erase Stroke"
 msgstr "Linie löschen"
 
-#: ../src/undo/EraseUndoAction.cpp:88
+#: ../src/undo/EraseUndoAction.cpp:88 ../src/undo/DeleteUndoAction.cpp:72
 msgid "Erase stroke"
 msgstr "Linie löschen"
 
@@ -380,7 +432,7 @@ msgstr "Radierer"
 msgid "Eraser Optio_ns"
 msgstr "Radierer Optionen"
 
-#: ../src/control/Control.cpp:1886
+#: ../src/control/Control.cpp:1886 ../src/control/Control.cpp:1976
 #, c-format
 msgid ""
 "Error annotate PDF file '%s'\n"
@@ -389,7 +441,7 @@ msgstr ""
 "Fehler beim öffnen des PDFs '%s'\n"
 "%s"
 
-#: ../src/control/Control.cpp:1821
+#: ../src/control/Control.cpp:1821 ../src/control/Control.cpp:1907
 #, c-format
 msgid ""
 "Error opening file '%s'\n"
@@ -409,6 +461,14 @@ msgstr "Exportieren als"
 #: ../ui/main.glade:88
 msgid "Export as..."
 msgstr "Exportieren als..."
+
+#: ../src/pdf/poppler/XojPopplerDocument.cpp:314
+msgid "Failed to open file for writing"
+msgstr "Datei konnte nicht zum schreiben geöffnet werden"
+
+#: ../src/pdf/poppler/XojPopplerDocument.cpp:320
+msgid "Failed to save document"
+msgstr "Dokument speichern fehlgeschlagen"
 
 #: ../ui/main.glade:782
 msgid "Fullscreen"
@@ -459,8 +519,19 @@ msgid "Image"
 msgstr "Bild"
 
 #: ../src/gui/PageView.cpp:576 ../src/control/Control.cpp:1103
+#: ../src/gui/PageView.cpp:575 ../src/control/Control.cpp:1147
 msgid "Images"
 msgstr "Bilder"
+
+#: ../src/control/Control.cpp:241
+#, c-format
+msgid "Info: autosave document...\n"
+msgstr "Info: Autospeichere Dokument...\n"
+
+#: ../src/control/Control.cpp:237
+#, c-format
+msgid "Info: autosave not necessary, nothing changed...\n"
+msgstr "Info: Autospeichere nicht nötig, nichts geändert...\n"
 
 #: ../ui/settings.glade:222
 msgid "Input"
@@ -520,7 +591,7 @@ msgstr "Neue Seite davor"
 
 #: ../ui/main.glade:315
 msgid "New Page at _End"
-msgstr ""
+msgstr "Neue Seite am Ende"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:352
 msgid "New Xournal"
@@ -534,11 +605,16 @@ msgstr "Neuer Layer"
 msgid "Next"
 msgstr "Nächste Seite"
 
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:379
+msgid "Next annotated page"
+msgstr "Nächste beschriftete Seite"
+
 #: ../ui/settings.glade:960
 msgid ""
 "Notice: <i>You need to enable XInput (Page \"Input\") else it won't work.</i>"
 msgstr ""
-"Anmerkung: <i>Sie müssen XInput aktivieren (Tab \"Eingabe\") sonst funktioniert es nicht.</i>"
+"Anmerkung: <i>Sie müssen XInput aktivieren (Tab \"Eingabe\") sonst "
+"funktioniert es nicht.</i>"
 
 #: ../src/control/RecentManager.cpp:327
 #, c-format
@@ -546,12 +622,24 @@ msgid "Open '%s'"
 msgstr "Öffne '%s'"
 
 #: ../src/gui/PageView.cpp:569 ../src/control/Control.cpp:1097
+#: ../src/gui/PageView.cpp:568 ../src/control/Control.cpp:1140
 msgid "Open Image"
 msgstr "Öffne Bild"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:355
+#: ../src/control/Control.cpp:1768
 msgid "Open file"
 msgstr "Öffne Datei"
+
+#: ../src/control/Control.cpp:2139
+#, c-format
+msgid "Open file error: %s"
+msgstr "Datei öffnen Fehler: %s"
+
+#: ../src/control/Control.cpp:2085
+#, c-format
+msgid "Output stream error: %s"
+msgstr "Ausgabestream error: %s"
 
 #: ../ui/export.glade:61
 msgid "PDF"
@@ -561,7 +649,7 @@ msgstr "PDF"
 msgid "PDF background missing"
 msgstr "PDF Hingergrund fehlt"
 
-#: ../src/control/Control.cpp:1701
+#: ../src/control/Control.cpp:1701 ../src/control/Control.cpp:1782
 msgid "PDF files"
 msgstr "PDF Dateien"
 
@@ -597,10 +685,6 @@ msgstr "Datei hinzugefügt"
 msgid "Pages"
 msgstr "Seiten"
 
-#: ../ui/main.glade:428
-msgid "Paper b_ackground"
-msgstr "Seitenhingergrund"
-
 #: ../ui/pagesize.glade:6
 msgid "Paper Format"
 msgstr "Seitenformat"
@@ -612,6 +696,10 @@ msgstr "Seite Hintergrundfarbe"
 #: ../ui/main.glade:414
 msgid "Paper _Format"
 msgstr "Seitenformat"
+
+#: ../ui/main.glade:428
+msgid "Paper b_ackground"
+msgstr "Seitenhingergrund"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:359
 msgid "Paste"
@@ -643,10 +731,11 @@ msgstr "Zuletzt geöffnete Dokumente"
 
 #: ../src/undo/UndoRedoHandler.cpp:154
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:365
+#: ../src/undo/UndoRedoHandler.cpp:156
 msgid "Redo"
 msgstr "Widerherstellen"
 
-#: ../src/undo/UndoRedoHandler.cpp:148
+#: ../src/undo/UndoRedoHandler.cpp:148 ../src/undo/UndoRedoHandler.cpp:150
 msgid "Redo: "
 msgstr "Widerherstellen: "
 
@@ -671,10 +760,11 @@ msgid "SVG"
 msgstr "SVG"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:351
+#: ../src/control/Control.cpp:2350
 msgid "Save"
 msgstr "Speichern"
 
-#: ../src/control/Control.cpp:2062
+#: ../src/control/Control.cpp:2062 ../src/control/Control.cpp:2181
 msgid "Save File"
 msgstr "Speichere Datei"
 
@@ -767,7 +857,7 @@ msgstr "Seitenleiste auf der rechten Seite anzeigen"
 msgid "Show vertical scrollbar on the left side"
 msgstr "Vertikale Scrollbar auf der linken Seite anzeigen"
 
-#: ../src/Xournalpp.cpp:155
+#: ../src/Xournalpp.cpp:155 ../src/Xournalpp.cpp:153
 msgid ""
 "Sorry, Xournal can only open one file from the command line.\n"
 "Others are ignored."
@@ -775,7 +865,7 @@ msgstr ""
 "Entschuldigung, Xournal kann nur eine Datei von der Kommandozeile öffnen.\n"
 "Alle weiteren werden ignoriert."
 
-#: ../src/Xournalpp.cpp:196
+#: ../src/Xournalpp.cpp:196 ../src/Xournalpp.cpp:194
 msgid ""
 "Sorry, Xournal cannot open remote files at the moment.\n"
 "You have to copy the file to a local directory."
@@ -787,7 +877,7 @@ msgstr ""
 msgid "Stroke recognizer"
 msgstr "Figurenerkennung"
 
-#: ../src/control/Control.cpp:1706
+#: ../src/control/Control.cpp:1706 ../src/control/Control.cpp:1787
 msgid "Supported files"
 msgstr "Unterstützte Dateien"
 
@@ -834,7 +924,7 @@ msgstr "Text nicht gefunden, auf allen Seiten gesucht"
 msgid "Text once found on page %i"
 msgstr "Text einmal gefunden auf Seite %i"
 
-#: ../src/control/Control.cpp:2201
+#: ../src/control/Control.cpp:2201 ../src/control/Control.cpp:2326
 msgid "There is still an operation running, exit anyway?"
 msgstr "Es läuft gerade noch eine Aktion, trozdem beenden?"
 
@@ -843,6 +933,8 @@ msgid ""
 "There was a wrong input event, input is not working.\n"
 "Do you want to disable \"Extended Input\"?"
 msgstr ""
+"Ungültiger Maus Event, Zeichnen ist nicht möglich.\n"
+"Möchten Sie \"Extended Input\" deaktivieren?"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:478
 msgid "Thik"
@@ -852,7 +944,12 @@ msgstr "Dick"
 msgid "Thin"
 msgstr "Dünn"
 
+#: ../src/control/Control.cpp:2348
+msgid "This document is not saved yet."
+msgstr "Dieses Dokument wurde noch nicht gespiechert."
+
 #: ../src/gui/PageView.cpp:525 ../src/control/Control.cpp:1136
+#: ../src/control/Control.cpp:1194
 #, c-format
 msgid "This image could not be loaded. Error message: %s"
 msgstr "Das Bild könnte nicht geladen werden. Fehlermeldung: %s"
@@ -867,18 +964,19 @@ msgstr "Zwei Seiten"
 
 #: ../src/undo/UndoRedoHandler.cpp:140
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:364
+#: ../src/undo/UndoRedoHandler.cpp:142
 msgid "Undo"
 msgstr "Rückgängig"
 
-#: ../src/undo/UndoRedoHandler.cpp:135
+#: ../src/undo/UndoRedoHandler.cpp:135 ../src/undo/UndoRedoHandler.cpp:137
 msgid "Undo: "
 msgstr "Rückgängig: "
 
-#: ../src/control/LoadHandler.cpp:631
+#: ../src/control/LoadHandler.cpp:631 ../src/control/LoadHandler.cpp:634
 msgid "Unknown parser error"
 msgstr "Unbekannter parser Fehler"
 
-#: ../src/control/Control.cpp:2118
+#: ../src/control/Control.cpp:2118 ../src/control/Control.cpp:2241
 msgid "Unsaved Document"
 msgstr "Ungespeichertes Dokument"
 
@@ -895,7 +993,7 @@ msgstr "Ansicht"
 msgid "Width:"
 msgstr "Breite:"
 
-#: ../ui/main.glade:370
+#: ../ui/main.glade:370 ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:442
 msgid "With PDF background"
 msgstr "Mit PDF Hintergrund"
 
@@ -903,12 +1001,13 @@ msgstr "Mit PDF Hintergrund"
 msgid "Write text"
 msgstr "Tescht schreiben"
 
-#: ../src/control/LoadHandler.cpp:625
+#: ../src/control/LoadHandler.cpp:625 ../src/control/LoadHandler.cpp:628
 #, c-format
 msgid "XML Parser error: %s"
 msgstr "XML Parser error: %s"
 
 #: ../src/control/Control.cpp:1697 ../src/control/Control.cpp:2067
+#: ../src/control/Control.cpp:1778 ../src/control/Control.cpp:2187
 msgid "Xournal files"
 msgstr "Xournal Dateien"
 
@@ -920,7 +1019,7 @@ msgstr "Xournal++"
 msgid "Xournal++ Preferences"
 msgstr "Xournal++ Einstellungen"
 
-#: ../src/Xournalpp.cpp:129
+#: ../src/Xournalpp.cpp:129 ../src/Xournalpp.cpp:127
 msgid ""
 "You are using a development release of Xournal\n"
 "You can find the current release in CVS!\n"
@@ -941,14 +1040,15 @@ msgstr ""
 "\"xournalpp --help\"\n"
 
 #: ../src/control/Control.cpp:990 ../src/control/Control.cpp:1206
+#: ../src/control/Control.cpp:1030 ../src/control/Control.cpp:1270
 msgid ""
 "You don't have any PDF pages to select from. Cancel operation,\n"
 "Please select another background type: Menu \"Journal\" / \"Insert Page Type"
 "\"."
 msgstr ""
 "Es gibt keine PDF Seiten zum auswählen. Abbruch.\n"
-"Bitte wählen Sie einen anderen Hintergrundtyp: Menü \"Journal\" / \"Hintergrund neuer Seiten"
-"\"."
+"Bitte wählen Sie einen anderen Hintergrundtyp: Menü \"Journal\" / "
+"\"Hintergrund neuer Seiten\"."
 
 #: ../src/gui/sidebar/Sidebar.cpp:182
 #, c-format
@@ -962,7 +1062,8 @@ msgstr ""
 "Ihr aktuelles Dokument beinhaltet die PDF Seite %i nicht\n"
 "Möchten Sie diese Seite einfügen?\n"
 "\n"
-"Tipp: Sie können im Menü Journal / Seitenhintergrund / PDF Hintergrund eine beliebige PDF Seite infügen."
+"Tipp: Sie können im Menü Journal / Seitenhintergrund / PDF Hintergrund eine "
+"beliebige PDF Seite infügen."
 
 #: ../ui/settings.glade:743
 msgid "Zoom"
@@ -976,7 +1077,7 @@ msgstr "Passend zoomen"
 msgid "Zoom in"
 msgstr "Hereinzoomen"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:381
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:381 ../ui/main.glade:960
 msgid "Zoom out"
 msgstr "Herauszoomen"
 
@@ -988,21 +1089,13 @@ msgstr "Zoom 100%"
 msgid "_Annotate PDF"
 msgstr "PDF Beschriften"
 
-#: ../ui/main.glade:767
-msgid "_View"
-msgstr "_Ansicht"
+#: ../ui/main.glade:382
+msgid "_Delete Page"
+msgstr "Seite löschen"
 
 #: ../ui/main.glade:131
 msgid "_Edit"
 msgstr "_Bearbeiten"
-
-#: ../ui/main.glade:19
-msgid "_File"
-msgstr "_Datei"
-
-#: ../ui/main.glade:382
-msgid "_Delete Page"
-msgstr "Seite löschen"
 
 #: ../ui/main.glade:503
 msgid "_Eraser"
@@ -1012,6 +1105,10 @@ msgstr "Radierer"
 msgid "_Export as PDF"
 msgstr "_Exportieren als PDF"
 
+#: ../ui/main.glade:19
+msgid "_File"
+msgstr "_Datei"
+
 #: ../ui/main.glade:237
 msgid "_First Page"
 msgstr "Erste Seite"
@@ -1020,13 +1117,13 @@ msgstr "Erste Seite"
 msgid "_Graph"
 msgstr "_Kariert"
 
-#: ../ui/main.glade:512
-msgid "_Highlighter"
-msgstr "_Leuchtstift"
-
 #: ../ui/main.glade:859
 msgid "_Help"
 msgstr "_Hilfe"
+
+#: ../ui/main.glade:512
+msgid "_Highlighter"
+msgstr "_Leuchtstift"
 
 #: ../ui/main.glade:464 ../ui/main.glade:530
 msgid "_Image"
@@ -1087,6 +1184,10 @@ msgstr "_Zwei seiten"
 #: ../ui/main.glade:583
 msgid "_Vertical Space"
 msgstr "_Vertical Space"
+
+#: ../ui/main.glade:767
+msgid "_View"
+msgstr "_Ansicht"
 
 #: ../ui/main.glade:709
 msgid "_delete strokes"
@@ -1156,4 +1257,3 @@ msgstr "sehr dick"
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:331
 msgid "whiteout"
 msgstr "ausweissen"
-

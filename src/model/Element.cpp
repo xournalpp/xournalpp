@@ -3,13 +3,13 @@
 
 Element::Element(ElementType type) {
 	this->type = type;
-	x = 0;
-	y = 0;
-	color = 0;
-	width = 0;
-	height = 0;
+	this->x = 0;
+	this->y = 0;
+	this->color = 0;
+	this->width = 0;
+	this->height = 0;
 
-	sizeCalculated = false;
+	this->sizeCalculated = false;
 }
 
 Element::~Element() {

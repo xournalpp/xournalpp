@@ -509,7 +509,7 @@ public:
 		g_object_unref(file);
 	}
 
-	bool run(bool * cancel) {
+	void run(bool * cancel) {
 		GError * err = NULL;
 		GFileInputStream * in = g_file_read(file, NULL, &err);
 		GdkPixbuf * pixbuf = NULL;
@@ -526,7 +526,6 @@ public:
 			gtk_dialog_run(GTK_DIALOG(dialog));
 			gtk_widget_destroy(dialog);
 			g_error_free(err);
-			return false;
 		}
 
 		Image * img = new Image();
@@ -608,6 +607,10 @@ GdkColor PageView::getSelectionColor() {
 
 TextEditor * PageView::getTextEditor() {
 	return textEditor;
+}
+
+void PageView::resetShapeRecognizer() {
+	this->inputHandler->resetShapeRecognizer();
 }
 
 gboolean PageView::onMouseEnterNotifyEvent(GtkWidget *widget, GdkEventCrossing *event, gpointer user_data) {
@@ -1049,11 +1052,11 @@ bool PageView::paintPage(GtkWidget * widget, GdkEventExpose * event, double zoom
 		return true;
 	}
 
-	if(event == NULL) {
-		printf("paint page: null\n");
-	} else {
-		printf("paint page: %i / %i : %i / %i\n", event->area.x, event->area.y, event->area.width, event->area.height);
-	}
+//	if(event == NULL) {
+//		printf("paint page: null\n");
+//	} else {
+//		printf("paint page: %i / %i : %i / %i\n", event->area.x, event->area.y, event->area.width, event->area.height);
+//	}
 
 	cairo_t * cr = gdk_cairo_create(widget->window);
 
