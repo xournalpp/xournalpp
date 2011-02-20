@@ -2,7 +2,9 @@
 
 // Hack: Needed to calculate the view size
 #include "../view/TextView.h"
+
 #include "../util/ObjectStream.h"
+#include "../util/Stacktrace.h"
 
 Text::Text() :
 	Element(ELEMENT_TEXT) {
@@ -52,6 +54,7 @@ void Text::scale(double x0, double y0, double fx, double fy) {
 	// only proportional scale allowed...
 	if (fx != fy) {
 		g_warning("rescale font with fx != fy not supported: %lf / %lf", fx, fy);
+		Stacktrace::printStracktrace();
 	}
 
 	this->x -= x0;

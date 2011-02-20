@@ -39,8 +39,7 @@ String Util::getAutosaveFilename() {
 }
 
 String Util::getSettingsSubfolder(String subfolder) {
-	gchar * folder = g_strconcat(g_get_home_dir(), G_DIR_SEPARATOR_S, CONFIG_DIR, G_DIR_SEPARATOR_S, subfolder.c_str(),
-			G_DIR_SEPARATOR_S, NULL);
+	gchar * folder = g_strconcat(g_get_home_dir(), G_DIR_SEPARATOR_S, CONFIG_DIR, G_DIR_SEPARATOR_S, subfolder.c_str(), G_DIR_SEPARATOR_S, NULL);
 	String path(folder, true);
 
 	if (!g_file_test(path.c_str(), G_FILE_TEST_EXISTS)) {
@@ -48,16 +47,5 @@ String Util::getSettingsSubfolder(String subfolder) {
 	}
 
 	return path;
-}
-
-
-MemoryCheckObject::MemoryCheckObject() {
-	this->d1 = 0xffff0000;
-	this->d2 = 465456;
-	this->d3 = 89535395;
-}
-
-bool MemoryCheckObject::isMemoryCorrupted() {
-	return (this->d1 != 0xffff0000 || this->d2 != 465456 || this->d3 != 89535395);
 }
 

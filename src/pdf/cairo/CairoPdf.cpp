@@ -21,15 +21,14 @@ cairo_status_t CairoPdf::writeOut(CairoPdf *pdf, unsigned char *data, unsigned i
 void CairoPdf::drawPage(XojPage * page) {
 	DocumentView view;
 
-	if(this->data == NULL) {
+	if (this->data == NULL) {
 		this->data = g_string_new("");
 	}
 
-	cairo_surface_t * surface = cairo_pdf_surface_create_for_stream((cairo_write_func_t) writeOut, this,
-			page->getWidth(), page->getHeight());
+	cairo_surface_t * surface = cairo_pdf_surface_create_for_stream((cairo_write_func_t) writeOut, this, page->getWidth(), page->getHeight());
 	cairo_t * cr = cairo_create(surface);
 
-	view.drawPage(page, NULL, cr, true);
+	view.drawPage(page, cr);
 
 	cairo_destroy(cr);
 	cairo_surface_destroy(surface);

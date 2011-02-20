@@ -95,6 +95,11 @@ void EditSelection::initAttributes() {
 }
 
 EditSelection::~EditSelection() {
+	if(this->rescaleId) {
+		g_source_remove(this->rescaleId);
+		this->rescaleId = 0;
+	}
+
 	double fx = this->width / this->originalWidth;
 	double fy = this->height / this->originalHeight;
 

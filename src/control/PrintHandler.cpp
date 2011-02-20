@@ -13,8 +13,7 @@ PrintHandler::~PrintHandler() {
 	delete view;
 }
 
-void PrintHandler::drawPage(GtkPrintOperation * operation, GtkPrintContext * context, int pageNr,
-		PrintHandler * handler) {
+void PrintHandler::drawPage(GtkPrintOperation * operation, GtkPrintContext * context, int pageNr, PrintHandler * handler) {
 	cairo_t * cr = gtk_print_context_get_cairo_context(context);
 
 	XojPage * page = handler->doc->getPage(pageNr);
@@ -35,13 +34,15 @@ void PrintHandler::drawPage(GtkPrintOperation * operation, GtkPrintContext * con
 	if (page->getBackgroundType() == BACKGROUND_TYPE_PDF) {
 		int pgNo = page->getPdfPageNr();
 		popplerPage = handler->doc->getPdfPage(pgNo);
+		if (popplerPage) {
+			popplerPage->render(cr, true);
+		}
 	}
 
-	handler->view->drawPage(page, popplerPage, cr, true);
+	handler->view->drawPage(page, cr);
 }
 
-void PrintHandler::requestPageSetup(GtkPrintOperation * operation, GtkPrintContext * context, gint pageNr,
-		GtkPageSetup *setup, PrintHandler * handler) {
+void PrintHandler::requestPageSetup(GtkPrintOperation * operation, GtkPrintContext * context, gint pageNr, GtkPageSetup *setup, PrintHandler * handler) {
 	XojPage * page = handler->doc->getPage(pageNr);
 	if (page == NULL) {
 		return;
@@ -61,9 +62,8 @@ void PrintHandler::requestPageSetup(GtkPrintOperation * operation, GtkPrintConte
 	gtk_paper_size_free(size);
 }
 
-void PrintHandler::print(Document * doc) {
-	gchar * filename = g_build_filename(g_get_home_dir(), G_DIR_SEPARATOR_S, CONFIG_DIR, G_DIR_SEPARATOR_S,
-			PRINT_CONFIG_FILE, NULL);
+void PrintHandler::print(Document * doc, int currentPage) {
+	gchar * filename = g_build_filename(g_get_home_dir(), G_DIR_SEPARATOR_S, CONFIG_DIR, G_DIR_SEPARATOR_S, PRINT_CONFIG_FILE, NULL);
 
 	GtkPrintSettings * settings = gtk_print_settings_new_from_file(filename, NULL);
 
@@ -76,6 +76,8 @@ void PrintHandler::print(Document * doc) {
 	GtkPrintOperation * op = gtk_print_operation_new();
 	gtk_print_operation_set_print_settings(op, settings);
 	gtk_print_operation_set_n_pages(op, doc->getPageCount());
+	gtk_print_operation_set_current_page(op, currentPage);
+	gtk_print_operation_set_job_name(op, "Xournal++");
 	gtk_print_operation_set_unit(op, GTK_UNIT_POINTS);
 	gtk_print_operation_set_use_full_page(op, true);
 	g_signal_connect(op, "draw_page", G_CALLBACK(drawPage), this);

@@ -1,6 +1,7 @@
 #include "Page.h"
 
 #include "Document.h"
+#include "../util/Stacktrace.h"
 
 XojPage::XojPage(double width, double heigth) {
 	this->pdfBackgroundPage = -1;
@@ -206,6 +207,7 @@ void BackgroundImage::setAttach(bool attach) {
 		((BackgroundImageContents *) this->img)->attach = true;
 	} else {
 		g_warning("BackgroundImage::setAttach:please load first an image before call setAttach!");
+		Stacktrace::printStracktrace();
 	}
 }
 

@@ -4,10 +4,10 @@
 #include "../control/tools/Selection.h"
 #include "../control/tools/EditSelection.h"
 #include "../model/EraseableStroke.h"
+//#include "../gui/PdfCache.h"
 
 #include <config.h>
 #include <glib/gi18n-lib.h>
-
 
 //#define SHOW_ELEMENT_BOUNDS
 //#define SHOW_REPAINT_BOUNDS
@@ -310,7 +310,7 @@ void DocumentView::limitArea(double x, double y, double width, double heigth) {
 	this->lHeight = heigth;
 }
 
-void DocumentView::drawPage(XojPage * page, XojPopplerPage * popplerPage, cairo_t * cr, bool forPrinting) {
+void DocumentView::drawPage(XojPage * page, cairo_t * cr) {
 	this->cr = cr;
 	this->page = page;
 	this->width = page->getWidth();
@@ -319,25 +319,7 @@ void DocumentView::drawPage(XojPage * page, XojPopplerPage * popplerPage, cairo_
 	CHECK_MEMORY(page);
 
 	if (page->getBackgroundType() == BACKGROUND_TYPE_PDF) {
-		if (popplerPage) {
-			popplerPage->render(cr, forPrinting);
-
-			cairo_set_operator(cr, CAIRO_OPERATOR_DEST_OVER);
-			cairo_set_source_rgb(cr, 1., 1., 1.);
-			cairo_paint(cr);
-		} else if (!forPrinting) {
-			cairo_select_font_face(cr, "Sans", CAIRO_FONT_SLANT_NORMAL, CAIRO_FONT_WEIGHT_BOLD);
-			cairo_set_font_size(cr, 26);
-
-			cairo_set_source_rgb(cr, 0.8, 0.8, 0.8);
-
-			cairo_text_extents_t extents = { 0 };
-			const char * loading = _("PDF background missing");
-
-			cairo_text_extents(cr, loading, &extents);
-			cairo_move_to(cr, this->width / 2 - extents.width / 2, this->height / 2 - extents.height / 2);
-			cairo_show_text(cr, loading);
-		}
+		// not handled here
 	} else if (page->getBackgroundType() == BACKGROUND_TYPE_IMAGE) {
 		paintBackgroundImage();
 	} else if (page->getBackgroundType() == BACKGROUND_TYPE_GRAPH) {
@@ -360,7 +342,7 @@ void DocumentView::drawPage(XojPage * page, XojPopplerPage * popplerPage, cairo_
 	ListIterator<Layer *> it = page->layerIterator();
 	while (it.hasNext() && layer < page->getSelectedLayerId()) {
 		Layer * l = it.next();
-		l->isMemoryCorrupted();
+		CHECK_MEMORY(l);
 		drawLayer(cr, l);
 		layer++;
 	}

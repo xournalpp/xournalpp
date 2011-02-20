@@ -25,7 +25,7 @@ public:
 	virtual ~PrintHandler();
 
 public:
-	void print(Document * doc);
+	void print(Document * doc, int currentPage);
 
 private:
 	static void drawPage(GtkPrintOperation *operation, GtkPrintContext *context, int pageNr, PrintHandler * handler);

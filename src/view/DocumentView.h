@@ -18,7 +18,6 @@
 #include "../model/Text.h"
 #include "../model/Page.h"
 #include "../model/Image.h"
-#include "../pdf/poppler/XojPopplerPage.h"
 
 #include "ElementContainer.h"
 
@@ -30,7 +29,7 @@ public:
 	virtual ~DocumentView();
 
 public:
-	void drawPage(XojPage * page, XojPopplerPage * popplerPage, cairo_t *cr, bool forPrinting = false);
+	void drawPage(XojPage * page, cairo_t * cr);
 	void drawStroke(cairo_t * cr, Stroke * s, int startPoint = 0);
 	void drawEraseableStroke(cairo_t * cr, Stroke * s);
 	static void applyColor(cairo_t * cr, int c, int alpha = 255);

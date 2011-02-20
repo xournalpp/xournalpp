@@ -31,6 +31,7 @@ xournalpp_SOURCES = \
 	control/ClipboardHandler.cpp \
 	control/Control.cpp \
 	control/LoadHandler.cpp \
+	control/PdfCache.cpp \
 	control/PrintHandler.cpp \
 	control/RecentManager.cpp \
 	control/SaveHandler.cpp \
@@ -95,14 +96,18 @@ xournalpp_SOURCES = \
 	undo/UndoRedoHandler.cpp \
 	util/CrashHandler.cpp \
 	util/GzHelper.cpp \
+	util/MemoryCheck.cpp \
 	util/ObjectStream.cpp \
 	util/OutputStream.cpp \
+	util/PageRange.cpp \
+	util/Stacktrace.cpp \
 	util/pixbuf-utils.cpp \
 	util/Range.cpp \
 	util/String.cpp \
 	util/StringBuffer.cpp \
 	util/Util.cpp \
 	view/DocumentView.cpp \
+	view/PdfView.cpp \
 	view/TextView.cpp \
 	Xournalpp.cpp
 

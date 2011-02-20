@@ -1,4 +1,5 @@
 #include "GzHelper.h"
+#include "Stacktrace.h"
 
 #include <zlib.h>
 
@@ -11,6 +12,7 @@ GzHelper::~GzHelper() {
 GString * GzHelper::gzcompress(GString * str, int level) {
 	if ((level < -1) || (level > 9)) {
 		g_warning("GzHelper::gzcompress compression level (%i) must be within -1..9", level);
+		Stacktrace::printStracktrace();
 		level = -1;
 	}
 
