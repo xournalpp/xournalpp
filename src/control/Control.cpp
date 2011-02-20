@@ -1,7 +1,6 @@
 #include "Control.h"
 #include <gtk/gtk.h>
 #include "../gui/dialog/AboutDialog.h"
-#include "../gui/dialog/ExportDialog.h"
 #include "../gui/dialog/SettingsDialog.h"
 #include "../gui/dialog/PdfPagesDialog.h"
 #include "../gui/dialog/ImagesDialog.h"
@@ -11,6 +10,7 @@
 #include "LoadHandler.h"
 #include "SaveHandler.h"
 #include "PrintHandler.h"
+#include "ExportHandler.h"
 #include "settings/ev-metadata-manager.h"
 #include "../pdf/PdfExport.h"
 #include "../util/CrashHandler.h"
@@ -2202,21 +2202,8 @@ void Control::runInBackground(Runnable * runnable) {
 }
 
 void Control::exportAs() {
-	ExportDialog * dlg = new ExportDialog();
-	dlg->show();
-
-	delete dlg;
-
-	//	FILE * fp = fopen("/home/andreas/tmp/pdfexp/exporttest.pdf", "w");
-
-	//	for (int i = 0; i < doc->getPageCount(); i++) {
-	//		PopplerPage * page = doc->getPdfPage(i);
-	//		Object * o = new Object();
-	//		o = page->page->getContents(o);
-	//
-	//	}
-
-	//fclose(fp);
+	ExportHandler handler;
+	handler.runExportWithDialog(this->doc, getCurrentPageNo());
 }
 
 void Control::saveAs() {

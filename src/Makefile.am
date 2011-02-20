@@ -29,6 +29,7 @@ xournalpp_SOURCES = \
 	control/Actions.cpp \
 	control/BackgroundThreadHandler.cpp \
 	control/ClipboardHandler.cpp \
+	control/ExportHandler.cpp \
 	control/Control.cpp \
 	control/LoadHandler.cpp \
 	control/PdfCache.cpp \
