@@ -19,6 +19,7 @@
 #include "../control/ZoomControl.h"
 #include "../util/Arrayiterator.h"
 #include "../util/Util.h"
+#include "../control/PdfCache.h"
 
 const int XOURNAL_PADDING = 20;
 const int XOURNAL_PADDING_TOP_LEFT = 10;
@@ -84,6 +85,8 @@ public:
 
 	void resetShapeRecognizer();
 
+	PdfCache * getCache();
+
 public:
 	//ZoomListener interface
 	void zoomChanged(double lastZoom);
@@ -133,6 +136,8 @@ private:
 	int currentPage;
 	int lastSelectedPage;
 
+
+	PdfCache * cache;
 
 	/**
 	 * Memory cleanup timeout

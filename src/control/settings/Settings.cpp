@@ -76,8 +76,7 @@ void Settings::loadDefault() {
 
 	this->defaultSaveName = _("%F-Note-%H-%M.xoj");
 
-	this->visiblePageFormats
-			= GTK_PAPER_NAME_A4 "," GTK_PAPER_NAME_A5 "," GTK_PAPER_NAME_LETTER ","GTK_PAPER_NAME_LEGAL;
+	this->visiblePageFormats = GTK_PAPER_NAME_A4 "," GTK_PAPER_NAME_A5 "," GTK_PAPER_NAME_LETTER ","GTK_PAPER_NAME_LEGAL;
 
 	// Eraser
 	buttonConfig[0] = new ButtonConfig(TOOL_ERASER, 0, TOOL_SIZE_NONE, false, false, ERASER_TYPE_NONE);
@@ -93,6 +92,8 @@ void Settings::loadDefault() {
 
 	this->pageInsertType = PAGE_INSERT_TYPE_COPY;
 	this->pageBackgroundColor = 0xffffff; //white
+
+	this->pdfPageCacheSize = 10;
 
 	this->selectionColor = 0xff0000;
 }
@@ -178,7 +179,7 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
 
 	if (xmlStrcmp(name, (const xmlChar *) "font") == 0) {
 		xmlFree(name);
-		xmlChar *font;
+		xmlChar * font;
 		xmlChar *size;
 
 		font = xmlGetProp(cur, (const xmlChar *) "font");
@@ -254,6 +255,8 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
 		this->pageInsertType = pageInsertTypeFromString((const char *) value);
 	} else if (xmlStrcmp(name, (const xmlChar *) "pageBackgroundColor") == 0) {
 		this->pageBackgroundColor = g_ascii_strtoll((const char *) value, NULL, 10);
+	} else if (xmlStrcmp(name, (const xmlChar *) "pdfPageCacheSize") == 0) {
+		this->pdfPageCacheSize = g_ascii_strtoll((const char *) value, NULL, 10);
 	} else if (xmlStrcmp(name, (const xmlChar *) "selectionColor") == 0) {
 		this->selectionColor = g_ascii_strtoll((const char *) value, NULL, 10);
 	} else if (xmlStrcmp(name, (const xmlChar *) "allowScrollOutsideThePage") == 0) {
@@ -508,10 +511,13 @@ void Settings::save() {
 	WRITE_INT_PROP(pageBackgroundColor);
 	WRITE_INT_PROP(selectionColor);
 
+	WRITE_INT_PROP(pdfPageCacheSize);
+	WRITE_COMMENT("The count of rendered PDF pages which will be cached.");
+
 	WRITE_DOUBLE_PROP(widthMinimumMultiplier);
-	WRITE_COMMENT("The multiplier for the presure sensitivity of the pen");
+	WRITE_COMMENT("The multiplier for the pressure sensitivity of the pen");
 	WRITE_DOUBLE_PROP(widthMaximumMultiplier);
-	WRITE_COMMENT("The multiplier for the presure sensitivity of the pen");
+	WRITE_COMMENT("The multiplier for the pressure sensitivity of the pen");
 
 	xmlNodePtr xmlFont;
 	xmlFont = xmlNewChild(root, NULL, (const xmlChar *) "property", NULL);
@@ -919,6 +925,18 @@ int Settings::getSelectionColor() {
 	return this->selectionColor;
 }
 
+int Settings::getPdfPageCacheSize() {
+	return this->pdfPageCacheSize;
+}
+
+void Settings::setPdfPageCacheSize(int size) {
+	if (this->pdfPageCacheSize == size) {
+		return;
+	}
+	this->pdfPageCacheSize = size;
+	saveTimeout();
+}
+
 void Settings::setSelectionColor(int color) {
 	if (this->selectionColor == color) {
 		return;
@@ -945,8 +963,7 @@ SAttribute::SAttribute() {
 //////////////////////////////////////////////////
 
 
-ButtonConfig::ButtonConfig(ToolType action, int color, ToolSize size, bool shapeRecognizer, bool rouler,
-		EraserType eraserMode) {
+ButtonConfig::ButtonConfig(ToolType action, int color, ToolSize size, bool shapeRecognizer, bool rouler, EraserType eraserMode) {
 	this->action = action;
 	this->color = color;
 	this->shapeRecognizer = shapeRecognizer;

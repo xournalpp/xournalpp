@@ -244,6 +244,9 @@ public:
 	int getSelectionColor();
 	void setSelectionColor(int color);
 
+	int getPdfPageCacheSize();
+	void setPdfPageCacheSize(int size);
+
 	String getVisiblePageFormats();
 public:
 	// Custom settings
@@ -398,6 +401,11 @@ private:
 	 * The background color of a new inserted page
 	 */
 	int pageBackgroundColor;
+
+	/**
+	 * The count of pages which will be cached
+	 */
+	int pdfPageCacheSize;
 
 	/**
 	 * The color to draw borders on selected elements (Page, insert image selection etc.)

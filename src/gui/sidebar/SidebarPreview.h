@@ -16,6 +16,8 @@
 #include "../../view/DocumentView.h"
 #include "../../util/Util.h"
 
+#include "../../control/PdfCache.h"
+
 class Sidebar;
 
 class SidebarPreview : public MemoryCheckObject {
@@ -52,6 +54,8 @@ private:
 	GtkWidget * widget;
 
 	cairo_surface_t * crBuffer;
+
+	PdfCache * cache;
 
 	/**
 	 * callback IDs

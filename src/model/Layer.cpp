@@ -1,4 +1,5 @@
 #include "Layer.h"
+#include "../util/Stacktrace.h"
 
 Layer::Layer() {
 	this->elements = NULL;
@@ -15,13 +16,14 @@ Layer::~Layer() {
 void Layer::addElement(Element * e) {
 	if (e == NULL) {
 		g_warning("addElement(NULL)!");
+		Stacktrace::printStracktrace();
 		return;
 	}
 
-	// TODO: Debug
 	GList * elem2 = g_list_find(this->elements, e);
 	if (elem2) {
-		printf("ADD: Element ist bereits auf dem Layer!\n");
+		printf("Layer::addElement: Element is already on this layer!\n");
+		return;
 	}
 
 	this->elements = g_list_append(this->elements, e);
@@ -30,12 +32,14 @@ void Layer::addElement(Element * e) {
 void Layer::insertElement(Element * e, int pos) {
 	if (e == NULL) {
 		g_warning("insertElement(NULL)!");
+		Stacktrace::printStracktrace();
 		return;
 	}
 
 	GList * elem2 = g_list_find(this->elements, e);
 	if (elem2) {
 		g_warning("Layer::insertElement() try to add an element twice!");
+		Stacktrace::printStracktrace();
 		return;
 	}
 
@@ -57,6 +61,7 @@ int Layer::removeElement(Element * e, bool free) {
 
 	if (elem == NULL) {
 		g_warning("could not remove element from layer, its not on the layer!");
+		Stacktrace::printStracktrace();
 		return -1;
 	}
 

@@ -1,9 +1,10 @@
 #include "SidebarPreview.h"
 #include "../Shadow.h"
 #include "Sidebar.h"
-#include "../../util/Util.h"
+#include "../../view/PdfView.h"
 
 SidebarPreview::SidebarPreview(Sidebar * sidebar, XojPage * page) {
+	this->cache = new PdfCache(sidebar->getControl()->getSettings()->getPdfPageCacheSize());
 	this->widget = gtk_drawing_area_new();
 	gtk_widget_show(this->widget);
 	this->crBuffer = NULL;
@@ -28,6 +29,9 @@ SidebarPreview::~SidebarPreview() {
 	gtk_widget_destroy(this->widget);
 	delete this->view;
 	this->view = NULL;
+
+	delete this->cache;
+	this->cache = NULL;
 
 	if (crBuffer) {
 		cairo_surface_destroy(crBuffer);
@@ -103,7 +107,8 @@ void SidebarPreview::paint() {
 			popplerPage = sidebar->getDocument()->getPdfPage(pgNo);
 		}
 
-		view->drawPage(page, popplerPage, cr2);
+		PdfView::drawPage(this->cache, popplerPage, cr2, zoom, page->getWidth(), page->getHeight());
+		view->drawPage(page, cr2);
 
 		cairo_set_matrix(cr2, &defaultMatrix);
 

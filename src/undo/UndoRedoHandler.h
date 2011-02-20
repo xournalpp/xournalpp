@@ -13,7 +13,7 @@
 #define __UNDOREDOHANDLER_H__
 
 #include "UndoAction.h"
-#include "../util/Util.h"
+#include "../util/MemoryCheck.h"
 
 class Control;
 

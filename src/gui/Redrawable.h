@@ -12,8 +12,11 @@
 #ifndef __REDRAWABLE_H__
 #define __REDRAWABLE_H__
 
-#include "../util/Util.h"
+#include "../util/MemoryCheck.h"
 #include "../util/Range.h"
+
+#include <gdk/gdktypes.h>
+#include <gtk/gtk.h>
 
 class Element;
 

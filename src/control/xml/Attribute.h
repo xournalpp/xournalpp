@@ -12,7 +12,7 @@
 #ifndef __ATTRIBUTE_H__
 #define __ATTRIBUTE_H__
 
-#include "../../util/Util.h"
+#include "../../util/MemoryCheck.h"
 #include "../../util/OutputStream.h"
 
 class Attribute: public MemoryCheckObject {

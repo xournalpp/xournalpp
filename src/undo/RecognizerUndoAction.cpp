@@ -3,6 +3,7 @@
 #include "../model/Layer.h"
 #include "../model/Stroke.h"
 #include "../gui/Redrawable.h"
+#include "../util/Stacktrace.h"
 
 RecognizerUndoAction::RecognizerUndoAction(XojPage * page, Redrawable * view, Layer * layer, Stroke * original, Stroke * recognized) {
 	this->page = page;
@@ -31,6 +32,7 @@ void RecognizerUndoAction::addSourceElement(Stroke * s) {
 	GList * elem2 = g_list_find(this->original, s);
 	if (elem2) {
 		g_warning("RecognizerUndoAction::addSourceElement() twice the same\n");
+		Stacktrace::printStracktrace();
 		return;
 	}
 

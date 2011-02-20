@@ -16,7 +16,7 @@
 #include "../../model/Stroke.h"
 #include "../../model/Page.h"
 #include "../../gui/Redrawable.h"
-#include "../../util/Util.h"
+#include "../../util/MemoryCheck.h"
 #include "../shaperecognizer/ShapeRecognizer.h"
 
 class DocumentView;

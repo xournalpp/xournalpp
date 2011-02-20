@@ -14,7 +14,7 @@
 
 #include "Layer.h"
 #include "../util/ListIterator.h"
-#include "../util/Util.h"
+#include "../util/MemoryCheck.h"
 #include "../util/String.h"
 
 enum BackgroundType {

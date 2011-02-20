@@ -13,7 +13,6 @@
 #define __UTIL_H__
 
 #include <glib.h>
-#include <assert.h>
 #include "../util/String.h"
 
 class Util {
@@ -29,28 +28,6 @@ public:
 
 private:
 	static String getSettingsSubfolder(String subfolder);
-};
-
-#define CHECK_MEMORY(obj) {	bool corrupted = obj->isMemoryCorrupted(); \
-	if(corrupted) { \
-		fprintf(stderr, "%s:%i\tMemory corrupted!\n", __FILE__, __LINE__); \
-	} \
-	assert(!corrupted); }
-
-
-/**
- * Used for testing memory violations
- */
-
-class MemoryCheckObject {
-public:
-	MemoryCheckObject();
-
-	bool isMemoryCorrupted();
-private:
-	int d1;
-	int d2;
-	int d3;
 };
 
 #endif /* __UTIL_H__ */

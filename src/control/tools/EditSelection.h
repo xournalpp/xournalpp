@@ -18,7 +18,7 @@
 #include "../../model/Font.h"
 #include "../../gui/Redrawable.h"
 #include "../../view/ElementContainer.h"
-#include "../../util/Util.h"
+#include "../../util/MemoryCheck.h"
 #include "Selection.h"
 #include "../../undo/UndoAction.h"
 #include "../Tool.h"

@@ -17,6 +17,7 @@
 
 #include "gui/MainWindow.h"
 #include "util/CrashHandler.h"
+#include "util/Stacktrace.h"
 #include "control/Control.h"
 #include "cfg.h"
 
@@ -95,6 +96,9 @@ static GOptionEntry options[] = {
 
 int main(int argc, char *argv[]) {
 	installCrashHandlers();
+	if (argc) {
+		Stacktrace::setExename(argv[0]);
+	}
 
 #ifdef ENABLE_NLS
 	setlocale( LC_ALL, "" );
@@ -148,8 +152,7 @@ int main(int argc, char *argv[]) {
 	bool opened = false;
 	if (optFilename) {
 		if (g_strv_length(optFilename) != 1) {
-			GtkWidget * dialog = gtk_message_dialog_new((GtkWindow*) *win, GTK_DIALOG_DESTROY_WITH_PARENT,
-					GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
+			GtkWidget * dialog = gtk_message_dialog_new((GtkWindow*) *win, GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
 					_("Sorry, Xournal can only open one file from the command line.\n"
 							"Others are ignored."));
 			gtk_dialog_run(GTK_DIALOG(dialog));
@@ -190,8 +193,8 @@ int main(int argc, char *argv[]) {
 			}
 			opened = control->openFile(path);
 		} else {
-			GtkWidget * dialog = gtk_message_dialog_new((GtkWindow*) *win, GTK_DIALOG_DESTROY_WITH_PARENT,
-					GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, _("Sorry, Xournal cannot open remote files at the moment.\n"
+			GtkWidget * dialog = gtk_message_dialog_new((GtkWindow*) *win, GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
+					_("Sorry, Xournal cannot open remote files at the moment.\n"
 							"You have to copy the file to a local directory."));
 			gtk_dialog_run(GTK_DIALOG(dialog));
 			gtk_widget_destroy(dialog);

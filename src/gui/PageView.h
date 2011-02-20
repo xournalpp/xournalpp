@@ -31,6 +31,8 @@ class XournalWidget;
 class DeleteUndoAction;
 class Selection;
 
+class Rectangle;
+
 class PageView: public Redrawable, public virtual MemoryCheckObject {
 public:
 	PageView(XournalWidget * xournal, XojPage * page);
@@ -46,7 +48,7 @@ public:
 
 	void firstPaint();
 	bool paintPage(GtkWidget *widget, GdkEventExpose *event, double zoom);
-	void repaintRectangle(GdkRectangle * rect, double zoom);
+	void repaintRectangle(Rectangle * rect, double zoom);
 
 	void repaint();
 	void repaint(Element * e);
@@ -124,7 +126,7 @@ private:
 
 	void fixXInputCoords(GdkEvent * event);
 
-	void addRepaintRect(int x, int y, int width, int height);
+	void addRepaintRect(double x, double y, double width, double height);
 private:
 	XojPage * page;
 	GtkWidget * widget;
@@ -185,6 +187,35 @@ private:
 	GList * repaintRect;
 
 	friend class InsertImageRunnable;
+};
+
+class Rectangle {
+public:
+	Rectangle();
+	Rectangle(double x, double y, double width, double height);
+public:
+
+	/**
+	 * @src1: a #Rectangle
+	 * @src2: a #Rectangle
+	 * @dest: return location for the intersection of @src1 and @src2, or %NULL
+	 *
+	 * Calculates the intersection of two rectangles. It is allowed for
+	 * @dest to be the same as either @src1 or @src2. If the rectangles
+	 * do not intersect, @dest's width and height is set to 0 and its x
+	 * and y values are undefined. If you are only interested in whether
+	 * the rectangles intersect, but not in the intersecting area itself,
+	 * pass %NULL for @dest.
+	 *
+	 * Returns: %TRUE if the rectangles intersect.
+	 */
+	bool intersect(const Rectangle * src, Rectangle * dest);
+
+public:
+	double x;
+	double y;
+	double width;
+	double height;
 };
 
 #endif /* __PAGEVIEW_H__ */

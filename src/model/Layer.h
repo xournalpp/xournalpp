@@ -16,7 +16,7 @@
 
 #include "Element.h"
 #include "../util/ListIterator.h"
-#include "../util/Util.h"
+#include "../util/MemoryCheck.h"
 
 class Layer : public MemoryCheckObject {
 public:
