@@ -68,8 +68,9 @@ am_xournalpp_OBJECTS = xournalpp-ev-metadata-manager.$(OBJEXT) \
 	xournalpp-XmlTextNode.$(OBJEXT) xournalpp-Actions.$(OBJEXT) \
 	xournalpp-BackgroundThreadHandler.$(OBJEXT) \
 	xournalpp-ClipboardHandler.$(OBJEXT) \
-	xournalpp-Control.$(OBJEXT) xournalpp-LoadHandler.$(OBJEXT) \
-	xournalpp-PdfCache.$(OBJEXT) xournalpp-PrintHandler.$(OBJEXT) \
+	xournalpp-ExportHandler.$(OBJEXT) xournalpp-Control.$(OBJEXT) \
+	xournalpp-LoadHandler.$(OBJEXT) xournalpp-PdfCache.$(OBJEXT) \
+	xournalpp-PrintHandler.$(OBJEXT) \
 	xournalpp-RecentManager.$(OBJEXT) \
 	xournalpp-SaveHandler.$(OBJEXT) \
 	xournalpp-SearchControl.$(OBJEXT) xournalpp-Tool.$(OBJEXT) \
@@ -303,6 +304,7 @@ xournalpp_SOURCES = \
 	control/Actions.cpp \
 	control/BackgroundThreadHandler.cpp \
 	control/ClipboardHandler.cpp \
+	control/ExportHandler.cpp \
 	control/Control.cpp \
 	control/LoadHandler.cpp \
 	control/PdfCache.cpp \
@@ -490,6 +492,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-EraseUndoAction.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-EraseableStroke.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-ExportDialog.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-ExportHandler.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-Font.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-FontUndoAction.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-FormatDefinitions.Po@am__quote@
@@ -923,6 +926,20 @@ xournalpp-ClipboardHandler.obj: control/ClipboardHandler.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='control/ClipboardHandler.cpp' object='xournalpp-ClipboardHandler.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-ClipboardHandler.obj `if test -f 'control/ClipboardHandler.cpp'; then $(CYGPATH_W) 'control/ClipboardHandler.cpp'; else $(CYGPATH_W) '$(srcdir)/control/ClipboardHandler.cpp'; fi`
+
+xournalpp-ExportHandler.o: control/ExportHandler.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-ExportHandler.o -MD -MP -MF $(DEPDIR)/xournalpp-ExportHandler.Tpo -c -o xournalpp-ExportHandler.o `test -f 'control/ExportHandler.cpp' || echo '$(srcdir)/'`control/ExportHandler.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-ExportHandler.Tpo $(DEPDIR)/xournalpp-ExportHandler.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='control/ExportHandler.cpp' object='xournalpp-ExportHandler.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-ExportHandler.o `test -f 'control/ExportHandler.cpp' || echo '$(srcdir)/'`control/ExportHandler.cpp
+
+xournalpp-ExportHandler.obj: control/ExportHandler.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-ExportHandler.obj -MD -MP -MF $(DEPDIR)/xournalpp-ExportHandler.Tpo -c -o xournalpp-ExportHandler.obj `if test -f 'control/ExportHandler.cpp'; then $(CYGPATH_W) 'control/ExportHandler.cpp'; else $(CYGPATH_W) '$(srcdir)/control/ExportHandler.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-ExportHandler.Tpo $(DEPDIR)/xournalpp-ExportHandler.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='control/ExportHandler.cpp' object='xournalpp-ExportHandler.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-ExportHandler.obj `if test -f 'control/ExportHandler.cpp'; then $(CYGPATH_W) 'control/ExportHandler.cpp'; else $(CYGPATH_W) '$(srcdir)/control/ExportHandler.cpp'; fi`
 
 xournalpp-Control.o: control/Control.cpp
 @am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-Control.o -MD -MP -MF $(DEPDIR)/xournalpp-Control.Tpo -c -o xournalpp-Control.o `test -f 'control/Control.cpp' || echo '$(srcdir)/'`control/Control.cpp
