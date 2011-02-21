@@ -5,6 +5,12 @@
 #include <math.h>
 
 Inertia::Inertia() {
+	this->mass = 0;
+	this->sx = 0;
+	this->sxx = 0;
+	this->sxy = 0;
+	this->sy = 0;
+	this->syy = 0;
 }
 
 Inertia::~Inertia() {
