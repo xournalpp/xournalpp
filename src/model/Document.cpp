@@ -19,6 +19,7 @@ Document::Document(DocumentHandler * handler) {
 	this->pagesArrayLen = 0;
 	this->preview = NULL;
 	this->attachPdf = false;
+	this->createBackupOnSave = false;
 }
 
 Document::~Document() {
