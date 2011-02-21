@@ -6,6 +6,18 @@
 
 RecoSegment::RecoSegment() {
 	this->stroke = NULL;
+	this->angle = 0;
+	this->endpt = 0;
+
+	this->radius = 0;
+	this->reversed = false;
+	this->startpt = 0;
+	this->x1 = 0;
+	this->x2 = 0;
+	this->xcenter = 0;
+	this->y1 = 0;
+	this->y2 = 0;
+	this->ycenter = 0;
 }
 
 RecoSegment::~RecoSegment() {

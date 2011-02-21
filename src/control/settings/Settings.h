@@ -413,7 +413,7 @@ private:
 	int selectionColor;
 
 	/**
-	 * The page format wich are visibel
+	 * The page format which are visibel
 	 */
 	String visiblePageFormats;
 };

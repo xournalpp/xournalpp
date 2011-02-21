@@ -51,6 +51,9 @@ void Settings::loadDefault() {
 	this->saved = true;
 	this->canXIput = false;
 
+	this->maximized = false;
+	this->showTwoPages = false;
+
 	this->displayDpi = 72;
 
 	this->font.setName(DEFAULT_FONT);
@@ -79,16 +82,16 @@ void Settings::loadDefault() {
 	this->visiblePageFormats = GTK_PAPER_NAME_A4 "," GTK_PAPER_NAME_A5 "," GTK_PAPER_NAME_LETTER ","GTK_PAPER_NAME_LEGAL;
 
 	// Eraser
-	buttonConfig[0] = new ButtonConfig(TOOL_ERASER, 0, TOOL_SIZE_NONE, false, false, ERASER_TYPE_NONE);
+	this->buttonConfig[0] = new ButtonConfig(TOOL_ERASER, 0, TOOL_SIZE_NONE, false, false, ERASER_TYPE_NONE);
 	// Middle button
-	buttonConfig[1] = new ButtonConfig(TOOL_NONE, 0, TOOL_SIZE_NONE, false, false, ERASER_TYPE_NONE);
+	this->buttonConfig[1] = new ButtonConfig(TOOL_NONE, 0, TOOL_SIZE_NONE, false, false, ERASER_TYPE_NONE);
 	// Right button
-	buttonConfig[2] = new ButtonConfig(TOOL_NONE, 0, TOOL_SIZE_NONE, false, false, ERASER_TYPE_NONE);
+	this->buttonConfig[2] = new ButtonConfig(TOOL_NONE, 0, TOOL_SIZE_NONE, false, false, ERASER_TYPE_NONE);
 	// Touch
-	buttonConfig[3] = new ButtonConfig(TOOL_NONE, 0, TOOL_SIZE_NONE, false, false, ERASER_TYPE_NONE);
+	this->buttonConfig[3] = new ButtonConfig(TOOL_NONE, 0, TOOL_SIZE_NONE, false, false, ERASER_TYPE_NONE);
 
-	fullscreenHideElements = "mainMenubar";
-	presentationHideElements = "mainMenubar,sidebarContents";
+	this->fullscreenHideElements = "mainMenubar";
+	this->presentationHideElements = "mainMenubar,sidebarContents";
 
 	this->pageInsertType = PAGE_INSERT_TYPE_COPY;
 	this->pageBackgroundColor = 0xffffff; //white
