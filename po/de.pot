@@ -1191,7 +1191,7 @@ msgstr "_Ansicht"
 
 #: ../ui/main.glade:709
 msgid "_delete strokes"
-msgstr "_linie löschen"
+msgstr "_Linie löschen"
 
 #: ../ui/main.glade:621 ../ui/main.glade:664 ../ui/main.glade:728
 msgid "_fine"
