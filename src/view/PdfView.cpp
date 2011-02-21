@@ -3,12 +3,10 @@
 #include <glib/gi18n-lib.h>
 
 PdfView::PdfView() {
-	// TODO Auto-generated constructor stub
 
 }
 
 PdfView::~PdfView() {
-	// TODO Auto-generated destructor stub
 }
 
 void PdfView::drawPage(PdfCache * cache, XojPopplerPage * popplerPage, cairo_t * cr, double zoom, double width, double height) {

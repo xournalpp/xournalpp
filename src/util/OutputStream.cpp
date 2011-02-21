@@ -37,7 +37,7 @@ GzOutputStream::~GzOutputStream() {
 	}
 }
 
-String GzOutputStream::getLastError() {
+String & GzOutputStream::getLastError() {
 	return this->error;
 }
 

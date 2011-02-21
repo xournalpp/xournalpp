@@ -145,7 +145,7 @@ void SaveHandler::visitLayer(XmlNode * page, Layer * l) {
 					values[i + 1] = points[i].z;
 				}
 
-				stroke->setAttrib("width", values, pointCount + 1);
+				stroke->setAttrib("width", values, pointCount);
 			} else {
 				stroke->setAttrib("width", s->getWidth());
 			}
