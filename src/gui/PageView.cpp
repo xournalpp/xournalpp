@@ -347,16 +347,16 @@ void PageView::onButtonPressEvent(GtkWidget * widget, GdkEventButton * event) {
 		return;
 	}
 
-	if (!this->selected) {
-		xournal->getControl()->firePageSelected(this->page);
-	}
-
 	if (event->button > 3) { // scroll wheel events! don't paint...
 		handleScrollEvent(event);
 		return;
 	}
 	if ((event->state & (GDK_CONTROL_MASK | GDK_MOD1_MASK)) != 0) {
 		return;
+	}
+
+	if (!this->selected) {
+		xournal->getControl()->firePageSelected(this->page);
 	}
 
 	// Change the tool depending on the key or device

@@ -2005,16 +2005,18 @@ public:
 		control->getUndoRedoHandler()->documentSaved();
 		control->updateWindowTitle();
 
-		if (!out->getLastError().isEmpty()) {
+		CHECK_MEMORY(this->out);
+
+		if (!this->out->getLastError().isEmpty()) {
 			GtkWidget * dialog = gtk_message_dialog_new((GtkWindow *) control->getWindow(), GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
 					_("Output stream error: %s"), out->getLastError().c_str());
 			gtk_dialog_run(GTK_DIALOG(dialog));
 			gtk_widget_destroy(dialog);
-			delete out;
+			delete this->out;
 			return false;
 		}
 
-		delete out;
+		delete this->out;
 		delete h;
 
 		control->getRecentManager()->addRecentFileFilename(control->getDocument()->getFilename().c_str());

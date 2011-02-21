@@ -13,9 +13,10 @@
 #define __OUTPUTSTREAM_H__
 
 #include "../util/String.h"
+#include "../util/MemoryCheck.h"
 #include <zlib.h>
 
-class OutputStream {
+class OutputStream : public MemoryCheckObject {
 public:
 	OutputStream();
 	virtual ~OutputStream();
@@ -38,7 +39,7 @@ public:
 	virtual void close();
 
 
-	String getLastError();
+	String & getLastError();
 private:
 	gzFile fp;
 

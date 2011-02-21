@@ -222,6 +222,7 @@ bool XournalWidget::searchTextOnPage(const char * text, int p, int * occures, do
 void XournalWidget::forceUpdatePagenumbers() {
 	int p = this->currentPage;
 	this->currentPage = -1;
+
 	control->firePageSelected(p);
 }
 

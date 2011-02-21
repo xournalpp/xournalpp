@@ -463,8 +463,8 @@ void LoadHandler::parseLayer() {
 	}
 }
 
-void LoadHandler::parserStartElement(GMarkupParseContext *context, const gchar *elementName,
-		const gchar **attributeNames, const gchar **attributeValues, gpointer userdata, GError **error) {
+void LoadHandler::parserStartElement(GMarkupParseContext *context, const gchar *elementName, const gchar **attributeNames, const gchar **attributeValues,
+		gpointer userdata, GError **error) {
 	LoadHandler * handler = (LoadHandler *) userdata;
 	// Return on error
 	if (*error) {
@@ -490,8 +490,7 @@ void LoadHandler::parserStartElement(GMarkupParseContext *context, const gchar *
 	handler->elementName = NULL;
 }
 
-void LoadHandler::parserEndElement(GMarkupParseContext *context, const gchar *element_name, gpointer userdata,
-		GError **error) {
+void LoadHandler::parserEndElement(GMarkupParseContext *context, const gchar *element_name, gpointer userdata, GError **error) {
 	// Return on error
 	if (*error) {
 		return;
@@ -520,8 +519,7 @@ void LoadHandler::parserEndElement(GMarkupParseContext *context, const gchar *el
 	}
 }
 
-void LoadHandler::parserText(GMarkupParseContext *context, const gchar *text, gsize textLen, gpointer userdata,
-		GError **error) {
+void LoadHandler::parserText(GMarkupParseContext *context, const gchar *text, gsize textLen, gpointer userdata, GError **error) {
 	// Return on error
 	if (*error) {
 		return;
@@ -561,12 +559,13 @@ void LoadHandler::parserText(GMarkupParseContext *context, const gchar *text, gs
 		}
 
 		if (handler->pressureBuffer.size() != 0) {
-			if (handler->pressureBuffer.size() == handler->stroke->getPointCount()) {
+			if (handler->pressureBuffer.size() == handler->stroke->getPointCount() - 1) {
 				const double * data = handler->pressureBuffer.getData();
 				handler->stroke->setPressure(data);
 				handler->pressureBuffer.clear();
 			} else {
-				g_warning("Wrong count of points, get %i, expected %i", handler->pressureBuffer.size() - 1,handler->stroke->getPointCount() - 1);
+				g_warning("xoj-File: %s", handler->filename.c_str());
+				g_warning("Wrong count of points, get %i, expected %i", handler->pressureBuffer.size(), handler->stroke->getPointCount() - 1);
 			}
 		}
 		handler->pressureBuffer.clear();
@@ -593,8 +592,7 @@ void LoadHandler::readImage(const gchar * base64_str, gsize base64_strlen) {
 }
 
 bool LoadHandler::parseXml() {
-	const GMarkupParser parser = { LoadHandler::parserStartElement, LoadHandler::parserEndElement,
-			LoadHandler::parserText, NULL, NULL };
+	const GMarkupParser parser = { LoadHandler::parserStartElement, LoadHandler::parserEndElement, LoadHandler::parserText, NULL, NULL };
 	GMarkupParseContext *context;
 	this->error = NULL;
 	gboolean valid = true;
