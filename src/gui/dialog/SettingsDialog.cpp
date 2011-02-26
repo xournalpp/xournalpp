@@ -139,8 +139,7 @@ void SettingsDialog::load() {
 	loadCheckbox("cbAutoloadXoj", settings->isAutloadPdfXoj());
 	loadCheckbox("cbAutosave", settings->isAutosaveEnabled());
 	loadCheckbox("cbSettingScrollOutside", settings->isAllowScrollOutsideThePage());
-
-
+	loadCheckbox("cbBigCursor", settings->isShowBigCursor());
 
 	GtkWidget * txtDefaultSaveName = get("txtDefaultSaveName");
 	const char * txt = settings->getDefaultSaveName().c_str();
@@ -255,7 +254,7 @@ void SettingsDialog::save() {
 	settings->setAutoloadPdfXoj(getCheckbox("cbAutoloadXoj"));
 	settings->setAutosaveEnabled(getCheckbox("cbAutosave"));
 	settings->setAllowScrollOutsideThePage(getCheckbox("cbSettingScrollOutside"));
-
+	settings->setShowBigCursor(getCheckbox("cbBigCursor"));
 
 	GtkWidget * colorBorder = get("colorBorder");
 	GdkColor color = { 0 };

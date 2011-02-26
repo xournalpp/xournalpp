@@ -77,8 +77,6 @@ private:
 
 	// The color in RGB format
 	int color;
-
-	int refcount;
 };
 
 #endif /* __ELEMENT_H__ */

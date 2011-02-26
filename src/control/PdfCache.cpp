@@ -21,11 +21,16 @@ PdfCache::PdfCache(int size) {
 	this->data = NULL;
 	this->size = size;
 	this->zoom = -1;
+
+	this->renderMutex = g_mutex_new();
 }
 
 PdfCache::~PdfCache() {
 	clearCache();
 	this->size = 0;
+
+	g_mutex_free(this->renderMutex);
+	this->renderMutex = NULL;
 }
 
 void PdfCache::setZoom(double zoom) {
@@ -76,6 +81,8 @@ void PdfCache::cache(XojPopplerPage * popplerPage, cairo_surface_t * img) {
 }
 
 void PdfCache::render(cairo_t * cr, XojPopplerPage * popplerPage, double zoom) {
+	g_mutex_lock(this->renderMutex);
+
 	this->setZoom(zoom);
 
 	cairo_surface_t * img = lookup(popplerPage);
@@ -103,4 +110,6 @@ void PdfCache::render(cairo_t * cr, XojPopplerPage * popplerPage, double zoom) {
 	cairo_set_source_surface(cr, img, 0, 0);
 	cairo_paint(cr);
 	cairo_set_matrix(cr, &mOriginal);
+
+	g_mutex_unlock(this->renderMutex);
 }

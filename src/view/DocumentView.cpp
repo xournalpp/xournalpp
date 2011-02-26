@@ -4,13 +4,10 @@
 #include "../control/tools/Selection.h"
 #include "../control/tools/EditSelection.h"
 #include "../model/EraseableStroke.h"
-//#include "../gui/PdfCache.h"
+#include "../cfg.h"
 
 #include <config.h>
 #include <glib/gi18n-lib.h>
-
-//#define SHOW_ELEMENT_BOUNDS
-//#define SHOW_REPAINT_BOUNDS
 
 DocumentView::DocumentView() {
 	this->page = NULL;

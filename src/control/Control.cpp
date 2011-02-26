@@ -23,6 +23,8 @@
 #include "../undo/PageBackgroundChangedUndoAction.h"
 #include "../undo/InsertUndoAction.h"
 #include "../undo/RemoveLayerUndoAction.h"
+#include "jobs/BlockingJob.h"
+#include "../view/DocumentView.h"
 
 #include <config.h>
 #include <glib/gi18n-lib.h>
@@ -35,25 +37,25 @@
 
 Control::Control() {
 	this->win = NULL;
-	recent = new RecentManager();
-	undoRedo = new UndoRedoHandler(this);
-	recent->addListener(this);
-	undoRedo->addUndoRedoListener(this);
+	this->recent = new RecentManager();
+	this->undoRedo = new UndoRedoHandler(this);
+	this->recent->addListener(this);
+	this->undoRedo->addUndoRedoListener(this);
 
-	background = new BackgroundThreadHandler(this);
-
-	lastAction = ACTION_NONE;
-	lastGroup = GROUP_NOGROUP;
-	lastEnabled = false;
-	fullscreen = false;
+	this->lastAction = ACTION_NONE;
+	this->lastGroup = GROUP_NOGROUP;
+	this->lastEnabled = false;
+	this->fullscreen = false;
 
 	gchar * filename = g_build_filename(g_get_home_dir(), G_DIR_SEPARATOR_S, CONFIG_DIR, G_DIR_SEPARATOR_S, SETTINGS_XML_FILE, NULL);
 	String name(filename, true);
-	settings = new Settings(name);
-	settings->load();
+	this->settings = new Settings(name);
+	this->settings->load();
 
-	sidebar = NULL;
-	searchBar = NULL;
+	this->sidebar = NULL;
+	this->searchBar = NULL;
+
+	this->scheduler = new XournalScheduler();
 
 	this->hiddenFullscreenWidgets = NULL;
 	this->sidebarHidden = false;
@@ -101,22 +103,20 @@ Control::~Control() {
 
 	delete this->clipboardHandler;
 	this->clipboardHandler = NULL;
-	delete recent;
-	recent = NULL;
-	delete undoRedo;
-	undoRedo = NULL;
-	delete settings;
-	settings = NULL;
-	delete toolHandler;
-	toolHandler = NULL;
-	delete doc;
-	doc = NULL;
-	delete sidebar;
-	sidebar = NULL;
-	delete searchBar;
-	searchBar = NULL;
-	delete background;
-	background = NULL;
+	delete this->recent;
+	this->recent = NULL;
+	delete this->undoRedo;
+	this->undoRedo = NULL;
+	delete this->settings;
+	this->settings = NULL;
+	delete this->toolHandler;
+	this->toolHandler = NULL;
+	delete this->doc;
+	this->doc = NULL;
+	delete this->sidebar;
+	this->sidebar = NULL;
+	delete this->searchBar;
+	this->searchBar = NULL;
 }
 
 UndoRedoHandler * Control::getUndoRedoHandler() {
@@ -845,6 +845,10 @@ void Control::enableFullscreen(bool enabled, bool presentation) {
 
 void Control::setSidebarTmpDisabled(bool disabled) {
 	this->sidebar->setTmpDisabled(disabled);
+}
+
+XournalScheduler * Control::getScheduler() {
+	return this->scheduler;
 }
 
 void Control::addDefaultPage() {
@@ -1649,6 +1653,7 @@ void Control::showSettings() {
 	bool xeventEnabled = settings->isUseXInput();
 	int selectionColor = settings->getSelectionColor();
 	bool allowScrollOutside = settings->isAllowScrollOutsideThePage();
+	bool bigCursor = settings->isShowBigCursor();
 
 	SettingsDialog * dlg = new SettingsDialog(settings);
 	dlg->show();
@@ -1663,6 +1668,10 @@ void Control::showSettings() {
 
 	if (allowScrollOutside != settings->isAllowScrollOutsideThePage()) {
 		win->getXournal()->layoutPages();
+	}
+
+	if (bigCursor != settings->isShowBigCursor()) {
+		cursor->updateCursor();
 	}
 
 	win->updateScrollbarSidebarPosition();
@@ -1987,15 +1996,15 @@ void Control::updatePreview() {
 	}
 }
 
-class SaveRunnable: public Runnable {
+class SaveRunnable: public BlockingJob {
 public:
-	SaveRunnable(Control * control, GzOutputStream * out, SaveHandler * h) {
-		this->control = control;
+	SaveRunnable(Control * control, GzOutputStream * out, SaveHandler * h) :
+		BlockingJob(control, _("Save")) {
 		this->out = out;
 		this->h = h;
 	}
 
-	virtual void run(bool * cancel) {
+	virtual void run() {
 		save();
 	}
 
@@ -2023,7 +2032,6 @@ public:
 	}
 
 private:
-	Control * control;
 	GzOutputStream * out;
 	SaveHandler * h;
 };
@@ -2067,16 +2075,18 @@ bool Control::save(bool asynchron) {
 		return false;
 	}
 
-	SaveRunnable * runnable = new SaveRunnable(this, out, h);
+	SaveRunnable * saveRunnable = new SaveRunnable(this, out, h);
 
-	if (asynchron) {
-		background->run(runnable);
-	} else {
-		bool result = runnable->save();
-		delete runnable;
-		return result;
-		cursor->setCursorBusy(false);
-	}
+	// TODO: asynchron
+	//	if (asynchron) {
+	//		this->scheduler->addJob(saveRunnable, JOB_PRIORITY_NONE);
+	//	} else {
+	bool result = saveRunnable->save();
+	saveRunnable->finished();
+	delete saveRunnable;
+	cursor->setCursorBusy(false);
+	return result;
+	//	}
 
 	return true;
 }
@@ -2093,18 +2103,11 @@ String Control::getFilename(String uri) {
 }
 
 bool Control::showSaveDialog() {
-	GtkWidget *dialog;
-	GtkFileFilter *filterXoj;
-
-	char *name;
-	int file_domain;
-	gboolean success;
-
-	dialog = gtk_file_chooser_dialog_new(_("Save File"), (GtkWindow*) *win, GTK_FILE_CHOOSER_ACTION_SAVE, GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+	GtkWidget * dialog = gtk_file_chooser_dialog_new(_("Save File"), (GtkWindow*) *win, GTK_FILE_CHOOSER_ACTION_SAVE, GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
 			GTK_STOCK_SAVE, GTK_RESPONSE_OK, NULL);
 	gtk_file_chooser_set_local_only(GTK_FILE_CHOOSER(dialog), true);
 
-	filterXoj = gtk_file_filter_new();
+	GtkFileFilter * filterXoj = gtk_file_filter_new();
 	gtk_file_filter_set_name(filterXoj, _("Xournal files"));
 	gtk_file_filter_add_pattern(filterXoj, "*.xoj");
 	gtk_file_chooser_add_filter(GTK_FILE_CHOOSER(dialog), filterXoj);
@@ -2129,13 +2132,14 @@ bool Control::showSaveDialog() {
 	}
 
 	gtk_file_chooser_set_current_name(GTK_FILE_CHOOSER(dialog), saveFilename.c_str());
+	gtk_file_chooser_set_do_overwrite_confirmation(GTK_FILE_CHOOSER(dialog), true);
 
 	if (gtk_dialog_run(GTK_DIALOG(dialog)) != GTK_RESPONSE_OK) {
 		gtk_widget_destroy(dialog);
 		return false;
 	}
 
-	name = gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(dialog));
+	char * name = gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(dialog));
 
 	String filename = name;
 	char * folder = gtk_file_chooser_get_current_folder_uri(GTK_FILE_CHOOSER(
@@ -2176,31 +2180,29 @@ void Control::updateWindowTitle() {
 	gtk_window_set_title((GtkWindow*) *win, title.c_str());
 }
 
-class PdfExportRunnable: public Runnable {
+class PdfExportRunnable: public BlockingJob {
 public:
-	PdfExportRunnable(Control * control) {
-		this->control = control;
+	PdfExportRunnable(Control * control) :
+		BlockingJob(control, _("PDF Export")) {
 	}
 
-	virtual void run(bool * cancel) {
-		PdfExport pdf(control->getDocument());
+	virtual void run() {
+		CHECK_MEMORY(control);
+		Document * doc = control->getDocument();
+		CHECK_MEMORY(doc);
+		PdfExport * pdf = new PdfExport(doc, this);
 		printf("export as pdf\n");
-		if (!pdf.createPdf("file:///home/andreas/tmp/pdf/pdffile.pdf", cancel)) {
+		if (!pdf->createPdf("file:///home/andreas/tmp/pdf/pdffile.pdf")) {
 			printf("create pdf failed\n");
-			printf("error: %s\n", pdf.getLastError().c_str());
+			printf("error: %s\n", pdf->getLastError().c_str());
 		}
+		delete pdf;
 	}
-
-private:
-	Control * control;
 };
 
 void Control::exportAsPdf() {
-	background->run(new PdfExportRunnable(this));
-}
-
-void Control::runInBackground(Runnable * runnable) {
-	background->run(runnable);
+	// TODO: debug
+	//this->scheduler->addJob(new PdfExportRunnable(this), JOB_PRIORITY_NONE);
 }
 
 void Control::exportAs() {
@@ -2223,21 +2225,8 @@ void Control::quit() {
 	if (!this->close()) {
 		return;
 	}
-	if (background->isRunning()) {
-		GtkWidget * dialog = gtk_message_dialog_new((GtkWindow *) *getWindow(), GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR, GTK_BUTTONS_NONE,
-				_("There is still an operation running, exit anyway?"));
 
-		gtk_dialog_add_button(GTK_DIALOG(dialog), "Cancel", 1);
-		gtk_dialog_add_button(GTK_DIALOG(dialog), "Stop operation", 2);
-
-		if (gtk_dialog_run(GTK_DIALOG(dialog)) == 1) {
-			gtk_widget_destroy(dialog);
-			return;
-		}
-		gtk_widget_destroy(dialog);
-
-		background->stop();
-	}
+	this->scheduler->finishTask();
 
 	settings->save();
 	gtk_main_quit();

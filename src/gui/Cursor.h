@@ -13,6 +13,7 @@
 #define __CURSOR_H__
 
 #include "../control/tools/CursorSelectionType.h"
+#include <gtk/gtk.h>
 
 class Control;
 
@@ -29,6 +30,9 @@ public:
 	void setMouseDown(bool mouseDown);
 
 	void setInvisible(bool invisible);
+
+private:
+	GdkCursor * getPenCursor();
 
 private:
 	Control * control;

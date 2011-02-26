@@ -5,6 +5,12 @@ INCLUDES = \
 
 bin_PROGRAMS = xournalpp
 xournalpp_SOURCES = \
+	control/jobs/BlockingJob.cpp \
+	control/jobs/Job.cpp \
+	control/jobs/PreviewJob.cpp \
+	control/jobs/RenderJob.cpp \
+	control/jobs/Scheduler.cpp \
+	control/jobs/XournalScheduler.cpp \
 	control/settings/ev-metadata-manager.cpp \
 	control/settings/Settings.cpp \
 	control/shaperecognizer/CircleRecognizer.cpp \
@@ -27,7 +33,6 @@ xournalpp_SOURCES = \
 	control/xml/XmlStrokeNode.cpp \
 	control/xml/XmlTextNode.cpp \
 	control/Actions.cpp \
-	control/BackgroundThreadHandler.cpp \
 	control/ClipboardHandler.cpp \
 	control/ExportHandler.cpp \
 	control/Control.cpp \
@@ -104,9 +109,11 @@ xournalpp_SOURCES = \
 	util/Stacktrace.cpp \
 	util/pixbuf-utils.cpp \
 	util/Range.cpp \
+	util/Rectangle.cpp \
 	util/String.cpp \
 	util/StringBuffer.cpp \
 	util/Util.cpp \
+	util/XInputUtils.cpp \
 	view/DocumentView.cpp \
 	view/PdfView.cpp \
 	view/TextView.cpp \

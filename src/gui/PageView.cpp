@@ -6,32 +6,33 @@
 #include <glib.h>
 #include "../control/Control.h"
 #include "../view/TextView.h"
-#include "../view/PdfView.h"
 #include "../control/tools/Selection.h"
 #include "../util/pixbuf-utils.h"
 #include "../util/Range.h"
+#include "../util/XInputUtils.h"
 #include "../cfg.h"
 #include "../undo/InsertUndoAction.h"
+#include "../control/jobs/BlockingJob.h"
+#include "../model/Image.h"
 
 #include <config.h>
 #include <glib/gi18n-lib.h>
-
-//#define INPUT_DEBUG
-
-#define EPSILON 1E-7
 
 PageView::PageView(XournalWidget * xournal, XojPage * page) {
 	this->page = page;
 	this->xournal = xournal;
 	this->selected = false;
 	this->settings = xournal->getControl()->getSettings();
-	this->view = new DocumentView();
 	this->lastVisibelTime = -1;
+
+	this->drawingMutex = g_mutex_new();
 
 	this->lastMousePositionX = 0;
 	this->lastMousePositionY = 0;
 
 	this->repaintRect = NULL;
+	this->repaintComplete = false;
+	this->repaintRectMutex = g_mutex_new();
 
 	this->scrollOffsetX = 0;
 	this->scrollOffsetY = 0;
@@ -41,8 +42,6 @@ PageView::PageView(XournalWidget * xournal, XojPage * page) {
 	this->firstPainted = false;
 
 	this->crBuffer = NULL;
-
-	this->idleRepaintId = 0;
 
 	this->inEraser = false;
 
@@ -72,8 +71,8 @@ PageView::PageView(XournalWidget * xournal, XojPage * page) {
 	g_signal_connect(widget, "button_press_event", G_CALLBACK(onButtonPressEventCallback), this);
 	g_signal_connect(widget, "button_release_event", G_CALLBACK(onButtonReleaseEventCallback), this);
 	g_signal_connect(widget, "motion_notify_event", G_CALLBACK(onMotionNotifyEventCallback), this);
-	g_signal_connect (widget, "enter_notify_event", G_CALLBACK(onMouseEnterNotifyEvent), NULL);
-	g_signal_connect (widget, "leave_notify_event", G_CALLBACK(onMouseLeaveNotifyEvent), NULL);
+	g_signal_connect (widget, "enter_notify_event", G_CALLBACK(XInputUtils::onMouseEnterNotifyEvent), NULL);
+	g_signal_connect (widget, "leave_notify_event", G_CALLBACK(XInputUtils::onMouseLeaveNotifyEvent), NULL);
 
 	g_signal_connect(G_OBJECT(widget), "expose_event", G_CALLBACK(exposeEventCallback), this);
 
@@ -81,17 +80,25 @@ PageView::PageView(XournalWidget * xournal, XojPage * page) {
 }
 
 PageView::~PageView() {
-	if (this->idleRepaintId) {
-		g_source_remove(this->idleRepaintId);
-		this->idleRepaintId = NULL;
-	}
+	this->xournal->getControl()->getScheduler()->removePage(this);
 
 	gtk_widget_destroy(widget);
-	delete this->view;
 	delete this->eraser;
+	this->eraser = NULL;
 	delete this->inputHandler;
+	this->inputHandler = NULL;
 	endText();
 	deleteViewBuffer();
+
+	g_mutex_free(this->repaintRectMutex);
+	for (GList * l = this->repaintRect; l != NULL; l = l->next) {
+		Rectangle * rect = (Rectangle *) l->data;
+		delete rect;
+	}
+	g_list_free(this->repaintRect);
+	this->repaintRect = NULL;
+
+	g_mutex_free(this->drawingMutex);
 }
 
 int PageView::getLastVisibelTime() {
@@ -116,10 +123,12 @@ void PageView::setIsVisibel(bool visibel) {
 }
 
 void PageView::deleteViewBuffer() {
+	g_mutex_lock(this->drawingMutex);
 	if (this->crBuffer) {
 		cairo_surface_destroy(this->crBuffer);
 		this->crBuffer = NULL;
 	}
+	g_mutex_unlock(this->drawingMutex);
 }
 
 /**
@@ -146,35 +155,6 @@ void PageView::updateXEvents() {
 gboolean PageView::onButtonPressEventCallback(GtkWidget *widget, GdkEventButton *event, PageView * view) {
 	view->onButtonPressEvent(widget, event);
 	return false;
-}
-
-void PageView::handleScrollEvent(GdkEventButton *event) {
-	GdkEvent scrollEvent;
-	/* with GTK+ 2.17 and later, the entire widget hierarchy is xinput-aware,
-	 so the core button event gets discarded and the scroll event never
-	 gets processed by the main window. This is arguably a GTK+ bug.
-	 We work around it. */
-	scrollEvent.scroll.type = GDK_SCROLL;
-	scrollEvent.scroll.window = event->window;
-	scrollEvent.scroll.send_event = event->send_event;
-	scrollEvent.scroll.time = event->time;
-	scrollEvent.scroll.x = event->x;
-	scrollEvent.scroll.y = event->y;
-	scrollEvent.scroll.state = event->state;
-	scrollEvent.scroll.device = event->device;
-	scrollEvent.scroll.x_root = event->x_root;
-	scrollEvent.scroll.y_root = event->y_root;
-	if (event->button == 4) {
-		scrollEvent.scroll.direction = GDK_SCROLL_UP;
-	} else if (event->button == 5) {
-		scrollEvent.scroll.direction = GDK_SCROLL_DOWN;
-	} else if (event->button == 6) {
-		scrollEvent.scroll.direction = GDK_SCROLL_LEFT;
-	} else {
-		scrollEvent.scroll.direction = GDK_SCROLL_RIGHT;
-	}
-	gtk_widget_event(gtk_widget_get_parent(xournal->getWidget()), &scrollEvent);
-
 }
 
 bool PageView::searchTextOnPage(const char * text, int * occures, double * top) {
@@ -215,7 +195,6 @@ void PageView::endText() {
 			layer->removeElement(txt, false);
 			eraseDeleteUndoAction->addElement(layer, txt, pos);
 			undo->addUndoAction(eraseDeleteUndoAction);
-			this->repaint();
 		}
 	} else {
 		// new element
@@ -223,13 +202,12 @@ void PageView::endText() {
 			undo->addUndoActionBefore(new InsertUndoAction(page, layer, txt, this), this->textEditor->getFirstUndoAction());
 			layer->addElement(txt);
 			this->textEditor->textCopyed();
-			this->repaint();
 		}
 	}
 
 	delete this->textEditor;
 	this->textEditor = NULL;
-	repaint();
+	this->repaint();
 }
 
 void PageView::startText(double x, double y) {
@@ -339,7 +317,7 @@ void PageView::onButtonPressEvent(GtkWidget * widget, GdkEventButton * event) {
 	//			event->xScreen, event->yScreen, event->button, event->state, isCore);
 #endif
 
-	fixXInputCoords((GdkEvent*) event);
+	XInputUtils::fixXInputCoords((GdkEvent*) event, this->widget);
 
 	xournal->resetFocus();
 
@@ -348,7 +326,7 @@ void PageView::onButtonPressEvent(GtkWidget * widget, GdkEventButton * event) {
 	}
 
 	if (event->button > 3) { // scroll wheel events! don't paint...
-		handleScrollEvent(event);
+		XInputUtils::handleScrollEvent(event, gtk_widget_get_parent(xournal->getWidget()));
 		return;
 	}
 	if ((event->state & (GDK_CONTROL_MASK | GDK_MOD1_MASK)) != 0) {
@@ -491,9 +469,10 @@ void PageView::onButtonPressEvent(GtkWidget * widget, GdkEventButton * event) {
 	cursor->setMouseDown(true);
 }
 
-class InsertImageRunnable: public Runnable {
+class InsertImageRunnable: public BlockingJob {
 public:
-	InsertImageRunnable(PageView * view, GFile * file, double x, double y) {
+	InsertImageRunnable(Control * control, PageView * view, GFile * file, double x, double y) :
+		BlockingJob(control, _("Insert image")) {
 		this->view = view;
 		this->x = x;
 		this->y = y;
@@ -503,7 +482,7 @@ public:
 		g_object_unref(file);
 	}
 
-	void run(bool * cancel) {
+	void run() {
 		GError * err = NULL;
 		GFileInputStream * in = g_file_read(file, NULL, &err);
 		GdkPixbuf * pixbuf = NULL;
@@ -585,7 +564,13 @@ void PageView::insertImage(double x, double y) {
 
 	gtk_widget_destroy(dialog);
 
-	xournal->getControl()->runInBackground(new InsertImageRunnable(this, file, x, y));
+	Control * control = xournal->getControl();
+
+	InsertImageRunnable * runnable = new InsertImageRunnable(control, this, file, x, y);
+	runnable->run();
+	runnable->finished();
+	delete runnable;
+	//control->getScheduler()->addJob(runnable, JOB_PRIORITY_NONE);
 }
 
 void PageView::redrawDocumentRegion(double x1, double y1, double x2, double y2) {
@@ -605,50 +590,6 @@ void PageView::resetShapeRecognizer() {
 	this->inputHandler->resetShapeRecognizer();
 }
 
-gboolean PageView::onMouseEnterNotifyEvent(GtkWidget *widget, GdkEventCrossing *event, gpointer user_data) {
-	GList *dev_list;
-	GdkDevice *dev;
-
-#ifdef INPUT_DEBUG
-	printf("DEBUG: enter notify\n");
-#endif
-	/* re-enable input devices after they've been emergency-disabled
-	 by leave_notify */
-	if (!gtk_check_version(2, 17, 0)) {
-		gdk_flush();
-		gdk_error_trap_push();
-		for (dev_list = gdk_devices_list(); dev_list != NULL; dev_list = dev_list->next) {
-			dev = GDK_DEVICE(dev_list->data);
-			gdk_device_set_mode(dev, GDK_MODE_SCREEN);
-		}
-		gdk_flush();
-		gdk_error_trap_pop();
-	}
-	return FALSE;
-}
-
-gboolean PageView::onMouseLeaveNotifyEvent(GtkWidget *widget, GdkEventCrossing *event, gpointer user_data) {
-	GList *dev_list;
-	GdkDevice *dev;
-
-#ifdef INPUT_DEBUG
-	printf("DEBUG: leave notify (mode=%d, details=%d)\n", event->mode, event->detail);
-#endif
-	/* emergency disable XInput to avoid segfaults (GTK+ 2.17) or
-	 interface non-responsiveness (GTK+ 2.18) */
-	if (!gtk_check_version(2, 17, 0)) {
-		gdk_flush();
-		gdk_error_trap_push();
-		for (dev_list = gdk_devices_list(); dev_list != NULL; dev_list = dev_list->next) {
-			dev = GDK_DEVICE(dev_list->data);
-			gdk_device_set_mode(dev, GDK_MODE_DISABLED);
-		}
-		gdk_flush();
-		gdk_error_trap_pop();
-	}
-	return FALSE;
-}
-
 gboolean PageView::onMotionNotifyEventCallback(GtkWidget *widget, GdkEventMotion *event, PageView * view) {
 	CHECK_MEMORY(view);
 	return view->onMotionNotifyEvent(widget, event);
@@ -661,7 +602,7 @@ gboolean PageView::onMotionNotifyEvent(GtkWidget * widget, GdkEventMotion * even
 	//			event->yScreen, event->state);
 #endif
 
-	fixXInputCoords((GdkEvent*) event);
+	XInputUtils::fixXInputCoords((GdkEvent*) event, this->widget);
 
 	double zoom = xournal->getZoom();
 	double x = event->x / zoom;
@@ -739,7 +680,7 @@ bool PageView::onButtonReleaseEvent(GtkWidget * widget, GdkEventButton * event) 
 	//			event->xScreen, event->yScreen, event->button, event->state, isCore);
 #endif
 
-	fixXInputCoords((GdkEvent*) event);
+	XInputUtils::fixXInputCoords((GdkEvent*) event, this->widget);
 	Control * control = xournal->getControl();
 
 	this->inputHandler->onButtonReleaseEvent(event, this->page);
@@ -868,8 +809,8 @@ XojPage * PageView::getPage() {
 }
 
 void PageView::repaint() {
-	deleteViewBuffer();
-	gtk_widget_queue_draw(widget);
+	this->repaintComplete = true;
+	this->xournal->getControl()->getScheduler()->addRepaintPage(this);
 }
 
 void PageView::redraw() {
@@ -893,14 +834,18 @@ void PageView::repaint(double x, double y, double width, double heigth) {
 	int rheight = (int) (heigth + 20);
 
 	addRepaintRect(rx, ry, rwidth, rheight);
-
-	gtk_widget_queue_draw_area(widget, rx * zoom, ry * zoom, rwidth * zoom, rheight * zoom);
 }
 
 void PageView::addRepaintRect(double x, double y, double width, double height) {
+	if (this->repaintComplete) {
+		return;
+	}
+
 	Rectangle * rect = new Rectangle(x, y, width, height);
 
 	Rectangle dest;
+
+	g_mutex_lock(this->repaintRectMutex);
 
 	for (GList * l = this->repaintRect; l != NULL; l = l->next) {
 		Rectangle * r = (Rectangle *) l->data;
@@ -913,11 +858,16 @@ void PageView::addRepaintRect(double x, double y, double width, double height) {
 			r->height = dest.height;
 
 			delete rect;
+
+			g_mutex_unlock(this->repaintRectMutex);
 			return;
 		}
 	}
 
 	this->repaintRect = g_list_append(this->repaintRect, rect);
+	g_mutex_unlock(this->repaintRectMutex);
+
+	this->xournal->getControl()->getScheduler()->addRepaintPage(this);
 }
 
 void PageView::updateSize() {
@@ -947,22 +897,6 @@ void PageView::firstPaint() {
 
 	gdk_window_set_background(this->widget->window, &this->widget->style->white);
 	gtk_widget_queue_draw(this->widget);
-}
-
-bool PageView::repaintCallback(PageView * view) {
-	view->idleRepaintId = 0;
-
-	view->deleteViewBuffer();
-	view->paintPage(view->widget, NULL, view->getXournal()->getZoom());
-	return false;
-}
-
-void PageView::repaintLater() {
-	if (this->idleRepaintId) {
-		return;
-	}
-
-	this->idleRepaintId = g_idle_add((GSourceFunc) &repaintCallback, this);
 }
 
 bool PageView::isSelected() {
@@ -1001,89 +935,37 @@ bool PageView::actionDelete() {
 	return false;
 }
 
-void PageView::repaintRectangle(Rectangle * rect, double zoom) {
-	cairo_t * crPageBuffer = cairo_create(this->crBuffer);
-
-	XojPopplerPage * popplerPage = NULL;
-
-	if (page->getBackgroundType() == BACKGROUND_TYPE_PDF) {
-		int pgNo = page->getPdfPageNr();
-		popplerPage = xournal->getDocument()->getPdfPage(pgNo);
-	}
-
-	cairo_surface_t * rectBuffer = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, rect->width * zoom, rect->height * zoom);
-	cairo_t * crRect = cairo_create(rectBuffer);
-	cairo_scale(crRect, zoom, zoom);
-	cairo_translate(crRect, -rect->x, -rect->y);
-
-	view->limitArea(rect->x, rect->y, rect->width, rect->height);
-
-	PdfCache * cache = xournal->getCache();
-	PdfView::drawPage(cache, popplerPage, crRect, zoom, page->getWidth(), page->getHeight());
-	view->drawPage(page, crRect);
-
-	cairo_destroy(crRect);
-
-	cairo_set_operator(crPageBuffer, CAIRO_OPERATOR_SOURCE);
-	cairo_set_source_surface(crPageBuffer, rectBuffer, rect->x * zoom, rect->y * zoom);
-	cairo_rectangle(crPageBuffer, rect->x * zoom, rect->y * zoom, rect->width * zoom, rect->height * zoom);
-	cairo_fill(crPageBuffer);
-
-	cairo_destroy(crPageBuffer);
-
-	cairo_surface_destroy(rectBuffer);
-}
-
 bool PageView::paintPage(GtkWidget * widget, GdkEventExpose * event, double zoom) {
 	if (!firstPainted) {
 		firstPaint();
 		return true;
 	}
 
-	//	if(event == NULL) {
-	//		printf("paint page: null\n");
-	//	} else {
-	//		printf("paint page: %i / %i : %i / %i\n", event->area.x, event->area.y, event->area.width, event->area.height);
-	//	}
-
 	cairo_t * cr = gdk_cairo_create(widget->window);
 
 	GtkAllocation alloc;
 	gtk_widget_get_allocation(widget, &alloc);
 
+	g_mutex_lock(this->drawingMutex);
+
 	if (this->crBuffer == NULL) {
 		this->crBuffer = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, alloc.width, alloc.height);
 		cairo_t * cr2 = cairo_create(this->crBuffer);
-
 		cairo_scale(cr2, xournal->getZoom(), xournal->getZoom());
 
-		XojPopplerPage * popplerPage = NULL;
+		const char * txtLoading = _("Loading...");
 
-		if (page->getBackgroundType() == BACKGROUND_TYPE_PDF) {
-			int pgNo = page->getPdfPageNr();
-			popplerPage = xournal->getDocument()->getPdfPage(pgNo);
-		}
-
-		PdfView::drawPage(xournal->getCache(), popplerPage, cr2, zoom, page->getWidth(), page->getHeight());
-		view->drawPage(page, cr2);
+		cairo_text_extents_t ex;
+		cairo_set_source_rgb(cr2, 0.5, 0.5, 0.5);
+		cairo_select_font_face(cr2, "Sans", CAIRO_FONT_SLANT_NORMAL, CAIRO_FONT_WEIGHT_BOLD);
+		cairo_set_font_size(cr2, 32.0);
+		cairo_text_extents(cr2, txtLoading, &ex);
+		cairo_move_to(cr2, (page->getWidth() - ex.width) / 2 - ex.x_bearing, (page->getHeight() - ex.height) / 2 - ex.y_bearing);
+		cairo_show_text(cr2, txtLoading);
 
 		cairo_destroy(cr2);
-
-		for (GList * l = this->repaintRect; l != NULL; l = l->next) {
-			Rectangle * rect = (Rectangle *) l->data;
-			delete rect;
-		}
-		g_list_free(this->repaintRect);
-		this->repaintRect = NULL;
+		repaint();
 	}
-
-	for (GList * l = this->repaintRect; l != NULL; l = l->next) {
-		Rectangle * rect = (Rectangle *) l->data;
-		repaintRectangle(rect, zoom);
-		g_free(rect);
-	}
-	g_list_free(this->repaintRect);
-	this->repaintRect = NULL;
 
 	cairo_save(cr);
 
@@ -1095,7 +977,7 @@ bool PageView::paintPage(GtkWidget * widget, GdkEventExpose * event, double zoom
 		cairo_scale(cr, scale, scale);
 		cairo_set_source_surface(cr, this->crBuffer, 0, 0);
 
-		repaintLater();
+		repaint();
 
 		event = NULL;
 	} else {
@@ -1133,117 +1015,7 @@ bool PageView::paintPage(GtkWidget * widget, GdkEventExpose * event, double zoom
 	this->inputHandler->draw(cr);
 
 	cairo_destroy(cr);
+
+	g_mutex_unlock(this->drawingMutex);
 	return true;
-}
-
-void PageView::fixXInputCoords(GdkEvent * event) {
-	double *axes, *px, *py;
-	GdkDevice *device;
-	int wx, wy, ix, iy;
-
-	if (event->type == GDK_BUTTON_PRESS || event->type == GDK_BUTTON_RELEASE) {
-		axes = event->button.axes;
-		px = &(event->button.x);
-		py = &(event->button.y);
-		device = event->button.device;
-	} else if (event->type == GDK_MOTION_NOTIFY) {
-		axes = event->motion.axes;
-		px = &(event->motion.x);
-		py = &(event->motion.y);
-		device = event->motion.device;
-	} else {
-		return; // nothing we know how to do
-	}
-
-#ifdef ENABLE_XINPUT_BUGFIX
-	if (axes == NULL) {
-		return;
-	}
-
-	// fix broken events with the core pointer's location
-	if (!finite(axes[0]) || !finite(axes[1]) || (axes[0] == 0. && axes[1] == 0.)) {
-		gdk_window_get_pointer(widget->window, &ix, &iy, NULL);
-		*px = ix;
-		*py = iy;
-	} else {
-		GdkScreen * screen = gtk_widget_get_screen(xournal->getWidget());
-		int screenWidth = gdk_screen_get_width(screen);
-		int screenHeight = gdk_screen_get_height(screen);
-
-		gdk_window_get_origin(widget->window, &wx, &wy);
-		double axisWidth = device->axes[0].max - device->axes[0].min;
-
-		if (axisWidth > EPSILON) {
-			*px = (axes[0] / axisWidth) * screenWidth - wx;
-		}
-		axisWidth = device->axes[1].max - device->axes[1].min;
-		if (axisWidth > EPSILON) {
-			*py = (axes[1] / axisWidth) * screenHeight - wy;
-		}
-
-	}
-#else
-	if (!finite(*px) || !finite(*py) || (*px == 0. && *py == 0.)) {
-		gdk_window_get_pointer(widget->window, &ix, &iy, NULL);
-		*px = ix;
-		*py = iy;
-	}
-#endif
-}
-
-Rectangle::Rectangle() {
-	this->x = 0;
-	this->y = 0;
-	this->width = 0;
-	this->height = 0;
-}
-
-Rectangle::Rectangle(double x, double y, double width, double height) {
-	this->x = x;
-	this->y = y;
-	this->width = width;
-	this->height = height;
-}
-
-/**
- * @src1: a #Rectangle
- * @src2: a #Rectangle
- * @dest: return location for the intersection of @src1 and @src2, or %NULL
- *
- * Calculates the intersection of two rectangles. It is allowed for
- * @dest to be the same as either @src1 or @src2. If the rectangles
- * do not intersect, @dest's width and height is set to 0 and its x
- * and y values are undefined. If you are only interested in whether
- * the rectangles intersect, but not in the intersecting area itself,
- * pass %NULL for @dest.
- *
- * Returns: %TRUE if the rectangles intersect.
- */
-bool Rectangle::intersect(const Rectangle * src, Rectangle * dest = NULL) {
-	double destX, destY;
-	double destW, destH;
-
-	g_return_val_if_fail(src != NULL, false);
-
-	bool returnVal = false;
-
-	destX = MAX(this->x, src->x);
-	destY = MAX(this->y, src->y);
-	destW = MIN(this->x + this->width, src->x + src->width) - destX;
-	destH = MIN(this->y + this->height, src->y + src->height) - destY;
-
-	if (destW > 0 && destH > 0) {
-		if (dest) {
-			dest->x = destX;
-			dest->y = destY;
-			dest->width = destW;
-			dest->height = destH;
-		}
-		returnVal = true;
-	} else if (dest) {
-		dest->width = 0;
-		dest->height = 0;
-	}
-
-	return returnVal;
 }

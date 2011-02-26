@@ -7,6 +7,7 @@
 #include "../../undo/ColorUndoAction.h"
 #include "../../undo/SizeUndoAction.h"
 #include "../../undo/FontUndoAction.h"
+#include "../../view/DocumentView.h"
 
 #include <config.h>
 #include <glib/gi18n-lib.h>
@@ -48,7 +49,7 @@ EditSelection::EditSelection(UndoRedoHandler * undo, Selection * selection, Redr
 		addElementInt((Element *) l->data);
 	}
 
-	this->view->deleteViewBuffer();
+	this->view->repaint();
 }
 
 EditSelection::EditSelection(UndoRedoHandler * undo, Element * e, Redrawable * view, XojPage * page) {
@@ -69,7 +70,7 @@ EditSelection::EditSelection(UndoRedoHandler * undo, Element * e, Redrawable * v
 
 	addElementInt(e);
 
-	this->view->deleteViewBuffer();
+	this->view->repaint();
 }
 
 void EditSelection::initAttributes() {

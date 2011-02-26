@@ -38,6 +38,8 @@ public:
 	double getZoom();
 	void setTmpDisabled(bool disabled);
 
+	PdfCache * getCache();
+
 private:
 	int expandOpenLinks(GtkTreeModel *model, GtkTreeIter *parent);
 	static bool treeClickedCallback(GtkWidget *treeview, GdkEventButton *event, Sidebar *sidebar);
@@ -51,11 +53,14 @@ private:
 
 	void layout();
 	void updatePreviews();
+
 private:
 	bool backgroundInitialized;
 	Control * control;
 	GladeGui * gui;
 	GtkComboBox * comboBox;
+
+	PdfCache * cache;
 
 	GtkWidget * treeViewBookmarks;
 	GtkWidget * iconViewPreview;

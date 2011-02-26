@@ -12,7 +12,8 @@
 #ifndef __SHAPERECOGNIZERCONFIG_H__
 #define __SHAPERECOGNIZERCONFIG_H__
 
-//#define RECOGNIZER_DEBUG  // uncomment for debug output
+#include "../../cfg.h"
+
 #define MAX_POLYGON_SIDES 4
 
 #define LINE_MAX_DET 0.015   // maximum score for line (ideal line = 0)
