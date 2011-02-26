@@ -1367,6 +1367,75 @@ Here you can disable your touchscreen.&lt;/i&gt;</property>
                     <property name="position">10</property>
                   </packing>
                 </child>
+                <child>
+                  <widget class="GtkHBox" id="hbox32">
+                    <property name="visible">True</property>
+                    <child>
+                      <widget class="GtkLabel" id="label33">
+                        <property name="visible">True</property>
+                        <property name="label" translatable="yes">&lt;b&gt;Cursor&lt;/b&gt;</property>
+                        <property name="use_markup">True</property>
+                      </widget>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="position">0</property>
+                      </packing>
+                    </child>
+                  </widget>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="position">11</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="GtkHBox" id="hboxMidleMouse5">
+                    <property name="visible">True</property>
+                    <child>
+                      <widget class="GtkLayout" id="layout10">
+                        <property name="visible">True</property>
+                      </widget>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="padding">11</property>
+                        <property name="position">0</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <widget class="GtkVBox" id="vbox15">
+                        <property name="visible">True</property>
+                        <property name="orientation">vertical</property>
+                        <child>
+                          <widget class="GtkCheckButton" id="cbBigCursor">
+                            <property name="label" translatable="yes">Big cursor for pen</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">True</property>
+                            <property name="receives_default">False</property>
+                            <property name="draw_indicator">True</property>
+                          </widget>
+                          <packing>
+                            <property name="position">0</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <placeholder/>
+                        </child>
+                        <child>
+                          <placeholder/>
+                        </child>
+                      </widget>
+                      <packing>
+                        <property name="position">1</property>
+                      </packing>
+                    </child>
+                  </widget>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="position">12</property>
+                  </packing>
+                </child>
+                <child>
+                  <placeholder/>
+                </child>
               </widget>
               <packing>
                 <property name="position">5</property>

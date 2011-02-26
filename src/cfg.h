@@ -25,4 +25,23 @@
  */
 #define ENABLE_XINPUT_BUGFIX
 
+///////////////////////////////////////
+// Enable debugging ///////////////////
+
+// Input debugging, e.g. eraser events etc.
+// #define INPUT_DEBUG
+
+// Shape recognizer debug: output score etc.
+// #define RECOGNIZER_DEBUG
+
+// Scheduler debug: show jobs etc.
+// #define SHEDULER_DEBUG
+
+// draw a sorrounding border to all elements
+// #define SHOW_ELEMENT_BOUNDS
+
+// draw a border around all repaint rects
+// #define SHOW_REPAINT_BOUNDS
+
+
 #endif /* __CONFIG_H__ */

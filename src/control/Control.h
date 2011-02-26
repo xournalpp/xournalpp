@@ -16,12 +16,13 @@
 #include "../gui/MainWindow.h"
 #include "Actions.h"
 #include "../undo/UndoRedoHandler.h"
-#include "BackgroundThreadHandler.h"
 #include "ClipboardHandler.h"
 #include "settings/Settings.h"
 #include "ToolHandler.h"
 #include "../model/Document.h"
 #include "ZoomControl.h"
+#include "jobs/XournalScheduler.h"
+#include "../util/MemoryCheck.h"
 
 #include "../gui/sidebar/Sidebar.h"
 #include "../gui/SearchBar.h"
@@ -38,7 +39,8 @@ class Control: public ActionHandler,
 		public DocumentHandler,
 		public RecentManagerListener,
 		public UndoRedoListener,
-		public ClipboardListener {
+		public ClipboardListener,
+		public MemoryCheckObject {
 public:
 	Control();
 	virtual ~Control();
@@ -155,8 +157,6 @@ public:
 	 */
 	void updateDeletePageButton();
 
-	void runInBackground(Runnable * runnable);
-
 	// selection handling
 	void clearSelection();
 	EditSelection * getSelectionFor(PageView * view);
@@ -177,6 +177,8 @@ public:
 	TextEditor * getTextEditor();
 
 	void setSidebarTmpDisabled(bool disabled);
+
+	XournalScheduler * getScheduler();
 
 public:
 	// UndoRedoListener interface
@@ -243,8 +245,6 @@ private:
 	GList * hiddenFullscreenWidgets;
 	bool sidebarHidden;
 
-	BackgroundThreadHandler * background;
-
 	/**
 	 * Timeout id: the timeout watches the changes and actualizes the previews from time to time
 	 */
@@ -277,6 +277,8 @@ private:
 	 */
 	double defaultWidth;
 	double defaultHeight;
+
+	XournalScheduler * scheduler;
 };
 
 class CallbackData {

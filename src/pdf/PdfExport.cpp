@@ -30,16 +30,13 @@ static const char specialChars[256] = { 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 1
 		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 // fx
 		};
 
-void destroyDelete(gpointer data) {
-	delete data;
-}
-
 /**
  * This class uses some inspiration from FPDF (PHP Class)
  */
-PdfExport::PdfExport(Document * doc) {
+PdfExport::PdfExport(Document * doc, ProgressListener * progressListener) {
 	this->doc = doc;
 	this->out = NULL;
+	this->progressListener = progressListener;
 
 	// TODO: enable compression
 	this->compressOutput = false;
@@ -64,8 +61,8 @@ PdfExport::PdfExport(Document * doc) {
 
 	this->resources = NULL;
 
-	this->updatedReferenced = g_hash_table_new_full((GHashFunc) UpdateRefKey::hashFunction,
-			(GEqualFunc) UpdateRefKey::equalFunction, (GDestroyNotify) destroyDelete, (GDestroyNotify) destroyDelete);
+	this->updatedReferenced = g_hash_table_new_full((GHashFunc) UpdateRefKey::hashFunction, (GEqualFunc) UpdateRefKey::equalFunction,
+			(GDestroyNotify) UpdateRefKey::destroyDelete, (GDestroyNotify) UpdateRef::destroyDelete);
 
 	addXref(0);
 	addXref(0);
@@ -103,6 +100,7 @@ PdfExport::~PdfExport() {
 	this->fonts = NULL;
 	this->images = NULL;
 	this->documents = NULL;
+	this->progressListener = NULL;
 }
 
 bool PdfExport::write(const char * data) {
@@ -111,7 +109,7 @@ bool PdfExport::write(const char * data) {
 
 bool PdfExport::writef(const char * format, ...) {
 	va_list args;
-	va_start (args, format);
+	va_start(args, format);
 	char * data = g_strdup_vprintf(format, args);
 	bool res = writeLen(data, strlen(data));
 	g_free(data);
@@ -1145,7 +1143,7 @@ bool PdfExport::writePage(int pageNr) {
 	return true;
 }
 
-bool PdfExport::createPdf(String uri, bool * cancel) {
+bool PdfExport::createPdf(String uri) {
 	if (doc->getPageCount() < 1) {
 		lastError = "No pages to export!";
 		return false;
@@ -1169,11 +1167,16 @@ bool PdfExport::createPdf(String uri, bool * cancel) {
 
 	write("%PDF-1.4\n");
 
+	if (this->progressListener) {
+		this->progressListener->setMaximumState(doc->getPageCount());
+	}
+
 	for (int i = 0; i < doc->getPageCount(); i++) {
 		if (!writePage(i)) {
 			g_warning("error writing page %i", i + 1);
 			return false;
 		}
+		this->progressListener->setCurrentState(i);
 	}
 
 	// Write our own footer
@@ -1197,5 +1200,19 @@ guint UpdateRefKey::hashFunction(UpdateRefKey * key) {
 
 bool UpdateRefKey::equalFunction(UpdateRefKey * a, UpdateRefKey * b) {
 	return a->ref.gen == b->ref.gen && a->ref.num == b->ref.num && a->doc == b->doc;
+}
+
+void UpdateRefKey::destroyDelete(UpdateRefKey * data) {
+	delete data;
+}
+
+UpdateRef::UpdateRef(int objectId, XojPopplerDocument doc) {
+	this->objectId = objectId;
+	this->wroteOut = false;
+	this->doc = doc;
+}
+
+void UpdateRef::destroyDelete(UpdateRef * data) {
+	delete data;
 }
 

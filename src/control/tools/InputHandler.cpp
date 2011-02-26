@@ -4,6 +4,7 @@
 #include "../../undo/InsertUndoAction.h"
 #include "../../undo/RecognizerUndoAction.h"
 #include <math.h>
+#include "../../view/DocumentView.h"
 
 #define PIXEL_MOTION_THRESHOLD 0.3
 

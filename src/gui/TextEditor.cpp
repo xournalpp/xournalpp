@@ -9,6 +9,7 @@
 
 #include "TextEditorWidget.h"
 #include "../undo/TextUndoAction.h"
+#include "../view/DocumentView.h"
 
 // TODO: LOW PRIO: implement drag & drop
 

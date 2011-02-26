@@ -2,7 +2,6 @@
 #include "XojPopplerIter.h"
 
 #include <glib.h>
-#include <poppler.h>
 #include <poppler/PDFDoc.h>
 #include <poppler/CairoOutputDev.h>
 #include <poppler/GlobalParams.h>
@@ -19,6 +18,8 @@ public:
 
 		this->doc = doc;
 
+		this->docMutex = g_mutex_new();
+
 		output_dev = new CairoOutputDev();
 		output_dev->startDoc(this->doc->getXRef(), this->doc->getCatalog());
 
@@ -28,7 +29,7 @@ public:
 		for (int i = 0; i < doc->getNumPages(); i++) {
 			Page * page = catalog->getPage(i + 1);
 
-			pages[i] = new XojPopplerPage(doc, output_dev, page, i);
+			pages[i] = new XojPopplerPage(doc, this->docMutex, output_dev, page, i);
 		}
 	}
 
@@ -46,6 +47,9 @@ private:
 		this->output_dev = NULL;
 		delete doc;
 		this->doc = NULL;
+
+		g_mutex_free(this->docMutex);
+		this->docMutex = NULL;
 	}
 
 public:
@@ -97,6 +101,7 @@ private:
 public:
 	PDFDoc * doc;
 
+
 	//	GList *layers;
 	GList * layers_rbgroups;
 	CairoOutputDev * output_dev;
@@ -105,6 +110,8 @@ public:
 
 private:
 	int ref;
+
+	GMutex * docMutex;
 
 };
 
@@ -311,13 +318,13 @@ bool XojPopplerDocument::save(String filename, GError ** error) {
 	case errNone:
 		break;
 	case errOpenFile:
-		g_set_error(error, 0, POPPLER_ERROR_OPEN_FILE, _("Failed to open file for writing"));
+		g_set_error(error, 0, 0, _("Failed to open file for writing"));
 		break;
 	case errEncrypted:
-		g_set_error(error, 0, POPPLER_ERROR_ENCRYPTED, _("Document is encrypted"));
+		g_set_error(error, 0, 0, _("Document is encrypted"));
 		break;
 	default:
-		g_set_error(error, 0, POPPLER_ERROR_INVALID, _("Failed to save document"));
+		g_set_error(error, 0, 0, _("Failed to save document"));
 	}
 
 	return err_code == errNone;

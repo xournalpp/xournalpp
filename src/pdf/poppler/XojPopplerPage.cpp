@@ -5,19 +5,27 @@
 #include <poppler/Gfx.h>
 #include <poppler/OutputDev.h>
 
-XojPopplerPage::XojPopplerPage(PDFDoc * doc, CairoOutputDev * outputDev, Page * page, int index) {
+XojPopplerPage::XojPopplerPage(PDFDoc * doc, GMutex * docMutex, CairoOutputDev * outputDev, Page * page, int index) {
 	this->doc = doc;
 	this->page = page;
 	this->index = index;
 
 	this->outputDev = outputDev;
 	this->text = NULL;
+
+	this->renderMutex = g_mutex_new();
+	this->docMutex = docMutex;
 }
 
 XojPopplerPage::~XojPopplerPage() {
 	if (this->text) {
 		this->text->decRefCnt();
 	}
+
+	g_mutex_free(this->renderMutex);
+	this->renderMutex = NULL;
+
+	this->docMutex = NULL;
 }
 
 double XojPopplerPage::getWidth() {
@@ -45,6 +53,8 @@ static GBool poppler_print_annot_cb(Annot *annot, void *user_data) {
 }
 
 void XojPopplerPage::render(cairo_t * cr, bool forPrinting) {
+	g_mutex_lock(this->renderMutex);
+
 	this->outputDev->setCairo(cr);
 	this->outputDev->setPrinting(forPrinting);
 
@@ -59,29 +69,42 @@ void XojPopplerPage::render(cairo_t * cr, bool forPrinting) {
 	/* NOTE: instead of passing -1 we should/could use cairo_clip_extents()
 	 * to get a bounding box */
 	cairo_save(cr);
+
+	g_mutex_lock(this->docMutex);
+
 	this->page->displaySlice(this->outputDev, 72.0, 72.0, 0, false, /* useMediaBox */
 	true, /* Crop */
 	-1, -1, -1, -1, forPrinting, this->doc->getCatalog(), NULL, NULL, forPrinting ? poppler_print_annot_cb : NULL, NULL);
 	cairo_restore(cr);
 
+	g_mutex_unlock(this->docMutex);
+
 	this->outputDev->setCairo(NULL);
 	this->outputDev->setTextPage(NULL);
+
+	g_mutex_unlock(this->renderMutex);
 }
 
 void XojPopplerPage::initTextPage() {
+	g_mutex_lock(this->renderMutex);
+
 	if (this->text == NULL) {
-		TextOutputDev *text_dev = new TextOutputDev(NULL, true, false, false);
-		Gfx *gfx = this->page->createGfx(text_dev, 72.0, 72.0, 0, false, /* useMediaBox */
+		g_mutex_lock(this->docMutex);
+		TextOutputDev *textDev = new TextOutputDev(NULL, true, false, false);
+		Gfx *gfx = this->page->createGfx(textDev, 72.0, 72.0, 0, false, /* useMediaBox */
 		true, /* Crop */
 		-1, -1, -1, -1, false, /* printing */
 		this->doc->getCatalog(), NULL, NULL, NULL, NULL);
 		this->page->display(gfx);
-		text_dev->endPage();
+		textDev->endPage();
 
-		this->text = text_dev->takeText();
+		this->text = textDev->takeText();
 		delete gfx;
-		delete text_dev;
+		delete textDev;
+		g_mutex_unlock(this->docMutex);
 	}
+
+	g_mutex_unlock(this->renderMutex);
 }
 
 Page * XojPopplerPage::getPage() {

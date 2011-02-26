@@ -32,6 +32,8 @@ private:
 	void cache(XojPopplerPage * popplerPage, cairo_surface_t * img);
 
 private:
+	GMutex * renderMutex;
+
 	GList * data;
 	int size;
 

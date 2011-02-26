@@ -12,7 +12,6 @@
 #ifndef __XOJ_POPPLERPAGE_H__
 #define __XOJ_POPPLERPAGE_H__
 
-#include <cairo.h>
 #include <gtk/gtk.h>
 #include <poppler/PDFDoc.h>
 #include <poppler/Gfx.h>
@@ -22,14 +21,16 @@
 #include <poppler/OptionalContent.h>
 #include <poppler/CairoOutputDev.h>
 
+#include "../../util/MemoryCheck.h"
+
 class Page;
 class TextPage;
 class Annots;
 class XojPopplerImage;
 
-class XojPopplerPage {
+class XojPopplerPage : public MemoryCheckObject {
 private:
-	XojPopplerPage(PDFDoc * doc, CairoOutputDev * outputDev, Page * page, int index);
+	XojPopplerPage(PDFDoc * doc, GMutex * docMutex, CairoOutputDev * outputDev, Page * page, int index);
 	virtual ~XojPopplerPage();
 public:
 	double getWidth();
@@ -45,6 +46,9 @@ private:
 	void initTextPage();
 
 private:
+	GMutex * renderMutex;
+	GMutex * docMutex;
+
 	CairoOutputDev * outputDev;
 	PDFDoc * doc;
 	Page * page;

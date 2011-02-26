@@ -13,7 +13,6 @@
 
 #include <gtk/gtk.h>
 #include "../../model/Page.h"
-#include "../../view/DocumentView.h"
 #include "../../util/Util.h"
 
 #include "../../control/PdfCache.h"
@@ -39,11 +38,6 @@ private:
 
 	void paint();
 private:
-	/**
-	 * The View to draw the page
-	 */
-	DocumentView * view;
-
 	bool selected;
 
 	bool firstPainted;
@@ -51,17 +45,19 @@ private:
 	Sidebar * sidebar;
 	XojPage * page;
 
+	GMutex * drawingMutex;
+
 	GtkWidget * widget;
 
 	cairo_surface_t * crBuffer;
-
-	PdfCache * cache;
 
 	/**
 	 * callback IDs
 	 */
 	gulong exposeId;
 	gulong pressId;
+
+	friend class PreviewJob;
 };
 
 #endif /* __SIDEBARPREVIEW_H__ */

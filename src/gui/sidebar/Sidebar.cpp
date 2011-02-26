@@ -11,6 +11,8 @@ Sidebar::Sidebar(GladeGui * gui, Control * control) {
 	this->iconViewPreview = gtk_layout_new(NULL, NULL);
 	this->typeSelected = false;
 	this->selectedPage = -1;
+	this->cache = new PdfCache(control->getSettings()->getPdfPageCacheSize());
+
 
 	this->zoom = 0.15;
 
@@ -102,6 +104,9 @@ void Sidebar::setBackgroundWhite() {
 Sidebar::~Sidebar() {
 	gtk_widget_destroy(treeViewBookmarks);
 	gtk_widget_destroy(iconViewPreview);
+
+	delete this->cache;
+	this->cache = NULL;
 }
 
 gboolean Sidebar::treeSearchFunction(GtkTreeModel *model, gint column, const gchar *key, GtkTreeIter *iter,
@@ -332,6 +337,10 @@ bool Sidebar::selectPageNr(int page, int pdfPage, GtkTreeIter * parent) {
 		}
 	}
 	return false;
+}
+
+PdfCache * Sidebar::getCache() {
+	return this->cache;
 }
 
 void Sidebar::setTmpDisabled(bool disabled) {

@@ -4,6 +4,8 @@
 #include <cairo-svg.h>
 #include <config.h>
 #include "../util/ObjectStream.h"
+#include "../view/DocumentView.h"
+
 
 ClipboardHandler::ClipboardHandler(ClipboardListener * listener, GtkWidget * widget) {
 	this->listener = listener;

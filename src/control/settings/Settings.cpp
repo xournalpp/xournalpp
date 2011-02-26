@@ -71,6 +71,7 @@ void Settings::loadDefault() {
 	this->widthMaximumMultiplier = 1.25;
 
 	this->autoloadPdfXoj = true;
+	this->showBigCursor = false;
 
 	this->autosaveTimeout = 1;
 	this->autosaveEnabled = true;
@@ -242,6 +243,8 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
 		showTwoPages = xmlStrcmp(value, (const xmlChar *) "true") ? false : true;
 	} else if (xmlStrcmp(name, (const xmlChar *) "autoloadPdfXoj") == 0) {
 		autoloadPdfXoj = xmlStrcmp(value, (const xmlChar *) "true") ? false : true;
+	} else if (xmlStrcmp(name, (const xmlChar *) "showBigCursor") == 0) {
+		showBigCursor = xmlStrcmp(value, (const xmlChar *) "true") ? false : true;
 	} else if (xmlStrcmp(name, (const xmlChar *) "defaultSaveName") == 0) {
 		this->defaultSaveName = (const char *) value;
 	} else if (xmlStrcmp(name, (const xmlChar *) "visiblePageFormats") == 0) {
@@ -497,6 +500,8 @@ void Settings::save() {
 	WRITE_STRING_PROP(presentationHideElements);
 	WRITE_COMMENT("Which gui elements are hidden if you are in Presentation mode, separated by a colon (,)");
 
+	WRITE_BOOL_PROP(showBigCursor);
+
 	WRITE_BOOL_PROP(autoloadPdfXoj);
 	WRITE_STRING_PROP(defaultSaveName);
 
@@ -678,6 +683,15 @@ bool Settings::isAllowScrollOutsideThePage() {
 void Settings::setAllowScrollOutsideThePage(bool outside) {
 	this->allowScrollOutsideThePage = outside;
 
+	saveTimeout();
+}
+
+bool Settings::isShowBigCursor() {
+	return this->showBigCursor;
+}
+
+void Settings::setShowBigCursor(bool b) {
+	this->showBigCursor = b;
 	saveTimeout();
 }
 
@@ -985,11 +999,11 @@ __RefSElement::~__RefSElement() {
 }
 
 void __RefSElement::ref() {
-	refcount++;
+	this->refcount++;
 }
 void __RefSElement::unref() {
-	refcount--;
-	if (refcount == 0) {
+	this->refcount--;
+	if (this->refcount == 0) {
 		delete this;
 	}
 }

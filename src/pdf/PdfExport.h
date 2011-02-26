@@ -9,19 +9,20 @@
  * @license GPL
  */
 
-#ifndef PDFEXPORT_H_
-#define PDFEXPORT_H_
+#ifndef __PDFEXPORT_H__
+#define __PDFEXPORT_H__
 
 #include "../model/Document.h"
 #include "../util/String.h"
+#include "../control/jobs/ProgressListener.h"
 #include <glib.h>
 
 class PdfExport {
 public:
-	PdfExport(Document * doc);
+	PdfExport(Document * doc, ProgressListener * progressListener);
 	virtual ~PdfExport();
 
-	bool createPdf(String uri, bool * cancel);
+	bool createPdf(String uri);
 	String getLastError();
 
 	static bool isWhitespace(int c);
@@ -78,6 +79,8 @@ private:
 private:
 	Document * doc;
 	XojPopplerDocument currentPdfDoc;
+
+	ProgressListener * progressListener;
 
 	bool compressOutput;
 
@@ -136,6 +139,8 @@ public:
 	static guint hashFunction(UpdateRefKey * key);
 	static bool equalFunction(UpdateRefKey * a, UpdateRefKey * b);
 
+	static void destroyDelete(UpdateRefKey * data);
+
 public:
 
 	Ref ref;
@@ -144,11 +149,9 @@ public:
 
 class UpdateRef {
 public:
-	UpdateRef(int objectId, XojPopplerDocument doc) {
-		this->objectId = objectId;
-		this->wroteOut = false;
-		this->doc = doc;
-	}
+	UpdateRef(int objectId, XojPopplerDocument doc);
+	static void destroyDelete(UpdateRef * data);
+
 public:
 	int objectId;
 	bool wroteOut;
@@ -157,4 +160,4 @@ public:
 	XojPopplerDocument doc;
 };
 
-#endif /* PDFEXPORT_H_ */
+#endif /* __PDFEXPORT_H__ */

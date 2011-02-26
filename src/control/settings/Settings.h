@@ -218,6 +218,9 @@ public:
 	bool isAllowScrollOutsideThePage();
 	void setAllowScrollOutsideThePage(bool outside);
 
+	bool isShowBigCursor();
+	void setShowBigCursor(bool b);
+
 	String getDefaultSaveName();
 	void setDefaultSaveName(String name);
 
@@ -303,6 +306,11 @@ private:
 	 * If the sidebar is on the right
 	 */
 	bool sidebarOnRight;
+
+	/**
+	 * Show a better visibel cursor for pen
+	 */
+	bool showBigCursor;
 
 	/**
 	 * The selected Toolbar name
