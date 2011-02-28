@@ -12,22 +12,25 @@
 #ifndef __PDFEXPORTIMAGE_H__
 #define __PDFEXPORTIMAGE_H__
 
+#include <poppler/Object.h>
+
 class PdfExportImage {
 public:
-	PdfExportImage(int objectId) {
+	PdfExportImage(int objectId, Ref ref) {
 		this->objectId = objectId;
+		this->ref = ref;
 	}
 
 	~PdfExportImage() {
 	}
 
-public:
-	int getObjectId() {
-		return this->objectId;
+	bool equalsRef(const Ref & ref) {
+		return (this->ref.gen == ref.gen && this->ref.num == ref.num);
 	}
 
-private:
+public:
 	int objectId;
+	Ref ref;
 };
 
 #endif /* __PDFEXPORTIMAGE_H__ */

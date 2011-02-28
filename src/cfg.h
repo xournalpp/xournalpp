@@ -37,7 +37,7 @@
 // Scheduler debug: show jobs etc.
 // #define SHEDULER_DEBUG
 
-// draw a sorrounding border to all elements
+// draw a surrounding border to all elements
 // #define SHOW_ELEMENT_BOUNDS
 
 // draw a border around all repaint rects
