@@ -224,13 +224,13 @@ void Shadow::drawShadowImpl(cairo_t * cr, int x, int y, int width, int height) {
 
 	drawShadowTop(cr, x, y, width - 3, 0, 0, 0);
 	drawShadowLeft(cr, x, y, height - 3, 0, 0, 0);
-	drawShadowRight(cr, x + width, y - 4, height + 4, 0, 0, 0);
-	drawShadowBottom(cr, x, y + height, width - 3, 0, 0, 0);
+	drawShadowRight(cr, x + width, y - 4, height + 5, 0, 0, 0);
+	drawShadowBottom(cr, x - 4, y + height, width + 5, 0, 0, 0);
 
 	paintEdge(cr, this->edgeTopLeft, x, y, sTlSize, sTlSize);
 	paintEdge(cr, this->edgeTopRight, x + width + 1, y, sBrSize, sTlSize);
 	paintEdge(cr, this->edgeBottomLeft, x, y + height + 1, sTlSize, sBrSize);
-	paintEdge(cr, this->edgeBottomRight, x + width + 1, y + height, sBrSize, sBrSize);
+	paintEdge(cr, this->edgeBottomRight, x + width + 1, y + height + 1, sBrSize, sBrSize);
 }
 
 void Shadow::drawShadow(cairo_t * cr, int x, int y, int width, int height) {
