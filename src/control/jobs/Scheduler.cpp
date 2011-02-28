@@ -1,5 +1,6 @@
 #include "Scheduler.h"
 #include <stdio.h>
+#include "../../cfg.h"
 
 
 #ifdef SHEDULER_DEBUG
@@ -45,7 +46,7 @@ void Scheduler::addJob(Job * job, JobPriority priority) {
 	g_queue_push_tail(this->jobQueue[priority], job);
 	g_cond_broadcast(this->jobQueueCond);
 
-	SDEBUG("add job: %ld\n", job);
+	SDEBUG("add job: %ld\n", (long)job);
 
 	g_mutex_unlock(this->jobQueueMutex);
 }
@@ -67,14 +68,14 @@ gpointer Scheduler::jobThreadCallback(Scheduler * scheduler) {
 	while (scheduler->threadRunning) {
 		g_mutex_lock(scheduler->jobQueueMutex);
 		Job * job = scheduler->getNextJobUnlocked();
-		SDEBUG("get job: %ld\n", job);
+		SDEBUG("get job: %ld\n", (long)job);
 		if (!job) {
 			g_cond_wait(scheduler->jobQueueCond, scheduler->jobQueueMutex);
 			g_mutex_unlock(scheduler->jobQueueMutex);
 			continue;
 		}
 
-		SDEBUG("do job: %ld\n", job);
+		SDEBUG("do job: %ld\n", (long)job);
 
 		g_mutex_unlock(scheduler->jobQueueMutex);
 
@@ -84,10 +85,10 @@ gpointer Scheduler::jobThreadCallback(Scheduler * scheduler) {
 		delete job;
 		g_mutex_unlock(scheduler->jobRunningMutex);
 
-		SDEBUG("next\n");
+		SDEBUG("next\n", NULL);
 	}
 
-	SDEBUG("finished\n");
+	SDEBUG("finished\n", NULL);
 
 	return NULL;
 }

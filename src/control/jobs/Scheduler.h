@@ -53,13 +53,12 @@ protected:
 	// this is need to be sure there is no job running if we delete a page, else we may access delete memory...
 	GMutex * jobRunningMutex;
 
-
 	GQueue queueUrgent;
-	GQueue queueHigh ;
-	GQueue queueLow ;
+	GQueue queueHigh;
+	GQueue queueLow;
 	GQueue queueNone;
 
-	GQueue * jobQueue[JOB_N_PRIORITIES] ;
+	GQueue * jobQueue[JOB_N_PRIORITIES];
 
 };
 

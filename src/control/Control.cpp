@@ -2233,17 +2233,17 @@ bool Control::close() {
 		int res = gtk_dialog_run(GTK_DIALOG(dialog));
 		gtk_widget_destroy(dialog);
 
-		// cancel
-		if (res == 3) {
-			return false;
-		}
-
 		// save
 		if (res == 1) {
 			if (!this->save()) {
 				// if not saved cancel, else close
 				return false;
 			}
+		}
+
+		// cancel or closed
+		if (res != 2) {// 2 = discard
+			return false;
 		}
 	}
 

@@ -23,10 +23,11 @@ PdfExport::PdfExport(Document * doc, ProgressListener * progressListener) {
 
 	this->pageCount = 0;
 
-	this->images = NULL;
-
 	this->fonts = NULL;
 	this->fontId = 1;
+
+	this->imageId = 1;
+	this->images = NULL;
 
 	this->documents = NULL;
 
@@ -177,12 +178,14 @@ bool PdfExport::writeTrailer() {
 
 bool PdfExport::writeXobjectdict() {
 	int i = 1;
-	for (GList * l = this->images; l != NULL; l = l->next) {
-		PdfExportImage * img = (PdfExportImage *) l->data;
-		this->writer->writef("/I%i %i 0 R\n", i, img->getObjectId());
 
-		i++;
-	}
+	// TODO: implementieren!
+	//	for (GList * l = this->images; l != NULL; l = l->next) {
+	//		PdfExportImage * img = (PdfExportImage *) l->data;
+	//		this->writer->writef("/I%i %i 0 R\n", i, img->getObjectId());
+	//
+	//		i++;
+	//	}
 
 	return true;
 }
@@ -533,9 +536,18 @@ void PdfExport::writeGzStream(Stream * str, GList * replacementList) {
 }
 
 int PdfExport::lookupImage(String name, Ref ref) {
-	// TODO implementieren!!!!!!!!!!!!!
+	for (GList * l = this->images; l != NULL; l = l->next) {
+		PdfExportImage * i = (PdfExportImage *) l->data;
 
-	return 0;
+		if (i->equalsRef(ref)) {
+			return i->objectId;
+		}
+	}
+
+	int id = this->imageId++;
+	this->images = g_list_append(this->images, new PdfExportImage(id, ref));
+
+	return id;
 }
 
 int PdfExport::lookupFont(String name, Ref ref) {
@@ -700,7 +712,7 @@ bool PdfExport::addPopplerPage(XojPopplerPage * pdf, XojPopplerDocument doc) {
 			}
 
 			o.free();
-		} else if(strcmp(dict->getKey(i), "XObject") == 0) {
+		} else if (strcmp(dict->getKey(i), "XObject") == 0) {
 			Object o;
 			dict->getVal(i, &o);
 
@@ -719,7 +731,7 @@ bool PdfExport::addPopplerPage(XojPopplerPage * pdf, XojPopplerDocument doc) {
 			o.free();
 		}
 
-//		printf("Dict: %s\n",dict->getKey(i));
+		//		printf("Dict: %s\n",dict->getKey(i));
 	}
 
 	Object * o = new Object();

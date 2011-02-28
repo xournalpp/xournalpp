@@ -33,6 +33,7 @@ msgid " text"
 msgstr " Text"
 
 #: ../src/control/settings/Settings.cpp:77 ../ui/settings.glade:448
+#: ../src/control/settings/Settings.cpp:81
 msgid "%F-Note-%H-%M.xoj"
 msgstr "Notiz-%d-%m-%Y-%H-%M.xoj"
 
@@ -84,7 +85,7 @@ msgstr ""
 "%Z\tZeitzone (z.B. CDT)\n"
 "%%\tein % Zeichen"
 
-#: ../src/gui/MainWindow.cpp:343
+#: ../src/gui/MainWindow.cpp:343 ../src/gui/MainWindow.cpp:345
 #, c-format
 msgid ", PDF Page %i"
 msgstr ", PDF Seite %i"
@@ -127,6 +128,10 @@ msgstr "<b>Automatisch speichern</b>"
 msgid "<b>Contributors:</b>"
 msgstr "<b>Mitwirkende:</b>"
 
+#: ../ui/settings.glade:1376
+msgid "<b>Cursor</b>"
+msgstr "<b>Cursor</b>"
+
 #: ../ui/page-background-color.glade:90
 msgid "<b>Custom color</b>"
 msgstr "<b>Selbstdefinierte farbe</b>"
@@ -146,6 +151,10 @@ msgstr "<b>Radierer</b>"
 #: ../ui/settings.glade:35
 msgid "<b>Extended Input</b>"
 msgstr "<b>Extended Input</b>"
+
+#: ../ui/export.glade:134
+msgid "<b>Format</b>"
+msgstr "<b>Format</b>"
 
 #: ../ui/settings.glade:1196
 msgid "<b>Fullscreen</b>"
@@ -167,6 +176,10 @@ msgstr "<b>Links / Rechts</b>"
 msgid "<b>Middle Mouse Button</b>"
 msgstr "<b>Mittlere Maustaste</b>"
 
+#: ../ui/export.glade:258
+msgid "<b>Output</b>"
+msgstr "<b>Ausgabe</b>"
+
 #: ../ui/pagesize.glade:58
 msgid "<b>Pagesize</b>"
 msgstr "<b>Seitengrösse</b>"
@@ -183,6 +196,10 @@ msgstr "<b>Präsentationsmodus</b> <i>Starten mit F5</i>"
 msgid "<b>Presure sensitivity</b>"
 msgstr "<b>Druck Empfindlichkeit</b>"
 
+#: ../ui/export.glade:24
+msgid "<b>Range</b>"
+msgstr "<b>Bereich</b>"
+
 #: ../ui/settings.glade:826
 msgid "<b>Right Mouse Button</b>"
 msgstr "<b>Rechte Maustaste</b>"
@@ -195,6 +212,10 @@ msgstr "<b>Seitemumrahumg (Ausgewählte Seite)</b>"
 msgid ""
 "<b>Touch Screen</b> <i>You can also configure other device like mice</i>"
 msgstr "<b>Touch Screen</b> <i>Sie können auch andere Geräte konfigurieren</i>"
+
+#: ../ui/export.glade:108
+msgid "<i>Example</i> 1-3 or 1,3,5-7 etc."
+msgstr "<i>Beispiel</i> 1-3 oder 1,3,5-7 etc."
 
 #: ../ui/settings.glade:877
 msgid ""
@@ -272,12 +293,18 @@ msgstr "<span size=\"xx-large\" weight=\"bold\">Xournal++</span>"
 msgid "About Xournal++"
 msgstr "Über Xournal++"
 
+#: ../ui/export.glade:47
+msgid "All Pages"
+msgstr "Alle Seiten"
+
 #: ../src/control/Control.cpp:1693 ../src/control/Control.cpp:1774
+#: ../src/control/Control.cpp:1725
 msgid "All files"
 msgstr "Alle Dateien"
 
 #: ../src/control/Control.cpp:1111 ../src/control/Control.cpp:1724
 #: ../src/control/Control.cpp:1159 ../src/control/Control.cpp:1807
+#: ../src/control/Control.cpp:1137 ../src/control/Control.cpp:1756
 msgid "Attach file to the journal"
 msgstr "Datei ans .xoj anhängen"
 
@@ -285,7 +312,7 @@ msgstr "Datei ans .xoj anhängen"
 msgid "Autosave every ... minute:"
 msgstr "Alle ... automatisch speichern:"
 
-#: ../src/control/Control.cpp:222
+#: ../src/control/Control.cpp:222 ../src/control/Control.cpp:221
 #, c-format
 msgid "Autosave: %s"
 msgstr "Autospeichern: %s"
@@ -294,7 +321,11 @@ msgstr "Autospeichern: %s"
 msgid "Back"
 msgstr "Zurück"
 
-#: ../src/gui/sidebar/Sidebar.cpp:84
+#: ../ui/settings.glade:1409
+msgid "Big cursor for pen"
+msgstr "Grosser Cursor für den Stift"
+
+#: ../src/gui/sidebar/Sidebar.cpp:84 ../src/gui/sidebar/Sidebar.cpp:88
 msgid "Bookmarks"
 msgstr "Lesezeichen"
 
@@ -306,7 +337,7 @@ msgstr "Rahmenfarbe"
 msgid "Border color for current page and other selections"
 msgstr "Rahmenfarbe der selektierten Seite und anderen Selektionen"
 
-#: ../src/control/Control.cpp:2352
+#: ../src/control/Control.cpp:2352 ../src/control/Control.cpp:2232
 msgid "Cancel"
 msgstr "Abbrechen"
 
@@ -380,6 +411,10 @@ msgstr "Konnte Hintergrund nicht speichern \"%s\". Fahre trotzdem weiter."
 msgid "Couldn't find pixmap file: %s"
 msgstr "Konnte das Bild nicht finden: %s"
 
+#: ../ui/export.glade:61
+msgid "Current Page"
+msgstr "Aktuelle Seite"
+
 #: ../src/gui/dialog/FormatDialog.cpp:105
 msgid "Custom"
 msgstr "Benutzerdefiniert"
@@ -396,15 +431,17 @@ msgstr "Löschen"
 msgid "Delete La_yer"
 msgstr "Layer löschen"
 
-#: ../src/control/Control.cpp:2351
+#: ../src/control/Control.cpp:2351 ../src/control/Control.cpp:2231
 msgid "Discard"
 msgstr "Verwerfen"
 
 #: ../src/pdf/poppler/XojPopplerDocument.cpp:317
+#: ../src/pdf/poppler/XojPopplerDocument.cpp:324
 msgid "Document is encrypted"
 msgstr "Dokument ist verschlüsselt"
 
 #: ../src/control/LoadHandler.cpp:639 ../src/control/LoadHandler.cpp:642
+#: ../src/control/LoadHandler.cpp:640
 msgid "Document is not complete (may the end is cut off?)"
 msgstr "Dokument ist nicht komplett (z.B. nicht komplett übertragen?)"
 
@@ -412,7 +449,7 @@ msgstr "Dokument ist nicht komplett (z.B. nicht komplett übertragen?)"
 msgid "Draw stroke"
 msgstr "Linie zeichen"
 
-#: ../ui/export.glade:259
+#: ../ui/export.glade:259 ../ui/export.glade:166
 msgid "EPS"
 msgstr "EPS"
 
@@ -433,6 +470,7 @@ msgid "Eraser Optio_ns"
 msgstr "Radierer Optionen"
 
 #: ../src/control/Control.cpp:1886 ../src/control/Control.cpp:1976
+#: ../src/control/Control.cpp:1923
 #, c-format
 msgid ""
 "Error annotate PDF file '%s'\n"
@@ -442,6 +480,7 @@ msgstr ""
 "%s"
 
 #: ../src/control/Control.cpp:1821 ../src/control/Control.cpp:1907
+#: ../src/control/Control.cpp:1860
 #, c-format
 msgid ""
 "Error opening file '%s'\n"
@@ -450,7 +489,7 @@ msgstr ""
 "Fehler beim öffnen der Date '%s'\n"
 "%s"
 
-#: ../ui/export.glade:294
+#: ../ui/export.glade:294 ../ui/export.glade:353
 msgid "Export"
 msgstr "Exportieren"
 
@@ -463,12 +502,22 @@ msgid "Export as..."
 msgstr "Exportieren als..."
 
 #: ../src/pdf/poppler/XojPopplerDocument.cpp:314
+#: ../src/pdf/poppler/XojPopplerDocument.cpp:321
 msgid "Failed to open file for writing"
 msgstr "Datei konnte nicht zum schreiben geöffnet werden"
 
 #: ../src/pdf/poppler/XojPopplerDocument.cpp:320
+#: ../src/pdf/poppler/XojPopplerDocument.cpp:327
 msgid "Failed to save document"
 msgstr "Dokument speichern fehlgeschlagen"
+
+#: ../ui/export.glade:280
+msgid ""
+"Filename (without extension), if neccessary numbers\n"
+"are extended to the filename"
+msgstr ""
+"Dateiname (ohne Endung), wenn nötig werden\n"
+"Nummern an den Namen angehängt"
 
 #: ../ui/main.glade:782
 msgid "Fullscreen"
@@ -520,15 +569,16 @@ msgstr "Bild"
 
 #: ../src/gui/PageView.cpp:576 ../src/control/Control.cpp:1103
 #: ../src/gui/PageView.cpp:575 ../src/control/Control.cpp:1147
+#: ../src/gui/PageView.cpp:547 ../src/control/Control.cpp:1129
 msgid "Images"
 msgstr "Bilder"
 
-#: ../src/control/Control.cpp:241
+#: ../src/control/Control.cpp:241 ../src/control/Control.cpp:240
 #, c-format
 msgid "Info: autosave document...\n"
 msgstr "Info: Autospeichere Dokument...\n"
 
-#: ../src/control/Control.cpp:237
+#: ../src/control/Control.cpp:237 ../src/control/Control.cpp:236
 #, c-format
 msgid "Info: autosave not necessary, nothing changed...\n"
 msgstr "Info: Autospeichere nicht nötig, nichts geändert...\n"
@@ -545,7 +595,8 @@ msgstr "Eingabegerät"
 msgid "Insert Page Type"
 msgstr "Hintergrund neuer Seiten"
 
-#: ../src/undo/InsertUndoAction.cpp:27
+#: ../src/undo/InsertUndoAction.cpp:27 ../src/gui/PageView.cpp:475
+#: ../src/gui/PageView.cpp:569
 msgid "Insert image"
 msgstr "Bild einfügen"
 
@@ -564,6 +615,10 @@ msgstr "Laden / Speichern"
 #: ../ui/images.glade:22
 msgid "Load file"
 msgstr "Datei laden"
+
+#: ../src/gui/PageView.cpp:961 ../src/gui/sidebar/SidebarPreview.cpp:105
+msgid "Loading..."
+msgstr "Laden..."
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:477
 msgid "Medium"
@@ -623,37 +678,39 @@ msgstr "Öffne '%s'"
 
 #: ../src/gui/PageView.cpp:569 ../src/control/Control.cpp:1097
 #: ../src/gui/PageView.cpp:568 ../src/control/Control.cpp:1140
+#: ../src/gui/PageView.cpp:540 ../src/control/Control.cpp:1124
 msgid "Open Image"
 msgstr "Öffne Bild"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:355
-#: ../src/control/Control.cpp:1768
+#: ../src/control/Control.cpp:1768 ../src/control/Control.cpp:1720
 msgid "Open file"
 msgstr "Öffne Datei"
 
-#: ../src/control/Control.cpp:2139
+#: ../src/control/Control.cpp:2139 ../src/control/Control.cpp:2071
 #, c-format
 msgid "Open file error: %s"
 msgstr "Datei öffnen Fehler: %s"
 
-#: ../src/control/Control.cpp:2085
+#: ../src/control/Control.cpp:2085 ../src/control/Control.cpp:2088
 #, c-format
 msgid "Output stream error: %s"
 msgstr "Ausgabestream error: %s"
 
-#: ../ui/export.glade:61
+#: ../ui/export.glade:61 ../ui/export.glade:152
 msgid "PDF"
 msgstr "PDF"
 
-#: ../src/view/DocumentView.cpp:335
+#: ../src/view/DocumentView.cpp:335 ../src/view/PdfView.cpp:30
 msgid "PDF background missing"
 msgstr "PDF Hingergrund fehlt"
 
 #: ../src/control/Control.cpp:1701 ../src/control/Control.cpp:1782
+#: ../src/control/Control.cpp:1733
 msgid "PDF files"
 msgstr "PDF Dateien"
 
-#: ../ui/export.glade:145
+#: ../ui/export.glade:145 ../ui/export.glade:199
 msgid "PNG"
 msgstr "PNG"
 
@@ -684,6 +741,10 @@ msgstr "Datei hinzugefügt"
 #: ../ui/export.glade:28
 msgid "Pages"
 msgstr "Seiten"
+
+#: ../ui/export.glade:78
+msgid "Pages:"
+msgstr "Seiten:"
 
 #: ../ui/pagesize.glade:6
 msgid "Paper Format"
@@ -721,7 +782,7 @@ msgstr "Einfarbig"
 msgid "Preferences"
 msgstr "Einstellungen"
 
-#: ../src/gui/sidebar/Sidebar.cpp:85
+#: ../src/gui/sidebar/Sidebar.cpp:85 ../src/gui/sidebar/Sidebar.cpp:89
 msgid "Preview"
 msgstr "Vorschau"
 
@@ -743,6 +804,10 @@ msgstr "Widerherstellen: "
 msgid "Resolution"
 msgstr "Auflösung"
 
+#: ../ui/export.glade:215
+msgid "Resolution:"
+msgstr "Auflösung:"
+
 #: ../ui/main.glade:552
 msgid "Ru_ler"
 msgstr "Radierer"
@@ -755,16 +820,18 @@ msgstr "Block"
 msgid "Ruler"
 msgstr "Masstab"
 
-#: ../ui/export.glade:202
+#: ../ui/export.glade:202 ../ui/export.glade:181
 msgid "SVG"
 msgstr "SVG"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:351
-#: ../src/control/Control.cpp:2350
+#: ../src/control/Control.cpp:2350 ../src/control/Control.cpp:2049
+#: ../src/control/Control.cpp:2230
 msgid "Save"
 msgstr "Speichern"
 
 #: ../src/control/Control.cpp:2062 ../src/control/Control.cpp:2181
+#: ../src/control/Control.cpp:2117
 msgid "Save File"
 msgstr "Speichere Datei"
 
@@ -820,6 +887,10 @@ msgstr "Wähle Rechteck"
 msgid "Select color"
 msgstr "Wähle Farbe"
 
+#: ../ui/export.glade:320
+msgid "Select output folder"
+msgstr "Ausgabeordner wählen"
+
 #: ../ui/settings.glade:1341
 msgid "Select toolbar:"
 msgstr "Wähle Toolbar:"
@@ -837,11 +908,13 @@ msgstr ""
 "THIS TEXT IS A PLACEHOLDER!"
 
 #: ../src/gui/dialog/PdfPagesDialog.cpp:338
+#: ../src/gui/dialog/PdfPagesDialog.cpp:331
 #, c-format
 msgid "Show only not used pages (%i unused pages)"
 msgstr "Nur noch nicht benutze Seiten anzeigen (%i nicht benutze Seiten)"
 
 #: ../src/gui/dialog/PdfPagesDialog.cpp:336
+#: ../src/gui/dialog/PdfPagesDialog.cpp:329
 msgid "Show only not used pages (one unused page)"
 msgstr "Nur noch nicht benutze Seiten anzeigen (eine nicht benutze Seiten)"
 
@@ -857,7 +930,7 @@ msgstr "Seitenleiste auf der rechten Seite anzeigen"
 msgid "Show vertical scrollbar on the left side"
 msgstr "Vertikale Scrollbar auf der linken Seite anzeigen"
 
-#: ../src/Xournalpp.cpp:155 ../src/Xournalpp.cpp:153
+#: ../src/Xournalpp.cpp:155 ../src/Xournalpp.cpp:153 ../src/Xournalpp.cpp:157
 msgid ""
 "Sorry, Xournal can only open one file from the command line.\n"
 "Others are ignored."
@@ -865,7 +938,7 @@ msgstr ""
 "Entschuldigung, Xournal kann nur eine Datei von der Kommandozeile öffnen.\n"
 "Alle weiteren werden ignoriert."
 
-#: ../src/Xournalpp.cpp:196 ../src/Xournalpp.cpp:194
+#: ../src/Xournalpp.cpp:196 ../src/Xournalpp.cpp:194 ../src/Xournalpp.cpp:198
 msgid ""
 "Sorry, Xournal cannot open remote files at the moment.\n"
 "You have to copy the file to a local directory."
@@ -873,11 +946,17 @@ msgstr ""
 "Entschuldigung, Xournal kann keine entfernten Dateien öffnen im Moment.\n"
 "Kopieren Sie die Datei in einen lokalen Ordner."
 
+#: ../ui/main.glade:1185
+msgid "State PLACEHOLDER"
+msgstr "State PLACEHOLDER"
+
 #: ../src/undo/RecognizerUndoAction.cpp:47
+#: ../src/undo/RecognizerUndoAction.cpp:72
 msgid "Stroke recognizer"
 msgstr "Figurenerkennung"
 
 #: ../src/control/Control.cpp:1706 ../src/control/Control.cpp:1787
+#: ../src/control/Control.cpp:1738
 msgid "Supported files"
 msgstr "Unterstützte Dateien"
 
@@ -928,7 +1007,7 @@ msgstr "Text einmal gefunden auf Seite %i"
 msgid "There is still an operation running, exit anyway?"
 msgstr "Es läuft gerade noch eine Aktion, trozdem beenden?"
 
-#: ../src/gui/PageView.cpp:425
+#: ../src/gui/PageView.cpp:425 ../src/gui/PageView.cpp:398
 msgid ""
 "There was a wrong input event, input is not working.\n"
 "Do you want to disable \"Extended Input\"?"
@@ -944,12 +1023,13 @@ msgstr "Dick"
 msgid "Thin"
 msgstr "Dünn"
 
-#: ../src/control/Control.cpp:2348
+#: ../src/control/Control.cpp:2348 ../src/control/Control.cpp:2228
 msgid "This document is not saved yet."
 msgstr "Dieses Dokument wurde noch nicht gespiechert."
 
 #: ../src/gui/PageView.cpp:525 ../src/control/Control.cpp:1136
-#: ../src/control/Control.cpp:1194
+#: ../src/control/Control.cpp:1194 ../src/gui/PageView.cpp:497
+#: ../src/control/Control.cpp:1163
 #, c-format
 msgid "This image could not be loaded. Error message: %s"
 msgstr "Das Bild könnte nicht geladen werden. Fehlermeldung: %s"
@@ -973,10 +1053,12 @@ msgid "Undo: "
 msgstr "Rückgängig: "
 
 #: ../src/control/LoadHandler.cpp:631 ../src/control/LoadHandler.cpp:634
+#: ../src/control/LoadHandler.cpp:632
 msgid "Unknown parser error"
 msgstr "Unbekannter parser Fehler"
 
 #: ../src/control/Control.cpp:2118 ../src/control/Control.cpp:2241
+#: ../src/control/Control.cpp:2174
 msgid "Unsaved Document"
 msgstr "Ungespeichertes Dokument"
 
@@ -985,7 +1067,7 @@ msgstr "Ungespeichertes Dokument"
 msgid "Vertical Space"
 msgstr "Vertical Space"
 
-#: ../ui/settings.glade:1378
+#: ../ui/settings.glade:1378 ../ui/settings.glade:1447
 msgid "View"
 msgstr "Ansicht"
 
@@ -1002,12 +1084,14 @@ msgid "Write text"
 msgstr "Tescht schreiben"
 
 #: ../src/control/LoadHandler.cpp:625 ../src/control/LoadHandler.cpp:628
+#: ../src/control/LoadHandler.cpp:626
 #, c-format
 msgid "XML Parser error: %s"
 msgstr "XML Parser error: %s"
 
 #: ../src/control/Control.cpp:1697 ../src/control/Control.cpp:2067
 #: ../src/control/Control.cpp:1778 ../src/control/Control.cpp:2187
+#: ../src/control/Control.cpp:1729 ../src/control/Control.cpp:2122
 msgid "Xournal files"
 msgstr "Xournal Dateien"
 
@@ -1019,7 +1103,7 @@ msgstr "Xournal++"
 msgid "Xournal++ Preferences"
 msgstr "Xournal++ Einstellungen"
 
-#: ../src/Xournalpp.cpp:129 ../src/Xournalpp.cpp:127
+#: ../src/Xournalpp.cpp:129 ../src/Xournalpp.cpp:127 ../src/Xournalpp.cpp:132
 msgid ""
 "You are using a development release of Xournal\n"
 "You can find the current release in CVS!\n"
@@ -1041,6 +1125,7 @@ msgstr ""
 
 #: ../src/control/Control.cpp:990 ../src/control/Control.cpp:1206
 #: ../src/control/Control.cpp:1030 ../src/control/Control.cpp:1270
+#: ../src/control/Control.cpp:1017 ../src/control/Control.cpp:1231
 msgid ""
 "You don't have any PDF pages to select from. Cancel operation,\n"
 "Please select another background type: Menu \"Journal\" / \"Insert Page Type"
@@ -1050,7 +1135,7 @@ msgstr ""
 "Bitte wählen Sie einen anderen Hintergrundtyp: Menü \"Journal\" / "
 "\"Hintergrund neuer Seiten\"."
 
-#: ../src/gui/sidebar/Sidebar.cpp:182
+#: ../src/gui/sidebar/Sidebar.cpp:182 ../src/gui/sidebar/Sidebar.cpp:189
 #, c-format
 msgid ""
 "Your current document does not contain PDF Page %i\n"
@@ -1225,11 +1310,15 @@ msgstr "cm"
 msgid "delete stroke"
 msgstr "linie löschen"
 
+#: ../ui/export.glade:239
+msgid "dpi"
+msgstr "dpi"
+
 #: ../src/model/FormatDefinitions.cpp:8
 msgid "in"
 msgstr "in"
 
-#: ../src/gui/MainWindow.cpp:346
+#: ../src/gui/MainWindow.cpp:346 ../src/gui/MainWindow.cpp:348
 #, c-format
 msgid "of %i%s"
 msgstr "von %i%s"

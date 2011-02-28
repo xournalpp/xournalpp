@@ -81,12 +81,13 @@ private:
 
 	Dict * resources;
 
-	GList * images;
-
 	GList * documents;
 
 	int fontId;
 	GList * fonts;
+
+	int imageId;
+	GList * images;
 
 	PdfXRef * xref;
 	PdfBookmarks bookmarks;
