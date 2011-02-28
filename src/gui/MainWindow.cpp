@@ -164,7 +164,9 @@ void MainWindow::setSidebarVisible(bool visible) {
 }
 
 bool pageNrSpinChangedTimerCallback(Control * control) {
+	gdk_threads_enter();
 	control->scrollToSpinPange();
+	gdk_threads_leave();
 	return false;
 }
 

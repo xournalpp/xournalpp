@@ -12,7 +12,6 @@
 #include "PrintHandler.h"
 #include "ExportHandler.h"
 #include "settings/ev-metadata-manager.h"
-#include "../pdf/PdfExport.h"
 #include "../util/CrashHandler.h"
 #include "../util/ObjectStream.h"
 #include "../util/Stacktrace.h"
@@ -24,6 +23,7 @@
 #include "../undo/InsertUndoAction.h"
 #include "../undo/RemoveLayerUndoAction.h"
 #include "jobs/BlockingJob.h"
+#include "jobs/PdfExportJob.h"
 #include "../view/DocumentView.h"
 
 #include <config.h>
@@ -65,6 +65,11 @@ Control::Control() {
 
 	this->defaultWidth = -1;
 	this->defaultHeight = -1;
+
+	this->statusbar = NULL;
+	this->lbState = NULL;
+	this->pgState = NULL;
+	this->maxState = 0;
 
 	// Init Metadata Manager
 	ev_metadata_manager_init();
@@ -353,7 +358,7 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent *even
 		annotatePdf(NULL, false, false);
 		break;
 	case ACTION_SAVE:
-		save(true);
+		save();
 		break;
 	case ACTION_SAVE_AS:
 		saveAs();
@@ -1398,6 +1403,8 @@ void Control::setPageInsertType(PageInsertType type) {
 }
 
 bool Control::invokeCallback(CallbackData * cb) {
+	gdk_threads_enter();
+
 	ZoomControl * zoom = cb->control->getZoomControl();
 
 	switch (cb->type) {
@@ -1416,6 +1423,8 @@ bool Control::invokeCallback(CallbackData * cb) {
 	}
 
 	delete cb;
+
+	gdk_threads_leave();
 
 	return false;
 }
@@ -1996,47 +2005,40 @@ void Control::updatePreview() {
 	}
 }
 
-class SaveRunnable: public BlockingJob {
-public:
-	SaveRunnable(Control * control, GzOutputStream * out, SaveHandler * h) :
-		BlockingJob(control, _("Save")) {
-		this->out = out;
-		this->h = h;
-	}
+void Control::block(const char * name) {
+	// Disable all gui Control, to get full control over the application
+	win->setControlTmpDisabled(true);
+	cursor->setCursorBusy(true);
+	setSidebarTmpDisabled(true);
 
-	virtual void run() {
-		save();
-	}
+	this->statusbar = this->win->get("statusbar");
+	this->lbState = GTK_LABEL(this->win->get("lbState"));
+	this->pgState = GTK_PROGRESS_BAR(this->win->get("pgState"));
 
-	bool save() {
-		h->saveTo(this->out, control->getDocument()->getFilename());
-		this->out->close();
-		control->getUndoRedoHandler()->documentSaved();
-		control->updateWindowTitle();
+	gtk_label_set_text(this->lbState, name);
+	gtk_widget_show(this->statusbar);
 
-		CHECK_MEMORY(this->out);
+	this->maxState = 100;
 
-		if (!this->out->getLastError().isEmpty()) {
-			GtkWidget * dialog = gtk_message_dialog_new((GtkWindow *) control->getWindow(), GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
-					_("Output stream error: %s"), out->getLastError().c_str());
-			gtk_dialog_run(GTK_DIALOG(dialog));
-			gtk_widget_destroy(dialog);
-			delete this->out;
-			return false;
-		}
+}
 
-		delete this->out;
-		delete h;
+void Control::unblock() {
+	this->win->setControlTmpDisabled(false);
+	cursor->setCursorBusy(false);
+	setSidebarTmpDisabled(false);
 
-		control->getRecentManager()->addRecentFileFilename(control->getDocument()->getFilename().c_str());
-	}
+	gtk_widget_hide(this->statusbar);
+}
 
-private:
-	GzOutputStream * out;
-	SaveHandler * h;
-};
+void Control::setMaximumState(int max) {
+	this->maxState = max;
+}
 
-bool Control::save(bool asynchron) {
+void Control::setCurrentState(int state) {
+	gtk_progress_bar_set_fraction(this->pgState, (double) state / this->maxState);
+}
+
+bool Control::save() {
 	if (doc->getFilename().isEmpty()) {
 		if (!showSaveDialog()) {
 			return false;
@@ -2044,11 +2046,12 @@ bool Control::save(bool asynchron) {
 	}
 
 	cursor->setCursorBusy(true);
+	block(_("Save"));
 
 	updatePreview();
 
-	SaveHandler * h = new SaveHandler();
-	h->prepareSave(this->doc);
+	SaveHandler h;
+	h.prepareSave(this->doc);
 
 	if (this->doc->shouldCreateBackupOnSave()) {
 		String backup = doc->getFilename();
@@ -2075,18 +2078,26 @@ bool Control::save(bool asynchron) {
 		return false;
 	}
 
-	SaveRunnable * saveRunnable = new SaveRunnable(this, out, h);
+	h.saveTo(out, doc->getFilename());
+	out->close();
+	getUndoRedoHandler()->documentSaved();
+	updateWindowTitle();
 
-	// TODO: asynchron
-	//	if (asynchron) {
-	//		this->scheduler->addJob(saveRunnable, JOB_PRIORITY_NONE);
-	//	} else {
-	bool result = saveRunnable->save();
-	saveRunnable->finished();
-	delete saveRunnable;
-	cursor->setCursorBusy(false);
-	return result;
-	//	}
+	if (!out->getLastError().isEmpty()) {
+		GtkWidget * dialog = gtk_message_dialog_new((GtkWindow *) *win, GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, _(
+				"Output stream error: %s"), out->getLastError().c_str());
+		gtk_dialog_run(GTK_DIALOG(dialog));
+		gtk_widget_destroy(dialog);
+
+		delete out;
+		return false;
+	}
+
+	delete out;
+
+	recent->addRecentFileFilename(doc->getFilename().c_str());
+
+	unblock();
 
 	return true;
 }
@@ -2180,29 +2191,8 @@ void Control::updateWindowTitle() {
 	gtk_window_set_title((GtkWindow*) *win, title.c_str());
 }
 
-class PdfExportRunnable: public BlockingJob {
-public:
-	PdfExportRunnable(Control * control) :
-		BlockingJob(control, _("PDF Export")) {
-	}
-
-	virtual void run() {
-		CHECK_MEMORY(control);
-		Document * doc = control->getDocument();
-		CHECK_MEMORY(doc);
-		PdfExport * pdf = new PdfExport(doc, this);
-		printf("export as pdf\n");
-		if (!pdf->createPdf("file:///home/andreas/tmp/pdf/pdffile.pdf")) {
-			printf("create pdf failed\n");
-			printf("error: %s\n", pdf->getLastError().c_str());
-		}
-		delete pdf;
-	}
-};
-
 void Control::exportAsPdf() {
-	// TODO: debug
-	//this->scheduler->addJob(new PdfExportRunnable(this), JOB_PRIORITY_NONE);
+	this->scheduler->addJob(new PdfExportJob(this), JOB_PRIORITY_NONE);
 }
 
 void Control::exportAs() {
@@ -2218,7 +2208,7 @@ void Control::saveAs() {
 		return;
 	}
 	doc->setCreateBackupOnSave(false);
-	save(true);
+	save();
 }
 
 void Control::quit() {
@@ -2250,8 +2240,8 @@ bool Control::close() {
 
 		// save
 		if (res == 1) {
-			if (!this->save(false)) {
-				// if not saved cacnel, else close
+			if (!this->save()) {
+				// if not saved cancel, else close
 				return false;
 			}
 		}

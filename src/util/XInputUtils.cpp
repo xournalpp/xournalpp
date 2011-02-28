@@ -71,6 +71,7 @@ void XInputUtils::handleScrollEvent(GdkEventButton * event, GtkWidget * widget) 
 	 so the core button event gets discarded and the scroll event never
 	 gets processed by the main window. This is arguably a GTK+ bug.
 	 We work around it. */
+
 	scrollEvent.scroll.type = GDK_SCROLL;
 	scrollEvent.scroll.window = event->window;
 	scrollEvent.scroll.send_event = event->send_event;

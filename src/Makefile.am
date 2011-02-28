@@ -7,9 +7,11 @@ bin_PROGRAMS = xournalpp
 xournalpp_SOURCES = \
 	control/jobs/BlockingJob.cpp \
 	control/jobs/Job.cpp \
+	control/jobs/PdfExportJob.cpp \
 	control/jobs/PreviewJob.cpp \
 	control/jobs/RenderJob.cpp \
 	control/jobs/Scheduler.cpp \
+	control/jobs/SynchronizedProgressListener.cpp \
 	control/jobs/XournalScheduler.cpp \
 	control/settings/ev-metadata-manager.cpp \
 	control/settings/Settings.cpp \
@@ -83,7 +85,14 @@ xournalpp_SOURCES = \
 	pdf/poppler/XojPopplerDocument.cpp \
 	pdf/poppler/XojPopplerIter.cpp \
 	pdf/poppler/XojPopplerPage.cpp \
+	pdf/PdfBookmark.cpp \
 	pdf/PdfExport.cpp \
+	pdf/PdfFont.cpp \
+	pdf/PdfUtil.cpp \
+	pdf/PdfWriter.cpp \
+	pdf/PdfXRef.cpp \
+	pdf/UpdateRef.cpp \
+	pdf/UpdateRefKey.cpp \
 	undo/ColorUndoAction.cpp \
 	undo/DeleteUndoAction.cpp \
 	undo/EraseUndoAction.cpp \

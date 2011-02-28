@@ -13,6 +13,7 @@ Sidebar::Sidebar(GladeGui * gui, Control * control) {
 	this->selectedPage = -1;
 	this->cache = new PdfCache(control->getSettings()->getPdfPageCacheSize());
 
+	this->buttonCloseSidebar = gui->get("buttonCloseSidebar");
 
 	this->zoom = 0.15;
 
@@ -21,7 +22,8 @@ Sidebar::Sidebar(GladeGui * gui, Control * control) {
 	this->previews = NULL;
 	this->previewCount = 0;
 
-	g_object_ref(treeViewBookmarks);
+	g_object_ref(this->treeViewBookmarks);
+	g_object_ref(this->iconViewPreview);
 	GtkWidget * sidebar = gui->get("sidebarContents");
 
 	gtk_tree_view_set_enable_search(GTK_TREE_VIEW(treeViewBookmarks), true);
@@ -102,8 +104,8 @@ void Sidebar::setBackgroundWhite() {
 }
 
 Sidebar::~Sidebar() {
-	gtk_widget_destroy(treeViewBookmarks);
-	gtk_widget_destroy(iconViewPreview);
+	gtk_widget_destroy(this->treeViewBookmarks);
+	gtk_widget_destroy(this->iconViewPreview);
 
 	delete this->cache;
 	this->cache = NULL;
@@ -344,8 +346,9 @@ PdfCache * Sidebar::getCache() {
 }
 
 void Sidebar::setTmpDisabled(bool disabled) {
-	gtk_widget_set_sensitive(treeViewBookmarks, !disabled);
-	gtk_widget_set_sensitive(iconViewPreview, !disabled);
+	gtk_widget_set_sensitive(this->treeViewBookmarks, !disabled);
+	gtk_widget_set_sensitive(this->iconViewPreview, !disabled);
+	gtk_widget_set_sensitive(this->buttonCloseSidebar, !disabled);
 
 	GdkCursor *cursor = NULL;
 
@@ -353,8 +356,8 @@ void Sidebar::setTmpDisabled(bool disabled) {
 		cursor = gdk_cursor_new(GDK_WATCH);
 	}
 
-	gdk_window_set_cursor(treeViewBookmarks->window, cursor);
-	gdk_window_set_cursor(iconViewPreview->window, cursor);
+	gdk_window_set_cursor(this->treeViewBookmarks->window, cursor);
+	gdk_window_set_cursor(this->iconViewPreview->window, cursor);
 
 	gdk_display_sync(gdk_display_get_default());
 
@@ -458,6 +461,7 @@ void Sidebar::pageChanged(int page) {
 
 bool Sidebar::scrollTopreview(Sidebar * sidebar) {
 	if (sidebar->selectedPage >= 0 && sidebar->selectedPage < sidebar->previewCount) {
+		gdk_threads_enter();
 		SidebarPreview * p = sidebar->previews[sidebar->selectedPage];
 
 		// scroll to preview
@@ -466,14 +470,17 @@ bool Sidebar::scrollTopreview(Sidebar * sidebar) {
 		GtkWidget * widget = p->getWidget();
 		int x = widget->allocation.x;
 		int y = widget->allocation.y;
+		gdk_threads_leave();
 
 		if (x == -1) {
 			g_idle_add((GSourceFunc) &scrollTopreview, sidebar);
 			return false;
 		}
 
+		gdk_threads_enter();
 		gtk_adjustment_clamp_page(vadj, y, y + widget->allocation.height);
 		gtk_adjustment_clamp_page(hadj, x, x + widget->allocation.width);
+		gdk_threads_leave();
 	}
 	return false;
 }

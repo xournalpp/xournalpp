@@ -24,16 +24,21 @@ public:
 
 public:
 	void drawPage(XojPage * page);
-	XojPopplerPage * getPage();
+	XojPopplerPage * getPage(int page);
 	XojPopplerDocument & getDocument();
 
+	void finalize();
+
 private:
-	static cairo_status_t writeOut(CairoPdf *pdf, unsigned char *data, unsigned int length);
+	static cairo_status_t writeOut(CairoPdf * pdf, unsigned char * data, unsigned int length);
 
 private:
 	GString * data;
 
 	XojPopplerDocument doc;
+
+	cairo_surface_t * surface;
+	cairo_t * cr;
 };
 
 #endif /* __CAIROPDF_H__ */

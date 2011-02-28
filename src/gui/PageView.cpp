@@ -566,9 +566,10 @@ void PageView::insertImage(double x, double y) {
 
 	Control * control = xournal->getControl();
 
+	control->block(_("Insert image"));
 	InsertImageRunnable * runnable = new InsertImageRunnable(control, this, file, x, y);
 	runnable->run();
-	runnable->finished();
+	control->unblock();
 	delete runnable;
 	//control->getScheduler()->addJob(runnable, JOB_PRIORITY_NONE);
 }
@@ -643,10 +644,14 @@ gboolean PageView::onMotionNotifyEvent(GtkWidget * widget, GdkEventMotion * even
 }
 
 bool PageView::scrollCallback(PageView * view) {
+	gdk_threads_enter();
+
 	view->xournal->getControl()->scrollRelative(view->scrollOffsetX, view->scrollOffsetY);
 
 	view->scrollOffsetX = 0;
 	view->scrollOffsetY = 0;
+
+	gdk_threads_leave();
 
 	return false;
 }

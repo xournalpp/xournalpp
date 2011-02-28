@@ -15,6 +15,10 @@
 #include "../model/Document.h"
 #include "../util/String.h"
 #include "../control/jobs/ProgressListener.h"
+#include "cairo/CairoPdf.h"
+#include "PdfXRef.h"
+#include "PdfBookmark.h"
+#include "PdfWriter.h"
 #include <glib.h>
 
 class PdfExport {
@@ -22,47 +26,35 @@ public:
 	PdfExport(Document * doc, ProgressListener * progressListener);
 	virtual ~PdfExport();
 
+public:
 	bool createPdf(String uri);
 	String getLastError();
 
-	static bool isWhitespace(int c);
 private:
-	bool writeLen(const char * data, int len);
-	bool write(const char * data);
-	bool writef(const char * data, ...);
-	bool writeTxt(const char * data);
-	bool write(int data);
 
 	void addPopplerDocument(XojPopplerDocument doc);
 
 	bool addPopplerPage(XojPopplerPage * pdf, XojPopplerDocument doc);
 	bool writePage(int page);
 
-	void writeDictionnary(Dict* dict, XojPopplerDocument doc);
-	void writeRawStream(Stream* str, XojPopplerDocument doc);
-	void writeStream(Stream* str);
-	void writeObject(Object* obj, XojPopplerDocument doc);
-	void writeString(GooString* s);
+	void writeDictionnary(Dict * dict, XojPopplerDocument doc);
+	void writeRawStream(Stream * str, XojPopplerDocument doc);
+	void writeStream(Stream * str);
+	void writeObject(Object * obj, XojPopplerDocument doc);
+	void writeString(GooString * s);
 
-	void writeGzStream(Stream* str);
-	void writePlainStream(Stream* str);
+	void writeGzStream(Stream * str, GList * replacementList);
+	void writePlainStream(Stream * str, GList * replacementList);
 
-	int lookupFont(String name);
+	void writeStream(const char * str, int len, GList * replacementList);
 
-	void writeStreamLine(char * line, int len);
+	int lookupFont(String name, Ref ref);
+	int lookupImage(String name, Ref ref);
 
 	bool parseFooter();
-	bool writeInfo();
 	bool writeFooter();
 
-	void startStream();
-	void endStream();
-
-	GList * exportBookmarksFromTreeModel(GtkTreeModel * model);
-	void createBookmarks(GtkTreeModel * model, GList * &data, GtkTreeIter * iter, int level);
-
 	bool writePagesindex();
-	bool writeOutlines();
 	bool writeCatalog();
 	bool writeCrossRef();
 	bool writeTrailer();
@@ -71,10 +63,7 @@ private:
 	bool writeResources();
 
 	bool writeFonts();
-	bool writeImages();
-
-	bool writeObj();
-	void addXref(int ref);
+	bool writeCopiedObjects();
 
 private:
 	Document * doc;
@@ -82,25 +71,13 @@ private:
 
 	ProgressListener * progressListener;
 
-	bool compressOutput;
-
 	String lastError;
 
-	GFileOutputStream * out;
-
-	int objectId;
-	int * xref;
-	int xrefLenght;
-	int xrefNr;
-	int dataCount;
 	int dataXrefStart;
 
 	int pageCount;
 
 	int outlineRoot;
-
-	bool inStream;
-	GString * stream;
 
 	Dict * resources;
 
@@ -111,53 +88,13 @@ private:
 	int fontId;
 	GList * fonts;
 
+	PdfXRef * xref;
+	PdfBookmarks bookmarks;
+	PdfWriter * writer;
+
+	CairoPdf cPdf;
+
 	GHashTable * updatedReferenced;
-};
-
-class PdfPageDesc {
-public:
-	struct PdfObj *resources, *mediabox, *contents;
-	int rotate;
-};
-
-class PdfInfo {
-public:
-	int startxref;
-	struct PdfObj *trailerdict;
-	int npages;
-	struct PdfPageDesc *pages;
-};
-
-class UpdateRefKey {
-public:
-	UpdateRefKey(Ref ref, XojPopplerDocument doc) {
-		this->ref = ref;
-		this->doc = doc;
-	}
-
-public:
-	static guint hashFunction(UpdateRefKey * key);
-	static bool equalFunction(UpdateRefKey * a, UpdateRefKey * b);
-
-	static void destroyDelete(UpdateRefKey * data);
-
-public:
-
-	Ref ref;
-	XojPopplerDocument doc;
-};
-
-class UpdateRef {
-public:
-	UpdateRef(int objectId, XojPopplerDocument doc);
-	static void destroyDelete(UpdateRef * data);
-
-public:
-	int objectId;
-	bool wroteOut;
-
-	Object object;
-	XojPopplerDocument doc;
 };
 
 #endif /* __PDFEXPORT_H__ */

@@ -130,11 +130,9 @@ private:
 			cairo_rectangle(cr2, 0, 0, alloc.width, Shadow::getShadowTopLeftSize() + 2);
 
 			//right
-			cairo_rectangle(cr2, alloc.width - Shadow::getShadowBottomRightSize() - 2, 0,
-					Shadow::getShadowBottomRightSize() + 2, alloc.height);
+			cairo_rectangle(cr2, alloc.width - Shadow::getShadowBottomRightSize() - 2, 0, Shadow::getShadowBottomRightSize() + 2, alloc.height);
 			//bottom
-			cairo_rectangle(cr2, 0, alloc.height - Shadow::getShadowBottomRightSize() - 2, alloc.width,
-					Shadow::getShadowBottomRightSize() + 2);
+			cairo_rectangle(cr2, 0, alloc.height - Shadow::getShadowBottomRightSize() - 2, alloc.width, Shadow::getShadowBottomRightSize() + 2);
 			cairo_fill(cr2);
 
 			cairo_set_operator(cr2, CAIRO_OPERATOR_ATOP);
@@ -146,16 +144,13 @@ private:
 				cairo_set_line_cap(cr2, CAIRO_LINE_CAP_BUTT);
 				cairo_set_line_join(cr2, CAIRO_LINE_JOIN_BEVEL);
 
-				cairo_rectangle(cr2, Shadow::getShadowTopLeftSize() + 1.5, Shadow::getShadowTopLeftSize() + 1.5, width
-						+ 2, height + 2);
+				cairo_rectangle(cr2, Shadow::getShadowTopLeftSize() + 1.5, Shadow::getShadowTopLeftSize() + 1.5, width + 2, height + 2);
 
 				cairo_stroke(cr2);
 
-				Shadow::drawShadow(cr2, Shadow::getShadowTopLeftSize(), Shadow::getShadowTopLeftSize(), width + 4,
-						height + 4, 0, 0, 0);
+				Shadow::drawShadow(cr2, Shadow::getShadowTopLeftSize(), Shadow::getShadowTopLeftSize(), width + 4, height + 4);
 			} else {
-				Shadow::drawShadow(cr2, Shadow::getShadowTopLeftSize() + 2, Shadow::getShadowTopLeftSize() + 2, width,
-						height, 0, 0, 0);
+				Shadow::drawShadow(cr2, Shadow::getShadowTopLeftSize() + 2, Shadow::getShadowTopLeftSize() + 2, width, height);
 			}
 
 			cairo_destroy(cr2);

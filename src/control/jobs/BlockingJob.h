@@ -13,36 +13,25 @@
 #define __BLOCKINGJOB_H__
 
 #include "Job.h"
-#include "ProgressListener.h"
 
 #include <gtk/gtk.h>
 
 class Control;
 
-class BlockingJob: public Job, public ProgressListener {
+class BlockingJob: public Job {
 public:
 	BlockingJob(Control * control, const char * name);
 	virtual ~BlockingJob();
 
 public:
 	virtual void execute();
-	virtual void finished();
 
 	virtual JobType getType();
 
-public:
-	void setMaximumState(int max);
-	void setCurrentState(int state);
-
 protected:
+	static bool finished(Control * control);
+
 	Control * control;
-
-	GtkWidget * statusbar;
-	GtkLabel * lbState;
-	GtkProgressBar * pgState;
-
-private:
-	int maxState;
 };
 
 #endif /* __BLOCKINGJOB_H__ */

@@ -253,7 +253,7 @@ bool XournalWidget::exposeEventCallback(GtkWidget *widget, GdkEventExpose *event
 	return true;
 }
 
-void XournalWidget::paintBorder(GtkWidget *widget, GdkEventExpose *event) {
+void XournalWidget::paintBorder(GtkWidget * widget, GdkEventExpose * event) {
 	cairo_t *cr;
 	cr = gdk_cairo_create(GTK_LAYOUT(widget)->bin_window);
 
@@ -280,7 +280,7 @@ void XournalWidget::paintBorder(GtkWidget *widget, GdkEventExpose *event) {
 		double b = 0;
 
 		if (p->isSelected()) {
-			Shadow::drawShadow(cr, alloc.x - 2, alloc.y - 2, alloc.width + 4, alloc.height + 4, r, g, b);
+			Shadow::drawShadow(cr, alloc.x - 2, alloc.y - 2, alloc.width + 4, alloc.height + 4);
 
 			// Draw border
 			Util::cairo_set_source_rgbi(cr, control->getSettings()->getSelectionColor());
@@ -296,7 +296,7 @@ void XournalWidget::paintBorder(GtkWidget *widget, GdkEventExpose *event) {
 
 			cairo_stroke(cr);
 		} else {
-			Shadow::drawShadow(cr, alloc.x, alloc.y, alloc.width, alloc.height, r, g, b);
+			Shadow::drawShadow(cr, alloc.x, alloc.y, alloc.width, alloc.height);
 		}
 	}
 
@@ -387,7 +387,7 @@ void XournalWidget::onScrolled() {
 
 	int viewHeight = allocation.height;
 
-	bool twoPages = getControl()->getSettings()->isShowTwoPages();
+	bool twoPages = control->getSettings()->isShowTwoPages();
 
 	if (scrollY < 1) {
 		if (twoPages && viewPagesLen > 1 && viewPages[1]->isSelected()) {
@@ -789,7 +789,9 @@ void XournalWidget::layoutPages() {
 }
 
 bool XournalWidget::widgetRepaintCallback(GtkWidget * widget) {
+	gdk_threads_enter();
 	gtk_widget_queue_draw(widget);
+	gdk_threads_leave();
 	return false;
 }
 

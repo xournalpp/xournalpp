@@ -66,6 +66,8 @@ void SidebarPreview::repaint() {
 }
 
 void SidebarPreview::paint() {
+	// TODO: Debug
+	return;
 	sidebar->setBackgroundWhite();
 
 	CHECK_MEMORY(this);
@@ -136,10 +138,10 @@ void SidebarPreview::paint() {
 		cairo_stroke(cr);
 
 		cairo_set_operator(cr, CAIRO_OPERATOR_ATOP);
-		Shadow::drawShadow(cr, Shadow::getShadowTopLeftSize(), Shadow::getShadowTopLeftSize(), width + 4, height + 4, 0, 0, 0);
+		Shadow::drawShadow(cr, Shadow::getShadowTopLeftSize(), Shadow::getShadowTopLeftSize(), width + 4, height + 4);
 	} else {
 		cairo_set_operator(cr, CAIRO_OPERATOR_ATOP);
-		Shadow::drawShadow(cr, Shadow::getShadowTopLeftSize() + 2, Shadow::getShadowTopLeftSize() + 2, width, height, 0, 0, 0);
+		Shadow::drawShadow(cr, Shadow::getShadowTopLeftSize() + 2, Shadow::getShadowTopLeftSize() + 2, width, height);
 	}
 
 	cairo_destroy(cr);

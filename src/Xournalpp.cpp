@@ -26,6 +26,7 @@
 
 #include "control/settings/ev-metadata-manager.h"
 
+
 void initPath(const char * argv0) {
 	gchar * path;
 	gchar * searchPath;

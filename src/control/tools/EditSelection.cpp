@@ -536,9 +536,13 @@ CursorSelectionType EditSelection::getSelectionTypeForPos(double x, double y, do
 }
 
 bool EditSelection::repaintSelection(EditSelection * selection) {
+	gdk_threads_enter();
+
 	selection->deleteViewBuffer();
 	gtk_widget_queue_draw(selection->view->getWidget());
 	selection->rescaleId = 0;
+
+	gdk_threads_leave();
 	return false;
 }
 

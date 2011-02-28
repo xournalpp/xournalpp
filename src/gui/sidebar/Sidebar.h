@@ -64,6 +64,7 @@ private:
 
 	GtkWidget * treeViewBookmarks;
 	GtkWidget * iconViewPreview;
+	GtkWidget * buttonCloseSidebar;
 
 	bool typeSelected;
 	int selectedPage;
