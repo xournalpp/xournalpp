@@ -49,7 +49,7 @@ private:
 	void writeStream(const char * str, int len, GList * replacementList);
 
 	int lookupFont(String name, Ref ref);
-	int lookupImage(String name, Ref ref);
+	int lookupImage(String name, Ref ref, Object * object);
 
 	bool parseFooter();
 	bool writeFooter();
@@ -63,6 +63,7 @@ private:
 	bool writeResources();
 
 	bool writeFonts();
+	bool writeImages();
 	bool writeCopiedObjects();
 
 private:

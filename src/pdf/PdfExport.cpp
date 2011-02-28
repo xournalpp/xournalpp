@@ -140,7 +140,7 @@ bool PdfExport::writeCrossRef() {
 }
 
 bool PdfExport::writePagesindex() {
-	this->xref->setXref(0, this->writer->getDataCount());
+	this->xref->setXref(1, this->writer->getDataCount());
 	//Pages root
 	this->writer->write("1 0 obj\n");
 	this->writer->write("<</Type /Pages\n");
@@ -177,16 +177,10 @@ bool PdfExport::writeTrailer() {
 }
 
 bool PdfExport::writeXobjectdict() {
-	int i = 1;
-
-	// TODO: implementieren!
-	//	for (GList * l = this->images; l != NULL; l = l->next) {
-	//		PdfExportImage * img = (PdfExportImage *) l->data;
-	//		this->writer->writef("/I%i %i 0 R\n", i, img->getObjectId());
-	//
-	//		i++;
-	//	}
-
+	for (GList * l = this->images; l != NULL; l = l->next) {
+		PdfExportImage * img = (PdfExportImage *) l->data;
+		this->writer->writef("/I%i %i 0 R\n", img->imageId, img->objectId);
+	}
 	return true;
 }
 
@@ -216,8 +210,21 @@ bool PdfExport::writeFonts() {
 
 		this->writer->writeObj();
 		font->objectId = this->writer->getObjectId() - 1;
-		printf("::objectid1: %i\n", font->objectId);
 		writeObject(font->object, font->doc);
+		this->writer->write("\nendobj\n");
+	}
+
+	return true;
+}
+
+bool PdfExport::writeImages() {
+	for (GList * l = this->images; l != NULL; l = l->next) {
+		PdfExportImage * img = (PdfExportImage *) l->data;
+
+		this->xref->setXref(img->objectId, this->writer->getDataCount());
+		bool res = this->writer->writef("%i 0 obj\n", img->objectId);
+
+		writeObject(img->object, img->doc);
 		this->writer->write("\nendobj\n");
 	}
 
@@ -231,7 +238,7 @@ bool PdfExport::writeCopiedObjects() {
 		for (GList * l = g_hash_table_get_values(this->updatedReferenced); l != NULL; l = l->next) {
 			UpdateRef * uref = (UpdateRef *) l->data;
 			if (!uref->wroteOut) {
-				this->xref->setXref(uref->objectId - 1, this->writer->getDataCount());
+				this->xref->setXref(uref->objectId, this->writer->getDataCount());
 				this->writer->writef("%i 0 obj\n", uref->objectId);
 
 				writeObject(&uref->object, uref->doc);
@@ -255,12 +262,17 @@ bool PdfExport::writeResources() {
 	if (!writeFonts()) {
 		return false;
 	}
+
+	if (!writeImages()) {
+		return false;
+	}
+
 	if (!writeCopiedObjects()) {
 		return false;
 	}
 
 	//Resource dictionary
-	this->xref->setXref(1, this->writer->getDataCount());
+	this->xref->setXref(2, this->writer->getDataCount());
 
 	this->writer->write("2 0 obj\n");
 	this->writer->write("<<\n");
@@ -535,17 +547,21 @@ void PdfExport::writeGzStream(Stream * str, GList * replacementList) {
 	str->reset();
 }
 
-int PdfExport::lookupImage(String name, Ref ref) {
+int PdfExport::lookupImage(String name, Ref ref, Object * object) {
 	for (GList * l = this->images; l != NULL; l = l->next) {
 		PdfExportImage * i = (PdfExportImage *) l->data;
 
 		if (i->equalsRef(ref)) {
+			delete object;
 			return i->objectId;
 		}
 	}
 
 	int id = this->imageId++;
-	this->images = g_list_append(this->images, new PdfExportImage(id, ref));
+
+	PdfExportImage * img = new PdfExportImage(this->writer->getNextObjectId(), ref, object, id, this->currentPdfDoc);
+	this->xref->addXref(0);
+	this->images = g_list_append(this->images, img);
 
 	return id;
 }
@@ -719,9 +735,12 @@ bool PdfExport::addPopplerPage(XojPopplerPage * pdf, XojPopplerDocument doc) {
 			Dict * xobjectDict = o.getDict();
 			for (int u = 0; u < xobjectDict->getLength(); u++) {
 				Object xobjectObject;
-				xobjectDict->getValNF(u, &xobjectObject);
 
-				int image = this->lookupImage(xobjectDict->getKey(u), xobjectObject.getRef());
+				Object * objImage = new Object();
+				xobjectDict->getValNF(u, &xobjectObject);
+				xobjectDict->getVal(u, objImage);
+
+				int image = this->lookupImage(xobjectDict->getKey(u), xobjectObject.getRef(), objImage);
 				RefReplacement * replacement = new RefReplacement(xobjectDict->getKey(u), image, 'I');
 				replacementList = g_list_append(replacementList, replacement);
 

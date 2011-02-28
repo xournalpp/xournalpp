@@ -16,12 +16,19 @@
 
 class PdfExportImage {
 public:
-	PdfExportImage(int objectId, Ref ref) {
+	PdfExportImage(int objectId, Ref ref, Object * object, int imageId, XojPopplerDocument doc) {
 		this->objectId = objectId;
 		this->ref = ref;
+		this->imageId = imageId;
+		this->doc = doc;
+		this->object = object;
 	}
 
 	~PdfExportImage() {
+		if (this->object) {
+			delete this->object;
+		}
+		this->object = NULL;
 	}
 
 	bool equalsRef(const Ref & ref) {
@@ -30,7 +37,10 @@ public:
 
 public:
 	int objectId;
+	int imageId;
 	Ref ref;
+	XojPopplerDocument doc;
+	Object * object;
 };
 
 #endif /* __PDFEXPORTIMAGE_H__ */
