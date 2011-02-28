@@ -27,6 +27,7 @@
 #include "../gui/sidebar/Sidebar.h"
 #include "../gui/SearchBar.h"
 #include "../gui/Cursor.h"
+#include "jobs/ProgressListener.h"
 
 class Sidebar;
 class CallbackData;
@@ -40,7 +41,8 @@ class Control: public ActionHandler,
 		public RecentManagerListener,
 		public UndoRedoListener,
 		public ClipboardListener,
-		public MemoryCheckObject {
+		public MemoryCheckObject,
+		public ProgressListener {
 public:
 	Control();
 	virtual ~Control();
@@ -54,7 +56,7 @@ public:
 	void print();
 	void exportAsPdf();
 	void exportAs();
-	bool save(bool asynchron);
+	bool save();
 	void saveAs();
 	void quit();
 	bool close();
@@ -70,8 +72,7 @@ public:
 	Settings * getSettings();
 	ToolHandler * getToolHandler();
 
-	virtual void actionPerformed(ActionType type, ActionGroup group, GdkEvent *event, GtkMenuItem *menuitem,
-			GtkToolButton *toolbutton, bool enabled);
+	virtual void actionPerformed(ActionType type, ActionGroup group, GdkEvent *event, GtkMenuItem *menuitem, GtkToolButton *toolbutton, bool enabled);
 
 	virtual void toolColorChanged();
 	virtual void setCustomColorSelected();
@@ -180,10 +181,18 @@ public:
 
 	XournalScheduler * getScheduler();
 
+	void block(const char * name);
+	void unblock();
+
 public:
 	// UndoRedoListener interface
 	void undoRedoChanged();
 	void undoRedoPageChanged(XojPage * page);
+
+public:
+	// ProgressListener interface
+	void setMaximumState(int max);
+	void setCurrentState(int state);
 
 public:
 	// ClipboardListener interface
@@ -279,6 +288,15 @@ private:
 	double defaultHeight;
 
 	XournalScheduler * scheduler;
+
+	/**
+	 * State / Blocking attributes
+	 */
+	GtkWidget * statusbar;
+	GtkLabel * lbState;
+	GtkProgressBar * pgState;
+	int maxState;
+
 };
 
 class CallbackData {

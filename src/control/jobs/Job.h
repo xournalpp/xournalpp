@@ -1,7 +1,7 @@
 /*
  * Xournal++
  *
- * A job wich is done
+ * A job which is done
  *
  * @author Xournal Team
  * http://xournal.sf.net

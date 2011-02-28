@@ -35,7 +35,7 @@ public:
 	void zoomIn();
 	void zoomOut();
 
-	bool paint(GtkWidget *widget, GdkEventExpose *event);
+	bool paint(GtkWidget * widget, GdkEventExpose * event);
 
 	GtkWidget * getWidget();
 
@@ -101,7 +101,7 @@ public:
 	void documentChanged(DocumentChangeType type);
 
 private:
-	static void onVscrollChanged(GtkAdjustment *adjustment, XournalWidget * xournal);
+	static void onVscrollChanged(GtkAdjustment * adjustment, XournalWidget * xournal);
 
 	void fireZoomChanged();
 
@@ -109,17 +109,17 @@ private:
 
 	void addLoadPageToQue(XojPage * page, int priority);
 
-	static void sizeAllocate(GtkWidget *widget, GtkRequisition *requisition, XournalWidget * xournal);
+	static void sizeAllocate(GtkWidget *widget, GtkRequisition * requisition, XournalWidget * xournal);
 	static gboolean onButtonPressEventCallback(GtkWidget *widget, GdkEventButton *event, XournalWidget * xournal);
 
-	static bool exposeEventCallback(GtkWidget *widget, GdkEventExpose *event, XournalWidget * xournal);
-	void paintBorder(GtkWidget *widget, GdkEventExpose *event);
+	static bool exposeEventCallback(GtkWidget * widget, GdkEventExpose * event, XournalWidget * xournal);
+	void paintBorder(GtkWidget * widget, GdkEventExpose * event);
 
 	static bool widgetRepaintCallback(GtkWidget * widget);
-	static bool onKeyPressCallback(GtkWidget *widget, GdkEventKey *event, XournalWidget * xournal);
-	static bool onKeyReleaseCallback(GtkWidget *widget, GdkEventKey *event, XournalWidget * xournal);
-	bool onKeyPressEvent(GtkWidget *widget, GdkEventKey *event);
-	bool onKeyReleaseEvent(GdkEventKey *event);
+	static bool onKeyPressCallback(GtkWidget * widget, GdkEventKey * event, XournalWidget * xournal);
+	static bool onKeyReleaseCallback(GtkWidget * widget, GdkEventKey * event, XournalWidget * xournal);
+	bool onKeyPressEvent(GtkWidget * widget, GdkEventKey * event);
+	bool onKeyReleaseEvent(GdkEventKey * event);
 
 	static gboolean clearMemoryTimer(XournalWidget * widget);
 private:

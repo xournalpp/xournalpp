@@ -15,6 +15,7 @@
 
 #include "../util/OutputStream.h"
 #include "../model/Page.h"
+#include "../model/Document.h"
 class XmlNode;
 
 class SaveHandler {

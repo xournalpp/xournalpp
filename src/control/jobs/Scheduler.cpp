@@ -15,6 +15,7 @@ Scheduler::Scheduler() {
 	this->jobQueueCond = g_cond_new();
 	this->jobQueueMutex = g_mutex_new();
 	this->jobRunningMutex= g_mutex_new();
+
 	this->thread = g_thread_create((GThreadFunc)jobThreadCallback, this, true, NULL);
 
 	// Queue

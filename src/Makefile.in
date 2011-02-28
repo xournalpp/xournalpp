@@ -49,8 +49,10 @@ CONFIG_CLEAN_VPATH_FILES =
 am__installdirs = "$(DESTDIR)$(bindir)"
 PROGRAMS = $(bin_PROGRAMS)
 am_xournalpp_OBJECTS = xournalpp-BlockingJob.$(OBJEXT) \
-	xournalpp-Job.$(OBJEXT) xournalpp-PreviewJob.$(OBJEXT) \
-	xournalpp-RenderJob.$(OBJEXT) xournalpp-Scheduler.$(OBJEXT) \
+	xournalpp-Job.$(OBJEXT) xournalpp-PdfExportJob.$(OBJEXT) \
+	xournalpp-PreviewJob.$(OBJEXT) xournalpp-RenderJob.$(OBJEXT) \
+	xournalpp-Scheduler.$(OBJEXT) \
+	xournalpp-SynchronizedProgressListener.$(OBJEXT) \
 	xournalpp-XournalScheduler.$(OBJEXT) \
 	xournalpp-ev-metadata-manager.$(OBJEXT) \
 	xournalpp-Settings.$(OBJEXT) \
@@ -106,7 +108,10 @@ am_xournalpp_OBJECTS = xournalpp-BlockingJob.$(OBJEXT) \
 	xournalpp-XojPopplerDocument.$(OBJEXT) \
 	xournalpp-XojPopplerIter.$(OBJEXT) \
 	xournalpp-XojPopplerPage.$(OBJEXT) \
-	xournalpp-PdfExport.$(OBJEXT) \
+	xournalpp-PdfBookmark.$(OBJEXT) xournalpp-PdfExport.$(OBJEXT) \
+	xournalpp-PdfFont.$(OBJEXT) xournalpp-PdfUtil.$(OBJEXT) \
+	xournalpp-PdfWriter.$(OBJEXT) xournalpp-PdfXRef.$(OBJEXT) \
+	xournalpp-UpdateRef.$(OBJEXT) xournalpp-UpdateRefKey.$(OBJEXT) \
 	xournalpp-ColorUndoAction.$(OBJEXT) \
 	xournalpp-DeleteUndoAction.$(OBJEXT) \
 	xournalpp-EraseUndoAction.$(OBJEXT) \
@@ -286,9 +291,11 @@ INCLUDES = \
 xournalpp_SOURCES = \
 	control/jobs/BlockingJob.cpp \
 	control/jobs/Job.cpp \
+	control/jobs/PdfExportJob.cpp \
 	control/jobs/PreviewJob.cpp \
 	control/jobs/RenderJob.cpp \
 	control/jobs/Scheduler.cpp \
+	control/jobs/SynchronizedProgressListener.cpp \
 	control/jobs/XournalScheduler.cpp \
 	control/settings/ev-metadata-manager.cpp \
 	control/settings/Settings.cpp \
@@ -362,7 +369,14 @@ xournalpp_SOURCES = \
 	pdf/poppler/XojPopplerDocument.cpp \
 	pdf/poppler/XojPopplerIter.cpp \
 	pdf/poppler/XojPopplerPage.cpp \
+	pdf/PdfBookmark.cpp \
 	pdf/PdfExport.cpp \
+	pdf/PdfFont.cpp \
+	pdf/PdfUtil.cpp \
+	pdf/PdfWriter.cpp \
+	pdf/PdfXRef.cpp \
+	pdf/UpdateRef.cpp \
+	pdf/UpdateRefKey.cpp \
 	undo/ColorUndoAction.cpp \
 	undo/DeleteUndoAction.cpp \
 	undo/EraseUndoAction.cpp \
@@ -531,10 +545,16 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-PageBackgroundChangedUndoAction.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-PageRange.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-PageView.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-PdfBookmark.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-PdfCache.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-PdfExport.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-PdfExportJob.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-PdfFont.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-PdfPagesDialog.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-PdfUtil.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-PdfView.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-PdfWriter.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-PdfXRef.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-Point.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-PreviewJob.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-PrintHandler.Po@am__quote@
@@ -564,6 +584,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-String.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-StringBuffer.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-Stroke.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-SynchronizedProgressListener.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-Text.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-TextAttribute.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-TextEditor.Po@am__quote@
@@ -574,6 +595,8 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-ToolMenuHandler.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-UndoAction.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-UndoRedoHandler.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-UpdateRef.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-UpdateRefKey.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-Util.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-VerticalToolHandler.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-XInputUtils.Po@am__quote@
@@ -637,6 +660,20 @@ xournalpp-Job.obj: control/jobs/Job.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-Job.obj `if test -f 'control/jobs/Job.cpp'; then $(CYGPATH_W) 'control/jobs/Job.cpp'; else $(CYGPATH_W) '$(srcdir)/control/jobs/Job.cpp'; fi`
 
+xournalpp-PdfExportJob.o: control/jobs/PdfExportJob.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-PdfExportJob.o -MD -MP -MF $(DEPDIR)/xournalpp-PdfExportJob.Tpo -c -o xournalpp-PdfExportJob.o `test -f 'control/jobs/PdfExportJob.cpp' || echo '$(srcdir)/'`control/jobs/PdfExportJob.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-PdfExportJob.Tpo $(DEPDIR)/xournalpp-PdfExportJob.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='control/jobs/PdfExportJob.cpp' object='xournalpp-PdfExportJob.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-PdfExportJob.o `test -f 'control/jobs/PdfExportJob.cpp' || echo '$(srcdir)/'`control/jobs/PdfExportJob.cpp
+
+xournalpp-PdfExportJob.obj: control/jobs/PdfExportJob.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-PdfExportJob.obj -MD -MP -MF $(DEPDIR)/xournalpp-PdfExportJob.Tpo -c -o xournalpp-PdfExportJob.obj `if test -f 'control/jobs/PdfExportJob.cpp'; then $(CYGPATH_W) 'control/jobs/PdfExportJob.cpp'; else $(CYGPATH_W) '$(srcdir)/control/jobs/PdfExportJob.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-PdfExportJob.Tpo $(DEPDIR)/xournalpp-PdfExportJob.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='control/jobs/PdfExportJob.cpp' object='xournalpp-PdfExportJob.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-PdfExportJob.obj `if test -f 'control/jobs/PdfExportJob.cpp'; then $(CYGPATH_W) 'control/jobs/PdfExportJob.cpp'; else $(CYGPATH_W) '$(srcdir)/control/jobs/PdfExportJob.cpp'; fi`
+
 xournalpp-PreviewJob.o: control/jobs/PreviewJob.cpp
 @am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-PreviewJob.o -MD -MP -MF $(DEPDIR)/xournalpp-PreviewJob.Tpo -c -o xournalpp-PreviewJob.o `test -f 'control/jobs/PreviewJob.cpp' || echo '$(srcdir)/'`control/jobs/PreviewJob.cpp
 @am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-PreviewJob.Tpo $(DEPDIR)/xournalpp-PreviewJob.Po
@@ -678,6 +715,20 @@ xournalpp-Scheduler.obj: control/jobs/Scheduler.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='control/jobs/Scheduler.cpp' object='xournalpp-Scheduler.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-Scheduler.obj `if test -f 'control/jobs/Scheduler.cpp'; then $(CYGPATH_W) 'control/jobs/Scheduler.cpp'; else $(CYGPATH_W) '$(srcdir)/control/jobs/Scheduler.cpp'; fi`
+
+xournalpp-SynchronizedProgressListener.o: control/jobs/SynchronizedProgressListener.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-SynchronizedProgressListener.o -MD -MP -MF $(DEPDIR)/xournalpp-SynchronizedProgressListener.Tpo -c -o xournalpp-SynchronizedProgressListener.o `test -f 'control/jobs/SynchronizedProgressListener.cpp' || echo '$(srcdir)/'`control/jobs/SynchronizedProgressListener.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-SynchronizedProgressListener.Tpo $(DEPDIR)/xournalpp-SynchronizedProgressListener.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='control/jobs/SynchronizedProgressListener.cpp' object='xournalpp-SynchronizedProgressListener.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-SynchronizedProgressListener.o `test -f 'control/jobs/SynchronizedProgressListener.cpp' || echo '$(srcdir)/'`control/jobs/SynchronizedProgressListener.cpp
+
+xournalpp-SynchronizedProgressListener.obj: control/jobs/SynchronizedProgressListener.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-SynchronizedProgressListener.obj -MD -MP -MF $(DEPDIR)/xournalpp-SynchronizedProgressListener.Tpo -c -o xournalpp-SynchronizedProgressListener.obj `if test -f 'control/jobs/SynchronizedProgressListener.cpp'; then $(CYGPATH_W) 'control/jobs/SynchronizedProgressListener.cpp'; else $(CYGPATH_W) '$(srcdir)/control/jobs/SynchronizedProgressListener.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-SynchronizedProgressListener.Tpo $(DEPDIR)/xournalpp-SynchronizedProgressListener.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='control/jobs/SynchronizedProgressListener.cpp' object='xournalpp-SynchronizedProgressListener.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-SynchronizedProgressListener.obj `if test -f 'control/jobs/SynchronizedProgressListener.cpp'; then $(CYGPATH_W) 'control/jobs/SynchronizedProgressListener.cpp'; else $(CYGPATH_W) '$(srcdir)/control/jobs/SynchronizedProgressListener.cpp'; fi`
 
 xournalpp-XournalScheduler.o: control/jobs/XournalScheduler.cpp
 @am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-XournalScheduler.o -MD -MP -MF $(DEPDIR)/xournalpp-XournalScheduler.Tpo -c -o xournalpp-XournalScheduler.o `test -f 'control/jobs/XournalScheduler.cpp' || echo '$(srcdir)/'`control/jobs/XournalScheduler.cpp
@@ -1701,6 +1752,20 @@ xournalpp-XojPopplerPage.obj: pdf/poppler/XojPopplerPage.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-XojPopplerPage.obj `if test -f 'pdf/poppler/XojPopplerPage.cpp'; then $(CYGPATH_W) 'pdf/poppler/XojPopplerPage.cpp'; else $(CYGPATH_W) '$(srcdir)/pdf/poppler/XojPopplerPage.cpp'; fi`
 
+xournalpp-PdfBookmark.o: pdf/PdfBookmark.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-PdfBookmark.o -MD -MP -MF $(DEPDIR)/xournalpp-PdfBookmark.Tpo -c -o xournalpp-PdfBookmark.o `test -f 'pdf/PdfBookmark.cpp' || echo '$(srcdir)/'`pdf/PdfBookmark.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-PdfBookmark.Tpo $(DEPDIR)/xournalpp-PdfBookmark.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='pdf/PdfBookmark.cpp' object='xournalpp-PdfBookmark.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-PdfBookmark.o `test -f 'pdf/PdfBookmark.cpp' || echo '$(srcdir)/'`pdf/PdfBookmark.cpp
+
+xournalpp-PdfBookmark.obj: pdf/PdfBookmark.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-PdfBookmark.obj -MD -MP -MF $(DEPDIR)/xournalpp-PdfBookmark.Tpo -c -o xournalpp-PdfBookmark.obj `if test -f 'pdf/PdfBookmark.cpp'; then $(CYGPATH_W) 'pdf/PdfBookmark.cpp'; else $(CYGPATH_W) '$(srcdir)/pdf/PdfBookmark.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-PdfBookmark.Tpo $(DEPDIR)/xournalpp-PdfBookmark.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='pdf/PdfBookmark.cpp' object='xournalpp-PdfBookmark.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-PdfBookmark.obj `if test -f 'pdf/PdfBookmark.cpp'; then $(CYGPATH_W) 'pdf/PdfBookmark.cpp'; else $(CYGPATH_W) '$(srcdir)/pdf/PdfBookmark.cpp'; fi`
+
 xournalpp-PdfExport.o: pdf/PdfExport.cpp
 @am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-PdfExport.o -MD -MP -MF $(DEPDIR)/xournalpp-PdfExport.Tpo -c -o xournalpp-PdfExport.o `test -f 'pdf/PdfExport.cpp' || echo '$(srcdir)/'`pdf/PdfExport.cpp
 @am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-PdfExport.Tpo $(DEPDIR)/xournalpp-PdfExport.Po
@@ -1714,6 +1779,90 @@ xournalpp-PdfExport.obj: pdf/PdfExport.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='pdf/PdfExport.cpp' object='xournalpp-PdfExport.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-PdfExport.obj `if test -f 'pdf/PdfExport.cpp'; then $(CYGPATH_W) 'pdf/PdfExport.cpp'; else $(CYGPATH_W) '$(srcdir)/pdf/PdfExport.cpp'; fi`
+
+xournalpp-PdfFont.o: pdf/PdfFont.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-PdfFont.o -MD -MP -MF $(DEPDIR)/xournalpp-PdfFont.Tpo -c -o xournalpp-PdfFont.o `test -f 'pdf/PdfFont.cpp' || echo '$(srcdir)/'`pdf/PdfFont.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-PdfFont.Tpo $(DEPDIR)/xournalpp-PdfFont.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='pdf/PdfFont.cpp' object='xournalpp-PdfFont.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-PdfFont.o `test -f 'pdf/PdfFont.cpp' || echo '$(srcdir)/'`pdf/PdfFont.cpp
+
+xournalpp-PdfFont.obj: pdf/PdfFont.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-PdfFont.obj -MD -MP -MF $(DEPDIR)/xournalpp-PdfFont.Tpo -c -o xournalpp-PdfFont.obj `if test -f 'pdf/PdfFont.cpp'; then $(CYGPATH_W) 'pdf/PdfFont.cpp'; else $(CYGPATH_W) '$(srcdir)/pdf/PdfFont.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-PdfFont.Tpo $(DEPDIR)/xournalpp-PdfFont.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='pdf/PdfFont.cpp' object='xournalpp-PdfFont.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-PdfFont.obj `if test -f 'pdf/PdfFont.cpp'; then $(CYGPATH_W) 'pdf/PdfFont.cpp'; else $(CYGPATH_W) '$(srcdir)/pdf/PdfFont.cpp'; fi`
+
+xournalpp-PdfUtil.o: pdf/PdfUtil.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-PdfUtil.o -MD -MP -MF $(DEPDIR)/xournalpp-PdfUtil.Tpo -c -o xournalpp-PdfUtil.o `test -f 'pdf/PdfUtil.cpp' || echo '$(srcdir)/'`pdf/PdfUtil.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-PdfUtil.Tpo $(DEPDIR)/xournalpp-PdfUtil.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='pdf/PdfUtil.cpp' object='xournalpp-PdfUtil.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-PdfUtil.o `test -f 'pdf/PdfUtil.cpp' || echo '$(srcdir)/'`pdf/PdfUtil.cpp
+
+xournalpp-PdfUtil.obj: pdf/PdfUtil.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-PdfUtil.obj -MD -MP -MF $(DEPDIR)/xournalpp-PdfUtil.Tpo -c -o xournalpp-PdfUtil.obj `if test -f 'pdf/PdfUtil.cpp'; then $(CYGPATH_W) 'pdf/PdfUtil.cpp'; else $(CYGPATH_W) '$(srcdir)/pdf/PdfUtil.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-PdfUtil.Tpo $(DEPDIR)/xournalpp-PdfUtil.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='pdf/PdfUtil.cpp' object='xournalpp-PdfUtil.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-PdfUtil.obj `if test -f 'pdf/PdfUtil.cpp'; then $(CYGPATH_W) 'pdf/PdfUtil.cpp'; else $(CYGPATH_W) '$(srcdir)/pdf/PdfUtil.cpp'; fi`
+
+xournalpp-PdfWriter.o: pdf/PdfWriter.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-PdfWriter.o -MD -MP -MF $(DEPDIR)/xournalpp-PdfWriter.Tpo -c -o xournalpp-PdfWriter.o `test -f 'pdf/PdfWriter.cpp' || echo '$(srcdir)/'`pdf/PdfWriter.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-PdfWriter.Tpo $(DEPDIR)/xournalpp-PdfWriter.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='pdf/PdfWriter.cpp' object='xournalpp-PdfWriter.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-PdfWriter.o `test -f 'pdf/PdfWriter.cpp' || echo '$(srcdir)/'`pdf/PdfWriter.cpp
+
+xournalpp-PdfWriter.obj: pdf/PdfWriter.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-PdfWriter.obj -MD -MP -MF $(DEPDIR)/xournalpp-PdfWriter.Tpo -c -o xournalpp-PdfWriter.obj `if test -f 'pdf/PdfWriter.cpp'; then $(CYGPATH_W) 'pdf/PdfWriter.cpp'; else $(CYGPATH_W) '$(srcdir)/pdf/PdfWriter.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-PdfWriter.Tpo $(DEPDIR)/xournalpp-PdfWriter.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='pdf/PdfWriter.cpp' object='xournalpp-PdfWriter.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-PdfWriter.obj `if test -f 'pdf/PdfWriter.cpp'; then $(CYGPATH_W) 'pdf/PdfWriter.cpp'; else $(CYGPATH_W) '$(srcdir)/pdf/PdfWriter.cpp'; fi`
+
+xournalpp-PdfXRef.o: pdf/PdfXRef.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-PdfXRef.o -MD -MP -MF $(DEPDIR)/xournalpp-PdfXRef.Tpo -c -o xournalpp-PdfXRef.o `test -f 'pdf/PdfXRef.cpp' || echo '$(srcdir)/'`pdf/PdfXRef.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-PdfXRef.Tpo $(DEPDIR)/xournalpp-PdfXRef.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='pdf/PdfXRef.cpp' object='xournalpp-PdfXRef.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-PdfXRef.o `test -f 'pdf/PdfXRef.cpp' || echo '$(srcdir)/'`pdf/PdfXRef.cpp
+
+xournalpp-PdfXRef.obj: pdf/PdfXRef.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-PdfXRef.obj -MD -MP -MF $(DEPDIR)/xournalpp-PdfXRef.Tpo -c -o xournalpp-PdfXRef.obj `if test -f 'pdf/PdfXRef.cpp'; then $(CYGPATH_W) 'pdf/PdfXRef.cpp'; else $(CYGPATH_W) '$(srcdir)/pdf/PdfXRef.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-PdfXRef.Tpo $(DEPDIR)/xournalpp-PdfXRef.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='pdf/PdfXRef.cpp' object='xournalpp-PdfXRef.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-PdfXRef.obj `if test -f 'pdf/PdfXRef.cpp'; then $(CYGPATH_W) 'pdf/PdfXRef.cpp'; else $(CYGPATH_W) '$(srcdir)/pdf/PdfXRef.cpp'; fi`
+
+xournalpp-UpdateRef.o: pdf/UpdateRef.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-UpdateRef.o -MD -MP -MF $(DEPDIR)/xournalpp-UpdateRef.Tpo -c -o xournalpp-UpdateRef.o `test -f 'pdf/UpdateRef.cpp' || echo '$(srcdir)/'`pdf/UpdateRef.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-UpdateRef.Tpo $(DEPDIR)/xournalpp-UpdateRef.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='pdf/UpdateRef.cpp' object='xournalpp-UpdateRef.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-UpdateRef.o `test -f 'pdf/UpdateRef.cpp' || echo '$(srcdir)/'`pdf/UpdateRef.cpp
+
+xournalpp-UpdateRef.obj: pdf/UpdateRef.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-UpdateRef.obj -MD -MP -MF $(DEPDIR)/xournalpp-UpdateRef.Tpo -c -o xournalpp-UpdateRef.obj `if test -f 'pdf/UpdateRef.cpp'; then $(CYGPATH_W) 'pdf/UpdateRef.cpp'; else $(CYGPATH_W) '$(srcdir)/pdf/UpdateRef.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-UpdateRef.Tpo $(DEPDIR)/xournalpp-UpdateRef.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='pdf/UpdateRef.cpp' object='xournalpp-UpdateRef.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-UpdateRef.obj `if test -f 'pdf/UpdateRef.cpp'; then $(CYGPATH_W) 'pdf/UpdateRef.cpp'; else $(CYGPATH_W) '$(srcdir)/pdf/UpdateRef.cpp'; fi`
+
+xournalpp-UpdateRefKey.o: pdf/UpdateRefKey.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-UpdateRefKey.o -MD -MP -MF $(DEPDIR)/xournalpp-UpdateRefKey.Tpo -c -o xournalpp-UpdateRefKey.o `test -f 'pdf/UpdateRefKey.cpp' || echo '$(srcdir)/'`pdf/UpdateRefKey.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-UpdateRefKey.Tpo $(DEPDIR)/xournalpp-UpdateRefKey.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='pdf/UpdateRefKey.cpp' object='xournalpp-UpdateRefKey.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-UpdateRefKey.o `test -f 'pdf/UpdateRefKey.cpp' || echo '$(srcdir)/'`pdf/UpdateRefKey.cpp
+
+xournalpp-UpdateRefKey.obj: pdf/UpdateRefKey.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-UpdateRefKey.obj -MD -MP -MF $(DEPDIR)/xournalpp-UpdateRefKey.Tpo -c -o xournalpp-UpdateRefKey.obj `if test -f 'pdf/UpdateRefKey.cpp'; then $(CYGPATH_W) 'pdf/UpdateRefKey.cpp'; else $(CYGPATH_W) '$(srcdir)/pdf/UpdateRefKey.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-UpdateRefKey.Tpo $(DEPDIR)/xournalpp-UpdateRefKey.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='pdf/UpdateRefKey.cpp' object='xournalpp-UpdateRefKey.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-UpdateRefKey.obj `if test -f 'pdf/UpdateRefKey.cpp'; then $(CYGPATH_W) 'pdf/UpdateRefKey.cpp'; else $(CYGPATH_W) '$(srcdir)/pdf/UpdateRefKey.cpp'; fi`
 
 xournalpp-ColorUndoAction.o: undo/ColorUndoAction.cpp
 @am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-ColorUndoAction.o -MD -MP -MF $(DEPDIR)/xournalpp-ColorUndoAction.Tpo -c -o xournalpp-ColorUndoAction.o `test -f 'undo/ColorUndoAction.cpp' || echo '$(srcdir)/'`undo/ColorUndoAction.cpp
