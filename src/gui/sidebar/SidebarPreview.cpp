@@ -66,8 +66,6 @@ void SidebarPreview::repaint() {
 }
 
 void SidebarPreview::paint() {
-	// TODO: Debug
-	return;
 	sidebar->setBackgroundWhite();
 
 	CHECK_MEMORY(this);
