@@ -21,6 +21,7 @@ xournalpp_SOURCES = \
 	control/shaperecognizer/ShapeRecognizer.cpp \
 	control/tools/EditSelection.cpp \
 	control/tools/EraseHandler.cpp \
+	control/tools/ImageHandler.cpp \
 	control/tools/InputHandler.cpp \
 	control/tools/Selection.cpp \
 	control/tools/VerticalToolHandler.cpp \
@@ -87,7 +88,9 @@ xournalpp_SOURCES = \
 	pdf/poppler/XojPopplerPage.cpp \
 	pdf/PdfBookmark.cpp \
 	pdf/PdfExport.cpp \
+	pdf/PdfExtGState.cpp \
 	pdf/PdfFont.cpp \
+	pdf/PdfRefEntry.cpp \
 	pdf/PdfUtil.cpp \
 	pdf/PdfWriter.cpp \
 	pdf/PdfXRef.cpp \

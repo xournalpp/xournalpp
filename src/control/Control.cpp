@@ -2389,8 +2389,10 @@ void Control::deleteSelection() {
 	if (this->selection) {
 		PageView * view = (PageView *) this->selection->getView();
 		DeleteUndoAction * undo = new DeleteUndoAction(this->selection->getPage(), view, false);
-		this->selection->fillUndoItemAndDelete(undo);
+		this->selection->fillUndoItem(undo);
 		this->undoRedo->addUndoAction(undo);
+
+		this->selection->clearContents();
 
 		clearSelection();
 

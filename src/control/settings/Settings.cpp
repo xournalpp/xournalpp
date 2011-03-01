@@ -221,6 +221,8 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
 		selectedToolbar = (const char *) value;
 	} else if (xmlStrcmp(name, (const xmlChar *) "lastSavePath") == 0) {
 		lastSavePath = (const char *) value;
+	} else if (xmlStrcmp(name, (const xmlChar *) "lastImagePath") == 0) {
+		lastImagePath = (const char *) value;
 	} else if (xmlStrcmp(name, (const xmlChar *) "displayDpi") == 0) {
 		displayDpi = g_ascii_strtoll((const char *) value, NULL, 10);
 	} else if (xmlStrcmp(name, (const xmlChar *) "mainWndWidth") == 0) {
@@ -483,6 +485,7 @@ void Settings::save() {
 
 	WRITE_STRING_PROP(selectedToolbar);
 	WRITE_STRING_PROP(lastSavePath);
+	WRITE_STRING_PROP(lastImagePath);
 
 	WRITE_INT_PROP(displayDpi);
 	WRITE_INT_PROP(mainWndWidth);
@@ -768,6 +771,15 @@ void Settings::setLastSavePath(String path) {
 
 String Settings::getLastSavePath() {
 	return lastSavePath;
+}
+
+void Settings::setLastImagePath(String path) {
+	this->lastImagePath = path;
+	saveTimeout();
+}
+
+String Settings::getLastImagePath() {
+	return lastImagePath;
 }
 
 void Settings::setDisplayDpi(int dpi) {

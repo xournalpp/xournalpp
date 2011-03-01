@@ -50,7 +50,7 @@ public:
 	Redrawable * getView();
 	XojPage * getPage();
 
-	void fillUndoItemAndDelete(DeleteUndoAction * undo);
+	void fillUndoItem(DeleteUndoAction * undo);
 
 	/**
 	 * Gets the selected objects, this should not be edited or freed
@@ -71,6 +71,10 @@ public:
 
 	void addElement(Element * e);
 
+	/**
+	 * This is needed if the selection is "Deleted" then the selection needs to be cleared
+	 */
+	void clearContents();
 private:
 	void deleteViewBuffer();
 

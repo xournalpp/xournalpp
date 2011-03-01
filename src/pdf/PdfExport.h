@@ -50,6 +50,7 @@ private:
 
 	int lookupFont(String name, Ref ref);
 	int lookupImage(String name, Ref ref, Object * object);
+	int lookupPattern(String name, Ref ref, Object * object);
 
 	bool parseFooter();
 	bool writeFooter();
@@ -58,13 +59,15 @@ private:
 	bool writeCatalog();
 	bool writeCrossRef();
 	bool writeTrailer();
-	bool writeXobjectdict();
 	bool writeResourcedict();
 	bool writeResources();
 
 	bool writeFonts();
 	bool writeImages();
 	bool writeCopiedObjects();
+
+	bool writeReferencedObjects(GList * list);
+	bool writeRefList(GList * list, const char * type);
 
 private:
 	Document * doc;
@@ -89,6 +92,12 @@ private:
 
 	int imageId;
 	GList * images;
+
+	int extGStateId;
+	GList * extGState;
+
+	int patternId;
+	GList * pattern;
 
 	PdfXRef * xref;
 	PdfBookmarks bookmarks;

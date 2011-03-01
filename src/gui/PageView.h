@@ -113,8 +113,6 @@ private:
 	void doScroll(GdkEventMotion * event);
 	static bool scrollCallback(PageView * view);
 
-	void insertImage(double x, double y);
-
 	void addRepaintRect(double x, double y, double width, double height);
 private:
 	XojPage * page;

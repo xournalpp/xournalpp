@@ -4,8 +4,9 @@
 #include <stdlib.h>
 #include "../util/GzHelper.h"
 
-#include "PdfExportImage.h"
+#include "PdfExtGState.h"
 #include "PdfFont.h"
+#include "PdfRefEntry.h"
 #include "PdfUtil.h"
 #include "UpdateRef.h"
 #include "UpdateRefKey.h"
@@ -29,6 +30,12 @@ PdfExport::PdfExport(Document * doc, ProgressListener * progressListener) {
 	this->imageId = 1;
 	this->images = NULL;
 
+	this->extGStateId = 1;
+	this->extGState = NULL;
+
+	this->patternId = 1;
+	this->pattern = NULL;
+
 	this->documents = NULL;
 
 	this->resources = NULL;
@@ -44,7 +51,7 @@ PdfExport::PdfExport(Document * doc, ProgressListener * progressListener) {
 
 PdfExport::~PdfExport() {
 	for (GList * l = this->images; l != NULL; l = l->next) {
-		PdfExportImage * img = (PdfExportImage *) l->data;
+		PdfRefEntry * img = (PdfRefEntry *) l->data;
 		delete img;
 	}
 	g_list_free(this->images);
@@ -61,12 +68,26 @@ PdfExport::~PdfExport() {
 	}
 	g_list_free(this->fonts);
 
+	for (GList * l = this->extGState; l != NULL; l = l->next) {
+		PdfExtGState * extGState = (PdfExtGState *) l->data;
+		delete extGState;
+	}
+	g_list_free(this->extGState);
+
+	for (GList * l = this->pattern; l != NULL; l = l->next) {
+		PdfRefEntry * pattern = (PdfRefEntry *) l->data;
+		delete pattern;
+	}
+	g_list_free(this->pattern);
+
 	g_hash_table_destroy(this->updatedReferenced);
 
 	this->fonts = NULL;
 	this->images = NULL;
 	this->documents = NULL;
 	this->progressListener = NULL;
+	this->extGState = NULL;
+	this->pattern = NULL;
 
 	delete this->writer;
 	this->writer = NULL;
@@ -176,28 +197,57 @@ bool PdfExport::writeTrailer() {
 	return this->writer->getLastError().isEmpty();
 }
 
-bool PdfExport::writeXobjectdict() {
-	for (GList * l = this->images; l != NULL; l = l->next) {
-		PdfExportImage * img = (PdfExportImage *) l->data;
-		this->writer->writef("/I%i %i 0 R\n", img->imageId, img->objectId);
+bool PdfExport::writeRefList(GList * list, const char * type) {
+	for (GList * l = list; l != NULL; l = l->next) {
+		PdfRefEntry * img = (PdfRefEntry *) l->data;
+		this->writer->writef("/%s%i %i 0 R\n", type, img->imageId, img->objectId);
 	}
 	return true;
+
 }
 
 bool PdfExport::writeResourcedict() {
 	this->writer->write("/ProcSet [/PDF /Text /ImageB /ImageC /ImageI]\n");
-	this->writer->write("/Font <<\n");
 
-	for (GList * l = this->fonts; l != NULL; l = l->next) {
-		PdfFont * font = (PdfFont *) l->data;
-		this->writer->writef("/F%i %i 0 R\n", font->id, font->objectId);
+	if (this->fonts) {
+		this->writer->write("/Font <<\n");
+
+		for (GList * l = this->fonts; l != NULL; l = l->next) {
+			PdfFont * font = (PdfFont *) l->data;
+			this->writer->writef("/F%i %i 0 R\n", font->id, font->objectId);
+		}
+		this->writer->write(">>\n");
 	}
-	this->writer->write(">>\n");
-	this->writer->write("/XObject <<\n");
-	if (!writeXobjectdict()) {
-		return false;
+
+	if (this->images) {
+		this->writer->write("/XObject <<\n");
+		if (!writeRefList(this->images, "I")) {
+			return false;
+		}
+		this->writer->write(">>\n");
 	}
-	this->writer->write(">>\n");
+
+	//	if (this->extGState) {
+	//		this->writer->write("/XObject <<\n");
+	//		for (GList * l = this->extGState; l != NULL; l = l->next) {
+	//			PdfExtGState * extGState = (PdfExtGState *) l->data;
+	//
+	//			// TODO: implementieren
+	//			//			this->writer->writef("/GS%i %i 0 R\n", extGState->id, extGState->objectId);
+	//		}
+	//		this->writer->write(">>\n");
+	//	}
+
+
+	if (this->pattern) {
+		this->writer->write("/Pattern <<\n");
+		if (!writeRefList(this->pattern, "p")) {
+			return false;
+		}
+
+		this->writer->write(">>\n");
+	}
+
 	return true;
 }
 
@@ -217,18 +267,22 @@ bool PdfExport::writeFonts() {
 	return true;
 }
 
-bool PdfExport::writeImages() {
-	for (GList * l = this->images; l != NULL; l = l->next) {
-		PdfExportImage * img = (PdfExportImage *) l->data;
+bool PdfExport::writeReferencedObjects(GList * list) {
+	for (GList * l = list; l != NULL; l = l->next) {
+		PdfRefEntry * ref = (PdfRefEntry *) l->data;
 
-		this->xref->setXref(img->objectId, this->writer->getDataCount());
-		bool res = this->writer->writef("%i 0 obj\n", img->objectId);
+		this->xref->setXref(ref->objectId, this->writer->getDataCount());
+		bool res = this->writer->writef("%i 0 obj\n", ref->objectId);
 
-		writeObject(img->object, img->doc);
+		writeObject(ref->object, ref->doc);
 		this->writer->write("\nendobj\n");
 	}
 
 	return true;
+}
+
+bool PdfExport::writeImages() {
+	return writeReferencedObjects(this->images);
 }
 
 bool PdfExport::writeCopiedObjects() {
@@ -264,6 +318,10 @@ bool PdfExport::writeResources() {
 	}
 
 	if (!writeImages()) {
+		return false;
+	}
+
+	if (!writeReferencedObjects(this->pattern)) {
 		return false;
 	}
 
@@ -328,9 +386,6 @@ void PdfExport::writeObject(Object * obj, XojPopplerDocument doc) {
 	Array * array;
 	Object obj1;
 
-	// TODO: debug
-	printf("::write out: %s\n", obj->getTypeName());
-
 	switch (obj->getType()) {
 	case objBool:
 		this->writer->writef("%s ", obj->getBool() ? "true" : "false");
@@ -345,9 +400,6 @@ void PdfExport::writeObject(Object * obj, XojPopplerDocument doc) {
 		this->writeString(obj->getString());
 		break;
 	case objName: {
-		// TODO: debug
-		printf("::objName: %s\n", obj->getName());
-
 		GooString name(obj->getName());
 		GooString * nameToPrint = name.sanitizedName(gFalse /* non ps mode */);
 		this->writer->writef("/%s ", nameToPrint->getCString());
@@ -374,9 +426,6 @@ void PdfExport::writeObject(Object * obj, XojPopplerDocument doc) {
 		// Poppler: => the only type of streams which that have been modified are internal streams (=strWeird)
 		Stream *stream = obj->getStream();
 		if (stream->getKind() == strWeird) {
-			// TODO: Debug
-			printf("strWeird\n");
-
 			//we write the stream unencoded
 			stream->reset();
 			//recalculate stream length
@@ -395,8 +444,6 @@ void PdfExport::writeObject(Object * obj, XojPopplerDocument doc) {
 			writeStream(stream);
 			obj1.free();
 		} else {
-			// TODO: Debug
-			printf("strWeird else\n");
 			//raw stream copy
 			writeDictionnary(stream->getDict(), doc);
 			writeRawStream(stream, doc);
@@ -407,12 +454,8 @@ void PdfExport::writeObject(Object * obj, XojPopplerDocument doc) {
 		UpdateRefKey key(obj->getRef(), doc);
 		UpdateRef * uref = (UpdateRef *) g_hash_table_lookup(this->updatedReferenced, &key);
 		if (uref) {
-			// TODO: debug
-			printf("reference found\n");
 			this->writer->writef("%i %i R ", uref->objectId, 0);
 		} else {
-			// TODO: debug
-			printf("reference not found, created\n");
 			UpdateRef * uref = new UpdateRef(this->writer->getNextObjectId(), doc);
 			this->xref->addXref(0);
 			this->writer->writef("%i %i R ", uref->objectId, 0);
@@ -549,9 +592,10 @@ void PdfExport::writeGzStream(Stream * str, GList * replacementList) {
 
 int PdfExport::lookupImage(String name, Ref ref, Object * object) {
 	for (GList * l = this->images; l != NULL; l = l->next) {
-		PdfExportImage * i = (PdfExportImage *) l->data;
+		PdfRefEntry * i = (PdfRefEntry *) l->data;
 
 		if (i->equalsRef(ref)) {
+			object->free();
 			delete object;
 			return i->objectId;
 		}
@@ -559,12 +603,38 @@ int PdfExport::lookupImage(String name, Ref ref, Object * object) {
 
 	int id = this->imageId++;
 
-	PdfExportImage * img = new PdfExportImage(this->writer->getNextObjectId(), ref, object, id, this->currentPdfDoc);
+	PdfRefEntry * img = new PdfRefEntry(this->writer->getNextObjectId(), ref, object, id, this->currentPdfDoc);
 	this->xref->addXref(0);
 	this->images = g_list_append(this->images, img);
 
 	return id;
 }
+
+int PdfExport::lookupPattern(String name, Ref ref, Object * object) {
+	for (GList * l = this->pattern; l != NULL; l = l->next) {
+		PdfRefEntry * p = (PdfRefEntry *) l->data;
+
+		if (p->equalsRef(ref)) {
+			object->free();
+			delete object;
+			return p->objectId;
+		}
+	}
+
+	int id = this->patternId++;
+
+	PdfRefEntry * pattern = new PdfRefEntry(this->writer->getNextObjectId(), ref, object, id, this->currentPdfDoc);
+	this->xref->addXref(0);
+	this->pattern = g_list_append(this->pattern, pattern);
+
+	return id;
+}
+
+//int PdfExport::lookupExtGState() {
+// TODO: impelementieren!!!!!!!!!!!!!!!!!!!!
+//	this->extGState = NULL;
+//	this->extGStateId;
+//}
 
 int PdfExport::lookupFont(String name, Ref ref) {
 	for (GList * l = this->fonts; l != NULL; l = l->next) {
@@ -748,9 +818,36 @@ bool PdfExport::addPopplerPage(XojPopplerPage * pdf, XojPopplerDocument doc) {
 			}
 
 			o.free();
-		}
+		} else if (strcmp(dict->getKey(i), "ExtGState") == 0) {
+			//TODO: implementieren!!!!!!!!!!
 
-		//		printf("Dict: %s\n",dict->getKey(i));
+		} else if (strcmp(dict->getKey(i), "Pattern") == 0) {
+			Object o;
+			dict->getVal(i, &o);
+
+			printf("pattern!\n");
+
+			Dict * patternDict = o.getDict();
+			for (int u = 0; u < patternDict->getLength(); u++) {
+				Object patternObject;
+
+				printf("pattern entry\n");
+
+				Object * objPattern = new Object();
+				patternDict->getValNF(u, &patternObject);
+				patternDict->getVal(u, objPattern);
+
+				int patternId = this->lookupPattern(patternDict->getKey(u), patternObject.getRef(), objPattern);
+				RefReplacement * replacement = new RefReplacement(patternDict->getKey(u), patternId, 'p');
+				replacementList = g_list_append(replacementList, replacement);
+
+				patternObject.free();
+			}
+
+			o.free();
+		} else {
+			printf("dict->%s\n", dict->getKey(i));
+		}
 	}
 
 	Object * o = new Object();
@@ -784,6 +881,7 @@ bool PdfExport::addPopplerPage(XojPopplerPage * pdf, XojPopplerDocument doc) {
 	}
 	g_list_free(replacementList);
 
+	o->free();
 	delete o;
 	this->resources = NULL;
 
