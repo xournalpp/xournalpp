@@ -7,6 +7,7 @@
 #include "../control/Control.h"
 #include "../view/TextView.h"
 #include "../control/tools/Selection.h"
+#include "../control/tools/ImageHandler.h"
 #include "../util/pixbuf-utils.h"
 #include "../util/Range.h"
 #include "../util/XInputUtils.h"
@@ -462,116 +463,12 @@ void PageView::onButtonPressEvent(GtkWidget * widget, GdkEventButton * event) {
 	} else if (h->getToolType() == TOOL_TEXT) {
 		startText(x, y);
 	} else if (h->getToolType() == TOOL_IMAGE) {
-		insertImage(x, y);
+		ImageHandler imgHandler(xournal->getControl(), this);
+		imgHandler.insertImage(x, y);
 	}
 
 	Cursor * cursor = xournal->getControl()->getCursor();
 	cursor->setMouseDown(true);
-}
-
-class InsertImageRunnable: public BlockingJob {
-public:
-	InsertImageRunnable(Control * control, PageView * view, GFile * file, double x, double y) :
-		BlockingJob(control, _("Insert image")) {
-		this->view = view;
-		this->x = x;
-		this->y = y;
-		this->file = file;
-	}
-	~InsertImageRunnable() {
-		g_object_unref(file);
-	}
-
-	void run() {
-		GError * err = NULL;
-		GFileInputStream * in = g_file_read(file, NULL, &err);
-		GdkPixbuf * pixbuf = NULL;
-
-		if (!err) {
-			pixbuf = gdk_pixbuf_new_from_stream(G_INPUT_STREAM(in), NULL, &err);
-			g_input_stream_close(G_INPUT_STREAM(in), NULL, NULL);
-		}
-
-		if (err) {
-			GtkWidget * dialog = gtk_message_dialog_new((GtkWindow*) *view->xournal->getControl()->getWindow(), GTK_DIALOG_DESTROY_WITH_PARENT,
-					GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, _("This image could not be loaded. Error message: %s"), err->message);
-			gtk_dialog_run(GTK_DIALOG(dialog));
-			gtk_widget_destroy(dialog);
-			g_error_free(err);
-		}
-
-		Image * img = new Image();
-		img->setX(x);
-		img->setY(y);
-		img->setImage(f_pixbuf_to_cairo_surface(pixbuf));
-
-		int width = gdk_pixbuf_get_width(pixbuf);
-		int height = gdk_pixbuf_get_height(pixbuf);
-		gdk_pixbuf_unref(pixbuf);
-
-		double zoom = 1;
-
-		if (x + width > view->page->getWidth() || y + height > view->page->getHeight()) {
-			double maxZoomX = (view->page->getWidth() - x) / width;
-			double maxZoomY = (view->page->getHeight() - y) / height;
-
-			if (maxZoomX < maxZoomY) {
-				zoom = maxZoomX;
-			} else {
-				zoom = maxZoomY;
-			}
-		}
-
-		img->setWidth(width * zoom);
-		img->setHeight(height * zoom);
-
-		view->page->getSelectedLayer()->addElement(img);
-		view->repaint();
-	}
-
-private:
-	PageView * view;
-	double x;
-	double y;
-	GFile * file;
-};
-
-void PageView::insertImage(double x, double y) {
-	GtkWidget *dialog = gtk_file_chooser_dialog_new(_("Open Image"), (GtkWindow*) *xournal->getControl()->getWindow(), GTK_FILE_CHOOSER_ACTION_OPEN,
-			GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL, GTK_STOCK_OPEN, GTK_RESPONSE_OK, NULL);
-
-	// here we can handle remote files without problems with backward compatibility
-	gtk_file_chooser_set_local_only(GTK_FILE_CHOOSER(dialog), false);
-
-	GtkFileFilter *filterSupported = gtk_file_filter_new();
-	gtk_file_filter_set_name(filterSupported, _("Images"));
-	gtk_file_filter_add_pixbuf_formats(filterSupported);
-	gtk_file_chooser_add_filter(GTK_FILE_CHOOSER(dialog), filterSupported);
-
-	if (!settings->getLastSavePath().isEmpty()) {
-		gtk_file_chooser_set_current_folder_uri(GTK_FILE_CHOOSER(dialog), settings->getLastSavePath().c_str());
-	}
-
-	if (gtk_dialog_run(GTK_DIALOG(dialog)) != GTK_RESPONSE_OK) {
-		gtk_widget_destroy(dialog);
-		return;
-	}
-	GFile * file = gtk_file_chooser_get_file(GTK_FILE_CHOOSER(dialog));
-
-	char * folder = gtk_file_chooser_get_current_folder_uri(GTK_FILE_CHOOSER(dialog));
-	settings->setLastSavePath(folder);
-	g_free(folder);
-
-	gtk_widget_destroy(dialog);
-
-	Control * control = xournal->getControl();
-
-	control->block(_("Insert image"));
-	InsertImageRunnable * runnable = new InsertImageRunnable(control, this, file, x, y);
-	runnable->run();
-	control->unblock();
-	delete runnable;
-	//control->getScheduler()->addJob(runnable, JOB_PRIORITY_NONE);
 }
 
 void PageView::redrawDocumentRegion(double x1, double y1, double x2, double y2) {

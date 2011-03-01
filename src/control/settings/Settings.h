@@ -186,6 +186,9 @@ public:
 	void setLastSavePath(String path);
 	String getLastSavePath();
 
+	void setLastImagePath(String path);
+	String getLastImagePath();
+
 	void setMainWndSize(int width, int height);
 	void setMainWndMaximized(bool max);
 	int getMainWndWidth();
@@ -321,6 +324,11 @@ private:
 	 * The last saved folder
 	 */
 	String lastSavePath;
+
+	/**
+	 * The last "insert image" folder
+	 */
+	String lastImagePath;
 
 	/**
 	 * The last used font

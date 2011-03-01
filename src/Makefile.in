@@ -61,6 +61,7 @@ am_xournalpp_OBJECTS = xournalpp-BlockingJob.$(OBJEXT) \
 	xournalpp-ShapeRecognizer.$(OBJEXT) \
 	xournalpp-EditSelection.$(OBJEXT) \
 	xournalpp-EraseHandler.$(OBJEXT) \
+	xournalpp-ImageHandler.$(OBJEXT) \
 	xournalpp-InputHandler.$(OBJEXT) xournalpp-Selection.$(OBJEXT) \
 	xournalpp-VerticalToolHandler.$(OBJEXT) \
 	xournalpp-Attribute.$(OBJEXT) \
@@ -109,7 +110,8 @@ am_xournalpp_OBJECTS = xournalpp-BlockingJob.$(OBJEXT) \
 	xournalpp-XojPopplerIter.$(OBJEXT) \
 	xournalpp-XojPopplerPage.$(OBJEXT) \
 	xournalpp-PdfBookmark.$(OBJEXT) xournalpp-PdfExport.$(OBJEXT) \
-	xournalpp-PdfFont.$(OBJEXT) xournalpp-PdfUtil.$(OBJEXT) \
+	xournalpp-PdfExtGState.$(OBJEXT) xournalpp-PdfFont.$(OBJEXT) \
+	xournalpp-PdfRefEntry.$(OBJEXT) xournalpp-PdfUtil.$(OBJEXT) \
 	xournalpp-PdfWriter.$(OBJEXT) xournalpp-PdfXRef.$(OBJEXT) \
 	xournalpp-UpdateRef.$(OBJEXT) xournalpp-UpdateRefKey.$(OBJEXT) \
 	xournalpp-ColorUndoAction.$(OBJEXT) \
@@ -305,6 +307,7 @@ xournalpp_SOURCES = \
 	control/shaperecognizer/ShapeRecognizer.cpp \
 	control/tools/EditSelection.cpp \
 	control/tools/EraseHandler.cpp \
+	control/tools/ImageHandler.cpp \
 	control/tools/InputHandler.cpp \
 	control/tools/Selection.cpp \
 	control/tools/VerticalToolHandler.cpp \
@@ -371,7 +374,9 @@ xournalpp_SOURCES = \
 	pdf/poppler/XojPopplerPage.cpp \
 	pdf/PdfBookmark.cpp \
 	pdf/PdfExport.cpp \
+	pdf/PdfExtGState.cpp \
 	pdf/PdfFont.cpp \
+	pdf/PdfRefEntry.cpp \
 	pdf/PdfUtil.cpp \
 	pdf/PdfWriter.cpp \
 	pdf/PdfXRef.cpp \
@@ -525,6 +530,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-GladeGui.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-GzHelper.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-Image.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-ImageHandler.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-ImagesDialog.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-Inertia.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-InputHandler.Po@am__quote@
@@ -549,8 +555,10 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-PdfCache.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-PdfExport.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-PdfExportJob.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-PdfExtGState.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-PdfFont.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-PdfPagesDialog.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-PdfRefEntry.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-PdfUtil.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-PdfView.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-PdfWriter.Po@am__quote@
@@ -855,6 +863,20 @@ xournalpp-EraseHandler.obj: control/tools/EraseHandler.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='control/tools/EraseHandler.cpp' object='xournalpp-EraseHandler.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-EraseHandler.obj `if test -f 'control/tools/EraseHandler.cpp'; then $(CYGPATH_W) 'control/tools/EraseHandler.cpp'; else $(CYGPATH_W) '$(srcdir)/control/tools/EraseHandler.cpp'; fi`
+
+xournalpp-ImageHandler.o: control/tools/ImageHandler.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-ImageHandler.o -MD -MP -MF $(DEPDIR)/xournalpp-ImageHandler.Tpo -c -o xournalpp-ImageHandler.o `test -f 'control/tools/ImageHandler.cpp' || echo '$(srcdir)/'`control/tools/ImageHandler.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-ImageHandler.Tpo $(DEPDIR)/xournalpp-ImageHandler.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='control/tools/ImageHandler.cpp' object='xournalpp-ImageHandler.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-ImageHandler.o `test -f 'control/tools/ImageHandler.cpp' || echo '$(srcdir)/'`control/tools/ImageHandler.cpp
+
+xournalpp-ImageHandler.obj: control/tools/ImageHandler.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-ImageHandler.obj -MD -MP -MF $(DEPDIR)/xournalpp-ImageHandler.Tpo -c -o xournalpp-ImageHandler.obj `if test -f 'control/tools/ImageHandler.cpp'; then $(CYGPATH_W) 'control/tools/ImageHandler.cpp'; else $(CYGPATH_W) '$(srcdir)/control/tools/ImageHandler.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-ImageHandler.Tpo $(DEPDIR)/xournalpp-ImageHandler.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='control/tools/ImageHandler.cpp' object='xournalpp-ImageHandler.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-ImageHandler.obj `if test -f 'control/tools/ImageHandler.cpp'; then $(CYGPATH_W) 'control/tools/ImageHandler.cpp'; else $(CYGPATH_W) '$(srcdir)/control/tools/ImageHandler.cpp'; fi`
 
 xournalpp-InputHandler.o: control/tools/InputHandler.cpp
 @am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-InputHandler.o -MD -MP -MF $(DEPDIR)/xournalpp-InputHandler.Tpo -c -o xournalpp-InputHandler.o `test -f 'control/tools/InputHandler.cpp' || echo '$(srcdir)/'`control/tools/InputHandler.cpp
@@ -1780,6 +1802,20 @@ xournalpp-PdfExport.obj: pdf/PdfExport.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-PdfExport.obj `if test -f 'pdf/PdfExport.cpp'; then $(CYGPATH_W) 'pdf/PdfExport.cpp'; else $(CYGPATH_W) '$(srcdir)/pdf/PdfExport.cpp'; fi`
 
+xournalpp-PdfExtGState.o: pdf/PdfExtGState.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-PdfExtGState.o -MD -MP -MF $(DEPDIR)/xournalpp-PdfExtGState.Tpo -c -o xournalpp-PdfExtGState.o `test -f 'pdf/PdfExtGState.cpp' || echo '$(srcdir)/'`pdf/PdfExtGState.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-PdfExtGState.Tpo $(DEPDIR)/xournalpp-PdfExtGState.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='pdf/PdfExtGState.cpp' object='xournalpp-PdfExtGState.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-PdfExtGState.o `test -f 'pdf/PdfExtGState.cpp' || echo '$(srcdir)/'`pdf/PdfExtGState.cpp
+
+xournalpp-PdfExtGState.obj: pdf/PdfExtGState.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-PdfExtGState.obj -MD -MP -MF $(DEPDIR)/xournalpp-PdfExtGState.Tpo -c -o xournalpp-PdfExtGState.obj `if test -f 'pdf/PdfExtGState.cpp'; then $(CYGPATH_W) 'pdf/PdfExtGState.cpp'; else $(CYGPATH_W) '$(srcdir)/pdf/PdfExtGState.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-PdfExtGState.Tpo $(DEPDIR)/xournalpp-PdfExtGState.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='pdf/PdfExtGState.cpp' object='xournalpp-PdfExtGState.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-PdfExtGState.obj `if test -f 'pdf/PdfExtGState.cpp'; then $(CYGPATH_W) 'pdf/PdfExtGState.cpp'; else $(CYGPATH_W) '$(srcdir)/pdf/PdfExtGState.cpp'; fi`
+
 xournalpp-PdfFont.o: pdf/PdfFont.cpp
 @am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-PdfFont.o -MD -MP -MF $(DEPDIR)/xournalpp-PdfFont.Tpo -c -o xournalpp-PdfFont.o `test -f 'pdf/PdfFont.cpp' || echo '$(srcdir)/'`pdf/PdfFont.cpp
 @am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-PdfFont.Tpo $(DEPDIR)/xournalpp-PdfFont.Po
@@ -1793,6 +1829,20 @@ xournalpp-PdfFont.obj: pdf/PdfFont.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='pdf/PdfFont.cpp' object='xournalpp-PdfFont.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-PdfFont.obj `if test -f 'pdf/PdfFont.cpp'; then $(CYGPATH_W) 'pdf/PdfFont.cpp'; else $(CYGPATH_W) '$(srcdir)/pdf/PdfFont.cpp'; fi`
+
+xournalpp-PdfRefEntry.o: pdf/PdfRefEntry.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-PdfRefEntry.o -MD -MP -MF $(DEPDIR)/xournalpp-PdfRefEntry.Tpo -c -o xournalpp-PdfRefEntry.o `test -f 'pdf/PdfRefEntry.cpp' || echo '$(srcdir)/'`pdf/PdfRefEntry.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-PdfRefEntry.Tpo $(DEPDIR)/xournalpp-PdfRefEntry.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='pdf/PdfRefEntry.cpp' object='xournalpp-PdfRefEntry.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-PdfRefEntry.o `test -f 'pdf/PdfRefEntry.cpp' || echo '$(srcdir)/'`pdf/PdfRefEntry.cpp
+
+xournalpp-PdfRefEntry.obj: pdf/PdfRefEntry.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-PdfRefEntry.obj -MD -MP -MF $(DEPDIR)/xournalpp-PdfRefEntry.Tpo -c -o xournalpp-PdfRefEntry.obj `if test -f 'pdf/PdfRefEntry.cpp'; then $(CYGPATH_W) 'pdf/PdfRefEntry.cpp'; else $(CYGPATH_W) '$(srcdir)/pdf/PdfRefEntry.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-PdfRefEntry.Tpo $(DEPDIR)/xournalpp-PdfRefEntry.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='pdf/PdfRefEntry.cpp' object='xournalpp-PdfRefEntry.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-PdfRefEntry.obj `if test -f 'pdf/PdfRefEntry.cpp'; then $(CYGPATH_W) 'pdf/PdfRefEntry.cpp'; else $(CYGPATH_W) '$(srcdir)/pdf/PdfRefEntry.cpp'; fi`
 
 xournalpp-PdfUtil.o: pdf/PdfUtil.cpp
 @am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-PdfUtil.o -MD -MP -MF $(DEPDIR)/xournalpp-PdfUtil.Tpo -c -o xournalpp-PdfUtil.o `test -f 'pdf/PdfUtil.cpp' || echo '$(srcdir)/'`pdf/PdfUtil.cpp

@@ -12,8 +12,7 @@
 #include <config.h>
 #include <glib/gi18n-lib.h>
 
-EditSelection::EditSelection(UndoRedoHandler * undo, double x, double y, double width, double height, XojPage * page,
-		Redrawable * view) {
+EditSelection::EditSelection(UndoRedoHandler * undo, double x, double y, double width, double height, XojPage * page, Redrawable * view) {
 	this->x = x;
 	this->y = y;
 	this->width = width;
@@ -96,7 +95,7 @@ void EditSelection::initAttributes() {
 }
 
 EditSelection::~EditSelection() {
-	if(this->rescaleId) {
+	if (this->rescaleId) {
 		g_source_remove(this->rescaleId);
 		this->rescaleId = 0;
 	}
@@ -124,8 +123,7 @@ EditSelection::~EditSelection() {
 	}
 
 	if (scale) {
-		ScaleUndoAction * scaleUndo = new ScaleUndoAction(this->page, this->view, this->selected, this->x, this->y, fx,
-				fy);
+		ScaleUndoAction * scaleUndo = new ScaleUndoAction(this->page, this->view, this->selected, this->x, this->y, fx, fy);
 		this->undo->addUndoAction(scaleUndo);
 	}
 
@@ -135,6 +133,11 @@ EditSelection::~EditSelection() {
 	delete this->documentView;
 
 	deleteViewBuffer();
+}
+
+void EditSelection::clearContents() {
+	g_list_free(this->selected);
+	this->selected = NULL;
 }
 
 void EditSelection::deleteViewBuffer() {
@@ -211,8 +214,7 @@ UndoAction * EditSelection::setColor(int color) {
 	}
 }
 
-UndoAction * EditSelection::setSize(ToolSize size, const double * thiknessPen, const double * thiknessHilighter,
-		const double * thiknessEraser) {
+UndoAction * EditSelection::setSize(ToolSize size, const double * thiknessPen, const double * thiknessHilighter, const double * thiknessEraser) {
 
 	SizeUndoAction * undo = new SizeUndoAction(this->page, this->layer, this->view);
 
@@ -473,8 +475,7 @@ CursorSelectionType EditSelection::getEditMode() {
 
 void EditSelection::drawAnchorRect(cairo_t * cr, double x, double y, double zoom) {
 	GdkColor selectionColor = view->getSelectionColor();
-	cairo_set_source_rgb(cr, selectionColor.red / 65536.0, selectionColor.green / 65536.0, selectionColor.blue
-			/ 65536.0);
+	cairo_set_source_rgb(cr, selectionColor.red / 65536.0, selectionColor.green / 65536.0, selectionColor.blue / 65536.0);
 	cairo_rectangle(cr, x - 4 / zoom, y - 4 / zoom, 8 / zoom, 8 / zoom);
 	cairo_stroke_preserve(cr);
 	cairo_set_source_rgb(cr, 1, 1, 1);
@@ -569,8 +570,8 @@ void EditSelection::paint(cairo_t * cr, GdkEventExpose *event, double zoom) {
 
 	cairo_save(cr);
 
-	if ((int) (this->width * zoom) != (int) cairo_image_surface_get_width(this->crBuffer)
-			|| (int) (this->height * zoom) != (int) cairo_image_surface_get_height(this->crBuffer)) {
+	if ((int) (this->width * zoom) != (int) cairo_image_surface_get_width(this->crBuffer) || (int) (this->height * zoom)
+			!= (int) cairo_image_surface_get_height(this->crBuffer)) {
 		if (!this->rescaleId) {
 			this->rescaleId = g_idle_add((GSourceFunc) repaintSelection, this);
 		}
@@ -592,14 +593,12 @@ void EditSelection::paint(cairo_t * cr, GdkEventExpose *event, double zoom) {
 
 	const double dashes[] = { 10.0 / zoom, 10.0 / zoom };
 	cairo_set_dash(cr, dashes, sizeof(dashes) / sizeof(dashes[0]), 0);
-	cairo_set_source_rgb(cr, selectionColor.red / 65536.0, selectionColor.green / 65536.0, selectionColor.blue
-			/ 65536.0);
+	cairo_set_source_rgb(cr, selectionColor.red / 65536.0, selectionColor.green / 65536.0, selectionColor.blue / 65536.0);
 
 	cairo_rectangle(cr, x, y, width, height);
 
 	cairo_stroke_preserve(cr);
-	cairo_set_source_rgba(cr, selectionColor.red / 65536.0, selectionColor.green / 65536.0, selectionColor.blue
-			/ 65536.0, 0.3);
+	cairo_set_source_rgba(cr, selectionColor.red / 65536.0, selectionColor.green / 65536.0, selectionColor.blue / 65536.0, 0.3);
 	cairo_fill(cr);
 
 	cairo_set_dash(cr, NULL, 0, 0);
@@ -685,12 +684,11 @@ UndoAction * EditSelection::setFont(XojFont & font) {
 	return NULL;
 }
 
-void EditSelection::fillUndoItemAndDelete(DeleteUndoAction * undo) {
+void EditSelection::fillUndoItem(DeleteUndoAction * undo) {
 	Layer * layer = this->page->getSelectedLayer();
 	for (GList * l = this->selected; l != NULL; l = l->next) {
 		Element * e = (Element *) l->data;
 		undo->addElement(layer, e, layer->indexOf(e));
-		layer->removeElement(e, false);
 	}
 }
 
