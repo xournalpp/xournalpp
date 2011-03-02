@@ -40,9 +40,8 @@ XojPopplerIter * XojPopplerIter::getChildIter() {
 	return child;
 }
 
-static gchar *
-unicode_to_char(Unicode *unicode, int len) {
-	static UnicodeMap *uMap = NULL;
+String XojPopplerIter::unicodeToChar(Unicode * unicode, int len) {
+	static UnicodeMap * uMap = NULL;
 	if (uMap == NULL) {
 		GooString *enc = new GooString("UTF-8");
 		uMap = globalParams->getUnicodeMap(enc);
@@ -52,14 +51,12 @@ unicode_to_char(Unicode *unicode, int len) {
 
 	GooString gstr;
 	gchar buf[8]; /* 8 is enough for mapping an unicode char to a string */
-	int i, n;
-
-	for (i = 0; i < len; ++i) {
-		n = uMap->mapUnicode(unicode[i], buf, sizeof(buf));
+	for (int i = 0; i < len; ++i) {
+		int n = uMap->mapUnicode(unicode[i], buf, sizeof(buf));
 		gstr.append(buf, n);
 	}
 
-	return g_strdup(gstr.getCString());
+	return String(gstr.getCString());
 }
 
 XojPopplerAction * XojPopplerIter::getAction() {
@@ -69,7 +66,7 @@ XojPopplerAction * XojPopplerIter::getAction() {
 	}
 	LinkAction * linkAction = item->getAction();
 
-	char * title = unicode_to_char(item->getTitle(), item->getTitleLength());
+	String title = unicodeToChar(item->getTitle(), item->getTitleLength());
 
 	return new XojPopplerAction(this->doc, linkAction, title);
 }

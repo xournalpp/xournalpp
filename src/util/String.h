@@ -20,8 +20,16 @@ public:
 	String();
 	String(const String & str);
 	String(const char * data);
-	String(char * data, bool freeAutomatically);
+	String(const char * data, int len);
 	~String();
+
+private:
+	String(char * data, bool freeAutomatically);
+
+public:
+	static String format(const char * format, ...);
+
+public:
 
 	String& operator=(const String & str);
 	String& operator=(const char * str);

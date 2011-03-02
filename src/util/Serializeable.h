@@ -16,7 +16,7 @@
 #include <exception>
 
 #define INPUT_STREAM_EXCEPTION(description, ...) \
-	InputStreamException(String(g_strdup_printf(description, __VA_ARGS__), true), __FILE__, __LINE__); \
+	InputStreamException(String::format(description, __VA_ARGS__), __FILE__, __LINE__); \
 
 
 class InputStreamException: public std::exception {

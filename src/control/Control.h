@@ -177,7 +177,7 @@ public:
 
 	TextEditor * getTextEditor();
 
-	void setSidebarTmpDisabled(bool disabled);
+	void disableSidebarTmp(bool disabled);
 
 	XournalScheduler * getScheduler();
 
@@ -222,7 +222,6 @@ protected:
 
 	static bool checkChangedDocument(Control * control);
 	static bool autosaveCallback(Control * control);
-	static gpointer autosaveThread(Control * control);
 
 	void updatePreview();
 

@@ -1,8 +1,8 @@
 #include "XojPopplerAction.h"
 #include "XojPopplerDocument.h"
 
-XojPopplerAction::XojPopplerAction(XojPopplerDocument doc, LinkAction * linkAction, char * title) :
-	doc(doc), title(title, true) {
+XojPopplerAction::XojPopplerAction(XojPopplerDocument doc, LinkAction * linkAction, String title) :
+	doc(doc), title(title) {
 	this->linkAction = linkAction;
 }
 
