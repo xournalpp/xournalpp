@@ -29,6 +29,9 @@ public:
 	XojPopplerAction * getAction();
 
 private:
+	static String unicodeToChar(Unicode * unicode, int len);
+
+private:
 	XojPopplerDocument doc;
 	GooList *items;
 	int index;

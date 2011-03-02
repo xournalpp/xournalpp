@@ -208,10 +208,7 @@ String ObjectInputStream::readString() throw (InputStreamException) {
 		throw InputStreamException("End reached, but try to read an string", __FILE__, __LINE__);
 	}
 
-	char * c = (char *) g_malloc(len + 1);
-	strncpy(c, this->str->str + this->pos, len);
-	c[len] = 0;
-	String s(c, true);
+	String s(this->str->str + this->pos, len);
 	this->pos += len;
 	return s;
 }

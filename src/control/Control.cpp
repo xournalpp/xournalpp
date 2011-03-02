@@ -47,8 +47,7 @@ Control::Control() {
 	this->lastEnabled = false;
 	this->fullscreen = false;
 
-	gchar * filename = g_build_filename(g_get_home_dir(), G_DIR_SEPARATOR_S, CONFIG_DIR, G_DIR_SEPARATOR_S, SETTINGS_XML_FILE, NULL);
-	String name(filename, true);
+	String name = String::format("%s%c%s%c%s", g_get_home_dir(), G_DIR_SEPARATOR, CONFIG_DIR, G_DIR_SEPARATOR, SETTINGS_XML_FILE);
 	this->settings = new Settings(name);
 	this->settings->load();
 
@@ -124,10 +123,6 @@ Control::~Control() {
 	this->searchBar = NULL;
 }
 
-UndoRedoHandler * Control::getUndoRedoHandler() {
-	return undoRedo;
-}
-
 bool Control::checkChangedDocument(Control * control) {
 	for (GList * l = control->changedPages; l != NULL; l = l->next) {
 		int p = control->doc->indexOf((XojPage *) l->data);
@@ -186,19 +181,28 @@ void Control::initWindow(MainWindow * win) {
 	win->setFontButtonFont(settings->getFont());
 }
 
-ZoomControl * Control::getZoomControl() {
-	return zoom;
-}
+bool Control::autosaveCallback(Control * control) {
+	gdk_threads_enter();
 
-Cursor * Control::getCursor() {
-	return cursor;
-}
+	if (!control->undoRedo->isChangedAutosave()) {
+		printf(_("Info: autosave not necessary, nothing changed...\n"));
 
-RecentManager * Control::getRecentManager() {
-	return this->recent;
-}
+		gdk_threads_leave();
 
-gpointer Control::autosaveThread(Control * control) {
+		// do nothing, nothing changed
+		return true;
+	} else {
+		printf(_("Info: autosave document...\n"));
+	}
+
+	if (control->autosaveHandler) {
+		delete control->autosaveHandler;
+	}
+
+	control->undoRedo->documentAutosaved();
+	control->autosaveHandler = new SaveHandler();
+	control->autosaveHandler->prepareSave(control->doc);
+
 	String filename = control->doc->getFilename();
 	if (filename.isEmpty()) {
 		filename = Util::getAutosaveFilename();
@@ -228,28 +232,7 @@ gpointer Control::autosaveThread(Control * control) {
 	control->autosaveHandler = NULL;
 	delete out;
 
-	return 0;
-}
-
-bool Control::autosaveCallback(Control * control) {
-	if (!control->undoRedo->isChangedAutosave()) {
-		printf(_("Info: autosave not necessary, nothing changed...\n"));
-		// do nothing, nothing changed
-		return true;
-	} else {
-		printf(_("Info: autosave document...\n"));
-	}
-
-	if (control->autosaveHandler) {
-		delete control->autosaveHandler;
-	}
-
-	control->undoRedo->documentAutosaved();
-	control->autosaveHandler = new SaveHandler();
-	control->autosaveHandler->prepareSave(control->doc);
-
-	g_thread_create((GThreadFunc) autosaveThread, control, false, NULL);
-
+	gdk_threads_leave();
 	return true;
 }
 
@@ -286,13 +269,6 @@ void Control::updatePageNumbers(int page, int pdfPage) {
 	fireEnableAction(ACTION_GOTO_NEXT_ANNOTATED_PAGE, current < count - 1);
 }
 
-Document * Control::getDocument() {
-	return doc;
-}
-
-ToolHandler * Control::getToolHandler() {
-	return toolHandler;
-}
 
 /**
  * If we change the state of a toggle button it will send an event,
@@ -848,12 +824,8 @@ void Control::enableFullscreen(bool enabled, bool presentation) {
 	this->fullscreen = enabled;
 }
 
-void Control::setSidebarTmpDisabled(bool disabled) {
+void Control::disableSidebarTmp(bool disabled) {
 	this->sidebar->setTmpDisabled(disabled);
-}
-
-XournalScheduler * Control::getScheduler() {
-	return this->scheduler;
 }
 
 void Control::addDefaultPage() {
@@ -1064,10 +1036,6 @@ void Control::insertPage(XojPage * page, int position) {
 	updateDeletePageButton();
 
 	undoRedo->addUndoAction(new InsertDeletePageUndoAction(page, position, true));
-}
-
-bool Control::isFullscreen() {
-	return fullscreen;
 }
 
 void Control::addNewLayer() {
@@ -1712,10 +1680,6 @@ void Control::newFile() {
 	fileLoaded();
 }
 
-MainWindow * Control::getWindow() {
-	return this->win;
-}
-
 String Control::showOpenDialog(bool pdf, bool & attachPdf) {
 	GtkWidget *dialog = gtk_file_chooser_dialog_new(_("Open file"), (GtkWindow*) *win, GTK_FILE_CHOOSER_ACTION_OPEN, GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
 			GTK_STOCK_OPEN, GTK_RESPONSE_OK, NULL);
@@ -1791,6 +1755,7 @@ void Control::scrollToPage(int page, double top) {
 	win->getXournal()->scrollTo(page, top);
 }
 
+// TODO: create class for scroll handler
 void adjustmentScroll(GtkAdjustment * adj, double scroll, int size) {
 	double v = gtk_adjustment_get_value(adj);
 	double max = gtk_adjustment_get_upper(adj) - size;
@@ -2009,7 +1974,7 @@ void Control::block(const char * name) {
 	// Disable all gui Control, to get full control over the application
 	win->setControlTmpDisabled(true);
 	cursor->setCursorBusy(true);
-	setSidebarTmpDisabled(true);
+	disableSidebarTmp(true);
 
 	this->statusbar = this->win->get("statusbar");
 	this->lbState = GTK_LABEL(this->win->get("lbState"));
@@ -2025,7 +1990,7 @@ void Control::block(const char * name) {
 void Control::unblock() {
 	this->win->setControlTmpDisabled(false);
 	cursor->setCursorBusy(false);
-	setSidebarTmpDisabled(false);
+	disableSidebarTmp(false);
 
 	gtk_widget_hide(this->statusbar);
 }
@@ -2258,13 +2223,8 @@ void Control::resetShapeRecognizer() {
 }
 
 void Control::showAbout() {
-	AboutDialog * dlg = new AboutDialog();
-	dlg->show();
-	delete dlg;
-}
-
-Settings * Control::getSettings() {
-	return settings;
+	AboutDialog dlg;
+	dlg.show();
 }
 
 void Control::clipboardCutCopyEnabled(bool enabled) {
@@ -2475,13 +2435,6 @@ void Control::setToolSize(ToolSize size) {
 	this->toolHandler->setSize(size);
 }
 
-TextEditor * Control::getTextEditor() {
-	if (win) {
-		return win->getXournal()->getTextEditor();
-	}
-	return NULL;
-}
-
 void Control::fontChanged() {
 	XojFont font = win->getFontButtonFont();
 	settings->setFont(font);
@@ -2498,3 +2451,55 @@ void Control::fontChanged() {
 		editor->setFont(font);
 	}
 }
+
+/**
+ * GETTER / SETTER
+ */
+
+UndoRedoHandler * Control::getUndoRedoHandler() {
+	return this->undoRedo;
+}
+
+ZoomControl * Control::getZoomControl() {
+	return this->zoom;
+}
+
+Cursor * Control::getCursor() {
+	return this->cursor;
+}
+
+RecentManager * Control::getRecentManager() {
+	return this->recent;
+}
+
+Document * Control::getDocument() {
+	return this->doc;
+}
+
+ToolHandler * Control::getToolHandler() {
+	return this->toolHandler;
+}
+
+XournalScheduler * Control::getScheduler() {
+	return this->scheduler;
+}
+
+MainWindow * Control::getWindow() {
+	return this->win;
+}
+
+bool Control::isFullscreen() {
+	return this->fullscreen;
+}
+
+TextEditor * Control::getTextEditor() {
+	if (this->win) {
+		return this->win->getXournal()->getTextEditor();
+	}
+	return NULL;
+}
+
+Settings * Control::getSettings() {
+	return settings;
+}
+

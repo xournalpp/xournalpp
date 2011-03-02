@@ -101,6 +101,15 @@ String::String(const char * str) {
 	this->data->reference();
 }
 
+String::String(const char * data, int len) {
+	char * str = (char *) g_malloc(len + 1);
+	strncpy(str, data, len);
+	str[len] = 0;
+
+	this->data = new _RefStrInternal(str);
+	this->data->reference();
+}
+
 String::String(char * str, bool freeAutomatically) {
 	if (freeAutomatically) {
 		this->data = new _RefStrInternal(str);
@@ -112,6 +121,15 @@ String::String(char * str, bool freeAutomatically) {
 
 String::~String() {
 	data->unreference();
+}
+
+String String::format(const char * format, ...) {
+	va_list args;
+	va_start(args, format);
+	char * data = g_strdup_vprintf(format, args);
+
+	String str(data, true);
+	return str;
 }
 
 int String::indexOfCaseInsensitiv(String substr, int fromIndex) const {

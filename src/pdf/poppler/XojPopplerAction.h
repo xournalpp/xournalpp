@@ -21,7 +21,7 @@
 
 class XojPopplerAction  {
 public:
-	XojPopplerAction(XojPopplerDocument doc, LinkAction * linkAction, char * title);
+	XojPopplerAction(XojPopplerDocument doc, LinkAction * linkAction, String title);
 	virtual ~XojPopplerAction();
 
 public:

@@ -5,7 +5,6 @@
 #include <config.h>
 #include <glib/gi18n-lib.h>
 
-
 MainWindow::MainWindow(Control * control) :
 	GladeGui("main.glade", "mainWindow") {
 	this->control = control;
@@ -33,17 +32,13 @@ MainWindow::MainWindow(Control * control) :
 
 	g_signal_connect(get("buttonCloseSidebar"), "clicked", G_CALLBACK(buttonCloseSidebarClicked), this);
 
-	this->toolbar = new ToolMenuHandler(this->control, this->control->getZoomControl(), this,
-			this->control->getToolHandler());
+	this->toolbar = new ToolMenuHandler(this->control, this->control->getZoomControl(), this, this->control->getToolHandler());
 
-	gchar * file = g_build_filename(g_get_home_dir(), G_DIR_SEPARATOR_S, CONFIG_DIR, G_DIR_SEPARATOR_S, TOOLBAR_CONFIG,
-			NULL);
+	gchar * file = g_build_filename(g_get_home_dir(), G_DIR_SEPARATOR_S, CONFIG_DIR, G_DIR_SEPARATOR_S, TOOLBAR_CONFIG, NULL);
 	if (!this->toolbar->parse(file) || this->toolbar->shouldRecreate()) {
 		if (!this->toolbar->writeDefault(file) || !this->toolbar->parse(file)) {
-			GtkWidget* dlg = gtk_message_dialog_new(GTK_WINDOW(this->window), GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR,
-					GTK_BUTTONS_OK,
-					_("Could not create toolbar config file: %s\nCheck write permission, no Toolbars will be available"),
-					file);
+			GtkWidget* dlg = gtk_message_dialog_new(GTK_WINDOW(this->window), GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
+					_("Could not create toolbar config file: %s\nCheck write permission, no Toolbars will be available"), file);
 
 			gtk_dialog_run(GTK_DIALOG(dlg));
 			gtk_widget_hide(dlg);
@@ -61,8 +56,7 @@ MainWindow::MainWindow(Control * control) :
 
 	updateScrollbarSidebarPosition();
 
-	gtk_window_set_default_size(GTK_WINDOW(window), control->getSettings()->getMainWndWidth(),
-			control->getSettings()->getMainWndHeight());
+	gtk_window_set_default_size(GTK_WINDOW(window), control->getSettings()->getMainWndWidth(), control->getSettings()->getMainWndHeight());
 
 	if (control->getSettings()->isMainWndMaximized()) {
 		gtk_window_maximize(GTK_WINDOW(window));
@@ -110,8 +104,8 @@ void MainWindow::updateScrollbarSidebarPosition() {
 	GtkWidget * sidebarContents = get("sidebarContents");
 	GtkWidget * scrolledwindowMain = get("scrolledwindowMain");
 
-	gtk_scrolled_window_set_placement(GTK_SCROLLED_WINDOW(scrolledwindowMain),
-			control->getSettings()->isScrollbarOnLeft() ? GTK_CORNER_TOP_RIGHT : GTK_CORNER_TOP_LEFT);
+	gtk_scrolled_window_set_placement(GTK_SCROLLED_WINDOW(scrolledwindowMain), control->getSettings()->isScrollbarOnLeft() ? GTK_CORNER_TOP_RIGHT
+			: GTK_CORNER_TOP_LEFT);
 
 	int divider = gtk_paned_get_position(GTK_PANED(panelMainContents));
 	bool sidebarRight = control->getSettings()->isSidebarOnRight();
@@ -345,7 +339,7 @@ void MainWindow::updatePageNumbers(int page, int pagecount, int pdfpage) {
 		pdfText = g_strdup_printf(_(", PDF Page %i"), pdfpage + 1);
 	}
 
-	String text(g_strdup_printf(_("of %i%s"), pagecount, pdfText), true);
+	String text = String::format(_("of %i%s"), pagecount, pdfText);
 	toolbar->setPageText(text);
 	g_free(pdfText);
 
