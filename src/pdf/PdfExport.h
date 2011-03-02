@@ -19,6 +19,8 @@
 #include "PdfXRef.h"
 #include "PdfBookmark.h"
 #include "PdfWriter.h"
+#include "PdfRefList.h"
+#include "PdfObjectWriter.h"
 #include <glib.h>
 
 class PdfExport {
@@ -37,20 +39,12 @@ private:
 	bool addPopplerPage(XojPopplerPage * pdf, XojPopplerDocument doc);
 	bool writePage(int page);
 
-	void writeDictionnary(Dict * dict, XojPopplerDocument doc);
-	void writeRawStream(Stream * str, XojPopplerDocument doc);
-	void writeStream(Stream * str);
-	void writeObject(Object * obj, XojPopplerDocument doc);
-	void writeString(GooString * s);
-
 	void writeGzStream(Stream * str, GList * replacementList);
 	void writePlainStream(Stream * str, GList * replacementList);
 
 	void writeStream(const char * str, int len, GList * replacementList);
 
 	int lookupFont(String name, Ref ref);
-	int lookupImage(String name, Ref ref, Object * object);
-	int lookupPattern(String name, Ref ref, Object * object);
 
 	bool parseFooter();
 	bool writeFooter();
@@ -63,11 +57,6 @@ private:
 	bool writeResources();
 
 	bool writeFonts();
-	bool writeImages();
-	bool writeCopiedObjects();
-
-	bool writeReferencedObjects(GList * list);
-	bool writeRefList(GList * list, const char * type);
 
 private:
 	Document * doc;
@@ -90,22 +79,19 @@ private:
 	int fontId;
 	GList * fonts;
 
-	int imageId;
-	GList * images;
+	PdfRefList * images;
 
 	int extGStateId;
 	GList * extGState;
 
-	int patternId;
-	GList * pattern;
+	PdfRefList * pattern;
 
 	PdfXRef * xref;
 	PdfBookmarks bookmarks;
 	PdfWriter * writer;
+	PdfObjectWriter * objectWriter;
 
 	CairoPdf cPdf;
-
-	GHashTable * updatedReferenced;
 };
 
 #endif /* __PDFEXPORT_H__ */

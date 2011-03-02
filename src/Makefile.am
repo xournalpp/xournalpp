@@ -90,7 +90,9 @@ xournalpp_SOURCES = \
 	pdf/PdfExport.cpp \
 	pdf/PdfExtGState.cpp \
 	pdf/PdfFont.cpp \
+	pdf/PdfObjectWriter.cpp \
 	pdf/PdfRefEntry.cpp \
+	pdf/PdfRefList.cpp \
 	pdf/PdfUtil.cpp \
 	pdf/PdfWriter.cpp \
 	pdf/PdfXRef.cpp \
