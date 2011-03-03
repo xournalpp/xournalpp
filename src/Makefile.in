@@ -60,6 +60,7 @@ am_xournalpp_OBJECTS = xournalpp-BlockingJob.$(OBJEXT) \
 	xournalpp-Inertia.$(OBJEXT) xournalpp-RecoSegment.$(OBJEXT) \
 	xournalpp-ShapeRecognizer.$(OBJEXT) \
 	xournalpp-ImageOpenDlg.$(OBJEXT) \
+	xournalpp-XojOpenDlg.$(OBJEXT) \
 	xournalpp-EditSelection.$(OBJEXT) \
 	xournalpp-EraseHandler.$(OBJEXT) \
 	xournalpp-ImageHandler.$(OBJEXT) \
@@ -310,6 +311,7 @@ xournalpp_SOURCES = \
 	control/shaperecognizer/RecoSegment.cpp \
 	control/shaperecognizer/ShapeRecognizer.cpp \
 	control/stockdlg/ImageOpenDlg.cpp \
+	control/stockdlg/XojOpenDlg.cpp \
 	control/tools/EditSelection.cpp \
 	control/tools/EraseHandler.cpp \
 	control/tools/ImageHandler.cpp \
@@ -625,6 +627,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-XmlPointNode.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-XmlStrokeNode.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-XmlTextNode.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-XojOpenDlg.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-XojPopplerAction.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-XojPopplerDocument.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-XojPopplerIter.Po@am__quote@
@@ -861,6 +864,20 @@ xournalpp-ImageOpenDlg.obj: control/stockdlg/ImageOpenDlg.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='control/stockdlg/ImageOpenDlg.cpp' object='xournalpp-ImageOpenDlg.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-ImageOpenDlg.obj `if test -f 'control/stockdlg/ImageOpenDlg.cpp'; then $(CYGPATH_W) 'control/stockdlg/ImageOpenDlg.cpp'; else $(CYGPATH_W) '$(srcdir)/control/stockdlg/ImageOpenDlg.cpp'; fi`
+
+xournalpp-XojOpenDlg.o: control/stockdlg/XojOpenDlg.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-XojOpenDlg.o -MD -MP -MF $(DEPDIR)/xournalpp-XojOpenDlg.Tpo -c -o xournalpp-XojOpenDlg.o `test -f 'control/stockdlg/XojOpenDlg.cpp' || echo '$(srcdir)/'`control/stockdlg/XojOpenDlg.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-XojOpenDlg.Tpo $(DEPDIR)/xournalpp-XojOpenDlg.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='control/stockdlg/XojOpenDlg.cpp' object='xournalpp-XojOpenDlg.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-XojOpenDlg.o `test -f 'control/stockdlg/XojOpenDlg.cpp' || echo '$(srcdir)/'`control/stockdlg/XojOpenDlg.cpp
+
+xournalpp-XojOpenDlg.obj: control/stockdlg/XojOpenDlg.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-XojOpenDlg.obj -MD -MP -MF $(DEPDIR)/xournalpp-XojOpenDlg.Tpo -c -o xournalpp-XojOpenDlg.obj `if test -f 'control/stockdlg/XojOpenDlg.cpp'; then $(CYGPATH_W) 'control/stockdlg/XojOpenDlg.cpp'; else $(CYGPATH_W) '$(srcdir)/control/stockdlg/XojOpenDlg.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-XojOpenDlg.Tpo $(DEPDIR)/xournalpp-XojOpenDlg.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='control/stockdlg/XojOpenDlg.cpp' object='xournalpp-XojOpenDlg.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-XojOpenDlg.obj `if test -f 'control/stockdlg/XojOpenDlg.cpp'; then $(CYGPATH_W) 'control/stockdlg/XojOpenDlg.cpp'; else $(CYGPATH_W) '$(srcdir)/control/stockdlg/XojOpenDlg.cpp'; fi`
 
 xournalpp-EditSelection.o: control/tools/EditSelection.cpp
 @am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-EditSelection.o -MD -MP -MF $(DEPDIR)/xournalpp-EditSelection.Tpo -c -o xournalpp-EditSelection.o `test -f 'control/tools/EditSelection.cpp' || echo '$(srcdir)/'`control/tools/EditSelection.cpp

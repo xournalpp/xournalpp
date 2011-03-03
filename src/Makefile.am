@@ -20,6 +20,7 @@ xournalpp_SOURCES = \
 	control/shaperecognizer/RecoSegment.cpp \
 	control/shaperecognizer/ShapeRecognizer.cpp \
 	control/stockdlg/ImageOpenDlg.cpp \
+	control/stockdlg/XojOpenDlg.cpp \
 	control/tools/EditSelection.cpp \
 	control/tools/EraseHandler.cpp \
 	control/tools/ImageHandler.cpp \
