@@ -109,7 +109,7 @@ void SearchBar::searchNext() {
 
 		bool found = control->searchTextOnPage(text, x, &occures, &top);
 		if (found) {
-			control->scrollToPage(x, top);
+			control->getScrollHandler()->scrollToPage(x, top);
 			char * msg;
 			if (occures == 1) {
 				msg = g_strdup_printf(_("Text once found on page %i"), x + 1);
@@ -158,7 +158,7 @@ void SearchBar::searchPrevious() {
 
 		bool found = control->searchTextOnPage(text, x, &occures, &top);
 		if (found) {
-			control->scrollToPage(x, top);
+			control->getScrollHandler()->scrollToPage(x, top);
 			char * msg;
 			if (occures == 1) {
 				msg = g_strdup_printf(_("Text once found on page %i"), x + 1);

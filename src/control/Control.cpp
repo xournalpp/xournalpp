@@ -25,6 +25,7 @@
 #include "jobs/BlockingJob.h"
 #include "jobs/PdfExportJob.h"
 #include "../view/DocumentView.h"
+#include "stockdlg/ImageOpenDlg.h"
 
 #include <config.h>
 #include <glib/gi18n-lib.h>
@@ -42,6 +43,9 @@ Control::Control() {
 	this->recent->addListener(this);
 	this->undoRedo->addUndoRedoListener(this);
 
+	// Init Metadata Manager
+	ev_metadata_manager_init();
+
 	this->lastAction = ACTION_NONE;
 	this->lastGroup = GROUP_NOGROUP;
 	this->lastEnabled = false;
@@ -53,6 +57,8 @@ Control::Control() {
 
 	this->sidebar = NULL;
 	this->searchBar = NULL;
+
+	this->scrollHandler = new ScrollHandler(this);
 
 	this->scheduler = new XournalScheduler();
 
@@ -70,18 +76,15 @@ Control::Control() {
 	this->pgState = NULL;
 	this->maxState = 0;
 
-	// Init Metadata Manager
-	ev_metadata_manager_init();
-
-	doc = new Document(this);
+	this->doc = new Document(this);
 
 	// for crashhandling
-	setEmergencyDocument(doc);
+	setEmergencyDocument(this->doc);
 
 	this->zoom = new ZoomControl();
-	this->zoom->setZoom100(settings->getDisplayDpi() / 72.0);
+	this->zoom->setZoom100(this->settings->getDisplayDpi() / 72.0);
 
-	this->toolHandler = new ToolHandler(this, settings);
+	this->toolHandler = new ToolHandler(this, this->settings);
 	this->toolHandler->loadSettings();
 
 	this->cursor = new Cursor(this);
@@ -121,6 +124,8 @@ Control::~Control() {
 	this->sidebar = NULL;
 	delete this->searchBar;
 	this->searchBar = NULL;
+	delete this->scrollHandler;
+	this->scrollHandler = NULL;
 }
 
 bool Control::checkChangedDocument(Control * control) {
@@ -269,7 +274,6 @@ void Control::updatePageNumbers(int page, int pdfPage) {
 	fireEnableAction(ACTION_GOTO_NEXT_ANNOTATED_PAGE, current < count - 1);
 }
 
-
 /**
  * If we change the state of a toggle button it will send an event,
  * to prevent our application to get in an endless loop we need to catch this events
@@ -396,26 +400,27 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent *even
 
 		// Menu Navigation
 	case ACTION_GOTO_FIRST:
-		scrollToPage(0);
+		scrollHandler->scrollToPage(0);
 		break;
 	case ACTION_GOTO_BACK:
-		goToPreviousPage();
+		scrollHandler->goToPreviousPage();
 		break;
 	case ACTION_GOTO_NEXT:
-		goToNextPage();
+		scrollHandler->goToNextPage();
 		break;
 	case ACTION_GOTO_LAST:
-		scrollToPage(doc->getPageCount() - 1);
+		scrollHandler->scrollToPage(doc->getPageCount() - 1);
 		break;
 	case ACTION_GOTO_NEXT_ANNOTATED_PAGE:
-		gotoAnnotatedPage(true);
+		scrollHandler->scrollToAnnotatedPage(true);
 		break;
 	case ACTION_GOTO_PREVIOUS_ANNOTATED_PAGE:
-		gotoAnnotatedPage(false);
+		scrollHandler->scrollToAnnotatedPage(false);
 		break;
 
 		// Menu Journal
 	case ACTION_NEW_PAGE_BEFORE:
+		// TODO: seite wird nicht selektiert!!
 		insertNewPage(getCurrentPageNo());
 		break;
 	case ACTION_NEW_PAGE_AFTER:
@@ -743,15 +748,7 @@ void Control::clearSelectionEndText() {
 }
 
 void Control::invokeLater(ActionType type) {
-	g_idle_add((GSourceFunc) &invokeCallback, new CallbackData(this, type));
-}
-
-void Control::goToPreviousPage() {
-	scrollToPage(win->getXournal()->getCurrentPage() - 1);
-}
-
-void Control::goToNextPage() {
-	scrollToPage(win->getXournal()->getCurrentPage() + 1);
+	g_idle_add((GSourceFunc) & invokeCallback, new CallbackData(this, type));
 }
 
 /**
@@ -985,9 +982,9 @@ void Control::insertNewPage(int position) {
 		}
 	} else if (PAGE_INSERT_TYPE_PDF_BACKGROUND == type) {
 		if (doc->getPdfPageCount() == 0) {
-			GtkWidget * dialog = gtk_message_dialog_new((GtkWindow*) *win, GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
-					_("You don't have any PDF pages to select from. Cancel operation,\n"
-							"Please select another background type: Menu \"Journal\" / \"Insert Page Type\"."));
+			GtkWidget * dialog = gtk_message_dialog_new((GtkWindow*) *win, GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, _(
+					"You don't have any PDF pages to select from. Cancel operation,\n"
+						"Please select another background type: Menu \"Journal\" / \"Insert Page Type\"."));
 			gtk_dialog_run(GTK_DIALOG(dialog));
 			gtk_widget_destroy(dialog);
 
@@ -1031,7 +1028,9 @@ void Control::insertPage(XojPage * page, int position) {
 
 	cursor->updateCursor();
 
-	scrollToPage(position);
+	if (!scrollHandler->isPageVisible(position)) {
+		scrollHandler->scrollToPage(position);
+	}
 
 	updateDeletePageButton();
 
@@ -1089,46 +1088,24 @@ void Control::setPageBackground(ActionType type) {
 			page->backgroundImage = *img;
 			page->setBackgroundType(BACKGROUND_TYPE_IMAGE);
 		} else if (dlg->shouldShowFilechooser()) {
-			GtkWidget *dialog = gtk_file_chooser_dialog_new(_("Open Image"), (GtkWindow*) *win, GTK_FILE_CHOOSER_ACTION_OPEN, GTK_STOCK_CANCEL,
-					GTK_RESPONSE_CANCEL, GTK_STOCK_OPEN, GTK_RESPONSE_OK, NULL);
-			gtk_file_chooser_set_local_only(GTK_FILE_CHOOSER(dialog), true);
 
-			GtkFileFilter *filterSupported = gtk_file_filter_new();
-			gtk_file_filter_set_name(filterSupported, _("Images"));
-			gtk_file_filter_add_pixbuf_formats(filterSupported);
-			gtk_file_chooser_add_filter(GTK_FILE_CHOOSER(dialog), filterSupported);
-
-			if (!settings->getLastSavePath().isEmpty()) {
-				gtk_file_chooser_set_current_folder_uri(GTK_FILE_CHOOSER(dialog), settings->getLastSavePath().c_str());
-			}
-
-			GtkWidget * attach_opt = gtk_check_button_new_with_label(_("Attach file to the journal"));
-			gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(attach_opt), false);
-			gtk_file_chooser_set_extra_widget(GTK_FILE_CHOOSER(dialog), attach_opt);
-
-			if (gtk_dialog_run(GTK_DIALOG(dialog)) != GTK_RESPONSE_OK) {
-				gtk_widget_destroy(dialog);
+			bool attach = false;
+			GFile * file = ImageOpenDlg::show((GtkWindow*) *win, settings, true, &attach);
+			if (file == NULL) {
 				return;
 			}
-			char *name = gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(dialog));
-			bool attach = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(
-					attach_opt));
-
+			char * name = g_file_get_path(file);
 			String filename = name;
-			char * folder = gtk_file_chooser_get_current_folder_uri(GTK_FILE_CHOOSER(dialog));
-			settings->setLastSavePath(folder);
-			g_free(folder);
 			g_free(name);
-
-			gtk_widget_destroy(dialog);
+			g_object_unref(file);
 
 			BackgroundImage newImg;
 			GError * err = NULL;
 			newImg.loadFile(filename, &err);
 			newImg.setAttach(attach);
 			if (err) {
-				GtkWidget * dialog = gtk_message_dialog_new((GtkWindow*) *win, GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
-						_("This image could not be loaded. Error message: %s"), err->message);
+				GtkWidget * dialog = gtk_message_dialog_new((GtkWindow*) *win, GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, _(
+						"This image could not be loaded. Error message: %s"), err->message);
 				gtk_dialog_run(GTK_DIALOG(dialog));
 				gtk_widget_destroy(dialog);
 				g_error_free(err);
@@ -1145,59 +1122,12 @@ void Control::setPageBackground(ActionType type) {
 			firePageSizeChanged(pageNr);
 		}
 
-		/**
-		 // TODO LOW PRIO: create preview for images, also previews for all other filechoosers!
-
-		 image = gtk_image_new ();
-		 gtk_file_chooser_set_preview_widget (chooser_dialog, image);
-		 g_signal_connect (chooser_dialog, "update-preview",
-		 G_CALLBACK (avatar_chooser_update_preview_cb),
-		 chooser);
-		 static void
-		 avatar_chooser_update_preview_cb (GtkFileChooser       *file_chooser,
-		 EmpathyAvatarChooser *chooser)
-		 {
-		 gchar *filename;
-
-		 filename = gtk_file_chooser_get_preview_filename (file_chooser);
-
-		 if (filename) {
-		 GtkWidget *image;
-		 GdkPixbuf *pixbuf = NULL;
-		 GdkPixbuf *scaled_pixbuf;
-
-		 pixbuf = gdk_pixbuf_new_from_file (filename, NULL);
-
-		 image = gtk_file_chooser_get_preview_widget (file_chooser);
-
-		 if (pixbuf) {
-		 scaled_pixbuf = empathy_pixbuf_scale_down_if_necessary (pixbuf, AVATAR_SIZE_SAVE);
-		 gtk_image_set_from_pixbuf (GTK_IMAGE (image), scaled_pixbuf);
-		 g_object_unref (scaled_pixbuf);
-		 g_object_unref (pixbuf);
-		 } else {
-		 gtk_image_set_from_stock (GTK_IMAGE (image),
-		 "gtk-dialog-question",
-		 GTK_ICON_SIZE_DIALOG);
-		 }
-
-		 g_free (filename);
-		 }
-
-		 gtk_file_chooser_set_preview_widget_active (file_chooser, TRUE);
-		 }
-
-
-
-
-		 */
-
 		delete dlg;
 	} else if (ACTION_SET_PAPER_BACKGROUND_PDF == type) {
 		if (doc->getPdfPageCount() == 0) {
-			GtkWidget * dialog = gtk_message_dialog_new((GtkWindow*) *win, GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
-					_("You don't have any PDF pages to select from. Cancel operation,\n"
-							"Please select another background type: Menu \"Journal\" / \"Insert Page Type\"."));
+			GtkWidget * dialog = gtk_message_dialog_new((GtkWindow*) *win, GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, _(
+					"You don't have any PDF pages to select from. Cancel operation,\n"
+						"Please select another background type: Menu \"Journal\" / \"Insert Page Type\"."));
 			gtk_dialog_run(GTK_DIALOG(dialog));
 			gtk_widget_destroy(dialog);
 			return;
@@ -1362,7 +1292,7 @@ void Control::setViewTwoPages(bool twoPages) {
 
 	int currentPage = getCurrentPageNo();
 	win->getXournal()->layoutPages();
-	scrollToPage(currentPage);
+	scrollHandler->scrollToPage(currentPage);
 }
 
 void Control::setPageInsertType(PageInsertType type) {
@@ -1397,17 +1327,11 @@ bool Control::invokeCallback(CallbackData * cb) {
 	return false;
 }
 
-void Control::scrollToSpinPange() {
-	GtkWidget * spinPageNo = win->getSpinPageNo();
-	int page = gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(spinPageNo));
-	if (page == 0) {
-		return;
-	}
-	scrollToPage(page - 1);
-}
-
 int Control::getCurrentPageNo() {
-	return win->getXournal()->getCurrentPage();
+	if (win) {
+		return win->getXournal()->getCurrentPage();
+	}
+	return 0;
 }
 
 bool Control::searchTextOnPage(const char * text, int p, int * occures, double * top) {
@@ -1441,22 +1365,6 @@ void Control::undoRedoPageChanged(XojPage * page) {
 		}
 	}
 	this->changedPages = g_list_append(this->changedPages, page);
-}
-
-void Control::gotoAnnotatedPage(bool next) {
-	int step;
-	if (next) {
-		step = 1;
-	} else {
-		step = -1;
-	}
-
-	for (int i = win->getXournal()->getCurrentPage() + step; i >= 0 && i < doc->getPageCount(); i += step) {
-		if (doc->getPage(i)->isAnnotated()) {
-			scrollToPage(i);
-			return;
-		}
-	}
 }
 
 void Control::selectTool(ToolType type) {
@@ -1681,7 +1589,7 @@ void Control::newFile() {
 }
 
 String Control::showOpenDialog(bool pdf, bool & attachPdf) {
-	GtkWidget *dialog = gtk_file_chooser_dialog_new(_("Open file"), (GtkWindow*) *win, GTK_FILE_CHOOSER_ACTION_OPEN, GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+	GtkWidget * dialog = gtk_file_chooser_dialog_new(_("Open file"), (GtkWindow*) *win, GTK_FILE_CHOOSER_ACTION_OPEN, GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
 			GTK_STOCK_OPEN, GTK_RESPONSE_OK, NULL);
 	gtk_file_chooser_set_local_only(GTK_FILE_CHOOSER(dialog), true);
 
@@ -1726,15 +1634,14 @@ String Control::showOpenDialog(bool pdf, bool & attachPdf) {
 		gtk_widget_destroy(dialog);
 		return NULL;
 	}
-	char *name = gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(dialog));
+	char * name = gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(dialog));
 
 	if (attachOpt) {
 		attachPdf = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(attachOpt));
 	}
 
 	String filename = name;
-	char * folder = gtk_file_chooser_get_current_folder_uri(GTK_FILE_CHOOSER(
-			dialog));
+	char * folder = gtk_file_chooser_get_current_folder_uri(GTK_FILE_CHOOSER(dialog));
 	settings->setLastSavePath(folder);
 	g_free(folder);
 	g_free(name);
@@ -1742,47 +1649,6 @@ String Control::showOpenDialog(bool pdf, bool & attachPdf) {
 	gtk_widget_destroy(dialog);
 
 	return filename;
-}
-
-void Control::scrollToPage(XojPage * page, double top) {
-	int p = doc->indexOf(page);
-	if (p != -1) {
-		scrollToPage(p, top);
-	}
-}
-
-void Control::scrollToPage(int page, double top) {
-	win->getXournal()->scrollTo(page, top);
-}
-
-// TODO: create class for scroll handler
-void adjustmentScroll(GtkAdjustment * adj, double scroll, int size) {
-	double v = gtk_adjustment_get_value(adj);
-	double max = gtk_adjustment_get_upper(adj) - size;
-
-	double newPos = v + scroll;
-	if (newPos < 0) {
-		newPos = 0;
-	}
-
-	if (newPos > max) {
-		newPos = max;
-	}
-
-	gtk_adjustment_set_value(adj, newPos);
-}
-
-void Control::scrollRelative(double x, double y) {
-	GtkWidget * scroll = win->get("scrolledwindowMain");
-
-	GtkAdjustment * hadj = gtk_scrolled_window_get_hadjustment(GTK_SCROLLED_WINDOW(scroll));
-	GtkAdjustment * vadj = gtk_scrolled_window_get_vadjustment(GTK_SCROLLED_WINDOW(scroll));
-
-	GtkAllocation alloc = { 0 };
-	gtk_widget_get_allocation(scroll, &alloc);
-
-	adjustmentScroll(hadj, x, alloc.width);
-	adjustmentScroll(vadj, y, alloc.height);
 }
 
 bool Control::openFile(String filename) {
@@ -1821,8 +1687,8 @@ bool Control::openFile(String filename) {
 
 	Document * tmp = h.loadDocument(filename);
 	if (!tmp) {
-		GtkWidget * dialog = gtk_message_dialog_new((GtkWindow*) *win, GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
-				_("Error opening file '%s'\n%s"), filename.c_str(), h.getLastError().c_str());
+		GtkWidget * dialog = gtk_message_dialog_new((GtkWindow*) *win, GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, _(
+				"Error opening file '%s'\n%s"), filename.c_str(), h.getLastError().c_str());
 		gtk_dialog_run(GTK_DIALOG(dialog));
 		gtk_widget_destroy(dialog);
 		fileLoaded();
@@ -1841,7 +1707,7 @@ bool Control::openFile(String filename) {
 		}
 
 		if (ev_metadata_manager_get(file, "page", &value, TRUE) && G_VALUE_TYPE(&value) == G_TYPE_INT) {
-			scrollToPage(g_value_get_int(&value));
+			scrollHandler->scrollToPage(g_value_get_int(&value));
 		}
 		recent->addRecentFileFilename(file);
 	}
@@ -1882,10 +1748,10 @@ bool Control::annotatePdf(String filename, bool attachPdf, bool attachToDocument
 		if (file && ev_metadata_manager_get(file, "page", &value, TRUE) && G_VALUE_TYPE(&value) == G_TYPE_INT) {
 			page = g_value_get_int(&value);
 		}
-		scrollToPage(page);
+		scrollHandler->scrollToPage(page);
 	} else {
-		GtkWidget * dialog = gtk_message_dialog_new((GtkWindow*) *win, GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
-				_("Error annotate PDF file '%s'\n%s"), filename.c_str(), doc->getLastErrorMsg().c_str());
+		GtkWidget * dialog = gtk_message_dialog_new((GtkWindow*) *win, GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, _(
+				"Error annotate PDF file '%s'\n%s"), filename.c_str(), doc->getLastErrorMsg().c_str());
 		gtk_dialog_run(GTK_DIALOG(dialog));
 		gtk_widget_destroy(dialog);
 	}
@@ -1914,14 +1780,14 @@ bool Control::copyFile(String source, String target) {
 	GFile * trg = g_file_new_for_path(target.c_str());
 	GError * err = NULL;
 
-	bool ok = g_file_copy(src, trg, G_FILE_COPY_OVERWRITE, NULL, (GFileProgressCallback) &copyProgressCallback, this, &err);
+	bool ok = g_file_copy(src, trg, G_FILE_COPY_OVERWRITE, NULL, (GFileProgressCallback) & copyProgressCallback, this, &err);
 
 	if (!err && !ok) {
-		copyError = "Copy error: return false, but didn't set error message";
+		this->copyError = "Copy error: return false, but didn't set error message";
 	}
 	if (err) {
 		ok = false;
-		copyError = err->message;
+		this->copyError = err->message;
 		g_error_free(err);
 	}
 	return ok;
@@ -2049,8 +1915,8 @@ bool Control::save() {
 	updateWindowTitle();
 
 	if (!out->getLastError().isEmpty()) {
-		GtkWidget * dialog = gtk_message_dialog_new((GtkWindow *) *win, GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, _(
-				"Output stream error: %s"), out->getLastError().c_str());
+		GtkWidget * dialog = gtk_message_dialog_new((GtkWindow *) *win, GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, _("Output stream error: %s"),
+				out->getLastError().c_str());
 		gtk_dialog_run(GTK_DIALOG(dialog));
 		gtk_widget_destroy(dialog);
 
@@ -2118,8 +1984,7 @@ bool Control::showSaveDialog() {
 	char * name = gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(dialog));
 
 	String filename = name;
-	char * folder = gtk_file_chooser_get_current_folder_uri(GTK_FILE_CHOOSER(
-			dialog));
+	char * folder = gtk_file_chooser_get_current_folder_uri(GTK_FILE_CHOOSER(dialog));
 	settings->setLastSavePath(folder);
 	g_free(folder);
 	g_free(name);
@@ -2189,8 +2054,8 @@ void Control::quit() {
 
 bool Control::close() {
 	if (undoRedo->isChanged()) {
-		GtkWidget * dialog = gtk_message_dialog_new((GtkWindow *) *getWindow(), GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_WARNING, GTK_BUTTONS_NONE,
-				_("This document is not saved yet."));
+		GtkWidget * dialog = gtk_message_dialog_new((GtkWindow *) *getWindow(), GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_WARNING, GTK_BUTTONS_NONE, _(
+				"This document is not saved yet."));
 
 		gtk_dialog_add_button(GTK_DIALOG(dialog), _("Save"), 1);
 		gtk_dialog_add_button(GTK_DIALOG(dialog), _("Discard"), 2);
@@ -2501,5 +2366,9 @@ TextEditor * Control::getTextEditor() {
 
 Settings * Control::getSettings() {
 	return settings;
+}
+
+ScrollHandler * Control::getScrollHandler() {
+	return this->scrollHandler;
 }
 

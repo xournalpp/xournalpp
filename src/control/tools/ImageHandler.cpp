@@ -4,6 +4,7 @@
 #include "../../model/Image.h"
 #include "../../util/pixbuf-utils.h"
 #include "../../undo/InsertUndoAction.h"
+#include "../stockdlg/ImageOpenDlg.h"
 
 ImageHandler::ImageHandler(Control * control, PageView * view) {
 	this->control = control;
@@ -14,40 +15,19 @@ ImageHandler::~ImageHandler() {
 }
 
 bool ImageHandler::insertImage(double x, double y) {
-	GtkWidget * dialog = gtk_file_chooser_dialog_new(_("Open Image"), (GtkWindow*) *this->control->getWindow(), GTK_FILE_CHOOSER_ACTION_OPEN, GTK_STOCK_CANCEL,
-			GTK_RESPONSE_CANCEL, GTK_STOCK_OPEN, GTK_RESPONSE_OK, NULL);
-
-	// here we can handle remote files without problems with backward compatibility
-	gtk_file_chooser_set_local_only(GTK_FILE_CHOOSER(dialog), false);
-
-	GtkFileFilter * filterSupported = gtk_file_filter_new();
-	gtk_file_filter_set_name(filterSupported, _("Images"));
-	gtk_file_filter_add_pixbuf_formats(filterSupported);
-	gtk_file_chooser_add_filter(GTK_FILE_CHOOSER(dialog), filterSupported);
-
-	String lastImagePath = control->getSettings()->getLastImagePath();
-	if (!lastImagePath.isEmpty()) {
-		gtk_file_chooser_set_current_folder_uri(GTK_FILE_CHOOSER(dialog), lastImagePath.c_str());
-	}
-
-	if (gtk_dialog_run(GTK_DIALOG(dialog)) != GTK_RESPONSE_OK) {
-		gtk_widget_destroy(dialog);
+	GFile * file = ImageOpenDlg::show((GtkWindow*) *control->getWindow(), control->getSettings());
+	if(file == NULL) {
 		return false;
 	}
-	GFile * file = gtk_file_chooser_get_file(GTK_FILE_CHOOSER(dialog));
-
-	char * folder = gtk_file_chooser_get_current_folder_uri(GTK_FILE_CHOOSER(dialog));
-	control->getSettings()->setLastImagePath(folder);
-	g_free(folder);
-
-	gtk_widget_destroy(dialog);
-
 	return insertImage(file, x, y);
 }
 
 bool ImageHandler::insertImage(GFile * file, double x, double y) {
 	GError * err = NULL;
 	GFileInputStream * in = g_file_read(file, NULL, &err);
+
+	g_object_unref(file);
+
 	GdkPixbuf * pixbuf = NULL;
 
 	if (!err) {
