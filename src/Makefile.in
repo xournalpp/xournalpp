@@ -59,6 +59,7 @@ am_xournalpp_OBJECTS = xournalpp-BlockingJob.$(OBJEXT) \
 	xournalpp-CircleRecognizer.$(OBJEXT) \
 	xournalpp-Inertia.$(OBJEXT) xournalpp-RecoSegment.$(OBJEXT) \
 	xournalpp-ShapeRecognizer.$(OBJEXT) \
+	xournalpp-ImageOpenDlg.$(OBJEXT) \
 	xournalpp-EditSelection.$(OBJEXT) \
 	xournalpp-EraseHandler.$(OBJEXT) \
 	xournalpp-ImageHandler.$(OBJEXT) \
@@ -79,6 +80,7 @@ am_xournalpp_OBJECTS = xournalpp-BlockingJob.$(OBJEXT) \
 	xournalpp-PrintHandler.$(OBJEXT) \
 	xournalpp-RecentManager.$(OBJEXT) \
 	xournalpp-SaveHandler.$(OBJEXT) \
+	xournalpp-ScrollHandler.$(OBJEXT) \
 	xournalpp-SearchControl.$(OBJEXT) xournalpp-Tool.$(OBJEXT) \
 	xournalpp-ToolHandler.$(OBJEXT) \
 	xournalpp-ZoomControl.$(OBJEXT) \
@@ -307,6 +309,7 @@ xournalpp_SOURCES = \
 	control/shaperecognizer/Inertia.cpp \
 	control/shaperecognizer/RecoSegment.cpp \
 	control/shaperecognizer/ShapeRecognizer.cpp \
+	control/stockdlg/ImageOpenDlg.cpp \
 	control/tools/EditSelection.cpp \
 	control/tools/EraseHandler.cpp \
 	control/tools/ImageHandler.cpp \
@@ -332,6 +335,7 @@ xournalpp_SOURCES = \
 	control/PrintHandler.cpp \
 	control/RecentManager.cpp \
 	control/SaveHandler.cpp \
+	control/ScrollHandler.cpp \
 	control/SearchControl.cpp \
 	control/Tool.cpp \
 	control/ToolHandler.cpp \
@@ -535,6 +539,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-GzHelper.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-Image.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-ImageHandler.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-ImageOpenDlg.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-ImagesDialog.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-Inertia.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-InputHandler.Po@am__quote@
@@ -582,6 +587,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-SaveHandler.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-ScaleUndoAction.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-Scheduler.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-ScrollHandler.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-SearchBar.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-SearchControl.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-SelectBackgroundColorDialog.Po@am__quote@
@@ -841,6 +847,20 @@ xournalpp-ShapeRecognizer.obj: control/shaperecognizer/ShapeRecognizer.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='control/shaperecognizer/ShapeRecognizer.cpp' object='xournalpp-ShapeRecognizer.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-ShapeRecognizer.obj `if test -f 'control/shaperecognizer/ShapeRecognizer.cpp'; then $(CYGPATH_W) 'control/shaperecognizer/ShapeRecognizer.cpp'; else $(CYGPATH_W) '$(srcdir)/control/shaperecognizer/ShapeRecognizer.cpp'; fi`
+
+xournalpp-ImageOpenDlg.o: control/stockdlg/ImageOpenDlg.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-ImageOpenDlg.o -MD -MP -MF $(DEPDIR)/xournalpp-ImageOpenDlg.Tpo -c -o xournalpp-ImageOpenDlg.o `test -f 'control/stockdlg/ImageOpenDlg.cpp' || echo '$(srcdir)/'`control/stockdlg/ImageOpenDlg.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-ImageOpenDlg.Tpo $(DEPDIR)/xournalpp-ImageOpenDlg.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='control/stockdlg/ImageOpenDlg.cpp' object='xournalpp-ImageOpenDlg.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-ImageOpenDlg.o `test -f 'control/stockdlg/ImageOpenDlg.cpp' || echo '$(srcdir)/'`control/stockdlg/ImageOpenDlg.cpp
+
+xournalpp-ImageOpenDlg.obj: control/stockdlg/ImageOpenDlg.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-ImageOpenDlg.obj -MD -MP -MF $(DEPDIR)/xournalpp-ImageOpenDlg.Tpo -c -o xournalpp-ImageOpenDlg.obj `if test -f 'control/stockdlg/ImageOpenDlg.cpp'; then $(CYGPATH_W) 'control/stockdlg/ImageOpenDlg.cpp'; else $(CYGPATH_W) '$(srcdir)/control/stockdlg/ImageOpenDlg.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-ImageOpenDlg.Tpo $(DEPDIR)/xournalpp-ImageOpenDlg.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='control/stockdlg/ImageOpenDlg.cpp' object='xournalpp-ImageOpenDlg.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-ImageOpenDlg.obj `if test -f 'control/stockdlg/ImageOpenDlg.cpp'; then $(CYGPATH_W) 'control/stockdlg/ImageOpenDlg.cpp'; else $(CYGPATH_W) '$(srcdir)/control/stockdlg/ImageOpenDlg.cpp'; fi`
 
 xournalpp-EditSelection.o: control/tools/EditSelection.cpp
 @am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-EditSelection.o -MD -MP -MF $(DEPDIR)/xournalpp-EditSelection.Tpo -c -o xournalpp-EditSelection.o `test -f 'control/tools/EditSelection.cpp' || echo '$(srcdir)/'`control/tools/EditSelection.cpp
@@ -1191,6 +1211,20 @@ xournalpp-SaveHandler.obj: control/SaveHandler.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='control/SaveHandler.cpp' object='xournalpp-SaveHandler.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-SaveHandler.obj `if test -f 'control/SaveHandler.cpp'; then $(CYGPATH_W) 'control/SaveHandler.cpp'; else $(CYGPATH_W) '$(srcdir)/control/SaveHandler.cpp'; fi`
+
+xournalpp-ScrollHandler.o: control/ScrollHandler.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-ScrollHandler.o -MD -MP -MF $(DEPDIR)/xournalpp-ScrollHandler.Tpo -c -o xournalpp-ScrollHandler.o `test -f 'control/ScrollHandler.cpp' || echo '$(srcdir)/'`control/ScrollHandler.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-ScrollHandler.Tpo $(DEPDIR)/xournalpp-ScrollHandler.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='control/ScrollHandler.cpp' object='xournalpp-ScrollHandler.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-ScrollHandler.o `test -f 'control/ScrollHandler.cpp' || echo '$(srcdir)/'`control/ScrollHandler.cpp
+
+xournalpp-ScrollHandler.obj: control/ScrollHandler.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-ScrollHandler.obj -MD -MP -MF $(DEPDIR)/xournalpp-ScrollHandler.Tpo -c -o xournalpp-ScrollHandler.obj `if test -f 'control/ScrollHandler.cpp'; then $(CYGPATH_W) 'control/ScrollHandler.cpp'; else $(CYGPATH_W) '$(srcdir)/control/ScrollHandler.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-ScrollHandler.Tpo $(DEPDIR)/xournalpp-ScrollHandler.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='control/ScrollHandler.cpp' object='xournalpp-ScrollHandler.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-ScrollHandler.obj `if test -f 'control/ScrollHandler.cpp'; then $(CYGPATH_W) 'control/ScrollHandler.cpp'; else $(CYGPATH_W) '$(srcdir)/control/ScrollHandler.cpp'; fi`
 
 xournalpp-SearchControl.o: control/SearchControl.cpp
 @am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-SearchControl.o -MD -MP -MF $(DEPDIR)/xournalpp-SearchControl.Tpo -c -o xournalpp-SearchControl.o `test -f 'control/SearchControl.cpp' || echo '$(srcdir)/'`control/SearchControl.cpp

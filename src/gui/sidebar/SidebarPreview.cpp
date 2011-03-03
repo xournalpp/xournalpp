@@ -48,7 +48,7 @@ gboolean SidebarPreview::exposeEventCallback(GtkWidget *widget, GdkEventExpose *
 }
 
 gboolean SidebarPreview::mouseButtonPressCallback(GtkWidget *widget, GdkEventButton *event, SidebarPreview * preview) {
-	preview->sidebar->getControl()->scrollToPage(preview->page);
+	preview->sidebar->getControl()->getScrollHandler()->scrollToPage(preview->page);
 	return true;
 }
 

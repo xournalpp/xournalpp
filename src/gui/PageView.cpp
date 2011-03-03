@@ -543,7 +543,7 @@ gboolean PageView::onMotionNotifyEvent(GtkWidget * widget, GdkEventMotion * even
 bool PageView::scrollCallback(PageView * view) {
 	gdk_threads_enter();
 
-	view->xournal->getControl()->scrollRelative(view->scrollOffsetX, view->scrollOffsetY);
+	view->xournal->getControl()->getScrollHandler()->scrollRelative(view->scrollOffsetX, view->scrollOffsetY);
 
 	view->scrollOffsetX = 0;
 	view->scrollOffsetY = 0;

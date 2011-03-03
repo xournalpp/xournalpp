@@ -34,7 +34,7 @@ XournalWidget::XournalWidget(GtkWidget * parent, Control * control) {
 	g_signal_connect(G_OBJECT(this->widget), "expose_event", G_CALLBACK(exposeEventCallback), this);
 
 	GtkAdjustment* adj = gtk_scrolled_window_get_vadjustment(GTK_SCROLLED_WINDOW(parent));
-	g_signal_connect(adj, "value-changed", G_CALLBACK( onVscrollChanged), this);
+	g_signal_connect(adj, "value-changed", G_CALLBACK(onVscrollChanged), this);
 
 	gtk_widget_set_events(this->widget, GDK_EXPOSURE_MASK | GDK_KEY_PRESS_MASK);
 	gtk_signal_connect(GTK_OBJECT(this->widget), "key_press_event", GTK_SIGNAL_FUNC(onKeyPressCallback), this);
@@ -143,11 +143,11 @@ bool XournalWidget::onKeyPressEvent(GtkWidget *widget, GdkEventKey *event) {
 
 	if (state & GDK_SHIFT_MASK) {
 		if (event->keyval == GDK_Page_Down) {
-			control->goToNextPage();
+			control->getScrollHandler()->goToNextPage();
 			return true;
 		}
 		if (event->keyval == GDK_Page_Up) {
-			control->goToPreviousPage();
+			control->getScrollHandler()->goToPreviousPage();
 			return true;
 		}
 	} else {
@@ -156,32 +156,32 @@ bool XournalWidget::onKeyPressEvent(GtkWidget *widget, GdkEventKey *event) {
 		int windowHeight = alloc.height - scrollKeySize;
 
 		if (event->keyval == GDK_Page_Down) {
-			control->scrollRelative(0, windowHeight);
+			control->getScrollHandler()->scrollRelative(0, windowHeight);
 			return true;
 		}
 		if (event->keyval == GDK_Page_Up) {
-			control->scrollRelative(0, -windowHeight);
+			control->getScrollHandler()->scrollRelative(0, -windowHeight);
 			return true;
 		}
 	}
 
 	if (event->keyval == GDK_Up) {
-		control->scrollRelative(0, -scrollKeySize);
+		control->getScrollHandler()->scrollRelative(0, -scrollKeySize);
 		return true;
 	}
 
 	if (event->keyval == GDK_Down) {
-		control->scrollRelative(0, scrollKeySize);
+		control->getScrollHandler()->scrollRelative(0, scrollKeySize);
 		return true;
 	}
 
 	if (event->keyval == GDK_Left) {
-		control->scrollRelative(-scrollKeySize, 0);
+		control->getScrollHandler()->scrollRelative(-scrollKeySize, 0);
 		return true;
 	}
 
 	if (event->keyval == GDK_Right) {
-		control->scrollRelative(scrollKeySize, 0);
+		control->getScrollHandler()->scrollRelative(scrollKeySize, 0);
 		return true;
 	}
 
@@ -377,7 +377,7 @@ void XournalWidget::scrollTo(int pageNo, double y) {
 }
 
 void XournalWidget::onScrolled() {
-	GtkAdjustment* h = gtk_layout_get_vadjustment(GTK_LAYOUT(widget));
+	GtkAdjustment * h = gtk_layout_get_vadjustment(GTK_LAYOUT(widget));
 
 	GtkAllocation allocation = { 0 };
 	GtkWidget * w = gtk_widget_get_parent(widget);
@@ -485,17 +485,81 @@ void XournalWidget::getPasteTarget(double & x, double & y) {
 	if (pageNo == -1) {
 		return;
 	}
-	XojPage * page = control->getDocument()->getPage(pageNo);
 
-	// TODO LOW PRIO: calculate the visible rect and paste in the center of the visible rect of the page!
+	Rectangle * rect = getVisibleRect(pageNo);
 
-	if (page) {
-		x = page->getWidth() / 2;
-		y = page->getHeight() / 2;
+	if (rect) {
+		x = rect->width / 2 + rect->x;
+		y = rect->height / 2 + rect->y;
 	}
 }
+/**
+ * Return the rectangle which is visible on screen, in document cooordinates
+ *
+ * Or NULL if the page is not visible
+ */
+Rectangle * XournalWidget::getVisibleRect(int page) {
+	if (page < 0 || page >= this->viewPagesLen) {
+		return NULL;
+	}
 
-void XournalWidget::sizeAllocate(GtkWidget *widget, GtkRequisition *requisition, XournalWidget * xournal) {
+	GtkAllocation allocation = { 0 };
+	GtkWidget * w = gtk_widget_get_parent(widget);
+	gtk_widget_get_allocation(w, &allocation);
+
+	GtkAdjustment * v = gtk_layout_get_vadjustment(GTK_LAYOUT(widget));
+	int scrollY = gtk_adjustment_get_value(v);
+	GtkAdjustment * h = gtk_layout_get_hadjustment(GTK_LAYOUT(widget));
+	int scrollX = gtk_adjustment_get_value(h);
+
+	int viewHeight = allocation.height;
+	int viewWidth = allocation.width;
+
+	PageView * p = viewPages[page];
+
+	GValue gValue = { 0 };
+	g_value_init(&gValue, G_TYPE_INT);
+
+	gtk_container_child_get_property(GTK_CONTAINER(widget), p->getWidget(), "y", &gValue);
+	int posY = g_value_get_int(&gValue);
+
+	gtk_container_child_get_property(GTK_CONTAINER(widget), p->getWidget(), "x", &gValue);
+	int posX = g_value_get_int(&gValue);
+
+	gtk_widget_get_allocation(p->getWidget(), &allocation);
+	int pageHeight = allocation.height;
+	int pageWidth = allocation.width;
+
+	// page is after visible area
+	if (scrollY + viewHeight < posY) {
+		return NULL;
+	}
+
+	// page is before visible area
+	if (posY + pageHeight < scrollY) {
+		return NULL;
+	}
+
+	// page is after visible area
+	if (scrollX + viewWidth < posX) {
+		return NULL;
+	}
+
+	// page is before visible area
+	if (posX + pageWidth < scrollX) {
+		return NULL;
+	}
+
+	double y = scrollY - posY;
+	double x = scrollX - posX;
+	double height = viewHeight + y - pageHeight;
+	double width = viewWidth + x - pageWidth;
+	Rectangle * rect = new Rectangle(MAX(x, 0) / getZoom(), MAX(y, 0) / getZoom(), width / getZoom(), height / getZoom());
+
+	return rect;
+}
+
+void XournalWidget::sizeAllocate(GtkWidget * widget, GtkRequisition * requisition, XournalWidget * xournal) {
 	GtkAllocation alloc = { 0 };
 	gtk_widget_get_allocation(widget, &alloc);
 
@@ -633,6 +697,9 @@ void XournalWidget::pageInserted(int page) {
 
 	layoutPages();
 	updateXEvents();
+
+	// Update scroll info, so we can call isPageVisible after
+	onScrolled();
 }
 
 double XournalWidget::getZoom() {
@@ -786,6 +853,16 @@ void XournalWidget::layoutPages() {
 
 	// Need to redraw shadows and borders
 	g_idle_add((GSourceFunc) widgetRepaintCallback, widget);
+}
+
+bool XournalWidget::isPageVisible(int page) {
+	Rectangle * rect = getVisibleRect(page);
+	if (rect) {
+		delete rect;
+		return true;
+	}
+
+	return false;
 }
 
 bool XournalWidget::widgetRepaintCallback(GtkWidget * widget) {

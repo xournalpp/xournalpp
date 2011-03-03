@@ -38,7 +38,7 @@ bool InsertDeletePageUndoAction::insertPage(Control * control) {
 
 	control->getCursor()->updateCursor();
 
-	control->scrollToPage(this->pagePos);
+	control->getScrollHandler()->scrollToPage(this->pagePos);
 
 	control->updateDeletePageButton();
 

@@ -249,10 +249,10 @@ bool Sidebar::treeClickedCallback(GtkWidget *treeview, GdkEventButton *event, Si
 						sidebar->askInsertPdfPage(pdfPage);
 					} else {
 						if (dest->shouldChangeTop()) {
-							sidebar->control->scrollToPage(page, dest->getTop());
+							sidebar->control->getScrollHandler()->scrollToPage(page, dest->getTop());
 						} else {
 							if (sidebar->control->getCurrentPageNo() != page) {
-								sidebar->control->scrollToPage(page);
+								sidebar->control->getScrollHandler()->scrollToPage(page);
 							}
 						}
 					}

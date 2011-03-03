@@ -87,6 +87,8 @@ public:
 
 	PdfCache * getCache();
 
+	bool isPageVisible(int page);
+
 public:
 	//ZoomListener interface
 	void zoomChanged(double lastZoom);
@@ -108,6 +110,8 @@ private:
 	void initScrollHandler(GtkWidget * parent);
 
 	void addLoadPageToQue(XojPage * page, int priority);
+
+	Rectangle * getVisibleRect(int page);
 
 	static void sizeAllocate(GtkWidget *widget, GtkRequisition * requisition, XournalWidget * xournal);
 	static gboolean onButtonPressEventCallback(GtkWidget *widget, GdkEventButton *event, XournalWidget * xournal);

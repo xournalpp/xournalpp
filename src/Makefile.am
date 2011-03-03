@@ -19,6 +19,7 @@ xournalpp_SOURCES = \
 	control/shaperecognizer/Inertia.cpp \
 	control/shaperecognizer/RecoSegment.cpp \
 	control/shaperecognizer/ShapeRecognizer.cpp \
+	control/stockdlg/ImageOpenDlg.cpp \
 	control/tools/EditSelection.cpp \
 	control/tools/EraseHandler.cpp \
 	control/tools/ImageHandler.cpp \
@@ -44,6 +45,7 @@ xournalpp_SOURCES = \
 	control/PrintHandler.cpp \
 	control/RecentManager.cpp \
 	control/SaveHandler.cpp \
+	control/ScrollHandler.cpp \
 	control/SearchControl.cpp \
 	control/Tool.cpp \
 	control/ToolHandler.cpp \

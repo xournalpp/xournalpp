@@ -28,6 +28,7 @@
 #include "../gui/SearchBar.h"
 #include "../gui/Cursor.h"
 #include "jobs/ProgressListener.h"
+#include "ScrollHandler.h"
 
 class Sidebar;
 class CallbackData;
@@ -84,8 +85,6 @@ public:
 
 	void selectTool(ToolType type);
 
-	void gotoAnnotatedPage(bool next);
-
 	void updatePageNumbers(int page, int pdfPage);
 
 	Document * getDocument();
@@ -99,21 +98,13 @@ public:
 	 */
 	void saveSettings();
 
-	void scrollToPage(XojPage * page, double top = 0);
-	void scrollToPage(int page, double top = 0);
-
 	UndoRedoHandler * getUndoRedoHandler();
-
 	MainWindow * getWindow();
-
 	Cursor * getCursor();
-
 	RecentManager * getRecentManager();
+	ScrollHandler * getScrollHandler();
 
 	void updateWindowTitle();
-
-	void scrollRelative(double x, double y);
-	void scrollToSpinPange();
 
 	int getCurrentPageNo();
 
@@ -141,9 +132,6 @@ public:
 	static String getFilename(String uri);
 
 	bool searchTextOnPage(const char * text, int p, int * occures, double * top);
-
-	void goToPreviousPage();
-	void goToNextPage();
 
 	void firePageSelected(XojPage * page);
 	void firePageSelected(int page);
@@ -252,6 +240,8 @@ private:
 
 	GList * hiddenFullscreenWidgets;
 	bool sidebarHidden;
+
+	ScrollHandler * scrollHandler;
 
 	/**
 	 * Timeout id: the timeout watches the changes and actualizes the previews from time to time
