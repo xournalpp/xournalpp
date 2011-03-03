@@ -191,7 +191,6 @@ public:
 	void deleteSelection();
 
 protected:
-	String showOpenDialog(bool pdf, bool & attachPdf);
 	static bool invokeCallback(CallbackData * cb);
 	void invokeLater(ActionType type);
 	void zoomFit();
