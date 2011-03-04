@@ -51,6 +51,7 @@ xournalpp_SOURCES = \
 	control/Tool.cpp \
 	control/ToolHandler.cpp \
 	control/ZoomControl.cpp \
+	control/XournalMain.cpp \
 	gui/dialog/AboutDialog.cpp \
 	gui/dialog/ExportDialog.cpp \
 	gui/dialog/FormatDialog.cpp \
