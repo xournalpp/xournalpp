@@ -1,8 +1,8 @@
 #include "ExportDialog.h"
 #include "../../util/PageRange.h"
 
-ExportDialog::ExportDialog(int pageCount, int currentPage) :
-	GladeGui("export.glade", "exportDialog") {
+ExportDialog::ExportDialog(GladeSearchpath * gladeSearchPath, int pageCount, int currentPage) :
+	GladeGui(gladeSearchPath, "export.glade", "exportDialog") {
 	this->range = NULL;
 	this->pageCount = pageCount;
 	this->currentPage = currentPage;

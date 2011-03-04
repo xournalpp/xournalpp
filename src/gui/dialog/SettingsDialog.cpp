@@ -18,8 +18,8 @@
 #include "../../util/Util.h"
 #include <string.h>
 
-SettingsDialog::SettingsDialog(Settings * settings) :
-	GladeGui("settings.glade", "settingsDialog") {
+SettingsDialog::SettingsDialog(GladeSearchpath * gladeSearchPath, Settings * settings) :
+	GladeGui(gladeSearchPath, "settings.glade", "settingsDialog") {
 	this->settings = settings;
 	this->dpi = 72;
 	callib = zoomcallib_new();
@@ -54,16 +54,14 @@ SettingsDialog::~SettingsDialog() {
 	this->settings = NULL;
 }
 
-gboolean SettingsDialog::zoomcallibSliderChanged(GtkRange *range, GtkScrollType scroll, gdouble value,
-		SettingsDialog * dlg) {
+gboolean SettingsDialog::zoomcallibSliderChanged(GtkRange *range, GtkScrollType scroll, gdouble value, SettingsDialog * dlg) {
 	dlg->setDpi((int) value);
 
 	return false;
 }
 
 void SettingsDialog::initMouseButtonEvents(const char * hbox, int button, bool withDevice) {
-	this->buttonConfigs = g_list_append(this->buttonConfigs, new ButtonConfigGui(this, get(hbox), settings, button,
-			withDevice));
+	this->buttonConfigs = g_list_append(this->buttonConfigs, new ButtonConfigGui(this, get(hbox), settings, button, withDevice));
 }
 
 void SettingsDialog::initMouseButtonEvents() {
@@ -264,13 +262,11 @@ void SettingsDialog::save() {
 
 	bool hideFullscreenMenubar = getCheckbox("cbHideFullscreenMenubar");
 	bool hideFullscreenSidebar = getCheckbox("cbHideFullscreenSidebar");
-	settings->setFullscreenHideElements(updateHideString(settings->getFullscreenHideElements(), hideFullscreenMenubar,
-			hideFullscreenSidebar));
+	settings->setFullscreenHideElements(updateHideString(settings->getFullscreenHideElements(), hideFullscreenMenubar, hideFullscreenSidebar));
 
 	bool hidePresentationMenubar = getCheckbox("cbHidePresentationMenubar");
 	bool hidePresentationSidebar = getCheckbox("cbHidePresentationSidebar");
-	settings->setPresentationHideElements(updateHideString(settings->getPresentationHideElements(),
-			hidePresentationMenubar, hidePresentationSidebar));
+	settings->setPresentationHideElements(updateHideString(settings->getPresentationHideElements(), hidePresentationMenubar, hidePresentationSidebar));
 
 	GtkWidget * txtDefaultSaveName = get("txtDefaultSaveName");
 	const char * txt = gtk_entry_get_text(GTK_ENTRY(txtDefaultSaveName));

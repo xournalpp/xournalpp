@@ -5,8 +5,8 @@
 #include <config.h>
 #include <glib/gi18n-lib.h>
 
-FormatDialog::FormatDialog(Settings * settings, double width, double heigth) :
-	GladeGui("pagesize.glade", "pagesizeDialog") {
+FormatDialog::FormatDialog(GladeSearchpath * gladeSearchPath, Settings * settings, double width, double heigth) :
+	GladeGui(gladeSearchPath, "pagesize.glade", "pagesizeDialog") {
 	this->orientation = ORIENTATION_NOT_DEFINED;
 	this->selectedScale = 0;
 	this->settings = settings;

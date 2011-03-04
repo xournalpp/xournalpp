@@ -17,16 +17,17 @@
 
 class SettingsDialog: public GladeGui {
 public:
-	SettingsDialog(Settings * dlg);
+	SettingsDialog(GladeSearchpath * gladeSearchPath, Settings * settings);
 	virtual ~SettingsDialog();
 
-
+public:
 	void show();
 	void save();
 
 	void setDpi(int dpi);
 
 	void toolboxToggled();
+
 private:
 	void load();
 	void loadCheckbox(const char * name, gboolean value);
@@ -36,9 +37,6 @@ private:
 
 	void initMouseButtonEvents();
 	void initMouseButtonEvents(const char * hbox, int button, bool withDevice = false);
-
-	SettingsDialog(const SettingsDialog & dlg);
-	void operator=(const SettingsDialog & dlg);
 
 	static gboolean zoomcallibSliderChanged(GtkRange *range, GtkScrollType scroll, gdouble value, SettingsDialog * dlg);
 

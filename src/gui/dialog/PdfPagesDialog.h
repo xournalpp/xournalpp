@@ -17,9 +17,10 @@
 
 class PdfPagesDialog: public GladeGui {
 public:
-	PdfPagesDialog(Document * doc, Settings * settings);
+	PdfPagesDialog(GladeSearchpath * gladeSearchPath, Document * doc, Settings * settings);
 	virtual ~PdfPagesDialog();
 
+public:
 	void show();
 	void setBackgroundWhite();
 	double getZoom();
@@ -31,13 +32,14 @@ public:
 	int getSelectedPage();
 
 	Settings * getSettings();
+
 private:
 	void layout();
 	void updateOkButton();
 
-	static void sizeAllocate(GtkWidget *widget, GtkRequisition *requisition, PdfPagesDialog * dlg);
+	static void sizeAllocate(GtkWidget * widget, GtkRequisition * requisition, PdfPagesDialog * dlg);
 	static void onlyNotUsedCallback(GtkToggleButton * tb, PdfPagesDialog * dlg);
-	static void okButtonCallback(GtkButton *button, PdfPagesDialog * dlg);
+	static void okButtonCallback(GtkButton * button, PdfPagesDialog * dlg);
 
 private:
 	bool backgroundInitialized;

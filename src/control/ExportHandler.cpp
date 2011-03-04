@@ -8,9 +8,9 @@ ExportHandler::ExportHandler() {
 ExportHandler::~ExportHandler() {
 }
 
-void ExportHandler::runExportWithDialog(Document * doc, int current) {
+void ExportHandler::runExportWithDialog(GladeSearchpath * gladeSearchPath, Document * doc, int current) {
 	int count = doc->getPageCount();
-	ExportDialog * dlg = new ExportDialog(count, current);
+	ExportDialog * dlg = new ExportDialog(gladeSearchPath, count, current);
 	dlg->show();
 	GList * selected = dlg->getRange();
 	ExportFormtType type = dlg->getFormatType();

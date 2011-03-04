@@ -15,7 +15,6 @@ PdfObjectWriter::~PdfObjectWriter() {
 	this->writer = NULL;
 	this->xref = NULL;
 
-	// TODO: free!?
 	g_hash_table_destroy(this->updatedReferenced);
 	this->updatedReferenced = NULL;
 }

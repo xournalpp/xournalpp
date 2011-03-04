@@ -14,6 +14,8 @@
 
 #include <config.h>
 
+class GladeSearchpath;
+
 class XournalMain {
 public:
 	XournalMain();
@@ -26,6 +28,9 @@ private:
 #ifdef ENABLE_NLS
 	void initLocalisation();
 #endif
+
+	int exportPdf(const char * input, const char * output);
+	GladeSearchpath * initPath(const char * argv0);
 
 };
 

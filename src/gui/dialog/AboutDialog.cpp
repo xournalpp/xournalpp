@@ -5,8 +5,8 @@
 #define AUTOHOR(name) authors += name; authors += "\n";
 #define CONTRIBUTOR(name) contributors += name; contributors += "\n";
 
-AboutDialog::AboutDialog() :
-	GladeGui("about.glade", "aboutDialog") {
+AboutDialog::AboutDialog(GladeSearchpath * gladeSearchPath) :
+	GladeGui(gladeSearchPath, "about.glade", "aboutDialog") {
 	GtkLabel *labelTitle;
 	labelTitle = GTK_LABEL(get("labelTitle"));
 	gtk_label_set_markup(labelTitle, "<span size=\"xx-large\" weight=\"bold\">Xournal++ " VERSION "</span>");

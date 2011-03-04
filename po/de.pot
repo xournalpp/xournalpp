@@ -86,6 +86,7 @@ msgstr ""
 "%%\tein % Zeichen"
 
 #: ../src/gui/MainWindow.cpp:343 ../src/gui/MainWindow.cpp:345
+#: ../src/gui/MainWindow.cpp:339
 #, c-format
 msgid ", PDF Page %i"
 msgstr ", PDF Seite %i"
@@ -313,6 +314,7 @@ msgid "Autosave every ... minute:"
 msgstr "Alle ... automatisch speichern:"
 
 #: ../src/control/Control.cpp:222 ../src/control/Control.cpp:221
+#: ../src/control/Control.cpp:231
 #, c-format
 msgid "Autosave: %s"
 msgstr "Autospeichern: %s"
@@ -338,6 +340,7 @@ msgid "Border color for current page and other selections"
 msgstr "Rahmenfarbe der selektierten Seite und anderen Selektionen"
 
 #: ../src/control/Control.cpp:2352 ../src/control/Control.cpp:2232
+#: ../src/control/Control.cpp:2000
 msgid "Cancel"
 msgstr "Abbrechen"
 
@@ -365,7 +368,7 @@ msgstr "Kopieren"
 msgid "Copy current"
 msgstr "Aktuellen Hintergrund kopieren"
 
-#: ../src/gui/MainWindow.cpp:45
+#: ../src/gui/MainWindow.cpp:45 ../src/gui/MainWindow.cpp:41
 #, c-format
 msgid ""
 "Could not create toolbar config file: %s\n"
@@ -432,8 +435,13 @@ msgid "Delete La_yer"
 msgstr "Layer löschen"
 
 #: ../src/control/Control.cpp:2351 ../src/control/Control.cpp:2231
+#: ../src/control/Control.cpp:1999
 msgid "Discard"
 msgstr "Verwerfen"
+
+# commandline options
+msgid "Do not warn this is a development release"
+msgstr "Nicht warnen das dies eine Entwicklerversion ist"
 
 #: ../src/pdf/poppler/XojPopplerDocument.cpp:317
 #: ../src/pdf/poppler/XojPopplerDocument.cpp:324
@@ -470,7 +478,7 @@ msgid "Eraser Optio_ns"
 msgstr "Radierer Optionen"
 
 #: ../src/control/Control.cpp:1886 ../src/control/Control.cpp:1976
-#: ../src/control/Control.cpp:1923
+#: ../src/control/Control.cpp:1923 ../src/control/Control.cpp:1692
 #, c-format
 msgid ""
 "Error annotate PDF file '%s'\n"
@@ -480,7 +488,7 @@ msgstr ""
 "%s"
 
 #: ../src/control/Control.cpp:1821 ../src/control/Control.cpp:1907
-#: ../src/control/Control.cpp:1860
+#: ../src/control/Control.cpp:1860 ../src/control/Control.cpp:1629
 #, c-format
 msgid ""
 "Error opening file '%s'\n"
@@ -574,11 +582,13 @@ msgid "Images"
 msgstr "Bilder"
 
 #: ../src/control/Control.cpp:241 ../src/control/Control.cpp:240
+#: ../src/control/Control.cpp:201
 #, c-format
 msgid "Info: autosave document...\n"
 msgstr "Info: Autospeichere Dokument...\n"
 
 #: ../src/control/Control.cpp:237 ../src/control/Control.cpp:236
+#: ../src/control/Control.cpp:194
 #, c-format
 msgid "Info: autosave not necessary, nothing changed...\n"
 msgstr "Info: Autospeichere nicht nötig, nichts geändert...\n"
@@ -604,6 +614,10 @@ msgstr "Bild einfügen"
 msgid "Insert page"
 msgstr "Seite einfügen"
 
+# commandline option
+msgid "Jump to Page (first Page: 1)"
+msgstr "Seite anzeigen (erste Seite: 1)"
+
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:414 ../ui/main.glade:338
 msgid "Lined"
 msgstr "Liniert"
@@ -617,6 +631,7 @@ msgid "Load file"
 msgstr "Datei laden"
 
 #: ../src/gui/PageView.cpp:961 ../src/gui/sidebar/SidebarPreview.cpp:105
+#: ../src/gui/PageView.cpp:858
 msgid "Loading..."
 msgstr "Laden..."
 
@@ -688,11 +703,13 @@ msgid "Open file"
 msgstr "Öffne Datei"
 
 #: ../src/control/Control.cpp:2139 ../src/control/Control.cpp:2071
+#: ../src/control/Control.cpp:1840
 #, c-format
 msgid "Open file error: %s"
 msgstr "Datei öffnen Fehler: %s"
 
 #: ../src/control/Control.cpp:2085 ../src/control/Control.cpp:2088
+#: ../src/control/Control.cpp:1856
 #, c-format
 msgid "Output stream error: %s"
 msgstr "Ausgabestream error: %s"
@@ -709,6 +726,10 @@ msgstr "PDF Hingergrund fehlt"
 #: ../src/control/Control.cpp:1733
 msgid "PDF files"
 msgstr "PDF Dateien"
+
+# commandline options
+msgid "PDF output filename"
+msgstr "PDF Ausgabedatei"
 
 #: ../ui/export.glade:145 ../ui/export.glade:199
 msgid "PNG"
@@ -826,12 +847,13 @@ msgstr "SVG"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:351
 #: ../src/control/Control.cpp:2350 ../src/control/Control.cpp:2049
-#: ../src/control/Control.cpp:2230
+#: ../src/control/Control.cpp:2230 ../src/control/Control.cpp:1818
+#: ../src/control/Control.cpp:1998
 msgid "Save"
 msgstr "Speichern"
 
 #: ../src/control/Control.cpp:2062 ../src/control/Control.cpp:2181
-#: ../src/control/Control.cpp:2117
+#: ../src/control/Control.cpp:2117 ../src/control/Control.cpp:1886
 msgid "Save File"
 msgstr "Speichere Datei"
 
@@ -931,6 +953,7 @@ msgid "Show vertical scrollbar on the left side"
 msgstr "Vertikale Scrollbar auf der linken Seite anzeigen"
 
 #: ../src/Xournalpp.cpp:155 ../src/Xournalpp.cpp:153 ../src/Xournalpp.cpp:157
+#: ../src/control/XournalMain.cpp:163
 msgid ""
 "Sorry, Xournal can only open one file from the command line.\n"
 "Others are ignored."
@@ -939,6 +962,7 @@ msgstr ""
 "Alle weiteren werden ignoriert."
 
 #: ../src/Xournalpp.cpp:196 ../src/Xournalpp.cpp:194 ../src/Xournalpp.cpp:198
+#: ../src/control/XournalMain.cpp:204
 msgid ""
 "Sorry, Xournal cannot open remote files at the moment.\n"
 "You have to copy the file to a local directory."
@@ -1008,6 +1032,7 @@ msgid "There is still an operation running, exit anyway?"
 msgstr "Es läuft gerade noch eine Aktion, trozdem beenden?"
 
 #: ../src/gui/PageView.cpp:425 ../src/gui/PageView.cpp:398
+#: ../src/gui/PageView.cpp:399
 msgid ""
 "There was a wrong input event, input is not working.\n"
 "Do you want to disable \"Extended Input\"?"
@@ -1024,12 +1049,14 @@ msgid "Thin"
 msgstr "Dünn"
 
 #: ../src/control/Control.cpp:2348 ../src/control/Control.cpp:2228
+#: ../src/control/Control.cpp:1996
 msgid "This document is not saved yet."
 msgstr "Dieses Dokument wurde noch nicht gespiechert."
 
 #: ../src/gui/PageView.cpp:525 ../src/control/Control.cpp:1136
 #: ../src/control/Control.cpp:1194 ../src/gui/PageView.cpp:497
-#: ../src/control/Control.cpp:1163
+#: ../src/control/Control.cpp:1163 ../src/control/Control.cpp:1109
+#: ../src/control/tools/ImageHandler.cpp:38
 #, c-format
 msgid "This image could not be loaded. Error message: %s"
 msgstr "Das Bild könnte nicht geladen werden. Fehlermeldung: %s"
@@ -1058,7 +1085,7 @@ msgid "Unknown parser error"
 msgstr "Unbekannter parser Fehler"
 
 #: ../src/control/Control.cpp:2118 ../src/control/Control.cpp:2241
-#: ../src/control/Control.cpp:2174
+#: ../src/control/Control.cpp:2174 ../src/control/Control.cpp:1942
 msgid "Unsaved Document"
 msgstr "Ungespeichertes Dokument"
 
@@ -1092,6 +1119,7 @@ msgstr "XML Parser error: %s"
 #: ../src/control/Control.cpp:1697 ../src/control/Control.cpp:2067
 #: ../src/control/Control.cpp:1778 ../src/control/Control.cpp:2187
 #: ../src/control/Control.cpp:1729 ../src/control/Control.cpp:2122
+#: ../src/control/Control.cpp:1891
 msgid "Xournal files"
 msgstr "Xournal Dateien"
 
@@ -1104,6 +1132,7 @@ msgid "Xournal++ Preferences"
 msgstr "Xournal++ Einstellungen"
 
 #: ../src/Xournalpp.cpp:129 ../src/Xournalpp.cpp:127 ../src/Xournalpp.cpp:132
+#: ../src/control/XournalMain.cpp:138
 msgid ""
 "You are using a development release of Xournal\n"
 "You can find the current release in CVS!\n"
@@ -1126,6 +1155,7 @@ msgstr ""
 #: ../src/control/Control.cpp:990 ../src/control/Control.cpp:1206
 #: ../src/control/Control.cpp:1030 ../src/control/Control.cpp:1270
 #: ../src/control/Control.cpp:1017 ../src/control/Control.cpp:1231
+#: ../src/control/Control.cpp:987 ../src/control/Control.cpp:1130
 msgid ""
 "You don't have any PDF pages to select from. Cancel operation,\n"
 "Please select another background type: Menu \"Journal\" / \"Insert Page Type"
@@ -1319,6 +1349,7 @@ msgid "in"
 msgstr "in"
 
 #: ../src/gui/MainWindow.cpp:346 ../src/gui/MainWindow.cpp:348
+#: ../src/gui/MainWindow.cpp:342
 #, c-format
 msgid "of %i%s"
 msgstr "von %i%s"

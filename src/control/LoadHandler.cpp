@@ -647,6 +647,9 @@ bool LoadHandler::parseXml() {
 	return valid;
 }
 
+/**
+ * Document shuld not be freed, it will be freed with LoadHandler!
+ */
 Document * LoadHandler::loadDocument(String filename) {
 	if (!openFile(filename)) {
 		return NULL;

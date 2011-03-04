@@ -44,8 +44,6 @@ private:
 
 	void writeStream(const char * str, int len, GList * replacementList);
 
-	int lookupFont(String name, Ref ref);
-
 	bool parseFooter();
 	bool writeFooter();
 
@@ -55,8 +53,6 @@ private:
 	bool writeTrailer();
 	bool writeResourcedict();
 	bool writeResources();
-
-	bool writeFonts();
 
 private:
 	Document * doc;
@@ -68,7 +64,7 @@ private:
 
 	int dataXrefStart;
 
-	int pageCount;
+	GList * pageIds;
 
 	int outlineRoot;
 
@@ -76,15 +72,7 @@ private:
 
 	GList * documents;
 
-	int fontId;
-	GList * fonts;
-
-	PdfRefList * images;
-
-	int extGStateId;
-	GList * extGState;
-
-	PdfRefList * pattern;
+	GHashTable * refListsOther;
 
 	PdfXRef * xref;
 	PdfBookmarks bookmarks;

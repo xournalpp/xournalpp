@@ -22,9 +22,10 @@ class MainWindow;
 
 class MainWindow: public GladeGui {
 public:
-	MainWindow(Control * control);
+	MainWindow(GladeSearchpath * gladeSearchPath, Control * control);
 	virtual ~MainWindow();
 
+public:
 	void show();
 
 	void setRecentMenu(GtkWidget * submenu);
@@ -62,23 +63,23 @@ public:
 private:
 	void initToolbar();
 
-	static void pageNrSpinChangedCallback(GtkSpinButton *spinbutton, MainWindow * win);
-	static void buttonCloseSidebarClicked(GtkButton *button, MainWindow * win);
+	static void pageNrSpinChangedCallback(GtkSpinButton * spinbutton, MainWindow * win);
+	static void buttonCloseSidebarClicked(GtkButton * button, MainWindow * win);
 
 	/**
 	 * Sidebar show / hidden
 	 */
-	static void viewShowSidebar(GtkCheckMenuItem *checkmenuitem, MainWindow * control);
+	static void viewShowSidebar(GtkCheckMenuItem * checkmenuitem, MainWindow * control);
 
 	/**
 	 * Window close Button is pressed
 	 */
-	static bool deleteEventCallback(GtkWidget *widget, GdkEvent *event, Control * control);
+	static bool deleteEventCallback(GtkWidget * widget, GdkEvent * event, Control * control);
 
 	/**
 	 * Callback fro window states, we ned to know if the window is fullscreen
 	 */
-	static bool windowStateEventCallback(GtkWidget *window, GdkEventWindowState *event, MainWindow * win);
+	static bool windowStateEventCallback(GtkWidget * window, GdkEventWindowState * event, MainWindow * win);
 private:
 	Control * control;
 

@@ -35,6 +35,7 @@ class CallbackData;
 class PageView;
 class EditSelection;
 class SaveHandler;
+class GladeSearchpath;
 
 class Control: public ActionHandler,
 		public ToolListener,
@@ -45,14 +46,14 @@ class Control: public ActionHandler,
 		public MemoryCheckObject,
 		public ProgressListener {
 public:
-	Control();
+	Control(GladeSearchpath * gladeSearchPath);
 	virtual ~Control();
 
 	void initWindow(MainWindow * win);
 public:
 	// Menu File
 	void newFile();
-	bool openFile(String filename = NULL);
+	bool openFile(String filename = NULL, int scrollToPage = -1);
 	bool annotatePdf(String filename, bool attachPdf, bool attachToDocument);
 	void print();
 	void exportAsPdf();
@@ -284,6 +285,8 @@ private:
 	GtkLabel * lbState;
 	GtkProgressBar * pgState;
 	int maxState;
+
+	GladeSearchpath * gladeSearchPath;
 
 };
 

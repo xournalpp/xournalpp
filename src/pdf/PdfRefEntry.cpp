@@ -1,9 +1,9 @@
 #include "PdfRefEntry.h"
 
-PdfRefEntry::PdfRefEntry(int objectId, Ref ref, Object * object, int imageId, XojPopplerDocument doc) {
+PdfRefEntry::PdfRefEntry(PdfRefEntryType type, int objectId, Object * object, int imageId, XojPopplerDocument doc) {
+	this->type = type;
 	this->objectId = objectId;
-	this->ref = ref;
-	this->imageId = imageId;
+	this->refSourceId = imageId;
 	this->doc = doc;
 	this->object = object;
 }
@@ -13,8 +13,4 @@ PdfRefEntry::~PdfRefEntry() {
 		delete this->object;
 	}
 	this->object = NULL;
-}
-
-bool PdfRefEntry::equalsRef(const Ref & ref) {
-	return (this->ref.gen == ref.gen && this->ref.num == ref.num);
 }

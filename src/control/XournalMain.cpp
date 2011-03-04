@@ -5,86 +5,13 @@
 
 
 #include "gui/MainWindow.h"
-#include "control/Control.h"
+#include "Control.h"
+#include "LoadHandler.h"
+#include "../gui/GladeSearchpath.h"
+#include "../pdf/PdfExport.h"
 #include "cfg.h"
 
 #include "control/settings/ev-metadata-manager.h"
-
-
-void initPath(const char * argv0) {
-	gchar * path;
-	gchar * searchPath;
-	char buffer[512] = { 0 };
-
-	// Create config directory if not exists
-	gchar * file = g_build_filename(g_get_home_dir(), G_DIR_SEPARATOR_S, CONFIG_DIR, NULL);
-	mkdir(file, 0700);
-	g_free(file);
-
-	// Add first home dir to search path, to add custom glade XMLs
-	searchPath = g_build_filename(g_get_home_dir(), G_DIR_SEPARATOR_S, CONFIG_DIR, "ui", NULL);
-
-	if (g_file_test(searchPath, G_FILE_TEST_EXISTS) && g_file_test(searchPath, G_FILE_TEST_IS_DIR)) {
-		GladeGui::addSearchDirectory(searchPath);
-	}
-	g_free(searchPath);
-
-	searchPath = g_build_filename(PACKAGE_DATA_DIR, PACKAGE, "ui", NULL);
-	GladeGui::addSearchDirectory(searchPath);
-	g_free(searchPath);
-
-	path = g_path_get_dirname(argv0);
-	searchPath = g_build_filename(path, "ui", NULL);
-	GladeGui::addSearchDirectory(searchPath);
-	g_free(searchPath);
-
-	searchPath = g_build_filename(path, "..", "ui", NULL);
-	GladeGui::addSearchDirectory(searchPath);
-	g_free(searchPath);
-	g_free(path);
-
-	path = getcwd(buffer, sizeof(buffer));
-	if (path == NULL) {
-		return;
-	}
-
-	searchPath = g_build_filename(path, "ui", NULL);
-	GladeGui::addSearchDirectory(searchPath);
-	g_free(searchPath);
-
-	searchPath = g_build_filename(path, "..", "ui", NULL);
-	GladeGui::addSearchDirectory(searchPath);
-	g_free(searchPath);
-}
-
-char hexValue(char c) {
-	if (c <= '9') {
-		return c - '0';
-	}
-	if (c <= 'f') {
-		return c - 'a';
-	}
-	if (c <= 'F') {
-		return c - 'A';
-	}
-	return 0;
-}
-
-static bool optNoWarnSVN = false;
-static gchar ** optFilename = NULL;
-
-static GOptionEntry options[] = {
-	{ "no-warn-svn",    'w', 0, G_OPTION_ARG_NONE,           &optNoWarnSVN, "Do not warn this is a development release", NULL },
-	{ G_OPTION_REMAINING, 0, 0, G_OPTION_ARG_FILENAME_ARRAY, &optFilename, "<input>" , NULL},
-	{ NULL }
-};
-
-
-
-
-
-
-
 
 XournalMain::XournalMain() {
 }
@@ -100,23 +27,60 @@ void XournalMain::initLocalisation() {
 }
 #endif
 
-int XournalMain::run(int argc, char *argv[]) {
+int XournalMain::exportPdf(const char * input, const char * output) {
+	LoadHandler loader;
+
+	Document * doc = loader.loadDocument(input);
+	if(doc == NULL) {
+		String err = loader.getLastError();
+		printf("%s\n", err.c_str());
+		return -2;
+	}
+
+	GFile * file = g_file_new_for_commandline_arg(output);
+
+	PdfExport pdf(doc, NULL);
+	if(!pdf.createPdf(g_file_get_uri(file))) {
+		String err = pdf.getLastError();
+		printf("%s\n", err.c_str());
+
+		g_object_unref(file);
+		return -3;
+	}
+
+	g_object_unref(file);
+
+	printf("%s\n", _("PDF File successfully created"));
+
+
+	return 0; // no error
+}
+
+int XournalMain::run(int argc, char * argv[]) {
 #ifdef ENABLE_NLS
 	this->initLocalisation();
 #endif
 
-	// Init GTK
-	gtk_init(&argc, &argv);
+	GError * error = NULL;
+	GOptionContext * context = context = g_option_context_new("FILE");
 
-	// Init threads (used for our Sheduler, Jobs)
-	g_thread_init(NULL);
+	bool optNoWarnSVN = false;
+	gchar ** optFilename = NULL;
+	gchar * pdfFilename = NULL;
+	int openAtPageNumber = -1;
 
-	initPath(argv[0]);
+	GOptionEntry options[] = {
+		{ "no-warn-svn",    'w', 0, G_OPTION_ARG_NONE,           &optNoWarnSVN, "Do not warn this is a development release", NULL },
+		{ "create-pdf",     'p', 0, G_OPTION_ARG_FILENAME,       &pdfFilename, "PDF output filename" , NULL},
+		{ "page",           'n', 0, G_OPTION_ARG_INT,            &openAtPageNumber, "Jump to Page (first Page: 1)", "N" },
+		{ G_OPTION_REMAINING, 0, 0, G_OPTION_ARG_FILENAME_ARRAY, &optFilename, "<input>" , NULL},
+		{ NULL }
+	};
 
-	GError *error = NULL;
-	GOptionContext * context = context = g_option_context_new("[options] FILE");
+
 	g_option_context_add_main_entries(context, options, GETTEXT_PACKAGE);
-	g_option_context_add_group(context, gtk_get_option_group(true));
+	// parse options, so we don't need gtk_init, but don't init display (so we have a commandline mode)
+	g_option_context_add_group(context, gtk_get_option_group(false));
 	if (!g_option_context_parse(context, &argc, &argv, &error)) {
 		g_printerr("%s\n", error->message);
 		g_error_free(error);
@@ -126,6 +90,19 @@ int XournalMain::run(int argc, char *argv[]) {
 		error = NULL;
 	}
 	g_option_context_free(context);
+
+	// Init threads (used for our Sheduler, Jobs)
+	g_thread_init(NULL);
+
+	if(pdfFilename && optFilename && *optFilename) {
+		return exportPdf(*optFilename, pdfFilename);
+	}
+
+	// Init GTK Display
+	gdk_display_open_default_libgtk_only();
+
+
+	GladeSearchpath * gladePath = initPath(argv[0]);
 
 	if (!optNoWarnSVN) {
 		GtkWidget * dialog = gtk_message_dialog_new(NULL, GTK_DIALOG_MODAL, GTK_MESSAGE_WARNING, GTK_BUTTONS_YES_NO,
@@ -145,9 +122,9 @@ int XournalMain::run(int argc, char *argv[]) {
 		}
 	}
 
-	Control * control = new Control();
+	Control * control = new Control(gladePath);
 
-	MainWindow * win = new MainWindow(control);
+	MainWindow * win = new MainWindow(gladePath, control);
 	control->initWindow(win);
 
 	bool opened = false;
@@ -161,38 +138,15 @@ int XournalMain::run(int argc, char *argv[]) {
 		}
 
 		GFile * file = g_file_new_for_commandline_arg(optFilename[0]);
+		char * filename = g_file_get_path(file);
 		char * uri = g_file_get_uri(file);
 		String sUri = uri;
 		g_free(uri);
 		g_object_unref(file);
 
 		if (sUri.startsWith("file://")) {
-			String path = "";
-			StringTokenizer token(sUri.substring(7), '%', true);
-
-			const char * tmp = token.next();
-			bool special = false;
-			while (tmp) {
-				if (!strcmp("%", tmp)) {
-					special = true;
-				} else {
-					if (special) {
-						special = false;
-						String t = tmp;
-						if (t.size() > 1) {
-							char x[2] = { 0 };
-							x[0] = hexValue(tmp[0]) << 4 + hexValue(tmp[1]);
-							path += x;
-							path += t.substring(2);
-						}
-					} else {
-						path += tmp;
-					}
-				}
-
-				tmp = token.next();
-			}
-			opened = control->openFile(path);
+			opened = control->openFile(filename, openAtPageNumber);
+			g_free(filename);
 		} else {
 			GtkWidget * dialog = gtk_message_dialog_new((GtkWindow*) *win, GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
 					_("Sorry, Xournal cannot open remote files at the moment.\n"
@@ -215,6 +169,59 @@ int XournalMain::run(int argc, char *argv[]) {
 
 	delete win;
 	delete control;
+	delete gladePath;
 
 	return 0;
+}
+
+/**
+ * Path for glade files and Pixmaps, first searches in the home folder, so you can customize glade files
+ */
+GladeSearchpath * XournalMain::initPath(const char * argv0) {
+	GladeSearchpath * gladePath = new GladeSearchpath();
+
+	// Create config directory if not exists
+	gchar * file = g_build_filename(g_get_home_dir(), G_DIR_SEPARATOR_S, CONFIG_DIR, NULL);
+	mkdir(file, 0700);
+	g_free(file);
+
+	// Add first home dir to search path, to add custom glade XMLs
+	gchar * searchPath = g_build_filename(g_get_home_dir(), G_DIR_SEPARATOR_S, CONFIG_DIR, "ui", NULL);
+
+	if (g_file_test(searchPath, G_FILE_TEST_EXISTS) && g_file_test(searchPath, G_FILE_TEST_IS_DIR)) {
+		gladePath->addSearchDirectory(searchPath);
+	}
+	g_free(searchPath);
+
+	searchPath = g_build_filename(PACKAGE_DATA_DIR, PACKAGE, "ui", NULL);
+	gladePath->addSearchDirectory(searchPath);
+	g_free(searchPath);
+
+	gchar * path;
+	path = g_path_get_dirname(argv0);
+	searchPath = g_build_filename(path, "ui", NULL);
+	gladePath->addSearchDirectory(searchPath);
+	g_free(searchPath);
+
+	searchPath = g_build_filename(path, "..", "ui", NULL);
+	gladePath->addSearchDirectory(searchPath);
+	g_free(searchPath);
+	g_free(path);
+
+	char buffer[512] = { 0 };
+	path = getcwd(buffer, sizeof(buffer));
+	if (path == NULL) {
+		return gladePath;
+	}
+
+	searchPath = g_build_filename(path, "ui", NULL);
+	gladePath->addSearchDirectory(searchPath);
+	g_free(searchPath);
+
+	searchPath = g_build_filename(path, "..", "ui", NULL);
+	gladePath->addSearchDirectory(searchPath);
+	g_free(searchPath);
+
+
+	return gladePath;
 }

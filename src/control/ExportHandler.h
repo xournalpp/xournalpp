@@ -14,13 +14,15 @@
 
 #include "../model/Document.h"
 
+class GladeSearchpath;
+
 class ExportHandler {
 public:
 	ExportHandler();
 	virtual ~ExportHandler();
 
 public:
-	void runExportWithDialog(Document * doc, int current);
+	void runExportWithDialog(GladeSearchpath * gladeSearchPath, Document * doc, int current);
 
 };
 

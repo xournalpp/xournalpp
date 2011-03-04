@@ -19,9 +19,10 @@ class ColorEntry;
 
 class SelectBackgroundColorDialog: public GladeGui {
 public:
-	SelectBackgroundColorDialog(Control * control);
+	SelectBackgroundColorDialog(GladeSearchpath * gladeSearchPath, Control * control);
 	virtual ~SelectBackgroundColorDialog();
 
+public:
 	void show();
 
 	int getSelectedColor();
@@ -31,8 +32,8 @@ public:
 private:
 	void updateLastUsedColors();
 
-	static void buttonSelectedCallback(GtkButton *button, ColorEntry * e);
-	static void buttonCustomCallback(GtkButton *button, SelectBackgroundColorDialog * dlg);
+	static void buttonSelectedCallback(GtkButton * button, ColorEntry * e);
+	static void buttonCustomCallback(GtkButton * button, SelectBackgroundColorDialog * dlg);
 
 private:
 	Control * control;

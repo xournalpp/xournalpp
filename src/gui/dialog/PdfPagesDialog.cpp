@@ -66,12 +66,12 @@ public:
 		gtk_widget_set_size_request(widget, getWidth(), getHeight());
 	}
 private:
-	static gboolean exposeEventCallback(GtkWidget *widget, GdkEventExpose *event, PdfPage * page) {
+	static gboolean exposeEventCallback(GtkWidget * widget, GdkEventExpose * event, PdfPage * page) {
 		page->paint();
 		return true;
 	}
 
-	static gboolean mouseButtonPressCallback(GtkWidget *widget, GdkEventButton *event, PdfPage * page) {
+	static gboolean mouseButtonPressCallback(GtkWidget * widget, GdkEventButton * event, PdfPage * page) {
 		page->dlg->setSelected(page->pageNr);
 		return true;
 	}
@@ -208,8 +208,8 @@ private:
 //////////////////////////////////////////////////////////////////
 
 
-PdfPagesDialog::PdfPagesDialog(Document * doc, Settings * settings) :
-	GladeGui("pdfpages.glade", "pdfPagesDialog") {
+PdfPagesDialog::PdfPagesDialog(GladeSearchpath * gladeSearchPath, Document * doc, Settings * settings) :
+	GladeGui(gladeSearchPath, "pdfpages.glade", "pdfPagesDialog") {
 
 	this->pages = NULL;
 	this->settings = settings;
@@ -300,6 +300,7 @@ void PdfPagesDialog::setPageUsed(int page) {
 int PdfPagesDialog::getSelectedPage() {
 	return this->selectedPage;
 }
+
 double PdfPagesDialog::getZoom() {
 	return 0.25;
 }

@@ -17,9 +17,10 @@
 
 class ImagesDialog: public GladeGui {
 public:
-	ImagesDialog(Document * doc, Settings * settings);
+	ImagesDialog(GladeSearchpath * gladeSearchPath, Document * doc, Settings * settings);
 	virtual ~ImagesDialog();
 
+public:
 	void show();
 	void setBackgroundWhite();
 
