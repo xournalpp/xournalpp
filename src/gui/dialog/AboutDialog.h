@@ -16,7 +16,7 @@
 
 class AboutDialog: public GladeGui {
 public:
-	AboutDialog();
+	AboutDialog(GladeSearchpath * gladeSearchPath);
 	virtual ~AboutDialog();
 
 	void show();

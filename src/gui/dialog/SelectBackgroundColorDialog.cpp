@@ -29,8 +29,8 @@ public:
 	bool custom;
 };
 
-SelectBackgroundColorDialog::SelectBackgroundColorDialog(Control * control) :
-	GladeGui("page-background-color.glade", "pageBgColorDialog") {
+SelectBackgroundColorDialog::SelectBackgroundColorDialog(GladeSearchpath * gladeSearchPath, Control * control) :
+	GladeGui(gladeSearchPath, "page-background-color.glade", "pageBgColorDialog") {
 	this->control = control;
 	this->colors = NULL;
 	this->selected = -1;
@@ -88,7 +88,7 @@ SelectBackgroundColorDialog::SelectBackgroundColorDialog(Control * control) :
 	}
 	gtk_widget_show_all(toolbar);
 
-	if(count == 0) {
+	if (count == 0) {
 		// no colors => not title
 		GtkWidget * w = get("lbLastUsed");
 		gtk_widget_hide(w);
@@ -182,19 +182,18 @@ void SelectBackgroundColorDialog::updateLastUsedColors() {
 	settings->customSettingsChanged();
 }
 
-void SelectBackgroundColorDialog::buttonCustomCallback(GtkButton *button, SelectBackgroundColorDialog * dlg) {
+void SelectBackgroundColorDialog::buttonCustomCallback(GtkButton * button, SelectBackgroundColorDialog * dlg) {
 	dlg->selected = -2;
 	gtk_widget_hide(dlg->window);
 }
 
-void SelectBackgroundColorDialog::buttonSelectedCallback(GtkButton *button, ColorEntry * e) {
+void SelectBackgroundColorDialog::buttonSelectedCallback(GtkButton * button, ColorEntry * e) {
 	e->dlg->selected = e->color;
 	if (e->custom) {
 		if (e->color == -1 && e->dlg->colorDlg) {
 			GdkColor color = { 0 };
 
-			GtkWidget* cw =
-					gtk_color_selection_dialog_get_color_selection(GTK_COLOR_SELECTION_DIALOG(e->dlg->colorDlg));
+			GtkWidget* cw = gtk_color_selection_dialog_get_color_selection(GTK_COLOR_SELECTION_DIALOG(e->dlg->colorDlg));
 			gtk_color_selection_get_current_color(GTK_COLOR_SELECTION(cw), &color);
 
 			e->dlg->selected = (color.red / 256) << 16 | (color.green / 256) << 8 | (color.blue / 256);

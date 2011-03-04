@@ -36,10 +36,9 @@ void CairoPdf::finalize() {
 	cairo_destroy(this->cr);
 	cairo_surface_destroy(this->surface);
 
-	// TODO: debug
-	FILE * fp = fopen("/home/andreas/tmp/pdf/cairo.pdf", "w");
-	fwrite(this->data->str, 1, this->data->len, fp);
-	fclose(fp);
+//	FILE * fp = fopen("/home/andreas/tmp/pdf/cairo.pdf", "w");
+//	fwrite(this->data->str, 1, this->data->len, fp);
+//	fclose(fp);
 
 	doc.load(this->data->str, this->data->len);
 	this->data->len = 0;

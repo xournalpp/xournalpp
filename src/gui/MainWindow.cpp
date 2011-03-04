@@ -5,8 +5,8 @@
 #include <config.h>
 #include <glib/gi18n-lib.h>
 
-MainWindow::MainWindow(Control * control) :
-	GladeGui("main.glade", "mainWindow") {
+MainWindow::MainWindow(GladeSearchpath * gladeSearchPath, Control * control) :
+	GladeGui(gladeSearchPath, "main.glade", "mainWindow") {
 	this->control = control;
 	this->toolbarIntialized = false;
 	this->toolbarGroup = NULL;
@@ -87,7 +87,7 @@ MainWindow::~MainWindow() {
 	g_list_free(this->toolbarMenuitem);
 }
 
-void MainWindow::viewShowSidebar(GtkCheckMenuItem *checkmenuitem, MainWindow * win) {
+void MainWindow::viewShowSidebar(GtkCheckMenuItem * checkmenuitem, MainWindow * win) {
 	bool a = gtk_check_menu_item_get_active(checkmenuitem);
 	if (win->control->getSettings()->isSidebarVisible() == a) {
 		return;
@@ -138,11 +138,11 @@ void MainWindow::updateScrollbarSidebarPosition() {
 	g_object_unref(scrolledwindowMain);
 }
 
-void MainWindow::buttonCloseSidebarClicked(GtkButton *button, MainWindow * win) {
+void MainWindow::buttonCloseSidebarClicked(GtkButton * button, MainWindow * win) {
 	win->setSidebarVisible(false);
 }
 
-bool MainWindow::deleteEventCallback(GtkWidget *widget, GdkEvent *event, Control * control) {
+bool MainWindow::deleteEventCallback(GtkWidget * widget, GdkEvent * event, Control * control) {
 	control->quit();
 
 	return true;
@@ -164,7 +164,7 @@ bool pageNrSpinChangedTimerCallback(Control * control) {
 	return false;
 }
 
-void MainWindow::pageNrSpinChangedCallback(GtkSpinButton *spinbutton, MainWindow * win) {
+void MainWindow::pageNrSpinChangedCallback(GtkSpinButton * spinbutton, MainWindow * win) {
 	static int lastId = 0;
 	if (lastId) {
 		g_source_remove(lastId);
@@ -190,7 +190,7 @@ XournalWidget * MainWindow::getXournal() {
 	return xournal;
 }
 
-bool MainWindow::windowStateEventCallback(GtkWidget *window, GdkEventWindowState *event, MainWindow * win) {
+bool MainWindow::windowStateEventCallback(GtkWidget * window, GdkEventWindowState * event, MainWindow * win) {
 	if (!(event->new_window_state & GDK_WINDOW_STATE_FULLSCREEN)) {
 		gboolean maximized;
 

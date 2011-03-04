@@ -15,17 +15,20 @@
 #include <poppler/Object.h>
 #include "poppler/XojPopplerDocument.h"
 
+enum PdfRefEntryType {
+	PDF_REF_ENTRY_TYPE_REF,
+	PDF_REF_ENTRY_TYPE_DICT
+};
+
 class PdfRefEntry {
 public:
-	PdfRefEntry(int objectId, Ref ref, Object * object, int imageId, XojPopplerDocument doc);
+	PdfRefEntry(PdfRefEntryType type, int objectId, Object * object, int imageId, XojPopplerDocument doc);
 	~PdfRefEntry();
 
-	bool equalsRef(const Ref & ref);
-
 public:
+	PdfRefEntryType type;
 	int objectId;
-	int imageId;
-	Ref ref;
+	int refSourceId;
 	XojPopplerDocument doc;
 	Object * object;
 };

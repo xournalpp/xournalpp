@@ -1,7 +1,7 @@
 /*
  * Xournal++
  *
- * Abstract gui class, which loads the glade objcts
+ * Abstract GUI class, which loads the glade objects
  *
  * @author Xournal Team
  * http://xournal.sf.net
@@ -15,17 +15,12 @@
 #include <gtk/gtk.h>
 #include <glade/glade-xml.h>
 
-class GladeGui;
-
-typedef bool (GladeGui::*tFunction)(void * d1, void * d2);
+class GladeSearchpath;
 
 class GladeGui {
 public:
-	GladeGui(const char * glade, const char * mainWnd);
+	GladeGui(GladeSearchpath * gladeSearchPath, const char * glade, const char * mainWnd);
 	virtual ~GladeGui();
-
-	static void addSearchDirectory(const char *directory);
-	static char * findFile(const char * subdir, const char * file);
 
 	virtual void show() = 0;
 
@@ -34,16 +29,17 @@ public:
 	GdkPixbuf * loadIconPixbuf(const char * filename);
 
 	GtkWidget * getWindow();
-private:
-	/**
-	 * Search directory for icons and Glade files
-	 */
-	static GList *directories;
 
+private:
 	/**
 	 * The Glade resources
 	 */
-	GladeXML *xml;
+	GladeXML * xml;
+
+	/**
+	 * Our search paths
+	 */
+	GladeSearchpath * gladeSearchPath;
 
 protected:
 	/**

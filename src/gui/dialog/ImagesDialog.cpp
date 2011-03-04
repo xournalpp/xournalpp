@@ -186,8 +186,8 @@ private:
 //////////////////////////////////////////////////////////////////
 
 
-ImagesDialog::ImagesDialog(Document * doc, Settings * settings) :
-	GladeGui("images.glade", "ImagesDialog") {
+ImagesDialog::ImagesDialog(GladeSearchpath * gladeSearchPath, Document * doc, Settings * settings) :
+	GladeGui(gladeSearchPath, "images.glade", "ImagesDialog") {
 
 	this->images = NULL;
 	this->settings = settings;

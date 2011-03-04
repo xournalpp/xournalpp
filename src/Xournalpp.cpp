@@ -13,10 +13,11 @@
 #include "util/CrashHandler.h"
 #include "util/Stacktrace.h"
 
-int main(int argc, char *argv[]) {
+int main(int argc, char * argv[]) {
 	// init crash handler
 	installCrashHandlers();
 	if (argc) {
+		// Filename is needed to get backtracke with filenumbers
 		Stacktrace::setExename(argv[0]);
 	}
 

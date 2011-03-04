@@ -67,6 +67,7 @@ xournalpp_SOURCES = \
 	gui/widgets/ZoomCallib.cpp \
 	gui/Cursor.cpp \
 	gui/GladeGui.cpp \
+	gui/GladeSearchpath.cpp \
 	gui/MainWindow.cpp \
 	gui/PageView.cpp \
 	gui/SearchBar.cpp \
@@ -93,7 +94,6 @@ xournalpp_SOURCES = \
 	pdf/PdfBookmark.cpp \
 	pdf/PdfExport.cpp \
 	pdf/PdfExtGState.cpp \
-	pdf/PdfFont.cpp \
 	pdf/PdfObjectWriter.cpp \
 	pdf/PdfRefEntry.cpp \
 	pdf/PdfRefList.cpp \

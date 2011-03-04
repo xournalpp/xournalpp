@@ -21,7 +21,7 @@ enum ExportFormtType {
 
 class ExportDialog: public GladeGui {
 public:
-	ExportDialog(int pageCount, int currentPage);
+	ExportDialog(GladeSearchpath * gladeSearchPath, int pageCount, int currentPage);
 	virtual ~ExportDialog();
 
 public:

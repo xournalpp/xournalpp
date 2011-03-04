@@ -37,12 +37,14 @@
 // TODO: Check for error log on startup, also check for emergency save document!
 
 
-Control::Control() {
+Control::Control(GladeSearchpath * gladeSearchPath) {
 	this->win = NULL;
 	this->recent = new RecentManager();
 	this->undoRedo = new UndoRedoHandler(this);
 	this->recent->addListener(this);
 	this->undoRedo->addUndoRedoListener(this);
+
+	this->gladeSearchPath = gladeSearchPath;
 
 	// Init Metadata Manager
 	ev_metadata_manager_init();
@@ -749,7 +751,7 @@ void Control::clearSelectionEndText() {
 }
 
 void Control::invokeLater(ActionType type) {
-	g_idle_add((GSourceFunc) & invokeCallback, new CallbackData(this, type));
+	g_idle_add((GSourceFunc) &invokeCallback, new CallbackData(this, type));
 }
 
 /**
@@ -985,7 +987,7 @@ void Control::insertNewPage(int position) {
 		if (doc->getPdfPageCount() == 0) {
 			GtkWidget * dialog = gtk_message_dialog_new((GtkWindow*) *win, GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, _(
 					"You don't have any PDF pages to select from. Cancel operation,\n"
-						"Please select another background type: Menu \"Journal\" / \"Insert Page Type\"."));
+					"Please select another background type: Menu \"Journal\" / \"Insert Page Type\"."));
 			gtk_dialog_run(GTK_DIALOG(dialog));
 			gtk_widget_destroy(dialog);
 
@@ -993,7 +995,7 @@ void Control::insertNewPage(int position) {
 			page->unreference();
 			return;
 		} else {
-			PdfPagesDialog * dlg = new PdfPagesDialog(this->doc, this->settings);
+			PdfPagesDialog * dlg = new PdfPagesDialog(this->gladeSearchPath, this->doc, this->settings);
 			for (int i = 0; i < doc->getPageCount(); i++) {
 				XojPage * p = doc->getPage(i);
 				if (p->getBackgroundType() == BACKGROUND_TYPE_PDF && p->getPdfPageNr() >= 0) {
@@ -1081,7 +1083,7 @@ void Control::setPageBackground(ActionType type) {
 	} else if (ACTION_SET_PAPER_BACKGROUND_GRAPH == type) {
 		page->setBackgroundType(BACKGROUND_TYPE_GRAPH);
 	} else if (ACTION_SET_PAPER_BACKGROUND_IMAGE == type) {
-		ImagesDialog * dlg = new ImagesDialog(this->doc, this->settings);
+		ImagesDialog * dlg = new ImagesDialog(this->gladeSearchPath, this->doc, this->settings);
 		dlg->show();
 		BackgroundImage * img = dlg->getSelectedImage();
 		if (img) {
@@ -1128,12 +1130,12 @@ void Control::setPageBackground(ActionType type) {
 		if (doc->getPdfPageCount() == 0) {
 			GtkWidget * dialog = gtk_message_dialog_new((GtkWindow*) *win, GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, _(
 					"You don't have any PDF pages to select from. Cancel operation,\n"
-						"Please select another background type: Menu \"Journal\" / \"Insert Page Type\"."));
+					"Please select another background type: Menu \"Journal\" / \"Insert Page Type\"."));
 			gtk_dialog_run(GTK_DIALOG(dialog));
 			gtk_widget_destroy(dialog);
 			return;
 		} else {
-			PdfPagesDialog * dlg = new PdfPagesDialog(this->doc, this->settings);
+			PdfPagesDialog * dlg = new PdfPagesDialog(this->gladeSearchPath, this->doc, this->settings);
 			for (int i = 0; i < doc->getPageCount(); i++) {
 				XojPage * p = doc->getPage(i);
 				if (p->getBackgroundType() == BACKGROUND_TYPE_PDF && p->getPdfPageNr() >= 0) {
@@ -1188,7 +1190,7 @@ void Control::paperFormat() {
 	}
 	clearSelectionEndText();
 
-	FormatDialog * dlg = new FormatDialog(settings, page->getWidth(), page->getHeight());
+	FormatDialog * dlg = new FormatDialog(this->gladeSearchPath, settings, page->getWidth(), page->getHeight());
 	dlg->show();
 
 	double width = dlg->getWidth();
@@ -1216,7 +1218,7 @@ void Control::changePageBackgroundColor() {
 		return;
 	}
 
-	SelectBackgroundColorDialog * dlg = new SelectBackgroundColorDialog(this);
+	SelectBackgroundColorDialog * dlg = new SelectBackgroundColorDialog(this->gladeSearchPath, this);
 	dlg->show();
 	int color = dlg->getSelectedColor();
 
@@ -1541,7 +1543,7 @@ void Control::showSettings() {
 	bool allowScrollOutside = settings->isAllowScrollOutsideThePage();
 	bool bigCursor = settings->isShowBigCursor();
 
-	SettingsDialog * dlg = new SettingsDialog(settings);
+	SettingsDialog * dlg = new SettingsDialog(this->gladeSearchPath, settings);
 	dlg->show();
 
 	if (xeventEnabled != settings->isUseXInput()) {
@@ -1589,14 +1591,14 @@ void Control::newFile() {
 	fileLoaded();
 }
 
-bool Control::openFile(String filename) {
+bool Control::openFile(String filename, int scrollToPage) {
 	if (!this->close()) {
 		return false;
 	}
 
 	if (filename.isEmpty()) {
 		bool attachPdf = false;
-		filename = XojOpenDlg::showOpenDialog((GtkWindow *)*win, this->settings, false, attachPdf);
+		filename = XojOpenDlg::showOpenDialog((GtkWindow *) *win, this->settings, false, attachPdf);
 		if (filename.isEmpty()) {
 			return false;
 		}
@@ -1644,7 +1646,9 @@ bool Control::openFile(String filename) {
 			zoom->setZoom(g_value_get_double(&value));
 		}
 
-		if (ev_metadata_manager_get(file, "page", &value, TRUE) && G_VALUE_TYPE(&value) == G_TYPE_INT) {
+		if (scrollToPage >= 0) {
+			scrollHandler->scrollToPage(scrollToPage);
+		} else if (ev_metadata_manager_get(file, "page", &value, TRUE) && G_VALUE_TYPE(&value) == G_TYPE_INT) {
 			scrollHandler->scrollToPage(g_value_get_int(&value));
 		}
 		recent->addRecentFileFilename(file);
@@ -1718,7 +1722,7 @@ bool Control::copyFile(String source, String target) {
 	GFile * trg = g_file_new_for_path(target.c_str());
 	GError * err = NULL;
 
-	bool ok = g_file_copy(src, trg, G_FILE_COPY_OVERWRITE, NULL, (GFileProgressCallback) & copyProgressCallback, this, &err);
+	bool ok = g_file_copy(src, trg, G_FILE_COPY_OVERWRITE, NULL, (GFileProgressCallback) &copyProgressCallback, this, &err);
 
 	if (!err && !ok) {
 		this->copyError = "Copy error: return false, but didn't set error message";
@@ -1965,7 +1969,7 @@ void Control::exportAsPdf() {
 
 void Control::exportAs() {
 	ExportHandler handler;
-	handler.runExportWithDialog(this->doc, getCurrentPageNo());
+	handler.runExportWithDialog(this->gladeSearchPath, this->doc, getCurrentPageNo());
 }
 
 void Control::saveAs() {
@@ -2015,7 +2019,12 @@ bool Control::close() {
 		}
 	}
 
+
+	// TODO: this is not working correct!
+	// some pages are not deleted, if i use annotate PDF
 	undoRedo->clearContents();
+	doc->clearDocument();
+	updateWindowTitle();
 	return true;
 }
 
@@ -2026,7 +2035,7 @@ void Control::resetShapeRecognizer() {
 }
 
 void Control::showAbout() {
-	AboutDialog dlg;
+	AboutDialog dlg(this->gladeSearchPath);
 	dlg.show();
 }
 

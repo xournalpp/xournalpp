@@ -48,6 +48,9 @@ void Document::clearDocument(bool destroy) {
 	this->pages = NULL;
 	this->pageCount = 0;
 	this->pagesArrayLen = 0;
+
+	this->filename = NULL;
+	this->pdfFilename = NULL;
 }
 
 int Document::getPageCount() {
@@ -137,8 +140,8 @@ void Document::buildTreeContentsModel(GtkTreeIter * parent, XojPopplerIter * ite
 		gtk_tree_store_append(GTK_TREE_STORE(contentsModel), &treeIter, parent);
 		char *titleMarkup = g_markup_escape_text(action->getTitle().c_str(), -1);
 
-		gtk_tree_store_set(GTK_TREE_STORE(contentsModel), &treeIter, DOCUMENT_LINKS_COLUMN_NAME, titleMarkup,
-				DOCUMENT_LINKS_COLUMN_LINK, link, DOCUMENT_LINKS_COLUMN_PAGE_NUMBER, "", -1);
+		gtk_tree_store_set(GTK_TREE_STORE(contentsModel), &treeIter, DOCUMENT_LINKS_COLUMN_NAME, titleMarkup, DOCUMENT_LINKS_COLUMN_LINK, link,
+				DOCUMENT_LINKS_COLUMN_PAGE_NUMBER, "", -1);
 
 		g_free(titleMarkup);
 		g_object_unref(link);

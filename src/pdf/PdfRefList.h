@@ -23,15 +23,33 @@ class PdfXRef;
 class PdfExport;
 class PdfWriter;
 
+class RefReplacement {
+public:
+	RefReplacement(String name, int newId, const char * type);
+	~RefReplacement();
+
+	// TODO: add reference counter, remove unused
+
+	String name;
+	int newId;
+	char * type;
+};
+
 class PdfRefList {
 public:
-	PdfRefList(PdfXRef * xref, PdfObjectWriter * objectWriter, PdfWriter * writer, const char * type);
+	/**
+	 * Type char is ownd by PdfRefList and should not be freed
+	 */
+	PdfRefList(PdfXRef * xref, PdfObjectWriter * objectWriter, PdfWriter * writer, char * type);
 	virtual ~PdfRefList();
 
 public:
 	void writeObjects();
-	bool writeRefList();
-	int lookup(String name, Ref ref, Object * object, XojPopplerDocument doc);
+	void writeRefList(const char * type);
+
+	void parse(Dict * dict, int index, XojPopplerDocument doc, GList * &replacementList);
+
+	static void deletePdfRefList(PdfRefList * ref);
 
 private:
 	int id;
@@ -40,7 +58,7 @@ private:
 	PdfXRef * xref;
 	PdfObjectWriter * objectWriter;
 	PdfWriter * writer;
-	const char * type;
+	char * type;
 };
 
 #endif /* PDFREFLIST_H_ */

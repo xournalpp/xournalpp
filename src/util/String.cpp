@@ -442,7 +442,7 @@ String String::substring(int start, int length) const {
 	}
 
 	if (start < 0) {
-		start = this->length() - start;
+		start = this->length() + start;
 	}
 
 	if (start + length > this->length() || start < 0 || length < 0) {
