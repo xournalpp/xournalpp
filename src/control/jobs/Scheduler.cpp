@@ -17,8 +17,6 @@ Scheduler::Scheduler() {
 	this->jobQueueMutex = g_mutex_new();
 	this->jobRunningMutex= g_mutex_new();
 
-	this->thread = g_thread_create((GThreadFunc)jobThreadCallback, this, true, NULL);
-
 	// Queue
 	GQueue init = G_QUEUE_INIT;
 	this->queueUrgent = init;
@@ -29,6 +27,8 @@ Scheduler::Scheduler() {
 	this->jobQueue[JOB_PRIORITY_HIGH] = &this->queueHigh;
 	this->jobQueue[JOB_PRIORITY_LOW] = &this->queueLow;
 	this->jobQueue[JOB_PRIORITY_NONE] = &this->queueNone;
+
+	this->thread = g_thread_create((GThreadFunc)jobThreadCallback, this, true, NULL);
 }
 
 Scheduler::~Scheduler() {
@@ -55,7 +55,7 @@ Job * Scheduler::getNextJobUnlocked() {
 	Job * job = NULL;
 
 	for (int i = JOB_PRIORITY_URGENT; i < JOB_N_PRIORITIES; i++) {
-		job = (Job *) g_queue_pop_head(jobQueue[i]);
+		job = (Job *) g_queue_pop_head(this->jobQueue[i]);
 		if (job) {
 			break;
 		}

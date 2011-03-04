@@ -85,6 +85,7 @@ am_xournalpp_OBJECTS = xournalpp-BlockingJob.$(OBJEXT) \
 	xournalpp-SearchControl.$(OBJEXT) xournalpp-Tool.$(OBJEXT) \
 	xournalpp-ToolHandler.$(OBJEXT) \
 	xournalpp-ZoomControl.$(OBJEXT) \
+	xournalpp-XournalMain.$(OBJEXT) \
 	xournalpp-AboutDialog.$(OBJEXT) \
 	xournalpp-ExportDialog.$(OBJEXT) \
 	xournalpp-FormatDialog.$(OBJEXT) \
@@ -342,6 +343,7 @@ xournalpp_SOURCES = \
 	control/Tool.cpp \
 	control/ToolHandler.cpp \
 	control/ZoomControl.cpp \
+	control/XournalMain.cpp \
 	gui/dialog/AboutDialog.cpp \
 	gui/dialog/ExportDialog.cpp \
 	gui/dialog/FormatDialog.cpp \
@@ -632,6 +634,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-XojPopplerDocument.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-XojPopplerIter.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-XojPopplerPage.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-XournalMain.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-XournalScheduler.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-XournalWidget.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-Xournalpp.Po@am__quote@
@@ -1298,6 +1301,20 @@ xournalpp-ZoomControl.obj: control/ZoomControl.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='control/ZoomControl.cpp' object='xournalpp-ZoomControl.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-ZoomControl.obj `if test -f 'control/ZoomControl.cpp'; then $(CYGPATH_W) 'control/ZoomControl.cpp'; else $(CYGPATH_W) '$(srcdir)/control/ZoomControl.cpp'; fi`
+
+xournalpp-XournalMain.o: control/XournalMain.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-XournalMain.o -MD -MP -MF $(DEPDIR)/xournalpp-XournalMain.Tpo -c -o xournalpp-XournalMain.o `test -f 'control/XournalMain.cpp' || echo '$(srcdir)/'`control/XournalMain.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-XournalMain.Tpo $(DEPDIR)/xournalpp-XournalMain.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='control/XournalMain.cpp' object='xournalpp-XournalMain.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-XournalMain.o `test -f 'control/XournalMain.cpp' || echo '$(srcdir)/'`control/XournalMain.cpp
+
+xournalpp-XournalMain.obj: control/XournalMain.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-XournalMain.obj -MD -MP -MF $(DEPDIR)/xournalpp-XournalMain.Tpo -c -o xournalpp-XournalMain.obj `if test -f 'control/XournalMain.cpp'; then $(CYGPATH_W) 'control/XournalMain.cpp'; else $(CYGPATH_W) '$(srcdir)/control/XournalMain.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-XournalMain.Tpo $(DEPDIR)/xournalpp-XournalMain.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='control/XournalMain.cpp' object='xournalpp-XournalMain.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-XournalMain.obj `if test -f 'control/XournalMain.cpp'; then $(CYGPATH_W) 'control/XournalMain.cpp'; else $(CYGPATH_W) '$(srcdir)/control/XournalMain.cpp'; fi`
 
 xournalpp-AboutDialog.o: gui/dialog/AboutDialog.cpp
 @am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-AboutDialog.o -MD -MP -MF $(DEPDIR)/xournalpp-AboutDialog.Tpo -c -o xournalpp-AboutDialog.o `test -f 'gui/dialog/AboutDialog.cpp' || echo '$(srcdir)/'`gui/dialog/AboutDialog.cpp
