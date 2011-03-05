@@ -22,17 +22,27 @@
 class PdfXRef;
 class PdfExport;
 class PdfWriter;
+class PdfRefEntry;
 
 class RefReplacement {
 public:
-	RefReplacement(String name, int newId, const char * type);
+	RefReplacement(String name, int newId, const char * type, PdfRefEntry * refEntry);
 	~RefReplacement();
-
-	// TODO: add reference counter, remove unused
 
 	String name;
 	int newId;
 	char * type;
+
+public:
+	/**
+	 * Mark this reference as used
+	 */
+	void markAsUsed();
+
+private:
+	bool used;
+
+	PdfRefEntry * refEntry;
 };
 
 class PdfRefList {
@@ -47,6 +57,7 @@ public:
 	void writeObjects();
 	void writeRefList(const char * type);
 
+	int lookup(Ref ref, Object * object, XojPopplerDocument doc, PdfRefEntry * &refEntry);
 	void parse(Dict * dict, int index, XojPopplerDocument doc, GList * &replacementList);
 
 	static void deletePdfRefList(PdfRefList * ref);

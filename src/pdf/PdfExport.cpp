@@ -211,10 +211,7 @@ bool PdfExport::writeFooter() {
 		return false;
 	}
 
-	if (!this->bookmarks.writeOutlines(this->doc, this->writer, &this->outlineRoot)) {
-		g_warning("failed to write outlines");
-		return false;
-	}
+	this->bookmarks.writeOutlines(this->doc, this->writer, &this->outlineRoot, this->pageIds);
 
 	if (!writer->writeInfo(doc->getFilename())) {
 		g_warning("failed to write info");
@@ -327,7 +324,9 @@ void PdfExport::writeStream(const char * str, int len, GList * replacementList) 
 				RefReplacement * f = (RefReplacement *) l->data;
 				if (f->name == buffer) {
 					this->writer->writef("/%s%i", f->type, f->newId);
+					f->markAsUsed();
 					lastWritten = u;
+
 					break;
 				}
 			}

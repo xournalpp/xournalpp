@@ -304,7 +304,7 @@ void XournalWidget::paintBorder(GtkWidget * widget, GdkEventExpose * event) {
 }
 
 void XournalWidget::pageSelected(int page) {
-	if (currentPage == page) {
+	if (this->currentPage == page && this->lastSelectedPage == page) {
 		return;
 	}
 
@@ -313,8 +313,8 @@ void XournalWidget::pageSelected(int page) {
 		ev_metadata_manager_set_int(file, "page", page);
 	}
 
-	if (lastSelectedPage >= 0 && lastSelectedPage < viewPagesLen) {
-		viewPages[lastSelectedPage]->setSelected(false);
+	if (this->lastSelectedPage >= 0 && this->lastSelectedPage < this->viewPagesLen) {
+		this->viewPages[this->lastSelectedPage]->setSelected(false);
 	}
 
 	this->currentPage = page;
@@ -679,11 +679,19 @@ void XournalWidget::pageInserted(int page) {
 
 	for (int i = 0; i < page; i++) {
 		this->viewPages[i] = lastViewPages[i];
+
+		// unselect to prevent problems...
+		this->viewPages[i]->setSelected(false);
 	}
 
 	for (int i = page; i < this->viewPagesLen; i++) {
 		this->viewPages[i + 1] = lastViewPages[i];
+
+		// unselect to prevent problems...
+		this->viewPages[i + 1]->setSelected(false);
 	}
+
+	this->lastSelectedPage = -1;
 
 	this->viewPagesLen++;
 

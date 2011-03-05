@@ -13,6 +13,7 @@
 #define __PDFEXPORTJOB_H__
 
 #include "BlockingJob.h"
+#include "../../util/String.h"
 
 class Control;
 class PdfExportJob: public BlockingJob {
@@ -23,6 +24,11 @@ public:
 public:
 	void run();
 
+public:
+	bool showFilechooser();
+
+private:
+	String filename;
 };
 
 #endif /* __PDFEXPORTJOB_H__ */

@@ -69,14 +69,19 @@ GList * PdfBookmarks::exportBookmarksFromTreeModel(GtkTreeModel * model, Documen
 	return data;
 }
 
-bool PdfBookmarks::writeOutlines(Document * doc, PdfWriter * writer, int * outlineRoot) {
+void PdfBookmarks::writeOutlines(Document * doc, PdfWriter * writer, int * outlineRoot, GList * pageIds) {
 	GtkTreeModel * model = doc->getContentsModel();
 	if (!model) {
-		return true;
+		return;
 	}
 
 	GList * bookmarkList = exportBookmarksFromTreeModel(model, doc);
 	int bookmarksLenght = g_list_length(bookmarkList);
+
+	if (bookmarksLenght == 0) {
+		return;
+	}
+
 	Bookmark ** bookmarks = new Bookmark *[bookmarksLenght];
 
 	int maxLevel = 0;
@@ -89,14 +94,14 @@ bool PdfBookmarks::writeOutlines(Document * doc, PdfWriter * writer, int * outli
 		bookmarks[i++] = b;
 	}
 
-	g_list_free(bookmarkList);
-
 	int * levels = new int[maxLevel + 1];
-	int level = 0;
+	for (int u = 0; u < maxLevel + 1; u++) {
+		levels[u] = 0;
+	}
 
+	int level = 0;
 	for (i = 0; i < bookmarksLenght; i++) {
 		Bookmark * b = bookmarks[i];
-
 		if (b->level > 0) {
 			int parent = levels[b->level - 1];
 			//Set parent and last pointers
@@ -107,30 +112,24 @@ bool PdfBookmarks::writeOutlines(Document * doc, PdfWriter * writer, int * outli
 				bookmarks[parent]->first = i;
 			}
 		} else {
-			b->parent = bookmarksLenght;
+			bookmarks[i]->parent = bookmarksLenght;
 		}
 
 		if (b->level <= level && i > 0) {
 			//Set prev and next pointers
 			int prev = levels[b->level];
 			bookmarks[prev]->next = i;
-			b->prev = prev;
+			bookmarks[i]->prev = prev;
 		}
-
 		levels[b->level] = i;
 		level = b->level;
-		i++;
 	}
 
-	//Outline items
-	char buffer[256];
 	int n = writer->getObjectId();
 
 	for (i = 0; i < bookmarksLenght; i++) {
 		Bookmark * b = bookmarks[i];
-		if (!writer->writeObj()) {
-			return false;
-		}
+		writer->writeObj();
 
 		writer->write("<<\n/Title ");
 		writer->writeTxt(b->name.c_str());
@@ -170,7 +169,16 @@ bool PdfBookmarks::writeOutlines(Document * doc, PdfWriter * writer, int * outli
 			top = (p->getHeight() - b->top) * 72;
 		}
 
-		sprintf(buffer, "/Dest [%d 0 R /XYZ 0 %.2f null]", 1 + 2 * b->page, top /*($this->h-$o['y'])*$this->k*/);
+		//Outline items
+		char buffer[256];
+
+		int pObjId = 0;
+		int * pObjIdPtr = (int *)g_list_nth_data(pageIds, b->page);
+		if (pObjIdPtr) {
+			pObjId = *pObjIdPtr;
+		}
+
+		sprintf(buffer, "/Dest [%d 0 R /XYZ 0 %.2f null]\n", pObjId, top /*($this->h-$o['y'])*$this->k*/);
 
 		writer->write(buffer);
 		writer->write("/Count 0\n>>\n");
@@ -195,5 +203,5 @@ bool PdfBookmarks::writeOutlines(Document * doc, PdfWriter * writer, int * outli
 	delete[] bookmarks;
 	delete[] levels;
 
-	return true;
+	return;
 }

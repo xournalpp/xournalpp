@@ -100,7 +100,7 @@ void VerticalToolHandler::currentPos(double x, double y) {
 	double dY = this->endY - this->startY;
 
 
-	// TODO: low prio: we should move to a *new* page, but we should it do a bit more intelligent
+	// TODO: LOW PRIO: we should move to a *new* page, but we should it do a bit more intelligent
 	// than only move all elements...
 	// But how?
 

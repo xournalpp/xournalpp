@@ -10,16 +10,80 @@ PdfExportJob::PdfExportJob(Control * control) :
 PdfExportJob::~PdfExportJob() {
 }
 
+bool PdfExportJob::showFilechooser() {
+	Settings * settings = control->getSettings();
+	Document * doc = control->getDocument();
+
+	GtkWidget * dialog = gtk_file_chooser_dialog_new(_("Export PDF"), (GtkWindow*) *control->getWindow(), GTK_FILE_CHOOSER_ACTION_SAVE, GTK_STOCK_CANCEL,
+			GTK_RESPONSE_CANCEL, GTK_STOCK_SAVE, GTK_RESPONSE_OK, NULL);
+	gtk_file_chooser_set_local_only(GTK_FILE_CHOOSER(dialog), false);
+
+	GtkFileFilter * filterPdf = gtk_file_filter_new();
+	gtk_file_filter_set_name(filterPdf, _("PDF files"));
+	gtk_file_filter_add_pattern(filterPdf, "*.pdf");
+	gtk_file_chooser_add_filter(GTK_FILE_CHOOSER(dialog), filterPdf);
+
+	if (!settings->getLastSavePath().isEmpty()) {
+		gtk_file_chooser_set_current_folder_uri(GTK_FILE_CHOOSER(dialog), settings->getLastSavePath().c_str());
+	}
+
+	String saveFilename = "";
+
+	if (!doc->getFilename().isEmpty()) {
+		saveFilename = control->getFilename(doc->getFilename());
+	} else if (!doc->getPdfFilename().isEmpty()) {
+		saveFilename = control->getFilename(doc->getPdfFilename());
+		saveFilename += ".xoj";
+	} else {
+		time_t curtime = time(NULL);
+		char stime[128];
+		strftime(stime, sizeof(stime), settings->getDefaultSaveName().c_str(), localtime(&curtime));
+
+		saveFilename = stime;
+
+		if (saveFilename.substring(-4) == ".xoj") {
+			saveFilename = saveFilename.substring(0, -4);
+		}
+	}
+
+	saveFilename += ".pdf";
+
+	gtk_file_chooser_set_current_name(GTK_FILE_CHOOSER(dialog), saveFilename.c_str());
+	gtk_file_chooser_set_do_overwrite_confirmation(GTK_FILE_CHOOSER(dialog), true);
+
+	if (gtk_dialog_run(GTK_DIALOG(dialog)) != GTK_RESPONSE_OK) {
+		gtk_widget_destroy(dialog);
+		return false;
+	}
+
+	char * name = gtk_file_chooser_get_uri(GTK_FILE_CHOOSER(dialog));
+
+	this->filename = name;
+	char * folder = gtk_file_chooser_get_current_folder_uri(GTK_FILE_CHOOSER(dialog));
+	settings->setLastSavePath(folder);
+	g_free(folder);
+	g_free(name);
+
+	gtk_widget_destroy(dialog);
+
+	return true;
+}
+
 void PdfExportJob::run() {
 	SynchronizedProgressListener pglistener(this->control);
 
 	Document * doc = control->getDocument();
-	CHECK_MEMORY(doc);
 	PdfExport pdf(doc, &pglistener);
 
-	// TODO: debug
-	if (!pdf.createPdf("file:///home/andreas/tmp/pdf/pdffile.pdf")) {
-		printf("create pdf failed\n");
-		printf("error: %s\n", pdf.getLastError().c_str());
+	if (!pdf.createPdf(this->filename)) {
+
+		gdk_threads_enter();
+
+		GtkWidget * dialog = gtk_message_dialog_new((GtkWindow*) *control->getWindow(), GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, _(
+				"Create pdf failed: %s"), pdf.getLastError().c_str());
+		gtk_dialog_run(GTK_DIALOG(dialog));
+		gtk_widget_destroy(dialog);
+
+		gdk_threads_leave();
 	}
 }

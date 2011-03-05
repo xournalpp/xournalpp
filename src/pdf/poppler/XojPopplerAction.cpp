@@ -27,14 +27,14 @@ void XojPopplerAction::linkFromDest(LinkDestination *link, LinkDest *dest) {
 		if (!popplerPage) {
 			return;
 		}
-		double height = popplerPage->getWidth();
+		double height = popplerPage->getHeight();
 
 		if (dest->getChangeLeft()) {
 			link->setChangeLeft(dest->getLeft());
 		}
 
 		if (dest->getChangeTop()) {
-			link->setChangeTop(height - MIN (height, dest->getTop()));
+			link->setChangeTop(height - MIN(height, dest->getTop()));
 		}
 
 		if (dest->getChangeZoom()) {

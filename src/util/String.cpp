@@ -563,9 +563,6 @@ String String::toUpperCase() const {
 	return s;
 }
 
-/**
- * TODO: this has some bugs!!
- */
 String String::replace(String search, String replace) const {
 	char const * const original = c_str();
 	char const * const pattern = search.c_str();
