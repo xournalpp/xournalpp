@@ -423,7 +423,6 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent *even
 
 		// Menu Journal
 	case ACTION_NEW_PAGE_BEFORE:
-		// TODO: seite wird nicht selektiert!!
 		insertNewPage(getCurrentPageNo());
 		break;
 	case ACTION_NEW_PAGE_AFTER:
@@ -1034,6 +1033,7 @@ void Control::insertPage(XojPage * page, int position) {
 	if (!scrollHandler->isPageVisible(position)) {
 		scrollHandler->scrollToPage(position);
 	}
+	firePageSelected(position);
 
 	updateDeletePageButton();
 
@@ -1964,7 +1964,12 @@ void Control::updateWindowTitle() {
 }
 
 void Control::exportAsPdf() {
-	this->scheduler->addJob(new PdfExportJob(this), JOB_PRIORITY_NONE);
+	PdfExportJob * job = new PdfExportJob(this);
+	if (job->showFilechooser()) {
+		this->scheduler->addJob(job, JOB_PRIORITY_NONE);
+	} else {
+		delete job;
+	}
 }
 
 void Control::exportAs() {
@@ -2019,8 +2024,7 @@ bool Control::close() {
 		}
 	}
 
-
-	// TODO: this is not working correct!
+	// TODO: !!!!!!!!!!!this is not working correct!
 	// some pages are not deleted, if i use annotate PDF
 	undoRedo->clearContents();
 	doc->clearDocument();

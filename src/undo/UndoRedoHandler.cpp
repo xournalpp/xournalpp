@@ -5,7 +5,7 @@
 #include <config.h>
 #include <glib/gi18n-lib.h>
 
-// TODO: low prio: add memory limit
+// TODO: LOW PRIO: add memory limit
 
 UndoRedoHandler::UndoRedoHandler(Control * control) {
 	this->undoList = NULL;

@@ -23,8 +23,8 @@ public:
 
 public:
 	void createBookmarks(GtkTreeModel * model, GList * &data, GtkTreeIter * iter, int level, Document * doc);
-	GList *  exportBookmarksFromTreeModel(GtkTreeModel * model, Document * doc);
-	bool writeOutlines(Document * doc, PdfWriter * writer, int * outlineRoot);
+	GList * exportBookmarksFromTreeModel(GtkTreeModel * model, Document * doc);
+	void writeOutlines(Document * doc, PdfWriter * writer, int * outlineRoot, GList * pageIds);
 };
 
 #endif /* __PDFBOOKMARK_H__ */

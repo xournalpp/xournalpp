@@ -14,8 +14,7 @@ PdfWriter::PdfWriter(PdfXRef * xref) {
 	this->xref = xref;
 	this->objectId = 3;
 
-	// TODO: enable compression
-	this->compressOutput = false;
+	this->compressOutput = true;
 }
 
 PdfWriter::~PdfWriter() {

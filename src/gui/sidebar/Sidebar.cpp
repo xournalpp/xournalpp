@@ -28,8 +28,7 @@ Sidebar::Sidebar(GladeGui * gui, Control * control) {
 
 	gtk_tree_view_set_enable_search(GTK_TREE_VIEW(treeViewBookmarks), true);
 	gtk_tree_view_set_search_column(GTK_TREE_VIEW(treeViewBookmarks), DOCUMENT_LINKS_COLUMN_NAME);
-	gtk_tree_view_set_search_equal_func(GTK_TREE_VIEW(treeViewBookmarks),
-			(GtkTreeViewSearchEqualFunc) treeSearchFunction, this, NULL);
+	gtk_tree_view_set_search_equal_func(GTK_TREE_VIEW(treeViewBookmarks), (GtkTreeViewSearchEqualFunc) treeSearchFunction, this, NULL);
 
 	GtkTreeViewColumn * column;
 	GtkCellRenderer * renderer;
@@ -63,13 +62,11 @@ Sidebar::Sidebar(GladeGui * gui, Control * control) {
 
 	renderer = (GtkCellRenderer*) g_object_new(GTK_TYPE_CELL_RENDERER_TEXT, "ellipsize", PANGO_ELLIPSIZE_END, NULL);
 	gtk_tree_view_column_pack_start(GTK_TREE_VIEW_COLUMN (column), renderer, TRUE);
-	gtk_tree_view_column_set_attributes(GTK_TREE_VIEW_COLUMN (column), renderer, "markup", DOCUMENT_LINKS_COLUMN_NAME,
-			NULL);
+	gtk_tree_view_column_set_attributes(GTK_TREE_VIEW_COLUMN (column), renderer, "markup", DOCUMENT_LINKS_COLUMN_NAME, NULL);
 
 	renderer = gtk_cell_renderer_text_new();
 	gtk_tree_view_column_pack_end(GTK_TREE_VIEW_COLUMN (column), renderer, FALSE);
-	gtk_tree_view_column_set_attributes(GTK_TREE_VIEW_COLUMN (column), renderer, "text",
-			DOCUMENT_LINKS_COLUMN_PAGE_NUMBER, NULL);
+	gtk_tree_view_column_set_attributes(GTK_TREE_VIEW_COLUMN (column), renderer, "text", DOCUMENT_LINKS_COLUMN_PAGE_NUMBER, NULL);
 	g_object_set(G_OBJECT (renderer), "style", PANGO_STYLE_ITALIC, NULL);
 
 	GtkCellRenderer *cell;
@@ -111,8 +108,7 @@ Sidebar::~Sidebar() {
 	this->cache = NULL;
 }
 
-gboolean Sidebar::treeSearchFunction(GtkTreeModel *model, gint column, const gchar *key, GtkTreeIter *iter,
-		Sidebar * sidebar) {
+gboolean Sidebar::treeSearchFunction(GtkTreeModel *model, gint column, const gchar *key, GtkTreeIter *iter, Sidebar * sidebar) {
 	// Source: Pidgin
 
 	gchar *enteredstring;
@@ -179,16 +175,9 @@ void Sidebar::cbChangedCallback(GtkComboBox * widget, Sidebar * sidebar) {
 }
 
 void Sidebar::askInsertPdfPage(int pdfPage) {
-	GtkWidget
-			* dialog =
-					gtk_message_dialog_new(
-							(GtkWindow*) *control->getWindow(),
-							GTK_DIALOG_DESTROY_WITH_PARENT,
-							GTK_MESSAGE_QUESTION,
-							GTK_BUTTONS_NONE,
-							_("Your current document does not contain PDF Page %i\n"
-									"Would you insert this page?\n\nTipp: You can select Journal / Paper Background / PDF Background to insert a PDF page."),
-							pdfPage + 1);
+	GtkWidget * dialog = gtk_message_dialog_new((GtkWindow*) *control->getWindow(), GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_QUESTION, GTK_BUTTONS_NONE,
+			_("Your current document does not contain PDF Page %i\n"
+					"Would you insert this page?\n\nTipp: You can select Journal / Paper Background / PDF Background to insert a PDF page."), pdfPage + 1);
 
 	gtk_dialog_add_button(GTK_DIALOG(dialog), "Cancel", 1);
 	gtk_dialog_add_button(GTK_DIALOG(dialog), "Insert after", 2);
@@ -502,11 +491,19 @@ void Sidebar::pageInserted(int page) {
 
 	for (int i = 0; i < page; i++) {
 		this->previews[i] = lastPreviews[i];
+
+		// unselect to prevent problems...
+		this->previews[i]->setSelected(false);
 	}
 
 	for (int i = page; i < this->previewCount; i++) {
 		this->previews[i + 1] = lastPreviews[i];
+
+		// unselect to prevent problems...
+		this->previews[i+1]->setSelected(false);
 	}
+
+	this->selectedPage = -1;
 
 	this->previewCount++;
 

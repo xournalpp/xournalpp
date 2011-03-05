@@ -31,7 +31,7 @@ void ExportHandler::runExportWithDialog(GladeSearchpath * gladeSearchPath, Docum
 
 	// pdf, supports multiple Pages per document
 	if (type == EXPORT_FORMAT_PDF) {
-		// TODO: PDF EXPORT
+		// TODO: !!!!!!!!!!!!!!!!!PDF EXPORT
 	} else { // all other formats need one file per page
 		if (onePage != -1) { // only one page to export
 

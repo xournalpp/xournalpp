@@ -22,8 +22,11 @@ enum PdfRefEntryType {
 
 class PdfRefEntry {
 public:
-	PdfRefEntry(PdfRefEntryType type, int objectId, Object * object, int imageId, XojPopplerDocument doc);
+	PdfRefEntry(PdfRefEntryType type, int objectId, Object * object, int refSourceId, Ref ref, XojPopplerDocument doc);
 	~PdfRefEntry();
+
+public:
+	bool equalsRef(const Ref & ref);
 
 public:
 	PdfRefEntryType type;
@@ -31,6 +34,17 @@ public:
 	int refSourceId;
 	XojPopplerDocument doc;
 	Object * object;
+	Ref ref;
+
+public:
+	/**
+	 * Mark this reference as used
+	 */
+	void markAsUsed();
+
+	bool isUsed();
+private:
+	bool used;
 };
 
 #endif /* __PDFREFENTRY_H__ */
