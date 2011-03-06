@@ -5,7 +5,7 @@
   <widget class="GtkDialog" id="pagesizeDialog">
     <property name="title" translatable="yes">Paper Format</property>
     <property name="window_position">center</property>
-    <property name="icon">pixmaps/xournal.svg</property>
+    <property name="icon">pixmaps/xournalpp.svg</property>
     <property name="type_hint">dialog</property>
     <child internal-child="vbox">
       <widget class="GtkVBox" id="dialog-vbox2">

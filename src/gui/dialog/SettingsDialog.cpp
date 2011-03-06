@@ -14,7 +14,7 @@
 
 #include "SettingsDialog.h"
 #include "../widgets/ZoomCallib.h"
-#include "ButtonConfig.h"
+#include "ButtonConfigGui.h"
 #include "../../util/Util.h"
 #include <string.h>
 

@@ -4,7 +4,7 @@
   <!-- interface-naming-policy toplevel-contextual -->
   <widget class="GtkDialog" id="aboutDialog">
     <property name="width_request">320</property>
-    <property name="title" translatable="yes">About Xournal++</property>
+    <property name="title" translatable="yes">About Xournal</property>
     <property name="resizable">False</property>
     <property name="window_position">center</property>
     <property name="icon_name">dialog-information</property>
@@ -16,7 +16,7 @@
         <child>
           <widget class="GtkImage" id="XournalIcon">
             <property name="visible">True</property>
-            <property name="pixbuf">pixmaps/xournal.svg</property>
+            <property name="pixbuf">pixmaps/xournalpp.svg</property>
           </widget>
           <packing>
             <property name="padding">12</property>
@@ -26,7 +26,8 @@
         <child>
           <widget class="GtkLabel" id="labelTitle">
             <property name="visible">True</property>
-            <property name="label" translatable="yes">&lt;span size="xx-large" weight="bold"&gt;Xournal++&lt;/span&gt;</property>
+            <property name="label" translatable="yes">&lt;span size="xx-large" weight="bold"&gt;Xournal++&lt;/span&gt;
+&lt;i&gt;The next generation&lt;/i&gt;</property>
             <property name="use_markup">True</property>
             <property name="justify">center</property>
           </widget>

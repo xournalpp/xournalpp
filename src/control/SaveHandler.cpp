@@ -214,8 +214,7 @@ void SaveHandler::visitPage(XmlNode * root, XojPage * p, Document * doc, int id)
 						this->errorMessage += "\n";
 					}
 
-					char * msg = g_strdup_printf(_("Could not write background \"%s\", %s"), filename.c_str(),
-							error->message);
+					char * msg = g_strdup_printf(_("Could not write background \"%s\", %s"), filename.c_str(), error->message);
 					this->errorMessage += msg;
 					g_free(msg);
 
@@ -268,6 +267,12 @@ void SaveHandler::visitPage(XmlNode * root, XojPage * p, Document * doc, int id)
 	}
 
 	ListIterator<Layer*> it = p->layerIterator();
+
+	if (!it.hasNext()) { // no layer, but we need to write one layer, else the old Xournal cannot read the file
+		XmlNode * layer = new XmlNode("layer");
+		page->addChild(layer);
+	}
+
 	while (it.hasNext()) {
 		visitLayer(page, it.next());
 	}

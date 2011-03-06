@@ -9,7 +9,7 @@ AboutDialog::AboutDialog(GladeSearchpath * gladeSearchPath) :
 	GladeGui(gladeSearchPath, "about.glade", "aboutDialog") {
 	GtkLabel *labelTitle;
 	labelTitle = GTK_LABEL(get("labelTitle"));
-	gtk_label_set_markup(labelTitle, "<span size=\"xx-large\" weight=\"bold\">Xournal++ " VERSION "</span>");
+	gtk_label_set_markup(labelTitle, "<span size=\"xx-large\" weight=\"bold\">Xournal++ " VERSION "</span>\n<i>The next generation</i>");
 
 	GtkWidget * w = get("vbox1");
 	GtkWidget * linkButton = gtk_link_button_new("http://xournal.sourceforge.net/");

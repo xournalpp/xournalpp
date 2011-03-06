@@ -34,7 +34,7 @@
 #include <stdio.h>
 #include <string.h>
 
-// TODO: Check for error log on startup, also check for emergency save document!
+// TODO: !!!!!!!!!!!!!!!Check for error log on startup, also check for emergency save document!
 
 
 Control::Control(GladeSearchpath * gladeSearchPath) {
@@ -496,11 +496,13 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent *even
 
 		// Menu Tools
 	case ACTION_TOOL_PEN:
+		clearSelection();
 		if (enabled) {
 			selectTool(TOOL_PEN);
 		}
 		break;
 	case ACTION_TOOL_ERASER:
+		clearSelection();
 		if (enabled) {
 			selectTool(TOOL_ERASER);
 		}
@@ -523,16 +525,19 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent *even
 		break;
 
 	case ACTION_TOOL_HILIGHTER:
+		clearSelection();
 		if (enabled) {
 			selectTool(TOOL_HILIGHTER);
 		}
 		break;
 	case ACTION_TOOL_TEXT:
+		clearSelection();
 		if (enabled) {
 			selectTool(TOOL_TEXT);
 		}
 		break;
 	case ACTION_TOOL_IMAGE:
+		clearSelection();
 		if (enabled) {
 			selectTool(TOOL_IMAGE);
 		}
@@ -553,6 +558,7 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent *even
 		}
 		break;
 	case ACTION_TOOL_VERTICAL_SPACE:
+		clearSelection();
 		if (enabled) {
 			selectTool(TOOL_VERTICAL_SPACE);
 		}
@@ -1432,9 +1438,6 @@ void Control::toolChanged() {
 
 	cursor->updateCursor();
 
-	if (type != TOOL_SELECT_RECT && type != TOOL_SELECT_REGION && type != TOOL_SELECT_OBJECT) {
-		clearSelection();
-	}
 	if (type != TOOL_TEXT) {
 		if (win) {
 			win->getXournal()->endTextSelection();
@@ -1626,6 +1629,32 @@ bool Control::openFile(String filename, int scrollToPage) {
 	}
 
 	Document * tmp = h.loadDocument(filename);
+	if (!tmp && h.isAttachedPdfMissing() || !h.getMissingPdfFilename().isEmpty()) {
+		// give the user a second chance to select a new PDF file, or to discard the PDF
+
+
+		GtkWidget * dialog = gtk_message_dialog_new((GtkWindow *) *getWindow(), GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_QUESTION, GTK_BUTTONS_NONE, _(
+				h.isAttachedPdfMissing()?"The attached background PDF could not be found.":"The background PDF could not be found."));
+
+		gtk_dialog_add_button(GTK_DIALOG(dialog), _("Select another PDF"), 1);
+		gtk_dialog_add_button(GTK_DIALOG(dialog), _("Remove PDF Background"), 2);
+		gtk_dialog_add_button(GTK_DIALOG(dialog), _("Cancel"), 3);
+		int res = gtk_dialog_run(GTK_DIALOG(dialog));
+		gtk_widget_destroy(dialog);
+
+		if(res == 2) { // remove PDF background
+			h.removePdfBackground();
+			tmp = h.loadDocument(filename);
+		} else if(res == 1) { // select another PDF background
+			bool attachToDocument = false;
+			String pdfFilename = XojOpenDlg::showOpenDialog((GtkWindow*) *win, this->settings, true, attachToDocument);
+			if (!pdfFilename.isEmpty()) {
+				h.setPdfReplacement(pdfFilename, attachToDocument);
+				tmp = h.loadDocument(filename);
+			}
+		}
+	}
+
 	if (!tmp) {
 		GtkWidget * dialog = gtk_message_dialog_new((GtkWindow*) *win, GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, _(
 				"Error opening file '%s'\n%s"), filename.c_str(), h.getLastError().c_str());
@@ -1656,7 +1685,6 @@ bool Control::openFile(String filename, int scrollToPage) {
 
 	fileLoaded();
 	return true;
-	// TODO: handle if PDF not found!
 }
 
 void Control::fileLoaded() {
@@ -2024,8 +2052,6 @@ bool Control::close() {
 		}
 	}
 
-	// TODO: !!!!!!!!!!!this is not working correct!
-	// some pages are not deleted, if i use annotate PDF
 	undoRedo->clearContents();
 	doc->clearDocument();
 	updateWindowTitle();

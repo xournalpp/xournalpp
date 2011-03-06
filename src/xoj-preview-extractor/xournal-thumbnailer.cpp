@@ -10,7 +10,7 @@
  */
 
 /**
- * Build this File with: gcc main.c -lz -o xoj-preview-extractor
+ * Build this File with: gcc xournal-thumbnailer.c -lz -o xoj-preview-extractor
  */
 
 #include <stdlib.h>

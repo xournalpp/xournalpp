@@ -87,6 +87,7 @@ am_xournalpp_OBJECTS = xournalpp-BlockingJob.$(OBJEXT) \
 	xournalpp-ZoomControl.$(OBJEXT) \
 	xournalpp-XournalMain.$(OBJEXT) \
 	xournalpp-AboutDialog.$(OBJEXT) \
+	xournalpp-ButtonConfigGui.$(OBJEXT) \
 	xournalpp-ExportDialog.$(OBJEXT) \
 	xournalpp-FormatDialog.$(OBJEXT) \
 	xournalpp-ImagesDialog.$(OBJEXT) \
@@ -168,6 +169,7 @@ ETAGS = etags
 CTAGS = ctags
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
 ACLOCAL = @ACLOCAL@
+ALL_LINGUAS = @ALL_LINGUAS@
 AMTAR = @AMTAR@
 AUTOCONF = @AUTOCONF@
 AUTOHEADER = @AUTOHEADER@
@@ -203,6 +205,10 @@ INSTALL_SCRIPT = @INSTALL_SCRIPT@
 INSTALL_STRIP_PROGRAM = @INSTALL_STRIP_PROGRAM@
 INSTOBJEXT = @INSTOBJEXT@
 INTLLIBS = @INTLLIBS@
+INTLTOOL_EXTRACT = @INTLTOOL_EXTRACT@
+INTLTOOL_MERGE = @INTLTOOL_MERGE@
+INTLTOOL_PERL = @INTLTOOL_PERL@
+INTLTOOL_UPDATE = @INTLTOOL_UPDATE@
 LDFLAGS = @LDFLAGS@
 LIBOBJS = @LIBOBJS@
 LIBS = @LIBS@
@@ -212,6 +218,7 @@ MKDIR_P = @MKDIR_P@
 MKINSTALLDIRS = @MKINSTALLDIRS@
 MSGFMT = @MSGFMT@
 MSGFMT_OPTS = @MSGFMT_OPTS@
+MSGMERGE = @MSGMERGE@
 NO_PREFIX_PACKAGE_DATA_DIR = @NO_PREFIX_PACKAGE_DATA_DIR@
 OBJEXT = @OBJEXT@
 PACKAGE = @PACKAGE@
@@ -346,6 +353,7 @@ xournalpp_SOURCES = \
 	control/ZoomControl.cpp \
 	control/XournalMain.cpp \
 	gui/dialog/AboutDialog.cpp \
+	gui/dialog/ButtonConfigGui.cpp \
 	gui/dialog/ExportDialog.cpp \
 	gui/dialog/FormatDialog.cpp \
 	gui/dialog/ImagesDialog.cpp \
@@ -517,6 +525,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-Actions.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-Attribute.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-BlockingJob.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-ButtonConfigGui.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-CairoPdf.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-CircleRecognizer.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-ClipboardHandler.Po@am__quote@
@@ -1330,6 +1339,20 @@ xournalpp-AboutDialog.obj: gui/dialog/AboutDialog.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='gui/dialog/AboutDialog.cpp' object='xournalpp-AboutDialog.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-AboutDialog.obj `if test -f 'gui/dialog/AboutDialog.cpp'; then $(CYGPATH_W) 'gui/dialog/AboutDialog.cpp'; else $(CYGPATH_W) '$(srcdir)/gui/dialog/AboutDialog.cpp'; fi`
+
+xournalpp-ButtonConfigGui.o: gui/dialog/ButtonConfigGui.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-ButtonConfigGui.o -MD -MP -MF $(DEPDIR)/xournalpp-ButtonConfigGui.Tpo -c -o xournalpp-ButtonConfigGui.o `test -f 'gui/dialog/ButtonConfigGui.cpp' || echo '$(srcdir)/'`gui/dialog/ButtonConfigGui.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-ButtonConfigGui.Tpo $(DEPDIR)/xournalpp-ButtonConfigGui.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='gui/dialog/ButtonConfigGui.cpp' object='xournalpp-ButtonConfigGui.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-ButtonConfigGui.o `test -f 'gui/dialog/ButtonConfigGui.cpp' || echo '$(srcdir)/'`gui/dialog/ButtonConfigGui.cpp
+
+xournalpp-ButtonConfigGui.obj: gui/dialog/ButtonConfigGui.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-ButtonConfigGui.obj -MD -MP -MF $(DEPDIR)/xournalpp-ButtonConfigGui.Tpo -c -o xournalpp-ButtonConfigGui.obj `if test -f 'gui/dialog/ButtonConfigGui.cpp'; then $(CYGPATH_W) 'gui/dialog/ButtonConfigGui.cpp'; else $(CYGPATH_W) '$(srcdir)/gui/dialog/ButtonConfigGui.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-ButtonConfigGui.Tpo $(DEPDIR)/xournalpp-ButtonConfigGui.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='gui/dialog/ButtonConfigGui.cpp' object='xournalpp-ButtonConfigGui.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-ButtonConfigGui.obj `if test -f 'gui/dialog/ButtonConfigGui.cpp'; then $(CYGPATH_W) 'gui/dialog/ButtonConfigGui.cpp'; else $(CYGPATH_W) '$(srcdir)/gui/dialog/ButtonConfigGui.cpp'; fi`
 
 xournalpp-ExportDialog.o: gui/dialog/ExportDialog.cpp
 @am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-ExportDialog.o -MD -MP -MF $(DEPDIR)/xournalpp-ExportDialog.Tpo -c -o xournalpp-ExportDialog.o `test -f 'gui/dialog/ExportDialog.cpp' || echo '$(srcdir)/'`gui/dialog/ExportDialog.cpp
