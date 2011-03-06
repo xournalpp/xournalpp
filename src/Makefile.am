@@ -62,7 +62,17 @@ xournalpp_SOURCES = \
 	gui/dialog/SettingsDialog.cpp \
 	gui/sidebar/Sidebar.cpp \
 	gui/sidebar/SidebarPreview.cpp \
+	gui/toolbarMenubar/AbstractItem.cpp \
+	gui/toolbarMenubar/AbstractToolItem.cpp \
+	gui/toolbarMenubar/ColorToolItem.cpp \
+	gui/toolbarMenubar/FontButton.cpp \
+	gui/toolbarMenubar/MenuItem.cpp \
+	gui/toolbarMenubar/ToolButton.cpp \
 	gui/toolbarMenubar/ToolMenuHandler.cpp \
+	gui/toolbarMenubar/ToolPageLayer.cpp \
+	gui/toolbarMenubar/ToolPageSpinner.cpp \
+	gui/toolbarMenubar/ToolSelectCombocontrol.cpp \
+	gui/toolbarMenubar/ToolZoomSlider.cpp \
 	gui/widgets/gtkmenutooltogglebutton.cpp \
 	gui/widgets/SelectColor.cpp \
 	gui/widgets/ZoomCallib.cpp \

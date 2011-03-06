@@ -25,6 +25,7 @@ public:
 	RecentManager();
 	virtual ~RecentManager();
 
+public:
 	void addRecentFileFilename(const char * filename);
 	void addRecentFileUri(const char * uri);
 	void removeRecentFileFilename(const char * filename);
@@ -44,7 +45,11 @@ public:
 
 private:
 	GList * filterRecent(GList * items, bool xoj);
-	void addRecentMenu(GtkRecentInfo *info, int i);
+	void addRecentMenu(GtkRecentInfo * info, int i);
+
+	static void recentManagerChangedCallback(GtkRecentManager * manager, RecentManager * recentManager);
+	static void recentsMenuActivateCallback(GtkAction * action, RecentManager * recentManager);
+	static int sortRecentsEntries(GtkRecentInfo * a, GtkRecentInfo * b);
 
 private:
 	int maxRecent;
@@ -52,7 +57,7 @@ private:
 
 	GList * listener;
 
-	GtkWidget* menu;
+	GtkWidget * menu;
 	GList * menuItemList;
 };
 

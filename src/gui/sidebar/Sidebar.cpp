@@ -108,7 +108,7 @@ Sidebar::~Sidebar() {
 	this->cache = NULL;
 }
 
-gboolean Sidebar::treeSearchFunction(GtkTreeModel *model, gint column, const gchar *key, GtkTreeIter *iter, Sidebar * sidebar) {
+gboolean Sidebar::treeSearchFunction(GtkTreeModel * model, gint column, const gchar * key, GtkTreeIter * iter, Sidebar * sidebar) {
 	// Source: Pidgin
 
 	gchar *enteredstring;
@@ -204,7 +204,7 @@ void Sidebar::askInsertPdfPage(int pdfPage) {
 	}
 }
 
-bool Sidebar::treeClickedCallback(GtkWidget *treeview, GdkEventButton *event, Sidebar *sidebar) {
+bool Sidebar::treeClickedCallback(GtkWidget * treeview, GdkEventButton * event, Sidebar * sidebar) {
 	GtkTreePath * path = NULL;
 	sidebar->typeSelected = true;
 
@@ -500,7 +500,7 @@ void Sidebar::pageInserted(int page) {
 		this->previews[i + 1] = lastPreviews[i];
 
 		// unselect to prevent problems...
-		this->previews[i+1]->setSelected(false);
+		this->previews[i + 1]->setSelected(false);
 	}
 
 	this->selectedPage = -1;

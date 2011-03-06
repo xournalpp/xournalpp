@@ -22,8 +22,9 @@ public:
 	Selection(Redrawable * view);
 	virtual ~Selection();
 
+public:
 	virtual bool finalize(XojPage * page) = 0;
-	virtual void paint(cairo_t * cr, GdkEventExpose *event, double zoom) = 0;
+	virtual void paint(cairo_t * cr, GdkEventExpose * event, double zoom) = 0;
 	virtual void currentPos(double x, double y) = 0;
 	virtual void getSelectedRect(double & x, double & y, double & width, double & height) = 0;
 protected:

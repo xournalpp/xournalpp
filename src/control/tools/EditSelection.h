@@ -32,12 +32,13 @@ class MoveUndoAction;
 
 class EditSelection: public MemoryCheckObject, public ElementContainer {
 public:
-	EditSelection(UndoRedoHandler * undo, double x, double y, double width, double height, XojPage * page,
-			Redrawable * view);
+	EditSelection(UndoRedoHandler * undo, double x, double y, double width, double height, XojPage * page, Redrawable * view);
 	EditSelection(UndoRedoHandler * undo, Selection * selection, Redrawable * view);
 	EditSelection(UndoRedoHandler * undo, Element * e, Redrawable * view, XojPage * page);
 	~EditSelection();
-	void paint(cairo_t * cr, GdkEventExpose *event, double zoom);
+
+public:
+	void paint(cairo_t * cr, GdkEventExpose * event, double zoom);
 
 	CursorSelectionType getSelectionTypeForPos(double x, double y, double zoom);
 	void setEditMode(CursorSelectionType selType, double x, double y);
@@ -62,8 +63,7 @@ public:
 	double getWidth();
 	double getHeight();
 
-	UndoAction * setSize(ToolSize size, const double * thiknessPen, const double * thiknessHilighter,
-			const double * thiknessEraser);
+	UndoAction * setSize(ToolSize size, const double * thiknessPen, const double * thiknessHilighter, const double * thiknessEraser);
 
 	UndoAction * setColor(int color);
 
@@ -75,6 +75,7 @@ public:
 	 * This is needed if the selection is "Deleted" then the selection needs to be cleared
 	 */
 	void clearContents();
+
 private:
 	void deleteViewBuffer();
 
@@ -127,8 +128,5 @@ private:
 
 	friend class MoveUndoAction;
 };
-
-
-
 
 #endif /* __EDITSELECTION_H__ */

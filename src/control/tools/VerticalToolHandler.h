@@ -18,13 +18,12 @@
 #include "../../view/ElementContainer.h"
 #include "../../undo/MoveUndoAction.h"
 
-
 class VerticalToolHandler: public ElementContainer {
 public:
 	VerticalToolHandler(Redrawable * view, XojPage * page, double y, double zoom);
 	virtual ~VerticalToolHandler();
 
-	void paint(cairo_t * cr, GdkEventExpose *event, double zoom);
+	void paint(cairo_t * cr, GdkEventExpose * event, double zoom);
 	void currentPos(double x, double y);
 
 	MoveUndoAction * finalize();
@@ -45,7 +44,6 @@ private:
 	 * When we create a new page
 	 */
 	double jumpY;
-
 
 	friend class MoveUndoAction;
 };

@@ -3,14 +3,14 @@
 const double zoomStep = 0.2;
 
 ZoomControl::ZoomControl() {
-	listener = NULL;
-	zoom = 1.0;
-	zoom100Value = 1.0;
-	zoomFitValue = 1.0;
+	this->listener = NULL;
+	this->zoom = 1.0;
+	this->zoom100Value = 1.0;
+	this->zoomFitValue = 1.0;
 }
 
 ZoomControl::~ZoomControl() {
-	g_list_free(listener);
+	g_list_free(this->listener);
 }
 
 void ZoomControl::addZoomListener(ZoomListener * listener) {
@@ -23,29 +23,29 @@ void ZoomControl::initZoomHandler(GladeGui * gui) {
 }
 
 void ZoomControl::fireZoomChanged(double lastZoom) {
-	if (zoom < 0.3) {
-		zoom = 0.3;
+	if (this->zoom < 0.3) {
+		this->zoom = 0.3;
 	}
 
-	if (zoom > 5) {
-		zoom = 5;
+	if (this->zoom > 5) {
+		this->zoom = 5;
 	}
 
-	for (GList * l = listener; l != NULL; l = l->next) {
+	for (GList * l = this->listener; l != NULL; l = l->next) {
 		ZoomListener * z = (ZoomListener *) l->data;
 		z->zoomChanged(lastZoom);
 	}
 }
 
 void ZoomControl::fireZoomRangeValueChanged() {
-	for (GList * l = listener; l != NULL; l = l->next) {
+	for (GList * l = this->listener; l != NULL; l = l->next) {
 		ZoomListener * z = (ZoomListener *) l->data;
 		z->zoomRangeValuesChanged();
 	}
 }
 
 double ZoomControl::getZoom() {
-	return zoom;
+	return this->zoom;
 }
 
 void ZoomControl::setZoom(double zoom) {
@@ -73,20 +73,20 @@ double ZoomControl::getZoom100() {
 }
 
 void ZoomControl::zoom100() {
-	double lastZoom = zoom;
-	zoom = zoom100Value;
+	double lastZoom = this->zoom;
+	this->zoom = this->zoom100Value;
 	fireZoomChanged(lastZoom);
 }
 
 void ZoomControl::zoomFit() {
-	double lastZoom = zoom;
-	zoom = zoomFitValue;
+	double lastZoom = this->zoom;
+	this->zoom = this->zoomFitValue;
 	fireZoomChanged(lastZoom);
 }
 
 void ZoomControl::zoomIn() {
-	double lastZoom = zoom;
-	zoom += zoomStep;
+	double lastZoom = this->zoom;
+	this->zoom += zoomStep;
 	fireZoomChanged(lastZoom);
 }
 
@@ -96,7 +96,7 @@ void ZoomControl::zoomOut() {
 	fireZoomChanged(lastZoom);
 }
 
-bool ZoomControl::onScrolledwindowMainScrollEvent(GtkWidget *widget, GdkEventScroll *event, ZoomControl * zoom) {
+bool ZoomControl::onScrolledwindowMainScrollEvent(GtkWidget * widget, GdkEventScroll * event, ZoomControl * zoom) {
 	guint state = event->state & gtk_accelerator_get_default_mod_mask();
 
 	// do not handle e.g. ALT + Scroll (e.g. Compiz use this shortcut for setting transparency...)

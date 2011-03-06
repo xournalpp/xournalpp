@@ -36,6 +36,7 @@ public:
 	DoubleArrayBuffer();
 	~DoubleArrayBuffer();
 
+public:
 	void clear();
 	const double * getData();
 	int size();
@@ -83,12 +84,12 @@ private:
 
 	bool parseColor(const char * text, int & color);
 
-	static void parserText(GMarkupParseContext *context, const gchar *text, gsize text_len, gpointer userdata,
-			GError **error);
-	static void parserEndElement(GMarkupParseContext *context, const gchar *element_name, gpointer userdata,
-			GError **error);
-	static void parserStartElement(GMarkupParseContext *context, const gchar *element_name,
-			const gchar **attribute_names, const gchar **attribute_values, gpointer userdata, GError **error);
+	static void parserText(GMarkupParseContext * context, const gchar * text, gsize text_len, gpointer userdata,
+			GError ** error);
+	static void parserEndElement(GMarkupParseContext * context, const gchar * element_name, gpointer userdata,
+			GError ** error);
+	static void parserStartElement(GMarkupParseContext * context, const gchar * element_name,
+			const gchar ** attribute_names, const gchar ** attribute_values, gpointer userdata, GError ** error);
 
 	const char * getAttrib(const char * name, bool optional = false);
 	double getAttribDouble(const char * name);

@@ -96,13 +96,12 @@ void RectSelection::currentPos(double x, double y) {
 	view->redrawDocumentRegion(aX, aY, bX, bY);
 }
 
-void RectSelection::paint(cairo_t * cr, GdkEventExpose *event, double zoom) {
+void RectSelection::paint(cairo_t * cr, GdkEventExpose * event, double zoom) {
 	GdkColor selectionColor = view->getSelectionColor();
 
 	// set the line always the same size on display
 	cairo_set_line_width(cr, 1 / zoom);
-	cairo_set_source_rgb(cr, selectionColor.red / 65536.0, selectionColor.green / 65536.0, selectionColor.blue
-			/ 65536.0);
+	gdk_cairo_set_source_color(cr, &selectionColor);
 
 	cairo_move_to(cr, sx, sy);
 	cairo_line_to(cr, ex, sy);
@@ -111,8 +110,7 @@ void RectSelection::paint(cairo_t * cr, GdkEventExpose *event, double zoom) {
 	cairo_close_path(cr);
 
 	cairo_stroke_preserve(cr);
-	cairo_set_source_rgba(cr, selectionColor.red / 65536.0, selectionColor.green / 65536.0, selectionColor.blue
-			/ 65536.0, 0.3);
+	cairo_set_source_rgba(cr, selectionColor.red / 65536.0, selectionColor.green / 65536.0, selectionColor.blue / 65536.0, 0.3);
 	cairo_fill(cr);
 }
 
@@ -189,8 +187,7 @@ void RegionSelect::paint(cairo_t * cr, GdkEventExpose *event, double zoom) {
 
 		// set the line always the same size on display
 		cairo_set_line_width(cr, 1 / zoom);
-		cairo_set_source_rgb(cr, selectionColor.red / 65536.0, selectionColor.green / 65536.0, selectionColor.blue
-				/ 65536.0);
+		gdk_cairo_set_source_color(cr, &selectionColor);
 
 		RegionPoint * r0 = (RegionPoint *) this->points->data;
 		cairo_move_to(cr, r0->x, r0->y);
@@ -203,8 +200,7 @@ void RegionSelect::paint(cairo_t * cr, GdkEventExpose *event, double zoom) {
 		cairo_line_to(cr, r0->x, r0->y);
 
 		cairo_stroke_preserve(cr);
-		cairo_set_source_rgba(cr, selectionColor.red / 65536.0, selectionColor.green / 65536.0, selectionColor.blue
-				/ 65536.0, 0.3);
+		cairo_set_source_rgba(cr, selectionColor.red / 65536.0, selectionColor.green / 65536.0, selectionColor.blue / 65536.0, 0.3);
 		cairo_fill(cr);
 	}
 }
@@ -242,10 +238,10 @@ void RegionSelect::currentPos(double x, double y) {
 }
 
 bool RegionSelect::contains(double x, double y) {
-	if (x < x1Box || x > x2Box) {
+	if (x < this->x1Box || x > this->x2Box) {
 		return false;
 	}
-	if (y < y1Box || y > y2Box) {
+	if (y < this->y1Box || y > this->y2Box) {
 		return false;
 	}
 	if (this->points == NULL || this->points->next == NULL) {
@@ -317,24 +313,24 @@ bool RegionSelect::contains(double x, double y) {
 bool RegionSelect::finalize(XojPage * page) {
 	this->page = page;
 
-	x1Box = 0;
-	x2Box = 0;
-	y1Box = 0;
-	y2Box = 0;
+	this->x1Box = 0;
+	this->x2Box = 0;
+	this->y1Box = 0;
+	this->y2Box = 0;
 
 	for (GList * l = this->points; l != NULL; l = l->next) {
 		RegionPoint * p = (RegionPoint *) l->data;
 
-		if (p->x < x1Box) {
-			x1Box = p->x;
-		} else if (p->x > x2Box) {
-			x2Box = p->x;
+		if (p->x < this->x1Box) {
+			this->x1Box = p->x;
+		} else if (p->x > this->x2Box) {
+			this->x2Box = p->x;
 		}
 
-		if (p->y < y1Box) {
-			y1Box = p->y;
-		} else if (p->y > y2Box) {
-			y2Box = p->y;
+		if (p->y < this->y1Box) {
+			this->y1Box = p->y;
+		} else if (p->y > this->y2Box) {
+			this->y2Box = p->y;
 		}
 	}
 
@@ -347,7 +343,7 @@ bool RegionSelect::finalize(XojPage * page) {
 		}
 	}
 
-	view->redrawDocumentRegion(x1Box, y1Box, x2Box, y2Box);
+	view->redrawDocumentRegion(this->x1Box, this->y1Box, this->x2Box, this->y2Box);
 
 	return this->selectedElements != NULL;
 }
