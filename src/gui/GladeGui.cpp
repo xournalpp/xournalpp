@@ -53,7 +53,7 @@ GdkPixbuf * GladeGui::loadIconPixbuf(const char * filename) {
 		return NULL;
 	}
 
-	gchar * pathname = this->gladeSearchPath->findFile("pixmaps", filename);
+	char * pathname = this->gladeSearchPath->findFile("pixmaps", filename);
 
 	if (!pathname) {
 		g_warning("GladeGui::get: Couldn't find pixmap file: %s", filename);

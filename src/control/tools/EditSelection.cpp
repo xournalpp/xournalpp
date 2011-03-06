@@ -547,7 +547,7 @@ bool EditSelection::repaintSelection(EditSelection * selection) {
 	return false;
 }
 
-void EditSelection::paint(cairo_t * cr, GdkEventExpose *event, double zoom) {
+void EditSelection::paint(cairo_t * cr, GdkEventExpose * event, double zoom) {
 	double x = this->x - this->offsetX;
 	double y = this->y - this->offsetY;
 

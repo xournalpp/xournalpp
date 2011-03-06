@@ -16,13 +16,19 @@
 #include <config.h>
 #include <glib/gi18n-lib.h>
 
-#include "ToolItems.h"
-#include <config.h>
-
 #include "../../control/Actions.h"
 #include "../widgets/SelectColor.h"
 #include "ToolMenuHandler.h"
 #include "../../toolbar.ini.h"
+
+#include "ColorToolItem.h"
+#include "MenuItem.h"
+#include "ToolButton.h"
+#include "ToolSelectCombocontrol.h"
+#include "FontButton.h"
+#include "ToolPageSpinner.h"
+#include "ToolZoomSlider.h"
+#include "ToolPageLayer.h"
 
 String ToolbarData::getName() {
 	return this->name;
@@ -68,8 +74,7 @@ void ToolbarData::load(GKeyFile * config, const char * group) {
 	g_strfreev(keys);
 }
 
-ToolMenuHandler::ToolMenuHandler(ActionHandler * listener, ZoomControl * zoom, GladeGui * gui,
-		ToolHandler * toolHandler) {
+ToolMenuHandler::ToolMenuHandler(ActionHandler * listener, ZoomControl * zoom, GladeGui * gui, ToolHandler * toolHandler) {
 	this->toolbars = NULL;
 	this->toolItems = NULL;
 	this->toolbarColorItems = NULL;
@@ -317,8 +322,8 @@ void ToolMenuHandler::registerMenupoint(GtkWidget * widget, ActionType type, Act
 
 void ToolMenuHandler::initEraserToolItem() {
 
-	ToolButton * tbEraser = new ToolButton(listener, gui, "ERASER", ACTION_TOOL_ERASER, GROUP_TOOL, "tool_eraser.png",
-			_("Eraser"), gui->get("menuToolsEraser"));
+	ToolButton * tbEraser =
+			new ToolButton(listener, gui, "ERASER", ACTION_TOOL_ERASER, GROUP_TOOL, "tool_eraser.png", _("Eraser"), gui->get("menuToolsEraser"));
 	GtkWidget * eraserPopup = gtk_menu_new();
 
 	GtkWidget *eraserPopupStandard = gtk_check_menu_item_new_with_label(_("standard"));
@@ -349,8 +354,7 @@ void ToolMenuHandler::initEraserToolItem() {
 
 void ToolMenuHandler::initToolItems() {
 	addToolItem(new ToolButton(listener, "SAVE", ACTION_SAVE, GTK_STOCK_SAVE, _("Save"), gui->get("menuFileSave")));
-	addToolItem(new ToolButton(listener, gui, "NEW", ACTION_NEW, "documentNew.png", _("New Xournal"), gui->get(
-			"menuFileNew")));
+	addToolItem(new ToolButton(listener, gui, "NEW", ACTION_NEW, "documentNew.png", _("New Xournal"), gui->get("menuFileNew")));
 
 	addToolItem(new ToolButton(listener, "OPEN", ACTION_OPEN, GTK_STOCK_OPEN, _("Open file"), gui->get("menuFileOpen")));
 
@@ -358,49 +362,38 @@ void ToolMenuHandler::initToolItems() {
 	addToolItem(new ToolButton(listener, "COPY", ACTION_COPY, GTK_STOCK_COPY, _("Copy"), gui->get("menuEditCopy")));
 	addToolItem(new ToolButton(listener, "PASTE", ACTION_PASTE, GTK_STOCK_PASTE, _("Paste"), gui->get("menuEditPaste")));
 
-	addToolItem(new ToolButton(listener, "SEARCH", ACTION_SEARCH, GTK_STOCK_FIND, _("Search"), gui->get(
-			"menuEditSearch")));
+	addToolItem(new ToolButton(listener, "SEARCH", ACTION_SEARCH, GTK_STOCK_FIND, _("Search"), gui->get("menuEditSearch")));
 
 	undoButton = new ToolButton(listener, "UNDO", ACTION_UNDO, GTK_STOCK_UNDO, _("Undo"), gui->get("menuEditUndo"));
 	redoButton = new ToolButton(listener, "REDO", ACTION_REDO, GTK_STOCK_REDO, _("Redo"), gui->get("menuEditRedo"));
 	addToolItem(undoButton);
 	addToolItem(redoButton);
 
-	addToolItem(new ToolButton(listener, "GOTO_FIRST", ACTION_GOTO_FIRST, GTK_STOCK_GOTO_FIRST, _("Go to first page"),
-			gui->get("menuViewFirstPage")));
-	addToolItem(new ToolButton(listener, "GOTO_BACK", ACTION_GOTO_BACK, GTK_STOCK_GO_BACK, _("Back"), gui->get(
-			"menuNavigationPreviousPage")));
-	addToolItem(new ToolButton(listener, "GOTO_NEXT", ACTION_GOTO_NEXT, GTK_STOCK_GO_FORWARD, _("Next"), gui->get(
-			"menuNavigationNextPage")));
-	addToolItem(new ToolButton(listener, "GOTO_LAST", ACTION_GOTO_LAST, GTK_STOCK_GOTO_LAST, _("Go to last page"),
-			gui->get("menuNavigationLastPage")));
+	addToolItem(new ToolButton(listener, "GOTO_FIRST", ACTION_GOTO_FIRST, GTK_STOCK_GOTO_FIRST, _("Go to first page"), gui->get("menuViewFirstPage")));
+	addToolItem(new ToolButton(listener, "GOTO_BACK", ACTION_GOTO_BACK, GTK_STOCK_GO_BACK, _("Back"), gui->get("menuNavigationPreviousPage")));
+	addToolItem(new ToolButton(listener, "GOTO_NEXT", ACTION_GOTO_NEXT, GTK_STOCK_GO_FORWARD, _("Next"), gui->get("menuNavigationNextPage")));
+	addToolItem(new ToolButton(listener, "GOTO_LAST", ACTION_GOTO_LAST, GTK_STOCK_GOTO_LAST, _("Go to last page"), gui->get("menuNavigationLastPage")));
 
-	addToolItem(new ToolButton(listener, gui, "GOTO_NEXT_ANNOTATED_PAGE", ACTION_GOTO_NEXT_ANNOTATED_PAGE,
-			"nextAnnotatedPage.png", _("Next annotated page"), gui->get("menuNavigationNextAnnotatedPage")));
+	addToolItem(new ToolButton(listener, gui, "GOTO_NEXT_ANNOTATED_PAGE", ACTION_GOTO_NEXT_ANNOTATED_PAGE, "nextAnnotatedPage.png", _("Next annotated page"),
+			gui->get("menuNavigationNextAnnotatedPage")));
 
-	addToolItem(new ToolButton(listener, "ZOOM_OUT", ACTION_ZOOM_OUT, GTK_STOCK_ZOOM_OUT, _("Zoom out"), gui->get(
-			"menuViewZoomOut")));
-	addToolItem(new ToolButton(listener, "ZOOM_IN", ACTION_ZOOM_IN, GTK_STOCK_ZOOM_IN, _("Zoom in"), gui->get(
-			"menuViewZoomIn")));
-	addToolItem(new ToolButton(listener, "ZOOM_FIT", ACTION_ZOOM_FIT, GTK_STOCK_ZOOM_FIT, _("Zoom fit to screen"),
-			gui->get("menuViewZoomFit")));
-	addToolItem(new ToolButton(listener, "ZOOM_100", ACTION_ZOOM_100, GTK_STOCK_ZOOM_100, _("Zoom to 100%"), gui->get(
-			"menuViewZoom100")));
+	addToolItem(new ToolButton(listener, "ZOOM_OUT", ACTION_ZOOM_OUT, GTK_STOCK_ZOOM_OUT, _("Zoom out"), gui->get("menuViewZoomOut")));
+	addToolItem(new ToolButton(listener, "ZOOM_IN", ACTION_ZOOM_IN, GTK_STOCK_ZOOM_IN, _("Zoom in"), gui->get("menuViewZoomIn")));
+	addToolItem(new ToolButton(listener, "ZOOM_FIT", ACTION_ZOOM_FIT, GTK_STOCK_ZOOM_FIT, _("Zoom fit to screen"), gui->get("menuViewZoomFit")));
+	addToolItem(new ToolButton(listener, "ZOOM_100", ACTION_ZOOM_100, GTK_STOCK_ZOOM_100, _("Zoom to 100%"), gui->get("menuViewZoom100")));
 
-	addToolItem(new ToolButton(listener, gui, "FULLSCREEN", ACTION_FULLSCREEN, GROUP_FULLSCREEN, "fullscreen.png",
-			_("Toggle fullscreen"), gui->get("menuViewFullScreen")));
+	addToolItem(new ToolButton(listener, gui, "FULLSCREEN", ACTION_FULLSCREEN, GROUP_FULLSCREEN, "fullscreen.png", _("Toggle fullscreen"), gui->get(
+			"menuViewFullScreen")));
 
 	addToolItem(new ColorToolItem("COLOR_SELECT", listener, toolHandler, 0xff0000, true));
 
-	addToolItem(new ToolButton(listener, gui, "PEN", ACTION_TOOL_PEN, GROUP_TOOL, "tool_pencil.png", _("Pen"),
-			gui->get("menuToolsPen")));
+	addToolItem(new ToolButton(listener, gui, "PEN", ACTION_TOOL_PEN, GROUP_TOOL, "tool_pencil.png", _("Pen"), gui->get("menuToolsPen")));
 
 	initEraserToolItem();
 
 	addToolItem(new ToolSelectCombocontrol(this, listener, gui, "SELECT"));
 
-	ToolButton * tbInsertNewPage = new ToolButton(listener, gui, "INSERT_NEW_PAGE", ACTION_NEW_PAGE_AFTER,
-			"addPage.svg", _("Insert page"));
+	ToolButton * tbInsertNewPage = new ToolButton(listener, gui, "INSERT_NEW_PAGE", ACTION_NEW_PAGE_AFTER, "addPage.svg", _("Insert page"));
 	addToolItem(tbInsertNewPage);
 	GtkWidget * newPagePopup = gtk_menu_new();
 
@@ -444,37 +437,31 @@ void ToolMenuHandler::initToolItems() {
 	gtk_container_add(GTK_CONTAINER (newPagePopup), newPagePopupWithPDFBackground);
 	gtk_check_menu_item_set_draw_as_radio(GTK_CHECK_MENU_ITEM(newPagePopupWithPDFBackground), true);
 	registerMenupoint(newPagePopupWithPDFBackground, ACTION_NEW_PAGE_PDF_BACKGROUND, GROUP_PAGE_INSERT_TYPE);
-	registerMenupoint(gui->get("menuJournalNewPageAfterWithPdf"), ACTION_NEW_PAGE_PDF_BACKGROUND,
-			GROUP_PAGE_INSERT_TYPE);
+	registerMenupoint(gui->get("menuJournalNewPageAfterWithPdf"), ACTION_NEW_PAGE_PDF_BACKGROUND, GROUP_PAGE_INSERT_TYPE);
 
 	tbInsertNewPage->setPopupMenu(newPagePopup);
 
 	// TODO LOW PRIO: check for Stock icons (Mail from 04.01.2010 to Xournal mailinglist)
 
-	addToolItem(new ToolButton(listener, gui, "HILIGHTER", ACTION_TOOL_HILIGHTER, GROUP_TOOL, "tool_highlighter.png",
-			_("Hilighter"), gui->get("menuToolsHighlighter")));
-	addToolItem(new ToolButton(listener, gui, "TEXT", ACTION_TOOL_TEXT, GROUP_TOOL, "tool_text.png", _("Text"),
-			gui->get("menuToolsText")));
-	addToolItem(new ToolButton(listener, gui, "IMAGE", ACTION_TOOL_IMAGE, GROUP_TOOL, "tool_image.png", _("Image"),
-			gui->get("menuToolsImage")));
+	addToolItem(new ToolButton(listener, gui, "HILIGHTER", ACTION_TOOL_HILIGHTER, GROUP_TOOL, "tool_highlighter.png", _("Hilighter"), gui->get(
+			"menuToolsHighlighter")));
+	addToolItem(new ToolButton(listener, gui, "TEXT", ACTION_TOOL_TEXT, GROUP_TOOL, "tool_text.png", _("Text"), gui->get("menuToolsText")));
+	addToolItem(new ToolButton(listener, gui, "IMAGE", ACTION_TOOL_IMAGE, GROUP_TOOL, "tool_image.png", _("Image"), gui->get("menuToolsImage")));
 
-	addToolItem(new ToolButton(listener, gui, "SELECT_REGION", ACTION_TOOL_SELECT_REGION, GROUP_TOOL, "lasso.png",
-			_("Select Region"), gui->get("menuToolsSelectRegion")));
-	addToolItem(new ToolButton(listener, gui, "SELECT_RECTANGLE", ACTION_TOOL_SELECT_RECT, GROUP_TOOL,
-			"rect-select.png", _("Select Rectangle"), gui->get("menuToolsSelectRectangle")));
-	addToolItem(new ToolButton(listener, gui, "VERTICAL_SPACE", ACTION_TOOL_VERTICAL_SPACE, GROUP_TOOL, "stretch.png",
-			_("Vertical Space"), gui->get("menuToolsVerticalSpace")));
-	addToolItem(new ToolButton(listener, gui, "HAND", ACTION_TOOL_HAND, GROUP_TOOL, "hand.png", _("Hand"), gui->get(
-			"menuToolsHand")));
+	addToolItem(new ToolButton(listener, gui, "SELECT_REGION", ACTION_TOOL_SELECT_REGION, GROUP_TOOL, "lasso.png", _("Select Region"), gui->get(
+			"menuToolsSelectRegion")));
+	addToolItem(new ToolButton(listener, gui, "SELECT_RECTANGLE", ACTION_TOOL_SELECT_RECT, GROUP_TOOL, "rect-select.png", _("Select Rectangle"), gui->get(
+			"menuToolsSelectRectangle")));
+	addToolItem(new ToolButton(listener, gui, "VERTICAL_SPACE", ACTION_TOOL_VERTICAL_SPACE, GROUP_TOOL, "stretch.png", _("Vertical Space"), gui->get(
+			"menuToolsVerticalSpace")));
+	addToolItem(new ToolButton(listener, gui, "HAND", ACTION_TOOL_HAND, GROUP_TOOL, "hand.png", _("Hand"), gui->get("menuToolsHand")));
 
-	addToolItem(new ToolButton(listener, gui, "SHAPE_RECOGNIZER", ACTION_SHAPE_RECOGNIZER, GROUP_SHAPE_RECOGNIZER,
-			"shape_recognizer.png", _("Shape Recognizer"), gui->get("menuToolsShapeRecognizer")));
-	addToolItem(new ToolButton(listener, gui, "RULER", ACTION_RULER, GROUP_RULER, "ruler.png", _("Ruler"), gui->get(
-			"menuToolsRuler")));
+	addToolItem(new ToolButton(listener, gui, "SHAPE_RECOGNIZER", ACTION_SHAPE_RECOGNIZER, GROUP_SHAPE_RECOGNIZER, "shape_recognizer.png",
+			_("Shape Recognizer"), gui->get("menuToolsShapeRecognizer")));
+	addToolItem(new ToolButton(listener, gui, "RULER", ACTION_RULER, GROUP_RULER, "ruler.png", _("Ruler"), gui->get("menuToolsRuler")));
 
 	addToolItem(new ToolButton(listener, gui, "FINE", ACTION_SIZE_FINE, GROUP_SIZE, "thickness_thin.png", _("Thin")));
-	addToolItem(new ToolButton(listener, gui, "MEDIUM", ACTION_SIZE_MEDIUM, GROUP_SIZE, "thickness_medium.png",
-			_("Medium")));
+	addToolItem(new ToolButton(listener, gui, "MEDIUM", ACTION_SIZE_MEDIUM, GROUP_SIZE, "thickness_medium.png", _("Medium")));
 	addToolItem(new ToolButton(listener, gui, "THICK", ACTION_SIZE_THICK, GROUP_SIZE, "thickness_thick.png", _("Thik")));
 
 	fontButton = new FontButton(listener, gui, "SELECT_FONT", ACTION_SELECT_FONT, _("Select Font"));
@@ -487,8 +474,8 @@ void ToolMenuHandler::initToolItems() {
 	ToolZoomSlider * toolZoomSlider = new ToolZoomSlider(listener, "ZOOM_SLIDER", ACTION_FOOTER_ZOOM_SLIDER, zoom);
 	addToolItem(toolZoomSlider);
 
-	addToolItem(new ToolButton(listener, gui, "TWO_PAGES", ACTION_VIEW_TWO_PAGES, GROUP_TWOPAGES, "showtwopages.png",
-			_("Two pages"), gui->get("menuViewTwoPages")));
+	addToolItem(new ToolButton(listener, gui, "TWO_PAGES", ACTION_VIEW_TWO_PAGES, GROUP_TWOPAGES, "showtwopages.png", _("Two pages"), gui->get(
+			"menuViewTwoPages")));
 
 	toolPageLayer = new ToolPageLayer(listener, "LAYER", ACTION_FOOTER_LAYER);
 	addToolItem(toolPageLayer);
@@ -553,46 +540,6 @@ void ToolMenuHandler::setFontButtonFont(XojFont & font) {
 
 XojFont ToolMenuHandler::getFontButtonFont() {
 	return fontButton->getFont();
-}
-
-ToolSelectCombocontrol::ToolSelectCombocontrol(ToolMenuHandler * th, ActionHandler * handler, GladeGui *gui, String id) :
-	ToolButton(handler, gui, id, ACTION_TOOL_SELECT_RECT, GROUP_TOOL, "rect-select.png", _("Select Rectangle")) {
-
-	this->labelWidget = NULL;
-
-	GtkWidget * popup = gtk_menu_new();
-
-	GtkWidget * menuItem;
-
-	this->iconSelectRect = gui->loadIconPixbuf("rect-select.png");
-	this->iconSelectRgion = gui->loadIconPixbuf("lasso.png");
-	this->iconSelectObject = gui->loadIconPixbuf("object-select.png");
-	g_object_ref(this->iconSelectRect);
-	g_object_ref(this->iconSelectRgion);
-	g_object_ref(this->iconSelectObject);
-
-	menuItem = gtk_image_menu_item_new_with_label(_("Select Rectangle"));
-	gtk_container_add(GTK_CONTAINER(popup), menuItem);
-	th->registerMenupoint(menuItem, ACTION_TOOL_SELECT_RECT, GROUP_TOOL);
-	gtk_image_menu_item_set_always_show_image(GTK_IMAGE_MENU_ITEM(menuItem), true);
-	gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuItem), gui->loadIcon("rect-select.png"));
-	gtk_widget_show_all(menuItem);
-
-	menuItem = gtk_image_menu_item_new_with_label(_("Select Region"));
-	gtk_container_add(GTK_CONTAINER(popup), menuItem);
-	th->registerMenupoint(menuItem, ACTION_TOOL_SELECT_REGION, GROUP_TOOL);
-	gtk_image_menu_item_set_always_show_image(GTK_IMAGE_MENU_ITEM(menuItem), true);
-	gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuItem), gui->loadIcon("lasso.png"));
-	gtk_widget_show_all(menuItem);
-
-	menuItem = gtk_image_menu_item_new_with_label(_("Select Object"));
-	gtk_container_add(GTK_CONTAINER(popup), menuItem);
-	th->registerMenupoint(menuItem, ACTION_TOOL_SELECT_OBJECT, GROUP_TOOL);
-	gtk_image_menu_item_set_always_show_image(GTK_IMAGE_MENU_ITEM(menuItem), true);
-	gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuItem), gui->loadIcon("object-select.png"));
-	gtk_widget_show_all(menuItem);
-
-	setPopupMenu(popup);
 }
 
 void ToolMenuHandler::setUndoDescription(String description) {

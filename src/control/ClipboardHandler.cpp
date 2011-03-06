@@ -6,7 +6,6 @@
 #include "../util/ObjectStream.h"
 #include "../view/DocumentView.h"
 
-
 ClipboardHandler::ClipboardHandler(ClipboardListener * listener, GtkWidget * widget) {
 	this->listener = listener;
 	this->clipboard = gtk_widget_get_clipboard(widget, GDK_SELECTION_CLIPBOARD);
@@ -21,8 +20,7 @@ ClipboardHandler::ClipboardHandler(ClipboardListener * listener, GtkWidget * wid
 	GdkDisplay * display = gtk_clipboard_get_display(clipboard);
 
 	if (gdk_display_supports_selection_notification(display)) {
-		gtk_clipboard_request_contents(clipboard, gdk_atom_intern_static_string("TARGETS"),
-				(GtkClipboardReceivedFunc) receivedClipboardContents, this);
+		gtk_clipboard_request_contents(clipboard, gdk_atom_intern_static_string("TARGETS"), (GtkClipboardReceivedFunc) receivedClipboardContents, this);
 	} else {
 		// XFIXES extension not available, make Paste always sensitive
 		this->listener->clipboardPasteEnabled(true);
@@ -39,8 +37,7 @@ void ClipboardHandler::paste() {
 	if (this->containsXournal) {
 		gtk_clipboard_request_contents(clipboard, atomXournal, (GtkClipboardReceivedFunc) pasteClipboardContents, this);
 	} else if (this->containsText) {
-		gtk_clipboard_request_contents(clipboard, gdk_atom_intern_static_string("UTF8_STRING"),
-				(GtkClipboardReceivedFunc) pasteClipboardContents, this);
+		gtk_clipboard_request_contents(clipboard, gdk_atom_intern_static_string("UTF8_STRING"), (GtkClipboardReceivedFunc) pasteClipboardContents, this);
 	}
 }
 
@@ -74,18 +71,15 @@ public:
 	}
 
 public:
-	static void getFunction(GtkClipboard *clipboard, GtkSelectionData *selection, guint info,
-			ClipboardContents * contents) {
+	static void getFunction(GtkClipboard *clipboard, GtkSelectionData *selection, guint info, ClipboardContents * contents) {
 
 		if (selection->target == gdk_atom_intern_static_string("UTF8_STRING")) {
 			gtk_selection_data_set_text(selection, contents->text.c_str(), -1);
-		} else if (selection->target == gdk_atom_intern_static_string("image/png") || selection->target
-				== gdk_atom_intern_static_string("image/jpeg") || selection->target == gdk_atom_intern_static_string(
-				"image/gif")) {
+		} else if (selection->target == gdk_atom_intern_static_string("image/png") || selection->target == gdk_atom_intern_static_string("image/jpeg")
+				|| selection->target == gdk_atom_intern_static_string("image/gif")) {
 			gtk_selection_data_set_pixbuf(selection, contents->image);
 		} else if (atomSvg1 == selection->target || atomSvg2 == selection->target) {
-			gtk_selection_data_set(selection, selection->target, 8, (guchar *) contents->svg.c_str(),
-					contents->svg.size());
+			gtk_selection_data_set(selection, selection->target, 8, (guchar *) contents->svg.c_str(), contents->svg.size());
 		} else if (atomXournal == selection->target) {
 			gtk_selection_data_set(selection, selection->target, 8, (guchar *) contents->str->str, contents->str->len);
 		}
@@ -165,8 +159,7 @@ void ClipboardHandler::copy() {
 
 	double dpiFactor = 1.0 / 72.0 * 300.0;
 
-	cairo_surface_t * surfacePng = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, selection->getWidth() * dpiFactor,
-			selection->getHeight() * dpiFactor);
+	cairo_surface_t * surfacePng = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, selection->getWidth() * dpiFactor, selection->getHeight() * dpiFactor);
 	cairo_t * crPng = cairo_create(surfacePng);
 	cairo_scale(crPng, dpiFactor, dpiFactor);
 
@@ -185,8 +178,8 @@ void ClipboardHandler::copy() {
 
 	GString * svgString = g_string_sized_new(1048576); // 1MB
 
-	cairo_surface_t * surfaceSVG = cairo_svg_surface_create_for_stream((cairo_write_func_t) svgWriteFunction,
-			svgString, selection->getWidth(), selection->getHeight());
+	cairo_surface_t * surfaceSVG = cairo_svg_surface_create_for_stream((cairo_write_func_t) svgWriteFunction, svgString, selection->getWidth(),
+			selection->getHeight());
 	cairo_t * crSVG = cairo_create(surfaceSVG);
 
 	view.drawSelection(crSVG, this->selection);
@@ -240,24 +233,22 @@ void ClipboardHandler::setCopyPasteEnabled(bool enabled) {
 	}
 }
 
-void ClipboardHandler::ownerChangedCallback(GtkClipboard *clip, GdkEvent *event, ClipboardHandler * handler) {
+void ClipboardHandler::ownerChangedCallback(GtkClipboard * clip, GdkEvent * event, ClipboardHandler * handler) {
 	if (event->type == GDK_OWNER_CHANGE) {
 		handler->clipboardUpdated(event->owner_change.selection);
 	}
 }
 
 void ClipboardHandler::clipboardUpdated(GdkAtom atom) {
-	gtk_clipboard_request_contents(clipboard, gdk_atom_intern_static_string("TARGETS"),
-			(GtkClipboardReceivedFunc) receivedClipboardContents, this);
+	gtk_clipboard_request_contents(clipboard, gdk_atom_intern_static_string("TARGETS"), (GtkClipboardReceivedFunc) receivedClipboardContents, this);
 }
 
-void ClipboardHandler::pasteClipboardContents(GtkClipboard *clipboard, GtkSelectionData *selectionData,
-		ClipboardHandler * handler) {
+void ClipboardHandler::pasteClipboardContents(GtkClipboard * clipboard, GtkSelectionData * selectionData, ClipboardHandler * handler) {
 
 	if (atomXournal == selectionData->target) {
 		ObjectInputStream in;
 
-		if(in.read((const char *)selectionData->data, selectionData->length)) {
+		if (in.read((const char *) selectionData->data, selectionData->length)) {
 			handler->listener->clipboardPasteXournal(in);
 		}
 	} else {
@@ -269,7 +260,7 @@ void ClipboardHandler::pasteClipboardContents(GtkClipboard *clipboard, GtkSelect
 	}
 }
 
-gboolean gtk_selection_data_targets_include_xournal(GtkSelectionData *selection_data) {
+gboolean gtk_selection_data_targets_include_xournal(GtkSelectionData * selection_data) {
 	GdkAtom *targets;
 	gint n_targets;
 	gboolean result = FALSE;
@@ -287,8 +278,7 @@ gboolean gtk_selection_data_targets_include_xournal(GtkSelectionData *selection_
 	return result;
 }
 
-void ClipboardHandler::receivedClipboardContents(GtkClipboard *clipboard, GtkSelectionData * selectionData,
-		ClipboardHandler * handler) {
+void ClipboardHandler::receivedClipboardContents(GtkClipboard * clipboard, GtkSelectionData * selectionData, ClipboardHandler * handler) {
 
 	handler->containsText = gtk_selection_data_targets_include_text(selectionData);
 	handler->containsXournal = gtk_selection_data_targets_include_xournal(selectionData);

@@ -29,9 +29,8 @@ VerticalToolHandler::VerticalToolHandler(Redrawable * view, XojPage * page, doub
 
 	this->jumpY = this->page->getHeight() - this->jumpY;
 
-	crBuffer = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, this->page->getWidth() * zoom, (this->page->getHeight()
-			- y) * zoom);
-	cairo_t * cr = cairo_create(crBuffer);
+	this->crBuffer = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, this->page->getWidth() * zoom, (this->page->getHeight() - y) * zoom);
+	cairo_t * cr = cairo_create(this->crBuffer);
 	cairo_scale(cr, zoom, zoom);
 	cairo_translate(cr, 0, -y);
 	DocumentView v;
@@ -56,14 +55,13 @@ VerticalToolHandler::~VerticalToolHandler() {
 	this->elements = NULL;
 }
 
-void VerticalToolHandler::paint(cairo_t * cr, GdkEventExpose *event, double zoom) {
+void VerticalToolHandler::paint(cairo_t * cr, GdkEventExpose * event, double zoom) {
 	GdkColor selectionColor = view->getSelectionColor();
 
 	// set the line always the same size on display
 	cairo_set_line_width(cr, 1 / zoom);
 
-	cairo_set_source_rgb(cr, selectionColor.red / 65536.0, selectionColor.green / 65536.0, selectionColor.blue
-			/ 65536.0);
+	gdk_cairo_set_source_color(cr, &selectionColor);
 
 	double y;
 	double height;
@@ -79,8 +77,7 @@ void VerticalToolHandler::paint(cairo_t * cr, GdkEventExpose *event, double zoom
 	cairo_rectangle(cr, 0, y, this->page->getWidth(), height);
 
 	cairo_stroke_preserve(cr);
-	cairo_set_source_rgba(cr, selectionColor.red / 65536.0, selectionColor.green / 65536.0, selectionColor.blue
-			/ 65536.0, 0.3);
+	cairo_set_source_rgba(cr, selectionColor.red / 65536.0, selectionColor.green / 65536.0, selectionColor.blue / 65536.0, 0.3);
 	cairo_fill(cr);
 
 	cairo_set_source_surface(cr, crBuffer, 0, this->endY);
@@ -95,21 +92,20 @@ void VerticalToolHandler::currentPos(double x, double y) {
 
 	this->endY = y;
 
-	view->redrawDocumentRegion(0, y1, this->page->getWidth(), this->page->getHeight());
+	this->view->redrawDocumentRegion(0, y1, this->page->getWidth(), this->page->getHeight());
 
 	double dY = this->endY - this->startY;
-
 
 	// TODO: LOW PRIO: we should move to a *new* page, but we should it do a bit more intelligent
 	// than only move all elements...
 	// But how?
 
-//	printf("dY %lf / %lf\n", dY, this->jumpY);
-//	if (this->jumpY + 10 < dY) {
-//		printf("add page\n");
-//	} else if (this->jumpY > dY) {
-//		printf("remove page\n");
-//	}
+	//	printf("dY %lf / %lf\n", dY, this->jumpY);
+	//	if (this->jumpY + 10 < dY) {
+	//		printf("add page\n");
+	//	} else if (this->jumpY > dY) {
+	//		printf("remove page\n");
+	//	}
 }
 
 GList * VerticalToolHandler::getElements() {

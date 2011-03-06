@@ -6,6 +6,8 @@
 #include "Shadow.h"
 #include "../util/Util.h"
 
+// TODO: LOW PRIO handle scroll events from touch / if Hand tool is selected
+
 XournalWidget::XournalWidget(GtkWidget * parent, Control * control) {
 	this->control = control;
 	this->cache = new PdfCache(control->getSettings()->getPdfPageCacheSize());

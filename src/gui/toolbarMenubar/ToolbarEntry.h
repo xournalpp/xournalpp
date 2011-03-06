@@ -1,13 +1,14 @@
 /*
  * Xournal Extended
  *
- * Part of the customizeable toolbars
+ * Part of the customizable toolbars
  *
  * @author Xournal Team
  * http://xournal.sf.net
  *
  * @license GPL
  */
+
 #ifndef __TOOLBARENTRY_H__
 #define __TOOLBARENTRY_H__
 

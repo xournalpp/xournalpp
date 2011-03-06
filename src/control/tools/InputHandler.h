@@ -24,8 +24,7 @@ class XournalWidget;
 
 class InputHandler: public MemoryCheckObject {
 public:
-	InputHandler(XournalWidget * xournal, GtkWidget * widget,
-			Redrawable * redrawable);
+	InputHandler(XournalWidget * xournal, GtkWidget * widget, Redrawable * redrawable);
 	virtual ~InputHandler();
 
 public:
@@ -33,8 +32,7 @@ public:
 	void draw(cairo_t * cr);
 	void onButtonReleaseEvent(GdkEventButton * event, XojPage * page);
 	bool onMotionNotifyEvent(GdkEventMotion * event);
-	void startStroke(GdkEventButton * event, StrokeTool tool, double x,
-			double y);
+	void startStroke(GdkEventButton * event, StrokeTool tool, double x, double y);
 
 	Stroke * getTmpStroke();
 

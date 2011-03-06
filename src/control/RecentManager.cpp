@@ -5,15 +5,9 @@
 #include <config.h>
 #include <glib/gi18n-lib.h>
 
-
 #define MIME "application/x-xoj"
 #define MIME_PDF "application/x-pdf"
 #define GROUP "xournal++"
-
-static void recent_manager_changed(GtkRecentManager *manager, RecentManager *recentManager) {
-	// regenerate the menu when the model changes
-	recentManager->updateMenu();
-}
 
 RecentManager::RecentManager() {
 	this->maxRecent = 10;
@@ -21,32 +15,34 @@ RecentManager::RecentManager() {
 	this->menuItemList = NULL;
 	this->listener = NULL;
 
-	GtkRecentManager *recentManager;
-	recentManager = gtk_recent_manager_get_default();
-	recentHandlerId = g_signal_connect (recentManager, "changed", G_CALLBACK (recent_manager_changed), this);
+	GtkRecentManager * recentManager = gtk_recent_manager_get_default();
+	this->recentHandlerId = g_signal_connect(recentManager, "changed", G_CALLBACK (recentManagerChangedCallback), this);
 
 	updateMenu();
 }
 
 RecentManager::~RecentManager() {
-	if (recentHandlerId) {
-		GtkRecentManager *recentManager;
-
-		recentManager = gtk_recent_manager_get_default();
-		g_signal_handler_disconnect(recentManager, recentHandlerId);
-		recentHandlerId = 0;
+	if (this->recentHandlerId) {
+		GtkRecentManager * recentManager = gtk_recent_manager_get_default();
+		g_signal_handler_disconnect(recentManager, this->recentHandlerId);
+		this->recentHandlerId = 0;
 	}
-	menu = NULL;
+	this->menu = NULL;
 }
 
 void RecentManager::addListener(RecentManagerListener * listener) {
 	this->listener = g_list_append(this->listener, listener);
 }
 
+void RecentManager::recentManagerChangedCallback(GtkRecentManager * manager, RecentManager * recentManager) {
+	// regenerate the menu when the model changes
+	recentManager->updateMenu();
+}
+
 void RecentManager::addRecentFileFilename(const char * filename) {
 	printf("addRecentFileFilename: %s\n", filename);
 
-	if(strncmp(filename, "file://", 7)==0) {
+	if (strncmp(filename, "file://", 7) == 0) {
 		addRecentFileUri(filename);
 		return;
 	}
@@ -61,11 +57,10 @@ void RecentManager::addRecentFileFilename(const char * filename) {
 void RecentManager::addRecentFileUri(const char * uri) {
 	printf("addRecentFileUri: %s\n", uri);
 
+	GtkRecentManager * recentManager;
+	GtkRecentData * recentData;
 
-	GtkRecentManager *recentManager;
-	GtkRecentData *recentData;
-
-	static gchar *groups[2] = { g_strdup(GROUP), NULL };
+	static gchar * groups[2] = { g_strdup(GROUP), NULL };
 
 	recentManager = gtk_recent_manager_get_default();
 
@@ -92,7 +87,6 @@ void RecentManager::addRecentFileUri(const char * uri) {
 	g_slice_free(GtkRecentData, recentData);
 }
 
-
 void RecentManager::removeRecentFileFilename(const char * filename) {
 	GFile * file = g_file_new_for_path(filename);
 
@@ -102,13 +96,8 @@ void RecentManager::removeRecentFileFilename(const char * filename) {
 }
 
 void RecentManager::removeRecentFileUri(const char * uri) {
-	GtkRecentManager *recentManager;
-	recentManager = gtk_recent_manager_get_default();
+	GtkRecentManager * recentManager = gtk_recent_manager_get_default();
 	gtk_recent_manager_remove_item(recentManager, uri, NULL);
-}
-
-static gint sort_recents_mru(GtkRecentInfo *a, GtkRecentInfo *b) {
-	return (gtk_recent_info_get_modified(b) - gtk_recent_info_get_modified(a));
 }
 
 int RecentManager::getMaxRecent() {
@@ -134,18 +123,6 @@ void RecentManager::openRecent(String uri) {
 		RecentManagerListener * listener = (RecentManagerListener *) l->data;
 		listener->fileOpened(uri.c_str());
 	}
-}
-
-static void recents_menu_activate(GtkAction *action, RecentManager *recentManager) {
-	GtkRecentInfo *info;
-	const gchar *uri;
-
-	info = (GtkRecentInfo *) g_object_get_data(G_OBJECT (action), "gtk-recent-info");
-	g_return_if_fail (info != NULL);
-
-	uri = gtk_recent_info_get_uri(info);
-
-	recentManager->openRecent(uri);
 }
 
 GtkWidget * RecentManager::getMenu() {
@@ -268,20 +245,23 @@ gedit_utils_replace_home_dir_with_tilde(const gchar *uri) {
 	return g_strdup(uri);
 }
 
+int RecentManager::sortRecentsEntries(GtkRecentInfo * a, GtkRecentInfo * b) {
+	return (gtk_recent_info_get_modified(b) - gtk_recent_info_get_modified(a));
+}
+
 GList * RecentManager::filterRecent(GList * items, bool xoj) {
-	GList *filteredItems = NULL;
+	GList * filteredItems = NULL;
 
 	// filter
-	for (GList *l = items; l != NULL; l = l->next) {
-		GtkRecentInfo *info = (GtkRecentInfo *) l->data;
-		const gchar * uri = gtk_recent_info_get_uri(info);
-
-		// Skip remote files
-		if(!g_str_has_prefix(uri, "file://")) {
-			continue;
-		}
+	for (GList * l = items; l != NULL; l = l->next) {
+		GtkRecentInfo * info = (GtkRecentInfo *) l->data;
+		const char * uri = gtk_recent_info_get_uri(info);
 
 		if (xoj) {
+			// Skip remote files
+			if (!g_str_has_prefix(uri, "file://")) {
+				continue;
+			}
 			if (g_str_has_suffix(uri, ".xoj")) {
 				filteredItems = g_list_prepend(filteredItems, info);
 			}
@@ -293,22 +273,23 @@ GList * RecentManager::filterRecent(GList * items, bool xoj) {
 	}
 
 	// sort
-	filteredItems = g_list_sort(filteredItems, (GCompareFunc) sort_recents_mru);
+	filteredItems = g_list_sort(filteredItems, (GCompareFunc) sortRecentsEntries);
 
 	return filteredItems;
 }
 
-void RecentManager::addRecentMenu(GtkRecentInfo *info, int i) {
-	const gchar *display_name;
-	gchar *escaped;
-	gchar *label;
-	gchar *uri;
-	gchar *ruri;
-	gchar *tip;
-	GtkWidget * item;
+void RecentManager::recentsMenuActivateCallback(GtkAction * action, RecentManager * recentManager) {
+	GtkRecentInfo * info = (GtkRecentInfo *) g_object_get_data(G_OBJECT (action), "gtk-recent-info");
+	g_return_if_fail(info != NULL);
 
-	display_name = gtk_recent_info_get_display_name(info);
-	escaped = gedit_utils_escape_underscores(display_name, -1);
+	const char * uri = gtk_recent_info_get_uri(info);
+	recentManager->openRecent(uri);
+}
+
+void RecentManager::addRecentMenu(GtkRecentInfo *info, int i) {
+	gchar * label = NULL;
+	const char * display_name = gtk_recent_info_get_display_name(info);
+	char * escaped = gedit_utils_escape_underscores(display_name, -1);
 	if (i >= 10) {
 		label = g_strdup_printf("%d.  %s", i, escaped);
 	} else {
@@ -318,25 +299,24 @@ void RecentManager::addRecentMenu(GtkRecentInfo *info, int i) {
 
 	/* gtk_recent_info_get_uri_display (info) is buggy and
 	 * works only for local files */
-	uri = gedit_utils_uri_for_display(gtk_recent_info_get_uri(info));
+	char * uri = gedit_utils_uri_for_display(gtk_recent_info_get_uri(info));
 
-	ruri = gedit_utils_replace_home_dir_with_tilde(uri);
+	char * ruri = gedit_utils_replace_home_dir_with_tilde(uri);
 	g_free(uri);
 
 	// Translators: %s is a URI
-	tip = g_strdup_printf(_("Open '%s'"), ruri);
+	char * tip = g_strdup_printf(_("Open '%s'"), ruri);
 	g_free(ruri);
 
-	item = gtk_menu_item_new_with_mnemonic(label);
+	GtkWidget * item = gtk_menu_item_new_with_mnemonic(label);
 
 	gtk_widget_set_tooltip_text(item, tip);
 
-	g_object_set_data_full(G_OBJECT (item), "gtk-recent-info", gtk_recent_info_ref(info),
-			(GDestroyNotify) gtk_recent_info_unref);
+	g_object_set_data_full(G_OBJECT (item), "gtk-recent-info", gtk_recent_info_ref(info), (GDestroyNotify) gtk_recent_info_unref);
 
 	g_signal_connect (item,
 			"activate",
-			G_CALLBACK (recents_menu_activate),
+			G_CALLBACK (recentsMenuActivateCallback),
 			this);
 
 	gtk_menu_shell_append(GTK_MENU_SHELL(menu), item);
@@ -354,14 +334,11 @@ void RecentManager::updateMenu() {
 	GList * filteredItemsXoj = filterRecent(items, true);
 	GList * filteredItemsPdf = filterRecent(items, false);
 
-	GList *actions;
-	gint i;
-
 	freeOldMenus();
 
-	i = 0;
+	int i = 0;
 	for (GList * l = filteredItemsXoj; l != NULL; l = l->next) {
-		GtkRecentInfo *info = (GtkRecentInfo *) l->data;
+		GtkRecentInfo * info = (GtkRecentInfo *) l->data;
 
 		if (i >= maxRecent) {
 			break;
@@ -378,7 +355,7 @@ void RecentManager::updateMenu() {
 
 	i = 0;
 	for (GList * l = filteredItemsPdf; l != NULL; l = l->next) {
-		GtkRecentInfo *info = (GtkRecentInfo *) l->data;
+		GtkRecentInfo * info = (GtkRecentInfo *) l->data;
 
 		if (i >= maxRecent) {
 			break;

@@ -95,7 +95,16 @@ am_xournalpp_OBJECTS = xournalpp-BlockingJob.$(OBJEXT) \
 	xournalpp-SelectBackgroundColorDialog.$(OBJEXT) \
 	xournalpp-SettingsDialog.$(OBJEXT) xournalpp-Sidebar.$(OBJEXT) \
 	xournalpp-SidebarPreview.$(OBJEXT) \
+	xournalpp-AbstractItem.$(OBJEXT) \
+	xournalpp-AbstractToolItem.$(OBJEXT) \
+	xournalpp-ColorToolItem.$(OBJEXT) \
+	xournalpp-FontButton.$(OBJEXT) xournalpp-MenuItem.$(OBJEXT) \
+	xournalpp-ToolButton.$(OBJEXT) \
 	xournalpp-ToolMenuHandler.$(OBJEXT) \
+	xournalpp-ToolPageLayer.$(OBJEXT) \
+	xournalpp-ToolPageSpinner.$(OBJEXT) \
+	xournalpp-ToolSelectCombocontrol.$(OBJEXT) \
+	xournalpp-ToolZoomSlider.$(OBJEXT) \
 	xournalpp-gtkmenutooltogglebutton.$(OBJEXT) \
 	xournalpp-SelectColor.$(OBJEXT) xournalpp-ZoomCallib.$(OBJEXT) \
 	xournalpp-Cursor.$(OBJEXT) xournalpp-GladeGui.$(OBJEXT) \
@@ -362,7 +371,17 @@ xournalpp_SOURCES = \
 	gui/dialog/SettingsDialog.cpp \
 	gui/sidebar/Sidebar.cpp \
 	gui/sidebar/SidebarPreview.cpp \
+	gui/toolbarMenubar/AbstractItem.cpp \
+	gui/toolbarMenubar/AbstractToolItem.cpp \
+	gui/toolbarMenubar/ColorToolItem.cpp \
+	gui/toolbarMenubar/FontButton.cpp \
+	gui/toolbarMenubar/MenuItem.cpp \
+	gui/toolbarMenubar/ToolButton.cpp \
 	gui/toolbarMenubar/ToolMenuHandler.cpp \
+	gui/toolbarMenubar/ToolPageLayer.cpp \
+	gui/toolbarMenubar/ToolPageSpinner.cpp \
+	gui/toolbarMenubar/ToolSelectCombocontrol.cpp \
+	gui/toolbarMenubar/ToolZoomSlider.cpp \
 	gui/widgets/gtkmenutooltogglebutton.cpp \
 	gui/widgets/SelectColor.cpp \
 	gui/widgets/ZoomCallib.cpp \
@@ -522,6 +541,8 @@ distclean-compile:
 	-rm -f *.tab.c
 
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-AboutDialog.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-AbstractItem.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-AbstractToolItem.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-Actions.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-Attribute.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-BlockingJob.Po@am__quote@
@@ -529,6 +550,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-CairoPdf.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-CircleRecognizer.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-ClipboardHandler.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-ColorToolItem.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-ColorUndoAction.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-Control.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-CrashHandler.Po@am__quote@
@@ -546,6 +568,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-ExportDialog.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-ExportHandler.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-Font.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-FontButton.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-FontUndoAction.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-FormatDefinitions.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-FormatDialog.Po@am__quote@
@@ -568,6 +591,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-LoadHandler.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-MainWindow.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-MemoryCheck.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-MenuItem.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-MoveUndoAction.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-ObjectStream.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-OutputStream.Po@am__quote@
@@ -625,8 +649,13 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-TextUndoAction.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-TextView.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-Tool.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-ToolButton.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-ToolHandler.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-ToolMenuHandler.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-ToolPageLayer.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-ToolPageSpinner.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-ToolSelectCombocontrol.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-ToolZoomSlider.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-UndoAction.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-UndoRedoHandler.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-UpdateRef.Po@am__quote@
@@ -1466,6 +1495,90 @@ xournalpp-SidebarPreview.obj: gui/sidebar/SidebarPreview.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-SidebarPreview.obj `if test -f 'gui/sidebar/SidebarPreview.cpp'; then $(CYGPATH_W) 'gui/sidebar/SidebarPreview.cpp'; else $(CYGPATH_W) '$(srcdir)/gui/sidebar/SidebarPreview.cpp'; fi`
 
+xournalpp-AbstractItem.o: gui/toolbarMenubar/AbstractItem.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-AbstractItem.o -MD -MP -MF $(DEPDIR)/xournalpp-AbstractItem.Tpo -c -o xournalpp-AbstractItem.o `test -f 'gui/toolbarMenubar/AbstractItem.cpp' || echo '$(srcdir)/'`gui/toolbarMenubar/AbstractItem.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-AbstractItem.Tpo $(DEPDIR)/xournalpp-AbstractItem.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='gui/toolbarMenubar/AbstractItem.cpp' object='xournalpp-AbstractItem.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-AbstractItem.o `test -f 'gui/toolbarMenubar/AbstractItem.cpp' || echo '$(srcdir)/'`gui/toolbarMenubar/AbstractItem.cpp
+
+xournalpp-AbstractItem.obj: gui/toolbarMenubar/AbstractItem.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-AbstractItem.obj -MD -MP -MF $(DEPDIR)/xournalpp-AbstractItem.Tpo -c -o xournalpp-AbstractItem.obj `if test -f 'gui/toolbarMenubar/AbstractItem.cpp'; then $(CYGPATH_W) 'gui/toolbarMenubar/AbstractItem.cpp'; else $(CYGPATH_W) '$(srcdir)/gui/toolbarMenubar/AbstractItem.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-AbstractItem.Tpo $(DEPDIR)/xournalpp-AbstractItem.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='gui/toolbarMenubar/AbstractItem.cpp' object='xournalpp-AbstractItem.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-AbstractItem.obj `if test -f 'gui/toolbarMenubar/AbstractItem.cpp'; then $(CYGPATH_W) 'gui/toolbarMenubar/AbstractItem.cpp'; else $(CYGPATH_W) '$(srcdir)/gui/toolbarMenubar/AbstractItem.cpp'; fi`
+
+xournalpp-AbstractToolItem.o: gui/toolbarMenubar/AbstractToolItem.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-AbstractToolItem.o -MD -MP -MF $(DEPDIR)/xournalpp-AbstractToolItem.Tpo -c -o xournalpp-AbstractToolItem.o `test -f 'gui/toolbarMenubar/AbstractToolItem.cpp' || echo '$(srcdir)/'`gui/toolbarMenubar/AbstractToolItem.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-AbstractToolItem.Tpo $(DEPDIR)/xournalpp-AbstractToolItem.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='gui/toolbarMenubar/AbstractToolItem.cpp' object='xournalpp-AbstractToolItem.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-AbstractToolItem.o `test -f 'gui/toolbarMenubar/AbstractToolItem.cpp' || echo '$(srcdir)/'`gui/toolbarMenubar/AbstractToolItem.cpp
+
+xournalpp-AbstractToolItem.obj: gui/toolbarMenubar/AbstractToolItem.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-AbstractToolItem.obj -MD -MP -MF $(DEPDIR)/xournalpp-AbstractToolItem.Tpo -c -o xournalpp-AbstractToolItem.obj `if test -f 'gui/toolbarMenubar/AbstractToolItem.cpp'; then $(CYGPATH_W) 'gui/toolbarMenubar/AbstractToolItem.cpp'; else $(CYGPATH_W) '$(srcdir)/gui/toolbarMenubar/AbstractToolItem.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-AbstractToolItem.Tpo $(DEPDIR)/xournalpp-AbstractToolItem.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='gui/toolbarMenubar/AbstractToolItem.cpp' object='xournalpp-AbstractToolItem.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-AbstractToolItem.obj `if test -f 'gui/toolbarMenubar/AbstractToolItem.cpp'; then $(CYGPATH_W) 'gui/toolbarMenubar/AbstractToolItem.cpp'; else $(CYGPATH_W) '$(srcdir)/gui/toolbarMenubar/AbstractToolItem.cpp'; fi`
+
+xournalpp-ColorToolItem.o: gui/toolbarMenubar/ColorToolItem.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-ColorToolItem.o -MD -MP -MF $(DEPDIR)/xournalpp-ColorToolItem.Tpo -c -o xournalpp-ColorToolItem.o `test -f 'gui/toolbarMenubar/ColorToolItem.cpp' || echo '$(srcdir)/'`gui/toolbarMenubar/ColorToolItem.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-ColorToolItem.Tpo $(DEPDIR)/xournalpp-ColorToolItem.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='gui/toolbarMenubar/ColorToolItem.cpp' object='xournalpp-ColorToolItem.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-ColorToolItem.o `test -f 'gui/toolbarMenubar/ColorToolItem.cpp' || echo '$(srcdir)/'`gui/toolbarMenubar/ColorToolItem.cpp
+
+xournalpp-ColorToolItem.obj: gui/toolbarMenubar/ColorToolItem.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-ColorToolItem.obj -MD -MP -MF $(DEPDIR)/xournalpp-ColorToolItem.Tpo -c -o xournalpp-ColorToolItem.obj `if test -f 'gui/toolbarMenubar/ColorToolItem.cpp'; then $(CYGPATH_W) 'gui/toolbarMenubar/ColorToolItem.cpp'; else $(CYGPATH_W) '$(srcdir)/gui/toolbarMenubar/ColorToolItem.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-ColorToolItem.Tpo $(DEPDIR)/xournalpp-ColorToolItem.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='gui/toolbarMenubar/ColorToolItem.cpp' object='xournalpp-ColorToolItem.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-ColorToolItem.obj `if test -f 'gui/toolbarMenubar/ColorToolItem.cpp'; then $(CYGPATH_W) 'gui/toolbarMenubar/ColorToolItem.cpp'; else $(CYGPATH_W) '$(srcdir)/gui/toolbarMenubar/ColorToolItem.cpp'; fi`
+
+xournalpp-FontButton.o: gui/toolbarMenubar/FontButton.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-FontButton.o -MD -MP -MF $(DEPDIR)/xournalpp-FontButton.Tpo -c -o xournalpp-FontButton.o `test -f 'gui/toolbarMenubar/FontButton.cpp' || echo '$(srcdir)/'`gui/toolbarMenubar/FontButton.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-FontButton.Tpo $(DEPDIR)/xournalpp-FontButton.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='gui/toolbarMenubar/FontButton.cpp' object='xournalpp-FontButton.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-FontButton.o `test -f 'gui/toolbarMenubar/FontButton.cpp' || echo '$(srcdir)/'`gui/toolbarMenubar/FontButton.cpp
+
+xournalpp-FontButton.obj: gui/toolbarMenubar/FontButton.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-FontButton.obj -MD -MP -MF $(DEPDIR)/xournalpp-FontButton.Tpo -c -o xournalpp-FontButton.obj `if test -f 'gui/toolbarMenubar/FontButton.cpp'; then $(CYGPATH_W) 'gui/toolbarMenubar/FontButton.cpp'; else $(CYGPATH_W) '$(srcdir)/gui/toolbarMenubar/FontButton.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-FontButton.Tpo $(DEPDIR)/xournalpp-FontButton.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='gui/toolbarMenubar/FontButton.cpp' object='xournalpp-FontButton.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-FontButton.obj `if test -f 'gui/toolbarMenubar/FontButton.cpp'; then $(CYGPATH_W) 'gui/toolbarMenubar/FontButton.cpp'; else $(CYGPATH_W) '$(srcdir)/gui/toolbarMenubar/FontButton.cpp'; fi`
+
+xournalpp-MenuItem.o: gui/toolbarMenubar/MenuItem.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-MenuItem.o -MD -MP -MF $(DEPDIR)/xournalpp-MenuItem.Tpo -c -o xournalpp-MenuItem.o `test -f 'gui/toolbarMenubar/MenuItem.cpp' || echo '$(srcdir)/'`gui/toolbarMenubar/MenuItem.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-MenuItem.Tpo $(DEPDIR)/xournalpp-MenuItem.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='gui/toolbarMenubar/MenuItem.cpp' object='xournalpp-MenuItem.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-MenuItem.o `test -f 'gui/toolbarMenubar/MenuItem.cpp' || echo '$(srcdir)/'`gui/toolbarMenubar/MenuItem.cpp
+
+xournalpp-MenuItem.obj: gui/toolbarMenubar/MenuItem.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-MenuItem.obj -MD -MP -MF $(DEPDIR)/xournalpp-MenuItem.Tpo -c -o xournalpp-MenuItem.obj `if test -f 'gui/toolbarMenubar/MenuItem.cpp'; then $(CYGPATH_W) 'gui/toolbarMenubar/MenuItem.cpp'; else $(CYGPATH_W) '$(srcdir)/gui/toolbarMenubar/MenuItem.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-MenuItem.Tpo $(DEPDIR)/xournalpp-MenuItem.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='gui/toolbarMenubar/MenuItem.cpp' object='xournalpp-MenuItem.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-MenuItem.obj `if test -f 'gui/toolbarMenubar/MenuItem.cpp'; then $(CYGPATH_W) 'gui/toolbarMenubar/MenuItem.cpp'; else $(CYGPATH_W) '$(srcdir)/gui/toolbarMenubar/MenuItem.cpp'; fi`
+
+xournalpp-ToolButton.o: gui/toolbarMenubar/ToolButton.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-ToolButton.o -MD -MP -MF $(DEPDIR)/xournalpp-ToolButton.Tpo -c -o xournalpp-ToolButton.o `test -f 'gui/toolbarMenubar/ToolButton.cpp' || echo '$(srcdir)/'`gui/toolbarMenubar/ToolButton.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-ToolButton.Tpo $(DEPDIR)/xournalpp-ToolButton.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='gui/toolbarMenubar/ToolButton.cpp' object='xournalpp-ToolButton.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-ToolButton.o `test -f 'gui/toolbarMenubar/ToolButton.cpp' || echo '$(srcdir)/'`gui/toolbarMenubar/ToolButton.cpp
+
+xournalpp-ToolButton.obj: gui/toolbarMenubar/ToolButton.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-ToolButton.obj -MD -MP -MF $(DEPDIR)/xournalpp-ToolButton.Tpo -c -o xournalpp-ToolButton.obj `if test -f 'gui/toolbarMenubar/ToolButton.cpp'; then $(CYGPATH_W) 'gui/toolbarMenubar/ToolButton.cpp'; else $(CYGPATH_W) '$(srcdir)/gui/toolbarMenubar/ToolButton.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-ToolButton.Tpo $(DEPDIR)/xournalpp-ToolButton.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='gui/toolbarMenubar/ToolButton.cpp' object='xournalpp-ToolButton.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-ToolButton.obj `if test -f 'gui/toolbarMenubar/ToolButton.cpp'; then $(CYGPATH_W) 'gui/toolbarMenubar/ToolButton.cpp'; else $(CYGPATH_W) '$(srcdir)/gui/toolbarMenubar/ToolButton.cpp'; fi`
+
 xournalpp-ToolMenuHandler.o: gui/toolbarMenubar/ToolMenuHandler.cpp
 @am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-ToolMenuHandler.o -MD -MP -MF $(DEPDIR)/xournalpp-ToolMenuHandler.Tpo -c -o xournalpp-ToolMenuHandler.o `test -f 'gui/toolbarMenubar/ToolMenuHandler.cpp' || echo '$(srcdir)/'`gui/toolbarMenubar/ToolMenuHandler.cpp
 @am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-ToolMenuHandler.Tpo $(DEPDIR)/xournalpp-ToolMenuHandler.Po
@@ -1479,6 +1592,62 @@ xournalpp-ToolMenuHandler.obj: gui/toolbarMenubar/ToolMenuHandler.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='gui/toolbarMenubar/ToolMenuHandler.cpp' object='xournalpp-ToolMenuHandler.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-ToolMenuHandler.obj `if test -f 'gui/toolbarMenubar/ToolMenuHandler.cpp'; then $(CYGPATH_W) 'gui/toolbarMenubar/ToolMenuHandler.cpp'; else $(CYGPATH_W) '$(srcdir)/gui/toolbarMenubar/ToolMenuHandler.cpp'; fi`
+
+xournalpp-ToolPageLayer.o: gui/toolbarMenubar/ToolPageLayer.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-ToolPageLayer.o -MD -MP -MF $(DEPDIR)/xournalpp-ToolPageLayer.Tpo -c -o xournalpp-ToolPageLayer.o `test -f 'gui/toolbarMenubar/ToolPageLayer.cpp' || echo '$(srcdir)/'`gui/toolbarMenubar/ToolPageLayer.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-ToolPageLayer.Tpo $(DEPDIR)/xournalpp-ToolPageLayer.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='gui/toolbarMenubar/ToolPageLayer.cpp' object='xournalpp-ToolPageLayer.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-ToolPageLayer.o `test -f 'gui/toolbarMenubar/ToolPageLayer.cpp' || echo '$(srcdir)/'`gui/toolbarMenubar/ToolPageLayer.cpp
+
+xournalpp-ToolPageLayer.obj: gui/toolbarMenubar/ToolPageLayer.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-ToolPageLayer.obj -MD -MP -MF $(DEPDIR)/xournalpp-ToolPageLayer.Tpo -c -o xournalpp-ToolPageLayer.obj `if test -f 'gui/toolbarMenubar/ToolPageLayer.cpp'; then $(CYGPATH_W) 'gui/toolbarMenubar/ToolPageLayer.cpp'; else $(CYGPATH_W) '$(srcdir)/gui/toolbarMenubar/ToolPageLayer.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-ToolPageLayer.Tpo $(DEPDIR)/xournalpp-ToolPageLayer.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='gui/toolbarMenubar/ToolPageLayer.cpp' object='xournalpp-ToolPageLayer.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-ToolPageLayer.obj `if test -f 'gui/toolbarMenubar/ToolPageLayer.cpp'; then $(CYGPATH_W) 'gui/toolbarMenubar/ToolPageLayer.cpp'; else $(CYGPATH_W) '$(srcdir)/gui/toolbarMenubar/ToolPageLayer.cpp'; fi`
+
+xournalpp-ToolPageSpinner.o: gui/toolbarMenubar/ToolPageSpinner.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-ToolPageSpinner.o -MD -MP -MF $(DEPDIR)/xournalpp-ToolPageSpinner.Tpo -c -o xournalpp-ToolPageSpinner.o `test -f 'gui/toolbarMenubar/ToolPageSpinner.cpp' || echo '$(srcdir)/'`gui/toolbarMenubar/ToolPageSpinner.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-ToolPageSpinner.Tpo $(DEPDIR)/xournalpp-ToolPageSpinner.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='gui/toolbarMenubar/ToolPageSpinner.cpp' object='xournalpp-ToolPageSpinner.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-ToolPageSpinner.o `test -f 'gui/toolbarMenubar/ToolPageSpinner.cpp' || echo '$(srcdir)/'`gui/toolbarMenubar/ToolPageSpinner.cpp
+
+xournalpp-ToolPageSpinner.obj: gui/toolbarMenubar/ToolPageSpinner.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-ToolPageSpinner.obj -MD -MP -MF $(DEPDIR)/xournalpp-ToolPageSpinner.Tpo -c -o xournalpp-ToolPageSpinner.obj `if test -f 'gui/toolbarMenubar/ToolPageSpinner.cpp'; then $(CYGPATH_W) 'gui/toolbarMenubar/ToolPageSpinner.cpp'; else $(CYGPATH_W) '$(srcdir)/gui/toolbarMenubar/ToolPageSpinner.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-ToolPageSpinner.Tpo $(DEPDIR)/xournalpp-ToolPageSpinner.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='gui/toolbarMenubar/ToolPageSpinner.cpp' object='xournalpp-ToolPageSpinner.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-ToolPageSpinner.obj `if test -f 'gui/toolbarMenubar/ToolPageSpinner.cpp'; then $(CYGPATH_W) 'gui/toolbarMenubar/ToolPageSpinner.cpp'; else $(CYGPATH_W) '$(srcdir)/gui/toolbarMenubar/ToolPageSpinner.cpp'; fi`
+
+xournalpp-ToolSelectCombocontrol.o: gui/toolbarMenubar/ToolSelectCombocontrol.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-ToolSelectCombocontrol.o -MD -MP -MF $(DEPDIR)/xournalpp-ToolSelectCombocontrol.Tpo -c -o xournalpp-ToolSelectCombocontrol.o `test -f 'gui/toolbarMenubar/ToolSelectCombocontrol.cpp' || echo '$(srcdir)/'`gui/toolbarMenubar/ToolSelectCombocontrol.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-ToolSelectCombocontrol.Tpo $(DEPDIR)/xournalpp-ToolSelectCombocontrol.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='gui/toolbarMenubar/ToolSelectCombocontrol.cpp' object='xournalpp-ToolSelectCombocontrol.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-ToolSelectCombocontrol.o `test -f 'gui/toolbarMenubar/ToolSelectCombocontrol.cpp' || echo '$(srcdir)/'`gui/toolbarMenubar/ToolSelectCombocontrol.cpp
+
+xournalpp-ToolSelectCombocontrol.obj: gui/toolbarMenubar/ToolSelectCombocontrol.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-ToolSelectCombocontrol.obj -MD -MP -MF $(DEPDIR)/xournalpp-ToolSelectCombocontrol.Tpo -c -o xournalpp-ToolSelectCombocontrol.obj `if test -f 'gui/toolbarMenubar/ToolSelectCombocontrol.cpp'; then $(CYGPATH_W) 'gui/toolbarMenubar/ToolSelectCombocontrol.cpp'; else $(CYGPATH_W) '$(srcdir)/gui/toolbarMenubar/ToolSelectCombocontrol.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-ToolSelectCombocontrol.Tpo $(DEPDIR)/xournalpp-ToolSelectCombocontrol.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='gui/toolbarMenubar/ToolSelectCombocontrol.cpp' object='xournalpp-ToolSelectCombocontrol.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-ToolSelectCombocontrol.obj `if test -f 'gui/toolbarMenubar/ToolSelectCombocontrol.cpp'; then $(CYGPATH_W) 'gui/toolbarMenubar/ToolSelectCombocontrol.cpp'; else $(CYGPATH_W) '$(srcdir)/gui/toolbarMenubar/ToolSelectCombocontrol.cpp'; fi`
+
+xournalpp-ToolZoomSlider.o: gui/toolbarMenubar/ToolZoomSlider.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-ToolZoomSlider.o -MD -MP -MF $(DEPDIR)/xournalpp-ToolZoomSlider.Tpo -c -o xournalpp-ToolZoomSlider.o `test -f 'gui/toolbarMenubar/ToolZoomSlider.cpp' || echo '$(srcdir)/'`gui/toolbarMenubar/ToolZoomSlider.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-ToolZoomSlider.Tpo $(DEPDIR)/xournalpp-ToolZoomSlider.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='gui/toolbarMenubar/ToolZoomSlider.cpp' object='xournalpp-ToolZoomSlider.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-ToolZoomSlider.o `test -f 'gui/toolbarMenubar/ToolZoomSlider.cpp' || echo '$(srcdir)/'`gui/toolbarMenubar/ToolZoomSlider.cpp
+
+xournalpp-ToolZoomSlider.obj: gui/toolbarMenubar/ToolZoomSlider.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-ToolZoomSlider.obj -MD -MP -MF $(DEPDIR)/xournalpp-ToolZoomSlider.Tpo -c -o xournalpp-ToolZoomSlider.obj `if test -f 'gui/toolbarMenubar/ToolZoomSlider.cpp'; then $(CYGPATH_W) 'gui/toolbarMenubar/ToolZoomSlider.cpp'; else $(CYGPATH_W) '$(srcdir)/gui/toolbarMenubar/ToolZoomSlider.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-ToolZoomSlider.Tpo $(DEPDIR)/xournalpp-ToolZoomSlider.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='gui/toolbarMenubar/ToolZoomSlider.cpp' object='xournalpp-ToolZoomSlider.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-ToolZoomSlider.obj `if test -f 'gui/toolbarMenubar/ToolZoomSlider.cpp'; then $(CYGPATH_W) 'gui/toolbarMenubar/ToolZoomSlider.cpp'; else $(CYGPATH_W) '$(srcdir)/gui/toolbarMenubar/ToolZoomSlider.cpp'; fi`
 
 xournalpp-gtkmenutooltogglebutton.o: gui/widgets/gtkmenutooltogglebutton.cpp
 @am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-gtkmenutooltogglebutton.o -MD -MP -MF $(DEPDIR)/xournalpp-gtkmenutooltogglebutton.Tpo -c -o xournalpp-gtkmenutooltogglebutton.o `test -f 'gui/widgets/gtkmenutooltogglebutton.cpp' || echo '$(srcdir)/'`gui/widgets/gtkmenutooltogglebutton.cpp

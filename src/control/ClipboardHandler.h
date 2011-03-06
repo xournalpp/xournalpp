@@ -32,6 +32,7 @@ public:
 	ClipboardHandler(ClipboardListener * listener, GtkWidget * widget);
 	virtual ~ClipboardHandler();
 
+public:
 	void paste();
 	void cut();
 	void copy();
@@ -41,13 +42,11 @@ public:
 	void setCopyPasteEnabled(bool enabled);
 
 private:
-	static void ownerChangedCallback(GtkClipboard *clip, GdkEvent *event, ClipboardHandler * handler);
+	static void ownerChangedCallback(GtkClipboard * clip, GdkEvent * event, ClipboardHandler * handler);
 	void clipboardUpdated(GdkAtom atom);
-	static void receivedClipboardContents(GtkClipboard *clipboard, GtkSelectionData *selectionData,
-			ClipboardHandler * handler);
+	static void receivedClipboardContents(GtkClipboard * clipboard, GtkSelectionData * selectionData, ClipboardHandler * handler);
 
-	static void pasteClipboardContents(GtkClipboard *clipboard, GtkSelectionData *selectionData,
-			ClipboardHandler * handler);
+	static void pasteClipboardContents(GtkClipboard * clipboard, GtkSelectionData * selectionData, ClipboardHandler * handler);
 
 private:
 	ClipboardListener * listener;

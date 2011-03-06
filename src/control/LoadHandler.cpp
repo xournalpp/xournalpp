@@ -498,7 +498,7 @@ void LoadHandler::parseLayer() {
 	}
 }
 
-void LoadHandler::parserStartElement(GMarkupParseContext *context, const gchar *elementName, const gchar **attributeNames, const gchar **attributeValues,
+void LoadHandler::parserStartElement(GMarkupParseContext * context, const gchar * elementName, const gchar ** attributeNames, const gchar ** attributeValues,
 		gpointer userdata, GError **error) {
 	LoadHandler * handler = (LoadHandler *) userdata;
 	// Return on error
@@ -525,7 +525,7 @@ void LoadHandler::parserStartElement(GMarkupParseContext *context, const gchar *
 	handler->elementName = NULL;
 }
 
-void LoadHandler::parserEndElement(GMarkupParseContext *context, const gchar *element_name, gpointer userdata, GError **error) {
+void LoadHandler::parserEndElement(GMarkupParseContext * context, const gchar * element_name, gpointer userdata, GError ** error) {
 	// Return on error
 	if (*error) {
 		return;
@@ -554,7 +554,7 @@ void LoadHandler::parserEndElement(GMarkupParseContext *context, const gchar *el
 	}
 }
 
-void LoadHandler::parserText(GMarkupParseContext *context, const gchar *text, gsize textLen, gpointer userdata, GError **error) {
+void LoadHandler::parserText(GMarkupParseContext * context, const gchar * text, gsize textLen, gpointer userdata, GError ** error) {
 	// Return on error
 	if (*error) {
 		return;

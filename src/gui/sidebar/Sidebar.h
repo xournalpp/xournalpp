@@ -41,10 +41,9 @@ public:
 	PdfCache * getCache();
 
 private:
-	int expandOpenLinks(GtkTreeModel *model, GtkTreeIter *parent);
-	static bool treeClickedCallback(GtkWidget *treeview, GdkEventButton *event, Sidebar *sidebar);
-	static gboolean treeSearchFunction(GtkTreeModel *model, gint column, const gchar *key, GtkTreeIter *iter,
-			Sidebar * sidebar);
+	int expandOpenLinks(GtkTreeModel * model, GtkTreeIter * parent);
+	static bool treeClickedCallback(GtkWidget * treeview, GdkEventButton * event, Sidebar * sidebar);
+	static gboolean treeSearchFunction(GtkTreeModel * model, gint column, const gchar * key, GtkTreeIter * iter, Sidebar * sidebar);
 
 	static void cbChangedCallback(GtkComboBox * widget, Sidebar * sidebar);
 	static bool scrollTopreview(Sidebar * sidebar);
