@@ -24,10 +24,15 @@ void RenderJob::repaintRectangle(Rectangle * rect, double zoom) {
 		popplerPage = this->view->xournal->getDocument()->getPdfPage(pgNo);
 	}
 
-	cairo_surface_t * rectBuffer = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, rect->width * zoom, rect->height * zoom);
+	int x = rect->x * zoom;
+	int y = rect->y * zoom;
+	int width = rect->width * zoom;
+	int height = rect->height * zoom;
+
+	cairo_surface_t * rectBuffer = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, width, height);
 	cairo_t * crRect = cairo_create(rectBuffer);
+	cairo_translate(crRect, -x, -y);
 	cairo_scale(crRect, zoom, zoom);
-	cairo_translate(crRect, -rect->x, -rect->y);
 
 	DocumentView view;
 	view.limitArea(rect->x, rect->y, rect->width, rect->height);
@@ -42,8 +47,8 @@ void RenderJob::repaintRectangle(Rectangle * rect, double zoom) {
 	cairo_t * crPageBuffer = cairo_create(this->view->crBuffer);
 
 	cairo_set_operator(crPageBuffer, CAIRO_OPERATOR_SOURCE);
-	cairo_set_source_surface(crPageBuffer, rectBuffer, rect->x * zoom, rect->y * zoom);
-	cairo_rectangle(crPageBuffer, rect->x * zoom, rect->y * zoom, rect->width * zoom, rect->height * zoom);
+	cairo_set_source_surface(crPageBuffer, rectBuffer, x, y);
+	cairo_rectangle(crPageBuffer, x, y, width, height);
 	cairo_fill(crPageBuffer);
 
 	cairo_destroy(crPageBuffer);
