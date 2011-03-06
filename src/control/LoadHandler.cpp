@@ -31,18 +31,25 @@ const int COLOR_COUNT = sizeof(PREDEFINED_COLORS) / sizeof(PredefinedColor);
 
 LoadHandler::LoadHandler() :
 	doc(&dHanlder) {
-	fp = NULL;
-	error = NULL;
-	attributeNames = NULL;
-	attributeValues = NULL;
-	elementName = NULL;
-	this->pdfFilenameParsed = false;
+	initAttributes();
+	this->removePdfBackgroundFlag = false;
+	this->pdfReplacementAttach = false;
+}
 
-	page = NULL;
-	layer = NULL;
-	stroke = NULL;
-	image = NULL;
-	text = NULL;
+void LoadHandler::initAttributes() {
+	this->fp = NULL;
+	this->error = NULL;
+	this->attributeNames = NULL;
+	this->attributeValues = NULL;
+	this->elementName = NULL;
+	this->pdfFilenameParsed = false;
+	this->attachedPdfMissing = false;
+
+	this->page = NULL;
+	this->layer = NULL;
+	this->stroke = NULL;
+	this->image = NULL;
+	this->text = NULL;
 }
 
 LoadHandler::~LoadHandler() {
@@ -50,6 +57,23 @@ LoadHandler::~LoadHandler() {
 
 String LoadHandler::getLastError() {
 	return lastError;
+}
+
+bool LoadHandler::isAttachedPdfMissing() {
+	return this->attachedPdfMissing;
+}
+
+String LoadHandler::getMissingPdfFilename() {
+	return this->pdfMissing;
+}
+
+void LoadHandler::removePdfBackground() {
+	this->removePdfBackgroundFlag = true;
+}
+
+void LoadHandler::setPdfReplacement(String filename, bool attachToDocument) {
+	this->pdfReplacementFilename = filename;
+	this->pdfReplacementAttach = attachToDocument;
 }
 
 bool LoadHandler::openFile(String filename) {
@@ -100,14 +124,14 @@ double LoadHandler::getAttribDouble(const char * name) {
 	const char * attrib = getAttrib(name);
 
 	if (attrib == NULL) {
-		error("Attribute \"%s\" could not be parsed as double, the value is NULL", name);
+		error(_("Attribute \"%s\" could not be parsed as double, the value is NULL"), name);
 		return 0;
 	}
 
 	char * ptr = NULL;
 	double val = g_ascii_strtod(attrib, &ptr);
 	if (ptr == attrib) {
-		error("Attribute \"%s\" could not be parsed as double, the value is \"%s\"", name, attrib);
+		error(_("Attribute \"%s\" could not be parsed as double, the value is \"%s\""), name, attrib);
 	}
 
 	return val;
@@ -117,14 +141,14 @@ int LoadHandler::getAttribInt(const char * name) {
 	const char * attrib = getAttrib(name);
 
 	if (attrib == NULL) {
-		error("Attribute \"%s\" could not be parsed as int, the value is NULL", name);
+		error(_("Attribute \"%s\" could not be parsed as int, the value is NULL"), name);
 		return 0;
 	}
 
 	char * ptr = NULL;
 	int val = strtol(attrib, &ptr, 10);
 	if (ptr == attrib) {
-		error("Attribute \"%s\" could not be parsed as int, the value is \"%s\"", name, attrib);
+		error(_("Attribute \"%s\" could not be parsed as int, the value is \"%s\""), name, attrib);
 	}
 
 	return val;
@@ -151,7 +175,7 @@ void LoadHandler::parseStart() {
 
 		this->pos = PARSER_POS_STARTED;
 	} else {
-		error("Unexpected root tag: %s", elementName);
+		error(_("Unexpected root tag: %s"), elementName);
 	}
 }
 
@@ -171,7 +195,7 @@ void LoadHandler::parseContents() {
 	} else if (strcmp(elementName, "preview") == 0) {
 		// Ignore this tag, we don't need a preview
 	} else {
-		error("Unexpected tag in document: \"%s\"", elementName);
+		error(_("Unexpected tag in document: \"%s\""), elementName);
 	}
 }
 const char * RULINGSTR_NONE = "plain";
@@ -192,7 +216,7 @@ void LoadHandler::parseBgSolid() {
 		this->page->setBackgroundType(BACKGROUND_TYPE_GRAPH);
 	} else {
 		this->page->setBackgroundType(BACKGROUND_TYPE_NONE);
-		error ("Unknown ruling type parsed: %s", style);
+		error(_("Unknown background type parsed: \"%s\""), style);
 	}
 
 	const char * sColor = getAttrib("color");
@@ -240,7 +264,7 @@ void LoadHandler::parseBgPixmap() {
 		img.loadFile(fileToLoad, &error);
 
 		if (error) {
-			error("could not read image: %s, Error message: %s", fileToLoad.c_str(), error->message);
+			error(_("could not read image: %s, Error message: %s"), fileToLoad.c_str(), error->message);
 			g_error_free(error);
 		}
 
@@ -252,71 +276,77 @@ void LoadHandler::parseBgPixmap() {
 			this->page->backgroundImage = p->backgroundImage;
 		}
 	} else {
-		error("Unknown pixmap::domain type: %s", domain);
+		error(_("Unknown pixmap::domain type: %s"), domain);
 	}
 	page->setBackgroundType(BACKGROUND_TYPE_IMAGE);
 }
 
 void LoadHandler::parseBgPdf() {
 	int pageno = getAttribInt("pageno");
+	bool attachToDocument = false;
+	String pdfFilename;
 
 	page->setBackgroundPdfPageNr(pageno - 1);
 
 	if (!this->pdfFilenameParsed) {
-		const char * domain = getAttrib("domain");
-		const char * sFilename = getAttrib("filename");
-		String filename;
 
-		if (sFilename == NULL) {
-			error("PDF Filename missing!");
-			return;
-		}
+		if (this->pdfReplacementFilename.isEmpty()) {
+			const char * domain = getAttrib("domain");
+			const char * sFilename = getAttrib("filename");
 
-		filename = sFilename;
+			if (sFilename == NULL) {
+				error("PDF Filename missing!");
+				return;
+			}
 
-		this->pdfFilenameParsed = true;
+			pdfFilename = sFilename;
 
-		bool attachToDocument = false;
+			if (!strcmp("absolute", domain)) { // Absolute OR relative path
+				if (!g_file_test(sFilename, G_FILE_TEST_EXISTS)) {
+					char * dirname = g_path_get_dirname(xournalFilename.c_str());
+					char * file = g_path_get_basename(sFilename);
 
-		if (!strcmp("absolute", domain)) { // Absolute OR relative path
-			if (!g_file_test(sFilename, G_FILE_TEST_EXISTS)) {
-				char * dirname = g_path_get_dirname(xournalFilename.c_str());
-				char * file = g_path_get_basename(sFilename);
+					char * tmpFilename = g_build_path(G_DIR_SEPARATOR_S, dirname, file, NULL);
 
-				char * tmpFilename = g_build_path(G_DIR_SEPARATOR_S, dirname, file, NULL);
+					if (g_file_test(tmpFilename, G_FILE_TEST_EXISTS)) {
+						pdfFilename = tmpFilename;
+					}
+
+					g_free(tmpFilename);
+					g_free(dirname);
+					g_free(file);
+				}
+			} else if (!strcmp("attach", domain)) {
+				attachToDocument = true;
+				char * tmpFilename = g_strdup_printf("%s.%s", xournalFilename.c_str(), sFilename);
 
 				if (g_file_test(tmpFilename, G_FILE_TEST_EXISTS)) {
-					filename = tmpFilename;
+					pdfFilename = tmpFilename;
 				}
 
 				g_free(tmpFilename);
-				g_free(dirname);
-				g_free(file);
-			}
-		} else if (!strcmp("attach", domain)) {
-			attachToDocument = true;
-			char * tmpFilename = g_strdup_printf("%s.%s", xournalFilename.c_str(), sFilename);
-
-			if (g_file_test(tmpFilename, G_FILE_TEST_EXISTS)) {
-				filename = tmpFilename;
+			} else {
+				error(_("Unknown domain type: %s"), domain);
+				return;
 			}
 
-			g_free(tmpFilename);
 		} else {
-			error("Unknown domain type: %s", domain);
-			return;
+			pdfFilename = this->pdfReplacementFilename;
+			attachToDocument = this->pdfReplacementAttach;
 		}
 
-		if (g_file_test(filename.c_str(), G_FILE_TEST_EXISTS)) {
-			doc.readPdf(filename, false, attachToDocument);
+		this->pdfFilenameParsed = true;
+
+		if (g_file_test(pdfFilename.c_str(), G_FILE_TEST_EXISTS)) {
+			doc.readPdf(pdfFilename, false, attachToDocument);
 			if (!doc.getLastErrorMsg().isEmpty()) {
-				error("Error reading PDF: %s", doc.getLastErrorMsg().c_str());
+				error(_("Error reading PDF: %s"), doc.getLastErrorMsg().c_str());
 			}
 		} else {
 			if (attachToDocument) {
-				error("Attached PDF not found");
+				this->attachedPdfMissing = true;
 			} else {
-				error("PDF not found: \"%s\"", filename.c_str());
+				this->pdfMissing = pdfFilename.c_str();
 			}
 		}
 	}
@@ -331,9 +361,14 @@ void LoadHandler::parsePage() {
 		} else if (strcmp("pixmap", type) == 0) {
 			parseBgPixmap();
 		} else if (strcmp("pdf", type) == 0) {
-			parseBgPdf();
+			if (this->removePdfBackgroundFlag) {
+				this->page->setBackgroundType(BACKGROUND_TYPE_NONE);
+				this->page->setBackgroundColor(0xffffff);
+			} else {
+				parseBgPdf();
+			}
 		} else {
-			error("Unknown background type: %s", type);
+			error(_("Unknown background type: %s"), type);
 		}
 	} else if (!strcmp(elementName, "layer")) {
 		this->pos = PARSER_POS_IN_LAYER;
@@ -344,7 +379,7 @@ void LoadHandler::parsePage() {
 
 bool LoadHandler::parseColor(const char * text, int & color) {
 	if (text == NULL) {
-		error("Attribute color not set!");
+		error(_("Attribute color not set!"));
 		return false;
 	}
 
@@ -352,7 +387,7 @@ bool LoadHandler::parseColor(const char * text, int & color) {
 		gchar * ptr = NULL;
 		int c = g_ascii_strtoull(&text[1], &ptr, 16);
 		if (ptr != text + strlen(text)) {
-			error("Unknown color value \"%s\"", text);
+			error(_("Unknown color value \"%s\""), text);
 			return false;
 		}
 
@@ -366,7 +401,7 @@ bool LoadHandler::parseColor(const char * text, int & color) {
 				return true;
 			}
 		}
-		error("Color \"%s\" unknown (not defined in default color list)!", text);
+		error(_("Color \"%s\" unknown (not defined in default color list)!"), text);
 		return false;
 	}
 }
@@ -382,7 +417,7 @@ void LoadHandler::parseStroke() {
 
 	stroke->setWidth(g_ascii_strtod(width, &ptr));
 	if (ptr == width) {
-		error("Error reading width of a stroke: %s", width);
+		error(_("Error reading width of a stroke: %s"), width);
 		return;
 	}
 
@@ -411,7 +446,7 @@ void LoadHandler::parseStroke() {
 	} else if (strcmp("highlighter", tool) == 0) {
 		stroke->setToolType(STROKE_TOOL_HIGHLIGHTER);
 	} else {
-		g_warning("Unknown stroke type: \"%s\", assume pen", tool);
+		g_warning(_("Unknown stroke type: \"%s\", assume pen"), tool);
 	}
 }
 
@@ -554,7 +589,7 @@ void LoadHandler::parserText(GMarkupParseContext *context, const gchar *text, gs
 		handler->stroke->freeUnusedPointItems();
 
 		if (n < 4 || n & 1) {
-			error2(*error, "Wrong count of points (%i)", n);
+			error2(*error, _("Wrong count of points (%i)"), n);
 			return;
 		}
 
@@ -564,8 +599,8 @@ void LoadHandler::parserText(GMarkupParseContext *context, const gchar *text, gs
 				handler->stroke->setPressure(data);
 				handler->pressureBuffer.clear();
 			} else {
-				g_warning("xoj-File: %s", handler->filename.c_str());
-				g_warning("Wrong count of points, get %i, expected %i", handler->pressureBuffer.size(), handler->stroke->getPointCount() - 1);
+				g_warning(_("xoj-File: %s"), handler->filename.c_str());
+				g_warning(_("Wrong count of points, get %i, expected %i"), handler->pressureBuffer.size(), handler->stroke->getPointCount() - 1);
 			}
 		}
 		handler->pressureBuffer.clear();
@@ -613,7 +648,7 @@ bool LoadHandler::parseXml() {
 		}
 
 		if (error) {
-			g_warning("error: %s\n", error->message);
+			g_warning("LoadHandler::parseXml: %s\n", error->message);
 			valid = false;
 			break;
 		}
@@ -641,16 +676,19 @@ bool LoadHandler::parseXml() {
 		return false;
 	}
 
-	printf("parsed creator: %s::version: %i\n", this->creator.c_str(), this->fileversion);
+	//	printf("parsed creator: %s::version: %i\n", this->creator.c_str(), this->fileversion);
 	doc.setCreateBackupOnSave(!this->fileversion < 2);
 
 	return valid;
 }
 
 /**
- * Document shuld not be freed, it will be freed with LoadHandler!
+ * Document should not be freed, it will be freed with LoadHandler!
  */
 Document * LoadHandler::loadDocument(String filename) {
+	initAttributes();
+	doc.clearDocument();
+
 	if (!openFile(filename)) {
 		return NULL;
 	}

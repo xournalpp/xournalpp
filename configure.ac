@@ -28,6 +28,8 @@ AC_SUBST(NO_PREFIX_PACKAGE_DATA_DIR)
 PACKAGE_DATA_DIR="${packageprefix}/${packagedatadir}"
 AC_SUBST(PACKAGE_DATA_DIR)
 
+IT_PROG_INTLTOOL([0.41.0])
+
 GETTEXT_PACKAGE=xournalpp
 AC_SUBST(GETTEXT_PACKAGE)
 AC_DEFINE_UNQUOTED([GETTEXT_PACKAGE],["$GETTEXT_PACKAGE"],[Gettext package])
@@ -36,6 +38,6 @@ dnl Add the languages which your application supports here.
 ALL_LINGUAS="`grep -v '^#' "$srcdir/po/LINGUAS" | tr '\n' ' '`"
 AM_GLIB_GNU_GETTEXT
 
-AC_CONFIG_FILES(Makefile src/Makefile)
+AC_CONFIG_FILES(Makefile src/Makefile po/Makefile.in ui/Makefile ui/pixmaps/Makefile src/xoj-preview-extractor/Makefile)
 AC_OUTPUT
 

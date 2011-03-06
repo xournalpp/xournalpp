@@ -415,13 +415,30 @@ void PageView::onButtonPressEvent(GtkWidget * widget, GdkEventButton * event) {
 	x /= zoom;
 	y /= zoom;
 
-	if (h->getToolType() == TOOL_PEN) {
-		this->inputHandler->startStroke(event, STROKE_TOOL_PEN, x, y);
-	} else if (h->getToolType() == TOOL_HAND) {
+	Cursor * cursor = xournal->getControl()->getCursor();
+	cursor->setMouseDown(true);
+
+	// hand tool don't change the selection, so you can scroll e.g.
+	// with your touchscreen without remove the selection
+	if (h->getToolType() == TOOL_HAND) {
 		this->lastMousePositionX = 0;
 		this->lastMousePositionY = 0;
 		this->inScrolling = true;
 		gtk_widget_get_pointer(widget, &this->lastMousePositionX, &this->lastMousePositionY);
+	} else if (xournal->getControl()->getSelectionFor(this)) {
+		EditSelection * selection = xournal->getControl()->getSelectionFor(this);
+		CursorSelectionType selType = selection->getSelectionTypeForPos(event->x, event->y, zoom);
+		if (selType) {
+			selection->setEditMode(selType, event->x / zoom, event->y / zoom);
+			// don't do everything else
+			return;
+		} else {
+			xournal->getControl()->clearSelection();
+		}
+	}
+
+	if (h->getToolType() == TOOL_PEN) {
+		this->inputHandler->startStroke(event, STROKE_TOOL_PEN, x, y);
 	} else if (h->getToolType() == TOOL_HILIGHTER) {
 		this->inputHandler->startStroke(event, STROKE_TOOL_HIGHLIGHTER, x, y);
 	} else if (h->getToolType() == TOOL_ERASER) {
@@ -435,16 +452,6 @@ void PageView::onButtonPressEvent(GtkWidget * widget, GdkEventButton * event) {
 	} else if (h->getToolType() == TOOL_VERTICAL_SPACE) {
 		this->verticalSpace = new VerticalToolHandler(this, this->page, y, zoom);
 	} else if (h->getToolType() == TOOL_SELECT_RECT || h->getToolType() == TOOL_SELECT_REGION || h->getToolType() == TOOL_SELECT_OBJECT) {
-		if (xournal->getControl()->getSelectionFor(this)) {
-			EditSelection * selection = xournal->getControl()->getSelectionFor(this);
-			CursorSelectionType selType = selection->getSelectionTypeForPos(event->x, event->y, zoom);
-			if (selType) {
-				selection->setEditMode(selType, event->x / zoom, event->y / zoom);
-				return;
-			} else {
-				xournal->getControl()->clearSelection();
-			}
-		}
 		if (h->getToolType() == TOOL_SELECT_RECT) {
 			if (this->selectionEdit) {
 				delete this->selectionEdit;
@@ -466,9 +473,6 @@ void PageView::onButtonPressEvent(GtkWidget * widget, GdkEventButton * event) {
 		ImageHandler imgHandler(xournal->getControl(), this);
 		imgHandler.insertImage(x, y);
 	}
-
-	Cursor * cursor = xournal->getControl()->getCursor();
-	cursor->setMouseDown(true);
 }
 
 void PageView::redrawDocumentRegion(double x1, double y1, double x2, double y2) {
@@ -505,36 +509,37 @@ gboolean PageView::onMotionNotifyEvent(GtkWidget * widget, GdkEventMotion * even
 	double zoom = xournal->getZoom();
 	double x = event->x / zoom;
 	double y = event->y / zoom;
+
 	ToolHandler * h = xournal->getControl()->getToolHandler();
+
 	if (h->getToolType() == TOOL_HAND) {
 		if (this->inScrolling) {
 			doScroll(event);
 		}
+	} else if (this->inputHandler->onMotionNotifyEvent(event)) {
+		// input handler used this event
+	} else if (this->selectionEdit) {
+		this->selectionEdit->currentPos(x, y);
+	} else if (this->verticalSpace) {
+		this->verticalSpace->currentPos(x, y);
+	} else if (xournal->getControl()->getSelectionFor(this)) {
+		EditSelection * selection = xournal->getControl()->getSelectionFor(this);
+		if (selection->getEditMode()) {
+			selection->move(x, y, this, xournal);
+		} else {
+			Cursor * cursor = xournal->getControl()->getCursor();
+
+			CursorSelectionType selType = selection->getSelectionTypeForPos(event->x, event->y, zoom);
+			cursor->setMouseSelectionType(selType);
+		}
+	} else if (this->textEditor) {
+		Cursor * cursor = getXournal()->getControl()->getCursor();
+		cursor->setInvisible(false);
+
+		Text * text = this->textEditor->getText();
+		this->textEditor->mouseMoved(x - text->getX(), y - text->getY());
 	} else if (h->getToolType() == TOOL_ERASER && h->getEraserType() != ERASER_TYPE_WHITEOUT && this->inEraser) {
 		this->eraser->erase(x, y);
-	} else {
-		if (this->inputHandler->onMotionNotifyEvent(event)) {
-		} else if (this->selectionEdit) {
-			this->selectionEdit->currentPos(x, y);
-		} else if (this->verticalSpace) {
-			this->verticalSpace->currentPos(x, y);
-		} else if (xournal->getControl()->getSelectionFor(this)) {
-			EditSelection * selection = xournal->getControl()->getSelectionFor(this);
-			if (selection->getEditMode()) {
-				selection->move(x, y, this, xournal);
-			} else {
-				Cursor * cursor = xournal->getControl()->getCursor();
-
-				CursorSelectionType selType = selection->getSelectionTypeForPos(event->x, event->y, zoom);
-				cursor->setMouseSelectionType(selType);
-			}
-		} else if (this->textEditor) {
-			Cursor * cursor = getXournal()->getControl()->getCursor();
-			cursor->setInvisible(false);
-
-			Text * text = this->textEditor->getText();
-			this->textEditor->mouseMoved(x - text->getX(), y - text->getY());
-		}
 	}
 
 	return false;

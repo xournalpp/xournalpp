@@ -95,7 +95,7 @@ GdkCursor * Cursor::getPenCursor() {
 	Util::cairo_set_source_rgbi(cr, handler->getColor());
 
 	if (big) {
-		cairo_set_source_rgb(cr, 1,1,1);
+		cairo_set_source_rgb(cr, 1, 1, 1);
 		cairo_set_line_width(cr, 1.2);
 		cairo_move_to(cr, 1.5, 1.5);
 		cairo_line_to(cr, 2, 19);
@@ -121,8 +121,8 @@ GdkCursor * Cursor::getPenCursor() {
 	cairo_destroy(cr);
 
 	GdkPixbuf * pixbuf = f_pixbuf_from_cairo_surface(crCursor);
-//	cairo_surface_write_to_png(crCursor, "/home/andreas/tmp/01/1.png");
-//	gdk_pixbuf_save(pixbuf, "/home/andreas/tmp/01/2.png", "PNG", NULL, NULL);
+	//	cairo_surface_write_to_png(crCursor, "/home/andreas/tmp/01/1.png");
+	//	gdk_pixbuf_save(pixbuf, "/home/andreas/tmp/01/2.png", "PNG", NULL, NULL);
 
 	cairo_surface_destroy(crCursor);
 
@@ -152,7 +152,39 @@ void Cursor::updateCursor() {
 		ToolHandler * handler = control->getToolHandler();
 		ToolType type = handler->getToolType();
 
-		if (type == TOOL_PEN) {
+		if (type == TOOL_HAND) {
+			if (this->mouseDown) {
+				cursor = gdk_cursor_new(GDK_FLEUR);
+			} else {
+				cursor = gdk_cursor_new(GDK_HAND1);
+			}
+		} else if (this->selectionType) {
+			switch (this->selectionType) {
+			case CURSOR_SELECTION_MOVE:
+				cursor = gdk_cursor_new(GDK_FLEUR);
+				break;
+			case CURSOR_SELECTION_TOP_LEFT:
+				cursor = gdk_cursor_new(GDK_TOP_LEFT_CORNER);
+				break;
+			case CURSOR_SELECTION_TOP_RIGHT:
+				cursor = gdk_cursor_new(GDK_TOP_RIGHT_CORNER);
+				break;
+			case CURSOR_SELECTION_BOTTOM_LEFT:
+				cursor = gdk_cursor_new(GDK_BOTTOM_LEFT_CORNER);
+				break;
+			case CURSOR_SELECTION_BOTTOM_RIGHT:
+				cursor = gdk_cursor_new(GDK_BOTTOM_RIGHT_CORNER);
+				break;
+			case CURSOR_SELECTION_LEFT:
+			case CURSOR_SELECTION_RIGHT:
+				cursor = gdk_cursor_new(GDK_SB_H_DOUBLE_ARROW);
+				break;
+			case CURSOR_SELECTION_TOP:
+			case CURSOR_SELECTION_BOTTOM:
+				cursor = gdk_cursor_new(GDK_SB_V_DOUBLE_ARROW);
+				break;
+			}
+		} else if (type == TOOL_PEN) {
 			cursor = getPenCursor();
 		} else if (type == TOOL_ERASER) {
 			GdkColor bg = { 0, 65535, 65535, 65535 };
@@ -178,47 +210,12 @@ void Cursor::updateCursor() {
 			}
 		} else if (type == TOOL_IMAGE) {
 			// No special cursor needed
-		} else if (type == TOOL_SELECT_RECT || type == TOOL_SELECT_REGION || type == TOOL_SELECT_OBJECT) {
-			if (this->selectionType) {
-				switch (this->selectionType) {
-				case CURSOR_SELECTION_MOVE:
-					cursor = gdk_cursor_new(GDK_FLEUR);
-					break;
-				case CURSOR_SELECTION_TOP_LEFT:
-					cursor = gdk_cursor_new(GDK_TOP_LEFT_CORNER);
-					break;
-				case CURSOR_SELECTION_TOP_RIGHT:
-					cursor = gdk_cursor_new(GDK_TOP_RIGHT_CORNER);
-					break;
-				case CURSOR_SELECTION_BOTTOM_LEFT:
-					cursor = gdk_cursor_new(GDK_BOTTOM_LEFT_CORNER);
-					break;
-				case CURSOR_SELECTION_BOTTOM_RIGHT:
-					cursor = gdk_cursor_new(GDK_BOTTOM_RIGHT_CORNER);
-					break;
-				case CURSOR_SELECTION_LEFT:
-				case CURSOR_SELECTION_RIGHT:
-					cursor = gdk_cursor_new(GDK_SB_H_DOUBLE_ARROW);
-					break;
-				case CURSOR_SELECTION_TOP:
-				case CURSOR_SELECTION_BOTTOM:
-					cursor = gdk_cursor_new(GDK_SB_V_DOUBLE_ARROW);
-					break;
-				}
-			} else if (type != TOOL_SELECT_OBJECT) {
-				cursor = gdk_cursor_new(GDK_TCROSS);
-			}
 		} else if (type == TOOL_VERTICAL_SPACE) {
 			if (this->mouseDown) {
 				cursor = gdk_cursor_new(GDK_SB_V_DOUBLE_ARROW);
 			}
-		} else if (type == TOOL_HAND) {
-			if (this->mouseDown) {
-				cursor = gdk_cursor_new(GDK_FLEUR);
-			} else {
-				cursor = gdk_cursor_new(GDK_HAND1);
-				//				cursor = gdk_cursor_new(GDK_HAND2);
-			}
+		} else if (type != TOOL_SELECT_OBJECT) { // other selections are handled before anyway, because you can move a selection with every tool
+			cursor = gdk_cursor_new(GDK_TCROSS);
 		}
 	}
 

@@ -54,8 +54,15 @@ public:
 
 public:
 	Document * loadDocument(String filename);
-	String getLastError();
 
+	String getLastError();
+	bool isAttachedPdfMissing();
+	String getMissingPdfFilename();
+
+	void removePdfBackground();
+	void setPdfReplacement(String filename, bool attachToDocument);
+
+private:
 	void parseStart();
 	void parseContents();
 	void parsePage();
@@ -64,7 +71,10 @@ public:
 	void parseStroke();
 	void parseText();
 	void parseImage();
+
 private:
+	void initAttributes();
+
 	String readLine();
 	int readFile(char * buffer, int len);
 	bool closeFile();
@@ -92,6 +102,12 @@ private:
 
 private:
 	String lastError;
+	String pdfMissing;
+	bool attachedPdfMissing;
+
+	bool removePdfBackgroundFlag;
+	String pdfReplacementFilename;
+	bool pdfReplacementAttach;
 
 	String filename;
 
