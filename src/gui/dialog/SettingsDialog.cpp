@@ -18,6 +18,8 @@
 #include "../../util/Util.h"
 #include <string.h>
 
+// TODO: Zoom kallibrieren einheitsangabe
+
 SettingsDialog::SettingsDialog(GladeSearchpath * gladeSearchPath, Settings * settings) :
 	GladeGui(gladeSearchPath, "settings.glade", "settingsDialog") {
 	this->settings = settings;
@@ -54,7 +56,7 @@ SettingsDialog::~SettingsDialog() {
 	this->settings = NULL;
 }
 
-gboolean SettingsDialog::zoomcallibSliderChanged(GtkRange *range, GtkScrollType scroll, gdouble value, SettingsDialog * dlg) {
+gboolean SettingsDialog::zoomcallibSliderChanged(GtkRange * range, GtkScrollType scroll, gdouble value, SettingsDialog * dlg) {
 	dlg->setDpi((int) value);
 
 	return false;
@@ -69,6 +71,8 @@ void SettingsDialog::initMouseButtonEvents() {
 	initMouseButtonEvents("hboxRightMouse", 2);
 	initMouseButtonEvents("hboxEraser", 0);
 	initMouseButtonEvents("hboxTouch", 3, true);
+
+	initMouseButtonEvents("hboxDefault", 4);
 }
 
 void SettingsDialog::setDpi(int dpi) {

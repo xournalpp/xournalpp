@@ -85,6 +85,7 @@ public:
 	void setEraserType(EraserType eraserType);
 
 	void selectTool(ToolType type);
+	void selectDefaultTool();
 
 	void updatePageNumbers(int page, int pdfPage);
 

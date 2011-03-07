@@ -25,6 +25,9 @@
 #define WRITE_COMMENT(var) com = xmlNewComment((const xmlChar *)var); \
 	xmlAddPrevSibling(xmlNode, com);
 
+const char * BUTTON_NAMES[] = { "middle", "right", "eraser", "touch", "default" };
+const int BUTTON_COUNT = 5;
+
 Settings::Settings(String filename) {
 	this->filename = filename;
 	this->timeoutId = 0;
@@ -40,7 +43,7 @@ Settings::~Settings() {
 		save();
 	}
 
-	for (int i = 0; i < 4; i++) {
+	for (int i = 0; i < 5; i++) {
 		delete buttonConfig[i];
 	}
 }
@@ -90,6 +93,8 @@ void Settings::loadDefault() {
 	this->buttonConfig[2] = new ButtonConfig(TOOL_NONE, 0, TOOL_SIZE_NONE, false, false, ERASER_TYPE_NONE);
 	// Touch
 	this->buttonConfig[3] = new ButtonConfig(TOOL_NONE, 0, TOOL_SIZE_NONE, false, false, ERASER_TYPE_NONE);
+	// Default config
+	this->buttonConfig[4] = new ButtonConfig(TOOL_PEN, 0, TOOL_SIZE_FINE, false, false, ERASER_TYPE_NONE);
 
 	this->fullscreenHideElements = "mainMenubar";
 	this->presentationHideElements = "mainMenubar,sidebarContents";
@@ -278,9 +283,7 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
 void Settings::loadButtonConfig() {
 	SElement & s = getCustomElement("buttonConfig");
 
-	const char * BUTTON_NAMES[] = { "middle", "right", "eraser", "touch" };
-
-	for (int i = 0; i < 4; i++) {
+	for (int i = 0; i < BUTTON_COUNT; i++) {
 		SElement & e = s.child(BUTTON_NAMES[i]);
 		ButtonConfig * cfg = buttonConfig[i];
 
@@ -344,7 +347,7 @@ bool Settings::load() {
 	doc = xmlParseFile(filename.c_str());
 
 	if (doc == NULL) {
-		g_warning("doc == null\n");
+		g_warning("Settings::load:: doc == null, could not load Settings!\n");
 		return false;
 	}
 
@@ -389,7 +392,7 @@ void Settings::saveTimeout() {
 		return;
 	}
 
-	timeoutId = g_timeout_add_seconds(2, (GSourceFunc) &saveCallback, this);
+	timeoutId = g_timeout_add_seconds(2, (GSourceFunc) & saveCallback, this);
 }
 
 xmlNodePtr Settings::savePropertyDouble(const gchar *key, double value, xmlNodePtr parent) {
@@ -422,9 +425,7 @@ void Settings::saveButtonConfig() {
 	SElement & s = getCustomElement("buttonConfig");
 	s.clear();
 
-	const char * BUTTON_NAMES[] = { "middle", "right", "eraser", "touch" };
-
-	for (int i = 0; i < 4; i++) {
+	for (int i = 0; i < BUTTON_COUNT; i++) {
 		SElement & e = s.child(BUTTON_NAMES[i]);
 		ButtonConfig * cfg = buttonConfig[i];
 
@@ -889,6 +890,10 @@ void Settings::customSettingsChanged() {
 }
 
 ButtonConfig * Settings::getButtonConfig(int id) {
+	if (id < 0 || id >= BUTTON_COUNT) {
+		g_error("Settings::getButtonConfig try to get id=%i out of range!", id);
+		return NULL;
+	}
 	return buttonConfig[id];
 }
 
@@ -906,6 +911,10 @@ ButtonConfig * Settings::getRightButtonConfig() {
 
 ButtonConfig * Settings::getTouchButtonConfig() {
 	return buttonConfig[3];
+}
+
+ButtonConfig * Settings::getDefaultButtonConfig() {
+	return buttonConfig[4];
 }
 
 String Settings::getFullscreenHideElements() {
@@ -995,6 +1004,7 @@ SAttribute::SAttribute() {
 ButtonConfig::ButtonConfig(ToolType action, int color, ToolSize size, bool shapeRecognizer, bool rouler, EraserType eraserMode) {
 	this->action = action;
 	this->color = color;
+	this->size = size;
 	this->shapeRecognizer = shapeRecognizer;
 	this->rouler = rouler;
 	this->eraserMode = eraserMode;

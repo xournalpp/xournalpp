@@ -568,6 +568,11 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent *even
 			selectTool(TOOL_HAND);
 		}
 		break;
+	case ACTION_TOOL_DEFAULT:
+		if (enabled) {
+			selectDefaultTool();
+		}
+		break;
 
 	case ACTION_RULER:
 		this->toolHandler->setRuler(enabled);
@@ -1378,6 +1383,32 @@ void Control::undoRedoPageChanged(XojPage * page) {
 
 void Control::selectTool(ToolType type) {
 	toolHandler->selectTool(type);
+}
+
+void Control::selectDefaultTool() {
+	ButtonConfig * cfg = settings->getDefaultButtonConfig();
+
+	if (cfg->action != TOOL_NONE) {
+		ToolType type = cfg->action;
+
+		toolHandler->selectTool(type);
+
+		if (type == TOOL_PEN || type == TOOL_HILIGHTER) {
+			toolHandler->setRuler(cfg->rouler);
+			toolHandler->setShapeRecognizer(cfg->shapeRecognizer);
+			if (cfg->size != TOOL_SIZE_NONE) {
+				toolHandler->setSize(cfg->size);
+			}
+		}
+
+		if (type == TOOL_PEN || type == TOOL_HILIGHTER || type == TOOL_TEXT) {
+			toolHandler->setColor(cfg->color);
+		}
+
+		if (type == TOOL_ERASER && cfg->eraserMode != ERASER_TYPE_NONE) {
+			setEraserType(cfg->eraserMode);
+		}
+	}
 }
 
 void Control::setEraserType(EraserType eraserType) {
