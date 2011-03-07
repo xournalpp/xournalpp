@@ -43,6 +43,7 @@ Control::Control(GladeSearchpath * gladeSearchPath) {
 	this->undoRedo = new UndoRedoHandler(this);
 	this->recent->addListener(this);
 	this->undoRedo->addUndoRedoListener(this);
+	this->isBlocking = false;
 
 	this->gladeSearchPath = gladeSearchPath;
 
@@ -761,7 +762,7 @@ void Control::clearSelectionEndText() {
 }
 
 void Control::invokeLater(ActionType type) {
-	g_idle_add((GSourceFunc) & invokeCallback, new CallbackData(this, type));
+	g_idle_add((GSourceFunc) &invokeCallback, new CallbackData(this, type));
 }
 
 /**
@@ -997,7 +998,7 @@ void Control::insertNewPage(int position) {
 		if (doc->getPdfPageCount() == 0) {
 			GtkWidget * dialog = gtk_message_dialog_new((GtkWindow*) *win, GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
 					_("You don't have any PDF pages to select from. Cancel operation,\n"
-						"Please select another background type: Menu \"Journal\" / \"Insert Page Type\"."));
+							"Please select another background type: Menu \"Journal\" / \"Insert Page Type\"."));
 			gtk_dialog_run(GTK_DIALOG(dialog));
 			gtk_widget_destroy(dialog);
 
@@ -1141,7 +1142,7 @@ void Control::setPageBackground(ActionType type) {
 		if (doc->getPdfPageCount() == 0) {
 			GtkWidget * dialog = gtk_message_dialog_new((GtkWindow*) *win, GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
 					_("You don't have any PDF pages to select from. Cancel operation,\n"
-						"Please select another background type: Menu \"Journal\" / \"Insert Page Type\"."));
+							"Please select another background type: Menu \"Journal\" / \"Insert Page Type\"."));
 			gtk_dialog_run(GTK_DIALOG(dialog));
 			gtk_widget_destroy(dialog);
 			return;
@@ -1781,7 +1782,7 @@ bool Control::copyFile(String source, String target) {
 	GFile * trg = g_file_new_for_path(target.c_str());
 	GError * err = NULL;
 
-	bool ok = g_file_copy(src, trg, G_FILE_COPY_OVERWRITE, NULL, (GFileProgressCallback) & copyProgressCallback, this, &err);
+	bool ok = g_file_copy(src, trg, G_FILE_COPY_OVERWRITE, NULL, (GFileProgressCallback) &copyProgressCallback, this, &err);
 
 	if (!err && !ok) {
 		this->copyError = "Copy error: return false, but didn't set error message";
@@ -1838,6 +1839,10 @@ void Control::updatePreview() {
 }
 
 void Control::block(const char * name) {
+	if (this->isBlocking) {
+		return;
+	}
+
 	// Disable all gui Control, to get full control over the application
 	win->setControlTmpDisabled(true);
 	cursor->setCursorBusy(true);
@@ -1851,15 +1856,22 @@ void Control::block(const char * name) {
 	gtk_widget_show(this->statusbar);
 
 	this->maxState = 100;
+	this->isBlocking = true;
 
 }
 
 void Control::unblock() {
+	if (!this->isBlocking) {
+		return;
+	}
+
 	this->win->setControlTmpDisabled(false);
 	cursor->setCursorBusy(false);
 	disableSidebarTmp(false);
 
 	gtk_widget_hide(this->statusbar);
+
+	this->isBlocking = false;
 }
 
 void Control::setMaximumState(int max) {
@@ -2033,7 +2045,7 @@ void Control::exportAsPdf() {
 
 void Control::exportAs() {
 	ExportHandler handler;
-	handler.runExportWithDialog(this->gladeSearchPath, this->doc, getCurrentPageNo());
+	handler.runExportWithDialog(this->gladeSearchPath, this->settings, this->doc, getCurrentPageNo());
 }
 
 void Control::saveAs() {

@@ -44,7 +44,17 @@ src/gui/GladeSearchpath.cpp
 src/gui/MainWindow.cpp
 src/gui/sidebar/SidebarPreview.cpp
 src/gui/sidebar/Sidebar.cpp
+src/gui/toolbarMenubar/AbstractItem.cpp
+src/gui/toolbarMenubar/ColorToolItem.cpp
+src/gui/toolbarMenubar/ToolButton.cpp
+src/gui/toolbarMenubar/AbstractToolItem.cpp
+src/gui/toolbarMenubar/FontButton.cpp
 src/gui/toolbarMenubar/ToolMenuHandler.cpp
+src/gui/toolbarMenubar/ToolPageLayer.cpp
+src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp
+src/gui/toolbarMenubar/ToolPageSpinner.cpp
+src/gui/toolbarMenubar/MenuItem.cpp
+src/gui/toolbarMenubar/ToolZoomSlider.cpp
 src/gui/widgets/gtkmenutooltogglebutton.cpp
 src/gui/widgets/ZoomCallib.cpp
 src/gui/widgets/SelectColor.cpp

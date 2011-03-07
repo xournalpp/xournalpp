@@ -315,7 +315,6 @@ are extended to the filename</property>
               <widget class="GtkFileChooserButton" id="fcOutput">
                 <property name="visible">True</property>
                 <property name="action">select-folder</property>
-                <property name="do_overwrite_confirmation">True</property>
                 <property name="local_only">False</property>
                 <property name="title" translatable="yes">Select output folder</property>
               </widget>

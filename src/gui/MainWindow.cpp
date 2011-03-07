@@ -296,14 +296,6 @@ void MainWindow::initToolbar() {
 	}
 }
 
-MainWindow::operator GdkWindow *() {
-	return GTK_WIDGET(getWindow())->window;
-}
-
-MainWindow::operator GtkWindow *() {
-	return GTK_WINDOW(getWindow());
-}
-
 int MainWindow::getCurrentLayer() {
 	return toolbar->getSelectedLayer();
 }

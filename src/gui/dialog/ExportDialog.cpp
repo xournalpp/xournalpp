@@ -1,17 +1,21 @@
 #include "ExportDialog.h"
 #include "../../util/PageRange.h"
 
-ExportDialog::ExportDialog(GladeSearchpath * gladeSearchPath, int pageCount, int currentPage) :
+#include <config.h>
+#include <glib/gi18n-lib.h>
+
+ExportDialog::ExportDialog(GladeSearchpath * gladeSearchPath, Settings * settings, int pageCount, int currentPage) :
 	GladeGui(gladeSearchPath, "export.glade", "exportDialog") {
 	this->range = NULL;
 	this->pageCount = pageCount;
 	this->currentPage = currentPage;
 	this->resolution = 72;
+	this->settings = settings;
 	this->type = EXPORT_FORMAT_PNG;
 
 	GtkFileChooser * chooser = GTK_FILE_CHOOSER(get("fcOutput"));
-	gtk_file_chooser_set_select_multiple(chooser, false);
-	gtk_file_chooser_set_action(chooser, GTK_FILE_CHOOSER_ACTION_SAVE);
+	gtk_file_chooser_set_local_only(chooser, true);
+	gtk_file_chooser_set_current_folder(chooser, settings->getLastSavePath().c_str());
 }
 
 ExportDialog::~ExportDialog() {
@@ -50,20 +54,59 @@ void ExportDialog::handleData() {
 	} else {
 		this->type = EXPORT_FORMAT_PNG;
 	}
+
+	GtkFileChooser * chooser = GTK_FILE_CHOOSER(get("fcOutput"));
+	char * folder = gtk_file_chooser_get_current_folder(chooser);
+	this->settings->setLastSavePath(folder);
+	g_free(folder);
 }
 
 ExportFormtType ExportDialog::getFormatType() {
 	return this->type;
 }
 
-int ExportDialog::getResolution() {
+int ExportDialog::getPngDpi() {
 	return this->resolution;
 }
 
-void ExportDialog::show() {
-	if (gtk_dialog_run(GTK_DIALOG(this->window)) == 2) {
-		handleData();
+String ExportDialog::getFolder() {
+	GtkFileChooser * chooser = GTK_FILE_CHOOSER(get("fcOutput"));
+	char * folder = gtk_file_chooser_get_current_folder(chooser);
+	String f = folder;
+	g_free(folder);
+	return f;
+}
+
+String ExportDialog::getFilename() {
+	return gtk_entry_get_text(GTK_ENTRY(get("txtFilename")));
+}
+
+bool ExportDialog::validate() {
+
+	if (gtk_entry_get_text_length(GTK_ENTRY(get("txtFilename"))) == 0) {
+		GtkWidget * dialog = gtk_message_dialog_new((GtkWindow *) *this, GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
+				_("The filename should not be empty"));
+
+		gtk_dialog_run(GTK_DIALOG(dialog));
+		gtk_widget_destroy(dialog);
+		return false;
 	}
+
+	return true;
+}
+
+void ExportDialog::show() {
+	int res = 0;
+	do {
+		res = gtk_dialog_run(GTK_DIALOG(this->window));
+		if (res == 2) {
+			if (validate()) {
+				handleData();
+				break;
+			}
+		}
+	} while (res == 2);
+
 	gtk_widget_hide(this->window);
 }
 

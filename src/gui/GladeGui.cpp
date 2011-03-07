@@ -73,3 +73,12 @@ GdkPixbuf * GladeGui::loadIconPixbuf(const char * filename) {
 GtkWidget * GladeGui::getWindow() {
 	return this->window;
 }
+
+GladeGui::operator GdkWindow *() {
+	return GTK_WIDGET(getWindow())->window;
+}
+
+GladeGui::operator GtkWindow *() {
+	return GTK_WINDOW(getWindow());
+}
+

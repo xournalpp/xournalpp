@@ -13,6 +13,7 @@
 #define __EXPORTDIALOG_H__
 
 #include "../GladeGui.h"
+#include "../../control/settings/Settings.h"
 
 enum ExportFormtType {
 	EXPORT_FORMAT_PDF, EXPORT_FORMAT_EPS, EXPORT_FORMAT_SVG, EXPORT_FORMAT_PNG
@@ -21,16 +22,20 @@ enum ExportFormtType {
 
 class ExportDialog: public GladeGui {
 public:
-	ExportDialog(GladeSearchpath * gladeSearchPath, int pageCount, int currentPage);
+	ExportDialog(GladeSearchpath * gladeSearchPath, Settings * settings, int pageCount, int currentPage);
 	virtual ~ExportDialog();
 
 public:
 	void show();
 	GList * getRange();
-	int getResolution();
+	int getPngDpi();
 	ExportFormtType getFormatType();
 
+	String getFolder();
+	String getFilename();
+
 private:
+	bool validate();
 	void handleData();
 
 private:
@@ -40,6 +45,8 @@ private:
 	ExportFormtType type;
 
 	GList * range;
+
+	Settings * settings;
 };
 
 #endif /* __EXPORTDIALOG_H__ */
