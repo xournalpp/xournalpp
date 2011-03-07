@@ -756,7 +756,7 @@ void Control::clearSelectionEndText() {
 }
 
 void Control::invokeLater(ActionType type) {
-	g_idle_add((GSourceFunc) &invokeCallback, new CallbackData(this, type));
+	g_idle_add((GSourceFunc) & invokeCallback, new CallbackData(this, type));
 }
 
 /**
@@ -990,9 +990,9 @@ void Control::insertNewPage(int position) {
 		}
 	} else if (PAGE_INSERT_TYPE_PDF_BACKGROUND == type) {
 		if (doc->getPdfPageCount() == 0) {
-			GtkWidget * dialog = gtk_message_dialog_new((GtkWindow*) *win, GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, _(
-					"You don't have any PDF pages to select from. Cancel operation,\n"
-					"Please select another background type: Menu \"Journal\" / \"Insert Page Type\"."));
+			GtkWidget * dialog = gtk_message_dialog_new((GtkWindow*) *win, GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
+					_("You don't have any PDF pages to select from. Cancel operation,\n"
+						"Please select another background type: Menu \"Journal\" / \"Insert Page Type\"."));
 			gtk_dialog_run(GTK_DIALOG(dialog));
 			gtk_widget_destroy(dialog);
 
@@ -1113,8 +1113,8 @@ void Control::setPageBackground(ActionType type) {
 			newImg.loadFile(filename, &err);
 			newImg.setAttach(attach);
 			if (err) {
-				GtkWidget * dialog = gtk_message_dialog_new((GtkWindow*) *win, GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, _(
-						"This image could not be loaded. Error message: %s"), err->message);
+				GtkWidget * dialog = gtk_message_dialog_new((GtkWindow*) *win, GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
+						_("This image could not be loaded. Error message: %s"), err->message);
 				gtk_dialog_run(GTK_DIALOG(dialog));
 				gtk_widget_destroy(dialog);
 				g_error_free(err);
@@ -1134,9 +1134,9 @@ void Control::setPageBackground(ActionType type) {
 		delete dlg;
 	} else if (ACTION_SET_PAPER_BACKGROUND_PDF == type) {
 		if (doc->getPdfPageCount() == 0) {
-			GtkWidget * dialog = gtk_message_dialog_new((GtkWindow*) *win, GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, _(
-					"You don't have any PDF pages to select from. Cancel operation,\n"
-					"Please select another background type: Menu \"Journal\" / \"Insert Page Type\"."));
+			GtkWidget * dialog = gtk_message_dialog_new((GtkWindow*) *win, GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
+					_("You don't have any PDF pages to select from. Cancel operation,\n"
+						"Please select another background type: Menu \"Journal\" / \"Insert Page Type\"."));
 			gtk_dialog_run(GTK_DIALOG(dialog));
 			gtk_widget_destroy(dialog);
 			return;
@@ -1633,8 +1633,8 @@ bool Control::openFile(String filename, int scrollToPage) {
 		// give the user a second chance to select a new PDF file, or to discard the PDF
 
 
-		GtkWidget * dialog = gtk_message_dialog_new((GtkWindow *) *getWindow(), GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_QUESTION, GTK_BUTTONS_NONE, _(
-				h.isAttachedPdfMissing()?"The attached background PDF could not be found.":"The background PDF could not be found."));
+		GtkWidget * dialog = gtk_message_dialog_new((GtkWindow *) *getWindow(), GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_QUESTION, GTK_BUTTONS_NONE,
+				_(h.isAttachedPdfMissing() ? "The attached background PDF could not be found." : "The background PDF could not be found."));
 
 		gtk_dialog_add_button(GTK_DIALOG(dialog), _("Select another PDF"), 1);
 		gtk_dialog_add_button(GTK_DIALOG(dialog), _("Remove PDF Background"), 2);
@@ -1642,10 +1642,10 @@ bool Control::openFile(String filename, int scrollToPage) {
 		int res = gtk_dialog_run(GTK_DIALOG(dialog));
 		gtk_widget_destroy(dialog);
 
-		if(res == 2) { // remove PDF background
+		if (res == 2) { // remove PDF background
 			h.removePdfBackground();
 			tmp = h.loadDocument(filename);
-		} else if(res == 1) { // select another PDF background
+		} else if (res == 1) { // select another PDF background
 			bool attachToDocument = false;
 			String pdfFilename = XojOpenDlg::showOpenDialog((GtkWindow*) *win, this->settings, true, attachToDocument);
 			if (!pdfFilename.isEmpty()) {
@@ -1656,8 +1656,8 @@ bool Control::openFile(String filename, int scrollToPage) {
 	}
 
 	if (!tmp) {
-		GtkWidget * dialog = gtk_message_dialog_new((GtkWindow*) *win, GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, _(
-				"Error opening file '%s'\n%s"), filename.c_str(), h.getLastError().c_str());
+		GtkWidget * dialog = gtk_message_dialog_new((GtkWindow*) *win, GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
+				_("Error opening file '%s'\n%s"), filename.c_str(), h.getLastError().c_str());
 		gtk_dialog_run(GTK_DIALOG(dialog));
 		gtk_widget_destroy(dialog);
 		fileLoaded();
@@ -1720,8 +1720,8 @@ bool Control::annotatePdf(String filename, bool attachPdf, bool attachToDocument
 		}
 		scrollHandler->scrollToPage(page);
 	} else {
-		GtkWidget * dialog = gtk_message_dialog_new((GtkWindow*) *win, GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, _(
-				"Error annotate PDF file '%s'\n%s"), filename.c_str(), doc->getLastErrorMsg().c_str());
+		GtkWidget * dialog = gtk_message_dialog_new((GtkWindow*) *win, GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
+				_("Error annotate PDF file '%s'\n%s"), filename.c_str(), doc->getLastErrorMsg().c_str());
 		gtk_dialog_run(GTK_DIALOG(dialog));
 		gtk_widget_destroy(dialog);
 	}
@@ -1750,7 +1750,7 @@ bool Control::copyFile(String source, String target) {
 	GFile * trg = g_file_new_for_path(target.c_str());
 	GError * err = NULL;
 
-	bool ok = g_file_copy(src, trg, G_FILE_COPY_OVERWRITE, NULL, (GFileProgressCallback) &copyProgressCallback, this, &err);
+	bool ok = g_file_copy(src, trg, G_FILE_COPY_OVERWRITE, NULL, (GFileProgressCallback) & copyProgressCallback, this, &err);
 
 	if (!err && !ok) {
 		this->copyError = "Copy error: return false, but didn't set error message";
@@ -2029,8 +2029,8 @@ void Control::quit() {
 
 bool Control::close() {
 	if (undoRedo->isChanged()) {
-		GtkWidget * dialog = gtk_message_dialog_new((GtkWindow *) *getWindow(), GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_WARNING, GTK_BUTTONS_NONE, _(
-				"This document is not saved yet."));
+		GtkWidget * dialog = gtk_message_dialog_new((GtkWindow *) *getWindow(), GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_WARNING, GTK_BUTTONS_NONE,
+				_("This document is not saved yet."));
 
 		gtk_dialog_add_button(GTK_DIALOG(dialog), _("Save"), 1);
 		gtk_dialog_add_button(GTK_DIALOG(dialog), _("Discard"), 2);
