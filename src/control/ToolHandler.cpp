@@ -189,6 +189,11 @@ double ToolHandler::getThikness() {
 }
 
 void ToolHandler::setSize(ToolSize size) {
+	if (size < TOOL_SIZE_VERY_FINE || size > TOOL_SIZE_VERY_THICK) {
+		g_warning("ToolHandler::setSize: Invalid size! %i", size);
+		return;
+	}
+
 	this->current->size = size;
 	listener->toolSizeChanged();
 }
@@ -374,8 +379,7 @@ void ToolHandler::setSelectionEditTools(bool setColor, bool setSize) {
 		t->color = -1;
 	}
 
-	if (this->current->type == TOOL_SELECT_RECT || this->current->type == TOOL_SELECT_RECT || this->current->type
-			== TOOL_SELECT_OBJECT) {
+	if (this->current->type == TOOL_SELECT_RECT || this->current->type == TOOL_SELECT_RECT || this->current->type == TOOL_SELECT_OBJECT) {
 		listener->toolColorChanged();
 		listener->toolSizeChanged();
 		listener->toolChanged();
