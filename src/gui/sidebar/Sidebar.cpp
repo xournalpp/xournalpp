@@ -39,35 +39,35 @@ Sidebar::Sidebar(GladeGui * gui, Control * control) {
 	gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scrollBookmarks), GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
 	gtk_scrolled_window_set_shadow_type(GTK_SCROLLED_WINDOW(scrollBookmarks), GTK_SHADOW_IN);
 
-	selection = gtk_tree_view_get_selection(GTK_TREE_VIEW (treeViewBookmarks));
+	selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(treeViewBookmarks));
 	gtk_tree_selection_set_mode(selection, GTK_SELECTION_SINGLE);
-	gtk_tree_view_set_headers_visible(GTK_TREE_VIEW (treeViewBookmarks), FALSE);
-	gtk_container_add(GTK_CONTAINER (scrollBookmarks), treeViewBookmarks);
+	gtk_tree_view_set_headers_visible(GTK_TREE_VIEW(treeViewBookmarks), FALSE);
+	gtk_container_add(GTK_CONTAINER(scrollBookmarks), treeViewBookmarks);
 
-	gtk_box_pack_start(GTK_BOX (sidebar), scrollBookmarks, TRUE, TRUE, 0);
+	gtk_box_pack_start(GTK_BOX(sidebar), scrollBookmarks, TRUE, TRUE, 0);
 
-	gtk_widget_show_all(GTK_WIDGET (sidebar));
-	gtk_widget_set_visible(GTK_WIDGET (sidebar), control->getSettings()->isSidebarVisible());
+	gtk_widget_show_all(GTK_WIDGET(sidebar));
+	gtk_widget_set_visible(GTK_WIDGET(sidebar), control->getSettings()->isSidebarVisible());
 
 	scrollPreview = gtk_scrolled_window_new(NULL, NULL);
 
 	gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scrollPreview), GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
 	gtk_scrolled_window_set_shadow_type(GTK_SCROLLED_WINDOW(scrollPreview), GTK_SHADOW_IN);
-	gtk_container_add(GTK_CONTAINER (scrollPreview), iconViewPreview);
+	gtk_container_add(GTK_CONTAINER(scrollPreview), iconViewPreview);
 	gtk_box_pack_start(GTK_BOX(sidebar), scrollPreview, TRUE, TRUE, 0);
 
 	column = gtk_tree_view_column_new();
-	gtk_tree_view_column_set_expand(GTK_TREE_VIEW_COLUMN (column), TRUE);
-	gtk_tree_view_append_column(GTK_TREE_VIEW (treeViewBookmarks), column);
+	gtk_tree_view_column_set_expand(GTK_TREE_VIEW_COLUMN(column), TRUE);
+	gtk_tree_view_append_column(GTK_TREE_VIEW(treeViewBookmarks), column);
 
 	renderer = (GtkCellRenderer*) g_object_new(GTK_TYPE_CELL_RENDERER_TEXT, "ellipsize", PANGO_ELLIPSIZE_END, NULL);
-	gtk_tree_view_column_pack_start(GTK_TREE_VIEW_COLUMN (column), renderer, TRUE);
-	gtk_tree_view_column_set_attributes(GTK_TREE_VIEW_COLUMN (column), renderer, "markup", DOCUMENT_LINKS_COLUMN_NAME, NULL);
+	gtk_tree_view_column_pack_start(GTK_TREE_VIEW_COLUMN(column), renderer, TRUE);
+	gtk_tree_view_column_set_attributes(GTK_TREE_VIEW_COLUMN(column), renderer, "markup", DOCUMENT_LINKS_COLUMN_NAME, NULL);
 
 	renderer = gtk_cell_renderer_text_new();
-	gtk_tree_view_column_pack_end(GTK_TREE_VIEW_COLUMN (column), renderer, FALSE);
-	gtk_tree_view_column_set_attributes(GTK_TREE_VIEW_COLUMN (column), renderer, "text", DOCUMENT_LINKS_COLUMN_PAGE_NUMBER, NULL);
-	g_object_set(G_OBJECT (renderer), "style", PANGO_STYLE_ITALIC, NULL);
+	gtk_tree_view_column_pack_end(GTK_TREE_VIEW_COLUMN(column), renderer, FALSE);
+	gtk_tree_view_column_set_attributes(GTK_TREE_VIEW_COLUMN(column), renderer, "text", DOCUMENT_LINKS_COLUMN_PAGE_NUMBER, NULL);
+	g_object_set(G_OBJECT(renderer), "style", PANGO_STYLE_ITALIC, NULL);
 
 	GtkCellRenderer *cell;
 	GtkListStore *store;
@@ -177,7 +177,7 @@ void Sidebar::cbChangedCallback(GtkComboBox * widget, Sidebar * sidebar) {
 void Sidebar::askInsertPdfPage(int pdfPage) {
 	GtkWidget * dialog = gtk_message_dialog_new((GtkWindow*) *control->getWindow(), GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_QUESTION, GTK_BUTTONS_NONE,
 			_("Your current document does not contain PDF Page %i\n"
-					"Would you insert this page?\n\nTipp: You can select Journal / Paper Background / PDF Background to insert a PDF page."), pdfPage + 1);
+				"Would you insert this page?\n\nTipp: You can select Journal / Paper Background / PDF Background to insert a PDF page."), pdfPage + 1);
 
 	gtk_dialog_add_button(GTK_DIALOG(dialog), "Cancel", 1);
 	gtk_dialog_add_button(GTK_DIALOG(dialog), "Insert after", 2);
@@ -449,6 +449,16 @@ void Sidebar::pageChanged(int page) {
 }
 
 bool Sidebar::scrollTopreview(Sidebar * sidebar) {
+	CHECK_MEMORY(sidebar);
+
+	MainWindow * win = sidebar->control->getWindow();
+	if (win) {
+		GtkWidget * w = win->get("sidebarContents");
+		if (!gtk_widget_get_visible(w)) {
+			return false;
+		}
+	}
+
 	if (sidebar->selectedPage >= 0 && sidebar->selectedPage < sidebar->previewCount) {
 		gdk_threads_enter();
 		SidebarPreview * p = sidebar->previews[sidebar->selectedPage];
@@ -457,12 +467,13 @@ bool Sidebar::scrollTopreview(Sidebar * sidebar) {
 		GtkAdjustment * hadj = gtk_scrolled_window_get_hadjustment(GTK_SCROLLED_WINDOW(sidebar->scrollPreview));
 		GtkAdjustment * vadj = gtk_scrolled_window_get_vadjustment(GTK_SCROLLED_WINDOW(sidebar->scrollPreview));
 		GtkWidget * widget = p->getWidget();
+
 		int x = widget->allocation.x;
 		int y = widget->allocation.y;
 		gdk_threads_leave();
 
 		if (x == -1) {
-			g_idle_add((GSourceFunc) &scrollTopreview, sidebar);
+			g_idle_add((GSourceFunc) & scrollTopreview, sidebar);
 			return false;
 		}
 

@@ -27,8 +27,8 @@ MainWindow::MainWindow(GladeSearchpath * gladeSearchPath, Control * control) :
 	setSidebarVisible(control->getSettings()->isSidebarVisible());
 
 	// Window handler
-	g_signal_connect(this->window, "delete-event", (GCallback)&deleteEventCallback, this->control);
-	g_signal_connect (this->window, "window_state_event", G_CALLBACK(&windowStateEventCallback), this);
+	g_signal_connect(this->window, "delete-event", (GCallback) & deleteEventCallback, this->control);
+	g_signal_connect(this->window, "window_state_event", G_CALLBACK(&windowStateEventCallback), this);
 
 	g_signal_connect(get("buttonCloseSidebar"), "clicked", G_CALLBACK(buttonCloseSidebarClicked), this);
 
@@ -52,7 +52,7 @@ MainWindow::MainWindow(GladeSearchpath * gladeSearchPath, Control * control) :
 	g_signal_connect(getSpinPageNo(), "value-changed", G_CALLBACK(pageNrSpinChangedCallback), this);
 
 	GtkWidget * menuViewSidebarVisible = get("menuViewSidebarVisible");
-	g_signal_connect(menuViewSidebarVisible, "toggled", (GCallback)viewShowSidebar, this);
+	g_signal_connect(menuViewSidebarVisible, "toggled", (GCallback) viewShowSidebar, this);
 
 	updateScrollbarSidebarPosition();
 
@@ -104,8 +104,8 @@ void MainWindow::updateScrollbarSidebarPosition() {
 	GtkWidget * sidebarContents = get("sidebarContents");
 	GtkWidget * scrolledwindowMain = get("scrolledwindowMain");
 
-	gtk_scrolled_window_set_placement(GTK_SCROLLED_WINDOW(scrolledwindowMain), control->getSettings()->isScrollbarOnLeft() ? GTK_CORNER_TOP_RIGHT
-			: GTK_CORNER_TOP_LEFT);
+	gtk_scrolled_window_set_placement(GTK_SCROLLED_WINDOW(scrolledwindowMain),
+			control->getSettings()->isScrollbarOnLeft() ? GTK_CORNER_TOP_RIGHT : GTK_CORNER_TOP_LEFT);
 
 	int divider = gtk_paned_get_position(GTK_PANED(panelMainContents));
 	bool sidebarRight = control->getSettings()->isSidebarOnRight();
@@ -171,7 +171,7 @@ void MainWindow::pageNrSpinChangedCallback(GtkSpinButton * spinbutton, MainWindo
 	}
 
 	// Give the spin button some time to realease, if we don't do he will send new events...
-	lastId = g_timeout_add(100, (GSourceFunc) &pageNrSpinChangedTimerCallback, win->control);
+	lastId = g_timeout_add(100, (GSourceFunc) & pageNrSpinChangedTimerCallback, win->control);
 }
 
 void tbSelectMenuitemActivated(GtkMenuItem *menuitem, MenuSelectToolbarData * data) {
@@ -269,7 +269,7 @@ void MainWindow::initToolbar() {
 		}
 
 		item = gtk_radio_menu_item_new_with_label(this->toolbarGroup, d->getName().c_str());
-		this->toolbarGroup = gtk_radio_menu_item_get_group(GTK_RADIO_MENU_ITEM (item));
+		this->toolbarGroup = gtk_radio_menu_item_get_group(GTK_RADIO_MENU_ITEM(item));
 
 		gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(item), false);
 
@@ -282,7 +282,7 @@ void MainWindow::initToolbar() {
 			selectedItem = item;
 		}
 
-		g_signal_connect (item, "activate", G_CALLBACK (tbSelectMenuitemActivated), data);
+		g_signal_connect(item, "activate", G_CALLBACK(tbSelectMenuitemActivated), data);
 
 		gtk_widget_show(item);
 		gtk_menu_shell_append(menubar, item);
@@ -290,7 +290,7 @@ void MainWindow::initToolbar() {
 	}
 
 	if (selectedData) {
-		gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM (selectedItem), TRUE);
+		gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(selectedItem), TRUE);
 		this->toolbarIntialized = true;
 		toolbarSelected(selectedData);
 	}

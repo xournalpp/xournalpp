@@ -15,8 +15,9 @@
 #include "../../control/Control.h"
 #include "../GladeGui.h"
 #include "SidebarPreview.h"
+#include "../../util/MemoryCheck.h"
 
-class Sidebar: public DocumentListener {
+class Sidebar: public DocumentListener, MemoryCheckObject {
 public:
 	Sidebar(GladeGui * gui, Control * control);
 	virtual ~Sidebar();
@@ -56,7 +57,6 @@ private:
 private:
 	bool backgroundInitialized;
 	Control * control;
-	GladeGui * gui;
 	GtkComboBox * comboBox;
 
 	PdfCache * cache;
