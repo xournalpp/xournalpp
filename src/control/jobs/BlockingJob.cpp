@@ -9,6 +9,7 @@ BlockingJob::BlockingJob(Control * control, const char * name) {
 }
 
 BlockingJob::~BlockingJob() {
+	this->control->unblock();
 	this->control = NULL;
 }
 

@@ -339,7 +339,7 @@ void Sidebar::setTmpDisabled(bool disabled) {
 	gtk_widget_set_sensitive(this->iconViewPreview, !disabled);
 	gtk_widget_set_sensitive(this->buttonCloseSidebar, !disabled);
 
-	GdkCursor *cursor = NULL;
+	GdkCursor * cursor = NULL;
 
 	if (disabled) {
 		cursor = gdk_cursor_new(GDK_WATCH);

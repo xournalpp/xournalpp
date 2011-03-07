@@ -24,6 +24,9 @@ public:
 
 	virtual void show() = 0;
 
+	operator GtkWindow *();
+	operator GdkWindow *();
+
 	GtkWidget * get(const char * name);
 	GtkWidget * loadIcon(const char * name);
 	GdkPixbuf * loadIconPixbuf(const char * filename);

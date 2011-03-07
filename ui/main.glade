@@ -9,6 +9,7 @@
     <child>
       <widget class="GtkVBox" id="vbox1">
         <property name="visible">True</property>
+        <property name="orientation">vertical</property>
         <child>
           <widget class="GtkMenuBar" id="mainMenubar">
             <property name="visible">True</property>
@@ -86,6 +87,7 @@
                         <property name="visible">True</property>
                         <property name="label" translatable="yes">Export as...</property>
                         <property name="use_underline">True</property>
+                        <accelerator key="i" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                       </widget>
                     </child>
                     <child>
@@ -235,6 +237,7 @@
                         <property name="visible">True</property>
                         <property name="label" translatable="yes">_First Page</property>
                         <property name="use_underline">True</property>
+                        <accelerator key="Home" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                       </widget>
                     </child>
                     <child>
@@ -242,6 +245,7 @@
                         <property name="visible">True</property>
                         <property name="label" translatable="yes">_Previous Page</property>
                         <property name="use_underline">True</property>
+                        <accelerator key="Page_Up" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                       </widget>
                     </child>
                     <child>
@@ -249,7 +253,7 @@
                         <property name="visible">True</property>
                         <property name="label" translatable="yes">_Next Page</property>
                         <property name="use_underline">True</property>
-                        <accelerator key="Page_Down" signal="activate"/>
+                        <accelerator key="Page_Down" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                       </widget>
                     </child>
                     <child>
@@ -257,7 +261,7 @@
                         <property name="visible">True</property>
                         <property name="label" translatable="yes">_Last Page</property>
                         <property name="use_underline">True</property>
-                        <accelerator key="Page_Up" signal="activate"/>
+                        <accelerator key="End" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                       </widget>
                     </child>
                     <child>
@@ -270,7 +274,7 @@
                         <property name="visible">True</property>
                         <property name="label" translatable="yes">N_ext annotated page</property>
                         <property name="use_underline">True</property>
-                        <accelerator key="Page_Down" signal="activate" modifiers="GDK_CONTROL_MASK"/>
+                        <accelerator key="Page_Down" signal="activate" modifiers="GDK_SHIFT_MASK | GDK_CONTROL_MASK"/>
                       </widget>
                     </child>
                     <child>
@@ -278,7 +282,7 @@
                         <property name="visible">True</property>
                         <property name="label" translatable="yes">P_revious annotated page</property>
                         <property name="use_underline">True</property>
-                        <accelerator key="Page_Up" signal="activate" modifiers="GDK_CONTROL_MASK"/>
+                        <accelerator key="Page_Up" signal="activate" modifiers="GDK_SHIFT_MASK | GDK_CONTROL_MASK"/>
                       </widget>
                     </child>
                   </widget>
@@ -305,7 +309,7 @@
                         <property name="visible">True</property>
                         <property name="label" translatable="yes">New Page _After</property>
                         <property name="use_underline">True</property>
-                        <accelerator key="o" signal="activate" modifiers="GDK_CONTROL_MASK"/>
+                        <accelerator key="d" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                       </widget>
                     </child>
                     <child>
@@ -380,6 +384,7 @@
                         <property name="visible">True</property>
                         <property name="label" translatable="yes">_Delete Page</property>
                         <property name="use_underline">True</property>
+                        <accelerator key="Delete" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                       </widget>
                     </child>
                     <child>
@@ -392,6 +397,7 @@
                         <property name="visible">True</property>
                         <property name="label" translatable="yes">New _Layer</property>
                         <property name="use_underline">True</property>
+                        <accelerator key="l" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                       </widget>
                     </child>
                     <child>
@@ -400,6 +406,7 @@
                         <property name="sensitive">False</property>
                         <property name="label" translatable="yes">Delete La_yer</property>
                         <property name="use_underline">True</property>
+                        <accelerator key="l" signal="activate" modifiers="GDK_SHIFT_MASK | GDK_CONTROL_MASK"/>
                       </widget>
                     </child>
                     <child>
@@ -825,8 +832,8 @@
                         <property name="visible">True</property>
                         <property name="use_underline">True</property>
                         <property name="use_stock">True</property>
-                        <accelerator key="plus" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                         <accelerator key="KP_Add" signal="activate" modifiers="GDK_CONTROL_MASK"/>
+                        <accelerator key="plus" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                       </widget>
                     </child>
                     <child>
@@ -835,8 +842,8 @@
                         <property name="visible">True</property>
                         <property name="use_underline">True</property>
                         <property name="use_stock">True</property>
-                        <accelerator key="KP_Subtract" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                         <accelerator key="minus" signal="activate" modifiers="GDK_CONTROL_MASK"/>
+                        <accelerator key="KP_Subtract" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                       </widget>
                     </child>
                     <child>
@@ -870,7 +877,6 @@
                     <child>
                       <widget class="GtkImageMenuItem" id="menuHelpHelp">
                         <property name="label">gtk-help</property>
-                        <property name="visible">True</property>
                         <property name="use_underline">True</property>
                         <property name="use_stock">True</property>
                       </widget>
@@ -947,6 +953,7 @@
                 <property name="can_focus">True</property>
                 <child>
                   <widget class="GtkVBox" id="sidebarContents">
+                    <property name="orientation">vertical</property>
                     <child>
                       <widget class="GtkHBox" id="hbox4">
                         <property name="visible">True</property>
@@ -1034,6 +1041,7 @@
         <child>
           <widget class="GtkVBox" id="searchBar">
             <property name="visible">True</property>
+            <property name="orientation">vertical</property>
             <child>
               <widget class="GtkHSeparator" id="hseparator1">
                 <property name="visible">True</property>

@@ -286,6 +286,7 @@ private:
 	GtkLabel * lbState;
 	GtkProgressBar * pgState;
 	int maxState;
+	bool isBlocking;
 
 	GladeSearchpath * gladeSearchPath;
 

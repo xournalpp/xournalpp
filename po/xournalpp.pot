@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-03-06 12:51+0100\n"
+"POT-Creation-Date: 2011-03-07 16:49+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -116,7 +116,7 @@ msgstr ""
 msgid "Select Image"
 msgstr ""
 
-#: ../ui/main.glade.h:1 ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:371
+#: ../ui/main.glade.h:1 ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:373
 msgid "Back"
 msgstr ""
 
@@ -124,7 +124,7 @@ msgstr ""
 msgid "Close"
 msgstr ""
 
-#: ../ui/main.glade.h:3 ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:435
+#: ../ui/main.glade.h:3 ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:428
 msgid "Copy current"
 msgstr ""
 
@@ -144,7 +144,7 @@ msgstr ""
 msgid "Fullscreen"
 msgstr ""
 
-#: ../ui/main.glade.h:8 ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:428
+#: ../ui/main.glade.h:8 ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:421
 msgid "Graph"
 msgstr ""
 
@@ -160,7 +160,7 @@ msgstr ""
 msgid "Insert Page Type"
 msgstr ""
 
-#: ../ui/main.glade.h:12 ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:414
+#: ../ui/main.glade.h:12 ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:407
 msgid "Lined"
 msgstr ""
 
@@ -184,7 +184,7 @@ msgstr ""
 msgid "New _Layer"
 msgstr ""
 
-#: ../ui/main.glade.h:18 ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:373
+#: ../ui/main.glade.h:18 ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:374
 msgid "Next"
 msgstr ""
 
@@ -212,7 +212,7 @@ msgstr ""
 msgid "Pen _Options"
 msgstr ""
 
-#: ../ui/main.glade.h:25 ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:407
+#: ../ui/main.glade.h:25 ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:400
 msgid "Plain"
 msgstr ""
 
@@ -228,7 +228,7 @@ msgstr ""
 msgid "Ru_ler"
 msgstr ""
 
-#: ../ui/main.glade.h:29 ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:421
+#: ../ui/main.glade.h:29 ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:414
 msgid "Ruled"
 msgstr ""
 
@@ -260,7 +260,7 @@ msgstr ""
 msgid "Text Font..."
 msgstr ""
 
-#: ../ui/main.glade.h:37 ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:442
+#: ../ui/main.glade.h:37 ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:435
 msgid "With PDF background"
 msgstr ""
 
@@ -268,7 +268,7 @@ msgstr ""
 msgid "Xournal++"
 msgstr ""
 
-#: ../ui/main.glade.h:39 ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:381
+#: ../ui/main.glade.h:39 ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:380
 msgid "Zoom out"
 msgstr ""
 
@@ -277,134 +277,138 @@ msgid "_Annotate PDF"
 msgstr ""
 
 #: ../ui/main.glade.h:41
-msgid "_Delete Page"
+msgid "_Default Tool"
 msgstr ""
 
 #: ../ui/main.glade.h:42
-msgid "_Edit"
+msgid "_Delete Page"
 msgstr ""
 
 #: ../ui/main.glade.h:43
-msgid "_Eraser"
+msgid "_Edit"
 msgstr ""
 
 #: ../ui/main.glade.h:44
-msgid "_Export as PDF"
+msgid "_Eraser"
 msgstr ""
 
 #: ../ui/main.glade.h:45
-msgid "_File"
+msgid "_Export as PDF"
 msgstr ""
 
 #: ../ui/main.glade.h:46
-msgid "_First Page"
+msgid "_File"
 msgstr ""
 
 #: ../ui/main.glade.h:47
-msgid "_Graph"
+msgid "_First Page"
 msgstr ""
 
 #: ../ui/main.glade.h:48
-msgid "_Help"
+msgid "_Graph"
 msgstr ""
 
 #: ../ui/main.glade.h:49
-msgid "_Highlighter"
+msgid "_Help"
 msgstr ""
 
 #: ../ui/main.glade.h:50
-msgid "_Image"
+msgid "_Highlighter"
 msgstr ""
 
 #: ../ui/main.glade.h:51
-msgid "_Journal"
+msgid "_Image"
 msgstr ""
 
 #: ../ui/main.glade.h:52
-msgid "_Last Page"
+msgid "_Journal"
 msgstr ""
 
 #: ../ui/main.glade.h:53
-msgid "_Lined"
+msgid "_Last Page"
 msgstr ""
 
 #: ../ui/main.glade.h:54
-msgid "_Navigation"
+msgid "_Lined"
 msgstr ""
 
 #: ../ui/main.glade.h:55
-msgid "_Next Page"
+msgid "_Navigation"
 msgstr ""
 
 #: ../ui/main.glade.h:56
-msgid "_Pen"
+msgid "_Next Page"
 msgstr ""
 
 #: ../ui/main.glade.h:57
-msgid "_Plain"
+msgid "_Pen"
 msgstr ""
 
 #: ../ui/main.glade.h:58
-msgid "_Previous Page"
+msgid "_Plain"
 msgstr ""
 
 #: ../ui/main.glade.h:59
-msgid "_Ruled"
+msgid "_Previous Page"
 msgstr ""
 
 #: ../ui/main.glade.h:60
-msgid "_Shape Recognizer"
+msgid "_Ruled"
 msgstr ""
 
 #: ../ui/main.glade.h:61
-msgid "_Text"
+msgid "_Shape Recognizer"
 msgstr ""
 
 #: ../ui/main.glade.h:62
-msgid "_Tools"
+msgid "_Text"
 msgstr ""
 
 #: ../ui/main.glade.h:63
-msgid "_Two Pages"
+msgid "_Tools"
 msgstr ""
 
 #: ../ui/main.glade.h:64
-msgid "_Vertical Space"
+msgid "_Two Pages"
 msgstr ""
 
 #: ../ui/main.glade.h:65
-msgid "_View"
+msgid "_Vertical Space"
 msgstr ""
 
 #: ../ui/main.glade.h:66
-msgid "_delete strokes"
+msgid "_View"
 msgstr ""
 
 #: ../ui/main.glade.h:67
-msgid "_fine"
+msgid "_delete strokes"
 msgstr ""
 
 #: ../ui/main.glade.h:68
-msgid "_medium"
+msgid "_fine"
 msgstr ""
 
 #: ../ui/main.glade.h:69
-msgid "_standard"
+msgid "_medium"
 msgstr ""
 
 #: ../ui/main.glade.h:70
-msgid "_thick"
+msgid "_standard"
 msgstr ""
 
 #: ../ui/main.glade.h:71
-msgid "_very fine"
+msgid "_thick"
 msgstr ""
 
 #: ../ui/main.glade.h:72
-msgid "_whiteout"
+msgid "_very fine"
 msgstr ""
 
 #: ../ui/main.glade.h:73
+msgid "_whiteout"
+msgstr ""
+
+#: ../ui/main.glade.h:74
 msgid "ver_y thick"
 msgstr ""
 
@@ -421,6 +425,8 @@ msgid "<b>Predefined colors</b>"
 msgstr ""
 
 #: ../ui/page-background-color.glade.h:5
+#: ../src/gui/toolbarMenubar/ColorToolItem.cpp:94
+#: ../src/gui/toolbarMenubar/ColorToolItem.cpp:119
 #: ../src/gui/dialog/SelectBackgroundColorDialog.cpp:108
 msgid "Select color"
 msgstr ""
@@ -463,7 +469,7 @@ msgid ""
 "THIS TEXT IS A PLACEHOLDER!"
 msgstr ""
 
-#: ../ui/settings.glade.h:2 ../src/control/settings/Settings.cpp:81
+#: ../ui/settings.glade.h:2 ../src/control/settings/Settings.cpp:84
 #, no-c-format
 msgid "%F-Note-%H-%M.xoj"
 msgstr ""
@@ -529,65 +535,69 @@ msgid "<b>Default save name</b>"
 msgstr ""
 
 #: ../ui/settings.glade.h:37
-msgid "<b>Eraser</b>"
+msgid "<b>Default</b>"
 msgstr ""
 
 #: ../ui/settings.glade.h:38
-msgid "<b>Extended Input</b>"
+msgid "<b>Eraser</b>"
 msgstr ""
 
 #: ../ui/settings.glade.h:39
-msgid "<b>Fullscreen</b>"
+msgid "<b>Extended Input</b>"
 msgstr ""
 
 #: ../ui/settings.glade.h:40
-msgid "<b>Help</b> (Placeholders)"
+msgid "<b>Fullscreen</b>"
 msgstr ""
 
 #: ../ui/settings.glade.h:41
-msgid "<b>Left / Right</b>"
+msgid "<b>Help</b> (Placeholders)"
 msgstr ""
 
 #: ../ui/settings.glade.h:42
-msgid "<b>Middle Mouse Button</b>"
+msgid "<b>Left / Right</b>"
 msgstr ""
 
 #: ../ui/settings.glade.h:43
-msgid "<b>Presentation</b> Another Fullscreen Modus, <i>Start with F5</i>"
+msgid "<b>Middle Mouse Button</b>"
 msgstr ""
 
 #: ../ui/settings.glade.h:44
-msgid "<b>Presure sensitivity</b>"
+msgid "<b>Presentation</b> Another Fullscreen Modus, <i>Start with F5</i>"
 msgstr ""
 
 #: ../ui/settings.glade.h:45
-msgid "<b>Right Mouse Button</b>"
+msgid "<b>Presure sensitivity</b>"
 msgstr ""
 
 #: ../ui/settings.glade.h:46
-msgid "<b>Selection Border</b>"
+msgid "<b>Right Mouse Button</b>"
 msgstr ""
 
 #: ../ui/settings.glade.h:47
+msgid "<b>Selection Border</b>"
+msgstr ""
+
+#: ../ui/settings.glade.h:48
 msgid ""
 "<b>Touch Screen</b> <i>You can also configure other device like mice</i>"
 msgstr ""
 
-#: ../ui/settings.glade.h:48
+#: ../ui/settings.glade.h:49
 msgid ""
 "<i>Here can you define wich tools will be selected If you\n"
 "use the eraser or other device.\n"
 "Here you can disable your touchscreen.</i>"
 msgstr ""
 
-#: ../ui/settings.glade.h:51
+#: ../ui/settings.glade.h:52
 msgid ""
 "<i>Here can you define wich tools will be selected if you press\n"
 "a button, after you release the button the previous selected\n"
 "tool will be selected</i>"
 msgstr ""
 
-#: ../ui/settings.glade.h:54
+#: ../ui/settings.glade.h:55
 msgid ""
 "<i>If you enable <b>Extended Input</b> you get more precise\n"
 "inputif you have a supported Tablet Device\n"
@@ -595,99 +605,111 @@ msgid ""
 "stroken are not drawn under the cursor </i>"
 msgstr ""
 
-#: ../ui/settings.glade.h:58
+#: ../ui/settings.glade.h:59
 msgid ""
 "<i>If you enable this you can move the border of a page to the\n"
 "center of the screen.</i>"
 msgstr ""
 
-#: ../ui/settings.glade.h:60
+#: ../ui/settings.glade.h:61
 msgid "<i>If you have a tablet pen you get a different width of the line</i>"
 msgstr ""
 
-#: ../ui/settings.glade.h:61
+#: ../ui/settings.glade.h:62
 msgid ""
 "<i>If you open a PDF and there is a\n"
 "Xournal file with the same name it will open it</i>"
 msgstr ""
 
-#: ../ui/settings.glade.h:63
+#: ../ui/settings.glade.h:64
 msgid ""
 "<i>Put a rouler on your screen to callibrate the zoom level to fit your "
 "screen\n"
 "The units are cm for the rouler, dpi for the slider</i>"
 msgstr ""
 
-#: ../ui/settings.glade.h:65
+#: ../ui/settings.glade.h:66
 msgid "<i>This name will be proposed if you save a new document</i>"
 msgstr ""
 
-#: ../ui/settings.glade.h:66
+#: ../ui/settings.glade.h:67
 msgid "Autosave every ... minute:"
 msgstr ""
 
-#: ../ui/settings.glade.h:67
+#: ../ui/settings.glade.h:68
 msgid "Big cursor for pen"
 msgstr ""
 
-#: ../ui/settings.glade.h:68
+#: ../ui/settings.glade.h:69
 msgid "Border color"
 msgstr ""
 
-#: ../ui/settings.glade.h:69
+#: ../ui/settings.glade.h:70
 msgid "Border color for current page and other selections"
 msgstr ""
 
-#: ../ui/settings.glade.h:70
-msgid "Hide Menubar"
-msgstr ""
-
 #: ../ui/settings.glade.h:71
-msgid "Hide Sidebar"
+msgid "Defaults"
 msgstr ""
 
 #: ../ui/settings.glade.h:72
-msgid "Input"
+msgid "Hide Menubar"
 msgstr ""
 
 #: ../ui/settings.glade.h:73
-msgid "Input Device"
+msgid "Hide Sidebar"
 msgstr ""
 
 #: ../ui/settings.glade.h:74
-msgid "Load / Save"
+msgid "Input"
 msgstr ""
 
 #: ../ui/settings.glade.h:75
-msgid "Mouse Button"
+msgid "Input Device"
 msgstr ""
 
 #: ../ui/settings.glade.h:76
+msgid "Load / Save"
+msgstr ""
+
+#: ../ui/settings.glade.h:77
+msgid "Mouse Button"
+msgstr ""
+
+#: ../ui/settings.glade.h:78
 msgid ""
 "Notice: <i>You need to enable XInput (Page \"Input\") else it won't work.</i>"
 msgstr ""
 
-#: ../ui/settings.glade.h:77
-msgid "Select toolbar:"
-msgstr ""
-
-#: ../ui/settings.glade.h:78
-msgid "Show sidebar on the right side"
-msgstr ""
-
 #: ../ui/settings.glade.h:79
-msgid "Show vertical scrollbar on the left side"
+msgid "Select the tool and Settings if you press the Default Button"
 msgstr ""
 
 #: ../ui/settings.glade.h:80
-msgid "View"
+msgid "Select toolbar:"
 msgstr ""
 
 #: ../ui/settings.glade.h:81
-msgid "Xournal++ Preferences"
+msgid "Show sidebar on the right side"
 msgstr ""
 
 #: ../ui/settings.glade.h:82
+msgid "Show vertical scrollbar on the left side"
+msgstr ""
+
+#: ../ui/settings.glade.h:83
+msgid "The unit of the ruler is cm"
+msgstr ""
+
+#: ../ui/settings.glade.h:84
+msgid "View"
+msgstr ""
+
+#: ../ui/settings.glade.h:85
+msgid "Xournal++ Preferences"
+msgstr ""
+
+#: ../ui/settings.glade.h:86
 msgid "Zoom"
 msgstr ""
 
@@ -780,64 +802,64 @@ msgid ""
 "PDF page."
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:321
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:326
 #: ../src/gui/dialog/ButtonConfigGui.cpp:62
 msgid "Eraser"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:324
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:329
 msgid "standard"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:331
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:336
 msgid "whiteout"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:338
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:343
 msgid "delete stroke"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:351
-#: ../src/control/Control.cpp:1850 ../src/control/Control.cpp:2035
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:356
+#: ../src/control/Control.cpp:1893 ../src/control/Control.cpp:2078
 msgid "Save"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:352
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:357
 msgid "New Xournal"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:355
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:359
 #: ../src/control/stockdlg/XojOpenDlg.cpp:13
 msgid "Open file"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:357
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:361
 msgid "Cut"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:358
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:362
 msgid "Copy"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:359
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:363
 msgid "Paste"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:361
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:365
 msgid "Search"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:364
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:367
 #: ../src/undo/UndoRedoHandler.cpp:142
 msgid "Undo"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:365
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:368
 #: ../src/undo/UndoRedoHandler.cpp:156
 msgid "Redo"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:369
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:372
 msgid "Go to first page"
 msgstr ""
 
@@ -845,103 +867,126 @@ msgstr ""
 msgid "Go to last page"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:379
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:377
 msgid "Next annotated page"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:383
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:381
 msgid "Zoom in"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:385
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:382
 msgid "Zoom fit to screen"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:387
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:383
 msgid "Zoom to 100%"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:391
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:385
 msgid "Toggle fullscreen"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:395
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:390
 #: ../src/gui/dialog/ButtonConfigGui.cpp:61
 msgid "Pen"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:403
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:396
 msgid "Insert page"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:455
+#. TODO LOW PRIO: check for Stock icons (Mail from 04.01.2010 to Xournal mailinglist)
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:446
 #: ../src/gui/dialog/ButtonConfigGui.cpp:63
 msgid "Hilighter"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:456
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:448
 #: ../src/gui/dialog/ButtonConfigGui.cpp:64
 msgid "Text"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:458
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:449
 msgid "Image"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:462
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:581
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:451
+#: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:30
+#: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:68
 msgid "Select Region"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:464
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:559
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:574
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:453
+#: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:8
+#: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:23
+#: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:64
+#: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:84
 msgid "Select Rectangle"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:466
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:455
 #: ../src/undo/MoveUndoAction.cpp:52
 msgid "Vertical Space"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:467
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:457
 #: ../src/gui/dialog/ButtonConfigGui.cpp:69
 msgid "Hand"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:471
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:460
 #: ../src/gui/dialog/ButtonConfigGui.cpp:101
 msgid "Shape Recognizer"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:472
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:461
 msgid "Ruler"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:475
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:463
 #: ../src/gui/dialog/ButtonConfigGui.cpp:89
 msgid "Thin"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:477
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:464
 #: ../src/gui/dialog/ButtonConfigGui.cpp:90
 msgid "Medium"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:478
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:465
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:467
 msgid "Thik"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:480
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:469
+msgid "Default Tool"
+msgstr ""
+
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:473
 msgid "Select Font"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:491
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:483
 msgid "Two pages"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:588
+#: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:54
+#, c-format
+msgid "Layer %i"
+msgstr ""
+
+#: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:69
+msgid "Layer"
+msgstr ""
+
+#: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:37
+#: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:72
 msgid "Select Object"
+msgstr ""
+
+#: ../src/gui/toolbarMenubar/ToolPageSpinner.cpp:29
+msgid "Page"
 msgstr ""
 
 #: ../src/gui/dialog/PdfPagesDialog.cpp:330
@@ -1178,90 +1223,90 @@ msgstr ""
 msgid "Create pdf failed: %s"
 msgstr ""
 
-#: ../src/control/Control.cpp:196
+#: ../src/control/Control.cpp:197
 #, c-format
 msgid "Info: autosave not necessary, nothing changed...\n"
 msgstr ""
 
-#: ../src/control/Control.cpp:203
+#: ../src/control/Control.cpp:204
 #, c-format
 msgid "Info: autosave document...\n"
 msgstr ""
 
-#: ../src/control/Control.cpp:233
+#: ../src/control/Control.cpp:234
 #, c-format
 msgid "Autosave: %s"
 msgstr ""
 
-#: ../src/control/Control.cpp:994 ../src/control/Control.cpp:1138
+#: ../src/control/Control.cpp:1000 ../src/control/Control.cpp:1144
 msgid ""
 "You don't have any PDF pages to select from. Cancel operation,\n"
 "Please select another background type: Menu \"Journal\" / \"Insert Page Type"
 "\"."
 msgstr ""
 
-#: ../src/control/Control.cpp:1117 ../src/control/tools/ImageHandler.cpp:38
+#: ../src/control/Control.cpp:1123 ../src/control/tools/ImageHandler.cpp:38
 #, c-format
 msgid "This image could not be loaded. Error message: %s"
 msgstr ""
 
-#: ../src/control/Control.cpp:1637
+#: ../src/control/Control.cpp:1669
 msgid "The attached background PDF could not be found."
 msgstr ""
 
-#: ../src/control/Control.cpp:1639
+#: ../src/control/Control.cpp:1671
 msgid "Select another PDF"
 msgstr ""
 
-#: ../src/control/Control.cpp:1640
+#: ../src/control/Control.cpp:1672
 msgid "Remove PDF Background"
 msgstr ""
 
-#: ../src/control/Control.cpp:1641 ../src/control/Control.cpp:2037
+#: ../src/control/Control.cpp:1673 ../src/control/Control.cpp:2080
 msgid "Cancel"
 msgstr ""
 
-#: ../src/control/Control.cpp:1660
+#: ../src/control/Control.cpp:1692
 #, c-format
 msgid ""
 "Error opening file '%s'\n"
 "%s"
 msgstr ""
 
-#: ../src/control/Control.cpp:1724
+#: ../src/control/Control.cpp:1756
 #, c-format
 msgid ""
 "Error annotate PDF file '%s'\n"
 "%s"
 msgstr ""
 
-#: ../src/control/Control.cpp:1872
+#: ../src/control/Control.cpp:1915
 #, c-format
 msgid "Open file error: %s"
 msgstr ""
 
-#: ../src/control/Control.cpp:1888
+#: ../src/control/Control.cpp:1931
 #, c-format
 msgid "Output stream error: %s"
 msgstr ""
 
-#: ../src/control/Control.cpp:1918
+#: ../src/control/Control.cpp:1961
 msgid "Save File"
 msgstr ""
 
-#: ../src/control/Control.cpp:1923 ../src/control/stockdlg/XojOpenDlg.cpp:22
+#: ../src/control/Control.cpp:1966 ../src/control/stockdlg/XojOpenDlg.cpp:22
 msgid "Xournal files"
 msgstr ""
 
-#: ../src/control/Control.cpp:1974
+#: ../src/control/Control.cpp:2017
 msgid "Unsaved Document"
 msgstr ""
 
-#: ../src/control/Control.cpp:2033
+#: ../src/control/Control.cpp:2076
 msgid "This document is not saved yet."
 msgstr ""
 
-#: ../src/control/Control.cpp:2036
+#: ../src/control/Control.cpp:2079
 msgid "Discard"
 msgstr ""
 
@@ -1325,7 +1370,7 @@ msgid "Images"
 msgstr ""
 
 #. Translators: %s is a URI
-#: ../src/control/RecentManager.cpp:327
+#: ../src/control/RecentManager.cpp:308
 #, c-format
 msgid "Open '%s'"
 msgstr ""

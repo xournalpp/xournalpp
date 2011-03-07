@@ -31,9 +31,6 @@ public:
 	void setRecentMenu(GtkWidget * submenu);
 	void toolbarSelected(ToolbarData * d);
 
-	operator GtkWindow *();
-	operator GdkWindow *();
-
 	void updatePageNumbers(int page, int pagecount, int pdfpage);
 	int getCurrentLayer();
 
