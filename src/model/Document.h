@@ -3,6 +3,8 @@
  *
  * The document
  *
+ * All methods are unlocked, you need to lock the document before you change something and unlock after.
+ *
  * @author Xournal Team
  * http://xournal.sf.net
  *
@@ -115,6 +117,11 @@ public:
 
 	cairo_surface_t * getPreview();
 	void setPreview(cairo_surface_t * preview);
+
+	void lock();
+	void unlock();
+	bool tryLock();
+
 private:
 
 	void buildContentsModel();
@@ -153,6 +160,11 @@ private:
 	 * The preview for the file
 	 */
 	cairo_surface_t * preview;
+
+	/**
+	 * The lock of the document
+	 */
+	GMutex * documentLock;
 };
 
 #endif /* __DOCUMENT_H__ */

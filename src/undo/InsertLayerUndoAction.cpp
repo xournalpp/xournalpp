@@ -21,8 +21,11 @@ String InsertLayerUndoAction::getText() {
 }
 
 bool InsertLayerUndoAction::undo(Control * control) {
-	this->page->removeLayer(this->layer);
 	Document * doc = control->getDocument();
+
+	doc->lock();
+
+	this->page->removeLayer(this->layer);
 	int id = doc->indexOf(this->page);
 	control->getWindow()->getXournal()->layerChanged(id);
 
@@ -30,18 +33,24 @@ bool InsertLayerUndoAction::undo(Control * control) {
 
 	this->undone = true;
 
+	doc->unlock();
 	return true;
 }
 
 bool InsertLayerUndoAction::redo(Control * control) {
-	this->page->addLayer(this->layer);
 	Document * doc = control->getDocument();
+
+	doc->lock();
+
+	this->page->addLayer(this->layer);
 	int id = doc->indexOf(this->page);
 	control->getWindow()->getXournal()->layerChanged(id);
 
 	control->getWindow()->updateLayerCombobox();
 
 	this->undone = false;
+
+	doc->unlock();
 
 	return true;
 }

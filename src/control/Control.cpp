@@ -134,6 +134,10 @@ Control::~Control() {
 }
 
 bool Control::checkChangedDocument(Control * control) {
+	if (!control->doc->tryLock()) {
+		// call again later
+		return true;
+	}
 	for (GList * l = control->changedPages; l != NULL; l = l->next) {
 		int p = control->doc->indexOf((XojPage *) l->data);
 		if (p != -1) {
@@ -143,6 +147,9 @@ bool Control::checkChangedDocument(Control * control) {
 	g_list_free(control->changedPages);
 	control->changedPages = NULL;
 
+	control->doc->unlock();
+
+	// Call again
 	return true;
 }
 
@@ -151,12 +158,12 @@ void Control::saveSettings() {
 
 	gint width = 0;
 	gint height = 0;
-	gtk_window_get_size((GtkWindow*) *win, &width, &height);
+	gtk_window_get_size((GtkWindow*) *this->win, &width, &height);
 
-	if (!win->isMaximized()) {
-		settings->setMainWndSize(width, height);
+	if (!this->win->isMaximized()) {
+		this->settings->setMainWndSize(width, height);
 	}
-	settings->setMainWndMaximized(win->isMaximized());
+	this->settings->setMainWndMaximized(this->win->isMaximized());
 }
 
 void Control::initWindow(MainWindow * win) {
@@ -170,7 +177,7 @@ void Control::initWindow(MainWindow * win) {
 
 	eraserTypeChanged();
 
-	searchBar = new SearchBar(this);
+	this->searchBar = new SearchBar(this);
 
 	// Disable undo buttons
 	undoRedoChanged();
@@ -192,57 +199,61 @@ void Control::initWindow(MainWindow * win) {
 }
 
 bool Control::autosaveCallback(Control * control) {
-	gdk_threads_enter();
+		gdk_threads_enter();
 
-	if (!control->undoRedo->isChangedAutosave()) {
-		printf(_("Info: autosave not necessary, nothing changed...\n"));
+		if (!control->undoRedo->isChangedAutosave()) {
+			printf(_("Info: autosave not necessary, nothing changed...\n"));
+
+			gdk_threads_leave();
+
+			// do nothing, nothing changed
+			return true;
+		} else {
+			printf(_("Info: autosave document...\n"));
+		}
+
+		if (control->autosaveHandler) {
+			delete control->autosaveHandler;
+		}
+
+		control->undoRedo->documentAutosaved();
+		control->autosaveHandler = new SaveHandler();
+
+
+		control->doc->lock();
+		control->autosaveHandler->prepareSave(control->doc);
+		String filename = control->doc->getFilename();
+		control->doc->unlock();
+
+		if (filename.isEmpty()) {
+			filename = Util::getAutosaveFilename();
+		} else {
+			if (filename.length() > 5 && filename.substring(-4) == ".xoj") {
+				filename = filename.substring(0, -4);
+			}
+			filename += ".autosave.xoj";
+		}
+
+		if (!control->lastAutosaveFilename.isEmpty() && control->lastAutosaveFilename != filename) {
+			GFile * file = g_file_new_for_path(control->lastAutosaveFilename.c_str());
+			g_file_delete(file, NULL, NULL);
+		}
+		control->lastAutosaveFilename = filename;
+
+		GzOutputStream * out = new GzOutputStream(filename);
+		control->autosaveHandler->saveTo(out, filename);
+		if (!control->autosaveHandler->getErrorMessage().isEmpty()) {
+			GtkWidget * dialog = gtk_message_dialog_new((GtkWindow *) control->getWindow(), GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, _("Autosave: %s"),
+					control->autosaveHandler->getErrorMessage().c_str());
+			gtk_dialog_run(GTK_DIALOG(dialog));
+			gtk_widget_destroy(dialog);
+		}
+
+		delete control->autosaveHandler;
+		control->autosaveHandler = NULL;
+		delete out;
 
 		gdk_threads_leave();
-
-		// do nothing, nothing changed
-		return true;
-	} else {
-		printf(_("Info: autosave document...\n"));
-	}
-
-	if (control->autosaveHandler) {
-		delete control->autosaveHandler;
-	}
-
-	control->undoRedo->documentAutosaved();
-	control->autosaveHandler = new SaveHandler();
-	control->autosaveHandler->prepareSave(control->doc);
-
-	String filename = control->doc->getFilename();
-	if (filename.isEmpty()) {
-		filename = Util::getAutosaveFilename();
-	} else {
-		if (filename.length() > 5 && filename.substring(-4) == ".xoj") {
-			filename = filename.substring(0, -4);
-		}
-		filename += ".autosave.xoj";
-	}
-
-	if (!control->lastAutosaveFilename.isEmpty() && control->lastAutosaveFilename != filename) {
-		GFile * file = g_file_new_for_path(control->lastAutosaveFilename.c_str());
-		g_file_delete(file, NULL, NULL);
-	}
-	control->lastAutosaveFilename = filename;
-
-	GzOutputStream * out = new GzOutputStream(filename);
-	control->autosaveHandler->saveTo(out, filename);
-	if (!control->autosaveHandler->getErrorMessage().isEmpty()) {
-		GtkWidget * dialog = gtk_message_dialog_new((GtkWindow *) control->getWindow(), GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, _("Autosave: %s"),
-				control->autosaveHandler->getErrorMessage().c_str());
-		gtk_dialog_run(GTK_DIALOG(dialog));
-		gtk_widget_destroy(dialog);
-	}
-
-	delete control->autosaveHandler;
-	control->autosaveHandler = NULL;
-	delete out;
-
-	gdk_threads_leave();
 	return true;
 }
 
@@ -259,16 +270,16 @@ void Control::enableAutosave(bool enable) {
 }
 
 void Control::updatePageNumbers(int page, int pdfPage) {
-	this->win->updatePageNumbers(page, doc->getPageCount(), pdfPage);
+	this->win->updatePageNumbers(page, this->doc->getPageCount(), pdfPage);
 	this->sidebar->selectPageNr(page, pdfPage);
 
-	const char * file = doc->getEvMetadataFilename();
+	const char * file = this->doc->getEvMetadataFilename();
 	if (file) {
 		ev_metadata_manager_set_int(file, "page", page);
 	}
 
-	int current = win->getXournal()->getCurrentPage();
-	int count = doc->getPageCount();
+	int current = this->win->getXournal()->getCurrentPage();
+	int count = this->doc->getPageCount();
 
 	fireEnableAction(ACTION_GOTO_FIRST, current != 0);
 	fireEnableAction(ACTION_GOTO_BACK, current != 0);
@@ -414,7 +425,7 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent *even
 		scrollHandler->goToNextPage();
 		break;
 	case ACTION_GOTO_LAST:
-		scrollHandler->scrollToPage(doc->getPageCount() - 1);
+		scrollHandler->scrollToPage(this->doc->getPageCount() - 1);
 		break;
 	case ACTION_GOTO_NEXT_ANNOTATED_PAGE:
 		scrollHandler->scrollToAnnotatedPage(true);
@@ -431,7 +442,7 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent *even
 		insertNewPage(getCurrentPageNo() + 1);
 		break;
 	case ACTION_NEW_PAGE_AT_END:
-		insertNewPage(doc->getPageCount());
+		insertNewPage(this->doc->getPageCount());
 		break;
 	case ACTION_DELETE_PAGE:
 		deletePage();
@@ -763,14 +774,16 @@ void Control::clearSelectionEndText() {
 }
 
 void Control::invokeLater(ActionType type) {
-	g_idle_add((GSourceFunc) & invokeCallback, new CallbackData(this, type));
+	g_idle_add((GSourceFunc) &invokeCallback, new CallbackData(this, type));
 }
 
 /**
  * Fire page selected, but first check if the page Number is valid
  */
 void Control::firePageSelected(XojPage * page) {
-	int p = doc->indexOf(page);
+	this->doc->lock();
+	int p = this->doc->indexOf(page);
+	this->doc->unlock();
 	if (p == -1) {
 		return;
 	}
@@ -861,7 +874,9 @@ void Control::addDefaultPage() {
 		page->setBackgroundType(BACKGROUND_TYPE_LINED);
 	}
 
-	doc->addPage(page);
+	this->doc->lock();
+	this->doc->addPage(page);
+	this->doc->unlock();
 
 	updateDeletePageButton();
 }
@@ -929,7 +944,7 @@ void Control::getDefaultPagesize(double & width, double & height) {
 void Control::updateDeletePageButton() {
 	if (this->win) {
 		GtkWidget * w = this->win->get("menuDeletePage");
-		gtk_widget_set_sensitive(w, doc->getPageCount() > 1);
+		gtk_widget_set_sensitive(w, this->doc->getPageCount() > 1);
 	}
 }
 
@@ -937,24 +952,29 @@ void Control::deletePage() {
 	clearSelectionEndText();
 	// don't allow delete pages if we have less than 2 pages,
 	// so we can be (more or less) sure there is at least one page.
-	if (doc->getPageCount() < 2) {
+	if (this->doc->getPageCount() < 2) {
 		return;
 	}
 
 	int pNr = getCurrentPageNo();
-	if (pNr < 0 || pNr > doc->getPageCount()) {
+	if (pNr < 0 || pNr > this->doc->getPageCount()) {
 		// something went wrong...
 		return;
 	}
 
+	this->doc->lock();
 	XojPage * page = doc->getPage(pNr);
+	this->doc->unlock();
 
 	// first send event, then delete page...
 	firePageDeleted(pNr);
+
+	this->doc->lock();
 	doc->deletePage(pNr);
+	this->doc->unlock();
 
 	updateDeletePageButton();
-	undoRedo->addUndoAction(new InsertDeletePageUndoAction(page, pNr, false));
+	this->undoRedo->addUndoAction(new InsertDeletePageUndoAction(page, pNr, false));
 }
 
 void Control::insertNewPage(int position) {
@@ -999,7 +1019,7 @@ void Control::insertNewPage(int position) {
 		if (doc->getPdfPageCount() == 0) {
 			GtkWidget * dialog = gtk_message_dialog_new((GtkWindow*) *win, GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
 					_("You don't have any PDF pages to select from. Cancel operation,\n"
-						"Please select another background type: Menu \"Journal\" / \"Insert Page Type\"."));
+							"Please select another background type: Menu \"Journal\" / \"Insert Page Type\"."));
 			gtk_dialog_run(GTK_DIALOG(dialog));
 			gtk_widget_destroy(dialog);
 
@@ -1007,6 +1027,7 @@ void Control::insertNewPage(int position) {
 			page->unreference();
 			return;
 		} else {
+			this->doc->lock();
 			PdfPagesDialog * dlg = new PdfPagesDialog(this->gladeSearchPath, this->doc, this->settings);
 			for (int i = 0; i < doc->getPageCount(); i++) {
 				XojPage * p = doc->getPage(i);
@@ -1031,6 +1052,7 @@ void Control::insertNewPage(int position) {
 
 			XojPopplerPage * p = doc->getPdfPage(selected);
 			page->setSize(p->getWidth(), p->getHeight());
+			this->doc->unlock();
 		}
 	}
 
@@ -1038,7 +1060,9 @@ void Control::insertNewPage(int position) {
 }
 
 void Control::insertPage(XojPage * page, int position) {
-	doc->insertPage(page, position);
+	this->doc->lock();
+	this->doc->insertPage(page, position);
+	this->doc->unlock();
 	firePageInserted(position);
 
 	cursor->updateCursor();
@@ -1076,7 +1100,9 @@ void Control::setPageBackground(ActionType type) {
 		return;
 	}
 
-	int pageNr = doc->indexOf(page);
+	this->doc->lock();
+	int pageNr = this->doc->indexOf(page);
+	this->doc->unlock();
 	if (pageNr == -1) {
 		return; // should not happen...
 	}
@@ -1096,7 +1122,11 @@ void Control::setPageBackground(ActionType type) {
 	} else if (ACTION_SET_PAPER_BACKGROUND_GRAPH == type) {
 		page->setBackgroundType(BACKGROUND_TYPE_GRAPH);
 	} else if (ACTION_SET_PAPER_BACKGROUND_IMAGE == type) {
+
+		this->doc->lock();
 		ImagesDialog * dlg = new ImagesDialog(this->gladeSearchPath, this->doc, this->settings);
+		this->doc->unlock();
+
 		dlg->show();
 		BackgroundImage * img = dlg->getSelectedImage();
 		if (img) {
@@ -1143,11 +1173,13 @@ void Control::setPageBackground(ActionType type) {
 		if (doc->getPdfPageCount() == 0) {
 			GtkWidget * dialog = gtk_message_dialog_new((GtkWindow*) *win, GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
 					_("You don't have any PDF pages to select from. Cancel operation,\n"
-						"Please select another background type: Menu \"Journal\" / \"Insert Page Type\"."));
+							"Please select another background type: Menu \"Journal\" / \"Insert Page Type\"."));
 			gtk_dialog_run(GTK_DIALOG(dialog));
 			gtk_widget_destroy(dialog);
 			return;
 		} else {
+			this->doc->lock();
+
 			PdfPagesDialog * dlg = new PdfPagesDialog(this->gladeSearchPath, this->doc, this->settings);
 			for (int i = 0; i < doc->getPageCount(); i++) {
 				XojPage * p = doc->getPage(i);
@@ -1155,6 +1187,8 @@ void Control::setPageBackground(ActionType type) {
 					dlg->setPageUsed(i);
 				}
 			}
+
+			this->doc->unlock();
 
 			dlg->show();
 
@@ -1210,7 +1244,9 @@ void Control::paperFormat() {
 	double height = dlg->getHeight();
 
 	if (width > 0) {
-		doc->setPageSize(page, width, height);
+		this->doc->lock();
+		this->doc->setPageSize(page, width, height);
+		this->doc->unlock();
 	}
 
 	delete dlg;
@@ -1218,7 +1254,9 @@ void Control::paperFormat() {
 
 void Control::changePageBackgroundColor() {
 	int pNr = getCurrentPageNo();
-	XojPage * p = doc->getPage(pNr);
+	this->doc->lock();
+	XojPage * p = this->doc->getPage(pNr);
+	this->doc->unlock();
 
 	if (p == NULL) {
 		return;
@@ -1274,7 +1312,7 @@ void Control::deleteCurrentLayer() {
 }
 
 void Control::calcZoomFitSize() {
-	if (doc && win) {
+	if (this->doc && this->win) {
 		double width = 0;
 		//		for (int i = 0; i < doc->getPageCount(); i++) {
 		//			Page * p = doc->getPage(i);
@@ -1356,7 +1394,12 @@ bool Control::searchTextOnPage(const char * text, int p, int * occures, double *
 
 XojPage * Control::getCurrentPage() {
 	int page = win->getXournal()->getCurrentPage();
-	return doc->getPage(page);
+
+	this->doc->lock();
+	XojPage * p = this->doc->getPage(page);
+	this->doc->unlock();
+
+	return p;
 }
 
 void Control::fileOpened(const char * uri) {
@@ -1613,7 +1656,9 @@ void Control::newFile() {
 
 	Document newDoc(this);
 
+	this->doc->lock();
 	*doc = newDoc;
+	this->doc->unlock();
 
 	PageInsertType type = settings->getPageInsertType();
 	if (type != PAGE_INSERT_TYPE_PLAIN && type != PAGE_INSERT_TYPE_LINED && type != PAGE_INSERT_TYPE_RULED && type != PAGE_INSERT_TYPE_GRAPH) {
@@ -1649,8 +1694,12 @@ bool Control::openFile(String filename, int scrollToPage) {
 			f += ".xoj";
 			Document * tmp = h.loadDocument(f);
 			if (tmp) {
-				doc->clearDocument();
-				*doc = *tmp;
+
+				this->doc->lock();
+				this->doc->clearDocument();
+				*this->doc = *tmp;
+				this->doc->unlock();
+
 				fileLoaded();
 				return true;
 			}
@@ -1696,13 +1745,18 @@ bool Control::openFile(String filename, int scrollToPage) {
 		fileLoaded();
 		return false;
 	} else {
-		doc->clearDocument();
-		*doc = *tmp;
+		this->doc->lock();
+		this->doc->clearDocument();
+		*this->doc = *tmp;
+		this->doc->unlock();
 	}
 
 	GValue value = { 0 };
 
-	const char * file = doc->getEvMetadataFilename();
+	this->doc->lock();
+	const char * file = this->doc->getEvMetadataFilename();
+	this->doc->unlock();
+
 	if (file) {
 		if (ev_metadata_manager_get(file, "zoom", &value, TRUE) && G_VALUE_TYPE(&value) == G_TYPE_DOUBLE) {
 			zoom->setZoom(g_value_get_double(&value));
@@ -1741,20 +1795,30 @@ bool Control::annotatePdf(String filename, bool attachPdf, bool attachToDocument
 	}
 
 	cursor->setCursorBusy(true);
-	if (doc->readPdf(filename, true, attachToDocument)) {
+
+	this->doc->lock();
+	bool res = this->doc->readPdf(filename, true, attachToDocument);
+	this->doc->unlock();
+	if (res) {
 		int page = 0;
 		GValue value = { 0 };
 
 		recent->addRecentFileFilename(filename.c_str());
 
-		const char * file = doc->getEvMetadataFilename();
+		this->doc->lock();
+		const char * file = this->doc->getEvMetadataFilename();
+		this->doc->unlock();
 		if (file && ev_metadata_manager_get(file, "page", &value, TRUE) && G_VALUE_TYPE(&value) == G_TYPE_INT) {
 			page = g_value_get_int(&value);
 		}
 		scrollHandler->scrollToPage(page);
 	} else {
+		this->doc->lock();
+		String errMsg = doc->getLastErrorMsg();
+		this->doc->unlock();
+
 		GtkWidget * dialog = gtk_message_dialog_new((GtkWindow*) *win, GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
-				_("Error annotate PDF file '%s'\n%s"), filename.c_str(), doc->getLastErrorMsg().c_str());
+				_("Error annotate PDF file '%s'\n%s"), filename.c_str(), errMsg.c_str());
 		gtk_dialog_run(GTK_DIALOG(dialog));
 		gtk_widget_destroy(dialog);
 	}
@@ -1768,7 +1832,9 @@ bool Control::annotatePdf(String filename, bool attachPdf, bool attachToDocument
 
 void Control::print() {
 	PrintHandler print;
+	this->doc->lock();
 	print.print(this->doc, getCurrentPageNo());
+	this->doc->unlock();
 }
 
 void Control::block(const char * name) {
@@ -1816,7 +1882,11 @@ void Control::setCurrentState(int state) {
 }
 
 bool Control::save(bool synchron) {
-	if (doc->getFilename().isEmpty()) {
+	this->doc->lock();
+	String filename = this->doc->getFilename();
+	this->doc->unlock();
+
+	if (filename.isEmpty()) {
 		if (!showSaveDialog()) {
 			return false;
 		}
@@ -1859,6 +1929,7 @@ bool Control::showSaveDialog() {
 
 	String saveFilename = "";
 
+	this->doc->lock();
 	if (!doc->getFilename().isEmpty()) {
 		saveFilename = getFilename(doc->getFilename());
 	} else if (!doc->getPdfFilename().isEmpty()) {
@@ -1871,6 +1942,7 @@ bool Control::showSaveDialog() {
 
 		saveFilename = stime;
 	}
+	this->doc->unlock();
 
 	gtk_file_chooser_set_current_name(GTK_FILE_CHOOSER(dialog), saveFilename.c_str());
 	gtk_file_chooser_set_do_overwrite_confirmation(GTK_FILE_CHOOSER(dialog), true);
@@ -1890,7 +1962,9 @@ bool Control::showSaveDialog() {
 
 	gtk_widget_destroy(dialog);
 
-	doc->setFilename(filename);
+	this->doc->lock();
+	this->doc->setFilename(filename);
+	this->doc->unlock();
 
 	return true;
 }
@@ -1898,6 +1972,7 @@ bool Control::showSaveDialog() {
 void Control::updateWindowTitle() {
 	String title = "";
 
+	this->doc->lock();
 	if (doc->getFilename().isEmpty()) {
 		if (doc->getPdfFilename().isEmpty()) {
 			title = _("Unsaved Document");
@@ -1914,6 +1989,7 @@ void Control::updateWindowTitle() {
 
 		title += getFilename(doc->getFilename());
 	}
+	this->doc->unlock();
 
 	title += " - Xournal";
 
@@ -1931,17 +2007,26 @@ void Control::exportAsPdf() {
 
 void Control::exportAs() {
 	ExportHandler handler;
+
+	this->doc->lock();
 	handler.runExportWithDialog(this->gladeSearchPath, this->settings, this->doc, getCurrentPageNo());
+	this->doc->unlock();
 }
 
 void Control::saveAs() {
 	if (!showSaveDialog()) {
 		return;
 	}
-	if (doc->getFilename().isEmpty()) {
+	this->doc->lock();
+	String filename = doc->getFilename();
+	this->doc->unlock();
+
+	if (filename.isEmpty()) {
 		return;
 	}
-	doc->setCreateBackupOnSave(false);
+
+	// no lock needed, this is an uncritical operation
+	this->doc->setCreateBackupOnSave(false);
 	save();
 }
 
@@ -1982,7 +2067,11 @@ bool Control::close() {
 	}
 
 	undoRedo->clearContents();
-	doc->clearDocument();
+
+	this->doc->lock();
+	this->doc->clearDocument();
+	this->doc->unlock();
+
 	updateWindowTitle();
 	return true;
 }
@@ -2019,7 +2108,8 @@ void Control::clipboardPasteText(String text) {
 		return;
 	}
 
-	XojPage * page = doc->getPage(pageNr);
+	this->doc->lock();
+	XojPage * page = this->doc->getPage(pageNr);
 	Layer * layer = page->getSelectedLayer();
 	win->getXournal()->getPasteTarget(x, y);
 
@@ -2036,6 +2126,8 @@ void Control::clipboardPasteText(String text) {
 	layer->addElement(t);
 	undoRedo->addUndoAction(new InsertUndoAction(page, layer, t, view));
 
+	this->doc->unlock();
+
 	EditSelection * selection = new EditSelection(this->undoRedo, t, view, page);
 	setSelection(selection);
 	view->repaint(t);
@@ -2047,10 +2139,13 @@ void Control::clipboardPasteXournal(ObjectInputStream & in) {
 		return;
 	}
 
-	XojPage * page = doc->getPage(pNr);
+	this->doc->lock();
+	XojPage * page = this->doc->getPage(pNr);
+
 	PageView * view = win->getXournal()->getViewFor(pNr);
 
 	if (!view || !page) {
+		this->doc->unlock();
 		return;
 	}
 
@@ -2069,6 +2164,9 @@ void Control::clipboardPasteXournal(ObjectInputStream & in) {
 		double height = in.readDouble();
 
 		selection = new EditSelection(this->undoRedo, x, y, width, height, page, view);
+
+		// document lock not needed anymore, because we don't change the document, we only change the selection
+		this->doc->unlock();
 
 		int count = in.readInt();
 

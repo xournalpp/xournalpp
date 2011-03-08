@@ -167,7 +167,11 @@ bool PageView::searchTextOnPage(const char * text, int * occures, double * top) 
 		int pNr = page->getPdfPageNr();
 		XojPopplerPage * pdf = NULL;
 		if (pNr != -1) {
-			pdf = xournal->getControl()->getDocument()->getPdfPage(pNr);
+			Document * doc = xournal->getControl()->getDocument();
+
+			doc->lock();
+			pdf = doc->getPdfPage(pNr);
+			doc->unlock();
 		}
 		this->search = new SearchControl(page, pdf);
 	}

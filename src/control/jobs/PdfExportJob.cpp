@@ -29,6 +29,7 @@ bool PdfExportJob::showFilechooser() {
 
 	String saveFilename = "";
 
+	doc->lock();
 	if (!doc->getFilename().isEmpty()) {
 		saveFilename = control->getFilename(doc->getFilename());
 	} else if (!doc->getPdfFilename().isEmpty()) {
@@ -45,6 +46,7 @@ bool PdfExportJob::showFilechooser() {
 			saveFilename = saveFilename.substring(0, -4);
 		}
 	}
+	doc->unlock();
 
 	saveFilename += ".pdf";
 
@@ -73,7 +75,9 @@ void PdfExportJob::run() {
 	SynchronizedProgressListener pglistener(this->control);
 
 	Document * doc = control->getDocument();
+	doc->lock();
 	PdfExport pdf(doc, &pglistener);
+	doc->unlock();
 
 	if (!pdf.createPdf(this->filename)) {
 

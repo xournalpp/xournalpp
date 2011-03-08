@@ -25,9 +25,12 @@ String RemoveLayerUndoAction::getText() {
 bool RemoveLayerUndoAction::undo(Control * control) {
 	this->page->insertLayer(this->layer, layerPos);
 	Document * doc = control->getDocument();
-	int id = doc->indexOf(this->page);
-	control->getWindow()->getXournal()->layerChanged(id);
 
+	doc->lock();
+	int id = doc->indexOf(this->page);
+	doc->unlock();
+
+	control->getWindow()->getXournal()->layerChanged(id);
 	control->getWindow()->updateLayerCombobox();
 
 	this->undone = true;
@@ -36,11 +39,14 @@ bool RemoveLayerUndoAction::undo(Control * control) {
 }
 
 bool RemoveLayerUndoAction::redo(Control * control) {
-	this->page->removeLayer(this->layer);
 	Document * doc = control->getDocument();
-	int id = doc->indexOf(this->page);
-	control->getWindow()->getXournal()->layerChanged(id);
 
+	doc->lock();
+	this->page->removeLayer(this->layer);
+	int id = doc->indexOf(this->page);
+	doc->unlock();
+
+	control->getWindow()->getXournal()->layerChanged(id);
 	control->getWindow()->updateLayerCombobox();
 
 	this->undone = false;
