@@ -10,6 +10,7 @@ xournalpp_SOURCES = \
 	control/jobs/PdfExportJob.cpp \
 	control/jobs/PreviewJob.cpp \
 	control/jobs/RenderJob.cpp \
+	control/jobs/SaveJob.cpp \
 	control/jobs/Scheduler.cpp \
 	control/jobs/SynchronizedProgressListener.cpp \
 	control/jobs/XournalScheduler.cpp \

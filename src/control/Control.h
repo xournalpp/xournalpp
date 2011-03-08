@@ -58,7 +58,7 @@ public:
 	void print();
 	void exportAsPdf();
 	void exportAs();
-	bool save();
+	bool save(bool synchron = false);
 	void saveAs();
 	void quit();
 	bool close();
@@ -116,8 +116,6 @@ public:
 	void setViewTwoPages(bool continous);
 
 	void setPageInsertType(PageInsertType type);
-
-	bool copyFile(String source, String target);
 
 	void enableFullscreen(bool enabled, bool presentation = false);
 
@@ -207,12 +205,8 @@ protected:
 	void penSizeChanged();
 	void hilighterSizeChanged();
 
-	static void copyProgressCallback(goffset current_num_bytes, goffset total_num_bytes, Control * control);
-
 	static bool checkChangedDocument(Control * control);
 	static bool autosaveCallback(Control * control);
-
-	void updatePreview();
 
 	void fontChanged();
 private:
@@ -236,8 +230,6 @@ private:
 	ActionType lastAction;
 	ActionGroup lastGroup;
 	bool lastEnabled;
-
-	String copyError;
 
 	GList * hiddenFullscreenWidgets;
 	bool sidebarHidden;

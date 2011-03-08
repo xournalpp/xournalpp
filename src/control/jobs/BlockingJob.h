@@ -24,7 +24,7 @@ public:
 	virtual ~BlockingJob();
 
 public:
-	virtual void execute();
+	void execute();
 
 	virtual JobType getType();
 

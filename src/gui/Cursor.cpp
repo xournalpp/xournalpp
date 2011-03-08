@@ -63,6 +63,22 @@ void Cursor::setCursorBusy(bool busy) {
 	}
 
 	this->busy = busy;
+	if (gtk_widget_get_root_window(win->getWindow())) {
+		gdk_window_set_cursor(gtk_widget_get_root_window(win->getWindow()), NULL);
+	}
+
+	if (busy) {
+		GdkCursor * cursor = gdk_cursor_new(GDK_WATCH);
+		if (gtk_widget_get_window(win->getWindow())) {
+			gdk_window_set_cursor(gtk_widget_get_window(win->getWindow()), cursor);
+		}
+
+		gdk_cursor_unref(cursor);
+	} else {
+		if (gtk_widget_get_window(win->getWindow())) {
+			gdk_window_set_cursor(gtk_widget_get_window(win->getWindow()), NULL);
+		}
+	}
 
 	updateCursor();
 }
@@ -224,14 +240,14 @@ void Cursor::updateCursor() {
 	while (it.hasNext()) {
 		PageView * p = it.next();
 
-		if (GDK_IS_WINDOW(p->getWidget()->window)) {
-			gdk_window_set_cursor(p->getWidget()->window, cursor);
+		if (gtk_widget_get_window(p->getWidget())) {
+			gdk_window_set_cursor(gtk_widget_get_window(p->getWidget()), cursor);
 
 			gtk_widget_set_sensitive(p->getWidget(), !this->busy);
 		}
 	}
 
-	gdk_display_sync(gdk_display_get_default());
+	gdk_display_sync( gdk_display_get_default());
 
 	if (cursor) {
 		gdk_cursor_unref(cursor);
