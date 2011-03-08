@@ -8,7 +8,6 @@
 #include "../gui/dialog/SelectBackgroundColorDialog.h"
 #include "../cfg.h"
 #include "LoadHandler.h"
-#include "SaveHandler.h"
 #include "PrintHandler.h"
 #include "ExportHandler.h"
 #include "settings/ev-metadata-manager.h"
@@ -24,9 +23,11 @@
 #include "../undo/RemoveLayerUndoAction.h"
 #include "jobs/BlockingJob.h"
 #include "jobs/PdfExportJob.h"
+#include "jobs/SaveJob.h"
 #include "../view/DocumentView.h"
 #include "stockdlg/ImageOpenDlg.h"
 #include "stockdlg/XojOpenDlg.h"
+#include "SaveHandler.h"
 
 #include <config.h>
 #include <glib/gi18n-lib.h>
@@ -762,7 +763,7 @@ void Control::clearSelectionEndText() {
 }
 
 void Control::invokeLater(ActionType type) {
-	g_idle_add((GSourceFunc) &invokeCallback, new CallbackData(this, type));
+	g_idle_add((GSourceFunc) & invokeCallback, new CallbackData(this, type));
 }
 
 /**
@@ -998,7 +999,7 @@ void Control::insertNewPage(int position) {
 		if (doc->getPdfPageCount() == 0) {
 			GtkWidget * dialog = gtk_message_dialog_new((GtkWindow*) *win, GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
 					_("You don't have any PDF pages to select from. Cancel operation,\n"
-							"Please select another background type: Menu \"Journal\" / \"Insert Page Type\"."));
+						"Please select another background type: Menu \"Journal\" / \"Insert Page Type\"."));
 			gtk_dialog_run(GTK_DIALOG(dialog));
 			gtk_widget_destroy(dialog);
 
@@ -1142,7 +1143,7 @@ void Control::setPageBackground(ActionType type) {
 		if (doc->getPdfPageCount() == 0) {
 			GtkWidget * dialog = gtk_message_dialog_new((GtkWindow*) *win, GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
 					_("You don't have any PDF pages to select from. Cancel operation,\n"
-							"Please select another background type: Menu \"Journal\" / \"Insert Page Type\"."));
+						"Please select another background type: Menu \"Journal\" / \"Insert Page Type\"."));
 			gtk_dialog_run(GTK_DIALOG(dialog));
 			gtk_widget_destroy(dialog);
 			return;
@@ -1770,74 +1771,6 @@ void Control::print() {
 	print.print(this->doc, getCurrentPageNo());
 }
 
-void Control::copyProgressCallback(goffset current_num_bytes, goffset total_num_bytes, Control * control) {
-	printf("copyProgressCallback: %i, %i\n", (int) current_num_bytes, (int) total_num_bytes);
-}
-
-bool Control::copyFile(String source, String target) {
-
-	// we need to build the GFile from a path.
-	// But if future versions support URIs, this has to be changed
-	GFile * src = g_file_new_for_path(source.c_str());
-	GFile * trg = g_file_new_for_path(target.c_str());
-	GError * err = NULL;
-
-	bool ok = g_file_copy(src, trg, G_FILE_COPY_OVERWRITE, NULL, (GFileProgressCallback) &copyProgressCallback, this, &err);
-
-	if (!err && !ok) {
-		this->copyError = "Copy error: return false, but didn't set error message";
-	}
-	if (err) {
-		ok = false;
-		this->copyError = err->message;
-		g_error_free(err);
-	}
-	return ok;
-}
-
-void Control::updatePreview() {
-	const int previewSize = 128;
-
-	if (doc->getPageCount() > 0) {
-		XojPage * page = doc->getPage(0);
-
-		double width = page->getWidth();
-		double height = page->getHeight();
-
-		double zoom = 1;
-
-		if (width < height) {
-			zoom = previewSize / height;
-		} else {
-			zoom = previewSize / width;
-		}
-		width *= zoom;
-		height *= zoom;
-
-		cairo_surface_t * crBuffer = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, width, height);
-
-		cairo_t * cr = cairo_create(crBuffer);
-		cairo_scale(cr, zoom, zoom);
-		XojPopplerPage * popplerPage = NULL;
-
-		if (page->getBackgroundType() == BACKGROUND_TYPE_PDF) {
-			int pgNo = page->getPdfPageNr();
-			popplerPage = sidebar->getDocument()->getPdfPage(pgNo);
-			if (popplerPage) {
-				popplerPage->render(cr, false);
-			}
-		}
-
-		DocumentView view;
-		view.drawPage(page, cr);
-		cairo_destroy(cr);
-		doc->setPreview(crBuffer);
-		cairo_surface_destroy(crBuffer);
-	} else {
-		doc->setPreview(NULL);
-	}
-}
-
 void Control::block(const char * name) {
 	if (this->isBlocking) {
 		return;
@@ -1882,66 +1815,19 @@ void Control::setCurrentState(int state) {
 	gtk_progress_bar_set_fraction(this->pgState, (double) state / this->maxState);
 }
 
-bool Control::save() {
+bool Control::save(bool synchron) {
 	if (doc->getFilename().isEmpty()) {
 		if (!showSaveDialog()) {
 			return false;
 		}
 	}
 
-	cursor->setCursorBusy(true);
-	block(_("Save"));
-
-	updatePreview();
-
-	SaveHandler h;
-	h.prepareSave(this->doc);
-
-	if (this->doc->shouldCreateBackupOnSave()) {
-		String backup = doc->getFilename();
-		backup += ".bak";
-		if (!copyFile(doc->getFilename(), backup)) {
-			g_warning("Could not create backup! (The file was created from an older Xournal version)\n%s\n", this->copyError.c_str());
-			cursor->setCursorBusy(false);
-			return false;
-		}
-
-		this->doc->setCreateBackupOnSave(false);
+	SaveJob * job = new SaveJob(this);
+	if (synchron) {
+		return job->save();
+	} else {
+		this->scheduler->addJob(job, JOB_PRIORITY_URGENT);
 	}
-
-	GzOutputStream * out = new GzOutputStream(this->doc->getFilename());
-
-	if (!out->getLastError().isEmpty()) {
-		GtkWidget * dialog = gtk_message_dialog_new((GtkWindow *) getWindow(), GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, _("Open file error: %s"),
-				out->getLastError().c_str());
-		gtk_dialog_run(GTK_DIALOG(dialog));
-		gtk_widget_destroy(dialog);
-
-		delete out;
-		cursor->setCursorBusy(false);
-		return false;
-	}
-
-	h.saveTo(out, doc->getFilename());
-	out->close();
-	getUndoRedoHandler()->documentSaved();
-	updateWindowTitle();
-
-	if (!out->getLastError().isEmpty()) {
-		GtkWidget * dialog = gtk_message_dialog_new((GtkWindow *) *win, GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, _("Output stream error: %s"),
-				out->getLastError().c_str());
-		gtk_dialog_run(GTK_DIALOG(dialog));
-		gtk_widget_destroy(dialog);
-
-		delete out;
-		return false;
-	}
-
-	delete out;
-
-	recent->addRecentFileFilename(doc->getFilename().c_str());
-
-	unblock();
 
 	return true;
 }
@@ -2083,7 +1969,7 @@ bool Control::close() {
 
 		// save
 		if (res == 1) {
-			if (!this->save()) {
+			if (!this->save(true)) {
 				// if not saved cancel, else close
 				return false;
 			}

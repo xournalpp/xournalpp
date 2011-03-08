@@ -345,10 +345,15 @@ void Sidebar::setTmpDisabled(bool disabled) {
 		cursor = gdk_cursor_new(GDK_WATCH);
 	}
 
-	gdk_window_set_cursor(this->treeViewBookmarks->window, cursor);
-	gdk_window_set_cursor(this->iconViewPreview->window, cursor);
+	if (gtk_widget_get_window(this->treeViewBookmarks)) {
+		gdk_window_set_cursor(gtk_widget_get_window(this->treeViewBookmarks), cursor);
+	}
 
-	gdk_display_sync(gdk_display_get_default());
+	if (gtk_widget_get_window(this->iconViewPreview)) {
+		gdk_window_set_cursor(gtk_widget_get_window(this->iconViewPreview), cursor);
+	}
+
+	gdk_display_sync( gdk_display_get_default());
 
 	if (cursor) {
 		gdk_cursor_unref(cursor);

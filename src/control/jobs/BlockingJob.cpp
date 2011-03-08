@@ -1,5 +1,7 @@
 #include "BlockingJob.h"
 #include "../Control.h"
+#include "../SaveHandler.h"
+
 
 BlockingJob::BlockingJob(Control * control, const char * name) {
 	this->control = control;

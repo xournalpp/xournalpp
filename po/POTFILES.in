@@ -74,6 +74,7 @@ src/control/LoadHandler.cpp
 src/control/jobs/SynchronizedProgressListener.cpp
 src/control/jobs/PdfExportJob.cpp
 src/control/jobs/RenderJob.cpp
+src/control/jobs/SaveJob.cpp
 src/control/jobs/Job.cpp
 src/control/jobs/BlockingJob.cpp
 src/control/jobs/Scheduler.cpp
