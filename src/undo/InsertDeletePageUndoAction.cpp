@@ -33,13 +33,13 @@ bool InsertDeletePageUndoAction::redo(Control * control) {
 bool InsertDeletePageUndoAction::insertPage(Control * control) {
 	Document * doc = control->getDocument();
 
+	doc->lock();
 	doc->insertPage(this->page, this->pagePos);
+	doc->unlock();
+
 	control->firePageInserted(this->pagePos);
-
 	control->getCursor()->updateCursor();
-
 	control->getScrollHandler()->scrollToPage(this->pagePos);
-
 	control->updateDeletePageButton();
 
 	return true;
@@ -48,8 +48,10 @@ bool InsertDeletePageUndoAction::insertPage(Control * control) {
 bool InsertDeletePageUndoAction::deletePage(Control * control) {
 	Document * doc = control->getDocument();
 
+	doc->lock();
 	int pNr = doc->indexOf(page);
 	if (pNr == -1) {
+		doc->unlock();
 		// this should not happen
 		return false;
 	}
@@ -60,6 +62,7 @@ bool InsertDeletePageUndoAction::deletePage(Control * control) {
 
 	control->updateDeletePageButton();
 
+	doc->unlock();
 	return true;
 }
 

@@ -190,13 +190,19 @@ void Sidebar::askInsertPdfPage(int pdfPage) {
 	}
 
 	int position = 0;
+
+	Document * doc = control->getDocument();
+
 	if (res == 2) {
 		position = control->getCurrentPageNo() + 1;
 	} else if (res == 3) {
-		position = control->getDocument()->getPageCount();
+		position = doc->getPageCount();
 	}
 
-	XojPopplerPage * pdf = control->getDocument()->getPdfPage(pdfPage);
+	doc->lock();
+	XojPopplerPage * pdf = doc->getPdfPage(pdfPage);
+	doc->unlock();
+
 	if (pdf) {
 		XojPage * page = new XojPage(pdf->getWidth(), pdf->getHeight());
 		page->setBackgroundPdfPageNr(pdfPage);
@@ -232,7 +238,9 @@ bool Sidebar::treeClickedCallback(GtkWidget * treeview, GdkEventButton * event, 
 
 				if (pdfPage >= 0) {
 					Document * doc = sidebar->control->getDocument();
+					doc->lock();
 					int page = doc->findPdfPage(pdfPage);
+					doc->unlock();
 
 					if (page == -1) {
 						sidebar->askInsertPdfPage(pdfPage);
@@ -256,7 +264,7 @@ bool Sidebar::treeClickedCallback(GtkWidget * treeview, GdkEventButton * event, 
 	return false;
 }
 
-int Sidebar::expandOpenLinks(GtkTreeModel *model, GtkTreeIter *parent) {
+int Sidebar::expandOpenLinks(GtkTreeModel * model, GtkTreeIter * parent) {
 	GtkTreeIter iter = { 0 };
 	XojLinkDest * link = NULL;
 	if (model == NULL) {
@@ -284,10 +292,16 @@ int Sidebar::expandOpenLinks(GtkTreeModel *model, GtkTreeIter *parent) {
 
 bool Sidebar::selectPageNr(int page, int pdfPage, GtkTreeIter * parent) {
 	GtkTreeIter iter;
-	GtkTreeModel * model = control->getDocument()->getContentsModel();
+
+	Document * doc = control->getDocument();
+	doc->lock();
+	GtkTreeModel * model = doc->getContentsModel();
 	if (model == NULL) {
+		doc->unlock();
 		return false;
 	}
+	g_object_ref(model);
+	doc->unlock();
 
 	if (parent == NULL) {
 		// check if there is already the current page selected
@@ -301,6 +315,9 @@ bool Sidebar::selectPageNr(int page, int pdfPage, GtkTreeIter * parent) {
 				LinkDestination *dest = link->dest;
 
 				if (dest->getPdfPage() == pdfPage) {
+
+					g_object_unref(model);
+
 					// already bookmak from this page selected
 					return true;
 				}
@@ -318,15 +335,20 @@ bool Sidebar::selectPageNr(int page, int pdfPage, GtkTreeIter * parent) {
 		if (link->dest->getPdfPage() == pdfPage) {
 			GtkTreeSelection * selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(treeViewBookmarks));
 			gtk_tree_selection_select_iter(selection, &iter);
+
+			g_object_unref(model);
 			return true;
 		} else {
 			if (selectPageNr(page, pdfPage, &iter)) {
+				g_object_unref(model);
 				return true;
 			} else {
 				valid = gtk_tree_model_iter_next(model, &iter);
 			}
 		}
 	}
+
+	g_object_unref(model);
 	return false;
 }
 
@@ -389,9 +411,11 @@ double Sidebar::getZoom() {
 
 void Sidebar::updatePreviews() {
 	Document * doc = control->getDocument();
+	doc->lock();
 	int len = doc->getPageCount();
 
 	if (this->previewCount == len) {
+		doc->unlock();
 		return;
 	}
 
@@ -412,15 +436,22 @@ void Sidebar::updatePreviews() {
 	}
 
 	layout();
+	doc->unlock();
 }
 
 void Sidebar::documentChanged(DocumentChangeType type) {
 	if (type == DOCUMENT_CHANGE_CLEARED) {
 		gtk_tree_view_set_model(GTK_TREE_VIEW(treeViewBookmarks), NULL);
 	} else if (type == DOCUMENT_CHANGE_PDF_BOOKMARKS || type == DOCUMENT_CHANGE_COMPLETE) {
-		GtkTreeModel * model = control->getDocument()->getContentsModel();
+
+		Document * doc = control->getDocument();
+
+		doc->lock();
+		GtkTreeModel * model = doc->getContentsModel();
 		gtk_tree_view_set_model(GTK_TREE_VIEW(treeViewBookmarks), model);
 		int count = expandOpenLinks(model, NULL);
+		doc->unlock();
+
 		if (count == 0) {
 			gtk_combo_box_set_active(GTK_COMBO_BOX(comboBox), 1);
 		} else if (this->typeSelected) {
@@ -526,8 +557,12 @@ void Sidebar::pageInserted(int page) {
 	delete[] lastPreviews;
 
 	Document * doc = control->getDocument();
+	doc->lock();
 
 	SidebarPreview * p = new SidebarPreview(this, doc->getPage(page));
+
+	doc->unlock();
+
 	this->previews[page] = p;
 	gtk_layout_put(GTK_LAYOUT(this->iconViewPreview), p->getWidget(), 0, 0);
 

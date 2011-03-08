@@ -22,7 +22,12 @@ void ScrollHandler::goToNextPage() {
 }
 
 void ScrollHandler::scrollToPage(XojPage * page, double top) {
-	int p = control->getDocument()->indexOf(page);
+	Document * doc = this->control->getDocument();
+
+	doc->lock();
+	int p = doc->indexOf(page);
+	doc->unlock();
+
 	if (p != -1) {
 		scrollToPage(p, top);
 	}
@@ -90,12 +95,17 @@ void ScrollHandler::scrollToAnnotatedPage(bool next) {
 		step = -1;
 	}
 
-	for (int i = control->getCurrentPageNo() + step; i >= 0 && i < control->getDocument()->getPageCount(); i += step) {
-		if (control->getDocument()->getPage(i)->isAnnotated()) {
+	Document * doc = control->getDocument();
+	doc->lock();
+
+	for (int i = control->getCurrentPageNo() + step; i >= 0 && i < doc->getPageCount(); i += step) {
+		if (doc->getPage(i)->isAnnotated()) {
 			scrollToPage(i);
-			return;
+			break;
 		}
 	}
+
+	doc->unlock();
 }
 
 bool ScrollHandler::isPageVisible(int page) {

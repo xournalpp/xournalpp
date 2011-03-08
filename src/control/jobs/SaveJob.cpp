@@ -30,7 +30,7 @@ bool SaveJob::copyFile(String source, String target) {
 	GFile * trg = g_file_new_for_path(target.c_str());
 	GError * err = NULL;
 
-	bool ok = g_file_copy(src, trg, G_FILE_COPY_OVERWRITE, NULL, (GFileProgressCallback) & copyProgressCallback, this, &err);
+	bool ok = g_file_copy(src, trg, G_FILE_COPY_OVERWRITE, NULL, (GFileProgressCallback) &copyProgressCallback, this, &err);
 
 	if (!err && !ok) {
 		this->copyError = "Copy error: return false, but didn't set error message";
@@ -47,6 +47,8 @@ void SaveJob::updatePreview() {
 	const int previewSize = 128;
 
 	Document * doc = this->control->getDocument();
+
+	doc->lock();
 
 	if (doc->getPageCount() > 0) {
 		XojPage * page = doc->getPage(0);
@@ -86,6 +88,8 @@ void SaveJob::updatePreview() {
 	} else {
 		doc->setPreview(NULL);
 	}
+
+	doc->unlock();
 }
 
 bool SaveJob::save() {
@@ -93,7 +97,11 @@ bool SaveJob::save() {
 	Document * doc = this->control->getDocument();
 
 	SaveHandler h;
+
+	doc->lock();
 	h.prepareSave(doc);
+	String filename = doc->getFilename();
+	doc->unlock();
 
 	if (doc->shouldCreateBackupOnSave()) {
 		String backup = doc->getFilename();
@@ -106,7 +114,7 @@ bool SaveJob::save() {
 		doc->setCreateBackupOnSave(false);
 	}
 
-	GzOutputStream * out = new GzOutputStream(doc->getFilename());
+	GzOutputStream * out = new GzOutputStream(filename);
 
 	if (!out->getLastError().isEmpty()) {
 		if (!control->getWindow()) {
@@ -125,21 +133,20 @@ bool SaveJob::save() {
 		return false;
 	}
 
-	h.saveTo(out, doc->getFilename());
+	h.saveTo(out, filename);
 	out->close();
 	control->getUndoRedoHandler()->documentSaved();
 	control->updateWindowTitle();
 
 	if (!out->getLastError().isEmpty()) {
 		if (!control->getWindow()) {
-			g_error(_("Output stream error: %s"),
-					out->getLastError().c_str());
+			g_error(_("Output stream error: %s"), out->getLastError().c_str());
 			return false;
 		}
 
 		gdk_threads_enter();
-		GtkWidget * dialog = gtk_message_dialog_new((GtkWindow *) *control->getWindow(), GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, _("Output stream error: %s"),
-				out->getLastError().c_str());
+		GtkWidget * dialog = gtk_message_dialog_new((GtkWindow *) *control->getWindow(), GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
+				_("Output stream error: %s"), out->getLastError().c_str());
 		gtk_dialog_run(GTK_DIALOG(dialog));
 		gtk_widget_destroy(dialog);
 
@@ -151,7 +158,7 @@ bool SaveJob::save() {
 	delete out;
 
 	gdk_threads_enter();
-	control->getRecentManager()->addRecentFileFilename(doc->getFilename().c_str());
+	control->getRecentManager()->addRecentFileFilename(filename.c_str());
 	gdk_threads_leave();
 	return true;
 }

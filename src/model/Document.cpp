@@ -5,6 +5,7 @@
 #include <glib/gi18n-lib.h>
 
 #include <string.h>
+#include "../util/Stacktrace.h"
 
 Document::Document(DocumentHandler * handler) {
 	this->handler = handler;
@@ -15,6 +16,8 @@ Document::Document(DocumentHandler * handler) {
 	this->preview = NULL;
 	this->attachPdf = false;
 	this->createBackupOnSave = false;
+
+	this->documentLock = g_mutex_new();
 }
 
 Document::~Document() {
@@ -24,6 +27,31 @@ Document::~Document() {
 		g_object_unref(contentsModel);
 		contentsModel = NULL;
 	}
+
+	g_mutex_free(this->documentLock);
+	this->documentLock = NULL;
+}
+
+void Document::lock() {
+	// TODO: real version:
+	 g_mutex_lock(this->documentLock);
+
+
+	// TODO: debug
+//	if(tryLock()) {
+//		Stacktrace::printStracktrace();
+//		fprintf(stderr, "\n\n\n\n");
+//	} else {
+//		g_mutex_lock(this->documentLock);
+//	}
+}
+
+void Document::unlock() {
+	g_mutex_unlock(this->documentLock);
+}
+
+bool Document::tryLock() {
+	return g_mutex_trylock(this->documentLock);
 }
 
 void Document::clearDocument(bool destroy) {
@@ -33,7 +61,13 @@ void Document::clearDocument(bool destroy) {
 	}
 
 	if (!destroy) {
+		// look aufheben
+		bool lastLock = tryLock();
+		unlock();
 		handler->fireDocumentChanged(DOCUMENT_CHANGE_CLEARED);
+		if(!lastLock) { // document was locked before
+			lock();
+		}
 	}
 
 	for (int i = 0; i < this->pageCount; i++) {
@@ -48,6 +82,9 @@ void Document::clearDocument(bool destroy) {
 	this->pdfFilename = NULL;
 }
 
+/**
+ * Returns the pageCount, this call don't need to be synchronized (if it's not critical, you may get wrong data)
+ */
 int Document::getPageCount() {
 	return this->pageCount;
 }
@@ -153,9 +190,9 @@ void Document::buildTreeContentsModel(GtkTreeIter * parent, XojPopplerIter * ite
 }
 
 void Document::buildContentsModel() {
-	if (contentsModel) {
-		g_object_unref(contentsModel);
-		contentsModel = NULL;
+	if (this->contentsModel) {
+		g_object_unref(this->contentsModel);
+		this->contentsModel = NULL;
 	}
 
 	XojPopplerIter * iter = pdfDocument.getContentsIter();
@@ -164,14 +201,14 @@ void Document::buildContentsModel() {
 		return;
 	}
 
-	contentsModel = (GtkTreeModel *) gtk_tree_store_new(4, G_TYPE_STRING, G_TYPE_OBJECT, G_TYPE_BOOLEAN, G_TYPE_STRING);
-	g_object_ref(contentsModel);
+	this->contentsModel = (GtkTreeModel *) gtk_tree_store_new(4, G_TYPE_STRING, G_TYPE_OBJECT, G_TYPE_BOOLEAN, G_TYPE_STRING);
+	g_object_ref(this->contentsModel);
 	buildTreeContentsModel(NULL, iter);
 	delete iter;
 }
 
 GtkTreeModel * Document::getContentsModel() {
-	return contentsModel;
+	return this->contentsModel;
 }
 
 bool Document::fillPageLabels(GtkTreeModel *treeModel, GtkTreePath *path, GtkTreeIter *iter, Document *doc) {
@@ -353,7 +390,12 @@ void Document::operator=(Document & doc) {
 	buildContentsModel();
 	updateIndexPageNumbers();
 
+	bool lastLock = tryLock();
+	unlock();
 	handler->fireDocumentChanged(DOCUMENT_CHANGE_COMPLETE);
+	if(!lastLock) { // document was locked before
+		lock();
+	}
 }
 
 void Document::setCreateBackupOnSave(bool backup) {

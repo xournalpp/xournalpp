@@ -21,8 +21,12 @@ bool PageBackgroundChangedUndoAction::undo(Control * control) {
 	this->newW = this->page->getWidth();
 	this->newH = this->page->getHeight();
 
-	int pageNr = control->getDocument()->indexOf(this->page);
+	Document * doc = control->getDocument();
+	doc->lock();
+
+	int pageNr = doc->indexOf(this->page);
 	if (pageNr == -1) {
+		doc->unlock();
 		return false;
 	}
 
@@ -38,13 +42,19 @@ bool PageBackgroundChangedUndoAction::undo(Control * control) {
 		this->page->backgroundImage = this->origBackgroundImage;
 	}
 
+	doc->unlock();
 	control->firePageChanged(pageNr);
 
 	return true;
 }
 
 bool PageBackgroundChangedUndoAction::redo(Control * control) {
-	int pageNr = control->getDocument()->indexOf(this->page);
+	Document * doc = control->getDocument();
+
+	doc->lock();
+	int pageNr = doc->indexOf(this->page);
+	doc->unlock();
+
 	if (pageNr == -1) {
 		return false;
 	}

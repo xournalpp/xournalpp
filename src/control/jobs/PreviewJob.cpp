@@ -38,9 +38,12 @@ void PreviewJob::run() {
 
 	XojPopplerPage * popplerPage = NULL;
 
+	Document * doc = this->sidebarPreview->sidebar->getDocument();
+	doc->lock();
+
 	if (this->sidebarPreview->page->getBackgroundType() == BACKGROUND_TYPE_PDF) {
 		int pgNo = this->sidebarPreview->page->getPdfPageNr();
-		popplerPage = this->sidebarPreview->sidebar->getDocument()->getPdfPage(pgNo);
+		popplerPage = doc->getPdfPage(pgNo);
 	}
 
 	PdfView::drawPage(this->sidebarPreview->sidebar->getCache(), popplerPage, cr2, zoom, this->sidebarPreview->page->getWidth(), this->sidebarPreview->page->getHeight());
@@ -62,6 +65,8 @@ void PreviewJob::run() {
 
 	cairo_destroy(cr2);
 
+
+	doc->unlock();
 
 	g_mutex_lock(this->sidebarPreview->drawingMutex);
 

@@ -256,8 +256,7 @@ bool XournalWidget::exposeEventCallback(GtkWidget *widget, GdkEventExpose *event
 }
 
 void XournalWidget::paintBorder(GtkWidget * widget, GdkEventExpose * event) {
-	cairo_t *cr;
-	cr = gdk_cairo_create(GTK_LAYOUT(widget)->bin_window);
+	cairo_t * cr = gdk_cairo_create(GTK_LAYOUT(widget)->bin_window);
 
 	GtkAdjustment* h = gtk_layout_get_vadjustment(GTK_LAYOUT(this->widget));
 	int scrollY = gtk_adjustment_get_value(h);
@@ -310,7 +309,10 @@ void XournalWidget::pageSelected(int page) {
 		return;
 	}
 
-	const char * file = control->getDocument()->getEvMetadataFilename();
+	Document * doc = control->getDocument();
+	doc->lock();
+	const char * file = doc->getEvMetadataFilename();
+	doc->unlock();
 	if (file) {
 		ev_metadata_manager_set_int(file, "page", page);
 	}
@@ -623,7 +625,11 @@ void XournalWidget::zoomChanged(double lastZoom) {
 	double zoom = control->getZoomControl()->getZoom();
 	gtk_adjustment_set_value(h, scrollY / lastZoom * control->getZoomControl()->getZoom());
 
-	const char * file = control->getDocument()->getEvMetadataFilename();
+	Document * doc = control->getDocument();
+	doc->lock();
+	const char * file = doc->getEvMetadataFilename();
+	doc->unlock();
+
 	if (file) {
 		ev_metadata_manager_set_double(file, "zoom", zoom);
 	}
@@ -700,8 +706,10 @@ void XournalWidget::pageInserted(int page) {
 	delete[] lastViewPages;
 
 	Document * doc = control->getDocument();
-
+	doc->lock();
 	PageView * pageView = new PageView(this, doc->getPage(page));
+	doc->unlock();
+
 	this->viewPages[page] = pageView;
 	gtk_layout_put(GTK_LAYOUT(widget), pageView->getWidget(), 0, 0);
 
@@ -901,15 +909,18 @@ void XournalWidget::documentChanged(DocumentChangeType type) {
 	updateBackground();
 
 	Document * doc = control->getDocument();
+	doc->lock();
 
-	viewPagesLen = doc->getPageCount();
-	viewPages = new PageView*[viewPagesLen];
+	this->viewPagesLen = doc->getPageCount();
+	this->viewPages = new PageView*[viewPagesLen];
 
 	for (int i = 0; i < viewPagesLen; i++) {
 		PageView * pageView = new PageView(this, doc->getPage(i));
 		viewPages[i] = pageView;
 		gtk_layout_put(GTK_LAYOUT(widget), pageView->getWidget(), 0, 0);
 	}
+
+	doc->unlock();
 
 	layoutPages();
 }
@@ -960,36 +971,4 @@ Document * XournalWidget::getDocument() {
 
 ArrayIterator<PageView *> XournalWidget::pageViewIterator() {
 	return ArrayIterator<PageView *> (viewPages, viewPagesLen);
-}
-
-static gboolean onScrolledwindowMainScrollEvent(GtkWidget *widget, GdkEventScroll *event, XournalWidget * xournal) {
-	guint state = event->state & gtk_accelerator_get_default_mod_mask();
-
-	if (state == GDK_CONTROL_MASK) {
-		if (event->direction == GDK_SCROLL_UP || event->direction == GDK_SCROLL_LEFT) {
-			xournal->zoomIn();
-		} else {
-			xournal->zoomOut();
-		}
-
-		return true;
-	}
-
-	// Shift+Wheel scrolls the in the perpendicular direction
-	if (state & GDK_SHIFT_MASK) {
-		if (event->direction == GDK_SCROLL_UP) {
-			event->direction = GDK_SCROLL_LEFT;
-		} else if (event->direction == GDK_SCROLL_LEFT) {
-			event->direction = GDK_SCROLL_UP;
-		} else if (event->direction == GDK_SCROLL_DOWN) {
-			event->direction = GDK_SCROLL_RIGHT;
-		} else if (event->direction == GDK_SCROLL_RIGHT) {
-			event->direction = GDK_SCROLL_DOWN;
-		}
-
-		event->state &= ~GDK_SHIFT_MASK;
-		state &= ~GDK_SHIFT_MASK;
-	}
-
-	return false;
 }
