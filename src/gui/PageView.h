@@ -47,7 +47,7 @@ public:
 	void updatePageSize(double width, double height);
 
 	void firstPaint();
-	bool paintPage(GdkEventExpose * event, bool test = false);
+	bool paintPage(GdkEventExpose * event);
 
 	void repaint();
 	void repaint(Element * e);
@@ -95,7 +95,6 @@ public:
 	void deleteViewBuffer();
 
 	static bool repaintCallback(PageView * view);
-	void repaintIdle();
 
 public:
 	// Redrawable
@@ -177,8 +176,6 @@ private:
 	bool repaintComplete;
 
 	GMutex * drawingMutex;
-
-	int repaintIdleId;
 
 	friend class InsertImageRunnable;
 	friend class RenderJob;

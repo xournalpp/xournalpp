@@ -51,8 +51,6 @@ PageView::PageView(XournalWidget * xournal, XojPage * page) {
 	this->scrollOffsetX = 0;
 	this->scrollOffsetY = 0;
 
-	this->repaintIdleId = 0;
-
 	this->inScrolling = false;
 
 	this->firstPainted = false;
@@ -100,10 +98,6 @@ PageView::PageView(XournalWidget * xournal, XojPage * page) {
 }
 
 PageView::~PageView() {
-	if (this->repaintIdleId) {
-		g_source_remove(this->repaintIdleId);
-	}
-
 	this->xournal->getControl()->getScheduler()->removePage(this);
 
 	gtk_widget_destroy(widget);
@@ -156,8 +150,6 @@ void PageView::deleteViewBuffer() {
 }
 
 bool PageView::repaintCallback(PageView * view) {
-	view->repaintIdleId = 0;
-
 	gdk_threads_enter();
 
 	view->paintPage(NULL);
@@ -165,14 +157,6 @@ bool PageView::repaintCallback(PageView * view) {
 	gdk_threads_leave();
 
 	return false; // do not call again
-}
-
-void PageView::repaintIdle() {
-	if (this->repaintIdleId) {
-		return;
-	}
-
-	this->repaintIdleId = g_idle_add_full(G_PRIORITY_HIGH_IDLE, (GSourceFunc) repaintCallback, this, NULL);
 }
 
 /**
@@ -783,8 +767,6 @@ void PageView::repaint(Element * e) {
 }
 
 void PageView::repaint(double x, double y, double width, double heigth) {
-	double zoom = xournal->getZoom();
-
 	int rx = (int) MAX(x - 10, 0);
 	int ry = (int) MAX(y - 10, 0);
 	int rwidth = (int) (width + 20);
@@ -892,35 +874,19 @@ bool PageView::actionDelete() {
 	return false;
 }
 
-bool PageView::paintPage(GdkEventExpose * event, bool test) {
+bool PageView::paintPage(GdkEventExpose * event) {
 	if (!firstPainted) {
 		firstPaint();
 		return true;
 	}
 	double zoom = xournal->getZoom();
 
-	printf("draw\n");
-
 	cairo_t * cr = gdk_cairo_create(widget->window);
-
-
-	if(test) {
-		cairo_set_source_rgb(cr, 1.0,0,0);
-
-		cairo_rectangle(cr, 0,0,100,100);
-		cairo_fill(cr);
-
-		cairo_destroy(cr);
-
-		return true;
-	}
 
 	GtkAllocation alloc;
 	gtk_widget_get_allocation(widget, &alloc);
 
-	printf("BEFORE locked\n");
-//	g_mutex_lock(this->drawingMutex);
-	printf("locked\n");
+	g_mutex_lock(this->drawingMutex);
 
 	if (this->crBuffer == NULL) {
 		this->crBuffer = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, alloc.width, alloc.height);
@@ -990,6 +956,6 @@ bool PageView::paintPage(GdkEventExpose * event, bool test) {
 
 	cairo_destroy(cr);
 
-//	g_mutex_unlock(this->drawingMutex);
+	g_mutex_unlock(this->drawingMutex);
 	return true;
 }
