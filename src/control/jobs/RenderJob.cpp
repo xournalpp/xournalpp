@@ -127,10 +127,7 @@ void RenderJob::run() {
 
 		gdk_threads_enter();
 
-		printf("repaint widget complete\n");
 		gtk_widget_queue_draw(this->view->widget);
-
-		//this->view->repaintIdle();
 
 		gdk_threads_leave();
 

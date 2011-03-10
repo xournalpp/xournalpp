@@ -116,37 +116,10 @@ void EraseHandler::eraseStroke(Layer * l, Stroke * s, double x, double y) {
 
 		Range * rect = eraseable->erase(x, y, halfEraserSize);
 		if (rect) {
-
-			// TODO: debug
-
-			//			Rectangle r(*rect);
-			//			RenderJob::repaintRectangle(this->view, &r);
-			//
-			//			GdkRectangle gdkRect = { rect->getX(), rect->getY(), rect->getWidth(), rect->getHeight() };
-			//			GdkRegion * region = gdk_region_rectangle(&gdkRect);
-			//
-			//			GdkEventExpose event = { GDK_EXPOSE, gtk_widget_get_window(this->view->getWidget()), 0, gdkRect, region, 0 };
-			//
-			//
-			//
-			//			gdk_window_begin_paint_region(event.window, event.region);
-			//			gtk_widget_send_expose(this->view->getWidget(), (GdkEvent *) &event);
-			//			gdk_window_end_paint(event.window);
-
-			printf("%lf/%lf %lf %lf\n",rect->getX(), rect->getY() , rect->getWidth(), rect->getHeight());
-
-			//			this->view->paintPage(&event);
-
-			//			g_free(region);
-
-			//			((Redrawable*)this->view)->redraw(*rect);
-
 			this->view->repaint(*rect);
 
 			delete rect;
 		}
-		// TODO: debug
-		//this->view->repaint();
 	}
 }
 
