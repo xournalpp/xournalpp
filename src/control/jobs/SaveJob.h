@@ -30,9 +30,12 @@ private:
 	bool copyFile(String source, String target);
 
 	void updatePreview();
+	virtual void afterRun();
 
 private:
 	String copyError;
+
+	String lastError;
 
 };
 

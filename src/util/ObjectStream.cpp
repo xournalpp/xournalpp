@@ -208,7 +208,7 @@ String ObjectInputStream::readString() throw (InputStreamException) {
 		throw InputStreamException("End reached, but try to read an string", __FILE__, __LINE__);
 	}
 
-	String s(this->str->str + this->pos, len);
+	String s((const char *)(this->str->str + this->pos), len);
 	this->pos += len;
 	return s;
 }

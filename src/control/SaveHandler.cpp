@@ -26,14 +26,14 @@
 #include <config.h>
 
 SaveHandler::SaveHandler() {
-	root = NULL;
-	firstPdfPageVisited = false;
-	attachBgId = 1;
+	this->root = NULL;
+	this->firstPdfPageVisited = false;
+	this->attachBgId = 1;
 	this->backgroundImages = NULL;
 }
 
 SaveHandler::~SaveHandler() {
-	delete root;
+	delete this->root;
 
 	for (GList * l = this->backgroundImages; l != NULL; l = l->next) {
 		delete (BackgroundImage *) l->data;
@@ -43,10 +43,10 @@ SaveHandler::~SaveHandler() {
 }
 
 void SaveHandler::prepareSave(Document * doc) {
-	if (root) {
+	if (this->root) {
 		// cleanup old data
-		delete root;
-		root = NULL;
+		delete this->root;
+		this->root = NULL;
 
 		for (GList * l = this->backgroundImages; l != NULL; l = l->next) {
 			delete (BackgroundImage *) l->data;
@@ -58,16 +58,16 @@ void SaveHandler::prepareSave(Document * doc) {
 	this->firstPdfPageVisited = false;
 	this->attachBgId = 1;
 
-	root = new XmlNode("xournal");
-	root->setAttrib("creator", "Xournal++ " VERSION);
-	root->setAttrib("fileversion", "2");
+	this->root = new XmlNode("xournal");
+	this->root->setAttrib("creator", "Xournal++ " VERSION);
+	this->root->setAttrib("fileversion", "2");
 
-	root->addChild(new XmlTextNode("title", "Xournal document - see http://xournal.sourceforge.net/"));
+	this->root->addChild(new XmlTextNode("title", "Xournal document - see http://xournal.sourceforge.net/"));
 	cairo_surface_t * preview = doc->getPreview();
 	if (preview) {
 		XmlImageNode * image = new XmlImageNode("preview");
 		image->setImage(preview);
-		root->addChild(image);
+		this->root->addChild(image);
 	}
 
 	for (int i = 0; i < doc->getPageCount(); i++) {
@@ -77,12 +77,12 @@ void SaveHandler::prepareSave(Document * doc) {
 
 	for (int i = 0; i < doc->getPageCount(); i++) {
 		XojPage * p = doc->getPage(i);
-		visitPage(root, p, doc, i);
+		visitPage(this->root, p, doc, i);
 	}
 }
 
-String SaveHandler::getColorStr(int c) {
-	char * str = g_strdup_printf("#%08x", c << 8 | 0xff);
+String SaveHandler::getColorStr(int c, unsigned char alpha) {
+	char * str = g_strdup_printf("#%08x", c << 8 | alpha);
 	String color = str;
 	g_free(str);
 	return color;
@@ -116,18 +116,21 @@ void SaveHandler::visitLayer(XmlNode * page, Layer * l) {
 
 			StrokeTool t = s->getToolType();
 
+			unsigned char alpha = 0xff;
+
 			if (t == STROKE_TOOL_PEN) {
 				stroke->setAttrib("tool", "pen");
 			} else if (t == STROKE_TOOL_ERASER) {
 				stroke->setAttrib("tool", "eraser");
 			} else if (t == STROKE_TOOL_HIGHLIGHTER) {
 				stroke->setAttrib("tool", "highlighter");
+				alpha = 0x7f;
 			} else {
 				g_warning("Unknown stroke tool type: %i", t);
 				stroke->setAttrib("tool", "pen");
 			}
 
-			stroke->setAttrib("color", getColorStr(s->getColor()).c_str());
+			stroke->setAttrib("color", getColorStr(s->getColor(), alpha).c_str());
 
 			bool hasPresureSensitivity = false;
 			int pointCount = s->getPointCount();

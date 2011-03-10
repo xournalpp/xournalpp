@@ -24,50 +24,7 @@
 #include "../pdf/poppler/XojPopplerIter.h"
 #include "../pdf/poppler/XojPopplerAction.h"
 
-class DocumentListener;
-
-enum DocumentChangeType {
-	DOCUMENT_CHANGE_CLEARED, DOCUMENT_CHANGE_COMPLETE, DOCUMENT_CHANGE_PDF_BOOKMARKS
-};
-
-class DocumentHandler {
-public:
-	DocumentHandler();
-	~DocumentHandler();
-
-	void fireDocumentChanged(DocumentChangeType type);
-	void firePageSizeChanged(int page);
-	void firePageChanged(int page);
-	void firePageInserted(int page);
-	void firePageDeleted(int page);
-	void firePageLoaded(XojPage * page);
-	void firePageSelected(int page);
-private:
-	void addListener(DocumentListener * l);
-	void removeListener(DocumentListener * l);
-
-	GList * listener;
-
-	friend class DocumentListener;
-};
-
-class DocumentListener {
-public:
-	DocumentListener();
-	~DocumentListener();
-
-	void registerListener(DocumentHandler * handler);
-	void unregisterListener();
-
-	virtual void documentChanged(DocumentChangeType type) = 0;
-	virtual void pageSizeChanged(int page) = 0;
-	virtual void pageChanged(int page) = 0;
-	virtual void pageInserted(int page) = 0;
-	virtual void pageDeleted(int page) = 0;
-	virtual void pageSelected(int page) = 0;
-private:
-	DocumentHandler * handler;
-};
+#include "DocumentHandler.h"
 
 class Document : public MemoryCheckObject {
 public:

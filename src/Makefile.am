@@ -86,9 +86,13 @@ xournalpp_SOURCES = \
 	gui/Shadow.cpp \
 	gui/TextEditor.cpp \
 	gui/XournalWidget.cpp \
+	model/eraser/EraseableStroke.cpp \
+	model/eraser/EraseableStrokePart.cpp \
+	model/eraser/PartList.cpp \
 	model/Document.cpp \
+	model/DocumentHandler.cpp \
+	model/DocumentListener.cpp \
 	model/Element.cpp \
-	model/EraseableStroke.cpp \
 	model/Font.cpp \
 	model/FormatDefinitions.cpp \
 	model/Image.cpp \

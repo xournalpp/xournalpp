@@ -7,7 +7,10 @@
 #include "../../undo/ColorUndoAction.h"
 #include "../../undo/SizeUndoAction.h"
 #include "../../undo/FontUndoAction.h"
+#include "../../undo/MoveUndoAction.h"
+#include "../../undo/DeleteUndoAction.h"
 #include "../../view/DocumentView.h"
+#include "../../gui/PageView.h"
 
 #include <config.h>
 #include <glib/gi18n-lib.h>

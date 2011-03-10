@@ -16,6 +16,29 @@ SaveJob::~SaveJob() {
 
 void SaveJob::run() {
 	save();
+
+	if (this->control->getWindow()) {
+		callAfterRun();
+	}
+}
+
+void SaveJob::afterRun() {
+	if (!this->lastError.isEmpty()) {
+		GtkWidget * dialog = gtk_message_dialog_new((GtkWindow *) *control->getWindow(), GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
+				this->lastError.c_str());
+		gtk_dialog_run(GTK_DIALOG(dialog));
+		gtk_widget_destroy(dialog);
+	} else {
+		Document * doc = this->control->getDocument();
+
+		doc->lock();
+		String filename = doc->getFilename();
+		doc->unlock();
+
+		control->getUndoRedoHandler()->documentSaved();
+		control->getRecentManager()->addRecentFileFilename(filename.c_str());
+		control->updateWindowTitle();
+	}
 }
 
 void SaveJob::copyProgressCallback(goffset current_num_bytes, goffset total_num_bytes, Control * control) {
@@ -30,7 +53,7 @@ bool SaveJob::copyFile(String source, String target) {
 	GFile * trg = g_file_new_for_path(target.c_str());
 	GError * err = NULL;
 
-	bool ok = g_file_copy(src, trg, G_FILE_COPY_OVERWRITE, NULL, (GFileProgressCallback) &copyProgressCallback, this, &err);
+	bool ok = g_file_copy(src, trg, G_FILE_COPY_OVERWRITE, NULL, (GFileProgressCallback) & copyProgressCallback, this, &err);
 
 	if (!err && !ok) {
 		this->copyError = "Copy error: return false, but didn't set error message";
@@ -108,7 +131,6 @@ bool SaveJob::save() {
 		backup += ".bak";
 		if (!copyFile(doc->getFilename(), backup)) {
 			g_warning("Could not create backup! (The file was created from an older Xournal version)\n%s\n", this->copyError.c_str());
-			return false;
 		}
 
 		doc->setCreateBackupOnSave(false);
@@ -122,44 +144,28 @@ bool SaveJob::save() {
 			return false;
 		}
 
-		gdk_threads_enter();
-		GtkWidget * dialog = gtk_message_dialog_new((GtkWindow *) *control->getWindow(), GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
-				_("Open file error: %s"), out->getLastError().c_str());
-		gtk_dialog_run(GTK_DIALOG(dialog));
-		gtk_widget_destroy(dialog);
+		this->lastError = String::format(_("Open file error: %s"), out->getLastError().c_str());
 
 		delete out;
-		gdk_threads_leave();
 		return false;
 	}
 
 	h.saveTo(out, filename);
 	out->close();
-	control->getUndoRedoHandler()->documentSaved();
-	control->updateWindowTitle();
 
 	if (!out->getLastError().isEmpty()) {
+		this->lastError = String::format(_("Open file error: %s"), out->getLastError().c_str());
 		if (!control->getWindow()) {
-			g_error(_("Output stream error: %s"), out->getLastError().c_str());
+			g_error(this->lastError.c_str());
 			return false;
 		}
 
-		gdk_threads_enter();
-		GtkWidget * dialog = gtk_message_dialog_new((GtkWindow *) *control->getWindow(), GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
-				_("Output stream error: %s"), out->getLastError().c_str());
-		gtk_dialog_run(GTK_DIALOG(dialog));
-		gtk_widget_destroy(dialog);
-
 		delete out;
-		gdk_threads_leave();
 		return false;
 	}
 
 	delete out;
 
-	gdk_threads_enter();
-	control->getRecentManager()->addRecentFileFilename(filename.c_str());
-	gdk_threads_leave();
 	return true;
 }
 

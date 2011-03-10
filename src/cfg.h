@@ -38,7 +38,7 @@
 // #define SHEDULER_DEBUG
 
 // draw a surrounding border to all elements
-// #define SHOW_ELEMENT_BOUNDS
+#define SHOW_ELEMENT_BOUNDS
 
 // draw a border around all repaint rects
 // #define SHOW_REPAINT_BOUNDS

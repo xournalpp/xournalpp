@@ -40,11 +40,11 @@ public:
 	void drawSelection(cairo_t * cr, ElementContainer * container);
 
 private:
-	void drawText(cairo_t *cr, Text * t);
-	void drawImage(cairo_t *cr, Image * i);
+	void drawText(cairo_t * cr, Text * t);
+	void drawImage(cairo_t * cr, Image * i);
 
-	void drawElement(cairo_t *cr, Element * e);
-	void drawLayer(cairo_t *cr, Layer * l);
+	void drawElement(cairo_t * cr, Element * e);
+	void drawLayer(cairo_t * cr, Layer * l);
 
 	void paintBackgroundImage();
 	void paintBackgroundColor();

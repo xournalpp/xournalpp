@@ -115,9 +115,9 @@ void InputHandler::drawTmpStroke() {
 	}
 }
 
-void InputHandler::draw(cairo_t * cr) {
+void InputHandler::draw(cairo_t * cr, double zoom) {
 	if (this->tmpStroke) {
-		view->drawStroke(cr, this->tmpStroke);
+		view->drawStroke(cr, this->tmpStroke, zoom);
 	}
 }
 

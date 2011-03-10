@@ -13,23 +13,25 @@
 #define __PAGEVIEW_H__
 
 #include <gtk/gtk.h>
-
-#include "../model/Page.h"
-#include "../model/Stroke.h"
-#include "../model/Text.h"
-
-#include "../control/settings/Settings.h"
-#include "../control/SearchControl.h"
-#include "../control/tools/VerticalToolHandler.h"
-#include "../control/tools/EraseHandler.h"
-#include "../control/tools/InputHandler.h"
-#include "../gui/TextEditor.h"
-#include "../util/Util.h"
-#include "../util/Rectangle.h"
+#include "../util/MemoryCheck.h"
+#include "../util/Range.h"
+#include "Redrawable.h"
 
 class XournalWidget;
 class DeleteUndoAction;
 class Selection;
+class TextEditor;
+class InputHandler;
+class EraseHandler;
+class VerticalToolHandler;
+class SearchControl;
+class Settings;
+
+// Model
+class Page;
+class Stroke;
+class Text;
+class XojPage;
 
 class PageView: public Redrawable, public virtual MemoryCheckObject {
 public:
@@ -45,7 +47,7 @@ public:
 	void updatePageSize(double width, double height);
 
 	void firstPaint();
-	bool paintPage(GtkWidget *widget, GdkEventExpose *event, double zoom);
+	bool paintPage(GdkEventExpose * event);
 
 	void repaint();
 	void repaint(Element * e);
@@ -91,6 +93,9 @@ public:
 	void resetShapeRecognizer();
 
 	void deleteViewBuffer();
+
+	static bool repaintCallback(PageView * view);
+	void repaintIdle();
 
 public:
 	// Redrawable
@@ -171,6 +176,8 @@ private:
 
 	GMutex * drawingMutex;
 
+
+	int repaintIdleId;
 
 	friend class InsertImageRunnable;
 	friend class RenderJob;

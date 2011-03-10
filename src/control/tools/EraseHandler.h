@@ -12,6 +12,7 @@
 #ifndef ERASEHANDLER_H_
 #define ERASEHANDLER_H_
 
+#include "../../model/Document.h"
 #include "../../model/Page.h"
 #include "../../model/Stroke.h"
 #include "../ToolHandler.h"
@@ -25,7 +26,7 @@ class EraseUndoAction;
 
 class EraseHandler {
 public:
-	EraseHandler(UndoRedoHandler * undo, XojPage * page, ToolHandler * handler, Redrawable * view);
+	EraseHandler(UndoRedoHandler * undo, Document * doc, XojPage * page, ToolHandler * handler, Redrawable * view);
 	virtual ~EraseHandler();
 
 public:
@@ -39,6 +40,7 @@ private:
 	XojPage * page;
 	ToolHandler * handler;
 	Redrawable * view;
+	Document * doc;
 	UndoRedoHandler * undo;
 
 	DeleteUndoAction * eraseDeleteUndoAction;
