@@ -104,7 +104,7 @@ void SaveJob::updatePreview() {
 		}
 
 		DocumentView view;
-		view.drawPage(page, cr);
+		view.drawPage(page, cr, true);
 		cairo_destroy(cr);
 		doc->setPreview(crBuffer);
 		cairo_surface_destroy(crBuffer);

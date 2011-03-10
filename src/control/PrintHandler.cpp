@@ -39,7 +39,7 @@ void PrintHandler::drawPage(GtkPrintOperation * operation, GtkPrintContext * con
 		}
 	}
 
-	handler->view->drawPage(page, cr);
+	handler->view->drawPage(page, cr, true /* dont render eraseable */);
 }
 
 void PrintHandler::requestPageSetup(GtkPrintOperation * operation, GtkPrintContext * context, gint pageNr, GtkPageSetup *setup, PrintHandler * handler) {

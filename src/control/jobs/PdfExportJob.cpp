@@ -71,6 +71,15 @@ bool PdfExportJob::showFilechooser() {
 	return true;
 }
 
+void PdfExportJob::afterRun() {
+	if (!this->errorMsg.isEmpty()) {
+		GtkWindow * win = (GtkWindow*) *control->getWindow();
+		GtkWidget * dialog = gtk_message_dialog_new(win, GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, this->errorMsg.c_str());
+		gtk_dialog_run(GTK_DIALOG(dialog));
+		gtk_widget_destroy(dialog);
+	}
+}
+
 void PdfExportJob::run() {
 	SynchronizedProgressListener pglistener(this->control);
 
@@ -80,14 +89,12 @@ void PdfExportJob::run() {
 	doc->unlock();
 
 	if (!pdf.createPdf(this->filename)) {
+		this->errorMsg = String::format(_( "Create pdf failed: %s"), pdf.getLastError().c_str());
 
-		gdk_threads_enter();
-
-		GtkWidget * dialog = gtk_message_dialog_new((GtkWindow*) *control->getWindow(), GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, _(
-				"Create pdf failed: %s"), pdf.getLastError().c_str());
-		gtk_dialog_run(GTK_DIALOG(dialog));
-		gtk_widget_destroy(dialog);
-
-		gdk_threads_leave();
+		if (control->getWindow()) {
+			callAfterRun();
+		} else {
+			g_error(this->errorMsg.c_str());
+		}
 	}
 }

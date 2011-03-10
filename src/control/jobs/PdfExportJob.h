@@ -23,12 +23,15 @@ public:
 
 public:
 	void run();
+	virtual void afterRun();
 
 public:
 	bool showFilechooser();
 
 private:
 	String filename;
+
+	String errorMsg;
 };
 
 #endif /* __PDFEXPORTJOB_H__ */

@@ -1,4 +1,5 @@
 #include "Rectangle.h"
+#include "Range.h"
 #include <glib.h>
 
 Rectangle::Rectangle() {
@@ -14,6 +15,14 @@ Rectangle::Rectangle(double x, double y, double width, double height) {
 	this->width = width;
 	this->height = height;
 }
+
+Rectangle::Rectangle(Range & rect) {
+	this->x = rect.getX();
+	this->y = rect.getY();
+	this->width = rect.getWidth();
+	this->height = rect.getHeight();
+}
+
 
 /**
  * @src1: a #Rectangle

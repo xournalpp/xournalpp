@@ -37,13 +37,12 @@ void EraseableStroke::draw(cairo_t * cr, double x, double y, double width, doubl
 	PartList * tmpCopy = this->parts->clone();
 	g_mutex_unlock(this->partLock);
 
-	// TODO: debug
-	printf("paint\n");
+	double w = this->stroke->getWidth();
 
 	for (GList * l = tmpCopy->data; l != NULL; l = l->next) {
 		EraseableStrokePart * part = (EraseableStrokePart *) l->data;
 		if (part->getWidth() == Point::NO_PRESURE) {
-			cairo_set_line_width(cr, width);
+			cairo_set_line_width(cr, w);
 		} else {
 			cairo_set_line_width(cr, part->getWidth());
 		}
@@ -59,41 +58,6 @@ void EraseableStroke::draw(cairo_t * cr, double x, double y, double width, doubl
 		}
 		cairo_stroke(cr);
 	}
-
-	//	// TODO: debug
-	//	printf("paint\n");
-	//
-	//	for (GList * l = tmpCopy->data; l != NULL; l = l->next) {
-	//		EraseableStrokePart * part = (EraseableStrokePart *) l->data;
-	//
-	//		if (pressure) {
-	//			cairo_set_line_width(cr, part->getWidth());
-	//		}
-	//
-	//		GList * pl = part->getPoints();
-	//		Point * p = (Point *) pl->data;
-	//
-	//		if (!lastPoint.equalsPos(*p) && !pressure) {
-	//			cairo_stroke(cr);
-	//			cairo_move_to(cr, p->x, p->y);
-	//		}
-	//
-	//		pl = pl->next;
-	//		for (; pl != NULL; pl = pl->next) {
-	//			Point * p = (Point *) pl->data;
-	//			cairo_line_to(cr, p->x, p->y);
-	//		}
-	//
-	//		if (pressure) {
-	//			cairo_stroke(cr);
-	//		}
-	//	}
-	//
-	//	delete tmpCopy;
-	//
-	//	if (!pressure) {
-	//		cairo_stroke(cr);
-	//	}
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////

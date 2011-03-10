@@ -12,21 +12,19 @@
 #ifndef ERASEHANDLER_H_
 #define ERASEHANDLER_H_
 
-#include "../../model/Document.h"
-#include "../../model/Page.h"
-#include "../../model/Stroke.h"
-#include "../ToolHandler.h"
-#include "../../gui/Redrawable.h"
-#include "../../undo/EraseUndoAction.h"
-#include "../../undo/DeleteUndoAction.h"
-#include "../../undo/UndoRedoHandler.h"
-
 class DeleteUndoAction;
 class EraseUndoAction;
+class Layer;
+class Stroke;
+class XojPage;
+class ToolHandler;
+class PageView;
+class Document;
+class UndoRedoHandler;
 
 class EraseHandler {
 public:
-	EraseHandler(UndoRedoHandler * undo, Document * doc, XojPage * page, ToolHandler * handler, Redrawable * view);
+	EraseHandler(UndoRedoHandler * undo, Document * doc, XojPage * page, ToolHandler * handler, PageView * view);
 	virtual ~EraseHandler();
 
 public:
@@ -39,7 +37,7 @@ private:
 private:
 	XojPage * page;
 	ToolHandler * handler;
-	Redrawable * view;
+	PageView * view;
 	Document * doc;
 	UndoRedoHandler * undo;
 

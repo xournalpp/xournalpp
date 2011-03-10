@@ -47,7 +47,7 @@ public:
 	void updatePageSize(double width, double height);
 
 	void firstPaint();
-	bool paintPage(GdkEventExpose * event);
+	bool paintPage(GdkEventExpose * event, bool test = false);
 
 	void repaint();
 	void repaint(Element * e);
@@ -99,16 +99,18 @@ public:
 
 public:
 	// Redrawable
-	void redrawDocumentRegion(double x1, double y1, double x2, double y2);
+	void redraw(double x1, double y1, double x2, double y2);
 	GdkColor getSelectionColor();
 private:
-	static gboolean exposeEventCallback(GtkWidget * widget, GdkEventExpose * event, PageView * page);
+	static gboolean drawEventCallback(GtkWidget * widget, cairo_t * cr, PageView * page);
 	static gboolean onButtonPressEventCallback(GtkWidget * widget, GdkEventButton * event, PageView * view);
 	void onButtonPressEvent(GtkWidget * widget, GdkEventButton * event);
 	static bool onButtonReleaseEventCallback(GtkWidget * widget, GdkEventButton * event, PageView * view);
 	bool onButtonReleaseEvent(GtkWidget * widget, GdkEventButton * event);
 	static gboolean onMotionNotifyEventCallback(GtkWidget * widget, GdkEventMotion * event, PageView * view);
 	gboolean onMotionNotifyEvent(GtkWidget * widget, GdkEventMotion * event);
+
+	static bool exposeEventCallback(GtkWidget * widget, GdkEventExpose * event, PageView * page);
 
 	void handleScrollEvent(GdkEventButton * event);
 
@@ -176,12 +178,10 @@ private:
 
 	GMutex * drawingMutex;
 
-
 	int repaintIdleId;
 
 	friend class InsertImageRunnable;
 	friend class RenderJob;
 };
-
 
 #endif /* __PAGEVIEW_H__ */

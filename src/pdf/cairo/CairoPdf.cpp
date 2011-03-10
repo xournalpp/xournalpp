@@ -26,7 +26,7 @@ void CairoPdf::drawPage(XojPage * page) {
 
 	cairo_pdf_surface_set_size(this->surface, page->getWidth(), page->getHeight());
 
-	view.drawPage(page, this->cr);
+	view.drawPage(page, this->cr, true /* dont render eraseable */);
 
 	// next page
 	cairo_show_page(this->cr);

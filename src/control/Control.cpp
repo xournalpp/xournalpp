@@ -2195,7 +2195,7 @@ void Control::clipboardPasteXournal(ObjectInputStream & in) {
 		}
 
 		setSelection(selection);
-		view->redrawDocumentRegion(x, y, x + width, y + height);
+		view->redraw(x, y, x + width, y + height);
 
 	} catch (std::exception & e) {
 		g_warning("could not paste, Exception occurred: %s", e.what());

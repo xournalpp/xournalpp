@@ -24,6 +24,9 @@ public:
 	double getWidth();
 	double getHeight();
 
+	double getX2();
+	double getY2();
+
 private:
 	double x1;
 	double y1;
