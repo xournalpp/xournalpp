@@ -48,7 +48,7 @@ void PreviewJob::run() {
 
 	PdfView::drawPage(this->sidebarPreview->sidebar->getCache(), popplerPage, cr2, zoom, this->sidebarPreview->page->getWidth(), this->sidebarPreview->page->getHeight());
 	DocumentView view;
-	view.drawPage(this->sidebarPreview->page, cr2);
+	view.drawPage(this->sidebarPreview->page, cr2, true);
 
 	cairo_set_matrix(cr2, &defaultMatrix);
 

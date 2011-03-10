@@ -19,19 +19,20 @@ void * RenderJob::getSource() {
 	return this->view;
 }
 
-void RenderJob::repaintRectangle(Rectangle * rect, double zoom) {
+void RenderJob::repaintRectangle(PageView * view, Rectangle * rect) {
 	XojPopplerPage * popplerPage = NULL;
+	double zoom = view->xournal->getZoom();
+	Document * doc = view->xournal->getDocument();
 
-	Document * doc = this->view->xournal->getDocument();
 	doc->lock();
 
-	if (this->view->page->getBackgroundType() == BACKGROUND_TYPE_PDF) {
-		int pgNo = this->view->page->getPdfPageNr();
+	if (view->page->getBackgroundType() == BACKGROUND_TYPE_PDF) {
+		int pgNo = view->page->getPdfPageNr();
 		popplerPage = doc->getPdfPage(pgNo);
 	}
 
-	double pageWidth = this->view->page->getWidth();
-	double pageHeight = this->view->page->getHeight();
+	double pageWidth = view->page->getWidth();
+	double pageHeight = view->page->getHeight();
 
 	doc->unlock();
 
@@ -45,20 +46,20 @@ void RenderJob::repaintRectangle(Rectangle * rect, double zoom) {
 	cairo_translate(crRect, -x, -y);
 	cairo_scale(crRect, zoom, zoom);
 
-	DocumentView view;
-	view.limitArea(rect->x, rect->y, rect->width, rect->height);
+	DocumentView v;
+	v.limitArea(rect->x, rect->y, rect->width, rect->height);
 
-	PdfCache * cache = this->view->xournal->getCache();
+	PdfCache * cache = view->xournal->getCache();
 	PdfView::drawPage(cache, popplerPage, crRect, zoom, pageWidth, pageHeight);
 
 	doc->lock();
-	view.drawPage(this->view->page, crRect);
+	v.drawPage(view->page, crRect, false);
 	doc->unlock();
 
 	cairo_destroy(crRect);
 
-	g_mutex_lock(this->view->drawingMutex);
-	cairo_t * crPageBuffer = cairo_create(this->view->crBuffer);
+	g_mutex_lock(view->drawingMutex);
+	cairo_t * crPageBuffer = cairo_create(view->crBuffer);
 
 	cairo_set_operator(crPageBuffer, CAIRO_OPERATOR_SOURCE);
 	cairo_set_source_surface(crPageBuffer, rectBuffer, x, y);
@@ -69,14 +70,18 @@ void RenderJob::repaintRectangle(Rectangle * rect, double zoom) {
 
 	cairo_surface_destroy(rectBuffer);
 
-	g_mutex_unlock(this->view->drawingMutex);
+	g_mutex_unlock(view->drawingMutex);
+}
+
+void RenderJob::repaintRectangle(Rectangle * rect) {
+	repaintRectangle(this->view, rect);
 }
 
 void RenderJob::run() {
 	CHECK_MEMORY(this);
 
-//	static int testId = 0;
-//	testId++;
+	//	static int testId = 0;
+	//	testId++;
 
 	double zoom = this->view->xournal->getZoom();
 
@@ -100,14 +105,14 @@ void RenderJob::run() {
 
 		DocumentView view;
 		PdfView::drawPage(this->view->xournal->getCache(), popplerPage, cr2, zoom, this->view->page->getWidth(), this->view->page->getHeight());
-		view.drawPage(this->view->page, cr2);
+		view.drawPage(this->view->page, cr2, false);
 
 		// TODO: debug
-//		char * str = g_strdup_printf("%i", testId);
-//		cairo_move_to(cr2, 100, 100);
-//		cairo_set_font_size(cr2, 20);
-//		cairo_show_text(cr2, str);
-//		g_free(str);
+		//		char * str = g_strdup_printf("%i", testId);
+		//		cairo_move_to(cr2, 100, 100);
+		//		cairo_set_font_size(cr2, 20);
+		//		cairo_show_text(cr2, str);
+		//		g_free(str);
 
 		cairo_destroy(cr2);
 		g_mutex_lock(this->view->drawingMutex);
@@ -123,16 +128,16 @@ void RenderJob::run() {
 		gdk_threads_enter();
 
 		printf("repaint widget complete\n");
-		//		gtk_widget_queue_draw(this->view->widget);
+		gtk_widget_queue_draw(this->view->widget);
 
-		this->view->repaintIdle();
+		//this->view->repaintIdle();
 
 		gdk_threads_leave();
 
 	} else {
 		for (GList * l = this->view->repaintRect; l != NULL; l = l->next) {
 			Rectangle * rect = (Rectangle *) l->data;
-			repaintRectangle(rect, zoom);
+			repaintRectangle(rect);
 			gdk_threads_enter();
 			gtk_widget_queue_draw_area(this->view->widget, rect->x * zoom, rect->y * zoom, rect->width * zoom, rect->height * zoom);
 			gdk_threads_leave();

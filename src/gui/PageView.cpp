@@ -27,6 +27,7 @@
 #include "../control/tools/InputHandler.h"
 #include "../gui/TextEditor.h"
 #include "../util/Rectangle.h"
+#include "../undo/DeleteUndoAction.h"
 
 #include <config.h>
 #include <glib/gi18n-lib.h>
@@ -66,6 +67,7 @@ PageView::PageView(XournalWidget * xournal, XojPage * page) {
 
 	this->selectionEdit = NULL;
 	this->widget = gtk_drawing_area_new();
+
 	gtk_widget_show(this->widget);
 
 	this->textEditor = NULL;
@@ -520,7 +522,7 @@ void PageView::onButtonPressEvent(GtkWidget * widget, GdkEventButton * event) {
 	}
 }
 
-void PageView::redrawDocumentRegion(double x1, double y1, double x2, double y2) {
+void PageView::redraw(double x1, double y1, double x2, double y2) {
 	double zoom = xournal->getZoom();
 	gtk_widget_queue_draw_area(this->widget, x1 * zoom - 10, y1 * zoom - 10, (x2 - x1) * zoom + 20, (y2 - y1) * zoom + 20);
 }
@@ -755,7 +757,7 @@ int PageView::getDisplayHeight() {
 	return page->getHeight() * xournal->getZoom();
 }
 
-gboolean PageView::exposeEventCallback(GtkWidget * widget, GdkEventExpose * event, PageView * page) {
+bool PageView::exposeEventCallback(GtkWidget * widget, GdkEventExpose * event, PageView * page) {
 	return page->paintPage(event);
 }
 
@@ -890,7 +892,7 @@ bool PageView::actionDelete() {
 	return false;
 }
 
-bool PageView::paintPage(GdkEventExpose * event) {
+bool PageView::paintPage(GdkEventExpose * event, bool test) {
 	if (!firstPainted) {
 		firstPaint();
 		return true;
@@ -901,10 +903,24 @@ bool PageView::paintPage(GdkEventExpose * event) {
 
 	cairo_t * cr = gdk_cairo_create(widget->window);
 
+
+	if(test) {
+		cairo_set_source_rgb(cr, 1.0,0,0);
+
+		cairo_rectangle(cr, 0,0,100,100);
+		cairo_fill(cr);
+
+		cairo_destroy(cr);
+
+		return true;
+	}
+
 	GtkAllocation alloc;
 	gtk_widget_get_allocation(widget, &alloc);
 
-	g_mutex_lock(this->drawingMutex);
+	printf("BEFORE locked\n");
+//	g_mutex_lock(this->drawingMutex);
+	printf("locked\n");
 
 	if (this->crBuffer == NULL) {
 		this->crBuffer = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, alloc.width, alloc.height);
@@ -974,6 +990,6 @@ bool PageView::paintPage(GdkEventExpose * event) {
 
 	cairo_destroy(cr);
 
-	g_mutex_unlock(this->drawingMutex);
+//	g_mutex_unlock(this->drawingMutex);
 	return true;
 }

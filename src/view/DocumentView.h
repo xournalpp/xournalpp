@@ -29,7 +29,7 @@ public:
 	virtual ~DocumentView();
 
 public:
-	void drawPage(XojPage * page, cairo_t * cr);
+	void drawPage(XojPage * page, cairo_t * cr, bool preview);
 	void drawStroke(cairo_t * cr, Stroke * s, int startPoint = 0);
 	void drawEraseableStroke(cairo_t * cr, Stroke * s);
 	static void applyColor(cairo_t * cr, int c, int alpha = 255);
@@ -57,6 +57,7 @@ private:
 	XojPage * page;
 	double width;
 	double height;
+	bool preview;
 
 	double lX;
 	double lY;

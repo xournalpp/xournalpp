@@ -29,8 +29,11 @@ public:
 
 	void run();
 
+public:
+	static void repaintRectangle(PageView * view, Rectangle * rect);
+
 private:
-	void repaintRectangle(Rectangle * rect, double zoom);
+	void repaintRectangle(Rectangle * rect);
 
 private:
 	PageView * view;

@@ -208,7 +208,7 @@ UndoAction * EditSelection::setColor(int color) {
 		double y2 = this->y + this->height;
 
 		this->deleteViewBuffer();
-		this->view->redrawDocumentRegion(x1 - this->offsetX, y1 - this->offsetY, x2, y2);
+		this->view->redraw(x1 - this->offsetX, y1 - this->offsetY, x2, y2);
 
 		return undo;
 	} else {
@@ -261,7 +261,7 @@ UndoAction * EditSelection::setSize(ToolSize size, const double * thiknessPen, c
 		double y2 = this->y + this->height;
 
 		this->deleteViewBuffer();
-		this->view->redrawDocumentRegion(x1 - this->offsetX, y1 - this->offsetY, x2, y2);
+		this->view->redraw(x1 - this->offsetX, y1 - this->offsetY, x2, y2);
 
 		return undo;
 	} else {
@@ -680,7 +680,7 @@ UndoAction * EditSelection::setFont(XojFont & font) {
 
 	if (!isnan(x1)) {
 		this->deleteViewBuffer();
-		this->view->redrawDocumentRegion(x1, y1, x2, y2);
+		this->view->redraw(x1, y1, x2, y2);
 		return undo;
 	}
 	delete undo;

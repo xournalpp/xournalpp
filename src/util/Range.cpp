@@ -36,3 +36,11 @@ double Range::getHeight() {
 	return this->y2 - this->y1;
 }
 
+double Range::getX2() {
+	return this->x2;
+}
+
+double Range::getY2() {
+	return this->y2;
+}
+

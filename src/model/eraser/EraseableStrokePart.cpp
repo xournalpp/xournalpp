@@ -84,6 +84,7 @@ double EraseableStrokePart::getElementHeight() {
 }
 
 void EraseableStrokePart::addPoint(Point p) {
+	calcSize();
 	this->points = g_list_append(this->points, new Point(p));
 }
 

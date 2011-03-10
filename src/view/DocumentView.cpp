@@ -16,6 +16,7 @@ DocumentView::DocumentView() {
 	this->lY = -1;
 	this->lWidth = -1;
 	this->lHeight = -1;
+	this->preview = 0;
 }
 
 DocumentView::~DocumentView() {
@@ -60,7 +61,8 @@ void DocumentView::drawStroke(cairo_t * cr, Stroke * s, int startPoint) {
 	cairo_set_line_join(cr, CAIRO_LINE_JOIN_ROUND);
 	cairo_set_line_cap(cr, CAIRO_LINE_CAP_ROUND);
 
-	if (s->getEraseable()) {
+	// dont render eraseable for previews
+	if (s->getEraseable() && !this->preview) {
 		drawEraseableStroke(cr, s);
 		return;
 	}
@@ -287,11 +289,12 @@ void DocumentView::limitArea(double x, double y, double width, double heigth) {
 	this->lHeight = heigth;
 }
 
-void DocumentView::drawPage(XojPage * page, cairo_t * cr) {
+void DocumentView::drawPage(XojPage * page, cairo_t * cr, bool preview) {
 	this->cr = cr;
 	this->page = page;
 	this->width = page->getWidth();
 	this->height = page->getHeight();
+	this->preview = preview;
 
 	CHECK_MEMORY(page);
 

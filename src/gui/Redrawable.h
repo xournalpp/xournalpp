@@ -28,7 +28,8 @@ public:
 	 *
 	 * for refreshing the view buffer (if you have changed the document) call repaint.
 	 */
-	virtual void redrawDocumentRegion(double x1, double y1, double x2, double y2) = 0;
+	virtual void redraw(double x1, double y1, double x2, double y2) = 0;
+	virtual void redraw(Range & r);
 
 	/**
 	 * Call this if you only need to readraw the view, this means the buffer will be painted again,

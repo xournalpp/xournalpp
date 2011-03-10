@@ -1,9 +1,23 @@
 #include "EraseHandler.h"
 #include "../../model/eraser/EraseableStroke.h"
+#include "../../model/Layer.h"
+#include "../../model/Stroke.h"
+#include "../../model/Page.h"
+#include "../../model/Document.h"
 #include "../../util/Range.h"
+#include "../../util/Rectangle.h"
+#include "../../undo/UndoRedoHandler.h"
+#include "../../undo/EraseUndoAction.h"
+#include "../../undo/DeleteUndoAction.h"
+#include "../../gui/PageView.h"
+#include "../ToolHandler.h"
+#include "../../control/jobs/RenderJob.h"
+
+#include "../../gui/XournalWidget.h"
+
 #include <math.h>
 
-EraseHandler::EraseHandler(UndoRedoHandler * undo, Document * doc, XojPage * page, ToolHandler * handler, Redrawable * view) {
+EraseHandler::EraseHandler(UndoRedoHandler * undo, Document * doc, XojPage * page, ToolHandler * handler, PageView * view) {
 	this->page = page;
 	this->handler = handler;
 	this->view = view;
@@ -104,11 +118,35 @@ void EraseHandler::eraseStroke(Layer * l, Stroke * s, double x, double y) {
 		if (rect) {
 
 			// TODO: debug
-//			this->view->repaint(*rect);
+
+			//			Rectangle r(*rect);
+			//			RenderJob::repaintRectangle(this->view, &r);
+			//
+			//			GdkRectangle gdkRect = { rect->getX(), rect->getY(), rect->getWidth(), rect->getHeight() };
+			//			GdkRegion * region = gdk_region_rectangle(&gdkRect);
+			//
+			//			GdkEventExpose event = { GDK_EXPOSE, gtk_widget_get_window(this->view->getWidget()), 0, gdkRect, region, 0 };
+			//
+			//
+			//
+			//			gdk_window_begin_paint_region(event.window, event.region);
+			//			gtk_widget_send_expose(this->view->getWidget(), (GdkEvent *) &event);
+			//			gdk_window_end_paint(event.window);
+
+			printf("%lf/%lf %lf %lf\n",rect->getX(), rect->getY() , rect->getWidth(), rect->getHeight());
+
+			//			this->view->paintPage(&event);
+
+			//			g_free(region);
+
+			//			((Redrawable*)this->view)->redraw(*rect);
+
+			this->view->repaint(*rect);
+
 			delete rect;
 		}
 		// TODO: debug
-		this->view->repaint();
+		//this->view->repaint();
 	}
 }
 

@@ -12,9 +12,12 @@
 #ifndef __RECTANGLE_H__
 #define __RECTANGLE_H__
 
+class Range;
+
 class Rectangle {
 public:
 	Rectangle();
+	Rectangle(Range & rect);
 	Rectangle(double x, double y, double width, double height);
 public:
 

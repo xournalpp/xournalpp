@@ -92,7 +92,7 @@ void VerticalToolHandler::currentPos(double x, double y) {
 
 	this->endY = y;
 
-	this->view->redrawDocumentRegion(0, y1, this->page->getWidth(), this->page->getHeight());
+	this->view->redraw(0, y1, this->page->getWidth(), this->page->getHeight());
 
 	double dY = this->endY - this->startY;
 

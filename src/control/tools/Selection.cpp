@@ -52,7 +52,7 @@ bool RectSelection::finalize(XojPage * page) {
 		}
 	}
 
-	view->redrawDocumentRegion(x1, y1, x2, y2);
+	view->redraw(x1, y1, x2, y2);
 
 	return this->selectedElements != NULL;
 }
@@ -93,7 +93,7 @@ void RectSelection::currentPos(double x, double y) {
 		this->ey = y;
 	}
 
-	view->redrawDocumentRegion(aX, aY, bX, bY);
+	view->redraw(aX, aY, bX, bY);
 }
 
 void RectSelection::paint(cairo_t * cr, GdkEventExpose * event, double zoom) {
@@ -233,7 +233,7 @@ void RegionSelect::currentPos(double x, double y) {
 			}
 		}
 
-		view->redrawDocumentRegion(ax, ay, bx, by);
+		view->redraw(ax, ay, bx, by);
 	}
 }
 
@@ -343,7 +343,7 @@ bool RegionSelect::finalize(XojPage * page) {
 		}
 	}
 
-	view->redrawDocumentRegion(this->x1Box, this->y1Box, this->x2Box, this->y2Box);
+	view->redraw(this->x1Box, this->y1Box, this->x2Box, this->y2Box);
 
 	return this->selectedElements != NULL;
 }
