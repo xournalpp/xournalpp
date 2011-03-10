@@ -33,7 +33,7 @@ void XournalScheduler::removeSource(void * source, JobType type, JobPriority pri
 		if (job->getType() == type) {
 			if (job->getSource() == source) {
 				g_queue_remove(this->jobQueue[priority], job);
-				delete job;
+				job->free();
 				break;
 			}
 		}

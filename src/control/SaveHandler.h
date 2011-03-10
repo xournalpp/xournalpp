@@ -9,7 +9,6 @@
  * @license GPL
  */
 
-
 #ifndef __SAVEHANDLER_H__
 #define __SAVEHANDLER_H__
 
@@ -31,7 +30,7 @@ public:
 private:
 	void visitPage(XmlNode * root, XojPage * p, Document * doc, int id);
 	String getSolidBgStr(BackgroundType type);
-	String getColorStr(int c);
+	String getColorStr(int c, unsigned char alpha = 0xff);
 	void visitLayer(XmlNode * page, Layer * l);
 
 private:

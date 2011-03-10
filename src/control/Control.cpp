@@ -28,6 +28,8 @@
 #include "stockdlg/ImageOpenDlg.h"
 #include "stockdlg/XojOpenDlg.h"
 #include "SaveHandler.h"
+#include "../gui/TextEditor.h"
+#include "../undo/DeleteUndoAction.h"
 
 #include <config.h>
 #include <glib/gi18n-lib.h>

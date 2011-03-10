@@ -80,9 +80,12 @@ gpointer Scheduler::jobThreadCallback(Scheduler * scheduler) {
 		g_mutex_unlock(scheduler->jobQueueMutex);
 
 		g_mutex_lock(scheduler->jobRunningMutex);
+
+		CHECK_MEMORY(job);
+
 		job->execute();
 
-		delete job;
+		job->free();
 		g_mutex_unlock(scheduler->jobRunningMutex);
 
 		SDEBUG("next\n", NULL);

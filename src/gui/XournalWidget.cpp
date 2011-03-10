@@ -6,6 +6,12 @@
 #include "Shadow.h"
 #include "../util/Util.h"
 
+#include "../model/Document.h"
+#include "PageView.h"
+#include "../control/PdfCache.h"
+#include "../util/Rectangle.h"
+
+
 // TODO: LOW PRIO handle scroll events from touch / if Hand tool is selected
 
 XournalWidget::XournalWidget(GtkWidget * parent, Control * control) {

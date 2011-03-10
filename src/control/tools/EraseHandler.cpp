@@ -1,11 +1,13 @@
 #include "EraseHandler.h"
-#include "../../model/EraseableStroke.h"
+#include "../../model/eraser/EraseableStroke.h"
+#include "../../util/Range.h"
 #include <math.h>
 
-EraseHandler::EraseHandler(UndoRedoHandler * undo, XojPage * page, ToolHandler * handler, Redrawable * view) {
+EraseHandler::EraseHandler(UndoRedoHandler * undo, Document * doc, XojPage * page, ToolHandler * handler, Redrawable * view) {
 	this->page = page;
 	this->handler = handler;
 	this->view = view;
+	this->doc = doc;
 
 	this->eraseDeleteUndoAction = NULL;
 	this->eraseUndoAction = NULL;
@@ -40,6 +42,7 @@ void EraseHandler::erase(double x, double y) {
 			Element * e = eit.next();
 			if (e->getType() == ELEMENT_STROKE && e->intersectsArea(&eraserRect)) {
 				Stroke * s = (Stroke *) e;
+
 				eraseStroke(l, s, x, y);
 			}
 		}
@@ -55,7 +58,10 @@ void EraseHandler::eraseStroke(Layer * l, Stroke * s, double x, double y) {
 
 	// delete complete element
 	if (this->handler->getEraserType() == ERASER_TYPE_DELETE_STROKE) {
+		this->doc->lock();
 		int pos = l->removeElement(s, false);
+		this->doc->unlock();
+
 		if (pos == -1) {
 			return;
 		}
@@ -85,16 +91,24 @@ void EraseHandler::eraseStroke(Layer * l, Stroke * s, double x, double y) {
 
 		EraseableStroke * eraseable = NULL;
 		if (s->getEraseable() == NULL) {
+			doc->lock();
 			eraseable = new EraseableStroke(s);
 			s->setEraseable(eraseable);
+			doc->unlock();
 			eraseUndoAction->addOriginal(l, s, pos);
 		} else {
 			eraseable = s->getEraseable();
 		}
 
-		if (eraseable->erase(x, y, halfEraserSize)) {
-			this->view->repaint(s);
+		Range * rect = eraseable->erase(x, y, halfEraserSize);
+		if (rect) {
+
+			// TODO: debug
+//			this->view->repaint(*rect);
+			delete rect;
 		}
+		// TODO: debug
+		this->view->repaint();
 	}
 }
 

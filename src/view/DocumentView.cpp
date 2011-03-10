@@ -3,7 +3,7 @@
 #include <gdk/gdk.h>
 #include "../control/tools/Selection.h"
 #include "../control/tools/EditSelection.h"
-#include "../model/EraseableStroke.h"
+#include "../model/eraser/EraseableStroke.h"
 #include "../cfg.h"
 
 #include <config.h>
@@ -36,27 +36,7 @@ void DocumentView::applyColor(cairo_t * cr, int c, int alpha) {
 void DocumentView::drawEraseableStroke(cairo_t * cr, Stroke * s) {
 	EraseableStroke * e = s->getEraseable();
 
-	double width = s->getWidth();
-
-	for (GList * l = e->getParts(); l != NULL; l = l->next) {
-		EraseableStrokePart * part = (EraseableStrokePart *) l->data;
-		if (part->getWidth() == Point::NO_PRESURE) {
-			cairo_set_line_width(cr, width);
-		} else {
-			cairo_set_line_width(cr, part->getWidth());
-		}
-
-		GList * pl = part->getPoints();
-		Point * p = (Point *) pl->data;
-		cairo_move_to(cr, p->x, p->y);
-
-		pl = pl->next;
-		for (; pl != NULL; pl = pl->next) {
-			Point * p = (Point *) pl->data;
-			cairo_line_to(cr, p->x, p->y);
-		}
-		cairo_stroke(cr);
-	}
+	e->draw(cr, this->lX, this->lY, this->width, this->height);
 }
 
 void DocumentView::drawStroke(cairo_t * cr, Stroke * s, int startPoint) {
@@ -165,7 +145,7 @@ void DocumentView::drawImage(cairo_t *cr, Image * i) {
 	cairo_set_matrix(cr, &defaultMatrix);
 }
 
-void DocumentView::drawElement(cairo_t *cr, Element * e) {
+void DocumentView::drawElement(cairo_t * cr, Element * e) {
 	if (e->getType() == ELEMENT_STROKE) {
 		drawStroke(cr, (Stroke *) e);
 	} else if (e->getType() == ELEMENT_TEXT) {
@@ -175,7 +155,7 @@ void DocumentView::drawElement(cairo_t *cr, Element * e) {
 	}
 }
 
-void DocumentView::drawLayer(cairo_t *cr, Layer * l) {
+void DocumentView::drawLayer(cairo_t * cr, Layer * l) {
 	ListIterator<Element *> it = l->elementIterator();
 
 #ifdef SHOW_REPAINT_BOUNDS

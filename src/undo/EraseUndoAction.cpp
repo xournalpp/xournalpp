@@ -2,7 +2,7 @@
 #include "../gui/Redrawable.h"
 #include "../model/Stroke.h"
 #include "../model/Layer.h"
-#include "../model/EraseableStroke.h"
+#include "../model/eraser/EraseableStroke.h"
 
 #include "PageLayerPosEntry.h"
 
@@ -71,6 +71,7 @@ void EraseUndoAction::finalize() {
 			EraseableStroke * e = p->element->getEraseable();
 			GList * stroke = e->getStroke(p->element);
 			for (GList * ls = stroke; ls != NULL; ls = ls->next) {
+				// TODO: lock document
 				Stroke * copy = (Stroke *) ls->data;
 				p->layer->insertElement(copy, pos);
 				this->addEdited(p->layer, copy, pos);

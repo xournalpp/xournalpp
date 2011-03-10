@@ -13,18 +13,21 @@
 #define __XOURNALWIDGET_H__
 
 #include <gtk/gtk.h>
-
-#include "../model/Document.h"
-#include "PageView.h"
-#include "../control/ZoomControl.h"
 #include "../util/Arrayiterator.h"
-#include "../util/Util.h"
-#include "../control/PdfCache.h"
+#include "../control/ZoomControl.h"
+#include "../util/MemoryCheck.h"
+#include "../model/DocumentListener.h"
 
 const int XOURNAL_PADDING = 20;
 const int XOURNAL_PADDING_TOP_LEFT = 10;
 
 class Control;
+class PageView;
+class Document;
+class TextEditor;
+class PdfCache;
+class XojPage;
+class Rectangle;
 
 class XournalWidget: public DocumentListener, public ZoomListener, public MemoryCheckObject {
 public:

@@ -112,9 +112,13 @@ am_xournalpp_OBJECTS = xournalpp-BlockingJob.$(OBJEXT) \
 	xournalpp-MainWindow.$(OBJEXT) xournalpp-PageView.$(OBJEXT) \
 	xournalpp-SearchBar.$(OBJEXT) xournalpp-Shadow.$(OBJEXT) \
 	xournalpp-TextEditor.$(OBJEXT) \
-	xournalpp-XournalWidget.$(OBJEXT) xournalpp-Document.$(OBJEXT) \
-	xournalpp-Element.$(OBJEXT) \
-	xournalpp-EraseableStroke.$(OBJEXT) xournalpp-Font.$(OBJEXT) \
+	xournalpp-XournalWidget.$(OBJEXT) \
+	xournalpp-EraseableStroke.$(OBJEXT) \
+	xournalpp-EraseableStrokePart.$(OBJEXT) \
+	xournalpp-PartList.$(OBJEXT) xournalpp-Document.$(OBJEXT) \
+	xournalpp-DocumentHandler.$(OBJEXT) \
+	xournalpp-DocumentListener.$(OBJEXT) \
+	xournalpp-Element.$(OBJEXT) xournalpp-Font.$(OBJEXT) \
 	xournalpp-FormatDefinitions.$(OBJEXT) \
 	xournalpp-Image.$(OBJEXT) xournalpp-Layer.$(OBJEXT) \
 	xournalpp-LinkDestination.$(OBJEXT) xournalpp-Page.$(OBJEXT) \
@@ -395,9 +399,13 @@ xournalpp_SOURCES = \
 	gui/Shadow.cpp \
 	gui/TextEditor.cpp \
 	gui/XournalWidget.cpp \
+	model/eraser/EraseableStroke.cpp \
+	model/eraser/EraseableStrokePart.cpp \
+	model/eraser/PartList.cpp \
 	model/Document.cpp \
+	model/DocumentHandler.cpp \
+	model/DocumentListener.cpp \
 	model/Element.cpp \
-	model/EraseableStroke.cpp \
 	model/Font.cpp \
 	model/FormatDefinitions.cpp \
 	model/Image.cpp \
@@ -558,6 +566,8 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-Cursor.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-DeleteUndoAction.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-Document.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-DocumentHandler.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-DocumentListener.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-DocumentView.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-DoubleArrayAttribute.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-DoubleAttribute.Po@am__quote@
@@ -566,6 +576,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-EraseHandler.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-EraseUndoAction.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-EraseableStroke.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-EraseableStrokePart.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-ExportDialog.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-ExportHandler.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-Font.Po@am__quote@
@@ -600,6 +611,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-PageBackgroundChangedUndoAction.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-PageRange.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-PageView.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-PartList.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-PdfBookmark.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-PdfCache.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-PdfExport.Po@am__quote@
@@ -1833,6 +1845,48 @@ xournalpp-XournalWidget.obj: gui/XournalWidget.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-XournalWidget.obj `if test -f 'gui/XournalWidget.cpp'; then $(CYGPATH_W) 'gui/XournalWidget.cpp'; else $(CYGPATH_W) '$(srcdir)/gui/XournalWidget.cpp'; fi`
 
+xournalpp-EraseableStroke.o: model/eraser/EraseableStroke.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-EraseableStroke.o -MD -MP -MF $(DEPDIR)/xournalpp-EraseableStroke.Tpo -c -o xournalpp-EraseableStroke.o `test -f 'model/eraser/EraseableStroke.cpp' || echo '$(srcdir)/'`model/eraser/EraseableStroke.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-EraseableStroke.Tpo $(DEPDIR)/xournalpp-EraseableStroke.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='model/eraser/EraseableStroke.cpp' object='xournalpp-EraseableStroke.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-EraseableStroke.o `test -f 'model/eraser/EraseableStroke.cpp' || echo '$(srcdir)/'`model/eraser/EraseableStroke.cpp
+
+xournalpp-EraseableStroke.obj: model/eraser/EraseableStroke.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-EraseableStroke.obj -MD -MP -MF $(DEPDIR)/xournalpp-EraseableStroke.Tpo -c -o xournalpp-EraseableStroke.obj `if test -f 'model/eraser/EraseableStroke.cpp'; then $(CYGPATH_W) 'model/eraser/EraseableStroke.cpp'; else $(CYGPATH_W) '$(srcdir)/model/eraser/EraseableStroke.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-EraseableStroke.Tpo $(DEPDIR)/xournalpp-EraseableStroke.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='model/eraser/EraseableStroke.cpp' object='xournalpp-EraseableStroke.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-EraseableStroke.obj `if test -f 'model/eraser/EraseableStroke.cpp'; then $(CYGPATH_W) 'model/eraser/EraseableStroke.cpp'; else $(CYGPATH_W) '$(srcdir)/model/eraser/EraseableStroke.cpp'; fi`
+
+xournalpp-EraseableStrokePart.o: model/eraser/EraseableStrokePart.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-EraseableStrokePart.o -MD -MP -MF $(DEPDIR)/xournalpp-EraseableStrokePart.Tpo -c -o xournalpp-EraseableStrokePart.o `test -f 'model/eraser/EraseableStrokePart.cpp' || echo '$(srcdir)/'`model/eraser/EraseableStrokePart.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-EraseableStrokePart.Tpo $(DEPDIR)/xournalpp-EraseableStrokePart.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='model/eraser/EraseableStrokePart.cpp' object='xournalpp-EraseableStrokePart.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-EraseableStrokePart.o `test -f 'model/eraser/EraseableStrokePart.cpp' || echo '$(srcdir)/'`model/eraser/EraseableStrokePart.cpp
+
+xournalpp-EraseableStrokePart.obj: model/eraser/EraseableStrokePart.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-EraseableStrokePart.obj -MD -MP -MF $(DEPDIR)/xournalpp-EraseableStrokePart.Tpo -c -o xournalpp-EraseableStrokePart.obj `if test -f 'model/eraser/EraseableStrokePart.cpp'; then $(CYGPATH_W) 'model/eraser/EraseableStrokePart.cpp'; else $(CYGPATH_W) '$(srcdir)/model/eraser/EraseableStrokePart.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-EraseableStrokePart.Tpo $(DEPDIR)/xournalpp-EraseableStrokePart.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='model/eraser/EraseableStrokePart.cpp' object='xournalpp-EraseableStrokePart.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-EraseableStrokePart.obj `if test -f 'model/eraser/EraseableStrokePart.cpp'; then $(CYGPATH_W) 'model/eraser/EraseableStrokePart.cpp'; else $(CYGPATH_W) '$(srcdir)/model/eraser/EraseableStrokePart.cpp'; fi`
+
+xournalpp-PartList.o: model/eraser/PartList.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-PartList.o -MD -MP -MF $(DEPDIR)/xournalpp-PartList.Tpo -c -o xournalpp-PartList.o `test -f 'model/eraser/PartList.cpp' || echo '$(srcdir)/'`model/eraser/PartList.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-PartList.Tpo $(DEPDIR)/xournalpp-PartList.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='model/eraser/PartList.cpp' object='xournalpp-PartList.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-PartList.o `test -f 'model/eraser/PartList.cpp' || echo '$(srcdir)/'`model/eraser/PartList.cpp
+
+xournalpp-PartList.obj: model/eraser/PartList.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-PartList.obj -MD -MP -MF $(DEPDIR)/xournalpp-PartList.Tpo -c -o xournalpp-PartList.obj `if test -f 'model/eraser/PartList.cpp'; then $(CYGPATH_W) 'model/eraser/PartList.cpp'; else $(CYGPATH_W) '$(srcdir)/model/eraser/PartList.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-PartList.Tpo $(DEPDIR)/xournalpp-PartList.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='model/eraser/PartList.cpp' object='xournalpp-PartList.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-PartList.obj `if test -f 'model/eraser/PartList.cpp'; then $(CYGPATH_W) 'model/eraser/PartList.cpp'; else $(CYGPATH_W) '$(srcdir)/model/eraser/PartList.cpp'; fi`
+
 xournalpp-Document.o: model/Document.cpp
 @am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-Document.o -MD -MP -MF $(DEPDIR)/xournalpp-Document.Tpo -c -o xournalpp-Document.o `test -f 'model/Document.cpp' || echo '$(srcdir)/'`model/Document.cpp
 @am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-Document.Tpo $(DEPDIR)/xournalpp-Document.Po
@@ -1847,6 +1901,34 @@ xournalpp-Document.obj: model/Document.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-Document.obj `if test -f 'model/Document.cpp'; then $(CYGPATH_W) 'model/Document.cpp'; else $(CYGPATH_W) '$(srcdir)/model/Document.cpp'; fi`
 
+xournalpp-DocumentHandler.o: model/DocumentHandler.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-DocumentHandler.o -MD -MP -MF $(DEPDIR)/xournalpp-DocumentHandler.Tpo -c -o xournalpp-DocumentHandler.o `test -f 'model/DocumentHandler.cpp' || echo '$(srcdir)/'`model/DocumentHandler.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-DocumentHandler.Tpo $(DEPDIR)/xournalpp-DocumentHandler.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='model/DocumentHandler.cpp' object='xournalpp-DocumentHandler.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-DocumentHandler.o `test -f 'model/DocumentHandler.cpp' || echo '$(srcdir)/'`model/DocumentHandler.cpp
+
+xournalpp-DocumentHandler.obj: model/DocumentHandler.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-DocumentHandler.obj -MD -MP -MF $(DEPDIR)/xournalpp-DocumentHandler.Tpo -c -o xournalpp-DocumentHandler.obj `if test -f 'model/DocumentHandler.cpp'; then $(CYGPATH_W) 'model/DocumentHandler.cpp'; else $(CYGPATH_W) '$(srcdir)/model/DocumentHandler.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-DocumentHandler.Tpo $(DEPDIR)/xournalpp-DocumentHandler.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='model/DocumentHandler.cpp' object='xournalpp-DocumentHandler.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-DocumentHandler.obj `if test -f 'model/DocumentHandler.cpp'; then $(CYGPATH_W) 'model/DocumentHandler.cpp'; else $(CYGPATH_W) '$(srcdir)/model/DocumentHandler.cpp'; fi`
+
+xournalpp-DocumentListener.o: model/DocumentListener.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-DocumentListener.o -MD -MP -MF $(DEPDIR)/xournalpp-DocumentListener.Tpo -c -o xournalpp-DocumentListener.o `test -f 'model/DocumentListener.cpp' || echo '$(srcdir)/'`model/DocumentListener.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-DocumentListener.Tpo $(DEPDIR)/xournalpp-DocumentListener.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='model/DocumentListener.cpp' object='xournalpp-DocumentListener.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-DocumentListener.o `test -f 'model/DocumentListener.cpp' || echo '$(srcdir)/'`model/DocumentListener.cpp
+
+xournalpp-DocumentListener.obj: model/DocumentListener.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-DocumentListener.obj -MD -MP -MF $(DEPDIR)/xournalpp-DocumentListener.Tpo -c -o xournalpp-DocumentListener.obj `if test -f 'model/DocumentListener.cpp'; then $(CYGPATH_W) 'model/DocumentListener.cpp'; else $(CYGPATH_W) '$(srcdir)/model/DocumentListener.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-DocumentListener.Tpo $(DEPDIR)/xournalpp-DocumentListener.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='model/DocumentListener.cpp' object='xournalpp-DocumentListener.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-DocumentListener.obj `if test -f 'model/DocumentListener.cpp'; then $(CYGPATH_W) 'model/DocumentListener.cpp'; else $(CYGPATH_W) '$(srcdir)/model/DocumentListener.cpp'; fi`
+
 xournalpp-Element.o: model/Element.cpp
 @am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-Element.o -MD -MP -MF $(DEPDIR)/xournalpp-Element.Tpo -c -o xournalpp-Element.o `test -f 'model/Element.cpp' || echo '$(srcdir)/'`model/Element.cpp
 @am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-Element.Tpo $(DEPDIR)/xournalpp-Element.Po
@@ -1860,20 +1942,6 @@ xournalpp-Element.obj: model/Element.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='model/Element.cpp' object='xournalpp-Element.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-Element.obj `if test -f 'model/Element.cpp'; then $(CYGPATH_W) 'model/Element.cpp'; else $(CYGPATH_W) '$(srcdir)/model/Element.cpp'; fi`
-
-xournalpp-EraseableStroke.o: model/EraseableStroke.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-EraseableStroke.o -MD -MP -MF $(DEPDIR)/xournalpp-EraseableStroke.Tpo -c -o xournalpp-EraseableStroke.o `test -f 'model/EraseableStroke.cpp' || echo '$(srcdir)/'`model/EraseableStroke.cpp
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-EraseableStroke.Tpo $(DEPDIR)/xournalpp-EraseableStroke.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='model/EraseableStroke.cpp' object='xournalpp-EraseableStroke.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-EraseableStroke.o `test -f 'model/EraseableStroke.cpp' || echo '$(srcdir)/'`model/EraseableStroke.cpp
-
-xournalpp-EraseableStroke.obj: model/EraseableStroke.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-EraseableStroke.obj -MD -MP -MF $(DEPDIR)/xournalpp-EraseableStroke.Tpo -c -o xournalpp-EraseableStroke.obj `if test -f 'model/EraseableStroke.cpp'; then $(CYGPATH_W) 'model/EraseableStroke.cpp'; else $(CYGPATH_W) '$(srcdir)/model/EraseableStroke.cpp'; fi`
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-EraseableStroke.Tpo $(DEPDIR)/xournalpp-EraseableStroke.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='model/EraseableStroke.cpp' object='xournalpp-EraseableStroke.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-EraseableStroke.obj `if test -f 'model/EraseableStroke.cpp'; then $(CYGPATH_W) 'model/EraseableStroke.cpp'; else $(CYGPATH_W) '$(srcdir)/model/EraseableStroke.cpp'; fi`
 
 xournalpp-Font.o: model/Font.cpp
 @am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-Font.o -MD -MP -MF $(DEPDIR)/xournalpp-Font.Tpo -c -o xournalpp-Font.o `test -f 'model/Font.cpp' || echo '$(srcdir)/'`model/Font.cpp

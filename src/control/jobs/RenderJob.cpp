@@ -3,6 +3,9 @@
 #include "../../gui/XournalWidget.h"
 #include "../../view/PdfView.h"
 #include "../../view/DocumentView.h"
+#include "../../gui/PageView.h"
+#include "../../model/Document.h"
+#include "../../util/Rectangle.h"
 
 RenderJob::RenderJob(PageView * view) {
 	this->view = view;
@@ -70,6 +73,11 @@ void RenderJob::repaintRectangle(Rectangle * rect, double zoom) {
 }
 
 void RenderJob::run() {
+	CHECK_MEMORY(this);
+
+//	static int testId = 0;
+//	testId++;
+
 	double zoom = this->view->xournal->getZoom();
 
 	if (this->view->repaintComplete) {
@@ -93,6 +101,14 @@ void RenderJob::run() {
 		DocumentView view;
 		PdfView::drawPage(this->view->xournal->getCache(), popplerPage, cr2, zoom, this->view->page->getWidth(), this->view->page->getHeight());
 		view.drawPage(this->view->page, cr2);
+
+		// TODO: debug
+//		char * str = g_strdup_printf("%i", testId);
+//		cairo_move_to(cr2, 100, 100);
+//		cairo_set_font_size(cr2, 20);
+//		cairo_show_text(cr2, str);
+//		g_free(str);
+
 		cairo_destroy(cr2);
 		g_mutex_lock(this->view->drawingMutex);
 
@@ -105,7 +121,12 @@ void RenderJob::run() {
 		doc->unlock();
 
 		gdk_threads_enter();
-		gtk_widget_queue_draw(this->view->widget);
+
+		printf("repaint widget complete\n");
+		//		gtk_widget_queue_draw(this->view->widget);
+
+		this->view->repaintIdle();
+
 		gdk_threads_leave();
 
 	} else {

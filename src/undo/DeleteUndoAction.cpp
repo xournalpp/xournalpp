@@ -36,6 +36,7 @@ bool DeleteUndoAction::undo(Control * control) {
 	}
 
 	for (GList * l = this->elements; l != NULL; l = l->next) {
+		// TODO : !!!!!!!!!synchronize
 		PageLayerPosEntry<Element> * e = (PageLayerPosEntry<Element>*) l->data;
 		e->layer->insertElement(e->element, e->pos);
 		view->repaint(e->element->getX(), e->element->getY(), e->element->getElementWidth(),

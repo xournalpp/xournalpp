@@ -13,7 +13,9 @@
 #define __RENDERJOB_H__
 
 #include "Job.h"
-#include "../../gui/PageView.h"
+
+class Rectangle;
+class PageView;
 
 class RenderJob: public Job {
 public:

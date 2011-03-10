@@ -34,6 +34,8 @@ public:
 	 */
 	bool intersect(const Rectangle * src, Rectangle * dest);
 
+	void add(double x, double y, double width, double height);
+
 public:
 	double x;
 	double y;

@@ -57,3 +57,21 @@ bool Rectangle::intersect(const Rectangle * src, Rectangle * dest = NULL) {
 
 	return returnVal;
 }
+
+void Rectangle::add(double x, double y, double width, double height) {
+	if (width <= 0 || height <= 0) {
+		return;
+	}
+
+	double x1 = MIN(this->x, x);
+	double y1 = MIN(this->y, y);
+
+	double x2 = MAX(this->x + this->width, x + width);
+	double y2 = MAX(this->y + this->height, y + height);
+
+	this->x = x1;
+	this->y = y1;
+	this->width = x2 - x1;
+	this->height = y2 - y1;
+}
+
