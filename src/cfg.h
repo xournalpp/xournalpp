@@ -41,7 +41,7 @@
 // #define SHOW_ELEMENT_BOUNDS
 
 // draw a border around all repaint rects
-// #define SHOW_REPAINT_BOUNDS
+ #define SHOW_REPAINT_BOUNDS
 
 
 #endif /* __CONFIG_H__ */

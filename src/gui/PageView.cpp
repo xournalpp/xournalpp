@@ -875,6 +875,8 @@ bool PageView::actionDelete() {
 }
 
 bool PageView::paintPage(GdkEventExpose * event) {
+	printf("paintPage\n");
+
 	if (!firstPainted) {
 		firstPaint();
 		return true;
