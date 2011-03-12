@@ -197,7 +197,7 @@ void DocumentView::drawLayer(cairo_t * cr, Layer * l) {
 	}
 
 #ifdef SHOW_REPAINT_BOUNDS
-	printf("DocumentView: draw %i / not draw %i\n", drawed, notDrawed);
+	printf("DBG:DocumentView: draw %i / not draw %i\n", drawed, notDrawed);
 #endif //SHOW_REPAINT_BOUNDS
 }
 
@@ -329,13 +329,13 @@ void DocumentView::drawPage(XojPage * page, cairo_t * cr, bool preview) {
 
 #ifdef SHOW_REPAINT_BOUNDS
 	if (this->lX != -1) {
-		printf("repaint area\n");
+		printf("DBG:repaint area\n");
 		cairo_set_source_rgb(cr, 1, 0, 0);
 		cairo_set_line_width(cr, 1);
 		cairo_rectangle(cr, this->lX + 3, this->lY + 3, this->lWidth - 6, this->lHeight - 6);
 		cairo_stroke(cr);
 	} else {
-		printf("repaint complete\n");
+		printf("DBG:repaint complete\n");
 	}
 #endif //SHOW_REPAINT_BOUNDS
 	this->lX = -1;

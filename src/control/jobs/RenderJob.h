@@ -13,6 +13,7 @@
 #define __RENDERJOB_H__
 
 #include "Job.h"
+#include <gtk/gtk.h>
 
 class Rectangle;
 class PageView;
@@ -28,6 +29,7 @@ public:
 	void * getSource();
 
 	void run();
+	virtual void afterRun();
 
 public:
 	static void repaintRectangle(PageView * view, Rectangle * rect);
@@ -37,6 +39,8 @@ private:
 
 private:
 	PageView * view;
+	bool repaintComplete;
+	GList * repaintRect;
 };
 
 #endif /* __RENDERJOB_H__ */

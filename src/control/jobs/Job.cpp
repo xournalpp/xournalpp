@@ -34,6 +34,9 @@ bool Job::callAfterCallback(Job * job) {
 }
 
 void Job::callAfterRun() {
+	if(this->afterRunId) {
+		return;
+	}
 	this->afterRunId = g_idle_add((GSourceFunc) Job::callAfterCallback, this);
 }
 

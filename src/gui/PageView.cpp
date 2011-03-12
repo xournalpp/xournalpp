@@ -875,8 +875,6 @@ bool PageView::actionDelete() {
 }
 
 bool PageView::paintPage(GdkEventExpose * event) {
-	printf("paintPage\n");
-
 	if (!firstPainted) {
 		firstPaint();
 		return true;
@@ -935,6 +933,11 @@ bool PageView::paintPage(GdkEventExpose * event) {
 
 	cairo_restore(cr);
 
+	// don't paint this with scale, because it needs a 1:1 zoom
+	if (this->verticalSpace) {
+		this->verticalSpace->paint(cr, event, zoom);
+	}
+
 	cairo_scale(cr, zoom, zoom);
 
 	if (this->textEditor) {
@@ -942,9 +945,6 @@ bool PageView::paintPage(GdkEventExpose * event) {
 	}
 	if (this->selectionEdit) {
 		this->selectionEdit->paint(cr, event, zoom);
-	}
-	if (this->verticalSpace) {
-		this->verticalSpace->paint(cr, event, zoom);
 	}
 
 	Control * control = xournal->getControl();

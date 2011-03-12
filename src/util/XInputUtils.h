@@ -28,6 +28,13 @@ public:
 	 */
 	static gboolean onMouseEnterNotifyEvent(GtkWidget * widget, GdkEventCrossing * event, gpointer user_data);
 	static gboolean onMouseLeaveNotifyEvent(GtkWidget * widget, GdkEventCrossing * event, gpointer user_data);
+
+	static void initUtils(GtkWidget * win);
+
+private:
+	static int screenWidth;
+	static int screenHeight;
+
 };
 
 #endif /* __XINPUTUTILS_H__ */
