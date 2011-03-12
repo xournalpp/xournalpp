@@ -30,6 +30,7 @@ void InputHandler::addPointToTmpStroke(GdkEventMotion * event) {
 	double zoom = xournal->getZoom();
 	double x = event->x / zoom;
 	double y = event->y / zoom;
+	bool presureSensitivity = xournal->getControl()->getSettings()->isPresureSensitivity();
 
 	if (tmpStroke->getPointCount() > 0) {
 		Point p = tmpStroke->getPoint(tmpStroke->getPointCount() - 1);
@@ -59,16 +60,18 @@ void InputHandler::addPointToTmpStroke(GdkEventMotion * event) {
 		return;
 	}
 
-	double pressure = Point::NO_PRESURE;
-	if (h->getToolType() == TOOL_PEN) {
-		if (getPressureMultiplier((GdkEvent *) event, pressure)) {
-			pressure = pressure * tmpStroke->getWidth();
-		} else {
-			pressure = Point::NO_PRESURE;
+	if (presureSensitivity) {
+		double pressure = Point::NO_PRESURE;
+		if (h->getToolType() == TOOL_PEN) {
+			if (getPressureMultiplier((GdkEvent *) event, pressure)) {
+				pressure = pressure * tmpStroke->getWidth();
+			} else {
+				pressure = Point::NO_PRESURE;
+			}
 		}
-	}
 
-	tmpStroke->setLastPressure(pressure);
+		tmpStroke->setLastPressure(pressure);
+	}
 	tmpStroke->addPoint(Point(x, y));
 
 	drawTmpStroke();
@@ -167,8 +170,8 @@ void InputHandler::onButtonReleaseEvent(GdkEventButton * event, XojPage * page) 
 			layer->addElement(result->recognized);
 
 			Range range(result->recognized->getX(), result->recognized->getY());
-			range.addPoint(result->recognized->getX() + result->recognized->getElementWidth(), result->recognized->getY()
-					+ result->recognized->getElementHeight());
+			range.addPoint(result->recognized->getX() + result->recognized->getElementWidth(),
+					result->recognized->getY() + result->recognized->getElementHeight());
 
 			range.addPoint(this->tmpStroke->getX(), this->tmpStroke->getY());
 			range.addPoint(this->tmpStroke->getX() + this->tmpStroke->getElementWidth(), this->tmpStroke->getY() + this->tmpStroke->getElementHeight());

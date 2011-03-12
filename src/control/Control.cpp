@@ -14,6 +14,7 @@
 #include "../util/CrashHandler.h"
 #include "../util/ObjectStream.h"
 #include "../util/Stacktrace.h"
+#include "../util/XInputUtils.h"
 #include "../model/FormatDefinitions.h"
 #include "../undo/InsertDeletePageUndoAction.h"
 #include "../undo/InsertLayerUndoAction.h"
@@ -198,6 +199,8 @@ void Control::initWindow(MainWindow * win) {
 	this->enableAutosave(settings->isAutosaveEnabled());
 
 	win->setFontButtonFont(settings->getFont());
+
+	XInputUtils::initUtils(win->getWindow());
 }
 
 bool Control::autosaveCallback(Control * control) {

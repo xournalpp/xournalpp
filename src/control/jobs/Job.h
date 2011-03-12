@@ -45,6 +45,11 @@ protected:
 	 */
 	virtual void run() = 0;
 
+	/**
+	 * This method should be called as _last_ operation in run
+	 *
+	 * If you call it in another position the object will be deleted before run is finished!
+	 */
 	void callAfterRun();
 
 	/**

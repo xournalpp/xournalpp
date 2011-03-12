@@ -2,10 +2,19 @@
 #include <math.h>
 #include "../cfg.h"
 
+int XInputUtils::screenWidth = 0;
+int XInputUtils::screenHeight = 0;
+
 XInputUtils::XInputUtils() {
 }
 
 XInputUtils::~XInputUtils() {
+}
+
+void XInputUtils::initUtils(GtkWidget * win) {
+	GdkScreen * screen = gtk_widget_get_screen(win);
+	screenWidth = gdk_screen_get_width(screen);
+	screenHeight = gdk_screen_get_height(screen);
 }
 
 #define EPSILON 1E-7
@@ -29,38 +38,40 @@ void XInputUtils::fixXInputCoords(GdkEvent * event, GtkWidget * widget) {
 		return; // nothing we know how to do
 	}
 
-#ifdef ENABLE_XINPUT_BUGFIX
 	if (axes == NULL) {
 		return;
 	}
 
+#ifdef ENABLE_XINPUT_BUGFIX
 	// fix broken events with the core pointer's location
 	if (!finite(axes[0]) || !finite(axes[1]) || (axes[0] == 0. && axes[1] == 0.)) {
-		gdk_window_get_pointer(widget->window, &ix, &iy, NULL);
+		gdk_window_get_pointer(GTK_WIDGET(widget)->window, &ix, &iy, NULL);
 		*px = ix;
 		*py = iy;
 	} else {
-		GdkScreen * screen = gtk_widget_get_screen(widget);
-		int screenWidth = gdk_screen_get_width(screen);
-		int screenHeight = gdk_screen_get_height(screen);
-
-		gdk_window_get_origin(widget->window, &wx, &wy);
-		double axisWidth = device->axes[0].max - device->axes[0].min;
-
-		if (axisWidth > EPSILON) {
-			*px = (axes[0] / axisWidth) * screenWidth - wx;
+		gdk_window_get_origin(GTK_WIDGET(widget)->window, &wx, &wy);
+		double axis_width = device->axes[0].max - device->axes[0].min;
+		if (axis_width > EPSILON) {
+			*px = (axes[0] / axis_width) * screenWidth - wx;
 		}
-		axisWidth = device->axes[1].max - device->axes[1].min;
-		if (axisWidth > EPSILON) {
-			*py = (axes[1] / axisWidth) * screenHeight - wy;
+		axis_width = device->axes[1].max - device->axes[1].min;
+		if (axis_width > EPSILON) {
+			*py = (axes[1] / axis_width) * screenHeight - wy;
 		}
-
 	}
 #else
 	if (!finite(*px) || !finite(*py) || (*px == 0. && *py == 0.)) {
-		gdk_window_get_pointer(widget->window, &ix, &iy, NULL);
+		gdk_window_get_pointer(GTK_WIDGET(widget)->window, &ix, &iy, NULL);
 		*px = ix;
 		*py = iy;
+	} else {
+		/* with GTK+ 2.17, events come improperly translated, and the event's
+		 GdkWindow isn't even the same for ButtonDown as for MotionNotify... */
+		if (gtk_major_version == 2 && gtk_minor_version == 17) { // GTK+ 2.17 issues !!
+			gdk_window_get_position(GTK_WIDGET(widget)->window, &wx, &wy);
+			*px += wx;
+			*py += wy;
+		}
 	}
 #endif
 }
@@ -112,7 +123,6 @@ gboolean XInputUtils::onMouseEnterNotifyEvent(GtkWidget * widget, GdkEventCrossi
 	}
 	return FALSE;
 }
-
 
 gboolean XInputUtils::onMouseLeaveNotifyEvent(GtkWidget * widget, GdkEventCrossing * event, gpointer user_data) {
 #ifdef INPUT_DEBUG

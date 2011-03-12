@@ -58,8 +58,7 @@ VerticalToolHandler::~VerticalToolHandler() {
 void VerticalToolHandler::paint(cairo_t * cr, GdkEventExpose * event, double zoom) {
 	GdkColor selectionColor = view->getSelectionColor();
 
-	// set the line always the same size on display
-	cairo_set_line_width(cr, 1 / zoom);
+	cairo_set_line_width(cr, 1);
 
 	gdk_cairo_set_source_color(cr, &selectionColor);
 
@@ -74,13 +73,13 @@ void VerticalToolHandler::paint(cairo_t * cr, GdkEventExpose * event, double zoo
 		height = this->startY - this->endY;
 	}
 
-	cairo_rectangle(cr, 0, y, this->page->getWidth(), height);
+	cairo_rectangle(cr, 0, y * zoom, this->page->getWidth() * zoom, height * zoom);
 
 	cairo_stroke_preserve(cr);
 	cairo_set_source_rgba(cr, selectionColor.red / 65536.0, selectionColor.green / 65536.0, selectionColor.blue / 65536.0, 0.3);
 	cairo_fill(cr);
 
-	cairo_set_source_surface(cr, crBuffer, 0, this->endY);
+	cairo_set_source_surface(cr, this->crBuffer, 0, this->endY * zoom);
 	cairo_paint(cr);
 }
 
