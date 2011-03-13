@@ -84,7 +84,8 @@ void EraseHandler::eraseStroke(Layer * l, Stroke * s, double x, double y, Range 
 		if (pos == -1) {
 			return;
 		}
-		this->view->repaint(s);
+		range->addPoint(s->getX(), s->getY());
+		range->addPoint(s->getX() + s->getElementWidth(), s->getY() + s->getElementHeight());
 
 		if (!this->eraseDeleteUndoAction) {
 			this->eraseDeleteUndoAction = new DeleteUndoAction(this->page, this->view, true);
