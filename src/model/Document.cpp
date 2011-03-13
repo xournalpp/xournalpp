@@ -36,7 +36,6 @@ void Document::lock() {
 	// TODO: real version:
 	 g_mutex_lock(this->documentLock);
 
-
 	// TODO: debug
 //	if(tryLock()) {
 //		Stacktrace::printStracktrace();

@@ -117,6 +117,8 @@ public:
 
 	void setPageInsertType(PageInsertType type);
 
+	void customizeToolbars();
+
 	void enableFullscreen(bool enabled, bool presentation = false);
 
 	void addNewLayer();
@@ -171,6 +173,8 @@ public:
 
 	void block(const char * name);
 	void unblock();
+
+	void deleteLastAutosaveFile(String newAutosaveFile);
 
 public:
 	// UndoRedoListener interface
@@ -260,7 +264,6 @@ private:
 	 * The autosave handler ID
 	 */
 	int autosaveTimeout;
-	SaveHandler * autosaveHandler;
 	String lastAutosaveFilename;
 
 	/**

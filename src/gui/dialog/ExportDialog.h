@@ -14,11 +14,7 @@
 
 #include "../GladeGui.h"
 #include "../../control/settings/Settings.h"
-
-enum ExportFormtType {
-	EXPORT_FORMAT_PDF, EXPORT_FORMAT_EPS, EXPORT_FORMAT_SVG, EXPORT_FORMAT_PNG
-
-};
+#include "../../control/jobs/ExportFormtType.h"
 
 class ExportDialog: public GladeGui {
 public:

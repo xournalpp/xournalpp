@@ -25,10 +25,10 @@
 #include "jobs/BlockingJob.h"
 #include "jobs/PdfExportJob.h"
 #include "jobs/SaveJob.h"
+#include "jobs/AutosaveJob.h"
 #include "../view/DocumentView.h"
 #include "stockdlg/ImageOpenDlg.h"
 #include "stockdlg/XojOpenDlg.h"
-#include "SaveHandler.h"
 #include "../gui/TextEditor.h"
 #include "../undo/DeleteUndoAction.h"
 
@@ -74,7 +74,6 @@ Control::Control(GladeSearchpath * gladeSearchPath) {
 	this->sidebarHidden = false;
 	this->selection = NULL;
 	this->autosaveTimeout = 0;
-	this->autosaveHandler = NULL;
 
 	this->defaultWidth = -1;
 	this->defaultHeight = -1;
@@ -110,11 +109,7 @@ Control::~Control() {
 	g_source_remove(this->changeTimout);
 	this->enableAutosave(false);
 
-	if (!this->lastAutosaveFilename.isEmpty()) {
-		// delete old autosave file
-		GFile * file = g_file_new_for_path(this->lastAutosaveFilename.c_str());
-		g_file_delete(file, NULL, NULL);
-	}
+	deleteLastAutosaveFile("");
 
 	delete this->clipboardHandler;
 	this->clipboardHandler = NULL;
@@ -134,6 +129,15 @@ Control::~Control() {
 	this->searchBar = NULL;
 	delete this->scrollHandler;
 	this->scrollHandler = NULL;
+}
+
+void Control::deleteLastAutosaveFile(String newAutosaveFile) {
+	if (!this->lastAutosaveFilename.isEmpty()) {
+		// delete old autosave file
+		GFile * file = g_file_new_for_path(this->lastAutosaveFilename.c_str());
+		g_file_delete(file, NULL, NULL);
+	}
+	this->lastAutosaveFilename = newAutosaveFile;
 }
 
 bool Control::checkChangedDocument(Control * control) {
@@ -204,61 +208,16 @@ void Control::initWindow(MainWindow * win) {
 }
 
 bool Control::autosaveCallback(Control * control) {
-		gdk_threads_enter();
+	if (!control->undoRedo->isChangedAutosave()) {
+		printf(_("Info: autosave not necessary, nothing changed...\n"));
+		// do nothing, nothing changed
+		return true;
+	} else {
+		printf(_("Info: autosave document...\n"));
+	}
 
-		if (!control->undoRedo->isChangedAutosave()) {
-			printf(_("Info: autosave not necessary, nothing changed...\n"));
+	control->scheduler->addJob(new AutosaveJob(control), JOB_PRIORITY_NONE);
 
-			gdk_threads_leave();
-
-			// do nothing, nothing changed
-			return true;
-		} else {
-			printf(_("Info: autosave document...\n"));
-		}
-
-		if (control->autosaveHandler) {
-			delete control->autosaveHandler;
-		}
-
-		control->undoRedo->documentAutosaved();
-		control->autosaveHandler = new SaveHandler();
-
-
-		control->doc->lock();
-		control->autosaveHandler->prepareSave(control->doc);
-		String filename = control->doc->getFilename();
-		control->doc->unlock();
-
-		if (filename.isEmpty()) {
-			filename = Util::getAutosaveFilename();
-		} else {
-			if (filename.length() > 5 && filename.substring(-4) == ".xoj") {
-				filename = filename.substring(0, -4);
-			}
-			filename += ".autosave.xoj";
-		}
-
-		if (!control->lastAutosaveFilename.isEmpty() && control->lastAutosaveFilename != filename) {
-			GFile * file = g_file_new_for_path(control->lastAutosaveFilename.c_str());
-			g_file_delete(file, NULL, NULL);
-		}
-		control->lastAutosaveFilename = filename;
-
-		GzOutputStream * out = new GzOutputStream(filename);
-		control->autosaveHandler->saveTo(out, filename);
-		if (!control->autosaveHandler->getErrorMessage().isEmpty()) {
-			GtkWidget * dialog = gtk_message_dialog_new((GtkWindow *) control->getWindow(), GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, _("Autosave: %s"),
-					control->autosaveHandler->getErrorMessage().c_str());
-			gtk_dialog_run(GTK_DIALOG(dialog));
-			gtk_widget_destroy(dialog);
-		}
-
-		delete control->autosaveHandler;
-		control->autosaveHandler = NULL;
-		delete out;
-
-		gdk_threads_leave();
 	return true;
 }
 
@@ -740,6 +699,10 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent *even
 	}
 		break;
 
+	case ACTION_CUSTOMIZE_TOOLBAR:
+		customizeToolbars();
+		break;
+
 	case ACTION_FULLSCREEN:
 		enableFullscreen(enabled);
 		break;
@@ -798,6 +761,10 @@ void Control::firePageSelected(XojPage * page) {
 
 void Control::firePageSelected(int page) {
 	DocumentHandler::firePageSelected(page);
+}
+
+void Control::customizeToolbars() {
+
 }
 
 void Control::enableFullscreen(bool enabled, bool presentation) {
@@ -1721,7 +1688,7 @@ bool Control::openFile(String filename, int scrollToPage) {
 
 
 		GtkWidget * dialog = gtk_message_dialog_new((GtkWindow *) *getWindow(), GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_QUESTION, GTK_BUTTONS_NONE,
-				_(h.isAttachedPdfMissing() ? "The attached background PDF could not be found." : "The background PDF could not be found."));
+				h.isAttachedPdfMissing() ? _("The attached background PDF could not be found.") : _("The background PDF could not be found."));
 
 		gtk_dialog_add_button(GTK_DIALOG(dialog), _("Select another PDF"), 1);
 		gtk_dialog_add_button(GTK_DIALOG(dialog), _("Remove PDF Background"), 2);
@@ -2013,9 +1980,7 @@ void Control::exportAsPdf() {
 void Control::exportAs() {
 	ExportHandler handler;
 
-	this->doc->lock();
-	handler.runExportWithDialog(this->gladeSearchPath, this->settings, this->doc, getCurrentPageNo());
-	this->doc->unlock();
+	handler.runExportWithDialog(this->gladeSearchPath, this->settings, this->doc, this, getCurrentPageNo());
 }
 
 void Control::saveAs() {

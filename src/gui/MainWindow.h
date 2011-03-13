@@ -13,12 +13,14 @@
 #define __MAINWINDOW_H__
 
 #include "GladeGui.h"
-#include "toolbarMenubar/ToolMenuHandler.h"
 
 #include "XournalWidget.h"
+#include "../model/Font.h"
 
 class Control;
 class MainWindow;
+class ToolMenuHandler;
+class ToolbarData;
 
 class MainWindow: public GladeGui {
 public:

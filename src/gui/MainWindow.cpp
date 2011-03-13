@@ -1,6 +1,8 @@
 #include "../control/Control.h"
 #include "MainWindow.h"
 #include "../cfg.h"
+#include "toolbarMenubar/ToolMenuHandler.h"
+#include "../gui/GladeSearchpath.h"
 
 #include <config.h>
 #include <glib/gi18n-lib.h>
@@ -34,11 +36,23 @@ MainWindow::MainWindow(GladeSearchpath * gladeSearchPath, Control * control) :
 
 	this->toolbar = new ToolMenuHandler(this->control, this->control->getZoomControl(), this, this->control->getToolHandler());
 
-	gchar * file = g_build_filename(g_get_home_dir(), G_DIR_SEPARATOR_S, CONFIG_DIR, G_DIR_SEPARATOR_S, TOOLBAR_CONFIG, NULL);
-	if (!this->toolbar->parse(file) || this->toolbar->shouldRecreate()) {
-		if (!this->toolbar->writeDefault(file) || !this->toolbar->parse(file)) {
+	char * file = gladeSearchPath->findFile(NULL, "toolbar.ini");
+	if (!this->toolbar->parse(file, true)) {
+		GtkWidget* dlg = gtk_message_dialog_new(GTK_WINDOW(this->window), GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
+				_("Could not parse general toolbar.ini file: %s\nNo Toolbars will be available"), file);
+
+		gtk_dialog_run(GTK_DIALOG(dlg));
+		gtk_widget_hide(dlg);
+		gtk_widget_destroy(dlg);
+	}
+
+	g_free(file);
+
+	file = g_build_filename(g_get_home_dir(), G_DIR_SEPARATOR_S, CONFIG_DIR, G_DIR_SEPARATOR_S, TOOLBAR_CONFIG, NULL);
+	if (g_file_test(file, G_FILE_TEST_EXISTS)) {
+		if (!this->toolbar->parse(file, false)) {
 			GtkWidget* dlg = gtk_message_dialog_new(GTK_WINDOW(this->window), GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
-					_("Could not create toolbar config file: %s\nCheck write permission, no Toolbars will be available"), file);
+					_("Could not parse custom toolbar.ini file: %s\nToolbars will not be available"), file);
 
 			gtk_dialog_run(GTK_DIALOG(dlg));
 			gtk_widget_hide(dlg);
@@ -104,8 +118,8 @@ void MainWindow::updateScrollbarSidebarPosition() {
 	GtkWidget * sidebarContents = get("sidebarContents");
 	GtkWidget * scrolledwindowMain = get("scrolledwindowMain");
 
-	gtk_scrolled_window_set_placement(GTK_SCROLLED_WINDOW(scrolledwindowMain),
-			control->getSettings()->isScrollbarOnLeft() ? GTK_CORNER_TOP_RIGHT : GTK_CORNER_TOP_LEFT);
+	gtk_scrolled_window_set_placement(GTK_SCROLLED_WINDOW(scrolledwindowMain), control->getSettings()->isScrollbarOnLeft() ? GTK_CORNER_TOP_RIGHT
+			: GTK_CORNER_TOP_LEFT);
 
 	int divider = gtk_paned_get_position(GTK_PANED(panelMainContents));
 	bool sidebarRight = control->getSettings()->isSidebarOnRight();
@@ -171,7 +185,7 @@ void MainWindow::pageNrSpinChangedCallback(GtkSpinButton * spinbutton, MainWindo
 	}
 
 	// Give the spin button some time to realease, if we don't do he will send new events...
-	lastId = g_timeout_add(100, (GSourceFunc) & pageNrSpinChangedTimerCallback, win->control);
+	lastId = g_timeout_add(100, (GSourceFunc) &pageNrSpinChangedTimerCallback, win->control);
 }
 
 void tbSelectMenuitemActivated(GtkMenuItem *menuitem, MenuSelectToolbarData * data) {
@@ -255,14 +269,16 @@ void MainWindow::initToolbar() {
 	ListIterator<ToolbarData *> it = this->toolbar->iterator();
 	GtkWidget * item = NULL;
 	GtkWidget * selectedItem = NULL;
-	ToolbarData * d = NULL;
 	ToolbarData * selectedData = NULL;
 
 	Settings * settings = control->getSettings();
 	String selectedId = settings->getSelectedToolbar();
 
+	bool predefined = true;
+	int menuPos = 0;
+
 	while (it.hasNext()) {
-		d = it.next();
+		ToolbarData * d = it.next();
 		if (selectedData == NULL) {
 			selectedData = d;
 			selectedItem = item;
@@ -285,7 +301,16 @@ void MainWindow::initToolbar() {
 		g_signal_connect(item, "activate", G_CALLBACK(tbSelectMenuitemActivated), data);
 
 		gtk_widget_show(item);
-		gtk_menu_shell_append(menubar, item);
+
+		if (predefined && !d->isPredefined()) {
+			GtkWidget * separator = gtk_separator_menu_item_new();
+			gtk_widget_show(separator);
+			gtk_menu_shell_insert(menubar, separator, menuPos++);
+
+			predefined = true;
+		}
+
+		gtk_menu_shell_insert(menubar, item, menuPos++);
 		gtk_widget_unrealize(item);
 	}
 

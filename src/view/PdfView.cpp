@@ -9,16 +9,18 @@ PdfView::PdfView() {
 PdfView::~PdfView() {
 }
 
-void PdfView::drawPage(PdfCache * cache, XojPopplerPage * popplerPage, cairo_t * cr, double zoom, double width, double height) {
+void PdfView::drawPage(PdfCache * cache, XojPopplerPage * popplerPage, cairo_t * cr, double zoom, double width, double height, bool forPrinting) {
 	if (popplerPage) {
-		if (cache) {
+		if (cache && !forPrinting) {
 			cache->render(cr, popplerPage, zoom);
 		} else {
-			popplerPage->render(cr, false);
+			popplerPage->render(cr, forPrinting);
 		}
 
-		cairo_set_operator(cr, CAIRO_OPERATOR_DEST_OVER);
-		cairo_set_source_rgb(cr, 1., 1., 1.);
+		if (!forPrinting) {
+			cairo_set_operator(cr, CAIRO_OPERATOR_DEST_OVER);
+			cairo_set_source_rgb(cr, 1., 1., 1.);
+		}
 		cairo_paint(cr);
 	} else {
 		cairo_select_font_face(cr, "Sans", CAIRO_FONT_SLANT_NORMAL, CAIRO_FONT_WEIGHT_BOLD);

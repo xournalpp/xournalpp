@@ -3,6 +3,7 @@
 #include "../../gui/Shadow.h"
 #include "../../view/PdfView.h"
 #include "../../view/DocumentView.h"
+#include "../../model/Document.h"
 
 PreviewJob::PreviewJob(SidebarPreview * sidebar) {
 	this->sidebarPreview = sidebar;
@@ -36,17 +37,15 @@ void PreviewJob::run() {
 
 	cairo_scale(cr2, zoom, zoom);
 
-	XojPopplerPage * popplerPage = NULL;
-
 	Document * doc = this->sidebarPreview->sidebar->getDocument();
 	doc->lock();
 
 	if (this->sidebarPreview->page->getBackgroundType() == BACKGROUND_TYPE_PDF) {
 		int pgNo = this->sidebarPreview->page->getPdfPageNr();
-		popplerPage = doc->getPdfPage(pgNo);
+		XojPopplerPage * popplerPage = doc->getPdfPage(pgNo);
+		PdfView::drawPage(this->sidebarPreview->sidebar->getCache(), popplerPage, cr2, zoom, this->sidebarPreview->page->getWidth(), this->sidebarPreview->page->getHeight());
 	}
 
-	PdfView::drawPage(this->sidebarPreview->sidebar->getCache(), popplerPage, cr2, zoom, this->sidebarPreview->page->getWidth(), this->sidebarPreview->page->getHeight());
 	DocumentView view;
 	view.drawPage(this->sidebarPreview->page, cr2, true);
 

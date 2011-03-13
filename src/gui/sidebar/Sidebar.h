@@ -12,10 +12,16 @@
 #ifndef __SIDEBAR_H__
 #define __SIDEBAR_H__
 
-#include "../../control/Control.h"
-#include "../GladeGui.h"
-#include "SidebarPreview.h"
+#include <gtk/gtk.h>
 #include "../../util/MemoryCheck.h"
+#include "../../model/DocumentChangeType.h"
+#include "../../model/DocumentListener.h"
+
+class Control;
+class Document;
+class SidebarPreview;
+class GladeGui;
+class PdfCache;
 
 class Sidebar: public DocumentListener, MemoryCheckObject {
 public:

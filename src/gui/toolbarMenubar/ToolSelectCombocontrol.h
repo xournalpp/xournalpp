@@ -14,7 +14,8 @@
 
 #include "ToolButton.h"
 #include "../GladeGui.h"
-#include "ToolMenuHandler.h"
+
+class ToolMenuHandler;
 
 class ToolSelectCombocontrol: public ToolButton {
 public:

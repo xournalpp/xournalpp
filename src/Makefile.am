@@ -5,7 +5,9 @@ INCLUDES = \
 
 bin_PROGRAMS = xournalpp
 xournalpp_SOURCES = \
+	control/jobs/AutosaveJob.cpp \
 	control/jobs/BlockingJob.cpp \
+	control/jobs/ExportJob.cpp \
 	control/jobs/Job.cpp \
 	control/jobs/PdfExportJob.cpp \
 	control/jobs/PreviewJob.cpp \

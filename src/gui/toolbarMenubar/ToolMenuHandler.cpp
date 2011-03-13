@@ -19,7 +19,6 @@
 #include "../../control/Actions.h"
 #include "../widgets/SelectColor.h"
 #include "ToolMenuHandler.h"
-#include "../../toolbar.ini.h"
 
 #include "ColorToolItem.h"
 #include "MenuItem.h"
@@ -30,12 +29,20 @@
 #include "ToolZoomSlider.h"
 #include "ToolPageLayer.h"
 
+ToolbarData::ToolbarData(bool predefined) {
+	this->predefined = predefined;
+}
+
 String ToolbarData::getName() {
 	return this->name;
 }
 
 String ToolbarData::getId() {
 	return this->id;
+}
+
+bool ToolbarData::isPredefined() {
+	return this->predefined;
 }
 
 void ToolbarData::load(GKeyFile * config, const char * group) {
@@ -87,7 +94,6 @@ ToolMenuHandler::ToolMenuHandler(ActionHandler * listener, ZoomControl * zoom, G
 	this->redoButton = NULL;
 	this->toolPageSpinner = NULL;
 	this->toolPageLayer = NULL;
-	this->autoupdate = true;
 
 	initToolItems();
 }
@@ -101,9 +107,17 @@ ToolMenuHandler::~ToolMenuHandler() {
 	toolbars = NULL;
 }
 
-void ToolMenuHandler::parseGroup(GKeyFile * config, const char * group) {
-	ToolbarData * data = new ToolbarData();
-	data->name = group;
+void ToolMenuHandler::parseGroup(GKeyFile * config, const char * group, bool predefined) {
+	ToolbarData * data = new ToolbarData(predefined);
+
+	String name;
+	if (predefined) {
+		name = "predef_";
+	} else {
+		name = "custom_";
+	}
+
+	data->name = name;
 	data->id = group;
 
 	data->load(config, group);
@@ -111,7 +125,7 @@ void ToolMenuHandler::parseGroup(GKeyFile * config, const char * group) {
 	this->toolbars = g_list_append(this->toolbars, data);
 }
 
-bool ToolMenuHandler::parse(const char * file) {
+bool ToolMenuHandler::parse(const char * file, bool predefined) {
 	GKeyFile * config = g_key_file_new();
 	g_key_file_set_list_separator(config, ',');
 	if (!g_key_file_load_from_file(config, file, G_KEY_FILE_NONE, NULL)) {
@@ -123,45 +137,19 @@ bool ToolMenuHandler::parse(const char * file) {
 	gchar ** groups = g_key_file_get_groups(config, &lenght);
 
 	for (gsize i = 0; i < lenght; i++) {
-		if (strcmp(groups[i], "general") == 0) {
-			this->autoupdate = g_key_file_get_boolean(config, "general", "autoupdate", NULL);
-			this->version = g_key_file_get_string(config, "general", "version", NULL);
+		if (groups[i][0] == '_') {
+			if (strcmp("_ColorNames", groups[i]) == 0) {
+				// TODO parse color names
+			}
 
 			continue;
 		}
-		parseGroup(config, groups[i]);
+
+		parseGroup(config, groups[i], predefined);
 	}
 
 	g_strfreev(groups);
 	g_key_file_free(config);
-	return true;
-}
-
-/**
- * A new file should be writen
- */
-bool ToolMenuHandler::shouldRecreate() {
-	if (!this->autoupdate) {
-		return false;
-	}
-
-	if (!this->version.isEmpty() && !strcmp(TOOLBAR_VERSION, this->version.c_str())) {
-		return false;
-	}
-
-	return true;
-}
-
-bool ToolMenuHandler::writeDefault(const char * file) {
-	FILE * fp = fopen(file, "w");
-
-	if (!fp) {
-		return false;
-	}
-
-	fwrite(TOOLBAR_INI, 1, strlen(TOOLBAR_INI), fp);
-
-	fclose(fp);
 	return true;
 }
 
@@ -441,7 +429,7 @@ void ToolMenuHandler::initToolItems() {
 
 	tbInsertNewPage->setPopupMenu(newPagePopup);
 
-	// TODO LOW PRIO: check for Stock icons (Mail from 04.01.2010 to Xournal mailinglist)
+	// TODO LOW PRIO: check for Stock icons (Mail from 04.01.2010 to Xournal mailinglist) gtk_icon_theme_load_icon
 
 	addToolItem(new ToolButton(listener, gui, "HILIGHTER", ACTION_TOOL_HILIGHTER, GROUP_TOOL, "tool_highlighter.png", _("Hilighter"), gui->get(
 			"menuToolsHighlighter")));
@@ -464,11 +452,8 @@ void ToolMenuHandler::initToolItems() {
 	addToolItem(new ToolButton(listener, gui, "MEDIUM", ACTION_SIZE_MEDIUM, GROUP_SIZE, "thickness_medium.png", _("Medium")));
 	addToolItem(new ToolButton(listener, gui, "THICK", ACTION_SIZE_THICK, GROUP_SIZE, "thickness_thick.png", _("Thik")));
 
-	addToolItem(new ToolButton(listener, gui, "THICK", ACTION_SIZE_THICK, GROUP_SIZE, "thickness_thick.png", _("Thik")));
-
-	addToolItem(new ToolButton(listener, gui, "DEFAULT_TOOL", ACTION_TOOL_DEFAULT, GROUP_NOGROUP, "default.png", _("Default Tool"), gui->get("menuToolsDefault")));
-
-
+	addToolItem(new ToolButton(listener, gui, "DEFAULT_TOOL", ACTION_TOOL_DEFAULT, GROUP_NOGROUP, "default.png", _("Default Tool"),
+			gui->get("menuToolsDefault")));
 
 	fontButton = new FontButton(listener, gui, "SELECT_FONT", ACTION_SELECT_FONT, _("Select Font"));
 	addToolItem(fontButton);
@@ -533,6 +518,8 @@ void ToolMenuHandler::initToolItems() {
 	registerMenupoint(gui->get("highlighterThick"), ACTION_TOOL_HILIGHTER_SIZE_THICK, GROUP_HILIGHTER_SIZE);
 
 	registerMenupoint(gui->get("menuToolsTextFont"), ACTION_SELECT_FONT);
+
+	registerMenupoint(gui->get("menuViewToolbarCustomize"), ACTION_CUSTOMIZE_TOOLBAR);
 
 	// Menu Help
 	registerMenupoint(gui->get("menuHelpAbout"), ACTION_ABOUT);

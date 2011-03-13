@@ -29,7 +29,7 @@ public:
 	/**
 	 * Returns a repaint rectangle or NULL, the rectangle is own by the caller
 	 */
-	Range * erase(double x, double y, double halfEraserSize);
+	Range * erase(double x, double y, double halfEraserSize, Range * range = NULL);
 
 	GList * getStroke(Stroke * original);
 

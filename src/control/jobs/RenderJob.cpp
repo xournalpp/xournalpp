@@ -22,16 +22,10 @@ void * RenderJob::getSource() {
 }
 
 void RenderJob::repaintRectangle(PageView * view, Rectangle * rect) {
-	XojPopplerPage * popplerPage = NULL;
 	double zoom = view->xournal->getZoom();
 	Document * doc = view->xournal->getDocument();
 
 	doc->lock();
-
-	if (view->page->getBackgroundType() == BACKGROUND_TYPE_PDF) {
-		int pgNo = view->page->getPdfPageNr();
-		popplerPage = doc->getPdfPage(pgNo);
-	}
 
 	double pageWidth = view->page->getWidth();
 	double pageHeight = view->page->getHeight();
@@ -51,8 +45,13 @@ void RenderJob::repaintRectangle(PageView * view, Rectangle * rect) {
 	DocumentView v;
 	v.limitArea(rect->x, rect->y, rect->width, rect->height);
 
-	PdfCache * cache = view->xournal->getCache();
-	PdfView::drawPage(cache, popplerPage, crRect, zoom, pageWidth, pageHeight);
+
+	if (view->page->getBackgroundType() == BACKGROUND_TYPE_PDF) {
+		int pgNo = view->page->getPdfPageNr();
+		XojPopplerPage * popplerPage = doc->getPdfPage(pgNo);
+		PdfCache * cache = view->xournal->getCache();
+		PdfView::drawPage(cache, popplerPage, crRect, zoom, pageWidth, pageHeight);
+	}
 
 	doc->lock();
 	v.drawPage(view->page, crRect, false);

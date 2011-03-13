@@ -9,6 +9,7 @@ ui_DATA = \
 	page-background-color.glade \
 	pagesize.glade \
 	pdfpages.glade \
-	settings.glade
+	settings.glade \
+	toolbar.ini
 
 EXTRA_DIST = ${ui_DATA}
