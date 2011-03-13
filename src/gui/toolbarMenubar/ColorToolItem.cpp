@@ -7,13 +7,14 @@
 
 bool ColorToolItem::inUpdate = false;
 
-ColorToolItem::ColorToolItem(String id, ActionHandler * handler, ToolHandler * toolHandler, int color, bool selector) :
+ColorToolItem::ColorToolItem(String id, ActionHandler * handler, ToolHandler * toolHandler, int color, String name, bool selector) :
 	AbstractToolItem(id, handler, selector ? ACTION_SELECT_COLOR_CUSTOM : ACTION_SELECT_COLOR) {
 	this->color = color;
 	this->selector = selector;
 	this->toolHandler = toolHandler;
 	this->group = GROUP_COLOR;
 	this->colorDlg = NULL;
+	this->name = name;
 }
 
 ColorToolItem::~ColorToolItem() {
@@ -116,12 +117,11 @@ GtkToolItem * ColorToolItem::newItem() {
 	GtkToolItem * it = gtk_toggle_tool_button_new();
 
 	if (selector) {
-		gtk_tool_button_set_label(GTK_TOOL_BUTTON(it), _("Select color"));
-	} else {
-		gchar * name = g_strdup_printf("%06x", color);
-		gtk_tool_button_set_label(GTK_TOOL_BUTTON(it), name);
-		g_free(name);
+		this->name = _("Select color");
 	}
+	gtk_tool_item_set_tooltip_text(GTK_TOOL_ITEM(it), this->name.c_str());
+	gtk_tool_button_set_label(GTK_TOOL_BUTTON(it), this->name.c_str());
+
 	gtk_tool_button_set_icon_widget(GTK_TOOL_BUTTON(it), iconWidget);
 
 	return it;

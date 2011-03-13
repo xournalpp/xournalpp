@@ -17,7 +17,7 @@
 
 class ColorToolItem: public AbstractToolItem {
 public:
-	ColorToolItem(String id, ActionHandler * handler, ToolHandler * toolHandler, int color, bool selector = false);
+	ColorToolItem(String id, ActionHandler * handler, ToolHandler * toolHandler, int color, String name, bool selector = false);
 	virtual ~ColorToolItem();
 
 public:
@@ -33,6 +33,7 @@ protected:
 
 private:
 	int color;
+	String name;
 	bool selector;
 	GtkWidget * iconWidget;
 	GtkWidget * colorDlg;

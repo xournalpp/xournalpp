@@ -59,20 +59,25 @@ void ToolSelectCombocontrol::selected(ActionGroup group, ActionType action) {
 			return;
 		}
 
+		const char * description = NULL;
+
 		if (action == ACTION_TOOL_SELECT_RECT && this->action != ACTION_TOOL_SELECT_RECT) {
 			this->action = ACTION_TOOL_SELECT_RECT;
 			gtk_image_set_from_pixbuf(GTK_IMAGE(iconWidget), this->iconSelectRect);
 
-			gtk_tool_button_set_label(GTK_TOOL_BUTTON(item), _("Select Rectangle"));
+			description = _("Select Rectangle");
 		} else if (action == ACTION_TOOL_SELECT_REGION && this->action != ACTION_TOOL_SELECT_REGION) {
 			this->action = ACTION_TOOL_SELECT_REGION;
 			gtk_image_set_from_pixbuf(GTK_IMAGE(iconWidget), this->iconSelectRgion);
-			gtk_tool_button_set_label(GTK_TOOL_BUTTON(item), _("Select Region"));
+
+			description = _("Select Region");
 		} else if (action == ACTION_TOOL_SELECT_OBJECT && this->action != ACTION_TOOL_SELECT_OBJECT) {
 			this->action = ACTION_TOOL_SELECT_OBJECT;
 			gtk_image_set_from_pixbuf(GTK_IMAGE(iconWidget), this->iconSelectObject);
-			gtk_tool_button_set_label(GTK_TOOL_BUTTON(item), _("Select Object"));
+
+			description = _("Select Object");
 		}
+		gtk_tool_item_set_tooltip_text(GTK_TOOL_ITEM(item), description);
 
 		if (gtk_toggle_tool_button_get_active(GTK_TOGGLE_TOOL_BUTTON(item)) != (this->action == action)) {
 			gtk_toggle_tool_button_set_active(GTK_TOGGLE_TOOL_BUTTON(item), (this->action == action));
