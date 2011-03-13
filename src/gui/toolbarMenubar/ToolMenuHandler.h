@@ -85,9 +85,14 @@ public:
 
 
 	void setTmpDisabled(bool disabled);
+
+	const char * getColorName(const char * color);
+
+
 private:
 	void addToolItem(AbstractToolItem * it);
 	void parseGroup(GKeyFile * config, const char * group, bool predefined);
+	void parseColors(GKeyFile * config, const char * group);
 
 	void initEraserToolItem();
 
@@ -109,6 +114,8 @@ private:
 	ZoomControl * zoom;
 	GladeGui * gui;
 	ToolHandler * toolHandler;
+
+	GHashTable * colorNameTable;
 };
 
 #endif /* EDITABLETOOLBAR_H_ */

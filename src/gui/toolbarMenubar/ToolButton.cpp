@@ -31,6 +31,7 @@ void ToolButton::updateDescription(String description) {
 	this->description = description;
 	if (GTK_IS_TOOL_ITEM(item)) {
 		gtk_tool_item_set_tooltip_text(GTK_TOOL_ITEM(item), description.c_str());
+		gtk_tool_button_set_label(GTK_TOOL_BUTTON(item), description.c_str());
 	}
 }
 
@@ -61,5 +62,7 @@ GtkToolItem * ToolButton::newItem() {
 		}
 	}
 	gtk_tool_item_set_tooltip_text(GTK_TOOL_ITEM(it), description.c_str());
+	gtk_tool_button_set_label(GTK_TOOL_BUTTON(it), description.c_str());
+
 	return it;
 }

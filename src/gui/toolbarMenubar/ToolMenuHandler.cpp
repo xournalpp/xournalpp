@@ -95,6 +95,8 @@ ToolMenuHandler::ToolMenuHandler(ActionHandler * listener, ZoomControl * zoom, G
 	this->toolPageSpinner = NULL;
 	this->toolPageLayer = NULL;
 
+	this->colorNameTable = g_hash_table_new_full(g_str_hash, g_str_equal, g_free, g_free);
+
 	initToolItems();
 }
 
@@ -103,8 +105,11 @@ ToolMenuHandler::~ToolMenuHandler() {
 		delete (ToolbarData*) l->data;
 	}
 
-	g_list_free(toolbars);
-	toolbars = NULL;
+	g_list_free(this->toolbars);
+	this->toolbars = NULL;
+
+	g_hash_table_destroy(this->colorNameTable);
+	this->colorNameTable = NULL;
 }
 
 void ToolMenuHandler::parseGroup(GKeyFile * config, const char * group, bool predefined) {
@@ -139,7 +144,7 @@ bool ToolMenuHandler::parse(const char * file, bool predefined) {
 	for (gsize i = 0; i < lenght; i++) {
 		if (groups[i][0] == '_') {
 			if (strcmp("_ColorNames", groups[i]) == 0) {
-				// TODO parse color names
+				parseColors(config, groups[i]);
 			}
 
 			continue;
@@ -151,6 +156,31 @@ bool ToolMenuHandler::parse(const char * file, bool predefined) {
 	g_strfreev(groups);
 	g_key_file_free(config);
 	return true;
+}
+
+void ToolMenuHandler::parseColors(GKeyFile * config, const char * group) {
+	gsize length = 0;
+	gchar ** keys = g_key_file_get_keys(config, group, &length, NULL);
+	if (keys == NULL) {
+		return;
+	}
+
+	for (gsize i = 0; i < length; i++) {
+		if (strstr(keys[i], "[")) {
+			// skip localized keys
+			continue;
+		}
+
+		char * name = g_key_file_get_locale_string(config, group, keys[i], NULL, NULL);
+		g_hash_table_insert(this->colorNameTable, g_strdup(keys[i]), name);
+	}
+
+	g_strfreev(keys);
+}
+
+const char * ToolMenuHandler::getColorName(const char * color) {
+	const char * name = (char *) g_hash_table_lookup(this->colorNameTable, color);
+	return name;
 }
 
 ListIterator<ToolbarData *> ToolMenuHandler::iterator() {
@@ -229,7 +259,16 @@ void ToolMenuHandler::load(ToolbarData * d, GtkWidget * toolbar, const char * to
 					color = color.substring(2);
 					gint c = g_ascii_strtoll(color.c_str(), NULL, 16);
 
-					ColorToolItem * item = new ColorToolItem("", listener, toolHandler, c);
+					const char * colorName = getColorName(color.c_str());
+					String name;
+					if (colorName == NULL) {
+						g_warning("No color name in toolbar.ini for %s defined!", color.c_str());
+						name = color;
+					} else {
+						name = colorName;
+					}
+
+					ColorToolItem * item = new ColorToolItem("", listener, toolHandler, c, name);
 					toolbarColorItems = g_list_append(toolbarColorItems, item);
 
 					GtkToolItem * it = item->createItem(horizontal);
@@ -373,7 +412,7 @@ void ToolMenuHandler::initToolItems() {
 	addToolItem(new ToolButton(listener, gui, "FULLSCREEN", ACTION_FULLSCREEN, GROUP_FULLSCREEN, "fullscreen.png", _("Toggle fullscreen"), gui->get(
 			"menuViewFullScreen")));
 
-	addToolItem(new ColorToolItem("COLOR_SELECT", listener, toolHandler, 0xff0000, true));
+	addToolItem(new ColorToolItem("COLOR_SELECT", listener, toolHandler, 0xff0000, "", true));
 
 	addToolItem(new ToolButton(listener, gui, "PEN", ACTION_TOOL_PEN, GROUP_TOOL, "tool_pencil.png", _("Pen"), gui->get("menuToolsPen")));
 
