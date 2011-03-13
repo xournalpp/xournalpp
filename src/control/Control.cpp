@@ -1768,9 +1768,8 @@ bool Control::annotatePdf(String filename, bool attachPdf, bool attachToDocument
 
 	cursor->setCursorBusy(true);
 
-	this->doc->lock();
 	bool res = this->doc->readPdf(filename, true, attachToDocument);
-	this->doc->unlock();
+
 	if (res) {
 		int page = 0;
 		GValue value = { 0 };

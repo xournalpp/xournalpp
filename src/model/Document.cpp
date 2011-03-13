@@ -239,9 +239,11 @@ void Document::updateIndexPageNumbers() {
 }
 
 bool Document::readPdf(String filename, bool initPages, bool attachToDocument) {
-	GError *popplerError = NULL;
+	GError * popplerError = NULL;
 	String uri = "file://";
 	uri += filename;
+
+	lock();
 
 	if (!pdfDocument.load(uri.c_str(), password.c_str(), &popplerError)) {
 		char * txt = g_strdup_printf("Document not loaded! (%s), %s", filename.c_str(), popplerError->message);
@@ -279,6 +281,8 @@ bool Document::readPdf(String filename, bool initPages, bool attachToDocument) {
 
 	buildContentsModel();
 	updateIndexPageNumbers();
+
+	unlock();
 
 	handler->fireDocumentChanged(DOCUMENT_CHANGE_PDF_BOOKMARKS);
 
