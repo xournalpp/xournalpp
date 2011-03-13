@@ -25,14 +25,21 @@
 
 class ToolbarData {
 public:
+	ToolbarData(bool predefined);
+
+public:
 	String getName();
 	String getId();
 
 	void load(GKeyFile * config, const char * group);
+
+	bool isPredefined();
 private:
 	String id;
 	String name;
 	std::vector<ToolbarEntry> contents;
+
+	bool predefined;
 
 	friend class ToolMenuHandler;
 };
@@ -50,14 +57,7 @@ public:
 	virtual ~ToolMenuHandler();
 
 public:
-	bool parse(const char * file);
-
-	/**
-	 * A new file should be writen
-	 */
-	bool shouldRecreate();
-
-	bool writeDefault(const char * file);
+	bool parse(const char * file, bool predefined);
 
 	ListIterator<ToolbarData *> iterator();
 
@@ -87,7 +87,7 @@ public:
 	void setTmpDisabled(bool disabled);
 private:
 	void addToolItem(AbstractToolItem * it);
-	void parseGroup(GKeyFile * config, const char * group);
+	void parseGroup(GKeyFile * config, const char * group, bool predefined);
 
 	void initEraserToolItem();
 
@@ -109,9 +109,6 @@ private:
 	ZoomControl * zoom;
 	GladeGui * gui;
 	ToolHandler * toolHandler;
-
-	bool autoupdate;
-	String version;
 };
 
 #endif /* EDITABLETOOLBAR_H_ */

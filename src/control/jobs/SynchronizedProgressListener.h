@@ -23,8 +23,18 @@ public:
 	virtual void setMaximumState(int max);
 	virtual void setCurrentState(int state);
 
+private:
+	static bool setMaxCallback(SynchronizedProgressListener * listener);
+	static bool setCurrentCallback(SynchronizedProgressListener * listener);
+
 public:
 	ProgressListener * target;
+
+	int maxIdleId;
+	int currentIdleId;
+
+	int max;
+	int current;
 };
 
 #endif /* __SYNCHRONIZEDPROGRESSLISTENER_H__ */

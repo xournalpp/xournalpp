@@ -21,6 +21,7 @@ class ToolHandler;
 class PageView;
 class Document;
 class UndoRedoHandler;
+class Range;
 
 class EraseHandler {
 public:
@@ -32,7 +33,7 @@ public:
 	void finalize();
 
 private:
-	void eraseStroke(Layer * l, Stroke * s, double x, double y);
+	void eraseStroke(Layer * l, Stroke * s, double x, double y, Range * range);
 
 private:
 	XojPage * page;

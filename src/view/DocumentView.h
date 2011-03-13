@@ -57,7 +57,7 @@ private:
 	XojPage * page;
 	double width;
 	double height;
-	bool preview;
+	bool dontRenderEditingStroke;
 
 	double lX;
 	double lY;

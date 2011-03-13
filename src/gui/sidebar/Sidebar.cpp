@@ -1,5 +1,9 @@
 #include "Sidebar.h"
 #include "../../model/LinkDestination.h"
+#include "../../control/Control.h"
+#include "../../control/PdfCache.h"
+#include "../GladeGui.h"
+
 #include <string.h>
 
 #include <config.h>

@@ -67,8 +67,8 @@ void EraseableStroke::draw(cairo_t * cr, double x, double y, double width, doubl
 /**
  * The only public method
  */
-Range * EraseableStroke::erase(double x, double y, double halfEraserSize) {
-	this->repaintRect = NULL;
+Range * EraseableStroke::erase(double x, double y, double halfEraserSize, Range * range) {
+	this->repaintRect = range;
 
 	g_mutex_lock(this->partLock);
 	PartList * tmpCopy = this->parts->clone();

@@ -63,9 +63,6 @@ void Cursor::setCursorBusy(bool busy) {
 	}
 
 	this->busy = busy;
-	if (gtk_widget_get_root_window(win->getWindow())) {
-		gdk_window_set_cursor(gtk_widget_get_root_window(win->getWindow()), NULL);
-	}
 
 	if (busy) {
 		GdkCursor * cursor = gdk_cursor_new(GDK_WATCH);
@@ -247,7 +244,7 @@ void Cursor::updateCursor() {
 		}
 	}
 
-	gdk_display_sync( gdk_display_get_default());
+	gdk_display_sync(gdk_display_get_default());
 
 	if (cursor) {
 		gdk_cursor_unref(cursor);

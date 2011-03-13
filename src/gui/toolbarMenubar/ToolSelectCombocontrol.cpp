@@ -1,6 +1,8 @@
 #include "ToolSelectCombocontrol.h"
 #include "../widgets/gtkmenutooltogglebutton.h"
 
+#include "ToolMenuHandler.h"
+
 #include <config.h>
 #include <glib/gi18n-lib.h>
 

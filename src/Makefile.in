@@ -48,7 +48,8 @@ CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
 am__installdirs = "$(DESTDIR)$(bindir)"
 PROGRAMS = $(bin_PROGRAMS)
-am_xournalpp_OBJECTS = xournalpp-BlockingJob.$(OBJEXT) \
+am_xournalpp_OBJECTS = xournalpp-AutosaveJob.$(OBJEXT) \
+	xournalpp-BlockingJob.$(OBJEXT) xournalpp-ExportJob.$(OBJEXT) \
 	xournalpp-Job.$(OBJEXT) xournalpp-PdfExportJob.$(OBJEXT) \
 	xournalpp-PreviewJob.$(OBJEXT) xournalpp-RenderJob.$(OBJEXT) \
 	xournalpp-SaveJob.$(OBJEXT) xournalpp-Scheduler.$(OBJEXT) \
@@ -318,7 +319,9 @@ INCLUDES = \
 	@PACKAGE_CFLAGS@
 
 xournalpp_SOURCES = \
+	control/jobs/AutosaveJob.cpp \
 	control/jobs/BlockingJob.cpp \
+	control/jobs/ExportJob.cpp \
 	control/jobs/Job.cpp \
 	control/jobs/PdfExportJob.cpp \
 	control/jobs/PreviewJob.cpp \
@@ -555,6 +558,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-AbstractToolItem.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-Actions.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-Attribute.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-AutosaveJob.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-BlockingJob.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-ButtonConfigGui.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-CairoPdf.Po@am__quote@
@@ -580,6 +584,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-EraseableStrokePart.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-ExportDialog.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-ExportHandler.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-ExportJob.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-Font.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-FontButton.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-FontUndoAction.Po@am__quote@
@@ -713,6 +718,20 @@ distclean-compile:
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(CXXCOMPILE) -c -o $@ `$(CYGPATH_W) '$<'`
 
+xournalpp-AutosaveJob.o: control/jobs/AutosaveJob.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-AutosaveJob.o -MD -MP -MF $(DEPDIR)/xournalpp-AutosaveJob.Tpo -c -o xournalpp-AutosaveJob.o `test -f 'control/jobs/AutosaveJob.cpp' || echo '$(srcdir)/'`control/jobs/AutosaveJob.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-AutosaveJob.Tpo $(DEPDIR)/xournalpp-AutosaveJob.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='control/jobs/AutosaveJob.cpp' object='xournalpp-AutosaveJob.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-AutosaveJob.o `test -f 'control/jobs/AutosaveJob.cpp' || echo '$(srcdir)/'`control/jobs/AutosaveJob.cpp
+
+xournalpp-AutosaveJob.obj: control/jobs/AutosaveJob.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-AutosaveJob.obj -MD -MP -MF $(DEPDIR)/xournalpp-AutosaveJob.Tpo -c -o xournalpp-AutosaveJob.obj `if test -f 'control/jobs/AutosaveJob.cpp'; then $(CYGPATH_W) 'control/jobs/AutosaveJob.cpp'; else $(CYGPATH_W) '$(srcdir)/control/jobs/AutosaveJob.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-AutosaveJob.Tpo $(DEPDIR)/xournalpp-AutosaveJob.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='control/jobs/AutosaveJob.cpp' object='xournalpp-AutosaveJob.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-AutosaveJob.obj `if test -f 'control/jobs/AutosaveJob.cpp'; then $(CYGPATH_W) 'control/jobs/AutosaveJob.cpp'; else $(CYGPATH_W) '$(srcdir)/control/jobs/AutosaveJob.cpp'; fi`
+
 xournalpp-BlockingJob.o: control/jobs/BlockingJob.cpp
 @am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-BlockingJob.o -MD -MP -MF $(DEPDIR)/xournalpp-BlockingJob.Tpo -c -o xournalpp-BlockingJob.o `test -f 'control/jobs/BlockingJob.cpp' || echo '$(srcdir)/'`control/jobs/BlockingJob.cpp
 @am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-BlockingJob.Tpo $(DEPDIR)/xournalpp-BlockingJob.Po
@@ -726,6 +745,20 @@ xournalpp-BlockingJob.obj: control/jobs/BlockingJob.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='control/jobs/BlockingJob.cpp' object='xournalpp-BlockingJob.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-BlockingJob.obj `if test -f 'control/jobs/BlockingJob.cpp'; then $(CYGPATH_W) 'control/jobs/BlockingJob.cpp'; else $(CYGPATH_W) '$(srcdir)/control/jobs/BlockingJob.cpp'; fi`
+
+xournalpp-ExportJob.o: control/jobs/ExportJob.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-ExportJob.o -MD -MP -MF $(DEPDIR)/xournalpp-ExportJob.Tpo -c -o xournalpp-ExportJob.o `test -f 'control/jobs/ExportJob.cpp' || echo '$(srcdir)/'`control/jobs/ExportJob.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-ExportJob.Tpo $(DEPDIR)/xournalpp-ExportJob.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='control/jobs/ExportJob.cpp' object='xournalpp-ExportJob.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-ExportJob.o `test -f 'control/jobs/ExportJob.cpp' || echo '$(srcdir)/'`control/jobs/ExportJob.cpp
+
+xournalpp-ExportJob.obj: control/jobs/ExportJob.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-ExportJob.obj -MD -MP -MF $(DEPDIR)/xournalpp-ExportJob.Tpo -c -o xournalpp-ExportJob.obj `if test -f 'control/jobs/ExportJob.cpp'; then $(CYGPATH_W) 'control/jobs/ExportJob.cpp'; else $(CYGPATH_W) '$(srcdir)/control/jobs/ExportJob.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-ExportJob.Tpo $(DEPDIR)/xournalpp-ExportJob.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='control/jobs/ExportJob.cpp' object='xournalpp-ExportJob.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-ExportJob.obj `if test -f 'control/jobs/ExportJob.cpp'; then $(CYGPATH_W) 'control/jobs/ExportJob.cpp'; else $(CYGPATH_W) '$(srcdir)/control/jobs/ExportJob.cpp'; fi`
 
 xournalpp-Job.o: control/jobs/Job.cpp
 @am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-Job.o -MD -MP -MF $(DEPDIR)/xournalpp-Job.Tpo -c -o xournalpp-Job.o `test -f 'control/jobs/Job.cpp' || echo '$(srcdir)/'`control/jobs/Job.cpp

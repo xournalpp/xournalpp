@@ -1,7 +1,8 @@
 #include "SidebarPreview.h"
-#include "../Shadow.h"
 #include "Sidebar.h"
+#include "../Shadow.h"
 #include "../../view/PdfView.h"
+#include "../../control/Control.h"
 
 SidebarPreview::SidebarPreview(Sidebar * sidebar, XojPage * page) {
 	this->widget = gtk_drawing_area_new();

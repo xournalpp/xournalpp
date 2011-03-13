@@ -15,7 +15,7 @@
 #include "../../util/MemoryCheck.h"
 
 enum JobType {
-	JOB_TYPE_BLOCKING, JOB_TYPE_PREVIEW, JOB_TYPE_RENDER
+	JOB_TYPE_BLOCKING, JOB_TYPE_PREVIEW, JOB_TYPE_RENDER, JOB_TYPE_AUTOSAVE
 };
 
 class Job: public MemoryCheckObject {

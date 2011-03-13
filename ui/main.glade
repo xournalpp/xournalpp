@@ -817,6 +817,18 @@
                         <child>
                           <widget class="GtkMenu" id="menuViewToolbar">
                             <property name="visible">True</property>
+                            <child>
+                              <widget class="GtkSeparatorMenuItem" id="menuitem4">
+                                <property name="visible">True</property>
+                              </widget>
+                            </child>
+                            <child>
+                              <widget class="GtkMenuItem" id="menuViewToolbarCustomize">
+                                <property name="visible">True</property>
+                                <property name="label" translatable="yes">_Customize</property>
+                                <property name="use_underline">True</property>
+                              </widget>
+                            </child>
                           </widget>
                         </child>
                       </widget>
@@ -832,8 +844,8 @@
                         <property name="visible">True</property>
                         <property name="use_underline">True</property>
                         <property name="use_stock">True</property>
-                        <accelerator key="KP_Add" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                         <accelerator key="plus" signal="activate" modifiers="GDK_CONTROL_MASK"/>
+                        <accelerator key="KP_Add" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                       </widget>
                     </child>
                     <child>
@@ -842,8 +854,8 @@
                         <property name="visible">True</property>
                         <property name="use_underline">True</property>
                         <property name="use_stock">True</property>
-                        <accelerator key="minus" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                         <accelerator key="KP_Subtract" signal="activate" modifiers="GDK_CONTROL_MASK"/>
+                        <accelerator key="minus" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                       </widget>
                     </child>
                     <child>

@@ -47,6 +47,8 @@ void EraseHandler::erase(double x, double y) {
 	this->halfEraserSize = this->handler->getThikness();
 	GdkRectangle eraserRect = { x - halfEraserSize, y - halfEraserSize, halfEraserSize * 2, halfEraserSize * 2 };
 
+	Range * range = new Range(x, y);
+
 	while (it.hasNext() && selected) {
 		Layer * l = it.next();
 
@@ -57,15 +59,18 @@ void EraseHandler::erase(double x, double y) {
 			if (e->getType() == ELEMENT_STROKE && e->intersectsArea(&eraserRect)) {
 				Stroke * s = (Stroke *) e;
 
-				eraseStroke(l, s, x, y);
+				eraseStroke(l, s, x, y, range);
 			}
 		}
 
 		selected--;
 	}
+
+	this->view->repaint(*range);
+	delete range;
 }
 
-void EraseHandler::eraseStroke(Layer * l, Stroke * s, double x, double y) {
+void EraseHandler::eraseStroke(Layer * l, Stroke * s, double x, double y, Range * range) {
 	if (!s->intersects(x, y, halfEraserSize)) {
 		return;
 	}
@@ -98,11 +103,6 @@ void EraseHandler::eraseStroke(Layer * l, Stroke * s, double x, double y) {
 			this->undo->addUndoAction(eraseUndoAction);
 		}
 
-		double repaintX = s->getX();
-		double repaintY = s->getY();
-		double repaintWidth = s->getElementWidth();
-		double repaintHeight = s->getElementHeight();
-
 		EraseableStroke * eraseable = NULL;
 		if (s->getEraseable() == NULL) {
 			doc->lock();
@@ -114,12 +114,7 @@ void EraseHandler::eraseStroke(Layer * l, Stroke * s, double x, double y) {
 			eraseable = s->getEraseable();
 		}
 
-		Range * rect = eraseable->erase(x, y, halfEraserSize);
-		if (rect) {
-			this->view->repaint(*rect);
-
-			delete rect;
-		}
+		eraseable->erase(x, y, halfEraserSize, range);
 	}
 }
 

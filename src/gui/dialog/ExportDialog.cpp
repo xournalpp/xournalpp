@@ -14,7 +14,6 @@ ExportDialog::ExportDialog(GladeSearchpath * gladeSearchPath, Settings * setting
 	this->type = EXPORT_FORMAT_PNG;
 
 	GtkFileChooser * chooser = GTK_FILE_CHOOSER(get("fcOutput"));
-	gtk_file_chooser_set_local_only(chooser, true);
 	gtk_file_chooser_set_current_folder(chooser, settings->getLastSavePath().c_str());
 }
 
@@ -90,6 +89,32 @@ bool ExportDialog::validate() {
 		gtk_dialog_run(GTK_DIALOG(dialog));
 		gtk_widget_destroy(dialog);
 		return false;
+	}
+
+	GtkFileChooser * chooser = GTK_FILE_CHOOSER(get("fcOutput"));
+	char * folder = gtk_file_chooser_get_current_folder(chooser);
+	GFile * file = g_file_new_for_path(folder);
+	g_free(folder);
+	GFileEnumerator * enumerator = g_file_enumerate_children(file, "standard::*", G_FILE_QUERY_INFO_NOFOLLOW_SYMLINKS, NULL, NULL);
+	g_object_unref(file);
+
+	if (enumerator != NULL) {
+		GFileInfo * info = g_file_enumerator_next_file(enumerator, NULL, NULL);
+		if (info) {
+			g_object_unref(info);
+
+			GtkWidget * dialog = gtk_message_dialog_new((GtkWindow *) *this, GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_QUESTION, GTK_BUTTONS_NONE,
+					_("The folder is not empty. May existing files will be overwritten."));
+
+			gtk_dialog_add_button(GTK_DIALOG(dialog), _("Select another folder"), 2);
+			gtk_dialog_add_button(GTK_DIALOG(dialog), _("Continue anyway"), 1);
+			int res = gtk_dialog_run(GTK_DIALOG(dialog));
+			gtk_widget_destroy(dialog);
+
+			if (res != 1) {
+				return false;
+			}
+		}
 	}
 
 	return true;
