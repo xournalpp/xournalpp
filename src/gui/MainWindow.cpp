@@ -3,6 +3,8 @@
 #include "../cfg.h"
 #include "toolbarMenubar/ToolMenuHandler.h"
 #include "../gui/GladeSearchpath.h"
+#include "toolbarMenubar/model/ToolbarData.h"
+#include "toolbarMenubar/model/ToolbarModel.h"
 
 #include <config.h>
 #include <glib/gi18n-lib.h>
@@ -22,7 +24,8 @@ MainWindow::MainWindow(GladeSearchpath * gladeSearchPath, Control * control) :
 	this->tbBottom1 = get("tbBottom1");
 	this->tbBottom2 = get("tbBottom2");
 	this->maximized = false;
-	this->toolbarMenuitem = NULL;
+	this->toolbarMenuData = NULL;
+	this->toolbarMenuitems = NULL;
 
 	this->xournal = new XournalWidget(get("scrolledwindowMain"), control);
 
@@ -37,7 +40,10 @@ MainWindow::MainWindow(GladeSearchpath * gladeSearchPath, Control * control) :
 	this->toolbar = new ToolMenuHandler(this->control, this->control->getZoomControl(), this, this->control->getToolHandler());
 
 	char * file = gladeSearchPath->findFile(NULL, "toolbar.ini");
-	if (!this->toolbar->parse(file, true)) {
+
+	ToolbarModel * tbModel = this->toolbar->getModel();
+
+	if (!tbModel->parse(file, true)) {
 		GtkWidget* dlg = gtk_message_dialog_new(GTK_WINDOW(this->window), GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
 				_("Could not parse general toolbar.ini file: %s\nNo Toolbars will be available"), file);
 
@@ -50,7 +56,7 @@ MainWindow::MainWindow(GladeSearchpath * gladeSearchPath, Control * control) :
 
 	file = g_build_filename(g_get_home_dir(), G_DIR_SEPARATOR_S, CONFIG_DIR, G_DIR_SEPARATOR_S, TOOLBAR_CONFIG, NULL);
 	if (g_file_test(file, G_FILE_TEST_EXISTS)) {
-		if (!this->toolbar->parse(file, false)) {
+		if (!tbModel->parse(file, false)) {
 			GtkWidget* dlg = gtk_message_dialog_new(GTK_WINDOW(this->window), GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
 					_("Could not parse custom toolbar.ini file: %s\nToolbars will not be available"), file);
 
@@ -61,7 +67,7 @@ MainWindow::MainWindow(GladeSearchpath * gladeSearchPath, Control * control) :
 	}
 	g_free(file);
 
-	initToolbar();
+	initToolbarAndMenu();
 
 	g_signal_connect(getSpinPageNo(), "value-changed", G_CALLBACK(pageNrSpinChangedCallback), this);
 
@@ -87,18 +93,21 @@ public:
 		this->d = d;
 	}
 
-	MainWindow *win;
+	MainWindow * win;
 	GtkWidget * item;
 	ToolbarData * d;
 };
 
 MainWindow::~MainWindow() {
-	for (GList * l = this->toolbarMenuitem; l != NULL; l = l->next) {
+	for (GList * l = this->toolbarMenuData; l != NULL; l = l->next) {
 		MenuSelectToolbarData * data = (MenuSelectToolbarData *) l->data;
 		delete data;
 	}
 
-	g_list_free(this->toolbarMenuitem);
+	g_list_free(this->toolbarMenuData);
+	this->toolbarMenuData = NULL;
+	g_list_free(this->toolbarMenuitems);
+	this->toolbarMenuitems = NULL;
 }
 
 void MainWindow::viewShowSidebar(GtkCheckMenuItem * checkmenuitem, MainWindow * win) {
@@ -250,7 +259,7 @@ void MainWindow::toolbarSelected(ToolbarData * d) {
 void MainWindow::setControlTmpDisabled(bool disabled) {
 	toolbar->setTmpDisabled(disabled);
 
-	for (GList * l = this->toolbarMenuitem; l != NULL; l = l->next) {
+	for (GList * l = this->toolbarMenuData; l != NULL; l = l->next) {
 		MenuSelectToolbarData * data = (MenuSelectToolbarData *) l->data;
 		gtk_widget_set_sensitive(data->item, !disabled);
 	}
@@ -262,11 +271,28 @@ void MainWindow::setControlTmpDisabled(bool disabled) {
 	gtk_widget_set_sensitive(w, !disabled);
 }
 
-void MainWindow::initToolbar() {
+void MainWindow::updateToolbarMenu() {
+	for (GList * l = this->toolbarMenuitems; l != NULL; l = l->next) {
+		GtkWidget * w = GTK_WIDGET(l->data);
+		gtk_widget_destroy(w);
+	}
+
+	for (GList * l = this->toolbarMenuData; l != NULL; l = l->next) {
+		MenuSelectToolbarData * data = (MenuSelectToolbarData *) l->data;
+		delete data;
+	}
+
+	g_slist_free(this->toolbarGroup);
+	this->toolbarGroup = NULL;
+
+	initToolbarAndMenu();
+}
+
+void MainWindow::initToolbarAndMenu() {
 	GtkMenuShell * menubar = GTK_MENU_SHELL(get("menuViewToolbar"));
 	g_return_if_fail(menubar != NULL);
 
-	ListIterator<ToolbarData *> it = this->toolbar->iterator();
+	ListIterator<ToolbarData *> it = this->toolbar->getModel()->iterator();
 	GtkWidget * item = NULL;
 	GtkWidget * selectedItem = NULL;
 	ToolbarData * selectedData = NULL;
@@ -291,7 +317,7 @@ void MainWindow::initToolbar() {
 
 		MenuSelectToolbarData * data = new MenuSelectToolbarData(this, item, d);
 
-		this->toolbarMenuitem = g_list_append(this->toolbarMenuitem, data);
+		this->toolbarMenuData = g_list_append(this->toolbarMenuData, data);
 
 		if (selectedId == d->getId()) {
 			selectedData = d;
@@ -308,10 +334,12 @@ void MainWindow::initToolbar() {
 			gtk_menu_shell_insert(menubar, separator, menuPos++);
 
 			predefined = true;
+			this->toolbarMenuitems = g_list_append(this->toolbarMenuitems, separator);
 		}
 
 		gtk_menu_shell_insert(menubar, item, menuPos++);
-		gtk_widget_unrealize(item);
+
+		this->toolbarMenuitems = g_list_append(this->toolbarMenuitems, item);
 	}
 
 	if (selectedData) {
@@ -400,4 +428,8 @@ void MainWindow::setRedoDescription(String description) {
 
 GtkWidget * MainWindow::getSpinPageNo() {
 	return toolbar->getPageSpinner();
+}
+
+ToolbarModel * MainWindow::getToolbarModel() {
+	return this->toolbar->getModel();
 }

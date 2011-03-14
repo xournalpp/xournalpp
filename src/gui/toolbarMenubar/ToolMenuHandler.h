@@ -14,42 +14,21 @@
 
 #include <gtk/gtk.h>
 
-#include "../../util/ListIterator.h"
 #include "../../control/Actions.h"
-#include "../../control/ZoomControl.h"
 #include "../../util/String.h"
-#include "../GladeGui.h"
-#include <vector>
-#include "ToolbarEntry.h"
-#include "../../control/ToolHandler.h"
 
-class ToolbarData {
-public:
-	ToolbarData(bool predefined);
-
-public:
-	String getName();
-	String getId();
-
-	void load(GKeyFile * config, const char * group);
-
-	bool isPredefined();
-private:
-	String id;
-	String name;
-	std::vector<ToolbarEntry> contents;
-
-	bool predefined;
-
-	friend class ToolMenuHandler;
-};
 
 class AbstractToolItem;
 class ToolButton;
 class ToolPageSpinner;
 class ToolPageLayer;
 class FontButton;
-
+class ToolbarData;
+class ZoomControl;
+class ToolHandler;
+class XojFont;
+class GladeGui;
+class ToolbarModel;
 
 class ToolMenuHandler {
 public:
@@ -57,9 +36,6 @@ public:
 	virtual ~ToolMenuHandler();
 
 public:
-	bool parse(const char * file, bool predefined);
-
-	ListIterator<ToolbarData *> iterator();
 
 	void unloadToolbar(GtkWidget * tBunload);
 	void freeToolbar();
@@ -86,18 +62,14 @@ public:
 
 	void setTmpDisabled(bool disabled);
 
-	const char * getColorName(const char * color);
-
+	ToolbarModel * getModel();
 
 private:
 	void addToolItem(AbstractToolItem * it);
-	void parseGroup(GKeyFile * config, const char * group, bool predefined);
-	void parseColors(GKeyFile * config, const char * group);
 
 	void initEraserToolItem();
 
 private:
-	GList * toolbars;
 	GList * toolbarColorItems;
 
 	GList * toolItems;
@@ -115,7 +87,7 @@ private:
 	GladeGui * gui;
 	ToolHandler * toolHandler;
 
-	GHashTable * colorNameTable;
+	ToolbarModel * tbModel;
 };
 
 #endif /* EDITABLETOOLBAR_H_ */

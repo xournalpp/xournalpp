@@ -8,12 +8,15 @@
  *
  * @license GPL
  */
+
 #ifndef __IMAGESDIALOG_H__
 #define __IMAGESDIALOG_H__
 
 #include "../GladeGui.h"
-#include "../../model/Document.h"
-#include "../../control/settings/Settings.h"
+
+class Document;
+class Settings;
+class BackgroundImage;
 
 class ImagesDialog: public GladeGui {
 public:
@@ -34,9 +37,9 @@ private:
 	void layout();
 	void updateOkButton();
 
-	static void sizeAllocate(GtkWidget *widget, GtkRequisition *requisition, ImagesDialog * dlg);
-	static void okButtonCallback(GtkButton *button, ImagesDialog * dlg);
-	static void filechooserButtonCallback(GtkButton *button, ImagesDialog * dlg);
+	static void sizeAllocate(GtkWidget * widget, GtkRequisition * requisition, ImagesDialog * dlg);
+	static void okButtonCallback(GtkButton * button, ImagesDialog * dlg);
+	static void filechooserButtonCallback(GtkButton * button, ImagesDialog * dlg);
 
 private:
 	bool backgroundInitialized;

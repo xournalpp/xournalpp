@@ -10,6 +10,7 @@ ui_DATA = \
 	pagesize.glade \
 	pdfpages.glade \
 	settings.glade \
+	toolbar.glade \
 	toolbar.ini
 
 EXTRA_DIST = ${ui_DATA}

@@ -9,6 +9,7 @@
 [type: gettext/glade]ui/pagesize.glade
 [type: gettext/glade]ui/pdfpages.glade
 [type: gettext/glade]ui/settings.glade
+[type: gettext/glade]ui/toolbar.glade
 src/Xournalpp.cpp
 src/util/OutputStream.cpp
 src/util/Range.cpp
@@ -48,6 +49,8 @@ src/gui/GladeSearchpath.cpp
 src/gui/MainWindow.cpp
 src/gui/sidebar/SidebarPreview.cpp
 src/gui/sidebar/Sidebar.cpp
+src/gui/toolbarMenubar/model/ToolbarData.cpp
+src/gui/toolbarMenubar/model/ToolbarModel.cpp
 src/gui/toolbarMenubar/AbstractItem.cpp
 src/gui/toolbarMenubar/ColorToolItem.cpp
 src/gui/toolbarMenubar/ToolButton.cpp
@@ -74,6 +77,7 @@ src/gui/dialog/SettingsDialog.cpp
 src/gui/dialog/AboutDialog.cpp
 src/gui/dialog/ButtonConfigGui.cpp
 src/gui/dialog/ExportDialog.cpp
+src/gui/dialog/ToolbarDialog.cpp
 src/gui/Shadow.cpp
 src/control/LoadHandler.cpp
 src/control/jobs/AutosaveJob.cpp
