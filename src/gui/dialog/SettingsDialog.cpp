@@ -18,8 +18,6 @@
 #include "../../util/Util.h"
 #include <string.h>
 
-// TODO: Zoom kallibrieren einheitsangabe
-
 SettingsDialog::SettingsDialog(GladeSearchpath * gladeSearchPath, Settings * settings) :
 	GladeGui(gladeSearchPath, "settings.glade", "settingsDialog") {
 	this->settings = settings;

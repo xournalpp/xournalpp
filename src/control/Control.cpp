@@ -6,6 +6,7 @@
 #include "../gui/dialog/ImagesDialog.h"
 #include "../gui/dialog/FormatDialog.h"
 #include "../gui/dialog/SelectBackgroundColorDialog.h"
+#include "../gui/dialog/ToolbarDialog.h"
 #include "../cfg.h"
 #include "LoadHandler.h"
 #include "PrintHandler.h"
@@ -764,7 +765,11 @@ void Control::firePageSelected(int page) {
 }
 
 void Control::customizeToolbars() {
+	ToolbarDialog dlg(this->gladeSearchPath, win->getToolbarModel());
+	dlg.show();
 
+	// TODO: Debug
+	//win->updateToolbarMenu();
 }
 
 void Control::enableFullscreen(bool enabled, bool presentation) {

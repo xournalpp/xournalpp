@@ -29,60 +29,10 @@
 #include "ToolZoomSlider.h"
 #include "ToolPageLayer.h"
 
-ToolbarData::ToolbarData(bool predefined) {
-	this->predefined = predefined;
-}
-
-String ToolbarData::getName() {
-	return this->name;
-}
-
-String ToolbarData::getId() {
-	return this->id;
-}
-
-bool ToolbarData::isPredefined() {
-	return this->predefined;
-}
-
-void ToolbarData::load(GKeyFile * config, const char * group) {
-	gsize length = 0;
-	gchar ** keys = g_key_file_get_keys(config, group, &length, NULL);
-	if (keys == NULL) {
-		return;
-	}
-
-	gchar * name = g_key_file_get_locale_string(config, group, "name", NULL, NULL);
-	if (name != NULL) {
-		this->name = name;
-		g_free(name);
-	}
-
-	for (gsize i = 0; i < length; i++) {
-		if (strcmp(keys[i], "name") == 0 || strncmp(keys[i], "name[", 5) == 0) {
-			continue;
-		}
-
-		ToolbarEntry e;
-		gsize keyLen = 0;
-		e.name = keys[i];
-		gchar ** list = g_key_file_get_string_list(config, group, keys[i], &keyLen, NULL);
-
-		for (gsize x = 0; x < keyLen; x++) {
-			String s = list[x];
-			e.entries.push_back(s.trim());
-		}
-
-		contents.push_back(e);
-
-		g_strfreev(list);
-	}
-
-	g_strfreev(keys);
-}
+#include "model/ToolbarModel.h"
+#include "model/ToolbarData.h"
 
 ToolMenuHandler::ToolMenuHandler(ActionHandler * listener, ZoomControl * zoom, GladeGui * gui, ToolHandler * toolHandler) {
-	this->toolbars = NULL;
 	this->toolItems = NULL;
 	this->toolbarColorItems = NULL;
 	this->menuItems = NULL;
@@ -94,97 +44,14 @@ ToolMenuHandler::ToolMenuHandler(ActionHandler * listener, ZoomControl * zoom, G
 	this->redoButton = NULL;
 	this->toolPageSpinner = NULL;
 	this->toolPageLayer = NULL;
-
-	this->colorNameTable = g_hash_table_new_full(g_str_hash, g_str_equal, g_free, g_free);
+	this->tbModel = new ToolbarModel();
 
 	initToolItems();
 }
 
 ToolMenuHandler::~ToolMenuHandler() {
-	for (GList * l = toolbars; l != NULL; l = l->next) {
-		delete (ToolbarData*) l->data;
-	}
-
-	g_list_free(this->toolbars);
-	this->toolbars = NULL;
-
-	g_hash_table_destroy(this->colorNameTable);
-	this->colorNameTable = NULL;
-}
-
-void ToolMenuHandler::parseGroup(GKeyFile * config, const char * group, bool predefined) {
-	ToolbarData * data = new ToolbarData(predefined);
-
-	String name;
-	if (predefined) {
-		name = "predef_";
-	} else {
-		name = "custom_";
-	}
-
-	data->name = name;
-	data->id = group;
-
-	data->load(config, group);
-
-	this->toolbars = g_list_append(this->toolbars, data);
-}
-
-bool ToolMenuHandler::parse(const char * file, bool predefined) {
-	GKeyFile * config = g_key_file_new();
-	g_key_file_set_list_separator(config, ',');
-	if (!g_key_file_load_from_file(config, file, G_KEY_FILE_NONE, NULL)) {
-		g_key_file_free(config);
-		return false;
-	}
-
-	gsize lenght = 0;
-	gchar ** groups = g_key_file_get_groups(config, &lenght);
-
-	for (gsize i = 0; i < lenght; i++) {
-		if (groups[i][0] == '_') {
-			if (strcmp("_ColorNames", groups[i]) == 0) {
-				parseColors(config, groups[i]);
-			}
-
-			continue;
-		}
-
-		parseGroup(config, groups[i], predefined);
-	}
-
-	g_strfreev(groups);
-	g_key_file_free(config);
-	return true;
-}
-
-void ToolMenuHandler::parseColors(GKeyFile * config, const char * group) {
-	gsize length = 0;
-	gchar ** keys = g_key_file_get_keys(config, group, &length, NULL);
-	if (keys == NULL) {
-		return;
-	}
-
-	for (gsize i = 0; i < length; i++) {
-		if (strstr(keys[i], "[")) {
-			// skip localized keys
-			continue;
-		}
-
-		char * name = g_key_file_get_locale_string(config, group, keys[i], NULL, NULL);
-		g_hash_table_insert(this->colorNameTable, g_strdup(keys[i]), name);
-	}
-
-	g_strfreev(keys);
-}
-
-const char * ToolMenuHandler::getColorName(const char * color) {
-	const char * name = (char *) g_hash_table_lookup(this->colorNameTable, color);
-	return name;
-}
-
-ListIterator<ToolbarData *> ToolMenuHandler::iterator() {
-	return ListIterator<ToolbarData *> (this->toolbars);
+	delete this->tbModel;
+	this->tbModel = NULL;
 }
 
 void ToolMenuHandler::freeToolbar() {
@@ -259,7 +126,7 @@ void ToolMenuHandler::load(ToolbarData * d, GtkWidget * toolbar, const char * to
 					color = color.substring(2);
 					gint c = g_ascii_strtoll(color.c_str(), NULL, 16);
 
-					const char * colorName = getColorName(color.c_str());
+					const char * colorName = this->tbModel->getColorName(color.c_str());
 					String name;
 					if (colorName == NULL) {
 						g_warning("No color name in toolbar.ini for %s defined!", color.c_str());
@@ -598,5 +465,9 @@ int ToolMenuHandler::getSelectedLayer() {
 
 void ToolMenuHandler::setLayerCount(int count, int selected) {
 	toolPageLayer->setLayerCount(count, selected);
+}
+
+ToolbarModel * ToolMenuHandler::getModel() {
+	return this->tbModel;
 }
 

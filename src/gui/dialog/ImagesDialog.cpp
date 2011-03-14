@@ -2,6 +2,8 @@
 #include "../Shadow.h"
 #include <math.h>
 #include "../../util/Util.h"
+#include "../../model/Document.h"
+#include "../../control/settings/Settings.h"
 
 #include <config.h>
 #include <glib/gi18n-lib.h>
@@ -266,11 +268,11 @@ void ImagesDialog::updateOkButton() {
 	gtk_widget_set_sensitive(get("buttonOk"), p && gtk_widget_get_visible(p->getWidget()));
 }
 
-void ImagesDialog::okButtonCallback(GtkButton *button, ImagesDialog * dlg) {
+void ImagesDialog::okButtonCallback(GtkButton * button, ImagesDialog * dlg) {
 	dlg->selectedPage = dlg->selected;
 }
 
-void ImagesDialog::filechooserButtonCallback(GtkButton *button, ImagesDialog * dlg) {
+void ImagesDialog::filechooserButtonCallback(GtkButton * button, ImagesDialog * dlg) {
 	dlg->selectedPage = -2;
 	gtk_widget_hide(dlg->window);
 }

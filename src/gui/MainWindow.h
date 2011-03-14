@@ -21,6 +21,7 @@ class Control;
 class MainWindow;
 class ToolMenuHandler;
 class ToolbarData;
+class ToolbarModel;
 
 class MainWindow: public GladeGui {
 public:
@@ -56,11 +57,14 @@ public:
 	void updateLayerCombobox();
 
 	GtkWidget * getSpinPageNo();
+	ToolbarModel * getToolbarModel();
 
 	void setControlTmpDisabled(bool disabled);
 
+	void updateToolbarMenu();
+
 private:
-	void initToolbar();
+	void initToolbarAndMenu();
 
 	static void pageNrSpinChangedCallback(GtkSpinButton * spinbutton, MainWindow * win);
 	static void buttonCloseSidebarClicked(GtkButton * button, MainWindow * win);
@@ -87,9 +91,11 @@ private:
 	// Toolbars
 	ToolMenuHandler * toolbar;
 	GSList * toolbarGroup;
-	GList * toolbarMenuitem;
+	GList * toolbarMenuData;
 	ToolbarData * selectedToolbar;
 	bool toolbarIntialized;
+
+	GList * toolbarMenuitems;
 
 	bool maximized;
 
