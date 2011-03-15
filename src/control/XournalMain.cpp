@@ -11,8 +11,6 @@
 #include "../pdf/PdfExport.h"
 #include "cfg.h"
 
-#include "control/settings/ev-metadata-manager.h"
-
 XournalMain::XournalMain() {
 }
 
@@ -163,7 +161,6 @@ int XournalMain::run(int argc, char * argv[]) {
 	}
 
 	gtk_main();
-	ev_metadata_manager_shutdown();
 
 	control->saveSettings();
 

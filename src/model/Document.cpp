@@ -120,15 +120,15 @@ void Document::setPreview(cairo_surface_t * preview) {
 
 }
 
-const char * Document::getEvMetadataFilename() {
+String Document::getEvMetadataFilename() {
 	String uri = "file://";
-	if (filename.c_str() != NULL) {
-		uri += filename;
-		return uri.c_str();
+	if (!this->filename.isEmpty()) {
+		uri += this->filename;
+		return uri;
 	}
-	if (pdfFilename.c_str() != NULL) {
-		uri += pdfFilename;
-		return uri.c_str();
+	if (!this->pdfFilename.isEmpty()) {
+		uri += this->pdfFilename;
+		return uri;
 	}
 	return NULL;
 }

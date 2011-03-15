@@ -11,7 +11,7 @@
 #include "LoadHandler.h"
 #include "PrintHandler.h"
 #include "ExportHandler.h"
-#include "settings/ev-metadata-manager.h"
+#include "settings/MetadataManager.h"
 #include "../util/CrashHandler.h"
 #include "../util/ObjectStream.h"
 #include "../util/Stacktrace.h"
@@ -52,8 +52,7 @@ Control::Control(GladeSearchpath * gladeSearchPath) {
 
 	this->gladeSearchPath = gladeSearchPath;
 
-	// Init Metadata Manager
-	ev_metadata_manager_init();
+	this->metadata = new MetadataManager();
 
 	this->lastAction = ACTION_NONE;
 	this->lastGroup = GROUP_NOGROUP;
@@ -130,6 +129,8 @@ Control::~Control() {
 	this->searchBar = NULL;
 	delete this->scrollHandler;
 	this->scrollHandler = NULL;
+	delete this->metadata;
+	this->metadata = NULL;
 }
 
 void Control::deleteLastAutosaveFile(String newAutosaveFile) {
@@ -238,10 +239,8 @@ void Control::updatePageNumbers(int page, int pdfPage) {
 	this->win->updatePageNumbers(page, this->doc->getPageCount(), pdfPage);
 	this->sidebar->selectPageNr(page, pdfPage);
 
-	const char * file = this->doc->getEvMetadataFilename();
-	if (file) {
-		ev_metadata_manager_set_int(file, "page", page);
-	}
+	String file = this->doc->getEvMetadataFilename();
+	this->metadata->setInt(file, "page", page);
 
 	int current = this->win->getXournal()->getCurrentPage();
 	int count = this->doc->getPageCount();
@@ -743,7 +742,7 @@ void Control::clearSelectionEndText() {
 }
 
 void Control::invokeLater(ActionType type) {
-	g_idle_add((GSourceFunc) &invokeCallback, new CallbackData(this, type));
+	g_idle_add((GSourceFunc) & invokeCallback, new CallbackData(this, type));
 }
 
 /**
@@ -996,7 +995,7 @@ void Control::insertNewPage(int position) {
 		if (doc->getPdfPageCount() == 0) {
 			GtkWidget * dialog = gtk_message_dialog_new((GtkWindow*) *win, GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
 					_("You don't have any PDF pages to select from. Cancel operation,\n"
-							"Please select another background type: Menu \"Journal\" / \"Insert Page Type\"."));
+						"Please select another background type: Menu \"Journal\" / \"Insert Page Type\"."));
 			gtk_dialog_run(GTK_DIALOG(dialog));
 			gtk_widget_destroy(dialog);
 
@@ -1150,7 +1149,7 @@ void Control::setPageBackground(ActionType type) {
 		if (doc->getPdfPageCount() == 0) {
 			GtkWidget * dialog = gtk_message_dialog_new((GtkWindow*) *win, GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
 					_("You don't have any PDF pages to select from. Cancel operation,\n"
-							"Please select another background type: Menu \"Journal\" / \"Insert Page Type\"."));
+						"Please select another background type: Menu \"Journal\" / \"Insert Page Type\"."));
 			gtk_dialog_run(GTK_DIALOG(dialog));
 			gtk_widget_destroy(dialog);
 			return;
@@ -1731,20 +1730,22 @@ bool Control::openFile(String filename, int scrollToPage) {
 	GValue value = { 0 };
 
 	this->doc->lock();
-	const char * file = this->doc->getEvMetadataFilename();
+	String file = this->doc->getEvMetadataFilename();
 	this->doc->unlock();
 
-	if (file) {
-		if (ev_metadata_manager_get(file, "zoom", &value, TRUE) && G_VALUE_TYPE(&value) == G_TYPE_DOUBLE) {
-			zoom->setZoom(g_value_get_double(&value));
+	if (!file.isEmpty()) {
+		double zoom = 1;
+		if (this->metadata->getDouble(file, "zoom", zoom)) {
+			this->zoom->setZoom(zoom);
 		}
 
+		int scrollPageMetadata = 0;
 		if (scrollToPage >= 0) {
 			scrollHandler->scrollToPage(scrollToPage);
-		} else if (ev_metadata_manager_get(file, "page", &value, TRUE) && G_VALUE_TYPE(&value) == G_TYPE_INT) {
-			scrollHandler->scrollToPage(g_value_get_int(&value));
+		} else if (this->metadata->getInt(file, "page", scrollPageMetadata)) {
+			scrollHandler->scrollToPage(scrollPageMetadata);
 		}
-		recent->addRecentFileFilename(file);
+		recent->addRecentFileFilename(file.c_str());
 	}
 
 	fileLoaded();
@@ -1782,11 +1783,10 @@ bool Control::annotatePdf(String filename, bool attachPdf, bool attachToDocument
 		recent->addRecentFileFilename(filename.c_str());
 
 		this->doc->lock();
-		const char * file = this->doc->getEvMetadataFilename();
+		String file = this->doc->getEvMetadataFilename();
 		this->doc->unlock();
-		if (file && ev_metadata_manager_get(file, "page", &value, TRUE) && G_VALUE_TYPE(&value) == G_TYPE_INT) {
-			page = g_value_get_int(&value);
-		}
+
+		this->metadata->getInt(file, "page", page);
 		scrollHandler->scrollToPage(page);
 	} else {
 		this->doc->lock();
@@ -1939,6 +1939,8 @@ bool Control::showSaveDialog() {
 	gtk_widget_destroy(dialog);
 
 	this->doc->lock();
+
+	// TODO: inform metadata manager about the name change!
 	this->doc->setFilename(filename);
 	this->doc->unlock();
 
@@ -2348,5 +2350,9 @@ Settings * Control::getSettings() {
 
 ScrollHandler * Control::getScrollHandler() {
 	return this->scrollHandler;
+}
+
+MetadataManager * Control::getMetadataManager() {
+	return this->metadata;
 }
 
