@@ -30,6 +30,7 @@ ColorUndoAction::~ColorUndoAction() {
 	}
 
 	g_list_free(this->data);
+	this->data = NULL;
 }
 
 void ColorUndoAction::addStroke(Element * e, int originalColor, double newColor) {

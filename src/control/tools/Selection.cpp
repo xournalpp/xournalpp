@@ -35,11 +35,11 @@ void RectSelection::getSelectedRect(double & x, double & y, double & width, doub
 }
 
 bool RectSelection::finalize(XojPage * page) {
-	x1 = MIN(this->sx, this->ex);
-	x2 = MAX(this->sx, this->ex);
+	this->x1 = MIN(this->sx, this->ex);
+	this->x2 = MAX(this->sx, this->ex);
 
-	y1 = MIN(this->sy, this->ey);
-	y2 = MAX(this->sy, this->ey);
+	this->y1 = MIN(this->sy, this->ey);
+	this->y2 = MAX(this->sy, this->ey);
 
 	this->page = page;
 

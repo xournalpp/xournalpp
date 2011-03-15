@@ -257,11 +257,21 @@ GList * RecentManager::filterRecent(GList * items, bool xoj) {
 		GtkRecentInfo * info = (GtkRecentInfo *) l->data;
 		const char * uri = gtk_recent_info_get_uri(info);
 
+		// Skip remote files anyway, PDF are supported as remote, XOJ not
+		if (!g_str_has_prefix(uri, "file://")) {
+			continue;
+		}
+
+		GFile * file = g_file_new_for_uri(uri);
+
+		// skipt not existing files
+		if (!g_file_query_exists(file, NULL)) {
+			g_object_unref(file);
+			continue;
+		}
+		g_object_unref(file);
+
 		if (xoj) {
-			// Skip remote files
-			if (!g_str_has_prefix(uri, "file://")) {
-				continue;
-			}
 			if (g_str_has_suffix(uri, ".xoj")) {
 				filteredItems = g_list_prepend(filteredItems, info);
 			}

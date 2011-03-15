@@ -1,6 +1,7 @@
 #include "InputHandler.h"
 #include "../../gui/XournalWidget.h"
 #include "../Control.h"
+#include "../shaperecognizer/ShapeRecognizerResult.h"
 #include "../../undo/InsertUndoAction.h"
 #include "../../undo/RecognizerUndoAction.h"
 #include <math.h>
@@ -165,19 +166,22 @@ void InputHandler::onButtonReleaseEvent(GdkEventButton * event, XojPage * page) 
 
 		if (result != NULL) {
 			UndoRedoHandler * undo = xournal->getControl()->getUndoRedoHandler();
-			RecognizerUndoAction * recognizerUndo = new RecognizerUndoAction(page, this->redrawable, layer, this->tmpStroke, result->recognized);
-			undo->addUndoAction(recognizerUndo);
-			layer->addElement(result->recognized);
 
-			Range range(result->recognized->getX(), result->recognized->getY());
-			range.addPoint(result->recognized->getX() + result->recognized->getElementWidth(),
-					result->recognized->getY() + result->recognized->getElementHeight());
+			Stroke * recognized = result->getRecognized();
+
+			RecognizerUndoAction * recognizerUndo = new RecognizerUndoAction(page, this->redrawable, layer, this->tmpStroke, recognized);
+			undo->addUndoAction(recognizerUndo);
+			layer->addElement(result->getRecognized());
+
+			Range range(recognized->getX(), recognized->getY());
+			range.addPoint(recognized->getX() + recognized->getElementWidth(), recognized->getY() + recognized->getElementHeight());
 
 			range.addPoint(this->tmpStroke->getX(), this->tmpStroke->getY());
 			range.addPoint(this->tmpStroke->getX() + this->tmpStroke->getElementWidth(), this->tmpStroke->getY() + this->tmpStroke->getElementHeight());
 
-			for (GList * l = result->source; l != NULL; l = l->next) {
-				Stroke * s = (Stroke *) l->data;
+			ListIterator<Stroke *> l = result->getSources();
+			while (l.hasNext()) {
+				Stroke * s = l.next();
 
 				layer->removeElement(s, false);
 

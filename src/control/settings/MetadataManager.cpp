@@ -11,15 +11,15 @@ MetadataManager::MetadataManager() {
 }
 
 MetadataManager::~MetadataManager() {
-	if(this->timeoutId) {
+	if (this->timeoutId) {
 		g_source_remove(this->timeoutId);
 		this->timeoutId = 0;
-
+		save(this);
 	}
 
-	save(this);
-
-	g_key_file_free(this->config);
+	if (this->config) {
+		g_key_file_free(this->config);
+	}
 }
 
 void MetadataManager::setInt(String uri, const char * name, int value) {
@@ -56,6 +56,7 @@ void MetadataManager::setString(String uri, const char * name, const char * valu
 }
 
 void MetadataManager::updateAccessTime(String uri) {
+	// TODO: low prio: newer GTK Version use _int64 instead of integer
 	g_key_file_set_integer(this->config, uri.c_str(), "atime", time(NULL));
 
 	if (this->timeoutId) {
@@ -65,11 +66,68 @@ void MetadataManager::updateAccessTime(String uri) {
 	this->timeoutId = g_timeout_add_seconds_full(G_PRIORITY_DEFAULT_IDLE, 2, (GSourceFunc) save, this, NULL);
 }
 
+struct GroupTimeEntry {
+	char * group;
+	int time;
+};
+
+int timeCompareFunc(GroupTimeEntry * a, GroupTimeEntry * b) {
+	return a->time - b->time;
+}
+
+void MetadataManager::cleanupMetadata() {
+	GList * data = NULL;
+
+	gsize lenght = 0;
+	gchar ** groups = g_key_file_get_groups(this->config, &lenght);
+
+	for (gsize i = 0; i < lenght; i++) {
+		char * group = groups[i];
+
+		GFile * file = g_file_new_for_uri(group);
+		bool exists = g_file_query_exists(file, NULL);
+		g_object_unref(file);
+
+		if (!exists) {
+			g_key_file_remove_group(this->config, group, NULL);
+			continue;
+		}
+
+		GError * error = NULL;
+		// TODO: low prio: newer GTK Version use _int64 instead of integer
+		int time = g_key_file_get_integer(this->config, group, "atime", &error);
+		if (error) {
+			g_error_free(error);
+			continue;
+		}
+
+		GroupTimeEntry * e = g_new(GroupTimeEntry, 1);
+		e->group = group;
+		e->time = time;
+
+		data = g_list_insert_sorted(data, e, (GCompareFunc) timeCompareFunc);
+	}
+
+	int count = g_list_length(data);
+	GList * d = data;
+	if (count > METADATA_MAX_ITEMS) {
+		for (int i = count - METADATA_MAX_ITEMS; i > 0 && d; i--) {
+			GroupTimeEntry * e = (GroupTimeEntry *) d->data;
+			g_key_file_remove_group(this->config, e->group, NULL);
+			d = d->next;
+		}
+	}
+
+	g_list_foreach(data, (GFunc) g_free, NULL);
+	g_list_free(data);
+
+	g_strfreev(groups);
+}
+
 bool MetadataManager::save(MetadataManager * manager) {
 	manager->timeoutId = 0;
 
-	// TODO: remove unused items
-	//	resize_items();
+	manager->cleanupMetadata();
 
 	gsize length = 0;
 	char * data = g_key_file_to_data(manager->config, &length, NULL);
