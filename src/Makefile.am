@@ -16,6 +16,7 @@ xournalpp_SOURCES = \
 	control/jobs/Scheduler.cpp \
 	control/jobs/SynchronizedProgressListener.cpp \
 	control/jobs/XournalScheduler.cpp \
+	control/settings/ButtonConfig.cpp \
 	control/settings/MetadataManager.cpp \
 	control/settings/Settings.cpp \
 	control/shaperecognizer/CircleRecognizer.cpp \

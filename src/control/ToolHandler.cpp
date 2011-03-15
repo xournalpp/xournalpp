@@ -1,16 +1,19 @@
 #include "ToolHandler.h"
 #include <stdio.h>
 #include "../util/Util.h"
+#include "Actions.h"
 
 #include <gtk/gtk.h>
 
-ToolHandler::ToolHandler(ToolListener * listener, Settings * settings) {
+ToolHandler::ToolHandler(ToolListener * listener, ActionHandler * actionHandler, Settings * settings) {
 	colorFound = false;
 	this->listener = NULL;
+	this->actionHandler = NULL;
 	this->settings = settings;
 	this->lastSelectedTool = NULL;
 	initTools();
 	this->listener = listener;
+	this->actionHandler = actionHandler;
 
 	this->eraserType = ERASER_TYPE_DEFAULT;
 }
@@ -83,8 +86,30 @@ ToolHandler::~ToolHandler() {
 	this->settings = NULL;
 }
 
-void ToolHandler::_setEraserType(EraserType eraserType) {
+void ToolHandler::setEraserType(EraserType eraserType) {
 	this->eraserType = eraserType;
+	eraserTypeChanged();
+}
+
+void ToolHandler::eraserTypeChanged() {
+	if (this->actionHandler == NULL) {
+		return;
+	}
+
+	switch (this->eraserType) {
+	case ERASER_TYPE_DELETE_STROKE:
+		this->actionHandler->fireActionSelected(GROUP_ERASER_MODE, ACTION_TOOL_ERASER_DELETE_STROKE);
+		break;
+
+	case ERASER_TYPE_WHITEOUT:
+		this->actionHandler->fireActionSelected(GROUP_ERASER_MODE, ACTION_TOOL_ERASER_WHITEOUT);
+		break;
+
+	case ERASER_TYPE_DEFAULT:
+	default:
+		this->actionHandler->fireActionSelected(GROUP_ERASER_MODE, ACTION_TOOL_ERASER_STANDARD);
+		break;
+	}
 }
 
 EraserType ToolHandler::getEraserType() {
@@ -337,13 +362,13 @@ void ToolHandler::loadSettings() {
 
 			if (st.getString("type", type)) {
 				if (type == "deleteStroke") {
-					_setEraserType(ERASER_TYPE_DELETE_STROKE);
+					setEraserType(ERASER_TYPE_DELETE_STROKE);
 				} else if (type == "whiteout") {
-					_setEraserType(ERASER_TYPE_WHITEOUT);
+					setEraserType(ERASER_TYPE_WHITEOUT);
 				} else {
-					_setEraserType(ERASER_TYPE_DEFAULT);
+					setEraserType(ERASER_TYPE_DEFAULT);
 				}
-				listener->eraserTypeChanged();
+				eraserTypeChanged();
 			}
 		}
 	}

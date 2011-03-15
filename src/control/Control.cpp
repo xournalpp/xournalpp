@@ -32,6 +32,7 @@
 #include "stockdlg/XojOpenDlg.h"
 #include "../gui/TextEditor.h"
 #include "../undo/DeleteUndoAction.h"
+#include "settings/ButtonConfig.h"
 
 #include <config.h>
 #include <glib/gi18n-lib.h>
@@ -91,7 +92,7 @@ Control::Control(GladeSearchpath * gladeSearchPath) {
 	this->zoom = new ZoomControl();
 	this->zoom->setZoom100(this->settings->getDisplayDpi() / 72.0);
 
-	this->toolHandler = new ToolHandler(this, this->settings);
+	this->toolHandler = new ToolHandler(this, this, this->settings);
 	this->toolHandler->loadSettings();
 
 	this->cursor = new Cursor(this);
@@ -184,7 +185,7 @@ void Control::initWindow(MainWindow * win) {
 
 	updatePageNumbers(0, -1);
 
-	eraserTypeChanged();
+	toolHandler->eraserTypeChanged();
 
 	this->searchBar = new SearchBar(this);
 
@@ -487,17 +488,17 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent *even
 
 	case ACTION_TOOL_ERASER_STANDARD:
 		if (enabled) {
-			setEraserType(ERASER_TYPE_DEFAULT);
+			toolHandler->setEraserType(ERASER_TYPE_DEFAULT);
 		}
 		break;
 	case ACTION_TOOL_ERASER_DELETE_STROKE:
 		if (enabled) {
-			setEraserType(ERASER_TYPE_DELETE_STROKE);
+			toolHandler->setEraserType(ERASER_TYPE_DELETE_STROKE);
 		}
 		break;
 	case ACTION_TOOL_ERASER_WHITEOUT:
 		if (enabled) {
-			setEraserType(ERASER_TYPE_WHITEOUT);
+			toolHandler->setEraserType(ERASER_TYPE_WHITEOUT);
 		}
 		break;
 
@@ -742,7 +743,7 @@ void Control::clearSelectionEndText() {
 }
 
 void Control::invokeLater(ActionType type) {
-	g_idle_add((GSourceFunc) & invokeCallback, new CallbackData(this, type));
+	g_idle_add((GSourceFunc) &invokeCallback, new CallbackData(this, type));
 }
 
 /**
@@ -764,8 +765,8 @@ void Control::firePageSelected(int page) {
 }
 
 void Control::customizeToolbars() {
-//	ToolbarDialog dlg(this->gladeSearchPath, win->getToolbarModel());
-//	dlg.show();
+	//	ToolbarDialog dlg(this->gladeSearchPath, win->getToolbarModel());
+	//	dlg.show();
 
 	printf("Not implemented yet\n");
 
@@ -997,7 +998,7 @@ void Control::insertNewPage(int position) {
 		if (doc->getPdfPageCount() == 0) {
 			GtkWidget * dialog = gtk_message_dialog_new((GtkWindow*) *win, GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
 					_("You don't have any PDF pages to select from. Cancel operation,\n"
-						"Please select another background type: Menu \"Journal\" / \"Insert Page Type\"."));
+							"Please select another background type: Menu \"Journal\" / \"Insert Page Type\"."));
 			gtk_dialog_run(GTK_DIALOG(dialog));
 			gtk_widget_destroy(dialog);
 
@@ -1151,7 +1152,7 @@ void Control::setPageBackground(ActionType type) {
 		if (doc->getPdfPageCount() == 0) {
 			GtkWidget * dialog = gtk_message_dialog_new((GtkWindow*) *win, GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
 					_("You don't have any PDF pages to select from. Cancel operation,\n"
-						"Please select another background type: Menu \"Journal\" / \"Insert Page Type\"."));
+							"Please select another background type: Menu \"Journal\" / \"Insert Page Type\"."));
 			gtk_dialog_run(GTK_DIALOG(dialog));
 			gtk_widget_destroy(dialog);
 			return;
@@ -1410,50 +1411,7 @@ void Control::selectTool(ToolType type) {
 
 void Control::selectDefaultTool() {
 	ButtonConfig * cfg = settings->getDefaultButtonConfig();
-
-	if (cfg->action != TOOL_NONE) {
-		ToolType type = cfg->action;
-
-		toolHandler->selectTool(type);
-
-		if (type == TOOL_PEN || type == TOOL_HILIGHTER) {
-			toolHandler->setRuler(cfg->rouler);
-			toolHandler->setShapeRecognizer(cfg->shapeRecognizer);
-			if (cfg->size != TOOL_SIZE_NONE) {
-				toolHandler->setSize(cfg->size);
-			}
-		}
-
-		if (type == TOOL_PEN || type == TOOL_HILIGHTER || type == TOOL_TEXT) {
-			toolHandler->setColor(cfg->color);
-		}
-
-		if (type == TOOL_ERASER && cfg->eraserMode != ERASER_TYPE_NONE) {
-			setEraserType(cfg->eraserMode);
-		}
-	}
-}
-
-void Control::setEraserType(EraserType eraserType) {
-	toolHandler->_setEraserType(eraserType);
-	eraserTypeChanged();
-}
-
-void Control::eraserTypeChanged() {
-	switch (toolHandler->getEraserType()) {
-	case ERASER_TYPE_DELETE_STROKE:
-		fireActionSelected(GROUP_ERASER_MODE, ACTION_TOOL_ERASER_DELETE_STROKE);
-		break;
-
-	case ERASER_TYPE_WHITEOUT:
-		fireActionSelected(GROUP_ERASER_MODE, ACTION_TOOL_ERASER_WHITEOUT);
-		break;
-
-	case ERASER_TYPE_DEFAULT:
-	default:
-		fireActionSelected(GROUP_ERASER_MODE, ACTION_TOOL_ERASER_STANDARD);
-		break;
-	}
+	cfg->acceptActions(toolHandler);
 }
 
 void Control::toolChanged() {

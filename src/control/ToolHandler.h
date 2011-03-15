@@ -22,12 +22,13 @@ public:
 	virtual void setCustomColorSelected() = 0;
 	virtual void toolSizeChanged() = 0;
 	virtual void toolChanged() = 0;
-	virtual void eraserTypeChanged() = 0;
 };
+
+class ActionHandler;
 
 class ToolHandler {
 public:
-	ToolHandler(ToolListener * listener, Settings * settings);
+	ToolHandler(ToolListener * listener, ActionHandler * actionHandler, Settings * settings);
 	virtual ~ToolHandler();
 
 	void setColor(int color);
@@ -57,12 +58,9 @@ public:
 	void selectTool(ToolType type);
 	ToolType getToolType();
 
-	/**
-	 * Do not call this Method
-	 * Call Control::setEraserType
-	 */
-	void _setEraserType(EraserType eraserType);
+	void setEraserType(EraserType eraserType);
 	EraserType getEraserType();
+	void eraserTypeChanged();
 
 	bool isEnableColor();
 	bool isEnableSize();
@@ -92,6 +90,7 @@ private:
 
 	bool colorFound;
 	ToolListener * listener;
+	ActionHandler * actionHandler;
 
 	Settings * settings;
 };

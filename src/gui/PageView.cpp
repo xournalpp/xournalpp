@@ -21,6 +21,7 @@
 #include "../model/Text.h"
 
 #include "../control/settings/Settings.h"
+#include "../control/settings/ButtonConfig.h"
 #include "../control/SearchControl.h"
 #include "../control/tools/VerticalToolHandler.h"
 #include "../control/tools/EraseHandler.h"
@@ -79,10 +80,8 @@ PageView::PageView(XournalWidget * xournal, XojPage * page) {
 
 	updateSize();
 
-	gtk_widget_set_events(
-			widget,
-			GDK_EXPOSURE_MASK | GDK_POINTER_MOTION_MASK | GDK_BUTTON_MOTION_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK | GDK_ENTER_NOTIFY_MASK
-					| GDK_LEAVE_NOTIFY_MASK);
+	gtk_widget_set_events(widget, GDK_EXPOSURE_MASK | GDK_POINTER_MOTION_MASK | GDK_BUTTON_MOTION_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK
+			| GDK_ENTER_NOTIFY_MASK | GDK_LEAVE_NOTIFY_MASK);
 
 	gtk_widget_set_can_focus(widget, true);
 
@@ -384,7 +383,7 @@ void PageView::onButtonPressEvent(GtkWidget * widget, GdkEventButton * event) {
 		cfg = cfgTouch;
 
 		// If an action is defined we do it, even if it's a drawing action...
-		if (cfg->disableDrawing && cfg->action == TOOL_NONE) {
+		if (cfg->getDisableDrawing() && cfg->getAction() == TOOL_NONE) {
 			ToolType tool = h->getToolType();
 			if (tool == TOOL_PEN || tool == TOOL_ERASER || tool == TOOL_HILIGHTER) {
 				printf("ignore touchscreen for drawing!\n");
@@ -393,28 +392,9 @@ void PageView::onButtonPressEvent(GtkWidget * widget, GdkEventButton * event) {
 		}
 	}
 
-	if (cfg && cfg->action != TOOL_NONE) {
+	if (cfg && cfg->getAction() != TOOL_NONE) {
 		h->copyCurrentConfig();
-		h->selectTool(cfg->action);
-
-		ToolType type = cfg->action;
-
-		if (type == TOOL_PEN || type == TOOL_HILIGHTER) {
-			h->setRuler(cfg->rouler);
-			h->setShapeRecognizer(cfg->shapeRecognizer);
-			if (cfg->size != TOOL_SIZE_NONE) {
-				h->setSize(cfg->size);
-			}
-		}
-
-		if (type == TOOL_PEN || type == TOOL_HILIGHTER || type == TOOL_TEXT) {
-			h->setColor(cfg->color);
-		}
-
-		if (type == TOOL_ERASER && cfg->eraserMode != ERASER_TYPE_NONE) {
-			xournal->getControl()->setEraserType(cfg->eraserMode);
-		}
-
+		cfg->acceptActions(h);
 	}
 
 	double x;

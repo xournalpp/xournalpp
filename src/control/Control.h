@@ -81,9 +81,6 @@ public:
 	virtual void setCustomColorSelected();
 	virtual void toolChanged();
 	virtual void toolSizeChanged();
-	virtual void eraserTypeChanged();
-
-	void setEraserType(EraserType eraserType);
 
 	void selectTool(ToolType type);
 	void selectDefaultTool();
