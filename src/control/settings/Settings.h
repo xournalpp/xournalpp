@@ -24,6 +24,8 @@ enum AttributeType {
 	ATTRIBUTE_TYPE_NONE, ATTRIBUTE_TYPE_STRING, ATTRIBUTE_TYPE_INT, ATTRIBUTE_TYPE_DOUBLE, ATTRIBUTE_TYPE_INT_HEX, ATTRIBUTE_TYPE_BOOLEAN,
 };
 
+class ButtonConfig;
+
 class SAttribute {
 public:
 	SAttribute();
@@ -76,7 +78,6 @@ public:
 
 	void setComment(const String name, const String comment);
 
-
 	bool getInt(const String name, int & value);
 	bool getDouble(const String name, double & value);
 	bool getBool(const String name, bool & value);
@@ -87,25 +88,6 @@ public:
 
 private:
 	__RefSElement * element;
-};
-
-/**
- * Configuration for Mouse Buttons and Eraser
- */
-class ButtonConfig {
-public:
-	ButtonConfig(ToolType action, int color, ToolSize size, bool shapeRecognizer, bool rouler, EraserType eraserMode);
-
-public:
-	ToolType action;
-	int color;
-	ToolSize size;
-	bool shapeRecognizer;
-	bool rouler;
-	EraserType eraserMode;
-
-	String device;
-	bool disableDrawing;
 };
 
 class Settings {
@@ -240,7 +222,6 @@ public:
 
 	String getPresentationHideElements();
 	void setPresentationHideElements(String elements);
-
 
 	PageInsertType getPageInsertType();
 	void setPageInsertType(PageInsertType type);

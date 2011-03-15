@@ -94,7 +94,7 @@ void PdfExportJob::run() {
 		if (control->getWindow()) {
 			callAfterRun();
 		} else {
-			g_error(this->errorMsg.c_str());
+			g_error("%s", this->errorMsg.c_str());
 		}
 	}
 }

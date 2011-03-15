@@ -11,6 +11,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "Settings.h"
+#include "ButtonConfig.h"
 
 #include <config.h>
 #include <glib/gi18n-lib.h>
@@ -86,15 +87,15 @@ void Settings::loadDefault() {
 	this->visiblePageFormats = GTK_PAPER_NAME_A4 "," GTK_PAPER_NAME_A5 "," GTK_PAPER_NAME_LETTER ","GTK_PAPER_NAME_LEGAL;
 
 	// Eraser
-	this->buttonConfig[0] = new ButtonConfig(TOOL_ERASER, 0, TOOL_SIZE_NONE, false, false, ERASER_TYPE_NONE);
+	this->buttonConfig[0] = new ButtonConfig(TOOL_ERASER, 0, TOOL_SIZE_NONE, DRAWING_TYPE_NONE, ERASER_TYPE_NONE);
 	// Middle button
-	this->buttonConfig[1] = new ButtonConfig(TOOL_NONE, 0, TOOL_SIZE_NONE, false, false, ERASER_TYPE_NONE);
+	this->buttonConfig[1] = new ButtonConfig(TOOL_NONE, 0, TOOL_SIZE_NONE, DRAWING_TYPE_NONE, ERASER_TYPE_NONE);
 	// Right button
-	this->buttonConfig[2] = new ButtonConfig(TOOL_NONE, 0, TOOL_SIZE_NONE, false, false, ERASER_TYPE_NONE);
+	this->buttonConfig[2] = new ButtonConfig(TOOL_NONE, 0, TOOL_SIZE_NONE, DRAWING_TYPE_NONE, ERASER_TYPE_NONE);
 	// Touch
-	this->buttonConfig[3] = new ButtonConfig(TOOL_NONE, 0, TOOL_SIZE_NONE, false, false, ERASER_TYPE_NONE);
+	this->buttonConfig[3] = new ButtonConfig(TOOL_NONE, 0, TOOL_SIZE_NONE, DRAWING_TYPE_NONE, ERASER_TYPE_NONE);
 	// Default config
-	this->buttonConfig[4] = new ButtonConfig(TOOL_PEN, 0, TOOL_SIZE_FINE, false, false, ERASER_TYPE_NONE);
+	this->buttonConfig[4] = new ButtonConfig(TOOL_PEN, 0, TOOL_SIZE_FINE, DRAWING_TYPE_NONE, ERASER_TYPE_NONE);
 
 	this->fullscreenHideElements = "mainMenubar";
 	this->presentationHideElements = "mainMenubar,sidebarContents";
@@ -293,8 +294,25 @@ void Settings::loadButtonConfig() {
 			cfg->action = type;
 
 			if (type == TOOL_PEN || type == TOOL_HILIGHTER) {
-				e.getBool("rouler", cfg->rouler);
-				e.getBool("shapeRecognizer", cfg->shapeRecognizer);
+				bool change = false;
+				bool ruler = false;
+				bool shapeRecognizer = false;
+				e.getBool("changeRulerShapeRecognizer", change);
+				e.getBool("ruler", ruler);
+				e.getBool("shapeRecognizer", shapeRecognizer);
+
+				if (!change) {
+					cfg->drawingType = DRAWING_TYPE_DONT_CHANGE;
+				} else {
+					if (ruler) {
+						cfg->drawingType = DRAWING_TYPE_RULER;
+					} else if (shapeRecognizer) {
+						cfg->drawingType = DRAWING_TYPE_STROKE_RECOGNIZER;
+					} else {
+						cfg->drawingType = DRAWING_TYPE_NONE;
+					}
+				}
+
 				String sSize;
 				if (e.getString("size", sSize)) {
 					cfg->size = toolSizeFromString(sSize);
@@ -392,7 +410,7 @@ void Settings::saveTimeout() {
 		return;
 	}
 
-	timeoutId = g_timeout_add_seconds(2, (GSourceFunc) & saveCallback, this);
+	timeoutId = g_timeout_add_seconds(2, (GSourceFunc) &saveCallback, this);
 }
 
 xmlNodePtr Settings::savePropertyDouble(const gchar *key, double value, xmlNodePtr parent) {
@@ -433,10 +451,32 @@ void Settings::saveButtonConfig() {
 		e.setString("tool", toolTypeToString(type));
 
 		if (type == TOOL_PEN || type == TOOL_HILIGHTER) {
-			e.setBool("rouler", cfg->rouler);
-			e.setBool("shapeRecognizer", cfg->shapeRecognizer);
-			e .setString("size", toolSizeToString(cfg->size));
-		}
+			bool change = false;
+			bool ruler = false;
+			bool shapeRecognizer = false;
+			if (cfg->drawingType == DRAWING_TYPE_DONT_CHANGE) {
+				change = false;
+				ruler = false;
+				shapeRecognizer = false;
+			} else if (cfg->drawingType == DRAWING_TYPE_STROKE_RECOGNIZER) {
+				change = true;
+				ruler = false;
+				shapeRecognizer = true;
+			} else if (cfg->drawingType == DRAWING_TYPE_RULER) {
+				change = true;
+				ruler = true;
+				shapeRecognizer = false;
+			} else if (cfg->drawingType == DRAWING_TYPE_NONE) {
+				change = true;
+				ruler = false;
+				shapeRecognizer = false;
+			}
+
+			e.setBool("changeRulerShapeRecognizer", change);
+			e.setBool("ruler", ruler);
+			e.setBool("shapeRecognizer", shapeRecognizer);
+			e.setString("size", toolSizeToString(cfg->size));
+		} // end if pen or hilighter
 
 		if (type == TOOL_PEN || type == TOOL_HILIGHTER || type == TOOL_TEXT) {
 			e.setIntHex("color", cfg->color);
@@ -996,19 +1036,6 @@ void Settings::setFont(const XojFont & font) {
 SAttribute::SAttribute() {
 	this->iValue = 0;
 	this->type = ATTRIBUTE_TYPE_NONE;
-}
-
-//////////////////////////////////////////////////
-
-
-ButtonConfig::ButtonConfig(ToolType action, int color, ToolSize size, bool shapeRecognizer, bool rouler, EraserType eraserMode) {
-	this->action = action;
-	this->color = color;
-	this->size = size;
-	this->shapeRecognizer = shapeRecognizer;
-	this->rouler = rouler;
-	this->eraserMode = eraserMode;
-	this->disableDrawing = false;
 }
 
 //////////////////////////////////////////////////

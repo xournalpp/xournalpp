@@ -53,7 +53,7 @@ bool SaveJob::copyFile(String source, String target) {
 	GFile * trg = g_file_new_for_path(target.c_str());
 	GError * err = NULL;
 
-	bool ok = g_file_copy(src, trg, G_FILE_COPY_OVERWRITE, NULL, (GFileProgressCallback) & copyProgressCallback, this, &err);
+	bool ok = g_file_copy(src, trg, G_FILE_COPY_OVERWRITE, NULL, (GFileProgressCallback) &copyProgressCallback, this, &err);
 
 	if (!err && !ok) {
 		this->copyError = "Copy error: return false, but didn't set error message";
@@ -156,7 +156,7 @@ bool SaveJob::save() {
 	if (!out->getLastError().isEmpty()) {
 		this->lastError = String::format(_("Open file error: %s"), out->getLastError().c_str());
 		if (!control->getWindow()) {
-			g_error(this->lastError.c_str());
+			g_error("%s", this->lastError.c_str());
 			return false;
 		}
 

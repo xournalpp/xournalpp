@@ -40,9 +40,8 @@ private:
 	GtkWidget * cbTool;
 	GtkWidget * cbThikness;
 	GtkWidget * colorButton;
-	GtkWidget * shapeRecognizer;
-	GtkWidget * rouler;
 	GtkWidget * cbEraserType;
+	GtkWidget * cbDrawingType;
 };
 
 #endif /* __BUTTONCONFIGGUI__ */

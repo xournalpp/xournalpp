@@ -1,7 +1,7 @@
 /*
  * Xournal Extended
  *
- * Control to zoom (DPI) callibration (rouler)
+ * Control to zoom (DPI) callibration (ruler)
  *
  * @author Xournal Team
  * http://xournal.sf.net

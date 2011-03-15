@@ -55,6 +55,7 @@ am_xournalpp_OBJECTS = xournalpp-AutosaveJob.$(OBJEXT) \
 	xournalpp-SaveJob.$(OBJEXT) xournalpp-Scheduler.$(OBJEXT) \
 	xournalpp-SynchronizedProgressListener.$(OBJEXT) \
 	xournalpp-XournalScheduler.$(OBJEXT) \
+	xournalpp-ButtonConfig.$(OBJEXT) \
 	xournalpp-MetadataManager.$(OBJEXT) \
 	xournalpp-Settings.$(OBJEXT) \
 	xournalpp-CircleRecognizer.$(OBJEXT) \
@@ -334,6 +335,7 @@ xournalpp_SOURCES = \
 	control/jobs/Scheduler.cpp \
 	control/jobs/SynchronizedProgressListener.cpp \
 	control/jobs/XournalScheduler.cpp \
+	control/settings/ButtonConfig.cpp \
 	control/settings/MetadataManager.cpp \
 	control/settings/Settings.cpp \
 	control/shaperecognizer/CircleRecognizer.cpp \
@@ -568,6 +570,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-Attribute.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-AutosaveJob.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-BlockingJob.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-ButtonConfig.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-ButtonConfigGui.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-CairoPdf.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-CircleRecognizer.Po@am__quote@
@@ -883,6 +886,20 @@ xournalpp-XournalScheduler.obj: control/jobs/XournalScheduler.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='control/jobs/XournalScheduler.cpp' object='xournalpp-XournalScheduler.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-XournalScheduler.obj `if test -f 'control/jobs/XournalScheduler.cpp'; then $(CYGPATH_W) 'control/jobs/XournalScheduler.cpp'; else $(CYGPATH_W) '$(srcdir)/control/jobs/XournalScheduler.cpp'; fi`
+
+xournalpp-ButtonConfig.o: control/settings/ButtonConfig.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-ButtonConfig.o -MD -MP -MF $(DEPDIR)/xournalpp-ButtonConfig.Tpo -c -o xournalpp-ButtonConfig.o `test -f 'control/settings/ButtonConfig.cpp' || echo '$(srcdir)/'`control/settings/ButtonConfig.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-ButtonConfig.Tpo $(DEPDIR)/xournalpp-ButtonConfig.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='control/settings/ButtonConfig.cpp' object='xournalpp-ButtonConfig.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-ButtonConfig.o `test -f 'control/settings/ButtonConfig.cpp' || echo '$(srcdir)/'`control/settings/ButtonConfig.cpp
+
+xournalpp-ButtonConfig.obj: control/settings/ButtonConfig.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-ButtonConfig.obj -MD -MP -MF $(DEPDIR)/xournalpp-ButtonConfig.Tpo -c -o xournalpp-ButtonConfig.obj `if test -f 'control/settings/ButtonConfig.cpp'; then $(CYGPATH_W) 'control/settings/ButtonConfig.cpp'; else $(CYGPATH_W) '$(srcdir)/control/settings/ButtonConfig.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-ButtonConfig.Tpo $(DEPDIR)/xournalpp-ButtonConfig.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='control/settings/ButtonConfig.cpp' object='xournalpp-ButtonConfig.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-ButtonConfig.obj `if test -f 'control/settings/ButtonConfig.cpp'; then $(CYGPATH_W) 'control/settings/ButtonConfig.cpp'; else $(CYGPATH_W) '$(srcdir)/control/settings/ButtonConfig.cpp'; fi`
 
 xournalpp-MetadataManager.o: control/settings/MetadataManager.cpp
 @am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-MetadataManager.o -MD -MP -MF $(DEPDIR)/xournalpp-MetadataManager.Tpo -c -o xournalpp-MetadataManager.o `test -f 'control/settings/MetadataManager.cpp' || echo '$(srcdir)/'`control/settings/MetadataManager.cpp
