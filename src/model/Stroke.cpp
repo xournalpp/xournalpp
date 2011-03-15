@@ -76,9 +76,9 @@ double Stroke::getWidth() const {
 }
 
 bool Stroke::isInSelection(ShapeContainer * container) {
-	for (int i = 1; i < pointCount; i++) {
-		double px = points[i].x;
-		double py = points[i].y;
+	for (int i = 0; i < this->pointCount; i++) {
+		double px = this->points[i].x;
+		double py = this->points[i].y;
 
 		if (!container->contains(px, py)) {
 			return false;

@@ -764,8 +764,10 @@ void Control::firePageSelected(int page) {
 }
 
 void Control::customizeToolbars() {
-	ToolbarDialog dlg(this->gladeSearchPath, win->getToolbarModel());
-	dlg.show();
+//	ToolbarDialog dlg(this->gladeSearchPath, win->getToolbarModel());
+//	dlg.show();
+
+	printf("Not implemented yet\n");
 
 	// TODO: Debug
 	//win->updateToolbarMenu();

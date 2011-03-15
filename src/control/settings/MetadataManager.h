@@ -41,6 +41,8 @@ private:
 	void updateAccessTime(String uri);
 	void loadConfigFile();
 
+	void cleanupMetadata();
+
 	static bool save(MetadataManager * manager);
 
 

@@ -23,8 +23,6 @@ DeleteUndoAction::~DeleteUndoAction() {
 }
 
 void DeleteUndoAction::addElement(Layer * layer, Element * e, int pos) {
-	//TODO SYNCHRONIZE
-
 	this->elements = g_list_insert_sorted(this->elements, new PageLayerPosEntry<Element> (layer, e, pos),
 			(GCompareFunc) PageLayerPosEntry<Element>::cmp);
 }
@@ -38,7 +36,6 @@ bool DeleteUndoAction::undo(Control * control) {
 	}
 
 	for (GList * l = this->elements; l != NULL; l = l->next) {
-		// TODO : !!!!!!!!!synchronize
 		PageLayerPosEntry<Element> * e = (PageLayerPosEntry<Element>*) l->data;
 		e->layer->insertElement(e->element, e->pos);
 		view->repaint(e->element->getX(), e->element->getY(), e->element->getElementWidth(),

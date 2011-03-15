@@ -47,18 +47,4 @@ private:
 	friend class ShapeRecognizerResult;
 };
 
-class ShapeRecognizerResult {
-public:
-	ShapeRecognizerResult(Stroke * result);
-	ShapeRecognizerResult(Stroke * result, ShapeRecognizer * recognizer);
-	~ShapeRecognizerResult();
-
-public:
-	void addSourceStroke(Stroke * s);
-
-public:
-	Stroke * recognized;
-	GList * source;
-};
-
 #endif /* __SHAPERECOGNIZER_H__ */

@@ -22,6 +22,7 @@ xournalpp_SOURCES = \
 	control/shaperecognizer/Inertia.cpp \
 	control/shaperecognizer/RecoSegment.cpp \
 	control/shaperecognizer/ShapeRecognizer.cpp \
+	control/shaperecognizer/ShapeRecognizerResult.cpp \
 	control/stockdlg/ImageOpenDlg.cpp \
 	control/stockdlg/XojOpenDlg.cpp \
 	control/tools/EditSelection.cpp \

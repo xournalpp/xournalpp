@@ -21,98 +21,106 @@ UndoRedoHandler::~UndoRedoHandler() {
 }
 
 void UndoRedoHandler::clearContents() {
-	for (GList * l = undoList; l != NULL; l = l->next) {
+	for (GList * l = this->undoList; l != NULL; l = l->next) {
 		UndoAction * action = (UndoAction *) l->data;
 		delete action;
 	}
-	g_list_free(undoList);
-	undoList = NULL;
+	g_list_free(this->undoList);
+	this->undoList = NULL;
 
 	clearRedo();
 }
 
 void UndoRedoHandler::clearRedo() {
-	for (GList * l = redoList; l != NULL; l = l->next) {
+	for (GList * l = this->redoList; l != NULL; l = l->next) {
 		UndoAction * action = (UndoAction *) l->data;
 		delete action;
 	}
-	g_list_free(redoList);
-	redoList = NULL;
+	g_list_free(this->redoList);
+	this->redoList = NULL;
 }
 
 void UndoRedoHandler::undo() {
-	if (!undoList) {
+	if (!this->undoList) {
 		return;
 	}
 
-	GList * e = g_list_last(undoList);
+	GList * e = g_list_last(this->undoList);
 	if (e == NULL) {
 		g_warning("UndoRedoHandler::undo() e == NULL");
 		return;
 	}
 
 	UndoAction * undo = (UndoAction *) e->data;
-	if (!undo->undo(this->control)) {
-		GtkWidget * dialog = gtk_message_dialog_new((GtkWindow *) *control->getWindow(),
-				GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
-				_("Could not undo '%s'\nSomething went wrong... Please write a bug report..."),
-				undo->getText().c_str());
+
+	Document * doc = control->getDocument();
+	doc->lock();
+	bool undoResult = undo->undo(this->control);
+	doc->unlock();
+
+	if (!undoResult) {
+		GtkWidget * dialog = gtk_message_dialog_new((GtkWindow *) *control->getWindow(), GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
+				_("Could not undo '%s'\nSomething went wrong... Please write a bug report..."), undo->getText().c_str());
 		gtk_dialog_run(GTK_DIALOG(dialog));
 		gtk_widget_destroy(dialog);
 	}
 
-	redoList = g_list_append(redoList, undo);
-	undoList = g_list_delete_link(undoList, e);
+	this->redoList = g_list_append(this->redoList, undo);
+	this->undoList = g_list_delete_link(this->undoList, e);
 	fireUpdateUndoRedoButtons(undo->getPages());
 }
 
 void UndoRedoHandler::redo() {
-	if (!redoList) {
+	if (!this->redoList) {
 		return;
 	}
 
-	GList * e = g_list_last(redoList);
+	GList * e = g_list_last(this->redoList);
 	if (e == NULL) {
 		g_warning("UndoRedoHandler::redo() e == NULL");
 		return;
 	}
 
 	UndoAction * redo = (UndoAction *) e->data;
-	if (!redo->redo(this->control)) {
-		GtkWidget * dialog = gtk_message_dialog_new((GtkWindow *) *control->getWindow(),
-				GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
-				_("Could not redo '%s'\nSomething went wrong... Please write a bug report..."),
-				redo->getText().c_str());
+
+	Document * doc = control->getDocument();
+	doc->lock();
+	bool redoResult = redo->redo(this->control);
+	doc->unlock();
+
+	if (!redoResult) {
+		GtkWidget * dialog = gtk_message_dialog_new((GtkWindow *) *control->getWindow(), GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
+				_("Could not redo '%s'\nSomething went wrong... Please write a bug report..."), redo->getText().c_str());
 		gtk_dialog_run(GTK_DIALOG(dialog));
 		gtk_widget_destroy(dialog);
 	}
 
-	undoList = g_list_append(undoList, redo);
-	redoList = g_list_delete_link(redoList, e);
+	this->undoList = g_list_append(this->undoList, redo);
+	this->redoList = g_list_delete_link(this->redoList, e);
 	fireUpdateUndoRedoButtons(redo->getPages());
 }
 
 bool UndoRedoHandler::canUndo() {
-	return undoList != NULL;
+	return this->undoList != NULL;
 }
 
 bool UndoRedoHandler::canRedo() {
-	return redoList != NULL;
+	return this->redoList != NULL;
 }
 
 void UndoRedoHandler::addUndoAction(UndoAction * action) {
-	undoList = g_list_append(undoList, action);
+	this->undoList = g_list_append(this->undoList, action);
 	clearRedo();
 	fireUpdateUndoRedoButtons(action->getPages());
 }
 
 void UndoRedoHandler::addUndoActionBefore(UndoAction * action, UndoAction * before) {
-	GList * data = g_list_find(undoList, before);
+	GList * data = g_list_find(this->undoList, before);
 	if (!data) {
 		addUndoAction(action);
 		return;
 	}
-	undoList = g_list_insert_before(undoList, data, action);
+	this->undoList = g_list_insert_before(this->undoList, data, action);
 	clearRedo();
 	fireUpdateUndoRedoButtons(action->getPages());
 }
@@ -130,8 +138,8 @@ bool UndoRedoHandler::removeUndoAction(UndoAction * action) {
 }
 
 String UndoRedoHandler::undoDescription() {
-	if (undoList) {
-		GList * l = g_list_last(undoList);
+	if (this->undoList) {
+		GList * l = g_list_last(this->undoList);
 		UndoAction * a = (UndoAction *) l->data;
 		if (!a->getText().isEmpty()) {
 			String txt = _("Undo: ");
@@ -143,8 +151,8 @@ String UndoRedoHandler::undoDescription() {
 }
 
 String UndoRedoHandler::redoDescription() {
-	if (redoList) {
-		GList * l = g_list_last(redoList);
+	if (this->redoList) {
+		GList * l = g_list_last(this->redoList);
 		UndoAction * a = (UndoAction *) l->data;
 		if (!a->getText().isEmpty()) {
 			String txt = _("Redo: ");

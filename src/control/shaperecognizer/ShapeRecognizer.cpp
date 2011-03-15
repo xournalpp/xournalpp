@@ -1,4 +1,5 @@
 #include "ShapeRecognizer.h"
+#include "ShapeRecognizerResult.h"
 #include "Inertia.h"
 #include "CircleRecognizer.h"
 
@@ -540,31 +541,4 @@ ShapeRecognizerResult * ShapeRecognizer::recognizePatterns(Stroke * stroke) {
 	return NULL;
 }
 
-ShapeRecognizerResult::ShapeRecognizerResult(Stroke * result) {
-	this->recognized = result;
-	this->source = NULL;
-}
-
-ShapeRecognizerResult::ShapeRecognizerResult(Stroke * result, ShapeRecognizer * recognizer) {
-	this->recognized = result;
-	this->source = NULL;
-
-	for (int i = 0; i < recognizer->queueLength; i++) {
-		if (recognizer->queue[i].stroke) {
-			this->addSourceStroke(recognizer->queue[i].stroke);
-		}
-	}
-
-	RDEBUG("source list length: %i\n", g_list_length(this->source));
-}
-
-ShapeRecognizerResult::~ShapeRecognizerResult() {
-	this->recognized = NULL;
-	g_list_free(this->source);
-	this->source = NULL;
-}
-
-void ShapeRecognizerResult::addSourceStroke(Stroke * s) {
-	this->source = g_list_append(this->source, s);
-}
 
