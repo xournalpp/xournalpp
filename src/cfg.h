@@ -17,7 +17,7 @@
 #define TOOLBAR_CONFIG      "toolbar.ini"
 #define SETTINGS_XML_FILE   "settings.xml"
 #define PRINT_CONFIG_FILE   "print-config.ini"
-#define METADATA_FILE 	    "xo-metadata.xml"
+#define METADATA_FILE 	    "metadata.ini"
 #define METADATA_MAX_ITEMS	50
 
 /**

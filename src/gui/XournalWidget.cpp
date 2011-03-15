@@ -2,13 +2,13 @@
 #include <gdk/gdkkeysyms.h>
 #include "../control/Control.h"
 #include <math.h>
-#include "../control/settings/ev-metadata-manager.h"
 #include "Shadow.h"
 #include "../util/Util.h"
 
 #include "../model/Document.h"
 #include "PageView.h"
 #include "../control/PdfCache.h"
+#include "../control/settings/MetadataManager.h"
 #include "../util/Rectangle.h"
 
 
@@ -317,11 +317,10 @@ void XournalWidget::pageSelected(int page) {
 
 	Document * doc = control->getDocument();
 	doc->lock();
-	const char * file = doc->getEvMetadataFilename();
+	String file = doc->getEvMetadataFilename();
 	doc->unlock();
-	if (file) {
-		ev_metadata_manager_set_int(file, "page", page);
-	}
+
+	control->getMetadataManager()->setInt(file, "page", page);
 
 	if (this->lastSelectedPage >= 0 && this->lastSelectedPage < this->viewPagesLen) {
 		this->viewPages[this->lastSelectedPage]->setSelected(false);
@@ -633,12 +632,10 @@ void XournalWidget::zoomChanged(double lastZoom) {
 
 	Document * doc = control->getDocument();
 	doc->lock();
-	const char * file = doc->getEvMetadataFilename();
+	String file = doc->getEvMetadataFilename();
 	doc->unlock();
 
-	if (file) {
-		ev_metadata_manager_set_double(file, "zoom", zoom);
-	}
+	control->getMetadataManager()->setDouble(file, "zoom", zoom);
 }
 
 void XournalWidget::pageSizeChanged(int page) {

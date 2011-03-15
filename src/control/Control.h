@@ -36,6 +36,7 @@ class PageView;
 class EditSelection;
 class SaveHandler;
 class GladeSearchpath;
+class MetadataManager;
 
 class Control: public ActionHandler,
 		public ToolListener,
@@ -176,6 +177,8 @@ public:
 
 	void deleteLastAutosaveFile(String newAutosaveFile);
 
+	MetadataManager * getMetadataManager();
+
 public:
 	// UndoRedoListener interface
 	void undoRedoChanged();
@@ -284,6 +287,8 @@ private:
 	bool isBlocking;
 
 	GladeSearchpath * gladeSearchPath;
+
+	MetadataManager * metadata;
 
 };
 

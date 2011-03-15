@@ -23,6 +23,8 @@ DeleteUndoAction::~DeleteUndoAction() {
 }
 
 void DeleteUndoAction::addElement(Layer * layer, Element * e, int pos) {
+	//TODO SYNCHRONIZE
+
 	this->elements = g_list_insert_sorted(this->elements, new PageLayerPosEntry<Element> (layer, e, pos),
 			(GCompareFunc) PageLayerPosEntry<Element>::cmp);
 }

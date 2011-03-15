@@ -61,7 +61,7 @@ public:
 	String getFilename();
 	String getPdfFilename();
 
-	const char * getEvMetadataFilename();
+	String getEvMetadataFilename();
 
 	GtkTreeModel * getContentsModel();
 

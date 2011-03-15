@@ -16,7 +16,7 @@ xournalpp_SOURCES = \
 	control/jobs/Scheduler.cpp \
 	control/jobs/SynchronizedProgressListener.cpp \
 	control/jobs/XournalScheduler.cpp \
-	control/settings/ev-metadata-manager.cpp \
+	control/settings/MetadataManager.cpp \
 	control/settings/Settings.cpp \
 	control/shaperecognizer/CircleRecognizer.cpp \
 	control/shaperecognizer/Inertia.cpp \
