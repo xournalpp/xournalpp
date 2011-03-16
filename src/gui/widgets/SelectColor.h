@@ -1,5 +1,5 @@
 /*
- * Xournal Extended
+ * Xournal++
  *
  * Control to display a single color button
  *
@@ -8,6 +8,7 @@
  *
  * @license GPL
  */
+
 #ifndef __SELECTCOLOR_H__
 #define __SELECTCOLOR_H__
 

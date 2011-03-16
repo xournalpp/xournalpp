@@ -1,5 +1,5 @@
 /*
- * Xournal Extended
+ * Xournal++
  *
  * Control to callibrate the zoom to fit the display DPI
  *
@@ -8,6 +8,7 @@
  *
  * @license GPL
  */
+
 #ifndef __ZOOMCALLIB_H__
 #define __ZOOMCALLIB_H__
 
