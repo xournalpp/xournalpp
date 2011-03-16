@@ -13,8 +13,6 @@
 #define __MAINWINDOW_H__
 
 #include "GladeGui.h"
-
-#include "XournalWidget.h"
 #include "../model/Font.h"
 
 class Control;
@@ -22,6 +20,7 @@ class MainWindow;
 class ToolMenuHandler;
 class ToolbarData;
 class ToolbarModel;
+class XournalView;
 
 class MainWindow: public GladeGui {
 public:
@@ -43,7 +42,7 @@ public:
 	void setMaximized(bool maximized);
 	bool isMaximized();
 
-	XournalWidget * getXournal();
+	XournalView * getXournal();
 
 	void setSidebarVisible(bool visible);
 
@@ -86,7 +85,7 @@ private:
 private:
 	Control * control;
 
-	XournalWidget * xournal;
+	XournalView * xournal;
 
 	// Toolbars
 	ToolMenuHandler * toolbar;

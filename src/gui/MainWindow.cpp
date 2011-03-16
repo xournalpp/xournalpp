@@ -1,5 +1,6 @@
 #include "../control/Control.h"
 #include "MainWindow.h"
+#include "XournalView.h"
 #include "../cfg.h"
 #include "toolbarMenubar/ToolMenuHandler.h"
 #include "../gui/GladeSearchpath.h"
@@ -27,7 +28,7 @@ MainWindow::MainWindow(GladeSearchpath * gladeSearchPath, Control * control) :
 	this->toolbarMenuData = NULL;
 	this->toolbarMenuitems = NULL;
 
-	this->xournal = new XournalWidget(get("scrolledwindowMain"), control);
+	this->xournal = new XournalView(get("tableXournal"), control);
 
 	setSidebarVisible(control->getSettings()->isSidebarVisible());
 
@@ -123,42 +124,45 @@ Control * MainWindow::getControl() {
 }
 
 void MainWindow::updateScrollbarSidebarPosition() {
-	GtkWidget * panelMainContents = get("panelMainContents");
-	GtkWidget * sidebarContents = get("sidebarContents");
-	GtkWidget * scrolledwindowMain = get("scrolledwindowMain");
+	// TODO: !!!!!!!!!!!!!!!!!!!!!!!!!
 
-	gtk_scrolled_window_set_placement(GTK_SCROLLED_WINDOW(scrolledwindowMain), control->getSettings()->isScrollbarOnLeft() ? GTK_CORNER_TOP_RIGHT
-			: GTK_CORNER_TOP_LEFT);
 
-	int divider = gtk_paned_get_position(GTK_PANED(panelMainContents));
-	bool sidebarRight = control->getSettings()->isSidebarOnRight();
-	if (sidebarRight == (gtk_paned_get_child2(GTK_PANED(panelMainContents)) == sidebarContents)) {
-		// Already correct
-		return;
-	} else {
-		GtkAllocation allocation;
-		gtk_widget_get_allocation(panelMainContents, &allocation);
-		divider = allocation.width - divider;
-	}
-
-	g_object_ref(sidebarContents);
-	g_object_ref(scrolledwindowMain);
-
-	gtk_container_remove(GTK_CONTAINER(panelMainContents), sidebarContents);
-	gtk_container_remove(GTK_CONTAINER(panelMainContents), scrolledwindowMain);
-
-	if (sidebarRight) {
-		gtk_paned_pack1(GTK_PANED(panelMainContents), scrolledwindowMain, true, true);
-		gtk_paned_pack2(GTK_PANED(panelMainContents), sidebarContents, false, true);
-	} else {
-		gtk_paned_pack1(GTK_PANED(panelMainContents), sidebarContents, false, true);
-		gtk_paned_pack2(GTK_PANED(panelMainContents), scrolledwindowMain, true, true);
-	}
-
-	xournal->updateBackground();
-
-	g_object_unref(sidebarContents);
-	g_object_unref(scrolledwindowMain);
+//	GtkWidget * panelMainContents = get("panelMainContents");
+//	GtkWidget * sidebarContents = get("sidebarContents");
+////	GtkWidget * scrolledwindowMain = get("scrolledwindowMain");
+//
+//	gtk_scrolled_window_set_placement(GTK_SCROLLED_WINDOW(scrolledwindowMain), control->getSettings()->isScrollbarOnLeft() ? GTK_CORNER_TOP_RIGHT
+//			: GTK_CORNER_TOP_LEFT);
+//
+//	int divider = gtk_paned_get_position(GTK_PANED(panelMainContents));
+//	bool sidebarRight = control->getSettings()->isSidebarOnRight();
+//	if (sidebarRight == (gtk_paned_get_child2(GTK_PANED(panelMainContents)) == sidebarContents)) {
+//		// Already correct
+//		return;
+//	} else {
+//		GtkAllocation allocation;
+//		gtk_widget_get_allocation(panelMainContents, &allocation);
+//		divider = allocation.width - divider;
+//	}
+//
+//	g_object_ref(sidebarContents);
+//	g_object_ref(scrolledwindowMain);
+//
+//	gtk_container_remove(GTK_CONTAINER(panelMainContents), sidebarContents);
+//	gtk_container_remove(GTK_CONTAINER(panelMainContents), scrolledwindowMain);
+//
+//	if (sidebarRight) {
+//		gtk_paned_pack1(GTK_PANED(panelMainContents), scrolledwindowMain, true, true);
+//		gtk_paned_pack2(GTK_PANED(panelMainContents), sidebarContents, false, true);
+//	} else {
+//		gtk_paned_pack1(GTK_PANED(panelMainContents), sidebarContents, false, true);
+//		gtk_paned_pack2(GTK_PANED(panelMainContents), scrolledwindowMain, true, true);
+//	}
+//
+//	xournal->updateBackground();
+//
+//	g_object_unref(sidebarContents);
+//	g_object_unref(scrolledwindowMain);
 }
 
 void MainWindow::buttonCloseSidebarClicked(GtkButton * button, MainWindow * win) {
@@ -209,7 +213,7 @@ bool MainWindow::isMaximized() {
 	return this->maximized;
 }
 
-XournalWidget * MainWindow::getXournal() {
+XournalView * MainWindow::getXournal() {
 	return xournal;
 }
 
@@ -414,8 +418,6 @@ void MainWindow::setRecentMenu(GtkWidget * submenu) {
 
 void MainWindow::show() {
 	gtk_widget_show(this->window);
-	GtkWidget * widget = xournal->getWidget();
-	gdk_window_set_background(GTK_LAYOUT(widget)->bin_window, &widget->style->dark[GTK_STATE_NORMAL]);
 }
 
 void MainWindow::setUndoDescription(String description) {

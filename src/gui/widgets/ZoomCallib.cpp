@@ -1,13 +1,3 @@
-/*
- * Xournal Extended
- *
- * Control to zoom (DPI) callibration (ruler)
- *
- * @author Xournal Team
- * http://xournal.sf.net
- *
- * @license GPL
- */
 #include "ZoomCallib.h"
 
 static void zoomcallib_class_init(ZoomCallibClass *klass);

@@ -1,5 +1,5 @@
 /*
- * Xournal Extended
+ * Xournal++
  *
  * Configuration for Mouse Buttons, Eraser and default configuration
  *

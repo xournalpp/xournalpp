@@ -1,6 +1,7 @@
 #include "ScrollHandler.h"
 #include "../model/Page.h"
 #include "Control.h"
+#include "../gui/XournalView.h"
 
 ScrollHandler::ScrollHandler(Control * control) {
 	this->control = control;
@@ -56,19 +57,21 @@ void ScrollHandler::adjustmentScroll(GtkAdjustment * adj, double scroll, int siz
 }
 
 void ScrollHandler::scrollRelative(double x, double y) {
-	if (!control->getWindow()) {
-		return;
-	}
-	GtkWidget * scroll = control->getWindow()->get("scrolledwindowMain");
+	// TODO !!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-	GtkAdjustment * hadj = gtk_scrolled_window_get_hadjustment(GTK_SCROLLED_WINDOW(scroll));
-	GtkAdjustment * vadj = gtk_scrolled_window_get_vadjustment(GTK_SCROLLED_WINDOW(scroll));
-
-	GtkAllocation alloc = { 0 };
-	gtk_widget_get_allocation(scroll, &alloc);
-
-	adjustmentScroll(hadj, x, alloc.width);
-	adjustmentScroll(vadj, y, alloc.height);
+//	if (!control->getWindow()) {
+//		return;
+//	}
+////	GtkWidget * scroll = control->getWindow()->get("scrolledwindowMain");
+//
+//	GtkAdjustment * hadj = gtk_scrolled_window_get_hadjustment(GTK_SCROLLED_WINDOW(scroll));
+//	GtkAdjustment * vadj = gtk_scrolled_window_get_vadjustment(GTK_SCROLLED_WINDOW(scroll));
+//
+//	GtkAllocation alloc = { 0 };
+//	gtk_widget_get_allocation(scroll, &alloc);
+//
+//	adjustmentScroll(hadj, x, alloc.width);
+//	adjustmentScroll(vadj, y, alloc.height);
 }
 
 void ScrollHandler::scrollToSpinPange() {

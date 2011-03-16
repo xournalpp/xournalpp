@@ -13,7 +13,7 @@
 #include "../ToolHandler.h"
 #include "../../control/jobs/RenderJob.h"
 
-#include "../../gui/XournalWidget.h"
+#include "../../gui/XournalView.h"
 
 #include <math.h>
 

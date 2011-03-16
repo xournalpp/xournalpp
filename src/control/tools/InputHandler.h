@@ -1,5 +1,5 @@
 /*
- * Xournal Extended
+ * Xournal++
  *
  * Handles input and optimizes the stroke
  *
@@ -20,11 +20,11 @@
 #include "../shaperecognizer/ShapeRecognizer.h"
 
 class DocumentView;
-class XournalWidget;
+class XournalView;
 
 class InputHandler: public MemoryCheckObject {
 public:
-	InputHandler(XournalWidget * xournal, GtkWidget * widget, Redrawable * redrawable);
+	InputHandler(XournalView * xournal, GtkWidget * widget, Redrawable * redrawable);
 	virtual ~InputHandler();
 
 public:
@@ -42,7 +42,7 @@ private:
 	void drawTmpStroke();
 
 private:
-	XournalWidget * xournal;
+	XournalView * xournal;
 
 	/**
 	 * If you are drawing on the document

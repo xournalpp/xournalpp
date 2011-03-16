@@ -1,5 +1,5 @@
 #include "InputHandler.h"
-#include "../../gui/XournalWidget.h"
+#include "../../gui/XournalView.h"
 #include "../Control.h"
 #include "../shaperecognizer/ShapeRecognizerResult.h"
 #include "../../undo/InsertUndoAction.h"
@@ -9,7 +9,7 @@
 
 #define PIXEL_MOTION_THRESHOLD 0.3
 
-InputHandler::InputHandler(XournalWidget * xournal, GtkWidget * widget, Redrawable * redrawable) {
+InputHandler::InputHandler(XournalView * xournal, GtkWidget * widget, Redrawable * redrawable) {
 	this->tmpStroke = NULL;
 	this->currentInputDevice = NULL;
 	this->widget = widget;

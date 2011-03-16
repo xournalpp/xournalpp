@@ -1,4 +1,5 @@
 #include "Cursor.h"
+#include "XournalView.h"
 #include "../control/Control.h"
 #include "../util/Util.h"
 #include "../util/pixbuf-utils.h"
@@ -152,7 +153,7 @@ void Cursor::updateCursor() {
 		return;
 	}
 
-	XournalWidget * xournal = win->getXournal();
+	XournalView * xournal = win->getXournal();
 	if (!xournal) {
 		return;
 	}
@@ -232,16 +233,10 @@ void Cursor::updateCursor() {
 		}
 	}
 
-	ArrayIterator<PageView *> it = xournal->pageViewIterator();
+	if (gtk_widget_get_window(xournal->getWidget())) {
+		gdk_window_set_cursor(gtk_widget_get_window(xournal->getWidget()), cursor);
 
-	while (it.hasNext()) {
-		PageView * p = it.next();
-
-		if (gtk_widget_get_window(p->getWidget())) {
-			gdk_window_set_cursor(gtk_widget_get_window(p->getWidget()), cursor);
-
-			gtk_widget_set_sensitive(p->getWidget(), !this->busy);
-		}
+		gtk_widget_set_sensitive(xournal->getWidget(), !this->busy);
 	}
 
 	gdk_display_sync(gdk_display_get_default());
@@ -249,5 +244,4 @@ void Cursor::updateCursor() {
 	if (cursor) {
 		gdk_cursor_unref(cursor);
 	}
-
 }

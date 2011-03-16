@@ -1,5 +1,6 @@
 #include "Control.h"
 #include <gtk/gtk.h>
+#include "../gui/XournalView.h"
 #include "../gui/dialog/AboutDialog.h"
 #include "../gui/dialog/SettingsDialog.h"
 #include "../gui/dialog/PdfPagesDialog.h"
@@ -1291,27 +1292,28 @@ void Control::deleteCurrentLayer() {
 }
 
 void Control::calcZoomFitSize() {
-	if (this->doc && this->win) {
-		double width = 0;
-		//		for (int i = 0; i < doc->getPageCount(); i++) {
-		//			Page * p = doc->getPage(i);
-		//			width = MAX(p->getWidth(), width);
-		//		}
-
-
-		XojPage * p = getCurrentPage();
-		if (p == NULL) {
-			return;
-		}
-		width = p->getWidth() + 20; // 20: show a shadow
-
-		GtkAllocation allocation = { 0 };
-		GtkWidget * w = win->get("scrolledwindowMain");
-
-		gtk_widget_get_allocation(w, &allocation);
-		double factor = ((double) allocation.width - 20) / width;
-		zoom->setZoomFit(factor);
-	}
+	// TODO: !!!!!!!!!!!!!!!!!!!!!!!!!
+//	if (this->doc && this->win) {
+//		double width = 0;
+//		//		for (int i = 0; i < doc->getPageCount(); i++) {
+//		//			Page * p = doc->getPage(i);
+//		//			width = MAX(p->getWidth(), width);
+//		//		}
+//
+//
+//		XojPage * p = getCurrentPage();
+//		if (p == NULL) {
+//			return;
+//		}
+//		width = p->getWidth() + 20; // 20: show a shadow
+//
+//		GtkAllocation allocation = { 0 };
+////		GtkWidget * w = win->get("scrolledwindowMain");
+//
+//		gtk_widget_get_allocation(w, &allocation);
+//		double factor = ((double) allocation.width - 20) / width;
+//		zoom->setZoomFit(factor);
+//	}
 }
 
 void Control::zoomFit() {

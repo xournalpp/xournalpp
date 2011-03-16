@@ -18,7 +18,8 @@ void ZoomControl::addZoomListener(ZoomListener * listener) {
 }
 
 void ZoomControl::initZoomHandler(GladeGui * gui) {
-	g_signal_connect(gui->get("scrolledwindowMain"), "scroll_event", G_CALLBACK(onScrolledwindowMainScrollEvent), this);
+	// TODO: debug
+//	g_signal_connect(gui->get("scrolledwindowMain"), "scroll_event", G_CALLBACK(onScrolledwindowMainScrollEvent), this);
 
 }
 

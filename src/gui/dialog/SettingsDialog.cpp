@@ -1,14 +1,3 @@
-/*
- * Xournal Extended
- *
- * Settings Dialog
- *
- *
- * @author Xournal Team
- * http://xournal.sf.net
- *
- * @license GPL
- */
 #include <config.h>
 #include <glib/gi18n-lib.h>
 

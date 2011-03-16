@@ -1,13 +1,3 @@
-/*
- * Xournal Extended
- *
- * Control to display a single color button
- *
- * @author Xournal Team
- * http://xournal.sf.net
- *
- * @license GPL
- */
 #include "SelectColor.h"
 #include "math.h"
 
