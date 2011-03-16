@@ -1,6 +1,6 @@
 #include "TextEditor.h"
 #include <gtk/gtkimcontextsimple.h>
-#include "XournalWidget.h"
+#include "XournalView.h"
 #include "PageView.h"
 #include "../view/TextView.h"
 #include <gdk/gdkkeysyms.h>

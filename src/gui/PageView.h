@@ -17,7 +17,7 @@
 #include "../util/Range.h"
 #include "Redrawable.h"
 
-class XournalWidget;
+class XournalView;
 class DeleteUndoAction;
 class Selection;
 class TextEditor;
@@ -35,7 +35,7 @@ class XojPage;
 
 class PageView: public Redrawable, public virtual MemoryCheckObject {
 public:
-	PageView(XournalWidget * xournal, XojPage * page);
+	PageView(XournalView * xournal, XojPage * page);
 	virtual ~PageView();
 
 	double getHeight();
@@ -46,7 +46,6 @@ public:
 
 	void updatePageSize(double width, double height);
 
-	void firstPaint();
 	bool paintPage(GdkEventExpose * event);
 
 	void repaint();
@@ -60,12 +59,9 @@ public:
 
 	XojPage * getPage();
 
-	GtkWidget * getWidget();
-
-	XournalWidget * getXournal();
+	XournalView * getXournal();
 
 	void setSelected(bool selected);
-	void updateXEvents();
 
 	void setIsVisibel(bool visibel);
 
@@ -122,8 +118,7 @@ private:
 	void addRepaintRect(double x, double y, double width, double height);
 private:
 	XojPage * page;
-	GtkWidget * widget;
-	XournalWidget * xournal;
+	XournalView * xournal;
 	Settings * settings;
 	EraseHandler * eraser;
 	InputHandler * inputHandler;
@@ -149,7 +144,6 @@ private:
 	 */
 	TextEditor * textEditor;
 
-	bool firstPainted;
 	bool selected;
 
 	cairo_surface_t * crBuffer;

@@ -1,5 +1,5 @@
 /*
- * Xournal Extended
+ * Xournal++
  *
  * The cursor types for selections
  *

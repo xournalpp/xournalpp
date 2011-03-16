@@ -1,13 +1,3 @@
-/*
- * Xournal Extended
- *
- * Xournal Settings
- *
- * @author Xournal Team
- * http://xournal.sf.net
- *
- * @license GPL
- */
 #include <stdlib.h>
 #include <string.h>
 #include "Settings.h"

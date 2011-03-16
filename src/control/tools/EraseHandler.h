@@ -1,5 +1,5 @@
 /*
- * Xournal Extended
+ * Xournal++
  *
  * Handles the erase of stroke, in special split into different parts etc.
  *

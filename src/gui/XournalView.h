@@ -9,8 +9,8 @@
  * @license GPL
  */
 
-#ifndef __XOURNALWIDGET_H__
-#define __XOURNALWIDGET_H__
+#ifndef __XOURNALVIEW_H__
+#define __XOURNALVIEW_H__
 
 #include <gtk/gtk.h>
 #include "../util/Arrayiterator.h"
@@ -29,10 +29,10 @@ class PdfCache;
 class XojPage;
 class Rectangle;
 
-class XournalWidget: public DocumentListener, public ZoomListener, public MemoryCheckObject {
+class XournalView: public DocumentListener, public ZoomListener, public MemoryCheckObject {
 public:
-	XournalWidget(GtkWidget * parent, Control * control);
-	virtual ~XournalWidget();
+	XournalView(GtkWidget * parent, Control * control);
+	virtual ~XournalView();
 
 public:
 	void zoomIn();
@@ -60,7 +60,6 @@ public:
 
 	ArrayIterator<PageView *> pageViewIterator();
 
-	void updateBackground();
 	void layerChanged(int page);
 
 	void resetFocus();
@@ -106,7 +105,7 @@ public:
 	void documentChanged(DocumentChangeType type);
 
 private:
-	static void onVscrollChanged(GtkAdjustment * adjustment, XournalWidget * xournal);
+	static void onVscrollChanged(GtkAdjustment * adjustment, XournalView * xournal);
 
 	void fireZoomChanged();
 
@@ -116,19 +115,17 @@ private:
 
 	Rectangle * getVisibleRect(int page);
 
-	static void sizeAllocate(GtkWidget *widget, GtkRequisition * requisition, XournalWidget * xournal);
-	static gboolean onButtonPressEventCallback(GtkWidget *widget, GdkEventButton *event, XournalWidget * xournal);
+	static void sizeAllocate(GtkWidget *widget, GtkRequisition * requisition, XournalView * xournal);
+	static gboolean onButtonPressEventCallback(GtkWidget *widget, GdkEventButton *event, XournalView * xournal);
 
-	static bool exposeEventCallback(GtkWidget * widget, GdkEventExpose * event, XournalWidget * xournal);
-	void paintBorder(GtkWidget * widget, GdkEventExpose * event);
 
 	static bool widgetRepaintCallback(GtkWidget * widget);
-	static bool onKeyPressCallback(GtkWidget * widget, GdkEventKey * event, XournalWidget * xournal);
-	static bool onKeyReleaseCallback(GtkWidget * widget, GdkEventKey * event, XournalWidget * xournal);
+	static bool onKeyPressCallback(GtkWidget * widget, GdkEventKey * event, XournalView * xournal);
+	static bool onKeyReleaseCallback(GtkWidget * widget, GdkEventKey * event, XournalView * xournal);
 	bool onKeyPressEvent(GtkWidget * widget, GdkEventKey * event);
 	bool onKeyReleaseEvent(GdkEventKey * event);
 
-	static gboolean clearMemoryTimer(XournalWidget * widget);
+	static gboolean clearMemoryTimer(XournalView * widget);
 private:
 	GtkWidget * widget;
 	double margin;
@@ -152,4 +149,4 @@ private:
 	int cleanupTimeout;
 };
 
-#endif /* __XOURNALWIDGET_H__ */
+#endif /* __XOURNALVIEW_H__ */

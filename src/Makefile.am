@@ -83,6 +83,7 @@ xournalpp_SOURCES = \
 	gui/toolbarMenubar/ToolZoomSlider.cpp \
 	gui/widgets/gtkmenutooltogglebutton.cpp \
 	gui/widgets/SelectColor.cpp \
+	gui/widgets/XournalWidget.cpp \
 	gui/widgets/ZoomCallib.cpp \
 	gui/Cursor.cpp \
 	gui/GladeGui.cpp \
@@ -93,7 +94,7 @@ xournalpp_SOURCES = \
 	gui/SearchBar.cpp \
 	gui/Shadow.cpp \
 	gui/TextEditor.cpp \
-	gui/XournalWidget.cpp \
+	gui/XournalView.cpp \
 	model/eraser/EraseableStroke.cpp \
 	model/eraser/EraseableStrokePart.cpp \
 	model/eraser/PartList.cpp \

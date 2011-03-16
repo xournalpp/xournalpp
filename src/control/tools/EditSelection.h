@@ -1,5 +1,5 @@
 /*
- * Xournal Extended
+ * Xournal++
  *
  * A selection for editing, every selection (Rect, Lasso...) is
  * converted to this one if the selection is finished
@@ -24,7 +24,7 @@
 #include "../Tool.h"
 #include "CursorSelectionType.h"
 
-class XournalWidget;
+class XournalView;
 class DocumentView;
 class UndoRedoHandler;
 class DeleteUndoAction;
@@ -42,8 +42,8 @@ public:
 
 	CursorSelectionType getSelectionTypeForPos(double x, double y, double zoom);
 	void setEditMode(CursorSelectionType selType, double x, double y);
-	void move(double x, double y, Redrawable * view, XournalWidget * xournal);
-	void doMove(double dx, double dy, Redrawable * view, XournalWidget * xournal);
+	void move(double x, double y, Redrawable * view, XournalView * xournal);
+	void doMove(double dx, double dy, Redrawable * view, XournalView * xournal);
 	CursorSelectionType getEditMode();
 	void finalizeEditing();
 

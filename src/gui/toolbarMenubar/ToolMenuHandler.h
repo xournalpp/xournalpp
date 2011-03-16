@@ -1,5 +1,5 @@
 /*
- * Xournal Extended
+ * Xournal++
  *
  * Part of the customizable toolbars
  *

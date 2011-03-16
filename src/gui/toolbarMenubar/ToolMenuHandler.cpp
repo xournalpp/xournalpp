@@ -1,13 +1,3 @@
-/*
- * Xournal Extended
- *
- * Part of the customizeable toolbars
- *
- * @author Xournal Team
- * http://xournal.sf.net
- *
- * @license GPL
- */
 #include <stdio.h>
 #include <string.h>
 #include <glib.h>

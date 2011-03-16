@@ -4,6 +4,7 @@
 #include "../model/Layer.h"
 #include "../control/Control.h"
 #include "../model/Document.h"
+#include "../gui/XournalView.h"
 
 RemoveLayerUndoAction::RemoveLayerUndoAction(XojPage * page, Layer * layer, int layerPos) {
 	this->page = page;

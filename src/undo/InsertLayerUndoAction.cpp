@@ -3,6 +3,7 @@
 #include "../model/Page.h"
 #include "../model/Document.h"
 #include "../control/Control.h"
+#include "../gui/XournalView.h"
 
 InsertLayerUndoAction::InsertLayerUndoAction(XojPage * page, Layer * layer) {
 	this->page = page;

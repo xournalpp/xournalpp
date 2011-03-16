@@ -1,5 +1,5 @@
 /*
- * Xournal Extended
+ * Xournal++
  *
  * Last opened files with all settings
  *

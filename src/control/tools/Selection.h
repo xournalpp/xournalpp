@@ -1,5 +1,5 @@
 /*
- * Xournal Extended
+ * Xournal++
  *
  * A selection while you are selection, not for editing, only for selection
  *
