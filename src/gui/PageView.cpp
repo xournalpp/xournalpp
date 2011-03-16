@@ -859,6 +859,7 @@ bool PageView::paintPage(GdkEventExpose * event) {
 		firstPaint();
 		return true;
 	}
+
 	double zoom = xournal->getZoom();
 
 	cairo_t * cr = gdk_cairo_create(widget->window);
