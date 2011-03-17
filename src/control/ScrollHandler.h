@@ -29,9 +29,6 @@ public:
 	void scrollToPage(XojPage * page, double top = 0);
 	void scrollToPage(int page, double top = 0);
 
-	void adjustmentScroll(GtkAdjustment * adj, double scroll, int size);
-
-	void scrollRelative(double x, double y);
 	void scrollToSpinPange();
 
 	void scrollToAnnotatedPage(bool next);

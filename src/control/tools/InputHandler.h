@@ -60,11 +60,6 @@ private:
 	GdkDevice * currentInputDevice;
 
 	/**
-	 * The view widget for drawing
-	 */
-	GtkWidget * widget;
-
-	/**
 	 * The View to draw the stroke
 	 */
 	DocumentView * view;

@@ -264,8 +264,7 @@ bool TextEditor::onKeyPressEvent(GdkEventKey *event) {
 		retval = true;
 	}
 	/* Pass through Tab as literal tab, unless Control is held down */
-	else if ((event->keyval == GDK_Tab || event->keyval == GDK_KP_Tab || event->keyval == GDK_ISO_Left_Tab)
-			&& !(event->state & GDK_CONTROL_MASK)) {
+	else if ((event->keyval == GDK_Tab || event->keyval == GDK_KP_Tab || event->keyval == GDK_ISO_Left_Tab) && !(event->state & GDK_CONTROL_MASK)) {
 		resetImContext();
 		iMCommitCallback(NULL, "\t", this);
 		obscure = true;
@@ -424,7 +423,7 @@ void TextEditor::findPos(GtkTextIter * iter, double xPos, double yPos) {
 	}
 
 	int index = 0;
-	if(!pango_layout_xy_to_index(this->layout, xPos * PANGO_SCALE, yPos * PANGO_SCALE, &index, NULL)) {
+	if (!pango_layout_xy_to_index(this->layout, xPos * PANGO_SCALE, yPos * PANGO_SCALE, &index, NULL)) {
 		index++;
 	}
 
@@ -435,10 +434,8 @@ void TextEditor::contentsChanged(bool forceCreateUndoAction) {
 	String currentText = getText()->getText();
 
 	if (forceCreateUndoAction || ABS(lastText.length()-currentText.length()) > 100) {
-		if (!lastText.isEmpty() && this->undoActions && !(((TextUndoAction*) this->undoActions->data)->getUndoText()
-				== currentText)) {
-			TextUndoAction * undo = new TextUndoAction(gui->getPage(), gui->getPage()->getSelectedLayer(), this->text,
-					lastText, gui, this);
+		if (!lastText.isEmpty() && this->undoActions && !(((TextUndoAction*) this->undoActions->data)->getUndoText() == currentText)) {
+			TextUndoAction * undo = new TextUndoAction(gui->getPage(), gui->getPage()->getSelectedLayer(), this->text, lastText, gui, this);
 			UndoRedoHandler * handler = gui->getXournal()->getControl()->getUndoRedoHandler();
 			handler->addUndoAction(undo);
 			this->undoActions = g_list_append(this->undoActions, undo);
@@ -496,12 +493,12 @@ void TextEditor::mouseReleased() {
 void TextEditor::jumpALine(GtkTextIter * textIter, int count) {
 	int cursorLine = gtk_text_iter_get_line(textIter);
 
-	if(cursorLine + count < 0) {
+	if (cursorLine + count < 0) {
 		return;
 	}
 
 	PangoLayoutLine * line = pango_layout_get_line(this->layout, cursorLine + count);
-	if(line == NULL) {
+	if (line == NULL) {
 		return;
 	}
 
@@ -750,11 +747,9 @@ void TextEditor::redrawCursor() {
  */
 gint TextEditor::blinkCallback(TextEditor * te) {
 	if (te->cursorVisible) {
-		te->blinkTimeout = gdk_threads_add_timeout(te->cursorBlinkTime * CURSOR_OFF_MULTIPLIER / CURSOR_DIVIDER,
-				(GSourceFunc) blinkCallback, te);
+		te->blinkTimeout = gdk_threads_add_timeout(te->cursorBlinkTime * CURSOR_OFF_MULTIPLIER / CURSOR_DIVIDER, (GSourceFunc) blinkCallback, te);
 	} else {
-		te->blinkTimeout = gdk_threads_add_timeout(te->cursorBlinkTime * CURSOR_ON_MULTIPLIER / CURSOR_DIVIDER,
-				(GSourceFunc) blinkCallback, te);
+		te->blinkTimeout = gdk_threads_add_timeout(te->cursorBlinkTime * CURSOR_ON_MULTIPLIER / CURSOR_DIVIDER, (GSourceFunc) blinkCallback, te);
 	}
 
 	te->cursorVisible = !te->cursorVisible;
@@ -849,8 +844,7 @@ void TextEditor::paint(cairo_t * cr, GdkEventExpose *event, double zoom) {
 	bool hasSelection = gtk_text_buffer_get_selection_bounds(this->buffer, &start, &end);
 
 	if (hasSelection) {
-		PangoAttribute * attrib = pango_attr_background_new(selectionColor.red, selectionColor.green,
-				selectionColor.blue);
+		PangoAttribute * attrib = pango_attr_background_new(selectionColor.red, selectionColor.green, selectionColor.blue);
 		PangoAttrList * list = pango_layout_get_attributes(this->layout);
 
 		attrib->start_index = gtk_text_iter_get_offset(&start);
@@ -883,8 +877,7 @@ void TextEditor::paint(cairo_t * cr, GdkEventExpose *event, double zoom) {
 
 	// set the line always the same size on display
 	cairo_set_line_width(cr, 1 / zoom);
-	cairo_set_source_rgb(cr, selectionColor.red / 65536.0, selectionColor.green / 65536.0, selectionColor.blue
-			/ 65536.0);
+	cairo_set_source_rgb(cr, selectionColor.red / 65536.0, selectionColor.green / 65536.0, selectionColor.blue / 65536.0);
 
 	cairo_rectangle(cr, x0 - 5 / zoom, y0 - 5 / zoom, width + 10 / zoom, height + 10 / zoom);
 	cairo_stroke(cr);

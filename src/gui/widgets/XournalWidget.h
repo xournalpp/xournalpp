@@ -67,6 +67,14 @@ void gtk_xournal_redraw(GtkWidget * widget);
 void gtk_xournal_update_xevent(GtkWidget * widget);
 void gtk_xournal_set_size(GtkWidget * widget, int width, int height);
 
+cairo_t * gtk_xournal_create_cairo_for(GtkWidget * widget, PageView * view);
+
+void gtk_xournal_scroll_relative(GtkWidget * widget, double x, double y);
+
+GtkAdjustment * gtk_xournal_get_hadj(GtkWidget * widget);
+GtkAdjustment * gtk_xournal_get_vadj(GtkWidget * widget);
+
+
 G_END_DECLS
 
 #endif /* __XOURNALWIDGET_H__ */

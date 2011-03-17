@@ -104,22 +104,19 @@ public:
 	void pageDeleted(int page);
 	void documentChanged(DocumentChangeType type);
 
+public:
+	bool onKeyPressEvent(GdkEventKey * event);
+	bool onKeyReleaseEvent(GdkEventKey * event);
+
+
 private:
 	static void onVscrollChanged(GtkAdjustment * adjustment, XournalView * xournal);
 
 	void fireZoomChanged();
 
-	void initScrollHandler(GtkWidget * parent);
-
 	void addLoadPageToQue(XojPage * page, int priority);
 
 	Rectangle * getVisibleRect(int page);
-
-	static bool widgetRepaintCallback(GtkWidget * widget);
-	static bool onKeyPressCallback(GtkWidget * widget, GdkEventKey * event, XournalView * xournal);
-	static bool onKeyReleaseCallback(GtkWidget * widget, GdkEventKey * event, XournalView * xournal);
-	bool onKeyPressEvent(GtkWidget * widget, GdkEventKey * event);
-	bool onKeyReleaseEvent(GdkEventKey * event);
 
 	static gboolean clearMemoryTimer(XournalView * widget);
 private:
