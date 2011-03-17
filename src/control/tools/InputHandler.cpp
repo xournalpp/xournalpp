@@ -1,5 +1,6 @@
 #include "InputHandler.h"
 #include "../../gui/XournalView.h"
+#include "../../gui/PageView.h"
 #include "../Control.h"
 #include "../shaperecognizer/ShapeRecognizerResult.h"
 #include "../../undo/InsertUndoAction.h"
@@ -9,10 +10,10 @@
 
 #define PIXEL_MOTION_THRESHOLD 0.3
 
-InputHandler::InputHandler(XournalView * xournal, GtkWidget * widget, Redrawable * redrawable) {
+InputHandler::InputHandler(XournalView * xournal, PageView * redrawable) {
 	this->tmpStroke = NULL;
 	this->currentInputDevice = NULL;
-	this->widget = widget;
+	this->widget = xournal->getWidget();
 	this->tmpStrokeDrawElem = 0;
 	this->view = new DocumentView();
 	this->redrawable = redrawable;
@@ -78,7 +79,7 @@ void InputHandler::addPointToTmpStroke(GdkEventMotion * event) {
 	drawTmpStroke();
 }
 
-bool InputHandler::getPressureMultiplier(GdkEvent *event, double & presure) {
+bool InputHandler::getPressureMultiplier(GdkEvent * event, double & presure) {
 	double * axes;
 	GdkDevice * device;
 
@@ -109,8 +110,9 @@ bool InputHandler::getPressureMultiplier(GdkEvent *event, double & presure) {
 
 void InputHandler::drawTmpStroke() {
 	if (this->tmpStroke) {
-		cairo_t * cr = gdk_cairo_create(widget->window);
+		cairo_t * cr = gdk_cairo_create(this->widget->window);
 
+		cairo_translate(cr, this->redrawable->getX(), this->redrawable->getY());
 		cairo_scale(cr, this->xournal->getZoom(), this->xournal->getZoom());
 
 		view->drawStroke(cr, this->tmpStroke, tmpStrokeDrawElem);

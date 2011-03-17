@@ -70,7 +70,7 @@ PageView::PageView(XournalView * xournal, XojPage * page) {
 	this->eraser = new EraseHandler(xournal->getControl()->getUndoRedoHandler(), xournal->getControl()->getDocument(), this->page,
 			xournal->getControl()->getToolHandler(), this);
 
-	//	this->inputHandler = new InputHandler(xournal, this->widget, this);
+	this->inputHandler = new InputHandler(this->xournal, this);
 
 	this->x = 0;
 	this->y = 0;
@@ -79,6 +79,8 @@ PageView::PageView(XournalView * xournal, XojPage * page) {
 
 PageView::~PageView() {
 	this->xournal->getControl()->getScheduler()->removePage(this);
+	delete this->inputHandler;
+	this->inputHandler = NULL;
 	delete this->eraser;
 	this->eraser = NULL;
 	endText();
@@ -125,36 +127,33 @@ void PageView::deleteViewBuffer() {
 	g_mutex_unlock(this->drawingMutex);
 }
 
-gboolean PageView::onButtonPressEventCallback(GtkWidget * widget, GdkEventButton * event, PageView * view) {
-	view->onButtonPressEvent(widget, event);
-	return false;
+bool PageView::containsPoint(int x, int y) {
+	return this->x <= x && this->x + this->getWidth() >= x && this->y <= y && this->y + this->getHeight() >= y;
 }
 
 bool PageView::searchTextOnPage(const char * text, int * occures, double * top) {
-	// TODO !!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-	return false;
-	//	if (this->search == NULL) {
-	//		if (text == NULL) {
-	//			return true;
-	//		}
-	//
-	//		int pNr = page->getPdfPageNr();
-	//		XojPopplerPage * pdf = NULL;
-	//		if (pNr != -1) {
-	//			Document * doc = xournal->getControl()->getDocument();
-	//
-	//			doc->lock();
-	//			pdf = doc->getPdfPage(pNr);
-	//			doc->unlock();
-	//		}
-	//		this->search = new SearchControl(page, pdf);
-	//	}
-	//
-	//	bool found = this->search->search(text, occures, top);
-	//
-	//	gtk_widget_queue_draw(widget);
-	//
-	//	return found;
+	if (this->search == NULL) {
+		if (text == NULL) {
+			return true;
+		}
+
+		int pNr = page->getPdfPageNr();
+		XojPopplerPage * pdf = NULL;
+		if (pNr != -1) {
+			Document * doc = xournal->getControl()->getDocument();
+
+			doc->lock();
+			pdf = doc->getPdfPage(pNr);
+			doc->unlock();
+		}
+		this->search = new SearchControl(page, pdf);
+	}
+
+	bool found = this->search->search(text, occures, top);
+
+	redraw();
+
+	return found;
 }
 
 void PageView::endText() {
@@ -282,18 +281,13 @@ void PageView::selectObjectAt(double x, double y) {
 		Control * control = xournal->getControl();
 		control->setSelection(new EditSelection(control->getUndoRedoHandler(), elementMatch, this, page));
 
-		// TODO !!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-		//		gtk_widget_queue_draw(this->widget);
+		redraw();
 	}
 }
 
-void PageView::onButtonPressEvent(GtkWidget * widget, GdkEventButton * event) {
-
-	xournal->resetFocus();
-
-
+bool PageView::onButtonPressEvent(GtkWidget * widget, GdkEventButton * event) {
 	if ((event->state & (GDK_CONTROL_MASK | GDK_MOD1_MASK)) != 0) {
-		return;
+		return false; // not handled here
 	}
 
 	if (!this->selected) {
@@ -319,7 +313,7 @@ void PageView::onButtonPressEvent(GtkWidget * widget, GdkEventButton * event) {
 			ToolType tool = h->getToolType();
 			if (tool == TOOL_PEN || tool == TOOL_ERASER || tool == TOOL_HILIGHTER) {
 				printf("ignore touchscreen for drawing!\n");
-				return;
+				return true;
 			}
 		}
 	}
@@ -333,11 +327,10 @@ void PageView::onButtonPressEvent(GtkWidget * widget, GdkEventButton * event) {
 	double y;
 
 	if (!gdk_event_get_coords((GdkEvent *) event, &x, &y)) {
-		return;
+		return false;
 	}
 
 	if ((x < 0 || y < 0) && !extendedWarningDisplayd && settings->isXinputEnabled()) {
-
 		GtkWidget * dialog = gtk_message_dialog_new((GtkWindow *) *xournal->getControl()->getWindow(), GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR,
 				GTK_BUTTONS_NONE, _("There was a wrong input event, input is not working.\nDo you want to disable \"Extended Input\"?"));
 
@@ -351,7 +344,7 @@ void PageView::onButtonPressEvent(GtkWidget * widget, GdkEventButton * event) {
 			xournal->updateXEvents();
 		}
 		gtk_widget_destroy(dialog);
-		return;
+		return true;
 	}
 
 	double zoom = xournal->getZoom();
@@ -374,21 +367,20 @@ void PageView::onButtonPressEvent(GtkWidget * widget, GdkEventButton * event) {
 		if (selType) {
 			selection->setEditMode(selType, event->x / zoom, event->y / zoom);
 			// don't do everything else
-			return;
+			return true;
 		} else {
 			xournal->getControl()->clearSelection();
 		}
 	}
 
 	if (h->getToolType() == TOOL_PEN) {
-		// TODO: !!!!!!!!!!!!!!
-		//		this->inputHandler->startStroke(event, STROKE_TOOL_PEN, x, y);
+		this->inputHandler->startStroke(event, STROKE_TOOL_PEN, x, y);
 	} else if (h->getToolType() == TOOL_HILIGHTER) {
-		//		this->inputHandler->startStroke(event, STROKE_TOOL_HIGHLIGHTER, x, y);
+		this->inputHandler->startStroke(event, STROKE_TOOL_HIGHLIGHTER, x, y);
 	} else if (h->getToolType() == TOOL_ERASER) {
 		if (h->getEraserType() == ERASER_TYPE_WHITEOUT) {
-			//			this->inputHandler->startStroke(event, STROKE_TOOL_ERASER, x, y);
-			//			this->inputHandler->getTmpStroke()->setColor(0xffffff); // White
+			this->inputHandler->startStroke(event, STROKE_TOOL_ERASER, x, y);
+			this->inputHandler->getTmpStroke()->setColor(0xffffff); // White
 		} else {
 			this->eraser->erase(x, y);
 			this->inEraser = true;
@@ -417,22 +409,21 @@ void PageView::onButtonPressEvent(GtkWidget * widget, GdkEventButton * event) {
 		ImageHandler imgHandler(xournal->getControl(), this);
 		imgHandler.insertImage(x, y);
 	}
+
+	return true;
 }
 
 void PageView::redraw(double x1, double y1, double x2, double y2) {
 	double zoom = xournal->getZoom();
 
 	// TODO !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	redraw();
 
 	//	gtk_widget_queue_draw_area(this->widget, x1 * zoom - 10, y1 * zoom - 10, (x2 - x1) * zoom + 20, (y2 - y1) * zoom + 20);
 }
 
 GdkColor PageView::getSelectionColor() {
-	// TODO !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-	//	return widget->style->base[GTK_STATE_SELECTED];
-
-	GdkColor color = { 0 };
-	return color;
+	return this->xournal->getWidget()->style->base[GTK_STATE_SELECTED];
 }
 
 TextEditor * PageView::getTextEditor() {
@@ -440,24 +431,10 @@ TextEditor * PageView::getTextEditor() {
 }
 
 void PageView::resetShapeRecognizer() {
-	//	this->inputHandler->resetShapeRecognizer();
+	this->inputHandler->resetShapeRecognizer();
 }
 
-gboolean PageView::onMotionNotifyEventCallback(GtkWidget *widget, GdkEventMotion *event, PageView * view) {
-	CHECK_MEMORY(view);
-	return view->onMotionNotifyEvent(widget, event);
-}
-
-gboolean PageView::onMotionNotifyEvent(GtkWidget * widget, GdkEventMotion * event) {
-#ifdef INPUT_DEBUG
-	bool is_core = (event->device == gdk_device_get_core_pointer());
-	//	printf("DEBUG: MotionNotify (%s) (x,y)=(%.2f,%.2f), modifier %x\n", is_core ? "core" : "xinput", event->xScreen,
-	//			event->yScreen, event->state);
-#endif
-
-	// TODO !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-	//	XInputUtils::fixXInputCoords((GdkEvent*) event, this->widget);
-
+bool PageView::onMotionNotifyEvent(GtkWidget * widget, GdkEventMotion * event) {
 	double zoom = xournal->getZoom();
 	double x = event->x / zoom;
 	double y = event->y / zoom;
@@ -468,8 +445,8 @@ gboolean PageView::onMotionNotifyEvent(GtkWidget * widget, GdkEventMotion * even
 		if (this->inScrolling) {
 			doScroll(event);
 		}
-		//	} else if (this->inputHandler->onMotionNotifyEvent(event)) {
-		// input handler used this event
+	} else if (this->inputHandler->onMotionNotifyEvent(event)) {
+		//input	handler used this event
 	} else if (this->selectionEdit) {
 		this->selectionEdit->currentPos(x, y);
 	} else if (this->verticalSpace) {
@@ -497,6 +474,27 @@ gboolean PageView::onMotionNotifyEvent(GtkWidget * widget, GdkEventMotion * even
 	return false;
 }
 
+void PageView::translateEvent(GdkEvent * event, int xOffset, int yOffset) {
+	double * x = NULL;
+	double * y = NULL;
+
+	if (event->type == GDK_MOTION_NOTIFY) {
+		GdkEventMotion * ev = &event->motion;
+		x = &ev->x;
+		y = &ev->y;
+	} else if (event->type == GDK_BUTTON_PRESS || event->type == GDK_BUTTON_RELEASE) {
+		GdkEventButton * ev = &event->button;
+		x = &ev->x;
+		y = &ev->y;
+	} else {
+		g_warning("PageView::translateEvent unknown event type: %i", event->type);
+		return;
+	}
+
+	*x -= this->getX() + xOffset;
+	*y -= this->getY() + yOffset;
+}
+
 bool PageView::scrollCallback(PageView * view) {
 	gdk_threads_enter();
 
@@ -511,41 +509,25 @@ bool PageView::scrollCallback(PageView * view) {
 }
 
 void PageView::doScroll(GdkEventMotion * event) {
-	// TODO !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	int x = event->x;
+	int y = event->y;
 
-	//	int x = 0;
-	//	int y = 0;
-	//	gtk_widget_get_pointer(widget, &x, &y);
-	//
-	//	if (this->lastMousePositionX - x == 0 && this->lastMousePositionY - y == 0) {
-	//		return;
-	//	}
-	//
-	//	if (this->scrollOffsetX == 0 && this->scrollOffsetY == 0) {
-	//		g_idle_add((GSourceFunc) scrollCallback, this);
-	//	}
-	//
-	//	this->scrollOffsetX = this->lastMousePositionX - x;
-	//	this->scrollOffsetY = this->lastMousePositionY - y;
-}
+	if (this->lastMousePositionX - x == 0 && this->lastMousePositionY - y == 0) {
+		return;
+	}
 
-bool PageView::onButtonReleaseEventCallback(GtkWidget * widget, GdkEventButton * event, PageView * view) {
-	CHECK_MEMORY(view);
-	return view->onButtonReleaseEvent(widget, event);
+	if (this->scrollOffsetX == 0 && this->scrollOffsetY == 0) {
+		g_idle_add((GSourceFunc) scrollCallback, this);
+	}
+
+	this->scrollOffsetX = this->lastMousePositionX - x;
+	this->scrollOffsetY = this->lastMousePositionY - y;
 }
 
 bool PageView::onButtonReleaseEvent(GtkWidget * widget, GdkEventButton * event) {
-	gboolean isCore = (event->device == gdk_device_get_core_pointer());
-#ifdef INPUT_DEBUG
-	//	printf("DEBUG: ButtonRelease (%s) (x,y)=(%.2f,%.2f), button %d, modifier %x, isCore %i\n", event->device->name,
-	//			event->xScreen, event->yScreen, event->button, event->state, isCore);
-#endif
-
-	// TODO !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-	//	XInputUtils::fixXInputCoords((GdkEvent*) event, this->widget);
 	Control * control = xournal->getControl();
 
-	//	this->inputHandler->onButtonReleaseEvent(event, this->page);
+	this->inputHandler->onButtonReleaseEvent(event, this->page);
 
 	ToolHandler * h = control->getToolHandler();
 	h->restoreLastConfig();
@@ -589,7 +571,7 @@ bool PageView::onButtonReleaseEvent(GtkWidget * widget, GdkEventButton * event) 
 	return false;
 }
 
-bool PageView::onKeyPressEvent(GdkEventKey *event) {
+bool PageView::onKeyPressEvent(GdkEventKey * event) {
 	// Esc leaves text edition
 	if (event->keyval == GDK_Escape) {
 		if (this->textEditor) {
@@ -633,7 +615,7 @@ bool PageView::onKeyPressEvent(GdkEventKey *event) {
 	return false;
 }
 
-bool PageView::onKeyReleaseEvent(GdkEventKey *event) {
+bool PageView::onKeyReleaseEvent(GdkEventKey * event) {
 	if (this->textEditor && this->textEditor->onKeyReleaseEvent(event)) {
 		return true;
 	}
@@ -642,23 +624,23 @@ bool PageView::onKeyReleaseEvent(GdkEventKey *event) {
 }
 
 XournalView * PageView::getXournal() {
-	return xournal;
+	return this->xournal;
 }
 
 double PageView::getHeight() {
-	return page->getHeight();
+	return this->page->getHeight();
 }
 
 double PageView::getWidth() {
-	return page->getWidth();
+	return this->page->getWidth();
 }
 
 int PageView::getDisplayWidth() {
-	return page->getWidth() * xournal->getZoom();
+	return this->page->getWidth() * this->xournal->getZoom();
 }
 
 int PageView::getDisplayHeight() {
-	return page->getHeight() * xournal->getZoom();
+	return this->page->getHeight() * this->xournal->getZoom();
 }
 
 void PageView::setPos(int x, int y) {
@@ -686,6 +668,7 @@ void PageView::repaint() {
 void PageView::redraw() {
 	// TODO !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	//	gtk_widget_queue_draw(widget);
+	gtk_widget_queue_draw(xournal->getWidget());
 }
 
 void PageView::repaint(Range & r) {
@@ -740,19 +723,12 @@ void PageView::addRepaintRect(double x, double y, double width, double height) {
 }
 
 void PageView::setSelected(bool selected) {
-	// TODO !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	this->selected = selected;
 
-	//	this->selected = selected;
-	//
-	//	GtkWidget * parent = gtk_widget_get_parent(this->widget);
-	//
-	//	GtkAllocation alloc = { 0 };
-	//	gtk_widget_get_allocation(parent, &alloc);
-	//	gtk_widget_queue_draw(parent);
-	//
-	//	if (selected) {
-	//		gtk_widget_grab_focus(widget);
-	//	}
+	if (selected) {
+		this->xournal->requestFocus();
+		gtk_widget_queue_draw(this->xournal->getWidget());
+	}
 }
 
 bool PageView::isSelected() {
@@ -807,7 +783,7 @@ bool PageView::paintPage(cairo_t * cr, GdkRectangle * rect) {
 		cairo_rectangle(cr2, 0, 0, dispWidth, dispHeight);
 		cairo_fill(cr2);
 
-		cairo_scale(cr2, xournal->getZoom(), xournal->getZoom());
+		cairo_scale(cr2, zoom, zoom);
 
 		const char * txtLoading = _("Loading...");
 
@@ -870,7 +846,7 @@ bool PageView::paintPage(cairo_t * cr, GdkRectangle * rect) {
 	if (this->search) {
 		this->search->paint(cr, NULL, zoom, getSelectionColor());
 	}
-	//		this->inputHandler->draw(cr, zoom);
+	this->inputHandler->draw(cr, zoom);
 	g_mutex_unlock(this->drawingMutex);
 	return true;
 }

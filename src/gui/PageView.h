@@ -25,6 +25,7 @@ class EraseHandler;
 class VerticalToolHandler;
 class SearchControl;
 class Settings;
+class InputHandler;
 
 // Model
 class Page;
@@ -91,20 +92,20 @@ public:
 	int getX();
 	int getY();
 
+	bool containsPoint(int x, int y);
 
 public:
 	// Redrawable
 	void redraw(double x1, double y1, double x2, double y2);
 	GdkColor getSelectionColor();
-private:
-	static gboolean drawEventCallback(GtkWidget * widget, cairo_t * cr, PageView * page);
-	static gboolean onButtonPressEventCallback(GtkWidget * widget, GdkEventButton * event, PageView * view);
-	void onButtonPressEvent(GtkWidget * widget, GdkEventButton * event);
-	static bool onButtonReleaseEventCallback(GtkWidget * widget, GdkEventButton * event, PageView * view);
-	bool onButtonReleaseEvent(GtkWidget * widget, GdkEventButton * event);
-	static gboolean onMotionNotifyEventCallback(GtkWidget * widget, GdkEventMotion * event, PageView * view);
-	gboolean onMotionNotifyEvent(GtkWidget * widget, GdkEventMotion * event);
 
+public: // event handler
+	bool onButtonPressEvent(GtkWidget * widget, GdkEventButton * event);
+	bool onButtonReleaseEvent(GtkWidget * widget, GdkEventButton * event);
+	bool onMotionNotifyEvent(GtkWidget * widget, GdkEventMotion * event);
+	void translateEvent(GdkEvent * event, int xOffset, int yOffset);
+
+private:
 	void handleScrollEvent(GdkEventButton * event);
 
 	void startText(double x, double y);
@@ -119,6 +120,7 @@ private:
 	XournalView * xournal;
 	Settings * settings;
 	EraseHandler * eraser;
+	InputHandler * inputHandler;
 
 	// position in px on screen
 	int x;
