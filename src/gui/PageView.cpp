@@ -10,7 +10,6 @@
 #include "../control/tools/ImageHandler.h"
 #include "../util/pixbuf-utils.h"
 #include "../util/Range.h"
-#include "../util/XInputUtils.h"
 #include "../cfg.h"
 #include "../undo/InsertUndoAction.h"
 #include "../control/jobs/BlockingJob.h"
@@ -71,34 +70,17 @@ PageView::PageView(XournalView * xournal, XojPage * page) {
 	this->eraser = new EraseHandler(xournal->getControl()->getUndoRedoHandler(), xournal->getControl()->getDocument(), this->page,
 			xournal->getControl()->getToolHandler(), this);
 
-//	this->inputHandler = new InputHandler(xournal, this->widget, this);
-	this->inputHandler = NULL;
+	//	this->inputHandler = new InputHandler(xournal, this->widget, this);
 
-	updateSize();
+	this->x = 0;
+	this->y = 0;
 
-	// TODO: !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-//	gtk_widget_set_events(widget, GDK_EXPOSURE_MASK | GDK_POINTER_MOTION_MASK | GDK_BUTTON_MOTION_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK
-//			| GDK_ENTER_NOTIFY_MASK | GDK_LEAVE_NOTIFY_MASK);
-//
-//	gtk_widget_set_can_focus(widget, true);
-//
-//	g_signal_connect(widget, "button_press_event", G_CALLBACK(onButtonPressEventCallback), this);
-//	g_signal_connect(widget, "button_release_event", G_CALLBACK(onButtonReleaseEventCallback), this);
-//	g_signal_connect(widget, "motion_notify_event", G_CALLBACK(onMotionNotifyEventCallback), this);
-//	g_signal_connect(widget, "enter_notify_event", G_CALLBACK(XInputUtils::onMouseEnterNotifyEvent), NULL);
-//	g_signal_connect(widget, "leave_notify_event", G_CALLBACK(XInputUtils::onMouseLeaveNotifyEvent), NULL);
-//
-//	g_signal_connect(G_OBJECT(widget), "expose_event", G_CALLBACK(exposeEventCallback), this);
-//
-//	updateXEvents();
 }
 
 PageView::~PageView() {
 	this->xournal->getControl()->getScheduler()->removePage(this);
 	delete this->eraser;
 	this->eraser = NULL;
-	delete this->inputHandler;
-	this->inputHandler = NULL;
 	endText();
 	deleteViewBuffer();
 
@@ -143,16 +125,6 @@ void PageView::deleteViewBuffer() {
 	g_mutex_unlock(this->drawingMutex);
 }
 
-bool PageView::repaintCallback(PageView * view) {
-	gdk_threads_enter();
-
-	view->paintPage(NULL);
-
-	gdk_threads_leave();
-
-	return false; // do not call again
-}
-
 gboolean PageView::onButtonPressEventCallback(GtkWidget * widget, GdkEventButton * event, PageView * view) {
 	view->onButtonPressEvent(widget, event);
 	return false;
@@ -161,28 +133,28 @@ gboolean PageView::onButtonPressEventCallback(GtkWidget * widget, GdkEventButton
 bool PageView::searchTextOnPage(const char * text, int * occures, double * top) {
 	// TODO !!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	return false;
-//	if (this->search == NULL) {
-//		if (text == NULL) {
-//			return true;
-//		}
-//
-//		int pNr = page->getPdfPageNr();
-//		XojPopplerPage * pdf = NULL;
-//		if (pNr != -1) {
-//			Document * doc = xournal->getControl()->getDocument();
-//
-//			doc->lock();
-//			pdf = doc->getPdfPage(pNr);
-//			doc->unlock();
-//		}
-//		this->search = new SearchControl(page, pdf);
-//	}
-//
-//	bool found = this->search->search(text, occures, top);
-//
-//	gtk_widget_queue_draw(widget);
-//
-//	return found;
+	//	if (this->search == NULL) {
+	//		if (text == NULL) {
+	//			return true;
+	//		}
+	//
+	//		int pNr = page->getPdfPageNr();
+	//		XojPopplerPage * pdf = NULL;
+	//		if (pNr != -1) {
+	//			Document * doc = xournal->getControl()->getDocument();
+	//
+	//			doc->lock();
+	//			pdf = doc->getPdfPage(pNr);
+	//			doc->unlock();
+	//		}
+	//		this->search = new SearchControl(page, pdf);
+	//	}
+	//
+	//	bool found = this->search->search(text, occures, top);
+	//
+	//	gtk_widget_queue_draw(widget);
+	//
+	//	return found;
 }
 
 void PageView::endText() {
@@ -247,7 +219,7 @@ void PageView::startText(double x, double y) {
 			text->setFont(settings->getFont());
 		}
 
-		this->textEditor = new TextEditor(this, text, ownText);
+		this->textEditor = new TextEditor(this, xournal->getWidget(), text, ownText);
 		if (!ownText) {
 			this->textEditor->mousePressed(x - text->getX(), y - text->getY());
 		}
@@ -311,34 +283,15 @@ void PageView::selectObjectAt(double x, double y) {
 		control->setSelection(new EditSelection(control->getUndoRedoHandler(), elementMatch, this, page));
 
 		// TODO !!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-//		gtk_widget_queue_draw(this->widget);
+		//		gtk_widget_queue_draw(this->widget);
 	}
 }
 
 void PageView::onButtonPressEvent(GtkWidget * widget, GdkEventButton * event) {
-#ifdef INPUT_DEBUG
-	/**
-	 * true: Core event, false: XInput event
-	 */
-	gboolean isCore = (event->device == gdk_device_get_core_pointer());
-
-	//	printf("DEBUG: ButtonPress (%s) (x,y)=(%.2f,%.2f), button %d, modifier %x, isCore %i\n", event->device->name,
-	//			event->xScreen, event->yScreen, event->button, event->state, isCore);
-#endif
-
-	// TODO !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-//	XInputUtils::fixXInputCoords((GdkEvent*) event, this->widget);
 
 	xournal->resetFocus();
 
-	if (event->type != GDK_BUTTON_PRESS) {
-		return;
-	}
 
-	if (event->button > 3) { // scroll wheel events! don't paint...
-		XInputUtils::handleScrollEvent(event, gtk_widget_get_parent(xournal->getWidget()));
-		return;
-	}
 	if ((event->state & (GDK_CONTROL_MASK | GDK_MOD1_MASK)) != 0) {
 		return;
 	}
@@ -428,13 +381,14 @@ void PageView::onButtonPressEvent(GtkWidget * widget, GdkEventButton * event) {
 	}
 
 	if (h->getToolType() == TOOL_PEN) {
-		this->inputHandler->startStroke(event, STROKE_TOOL_PEN, x, y);
+		// TODO: !!!!!!!!!!!!!!
+		//		this->inputHandler->startStroke(event, STROKE_TOOL_PEN, x, y);
 	} else if (h->getToolType() == TOOL_HILIGHTER) {
-		this->inputHandler->startStroke(event, STROKE_TOOL_HIGHLIGHTER, x, y);
+		//		this->inputHandler->startStroke(event, STROKE_TOOL_HIGHLIGHTER, x, y);
 	} else if (h->getToolType() == TOOL_ERASER) {
 		if (h->getEraserType() == ERASER_TYPE_WHITEOUT) {
-			this->inputHandler->startStroke(event, STROKE_TOOL_ERASER, x, y);
-			this->inputHandler->getTmpStroke()->setColor(0xffffff); // White
+			//			this->inputHandler->startStroke(event, STROKE_TOOL_ERASER, x, y);
+			//			this->inputHandler->getTmpStroke()->setColor(0xffffff); // White
 		} else {
 			this->eraser->erase(x, y);
 			this->inEraser = true;
@@ -470,14 +424,14 @@ void PageView::redraw(double x1, double y1, double x2, double y2) {
 
 	// TODO !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-//	gtk_widget_queue_draw_area(this->widget, x1 * zoom - 10, y1 * zoom - 10, (x2 - x1) * zoom + 20, (y2 - y1) * zoom + 20);
+	//	gtk_widget_queue_draw_area(this->widget, x1 * zoom - 10, y1 * zoom - 10, (x2 - x1) * zoom + 20, (y2 - y1) * zoom + 20);
 }
 
 GdkColor PageView::getSelectionColor() {
 	// TODO !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-//	return widget->style->base[GTK_STATE_SELECTED];
+	//	return widget->style->base[GTK_STATE_SELECTED];
 
-	GdkColor color = {0};
+	GdkColor color = { 0 };
 	return color;
 }
 
@@ -486,7 +440,7 @@ TextEditor * PageView::getTextEditor() {
 }
 
 void PageView::resetShapeRecognizer() {
-	this->inputHandler->resetShapeRecognizer();
+	//	this->inputHandler->resetShapeRecognizer();
 }
 
 gboolean PageView::onMotionNotifyEventCallback(GtkWidget *widget, GdkEventMotion *event, PageView * view) {
@@ -502,7 +456,7 @@ gboolean PageView::onMotionNotifyEvent(GtkWidget * widget, GdkEventMotion * even
 #endif
 
 	// TODO !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-//	XInputUtils::fixXInputCoords((GdkEvent*) event, this->widget);
+	//	XInputUtils::fixXInputCoords((GdkEvent*) event, this->widget);
 
 	double zoom = xournal->getZoom();
 	double x = event->x / zoom;
@@ -514,7 +468,7 @@ gboolean PageView::onMotionNotifyEvent(GtkWidget * widget, GdkEventMotion * even
 		if (this->inScrolling) {
 			doScroll(event);
 		}
-	} else if (this->inputHandler->onMotionNotifyEvent(event)) {
+		//	} else if (this->inputHandler->onMotionNotifyEvent(event)) {
 		// input handler used this event
 	} else if (this->selectionEdit) {
 		this->selectionEdit->currentPos(x, y);
@@ -559,20 +513,20 @@ bool PageView::scrollCallback(PageView * view) {
 void PageView::doScroll(GdkEventMotion * event) {
 	// TODO !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-//	int x = 0;
-//	int y = 0;
-//	gtk_widget_get_pointer(widget, &x, &y);
-//
-//	if (this->lastMousePositionX - x == 0 && this->lastMousePositionY - y == 0) {
-//		return;
-//	}
-//
-//	if (this->scrollOffsetX == 0 && this->scrollOffsetY == 0) {
-//		g_idle_add((GSourceFunc) scrollCallback, this);
-//	}
-//
-//	this->scrollOffsetX = this->lastMousePositionX - x;
-//	this->scrollOffsetY = this->lastMousePositionY - y;
+	//	int x = 0;
+	//	int y = 0;
+	//	gtk_widget_get_pointer(widget, &x, &y);
+	//
+	//	if (this->lastMousePositionX - x == 0 && this->lastMousePositionY - y == 0) {
+	//		return;
+	//	}
+	//
+	//	if (this->scrollOffsetX == 0 && this->scrollOffsetY == 0) {
+	//		g_idle_add((GSourceFunc) scrollCallback, this);
+	//	}
+	//
+	//	this->scrollOffsetX = this->lastMousePositionX - x;
+	//	this->scrollOffsetY = this->lastMousePositionY - y;
 }
 
 bool PageView::onButtonReleaseEventCallback(GtkWidget * widget, GdkEventButton * event, PageView * view) {
@@ -588,10 +542,10 @@ bool PageView::onButtonReleaseEvent(GtkWidget * widget, GdkEventButton * event) 
 #endif
 
 	// TODO !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-//	XInputUtils::fixXInputCoords((GdkEvent*) event, this->widget);
+	//	XInputUtils::fixXInputCoords((GdkEvent*) event, this->widget);
 	Control * control = xournal->getControl();
 
-	this->inputHandler->onButtonReleaseEvent(event, this->page);
+	//	this->inputHandler->onButtonReleaseEvent(event, this->page);
 
 	ToolHandler * h = control->getToolHandler();
 	h->restoreLastConfig();
@@ -707,8 +661,17 @@ int PageView::getDisplayHeight() {
 	return page->getHeight() * xournal->getZoom();
 }
 
-bool PageView::exposeEventCallback(GtkWidget * widget, GdkEventExpose * event, PageView * page) {
-	return page->paintPage(event);
+void PageView::setPos(int x, int y) {
+	this->x = x;
+	this->y = y;
+}
+
+int PageView::getX() {
+	return this->x;
+}
+
+int PageView::getY() {
+	return this->y;
 }
 
 XojPage * PageView::getPage() {
@@ -722,7 +685,7 @@ void PageView::repaint() {
 
 void PageView::redraw() {
 	// TODO !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-//	gtk_widget_queue_draw(widget);
+	//	gtk_widget_queue_draw(widget);
 }
 
 void PageView::repaint(Range & r) {
@@ -776,25 +739,20 @@ void PageView::addRepaintRect(double x, double y, double width, double height) {
 	this->xournal->getControl()->getScheduler()->addRepaintPage(this);
 }
 
-void PageView::updateSize() {
-	// TODO !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-//	gtk_widget_set_size_request(widget, getDisplayWidth(), getDisplayHeight());
-}
-
 void PageView::setSelected(bool selected) {
 	// TODO !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-//	this->selected = selected;
-//
-//	GtkWidget * parent = gtk_widget_get_parent(this->widget);
-//
-//	GtkAllocation alloc = { 0 };
-//	gtk_widget_get_allocation(parent, &alloc);
-//	gtk_widget_queue_draw(parent);
-//
-//	if (selected) {
-//		gtk_widget_grab_focus(widget);
-//	}
+	//	this->selected = selected;
+	//
+	//	GtkWidget * parent = gtk_widget_get_parent(this->widget);
+	//
+	//	GtkAllocation alloc = { 0 };
+	//	gtk_widget_get_allocation(parent, &alloc);
+	//	gtk_widget_queue_draw(parent);
+	//
+	//	if (selected) {
+	//		gtk_widget_grab_focus(widget);
+	//	}
 }
 
 bool PageView::isSelected() {
@@ -833,87 +791,86 @@ bool PageView::actionDelete() {
 	return false;
 }
 
-bool PageView::paintPage(GdkEventExpose * event) {
+bool PageView::paintPage(cairo_t * cr, GdkRectangle * rect) {
 	// TODO !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-//	double zoom = xournal->getZoom();
-//
-//	cairo_t * cr = gdk_cairo_create(widget->window);
-//
-//	GtkAllocation alloc;
-//	gtk_widget_get_allocation(widget, &alloc);
-//
-//	g_mutex_lock(this->drawingMutex);
-//
-//	if (this->crBuffer == NULL) {
-//		this->crBuffer = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, alloc.width, alloc.height);
-//		cairo_t * cr2 = cairo_create(this->crBuffer);
-//		cairo_scale(cr2, xournal->getZoom(), xournal->getZoom());
-//
-//		const char * txtLoading = _("Loading...");
-//
-//		cairo_text_extents_t ex;
-//		cairo_set_source_rgb(cr2, 0.5, 0.5, 0.5);
-//		cairo_select_font_face(cr2, "Sans", CAIRO_FONT_SLANT_NORMAL, CAIRO_FONT_WEIGHT_BOLD);
-//		cairo_set_font_size(cr2, 32.0);
-//		cairo_text_extents(cr2, txtLoading, &ex);
-//		cairo_move_to(cr2, (page->getWidth() - ex.width) / 2 - ex.x_bearing, (page->getHeight() - ex.height) / 2 - ex.y_bearing);
-//		cairo_show_text(cr2, txtLoading);
-//
-//		cairo_destroy(cr2);
-//		repaint();
-//	}
-//
-//	cairo_save(cr);
-//
-//	double width = cairo_image_surface_get_width(this->crBuffer);
-//	if (width != alloc.width) {
-//		double scale = ((double) alloc.width) / ((double) width);
-//
-//		// Scale current image to fit the zoom level
-//		cairo_scale(cr, scale, scale);
-//		cairo_set_source_surface(cr, this->crBuffer, 0, 0);
-//
-//		repaint();
-//
-//		event = NULL;
-//	} else {
-//		cairo_set_source_surface(cr, this->crBuffer, 0, 0);
-//	}
-//
-//	if (event) {
-//		cairo_rectangle(cr, event->area.x, event->area.y, event->area.width, event->area.height);
-//		cairo_fill(cr);
-//	} else {
-//		cairo_paint(cr);
-//	}
-//
-//	cairo_restore(cr);
-//
-//	// don't paint this with scale, because it needs a 1:1 zoom
-//	if (this->verticalSpace) {
-//		this->verticalSpace->paint(cr, event, zoom);
-//	}
-//
-//	cairo_scale(cr, zoom, zoom);
-//
-//	if (this->textEditor) {
-//		this->textEditor->paint(cr, event, zoom);
-//	}
-//	if (this->selectionEdit) {
-//		this->selectionEdit->paint(cr, event, zoom);
-//	}
-//
-//	Control * control = xournal->getControl();
-//
-//	control->paintSelection(cr, event, zoom, this);
-//
-//	if (this->search) {
-//		this->search->paint(cr, event, zoom, getSelectionColor());
-//	}
-//	this->inputHandler->draw(cr, zoom);
-//
-//	cairo_destroy(cr);
-//
-//	g_mutex_unlock(this->drawingMutex);
+	double zoom = xournal->getZoom();
+
+	g_mutex_lock(this->drawingMutex);
+
+	int dispWidth = getDisplayWidth();
+	int dispHeight = getDisplayHeight();
+
+	if (this->crBuffer == NULL) {
+		this->crBuffer = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, dispWidth, dispHeight);
+		cairo_t * cr2 = cairo_create(this->crBuffer);
+		cairo_set_source_rgb(cr2, 1, 1, 1);
+		cairo_rectangle(cr2, 0, 0, dispWidth, dispHeight);
+		cairo_fill(cr2);
+
+		cairo_scale(cr2, xournal->getZoom(), xournal->getZoom());
+
+		const char * txtLoading = _("Loading...");
+
+		cairo_text_extents_t ex;
+		cairo_set_source_rgb(cr2, 0.5, 0.5, 0.5);
+		cairo_select_font_face(cr2, "Sans", CAIRO_FONT_SLANT_NORMAL, CAIRO_FONT_WEIGHT_BOLD);
+		cairo_set_font_size(cr2, 32.0);
+		cairo_text_extents(cr2, txtLoading, &ex);
+		cairo_move_to(cr2, (page->getWidth() - ex.width) / 2 - ex.x_bearing, (page->getHeight() - ex.height) / 2 - ex.y_bearing);
+		cairo_show_text(cr2, txtLoading);
+
+		cairo_destroy(cr2);
+		repaint();
+	}
+
+	cairo_save(cr);
+
+	double width = cairo_image_surface_get_width(this->crBuffer);
+	if (width != dispWidth) {
+		double scale = ((double) dispWidth) / ((double) width);
+
+		// Scale current image to fit the zoom level
+		cairo_scale(cr, scale, scale);
+		cairo_set_source_surface(cr, this->crBuffer, 0, 0);
+
+		repaint();
+
+		rect = NULL;
+	} else {
+		cairo_set_source_surface(cr, this->crBuffer, 0, 0);
+	}
+
+	if (rect) {
+		cairo_rectangle(cr, rect->x, rect->y, rect->width, rect->height);
+		cairo_fill(cr);
+	} else {
+		cairo_paint(cr);
+	}
+
+	cairo_restore(cr);
+
+	// don't paint this with scale, because it needs a 1:1 zoom
+	if (this->verticalSpace) {
+		this->verticalSpace->paint(cr, NULL, zoom);
+	}
+
+	cairo_scale(cr, zoom, zoom);
+
+	if (this->textEditor) {
+		this->textEditor->paint(cr, NULL, zoom);
+	}
+	if (this->selectionEdit) {
+		this->selectionEdit->paint(cr, NULL, zoom);
+	}
+
+	Control * control = xournal->getControl();
+
+	control->paintSelection(cr, NULL, zoom, this);
+
+	if (this->search) {
+		this->search->paint(cr, NULL, zoom, getSelectionColor());
+	}
+	//		this->inputHandler->draw(cr, zoom);
+	g_mutex_unlock(this->drawingMutex);
 	return true;
 }

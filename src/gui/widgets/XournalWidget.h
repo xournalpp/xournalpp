@@ -35,6 +35,21 @@ struct _GtkXournal {
 
 	int scrollX;
 	int scrollY;
+
+	/**
+	 * Visible area
+	 */
+	int x;
+	int y;
+	int width;
+	int height;
+
+	int lastWidgetSize;
+
+	GtkAdjustment * hadj;
+	GtkAdjustment * vadj;
+	GtkRange * hrange;
+	GtkRange * vrange;
 };
 
 struct _GtkXournalClass {
@@ -42,10 +57,11 @@ struct _GtkXournalClass {
 };
 
 GtkType gtk_xournal_get_type(void);
-GtkWidget * gtk_xournal_new(XournalView * view);
+GtkWidget * gtk_xournal_new(XournalView * view, GtkRange * hrange, GtkRange * vrange);
 
 void gtk_xournal_redraw(GtkWidget * widget);
 void gtk_xournal_update_xevent(GtkWidget * widget);
+void gtk_xournal_set_size(GtkWidget * widget, int width, int height);
 
 G_END_DECLS
 

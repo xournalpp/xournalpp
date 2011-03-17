@@ -31,7 +31,7 @@ class Rectangle;
 
 class XournalView: public DocumentListener, public ZoomListener, public MemoryCheckObject {
 public:
-	XournalView(GtkWidget * parent, Control * control);
+	XournalView(GtkWidget * parent, GtkRange * hrange, GtkRange * vrange, Control * control);
 	virtual ~XournalView();
 
 public:
@@ -115,7 +115,6 @@ private:
 
 	Rectangle * getVisibleRect(int page);
 
-	static void sizeAllocate(GtkWidget *widget, GtkRequisition * requisition, XournalView * xournal);
 	static gboolean onButtonPressEventCallback(GtkWidget *widget, GdkEventButton *event, XournalView * xournal);
 
 
@@ -129,8 +128,6 @@ private:
 private:
 	GtkWidget * widget;
 	double margin;
-
-	int lastWidgetSize;
 
 	PageView ** viewPages;
 	int viewPagesLen;

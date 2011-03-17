@@ -14,14 +14,14 @@
 
 // TODO: LOW PRIO handle scroll events from touch / if Hand tool is selected
 
-XournalView::XournalView(GtkWidget * parent, Control * control) {
+XournalView::XournalView(GtkWidget * parent, GtkRange * hrange, GtkRange * vrange, Control * control) {
 	this->control = control;
 	this->cache = new PdfCache(control->getSettings()->getPdfPageCacheSize());
 	registerListener(control);
 
 	initScrollHandler(parent);
 
-	this->widget = gtk_xournal_new(this);
+	this->widget = gtk_xournal_new(this, hrange, vrange);
 
 	gtk_table_attach_defaults(GTK_TABLE(parent), this->widget, 0, 1, 0, 1);
 	gtk_widget_show(this->widget);
@@ -31,7 +31,6 @@ XournalView::XournalView(GtkWidget * parent, Control * control) {
 	this->margin = 75;
 	this->currentPage = 0;
 	this->lastSelectedPage = -1;
-	this->lastWidgetSize = 0;
 
 	// TODO: !!!!!!!!!!!!!!!!!!
 //	gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(parent), GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
@@ -242,15 +241,17 @@ PageView * XournalView::getViewFor(int pageNr) {
 }
 
 PageView * XournalView::getViewAt(int x, int y) {
-	for (int page = 0; page < viewPagesLen; page++) {
-		PageView * p = viewPages[page];
-		GtkAllocation alloc = { 0 };
-		gtk_widget_get_allocation(p->getWidget(), &alloc);
+	// TODO !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-		if (alloc.x <= x && alloc.x + alloc.width >= x && alloc.y <= y && alloc.y + alloc.height >= y) {
-			return p;
-		}
-	}
+//	for (int page = 0; page < viewPagesLen; page++) {
+//		PageView * p = viewPages[page];
+//		GtkAllocation alloc = { 0 };
+//		gtk_widget_get_allocation(p->getWidget(), &alloc);
+//
+//		if (alloc.x <= x && alloc.x + alloc.width >= x && alloc.y <= y && alloc.y + alloc.height >= y) {
+//			return p;
+//		}
+//	}
 
 	return NULL;
 }
@@ -519,17 +520,6 @@ Rectangle * XournalView::getVisibleRect(int page) {
 	return NULL;
 }
 
-void XournalView::sizeAllocate(GtkWidget * widget, GtkRequisition * requisition, XournalView * xournal) {
-	GtkAllocation alloc = { 0 };
-	gtk_widget_get_allocation(widget, &alloc);
-
-	if (xournal->lastWidgetSize != alloc.width) {
-		xournal->layoutPages();
-		xournal->lastWidgetSize = alloc.width;
-	}
-	xournal->control->calcZoomFitSize();
-}
-
 GtkWidget * XournalView::getWidget() {
 	// TODO: !!!!!!!!!!!
 	return widget;
@@ -595,7 +585,6 @@ void XournalView::zoomChanged(double lastZoom) {
 
 void XournalView::pageSizeChanged(int page) {
 	PageView * v = this->viewPages[page];
-	v->updateSize();
 	layoutPages();
 }
 
@@ -670,12 +659,10 @@ void XournalView::pageInserted(int page) {
 
 	this->viewPages[page] = pageView;
 
-	// TODO !!!!!!!!!!!!
-//	gtk_layout_put(GTK_LAYOUT(widget), pageView->getWidget(), 0, 0);
-
 	layoutPages();
-	updateXEvents();
 
+
+	// TODO !!!!!!!! still neccessary?
 	// Update scroll info, so we can call isPageVisible after
 	onScrolled();
 }
@@ -691,7 +678,7 @@ void XournalView::updateXEvents() {
 void XournalView::layoutPages() {
 	GtkAllocation alloc = { 0 };
 
-	gtk_widget_get_allocation(widget, &alloc);
+	gtk_widget_get_allocation(this->widget, &alloc);
 
 	Settings * settings = getControl()->getSettings();
 
@@ -699,80 +686,79 @@ void XournalView::layoutPages() {
 
 	bool allowScrollOutsideThePage = settings->isAllowScrollOutsideThePage();
 
-//	if (showTwoPages) {
-//		int width = alloc.width;
-//		int height = XOURNAL_PADDING_TOP_LEFT;
-//
-//		// TODO LOW PRIO: handle single landscape page better
-//		// If there is a landscape page, display them on a single line, not with another page
-//
-//		// calc size for the widget
-//		for (int i = 0; i < this->viewPagesLen; i++) {
-//			int w = this->viewPages[i]->getDisplayWidth() + XOURNAL_PADDING_TOP_LEFT + XOURNAL_PADDING;
-//			int h = this->viewPages[i]->getDisplayHeight();
-//			if (i < this->viewPagesLen - 1) {
-//
-//				i++;
-//				w += this->viewPages[i]->getDisplayWidth();
-//				w += XOURNAL_PADDING;
-//				h = MAX(h, this->viewPages[i]->getDisplayHeight());
-//			}
-//			if (width < w) {
-//				width = w;
-//			}
-//			height += h;
-//			height += XOURNAL_PADDING;
-//		}
-//
-//		int y = XOURNAL_PADDING_TOP_LEFT;
-//
-//		int additionalHeight = 0;
-//		if (viewPagesLen > 0) {
-//			additionalHeight = this->viewPages[0]->getHeight();
-//		}
-//
-//		if (allowScrollOutsideThePage && viewPagesLen > 0) {
-//			y += this->viewPages[0]->getHeight() / 2;
-//			height += additionalHeight;
-//			width *= 2;
-//		}
-//
-//		// layout pages
-//		for (int i = 0; i < viewPagesLen; i++) {
-//			int x = 0;
-//			int h = this->viewPages[i]->getDisplayHeight();
-//			if (i < this->viewPagesLen - 1) {
-//				x = width - this->viewPages[i]->getDisplayWidth() - this->viewPages[i + 1]->getDisplayWidth() - XOURNAL_PADDING - +XOURNAL_PADDING_TOP_LEFT;
-//				x /= 2;
-//
-//				gtk_layout_move(GTK_LAYOUT(this->widget), this->viewPages[i]->getWidget(), x, y);
-//
-//				x += this->viewPages[i]->getDisplayWidth() + XOURNAL_PADDING;
-//
-//				i++;
-//
-//				h = MAX(h, this->viewPages[i]->getDisplayHeight());
-//			} else {
-//				x = width - this->viewPages[i]->getDisplayWidth();
-//				x /= 2;
-//			}
-//
-//			gtk_layout_move(GTK_LAYOUT(this->widget), this->viewPages[i]->getWidget(), x, y);
-//			y += h;
-//			y += XOURNAL_PADDING;
-//		}
-//
-//		this->lastWidgetSize = width;
-//		gtk_layout_set_size(GTK_LAYOUT(this->widget), width, height);
-//
-//		if (allowScrollOutsideThePage) {
-//			GtkAdjustment * hadj = gtk_scrolled_window_get_hadjustment(GTK_SCROLLED_WINDOW(gtk_widget_get_parent(this->widget)));
-//			gtk_adjustment_set_value(hadj, width / 4);
-//
-//			GtkAdjustment * vadj = gtk_scrolled_window_get_vadjustment(GTK_SCROLLED_WINDOW(gtk_widget_get_parent(this->widget)));
-//			gtk_adjustment_set_value(vadj, additionalHeight / 2);
-//		}
-//	} else {
+	if (showTwoPages) {
+		int width = alloc.width;
+		int height = XOURNAL_PADDING_TOP_LEFT;
+
+		// TODO LOW PRIO: handle single landscape page better
+		// If there is a landscape page, display them on a single line, not with another page
+
+		// calc size for the widget
+		for (int i = 0; i < this->viewPagesLen; i++) {
+			int w = this->viewPages[i]->getDisplayWidth() + XOURNAL_PADDING_TOP_LEFT + XOURNAL_PADDING;
+			int h = this->viewPages[i]->getDisplayHeight();
+			if (i < this->viewPagesLen - 1) {
+
+				i++;
+				w += this->viewPages[i]->getDisplayWidth();
+				w += XOURNAL_PADDING;
+				h = MAX(h, this->viewPages[i]->getDisplayHeight());
+			}
+			if (width < w) {
+				width = w;
+			}
+			height += h;
+			height += XOURNAL_PADDING;
+		}
+
+		int y = XOURNAL_PADDING_TOP_LEFT;
+
+		int additionalHeight = 0;
+		if (viewPagesLen > 0) {
+			additionalHeight = this->viewPages[0]->getHeight();
+		}
+
+		if (allowScrollOutsideThePage && viewPagesLen > 0) {
+			y += this->viewPages[0]->getHeight() / 2;
+			height += additionalHeight;
+			width *= 2;
+		}
+
+		// layout pages
+		for (int i = 0; i < viewPagesLen; i++) {
+			int x = 0;
+			int h = this->viewPages[i]->getDisplayHeight();
+			if (i < this->viewPagesLen - 1) {
+				x = width - this->viewPages[i]->getDisplayWidth() - this->viewPages[i + 1]->getDisplayWidth() - XOURNAL_PADDING - +XOURNAL_PADDING_TOP_LEFT;
+				x /= 2;
+
+				this->viewPages[i]->setPos(x,y);
+
+				x += this->viewPages[i]->getDisplayWidth() + XOURNAL_PADDING;
+
+				i++;
+
+				h = MAX(h, this->viewPages[i]->getDisplayHeight());
+			} else {
+				x = width - this->viewPages[i]->getDisplayWidth();
+				x /= 2;
+			}
+
+			this->viewPages[i]->setPos(x,y);
+			y += h;
+			y += XOURNAL_PADDING;
+		}
+
+		gtk_xournal_set_size(this->widget, width, height);
+
+		if (allowScrollOutsideThePage) {
+			GtkAdjustment * hadj = gtk_scrolled_window_get_hadjustment(GTK_SCROLLED_WINDOW(gtk_widget_get_parent(this->widget)));
+			gtk_adjustment_set_value(hadj, width / 4);
+
+			GtkAdjustment * vadj = gtk_scrolled_window_get_vadjustment(GTK_SCROLLED_WINDOW(gtk_widget_get_parent(this->widget)));
+			gtk_adjustment_set_value(vadj, additionalHeight / 2);
+		}
+	} else {
 		int width = alloc.width;
 		int height = XOURNAL_PADDING_TOP_LEFT;
 
@@ -801,8 +787,7 @@ void XournalView::layoutPages() {
 			width *= 2;
 		}
 
-		this->lastWidgetSize = width;
-		gtk_layout_set_size(GTK_LAYOUT(this->widget), width, height);
+		gtk_xournal_set_size(this->widget, width, height);
 
 		// layout pages
 
@@ -812,8 +797,7 @@ void XournalView::layoutPages() {
 			x = width - pageView->getDisplayWidth();
 			x /= 2;
 
-			// TODO !!!!!!!!!!!!
-//			gtk_layout_move(GTK_LAYOUT(this->widget), pageView->getWidget(), x, y);
+			pageView->setPos(x,y);
 			y += pageView->getDisplayHeight();
 			y += XOURNAL_PADDING;
 		}
@@ -825,7 +809,7 @@ void XournalView::layoutPages() {
 			GtkAdjustment * vadj = gtk_scrolled_window_get_vadjustment(GTK_SCROLLED_WINDOW(gtk_widget_get_parent(this->widget)));
 			gtk_adjustment_set_value(vadj, additionalHeight / 2);
 		}
-//	}
+	}
 
 	//	TODO: !!!!!!!!! Need to redraw
 //	g_idle_add((GSourceFunc) widgetRepaintCallback, widget);

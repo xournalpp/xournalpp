@@ -21,7 +21,7 @@ class PageView;
 
 class TextEditor {
 public:
-	TextEditor(PageView * gui, Text * text, bool ownText);
+	TextEditor(PageView * gui, GtkWidget * widget, Text * text, bool ownText);
 	virtual ~TextEditor();
 
 	void paint(cairo_t * cr, GdkEventExpose *event, double zoom);
@@ -74,11 +74,12 @@ private:
 	void contentsChanged(bool forceCreateUndoAction = false);
 private:
 	PageView * gui;
+	GtkWidget * widget;
 
 	Text * text;
 	bool ownText;
 
-	GtkWidget *textWidget;
+	GtkWidget * textWidget;
 
 	GtkIMContext *imContext;
 	String preeditString;

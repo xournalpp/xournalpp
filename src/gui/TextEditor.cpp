@@ -13,8 +13,9 @@
 
 // TODO: LOW PRIO: implement drag & drop
 
-TextEditor::TextEditor(PageView * gui, Text * text, bool ownText) {
+TextEditor::TextEditor(PageView * gui, GtkWidget * widget, Text * text, bool ownText) {
 	this->gui = gui;
+	this->widget = widget;
 	this->text = text;
 	this->text->setInEditing(true);
 	this->ownText = ownText;
@@ -45,7 +46,7 @@ TextEditor::TextEditor(PageView * gui, Text * text, bool ownText) {
 	gtk_text_buffer_get_iter_at_offset(this->buffer, &first, 0);
 	gtk_text_buffer_place_cursor(this->buffer, &first);
 
-	GtkSettings *settings = gtk_widget_get_settings(gui->getWidget());
+	GtkSettings * settings = gtk_widget_get_settings(this->widget);
 	g_object_get(settings, "gtk-cursor-blink-time", &this->cursorBlinkTime, NULL);
 	g_object_get(settings, "gtk-cursor-blink-timeout", &this->cursorBlinkTimeout, NULL);
 
@@ -66,6 +67,7 @@ TextEditor::TextEditor(PageView * gui, Text * text, bool ownText) {
 
 TextEditor::~TextEditor() {
 	this->text->setInEditing(false);
+	this->widget = NULL;
 
 	Control * control = gui->getXournal()->getControl();
 	control->setCopyPasteEnabled(false);
@@ -143,7 +145,7 @@ void TextEditor::iMCommitCallback(GtkIMContext *context, const gchar *str, TextE
 
 	if (!strcmp(str, "\n")) {
 		if (!gtk_text_buffer_insert_interactive_at_cursor(te->buffer, "\n", 1, true)) {
-			gtk_widget_error_bell(te->gui->getWidget());
+			gtk_widget_error_bell(te->widget);
 		} else {
 			te->contentsChanged(true);
 		}
@@ -158,7 +160,7 @@ void TextEditor::iMCommitCallback(GtkIMContext *context, const gchar *str, TextE
 		}
 
 		if (!gtk_text_buffer_insert_interactive_at_cursor(te->buffer, str, -1, true)) {
-			gtk_widget_error_bell(te->gui->getWidget());
+			gtk_widget_error_bell(te->widget);
 		}
 	}
 
@@ -182,7 +184,7 @@ void TextEditor::iMPreeditChangedCallback(GtkIMContext *context, TextEditor * te
 	gtk_im_context_get_preedit_string(context, &str, &attrs, &cursor_pos);
 
 	if (str && str[0] && !gtk_text_iter_can_insert(&iter, true)) {
-		gtk_widget_error_bell(te->gui->getWidget());
+		gtk_widget_error_bell(te->widget);
 		goto out;
 	}
 
@@ -406,7 +408,7 @@ void TextEditor::moveCursor(GtkMovementStep step, int count, bool extend_selecti
 	}
 
 	if (gtk_text_iter_equal(&insert, &newplace)) {
-		gtk_widget_error_bell(gui->getWidget());
+		gtk_widget_error_bell(this->widget);
 	}
 
 	this->cursorVisible = false;
@@ -659,12 +661,12 @@ void TextEditor::deleteFromCursor(GtkDeleteType type, int count) {
 				gtk_text_buffer_insert_interactive_at_cursor(this->buffer, " ", 1, true);
 			}
 		} else {
-			gtk_widget_error_bell(gui->getWidget());
+			gtk_widget_error_bell(this->widget);
 		}
 
 		gtk_text_buffer_end_user_action(this->buffer);
 	} else {
-		gtk_widget_error_bell(gui->getWidget());
+		gtk_widget_error_bell(this->widget);
 	}
 
 	this->contentsChanged();
@@ -689,7 +691,7 @@ void TextEditor::backspace() {
 		this->redrawEditor();
 		this->contentsChanged();
 	} else {
-		gtk_widget_error_bell(gui->getWidget());
+		gtk_widget_error_bell(this->widget);
 	}
 }
 
@@ -707,12 +709,12 @@ String TextEditor::getSelection() {
 }
 
 void TextEditor::copyToCliboard() {
-	GtkClipboard *clipboard = gtk_widget_get_clipboard(this->gui->getWidget(), GDK_SELECTION_PRIMARY);
+	GtkClipboard *clipboard = gtk_widget_get_clipboard(this->widget, GDK_SELECTION_PRIMARY);
 	gtk_text_buffer_copy_clipboard(this->buffer, clipboard);
 }
 
 void TextEditor::cutToClipboard() {
-	GtkClipboard *clipboard = gtk_widget_get_clipboard(this->gui->getWidget(), GDK_SELECTION_PRIMARY);
+	GtkClipboard *clipboard = gtk_widget_get_clipboard(this->widget, GDK_SELECTION_PRIMARY);
 	gtk_text_buffer_cut_clipboard(this->buffer, clipboard, true);
 
 	this->redrawEditor();
@@ -720,7 +722,7 @@ void TextEditor::cutToClipboard() {
 }
 
 void TextEditor::pasteFromClipboard() {
-	GtkClipboard *clipboard = gtk_widget_get_clipboard(this->gui->getWidget(), GDK_SELECTION_PRIMARY);
+	GtkClipboard *clipboard = gtk_widget_get_clipboard(this->widget, GDK_SELECTION_PRIMARY);
 	gtk_text_buffer_paste_clipboard(this->buffer, clipboard, NULL, true);
 
 	this->redrawEditor();
@@ -771,7 +773,7 @@ void TextEditor::redrawEditor() {
 	//	double width = this->text->getElementWidth() + 10;
 	//	double heigth = this->text->getElementHeight() + 10;
 	//	gui->redrawDocumentRegion(x, y, width, heigth);
-	gtk_widget_queue_draw(gui->getWidget());
+	gtk_widget_queue_draw(this->widget);
 }
 
 void TextEditor::drawCursor(cairo_t * cr, double x, double y, double height, double zoom) {

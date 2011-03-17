@@ -17,7 +17,7 @@
 
 #include <math.h>
 
-EraseHandler::EraseHandler(UndoRedoHandler * undo, Document * doc, XojPage * page, ToolHandler * handler, PageView * view) {
+EraseHandler::EraseHandler(UndoRedoHandler * undo, Document * doc, XojPage * page, ToolHandler * handler, Redrawable * view) {
 	this->page = page;
 	this->handler = handler;
 	this->view = view;

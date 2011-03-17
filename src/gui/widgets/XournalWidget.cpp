@@ -4,6 +4,10 @@
 #include "../Shadow.h"
 #include "../../control/Control.h"
 #include "../../control/settings/Settings.h"
+#include "../../util/XInputUtils.h"
+#include "../../cfg.h"
+
+#include <math.h>
 
 static void gtk_xournal_class_init(GtkXournalClass * klass);
 static void gtk_xournal_init(GtkXournal * xournal);
@@ -12,6 +16,11 @@ static void gtk_xournal_size_allocate(GtkWidget * widget, GtkAllocation * alloca
 static void gtk_xournal_realize(GtkWidget * widget);
 static gboolean gtk_xournal_expose(GtkWidget * widget, GdkEventExpose * event);
 static void gtk_xournal_destroy(GtkObject * object);
+static void gtk_xournal_connect_scrollbars(GtkXournal * xournal);
+static gboolean gtk_xournal_button_press_event(GtkWidget * widget, GdkEventButton * event);
+static gboolean gtk_xournal_button_release_event(GtkWidget * widget, GdkEventButton * event);
+static gboolean gtk_xournal_motion_notify_event(GtkWidget * widget, GdkEventMotion * event);
+static void gtk_xournal_set_adjustment_upper(GtkAdjustment *adj, gdouble upper, gboolean always_emit_changed);
 
 GtkType gtk_xournal_get_type(void) {
 	static GtkType gtk_xournal_type = 0;
@@ -25,15 +34,73 @@ GtkType gtk_xournal_get_type(void) {
 	return gtk_xournal_type;
 }
 
-GtkWidget * gtk_xournal_new(XournalView * view) {
+GtkWidget * gtk_xournal_new(XournalView * view, GtkRange * hrange, GtkRange * vrange) {
 	GtkXournal * xoj = GTK_XOURNAL(gtk_type_new(gtk_xournal_get_type()));
 	xoj->view = view;
 	xoj->scrollX = 0;
 	xoj->scrollY = 0;
+	xoj->x = 0;
+	xoj->y = 0;
+	xoj->width = 10;
+	xoj->height = 10;
+	xoj->lastWidgetSize = 0;
+	xoj->hrange = hrange;
+	xoj->vrange = vrange;
+	xoj->hadj = hrange->adjustment;
+	xoj->vadj = vrange->adjustment;
+
+	gtk_xournal_connect_scrollbars(xoj);
+
 	return GTK_WIDGET(xoj);
 }
 
-static void gtk_xournal_class_init(GtkXournalClass *klass) {
+static void gtk_xournal_vertical_scrolled(GtkAdjustment * adjustment, GtkXournal * xournal) {
+	g_return_if_fail(GTK_IS_XOURNAL(xournal));
+
+	xournal->y = gtk_adjustment_get_value(adjustment);
+
+	gtk_widget_queue_draw(GTK_WIDGET(xournal));
+}
+
+void gtk_xournal_horizontal_scrolled(GtkAdjustment * adjustment, GtkXournal * xournal) {
+	g_return_if_fail(GTK_IS_XOURNAL(xournal));
+
+	xournal->x = gtk_adjustment_get_value(adjustment);
+
+	gtk_widget_queue_draw(GTK_WIDGET(xournal));
+}
+
+void gtk_xournal_connect_scrollbars(GtkXournal * xournal) {
+	g_return_if_fail(GTK_IS_ADJUSTMENT(xournal->hadj));
+	g_return_if_fail(GTK_IS_ADJUSTMENT(xournal->vadj));
+
+	g_signal_connect(xournal->hadj, "value-changed", G_CALLBACK(gtk_xournal_horizontal_scrolled), xournal);
+	g_signal_connect(xournal->vadj, "value-changed", G_CALLBACK(gtk_xournal_vertical_scrolled), xournal);
+}
+
+void gtk_xournal_set_size(GtkWidget * widget, int width, int height) {
+	g_return_if_fail(widget != NULL);
+	g_return_if_fail(GTK_IS_XOURNAL(widget));
+
+	GtkXournal * xournal = GTK_XOURNAL(widget);
+
+	xournal->width = width;
+	xournal->height = height;
+
+	g_return_if_fail(GTK_IS_ADJUSTMENT(xournal->hadj));
+	g_return_if_fail(GTK_IS_ADJUSTMENT(xournal->vadj));
+
+	gtk_adjustment_set_upper(xournal->hadj, width);
+	gtk_adjustment_set_upper(xournal->vadj, height);
+
+	if (gtk_widget_get_realized(widget)) {
+		width = MAX (width, widget->allocation.width);
+		height = MAX (height, widget->allocation.height);
+		gdk_window_resize(widget->window, width, height);
+	}
+}
+
+static void gtk_xournal_class_init(GtkXournalClass * klass) {
 	GtkWidgetClass * widget_class;
 	GtkObjectClass * object_class;
 
@@ -43,14 +110,125 @@ static void gtk_xournal_class_init(GtkXournalClass *klass) {
 	widget_class->realize = gtk_xournal_realize;
 	widget_class->size_request = gtk_xournal_size_request;
 	widget_class->size_allocate = gtk_xournal_size_allocate;
+	widget_class->button_press_event = gtk_xournal_button_press_event;
+	widget_class->button_release_event = gtk_xournal_button_release_event;
+	widget_class->motion_notify_event = gtk_xournal_motion_notify_event;
+	widget_class->enter_notify_event = XInputUtils::onMouseEnterNotifyEvent;
+	widget_class->leave_notify_event = XInputUtils::onMouseLeaveNotifyEvent;
+	//	widget_class->scroll_event = gtk_xournal_scroll_event;
 
 	widget_class->expose_event = gtk_xournal_expose;
 
 	object_class->destroy = gtk_xournal_destroy;
 }
 
+gdouble gtk_xournal_get_wheel_delta(GtkRange * range, GdkScrollDirection direction) {
+	GtkAdjustment * adj = range->adjustment;
+	gdouble delta;
+
+	if (GTK_IS_SCROLLBAR (range)) {
+		delta = pow(adj->page_size, 2.0 / 3.0);
+	} else {
+		delta = adj->step_increment * 2;
+	}
+
+	if (direction == GDK_SCROLL_UP || direction == GDK_SCROLL_LEFT) {
+		delta = -delta;
+	}
+
+	if (range->inverted) {
+		delta = -delta;
+	}
+
+	return delta;
+}
+
+gboolean gtk_xournal_scroll_event(GtkWidget * widget, GdkEventScroll * event) {
+#ifdef INPUT_DEBUG
+	// true: Core event, false: XInput event
+	gboolean isCore = (event->device == gdk_device_get_core_pointer());
+
+	printf("DEBUG: Scroll (%s) (x,y)=(%.2f,%.2f), direction %d, modifier %x, isCore %i\n", event->device->name, event->x, event->y, event->direction,
+			event->state, isCore);
+#endif
+
+	g_return_val_if_fail (GTK_IS_SCROLLED_WINDOW (widget), FALSE);
+	g_return_val_if_fail (event != NULL, FALSE);
+
+	GtkXournal * xournal = GTK_XOURNAL(widget);
+
+	GtkRange * range;
+	if (event->direction == GDK_SCROLL_UP || event->direction == GDK_SCROLL_DOWN) {
+		range = xournal->vrange;
+	} else {
+		range = xournal->hrange;
+	}
+
+	if (range && gtk_widget_get_visible(GTK_WIDGET(range))) {
+		GtkAdjustment * adj = range->adjustment;
+
+		double delta = gtk_xournal_get_wheel_delta(GTK_RANGE(range), event->direction);
+		double new_value = CLAMP (adj->value + delta, adj->lower, adj->upper - adj->page_size);
+		gtk_adjustment_set_value(adj, new_value);
+
+		return true;
+	}
+
+	return false;
+}
+
+gboolean gtk_xournal_button_press_event(GtkWidget * widget, GdkEventButton * event) {
+#ifdef INPUT_DEBUG
+	/**
+	 * true: Core event, false: XInput event
+	 */
+	gboolean isCore = (event->device == gdk_device_get_core_pointer());
+
+	printf("DEBUG: ButtonPress (%s) (x,y)=(%.2f,%.2f), button %d, modifier %x, isCore %i\n", event->device->name, event->x, event->y, event->button,
+			event->state, isCore);
+#endif
+	XInputUtils::fixXInputCoords((GdkEvent*) event, widget);
+
+	if (event->type != GDK_BUTTON_PRESS) {
+		return false; // this event is not handled here
+	}
+
+	if (event->button > 3) { // scroll wheel events! don't paint...
+		XInputUtils::handleScrollEvent(event, widget);
+		return true;
+	}
+
+	return true; // no other handlers
+}
+
+gboolean gtk_xournal_button_release_event(GtkWidget * widget, GdkEventButton * event) {
+	// TODO: onButtonReleaseEventCallback
+
+
+	return true; // no other handlers
+}
+
+gboolean gtk_xournal_motion_notify_event(GtkWidget * widget, GdkEventMotion * event) {
+	// TODO:onMotionNotifyEventCallback
+
+	return true; // no other handlers
+}
+
 static void gtk_xournal_init(GtkXournal * xournal) {
-	GTK_WIDGET_SET_FLAGS(GTK_WIDGET(xournal), GTK_CAN_FOCUS);
+	GtkWidget * widget = GTK_WIDGET(xournal);
+
+	GTK_WIDGET_SET_FLAGS(widget, GTK_CAN_FOCUS);
+
+	int events  = GDK_EXPOSURE_MASK;
+		events |= GDK_POINTER_MOTION_MASK;
+		events |= GDK_EXPOSURE_MASK;
+		events |= GDK_BUTTON_MOTION_MASK;
+		events |= GDK_BUTTON_PRESS_MASK;
+		events |= GDK_BUTTON_RELEASE_MASK;
+		events |= GDK_ENTER_NOTIFY_MASK;
+		events |= GDK_LEAVE_NOTIFY_MASK;
+
+	gtk_widget_set_events(widget, events);
 }
 
 // gtk_widget_get_preferred_size()
@@ -60,8 +238,10 @@ static void gtk_xournal_size_request(GtkWidget * widget, GtkRequisition * requis
 	g_return_if_fail(GTK_IS_XOURNAL(widget));
 	g_return_if_fail(requisition != NULL);
 
-	requisition->width = 100;
-	requisition->height = 100;
+	GtkXournal * xournal = GTK_XOURNAL(widget);
+
+	requisition->width = 400;
+	requisition->height = 400;
 }
 
 static void gtk_xournal_size_allocate(GtkWidget * widget, GtkAllocation * allocation) {
@@ -74,6 +254,49 @@ static void gtk_xournal_size_allocate(GtkWidget * widget, GtkAllocation * alloca
 	if (GTK_WIDGET_REALIZED(widget)) {
 		gdk_window_move_resize(widget->window, allocation->x, allocation->y, allocation->width, allocation->height);
 	}
+
+	GtkXournal * xournal = GTK_XOURNAL(widget);
+
+	if (xournal->lastWidgetSize != allocation->width) {
+		// Layout pages calls gtk_xournal_set_size => so we can there update the scrollbars
+		xournal->view->layoutPages();
+		xournal->lastWidgetSize = allocation->width;
+	}
+	xournal->view->getControl()->calcZoomFitSize();
+
+	xournal->hadj->page_size = allocation->width;
+	xournal->hadj->page_increment = allocation->width * 0.9;
+	xournal->hadj->lower = 0;
+	// set_adjustment_upper() emits ::changed
+	gtk_xournal_set_adjustment_upper(xournal->hadj, MAX(allocation->width, xournal->width), true);
+
+	xournal->vadj->page_size = allocation->height;
+	xournal->vadj->page_increment = allocation->height * 0.9;
+	xournal->vadj->lower = 0;
+	xournal->vadj->upper = MAX (allocation->height, xournal->height);
+	gtk_xournal_set_adjustment_upper(xournal->vadj, MAX(allocation->height, xournal->height), true);
+}
+
+static void gtk_xournal_set_adjustment_upper(GtkAdjustment *adj, gdouble upper, gboolean always_emit_changed) {
+	gboolean changed = FALSE;
+	gboolean value_changed = FALSE;
+
+	gdouble min = MAX (0., upper - adj->page_size);
+
+	if (upper != adj->upper) {
+		adj->upper = upper;
+		changed = TRUE;
+	}
+
+	if (adj->value > min) {
+		adj->value = min;
+		value_changed = TRUE;
+	}
+
+	if (changed || always_emit_changed)
+		gtk_adjustment_changed(adj);
+	if (value_changed)
+		gtk_adjustment_value_changed(adj);
 }
 
 static void gtk_xournal_realize(GtkWidget * widget) {
@@ -116,7 +339,6 @@ void gtk_xournal_redraw(GtkWidget * widget) {
 	gdk_window_process_updates(GTK_WIDGET(xournal)->window, TRUE);
 }
 
-
 /**
  * Change event handling between XInput and Core
  */
@@ -145,7 +367,7 @@ void gtk_xournal_update_xevent(GtkWidget * widget) {
 
 }
 
-static void gtk_xournal_draw_shadow(GtkXournal * xournal, cairo_t * cr, int top, int left, int width, int height, bool selected) {
+static void gtk_xournal_draw_shadow(GtkXournal * xournal, cairo_t * cr, int left, int top, int width, int height, bool selected) {
 	if (selected) {
 		Shadow::drawShadow(cr, left - 2, top - 2, width + 4, height + 4);
 
@@ -180,12 +402,13 @@ static gboolean gtk_xournal_expose(GtkWidget * widget, GdkEventExpose * event) {
 
 	ArrayIterator<PageView *> it = xournal->view->pageViewIterator();
 
-
-	while(it.hasNext()) {
+	while (it.hasNext()) {
 		PageView * pv = it.next();
-
-
-//		gtk_xournal_draw_shadow(xournal, cr, 10+i*100, 20, 50, 50, i < 3);
+		gtk_xournal_draw_shadow(xournal, cr, pv->getX() - xournal->x, pv->getY() - xournal->y, pv->getDisplayWidth(), pv->getDisplayHeight(), pv->isSelected());
+		cairo_save(cr);
+		cairo_translate(cr, pv->getX() - xournal->x, pv->getY() - xournal->y);
+		pv->paintPage(cr, NULL);
+		cairo_restore(cr);
 	}
 
 	cairo_destroy(cr);
