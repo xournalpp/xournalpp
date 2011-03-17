@@ -62,7 +62,7 @@ public:
 
 	void layerChanged(int page);
 
-	void resetFocus();
+	void requestFocus();
 
 	void onScrolled();
 
@@ -114,9 +114,6 @@ private:
 	void addLoadPageToQue(XojPage * page, int priority);
 
 	Rectangle * getVisibleRect(int page);
-
-	static gboolean onButtonPressEventCallback(GtkWidget *widget, GdkEventButton *event, XournalView * xournal);
-
 
 	static bool widgetRepaintCallback(GtkWidget * widget);
 	static bool onKeyPressCallback(GtkWidget * widget, GdkEventKey * event, XournalView * xournal);

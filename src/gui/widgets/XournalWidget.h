@@ -21,6 +21,7 @@ G_BEGIN_DECLS
 #define GTK_IS_XOURNAL(obj) GTK_CHECK_TYPE(obj, gtk_xournal_get_type())
 
 class XournalView;
+class PageView;
 
 typedef struct _GtkXournal GtkXournal;
 typedef struct _GtkXournalClass GtkXournalClass;
@@ -50,6 +51,9 @@ struct _GtkXournal {
 	GtkAdjustment * vadj;
 	GtkRange * hrange;
 	GtkRange * vrange;
+
+	PageView * currentInputPage;
+	PageView * lastInputPage;
 };
 
 struct _GtkXournalClass {

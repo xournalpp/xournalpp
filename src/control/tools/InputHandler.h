@@ -15,16 +15,16 @@
 #include <gtk/gtk.h>
 #include "../../model/Stroke.h"
 #include "../../model/Page.h"
-#include "../../gui/Redrawable.h"
 #include "../../util/MemoryCheck.h"
 #include "../shaperecognizer/ShapeRecognizer.h"
 
 class DocumentView;
 class XournalView;
+class PageView;
 
 class InputHandler: public MemoryCheckObject {
 public:
-	InputHandler(XournalView * xournal, GtkWidget * widget, Redrawable * redrawable);
+	InputHandler(XournalView * xournal, PageView * redrawable);
 	virtual ~InputHandler();
 
 public:
@@ -72,7 +72,7 @@ private:
 	/**
 	 * The view which should be refreshed
 	 */
-	Redrawable * redrawable;
+	PageView * redrawable;
 
 	/**
 	 * Xournal shape recognizer, one instance per page

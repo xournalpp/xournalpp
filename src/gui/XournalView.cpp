@@ -33,19 +33,19 @@ XournalView::XournalView(GtkWidget * parent, GtkRange * hrange, GtkRange * vrang
 	this->lastSelectedPage = -1;
 
 	// TODO: !!!!!!!!!!!!!!!!!!
-//	gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(parent), GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
-//	g_signal_connect(this->widget, "size-allocate", G_CALLBACK(sizeAllocate), this);
-//	g_signal_connect(this->widget, "button_press_event", G_CALLBACK(onButtonPressEventCallback), this);
-//	gtk_widget_set_events(this->widget, GDK_BUTTON_PRESS_MASK);
-//
-//	g_signal_connect(G_OBJECT(this->widget), "expose_event", G_CALLBACK(exposeEventCallback), this);
-//
-//	GtkAdjustment* adj = gtk_scrolled_window_get_vadjustment(GTK_SCROLLED_WINDOW(parent));
-//	g_signal_connect(adj, "value-changed", G_CALLBACK(onVscrollChanged), this);
-//
-//	gtk_widget_set_events(this->widget, GDK_EXPOSURE_MASK | GDK_KEY_PRESS_MASK);
-//	gtk_signal_connect(GTK_OBJECT(this->widget), "key_press_event", GTK_SIGNAL_FUNC(onKeyPressCallback), this);
-//	gtk_signal_connect(GTK_OBJECT(this->widget), "key_release_event", GTK_SIGNAL_FUNC(onKeyReleaseCallback), this);
+	//	gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(parent), GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
+	//	g_signal_connect(this->widget, "size-allocate", G_CALLBACK(sizeAllocate), this);
+	//	g_signal_connect(this->widget, "button_press_event", G_CALLBACK(onButtonPressEventCallback), this);
+	//	gtk_widget_set_events(this->widget, GDK_BUTTON_PRESS_MASK);
+	//
+	//	g_signal_connect(G_OBJECT(this->widget), "expose_event", G_CALLBACK(exposeEventCallback), this);
+	//
+	//	GtkAdjustment* adj = gtk_scrolled_window_get_vadjustment(GTK_SCROLLED_WINDOW(parent));
+	//	g_signal_connect(adj, "value-changed", G_CALLBACK(onVscrollChanged), this);
+	//
+	//	gtk_widget_set_events(this->widget, GDK_EXPOSURE_MASK | GDK_KEY_PRESS_MASK);
+	//	gtk_signal_connect(GTK_OBJECT(this->widget), "key_press_event", GTK_SIGNAL_FUNC(onKeyPressCallback), this);
+	//	gtk_signal_connect(GTK_OBJECT(this->widget), "key_release_event", GTK_SIGNAL_FUNC(onKeyReleaseCallback), this);
 
 	control->getZoomControl()->addZoomListener(this);
 
@@ -207,14 +207,9 @@ bool XournalView::onKeyReleaseEvent(GdkEventKey *event) {
 	return false;
 }
 
-gboolean XournalView::onButtonPressEventCallback(GtkWidget *widget, GdkEventButton *event, XournalView * xournal) {
-	xournal->resetFocus();
-	return false;
-}
-
 // send the focus back to the appropriate widget
-void XournalView::resetFocus() {
-	gtk_widget_grab_focus(widget);
+void XournalView::requestFocus() {
+	gtk_widget_grab_focus(this->widget);
 }
 
 bool XournalView::searchTextOnPage(const char * text, int p, int * occures, double * top) {
@@ -237,21 +232,18 @@ PageView * XournalView::getViewFor(int pageNr) {
 	if (pageNr < 0 || pageNr >= this->viewPagesLen) {
 		return NULL;
 	}
-	return viewPages[pageNr];
+	return this->viewPages[pageNr];
 }
 
 PageView * XournalView::getViewAt(int x, int y) {
-	// TODO !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	// TODO: low prio: binary search
 
-//	for (int page = 0; page < viewPagesLen; page++) {
-//		PageView * p = viewPages[page];
-//		GtkAllocation alloc = { 0 };
-//		gtk_widget_get_allocation(p->getWidget(), &alloc);
-//
-//		if (alloc.x <= x && alloc.x + alloc.width >= x && alloc.y <= y && alloc.y + alloc.height >= y) {
-//			return p;
-//		}
-//	}
+	for (int page = 0; page < this->viewPagesLen; page++) {
+		PageView * p = this->viewPages[page];
+		if(p->containsPoint(x, y)) {
+			return p;
+		}
+	}
 
 	return NULL;
 }
@@ -295,136 +287,136 @@ Control * XournalView::getControl() {
 void XournalView::scrollTo(int pageNo, double y) {
 	// TODO: !!!!!!!!!!!!!!!!!!!!!!!
 
-//	if (currentPage == pageNo) {
-//		return;
-//	}
-//	if (pageNo < 0 || pageNo >= viewPagesLen) {
-//		return;
-//	}
-//	// TODO LOW PRIO: handle horizontal scrolling (dual page view)
-//
-//	GtkAdjustment* h = gtk_layout_get_vadjustment(GTK_LAYOUT(widget));
-//
-//	PageView * p = viewPages[pageNo];
-//
-//	int pdfPage = p->getPage()->getPdfPageNr();
-//
-//	GValue pY = { 0 };
-//	g_value_init(&pY, G_TYPE_INT);
-//
-//	gtk_container_child_get_property(GTK_CONTAINER(widget), p->getWidget(), "y", &pY);
-//	int pos = g_value_get_int(&pY);
-//
-//	control->firePageSelected(pageNo);
-//
-//	y = y * control->getZoomControl()->getZoom();
-//
-//	if (y == 0) {
-//		y = -10; // show the shadow on top
-//	}
-//
-//	double v = (double) pos + y;
-//	double upper = gtk_adjustment_get_upper(h) - gtk_adjustment_get_page_size(h);
-//
-//	if (upper < v) {
-//		v = upper;
-//	}
-//
-//	gtk_adjustment_set_value(h, v);
+	//	if (currentPage == pageNo) {
+	//		return;
+	//	}
+	//	if (pageNo < 0 || pageNo >= viewPagesLen) {
+	//		return;
+	//	}
+	//	// TODO LOW PRIO: handle horizontal scrolling (dual page view)
+	//
+	//	GtkAdjustment* h = gtk_layout_get_vadjustment(GTK_LAYOUT(widget));
+	//
+	//	PageView * p = viewPages[pageNo];
+	//
+	//	int pdfPage = p->getPage()->getPdfPageNr();
+	//
+	//	GValue pY = { 0 };
+	//	g_value_init(&pY, G_TYPE_INT);
+	//
+	//	gtk_container_child_get_property(GTK_CONTAINER(widget), p->getWidget(), "y", &pY);
+	//	int pos = g_value_get_int(&pY);
+	//
+	//	control->firePageSelected(pageNo);
+	//
+	//	y = y * control->getZoomControl()->getZoom();
+	//
+	//	if (y == 0) {
+	//		y = -10; // show the shadow on top
+	//	}
+	//
+	//	double v = (double) pos + y;
+	//	double upper = gtk_adjustment_get_upper(h) - gtk_adjustment_get_page_size(h);
+	//
+	//	if (upper < v) {
+	//		v = upper;
+	//	}
+	//
+	//	gtk_adjustment_set_value(h, v);
 }
 
 void XournalView::onScrolled() {
 	// TODO!!!!!!!!!!!!!!
-//	GtkAdjustment * h = gtk_layout_get_vadjustment(GTK_LAYOUT(widget));
-//
-//	GtkAllocation allocation = { 0 };
-//	GtkWidget * w = gtk_widget_get_parent(widget);
-//	gtk_widget_get_allocation(w, &allocation);
-//
-//	int scrollY = gtk_adjustment_get_value(h);
-//
-//	int viewHeight = allocation.height;
-//
-//	bool twoPages = control->getSettings()->isShowTwoPages();
-//
-//	if (scrollY < 1) {
-//		if (twoPages && viewPagesLen > 1 && viewPages[1]->isSelected()) {
-//			// page 2 already selected
-//		} else {
-//			control->firePageSelected(0);
-//		}
-//		return;
-//	}
-//
-//	int mostPageNr = 0;
-//	double mostPagePercent = 0;
-//
-//	// next four pages are not marked as invisible,
-//	// because usually you scroll forward
-//
-//	int visibelPageAdd = 4;
-//
-//	for (int page = 0; page < viewPagesLen; page++) {
-//		PageView * p = viewPages[page];
-//		GValue pY = { 0 };
-//		g_value_init(&pY, G_TYPE_INT);
-//
-//		gtk_container_child_get_property(GTK_CONTAINER(widget), p->getWidget(), "y", &pY);
-//		int y = g_value_get_int(&pY);
-//
-//		int pageHeight = p->getDisplayHeight();
-//
-//		if (y > scrollY + viewHeight) {
-//			p->setIsVisibel(false);
-//			for (; page < viewPagesLen; page++) {
-//				p = viewPages[page];
-//				p->setIsVisibel(false);
-//			}
-//
-//			break;
-//		}
-//		if (y + pageHeight >= scrollY) {
-//			int startY = 0;
-//			int endY = pageHeight;
-//			if (y <= scrollY) {
-//				startY = scrollY - y;
-//			}
-//			if (y + pageHeight > scrollY + viewHeight) {
-//				endY = pageHeight - ((y + pageHeight) - (scrollY + viewHeight));
-//			}
-//
-//			double percent = ((double) (endY - startY)) / ((double) pageHeight);
-//
-//			if (percent > mostPagePercent) {
-//				mostPagePercent = percent;
-//				mostPageNr = page;
-//			}
-//
-//			p->setIsVisibel(true);
-//		} else {
-//			p->setIsVisibel(false);
-//		}
-//	}
-//
-//	if (twoPages && mostPageNr < viewPagesLen - 1) {
-//		GValue pY1 = { 0 };
-//		g_value_init(&pY1, G_TYPE_INT);
-//		GValue pY2 = { 0 };
-//		g_value_init(&pY2, G_TYPE_INT);
-//
-//		gtk_container_child_get_property(GTK_CONTAINER(widget), viewPages[mostPageNr]->getWidget(), "y", &pY1);
-//		int y1 = g_value_get_int(&pY1);
-//		gtk_container_child_get_property(GTK_CONTAINER(widget), viewPages[mostPageNr + 1]->getWidget(), "y", &pY2);
-//		int y2 = g_value_get_int(&pY2);
-//
-//		if (y1 != y2 || !viewPages[mostPageNr + 1]->isSelected()) {
-//			// if the second page is selected DON'T select the first page.
-//			// Only select the first page if none is selected
-//			control->firePageSelected(mostPageNr);
-//		}
-//	} else {
-//		control->firePageSelected(mostPageNr);
-//	}
+	//	GtkAdjustment * h = gtk_layout_get_vadjustment(GTK_LAYOUT(widget));
+	//
+	//	GtkAllocation allocation = { 0 };
+	//	GtkWidget * w = gtk_widget_get_parent(widget);
+	//	gtk_widget_get_allocation(w, &allocation);
+	//
+	//	int scrollY = gtk_adjustment_get_value(h);
+	//
+	//	int viewHeight = allocation.height;
+	//
+	//	bool twoPages = control->getSettings()->isShowTwoPages();
+	//
+	//	if (scrollY < 1) {
+	//		if (twoPages && viewPagesLen > 1 && viewPages[1]->isSelected()) {
+	//			// page 2 already selected
+	//		} else {
+	//			control->firePageSelected(0);
+	//		}
+	//		return;
+	//	}
+	//
+	//	int mostPageNr = 0;
+	//	double mostPagePercent = 0;
+	//
+	//	// next four pages are not marked as invisible,
+	//	// because usually you scroll forward
+	//
+	//	int visibelPageAdd = 4;
+	//
+	//	for (int page = 0; page < viewPagesLen; page++) {
+	//		PageView * p = viewPages[page];
+	//		GValue pY = { 0 };
+	//		g_value_init(&pY, G_TYPE_INT);
+	//
+	//		gtk_container_child_get_property(GTK_CONTAINER(widget), p->getWidget(), "y", &pY);
+	//		int y = g_value_get_int(&pY);
+	//
+	//		int pageHeight = p->getDisplayHeight();
+	//
+	//		if (y > scrollY + viewHeight) {
+	//			p->setIsVisibel(false);
+	//			for (; page < viewPagesLen; page++) {
+	//				p = viewPages[page];
+	//				p->setIsVisibel(false);
+	//			}
+	//
+	//			break;
+	//		}
+	//		if (y + pageHeight >= scrollY) {
+	//			int startY = 0;
+	//			int endY = pageHeight;
+	//			if (y <= scrollY) {
+	//				startY = scrollY - y;
+	//			}
+	//			if (y + pageHeight > scrollY + viewHeight) {
+	//				endY = pageHeight - ((y + pageHeight) - (scrollY + viewHeight));
+	//			}
+	//
+	//			double percent = ((double) (endY - startY)) / ((double) pageHeight);
+	//
+	//			if (percent > mostPagePercent) {
+	//				mostPagePercent = percent;
+	//				mostPageNr = page;
+	//			}
+	//
+	//			p->setIsVisibel(true);
+	//		} else {
+	//			p->setIsVisibel(false);
+	//		}
+	//	}
+	//
+	//	if (twoPages && mostPageNr < viewPagesLen - 1) {
+	//		GValue pY1 = { 0 };
+	//		g_value_init(&pY1, G_TYPE_INT);
+	//		GValue pY2 = { 0 };
+	//		g_value_init(&pY2, G_TYPE_INT);
+	//
+	//		gtk_container_child_get_property(GTK_CONTAINER(widget), viewPages[mostPageNr]->getWidget(), "y", &pY1);
+	//		int y1 = g_value_get_int(&pY1);
+	//		gtk_container_child_get_property(GTK_CONTAINER(widget), viewPages[mostPageNr + 1]->getWidget(), "y", &pY2);
+	//		int y2 = g_value_get_int(&pY2);
+	//
+	//		if (y1 != y2 || !viewPages[mostPageNr + 1]->isSelected()) {
+	//			// if the second page is selected DON'T select the first page.
+	//			// Only select the first page if none is selected
+	//			control->firePageSelected(mostPageNr);
+	//		}
+	//	} else {
+	//		control->firePageSelected(mostPageNr);
+	//	}
 }
 
 void XournalView::endTextSelection() {
@@ -458,64 +450,64 @@ void XournalView::getPasteTarget(double & x, double & y) {
  */
 Rectangle * XournalView::getVisibleRect(int page) {
 	// TODO !!!!!!!!!!!!!!!!!!!
-//	if (page < 0 || page >= this->viewPagesLen) {
-//		return NULL;
-//	}
-//
-//	GtkAllocation allocation = { 0 };
-//	GtkWidget * w = gtk_widget_get_parent(widget);
-//	gtk_widget_get_allocation(w, &allocation);
-//
-//	GtkAdjustment * v = gtk_layout_get_vadjustment(GTK_LAYOUT(widget));
-//	int scrollY = gtk_adjustment_get_value(v);
-//	GtkAdjustment * h = gtk_layout_get_hadjustment(GTK_LAYOUT(widget));
-//	int scrollX = gtk_adjustment_get_value(h);
-//
-//	int viewHeight = allocation.height;
-//	int viewWidth = allocation.width;
-//
-//	PageView * p = viewPages[page];
-//
-//	GValue gValue = { 0 };
-//	g_value_init(&gValue, G_TYPE_INT);
-//
-//	gtk_container_child_get_property(GTK_CONTAINER(widget), p->getWidget(), "y", &gValue);
-//	int posY = g_value_get_int(&gValue);
-//
-//	gtk_container_child_get_property(GTK_CONTAINER(widget), p->getWidget(), "x", &gValue);
-//	int posX = g_value_get_int(&gValue);
-//
-//	gtk_widget_get_allocation(p->getWidget(), &allocation);
-//	int pageHeight = allocation.height;
-//	int pageWidth = allocation.width;
-//
-//	// page is after visible area
-//	if (scrollY + viewHeight < posY) {
-//		return NULL;
-//	}
-//
-//	// page is before visible area
-//	if (posY + pageHeight < scrollY) {
-//		return NULL;
-//	}
-//
-//	// page is after visible area
-//	if (scrollX + viewWidth < posX) {
-//		return NULL;
-//	}
-//
-//	// page is before visible area
-//	if (posX + pageWidth < scrollX) {
-//		return NULL;
-//	}
-//
-//	double y = scrollY - posY;
-//	double x = scrollX - posX;
-//	double height = viewHeight + y - pageHeight;
-//	double width = viewWidth + x - pageWidth;
-//	Rectangle * rect = new Rectangle(MAX(x, 0) / getZoom(), MAX(y, 0) / getZoom(), width / getZoom(), height / getZoom());
-//
-//	return rect;
+	//	if (page < 0 || page >= this->viewPagesLen) {
+	//		return NULL;
+	//	}
+	//
+	//	GtkAllocation allocation = { 0 };
+	//	GtkWidget * w = gtk_widget_get_parent(widget);
+	//	gtk_widget_get_allocation(w, &allocation);
+	//
+	//	GtkAdjustment * v = gtk_layout_get_vadjustment(GTK_LAYOUT(widget));
+	//	int scrollY = gtk_adjustment_get_value(v);
+	//	GtkAdjustment * h = gtk_layout_get_hadjustment(GTK_LAYOUT(widget));
+	//	int scrollX = gtk_adjustment_get_value(h);
+	//
+	//	int viewHeight = allocation.height;
+	//	int viewWidth = allocation.width;
+	//
+	//	PageView * p = viewPages[page];
+	//
+	//	GValue gValue = { 0 };
+	//	g_value_init(&gValue, G_TYPE_INT);
+	//
+	//	gtk_container_child_get_property(GTK_CONTAINER(widget), p->getWidget(), "y", &gValue);
+	//	int posY = g_value_get_int(&gValue);
+	//
+	//	gtk_container_child_get_property(GTK_CONTAINER(widget), p->getWidget(), "x", &gValue);
+	//	int posX = g_value_get_int(&gValue);
+	//
+	//	gtk_widget_get_allocation(p->getWidget(), &allocation);
+	//	int pageHeight = allocation.height;
+	//	int pageWidth = allocation.width;
+	//
+	//	// page is after visible area
+	//	if (scrollY + viewHeight < posY) {
+	//		return NULL;
+	//	}
+	//
+	//	// page is before visible area
+	//	if (posY + pageHeight < scrollY) {
+	//		return NULL;
+	//	}
+	//
+	//	// page is after visible area
+	//	if (scrollX + viewWidth < posX) {
+	//		return NULL;
+	//	}
+	//
+	//	// page is before visible area
+	//	if (posX + pageWidth < scrollX) {
+	//		return NULL;
+	//	}
+	//
+	//	double y = scrollY - posY;
+	//	double x = scrollX - posX;
+	//	double height = viewHeight + y - pageHeight;
+	//	double width = viewWidth + x - pageWidth;
+	//	Rectangle * rect = new Rectangle(MAX(x, 0) / getZoom(), MAX(y, 0) / getZoom(), width / getZoom(), height / getZoom());
+	//
+	//	return rect;
 
 	return NULL;
 }
@@ -527,7 +519,7 @@ GtkWidget * XournalView::getWidget() {
 
 void XournalView::initScrollHandler(GtkWidget * parent) {
 
-	// TODO: !!!!!!!!!!!!!!is this still working?
+	// TODO: !!!!!!!!!!!!!!This is not working anymore
 
 	GtkBindingSet * bindingSet = gtk_binding_set_by_class(G_OBJECT_GET_CLASS(parent));
 	gtk_binding_entry_add_signal(bindingSet, GDK_Up, (GdkModifierType) 0, "scroll_child", 2, GTK_TYPE_SCROLL_TYPE, GTK_SCROLL_STEP_BACKWARD, G_TYPE_BOOLEAN,
@@ -559,28 +551,28 @@ void XournalView::zoomOut() {
 void XournalView::zoomChanged(double lastZoom) {
 	// TODO !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-//	GtkAdjustment* h = gtk_layout_get_vadjustment(GTK_LAYOUT(widget));
-//	GtkAllocation allocation = { 0 };
-//	GtkWidget * w = gtk_widget_get_parent(widget);
-//	gtk_widget_get_allocation(w, &allocation);
-//	double scrollY = gtk_adjustment_get_value(h);
-//
-//	layoutPages();
-//
-//	for (int i = 0; i < viewPagesLen; i++) {
-//		PageView * pageView = viewPages[i];
-//		pageView->updateSize();
-//	}
-//
-//	double zoom = control->getZoomControl()->getZoom();
-//	gtk_adjustment_set_value(h, scrollY / lastZoom * control->getZoomControl()->getZoom());
-//
-//	Document * doc = control->getDocument();
-//	doc->lock();
-//	String file = doc->getEvMetadataFilename();
-//	doc->unlock();
-//
-//	control->getMetadataManager()->setDouble(file, "zoom", zoom);
+	//	GtkAdjustment* h = gtk_layout_get_vadjustment(GTK_LAYOUT(widget));
+	//	GtkAllocation allocation = { 0 };
+	//	GtkWidget * w = gtk_widget_get_parent(widget);
+	//	gtk_widget_get_allocation(w, &allocation);
+	//	double scrollY = gtk_adjustment_get_value(h);
+	//
+	//	layoutPages();
+	//
+	//	for (int i = 0; i < viewPagesLen; i++) {
+	//		PageView * pageView = viewPages[i];
+	//		pageView->updateSize();
+	//	}
+	//
+	//	double zoom = control->getZoomControl()->getZoom();
+	//	gtk_adjustment_set_value(h, scrollY / lastZoom * control->getZoomControl()->getZoom());
+	//
+	//	Document * doc = control->getDocument();
+	//	doc->lock();
+	//	String file = doc->getEvMetadataFilename();
+	//	doc->unlock();
+	//
+	//	control->getMetadataManager()->setDouble(file, "zoom", zoom);
 }
 
 void XournalView::pageSizeChanged(int page) {
@@ -661,7 +653,6 @@ void XournalView::pageInserted(int page) {
 
 	layoutPages();
 
-
 	// TODO !!!!!!!! still neccessary?
 	// Update scroll info, so we can call isPageVisible after
 	onScrolled();
@@ -732,7 +723,7 @@ void XournalView::layoutPages() {
 				x = width - this->viewPages[i]->getDisplayWidth() - this->viewPages[i + 1]->getDisplayWidth() - XOURNAL_PADDING - +XOURNAL_PADDING_TOP_LEFT;
 				x /= 2;
 
-				this->viewPages[i]->setPos(x,y);
+				this->viewPages[i]->setPos(x, y);
 
 				x += this->viewPages[i]->getDisplayWidth() + XOURNAL_PADDING;
 
@@ -744,7 +735,7 @@ void XournalView::layoutPages() {
 				x /= 2;
 			}
 
-			this->viewPages[i]->setPos(x,y);
+			this->viewPages[i]->setPos(x, y);
 			y += h;
 			y += XOURNAL_PADDING;
 		}
@@ -797,7 +788,7 @@ void XournalView::layoutPages() {
 			x = width - pageView->getDisplayWidth();
 			x /= 2;
 
-			pageView->setPos(x,y);
+			pageView->setPos(x, y);
 			y += pageView->getDisplayHeight();
 			y += XOURNAL_PADDING;
 		}
@@ -812,7 +803,7 @@ void XournalView::layoutPages() {
 	}
 
 	//	TODO: !!!!!!!!! Need to redraw
-//	g_idle_add((GSourceFunc) widgetRepaintCallback, widget);
+	//	g_idle_add((GSourceFunc) widgetRepaintCallback, widget);
 }
 
 bool XournalView::isPageVisible(int page) {
@@ -850,9 +841,6 @@ void XournalView::documentChanged(DocumentChangeType type) {
 	for (int i = 0; i < viewPagesLen; i++) {
 		PageView * pageView = new PageView(this, doc->getPage(i));
 		viewPages[i] = pageView;
-
-		// TODO !!!!!!!!!!!!!!!!!
-//		gtk_layout_put(GTK_LAYOUT(widget), pageView->getWidget(), 0, 0);
 	}
 
 	doc->unlock();

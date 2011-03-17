@@ -48,6 +48,8 @@ GtkWidget * gtk_xournal_new(XournalView * view, GtkRange * hrange, GtkRange * vr
 	xoj->vrange = vrange;
 	xoj->hadj = hrange->adjustment;
 	xoj->vadj = vrange->adjustment;
+	xoj->currentInputPage = NULL;
+	xoj->lastInputPage = NULL;
 
 	gtk_xournal_connect_scrollbars(xoj);
 
@@ -92,12 +94,6 @@ void gtk_xournal_set_size(GtkWidget * widget, int width, int height) {
 
 	gtk_adjustment_set_upper(xournal->hadj, width);
 	gtk_adjustment_set_upper(xournal->vadj, height);
-
-	if (gtk_widget_get_realized(widget)) {
-		width = MAX (width, widget->allocation.width);
-		height = MAX (height, widget->allocation.height);
-		gdk_window_resize(widget->window, width, height);
-	}
 }
 
 static void gtk_xournal_class_init(GtkXournalClass * klass) {
@@ -177,6 +173,19 @@ gboolean gtk_xournal_scroll_event(GtkWidget * widget, GdkEventScroll * event) {
 	return false;
 }
 
+PageView * gtk_xournal_get_page_view_for_pos_cached(GtkXournal * xournal, int x, int y) {
+	x += xournal->x;
+	y += xournal->y;
+
+	if (xournal->lastInputPage && xournal->lastInputPage->containsPoint(x, y)) {
+		return xournal->lastInputPage;
+	}
+
+	PageView * pv = xournal->view->getViewAt(x, y);
+	xournal->lastInputPage = pv;
+	return pv;
+}
+
 gboolean gtk_xournal_button_press_event(GtkWidget * widget, GdkEventButton * event) {
 #ifdef INPUT_DEBUG
 	/**
@@ -198,20 +207,71 @@ gboolean gtk_xournal_button_press_event(GtkWidget * widget, GdkEventButton * eve
 		return true;
 	}
 
-	return true; // no other handlers
+	gtk_widget_grab_focus(widget);
+
+	GtkXournal * xournal = GTK_XOURNAL(widget);
+
+	if (xournal->currentInputPage) {
+		return false;
+	}
+
+	PageView * pv = gtk_xournal_get_page_view_for_pos_cached(xournal, event->x, event->y);
+	if (pv) {
+
+		// none button release event was sent, send one now
+		if (xournal->currentInputPage) {
+			GdkEventButton ev = *event;
+			xournal->currentInputPage->translateEvent((GdkEvent*) &ev, xournal->x, xournal->y);
+			xournal->currentInputPage->onButtonReleaseEvent(widget, &ev);
+		}
+		xournal->currentInputPage = pv;
+		pv->translateEvent((GdkEvent*) event, xournal->x, xournal->y);
+		return pv->onButtonPressEvent(widget, event);
+	}
+
+	return false; // not handled
 }
 
 gboolean gtk_xournal_button_release_event(GtkWidget * widget, GdkEventButton * event) {
-	// TODO: onButtonReleaseEventCallback
+#ifdef INPUT_DEBUG
+	gboolean isCore = (event->device == gdk_device_get_core_pointer());
+	printf("DEBUG: ButtonRelease (%s) (x,y)=(%.2f,%.2f), button %d, modifier %x, isCore %i\n", event->device->name, event->x, event->y, event->button,
+			event->state, isCore);
+#endif
+	XInputUtils::fixXInputCoords((GdkEvent*) event, widget);
 
+	GtkXournal * xournal = GTK_XOURNAL(widget);
 
-	return true; // no other handlers
+	if (xournal->currentInputPage) {
+		xournal->currentInputPage->translateEvent((GdkEvent*) event, xournal->x, xournal->y);
+		bool res = xournal->currentInputPage->onButtonReleaseEvent(widget, event);
+		xournal->currentInputPage = NULL;
+		return res;
+	}
+
+	return false;
 }
 
 gboolean gtk_xournal_motion_notify_event(GtkWidget * widget, GdkEventMotion * event) {
-	// TODO:onMotionNotifyEventCallback
+#ifdef INPUT_DEBUG
+	bool is_core = (event->device == gdk_device_get_core_pointer());
+	printf("DEBUG: MotionNotify (%s) (x,y)=(%.2f,%.2f), modifier %x\n", is_core ? "core" : "xinput", event->x, event->y, event->state);
+#endif
 
-	return true; // no other handlers
+	XInputUtils::fixXInputCoords((GdkEvent*) event, widget);
+
+	GtkXournal * xournal = GTK_XOURNAL(widget);
+
+	PageView * pv = gtk_xournal_get_page_view_for_pos_cached(xournal, event->x, event->y);
+	if (pv) {
+		// allow events only to a single page!
+		if (xournal->currentInputPage == NULL || pv == xournal->currentInputPage) {
+			pv->translateEvent((GdkEvent*) event, xournal->x, xournal->y);
+			return pv->onMotionNotifyEvent(widget, event);;
+		}
+	}
+
+	return false;
 }
 
 static void gtk_xournal_init(GtkXournal * xournal) {
@@ -219,14 +279,14 @@ static void gtk_xournal_init(GtkXournal * xournal) {
 
 	GTK_WIDGET_SET_FLAGS(widget, GTK_CAN_FOCUS);
 
-	int events  = GDK_EXPOSURE_MASK;
-		events |= GDK_POINTER_MOTION_MASK;
-		events |= GDK_EXPOSURE_MASK;
-		events |= GDK_BUTTON_MOTION_MASK;
-		events |= GDK_BUTTON_PRESS_MASK;
-		events |= GDK_BUTTON_RELEASE_MASK;
-		events |= GDK_ENTER_NOTIFY_MASK;
-		events |= GDK_LEAVE_NOTIFY_MASK;
+	int events = GDK_EXPOSURE_MASK;
+	events |= GDK_POINTER_MOTION_MASK;
+	events |= GDK_EXPOSURE_MASK;
+	events |= GDK_BUTTON_MOTION_MASK;
+	events |= GDK_BUTTON_PRESS_MASK;
+	events |= GDK_BUTTON_RELEASE_MASK;
+	events |= GDK_ENTER_NOTIFY_MASK;
+	events |= GDK_LEAVE_NOTIFY_MASK;
 
 	gtk_widget_set_events(widget, events);
 }
@@ -240,8 +300,8 @@ static void gtk_xournal_size_request(GtkWidget * widget, GtkRequisition * requis
 
 	GtkXournal * xournal = GTK_XOURNAL(widget);
 
-	requisition->width = 400;
-	requisition->height = 400;
+	requisition->width = 200;
+	requisition->height = 200;
 }
 
 static void gtk_xournal_size_allocate(GtkWidget * widget, GtkAllocation * allocation) {
@@ -293,10 +353,12 @@ static void gtk_xournal_set_adjustment_upper(GtkAdjustment *adj, gdouble upper, 
 		value_changed = TRUE;
 	}
 
-	if (changed || always_emit_changed)
+	if (changed || always_emit_changed) {
 		gtk_adjustment_changed(adj);
-	if (value_changed)
+	}
+	if (value_changed) {
 		gtk_adjustment_value_changed(adj);
+	}
 }
 
 static void gtk_xournal_realize(GtkWidget * widget) {
@@ -311,8 +373,8 @@ static void gtk_xournal_realize(GtkWidget * widget) {
 	attributes.window_type = GDK_WINDOW_CHILD;
 	attributes.x = widget->allocation.x;
 	attributes.y = widget->allocation.y;
-	attributes.width = 80;
-	attributes.height = 100;
+	attributes.width = widget->allocation.width;
+	attributes.height = widget->allocation.height;
 
 	attributes.wclass = GDK_INPUT_OUTPUT;
 	attributes.event_mask = gtk_widget_get_events(widget) | GDK_EXPOSURE_MASK;
@@ -326,6 +388,8 @@ static void gtk_xournal_realize(GtkWidget * widget) {
 
 	widget->style = gtk_style_attach(widget->style, widget->window);
 	gtk_style_set_background(widget->style, widget->window, GTK_STATE_NORMAL);
+
+	gtk_xournal_update_xevent(widget);
 }
 
 void gtk_xournal_redraw(GtkWidget * widget) {
@@ -404,16 +468,19 @@ static gboolean gtk_xournal_expose(GtkWidget * widget, GdkEventExpose * event) {
 
 	while (it.hasNext()) {
 		PageView * pv = it.next();
-		gtk_xournal_draw_shadow(xournal, cr, pv->getX() - xournal->x, pv->getY() - xournal->y, pv->getDisplayWidth(), pv->getDisplayHeight(), pv->isSelected());
+
+		int x = pv->getX() - xournal->x;
+		int y = pv->getY() - xournal->y;
+
+		gtk_xournal_draw_shadow(xournal, cr, x, y, pv->getDisplayWidth(), pv->getDisplayHeight(), pv->isSelected());
 		cairo_save(cr);
-		cairo_translate(cr, pv->getX() - xournal->x, pv->getY() - xournal->y);
+		cairo_translate(cr, x, y);
 		pv->paintPage(cr, NULL);
 		cairo_restore(cr);
 	}
 
 	cairo_destroy(cr);
 
-	// dont call any event handler, all is draw here
 	return true;
 }
 
