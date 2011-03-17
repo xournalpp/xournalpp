@@ -105,7 +105,7 @@ void XInputUtils::handleScrollEvent(GdkEventButton * event, GtkWidget * widget) 
 	gtk_widget_event(widget, &scrollEvent);
 }
 
-gboolean XInputUtils::onMouseEnterNotifyEvent(GtkWidget * widget, GdkEventCrossing * event, gpointer user_data) {
+gboolean XInputUtils::onMouseEnterNotifyEvent(GtkWidget * widget, GdkEventCrossing * event) {
 #ifdef INPUT_DEBUG
 	printf("DEBUG: enter notify\n");
 #endif
@@ -124,7 +124,7 @@ gboolean XInputUtils::onMouseEnterNotifyEvent(GtkWidget * widget, GdkEventCrossi
 	return FALSE;
 }
 
-gboolean XInputUtils::onMouseLeaveNotifyEvent(GtkWidget * widget, GdkEventCrossing * event, gpointer user_data) {
+gboolean XInputUtils::onMouseLeaveNotifyEvent(GtkWidget * widget, GdkEventCrossing * event) {
 #ifdef INPUT_DEBUG
 	printf("DEBUG: leave notify (mode=%d, details=%d)\n", event->mode, event->detail);
 #endif

@@ -21,7 +21,6 @@ class XournalView;
 class DeleteUndoAction;
 class Selection;
 class TextEditor;
-class InputHandler;
 class EraseHandler;
 class VerticalToolHandler;
 class SearchControl;
@@ -46,7 +45,7 @@ public:
 
 	void updatePageSize(double width, double height);
 
-	bool paintPage(GdkEventExpose * event);
+	bool paintPage(cairo_t * cr, GdkRectangle * rect);
 
 	void repaint();
 	void repaint(Element * e);
@@ -54,8 +53,6 @@ public:
 	void repaint(double x, double y, double width, double heigth);
 
 	void redraw();
-
-	void updateSize();
 
 	XojPage * getPage();
 
@@ -90,7 +87,10 @@ public:
 
 	void deleteViewBuffer();
 
-	static bool repaintCallback(PageView * view);
+	void setPos(int x, int y);
+	int getX();
+	int getY();
+
 
 public:
 	// Redrawable
@@ -104,8 +104,6 @@ private:
 	bool onButtonReleaseEvent(GtkWidget * widget, GdkEventButton * event);
 	static gboolean onMotionNotifyEventCallback(GtkWidget * widget, GdkEventMotion * event, PageView * view);
 	gboolean onMotionNotifyEvent(GtkWidget * widget, GdkEventMotion * event);
-
-	static bool exposeEventCallback(GtkWidget * widget, GdkEventExpose * event, PageView * page);
 
 	void handleScrollEvent(GdkEventButton * event);
 
@@ -121,7 +119,10 @@ private:
 	XournalView * xournal;
 	Settings * settings;
 	EraseHandler * eraser;
-	InputHandler * inputHandler;
+
+	// position in px on screen
+	int x;
+	int y;
 
 	/**
 	 * The selected (while selection)

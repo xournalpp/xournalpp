@@ -18,14 +18,14 @@ class Layer;
 class Stroke;
 class XojPage;
 class ToolHandler;
-class PageView;
+class Redrawable;
 class Document;
 class UndoRedoHandler;
 class Range;
 
 class EraseHandler {
 public:
-	EraseHandler(UndoRedoHandler * undo, Document * doc, XojPage * page, ToolHandler * handler, PageView * view);
+	EraseHandler(UndoRedoHandler * undo, Document * doc, XojPage * page, ToolHandler * handler, Redrawable * view);
 	virtual ~EraseHandler();
 
 public:
@@ -38,7 +38,7 @@ private:
 private:
 	XojPage * page;
 	ToolHandler * handler;
-	PageView * view;
+	Redrawable * view;
 	Document * doc;
 	UndoRedoHandler * undo;
 
