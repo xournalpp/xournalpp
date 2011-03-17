@@ -1,6 +1,7 @@
 #include "InputHandler.h"
 #include "../../gui/XournalView.h"
 #include "../../gui/PageView.h"
+#include "../../gui/widgets/XournalWidget.h"
 #include "../Control.h"
 #include "../shaperecognizer/ShapeRecognizerResult.h"
 #include "../../undo/InsertUndoAction.h"
@@ -13,7 +14,6 @@
 InputHandler::InputHandler(XournalView * xournal, PageView * redrawable) {
 	this->tmpStroke = NULL;
 	this->currentInputDevice = NULL;
-	this->widget = xournal->getWidget();
 	this->tmpStrokeDrawElem = 0;
 	this->view = new DocumentView();
 	this->redrawable = redrawable;
@@ -110,10 +110,7 @@ bool InputHandler::getPressureMultiplier(GdkEvent * event, double & presure) {
 
 void InputHandler::drawTmpStroke() {
 	if (this->tmpStroke) {
-		cairo_t * cr = gdk_cairo_create(this->widget->window);
-
-		cairo_translate(cr, this->redrawable->getX(), this->redrawable->getY());
-		cairo_scale(cr, this->xournal->getZoom(), this->xournal->getZoom());
+		cairo_t * cr = gtk_xournal_create_cairo_for(this->xournal->getWidget(), this->redrawable);
 
 		view->drawStroke(cr, this->tmpStroke, tmpStrokeDrawElem);
 		tmpStrokeDrawElem = this->tmpStroke->getPointCount() - 1;

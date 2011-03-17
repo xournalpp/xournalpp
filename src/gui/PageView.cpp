@@ -28,6 +28,7 @@
 #include "../gui/TextEditor.h"
 #include "../util/Rectangle.h"
 #include "../undo/DeleteUndoAction.h"
+#include "../gui/widgets/XournalWidget.h"
 
 #include <config.h>
 #include <glib/gi18n-lib.h>
@@ -491,14 +492,14 @@ void PageView::translateEvent(GdkEvent * event, int xOffset, int yOffset) {
 		return;
 	}
 
-	*x -= this->getX() + xOffset;
-	*y -= this->getY() + yOffset;
+	*x -= this->getX() - xOffset;
+	*y -= this->getY() - yOffset;
 }
 
 bool PageView::scrollCallback(PageView * view) {
 	gdk_threads_enter();
 
-	view->xournal->getControl()->getScrollHandler()->scrollRelative(view->scrollOffsetX, view->scrollOffsetY);
+	gtk_xournal_scroll_relative(view->xournal->getWidget(), view->scrollOffsetX, view->scrollOffsetY);
 
 	view->scrollOffsetX = 0;
 	view->scrollOffsetY = 0;

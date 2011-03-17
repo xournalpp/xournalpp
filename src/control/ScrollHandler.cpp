@@ -40,40 +40,6 @@ void ScrollHandler::scrollToPage(int page, double top) {
 	}
 }
 
-void ScrollHandler::adjustmentScroll(GtkAdjustment * adj, double scroll, int size) {
-	double v = gtk_adjustment_get_value(adj);
-	double max = gtk_adjustment_get_upper(adj) - size;
-
-	double newPos = v + scroll;
-	if (newPos < 0) {
-		newPos = 0;
-	}
-
-	if (newPos > max) {
-		newPos = max;
-	}
-
-	gtk_adjustment_set_value(adj, newPos);
-}
-
-void ScrollHandler::scrollRelative(double x, double y) {
-	// TODO !!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-//	if (!control->getWindow()) {
-//		return;
-//	}
-////	GtkWidget * scroll = control->getWindow()->get("scrolledwindowMain");
-//
-//	GtkAdjustment * hadj = gtk_scrolled_window_get_hadjustment(GTK_SCROLLED_WINDOW(scroll));
-//	GtkAdjustment * vadj = gtk_scrolled_window_get_vadjustment(GTK_SCROLLED_WINDOW(scroll));
-//
-//	GtkAllocation alloc = { 0 };
-//	gtk_widget_get_allocation(scroll, &alloc);
-//
-//	adjustmentScroll(hadj, x, alloc.width);
-//	adjustmentScroll(vadj, y, alloc.height);
-}
-
 void ScrollHandler::scrollToSpinPange() {
 	if (!control->getWindow()) {
 		return;
