@@ -44,7 +44,8 @@ void DocumentView::drawStroke(cairo_t * cr, Stroke * s, int startPoint) {
 	ArrayIterator<Point> points = s->pointIterator();
 
 	if (!points.hasNext()) {
-		// Empty stroke... Should not happen
+		// Should not happen
+		g_warning("DocumentView::drawStroke Empty stroke...");
 		return;
 	}
 
@@ -61,22 +62,23 @@ void DocumentView::drawStroke(cairo_t * cr, Stroke * s, int startPoint) {
 	cairo_set_line_join(cr, CAIRO_LINE_JOIN_ROUND);
 	cairo_set_line_cap(cr, CAIRO_LINE_CAP_ROUND);
 
-	// dont render eraseable for previews
+	// don't render eraseable for previews
 	if (s->getEraseable() && !this->dontRenderEditingStroke) {
 		drawEraseableStroke(cr, s);
 		return;
 	}
 
-	int count = 0;
+	int count = 1; // we need to start on the last point (or need cairo_move_to first)
 	double width = s->getWidth();
 
-	// No presure sensitivity, easy draw a line...
+	// No pressure sensitivity, easy draw a line...
 	if (!s->hasPressure()) {
 		// Set width
 		cairo_set_line_width(cr, width);
 
 		while (points.hasNext()) {
 			Point p = points.next();
+
 			if (startPoint <= count) {
 				cairo_line_to(cr, p.x, p.y);
 			}
@@ -114,7 +116,6 @@ void DocumentView::drawStroke(cairo_t * cr, Stroke * s, int startPoint) {
 	}
 
 	cairo_stroke(cr);
-
 }
 
 void DocumentView::drawText(cairo_t *cr, Text * t) {

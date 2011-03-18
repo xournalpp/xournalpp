@@ -118,9 +118,10 @@ am_xournalpp_OBJECTS = xournalpp-AutosaveJob.$(OBJEXT) \
 	xournalpp-GladeGui.$(OBJEXT) \
 	xournalpp-GladeSearchpath.$(OBJEXT) \
 	xournalpp-MainWindow.$(OBJEXT) xournalpp-PageView.$(OBJEXT) \
-	xournalpp-Redrawable.$(OBJEXT) xournalpp-SearchBar.$(OBJEXT) \
-	xournalpp-Shadow.$(OBJEXT) xournalpp-TextEditor.$(OBJEXT) \
-	xournalpp-XournalView.$(OBJEXT) \
+	xournalpp-Redrawable.$(OBJEXT) \
+	xournalpp-RepaintHandler.$(OBJEXT) \
+	xournalpp-SearchBar.$(OBJEXT) xournalpp-Shadow.$(OBJEXT) \
+	xournalpp-TextEditor.$(OBJEXT) xournalpp-XournalView.$(OBJEXT) \
 	xournalpp-EraseableStroke.$(OBJEXT) \
 	xournalpp-EraseableStrokePart.$(OBJEXT) \
 	xournalpp-PartList.$(OBJEXT) xournalpp-Document.$(OBJEXT) \
@@ -412,6 +413,7 @@ xournalpp_SOURCES = \
 	gui/MainWindow.cpp \
 	gui/PageView.cpp \
 	gui/Redrawable.cpp \
+	gui/RepaintHandler.cpp \
 	gui/SearchBar.cpp \
 	gui/Shadow.cpp \
 	gui/TextEditor.cpp \
@@ -657,6 +659,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-Redrawable.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-RemoveLayerUndoAction.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-RenderJob.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-RepaintHandler.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-SaveHandler.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-SaveJob.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-ScaleUndoAction.Po@am__quote@
@@ -1940,6 +1943,20 @@ xournalpp-Redrawable.obj: gui/Redrawable.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='gui/Redrawable.cpp' object='xournalpp-Redrawable.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-Redrawable.obj `if test -f 'gui/Redrawable.cpp'; then $(CYGPATH_W) 'gui/Redrawable.cpp'; else $(CYGPATH_W) '$(srcdir)/gui/Redrawable.cpp'; fi`
+
+xournalpp-RepaintHandler.o: gui/RepaintHandler.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-RepaintHandler.o -MD -MP -MF $(DEPDIR)/xournalpp-RepaintHandler.Tpo -c -o xournalpp-RepaintHandler.o `test -f 'gui/RepaintHandler.cpp' || echo '$(srcdir)/'`gui/RepaintHandler.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-RepaintHandler.Tpo $(DEPDIR)/xournalpp-RepaintHandler.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='gui/RepaintHandler.cpp' object='xournalpp-RepaintHandler.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-RepaintHandler.o `test -f 'gui/RepaintHandler.cpp' || echo '$(srcdir)/'`gui/RepaintHandler.cpp
+
+xournalpp-RepaintHandler.obj: gui/RepaintHandler.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-RepaintHandler.obj -MD -MP -MF $(DEPDIR)/xournalpp-RepaintHandler.Tpo -c -o xournalpp-RepaintHandler.obj `if test -f 'gui/RepaintHandler.cpp'; then $(CYGPATH_W) 'gui/RepaintHandler.cpp'; else $(CYGPATH_W) '$(srcdir)/gui/RepaintHandler.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-RepaintHandler.Tpo $(DEPDIR)/xournalpp-RepaintHandler.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='gui/RepaintHandler.cpp' object='xournalpp-RepaintHandler.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-RepaintHandler.obj `if test -f 'gui/RepaintHandler.cpp'; then $(CYGPATH_W) 'gui/RepaintHandler.cpp'; else $(CYGPATH_W) '$(srcdir)/gui/RepaintHandler.cpp'; fi`
 
 xournalpp-SearchBar.o: gui/SearchBar.cpp
 @am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-SearchBar.o -MD -MP -MF $(DEPDIR)/xournalpp-SearchBar.Tpo -c -o xournalpp-SearchBar.o `test -f 'gui/SearchBar.cpp' || echo '$(srcdir)/'`gui/SearchBar.cpp

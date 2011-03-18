@@ -22,7 +22,7 @@ void SearchControl::freeSearchResults() {
 	}
 }
 
-void SearchControl::paint(cairo_t * cr, GdkEventExpose *event, double zoom, GdkColor color) {
+void SearchControl::paint(cairo_t * cr, GdkRectangle * rect, double zoom, GdkColor color) {
 	// set the line always the same size on display
 	cairo_set_line_width(cr, 1 / zoom);
 

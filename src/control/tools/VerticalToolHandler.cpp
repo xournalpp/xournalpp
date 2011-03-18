@@ -38,7 +38,7 @@ VerticalToolHandler::VerticalToolHandler(Redrawable * view, XojPage * page, doub
 
 	cairo_destroy(cr);
 
-	view->repaint();
+	view->rerender();
 }
 
 VerticalToolHandler::~VerticalToolHandler() {
@@ -55,7 +55,7 @@ VerticalToolHandler::~VerticalToolHandler() {
 	this->elements = NULL;
 }
 
-void VerticalToolHandler::paint(cairo_t * cr, GdkEventExpose * event, double zoom) {
+void VerticalToolHandler::paint(cairo_t * cr, GdkRectangle * rect, double zoom) {
 	GdkColor selectionColor = view->getSelectionColor();
 
 	cairo_set_line_width(cr, 1);
@@ -91,7 +91,7 @@ void VerticalToolHandler::currentPos(double x, double y) {
 
 	this->endY = y;
 
-	this->view->redraw(0, y1, this->page->getWidth(), this->page->getHeight());
+	this->view->repaint(0, y1, this->page->getWidth(), this->page->getHeight());
 
 	double dY = this->endY - this->startY;
 
@@ -125,7 +125,7 @@ MoveUndoAction * VerticalToolHandler::finalize() {
 
 	undo->finalize(this);
 
-	view->repaint();
+	view->rerender();
 
 	return undo;
 }

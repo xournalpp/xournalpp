@@ -81,7 +81,7 @@ void EraseUndoAction::finalize() {
 			p->element->setEraseable(NULL);
 		}
 	}
-	view->repaint();
+	view->rerender();
 }
 
 String EraseUndoAction::getText() {
@@ -92,18 +92,18 @@ bool EraseUndoAction::undo(Control * control) {
 	for (GList * l = this->edited; l != NULL; l = l->next) {
 		PageLayerPosEntry<Stroke> * e = (PageLayerPosEntry<Stroke>*) l->data;
 		e->layer->removeElement(e->element, false);
-		view->repaint(e->element->getX(), e->element->getY(), e->element->getElementWidth(),
+		view->rerender(e->element->getX(), e->element->getY(), e->element->getElementWidth(),
 				e->element->getElementHeight());
 	}
 
 	for (GList * l = this->original; l != NULL; l = l->next) {
 		PageLayerPosEntry<Stroke> * e = (PageLayerPosEntry<Stroke>*) l->data;
 		e->layer->insertElement(e->element, e->pos);
-		view->repaint(e->element->getX(), e->element->getY(), e->element->getElementWidth(),
+		view->rerender(e->element->getX(), e->element->getY(), e->element->getElementWidth(),
 				e->element->getElementHeight());
 	}
 
-	this->view->repaint();
+	this->view->rerender();
 
 	this->undone = true;
 	return true;
@@ -113,18 +113,18 @@ bool EraseUndoAction::redo(Control * control) {
 	for (GList * l = this->original; l != NULL; l = l->next) {
 		PageLayerPosEntry<Stroke> * e = (PageLayerPosEntry<Stroke>*) l->data;
 		e->layer->removeElement(e->element, false);
-		view->repaint(e->element->getX(), e->element->getY(), e->element->getElementWidth(),
+		view->rerender(e->element->getX(), e->element->getY(), e->element->getElementWidth(),
 				e->element->getElementHeight());
 	}
 
 	for (GList * l = this->edited; l != NULL; l = l->next) {
 		PageLayerPosEntry<Stroke> * e = (PageLayerPosEntry<Stroke>*) l->data;
 		e->layer->insertElement(e->element, e->pos);
-		view->repaint(e->element->getX(), e->element->getY(), e->element->getElementWidth(),
+		view->rerender(e->element->getX(), e->element->getY(), e->element->getElementWidth(),
 				e->element->getElementHeight());
 	}
 
-	this->view->repaint();
+	this->view->rerender();
 
 	this->undone = false;
 	return true;

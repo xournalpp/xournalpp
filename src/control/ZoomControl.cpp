@@ -17,10 +17,8 @@ void ZoomControl::addZoomListener(ZoomListener * listener) {
 	this->listener = g_list_append(this->listener, listener);
 }
 
-void ZoomControl::initZoomHandler(GladeGui * gui) {
-	// TODO: debug
-//	g_signal_connect(gui->get("scrolledwindowMain"), "scroll_event", G_CALLBACK(onScrolledwindowMainScrollEvent), this);
-
+void ZoomControl::initZoomHandler(GtkWidget * widget) {
+	g_signal_connect(widget, "scroll_event", G_CALLBACK(onScrolledwindowMainScrollEvent), this);
 }
 
 void ZoomControl::fireZoomChanged(double lastZoom) {

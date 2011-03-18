@@ -50,7 +50,7 @@ EditSelection::EditSelection(UndoRedoHandler * undo, Selection * selection, Redr
 		addElementInt((Element *) l->data);
 	}
 
-	this->view->repaint();
+	this->view->rerender();
 }
 
 EditSelection::EditSelection(UndoRedoHandler * undo, Element * e, Redrawable * view, XojPage * page) {
@@ -71,7 +71,7 @@ EditSelection::EditSelection(UndoRedoHandler * undo, Element * e, Redrawable * v
 
 	addElementInt(e);
 
-	this->view->repaint();
+	this->view->rerender();
 }
 
 void EditSelection::initAttributes() {
@@ -129,7 +129,7 @@ EditSelection::~EditSelection() {
 		this->undo->addUndoAction(scaleUndo);
 	}
 
-	view->repaint(x - this->offsetX, y - this->offsetY, x + width, y + height);
+	view->rerender(x - this->offsetX, y - this->offsetY, x + width, y + height);
 	g_list_free(this->selected);
 
 	delete this->documentView;
@@ -207,7 +207,7 @@ UndoAction * EditSelection::setColor(int color) {
 		double y2 = this->y + this->height;
 
 		this->deleteViewBuffer();
-		this->view->redraw(x1 - this->offsetX, y1 - this->offsetY, x2, y2);
+		this->view->repaint(x1 - this->offsetX, y1 - this->offsetY, x2, y2);
 
 		return undo;
 	} else {
@@ -260,7 +260,7 @@ UndoAction * EditSelection::setSize(ToolSize size, const double * thiknessPen, c
 		double y2 = this->y + this->height;
 
 		this->deleteViewBuffer();
-		this->view->redraw(x1 - this->offsetX, y1 - this->offsetY, x2, y2);
+		this->view->repaint(x1 - this->offsetX, y1 - this->offsetY, x2, y2);
 
 		return undo;
 	} else {
@@ -401,7 +401,7 @@ void EditSelection::move(double x, double y, Redrawable * view, XournalView * xo
 		this->x += oldW - this->width;
 		this->y += oldH - this->height;
 
-		this->view->repaint();
+		this->view->rerender();
 	} else if (this->selType == CURSOR_SELECTION_TOP_RIGHT) {
 		double dx = x - this->x - this->width;
 		double dy = y - this->y;
@@ -418,7 +418,7 @@ void EditSelection::move(double x, double y, Redrawable * view, XournalView * xo
 
 		this->y += oldH - this->height;
 
-		this->view->repaint();
+		this->view->rerender();
 	} else if (this->selType == CURSOR_SELECTION_BOTTOM_LEFT) {
 		double dx = x - this->x;
 		double dy = y - this->y - this->height;
@@ -435,7 +435,7 @@ void EditSelection::move(double x, double y, Redrawable * view, XournalView * xo
 
 		this->x += oldW - this->width;
 
-		this->view->repaint();
+		this->view->rerender();
 	} else if (this->selType == CURSOR_SELECTION_BOTTOM_RIGHT) {
 		double dx = x - this->x - this->width;
 		double dy = y - this->y - this->height;
@@ -449,26 +449,26 @@ void EditSelection::move(double x, double y, Redrawable * view, XournalView * xo
 		this->width *= f;
 		this->height *= f;
 
-		this->view->repaint();
+		this->view->rerender();
 	} else if (this->selType == CURSOR_SELECTION_TOP) {
 		double dy = y - this->y;
 		this->height -= dy;
 		this->y += dy;
-		this->view->repaint();
+		this->view->rerender();
 	} else if (this->selType == CURSOR_SELECTION_BOTTOM) {
 		double dy = y - this->y - this->height;
 		this->height += dy;
-		this->view->repaint();
+		this->view->rerender();
 	} else if (this->selType == CURSOR_SELECTION_LEFT) {
 		double dx = x - this->x;
 		this->width -= dx;
 		this->x += dx;
 
-		this->view->repaint();
+		this->view->rerender();
 	} else if (this->selType == CURSOR_SELECTION_RIGHT) {
 		double dx = x - this->x - this->width;
 		this->width += dx;
-		this->view->repaint();
+		this->view->rerender();
 	}
 }
 
@@ -544,14 +544,14 @@ bool EditSelection::repaintSelection(EditSelection * selection) {
 
 	// TODO !!!!!!!!!!!!!!!
 	selection->deleteViewBuffer();
-	selection->view->repaint();
+	selection->view->rerender();
 	selection->rescaleId = 0;
 
 	gdk_threads_leave();
 	return false;
 }
 
-void EditSelection::paint(cairo_t * cr, GdkEventExpose * event, double zoom) {
+void EditSelection::paint(cairo_t * cr, GdkRectangle * rect, double zoom) {
 	double x = this->x - this->offsetX;
 	double y = this->y - this->offsetY;
 
@@ -681,7 +681,7 @@ UndoAction * EditSelection::setFont(XojFont & font) {
 
 	if (!isnan(x1)) {
 		this->deleteViewBuffer();
-		this->view->redraw(x1, y1, x2, y2);
+		this->view->repaint(x1, y1, x2, y2);
 		return undo;
 	}
 	delete undo;

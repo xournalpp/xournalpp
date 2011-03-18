@@ -24,7 +24,7 @@ public:
 
 public:
 	virtual bool finalize(XojPage * page) = 0;
-	virtual void paint(cairo_t * cr, GdkEventExpose * event, double zoom) = 0;
+	virtual void paint(cairo_t * cr, GdkRectangle * rect, double zoom) = 0;
 	virtual void currentPos(double x, double y) = 0;
 	virtual void getSelectedRect(double & x, double & y, double & width, double & height) = 0;
 protected:
@@ -45,7 +45,7 @@ public:
 	RectSelection(double x, double y, Redrawable * view);
 
 	virtual bool finalize(XojPage * page);
-	virtual void paint(cairo_t * cr, GdkEventExpose *event, double zoom);
+	virtual void paint(cairo_t * cr, GdkRectangle * rect, double zoom);
 	virtual void currentPos(double x, double y);
 	virtual void getSelectedRect(double & x, double & y, double & width, double & height);
 	virtual bool contains(double x, double y);
@@ -70,7 +70,7 @@ public:
 	RegionSelect(double x, double y, Redrawable * view);
 	~RegionSelect();
 	virtual bool finalize(XojPage * page);
-	virtual void paint(cairo_t * cr, GdkEventExpose *event, double zoom);
+	virtual void paint(cairo_t * cr, GdkRectangle * rect, double zoom);
 	virtual void currentPos(double x, double y);
 	virtual void getSelectedRect(double & x, double & y, double & width, double & height);
 	virtual bool contains(double x, double y);

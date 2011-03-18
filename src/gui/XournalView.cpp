@@ -10,6 +10,9 @@
 #include "../control/settings/MetadataManager.h"
 #include "../util/Rectangle.h"
 #include "widgets/XournalWidget.h"
+
+#include "RepaintHandler.h"
+
 #include <gdk/gdkkeysyms.h>
 
 // TODO: LOW PRIO handle scroll events from touch / if Hand tool is selected
@@ -23,6 +26,8 @@ XournalView::XournalView(GtkWidget * parent, GtkRange * hrange, GtkRange * vrang
 
 	gtk_table_attach_defaults(GTK_TABLE(parent), this->widget, 0, 1, 0, 1);
 	gtk_widget_show(this->widget);
+
+	this->repaintHandler = new RepaintHandler(this);
 
 	this->viewPages = NULL;
 	this->viewPagesLen = 0;
@@ -47,6 +52,8 @@ XournalView::~XournalView() {
 	g_source_remove(this->cleanupTimeout);
 	delete this->cache;
 	this->cache = NULL;
+	delete this->repaintHandler;
+	this->repaintHandler = NULL;
 }
 
 gint pageViewCmpSize(PageView * a, PageView * b) {
@@ -171,6 +178,10 @@ bool XournalView::onKeyPressEvent(GdkEventKey * event) {
 	}
 
 	return false;
+}
+
+RepaintHandler * XournalView::getRepaintHandler() {
+	return this->repaintHandler;
 }
 
 bool XournalView::onKeyReleaseEvent(GdkEventKey *event) {
@@ -299,7 +310,7 @@ void XournalView::scrollTo(int pageNo, double y) {
 
 void XournalView::onScrolled() {
 	GtkAdjustment * h = gtk_xournal_get_vadj(this->widget);
-	GtkAllocation allocation = {0};
+	GtkAllocation allocation = { 0 };
 	gtk_widget_get_allocation(this->widget, &allocation);
 
 	int scrollY = gtk_adjustment_get_value(h);
@@ -384,7 +395,7 @@ void XournalView::endTextSelection() {
 }
 
 void XournalView::layerChanged(int page) {
-	this->viewPages[page]->repaint();
+	this->viewPages[page]->rerender();
 }
 
 void XournalView::getPasteTarget(double & x, double & y) {
@@ -496,7 +507,7 @@ void XournalView::pageSizeChanged(int page) {
 
 void XournalView::pageChanged(int page) {
 	if (page >= 0 && page < this->viewPagesLen) {
-		this->viewPages[page]->repaint();
+		this->viewPages[page]->rerender();
 	}
 }
 
@@ -567,7 +578,6 @@ void XournalView::pageInserted(int page) {
 
 	layoutPages();
 
-	// TODO !!!!!!!! still neccessary?
 	// Update scroll info, so we can call isPageVisible after
 	onScrolled();
 }

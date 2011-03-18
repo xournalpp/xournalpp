@@ -151,7 +151,7 @@ public:
 	EditSelection * getSelectionFor(PageView * view);
 	EditSelection * getSelection();
 	void setSelection(EditSelection * selection);
-	void paintSelection(cairo_t * cr, GdkEventExpose *event, double zoom, PageView * view);
+	void paintSelection(cairo_t * cr, GdkRectangle * rect, double zoom, PageView * view);
 
 	void setCopyPasteEnabled(bool enabled);
 

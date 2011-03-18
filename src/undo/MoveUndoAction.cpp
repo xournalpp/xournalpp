@@ -146,7 +146,7 @@ void MoveUndoAction::repaint(Redrawable * view, GList * list) {
 	}
 
 	CHECK_MEMORY(view);
-	view->repaint(range);
+	view->rerender(range);
 }
 
 void MoveUndoAction::repaint() {
