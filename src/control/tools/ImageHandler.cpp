@@ -74,7 +74,7 @@ bool ImageHandler::insertImage(GFile * file, double x, double y) {
 	InsertUndoAction * insertUndo = new InsertUndoAction(page, page->getSelectedLayer(), img, view);
 	control->getUndoRedoHandler()->addUndoAction(insertUndo);
 
-	view->repaint();
+	view->rerender();
 
 	return true;
 }

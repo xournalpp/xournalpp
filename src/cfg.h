@@ -12,7 +12,6 @@
 #ifndef __CONFIG_H__
 #define __CONFIG_H__
 
-// PREF FILES INFO
 #define CONFIG_DIR          ".xournalpp"
 #define TOOLBAR_CONFIG      "toolbar.ini"
 #define SETTINGS_XML_FILE   "settings.xml"
@@ -42,6 +41,9 @@
 
 // draw a border around all repaint rects
 // #define SHOW_REPAINT_BOUNDS
+
+// draw a border around all painted rects
+// #define SHOW_PAINT_BOUNDS
 
 
 #endif /* __CONFIG_H__ */

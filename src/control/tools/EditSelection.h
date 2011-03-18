@@ -38,7 +38,7 @@ public:
 	~EditSelection();
 
 public:
-	void paint(cairo_t * cr, GdkEventExpose * event, double zoom);
+	void paint(cairo_t * cr, GdkRectangle * rect, double zoom);
 
 	CursorSelectionType getSelectionTypeForPos(double x, double y, double zoom);
 	void setEditMode(CursorSelectionType selType, double x, double y);

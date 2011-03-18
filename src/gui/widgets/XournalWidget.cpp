@@ -26,19 +26,12 @@ static gboolean gtk_xournal_key_press_event(GtkWidget * widget, GdkEventKey * ev
 static gboolean gtk_xournal_key_release_event(GtkWidget * widget, GdkEventKey * event);
 gboolean gtk_xournal_scroll_event(GtkWidget * widget, GdkEventScroll * event);
 
-
 GtkType gtk_xournal_get_type(void) {
 	static GtkType gtk_xournal_type = 0;
 
 	if (!gtk_xournal_type) {
-		static const GtkTypeInfo gtk_xournal_info = {
-				"GtkXournal",
-				sizeof(GtkXournal),
-				sizeof(GtkXournalClass),
-				(GtkClassInitFunc) gtk_xournal_class_init,
-				(GtkObjectInitFunc) gtk_xournal_init,
-				NULL, NULL, (GtkClassInitFunc) NULL
-		};
+		static const GtkTypeInfo gtk_xournal_info = { "GtkXournal", sizeof(GtkXournal), sizeof(GtkXournalClass), (GtkClassInitFunc) gtk_xournal_class_init,
+				(GtkObjectInitFunc) gtk_xournal_init, NULL, NULL, (GtkClassInitFunc) NULL };
 		gtk_xournal_type = gtk_type_unique(GTK_TYPE_WIDGET, &gtk_xournal_info);
 	}
 
@@ -126,6 +119,9 @@ void gtk_xournal_set_size(GtkWidget * widget, int width, int height) {
 
 	gtk_adjustment_set_upper(xournal->hadj, width);
 	gtk_adjustment_set_upper(xournal->vadj, height);
+
+	gtk_widget_set_visible(GTK_WIDGET(xournal->vrange), widget->allocation.height < xournal->height);
+	gtk_widget_set_visible(GTK_WIDGET(xournal->hrange), widget->allocation.width < xournal->width);
 }
 
 static void gtk_xournal_class_init(GtkXournalClass * klass) {
@@ -147,7 +143,6 @@ static void gtk_xournal_class_init(GtkXournalClass * klass) {
 
 	widget_class->key_press_event = gtk_xournal_key_press_event;
 	widget_class->key_release_event = gtk_xournal_key_release_event;
-
 
 	widget_class->expose_event = gtk_xournal_expose;
 
@@ -195,7 +190,6 @@ void gtk_xournal_scroll_relative(GtkWidget * widget, double x, double y) {
 	g_return_if_fail(GTK_IS_XOURNAL(widget));
 
 	GtkXournal * xournal = GTK_XOURNAL(widget);
-
 
 	GtkAllocation alloc = { 0 };
 	gtk_widget_get_allocation(widget, &alloc);
@@ -423,6 +417,9 @@ static void gtk_xournal_size_allocate(GtkWidget * widget, GtkAllocation * alloca
 	xournal->vadj->lower = 0;
 	xournal->vadj->upper = MAX (allocation->height, xournal->height);
 	gtk_xournal_set_adjustment_upper(xournal->vadj, MAX(allocation->height, xournal->height), true);
+
+	gtk_widget_set_visible(GTK_WIDGET(xournal->vrange), widget->allocation.height < xournal->height);
+	gtk_widget_set_visible(GTK_WIDGET(xournal->hrange), widget->allocation.width < xournal->width);
 }
 
 static void gtk_xournal_set_adjustment_upper(GtkAdjustment *adj, gdouble upper, gboolean always_emit_changed) {
@@ -478,18 +475,6 @@ static void gtk_xournal_realize(GtkWidget * widget) {
 	gtk_style_set_background(widget->style, widget->window, GTK_STATE_NORMAL);
 
 	gtk_xournal_update_xevent(widget);
-}
-
-// TODO !!!!!!!!!!!!!!!!!!!!!!!!
-void gtk_xournal_redraw(GtkWidget * widget) {
-	g_return_if_fail(widget != NULL);
-	g_return_if_fail(GTK_IS_XOURNAL(widget));
-
-	GtkXournal * xournal = GTK_XOURNAL(widget);
-
-	GdkRegion * region = gdk_drawable_get_clip_region(GTK_WIDGET(xournal)->window);
-	gdk_window_invalidate_region(GTK_WIDGET(xournal)->window, region, TRUE);
-	gdk_window_process_updates(GTK_WIDGET(xournal)->window, TRUE);
 }
 
 /**
@@ -560,6 +545,26 @@ cairo_t * gtk_xournal_create_cairo_for(GtkWidget * widget, PageView * view) {
 	return cr;
 }
 
+void gtk_xournal_repaint_area(GtkWidget * widget, int x1, int y1, int x2, int y2) {
+	g_return_if_fail(widget != NULL);
+	g_return_if_fail(GTK_IS_XOURNAL(widget));
+
+	GtkXournal * xournal = GTK_XOURNAL(widget);
+
+	if (x2 < 0 || y2 < 0) {
+		return; // outside visible area
+	}
+
+	GtkAllocation alloc = { 0 };
+	gtk_widget_get_allocation(widget, &alloc);
+
+	if (x1 > alloc.width || y1 > alloc.height) {
+		return; // outside visible area
+	}
+
+	gtk_widget_queue_draw_area(widget, x1, y1, x2 - x1, y2 - y1);
+}
+
 static gboolean gtk_xournal_expose(GtkWidget * widget, GdkEventExpose * event) {
 	g_return_val_if_fail(widget != NULL, FALSE);
 	g_return_val_if_fail(GTK_IS_XOURNAL(widget), FALSE);
@@ -580,7 +585,12 @@ static gboolean gtk_xournal_expose(GtkWidget * widget, GdkEventExpose * event) {
 		gtk_xournal_draw_shadow(xournal, cr, x, y, pv->getDisplayWidth(), pv->getDisplayHeight(), pv->isSelected());
 		cairo_save(cr);
 		cairo_translate(cr, x, y);
-		pv->paintPage(cr, NULL);
+
+		GdkRectangle rect = event->area;
+		rect.x -= x;
+		rect.y -= y;
+
+		pv->paintPage(cr, &rect);
 		cairo_restore(cr);
 	}
 

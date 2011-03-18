@@ -46,14 +46,14 @@ public:
 
 	void updatePageSize(double width, double height);
 
-	bool paintPage(cairo_t * cr, GdkRectangle * rect);
+	void rerender();
+	void rerender(Element * e);
+	void rerender(Range & r);
+	void rerender(double x, double y, double width, double heigth);
 
 	void repaint();
 	void repaint(Element * e);
-	void repaint(Range & r);
-	void repaint(double x, double y, double width, double heigth);
-
-	void redraw();
+	void repaint(double x1, double y1, double x2, double y2);
 
 	XojPage * getPage();
 
@@ -94,9 +94,6 @@ public:
 
 	bool containsPoint(int x, int y);
 
-public:
-	// Redrawable
-	void redraw(double x1, double y1, double x2, double y2);
 	GdkColor getSelectionColor();
 
 public: // event handler
@@ -104,6 +101,7 @@ public: // event handler
 	bool onButtonReleaseEvent(GtkWidget * widget, GdkEventButton * event);
 	bool onMotionNotifyEvent(GtkWidget * widget, GdkEventMotion * event);
 	void translateEvent(GdkEvent * event, int xOffset, int yOffset);
+	bool paintPage(cairo_t * cr, GdkRectangle * rect);
 
 private:
 	void handleScrollEvent(GdkEventButton * event);
@@ -114,7 +112,7 @@ private:
 	void doScroll(GdkEventMotion * event);
 	static bool scrollCallback(PageView * view);
 
-	void addRepaintRect(double x, double y, double width, double height);
+	void addRerenderRect(double x, double y, double width, double height);
 private:
 	XojPage * page;
 	XournalView * xournal;
@@ -170,7 +168,7 @@ private:
 
 	GMutex * repaintRectMutex;
 	GList * repaintRect;
-	bool repaintComplete;
+	bool rerenderComplete;
 
 	GMutex * drawingMutex;
 

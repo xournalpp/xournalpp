@@ -181,7 +181,7 @@ void Control::initWindow(MainWindow * win) {
 	win->setRecentMenu(recent->getMenu());
 	selectTool(toolHandler->getToolType());
 	this->win = win;
-	this->zoom->initZoomHandler(win);
+	this->zoom->initZoomHandler(win->getXournal()->getWidget());
 	this->sidebar = new Sidebar(win, this);
 
 	updatePageNumbers(0, -1);
@@ -1292,28 +1292,26 @@ void Control::deleteCurrentLayer() {
 }
 
 void Control::calcZoomFitSize() {
-	// TODO: !!!!!!!!!!!!!!!!!!!!!!!!!
-//	if (this->doc && this->win) {
-//		double width = 0;
-//		//		for (int i = 0; i < doc->getPageCount(); i++) {
-//		//			Page * p = doc->getPage(i);
-//		//			width = MAX(p->getWidth(), width);
-//		//		}
-//
-//
-//		XojPage * p = getCurrentPage();
-//		if (p == NULL) {
-//			return;
-//		}
-//		width = p->getWidth() + 20; // 20: show a shadow
-//
-//		GtkAllocation allocation = { 0 };
-////		GtkWidget * w = win->get("scrolledwindowMain");
-//
-//		gtk_widget_get_allocation(w, &allocation);
-//		double factor = ((double) allocation.width - 20) / width;
-//		zoom->setZoomFit(factor);
-//	}
+	if (this->doc && this->win) {
+		double width = 0;
+		//		for (int i = 0; i < doc->getPageCount(); i++) {
+		//			Page * p = doc->getPage(i);
+		//			width = MAX(p->getWidth(), width);
+		//		}
+
+
+		XojPage * p = getCurrentPage();
+		if (p == NULL) {
+			return;
+		}
+		width = p->getWidth() + 15; // 15: show a shadow
+
+		GtkAllocation allocation = { 0 };
+
+		gtk_widget_get_allocation(win->getXournal()->getWidget(), &allocation);
+		double factor = ((double) allocation.width) / width;
+		zoom->setZoomFit(factor);
+	}
 }
 
 void Control::zoomFit() {
@@ -2068,7 +2066,7 @@ void Control::clipboardPasteText(String text) {
 
 	EditSelection * selection = new EditSelection(this->undoRedo, t, view, page);
 	setSelection(selection);
-	view->repaint(t);
+	view->rerender(t);
 }
 
 void Control::clipboardPasteXournal(ObjectInputStream & in) {
@@ -2131,7 +2129,7 @@ void Control::clipboardPasteXournal(ObjectInputStream & in) {
 		}
 
 		setSelection(selection);
-		view->redraw(x, y, x + width, y + height);
+		view->repaint(x, y, x + width, y + height);
 
 	} catch (std::exception & e) {
 		g_warning("could not paste, Exception occurred: %s", e.what());
@@ -2163,7 +2161,7 @@ void Control::deleteSelection() {
 
 		clearSelection();
 
-		view->repaint();
+		view->rerender();
 	}
 }
 
@@ -2221,9 +2219,9 @@ EditSelection * Control::getSelectionFor(PageView * view) {
 	return NULL;
 }
 
-void Control::paintSelection(cairo_t * cr, GdkEventExpose *event, double zoom, PageView * view) {
+void Control::paintSelection(cairo_t * cr, GdkRectangle * rect, double zoom, PageView * view) {
 	if (this->selection && this->selection->getView() == view) {
-		this->selection->paint(cr, event, zoom);
+		this->selection->paint(cr, rect, zoom);
 	}
 }
 

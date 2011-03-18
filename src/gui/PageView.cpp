@@ -29,6 +29,7 @@
 #include "../util/Rectangle.h"
 #include "../undo/DeleteUndoAction.h"
 #include "../gui/widgets/XournalWidget.h"
+#include "../gui/RepaintHandler.h"
 
 #include <config.h>
 #include <glib/gi18n-lib.h>
@@ -46,7 +47,7 @@ PageView::PageView(XournalView * xournal, XojPage * page) {
 	this->lastMousePositionY = 0;
 
 	this->repaintRect = NULL;
-	this->repaintComplete = false;
+	this->rerenderComplete = false;
 	this->repaintRectMutex = g_mutex_new();
 
 	this->scrollOffsetX = 0;
@@ -152,7 +153,7 @@ bool PageView::searchTextOnPage(const char * text, int * occures, double * top) 
 
 	bool found = this->search->search(text, occures, top);
 
-	redraw();
+	repaint();
 
 	return found;
 }
@@ -186,7 +187,7 @@ void PageView::endText() {
 
 	delete this->textEditor;
 	this->textEditor = NULL;
-	this->repaint();
+	this->rerender();
 }
 
 void PageView::startText(double x, double y) {
@@ -224,7 +225,7 @@ void PageView::startText(double x, double y) {
 			this->textEditor->mousePressed(x - text->getX(), y - text->getY());
 		}
 
-		repaint();
+		rerender();
 	} else {
 		Text * text = this->textEditor->getText();
 		GdkRectangle matchRect = { x - 10, y - 10, 20, 20 };
@@ -282,7 +283,7 @@ void PageView::selectObjectAt(double x, double y) {
 		Control * control = xournal->getControl();
 		control->setSelection(new EditSelection(control->getUndoRedoHandler(), elementMatch, this, page));
 
-		redraw();
+		repaint();
 	}
 }
 
@@ -414,15 +415,6 @@ bool PageView::onButtonPressEvent(GtkWidget * widget, GdkEventButton * event) {
 	return true;
 }
 
-void PageView::redraw(double x1, double y1, double x2, double y2) {
-	double zoom = xournal->getZoom();
-
-	// TODO !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-	redraw();
-
-	//	gtk_widget_queue_draw_area(this->widget, x1 * zoom - 10, y1 * zoom - 10, (x2 - x1) * zoom + 20, (y2 - y1) * zoom + 20);
-}
-
 GdkColor PageView::getSelectionColor() {
 	return this->xournal->getWidget()->style->base[GTK_STATE_SELECTED];
 }
@@ -499,6 +491,7 @@ void PageView::translateEvent(GdkEvent * event, int xOffset, int yOffset) {
 bool PageView::scrollCallback(PageView * view) {
 	gdk_threads_enter();
 
+	// TODO: is this still working?
 	gtk_xournal_scroll_relative(view->xournal->getWidget(), view->scrollOffsetX, view->scrollOffsetY);
 
 	view->scrollOffsetX = 0;
@@ -661,36 +654,43 @@ XojPage * PageView::getPage() {
 	return page;
 }
 
-void PageView::repaint() {
-	this->repaintComplete = true;
+void PageView::rerender() {
+	this->rerenderComplete = true;
 	this->xournal->getControl()->getScheduler()->addRepaintPage(this);
 }
 
-void PageView::redraw() {
-	// TODO !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-	//	gtk_widget_queue_draw(widget);
-	gtk_widget_queue_draw(xournal->getWidget());
+void PageView::repaint() {
+	xournal->getRepaintHandler()->repaintPage(this);
 }
 
-void PageView::repaint(Range & r) {
-	repaint(r.getX(), r.getY(), r.getWidth(), r.getHeight());
+void PageView::repaint(double x1, double y1, double x2, double y2) {
+	double zoom = xournal->getZoom();
+	xournal->getRepaintHandler()->repaintPageArea(this, x1 * zoom - 10, y1 * zoom - 10, x2 * zoom + 20, y2 * zoom + 20);
 }
 
 void PageView::repaint(Element * e) {
-	repaint(e->getX(), e->getY(), e->getElementWidth(), e->getElementHeight());
+	repaint(e->getX(), e->getY(), e->getElementWidth() + e->getX(), e->getElementHeight() + e->getY());
 }
 
-void PageView::repaint(double x, double y, double width, double heigth) {
+void PageView::rerender(Range & r) {
+	rerender(r.getX(), r.getY(), r.getWidth(), r.getHeight());
+}
+
+void PageView::rerender(Element * e) {
+	rerender(e->getX(), e->getY(), e->getElementWidth(), e->getElementHeight());
+}
+
+void PageView::rerender(double x, double y, double width, double heigth) {
 	int rx = (int) MAX(x - 10, 0);
 	int ry = (int) MAX(y - 10, 0);
 	int rwidth = (int) (width + 20);
 	int rheight = (int) (heigth + 20);
 
-	addRepaintRect(rx, ry, rwidth, rheight);
+	addRerenderRect(rx, ry, rwidth, rheight);
 }
 
-void PageView::addRepaintRect(double x, double y, double width, double height) {
-	if (this->repaintComplete) {
+void PageView::addRerenderRect(double x, double y, double width, double height) {
+	if (this->rerenderComplete) {
 		return;
 	}
 
@@ -703,7 +703,7 @@ void PageView::addRepaintRect(double x, double y, double width, double height) {
 	for (GList * l = this->repaintRect; l != NULL; l = l->next) {
 		Rectangle * r = (Rectangle *) l->data;
 
-		// its better to redraw only one rect than repaint twice the same area
+		// its faster to redraw only one rect than repaint twice the same area
 		if (r->intersect(rect, &dest)) {
 			r->x = dest.x;
 			r->y = dest.y;
@@ -728,7 +728,7 @@ void PageView::setSelected(bool selected) {
 
 	if (selected) {
 		this->xournal->requestFocus();
-		gtk_widget_queue_draw(this->xournal->getWidget());
+		this->xournal->getRepaintHandler()->repaintPageBorder(this);
 	}
 }
 
@@ -769,7 +769,6 @@ bool PageView::actionDelete() {
 }
 
 bool PageView::paintPage(cairo_t * cr, GdkRectangle * rect) {
-	// TODO !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	double zoom = xournal->getZoom();
 
 	g_mutex_lock(this->drawingMutex);
@@ -797,7 +796,7 @@ bool PageView::paintPage(cairo_t * cr, GdkRectangle * rect) {
 		cairo_show_text(cr2, txtLoading);
 
 		cairo_destroy(cr2);
-		repaint();
+		rerender();
 	}
 
 	cairo_save(cr);
@@ -810,7 +809,7 @@ bool PageView::paintPage(cairo_t * cr, GdkRectangle * rect) {
 		cairo_scale(cr, scale, scale);
 		cairo_set_source_surface(cr, this->crBuffer, 0, 0);
 
-		repaint();
+		rerender();
 
 		rect = NULL;
 	} else {
@@ -820,6 +819,13 @@ bool PageView::paintPage(cairo_t * cr, GdkRectangle * rect) {
 	if (rect) {
 		cairo_rectangle(cr, rect->x, rect->y, rect->width, rect->height);
 		cairo_fill(cr);
+
+#ifdef SHOW_PAINT_BOUNDS
+		cairo_set_source_rgb(cr, 1.0, 0.5, 1.0);
+		cairo_set_line_width(cr, 1. / zoom);
+		cairo_rectangle(cr, rect->x, rect->y, rect->width, rect->height);
+		cairo_stroke(cr);
+#endif
 	} else {
 		cairo_paint(cr);
 	}
@@ -828,24 +834,24 @@ bool PageView::paintPage(cairo_t * cr, GdkRectangle * rect) {
 
 	// don't paint this with scale, because it needs a 1:1 zoom
 	if (this->verticalSpace) {
-		this->verticalSpace->paint(cr, NULL, zoom);
+		this->verticalSpace->paint(cr, rect, zoom);
 	}
 
 	cairo_scale(cr, zoom, zoom);
 
 	if (this->textEditor) {
-		this->textEditor->paint(cr, NULL, zoom);
+		this->textEditor->paint(cr, rect, zoom);
 	}
 	if (this->selectionEdit) {
-		this->selectionEdit->paint(cr, NULL, zoom);
+		this->selectionEdit->paint(cr, rect, zoom);
 	}
 
 	Control * control = xournal->getControl();
 
-	control->paintSelection(cr, NULL, zoom, this);
+	control->paintSelection(cr, rect, zoom, this);
 
 	if (this->search) {
-		this->search->paint(cr, NULL, zoom, getSelectionColor());
+		this->search->paint(cr, rect, zoom, getSelectionColor());
 	}
 	this->inputHandler->draw(cr, zoom);
 	g_mutex_unlock(this->drawingMutex);

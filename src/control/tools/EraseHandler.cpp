@@ -66,7 +66,7 @@ void EraseHandler::erase(double x, double y) {
 		selected--;
 	}
 
-	this->view->repaint(*range);
+	this->view->rerender(*range);
 	delete range;
 }
 

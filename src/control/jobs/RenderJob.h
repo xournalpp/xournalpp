@@ -35,7 +35,7 @@ public:
 	static void repaintRectangle(PageView * view, Rectangle * rect);
 
 private:
-	void repaintRectangle(Rectangle * rect);
+	void rerenderRectangle(Rectangle * rect);
 
 private:
 	PageView * view;

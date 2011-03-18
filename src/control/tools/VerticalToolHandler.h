@@ -23,7 +23,7 @@ public:
 	VerticalToolHandler(Redrawable * view, XojPage * page, double y, double zoom);
 	virtual ~VerticalToolHandler();
 
-	void paint(cairo_t * cr, GdkEventExpose * event, double zoom);
+	void paint(cairo_t * cr, GdkRectangle * rect, double zoom);
 	void currentPos(double x, double y);
 
 	MoveUndoAction * finalize();

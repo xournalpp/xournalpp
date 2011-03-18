@@ -38,7 +38,7 @@ bool DeleteUndoAction::undo(Control * control) {
 	for (GList * l = this->elements; l != NULL; l = l->next) {
 		PageLayerPosEntry<Element> * e = (PageLayerPosEntry<Element>*) l->data;
 		e->layer->insertElement(e->element, e->pos);
-		view->repaint(e->element->getX(), e->element->getY(), e->element->getElementWidth(),
+		view->rerender(e->element->getX(), e->element->getY(), e->element->getElementWidth(),
 				e->element->getElementHeight());
 	}
 
@@ -56,7 +56,7 @@ bool DeleteUndoAction::redo(Control * control) {
 	for (GList * l = this->elements; l != NULL; l = l->next) {
 		PageLayerPosEntry<Element> * e = (PageLayerPosEntry<Element>*) l->data;
 		e->layer->removeElement(e->element, false);
-		view->repaint(e->element->getX(), e->element->getY(), e->element->getElementWidth(),
+		view->rerender(e->element->getX(), e->element->getY(), e->element->getElementWidth(),
 				e->element->getElementHeight());
 	}
 

@@ -48,7 +48,7 @@ bool RecognizerUndoAction::undo(Control * control) {
 		i++;
 	}
 
-	this->view->repaint();
+	this->view->rerender();
 
 	undone = true;
 	return true;
@@ -62,7 +62,7 @@ bool RecognizerUndoAction::redo(Control * control) {
 	}
 	this->layer->insertElement(this->recognized, pos);
 
-	this->view->repaint();
+	this->view->rerender();
 
 	undone = false;
 	return true;

@@ -73,7 +73,7 @@ void RenderJob::repaintRectangle(PageView * view, Rectangle * rect) {
 	g_mutex_unlock(view->drawingMutex);
 }
 
-void RenderJob::repaintRectangle(Rectangle * rect) {
+void RenderJob::rerenderRectangle(Rectangle * rect) {
 	repaintRectangle(this->view, rect);
 }
 
@@ -82,7 +82,7 @@ void RenderJob::run() {
 
 	double zoom = this->view->xournal->getZoom();
 
-	if (this->view->repaintComplete) {
+	if (this->view->rerenderComplete) {
 		Document * doc = this->view->xournal->getDocument();
 
 		int dispWidth = this->view->getDisplayWidth();
@@ -123,7 +123,7 @@ void RenderJob::run() {
 	} else {
 		for (GList * l = this->view->repaintRect; l != NULL; l = l->next) {
 			Rectangle * rect = (Rectangle *) l->data;
-			repaintRectangle(rect);
+			rerenderRectangle(rect);
 
 			this->repaintRect = g_list_append(repaintRect, new Rectangle(rect->x * zoom, rect->y * zoom, rect->width * zoom, rect->height * zoom));
 		}
@@ -133,7 +133,7 @@ void RenderJob::run() {
 	g_mutex_lock(this->view->repaintRectMutex);
 
 	// delete all rectangles
-	this->view->repaintComplete = false;
+	this->view->rerenderComplete = false;
 	for (GList * l = this->view->repaintRect; l != NULL; l = l->next) {
 		Rectangle * rect = (Rectangle *) l->data;
 		delete rect;
@@ -148,11 +148,11 @@ void RenderJob::run() {
 
 void RenderJob::afterRun() {
 	if (this->repaintComplete) {
-		this->view->redraw();
+		this->view->repaint();
 	} else {
 		for (GList * l = this->repaintRect; l != NULL; l = l->next) {
 			Rectangle * rect = (Rectangle *) l->data;
-			this->view->redraw(rect->x, rect->y, rect->width, rect->height);
+			this->view->repaint(rect->x, rect->y, rect->x + rect->width, rect->y + rect->height);
 			delete rect;
 		}
 		g_list_free(this->repaintRect);

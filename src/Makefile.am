@@ -91,6 +91,7 @@ xournalpp_SOURCES = \
 	gui/MainWindow.cpp \
 	gui/PageView.cpp \
 	gui/Redrawable.cpp \
+	gui/RepaintHandler.cpp \
 	gui/SearchBar.cpp \
 	gui/Shadow.cpp \
 	gui/TextEditor.cpp \

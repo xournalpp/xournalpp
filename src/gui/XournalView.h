@@ -28,6 +28,7 @@ class TextEditor;
 class PdfCache;
 class XojPage;
 class Rectangle;
+class RepaintHandler;
 
 class XournalView: public DocumentListener, public ZoomListener, public MemoryCheckObject {
 public:
@@ -91,6 +92,8 @@ public:
 
 	bool isPageVisible(int page);
 
+	RepaintHandler * getRepaintHandler();
+
 public:
 	//ZoomListener interface
 	void zoomChanged(double lastZoom);
@@ -131,8 +134,12 @@ private:
 	int currentPage;
 	int lastSelectedPage;
 
-
 	PdfCache * cache;
+
+	/**
+	 * Handler for rerendering pages / repainting pages
+	 */
+	RepaintHandler * repaintHandler;
 
 	/**
 	 * Memory cleanup timeout

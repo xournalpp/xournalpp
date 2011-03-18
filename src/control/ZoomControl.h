@@ -13,7 +13,6 @@
 #define __ZOOMCONTROL_H__
 
 #include <gtk/gtk.h>
-#include "../gui/GladeGui.h"
 
 class ZoomListener {
 public:
@@ -43,12 +42,12 @@ public:
 
 	void addZoomListener(ZoomListener * listener);
 
-	void initZoomHandler(GladeGui * gui);
+	void initZoomHandler(GtkWidget * widget);
 protected:
 	void fireZoomChanged(double lastZoom);
 	void fireZoomRangeValueChanged();
 
-	static bool onScrolledwindowMainScrollEvent(GtkWidget *widget, GdkEventScroll *event, ZoomControl * zoom);
+	static bool onScrolledwindowMainScrollEvent(GtkWidget * widget, GdkEventScroll * event, ZoomControl * zoom);
 private:
 	GList * listener;
 

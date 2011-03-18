@@ -768,7 +768,8 @@ void TextEditor::redrawEditor() {
 	//	double width = this->text->getElementWidth() + 10;
 	//	double heigth = this->text->getElementHeight() + 10;
 	//	gui->redrawDocumentRegion(x, y, width, heigth);
-	gtk_widget_queue_draw(this->widget);
+	// TODO: OPTIMIZE redraw
+	this->gui->repaint();
 }
 
 void TextEditor::drawCursor(cairo_t * cr, double x, double y, double height, double zoom) {
@@ -791,7 +792,7 @@ void TextEditor::drawCursor(cairo_t * cr, double x, double y, double height, dou
 	DocumentView::applyColor(cr, this->text);
 }
 
-void TextEditor::paint(cairo_t * cr, GdkEventExpose *event, double zoom) {
+void TextEditor::paint(cairo_t * cr, GdkRectangle * repaintRect, double zoom) {
 	GdkColor selectionColor = gui->getSelectionColor();
 
 	cairo_save(cr);

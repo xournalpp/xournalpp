@@ -24,7 +24,7 @@ public:
 	TextEditor(PageView * gui, GtkWidget * widget, Text * text, bool ownText);
 	virtual ~TextEditor();
 
-	void paint(cairo_t * cr, GdkEventExpose *event, double zoom);
+	void paint(cairo_t * cr, GdkRectangle * rect, double zoom);
 
 	bool onKeyPressEvent(GdkEventKey *event);
 	bool onKeyReleaseEvent(GdkEventKey *event);
@@ -56,12 +56,12 @@ private:
 	void redrawCursor();
 	void resetImContext();
 
-	static void iMCommitCallback(GtkIMContext *context, const gchar *str, TextEditor * te);
-	static void iMPreeditChangedCallback(GtkIMContext *context, TextEditor * te);
-	static bool iMRetrieveSurroundingCallback(GtkIMContext *context, TextEditor * te);
-	static bool imDeleteSurroundingCallback(GtkIMContext *context, gint offset, gint n_chars, TextEditor * te);
+	static void iMCommitCallback(GtkIMContext * context, const gchar * str, TextEditor * te);
+	static void iMPreeditChangedCallback(GtkIMContext * context, TextEditor * te);
+	static bool iMRetrieveSurroundingCallback(GtkIMContext * context, TextEditor * te);
+	static bool imDeleteSurroundingCallback(GtkIMContext * context, gint offset, gint n_chars, TextEditor * te);
 
-	void moveCursor(const GtkTextIter *new_location, gboolean extend_selection);
+	void moveCursor(const GtkTextIter * new_location, gboolean extend_selection);
 
 	static gint blinkCallback(TextEditor * te);
 

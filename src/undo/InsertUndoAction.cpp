@@ -33,7 +33,7 @@ String InsertUndoAction::getText() {
 bool InsertUndoAction::undo(Control * control) {
 	this->layer->removeElement(this->element, false);
 
-	view->repaint(element->getX(), element->getY(), element->getElementWidth(), element->getElementHeight());
+	view->rerender(element->getX(), element->getY(), element->getElementWidth(), element->getElementHeight());
 
 	this->undone = true;
 
@@ -43,7 +43,7 @@ bool InsertUndoAction::undo(Control * control) {
 bool InsertUndoAction::redo(Control * control) {
 	this->layer->addElement(this->element);
 
-	view->repaint(element->getX(), element->getY(), element->getElementWidth(), element->getElementHeight());
+	view->rerender(element->getX(), element->getY(), element->getElementWidth(), element->getElementHeight());
 
 	this->undone = false;
 

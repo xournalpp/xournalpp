@@ -45,20 +45,15 @@ void InputHandler::addPointToTmpStroke(GdkEventMotion * event) {
 	ToolHandler * h = xournal->getControl()->getToolHandler();
 
 	if (h->isRuler()) {
-		Range range(x, y);
-
 		int count = tmpStroke->getPointCount();
 		if (count < 2) {
 			tmpStroke->addPoint(Point(x, y));
 		} else {
-			Point p = tmpStroke->getPoint(tmpStroke->getPointCount() - 1);
-			range.addPoint(p.x, p.y);
 			tmpStroke->setLastPoint(x, y);
 		}
 		Point p = tmpStroke->getPoint(0);
-		range.addPoint(p.x, p.y);
 
-		this->redrawable->repaint(range);
+		this->redrawable->repaint(this->tmpStroke);
 		return;
 	}
 
@@ -190,18 +185,18 @@ void InputHandler::onButtonReleaseEvent(GdkEventButton * event, XojPage * page) 
 				range.addPoint(s->getX() + s->getElementWidth(), s->getY() + s->getElementHeight());
 			}
 
-			this->redrawable->repaint(range);
+			this->redrawable->rerender(range);
 
 			// delete the result object, this is not needed anymore, the stroke are not deleted with this
 			delete result;
 		} else {
 			layer->addElement(this->tmpStroke);
-			this->redrawable->repaint(this->tmpStroke);
+			this->redrawable->rerender(this->tmpStroke);
 		}
 
 	} else {
 		layer->addElement(this->tmpStroke);
-		this->redrawable->repaint(this->tmpStroke);
+		this->redrawable->rerender(this->tmpStroke);
 	}
 
 	this->tmpStroke = NULL;

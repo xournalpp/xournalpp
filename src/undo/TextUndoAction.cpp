@@ -46,7 +46,7 @@ bool TextUndoAction::undo(Control * control) {
 	x2 = MAX(x2, text->getX() + text->getElementWidth());
 	y2 = MAX(y2, text->getY() + text->getElementHeight());
 
-	view->repaint(x1, y1, x2 - x1, y2 - y1);
+	view->rerender(x1, y1, x2 - x1, y2 - y1);
 
 	this->undone = true;
 	return true;
@@ -66,7 +66,7 @@ bool TextUndoAction::redo(Control * control) {
 	x2 = MAX(x2, text->getX() + text->getElementWidth());
 	y2 = MAX(y2, text->getY() + text->getElementHeight());
 
-	view->repaint(x1, y1, x2 - x1, y2 - y1);
+	view->rerender(x1, y1, x2 - x1, y2 - y1);
 
 	this->undone = false;
 	return true;
