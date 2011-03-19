@@ -74,7 +74,7 @@ bool PdfExportJob::showFilechooser() {
 void PdfExportJob::afterRun() {
 	if (!this->errorMsg.isEmpty()) {
 		GtkWindow * win = (GtkWindow*) *control->getWindow();
-		GtkWidget * dialog = gtk_message_dialog_new(win, GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, this->errorMsg.c_str());
+		GtkWidget * dialog = gtk_message_dialog_new(win, GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, "%s", this->errorMsg.c_str());
 		gtk_dialog_run(GTK_DIALOG(dialog));
 		gtk_widget_destroy(dialog);
 	}
@@ -89,7 +89,7 @@ void PdfExportJob::run() {
 	doc->unlock();
 
 	if (!pdf.createPdf(this->filename)) {
-		this->errorMsg = String::format(_( "Create pdf failed: %s"), pdf.getLastError().c_str());
+		this->errorMsg = String::format(_("Create pdf failed: %s"), pdf.getLastError().c_str());
 
 		if (control->getWindow()) {
 			callAfterRun();

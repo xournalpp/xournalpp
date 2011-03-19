@@ -6,8 +6,7 @@
 #include "../gui/Redrawable.h"
 #include "../gui/TextEditor.h"
 
-TextUndoAction::TextUndoAction(XojPage * page, Layer * layer, Text * text, String lastText, Redrawable * view,
-		TextEditor * textEditor) {
+TextUndoAction::TextUndoAction(XojPage * page, Layer * layer, Text * text, String lastText, Redrawable * view, TextEditor * textEditor) {
 	this->page = page;
 	this->layer = layer;
 	this->text = text;
@@ -46,7 +45,7 @@ bool TextUndoAction::undo(Control * control) {
 	x2 = MAX(x2, text->getX() + text->getElementWidth());
 	y2 = MAX(y2, text->getY() + text->getElementHeight());
 
-	view->rerender(x1, y1, x2 - x1, y2 - y1);
+	view->rerenderArea(x1, y1, x2, y2);
 
 	this->undone = true;
 	return true;
@@ -66,7 +65,7 @@ bool TextUndoAction::redo(Control * control) {
 	x2 = MAX(x2, text->getX() + text->getElementWidth());
 	y2 = MAX(y2, text->getY() + text->getElementHeight());
 
-	view->rerender(x1, y1, x2 - x1, y2 - y1);
+	view->rerenderArea(x1, y1, x2, y2);
 
 	this->undone = false;
 	return true;

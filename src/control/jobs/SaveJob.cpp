@@ -25,7 +25,7 @@ void SaveJob::run() {
 void SaveJob::afterRun() {
 	if (!this->lastError.isEmpty()) {
 		GtkWidget * dialog = gtk_message_dialog_new((GtkWindow *) *control->getWindow(), GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
-				this->lastError.c_str());
+				"%s", this->lastError.c_str());
 		gtk_dialog_run(GTK_DIALOG(dialog));
 		gtk_widget_destroy(dialog);
 	} else {

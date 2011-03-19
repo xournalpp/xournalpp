@@ -13,7 +13,6 @@
 #define __PAGEVIEW_H__
 
 #include <gtk/gtk.h>
-#include "../util/MemoryCheck.h"
 #include "../util/Range.h"
 #include "Redrawable.h"
 
@@ -33,31 +32,19 @@ class Stroke;
 class Text;
 class XojPage;
 
-class PageView: public Redrawable, public virtual MemoryCheckObject {
+class PageView: public Redrawable {
 public:
 	PageView(XournalView * xournal, XojPage * page);
 	virtual ~PageView();
 
-	double getHeight();
-	double getWidth();
-
-	int getDisplayWidth();
-	int getDisplayHeight();
-
+public:
 	void updatePageSize(double width, double height);
 
-	void rerender();
-	void rerender(Element * e);
-	void rerender(Range & r);
-	void rerender(double x, double y, double width, double heigth);
+	virtual void rerenderPage();
+	virtual void rerenderRect(double x, double y, double width, double heigth);
 
-	void repaint();
-	void repaint(Element * e);
-	void repaint(double x1, double y1, double x2, double y2);
-
-	XojPage * getPage();
-
-	XournalView * getXournal();
+	virtual void repaintPage();
+	virtual void repaintArea(double x1, double y1, double x2, double y2);
 
 	void setSelected(bool selected);
 
@@ -78,23 +65,27 @@ public:
 
 	bool actionDelete();
 
-	int getLastVisibelTime();
-
-	int getBufferPixels();
-
-	TextEditor * getTextEditor();
-
 	void resetShapeRecognizer();
 
 	void deleteViewBuffer();
 
 	void setPos(int x, int y);
-	int getX();
-	int getY();
 
 	bool containsPoint(int x, int y);
+	bool containsY(int y);
 
 	GdkColor getSelectionColor();
+	int getBufferPixels();
+	int getLastVisibelTime();
+	TextEditor * getTextEditor();
+	XojPage * getPage();
+	XournalView * getXournal();
+	double getHeight();
+	double getWidth();
+	int getDisplayWidth();
+	int getDisplayHeight();
+	int getX();
+	int getY();
 
 public: // event handler
 	bool onButtonPressEvent(GtkWidget * widget, GdkEventButton * event);
@@ -167,7 +158,7 @@ private:
 	int lastVisibelTime;
 
 	GMutex * repaintRectMutex;
-	GList * repaintRect;
+	GList * repaintRects;
 	bool rerenderComplete;
 
 	GMutex * drawingMutex;

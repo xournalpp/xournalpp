@@ -52,7 +52,7 @@ bool RectSelection::finalize(XojPage * page) {
 		}
 	}
 
-	view->repaint(x1, y1, x2, y2);
+	view->repaintArea(x1, y1, x2, y2);
 
 	return this->selectedElements != NULL;
 }
@@ -93,7 +93,7 @@ void RectSelection::currentPos(double x, double y) {
 		this->ey = y;
 	}
 
-	view->repaint(aX, aY, bX, bY);
+	view->repaintArea(aX, aY, bX, bY);
 }
 
 void RectSelection::paint(cairo_t * cr, GdkRectangle * rect, double zoom) {
@@ -233,7 +233,7 @@ void RegionSelect::currentPos(double x, double y) {
 			}
 		}
 
-		view->repaint(ax, ay, bx, by);
+		view->repaintArea(ax, ay, bx, by);
 	}
 }
 
@@ -343,7 +343,7 @@ bool RegionSelect::finalize(XojPage * page) {
 		}
 	}
 
-	view->repaint(this->x1Box, this->y1Box, this->x2Box, this->y2Box);
+	view->repaintArea(this->x1Box, this->y1Box, this->x2Box, this->y2Box);
 
 	return this->selectedElements != NULL;
 }

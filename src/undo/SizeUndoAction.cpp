@@ -79,7 +79,7 @@ bool SizeUndoAction::undo(Control * control) {
 		range.addPoint(e->s->getX()+ e->s->getElementWidth(), e->s->getY()+ e->s->getElementHeight());
 	}
 
-	view->rerender(range);
+	view->rerenderRange(range);
 
 	return true;
 }
@@ -101,7 +101,7 @@ bool SizeUndoAction::redo(Control * control) {
 		range.addPoint(e->s->getX()+ e->s->getElementWidth(), e->s->getY()+ e->s->getElementHeight());
 	}
 
-	view->rerender(range);
+	view->rerenderRange(range);
 
 	return true;
 }

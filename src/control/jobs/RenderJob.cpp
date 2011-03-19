@@ -121,25 +121,24 @@ void RenderJob::run() {
 
 		this->repaintComplete = true;
 	} else {
-		for (GList * l = this->view->repaintRect; l != NULL; l = l->next) {
+		for (GList * l = this->view->repaintRects; l != NULL; l = l->next) {
 			Rectangle * rect = (Rectangle *) l->data;
 			rerenderRectangle(rect);
 
-			this->repaintRect = g_list_append(repaintRect, new Rectangle(rect->x * zoom, rect->y * zoom, rect->width * zoom, rect->height * zoom));
+			this->repaintRect = g_list_append(this->repaintRect, new Rectangle(rect->x, rect->y, rect->width, rect->height));
 		}
 	}
 
-	CHECK_MEMORY(this->view);
 	g_mutex_lock(this->view->repaintRectMutex);
 
 	// delete all rectangles
 	this->view->rerenderComplete = false;
-	for (GList * l = this->view->repaintRect; l != NULL; l = l->next) {
+	for (GList * l = this->view->repaintRects; l != NULL; l = l->next) {
 		Rectangle * rect = (Rectangle *) l->data;
 		delete rect;
 	}
-	g_list_free(this->view->repaintRect);
-	this->view->repaintRect = NULL;
+	g_list_free(this->view->repaintRects);
+	this->view->repaintRects = NULL;
 
 	g_mutex_unlock(this->view->repaintRectMutex);
 
@@ -148,11 +147,11 @@ void RenderJob::run() {
 
 void RenderJob::afterRun() {
 	if (this->repaintComplete) {
-		this->view->repaint();
+		this->view->repaintPage();
 	} else {
 		for (GList * l = this->repaintRect; l != NULL; l = l->next) {
 			Rectangle * rect = (Rectangle *) l->data;
-			this->view->repaint(rect->x, rect->y, rect->x + rect->width, rect->y + rect->height);
+			this->view->repaintRect(rect->x, rect->y, rect->width, rect->height);
 			delete rect;
 		}
 		g_list_free(this->repaintRect);

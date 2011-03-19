@@ -53,7 +53,7 @@ void InputHandler::addPointToTmpStroke(GdkEventMotion * event) {
 		}
 		Point p = tmpStroke->getPoint(0);
 
-		this->redrawable->repaint(this->tmpStroke);
+		this->redrawable->rerenderElement(this->tmpStroke);
 		return;
 	}
 
@@ -107,15 +107,15 @@ void InputHandler::drawTmpStroke() {
 	if (this->tmpStroke) {
 		cairo_t * cr = gtk_xournal_create_cairo_for(this->xournal->getWidget(), this->redrawable);
 
-		view->drawStroke(cr, this->tmpStroke, tmpStrokeDrawElem);
-		tmpStrokeDrawElem = this->tmpStroke->getPointCount() - 1;
+		this->view->drawStroke(cr, this->tmpStroke, this->tmpStrokeDrawElem);
+		this->tmpStrokeDrawElem = this->tmpStroke->getPointCount() - 1;
 		cairo_destroy(cr);
 	}
 }
 
 void InputHandler::draw(cairo_t * cr, double zoom) {
 	if (this->tmpStroke) {
-		view->drawStroke(cr, this->tmpStroke, zoom);
+		this->view->drawStroke(cr, this->tmpStroke, zoom);
 	}
 }
 
@@ -185,18 +185,18 @@ void InputHandler::onButtonReleaseEvent(GdkEventButton * event, XojPage * page) 
 				range.addPoint(s->getX() + s->getElementWidth(), s->getY() + s->getElementHeight());
 			}
 
-			this->redrawable->rerender(range);
+			this->redrawable->rerenderRange(range);
 
 			// delete the result object, this is not needed anymore, the stroke are not deleted with this
 			delete result;
 		} else {
 			layer->addElement(this->tmpStroke);
-			this->redrawable->rerender(this->tmpStroke);
+			this->redrawable->rerenderElement(this->tmpStroke);
 		}
 
 	} else {
 		layer->addElement(this->tmpStroke);
-		this->redrawable->rerender(this->tmpStroke);
+		this->redrawable->rerenderElement(this->tmpStroke);
 	}
 
 	this->tmpStroke = NULL;

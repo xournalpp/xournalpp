@@ -145,8 +145,7 @@ void MoveUndoAction::repaint(Redrawable * view, GList * list) {
 		range.addPoint(u->x + u->e->getElementWidth(), u->y + u->e->getElementHeight());
 	}
 
-	CHECK_MEMORY(view);
-	view->rerender(range);
+	view->rerenderRange(range);
 }
 
 void MoveUndoAction::repaint() {

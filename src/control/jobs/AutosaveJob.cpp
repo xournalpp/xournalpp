@@ -38,6 +38,7 @@ void AutosaveJob::run() {
 		filename += ".autosave.xoj";
 	}
 
+	// TODO: delete after saved the new file...
 	control->deleteLastAutosaveFile(filename);
 
 	GzOutputStream * out = new GzOutputStream(filename);

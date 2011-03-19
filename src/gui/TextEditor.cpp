@@ -763,13 +763,12 @@ gint TextEditor::blinkCallback(TextEditor * te) {
 }
 
 void TextEditor::redrawEditor() {
-	//	double x = this->text->getX();
-	//	double y = this->text->getY();
-	//	double width = this->text->getElementWidth() + 10;
-	//	double heigth = this->text->getElementHeight() + 10;
-	//	gui->redrawDocumentRegion(x, y, width, heigth);
+	double x = this->text->getX();
+	double y = this->text->getY();
+	double width = this->text->getElementWidth() + 10;
+	double heigth = this->text->getElementHeight() + 10;
 	// TODO: OPTIMIZE redraw
-	this->gui->repaint();
+	this->gui->repaintRect(x, y, width, heigth);
 }
 
 void TextEditor::drawCursor(cairo_t * cr, double x, double y, double height, double zoom) {

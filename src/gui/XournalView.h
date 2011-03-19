@@ -29,6 +29,7 @@ class PdfCache;
 class XojPage;
 class Rectangle;
 class RepaintHandler;
+class PagePositionHandler;
 
 class XournalView: public DocumentListener, public ZoomListener, public MemoryCheckObject {
 public:
@@ -41,25 +42,15 @@ public:
 
 	bool paint(GtkWidget * widget, GdkEventExpose * event);
 
-	GtkWidget * getWidget();
-
 	void requestPage(PageView * page);
 
 	void layoutPages();
-
-	double getZoom();
-
-	Document * getDocument();
-
-	Control * getControl();
 
 	void scrollTo(int pageNo, double y);
 
 	int getCurrentPage();
 
 	void updateXEvents();
-
-	ArrayIterator<PageView *> pageViewIterator();
 
 	void layerChanged(int page);
 
@@ -70,7 +61,6 @@ public:
 	void forceUpdatePagenumbers();
 
 	PageView * getViewFor(int pageNr);
-	PageView * getViewAt(int x, int y);
 
 	bool searchTextOnPage(const char * text, int p, int * occures, double * top);
 
@@ -84,15 +74,19 @@ public:
 
 	void endTextSelection();
 
-	TextEditor * getTextEditor();
-
 	void resetShapeRecognizer();
-
-	PdfCache * getCache();
 
 	bool isPageVisible(int page);
 
+	TextEditor * getTextEditor();
+	ArrayIterator<PageView *> pageViewIterator();
+	Control * getControl();
+	double getZoom();
+	Document * getDocument();
+	PagePositionHandler * getPagePositionHandler();
+	PdfCache * getCache();
 	RepaintHandler * getRepaintHandler();
+	GtkWidget * getWidget();
 
 public:
 	//ZoomListener interface
@@ -140,6 +134,11 @@ private:
 	 * Handler for rerendering pages / repainting pages
 	 */
 	RepaintHandler * repaintHandler;
+
+	/**
+	 * The positions of all pages
+	 */
+	PagePositionHandler * pagePosition;
 
 	/**
 	 * Memory cleanup timeout

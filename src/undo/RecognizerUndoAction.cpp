@@ -41,14 +41,14 @@ void RecognizerUndoAction::addSourceElement(Stroke * s) {
 
 bool RecognizerUndoAction::undo(Control * control) {
 	int pos = this->layer->removeElement(this->recognized, false);
+	this->view->rerenderElement(this->recognized);
 	int i = 0;
 	for (GList * l = this->original; l != NULL; l = l->next) {
 		Stroke * s = (Stroke *) l->data;
 		this->layer->insertElement(s, pos);
+		this->view->rerenderElement(s);
 		i++;
 	}
-
-	this->view->rerender();
 
 	undone = true;
 	return true;
@@ -59,10 +59,11 @@ bool RecognizerUndoAction::redo(Control * control) {
 	for (GList * l = this->original; l != NULL; l = l->next) {
 		Stroke * s = (Stroke *) l->data;
 		pos = this->layer->removeElement(s, false);
+		this->view->rerenderElement(s);
 	}
 	this->layer->insertElement(this->recognized, pos);
 
-	this->view->rerender();
+	this->view->rerenderElement(this->recognized);
 
 	undone = false;
 	return true;

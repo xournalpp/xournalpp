@@ -97,7 +97,10 @@ am_xournalpp_OBJECTS = xournalpp-AutosaveJob.$(OBJEXT) \
 	xournalpp-ImagesDialog.$(OBJEXT) \
 	xournalpp-PdfPagesDialog.$(OBJEXT) \
 	xournalpp-SelectBackgroundColorDialog.$(OBJEXT) \
-	xournalpp-SettingsDialog.$(OBJEXT) xournalpp-Sidebar.$(OBJEXT) \
+	xournalpp-SettingsDialog.$(OBJEXT) \
+	xournalpp-PagePositionCache.$(OBJEXT) \
+	xournalpp-PagePositionHandler.$(OBJEXT) \
+	xournalpp-PagePosition.$(OBJEXT) xournalpp-Sidebar.$(OBJEXT) \
 	xournalpp-SidebarPreview.$(OBJEXT) \
 	xournalpp-ToolbarModel.$(OBJEXT) \
 	xournalpp-ToolbarData.$(OBJEXT) \
@@ -388,6 +391,9 @@ xournalpp_SOURCES = \
 	gui/dialog/PdfPagesDialog.cpp \
 	gui/dialog/SelectBackgroundColorDialog.cpp \
 	gui/dialog/SettingsDialog.cpp \
+	gui/pageposition/PagePositionCache.cpp \
+	gui/pageposition/PagePositionHandler.cpp \
+	gui/pageposition/PagePosition.cpp \
 	gui/sidebar/Sidebar.cpp \
 	gui/sidebar/SidebarPreview.cpp \
 	gui/toolbarMenubar/model/ToolbarModel.cpp \
@@ -632,6 +638,9 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-OutputStream.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-Page.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-PageBackgroundChangedUndoAction.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-PagePosition.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-PagePositionCache.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-PagePositionHandler.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-PageRange.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-PageView.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-PartList.Po@am__quote@
@@ -1593,6 +1602,48 @@ xournalpp-SettingsDialog.obj: gui/dialog/SettingsDialog.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='gui/dialog/SettingsDialog.cpp' object='xournalpp-SettingsDialog.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-SettingsDialog.obj `if test -f 'gui/dialog/SettingsDialog.cpp'; then $(CYGPATH_W) 'gui/dialog/SettingsDialog.cpp'; else $(CYGPATH_W) '$(srcdir)/gui/dialog/SettingsDialog.cpp'; fi`
+
+xournalpp-PagePositionCache.o: gui/pageposition/PagePositionCache.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-PagePositionCache.o -MD -MP -MF $(DEPDIR)/xournalpp-PagePositionCache.Tpo -c -o xournalpp-PagePositionCache.o `test -f 'gui/pageposition/PagePositionCache.cpp' || echo '$(srcdir)/'`gui/pageposition/PagePositionCache.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-PagePositionCache.Tpo $(DEPDIR)/xournalpp-PagePositionCache.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='gui/pageposition/PagePositionCache.cpp' object='xournalpp-PagePositionCache.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-PagePositionCache.o `test -f 'gui/pageposition/PagePositionCache.cpp' || echo '$(srcdir)/'`gui/pageposition/PagePositionCache.cpp
+
+xournalpp-PagePositionCache.obj: gui/pageposition/PagePositionCache.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-PagePositionCache.obj -MD -MP -MF $(DEPDIR)/xournalpp-PagePositionCache.Tpo -c -o xournalpp-PagePositionCache.obj `if test -f 'gui/pageposition/PagePositionCache.cpp'; then $(CYGPATH_W) 'gui/pageposition/PagePositionCache.cpp'; else $(CYGPATH_W) '$(srcdir)/gui/pageposition/PagePositionCache.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-PagePositionCache.Tpo $(DEPDIR)/xournalpp-PagePositionCache.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='gui/pageposition/PagePositionCache.cpp' object='xournalpp-PagePositionCache.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-PagePositionCache.obj `if test -f 'gui/pageposition/PagePositionCache.cpp'; then $(CYGPATH_W) 'gui/pageposition/PagePositionCache.cpp'; else $(CYGPATH_W) '$(srcdir)/gui/pageposition/PagePositionCache.cpp'; fi`
+
+xournalpp-PagePositionHandler.o: gui/pageposition/PagePositionHandler.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-PagePositionHandler.o -MD -MP -MF $(DEPDIR)/xournalpp-PagePositionHandler.Tpo -c -o xournalpp-PagePositionHandler.o `test -f 'gui/pageposition/PagePositionHandler.cpp' || echo '$(srcdir)/'`gui/pageposition/PagePositionHandler.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-PagePositionHandler.Tpo $(DEPDIR)/xournalpp-PagePositionHandler.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='gui/pageposition/PagePositionHandler.cpp' object='xournalpp-PagePositionHandler.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-PagePositionHandler.o `test -f 'gui/pageposition/PagePositionHandler.cpp' || echo '$(srcdir)/'`gui/pageposition/PagePositionHandler.cpp
+
+xournalpp-PagePositionHandler.obj: gui/pageposition/PagePositionHandler.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-PagePositionHandler.obj -MD -MP -MF $(DEPDIR)/xournalpp-PagePositionHandler.Tpo -c -o xournalpp-PagePositionHandler.obj `if test -f 'gui/pageposition/PagePositionHandler.cpp'; then $(CYGPATH_W) 'gui/pageposition/PagePositionHandler.cpp'; else $(CYGPATH_W) '$(srcdir)/gui/pageposition/PagePositionHandler.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-PagePositionHandler.Tpo $(DEPDIR)/xournalpp-PagePositionHandler.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='gui/pageposition/PagePositionHandler.cpp' object='xournalpp-PagePositionHandler.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-PagePositionHandler.obj `if test -f 'gui/pageposition/PagePositionHandler.cpp'; then $(CYGPATH_W) 'gui/pageposition/PagePositionHandler.cpp'; else $(CYGPATH_W) '$(srcdir)/gui/pageposition/PagePositionHandler.cpp'; fi`
+
+xournalpp-PagePosition.o: gui/pageposition/PagePosition.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-PagePosition.o -MD -MP -MF $(DEPDIR)/xournalpp-PagePosition.Tpo -c -o xournalpp-PagePosition.o `test -f 'gui/pageposition/PagePosition.cpp' || echo '$(srcdir)/'`gui/pageposition/PagePosition.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-PagePosition.Tpo $(DEPDIR)/xournalpp-PagePosition.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='gui/pageposition/PagePosition.cpp' object='xournalpp-PagePosition.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-PagePosition.o `test -f 'gui/pageposition/PagePosition.cpp' || echo '$(srcdir)/'`gui/pageposition/PagePosition.cpp
+
+xournalpp-PagePosition.obj: gui/pageposition/PagePosition.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-PagePosition.obj -MD -MP -MF $(DEPDIR)/xournalpp-PagePosition.Tpo -c -o xournalpp-PagePosition.obj `if test -f 'gui/pageposition/PagePosition.cpp'; then $(CYGPATH_W) 'gui/pageposition/PagePosition.cpp'; else $(CYGPATH_W) '$(srcdir)/gui/pageposition/PagePosition.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-PagePosition.Tpo $(DEPDIR)/xournalpp-PagePosition.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='gui/pageposition/PagePosition.cpp' object='xournalpp-PagePosition.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-PagePosition.obj `if test -f 'gui/pageposition/PagePosition.cpp'; then $(CYGPATH_W) 'gui/pageposition/PagePosition.cpp'; else $(CYGPATH_W) '$(srcdir)/gui/pageposition/PagePosition.cpp'; fi`
 
 xournalpp-Sidebar.o: gui/sidebar/Sidebar.cpp
 @am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-Sidebar.o -MD -MP -MF $(DEPDIR)/xournalpp-Sidebar.Tpo -c -o xournalpp-Sidebar.o `test -f 'gui/sidebar/Sidebar.cpp' || echo '$(srcdir)/'`gui/sidebar/Sidebar.cpp
