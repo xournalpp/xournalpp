@@ -100,9 +100,6 @@ private:
 	void startText(double x, double y);
 	void selectObjectAt(double x, double y);
 
-	void doScroll(GdkEventMotion * event);
-	static bool scrollCallback(PageView * view);
-
 	void addRerenderRect(double x, double y, double width, double height);
 private:
 	XojPage * page;
@@ -119,17 +116,6 @@ private:
 	 * The selected (while selection)
 	 */
 	Selection * selectionEdit;
-
-	/**
-	 * The last Mouse Position, for scrolling
-	 */
-	int lastMousePositionX;
-	int lastMousePositionY;
-
-	int scrollOffsetX;
-	int scrollOffsetY;
-
-	bool inScrolling;
 
 	/**
 	 * The text editor View

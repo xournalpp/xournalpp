@@ -25,12 +25,15 @@ Cursor::Cursor(Control * control) {
 	this->busy = false;
 	this->invisible = false;
 	this->selectionType = CURSOR_SELECTION_NONE;
+	this->insidePage = false;
 }
 
 Cursor::~Cursor() {
 }
 
 void Cursor::setMouseDown(bool mouseDown) {
+	g_return_if_fail(this != NULL);
+
 	if (this->mouseDown == mouseDown) {
 		return;
 	}
@@ -46,6 +49,8 @@ void Cursor::setMouseDown(bool mouseDown) {
 }
 
 void Cursor::setMouseSelectionType(CursorSelectionType selectionType) {
+	g_return_if_fail(this != NULL);
+
 	if (this->selectionType == selectionType) {
 		return;
 	}
@@ -54,6 +59,8 @@ void Cursor::setMouseSelectionType(CursorSelectionType selectionType) {
 }
 
 void Cursor::setCursorBusy(bool busy) {
+	g_return_if_fail(this != NULL);
+
 	MainWindow * win = control->getWindow();
 	if (!win) {
 		return;
@@ -81,7 +88,21 @@ void Cursor::setCursorBusy(bool busy) {
 	updateCursor();
 }
 
+void Cursor::setInsidePage(bool insidePage) {
+	g_return_if_fail(this != NULL);
+
+	if(this->insidePage == insidePage) {
+		return;
+	}
+
+	this->insidePage = insidePage;
+
+	updateCursor();
+}
+
 void Cursor::setInvisible(bool invisible) {
+	g_return_if_fail(this != NULL);
+
 	if (this->invisible == invisible) {
 		return;
 	}
@@ -148,6 +169,8 @@ GdkCursor * Cursor::getPenCursor() {
 }
 
 void Cursor::updateCursor() {
+	g_return_if_fail(this != NULL);
+
 	MainWindow * win = control->getWindow();
 	if (!win) {
 		return;
@@ -172,6 +195,8 @@ void Cursor::updateCursor() {
 			} else {
 				cursor = gdk_cursor_new(GDK_HAND1);
 			}
+		} else if(!this->insidePage) {
+			// not inside page: so use default cursor
 		} else if (this->selectionType) {
 			switch (this->selectionType) {
 			case CURSOR_SELECTION_MOVE:

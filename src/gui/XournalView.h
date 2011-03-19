@@ -30,6 +30,7 @@ class XojPage;
 class Rectangle;
 class RepaintHandler;
 class PagePositionHandler;
+class Cursor;
 
 class XournalView: public DocumentListener, public ZoomListener, public MemoryCheckObject {
 public:
@@ -87,6 +88,7 @@ public:
 	PdfCache * getCache();
 	RepaintHandler * getRepaintHandler();
 	GtkWidget * getWidget();
+	Cursor * getCursor();
 
 public:
 	//ZoomListener interface

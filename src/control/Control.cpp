@@ -34,6 +34,7 @@
 #include "../gui/TextEditor.h"
 #include "../undo/DeleteUndoAction.h"
 #include "settings/ButtonConfig.h"
+#include "../gui/Cursor.h"
 
 #include <config.h>
 #include <glib/gi18n-lib.h>
@@ -55,6 +56,7 @@ Control::Control(GladeSearchpath * gladeSearchPath) {
 	this->gladeSearchPath = gladeSearchPath;
 
 	this->metadata = new MetadataManager();
+	this->cursor = new Cursor(this);
 
 	this->lastAction = ACTION_NONE;
 	this->lastGroup = GROUP_NOGROUP;
@@ -96,8 +98,6 @@ Control::Control(GladeSearchpath * gladeSearchPath) {
 	this->toolHandler = new ToolHandler(this, this, this->settings);
 	this->toolHandler->loadSettings();
 
-	this->cursor = new Cursor(this);
-
 	/**
 	 * This is needed to update the previews
 	 */
@@ -133,6 +133,8 @@ Control::~Control() {
 	this->scrollHandler = NULL;
 	delete this->metadata;
 	this->metadata = NULL;
+	delete this->cursor;
+	this->cursor = NULL;
 }
 
 void Control::deleteLastAutosaveFile(String newAutosaveFile) {
@@ -1045,7 +1047,7 @@ void Control::insertPage(XojPage * page, int position) {
 	this->doc->unlock();
 	firePageInserted(position);
 
-	cursor->updateCursor();
+	getCursor()->updateCursor();
 
 	if (!scrollHandler->isPageVisible(position)) {
 		scrollHandler->scrollToPage(position);
@@ -1441,7 +1443,7 @@ void Control::toolChanged() {
 	fireActionSelected(GROUP_SHAPE_RECOGNIZER, toolHandler->isShapeRecognizer() ? ACTION_SHAPE_RECOGNIZER : ACTION_NOT_SELECTED);
 	fireActionSelected(GROUP_RULER, toolHandler->isRuler() ? ACTION_RULER : ACTION_NOT_SELECTED);
 
-	cursor->updateCursor();
+	getCursor()->updateCursor();
 
 	if (type != TOOL_TEXT) {
 		if (win) {
@@ -1531,7 +1533,7 @@ void Control::toolSizeChanged() {
 
 void Control::toolColorChanged() {
 	fireActionSelected(GROUP_COLOR, ACTION_SELECT_COLOR);
-	cursor->updateCursor();
+	getCursor()->updateCursor();
 
 	if (this->selection && toolHandler->getColor() != -1) {
 		UndoAction * undo = this->selection->setColor(toolHandler->getColor());
@@ -1567,7 +1569,7 @@ void Control::showSettings() {
 	}
 
 	if (bigCursor != settings->isShowBigCursor()) {
-		cursor->updateCursor();
+		getCursor()->updateCursor();
 	}
 
 	win->updateScrollbarSidebarPosition();
@@ -1709,7 +1711,7 @@ void Control::fileLoaded() {
 	updateWindowTitle();
 	win->updateLayerCombobox();
 	win->getXournal()->forceUpdatePagenumbers();
-	cursor->updateCursor();
+	getCursor()->updateCursor();
 	updateDeletePageButton();
 }
 
@@ -1725,7 +1727,7 @@ bool Control::annotatePdf(String filename, bool attachPdf, bool attachToDocument
 		}
 	}
 
-	cursor->setCursorBusy(true);
+	getCursor()->setCursorBusy(true);
 
 	bool res = this->doc->readPdf(filename, true, attachToDocument);
 
@@ -1751,10 +1753,10 @@ bool Control::annotatePdf(String filename, bool attachPdf, bool attachToDocument
 		gtk_dialog_run(GTK_DIALOG(dialog));
 		gtk_widget_destroy(dialog);
 	}
-	cursor->setCursorBusy(false);
+	getCursor()->setCursorBusy(false);
 
 	fireDocumentChanged(DOCUMENT_CHANGE_COMPLETE);
-	cursor->updateCursor();
+	getCursor()->updateCursor();
 
 	return true;
 }
@@ -1773,7 +1775,7 @@ void Control::block(const char * name) {
 
 	// Disable all gui Control, to get full control over the application
 	win->setControlTmpDisabled(true);
-	cursor->setCursorBusy(true);
+	getCursor()->setCursorBusy(true);
 	disableSidebarTmp(true);
 
 	this->statusbar = this->win->get("statusbar");
@@ -1794,7 +1796,7 @@ void Control::unblock() {
 	}
 
 	this->win->setControlTmpDisabled(false);
-	cursor->setCursorBusy(false);
+	getCursor()->setCursorBusy(false);
 	disableSidebarTmp(false);
 
 	gtk_widget_hide(this->statusbar);
@@ -1893,7 +1895,7 @@ bool Control::showSaveDialog() {
 
 	this->doc->lock();
 
-	// TODO: inform metadata manager about the name change!
+	this->metadata->move(this->doc->getFilename(), filename);
 	this->doc->setFilename(filename);
 	this->doc->unlock();
 
@@ -2166,7 +2168,7 @@ void Control::clearSelection() {
 		this->clipboardHandler->setSelection(this->selection);
 	}
 
-	cursor->setMouseSelectionType(CURSOR_SELECTION_NONE);
+	getCursor()->setMouseSelectionType(CURSOR_SELECTION_NONE);
 	toolHandler->setSelectionEditTools(false, false);
 }
 
@@ -2307,5 +2309,9 @@ ScrollHandler * Control::getScrollHandler() {
 
 MetadataManager * Control::getMetadataManager() {
 	return this->metadata;
+}
+
+Sidebar * Control::getSidebar() {
+	return this->sidebar;
 }
 

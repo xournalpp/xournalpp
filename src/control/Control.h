@@ -26,7 +26,6 @@
 
 #include "../gui/sidebar/Sidebar.h"
 #include "../gui/SearchBar.h"
-#include "../gui/Cursor.h"
 #include "jobs/ProgressListener.h"
 #include "ScrollHandler.h"
 
@@ -37,6 +36,7 @@ class EditSelection;
 class SaveHandler;
 class GladeSearchpath;
 class MetadataManager;
+class Cursor;
 
 class Control: public ActionHandler,
 		public ToolListener,
@@ -72,9 +72,6 @@ public:
 	// Menu Help
 	void showAbout();
 
-	Settings * getSettings();
-	ToolHandler * getToolHandler();
-
 	virtual void actionPerformed(ActionType type, ActionGroup group, GdkEvent *event, GtkMenuItem *menuitem, GtkToolButton *toolbutton, bool enabled);
 
 	virtual void toolColorChanged();
@@ -87,36 +84,18 @@ public:
 
 	void updatePageNumbers(int page, int pdfPage);
 
-	Document * getDocument();
-
 	virtual void fileOpened(const char * uri);
 
-	ZoomControl * getZoomControl();
-
 	/**
-	 * Save current state
+	 * Save current state (selected tool etc.)
 	 */
 	void saveSettings();
 
-	UndoRedoHandler * getUndoRedoHandler();
-	MainWindow * getWindow();
-	Cursor * getCursor();
-	RecentManager * getRecentManager();
-	ScrollHandler * getScrollHandler();
-
 	void updateWindowTitle();
-
-	int getCurrentPageNo();
-
-	XojPage * getCurrentPage();
 	void calcZoomFitSize();
-
 	void setViewTwoPages(bool continous);
-
 	void setPageInsertType(PageInsertType type);
-
 	void customizeToolbars();
-
 	void enableFullscreen(bool enabled, bool presentation = false);
 
 	void addNewLayer();
@@ -175,7 +154,18 @@ public:
 	void deleteLastAutosaveFile(String newAutosaveFile);
 
 	MetadataManager * getMetadataManager();
-
+	Settings * getSettings();
+	ToolHandler * getToolHandler();
+	ZoomControl * getZoomControl();
+	Document * getDocument();
+	UndoRedoHandler * getUndoRedoHandler();
+	MainWindow * getWindow();
+	RecentManager * getRecentManager();
+	ScrollHandler * getScrollHandler();
+	XojPage * getCurrentPage();
+	int getCurrentPageNo();
+	Cursor * getCursor();
+	Sidebar * getSidebar();
 public:
 	// UndoRedoListener interface
 	void undoRedoChanged();
@@ -229,8 +219,6 @@ private:
 
 	ToolHandler * toolHandler;
 
-	Cursor * cursor;
-
 	ActionType lastAction;
 	ActionGroup lastGroup;
 	bool lastEnabled;
@@ -239,6 +227,11 @@ private:
 	bool sidebarHidden;
 
 	ScrollHandler * scrollHandler;
+
+	/**
+	 * The cursor handler
+	 */
+	Cursor * cursor;
 
 	/**
 	 * Timeout id: the timeout watches the changes and actualizes the previews from time to time

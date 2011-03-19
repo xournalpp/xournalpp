@@ -8,8 +8,9 @@
 #include "../../cfg.h"
 #include "../pageposition/PagePositionCache.h"
 #include "../pageposition/PagePositionHandler.h"
-#include <gdk/gdkkeysyms.h>
+#include "../Cursor.h"
 
+#include <gdk/gdkkeysyms.h>
 #include <math.h>
 
 static void gtk_xournal_class_init(GtkXournalClass * klass);
@@ -27,13 +28,20 @@ static void gtk_xournal_set_adjustment_upper(GtkAdjustment *adj, gdouble upper, 
 static gboolean gtk_xournal_key_press_event(GtkWidget * widget, GdkEventKey * event);
 static gboolean gtk_xournal_key_release_event(GtkWidget * widget, GdkEventKey * event);
 gboolean gtk_xournal_scroll_event(GtkWidget * widget, GdkEventScroll * event);
+static void gtk_xournal_scroll_mouse_event(GtkXournal * xournal, GdkEventMotion * event);
 
 GtkType gtk_xournal_get_type(void) {
 	static GtkType gtk_xournal_type = 0;
 
 	if (!gtk_xournal_type) {
-		static const GtkTypeInfo gtk_xournal_info = { "GtkXournal", sizeof(GtkXournal), sizeof(GtkXournalClass), (GtkClassInitFunc) gtk_xournal_class_init,
-				(GtkObjectInitFunc) gtk_xournal_init, NULL, NULL, (GtkClassInitFunc) NULL };
+		static const GtkTypeInfo gtk_xournal_info = {
+				"GtkXournal",
+				sizeof(GtkXournal),
+				sizeof(GtkXournalClass),
+				(GtkClassInitFunc) gtk_xournal_class_init,
+				(GtkObjectInitFunc) gtk_xournal_init,
+				NULL, NULL, (GtkClassInitFunc) NULL
+		};
 		gtk_xournal_type = gtk_type_unique(GTK_TYPE_WIDGET, &gtk_xournal_info);
 	}
 
@@ -59,6 +67,12 @@ GtkWidget * gtk_xournal_new(XournalView * view, GtkRange * hrange, GtkRange * vr
 
 	xoj->vadj->step_increment = 20;
 	xoj->hadj->step_increment = 20;
+
+	xoj->lastMousePositionX = 0;
+	xoj->lastMousePositionY = 0;
+	xoj->scrollOffsetX = 0;
+	xoj->scrollOffsetY = 0;
+	xoj->inScrolling = false;
 
 	gtk_xournal_connect_scrollbars(xoj);
 
@@ -255,6 +269,38 @@ gboolean gtk_xournal_scroll_event(GtkWidget * widget, GdkEventScroll * event) {
 	return false;
 }
 
+
+bool gtk_xournal_scroll_callback(GtkXournal * xournal) {
+	gdk_threads_enter();
+
+	gtk_xournal_scroll_relative(GTK_WIDGET(xournal), xournal->scrollOffsetX, xournal->scrollOffsetY);
+
+	xournal->scrollOffsetX = 0;
+	xournal->scrollOffsetY = 0;
+
+	gdk_threads_leave();
+
+	return false;
+}
+
+static void gtk_xournal_scroll_mouse_event(GtkXournal * xournal, GdkEventMotion * event) {
+	int x = event->x;
+	int y = event->y;
+
+	if (xournal->lastMousePositionX - x == 0 && xournal->lastMousePositionY - y == 0) {
+		return;
+	}
+
+	if (xournal->scrollOffsetX == 0 && xournal->scrollOffsetY == 0) {
+		xournal->scrollOffsetX = xournal->lastMousePositionX - x;
+		xournal->scrollOffsetY = xournal->lastMousePositionY - y;
+		g_idle_add((GSourceFunc) gtk_xournal_scroll_callback, xournal);
+
+		xournal->lastMousePositionX = x;
+		xournal->lastMousePositionY = y;
+	}
+}
+
 PageView * gtk_xournal_get_page_view_for_pos_cached(GtkXournal * xournal, int x, int y) {
 	x += xournal->x;
 	y += xournal->y;
@@ -288,6 +334,20 @@ gboolean gtk_xournal_button_press_event(GtkWidget * widget, GdkEventButton * eve
 	gtk_widget_grab_focus(widget);
 
 	GtkXournal * xournal = GTK_XOURNAL(widget);
+	ToolHandler * h = xournal->view->getControl()->getToolHandler();
+
+	// hand tool don't change the selection, so you can scroll e.g.
+	// with your touchscreen without remove the selection
+	if (h->getToolType() == TOOL_HAND) {
+		Cursor * cursor = xournal->view->getCursor();
+		cursor->setMouseDown(true);
+		xournal->lastMousePositionX = 0;
+		xournal->lastMousePositionY = 0;
+		xournal->inScrolling = true;
+		gtk_widget_get_pointer(widget, &xournal->lastMousePositionX, &xournal->lastMousePositionY);
+
+		return true;
+	}
 
 	PageView * pv = gtk_xournal_get_page_view_for_pos_cached(xournal, event->x, event->y);
 	if (pv) {
@@ -315,6 +375,12 @@ gboolean gtk_xournal_button_release_event(GtkWidget * widget, GdkEventButton * e
 
 	GtkXournal * xournal = GTK_XOURNAL(widget);
 
+	Cursor * cursor = xournal->view->getCursor();
+	ToolHandler * h = xournal->view->getControl()->getToolHandler();
+	cursor->setMouseDown(false);
+
+	xournal->inScrolling = false;
+
 	if (xournal->currentInputPage) {
 		xournal->currentInputPage->translateEvent((GdkEvent*) event, xournal->x, xournal->y);
 		bool res = xournal->currentInputPage->onButtonReleaseEvent(widget, event);
@@ -334,8 +400,18 @@ gboolean gtk_xournal_motion_notify_event(GtkWidget * widget, GdkEventMotion * ev
 	XInputUtils::fixXInputCoords((GdkEvent*) event, widget);
 
 	GtkXournal * xournal = GTK_XOURNAL(widget);
+	ToolHandler * h = xournal->view->getControl()->getToolHandler();
+
+	if (h->getToolType() == TOOL_HAND) {
+		if (xournal->inScrolling) {
+			gtk_xournal_scroll_mouse_event(xournal, event);
+			return true;
+		}
+		return false;
+	}
 
 	PageView * pv = gtk_xournal_get_page_view_for_pos_cached(xournal, event->x, event->y);
+	xournal->view->getCursor()->setInsidePage(pv != NULL);
 	if (pv) {
 		// allow events only to a single page!
 		if (xournal->currentInputPage == NULL || pv == xournal->currentInputPage) {

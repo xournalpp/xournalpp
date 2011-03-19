@@ -29,8 +29,6 @@ void PagePositionHandler::freeData() {
 void PagePositionHandler::update(PageView ** viewPages, int viewPagesLen, int maxY) {
 	freeData();
 
-	printf("PagePositionHandler::update\n");
-
 	this->maxY = maxY;
 
 	PagePosition * lastPp = new PagePosition();
