@@ -50,7 +50,7 @@ EditSelection::EditSelection(UndoRedoHandler * undo, Selection * selection, Redr
 		addElementInt((Element *) l->data);
 	}
 
-	this->view->rerender();
+	this->view->rerenderPage();
 }
 
 EditSelection::EditSelection(UndoRedoHandler * undo, Element * e, Redrawable * view, XojPage * page) {
@@ -71,7 +71,7 @@ EditSelection::EditSelection(UndoRedoHandler * undo, Element * e, Redrawable * v
 
 	addElementInt(e);
 
-	this->view->rerender();
+	this->view->rerenderPage();
 }
 
 void EditSelection::initAttributes() {
@@ -129,7 +129,7 @@ EditSelection::~EditSelection() {
 		this->undo->addUndoAction(scaleUndo);
 	}
 
-	view->rerender(x - this->offsetX, y - this->offsetY, x + width, y + height);
+	view->rerenderRect(x - this->offsetX, y - this->offsetY, width, height);
 	g_list_free(this->selected);
 
 	delete this->documentView;
@@ -207,7 +207,7 @@ UndoAction * EditSelection::setColor(int color) {
 		double y2 = this->y + this->height;
 
 		this->deleteViewBuffer();
-		this->view->repaint(x1 - this->offsetX, y1 - this->offsetY, x2, y2);
+		this->view->repaintArea(x1 - this->offsetX, y1 - this->offsetY, x2, y2);
 
 		return undo;
 	} else {
@@ -260,7 +260,7 @@ UndoAction * EditSelection::setSize(ToolSize size, const double * thiknessPen, c
 		double y2 = this->y + this->height;
 
 		this->deleteViewBuffer();
-		this->view->repaint(x1 - this->offsetX, y1 - this->offsetY, x2, y2);
+		this->view->repaintArea(x1 - this->offsetX, y1 - this->offsetY, x2, y2);
 
 		return undo;
 	} else {
@@ -289,93 +289,95 @@ void EditSelection::setEditMode(CursorSelectionType selType, double x, double y)
  */
 void EditSelection::doMove(double dx, double dy, Redrawable * view, XournalView * xournal) {
 	// TODO !!!!!!!!!!!!!!!!!!!!!!
-//	if (this->moveUndoAction == NULL) {
-//		this->moveUndoAction = new MoveUndoAction(this->page, this);
-//	}
-//
-//	double x1 = this->x;
-//	double x2 = this->x + this->width;
-//	double y1 = this->y;
-//	double y2 = this->y + this->height;
-//
-//	GtkAllocation alloc = { 0 };
-//	gtk_widget_get_allocation(inputView->getWidget(), &alloc);
-//
-//	this->x += dx;
-//	this->y += dy;
-//
-//	double zoom = xournal->getZoom();
-//
-//	// Test if the selection is moved to another page
-//	int xPos = (this->x + this->mouseX) * zoom + alloc.x;
-//	int yPos = (this->y + this->mouseY) * zoom + alloc.y;
-//
-//	PageView * v = xournal->getViewAt(xPos, yPos);
-//	Redrawable * lastView = NULL;
-//	if (v != NULL && this->view != v) {
-//		lastView = this->view;
-//		this->view = v;
-//
-//		GtkAllocation alloc1 = { 0 };
-//		gtk_widget_get_allocation(lastView->getWidget(), &alloc1);
-//		GtkAllocation alloc2 = { 0 };
-//		gtk_widget_get_allocation(this->view->getWidget(), &alloc2);
-//
-//		double zoom = xournal->getZoom();
-//
-//		double xOffset = alloc2.x - alloc1.x;
-//		double yOffset = alloc2.y - alloc1.y;
-//
-//		if (yOffset > 1 || yOffset < -1) {
-//			if (yOffset > 1) {
-//				yOffset += XOURNAL_PADDING;
-//			} else {
-//				yOffset -= XOURNAL_PADDING;
-//			}
-//
-//			yOffset *= zoom;
-//		}
-//
-//		if (xOffset > 1 || xOffset < -1) {
-//			if (xOffset > 1) {
-//				xOffset += XOURNAL_PADDING;
-//			} else {
-//				xOffset -= XOURNAL_PADDING;
-//			}
-//
-//			xOffset *= zoom;
-//		}
-//
-//		this->offsetX += xOffset;
-//		this->offsetY += yOffset;
-//
-//		page = v->getPage();
-//		this->layer = page->getSelectedLayer();
-//	}
-//
-//	if (lastView) {
-//		//		lastView->redrawDocumentRegion(x1, y1, x2, y2);
-//		lastView->redraw();
-//
-//		//		x1 = this->x;
-//		//		y1 = this->y;
-//		//
-//		//		x2 = this->x + this->width;
-//		//		y2 = this->y + this->height;
-//	} else {
-//		//		x1 = MIN(x1, this->x);
-//		//		y1 = MIN(y1, this->y);
-//		//
-//		//		x2 = MAX(x2, this->x + this->width);
-//		//		y2 = MAX(y2, this->y + this->height);
-//	}
-//	//this->view->redrawDocumentRegion(x1 - this->offsetX, y1 - this->offsetY, x2, y2);
-//	//this->view->redrawDocumentRegion(x1, y1, x2, y2);
-//
-//	this->view->redraw();
+	//	if (this->moveUndoAction == NULL) {
+	//		this->moveUndoAction = new MoveUndoAction(this->page, this);
+	//	}
+	//
+	//	double x1 = this->x;
+	//	double x2 = this->x + this->width;
+	//	double y1 = this->y;
+	//	double y2 = this->y + this->height;
+	//
+	//	GtkAllocation alloc = { 0 };
+	//	gtk_widget_get_allocation(inputView->getWidget(), &alloc);
+	//
+	//	this->x += dx;
+	//	this->y += dy;
+	//
+	//	double zoom = xournal->getZoom();
+	//
+	//	// Test if the selection is moved to another page
+	//	int xPos = (this->x + this->mouseX) * zoom + alloc.x;
+	//	int yPos = (this->y + this->mouseY) * zoom + alloc.y;
+	//
+	//	PageView * v = xournal->getViewAt(xPos, yPos);
+	//	Redrawable * lastView = NULL;
+	//	if (v != NULL && this->view != v) {
+	//		lastView = this->view;
+	//		this->view = v;
+	//
+	//		GtkAllocation alloc1 = { 0 };
+	//		gtk_widget_get_allocation(lastView->getWidget(), &alloc1);
+	//		GtkAllocation alloc2 = { 0 };
+	//		gtk_widget_get_allocation(this->view->getWidget(), &alloc2);
+	//
+	//		double zoom = xournal->getZoom();
+	//
+	//		double xOffset = alloc2.x - alloc1.x;
+	//		double yOffset = alloc2.y - alloc1.y;
+	//
+	//		if (yOffset > 1 || yOffset < -1) {
+	//			if (yOffset > 1) {
+	//				yOffset += XOURNAL_PADDING;
+	//			} else {
+	//				yOffset -= XOURNAL_PADDING;
+	//			}
+	//
+	//			yOffset *= zoom;
+	//		}
+	//
+	//		if (xOffset > 1 || xOffset < -1) {
+	//			if (xOffset > 1) {
+	//				xOffset += XOURNAL_PADDING;
+	//			} else {
+	//				xOffset -= XOURNAL_PADDING;
+	//			}
+	//
+	//			xOffset *= zoom;
+	//		}
+	//
+	//		this->offsetX += xOffset;
+	//		this->offsetY += yOffset;
+	//
+	//		page = v->getPage();
+	//		this->layer = page->getSelectedLayer();
+	//	}
+	//
+	//	if (lastView) {
+	//		//		lastView->redrawDocumentRegion(x1, y1, x2, y2);
+	//		lastView->redraw();
+	//
+	//		//		x1 = this->x;
+	//		//		y1 = this->y;
+	//		//
+	//		//		x2 = this->x + this->width;
+	//		//		y2 = this->y + this->height;
+	//	} else {
+	//		//		x1 = MIN(x1, this->x);
+	//		//		y1 = MIN(y1, this->y);
+	//		//
+	//		//		x2 = MAX(x2, this->x + this->width);
+	//		//		y2 = MAX(y2, this->y + this->height);
+	//	}
+	//	//this->view->redrawDocumentRegion(x1 - this->offsetX, y1 - this->offsetY, x2, y2);
+	//	//this->view->redrawDocumentRegion(x1, y1, x2, y2);
+	//
+	//	this->view->redraw();
 }
 
 void EditSelection::move(double x, double y, Redrawable * view, XournalView * xournal) {
+	// TODO: OPTIMIZE redrawing
+
 	if (this->selType == CURSOR_SELECTION_MOVE) {
 		double dx = x - this->selX;
 		double dy = y - this->selY;
@@ -401,7 +403,7 @@ void EditSelection::move(double x, double y, Redrawable * view, XournalView * xo
 		this->x += oldW - this->width;
 		this->y += oldH - this->height;
 
-		this->view->rerender();
+		this->view->repaintPage();
 	} else if (this->selType == CURSOR_SELECTION_TOP_RIGHT) {
 		double dx = x - this->x - this->width;
 		double dy = y - this->y;
@@ -418,7 +420,7 @@ void EditSelection::move(double x, double y, Redrawable * view, XournalView * xo
 
 		this->y += oldH - this->height;
 
-		this->view->rerender();
+		this->view->repaintPage();
 	} else if (this->selType == CURSOR_SELECTION_BOTTOM_LEFT) {
 		double dx = x - this->x;
 		double dy = y - this->y - this->height;
@@ -435,7 +437,7 @@ void EditSelection::move(double x, double y, Redrawable * view, XournalView * xo
 
 		this->x += oldW - this->width;
 
-		this->view->rerender();
+		this->view->repaintPage();
 	} else if (this->selType == CURSOR_SELECTION_BOTTOM_RIGHT) {
 		double dx = x - this->x - this->width;
 		double dy = y - this->y - this->height;
@@ -449,26 +451,26 @@ void EditSelection::move(double x, double y, Redrawable * view, XournalView * xo
 		this->width *= f;
 		this->height *= f;
 
-		this->view->rerender();
+		this->view->repaintPage();
 	} else if (this->selType == CURSOR_SELECTION_TOP) {
 		double dy = y - this->y;
 		this->height -= dy;
 		this->y += dy;
-		this->view->rerender();
+		this->view->repaintPage();
 	} else if (this->selType == CURSOR_SELECTION_BOTTOM) {
 		double dy = y - this->y - this->height;
 		this->height += dy;
-		this->view->rerender();
+		this->view->repaintPage();
 	} else if (this->selType == CURSOR_SELECTION_LEFT) {
 		double dx = x - this->x;
 		this->width -= dx;
 		this->x += dx;
 
-		this->view->rerender();
+		this->view->repaintPage();
 	} else if (this->selType == CURSOR_SELECTION_RIGHT) {
 		double dx = x - this->x - this->width;
 		this->width += dx;
-		this->view->rerender();
+		this->view->repaintPage();
 	}
 }
 
@@ -542,9 +544,9 @@ CursorSelectionType EditSelection::getSelectionTypeForPos(double x, double y, do
 bool EditSelection::repaintSelection(EditSelection * selection) {
 	gdk_threads_enter();
 
-	// TODO !!!!!!!!!!!!!!!
+	// delete the selection buffer, force a redraw
 	selection->deleteViewBuffer();
-	selection->view->rerender();
+	selection->view->repaintRect(selection->getX(), selection->getY(), selection->getWidth(), selection->getHeight());
 	selection->rescaleId = 0;
 
 	gdk_threads_leave();
@@ -681,7 +683,7 @@ UndoAction * EditSelection::setFont(XojFont & font) {
 
 	if (!isnan(x1)) {
 		this->deleteViewBuffer();
-		this->view->repaint(x1, y1, x2, y2);
+		this->view->repaintArea(x1, y1, x2, y2);
 		return undo;
 	}
 	delete undo;

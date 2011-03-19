@@ -1293,18 +1293,11 @@ void Control::deleteCurrentLayer() {
 
 void Control::calcZoomFitSize() {
 	if (this->doc && this->win) {
-		double width = 0;
-		//		for (int i = 0; i < doc->getPageCount(); i++) {
-		//			Page * p = doc->getPage(i);
-		//			width = MAX(p->getWidth(), width);
-		//		}
-
-
 		XojPage * p = getCurrentPage();
 		if (p == NULL) {
 			return;
 		}
-		width = p->getWidth() + 15; // 15: show a shadow
+		double width = p->getWidth() + 20;
 
 		GtkAllocation allocation = { 0 };
 
@@ -2066,7 +2059,7 @@ void Control::clipboardPasteText(String text) {
 
 	EditSelection * selection = new EditSelection(this->undoRedo, t, view, page);
 	setSelection(selection);
-	view->rerender(t);
+	view->rerenderElement(t);
 }
 
 void Control::clipboardPasteXournal(ObjectInputStream & in) {
@@ -2129,7 +2122,7 @@ void Control::clipboardPasteXournal(ObjectInputStream & in) {
 		}
 
 		setSelection(selection);
-		view->repaint(x, y, x + width, y + height);
+		view->repaintRect(x, y, width, height);
 
 	} catch (std::exception & e) {
 		g_warning("could not paste, Exception occurred: %s", e.what());
@@ -2161,7 +2154,7 @@ void Control::deleteSelection() {
 
 		clearSelection();
 
-		view->rerender();
+		view->rerenderPage();
 	}
 }
 

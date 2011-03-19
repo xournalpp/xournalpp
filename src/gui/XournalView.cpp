@@ -10,6 +10,7 @@
 #include "../control/settings/MetadataManager.h"
 #include "../util/Rectangle.h"
 #include "widgets/XournalWidget.h"
+#include "pageposition/PagePositionHandler.h"
 
 #include "RepaintHandler.h"
 
@@ -28,6 +29,7 @@ XournalView::XournalView(GtkWidget * parent, GtkRange * hrange, GtkRange * vrang
 	gtk_widget_show(this->widget);
 
 	this->repaintHandler = new RepaintHandler(this);
+	this->pagePosition = new PagePositionHandler();
 
 	this->viewPages = NULL;
 	this->viewPagesLen = 0;
@@ -54,6 +56,9 @@ XournalView::~XournalView() {
 	this->cache = NULL;
 	delete this->repaintHandler;
 	this->repaintHandler = NULL;
+
+	delete this->pagePosition;
+	this->pagePosition = NULL;
 }
 
 gint pageViewCmpSize(PageView * a, PageView * b) {
@@ -224,19 +229,6 @@ PageView * XournalView::getViewFor(int pageNr) {
 	return this->viewPages[pageNr];
 }
 
-PageView * XournalView::getViewAt(int x, int y) {
-	// TODO: LOW PRIO: binary search
-
-	for (int page = 0; page < this->viewPagesLen; page++) {
-		PageView * p = this->viewPages[page];
-		if (p->containsPoint(x, y)) {
-			return p;
-		}
-	}
-
-	return NULL;
-}
-
 void XournalView::pageSelected(int page) {
 	if (this->currentPage == page && this->lastSelectedPage == page) {
 		return;
@@ -395,7 +387,9 @@ void XournalView::endTextSelection() {
 }
 
 void XournalView::layerChanged(int page) {
-	this->viewPages[page]->rerender();
+	if (page >= 0 && page < this->viewPagesLen) {
+		this->viewPages[page]->rerenderPage();
+	}
 }
 
 void XournalView::getPasteTarget(double & x, double & y) {
@@ -507,7 +501,7 @@ void XournalView::pageSizeChanged(int page) {
 
 void XournalView::pageChanged(int page) {
 	if (page >= 0 && page < this->viewPagesLen) {
-		this->viewPages[page]->rerender();
+		this->viewPages[page]->rerenderPage();
 	}
 }
 
@@ -601,10 +595,10 @@ void XournalView::layoutPages() {
 
 	bool allowScrollOutsideThePage = settings->isAllowScrollOutsideThePage();
 
-	if (showTwoPages) {
-		int width = alloc.width;
-		int height = XOURNAL_PADDING_TOP_LEFT;
+	int width = alloc.width;
+	int height = XOURNAL_PADDING_TOP_LEFT;
 
+	if (showTwoPages) {
 		// TODO LOW PRIO: handle single landscape page better
 		// If there is a landscape page, display them on a single line, not with another page
 
@@ -644,7 +638,7 @@ void XournalView::layoutPages() {
 			int x = 0;
 			int h = this->viewPages[i]->getDisplayHeight();
 			if (i < this->viewPagesLen - 1) {
-				x = width - this->viewPages[i]->getDisplayWidth() - this->viewPages[i + 1]->getDisplayWidth() - XOURNAL_PADDING - +XOURNAL_PADDING_TOP_LEFT;
+				x = width - this->viewPages[i]->getDisplayWidth() - this->viewPages[i + 1]->getDisplayWidth() - XOURNAL_PADDING - XOURNAL_PADDING_TOP_LEFT;
 				x /= 2;
 
 				this->viewPages[i]->setPos(x, y);
@@ -673,14 +667,12 @@ void XournalView::layoutPages() {
 			GtkAdjustment * vadj = gtk_scrolled_window_get_vadjustment(GTK_SCROLLED_WINDOW(gtk_widget_get_parent(this->widget)));
 			gtk_adjustment_set_value(vadj, additionalHeight / 2);
 		}
-	} else {
-		int width = alloc.width;
-		int height = XOURNAL_PADDING_TOP_LEFT;
-
+	} else { // single page
 		// calc size for the widget
 		for (int i = 0; i < this->viewPagesLen; i++) {
 			PageView * pageView = this->viewPages[i];
-			int w = pageView->getDisplayWidth();
+			int w = pageView->getDisplayWidth() + 20; // 20px for shadow
+
 			if (width < w) {
 				width = w;
 			}
@@ -705,8 +697,7 @@ void XournalView::layoutPages() {
 		gtk_xournal_set_size(this->widget, width, height);
 
 		// layout pages
-
-		for (int i = 0; i < viewPagesLen; i++) {
+		for (int i = 0; i < this->viewPagesLen; i++) {
 			PageView * pageView = this->viewPages[i];
 
 			x = width - pageView->getDisplayWidth();
@@ -727,6 +718,8 @@ void XournalView::layoutPages() {
 	}
 
 	gtk_widget_queue_draw(this->widget);
+
+	this->pagePosition->update(this->viewPages, this->viewPagesLen, height);
 }
 
 bool XournalView::isPageVisible(int page) {
@@ -810,4 +803,8 @@ Document * XournalView::getDocument() {
 
 ArrayIterator<PageView *> XournalView::pageViewIterator() {
 	return ArrayIterator<PageView *> (viewPages, viewPagesLen);
+}
+
+PagePositionHandler * XournalView::getPagePositionHandler() {
+	return this->pagePosition;
 }

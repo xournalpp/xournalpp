@@ -38,7 +38,7 @@ VerticalToolHandler::VerticalToolHandler(Redrawable * view, XojPage * page, doub
 
 	cairo_destroy(cr);
 
-	view->rerender();
+	view->rerenderPage();
 }
 
 VerticalToolHandler::~VerticalToolHandler() {
@@ -91,7 +91,7 @@ void VerticalToolHandler::currentPos(double x, double y) {
 
 	this->endY = y;
 
-	this->view->repaint(0, y1, this->page->getWidth(), this->page->getHeight());
+	this->view->repaintRect(0, y1, this->page->getWidth(), this->page->getHeight());
 
 	double dY = this->endY - this->startY;
 
@@ -125,7 +125,7 @@ MoveUndoAction * VerticalToolHandler::finalize() {
 
 	undo->finalize(this);
 
-	view->rerender();
+	view->rerenderPage();
 
 	return undo;
 }

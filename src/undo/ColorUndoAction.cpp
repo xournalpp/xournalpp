@@ -58,7 +58,7 @@ bool ColorUndoAction::undo(Control * control) {
 		y2 = MAX(y2, e->e->getY()+ e->e->getElementHeight());
 	}
 
-	view->rerender(x1, y1, x2, y2);
+	view->rerenderArea(x1, y1, x2, y2);
 
 	return true;
 }
@@ -84,7 +84,7 @@ bool ColorUndoAction::redo(Control * control) {
 		y2 = MAX(y2, e->e->getY()+ e->e->getElementHeight());
 	}
 
-	view->rerender(x1, y1, x2, y2);
+	view->rerenderArea(x1, y1, x2, y2);
 
 	return true;
 }

@@ -6,6 +6,8 @@
 #include "../../control/settings/Settings.h"
 #include "../../util/XInputUtils.h"
 #include "../../cfg.h"
+#include "../pageposition/PagePositionCache.h"
+#include "../pageposition/PagePositionHandler.h"
 #include <gdk/gdkkeysyms.h>
 
 #include <math.h>
@@ -53,7 +55,7 @@ GtkWidget * gtk_xournal_new(XournalView * view, GtkRange * hrange, GtkRange * vr
 	xoj->hadj = hrange->adjustment;
 	xoj->vadj = vrange->adjustment;
 	xoj->currentInputPage = NULL;
-	xoj->lastInputPage = NULL;
+	xoj->pagePositionCache = new PagePositionCache();
 
 	xoj->vadj->step_increment = 20;
 	xoj->hadj->step_increment = 20;
@@ -257,13 +259,9 @@ PageView * gtk_xournal_get_page_view_for_pos_cached(GtkXournal * xournal, int x,
 	x += xournal->x;
 	y += xournal->y;
 
-	if (xournal->lastInputPage && xournal->lastInputPage->containsPoint(x, y)) {
-		return xournal->lastInputPage;
-	}
+	PagePositionHandler * pph = xournal->view->getPagePositionHandler();
 
-	PageView * pv = xournal->view->getViewAt(x, y);
-	xournal->lastInputPage = pv;
-	return pv;
+	return pph->getViewAt(x, y, xournal->pagePositionCache);
 }
 
 gboolean gtk_xournal_button_press_event(GtkWidget * widget, GdkEventButton * event) {
@@ -291,13 +289,8 @@ gboolean gtk_xournal_button_press_event(GtkWidget * widget, GdkEventButton * eve
 
 	GtkXournal * xournal = GTK_XOURNAL(widget);
 
-	if (xournal->currentInputPage) {
-		return false;
-	}
-
 	PageView * pv = gtk_xournal_get_page_view_for_pos_cached(xournal, event->x, event->y);
 	if (pv) {
-
 		// none button release event was sent, send one now
 		if (xournal->currentInputPage) {
 			GdkEventButton ev = *event;
@@ -422,7 +415,7 @@ static void gtk_xournal_size_allocate(GtkWidget * widget, GtkAllocation * alloca
 	gtk_widget_set_visible(GTK_WIDGET(xournal->hrange), widget->allocation.width < xournal->width);
 }
 
-static void gtk_xournal_set_adjustment_upper(GtkAdjustment *adj, gdouble upper, gboolean always_emit_changed) {
+static void gtk_xournal_set_adjustment_upper(GtkAdjustment * adj, gdouble upper, gboolean always_emit_changed) {
 	gboolean changed = FALSE;
 	gboolean value_changed = FALSE;
 
@@ -551,6 +544,11 @@ void gtk_xournal_repaint_area(GtkWidget * widget, int x1, int y1, int x2, int y2
 
 	GtkXournal * xournal = GTK_XOURNAL(widget);
 
+	x1 -= xournal->x;
+	x2 -= xournal->x;
+	y1 -= xournal->y;
+	y2 -= xournal->y;
+
 	if (x2 < 0 || y2 < 0) {
 		return; // outside visible area
 	}
@@ -576,13 +574,43 @@ static gboolean gtk_xournal_expose(GtkWidget * widget, GdkEventExpose * event) {
 
 	ArrayIterator<PageView *> it = xournal->view->pageViewIterator();
 
+	GtkAllocation alloc = { 0 };
+	gtk_widget_get_allocation(widget, &alloc);
+	int lastVisibleX = alloc.width + xournal->x + 10;
+	int lastVisibleY = alloc.height + xournal->y + 10; //+10 fix to draw the shadow
+
+	int firstVisibleX = xournal->x - 10;
+	int firstVisibleY = xournal->y - 10;
+
 	while (it.hasNext()) {
 		PageView * pv = it.next();
 
-		int x = pv->getX() - xournal->x;
-		int y = pv->getY() - xournal->y;
+		int px = pv->getX();
+		int py = pv->getY();
+		int pw = pv->getDisplayWidth();
+		int ph = pv->getDisplayHeight();
 
-		gtk_xournal_draw_shadow(xournal, cr, x, y, pv->getDisplayWidth(), pv->getDisplayHeight(), pv->isSelected());
+		// not visible, its on the right side of the visible area
+		if (px > lastVisibleX) {
+			continue;
+		}
+		// not visible, its on the left side of the visible area
+		if (px + pw < firstVisibleX) {
+			continue;
+		}
+		// not visible, its on the bottom side of the visible area
+		if (py > lastVisibleY) {
+			continue;
+		}
+		// not visible, its on the top side of the visible area
+		if (py + ph < firstVisibleY) {
+			continue;
+		}
+
+		int x = px - xournal->x;
+		int y = py - xournal->y;
+
+		gtk_xournal_draw_shadow(xournal, cr, x, y, pw, ph, pv->isSelected());
 		cairo_save(cr);
 		cairo_translate(cr, x, y);
 
@@ -604,6 +632,8 @@ static void gtk_xournal_destroy(GtkObject * object) {
 	g_return_if_fail(GTK_IS_XOURNAL(object));
 
 	GtkXournal * xournal = GTK_XOURNAL(object);
+	delete xournal->pagePositionCache;
+	xournal->pagePositionCache = NULL;
 
 	GtkXournalClass * klass = (GtkXournalClass *) gtk_type_class(gtk_widget_get_type());
 

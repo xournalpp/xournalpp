@@ -46,7 +46,7 @@ PageView::PageView(XournalView * xournal, XojPage * page) {
 	this->lastMousePositionX = 0;
 	this->lastMousePositionY = 0;
 
-	this->repaintRect = NULL;
+	this->repaintRects = NULL;
 	this->rerenderComplete = false;
 	this->repaintRectMutex = g_mutex_new();
 
@@ -89,25 +89,14 @@ PageView::~PageView() {
 	deleteViewBuffer();
 
 	g_mutex_free(this->repaintRectMutex);
-	for (GList * l = this->repaintRect; l != NULL; l = l->next) {
+	for (GList * l = this->repaintRects; l != NULL; l = l->next) {
 		Rectangle * rect = (Rectangle *) l->data;
 		delete rect;
 	}
-	g_list_free(this->repaintRect);
-	this->repaintRect = NULL;
+	g_list_free(this->repaintRects);
+	this->repaintRects = NULL;
 
 	g_mutex_free(this->drawingMutex);
-}
-
-int PageView::getLastVisibelTime() {
-	return this->lastVisibelTime;
-}
-
-int PageView::getBufferPixels() {
-	if (crBuffer) {
-		return cairo_image_surface_get_width(crBuffer) * cairo_image_surface_get_height(crBuffer);
-	}
-	return 0;
 }
 
 void PageView::setIsVisibel(bool visibel) {
@@ -130,7 +119,7 @@ void PageView::deleteViewBuffer() {
 }
 
 bool PageView::containsPoint(int x, int y) {
-	return this->x <= x && this->x + this->getWidth() >= x && this->y <= y && this->y + this->getHeight() >= y;
+	return this->x <= x && this->x + this->getDisplayWidth() >= x && this->y <= y && this->y + this->getDisplayHeight() >= y;
 }
 
 bool PageView::searchTextOnPage(const char * text, int * occures, double * top) {
@@ -153,7 +142,7 @@ bool PageView::searchTextOnPage(const char * text, int * occures, double * top) 
 
 	bool found = this->search->search(text, occures, top);
 
-	repaint();
+	repaintPage();
 
 	return found;
 }
@@ -187,7 +176,7 @@ void PageView::endText() {
 
 	delete this->textEditor;
 	this->textEditor = NULL;
-	this->rerender();
+	this->rerenderPage();
 }
 
 void PageView::startText(double x, double y) {
@@ -225,7 +214,7 @@ void PageView::startText(double x, double y) {
 			this->textEditor->mousePressed(x - text->getX(), y - text->getY());
 		}
 
-		rerender();
+		rerenderPage();
 	} else {
 		Text * text = this->textEditor->getText();
 		GdkRectangle matchRect = { x - 10, y - 10, 20, 20 };
@@ -283,7 +272,7 @@ void PageView::selectObjectAt(double x, double y) {
 		Control * control = xournal->getControl();
 		control->setSelection(new EditSelection(control->getUndoRedoHandler(), elementMatch, this, page));
 
-		repaint();
+		repaintPage();
 	}
 }
 
@@ -413,14 +402,6 @@ bool PageView::onButtonPressEvent(GtkWidget * widget, GdkEventButton * event) {
 	}
 
 	return true;
-}
-
-GdkColor PageView::getSelectionColor() {
-	return this->xournal->getWidget()->style->base[GTK_STATE_SELECTED];
-}
-
-TextEditor * PageView::getTextEditor() {
-	return textEditor;
 }
 
 void PageView::resetShapeRecognizer() {
@@ -617,70 +598,26 @@ bool PageView::onKeyReleaseEvent(GdkEventKey * event) {
 	return false;
 }
 
-XournalView * PageView::getXournal() {
-	return this->xournal;
-}
-
-double PageView::getHeight() {
-	return this->page->getHeight();
-}
-
-double PageView::getWidth() {
-	return this->page->getWidth();
-}
-
-int PageView::getDisplayWidth() {
-	return this->page->getWidth() * this->xournal->getZoom();
-}
-
-int PageView::getDisplayHeight() {
-	return this->page->getHeight() * this->xournal->getZoom();
-}
-
 void PageView::setPos(int x, int y) {
 	this->x = x;
 	this->y = y;
 }
 
-int PageView::getX() {
-	return this->x;
-}
-
-int PageView::getY() {
-	return this->y;
-}
-
-XojPage * PageView::getPage() {
-	return page;
-}
-
-void PageView::rerender() {
+void PageView::rerenderPage() {
 	this->rerenderComplete = true;
 	this->xournal->getControl()->getScheduler()->addRepaintPage(this);
 }
 
-void PageView::repaint() {
+void PageView::repaintPage() {
 	xournal->getRepaintHandler()->repaintPage(this);
 }
 
-void PageView::repaint(double x1, double y1, double x2, double y2) {
+void PageView::repaintArea(double x1, double y1, double x2, double y2) {
 	double zoom = xournal->getZoom();
 	xournal->getRepaintHandler()->repaintPageArea(this, x1 * zoom - 10, y1 * zoom - 10, x2 * zoom + 20, y2 * zoom + 20);
 }
 
-void PageView::repaint(Element * e) {
-	repaint(e->getX(), e->getY(), e->getElementWidth() + e->getX(), e->getElementHeight() + e->getY());
-}
-
-void PageView::rerender(Range & r) {
-	rerender(r.getX(), r.getY(), r.getWidth(), r.getHeight());
-}
-
-void PageView::rerender(Element * e) {
-	rerender(e->getX(), e->getY(), e->getElementWidth(), e->getElementHeight());
-}
-
-void PageView::rerender(double x, double y, double width, double heigth) {
+void PageView::rerenderRect(double x, double y, double width, double heigth) {
 	int rx = (int) MAX(x - 10, 0);
 	int ry = (int) MAX(y - 10, 0);
 	int rwidth = (int) (width + 20);
@@ -700,7 +637,7 @@ void PageView::addRerenderRect(double x, double y, double width, double height) 
 
 	g_mutex_lock(this->repaintRectMutex);
 
-	for (GList * l = this->repaintRect; l != NULL; l = l->next) {
+	for (GList * l = this->repaintRects; l != NULL; l = l->next) {
 		Rectangle * r = (Rectangle *) l->data;
 
 		// its faster to redraw only one rect than repaint twice the same area
@@ -717,7 +654,7 @@ void PageView::addRerenderRect(double x, double y, double width, double height) 
 		}
 	}
 
-	this->repaintRect = g_list_append(this->repaintRect, rect);
+	this->repaintRects = g_list_append(this->repaintRects, rect);
 	g_mutex_unlock(this->repaintRectMutex);
 
 	this->xournal->getControl()->getScheduler()->addRepaintPage(this);
@@ -730,10 +667,6 @@ void PageView::setSelected(bool selected) {
 		this->xournal->requestFocus();
 		this->xournal->getRepaintHandler()->repaintPageBorder(this);
 	}
-}
-
-bool PageView::isSelected() {
-	return selected;
 }
 
 bool PageView::cut() {
@@ -796,7 +729,7 @@ bool PageView::paintPage(cairo_t * cr, GdkRectangle * rect) {
 		cairo_show_text(cr2, txtLoading);
 
 		cairo_destroy(cr2);
-		rerender();
+		rerenderPage();
 	}
 
 	cairo_save(cr);
@@ -809,7 +742,7 @@ bool PageView::paintPage(cairo_t * cr, GdkRectangle * rect) {
 		cairo_scale(cr, scale, scale);
 		cairo_set_source_surface(cr, this->crBuffer, 0, 0);
 
-		rerender();
+		rerenderPage();
 
 		rect = NULL;
 	} else {
@@ -856,4 +789,67 @@ bool PageView::paintPage(cairo_t * cr, GdkRectangle * rect) {
 	this->inputHandler->draw(cr, zoom);
 	g_mutex_unlock(this->drawingMutex);
 	return true;
+}
+
+bool PageView::containsY(int y) {
+	return (y >= this->getY() && y <= (this->getY() + this->getDisplayHeight()));
+}
+
+/**
+ * GETTER / SETTER
+ */
+
+int PageView::getLastVisibelTime() {
+	return this->lastVisibelTime;
+}
+
+bool PageView::isSelected() {
+	return selected;
+}
+
+int PageView::getBufferPixels() {
+	if (crBuffer) {
+		return cairo_image_surface_get_width(crBuffer) * cairo_image_surface_get_height(crBuffer);
+	}
+	return 0;
+}
+
+GdkColor PageView::getSelectionColor() {
+	return this->xournal->getWidget()->style->base[GTK_STATE_SELECTED];
+}
+
+TextEditor * PageView::getTextEditor() {
+	return textEditor;
+}
+
+int PageView::getX() {
+	return this->x;
+}
+
+int PageView::getY() {
+	return this->y;
+}
+
+XojPage * PageView::getPage() {
+	return page;
+}
+
+XournalView * PageView::getXournal() {
+	return this->xournal;
+}
+
+double PageView::getHeight() {
+	return this->page->getHeight();
+}
+
+double PageView::getWidth() {
+	return this->page->getWidth();
+}
+
+int PageView::getDisplayWidth() {
+	return this->page->getWidth() * this->xournal->getZoom();
+}
+
+int PageView::getDisplayHeight() {
+	return this->page->getHeight() * this->xournal->getZoom();
 }

@@ -22,6 +22,7 @@ G_BEGIN_DECLS
 
 class XournalView;
 class PageView;
+class PagePositionCache;
 
 typedef struct _GtkXournal GtkXournal;
 typedef struct _GtkXournalClass GtkXournalClass;
@@ -53,7 +54,7 @@ struct _GtkXournal {
 	GtkRange * vrange;
 
 	PageView * currentInputPage;
-	PageView * lastInputPage;
+	PagePositionCache * pagePositionCache;
 };
 
 struct _GtkXournalClass {
