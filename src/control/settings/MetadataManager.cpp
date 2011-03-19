@@ -124,6 +124,24 @@ void MetadataManager::cleanupMetadata() {
 	g_strfreev(groups);
 }
 
+void MetadataManager::move(String source, String target) {
+	if (source.isEmpty() || target.isEmpty()) {
+		return;
+	}
+
+	gsize length = 0;
+	gchar ** keys = g_key_file_get_keys(this->config, source.c_str(), &length, NULL);
+
+	for (gsize i = 0; i < length; i++) {
+		char * str = g_key_file_get_string(this->config, source.c_str(), keys[i], NULL);
+		g_key_file_set_string(this->config, target.c_str(), keys[i], str);
+
+		g_free(str);
+	}
+
+	g_strfreev(keys);
+}
+
 bool MetadataManager::save(MetadataManager * manager) {
 	manager->timeoutId = 0;
 

@@ -28,7 +28,6 @@ MainWindow::MainWindow(GladeSearchpath * gladeSearchPath, Control * control) :
 	this->toolbarMenuData = NULL;
 	this->toolbarMenuitems = NULL;
 
-
 	GtkRange * hrang = GTK_RANGE(get("scrollHorizontal"));
 	GtkRange * vrang = GTK_RANGE(get("scrollVertical"));
 	this->xournal = new XournalView(get("tableXournal"), hrang, vrang, control);
@@ -127,45 +126,51 @@ Control * MainWindow::getControl() {
 }
 
 void MainWindow::updateScrollbarSidebarPosition() {
-	// TODO: !!!!!!!!!!!!!!!!!!!!!!!!!
+	GtkWidget * panelMainContents = get("panelMainContents");
+	GtkWidget * sidebarContents = get("sidebarContents");
+	GtkWidget * tableXournal = get("tableXournal");
+	GtkWidget * scrollVertical = get("scrollVertical");
 
+	g_object_ref(scrollVertical);
+	bool scrollbarOnLeft = control->getSettings()->isScrollbarOnLeft();
 
-	//	GtkWidget * panelMainContents = get("panelMainContents");
-	//	GtkWidget * sidebarContents = get("sidebarContents");
-	////	GtkWidget * scrolledwindowMain = get("scrolledwindowMain");
-	//
-	//	gtk_scrolled_window_set_placement(GTK_SCROLLED_WINDOW(scrolledwindowMain), control->getSettings()->isScrollbarOnLeft() ? GTK_CORNER_TOP_RIGHT
-	//			: GTK_CORNER_TOP_LEFT);
-	//
-	//	int divider = gtk_paned_get_position(GTK_PANED(panelMainContents));
-	//	bool sidebarRight = control->getSettings()->isSidebarOnRight();
-	//	if (sidebarRight == (gtk_paned_get_child2(GTK_PANED(panelMainContents)) == sidebarContents)) {
-	//		// Already correct
-	//		return;
-	//	} else {
-	//		GtkAllocation allocation;
-	//		gtk_widget_get_allocation(panelMainContents, &allocation);
-	//		divider = allocation.width - divider;
-	//	}
-	//
-	//	g_object_ref(sidebarContents);
-	//	g_object_ref(scrolledwindowMain);
-	//
-	//	gtk_container_remove(GTK_CONTAINER(panelMainContents), sidebarContents);
-	//	gtk_container_remove(GTK_CONTAINER(panelMainContents), scrolledwindowMain);
-	//
-	//	if (sidebarRight) {
-	//		gtk_paned_pack1(GTK_PANED(panelMainContents), scrolledwindowMain, true, true);
-	//		gtk_paned_pack2(GTK_PANED(panelMainContents), sidebarContents, false, true);
-	//	} else {
-	//		gtk_paned_pack1(GTK_PANED(panelMainContents), sidebarContents, false, true);
-	//		gtk_paned_pack2(GTK_PANED(panelMainContents), scrolledwindowMain, true, true);
-	//	}
-	//
-	//	xournal->updateBackground();
-	//
-	//	g_object_unref(sidebarContents);
-	//	g_object_unref(scrolledwindowMain);
+	gtk_container_remove(GTK_CONTAINER(tableXournal), scrollVertical);
+	if (scrollbarOnLeft) {
+		gtk_table_attach(GTK_TABLE(tableXournal), scrollVertical, 0, 1, 0, 1, (GtkAttachOptions) 0, GTK_FILL, 0, 0);
+	} else {
+		gtk_table_attach(GTK_TABLE(tableXournal), scrollVertical, 2, 3, 0, 1, (GtkAttachOptions) 0, GTK_FILL, 0, 0);
+	}
+	this->control->getSidebar()->setBackgroundWhite();
+
+	g_object_unref(scrollVertical);
+
+	int divider = gtk_paned_get_position(GTK_PANED(panelMainContents));
+	bool sidebarRight = control->getSettings()->isSidebarOnRight();
+	if (sidebarRight == (gtk_paned_get_child2(GTK_PANED(panelMainContents)) == sidebarContents)) {
+		// Already correct
+		return;
+	} else {
+		GtkAllocation allocation;
+		gtk_widget_get_allocation(panelMainContents, &allocation);
+		divider = allocation.width - divider;
+	}
+
+	g_object_ref(sidebarContents);
+	g_object_ref(tableXournal);
+
+	gtk_container_remove(GTK_CONTAINER(panelMainContents), sidebarContents);
+	gtk_container_remove(GTK_CONTAINER(panelMainContents), tableXournal);
+
+	if (sidebarRight) {
+		gtk_paned_pack1(GTK_PANED(panelMainContents), tableXournal, true, true);
+		gtk_paned_pack2(GTK_PANED(panelMainContents), sidebarContents, false, true);
+	} else {
+		gtk_paned_pack1(GTK_PANED(panelMainContents), sidebarContents, false, true);
+		gtk_paned_pack2(GTK_PANED(panelMainContents), tableXournal, true, true);
+	}
+
+	g_object_unref(sidebarContents);
+	g_object_unref(tableXournal);
 }
 
 void MainWindow::buttonCloseSidebarClicked(GtkButton * button, MainWindow * win) {

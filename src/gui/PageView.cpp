@@ -25,11 +25,12 @@
 #include "../control/tools/VerticalToolHandler.h"
 #include "../control/tools/EraseHandler.h"
 #include "../control/tools/InputHandler.h"
-#include "../gui/TextEditor.h"
 #include "../util/Rectangle.h"
 #include "../undo/DeleteUndoAction.h"
-#include "../gui/widgets/XournalWidget.h"
-#include "../gui/RepaintHandler.h"
+#include "Cursor.h"
+#include "TextEditor.h"
+#include "widgets/XournalWidget.h"
+#include "RepaintHandler.h"
 
 #include <config.h>
 #include <glib/gi18n-lib.h>
@@ -43,17 +44,9 @@ PageView::PageView(XournalView * xournal, XojPage * page) {
 
 	this->drawingMutex = g_mutex_new();
 
-	this->lastMousePositionX = 0;
-	this->lastMousePositionY = 0;
-
 	this->repaintRects = NULL;
 	this->rerenderComplete = false;
 	this->repaintRectMutex = g_mutex_new();
-
-	this->scrollOffsetX = 0;
-	this->scrollOffsetY = 0;
-
-	this->inScrolling = false;
 
 	this->crBuffer = NULL;
 
@@ -314,12 +307,8 @@ bool PageView::onButtonPressEvent(GtkWidget * widget, GdkEventButton * event) {
 		cfg->acceptActions(h);
 	}
 
-	double x;
-	double y;
-
-	if (!gdk_event_get_coords((GdkEvent *) event, &x, &y)) {
-		return false;
-	}
+	double x = event->x;
+	double y = event->y;
 
 	if ((x < 0 || y < 0) && !extendedWarningDisplayd && settings->isXinputEnabled()) {
 		GtkWidget * dialog = gtk_message_dialog_new((GtkWindow *) *xournal->getControl()->getWindow(), GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR,
@@ -342,17 +331,10 @@ bool PageView::onButtonPressEvent(GtkWidget * widget, GdkEventButton * event) {
 	x /= zoom;
 	y /= zoom;
 
-	Cursor * cursor = xournal->getControl()->getCursor();
+	Cursor * cursor = xournal->getCursor();
 	cursor->setMouseDown(true);
 
-	// hand tool don't change the selection, so you can scroll e.g.
-	// with your touchscreen without remove the selection
-	if (h->getToolType() == TOOL_HAND) {
-		this->lastMousePositionX = 0;
-		this->lastMousePositionY = 0;
-		this->inScrolling = true;
-		gtk_widget_get_pointer(widget, &this->lastMousePositionX, &this->lastMousePositionY);
-	} else if (xournal->getControl()->getSelectionFor(this)) {
+	if (xournal->getControl()->getSelectionFor(this)) {
 		EditSelection * selection = xournal->getControl()->getSelectionFor(this);
 		CursorSelectionType selType = selection->getSelectionTypeForPos(event->x, event->y, zoom);
 		if (selType) {
@@ -415,11 +397,7 @@ bool PageView::onMotionNotifyEvent(GtkWidget * widget, GdkEventMotion * event) {
 
 	ToolHandler * h = xournal->getControl()->getToolHandler();
 
-	if (h->getToolType() == TOOL_HAND) {
-		if (this->inScrolling) {
-			doScroll(event);
-		}
-	} else if (this->inputHandler->onMotionNotifyEvent(event)) {
+	if (this->inputHandler->onMotionNotifyEvent(event)) {
 		//input	handler used this event
 	} else if (this->selectionEdit) {
 		this->selectionEdit->currentPos(x, y);
@@ -430,13 +408,13 @@ bool PageView::onMotionNotifyEvent(GtkWidget * widget, GdkEventMotion * event) {
 		if (selection->getEditMode()) {
 			selection->move(x, y, this, xournal);
 		} else {
-			Cursor * cursor = xournal->getControl()->getCursor();
+			Cursor * cursor = xournal->getCursor();
 
 			CursorSelectionType selType = selection->getSelectionTypeForPos(event->x, event->y, zoom);
 			cursor->setMouseSelectionType(selType);
 		}
 	} else if (this->textEditor) {
-		Cursor * cursor = getXournal()->getControl()->getCursor();
+		Cursor * cursor = getXournal()->getCursor();
 		cursor->setInvisible(false);
 
 		Text * text = this->textEditor->getText();
@@ -469,36 +447,6 @@ void PageView::translateEvent(GdkEvent * event, int xOffset, int yOffset) {
 	*y -= this->getY() - yOffset;
 }
 
-bool PageView::scrollCallback(PageView * view) {
-	gdk_threads_enter();
-
-	// TODO: is this still working?
-	gtk_xournal_scroll_relative(view->xournal->getWidget(), view->scrollOffsetX, view->scrollOffsetY);
-
-	view->scrollOffsetX = 0;
-	view->scrollOffsetY = 0;
-
-	gdk_threads_leave();
-
-	return false;
-}
-
-void PageView::doScroll(GdkEventMotion * event) {
-	int x = event->x;
-	int y = event->y;
-
-	if (this->lastMousePositionX - x == 0 && this->lastMousePositionY - y == 0) {
-		return;
-	}
-
-	if (this->scrollOffsetX == 0 && this->scrollOffsetY == 0) {
-		g_idle_add((GSourceFunc) scrollCallback, this);
-	}
-
-	this->scrollOffsetX = this->lastMousePositionX - x;
-	this->scrollOffsetY = this->lastMousePositionY - y;
-}
-
 bool PageView::onButtonReleaseEvent(GtkWidget * widget, GdkEventButton * event) {
 	Control * control = xournal->getControl();
 
@@ -506,11 +454,6 @@ bool PageView::onButtonReleaseEvent(GtkWidget * widget, GdkEventButton * event) 
 
 	ToolHandler * h = control->getToolHandler();
 	h->restoreLastConfig();
-
-	Cursor * cursor = control->getCursor();
-	cursor->setMouseDown(false);
-
-	this->inScrolling = false;
 
 	if (this->inEraser) {
 		this->inEraser = false;
@@ -740,6 +683,8 @@ bool PageView::paintPage(cairo_t * cr, GdkRectangle * rect) {
 
 		// Scale current image to fit the zoom level
 		cairo_scale(cr, scale, scale);
+		cairo_pattern_set_filter(cairo_get_source(cr), CAIRO_FILTER_FAST);
+
 		cairo_set_source_surface(cr, this->crBuffer, 0, 0);
 
 		rerenderPage();

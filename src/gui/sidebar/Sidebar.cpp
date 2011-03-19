@@ -38,7 +38,7 @@ Sidebar::Sidebar(GladeGui * gui, Control * control) {
 	GtkCellRenderer * renderer;
 	GtkTreeSelection * selection;
 
-	scrollBookmarks = gtk_scrolled_window_new(NULL, NULL);
+	this->scrollBookmarks = gtk_scrolled_window_new(NULL, NULL);
 
 	gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scrollBookmarks), GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
 	gtk_scrolled_window_set_shadow_type(GTK_SCROLLED_WINDOW(scrollBookmarks), GTK_SHADOW_IN);
@@ -53,7 +53,7 @@ Sidebar::Sidebar(GladeGui * gui, Control * control) {
 	gtk_widget_show_all(GTK_WIDGET(sidebar));
 	gtk_widget_set_visible(GTK_WIDGET(sidebar), control->getSettings()->isSidebarVisible());
 
-	scrollPreview = gtk_scrolled_window_new(NULL, NULL);
+	this->scrollPreview = gtk_scrolled_window_new(NULL, NULL);
 
 	gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scrollPreview), GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
 	gtk_scrolled_window_set_shadow_type(GTK_SCROLLED_WINDOW(scrollPreview), GTK_SHADOW_IN);
@@ -73,16 +73,13 @@ Sidebar::Sidebar(GladeGui * gui, Control * control) {
 	gtk_tree_view_column_set_attributes(GTK_TREE_VIEW_COLUMN(column), renderer, "text", DOCUMENT_LINKS_COLUMN_PAGE_NUMBER, NULL);
 	g_object_set(G_OBJECT(renderer), "style", PANGO_STYLE_ITALIC, NULL);
 
-	GtkCellRenderer *cell;
-	GtkListStore *store;
+	this->comboBox = GTK_COMBO_BOX(gui->get("cbSelectSidebar"));
 
-	comboBox = GTK_COMBO_BOX(gui->get("cbSelectSidebar"));
-
-	store = gtk_list_store_new(1, G_TYPE_STRING);
+	GtkListStore * store = gtk_list_store_new(1, G_TYPE_STRING);
 	gtk_combo_box_set_model(comboBox, GTK_TREE_MODEL(store));
 	g_object_unref(store);
 
-	cell = gtk_cell_renderer_text_new();
+	GtkCellRenderer * cell = gtk_cell_renderer_text_new();
 	gtk_cell_layout_pack_start(GTK_CELL_LAYOUT(comboBox), cell, TRUE);
 	gtk_cell_layout_set_attributes(GTK_CELL_LAYOUT(comboBox), cell, "text", 0, NULL);
 

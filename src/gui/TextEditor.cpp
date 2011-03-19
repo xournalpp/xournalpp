@@ -10,6 +10,7 @@
 #include "TextEditorWidget.h"
 #include "../undo/TextUndoAction.h"
 #include "../view/DocumentView.h"
+#include "Cursor.h"
 
 // TODO: LOW PRIO: implement drag & drop
 
@@ -274,7 +275,7 @@ bool TextEditor::onKeyPressEvent(GdkEventKey *event) {
 	}
 
 	if (obscure) {
-		Cursor * cursor = gui->getXournal()->getControl()->getCursor();
+		Cursor * cursor = gui->getXournal()->getCursor();
 		cursor->setInvisible(true);
 	}
 

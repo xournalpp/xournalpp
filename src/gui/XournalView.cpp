@@ -11,12 +11,11 @@
 #include "../util/Rectangle.h"
 #include "widgets/XournalWidget.h"
 #include "pageposition/PagePositionHandler.h"
+#include "Cursor.h"
 
 #include "RepaintHandler.h"
 
 #include <gdk/gdkkeysyms.h>
-
-// TODO: LOW PRIO handle scroll events from touch / if Hand tool is selected
 
 XournalView::XournalView(GtkWidget * parent, GtkRange * hrange, GtkRange * vrange, Control * control) {
 	this->control = control;
@@ -25,7 +24,7 @@ XournalView::XournalView(GtkWidget * parent, GtkRange * hrange, GtkRange * vrang
 
 	this->widget = gtk_xournal_new(this, hrange, vrange);
 
-	gtk_table_attach_defaults(GTK_TABLE(parent), this->widget, 0, 1, 0, 1);
+	gtk_table_attach_defaults(GTK_TABLE(parent), this->widget, 1, 2, 0, 1);
 	gtk_widget_show(this->widget);
 
 	this->repaintHandler = new RepaintHandler(this);
@@ -807,4 +806,8 @@ ArrayIterator<PageView *> XournalView::pageViewIterator() {
 
 PagePositionHandler * XournalView::getPagePositionHandler() {
 	return this->pagePosition;
+}
+
+Cursor * XournalView::getCursor() {
+	return control->getCursor();
 }

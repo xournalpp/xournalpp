@@ -2,6 +2,7 @@
 #include "../model/Page.h"
 #include "../model/Document.h"
 #include "../control/Control.h"
+#include "../gui/Cursor.h"
 
 InsertDeletePageUndoAction::InsertDeletePageUndoAction(XojPage * page, int pagePos, bool inserted) {
 	this->inserted = inserted;

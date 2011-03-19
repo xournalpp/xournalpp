@@ -37,6 +37,7 @@ public:
 	 */
 	bool getString(String uri, const char * name, char * &value);
 
+	void move(String source, String target);
 private:
 	void updateAccessTime(String uri);
 	void loadConfigFile();

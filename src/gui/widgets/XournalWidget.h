@@ -55,6 +55,15 @@ struct _GtkXournal {
 
 	PageView * currentInputPage;
 	PagePositionCache * pagePositionCache;
+
+	/**
+	 * The last Mouse Position, for scrolling
+	 */
+	int lastMousePositionX;
+	int lastMousePositionY;
+	int scrollOffsetX;
+	int scrollOffsetY;
+	bool inScrolling;
 };
 
 struct _GtkXournalClass {
