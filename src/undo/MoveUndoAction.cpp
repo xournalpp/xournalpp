@@ -20,25 +20,25 @@ public:
 	double y;
 };
 
-MoveUndoAction::MoveUndoAction(XojPage * page, EditSelection * selection) {
-	this->page = page;
-	this->newPage = NULL;
-	this->originalPos = NULL;
-	this->newPos = NULL;
-	this->oldLayer = selection->layer;
-	this->newLayer = NULL;
-	this->origView = selection->view;
-	this->newView = NULL;
-	this->text = _("Move");
-
-	double x = selection->x - selection->relativeX;
-	double y = selection->y - selection->relativeY;
-
-	for (GList * l = selection->selected; l != NULL; l = l->next) {
-		Element * e = (Element *) l->data;
-		this->originalPos = g_list_append(this->originalPos, new MoveUndoEntry(e, e->getX() + x, e->getY() + y));
-	}
-}
+//MoveUndoAction::MoveUndoAction(XojPage * page, EditSelection * selection) {
+//	this->page = page;
+//	this->newPage = NULL;
+//	this->originalPos = NULL;
+//	this->newPos = NULL;
+//	this->oldLayer = selection->layer;
+//	this->newLayer = NULL;
+//	this->origView = selection->view;
+//	this->newView = NULL;
+//	this->text = _("Move");
+//
+//	double x = selection->x - selection->relativeX;
+//	double y = selection->y - selection->relativeY;
+//
+//	for (GList * l = selection->selected; l != NULL; l = l->next) {
+//		Element * e = (Element *) l->data;
+//		this->originalPos = g_list_append(this->originalPos, new MoveUndoEntry(e, e->getX() + x, e->getY() + y));
+//	}
+//}
 
 MoveUndoAction::MoveUndoAction(XojPage * page, VerticalToolHandler * handler) {
 	this->page = page;
@@ -51,8 +51,9 @@ MoveUndoAction::MoveUndoAction(XojPage * page, VerticalToolHandler * handler) {
 	this->newView = NULL;
 	this->text = _("Vertical Space");
 
-	for (GList * l = handler->getElements(); l != NULL; l = l->next) {
-		Element * e = (Element *) l->data;
+	ListIterator<Element *> it = handler->getElements();
+	while (it.hasNext()) {
+		Element * e = it.next();
 		this->originalPos = g_list_append(this->originalPos, new MoveUndoEntry(e, e->getX(), e->getY()));
 	}
 }
@@ -69,23 +70,24 @@ MoveUndoAction::~MoveUndoAction() {
 	g_list_free(this->originalPos);
 }
 
-void MoveUndoAction::finalize(EditSelection * selection) {
-	for (GList * l = selection->selected; l != NULL; l = l->next) {
-		Element * e = (Element *) l->data;
-		this->newPos = g_list_append(this->newPos, new MoveUndoEntry(e,
-				e->getX() + selection->x - selection->relativeX, e->getY() + selection->y - selection->relativeY));
-	}
-
-	if (this->page != selection->page) {
-		this->newPage = selection->page;
-		this->newLayer = selection->layer;
-		this->newView = selection->view;
-	}
-}
+//void MoveUndoAction::finalize(EditSelection * selection) {
+//	for (GList * l = selection->selected; l != NULL; l = l->next) {
+//		Element * e = (Element *) l->data;
+//		this->newPos = g_list_append(this->newPos, new MoveUndoEntry(e,
+//				e->getX() + selection->x - selection->relativeX, e->getY() + selection->y - selection->relativeY));
+//	}
+//
+//	if (this->page != selection->page) {
+//		this->newPage = selection->page;
+//		this->newLayer = selection->layer;
+//		this->newView = selection->view;
+//	}
+//}
 
 void MoveUndoAction::finalize(VerticalToolHandler * handler) {
-	for (GList * l = handler->getElements(); l != NULL; l = l->next) {
-		Element * e = (Element *) l->data;
+	ListIterator<Element *> it = handler->getElements();
+	while (it.hasNext()) {
+		Element * e = it.next();
 		this ->newPos = g_list_append(this->newPos, new MoveUndoEntry(e, e->getX(), e->getY()));
 	}
 }

@@ -5,6 +5,7 @@
 #include "../util/Util.h"
 
 #include "../model/Document.h"
+#include "../model/Stroke.h"
 #include "PageView.h"
 #include "../control/PdfCache.h"
 #include "../control/settings/MetadataManager.h"
@@ -12,6 +13,7 @@
 #include "widgets/XournalWidget.h"
 #include "pageposition/PagePositionHandler.h"
 #include "Cursor.h"
+#include "../undo/DeleteUndoAction.h"
 
 #include "RepaintHandler.h"
 
@@ -583,6 +585,85 @@ void XournalView::updateXEvents() {
 	gtk_xournal_update_xevent(this->widget);
 }
 
+void XournalView::clearSelection() {
+	delete GTK_XOURNAL(widget)->selection;
+	GTK_XOURNAL(widget)->selection = NULL;
+
+	control->setClipboardHandlerSelection(getSelection());
+
+	getCursor()->setMouseSelectionType(CURSOR_SELECTION_NONE);
+	control->getToolHandler()->setSelectionEditTools(false, false);
+}
+
+void XournalView::deleteSelection() {
+
+	// TODO ????????????? delete selection
+//	EditSelection * sel = getSelection();
+//	if (sel) {
+//		PageView * view = sel->getView();
+//		DeleteUndoAction * undo = new DeleteUndoAction(sel->getPage(), view, false);
+//		sel->fillUndoItem(undo);
+//		control->getUndoRedoHandler()->addUndoAction(undo);
+//
+//		sel->clearContents();
+//
+//		clearSelection();
+//
+//		view->rerenderPage();
+//	}
+}
+
+void XournalView::setSelection(EditSelection * selection) {
+	clearSelection();
+	GTK_XOURNAL(widget)->selection = selection;
+
+	control->setClipboardHandlerSelection(getSelection());
+
+	bool canChangeSize = false;
+	bool canChangeColor = false;
+
+	ListIterator<Element *> it = selection->getElements();
+
+	while (it.hasNext()) {
+		Element * e = it.next();
+		if (e->getType() == ELEMENT_TEXT) {
+			canChangeColor = true;
+		} else if (e->getType() == ELEMENT_STROKE) {
+			Stroke * s = (Stroke *) e;
+			if (s->getToolType() != STROKE_TOOL_ERASER) {
+				canChangeColor = true;
+			}
+			canChangeSize = true;
+		}
+
+		if (canChangeColor && canChangeSize) {
+			break;
+		}
+	}
+
+	control->getToolHandler()->setSelectionEditTools(canChangeColor, canChangeSize);
+
+	repaintSelection();
+}
+
+void XournalView::repaintSelection() {
+	EditSelection * selection = getSelection();
+	if (selection == NULL) {
+		return;
+	}
+
+	Redrawable * red = selection->getView();
+	double zoom = getZoom();
+	int x0 = red->getX();
+	int y0 = red->getY();
+	int x = selection->getX() * zoom;
+	int y = selection->getY() * zoom;
+	int w = selection->getWidth() * zoom;
+	int h = selection->getHeight() * zoom;
+
+	gtk_xournal_repaint_area(this->widget, x0 + x - 10, y0 + y - 10, w + 20, h + 20);
+}
+
 void XournalView::layoutPages() {
 	GtkAllocation alloc = { 0 };
 
@@ -660,10 +741,10 @@ void XournalView::layoutPages() {
 		gtk_xournal_set_size(this->widget, width, height);
 
 		if (allowScrollOutsideThePage) {
-			GtkAdjustment * hadj = gtk_scrolled_window_get_hadjustment(GTK_SCROLLED_WINDOW(gtk_widget_get_parent(this->widget)));
+			GtkAdjustment * hadj = gtk_xournal_get_hadj(this->widget);
 			gtk_adjustment_set_value(hadj, width / 4);
 
-			GtkAdjustment * vadj = gtk_scrolled_window_get_vadjustment(GTK_SCROLLED_WINDOW(gtk_widget_get_parent(this->widget)));
+			GtkAdjustment * vadj = gtk_xournal_get_vadj(this->widget);
 			gtk_adjustment_set_value(vadj, additionalHeight / 2);
 		}
 	} else { // single page
@@ -811,3 +892,8 @@ PagePositionHandler * XournalView::getPagePositionHandler() {
 Cursor * XournalView::getCursor() {
 	return control->getCursor();
 }
+
+EditSelection * XournalView::getSelection() {
+	return GTK_XOURNAL(widget)->selection;
+}
+

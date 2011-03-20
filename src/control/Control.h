@@ -32,7 +32,6 @@
 class Sidebar;
 class CallbackData;
 class PageView;
-class EditSelection;
 class SaveHandler;
 class GladeSearchpath;
 class MetadataManager;
@@ -127,10 +126,6 @@ public:
 
 	// selection handling
 	void clearSelection();
-	EditSelection * getSelectionFor(PageView * view);
-	EditSelection * getSelection();
-	void setSelection(EditSelection * selection);
-	void paintSelection(cairo_t * cr, GdkRectangle * rect, double zoom, PageView * view);
 
 	void setCopyPasteEnabled(bool enabled);
 
@@ -152,6 +147,7 @@ public:
 	void unblock();
 
 	void deleteLastAutosaveFile(String newAutosaveFile);
+	void setClipboardHandlerSelection(EditSelection * selection);
 
 	MetadataManager * getMetadataManager();
 	Settings * getSettings();
@@ -247,11 +243,6 @@ private:
 	 * Our clipboard abstraction
 	 */
 	ClipboardHandler * clipboardHandler;
-
-	/**
-	 * Selected content, if any
-	 */
-	EditSelection * selection;
 
 	/**
 	 * The autosave handler ID

@@ -9,6 +9,7 @@
 #include "../pageposition/PagePositionCache.h"
 #include "../pageposition/PagePositionHandler.h"
 #include "../Cursor.h"
+#include "../../control/tools/EditSelection.h"
 
 #include <gdk/gdkkeysyms.h>
 #include <math.h>
@@ -73,6 +74,8 @@ GtkWidget * gtk_xournal_new(XournalView * view, GtkRange * hrange, GtkRange * vr
 	xoj->scrollOffsetX = 0;
 	xoj->scrollOffsetY = 0;
 	xoj->inScrolling = false;
+
+	xoj->selection = NULL;
 
 	gtk_xournal_connect_scrollbars(xoj);
 
@@ -172,6 +175,29 @@ static gboolean gtk_xournal_key_press_event(GtkWidget * widget, GdkEventKey * ev
 
 	GtkXournal * xournal = GTK_XOURNAL(widget);
 
+	EditSelection * selection = xournal->selection;
+	if (selection) {
+		int d = 10;
+
+		if (event->state & GDK_MOD1_MASK || event->state & GDK_SHIFT_MASK) {
+			d = 1;
+		}
+
+		if (event->keyval == GDK_Left) {
+			selection->moveSelection(-d, 0);
+			return true;
+		} else if (event->keyval == GDK_Up) {
+			selection->moveSelection(0, -d);
+			return true;
+		} else if (event->keyval == GDK_Right) {
+			selection->moveSelection(d, 0);
+			return true;
+		} else if (event->keyval == GDK_Down) {
+			selection->moveSelection(0, d);
+			return true;
+		}
+	}
+
 	return xournal->view->onKeyPressEvent(event);
 }
 
@@ -268,7 +294,6 @@ gboolean gtk_xournal_scroll_event(GtkWidget * widget, GdkEventScroll * event) {
 
 	return false;
 }
-
 
 bool gtk_xournal_scroll_callback(GtkXournal * xournal) {
 	gdk_threads_enter();
@@ -381,6 +406,11 @@ gboolean gtk_xournal_button_release_event(GtkWidget * widget, GdkEventButton * e
 
 	xournal->inScrolling = false;
 
+	EditSelection * sel = xournal->view->getSelection();
+	if (sel) {
+		sel->finalizeEditing();
+	}
+
 	if (xournal->currentInputPage) {
 		xournal->currentInputPage->translateEvent((GdkEvent*) event, xournal->x, xournal->y);
 		bool res = xournal->currentInputPage->onButtonReleaseEvent(widget, event);
@@ -408,6 +438,15 @@ gboolean gtk_xournal_motion_notify_event(GtkWidget * widget, GdkEventMotion * ev
 			return true;
 		}
 		return false;
+	} else if (xournal->selection) {
+		EditSelection * selection = xournal->selection;
+
+		PageView * view = selection->getView();
+		GdkEventMotion ev = *event;
+		view->translateEvent((GdkEvent*) &ev, xournal->x, xournal->y);
+		CursorSelectionType selType = selection->getSelectionTypeForPos(ev.x, ev.y, xournal->view->getZoom());
+		xournal->view->getCursor()->setMouseSelectionType(selType);
+		return true;
 	}
 
 	PageView * pv = gtk_xournal_get_page_view_for_pos_cached(xournal, event->x, event->y);
@@ -698,6 +737,33 @@ static gboolean gtk_xournal_expose(GtkWidget * widget, GdkEventExpose * event) {
 		cairo_restore(cr);
 	}
 
+	if (xournal->selection) {
+		double zoom = xournal->view->getZoom();
+
+		int px = xournal->selection->getX();
+		int py = xournal->selection->getY();
+		int pw = xournal->selection->getWidth() * zoom;
+		int ph = xournal->selection->getHeight() * zoom;
+
+		// not visible, its on the right side of the visible area
+		if (px > lastVisibleX) {
+		} else
+		// not visible, its on the left side of the visible area
+		if (px + pw < firstVisibleX) {
+		} else
+		// not visible, its on the bottom side of the visible area
+		if (py > lastVisibleY) {
+		} else
+		// not visible, its on the top side of the visible area
+		if (py + ph < firstVisibleY) {
+		} else {
+			Redrawable * red = xournal->selection->getView();
+			cairo_translate(cr, red->getX(), red->getY());
+
+			xournal->selection->paint(cr, zoom);
+		}
+	}
+
 	cairo_destroy(cr);
 
 	return true;
@@ -710,6 +776,9 @@ static void gtk_xournal_destroy(GtkObject * object) {
 	GtkXournal * xournal = GTK_XOURNAL(object);
 	delete xournal->pagePositionCache;
 	xournal->pagePositionCache = NULL;
+
+	delete xournal->selection;
+	xournal->selection = NULL;
 
 	GtkXournalClass * klass = (GtkXournalClass *) gtk_type_class(gtk_widget_get_type());
 

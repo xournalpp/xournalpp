@@ -31,6 +31,7 @@ class Rectangle;
 class RepaintHandler;
 class PagePositionHandler;
 class Cursor;
+class EditSelection;
 
 class XournalView: public DocumentListener, public ZoomListener, public MemoryCheckObject {
 public:
@@ -52,6 +53,8 @@ public:
 	int getCurrentPage();
 
 	void updateXEvents();
+
+	void clearSelection();
 
 	void layerChanged(int page);
 
@@ -78,6 +81,11 @@ public:
 	void resetShapeRecognizer();
 
 	bool isPageVisible(int page);
+
+	void setSelection(EditSelection * selection);
+	EditSelection * getSelection();
+	void deleteSelection();
+	void repaintSelection();
 
 	TextEditor * getTextEditor();
 	ArrayIterator<PageView *> pageViewIterator();

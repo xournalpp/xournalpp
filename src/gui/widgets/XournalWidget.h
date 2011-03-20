@@ -23,6 +23,7 @@ G_BEGIN_DECLS
 class XournalView;
 class PageView;
 class PagePositionCache;
+class EditSelection;
 
 typedef struct _GtkXournal GtkXournal;
 typedef struct _GtkXournalClass GtkXournalClass;
@@ -64,6 +65,11 @@ struct _GtkXournal {
 	int scrollOffsetX;
 	int scrollOffsetY;
 	bool inScrolling;
+
+	/**
+	 * Selected content, if any
+	 */
+	EditSelection * selection;
 };
 
 struct _GtkXournalClass {

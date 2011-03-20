@@ -56,7 +56,7 @@ PageView::PageView(XournalView * xournal, XojPage * page) {
 
 	this->verticalSpace = NULL;
 
-	this->selectionEdit = NULL;
+	this->selection = NULL;
 
 	this->textEditor = NULL;
 
@@ -262,8 +262,7 @@ void PageView::selectObjectAt(double x, double y) {
 	}
 
 	if (elementMatch) {
-		Control * control = xournal->getControl();
-		control->setSelection(new EditSelection(control->getUndoRedoHandler(), elementMatch, this, page));
+		xournal->setSelection(new EditSelection(xournal->getControl()->getUndoRedoHandler(), elementMatch, this, page));
 
 		repaintPage();
 	}
@@ -334,18 +333,6 @@ bool PageView::onButtonPressEvent(GtkWidget * widget, GdkEventButton * event) {
 	Cursor * cursor = xournal->getCursor();
 	cursor->setMouseDown(true);
 
-	if (xournal->getControl()->getSelectionFor(this)) {
-		EditSelection * selection = xournal->getControl()->getSelectionFor(this);
-		CursorSelectionType selType = selection->getSelectionTypeForPos(event->x, event->y, zoom);
-		if (selType) {
-			selection->setEditMode(selType, event->x / zoom, event->y / zoom);
-			// don't do everything else
-			return true;
-		} else {
-			xournal->getControl()->clearSelection();
-		}
-	}
-
 	if (h->getToolType() == TOOL_PEN) {
 		this->inputHandler->startStroke(event, STROKE_TOOL_PEN, x, y);
 	} else if (h->getToolType() == TOOL_HILIGHTER) {
@@ -362,17 +349,17 @@ bool PageView::onButtonPressEvent(GtkWidget * widget, GdkEventButton * event) {
 		this->verticalSpace = new VerticalToolHandler(this, this->page, y, zoom);
 	} else if (h->getToolType() == TOOL_SELECT_RECT || h->getToolType() == TOOL_SELECT_REGION || h->getToolType() == TOOL_SELECT_OBJECT) {
 		if (h->getToolType() == TOOL_SELECT_RECT) {
-			if (this->selectionEdit) {
-				delete this->selectionEdit;
-				this->selectionEdit = NULL;
+			if (this->selection) {
+				delete this->selection;
+				this->selection = NULL;
 			}
-			this->selectionEdit = new RectSelection(x, y, this);
+			this->selection = new RectSelection(x, y, this);
 		} else if (h->getToolType() == TOOL_SELECT_REGION) {
-			if (this->selectionEdit) {
-				delete this->selectionEdit;
-				this->selectionEdit = NULL;
+			if (this->selection) {
+				delete this->selection;
+				this->selection = NULL;
 			}
-			this->selectionEdit = new RegionSelect(x, y, this);
+			this->selection = new RegionSelect(x, y, this);
 		} else if (h->getToolType() == TOOL_SELECT_OBJECT) {
 			selectObjectAt(x, y);
 		}
@@ -399,20 +386,10 @@ bool PageView::onMotionNotifyEvent(GtkWidget * widget, GdkEventMotion * event) {
 
 	if (this->inputHandler->onMotionNotifyEvent(event)) {
 		//input	handler used this event
-	} else if (this->selectionEdit) {
-		this->selectionEdit->currentPos(x, y);
+	} else if (this->selection) {
+		this->selection->currentPos(x, y);
 	} else if (this->verticalSpace) {
 		this->verticalSpace->currentPos(x, y);
-	} else if (xournal->getControl()->getSelectionFor(this)) {
-		EditSelection * selection = xournal->getControl()->getSelectionFor(this);
-		if (selection->getEditMode()) {
-			selection->move(x, y, this, xournal);
-		} else {
-			Cursor * cursor = xournal->getCursor();
-
-			CursorSelectionType selType = selection->getSelectionTypeForPos(event->x, event->y, zoom);
-			cursor->setMouseSelectionType(selType);
-		}
 	} else if (this->textEditor) {
 		Cursor * cursor = getXournal()->getCursor();
 		cursor->setInvisible(false);
@@ -470,18 +447,14 @@ bool PageView::onButtonReleaseEvent(GtkWidget * widget, GdkEventButton * event) 
 		control->getUndoRedoHandler()->addUndoAction(undo);
 	}
 
-	EditSelection * sel = control->getSelectionFor(this);
-
-	if (this->selectionEdit) {
-		if (this->selectionEdit->finalize(this->page)) {
-			control->setSelection(new EditSelection(control->getUndoRedoHandler(), this->selectionEdit, this));
+	if (this->selection) {
+		if (this->selection->finalize(this->page)) {
+			xournal->setSelection(new EditSelection(control->getUndoRedoHandler(), this->selection, this));
 		}
-		delete this->selectionEdit;
-		this->selectionEdit = NULL;
-	} else if (sel) {
-		CHECK_MEMORY(sel);
 
-		sel->finalizeEditing();
+		// TODO ??? repaint / rerender
+		delete this->selection;
+		this->selection = NULL;
 	} else if (this->textEditor) {
 		this->textEditor->mouseReleased();
 	}
@@ -495,8 +468,8 @@ bool PageView::onKeyPressEvent(GdkEventKey * event) {
 		if (this->textEditor) {
 			endText();
 			return true;
-		} else if (xournal->getControl()->getSelection()) {
-			xournal->getControl()->clearSelection();
+		} else if (xournal->getSelection()) {
+			xournal->clearSelection();
 			return true;
 		} else {
 			return false;
@@ -505,29 +478,6 @@ bool PageView::onKeyPressEvent(GdkEventKey * event) {
 
 	if (this->textEditor && this->textEditor->onKeyPressEvent(event)) {
 		return true;
-	}
-
-	EditSelection * selection = xournal->getControl()->getSelectionFor(this);
-	if (selection) {
-		int d = 10;
-
-		if (event->state & GDK_MOD1_MASK || event->state & GDK_SHIFT_MASK) {
-			d = 1;
-		}
-
-		if (event->keyval == GDK_Left) {
-			selection->doMove(-d, 0, this, xournal);
-			return true;
-		} else if (event->keyval == GDK_Up) {
-			selection->doMove(0, -d, this, xournal);
-			return true;
-		} else if (event->keyval == GDK_Right) {
-			selection->doMove(d, 0, this, xournal);
-			return true;
-		} else if (event->keyval == GDK_Down) {
-			selection->doMove(0, d, this, xournal);
-			return true;
-		}
 	}
 
 	return false;
@@ -720,13 +670,11 @@ bool PageView::paintPage(cairo_t * cr, GdkRectangle * rect) {
 	if (this->textEditor) {
 		this->textEditor->paint(cr, rect, zoom);
 	}
-	if (this->selectionEdit) {
-		this->selectionEdit->paint(cr, rect, zoom);
+	if (this->selection) {
+		this->selection->paint(cr, rect, zoom);
 	}
 
 	Control * control = xournal->getControl();
-
-	control->paintSelection(cr, rect, zoom, this);
 
 	if (this->search) {
 		this->search->paint(cr, rect, zoom, getSelectionColor());
