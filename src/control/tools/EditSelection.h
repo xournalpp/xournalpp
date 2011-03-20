@@ -13,120 +13,184 @@
 #ifndef __EDITSELECTION_H__
 #define __EDITSELECTION_H__
 
-#include <glib.h>
-#include "../../model/Page.h"
-#include "../../model/Font.h"
-#include "../../gui/Redrawable.h"
 #include "../../view/ElementContainer.h"
-#include "../../util/MemoryCheck.h"
-#include "Selection.h"
-#include "../../undo/UndoAction.h"
 #include "../Tool.h"
+#include "../../model/Font.h"
 #include "CursorSelectionType.h"
 
-class XournalView;
-class DocumentView;
 class UndoRedoHandler;
-class DeleteUndoAction;
-class MoveUndoAction;
+class XojPage;
+class Layer;
+class PageView;
+class Selection;
+class Element;
+class UndoAction;
 
-class EditSelection: public MemoryCheckObject, public ElementContainer {
+class EditSelection: public ElementContainer {
 public:
-	EditSelection(UndoRedoHandler * undo, double x, double y, double width, double height, XojPage * page, Redrawable * view);
-	EditSelection(UndoRedoHandler * undo, Selection * selection, Redrawable * view);
-	EditSelection(UndoRedoHandler * undo, Element * e, Redrawable * view, XojPage * page);
+	EditSelection(UndoRedoHandler * undo, double x, double y, double width, double height, XojPage * page, PageView * view);
+	EditSelection(UndoRedoHandler * undo, Selection * selection, PageView * view);
+	EditSelection(UndoRedoHandler * undo, Element * e, PageView * view, XojPage * page);
 	~EditSelection();
 
+private:
+	/**
+	 * Our internal constructor
+	 */
+	void contstruct(UndoRedoHandler * undo, PageView * view, XojPage * sourcePage);
+
 public:
-	void paint(cairo_t * cr, GdkRectangle * rect, double zoom);
-
-	CursorSelectionType getSelectionTypeForPos(double x, double y, double zoom);
-	void setEditMode(CursorSelectionType selType, double x, double y);
-	void move(double x, double y, Redrawable * view, XournalView * xournal);
-	void doMove(double dx, double dy, Redrawable * view, XournalView * xournal);
-	CursorSelectionType getEditMode();
-	void finalizeEditing();
-
-	Redrawable * getInputView();
-	Redrawable * getView();
-	XojPage * getPage();
-
-	void fillUndoItem(DeleteUndoAction * undo);
+	/**
+	 * get the X cooridnate relative to the provided view (getView())
+	 */
+	double getX();
 
 	/**
-	 * Gets the selected objects, this should not be edited or freed
+	 * get the Y cooridnate relative to the provided view (getView())
 	 */
-	GList * getElements();
-
-	double getX();
 	double getY();
+
+	/**
+	 * get the width in document coordinates (multiple with zoom)
+	 */
 	double getWidth();
+
+	/**
+	 * get the height in document coordinates (multiple with zoom)
+	 */
 	double getHeight();
 
+	/**
+	 * get the source page (where the selection was done)
+	 */
+	XojPage * getSourcePage();
+
+	/**
+	 * get the target page if not the same as the source page, if the selection is moved to a new page
+	 */
+	XojPage * getTargetPage();
+
+public:
+	/**
+	 * Sets the tool size for pen or eraser, returs an undo action
+	 * (or NULL if nothing is done)
+	 */
 	UndoAction * setSize(ToolSize size, const double * thiknessPen, const double * thiknessHilighter, const double * thiknessEraser);
 
+	/**
+	 * Set the color of all elements, return an undo action
+	 * (Or NULL if nothing done, e.g. because there is only an image)
+	 */
 	UndoAction * setColor(int color);
 
+	/**
+	 * Sets the font of all containing text elements, return an undo action
+	 * (or NULL if there are no Text elements)
+	 */
 	UndoAction * setFont(XojFont & font);
 
+public:
+	/**
+	 * Add an element to the this selection
+	 */
 	void addElement(Element * e);
 
 	/**
-	 * This is needed if the selection is "Deleted" then the selection needs to be cleared
+	 * Returns all containig elements of this selections
 	 */
-	void clearContents();
+	ListIterator<Element *> getElements();
+
+	/**
+	 * Finish the current movement
+	 * (should be called in the mouse-button-released event handler)
+	 */
+	void finalizeEditing();
+
+	/**
+	 * Move the selection
+	 */
+	void moveSelection(double dx, double dy);
+
+	/**
+	 * Get the cursor type for the current position (if 0 then the default cursor should be used)
+	 */
+	CursorSelectionType getSelectionTypeForPos(double x, double y, double zoom);
+
+	/**
+	 * Paints the selection to cr, with the given zoom factor. The coordinates of cr
+	 * should be relative to the provideded view by getView() (use translateEvent())
+	 */
+	void paint(cairo_t * cr, double zoom);
+
+public:
+	PageView * getView();
 
 private:
+	/**
+	 * Delete our internal View buffer,
+	 * it will be recreated when the selection is painted next time
+	 */
 	void deleteViewBuffer();
 
-	void initAttributes();
 
-	void drawAnchorRect(cairo_t * cr, double x, double y, double zoom);
-
-	void addElementInt(Element * e);
-
-	static bool repaintSelection(EditSelection * selection);
-
-private:
+private: // DATA
+	/**
+	 * The size
+	 */
 	double x;
 	double y;
 	double width;
 	double height;
 
+	/**
+	 * The original size to calculate the zoom factor for reascaling the items
+	 */
 	double originalWidth;
 	double originalHeight;
 
-	double relativeX;
-	double relativeY;
-
-	CursorSelectionType selType;
-	double selX;
-	double selY;
-
-	double mouseX;
-	double mouseY;
-
+	/**
+	 * The new position
+	 */
 	double offsetX;
 	double offsetY;
 
+	/**
+	 * If both scale axes should have the same scale factor, e.g. for Text
+	 * (we cannot only set the font size for text)
+	 */
 	bool aspectRatio;
 
-	Redrawable * inputView;
-	Redrawable * view;
+	/**
+	 * The source page (form where the Elements come)
+	 */
+	XojPage * sourcePage;
 
-	UndoRedoHandler * undo;
-	MoveUndoAction * moveUndoAction;
+	/**
+	 * The source layer (form where the Elements come)
+	 */
+	Layer * sourceLayer;
 
+	/**
+	 * The selected element (the only one which are handled by this instance)
+	 */
 	GList * selected;
-	XojPage * page;
-	Layer * layer;
 
-	DocumentView * documentView;
-
+	/**
+	 * The rendered elements
+	 */
 	cairo_surface_t * crBuffer;
-	int rescaleId;
 
-	friend class MoveUndoAction;
+private: // HANDLER
+	/**
+	 * The page view for the anchor
+	 */
+	PageView * view;
+
+	/**
+	 * Undo redo handler
+	 */
+	UndoRedoHandler * undo;
+
 };
 
 #endif /* __EDITSELECTION_H__ */

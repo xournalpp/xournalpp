@@ -28,7 +28,7 @@ public:
 
 	MoveUndoAction * finalize();
 
-	GList * getElements();
+	ListIterator<Element *> getElements();
 private:
 	Redrawable * view;
 	XojPage * page;

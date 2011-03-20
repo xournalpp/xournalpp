@@ -140,7 +140,10 @@ void MainWindow::updateScrollbarSidebarPosition() {
 	} else {
 		gtk_table_attach(GTK_TABLE(tableXournal), scrollVertical, 2, 3, 0, 1, (GtkAttachOptions) 0, GTK_FILL, 0, 0);
 	}
-	this->control->getSidebar()->setBackgroundWhite();
+	Sidebar * sidebar = this->control->getSidebar();
+	if (sidebar) {
+		sidebar->setBackgroundWhite();
+	}
 
 	g_object_unref(scrollVertical);
 

@@ -277,8 +277,9 @@ void DocumentView::paintBackgroundLined() {
 }
 
 void DocumentView::drawSelection(cairo_t * cr, ElementContainer * container) {
-	for (GList * l = container->getElements(); l != NULL; l = l->next) {
-		Element * e = (Element *) l->data;
+	ListIterator<Element *> it = container->getElements();
+	while (it.hasNext()) {
+		Element * e = it.next();
 		drawElement(cr, e);
 	}
 }

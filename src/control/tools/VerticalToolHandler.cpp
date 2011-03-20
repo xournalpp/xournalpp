@@ -107,8 +107,8 @@ void VerticalToolHandler::currentPos(double x, double y) {
 	//	}
 }
 
-GList * VerticalToolHandler::getElements() {
-	return this->elements;
+ListIterator<Element *> VerticalToolHandler::getElements() {
+	return ListIterator<Element *>(this->elements);
 }
 
 MoveUndoAction * VerticalToolHandler::finalize() {

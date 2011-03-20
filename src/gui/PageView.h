@@ -115,7 +115,7 @@ private:
 	/**
 	 * The selected (while selection)
 	 */
-	Selection * selectionEdit;
+	Selection * selection;
 
 	/**
 	 * The text editor View

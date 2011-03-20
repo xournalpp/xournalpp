@@ -76,7 +76,6 @@ Control::Control(GladeSearchpath * gladeSearchPath) {
 
 	this->hiddenFullscreenWidgets = NULL;
 	this->sidebarHidden = false;
-	this->selection = NULL;
 	this->autosaveTimeout = 0;
 
 	this->defaultWidth = -1;
@@ -1535,10 +1534,13 @@ void Control::toolColorChanged() {
 	fireActionSelected(GROUP_COLOR, ACTION_SELECT_COLOR);
 	getCursor()->updateCursor();
 
-	if (this->selection && toolHandler->getColor() != -1) {
-		UndoAction * undo = this->selection->setColor(toolHandler->getColor());
-		if (undo) {
-			undoRedo->addUndoAction(undo);
+	if (this->win && toolHandler->getColor() != -1) {
+		EditSelection * sel = this->win->getXournal()->getSelection();
+		if (sel) {
+			UndoAction * undo = sel->setColor(toolHandler->getColor());
+			if (undo) {
+				undoRedo->addUndoAction(undo);
+			}
 		}
 	}
 }
@@ -2028,40 +2030,41 @@ void Control::clipboardPasteEnabled(bool enabled) {
 }
 
 void Control::clipboardPasteText(String text) {
-	double x = 0;
-	double y = 0;
-	int pageNr = getCurrentPageNo();
-	if (pageNr == -1) {
-		return;
-	}
-	PageView * view = win->getXournal()->getViewFor(pageNr);
-	if (view == NULL) {
-		return;
-	}
-
-	this->doc->lock();
-	XojPage * page = this->doc->getPage(pageNr);
-	Layer * layer = page->getSelectedLayer();
-	win->getXournal()->getPasteTarget(x, y);
-
-	Text * t = new Text();
-	t->setText(text);
-	t->setFont(settings->getFont());
-	t->setColor(toolHandler->getColor());
-
-	double width = t->getElementWidth();
-	double height = t->getElementHeight();
-
-	t->setX(x - width / 2);
-	t->setY(y - height / 2);
-	layer->addElement(t);
-	undoRedo->addUndoAction(new InsertUndoAction(page, layer, t, view));
-
-	this->doc->unlock();
-
-	EditSelection * selection = new EditSelection(this->undoRedo, t, view, page);
-	setSelection(selection);
-	view->rerenderElement(t);
+	// TODO ?????????????????????
+//	double x = 0;
+//	double y = 0;
+//	int pageNr = getCurrentPageNo();
+//	if (pageNr == -1) {
+//		return;
+//	}
+//	PageView * view = win->getXournal()->getViewFor(pageNr);
+//	if (view == NULL) {
+//		return;
+//	}
+//
+//	this->doc->lock();
+//	XojPage * page = this->doc->getPage(pageNr);
+//	Layer * layer = page->getSelectedLayer();
+//	win->getXournal()->getPasteTarget(x, y);
+//
+//	Text * t = new Text();
+//	t->setText(text);
+//	t->setFont(settings->getFont());
+//	t->setColor(toolHandler->getColor());
+//
+//	double width = t->getElementWidth();
+//	double height = t->getElementHeight();
+//
+//	t->setX(x - width / 2);
+//	t->setY(y - height / 2);
+//	layer->addElement(t);
+//	undoRedo->addUndoAction(new InsertUndoAction(page, layer, t, view));
+//
+//	this->doc->unlock();
+//
+//	EditSelection * selection = new EditSelection(this->undoRedo, t, view, page);
+//
+//	win->getXournal()->setSelection(selection);
 }
 
 void Control::clipboardPasteXournal(ObjectInputStream & in) {
@@ -2123,7 +2126,7 @@ void Control::clipboardPasteXournal(ObjectInputStream & in) {
 			element = NULL;
 		}
 
-		setSelection(selection);
+		win->getXournal()->setSelection(selection);
 		view->repaintRect(x, y, width, height);
 
 	} catch (std::exception & e) {
@@ -2136,8 +2139,10 @@ void Control::clipboardPasteXournal(ObjectInputStream & in) {
 		}
 
 		if (selection) {
-			for (GList * l = selection->getElements(); l != NULL; l = l->next) {
-				delete (Element *) l->data;
+			ListIterator<Element *> it = selection->getElements();
+
+			while (it.hasNext()) {
+				delete it.next();
 			}
 
 			delete selection;
@@ -2146,77 +2151,20 @@ void Control::clipboardPasteXournal(ObjectInputStream & in) {
 }
 
 void Control::deleteSelection() {
-	if (this->selection) {
-		PageView * view = (PageView *) this->selection->getView();
-		DeleteUndoAction * undo = new DeleteUndoAction(this->selection->getPage(), view, false);
-		this->selection->fillUndoItem(undo);
-		this->undoRedo->addUndoAction(undo);
-
-		this->selection->clearContents();
-
-		clearSelection();
-
-		view->rerenderPage();
+	if(win) {
+		win->getXournal()->deleteSelection();
 	}
 }
 
 void Control::clearSelection() {
-	delete this->selection;
-	this->selection = NULL;
+	if (this->win) {
+		this->win->getXournal()->clearSelection();
+	}
+}
 
+void Control::setClipboardHandlerSelection(EditSelection * selection) {
 	if (this->clipboardHandler) {
-		this->clipboardHandler->setSelection(this->selection);
-	}
-
-	getCursor()->setMouseSelectionType(CURSOR_SELECTION_NONE);
-	toolHandler->setSelectionEditTools(false, false);
-}
-
-void Control::setSelection(EditSelection * selection) {
-	clearSelection();
-	this->selection = selection;
-
-	if (this->clipboardHandler) {
-		this->clipboardHandler->setSelection(this->selection);
-	}
-
-	bool canChangeSize = false;
-	bool canChangeColor = false;
-
-	for (GList * l = this->selection->getElements(); l != NULL; l = l->next) {
-		Element * e = (Element *) l->data;
-		if (e->getType() == ELEMENT_TEXT) {
-			canChangeColor = true;
-		} else if (e->getType() == ELEMENT_STROKE) {
-			Stroke * s = (Stroke *) e;
-			if (s->getToolType() != STROKE_TOOL_ERASER) {
-				canChangeColor = true;
-			}
-			canChangeSize = true;
-		}
-
-		if (canChangeColor && canChangeSize) {
-			break;
-		}
-	}
-
-	toolHandler->setSelectionEditTools(canChangeColor, canChangeSize);
-}
-
-EditSelection * Control::getSelection() {
-	return this->selection;
-}
-
-EditSelection * Control::getSelectionFor(PageView * view) {
-	if (this->selection && this->selection->getInputView() == view) {
-		return this->selection;
-	}
-	return NULL;
-}
-
-void Control::paintSelection(cairo_t * cr, GdkRectangle * rect, double zoom, PageView * view) {
-	if (this->selection && this->selection->getView() == view) {
-		this->selection->paint(cr, rect, zoom);
+		this->clipboardHandler->setSelection(selection);
 	}
 }
 
@@ -2225,8 +2173,9 @@ void Control::setCopyPasteEnabled(bool enabled) {
 }
 
 void Control::setToolSize(ToolSize size) {
-	if (this->selection) {
-		UndoAction * undo = this->selection->setSize(size, toolHandler->getToolThikness(TOOL_PEN), toolHandler->getToolThikness(TOOL_HILIGHTER),
+	EditSelection * sel = this->win->getXournal()->getSelection();
+	if (sel) {
+		UndoAction * undo = sel->setSize(size, toolHandler->getToolThikness(TOOL_PEN), toolHandler->getToolThikness(TOOL_HILIGHTER),
 				toolHandler->getToolThikness(TOOL_ERASER));
 		if (undo) {
 			undoRedo->addUndoAction(undo);
@@ -2239,8 +2188,9 @@ void Control::fontChanged() {
 	XojFont font = win->getFontButtonFont();
 	settings->setFont(font);
 
-	if (this->selection) {
-		UndoAction * undo = this->selection->setFont(font);
+	EditSelection * sel = this->win->getXournal()->getSelection();
+	if (sel) {
+		UndoAction * undo = sel->setFont(font);
 		if (undo) {
 			undoRedo->addUndoAction(undo);
 		}

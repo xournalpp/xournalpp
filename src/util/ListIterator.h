@@ -25,11 +25,12 @@ public:
 		}
 		this->reverse = reverse;
 		this->copied = false;
+		this->list = data;
 	}
 
 	virtual ~ListIterator() {
 		if (this->copied) {
-			g_list_free(this->data);
+			g_list_free(this->list);
 		}
 		this->copied = false;
 		this->data = NULL;
@@ -43,7 +44,8 @@ public:
 			return;
 		}
 		this->copied = true;
-		this->data = g_list_copy(this->data);
+		this->list = g_list_copy(this->data);
+		this->data = this->list;
 	}
 
 	bool hasNext() {
@@ -60,7 +62,20 @@ public:
 		return d;
 	}
 
+	int getLength() {
+		return g_list_length(this->list);
+	}
+
+	void reset() {
+		if (this->reverse) {
+			this->data = g_list_last(this->list);
+		} else {
+			this->data = this->list;
+		}
+	}
+
 private:
+	GList * list;
 	GList * data;
 	bool reverse;
 	bool copied;

@@ -114,7 +114,9 @@ void ClipboardHandler::copy() {
 
 	out.writeString(PACKAGE_STRING);
 
-	int count = g_list_length(this->selection->getElements());
+	ListIterator<Element *> it = this->selection->getElements();
+
+	int count = it.getLength();
 	out.writeObject("Selection");
 	out.writeDouble(this->selection->getX());
 	out.writeDouble(this->selection->getY());
@@ -123,8 +125,8 @@ void ClipboardHandler::copy() {
 	out.writeInt(count);
 	out.endObject();
 
-	for (GList * l = this->selection->getElements(); l != NULL; l = l->next) {
-		Element * e = (Element *) l->data;
+	while (it.hasNext()) {
+		Element * e = it.next();
 		out << e;
 	}
 
@@ -134,8 +136,9 @@ void ClipboardHandler::copy() {
 
 	GList * textElements = NULL;
 
-	for (GList * l = this->selection->getElements(); l != NULL; l = l->next) {
-		Element * e = (Element *) l->data;
+	it.reset();
+	while (it.hasNext()) {
+		Element * e = it.next();
 		if (e->getType() == ELEMENT_TEXT) {
 			textElements = g_list_insert_sorted(textElements, e, (GCompareFunc) ElementCompareFunc);
 		}
