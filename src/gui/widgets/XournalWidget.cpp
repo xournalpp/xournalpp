@@ -296,7 +296,14 @@ gboolean gtk_xournal_scroll_event(GtkWidget * widget, GdkEventScroll * event) {
 }
 
 void gtk_xournal_ensure_rect_is_visible(GtkWidget * widget, int x, int y, int width, int height) {
-	// TODO: implementieren
+	g_return_if_fail(widget != NULL);
+	g_return_if_fail(GTK_IS_XOURNAL(widget));
+
+	GtkXournal * xournal = GTK_XOURNAL(widget);
+
+
+	gtk_adjustment_clamp_page(xournal->vadj, y - 5, y + height + 10);
+	gtk_adjustment_clamp_page(xournal->hadj, x - 5, x + width + 10);
 }
 
 bool gtk_xournal_scroll_callback(GtkXournal * xournal) {
@@ -763,7 +770,7 @@ static gboolean gtk_xournal_expose(GtkWidget * widget, GdkEventExpose * event) {
 		} else
 		// not visible, its on the top side of the visible area
 		if (py + ph < firstVisibleY) {
-			printf("test4 %i:: %i\n", py+ph, firstVisibleY);
+			printf("test4 %i:: %i\n", py + ph, firstVisibleY);
 		} else {
 			Redrawable * red = xournal->selection->getView();
 			cairo_translate(cr, red->getX() - xournal->x, red->getY() - xournal->y);
@@ -787,6 +794,8 @@ static void gtk_xournal_destroy(GtkObject * object) {
 
 	delete xournal->selection;
 	xournal->selection = NULL;
+
+	xournal->view->widgetDeleted();
 
 	GtkXournalClass * klass = (GtkXournalClass *) gtk_type_class(gtk_widget_get_type());
 

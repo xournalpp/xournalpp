@@ -14,6 +14,7 @@
 
 #include "GladeGui.h"
 #include "../model/Font.h"
+#include "../util/MemoryCheck.h"
 
 class Control;
 class MainWindow;
@@ -22,7 +23,7 @@ class ToolbarData;
 class ToolbarModel;
 class XournalView;
 
-class MainWindow: public GladeGui {
+class MainWindow: public GladeGui, public MemoryCheckObject {
 public:
 	MainWindow(GladeSearchpath * gladeSearchPath, Control * control);
 	virtual ~MainWindow();
