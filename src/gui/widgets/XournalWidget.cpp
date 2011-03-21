@@ -295,6 +295,10 @@ gboolean gtk_xournal_scroll_event(GtkWidget * widget, GdkEventScroll * event) {
 	return false;
 }
 
+void gtk_xournal_ensure_rect_is_visible(GtkWidget * widget, int x, int y, int width, int height) {
+	// TODO: implementieren
+}
+
 bool gtk_xournal_scroll_callback(GtkXournal * xournal) {
 	gdk_threads_enter();
 
@@ -740,25 +744,29 @@ static gboolean gtk_xournal_expose(GtkWidget * widget, GdkEventExpose * event) {
 	if (xournal->selection) {
 		double zoom = xournal->view->getZoom();
 
-		int px = xournal->selection->getX();
-		int py = xournal->selection->getY();
+		int px = xournal->selection->getXOnView() * zoom;
+		int py = xournal->selection->getYOnView() * zoom;
 		int pw = xournal->selection->getWidth() * zoom;
 		int ph = xournal->selection->getHeight() * zoom;
 
 		// not visible, its on the right side of the visible area
 		if (px > lastVisibleX) {
+			printf("test1\n");
 		} else
 		// not visible, its on the left side of the visible area
 		if (px + pw < firstVisibleX) {
+			printf("test2\n");
 		} else
 		// not visible, its on the bottom side of the visible area
 		if (py > lastVisibleY) {
+			printf("test3\n");
 		} else
 		// not visible, its on the top side of the visible area
 		if (py + ph < firstVisibleY) {
+			printf("test4 %i:: %i\n", py+ph, firstVisibleY);
 		} else {
 			Redrawable * red = xournal->selection->getView();
-			cairo_translate(cr, red->getX(), red->getY());
+			cairo_translate(cr, red->getX() - xournal->x, red->getY() - xournal->y);
 
 			xournal->selection->paint(cr, zoom);
 		}

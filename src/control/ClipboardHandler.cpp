@@ -118,8 +118,10 @@ void ClipboardHandler::copy() {
 
 	int count = it.getLength();
 	out.writeObject("Selection");
-	out.writeDouble(this->selection->getX());
-	out.writeDouble(this->selection->getY());
+
+	//TODO: check this coordinates!! may they're wrong...
+	out.writeDouble(this->selection->getXOnView());
+	out.writeDouble(this->selection->getYOnView());
 	out.writeDouble(this->selection->getWidth());
 	out.writeDouble(this->selection->getHeight());
 	out.writeInt(count);
@@ -166,7 +168,7 @@ void ClipboardHandler::copy() {
 	cairo_t * crPng = cairo_create(surfacePng);
 	cairo_scale(crPng, dpiFactor, dpiFactor);
 
-	cairo_translate(crPng, -selection->getX(), -selection->getY());
+	cairo_translate(crPng, -selection->getXOnView(), -selection->getYOnView());
 	view.drawSelection(crPng, this->selection);
 
 	cairo_destroy(crPng);

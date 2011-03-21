@@ -5,12 +5,10 @@
 #include "../../model/Text.h"
 #include "Selection.h"
 #include "../../gui/PageView.h"
+#include "../../view/DocumentView.h"
 #include "../../undo/SizeUndoAction.h"
 #include "../../undo/ColorUndoAction.h"
 #include "../../undo/FontUndoAction.h"
-
-
-// TODO: Debug
 #include "../../gui/XournalView.h"
 
 #include <math.h>
@@ -63,11 +61,22 @@ void EditSelection::contstruct(UndoRedoHandler * undo, PageView * view, XojPage 
 	this->offsetY = 0;
 	this->originalWidth = this->width;
 	this->originalHeight = this->height;
+	this->relativeX = ceil(this->x);
+	this->relativeY = ceil(this->y);
 
 	this->crBuffer = NULL;
+
+	this->rescaleId = 0;
 }
 
 EditSelection::~EditSelection() {
+	if (this->rescaleId) {
+		g_source_remove(this->rescaleId);
+		this->rescaleId = 0;
+	}
+
+	finalizeSelection();
+
 	this->view = NULL;
 	this->undo = NULL;
 
@@ -75,20 +84,64 @@ EditSelection::~EditSelection() {
 	this->sourceLayer = NULL;
 
 	deleteViewBuffer();
+
+	g_list_free(this->selected);
+	this->selected = NULL;
+
+	deleteViewBuffer();
+}
+
+/**
+ * Finishes all pending changes, move the elements, scale the elements and add
+ * them to new layer if any or to the old if no new layer
+ */
+void EditSelection::finalizeSelection() {
+	double fx = this->width / this->originalWidth;
+	double fy = this->height / this->originalHeight;
+
+	bool scale = false;
+	if (this->aspectRatio) {
+		double f = (fx + fy) / 2;
+		fx = f;
+		fy = f;
+	}
+	if (this->width != this->originalWidth || this->height != this->originalHeight) {
+		scale = true;
+	}
+
+	Layer * layer = this->sourceLayer;
+	// TODO: add to new layer
+
+	for (GList * l = this->selected; l != NULL; l = l->next) {
+		Element * e = (Element *) l->data;
+		e->move(this->x - this->relativeX, this->y - this->relativeY);
+		if (scale) {
+			e->scale(this->x, this->y, fx, fy);
+		}
+		layer->addElement(e);
+	}
+
+	if (scale) {
+		// TODO: ????????????????????????
+		//		ScaleUndoAction * scaleUndo = new ScaleUndoAction(this->page, this->view, this->selected, this->x, this->y, fx, fy);
+		//		this->undo->addUndoAction(scaleUndo);
+	}
+
+	this->view->getXournal()->repaintSelection();
 }
 
 /**
  * get the X cooridnate relative to the provided view (getView())
  */
-double EditSelection::getX() {
-	return this->x;
+double EditSelection::getXOnView() {
+	return this->x - this->offsetX;
 }
 
 /**
  * get the Y cooridnate relative to the provided view (getView())
  */
-double EditSelection::getY() {
-	return this->y;
+double EditSelection::getYOnView() {
+	return this->y - this->offsetY;
 }
 
 /**
@@ -166,7 +219,7 @@ UndoAction * EditSelection::setSize(ToolSize size, const double * thiknessPen, c
 		double y2 = this->y + this->height;
 
 		this->deleteViewBuffer();
-		this->view->repaintArea(x1 - this->offsetX, y1 - this->offsetY, x2, y2);
+		this->view->getXournal()->repaintSelection();
 
 		return undo;
 	} else {
@@ -202,7 +255,7 @@ UndoAction * EditSelection::setColor(int color) {
 		double y2 = this->y + this->height;
 
 		this->deleteViewBuffer();
-		this->view->repaintArea(x1 - this->offsetX, y1 - this->offsetY, x2, y2);
+		this->view->getXournal()->repaintSelection();
 
 		return undo;
 	} else {
@@ -256,7 +309,7 @@ UndoAction * EditSelection::setFont(XojFont & font) {
 
 	if (!isnan(x1)) {
 		this->deleteViewBuffer();
-		this->view->repaintArea(x1, y1, x2, y2);
+		this->view->getXournal()->repaintSelection();
 		return undo;
 	}
 	delete undo;
@@ -294,22 +347,58 @@ void EditSelection::finalizeEditing() {
  * Move the selection
  */
 void EditSelection::moveSelection(double dx, double dy) {
-	// TODO ????????????????????
+	this->offsetX -= dx;
+	this->offsetY -= dy;
 
-	this->offsetX += dx;
-	this->offsetY += dy;
+	ensureWithinVisibleArea();
 
-	gtk_widget_queue_draw(this->view->getXournal()->getWidget());
+	int x = this->view->getX() - this->offsetX + this->relativeX;
+	int y = this->view->getY() - this->offsetY + this->relativeY;
+	double zoom = this->view->getXournal()->getZoom();
+	this->view->getXournal()->ensureRectIsVisible(x, y, this->width * zoom, this->height * zoom);
+
+	this->view->getXournal()->repaintSelection();
+}
+
+/**
+ * If the selection is outside the visible area correct the coordinates
+ */
+void EditSelection::ensureWithinVisibleArea() {
+	// TODO debug
+	printf("->%lf / %lf\n", this->offsetX, this->offsetY);
+
+	//TODO: scroll to this point if not in visible area
+
+	double zoom = this->view->getXournal()->getZoom();
+	int x = this->view->getX() - this->offsetX + this->relativeX;
+	if (x < 0) {
+		this->offsetX += x;
+	}
+	int maxX = this->view->getXournal()->getMaxAreaX();
+	if (maxX < x + this->width * zoom) {
+		this->offsetX += (x + this->width * zoom) - maxX;
+	}
+
+	int y = this->view->getY() - this->offsetY + this->relativeY;
+	if (y < 0) {
+		this->offsetY += y;
+	}
+	int maxY = this->view->getXournal()->getMaxAreaY();
+	if (maxY < y + this->height * zoom) {
+		this->offsetY += (y + this->height * zoom) - maxY;
+	}
+
+	printf("->%lf / %lf\n\n", this->offsetX, this->offsetY);
 }
 
 /**
  * Get the cursor type for the current position (if 0 then the default cursor should be used)
  */
 CursorSelectionType EditSelection::getSelectionTypeForPos(double x, double y, double zoom) {
-	double x1 = this->x * zoom;
-	double x2 = (this->x + this->width) * zoom;
-	double y1 = this->y * zoom;
-	double y2 = (this->y + this->height) * zoom;
+	double x1 = getXOnView() * zoom;
+	double x2 = x1 + (this->width * zoom);
+	double y1 = getYOnView() * zoom;
+	double y2 = y1 + (this->height * zoom);
 
 	const int EDGE_PADDING = 5;
 	const int BORDER_PADDING = 3;
@@ -364,80 +453,105 @@ CursorSelectionType EditSelection::getSelectionTypeForPos(double x, double y, do
  * should be relative to the provideded view by getView() (use translateEvent())
  */
 void EditSelection::paint(cairo_t * cr, double zoom) {
-//	double x = this->x - this->offsetX;
-//	double y = this->y - this->offsetY;
-//
-//	double fx = this->width / this->originalWidth;
-//	double fy = this->height / this->originalHeight;
-//
-//	if (this->crBuffer == NULL) {
-//		this->crBuffer = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, this->width * zoom, this->height * zoom);
-//		cairo_t * cr2 = cairo_create(this->crBuffer);
-//		//		cairo_set_source_rgb(cr2, 1, 0, 0);
-//		//		cairo_rectangle(cr2, 0, 0, 100, 100);
-//		//		cairo_fill(cr2);
-//
-//		cairo_scale(cr2, zoom * fx, zoom * fy);
-//		cairo_translate(cr2, -this->relativeX, -this->relativeY);
-//		this->documentView->drawSelection(cr2, this);
-//
-//		cairo_destroy(cr2);
-//	}
-//
-//	cairo_save(cr);
-//
-//	if ((int) (this->width * zoom) != (int) cairo_image_surface_get_width(this->crBuffer) || (int) (this->height * zoom)
-//			!= (int) cairo_image_surface_get_height(this->crBuffer)) {
-//		if (!this->rescaleId) {
-//			this->rescaleId = g_idle_add((GSourceFunc) repaintSelection, this);
-//		}
-//	}
-//
-//	cairo_scale(cr, 1 / zoom, 1 / zoom);
-//
-//	cairo_set_source_surface(cr, this->crBuffer, x * zoom, y * zoom);
-//	cairo_paint(cr);
-//
-//	cairo_restore(cr);
-//
-//	cairo_set_operator(cr, CAIRO_OPERATOR_OVER);
-//
-//	GdkColor selectionColor = view->getSelectionColor();
-//
-//	// set the line always the same size on display
-//	cairo_set_line_width(cr, 1 / zoom);
-//
-//	const double dashes[] = { 10.0 / zoom, 10.0 / zoom };
-//	cairo_set_dash(cr, dashes, sizeof(dashes) / sizeof(dashes[0]), 0);
-//	cairo_set_source_rgb(cr, selectionColor.red / 65536.0, selectionColor.green / 65536.0, selectionColor.blue / 65536.0);
-//
-//	cairo_rectangle(cr, x, y, width, height);
-//
-//	cairo_stroke_preserve(cr);
-//	cairo_set_source_rgba(cr, selectionColor.red / 65536.0, selectionColor.green / 65536.0, selectionColor.blue / 65536.0, 0.3);
-//	cairo_fill(cr);
-//
-//	cairo_set_dash(cr, NULL, 0, 0);
-//
-//	if (!this->aspectRatio) {
-//		// top
-//		drawAnchorRect(cr, x + width / 2, y, zoom);
-//		// bottom
-//		drawAnchorRect(cr, x + width / 2, y + height, zoom);
-//		// left
-//		drawAnchorRect(cr, x, y + height / 2, zoom);
-//		// right
-//		drawAnchorRect(cr, x + width, y + height / 2, zoom);
-//	}
-//
-//	// top left
-//	drawAnchorRect(cr, x, y, zoom);
-//	// top right
-//	drawAnchorRect(cr, x + width, y, zoom);
-//	// bottom left
-//	drawAnchorRect(cr, x, y + height, zoom);
-//	// bottom right
-//	drawAnchorRect(cr, x + width, y + height, zoom);
+	double x = this->x - this->offsetX;
+	double y = this->y - this->offsetY;
+
+	double fx = this->width / this->originalWidth;
+	double fy = this->height / this->originalHeight;
+
+	if (this->crBuffer == NULL) {
+		this->crBuffer = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, this->width * zoom, this->height * zoom);
+		cairo_t * cr2 = cairo_create(this->crBuffer);
+
+		cairo_scale(cr2, zoom * fx, zoom * fy);
+		cairo_translate(cr2, -this->relativeX, -this->relativeY);
+		DocumentView view;
+		view.drawSelection(cr2, this);
+
+		cairo_destroy(cr2);
+	}
+
+	cairo_save(cr);
+
+	if ((int) (this->width * zoom) != (int) cairo_image_surface_get_width(this->crBuffer) || (int) (this->height * zoom)
+			!= (int) cairo_image_surface_get_height(this->crBuffer)) {
+		if (!this->rescaleId) {
+			this->rescaleId = g_idle_add((GSourceFunc) repaintSelection, this);
+		}
+	}
+
+	cairo_scale(cr, 1 / zoom, 1 / zoom);
+
+	cairo_set_source_surface(cr, this->crBuffer, (int) (x * zoom), (int) (y * zoom));
+	cairo_paint(cr);
+
+	cairo_restore(cr);
+
+	cairo_set_operator(cr, CAIRO_OPERATOR_OVER);
+
+	GdkColor selectionColor = view->getSelectionColor();
+
+	// set the line always the same size on display
+	cairo_set_line_width(cr, 1 / zoom);
+
+	const double dashes[] = { 10.0 / zoom, 10.0 / zoom };
+	cairo_set_dash(cr, dashes, sizeof(dashes) / sizeof(dashes[0]), 0);
+	cairo_set_source_rgb(cr, selectionColor.red / 65536.0, selectionColor.green / 65536.0, selectionColor.blue / 65536.0);
+
+	cairo_rectangle(cr, x, y, width, height);
+
+	cairo_stroke_preserve(cr);
+	cairo_set_source_rgba(cr, selectionColor.red / 65536.0, selectionColor.green / 65536.0, selectionColor.blue / 65536.0, 0.3);
+	cairo_fill(cr);
+
+	cairo_set_dash(cr, NULL, 0, 0);
+
+	if (!this->aspectRatio) {
+		// top
+		drawAnchorRect(cr, x + width / 2, y, zoom);
+		// bottom
+		drawAnchorRect(cr, x + width / 2, y + height, zoom);
+		// left
+		drawAnchorRect(cr, x, y + height / 2, zoom);
+		// right
+		drawAnchorRect(cr, x + width, y + height / 2, zoom);
+	}
+
+	// top left
+	drawAnchorRect(cr, x, y, zoom);
+	// top right
+	drawAnchorRect(cr, x + width, y, zoom);
+	// bottom left
+	drawAnchorRect(cr, x, y + height, zoom);
+	// bottom right
+	drawAnchorRect(cr, x + width, y + height, zoom);
+}
+
+/**
+ * Callback to redrawing the buffer asynchron
+ */
+bool EditSelection::repaintSelection(EditSelection * selection) {
+	gdk_threads_enter();
+
+	// delete the selection buffer, force a redraw
+	selection->deleteViewBuffer();
+	selection->view->repaintRect(selection->x, selection->y, selection->width, selection->height);
+	selection->rescaleId = 0;
+
+	gdk_threads_leave();
+	return false;
+}
+
+/**
+ * draws an idicator where you can scale the selection
+ */
+void EditSelection::drawAnchorRect(cairo_t * cr, double x, double y, double zoom) {
+	GdkColor selectionColor = view->getSelectionColor();
+	cairo_set_source_rgb(cr, selectionColor.red / 65536.0, selectionColor.green / 65536.0, selectionColor.blue / 65536.0);
+	cairo_rectangle(cr, x - 4 / zoom, y - 4 / zoom, 8 / zoom, 8 / zoom);
+	cairo_stroke_preserve(cr);
+	cairo_set_source_rgb(cr, 1, 1, 1);
+	cairo_fill(cr);
 }
 
 PageView * EditSelection::getView() {

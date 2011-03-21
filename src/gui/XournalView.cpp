@@ -478,6 +478,10 @@ void XournalView::zoomOut() {
 	control->getZoomControl()->zoomOut();
 }
 
+void XournalView::ensureRectIsVisible(int x, int y, int width, int heigth) {
+	gtk_xournal_ensure_rect_is_visible(this->widget, x, y, width, heigth);
+}
+
 void XournalView::zoomChanged(double lastZoom) {
 	GtkAdjustment * h = gtk_xournal_get_vadj(this->widget);
 	double scrollY = gtk_adjustment_get_value(h);
@@ -598,19 +602,19 @@ void XournalView::clearSelection() {
 void XournalView::deleteSelection() {
 
 	// TODO ????????????? delete selection
-//	EditSelection * sel = getSelection();
-//	if (sel) {
-//		PageView * view = sel->getView();
-//		DeleteUndoAction * undo = new DeleteUndoAction(sel->getPage(), view, false);
-//		sel->fillUndoItem(undo);
-//		control->getUndoRedoHandler()->addUndoAction(undo);
-//
-//		sel->clearContents();
-//
-//		clearSelection();
-//
-//		view->rerenderPage();
-//	}
+	//	EditSelection * sel = getSelection();
+	//	if (sel) {
+	//		PageView * view = sel->getView();
+	//		DeleteUndoAction * undo = new DeleteUndoAction(sel->getPage(), view, false);
+	//		sel->fillUndoItem(undo);
+	//		control->getUndoRedoHandler()->addUndoAction(undo);
+	//
+	//		sel->clearContents();
+	//
+	//		clearSelection();
+	//
+	//		view->rerenderPage();
+	//	}
 }
 
 void XournalView::setSelection(EditSelection * selection) {
@@ -652,16 +656,19 @@ void XournalView::repaintSelection() {
 		return;
 	}
 
-	Redrawable * red = selection->getView();
-	double zoom = getZoom();
-	int x0 = red->getX();
-	int y0 = red->getY();
-	int x = selection->getX() * zoom;
-	int y = selection->getY() * zoom;
-	int w = selection->getWidth() * zoom;
-	int h = selection->getHeight() * zoom;
+	//	Redrawable * red = selection->getView();
+	//	double zoom = getZoom();
+	//	int x0 = red->getX();
+	//	int y0 = red->getY();
+	//	int x = selection->getX() * zoom;
+	//	int y = selection->getY() * zoom;
+	//	int w = selection->getWidth() * zoom;
+	//	int h = selection->getHeight() * zoom;
+	//
+	//	gtk_xournal_repaint_area(this->widget, x0 + x - 10, y0 + y - 10, w + 20, h + 20);
 
-	gtk_xournal_repaint_area(this->widget, x0 + x - 10, y0 + y - 10, w + 20, h + 20);
+	// TODO: OPTIMIZE ?
+	gtk_widget_queue_draw(this->widget);
 }
 
 void XournalView::layoutPages() {
@@ -895,5 +902,13 @@ Cursor * XournalView::getCursor() {
 
 EditSelection * XournalView::getSelection() {
 	return GTK_XOURNAL(widget)->selection;
+}
+
+int XournalView::getMaxAreaX() {
+	return GTK_XOURNAL(widget)->width;
+}
+
+int XournalView::getMaxAreaY() {
+	return GTK_XOURNAL(widget)->height;
 }
 
