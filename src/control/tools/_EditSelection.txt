@@ -546,7 +546,7 @@ bool EditSelection::repaintSelection(EditSelection * selection) {
 
 	// delete the selection buffer, force a redraw
 	selection->deleteViewBuffer();
-	selection->view->repaintRect(selection->getX(), selection->getY(), selection->getWidth(), selection->getHeight());
+	selection->view->repaintRect(selection->getXOnView(), selection->getYOnView(), selection->getWidth(), selection->getHeight());
 	selection->rescaleId = 0;
 
 	gdk_threads_leave();
@@ -698,11 +698,11 @@ void EditSelection::fillUndoItem(DeleteUndoAction * undo) {
 	}
 }
 
-double EditSelection::getX() {
+double EditSelection::getXOnView() {
 	return this->x;
 }
 
-double EditSelection::getY() {
+double EditSelection::getYOnView() {
 	return this->y;
 }
 

@@ -58,8 +58,8 @@ public:
 	 */
 	GList * getElements();
 
-	double getX();
-	double getY();
+	double getXOnView();
+	double getYOnView();
 	double getWidth();
 	double getHeight();
 

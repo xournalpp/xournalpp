@@ -43,12 +43,12 @@ public:
 	/**
 	 * get the X cooridnate relative to the provided view (getView())
 	 */
-	double getX();
+	double getXOnView();
 
 	/**
 	 * get the Y cooridnate relative to the provided view (getView())
 	 */
-	double getY();
+	double getYOnView();
 
 	/**
 	 * get the width in document coordinates (multiple with zoom)
@@ -118,9 +118,19 @@ public:
 
 	/**
 	 * Paints the selection to cr, with the given zoom factor. The coordinates of cr
-	 * should be relative to the provideded view by getView() (use translateEvent())
+	 * should be relative to the provided view by getView() (use translateEvent())
 	 */
 	void paint(cairo_t * cr, double zoom);
+
+	/**
+	 * Callback to redrawing the buffer asynchrony
+	 */
+	static bool repaintSelection(EditSelection * selection);
+
+	/**
+	 * If the selection is outside the visible area correct the coordinates
+	 */
+	void ensureWithinVisibleArea();
 
 public:
 	PageView * getView();
@@ -132,6 +142,16 @@ private:
 	 */
 	void deleteViewBuffer();
 
+	/**
+	 * Draws an indicator where you can scale the selection
+	 */
+	void drawAnchorRect(cairo_t * cr, double x, double y, double zoom);
+
+	/**
+	 * Finishes all pending changes, move the elements, scale the elements and add
+	 * them to new layer if any or to the old if no new layer
+	 */
+	void finalizeSelection();
 
 private: // DATA
 	/**
@@ -153,6 +173,12 @@ private: // DATA
 	 */
 	double offsetX;
 	double offsetY;
+
+	/**
+	 * The offset to the original selection
+	 */
+	int relativeX;
+	int relativeY;
 
 	/**
 	 * If both scale axes should have the same scale factor, e.g. for Text
@@ -179,6 +205,11 @@ private: // DATA
 	 * The rendered elements
 	 */
 	cairo_surface_t * crBuffer;
+
+	/**
+	 * The source id for the rescaling task
+	 */
+	int rescaleId;
 
 private: // HANDLER
 	/**

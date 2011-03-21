@@ -82,6 +82,8 @@ public:
 
 	bool isPageVisible(int page);
 
+	void ensureRectIsVisible(int x, int y, int width, int heigth);
+
 	void setSelection(EditSelection * selection);
 	EditSelection * getSelection();
 	void deleteSelection();
@@ -97,6 +99,9 @@ public:
 	RepaintHandler * getRepaintHandler();
 	GtkWidget * getWidget();
 	Cursor * getCursor();
+
+	int getMaxAreaX();
+	int getMaxAreaY();
 
 public:
 	//ZoomListener interface
@@ -114,7 +119,6 @@ public:
 public:
 	bool onKeyPressEvent(GdkEventKey * event);
 	bool onKeyReleaseEvent(GdkEventKey * event);
-
 
 private:
 	static void onVscrollChanged(GtkAdjustment * adjustment, XournalView * xournal);

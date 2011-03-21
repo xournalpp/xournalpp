@@ -90,6 +90,7 @@ GtkAdjustment * gtk_xournal_get_hadj(GtkWidget * widget);
 GtkAdjustment * gtk_xournal_get_vadj(GtkWidget * widget);
 
 void gtk_xournal_repaint_area(GtkWidget * widget, int x1, int y1, int x2, int y2);
+void gtk_xournal_ensure_rect_is_visible(GtkWidget * widget, int x, int y, int width, int height);
 
 G_END_DECLS
 
