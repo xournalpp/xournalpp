@@ -26,6 +26,9 @@ XournalView::XournalView(GtkWidget * parent, GtkRange * hrange, GtkRange * vrang
 
 	this->widget = gtk_xournal_new(this, hrange, vrange);
 
+	// we need to refer widget here, because wo unref it somwere twice!?
+	g_object_ref(this->widget);
+
 	gtk_table_attach_defaults(GTK_TABLE(parent), this->widget, 1, 2, 0, 1);
 	gtk_widget_show(this->widget);
 
@@ -60,6 +63,10 @@ XournalView::~XournalView() {
 
 	delete this->pagePosition;
 	this->pagePosition = NULL;
+}
+
+void XournalView::widgetDeleted() {
+	this->widget = NULL;
 }
 
 gint pageViewCmpSize(PageView * a, PageView * b) {
@@ -511,6 +518,8 @@ void XournalView::pageChanged(int page) {
 }
 
 void XournalView::pageDeleted(int page) {
+	/// TODO: ???? clear selection
+
 	delete this->viewPages[page];
 	for (int i = page; i < this->viewPagesLen; i++) {
 		this->viewPages[i] = this->viewPages[i + 1];
@@ -590,13 +599,16 @@ void XournalView::updateXEvents() {
 }
 
 void XournalView::clearSelection() {
-	delete GTK_XOURNAL(widget)->selection;
+	CHECK_MEMORY(this);
+	EditSelection * sel = GTK_XOURNAL(widget)->selection;
 	GTK_XOURNAL(widget)->selection = NULL;
 
 	control->setClipboardHandlerSelection(getSelection());
 
 	getCursor()->setMouseSelectionType(CURSOR_SELECTION_NONE);
 	control->getToolHandler()->setSelectionEditTools(false, false);
+
+	delete sel;
 }
 
 void XournalView::deleteSelection() {
@@ -619,7 +631,7 @@ void XournalView::deleteSelection() {
 
 void XournalView::setSelection(EditSelection * selection) {
 	clearSelection();
-	GTK_XOURNAL(widget)->selection = selection;
+	GTK_XOURNAL(this->widget)->selection = selection;
 
 	control->setClipboardHandlerSelection(getSelection());
 
@@ -651,6 +663,8 @@ void XournalView::setSelection(EditSelection * selection) {
 }
 
 void XournalView::repaintSelection() {
+	CHECK_MEMORY(this);
+
 	EditSelection * selection = getSelection();
 	if (selection == NULL) {
 		return;
@@ -823,6 +837,7 @@ void XournalView::documentChanged(DocumentChangeType type) {
 	if (type != DOCUMENT_CHANGE_CLEARED && type != DOCUMENT_CHANGE_COMPLETE) {
 		return;
 	}
+	/// TODO: ???? clear selection
 	for (int i = 0; i < viewPagesLen; i++) {
 		delete viewPages[i];
 	}
@@ -901,14 +916,25 @@ Cursor * XournalView::getCursor() {
 }
 
 EditSelection * XournalView::getSelection() {
-	return GTK_XOURNAL(widget)->selection;
+	CHECK_MEMORY(this);
+	g_return_val_if_fail(this->widget != NULL, NULL);
+	g_return_val_if_fail(GTK_IS_XOURNAL(this->widget), NULL);
+
+
+	return GTK_XOURNAL(this->widget)->selection;
 }
 
 int XournalView::getMaxAreaX() {
-	return GTK_XOURNAL(widget)->width;
+	g_return_val_if_fail(this->widget != NULL, 0);
+	g_return_val_if_fail(GTK_IS_XOURNAL(this->widget), 0);
+
+	return GTK_XOURNAL(this->widget)->width;
 }
 
 int XournalView::getMaxAreaY() {
-	return GTK_XOURNAL(widget)->height;
+	g_return_val_if_fail(this->widget != NULL, 0);
+	g_return_val_if_fail(GTK_IS_XOURNAL(this->widget), 0);
+
+	return GTK_XOURNAL(this->widget)->height;
 }
 

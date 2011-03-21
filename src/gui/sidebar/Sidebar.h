@@ -53,7 +53,7 @@ private:
 	static gboolean treeSearchFunction(GtkTreeModel * model, gint column, const gchar * key, GtkTreeIter * iter, Sidebar * sidebar);
 
 	static void cbChangedCallback(GtkComboBox * widget, Sidebar * sidebar);
-	static bool scrollTopreview(Sidebar * sidebar);
+	static bool scrollToPreview(Sidebar * sidebar);
 
 	void askInsertPdfPage(int pdfPage);
 

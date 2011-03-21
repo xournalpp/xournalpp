@@ -485,7 +485,7 @@ void Sidebar::pageChanged(int page) {
 	p->repaint();
 }
 
-bool Sidebar::scrollTopreview(Sidebar * sidebar) {
+bool Sidebar::scrollToPreview(Sidebar * sidebar) {
 	CHECK_MEMORY(sidebar);
 
 	MainWindow * win = sidebar->control->getWindow();
@@ -510,7 +510,7 @@ bool Sidebar::scrollTopreview(Sidebar * sidebar) {
 		gdk_threads_leave();
 
 		if (x == -1) {
-			g_idle_add((GSourceFunc) & scrollTopreview, sidebar);
+			g_idle_add((GSourceFunc) scrollToPreview, sidebar);
 			return false;
 		}
 
@@ -579,7 +579,7 @@ void Sidebar::pageSelected(int page) {
 	if (this->selectedPage >= 0 && this->selectedPage < this->previewCount) {
 		SidebarPreview * p = this->previews[this->selectedPage];
 		p->setSelected(true);
-		scrollTopreview(this);
+		scrollToPreview(this);
 	}
 }
 

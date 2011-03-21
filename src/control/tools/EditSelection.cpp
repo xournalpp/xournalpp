@@ -70,11 +70,13 @@ void EditSelection::contstruct(UndoRedoHandler * undo, PageView * view, XojPage 
 }
 
 EditSelection::~EditSelection() {
+	CHECK_MEMORY(this);
 	if (this->rescaleId) {
 		g_source_remove(this->rescaleId);
 		this->rescaleId = 0;
 	}
 
+	// TODO: ?????????? view is corruped here, WHY???
 	finalizeSelection();
 
 	this->view = NULL;
@@ -364,9 +366,6 @@ void EditSelection::moveSelection(double dx, double dy) {
  * If the selection is outside the visible area correct the coordinates
  */
 void EditSelection::ensureWithinVisibleArea() {
-	// TODO debug
-	printf("->%lf / %lf\n", this->offsetX, this->offsetY);
-
 	//TODO: scroll to this point if not in visible area
 
 	double zoom = this->view->getXournal()->getZoom();
@@ -387,8 +386,6 @@ void EditSelection::ensureWithinVisibleArea() {
 	if (maxY < y + this->height * zoom) {
 		this->offsetY += (y + this->height * zoom) - maxY;
 	}
-
-	printf("->%lf / %lf\n\n", this->offsetX, this->offsetY);
 }
 
 /**

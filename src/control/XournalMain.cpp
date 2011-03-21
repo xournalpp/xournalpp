@@ -8,6 +8,7 @@
 #include "Control.h"
 #include "LoadHandler.h"
 #include "../gui/GladeSearchpath.h"
+#include "../gui/XournalView.h"
 #include "../pdf/PdfExport.h"
 #include "cfg.h"
 
@@ -163,6 +164,8 @@ int XournalMain::run(int argc, char * argv[]) {
 	gtk_main();
 
 	control->saveSettings();
+
+	win->getXournal()->clearSelection();
 
 	delete win;
 	delete control;
