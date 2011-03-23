@@ -10,7 +10,6 @@
  *
  * @license GPL
  */
-// TODO: AA: type check
 
 #ifndef __XOURNALSCHEDULER_H__
 #define __XOURNALSCHEDULER_H__
@@ -18,7 +17,7 @@
 #include "Scheduler.h"
 #include "../../gui/sidebar/SidebarPreview.h"
 #include "../../gui/PageView.h"
-
+#include "../../util/XournalType.h"
 
 class XournalScheduler: public Scheduler {
 public:
@@ -44,6 +43,9 @@ private:
 	void removeSource(void * source, JobType type, JobPriority priority);
 
 	bool existsSource(void * source, JobType type, JobPriority priority);
+
+private:
+	XOJ_TYPE_ATTRIB;
 };
 
 #endif /* __XOURNALSCHEDULER_H__ */

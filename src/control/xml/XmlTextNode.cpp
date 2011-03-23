@@ -21,6 +21,8 @@ XmlTextNode::~XmlTextNode() {
 
 	g_free(this->text);
 	this->text = NULL;
+
+	XOJ_RELEASE_TYPE(XmlTextNode);
 }
 
 void XmlTextNode::setText(const char * text) {

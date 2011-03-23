@@ -1,8 +1,6 @@
 #include "Scheduler.h"
 #include <stdio.h>
 #include "../../cfg.h"
-// TODO: AA: type check
-
 
 #ifdef SHEDULER_DEBUG
 #define SDEBUG(msg, ...) printf("Scheduler:: " msg, __VA_ARGS__)
@@ -10,13 +8,14 @@
 #define SDEBUG(msg, ...) {}
 #endif
 
-
 Scheduler::Scheduler() {
+	XOJ_INIT_TYPE(Scheduler);
+
 	// Thread
 	this->threadRunning = true;
 	this->jobQueueCond = g_cond_new();
 	this->jobQueueMutex = g_mutex_new();
-	this->jobRunningMutex= g_mutex_new();
+	this->jobRunningMutex = g_mutex_new();
 
 	// Queue
 	GQueue init = G_QUEUE_INIT;
@@ -33,15 +32,21 @@ Scheduler::Scheduler() {
 }
 
 Scheduler::~Scheduler() {
+	XOJ_CHECK_TYPE(Scheduler);
+
 	this->threadRunning = false;
 	g_cond_broadcast(this->jobQueueCond);
 	g_thread_join(this->thread);
 	g_mutex_free(this->jobQueueMutex);
 	g_mutex_free(this->jobRunningMutex);
 	g_cond_free(this->jobQueueCond);
+
+	XOJ_RELEASE_TYPE(Scheduler);
 }
 
 void Scheduler::addJob(Job * job, JobPriority priority) {
+	XOJ_CHECK_TYPE(Scheduler);
+
 	g_mutex_lock(this->jobQueueMutex);
 
 	g_queue_push_tail(this->jobQueue[priority], job);
@@ -53,6 +58,8 @@ void Scheduler::addJob(Job * job, JobPriority priority) {
 }
 
 Job * Scheduler::getNextJobUnlocked() {
+	XOJ_CHECK_TYPE(Scheduler);
+
 	Job * job = NULL;
 
 	for (int i = JOB_PRIORITY_URGENT; i < JOB_N_PRIORITIES; i++) {
@@ -66,6 +73,8 @@ Job * Scheduler::getNextJobUnlocked() {
 }
 
 gpointer Scheduler::jobThreadCallback(Scheduler * scheduler) {
+	XOJ_CHECK_TYPE_OBJ(scheduler, Scheduler);
+
 	while (scheduler->threadRunning) {
 		g_mutex_lock(scheduler->jobQueueMutex);
 		Job * job = scheduler->getNextJobUnlocked();

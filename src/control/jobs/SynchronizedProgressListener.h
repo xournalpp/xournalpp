@@ -8,12 +8,12 @@
  *
  * @license GPL
  */
-// TODO: AA: type check
 
 #ifndef __SYNCHRONIZEDPROGRESSLISTENER_H__
 #define __SYNCHRONIZEDPROGRESSLISTENER_H__
 
 #include "ProgressListener.h"
+#include "../../util/XournalType.h"
 
 class SynchronizedProgressListener: public ProgressListener {
 public:
@@ -29,6 +29,8 @@ private:
 	static bool setCurrentCallback(SynchronizedProgressListener * listener);
 
 public:
+	XOJ_TYPE_ATTRIB;
+
 	ProgressListener * target;
 
 	int maxIdleId;

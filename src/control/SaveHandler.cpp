@@ -8,7 +8,6 @@
  *
  * @license GPL
  */
-// TODO: AA: type check
 
 #include "../model/Stroke.h"
 #include "../model/Text.h"
@@ -27,6 +26,8 @@
 #include <config.h>
 
 SaveHandler::SaveHandler() {
+	XOJ_INIT_TYPE(SaveHandler);
+
 	this->root = NULL;
 	this->firstPdfPageVisited = false;
 	this->attachBgId = 1;
@@ -34,6 +35,8 @@ SaveHandler::SaveHandler() {
 }
 
 SaveHandler::~SaveHandler() {
+	XOJ_CHECK_TYPE(SaveHandler);
+
 	delete this->root;
 
 	for (GList * l = this->backgroundImages; l != NULL; l = l->next) {
@@ -41,9 +44,13 @@ SaveHandler::~SaveHandler() {
 	}
 	g_list_free(this->backgroundImages);
 	this->backgroundImages = NULL;
+
+	XOJ_RELEASE_TYPE(SaveHandler);
 }
 
 void SaveHandler::prepareSave(Document * doc) {
+	XOJ_CHECK_TYPE(SaveHandler);
+
 	if (this->root) {
 		// cleanup old data
 		delete this->root;
@@ -104,6 +111,8 @@ String SaveHandler::getSolidBgStr(BackgroundType type) {
 }
 
 void SaveHandler::visitLayer(XmlNode * page, Layer * l) {
+	XOJ_CHECK_TYPE(SaveHandler);
+
 	XmlNode * layer = new XmlNode("layer");
 	page->addChild(layer);
 	ListIterator<Element *> it = l->elementIterator();
@@ -182,6 +191,8 @@ void SaveHandler::visitLayer(XmlNode * page, Layer * l) {
 }
 
 void SaveHandler::visitPage(XmlNode * root, XojPage * p, Document * doc, int id) {
+	XOJ_CHECK_TYPE(SaveHandler);
+
 	XmlNode * page = new XmlNode("page");
 	root->addChild(page);
 	page->setAttrib("width", p->getWidth());
@@ -283,6 +294,8 @@ void SaveHandler::visitPage(XmlNode * root, XojPage * p, Document * doc, int id)
 }
 
 void SaveHandler::saveTo(OutputStream * out, String filename) {
+	XOJ_CHECK_TYPE(SaveHandler);
+
 	out->write("<?xml version=\"1.0\" standalone=\"no\"?>\n");
 	root->writeOut(out);
 
@@ -305,6 +318,8 @@ void SaveHandler::saveTo(OutputStream * out, String filename) {
 }
 
 String SaveHandler::getErrorMessage() {
+	XOJ_CHECK_TYPE(SaveHandler);
+
 	return this->errorMessage;
 }
 

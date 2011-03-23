@@ -1,19 +1,26 @@
 #include "XmlStrokeNode.h"
-// TODO: AA: type check
 
 XmlStrokeNode::XmlStrokeNode(const char * tag) :
 	XmlNode(tag) {
+	XOJ_INIT_TYPE(XmlStrokeNode);
+
 	this->points = NULL;
 	this->width = 0;
 	this->widths = NULL;
 	this->widthsLength = 0;
 }
 XmlStrokeNode::~XmlStrokeNode() {
+	XOJ_CHECK_TYPE(XmlStrokeNode);
+
 	delete[] this->points;
 	delete[] this->widths;
+
+	XOJ_RELEASE_TYPE(XmlStrokeNode);
 }
 
 void XmlStrokeNode::setPoints(Point * points, int pointLength) {
+	XOJ_CHECK_TYPE(XmlStrokeNode);
+
 	if (this->points) {
 		delete[] this->points;
 	}
@@ -25,6 +32,8 @@ void XmlStrokeNode::setPoints(Point * points, int pointLength) {
 }
 
 void XmlStrokeNode::setWidth(double width, double * widths, int widthsLength) {
+	XOJ_CHECK_TYPE(XmlStrokeNode);
+
 	this->width = width;
 
 	if (this->widths) {
@@ -39,6 +48,8 @@ void XmlStrokeNode::setWidth(double width, double * widths, int widthsLength) {
 }
 
 void XmlStrokeNode::writeOut(OutputStream * out) {
+	XOJ_CHECK_TYPE(XmlStrokeNode);
+
 	out->write("<");
 	out->write(tag);
 	writeAttributes(out);

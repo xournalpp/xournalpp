@@ -29,7 +29,7 @@ public:
 	void saveSettings();
 
 private:
-	GtkWidget * newLabel(const char * text);
+	static GtkWidget * newLabel(const char * text);
 	static void cbSelectCallback(GtkComboBox *widget, ButtonConfigGui * gui);
 	void enableDisableTools();
 

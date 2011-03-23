@@ -53,13 +53,9 @@ XournalView::XournalView(GtkWidget * parent, GtkRange * hrange, GtkRange * vrang
 	gtk_widget_grab_focus(this->widget);
 
 	this->cleanupTimeout = g_timeout_add_seconds(5, (GSourceFunc) clearMemoryTimer, this);
-
-	printf("XournalView(%ld)\n", this);
 }
 
 XournalView::~XournalView() {
-	printf("~XournalView(%ld)\n", this);
-
 	g_source_remove(this->cleanupTimeout);
 	delete this->cache;
 	this->cache = NULL;
@@ -602,9 +598,6 @@ void XournalView::updateXEvents() {
 }
 
 void XournalView::clearSelection() {
-	printf("XournalView::clearSelection(%ld)\n", this);
-	fflush(stdout);
-
 	CHECK_MEMORY(this);
 	EditSelection * sel = GTK_XOURNAL(widget)->selection;
 	GTK_XOURNAL(widget)->selection = NULL;

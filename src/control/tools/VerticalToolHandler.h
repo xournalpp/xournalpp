@@ -8,7 +8,6 @@
  *
  * @license GPL
  */
-// TODO: AA: type check
 
 #ifndef __VERTICALTOOLHANDLER_H__
 #define __VERTICALTOOLHANDLER_H__
@@ -18,6 +17,7 @@
 #include "../../model/Page.h"
 #include "../../view/ElementContainer.h"
 #include "../../undo/MoveUndoAction.h"
+#include "../../util/XournalType.h"
 
 class VerticalToolHandler: public ElementContainer {
 public:
@@ -30,7 +30,10 @@ public:
 	MoveUndoAction * finalize();
 
 	ListIterator<Element *> getElements();
+
 private:
+	XOJ_TYPE_ATTRIB;
+
 	Redrawable * view;
 	XojPage * page;
 	Layer * layer;

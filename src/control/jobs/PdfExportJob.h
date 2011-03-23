@@ -8,13 +8,13 @@
  *
  * @license GPL
  */
-// TODO: AA: type check
 
 #ifndef __PDFEXPORTJOB_H__
 #define __PDFEXPORTJOB_H__
 
 #include "BlockingJob.h"
 #include "../../util/String.h"
+#include "../../util/XournalType.h"
 
 class Control;
 class PdfExportJob: public BlockingJob {
@@ -30,6 +30,8 @@ public:
 	bool showFilechooser();
 
 private:
+	XOJ_TYPE_ATTRIB;
+
 	String filename;
 
 	String errorMsg;

@@ -1,8 +1,10 @@
 #include "Tool.h"
-// TODO: AA: type check
 
 Tool::Tool(String name, ToolType type, int color, bool enableColor, bool enableSize, bool enableRuler,
 		bool enableShapreRecognizer, double * thikness) {
+
+	XOJ_INIT_TYPE(Tool);
+
 	this->name = name;
 	this->type = type;
 	this->thikness = thikness;
@@ -20,58 +22,88 @@ Tool::Tool(String name, ToolType type, int color, bool enableColor, bool enableS
 }
 
 Tool::~Tool() {
-	delete[] thikness;
+	XOJ_CHECK_TYPE(Tool);
+
+	delete[] this->thikness;
+
+	XOJ_RELEASE_TYPE(Tool);
 }
 
 String Tool::getName() {
-	return name;
+	XOJ_CHECK_TYPE(Tool);
+
+	return this->name;
 }
 
 int Tool::getColor() {
-	return color;
+	XOJ_CHECK_TYPE(Tool);
+
+	return this->color;
 }
 
 void Tool::setColor(int color) {
+	XOJ_CHECK_TYPE(Tool);
+
 	this->color = color;
 }
 
 ToolSize Tool::getSize() {
-	return size;
+	XOJ_CHECK_TYPE(Tool);
+
+	return this->size;
 }
 
 void Tool::setSize(ToolSize size) {
+	XOJ_CHECK_TYPE(Tool);
+
 	this->size = size;
 }
 
 bool Tool::isEnableColor() {
-	return enableColor;
+	XOJ_CHECK_TYPE(Tool);
+
+	return this->enableColor;
 }
 
 bool Tool::isEnableSize() {
-	return enableSize;
+	XOJ_CHECK_TYPE(Tool);
+
+	return this->enableSize;
 }
 
 bool Tool::isEnableRuler() {
-	return enableRuler;
+	XOJ_CHECK_TYPE(Tool);
+
+	return this->enableRuler;
 }
 
 bool Tool::isEnableShapeRecognizer() {
-	return enableShapeRecognizer;
+	XOJ_CHECK_TYPE(Tool);
+
+	return this->enableShapeRecognizer;
 }
 
 bool Tool::isShapeRecognizer() {
-	return shapeRecognizer;
+	XOJ_CHECK_TYPE(Tool);
+
+	return this->shapeRecognizer;
 }
 
 bool Tool::isRuler() {
-	return ruler;
+	XOJ_CHECK_TYPE(Tool);
+
+	return this->ruler;
 }
 
 void Tool::setShapeRecognizer(bool enabled) {
+	XOJ_CHECK_TYPE(Tool);
+
 	this->shapeRecognizer = enabled;
 }
 
 void Tool::setRuler(bool enabled) {
+	XOJ_CHECK_TYPE(Tool);
+
 	this->ruler = enabled;
 }
 

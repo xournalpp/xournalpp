@@ -16,9 +16,10 @@
 #include "../../gui/XournalView.h"
 
 #include <math.h>
-// TODO: AA: type check
 
 EraseHandler::EraseHandler(UndoRedoHandler * undo, Document * doc, XojPage * page, ToolHandler * handler, Redrawable * view) {
+	XOJ_INIT_TYPE(EraseHandler);
+
 	this->page = page;
 	this->handler = handler;
 	this->view = view;
@@ -32,15 +33,21 @@ EraseHandler::EraseHandler(UndoRedoHandler * undo, Document * doc, XojPage * pag
 }
 
 EraseHandler::~EraseHandler() {
+	XOJ_CHECK_TYPE(EraseHandler);
+
 	if (this->eraseDeleteUndoAction) {
 		this->finalize();
 	}
+
+	XOJ_RELEASE_TYPE(EraseHandler);
 }
 
 /**
  * Handle eraser event: Delete Stroke and Standard, Whiteout is not handled here
  */
 void EraseHandler::erase(double x, double y) {
+	XOJ_CHECK_TYPE(EraseHandler);
+
 	ListIterator<Layer*> it = this->page->layerIterator();
 
 	int selected = page->getSelectedLayerId();
@@ -72,6 +79,8 @@ void EraseHandler::erase(double x, double y) {
 }
 
 void EraseHandler::eraseStroke(Layer * l, Stroke * s, double x, double y, Range * range) {
+	XOJ_CHECK_TYPE(EraseHandler);
+
 	if (!s->intersects(x, y, halfEraserSize)) {
 		return;
 	}
@@ -121,6 +130,8 @@ void EraseHandler::eraseStroke(Layer * l, Stroke * s, double x, double y, Range 
 }
 
 void EraseHandler::finalize() {
+	XOJ_CHECK_TYPE(EraseHandler);
+
 	if (this->eraseUndoAction) {
 		this->eraseUndoAction->finalize();
 		this->eraseUndoAction = NULL;

@@ -8,17 +8,17 @@
  *
  * @license GPL
  */
-// TODO: AA: type check
 
 #ifndef __PRINTHANDLER_H__
 #define __PRINTHANDLER_H__
 
 #include <gtk/gtk.h>
 
+#include "../util/XournalType.h"
+
 class Document;
 class Settings;
 class SElement;
-class DocumentView;
 
 class PrintHandler {
 public:
@@ -34,7 +34,9 @@ private:
 			GtkPageSetup *setup, PrintHandler * handler);
 
 private:
-	DocumentView * view;
+	XOJ_TYPE_ATTRIB;
+
+
 	Document * doc;
 };
 

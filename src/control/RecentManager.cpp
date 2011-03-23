@@ -8,9 +8,10 @@
 #define MIME "application/x-xoj"
 #define MIME_PDF "application/x-pdf"
 #define GROUP "xournal++"
-// TODO: AA: type check
 
 RecentManager::RecentManager() {
+	XOJ_INIT_TYPE(RecentManager);
+
 	this->maxRecent = 10;
 	this->menu = gtk_menu_new();
 	this->menuItemList = NULL;
@@ -23,15 +24,21 @@ RecentManager::RecentManager() {
 }
 
 RecentManager::~RecentManager() {
+	XOJ_CHECK_TYPE(RecentManager);
+
 	if (this->recentHandlerId) {
 		GtkRecentManager * recentManager = gtk_recent_manager_get_default();
 		g_signal_handler_disconnect(recentManager, this->recentHandlerId);
 		this->recentHandlerId = 0;
 	}
 	this->menu = NULL;
+
+	XOJ_RELEASE_TYPE(RecentManager);
 }
 
 void RecentManager::addListener(RecentManagerListener * listener) {
+	XOJ_CHECK_TYPE(RecentManager);
+
 	this->listener = g_list_append(this->listener, listener);
 }
 
@@ -41,6 +48,8 @@ void RecentManager::recentManagerChangedCallback(GtkRecentManager * manager, Rec
 }
 
 void RecentManager::addRecentFileFilename(const char * filename) {
+	XOJ_CHECK_TYPE(RecentManager);
+
 	printf("addRecentFileFilename: %s\n", filename);
 
 	if (strncmp(filename, "file://", 7) == 0) {
@@ -56,6 +65,8 @@ void RecentManager::addRecentFileFilename(const char * filename) {
 }
 
 void RecentManager::addRecentFileUri(const char * uri) {
+	XOJ_CHECK_TYPE(RecentManager);
+
 	printf("addRecentFileUri: %s\n", uri);
 
 	GtkRecentManager * recentManager;
@@ -89,6 +100,8 @@ void RecentManager::addRecentFileUri(const char * uri) {
 }
 
 void RecentManager::removeRecentFileFilename(const char * filename) {
+	XOJ_CHECK_TYPE(RecentManager);
+
 	GFile * file = g_file_new_for_path(filename);
 
 	removeRecentFileUri(g_file_get_uri(file));
@@ -97,19 +110,27 @@ void RecentManager::removeRecentFileFilename(const char * filename) {
 }
 
 void RecentManager::removeRecentFileUri(const char * uri) {
+	XOJ_CHECK_TYPE(RecentManager);
+
 	GtkRecentManager * recentManager = gtk_recent_manager_get_default();
 	gtk_recent_manager_remove_item(recentManager, uri, NULL);
 }
 
 int RecentManager::getMaxRecent() {
+	XOJ_CHECK_TYPE(RecentManager);
+
 	return this->maxRecent;
 }
 
 void RecentManager::setMaxRecent(int maxRecent) {
+	XOJ_CHECK_TYPE(RecentManager);
+
 	this->maxRecent = maxRecent;
 }
 
 void RecentManager::openRecent(String uri) {
+	XOJ_CHECK_TYPE(RecentManager);
+
 	printf("openRecent: %s\n", uri.c_str());
 
 	if (uri.startsWith("file://")) {
@@ -127,10 +148,14 @@ void RecentManager::openRecent(String uri) {
 }
 
 GtkWidget * RecentManager::getMenu() {
+	XOJ_CHECK_TYPE(RecentManager);
+
 	return menu;
 }
 
 void RecentManager::freeOldMenus() {
+	XOJ_CHECK_TYPE(RecentManager);
+
 	GtkWidget * w = NULL;
 
 	for (GList * l = menuItemList; l != NULL; l = l->next) {
@@ -251,6 +276,8 @@ int RecentManager::sortRecentsEntries(GtkRecentInfo * a, GtkRecentInfo * b) {
 }
 
 GList * RecentManager::filterRecent(GList * items, bool xoj) {
+	XOJ_CHECK_TYPE(RecentManager);
+
 	GList * filteredItems = NULL;
 
 	// filter
@@ -290,6 +317,8 @@ GList * RecentManager::filterRecent(GList * items, bool xoj) {
 }
 
 void RecentManager::recentsMenuActivateCallback(GtkAction * action, RecentManager * recentManager) {
+	XOJ_CHECK_TYPE_OBJ(recentManager, RecentManager);
+
 	GtkRecentInfo * info = (GtkRecentInfo *) g_object_get_data(G_OBJECT (action), "gtk-recent-info");
 	g_return_if_fail(info != NULL);
 
@@ -298,6 +327,8 @@ void RecentManager::recentsMenuActivateCallback(GtkAction * action, RecentManage
 }
 
 void RecentManager::addRecentMenu(GtkRecentInfo *info, int i) {
+	XOJ_CHECK_TYPE(RecentManager);
+
 	gchar * label = NULL;
 	const char * display_name = gtk_recent_info_get_display_name(info);
 	char * escaped = gedit_utils_escape_underscores(display_name, -1);
@@ -340,6 +371,8 @@ void RecentManager::addRecentMenu(GtkRecentInfo *info, int i) {
 }
 
 void RecentManager::updateMenu() {
+	XOJ_CHECK_TYPE(RecentManager);
+
 	GtkRecentManager * recentManager = gtk_recent_manager_get_default();
 	GList * items = gtk_recent_manager_get_items(recentManager);
 	GList * filteredItemsXoj = filterRecent(items, true);

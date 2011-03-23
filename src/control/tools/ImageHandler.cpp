@@ -5,17 +5,21 @@
 #include "../../util/pixbuf-utils.h"
 #include "../../undo/InsertUndoAction.h"
 #include "../stockdlg/ImageOpenDlg.h"
-// TODO: AA: type check
 
 ImageHandler::ImageHandler(Control * control, PageView * view) {
+	XOJ_INIT_TYPE(ImageHandler);
+
 	this->control = control;
 	this->view = view;
 }
 
 ImageHandler::~ImageHandler() {
+	XOJ_RELEASE_TYPE(ImageHandler);
 }
 
 bool ImageHandler::insertImage(double x, double y) {
+	XOJ_CHECK_TYPE(ImageHandler);
+
 	GFile * file = ImageOpenDlg::show((GtkWindow*) *control->getWindow(), control->getSettings());
 	if(file == NULL) {
 		return false;
@@ -24,6 +28,8 @@ bool ImageHandler::insertImage(double x, double y) {
 }
 
 bool ImageHandler::insertImage(GFile * file, double x, double y) {
+	XOJ_CHECK_TYPE(ImageHandler);
+
 	GError * err = NULL;
 	GFileInputStream * in = g_file_read(file, NULL, &err);
 

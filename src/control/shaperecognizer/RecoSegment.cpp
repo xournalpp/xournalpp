@@ -3,9 +3,12 @@
 #include <math.h>
 
 #include "Inertia.h"
-// TODO: AA: type check
+
+#include <glib.h>
 
 RecoSegment::RecoSegment() {
+	XOJ_INIT_TYPE(RecoSegment);
+
 	this->stroke = NULL;
 	this->angle = 0;
 	this->endpt = 0;
@@ -22,9 +25,12 @@ RecoSegment::RecoSegment() {
 }
 
 RecoSegment::~RecoSegment() {
+	XOJ_RELEASE_TYPE(RecoSegment);
 }
 
 Point RecoSegment::calcEdgeIsect(RecoSegment * r2) {
+	XOJ_CHECK_TYPE(RecoSegment);
+
 	double t;
 	t = (r2->xcenter - this->xcenter) * sin(r2->angle) - (r2->ycenter - this->ycenter) * cos(r2->angle);
 	t /= sin(r2->angle - this->angle);
@@ -38,6 +44,8 @@ Point RecoSegment::calcEdgeIsect(RecoSegment * r2) {
  * find the geometry of a recognized segment
  */
 void RecoSegment::calcSegmentGeometry(const Point * pt, int start, int end, Inertia * s) {
+	XOJ_CHECK_TYPE(RecoSegment);
+
 	this->xcenter = s->centerX();
 	this->ycenter = s->centerY();
 	double a = s->xx();

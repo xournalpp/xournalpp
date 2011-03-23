@@ -10,7 +10,7 @@ BlockingJob::BlockingJob(Control * control, const char * name) {
 }
 
 BlockingJob::~BlockingJob() {
-	XOJ_CHECK_TYPE(XmlNode);
+	XOJ_CHECK_TYPE(BlockingJob);
 
 	this->control = NULL;
 

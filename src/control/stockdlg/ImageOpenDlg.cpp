@@ -3,13 +3,6 @@
 
 #include <config.h>
 #include <glib/gi18n-lib.h>
-// TODO: AA: type check
-
-ImageOpenDlg::ImageOpenDlg() {
-}
-
-ImageOpenDlg::~ImageOpenDlg() {
-}
 
 GFile * ImageOpenDlg::show(GtkWindow * win, Settings * settings, bool localOnly, bool * attach) {
 	GtkWidget * dialog = gtk_file_chooser_dialog_new(_("Open Image"), win, GTK_FILE_CHOOSER_ACTION_OPEN, GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL, GTK_STOCK_OPEN,

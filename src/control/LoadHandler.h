@@ -8,7 +8,6 @@
  *
  * @license GPL
  */
-// TODO: AA: type check
 
 #ifndef __LOADHANDLER_H__
 #define __LOADHANDLER_H__
@@ -17,6 +16,7 @@
 #include "../model/Stroke.h"
 #include "../model/Text.h"
 #include "../model/Image.h"
+#include "../util/XournalType.h"
 #include <zlib.h>
 
 enum ParserPosition {
@@ -28,8 +28,7 @@ enum ParserPosition {
 	PARSER_POS_IN_TEXT, // Starting text tag read
 	PARSER_POS_IN_IMAGE, // Starting image tag read
 
-	PASER_POS_FINISHED
-// Document is parsed
+	PASER_POS_FINISHED // Document is parsed
 };
 
 class DoubleArrayBuffer {
@@ -42,7 +41,9 @@ public:
 	const double * getData();
 	int size();
 	void add(double d);
+
 private:
+	XOJ_TYPE_ATTRIB;
 
 	double * data;
 	int len;
@@ -103,6 +104,8 @@ private:
 	void readImage(const gchar * base64_str, gsize base64_strlen);
 
 private:
+	XOJ_TYPE_ATTRIB;
+
 	String lastError;
 	String pdfMissing;
 	bool attachedPdfMissing;

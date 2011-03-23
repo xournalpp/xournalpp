@@ -11,10 +11,10 @@
 
 #ifndef __TOOLHANDLER_H__
 #define __TOOLHANDLER_H__
-// TODO: AA: type check
 
 #include "Tool.h"
 #include "../util/Arrayiterator.h"
+#include "../util/XournalType.h"
 #include "settings/Settings.h"
 
 class ToolListener {
@@ -79,10 +79,13 @@ public:
 	void setSelectionEditTools(bool setColor, bool setSize);
 
 	const double * getToolThikness(ToolType type);
+
 protected:
 	void initTools();
 
 private:
+	XOJ_TYPE_ATTRIB;
+
 	Tool * tools[TOOL_COUNT];
 	Tool * current;
 	Tool * lastSelectedTool;

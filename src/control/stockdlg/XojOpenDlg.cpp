@@ -2,13 +2,6 @@
 
 #include <config.h>
 #include <glib/gi18n-lib.h>
-// TODO: AA: type check
-
-XojOpenDlg::XojOpenDlg() {
-}
-
-XojOpenDlg::~XojOpenDlg() {
-}
 
 String XojOpenDlg::showOpenDialog(GtkWindow * win, Settings * settings, bool pdf, bool & attachPdf) {
 	GtkWidget * dialog = gtk_file_chooser_dialog_new(_("Open file"), win, GTK_FILE_CHOOSER_ACTION_OPEN, GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,

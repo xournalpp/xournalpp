@@ -59,6 +59,7 @@ void AutosaveJob::run() {
 }
 
 JobType AutosaveJob::getType() {
+	XOJ_CHECK_TYPE(AutosaveJob);
 	return JOB_TYPE_AUTOSAVE;
 }
 

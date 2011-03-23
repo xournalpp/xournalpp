@@ -15,10 +15,10 @@
 
 #include <cairo/cairo.h>
 #include "../pdf/poppler/XojPopplerPage.h"
-#include "../util/MemoryCheck.h"
+#include "../util/XournalType.h"
 
 
-class PdfCache : public MemoryCheckObject {
+class PdfCache {
 public:
 	PdfCache(int size);
 	virtual ~PdfCache();
@@ -33,6 +33,8 @@ private:
 	void cache(XojPopplerPage * popplerPage, cairo_surface_t * img);
 
 private:
+	XOJ_TYPE_ATTRIB;
+
 	GMutex * renderMutex;
 
 	GList * data;

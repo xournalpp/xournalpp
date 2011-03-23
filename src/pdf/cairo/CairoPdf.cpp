@@ -55,7 +55,7 @@ void CairoPdf::finalize() {
 }
 
 XojPopplerPage * CairoPdf::getPage(int page) {
-	XOJ_CHECK_TYPE_RET(CairoPdf, NULL);
+	XOJ_CHECK_TYPE(CairoPdf);
 
 	return doc.getPage(page);
 }

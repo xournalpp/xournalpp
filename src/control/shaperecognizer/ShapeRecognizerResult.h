@@ -8,13 +8,13 @@
  *
  * @license GPL
  */
-// TODO: AA: type check
 
 #ifndef __SHAPERECOGNIZERRESULT_H__
 #define __SHAPERECOGNIZERRESULT_H__
 
 #include <glib.h>
 #include "../../util/ListIterator.h"
+#include "../../util/XournalType.h"
 
 class Stroke;
 class ShapeRecognizer;
@@ -31,6 +31,8 @@ public:
 	ListIterator<Stroke *> getSources();
 
 private:
+	XOJ_TYPE_ATTRIB;
+
 	Stroke * recognized;
 	GList * source;
 };

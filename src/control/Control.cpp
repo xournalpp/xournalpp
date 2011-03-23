@@ -138,8 +138,7 @@ Control::~Control() {
 	delete this->cursor;
 	this->cursor = NULL;
 
-	XOJ_RELEASE_TYPE(Control)
-	;
+	XOJ_RELEASE_TYPE(Control);
 }
 
 void Control::deleteLastAutosaveFile(String newAutosaveFile) {
@@ -154,7 +153,7 @@ void Control::deleteLastAutosaveFile(String newAutosaveFile) {
 }
 
 bool Control::checkChangedDocument(Control * control) {
-	XOJ_CHECK_TYPE_OBJ_RET(control, Control, false);
+	XOJ_CHECK_TYPE_OBJ(control, Control);
 
 	if (!control->doc->tryLock()) {
 		// call again later
@@ -227,7 +226,7 @@ void Control::initWindow(MainWindow * win) {
 }
 
 bool Control::autosaveCallback(Control * control) {
-	XOJ_CHECK_TYPE_OBJ_RET(control, Control, true);
+	XOJ_CHECK_TYPE_OBJ(control, Control);
 
 	if (!control->undoRedo->isChangedAutosave()) {
 		printf(_("Info: autosave not necessary, nothing changed...\n"));
@@ -282,7 +281,7 @@ void Control::updatePageNumbers(int page, int pdfPage) {
  * to prevent our application to get in an endless loop we need to catch this events
  */
 bool Control::shouldIgnorAction(ActionType action, ActionGroup group, bool enabled) {
-	XOJ_CHECK_TYPE_RET(Control, false);
+	XOJ_CHECK_TYPE(Control);
 
 	// No selection events to catch
 	if (group == GROUP_NOGROUP) {
@@ -1399,6 +1398,8 @@ void Control::setPageInsertType(PageInsertType type) {
 bool Control::invokeCallback(CallbackData * cb) {
 	gdk_threads_enter();
 
+	XOJ_CHECK_TYPE_OBJ(cb->control, Control);
+
 	ZoomControl * zoom = cb->control->getZoomControl();
 
 	switch (cb->type) {
@@ -1424,7 +1425,7 @@ bool Control::invokeCallback(CallbackData * cb) {
 }
 
 int Control::getCurrentPageNo() {
-	XOJ_CHECK_TYPE_RET(Control, 0);
+	XOJ_CHECK_TYPE(Control);
 
 	if (win) {
 		return win->getXournal()->getCurrentPage();
@@ -1433,13 +1434,13 @@ int Control::getCurrentPageNo() {
 }
 
 bool Control::searchTextOnPage(const char * text, int p, int * occures, double * top) {
-	XOJ_CHECK_TYPE_RET(Control, false);
+	XOJ_CHECK_TYPE(Control);
 
 	return getWindow()->getXournal()->searchTextOnPage(text, p, occures, top);
 }
 
 XojPage * Control::getCurrentPage() {
-	XOJ_CHECK_TYPE_RET(Control, NULL);
+	XOJ_CHECK_TYPE(Control);
 
 	int page = win->getXournal()->getCurrentPage();
 
@@ -1709,7 +1710,7 @@ void Control::newFile() {
 }
 
 bool Control::openFile(String filename, int scrollToPage) {
-	XOJ_CHECK_TYPE_RET(Control, false);
+	XOJ_CHECK_TYPE(Control);
 
 	if (!this->close()) {
 		return false;
@@ -1825,7 +1826,7 @@ void Control::fileLoaded() {
 }
 
 bool Control::annotatePdf(String filename, bool attachPdf, bool attachToDocument) {
-	XOJ_CHECK_TYPE_RET(Control, false);
+	XOJ_CHECK_TYPE(Control);
 
 	if (!this->close()) {
 		return false;
@@ -1934,7 +1935,7 @@ void Control::setCurrentState(int state) {
 }
 
 bool Control::save(bool synchron) {
-	XOJ_CHECK_TYPE_RET(Control, false);
+	XOJ_CHECK_TYPE(Control);
 
 	this->doc->lock();
 	String filename = this->doc->getFilename();
@@ -1968,7 +1969,7 @@ String Control::getFilename(String uri) {
 }
 
 bool Control::showSaveDialog() {
-	XOJ_CHECK_TYPE_RET(Control, false);
+	XOJ_CHECK_TYPE(Control);
 
 	GtkWidget * dialog = gtk_file_chooser_dialog_new(_("Save File"), (GtkWindow*) *win, GTK_FILE_CHOOSER_ACTION_SAVE, GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
 			GTK_STOCK_SAVE, GTK_RESPONSE_OK, NULL);
@@ -2108,7 +2109,7 @@ void Control::quit() {
 }
 
 bool Control::close() {
-	XOJ_CHECK_TYPE_RET(Control, false);
+	XOJ_CHECK_TYPE(Control);
 
 	if (undoRedo->isChanged()) {
 		GtkWidget * dialog = gtk_message_dialog_new((GtkWindow *) *getWindow(), GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_WARNING, GTK_BUTTONS_NONE,
@@ -2373,61 +2374,61 @@ void Control::fontChanged() {
  */
 
 UndoRedoHandler * Control::getUndoRedoHandler() {
-	XOJ_CHECK_TYPE_RET(Control, NULL);
+	XOJ_CHECK_TYPE(Control);
 
 	return this->undoRedo;
 }
 
 ZoomControl * Control::getZoomControl() {
-	XOJ_CHECK_TYPE_RET(Control, NULL);
+	XOJ_CHECK_TYPE(Control);
 
 	return this->zoom;
 }
 
 Cursor * Control::getCursor() {
-	XOJ_CHECK_TYPE_RET(Control, NULL);
+	XOJ_CHECK_TYPE(Control);
 
 	return this->cursor;
 }
 
 RecentManager * Control::getRecentManager() {
-	XOJ_CHECK_TYPE_RET(Control, NULL);
+	XOJ_CHECK_TYPE(Control);
 
 	return this->recent;
 }
 
 Document * Control::getDocument() {
-	XOJ_CHECK_TYPE_RET(Control, NULL);
+	XOJ_CHECK_TYPE(Control);
 
 	return this->doc;
 }
 
 ToolHandler * Control::getToolHandler() {
-	XOJ_CHECK_TYPE_RET(Control, NULL);
+	XOJ_CHECK_TYPE(Control);
 
 	return this->toolHandler;
 }
 
 XournalScheduler * Control::getScheduler() {
-	XOJ_CHECK_TYPE_RET(Control, NULL);
+	XOJ_CHECK_TYPE(Control);
 
 	return this->scheduler;
 }
 
 MainWindow * Control::getWindow() {
-	XOJ_CHECK_TYPE_RET(Control, NULL);
+	XOJ_CHECK_TYPE(Control);
 
 	return this->win;
 }
 
 bool Control::isFullscreen() {
-	XOJ_CHECK_TYPE_RET(Control, false);
+	XOJ_CHECK_TYPE(Control);
 
 	return this->fullscreen;
 }
 
 TextEditor * Control::getTextEditor() {
-	XOJ_CHECK_TYPE_RET(Control, NULL);
+	XOJ_CHECK_TYPE(Control);
 
 	if (this->win) {
 		return this->win->getXournal()->getTextEditor();
@@ -2436,25 +2437,25 @@ TextEditor * Control::getTextEditor() {
 }
 
 Settings * Control::getSettings() {
-	XOJ_CHECK_TYPE_RET(Control, NULL);
+	XOJ_CHECK_TYPE(Control);
 
 	return settings;
 }
 
 ScrollHandler * Control::getScrollHandler() {
-	XOJ_CHECK_TYPE_RET(Control, NULL);
+	XOJ_CHECK_TYPE(Control);
 
 	return this->scrollHandler;
 }
 
 MetadataManager * Control::getMetadataManager() {
-	XOJ_CHECK_TYPE_RET(Control, NULL);
+	XOJ_CHECK_TYPE(Control);
 
 	return this->metadata;
 }
 
 Sidebar * Control::getSidebar() {
-	XOJ_CHECK_TYPE_RET(Control, NULL);
+	XOJ_CHECK_TYPE(Control);
 
 	return this->sidebar;
 }
