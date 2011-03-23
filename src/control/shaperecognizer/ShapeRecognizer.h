@@ -8,7 +8,6 @@
  *
  * @license GPL
  */
-// TODO: AA: type check
 
 #ifndef __SHAPERECOGNIZER_H__
 #define __SHAPERECOGNIZER_H__
@@ -17,6 +16,7 @@
 #include "ShapeRecognizerConfig.h"
 #include "CircleRecognizer.h"
 
+#include "../../util/XournalType.h"
 #include <glib.h>
 
 class Stroke;
@@ -40,6 +40,8 @@ private:
 	int findPolygonal(const Point * pt, int start, int end, int nsides, int * breaks, Inertia * ss);
 
 private:
+	XOJ_TYPE_ATTRIB;
+
 	RecoSegment queue[MAX_POLYGON_SIDES + 1];
 	int queueLength;
 

@@ -17,6 +17,7 @@ class XojPage;
 class Control;
 
 #include <gtk/gtk.h>
+#include "../util/XournalType.h"
 
 class ScrollHandler {
 public:
@@ -37,6 +38,8 @@ public:
 	bool isPageVisible(int page);
 
 private:
+	XOJ_TYPE_ATTRIB;
+
 	Control * control;
 };
 

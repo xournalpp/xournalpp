@@ -5,15 +5,18 @@
 #include "../gui/dialog/ExportDialog.h"
 #include "jobs/ExportJob.h"
 #include "Control.h"
-// TODO: AA: type check
 
 ExportHandler::ExportHandler() {
+	XOJ_INIT_TYPE(ExportHandler);
 }
 
 ExportHandler::~ExportHandler() {
+	XOJ_RELEASE_TYPE(ExportHandler);
 }
 
 void ExportHandler::runExportWithDialog(GladeSearchpath * gladeSearchPath, Settings * settings, Document * doc, Control * control, int current) {
+	XOJ_CHECK_TYPE(ExportHandler);
+
 	doc->lock();
 	int count = doc->getPageCount();
 	ExportDialog * dlg = new ExportDialog(gladeSearchPath, settings, count, current);

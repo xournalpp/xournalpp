@@ -271,8 +271,6 @@ void ButtonConfigGui::saveSettings() {
 }
 
 GtkWidget * ButtonConfigGui::newLabel(const char * text) {
-	XOJ_CHECK_TYPE_RET(ButtonConfig, NULL);
-
 	GtkWidget * label = gtk_label_new(text);
 	gtk_misc_set_alignment(GTK_MISC(label), 0.0, 0.5);
 	return label;

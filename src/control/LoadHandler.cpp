@@ -7,7 +7,6 @@
 
 #include <config.h>
 #include <glib/gi18n-lib.h>
-// TODO: AA: type check
 
 typedef struct {
 	const char * name;
@@ -32,12 +31,16 @@ const int COLOR_COUNT = sizeof(PREDEFINED_COLORS) / sizeof(PredefinedColor);
 
 LoadHandler::LoadHandler() :
 	doc(&dHanlder) {
+	XOJ_INIT_TYPE(LoadHandler);
+
 	initAttributes();
 	this->removePdfBackgroundFlag = false;
 	this->pdfReplacementAttach = false;
 }
 
 void LoadHandler::initAttributes() {
+	XOJ_RELEASE_TYPE(LoadHandler);
+
 	this->fp = NULL;
 	this->error = NULL;
 	this->attributeNames = NULL;
@@ -54,58 +57,77 @@ void LoadHandler::initAttributes() {
 }
 
 LoadHandler::~LoadHandler() {
+	XOJ_RELEASE_TYPE(LoadHandler);
 }
 
 String LoadHandler::getLastError() {
-	return lastError;
+	XOJ_CHECK_TYPE(LoadHandler);
+
+	return this->lastError;
 }
 
 bool LoadHandler::isAttachedPdfMissing() {
+	XOJ_CHECK_TYPE(LoadHandler);
+
 	return this->attachedPdfMissing;
 }
 
 String LoadHandler::getMissingPdfFilename() {
+	XOJ_CHECK_TYPE(LoadHandler);
+
 	return this->pdfMissing;
 }
 
 void LoadHandler::removePdfBackground() {
+	XOJ_CHECK_TYPE(LoadHandler);
+
 	this->removePdfBackgroundFlag = true;
 }
 
 void LoadHandler::setPdfReplacement(String filename, bool attachToDocument) {
+	XOJ_CHECK_TYPE(LoadHandler);
+
 	this->pdfReplacementFilename = filename;
 	this->pdfReplacementAttach = attachToDocument;
 }
 
 bool LoadHandler::openFile(String filename) {
+	XOJ_CHECK_TYPE(LoadHandler);
+
 	this->filename = filename;
-	fp = gzopen(filename.c_str(), "r");
-	if (!fp) {
-		lastError = _("Could not open file: \"");
-		lastError += filename;
-		lastError += "\"";
+	this->fp = gzopen(filename.c_str(), "r");
+	if (!this->fp) {
+		this->lastError = _("Could not open file: \"");
+		this->lastError += filename;
+		this->lastError += "\"";
 		return false;
 	}
 	return true;
 }
 
 bool LoadHandler::closeFile() {
-	return gzclose(fp);
+	XOJ_CHECK_TYPE(LoadHandler);
+
+	return gzclose(this->fp);
 }
 
 int LoadHandler::readFile(char * buffer, int len) {
-	if (gzeof(fp)) {
+	XOJ_CHECK_TYPE(LoadHandler);
+
+	if (gzeof(this->fp)) {
 		return -1;
 	}
-	return gzread(fp, buffer, len);
+	return gzread(this->fp, buffer, len);
 }
 
 #define error2(var, ...) if(var == NULL) var = g_error_new(G_MARKUP_ERROR, G_MARKUP_ERROR_INVALID_CONTENT, __VA_ARGS__);
 #define error(...) if(error == NULL) error = g_error_new(G_MARKUP_ERROR, G_MARKUP_ERROR_INVALID_CONTENT, __VA_ARGS__);
 
 const char * LoadHandler::getAttrib(const char * name, bool optional) {
-	const char ** aName = attributeNames;
-	const char ** aValue = attributeValues;
+	XOJ_CHECK_TYPE(LoadHandler);
+
+	const char ** aName = this->attributeNames;
+	const char ** aValue = this->attributeValues;
 
 	while (*aName != NULL) {
 		if (!strcmp(*aName, name)) {
@@ -122,6 +144,8 @@ const char * LoadHandler::getAttrib(const char * name, bool optional) {
 }
 
 double LoadHandler::getAttribDouble(const char * name) {
+	XOJ_CHECK_TYPE(LoadHandler);
+
 	const char * attrib = getAttrib(name);
 
 	if (attrib == NULL) {
@@ -139,6 +163,8 @@ double LoadHandler::getAttribDouble(const char * name) {
 }
 
 int LoadHandler::getAttribInt(const char * name) {
+	XOJ_CHECK_TYPE(LoadHandler);
+
 	const char * attrib = getAttrib(name);
 
 	if (attrib == NULL) {
@@ -156,6 +182,8 @@ int LoadHandler::getAttribInt(const char * name) {
 }
 
 void LoadHandler::parseStart() {
+	XOJ_CHECK_TYPE(LoadHandler);
+
 	if (strcmp(elementName, "xournal") == 0) {
 		// Read the document version
 
@@ -181,6 +209,8 @@ void LoadHandler::parseStart() {
 }
 
 void LoadHandler::parseContents() {
+	XOJ_CHECK_TYPE(LoadHandler);
+
 	if (strcmp(elementName, "page") == 0) {
 		this->pos = PARSER_POS_IN_PAGE;
 
@@ -205,6 +235,8 @@ const char * RULINGSTR_RULED = "ruled";
 const char * RULINGSTR_GRAPH = "graph";
 
 void LoadHandler::parseBgSolid() {
+	XOJ_CHECK_TYPE(LoadHandler);
+
 	const char * style = getAttrib("style");
 
 	if (strcmp("plain", style) == 0) {
@@ -243,6 +275,8 @@ void LoadHandler::parseBgSolid() {
 }
 
 void LoadHandler::parseBgPixmap() {
+	XOJ_CHECK_TYPE(LoadHandler);
+
 	const char * domain = getAttrib("domain");
 	const char * filename = getAttrib("filename");
 
@@ -283,6 +317,8 @@ void LoadHandler::parseBgPixmap() {
 }
 
 void LoadHandler::parseBgPdf() {
+	XOJ_CHECK_TYPE(LoadHandler);
+
 	int pageno = getAttribInt("pageno");
 	bool attachToDocument = false;
 	String pdfFilename;
@@ -354,6 +390,8 @@ void LoadHandler::parseBgPdf() {
 }
 
 void LoadHandler::parsePage() {
+	XOJ_CHECK_TYPE(LoadHandler);
+
 	if (!strcmp(elementName, "background")) {
 		const char * type = getAttrib("type");
 
@@ -379,6 +417,8 @@ void LoadHandler::parsePage() {
 }
 
 bool LoadHandler::parseColor(const char * text, int & color) {
+	XOJ_CHECK_TYPE(LoadHandler);
+
 	if (text == NULL) {
 		error(_("Attribute color not set!"));
 		return false;
@@ -408,6 +448,8 @@ bool LoadHandler::parseColor(const char * text, int & color) {
 }
 
 void LoadHandler::parseStroke() {
+	XOJ_CHECK_TYPE(LoadHandler);
+
 	this->stroke = new Stroke();
 	this->layer->addElement(this->stroke);
 
@@ -452,6 +494,8 @@ void LoadHandler::parseStroke() {
 }
 
 void LoadHandler::parseText() {
+	XOJ_CHECK_TYPE(LoadHandler);
+
 	this->text = new Text();
 	this->layer->addElement(this->text);
 
@@ -473,6 +517,8 @@ void LoadHandler::parseText() {
 }
 
 void LoadHandler::parseImage() {
+	XOJ_CHECK_TYPE(LoadHandler);
+
 	double left = getAttribDouble("left");
 	double top = getAttribDouble("top");
 	double right = getAttribDouble("right");
@@ -487,14 +533,16 @@ void LoadHandler::parseImage() {
 }
 
 void LoadHandler::parseLayer() {
+	XOJ_CHECK_TYPE(LoadHandler);
+
 	if (!strcmp(elementName, "stroke")) { // start of a stroke
-		pos = PARSER_POS_IN_STROKE;
+		this->pos = PARSER_POS_IN_STROKE;
 		parseStroke();
 	} else if (!strcmp(elementName, "text")) { // start of a text item
-		pos = PARSER_POS_IN_TEXT;
+		this->pos = PARSER_POS_IN_TEXT;
 		parseText();
 	} else if (!strcmp(elementName, "image")) { // start of a image item
-		pos = PARSER_POS_IN_IMAGE;
+		this->pos = PARSER_POS_IN_IMAGE;
 		parseImage();
 	}
 }
@@ -506,6 +554,9 @@ void LoadHandler::parserStartElement(GMarkupParseContext * context, const gchar 
 	if (*error) {
 		return;
 	}
+
+	XOJ_CHECK_TYPE_OBJ(handler, LoadHandler);
+
 
 	handler->attributeNames = attributeNames;
 	handler->attributeValues = attributeValues;
@@ -533,6 +584,9 @@ void LoadHandler::parserEndElement(GMarkupParseContext * context, const gchar * 
 	}
 
 	LoadHandler * handler = (LoadHandler *) userdata;
+
+	XOJ_CHECK_TYPE_OBJ(handler, LoadHandler);
+
 
 	if (handler->pos == PARSER_POS_STARTED && strcmp(element_name, "xournal") == 0) {
 		handler->pos = PASER_POS_FINISHED;
@@ -562,6 +616,9 @@ void LoadHandler::parserText(GMarkupParseContext * context, const gchar * text, 
 	}
 
 	LoadHandler * handler = (LoadHandler *) userdata;
+
+	XOJ_CHECK_TYPE_OBJ(handler, LoadHandler);
+
 
 	if (handler->pos == PARSER_POS_IN_STROKE) {
 		const char * ptr = text;
@@ -615,6 +672,8 @@ void LoadHandler::parserText(GMarkupParseContext * context, const gchar * text, 
 }
 
 void LoadHandler::readImage(const gchar * base64_str, gsize base64_strlen) {
+	XOJ_CHECK_TYPE(LoadHandler);
+
 	gsize png_buflen;
 
 	// We have to copy the string in order to null terminate it, sigh.
@@ -628,6 +687,8 @@ void LoadHandler::readImage(const gchar * base64_str, gsize base64_strlen) {
 }
 
 bool LoadHandler::parseXml() {
+	XOJ_CHECK_TYPE(LoadHandler);
+
 	const GMarkupParser parser = { LoadHandler::parserStartElement, LoadHandler::parserEndElement, LoadHandler::parserText, NULL, NULL };
 	GMarkupParseContext *context;
 	this->error = NULL;
@@ -687,6 +748,8 @@ bool LoadHandler::parseXml() {
  * Document should not be freed, it will be freed with LoadHandler!
  */
 Document * LoadHandler::loadDocument(String filename) {
+	XOJ_CHECK_TYPE(LoadHandler);
+
 	initAttributes();
 	doc.clearDocument();
 
@@ -710,12 +773,16 @@ Document * LoadHandler::loadDocument(String filename) {
 }
 
 DoubleArrayBuffer::DoubleArrayBuffer() {
+	XOJ_INIT_TYPE(DoubleArrayBuffer);
+
 	this->data = NULL;
 	this->len = 0;
 	this->allocCount = 0;
 }
 
 DoubleArrayBuffer::~DoubleArrayBuffer() {
+	XOJ_CHECK_TYPE(DoubleArrayBuffer);
+
 	g_free(this->data);
 	this->data = NULL;
 	this->len = 0;
@@ -723,18 +790,28 @@ DoubleArrayBuffer::~DoubleArrayBuffer() {
 }
 
 void DoubleArrayBuffer::clear() {
+	XOJ_CHECK_TYPE(DoubleArrayBuffer);
+
 	this->len = 0;
+
+	XOJ_RELEASE_TYPE(DoubleArrayBuffer);
 }
 
 const double * DoubleArrayBuffer::getData() {
+	XOJ_CHECK_TYPE(DoubleArrayBuffer);
+
 	return this->data;
 }
 
 int DoubleArrayBuffer::size() {
+	XOJ_CHECK_TYPE(DoubleArrayBuffer);
+
 	return this->len;
 }
 
 void DoubleArrayBuffer::add(double d) {
+	XOJ_CHECK_TYPE(DoubleArrayBuffer);
+
 	if (this->len >= this->allocCount) {
 		this->allocCount += 1024;
 		this->data = (double *) g_realloc(this->data, this->allocCount * sizeof(double));

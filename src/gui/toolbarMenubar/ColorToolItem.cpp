@@ -76,7 +76,7 @@ void ColorToolItem::selectColor() {
 }
 
 bool ColorToolItem::colorEqualsMoreOreLess(int color) {
-	XOJ_CHECK_TYPE_RET(ColorToolItem, false);
+	XOJ_CHECK_TYPE(ColorToolItem);
 
 	if (color == -1) {
 		return false;
@@ -125,7 +125,7 @@ void ColorToolItem::activated(GdkEvent *event, GtkMenuItem *menuitem, GtkToolBut
 }
 
 GtkToolItem * ColorToolItem::newItem() {
-	XOJ_CHECK_TYPE_RET(ColorToolItem, NULL);
+	XOJ_CHECK_TYPE(ColorToolItem);
 
 	this->iconWidget = selectcolor_new(color);
 	selectcolor_set_circle(this->iconWidget, !this->selector);

@@ -10,9 +10,10 @@
 #include "../../view/DocumentView.h"
 
 #define PIXEL_MOTION_THRESHOLD 0.3
-// TODO: AA: type check
 
 InputHandler::InputHandler(XournalView * xournal, PageView * redrawable) {
+	XOJ_INIT_TYPE(InputHandler);
+
 	this->tmpStroke = NULL;
 	this->currentInputDevice = NULL;
 	this->tmpStrokeDrawElem = 0;
@@ -23,13 +24,20 @@ InputHandler::InputHandler(XournalView * xournal, PageView * redrawable) {
 }
 
 InputHandler::~InputHandler() {
+	XOJ_CHECK_TYPE(InputHandler);
+
 	this->tmpStroke = NULL;
 	this->currentInputDevice = NULL;
 	this->redrawable = NULL;
 	delete this->view;
+	this->view = NULL;
+
+	XOJ_RELEASE_TYPE(InputHandler);
 }
 
 void InputHandler::addPointToTmpStroke(GdkEventMotion * event) {
+	XOJ_CHECK_TYPE(InputHandler);
+
 	double zoom = xournal->getZoom();
 	double x = event->x / zoom;
 	double y = event->y / zoom;
@@ -76,8 +84,10 @@ void InputHandler::addPointToTmpStroke(GdkEventMotion * event) {
 }
 
 bool InputHandler::getPressureMultiplier(GdkEvent * event, double & presure) {
-	double * axes;
-	GdkDevice * device;
+	XOJ_CHECK_TYPE(InputHandler);
+
+	double * axes = NULL;
+	GdkDevice * device = NULL;
 
 	if (event->type == GDK_MOTION_NOTIFY) {
 		axes = event->motion.axes;
@@ -105,6 +115,8 @@ bool InputHandler::getPressureMultiplier(GdkEvent * event, double & presure) {
 }
 
 void InputHandler::drawTmpStroke() {
+	XOJ_CHECK_TYPE(InputHandler);
+
 	if (this->tmpStroke) {
 		cairo_t * cr = gtk_xournal_create_cairo_for(this->xournal->getWidget(), this->redrawable);
 
@@ -115,12 +127,16 @@ void InputHandler::drawTmpStroke() {
 }
 
 void InputHandler::draw(cairo_t * cr, double zoom) {
+	XOJ_CHECK_TYPE(InputHandler);
+
 	if (this->tmpStroke) {
 		this->view->drawStroke(cr, this->tmpStroke, zoom);
 	}
 }
 
 void InputHandler::onButtonReleaseEvent(GdkEventButton * event, XojPage * page) {
+	XOJ_CHECK_TYPE(InputHandler);
+
 	if (!this->tmpStroke) {
 		return;
 	}
@@ -210,7 +226,9 @@ void InputHandler::onButtonReleaseEvent(GdkEventButton * event, XojPage * page) 
 }
 
 bool InputHandler::onMotionNotifyEvent(GdkEventMotion * event) {
-	if (tmpStroke != NULL && this->currentInputDevice == event->device) {
+	XOJ_CHECK_TYPE(InputHandler);
+
+	if (this->tmpStroke != NULL && this->currentInputDevice == event->device) {
 		this->addPointToTmpStroke(event);
 		return true;
 	}
@@ -218,6 +236,8 @@ bool InputHandler::onMotionNotifyEvent(GdkEventMotion * event) {
 }
 
 void InputHandler::startStroke(GdkEventButton * event, StrokeTool tool, double x, double y) {
+	XOJ_CHECK_TYPE(InputHandler);
+
 	ToolHandler * h = xournal->getControl()->getToolHandler();
 
 	if (tmpStroke == NULL) {
@@ -231,10 +251,14 @@ void InputHandler::startStroke(GdkEventButton * event, StrokeTool tool, double x
 }
 
 Stroke * InputHandler::getTmpStroke() {
+	XOJ_CHECK_TYPE(InputHandler);
+
 	return tmpStroke;
 }
 
 void InputHandler::resetShapeRecognizer() {
+	XOJ_CHECK_TYPE(InputHandler);
+
 	if (this->reco) {
 		delete this->reco;
 		this->reco = NULL;

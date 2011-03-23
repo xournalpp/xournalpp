@@ -4,10 +4,11 @@
 #include "Actions.h"
 
 #include <gtk/gtk.h>
-// TODO: AA: type check
 
 ToolHandler::ToolHandler(ToolListener * listener, ActionHandler * actionHandler, Settings * settings) {
-	colorFound = false;
+	XOJ_INIT_TYPE(ToolHandler);
+
+	this->colorFound = false;
 	this->listener = NULL;
 	this->actionHandler = NULL;
 	this->settings = settings;
@@ -20,6 +21,8 @@ ToolHandler::ToolHandler(ToolListener * listener, ActionHandler * actionHandler,
 }
 
 void ToolHandler::initTools() {
+	XOJ_CHECK_TYPE(ToolHandler);
+
 	Tool * t;
 
 	for (int i = 0; i < TOOL_COUNT; i++) {
@@ -80,19 +83,27 @@ void ToolHandler::initTools() {
 }
 
 ToolHandler::~ToolHandler() {
+	XOJ_CHECK_TYPE(ToolHandler);
+
 	for (int i = 0; i < TOOL_COUNT; i++) {
 		delete tools[i];
 	}
 	// Do not delete settings!
 	this->settings = NULL;
+
+	XOJ_RELEASE_TYPE(ToolHandler);
 }
 
 void ToolHandler::setEraserType(EraserType eraserType) {
+	XOJ_CHECK_TYPE(ToolHandler);
+
 	this->eraserType = eraserType;
 	eraserTypeChanged();
 }
 
 void ToolHandler::eraserTypeChanged() {
+	XOJ_CHECK_TYPE(ToolHandler);
+
 	if (this->actionHandler == NULL) {
 		return;
 	}
@@ -114,10 +125,14 @@ void ToolHandler::eraserTypeChanged() {
 }
 
 EraserType ToolHandler::getEraserType() {
+	XOJ_CHECK_TYPE(ToolHandler);
+
 	return this->eraserType;
 }
 
 void ToolHandler::selectTool(ToolType type) {
+	XOJ_CHECK_TYPE(ToolHandler);
+
 	if (type < 1 || type > TOOL_COUNT) {
 		g_warning("unknown tool selected: %i\n", type);
 		return;
@@ -130,82 +145,116 @@ void ToolHandler::selectTool(ToolType type) {
 }
 
 ToolType ToolHandler::getToolType() {
+	XOJ_CHECK_TYPE(ToolHandler);
+
 	return this->current->type;
 }
 
 bool ToolHandler::isEnableColor() {
+	XOJ_CHECK_TYPE(ToolHandler);
+
 	return current->enableColor;
 }
 
 bool ToolHandler::isEnableSize() {
+	XOJ_CHECK_TYPE(ToolHandler);
+
 	return current->enableSize;
 }
 
 bool ToolHandler::isEnableRuler() {
+	XOJ_CHECK_TYPE(ToolHandler);
+
 	return current->enableRuler;
 }
 
 bool ToolHandler::isEnableShapreRecognizer() {
+	XOJ_CHECK_TYPE(ToolHandler);
+
 	return current->enableShapeRecognizer;
 }
 
 void ToolHandler::setRuler(bool ruler) {
+	XOJ_CHECK_TYPE(ToolHandler);
+
 	this->current->ruler = ruler;
 }
 
 bool ToolHandler::isRuler() {
+	XOJ_CHECK_TYPE(ToolHandler);
+
 	return this->current->ruler;
 }
 
 void ToolHandler::setShapeRecognizer(bool reco) {
+	XOJ_CHECK_TYPE(ToolHandler);
+
 	this->current->shapeRecognizer = reco;
 }
 
 bool ToolHandler::isShapeRecognizer() {
+	XOJ_CHECK_TYPE(ToolHandler);
+
 	return this->current->shapeRecognizer;
 }
 
 ToolSize ToolHandler::getSize() {
+	XOJ_CHECK_TYPE(ToolHandler);
+
 	return this->current->size;
 }
 
 ToolSize ToolHandler::getPenSize() {
+	XOJ_CHECK_TYPE(ToolHandler);
+
 	return tools[TOOL_PEN - TOOL_PEN]->size;
 }
 
 ToolSize ToolHandler::getEraserSize() {
+	XOJ_CHECK_TYPE(ToolHandler);
+
 	return tools[TOOL_ERASER - TOOL_PEN]->size;
 }
 
 ToolSize ToolHandler::getHilighterSize() {
+	XOJ_CHECK_TYPE(ToolHandler);
+
 	return tools[TOOL_HILIGHTER - TOOL_PEN]->size;
 }
 
 void ToolHandler::setPenSize(ToolSize size) {
-	tools[TOOL_PEN - TOOL_PEN]->size = size;
+	XOJ_CHECK_TYPE(ToolHandler);
+
+	this->tools[TOOL_PEN - TOOL_PEN]->size = size;
 
 	if (this->current->type == TOOL_PEN) {
-		listener->toolSizeChanged();
+		this->listener->toolSizeChanged();
 	}
 }
 
 void ToolHandler::setEraserSize(ToolSize size) {
-	tools[TOOL_ERASER - TOOL_PEN]->size = size;
+	XOJ_CHECK_TYPE(ToolHandler);
+
+	this->tools[TOOL_ERASER - TOOL_PEN]->size = size;
 
 	if (this->current->type == TOOL_ERASER) {
-		listener->toolSizeChanged();
+		this->listener->toolSizeChanged();
 	}
 }
 
 void ToolHandler::setHilighterSize(ToolSize size) {
-	tools[TOOL_HILIGHTER - TOOL_PEN]->size = size;
+	XOJ_CHECK_TYPE(ToolHandler);
+
+	this->tools[TOOL_HILIGHTER - TOOL_PEN]->size = size;
 
 	if (this->current->type == TOOL_HILIGHTER) {
-		listener->toolSizeChanged();
+		this->listener->toolSizeChanged();
 	}
 }
 
 double ToolHandler::getThikness() {
+	XOJ_CHECK_TYPE(ToolHandler);
+
 	if (this->current->thikness) {
 		return this->current->thikness[this->current->size];
 	} else {
@@ -215,43 +264,57 @@ double ToolHandler::getThikness() {
 }
 
 void ToolHandler::setSize(ToolSize size) {
+	XOJ_CHECK_TYPE(ToolHandler);
+
 	if (size < TOOL_SIZE_VERY_FINE || size > TOOL_SIZE_VERY_THICK) {
 		g_warning("ToolHandler::setSize: Invalid size! %i", size);
 		return;
 	}
 
 	this->current->size = size;
-	listener->toolSizeChanged();
+	this->listener->toolSizeChanged();
 }
 
 void ToolHandler::setColor(int color) {
-	colorFound = false;
+	XOJ_CHECK_TYPE(ToolHandler);
 
-	current->color = color;
-	listener->toolColorChanged();
+	this->colorFound = false;
+
+	this->current->color = color;
+	this->listener->toolColorChanged();
 
 	if (!colorFound) {
-		listener->setCustomColorSelected();
+		this->listener->setCustomColorSelected();
 	}
 }
 
 int ToolHandler::getColor() {
+	XOJ_CHECK_TYPE(ToolHandler);
+
 	return current->color;
 }
 
 GdkColor ToolHandler::getGdkColor() {
-	return Util::intToGdkColor(current->color);
+	XOJ_CHECK_TYPE(ToolHandler);
+
+	return Util::intToGdkColor(this->current->color);
 }
 
 void ToolHandler::setColorFound() {
-	colorFound = true;
+	XOJ_CHECK_TYPE(ToolHandler);
+
+	this->colorFound = true;
 }
 
 ArrayIterator<Tool *> ToolHandler::iterator() {
+	XOJ_CHECK_TYPE(ToolHandler);
+
 	return ArrayIterator<Tool *> (tools, TOOL_COUNT);
 }
 
 void ToolHandler::saveSettings() {
+	XOJ_CHECK_TYPE(ToolHandler);
+
 	SElement & s = settings->getCustomElement("tools");
 	s.clear();
 
@@ -312,6 +375,8 @@ void ToolHandler::saveSettings() {
 }
 
 void ToolHandler::loadSettings() {
+	XOJ_CHECK_TYPE(ToolHandler);
+
 	SElement & s = settings->getCustomElement("tools");
 
 	String selectedTool;
@@ -377,26 +442,34 @@ void ToolHandler::loadSettings() {
 }
 
 void ToolHandler::copyCurrentConfig() {
+	XOJ_CHECK_TYPE(ToolHandler);
+
 	this->lastSelectedTool = this->current;
 }
 
 void ToolHandler::restoreLastConfig() {
+	XOJ_CHECK_TYPE(ToolHandler);
+
 	if (this->lastSelectedTool == NULL) {
 		return;
 	}
 	this->current = this->lastSelectedTool;
 	this->lastSelectedTool = NULL;
 
-	listener->toolColorChanged();
-	listener->toolSizeChanged();
-	listener->toolChanged();
+	this->listener->toolColorChanged();
+	this->listener->toolSizeChanged();
+	this->listener->toolChanged();
 }
 
 const double * ToolHandler::getToolThikness(ToolType type) {
-	return tools[type - TOOL_PEN]->thikness;
+	XOJ_CHECK_TYPE(ToolHandler);
+
+	return this->tools[type - TOOL_PEN]->thikness;
 }
 
 void ToolHandler::setSelectionEditTools(bool setColor, bool setSize) {
+	XOJ_CHECK_TYPE(ToolHandler);
+
 	for (int i = TOOL_SELECT_RECT - TOOL_PEN; i <= TOOL_SELECT_OBJECT - TOOL_PEN; i++) {
 		Tool * t = tools[i];
 		t->enableColor = setColor;
@@ -406,8 +479,8 @@ void ToolHandler::setSelectionEditTools(bool setColor, bool setSize) {
 	}
 
 	if (this->current->type == TOOL_SELECT_RECT || this->current->type == TOOL_SELECT_RECT || this->current->type == TOOL_SELECT_OBJECT) {
-		listener->toolColorChanged();
-		listener->toolSizeChanged();
-		listener->toolChanged();
+		this->listener->toolColorChanged();
+		this->listener->toolSizeChanged();
+		this->listener->toolChanged();
 	}
 }

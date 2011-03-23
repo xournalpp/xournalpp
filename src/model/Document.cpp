@@ -57,7 +57,8 @@ void Document::unlock() {
 }
 
 bool Document::tryLock() {
-	XOJ_CHECK_TYPE_RET(Document, false);
+	XOJ_CHECK_TYPE(Document);
+
 	return g_mutex_trylock(this->documentLock);
 }
 
@@ -95,13 +96,13 @@ void Document::clearDocument(bool destroy) {
  * Returns the pageCount, this call don't need to be synchronized (if it's not critical, you may get wrong data)
  */
 int Document::getPageCount() {
-	XOJ_CHECK_TYPE_RET(Document,0);
+	XOJ_CHECK_TYPE(Document);
 
 	return this->pageCount;
 }
 
 int Document::getPdfPageCount() {
-	XOJ_CHECK_TYPE_RET(Document, 0);
+	XOJ_CHECK_TYPE(Document);
 
 	return pdfDocument.getPageCount();
 }
@@ -113,19 +114,20 @@ void Document::setFilename(String filename) {
 }
 
 String Document::getFilename() {
-	XOJ_CHECK_TYPE_RET(Document, NULL);
+	XOJ_CHECK_TYPE(Document);
 
 	return filename;
 }
 
 String Document::getPdfFilename() {
-	XOJ_CHECK_TYPE_RET(Document, NULL);
+	XOJ_CHECK_TYPE(Document);
 
 	return pdfFilename;
 }
 
 cairo_surface_t * Document::getPreview() {
-	XOJ_CHECK_TYPE_RET(Document, NULL);
+	XOJ_CHECK_TYPE(Document);
+
 	return this->preview;
 }
 
@@ -144,7 +146,7 @@ void Document::setPreview(cairo_surface_t * preview) {
 }
 
 String Document::getEvMetadataFilename() {
-	XOJ_CHECK_TYPE_RET(Document, NULL);
+	XOJ_CHECK_TYPE(Document);
 
 	String uri = "file://";
 	if (!this->filename.isEmpty()) {
@@ -159,19 +161,19 @@ String Document::getEvMetadataFilename() {
 }
 
 bool Document::isPdfDocumentLoaded() {
-	XOJ_CHECK_TYPE_RET(Document, false);
+	XOJ_CHECK_TYPE(Document);
 
 	return pdfDocument.isLoaded();
 }
 
 bool Document::isAttachPdf() {
-	XOJ_CHECK_TYPE_RET(Document, false);
+	XOJ_CHECK_TYPE(Document);
 
 	return this->attachPdf;
 }
 
 int Document::findPdfPage(int pdfPage) {
-	XOJ_CHECK_TYPE_RET(Document, -1);
+	XOJ_CHECK_TYPE(Document);
 
 	for (int i = 0; i < this->pageCount; i++) {
 		XojPage * p = this->pages[i];
@@ -242,7 +244,7 @@ void Document::buildContentsModel() {
 }
 
 GtkTreeModel * Document::getContentsModel() {
-	XOJ_CHECK_TYPE_RET(Document, NULL);
+	XOJ_CHECK_TYPE(Document);
 
 	return this->contentsModel;
 }
@@ -278,7 +280,7 @@ void Document::updateIndexPageNumbers() {
 }
 
 bool Document::readPdf(String filename, bool initPages, bool attachToDocument) {
-	XOJ_CHECK_TYPE_RET(Document, false);
+	XOJ_CHECK_TYPE(Document);
 
 	GError * popplerError = NULL;
 	String uri = "file://";
@@ -342,7 +344,8 @@ void Document::setPageSize(XojPage * p, double width, double height) {
 }
 
 String Document::getLastErrorMsg() {
-	XOJ_CHECK_TYPE_RET(Document, NULL);
+	XOJ_CHECK_TYPE(Document);
+
 	return lastError;
 }
 
@@ -393,7 +396,7 @@ void Document::addPage(XojPage * p) {
 }
 
 int Document::indexOf(XojPage * page) {
-	XOJ_CHECK_TYPE_RET(Document, -1);
+	XOJ_CHECK_TYPE(Document);
 
 	for (int i = 0; i < this->pageCount; i++) {
 		if (page == this->pages[i]) {
@@ -405,7 +408,7 @@ int Document::indexOf(XojPage * page) {
 }
 
 XojPage * Document::getPage(int page) {
-	XOJ_CHECK_TYPE_RET(Document, NULL);
+	XOJ_CHECK_TYPE(Document);
 
 	if (getPageCount() <= page) {
 		return NULL;
@@ -424,12 +427,14 @@ void Document::firePageSizeChanged(int page) {
 }
 
 XojPopplerPage * Document::getPdfPage(int page) {
-	XOJ_CHECK_TYPE_RET(Document, NULL);
+	XOJ_CHECK_TYPE(Document);
 
 	return this->pdfDocument.getPage(page);
 }
 
 XojPopplerDocument & Document::getPdfDocument() {
+	XOJ_CHECK_TYPE(Document);
+
 	return this->pdfDocument;
 }
 
@@ -468,7 +473,7 @@ void Document::setCreateBackupOnSave(bool backup) {
 }
 
 bool Document::shouldCreateBackupOnSave() {
-	XOJ_CHECK_TYPE_RET(Document, false);
+	XOJ_CHECK_TYPE(Document);
 
 	return this->createBackupOnSave;
 }

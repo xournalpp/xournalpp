@@ -8,13 +8,14 @@
  *
  * @license GPL
  */
-// TODO: AA: type check
 
 #ifndef __RENDERJOB_H__
 #define __RENDERJOB_H__
 
 #include "Job.h"
 #include <gtk/gtk.h>
+
+#include "../../util/XournalType.h"
 
 class Rectangle;
 class PageView;
@@ -39,6 +40,8 @@ private:
 	void rerenderRectangle(Rectangle * rect);
 
 private:
+	XOJ_TYPE_ATTRIB;
+
 	PageView * view;
 	bool repaintComplete;
 	GList * repaintRect;

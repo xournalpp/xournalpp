@@ -1,19 +1,26 @@
 #include "SearchControl.h"
 #include "../model/Text.h"
 #include "../view/TextView.h"
-// TODO: AA: type check
 
 SearchControl::SearchControl(XojPage * page, XojPopplerPage * pdf) {
+	XOJ_INIT_TYPE(SearchControl);
+
 	this->page = page;
 	this->pdf = pdf;
 	this->results = NULL;
 }
 
 SearchControl::~SearchControl() {
+	XOJ_CHECK_TYPE(SearchControl);
+
 	freeSearchResults();
+
+	XOJ_RELEASE_TYPE(SearchControl);
 }
 
 void SearchControl::freeSearchResults() {
+	XOJ_CHECK_TYPE(SearchControl);
+
 	if (this->results) {
 		for (GList * l = this->results; l != NULL; l = l->next) {
 			delete (XojPopplerRectangle*) l->data;
@@ -24,6 +31,8 @@ void SearchControl::freeSearchResults() {
 }
 
 void SearchControl::paint(cairo_t * cr, GdkRectangle * rect, double zoom, GdkColor color) {
+	XOJ_CHECK_TYPE(SearchControl);
+
 	// set the line always the same size on display
 	cairo_set_line_width(cr, 1 / zoom);
 
@@ -38,6 +47,8 @@ void SearchControl::paint(cairo_t * cr, GdkRectangle * rect, double zoom, GdkCol
 }
 
 bool SearchControl::search(const char * text, int * occures, double * top) {
+	XOJ_CHECK_TYPE(SearchControl);
+
 	freeSearchResults();
 
 	if (text == NULL) {

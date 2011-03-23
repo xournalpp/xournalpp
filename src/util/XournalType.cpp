@@ -2,7 +2,9 @@
 #include <glib.h>
 #include <stdlib.h>
 
-#define XOURNAL_TYPE_LIST_LENGTH 50
+#ifdef XOJ_MEMORY_CHECK_ENABLED
+
+#define XOURNAL_TYPE_LIST_LENGTH 128
 
 #undef XOJ_DECLARE_TYPE
 #define XOJ_DECLARE_TYPE(name, id) \
@@ -32,3 +34,5 @@ const char * xoj_type_getName(int id) {
 
 	return xojTypeList[id];
 }
+
+#endif

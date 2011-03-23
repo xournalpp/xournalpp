@@ -8,19 +8,26 @@
 
 #include <math.h>
 #include <string.h>
-// TODO: AA: type check
 
 ShapeRecognizer::ShapeRecognizer() {
+	XOJ_INIT_TYPE(ShapeRecognizer);
+
 	resetRecognizer();
 	this->stroke = NULL;
 	this->queueLength = 0;
 }
 
 ShapeRecognizer::~ShapeRecognizer() {
+	XOJ_CHECK_TYPE(ShapeRecognizer);
+
 	resetRecognizer();
+
+	XOJ_RELEASE_TYPE(ShapeRecognizer);
 }
 
 void ShapeRecognizer::resetRecognizer() {
+	XOJ_CHECK_TYPE(ShapeRecognizer);
+
 	RDEBUG("reset\n", 0);
 
 	for (int i = 0; i < MAX_POLYGON_SIDES + 1; i++) {
@@ -34,6 +41,8 @@ void ShapeRecognizer::resetRecognizer() {
  *  test if segments form standard shapes
  */
 Stroke * ShapeRecognizer::tryRectangle() {
+	XOJ_CHECK_TYPE(ShapeRecognizer);
+
 	// first, we need whole strokes to combine to 4 segments...
 	if (this->queueLength < 4) {
 		return NULL;
@@ -101,6 +110,8 @@ Stroke * ShapeRecognizer::tryRectangle() {
 }
 
 Stroke * ShapeRecognizer::tryArrow() {
+	XOJ_CHECK_TYPE(ShapeRecognizer);
+
 	bool rev[3];
 
 	// first, we need whole strokes to combine to nsides segments...
@@ -245,6 +256,8 @@ Stroke * ShapeRecognizer::tryArrow() {
  * check if something is a polygonal line with at most nsides sides
  */
 int ShapeRecognizer::findPolygonal(const Point * pt, int start, int end, int nsides, int * breaks, Inertia * ss) {
+	XOJ_CHECK_TYPE(ShapeRecognizer);
+
 	Inertia s;
 	int i1, i2, n1, n2;
 
@@ -337,6 +350,8 @@ int ShapeRecognizer::findPolygonal(const Point * pt, int start, int end, int nsi
  * Improve on the polygon found by find_polygonal()
  */
 void ShapeRecognizer::optimizePolygonal(const Point * pt, int nsides, int * breaks, Inertia * ss) {
+	XOJ_CHECK_TYPE(ShapeRecognizer);
+
 	for (int i = 1; i < nsides; i++) {
 		// optimize break between sides i and i+1
 		double cost = ss[i - 1].det() * ss[i - 1].det() + ss[i].det() * ss[i].det();
@@ -385,6 +400,8 @@ void ShapeRecognizer::optimizePolygonal(const Point * pt, int nsides, int * brea
 }
 
 Stroke * ShapeRecognizer::tryClosedPolygon(int nsides) {
+	XOJ_CHECK_TYPE(ShapeRecognizer);
+
 	RecoSegment * r1 = NULL;
 	RecoSegment * r2 = NULL;
 
@@ -437,6 +454,8 @@ Stroke * ShapeRecognizer::tryClosedPolygon(int nsides) {
  * the main pattern recognition function
  */
 ShapeRecognizerResult * ShapeRecognizer::recognizePatterns(Stroke * stroke) {
+	XOJ_CHECK_TYPE(ShapeRecognizer);
+
 	this->stroke = stroke;
 
 	if (stroke->getPointCount() < 3) {

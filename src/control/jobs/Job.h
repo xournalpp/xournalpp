@@ -8,12 +8,12 @@
  *
  * @license GPL
  */
-// TODO: AA: type check
 
 #ifndef __JOB_H__
 #define __JOB_H__
 
 #include "../../util/MemoryCheck.h"
+#include "../../util/XournalType.h"
 
 enum JobType {
 	JOB_TYPE_BLOCKING, JOB_TYPE_PREVIEW, JOB_TYPE_RENDER, JOB_TYPE_AUTOSAVE
@@ -62,6 +62,8 @@ private:
 	static bool callAfterCallback(Job * job);
 
 private:
+	XOJ_TYPE_ATTRIB;
+
 	int afterRunId;
 };
 

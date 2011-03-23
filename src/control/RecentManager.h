@@ -8,13 +8,13 @@
  *
  * @license GPL
  */
-// TODO: AA: type check
 
 #ifndef __RECENTMANAGER_H__
 #define __RECENTMANAGER_H__
 
 #include <gtk/gtk.h>
 #include "../util/String.h"
+#include "../util/XournalType.h"
 
 class RecentManagerListener {
 public:
@@ -53,6 +53,9 @@ private:
 	static int sortRecentsEntries(GtkRecentInfo * a, GtkRecentInfo * b);
 
 private:
+	XOJ_TYPE_ATTRIB;
+
+
 	int maxRecent;
 	int recentHandlerId;
 

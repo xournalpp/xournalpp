@@ -82,7 +82,7 @@ public:
 	}
 
 public:
-	static void getFunction(GtkClipboard *clipboard, GtkSelectionData *selection, guint info, ClipboardContents * contents) {
+	static void getFunction(GtkClipboard * clipboard, GtkSelectionData * selection, guint info, ClipboardContents * contents) {
 
 		if (selection->target == gdk_atom_intern_static_string("UTF8_STRING")) {
 			gtk_selection_data_set_text(selection, contents->text.c_str(), -1);
@@ -96,7 +96,7 @@ public:
 		}
 	}
 
-	static void clearFunction(GtkClipboard *clipboard, ClipboardContents * contents) {
+	static void clearFunction(GtkClipboard * clipboard, ClipboardContents * contents) {
 		delete contents;
 	}
 
@@ -256,6 +256,8 @@ void ClipboardHandler::setCopyPasteEnabled(bool enabled) {
 }
 
 void ClipboardHandler::ownerChangedCallback(GtkClipboard * clip, GdkEvent * event, ClipboardHandler * handler) {
+	XOJ_CHECK_TYPE_OBJ(handler, ClipboardHandler);
+
 	if (event->type == GDK_OWNER_CHANGE) {
 		handler->clipboardUpdated(event->owner_change.selection);
 	}

@@ -18,13 +18,13 @@ ButtonConfig::~ButtonConfig() {
 
 
 bool ButtonConfig::getDisableDrawing() {
-	XOJ_CHECK_TYPE_RET(ButtonConfig, false);
+	XOJ_CHECK_TYPE(ButtonConfig);
 
 	return this->disableDrawing;
 }
 
 ToolType ButtonConfig::getAction() {
-	XOJ_CHECK_TYPE_RET(ButtonConfig, TOOL_NONE);
+	XOJ_CHECK_TYPE(ButtonConfig);
 
 	return this->action;
 }

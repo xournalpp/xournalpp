@@ -36,7 +36,7 @@ void DeleteUndoAction::addElement(Layer * layer, Element * e, int pos) {
 }
 
 bool DeleteUndoAction::undo(Control * control) {
-	XOJ_CHECK_TYPE_RET(DeleteUndoAction, false);
+	XOJ_CHECK_TYPE(DeleteUndoAction);
 
 	if (this->elements == NULL) {
 		g_warning("Could not undo DeleteUndoAction, there is nothing to undo");
@@ -55,7 +55,7 @@ bool DeleteUndoAction::undo(Control * control) {
 }
 
 bool DeleteUndoAction::redo(Control * control) {
-	XOJ_CHECK_TYPE_RET(DeleteUndoAction, false);
+	XOJ_CHECK_TYPE(DeleteUndoAction);
 
 	if (this->elements == NULL) {
 		g_warning("Could not redo DeleteUndoAction, there is nothing to redo");
@@ -76,7 +76,7 @@ bool DeleteUndoAction::redo(Control * control) {
 }
 
 String DeleteUndoAction::getText() {
-	XOJ_CHECK_TYPE_RET(DeleteUndoAction, "");
+	XOJ_CHECK_TYPE(DeleteUndoAction);
 
 	String text;
 

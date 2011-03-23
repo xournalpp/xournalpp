@@ -8,14 +8,13 @@
  *
  * @license GPL
  */
-// TODO: AA: type check
 
 #ifndef __PREVIEWJOB_H__
 #define __PREVIEWJOB_H__
 
 #include "Job.h"
 #include "../../gui/sidebar/SidebarPreview.h"
-
+#include "../../util/XournalType.h"
 
 class PreviewJob : public Job {
 public:
@@ -30,6 +29,8 @@ public:
 	virtual JobType getType();
 
 private:
+	XOJ_TYPE_ATTRIB;
+
 	SidebarPreview * sidebarPreview;
 };
 

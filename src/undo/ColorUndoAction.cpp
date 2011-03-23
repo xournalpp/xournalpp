@@ -46,7 +46,7 @@ void ColorUndoAction::addStroke(Element * e, int originalColor, double newColor)
 }
 
 bool ColorUndoAction::undo(Control * control) {
-	XOJ_CHECK_TYPE_RET(ColorUndoAction, false);
+	XOJ_CHECK_TYPE(ColorUndoAction);
 
 	if (this->data == NULL) {
 		return true;
@@ -74,7 +74,7 @@ bool ColorUndoAction::undo(Control * control) {
 }
 
 bool ColorUndoAction::redo(Control * control) {
-	XOJ_CHECK_TYPE_RET(ColorUndoAction, false);
+	XOJ_CHECK_TYPE(ColorUndoAction);
 
 	if (this->data == NULL) {
 		return true;

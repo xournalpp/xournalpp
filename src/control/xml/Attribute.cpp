@@ -7,7 +7,7 @@ Attribute::Attribute(const char * name) {
 }
 
 Attribute::~Attribute() {
-	XOJ_CHECK_TYPE(XmlNode);
+	XOJ_CHECK_TYPE(Attribute);
 
 	g_free(this->name);
 	this->name = NULL;
@@ -16,7 +16,7 @@ Attribute::~Attribute() {
 }
 
 const char * Attribute::getName() {
-	XOJ_CHECK_TYPE_RET(Attribute, NULL);
+	XOJ_CHECK_TYPE(Attribute);
 
 	return name;
 }

@@ -10,13 +10,14 @@
  *
  * @license GPL
  */
-// TODO: AA: type check
 
 #ifndef __SCHEDULER_H__
 #define __SCHEDULER_H__
 
 #include "Job.h"
 #include <glib.h>
+
+#include "../../util/XournalType.h"
 
 typedef enum {
 	JOB_PRIORITY_URGENT, // Rendering current page range
@@ -44,6 +45,8 @@ private:
 	Job * getNextJobUnlocked();
 
 protected:
+	XOJ_TYPE_ATTRIB;
+
 	bool threadRunning;
 
 	GThread * thread;

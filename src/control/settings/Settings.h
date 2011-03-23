@@ -11,7 +11,6 @@
 
 #ifndef __SETTINGS_H__
 #define __SETTINGS_H__
-// TODO: AA: type check
 
 #include <libxml/xmlreader.h>
 #include <glib.h>
@@ -30,8 +29,11 @@ class ButtonConfig;
 class SAttribute {
 public:
 	SAttribute();
+	~SAttribute();
 
 public:
+	XOJ_TYPE_ATTRIB;
+
 	String sValue;
 	int iValue;
 	double dValue;
@@ -50,7 +52,10 @@ public:
 
 	void ref();
 	void unref();
+
 private:
+	XOJ_TYPE_ATTRIB;
+
 	std::map<String, SAttribute> attributes;
 	std::map<String, SElement> children;
 
@@ -88,6 +93,8 @@ public:
 	std::map<String, SElement> & children();
 
 private:
+	XOJ_TYPE_ATTRIB;
+
 	__RefSElement * element;
 };
 
@@ -113,12 +120,13 @@ public:
 private:
 	void loadDefault();
 	void saveTimeout();
+	static gboolean saveCallback(Settings * data);
 
 	void parseItem(xmlDocPtr doc, xmlNodePtr cur);
 
-	xmlNodePtr savePropertyDouble(const gchar *key, double value, xmlNodePtr parent);
-	xmlNodePtr saveProperty(const gchar *key, int value, xmlNodePtr parent);
-	xmlNodePtr saveProperty(const gchar *key, const gchar *value, xmlNodePtr parent);
+	xmlNodePtr savePropertyDouble(const gchar * key, double value, xmlNodePtr parent);
+	xmlNodePtr saveProperty(const gchar * key, int value, xmlNodePtr parent);
+	xmlNodePtr saveProperty(const gchar * key, const gchar * value, xmlNodePtr parent);
 
 	void saveData(xmlNodePtr root, String name, SElement & elem);
 
@@ -253,6 +261,8 @@ private:
 	}
 
 private:
+	XOJ_TYPE_ATTRIB;
+
 	bool saved;
 	gint timeoutId;
 

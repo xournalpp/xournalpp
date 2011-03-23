@@ -1,19 +1,27 @@
 #include "XmlPointNode.h"
-// TODO: AA: type check
 
 XmlPointNode::XmlPointNode(const char * tag) :
 	XmlNode(tag) {
+	XOJ_INIT_TYPE(XmlPointNode);
+
 	this->points = NULL;
 }
 
 XmlPointNode::~XmlPointNode() {
-	delete points;
+	XOJ_CHECK_TYPE(XmlPointNode);
+
+	delete this->points;
+	this->points = NULL;
+
+	XOJ_RELEASE_TYPE(XmlPointNode);
 }
 
 /**
  * The point array is owned by the XML Node and automatically deleted
  */
 void XmlPointNode::setPoints(Point * points, int count) {
+	XOJ_CHECK_TYPE(XmlPointNode);
+
 	// Delete may old data
 	delete this->points;
 
@@ -22,6 +30,8 @@ void XmlPointNode::setPoints(Point * points, int count) {
 }
 
 void XmlPointNode::writeOut(OutputStream * out) {
+	XOJ_CHECK_TYPE(XmlPointNode);
+
 	out->write("<");
 	out->write(tag);
 	writeAttributes(out);

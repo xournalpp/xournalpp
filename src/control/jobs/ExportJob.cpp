@@ -10,10 +10,11 @@
 
 #include <config.h>
 #include <glib/gi18n-lib.h>
-// TODO: AA: type check
 
 ExportJob::ExportJob(Control * control, GList * selected, ExportFormtType type, int dpi, String folder, String filename) :
 	BlockingJob(control, _("Export")) {
+	XOJ_INIT_TYPE(ExportJob);
+
 	this->selected = selected;
 
 	this->surface = NULL;
@@ -26,15 +27,21 @@ ExportJob::ExportJob(Control * control, GList * selected, ExportFormtType type, 
 }
 
 ExportJob::~ExportJob() {
+	XOJ_CHECK_TYPE(ExportJob);
+
 	for (GList * l = this->selected; l != NULL; l = l->next) {
 		PageRangeEntry * e = (PageRangeEntry *) l->data;
 		delete e;
 	}
 	g_list_free(this->selected);
 	this->selected = NULL;
+
+	XOJ_RELEASE_TYPE(ExportJob);
 }
 
 bool ExportJob::createSurface(int id, double width, double height) {
+	XOJ_CHECK_TYPE(ExportJob);
+
 	if (this->type == EXPORT_FORMAT_EPS) {
 		char * path = NULL;
 		if (id == -1) {
@@ -75,6 +82,8 @@ bool ExportJob::createSurface(int id, double width, double height) {
 }
 
 bool ExportJob::freeSurface(int id) {
+	XOJ_CHECK_TYPE(ExportJob);
+
 	cairo_destroy(this->cr);
 
 	if (this->type == EXPORT_FORMAT_PNG) {
@@ -101,6 +110,8 @@ bool ExportJob::freeSurface(int id) {
 }
 
 void ExportJob::run() {
+	XOJ_CHECK_TYPE(ExportJob);
+
 	SynchronizedProgressListener pglistener(this->control);
 	Document * doc = control->getDocument();
 

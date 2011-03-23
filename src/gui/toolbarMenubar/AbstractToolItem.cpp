@@ -10,7 +10,7 @@ AbstractToolItem::AbstractToolItem(String id, ActionHandler * handler, ActionTyp
 }
 
 AbstractToolItem::~AbstractToolItem() {
-	XOJ_CHECK_TYPE(XmlNode);
+	XOJ_CHECK_TYPE(AbstractToolItem);
 
 	if (this->item) {
 		gtk_object_unref(GTK_OBJECT(this->item));
@@ -41,7 +41,7 @@ void AbstractToolItem::toolButtonCallback(GtkToolButton * toolbutton, AbstractTo
 }
 
 GtkToolItem * AbstractToolItem::createItem(bool horizontal) {
-	XOJ_CHECK_TYPE_RET(AbstractToolItem, NULL);
+	XOJ_CHECK_TYPE(AbstractToolItem);
 
 	if (this->item) {
 		return this->item;
@@ -74,13 +74,13 @@ void AbstractToolItem::setPopupMenu(GtkWidget * popupMenu) {
 }
 
 GtkWidget * AbstractToolItem::getPopupMenu() {
-	XOJ_CHECK_TYPE_RET(AbstractToolItem, NULL);
+	XOJ_CHECK_TYPE(AbstractToolItem);
 
 	return this->popupMenu;
 }
 
 bool AbstractToolItem::isUsed() {
-	XOJ_CHECK_TYPE_RET(AbstractToolItem, false);
+	XOJ_CHECK_TYPE(AbstractToolItem);
 
 	return used;
 }

@@ -148,7 +148,7 @@ void EditSelection::finalizeSelection() {
  * get the X cooridnate relative to the provided view (getView())
  */
 double EditSelection::getXOnView() {
-	XOJ_CHECK_TYPE_RET(EditSelection, 0);
+	XOJ_CHECK_TYPE(EditSelection);
 
 	return this->x - this->offsetX;
 }
@@ -157,7 +157,7 @@ double EditSelection::getXOnView() {
  * get the Y cooridnate relative to the provided view (getView())
  */
 double EditSelection::getYOnView() {
-	XOJ_CHECK_TYPE_RET(EditSelection, 0);
+	XOJ_CHECK_TYPE(EditSelection);
 
 	return this->y - this->offsetY;
 }
@@ -166,7 +166,7 @@ double EditSelection::getYOnView() {
  * get the width in document coordinates (multiple with zoom)
  */
 double EditSelection::getWidth() {
-	XOJ_CHECK_TYPE_RET(EditSelection, 0);
+	XOJ_CHECK_TYPE(EditSelection);
 
 	return this->width;
 }
@@ -175,7 +175,7 @@ double EditSelection::getWidth() {
  * get the height in document coordinates (multiple with zoom)
  */
 double EditSelection::getHeight() {
-	XOJ_CHECK_TYPE_RET(EditSelection, 0);
+	XOJ_CHECK_TYPE(EditSelection);
 
 	return this->height;
 }
@@ -184,7 +184,7 @@ double EditSelection::getHeight() {
  * get the source page (where the selection was done)
  */
 XojPage * EditSelection::getSourcePage() {
-	XOJ_CHECK_TYPE_RET(EditSelection, NULL);
+	XOJ_CHECK_TYPE(EditSelection);
 
 	return this->sourcePage;
 }
@@ -193,7 +193,7 @@ XojPage * EditSelection::getSourcePage() {
  * get the target page if not the same as the source page, if the selection is moved to a new page
  */
 XojPage * EditSelection::getTargetPage() {
-	XOJ_CHECK_TYPE_RET(EditSelection, NULL);
+	XOJ_CHECK_TYPE(EditSelection);
 
 	return NULL;
 }
@@ -203,7 +203,7 @@ XojPage * EditSelection::getTargetPage() {
  * (or NULL if nothing is done)
  */
 UndoAction * EditSelection::setSize(ToolSize size, const double * thiknessPen, const double * thiknessHilighter, const double * thiknessEraser) {
-	XOJ_CHECK_TYPE_RET(EditSelection, NULL);
+	XOJ_CHECK_TYPE(EditSelection);
 
 	SizeUndoAction * undo = new SizeUndoAction(this->sourcePage, this->sourceLayer, this->view);
 
@@ -261,7 +261,7 @@ UndoAction * EditSelection::setSize(ToolSize size, const double * thiknessPen, c
  * (Or NULL if nothing done, e.g. because there is only an image)
  */
 UndoAction * EditSelection::setColor(int color) {
-	XOJ_CHECK_TYPE_RET(EditSelection, NULL);
+	XOJ_CHECK_TYPE(EditSelection);
 
 	ColorUndoAction * undo = new ColorUndoAction(this->sourcePage, this->sourceLayer, this->view);
 
@@ -299,7 +299,7 @@ UndoAction * EditSelection::setColor(int color) {
  * (or NULL if there are no Text elements)
  */
 UndoAction * EditSelection::setFont(XojFont & font) {
-	XOJ_CHECK_TYPE_RET(EditSelection, NULL);
+	XOJ_CHECK_TYPE(EditSelection);
 
 	double x1 = 0.0 / 0.0;
 	double x2 = 0.0 / 0.0;
@@ -365,7 +365,7 @@ void EditSelection::addElement(Element * e) {
  * Returns all containig elements of this selections
  */
 ListIterator<Element *> EditSelection::getElements() {
-	XOJ_CHECK_TYPE_RET(EditSelection, NULL);
+	XOJ_CHECK_TYPE(EditSelection);
 
 	return ListIterator<Element *> (this->selected);
 }
@@ -432,7 +432,7 @@ void EditSelection::ensureWithinVisibleArea() {
  * Get the cursor type for the current position (if 0 then the default cursor should be used)
  */
 CursorSelectionType EditSelection::getSelectionTypeForPos(double x, double y, double zoom) {
-	XOJ_CHECK_TYPE_RET(EditSelection, CURSOR_SELECTION_NONE);
+	XOJ_CHECK_TYPE(EditSelection);
 
 	double x1 = getXOnView() * zoom;
 	double x2 = x1 + (this->width * zoom);
@@ -572,7 +572,7 @@ void EditSelection::paint(cairo_t * cr, double zoom) {
  * Callback to redrawing the buffer asynchron
  */
 bool EditSelection::repaintSelection(EditSelection * selection) {
-	XOJ_CHECK_TYPE_OBJ_RET(selection, EditSelection, false); //TODO: return true or false for no recall
+	XOJ_CHECK_TYPE_OBJ(selection, EditSelection); //TODO: return true or false for no recall
 
 	gdk_threads_enter();
 
@@ -600,7 +600,7 @@ void EditSelection::drawAnchorRect(cairo_t * cr, double x, double y, double zoom
 }
 
 PageView * EditSelection::getView() {
-	XOJ_CHECK_TYPE_RET(EditSelection, NULL);
+	XOJ_CHECK_TYPE(EditSelection);
 
 	return this->view;
 }

@@ -8,12 +8,12 @@
  *
  * @license GPL
  */
-// TODO: AA: type check
 
 #ifndef __XOURNALMAIN_H__
 #define __XOURNALMAIN_H__
 
 #include <config.h>
+#include "../util/XournalType.h"
 
 class GladeSearchpath;
 
@@ -32,6 +32,9 @@ private:
 
 	int exportPdf(const char * input, const char * output);
 	GladeSearchpath * initPath(const char * argv0);
+
+private:
+	XOJ_TYPE_ATTRIB;
 
 };
 

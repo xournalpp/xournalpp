@@ -8,7 +8,6 @@
  *
  * @license GPL
  */
-// TODO: AA: type check
 
 #ifndef __RECOSEGMENT_H__
 #define __RECOSEGMENT_H__
@@ -17,6 +16,7 @@ class Stroke;
 class Inertia;
 
 #include "../../model/Point.h"
+#include "../../util/XournalType.h"
 
 class RecoSegment {
 public:
@@ -32,6 +32,8 @@ public:
 	void calcSegmentGeometry(const Point * pt, int start, int end, Inertia * s);
 
 public:
+	XOJ_TYPE_ATTRIB;
+
 	Stroke * stroke;
 	int startpt;
 	int endpt;

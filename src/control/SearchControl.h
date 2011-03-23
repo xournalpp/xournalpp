@@ -8,7 +8,6 @@
  *
  * @license GPL
  */
-// TODO: AA: type check
 
 #ifndef __SEARCHCONTROL_H__
 #define __SEARCHCONTROL_H__
@@ -27,6 +26,8 @@ private:
 	void freeSearchResults();
 
 private:
+	XOJ_TYPE_ATTRIB;
+
 	XojPage * page;
 	XojPopplerPage * pdf;
 

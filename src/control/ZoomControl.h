@@ -8,12 +8,13 @@
  *
  * @license GPL
  */
-// TODO: AA: type check
 
 #ifndef __ZOOMCONTROL_H__
 #define __ZOOMCONTROL_H__
 
 #include <gtk/gtk.h>
+
+#include "../util/XournalType.h"
 
 class ZoomListener {
 public:
@@ -44,12 +45,16 @@ public:
 	void addZoomListener(ZoomListener * listener);
 
 	void initZoomHandler(GtkWidget * widget);
+
 protected:
 	void fireZoomChanged(double lastZoom);
 	void fireZoomRangeValueChanged();
 
 	static bool onScrolledwindowMainScrollEvent(GtkWidget * widget, GdkEventScroll * event, ZoomControl * zoom);
+
 private:
+	XOJ_TYPE_ATTRIB;
+
 	GList * listener;
 
 	double zoom;

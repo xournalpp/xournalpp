@@ -1,28 +1,37 @@
 #include "XournalScheduler.h"
 #include "PreviewJob.h"
 #include "RenderJob.h"
-// TODO: AA: type check
 
 XournalScheduler::XournalScheduler() {
+	XOJ_INIT_TYPE(XournalScheduler);
 }
 
 XournalScheduler::~XournalScheduler() {
+	XOJ_RELEASE_TYPE(XournalScheduler);
 }
 
 void XournalScheduler::removeSidebar(SidebarPreview * preview) {
+	XOJ_CHECK_TYPE(XournalScheduler);
+
 	removeSource(preview, JOB_TYPE_PREVIEW, JOB_PRIORITY_HIGH);
 }
 
 void XournalScheduler::removePage(PageView * view) {
+	XOJ_CHECK_TYPE(XournalScheduler);
+
 	removeSource(view, JOB_TYPE_RENDER, JOB_PRIORITY_URGENT);
 }
 
 void XournalScheduler::finishTask() {
+	XOJ_CHECK_TYPE(XournalScheduler);
+
 	g_mutex_lock(this->jobRunningMutex);
 	g_mutex_unlock(this->jobRunningMutex);
 }
 
 void XournalScheduler::removeSource(void * source, JobType type, JobPriority priority) {
+	XOJ_CHECK_TYPE(XournalScheduler);
+
 	g_mutex_lock(this->jobQueueMutex);
 
 	int length = g_queue_get_length(this->jobQueue[priority]);
@@ -48,6 +57,8 @@ void XournalScheduler::removeSource(void * source, JobType type, JobPriority pri
 }
 
 bool XournalScheduler::existsSource(void * source, JobType type, JobPriority priority) {
+	XOJ_CHECK_TYPE(XournalScheduler);
+
 	bool exists = false;
 	g_mutex_lock(this->jobQueueMutex);
 
@@ -69,6 +80,8 @@ bool XournalScheduler::existsSource(void * source, JobType type, JobPriority pri
 }
 
 void XournalScheduler::addRepaintSidebar(SidebarPreview * preview) {
+	XOJ_CHECK_TYPE(XournalScheduler);
+
 	if (existsSource(preview, JOB_TYPE_PREVIEW, JOB_PRIORITY_HIGH)) {
 		return;
 	}
@@ -77,6 +90,8 @@ void XournalScheduler::addRepaintSidebar(SidebarPreview * preview) {
 }
 
 void XournalScheduler::addRepaintPage(PageView * view) {
+	XOJ_CHECK_TYPE(XournalScheduler);
+
 	if (existsSource(view, JOB_TYPE_RENDER, JOB_PRIORITY_URGENT)) {
 		return;
 	}

@@ -8,7 +8,6 @@
  *
  * @license GPL
  */
-// TODO: AA: type check
 
 #ifndef __TEXTATTRIBUTE_H__
 #define __TEXTATTRIBUTE_H__
@@ -24,6 +23,8 @@ public:
 	virtual void writeOut(OutputStream * out);
 
 private:
+	XOJ_TYPE_ATTRIB;
+
 	char * value;
 };
 

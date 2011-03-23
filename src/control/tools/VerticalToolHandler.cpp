@@ -1,9 +1,10 @@
 #include "VerticalToolHandler.h"
 #include "../../view/DocumentView.h"
 #include "../../undo/UndoRedoHandler.h"
-// TODO: AA: type check
 
 VerticalToolHandler::VerticalToolHandler(Redrawable * view, XojPage * page, double y, double zoom) {
+	XOJ_INIT_TYPE(VerticalToolHandler);
+
 	this->startY = y;
 	this->endY = y;
 	this->view = view;
@@ -43,6 +44,8 @@ VerticalToolHandler::VerticalToolHandler(Redrawable * view, XojPage * page, doub
 }
 
 VerticalToolHandler::~VerticalToolHandler() {
+	XOJ_CHECK_TYPE(VerticalToolHandler);
+
 	this->page->unreference();
 	this->page = NULL;
 	this->view = NULL;
@@ -54,9 +57,13 @@ VerticalToolHandler::~VerticalToolHandler() {
 
 	g_list_free(this->elements);
 	this->elements = NULL;
+
+	XOJ_RELEASE_TYPE(VerticalToolHandler);
 }
 
 void VerticalToolHandler::paint(cairo_t * cr, GdkRectangle * rect, double zoom) {
+	XOJ_CHECK_TYPE(VerticalToolHandler);
+
 	GdkColor selectionColor = view->getSelectionColor();
 
 	cairo_set_line_width(cr, 1);
@@ -85,6 +92,8 @@ void VerticalToolHandler::paint(cairo_t * cr, GdkRectangle * rect, double zoom) 
 }
 
 void VerticalToolHandler::currentPos(double x, double y) {
+	XOJ_CHECK_TYPE(VerticalToolHandler);
+
 	if (this->endY == y) {
 		return;
 	}
@@ -109,10 +118,14 @@ void VerticalToolHandler::currentPos(double x, double y) {
 }
 
 ListIterator<Element *> VerticalToolHandler::getElements() {
+	XOJ_CHECK_TYPE(VerticalToolHandler);
+
 	return ListIterator<Element *>(this->elements);
 }
 
 MoveUndoAction * VerticalToolHandler::finalize() {
+	XOJ_CHECK_TYPE(VerticalToolHandler);
+
 	double dY = this->endY - this->startY;
 
 	MoveUndoAction * undo = new MoveUndoAction(this->page, this);

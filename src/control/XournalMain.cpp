@@ -3,7 +3,6 @@
 #include <gtk/gtk.h>
 #include <iostream>
 
-
 #include "gui/MainWindow.h"
 #include "Control.h"
 #include "LoadHandler.h"
@@ -11,16 +10,19 @@
 #include "../gui/XournalView.h"
 #include "../pdf/PdfExport.h"
 #include "cfg.h"
-// TODO: AA: type check
 
 XournalMain::XournalMain() {
+	XOJ_INIT_TYPE(XournalMain);
 }
 
 XournalMain::~XournalMain() {
+	XOJ_RELEASE_TYPE(XournalMain);
 }
 
 #ifdef ENABLE_NLS
 void XournalMain::initLocalisation() {
+	XOJ_CHECK_TYPE(XournalMain);
+
 	setlocale(LC_ALL, "");
 	bindtextdomain(GETTEXT_PACKAGE, PACKAGE_LOCALE_DIR);
 	textdomain(GETTEXT_PACKAGE);
@@ -28,10 +30,12 @@ void XournalMain::initLocalisation() {
 #endif
 
 int XournalMain::exportPdf(const char * input, const char * output) {
+	XOJ_CHECK_TYPE(XournalMain);
+
 	LoadHandler loader;
 
 	Document * doc = loader.loadDocument(input);
-	if(doc == NULL) {
+	if (doc == NULL) {
 		String err = loader.getLastError();
 		printf("%s\n", err.c_str());
 		return -2;
@@ -40,7 +44,7 @@ int XournalMain::exportPdf(const char * input, const char * output) {
 	GFile * file = g_file_new_for_commandline_arg(output);
 
 	PdfExport pdf(doc, NULL);
-	if(!pdf.createPdf(g_file_get_uri(file))) {
+	if (!pdf.createPdf(g_file_get_uri(file))) {
 		String err = pdf.getLastError();
 		printf("%s\n", err.c_str());
 
@@ -52,11 +56,12 @@ int XournalMain::exportPdf(const char * input, const char * output) {
 
 	printf("%s\n", _("PDF File successfully created"));
 
-
 	return 0; // no error
 }
 
 int XournalMain::run(int argc, char * argv[]) {
+	XOJ_CHECK_TYPE(XournalMain);
+
 #ifdef ENABLE_NLS
 	this->initLocalisation();
 #endif
@@ -69,14 +74,9 @@ int XournalMain::run(int argc, char * argv[]) {
 	gchar * pdfFilename = NULL;
 	int openAtPageNumber = -1;
 
-	GOptionEntry options[] = {
-		{ "no-warn-svn",    'w', 0, G_OPTION_ARG_NONE,           &optNoWarnSVN, "Do not warn this is a development release", NULL },
-		{ "create-pdf",     'p', 0, G_OPTION_ARG_FILENAME,       &pdfFilename, "PDF output filename" , NULL},
-		{ "page",           'n', 0, G_OPTION_ARG_INT,            &openAtPageNumber, "Jump to Page (first Page: 1)", "N" },
-		{ G_OPTION_REMAINING, 0, 0, G_OPTION_ARG_FILENAME_ARRAY, &optFilename, "<input>" , NULL},
-		{ NULL }
-	};
-
+	GOptionEntry options[] = { { "no-warn-svn", 'w', 0, G_OPTION_ARG_NONE, &optNoWarnSVN, "Do not warn this is a development release", NULL }, { "create-pdf",
+			'p', 0, G_OPTION_ARG_FILENAME, &pdfFilename, "PDF output filename", NULL }, { "page", 'n', 0, G_OPTION_ARG_INT, &openAtPageNumber,
+			"Jump to Page (first Page: 1)", "N" }, { G_OPTION_REMAINING, 0, 0, G_OPTION_ARG_FILENAME_ARRAY, &optFilename, "<input>", NULL }, { NULL } };
 
 	g_option_context_add_main_entries(context, options, GETTEXT_PACKAGE);
 	// parse options, so we don't need gtk_init, but don't init display (so we have a commandline mode)
@@ -94,13 +94,12 @@ int XournalMain::run(int argc, char * argv[]) {
 	// Init threads (used for our Sheduler, Jobs)
 	g_thread_init(NULL);
 
-	if(pdfFilename && optFilename && *optFilename) {
+	if (pdfFilename && optFilename && *optFilename) {
 		return exportPdf(*optFilename, pdfFilename);
 	}
 
 	// Init GTK Display
 	gdk_display_open_default_libgtk_only();
-
 
 	GladeSearchpath * gladePath = initPath(argv[0]);
 
@@ -179,6 +178,8 @@ int XournalMain::run(int argc, char * argv[]) {
  * Path for glade files and Pixmaps, first searches in the home folder, so you can customize glade files
  */
 GladeSearchpath * XournalMain::initPath(const char * argv0) {
+	XOJ_CHECK_TYPE(XournalMain);
+
 	GladeSearchpath * gladePath = new GladeSearchpath();
 
 	// Create config directory if not exists
@@ -222,7 +223,6 @@ GladeSearchpath * XournalMain::initPath(const char * argv0) {
 	searchPath = g_build_filename(path, "..", "ui", NULL);
 	gladePath->addSearchDirectory(searchPath);
 	g_free(searchPath);
-
 
 	return gladePath;
 }

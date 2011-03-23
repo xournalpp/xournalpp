@@ -7,7 +7,7 @@ ActionEnabledListener::ActionEnabledListener() {
 }
 
 ActionEnabledListener::~ActionEnabledListener() {
-	XOJ_CHECK_TYPE(XmlNode);
+	XOJ_CHECK_TYPE(ActionEnabledListener);
 
 	unregisterListener();
 
@@ -39,7 +39,7 @@ ActionSelectionListener::ActionSelectionListener() {
 }
 
 ActionSelectionListener::~ActionSelectionListener() {
-	XOJ_CHECK_TYPE(XmlNode);
+	XOJ_CHECK_TYPE(ActionSelectionListener);
 
 	unregisterListener();
 

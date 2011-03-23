@@ -2,14 +2,17 @@
 #include "ShapeRecognizer.h"
 
 #include "../../util/Stacktrace.h"
-// TODO: AA: type check
 
 ShapeRecognizerResult::ShapeRecognizerResult(Stroke * result) {
+	XOJ_INIT_TYPE(ShapeRecognizerResult);
+
 	this->recognized = result;
 	this->source = NULL;
 }
 
 ShapeRecognizerResult::ShapeRecognizerResult(Stroke * result, ShapeRecognizer * recognizer) {
+	XOJ_INIT_TYPE(ShapeRecognizerResult);
+
 	this->recognized = result;
 	this->source = NULL;
 
@@ -23,12 +26,18 @@ ShapeRecognizerResult::ShapeRecognizerResult(Stroke * result, ShapeRecognizer * 
 }
 
 ShapeRecognizerResult::~ShapeRecognizerResult() {
+	XOJ_CHECK_TYPE(ShapeRecognizerResult);
+
 	this->recognized = NULL;
 	g_list_free(this->source);
 	this->source = NULL;
+
+	XOJ_RELEASE_TYPE(ShapeRecognizer);
 }
 
 void ShapeRecognizerResult::addSourceStroke(Stroke * s) {
+	XOJ_CHECK_TYPE(ShapeRecognizerResult);
+
 	GList * elem = g_list_find(this->source, s);
 	if (elem) {
 		// TODO: LOW PRIO: this is a bug in the ShapreRecognizer!!
@@ -42,10 +51,14 @@ void ShapeRecognizerResult::addSourceStroke(Stroke * s) {
 }
 
 Stroke * ShapeRecognizerResult::getRecognized() {
+	XOJ_CHECK_TYPE(ShapeRecognizerResult);
+
 	return this->recognized;
 }
 
 ListIterator<Stroke *> ShapeRecognizerResult::getSources() {
+	XOJ_CHECK_TYPE(ShapeRecognizerResult);
+
 	return ListIterator<Stroke *> (this->source);
 }
 

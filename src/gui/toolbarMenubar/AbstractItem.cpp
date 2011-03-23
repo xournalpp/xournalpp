@@ -21,7 +21,7 @@ AbstractItem::AbstractItem(String id, ActionHandler * handler, ActionType action
 }
 
 AbstractItem::~AbstractItem() {
-	XOJ_CHECK_TYPE(XmlNode);
+	XOJ_CHECK_TYPE(AbstractItem);
 
 	if (this->menuitem) {
 		g_signal_handler_disconnect(this->menuitem, menuSignalHandler);

@@ -11,7 +11,6 @@
 
 #ifndef __XOURNALVIEW_H__
 #define __XOURNALVIEW_H__
-// TODO: AA: type check
 
 #include <gtk/gtk.h>
 #include "../util/Arrayiterator.h"
@@ -136,6 +135,8 @@ private:
 
 	static gboolean clearMemoryTimer(XournalView * widget);
 private:
+	XOJ_TYPE_ATTRIB;
+
 	GtkWidget * widget;
 	double margin;
 

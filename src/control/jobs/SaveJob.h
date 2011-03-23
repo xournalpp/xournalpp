@@ -15,6 +15,7 @@
 
 #include "BlockingJob.h"
 #include "../../util/String.h"
+#include "../../util/XournalType.h"
 
 class SaveJob : public BlockingJob {
 public:
@@ -34,6 +35,8 @@ private:
 	virtual void afterRun();
 
 private:
+	XOJ_TYPE_ATTRIB;
+
 	String copyError;
 
 	String lastError;

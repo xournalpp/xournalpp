@@ -11,9 +11,9 @@
 
 #ifndef __TOOL_H__
 #define __TOOL_H__
-// TODO: AA: type check
 
 #include "../util/String.h"
+#include "../util/XournalType.h"
 
 #define TOOL_COUNT 10
 
@@ -98,6 +98,8 @@ private:
 	void operator = (const Tool & t);
 
 private:
+	XOJ_TYPE_ATTRIB;
+
 	String name;
 	ToolType type;
 

@@ -8,7 +8,6 @@
  *
  * @license GPL
  */
-// TODO: AA: type check
 
 #ifndef __SELECTION_H__
 #define __SELECTION_H__
@@ -17,6 +16,7 @@
 #include "../../model/Page.h"
 #include "../../gui/Redrawable.h"
 #include "../../util/Util.h"
+#include "../../util/XournalType.h"
 
 class Selection: public ShapeContainer {
 public:
@@ -28,6 +28,10 @@ public:
 	virtual void paint(cairo_t * cr, GdkRectangle * rect, double zoom) = 0;
 	virtual void currentPos(double x, double y) = 0;
 	virtual void getSelectedRect(double & x, double & y, double & width, double & height) = 0;
+
+private:
+	XOJ_TYPE_ATTRIB;
+
 protected:
 	GList * selectedElements;
 	XojPage * page;
@@ -44,7 +48,9 @@ protected:
 class RectSelection: public Selection {
 public:
 	RectSelection(double x, double y, Redrawable * view);
+	~RectSelection();
 
+public:
 	virtual bool finalize(XojPage * page);
 	virtual void paint(cairo_t * cr, GdkRectangle * rect, double zoom);
 	virtual void currentPos(double x, double y);
@@ -52,6 +58,8 @@ public:
 	virtual bool contains(double x, double y);
 
 private:
+	XOJ_TYPE_ATTRIB;
+
 	double sx;
 	double sy;
 	double ex;
@@ -70,12 +78,17 @@ class RegionSelect: public Selection {
 public:
 	RegionSelect(double x, double y, Redrawable * view);
 	~RegionSelect();
+
+public:
 	virtual bool finalize(XojPage * page);
 	virtual void paint(cairo_t * cr, GdkRectangle * rect, double zoom);
 	virtual void currentPos(double x, double y);
 	virtual void getSelectedRect(double & x, double & y, double & width, double & height);
 	virtual bool contains(double x, double y);
+
 private:
+	XOJ_TYPE_ATTRIB;
+
 	GList * points;
 };
 

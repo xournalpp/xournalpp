@@ -6,16 +6,19 @@
 #include "../SaveHandler.h"
 #include "../Control.h"
 #include "../../view/DocumentView.h"
-// TODO: AA: type check
 
 SaveJob::SaveJob(Control * control) :
 	BlockingJob(control, _("Save")) {
+	XOJ_INIT_TYPE(SaveJob);
 }
 
 SaveJob::~SaveJob() {
+	XOJ_RELEASE_TYPE(SaveJob);
 }
 
 void SaveJob::run() {
+	XOJ_CHECK_TYPE(SaveJob);
+
 	save();
 
 	if (this->control->getWindow()) {
@@ -24,6 +27,8 @@ void SaveJob::run() {
 }
 
 void SaveJob::afterRun() {
+	XOJ_CHECK_TYPE(SaveJob);
+
 	if (!this->lastError.isEmpty()) {
 		GtkWidget * dialog = gtk_message_dialog_new((GtkWindow *) *control->getWindow(), GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
 				"%s", this->lastError.c_str());
@@ -47,6 +52,7 @@ void SaveJob::copyProgressCallback(goffset current_num_bytes, goffset total_num_
 }
 
 bool SaveJob::copyFile(String source, String target) {
+	XOJ_CHECK_TYPE(SaveJob);
 
 	// we need to build the GFile from a path.
 	// But if future versions support URIs, this has to be changed
@@ -68,6 +74,8 @@ bool SaveJob::copyFile(String source, String target) {
 }
 
 void SaveJob::updatePreview() {
+	XOJ_CHECK_TYPE(SaveJob);
+
 	const int previewSize = 128;
 
 	Document * doc = this->control->getDocument();
@@ -117,6 +125,8 @@ void SaveJob::updatePreview() {
 }
 
 bool SaveJob::save() {
+	XOJ_CHECK_TYPE(SaveJob);
+
 	updatePreview();
 	Document * doc = this->control->getDocument();
 

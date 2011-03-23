@@ -2,28 +2,36 @@
 #include "../model/Page.h"
 #include "Control.h"
 #include "../gui/XournalView.h"
-// TODO: AA: type check
 
 ScrollHandler::ScrollHandler(Control * control) {
+	XOJ_INIT_TYPE(ScrollHandler);
+
 	this->control = control;
 }
 
 ScrollHandler::~ScrollHandler() {
+	XOJ_RELEASE_TYPE(ScrollHandler);
 }
 
 void ScrollHandler::goToPreviousPage() {
-	if (control->getWindow()) {
-		scrollToPage(control->getWindow()->getXournal()->getCurrentPage() - 1);
+	XOJ_CHECK_TYPE(ScrollHandler);
+
+	if (this->control->getWindow()) {
+		scrollToPage(this->control->getWindow()->getXournal()->getCurrentPage() - 1);
 	}
 }
 
 void ScrollHandler::goToNextPage() {
-	if (control->getWindow()) {
-		scrollToPage(control->getWindow()->getXournal()->getCurrentPage() + 1);
+	XOJ_CHECK_TYPE(ScrollHandler);
+
+	if (this->control->getWindow()) {
+		scrollToPage(this->control->getWindow()->getXournal()->getCurrentPage() + 1);
 	}
 }
 
 void ScrollHandler::scrollToPage(XojPage * page, double top) {
+	XOJ_CHECK_TYPE(ScrollHandler);
+
 	Document * doc = this->control->getDocument();
 
 	doc->lock();
@@ -36,16 +44,20 @@ void ScrollHandler::scrollToPage(XojPage * page, double top) {
 }
 
 void ScrollHandler::scrollToPage(int page, double top) {
-	if (control->getWindow()) {
-		control->getWindow()->getXournal()->scrollTo(page, top);
+	XOJ_CHECK_TYPE(ScrollHandler);
+
+	if (this->control->getWindow()) {
+		this->control->getWindow()->getXournal()->scrollTo(page, top);
 	}
 }
 
 void ScrollHandler::scrollToSpinPange() {
-	if (!control->getWindow()) {
+	XOJ_CHECK_TYPE(ScrollHandler);
+
+	if (!this->control->getWindow()) {
 		return;
 	}
-	GtkWidget * spinPageNo = control->getWindow()->getSpinPageNo();
+	GtkWidget * spinPageNo = this->control->getWindow()->getSpinPageNo();
 	int page = gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(spinPageNo));
 	if (page == 0) {
 		return;
@@ -54,7 +66,9 @@ void ScrollHandler::scrollToSpinPange() {
 }
 
 void ScrollHandler::scrollToAnnotatedPage(bool next) {
-	if (!control->getWindow()) {
+	XOJ_CHECK_TYPE(ScrollHandler);
+
+	if (!this->control->getWindow()) {
 		return;
 	}
 
@@ -65,10 +79,10 @@ void ScrollHandler::scrollToAnnotatedPage(bool next) {
 		step = -1;
 	}
 
-	Document * doc = control->getDocument();
+	Document * doc = this->control->getDocument();
 	doc->lock();
 
-	for (int i = control->getCurrentPageNo() + step; i >= 0 && i < doc->getPageCount(); i += step) {
+	for (int i = this->control->getCurrentPageNo() + step; i >= 0 && i < doc->getPageCount(); i += step) {
 		if (doc->getPage(i)->isAnnotated()) {
 			scrollToPage(i);
 			break;
@@ -79,10 +93,12 @@ void ScrollHandler::scrollToAnnotatedPage(bool next) {
 }
 
 bool ScrollHandler::isPageVisible(int page) {
-	if (!control->getWindow()) {
+	XOJ_CHECK_TYPE(ScrollHandler);
+
+	if (!this->control->getWindow()) {
 		return false;
 	}
 
-	return control->getWindow()->getXournal()->isPageVisible(page);
+	return this->control->getWindow()->getXournal()->isPageVisible(page);
 }
 
