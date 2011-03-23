@@ -1,6 +1,7 @@
 #include "OutputStream.h"
 #include <stdlib.h>
 #include <string.h>
+// TODO: AA: type check
 
 OutputStream::OutputStream() {
 }

@@ -15,6 +15,7 @@
 #include "AbstractToolItem.h"
 #include "../GladeGui.h"
 #include "../../model/Font.h"
+#include "../../util/XournalType.h"
 
 class FontButton: public AbstractToolItem {
 public:
@@ -31,6 +32,9 @@ protected:
 	virtual GtkToolItem * newItem();
 
 private:
+	XOJ_TYPE_ATTRIB;
+
+
 	GtkWidget * fontButton;
 	GladeGui * gui;
 	String description;

@@ -7,17 +7,18 @@
 #include <string.h>
 
 XmlNode::XmlNode(const char * tag) {
+	XOJ_INIT_TYPE(XmlNode);
+
 	this->tag = g_strdup(tag);
 	this->attributes = NULL;
 	this->children = NULL;
 }
 
 XmlNode::~XmlNode() {
-	CHECK_MEMORY(this);
+	XOJ_CHECK_TYPE(XmlNode);
 
 	for (GList * l = this->children; l != NULL; l = l->next) {
 		XmlNode * node = (XmlNode *) l->data;
-		CHECK_MEMORY(node);
 		delete node;
 	}
 	g_list_free(this->children);
@@ -25,7 +26,6 @@ XmlNode::~XmlNode() {
 
 	for (GList * l = this->attributes; l != NULL; l = l->next) {
 		Attribute * attrib = (Attribute *) l->data;
-		CHECK_MEMORY(attrib);
 		delete attrib;
 	}
 	g_list_free(this->attributes);
@@ -33,10 +33,12 @@ XmlNode::~XmlNode() {
 
 	g_free(this->tag);
 	this->tag = NULL;
+
+	XOJ_RELEASE_TYPE(XmlNode);
 }
 
 void XmlNode::setAttrib(const char * attrib, const char * value) {
-	CHECK_MEMORY(this);
+	XOJ_CHECK_TYPE(XmlNode);
 
 	if (value == NULL) {
 		value = "";
@@ -45,13 +47,13 @@ void XmlNode::setAttrib(const char * attrib, const char * value) {
 }
 
 void XmlNode::setAttrib(const char * attrib, double value) {
-	CHECK_MEMORY(this);
+	XOJ_CHECK_TYPE(XmlNode);
 
 	putAttrib(new DoubleAttribute(attrib, value));
 }
 
 void XmlNode::setAttrib(const char * attrib, int value) {
-	CHECK_MEMORY(this);
+	XOJ_CHECK_TYPE(XmlNode);
 
 	putAttrib(new IntAttribute(attrib, value));
 }
@@ -60,13 +62,13 @@ void XmlNode::setAttrib(const char * attrib, int value) {
  * The double array is now owned by XmlNode and automatically deleted!
  */
 void XmlNode::setAttrib(const char * attrib, double * value, int count) {
-	CHECK_MEMORY(this);
+	XOJ_CHECK_TYPE(XmlNode);
 
 	putAttrib(new DoubleArrayAttribute(attrib, value, count));
 }
 
 void XmlNode::writeOut(OutputStream * out) {
-	CHECK_MEMORY(this);
+	XOJ_CHECK_TYPE(XmlNode);
 
 	out->write("<");
 	out->write(tag);
@@ -79,8 +81,6 @@ void XmlNode::writeOut(OutputStream * out) {
 
 		for (GList * l = this->children; l != NULL; l = l->next) {
 			XmlNode * node = (XmlNode *) l->data;
-			CHECK_MEMORY(node);
-
 			node->writeOut(out);
 		}
 
@@ -91,21 +91,18 @@ void XmlNode::writeOut(OutputStream * out) {
 }
 
 void XmlNode::addChild(XmlNode * node) {
-	CHECK_MEMORY(this);
+	XOJ_CHECK_TYPE(XmlNode);
 
 	this->children = g_list_append(this->children, node);
 }
 
 void XmlNode::putAttrib(Attribute * a) {
-	CHECK_MEMORY(this);
-
-	CHECK_MEMORY(a);
+	XOJ_CHECK_TYPE(XmlNode);
 
 	for (GList * l = this->attributes; l != NULL; l = l->next) {
 		Attribute * attrib = (Attribute *) l->data;
-		CHECK_MEMORY(attrib);
 
-		if (strcmp(attrib->getName(), a->getName())==0) {
+		if (strcmp(attrib->getName(), a->getName()) == 0) {
 			delete attrib;
 			l->data = a;
 			return;
@@ -116,11 +113,10 @@ void XmlNode::putAttrib(Attribute * a) {
 }
 
 void XmlNode::writeAttributes(OutputStream * out) {
-	CHECK_MEMORY(this);
+	XOJ_CHECK_TYPE(XmlNode);
 
 	for (GList * l = this->attributes; l != NULL; l = l->next) {
 		Attribute * attrib = (Attribute *) l->data;
-		CHECK_MEMORY(attrib);
 		out->write(" ");
 		out->write(attrib->getName());
 		out->write("=\"");

@@ -16,6 +16,7 @@
 #include "../../model/Stroke.h"
 #include "../../model/Page.h"
 #include "../../util/MemoryCheck.h"
+#include "../../util/XournalType.h"
 #include "../shaperecognizer/ShapeRecognizer.h"
 
 class DocumentView;
@@ -42,6 +43,9 @@ private:
 	void drawTmpStroke();
 
 private:
+	XOJ_TYPE_ATTRIB;
+
+
 	XournalView * xournal;
 
 	/**

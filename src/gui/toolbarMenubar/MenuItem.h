@@ -11,6 +11,7 @@
 
 #ifndef __MENUITEM_H__
 #define __MENUITEM_H__
+// TODO: AA: type check
 
 #include "AbstractItem.h"
 

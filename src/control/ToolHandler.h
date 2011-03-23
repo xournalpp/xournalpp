@@ -11,6 +11,7 @@
 
 #ifndef __TOOLHANDLER_H__
 #define __TOOLHANDLER_H__
+// TODO: AA: type check
 
 #include "Tool.h"
 #include "../util/Arrayiterator.h"

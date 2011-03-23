@@ -8,6 +8,7 @@
  *
  * @license GPL
  */
+// TODO: AA: type check
 
 #ifndef __PAGEBACKGROUNDCHANGEDUNDOACTION_H__
 #define __PAGEBACKGROUNDCHANGEDUNDOACTION_H__

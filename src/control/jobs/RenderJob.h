@@ -8,6 +8,7 @@
  *
  * @license GPL
  */
+// TODO: AA: type check
 
 #ifndef __RENDERJOB_H__
 #define __RENDERJOB_H__

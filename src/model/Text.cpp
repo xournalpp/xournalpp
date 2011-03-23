@@ -5,6 +5,7 @@
 
 #include "../util/ObjectStream.h"
 #include "../util/Stacktrace.h"
+// TODO: AA: type check
 
 Text::Text() :
 	Element(ELEMENT_TEXT) {

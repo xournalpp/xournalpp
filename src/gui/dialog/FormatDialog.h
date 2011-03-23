@@ -14,6 +14,7 @@
 
 #include "../GladeGui.h"
 #include "../../control/settings/Settings.h"
+#include "../../util/XournalType.h"
 
 enum Orientation {
 	ORIENTATION_NOT_DEFINED, ORIENTATION_LANDSCAPE, ORIENTATION_PORTRAIT
@@ -40,6 +41,9 @@ private:
 	static void spinValueChangedCb(GtkSpinButton * spinbutton, FormatDialog * dlg);
 
 private:
+	XOJ_TYPE_ATTRIB;
+
+
 	Settings * settings;
 
 	GList * list;

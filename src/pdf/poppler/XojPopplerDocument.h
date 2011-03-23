@@ -11,6 +11,7 @@
 
 #ifndef __XOJ_POPPLERDOCUMENT_H__
 #define __XOJ_POPPLERDOCUMENT_H__
+// TODO: AA: type check
 
 #include "XojPopplerPage.h"
 #include "../../util/String.h"

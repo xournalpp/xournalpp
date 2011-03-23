@@ -18,6 +18,8 @@ class Control;
 class Document;
 class ExportDialog;
 
+#include "../util/XournalType.h"
+
 class ExportHandler {
 public:
 	ExportHandler();
@@ -27,6 +29,8 @@ public:
 	void runExportWithDialog(GladeSearchpath * gladeSearchPath, Settings * settings, Document * doc, Control * control, int current);
 
 private:
+	XOJ_TYPE_ATTRIB;
+
 };
 
 #endif /* __EXPORTHANDLER_H__ */

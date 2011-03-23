@@ -21,6 +21,8 @@ static char ERASER_CURSOR_MASK[] = { 0x00, 0x00, 0x00, 0xc0, 0x3f, 0x00, 0xf0, 0
 		0xfc, 0xff, 0x03, 0xf8, 0xff, 0x01, 0xf0, 0xff, 0x00, 0xe0, 0x7f, 0x00, 0x80, 0x1f, 0x00 };
 
 Cursor::Cursor(Control * control) {
+	XOJ_INIT_TYPE(Cursor);
+
 	this->control = control;
 	this->busy = false;
 	this->invisible = false;
@@ -29,10 +31,11 @@ Cursor::Cursor(Control * control) {
 }
 
 Cursor::~Cursor() {
+	XOJ_RELEASE_TYPE(Cursor);
 }
 
 void Cursor::setMouseDown(bool mouseDown) {
-	g_return_if_fail(this != NULL);
+	XOJ_CHECK_TYPE(Cursor);
 
 	if (this->mouseDown == mouseDown) {
 		return;
@@ -49,7 +52,7 @@ void Cursor::setMouseDown(bool mouseDown) {
 }
 
 void Cursor::setMouseSelectionType(CursorSelectionType selectionType) {
-	g_return_if_fail(this != NULL);
+	XOJ_CHECK_TYPE(Cursor);
 
 	if (this->selectionType == selectionType) {
 		return;
@@ -59,7 +62,7 @@ void Cursor::setMouseSelectionType(CursorSelectionType selectionType) {
 }
 
 void Cursor::setCursorBusy(bool busy) {
-	g_return_if_fail(this != NULL);
+	XOJ_CHECK_TYPE(Cursor);
 
 	MainWindow * win = control->getWindow();
 	if (!win) {
@@ -89,7 +92,7 @@ void Cursor::setCursorBusy(bool busy) {
 }
 
 void Cursor::setInsidePage(bool insidePage) {
-	g_return_if_fail(this != NULL);
+	XOJ_CHECK_TYPE(Cursor);
 
 	if(this->insidePage == insidePage) {
 		return;
@@ -169,7 +172,7 @@ GdkCursor * Cursor::getPenCursor() {
 }
 
 void Cursor::updateCursor() {
-	g_return_if_fail(this != NULL);
+	XOJ_CHECK_TYPE(Cursor);
 
 	MainWindow * win = control->getWindow();
 	if (!win) {

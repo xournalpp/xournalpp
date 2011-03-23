@@ -11,6 +11,7 @@
 
 #ifndef __XMLTEXTNODE_H__
 #define __XMLTEXTNODE_H__
+// TODO: AA: type check
 
 #include "XmlNode.h"
 

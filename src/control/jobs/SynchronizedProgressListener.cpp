@@ -1,5 +1,6 @@
 #include "SynchronizedProgressListener.h"
 #include <gtk/gtk.h>
+// TODO: AA: type check
 
 SynchronizedProgressListener::SynchronizedProgressListener(ProgressListener * target) {
 	this->target = target;

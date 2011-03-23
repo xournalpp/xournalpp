@@ -2,6 +2,7 @@
 
 #include <math.h>
 #include <stdio.h>
+// TODO: AA: type check
 
 Point::Point() {
 	this->x = 0;

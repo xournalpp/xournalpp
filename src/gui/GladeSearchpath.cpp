@@ -1,4 +1,5 @@
 #include "GladeSearchpath.h"
+// TODO: AA: type check
 
 GladeSearchpath::GladeSearchpath() {
 	this->directories = NULL;

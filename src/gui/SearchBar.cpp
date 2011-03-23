@@ -4,6 +4,7 @@
 
 #include <config.h>
 #include <glib/gi18n-lib.h>
+// TODO: AA: type check
 
 SearchBar::SearchBar(Control * control) {
 	this->control = control;

@@ -8,6 +8,7 @@
  *
  * @license GPL
  */
+// TODO: AA: type check
 
 #ifndef __OUTPUTSTREAM_H__
 #define __OUTPUTSTREAM_H__

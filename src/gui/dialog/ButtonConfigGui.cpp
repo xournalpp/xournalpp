@@ -11,6 +11,8 @@
 			gtk_list_store_set(typeModel, &iter, 0, dlg->loadIconPixbuf(icon), 1, name, 2, action, -1);
 
 ButtonConfigGui::ButtonConfigGui(SettingsDialog * dlg, GtkWidget * w, Settings * settings, int button, bool withDevice) {
+	XOJ_INIT_TYPE(ButtonConfigGui);
+
 	this->settings = settings;
 	this->button = button;
 	this->withDevice = withDevice;
@@ -122,7 +124,13 @@ ButtonConfigGui::ButtonConfigGui(SettingsDialog * dlg, GtkWidget * w, Settings *
 	loadSettings();
 }
 
+ButtonConfigGui::~ButtonConfigGui() {
+	XOJ_RELEASE_TYPE(ButtonConfigGui);
+}
+
 void ButtonConfigGui::loadSettings() {
+	XOJ_CHECK_TYPE(ButtonConfig);
+
 	ButtonConfig * cfg = settings->getButtonConfig(button);
 
 	GtkTreeModel * model = gtk_combo_box_get_model(GTK_COMBO_BOX(cbTool));
@@ -198,6 +206,8 @@ void ButtonConfigGui::loadSettings() {
 }
 
 void ButtonConfigGui::saveSettings() {
+	XOJ_CHECK_TYPE(ButtonConfig);
+
 	ButtonConfig * cfg = settings->getButtonConfig(button);
 	ToolType action = TOOL_NONE;
 	GtkTreeIter iter;
@@ -261,16 +271,20 @@ void ButtonConfigGui::saveSettings() {
 }
 
 GtkWidget * ButtonConfigGui::newLabel(const char * text) {
+	XOJ_CHECK_TYPE_RET(ButtonConfig, NULL);
+
 	GtkWidget * label = gtk_label_new(text);
 	gtk_misc_set_alignment(GTK_MISC(label), 0.0, 0.5);
 	return label;
 }
 
-void ButtonConfigGui::cbSelectCallback(GtkComboBox *widget, ButtonConfigGui * gui) {
+void ButtonConfigGui::cbSelectCallback(GtkComboBox * widget, ButtonConfigGui * gui) {
 	gui->enableDisableTools();
 }
 
 void ButtonConfigGui::enableDisableTools() {
+	XOJ_CHECK_TYPE(ButtonConfig);
+
 	ToolType action = TOOL_NONE;
 	GtkTreeIter iter;
 

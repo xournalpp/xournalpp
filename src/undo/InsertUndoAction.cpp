@@ -3,6 +3,7 @@
 #include "../model/Layer.h"
 #include "../model/Element.h"
 #include "../gui/Redrawable.h"
+// TODO: AA: type check
 
 InsertUndoAction::InsertUndoAction(XojPage * page, Layer * layer, Element * element, Redrawable * view) {
 	this->page = page;

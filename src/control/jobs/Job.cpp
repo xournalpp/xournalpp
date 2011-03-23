@@ -1,6 +1,7 @@
 #include "Job.h"
 #include <stdio.h>
 #include <gtk/gtk.h>
+// TODO: AA: type check
 
 Job::Job() {
 	this->afterRunId = 0;

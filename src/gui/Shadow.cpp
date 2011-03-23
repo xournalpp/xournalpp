@@ -4,6 +4,7 @@
 Shadow * Shadow::instance = new Shadow();
 
 typedef const unsigned char * u8ptr;
+// TODO: AA: type check
 
 Shadow::Shadow() {
 	this->edgeBottomLeft = NULL;

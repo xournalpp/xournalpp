@@ -3,6 +3,8 @@
 #include <cairo/cairo-pdf.h>
 
 CairoPdf::CairoPdf() {
+	XOJ_INIT_TYPE(CairoPdf);
+
 	this->data = g_string_new("");
 
 	this->surface = cairo_pdf_surface_create_for_stream((cairo_write_func_t) writeOut, this, 0, 0);
@@ -10,10 +12,14 @@ CairoPdf::CairoPdf() {
 }
 
 CairoPdf::~CairoPdf() {
+	XOJ_CHECK_TYPE(CairoPdf);
+
 	if (this->data) {
 		g_string_free(this->data, true);
 		this->data = NULL;
 	}
+
+	XOJ_RELEASE_TYPE(CairoPdf);
 }
 
 cairo_status_t CairoPdf::writeOut(CairoPdf * pdf, unsigned char * data, unsigned int length) {
@@ -22,6 +28,8 @@ cairo_status_t CairoPdf::writeOut(CairoPdf * pdf, unsigned char * data, unsigned
 }
 
 void CairoPdf::drawPage(XojPage * page) {
+	XOJ_CHECK_TYPE(CairoPdf);
+
 	DocumentView view;
 
 	cairo_pdf_surface_set_size(this->surface, page->getWidth(), page->getHeight());
@@ -33,6 +41,8 @@ void CairoPdf::drawPage(XojPage * page) {
 }
 
 void CairoPdf::finalize() {
+	XOJ_CHECK_TYPE(CairoPdf);
+
 	cairo_destroy(this->cr);
 	cairo_surface_destroy(this->surface);
 
@@ -45,6 +55,8 @@ void CairoPdf::finalize() {
 }
 
 XojPopplerPage * CairoPdf::getPage(int page) {
+	XOJ_CHECK_TYPE_RET(CairoPdf, NULL);
+
 	return doc.getPage(page);
 }
 

@@ -5,6 +5,8 @@
 #include "PageLayerPosEntry.h"
 
 DeleteUndoAction::DeleteUndoAction(XojPage * page, Redrawable * view, bool eraser) {
+	XOJ_INIT_TYPE(DeleteUndoAction);
+
 	this->page = page;
 	this->view = view;
 	this->eraser = eraser;
@@ -12,6 +14,8 @@ DeleteUndoAction::DeleteUndoAction(XojPage * page, Redrawable * view, bool erase
 }
 
 DeleteUndoAction::~DeleteUndoAction() {
+	XOJ_CHECK_TYPE(DeleteUndoAction);
+
 	for (GList * l = this->elements; l != NULL; l = l->next) {
 		PageLayerPosEntry<Element> * e = (PageLayerPosEntry<Element>*) l->data;
 		if (!undone) {
@@ -20,14 +24,20 @@ DeleteUndoAction::~DeleteUndoAction() {
 		delete e;
 	}
 	g_list_free(this->elements);
+
+	XOJ_RELEASE_TYPE(DeleteUndoAction)
+	;
 }
 
 void DeleteUndoAction::addElement(Layer * layer, Element * e, int pos) {
-	this->elements = g_list_insert_sorted(this->elements, new PageLayerPosEntry<Element> (layer, e, pos),
-			(GCompareFunc) PageLayerPosEntry<Element>::cmp);
+	XOJ_CHECK_TYPE(DeleteUndoAction);
+
+	this->elements = g_list_insert_sorted(this->elements, new PageLayerPosEntry<Element> (layer, e, pos), (GCompareFunc) PageLayerPosEntry<Element>::cmp);
 }
 
 bool DeleteUndoAction::undo(Control * control) {
+	XOJ_CHECK_TYPE_RET(DeleteUndoAction, false);
+
 	if (this->elements == NULL) {
 		g_warning("Could not undo DeleteUndoAction, there is nothing to undo");
 
@@ -45,6 +55,8 @@ bool DeleteUndoAction::undo(Control * control) {
 }
 
 bool DeleteUndoAction::redo(Control * control) {
+	XOJ_CHECK_TYPE_RET(DeleteUndoAction, false);
+
 	if (this->elements == NULL) {
 		g_warning("Could not redo DeleteUndoAction, there is nothing to redo");
 
@@ -64,6 +76,8 @@ bool DeleteUndoAction::redo(Control * control) {
 }
 
 String DeleteUndoAction::getText() {
+	XOJ_CHECK_TYPE_RET(DeleteUndoAction, "");
+
 	String text;
 
 	if (eraser) {

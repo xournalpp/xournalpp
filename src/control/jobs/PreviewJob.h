@@ -8,6 +8,7 @@
  *
  * @license GPL
  */
+// TODO: AA: type check
 
 #ifndef __PREVIEWJOB_H__
 #define __PREVIEWJOB_H__

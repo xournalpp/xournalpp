@@ -8,6 +8,7 @@
  *
  * @license GPL
  */
+// TODO: AA: type check
 
 #ifndef __PDFREFENTRY_H__
 #define __PDFREFENTRY_H__

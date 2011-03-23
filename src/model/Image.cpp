@@ -1,5 +1,6 @@
 #include "Image.h"
 #include "../util/ObjectStream.h"
+// TODO: AA: type check
 
 Image::Image() :
 	Element(ELEMENT_IMAGE) {

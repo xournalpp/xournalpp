@@ -3,6 +3,7 @@
 #include "../model/Font.h"
 #include "../model/Text.h"
 #include "../gui/Redrawable.h"
+// TODO: AA: type check
 
 class FontUndoActionEntry {
 public:

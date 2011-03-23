@@ -8,6 +8,7 @@
  *
  * @license GPL
  */
+// TODO: AA: type check
 
 #ifndef __XOJOPENDLG_H__
 #define __XOJOPENDLG_H__

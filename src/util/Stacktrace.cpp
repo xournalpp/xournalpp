@@ -8,6 +8,8 @@
  * another solution would be backtrace-symbols.c from cairo/util, but its really complicated
  */
 
+// TODO: AA: type check
+
 #include <glib.h>
 
 char * exeName = NULL;

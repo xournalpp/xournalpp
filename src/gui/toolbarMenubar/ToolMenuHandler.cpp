@@ -21,6 +21,7 @@
 
 #include "model/ToolbarModel.h"
 #include "model/ToolbarData.h"
+// TODO: AA: type check
 
 ToolMenuHandler::ToolMenuHandler(ActionHandler * listener, ZoomControl * zoom, GladeGui * gui, ToolHandler * toolHandler) {
 	this->toolItems = NULL;

@@ -8,6 +8,7 @@
  *
  * @license GPL
  */
+// TODO: AA: type check
 
 #ifndef __SIZEUNDOACTION_H__
 #define __SIZEUNDOACTION_H__

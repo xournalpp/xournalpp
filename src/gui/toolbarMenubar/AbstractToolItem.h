@@ -33,6 +33,9 @@ protected:
 
 	virtual void enable(bool enabled);
 
+private:
+	XOJ_TYPE_ATTRIB;
+
 protected:
 	GtkToolItem * item;
 	GtkWidget * popupMenu;

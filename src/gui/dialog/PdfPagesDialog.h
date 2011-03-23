@@ -10,6 +10,7 @@
  */
 #ifndef __PDFPAGESDIALOG_H__
 #define __PDFPAGESDIALOG_H__
+// TODO: AA: type check
 
 #include "../GladeGui.h"
 #include "../../model/Document.h"

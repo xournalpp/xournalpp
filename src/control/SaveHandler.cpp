@@ -8,6 +8,7 @@
  *
  * @license GPL
  */
+// TODO: AA: type check
 
 #include "../model/Stroke.h"
 #include "../model/Text.h"

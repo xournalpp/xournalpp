@@ -8,6 +8,7 @@
  *
  * @license GPL
  */
+// TODO: AA: type check
 
 #ifndef __TOOLPAGELAYER_H__
 #define __TOOLPAGELAYER_H__

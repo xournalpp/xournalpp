@@ -2,6 +2,7 @@
 #include "../model/Page.h"
 #include "Control.h"
 #include "../gui/XournalView.h"
+// TODO: AA: type check
 
 ScrollHandler::ScrollHandler(Control * control) {
 	this->control = control;

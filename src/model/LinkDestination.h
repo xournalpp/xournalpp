@@ -8,6 +8,7 @@
  *
  * @license GPL
  */
+// TODO: AA: type check
 
 #ifndef __LINKDESTINATION_H__
 #define __LINKDESTINATION_H__

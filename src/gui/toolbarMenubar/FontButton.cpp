@@ -1,6 +1,7 @@
 #include "FontButton.h"
 
 #include <stdlib.h>
+// TODO: AA: type check
 
 FontButton::FontButton(ActionHandler * handler, GladeGui * gui, String id, ActionType type, String description, GtkWidget * menuitem) :
 	AbstractToolItem(id, handler, type, menuitem) {

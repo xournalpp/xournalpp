@@ -8,6 +8,7 @@
  *
  * @license GPL
  */
+// TODO: AA: type check
 
 #ifndef __RECENTMANAGER_H__
 #define __RECENTMANAGER_H__

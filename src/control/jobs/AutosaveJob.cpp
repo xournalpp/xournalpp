@@ -4,13 +4,18 @@
 #include "../Control.h"
 
 AutosaveJob::AutosaveJob(Control * control) {
+	XOJ_INIT_TYPE(AutosaveJob);
+
 	this->control = control;
 }
 
 AutosaveJob::~AutosaveJob() {
+	XOJ_RELEASE_TYPE(AutosaveJob);
 }
 
 void AutosaveJob::afterRun() {
+	XOJ_CHECK_TYPE(AutosaveJob);
+
 	GtkWidget * dialog = gtk_message_dialog_new((GtkWindow *) control->getWindow(), GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, _("Autosave: %s"),
 			this->error.c_str());
 	gtk_dialog_run(GTK_DIALOG(dialog));
@@ -18,6 +23,8 @@ void AutosaveJob::afterRun() {
 }
 
 void AutosaveJob::run() {
+	XOJ_CHECK_TYPE(AutosaveJob);
+
 	SaveHandler handler;
 
 	control->getUndoRedoHandler()->documentAutosaved();

@@ -1,5 +1,6 @@
 #include "Element.h"
 #include "../util/ObjectStream.h"
+// TODO: AA: type check
 
 Element::Element(ElementType type) {
 	this->type = type;

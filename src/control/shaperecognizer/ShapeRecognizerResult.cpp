@@ -2,6 +2,7 @@
 #include "ShapeRecognizer.h"
 
 #include "../../util/Stacktrace.h"
+// TODO: AA: type check
 
 ShapeRecognizerResult::ShapeRecognizerResult(Stroke * result) {
 	this->recognized = result;

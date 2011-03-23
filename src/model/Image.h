@@ -13,6 +13,7 @@
 #define __IMAGE_H__
 
 #include "Element.h"
+#include "../util/XournalType.h"
 
 class Image: public Element {
 public:
@@ -39,6 +40,8 @@ private:
 
 	static cairo_status_t cairoReadFunction(Image * image, unsigned char *data, unsigned int length);
 private:
+	XOJ_TYPE_ATTRIB;
+
 
 	cairo_surface_t * image;
 

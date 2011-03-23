@@ -8,6 +8,7 @@
 enum {
 	COLUMN_STRING, COLUMN_BOLD, COLUMN_POINTER, COLUMN_EDITABLE, N_COLUMNS
 };
+// TODO: AA: type check
 
 ToolbarDialog::ToolbarDialog(GladeSearchpath * gladeSearchPath, ToolbarModel * model) :
 	GladeGui(gladeSearchPath, "toolbar.glade", "DialogEditToolbar") {

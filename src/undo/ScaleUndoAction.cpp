@@ -2,6 +2,7 @@
 
 #include "../model/Page.h"
 #include "../model/Element.h"
+// TODO: AA: type check
 
 ScaleUndoAction::ScaleUndoAction(XojPage * page, Redrawable * view, GList * elements, double x0, double y0, double fx,
 		double fy) {

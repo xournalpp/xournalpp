@@ -8,6 +8,7 @@
  *
  * @license GPL
  */
+// TODO: AA: type check
 
 #ifndef __SERIALIZEABLE_H__
 #define __SERIALIZEABLE_H__

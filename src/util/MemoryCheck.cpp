@@ -1,6 +1,7 @@
 #include "MemoryCheck.h"
 #include "CrashHandler.h"
 #include <stdlib.h>
+// TODO: AA: type check
 
 MemoryCheckObject::MemoryCheckObject() {
 	this->d1 = 0xffff0000;

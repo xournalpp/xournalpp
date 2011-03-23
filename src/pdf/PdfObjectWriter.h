@@ -8,6 +8,7 @@
  *
  * @license GPL
  */
+// TODO: AA: type check
 
 #ifndef __PDFOBJECTWRITER_H__
 #define __PDFOBJECTWRITER_H__

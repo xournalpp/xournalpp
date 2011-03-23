@@ -13,6 +13,7 @@
 #define __DOCUMENTLISTENER_H__
 
 #include "DocumentChangeType.h"
+#include "../util/XournalType.h"
 
 class DocumentHandler;
 
@@ -30,7 +31,11 @@ public:
 	virtual void pageInserted(int page) = 0;
 	virtual void pageDeleted(int page) = 0;
 	virtual void pageSelected(int page) = 0;
+
 private:
+	XOJ_TYPE_ATTRIB;
+
+
 	DocumentHandler * handler;
 };
 

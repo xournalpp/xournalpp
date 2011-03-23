@@ -11,6 +11,7 @@
 
 #ifndef __SETTINGS_H__
 #define __SETTINGS_H__
+// TODO: AA: type check
 
 #include <libxml/xmlreader.h>
 #include <glib.h>

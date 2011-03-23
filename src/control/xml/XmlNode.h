@@ -8,6 +8,7 @@
  *
  * @license GPL
  */
+// TODO: AA: type check
 
 #ifndef __XMLNODE_H__
 #define __XMLNODE_H__
@@ -17,7 +18,7 @@
 #include "Attribute.h"
 #include <glib.h>
 
-class XmlNode: public MemoryCheckObject {
+class XmlNode {
 public:
 	XmlNode(const char * tag);
 	~XmlNode();
@@ -38,6 +39,9 @@ public:
 protected:
 	void putAttrib(Attribute * a);
 	void writeAttributes(OutputStream * out);
+
+public:
+	XOJ_TYPE_ATTRIB;
 
 protected:
 	GList * children;

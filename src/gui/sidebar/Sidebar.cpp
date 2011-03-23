@@ -8,6 +8,7 @@
 
 #include <config.h>
 #include <glib/gi18n-lib.h>
+// TODO: AA: type check
 
 Sidebar::Sidebar(GladeGui * gui, Control * control) {
 	this->control = control;

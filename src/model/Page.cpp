@@ -2,6 +2,7 @@
 
 #include "Document.h"
 #include "../util/Stacktrace.h"
+// TODO: AA: type check
 
 XojPage::XojPage(double width, double heigth) {
 	this->pdfBackgroundPage = -1;

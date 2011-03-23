@@ -1,6 +1,7 @@
 #include "PageRange.h"
 #include <ctype.h>
 #include <stdlib.h>
+// TODO: AA: type check
 
 PageRangeEntry::PageRangeEntry(int first, int last) {
 	this->first = first;

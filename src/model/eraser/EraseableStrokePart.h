@@ -9,12 +9,12 @@
  * @license GPL
  */
 
-
 #ifndef __ERASEABLESTROKEPART_H__
 #define __ERASEABLESTROKEPART_H__
 
 #include <glib.h>
 #include "../Point.h"
+#include "../../util/XournalType.h"
 
 class EraseableStrokePart {
 public:
@@ -41,6 +41,9 @@ public:
 	double getElementHeight();
 
 private:
+	XOJ_TYPE_ATTRIB;
+
+
 	double width;
 	double splitSize;
 

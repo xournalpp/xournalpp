@@ -14,6 +14,7 @@
 
 #include "AbstractToolItem.h"
 #include "../../control/ToolHandler.h"
+#include "../../util/XournalType.h"
 
 class ColorToolItem: public AbstractToolItem {
 public:
@@ -32,6 +33,9 @@ protected:
 	static void customColorSelected(GtkWidget * button, ColorToolItem * item);
 
 private:
+	XOJ_TYPE_ATTRIB;
+
+
 	int color;
 	String name;
 	bool selector;

@@ -11,6 +11,7 @@
 
 #ifndef __UNDOREDOHANDLER_H__
 #define __UNDOREDOHANDLER_H__
+// TODO: AA: type check
 
 #include "UndoAction.h"
 #include "../util/MemoryCheck.h"

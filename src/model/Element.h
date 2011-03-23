@@ -15,6 +15,7 @@
 #include <gtk/gtk.h>
 #include "../util/MemoryCheck.h"
 #include "../util/Serializeable.h"
+#include "../util/XournalType.h"
 
 enum ElementType {
 	ELEMENT_STROKE = 1, ELEMENT_IMAGE, ELEMENT_TEXT
@@ -55,6 +56,10 @@ public:
 	virtual bool isInSelection(ShapeContainer * container);
 
 	virtual bool rescaleOnlyAspectRatio();
+
+private:
+	XOJ_TYPE_ATTRIB;
+
 protected:
 	// The position on the screen
 	double x;

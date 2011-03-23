@@ -9,7 +9,10 @@
 #include <config.h>
 #include <glib/gi18n-lib.h>
 
+#include <typeinfo>
+
 DocumentView::DocumentView() {
+	XOJ_INIT_TYPE(DocumentView);
 	this->page = NULL;
 	this->cr = NULL;
 	this->lX = -1;
@@ -20,6 +23,7 @@ DocumentView::DocumentView() {
 }
 
 DocumentView::~DocumentView() {
+	XOJ_RELEASE_TYPE(DocumentView);
 }
 
 void DocumentView::applyColor(cairo_t * cr, Element * e, int alpha) {
@@ -35,12 +39,16 @@ void DocumentView::applyColor(cairo_t * cr, int c, int alpha) {
 }
 
 void DocumentView::drawEraseableStroke(cairo_t * cr, Stroke * s) {
+	XOJ_CHECK_TYPE(DocumentView);
+
 	EraseableStroke * e = s->getEraseable();
 
 	e->draw(cr, this->lX, this->lY, this->width, this->height);
 }
 
 void DocumentView::drawStroke(cairo_t * cr, Stroke * s, int startPoint) {
+	XOJ_CHECK_TYPE(DocumentView);
+
 	ArrayIterator<Point> points = s->pointIterator();
 
 	if (!points.hasNext()) {
@@ -119,6 +127,8 @@ void DocumentView::drawStroke(cairo_t * cr, Stroke * s, int startPoint) {
 }
 
 void DocumentView::drawText(cairo_t *cr, Text * t) {
+	XOJ_CHECK_TYPE(DocumentView);
+
 	if (t->isInEditing()) {
 		return;
 	}
@@ -128,6 +138,8 @@ void DocumentView::drawText(cairo_t *cr, Text * t) {
 }
 
 void DocumentView::drawImage(cairo_t *cr, Image * i) {
+	XOJ_CHECK_TYPE(DocumentView);
+
 	cairo_matrix_t defaultMatrix = { 0 };
 	cairo_get_matrix(cr, &defaultMatrix);
 
@@ -149,6 +161,8 @@ void DocumentView::drawImage(cairo_t *cr, Image * i) {
 }
 
 void DocumentView::drawElement(cairo_t * cr, Element * e) {
+	XOJ_CHECK_TYPE(DocumentView);
+
 	if (e->getType() == ELEMENT_STROKE) {
 		drawStroke(cr, (Stroke *) e);
 	} else if (e->getType() == ELEMENT_TEXT) {
@@ -159,6 +173,8 @@ void DocumentView::drawElement(cairo_t * cr, Element * e) {
 }
 
 void DocumentView::drawLayer(cairo_t * cr, Layer * l) {
+	XOJ_CHECK_TYPE(DocumentView);
+
 	ListIterator<Element *> it = l->elementIterator();
 
 #ifdef SHOW_REPAINT_BOUNDS
@@ -203,6 +219,8 @@ void DocumentView::drawLayer(cairo_t * cr, Layer * l) {
 }
 
 void DocumentView::paintBackgroundImage() {
+	XOJ_CHECK_TYPE(DocumentView);
+
 	GdkPixbuf * pixbuff = page->backgroundImage.getPixbuf();
 	if (pixbuff) {
 		cairo_matrix_t matrix = { 0 };
@@ -224,6 +242,8 @@ void DocumentView::paintBackgroundImage() {
 }
 
 void DocumentView::paintBackgroundColor() {
+	XOJ_CHECK_TYPE(DocumentView);
+
 	applyColor(cr, page->getBackgroundColor());
 
 	cairo_rectangle(cr, 0, 0, width, height);
@@ -233,6 +253,8 @@ void DocumentView::paintBackgroundColor() {
 const double graphSize = 14.17;
 
 void DocumentView::paintBackgroundGraph() {
+	XOJ_CHECK_TYPE(DocumentView);
+
 	applyColor(cr, 0x40A0FF);
 
 	cairo_set_line_width(cr, 0.5);
@@ -253,6 +275,8 @@ void DocumentView::paintBackgroundGraph() {
 const double roulingSize = 24;
 
 void DocumentView::paintBackgroundRuled() {
+	XOJ_CHECK_TYPE(DocumentView);
+
 	applyColor(cr, 0x40A0FF);
 
 	cairo_set_line_width(cr, 0.5);
@@ -266,6 +290,8 @@ void DocumentView::paintBackgroundRuled() {
 }
 
 void DocumentView::paintBackgroundLined() {
+	XOJ_CHECK_TYPE(DocumentView);
+
 	applyColor(cr, 0x40A0FF);
 
 	cairo_set_line_width(cr, 0.5);
@@ -277,6 +303,8 @@ void DocumentView::paintBackgroundLined() {
 }
 
 void DocumentView::drawSelection(cairo_t * cr, ElementContainer * container) {
+	XOJ_CHECK_TYPE(DocumentView);
+
 	ListIterator<Element *> it = container->getElements();
 	while (it.hasNext()) {
 		Element * e = it.next();
@@ -285,6 +313,8 @@ void DocumentView::drawSelection(cairo_t * cr, ElementContainer * container) {
 }
 
 void DocumentView::limitArea(double x, double y, double width, double heigth) {
+	XOJ_CHECK_TYPE(DocumentView);
+
 	this->lX = x;
 	this->lY = y;
 	this->lWidth = width;
@@ -292,6 +322,8 @@ void DocumentView::limitArea(double x, double y, double width, double heigth) {
 }
 
 void DocumentView::drawPage(XojPage * page, cairo_t * cr, bool dontRenderEditingStroke) {
+	XOJ_CHECK_TYPE(DocumentView);
+
 	this->cr = cr;
 	this->page = page;
 	this->width = page->getWidth();

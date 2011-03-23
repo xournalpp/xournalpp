@@ -1,4 +1,5 @@
 #include "XmlPointNode.h"
+// TODO: AA: type check
 
 XmlPointNode::XmlPointNode(const char * tag) :
 	XmlNode(tag) {

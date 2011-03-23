@@ -8,6 +8,7 @@
  *
  * @license GPL
  */
+// TODO: AA: type check
 
 #ifndef __INSERTUNDOACTION_H__
 #define __INSERTUNDOACTION_H__

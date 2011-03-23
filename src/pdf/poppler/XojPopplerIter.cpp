@@ -4,6 +4,7 @@
 #include <poppler/Outline.h>
 #include <poppler/GlobalParams.h>
 #include <poppler/UnicodeMap.h>
+// TODO: AA: type check
 
 XojPopplerIter::XojPopplerIter(XojPopplerDocument doc, GooList *items) {
 	this->doc = doc;

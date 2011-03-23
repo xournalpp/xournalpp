@@ -1,5 +1,6 @@
 #include "Layer.h"
 #include "../util/Stacktrace.h"
+// TODO: AA: type check
 
 Layer::Layer() {
 	this->elements = NULL;

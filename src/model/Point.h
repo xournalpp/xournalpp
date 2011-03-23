@@ -11,6 +11,7 @@
 
 #ifndef __POINT_H__
 #define __POINT_H__
+// TODO: AA: type check
 
 class Point {
 public:

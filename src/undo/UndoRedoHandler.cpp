@@ -4,6 +4,7 @@
 
 #include <config.h>
 #include <glib/gi18n-lib.h>
+// TODO: AA: type check
 
 // TODO: LOW PRIO: add memory limit
 

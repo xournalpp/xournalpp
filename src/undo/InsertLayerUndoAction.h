@@ -8,6 +8,7 @@
  *
  * @license GPL
  */
+// TODO: AA: type check
 
 #ifndef __INSERTLAYERUNDOACTION_H__
 #define __INSERTLAYERUNDOACTION_H__

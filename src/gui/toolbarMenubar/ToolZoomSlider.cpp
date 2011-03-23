@@ -1,4 +1,5 @@
 #include "ToolZoomSlider.h"
+// TODO: AA: type check
 
 ToolZoomSlider::ToolZoomSlider(ActionHandler * handler, String id, ActionType type, ZoomControl * zoom) :
 	AbstractToolItem(id, handler, type, NULL) {

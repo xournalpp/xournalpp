@@ -1,4 +1,5 @@
 #include "XmlStrokeNode.h"
+// TODO: AA: type check
 
 XmlStrokeNode::XmlStrokeNode(const char * tag) :
 	XmlNode(tag) {

@@ -4,6 +4,7 @@
 #include "../Stroke.h"
 #include "../../util/Range.h"
 #include <math.h>
+// TODO: AA: type check
 
 EraseableStroke::EraseableStroke(Stroke * stroke) {
 	this->parts = new PartList();

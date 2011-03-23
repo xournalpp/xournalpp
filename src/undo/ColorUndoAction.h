@@ -13,6 +13,7 @@
 #define __COLORUNDOACTION_H__
 
 #include "UndoAction.h"
+#include "../util/XournalType.h"
 #include <glib.h>
 
 class Layer;
@@ -29,7 +30,11 @@ public:
 	virtual String getText();
 
 	void addStroke(Element * e, int originalColor, double newColor);
+
 private:
+	XOJ_TYPE_ATTRIB;
+
+
 	GList * data;
 
 	Layer * layer;

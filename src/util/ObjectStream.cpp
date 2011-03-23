@@ -1,6 +1,7 @@
 #include "ObjectStream.h"
 #include "Serializeable.h"
 #include <string.h>
+// TODO: AA: type check
 
 const char * XML_VERSION_STR = "XojStrm1:";
 

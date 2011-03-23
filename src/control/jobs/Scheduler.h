@@ -10,6 +10,7 @@
  *
  * @license GPL
  */
+// TODO: AA: type check
 
 #ifndef __SCHEDULER_H__
 #define __SCHEDULER_H__

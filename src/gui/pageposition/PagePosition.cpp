@@ -1,6 +1,7 @@
 #include "PagePosition.h"
 
 #include "../PageView.h"
+// TODO: AA: type check
 
 PagePosition::PagePosition(PageView * pv) {
 	this->y1 = pv->getY();

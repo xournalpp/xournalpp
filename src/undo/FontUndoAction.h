@@ -14,6 +14,7 @@
 
 #include "UndoAction.h"
 #include <glib.h>
+#include "../util/XournalType.h"
 
 class Layer;
 class Redrawable;
@@ -30,7 +31,11 @@ public:
 	virtual String getText();
 
 	void addStroke(Text * e, XojFont & oldFont, XojFont & newFont);
+
 private:
+	XOJ_TYPE_ATTRIB;
+
+
 	GList * data;
 
 	Layer * layer;

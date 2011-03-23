@@ -2,6 +2,7 @@
 #include "Stacktrace.h"
 
 #include <zlib.h>
+// TODO: AA: type check
 
 GzHelper::GzHelper() {
 }

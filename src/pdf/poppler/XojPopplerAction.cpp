@@ -1,5 +1,6 @@
 #include "XojPopplerAction.h"
 #include "XojPopplerDocument.h"
+// TODO: AA: type check
 
 XojPopplerAction::XojPopplerAction(XojPopplerDocument doc, LinkAction * linkAction, String title) :
 	doc(doc), title(title) {

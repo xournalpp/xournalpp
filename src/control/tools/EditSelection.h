@@ -18,7 +18,7 @@
 #include "../../model/Font.h"
 #include "CursorSelectionType.h"
 
-#include "../../util/MemoryCheck.h"
+#include "../../util/XournalType.h"
 
 class UndoRedoHandler;
 class XojPage;
@@ -28,7 +28,7 @@ class Selection;
 class Element;
 class UndoAction;
 
-class EditSelection: public ElementContainer, public MemoryCheckObject {
+class EditSelection: public ElementContainer {
 public:
 	EditSelection(UndoRedoHandler * undo, double x, double y, double width, double height, XojPage * page, PageView * view);
 	EditSelection(UndoRedoHandler * undo, Selection * selection, PageView * view);
@@ -156,6 +156,9 @@ private:
 	void finalizeSelection();
 
 private: // DATA
+	XOJ_TYPE_ATTRIB;
+
+
 	/**
 	 * The size
 	 */

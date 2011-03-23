@@ -1,5 +1,6 @@
 #include "PdfXRef.h"
 #include <glib.h>
+// TODO: AA: type check
 
 PdfXRef::PdfXRef() {
 	this->xref = NULL;

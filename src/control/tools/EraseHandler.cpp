@@ -16,6 +16,7 @@
 #include "../../gui/XournalView.h"
 
 #include <math.h>
+// TODO: AA: type check
 
 EraseHandler::EraseHandler(UndoRedoHandler * undo, Document * doc, XojPage * page, ToolHandler * handler, Redrawable * view) {
 	this->page = page;

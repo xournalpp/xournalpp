@@ -13,6 +13,8 @@
 #define __CURSOR_H__
 
 #include "../control/tools/CursorSelectionType.h"
+#include "../util/XournalType.h"
+
 #include <gtk/gtk.h>
 
 class Control;
@@ -35,6 +37,9 @@ private:
 	GdkCursor * getPenCursor();
 
 private:
+	XOJ_TYPE_ATTRIB;
+
+
 	Control * control;
 	bool busy;
 	bool insidePage;

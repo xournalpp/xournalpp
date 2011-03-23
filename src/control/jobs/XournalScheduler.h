@@ -10,6 +10,7 @@
  *
  * @license GPL
  */
+// TODO: AA: type check
 
 #ifndef __XOURNALSCHEDULER_H__
 #define __XOURNALSCHEDULER_H__

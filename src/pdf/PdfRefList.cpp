@@ -1,6 +1,7 @@
 #include "PdfRefList.h"
 #include "PdfRefEntry.h"
 #include "PdfXRef.h"
+// TODO: AA: type check
 
 PdfRefList::PdfRefList(PdfXRef * xref, PdfObjectWriter * objectWriter, PdfWriter * writer, char * type) {
 	this->id = 1;

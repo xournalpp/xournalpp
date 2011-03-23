@@ -8,6 +8,7 @@
  *
  * @license GPL
  */
+// TODO: AA: type check
 
 #ifndef __REDRAWABLE_H__
 #define __REDRAWABLE_H__

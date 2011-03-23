@@ -8,6 +8,7 @@
  *
  * @license GPL
  */
+// TODO: AA: type check
 
 #ifndef __MAINWINDOW_H__
 #define __MAINWINDOW_H__

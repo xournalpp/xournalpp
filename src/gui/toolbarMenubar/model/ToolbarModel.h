@@ -14,6 +14,7 @@
 
 #include <glib.h>
 #include "../../../util/ListIterator.h"
+// TODO: AA: type check
 
 class ToolbarData;
 

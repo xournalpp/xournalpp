@@ -2,6 +2,7 @@
 #include "../../pdf/PdfExport.h"
 #include "../Control.h"
 #include "SynchronizedProgressListener.h"
+// TODO: AA: type check
 
 PdfExportJob::PdfExportJob(Control * control) :
 	BlockingJob(control, _("PDF Export")) {

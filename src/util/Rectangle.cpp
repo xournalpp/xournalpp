@@ -1,6 +1,7 @@
-#include "Rectangle.h"
+ #include "Rectangle.h"
 #include "Range.h"
 #include <glib.h>
+// TODO: AA: type check
 
 Rectangle::Rectangle() {
 	this->x = 0;

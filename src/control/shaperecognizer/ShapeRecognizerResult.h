@@ -8,6 +8,7 @@
  *
  * @license GPL
  */
+// TODO: AA: type check
 
 #ifndef __SHAPERECOGNIZERRESULT_H__
 #define __SHAPERECOGNIZERRESULT_H__

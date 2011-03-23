@@ -4,6 +4,7 @@
 #include <gtk/gtk.h>
 
 #define FILENAME() g_build_filename(g_get_home_dir(), CONFIG_DIR, METADATA_FILE, NULL)
+// TODO: AA: type check
 
 MetadataManager::MetadataManager() {
 	this->config = NULL;

@@ -22,6 +22,7 @@ class Document;
 class SidebarPreview;
 class GladeGui;
 class PdfCache;
+// TODO: AA: type check
 
 class Sidebar: public DocumentListener, MemoryCheckObject {
 public:

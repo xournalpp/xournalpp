@@ -13,6 +13,7 @@
 #define ERASEABLESTROKE_H_
 
 #include "../Point.h"
+#include "../../util/XournalType.h"
 #include <gtk/gtk.h>
 
 class Stroke;
@@ -42,6 +43,8 @@ private:
 	void addRepaintRect(double x, double y, double width, double height);
 
 private:
+	XOJ_TYPE_ATTRIB;
+
 
 	GMutex * partLock;
 	PartList * parts;

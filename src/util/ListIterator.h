@@ -8,6 +8,7 @@
  *
  * @license GPL
  */
+// TODO: AA: type check
 
 #ifndef __LISTITERATOR_H__
 #define __LISTITERATOR_H__

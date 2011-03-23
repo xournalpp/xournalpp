@@ -2,6 +2,8 @@
 #include "../ToolHandler.h"
 
 ButtonConfig::ButtonConfig(ToolType action, int color, ToolSize size, DrawingType drawingType, EraserType eraserMode) {
+	XOJ_INIT_TYPE(ButtonConfig);
+
 	this->action = action;
 	this->color = color;
 	this->size = size;
@@ -10,15 +12,26 @@ ButtonConfig::ButtonConfig(ToolType action, int color, ToolSize size, DrawingTyp
 	this->disableDrawing = false;
 }
 
+ButtonConfig::~ButtonConfig() {
+	XOJ_RELEASE_TYPE(ButtonConfig);
+}
+
+
 bool ButtonConfig::getDisableDrawing() {
+	XOJ_CHECK_TYPE_RET(ButtonConfig, false);
+
 	return this->disableDrawing;
 }
 
 ToolType ButtonConfig::getAction() {
+	XOJ_CHECK_TYPE_RET(ButtonConfig, TOOL_NONE);
+
 	return this->action;
 }
 
 void ButtonConfig::acceptActions(ToolHandler * toolHandler) {
+	XOJ_CHECK_TYPE(ButtonConfig);
+
 	if (this->action != TOOL_NONE) {
 		toolHandler->selectTool(this->action);
 

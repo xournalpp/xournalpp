@@ -3,6 +3,7 @@
 #include "../../model/Point.h"
 
 #include <math.h>
+// TODO: AA: type check
 
 Inertia::Inertia() {
 	this->mass = 0;

@@ -8,6 +8,7 @@
  *
  * @license GPL
  */
+// TODO: AA: type check
 
 #ifndef __LOADHANDLER_H__
 #define __LOADHANDLER_H__

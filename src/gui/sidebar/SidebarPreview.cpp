@@ -3,6 +3,7 @@
 #include "../Shadow.h"
 #include "../../view/PdfView.h"
 #include "../../control/Control.h"
+// TODO: AA: type check
 
 SidebarPreview::SidebarPreview(Sidebar * sidebar, XojPage * page) {
 	this->widget = gtk_drawing_area_new();

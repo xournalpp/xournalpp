@@ -1,4 +1,5 @@
 #include "IntAttribute.h"
+// TODO: AA: type check
 
 IntAttribute::IntAttribute(const char * name, int value) :
 	Attribute(name) {

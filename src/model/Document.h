@@ -15,6 +15,7 @@
 #define __DOCUMENT_H__
 
 #include "../util/String.h"
+#include "../util/XournalType.h"
 
 #include "Page.h"
 #include "LinkDestination.h"
@@ -82,11 +83,14 @@ public:
 private:
 
 	void buildContentsModel();
-	void buildTreeContentsModel(GtkTreeIter *parent, XojPopplerIter *iter);
+	void buildTreeContentsModel(GtkTreeIter * parent, XojPopplerIter * iter);
 	void updateIndexPageNumbers();
-	static bool fillPageLabels(GtkTreeModel *tree_model, GtkTreePath *path, GtkTreeIter *iter, Document *doc);
+	static bool fillPageLabels(GtkTreeModel * tree_model, GtkTreePath * path, GtkTreeIter * iter, Document * doc);
 
 private:
+	XOJ_TYPE_ATTRIB;
+
+
 	DocumentHandler * handler;
 
 	XojPopplerDocument pdfDocument;

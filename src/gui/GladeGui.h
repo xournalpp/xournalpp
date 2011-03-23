@@ -15,6 +15,8 @@
 #include <gtk/gtk.h>
 #include <glade/glade-xml.h>
 
+#include "../util/XournalType.h"
+
 class GladeSearchpath;
 
 class GladeGui {
@@ -34,6 +36,8 @@ public:
 	GtkWidget * getWindow();
 
 private:
+	XOJ_TYPE_ATTRIB;
+
 	/**
 	 * The Glade resources
 	 */

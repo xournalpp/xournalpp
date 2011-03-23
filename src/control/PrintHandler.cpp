@@ -4,6 +4,7 @@
 #include "../view/DocumentView.h"
 
 #include <math.h>
+// TODO: AA: type check
 
 PrintHandler::PrintHandler() {
 	view = new DocumentView();

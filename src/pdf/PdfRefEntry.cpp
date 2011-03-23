@@ -1,4 +1,5 @@
 #include "PdfRefEntry.h"
+// TODO: AA: type check
 
 PdfRefEntry::PdfRefEntry(PdfRefEntryType type, int objectId, Object * object, int refSourceId, Ref ref, XojPopplerDocument doc) {
 	this->type = type;

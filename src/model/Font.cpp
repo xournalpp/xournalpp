@@ -1,5 +1,6 @@
 #include "Font.h"
 #include "../util/ObjectStream.h"
+// TODO: AA: type check
 
 XojFont::XojFont() {
 	this->size = 0;

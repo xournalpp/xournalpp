@@ -8,6 +8,7 @@
  *
  * @license GPL
  */
+// TODO: AA: type check
 
 #ifndef __PDFEXTGSTATE_H__
 #define __PDFEXTGSTATE_H__

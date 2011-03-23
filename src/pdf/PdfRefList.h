@@ -8,6 +8,7 @@
  *
  * @license GPL
  */
+// TODO: AA: type check
 
 #ifndef __PDFREFLIST_H__
 #define __PDFREFLIST_H__

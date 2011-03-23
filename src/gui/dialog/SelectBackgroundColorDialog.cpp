@@ -8,6 +8,7 @@
  *
  * @license GPL
  */
+// TODO: AA: type check
 
 #include "SelectBackgroundColorDialog.h"
 #include "../../control/Control.h"

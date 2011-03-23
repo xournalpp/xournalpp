@@ -12,6 +12,8 @@
 #ifndef __ARRAYITERATOR_H__
 #define __ARRAYITERATOR_H__
 
+#include "XournalType.h"
+
 template<class T>
 class ArrayIterator {
 public:
@@ -37,6 +39,8 @@ public:
 	}
 
 private:
+	XOJ_TYPE_ATTRIB;
+
 	int i;
 	int count;
 	const T * data;

@@ -1,4 +1,5 @@
 #include "Selection.h"
+// TODO: AA: type check
 
 Selection::Selection(Redrawable * view) {
 	this->view = view;

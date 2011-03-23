@@ -11,6 +11,7 @@
 #include "../undo/TextUndoAction.h"
 #include "../view/DocumentView.h"
 #include "Cursor.h"
+// TODO: AA: type check
 
 // TODO: LOW PRIO: implement drag & drop
 

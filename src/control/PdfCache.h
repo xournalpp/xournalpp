@@ -8,6 +8,7 @@
  *
  * @license GPL
  */
+// TODO: AA: type check
 
 #ifndef __PDFCACHE_H__
 #define __PDFCACHE_H__

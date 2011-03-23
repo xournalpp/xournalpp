@@ -8,6 +8,7 @@
  *
  * @license GPL
  */
+// TODO: AA: type check
 
 #ifndef __SYNCHRONIZEDPROGRESSLISTENER_H__
 #define __SYNCHRONIZEDPROGRESSLISTENER_H__

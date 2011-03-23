@@ -8,6 +8,7 @@
  *
  * @license GPL
  */
+// TODO: AA: type check
 
 #ifndef __PDFEXPORTJOB_H__
 #define __PDFEXPORTJOB_H__

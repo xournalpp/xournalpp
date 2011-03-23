@@ -3,6 +3,7 @@
 #include <math.h>
 #include <string.h>
 #include "../util/ObjectStream.h"
+// TODO: AA: type check
 
 Stroke::Stroke() :
 	Element(ELEMENT_STROKE) {

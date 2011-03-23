@@ -8,6 +8,7 @@
  *
  * @license GPL
  */
+// TODO: AA: type check
 
 #ifndef __XOURNALMAIN_H__
 #define __XOURNALMAIN_H__

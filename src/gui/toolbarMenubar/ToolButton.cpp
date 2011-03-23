@@ -1,5 +1,6 @@
 #include "ToolButton.h"
 #include "../widgets/gtkmenutooltogglebutton.h"
+// TODO: AA: type check
 
 ToolButton::ToolButton(ActionHandler * handler, String id, ActionType type, String stock, String description, GtkWidget * menuitem) :
 	AbstractToolItem(id, handler, type, menuitem) {

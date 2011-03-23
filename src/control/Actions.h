@@ -12,6 +12,8 @@
 #ifndef __ACTIONDISPATCHER_H__
 #define __ACTIONDISPATCHER_H__
 
+#include "../util/XournalType.h"
+
 #include <gtk/gtk.h>
 
 enum ActionType {
@@ -179,6 +181,9 @@ public:
 	void unregisterListener();
 
 private:
+	XOJ_TYPE_ATTRIB;
+
+
 	ActionHandler * handler;
 };
 
@@ -193,6 +198,9 @@ public:
 	void unregisterListener();
 
 private:
+	XOJ_TYPE_ATTRIB;
+
+
 	ActionHandler * handler;
 };
 
@@ -213,6 +221,9 @@ public:
 	void removeListener(ActionSelectionListener * listener);
 
 private:
+	XOJ_TYPE_ATTRIB;
+
+
 	GList * enabledListener;
 	GList * selectionListener;
 };

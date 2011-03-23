@@ -8,6 +8,7 @@
  *
  * @license GPL
  */
+// TODO: AA: type check
 
 #ifndef __MEMORYCHECK_H__
 #define __MEMORYCHECK_H__

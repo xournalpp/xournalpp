@@ -8,6 +8,7 @@
  *
  * @license GPL
  */
+// TODO: AA: type check
 
 #ifndef __SCROLLHANDLER_H__
 #define __SCROLLHANDLER_H__

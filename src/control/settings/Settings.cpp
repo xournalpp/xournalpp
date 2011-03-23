@@ -18,6 +18,7 @@
 
 const char * BUTTON_NAMES[] = { "middle", "right", "eraser", "touch", "default" };
 const int BUTTON_COUNT = 5;
+// TODO: AA: type check
 
 Settings::Settings(String filename) {
 	this->filename = filename;

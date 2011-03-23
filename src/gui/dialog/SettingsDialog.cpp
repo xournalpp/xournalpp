@@ -6,6 +6,7 @@
 #include "ButtonConfigGui.h"
 #include "../../util/Util.h"
 #include <string.h>
+// TODO: AA: type check
 
 SettingsDialog::SettingsDialog(GladeSearchpath * gladeSearchPath, Settings * settings) :
 	GladeGui(gladeSearchPath, "settings.glade", "settingsDialog") {

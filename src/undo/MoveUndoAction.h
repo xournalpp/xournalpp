@@ -9,6 +9,7 @@
  * @license GPL
  */
 
+// TODO: AA: type check
 
 #ifndef __MOVEUNDOACTION_H__
 #define __MOVEUNDOACTION_H__

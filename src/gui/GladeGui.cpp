@@ -1,6 +1,7 @@
 #include "GladeGui.h"
 #include <config.h>
 #include <stdlib.h>
+// TODO: AA: type check
 
 #include <config.h>
 #include <glib/gi18n-lib.h>

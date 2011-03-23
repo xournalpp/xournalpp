@@ -14,6 +14,7 @@
 
 #include <gtk/gtk.h>
 #include "../util/String.h"
+#include "../util/XournalType.h"
 #include "tools/EditSelection.h"
 
 class ObjectInputStream;
@@ -49,6 +50,9 @@ private:
 	static void pasteClipboardContents(GtkClipboard * clipboard, GtkSelectionData * selectionData, ClipboardHandler * handler);
 
 private:
+	XOJ_TYPE_ATTRIB;
+
+
 	ClipboardListener * listener;
 	GtkClipboard * clipboard;
 	gulong hanlderId;

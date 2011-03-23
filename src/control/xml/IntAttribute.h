@@ -8,6 +8,7 @@
  *
  * @license GPL
  */
+// TODO: AA: type check
 
 #ifndef __INTATTRIBUTE_H__
 #define __INTATTRIBUTE_H__
