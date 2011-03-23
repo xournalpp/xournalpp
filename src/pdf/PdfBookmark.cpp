@@ -1,5 +1,6 @@
 #include "PdfBookmark.h"
 #include "../model/LinkDestination.h"
+// TODO: AA: type check
 
 class Bookmark {
 public:

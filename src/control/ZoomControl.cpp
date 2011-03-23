@@ -1,6 +1,7 @@
 #include "ZoomControl.h"
 
 const double zoomStep = 0.2;
+// TODO: AA: type check
 
 ZoomControl::ZoomControl() {
 	this->listener = NULL;

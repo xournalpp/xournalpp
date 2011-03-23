@@ -23,6 +23,7 @@
 #include "ZoomControl.h"
 #include "jobs/XournalScheduler.h"
 #include "../util/MemoryCheck.h"
+#include "../util/XournalType.h"
 
 #include "../gui/sidebar/Sidebar.h"
 #include "../gui/SearchBar.h"
@@ -199,7 +200,11 @@ protected:
 	static bool autosaveCallback(Control * control);
 
 	void fontChanged();
+
 private:
+	XOJ_TYPE_ATTRIB;
+
+
 	RecentManager * recent;
 	UndoRedoHandler * undoRedo;
 	ZoomControl * zoom;

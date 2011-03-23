@@ -8,6 +8,7 @@
  *
  * @license GPL
  */
+// TODO: AA: type check
 
 #ifndef __XMLPOINTNODE_H__
 #define __XMLPOINTNODE_H__

@@ -9,6 +9,8 @@ bool ColorToolItem::inUpdate = false;
 
 ColorToolItem::ColorToolItem(String id, ActionHandler * handler, ToolHandler * toolHandler, int color, String name, bool selector) :
 	AbstractToolItem(id, handler, selector ? ACTION_SELECT_COLOR_CUSTOM : ACTION_SELECT_COLOR) {
+	XOJ_INIT_TYPE(ColorToolItem);
+
 	this->color = color;
 	this->selector = selector;
 	this->toolHandler = toolHandler;
@@ -18,9 +20,12 @@ ColorToolItem::ColorToolItem(String id, ActionHandler * handler, ToolHandler * t
 }
 
 ColorToolItem::~ColorToolItem() {
+	XOJ_RELEASE_TYPE(ColorToolItem);
 }
 
 void ColorToolItem::actionSelected(ActionGroup group, ActionType action) {
+	XOJ_CHECK_TYPE(ColorToolItem);
+
 	inUpdate = true;
 	if (this->group == group && item) {
 		if (selector) {
@@ -32,6 +37,8 @@ void ColorToolItem::actionSelected(ActionGroup group, ActionType action) {
 }
 
 void ColorToolItem::enableColor(int color) {
+	XOJ_CHECK_TYPE(ColorToolItem);
+
 	if (selector) {
 		selectcolor_set_color(iconWidget, color);
 		this->color = color;
@@ -58,6 +65,8 @@ void ColorToolItem::enableColor(int color) {
 }
 
 void ColorToolItem::selectColor() {
+	XOJ_CHECK_TYPE(ColorToolItem);
+
 	GdkColor color = { 0 };
 
 	GtkWidget* cw = gtk_color_selection_dialog_get_color_selection(GTK_COLOR_SELECTION_DIALOG(colorDlg));
@@ -67,6 +76,8 @@ void ColorToolItem::selectColor() {
 }
 
 bool ColorToolItem::colorEqualsMoreOreLess(int color) {
+	XOJ_CHECK_TYPE_RET(ColorToolItem, false);
+
 	if (color == -1) {
 		return false;
 	}
@@ -86,6 +97,8 @@ bool ColorToolItem::colorEqualsMoreOreLess(int color) {
 }
 
 void ColorToolItem::activated(GdkEvent *event, GtkMenuItem *menuitem, GtkToolButton *toolbutton) {
+	XOJ_CHECK_TYPE(ColorToolItem);
+
 	if (inUpdate) {
 		return;
 	}
@@ -112,21 +125,25 @@ void ColorToolItem::activated(GdkEvent *event, GtkMenuItem *menuitem, GtkToolBut
 }
 
 GtkToolItem * ColorToolItem::newItem() {
-	iconWidget = selectcolor_new(color);
-	selectcolor_set_circle(iconWidget, !selector);
+	XOJ_CHECK_TYPE_RET(ColorToolItem, NULL);
+
+	this->iconWidget = selectcolor_new(color);
+	selectcolor_set_circle(this->iconWidget, !this->selector);
 	GtkToolItem * it = gtk_toggle_tool_button_new();
 
-	if (selector) {
+	if (this->selector) {
 		this->name = _("Select color");
 	}
 	gtk_tool_item_set_tooltip_text(GTK_TOOL_ITEM(it), this->name.c_str());
 	gtk_tool_button_set_label(GTK_TOOL_BUTTON(it), this->name.c_str());
 
-	gtk_tool_button_set_icon_widget(GTK_TOOL_BUTTON(it), iconWidget);
+	gtk_tool_button_set_icon_widget(GTK_TOOL_BUTTON(it), this->iconWidget);
 
 	return it;
 }
 
-void ColorToolItem::customColorSelected(GtkWidget *button, ColorToolItem * item) {
+void ColorToolItem::customColorSelected(GtkWidget * button, ColorToolItem * item) {
+	XOJ_CHECK_TYPE_OBJ(item, ColorToolItem);
+
 	item->selectColor();
 }

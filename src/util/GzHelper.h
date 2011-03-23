@@ -9,7 +9,6 @@
  * @license GPL
  */
 
-
 #ifndef __GZHELPER_H__
 #define __GZHELPER_H__
 

@@ -2,20 +2,23 @@
 #include "../Control.h"
 #include "../SaveHandler.h"
 
-
 BlockingJob::BlockingJob(Control * control, const char * name) {
-	this->control = control;
-	CHECK_MEMORY(control);
+	XOJ_INIT_TYPE(BlockingJob);
 
+	this->control = control;
 	control->block(name);
 }
 
 BlockingJob::~BlockingJob() {
+	XOJ_CHECK_TYPE(XmlNode);
+
 	this->control = NULL;
+
+	XOJ_RELEASE_TYPE(BlockingJob);
 }
 
 void BlockingJob::execute() {
-	CHECK_MEMORY(this->control);
+	XOJ_CHECK_TYPE(BlockingJob);
 
 	this->run();
 

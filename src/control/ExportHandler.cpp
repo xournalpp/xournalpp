@@ -5,6 +5,7 @@
 #include "../gui/dialog/ExportDialog.h"
 #include "jobs/ExportJob.h"
 #include "Control.h"
+// TODO: AA: type check
 
 ExportHandler::ExportHandler() {
 }

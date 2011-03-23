@@ -11,6 +11,7 @@
 
 #ifndef __TOOLBARDIALOG_H__
 #define __TOOLBARDIALOG_H__
+// TODO: AA: type check
 
 #include "../GladeGui.h"
 

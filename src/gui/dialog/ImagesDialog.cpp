@@ -7,6 +7,7 @@
 
 #include <config.h>
 #include <glib/gi18n-lib.h>
+// TODO: AA: type check
 
 class ImageView {
 public:

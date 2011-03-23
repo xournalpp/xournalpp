@@ -16,6 +16,10 @@
 #include "../util/String.h"
 
 class Util {
+private:
+	Util();
+	~Util();
+
 public:
 	static GdkColor intToGdkColor(int c);
 	static int gdkColorToInt(const GdkColor & c);

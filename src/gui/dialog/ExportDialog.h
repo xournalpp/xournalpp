@@ -15,6 +15,7 @@
 #include "../GladeGui.h"
 #include "../../control/settings/Settings.h"
 #include "../../control/jobs/ExportFormtType.h"
+#include "../../util/XournalType.h"
 
 class ExportDialog: public GladeGui {
 public:
@@ -35,6 +36,9 @@ private:
 	void handleData();
 
 private:
+	XOJ_TYPE_ATTRIB;
+
+
 	int pageCount;
 	int currentPage;
 	int resolution;

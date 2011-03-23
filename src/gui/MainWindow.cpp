@@ -6,6 +6,7 @@
 #include "../gui/GladeSearchpath.h"
 #include "toolbarMenubar/model/ToolbarData.h"
 #include "toolbarMenubar/model/ToolbarModel.h"
+// TODO: AA: type check
 
 #include <config.h>
 #include <glib/gi18n-lib.h>

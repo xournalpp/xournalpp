@@ -8,6 +8,7 @@
  *
  * @license GPL
  */
+// TODO: AA: type check
 
 #ifndef __REPAINTHANDLER_H__
 #define __REPAINTHANDLER_H__

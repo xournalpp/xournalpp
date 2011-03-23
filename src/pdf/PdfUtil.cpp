@@ -1,5 +1,6 @@
 #include "PdfUtil.h"
 
+// TODO: AA: type check
 
 // A '1' in this array means the character is white space.  A '1' or
 // '2' means the character ends a name or command.

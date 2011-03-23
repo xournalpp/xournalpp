@@ -8,6 +8,7 @@
 #define MIME "application/x-xoj"
 #define MIME_PDF "application/x-pdf"
 #define GROUP "xournal++"
+// TODO: AA: type check
 
 RecentManager::RecentManager() {
 	this->maxRecent = 10;

@@ -12,6 +12,7 @@
 #ifndef __XFONT_H__
 #define __XFONT_H__
 #include "../util/String.h"
+#include "../util/XournalType.h"
 
 #include <gtk/gtk.h>
 #include "../util/Serializeable.h"
@@ -38,6 +39,9 @@ private:
 	void updateFontDesc();
 
 private:
+	XOJ_TYPE_ATTRIB;
+
+
 	String name;
 	double size;
 };

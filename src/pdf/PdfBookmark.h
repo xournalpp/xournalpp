@@ -8,6 +8,7 @@
  *
  * @license GPL
  */
+// TODO: AA: type check
 
 #ifndef __PDFBOOKMARK_H__
 #define __PDFBOOKMARK_H__

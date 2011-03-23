@@ -1,5 +1,6 @@
 #include "ToolbarData.h"
 #include <string.h>
+// TODO: AA: type check
 
 ToolbarData::ToolbarData(bool predefined) {
 	this->predefined = predefined;

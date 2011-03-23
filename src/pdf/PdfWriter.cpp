@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <stdarg.h>
 #include <config.h>
+// TODO: AA: type check
 
 #include "../util/GzHelper.h"
 

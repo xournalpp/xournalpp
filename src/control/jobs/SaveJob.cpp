@@ -6,6 +6,7 @@
 #include "../SaveHandler.h"
 #include "../Control.h"
 #include "../../view/DocumentView.h"
+// TODO: AA: type check
 
 SaveJob::SaveJob(Control * control) :
 	BlockingJob(control, _("Save")) {

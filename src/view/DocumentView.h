@@ -18,6 +18,7 @@
 #include "../model/Text.h"
 #include "../model/Page.h"
 #include "../model/Image.h"
+#include "../util/XournalType.h"
 
 #include "ElementContainer.h"
 
@@ -53,6 +54,8 @@ private:
 	void paintBackgroundLined();
 
 private:
+	XOJ_TYPE_ATTRIB;
+
 	cairo_t * cr;
 	XojPage * page;
 	double width;

@@ -5,6 +5,7 @@
 
 #include <config.h>
 #include <glib/gi18n-lib.h>
+// TODO: AA: type check
 
 ToolSelectCombocontrol::ToolSelectCombocontrol(ToolMenuHandler * th, ActionHandler * handler, GladeGui * gui, String id) :
 	ToolButton(handler, gui, id, ACTION_TOOL_SELECT_RECT, GROUP_TOOL, "rect-select.png", _("Select Rectangle")) {

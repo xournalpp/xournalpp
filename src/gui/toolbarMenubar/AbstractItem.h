@@ -14,6 +14,7 @@
 
 #include "../../control/Actions.h"
 #include "../../util/String.h"
+#include "../../util/XournalType.h"
 
 #include <gtk/gtk.h>
 
@@ -40,6 +41,9 @@ public:
 
 protected:
 	virtual void enable(bool enabled);
+
+private:
+	XOJ_TYPE_ATTRIB;
 
 protected:
 	ActionGroup group;

@@ -13,6 +13,7 @@
 #define __ABOUTDIALOG_H__
 
 #include "../GladeGui.h"
+#include "../../util/XournalType.h"
 
 class AboutDialog: public GladeGui {
 public:
@@ -20,6 +21,9 @@ public:
 	virtual ~AboutDialog();
 
 	void show();
+
+private:
+	XOJ_TYPE_ATTRIB;
 };
 
 #endif /* __ABOUTDIALOG_H__ */

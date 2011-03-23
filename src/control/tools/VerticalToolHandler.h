@@ -8,6 +8,7 @@
  *
  * @license GPL
  */
+// TODO: AA: type check
 
 #ifndef __VERTICALTOOLHANDLER_H__
 #define __VERTICALTOOLHANDLER_H__

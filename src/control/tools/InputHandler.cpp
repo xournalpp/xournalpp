@@ -10,6 +10,7 @@
 #include "../../view/DocumentView.h"
 
 #define PIXEL_MOTION_THRESHOLD 0.3
+// TODO: AA: type check
 
 InputHandler::InputHandler(XournalView * xournal, PageView * redrawable) {
 	this->tmpStroke = NULL;

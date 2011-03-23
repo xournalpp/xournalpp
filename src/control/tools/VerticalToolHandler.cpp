@@ -1,6 +1,7 @@
 #include "VerticalToolHandler.h"
 #include "../../view/DocumentView.h"
 #include "../../undo/UndoRedoHandler.h"
+// TODO: AA: type check
 
 VerticalToolHandler::VerticalToolHandler(Redrawable * view, XojPage * page, double y, double zoom) {
 	this->startY = y;

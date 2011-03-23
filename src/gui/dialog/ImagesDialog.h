@@ -13,6 +13,7 @@
 #define __IMAGESDIALOG_H__
 
 #include "../GladeGui.h"
+#include "../../util/XournalType.h"
 
 class Document;
 class Settings;
@@ -42,6 +43,8 @@ private:
 	static void filechooserButtonCallback(GtkButton * button, ImagesDialog * dlg);
 
 private:
+	XOJ_TYPE_ATTRIB;
+
 	bool backgroundInitialized;
 
 	Settings * settings;

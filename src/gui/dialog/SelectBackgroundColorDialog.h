@@ -8,6 +8,7 @@
  *
  * @license GPL
  */
+// TODO: AA: type check
 
 #ifndef __SELECTBACKGROUNDCOLORDIALOG_H__
 #define __SELECTBACKGROUNDCOLORDIALOG_H__

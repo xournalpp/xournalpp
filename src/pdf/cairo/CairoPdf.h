@@ -16,6 +16,7 @@
 #include "../poppler/XojPopplerPage.h"
 #include "../poppler/XojPopplerDocument.h"
 #include "../../model/Page.h"
+#include "../../util/XournalType.h"
 
 class CairoPdf {
 public:
@@ -33,6 +34,9 @@ private:
 	static cairo_status_t writeOut(CairoPdf * pdf, unsigned char * data, unsigned int length);
 
 private:
+	XOJ_TYPE_ATTRIB;
+
+
 	GString * data;
 
 	XojPopplerDocument doc;

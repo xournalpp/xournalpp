@@ -3,6 +3,7 @@
 
 #include <config.h>
 #include <glib/gi18n-lib.h>
+// TODO: AA: type check
 
 ExportDialog::ExportDialog(GladeSearchpath * gladeSearchPath, Settings * settings, int pageCount, int currentPage) :
 	GladeGui(gladeSearchPath, "export.glade", "exportDialog") {

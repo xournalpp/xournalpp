@@ -14,6 +14,7 @@
 
 #include "Job.h"
 #include "../../util/String.h"
+#include "../../util/XournalType.h"
 
 class Control;
 
@@ -28,8 +29,10 @@ public:
 
 	virtual JobType getType();
 
-
 private:
+	XOJ_TYPE_ATTRIB;
+
+
 	Control * control;
 	String error;
 };

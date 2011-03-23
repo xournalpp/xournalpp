@@ -11,6 +11,7 @@
 
 #ifndef __TOOLBARENTRY_H__
 #define __TOOLBARENTRY_H__
+// TODO: AA: type check
 
 class ToolbarEntry {
 private:

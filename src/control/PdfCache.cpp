@@ -1,5 +1,6 @@
 #include "PdfCache.h"
 #include <stdio.h>
+// TODO: AA: type check
 
 class PdfCacheEntry {
 public:

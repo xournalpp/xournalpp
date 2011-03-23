@@ -13,6 +13,7 @@
 #define __BLOCKINGJOB_H__
 
 #include "Job.h"
+#include "../../util/XournalType.h"
 
 #include <gtk/gtk.h>
 
@@ -31,6 +32,10 @@ public:
 protected:
 	static bool finished(Control * control);
 
+private:
+	XOJ_TYPE_ATTRIB;
+
+protected:
 	Control * control;
 };
 

@@ -11,6 +11,7 @@
 
 #ifndef __TOOL_H__
 #define __TOOL_H__
+// TODO: AA: type check
 
 #include "../util/String.h"
 

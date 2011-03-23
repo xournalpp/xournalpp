@@ -12,6 +12,8 @@
 #ifndef __INERTIA_H__
 #define __INERTIA_H__
 
+#include "../../util/XournalType.h"
+
 class Point;
 
 class Inertia {
@@ -37,6 +39,8 @@ public:
 	void calc(const Point * pt, int start, int end);
 
 private:
+	XOJ_TYPE_ATTRIB;
+
 	double mass;
 	double sx;
 	double sy;

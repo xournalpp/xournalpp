@@ -4,6 +4,7 @@
 
 #include <config.h>
 #include <glib/gi18n-lib.h>
+// TODO: AA: type check
 
 FormatDialog::FormatDialog(GladeSearchpath * gladeSearchPath, Settings * settings, double width, double heigth) :
 	GladeGui(gladeSearchPath, "pagesize.glade", "pagesizeDialog") {

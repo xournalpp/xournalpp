@@ -1,5 +1,6 @@
 #include "Range.h"
 #include <glib.h>
+// TODO: AA: type check
 
 Range::Range(double x, double y) {
 	this->x1 = x;

@@ -8,6 +8,7 @@
  *
  * @license GPL
  */
+// TODO: AA: type check
 
 #ifndef __TOOLPAGESPINNER_H__
 #define __TOOLPAGESPINNER_H__

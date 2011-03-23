@@ -8,6 +8,7 @@
  *
  * @license GPL
  */
+// TODO: AA: type check
 
 #ifndef __UNDOACTION_H__
 #define __UNDOACTION_H__

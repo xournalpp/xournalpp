@@ -14,6 +14,8 @@
 #include <math.h>
 
 EditSelection::EditSelection(UndoRedoHandler * undo, double x, double y, double width, double height, XojPage * page, PageView * view) {
+	XOJ_INIT_TYPE(EditSelection);
+
 	this->x = x;
 	this->y = y;
 	this->width = width;
@@ -23,6 +25,8 @@ EditSelection::EditSelection(UndoRedoHandler * undo, double x, double y, double 
 }
 
 EditSelection::EditSelection(UndoRedoHandler * undo, Selection * selection, PageView * view) {
+	XOJ_INIT_TYPE(EditSelection);
+
 	selection->getSelectedRect(this->x, this->y, this->width, this->height);
 
 	contstruct(undo, view, view->getPage());
@@ -37,6 +41,8 @@ EditSelection::EditSelection(UndoRedoHandler * undo, Selection * selection, Page
 }
 
 EditSelection::EditSelection(UndoRedoHandler * undo, Element * e, PageView * view, XojPage * page) {
+	XOJ_INIT_TYPE(EditSelection);
+
 	this->x = e->getX();
 	this->y = e->getY();
 	this->width = e->getElementWidth();
@@ -49,6 +55,8 @@ EditSelection::EditSelection(UndoRedoHandler * undo, Element * e, PageView * vie
  * Our internal constructor
  */
 void EditSelection::contstruct(UndoRedoHandler * undo, PageView * view, XojPage * sourcePage) {
+	XOJ_CHECK_TYPE(EditSelection);
+
 	this->view = view;
 	this->undo = undo;
 	this->sourcePage = sourcePage;
@@ -70,13 +78,13 @@ void EditSelection::contstruct(UndoRedoHandler * undo, PageView * view, XojPage 
 }
 
 EditSelection::~EditSelection() {
-	CHECK_MEMORY(this);
+	XOJ_CHECK_TYPE(EditSelection);
+
 	if (this->rescaleId) {
 		g_source_remove(this->rescaleId);
 		this->rescaleId = 0;
 	}
 
-	// TODO: ?????????? view is corruped here, WHY???
 	finalizeSelection();
 
 	this->view = NULL;
@@ -91,6 +99,8 @@ EditSelection::~EditSelection() {
 	this->selected = NULL;
 
 	deleteViewBuffer();
+
+	XOJ_RELEASE_TYPE(EditSelection);
 }
 
 /**
@@ -98,6 +108,8 @@ EditSelection::~EditSelection() {
  * them to new layer if any or to the old if no new layer
  */
 void EditSelection::finalizeSelection() {
+	XOJ_CHECK_TYPE(EditSelection);
+
 	double fx = this->width / this->originalWidth;
 	double fy = this->height / this->originalHeight;
 
@@ -136,6 +148,8 @@ void EditSelection::finalizeSelection() {
  * get the X cooridnate relative to the provided view (getView())
  */
 double EditSelection::getXOnView() {
+	XOJ_CHECK_TYPE_RET(EditSelection, 0);
+
 	return this->x - this->offsetX;
 }
 
@@ -143,6 +157,8 @@ double EditSelection::getXOnView() {
  * get the Y cooridnate relative to the provided view (getView())
  */
 double EditSelection::getYOnView() {
+	XOJ_CHECK_TYPE_RET(EditSelection, 0);
+
 	return this->y - this->offsetY;
 }
 
@@ -150,6 +166,8 @@ double EditSelection::getYOnView() {
  * get the width in document coordinates (multiple with zoom)
  */
 double EditSelection::getWidth() {
+	XOJ_CHECK_TYPE_RET(EditSelection, 0);
+
 	return this->width;
 }
 
@@ -157,6 +175,8 @@ double EditSelection::getWidth() {
  * get the height in document coordinates (multiple with zoom)
  */
 double EditSelection::getHeight() {
+	XOJ_CHECK_TYPE_RET(EditSelection, 0);
+
 	return this->height;
 }
 
@@ -164,6 +184,8 @@ double EditSelection::getHeight() {
  * get the source page (where the selection was done)
  */
 XojPage * EditSelection::getSourcePage() {
+	XOJ_CHECK_TYPE_RET(EditSelection, NULL);
+
 	return this->sourcePage;
 }
 
@@ -171,6 +193,8 @@ XojPage * EditSelection::getSourcePage() {
  * get the target page if not the same as the source page, if the selection is moved to a new page
  */
 XojPage * EditSelection::getTargetPage() {
+	XOJ_CHECK_TYPE_RET(EditSelection, NULL);
+
 	return NULL;
 }
 
@@ -179,6 +203,8 @@ XojPage * EditSelection::getTargetPage() {
  * (or NULL if nothing is done)
  */
 UndoAction * EditSelection::setSize(ToolSize size, const double * thiknessPen, const double * thiknessHilighter, const double * thiknessEraser) {
+	XOJ_CHECK_TYPE_RET(EditSelection, NULL);
+
 	SizeUndoAction * undo = new SizeUndoAction(this->sourcePage, this->sourceLayer, this->view);
 
 	bool found = false;
@@ -235,6 +261,8 @@ UndoAction * EditSelection::setSize(ToolSize size, const double * thiknessPen, c
  * (Or NULL if nothing done, e.g. because there is only an image)
  */
 UndoAction * EditSelection::setColor(int color) {
+	XOJ_CHECK_TYPE_RET(EditSelection, NULL);
+
 	ColorUndoAction * undo = new ColorUndoAction(this->sourcePage, this->sourceLayer, this->view);
 
 	bool found = false;
@@ -271,6 +299,8 @@ UndoAction * EditSelection::setColor(int color) {
  * (or NULL if there are no Text elements)
  */
 UndoAction * EditSelection::setFont(XojFont & font) {
+	XOJ_CHECK_TYPE_RET(EditSelection, NULL);
+
 	double x1 = 0.0 / 0.0;
 	double x2 = 0.0 / 0.0;
 	double y1 = 0.0 / 0.0;
@@ -322,6 +352,8 @@ UndoAction * EditSelection::setFont(XojFont & font) {
  * Add an element to the this selection
  */
 void EditSelection::addElement(Element * e) {
+	XOJ_CHECK_TYPE(EditSelection);
+
 	this->selected = g_list_append(this->selected, e);
 
 	if (e->rescaleOnlyAspectRatio()) {
@@ -333,6 +365,8 @@ void EditSelection::addElement(Element * e) {
  * Returns all containig elements of this selections
  */
 ListIterator<Element *> EditSelection::getElements() {
+	XOJ_CHECK_TYPE_RET(EditSelection, NULL);
+
 	return ListIterator<Element *> (this->selected);
 }
 
@@ -341,6 +375,8 @@ ListIterator<Element *> EditSelection::getElements() {
  * (should be called in the mouse-button-released event handler)
  */
 void EditSelection::finalizeEditing() {
+	XOJ_CHECK_TYPE(EditSelection);
+
 	// TODO ????????????????????
 
 }
@@ -349,6 +385,8 @@ void EditSelection::finalizeEditing() {
  * Move the selection
  */
 void EditSelection::moveSelection(double dx, double dy) {
+	XOJ_CHECK_TYPE(EditSelection);
+
 	this->offsetX -= dx;
 	this->offsetY -= dy;
 
@@ -366,6 +404,8 @@ void EditSelection::moveSelection(double dx, double dy) {
  * If the selection is outside the visible area correct the coordinates
  */
 void EditSelection::ensureWithinVisibleArea() {
+	XOJ_CHECK_TYPE(EditSelection);
+
 	//TODO: scroll to this point if not in visible area
 
 	double zoom = this->view->getXournal()->getZoom();
@@ -392,6 +432,8 @@ void EditSelection::ensureWithinVisibleArea() {
  * Get the cursor type for the current position (if 0 then the default cursor should be used)
  */
 CursorSelectionType EditSelection::getSelectionTypeForPos(double x, double y, double zoom) {
+	XOJ_CHECK_TYPE_RET(EditSelection, CURSOR_SELECTION_NONE);
+
 	double x1 = getXOnView() * zoom;
 	double x2 = x1 + (this->width * zoom);
 	double y1 = getYOnView() * zoom;
@@ -450,6 +492,8 @@ CursorSelectionType EditSelection::getSelectionTypeForPos(double x, double y, do
  * should be relative to the provideded view by getView() (use translateEvent())
  */
 void EditSelection::paint(cairo_t * cr, double zoom) {
+	XOJ_CHECK_TYPE(EditSelection);
+
 	double x = this->x - this->offsetX;
 	double y = this->y - this->offsetY;
 
@@ -528,6 +572,8 @@ void EditSelection::paint(cairo_t * cr, double zoom) {
  * Callback to redrawing the buffer asynchron
  */
 bool EditSelection::repaintSelection(EditSelection * selection) {
+	XOJ_CHECK_TYPE_OBJ_RET(selection, EditSelection, false); //TODO: return true or false for no recall
+
 	gdk_threads_enter();
 
 	// delete the selection buffer, force a redraw
@@ -543,6 +589,8 @@ bool EditSelection::repaintSelection(EditSelection * selection) {
  * draws an idicator where you can scale the selection
  */
 void EditSelection::drawAnchorRect(cairo_t * cr, double x, double y, double zoom) {
+	XOJ_CHECK_TYPE(EditSelection);
+
 	GdkColor selectionColor = view->getSelectionColor();
 	cairo_set_source_rgb(cr, selectionColor.red / 65536.0, selectionColor.green / 65536.0, selectionColor.blue / 65536.0);
 	cairo_rectangle(cr, x - 4 / zoom, y - 4 / zoom, 8 / zoom, 8 / zoom);
@@ -552,6 +600,8 @@ void EditSelection::drawAnchorRect(cairo_t * cr, double x, double y, double zoom
 }
 
 PageView * EditSelection::getView() {
+	XOJ_CHECK_TYPE_RET(EditSelection, NULL);
+
 	return this->view;
 }
 
@@ -560,6 +610,8 @@ PageView * EditSelection::getView() {
  * it will be recreated when the selection is painted next time
  */
 void EditSelection::deleteViewBuffer() {
+	XOJ_CHECK_TYPE(EditSelection);
+
 	if (this->crBuffer) {
 		cairo_surface_destroy(this->crBuffer);
 		this->crBuffer = NULL;

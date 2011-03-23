@@ -8,6 +8,7 @@
  *
  * @license GPL
  */
+// TODO: AA: type check
 
 #ifndef __RECOSEGMENT_H__
 #define __RECOSEGMENT_H__

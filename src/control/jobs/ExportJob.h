@@ -15,6 +15,7 @@
 #include "BlockingJob.h"
 #include "ExportFormtType.h"
 #include "../../util/String.h"
+#include "../../util/XournalType.h"
 
 class ExportJob : public BlockingJob {
 public:
@@ -28,6 +29,9 @@ private:
 	bool freeSurface(int id);
 
 private:
+	XOJ_TYPE_ATTRIB;
+
+
 	GList * selected;
 
 	cairo_surface_t * surface;

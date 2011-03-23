@@ -13,6 +13,7 @@
 #define __ERASEUNDOACTION_H__
 
 #include "UndoAction.h"
+#include "../util/XournalType.h"
 
 class XojPage;
 class Redrawable;
@@ -35,6 +36,9 @@ public:
 
 	virtual String getText();
 private:
+	XOJ_TYPE_ATTRIB;
+
+
 	Redrawable * view;
 
 	GList * edited;

@@ -8,6 +8,7 @@
  *
  * @license GPL
  */
+// TODO: AA: type check
 
 #ifndef __OBJECTSTREAM_H__
 #define __OBJECTSTREAM_H__

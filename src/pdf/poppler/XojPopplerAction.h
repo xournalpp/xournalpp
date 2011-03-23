@@ -11,6 +11,7 @@
 
 #ifndef __XOJPOPPLERACTION_H__
 #define __XOJPOPPLERACTION_H__
+// TODO: AA: type check
 
 #include "XojPopplerDocument.h"
 

@@ -11,6 +11,7 @@
 
 #ifndef __TEXT_H__
 #define __TEXT_H__
+// TODO: AA: type check
 
 #include "Element.h"
 #include "../util/String.h"

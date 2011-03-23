@@ -8,6 +8,7 @@
  *
  * @license GPL
  */
+// TODO: AA: type check
 
 #ifndef __PRINTHANDLER_H__
 #define __PRINTHANDLER_H__

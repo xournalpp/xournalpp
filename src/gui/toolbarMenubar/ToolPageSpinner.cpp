@@ -2,6 +2,7 @@
 
 #include <config.h>
 #include <glib/gi18n-lib.h>
+// TODO: AA: type check
 
 ToolPageSpinner::ToolPageSpinner(ActionHandler * handler, String id, ActionType type) :
 	AbstractToolItem(id, handler, type, NULL) {

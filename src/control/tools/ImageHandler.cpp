@@ -5,6 +5,7 @@
 #include "../../util/pixbuf-utils.h"
 #include "../../undo/InsertUndoAction.h"
 #include "../stockdlg/ImageOpenDlg.h"
+// TODO: AA: type check
 
 ImageHandler::ImageHandler(Control * control, PageView * view) {
 	this->control = control;

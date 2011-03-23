@@ -8,6 +8,7 @@
  *
  * @license GPL
  */
+// TODO: AA: type check
 
 #ifndef __REMOVELAYERUNDOACTION_H__
 #define __REMOVELAYERUNDOACTION_H__

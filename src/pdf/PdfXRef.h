@@ -11,6 +11,7 @@
 
 #ifndef __PDFXREF_H__
 #define __PDFXREF_H__
+// TODO: AA: type check
 
 class PdfXRef {
 public:

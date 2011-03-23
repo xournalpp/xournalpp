@@ -8,6 +8,7 @@
 
 #include <math.h>
 #include <string.h>
+// TODO: AA: type check
 
 ShapeRecognizer::ShapeRecognizer() {
 	resetRecognizer();

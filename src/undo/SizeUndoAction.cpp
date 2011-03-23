@@ -3,6 +3,7 @@
 #include "../model/Stroke.h"
 #include "../util/Range.h"
 #include "../gui/Redrawable.h"
+// TODO: AA: type check
 
 class SizeUndoActionEntry {
 public:

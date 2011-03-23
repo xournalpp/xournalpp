@@ -7,8 +7,9 @@
 
 AboutDialog::AboutDialog(GladeSearchpath * gladeSearchPath) :
 	GladeGui(gladeSearchPath, "about.glade", "aboutDialog") {
-	GtkLabel *labelTitle;
-	labelTitle = GTK_LABEL(get("labelTitle"));
+	XOJ_INIT_TYPE(AboutDialog);
+
+	GtkLabel * labelTitle = GTK_LABEL(get("labelTitle"));
 	gtk_label_set_markup(labelTitle, "<span size=\"xx-large\" weight=\"bold\">Xournal++ " VERSION "</span>\n<i>The next generation</i>");
 
 	GtkWidget * w = get("vbox1");
@@ -34,9 +35,12 @@ AboutDialog::AboutDialog(GladeSearchpath * gladeSearchPath) :
 }
 
 AboutDialog::~AboutDialog() {
+	XOJ_RELEASE_TYPE(AboutDialog);
 }
 
 void AboutDialog::show() {
+	XOJ_CHECK_TYPE(AboutDialog);
+
 	gtk_dialog_run(GTK_DIALOG(this->window));
 	gtk_widget_hide(this->window);
 }

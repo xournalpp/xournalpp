@@ -1,6 +1,7 @@
 #include "PdfObjectWriter.h"
 #include "UpdateRef.h"
 #include "UpdateRefKey.h"
+// TODO: AA: type check
 
 PdfObjectWriter::PdfObjectWriter(PdfWriter * writer, PdfXRef * xref) {
 	this->writer = writer;

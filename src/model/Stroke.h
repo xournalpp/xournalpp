@@ -11,6 +11,7 @@
 
 #ifndef __STROKE_H__
 #define __STROKE_H__
+// TODO: AA: type check
 
 #include "Element.h"
 #include "../util/Arrayiterator.h"

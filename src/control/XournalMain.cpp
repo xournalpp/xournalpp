@@ -11,6 +11,7 @@
 #include "../gui/XournalView.h"
 #include "../pdf/PdfExport.h"
 #include "cfg.h"
+// TODO: AA: type check
 
 XournalMain::XournalMain() {
 }

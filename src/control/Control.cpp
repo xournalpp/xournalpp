@@ -44,8 +44,9 @@
 
 // TODO: !!!!!!!!!!!!!!!Check for error log on startup, also check for emergency save document!
 
-
 Control::Control(GladeSearchpath * gladeSearchPath) {
+	XOJ_INIT_TYPE(Control);
+
 	this->win = NULL;
 	this->recent = new RecentManager();
 	this->undoRedo = new UndoRedoHandler(this);
@@ -107,6 +108,8 @@ Control::Control(GladeSearchpath * gladeSearchPath) {
 }
 
 Control::~Control() {
+	XOJ_CHECK_TYPE(Control);
+
 	g_source_remove(this->changeTimout);
 	this->enableAutosave(false);
 
@@ -134,9 +137,14 @@ Control::~Control() {
 	this->metadata = NULL;
 	delete this->cursor;
 	this->cursor = NULL;
+
+	XOJ_RELEASE_TYPE(Control)
+	;
 }
 
 void Control::deleteLastAutosaveFile(String newAutosaveFile) {
+	XOJ_CHECK_TYPE(Control);
+
 	if (!this->lastAutosaveFilename.isEmpty()) {
 		// delete old autosave file
 		GFile * file = g_file_new_for_path(this->lastAutosaveFilename.c_str());
@@ -146,6 +154,8 @@ void Control::deleteLastAutosaveFile(String newAutosaveFile) {
 }
 
 bool Control::checkChangedDocument(Control * control) {
+	XOJ_CHECK_TYPE_OBJ_RET(control, Control, false);
+
 	if (!control->doc->tryLock()) {
 		// call again later
 		return true;
@@ -166,6 +176,8 @@ bool Control::checkChangedDocument(Control * control) {
 }
 
 void Control::saveSettings() {
+	XOJ_CHECK_TYPE(Control);
+
 	this->toolHandler->saveSettings();
 
 	gint width = 0;
@@ -179,6 +191,8 @@ void Control::saveSettings() {
 }
 
 void Control::initWindow(MainWindow * win) {
+	XOJ_CHECK_TYPE(Control);
+
 	win->setRecentMenu(recent->getMenu());
 	selectTool(toolHandler->getToolType());
 	this->win = win;
@@ -213,6 +227,8 @@ void Control::initWindow(MainWindow * win) {
 }
 
 bool Control::autosaveCallback(Control * control) {
+	XOJ_CHECK_TYPE_OBJ_RET(control, Control, true);
+
 	if (!control->undoRedo->isChangedAutosave()) {
 		printf(_("Info: autosave not necessary, nothing changed...\n"));
 		// do nothing, nothing changed
@@ -227,6 +243,8 @@ bool Control::autosaveCallback(Control * control) {
 }
 
 void Control::enableAutosave(bool enable) {
+	XOJ_CHECK_TYPE(Control);
+
 	if (this->autosaveTimeout) {
 		g_source_remove(this->autosaveTimeout);
 		this->autosaveTimeout = 0;
@@ -239,6 +257,8 @@ void Control::enableAutosave(bool enable) {
 }
 
 void Control::updatePageNumbers(int page, int pdfPage) {
+	XOJ_CHECK_TYPE(Control);
+
 	this->win->updatePageNumbers(page, this->doc->getPageCount(), pdfPage);
 	this->sidebar->selectPageNr(page, pdfPage);
 
@@ -262,35 +282,37 @@ void Control::updatePageNumbers(int page, int pdfPage) {
  * to prevent our application to get in an endless loop we need to catch this events
  */
 bool Control::shouldIgnorAction(ActionType action, ActionGroup group, bool enabled) {
+	XOJ_CHECK_TYPE_RET(Control, false);
+
 	// No selection events to catch
 	if (group == GROUP_NOGROUP) {
-		lastGroup = group;
+		this->lastGroup = group;
 		return false;
 	}
 
 	// Different group, different action
-	if (lastGroup != group) {
-		lastAction = action;
-		lastGroup = group;
-		lastEnabled = enabled;
+	if (this->lastGroup != group) {
+		this->lastAction = action;
+		this->lastGroup = group;
+		this->lastEnabled = enabled;
 		return false;
 	}
 
 	if (GROUP_TOGGLE_GROUP < group) {
-		if (lastEnabled == enabled) {
+		if (this->lastEnabled == enabled) {
 			// same action
 			return true;
 		} else {
-			lastAction = action;
-			lastGroup = group;
-			lastEnabled = enabled;
+			this->lastAction = action;
+			this->lastGroup = group;
+			this->lastEnabled = enabled;
 			return false;
 		}
 	}
 
-	lastAction = action;
-	lastGroup = group;
-	lastEnabled = enabled;
+	this->lastAction = action;
+	this->lastGroup = group;
+	this->lastEnabled = enabled;
 
 	if (!enabled) {
 		return true;
@@ -300,6 +322,7 @@ bool Control::shouldIgnorAction(ActionType action, ActionGroup group, bool enabl
 }
 
 void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent *event, GtkMenuItem *menuitem, GtkToolButton *toolbutton, bool enabled) {
+	XOJ_CHECK_TYPE(Control);
 
 	// Because GTK sends events if we change radio items etc.
 	if (shouldIgnorAction(type, group, enabled)) {
@@ -738,6 +761,8 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent *even
 }
 
 void Control::clearSelectionEndText() {
+	XOJ_CHECK_TYPE(Control);
+
 	clearSelection();
 	if (win) {
 		win->getXournal()->endTextSelection();
@@ -745,6 +770,8 @@ void Control::clearSelectionEndText() {
 }
 
 void Control::invokeLater(ActionType type) {
+	XOJ_CHECK_TYPE(Control);
+
 	g_idle_add((GSourceFunc) &invokeCallback, new CallbackData(this, type));
 }
 
@@ -752,6 +779,8 @@ void Control::invokeLater(ActionType type) {
  * Fire page selected, but first check if the page Number is valid
  */
 void Control::firePageSelected(XojPage * page) {
+	XOJ_CHECK_TYPE(Control);
+
 	this->doc->lock();
 	int p = this->doc->indexOf(page);
 	this->doc->unlock();
@@ -763,10 +792,14 @@ void Control::firePageSelected(XojPage * page) {
 }
 
 void Control::firePageSelected(int page) {
+	XOJ_CHECK_TYPE(Control);
+
 	DocumentHandler::firePageSelected(page);
 }
 
 void Control::customizeToolbars() {
+	XOJ_CHECK_TYPE(Control);
+
 	//	ToolbarDialog dlg(this->gladeSearchPath, win->getToolbarModel());
 	//	dlg.show();
 
@@ -777,6 +810,8 @@ void Control::customizeToolbars() {
 }
 
 void Control::enableFullscreen(bool enabled, bool presentation) {
+	XOJ_CHECK_TYPE(Control);
+
 	if (enabled) {
 		gtk_window_fullscreen((GtkWindow*) *win);
 
@@ -831,10 +866,14 @@ void Control::enableFullscreen(bool enabled, bool presentation) {
 }
 
 void Control::disableSidebarTmp(bool disabled) {
+	XOJ_CHECK_TYPE(Control);
+
 	this->sidebar->setTmpDisabled(disabled);
 }
 
 void Control::addDefaultPage() {
+	XOJ_CHECK_TYPE(Control);
+
 	PageInsertType type = settings->getPageInsertType();
 
 	double width = 0;
@@ -863,6 +902,8 @@ void Control::addDefaultPage() {
 }
 
 void Control::getDefaultPagesize(double & width, double & height) {
+	XOJ_CHECK_TYPE(Control);
+
 	if (this->defaultHeight < 0) {
 		SElement & format = settings->getCustomElement("format");
 		format.setComment("paperformat", "Available values are: system, A4, Letter, Custom: For custom you have to create the tags width and height.");
@@ -923,6 +964,8 @@ void Control::getDefaultPagesize(double & width, double & height) {
 }
 
 void Control::updateDeletePageButton() {
+	XOJ_CHECK_TYPE(Control);
+
 	if (this->win) {
 		GtkWidget * w = this->win->get("menuDeletePage");
 		gtk_widget_set_sensitive(w, this->doc->getPageCount() > 1);
@@ -930,6 +973,8 @@ void Control::updateDeletePageButton() {
 }
 
 void Control::deletePage() {
+	XOJ_CHECK_TYPE(Control);
+
 	clearSelectionEndText();
 	// don't allow delete pages if we have less than 2 pages,
 	// so we can be (more or less) sure there is at least one page.
@@ -959,6 +1004,8 @@ void Control::deletePage() {
 }
 
 void Control::insertNewPage(int position) {
+	XOJ_CHECK_TYPE(Control);
+
 	clearSelectionEndText();
 	PageInsertType type = settings->getPageInsertType();
 
@@ -1041,6 +1088,8 @@ void Control::insertNewPage(int position) {
 }
 
 void Control::insertPage(XojPage * page, int position) {
+	XOJ_CHECK_TYPE(Control);
+
 	this->doc->lock();
 	this->doc->insertPage(page, position);
 	this->doc->unlock();
@@ -1059,6 +1108,8 @@ void Control::insertPage(XojPage * page, int position) {
 }
 
 void Control::addNewLayer() {
+	XOJ_CHECK_TYPE(Control);
+
 	clearSelectionEndText();
 	XojPage * p = getCurrentPage();
 	if (p == NULL) {
@@ -1075,6 +1126,8 @@ void Control::addNewLayer() {
 }
 
 void Control::setPageBackground(ActionType type) {
+	XOJ_CHECK_TYPE(Control);
+
 	XojPage * page = getCurrentPage();
 
 	if (page == NULL) {
@@ -1192,6 +1245,8 @@ void Control::setPageBackground(ActionType type) {
 }
 
 void Control::updateBackgroundSizeButton() {
+	XOJ_CHECK_TYPE(Control);
+
 	// Update paper color button
 	XojPage * p = getCurrentPage();
 	if (p == NULL || win == NULL) {
@@ -1212,6 +1267,8 @@ void Control::updateBackgroundSizeButton() {
 }
 
 void Control::paperFormat() {
+	XOJ_CHECK_TYPE(Control);
+
 	XojPage * page = getCurrentPage();
 	if (!page || page->getBackgroundType() == BACKGROUND_TYPE_PDF) {
 		return;
@@ -1234,6 +1291,8 @@ void Control::paperFormat() {
 }
 
 void Control::changePageBackgroundColor() {
+	XOJ_CHECK_TYPE(Control);
+
 	int pNr = getCurrentPageNo();
 	this->doc->lock();
 	XojPage * p = this->doc->getPage(pNr);
@@ -1269,6 +1328,8 @@ void Control::changePageBackgroundColor() {
 }
 
 void Control::deleteCurrentLayer() {
+	XOJ_CHECK_TYPE(Control);
+
 	clearSelectionEndText();
 	XojPage * p = getCurrentPage();
 	int pId = getCurrentPageNo();
@@ -1293,6 +1354,8 @@ void Control::deleteCurrentLayer() {
 }
 
 void Control::calcZoomFitSize() {
+	XOJ_CHECK_TYPE(Control);
+
 	if (this->doc && this->win) {
 		XojPage * p = getCurrentPage();
 		if (p == NULL) {
@@ -1309,11 +1372,15 @@ void Control::calcZoomFitSize() {
 }
 
 void Control::zoomFit() {
+	XOJ_CHECK_TYPE(Control);
+
 	calcZoomFitSize();
 	zoom->zoomFit();
 }
 
 void Control::setViewTwoPages(bool twoPages) {
+	XOJ_CHECK_TYPE(Control);
+
 	settings->setShowTwoPages(twoPages);
 	fireActionSelected(GROUP_TWOPAGES, twoPages ? ACTION_VIEW_TWO_PAGES : ACTION_NOT_SELECTED);
 
@@ -1323,6 +1390,8 @@ void Control::setViewTwoPages(bool twoPages) {
 }
 
 void Control::setPageInsertType(PageInsertType type) {
+	XOJ_CHECK_TYPE(Control);
+
 	settings->setPageInsertType(type);
 	fireActionSelected(GROUP_PAGE_INSERT_TYPE, (ActionType) (type - PAGE_INSERT_TYPE_PLAIN + ACTION_NEW_PAGE_PLAIN));
 }
@@ -1355,6 +1424,8 @@ bool Control::invokeCallback(CallbackData * cb) {
 }
 
 int Control::getCurrentPageNo() {
+	XOJ_CHECK_TYPE_RET(Control, 0);
+
 	if (win) {
 		return win->getXournal()->getCurrentPage();
 	}
@@ -1362,10 +1433,14 @@ int Control::getCurrentPageNo() {
 }
 
 bool Control::searchTextOnPage(const char * text, int p, int * occures, double * top) {
+	XOJ_CHECK_TYPE_RET(Control, false);
+
 	return getWindow()->getXournal()->searchTextOnPage(text, p, occures, top);
 }
 
 XojPage * Control::getCurrentPage() {
+	XOJ_CHECK_TYPE_RET(Control, NULL);
+
 	int page = win->getXournal()->getCurrentPage();
 
 	this->doc->lock();
@@ -1376,11 +1451,15 @@ XojPage * Control::getCurrentPage() {
 }
 
 void Control::fileOpened(const char * uri) {
+	XOJ_CHECK_TYPE(Control);
+
 	openFile(uri);
 	win->updateLayerCombobox();
 }
 
 void Control::undoRedoChanged() {
+	XOJ_CHECK_TYPE(Control);
+
 	fireEnableAction(ACTION_UNDO, undoRedo->canUndo());
 	fireEnableAction(ACTION_REDO, undoRedo->canRedo());
 
@@ -1391,6 +1470,8 @@ void Control::undoRedoChanged() {
 }
 
 void Control::undoRedoPageChanged(XojPage * page) {
+	XOJ_CHECK_TYPE(Control);
+
 	for (GList * l = this->changedPages; l != NULL; l = l->next) {
 		if (l->data == page) {
 			return;
@@ -1400,15 +1481,21 @@ void Control::undoRedoPageChanged(XojPage * page) {
 }
 
 void Control::selectTool(ToolType type) {
+	XOJ_CHECK_TYPE(Control);
+
 	toolHandler->selectTool(type);
 }
 
 void Control::selectDefaultTool() {
+	XOJ_CHECK_TYPE(Control);
+
 	ButtonConfig * cfg = settings->getDefaultButtonConfig();
 	cfg->acceptActions(toolHandler);
 }
 
 void Control::toolChanged() {
+	XOJ_CHECK_TYPE(Control);
+
 	ToolType type = toolHandler->getToolType();
 
 	// Convert enum values, enums has to be in the same order!
@@ -1452,6 +1539,8 @@ void Control::toolChanged() {
 }
 
 void Control::eraserSizeChanged() {
+	XOJ_CHECK_TYPE(Control);
+
 	switch (toolHandler->getEraserSize()) {
 	case TOOL_SIZE_FINE:
 		fireActionSelected(GROUP_ERASER_SIZE, ACTION_TOOL_ERASER_SIZE_FINE);
@@ -1466,6 +1555,8 @@ void Control::eraserSizeChanged() {
 }
 
 void Control::penSizeChanged() {
+	XOJ_CHECK_TYPE(Control);
+
 	switch (toolHandler->getPenSize()) {
 	case TOOL_SIZE_VERY_FINE:
 		fireActionSelected(GROUP_PEN_SIZE, ACTION_TOOL_PEN_SIZE_VERY_THIN);
@@ -1486,6 +1577,8 @@ void Control::penSizeChanged() {
 }
 
 void Control::hilighterSizeChanged() {
+	XOJ_CHECK_TYPE(Control);
+
 	switch (toolHandler->getHilighterSize()) {
 	case TOOL_SIZE_FINE:
 		fireActionSelected(GROUP_HILIGHTER_SIZE, ACTION_TOOL_HILIGHTER_SIZE_FINE);
@@ -1500,6 +1593,8 @@ void Control::hilighterSizeChanged() {
 }
 
 void Control::toolSizeChanged() {
+	XOJ_CHECK_TYPE(Control);
+
 	if (toolHandler->getToolType() == TOOL_PEN) {
 		penSizeChanged();
 	} else if (toolHandler->getToolType() == TOOL_ERASER) {
@@ -1531,6 +1626,8 @@ void Control::toolSizeChanged() {
 }
 
 void Control::toolColorChanged() {
+	XOJ_CHECK_TYPE(Control);
+
 	fireActionSelected(GROUP_COLOR, ACTION_SELECT_COLOR);
 	getCursor()->updateCursor();
 
@@ -1546,10 +1643,14 @@ void Control::toolColorChanged() {
 }
 
 void Control::setCustomColorSelected() {
+	XOJ_CHECK_TYPE(Control);
+
 	fireActionSelected(GROUP_COLOR, ACTION_SELECT_COLOR_CUSTOM);
 }
 
 void Control::showSettings() {
+	XOJ_CHECK_TYPE(Control);
+
 	bool xeventEnabled = settings->isUseXInput();
 	int selectionColor = settings->getSelectionColor();
 	bool allowScrollOutside = settings->isAllowScrollOutsideThePage();
@@ -1583,6 +1684,8 @@ void Control::showSettings() {
 }
 
 void Control::newFile() {
+	XOJ_CHECK_TYPE(Control);
+
 	if (!this->close()) {
 		return;
 	}
@@ -1606,6 +1709,8 @@ void Control::newFile() {
 }
 
 bool Control::openFile(String filename, int scrollToPage) {
+	XOJ_CHECK_TYPE_RET(Control, false);
+
 	if (!this->close()) {
 		return false;
 	}
@@ -1710,6 +1815,8 @@ bool Control::openFile(String filename, int scrollToPage) {
 }
 
 void Control::fileLoaded() {
+	XOJ_CHECK_TYPE(Control);
+
 	updateWindowTitle();
 	win->updateLayerCombobox();
 	win->getXournal()->forceUpdatePagenumbers();
@@ -1718,6 +1825,8 @@ void Control::fileLoaded() {
 }
 
 bool Control::annotatePdf(String filename, bool attachPdf, bool attachToDocument) {
+	XOJ_CHECK_TYPE_RET(Control, false);
+
 	if (!this->close()) {
 		return false;
 	}
@@ -1764,6 +1873,8 @@ bool Control::annotatePdf(String filename, bool attachPdf, bool attachToDocument
 }
 
 void Control::print() {
+	XOJ_CHECK_TYPE(Control);
+
 	PrintHandler print;
 	this->doc->lock();
 	print.print(this->doc, getCurrentPageNo());
@@ -1771,6 +1882,8 @@ void Control::print() {
 }
 
 void Control::block(const char * name) {
+	XOJ_CHECK_TYPE(Control);
+
 	if (this->isBlocking) {
 		return;
 	}
@@ -1793,6 +1906,8 @@ void Control::block(const char * name) {
 }
 
 void Control::unblock() {
+	XOJ_CHECK_TYPE(Control);
+
 	if (!this->isBlocking) {
 		return;
 	}
@@ -1807,14 +1922,20 @@ void Control::unblock() {
 }
 
 void Control::setMaximumState(int max) {
+	XOJ_CHECK_TYPE(Control);
+
 	this->maxState = max;
 }
 
 void Control::setCurrentState(int state) {
+	XOJ_CHECK_TYPE(Control);
+
 	gtk_progress_bar_set_fraction(this->pgState, (double) state / this->maxState);
 }
 
 bool Control::save(bool synchron) {
+	XOJ_CHECK_TYPE_RET(Control, false);
+
 	this->doc->lock();
 	String filename = this->doc->getFilename();
 	this->doc->unlock();
@@ -1847,6 +1968,8 @@ String Control::getFilename(String uri) {
 }
 
 bool Control::showSaveDialog() {
+	XOJ_CHECK_TYPE_RET(Control, false);
+
 	GtkWidget * dialog = gtk_file_chooser_dialog_new(_("Save File"), (GtkWindow*) *win, GTK_FILE_CHOOSER_ACTION_SAVE, GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
 			GTK_STOCK_SAVE, GTK_RESPONSE_OK, NULL);
 	gtk_file_chooser_set_local_only(GTK_FILE_CHOOSER(dialog), true);
@@ -1905,6 +2028,8 @@ bool Control::showSaveDialog() {
 }
 
 void Control::updateWindowTitle() {
+	XOJ_CHECK_TYPE(Control);
+
 	String title = "";
 
 	this->doc->lock();
@@ -1932,6 +2057,8 @@ void Control::updateWindowTitle() {
 }
 
 void Control::exportAsPdf() {
+	XOJ_CHECK_TYPE(Control);
+
 	PdfExportJob * job = new PdfExportJob(this);
 	if (job->showFilechooser()) {
 		this->scheduler->addJob(job, JOB_PRIORITY_NONE);
@@ -1941,12 +2068,16 @@ void Control::exportAsPdf() {
 }
 
 void Control::exportAs() {
+	XOJ_CHECK_TYPE(Control);
+
 	ExportHandler handler;
 
 	handler.runExportWithDialog(this->gladeSearchPath, this->settings, this->doc, this, getCurrentPageNo());
 }
 
 void Control::saveAs() {
+	XOJ_CHECK_TYPE(Control);
+
 	if (!showSaveDialog()) {
 		return;
 	}
@@ -1964,6 +2095,8 @@ void Control::saveAs() {
 }
 
 void Control::quit() {
+	XOJ_CHECK_TYPE(Control);
+
 	if (!this->close()) {
 		return;
 	}
@@ -1975,6 +2108,8 @@ void Control::quit() {
 }
 
 bool Control::close() {
+	XOJ_CHECK_TYPE_RET(Control, false);
+
 	if (undoRedo->isChanged()) {
 		GtkWidget * dialog = gtk_message_dialog_new((GtkWindow *) *getWindow(), GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_WARNING, GTK_BUTTONS_NONE,
 				_("This document is not saved yet."));
@@ -2010,26 +2145,36 @@ bool Control::close() {
 }
 
 void Control::resetShapeRecognizer() {
+	XOJ_CHECK_TYPE(Control);
+
 	if (this->win) {
 		this->win->getXournal()->resetShapeRecognizer();
 	}
 }
 
 void Control::showAbout() {
+	XOJ_CHECK_TYPE(Control);
+
 	AboutDialog dlg(this->gladeSearchPath);
 	dlg.show();
 }
 
 void Control::clipboardCutCopyEnabled(bool enabled) {
+	XOJ_CHECK_TYPE(Control);
+
 	fireEnableAction(ACTION_CUT, enabled);
 	fireEnableAction(ACTION_COPY, enabled);
 }
 
 void Control::clipboardPasteEnabled(bool enabled) {
+	XOJ_CHECK_TYPE(Control);
+
 	fireEnableAction(ACTION_PASTE, enabled);
 }
 
 void Control::clipboardPasteText(String text) {
+	XOJ_CHECK_TYPE(Control);
+
 	// TODO ?????????????????????
 	//	double x = 0;
 	//	double y = 0;
@@ -2068,6 +2213,8 @@ void Control::clipboardPasteText(String text) {
 }
 
 void Control::clipboardPasteXournal(ObjectInputStream & in) {
+	XOJ_CHECK_TYPE(Control);
+
 	int pNr = getCurrentPageNo();
 	if (pNr == -1 && win != NULL) {
 		return;
@@ -2151,28 +2298,38 @@ void Control::clipboardPasteXournal(ObjectInputStream & in) {
 }
 
 void Control::deleteSelection() {
+	XOJ_CHECK_TYPE(Control);
+
 	if (win) {
 		win->getXournal()->deleteSelection();
 	}
 }
 
 void Control::clearSelection() {
+	XOJ_CHECK_TYPE(Control);
+
 	if (this->win) {
 		this->win->getXournal()->clearSelection();
 	}
 }
 
 void Control::setClipboardHandlerSelection(EditSelection * selection) {
+	XOJ_CHECK_TYPE(Control);
+
 	if (this->clipboardHandler) {
 		this->clipboardHandler->setSelection(selection);
 	}
 }
 
 void Control::setCopyPasteEnabled(bool enabled) {
+	XOJ_CHECK_TYPE(Control);
+
 	this->clipboardHandler->setCopyPasteEnabled(enabled);
 }
 
 void Control::setToolSize(ToolSize size) {
+	XOJ_CHECK_TYPE(Control);
+
 	EditSelection * sel = NULL;
 	if (this->win) {
 		sel = this->win->getXournal()->getSelection();
@@ -2189,6 +2346,8 @@ void Control::setToolSize(ToolSize size) {
 }
 
 void Control::fontChanged() {
+	XOJ_CHECK_TYPE(Control);
+
 	XojFont font = win->getFontButtonFont();
 	settings->setFont(font);
 
@@ -2214,42 +2373,62 @@ void Control::fontChanged() {
  */
 
 UndoRedoHandler * Control::getUndoRedoHandler() {
+	XOJ_CHECK_TYPE_RET(Control, NULL);
+
 	return this->undoRedo;
 }
 
 ZoomControl * Control::getZoomControl() {
+	XOJ_CHECK_TYPE_RET(Control, NULL);
+
 	return this->zoom;
 }
 
 Cursor * Control::getCursor() {
+	XOJ_CHECK_TYPE_RET(Control, NULL);
+
 	return this->cursor;
 }
 
 RecentManager * Control::getRecentManager() {
+	XOJ_CHECK_TYPE_RET(Control, NULL);
+
 	return this->recent;
 }
 
 Document * Control::getDocument() {
+	XOJ_CHECK_TYPE_RET(Control, NULL);
+
 	return this->doc;
 }
 
 ToolHandler * Control::getToolHandler() {
+	XOJ_CHECK_TYPE_RET(Control, NULL);
+
 	return this->toolHandler;
 }
 
 XournalScheduler * Control::getScheduler() {
+	XOJ_CHECK_TYPE_RET(Control, NULL);
+
 	return this->scheduler;
 }
 
 MainWindow * Control::getWindow() {
+	XOJ_CHECK_TYPE_RET(Control, NULL);
+
 	return this->win;
 }
 
 bool Control::isFullscreen() {
+	XOJ_CHECK_TYPE_RET(Control, false);
+
 	return this->fullscreen;
 }
 
 TextEditor * Control::getTextEditor() {
+	XOJ_CHECK_TYPE_RET(Control, NULL);
+
 	if (this->win) {
 		return this->win->getXournal()->getTextEditor();
 	}
@@ -2257,18 +2436,26 @@ TextEditor * Control::getTextEditor() {
 }
 
 Settings * Control::getSettings() {
+	XOJ_CHECK_TYPE_RET(Control, NULL);
+
 	return settings;
 }
 
 ScrollHandler * Control::getScrollHandler() {
+	XOJ_CHECK_TYPE_RET(Control, NULL);
+
 	return this->scrollHandler;
 }
 
 MetadataManager * Control::getMetadataManager() {
+	XOJ_CHECK_TYPE_RET(Control, NULL);
+
 	return this->metadata;
 }
 
 Sidebar * Control::getSidebar() {
+	XOJ_CHECK_TYPE_RET(Control, NULL);
+
 	return this->sidebar;
 }
 

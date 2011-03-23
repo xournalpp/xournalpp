@@ -8,6 +8,7 @@
  *
  * @license GPL
  */
+// TODO: AA: type check
 
 #ifndef __SEARCHBAR_H__
 #define __SEARCHBAR_H__

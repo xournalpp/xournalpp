@@ -1,4 +1,5 @@
 #include "LinkDestination.h"
+// TODO: AA: type check
 
 struct _LinkDestClass {
 	GObjectClass base_class;

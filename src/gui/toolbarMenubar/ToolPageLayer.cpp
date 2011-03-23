@@ -1,6 +1,7 @@
 #include "ToolPageLayer.h"
 #include <config.h>
 #include <glib/gi18n-lib.h>
+// TODO: AA: type check
 
 ToolPageLayer::ToolPageLayer(ActionHandler * handler, String id, ActionType type) :
 	AbstractToolItem(id, handler, type, NULL) {

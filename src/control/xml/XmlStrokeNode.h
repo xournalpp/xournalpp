@@ -8,6 +8,7 @@
  *
  * @license GPL
  */
+// TODO: AA: type check
 
 #ifndef __XMLSTROKENODE_H__
 #define __XMLSTROKENODE_H__

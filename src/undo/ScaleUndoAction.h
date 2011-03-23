@@ -9,6 +9,7 @@
  * @license GPL
  */
 
+// TODO: AA: type check
 
 #ifndef __SCALEUNDOACTION_H__
 #define __SCALEUNDOACTION_H__

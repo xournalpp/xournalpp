@@ -11,6 +11,7 @@
 
 #ifndef __PAGEPOSITIONHANDLER_H__
 #define __PAGEPOSITIONHANDLER_H__
+// TODO: AA: type check
 
 #include <glib.h>
 

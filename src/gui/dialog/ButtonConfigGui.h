@@ -13,6 +13,7 @@
 #define __BUTTONCONFIGGUI__
 
 #include "../../control/Actions.h"
+#include "../../util/XournalType.h"
 #include <gdk/gdk.h>
 
 class SettingsDialog;
@@ -21,6 +22,9 @@ class Settings;
 class ButtonConfigGui {
 public:
 	ButtonConfigGui(SettingsDialog * dlg, GtkWidget * w, Settings * settings, int button, bool withDevice);
+	~ButtonConfigGui();
+
+public:
 	void loadSettings();
 	void saveSettings();
 
@@ -30,6 +34,9 @@ private:
 	void enableDisableTools();
 
 private:
+	XOJ_TYPE_ATTRIB;
+
+
 	Settings * settings;
 	int button;
 	bool withDevice;

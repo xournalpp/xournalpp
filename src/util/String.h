@@ -9,6 +9,8 @@
  * @license GPL
  */
 
+// TODO: AA: type check
+
 #ifndef __STRING_HPP__
 #define __STRING_HPP__
 #include <gtk/gtk.h>

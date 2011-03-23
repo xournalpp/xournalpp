@@ -4,6 +4,7 @@
 #include "../model/Stroke.h"
 #include "../gui/Redrawable.h"
 #include "../util/Stacktrace.h"
+// TODO: AA: type check
 
 RecognizerUndoAction::RecognizerUndoAction(XojPage * page, Redrawable * view, Layer * layer, Stroke * original, Stroke * recognized) {
 	this->page = page;

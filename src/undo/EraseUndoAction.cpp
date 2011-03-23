@@ -5,6 +5,7 @@
 #include "../model/eraser/EraseableStroke.h"
 
 #include "PageLayerPosEntry.h"
+// TODO: AA: type check
 
 EraseUndoAction::EraseUndoAction(XojPage * page, Redrawable * view) {
 	this->page = page;

@@ -12,6 +12,8 @@
 #ifndef ERASEHANDLER_H_
 #define ERASEHANDLER_H_
 
+#include "../../util/XournalType.h"
+
 class DeleteUndoAction;
 class EraseUndoAction;
 class Layer;
@@ -36,6 +38,9 @@ private:
 	void eraseStroke(Layer * l, Stroke * s, double x, double y, Range * range);
 
 private:
+	XOJ_TYPE_ATTRIB;
+
+
 	XojPage * page;
 	ToolHandler * handler;
 	Redrawable * view;

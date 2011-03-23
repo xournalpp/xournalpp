@@ -8,6 +8,7 @@
  *
  * @license GPL
  */
+// TODO: AA: type check
 
 #ifndef __XMLIMAGENODE_H__
 #define __XMLIMAGENODE_H__

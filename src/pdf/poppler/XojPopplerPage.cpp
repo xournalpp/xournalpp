@@ -4,6 +4,7 @@
 #include <poppler/PDFDoc.h>
 #include <poppler/Gfx.h>
 #include <poppler/OutputDev.h>
+// TODO: AA: type check
 
 XojPopplerPage::XojPopplerPage(PDFDoc * doc, GMutex * docMutex, CairoOutputDev * outputDev, Page * page, int index) {
 	this->doc = doc;

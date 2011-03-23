@@ -8,6 +8,7 @@
  *
  * @license GPL
  */
+// TODO: AA: type check
 
 #ifndef __SAVEJOB_H__
 #define __SAVEJOB_H__

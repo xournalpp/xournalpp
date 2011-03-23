@@ -2,6 +2,7 @@
 #include "XournalView.h"
 #include "widgets/XournalWidget.h"
 #include "PageView.h"
+// TODO: AA: type check
 
 RepaintHandler::RepaintHandler(XournalView * xournal) {
 	this->xournal = xournal;

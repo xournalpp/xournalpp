@@ -9,6 +9,7 @@
  * @license GPL
  */
 
+// TODO: AA: type check
 
 #ifndef __PAGEPOSITIONCACHE_H__
 #define __PAGEPOSITIONCACHE_H__

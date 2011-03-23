@@ -11,6 +11,7 @@
 
 #ifndef __XOJ_POPPLERPAGE_H__
 #define __XOJ_POPPLERPAGE_H__
+// TODO: AA: type check
 
 #include <gtk/gtk.h>
 #include <poppler/PDFDoc.h>

@@ -3,6 +3,7 @@
 #include "PagePositionCache.h"
 
 #include <gtk/gtk.h>
+// TODO: AA: type check
 
 PagePositionHandler::PagePositionHandler() {
 	this->dataCount = 0;

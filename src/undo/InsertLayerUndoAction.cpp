@@ -4,6 +4,7 @@
 #include "../model/Document.h"
 #include "../control/Control.h"
 #include "../gui/XournalView.h"
+// TODO: AA: type check
 
 InsertLayerUndoAction::InsertLayerUndoAction(XojPage * page, Layer * layer) {
 	this->page = page;

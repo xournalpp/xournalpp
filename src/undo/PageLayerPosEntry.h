@@ -8,6 +8,7 @@
  *
  * @license GPL
  */
+// TODO: AA: type check
 
 #ifndef __PAGELAYERPOSENTRY_H__
 #define __PAGELAYERPOSENTRY_H__

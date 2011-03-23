@@ -9,6 +9,7 @@
 #define __GLADESEARCHPATH_H__
 
 #include <glib.h>
+#include "../util/XournalType.h"
 
 class GladeSearchpath {
 public:
@@ -20,6 +21,8 @@ public:
 	char * findFile(const char * subdir, const char * file);
 
 private:
+	XOJ_TYPE_ATTRIB;
+
 	/**
 	 * Search directory for icons and Glade files
 	 */

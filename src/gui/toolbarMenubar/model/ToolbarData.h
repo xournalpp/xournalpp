@@ -17,6 +17,7 @@
 #include <vector>
 
 #include "ToolbarEntry.h"
+// TODO: AA: type check
 
 class ToolbarData {
 public:

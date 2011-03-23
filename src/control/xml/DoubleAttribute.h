@@ -9,11 +9,11 @@
  * @license GPL
  */
 
-
 #ifndef __DOUBLEATTRIBUTE_H__
 #define __DOUBLEATTRIBUTE_H__
 
 #include "Attribute.h"
+#include "../../util/XournalType.h"
 
 class DoubleAttribute: public Attribute {
 public:
@@ -24,6 +24,8 @@ public:
 	virtual void writeOut(OutputStream * out);
 
 private:
+	XOJ_TYPE_ATTRIB;
+
 	double value;
 };
 

@@ -9,6 +9,7 @@
  * @license GPL
  */
 
+// TODO: AA: type check
 
 #ifndef __PARTLIST_H__
 #define __PARTLIST_H__

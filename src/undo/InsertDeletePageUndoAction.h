@@ -13,6 +13,7 @@
 #define __INSERTDELETEPAGEUNDOACTION_H__
 
 #include "UndoAction.h"
+#include "../util/XournalType.h"
 
 class InsertDeletePageUndoAction: public UndoAction {
 public:
@@ -28,6 +29,8 @@ private:
 	bool deletePage(Control * control);
 
 private:
+	XOJ_TYPE_ATTRIB;
+
 	bool inserted;
 	int pagePos;
 };

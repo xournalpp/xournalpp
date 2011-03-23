@@ -1,4 +1,5 @@
 #include "UpdateRef.h"
+// TODO: AA: type check
 
 UpdateRef::UpdateRef(int objectId, XojPopplerDocument doc) {
 	this->objectId = objectId;

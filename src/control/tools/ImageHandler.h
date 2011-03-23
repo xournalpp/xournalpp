@@ -13,6 +13,7 @@
 #define __IMAGEHANDLER_H__
 
 #include <gtk/gtk.h>
+#include "../../util/XournalType.h"
 
 class Control;
 class PageView;
@@ -27,6 +28,8 @@ public:
 	bool insertImage(GFile * file, double x, double y);
 
 private:
+	XOJ_TYPE_ATTRIB;
+
 	Control * control;
 	PageView * view;
 };

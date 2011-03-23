@@ -14,6 +14,7 @@
 
 #include "../GladeGui.h"
 #include "../../control/settings/Settings.h"
+// TODO: AA: type check
 
 class SettingsDialog: public GladeGui {
 public:

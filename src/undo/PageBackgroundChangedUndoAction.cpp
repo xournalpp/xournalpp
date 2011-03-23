@@ -1,6 +1,7 @@
 #include "PageBackgroundChangedUndoAction.h"
 #include "../control/Control.h"
 #include "../model/Document.h"
+// TODO: AA: type check
 
 PageBackgroundChangedUndoAction::PageBackgroundChangedUndoAction(XojPage * page, BackgroundType origType,
 		int origPdfPage, BackgroundImage origBackgroundImage, double origW, double origH) {

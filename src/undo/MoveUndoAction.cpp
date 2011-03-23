@@ -6,6 +6,7 @@
 #include "../gui/Redrawable.h"
 #include "../control/tools/EditSelection.h"
 #include "../control/tools/VerticalToolHandler.h"
+// TODO: AA: type check
 
 class MoveUndoEntry {
 public:

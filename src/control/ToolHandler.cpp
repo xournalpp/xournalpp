@@ -4,6 +4,7 @@
 #include "Actions.h"
 
 #include <gtk/gtk.h>
+// TODO: AA: type check
 
 ToolHandler::ToolHandler(ToolListener * listener, ActionHandler * actionHandler, Settings * settings) {
 	colorFound = false;

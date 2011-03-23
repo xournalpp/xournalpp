@@ -1,4 +1,5 @@
 #include "EraseableStrokePart.h"
+// TODO: AA: type check
 
 EraseableStrokePart::EraseableStrokePart(Point a, Point b) {
 	this->points = NULL;

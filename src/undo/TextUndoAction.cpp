@@ -5,6 +5,7 @@
 #include "../model/Text.h"
 #include "../gui/Redrawable.h"
 #include "../gui/TextEditor.h"
+// TODO: AA: type check
 
 TextUndoAction::TextUndoAction(XojPage * page, Layer * layer, Text * text, String lastText, Redrawable * view, TextEditor * textEditor) {
 	this->page = page;

@@ -8,6 +8,7 @@
  *
  * @license GPL
  */
+// TODO: AA: type check
 
 #ifndef __TEXTUNDOACTION_H__
 #define __TEXTUNDOACTION_H__

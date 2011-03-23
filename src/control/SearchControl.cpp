@@ -1,6 +1,7 @@
 #include "SearchControl.h"
 #include "../model/Text.h"
 #include "../view/TextView.h"
+// TODO: AA: type check
 
 SearchControl::SearchControl(XojPage * page, XojPopplerPage * pdf) {
 	this->page = page;

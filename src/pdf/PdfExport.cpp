@@ -9,6 +9,7 @@
 #include "PdfUtil.h"
 #include "UpdateRef.h"
 #include "UpdateRefKey.h"
+// TODO: AA: type check
 
 /**
  * This class uses some inspiration from FPDF (PHP Class)

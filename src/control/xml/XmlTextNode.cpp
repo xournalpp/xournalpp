@@ -2,26 +2,37 @@
 
 XmlTextNode::XmlTextNode(const char * tag, const char * text) :
 	XmlNode(tag) {
+	XOJ_INIT_TYPE(XmlTextNode);
+
 	this->text = g_strdup(text);
 }
 
 XmlTextNode::XmlTextNode(const char * tag) :
 	XmlNode(tag) {
+	XOJ_INIT_TYPE(XmlTextNode);
+
 	this->text = NULL;
+
+	XOJ_RELEASE_TYPE(XmlTextNode);
 }
 
 XmlTextNode::~XmlTextNode() {
+	XOJ_CHECK_TYPE(XmlTextNode);
+
 	g_free(this->text);
 	this->text = NULL;
 }
 
 void XmlTextNode::setText(const char * text) {
-	CHECK_MEMORY(this);
+	XOJ_CHECK_TYPE(XmlTextNode);
+
 	g_free(this->text);
 	this->text = g_strdup(text);
 }
 
 void XmlTextNode::writeOut(OutputStream * out) {
+	XOJ_CHECK_TYPE(XmlTextNode);
+
 	out->write("<");
 	out->write(tag);
 	writeAttributes(out);

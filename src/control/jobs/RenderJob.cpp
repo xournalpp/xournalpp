@@ -6,6 +6,7 @@
 #include "../../gui/PageView.h"
 #include "../../model/Document.h"
 #include "../../util/Rectangle.h"
+// TODO: AA: type check
 
 RenderJob::RenderJob(PageView * view) {
 	this->view = view;

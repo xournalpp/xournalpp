@@ -1,5 +1,6 @@
 #include "PartList.h"
 #include "EraseableStrokePart.h"
+// TODO: AA: type check
 
 PartList::PartList() {
 	this->data = NULL;

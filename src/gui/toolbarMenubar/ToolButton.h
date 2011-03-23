@@ -14,6 +14,7 @@
 
 #include "AbstractToolItem.h"
 #include "../GladeGui.h"
+// TODO: AA: type check
 
 class ToolButton: public AbstractToolItem {
 public:

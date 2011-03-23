@@ -5,6 +5,7 @@
 #include "../control/Control.h"
 #include "../model/Document.h"
 #include "../gui/XournalView.h"
+// TODO: AA: type check
 
 RemoveLayerUndoAction::RemoveLayerUndoAction(XojPage * page, Layer * layer, int layerPos) {
 	this->page = page;

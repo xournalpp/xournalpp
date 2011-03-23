@@ -8,6 +8,7 @@
  *
  * @license GPL
  */
+// TODO: AA: type check
 
 #ifndef EDITABLETOOLBAR_H_
 #define EDITABLETOOLBAR_H_

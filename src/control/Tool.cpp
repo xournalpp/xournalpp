@@ -1,4 +1,5 @@
 #include "Tool.h"
+// TODO: AA: type check
 
 Tool::Tool(String name, ToolType type, int color, bool enableColor, bool enableSize, bool enableRuler,
 		bool enableShapreRecognizer, double * thikness) {

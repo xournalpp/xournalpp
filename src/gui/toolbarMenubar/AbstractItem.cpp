@@ -1,6 +1,7 @@
 #include "AbstractItem.h"
 
 AbstractItem::AbstractItem(String id, ActionHandler * handler, ActionType action, GtkWidget * menuitem) {
+	XOJ_INIT_TYPE(AbstractItem);
 	this->id = id;
 	this->handler = handler;
 	this->action = action;
@@ -20,10 +21,14 @@ AbstractItem::AbstractItem(String id, ActionHandler * handler, ActionType action
 }
 
 AbstractItem::~AbstractItem() {
+	XOJ_CHECK_TYPE(XmlNode);
+
 	if (this->menuitem) {
 		g_signal_handler_disconnect(this->menuitem, menuSignalHandler);
 		gtk_object_unref(GTK_OBJECT(this->menuitem));
 	}
+
+	XOJ_RELEASE_TYPE(AbstractItem);
 }
 
 void AbstractItem::menuCallback(GtkMenuItem * menuitem, AbstractItem * toolItem) {

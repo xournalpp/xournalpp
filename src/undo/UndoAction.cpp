@@ -1,4 +1,5 @@
 #include "UndoAction.h"
+// TODO: AA: type check
 
 UndoAction::UndoAction() {
 	this->undone = false;

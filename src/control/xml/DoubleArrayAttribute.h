@@ -13,6 +13,7 @@
 #define __DOUBLEARRAYATTRIBUTE_H__
 
 #include "Attribute.h"
+#include "../../util/XournalType.h"
 
 class DoubleArrayAttribute: public Attribute {
 public:
@@ -23,6 +24,9 @@ public:
 	virtual void writeOut(OutputStream * out);
 
 private:
+	XOJ_TYPE_ATTRIB;
+
+
 	double * values;
 	int count;
 };

@@ -12,10 +12,10 @@
 #ifndef __ATTRIBUTE_H__
 #define __ATTRIBUTE_H__
 
-#include "../../util/MemoryCheck.h"
 #include "../../util/OutputStream.h"
+#include "../../util/XournalType.h"
 
-class Attribute: public MemoryCheckObject {
+class Attribute {
 public:
 	Attribute(const char * name);
 	virtual ~Attribute();
@@ -26,6 +26,9 @@ public:
 	const char * getName();
 
 private:
+	XOJ_TYPE_ATTRIB;
+
+
 	char * name;
 };
 

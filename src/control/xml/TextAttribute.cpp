@@ -1,5 +1,6 @@
 #include "TextAttribute.h"
 #include "../../util/String.h"
+// TODO: AA: type check
 
 TextAttribute::TextAttribute(const char * name, const char * value) :
 	Attribute(name) {
@@ -12,7 +13,6 @@ TextAttribute::~TextAttribute() {
 }
 
 void TextAttribute::writeOut(OutputStream * out) {
-	CHECK_MEMORY(this);
 	String v = this->value;
 	out->write(v.replace("\"", "&quot;"));
 }

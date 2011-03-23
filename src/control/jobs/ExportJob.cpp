@@ -10,6 +10,7 @@
 
 #include <config.h>
 #include <glib/gi18n-lib.h>
+// TODO: AA: type check
 
 ExportJob::ExportJob(Control * control, GList * selected, ExportFormtType type, int dpi, String folder, String filename) :
 	BlockingJob(control, _("Export")) {

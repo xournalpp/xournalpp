@@ -1,4 +1,5 @@
 #include "MenuItem.h"
+// TODO: AA: type check
 
 MenuItem::MenuItem(ActionHandler * handler, GtkWidget * widget, ActionType type) :
 	AbstractItem(NULL, handler, type, widget) {

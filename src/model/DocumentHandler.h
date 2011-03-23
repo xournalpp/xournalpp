@@ -15,6 +15,8 @@
 #include "DocumentChangeType.h"
 #include <glib.h>
 
+#include "../util/XournalType.h"
+
 class DocumentListener;
 class XojPage;
 
@@ -30,9 +32,14 @@ public:
 	void firePageDeleted(int page);
 	void firePageLoaded(XojPage * page);
 	void firePageSelected(int page);
+
 private:
 	void addListener(DocumentListener * l);
 	void removeListener(DocumentListener * l);
+
+private:
+	XOJ_TYPE_ATTRIB;
+
 
 	GList * listener;
 

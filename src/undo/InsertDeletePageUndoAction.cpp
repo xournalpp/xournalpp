@@ -3,6 +3,7 @@
 #include "../model/Document.h"
 #include "../control/Control.h"
 #include "../gui/Cursor.h"
+// TODO: AA: type check
 
 InsertDeletePageUndoAction::InsertDeletePageUndoAction(XojPage * page, int pagePos, bool inserted) {
 	this->inserted = inserted;

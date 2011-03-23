@@ -8,6 +8,7 @@
  *
  * @license GPL
  */
+// TODO: AA: type check
 
 #ifndef __PAGEVIEW_H__
 #define __PAGEVIEW_H__

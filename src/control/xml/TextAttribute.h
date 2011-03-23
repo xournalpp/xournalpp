@@ -8,6 +8,7 @@
  *
  * @license GPL
  */
+// TODO: AA: type check
 
 #ifndef __TEXTATTRIBUTE_H__
 #define __TEXTATTRIBUTE_H__

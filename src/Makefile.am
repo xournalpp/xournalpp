@@ -158,9 +158,9 @@ xournalpp_SOURCES = \
 	util/Range.cpp \
 	util/Rectangle.cpp \
 	util/String.cpp \
-	util/StringBuffer.cpp \
 	util/Util.cpp \
 	util/XInputUtils.cpp \
+	util/XournalType.cpp \
 	view/DocumentView.cpp \
 	view/PdfView.cpp \
 	view/TextView.cpp \

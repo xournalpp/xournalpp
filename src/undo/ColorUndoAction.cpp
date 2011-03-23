@@ -17,6 +17,8 @@ public:
 };
 
 ColorUndoAction::ColorUndoAction(XojPage * page, Layer * layer, Redrawable * view) {
+	XOJ_INIT_TYPE(ColorUndoAction);
+
 	this->page = page;
 	this->layer = layer;
 	this->view = view;
@@ -24,6 +26,8 @@ ColorUndoAction::ColorUndoAction(XojPage * page, Layer * layer, Redrawable * vie
 }
 
 ColorUndoAction::~ColorUndoAction() {
+	XOJ_CHECK_TYPE(ColorUndoAction);
+
 	for (GList * l = this->data; l != NULL; l = l->next) {
 		ColorUndoActionEntry * e = (ColorUndoActionEntry *) l->data;
 		delete e;
@@ -31,13 +35,19 @@ ColorUndoAction::~ColorUndoAction() {
 
 	g_list_free(this->data);
 	this->data = NULL;
+
+	XOJ_RELEASE_TYPE(ColorUndoAction);
 }
 
 void ColorUndoAction::addStroke(Element * e, int originalColor, double newColor) {
+	XOJ_CHECK_TYPE(ColorUndoAction);
+
 	this->data = g_list_append(this->data, new ColorUndoActionEntry(e, originalColor, newColor));
 }
 
 bool ColorUndoAction::undo(Control * control) {
+	XOJ_CHECK_TYPE_RET(ColorUndoAction, false);
+
 	if (this->data == NULL) {
 		return true;
 	}
@@ -64,6 +74,8 @@ bool ColorUndoAction::undo(Control * control) {
 }
 
 bool ColorUndoAction::redo(Control * control) {
+	XOJ_CHECK_TYPE_RET(ColorUndoAction, false);
+
 	if (this->data == NULL) {
 		return true;
 	}

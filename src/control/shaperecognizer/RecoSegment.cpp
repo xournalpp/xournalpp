@@ -3,6 +3,7 @@
 #include <math.h>
 
 #include "Inertia.h"
+// TODO: AA: type check
 
 RecoSegment::RecoSegment() {
 	this->stroke = NULL;

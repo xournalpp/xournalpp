@@ -8,6 +8,7 @@
  *
  * @license GPL
  */
+// TODO: AA: type check
 
 #ifndef __SAVEHANDLER_H__
 #define __SAVEHANDLER_H__

@@ -8,6 +8,7 @@
  *
  * @license GPL
  */
+// TODO: AA: type check
 
 #ifndef __TOOLZOOMSLIDER_H__
 #define __TOOLZOOMSLIDER_H__

@@ -8,6 +8,7 @@
  *
  * @license GPL
  */
+// TODO: AA: type check
 
 #ifndef __ZOOMCONTROL_H__
 #define __ZOOMCONTROL_H__

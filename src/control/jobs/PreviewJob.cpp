@@ -4,6 +4,7 @@
 #include "../../view/PdfView.h"
 #include "../../view/DocumentView.h"
 #include "../../model/Document.h"
+// TODO: AA: type check
 
 PreviewJob::PreviewJob(SidebarPreview * sidebar) {
 	this->sidebarPreview = sidebar;

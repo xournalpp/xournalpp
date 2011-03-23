@@ -8,6 +8,7 @@
  *
  * @license GPL
  */
+// TODO: AA: type check
 
 #ifndef __PAGEPOSITION_H__
 #define __PAGEPOSITION_H__

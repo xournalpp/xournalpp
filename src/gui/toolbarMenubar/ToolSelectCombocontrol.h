@@ -8,6 +8,7 @@
  *
  * @license GPL
  */
+// TODO: AA: type check
 
 #ifndef __TOOLSELECTCOMBOCONTROL_H__
 #define __TOOLSELECTCOMBOCONTROL_H__

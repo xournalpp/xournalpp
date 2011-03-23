@@ -2,6 +2,7 @@
 #include "ToolbarData.h"
 
 #include <string.h>
+// TODO: AA: type check
 
 ToolbarModel::ToolbarModel() {
 	this->toolbars = NULL;

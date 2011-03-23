@@ -8,6 +8,7 @@
  *
  * @license GPL
  */
+// TODO: AA: type check
 
 #ifndef __UPDATEREFKEY_H__
 #define __UPDATEREFKEY_H__
