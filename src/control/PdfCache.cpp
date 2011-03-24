@@ -122,8 +122,6 @@ void PdfCache::render(cairo_t * cr, XojPopplerPage * popplerPage, double zoom) {
 		cache(popplerPage, img);
 	}
 
-	assert(this->zoom > 0);
-
 	cairo_matrix_t mOriginal;
 	cairo_matrix_t mScaled;
 	cairo_get_matrix(cr, &mOriginal);

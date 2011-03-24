@@ -1,10 +1,12 @@
 #include "Image.h"
 #include "../util/ObjectStream.h"
-// TODO: AA: type check
 
 Image::Image() :
 	Element(ELEMENT_IMAGE) {
-	sizeCalculated = true;
+
+	XOJ_INIT_TYPE(Image);
+
+	this->sizeCalculated = true;
 	this->image = NULL;
 	this->data = NULL;
 	this->dLen = 0;
@@ -12,20 +14,31 @@ Image::Image() :
 }
 
 Image::~Image() {
+	XOJ_CHECK_TYPE(Image);
+
 	if (this->image) {
 		cairo_surface_destroy(this->image);
+		this->image = NULL;
 	}
+
+	XOJ_RELEASE_TYPE(Image);
 }
 
 void Image::setWidth(double width) {
+	XOJ_CHECK_TYPE(Image);
+
 	this->width = width;
 }
 
 void Image::setHeight(double height) {
+	XOJ_CHECK_TYPE(Image);
+
 	this->height = height;
 }
 
-cairo_status_t Image::cairoReadFunction(Image * image, unsigned char *data, unsigned int length) {
+cairo_status_t Image::cairoReadFunction(Image * image, unsigned char * data, unsigned int length) {
+	XOJ_CHECK_TYPE_OBJ(image, Image);
+
 	for (int i = 0; i < length; i++, image->read++) {
 		if (image->read >= image->dLen) {
 			return CAIRO_STATUS_READ_ERROR;
@@ -37,6 +50,8 @@ cairo_status_t Image::cairoReadFunction(Image * image, unsigned char *data, unsi
 }
 
 void Image::setImage(unsigned char * data, int len) {
+	XOJ_CHECK_TYPE(Image);
+
 	if (this->image) {
 		cairo_surface_destroy(this->image);
 		this->image = NULL;
@@ -49,6 +64,8 @@ void Image::setImage(unsigned char * data, int len) {
 }
 
 void Image::setImage(cairo_surface_t * image) {
+	XOJ_CHECK_TYPE(Image);
+
 	if (this->image) {
 		cairo_surface_destroy(this->image);
 		this->image = NULL;
@@ -63,6 +80,8 @@ void Image::setImage(cairo_surface_t * image) {
 }
 
 cairo_surface_t * Image::getImage() {
+	XOJ_CHECK_TYPE(Image);
+
 	if (this->image == NULL && this->dLen != 0) {
 		this->read = 0;
 		this->image = cairo_image_surface_create_from_png_stream((cairo_read_func_t) &cairoReadFunction, this);
@@ -75,6 +94,8 @@ cairo_surface_t * Image::getImage() {
 }
 
 void Image::scale(double x0, double y0, double fx, double fy) {
+	XOJ_CHECK_TYPE(Image);
+
 	this->x -= x0;
 	this->x *= fx;
 	this->x += x0;
@@ -87,6 +108,8 @@ void Image::scale(double x0, double y0, double fx, double fy) {
 }
 
 void Image::serialize(ObjectOutputStream & out) {
+	XOJ_CHECK_TYPE(Image);
+
 	out.writeObject("Image");
 
 	serializeElement(out);
@@ -100,6 +123,8 @@ void Image::serialize(ObjectOutputStream & out) {
 }
 
 void Image::readSerialized(ObjectInputStream & in) throw (InputStreamException) {
+	XOJ_CHECK_TYPE(Image);
+
 	in.readObject("Image");
 
 	readSerializedElement(in);
@@ -118,5 +143,6 @@ void Image::readSerialized(ObjectInputStream & in) throw (InputStreamException) 
 }
 
 void Image::calcSize() {
+	XOJ_CHECK_TYPE(Image);
 }
 

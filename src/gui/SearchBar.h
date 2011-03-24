@@ -8,12 +8,13 @@
  *
  * @license GPL
  */
-// TODO: AA: type check
 
 #ifndef __SEARCHBAR_H__
 #define __SEARCHBAR_H__
 
 #include <gtk/gtk.h>
+
+#include "../util/XournalType.h"
 
 class Control;
 
@@ -38,6 +39,8 @@ private:
 	bool searchTextonCurrentPage(const char * text, int * occures, double * top);
 
 private:
+	XOJ_TYPE_ATTRIB;
+
 	Control * control;
 	GdkColor defaultColor;
 };

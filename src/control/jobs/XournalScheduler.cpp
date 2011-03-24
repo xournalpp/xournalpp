@@ -38,8 +38,6 @@ void XournalScheduler::removeSource(void * source, JobType type, JobPriority pri
 	for (int i = 0; i < length; i++) {
 		Job * job = (Job *) g_queue_peek_nth(this->jobQueue[priority], i);
 
-		CHECK_MEMORY(job);
-
 		if (job->getType() == type) {
 			if (job->getSource() == source) {
 				g_queue_remove(this->jobQueue[priority], job);

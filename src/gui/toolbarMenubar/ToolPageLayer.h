@@ -8,12 +8,12 @@
  *
  * @license GPL
  */
-// TODO: AA: type check
 
 #ifndef __TOOLPAGELAYER_H__
 #define __TOOLPAGELAYER_H__
 
 #include "AbstractToolItem.h"
+#include "../../util/XournalType.h"
 
 class ToolPageLayer: public AbstractToolItem {
 public:
@@ -31,6 +31,8 @@ protected:
 	virtual GtkToolItem * newItem();
 
 private:
+	XOJ_TYPE_ATTRIB;
+
 	GtkWidget * layerComboBox;
 
 	int layerCount;

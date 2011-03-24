@@ -9,12 +9,12 @@
  * @license GPL
  */
 
-// TODO: AA: type check
 
 #ifndef __PARTLIST_H__
 #define __PARTLIST_H__
 
 #include <gtk/gtk.h>
+#include "../../util/XournalType.h"
 
 class EraseableStrokePart;
 
@@ -28,6 +28,8 @@ public:
 	PartList * clone();
 
 private:
+	XOJ_TYPE_ATTRIB;
+
 	GList * data;
 
 	friend class EraseableStroke;

@@ -5,26 +5,36 @@
 #include "../control/Control.h"
 #include "../model/Document.h"
 #include "../gui/XournalView.h"
-// TODO: AA: type check
 
 RemoveLayerUndoAction::RemoveLayerUndoAction(XojPage * page, Layer * layer, int layerPos) {
+	XOJ_INIT_TYPE(RemoveLayerUndoAction);
+
 	this->page = page;
 	this->layer = layer;
 	this->layerPos = layerPos;
 }
 
 RemoveLayerUndoAction::~RemoveLayerUndoAction() {
-	if (!undone) {
+	XOJ_CHECK_TYPE(RemoveLayerUndoAction);
+
+	if (!this->undone) {
 		// The layer was NOT undone, also NOT restored
 		delete this->layer;
 	}
+	this->layer = NULL;
+
+	XOJ_RELEASE_TYPE(RemoveLayerUndoAction);
 }
 
 String RemoveLayerUndoAction::getText() {
-	return "Delete layer";
+	XOJ_CHECK_TYPE(RemoveLayerUndoAction);
+
+	return _("Delete layer");
 }
 
 bool RemoveLayerUndoAction::undo(Control * control) {
+	XOJ_CHECK_TYPE(RemoveLayerUndoAction);
+
 	this->page->insertLayer(this->layer, layerPos);
 	Document * doc = control->getDocument();
 
@@ -41,6 +51,8 @@ bool RemoveLayerUndoAction::undo(Control * control) {
 }
 
 bool RemoveLayerUndoAction::redo(Control * control) {
+	XOJ_CHECK_TYPE(RemoveLayerUndoAction);
+
 	Document * doc = control->getDocument();
 
 	doc->lock();

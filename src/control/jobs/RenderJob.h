@@ -34,7 +34,7 @@ public:
 	virtual void afterRun();
 
 public:
-	static void repaintRectangle(PageView * view, Rectangle * rect);
+	static void repaintRectangle(RenderJob * renderJob, Rectangle * rect);
 
 private:
 	void rerenderRectangle(Rectangle * rect);

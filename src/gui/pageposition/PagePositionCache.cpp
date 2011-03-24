@@ -1,12 +1,17 @@
 #include "PagePositionCache.h"
 
 #include <glib.h>
-// TODO: AA: type check
 
 PagePositionCache::PagePositionCache() {
+	XOJ_INIT_TYPE(PagePositionCache);
+
 	this->ppId = -1;
 }
 
 PagePositionCache::~PagePositionCache() {
+	XOJ_CHECK_TYPE(PagePositionCache);
+
 	this->ppId = -1;
+
+	XOJ_RELEASE_TYPE(PagePositionCache);
 }

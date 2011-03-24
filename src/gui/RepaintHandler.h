@@ -8,10 +8,11 @@
  *
  * @license GPL
  */
-// TODO: AA: type check
 
 #ifndef __REPAINTHANDLER_H__
 #define __REPAINTHANDLER_H__
+
+#include "../util/XournalType.h"
 
 class PageView;
 class XournalView;
@@ -38,6 +39,8 @@ public:
 	void repaintPageBorder(PageView * view);
 
 private:
+	XOJ_TYPE_ATTRIB;
+
 	XournalView * xournal;
 };
 

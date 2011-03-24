@@ -9,8 +9,6 @@
  * @license GPL
  */
 
-// TODO: AA: type check
-
 #ifndef __SCALEUNDOACTION_H__
 #define __SCALEUNDOACTION_H__
 
@@ -33,6 +31,8 @@ private:
 	void applayScale(double fx, double fy);
 
 private:
+	XOJ_TYPE_ATTRIB;
+
 	XojPage * page;
 	Redrawable * view;
 	GList * elements;

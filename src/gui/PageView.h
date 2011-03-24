@@ -8,7 +8,6 @@
  *
  * @license GPL
  */
-// TODO: AA: type check
 
 #ifndef __PAGEVIEW_H__
 #define __PAGEVIEW_H__
@@ -102,7 +101,10 @@ private:
 	void selectObjectAt(double x, double y);
 
 	void addRerenderRect(double x, double y, double width, double height);
+
 private:
+	XOJ_TYPE_ATTRIB;
+
 	XojPage * page;
 	XournalView * xournal;
 	Settings * settings;

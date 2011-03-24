@@ -2,7 +2,6 @@
 
 #include <config.h>
 #include <glib/gi18n-lib.h>
-// TODO: AA: type check
 
 const FormatUnits XOJ_UNITS[] = {
 		{ _("cm"),     28.346 },

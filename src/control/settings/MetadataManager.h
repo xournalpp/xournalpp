@@ -8,7 +8,6 @@
  *
  * @license GPL
  */
-// TODO: AA: type check
 
 #ifndef __METADATAMANAGER_H__
 #define __METADATAMANAGER_H__
@@ -39,6 +38,7 @@ public:
 	bool getString(String uri, const char * name, char * &value);
 
 	void move(String source, String target);
+
 private:
 	void updateAccessTime(String uri);
 	void loadConfigFile();
@@ -49,6 +49,8 @@ private:
 
 
 private:
+	XOJ_TYPE_ATTRIB;
+
 	int timeoutId;
 	GKeyFile * config;
 };

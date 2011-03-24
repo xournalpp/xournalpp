@@ -4,7 +4,6 @@
 #include <stdlib.h>
 #include "../util/GzHelper.h"
 
-#include "PdfExtGState.h"
 #include "PdfRefEntry.h"
 #include "PdfUtil.h"
 #include "UpdateRef.h"

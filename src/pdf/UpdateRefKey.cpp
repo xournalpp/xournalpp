@@ -1,5 +1,4 @@
 #include "UpdateRefKey.h"
-// TODO: AA: type check
 
 guint UpdateRefKey::hashFunction(UpdateRefKey * key) {
 	return key->ref.num + key->ref.gen * 13 + key->doc.getId() * 23;

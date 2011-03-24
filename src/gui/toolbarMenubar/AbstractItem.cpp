@@ -32,10 +32,14 @@ AbstractItem::~AbstractItem() {
 }
 
 void AbstractItem::menuCallback(GtkMenuItem * menuitem, AbstractItem * toolItem) {
+	XOJ_CHECK_TYPE_OBJ(toolItem, AbstractItem);
+
 	toolItem->activated(NULL, menuitem, NULL);
 }
 
 void AbstractItem::actionSelected(ActionGroup group, ActionType action) {
+	XOJ_CHECK_TYPE(AbstractItem);
+
 	if (this->group == group) {
 
 		if (this->menuitem && GTK_IS_CHECK_MENU_ITEM(this->menuitem)) {
@@ -51,9 +55,13 @@ void AbstractItem::actionSelected(ActionGroup group, ActionType action) {
  * Override this method
  */
 void AbstractItem::selected(ActionGroup group, ActionType action) {
+	XOJ_CHECK_TYPE(AbstractItem);
+
 }
 
 void AbstractItem::actionEnabledAction(ActionType action, bool enabled) {
+	XOJ_CHECK_TYPE(AbstractItem);
+
 	if (this->action == action) {
 		this->enabled = enabled;
 		enable(enabled);
@@ -64,6 +72,8 @@ void AbstractItem::actionEnabledAction(ActionType action, bool enabled) {
 }
 
 void AbstractItem::activated(GdkEvent * event, GtkMenuItem * menuitem, GtkToolButton * toolbutton) {
+	XOJ_CHECK_TYPE(AbstractItem);
+
 	bool selected = true;
 
 	if (menuitem && GTK_IS_CHECK_MENU_ITEM(menuitem)) {
@@ -76,10 +86,14 @@ void AbstractItem::activated(GdkEvent * event, GtkMenuItem * menuitem, GtkToolBu
 }
 
 String AbstractItem::getId() {
+	XOJ_CHECK_TYPE(AbstractItem);
+
 	return id;
 }
 
 void AbstractItem::setTmpDisabled(bool disabled) {
+	XOJ_CHECK_TYPE(AbstractItem);
+
 	bool ena = false;
 	if (disabled) {
 		ena = false;
@@ -94,5 +108,6 @@ void AbstractItem::setTmpDisabled(bool disabled) {
 }
 
 void AbstractItem::enable(bool enabled) {
+	XOJ_CHECK_TYPE(AbstractItem);
 }
 

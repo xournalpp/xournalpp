@@ -175,6 +175,7 @@ public:
 	ActionEnabledListener();
 	virtual ~ActionEnabledListener();
 
+public:
 	virtual void actionEnabledAction(ActionType action, bool enabled) = 0;
 
 	void registerListener(ActionHandler * handler);

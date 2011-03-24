@@ -8,7 +8,6 @@
  *
  * @license GPL
  */
-// TODO: AA: type check
 
 #ifndef __TEXTEDITOR_H__
 #define __TEXTEDITOR_H__
@@ -73,7 +72,10 @@ private:
 	void markPos(double x, double y, bool extendSelection);
 
 	void contentsChanged(bool forceCreateUndoAction = false);
+
 private:
+	XOJ_TYPE_ATTRIB;
+
 	PageView * gui;
 	GtkWidget * widget;
 

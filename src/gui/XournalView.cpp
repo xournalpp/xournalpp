@@ -18,9 +18,10 @@
 #include "RepaintHandler.h"
 
 #include <gdk/gdkkeysyms.h>
-// TODO: AA: type check
 
 XournalView::XournalView(GtkWidget * parent, GtkRange * hrange, GtkRange * vrange, Control * control) {
+	XOJ_INIT_TYPE(XournalView);
+
 	this->control = control;
 	this->cache = new PdfCache(control->getSettings()->getPdfPageCacheSize());
 	registerListener(control);
@@ -56,6 +57,8 @@ XournalView::XournalView(GtkWidget * parent, GtkRange * hrange, GtkRange * vrang
 }
 
 XournalView::~XournalView() {
+	XOJ_CHECK_TYPE(XournalView);
+
 	g_source_remove(this->cleanupTimeout);
 	delete this->cache;
 	this->cache = NULL;
@@ -64,9 +67,13 @@ XournalView::~XournalView() {
 
 	delete this->pagePosition;
 	this->pagePosition = NULL;
+
+	XOJ_RELEASE_TYPE(XournalView);
 }
 
 void XournalView::widgetDeleted() {
+	XOJ_CHECK_TYPE(XournalView);
+
 	this->widget = NULL;
 }
 
@@ -75,6 +82,8 @@ gint pageViewCmpSize(PageView * a, PageView * b) {
 }
 
 gboolean XournalView::clearMemoryTimer(XournalView * widget) {
+	XOJ_CHECK_TYPE_OBJ(widget, XournalView);
+
 	GList * list = NULL;
 
 	for (int i = 0; i < widget->viewPagesLen; i++) {
@@ -111,16 +120,22 @@ gboolean XournalView::clearMemoryTimer(XournalView * widget) {
 }
 
 void XournalView::onVscrollChanged(GtkAdjustment * adjustment, XournalView * xournal) {
+	XOJ_CHECK_TYPE_OBJ(xournal, XournalView);
+
 	xournal->onScrolled();
 }
 
 int XournalView::getCurrentPage() {
+	XOJ_CHECK_TYPE(XournalView);
+
 	return currentPage;
 }
 
 const int scrollKeySize = 10;
 
 bool XournalView::onKeyPressEvent(GdkEventKey * event) {
+	XOJ_CHECK_TYPE(XournalView);
+
 	int p = getCurrentPage();
 	if (p >= 0 && p < this->viewPagesLen) {
 		PageView * v = this->viewPages[p];
@@ -195,10 +210,14 @@ bool XournalView::onKeyPressEvent(GdkEventKey * event) {
 }
 
 RepaintHandler * XournalView::getRepaintHandler() {
+	XOJ_CHECK_TYPE(XournalView);
+
 	return this->repaintHandler;
 }
 
 bool XournalView::onKeyReleaseEvent(GdkEventKey *event) {
+	XOJ_CHECK_TYPE(XournalView);
+
 	int p = getCurrentPage();
 	if (p >= 0 && p < this->viewPagesLen) {
 		PageView * v = this->viewPages[p];
@@ -212,10 +231,14 @@ bool XournalView::onKeyReleaseEvent(GdkEventKey *event) {
 
 // send the focus back to the appropriate widget
 void XournalView::requestFocus() {
+	XOJ_CHECK_TYPE(XournalView);
+
 	gtk_widget_grab_focus(this->widget);
 }
 
 bool XournalView::searchTextOnPage(const char * text, int p, int * occures, double * top) {
+	XOJ_CHECK_TYPE(XournalView);
+
 	if (p < 0 || p >= this->viewPagesLen) {
 		return false;
 	}
@@ -225,6 +248,8 @@ bool XournalView::searchTextOnPage(const char * text, int p, int * occures, doub
 }
 
 void XournalView::forceUpdatePagenumbers() {
+	XOJ_CHECK_TYPE(XournalView);
+
 	int p = this->currentPage;
 	this->currentPage = -1;
 
@@ -232,6 +257,8 @@ void XournalView::forceUpdatePagenumbers() {
 }
 
 PageView * XournalView::getViewFor(int pageNr) {
+	XOJ_CHECK_TYPE(XournalView);
+
 	if (pageNr < 0 || pageNr >= this->viewPagesLen) {
 		return NULL;
 	}
@@ -239,6 +266,8 @@ PageView * XournalView::getViewFor(int pageNr) {
 }
 
 void XournalView::pageSelected(int page) {
+	XOJ_CHECK_TYPE(XournalView);
+
 	if (this->currentPage == page && this->lastSelectedPage == page) {
 		return;
 	}
@@ -271,10 +300,14 @@ void XournalView::pageSelected(int page) {
 }
 
 Control * XournalView::getControl() {
+	XOJ_CHECK_TYPE(XournalView);
+
 	return control;
 }
 
 void XournalView::scrollTo(int pageNo, double y) {
+	XOJ_CHECK_TYPE(XournalView);
+
 	if (this->currentPage == pageNo) {
 		return;
 	}
@@ -310,6 +343,8 @@ void XournalView::scrollTo(int pageNo, double y) {
 }
 
 void XournalView::onScrolled() {
+	XOJ_CHECK_TYPE(XournalView);
+
 	GtkAdjustment * h = gtk_xournal_get_vadj(this->widget);
 	GtkAllocation allocation = { 0 };
 	gtk_widget_get_allocation(this->widget, &allocation);
@@ -389,6 +424,8 @@ void XournalView::onScrolled() {
 }
 
 void XournalView::endTextSelection() {
+	XOJ_CHECK_TYPE(XournalView);
+
 	for (int i = 0; i < this->viewPagesLen; i++) {
 		PageView * v = this->viewPages[i];
 		v->endText();
@@ -396,12 +433,16 @@ void XournalView::endTextSelection() {
 }
 
 void XournalView::layerChanged(int page) {
+	XOJ_CHECK_TYPE(XournalView);
+
 	if (page >= 0 && page < this->viewPagesLen) {
 		this->viewPages[page]->rerenderPage();
 	}
 }
 
 void XournalView::getPasteTarget(double & x, double & y) {
+	XOJ_CHECK_TYPE(XournalView);
+
 	int pageNo = getCurrentPage();
 	if (pageNo == -1) {
 		return;
@@ -420,6 +461,8 @@ void XournalView::getPasteTarget(double & x, double & y) {
  * Or NULL if the page is not visible
  */
 Rectangle * XournalView::getVisibleRect(int page) {
+	XOJ_CHECK_TYPE(XournalView);
+
 	if (page < 0 || page >= this->viewPagesLen) {
 		return NULL;
 	}
@@ -475,22 +518,32 @@ Rectangle * XournalView::getVisibleRect(int page) {
 }
 
 GtkWidget * XournalView::getWidget() {
+	XOJ_CHECK_TYPE(XournalView);
+
 	return widget;
 }
 
 void XournalView::zoomIn() {
+	XOJ_CHECK_TYPE(XournalView);
+
 	control->getZoomControl()->zoomIn();
 }
 
 void XournalView::zoomOut() {
+	XOJ_CHECK_TYPE(XournalView);
+
 	control->getZoomControl()->zoomOut();
 }
 
 void XournalView::ensureRectIsVisible(int x, int y, int width, int heigth) {
+	XOJ_CHECK_TYPE(XournalView);
+
 	gtk_xournal_ensure_rect_is_visible(this->widget, x, y, width, heigth);
 }
 
 void XournalView::zoomChanged(double lastZoom) {
+	XOJ_CHECK_TYPE(XournalView);
+
 	GtkAdjustment * h = gtk_xournal_get_vadj(this->widget);
 	double scrollY = gtk_adjustment_get_value(h);
 
@@ -508,17 +561,23 @@ void XournalView::zoomChanged(double lastZoom) {
 }
 
 void XournalView::pageSizeChanged(int page) {
+	XOJ_CHECK_TYPE(XournalView);
+
 	PageView * v = this->viewPages[page];
 	layoutPages();
 }
 
 void XournalView::pageChanged(int page) {
+	XOJ_CHECK_TYPE(XournalView);
+
 	if (page >= 0 && page < this->viewPagesLen) {
 		this->viewPages[page]->rerenderPage();
 	}
 }
 
 void XournalView::pageDeleted(int page) {
+	XOJ_CHECK_TYPE(XournalView);
+
 	delete this->viewPages[page];
 	for (int i = page; i < this->viewPagesLen; i++) {
 		this->viewPages[i] = this->viewPages[i + 1];
@@ -530,6 +589,8 @@ void XournalView::pageDeleted(int page) {
 }
 
 TextEditor * XournalView::getTextEditor() {
+	XOJ_CHECK_TYPE(XournalView);
+
 	for (int i = 0; i < this->viewPagesLen; i++) {
 		PageView * v = this->viewPages[i];
 		if (v->getTextEditor()) {
@@ -541,6 +602,8 @@ TextEditor * XournalView::getTextEditor() {
 }
 
 void XournalView::resetShapeRecognizer() {
+	XOJ_CHECK_TYPE(XournalView);
+
 	for (int i = 0; i < this->viewPagesLen; i++) {
 		PageView * v = this->viewPages[i];
 		v->resetShapeRecognizer();
@@ -548,10 +611,14 @@ void XournalView::resetShapeRecognizer() {
 }
 
 PdfCache * XournalView::getCache() {
+	XOJ_CHECK_TYPE(XournalView);
+
 	return this->cache;
 }
 
 void XournalView::pageInserted(int page) {
+	XOJ_CHECK_TYPE(XournalView);
+
 	PageView ** lastViewPages = this->viewPages;
 
 	this->viewPages = new PageView *[this->viewPagesLen + 1];
@@ -590,27 +657,33 @@ void XournalView::pageInserted(int page) {
 }
 
 double XournalView::getZoom() {
+	XOJ_CHECK_TYPE(XournalView);
+
 	return control->getZoomControl()->getZoom();
 }
 
 void XournalView::updateXEvents() {
+	XOJ_CHECK_TYPE(XournalView);
+
 	gtk_xournal_update_xevent(this->widget);
 }
 
 void XournalView::clearSelection() {
-	CHECK_MEMORY(this);
+	XOJ_CHECK_TYPE(XournalView);
+
 	EditSelection * sel = GTK_XOURNAL(widget)->selection;
 	GTK_XOURNAL(widget)->selection = NULL;
+	delete sel;
 
 	control->setClipboardHandlerSelection(getSelection());
 
 	getCursor()->setMouseSelectionType(CURSOR_SELECTION_NONE);
 	control->getToolHandler()->setSelectionEditTools(false, false);
-
-	delete sel;
 }
 
 void XournalView::deleteSelection() {
+	XOJ_CHECK_TYPE(XournalView);
+
 
 	// TODO ????????????? delete selection
 	//	EditSelection * sel = getSelection();
@@ -629,6 +702,8 @@ void XournalView::deleteSelection() {
 }
 
 void XournalView::setSelection(EditSelection * selection) {
+	XOJ_CHECK_TYPE(XournalView);
+
 	clearSelection();
 	GTK_XOURNAL(this->widget)->selection = selection;
 
@@ -662,7 +737,7 @@ void XournalView::setSelection(EditSelection * selection) {
 }
 
 void XournalView::repaintSelection() {
-	CHECK_MEMORY(this);
+	XOJ_CHECK_TYPE(XournalView);
 
 	EditSelection * selection = getSelection();
 	if (selection == NULL) {
@@ -685,6 +760,8 @@ void XournalView::repaintSelection() {
 }
 
 void XournalView::layoutPages() {
+	XOJ_CHECK_TYPE(XournalView);
+
 	GtkAllocation alloc = { 0 };
 
 	gtk_widget_get_allocation(this->widget, &alloc);
@@ -823,6 +900,8 @@ void XournalView::layoutPages() {
 }
 
 bool XournalView::isPageVisible(int page) {
+	XOJ_CHECK_TYPE(XournalView);
+
 	Rectangle * rect = getVisibleRect(page);
 	if (rect) {
 		delete rect;
@@ -833,6 +912,10 @@ bool XournalView::isPageVisible(int page) {
 }
 
 void XournalView::documentChanged(DocumentChangeType type) {
+	XOJ_CHECK_TYPE(XournalView);
+
+	clearSelection();
+
 	if (type != DOCUMENT_CHANGE_CLEARED && type != DOCUMENT_CHANGE_COMPLETE) {
 		return;
 	}
@@ -858,6 +941,8 @@ void XournalView::documentChanged(DocumentChangeType type) {
 }
 
 bool XournalView::cut() {
+	XOJ_CHECK_TYPE(XournalView);
+
 	int p = getCurrentPage();
 	if (p < 0 || p >= viewPagesLen) {
 		return false;
@@ -868,6 +953,8 @@ bool XournalView::cut() {
 }
 
 bool XournalView::copy() {
+	XOJ_CHECK_TYPE(XournalView);
+
 	int p = getCurrentPage();
 	if (p < 0 || p >= viewPagesLen) {
 		return false;
@@ -878,6 +965,8 @@ bool XournalView::copy() {
 }
 
 bool XournalView::paste() {
+	XOJ_CHECK_TYPE(XournalView);
+
 	int p = getCurrentPage();
 	if (p < 0 || p >= viewPagesLen) {
 		return false;
@@ -888,6 +977,8 @@ bool XournalView::paste() {
 }
 
 bool XournalView::actionDelete() {
+	XOJ_CHECK_TYPE(XournalView);
+
 	int p = getCurrentPage();
 	if (p < 0 || p >= viewPagesLen) {
 		return false;
@@ -898,23 +989,32 @@ bool XournalView::actionDelete() {
 }
 
 Document * XournalView::getDocument() {
+	XOJ_CHECK_TYPE(XournalView);
+
 	return control->getDocument();
 }
 
 ArrayIterator<PageView *> XournalView::pageViewIterator() {
+	XOJ_CHECK_TYPE(XournalView);
+
 	return ArrayIterator<PageView *> (viewPages, viewPagesLen);
 }
 
 PagePositionHandler * XournalView::getPagePositionHandler() {
+	XOJ_CHECK_TYPE(XournalView);
+
 	return this->pagePosition;
 }
 
 Cursor * XournalView::getCursor() {
+	XOJ_CHECK_TYPE(XournalView);
+
 	return control->getCursor();
 }
 
 EditSelection * XournalView::getSelection() {
-	CHECK_MEMORY(this);
+	XOJ_CHECK_TYPE(XournalView);
+
 	g_return_val_if_fail(this->widget != NULL, NULL);
 	g_return_val_if_fail(GTK_IS_XOURNAL(this->widget), NULL);
 
@@ -923,6 +1023,8 @@ EditSelection * XournalView::getSelection() {
 }
 
 int XournalView::getMaxAreaX() {
+	XOJ_CHECK_TYPE(XournalView);
+
 	g_return_val_if_fail(this->widget != NULL, 0);
 	g_return_val_if_fail(GTK_IS_XOURNAL(this->widget), 0);
 
@@ -930,6 +1032,8 @@ int XournalView::getMaxAreaX() {
 }
 
 int XournalView::getMaxAreaY() {
+	XOJ_CHECK_TYPE(XournalView);
+
 	g_return_val_if_fail(this->widget != NULL, 0);
 	g_return_val_if_fail(GTK_IS_XOURNAL(this->widget), 0);
 

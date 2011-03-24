@@ -8,7 +8,6 @@
  *
  * @license GPL
  */
-// TODO: AA: type check
 
 #ifndef __PDFCACHE_H__
 #define __PDFCACHE_H__
@@ -22,6 +21,10 @@ class PdfCache {
 public:
 	PdfCache(int size);
 	virtual ~PdfCache();
+
+private:
+	PdfCache(const PdfCache & cache);
+	void operator = (const PdfCache & cache);
 
 public:
 	void render(cairo_t * cr, XojPopplerPage * popplerPage, double zoom);

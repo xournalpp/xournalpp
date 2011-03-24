@@ -11,7 +11,6 @@
 
 #ifndef __XOJ_POPPLERPAGE_H__
 #define __XOJ_POPPLERPAGE_H__
-// TODO: AA: type check
 
 #include <gtk/gtk.h>
 #include <poppler/PDFDoc.h>
@@ -22,14 +21,14 @@
 #include <poppler/OptionalContent.h>
 #include <poppler/CairoOutputDev.h>
 
-#include "../../util/MemoryCheck.h"
+#include "../../util/XournalType.h"
 
 class Page;
 class TextPage;
 class Annots;
 class XojPopplerImage;
 
-class XojPopplerPage : public MemoryCheckObject {
+class XojPopplerPage {
 private:
 	XojPopplerPage(PDFDoc * doc, GMutex * docMutex, CairoOutputDev * outputDev, Page * page, int index);
 	virtual ~XojPopplerPage();
@@ -47,6 +46,8 @@ private:
 	void initTextPage();
 
 private:
+	XOJ_TYPE_ATTRIB;
+
 	GMutex * renderMutex;
 	GMutex * docMutex;
 
@@ -72,13 +73,5 @@ public:
 	double y2;
 };
 
-class XojPopplerImage {
-public:
-	XojPopplerImage();
-	~XojPopplerImage();
-
-public:
-
-};
 
 #endif /* __XOJ_POPPLERPAGE_H__ */

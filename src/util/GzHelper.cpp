@@ -2,7 +2,6 @@
 #include "Stacktrace.h"
 
 #include <zlib.h>
-// TODO: AA: type check
 
 GzHelper::GzHelper() {
 }
@@ -32,7 +31,7 @@ GString * GzHelper::gzcompress(GString * str, int level) {
 	return dest;
 }
 
-GString * GzHelper::gzuncompress(GString* str) {
+GString * GzHelper::gzuncompress(GString * str) {
 	return gzuncompress(str->str, str->len);
 }
 

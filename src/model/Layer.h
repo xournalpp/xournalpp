@@ -8,7 +8,6 @@
  *
  * @license GPL
  */
-// TODO: AA: type check
 
 #ifndef __LAYER_H__
 #define __LAYER_H__
@@ -17,9 +16,9 @@
 
 #include "Element.h"
 #include "../util/ListIterator.h"
-#include "../util/MemoryCheck.h"
+#include "../util/XournalType.h"
 
-class Layer : public MemoryCheckObject {
+class Layer {
 public:
 	Layer();
 	virtual ~Layer();
@@ -32,7 +31,10 @@ public:
 	ListIterator<Element *> elementIterator();
 
 	bool isAnnotated();
+
 private:
+	XOJ_TYPE_ATTRIB;
+
 	GList * elements;
 };
 

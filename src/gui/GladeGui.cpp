@@ -1,7 +1,6 @@
 #include "GladeGui.h"
 #include <config.h>
 #include <stdlib.h>
-// TODO: AA: type check
 
 #include <config.h>
 #include <glib/gi18n-lib.h>
@@ -9,6 +8,8 @@
 #include "GladeSearchpath.h"
 
 GladeGui::GladeGui(GladeSearchpath * gladeSearchPath, const char * glade, const char * mainWnd) {
+	XOJ_INIT_TYPE(GladeGui);
+
 	this->window = NULL;
 	this->gladeSearchPath = gladeSearchPath;
 
@@ -28,11 +29,17 @@ GladeGui::GladeGui(GladeSearchpath * gladeSearchPath, const char * glade, const 
 }
 
 GladeGui::~GladeGui() {
+	XOJ_CHECK_TYPE(GladeGui);
+
 	gtk_widget_destroy(this->window);
 	g_object_unref(this->xml);
+
+	XOJ_RELEASE_TYPE(GladeGui);
 }
 
 GtkWidget * GladeGui::get(const char * name) {
+	XOJ_CHECK_TYPE(GladeGui);
+
 	GtkWidget * w = glade_xml_get_widget(xml, name);
 	if (w == NULL) {
 		g_warning("GladeGui::get: Could not find glade Widget: \"%s\"", name);
@@ -41,6 +48,8 @@ GtkWidget * GladeGui::get(const char * name) {
 }
 
 GtkWidget * GladeGui::loadIcon(const char * filename) {
+	XOJ_CHECK_TYPE(GladeGui);
+
 	GdkPixbuf * icon = loadIconPixbuf(filename);
 	if (icon == NULL) {
 		return gtk_image_new();
@@ -50,6 +59,8 @@ GtkWidget * GladeGui::loadIcon(const char * filename) {
 }
 
 GdkPixbuf * GladeGui::loadIconPixbuf(const char * filename) {
+	XOJ_CHECK_TYPE(GladeGui);
+
 	if (!filename || !filename[0]) {
 		return NULL;
 	}
@@ -72,14 +83,20 @@ GdkPixbuf * GladeGui::loadIconPixbuf(const char * filename) {
 }
 
 GtkWidget * GladeGui::getWindow() {
+	XOJ_CHECK_TYPE(GladeGui);
+
 	return this->window;
 }
 
 GladeGui::operator GdkWindow *() {
+	XOJ_CHECK_TYPE(GladeGui);
+
 	return GTK_WIDGET(getWindow())->window;
 }
 
 GladeGui::operator GtkWindow *() {
+	XOJ_CHECK_TYPE(GladeGui);
+
 	return GTK_WINDOW(getWindow());
 }
 

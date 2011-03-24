@@ -4,18 +4,22 @@
 #include <poppler/Outline.h>
 #include <poppler/GlobalParams.h>
 #include <poppler/UnicodeMap.h>
-// TODO: AA: type check
 
 XojPopplerIter::XojPopplerIter(XojPopplerDocument doc, GooList *items) {
+	XOJ_INIT_TYPE(XojPopplerIter);
+
 	this->doc = doc;
 	this->items = items;
 	this->index = 0;
 }
 
 XojPopplerIter::~XojPopplerIter() {
+	XOJ_RELEASE_TYPE(XojPopplerIter);
 }
 
 bool XojPopplerIter::next() {
+	XOJ_CHECK_TYPE(XojPopplerIter);
+
 	this->index++;
 	if (this->index >= this->items->getLength()) {
 		return false;
@@ -25,11 +29,15 @@ bool XojPopplerIter::next() {
 }
 
 bool XojPopplerIter::isOpen() {
+	XOJ_CHECK_TYPE(XojPopplerIter);
+
 	OutlineItem * item = (OutlineItem *) this->items->get(this->index);
 	return item->isOpen();
 }
 
 XojPopplerIter * XojPopplerIter::getChildIter() {
+	XOJ_CHECK_TYPE(XojPopplerIter);
+
 	OutlineItem * item = (OutlineItem *) this->items->get(this->index);
 	item->open();
 	if (!(item->hasKids() && item->getKids())) {
@@ -61,6 +69,8 @@ String XojPopplerIter::unicodeToChar(Unicode * unicode, int len) {
 }
 
 XojPopplerAction * XojPopplerIter::getAction() {
+	XOJ_CHECK_TYPE(XojPopplerIter);
+
 	OutlineItem * item = (OutlineItem *) this->items->get(this->index);
 	if (item == NULL) {
 		return NULL;

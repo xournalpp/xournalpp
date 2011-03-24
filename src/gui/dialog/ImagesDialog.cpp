@@ -7,11 +7,12 @@
 
 #include <config.h>
 #include <glib/gi18n-lib.h>
-// TODO: AA: type check
 
 class ImageView {
 public:
 	ImageView(int id, ImagesDialog * dlg) {
+		XOJ_INIT_TYPE(ImageView);
+
 		this->widget = gtk_drawing_area_new();
 		gtk_widget_show(this->widget);
 		this->crBuffer = NULL;
@@ -29,20 +30,28 @@ public:
 	}
 
 	virtual ~ImageView() {
+		XOJ_CHECK_TYPE(ImageView);
+
 		gtk_widget_destroy(this->widget);
 
-		if (crBuffer) {
-			cairo_surface_destroy(crBuffer);
-			crBuffer = NULL;
+		if (this->crBuffer) {
+			cairo_surface_destroy(this->crBuffer);
+			this->crBuffer = NULL;
 		}
+
+		XOJ_RELEASE_TYPE(ImageView);
 	}
 
 	GtkWidget * getWidget() {
+		XOJ_CHECK_TYPE(ImageView);
+
 		updateSize();
 		return this->widget;
 	}
 
 	void calcSize() {
+		XOJ_CHECK_TYPE(ImageView);
+
 		if (this->width == -1) {
 			GdkPixbuf * p = backgroundImage.getPixbuf();
 			this->width = gdk_pixbuf_get_width(p);
@@ -59,16 +68,22 @@ public:
 	}
 
 	int getWidth() {
+		XOJ_CHECK_TYPE(ImageView);
+
 		calcSize();
 		return width + Shadow::getShadowBottomRightSize() + Shadow::getShadowTopLeftSize() + 4;
 	}
 
 	int getHeight() {
+		XOJ_CHECK_TYPE(ImageView);
+
 		calcSize();
 		return height + Shadow::getShadowBottomRightSize() + Shadow::getShadowTopLeftSize() + 4;
 	}
 
 	void setSelected(bool selected) {
+		XOJ_CHECK_TYPE(ImageView);
+
 		if (this->selected == selected) {
 			return;
 		}
@@ -78,45 +93,55 @@ public:
 	}
 
 	void repaint() {
-		if (crBuffer) {
-			cairo_surface_destroy(crBuffer);
-			crBuffer = NULL;
+		XOJ_CHECK_TYPE(ImageView);
+
+		if (this->crBuffer) {
+			cairo_surface_destroy(this->crBuffer);
+			this->crBuffer = NULL;
 		}
 		gtk_widget_queue_draw(this->widget);
 	}
 
 	void updateSize() {
-		gtk_widget_set_size_request(widget, this->getWidth(), this->getHeight());
+		XOJ_CHECK_TYPE(ImageView);
+
+		gtk_widget_set_size_request(this->widget, this->getWidth(), this->getHeight());
 	}
 private:
-	static gboolean exposeEventCallback(GtkWidget *widget, GdkEventExpose *event, ImageView * page) {
+	static gboolean exposeEventCallback(GtkWidget  * widget, GdkEventExpose * event, ImageView * page) {
+		XOJ_CHECK_TYPE_OBJ(page, ImageView);
+
 		page->paint();
 		return true;
 	}
 
-	static gboolean mouseButtonPressCallback(GtkWidget *widget, GdkEventButton *event, ImageView * page) {
+	static gboolean mouseButtonPressCallback(GtkWidget * widget, GdkEventButton *event, ImageView * page) {
+		XOJ_CHECK_TYPE_OBJ(page, ImageView);
+
 		page->dlg->setSelected(page->id);
 		return true;
 	}
 
 	void paint() {
-		dlg->setBackgroundWhite();
+		XOJ_CHECK_TYPE(ImageView);
+
+		this->dlg->setBackgroundWhite();
 
 		GtkAllocation alloc;
-		gtk_widget_get_allocation(widget, &alloc);
+		gtk_widget_get_allocation(this->widget, &alloc);
 
-		if (crBuffer == NULL) {
-			crBuffer = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, alloc.width, alloc.height);
+		if (this->crBuffer == NULL) {
+			this->crBuffer = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, alloc.width, alloc.height);
 
-			cairo_t * cr2 = cairo_create(crBuffer);
+			cairo_t * cr2 = cairo_create(this->crBuffer);
 			cairo_matrix_t defaultMatrix = { 0 };
 			cairo_get_matrix(cr2, &defaultMatrix);
 
 			cairo_translate(cr2, Shadow::getShadowTopLeftSize() + 2, Shadow::getShadowTopLeftSize() + 2);
 
-			cairo_scale(cr2, zoom, zoom);
+			cairo_scale(cr2, this->zoom, this->zoom);
 
-			GdkPixbuf * p = backgroundImage.getPixbuf();
+			GdkPixbuf * p = this->backgroundImage.getPixbuf();
 			gdk_cairo_set_source_pixbuf(cr2, p, Shadow::getShadowTopLeftSize() + 2, Shadow::getShadowTopLeftSize() + 2);
 			cairo_paint(cr2);
 
@@ -159,10 +184,10 @@ private:
 			cairo_destroy(cr2);
 		}
 
-		cairo_t * cr = gdk_cairo_create(widget->window);
+		cairo_t * cr = gdk_cairo_create(this->widget->window);
 
-		double width = cairo_image_surface_get_width(crBuffer);
-		cairo_set_source_surface(cr, crBuffer, 0, 0);
+		double width = cairo_image_surface_get_width(this->crBuffer);
+		cairo_set_source_surface(cr, this->crBuffer, 0, 0);
 
 		cairo_paint(cr);
 		cairo_destroy(cr);
@@ -172,6 +197,8 @@ public:
 	BackgroundImage backgroundImage;
 
 private:
+	XOJ_TYPE_ATTRIB;
+
 	bool selected;
 	ImagesDialog * dlg;
 	int id;
@@ -191,6 +218,7 @@ private:
 
 ImagesDialog::ImagesDialog(GladeSearchpath * gladeSearchPath, Document * doc, Settings * settings) :
 	GladeGui(gladeSearchPath, "images.glade", "ImagesDialog") {
+	XOJ_INIT_TYPE(ImagesDialog);
 
 	this->images = NULL;
 	this->settings = settings;
@@ -255,34 +283,50 @@ ImagesDialog::ImagesDialog(GladeSearchpath * gladeSearchPath, Document * doc, Se
 }
 
 ImagesDialog::~ImagesDialog() {
+	XOJ_CHECK_TYPE(ImagesDialog);
+
 	for (GList * l = this->images; l != NULL; l = l->next) {
 		delete (ImageView*) l->data;
 	}
+
+	XOJ_RELEASE_TYPE(ImagesDialog);
 }
 
 Settings * ImagesDialog::getSettings() {
+	XOJ_CHECK_TYPE(ImagesDialog);
+
 	return this->settings;
 }
 
 void ImagesDialog::updateOkButton() {
+	XOJ_CHECK_TYPE(ImagesDialog);
+
 	ImageView * p = (ImageView *) g_list_nth_data(this->images, this->selected);
 	gtk_widget_set_sensitive(get("buttonOk"), p && gtk_widget_get_visible(p->getWidget()));
 }
 
 void ImagesDialog::okButtonCallback(GtkButton * button, ImagesDialog * dlg) {
+	XOJ_CHECK_TYPE_OBJ(dlg, ImagesDialog);
+
 	dlg->selectedPage = dlg->selected;
 }
 
 void ImagesDialog::filechooserButtonCallback(GtkButton * button, ImagesDialog * dlg) {
+	XOJ_CHECK_TYPE_OBJ(dlg, ImagesDialog);
+
 	dlg->selectedPage = -2;
 	gtk_widget_hide(dlg->window);
 }
 
 bool ImagesDialog::shouldShowFilechooser() {
+	XOJ_CHECK_TYPE(ImagesDialog);
+
 	return this->selectedPage == -2;
 }
 
 BackgroundImage * ImagesDialog::getSelectedImage() {
+	XOJ_CHECK_TYPE(ImagesDialog);
+
 	ImageView * p = (ImageView *) g_list_nth_data(this->images, this->selectedPage);
 	if (p == NULL) {
 		return NULL;
@@ -291,6 +335,8 @@ BackgroundImage * ImagesDialog::getSelectedImage() {
 }
 
 void ImagesDialog::sizeAllocate(GtkWidget *widget, GtkRequisition *requisition, ImagesDialog * dlg) {
+	XOJ_CHECK_TYPE_OBJ(dlg, ImagesDialog);
+
 	GtkAllocation alloc = { 0 };
 	gtk_widget_get_allocation(dlg->scrollPreview, &alloc);
 	if (dlg->lastWidth == alloc.width) {
@@ -301,6 +347,8 @@ void ImagesDialog::sizeAllocate(GtkWidget *widget, GtkRequisition *requisition, 
 }
 
 void ImagesDialog::show() {
+	XOJ_CHECK_TYPE(ImagesDialog);
+
 	if (this->images == NULL) {
 		this->selectedPage = -2;
 	} else {
@@ -310,6 +358,8 @@ void ImagesDialog::show() {
 }
 
 void ImagesDialog::setBackgroundWhite() {
+	XOJ_CHECK_TYPE(ImagesDialog);
+
 	if (this->backgroundInitialized) {
 		return;
 	}
@@ -318,6 +368,8 @@ void ImagesDialog::setBackgroundWhite() {
 }
 
 void ImagesDialog::setSelected(int selected) {
+	XOJ_CHECK_TYPE(ImagesDialog);
+
 	if (this->selected == selected) {
 		return;
 	}
@@ -337,6 +389,8 @@ void ImagesDialog::setSelected(int selected) {
 }
 
 void ImagesDialog::layout() {
+	XOJ_CHECK_TYPE(ImagesDialog);
+
 	double x = 0;
 	double y = 0;
 	double height = 0;

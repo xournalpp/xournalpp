@@ -8,7 +8,6 @@
  *
  * @license GPL
  */
-// TODO: AA: type check
 
 #ifndef __TEXTUNDOACTION_H__
 #define __TEXTUNDOACTION_H__
@@ -35,7 +34,10 @@ public:
 	String getUndoText();
 
 	void textEditFinished();
+
 private:
+	XOJ_TYPE_ATTRIB;
+
 	Layer * layer;
 	Text * text;
 	String lastText;

@@ -1,9 +1,10 @@
 #include "PdfRefList.h"
 #include "PdfRefEntry.h"
 #include "PdfXRef.h"
-// TODO: AA: type check
 
 PdfRefList::PdfRefList(PdfXRef * xref, PdfObjectWriter * objectWriter, PdfWriter * writer, char * type) {
+	XOJ_INIT_TYPE(PdfRefList);
+
 	this->id = 1;
 	this->data = NULL;
 	this->xref = xref;
@@ -13,16 +14,23 @@ PdfRefList::PdfRefList(PdfXRef * xref, PdfObjectWriter * objectWriter, PdfWriter
 }
 
 PdfRefList::~PdfRefList() {
+	XOJ_CHECK_TYPE(PdfRefList);
+
 	for (GList * l = this->data; l != NULL; l = l->next) {
 		PdfRefEntry * entry = (PdfRefEntry *) l->data;
 		delete entry;
 	}
 	g_list_free(this->data);
+	this->data = NULL;
 	g_free(this->type);
 	this->type = NULL;
+
+	XOJ_RELEASE_TYPE(PdfRefList);
 }
 
 void PdfRefList::writeObjects() {
+	XOJ_CHECK_TYPE(PdfRefList);
+
 	for (GList * l = this->data; l != NULL; l = l->next) {
 		PdfRefEntry * ref = (PdfRefEntry *) l->data;
 
@@ -48,6 +56,8 @@ void PdfRefList::deletePdfRefList(PdfRefList * ref) {
 }
 
 int PdfRefList::lookup(Ref ref, Object * object, XojPopplerDocument doc, PdfRefEntry * &refEntryRet) {
+	XOJ_CHECK_TYPE(PdfRefList);
+
 	for (GList * l = this->data; l != NULL; l = l->next) {
 		PdfRefEntry * p = (PdfRefEntry *) l->data;
 
@@ -71,6 +81,8 @@ int PdfRefList::lookup(Ref ref, Object * object, XojPopplerDocument doc, PdfRefE
 }
 
 void PdfRefList::parse(Dict * dict, int index, XojPopplerDocument doc, GList * &replacementList) {
+	XOJ_CHECK_TYPE(PdfRefList);
+
 	Object o;
 	dict->getVal(index, &o);
 
@@ -119,6 +131,8 @@ void PdfRefList::parse(Dict * dict, int index, XojPopplerDocument doc, GList * &
 }
 
 void PdfRefList::writeRefList(const char * type) {
+	XOJ_CHECK_TYPE(PdfRefList);
+
 	if (!this->data) {
 		return;
 	}
@@ -146,6 +160,8 @@ void PdfRefList::writeRefList(const char * type) {
 }
 
 RefReplacement::RefReplacement(String name, int newId, const char * type, PdfRefEntry * refEntry) {
+	XOJ_INIT_TYPE(RefReplacement);
+
 	this->name = name;
 	this->newId = newId;
 	this->type = g_strdup(type);
@@ -154,7 +170,10 @@ RefReplacement::RefReplacement(String name, int newId, const char * type, PdfRef
 }
 
 RefReplacement::~RefReplacement() {
+	XOJ_CHECK_TYPE(RefReplacement);
+
 	g_free(this->type);
+	this->type = NULL;
 	if (this->refEntry == NULL) {
 		g_warning("RefReplacement::~RefReplacement(): this->refEntry == NULL");
 		return;
@@ -162,9 +181,13 @@ RefReplacement::~RefReplacement() {
 	if (this->used) {
 		this->refEntry->markAsUsed();
 	}
+
+	XOJ_RELEASE_TYPE(RefReplacement);
 }
 
 void RefReplacement::markAsUsed() {
+	XOJ_CHECK_TYPE(RefReplacement);
+
 	this->used = true;
 }
 

@@ -11,7 +11,8 @@
 
 #ifndef __POINT_H__
 #define __POINT_H__
-// TODO: AA: type check
+
+#include "../util/XournalType.h"
 
 class Point {
 public:
@@ -19,6 +20,7 @@ public:
 	Point(const Point & p);
 	Point(double x, double y);
 	Point(double x, double y, double z);
+	~Point();
 
 public:
 	double lineLengthTo(const Point p);
@@ -26,6 +28,8 @@ public:
 	bool equalsPos(const Point p);
 
 public:
+	XOJ_TYPE_ATTRIB;
+
 	double x;
 	double y;
 

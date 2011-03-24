@@ -2,36 +2,53 @@
 
 #include <math.h>
 #include <stdio.h>
-// TODO: AA: type check
+
+#include <glib.h>
 
 Point::Point() {
+	XOJ_INIT_TYPE(Point);
+
 	this->x = 0;
 	this->y = 0;
 	this->z = NO_PRESURE;
 }
 Point::Point(const Point & p) {
+	XOJ_INIT_TYPE(Point);
+
 	this->x = p.x;
 	this->y = p.y;
 	this->z = p.z;
 }
 
 Point::Point(double x, double y) {
+	XOJ_INIT_TYPE(Point);
+
 	this->x = x;
 	this->y = y;
 	this->z = NO_PRESURE;
 }
 
 Point::Point(double x, double y, double z) {
+	XOJ_INIT_TYPE(Point);
+
 	this->x = x;
 	this->y = y;
 	this->z = z;
 }
 
+Point::~Point() {
+	XOJ_RELEASE_TYPE(Point);
+}
+
 double Point::lineLengthTo(const Point p) {
+	XOJ_CHECK_TYPE(Point);
+
 	return hypot(this->x - p.x, this->y - p.y);
 }
 
 Point Point::lineTo(const Point p, double length) {
+	XOJ_CHECK_TYPE(Point);
+
 	double factor = lineLengthTo(p);
 	factor = length / factor;
 
@@ -46,6 +63,8 @@ Point Point::lineTo(const Point p, double length) {
 }
 
 bool Point::equalsPos(const Point p) {
+	XOJ_CHECK_TYPE(Point);
+
 	return this->x == p.x && this->y == p.y;
 }
 

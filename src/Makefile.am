@@ -122,7 +122,6 @@ xournalpp_SOURCES = \
 	pdf/poppler/XojPopplerPage.cpp \
 	pdf/PdfBookmark.cpp \
 	pdf/PdfExport.cpp \
-	pdf/PdfExtGState.cpp \
 	pdf/PdfObjectWriter.cpp \
 	pdf/PdfRefEntry.cpp \
 	pdf/PdfRefList.cpp \
@@ -149,7 +148,6 @@ xournalpp_SOURCES = \
 	undo/UndoRedoHandler.cpp \
 	util/CrashHandler.cpp \
 	util/GzHelper.cpp \
-	util/MemoryCheck.cpp \
 	util/ObjectStream.cpp \
 	util/OutputStream.cpp \
 	util/PageRange.cpp \

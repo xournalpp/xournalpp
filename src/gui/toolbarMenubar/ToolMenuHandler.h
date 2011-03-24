@@ -8,7 +8,6 @@
  *
  * @license GPL
  */
-// TODO: AA: type check
 
 #ifndef EDITABLETOOLBAR_H_
 #define EDITABLETOOLBAR_H_
@@ -71,6 +70,8 @@ private:
 	void initEraserToolItem();
 
 private:
+	XOJ_TYPE_ATTRIB;
+
 	GList * toolbarColorItems;
 
 	GList * toolItems;

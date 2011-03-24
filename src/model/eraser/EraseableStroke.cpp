@@ -4,9 +4,10 @@
 #include "../Stroke.h"
 #include "../../util/Range.h"
 #include <math.h>
-// TODO: AA: type check
 
 EraseableStroke::EraseableStroke(Stroke * stroke) {
+	XOJ_INIT_TYPE(EraseableStroke);
+
 	this->parts = new PartList();
 	this->partLock = g_mutex_new();
 
@@ -19,11 +20,15 @@ EraseableStroke::EraseableStroke(Stroke * stroke) {
 }
 
 EraseableStroke::~EraseableStroke() {
+	XOJ_CHECK_TYPE(EraseableStroke);
+
 	g_mutex_free(this->partLock);
 	this->partLock = NULL;
 
 	delete this->parts;
 	this->parts = NULL;
+
+	XOJ_RELEASE_TYPE(EraseableStroke);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -31,6 +36,8 @@ EraseableStroke::~EraseableStroke() {
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
 void EraseableStroke::draw(cairo_t * cr, double x, double y, double width, double height) {
+	XOJ_CHECK_TYPE(EraseableStroke);
+
 	bool pressure = this->stroke->hasPressure();
 	Point lastPoint;
 
@@ -69,6 +76,8 @@ void EraseableStroke::draw(cairo_t * cr, double x, double y, double width, doubl
  * The only public method
  */
 Range * EraseableStroke::erase(double x, double y, double halfEraserSize, Range * range) {
+	XOJ_CHECK_TYPE(EraseableStroke);
+
 	this->repaintRect = range;
 
 	g_mutex_lock(this->partLock);
@@ -92,6 +101,8 @@ Range * EraseableStroke::erase(double x, double y, double halfEraserSize, Range 
 }
 
 void EraseableStroke::addRepaintRect(double x, double y, double width, double height) {
+	XOJ_CHECK_TYPE(EraseableStroke);
+
 	if (this->repaintRect) {
 		this->repaintRect->addPoint(x, y);
 	} else {
@@ -102,6 +113,8 @@ void EraseableStroke::addRepaintRect(double x, double y, double width, double he
 }
 
 void EraseableStroke::erase(double x, double y, double halfEraserSize, EraseableStrokePart * part, PartList * list) {
+	XOJ_CHECK_TYPE(EraseableStroke);
+
 	if (part->points->next == NULL) {
 		return;
 	}
@@ -177,6 +190,8 @@ void EraseableStroke::erase(double x, double y, double halfEraserSize, Eraseable
 }
 
 bool EraseableStroke::erasePart(double x, double y, double halfEraserSize, EraseableStrokePart * part, PartList * list) {
+	XOJ_CHECK_TYPE(EraseableStroke);
+
 	bool changed = false;
 
 	part->splitFor(halfEraserSize);
@@ -272,6 +287,8 @@ bool EraseableStroke::erasePart(double x, double y, double halfEraserSize, Erase
 }
 
 GList * EraseableStroke::getStroke(Stroke * original) {
+	XOJ_CHECK_TYPE(EraseableStroke);
+
 	GList * list = NULL;
 
 	Stroke * s = NULL;

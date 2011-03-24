@@ -5,9 +5,10 @@
 #include "../model/Text.h"
 #include "../gui/Redrawable.h"
 #include "../gui/TextEditor.h"
-// TODO: AA: type check
 
 TextUndoAction::TextUndoAction(XojPage * page, Layer * layer, Text * text, String lastText, Redrawable * view, TextEditor * textEditor) {
+	XOJ_INIT_TYPE(TextUndoAction);
+
 	this->page = page;
 	this->layer = layer;
 	this->text = text;
@@ -17,21 +18,30 @@ TextUndoAction::TextUndoAction(XojPage * page, Layer * layer, Text * text, Strin
 }
 
 TextUndoAction::~TextUndoAction() {
+	XOJ_RELEASE_TYPE(TextUndoAction);
 }
 
 String TextUndoAction::getUndoText() {
-	return lastText;
+	XOJ_CHECK_TYPE(TextUndoAction);
+
+	return this->lastText;
 }
 
 void TextUndoAction::textEditFinished() {
+	XOJ_CHECK_TYPE(TextUndoAction);
+
 	this->textEditor = NULL;
 }
 
 String TextUndoAction::getText() {
-	return "Text changes";
+	XOJ_CHECK_TYPE(TextUndoAction);
+
+	return _("Text changes");
 }
 
 bool TextUndoAction::undo(Control * control) {
+	XOJ_CHECK_TYPE(TextUndoAction);
+
 	double x1 = text->getX();
 	double y1 = text->getY();
 	double x2 = text->getX() + text->getElementWidth();
@@ -53,6 +63,8 @@ bool TextUndoAction::undo(Control * control) {
 }
 
 bool TextUndoAction::redo(Control * control) {
+	XOJ_CHECK_TYPE(TextUndoAction);
+
 	double x1 = text->getX();
 	double y1 = text->getY();
 	double x2 = text->getX() + text->getElementWidth();

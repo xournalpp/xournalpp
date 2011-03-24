@@ -3,11 +3,12 @@
 #include <stdlib.h>
 #include <stdarg.h>
 #include <config.h>
-// TODO: AA: type check
 
 #include "../util/GzHelper.h"
 
 PdfWriter::PdfWriter(PdfXRef * xref) {
+	XOJ_INIT_TYPE(PdfWriter);
+
 	this->inStream = false;
 	this->stream = NULL;
 	this->out = NULL;
@@ -19,18 +20,27 @@ PdfWriter::PdfWriter(PdfXRef * xref) {
 }
 
 PdfWriter::~PdfWriter() {
+	XOJ_CHECK_TYPE(PdfWriter);
+
 	if (this->stream) {
 		g_string_free(this->stream, true);
 	}
+	this->stream = NULL;
 
 	this->xref = NULL;
+
+	XOJ_RELEASE_TYPE(PdfWriter);
 }
 
 void PdfWriter::close() {
+	XOJ_CHECK_TYPE(PdfWriter);
+
 	g_output_stream_close(G_OUTPUT_STREAM(this->out), NULL, NULL);
 }
 
 bool PdfWriter::openFile(const char * uri) {
+	XOJ_CHECK_TYPE(PdfWriter);
+
 	GError * error = NULL;
 
 	GFile * file = g_file_new_for_uri(uri);
@@ -50,10 +60,14 @@ bool PdfWriter::openFile(const char * uri) {
 }
 
 bool PdfWriter::write(const char * data) {
+	XOJ_CHECK_TYPE(PdfWriter);
+
 	return writeLen(data, strlen(data));
 }
 
 bool PdfWriter::writef(const char * format, ...) {
+	XOJ_CHECK_TYPE(PdfWriter);
+
 	va_list args;
 	va_start(args, format);
 	char * data = g_strdup_vprintf(format, args);
@@ -63,26 +77,38 @@ bool PdfWriter::writef(const char * format, ...) {
 }
 
 bool PdfWriter::write(int data) {
+	XOJ_CHECK_TYPE(PdfWriter);
+
 	return writef("%i", data);;
 }
 
 String PdfWriter::getLastError() {
+	XOJ_CHECK_TYPE(PdfWriter);
+
 	return lastError;
 }
 
 int PdfWriter::getObjectId() {
+	XOJ_CHECK_TYPE(PdfWriter);
+
 	return this->objectId;
 }
 
 int PdfWriter::getNextObjectId() {
+	XOJ_CHECK_TYPE(PdfWriter);
+
 	return this->objectId++;
 }
 
 int PdfWriter::getDataCount() {
+	XOJ_CHECK_TYPE(PdfWriter);
+
 	return this->dataCount;
 }
 
 bool PdfWriter::writeTxt(const char * data) {
+	XOJ_CHECK_TYPE(PdfWriter);
+
 	GString * str = g_string_sized_new(strlen(data) + 100);
 	g_string_append(str, "(");
 
@@ -101,6 +127,8 @@ bool PdfWriter::writeTxt(const char * data) {
 }
 
 bool PdfWriter::writeLen(const char * data, int len) {
+	XOJ_CHECK_TYPE(PdfWriter);
+
 	if (this->inStream) {
 		g_string_append_len(this->stream, data, len);
 		return true;
@@ -125,6 +153,8 @@ bool PdfWriter::writeLen(const char * data, int len) {
 }
 
 bool PdfWriter::writeObj() {
+	XOJ_CHECK_TYPE(PdfWriter);
+
 	this->xref->addXref(this->dataCount);
 	bool res = this->writef("%i 0 obj\n", this->objectId++);
 	if (!res) {
@@ -135,6 +165,8 @@ bool PdfWriter::writeObj() {
 }
 
 bool PdfWriter::writeInfo(String title) {
+	XOJ_CHECK_TYPE(PdfWriter);
+
 	if (!writeObj()) {
 		return false;
 	}
@@ -176,6 +208,8 @@ bool PdfWriter::writeInfo(String title) {
 }
 
 void PdfWriter::startStream() {
+	XOJ_CHECK_TYPE(PdfWriter);
+
 	this->inStream = true;
 	if (this->stream == NULL) {
 		this->stream = g_string_new("");
@@ -183,6 +217,8 @@ void PdfWriter::startStream() {
 }
 
 void PdfWriter::endStream() {
+	XOJ_CHECK_TYPE(PdfWriter);
+
 	this->inStream = false;
 
 	GString * data = NULL;

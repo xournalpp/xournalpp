@@ -1,9 +1,10 @@
  #include "Rectangle.h"
 #include "Range.h"
 #include <glib.h>
-// TODO: AA: type check
 
 Rectangle::Rectangle() {
+	XOJ_INIT_TYPE(Rectangle);
+
 	this->x = 0;
 	this->y = 0;
 	this->width = 0;
@@ -11,6 +12,8 @@ Rectangle::Rectangle() {
 }
 
 Rectangle::Rectangle(double x, double y, double width, double height) {
+	XOJ_INIT_TYPE(Rectangle);
+
 	this->x = x;
 	this->y = y;
 	this->width = width;
@@ -18,10 +21,16 @@ Rectangle::Rectangle(double x, double y, double width, double height) {
 }
 
 Rectangle::Rectangle(Range & rect) {
+	XOJ_INIT_TYPE(Rectangle);
+
 	this->x = rect.getX();
 	this->y = rect.getY();
 	this->width = rect.getWidth();
 	this->height = rect.getHeight();
+}
+
+Rectangle::~Rectangle() {
+	XOJ_RELEASE_TYPE(Rectangle);
 }
 
 
@@ -40,6 +49,8 @@ Rectangle::Rectangle(Range & rect) {
  * Returns: %TRUE if the rectangles intersect.
  */
 bool Rectangle::intersect(const Rectangle * src, Rectangle * dest = NULL) {
+	XOJ_CHECK_TYPE(Rectangle);
+
 	double destX, destY;
 	double destW, destH;
 
@@ -69,6 +80,8 @@ bool Rectangle::intersect(const Rectangle * src, Rectangle * dest = NULL) {
 }
 
 void Rectangle::add(double x, double y, double width, double height) {
+	XOJ_CHECK_TYPE(Rectangle);
+
 	if (width <= 0 || height <= 0) {
 		return;
 	}

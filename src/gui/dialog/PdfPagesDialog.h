@@ -10,11 +10,11 @@
  */
 #ifndef __PDFPAGESDIALOG_H__
 #define __PDFPAGESDIALOG_H__
-// TODO: AA: type check
 
 #include "../GladeGui.h"
 #include "../../model/Document.h"
 #include "../../control/settings/Settings.h"
+#include "../../util/XournalType.h"
 
 class PdfPagesDialog: public GladeGui {
 public:
@@ -43,6 +43,8 @@ private:
 	static void okButtonCallback(GtkButton * button, PdfPagesDialog * dlg);
 
 private:
+	XOJ_TYPE_ATTRIB;
+
 	bool backgroundInitialized;
 
 	int selected;

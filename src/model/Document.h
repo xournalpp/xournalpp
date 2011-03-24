@@ -27,7 +27,7 @@
 
 #include "DocumentHandler.h"
 
-class Document : public MemoryCheckObject {
+class Document {
 public:
 	Document(DocumentHandler * handler);
 	virtual ~Document();
@@ -81,7 +81,6 @@ public:
 	bool tryLock();
 
 private:
-
 	void buildContentsModel();
 	void buildTreeContentsModel(GtkTreeIter * parent, XojPopplerIter * iter);
 	void updateIndexPageNumbers();

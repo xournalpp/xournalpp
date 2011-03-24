@@ -14,8 +14,18 @@
 #define __XOURNALTYPE_H__
 
 #define XOJ_MEMORY_CHECK_ENABLED
+#define XOJ_MEMORY_LEAK_CHECK_ENABLED
 
 #ifdef XOJ_MEMORY_CHECK_ENABLED
+
+
+#ifdef XOJ_MEMORY_LEAK_CHECK_ENABLED
+
+void xoj_memoryleak_initType(int id);
+void xoj_memoryleak_releaseType(int id);
+void xoj_momoryleak_printRemainingObjects();
+
+#endif
 
 #define XOJ_DECLARE_TYPE(type, id) \
 	const int __XOJ_TYPE_ ## type = id
@@ -30,17 +40,32 @@
 /**
  * Initalize the Xournal type info, this should be called in the constructor
  */
+#ifdef XOJ_MEMORY_LEAK_CHECK_ENABLED
+#define XOJ_INIT_TYPE(type) \
+		this->__xoj_type = __XOJ_TYPE_ ## type; \
+		this->__xoj_typeCheckvalue = 0xFFAA00AA; \
+		xoj_memoryleak_initType(__XOJ_TYPE_ ## type)
+#else
 #define XOJ_INIT_TYPE(type) \
 		this->__xoj_type = __XOJ_TYPE_ ## type; \
 		this->__xoj_typeCheckvalue = 0xFFAA00AA
+#endif
 
 /**
  * Release the Xournal type info, this should be called in the destructor
  */
+#ifdef XOJ_MEMORY_LEAK_CHECK_ENABLED
+#define XOJ_RELEASE_TYPE(type) \
+		XOJ_CHECK_TYPE(type) \
+		this->__xoj_type = -(__XOJ_TYPE_ ## type); \
+		this->__xoj_typeCheckvalue = 0xFFAA00AA; \
+		xoj_memoryleak_releaseType(__XOJ_TYPE_ ## type)
+#else
 #define XOJ_RELEASE_TYPE(type) \
 		XOJ_CHECK_TYPE(type) \
 		this->__xoj_type = -(__XOJ_TYPE_ ## type); \
 		this->__xoj_typeCheckvalue = 0xFFAA00AA
+#endif
 
 
 /**

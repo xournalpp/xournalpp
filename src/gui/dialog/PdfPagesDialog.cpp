@@ -5,11 +5,12 @@
 
 #include <config.h>
 #include <glib/gi18n-lib.h>
-// TODO: AA: type check
 
 class PdfPage {
 public:
 	PdfPage(XojPopplerPage * page, int index, PdfPagesDialog * dlg) {
+		XOJ_INIT_TYPE(PdfPage);
+
 		this->widget = gtk_drawing_area_new();
 		gtk_widget_show(this->widget);
 		this->crBuffer = NULL;
@@ -26,27 +27,39 @@ public:
 	}
 
 	virtual ~PdfPage() {
+		XOJ_CHECK_TYPE(PdfPage);
+
 		gtk_widget_destroy(this->widget);
 
 		if (crBuffer) {
 			cairo_surface_destroy(crBuffer);
 			crBuffer = NULL;
 		}
+
+		XOJ_RELEASE_TYPE(PdfPage);
 	}
 
 	GtkWidget * getWidget() {
+		XOJ_CHECK_TYPE(PdfPage);
+
 		return this->widget;
 	}
 
 	int getWidth() {
+		XOJ_CHECK_TYPE(PdfPage);
+
 		return page->getWidth() * dlg->getZoom() + Shadow::getShadowBottomRightSize() + Shadow::getShadowTopLeftSize() + 4;
 	}
 
 	int getHeight() {
+		XOJ_CHECK_TYPE(PdfPage);
+
 		return page->getHeight() * dlg->getZoom() + Shadow::getShadowBottomRightSize() + Shadow::getShadowTopLeftSize() + 4;
 	}
 
 	void setSelected(bool selected) {
+		XOJ_CHECK_TYPE(PdfPage);
+
 		if (this->selected == selected) {
 			return;
 		}
@@ -56,28 +69,38 @@ public:
 	}
 
 	void repaint() {
-		if (crBuffer) {
-			cairo_surface_destroy(crBuffer);
-			crBuffer = NULL;
+		XOJ_CHECK_TYPE(PdfPage);
+
+		if (this->crBuffer) {
+			cairo_surface_destroy(this->crBuffer);
+			this->crBuffer = NULL;
 		}
 		gtk_widget_queue_draw(this->widget);
 	}
 
 	void updateSize() {
-		gtk_widget_set_size_request(widget, getWidth(), getHeight());
+		XOJ_CHECK_TYPE(PdfPage);
+
+		gtk_widget_set_size_request(this->widget, getWidth(), getHeight());
 	}
 private:
 	static gboolean exposeEventCallback(GtkWidget * widget, GdkEventExpose * event, PdfPage * page) {
+		XOJ_CHECK_TYPE_OBJ(page, PdfPage);
+
 		page->paint();
 		return true;
 	}
 
 	static gboolean mouseButtonPressCallback(GtkWidget * widget, GdkEventButton * event, PdfPage * page) {
+		XOJ_CHECK_TYPE_OBJ(page, PdfPage);
+
 		page->dlg->setSelected(page->pageNr);
 		return true;
 	}
 
 	void paint() {
+		XOJ_CHECK_TYPE(PdfPage);
+
 		dlg->setBackgroundWhite();
 
 		GtkAllocation alloc;
@@ -192,6 +215,8 @@ private:
 		cairo_destroy(cr);
 	}
 private:
+	XOJ_TYPE_ATTRIB;
+
 	bool selected;
 	int pageNr;
 
@@ -211,6 +236,8 @@ private:
 
 PdfPagesDialog::PdfPagesDialog(GladeSearchpath * gladeSearchPath, Document * doc, Settings * settings) :
 	GladeGui(gladeSearchPath, "pdfpages.glade", "pdfPagesDialog") {
+
+	XOJ_INIT_TYPE(PdfPagesDialog);
 
 	this->pages = NULL;
 	this->settings = settings;
@@ -258,26 +285,42 @@ PdfPagesDialog::PdfPagesDialog(GladeSearchpath * gladeSearchPath, Document * doc
 }
 
 PdfPagesDialog::~PdfPagesDialog() {
+	XOJ_CHECK_TYPE(PdfPagesDialog);
+
 	for (GList * l = this->pages; l != NULL; l = l->next) {
 		delete (PdfPage*) l->data;
 	}
+	g_list_free(this->pages);
+	this->pages = NULL;
+
 	delete[] this->usedPages;
+	this->usedPages = NULL;
+
+	XOJ_RELEASE_TYPE(PdfPagesDialog);
 }
 
 Settings * PdfPagesDialog::getSettings() {
+	XOJ_CHECK_TYPE(PdfPagesDialog);
+
 	return this->settings;
 }
 
 void PdfPagesDialog::updateOkButton() {
+	XOJ_CHECK_TYPE(PdfPagesDialog);
+
 	PdfPage * p = (PdfPage *) g_list_nth_data(this->pages, this->selected);
 	gtk_widget_set_sensitive(get("buttonOk"), p && gtk_widget_get_visible(p->getWidget()));
 }
 
 void PdfPagesDialog::okButtonCallback(GtkButton *button, PdfPagesDialog * dlg) {
+	XOJ_CHECK_TYPE_OBJ(dlg, PdfPagesDialog);
+
 	dlg->selectedPage = dlg->selected;
 }
 
 void PdfPagesDialog::onlyNotUsedCallback(GtkToggleButton * tb, PdfPagesDialog * dlg) {
+	XOJ_CHECK_TYPE_OBJ(dlg, PdfPagesDialog);
+
 	if (gtk_toggle_button_get_active(tb)) {
 		int i = 0;
 		for (GList * l = dlg->pages; l != NULL; l = l->next) {
@@ -295,18 +338,26 @@ void PdfPagesDialog::onlyNotUsedCallback(GtkToggleButton * tb, PdfPagesDialog * 
 }
 
 void PdfPagesDialog::setPageUsed(int page) {
+	XOJ_CHECK_TYPE(PdfPagesDialog);
+
 	this->usedPages[page] = true;
 }
 
 int PdfPagesDialog::getSelectedPage() {
+	XOJ_CHECK_TYPE(PdfPagesDialog);
+
 	return this->selectedPage;
 }
 
 double PdfPagesDialog::getZoom() {
+	XOJ_CHECK_TYPE(PdfPagesDialog);
+
 	return 0.25;
 }
 
 void PdfPagesDialog::sizeAllocate(GtkWidget *widget, GtkRequisition *requisition, PdfPagesDialog * dlg) {
+	XOJ_CHECK_TYPE_OBJ(dlg, PdfPagesDialog);
+
 	GtkAllocation alloc = { 0 };
 	gtk_widget_get_allocation(dlg->scrollPreview, &alloc);
 	if (dlg->lastWidth == alloc.width) {
@@ -317,6 +368,8 @@ void PdfPagesDialog::sizeAllocate(GtkWidget *widget, GtkRequisition *requisition
 }
 
 void PdfPagesDialog::show() {
+	XOJ_CHECK_TYPE(PdfPagesDialog);
+
 	GtkWidget * w = get("cbOnlyNotUsed");
 
 	int unused = 0;
@@ -341,6 +394,8 @@ void PdfPagesDialog::show() {
 }
 
 void PdfPagesDialog::setBackgroundWhite() {
+	XOJ_CHECK_TYPE(PdfPagesDialog);
+
 	if (this->backgroundInitialized) {
 		return;
 	}
@@ -349,6 +404,8 @@ void PdfPagesDialog::setBackgroundWhite() {
 }
 
 void PdfPagesDialog::setSelected(int selected) {
+	XOJ_CHECK_TYPE(PdfPagesDialog);
+
 	if (this->selected == selected) {
 		return;
 	}
@@ -368,6 +425,8 @@ void PdfPagesDialog::setSelected(int selected) {
 }
 
 void PdfPagesDialog::layout() {
+	XOJ_CHECK_TYPE(PdfPagesDialog);
+
 	double x = 0;
 	double y = 0;
 	double height = 0;

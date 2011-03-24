@@ -2,14 +2,17 @@
 #include "ToolbarData.h"
 
 #include <string.h>
-// TODO: AA: type check
 
 ToolbarModel::ToolbarModel() {
+	XOJ_INIT_TYPE(ToolbarModel);
+
 	this->toolbars = NULL;
 	this->colorNameTable = g_hash_table_new_full(g_str_hash, g_str_equal, g_free, g_free);
 }
 
 ToolbarModel::~ToolbarModel() {
+	XOJ_CHECK_TYPE(ToolbarModel);
+
 	for (GList * l = this->toolbars; l != NULL; l = l->next) {
 		delete (ToolbarData *) l->data;
 	}
@@ -18,13 +21,19 @@ ToolbarModel::~ToolbarModel() {
 
 	g_hash_table_destroy(this->colorNameTable);
 	this->colorNameTable = NULL;
+
+	XOJ_RELEASE_TYPE(ToolbarModel);
 }
 
 ListIterator<ToolbarData *> ToolbarModel::iterator() {
+	XOJ_CHECK_TYPE(ToolbarModel);
+
 	return ListIterator<ToolbarData *> (this->toolbars);
 }
 
 void ToolbarModel::parseGroup(GKeyFile * config, const char * group, bool predefined) {
+	XOJ_CHECK_TYPE(ToolbarModel);
+
 	ToolbarData * data = new ToolbarData(predefined);
 
 	String name;
@@ -43,19 +52,24 @@ void ToolbarModel::parseGroup(GKeyFile * config, const char * group, bool predef
 }
 
 void ToolbarModel::remove(ToolbarData * data) {
+	XOJ_CHECK_TYPE(ToolbarModel);
+
 	this->toolbars = g_list_remove(this->toolbars, data);
 }
 
 void ToolbarModel::add(ToolbarData * data) {
+	XOJ_CHECK_TYPE(ToolbarModel);
+
 	this->toolbars = g_list_append(this->toolbars, data);
 }
 
 const char * ToolbarModel::getColorName(const char * color) {
-	const char * name = (char *) g_hash_table_lookup(this->colorNameTable, color);
-	return name;
+	return (char *) g_hash_table_lookup(this->colorNameTable, color);
 }
 
 bool ToolbarModel::parse(const char * file, bool predefined) {
+	XOJ_CHECK_TYPE(ToolbarModel);
+
 	GKeyFile * config = g_key_file_new();
 	g_key_file_set_list_separator(config, ',');
 	if (!g_key_file_load_from_file(config, file, G_KEY_FILE_NONE, NULL)) {
@@ -84,6 +98,8 @@ bool ToolbarModel::parse(const char * file, bool predefined) {
 }
 
 void ToolbarModel::parseColors(GKeyFile * config, const char * group) {
+	XOJ_CHECK_TYPE(ToolbarModel);
+
 	gsize length = 0;
 	gchar ** keys = g_key_file_get_keys(config, group, &length, NULL);
 	if (keys == NULL) {

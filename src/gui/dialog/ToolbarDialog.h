@@ -11,9 +11,9 @@
 
 #ifndef __TOOLBARDIALOG_H__
 #define __TOOLBARDIALOG_H__
-// TODO: AA: type check
 
 #include "../GladeGui.h"
+#include "../../util/XournalType.h"
 
 class ToolbarModel;
 class ToolbarData;
@@ -38,6 +38,8 @@ private:
 	void entrySelected(ToolbarData * data);
 
 private:
+	XOJ_TYPE_ATTRIB;
+
 	ToolbarModel * tbModel;
 	GtkListStore * model;
 

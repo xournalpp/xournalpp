@@ -14,14 +14,15 @@
 
 #include <glib.h>
 #include "../../../util/String.h"
+#include "../../../util/XournalType.h"
 #include <vector>
 
 #include "ToolbarEntry.h"
-// TODO: AA: type check
 
 class ToolbarData {
 public:
 	ToolbarData(bool predefined);
+	~ToolbarData();
 
 public:
 	String getName();
@@ -32,6 +33,8 @@ public:
 
 	bool isPredefined();
 private:
+	XOJ_TYPE_ATTRIB;
+
 	String id;
 	String name;
 	std::vector<ToolbarEntry> contents;

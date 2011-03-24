@@ -1,28 +1,43 @@
 #include "ToolbarData.h"
 #include <string.h>
-// TODO: AA: type check
 
 ToolbarData::ToolbarData(bool predefined) {
+	XOJ_INIT_TYPE(ToolbarData);
+
 	this->predefined = predefined;
 }
 
+ToolbarData::~ToolbarData() {
+	XOJ_RELEASE_TYPE(ToolbarData);
+}
+
 String ToolbarData::getName() {
+	XOJ_CHECK_TYPE(ToolbarData);
+
 	return this->name;
 }
 
 void ToolbarData::setName(String name) {
+	XOJ_CHECK_TYPE(ToolbarData);
+
 	this->name = name;
 }
 
 String ToolbarData::getId() {
+	XOJ_CHECK_TYPE(ToolbarData);
+
 	return this->id;
 }
 
 bool ToolbarData::isPredefined() {
+	XOJ_CHECK_TYPE(ToolbarData);
+
 	return this->predefined;
 }
 
 void ToolbarData::load(GKeyFile * config, const char * group) {
+	XOJ_CHECK_TYPE(ToolbarData);
+
 	gsize length = 0;
 	gchar ** keys = g_key_file_get_keys(config, group, &length, NULL);
 	if (keys == NULL) {

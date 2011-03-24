@@ -1,17 +1,21 @@
 #include "XojPopplerAction.h"
 #include "XojPopplerDocument.h"
-// TODO: AA: type check
 
 XojPopplerAction::XojPopplerAction(XojPopplerDocument doc, LinkAction * linkAction, String title) :
 	doc(doc), title(title) {
+	XOJ_INIT_TYPE(XojPopplerAction);
+
 	this->linkAction = linkAction;
 }
 
 XojPopplerAction::~XojPopplerAction() {
+	XOJ_RELEASE_TYPE(XojPopplerAction);
 }
 
-void XojPopplerAction::linkFromDest(LinkDestination *link, LinkDest *dest) {
-	const char *unimplementedDest = NULL;
+void XojPopplerAction::linkFromDest(LinkDestination * link, LinkDest * dest) {
+	XOJ_CHECK_TYPE(XojPopplerAction);
+
+	const char * unimplementedDest = NULL;
 
 	int pageNum = 0;
 	if (dest->isPageRef()) {
@@ -80,6 +84,8 @@ void XojPopplerAction::linkFromDest(LinkDestination *link, LinkDest *dest) {
 }
 
 XojLinkDest * XojPopplerAction::getDestination() {
+	XOJ_CHECK_TYPE(XojPopplerAction);
+
 	XojLinkDest * dest = link_dest_new();
 	dest->dest = new LinkDestination();
 	dest->dest->setName(this->title);
@@ -111,6 +117,8 @@ XojLinkDest * XojPopplerAction::getDestination() {
 }
 
 String XojPopplerAction::getTitle() {
+	XOJ_CHECK_TYPE(XojPopplerAction);
+
 	return this->title;
 }
 

@@ -11,7 +11,6 @@
 
 #ifndef __MENUITEM_H__
 #define __MENUITEM_H__
-// TODO: AA: type check
 
 #include "AbstractItem.h"
 
@@ -23,6 +22,9 @@ public:
 	MenuItem(ActionHandler * handler, GtkWidget * widget, ActionType type);
 	MenuItem(ActionHandler * handler, GtkWidget * widget, ActionType type, ActionGroup group);
 	virtual ~MenuItem();
+
+private:
+	XOJ_TYPE_ATTRIB;
 };
 
 #endif /* __MENUITEM_H__ */

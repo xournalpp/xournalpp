@@ -4,9 +4,10 @@
 #include <poppler/PDFDoc.h>
 #include <poppler/Gfx.h>
 #include <poppler/OutputDev.h>
-// TODO: AA: type check
 
 XojPopplerPage::XojPopplerPage(PDFDoc * doc, GMutex * docMutex, CairoOutputDev * outputDev, Page * page, int index) {
+	XOJ_INIT_TYPE(XojPopplerPage);
+
 	this->doc = doc;
 	this->page = page;
 	this->index = index;
@@ -19,6 +20,8 @@ XojPopplerPage::XojPopplerPage(PDFDoc * doc, GMutex * docMutex, CairoOutputDev *
 }
 
 XojPopplerPage::~XojPopplerPage() {
+	XOJ_CHECK_TYPE(XojPopplerPage);
+
 	if (this->text) {
 		this->text->decRefCnt();
 	}
@@ -27,9 +30,13 @@ XojPopplerPage::~XojPopplerPage() {
 	this->renderMutex = NULL;
 
 	this->docMutex = NULL;
+
+	XOJ_RELEASE_TYPE(XojPopplerPage);
 }
 
 double XojPopplerPage::getWidth() {
+	XOJ_CHECK_TYPE(XojPopplerPage);
+
 	int rotate = this->page->getRotate();
 	if (rotate == 90 || rotate == 270) {
 		return this->page->getCropHeight();
@@ -39,6 +46,8 @@ double XojPopplerPage::getWidth() {
 }
 
 double XojPopplerPage::getHeight() {
+	XOJ_CHECK_TYPE(XojPopplerPage);
+
 	int rotate = this->page->getRotate();
 	if (rotate == 90 || rotate == 270) {
 		return this->page->getCropWidth();
@@ -47,13 +56,16 @@ double XojPopplerPage::getHeight() {
 	}
 }
 
-static GBool poppler_print_annot_cb(Annot *annot, void *user_data) {
-	if (annot->getFlags() & Annot::flagPrint)
-		return gTrue;
+static GBool poppler_print_annot_cb(Annot * annot, void * user_data) {
+	if (annot->getFlags() & Annot::flagPrint) {
+		return true;
+	}
 	return (annot->getType() == Annot::typeWidget);
 }
 
 void XojPopplerPage::render(cairo_t * cr, bool forPrinting) {
+	XOJ_CHECK_TYPE(XojPopplerPage);
+
 	g_mutex_lock(this->renderMutex);
 
 	this->outputDev->setCairo(cr);
@@ -87,6 +99,8 @@ void XojPopplerPage::render(cairo_t * cr, bool forPrinting) {
 }
 
 void XojPopplerPage::initTextPage() {
+	XOJ_CHECK_TYPE(XojPopplerPage);
+
 	g_mutex_lock(this->renderMutex);
 
 	if (this->text == NULL) {
@@ -109,10 +123,14 @@ void XojPopplerPage::initTextPage() {
 }
 
 Page * XojPopplerPage::getPage() {
+	XOJ_CHECK_TYPE(XojPopplerPage);
+
 	return this->page;
 }
 
 GList * XojPopplerPage::findText(const char * text) {
+	XOJ_CHECK_TYPE(XojPopplerPage);
+
 	XojPopplerRectangle *match;
 	GList *matches;
 	double xMin, yMin, xMax, yMax;
@@ -171,11 +189,3 @@ XojPopplerRectangle::XojPopplerRectangle() {
 	this->y2 = -1;
 }
 
-////////////////////////////////////////////////
-
-
-XojPopplerImage::XojPopplerImage() {
-}
-
-XojPopplerImage::~XojPopplerImage() {
-}

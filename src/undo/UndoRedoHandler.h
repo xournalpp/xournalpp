@@ -11,10 +11,9 @@
 
 #ifndef __UNDOREDOHANDLER_H__
 #define __UNDOREDOHANDLER_H__
-// TODO: AA: type check
 
 #include "UndoAction.h"
-#include "../util/MemoryCheck.h"
+#include "../util/XournalType.h"
 
 class Control;
 
@@ -24,7 +23,7 @@ public:
 	virtual void undoRedoPageChanged(XojPage * page) = 0;
 };
 
-class UndoRedoHandler: public MemoryCheckObject {
+class UndoRedoHandler {
 public:
 	UndoRedoHandler(Control * control);
 	virtual ~UndoRedoHandler();
@@ -56,6 +55,8 @@ private:
 	void clearRedo();
 
 private:
+	XOJ_TYPE_ATTRIB;
+
 	GList * undoList;
 	GList * redoList;
 

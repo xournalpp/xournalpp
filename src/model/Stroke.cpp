@@ -3,11 +3,12 @@
 #include <math.h>
 #include <string.h>
 #include "../util/ObjectStream.h"
-// TODO: AA: type check
 
 Stroke::Stroke() :
 	Element(ELEMENT_STROKE) {
-	width = 0;
+	XOJ_INIT_TYPE(Stroke);
+
+	this->width = 0;
 
 	this->pointAllocCount = 0;
 	this->pointCount = 0;
@@ -18,10 +19,19 @@ Stroke::Stroke() :
 }
 
 Stroke::~Stroke() {
+	XOJ_CHECK_TYPE(Stroke);
+
 	g_free(this->points);
+	this->points = NULL;
+	this->pointCount = 0;
+	this->pointAllocCount = 0;
+
+	XOJ_RELEASE_TYPE(Stroke);
 }
 
 Stroke * Stroke::clone() const {
+	XOJ_CHECK_TYPE(Stroke);
+
 	Stroke * s = new Stroke();
 	s->setColor(this->getColor());
 	s->setToolType(this->getToolType());
@@ -35,6 +45,8 @@ Stroke * Stroke::clone() const {
 }
 
 void Stroke::serialize(ObjectOutputStream & out) {
+	XOJ_CHECK_TYPE(Stroke);
+
 	out.writeObject("Stroke");
 
 	serializeElement(out);
@@ -49,6 +61,8 @@ void Stroke::serialize(ObjectOutputStream & out) {
 }
 
 void Stroke::readSerialized(ObjectInputStream & in) throw (InputStreamException) {
+	XOJ_CHECK_TYPE(Stroke);
+
 	in.readObject("Stroke");
 
 	readSerializedElement(in);
@@ -69,14 +83,20 @@ void Stroke::readSerialized(ObjectInputStream & in) throw (InputStreamException)
 }
 
 void Stroke::setWidth(double width) {
+	XOJ_CHECK_TYPE(Stroke);
+
 	this->width = width;
 }
 
 double Stroke::getWidth() const {
-	return width;
+	XOJ_CHECK_TYPE(Stroke);
+
+	return this->width;
 }
 
 bool Stroke::isInSelection(ShapeContainer * container) {
+	XOJ_CHECK_TYPE(Stroke);
+
 	for (int i = 0; i < this->pointCount; i++) {
 		double px = this->points[i].x;
 		double py = this->points[i].y;
@@ -90,6 +110,8 @@ bool Stroke::isInSelection(ShapeContainer * container) {
 }
 
 void Stroke::setLastPoint(double x, double y) {
+	XOJ_CHECK_TYPE(Stroke);
+
 	if (this->pointCount > 0) {
 		Point & p = this->points[this->pointCount - 1];
 		p.x = x;
@@ -99,6 +121,8 @@ void Stroke::setLastPoint(double x, double y) {
 }
 
 void Stroke::addPoint(Point p) {
+	XOJ_CHECK_TYPE(Stroke);
+
 	if (this->pointCount >= this->pointAllocCount) {
 		this->allocPointSize(this->pointAllocCount + 100);
 	}
@@ -107,19 +131,27 @@ void Stroke::addPoint(Point p) {
 }
 
 void Stroke::allocPointSize(int size) {
+	XOJ_CHECK_TYPE(Stroke);
+
 	this->pointAllocCount = size;
 	this->points = (Point *) g_realloc(this->points, this->pointAllocCount * sizeof(Point));
 }
 
 int Stroke::getPointCount() const {
-	return pointCount;
+	XOJ_CHECK_TYPE(Stroke);
+
+	return this->pointCount;
 }
 
 ArrayIterator<Point> Stroke::pointIterator() const {
+	XOJ_CHECK_TYPE(Stroke);
+
 	return ArrayIterator<Point> (points, pointCount);
 }
 
 void Stroke::deletePointsFrom(int index) {
+	XOJ_CHECK_TYPE(Stroke);
+
 	if (this->pointCount <= index) {
 		return;
 	}
@@ -127,6 +159,8 @@ void Stroke::deletePointsFrom(int index) {
 }
 
 void Stroke::deletePoint(int index) {
+	XOJ_CHECK_TYPE(Stroke);
+
 	if (this->pointCount <= index) {
 		return;
 	}
@@ -142,6 +176,8 @@ void Stroke::deletePoint(int index) {
 }
 
 Point Stroke::getPoint(int index) const {
+	XOJ_CHECK_TYPE(Stroke);
+
 	if (index < 0 || index >= pointCount) {
 		g_warning("Stroke::getPoint(%i) out of bounds!", index);
 		return Point(0, 0, Point::NO_PRESURE);
@@ -150,10 +186,14 @@ Point Stroke::getPoint(int index) const {
 }
 
 const Point * Stroke::getPoints() const {
-	return points;
+	XOJ_CHECK_TYPE(Stroke);
+
+	return this->points;
 }
 
 void Stroke::freeUnusedPointItems() {
+	XOJ_CHECK_TYPE(Stroke);
+
 	if (this->pointAllocCount == this->pointCount) {
 		return;
 	}
@@ -162,14 +202,20 @@ void Stroke::freeUnusedPointItems() {
 }
 
 void Stroke::setToolType(StrokeTool type) {
+	XOJ_CHECK_TYPE(Stroke);
+
 	this->toolType = type;
 }
 
 StrokeTool Stroke::getToolType() const {
-	return toolType;
+	XOJ_CHECK_TYPE(Stroke);
+
+	return this->toolType;
 }
 
 void Stroke::move(double dx, double dy) {
+	XOJ_CHECK_TYPE(Stroke);
+
 	for (int i = 0; i < pointCount; i++) {
 		points[i].x += dx;
 		points[i].y += dy;
@@ -179,6 +225,8 @@ void Stroke::move(double dx, double dy) {
 }
 
 void Stroke::scale(double x0, double y0, double fx, double fy) {
+	XOJ_CHECK_TYPE(Stroke);
+
 	double fz = (fx + fy) / 2;
 
 	for (int i = 0; i < this->pointCount; i++) {
@@ -202,6 +250,8 @@ void Stroke::scale(double x0, double y0, double fx, double fy) {
 }
 
 bool Stroke::hasPressure() {
+	XOJ_CHECK_TYPE(Stroke);
+
 	if (this->pointCount > 0) {
 		return this->points[0].z != Point::NO_PRESURE;
 	}
@@ -209,6 +259,8 @@ bool Stroke::hasPressure() {
 }
 
 void Stroke::scalePressure(double factor) {
+	XOJ_CHECK_TYPE(Stroke);
+
 	if (!hasPressure()) {
 		return;
 	}
@@ -218,18 +270,24 @@ void Stroke::scalePressure(double factor) {
 }
 
 void Stroke::clearPressure() {
+	XOJ_CHECK_TYPE(Stroke);
+
 	for (int i = 0; i < this->pointCount; i++) {
 		this->points[i].z = Point::NO_PRESURE;
 	}
 }
 
 void Stroke::setLastPressure(double pressure) {
+	XOJ_CHECK_TYPE(Stroke);
+
 	if (this->pointCount > 0) {
 		this->points[this->pointCount - 1].z = pressure;
 	}
 }
 
 void Stroke::setPressure(const double * data) {
+	XOJ_CHECK_TYPE(Stroke);
+
 	if (data == NULL) {
 		return;
 	}
@@ -242,7 +300,9 @@ void Stroke::setPressure(const double * data) {
  * split index is the split point, minimimum is 1 NOT 0
  */
 bool Stroke::intersects(double x, double y, double halfEraserSize, double * gap) {
-	if (pointCount < 1) {
+	XOJ_CHECK_TYPE(Stroke);
+
+	if (this->pointCount < 1) {
 		return false;
 	}
 
@@ -307,7 +367,9 @@ bool Stroke::intersects(double x, double y, double halfEraserSize, double * gap)
  * the whole page (performance reason)
  */
 void Stroke::calcSize() {
-	if (pointCount == 0) {
+	XOJ_CHECK_TYPE(Stroke);
+
+	if (this->pointCount == 0) {
 		Element::x = 0;
 		Element::y = 0;
 
@@ -321,7 +383,7 @@ void Stroke::calcSize() {
 	double minY = points[0].y;
 	double maxY = points[0].y;
 
-	for (int i = 1; i < pointCount; i++) {
+	for (int i = 1; i < this->pointCount; i++) {
 		if (minX > points[i].x) {
 			minX = points[i].x;
 		}
@@ -343,14 +405,20 @@ void Stroke::calcSize() {
 }
 
 EraseableStroke * Stroke::getEraseable() {
+	XOJ_CHECK_TYPE(Stroke);
+
 	return this->eraseable;
 }
 
 void Stroke::setEraseable(EraseableStroke * eraseable) {
+	XOJ_CHECK_TYPE(Stroke);
+
 	this->eraseable = eraseable;
 }
 
 void Stroke::debugPrint() {
+	XOJ_CHECK_TYPE(Stroke);
+
 	printf("Stroke %ld / hasPressure() = %i\n", (long)this, this->hasPressure());
 
 	for(int i = 0; i < this->pointCount;i++) {

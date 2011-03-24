@@ -8,10 +8,10 @@
 enum {
 	COLUMN_STRING, COLUMN_BOLD, COLUMN_POINTER, COLUMN_EDITABLE, N_COLUMNS
 };
-// TODO: AA: type check
 
 ToolbarDialog::ToolbarDialog(GladeSearchpath * gladeSearchPath, ToolbarModel * model) :
 	GladeGui(gladeSearchPath, "toolbar.glade", "DialogEditToolbar") {
+	XOJ_INIT_TYPE(ToolbarDialog);
 
 	this->tbModel = model;
 	this->selected = NULL;
@@ -70,17 +70,25 @@ ToolbarDialog::ToolbarDialog(GladeSearchpath * gladeSearchPath, ToolbarModel * m
 }
 
 ToolbarDialog::~ToolbarDialog() {
+	XOJ_CHECK_TYPE(ToolbarDialog);
+
 	g_object_unref(this->model);
 	this->tbModel = NULL;
+
+	XOJ_RELEASE_TYPE(ToolbarDialog);
 }
 
 void ToolbarDialog::buttonNewCallback(GtkButton * button, ToolbarDialog * dlg) {
+	XOJ_CHECK_TYPE_OBJ(dlg, ToolbarDialog);
+
 	ToolbarData * data = new ToolbarData(false);
 	data->setName(_("New"));
 	dlg->addToolbarData(data);
 }
 
 void ToolbarDialog::buttonDeleteCallback(GtkButton * button, ToolbarDialog * dlg) {
+	XOJ_CHECK_TYPE_OBJ(dlg, ToolbarDialog);
+
 	if (dlg->selected) {
 		dlg->tbModel->remove(dlg->selected);
 		GtkTreeIter iter;
@@ -101,6 +109,8 @@ void ToolbarDialog::buttonDeleteCallback(GtkButton * button, ToolbarDialog * dlg
 }
 
 void ToolbarDialog::buttonCopyCallback(GtkButton * button, ToolbarDialog * dlg) {
+	XOJ_CHECK_TYPE_OBJ(dlg, ToolbarDialog);
+
 	if (dlg->selected) {
 		ToolbarData * data = new ToolbarData(*dlg->selected);
 		dlg->addToolbarData(data);
@@ -108,6 +118,8 @@ void ToolbarDialog::buttonCopyCallback(GtkButton * button, ToolbarDialog * dlg) 
 }
 
 void ToolbarDialog::addToolbarData(ToolbarData * data) {
+	XOJ_CHECK_TYPE(ToolbarDialog);
+
 	this->tbModel->add(data);
 	GtkTreeIter iter;
 	gtk_list_store_append(this->model, &iter);
@@ -123,6 +135,8 @@ void ToolbarDialog::addToolbarData(ToolbarData * data) {
 }
 
 void ToolbarDialog::treeCellEditedCallback(GtkCellRendererText * renderer, gchar * pathString, gchar * newText, ToolbarDialog * dlg) {
+	XOJ_CHECK_TYPE_OBJ(dlg, ToolbarDialog);
+
 	GtkTreeIter iter;
 	ToolbarData * data = NULL;
 
@@ -135,6 +149,8 @@ void ToolbarDialog::treeCellEditedCallback(GtkCellRendererText * renderer, gchar
 }
 
 void ToolbarDialog::entrySelected(ToolbarData * data) {
+	XOJ_CHECK_TYPE(ToolbarDialog);
+
 	GtkWidget * btCopy = get("btCopy");
 	GtkWidget * btDelete = get("btDelete");
 
@@ -150,6 +166,8 @@ void ToolbarDialog::entrySelected(ToolbarData * data) {
 }
 
 void ToolbarDialog::treeSelectionChangedCallback(GtkTreeSelection * selection, ToolbarDialog * dlg) {
+	XOJ_CHECK_TYPE_OBJ(dlg, ToolbarDialog);
+
 	GtkTreeIter iter;
 	GtkTreeModel * model = NULL;
 	ToolbarData * data = NULL;
@@ -161,6 +179,8 @@ void ToolbarDialog::treeSelectionChangedCallback(GtkTreeSelection * selection, T
 }
 
 void ToolbarDialog::show() {
+	XOJ_CHECK_TYPE(ToolbarDialog);
+
 	gtk_dialog_run(GTK_DIALOG(this->window));
 	gtk_widget_hide(this->window);
 }

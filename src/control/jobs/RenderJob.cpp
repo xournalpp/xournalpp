@@ -6,23 +6,33 @@
 #include "../../gui/PageView.h"
 #include "../../model/Document.h"
 #include "../../util/Rectangle.h"
-// TODO: AA: type check
 
 RenderJob::RenderJob(PageView * view) {
+	XOJ_INIT_TYPE(RenderJob);
+
 	this->view = view;
 	this->repaintComplete = false;
 	this->repaintRect = NULL;
 }
 
 RenderJob::~RenderJob() {
+	XOJ_CHECK_TYPE(RenderJob);
+
 	this->view = NULL;
+
+	XOJ_RELEASE_TYPE(RenderJob);
 }
 
 void * RenderJob::getSource() {
+	XOJ_CHECK_TYPE(RenderJob);
+
 	return this->view;
 }
 
-void RenderJob::repaintRectangle(PageView * view, Rectangle * rect) {
+void RenderJob::repaintRectangle(RenderJob * renderJob, Rectangle * rect) {
+	XOJ_CHECK_TYPE_OBJ(renderJob, RenderJob);
+
+	PageView * view = renderJob->view;
 	double zoom = view->xournal->getZoom();
 	Document * doc = view->xournal->getDocument();
 
@@ -75,11 +85,13 @@ void RenderJob::repaintRectangle(PageView * view, Rectangle * rect) {
 }
 
 void RenderJob::rerenderRectangle(Rectangle * rect) {
-	repaintRectangle(this->view, rect);
+	XOJ_CHECK_TYPE(RenderJob);
+
+	repaintRectangle(this, rect);
 }
 
 void RenderJob::run() {
-	CHECK_MEMORY(this);
+	XOJ_CHECK_TYPE(RenderJob);
 
 	double zoom = this->view->xournal->getZoom();
 
@@ -147,6 +159,8 @@ void RenderJob::run() {
 }
 
 void RenderJob::afterRun() {
+	XOJ_CHECK_TYPE(RenderJob);
+
 	if (this->repaintComplete) {
 		this->view->repaintPage();
 	} else {
@@ -161,5 +175,7 @@ void RenderJob::afterRun() {
 }
 
 JobType RenderJob::getType() {
+	XOJ_CHECK_TYPE(RenderJob);
+
 	return JOB_TYPE_RENDER;
 }

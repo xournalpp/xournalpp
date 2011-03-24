@@ -8,7 +8,6 @@
  *
  * @license GPL
  */
-// TODO: AA: type check
 
 #ifndef __REMOVELAYERUNDOACTION_H__
 #define __REMOVELAYERUNDOACTION_H__
@@ -27,7 +26,10 @@ public:
 	virtual bool redo(Control * control);
 
 	virtual String getText();
+
 private:
+	XOJ_TYPE_ATTRIB;
+
 	Layer * layer;
 	int layerPos;
 };

@@ -11,7 +11,6 @@
 
 #ifndef __SHADOW_H__
 #define __SHADOW_H__
-// TODO: AA: type check
 
 #include <gtk/gtk.h>
 

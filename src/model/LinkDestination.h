@@ -8,7 +8,6 @@
  *
  * @license GPL
  */
-// TODO: AA: type check
 
 #ifndef __LINKDESTINATION_H__
 #define __LINKDESTINATION_H__
@@ -22,7 +21,9 @@ typedef struct _LinkDestClass XojLinkDestClass;
 class LinkDestination {
 public:
 	LinkDestination();
+	~LinkDestination();
 
+public:
 	int getPdfPage();
 	void setPdfPage(int page);
 
@@ -44,6 +45,8 @@ public:
 	void setName(String name);
 	String getName();
 private:
+	XOJ_TYPE_ATTRIB;
+
 	int page;
 	bool expand;
 

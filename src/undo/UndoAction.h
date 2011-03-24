@@ -8,7 +8,6 @@
  *
  * @license GPL
  */
-// TODO: AA: type check
 
 #ifndef __UNDOACTION_H__
 #define __UNDOACTION_H__
@@ -34,7 +33,10 @@ public:
 	 * Get the affected pages, the Array is terminated with NULL and should be freed with delete[]
 	 */
 	virtual XojPage ** getPages();
+
 protected:
+	XOJ_TYPE_ATTRIB;
+
 	XojPage * page;
 	bool undone;
 };

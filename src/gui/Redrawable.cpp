@@ -1,6 +1,5 @@
 #include "Redrawable.h"
 #include "../model/Element.h"
-// TODO: AA: type check
 
 void Redrawable::repaintRange(Range & r) {
 	repaintArea(r.getX(), r.getY(), r.getX2(), r.getY2());

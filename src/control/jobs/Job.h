@@ -12,14 +12,13 @@
 #ifndef __JOB_H__
 #define __JOB_H__
 
-#include "../../util/MemoryCheck.h"
 #include "../../util/XournalType.h"
 
 enum JobType {
 	JOB_TYPE_BLOCKING, JOB_TYPE_PREVIEW, JOB_TYPE_RENDER, JOB_TYPE_AUTOSAVE
 };
 
-class Job: public MemoryCheckObject {
+class Job {
 public:
 	Job();
 

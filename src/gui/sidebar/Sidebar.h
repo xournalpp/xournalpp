@@ -13,7 +13,6 @@
 #define __SIDEBAR_H__
 
 #include <gtk/gtk.h>
-#include "../../util/MemoryCheck.h"
 #include "../../model/DocumentChangeType.h"
 #include "../../model/DocumentListener.h"
 
@@ -22,9 +21,8 @@ class Document;
 class SidebarPreview;
 class GladeGui;
 class PdfCache;
-// TODO: AA: type check
 
-class Sidebar: public DocumentListener, MemoryCheckObject {
+class Sidebar: public DocumentListener {
 public:
 	Sidebar(GladeGui * gui, Control * control);
 	virtual ~Sidebar();
@@ -62,6 +60,8 @@ private:
 	void updatePreviews();
 
 private:
+	XOJ_TYPE_ATTRIB;
+
 	bool backgroundInitialized;
 	Control * control;
 	GtkComboBox * comboBox;

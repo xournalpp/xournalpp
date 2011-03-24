@@ -4,9 +4,10 @@
 #include "../model/Stroke.h"
 #include "../gui/Redrawable.h"
 #include "../util/Stacktrace.h"
-// TODO: AA: type check
 
 RecognizerUndoAction::RecognizerUndoAction(XojPage * page, Redrawable * view, Layer * layer, Stroke * original, Stroke * recognized) {
+	XOJ_INIT_TYPE(RecognizerUndoAction);
+
 	this->page = page;
 	this->view = view;
 	this->layer = layer;
@@ -17,19 +18,25 @@ RecognizerUndoAction::RecognizerUndoAction(XojPage * page, Redrawable * view, La
 }
 
 RecognizerUndoAction::~RecognizerUndoAction() {
-	if (undone) {
-		delete recognized;
+	XOJ_CHECK_TYPE(RecognizerUndoAction);
+
+	if (this->undone) {
+		delete this->recognized;
 	} else {
 		for (GList * l = this->original; l != NULL; l = l->next) {
 			Stroke * s = (Stroke *) l->data;
 			delete s;
 		}
 	}
-	original = NULL;
-	recognized = NULL;
+	this->original = NULL;
+	this->recognized = NULL;
+
+	XOJ_RELEASE_TYPE(RecognizerUndoAction);
 }
 
 void RecognizerUndoAction::addSourceElement(Stroke * s) {
+	XOJ_CHECK_TYPE(RecognizerUndoAction);
+
 	GList * elem2 = g_list_find(this->original, s);
 	if (elem2) {
 		g_warning("RecognizerUndoAction::addSourceElement() twice the same\n");
@@ -41,6 +48,8 @@ void RecognizerUndoAction::addSourceElement(Stroke * s) {
 }
 
 bool RecognizerUndoAction::undo(Control * control) {
+	XOJ_CHECK_TYPE(RecognizerUndoAction);
+
 	int pos = this->layer->removeElement(this->recognized, false);
 	this->view->rerenderElement(this->recognized);
 	int i = 0;
@@ -51,11 +60,13 @@ bool RecognizerUndoAction::undo(Control * control) {
 		i++;
 	}
 
-	undone = true;
+	this->undone = true;
 	return true;
 }
 
 bool RecognizerUndoAction::redo(Control * control) {
+	XOJ_CHECK_TYPE(RecognizerUndoAction);
+
 	int pos = 0;
 	for (GList * l = this->original; l != NULL; l = l->next) {
 		Stroke * s = (Stroke *) l->data;
@@ -66,11 +77,13 @@ bool RecognizerUndoAction::redo(Control * control) {
 
 	this->view->rerenderElement(this->recognized);
 
-	undone = false;
+	this->undone = false;
 	return true;
 }
 
 String RecognizerUndoAction::getText() {
+	XOJ_CHECK_TYPE(RecognizerUndoAction);
+
 	return _("Stroke recognizer");
 }
 

@@ -8,7 +8,6 @@
  *
  * @license GPL
  */
-// TODO: AA: type check
 
 #ifndef __XMLNODE_H__
 #define __XMLNODE_H__

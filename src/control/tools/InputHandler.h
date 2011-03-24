@@ -15,7 +15,6 @@
 #include <gtk/gtk.h>
 #include "../../model/Stroke.h"
 #include "../../model/Page.h"
-#include "../../util/MemoryCheck.h"
 #include "../../util/XournalType.h"
 #include "../shaperecognizer/ShapeRecognizer.h"
 
@@ -23,7 +22,7 @@ class DocumentView;
 class XournalView;
 class PageView;
 
-class InputHandler: public MemoryCheckObject {
+class InputHandler {
 public:
 	InputHandler(XournalView * xournal, PageView * redrawable);
 	virtual ~InputHandler();

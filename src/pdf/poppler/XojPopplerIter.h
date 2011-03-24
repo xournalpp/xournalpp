@@ -11,7 +11,6 @@
 
 #ifndef __XOJPOPPLERITER_H__
 #define __XOJPOPPLERITER_H__
-// TODO: AA: type check
 
 #include "XojPopplerDocument.h"
 #include "XojPopplerAction.h"
@@ -33,6 +32,8 @@ private:
 	static String unicodeToChar(Unicode * unicode, int len);
 
 private:
+	XOJ_TYPE_ATTRIB;
+
 	XojPopplerDocument doc;
 	GooList *items;
 	int index;

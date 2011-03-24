@@ -8,7 +8,6 @@
  *
  * @license GPL
  */
-// TODO: AA: type check
 
 #ifndef __PAGELAYERPOSENTRY_H__
 #define __PAGELAYERPOSENTRY_H__
@@ -21,6 +20,8 @@ public:
 		this->pos = pos;
 		this->layer = layer;
 	}
+
+	XOJ_TYPE_ATTRIB;
 
 	Layer * layer;
 	T * element;

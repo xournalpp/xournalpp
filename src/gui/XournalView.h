@@ -15,7 +15,6 @@
 #include <gtk/gtk.h>
 #include "../util/Arrayiterator.h"
 #include "../control/ZoomControl.h"
-#include "../util/MemoryCheck.h"
 #include "../model/DocumentListener.h"
 
 const int XOURNAL_PADDING = 20;
@@ -33,7 +32,7 @@ class PagePositionHandler;
 class Cursor;
 class EditSelection;
 
-class XournalView: public DocumentListener, public ZoomListener, public MemoryCheckObject {
+class XournalView: public DocumentListener, public ZoomListener {
 public:
 	XournalView(GtkWidget * parent, GtkRange * hrange, GtkRange * vrange, Control * control);
 	virtual ~XournalView();

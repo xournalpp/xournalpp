@@ -1,5 +1,4 @@
 #include "LinkDestination.h"
-// TODO: AA: type check
 
 struct _LinkDestClass {
 	GObjectClass base_class;
@@ -7,11 +6,11 @@ struct _LinkDestClass {
 
 G_DEFINE_TYPE (XojLinkDest, link_dest, G_TYPE_OBJECT)
 
-static void link_dest_init(XojLinkDest *linkAction) {
+static void link_dest_init(XojLinkDest * linkAction) {
 	linkAction->dest = NULL;
 }
 
-static void link_dest_finalize(GObject *object) {
+static void link_dest_finalize(GObject * object) {
 	delete LINK_DEST(object)->dest;
 	G_OBJECT_CLASS (object)->finalize(object);
 }
@@ -30,6 +29,8 @@ XojLinkDest * link_dest_new() {
 }
 
 LinkDestination::LinkDestination() {
+	XOJ_INIT_TYPE(LinkDestination);
+
 	this->page = -1;
 	this->changeLeft = false;
 	this->changeZoom = false;
@@ -39,66 +40,100 @@ LinkDestination::LinkDestination() {
 	this->top = 0;
 }
 
+LinkDestination::~LinkDestination() {
+	XOJ_RELEASE_TYPE(LinkDestination);
+}
+
 int LinkDestination::getPdfPage() {
+	XOJ_CHECK_TYPE(LinkDestination);
+
 	return this->page;
 }
 
 void LinkDestination::setPdfPage(int page) {
+	XOJ_CHECK_TYPE(LinkDestination);
+
 	this->page = page;
 }
 
 void LinkDestination::setExpand(bool expand) {
+	XOJ_CHECK_TYPE(LinkDestination);
+
 	this->expand = expand;
 }
 
 bool LinkDestination::getExpand() {
+	XOJ_CHECK_TYPE(LinkDestination);
+
 	return this->expand;
 }
 
 bool LinkDestination::shouldChangeLeft() {
+	XOJ_CHECK_TYPE(LinkDestination);
+
 	return changeLeft;
 }
 
 bool LinkDestination::shouldChangeZoom() {
+	XOJ_CHECK_TYPE(LinkDestination);
+
 	return changeZoom;
 }
 
 bool LinkDestination::shouldChangeTop() {
+	XOJ_CHECK_TYPE(LinkDestination);
+
 	return changeTop;
 }
 
 double LinkDestination::getZoom() {
+	XOJ_CHECK_TYPE(LinkDestination);
+
 	return zoom;
 }
 
 double LinkDestination::getLeft() {
+	XOJ_CHECK_TYPE(LinkDestination);
+
 	return left;
 }
 
 double LinkDestination::getTop() {
+	XOJ_CHECK_TYPE(LinkDestination);
+
 	return top;
 }
 
 void LinkDestination::setChangeLeft(double left) {
+	XOJ_CHECK_TYPE(LinkDestination);
+
 	this->left = left;
 	this->changeLeft = true;
 }
 
 void LinkDestination::setChangeZoom(double zoom) {
+	XOJ_CHECK_TYPE(LinkDestination);
+
 	this->zoom = zoom;
 	this->changeZoom = true;
 }
 
 void LinkDestination::setChangeTop(double top) {
+	XOJ_CHECK_TYPE(LinkDestination);
+
 	this->top = top;
 	this->changeTop = true;
 }
 
 void LinkDestination::setName(String name) {
+	XOJ_CHECK_TYPE(LinkDestination);
+
 	this->name = name;
 }
 
 String LinkDestination::getName() {
+	XOJ_CHECK_TYPE(LinkDestination);
+
 	return this->name;
 }
 

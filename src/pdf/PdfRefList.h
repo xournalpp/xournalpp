@@ -8,7 +8,6 @@
  *
  * @license GPL
  */
-// TODO: AA: type check
 
 #ifndef __PDFREFLIST_H__
 #define __PDFREFLIST_H__
@@ -41,6 +40,8 @@ public:
 	void markAsUsed();
 
 private:
+	XOJ_TYPE_ATTRIB;
+
 	bool used;
 
 	PdfRefEntry * refEntry;
@@ -64,6 +65,8 @@ public:
 	static void deletePdfRefList(PdfRefList * ref);
 
 private:
+	XOJ_TYPE_ATTRIB;
+
 	int id;
 	GList * data;
 

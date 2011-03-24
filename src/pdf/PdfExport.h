@@ -8,7 +8,6 @@
  *
  * @license GPL
  */
-// TODO: AA: type check
 
 #ifndef __PDFEXPORT_H__
 #define __PDFEXPORT_H__
@@ -56,6 +55,8 @@ private:
 	bool writeResources();
 
 private:
+	XOJ_TYPE_ATTRIB;
+
 	Document * doc;
 	XojPopplerDocument currentPdfDoc;
 

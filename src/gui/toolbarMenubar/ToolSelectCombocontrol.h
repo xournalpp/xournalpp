@@ -8,13 +8,13 @@
  *
  * @license GPL
  */
-// TODO: AA: type check
 
 #ifndef __TOOLSELECTCOMBOCONTROL_H__
 #define __TOOLSELECTCOMBOCONTROL_H__
 
 #include "ToolButton.h"
 #include "../GladeGui.h"
+#include "../../util/XournalType.h"
 
 class ToolMenuHandler;
 
@@ -30,6 +30,8 @@ protected:
 	virtual GtkToolItem * newItem();
 
 private:
+	XOJ_TYPE_ATTRIB;
+
 	GtkWidget * iconWidget;
 	GtkWidget * labelWidget;
 

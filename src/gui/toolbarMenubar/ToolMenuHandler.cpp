@@ -21,9 +21,10 @@
 
 #include "model/ToolbarModel.h"
 #include "model/ToolbarData.h"
-// TODO: AA: type check
 
 ToolMenuHandler::ToolMenuHandler(ActionHandler * listener, ZoomControl * zoom, GladeGui * gui, ToolHandler * toolHandler) {
+	XOJ_INIT_TYPE(ToolMenuHandler);
+
 	this->toolItems = NULL;
 	this->toolbarColorItems = NULL;
 	this->menuItems = NULL;
@@ -41,16 +42,22 @@ ToolMenuHandler::ToolMenuHandler(ActionHandler * listener, ZoomControl * zoom, G
 }
 
 ToolMenuHandler::~ToolMenuHandler() {
+	XOJ_CHECK_TYPE(ToolMenuHandler);
+
 	delete this->tbModel;
 	this->tbModel = NULL;
+
+	XOJ_RELEASE_TYPE(ToolMenuHandler);
 }
 
 void ToolMenuHandler::freeToolbar() {
-	for (GList * l = toolbarColorItems; l != NULL; l = l->next) {
+	XOJ_CHECK_TYPE(ToolMenuHandler);
+
+	for (GList * l = this->toolbarColorItems; l != NULL; l = l->next) {
 		delete (ColorToolItem *) l->data;
 	}
-	g_list_free(toolbarColorItems);
-	toolbarColorItems = NULL;
+	g_list_free(this->toolbarColorItems);
+	this->toolbarColorItems = NULL;
 
 	for (GList * l = this->toolItems; l != NULL; l = l->next) {
 		AbstractToolItem * item = (AbstractToolItem *) l->data;
@@ -59,6 +66,8 @@ void ToolMenuHandler::freeToolbar() {
 }
 
 void ToolMenuHandler::unloadToolbar(GtkWidget * toolbar) {
+	XOJ_CHECK_TYPE(ToolMenuHandler);
+
 	for (int i = gtk_toolbar_get_n_items(GTK_TOOLBAR(toolbar)) - 1; i >= 0; i--) {
 		GtkToolItem * tbItem = gtk_toolbar_get_nth_item(GTK_TOOLBAR(toolbar), i);
 		gtk_container_remove(GTK_CONTAINER(toolbar), GTK_WIDGET(tbItem));
@@ -68,6 +77,8 @@ void ToolMenuHandler::unloadToolbar(GtkWidget * toolbar) {
 }
 
 void ToolMenuHandler::load(ToolbarData * d, GtkWidget * toolbar, const char * toolbarName, bool horizontal) {
+	XOJ_CHECK_TYPE(ToolMenuHandler);
+
 	std::vector<ToolbarEntry>::iterator it;
 
 	int count = 0;
@@ -173,6 +184,8 @@ void ToolMenuHandler::load(ToolbarData * d, GtkWidget * toolbar, const char * to
 }
 
 void ToolMenuHandler::setTmpDisabled(bool disabled) {
+	XOJ_CHECK_TYPE(ToolMenuHandler);
+
 	for (GList * l = this->toolItems; l != NULL; l = l->next) {
 		AbstractToolItem * it = (AbstractToolItem *) l->data;
 		it->setTmpDisabled(disabled);
@@ -192,20 +205,27 @@ void ToolMenuHandler::setTmpDisabled(bool disabled) {
 }
 
 void ToolMenuHandler::addToolItem(AbstractToolItem * it) {
+	XOJ_CHECK_TYPE(ToolMenuHandler);
+
 	this->toolItems = g_list_append(this->toolItems, it);
 }
 
 void ToolMenuHandler::registerMenupoint(GtkWidget * widget, ActionType type) {
+	XOJ_CHECK_TYPE(ToolMenuHandler);
+
 	MenuItem * it = new MenuItem(listener, widget, type);
 	this->menuItems = g_list_append(this->menuItems, it);
 }
 
 void ToolMenuHandler::registerMenupoint(GtkWidget * widget, ActionType type, ActionGroup group) {
+	XOJ_CHECK_TYPE(ToolMenuHandler);
+
 	MenuItem * it = new MenuItem(listener, widget, type, group);
 	this->menuItems = g_list_append(this->menuItems, it);
 }
 
 void ToolMenuHandler::initEraserToolItem() {
+	XOJ_CHECK_TYPE(ToolMenuHandler);
 
 	ToolButton * tbEraser =
 			new ToolButton(listener, gui, "ERASER", ACTION_TOOL_ERASER, GROUP_TOOL, "tool_eraser.png", _("Eraser"), gui->get("menuToolsEraser"));
@@ -238,6 +258,8 @@ void ToolMenuHandler::initEraserToolItem() {
 }
 
 void ToolMenuHandler::initToolItems() {
+	XOJ_CHECK_TYPE(ToolMenuHandler);
+
 	addToolItem(new ToolButton(listener, "SAVE", ACTION_SAVE, GTK_STOCK_SAVE, _("Save"), gui->get("menuFileSave")));
 	addToolItem(new ToolButton(listener, gui, "NEW", ACTION_NEW, "documentNew.png", _("New Xournal"), gui->get("menuFileNew")));
 
@@ -425,40 +447,58 @@ void ToolMenuHandler::initToolItems() {
 }
 
 void ToolMenuHandler::setFontButtonFont(XojFont & font) {
+	XOJ_CHECK_TYPE(ToolMenuHandler);
+
 	fontButton->setFont(font);
 }
 
 XojFont ToolMenuHandler::getFontButtonFont() {
+	XOJ_CHECK_TYPE(ToolMenuHandler);
+
 	return fontButton->getFont();
 }
 
 void ToolMenuHandler::setUndoDescription(String description) {
+	XOJ_CHECK_TYPE(ToolMenuHandler);
+
 	undoButton->updateDescription(description);
 	gtk_menu_item_set_label(GTK_MENU_ITEM(gui->get("menuEditUndo")), description.c_str());
 }
 
 void ToolMenuHandler::setRedoDescription(String description) {
+	XOJ_CHECK_TYPE(ToolMenuHandler);
+
 	redoButton->updateDescription(description);
 	gtk_menu_item_set_label(GTK_MENU_ITEM(gui->get("menuEditRedo")), description.c_str());
 }
 
 GtkWidget * ToolMenuHandler::getPageSpinner() {
+	XOJ_CHECK_TYPE(ToolMenuHandler);
+
 	return toolPageSpinner->getPageSpinner();
 }
 
 void ToolMenuHandler::setPageText(String text) {
+	XOJ_CHECK_TYPE(ToolMenuHandler);
+
 	toolPageSpinner->setText(text);
 }
 
 int ToolMenuHandler::getSelectedLayer() {
+	XOJ_CHECK_TYPE(ToolMenuHandler);
+
 	return toolPageLayer->getSelectedLayer();
 }
 
 void ToolMenuHandler::setLayerCount(int count, int selected) {
+	XOJ_CHECK_TYPE(ToolMenuHandler);
+
 	toolPageLayer->setLayerCount(count, selected);
 }
 
 ToolbarModel * ToolMenuHandler::getModel() {
+	XOJ_CHECK_TYPE(ToolMenuHandler);
+
 	return this->tbModel;
 }
 

@@ -103,8 +103,6 @@ public:
 };
 
 MainWindow::~MainWindow() {
-	CHECK_MEMORY(this);
-
 	for (GList * l = this->toolbarMenuData; l != NULL; l = l->next) {
 		MenuSelectToolbarData * data = (MenuSelectToolbarData *) l->data;
 		delete data;

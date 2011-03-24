@@ -3,9 +3,10 @@
 #include "../model/Document.h"
 #include "../control/Control.h"
 #include "../gui/Cursor.h"
-// TODO: AA: type check
 
 InsertDeletePageUndoAction::InsertDeletePageUndoAction(XojPage * page, int pagePos, bool inserted) {
+	XOJ_INIT_TYPE(InsertDeletePageUndoAction);
+
 	this->inserted = inserted;
 	this->page = page;
 	this->pagePos = pagePos;
@@ -13,10 +14,16 @@ InsertDeletePageUndoAction::InsertDeletePageUndoAction(XojPage * page, int pageP
 }
 
 InsertDeletePageUndoAction::~InsertDeletePageUndoAction() {
+	XOJ_CHECK_TYPE(InsertDeletePageUndoAction);
+
 	page->unreference();
+
+	XOJ_RELEASE_TYPE(InsertDeletePageUndoAction);
 }
 
 bool InsertDeletePageUndoAction::undo(Control * control) {
+	XOJ_CHECK_TYPE(InsertDeletePageUndoAction);
+
 	if (this->inserted) {
 		return deletePage(control);
 	} else {
@@ -25,6 +32,8 @@ bool InsertDeletePageUndoAction::undo(Control * control) {
 }
 
 bool InsertDeletePageUndoAction::redo(Control * control) {
+	XOJ_CHECK_TYPE(InsertDeletePageUndoAction);
+
 	if (this->inserted) {
 		return insertPage(control);
 	} else {
@@ -33,6 +42,8 @@ bool InsertDeletePageUndoAction::redo(Control * control) {
 }
 
 bool InsertDeletePageUndoAction::insertPage(Control * control) {
+	XOJ_CHECK_TYPE(InsertDeletePageUndoAction);
+
 	Document * doc = control->getDocument();
 
 	doc->lock();
@@ -48,6 +59,8 @@ bool InsertDeletePageUndoAction::insertPage(Control * control) {
 }
 
 bool InsertDeletePageUndoAction::deletePage(Control * control) {
+	XOJ_CHECK_TYPE(InsertDeletePageUndoAction);
+
 	Document * doc = control->getDocument();
 
 	doc->lock();
@@ -69,6 +82,8 @@ bool InsertDeletePageUndoAction::deletePage(Control * control) {
 }
 
 String InsertDeletePageUndoAction::getText() {
+	XOJ_CHECK_TYPE(InsertDeletePageUndoAction);
+
 	if (this->inserted) {
 		return _("Page inserted");
 	} else {

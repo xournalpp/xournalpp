@@ -11,7 +11,6 @@
 
 #ifndef __XOJ_POPPLERDOCUMENT_H__
 #define __XOJ_POPPLERDOCUMENT_H__
-// TODO: AA: type check
 
 #include "XojPopplerPage.h"
 #include "../../util/String.h"
@@ -37,8 +36,8 @@ public:
 
 	int getPageCount();
 
-	void load(char *data, int length);
-	bool load(const char *uri, const char *password, GError **error);
+	void load(char * data, int length);
+	bool load(const char * uri, const char * password, GError ** error);
 
 	PDFDoc * getDoc();
 
@@ -47,6 +46,8 @@ public:
 	bool save(String filename, GError ** error);
 
 private:
+	XOJ_TYPE_ATTRIB;
+
 	_IntPopplerDocument * data;
 };
 

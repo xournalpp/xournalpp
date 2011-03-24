@@ -8,7 +8,6 @@
  *
  * @license GPL
  */
-// TODO: AA: type check
 
 #ifndef __XMLIMAGENODE_H__
 #define __XMLIMAGENODE_H__
@@ -28,6 +27,8 @@ public:
 	virtual void writeOut(OutputStream * out);
 
 private:
+	XOJ_TYPE_ATTRIB;
+
 	cairo_surface_t * img;
 
 	OutputStream * out;

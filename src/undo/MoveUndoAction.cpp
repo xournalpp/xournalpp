@@ -121,7 +121,6 @@ void MoveUndoAction::acceptPositions(GList * pos) {
 	for (GList * l = pos; l != NULL; l = l->next) {
 		MoveUndoEntry * u = (MoveUndoEntry *) l->data;
 		Element * e = u->e;
-		CHECK_MEMORY(e);
 
 		e->move(u->x - e->getX(), u->y - e->getY());
 	}
@@ -137,13 +136,11 @@ void MoveUndoAction::switchLayer(GList * entries, Layer * oldLayer, Layer * newL
 
 void MoveUndoAction::repaint(Redrawable * view, GList * list) {
 	MoveUndoEntry * u = (MoveUndoEntry *) list->data;
-	CHECK_MEMORY(u->e);
 
 	Range range(u->x, u->y);
 
 	for (GList * l = list; l != NULL; l = l->next) {
 		u = (MoveUndoEntry *) l->data;
-		CHECK_MEMORY(u->e);
 		range.addPoint(u->x, u->y);
 		range.addPoint(u->x + u->e->getElementWidth(), u->y + u->e->getElementHeight());
 	}

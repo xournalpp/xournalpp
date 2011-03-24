@@ -6,10 +6,12 @@
 #include "ButtonConfigGui.h"
 #include "../../util/Util.h"
 #include <string.h>
-// TODO: AA: type check
 
 SettingsDialog::SettingsDialog(GladeSearchpath * gladeSearchPath, Settings * settings) :
 	GladeGui(gladeSearchPath, "settings.glade", "settingsDialog") {
+
+	XOJ_INIT_TYPE(SettingsDialog);
+
 	this->settings = settings;
 	this->dpi = 72;
 	callib = zoomcallib_new();
@@ -35,6 +37,8 @@ SettingsDialog::SettingsDialog(GladeSearchpath * gladeSearchPath, Settings * set
 }
 
 SettingsDialog::~SettingsDialog() {
+	XOJ_CHECK_TYPE(SettingsDialog);
+
 	for (GList * l = this->buttonConfigs; l != NULL; l = l->next) {
 		delete (ButtonConfigGui *) l->data;
 	}
@@ -42,19 +46,27 @@ SettingsDialog::~SettingsDialog() {
 
 	// DO NOT delete settings!
 	this->settings = NULL;
+
+	XOJ_RELEASE_TYPE(SettingsDialog);
 }
 
 gboolean SettingsDialog::zoomcallibSliderChanged(GtkRange * range, GtkScrollType scroll, gdouble value, SettingsDialog * dlg) {
+	XOJ_CHECK_TYPE_OBJ(dlg, SettingsDialog);
+
 	dlg->setDpi((int) value);
 
 	return false;
 }
 
 void SettingsDialog::initMouseButtonEvents(const char * hbox, int button, bool withDevice) {
+	XOJ_CHECK_TYPE(SettingsDialog);
+
 	this->buttonConfigs = g_list_append(this->buttonConfigs, new ButtonConfigGui(this, get(hbox), settings, button, withDevice));
 }
 
 void SettingsDialog::initMouseButtonEvents() {
+	XOJ_CHECK_TYPE(SettingsDialog);
+
 	initMouseButtonEvents("hboxMidleMouse", 1);
 	initMouseButtonEvents("hboxRightMouse", 2);
 	initMouseButtonEvents("hboxEraser", 0);
@@ -64,6 +76,8 @@ void SettingsDialog::initMouseButtonEvents() {
 }
 
 void SettingsDialog::setDpi(int dpi) {
+	XOJ_CHECK_TYPE(SettingsDialog);
+
 	if (this->dpi == dpi) {
 		return;
 	}
@@ -73,6 +87,8 @@ void SettingsDialog::setDpi(int dpi) {
 }
 
 void SettingsDialog::show() {
+	XOJ_CHECK_TYPE(SettingsDialog);
+
 	load();
 
 	int res = gtk_dialog_run(GTK_DIALOG(this->window));
@@ -83,21 +99,30 @@ void SettingsDialog::show() {
 
 	gtk_widget_hide(this->window);
 }
+
 void SettingsDialog::loadCheckbox(const char * name, gboolean value) {
+	XOJ_CHECK_TYPE(SettingsDialog);
+
 	GtkToggleButton * b = GTK_TOGGLE_BUTTON(get(name));
 	gtk_toggle_button_set_active(b, value);
 }
 
-gboolean SettingsDialog::getCheckbox(const char * name) {
+bool SettingsDialog::getCheckbox(const char * name) {
+	XOJ_CHECK_TYPE(SettingsDialog);
+
 	GtkToggleButton * b = GTK_TOGGLE_BUTTON(get(name));
 	return gtk_toggle_button_get_active(b);
 }
 
-void SettingsDialog::toolboxToggledCallback(GtkToggleButton *togglebutton, SettingsDialog * sd) {
+void SettingsDialog::toolboxToggledCallback(GtkToggleButton * togglebutton, SettingsDialog * sd) {
+	XOJ_CHECK_TYPE_OBJ(sd, SettingsDialog);
+
 	sd->toolboxToggled();
 }
 
 void SettingsDialog::toolboxToggled() {
+	XOJ_CHECK_TYPE(SettingsDialog);
+
 	GtkToggleButton * cbSettingXinput = GTK_TOGGLE_BUTTON(get("cbSettingXinput"));
 	GtkWidget* cbSettingPresureSensitivity = get("cbSettingPresureSensitivity");
 	GtkWidget* labePresureSensitivity = get("labePresureSensitivity");
@@ -122,6 +147,8 @@ void SettingsDialog::toolboxToggled() {
 }
 
 void SettingsDialog::load() {
+	XOJ_CHECK_TYPE(SettingsDialog);
+
 	loadCheckbox("cbSettingXinput", settings->isXinputEnabled());
 	loadCheckbox("cbSettingPresureSensitivity", settings->isPresureSensitivity());
 	loadCheckbox("cbShowSidebarRight", settings->isSidebarOnRight());
@@ -189,6 +216,8 @@ void SettingsDialog::load() {
 }
 
 String SettingsDialog::updateHideString(String hidden, bool hideMenubar, bool hideSidebar) {
+	XOJ_CHECK_TYPE(SettingsDialog);
+
 	String newHidden = "";
 
 	const char * element;
@@ -237,6 +266,8 @@ String SettingsDialog::updateHideString(String hidden, bool hideMenubar, bool hi
 }
 
 void SettingsDialog::save() {
+	XOJ_CHECK_TYPE(SettingsDialog);
+
 	settings->setXinputEnabled(getCheckbox("cbSettingXinput"));
 	settings->setPresureSensitivity(getCheckbox("cbSettingPresureSensitivity"));
 	settings->setSidebarOnRight(getCheckbox("cbShowSidebarRight"));

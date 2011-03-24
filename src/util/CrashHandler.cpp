@@ -133,12 +133,6 @@ static void emergencySave() {
 
 	fprintf(stderr, "\nTry to emergency save the current open document...\n");
 
-	if (document->isMemoryCorrupted(__FILE__, __LINE__)) {
-		fprintf(stderr, "Document is corrupted... no chance... sorry...\n");
-
-		return;
-	}
-
 	SaveHandler handler;
 	handler.prepareSave(document);
 
