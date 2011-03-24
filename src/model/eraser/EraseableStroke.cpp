@@ -5,6 +5,8 @@
 #include "../../util/Range.h"
 #include <math.h>
 
+// TODO: MEMORY LEAK!
+
 EraseableStroke::EraseableStroke(Stroke * stroke) {
 	XOJ_INIT_TYPE(EraseableStroke);
 
@@ -127,6 +129,7 @@ void EraseableStroke::erase(double x, double y, double halfEraserSize, Eraseable
 	if (eraser.lineLengthTo(*a) < halfEraserSize * 1.2 && eraser.lineLengthTo(*b) < halfEraserSize * 1.2) {
 		list->data = g_list_remove(list->data, part);
 		addRepaintRect(part->getX(), part->getY(), part->getElementWidth(), part->getElementHeight());
+
 		delete part;
 		return;
 	}
@@ -143,19 +146,33 @@ void EraseableStroke::erase(double x, double y, double halfEraserSize, Eraseable
 
 	// check first point
 	if (aX >= x1 && aY >= y1 && aX <= x2 && aY <= y2) {
-		if (erasePart(x, y, halfEraserSize, part, list)) {
+		bool deleteAfter = false;
+
+		if (erasePart(x, y, halfEraserSize, part, list, &deleteAfter)) {
 			addRepaintRect(part->getX(), part->getY(), part->getElementWidth(), part->getElementHeight());
 			part->calcSize();
 		}
+
+		if(deleteAfter) {
+			delete part;
+		}
+
 		return;
 	}
 
 	// check last point
 	if (bX >= x1 && bY >= y1 && bX <= x2 && bY <= y2) {
-		if (erasePart(x, y, halfEraserSize, part, list)) {
+		bool deleteAfter = false;
+
+		if (erasePart(x, y, halfEraserSize, part, list, &deleteAfter)) {
 			addRepaintRect(part->getX(), part->getY(), part->getElementWidth(), part->getElementHeight());
 			part->calcSize();
 		}
+
+		if(deleteAfter) {
+			delete part;
+		}
+
 		return;
 	}
 
@@ -180,16 +197,23 @@ void EraseableStroke::erase(double x, double y, double halfEraserSize, Eraseable
 		distance -= hypot((x2 - x1) / 2, (y2 - y1) / 2);
 
 		if (distance <= (len / 2) + 0.1) {
-			if (erasePart(x, y, halfEraserSize, part, list)) {
+			bool deleteAfter = false;
+
+			if (erasePart(x, y, halfEraserSize, part, list, &deleteAfter)) {
 				addRepaintRect(part->getX(), part->getY(), part->getElementWidth(), part->getElementHeight());
 				part->calcSize();
 			}
+
+			if(deleteAfter) {
+				delete part;
+			}
+
 			return;
 		}
 	}
 }
 
-bool EraseableStroke::erasePart(double x, double y, double halfEraserSize, EraseableStrokePart * part, PartList * list) {
+bool EraseableStroke::erasePart(double x, double y, double halfEraserSize, EraseableStrokePart * part, PartList * list, bool * deleteStrokeAfter) {
 	XOJ_CHECK_TYPE(EraseableStroke);
 
 	bool changed = false;
@@ -280,7 +304,7 @@ bool EraseableStroke::erasePart(double x, double y, double halfEraserSize, Erase
 	} else {
 		// no parts, all deleted
 		list->data = g_list_remove(list->data, part);
-		delete part;
+		*deleteStrokeAfter = true;
 	}
 
 	return changed;
