@@ -60,6 +60,14 @@ XournalView::~XournalView() {
 	XOJ_CHECK_TYPE(XournalView);
 
 	g_source_remove(this->cleanupTimeout);
+
+	for (int i = 0; i < this->viewPagesLen; i++) {
+		delete this->viewPages[i];
+	}
+	delete[] this->viewPages;
+	this->viewPagesLen = 0;
+	this->viewPages = NULL;
+
 	delete this->cache;
 	this->cache = NULL;
 	delete this->repaintHandler;
@@ -68,13 +76,9 @@ XournalView::~XournalView() {
 	delete this->pagePosition;
 	this->pagePosition = NULL;
 
-	XOJ_RELEASE_TYPE(XournalView);
-}
-
-void XournalView::widgetDeleted() {
-	XOJ_CHECK_TYPE(XournalView);
-
 	this->widget = NULL;
+
+	XOJ_RELEASE_TYPE(XournalView);
 }
 
 gint pageViewCmpSize(PageView * a, PageView * b) {
@@ -914,15 +918,16 @@ bool XournalView::isPageVisible(int page) {
 void XournalView::documentChanged(DocumentChangeType type) {
 	XOJ_CHECK_TYPE(XournalView);
 
-	clearSelection();
-
 	if (type != DOCUMENT_CHANGE_CLEARED && type != DOCUMENT_CHANGE_COMPLETE) {
 		return;
 	}
-	for (int i = 0; i < viewPagesLen; i++) {
-		delete viewPages[i];
+
+	clearSelection();
+
+	for (int i = 0; i < this->viewPagesLen; i++) {
+		delete this->viewPages[i];
 	}
-	delete[] viewPages;
+	delete[] this->viewPages;
 
 	Document * doc = control->getDocument();
 	doc->lock();

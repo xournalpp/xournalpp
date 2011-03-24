@@ -47,22 +47,43 @@ ToolMenuHandler::~ToolMenuHandler() {
 	delete this->tbModel;
 	this->tbModel = NULL;
 
+	for (GList * l = this->menuItems; l != NULL; l = l->next) {
+		MenuItem * it = (MenuItem *) l->data;
+		delete it;
+	}
+
+	g_list_free(this->menuItems);
+	this->menuItems = NULL;
+
+	freeToolbar();
+
 	XOJ_RELEASE_TYPE(ToolMenuHandler);
 }
 
 void ToolMenuHandler::freeToolbar() {
 	XOJ_CHECK_TYPE(ToolMenuHandler);
 
-	for (GList * l = this->toolbarColorItems; l != NULL; l = l->next) {
-		delete (ColorToolItem *) l->data;
+	for (GList * l = this->toolItems; l != NULL; l = l->next) {
+		AbstractToolItem * it = (AbstractToolItem *) l->data;
+		delete it;
+	}
+	g_list_free(this->toolItems);
+	this->toolItems = NULL;
+
+	for (GList * l = this->menuItems; l != NULL; l = l->next) {
+		MenuItem * it = (MenuItem *) l->data;
+		delete it;
+	}
+	g_list_free(this->menuItems);
+	this->menuItems = NULL;
+
+	for (GList * l = toolbarColorItems; l != NULL; l = l->next) {
+		ColorToolItem * it = (ColorToolItem *) l->data;
+		delete it;
 	}
 	g_list_free(this->toolbarColorItems);
 	this->toolbarColorItems = NULL;
 
-	for (GList * l = this->toolItems; l != NULL; l = l->next) {
-		AbstractToolItem * item = (AbstractToolItem *) l->data;
-		item->setUsed(false);
-	}
 }
 
 void ToolMenuHandler::unloadToolbar(GtkWidget * toolbar) {

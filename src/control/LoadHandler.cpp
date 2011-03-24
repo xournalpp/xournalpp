@@ -38,8 +38,12 @@ LoadHandler::LoadHandler() :
 	this->pdfReplacementAttach = false;
 }
 
-void LoadHandler::initAttributes() {
+LoadHandler::~LoadHandler() {
 	XOJ_RELEASE_TYPE(LoadHandler);
+}
+
+void LoadHandler::initAttributes() {
+	XOJ_CHECK_TYPE(LoadHandler);
 
 	this->fp = NULL;
 	this->error = NULL;
@@ -54,10 +58,6 @@ void LoadHandler::initAttributes() {
 	this->stroke = NULL;
 	this->image = NULL;
 	this->text = NULL;
-}
-
-LoadHandler::~LoadHandler() {
-	XOJ_RELEASE_TYPE(LoadHandler);
 }
 
 String LoadHandler::getLastError() {

@@ -8,12 +8,13 @@
 #include "PdfUtil.h"
 #include "UpdateRef.h"
 #include "UpdateRefKey.h"
-// TODO: AA: type check
 
 /**
  * This class uses some inspiration from FPDF (PHP Class)
  */
 PdfExport::PdfExport(Document * doc, ProgressListener * progressListener) {
+	XOJ_INIT_TYPE(PdfExport);
+
 	this->doc = doc;
 	this->progressListener = progressListener;
 	this->xref = new PdfXRef();
@@ -37,16 +38,19 @@ PdfExport::PdfExport(Document * doc, ProgressListener * progressListener) {
 }
 
 PdfExport::~PdfExport() {
+	XOJ_CHECK_TYPE(PdfExport);
+
 	for (GList * l = this->documents; l != NULL; l = l->next) {
 		XojPopplerDocument * doc = (XojPopplerDocument *) l->data;
 		delete doc;
 	}
 	g_list_free(this->documents);
+	this->documents = NULL;
 
 	g_list_foreach(this->pageIds, (GFunc) g_free, NULL);
 	g_list_free(this->pageIds);
+	this->pageIds = NULL;
 
-	this->documents = NULL;
 	this->progressListener = NULL;
 
 	g_hash_table_destroy(this->refListsOther);
@@ -60,9 +64,13 @@ PdfExport::~PdfExport() {
 
 	delete this->xref;
 	this->xref = NULL;
+
+	XOJ_RELEASE_TYPE(PdfExport);
 }
 
 bool PdfExport::writeCatalog() {
+	XOJ_CHECK_TYPE(PdfExport);
+
 	if (!writer->writeObj()) {
 		return false;
 	}
@@ -106,6 +114,8 @@ bool PdfExport::writeCatalog() {
 }
 
 bool PdfExport::writeCrossRef() {
+	XOJ_CHECK_TYPE(PdfExport);
+
 	this->dataXrefStart = this->writer->getDataCount();
 	this->writer->write("xref\n");
 	this->writer->write("0 ");
@@ -127,6 +137,8 @@ bool PdfExport::writeCrossRef() {
 }
 
 bool PdfExport::writePagesindex() {
+	XOJ_CHECK_TYPE(PdfExport);
+
 	this->xref->setXref(1, this->writer->getDataCount());
 	//Pages root
 	this->writer->write("1 0 obj\n");
@@ -150,6 +162,8 @@ bool PdfExport::writePagesindex() {
 }
 
 bool PdfExport::writeTrailer() {
+	XOJ_CHECK_TYPE(PdfExport);
+
 	this->writer->write("trailer\n");
 	this->writer->write("<<\n");
 
@@ -170,6 +184,8 @@ void writeOutRef(char * key, PdfRefList * list, gpointer user_data) {
 }
 
 bool PdfExport::writeResourcedict() {
+	XOJ_CHECK_TYPE(PdfExport);
+
 	this->writer->write("/ProcSet [/PDF /Text /ImageB /ImageC /ImageI]\n");
 
 	g_hash_table_foreach(this->refListsOther, (GHFunc) writeOutRef, this);
@@ -182,6 +198,8 @@ void writeOutRefObj(char * key, PdfRefList * list, gpointer user_data) {
 }
 
 bool PdfExport::writeResources() {
+	XOJ_CHECK_TYPE(PdfExport);
+
 	g_hash_table_foreach(this->refListsOther, (GHFunc) writeOutRefObj, this);
 
 	this->objectWriter->writeCopiedObjects();
@@ -201,6 +219,8 @@ bool PdfExport::writeResources() {
 }
 
 bool PdfExport::writeFooter() {
+	XOJ_CHECK_TYPE(PdfExport);
+
 	if (!writePagesindex()) {
 		g_warning("failed to write outlines");
 		return false;
@@ -237,6 +257,8 @@ bool PdfExport::writeFooter() {
 }
 
 void PdfExport::writeGzStream(Stream * str, GList * replacementList) {
+	XOJ_CHECK_TYPE(PdfExport);
+
 	Object obj1;
 	str->getDict()->lookup("Length", &obj1);
 	if (!obj1.isInt()) {
@@ -265,6 +287,8 @@ void PdfExport::writeGzStream(Stream * str, GList * replacementList) {
 }
 
 void PdfExport::writePlainStream(Stream * str, GList * replacementList) {
+	XOJ_CHECK_TYPE(PdfExport);
+
 	Object obj1;
 	str->getDict()->lookup("Length", &obj1);
 	if (!obj1.isInt()) {
@@ -292,6 +316,8 @@ void PdfExport::writePlainStream(Stream * str, GList * replacementList) {
 }
 
 void PdfExport::writeStream(const char * str, int len, GList * replacementList) {
+	XOJ_CHECK_TYPE(PdfExport);
+
 	int lastWritten = 0;
 	int brackets = 0;
 
@@ -341,6 +367,8 @@ void PdfExport::writeStream(const char * str, int len, GList * replacementList) 
 }
 
 void PdfExport::addPopplerDocument(XojPopplerDocument doc) {
+	XOJ_CHECK_TYPE(PdfExport);
+
 	for (GList * l = this->documents; l != NULL; l = l->next) {
 		XojPopplerDocument * d = (XojPopplerDocument *) l->data;
 		if (*d == doc) {
@@ -355,6 +383,8 @@ void PdfExport::addPopplerDocument(XojPopplerDocument doc) {
 }
 
 bool PdfExport::addPopplerPage(XojPopplerPage * pdf, XojPopplerDocument doc) {
+	XOJ_CHECK_TYPE(PdfExport);
+
 	Page * page = pdf->getPage();
 	static int otherObjectId = 1;
 
@@ -430,6 +460,8 @@ bool PdfExport::addPopplerPage(XojPopplerPage * pdf, XojPopplerDocument doc) {
 }
 
 bool PdfExport::writePage(int pageNr) {
+	XOJ_CHECK_TYPE(PdfExport);
+
 	XojPage * page = doc->getPage(pageNr);
 
 	if (!page) {
@@ -494,6 +526,8 @@ bool PdfExport::writePage(int pageNr) {
 }
 
 String PdfExport::getLastError() {
+	XOJ_CHECK_TYPE(PdfExport);
+
 	if (this->lastError.isEmpty()) {
 		return this->writer->getLastError();
 	}
@@ -501,6 +535,8 @@ String PdfExport::getLastError() {
 }
 
 bool PdfExport::createPdf(String uri) {
+	XOJ_CHECK_TYPE(PdfExport);
+
 	if (doc->getPageCount() < 1) {
 		lastError = "No pages to export!";
 		return false;
@@ -546,46 +582,4 @@ bool PdfExport::createPdf(String uri) {
 
 	return true;
 }
-
-/**
- *
- * <?php
- require('fpdf.php');
-
- class PDF_Rotate extends FPDF
- {
- var $angle=0;
-
- function Rotate($angle, $x=-1, $y=-1)
- {
- if($x==-1)
- $x=$this->x;
- if($y==-1)
- $y=$this->y;
- if($this->angle!=0)
- $this->_out('Q');
- $this->angle=$angle;
- if($angle!=0)
- {
- $angle*=M_PI/180;
- $c=cos($angle);
- $s=sin($angle);
- $cx=$x*$this->k;
- $cy=($this->h-$y)*$this->k;
- $this->_out(sprintf('q %.5f %.5f %.5f %.5f %.2f %.2f cm 1 0 0 1 %.2f %.2f cm', $c, $s, -$s, $c, $cx, $cy, -$cx, -$cy));
- }
- }
-
- function _endpage()
- {
- if($this->angle!=0)
- {
- $this->angle=0;
- $this->_out('Q');
- }
- parent::_endpage();
- }
- }
- ?>
- */
 

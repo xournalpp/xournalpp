@@ -125,10 +125,10 @@ Control::~Control() {
 	this->settings = NULL;
 	delete this->toolHandler;
 	this->toolHandler = NULL;
-	delete this->doc;
-	this->doc = NULL;
 	delete this->sidebar;
 	this->sidebar = NULL;
+	delete this->doc;
+	this->doc = NULL;
 	delete this->searchBar;
 	this->searchBar = NULL;
 	delete this->scrollHandler;
@@ -139,6 +139,8 @@ Control::~Control() {
 	this->cursor = NULL;
 	delete this->zoom;
 	this->zoom = NULL;
+	delete this->scheduler;
+	this->scheduler = NULL;
 
 	XOJ_RELEASE_TYPE(Control);
 }
@@ -2100,7 +2102,7 @@ void Control::saveAs() {
 void Control::quit() {
 	XOJ_CHECK_TYPE(Control);
 
-	if (!this->close()) {
+	if (!this->close(true)) {
 		return;
 	}
 
@@ -2110,7 +2112,7 @@ void Control::quit() {
 	gtk_main_quit();
 }
 
-bool Control::close() {
+bool Control::close(bool destroy) {
 	XOJ_CHECK_TYPE(Control);
 
 	if (undoRedo->isChanged()) {
@@ -2140,7 +2142,7 @@ bool Control::close() {
 	undoRedo->clearContents();
 
 	this->doc->lock();
-	this->doc->clearDocument();
+	this->doc->clearDocument(destroy);
 	this->doc->unlock();
 
 	updateWindowTitle();

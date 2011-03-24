@@ -102,10 +102,6 @@ public:
 	int getMaxAreaX();
 	int getMaxAreaY();
 
-	/**
-	 * This method is only internally used (by GtkXournal)
-	 */
-	void widgetDeleted();
 public:
 	//ZoomListener interface
 	void zoomChanged(double lastZoom);

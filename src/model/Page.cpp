@@ -2,9 +2,10 @@
 
 #include "Document.h"
 #include "../util/Stacktrace.h"
-// TODO: AA: type check
 
 XojPage::XojPage(double width, double heigth) {
+	XOJ_INIT_TYPE(XojPage);
+
 	this->pdfBackgroundPage = -1;
 	this->bgType = BACKGROUND_TYPE_LINED;
 
@@ -16,38 +17,52 @@ XojPage::XojPage(double width, double heigth) {
 	this->currentLayer = -1;
 }
 
+XojPage::~XojPage() {
+	XOJ_CHECK_TYPE(XojPage);
+
+	for (GList * l = this->layer; l != NULL; l = l->next) {
+		delete (Layer *) l->data;
+	}
+	g_list_free(this->layer);
+	this->layer = NULL;
+
+	XOJ_RELEASE_TYPE(XojPage);
+}
+
 void XojPage::reference() {
-	ref++;
+	XOJ_CHECK_TYPE(XojPage);
+
+	this->ref++;
 }
 
 void XojPage::unreference() {
-	ref--;
+	XOJ_CHECK_TYPE(XojPage);
+
+	this->ref--;
 	if (ref < 1) {
 		delete this;
 	}
 }
 
-XojPage::~XojPage() {
-	for (GList * l = layer; l != NULL; l = l->next) {
-		delete (Layer *) l->data;
-	}
-	g_list_free(layer);
-	layer = NULL;
-}
-
 void XojPage::addLayer(Layer * layer) {
+	XOJ_CHECK_TYPE(XojPage);
+
 	this->layer = g_list_append(this->layer, layer);
-	currentLayer = -1;
+	this->currentLayer = -1;
 }
 
 void XojPage::insertLayer(Layer * layer, int index) {
+	XOJ_CHECK_TYPE(XojPage);
+
 	this->layer = g_list_insert(this->layer, layer, index);
-	currentLayer = index + 1;
+	this->currentLayer = index + 1;
 }
 
 void XojPage::removeLayer(Layer * layer) {
+	XOJ_CHECK_TYPE(XojPage);
+
 	this->layer = g_list_remove(this->layer, layer);
-	currentLayer = -1;
+	this->currentLayer = -1;
 }
 
 void XojPage::setSelectedLayerId(int id) {
@@ -55,10 +70,14 @@ void XojPage::setSelectedLayerId(int id) {
 }
 
 ListIterator<Layer*> XojPage::layerIterator() {
+	XOJ_CHECK_TYPE(XojPage);
+
 	return ListIterator<Layer *> (this->layer);
 }
 
 int XojPage::getLayerCount() {
+	XOJ_CHECK_TYPE(XojPage);
+
 	return g_list_length(this->layer);
 }
 
@@ -66,44 +85,62 @@ int XojPage::getLayerCount() {
  * Layer ID 0 = Background, Layer ID 1 = Layer 1
  */
 int XojPage::getSelectedLayerId() {
-	if (currentLayer == -1) {
-		currentLayer = g_list_length(this->layer);
+	XOJ_CHECK_TYPE(XojPage);
+
+	if (this->currentLayer == -1) {
+		this->currentLayer = g_list_length(this->layer);
 	}
 
-	return currentLayer;
+	return this->currentLayer;
 }
 
 void XojPage::setBackgroundPdfPageNr(int page) {
-	pdfBackgroundPage = page;
-	bgType = BACKGROUND_TYPE_PDF;
+	XOJ_CHECK_TYPE(XojPage);
+
+	this->pdfBackgroundPage = page;
+	this->bgType = BACKGROUND_TYPE_PDF;
 }
 
 void XojPage::setBackgroundColor(int color) {
-	backgroundColor = color;
+	XOJ_CHECK_TYPE(XojPage);
+
+	this->backgroundColor = color;
 }
 
 int XojPage::getBackgroundColor() {
-	return backgroundColor;
+	XOJ_CHECK_TYPE(XojPage);
+
+	return this->backgroundColor;
 }
 
 void XojPage::setSize(double width, double height) {
+	XOJ_CHECK_TYPE(XojPage);
+
 	this->width = width;
 	this->height = height;
 }
 
 double XojPage::getWidth() {
-	return width;
+	XOJ_CHECK_TYPE(XojPage);
+
+	return this->width;
 }
 
 double XojPage::getHeight() {
-	return height;
+	XOJ_CHECK_TYPE(XojPage);
+
+	return this->height;
 }
 
 int XojPage::getPdfPageNr() {
-	return pdfBackgroundPage;
+	XOJ_CHECK_TYPE(XojPage);
+
+	return this->pdfBackgroundPage;
 }
 
 bool XojPage::isAnnotated() {
+	XOJ_CHECK_TYPE(XojPage);
+
 	ListIterator<Layer*> it = layerIterator();
 	while (it.hasNext()) {
 		if (it.next()->isAnnotated()) {
@@ -114,21 +151,27 @@ bool XojPage::isAnnotated() {
 }
 
 void XojPage::setBackgroundType(BackgroundType bgType) {
+	XOJ_CHECK_TYPE(XojPage);
+
 	this->bgType = bgType;
 
 	if (bgType != BACKGROUND_TYPE_PDF) {
-		pdfBackgroundPage = -1;
+		this->pdfBackgroundPage = -1;
 	}
 	if (bgType != BACKGROUND_TYPE_IMAGE) {
-		backgroundImage.free();
+		this->backgroundImage.free();
 	}
 }
 
 BackgroundType XojPage::getBackgroundType() {
-	return bgType;
+	XOJ_CHECK_TYPE(XojPage);
+
+	return this->bgType;
 }
 
 Layer * XojPage::getSelectedLayer() {
+	XOJ_CHECK_TYPE(XojPage);
+
 	if (this->layer == NULL) {
 		addLayer(new Layer());
 	}
@@ -168,6 +211,7 @@ private:
 	void reference() {
 		this->ref++;
 	}
+
 private:
 	int ref;
 	String filename;
@@ -179,17 +223,25 @@ private:
 };
 
 BackgroundImage::BackgroundImage() {
+	XOJ_INIT_TYPE(BackgroundImage);
+
 	this->img = NULL;
 }
 
 BackgroundImage::~BackgroundImage() {
+	XOJ_CHECK_TYPE(BackgroundImage);
+
 	if (this->img) {
 		BackgroundImageContents * img = (BackgroundImageContents *) this->img;
 		img->unreference();
 	}
+
+	XOJ_RELEASE_TYPE(BackgroundImage);
 }
 
 String BackgroundImage::getFilename() {
+	XOJ_CHECK_TYPE(BackgroundImage);
+
 	if (this->img != NULL) {
 		return ((BackgroundImageContents *) this->img)->filename;
 	}
@@ -197,6 +249,8 @@ String BackgroundImage::getFilename() {
 }
 
 void BackgroundImage::loadFile(String filename, GError ** error) {
+	XOJ_CHECK_TYPE(BackgroundImage);
+
 	if (this->img != NULL) {
 		((BackgroundImageContents *) this->img)->unreference();
 	}
@@ -204,6 +258,8 @@ void BackgroundImage::loadFile(String filename, GError ** error) {
 }
 
 void BackgroundImage::setAttach(bool attach) {
+	XOJ_CHECK_TYPE(BackgroundImage);
+
 	if (this->img != NULL) {
 		((BackgroundImageContents *) this->img)->attach = true;
 	} else {
@@ -213,6 +269,8 @@ void BackgroundImage::setAttach(bool attach) {
 }
 
 void BackgroundImage::operator =(BackgroundImage & img) {
+	XOJ_CHECK_TYPE(BackgroundImage);
+
 	if (this->img) {
 		((BackgroundImageContents *) this->img)->unreference();
 	}
@@ -223,10 +281,14 @@ void BackgroundImage::operator =(BackgroundImage & img) {
 }
 
 bool BackgroundImage::operator ==(const BackgroundImage & img) {
+	XOJ_CHECK_TYPE(BackgroundImage);
+
 	return this->img == img.img;
 }
 
 void BackgroundImage::free() {
+	XOJ_CHECK_TYPE(BackgroundImage);
+
 	if (this->img) {
 		((BackgroundImageContents *) this->img)->unreference();
 	}
@@ -234,12 +296,16 @@ void BackgroundImage::free() {
 }
 
 void BackgroundImage::clearSaveState() {
+	XOJ_CHECK_TYPE(BackgroundImage);
+
 	if (this->img) {
 		((BackgroundImageContents *) this->img)->pageId = -1;
 	}
 }
 
 int BackgroundImage::getCloneId() {
+	XOJ_CHECK_TYPE(BackgroundImage);
+
 	if (this->img) {
 		return ((BackgroundImageContents *) this->img)->pageId;
 	}
@@ -247,18 +313,24 @@ int BackgroundImage::getCloneId() {
 }
 
 void BackgroundImage::setCloneId(int id) {
+	XOJ_CHECK_TYPE(BackgroundImage);
+
 	if (this->img) {
 		((BackgroundImageContents *) this->img)->pageId = id;
 	}
 }
 
 void BackgroundImage::setFilename(String filename) {
+	XOJ_CHECK_TYPE(BackgroundImage);
+
 	if (this->img) {
 		((BackgroundImageContents *) this->img)->filename = filename;
 	}
 }
 
 bool BackgroundImage::isAttached() {
+	XOJ_CHECK_TYPE(BackgroundImage);
+
 	if (this->img) {
 		return ((BackgroundImageContents *) this->img)->attach;
 	}
@@ -266,6 +338,8 @@ bool BackgroundImage::isAttached() {
 }
 
 GdkPixbuf * BackgroundImage::getPixbuf() {
+	XOJ_CHECK_TYPE(BackgroundImage);
+
 	if (this->img) {
 		return ((BackgroundImageContents *) this->img)->pixbuf;
 	}

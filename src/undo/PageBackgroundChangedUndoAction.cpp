@@ -1,10 +1,11 @@
 #include "PageBackgroundChangedUndoAction.h"
 #include "../control/Control.h"
 #include "../model/Document.h"
-// TODO: AA: type check
 
 PageBackgroundChangedUndoAction::PageBackgroundChangedUndoAction(XojPage * page, BackgroundType origType,
 		int origPdfPage, BackgroundImage origBackgroundImage, double origW, double origH) {
+	XOJ_INIT_TYPE(PageBackgroundChangedUndoAction);
+
 	this->page = page;
 	this->origType = origType;
 	this->origPdfPage = this->origPdfPage;
@@ -13,9 +14,12 @@ PageBackgroundChangedUndoAction::PageBackgroundChangedUndoAction(XojPage * page,
 	this->origH = origH;
 }
 PageBackgroundChangedUndoAction::~PageBackgroundChangedUndoAction() {
+	XOJ_RELEASE_TYPE(PageBackgroundChangedUndoAction);
 }
 
 bool PageBackgroundChangedUndoAction::undo(Control * control) {
+	XOJ_CHECK_TYPE(PageBackgroundChangedUndoAction);
+
 	this->newType = this->page->getBackgroundType();
 	this->newPdfPage = this->page->getPdfPageNr();
 	this->newBackgroundImage = this->page->backgroundImage;
@@ -50,6 +54,8 @@ bool PageBackgroundChangedUndoAction::undo(Control * control) {
 }
 
 bool PageBackgroundChangedUndoAction::redo(Control * control) {
+	XOJ_CHECK_TYPE(PageBackgroundChangedUndoAction);
+
 	Document * doc = control->getDocument();
 
 	doc->lock();
@@ -79,5 +85,7 @@ bool PageBackgroundChangedUndoAction::redo(Control * control) {
 }
 
 String PageBackgroundChangedUndoAction::getText() {
+	XOJ_CHECK_TYPE(PageBackgroundChangedUndoAction);
+
 	return _("Page background changed");
 }

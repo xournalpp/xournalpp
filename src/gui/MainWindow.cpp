@@ -6,13 +6,15 @@
 #include "../gui/GladeSearchpath.h"
 #include "toolbarMenubar/model/ToolbarData.h"
 #include "toolbarMenubar/model/ToolbarModel.h"
-// TODO: AA: type check
 
 #include <config.h>
 #include <glib/gi18n-lib.h>
 
 MainWindow::MainWindow(GladeSearchpath * gladeSearchPath, Control * control) :
 	GladeGui(gladeSearchPath, "main.glade", "mainWindow") {
+
+	XOJ_INIT_TYPE(MainWindow);
+
 	this->control = control;
 	this->toolbarIntialized = false;
 	this->toolbarGroup = NULL;
@@ -103,6 +105,8 @@ public:
 };
 
 MainWindow::~MainWindow() {
+	XOJ_CHECK_TYPE(MainWindow);
+
 	for (GList * l = this->toolbarMenuData; l != NULL; l = l->next) {
 		MenuSelectToolbarData * data = (MenuSelectToolbarData *) l->data;
 		delete data;
@@ -112,9 +116,19 @@ MainWindow::~MainWindow() {
 	this->toolbarMenuData = NULL;
 	g_list_free(this->toolbarMenuitems);
 	this->toolbarMenuitems = NULL;
+
+	delete this->xournal;
+	this->xournal = NULL;
+
+	delete this->toolbar;
+	this->toolbar = NULL;
+
+	XOJ_RELEASE_TYPE(MainWindow);
 }
 
 void MainWindow::viewShowSidebar(GtkCheckMenuItem * checkmenuitem, MainWindow * win) {
+	XOJ_CHECK_TYPE_OBJ(win, MainWindow);
+
 	bool a = gtk_check_menu_item_get_active(checkmenuitem);
 	if (win->control->getSettings()->isSidebarVisible() == a) {
 		return;
@@ -123,10 +137,14 @@ void MainWindow::viewShowSidebar(GtkCheckMenuItem * checkmenuitem, MainWindow * 
 }
 
 Control * MainWindow::getControl() {
+	XOJ_CHECK_TYPE(MainWindow);
+
 	return control;
 }
 
 void MainWindow::updateScrollbarSidebarPosition() {
+	XOJ_CHECK_TYPE(MainWindow);
+
 	GtkWidget * panelMainContents = get("panelMainContents");
 	GtkWidget * sidebarContents = get("sidebarContents");
 	GtkWidget * tableXournal = get("tableXournal");
@@ -178,6 +196,8 @@ void MainWindow::updateScrollbarSidebarPosition() {
 }
 
 void MainWindow::buttonCloseSidebarClicked(GtkButton * button, MainWindow * win) {
+	XOJ_CHECK_TYPE_OBJ(win, MainWindow);
+
 	win->setSidebarVisible(false);
 }
 
@@ -188,6 +208,8 @@ bool MainWindow::deleteEventCallback(GtkWidget * widget, GdkEvent * event, Contr
 }
 
 void MainWindow::setSidebarVisible(bool visible) {
+	XOJ_CHECK_TYPE(MainWindow);
+
 	GtkWidget * sidebar = get("sidebarContents");
 	gtk_widget_set_visible(sidebar, visible);
 	control->getSettings()->setSidebarVisible(visible);
@@ -204,6 +226,8 @@ bool pageNrSpinChangedTimerCallback(Control * control) {
 }
 
 void MainWindow::pageNrSpinChangedCallback(GtkSpinButton * spinbutton, MainWindow * win) {
+	XOJ_CHECK_TYPE_OBJ(win, MainWindow);
+
 	static int lastId = 0;
 	if (lastId) {
 		g_source_remove(lastId);
@@ -213,23 +237,31 @@ void MainWindow::pageNrSpinChangedCallback(GtkSpinButton * spinbutton, MainWindo
 	lastId = g_timeout_add(100, (GSourceFunc) &pageNrSpinChangedTimerCallback, win->control);
 }
 
-void tbSelectMenuitemActivated(GtkMenuItem *menuitem, MenuSelectToolbarData * data) {
+void tbSelectMenuitemActivated(GtkMenuItem * menuitem, MenuSelectToolbarData * data) {
 	data->win->toolbarSelected(data->d);
 }
 
 void MainWindow::setMaximized(bool maximized) {
+	XOJ_CHECK_TYPE(MainWindow);
+
 	this->maximized = maximized;
 }
 
 bool MainWindow::isMaximized() {
+	XOJ_CHECK_TYPE(MainWindow);
+
 	return this->maximized;
 }
 
 XournalView * MainWindow::getXournal() {
+	XOJ_CHECK_TYPE(MainWindow);
+
 	return xournal;
 }
 
 bool MainWindow::windowStateEventCallback(GtkWidget * window, GdkEventWindowState * event, MainWindow * win) {
+	XOJ_CHECK_TYPE_OBJ(win, MainWindow);
+
 	if (!(event->new_window_state & GDK_WINDOW_STATE_FULLSCREEN)) {
 		gboolean maximized;
 
@@ -241,6 +273,8 @@ bool MainWindow::windowStateEventCallback(GtkWidget * window, GdkEventWindowStat
 }
 
 void MainWindow::toolbarSelected(ToolbarData * d) {
+	XOJ_CHECK_TYPE(MainWindow);
+
 	if (!toolbarIntialized || this->selectedToolbar == d) {
 		return;
 	}
@@ -273,6 +307,8 @@ void MainWindow::toolbarSelected(ToolbarData * d) {
 }
 
 void MainWindow::setControlTmpDisabled(bool disabled) {
+	XOJ_CHECK_TYPE(MainWindow);
+
 	toolbar->setTmpDisabled(disabled);
 
 	for (GList * l = this->toolbarMenuData; l != NULL; l = l->next) {
@@ -288,6 +324,8 @@ void MainWindow::setControlTmpDisabled(bool disabled) {
 }
 
 void MainWindow::updateToolbarMenu() {
+	XOJ_CHECK_TYPE(MainWindow);
+
 	for (GList * l = this->toolbarMenuitems; l != NULL; l = l->next) {
 		GtkWidget * w = GTK_WIDGET(l->data);
 		gtk_widget_destroy(w);
@@ -305,6 +343,8 @@ void MainWindow::updateToolbarMenu() {
 }
 
 void MainWindow::initToolbarAndMenu() {
+	XOJ_CHECK_TYPE(MainWindow);
+
 	GtkMenuShell * menubar = GTK_MENU_SHELL(get("menuViewToolbar"));
 	g_return_if_fail(menubar != NULL);
 
@@ -366,18 +406,26 @@ void MainWindow::initToolbarAndMenu() {
 }
 
 int MainWindow::getCurrentLayer() {
+	XOJ_CHECK_TYPE(MainWindow);
+
 	return toolbar->getSelectedLayer();
 }
 
 void MainWindow::setFontButtonFont(XojFont & font) {
+	XOJ_CHECK_TYPE(MainWindow);
+
 	toolbar->setFontButtonFont(font);
 }
 
 XojFont MainWindow::getFontButtonFont() {
+	XOJ_CHECK_TYPE(MainWindow);
+
 	return toolbar->getFontButtonFont();
 }
 
 void MainWindow::updatePageNumbers(int page, int pagecount, int pdfpage) {
+	XOJ_CHECK_TYPE(MainWindow);
+
 	GtkWidget * spinPageNo = getSpinPageNo();
 
 	int min = 1;
@@ -408,6 +456,8 @@ void MainWindow::updatePageNumbers(int page, int pagecount, int pdfpage) {
 }
 
 void MainWindow::updateLayerCombobox() {
+	XOJ_CHECK_TYPE(MainWindow);
+
 	XojPage * p = control->getCurrentPage();
 
 	int layer = 0;
@@ -423,27 +473,39 @@ void MainWindow::updateLayerCombobox() {
 }
 
 void MainWindow::setRecentMenu(GtkWidget * submenu) {
+	XOJ_CHECK_TYPE(MainWindow);
+
 	GtkWidget * menuitem = get("menuFileRecent");
 	g_return_if_fail(menuitem != NULL);
 	gtk_menu_item_set_submenu(GTK_MENU_ITEM(menuitem), submenu);
 }
 
 void MainWindow::show() {
+	XOJ_CHECK_TYPE(MainWindow);
+
 	gtk_widget_show(this->window);
 }
 
 void MainWindow::setUndoDescription(String description) {
+	XOJ_CHECK_TYPE(MainWindow);
+
 	toolbar->setUndoDescription(description);
 }
 
 void MainWindow::setRedoDescription(String description) {
+	XOJ_CHECK_TYPE(MainWindow);
+
 	toolbar->setRedoDescription(description);
 }
 
 GtkWidget * MainWindow::getSpinPageNo() {
+	XOJ_CHECK_TYPE(MainWindow);
+
 	return toolbar->getPageSpinner();
 }
 
 ToolbarModel * MainWindow::getToolbarModel() {
+	XOJ_CHECK_TYPE(MainWindow);
+
 	return this->toolbar->getModel();
 }
