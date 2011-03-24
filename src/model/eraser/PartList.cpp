@@ -1,24 +1,33 @@
 #include "PartList.h"
 #include "EraseableStrokePart.h"
-// TODO: AA: type check
 
 PartList::PartList() {
+	XOJ_INIT_TYPE(PartList);
+
 	this->data = NULL;
 }
 
 PartList::~PartList() {
+	XOJ_CHECK_TYPE(PartList);
+
 	for (GList * l = this->data; l != NULL; l = l->next) {
 		EraseableStrokePart * p = (EraseableStrokePart *) l->data;
 		delete p;
 	}
 	this->data = NULL;
+
+	XOJ_RELEASE_TYPE(PartList);
 }
 
 void PartList::add(EraseableStrokePart * part) {
+	XOJ_CHECK_TYPE(PartList);
+
 	this->data = g_list_append(this->data, part);
 }
 
 PartList * PartList::clone() {
+	XOJ_CHECK_TYPE(PartList);
+
 	PartList * list = new PartList();
 	for (GList * l = this->data; l != NULL; l = l->next) {
 		EraseableStrokePart * p = (EraseableStrokePart *) l->data;

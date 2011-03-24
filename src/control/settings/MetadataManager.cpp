@@ -4,14 +4,17 @@
 #include <gtk/gtk.h>
 
 #define FILENAME() g_build_filename(g_get_home_dir(), CONFIG_DIR, METADATA_FILE, NULL)
-// TODO: AA: type check
 
 MetadataManager::MetadataManager() {
+	XOJ_INIT_TYPE(MetadataManager);
+
 	this->config = NULL;
 	this->timeoutId = 0;
 }
 
 MetadataManager::~MetadataManager() {
+	XOJ_CHECK_TYPE(MetadataManager);
+
 	if (this->timeoutId) {
 		g_source_remove(this->timeoutId);
 		this->timeoutId = 0;
@@ -20,10 +23,15 @@ MetadataManager::~MetadataManager() {
 
 	if (this->config) {
 		g_key_file_free(this->config);
+		this->config = NULL;
 	}
+
+	XOJ_RELEASE_TYPE(MetadataManager);
 }
 
 void MetadataManager::setInt(String uri, const char * name, int value) {
+	XOJ_CHECK_TYPE(MetadataManager);
+
 	if (uri.isEmpty()) {
 		return;
 	}
@@ -35,6 +43,8 @@ void MetadataManager::setInt(String uri, const char * name, int value) {
 }
 
 void MetadataManager::setDouble(String uri, const char * name, double value) {
+	XOJ_CHECK_TYPE(MetadataManager);
+
 	if (uri.isEmpty()) {
 		return;
 	}
@@ -46,6 +56,8 @@ void MetadataManager::setDouble(String uri, const char * name, double value) {
 }
 
 void MetadataManager::setString(String uri, const char * name, const char * value) {
+	XOJ_CHECK_TYPE(MetadataManager);
+
 	if (uri.isEmpty()) {
 		return;
 	}
@@ -57,6 +69,8 @@ void MetadataManager::setString(String uri, const char * name, const char * valu
 }
 
 void MetadataManager::updateAccessTime(String uri) {
+	XOJ_CHECK_TYPE(MetadataManager);
+
 	// TODO: low prio: newer GTK Version use _int64 instead of integer
 	g_key_file_set_integer(this->config, uri.c_str(), "atime", time(NULL));
 
@@ -77,6 +91,8 @@ int timeCompareFunc(GroupTimeEntry * a, GroupTimeEntry * b) {
 }
 
 void MetadataManager::cleanupMetadata() {
+	XOJ_CHECK_TYPE(MetadataManager);
+
 	GList * data = NULL;
 
 	gsize lenght = 0;
@@ -126,6 +142,8 @@ void MetadataManager::cleanupMetadata() {
 }
 
 void MetadataManager::move(String source, String target) {
+	XOJ_CHECK_TYPE(MetadataManager);
+
 	if (source.isEmpty() || target.isEmpty()) {
 		return;
 	}
@@ -144,6 +162,8 @@ void MetadataManager::move(String source, String target) {
 }
 
 bool MetadataManager::save(MetadataManager * manager) {
+	XOJ_CHECK_TYPE_OBJ(manager, MetadataManager);
+
 	manager->timeoutId = 0;
 
 	manager->cleanupMetadata();
@@ -165,6 +185,8 @@ bool MetadataManager::save(MetadataManager * manager) {
 }
 
 void MetadataManager::loadConfigFile() {
+	XOJ_CHECK_TYPE(MetadataManager);
+
 	if (this->config) {
 		return;
 	}
@@ -186,6 +208,8 @@ void MetadataManager::loadConfigFile() {
 }
 
 bool MetadataManager::getInt(String uri, const char * name, int &value) {
+	XOJ_CHECK_TYPE(MetadataManager);
+
 	if (uri.isEmpty()) {
 		return false;
 	}
@@ -203,6 +227,8 @@ bool MetadataManager::getInt(String uri, const char * name, int &value) {
 }
 
 bool MetadataManager::getDouble(String uri, const char * name, double &value) {
+	XOJ_CHECK_TYPE(MetadataManager);
+
 	if (uri.isEmpty()) {
 		return false;
 	}
@@ -220,6 +246,8 @@ bool MetadataManager::getDouble(String uri, const char * name, double &value) {
 }
 
 bool MetadataManager::getString(String uri, const char * name, char * &value) {
+	XOJ_CHECK_TYPE(MetadataManager);
+
 	if (uri.isEmpty()) {
 		return false;
 	}

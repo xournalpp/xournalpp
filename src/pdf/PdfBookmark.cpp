@@ -1,6 +1,5 @@
 #include "PdfBookmark.h"
 #include "../model/LinkDestination.h"
-// TODO: AA: type check
 
 class Bookmark {
 public:
@@ -29,12 +28,16 @@ public:
 };
 
 PdfBookmarks::PdfBookmarks() {
+	XOJ_INIT_TYPE(PdfBookmarks);
 }
 
 PdfBookmarks::~PdfBookmarks() {
+	XOJ_RELEASE_TYPE(PdfBookmarks);
 }
 
 void PdfBookmarks::createBookmarks(GtkTreeModel * model, GList * &data, GtkTreeIter * iter, int level, Document * doc) {
+	XOJ_CHECK_TYPE(PdfBookmarks);
+
 	XojLinkDest * link = NULL;
 	LinkDestination * dest = NULL;
 
@@ -58,6 +61,8 @@ void PdfBookmarks::createBookmarks(GtkTreeModel * model, GList * &data, GtkTreeI
 }
 
 GList * PdfBookmarks::exportBookmarksFromTreeModel(GtkTreeModel * model, Document * doc) {
+	XOJ_CHECK_TYPE(PdfBookmarks);
+
 	GList * data = NULL;
 	GtkTreeIter iter = { 0 };
 
@@ -71,6 +76,8 @@ GList * PdfBookmarks::exportBookmarksFromTreeModel(GtkTreeModel * model, Documen
 }
 
 void PdfBookmarks::writeOutlines(Document * doc, PdfWriter * writer, int * outlineRoot, GList * pageIds) {
+	XOJ_CHECK_TYPE(PdfBookmarks);
+
 	GtkTreeModel * model = doc->getContentsModel();
 	if (!model) {
 		return;

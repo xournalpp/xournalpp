@@ -9,6 +9,8 @@ SidebarPreview::SidebarPreview(Sidebar * sidebar, XojPage * page) {
 
 	this->widget = gtk_drawing_area_new();
 	gtk_widget_show(this->widget);
+	g_object_ref(this->widget);
+
 	this->crBuffer = NULL;
 	this->sidebar = sidebar;
 	this->page = page;
@@ -21,8 +23,8 @@ SidebarPreview::SidebarPreview(Sidebar * sidebar, XojPage * page) {
 	updateSize();
 	gtk_widget_set_events(widget, GDK_EXPOSURE_MASK | GDK_BUTTON_PRESS_MASK);
 
-	this->exposeId = g_signal_connect(this->widget, "expose_event", G_CALLBACK(exposeEventCallback), this);
-	this->pressId = g_signal_connect(this->widget, "button-press-event", G_CALLBACK(mouseButtonPressCallback), this);
+	g_signal_connect(this->widget, "expose_event", G_CALLBACK(exposeEventCallback), this);
+	g_signal_connect(this->widget, "button-press-event", G_CALLBACK(mouseButtonPressCallback), this);
 }
 
 SidebarPreview::~SidebarPreview() {
@@ -30,9 +32,6 @@ SidebarPreview::~SidebarPreview() {
 
 	this->sidebar->getControl()->getScheduler()->removeSidebar(this);
 	this->page->unreference();
-
-	g_signal_handler_disconnect(this->widget, this->exposeId);
-	g_signal_handler_disconnect(this->widget, this->pressId);
 
 	gtk_widget_destroy(this->widget);
 
@@ -44,7 +43,7 @@ SidebarPreview::~SidebarPreview() {
 	g_mutex_free(this->drawingMutex);
 	this->drawingMutex = NULL;
 
-	XOJ_CHECK_TYPE(SidebarPreview);
+	XOJ_RELEASE_TYPE(SidebarPreview);
 }
 
 gboolean SidebarPreview::exposeEventCallback(GtkWidget * widget, GdkEventExpose * event, SidebarPreview * preview) {

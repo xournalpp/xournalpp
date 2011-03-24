@@ -60,7 +60,7 @@ public:
 	bool save(bool synchron = false);
 	void saveAs();
 	void quit();
-	bool close();
+	bool close(bool destroy = false);
 
 	void resetShapeRecognizer();
 

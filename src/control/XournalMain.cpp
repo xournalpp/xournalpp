@@ -171,10 +171,6 @@ int XournalMain::run(int argc, char * argv[]) {
 	delete control;
 	delete gladePath;
 
-#ifdef XOJ_MEMORY_LEAK_CHECK_ENABLED
-	xoj_momoryleak_printRemainingObjects();
-#endif
-
 	return 0;
 }
 

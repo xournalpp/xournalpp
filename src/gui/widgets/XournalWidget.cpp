@@ -795,8 +795,6 @@ static void gtk_xournal_destroy(GtkObject * object) {
 	delete xournal->selection;
 	xournal->selection = NULL;
 
-	xournal->view->widgetDeleted();
-
 	GtkXournalClass * klass = (GtkXournalClass *) gtk_type_class(gtk_widget_get_type());
 
 	if (GTK_OBJECT_CLASS(klass)->destroy) {

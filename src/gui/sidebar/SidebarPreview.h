@@ -56,12 +56,6 @@ private:
 
 	cairo_surface_t * crBuffer;
 
-	/**
-	 * callback IDs
-	 */
-	gulong exposeId;
-	gulong pressId;
-
 	friend class PreviewJob;
 };
 

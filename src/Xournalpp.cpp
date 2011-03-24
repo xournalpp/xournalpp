@@ -21,6 +21,13 @@ int main(int argc, char * argv[]) {
 		Stacktrace::setExename(argv[0]);
 	}
 
-	XournalMain main;
-	return main.run(argc, argv);
+	XournalMain * main = new XournalMain();
+	int result = main->run(argc, argv);
+	delete main;
+
+#ifdef XOJ_MEMORY_LEAK_CHECK_ENABLED
+	xoj_momoryleak_printRemainingObjects();
+#endif
+
+	return result;
 }

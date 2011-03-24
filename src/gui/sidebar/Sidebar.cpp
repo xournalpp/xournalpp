@@ -99,7 +99,17 @@ Sidebar::~Sidebar() {
 	XOJ_CHECK_TYPE(Sidebar);
 
 	gtk_widget_destroy(this->treeViewBookmarks);
+	this->treeViewBookmarks = NULL;
 	gtk_widget_destroy(this->iconViewPreview);
+	this->iconViewPreview = NULL;
+
+	for (int i = 0; i < this->previewCount; i++) {
+		delete this->previews[i];
+	}
+	delete[] this->previews;
+	this->previewCount = 0;
+	this->previews = NULL;
+
 
 	delete this->cache;
 	this->cache = NULL;

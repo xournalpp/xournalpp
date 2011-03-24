@@ -1,7 +1,6 @@
 #include "OutputStream.h"
 #include <stdlib.h>
 #include <string.h>
-// TODO: AA: type check
 
 OutputStream::OutputStream() {
 }
@@ -22,6 +21,8 @@ void OutputStream::write(const char * str) {
 ////////////////////////////////////////////////////////
 
 GzOutputStream::GzOutputStream(String filename) {
+	XOJ_INIT_TYPE(GzOutputStream);
+
 	this->fp = NULL;
 	this->filename = filename;
 	this->fp = gzopen(filename.c_str(), "w");
@@ -33,20 +34,30 @@ GzOutputStream::GzOutputStream(String filename) {
 }
 
 GzOutputStream::~GzOutputStream() {
+	XOJ_CHECK_TYPE(GzOutputStream);
+
 	if (this->fp) {
 		close();
 	}
+
+	XOJ_RELEASE_TYPE(GzOutputStream);
 }
 
 String & GzOutputStream::getLastError() {
+	XOJ_CHECK_TYPE(GzOutputStream);
+
 	return this->error;
 }
 
 void GzOutputStream::write(const char * data, int len) {
+	XOJ_CHECK_TYPE(GzOutputStream);
+
 	gzwrite(this->fp, data, len);
 }
 
 void GzOutputStream::close() {
+	XOJ_CHECK_TYPE(GzOutputStream);
+
 	if (this->fp) {
 		gzclose(this->fp);
 		this->fp = NULL;

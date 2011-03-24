@@ -37,6 +37,8 @@ public:
 			this->size = strlen(str);
 			this->len = length((utf8) str);
 		}
+
+		this->nref = 0;
 	}
 
 	~_RefStrInternal() {
@@ -121,7 +123,8 @@ String::String() {
 String::String(const String & str) {
 	XOJ_INIT_TYPE(String);
 
-	*this = str;
+	this->data = str.data;
+	this->data->reference();
 }
 
 String::String(const char * str) {
@@ -360,6 +363,7 @@ String& String::operator=(const char * str) {
 String& String::operator=(const String & str) {
 	XOJ_CHECK_TYPE(String);
 
+	this->data->unreference();
 	this->data = str.data;
 	this->data->reference();
 }
@@ -495,29 +499,6 @@ String String::substring(int start) const {
 	return substring(start, length() - start);
 }
 
-//String oldSubstring(String str, int start, int length) {
-//	if (length < 0) {
-//		length = str.length() - start + length;
-//	}
-//
-//	if(start < 0) {
-//		start = str.length() - start;
-//	}
-//
-//	if (start + length > str.length() || start < 0 || length < 0) {
-//		g_critical("substring \"%s\" (%i, %i) out of bounds", str.c_str(), start, length);
-//		return "";
-//	}
-//
-//	const char * orig = str.c_str();
-//	char * d = (char *) g_malloc(length + 1);
-//	strncpy(d, &orig[start], length);
-//	d[length] = 0;
-//
-//	String substr(d, true);
-//	return substr;
-//}
-
 String String::substring(int start, int length) const {
 	XOJ_CHECK_TYPE(String);
 
@@ -556,16 +537,6 @@ String String::substring(int start, int length) const {
 		*output++ = *string++;
 	}
 	*output = '\0';
-
-	//	String old = oldSubstring(*this, start, length);
-	//
-	//	const char * error = "";
-	//
-	//	if(old != substring) {
-	//		error = "\nMISSMATCH!";
-	//	}
-	//
-	//	printf("substring(\"%s\", %i, %i) =\n\"%s\"\n\"%s\"%s\n\n", this->c_str(), start, length, substring, old.c_str(),error);
 
 	String substr(substring, true);
 	return substr;

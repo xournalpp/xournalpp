@@ -2,16 +2,20 @@
 #include "../../pdf/PdfExport.h"
 #include "../Control.h"
 #include "SynchronizedProgressListener.h"
-// TODO: AA: type check
 
 PdfExportJob::PdfExportJob(Control * control) :
 	BlockingJob(control, _("PDF Export")) {
+
+	XOJ_INIT_TYPE(PdfExportJob);
 }
 
 PdfExportJob::~PdfExportJob() {
+	XOJ_RELEASE_TYPE(PdfExportJob);
 }
 
 bool PdfExportJob::showFilechooser() {
+	XOJ_CHECK_TYPE(PdfExportJob);
+
 	Settings * settings = control->getSettings();
 	Document * doc = control->getDocument();
 
@@ -73,6 +77,8 @@ bool PdfExportJob::showFilechooser() {
 }
 
 void PdfExportJob::afterRun() {
+	XOJ_CHECK_TYPE(PdfExportJob);
+
 	if (!this->errorMsg.isEmpty()) {
 		GtkWindow * win = (GtkWindow*) *control->getWindow();
 		GtkWidget * dialog = gtk_message_dialog_new(win, GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, "%s", this->errorMsg.c_str());
@@ -82,6 +88,8 @@ void PdfExportJob::afterRun() {
 }
 
 void PdfExportJob::run() {
+	XOJ_CHECK_TYPE(PdfExportJob);
+
 	SynchronizedProgressListener pglistener(this->control);
 
 	Document * doc = control->getDocument();

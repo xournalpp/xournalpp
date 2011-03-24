@@ -6,7 +6,6 @@
 #include "../gui/Redrawable.h"
 #include "../control/tools/EditSelection.h"
 #include "../control/tools/VerticalToolHandler.h"
-// TODO: AA: type check
 
 class MoveUndoEntry {
 public:
@@ -42,6 +41,8 @@ public:
 //}
 
 MoveUndoAction::MoveUndoAction(XojPage * page, VerticalToolHandler * handler) {
+	XOJ_INIT_TYPE(MoveUndoAction);
+
 	this->page = page;
 	this->newPage = NULL;
 	this->originalPos = NULL;
@@ -60,15 +61,23 @@ MoveUndoAction::MoveUndoAction(XojPage * page, VerticalToolHandler * handler) {
 }
 
 MoveUndoAction::~MoveUndoAction() {
+	XOJ_CHECK_TYPE(MoveUndoAction);
+
 	for (GList * l = this ->originalPos; l != NULL; l = l->next) {
 		MoveUndoEntry * u = (MoveUndoEntry *) l->data;
 		delete u;
 	}
+	g_list_free(this->originalPos);
+	this->originalPos = NULL;
+
 	for (GList * l = this->newPos; l != NULL; l = l->next) {
 		MoveUndoEntry * u = (MoveUndoEntry *) l->data;
 		delete u;
 	}
-	g_list_free(this->originalPos);
+	g_list_free(this->newPos);
+	this->newPos = NULL;
+
+	XOJ_RELEASE_TYPE(MoveUndoAction);
 }
 
 //void MoveUndoAction::finalize(EditSelection * selection) {
@@ -86,6 +95,8 @@ MoveUndoAction::~MoveUndoAction() {
 //}
 
 void MoveUndoAction::finalize(VerticalToolHandler * handler) {
+	XOJ_CHECK_TYPE(MoveUndoAction);
+
 	ListIterator<Element *> it = handler->getElements();
 	while (it.hasNext()) {
 		Element * e = it.next();
@@ -94,6 +105,8 @@ void MoveUndoAction::finalize(VerticalToolHandler * handler) {
 }
 
 bool MoveUndoAction::undo(Control * control) {
+	XOJ_CHECK_TYPE(MoveUndoAction);
+
 	if (this->oldLayer != this->newLayer && this->newLayer != NULL) {
 		switchLayer(this->originalPos, this->newLayer, this->oldLayer);
 	}
@@ -106,6 +119,8 @@ bool MoveUndoAction::undo(Control * control) {
 }
 
 bool MoveUndoAction::redo(Control * control) {
+	XOJ_CHECK_TYPE(MoveUndoAction);
+
 	if (this->oldLayer != this->newLayer && this->newLayer != NULL) {
 		switchLayer(this->originalPos, this->oldLayer, this->newLayer);
 	}
@@ -118,6 +133,8 @@ bool MoveUndoAction::redo(Control * control) {
 }
 
 void MoveUndoAction::acceptPositions(GList * pos) {
+	XOJ_CHECK_TYPE(MoveUndoAction);
+
 	for (GList * l = pos; l != NULL; l = l->next) {
 		MoveUndoEntry * u = (MoveUndoEntry *) l->data;
 		Element * e = u->e;
@@ -127,6 +144,8 @@ void MoveUndoAction::acceptPositions(GList * pos) {
 }
 
 void MoveUndoAction::switchLayer(GList * entries, Layer * oldLayer, Layer * newLayer) {
+	XOJ_CHECK_TYPE(MoveUndoAction);
+
 	for (GList * l = this->originalPos; l != NULL; l = l->next) {
 		MoveUndoEntry * u = (MoveUndoEntry *) l->data;
 		oldLayer->removeElement(u->e, false);
@@ -135,6 +154,8 @@ void MoveUndoAction::switchLayer(GList * entries, Layer * oldLayer, Layer * newL
 }
 
 void MoveUndoAction::repaint(Redrawable * view, GList * list) {
+	XOJ_CHECK_TYPE(MoveUndoAction);
+
 	MoveUndoEntry * u = (MoveUndoEntry *) list->data;
 
 	Range range(u->x, u->y);
@@ -149,6 +170,8 @@ void MoveUndoAction::repaint(Redrawable * view, GList * list) {
 }
 
 void MoveUndoAction::repaint() {
+	XOJ_CHECK_TYPE(MoveUndoAction);
+
 	if (!this->originalPos) {
 		return;
 	}
@@ -158,6 +181,8 @@ void MoveUndoAction::repaint() {
 }
 
 XojPage ** MoveUndoAction::getPages() {
+	XOJ_CHECK_TYPE(MoveUndoAction);
+
 	XojPage ** pages = new XojPage *[3];
 	pages[0] = this->page;
 	pages[1] = this->newPage;
@@ -166,6 +191,8 @@ XojPage ** MoveUndoAction::getPages() {
 }
 
 String MoveUndoAction::getText() {
+	XOJ_CHECK_TYPE(MoveUndoAction);
+
 	return text;
 }
 

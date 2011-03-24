@@ -1,9 +1,10 @@
 #include "PdfObjectWriter.h"
 #include "UpdateRef.h"
 #include "UpdateRefKey.h"
-// TODO: AA: type check
 
 PdfObjectWriter::PdfObjectWriter(PdfWriter * writer, PdfXRef * xref) {
+	XOJ_INIT_TYPE(PdfObjectWriter);
+
 	this->writer = writer;
 	this->xref = xref;
 
@@ -13,14 +14,20 @@ PdfObjectWriter::PdfObjectWriter(PdfWriter * writer, PdfXRef * xref) {
 }
 
 PdfObjectWriter::~PdfObjectWriter() {
+	XOJ_CHECK_TYPE(PdfObjectWriter);
+
 	this->writer = NULL;
 	this->xref = NULL;
 
 	g_hash_table_destroy(this->updatedReferenced);
 	this->updatedReferenced = NULL;
+
+	XOJ_RELEASE_TYPE(PdfObjectWriter);
 }
 
 void PdfObjectWriter::writeCopiedObjects() {
+	XOJ_CHECK_TYPE(PdfObjectWriter);
+
 	bool allWritten = false;
 	while (!allWritten) {
 		allWritten = true;
@@ -46,6 +53,8 @@ void PdfObjectWriter::writeCopiedObjects() {
 }
 
 void PdfObjectWriter::writeObject(Object * obj, XojPopplerDocument doc) {
+	XOJ_CHECK_TYPE(PdfObjectWriter);
+
 	Array * array;
 	Object obj1;
 
@@ -148,6 +157,8 @@ void PdfObjectWriter::writeObject(Object * obj, XojPopplerDocument doc) {
 }
 
 void PdfObjectWriter::writeRawStream(Stream * str, XojPopplerDocument doc) {
+	XOJ_CHECK_TYPE(PdfObjectWriter);
+
 	Object obj1;
 	str->getDict()->lookup("Length", &obj1);
 	if (!obj1.isInt()) {
@@ -173,6 +184,8 @@ void PdfObjectWriter::writeRawStream(Stream * str, XojPopplerDocument doc) {
 }
 
 void PdfObjectWriter::writeStream(Stream * str) {
+	XOJ_CHECK_TYPE(PdfObjectWriter);
+
 	this->writer->write("stream\r\n");
 	str->reset();
 	for (int c = str->getChar(); c != EOF; c = str->getChar()) {
@@ -182,6 +195,8 @@ void PdfObjectWriter::writeStream(Stream * str) {
 }
 
 void PdfObjectWriter::writeDictionnary(Dict * dict, XojPopplerDocument doc) {
+	XOJ_CHECK_TYPE(PdfObjectWriter);
+
 	Object obj1;
 	this->writer->write("<<");
 	for (int i = 0; i < dict->getLength(); i++) {
@@ -196,6 +211,8 @@ void PdfObjectWriter::writeDictionnary(Dict * dict, XojPopplerDocument doc) {
 }
 
 void PdfObjectWriter::writeString(GooString * s) {
+	XOJ_CHECK_TYPE(PdfObjectWriter);
+
 	if (s->hasUnicodeMarker()) {
 		//unicode string don't necessary end with \0
 		const char* c = s->getCString();

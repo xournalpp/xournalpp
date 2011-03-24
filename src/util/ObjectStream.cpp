@@ -1,33 +1,43 @@
 #include "ObjectStream.h"
 #include "Serializeable.h"
 #include <string.h>
-// TODO: AA: type check
 
 const char * XML_VERSION_STR = "XojStrm1:";
 
 ObjectOutputStream::ObjectOutputStream() {
+	XOJ_INIT_TYPE(ObjectOutputStream);
+
 	this->data = g_string_new("");
 	writeString(XML_VERSION_STR);
 }
 
 ObjectOutputStream::~ObjectOutputStream() {
+	XOJ_RELEASE_TYPE(ObjectOutputStream);
 }
 
 ObjectOutputStream & ObjectOutputStream::operator <<(Serializeable * s) {
+	XOJ_CHECK_TYPE(ObjectOutputStream);
+
 	s->serialize(*this);
 	return *this;
 }
 
 void ObjectOutputStream::writeObject(const char * name) {
+	XOJ_CHECK_TYPE(ObjectOutputStream);
+
 	g_string_append(this->data, "_{");
 	writeString(name);
 }
 
 void ObjectOutputStream::endObject() {
+	XOJ_CHECK_TYPE(ObjectOutputStream);
+
 	g_string_append(this->data, "_}");
 }
 
 void ObjectOutputStream::writeInt(int i) {
+	XOJ_CHECK_TYPE(ObjectOutputStream);
+
 	g_string_append(this->data, "_i");
 
 	char * c = (char *) &i;
@@ -35,6 +45,8 @@ void ObjectOutputStream::writeInt(int i) {
 }
 
 void ObjectOutputStream::writeDouble(double d) {
+	XOJ_CHECK_TYPE(ObjectOutputStream);
+
 	g_string_append(this->data, "_d");
 
 	char * c = (char *) &d;
@@ -42,11 +54,15 @@ void ObjectOutputStream::writeDouble(double d) {
 }
 
 void ObjectOutputStream::writeString(const char * str) {
+	XOJ_CHECK_TYPE(ObjectOutputStream);
+
 	String s = str;
 	writeString(s);
 }
 
 void ObjectOutputStream::writeString(const String & s) {
+	XOJ_CHECK_TYPE(ObjectOutputStream);
+
 	g_string_append(this->data, "_s");
 	int len = s.size();
 	char * c = (char *) &len;
@@ -55,6 +71,8 @@ void ObjectOutputStream::writeString(const String & s) {
 }
 
 void ObjectOutputStream::writeData(const void * data, int len, int width) {
+	XOJ_CHECK_TYPE(ObjectOutputStream);
+
 	g_string_append(this->data, "_b");
 	char * c = (char *) &len;
 	g_string_append_len(this->data, c, sizeof(int));
@@ -67,12 +85,14 @@ void ObjectOutputStream::writeData(const void * data, int len, int width) {
 	}
 }
 
-static cairo_status_t cairoWriteFunction(GString * string, const unsigned char *data, unsigned int length) {
+static cairo_status_t cairoWriteFunction(GString * string, const unsigned char * data, unsigned int length) {
 	g_string_append_len(string, (const gchar *) data, length);
 	return CAIRO_STATUS_SUCCESS;
 }
 
 void ObjectOutputStream::writeImage(cairo_surface_t * img) {
+	XOJ_CHECK_TYPE(ObjectOutputStream);
+
 	GString * imgStr = g_string_sized_new(102400);
 
 	cairo_surface_write_to_png_stream(img, (cairo_write_func_t) &cairoWriteFunction, imgStr);
@@ -86,6 +106,8 @@ void ObjectOutputStream::writeImage(cairo_surface_t * img) {
 }
 
 GString * ObjectOutputStream::getStr() {
+	XOJ_CHECK_TYPE(ObjectOutputStream);
+
 	return this->data;
 }
 
@@ -109,17 +131,25 @@ const char* InputStreamException::what() const throw () {
 ////////////////////////////////////////////////////
 
 ObjectInputStream::ObjectInputStream() {
+	XOJ_INIT_TYPE(ObjectInputStream);
+
 	this->str = NULL;
 	this->pos = 0;
 }
 
 ObjectInputStream::~ObjectInputStream() {
+	XOJ_CHECK_TYPE(ObjectInputStream);
+
 	if (this->str) {
 		g_string_free(this->str, true);
 	}
+
+	XOJ_RELEASE_TYPE(ObjectInputStream);
 }
 
 bool ObjectInputStream::read(const char * data, int len) throw (InputStreamException) {
+	XOJ_CHECK_TYPE(ObjectInputStream);
+
 	if (this->str) {
 		g_string_free(this->str, true);
 	}
@@ -146,6 +176,8 @@ bool ObjectInputStream::read(const char * data, int len) throw (InputStreamExcep
 }
 
 void ObjectInputStream::readObject(const char * name) throw (InputStreamException) {
+	XOJ_CHECK_TYPE(ObjectInputStream);
+
 	String type = readObject();
 	if (type != name) {
 		throw INPUT_STREAM_EXCEPTION("Try to read object type %s but read object type %s", name, type.c_str());
@@ -153,11 +185,15 @@ void ObjectInputStream::readObject(const char * name) throw (InputStreamExceptio
 }
 
 String ObjectInputStream::readObject() throw (InputStreamException) {
+	XOJ_CHECK_TYPE(ObjectInputStream);
+
 	checkType('{');
 	return readString();
 }
 
 String ObjectInputStream::getNextObjectName() throw (InputStreamException) {
+	XOJ_CHECK_TYPE(ObjectInputStream);
+
 	int pos = this->pos;
 	checkType('{');
 	String name = readString();
@@ -168,10 +204,14 @@ String ObjectInputStream::getNextObjectName() throw (InputStreamException) {
 }
 
 void ObjectInputStream::endObject() throw (InputStreamException) {
+	XOJ_CHECK_TYPE(ObjectInputStream);
+
 	checkType('}');
 }
 
 int ObjectInputStream::readInt() throw (InputStreamException) {
+	XOJ_CHECK_TYPE(ObjectInputStream);
+
 	checkType('i');
 
 	if (this->pos + sizeof(int) >= this->str->len) {
@@ -184,6 +224,8 @@ int ObjectInputStream::readInt() throw (InputStreamException) {
 }
 
 double ObjectInputStream::readDouble() throw (InputStreamException) {
+	XOJ_CHECK_TYPE(ObjectInputStream);
+
 	checkType('d');
 
 	if (this->pos + sizeof(double) >= this->str->len) {
@@ -196,6 +238,8 @@ double ObjectInputStream::readDouble() throw (InputStreamException) {
 }
 
 String ObjectInputStream::readString() throw (InputStreamException) {
+	XOJ_CHECK_TYPE(ObjectInputStream);
+
 	checkType('s');
 
 	if (this->pos + sizeof(int) >= this->str->len) {
@@ -215,6 +259,8 @@ String ObjectInputStream::readString() throw (InputStreamException) {
 }
 
 void ObjectInputStream::readData(void ** data, int * length) throw (InputStreamException) {
+	XOJ_CHECK_TYPE(ObjectInputStream);
+
 	checkType('b');
 
 	if (this->pos + 2 * sizeof(int) >= this->str->len) {
@@ -270,6 +316,8 @@ cairo_status_t cairoReadFunction(PngDatasource * obj, unsigned char * data, unsi
 }
 
 cairo_surface_t * ObjectInputStream::readImage() throw (InputStreamException) {
+	XOJ_CHECK_TYPE(ObjectInputStream);
+
 	checkType('m');
 
 	if (this->pos + sizeof(int) >= this->str->len) {
@@ -292,11 +340,15 @@ cairo_surface_t * ObjectInputStream::readImage() throw (InputStreamException) {
 }
 
 ObjectInputStream & ObjectInputStream::operator >>(Serializeable * s) throw (InputStreamException) {
+	XOJ_CHECK_TYPE(ObjectInputStream);
+
 	s->readSerialized(*this);
 	return *this;
 }
 
 void ObjectInputStream::checkType(char type) throw (InputStreamException) {
+	XOJ_CHECK_TYPE(ObjectInputStream);
+
 	if (this->pos + 2 > this->str->len) {
 		throw INPUT_STREAM_EXCEPTION("End reached, but try to read %s, index %i of %ld", getType(type).c_str(), this->pos, this->str->len);
 	}
@@ -314,6 +366,8 @@ void ObjectInputStream::checkType(char type) throw (InputStreamException) {
 }
 
 String ObjectInputStream::getType(char type) {
+	XOJ_CHECK_TYPE(ObjectInputStream);
+
 	String ret;
 	if (type == '{') {
 		ret = "Object begin";
