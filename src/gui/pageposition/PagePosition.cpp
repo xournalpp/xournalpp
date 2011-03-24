@@ -1,9 +1,10 @@
 #include "PagePosition.h"
 
 #include "../PageView.h"
-// TODO: AA: type check
 
 PagePosition::PagePosition(PageView * pv) {
+	XOJ_INIT_TYPE(PagePosition);
+
 	this->y1 = pv->getY();
 	this->y2 = this->y1 + pv->getDisplayHeight();
 
@@ -11,6 +12,8 @@ PagePosition::PagePosition(PageView * pv) {
 }
 
 PagePosition::PagePosition() {
+	XOJ_INIT_TYPE(PagePosition);
+
 	this->y1 = 0;
 	this->y2 = 0;
 
@@ -18,10 +21,16 @@ PagePosition::PagePosition() {
 }
 
 PagePosition::~PagePosition() {
+	XOJ_CHECK_TYPE(PagePosition);
+
 	g_list_free(this->views);
+
+	XOJ_RELEASE_TYPE(PagePosition);
 }
 
 bool PagePosition::add(PageView * pv) {
+	XOJ_CHECK_TYPE(PagePosition);
+
 	int y1 = pv->getY();
 	int y2 = this->y1 + pv->getDisplayHeight();
 
@@ -37,6 +46,8 @@ bool PagePosition::add(PageView * pv) {
 }
 
 PageView * PagePosition::getViewAt(int x, int y) {
+	XOJ_CHECK_TYPE(PagePosition);
+
 	for (GList * l = this->views; l != NULL; l = l->next) {
 		PageView * v = (PageView *) l->data;
 		if (v->containsPoint(x, y)) {
@@ -47,14 +58,20 @@ PageView * PagePosition::getViewAt(int x, int y) {
 }
 
 bool PagePosition::containsY(int y) {
+	XOJ_CHECK_TYPE(PagePosition);
+
 	return (y >= this->y1 && y <= this->y2);
 }
 
 bool PagePosition::isYSmallerThan(int y) {
+	XOJ_CHECK_TYPE(PagePosition);
+
 	return y > this->y2;
 }
 
 bool PagePosition::isYGraterThan(int y) {
+	XOJ_CHECK_TYPE(PagePosition);
+
 	return y < this->y1;
 }
 

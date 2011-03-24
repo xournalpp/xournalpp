@@ -3,12 +3,13 @@
 #include "../model/Stroke.h"
 #include "../util/Range.h"
 #include "../gui/Redrawable.h"
-// TODO: AA: type check
 
 class SizeUndoActionEntry {
 public:
 	SizeUndoActionEntry(Stroke * s, double orignalWidth, double newWidth, double * originalPressure,
 			double * newPressure, int pressureCount) {
+		XOJ_INIT_TYPE(SizeUndoActionEntry);
+
 		this->s = s;
 		this->orignalWidth = orignalWidth;
 		this->newWidth = newWidth;
@@ -18,9 +19,17 @@ public:
 	}
 
 	~SizeUndoActionEntry() {
+		XOJ_CHECK_TYPE(SizeUndoActionEntry);
+
 		delete this->originalPressure;
+		this->originalPressure;
 		delete this->newPressure;
+		this->newPressure;
+
+		XOJ_RELEASE_TYPE(SizeUndoActionEntry);
 	}
+
+	XOJ_TYPE_ATTRIB;
 
 	Stroke * s;
 	double orignalWidth;
@@ -32,6 +41,8 @@ public:
 };
 
 SizeUndoAction::SizeUndoAction(XojPage * page, Layer * layer, Redrawable * view) {
+	XOJ_INIT_TYPE(SizeUndoAction);
+
 	this->page = page;
 	this->layer = layer;
 	this->view = view;
@@ -39,12 +50,17 @@ SizeUndoAction::SizeUndoAction(XojPage * page, Layer * layer, Redrawable * view)
 }
 
 SizeUndoAction::~SizeUndoAction() {
+	XOJ_CHECK_TYPE(SizeUndoAction);
+
 	for (GList * l = this->data; l != NULL; l = l->next) {
 		SizeUndoActionEntry * e = (SizeUndoActionEntry *) l->data;
 		delete e;
 	}
 
 	g_list_free(this->data);
+	this->data = NULL;
+
+	XOJ_RELEASE_TYPE(SizeUndoAction);
 }
 
 double * SizeUndoAction::getPressure(Stroke * s) {
@@ -59,11 +75,15 @@ double * SizeUndoAction::getPressure(Stroke * s) {
 
 void SizeUndoAction::addStroke(Stroke * s, double originalWidth, double newWidt, double * originalPressure,
 		double * newPressure, int pressureCount) {
+	XOJ_CHECK_TYPE(SizeUndoAction);
+
 	this->data = g_list_append(this->data, new SizeUndoActionEntry(s, originalWidth, newWidt, originalPressure,
 			newPressure, pressureCount));
 }
 
 bool SizeUndoAction::undo(Control * control) {
+	XOJ_CHECK_TYPE(SizeUndoAction);
+
 	if (this->data == NULL) {
 		return true;
 	}
@@ -86,6 +106,8 @@ bool SizeUndoAction::undo(Control * control) {
 }
 
 bool SizeUndoAction::redo(Control * control) {
+	XOJ_CHECK_TYPE(SizeUndoAction);
+
 	if (this->data == NULL) {
 		return true;
 	}
@@ -108,5 +130,7 @@ bool SizeUndoAction::redo(Control * control) {
 }
 
 String SizeUndoAction::getText() {
+	XOJ_CHECK_TYPE(SizeUndoAction);
+
 	return _("Change stroke width");
 }

@@ -8,7 +8,6 @@
  *
  * @license GPL
  */
-// TODO: AA: type check
 
 #ifndef __UPDATEREF_H__
 #define __UPDATEREF_H__
@@ -18,9 +17,14 @@
 class UpdateRef {
 public:
 	UpdateRef(int objectId, XojPopplerDocument doc);
+	~UpdateRef();
+
+public:
 	static void destroyDelete(UpdateRef * data);
 
 public:
+	XOJ_TYPE_ATTRIB;
+
 	int objectId;
 	bool wroteOut;
 

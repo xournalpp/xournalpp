@@ -10,17 +10,17 @@
  */
 #ifndef __SIDEBARPREVIEW_H__
 #define __SIDEBARPREVIEW_H__
-// TODO: AA: type check
 
 #include <gtk/gtk.h>
 #include "../../model/Page.h"
 #include "../../util/Util.h"
+#include "../../util/XournalType.h"
 
 #include "../../control/PdfCache.h"
 
 class Sidebar;
 
-class SidebarPreview : public MemoryCheckObject {
+class SidebarPreview {
 public:
 	SidebarPreview(Sidebar * sidebar, XojPage * page);
 	virtual ~SidebarPreview();
@@ -33,12 +33,16 @@ public:
 
 	void repaint();
 	void updateSize();
+
 private:
-	static gboolean exposeEventCallback(GtkWidget *widget, GdkEventExpose *event, SidebarPreview * preview);
-	static gboolean mouseButtonPressCallback(GtkWidget *widget, GdkEventButton *event, SidebarPreview * preview);
+	static gboolean exposeEventCallback(GtkWidget * widget, GdkEventExpose * event, SidebarPreview * preview);
+	static gboolean mouseButtonPressCallback(GtkWidget * widget, GdkEventButton * event, SidebarPreview * preview);
 
 	void paint();
+
 private:
+	XOJ_TYPE_ATTRIB;
+
 	bool selected;
 
 	bool firstPainted;

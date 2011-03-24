@@ -1,19 +1,23 @@
 #include "FontButton.h"
 
 #include <stdlib.h>
-// TODO: AA: type check
 
 FontButton::FontButton(ActionHandler * handler, GladeGui * gui, String id, ActionType type, String description, GtkWidget * menuitem) :
 	AbstractToolItem(id, handler, type, menuitem) {
+	XOJ_INIT_TYPE(FontButton);
+
 	this->gui = gui;
 	this->description = description;
 	fontButton = NULL;
 }
 
 FontButton::~FontButton() {
+	XOJ_RELEASE_TYPE(FontButton);
 }
 
 void FontButton::activated(GdkEvent *event, GtkMenuItem *menuitem, GtkToolButton *toolbutton) {
+	XOJ_CHECK_TYPE(FontButton);
+
 	GtkFontButton * button = GTK_FONT_BUTTON(fontButton);
 
 	String name = gtk_font_button_get_font_name(button);
@@ -26,6 +30,8 @@ void FontButton::activated(GdkEvent *event, GtkMenuItem *menuitem, GtkToolButton
 }
 
 void FontButton::setFont(XojFont & font) {
+	XOJ_CHECK_TYPE(FontButton);
+
 	this->font = font;
 	GtkFontButton * button = GTK_FONT_BUTTON(fontButton);
 
@@ -37,10 +43,14 @@ void FontButton::setFont(XojFont & font) {
 }
 
 XojFont FontButton::getFont() {
+	XOJ_CHECK_TYPE(FontButton);
+
 	return font;
 }
 
 GtkToolItem * FontButton::createItem(bool horizontal) {
+	XOJ_CHECK_TYPE(FontButton);
+
 	if (item) {
 		return item;
 	}
@@ -54,6 +64,8 @@ GtkToolItem * FontButton::createItem(bool horizontal) {
 }
 
 GtkToolItem * FontButton::newItem() {
+	XOJ_CHECK_TYPE(FontButton);
+
 	if (fontButton) {
 		g_object_unref(fontButton);
 	}

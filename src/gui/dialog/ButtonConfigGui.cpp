@@ -277,6 +277,7 @@ GtkWidget * ButtonConfigGui::newLabel(const char * text) {
 }
 
 void ButtonConfigGui::cbSelectCallback(GtkComboBox * widget, ButtonConfigGui * gui) {
+	XOJ_CHECK_TYPE_OBJ(gui, ButtonConfigGui);
 	gui->enableDisableTools();
 }
 

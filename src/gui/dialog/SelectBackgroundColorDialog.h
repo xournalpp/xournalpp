@@ -8,7 +8,6 @@
  *
  * @license GPL
  */
-// TODO: AA: type check
 
 #ifndef __SELECTBACKGROUNDCOLORDIALOG_H__
 #define __SELECTBACKGROUNDCOLORDIALOG_H__
@@ -37,6 +36,8 @@ private:
 	static void buttonCustomCallback(GtkButton * button, SelectBackgroundColorDialog * dlg);
 
 private:
+	XOJ_TYPE_ATTRIB;
+
 	Control * control;
 
 	int selected;

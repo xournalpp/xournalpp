@@ -1,9 +1,10 @@
 #include "ToolButton.h"
 #include "../widgets/gtkmenutooltogglebutton.h"
-// TODO: AA: type check
 
 ToolButton::ToolButton(ActionHandler * handler, String id, ActionType type, String stock, String description, GtkWidget * menuitem) :
 	AbstractToolItem(id, handler, type, menuitem) {
+	XOJ_INIT_TYPE(ToolButton);
+
 	this->stock = stock;
 	this->gui = NULL;
 	this->description = description;
@@ -11,6 +12,8 @@ ToolButton::ToolButton(ActionHandler * handler, String id, ActionType type, Stri
 
 ToolButton::ToolButton(ActionHandler * handler, GladeGui * gui, String id, ActionType type, String iconName, String description, GtkWidget * menuitem) :
 	AbstractToolItem(id, handler, type, menuitem) {
+	XOJ_INIT_TYPE(ToolButton);
+
 	this->iconName = iconName;
 	this->gui = gui;
 	this->description = description;
@@ -19,6 +22,8 @@ ToolButton::ToolButton(ActionHandler * handler, GladeGui * gui, String id, Actio
 ToolButton::ToolButton(ActionHandler * handler, GladeGui * gui, String id, ActionType type, ActionGroup group, String iconName, String description,
 		GtkWidget * menuitem) :
 	AbstractToolItem(id, handler, type, menuitem) {
+	XOJ_INIT_TYPE(ToolButton);
+
 	this->iconName = iconName;
 	this->gui = gui;
 	this->description = description;
@@ -26,9 +31,12 @@ ToolButton::ToolButton(ActionHandler * handler, GladeGui * gui, String id, Actio
 }
 
 ToolButton::~ToolButton() {
+	XOJ_RELEASE_TYPE(ToolButton);
 }
 
 void ToolButton::updateDescription(String description) {
+	XOJ_CHECK_TYPE(ToolButton);
+
 	this->description = description;
 	if (GTK_IS_TOOL_ITEM(item)) {
 		gtk_tool_item_set_tooltip_text(GTK_TOOL_ITEM(item), description.c_str());
@@ -37,6 +45,8 @@ void ToolButton::updateDescription(String description) {
 }
 
 GtkToolItem * ToolButton::newItem() {
+	XOJ_CHECK_TYPE(ToolButton);
+
 	GtkToolItem * it;
 
 	if (!stock.isEmpty()) {

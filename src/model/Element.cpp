@@ -1,8 +1,9 @@
 #include "Element.h"
 #include "../util/ObjectStream.h"
-// TODO: AA: type check
 
 Element::Element(ElementType type) {
+	XOJ_INIT_TYPE(Element);
+
 	this->type = type;
 	this->x = 0;
 	this->y = 0;
@@ -14,72 +15,97 @@ Element::Element(ElementType type) {
 }
 
 Element::~Element() {
+	XOJ_RELEASE_TYPE(Element);
 }
 
 ElementType Element::getType() const {
-	return type;
+	XOJ_CHECK_TYPE(Element);
+
+	return this->type;
 }
 
 void Element::setX(double x) {
+	XOJ_CHECK_TYPE(Element);
+
 	this->x = x;
 }
 
 void Element::setY(double y) {
+	XOJ_CHECK_TYPE(Element);
+
 	this->y = y;
 }
 
 double Element::getX() {
-	if (!sizeCalculated) {
-		sizeCalculated = true;
+	XOJ_CHECK_TYPE(Element);
+
+	if (!this->sizeCalculated) {
+		this->sizeCalculated = true;
 		calcSize();
 	}
 	return x;
 }
 
 double Element::getY() {
-	if (!sizeCalculated) {
-		sizeCalculated = true;
+	XOJ_CHECK_TYPE(Element);
+
+	if (!this->sizeCalculated) {
+		this->sizeCalculated = true;
 		calcSize();
 	}
 	return y;
 }
 
 void Element::move(double dx, double dy) {
+	XOJ_CHECK_TYPE(Element);
+
 	this->x += dx;
 	this->y += dy;
 }
 
 double Element::getElementWidth() {
-	if (!sizeCalculated) {
-		sizeCalculated = true;
+	XOJ_CHECK_TYPE(Element);
+
+	if (!this->sizeCalculated) {
+		this->sizeCalculated = true;
 		calcSize();
 	}
-	return width;
+	return this->width;
 }
 
 double Element::getElementHeight() {
-	if (!sizeCalculated) {
-		sizeCalculated = true;
+	XOJ_CHECK_TYPE(Element);
+
+	if (!this->sizeCalculated) {
+		this->sizeCalculated = true;
 		calcSize();
 	}
-	return height;
+	return this->height;
 }
 
 void Element::setColor(int color) {
+	XOJ_CHECK_TYPE(Element);
+
 	this->color = color;
 }
 
 int Element::getColor() const {
-	return color;
+	XOJ_CHECK_TYPE(Element);
+
+	return this->color;
 }
 
 bool Element::intersectsArea(const GdkRectangle * src) {
+	XOJ_CHECK_TYPE(Element);
+
 	GdkRectangle rect = { getX(), getY(), getElementWidth(), getElementHeight() };
 
 	return gdk_rectangle_intersect(src, &rect, NULL);
 }
 
 bool Element::intersectsArea(double x, double y, double width, double height) {
+	XOJ_CHECK_TYPE(Element);
+
 	double dest_x, dest_y;
 	double dest_w, dest_h;
 
@@ -92,6 +118,8 @@ bool Element::intersectsArea(double x, double y, double width, double height) {
 }
 
 bool Element::isInSelection(ShapeContainer * container) {
+	XOJ_CHECK_TYPE(Element);
+
 	if (!container->contains(getX(), getY())) {
 		return false;
 	}
@@ -109,10 +137,14 @@ bool Element::isInSelection(ShapeContainer * container) {
 }
 
 bool Element::rescaleOnlyAspectRatio() {
+	XOJ_CHECK_TYPE(Element);
+
 	return false;
 }
 
 void Element::serializeElement(ObjectOutputStream & out) {
+	XOJ_CHECK_TYPE(Element);
+
 	out.writeObject("Element");
 
 	out.writeDouble(this->x);
@@ -123,6 +155,8 @@ void Element::serializeElement(ObjectOutputStream & out) {
 }
 
 void Element::readSerializedElement(ObjectInputStream & in) throw (InputStreamException) {
+	XOJ_CHECK_TYPE(Element);
+
 	in.readObject("Element");
 
 	this->x = in.readDouble();

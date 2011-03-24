@@ -3,9 +3,10 @@
 #include "PagePositionCache.h"
 
 #include <gtk/gtk.h>
-// TODO: AA: type check
 
 PagePositionHandler::PagePositionHandler() {
+	XOJ_INIT_TYPE(PagePositionHandler);
+
 	this->dataCount = 0;
 	this->dataAllocSize = 0;
 	this->data = NULL;
@@ -13,10 +14,16 @@ PagePositionHandler::PagePositionHandler() {
 }
 
 PagePositionHandler::~PagePositionHandler() {
+	XOJ_CHECK_TYPE(PagePositionHandler);
+
 	freeData();
+
+	XOJ_RELEASE_TYPE(PagePositionHandler);
 }
 
 void PagePositionHandler::freeData() {
+	XOJ_CHECK_TYPE(PagePositionHandler);
+
 	for (int i = 0; i < this->dataCount; i++) {
 		delete this->data[i];
 	}
@@ -28,6 +35,8 @@ void PagePositionHandler::freeData() {
 }
 
 void PagePositionHandler::update(PageView ** viewPages, int viewPagesLen, int maxY) {
+	XOJ_CHECK_TYPE(PagePositionHandler);
+
 	freeData();
 
 	this->maxY = maxY;
@@ -52,6 +61,8 @@ void PagePositionHandler::update(PageView ** viewPages, int viewPagesLen, int ma
 }
 
 PageView * PagePositionHandler::getViewAt(int x, int y, PagePositionCache * cache) {
+	XOJ_CHECK_TYPE(PagePositionHandler);
+
 	if (y < 0 || y > this->maxY) {
 		return NULL;
 	}
@@ -76,6 +87,8 @@ PageView * PagePositionHandler::getViewAt(int x, int y, PagePositionCache * cach
 }
 
 PagePosition * PagePositionHandler::binarySearch(PagePosition ** sortedArray, int first, int last, int y, int & index) {
+	XOJ_CHECK_TYPE(PagePositionHandler);
+
 	while (first <= last) {
 		int mid = (first + last) / 2; // compute mid point.
 		if (sortedArray[mid]->isYSmallerThan(y)) {
@@ -91,6 +104,8 @@ PagePosition * PagePositionHandler::binarySearch(PagePosition ** sortedArray, in
 }
 
 void PagePositionHandler::addData(PagePosition * p) {
+	XOJ_CHECK_TYPE(PagePositionHandler);
+
 	if (this->dataCount >= this->dataAllocSize) {
 		this->allocDataSize(this->dataAllocSize + 100);
 	}
@@ -98,6 +113,8 @@ void PagePositionHandler::addData(PagePosition * p) {
 }
 
 void PagePositionHandler::allocDataSize(int size) {
+	XOJ_CHECK_TYPE(PagePositionHandler);
+
 	this->dataAllocSize = size;
 	this->data = (PagePosition **) g_realloc(this->data, this->dataAllocSize * sizeof(PagePosition *));
 }

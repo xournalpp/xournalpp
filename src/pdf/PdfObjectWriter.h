@@ -8,7 +8,6 @@
  *
  * @license GPL
  */
-// TODO: AA: type check
 
 #ifndef __PDFOBJECTWRITER_H__
 #define __PDFOBJECTWRITER_H__
@@ -33,6 +32,8 @@ public:
 	void writeCopiedObjects();
 
 private:
+	XOJ_TYPE_ATTRIB;
+
 	PdfWriter * writer;
 	PdfXRef * xref;
 

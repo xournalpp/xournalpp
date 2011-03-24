@@ -3,9 +3,10 @@
 #include "../model/Layer.h"
 #include "../model/Element.h"
 #include "../gui/Redrawable.h"
-// TODO: AA: type check
 
 InsertUndoAction::InsertUndoAction(XojPage * page, Layer * layer, Element * element, Redrawable * view) {
+	XOJ_INIT_TYPE(InsertUndoAction);
+
 	this->page = page;
 	this->layer = layer;
 	this->element = element;
@@ -13,13 +14,20 @@ InsertUndoAction::InsertUndoAction(XojPage * page, Layer * layer, Element * elem
 }
 
 InsertUndoAction::~InsertUndoAction() {
-	if (undone) {
+	XOJ_CHECK_TYPE(InsertUndoAction);
+
+	if (this->undone) {
 		// Insert was undone, so this is not needed anymore
 		delete this->element;
 	}
+	this->element = NULL;
+
+	XOJ_RELEASE_TYPE(InsertUndoAction);
 }
 
 String InsertUndoAction::getText() {
+	XOJ_CHECK_TYPE(InsertUndoAction);
+
 	if (element->getType() == ELEMENT_STROKE) {
 		return _("Draw stroke");
 	} else if (element->getType() == ELEMENT_TEXT) {
@@ -32,6 +40,8 @@ String InsertUndoAction::getText() {
 }
 
 bool InsertUndoAction::undo(Control * control) {
+	XOJ_CHECK_TYPE(InsertUndoAction);
+
 	this->layer->removeElement(this->element, false);
 
 	view->rerenderElement(this->element);
@@ -42,6 +52,8 @@ bool InsertUndoAction::undo(Control * control) {
 }
 
 bool InsertUndoAction::redo(Control * control) {
+	XOJ_CHECK_TYPE(InsertUndoAction);
+
 	this->layer->addElement(this->element);
 
 	view->rerenderElement(this->element);

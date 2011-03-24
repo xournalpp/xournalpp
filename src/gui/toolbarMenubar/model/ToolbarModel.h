@@ -14,7 +14,7 @@
 
 #include <glib.h>
 #include "../../../util/ListIterator.h"
-// TODO: AA: type check
+#include "../../../util/XournalType.h"
 
 class ToolbarData;
 
@@ -35,6 +35,8 @@ private:
 	void parseColors(GKeyFile * config, const char * group);
 
 private:
+	XOJ_TYPE_ATTRIB;
+
 	GList * toolbars;
 	GHashTable * colorNameTable;
 };

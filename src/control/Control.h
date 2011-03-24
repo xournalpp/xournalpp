@@ -22,7 +22,6 @@
 #include "../model/Document.h"
 #include "ZoomControl.h"
 #include "jobs/XournalScheduler.h"
-#include "../util/MemoryCheck.h"
 #include "../util/XournalType.h"
 
 #include "../gui/sidebar/Sidebar.h"
@@ -44,7 +43,6 @@ class Control: public ActionHandler,
 		public RecentManagerListener,
 		public UndoRedoListener,
 		public ClipboardListener,
-		public MemoryCheckObject,
 		public ProgressListener {
 public:
 	Control(GladeSearchpath * gladeSearchPath);

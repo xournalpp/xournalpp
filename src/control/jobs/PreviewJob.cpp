@@ -4,25 +4,36 @@
 #include "../../view/PdfView.h"
 #include "../../view/DocumentView.h"
 #include "../../model/Document.h"
-// TODO: AA: type check
 
 PreviewJob::PreviewJob(SidebarPreview * sidebar) {
+	XOJ_INIT_TYPE(PreviewJob);
+
 	this->sidebarPreview = sidebar;
 }
 
 PreviewJob::~PreviewJob() {
+	XOJ_CHECK_TYPE(PreviewJob);
+
 	this->sidebarPreview = NULL;
+
+	XOJ_RELEASE_TYPE(PreviewJob);
 }
 
 void * PreviewJob::getSource() {
+	XOJ_CHECK_TYPE(PreviewJob);
+
 	return this->sidebarPreview;
 }
 
 JobType PreviewJob::getType() {
+	XOJ_CHECK_TYPE(PreviewJob);
+
 	return JOB_TYPE_PREVIEW;
 }
 
 void PreviewJob::run() {
+	XOJ_CHECK_TYPE(PreviewJob);
+
 	GtkAllocation alloc;
 	gtk_widget_get_allocation(this->sidebarPreview->widget, &alloc);
 

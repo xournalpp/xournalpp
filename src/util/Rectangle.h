@@ -8,10 +8,11 @@
  *
  * @license GPL
  */
-// TODO: AA: type check
 
 #ifndef __RECTANGLE_H__
 #define __RECTANGLE_H__
+
+#include "XournalType.h"
 
 class Range;
 
@@ -20,6 +21,8 @@ public:
 	Rectangle();
 	Rectangle(Range & rect);
 	Rectangle(double x, double y, double width, double height);
+	~Rectangle();
+
 public:
 
 	/**
@@ -41,6 +44,8 @@ public:
 	void add(double x, double y, double width, double height);
 
 public:
+	XOJ_TYPE_ATTRIB;
+
 	double x;
 	double y;
 	double width;

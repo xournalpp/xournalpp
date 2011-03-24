@@ -8,16 +8,15 @@
  *
  * @license GPL
  */
-// TODO: AA: type check
 
 #ifndef __OUTPUTSTREAM_H__
 #define __OUTPUTSTREAM_H__
 
 #include "../util/String.h"
-#include "../util/MemoryCheck.h"
+#include "../util/XournalType.h"
 #include <zlib.h>
 
-class OutputStream : public MemoryCheckObject {
+class OutputStream {
 public:
 	OutputStream();
 	virtual ~OutputStream();
@@ -41,7 +40,10 @@ public:
 
 
 	String & getLastError();
+
 private:
+	XOJ_TYPE_ATTRIB;
+
 	gzFile fp;
 
 	String error;

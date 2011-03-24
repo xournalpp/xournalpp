@@ -8,7 +8,6 @@
  *
  * @license GPL
  */
-// TODO: AA: type check
 
 #ifndef __PDFREFENTRY_H__
 #define __PDFREFENTRY_H__
@@ -30,6 +29,8 @@ public:
 	bool equalsRef(const Ref & ref);
 
 public:
+	XOJ_TYPE_ATTRIB;
+
 	PdfRefEntryType type;
 	int objectId;
 	int refSourceId;

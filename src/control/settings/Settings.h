@@ -29,6 +29,7 @@ class ButtonConfig;
 class SAttribute {
 public:
 	SAttribute();
+	SAttribute(const SAttribute & attrib);
 	~SAttribute();
 
 public:

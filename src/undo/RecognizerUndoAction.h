@@ -11,7 +11,6 @@
 
 #ifndef __RECOGNIZERUNDOACTION_H__
 #define __RECOGNIZERUNDOACTION_H__
-// TODO: AA: type check
 
 #include "UndoAction.h"
 
@@ -32,7 +31,10 @@ public:
 	virtual bool redo(Control * control);
 
 	virtual String getText();
+
 private:
+	XOJ_TYPE_ATTRIB;
+
 	Redrawable * view;
 	Layer * layer;
 	Stroke * recognized;

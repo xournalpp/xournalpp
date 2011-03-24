@@ -14,7 +14,7 @@
 
 #include "../GladeGui.h"
 #include "../../control/settings/Settings.h"
-// TODO: AA: type check
+#include "../../util/XournalType.h"
 
 class SettingsDialog: public GladeGui {
 public:
@@ -32,7 +32,7 @@ public:
 private:
 	void load();
 	void loadCheckbox(const char * name, gboolean value);
-	gboolean getCheckbox(const char * name);
+	bool getCheckbox(const char * name);
 
 	String updateHideString(String hidden, bool hideMenubar, bool hideSidebar);
 
@@ -42,7 +42,10 @@ private:
 	static gboolean zoomcallibSliderChanged(GtkRange *range, GtkScrollType scroll, gdouble value, SettingsDialog * dlg);
 
 	static void toolboxToggledCallback(GtkToggleButton *togglebutton, SettingsDialog * sd);
+
 private:
+	XOJ_TYPE_ATTRIB;
+
 	Settings * settings;
 	GtkWidget * callib;
 	int dpi;

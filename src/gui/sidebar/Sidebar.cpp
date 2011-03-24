@@ -8,9 +8,10 @@
 
 #include <config.h>
 #include <glib/gi18n-lib.h>
-// TODO: AA: type check
 
 Sidebar::Sidebar(GladeGui * gui, Control * control) {
+	XOJ_INIT_TYPE(Sidebar);
+
 	this->control = control;
 	this->treeViewBookmarks = gtk_tree_view_new();
 	this->iconViewPreview = gtk_layout_new(NULL, NULL);
@@ -94,7 +95,21 @@ Sidebar::Sidebar(GladeGui * gui, Control * control) {
 	registerListener(control);
 }
 
+Sidebar::~Sidebar() {
+	XOJ_CHECK_TYPE(Sidebar);
+
+	gtk_widget_destroy(this->treeViewBookmarks);
+	gtk_widget_destroy(this->iconViewPreview);
+
+	delete this->cache;
+	this->cache = NULL;
+
+	XOJ_RELEASE_TYPE(Sidebar);
+}
+
 void Sidebar::setBackgroundWhite() {
+	XOJ_CHECK_TYPE(Sidebar);
+
 	if (this->backgroundInitialized) {
 		return;
 	}
@@ -102,15 +117,9 @@ void Sidebar::setBackgroundWhite() {
 	gdk_window_set_background(GTK_LAYOUT(iconViewPreview)->bin_window, &iconViewPreview->style->white);
 }
 
-Sidebar::~Sidebar() {
-	gtk_widget_destroy(this->treeViewBookmarks);
-	gtk_widget_destroy(this->iconViewPreview);
-
-	delete this->cache;
-	this->cache = NULL;
-}
-
 gboolean Sidebar::treeSearchFunction(GtkTreeModel * model, gint column, const gchar * key, GtkTreeIter * iter, Sidebar * sidebar) {
+	XOJ_CHECK_TYPE_OBJ(sidebar, Sidebar);
+
 	// Source: Pidgin
 
 	gchar *enteredstring;
@@ -165,6 +174,8 @@ gboolean Sidebar::treeSearchFunction(GtkTreeModel * model, gint column, const gc
 }
 
 void Sidebar::cbChangedCallback(GtkComboBox * widget, Sidebar * sidebar) {
+	XOJ_CHECK_TYPE_OBJ(sidebar, Sidebar);
+
 	int selected = gtk_combo_box_get_active(widget);
 
 	if (selected == 0) { // Bookmark
@@ -177,6 +188,8 @@ void Sidebar::cbChangedCallback(GtkComboBox * widget, Sidebar * sidebar) {
 }
 
 void Sidebar::askInsertPdfPage(int pdfPage) {
+	XOJ_CHECK_TYPE(Sidebar);
+
 	GtkWidget * dialog = gtk_message_dialog_new((GtkWindow*) *control->getWindow(), GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_QUESTION, GTK_BUTTONS_NONE,
 			_("Your current document does not contain PDF Page %i\n"
 				"Would you insert this page?\n\nTipp: You can select Journal / Paper Background / PDF Background to insert a PDF page."), pdfPage + 1);
@@ -213,6 +226,8 @@ void Sidebar::askInsertPdfPage(int pdfPage) {
 }
 
 bool Sidebar::treeClickedCallback(GtkWidget * treeview, GdkEventButton * event, Sidebar * sidebar) {
+	XOJ_CHECK_TYPE_OBJ(sidebar, Sidebar);
+
 	GtkTreePath * path = NULL;
 	sidebar->typeSelected = true;
 
@@ -267,6 +282,8 @@ bool Sidebar::treeClickedCallback(GtkWidget * treeview, GdkEventButton * event, 
 }
 
 int Sidebar::expandOpenLinks(GtkTreeModel * model, GtkTreeIter * parent) {
+	XOJ_CHECK_TYPE(Sidebar);
+
 	GtkTreeIter iter = { 0 };
 	XojLinkDest * link = NULL;
 	if (model == NULL) {
@@ -293,6 +310,8 @@ int Sidebar::expandOpenLinks(GtkTreeModel * model, GtkTreeIter * parent) {
 }
 
 bool Sidebar::selectPageNr(int page, int pdfPage, GtkTreeIter * parent) {
+	XOJ_CHECK_TYPE(Sidebar);
+
 	GtkTreeIter iter;
 
 	Document * doc = control->getDocument();
@@ -355,10 +374,14 @@ bool Sidebar::selectPageNr(int page, int pdfPage, GtkTreeIter * parent) {
 }
 
 PdfCache * Sidebar::getCache() {
+	XOJ_CHECK_TYPE(Sidebar);
+
 	return this->cache;
 }
 
 void Sidebar::setTmpDisabled(bool disabled) {
+	XOJ_CHECK_TYPE(Sidebar);
+
 	gtk_widget_set_sensitive(this->treeViewBookmarks, !disabled);
 	gtk_widget_set_sensitive(this->iconViewPreview, !disabled);
 	gtk_widget_set_sensitive(this->buttonCloseSidebar, !disabled);
@@ -385,6 +408,8 @@ void Sidebar::setTmpDisabled(bool disabled) {
 }
 
 void Sidebar::layout() {
+	XOJ_CHECK_TYPE(Sidebar);
+
 	int x = 0;
 	int y = 0;
 	int width = 0;
@@ -400,10 +425,14 @@ void Sidebar::layout() {
 }
 
 Document * Sidebar::getDocument() {
+	XOJ_CHECK_TYPE(Sidebar);
+
 	return control->getDocument();
 }
 
 Control * Sidebar::getControl() {
+	XOJ_CHECK_TYPE(Sidebar);
+
 	return control;
 }
 
@@ -412,6 +441,8 @@ double Sidebar::getZoom() {
 }
 
 void Sidebar::updatePreviews() {
+	XOJ_CHECK_TYPE(Sidebar);
+
 	Document * doc = control->getDocument();
 	doc->lock();
 	int len = doc->getPageCount();
@@ -442,6 +473,8 @@ void Sidebar::updatePreviews() {
 }
 
 void Sidebar::documentChanged(DocumentChangeType type) {
+	XOJ_CHECK_TYPE(Sidebar);
+
 	if (type == DOCUMENT_CHANGE_CLEARED) {
 		gtk_tree_view_set_model(GTK_TREE_VIEW(treeViewBookmarks), NULL);
 	} else if (type == DOCUMENT_CHANGE_PDF_BOOKMARKS || type == DOCUMENT_CHANGE_COMPLETE) {
@@ -467,6 +500,8 @@ void Sidebar::documentChanged(DocumentChangeType type) {
 }
 
 void Sidebar::pageSizeChanged(int page) {
+	XOJ_CHECK_TYPE(Sidebar);
+
 	if (page < 0 || page >= this->previewCount) {
 		return;
 	}
@@ -478,6 +513,8 @@ void Sidebar::pageSizeChanged(int page) {
 }
 
 void Sidebar::pageChanged(int page) {
+	XOJ_CHECK_TYPE(Sidebar);
+
 	if (page < 0 || page >= this->previewCount) {
 		return;
 	}
@@ -487,7 +524,7 @@ void Sidebar::pageChanged(int page) {
 }
 
 bool Sidebar::scrollToPreview(Sidebar * sidebar) {
-	CHECK_MEMORY(sidebar);
+	XOJ_CHECK_TYPE_OBJ(sidebar, Sidebar);
 
 	MainWindow * win = sidebar->control->getWindow();
 	if (win) {
@@ -524,6 +561,8 @@ bool Sidebar::scrollToPreview(Sidebar * sidebar) {
 }
 
 void Sidebar::pageDeleted(int page) {
+	XOJ_CHECK_TYPE(Sidebar);
+
 	delete this->previews[page];
 	for (int i = page; i < this->previewCount; i++) {
 		this->previews[i] = this->previews[i + 1];
@@ -534,6 +573,8 @@ void Sidebar::pageDeleted(int page) {
 }
 
 void Sidebar::pageInserted(int page) {
+	XOJ_CHECK_TYPE(Sidebar);
+
 	SidebarPreview ** lastPreviews = this->previews;
 
 	this->previews = new SidebarPreview *[this->previewCount + 1];
@@ -572,6 +613,8 @@ void Sidebar::pageInserted(int page) {
 }
 
 void Sidebar::pageSelected(int page) {
+	XOJ_CHECK_TYPE(Sidebar);
+
 	if (this->selectedPage >= 0 && this->selectedPage < this->previewCount) {
 		this->previews[this->selectedPage]->setSelected(false);
 	}

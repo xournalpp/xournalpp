@@ -11,7 +11,8 @@
 
 #ifndef __PDFXREF_H__
 #define __PDFXREF_H__
-// TODO: AA: type check
+
+#include "../util/XournalType.h"
 
 class PdfXRef {
 public:
@@ -26,6 +27,8 @@ public:
 	int getXref(int id);
 
 private:
+	XOJ_TYPE_ATTRIB;
+
 	int * xref;
 	int xrefLenght;
 	int xrefNr;

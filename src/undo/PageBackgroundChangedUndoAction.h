@@ -8,7 +8,6 @@
  *
  * @license GPL
  */
-// TODO: AA: type check
 
 #ifndef __PAGEBACKGROUNDCHANGEDUNDOACTION_H__
 #define __PAGEBACKGROUNDCHANGEDUNDOACTION_H__
@@ -28,6 +27,8 @@ public:
 	virtual String getText();
 
 private:
+	XOJ_TYPE_ATTRIB;
+
 	BackgroundType origType;
 	int origPdfPage;
 	BackgroundImage origBackgroundImage;

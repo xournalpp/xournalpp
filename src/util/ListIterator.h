@@ -8,17 +8,19 @@
  *
  * @license GPL
  */
-// TODO: AA: type check
 
 #ifndef __LISTITERATOR_H__
 #define __LISTITERATOR_H__
 
 #include <gtk/gtk.h>
+#include "XournalType.h"
 
 template<class T>
 class ListIterator {
 public:
 	ListIterator(GList * data, bool reverse = false) {
+		XOJ_INIT_TYPE(ListIterator);
+
 		if (reverse) {
 			this->data = g_list_last(data);
 		} else {
@@ -30,17 +32,23 @@ public:
 	}
 
 	virtual ~ListIterator() {
+		XOJ_CHECK_TYPE(ListIterator);
+
 		if (this->copied) {
 			g_list_free(this->list);
 		}
 		this->copied = false;
 		this->data = NULL;
+
+		XOJ_RELEASE_TYPE(ListIterator);
 	}
 
 	/**
 	 * If the source changes while you are using the iterator nothing happens
 	 */
 	void freeze() {
+		XOJ_CHECK_TYPE(ListIterator);
+
 		if (this->copied) {
 			return;
 		}
@@ -50,10 +58,14 @@ public:
 	}
 
 	bool hasNext() {
+		XOJ_CHECK_TYPE(ListIterator);
+
 		return this->data != NULL;
 	}
 
 	T next() {
+		XOJ_CHECK_TYPE(ListIterator);
+
 		T d = (T) this->data->data;
 		if (reverse) {
 			this->data = this->data->prev;
@@ -64,10 +76,14 @@ public:
 	}
 
 	int getLength() {
+		XOJ_CHECK_TYPE(ListIterator);
+
 		return g_list_length(this->list);
 	}
 
 	void reset() {
+		XOJ_CHECK_TYPE(ListIterator);
+
 		if (this->reverse) {
 			this->data = g_list_last(this->list);
 		} else {
@@ -76,6 +92,8 @@ public:
 	}
 
 private:
+	XOJ_TYPE_ATTRIB;
+
 	GList * list;
 	GList * data;
 	bool reverse;

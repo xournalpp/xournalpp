@@ -9,11 +9,11 @@
  * @license GPL
  */
 
-// TODO: AA: type check
+#ifndef __STRING_H__
+#define __STRING_H__
 
-#ifndef __STRING_HPP__
-#define __STRING_HPP__
 #include <gtk/gtk.h>
+#include "XournalType.h"
 
 class _RefStrInternal;
 
@@ -77,7 +77,10 @@ public:
 
 	String toLowerCase() const;
 	String toUpperCase() const;
+
 private:
+	XOJ_TYPE_ATTRIB;
+
 	_RefStrInternal * data;
 };
 
@@ -87,7 +90,10 @@ public:
 	~StringTokenizer();
 
 	const char * next();
+
 private:
+	XOJ_TYPE_ATTRIB;
+
 	char * str;
 	int x;
 	int len;
@@ -97,4 +103,4 @@ private:
 	bool lastWasToken;
 };
 
-#endif /* __STRING_HPP__ */
+#endif /* __STRING_H__ */

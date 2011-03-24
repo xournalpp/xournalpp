@@ -4,9 +4,10 @@
 
 #include <config.h>
 #include <glib/gi18n-lib.h>
-// TODO: AA: type check
 
 SearchBar::SearchBar(Control * control) {
+	XOJ_INIT_TYPE(SearchBar);
+
 	this->control = control;
 
 	MainWindow * win = control->getWindow();
@@ -29,16 +30,24 @@ SearchBar::SearchBar(Control * control) {
 }
 
 SearchBar::~SearchBar() {
-	control = NULL;
+	XOJ_CHECK_TYPE(SearchBar);
+
+	this->control = NULL;
+
+	XOJ_RELEASE_TYPE(SearchBar);
 }
 
 bool SearchBar::searchTextonCurrentPage(const char * text, int * occures, double * top) {
+	XOJ_CHECK_TYPE(SearchBar);
+
 	int p = control->getCurrentPageNo();
 
 	return control->searchTextOnPage(text, p, occures, top);
 }
 
 void SearchBar::search(const char * text) {
+	XOJ_CHECK_TYPE(SearchBar);
+
 	MainWindow * win = control->getWindow();
 	GdkColor color = { 0, 0xff00, 0xc000, 0xc000 };
 	GtkWidget * searchTextField = win->get("searchTextField");
@@ -73,16 +82,22 @@ void SearchBar::search(const char * text) {
 	}
 }
 
-void SearchBar::searchTextChangedCallback(GtkEntry *entry, SearchBar * searchBar) {
+void SearchBar::searchTextChangedCallback(GtkEntry * entry, SearchBar * searchBar) {
+	XOJ_CHECK_TYPE_OBJ(searchBar, SearchBar);
+
 	const char * text = gtk_entry_get_text(entry);
 	searchBar->search(text);
 }
 
-void SearchBar::buttonCloseSearchClicked(GtkButton *button, SearchBar * searchBar) {
+void SearchBar::buttonCloseSearchClicked(GtkButton * button, SearchBar * searchBar) {
+	XOJ_CHECK_TYPE_OBJ(searchBar, SearchBar);
+
 	searchBar->showSearchBar(false);
 }
 
 void SearchBar::searchNext() {
+	XOJ_CHECK_TYPE(SearchBar);
+
 	int page = control->getCurrentPageNo();
 	int count = control->getDocument()->getPageCount();
 	if (count < 2) {
@@ -132,6 +147,8 @@ void SearchBar::searchNext() {
 }
 
 void SearchBar::searchPrevious() {
+	XOJ_CHECK_TYPE(SearchBar);
+
 	int page = control->getCurrentPageNo();
 	int count = control->getDocument()->getPageCount();
 	if (count < 2) {
@@ -180,15 +197,21 @@ void SearchBar::searchPrevious() {
 	gtk_label_set_text(GTK_LABEL(lbSearchState), _("Text not found, searched on all pages"));
 }
 
-void SearchBar::buttonNextSearchClicked(GtkButton *button, SearchBar * searchBar) {
+void SearchBar::buttonNextSearchClicked(GtkButton * button, SearchBar * searchBar) {
+	XOJ_CHECK_TYPE_OBJ(searchBar, SearchBar);
+
 	searchBar->searchNext();
 }
 
-void SearchBar::buttonPreviousSearchClicked(GtkButton *button, SearchBar * searchBar) {
+void SearchBar::buttonPreviousSearchClicked(GtkButton * button, SearchBar * searchBar) {
+	XOJ_CHECK_TYPE_OBJ(searchBar, SearchBar);
+
 	searchBar->searchPrevious();
 }
 
 void SearchBar::showSearchBar(bool show) {
+	XOJ_CHECK_TYPE(SearchBar);
+
 	MainWindow * win = control->getWindow();
 	GtkWidget *searchBar = win->get("searchBar");
 

@@ -4,11 +4,11 @@
 
 #include <config.h>
 #include <glib/gi18n-lib.h>
-// TODO: AA: type check
-
 // TODO: LOW PRIO: add memory limit
 
 UndoRedoHandler::UndoRedoHandler(Control * control) {
+	XOJ_INIT_TYPE(UndoRedoHandler);
+
 	this->undoList = NULL;
 	this->savedUndoList = NULL;
 	this->autosavedUndoList = NULL;
@@ -18,10 +18,16 @@ UndoRedoHandler::UndoRedoHandler(Control * control) {
 }
 
 UndoRedoHandler::~UndoRedoHandler() {
+	XOJ_CHECK_TYPE(UndoRedoHandler);
+
 	clearContents();
+
+	XOJ_RELEASE_TYPE(UndoRedoHandler);
 }
 
 void UndoRedoHandler::clearContents() {
+	XOJ_CHECK_TYPE(UndoRedoHandler);
+
 	for (GList * l = this->undoList; l != NULL; l = l->next) {
 		UndoAction * action = (UndoAction *) l->data;
 		delete action;
@@ -33,6 +39,8 @@ void UndoRedoHandler::clearContents() {
 }
 
 void UndoRedoHandler::clearRedo() {
+	XOJ_CHECK_TYPE(UndoRedoHandler);
+
 	for (GList * l = this->redoList; l != NULL; l = l->next) {
 		UndoAction * action = (UndoAction *) l->data;
 		delete action;
@@ -42,6 +50,8 @@ void UndoRedoHandler::clearRedo() {
 }
 
 void UndoRedoHandler::undo() {
+	XOJ_CHECK_TYPE(UndoRedoHandler);
+
 	if (!this->undoList) {
 		return;
 	}
@@ -72,6 +82,8 @@ void UndoRedoHandler::undo() {
 }
 
 void UndoRedoHandler::redo() {
+	XOJ_CHECK_TYPE(UndoRedoHandler);
+
 	if (!this->redoList) {
 		return;
 	}
@@ -102,20 +114,28 @@ void UndoRedoHandler::redo() {
 }
 
 bool UndoRedoHandler::canUndo() {
+	XOJ_CHECK_TYPE(UndoRedoHandler);
+
 	return this->undoList != NULL;
 }
 
 bool UndoRedoHandler::canRedo() {
+	XOJ_CHECK_TYPE(UndoRedoHandler);
+
 	return this->redoList != NULL;
 }
 
 void UndoRedoHandler::addUndoAction(UndoAction * action) {
+	XOJ_CHECK_TYPE(UndoRedoHandler);
+
 	this->undoList = g_list_append(this->undoList, action);
 	clearRedo();
 	fireUpdateUndoRedoButtons(action->getPages());
 }
 
 void UndoRedoHandler::addUndoActionBefore(UndoAction * action, UndoAction * before) {
+	XOJ_CHECK_TYPE(UndoRedoHandler);
+
 	GList * data = g_list_find(this->undoList, before);
 	if (!data) {
 		addUndoAction(action);
@@ -127,6 +147,8 @@ void UndoRedoHandler::addUndoActionBefore(UndoAction * action, UndoAction * befo
 }
 
 bool UndoRedoHandler::removeUndoAction(UndoAction * action) {
+	XOJ_CHECK_TYPE(UndoRedoHandler);
+
 	GList * l = g_list_find(this->undoList, action);
 	if (l == NULL) {
 		return false;
@@ -139,6 +161,8 @@ bool UndoRedoHandler::removeUndoAction(UndoAction * action) {
 }
 
 String UndoRedoHandler::undoDescription() {
+	XOJ_CHECK_TYPE(UndoRedoHandler);
+
 	if (this->undoList) {
 		GList * l = g_list_last(this->undoList);
 		UndoAction * a = (UndoAction *) l->data;
@@ -152,6 +176,8 @@ String UndoRedoHandler::undoDescription() {
 }
 
 String UndoRedoHandler::redoDescription() {
+	XOJ_CHECK_TYPE(UndoRedoHandler);
+
 	if (this->redoList) {
 		GList * l = g_list_last(this->redoList);
 		UndoAction * a = (UndoAction *) l->data;
@@ -166,6 +192,8 @@ String UndoRedoHandler::redoDescription() {
 }
 
 void UndoRedoHandler::fireUpdateUndoRedoButtons(XojPage ** pages) {
+	XOJ_CHECK_TYPE(UndoRedoHandler);
+
 	for (GList * l = this->listener; l != NULL; l = l->next) {
 		((UndoRedoListener *) l->data)->undoRedoChanged();
 	}
@@ -179,21 +207,31 @@ void UndoRedoHandler::fireUpdateUndoRedoButtons(XojPage ** pages) {
 }
 
 void UndoRedoHandler::addUndoRedoListener(UndoRedoListener * listener) {
+	XOJ_CHECK_TYPE(UndoRedoHandler);
+
 	this->listener = g_list_append(this->listener, listener);
 }
 
 bool UndoRedoHandler::isChanged() {
+	XOJ_CHECK_TYPE(UndoRedoHandler);
+
 	return this->savedUndoList != g_list_last(this->undoList);
 }
 
 bool UndoRedoHandler::isChangedAutosave() {
+	XOJ_CHECK_TYPE(UndoRedoHandler);
+
 	return this->autosavedUndoList != g_list_last(this->undoList);
 }
 
 void UndoRedoHandler::documentAutosaved() {
+	XOJ_CHECK_TYPE(UndoRedoHandler);
+
 	this->autosavedUndoList = g_list_last(this->undoList);
 }
 
 void UndoRedoHandler::documentSaved() {
+	XOJ_CHECK_TYPE(UndoRedoHandler);
+
 	this->savedUndoList = g_list_last(this->undoList);
 }

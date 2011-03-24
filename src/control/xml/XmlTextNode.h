@@ -11,7 +11,6 @@
 
 #ifndef __XMLTEXTNODE_H__
 #define __XMLTEXTNODE_H__
-// TODO: AA: type check
 
 #include "XmlNode.h"
 
@@ -27,6 +26,8 @@ public:
 	virtual void writeOut(OutputStream * out);
 
 private:
+	XOJ_TYPE_ATTRIB;
+
 	char * text;
 };
 

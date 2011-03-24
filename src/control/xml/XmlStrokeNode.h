@@ -8,7 +8,6 @@
  *
  * @license GPL
  */
-// TODO: AA: type check
 
 #ifndef __XMLSTROKENODE_H__
 #define __XMLSTROKENODE_H__
@@ -26,7 +25,10 @@ public:
 	void setWidth(double width, double * widths, int widthsLength);
 
 	virtual void writeOut(OutputStream * out);
+
 private:
+	XOJ_TYPE_ATTRIB;
+
 	Point * points;
 	int pointLength;
 

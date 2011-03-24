@@ -11,7 +11,6 @@
 
 #ifndef __XOJPOPPLERACTION_H__
 #define __XOJPOPPLERACTION_H__
-// TODO: AA: type check
 
 #include "XojPopplerDocument.h"
 
@@ -33,6 +32,8 @@ private:
 	void linkFromDest(LinkDestination *link, LinkDest *dest);
 
 private:
+	XOJ_TYPE_ATTRIB;
+
 	XojPopplerDocument doc;
 	LinkAction * linkAction;
 	String title;

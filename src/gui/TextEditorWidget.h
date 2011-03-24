@@ -8,7 +8,6 @@
  *
  * @license GPL
  */
-// TODO: AA: type check
 
 #ifndef __TEXTEDITORWIDGET_H__
 #define __TEXTEDITORWIDGET_H__

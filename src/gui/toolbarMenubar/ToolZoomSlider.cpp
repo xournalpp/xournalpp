@@ -1,8 +1,9 @@
 #include "ToolZoomSlider.h"
-// TODO: AA: type check
 
 ToolZoomSlider::ToolZoomSlider(ActionHandler * handler, String id, ActionType type, ZoomControl * zoom) :
 	AbstractToolItem(id, handler, type, NULL) {
+	XOJ_INIT_TYPE(ToolZoomSlider);
+
 	slider = NULL;
 	this->zoom = zoom;
 
@@ -13,6 +14,7 @@ ToolZoomSlider::ToolZoomSlider(ActionHandler * handler, String id, ActionType ty
 }
 
 ToolZoomSlider::~ToolZoomSlider() {
+	XOJ_RELEASE_TYPE(ToolZoomSlider);
 }
 
 void ToolZoomSlider::sliderChanged(GtkRange * range, ZoomControl * zoom) {
@@ -20,15 +22,21 @@ void ToolZoomSlider::sliderChanged(GtkRange * range, ZoomControl * zoom) {
 }
 
 void ToolZoomSlider::zoomChanged(double lastZoom) {
+	XOJ_CHECK_TYPE(ToolZoomSlider);
+
 	gtk_range_set_value(GTK_RANGE(slider), zoom->getZoom());
 }
 
 void ToolZoomSlider::zoomRangeValuesChanged() {
+	XOJ_CHECK_TYPE(ToolZoomSlider);
+
 	updateScaleMarks();
 }
 
 // Should be called when the window size changes
 void ToolZoomSlider::updateScaleMarks() {
+	XOJ_CHECK_TYPE(ToolZoomSlider);
+
 	if (!slider) {
 		return;
 	}
@@ -38,6 +46,8 @@ void ToolZoomSlider::updateScaleMarks() {
 }
 
 void ToolZoomSlider::setHorizontal(bool horizontal) {
+	XOJ_CHECK_TYPE(ToolZoomSlider);
+
 	if (horizontal) {
 		GtkAllocation alloc = { 0, 0, 120, 30 };
 		gtk_widget_set_allocation(fixed, &alloc);
@@ -51,6 +61,8 @@ void ToolZoomSlider::setHorizontal(bool horizontal) {
 }
 
 GtkToolItem * ToolZoomSlider::createItem(bool horizontal) {
+	XOJ_CHECK_TYPE(ToolZoomSlider);
+
 	this->horizontal = horizontal;
 	GtkToolItem * item = newItem();
 	g_object_ref(item);
@@ -67,6 +79,8 @@ GtkToolItem * ToolZoomSlider::createItem(bool horizontal) {
 }
 
 void ToolZoomSlider::enable(bool enabled) {
+	XOJ_CHECK_TYPE(ToolZoomSlider);
+
 	if (this->item) {
 		gtk_widget_set_sensitive(GTK_WIDGET(this->item), enabled);
 	}
@@ -76,41 +90,43 @@ void ToolZoomSlider::enable(bool enabled) {
 }
 
 GtkToolItem * ToolZoomSlider::newItem() {
+	XOJ_CHECK_TYPE(ToolZoomSlider);
+
 	GtkToolItem * it = gtk_tool_item_new();
 
-	if (slider) {
-		g_signal_handlers_disconnect_by_func(slider, (void*) (sliderChanged), zoom);
+	if (this->slider) {
+		g_signal_handlers_disconnect_by_func(this->slider, (void *)(sliderChanged), this->zoom);
 	}
 
-	if (horizontal) {
-		slider = gtk_hscale_new_with_range(0.3, 3, 0.1);
+	if (this->horizontal) {
+		this->slider = gtk_hscale_new_with_range(0.3, 3, 0.1);
 	} else {
-		slider = gtk_vscale_new_with_range(0.3, 3, 0.1);
-		gtk_range_set_inverted(GTK_RANGE(slider), true);
+		this->slider = gtk_vscale_new_with_range(0.3, 3, 0.1);
+		gtk_range_set_inverted(GTK_RANGE(this->slider), true);
 	}
-	g_signal_connect(slider, "value-changed", G_CALLBACK(sliderChanged), zoom);
-	gtk_scale_set_draw_value(GTK_SCALE(slider), false);
+	g_signal_connect(this->slider, "value-changed", G_CALLBACK(sliderChanged), this->zoom);
+	gtk_scale_set_draw_value(GTK_SCALE(this->slider), false);
 
-	fixed = gtk_fixed_new();
+	this->fixed = gtk_fixed_new();
 
 	GtkAllocation alloc = { 0, 0, 125, 30 };
-	if (!horizontal) {
+	if (!this->horizontal) {
 		alloc.width = 30;
 		alloc.height = 125;
 	}
 
-	gtk_widget_set_allocation(fixed, &alloc);
+	gtk_widget_set_allocation(this->fixed, &alloc);
 
-	if (horizontal) {
-		gtk_fixed_put(GTK_FIXED(fixed), slider, 0, 5);
-		gtk_widget_set_size_request(slider, 120, 25);
+	if (this->horizontal) {
+		gtk_fixed_put(GTK_FIXED(this->fixed), this->slider, 0, 5);
+		gtk_widget_set_size_request(this->slider, 120, 25);
 	} else {
-		gtk_fixed_put(GTK_FIXED(fixed), slider, 5, 0);
-		gtk_widget_set_size_request(slider, 25, 120);
+		gtk_fixed_put(GTK_FIXED(this->fixed), this->slider, 5, 0);
+		gtk_widget_set_size_request(this->slider, 25, 120);
 	}
 
-	gtk_container_add(GTK_CONTAINER(it), fixed);
-	gtk_range_set_value(GTK_RANGE(slider), zoom->getZoom());
+	gtk_container_add(GTK_CONTAINER(it), this->fixed);
+	gtk_range_set_value(GTK_RANGE(this->slider), this->zoom->getZoom());
 	updateScaleMarks();
 
 	return it;

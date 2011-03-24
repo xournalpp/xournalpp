@@ -13,7 +13,6 @@
 #define __ELEMENT_H__
 
 #include <gtk/gtk.h>
-#include "../util/MemoryCheck.h"
 #include "../util/Serializeable.h"
 #include "../util/XournalType.h"
 
@@ -26,7 +25,7 @@ public:
 	virtual bool contains(double x, double y) = 0;
 };
 
-class Element: public MemoryCheckObject, public Serializeable {
+class Element: public Serializeable {
 protected:
 	Element(ElementType type);
 

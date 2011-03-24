@@ -8,12 +8,12 @@
  *
  * @license GPL
  */
-// TODO: AA: type check
 
 #ifndef __PAGEPOSITION_H__
 #define __PAGEPOSITION_H__
 
 #include <glib.h>
+#include "../../util/XournalType.h"
 
 class PageView;
 
@@ -30,7 +30,10 @@ public:
 	bool isYGraterThan(int y);
 
 	PageView * getViewAt(int x, int y);
+
 private:
+	XOJ_TYPE_ATTRIB;
+
 	int y1;
 	int y2;
 

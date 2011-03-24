@@ -14,7 +14,6 @@
 
 #include "AbstractToolItem.h"
 #include "../GladeGui.h"
-// TODO: AA: type check
 
 class ToolButton: public AbstractToolItem {
 public:
@@ -35,6 +34,8 @@ protected:
 	GladeGui * gui;
 
 private:
+	XOJ_TYPE_ATTRIB;
+
 	String stock;
 
 	String iconName;

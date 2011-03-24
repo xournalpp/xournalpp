@@ -1,20 +1,28 @@
 #include "GladeSearchpath.h"
-// TODO: AA: type check
 
 GladeSearchpath::GladeSearchpath() {
+	XOJ_INIT_TYPE(GladeSearchpath);
+
 	this->directories = NULL;
 }
 
 GladeSearchpath::~GladeSearchpath() {
+	XOJ_CHECK_TYPE(GladeSearchpath);
+
 	for (GList * l = this->directories; l != NULL; l = l->next) {
 		char * str = (char *)l->data;
 		g_free(str);
 	}
 
 	g_list_free(this->directories);
+	this->directories;
+
+	XOJ_RELEASE_TYPE(GladeSearchpath);
 }
 
 char * GladeSearchpath::findFile(const char * subdir, const char * file) {
+	XOJ_CHECK_TYPE(GladeSearchpath);
+
 	GList * elem;
 
 	char * filename = NULL;
@@ -44,5 +52,7 @@ char * GladeSearchpath::findFile(const char * subdir, const char * file) {
  * Use this function to set the directory containing installed pixmaps and Glade XML files.
  */
 void GladeSearchpath::addSearchDirectory(const char * directory) {
+	XOJ_CHECK_TYPE(GladeSearchpath);
+
 	this->directories = g_list_append(this->directories, g_strdup(directory));
 }

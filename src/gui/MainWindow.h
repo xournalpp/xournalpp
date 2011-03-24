@@ -8,14 +8,13 @@
  *
  * @license GPL
  */
-// TODO: AA: type check
 
 #ifndef __MAINWINDOW_H__
 #define __MAINWINDOW_H__
 
 #include "GladeGui.h"
 #include "../model/Font.h"
-#include "../util/MemoryCheck.h"
+#include "../util/XournalType.h"
 
 class Control;
 class MainWindow;
@@ -24,7 +23,7 @@ class ToolbarData;
 class ToolbarModel;
 class XournalView;
 
-class MainWindow: public GladeGui, public MemoryCheckObject {
+class MainWindow: public GladeGui {
 public:
 	MainWindow(GladeSearchpath * gladeSearchPath, Control * control);
 	virtual ~MainWindow();
@@ -84,7 +83,10 @@ private:
 	 * Callback fro window states, we ned to know if the window is fullscreen
 	 */
 	static bool windowStateEventCallback(GtkWidget * window, GdkEventWindowState * event, MainWindow * win);
+
 private:
+	XOJ_TYPE_ATTRIB;
+
 	Control * control;
 
 	XournalView * xournal;

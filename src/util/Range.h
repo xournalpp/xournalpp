@@ -8,10 +8,11 @@
  *
  * @license GPL
  */
-// TODO: AA: type check
 
 #ifndef RANGE_H_
 #define RANGE_H_
+
+#include "XournalType.h"
 
 class Range {
 public:
@@ -29,6 +30,8 @@ public:
 	double getY2();
 
 private:
+	XOJ_TYPE_ATTRIB;
+
 	double x1;
 	double y1;
 	double y2;

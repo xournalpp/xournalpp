@@ -11,7 +11,6 @@
 
 #ifndef __TEXT_H__
 #define __TEXT_H__
-// TODO: AA: type check
 
 #include "Element.h"
 #include "../util/String.h"
@@ -49,6 +48,8 @@ protected:
 	virtual void calcSize();
 
 private:
+	XOJ_TYPE_ATTRIB;
+
 	XojFont font;
 
 	String text;

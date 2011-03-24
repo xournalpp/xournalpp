@@ -183,7 +183,6 @@ void DocumentView::drawLayer(cairo_t * cr, Layer * l) {
 #endif //SHOW_REPAINT_BOUNDS
 	while (it.hasNext()) {
 		Element * e = it.next();
-		CHECK_MEMORY(e);
 
 #ifdef SHOW_ELEMENT_BOUNDS
 		cairo_set_source_rgb(cr, 1, 0, 0);
@@ -330,8 +329,6 @@ void DocumentView::drawPage(XojPage * page, cairo_t * cr, bool dontRenderEditing
 	this->height = page->getHeight();
 	this->dontRenderEditingStroke = dontRenderEditingStroke;
 
-	CHECK_MEMORY(page);
-
 	if (page->getBackgroundType() == BACKGROUND_TYPE_PDF) {
 		// not handled here
 	} else if (page->getBackgroundType() == BACKGROUND_TYPE_IMAGE) {
@@ -356,7 +353,6 @@ void DocumentView::drawPage(XojPage * page, cairo_t * cr, bool dontRenderEditing
 	ListIterator<Layer *> it = page->layerIterator();
 	while (it.hasNext() && layer < page->getSelectedLayerId()) {
 		Layer * l = it.next();
-		CHECK_MEMORY(l);
 		drawLayer(cr, l);
 		layer++;
 	}

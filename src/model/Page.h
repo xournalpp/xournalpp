@@ -8,14 +8,13 @@
  *
  * @license GPL
  */
-// TODO: AA: type check
 
 #ifndef __PAGE_H__
 #define __PAGE_H__
 
 #include "Layer.h"
 #include "../util/ListIterator.h"
-#include "../util/MemoryCheck.h"
+#include "../util/XournalType.h"
 #include "../util/String.h"
 
 enum BackgroundType {
@@ -51,11 +50,14 @@ public:
 	bool isAttached();
 
 	GdkPixbuf * getPixbuf();
+
 private:
+	XOJ_TYPE_ATTRIB;
+
 	void * img;
 };
 
-class XojPage : public MemoryCheckObject {
+class XojPage {
 public:
 	XojPage(double width, double heigth);
 	void reference();
@@ -106,6 +108,8 @@ public:
 	BackgroundImage backgroundImage;
 
 private:
+	XOJ_TYPE_ATTRIB;
+
 	int ref;
 
 	double width;

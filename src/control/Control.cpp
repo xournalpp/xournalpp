@@ -137,6 +137,8 @@ Control::~Control() {
 	this->metadata = NULL;
 	delete this->cursor;
 	this->cursor = NULL;
+	delete this->zoom;
+	this->zoom = NULL;
 
 	XOJ_RELEASE_TYPE(Control);
 }

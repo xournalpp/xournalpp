@@ -8,7 +8,6 @@
  *
  * @license GPL
  */
-// TODO: AA: type check
 
 #ifndef __INSERTUNDOACTION_H__
 #define __INSERTUNDOACTION_H__
@@ -29,7 +28,10 @@ public:
 	virtual bool redo(Control * control);
 
 	virtual String getText();
+
 private:
+	XOJ_TYPE_ATTRIB;
+
 	Layer * layer;
 	Element * element;
 	Redrawable * view;

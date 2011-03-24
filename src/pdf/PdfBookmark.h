@@ -8,7 +8,6 @@
  *
  * @license GPL
  */
-// TODO: AA: type check
 
 #ifndef __PDFBOOKMARK_H__
 #define __PDFBOOKMARK_H__
@@ -26,6 +25,9 @@ public:
 	void createBookmarks(GtkTreeModel * model, GList * &data, GtkTreeIter * iter, int level, Document * doc);
 	GList * exportBookmarksFromTreeModel(GtkTreeModel * model, Document * doc);
 	void writeOutlines(Document * doc, PdfWriter * writer, int * outlineRoot, GList * pageIds);
+
+private:
+	XOJ_TYPE_ATTRIB;
 };
 
 #endif /* __PDFBOOKMARK_H__ */

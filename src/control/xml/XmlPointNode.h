@@ -8,7 +8,6 @@
  *
  * @license GPL
  */
-// TODO: AA: type check
 
 #ifndef __XMLPOINTNODE_H__
 #define __XMLPOINTNODE_H__
@@ -30,6 +29,8 @@ public:
 	virtual void writeOut(OutputStream * out);
 
 private:
+	XOJ_TYPE_ATTRIB;
+
 	Point * points;
 	int count;
 };

@@ -1,10 +1,11 @@
 #include "XournalType.h"
 #include <glib.h>
 #include <stdlib.h>
+#include <stdio.h>
 
 #ifdef XOJ_MEMORY_CHECK_ENABLED
 
-#define XOURNAL_TYPE_LIST_LENGTH 128
+#define XOURNAL_TYPE_LIST_LENGTH 256
 
 #undef XOJ_DECLARE_TYPE
 #define XOJ_DECLARE_TYPE(name, id) \
@@ -34,5 +35,34 @@ const char * xoj_type_getName(int id) {
 
 	return xojTypeList[id];
 }
+
+
+#ifdef XOJ_MEMORY_LEAK_CHECK_ENABLED
+
+static int xojInstanceList[XOURNAL_TYPE_LIST_LENGTH] = { 0 };
+
+void xoj_memoryleak_initType(int id) {
+	xojInstanceList[id]++;
+}
+
+void xoj_memoryleak_releaseType(int id) {
+	xojInstanceList[id]--;
+}
+
+void xoj_momoryleak_printRemainingObjects() {
+	int sum = 0;
+	for(int i = 0; i < XOURNAL_TYPE_LIST_LENGTH; i++) {
+		int x = xojInstanceList[i];
+		if(x != 0) {
+			sum += x;
+			printf("MemoryLeak: %i objects of type: %s\n", x, xoj_type_getName(i));
+		}
+	}
+
+	printf("MemoryLeak: sum %i objects", sum);
+}
+
+#endif
+
 
 #endif

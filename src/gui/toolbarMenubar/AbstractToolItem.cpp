@@ -37,6 +37,8 @@ void AbstractToolItem::selected(ActionGroup group, ActionType action) {
 }
 
 void AbstractToolItem::toolButtonCallback(GtkToolButton * toolbutton, AbstractToolItem * item) {
+	XOJ_CHECK_TYPE_OBJ(item, AbstractToolItem);
+
 	item->activated(NULL, NULL, toolbutton);
 }
 

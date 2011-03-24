@@ -5,10 +5,11 @@
 
 #include <config.h>
 #include <glib/gi18n-lib.h>
-// TODO: AA: type check
 
 ToolSelectCombocontrol::ToolSelectCombocontrol(ToolMenuHandler * th, ActionHandler * handler, GladeGui * gui, String id) :
 	ToolButton(handler, gui, id, ACTION_TOOL_SELECT_RECT, GROUP_TOOL, "rect-select.png", _("Select Rectangle")) {
+
+	XOJ_INIT_TYPE(ToolSelectCombocontrol);
 
 	this->labelWidget = NULL;
 
@@ -48,14 +49,20 @@ ToolSelectCombocontrol::ToolSelectCombocontrol(ToolMenuHandler * th, ActionHandl
 }
 
 ToolSelectCombocontrol::~ToolSelectCombocontrol() {
+	XOJ_CHECK_TYPE(ToolSelectCombocontrol);
+
 	g_object_unref(this->iconSelectRect);
 	g_object_unref(this->iconSelectRgion);
 	g_object_unref(this->iconSelectObject);
+
+	XOJ_RELEASE_TYPE(ToolSelectCombocontrol);
 }
 
 void ToolSelectCombocontrol::selected(ActionGroup group, ActionType action) {
-	if (item) {
-		if (!GTK_IS_TOGGLE_TOOL_BUTTON(item)) {
+	XOJ_CHECK_TYPE(ToolSelectCombocontrol);
+
+	if (this->item) {
+		if (!GTK_IS_TOGGLE_TOOL_BUTTON(this->item)) {
 			g_warning("selected action %i which is not a toggle action! 2", action);
 			return;
 		}
@@ -87,6 +94,8 @@ void ToolSelectCombocontrol::selected(ActionGroup group, ActionType action) {
 }
 
 GtkToolItem * ToolSelectCombocontrol::newItem() {
+	XOJ_CHECK_TYPE(ToolSelectCombocontrol);
+
 	GtkToolItem * it;
 
 	labelWidget = gtk_label_new(_("Select Rectangle"));

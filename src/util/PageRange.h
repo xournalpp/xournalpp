@@ -8,7 +8,6 @@
  *
  * @license GPL
  */
-// TODO: AA: type check
 
 #ifndef __PAGERANGE_H__
 #define __PAGERANGE_H__

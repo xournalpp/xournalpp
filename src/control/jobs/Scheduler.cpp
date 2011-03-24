@@ -91,8 +91,6 @@ gpointer Scheduler::jobThreadCallback(Scheduler * scheduler) {
 
 		g_mutex_lock(scheduler->jobRunningMutex);
 
-		CHECK_MEMORY(job);
-
 		job->execute();
 
 		job->free();

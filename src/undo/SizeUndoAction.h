@@ -8,7 +8,6 @@
  *
  * @license GPL
  */
-// TODO: AA: type check
 
 #ifndef __SIZEUNDOACTION_H__
 #define __SIZEUNDOACTION_H__
@@ -36,6 +35,8 @@ public:
 	static double * getPressure(Stroke * s);
 
 private:
+	XOJ_TYPE_ATTRIB;
+
 	GList * data;
 
 	Layer * layer;

@@ -9,8 +9,6 @@
  * @license GPL
  */
 
-// TODO: AA: type check
-
 #ifndef __MOVEUNDOACTION_H__
 #define __MOVEUNDOACTION_H__
 
@@ -42,7 +40,10 @@ private:
 	void switchLayer(GList * entries, Layer * oldLayer, Layer * newLayer);
 	void repaint(Redrawable * view, GList * list);
 	void repaint();
+
 private:
+	XOJ_TYPE_ATTRIB;
+
 	GList * originalPos;
 	GList * newPos;
 	XojPage * newPage;

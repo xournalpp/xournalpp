@@ -1,20 +1,27 @@
 #include "Layer.h"
 #include "../util/Stacktrace.h"
-// TODO: AA: type check
 
 Layer::Layer() {
+	XOJ_INIT_TYPE(Layer);
+
 	this->elements = NULL;
 }
 
 Layer::~Layer() {
+	XOJ_CHECK_TYPE(Layer);
+
 	for (GList * l = elements; l != NULL; l = l->next) {
 		delete (Element *) l->data;
 	}
 	g_list_free(this->elements);
 	this->elements = NULL;
+
+	XOJ_RELEASE_TYPE(Layer);
 }
 
 void Layer::addElement(Element * e) {
+	XOJ_CHECK_TYPE(Layer);
+
 	if (e == NULL) {
 		g_warning("addElement(NULL)!");
 		Stacktrace::printStracktrace();
@@ -31,6 +38,8 @@ void Layer::addElement(Element * e) {
 }
 
 void Layer::insertElement(Element * e, int pos) {
+	XOJ_CHECK_TYPE(Layer);
+
 	if (e == NULL) {
 		g_warning("insertElement(NULL)!");
 		Stacktrace::printStracktrace();
@@ -48,6 +57,8 @@ void Layer::insertElement(Element * e, int pos) {
 }
 
 int Layer::indexOf(Element * e) {
+	XOJ_CHECK_TYPE(Layer);
+
 	GList * elem = g_list_find(this->elements, e);
 
 	if (elem == NULL) {
@@ -58,6 +69,8 @@ int Layer::indexOf(Element * e) {
 }
 
 int Layer::removeElement(Element * e, bool free) {
+	XOJ_CHECK_TYPE(Layer);
+
 	GList * elem = g_list_find(this->elements, e);
 
 	if (elem == NULL) {
@@ -76,10 +89,14 @@ int Layer::removeElement(Element * e, bool free) {
 }
 
 bool Layer::isAnnotated() {
+	XOJ_CHECK_TYPE(Layer);
+
 	return this->elements != NULL;
 }
 
 ListIterator<Element *> Layer::elementIterator() {
+	XOJ_CHECK_TYPE(Layer);
+
 	return ListIterator<Element *> (this->elements);
 }
 

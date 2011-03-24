@@ -9,10 +9,10 @@
  * @license GPL
  */
 
-// TODO: AA: type check
-
 #ifndef __PAGEPOSITIONCACHE_H__
 #define __PAGEPOSITIONCACHE_H__
+
+#include "../../util/XournalType.h"
 
 class PagePositionCache {
 public:
@@ -20,6 +20,8 @@ public:
 	virtual ~PagePositionCache();
 
 private:
+	XOJ_TYPE_ATTRIB;
+
 	int ppId;
 
 	friend class PagePositionHandler;

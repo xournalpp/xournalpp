@@ -8,7 +8,6 @@
  *
  * @license GPL
  */
-// TODO: AA: type check
 
 #include "String.h"
 #include <string.h>
@@ -28,6 +27,8 @@
 class _RefStrInternal {
 public:
 	_RefStrInternal(char * str) {
+		XOJ_INIT_TYPE(_RefStrInternal);
+
 		this->s = str;
 		if (str == NULL) {
 			this->size = 0;
@@ -39,21 +40,32 @@ public:
 	}
 
 	~_RefStrInternal() {
+		XOJ_CHECK_TYPE(_RefStrInternal);
+
 		g_free(this->s);
+		this->s = NULL;
+
+		XOJ_RELEASE_TYPE(_RefStrInternal);
 	}
 
 	void reference() {
-		nref++;
+		XOJ_CHECK_TYPE(_RefStrInternal);
+
+		this->nref++;
 	}
 
 	void unreference() {
-		nref--;
+		XOJ_CHECK_TYPE(_RefStrInternal);
+
+		this->nref--;
 		if (nref == 0) {
 			delete this;
 		}
 	}
 
 	int length(const utf8 string) {
+		XOJ_CHECK_TYPE(_RefStrInternal);
+
 		int len;
 		len = 0;
 		while (*string) {
@@ -64,23 +76,34 @@ public:
 	}
 
 	char * c_str() {
-		return s;
+		XOJ_CHECK_TYPE(_RefStrInternal);
+		return this->s;
 	}
 
 	int getLength() const {
+		XOJ_CHECK_TYPE(_RefStrInternal);
+
 		return this->len;
 	}
 
 	int getSize() const {
+		XOJ_CHECK_TYPE(_RefStrInternal);
+
 		return this->size;
-	}
-private:
-	_RefStrInternal(const _RefStrInternal & str) {
-	}
-	_RefStrInternal() {
 	}
 
 private:
+	_RefStrInternal(const _RefStrInternal & str) {
+		XOJ_INIT_TYPE(_RefStrInternal);
+	}
+
+	_RefStrInternal() {
+		XOJ_INIT_TYPE(_RefStrInternal);
+	}
+
+private:
+	XOJ_TYPE_ATTRIB;
+
 	int nref;
 
 	char * s;
@@ -89,20 +112,28 @@ private:
 };
 
 String::String() {
+	XOJ_INIT_TYPE(String);
+
 	this->data = new _RefStrInternal(NULL);
 	this->data->reference();
 }
 
 String::String(const String & str) {
+	XOJ_INIT_TYPE(String);
+
 	*this = str;
 }
 
 String::String(const char * str) {
+	XOJ_INIT_TYPE(String);
+
 	this->data = new _RefStrInternal(g_strdup(str));
 	this->data->reference();
 }
 
 String::String(const char * data, int len) {
+	XOJ_INIT_TYPE(String);
+
 	char * str = (char *) g_malloc(len + 1);
 	strncpy(str, data, len);
 	str[len] = 0;
@@ -112,6 +143,8 @@ String::String(const char * data, int len) {
 }
 
 String::String(char * str, bool freeAutomatically) {
+	XOJ_INIT_TYPE(String);
+
 	if (freeAutomatically) {
 		this->data = new _RefStrInternal(str);
 	} else {
@@ -121,7 +154,11 @@ String::String(char * str, bool freeAutomatically) {
 }
 
 String::~String() {
+	XOJ_CHECK_TYPE(String);
+
 	data->unreference();
+
+	XOJ_RELEASE_TYPE(String);
 }
 
 String String::format(const char * format, ...) {
@@ -134,6 +171,8 @@ String String::format(const char * format, ...) {
 }
 
 int String::indexOfCaseInsensitiv(String substr, int fromIndex) const {
+	XOJ_CHECK_TYPE(String);
+
 	const char * source = c_str();
 	const char * target = substr.c_str();
 	if (source == NULL || target == NULL) {
@@ -182,6 +221,8 @@ int String::indexOfCaseInsensitiv(String substr, int fromIndex) const {
 }
 
 int String::indexOf(String substr, int fromIndex) const {
+	XOJ_CHECK_TYPE(String);
+
 	const char * source = c_str();
 	const char * target = substr.c_str();
 	if (source == NULL || target == NULL) {
@@ -230,10 +271,14 @@ int String::indexOf(String substr, int fromIndex) const {
 }
 
 int String::lastIndexOf(String substr) const {
+	XOJ_CHECK_TYPE(String);
+
 	return lastIndexOf(substr, size() - 1);
 }
 
 int String::lastIndexOf(String substr, int fromIndex) const {
+	XOJ_CHECK_TYPE(String);
+
 	const char * source = c_str();
 	const char * target = substr.c_str();
 	if (source == NULL || target == NULL) {
@@ -278,6 +323,8 @@ int String::lastIndexOf(String substr, int fromIndex) const {
 }
 
 bool String::contains(const char * substr) const {
+	XOJ_CHECK_TYPE(String);
+
 	if (c_str() == NULL || substr == NULL) {
 		return false;
 	}
@@ -285,6 +332,8 @@ bool String::contains(const char * substr) const {
 }
 
 bool String::equals(const char * other) const {
+	XOJ_CHECK_TYPE(String);
+
 	if (other == c_str()) {
 		return true;
 	}
@@ -295,45 +344,63 @@ bool String::equals(const char * other) const {
 }
 
 bool String::equals(const String & s) const {
+	XOJ_CHECK_TYPE(String);
+
 	return equals(s.c_str());
 }
 
 String& String::operator=(const char * str) {
+	XOJ_CHECK_TYPE(String);
+
 	this->data->unreference();
 	this->data = new _RefStrInternal(g_strdup(str));
 	this->data->reference();
 }
 
 String& String::operator=(const String & str) {
+	XOJ_CHECK_TYPE(String);
+
 	this->data = str.data;
 	this->data->reference();
 }
 
 bool String::operator==(const String & str) const {
+	XOJ_CHECK_TYPE(String);
+
 	return equals(str.c_str());
 }
 
 bool String::operator!=(const String & str) const {
+	XOJ_CHECK_TYPE(String);
+
 	return !equals(str.c_str());
 }
 
 void String::operator +=(const String & str) {
+	XOJ_CHECK_TYPE(String);
+
 	*this += str.c_str();
 }
 
 void String::operator +=(int i) {
+	XOJ_CHECK_TYPE(String);
+
 	char * tmp = g_strdup_printf("%i", i);
 	*this += tmp;
 	g_free(tmp);
 }
 
 void String::operator +=(double d) {
+	XOJ_CHECK_TYPE(String);
+
 	char * tmp = g_strdup_printf("%0.2lf", d);
 	*this += tmp;
 	g_free(tmp);
 }
 
 void String::operator +=(const char * str) {
+	XOJ_CHECK_TYPE(String);
+
 	if (str == NULL) {
 		return;
 	}
@@ -352,6 +419,8 @@ void String::operator +=(const char * str) {
 }
 
 bool String::operator <(const String & str) const {
+	XOJ_CHECK_TYPE(String);
+
 	if (c_str() == NULL && str.c_str() == NULL) {
 		return false;
 	}
@@ -366,6 +435,8 @@ bool String::operator <(const String & str) const {
 }
 
 bool String::operator >(const String & str) const {
+	XOJ_CHECK_TYPE(String);
+
 	if (c_str() == NULL && str.c_str() == NULL) {
 		return false;
 	}
@@ -380,10 +451,14 @@ bool String::operator >(const String & str) const {
 }
 
 const char * String::c_str() const {
+	XOJ_CHECK_TYPE(String);
+
 	return data->c_str();
 }
 
 bool String::isEmpty() const {
+	XOJ_CHECK_TYPE(String);
+
 	return this->c_str() == NULL || *c_str() == 0;
 }
 
@@ -392,6 +467,8 @@ bool String::isEmpty() const {
  * this is may smaller than the size, if there are multibyte UTF8 chars
  */
 int String::length() const {
+	XOJ_CHECK_TYPE(String);
+
 	return this->data->getLength();
 }
 
@@ -399,10 +476,14 @@ int String::length() const {
  * The size is the count of bytes which this string contains
  */
 int String::size() const {
+	XOJ_CHECK_TYPE(String);
+
 	return this->data->getSize();
 }
 
 String String::substring(int start) const {
+	XOJ_CHECK_TYPE(String);
+
 	if (start < 0) {
 		start = length() + start;
 		if (start < 0) {
@@ -438,6 +519,8 @@ String String::substring(int start) const {
 //}
 
 String String::substring(int start, int length) const {
+	XOJ_CHECK_TYPE(String);
+
 	if (length < 0) {
 		length = this->length() - start + length;
 	}
@@ -489,6 +572,8 @@ String String::substring(int start, int length) const {
 }
 
 String String::trim() {
+	XOJ_CHECK_TYPE(String);
+
 	const char * s = c_str();
 	int start = 0;
 	int len;
@@ -521,26 +606,38 @@ String String::trim() {
 }
 
 bool String::startsWith(const String & s) const {
+	XOJ_CHECK_TYPE(String);
+
 	return startsWith(s.c_str());
 }
 
 bool String::startsWith(const char * s) const {
+	XOJ_CHECK_TYPE(String);
+
 	return g_str_has_prefix(c_str(), s);
 }
 
 bool String::endsWith(const String & s) const {
+	XOJ_CHECK_TYPE(String);
+
 	return endsWith(s.c_str());
 }
 
 bool String::equalsIgnorCase(const String & s) {
+	XOJ_CHECK_TYPE(String);
+
 	return this->toLowerCase().equals(s.toLowerCase());
 }
 
 bool String::endsWith(const char * s) const {
+	XOJ_CHECK_TYPE(String);
+
 	return g_str_has_suffix(c_str(), s);
 }
 
 String String::toLowerCase() const {
+	XOJ_CHECK_TYPE(String);
+
 	String s = c_str();
 
 	char * data = s.data->c_str();
@@ -553,6 +650,8 @@ String String::toLowerCase() const {
 }
 
 String String::toUpperCase() const {
+	XOJ_CHECK_TYPE(String);
+
 	String s = c_str();
 
 	char * data = s.data->c_str();
@@ -565,6 +664,8 @@ String String::toUpperCase() const {
 }
 
 String String::replace(String search, String replace) const {
+	XOJ_CHECK_TYPE(String);
+
 	char const * const original = c_str();
 	char const * const pattern = search.c_str();
 	char const * const replacement = replace.c_str();
@@ -615,6 +716,8 @@ String String::replace(String search, String replace) const {
  * THIS CLASS IS NOT UTF8 SAVE
  */
 StringTokenizer::StringTokenizer(String s, char token, bool returnToken) {
+	XOJ_INIT_TYPE(StringTokenizer);
+
 	this->str = g_strdup(s.c_str());
 	this->token = token;
 	this->tokenStr[0] = token;
@@ -626,11 +729,18 @@ StringTokenizer::StringTokenizer(String s, char token, bool returnToken) {
 }
 
 StringTokenizer::~StringTokenizer() {
+	XOJ_CHECK_TYPE(StringTokenizer);
+
 	g_free(this->str);
+	this->str = NULL;
+
+	XOJ_RELEASE_TYPE(StringTokenizer);
 }
 
 const char * StringTokenizer::next() {
-	if (x == -1) {
+	XOJ_CHECK_TYPE(StringTokenizer);
+
+	if (this->x == -1) {
 		return NULL;
 	}
 

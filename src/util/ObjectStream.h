@@ -8,7 +8,6 @@
  *
  * @license GPL
  */
-// TODO: AA: type check
 
 #ifndef __OBJECTSTREAM_H__
 #define __OBJECTSTREAM_H__
@@ -38,7 +37,10 @@ public:
 	ObjectOutputStream & operator <<(Serializeable * s);
 
 	GString * getStr();
+
 private:
+	XOJ_TYPE_ATTRIB;
+
 	GString * data;
 };
 
@@ -70,6 +72,8 @@ private:
 	String getType(char type);
 
 private:
+	XOJ_TYPE_ATTRIB;
+
 	GString * str;
 	int pos;
 };

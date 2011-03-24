@@ -11,9 +11,9 @@
 
 #ifndef __PAGEPOSITIONHANDLER_H__
 #define __PAGEPOSITIONHANDLER_H__
-// TODO: AA: type check
 
 #include <glib.h>
+#include "../../util/XournalType.h"
 
 class PageView;
 class PagePosition;
@@ -37,6 +37,8 @@ private:
 	PagePosition * binarySearch(PagePosition ** sortedArray, int first, int last, int y, int & index);
 
 private:
+	XOJ_TYPE_ATTRIB;
+
 	int dataCount;
 	int dataAllocSize;
 	PagePosition ** data;

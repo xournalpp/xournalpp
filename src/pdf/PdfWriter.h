@@ -8,7 +8,6 @@
  *
  * @license GPL
  */
-// TODO: AA: type check
 
 #ifndef __PDFWRITER_H__
 #define __PDFWRITER_H__
@@ -47,6 +46,8 @@ public:
 	int getDataCount();
 
 private:
+	XOJ_TYPE_ATTRIB;
+
 	int dataCount;
 	bool compressOutput;
 

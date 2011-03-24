@@ -11,7 +11,6 @@
 
 #ifndef __STROKE_H__
 #define __STROKE_H__
-// TODO: AA: type check
 
 #include "Element.h"
 #include "../util/Arrayiterator.h"
@@ -76,7 +75,10 @@ public:
 protected:
 	virtual void calcSize();
 	void allocPointSize(int size);
+
 private:
+	XOJ_TYPE_ATTRIB;
+
 	// The stroke width
 	double width;
 

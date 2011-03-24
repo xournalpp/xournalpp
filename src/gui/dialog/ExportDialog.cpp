@@ -3,10 +3,12 @@
 
 #include <config.h>
 #include <glib/gi18n-lib.h>
-// TODO: AA: type check
 
 ExportDialog::ExportDialog(GladeSearchpath * gladeSearchPath, Settings * settings, int pageCount, int currentPage) :
 	GladeGui(gladeSearchPath, "export.glade", "exportDialog") {
+
+	XOJ_INIT_TYPE(ExportDialog);
+
 	this->range = NULL;
 	this->pageCount = pageCount;
 	this->currentPage = currentPage;
@@ -19,13 +21,18 @@ ExportDialog::ExportDialog(GladeSearchpath * gladeSearchPath, Settings * setting
 }
 
 ExportDialog::~ExportDialog() {
+	XOJ_RELEASE_TYPE(ExportDialog);
 }
 
 GList * ExportDialog::getRange() {
+	XOJ_CHECK_TYPE(ExportDialog);
+
 	return this->range;
 }
 
 void ExportDialog::handleData() {
+	XOJ_CHECK_TYPE(ExportDialog);
+
 	GtkWidget * rdRangeAll = get("rdRangeAll");
 	GtkWidget * rdRangeCurrent = get("rdRangeCurrent");
 	GtkWidget * rdRangePages = get("rdRangePages");
@@ -62,14 +69,20 @@ void ExportDialog::handleData() {
 }
 
 ExportFormtType ExportDialog::getFormatType() {
+	XOJ_CHECK_TYPE(ExportDialog);
+
 	return this->type;
 }
 
 int ExportDialog::getPngDpi() {
+	XOJ_CHECK_TYPE(ExportDialog);
+
 	return this->resolution;
 }
 
 String ExportDialog::getFolder() {
+	XOJ_CHECK_TYPE(ExportDialog);
+
 	GtkFileChooser * chooser = GTK_FILE_CHOOSER(get("fcOutput"));
 	char * folder = gtk_file_chooser_get_current_folder(chooser);
 	String f = folder;
@@ -78,10 +91,13 @@ String ExportDialog::getFolder() {
 }
 
 String ExportDialog::getFilename() {
+	XOJ_CHECK_TYPE(ExportDialog);
+
 	return gtk_entry_get_text(GTK_ENTRY(get("txtFilename")));
 }
 
 bool ExportDialog::validate() {
+	XOJ_CHECK_TYPE(ExportDialog);
 
 	if (gtk_entry_get_text_length(GTK_ENTRY(get("txtFilename"))) == 0) {
 		GtkWidget * dialog = gtk_message_dialog_new((GtkWindow *) *this, GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
@@ -122,6 +138,8 @@ bool ExportDialog::validate() {
 }
 
 void ExportDialog::show() {
+	XOJ_CHECK_TYPE(ExportDialog);
+
 	int res = 0;
 	do {
 		res = gtk_dialog_run(GTK_DIALOG(this->window));

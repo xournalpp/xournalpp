@@ -8,13 +8,13 @@
  *
  * @license GPL
  */
-// TODO: AA: type check
 
 #ifndef __TOOLZOOMSLIDER_H__
 #define __TOOLZOOMSLIDER_H__
 
 #include "AbstractToolItem.h"
 #include "../../control/ZoomControl.h"
+#include "../../util/XournalType.h"
 
 class ToolZoomSlider: public AbstractToolItem, public ZoomListener {
 public:
@@ -36,6 +36,8 @@ protected:
 	virtual GtkToolItem * newItem();
 
 private:
+	XOJ_TYPE_ATTRIB;
+
 	GtkWidget * slider;
 	GtkWidget * fixed;
 	ZoomControl * zoom;

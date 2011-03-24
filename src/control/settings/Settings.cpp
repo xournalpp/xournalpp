@@ -1177,6 +1177,12 @@ SAttribute::SAttribute() {
 	this->type = ATTRIBUTE_TYPE_NONE;
 }
 
+SAttribute::SAttribute(const SAttribute & attrib) {
+	XOJ_INIT_TYPE(SAttribute);
+
+	*this = attrib;
+}
+
 SAttribute::~SAttribute() {
 	XOJ_CHECK_TYPE(SAttribute);
 

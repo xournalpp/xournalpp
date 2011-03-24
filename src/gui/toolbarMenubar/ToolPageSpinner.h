@@ -8,12 +8,12 @@
  *
  * @license GPL
  */
-// TODO: AA: type check
 
 #ifndef __TOOLPAGESPINNER_H__
 #define __TOOLPAGESPINNER_H__
 
 #include "AbstractToolItem.h"
+#include "../../util/XournalType.h"
 
 class ToolPageSpinner: public AbstractToolItem {
 public:
@@ -28,6 +28,8 @@ protected:
 	virtual GtkToolItem * newItem();
 
 private:
+	XOJ_TYPE_ATTRIB;
+
 	GtkWidget * pageSpinner;
 	GtkWidget * lbPageNo;
 };
