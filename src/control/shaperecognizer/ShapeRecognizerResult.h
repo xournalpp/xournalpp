@@ -23,7 +23,7 @@ class ShapeRecognizerResult {
 public:
 	ShapeRecognizerResult(Stroke * result);
 	ShapeRecognizerResult(Stroke * result, ShapeRecognizer * recognizer);
-	~ShapeRecognizerResult();
+	virtual ~ShapeRecognizerResult();
 
 public:
 	void addSourceStroke(Stroke * s);

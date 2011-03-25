@@ -18,7 +18,7 @@
 class Util {
 private:
 	Util();
-	~Util();
+	virtual ~Util();
 
 public:
 	static GdkColor intToGdkColor(int c);

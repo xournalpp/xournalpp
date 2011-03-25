@@ -25,8 +25,9 @@ class MoveUndoAction: public UndoAction {
 public:
 	MoveUndoAction(XojPage * page, EditSelection * selection);
 	MoveUndoAction(XojPage * page, VerticalToolHandler * handler);
-	~MoveUndoAction();
+	virtual ~MoveUndoAction();
 
+public:
 	void finalize(EditSelection * selection);
 	void finalize(VerticalToolHandler * handler);
 

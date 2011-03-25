@@ -108,28 +108,55 @@ bool ExportDialog::validate() {
 		return false;
 	}
 
-	GtkFileChooser * chooser = GTK_FILE_CHOOSER(get("fcOutput"));
-	char * folder = gtk_file_chooser_get_current_folder(chooser);
-	GFile * file = g_file_new_for_path(folder);
-	g_free(folder);
-	GFileEnumerator * enumerator = g_file_enumerate_children(file, "standard::*", G_FILE_QUERY_INFO_NOFOLLOW_SYMLINKS, NULL, NULL);
-	g_object_unref(file);
+	GtkWidget * rdFormatPDF = get("rdFormatPDF");
+	if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(rdFormatPDF))) {
+		GtkFileChooser * chooser = GTK_FILE_CHOOSER(get("fcOutput"));
+		char * folder = gtk_file_chooser_get_current_folder(chooser);
+		String path = folder;
+		g_free(folder);
 
-	if (enumerator != NULL) {
-		GFileInfo * info = g_file_enumerator_next_file(enumerator, NULL, NULL);
-		if (info) {
-			g_object_unref(info);
+		path += G_DIR_SEPARATOR_S;
 
+		const char * txtFilename = gtk_entry_get_text(GTK_ENTRY(get("txtFilename")));
+		path += txtFilename;
+
+		if (g_file_test(path.c_str(), G_FILE_TEST_EXISTS)) {
 			GtkWidget * dialog = gtk_message_dialog_new((GtkWindow *) *this, GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_QUESTION, GTK_BUTTONS_NONE,
-					_("The folder is not empty. May existing files will be overwritten."));
+					_("The file already exists."));
 
-			gtk_dialog_add_button(GTK_DIALOG(dialog), _("Select another folder"), 2);
-			gtk_dialog_add_button(GTK_DIALOG(dialog), _("Continue anyway"), 1);
+			gtk_dialog_add_button(GTK_DIALOG(dialog), _("Cancel"), 2);
+			gtk_dialog_add_button(GTK_DIALOG(dialog), _("Replace PDF"), 1);
 			int res = gtk_dialog_run(GTK_DIALOG(dialog));
 			gtk_widget_destroy(dialog);
 
 			if (res != 1) {
 				return false;
+			}
+		}
+	} else {
+		GtkFileChooser * chooser = GTK_FILE_CHOOSER(get("fcOutput"));
+		char * folder = gtk_file_chooser_get_current_folder(chooser);
+		GFile * file = g_file_new_for_path(folder);
+		g_free(folder);
+		GFileEnumerator * enumerator = g_file_enumerate_children(file, "standard::*", G_FILE_QUERY_INFO_NOFOLLOW_SYMLINKS, NULL, NULL);
+		g_object_unref(file);
+
+		if (enumerator != NULL) {
+			GFileInfo * info = g_file_enumerator_next_file(enumerator, NULL, NULL);
+			if (info) {
+				g_object_unref(info);
+
+				GtkWidget * dialog = gtk_message_dialog_new((GtkWindow *) *this, GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_QUESTION, GTK_BUTTONS_NONE,
+						_("The folder is not empty. May existing files will be overwritten."));
+
+				gtk_dialog_add_button(GTK_DIALOG(dialog), _("Select another folder"), 2);
+				gtk_dialog_add_button(GTK_DIALOG(dialog), _("Continue anyway"), 1);
+				int res = gtk_dialog_run(GTK_DIALOG(dialog));
+				gtk_widget_destroy(dialog);
+
+				if (res != 1) {
+					return false;
+				}
 			}
 		}
 	}

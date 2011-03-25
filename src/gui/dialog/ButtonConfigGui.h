@@ -22,7 +22,7 @@ class Settings;
 class ButtonConfigGui {
 public:
 	ButtonConfigGui(SettingsDialog * dlg, GtkWidget * w, Settings * settings, int button, bool withDevice);
-	~ButtonConfigGui();
+	virtual ~ButtonConfigGui();
 
 public:
 	void loadSettings();

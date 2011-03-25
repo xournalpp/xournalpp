@@ -20,7 +20,7 @@
 class XmlNode {
 public:
 	XmlNode(const char * tag);
-	~XmlNode();
+	virtual ~XmlNode();
 
 public:
 	void setAttrib(const char * attrib, const char * value);

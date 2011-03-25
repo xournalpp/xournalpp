@@ -20,8 +20,9 @@ class DocumentHandler;
 class DocumentListener {
 public:
 	DocumentListener();
-	~DocumentListener();
+	virtual ~DocumentListener();
 
+public:
 	void registerListener(DocumentHandler * handler);
 	void unregisterListener();
 

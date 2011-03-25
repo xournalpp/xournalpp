@@ -12,18 +12,27 @@
 #ifndef __PAGERANGE_H__
 #define __PAGERANGE_H__
 
+#include "../util/XournalType.h"
 #include <glib.h>
 
 class PageRangeEntry {
 public:
 	PageRangeEntry(int first, int last);
+	virtual ~PageRangeEntry();
+
+public:
+	int getLast();
+	int getFirst();
+
+private:
+	XOJ_TYPE_ATTRIB;
 
 	int first;
 	int last;
 };
 
 class PageRange {
-public:
+private:
 	PageRange();
 	virtual ~PageRange();
 

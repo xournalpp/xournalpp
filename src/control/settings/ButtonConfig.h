@@ -25,7 +25,7 @@ class ToolHandler;
 class ButtonConfig {
 public:
 	ButtonConfig(ToolType action, int color, ToolSize size, DrawingType drawingType, EraserType eraserMode);
-	~ButtonConfig();
+	virtual ~ButtonConfig();
 
 public:
 	void acceptActions(ToolHandler * toolHandler);

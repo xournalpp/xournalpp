@@ -21,8 +21,9 @@ class Redrawable;
 class ScaleUndoAction: public UndoAction {
 public:
 	ScaleUndoAction(XojPage * page, Redrawable * view, GList * elements, double x0, double y0, double fx, double fy);
-	~ScaleUndoAction();
+	virtual ~ScaleUndoAction();
 
+public:
 	virtual bool undo(Control * control);
 	virtual bool redo(Control * control);
 	virtual String getText();

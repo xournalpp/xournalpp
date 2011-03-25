@@ -18,7 +18,7 @@
 class XmlStrokeNode: public XmlNode {
 public:
 	XmlStrokeNode(const char * tag);
-	~XmlStrokeNode();
+	virtual ~XmlStrokeNode();
 
 public:
 	void setPoints(Point * points, int pointLength);

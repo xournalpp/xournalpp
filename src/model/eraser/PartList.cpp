@@ -14,6 +14,7 @@ PartList::~PartList() {
 		EraseableStrokePart * p = (EraseableStrokePart *) l->data;
 		delete p;
 	}
+	g_list_free(this->data);
 	this->data = NULL;
 
 	XOJ_RELEASE_TYPE(PartList);

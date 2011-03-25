@@ -7,6 +7,7 @@
 #include <cairo-svg.h>
 #include "../Control.h"
 #include "ExportFormtType.h"
+#include "../../pdf/PdfExport.h"
 
 #include <config.h>
 #include <glib/gi18n-lib.h>
@@ -123,23 +124,31 @@ void ExportJob::run() {
 	bool onePage = false;
 	if (this->selected->next == NULL) {
 		PageRangeEntry * e = (PageRangeEntry *) selected->data;
-		if (e->first == e->last) {
+		if (e->getFirst() == e->getLast()) {
 			onePage = true;
 		}
 	}
 
 	// pdf, supports multiple Pages per document, all other formats don't
 	if (this->type == EXPORT_FORMAT_PDF) {
-		// TODO: !!!!!!!!!!!!!!!!!PDF EXPORT
+		PdfExport pdfe(doc, &pglistener);
+		char * path = g_strdup_printf("file://%s%c%s.pdf", this->folder.c_str(), G_DIR_SEPARATOR, this->filename.c_str());
+
+		// TODO: crashes with synchronisationproblem: xournalpp: Fatal IO error 11 (Resource temporarily unavailable) on X server :0.0.
+//		if(!pdfe.createPdf(path, this->selected)) {
+//			g_warning("Error creating PDF: %s", pdfe.getLastError().c_str());
+//		}
+
+		g_free(path);
 	} else { // all other formats need one file per page
 		char selectedPages[count];
 		int selectedCount = 0;
 		for (int i = 0; i < count; i++) {
 			selectedPages[i] = 0;
 		}
-		for (GList * l = selected; l != NULL; l = l->next) {
+		for (GList * l = this->selected; l != NULL; l = l->next) {
 			PageRangeEntry * e = (PageRangeEntry *) l->data;
-			for (int x = e->first; x <= e->last; x++) {
+			for (int x = e->getFirst(); x <= e->getLast(); x++) {
 				selectedPages[x] = 1;
 				selectedCount++;
 			}

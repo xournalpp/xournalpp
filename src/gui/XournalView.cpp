@@ -740,8 +740,13 @@ void XournalView::setSelection(EditSelection * selection) {
 	repaintSelection();
 }
 
-void XournalView::repaintSelection() {
+void XournalView::repaintSelection(bool evenWithoutSelection) {
 	XOJ_CHECK_TYPE(XournalView);
+
+	if(evenWithoutSelection) {
+		gtk_widget_queue_draw(this->widget);
+		return;
+	}
 
 	EditSelection * selection = getSelection();
 	if (selection == NULL) {

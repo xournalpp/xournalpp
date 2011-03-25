@@ -19,8 +19,9 @@ class PageBackgroundChangedUndoAction: public UndoAction {
 public:
 	PageBackgroundChangedUndoAction(XojPage * page, BackgroundType origType, int origPdfPage,
 			BackgroundImage origBackgroundImage, double origW, double origH);
-	~PageBackgroundChangedUndoAction();
+	virtual ~PageBackgroundChangedUndoAction();
 
+public:
 	virtual bool undo(Control * control);
 	virtual bool redo(Control * control);
 

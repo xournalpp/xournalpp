@@ -23,7 +23,7 @@ public:
 	String(const String & str);
 	String(const char * data);
 	String(const char * data, int len);
-	~String();
+	virtual ~String();
 
 private:
 	String(char * data, bool freeAutomatically);
@@ -87,7 +87,7 @@ private:
 class StringTokenizer {
 public:
 	StringTokenizer(String s, char token, bool returnToken = false);
-	~StringTokenizer();
+	virtual ~StringTokenizer();
 
 	const char * next();
 

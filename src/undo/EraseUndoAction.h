@@ -23,8 +23,9 @@ class Stroke;
 class EraseUndoAction: public UndoAction {
 public:
 	EraseUndoAction(XojPage * page, Redrawable * view);
-	~EraseUndoAction();
+	virtual ~EraseUndoAction();
 
+public:
 	virtual bool undo(Control * control);
 	virtual bool redo(Control * control);
 

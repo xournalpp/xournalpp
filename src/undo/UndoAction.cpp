@@ -6,6 +6,10 @@ UndoAction::UndoAction() {
 	this->undone = false;
 }
 
+UndoAction::~UndoAction() {
+	XOJ_RELEASE_TYPE(UndoAction);
+}
+
 XojPage ** UndoAction::getPages() {
 	XOJ_CHECK_TYPE(UndoAction);
 

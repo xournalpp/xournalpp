@@ -24,8 +24,9 @@ class TextUndoAction: public UndoAction {
 public:
 	TextUndoAction(XojPage * page, Layer * layer, Text * text, String lastText, Redrawable * view,
 			TextEditor * textEditor);
-	~TextUndoAction();
+	virtual ~TextUndoAction();
 
+public:
 	virtual bool undo(Control * control);
 	virtual bool redo(Control * control);
 

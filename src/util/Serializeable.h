@@ -22,8 +22,9 @@
 class InputStreamException: public std::exception {
 public:
 	InputStreamException(String message, const char * filename, int line);
-	~InputStreamException() throw ();
+	virtual ~InputStreamException() throw ();
 
+public:
 	virtual const char* what() const throw ();
 
 private:
