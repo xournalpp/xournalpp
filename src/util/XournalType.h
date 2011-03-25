@@ -55,16 +55,16 @@ void xoj_momoryleak_printRemainingObjects();
  * Release the Xournal type info, this should be called in the destructor
  */
 #ifdef XOJ_MEMORY_LEAK_CHECK_ENABLED
-#define XOJ_RELEASE_TYPE(type) \
+#define XOJ_RELEASE_TYPE(type) do { \
 		XOJ_CHECK_TYPE(type) \
 		this->__xoj_type = -(__XOJ_TYPE_ ## type); \
 		this->__xoj_typeCheckvalue = 0xFFAA00AA; \
-		xoj_memoryleak_releaseType(__XOJ_TYPE_ ## type)
+		xoj_memoryleak_releaseType(__XOJ_TYPE_ ## type); } while(false)
 #else
-#define XOJ_RELEASE_TYPE(type) \
+#define XOJ_RELEASE_TYPE(type) do { \
 		XOJ_CHECK_TYPE(type) \
 		this->__xoj_type = -(__XOJ_TYPE_ ## type); \
-		this->__xoj_typeCheckvalue = 0xFFAA00AA
+		this->__xoj_typeCheckvalue = 0xFFAA00AA; } while(false)
 #endif
 
 

@@ -24,8 +24,9 @@ class XojFont;
 class FontUndoAction: public UndoAction {
 public:
 	FontUndoAction(XojPage * page, Layer * layer, Redrawable * view);
-	~FontUndoAction();
+	virtual ~FontUndoAction();
 
+public:
 	virtual bool undo(Control * control);
 	virtual bool redo(Control * control);
 	virtual String getText();

@@ -34,7 +34,7 @@ enum ParserPosition {
 class DoubleArrayBuffer {
 public:
 	DoubleArrayBuffer();
-	~DoubleArrayBuffer();
+	virtual ~DoubleArrayBuffer();
 
 public:
 	void clear();

@@ -22,8 +22,9 @@ class Redrawable;
 class InsertUndoAction: public UndoAction {
 public:
 	InsertUndoAction(XojPage * page, Layer * layer, Element * element, Redrawable * view);
-	~InsertUndoAction();
+	virtual ~InsertUndoAction();
 
+public:
 	virtual bool undo(Control * control);
 	virtual bool redo(Control * control);
 

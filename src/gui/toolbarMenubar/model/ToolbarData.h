@@ -22,7 +22,7 @@
 class ToolbarData {
 public:
 	ToolbarData(bool predefined);
-	~ToolbarData();
+	virtual ~ToolbarData();
 
 public:
 	String getName();

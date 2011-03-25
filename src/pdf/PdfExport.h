@@ -30,10 +30,10 @@ public:
 
 public:
 	bool createPdf(String uri);
+	bool createPdf(String uri, GList * range);
 	String getLastError();
 
 private:
-
 	void addPopplerDocument(XojPopplerDocument doc);
 
 	bool addPopplerPage(XojPopplerPage * pdf, XojPopplerDocument doc);

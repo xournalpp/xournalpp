@@ -17,7 +17,7 @@
 class UpdateRef {
 public:
 	UpdateRef(int objectId, XojPopplerDocument doc);
-	~UpdateRef();
+	virtual ~UpdateRef();
 
 public:
 	static void destroyDelete(UpdateRef * data);

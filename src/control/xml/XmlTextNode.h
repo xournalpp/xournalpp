@@ -18,7 +18,7 @@ class XmlTextNode: public XmlNode {
 public:
 	XmlTextNode(const char * tag, const char * text);
 	XmlTextNode(const char * tag);
-	~XmlTextNode();
+	virtual ~XmlTextNode();
 
 public:
 	void setText(const char * text);

@@ -68,6 +68,8 @@ void EraseableStroke::draw(cairo_t * cr, double x, double y, double width, doubl
 		}
 		cairo_stroke(cr);
 	}
+
+	delete tmpCopy;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////

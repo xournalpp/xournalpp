@@ -23,7 +23,9 @@ class XojPage;
 class UndoAction {
 public:
 	UndoAction();
+	virtual ~UndoAction();
 
+public:
 	virtual bool undo(Control * control) = 0;
 	virtual bool redo(Control * control) = 0;
 

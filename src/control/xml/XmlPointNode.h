@@ -18,7 +18,7 @@
 class XmlPointNode: public XmlNode {
 public:
 	XmlPointNode(const char * tag);
-	~XmlPointNode();
+	virtual ~XmlPointNode();
 
 public:
 	/**

@@ -23,8 +23,9 @@ class XojPage;
 class DocumentHandler {
 public:
 	DocumentHandler();
-	~DocumentHandler();
+	virtual ~DocumentHandler();
 
+public:
 	void fireDocumentChanged(DocumentChangeType type);
 	void firePageSizeChanged(int page);
 	void firePageChanged(int page);

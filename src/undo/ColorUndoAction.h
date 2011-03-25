@@ -23,8 +23,9 @@ class Element;
 class ColorUndoAction: public UndoAction {
 public:
 	ColorUndoAction(XojPage * page, Layer * layer, Redrawable * view);
-	~ColorUndoAction();
+	virtual ~ColorUndoAction();
 
+public:
 	virtual bool undo(Control * control);
 	virtual bool redo(Control * control);
 	virtual String getText();

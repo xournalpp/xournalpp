@@ -20,7 +20,8 @@ class EraseableStrokePart {
 public:
 	EraseableStrokePart(Point a, Point b);
 	EraseableStrokePart(double width);
-	~EraseableStrokePart();
+	virtual ~EraseableStrokePart();
+
 public:
 	void addPoint(Point p);
 	double getWidth();

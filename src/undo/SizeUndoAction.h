@@ -22,8 +22,9 @@ class Stroke;
 class SizeUndoAction: public UndoAction {
 public:
 	SizeUndoAction(XojPage * page, Layer * layer, Redrawable * view);
-	~SizeUndoAction();
+	virtual ~SizeUndoAction();
 
+public:
 	virtual bool undo(Control * control);
 	virtual bool redo(Control * control);
 	virtual String getText();

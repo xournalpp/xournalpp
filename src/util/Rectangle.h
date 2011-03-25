@@ -21,7 +21,7 @@ public:
 	Rectangle();
 	Rectangle(Range & rect);
 	Rectangle(double x, double y, double width, double height);
-	~Rectangle();
+	virtual ~Rectangle();
 
 public:
 

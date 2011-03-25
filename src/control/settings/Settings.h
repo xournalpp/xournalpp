@@ -30,7 +30,7 @@ class SAttribute {
 public:
 	SAttribute();
 	SAttribute(const SAttribute & attrib);
-	~SAttribute();
+	virtual ~SAttribute();
 
 public:
 	XOJ_TYPE_ATTRIB;
@@ -49,8 +49,9 @@ class SElement;
 class __RefSElement {
 public:
 	__RefSElement();
-	~__RefSElement();
+	virtual ~__RefSElement();
 
+public:
 	void ref();
 	void unref();
 
@@ -69,8 +70,9 @@ class SElement {
 public:
 	SElement();
 	SElement(const SElement& elem);
-	~SElement();
+	virtual ~SElement();
 
+public:
 	void operator=(const SElement& elem);
 
 	void clear();
@@ -102,8 +104,9 @@ private:
 class Settings {
 public:
 	Settings(String filename);
-	~Settings();
+	virtual ~Settings();
 
+public:
 	bool load();
 	void parseData(xmlNodePtr cur, SElement & elem);
 

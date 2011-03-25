@@ -208,8 +208,9 @@ private:
 class ActionHandler {
 public:
 	ActionHandler();
-	~ActionHandler();
+	virtual ~ActionHandler();
 
+public:
 	virtual void actionPerformed(ActionType type, ActionGroup group, GdkEvent *event, GtkMenuItem *menuitem,
 			GtkToolButton *toolbutton, bool enabled) = 0;
 

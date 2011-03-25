@@ -23,8 +23,9 @@ class Layer;
 class DeleteUndoAction: public UndoAction {
 public:
 	DeleteUndoAction(XojPage * page, Redrawable * view, bool eraser);
-	~DeleteUndoAction();
+	virtual ~DeleteUndoAction();
 
+public:
 	virtual bool undo(Control * control);
 	virtual bool redo(Control * control);
 

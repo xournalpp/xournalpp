@@ -23,7 +23,7 @@ enum PdfRefEntryType {
 class PdfRefEntry {
 public:
 	PdfRefEntry(PdfRefEntryType type, int objectId, Object * object, int refSourceId, Ref ref, XojPopplerDocument doc);
-	~PdfRefEntry();
+	virtual ~PdfRefEntry();
 
 public:
 	bool equalsRef(const Ref & ref);

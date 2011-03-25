@@ -3,14 +3,24 @@
 #include <stdlib.h>
 
 PageRangeEntry::PageRangeEntry(int first, int last) {
+	XOJ_INIT_TYPE(PageRangeEntry);
+
 	this->first = first;
 	this->last = last;
 }
-
-PageRange::PageRange() {
+PageRangeEntry::~PageRangeEntry() {
+	XOJ_RELEASE_TYPE(PageRangeEntry);
 }
 
-PageRange::~PageRange() {
+int PageRangeEntry::getLast() {
+	XOJ_CHECK_TYPE(PageRangeEntry);
+
+	return this->last;
+}
+int PageRangeEntry::getFirst() {
+	XOJ_CHECK_TYPE(PageRangeEntry);
+
+	return this->first;
 }
 
 bool PageRange::isSeparator(char c) {

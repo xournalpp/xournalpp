@@ -86,7 +86,7 @@ public:
 	void setSelection(EditSelection * selection);
 	EditSelection * getSelection();
 	void deleteSelection();
-	void repaintSelection();
+	void repaintSelection(bool evenWithoutSelection = false);
 
 	TextEditor * getTextEditor();
 	ArrayIterator<PageView *> pageViewIterator();

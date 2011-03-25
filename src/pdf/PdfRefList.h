@@ -27,8 +27,9 @@ class PdfRefEntry;
 class RefReplacement {
 public:
 	RefReplacement(String name, int newId, const char * type, PdfRefEntry * refEntry);
-	~RefReplacement();
+	virtual ~RefReplacement();
 
+public:
 	String name;
 	int newId;
 	char * type;

@@ -21,7 +21,7 @@ typedef struct _LinkDestClass XojLinkDestClass;
 class LinkDestination {
 public:
 	LinkDestination();
-	~LinkDestination();
+	virtual ~LinkDestination();
 
 public:
 	int getPdfPage();

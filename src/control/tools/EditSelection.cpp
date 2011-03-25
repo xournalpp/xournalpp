@@ -87,18 +87,19 @@ EditSelection::~EditSelection() {
 
 	finalizeSelection();
 
-	this->view = NULL;
-	this->undo = NULL;
-
 	this->sourcePage = NULL;
 	this->sourceLayer = NULL;
-
-	deleteViewBuffer();
 
 	g_list_free(this->selected);
 	this->selected = NULL;
 
 	deleteViewBuffer();
+
+	this->view->rerenderPage();
+	this->view->getXournal()->repaintSelection(true);
+
+	this->view = NULL;
+	this->undo = NULL;
 
 	XOJ_RELEASE_TYPE(EditSelection);
 }

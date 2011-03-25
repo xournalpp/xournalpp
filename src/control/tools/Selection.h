@@ -48,7 +48,7 @@ protected:
 class RectSelection: public Selection {
 public:
 	RectSelection(double x, double y, Redrawable * view);
-	~RectSelection();
+	virtual ~RectSelection();
 
 public:
 	virtual bool finalize(XojPage * page);
@@ -77,7 +77,7 @@ private:
 class RegionSelect: public Selection {
 public:
 	RegionSelect(double x, double y, Redrawable * view);
-	~RegionSelect();
+	virtual ~RegionSelect();
 
 public:
 	virtual bool finalize(XojPage * page);

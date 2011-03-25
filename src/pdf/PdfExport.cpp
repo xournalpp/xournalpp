@@ -3,6 +3,7 @@
 #include <config.h>
 #include <stdlib.h>
 #include "../util/GzHelper.h"
+#include "../util/PageRange.h"
 
 #include "PdfRefEntry.h"
 #include "PdfUtil.h"
@@ -534,6 +535,69 @@ String PdfExport::getLastError() {
 	return this->lastError;
 }
 
+bool PdfExport::createPdf(String uri, GList * range) {
+	XOJ_CHECK_TYPE(PdfExport);
+
+	// TODO: LOW PRIO: handle bookmakrs correct
+
+	if (range == NULL) {
+		this->lastError = "No pages to export!";
+		return false;
+	}
+
+	if (!this->writer->openFile(uri.c_str())) {
+		return false;
+	}
+	this->writer->write("%PDF-1.4\n");
+
+	int count = 0;
+	for (GList * l = range; l != NULL; l = l->next) {
+		PageRangeEntry * e = (PageRangeEntry *) l->data;
+		count += e->getLast() - e->getFirst();
+	}
+
+	if (this->progressListener) {
+		this->progressListener->setMaximumState(count * 2);
+	}
+
+	int c = 0;
+	for (GList * l = range; l != NULL; l = l->next) {
+		PageRangeEntry * e = (PageRangeEntry *) l->data;
+
+		for (int i = e->getFirst(); i < e->getLast(); i++) {
+			XojPage * page = doc->getPage(i);
+			cPdf.drawPage(page);
+			if (this->progressListener) {
+				this->progressListener->setCurrentState(c++);
+			}
+		}
+	}
+
+	cPdf.finalize();
+	addPopplerDocument(cPdf.getDocument());
+
+	for (int i = 0; i < count; i++) {
+		if (!writePage(i)) {
+			g_warning("error writing page %i", i + 1);
+			return false;
+		}
+
+		if (this->progressListener) {
+			this->progressListener->setCurrentState(i + count);
+		}
+	}
+
+	// Write our own footer
+	if (!writeFooter()) {
+		g_warning("error writing footer");
+		return false;
+	}
+
+	this->writer->close();
+
+	return true;
+}
+
 bool PdfExport::createPdf(String uri) {
 	XOJ_CHECK_TYPE(PdfExport);
 
@@ -557,6 +621,10 @@ bool PdfExport::createPdf(String uri) {
 	for (int i = 0; i < count; i++) {
 		XojPage * page = doc->getPage(i);
 		cPdf.drawPage(page);
+
+		if (this->progressListener) {
+			this->progressListener->setCurrentState(i);
+		}
 	}
 	cPdf.finalize();
 	addPopplerDocument(cPdf.getDocument());

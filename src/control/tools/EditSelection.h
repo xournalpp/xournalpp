@@ -33,7 +33,7 @@ public:
 	EditSelection(UndoRedoHandler * undo, double x, double y, double width, double height, XojPage * page, PageView * view);
 	EditSelection(UndoRedoHandler * undo, Selection * selection, PageView * view);
 	EditSelection(UndoRedoHandler * undo, Element * e, PageView * view, XojPage * page);
-	~EditSelection();
+	virtual ~EditSelection();
 
 private:
 	/**

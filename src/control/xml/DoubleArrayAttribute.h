@@ -18,7 +18,7 @@
 class DoubleArrayAttribute: public Attribute {
 public:
 	DoubleArrayAttribute(const char * name, double * values, int count);
-	~DoubleArrayAttribute();
+	virtual ~DoubleArrayAttribute();
 
 public:
 	virtual void writeOut(OutputStream * out);

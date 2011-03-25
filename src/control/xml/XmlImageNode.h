@@ -17,7 +17,7 @@
 class XmlImageNode: public XmlNode {
 public:
 	XmlImageNode(const char * tag);
-	~XmlImageNode();
+	virtual ~XmlImageNode();
 
 public:
 	void setImage(cairo_surface_t * img);

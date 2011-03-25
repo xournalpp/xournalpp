@@ -29,8 +29,9 @@ enum BackgroundType {
 class BackgroundImage {
 public:
 	BackgroundImage();
-	~BackgroundImage();
+	virtual ~BackgroundImage();
 
+public:
 	String getFilename();
 	void loadFile(String filename, GError ** error);
 
