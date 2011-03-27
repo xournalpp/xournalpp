@@ -24,6 +24,7 @@ PagePosition::~PagePosition() {
 	XOJ_CHECK_TYPE(PagePosition);
 
 	g_list_free(this->views);
+	this->views = NULL;
 
 	XOJ_RELEASE_TYPE(PagePosition);
 }
@@ -32,7 +33,7 @@ bool PagePosition::add(PageView * pv) {
 	XOJ_CHECK_TYPE(PagePosition);
 
 	int y1 = pv->getY();
-	int y2 = this->y1 + pv->getDisplayHeight();
+	int y2 = y1 + pv->getDisplayHeight();
 
 	if (containsY(y1) || containsY(y2) || pv->containsY(this->y1) || pv->containsY(this->y2)) {
 		this->views = g_list_append(this->views, pv);
@@ -42,6 +43,7 @@ bool PagePosition::add(PageView * pv) {
 
 		return true;
 	}
+
 	return false;
 }
 

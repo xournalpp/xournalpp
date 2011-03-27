@@ -123,7 +123,7 @@ void Stroke::setLastPoint(double x, double y) {
 void Stroke::addPoint(Point p) {
 	XOJ_CHECK_TYPE(Stroke);
 
-	if (this->pointCount >= this->pointAllocCount) {
+	if (this->pointCount >= this->pointAllocCount - 1) {
 		this->allocPointSize(this->pointAllocCount + 100);
 	}
 	this->points[this->pointCount++] = p;
@@ -197,7 +197,7 @@ void Stroke::freeUnusedPointItems() {
 	if (this->pointAllocCount == this->pointCount) {
 		return;
 	}
-	this->pointAllocCount = this->pointCount;
+	this->pointAllocCount = this->pointCount + 1;
 	this->points = (Point *) g_realloc(this->points, this->pointAllocCount * sizeof(Point));
 }
 

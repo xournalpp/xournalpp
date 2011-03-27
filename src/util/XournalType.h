@@ -3,6 +3,10 @@
  *
  * Type macros like GLib use for C to find wrong pointers at runtime
  *
+ * The attributes start with z__ because if they start with __ they appear
+ * as first element in the autocomplete list...
+ *
+ *
  * @author Xournal Team
  * http://xournal.sf.net
  *
@@ -34,21 +38,21 @@ void xoj_momoryleak_printRemainingObjects();
  * This creates a Xournal mTypeinformation Attribute
  */
 #define XOJ_TYPE_ATTRIB \
-	int __xoj_type; \
-	int __xoj_typeCheckvalue
+	int z__xoj_type; \
+	int z__xoj_typeCheckvalue
 
 /**
  * Initalize the Xournal type info, this should be called in the constructor
  */
 #ifdef XOJ_MEMORY_LEAK_CHECK_ENABLED
 #define XOJ_INIT_TYPE(type) \
-		this->__xoj_type = __XOJ_TYPE_ ## type; \
-		this->__xoj_typeCheckvalue = 0xFFAA00AA; \
+		this->z__xoj_type = __XOJ_TYPE_ ## type; \
+		this->z__xoj_typeCheckvalue = 0xFFAA00AA; \
 		xoj_memoryleak_initType(__XOJ_TYPE_ ## type)
 #else
 #define XOJ_INIT_TYPE(type) \
-		this->__xoj_type = __XOJ_TYPE_ ## type; \
-		this->__xoj_typeCheckvalue = 0xFFAA00AA
+		this->z__xoj_type = __XOJ_TYPE_ ## type; \
+		this->z__xoj_typeCheckvalue = 0xFFAA00AA
 #endif
 
 /**
@@ -57,14 +61,14 @@ void xoj_momoryleak_printRemainingObjects();
 #ifdef XOJ_MEMORY_LEAK_CHECK_ENABLED
 #define XOJ_RELEASE_TYPE(type) do { \
 		XOJ_CHECK_TYPE(type) \
-		this->__xoj_type = -(__XOJ_TYPE_ ## type); \
-		this->__xoj_typeCheckvalue = 0xFFAA00AA; \
+		this->z__xoj_type = -(__XOJ_TYPE_ ## type); \
+		this->z__xoj_typeCheckvalue = 0xFFAA00AA; \
 		xoj_memoryleak_releaseType(__XOJ_TYPE_ ## type); } while(false)
 #else
 #define XOJ_RELEASE_TYPE(type) do { \
 		XOJ_CHECK_TYPE(type) \
-		this->__xoj_type = -(__XOJ_TYPE_ ## type); \
-		this->__xoj_typeCheckvalue = 0xFFAA00AA; } while(false)
+		this->z__xoj_type = -(__XOJ_TYPE_ ## type); \
+		this->z__xoj_typeCheckvalue = 0xFFAA00AA; } while(false)
 #endif
 
 
@@ -75,11 +79,11 @@ void xoj_momoryleak_printRemainingObjects();
 		if(obj == NULL) { \
 			g_warning("XojTypeCheck failed: NULL %s:%i", __FILE__, __LINE__);\
 		} \
-		if(((type *)obj)->__xoj_typeCheckvalue != 0xFFAA00AA) { \
+		if(((type *)obj)->z__xoj_typeCheckvalue != 0xFFAA00AA) { \
 			g_warning("XojTypeCheck failed: expected %s but get something else on %s:%i", #type, __FILE__, __LINE__);\
 		} \
-		if(((type *)obj)->__xoj_type != __XOJ_TYPE_ ## type) { \
-			g_warning("XojTypeCheck failed: expected %s but get %s on %s:%i", #type, xoj_type_getName(((type *)obj)->__xoj_type), __FILE__, __LINE__);\
+		if(((type *)obj)->z__xoj_type != __XOJ_TYPE_ ## type) { \
+			g_warning("XojTypeCheck failed: expected %s but get %s on %s:%i", #type, xoj_type_getName(((type *)obj)->z__xoj_type), __FILE__, __LINE__);\
 		}
 
 /**
@@ -89,11 +93,11 @@ void xoj_momoryleak_printRemainingObjects();
 		if(this == NULL) { \
 			g_warning("XojTypeCheck failed: NULL %s:%i", __FILE__, __LINE__);\
 		} \
-		if(((type *)this)->__xoj_typeCheckvalue != 0xFFAA00AA) { \
+		if(((type *)this)->z__xoj_typeCheckvalue != 0xFFAA00AA) { \
 			g_warning("XojTypeCheck failed: expected %s but get something else on %s:%i", #type, __FILE__, __LINE__);\
 		} \
-		if(((type *)this)->__xoj_type != __XOJ_TYPE_ ## type) { \
-			g_warning("XojTypeCheck failed: expected %s but get %s on %s:%i", #type, xoj_type_getName(((type *)this)->__xoj_type), __FILE__, __LINE__);\
+		if(((type *)this)->z__xoj_type != __XOJ_TYPE_ ## type) { \
+			g_warning("XojTypeCheck failed: expected %s but get %s on %s:%i", #type, xoj_type_getName(((type *)this)->z__xoj_type), __FILE__, __LINE__);\
 		}
 
 const char * xoj_type_getName(int id);

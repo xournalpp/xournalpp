@@ -129,7 +129,7 @@ ButtonConfigGui::~ButtonConfigGui() {
 }
 
 void ButtonConfigGui::loadSettings() {
-	XOJ_CHECK_TYPE(ButtonConfig);
+	XOJ_CHECK_TYPE(ButtonConfigGui);
 
 	ButtonConfig * cfg = settings->getButtonConfig(button);
 
@@ -206,7 +206,7 @@ void ButtonConfigGui::loadSettings() {
 }
 
 void ButtonConfigGui::saveSettings() {
-	XOJ_CHECK_TYPE(ButtonConfig);
+	XOJ_CHECK_TYPE(ButtonConfigGui);
 
 	ButtonConfig * cfg = settings->getButtonConfig(button);
 	ToolType action = TOOL_NONE;
@@ -282,7 +282,7 @@ void ButtonConfigGui::cbSelectCallback(GtkComboBox * widget, ButtonConfigGui * g
 }
 
 void ButtonConfigGui::enableDisableTools() {
-	XOJ_CHECK_TYPE(ButtonConfig);
+	XOJ_CHECK_TYPE(ButtonConfigGui);
 
 	ToolType action = TOOL_NONE;
 	GtkTreeIter iter;

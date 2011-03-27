@@ -470,55 +470,9 @@ Rectangle * XournalView::getVisibleRect(int page) {
 	if (page < 0 || page >= this->viewPagesLen) {
 		return NULL;
 	}
-
-	GtkAllocation allocation = { 0 };
-	gtk_widget_get_allocation(this->widget, &allocation);
-
-	GtkAdjustment * v = gtk_xournal_get_vadj(this->widget);
-	int scrollY = gtk_adjustment_get_value(v);
-	GtkAdjustment * h = gtk_xournal_get_hadj(this->widget);
-	int scrollX = gtk_adjustment_get_value(h);
-
-	int viewHeight = allocation.height;
-	int viewWidth = allocation.width;
-
 	PageView * p = this->viewPages[page];
 
-	int posY = p->getY();
-	int posX = p->getX();
-	int pageHeight = p->getDisplayHeight();
-	int pageWidth = p->getDisplayWidth();
-
-	// page is after visible area
-	if (scrollY + viewHeight < posY) {
-		return NULL;
-	}
-
-	// page is before visible area
-	if (posY + pageHeight < scrollY) {
-		return NULL;
-	}
-
-	// page is after visible area
-	if (scrollX + viewWidth < posX) {
-		return NULL;
-	}
-
-	// page is before visible area
-	if (posX + pageWidth < scrollX) {
-		return NULL;
-	}
-
-	double y = scrollY - posY;
-	double x = scrollX - posX;
-	double height = viewHeight + y - pageHeight;
-	double width = viewWidth + x - pageWidth;
-
-	double zoom = getZoom();
-
-	Rectangle * rect = new Rectangle(MAX(x, 0) / zoom, MAX(y, 0) / zoom, width / zoom, height / zoom);
-
-	return rect;
+	return gtk_xournal_get_visible_area(this->widget, p);
 }
 
 GtkWidget * XournalView::getWidget() {
@@ -906,16 +860,29 @@ void XournalView::layoutPages() {
 	gtk_widget_queue_draw(this->widget);
 
 	this->pagePosition->update(this->viewPages, this->viewPagesLen, height);
+
 }
 
-bool XournalView::isPageVisible(int page) {
+bool XournalView::isPageVisible(int page, int * visibleHeight) {
 	XOJ_CHECK_TYPE(XournalView);
 
 	Rectangle * rect = getVisibleRect(page);
 	if (rect) {
+		printf("->rect:x:%lf; y:%lf; width:%lf; heigth: %lf\n", rect->x, rect->y, rect->width, rect->height);
+
+		if(visibleHeight) {
+			*visibleHeight = rect->height;
+		}
+
 		delete rect;
 		return true;
 	}
+	if(visibleHeight) {
+		*visibleHeight = 0;
+	}
+
+	// TODO: debug
+	return true;
 
 	return false;
 }

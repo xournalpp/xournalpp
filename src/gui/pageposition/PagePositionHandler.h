@@ -28,6 +28,7 @@ public:
 	void update(PageView ** viewPages, int viewPagesLen, int maxY);
 
 	PageView * getViewAt(int x, int y, PagePositionCache * cache = NULL);
+	PageView * getBestMatchingView(int x, int y, int width, int heigth);
 
 private:
 	void addData(PagePosition * p);

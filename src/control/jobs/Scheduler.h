@@ -40,6 +40,8 @@ public:
 	 */
 	void addJob(Job * job, JobPriority priority);
 
+	void stop();
+
 private:
 	static gpointer jobThreadCallback(Scheduler * scheduler);
 	Job * getNextJobUnlocked();

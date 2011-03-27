@@ -43,12 +43,14 @@ private:
 
 public:
 	/**
-	 * get the X cooridnate relative to the provided view (getView())
+	 * get the X coordinate relative to the provided view (getView())
+	 * in document coordinates
 	 */
 	double getXOnView();
 
 	/**
-	 * get the Y cooridnate relative to the provided view (getView())
+	 * get the Y coordinate relative to the provided view (getView())
+	 * in document coordinates
 	 */
 	double getYOnView();
 
@@ -71,6 +73,26 @@ public:
 	 * get the target page if not the same as the source page, if the selection is moved to a new page
 	 */
 	XojPage * getTargetPage();
+
+	/**
+	 * Get the X coordinate in View coordinates (absolute)
+	 */
+	int getXOnViewAbsolute();
+
+	/**
+	 * Get the Y coordinate in View coordinates (absolute)
+	 */
+	int getYOnViewAbsolute();
+
+	/**
+	 * Get the width in View coordinates
+	 */
+	int getViewWidth();
+
+	/**
+	 * Get the height in View coordinates
+	 */
+	int getViewHeight();
 
 public:
 	/**
@@ -106,7 +128,7 @@ public:
 	 * Finish the current movement
 	 * (should be called in the mouse-button-released event handler)
 	 */
-	void finalizeEditing();
+	void mouseUp();
 
 	/**
 	 * Move the selection
@@ -133,6 +155,22 @@ public:
 	 * If the selection is outside the visible area correct the coordinates
 	 */
 	void ensureWithinVisibleArea();
+
+public:
+	/**
+	 * Handles mouse input for moving and resizing, coordinates are relative to "view"
+	 */
+	void mouseDown(CursorSelectionType type, double x, double y);
+
+	/**
+	 * Handles mouse input for moving and resizing, coordinates are relative to "view"
+	 */
+	void mouseMove(double x, double y);
+
+	/**
+	 * If the selection should moved (or rescaled)
+	 */
+	bool isMoving();
 
 public:
 	PageView * getView();
@@ -184,6 +222,13 @@ private: // DATA
 	 */
 	int relativeX;
 	int relativeY;
+
+	/**
+	 * Mouse coordinates for moving / resizing
+	 */
+	CursorSelectionType mouseDownType;
+	double relMousePosX;
+	double relMousePosY;
 
 	/**
 	 * If both scale axes should have the same scale factor, e.g. for Text

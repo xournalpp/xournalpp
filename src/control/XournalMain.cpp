@@ -195,12 +195,7 @@ GladeSearchpath * XournalMain::initPath(const char * argv0) {
 	}
 	g_free(searchPath);
 
-	searchPath = g_build_filename(PACKAGE_DATA_DIR, PACKAGE, "ui", NULL);
-	gladePath->addSearchDirectory(searchPath);
-	g_free(searchPath);
-
-	gchar * path;
-	path = g_path_get_dirname(argv0);
+	gchar * path = g_path_get_dirname(argv0);
 	searchPath = g_build_filename(path, "ui", NULL);
 	gladePath->addSearchDirectory(searchPath);
 	g_free(searchPath);
@@ -221,6 +216,10 @@ GladeSearchpath * XournalMain::initPath(const char * argv0) {
 	g_free(searchPath);
 
 	searchPath = g_build_filename(path, "..", "ui", NULL);
+	gladePath->addSearchDirectory(searchPath);
+	g_free(searchPath);
+
+	searchPath = g_build_filename(PACKAGE_DATA_DIR, PACKAGE, "ui", NULL);
 	gladePath->addSearchDirectory(searchPath);
 	g_free(searchPath);
 

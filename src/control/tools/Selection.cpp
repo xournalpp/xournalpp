@@ -19,6 +19,33 @@ Selection::~Selection() {
 	XOJ_RELEASE_TYPE(Selection);
 }
 
+void Selection::getSelectedRect(double & x, double & y, double & width, double & height) {
+	XOJ_CHECK_TYPE(Selection);
+
+	if (this->selectedElements == NULL) {
+		x = 0;
+		y = 0;
+		width = 0;
+		height = 0;
+		return;
+	}
+
+	Element * first = (Element *) this->selectedElements->data;
+	Range range(first->getX(), first->getY());
+
+	for (GList * l = this->selectedElements; l != NULL; l = l->next) {
+		Element * e = (Element *) l->data;
+
+		range.addPoint(e->getX(), e->getY());
+		range.addPoint(e->getX() + e->getElementWidth(), e->getY() + e->getElementHeight());
+	}
+
+	x = range.getX() - 3;
+	y = range.getY() - 3;
+	width = range.getWidth() + 6;
+	height = range.getHeight() + 6;
+}
+
 //////////////////////////////////////////////////////////
 
 RectSelection::RectSelection(double x, double y, Redrawable * view) :
@@ -37,15 +64,6 @@ RectSelection::RectSelection(double x, double y, Redrawable * view) :
 
 RectSelection::~RectSelection() {
 	XOJ_RELEASE_TYPE(RectSelection);
-}
-
-void RectSelection::getSelectedRect(double & x, double & y, double & width, double & height) {
-	XOJ_CHECK_TYPE(RectSelection);
-
-	x = this->sx;
-	y = this->sy;
-	width = this->ex - this->sx;
-	height = this->ey - this->sy;
 }
 
 bool RectSelection::finalize(XojPage * page) {
@@ -167,47 +185,6 @@ RegionSelect::~RegionSelect() {
 	g_list_free(this->points);
 
 	XOJ_RELEASE_TYPE(RegionSelect);
-}
-
-void RegionSelect::getSelectedRect(double & x, double & y, double & width, double & height) {
-	XOJ_CHECK_TYPE(RegionSelect);
-
-	if (this->selectedElements == NULL) {
-		x = 0;
-		y = 0;
-		width = 0;
-		height = 0;
-		return;
-	}
-
-	Element * first = (Element *) this->selectedElements->data;
-
-	double aX = first->getX();
-	double bX = first->getX();
-	double aY = first->getY();
-	double bY = first->getY();
-
-	for (GList * l = this->selectedElements; l != NULL; l = l->next) {
-		Element * e = (Element *) l->data;
-		if (aX > e->getX()) {
-			aX = e->getX();
-		}
-		if (aY > e->getY()) {
-			aY = e->getY();
-		}
-
-		if (bX < e->getX() + e->getElementWidth()) {
-			bX = e->getX() + e->getElementWidth();
-		}
-		if (bY < e->getY() + e->getElementHeight()) {
-			bY = e->getY() + e->getElementHeight();
-		}
-	}
-
-	x = aX - 3;
-	y = aY - 3;
-	width = bX - aX + 6;
-	height = bY - aY + 6;
 }
 
 void RegionSelect::paint(cairo_t * cr, GdkRectangle * rect, double zoom) {

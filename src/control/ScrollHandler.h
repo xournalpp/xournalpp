@@ -34,7 +34,7 @@ public:
 
 	void scrollToAnnotatedPage(bool next);
 
-	bool isPageVisible(int page);
+	bool isPageVisible(int page, int * visibleHeight = NULL);
 
 private:
 	XOJ_TYPE_ATTRIB;

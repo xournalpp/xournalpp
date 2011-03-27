@@ -10,6 +10,11 @@
 #include "../../undo/ColorUndoAction.h"
 #include "../../undo/FontUndoAction.h"
 #include "../../gui/XournalView.h"
+#include "../../gui/pageposition/PagePositionHandler.h"
+
+// TODO: debug
+#include "../../control/Control.h"
+#include "../../model/Document.h"
 
 #include <math.h>
 
@@ -71,6 +76,10 @@ void EditSelection::contstruct(UndoRedoHandler * undo, PageView * view, XojPage 
 	this->originalHeight = this->height;
 	this->relativeX = ceil(this->x);
 	this->relativeY = ceil(this->y);
+
+	this->relMousePosX = 0;
+	this->relMousePosY = 0;
+	this->mouseDownType = CURSOR_SELECTION_NONE;
 
 	this->crBuffer = NULL;
 
@@ -146,7 +155,8 @@ void EditSelection::finalizeSelection() {
 }
 
 /**
- * get the X cooridnate relative to the provided view (getView())
+ * get the X coordinate relative to the provided view (getView())
+ * in document coordinates
  */
 double EditSelection::getXOnView() {
 	XOJ_CHECK_TYPE(EditSelection);
@@ -155,7 +165,8 @@ double EditSelection::getXOnView() {
 }
 
 /**
- * get the Y cooridnate relative to the provided view (getView())
+ * get the Y coordinate relative to the provided view (getView())
+ * in document coordinates
  */
 double EditSelection::getYOnView() {
 	XOJ_CHECK_TYPE(EditSelection);
@@ -196,7 +207,48 @@ XojPage * EditSelection::getSourcePage() {
 XojPage * EditSelection::getTargetPage() {
 	XOJ_CHECK_TYPE(EditSelection);
 
+	// TODO: implement
 	return NULL;
+}
+
+/**
+ * Get the X coordinate in View coordinates (absolute)
+ */
+int EditSelection::getXOnViewAbsolute() {
+	XOJ_CHECK_TYPE(EditSelection);
+
+	double zoom = view->getXournal()->getZoom();
+	return this->view->getX() + this->getXOnView() * zoom;
+}
+
+/**
+ * Get the Y coordinate in View coordinates (absolute)
+ */
+int EditSelection::getYOnViewAbsolute() {
+	XOJ_CHECK_TYPE(EditSelection);
+
+	double zoom = view->getXournal()->getZoom();
+	return this->view->getY() + this->getYOnView() * zoom;
+}
+
+/**
+ * Get the width in View coordinates
+ */
+int EditSelection::getViewWidth() {
+	XOJ_CHECK_TYPE(EditSelection);
+
+	double zoom = view->getXournal()->getZoom();
+	return this->width * zoom;
+}
+
+/**
+ * Get the height in View coordinates
+ */
+int EditSelection::getViewHeight() {
+	XOJ_CHECK_TYPE(EditSelection);
+
+	double zoom = view->getXournal()->getZoom();
+	return this->height * zoom;
 }
 
 /**
@@ -375,11 +427,149 @@ ListIterator<Element *> EditSelection::getElements() {
  * Finish the current movement
  * (should be called in the mouse-button-released event handler)
  */
-void EditSelection::finalizeEditing() {
+void EditSelection::mouseUp() {
 	XOJ_CHECK_TYPE(EditSelection);
 
+	this->mouseDownType = CURSOR_SELECTION_NONE;
 	// TODO ????????????????????
 
+}
+
+/**
+ * Handles mouse input for moving and resizing, coordinates are relative to "view"
+ */
+void EditSelection::mouseDown(CursorSelectionType type, double x, double y) {
+	double zoom = this->view->getXournal()->getZoom();
+	x /= zoom;
+	y /= zoom;
+
+	this->mouseDownType = type;
+	this->relMousePosX = x - this->x + this->offsetX;
+	this->relMousePosY = y - this->y + this->offsetY;
+
+	printf("rel mouse pos: %lf / %lf | %lf / %lf\n", this->relMousePosX, this->relMousePosY, this->width, this->height);
+}
+
+/**
+ * Handles mouse input for moving and resizing, coordinates are relative to "view"
+ */
+void EditSelection::mouseMove(double x, double y) {
+	double zoom = this->view->getXournal()->getZoom();
+	x /= zoom;
+	y /= zoom;
+
+	if (this->mouseDownType == CURSOR_SELECTION_MOVE) {
+		this->offsetX = this->x - x + this->relMousePosX;
+		this->offsetY = this->y - y + this->relMousePosY;
+
+		this->view->getXournal()->repaintSelection();
+	} else if (this->mouseDownType == CURSOR_SELECTION_TOP_LEFT) {
+		double dx = x - this->x;
+		double dy = y - this->y;
+		double f;
+		if (ABS(dy) < ABS(dx)) {
+			f = (this->height + dy) / this->height;
+		} else {
+			f = (this->width + dx) / this->width;
+		}
+
+		double oldW = this->width;
+		double oldH = this->height;
+		this->width /= f;
+		this->height /= f;
+
+		this->x += oldW - this->width;
+		this->y += oldH - this->height;
+
+		this->view->getXournal()->repaintSelection();
+	} else if (this->mouseDownType == CURSOR_SELECTION_TOP_RIGHT) {
+		double dx = x - this->x - this->width;
+		double dy = y - this->y;
+		double f;
+		if (ABS(dy) < ABS(dx)) {
+			f = this->height / (this->height + dy);
+		} else {
+			f = (this->width + dx) / this->width;
+		}
+
+		double oldH = this->height;
+		this->width *= f;
+		this->height *= f;
+
+		this->y += oldH - this->height;
+
+		this->view->getXournal()->repaintSelection();
+	} else if (this->mouseDownType == CURSOR_SELECTION_BOTTOM_LEFT) {
+		double dx = x - this->x;
+		double dy = y - this->y - this->height;
+		double f;
+		if (ABS(dy) < ABS(dx)) {
+			f = (this->height + dy) / this->height;
+		} else {
+			f = this->width / (this->width + dx);
+		}
+
+		double oldW = this->width;
+		this->width *= f;
+		this->height *= f;
+
+		this->x += oldW - this->width;
+
+		this->view->getXournal()->repaintSelection();
+	} else if (this->mouseDownType == CURSOR_SELECTION_BOTTOM_RIGHT) {
+		double dx = x - this->x - this->width;
+		double dy = y - this->y - this->height;
+		double f;
+		if (ABS(dy) < ABS(dx)) {
+			f = (this->height + dy) / this->height;
+		} else {
+			f = (this->width + dx) / this->width;
+		}
+
+		this->width *= f;
+		this->height *= f;
+
+		this->view->getXournal()->repaintSelection();
+	} else if (this->mouseDownType == CURSOR_SELECTION_TOP) {
+		double dy = y - this->y;
+		this->height -= dy;
+		this->y += dy;
+		this->view->getXournal()->repaintSelection();
+	} else if (this->mouseDownType == CURSOR_SELECTION_BOTTOM) {
+		double dy = y - this->y - this->height;
+		this->height += dy;
+		this->view->getXournal()->repaintSelection();
+	} else if (this->mouseDownType == CURSOR_SELECTION_LEFT) {
+		double dx = x - this->x;
+		this->width -= dx;
+		this->x += dx;
+
+		this->view->getXournal()->repaintSelection();
+	} else if (this->mouseDownType == CURSOR_SELECTION_RIGHT) {
+		double dx = x - this->x - this->width;
+		this->width += dx;
+		this->view->getXournal()->repaintSelection();
+	}
+
+	PagePositionHandler * pp = this->view->getXournal()->getPagePositionHandler();
+	int rx = this->getXOnViewAbsolute();
+	int ry = this->getYOnViewAbsolute();
+	PageView * v = pp->getBestMatchingView(rx, ry, this->getViewWidth(), this->getViewHeight());
+
+	// TODO: Debug
+	if (v) {
+		int pageNr = this->view->getXournal()->getControl()->getDocument()->indexOf(v->getPage());
+		printf("best matching page: %i\n", pageNr);
+	} else {
+		printf("no matching page found\n");
+	}
+}
+
+/**
+ * If the selection should moved (or rescaled)
+ */
+bool EditSelection::isMoving() {
+	return this->mouseDownType != CURSOR_SELECTION_NONE;
 }
 
 /**
@@ -513,8 +703,6 @@ void EditSelection::paint(cairo_t * cr, double zoom) {
 		cairo_destroy(cr2);
 	}
 
-	cairo_save(cr);
-
 	if ((int) (this->width * zoom) != (int) cairo_image_surface_get_width(this->crBuffer) || (int) (this->height * zoom)
 			!= (int) cairo_image_surface_get_height(this->crBuffer)) {
 		if (!this->rescaleId) {
@@ -522,25 +710,21 @@ void EditSelection::paint(cairo_t * cr, double zoom) {
 		}
 	}
 
-	cairo_scale(cr, 1 / zoom, 1 / zoom);
-
 	cairo_set_source_surface(cr, this->crBuffer, (int) (x * zoom), (int) (y * zoom));
 	cairo_paint(cr);
-
-	cairo_restore(cr);
 
 	cairo_set_operator(cr, CAIRO_OPERATOR_OVER);
 
 	GdkColor selectionColor = view->getSelectionColor();
 
 	// set the line always the same size on display
-	cairo_set_line_width(cr, 1 / zoom);
+	cairo_set_line_width(cr, 1);
 
-	const double dashes[] = { 10.0 / zoom, 10.0 / zoom };
+	const double dashes[] = { 10.0, 10.0 };
 	cairo_set_dash(cr, dashes, sizeof(dashes) / sizeof(dashes[0]), 0);
 	cairo_set_source_rgb(cr, selectionColor.red / 65536.0, selectionColor.green / 65536.0, selectionColor.blue / 65536.0);
 
-	cairo_rectangle(cr, x, y, width, height);
+	cairo_rectangle(cr, x * zoom, y * zoom, width * zoom, height * zoom);
 
 	cairo_stroke_preserve(cr);
 	cairo_set_source_rgba(cr, selectionColor.red / 65536.0, selectionColor.green / 65536.0, selectionColor.blue / 65536.0, 0.3);
@@ -573,7 +757,7 @@ void EditSelection::paint(cairo_t * cr, double zoom) {
  * Callback to redrawing the buffer asynchron
  */
 bool EditSelection::repaintSelection(EditSelection * selection) {
-	XOJ_CHECK_TYPE_OBJ(selection, EditSelection); //TODO: return true or false for no recall
+	XOJ_CHECK_TYPE_OBJ(selection, EditSelection);
 
 	gdk_threads_enter();
 
@@ -594,7 +778,7 @@ void EditSelection::drawAnchorRect(cairo_t * cr, double x, double y, double zoom
 
 	GdkColor selectionColor = view->getSelectionColor();
 	cairo_set_source_rgb(cr, selectionColor.red / 65536.0, selectionColor.green / 65536.0, selectionColor.blue / 65536.0);
-	cairo_rectangle(cr, x - 4 / zoom, y - 4 / zoom, 8 / zoom, 8 / zoom);
+	cairo_rectangle(cr, x * zoom - 4, y * zoom - 4, 8, 8);
 	cairo_stroke_preserve(cr);
 	cairo_set_source_rgb(cr, 1, 1, 1);
 	cairo_fill(cr);
@@ -618,45 +802,3 @@ void EditSelection::deleteViewBuffer() {
 		this->crBuffer = NULL;
 	}
 }
-
-//EditSelection::~EditSelection() {
-//	if (this->rescaleId) {
-//		g_source_remove(this->rescaleId);
-//		this->rescaleId = 0;
-//	}
-//
-//	double fx = this->width / this->originalWidth;
-//	double fy = this->height / this->originalHeight;
-//
-//	bool scale = false;
-//	if (this->aspectRatio) {
-//		double f = (fx + fy) / 2;
-//		fx = f;
-//		fy = f;
-//	}
-//	if (this->width != this->originalWidth || this->height != this->originalHeight) {
-//		scale = true;
-//	}
-//
-//	for (GList * l = this->selected; l != NULL; l = l->next) {
-//		Element * e = (Element *) l->data;
-//		e->move(this->x - this->relativeX, this->y - this->relativeY);
-//		if (scale) {
-//			e->scale(this->x, this->y, fx, fy);
-//		}
-//		this->layer->addElement(e);
-//	}
-//
-//	if (scale) {
-//		ScaleUndoAction * scaleUndo = new ScaleUndoAction(this->page, this->view, this->selected, this->x, this->y, fx, fy);
-//		this->undo->addUndoAction(scaleUndo);
-//	}
-//
-//	view->rerenderRect(x - this->offsetX, y - this->offsetY, width, height);
-//	g_list_free(this->selected);
-//
-//	delete this->documentView;
-//
-//	deleteViewBuffer();
-//}
-

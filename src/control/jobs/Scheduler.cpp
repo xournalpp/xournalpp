@@ -34,14 +34,27 @@ Scheduler::Scheduler() {
 Scheduler::~Scheduler() {
 	XOJ_CHECK_TYPE(Scheduler);
 
-	this->threadRunning = false;
-	g_cond_broadcast(this->jobQueueCond);
-	g_thread_join(this->thread);
+	stop();
+
 	g_mutex_free(this->jobQueueMutex);
 	g_mutex_free(this->jobRunningMutex);
 	g_cond_free(this->jobQueueCond);
 
+	Job * job = NULL;
+	while(job = getNextJobUnlocked()) {
+		job->free();
+	}
+
 	XOJ_RELEASE_TYPE(Scheduler);
+}
+
+void Scheduler::stop() {
+	if (!this->threadRunning) {
+		return;
+	}
+	this->threadRunning = false;
+	g_cond_broadcast(this->jobQueueCond);
+	g_thread_join(this->thread);
 }
 
 void Scheduler::addJob(Job * job, JobPriority priority) {
