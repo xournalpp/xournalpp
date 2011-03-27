@@ -22,7 +22,7 @@ PdfXRef::~PdfXRef() {
 void PdfXRef::addXref(int ref) {
 	XOJ_CHECK_TYPE(PdfXRef);
 
-	if (this->xrefLenght < this->xrefNr + 1) {
+	if (this->xrefLenght <= this->xrefNr + 1) {
 		this->xrefLenght += 100;
 		this->xref = (int *) g_realloc(this->xref, this->xrefLenght * sizeof(int));
 	}

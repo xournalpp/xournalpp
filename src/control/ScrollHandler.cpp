@@ -92,13 +92,16 @@ void ScrollHandler::scrollToAnnotatedPage(bool next) {
 	doc->unlock();
 }
 
-bool ScrollHandler::isPageVisible(int page) {
+bool ScrollHandler::isPageVisible(int page, int * visibleHeight) {
 	XOJ_CHECK_TYPE(ScrollHandler);
 
 	if (!this->control->getWindow()) {
+		if(visibleHeight) {
+			*visibleHeight = 0;
+		}
 		return false;
 	}
 
-	return this->control->getWindow()->getXournal()->isPageVisible(page);
+	return this->control->getWindow()->getXournal()->isPageVisible(page, visibleHeight);
 }
 

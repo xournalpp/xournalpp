@@ -1,6 +1,7 @@
 #include "PagePositionHandler.h"
 #include "PagePosition.h"
 #include "PagePositionCache.h"
+#include "PageViewIndex.h"
 
 #include <gtk/gtk.h>
 
@@ -45,7 +46,9 @@ void PagePositionHandler::update(PageView ** viewPages, int viewPagesLen, int ma
 	addData(lastPp);
 
 	for (int i = 0; i < viewPagesLen; i++) {
+
 		PageView * pv = viewPages[i];
+
 		if (!lastPp->add(pv)) {
 			PagePosition * pp = new PagePosition(pv);
 			lastPp->y2 = pp->y1 - 1;
@@ -58,6 +61,30 @@ void PagePositionHandler::update(PageView ** viewPages, int viewPagesLen, int ma
 	pp->y1 = lastPp->y2 + 1;
 	pp->y2 = maxY;
 	addData(pp);
+}
+
+PageView * PagePositionHandler::getBestMatchingView(int x, int y, int width, int heigth) {
+	XOJ_CHECK_TYPE(PagePositionHandler);
+
+	if (y + heigth < 0 || y > this->maxY) {
+		return NULL;
+	}
+
+	int id = -1;
+	PagePosition * pp1 = binarySearch(this->data, 0, this->dataCount - 1, y, id);
+	id = -1;
+	PagePosition * pp2 = binarySearch(this->data, 0, this->dataCount - 1, y + heigth, id);
+
+	PageViewIndex index(x, y, width, heigth);
+	if (pp1 != NULL) {
+		index.add(pp1, y);
+	}
+
+	if (pp2 != NULL && pp1 != pp2) {
+		index.add(pp2, y + heigth);
+	}
+
+	return index.getHighestIntersects();
 }
 
 PageView * PagePositionHandler::getViewAt(int x, int y, PagePositionCache * cache) {
@@ -75,6 +102,8 @@ PageView * PagePositionHandler::getViewAt(int x, int y, PagePositionCache * cach
 
 	int index = -1;
 	PagePosition * pp = binarySearch(this->data, 0, this->dataCount - 1, y, index);
+
+
 	if (cache) {
 		cache->ppId = index;
 	}
@@ -106,7 +135,7 @@ PagePosition * PagePositionHandler::binarySearch(PagePosition ** sortedArray, in
 void PagePositionHandler::addData(PagePosition * p) {
 	XOJ_CHECK_TYPE(PagePositionHandler);
 
-	if (this->dataCount >= this->dataAllocSize) {
+	if (this->dataCount >= this->dataAllocSize - 1) {
 		this->allocDataSize(this->dataAllocSize + 100);
 	}
 	this->data[this->dataCount++] = p;

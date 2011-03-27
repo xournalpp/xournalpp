@@ -66,9 +66,10 @@ xournalpp_SOURCES = \
 	gui/dialog/PdfPagesDialog.cpp \
 	gui/dialog/SelectBackgroundColorDialog.cpp \
 	gui/dialog/SettingsDialog.cpp \
+	gui/pageposition/PagePosition.cpp \
 	gui/pageposition/PagePositionCache.cpp \
 	gui/pageposition/PagePositionHandler.cpp \
-	gui/pageposition/PagePosition.cpp \
+	gui/pageposition/PageViewIndex.cpp \
 	gui/sidebar/Sidebar.cpp \
 	gui/sidebar/SidebarPreview.cpp \
 	gui/toolbarMenubar/model/ToolbarModel.cpp \

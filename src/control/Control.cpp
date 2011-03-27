@@ -115,6 +115,8 @@ Control::~Control() {
 
 	deleteLastAutosaveFile("");
 
+	this->scheduler->stop();
+
 	delete this->clipboardHandler;
 	this->clipboardHandler = NULL;
 	delete this->recent;
@@ -1100,7 +1102,10 @@ void Control::insertPage(XojPage * page, int position) {
 
 	getCursor()->updateCursor();
 
-	if (!scrollHandler->isPageVisible(position)) {
+	int visibleHeight = 0;
+	scrollHandler->isPageVisible(position, &visibleHeight);
+
+	if (visibleHeight < 10) {
 		scrollHandler->scrollToPage(position);
 	}
 	firePageSelected(position);

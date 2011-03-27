@@ -27,7 +27,7 @@ public:
 	virtual bool finalize(XojPage * page) = 0;
 	virtual void paint(cairo_t * cr, GdkRectangle * rect, double zoom) = 0;
 	virtual void currentPos(double x, double y) = 0;
-	virtual void getSelectedRect(double & x, double & y, double & width, double & height) = 0;
+	virtual void getSelectedRect(double & x, double & y, double & width, double & height);
 
 private:
 	XOJ_TYPE_ATTRIB;
@@ -54,7 +54,6 @@ public:
 	virtual bool finalize(XojPage * page);
 	virtual void paint(cairo_t * cr, GdkRectangle * rect, double zoom);
 	virtual void currentPos(double x, double y);
-	virtual void getSelectedRect(double & x, double & y, double & width, double & height);
 	virtual bool contains(double x, double y);
 
 private:
@@ -83,7 +82,6 @@ public:
 	virtual bool finalize(XojPage * page);
 	virtual void paint(cairo_t * cr, GdkRectangle * rect, double zoom);
 	virtual void currentPos(double x, double y);
-	virtual void getSelectedRect(double & x, double & y, double & width, double & height);
 	virtual bool contains(double x, double y);
 
 private:

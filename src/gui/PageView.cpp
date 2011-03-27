@@ -300,34 +300,7 @@ bool PageView::onButtonPressEvent(GtkWidget * widget, GdkEventButton * event) {
 		xournal->getControl()->firePageSelected(this->page);
 	}
 
-	// Change the tool depending on the key or device
-
 	ToolHandler * h = xournal->getControl()->getToolHandler();
-	ButtonConfig * cfg = NULL;
-	ButtonConfig * cfgTouch = settings->getTouchButtonConfig();
-	if (event->button == 2) { // Middle Button
-		cfg = settings->getMiddleButtonConfig();
-	} else if (event->button == 3) { // Right Button
-		cfg = settings->getRightButtonConfig();
-	} else if (event->device->source == GDK_SOURCE_ERASER) {
-		cfg = settings->getEraserButtonConfig();
-	} else if (cfgTouch->device == event->device->name) {
-		cfg = cfgTouch;
-
-		// If an action is defined we do it, even if it's a drawing action...
-		if (cfg->getDisableDrawing() && cfg->getAction() == TOOL_NONE) {
-			ToolType tool = h->getToolType();
-			if (tool == TOOL_PEN || tool == TOOL_ERASER || tool == TOOL_HILIGHTER) {
-				printf("ignore touchscreen for drawing!\n");
-				return true;
-			}
-		}
-	}
-
-	if (cfg && cfg->getAction() != TOOL_NONE) {
-		h->copyCurrentConfig();
-		cfg->acceptActions(h);
-	}
 
 	double x = event->x;
 	double y = event->y;
@@ -460,9 +433,6 @@ bool PageView::onButtonReleaseEvent(GtkWidget * widget, GdkEventButton * event) 
 
 	this->inputHandler->onButtonReleaseEvent(event, this->page);
 
-	ToolHandler * h = control->getToolHandler();
-	h->restoreLastConfig();
-
 	if (this->inEraser) {
 		this->inEraser = false;
 		Document * doc = this->xournal->getControl()->getDocument();
@@ -483,7 +453,6 @@ bool PageView::onButtonReleaseEvent(GtkWidget * widget, GdkEventButton * event) 
 			xournal->setSelection(new EditSelection(control->getUndoRedoHandler(), this->selection, this));
 		}
 
-		// TODO ??? repaint / rerender
 		delete this->selection;
 		this->selection = NULL;
 	} else if (this->textEditor) {

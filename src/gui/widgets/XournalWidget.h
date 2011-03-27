@@ -24,6 +24,7 @@ class XournalView;
 class PageView;
 class PagePositionCache;
 class EditSelection;
+class Rectangle;
 
 typedef struct _GtkXournal GtkXournal;
 typedef struct _GtkXournalClass GtkXournalClass;
@@ -91,6 +92,8 @@ GtkAdjustment * gtk_xournal_get_vadj(GtkWidget * widget);
 
 void gtk_xournal_repaint_area(GtkWidget * widget, int x1, int y1, int x2, int y2);
 void gtk_xournal_ensure_rect_is_visible(GtkWidget * widget, int x, int y, int width, int height);
+
+Rectangle * gtk_xournal_get_visible_area(GtkWidget * widget, PageView * p);
 
 G_END_DECLS
 
