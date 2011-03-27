@@ -74,9 +74,13 @@ int XournalMain::run(int argc, char * argv[]) {
 	gchar * pdfFilename = NULL;
 	int openAtPageNumber = -1;
 
-	GOptionEntry options[] = { { "no-warn-svn", 'w', 0, G_OPTION_ARG_NONE, &optNoWarnSVN, "Do not warn this is a development release", NULL }, { "create-pdf",
-			'p', 0, G_OPTION_ARG_FILENAME, &pdfFilename, "PDF output filename", NULL }, { "page", 'n', 0, G_OPTION_ARG_INT, &openAtPageNumber,
-			"Jump to Page (first Page: 1)", "N" }, { G_OPTION_REMAINING, 0, 0, G_OPTION_ARG_FILENAME_ARRAY, &optFilename, "<input>", NULL }, { NULL } };
+	GOptionEntry options[] = {
+		{ "no-warn-svn",    'w', 0, G_OPTION_ARG_NONE,           &optNoWarnSVN,     "Do not warn this is a development release", NULL },
+		{ "create-pdf",     'p', 0, G_OPTION_ARG_FILENAME,       &pdfFilename,      "PDF output filename" , NULL},
+		{ "page",           'n', 0, G_OPTION_ARG_INT,            &openAtPageNumber, "Jump to Page (first Page: 1)", "N" },
+		{ G_OPTION_REMAINING, 0, 0, G_OPTION_ARG_FILENAME_ARRAY, &optFilename,      "<input>" , NULL},
+		{ NULL }
+	};
 
 	g_option_context_add_main_entries(context, options, GETTEXT_PACKAGE);
 	// parse options, so we don't need gtk_init, but don't init display (so we have a commandline mode)

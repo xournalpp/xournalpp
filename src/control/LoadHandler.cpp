@@ -787,14 +787,14 @@ DoubleArrayBuffer::~DoubleArrayBuffer() {
 	this->data = NULL;
 	this->len = 0;
 	this->allocCount = 0;
+
+	XOJ_RELEASE_TYPE(DoubleArrayBuffer);
 }
 
 void DoubleArrayBuffer::clear() {
 	XOJ_CHECK_TYPE(DoubleArrayBuffer);
 
 	this->len = 0;
-
-	XOJ_RELEASE_TYPE(DoubleArrayBuffer);
 }
 
 const double * DoubleArrayBuffer::getData() {
