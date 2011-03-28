@@ -11,8 +11,6 @@
 #include "../../undo/FontUndoAction.h"
 #include "../../gui/XournalView.h"
 #include "../../gui/pageposition/PagePositionHandler.h"
-
-// TODO: debug
 #include "../../control/Control.h"
 #include "../../model/Document.h"
 
@@ -294,11 +292,6 @@ UndoAction * EditSelection::setSize(ToolSize size, const double * thiknessPen, c
 	}
 
 	if (found) {
-		double x1 = this->x;
-		double x2 = this->x + this->width;
-		double y1 = this->y;
-		double y2 = this->y + this->height;
-
 		this->deleteViewBuffer();
 		this->view->getXournal()->repaintSelection();
 
@@ -332,11 +325,6 @@ UndoAction * EditSelection::setColor(int color) {
 	}
 
 	if (found) {
-		double x1 = this->x;
-		double x2 = this->x + this->width;
-		double y1 = this->y;
-		double y2 = this->y + this->height;
-
 		this->deleteViewBuffer();
 		this->view->getXournal()->repaintSelection();
 
@@ -556,12 +544,49 @@ void EditSelection::mouseMove(double x, double y) {
 	int ry = this->getYOnViewAbsolute();
 	PageView * v = pp->getBestMatchingView(rx, ry, this->getViewWidth(), this->getViewHeight());
 
-	// TODO: Debug
-	if (v) {
-		int pageNr = this->view->getXournal()->getControl()->getDocument()->indexOf(v->getPage());
-		printf("best matching page: %i\n", pageNr);
-	} else {
-		printf("no matching page found\n");
+	if(v && v != this->view) {
+		XournalView * xournal = this->view->getXournal();
+		int pageNr = xournal->getControl()->getDocument()->indexOf(v->getPage());
+
+		xournal->pageSelected(pageNr);
+
+		translateToView(v);
+	}
+}
+
+/**
+ * Translate all coordinates which are relative to the current view to the new view,
+ * and set the attribute view to the new view
+ */
+void EditSelection::translateToView(PageView * v) {
+	double zoom = view->getXournal()->getZoom();
+
+	double absoluteX = getXOnViewAbsolute();
+	double absoluteY = getYOnViewAbsolute();
+
+	int aX1 = getXOnViewAbsolute();
+	int aY1 = getYOnViewAbsolute();
+
+
+	absoluteX -= v->getX();
+	absoluteY -= v->getY();
+
+	this->relativeX = absoluteX / zoom - this->x;
+	this->relativeY = absoluteY / zoom - this->y;
+
+
+
+	this->view = v;
+
+
+	int aX2 = getXOnViewAbsolute();
+	int aY2 = getYOnViewAbsolute();
+
+	if(aX1 != aX2) {
+		printf("aX1 != aX2!! %i / %i\n", aX1, aX2);
+	}
+	if(aY1 != aY2) {
+		printf("aY1 != aY2!! %i / %i\n", aY1, aY2);
 	}
 }
 

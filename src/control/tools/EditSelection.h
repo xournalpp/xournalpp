@@ -193,15 +193,25 @@ private:
 	 */
 	void finalizeSelection();
 
+	/**
+	 * Translate all coordinates which are relative to the current view to the new view,
+	 * and set the attribute view to the new view
+	 */
+	void translateToView(PageView * v);
+
 private: // DATA
 	XOJ_TYPE_ATTRIB;
 
 
 	/**
-	 * The size
+	 * The position relative to the current view
 	 */
 	double x;
 	double y;
+
+	/**
+	 * The size
+	 */
 	double width;
 	double height;
 

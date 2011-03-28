@@ -91,20 +91,13 @@ PageView * PageViewIndex::getHighestIntersects() {
 
 	PageViewIndexEntry * b = NULL;
 
-	// TODO: Debug
-	printf("----------------\n");
-
 	for(GList * l = this->data; l != NULL;l = l->next) {
 		PageViewIndexEntry * e = (PageViewIndexEntry *)l->data;
-
-		printf("->%i\n", e->area);
 
 		if(b == NULL || b->area < e->area) {
 			b = e;
 		}
 	}
-
-	printf("\n");
 
 	if(b != NULL) {
 		return b->view;

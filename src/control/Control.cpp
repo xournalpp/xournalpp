@@ -2074,6 +2074,9 @@ void Control::exportAsPdf() {
 		this->scheduler->addJob(job, JOB_PRIORITY_NONE);
 	} else {
 		delete job;
+
+		// The job blocked, so we have to unblock, because the job unblocks only after run
+		unblock();
 	}
 }
 

@@ -150,6 +150,7 @@ bool PdfExport::writePagesindex() {
 	for (GList * l = this->pageIds; l != NULL; l = l->next) {
 		int id = *((int *) l->data);
 		this->writer->writef("%i 0 R ", id);
+		pageCount++;
 	}
 	this->writer->write("]\n");
 	this->writer->writef("/Count %i\n", pageCount);
@@ -538,7 +539,7 @@ String PdfExport::getLastError() {
 bool PdfExport::createPdf(String uri, GList * range) {
 	XOJ_CHECK_TYPE(PdfExport);
 
-	// TODO: LOW PRIO: handle bookmakrs correct
+	// TODO: LOW PRIO: handle bookmarks correct
 
 	if (range == NULL) {
 		this->lastError = "No pages to export!";
