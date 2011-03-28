@@ -27,6 +27,7 @@ class PageView;
 class Selection;
 class Element;
 class UndoAction;
+class EditSelectionContents;
 
 class EditSelection: public ElementContainer {
 public:
@@ -147,11 +148,6 @@ public:
 	void paint(cairo_t * cr, double zoom);
 
 	/**
-	 * Callback to redrawing the buffer asynchrony
-	 */
-	static bool repaintSelection(EditSelection * selection);
-
-	/**
 	 * If the selection is outside the visible area correct the coordinates
 	 */
 	void ensureWithinVisibleArea();
@@ -176,11 +172,6 @@ public:
 	PageView * getView();
 
 private:
-	/**
-	 * Delete our internal View buffer,
-	 * it will be recreated when the selection is painted next time
-	 */
-	void deleteViewBuffer();
 
 	/**
 	 * Draws an indicator where you can scale the selection
@@ -194,6 +185,11 @@ private:
 	void finalizeSelection();
 
 	/**
+	 * Gets the PageView where the selection is located on
+	 */
+	PageView * getBestMatchingPageView();
+
+	/**
 	 * Translate all coordinates which are relative to the current view to the new view,
 	 * and set the attribute view to the new view
 	 */
@@ -201,7 +197,6 @@ private:
 
 private: // DATA
 	XOJ_TYPE_ATTRIB;
-
 
 	/**
 	 * The position relative to the current view
@@ -214,24 +209,6 @@ private: // DATA
 	 */
 	double width;
 	double height;
-
-	/**
-	 * The original size to calculate the zoom factor for reascaling the items
-	 */
-	double originalWidth;
-	double originalHeight;
-
-	/**
-	 * The new position
-	 */
-	double offsetX;
-	double offsetY;
-
-	/**
-	 * The offset to the original selection
-	 */
-	int relativeX;
-	int relativeY;
 
 	/**
 	 * Mouse coordinates for moving / resizing
@@ -257,19 +234,9 @@ private: // DATA
 	Layer * sourceLayer;
 
 	/**
-	 * The selected element (the only one which are handled by this instance)
+	 * The contents of the selection
 	 */
-	GList * selected;
-
-	/**
-	 * The rendered elements
-	 */
-	cairo_surface_t * crBuffer;
-
-	/**
-	 * The source id for the rescaling task
-	 */
-	int rescaleId;
+	EditSelectionContents * contents;
 
 private: // HANDLER
 	/**

@@ -656,6 +656,7 @@ void XournalView::deleteSelection() {
 	//		clearSelection();
 	//
 	//		view->rerenderPage();
+	//      repaintSelection();
 	//	}
 }
 
