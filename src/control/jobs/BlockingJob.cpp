@@ -12,7 +12,6 @@ BlockingJob::BlockingJob(Control * control, const char * name) {
 BlockingJob::~BlockingJob() {
 	XOJ_CHECK_TYPE(BlockingJob);
 
-	control->unblock();
 	this->control = NULL;
 
 	XOJ_RELEASE_TYPE(BlockingJob);

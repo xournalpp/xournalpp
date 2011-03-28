@@ -6,6 +6,8 @@
 
 #include "../util/GzHelper.h"
 
+bool PdfWriter::compressPdfOutput = true;
+
 PdfWriter::PdfWriter(PdfXRef * xref) {
 	XOJ_INIT_TYPE(PdfWriter);
 
@@ -15,8 +17,6 @@ PdfWriter::PdfWriter(PdfXRef * xref) {
 	this->dataCount = 0;
 	this->xref = xref;
 	this->objectId = 3;
-
-	this->compressOutput = true;
 }
 
 PdfWriter::~PdfWriter() {
@@ -30,6 +30,10 @@ PdfWriter::~PdfWriter() {
 	this->xref = NULL;
 
 	XOJ_RELEASE_TYPE(PdfWriter);
+}
+
+void PdfWriter::setCompressPdfOutput(bool compress) {
+	PdfWriter::compressPdfOutput = compress;
 }
 
 void PdfWriter::close() {
@@ -224,7 +228,7 @@ void PdfWriter::endStream() {
 	GString * data = NULL;
 	GString * compressed = NULL;
 
-	if (this->compressOutput) {
+	if (PdfWriter::compressPdfOutput) {
 		compressed = GzHelper::gzcompress(this->stream);
 	}
 

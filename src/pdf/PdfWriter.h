@@ -45,12 +45,15 @@ public:
 	int getNextObjectId();
 	int getDataCount();
 
+public:
+	static void setCompressPdfOutput(bool compress);
+
 private:
 	XOJ_TYPE_ATTRIB;
 
-	int dataCount;
-	bool compressOutput;
+	static bool compressPdfOutput;
 
+	int dataCount;
 	bool inStream;
 	GString * stream;
 
