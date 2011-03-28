@@ -859,10 +859,10 @@ static gboolean gtk_xournal_expose(GtkWidget * widget, GdkEventExpose * event) {
 		// not visible, its on the bottom side of the visible area
 		if (py > lastVisibleY) {
 			printf("test3\n");
-		} else
-		// not visible, its on the top side of the visible area
-		if (py + ph < firstVisibleY) {
-			printf("test4 %i:: %i\n", py + ph, firstVisibleY);
+//		} else
+//		// not visible, its on the top side of the visible area
+//		if (py + ph < firstVisibleY) {
+//			printf("test4 %i:: %i\n", py + ph, firstVisibleY);
 		} else {
 			Redrawable * red = xournal->selection->getView();
 			cairo_translate(cr, red->getX() - xournal->x, red->getY() - xournal->y);

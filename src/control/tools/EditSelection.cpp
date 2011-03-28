@@ -14,7 +14,7 @@
 #include "../../control/Control.h"
 #include "../../model/Document.h"
 
-#include <math.h>
+#include "EditSelectionContents.h"
 
 EditSelection::EditSelection(UndoRedoHandler * undo, double x, double y, double width, double height, XojPage * page, PageView * view) {
 	XOJ_INIT_TYPE(EditSelection);
@@ -66,41 +66,24 @@ void EditSelection::contstruct(UndoRedoHandler * undo, PageView * view, XojPage 
 	this->sourceLayer = this->sourcePage->getSelectedLayer();
 
 	this->aspectRatio = false;
-	this->selected = NULL;
-
-	this->offsetX = 0;
-	this->offsetY = 0;
-	this->originalWidth = this->width;
-	this->originalHeight = this->height;
-	this->relativeX = ceil(this->x);
-	this->relativeY = ceil(this->y);
 
 	this->relMousePosX = 0;
 	this->relMousePosY = 0;
 	this->mouseDownType = CURSOR_SELECTION_NONE;
 
-	this->crBuffer = NULL;
-
-	this->rescaleId = 0;
+	this->contents = new EditSelectionContents(this->x, this->y, this->width, this->height, this->sourcePage, this->sourceLayer, this->view);
 }
 
 EditSelection::~EditSelection() {
 	XOJ_CHECK_TYPE(EditSelection);
-
-	if (this->rescaleId) {
-		g_source_remove(this->rescaleId);
-		this->rescaleId = 0;
-	}
 
 	finalizeSelection();
 
 	this->sourcePage = NULL;
 	this->sourceLayer = NULL;
 
-	g_list_free(this->selected);
-	this->selected = NULL;
-
-	deleteViewBuffer();
+	delete this->contents;
+	this->contents = NULL;
 
 	this->view->rerenderPage();
 	this->view->getXournal()->repaintSelection(true);
@@ -118,38 +101,21 @@ EditSelection::~EditSelection() {
 void EditSelection::finalizeSelection() {
 	XOJ_CHECK_TYPE(EditSelection);
 
-	double fx = this->width / this->originalWidth;
-	double fy = this->height / this->originalHeight;
-
-	bool scale = false;
-	if (this->aspectRatio) {
-		double f = (fx + fy) / 2;
-		fx = f;
-		fy = f;
+	PageView * v = getBestMatchingPageView();
+	if(v == NULL) {
+		this->view->getXournal()->deleteSelection();
+	} else {
+//		this->contents->finalizeSelection(this->width, this->height, this->aspectRatio);
+//
+//
+//		if (scale) {
+//			// TODO: ????????????????????????
+//			//		ScaleUndoAction * scaleUndo = new ScaleUndoAction(this->page, this->view, this->selected, this->x, this->y, fx, fy);
+//			//		this->undo->addUndoAction(scaleUndo);
+//		}
+//
+//		this->view->getXournal()->repaintSelection();
 	}
-	if (this->width != this->originalWidth || this->height != this->originalHeight) {
-		scale = true;
-	}
-
-	Layer * layer = this->sourceLayer;
-	// TODO: add to new layer
-
-	for (GList * l = this->selected; l != NULL; l = l->next) {
-		Element * e = (Element *) l->data;
-		e->move(this->x - this->relativeX, this->y - this->relativeY);
-		if (scale) {
-			e->scale(this->x, this->y, fx, fy);
-		}
-		layer->addElement(e);
-	}
-
-	if (scale) {
-		// TODO: ????????????????????????
-		//		ScaleUndoAction * scaleUndo = new ScaleUndoAction(this->page, this->view, this->selected, this->x, this->y, fx, fy);
-		//		this->undo->addUndoAction(scaleUndo);
-	}
-
-	this->view->getXournal()->repaintSelection();
 }
 
 /**
@@ -159,7 +125,7 @@ void EditSelection::finalizeSelection() {
 double EditSelection::getXOnView() {
 	XOJ_CHECK_TYPE(EditSelection);
 
-	return this->x - this->offsetX;
+	return this->x;
 }
 
 /**
@@ -169,7 +135,7 @@ double EditSelection::getXOnView() {
 double EditSelection::getYOnView() {
 	XOJ_CHECK_TYPE(EditSelection);
 
-	return this->y - this->offsetY;
+	return this->y;
 }
 
 /**
@@ -256,50 +222,7 @@ int EditSelection::getViewHeight() {
 UndoAction * EditSelection::setSize(ToolSize size, const double * thiknessPen, const double * thiknessHilighter, const double * thiknessEraser) {
 	XOJ_CHECK_TYPE(EditSelection);
 
-	SizeUndoAction * undo = new SizeUndoAction(this->sourcePage, this->sourceLayer, this->view);
-
-	bool found = false;
-
-	for (GList * l = this->selected; l != NULL; l = l->next) {
-		Element * e = (Element *) l->data;
-		if (e->getType() == ELEMENT_STROKE) {
-			Stroke * s = (Stroke *) e;
-			StrokeTool tool = s->getToolType();
-
-			double originalWidth = s->getWidth();
-
-			int pointCount = s->getPointCount();
-			double * originalPressure = SizeUndoAction::getPressure(s);
-
-			if (tool == STROKE_TOOL_PEN) {
-				s->setWidth(thiknessPen[size]);
-			} else if (tool == STROKE_TOOL_HIGHLIGHTER) {
-				s->setWidth(thiknessHilighter[size]);
-			} else if (tool == STROKE_TOOL_ERASER) {
-				s->setWidth(thiknessEraser[size]);
-			}
-
-			// scale the stroke
-			double factor = s->getWidth() / originalWidth;
-			s->scalePressure(factor);
-
-			// save the new pressure
-			double * newPressure = SizeUndoAction::getPressure(s);
-
-			undo->addStroke(s, originalWidth, s->getWidth(), originalPressure, newPressure, pointCount);
-			found = true;
-		}
-	}
-
-	if (found) {
-		this->deleteViewBuffer();
-		this->view->getXournal()->repaintSelection();
-
-		return undo;
-	} else {
-		delete undo;
-		return NULL;
-	}
+	return this->contents->setSize(size, thiknessPen, thiknessHilighter, thiknessEraser);
 }
 
 /**
@@ -309,30 +232,7 @@ UndoAction * EditSelection::setSize(ToolSize size, const double * thiknessPen, c
 UndoAction * EditSelection::setColor(int color) {
 	XOJ_CHECK_TYPE(EditSelection);
 
-	ColorUndoAction * undo = new ColorUndoAction(this->sourcePage, this->sourceLayer, this->view);
-
-	bool found = false;
-
-	for (GList * l = this->selected; l != NULL; l = l->next) {
-		Element * e = (Element *) l->data;
-		if (e->getType() == ELEMENT_TEXT || e->getType() == ELEMENT_STROKE) {
-			int lastColor = e->getColor();
-			e->setColor(color);
-			undo->addStroke(e, lastColor, e->getColor());
-
-			found = true;
-		}
-	}
-
-	if (found) {
-		this->deleteViewBuffer();
-		this->view->getXournal()->repaintSelection();
-
-		return undo;
-	} else {
-		delete undo;
-		return NULL;
-	}
+	return this->contents->setColor(color);
 }
 
 /**
@@ -342,51 +242,7 @@ UndoAction * EditSelection::setColor(int color) {
 UndoAction * EditSelection::setFont(XojFont & font) {
 	XOJ_CHECK_TYPE(EditSelection);
 
-	double x1 = 0.0 / 0.0;
-	double x2 = 0.0 / 0.0;
-	double y1 = 0.0 / 0.0;
-	double y2 = 0.0 / 0.0;
-
-	FontUndoAction * undo = new FontUndoAction(this->sourcePage, this->sourceLayer, this->view);
-
-	for (GList * l = this->selected; l != NULL; l = l->next) {
-		Element * e = (Element *) l->data;
-		if (e->getType() == ELEMENT_TEXT) {
-			Text * t = (Text *) e;
-			undo->addStroke(t, t->getFont(), font);
-
-			if (isnan(x1)) {
-				x1 = t->getX();
-				y1 = t->getY();
-				x2 = t->getX() + t->getElementWidth();
-				y2 = t->getY() + t->getElementHeight();
-			} else {
-				// size with old font
-				x1 = MIN(x1, t->getX());
-				y1 = MIN(y1, t->getY());
-
-				x2 = MAX(x2, t->getX() + t->getElementWidth());
-				y2 = MAX(y2, t->getY() + t->getElementHeight());
-			}
-
-			t->setFont(font);
-
-			// size with new font
-			x1 = MIN(x1, t->getX());
-			y1 = MIN(y1, t->getY());
-
-			x2 = MAX(x2, t->getX() + t->getElementWidth());
-			y2 = MAX(y2, t->getY() + t->getElementHeight());
-		}
-	}
-
-	if (!isnan(x1)) {
-		this->deleteViewBuffer();
-		this->view->getXournal()->repaintSelection();
-		return undo;
-	}
-	delete undo;
-	return NULL;
+	return this->contents->setFont(font);
 }
 
 /**
@@ -395,7 +251,7 @@ UndoAction * EditSelection::setFont(XojFont & font) {
 void EditSelection::addElement(Element * e) {
 	XOJ_CHECK_TYPE(EditSelection);
 
-	this->selected = g_list_append(this->selected, e);
+	this->contents->addElement(e);
 
 	if (e->rescaleOnlyAspectRatio()) {
 		this->aspectRatio = true;
@@ -408,7 +264,7 @@ void EditSelection::addElement(Element * e) {
 ListIterator<Element *> EditSelection::getElements() {
 	XOJ_CHECK_TYPE(EditSelection);
 
-	return ListIterator<Element *> (this->selected);
+	return this->contents->getElements();
 }
 
 /**
@@ -419,8 +275,6 @@ void EditSelection::mouseUp() {
 	XOJ_CHECK_TYPE(EditSelection);
 
 	this->mouseDownType = CURSOR_SELECTION_NONE;
-	// TODO ????????????????????
-
 }
 
 /**
@@ -432,10 +286,8 @@ void EditSelection::mouseDown(CursorSelectionType type, double x, double y) {
 	y /= zoom;
 
 	this->mouseDownType = type;
-	this->relMousePosX = x - this->x + this->offsetX;
-	this->relMousePosY = y - this->y + this->offsetY;
-
-	printf("rel mouse pos: %lf / %lf | %lf / %lf\n", this->relMousePosX, this->relMousePosY, this->width, this->height);
+	this->relMousePosX = x - this->x;
+	this->relMousePosY = y - this->y;
 }
 
 /**
@@ -447,8 +299,8 @@ void EditSelection::mouseMove(double x, double y) {
 	y /= zoom;
 
 	if (this->mouseDownType == CURSOR_SELECTION_MOVE) {
-		this->offsetX = this->x - x + this->relMousePosX;
-		this->offsetY = this->y - y + this->relMousePosY;
+		this->x = x - this->relMousePosX;
+		this->y = y - this->relMousePosY;
 
 		this->view->getXournal()->repaintSelection();
 	} else if (this->mouseDownType == CURSOR_SELECTION_TOP_LEFT) {
@@ -539,12 +391,9 @@ void EditSelection::mouseMove(double x, double y) {
 		this->view->getXournal()->repaintSelection();
 	}
 
-	PagePositionHandler * pp = this->view->getXournal()->getPagePositionHandler();
-	int rx = this->getXOnViewAbsolute();
-	int ry = this->getYOnViewAbsolute();
-	PageView * v = pp->getBestMatchingView(rx, ry, this->getViewWidth(), this->getViewHeight());
+	PageView * v = getBestMatchingPageView();
 
-	if(v && v != this->view) {
+	if (v && v != this->view) {
 		XournalView * xournal = this->view->getXournal();
 		int pageNr = xournal->getControl()->getDocument()->indexOf(v->getPage());
 
@@ -554,6 +403,14 @@ void EditSelection::mouseMove(double x, double y) {
 	}
 }
 
+PageView * EditSelection::getBestMatchingPageView() {
+	PagePositionHandler * pp = this->view->getXournal()->getPagePositionHandler();
+	int rx = this->getXOnViewAbsolute();
+	int ry = this->getYOnViewAbsolute();
+	PageView * v = pp->getBestMatchingView(rx, ry, this->getViewWidth(), this->getViewHeight());
+	return v;
+}
+
 /**
  * Translate all coordinates which are relative to the current view to the new view,
  * and set the attribute view to the new view
@@ -561,31 +418,21 @@ void EditSelection::mouseMove(double x, double y) {
 void EditSelection::translateToView(PageView * v) {
 	double zoom = view->getXournal()->getZoom();
 
-	double absoluteX = getXOnViewAbsolute();
-	double absoluteY = getYOnViewAbsolute();
-
 	int aX1 = getXOnViewAbsolute();
 	int aY1 = getYOnViewAbsolute();
 
-
-	absoluteX -= v->getX();
-	absoluteY -= v->getY();
-
-	this->relativeX = absoluteX / zoom - this->x;
-	this->relativeY = absoluteY / zoom - this->y;
-
-
+	this->x = (aX1 - v->getX()) / zoom;
+	this->y = (aY1 - v->getY()) / zoom;
 
 	this->view = v;
-
 
 	int aX2 = getXOnViewAbsolute();
 	int aY2 = getYOnViewAbsolute();
 
-	if(aX1 != aX2) {
+	if (aX1 != aX2) {
 		printf("aX1 != aX2!! %i / %i\n", aX1, aX2);
 	}
-	if(aY1 != aY2) {
+	if (aY1 != aY2) {
 		printf("aY1 != aY2!! %i / %i\n", aY1, aY2);
 	}
 }
@@ -603,13 +450,13 @@ bool EditSelection::isMoving() {
 void EditSelection::moveSelection(double dx, double dy) {
 	XOJ_CHECK_TYPE(EditSelection);
 
-	this->offsetX -= dx;
-	this->offsetY -= dy;
+	this->x -= dx;
+	this->y -= dy;
 
 	ensureWithinVisibleArea();
 
-	int x = this->view->getX() - this->offsetX + this->relativeX;
-	int y = this->view->getY() - this->offsetY + this->relativeY;
+	int x = this->view->getX();
+	int y = this->view->getY();
 	double zoom = this->view->getXournal()->getZoom();
 	this->view->getXournal()->ensureRectIsVisible(x, y, this->width * zoom, this->height * zoom);
 
@@ -624,24 +471,24 @@ void EditSelection::ensureWithinVisibleArea() {
 
 	//TODO: scroll to this point if not in visible area
 
-	double zoom = this->view->getXournal()->getZoom();
-	int x = this->view->getX() - this->offsetX + this->relativeX;
-	if (x < 0) {
-		this->offsetX += x;
-	}
-	int maxX = this->view->getXournal()->getMaxAreaX();
-	if (maxX < x + this->width * zoom) {
-		this->offsetX += (x + this->width * zoom) - maxX;
-	}
-
-	int y = this->view->getY() - this->offsetY + this->relativeY;
-	if (y < 0) {
-		this->offsetY += y;
-	}
-	int maxY = this->view->getXournal()->getMaxAreaY();
-	if (maxY < y + this->height * zoom) {
-		this->offsetY += (y + this->height * zoom) - maxY;
-	}
+	//	double zoom = this->view->getXournal()->getZoom();
+	//	int x = this->view->getX() - this->offsetX + this->relativeX;
+	//	if (x < 0) {
+	//		this->offsetX += x;
+	//	}
+	//	int maxX = this->view->getXournal()->getMaxAreaX();
+	//	if (maxX < x + this->width * zoom) {
+	//		this->offsetX += (x + this->width * zoom) - maxX;
+	//	}
+	//
+	//	int y = this->view->getY() - this->offsetY + this->relativeY;
+	//	if (y < 0) {
+	//		this->offsetY += y;
+	//	}
+	//	int maxY = this->view->getXournal()->getMaxAreaY();
+	//	if (maxY < y + this->height * zoom) {
+	//		this->offsetY += (y + this->height * zoom) - maxY;
+	//	}
 }
 
 /**
@@ -710,33 +557,10 @@ CursorSelectionType EditSelection::getSelectionTypeForPos(double x, double y, do
 void EditSelection::paint(cairo_t * cr, double zoom) {
 	XOJ_CHECK_TYPE(EditSelection);
 
-	double x = this->x - this->offsetX;
-	double y = this->y - this->offsetY;
+	double x = this->x;
+	double y = this->y;
 
-	double fx = this->width / this->originalWidth;
-	double fy = this->height / this->originalHeight;
-
-	if (this->crBuffer == NULL) {
-		this->crBuffer = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, this->width * zoom, this->height * zoom);
-		cairo_t * cr2 = cairo_create(this->crBuffer);
-
-		cairo_scale(cr2, zoom * fx, zoom * fy);
-		cairo_translate(cr2, -this->relativeX, -this->relativeY);
-		DocumentView view;
-		view.drawSelection(cr2, this);
-
-		cairo_destroy(cr2);
-	}
-
-	if ((int) (this->width * zoom) != (int) cairo_image_surface_get_width(this->crBuffer) || (int) (this->height * zoom)
-			!= (int) cairo_image_surface_get_height(this->crBuffer)) {
-		if (!this->rescaleId) {
-			this->rescaleId = g_idle_add((GSourceFunc) repaintSelection, this);
-		}
-	}
-
-	cairo_set_source_surface(cr, this->crBuffer, (int) (x * zoom), (int) (y * zoom));
-	cairo_paint(cr);
+	this->contents->paint(cr, x, y, this->width, this->height, zoom);
 
 	cairo_set_operator(cr, CAIRO_OPERATOR_OVER);
 
@@ -779,23 +603,6 @@ void EditSelection::paint(cairo_t * cr, double zoom) {
 }
 
 /**
- * Callback to redrawing the buffer asynchron
- */
-bool EditSelection::repaintSelection(EditSelection * selection) {
-	XOJ_CHECK_TYPE_OBJ(selection, EditSelection);
-
-	gdk_threads_enter();
-
-	// delete the selection buffer, force a redraw
-	selection->deleteViewBuffer();
-	selection->view->repaintRect(selection->x, selection->y, selection->width, selection->height);
-	selection->rescaleId = 0;
-
-	gdk_threads_leave();
-	return false;
-}
-
-/**
  * draws an idicator where you can scale the selection
  */
 void EditSelection::drawAnchorRect(cairo_t * cr, double x, double y, double zoom) {
@@ -815,15 +622,3 @@ PageView * EditSelection::getView() {
 	return this->view;
 }
 
-/**
- * Delete our internal View buffer,
- * it will be recreated when the selection is painted next time
- */
-void EditSelection::deleteViewBuffer() {
-	XOJ_CHECK_TYPE(EditSelection);
-
-	if (this->crBuffer) {
-		cairo_surface_destroy(this->crBuffer);
-		this->crBuffer = NULL;
-	}
-}

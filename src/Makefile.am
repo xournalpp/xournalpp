@@ -27,6 +27,7 @@ xournalpp_SOURCES = \
 	control/stockdlg/ImageOpenDlg.cpp \
 	control/stockdlg/XojOpenDlg.cpp \
 	control/tools/EditSelection.cpp \
+	control/tools/EditSelectionContents.cpp \
 	control/tools/EraseHandler.cpp \
 	control/tools/ImageHandler.cpp \
 	control/tools/InputHandler.cpp \
