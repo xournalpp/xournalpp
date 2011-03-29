@@ -13,6 +13,7 @@
 #define __JOB_H__
 
 #include "../../util/XournalType.h"
+#include <glib.h>
 
 enum JobType {
 	JOB_TYPE_BLOCKING, JOB_TYPE_PREVIEW, JOB_TYPE_RENDER, JOB_TYPE_AUTOSAVE
@@ -26,7 +27,16 @@ protected:
 	virtual ~Job();
 
 public:
-	void free();
+
+	/**
+	 * Unref the Job, the initial refcount is set to 1 on creation
+	 */
+	void unref();
+
+	/**
+	 * Increase the refcount
+	 */
+	void ref();
 
 public:
 	virtual JobType getType() = 0;
@@ -64,6 +74,9 @@ private:
 	XOJ_TYPE_ATTRIB;
 
 	int afterRunId;
+
+	int refCount;
+	GMutex * refMutex;
 };
 
 #endif /* __JOB_H__ */

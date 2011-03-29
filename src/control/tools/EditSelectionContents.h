@@ -30,6 +30,7 @@ class Selection;
 class Element;
 class UndoAction;
 class EditSelectionContents;
+class DeleteUndoAction;
 
 class EditSelectionContents: public ElementContainer {
 public:
@@ -55,6 +56,12 @@ public:
 	 */
 	UndoAction * setFont(XojFont & font);
 
+	/**
+	 * Fills de undo item if the selection is deleted
+	 * the selection is cleared after
+	 */
+	void fillUndoItem(DeleteUndoAction * undo);
+
 public:
 	/**
 	 * Add an element to the this selection
@@ -72,6 +79,11 @@ public:
 	 */
 	void paint(cairo_t * cr, double x, double y, double width, double height, double zoom);
 
+	/**
+	 * Finish the editing
+	 */
+	void finalizeSelection(double x, double y, double width, double height, bool aspectRatio, Layer * layer, UndoRedoHandler * undo);
+
 private:
 	/**
 	 * Delete our internal View buffer,
@@ -83,11 +95,6 @@ private:
 	 * Callback to redrawing the buffer asynchrony
 	 */
 	static bool repaintSelection(EditSelectionContents * selection);
-
-	/**
-	 * Finish the editing
-	 */
-	void finalizeSelection(double width, double height, bool aspectRatio, Layer * layer);
 
 public:
 	/**
@@ -108,6 +115,12 @@ private:
 	 */
 	double originalWidth;
 	double originalHeight;
+
+	/**
+	 * The original position, to calculate the offset for moving the objects
+	 */
+	double originalX;
+	double originalY;
 
 	/**
 	 * The offset to the original selection

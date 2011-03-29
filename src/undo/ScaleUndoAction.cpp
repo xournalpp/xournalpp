@@ -24,6 +24,7 @@ ScaleUndoAction::~ScaleUndoAction() {
 	this->page = NULL;
 	this->view = NULL;
 	g_list_free(this->elements);
+	this->elements = NULL;
 
 	XOJ_RELEASE_TYPE(ScaleUndoAction);
 }

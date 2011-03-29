@@ -32,6 +32,11 @@ InputHandler::~InputHandler() {
 	delete this->view;
 	this->view = NULL;
 
+	if(this->reco) {
+		delete this->reco;
+		this->reco = NULL;
+	}
+
 	XOJ_RELEASE_TYPE(InputHandler);
 }
 

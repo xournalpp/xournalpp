@@ -20,7 +20,10 @@
 class ExportJob : public BlockingJob {
 public:
 	ExportJob(Control * control, GList * selected, ExportFormtType type, int dpi, String folder, String filename);
+
+protected:
 	virtual ~ExportJob();
+
 public:
 	virtual void run();
 

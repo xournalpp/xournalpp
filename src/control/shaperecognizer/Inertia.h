@@ -19,6 +19,7 @@ class Point;
 class Inertia {
 public:
 	Inertia();
+	Inertia(const Inertia & inertia);
 	virtual ~Inertia();
 
 public:

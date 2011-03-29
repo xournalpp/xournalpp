@@ -466,8 +466,10 @@ gboolean gtk_xournal_button_press_event(GtkWidget * widget, GdkEventButton * eve
 		if(selType) {
 			xournal->view->getCursor()->setMouseDown(true);
 			xournal->selection->mouseDown(selType, ev.x, ev.y);
+			return true;
+		} else {
+			xournal->view->clearSelection();
 		}
-		return true;
 	}
 
 	PageView * pv = gtk_xournal_get_page_view_for_pos_cached(xournal, event->x, event->y);
@@ -745,6 +747,8 @@ cairo_t * gtk_xournal_create_cairo_for(GtkWidget * widget, PageView * view) {
 	GtkXournal * xournal = GTK_XOURNAL(widget);
 	double zoom = xournal->view->getZoom();
 
+
+	// TODO: LOW PRIO: stroke draw to this cairo surface look a little different than rendererd to a cairo surface
 	cairo_t * cr = gdk_cairo_create(GTK_WIDGET(widget)->window);
 	int x = view->getX() - xournal->x;
 	int y = view->getY() - xournal->y;
