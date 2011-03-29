@@ -642,22 +642,18 @@ void XournalView::clearSelection() {
 void XournalView::deleteSelection() {
 	XOJ_CHECK_TYPE(XournalView);
 
+	EditSelection * sel = getSelection();
+	if (sel) {
+		PageView * view = sel->getView();
+		DeleteUndoAction * undo = new DeleteUndoAction(sel->getSourcePage(), view, false);
+		sel->fillUndoItem(undo);
+		control->getUndoRedoHandler()->addUndoAction(undo);
 
-	// TODO ????????????? delete selection
-	//	EditSelection * sel = getSelection();
-	//	if (sel) {
-	//		PageView * view = sel->getView();
-	//		DeleteUndoAction * undo = new DeleteUndoAction(sel->getPage(), view, false);
-	//		sel->fillUndoItem(undo);
-	//		control->getUndoRedoHandler()->addUndoAction(undo);
-	//
-	//		sel->clearContents();
-	//
-	//		clearSelection();
-	//
-	//		view->rerenderPage();
-	//      repaintSelection();
-	//	}
+		clearSelection();
+
+		view->rerenderPage();
+		repaintSelection();
+	}
 }
 
 void XournalView::setSelection(EditSelection * selection) {
@@ -698,7 +694,7 @@ void XournalView::setSelection(EditSelection * selection) {
 void XournalView::repaintSelection(bool evenWithoutSelection) {
 	XOJ_CHECK_TYPE(XournalView);
 
-	if(evenWithoutSelection) {
+	if (evenWithoutSelection) {
 		gtk_widget_queue_draw(this->widget);
 		return;
 	}
@@ -871,14 +867,14 @@ bool XournalView::isPageVisible(int page, int * visibleHeight) {
 	if (rect) {
 		printf("->rect:x:%lf; y:%lf; width:%lf; heigth: %lf\n", rect->x, rect->y, rect->width, rect->height);
 
-		if(visibleHeight) {
+		if (visibleHeight) {
 			*visibleHeight = rect->height;
 		}
 
 		delete rect;
 		return true;
 	}
-	if(visibleHeight) {
+	if (visibleHeight) {
 		*visibleHeight = 0;
 	}
 
@@ -995,7 +991,6 @@ EditSelection * XournalView::getSelection() {
 
 	g_return_val_if_fail(this->widget != NULL, NULL);
 	g_return_val_if_fail(GTK_IS_XOURNAL(this->widget), NULL);
-
 
 	return GTK_XOURNAL(this->widget)->selection;
 }

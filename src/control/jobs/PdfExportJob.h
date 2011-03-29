@@ -20,6 +20,8 @@ class Control;
 class PdfExportJob: public BlockingJob {
 public:
 	PdfExportJob(Control * control);
+
+protected:
 	virtual ~PdfExportJob();
 
 public:

@@ -22,6 +22,8 @@ class Control;
 class BlockingJob: public Job {
 public:
 	BlockingJob(Control * control, const char * name);
+
+protected:
 	virtual ~BlockingJob();
 
 public:

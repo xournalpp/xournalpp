@@ -105,16 +105,14 @@ void EditSelection::finalizeSelection() {
 	if(v == NULL) {
 		this->view->getXournal()->deleteSelection();
 	} else {
-//		this->contents->finalizeSelection(this->width, this->height, this->aspectRatio);
-//
-//
-//		if (scale) {
-//			// TODO: ????????????????????????
-//			//		ScaleUndoAction * scaleUndo = new ScaleUndoAction(this->page, this->view, this->selected, this->x, this->y, fx, fy);
-//			//		this->undo->addUndoAction(scaleUndo);
-//		}
-//
-//		this->view->getXournal()->repaintSelection();
+		Layer * layer = this->view->getPage()->getSelectedLayer();
+		this->contents->finalizeSelection(this->x, this->y, this->width, this->height, this->aspectRatio, layer, this->undo);
+
+
+		this->view->rerenderPage();
+
+		// This is needed if the selection not was 100% on a page
+		this->view->getXournal()->repaintSelection();
 	}
 }
 
@@ -163,16 +161,6 @@ XojPage * EditSelection::getSourcePage() {
 	XOJ_CHECK_TYPE(EditSelection);
 
 	return this->sourcePage;
-}
-
-/**
- * get the target page if not the same as the source page, if the selection is moved to a new page
- */
-XojPage * EditSelection::getTargetPage() {
-	XOJ_CHECK_TYPE(EditSelection);
-
-	// TODO: implement
-	return NULL;
 }
 
 /**
@@ -243,6 +231,14 @@ UndoAction * EditSelection::setFont(XojFont & font) {
 	XOJ_CHECK_TYPE(EditSelection);
 
 	return this->contents->setFont(font);
+}
+
+/**
+ * Fills de undo item if the selection is deleted
+ * the selection is cleared after
+ */
+void EditSelection::fillUndoItem(DeleteUndoAction * undo) {
+	this->contents->fillUndoItem(undo);
 }
 
 /**

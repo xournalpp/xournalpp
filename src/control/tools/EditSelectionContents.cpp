@@ -9,6 +9,8 @@
 #include "../../undo/SizeUndoAction.h"
 #include "../../undo/ColorUndoAction.h"
 #include "../../undo/FontUndoAction.h"
+#include "../../undo/ScaleUndoAction.h"
+#include "../../undo/DeleteUndoAction.h"
 #include "../../gui/XournalView.h"
 #include "../../gui/pageposition/PagePositionHandler.h"
 #include "../../control/Control.h"
@@ -28,6 +30,9 @@ EditSelectionContents::EditSelectionContents(double x, double y, double width, d
 	this->originalHeight = height;
 	this->relativeX = ceil(x);
 	this->relativeY = ceil(y);
+
+	this->originalX = x;
+	this->originalY = y;
 
 	this->sourcePage = sourcePage;
 	this->sourceLayer = sourceLayer;
@@ -211,6 +216,21 @@ UndoAction * EditSelectionContents::setColor(int color) {
 }
 
 /**
+ * Fills de undo item if the selection is deleted
+ * the selection is cleared after
+ */
+void EditSelectionContents::fillUndoItem(DeleteUndoAction * undo) {
+	Layer * layer = this->sourceLayer;
+	for (GList * l = this->selected; l != NULL; l = l->next) {
+		Element * e = (Element *) l->data;
+		undo->addElement(layer, e, layer->indexOf(e));
+	}
+
+	g_list_free(this->selected);
+	this->selected = NULL;
+}
+
+/**
  * Callback to redrawing the buffer asynchron
  */
 bool EditSelectionContents::repaintSelection(EditSelectionContents * selection) {
@@ -218,12 +238,10 @@ bool EditSelectionContents::repaintSelection(EditSelectionContents * selection) 
 
 	gdk_threads_enter();
 
-	// TODO: debug
-
-	//	// delete the selection buffer, force a redraw
-	//	selection->deleteViewBuffer();
-	//	selection->view->repaintRect(selection->x, selection->y, selection->width, selection->height);
-	//	selection->rescaleId = 0;
+	// delete the selection buffer, force a redraw
+	selection->deleteViewBuffer();
+	selection->sourceView->getXournal()->repaintSelection();
+	selection->rescaleId = 0;
 
 	gdk_threads_leave();
 	return false;
@@ -259,7 +277,7 @@ double EditSelectionContents::getOriginalHeight() {
 /**
  * The contents of the selection
  */
-void EditSelectionContents::finalizeSelection(double width, double height, bool aspectRatio, Layer * layer) {
+void EditSelectionContents::finalizeSelection(double x, double y, double width, double height, bool aspectRatio, Layer * layer, UndoRedoHandler * undo) {
 	double fx = width / this->originalWidth;
 	double fy = height / this->originalHeight;
 
@@ -273,22 +291,19 @@ void EditSelectionContents::finalizeSelection(double width, double height, bool 
 		scale = true;
 	}
 
-	// TODO: debug
-//	for (GList * l = this->selected; l != NULL; l = l->next) {
-//		Element * e = (Element *) l->data;
-//		e->move(this->x - this->relativeX, this->y - this->relativeY);
-//		if (scale) {
-//			e->scale(this->x, this->y, fx, fy);
-//		}
-//		layer->addElement(e);
-//	}
-
-	if (scale) {
-		// TODO: ????????????????????????
-		//		ScaleUndoAction * scaleUndo = new ScaleUndoAction(this->page, this->view, this->selected, this->x, this->y, fx, fy);
-		//		this->undo->addUndoAction(scaleUndo);
+	for (GList * l = this->selected; l != NULL; l = l->next) {
+		Element * e = (Element *) l->data;
+		e->move(x - this->originalX, y - this->originalY);
+		if (scale) {
+			e->scale(x, y, fx, fy);
+		}
+		layer->addElement(e);
 	}
 
+	if (scale) {
+		ScaleUndoAction * scaleUndo = new ScaleUndoAction(this->sourcePage, this->sourceView, this->selected, x, y, fx, fy);
+		undo->addUndoAction(scaleUndo);
+	}
 }
 
 /**
@@ -310,15 +325,28 @@ void EditSelectionContents::paint(cairo_t * cr, double x, double y, double width
 		cairo_destroy(cr2);
 	}
 
-	int w = cairo_image_surface_get_width(this->crBuffer);
-	int h = cairo_image_surface_get_height(this->crBuffer);
-	if ((int) (width * zoom) != w || (int) (height * zoom) != h) {
+	cairo_save(cr);
+
+	int wImg = cairo_image_surface_get_width(this->crBuffer);
+	int hImg = cairo_image_surface_get_height(this->crBuffer);
+
+	int wTarget = (int) (width * zoom);
+	int hTarget = (int) (height * zoom);
+
+	double sx = (double) wTarget / wImg;
+	double sy = (double) hTarget / hImg;
+
+	if (wTarget != wImg || hTarget != hImg) {
 		if (!this->rescaleId) {
 			this->rescaleId = g_idle_add((GSourceFunc) repaintSelection, this);
 		}
+
+		cairo_scale(cr, sx, sy);
 	}
 
-	cairo_set_source_surface(cr, this->crBuffer, (int) (x * zoom), (int) (y * zoom));
+	cairo_set_source_surface(cr, this->crBuffer, (int) (x * zoom / sx), (int) (y * zoom / sy));
 	cairo_paint(cr);
+
+	cairo_restore(cr);
 
 }

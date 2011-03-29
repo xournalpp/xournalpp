@@ -27,6 +27,7 @@ void ExportHandler::runExportWithDialog(GladeSearchpath * gladeSearchPath, Setti
 	if (selected) {
 		ExportJob * job = new ExportJob(control, selected, dlg->getFormatType(), dlg->getPngDpi(), dlg->getFolder(), dlg->getFilename());
 		control->getScheduler()->addJob(job, JOB_PRIORITY_NONE);
+		job->unref();
 	}
 
 	delete dlg;

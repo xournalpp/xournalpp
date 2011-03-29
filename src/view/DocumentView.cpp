@@ -53,7 +53,7 @@ void DocumentView::drawStroke(cairo_t * cr, Stroke * s, int startPoint) {
 
 	if (!points.hasNext()) {
 		// Should not happen
-		g_warning("DocumentView::drawStroke Empty stroke...");
+		g_warning("DocumentView::drawStroke empty stroke...");
 		return;
 	}
 

@@ -32,7 +32,7 @@ ShapeRecognizerResult::~ShapeRecognizerResult() {
 	g_list_free(this->source);
 	this->source = NULL;
 
-	XOJ_RELEASE_TYPE(ShapeRecognizer);
+	XOJ_RELEASE_TYPE(ShapeRecognizerResult);
 }
 
 void ShapeRecognizerResult::addSourceStroke(Stroke * s) {

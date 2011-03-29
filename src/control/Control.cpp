@@ -242,7 +242,9 @@ bool Control::autosaveCallback(Control * control) {
 		printf(_("Info: autosave document...\n"));
 	}
 
-	control->scheduler->addJob(new AutosaveJob(control), JOB_PRIORITY_NONE);
+	AutosaveJob * job = new AutosaveJob(control);
+	control->scheduler->addJob(job, JOB_PRIORITY_NONE);
+	job->unref();
 
 	return true;
 }
@@ -1957,11 +1959,13 @@ bool Control::save(bool synchron) {
 	}
 
 	SaveJob * job = new SaveJob(this);
+	bool result = true;
 	if (synchron) {
-		return job->save();
+		result = job->save();
 	} else {
 		this->scheduler->addJob(job, JOB_PRIORITY_URGENT);
 	}
+	job->unref();
 
 	return true;
 }
@@ -2073,11 +2077,10 @@ void Control::exportAsPdf() {
 	if (job->showFilechooser()) {
 		this->scheduler->addJob(job, JOB_PRIORITY_NONE);
 	} else {
-		delete job;
-
 		// The job blocked, so we have to unblock, because the job unblocks only after run
 		unblock();
 	}
+	job->unref();
 }
 
 void Control::exportAs() {

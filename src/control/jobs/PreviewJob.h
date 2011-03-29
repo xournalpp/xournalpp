@@ -19,6 +19,8 @@
 class PreviewJob : public Job {
 public:
 	PreviewJob(SidebarPreview * sidebar);
+
+protected:
 	virtual ~PreviewJob();
 
 public:

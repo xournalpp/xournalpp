@@ -19,6 +19,8 @@
 class SaveJob : public BlockingJob {
 public:
 	SaveJob(Control * control);
+
+protected:
 	virtual ~SaveJob();
 
 public:

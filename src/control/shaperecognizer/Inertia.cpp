@@ -16,6 +16,13 @@ Inertia::Inertia() {
 	this->syy = 0;
 }
 
+Inertia::Inertia(const Inertia & inertia) {
+	XOJ_CHECK_TYPE_OBJ(&inertia, Inertia);
+
+	XOJ_INIT_TYPE(Inertia);
+	*this = inertia;
+}
+
 Inertia::~Inertia() {
 	XOJ_RELEASE_TYPE(Inertia);
 }

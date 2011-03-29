@@ -23,6 +23,8 @@ class PageView;
 class RenderJob: public Job {
 public:
 	RenderJob(PageView * view);
+
+protected:
 	virtual ~RenderJob();
 
 public:

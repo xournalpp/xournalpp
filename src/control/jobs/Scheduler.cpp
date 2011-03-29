@@ -34,6 +34,8 @@ Scheduler::Scheduler() {
 Scheduler::~Scheduler() {
 	XOJ_CHECK_TYPE(Scheduler);
 
+	SDEBUG("Destroy scheduler\n", 0);
+
 	stop();
 
 	g_mutex_free(this->jobQueueMutex);
@@ -42,7 +44,7 @@ Scheduler::~Scheduler() {
 
 	Job * job = NULL;
 	while(job = getNextJobUnlocked()) {
-		job->free();
+		job->unref();
 	}
 
 	XOJ_RELEASE_TYPE(Scheduler);
@@ -62,6 +64,7 @@ void Scheduler::addJob(Job * job, JobPriority priority) {
 
 	g_mutex_lock(this->jobQueueMutex);
 
+	job->ref();
 	g_queue_push_tail(this->jobQueue[priority], job);
 	g_cond_broadcast(this->jobQueueCond);
 
@@ -106,7 +109,7 @@ gpointer Scheduler::jobThreadCallback(Scheduler * scheduler) {
 
 		job->execute();
 
-		job->free();
+		job->unref();
 		g_mutex_unlock(scheduler->jobRunningMutex);
 
 		SDEBUG("next\n", NULL);

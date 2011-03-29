@@ -21,6 +21,8 @@ class Control;
 class AutosaveJob: public Job {
 public:
 	AutosaveJob(Control * control);
+
+protected:
 	virtual ~AutosaveJob();
 
 public:

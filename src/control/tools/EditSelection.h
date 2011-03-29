@@ -28,6 +28,7 @@ class Selection;
 class Element;
 class UndoAction;
 class EditSelectionContents;
+class DeleteUndoAction;
 
 class EditSelection: public ElementContainer {
 public:
@@ -50,30 +51,25 @@ public:
 	double getXOnView();
 
 	/**
-	 * get the Y coordinate relative to the provided view (getView())
+	 * Get the Y coordinate relative to the provided view (getView())
 	 * in document coordinates
 	 */
 	double getYOnView();
 
 	/**
-	 * get the width in document coordinates (multiple with zoom)
+	 * Get the width in document coordinates (multiple with zoom)
 	 */
 	double getWidth();
 
 	/**
-	 * get the height in document coordinates (multiple with zoom)
+	 * Get the height in document coordinates (multiple with zoom)
 	 */
 	double getHeight();
 
 	/**
-	 * get the source page (where the selection was done)
+	 * Get the source page (where the selection was done)
 	 */
 	XojPage * getSourcePage();
-
-	/**
-	 * get the target page if not the same as the source page, if the selection is moved to a new page
-	 */
-	XojPage * getTargetPage();
 
 	/**
 	 * Get the X coordinate in View coordinates (absolute)
@@ -113,6 +109,12 @@ public:
 	 * (or NULL if there are no Text elements)
 	 */
 	UndoAction * setFont(XojFont & font);
+
+	/**
+	 * Fills de undo item if the selection is deleted
+	 * the selection is cleared after
+	 */
+	void fillUndoItem(DeleteUndoAction * undo);
 
 public:
 	/**

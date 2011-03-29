@@ -41,7 +41,7 @@ void XournalScheduler::removeSource(void * source, JobType type, JobPriority pri
 		if (job->getType() == type) {
 			if (job->getSource() == source) {
 				g_queue_remove(this->jobQueue[priority], job);
-				job->free();
+				job->unref();
 				break;
 			}
 		}
@@ -84,7 +84,9 @@ void XournalScheduler::addRepaintSidebar(SidebarPreview * preview) {
 		return;
 	}
 
-	addJob(new PreviewJob(preview), JOB_PRIORITY_HIGH);
+	PreviewJob * job = new PreviewJob(preview);
+	addJob(job, JOB_PRIORITY_HIGH);
+	job->unref();
 }
 
 void XournalScheduler::addRepaintPage(PageView * view) {
@@ -94,6 +96,8 @@ void XournalScheduler::addRepaintPage(PageView * view) {
 		return;
 	}
 
-	addJob(new RenderJob(view), JOB_PRIORITY_URGENT);
+	RenderJob * job = new RenderJob(view);
+	addJob(job, JOB_PRIORITY_URGENT);
+	job->unref();
 }
 
