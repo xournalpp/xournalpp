@@ -43,12 +43,12 @@ void Document::lock() {
 
 	g_mutex_lock(this->documentLock);
 
-	//	if(tryLock()) {
-	//		Stacktrace::printStracktrace();
-	//		fprintf(stderr, "\n\n\n\n");
-	//	} else {
-	//		g_mutex_lock(this->documentLock);
-	//	}
+//		if(tryLock()) {
+//			Stacktrace::printStracktrace();
+//			fprintf(stderr, "\n\n\n\n");
+//		} else {
+//			g_mutex_lock(this->documentLock);
+//		}
 }
 
 void Document::unlock() {

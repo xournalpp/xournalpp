@@ -5,8 +5,6 @@
 #include "../../util/Range.h"
 #include <math.h>
 
-// TODO: MEMORY LEAK!
-
 EraseableStroke::EraseableStroke(Stroke * stroke) {
 	XOJ_INIT_TYPE(EraseableStroke);
 
