@@ -52,6 +52,9 @@ EditSelection::EditSelection(UndoRedoHandler * undo, Element * e, PageView * vie
 	this->height = e->getElementHeight();
 
 	contstruct(undo, view, page);
+
+	addElement(e);
+	this->sourceLayer->removeElement(e, false);
 }
 
 /**

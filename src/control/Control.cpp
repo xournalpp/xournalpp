@@ -2191,41 +2191,42 @@ void Control::clipboardPasteEnabled(bool enabled) {
 void Control::clipboardPasteText(String text) {
 	XOJ_CHECK_TYPE(Control);
 
-	// TODO ?????????????????????
-	//	double x = 0;
-	//	double y = 0;
-	//	int pageNr = getCurrentPageNo();
-	//	if (pageNr == -1) {
-	//		return;
-	//	}
-	//	PageView * view = win->getXournal()->getViewFor(pageNr);
-	//	if (view == NULL) {
-	//		return;
-	//	}
-	//
-	//	this->doc->lock();
-	//	XojPage * page = this->doc->getPage(pageNr);
-	//	Layer * layer = page->getSelectedLayer();
-	//	win->getXournal()->getPasteTarget(x, y);
-	//
-	//	Text * t = new Text();
-	//	t->setText(text);
-	//	t->setFont(settings->getFont());
-	//	t->setColor(toolHandler->getColor());
-	//
-	//	double width = t->getElementWidth();
-	//	double height = t->getElementHeight();
-	//
-	//	t->setX(x - width / 2);
-	//	t->setY(y - height / 2);
-	//	layer->addElement(t);
-	//	undoRedo->addUndoAction(new InsertUndoAction(page, layer, t, view));
-	//
-	//	this->doc->unlock();
-	//
-	//	EditSelection * selection = new EditSelection(this->undoRedo, t, view, page);
-	//
-	//	win->getXournal()->setSelection(selection);
+	// TODO: debug
+	double x = 0;
+	double y = 0;
+	int pageNr = getCurrentPageNo();
+	if (pageNr == -1) {
+		return;
+	}
+	PageView * view = win->getXournal()->getViewFor(pageNr);
+	if (view == NULL) {
+		return;
+	}
+
+	this->doc->lock();
+	XojPage * page = this->doc->getPage(pageNr);
+	Layer * layer = page->getSelectedLayer();
+	win->getXournal()->getPasteTarget(x, y);
+
+	Text * t = new Text();
+	t->setText(text);
+	t->setFont(settings->getFont());
+	t->setColor(toolHandler->getColor());
+
+	double width = t->getElementWidth();
+	double height = t->getElementHeight();
+
+	t->setX(x - width / 2);
+	t->setY(y - height / 2);
+	layer->addElement(t);
+
+	this->doc->unlock();
+
+	undoRedo->addUndoAction(new InsertUndoAction(page, layer, t, view));
+
+	EditSelection * selection = new EditSelection(this->undoRedo, t, view, page);
+
+	win->getXournal()->setSelection(selection);
 }
 
 void Control::clipboardPasteXournal(ObjectInputStream & in) {
