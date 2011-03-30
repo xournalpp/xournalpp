@@ -2,9 +2,10 @@
 
 #include "../model/Page.h"
 #include "../model/Element.h"
+#include "../util/Range.h"
+#include "../gui/Redrawable.h"
 
-ScaleUndoAction::ScaleUndoAction(XojPage * page, Redrawable * view, GList * elements, double x0, double y0, double fx,
-		double fy) {
+ScaleUndoAction::ScaleUndoAction(XojPage * page, Redrawable * view, GList * elements, double x0, double y0, double fx, double fy) {
 	XOJ_INIT_TYPE(ScaleUndoAction);
 
 	this->page = page;
@@ -48,10 +49,23 @@ bool ScaleUndoAction::redo(Control * control) {
 void ScaleUndoAction::applayScale(double fx, double fy) {
 	XOJ_CHECK_TYPE(ScaleUndoAction);
 
+	if (this->elements == NULL) {
+		return;
+	}
+
+	Element * first = (Element *) elements->data;
+	Range r(first->getX(), first->getY());
+
 	for (GList * l = this->elements; l != NULL; l = l->next) {
 		Element * e = (Element *) l->data;
+		r.addPoint(e->getX(), e->getY());
+		r.addPoint(e->getX() + e->getElementWidth(), e->getY() + e->getElementHeight());
 		e->scale(this->x0, this->y0, fx, fy);
+		r.addPoint(e->getX(), e->getY());
+		r.addPoint(e->getX() + e->getElementWidth(), e->getY() + e->getElementHeight());
 	}
+
+	this->view->rerenderRange(r);
 }
 
 String ScaleUndoAction::getText() {
