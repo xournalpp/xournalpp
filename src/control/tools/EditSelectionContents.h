@@ -82,7 +82,7 @@ public:
 	/**
 	 * Finish the editing
 	 */
-	void finalizeSelection(double x, double y, double width, double height, bool aspectRatio, Layer * layer, UndoRedoHandler * undo);
+	void finalizeSelection(double x, double y, double width, double height, bool aspectRatio, Layer * layer, XojPage * targetPage, PageView * targetView, UndoRedoHandler * undo);
 
 private:
 	/**

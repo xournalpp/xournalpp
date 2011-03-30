@@ -10,6 +10,7 @@
 #include "../../undo/ColorUndoAction.h"
 #include "../../undo/FontUndoAction.h"
 #include "../../undo/ScaleUndoAction.h"
+#include "../../undo/MoveUndoAction.h"
 #include "../../undo/DeleteUndoAction.h"
 #include "../../gui/XournalView.h"
 #include "../../gui/pageposition/PagePositionHandler.h"
@@ -277,7 +278,7 @@ double EditSelectionContents::getOriginalHeight() {
 /**
  * The contents of the selection
  */
-void EditSelectionContents::finalizeSelection(double x, double y, double width, double height, bool aspectRatio, Layer * layer, UndoRedoHandler * undo) {
+void EditSelectionContents::finalizeSelection(double x, double y, double width, double height, bool aspectRatio, Layer * layer, XojPage * targetPage, PageView * targetView, UndoRedoHandler * undo) {
 	double fx = width / this->originalWidth;
 	double fy = height / this->originalHeight;
 
@@ -291,13 +292,25 @@ void EditSelectionContents::finalizeSelection(double x, double y, double width, 
 		scale = true;
 	}
 
+	double mx = x - this->originalX;
+	double my = y - this->originalY;
+
+	bool move = mx != 0 || my != 0;
+
 	for (GList * l = this->selected; l != NULL; l = l->next) {
 		Element * e = (Element *) l->data;
-		e->move(x - this->originalX, y - this->originalY);
+		if(move) {
+			e->move(mx, my);
+		}
 		if (scale) {
 			e->scale(x, y, fx, fy);
 		}
 		layer->addElement(e);
+	}
+
+	if(move) {
+		MoveUndoAction * moveUndo = new MoveUndoAction(this->sourceLayer, this->sourcePage, this->sourceView, this->selected, mx, my, layer, targetPage, targetView);
+		undo->addUndoAction(moveUndo);
 	}
 
 	if (scale) {

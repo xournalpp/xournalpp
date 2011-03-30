@@ -23,12 +23,11 @@ class Redrawable;
 
 class MoveUndoAction: public UndoAction {
 public:
-	MoveUndoAction(XojPage * page, EditSelection * selection);
-	MoveUndoAction(XojPage * page, VerticalToolHandler * handler);
+	MoveUndoAction(Layer * sourceLayer, XojPage * sourcePage, Redrawable * sourceView, GList * selected, double mx, double my, Layer * targetLayer, XojPage * targetPage, Redrawable * targetView);
+	MoveUndoAction(XojPage * sourcePage, VerticalToolHandler * handler);
 	virtual ~MoveUndoAction();
 
 public:
-	void finalize(EditSelection * selection);
 	void finalize(VerticalToolHandler * handler);
 
 	virtual bool undo(Control * control);
@@ -39,21 +38,21 @@ public:
 private:
 	void acceptPositions(GList * pos);
 	void switchLayer(GList * entries, Layer * oldLayer, Layer * newLayer);
-	void repaint(Redrawable * view, GList * list);
+	void repaint(Redrawable * view, GList * list, GList * list2 = NULL);
 	void repaint();
 
 private:
 	XOJ_TYPE_ATTRIB;
 
-	GList * originalPos;
-	GList * newPos;
-	XojPage * newPage;
+	GList * sourcePos;
+	GList * targetPos;
+	XojPage * targetPage;
 
-	Layer * oldLayer;
-	Layer * newLayer;
+	Layer * sourceLayer;
+	Layer * targetLayer;
 
-	Redrawable * origView;
-	Redrawable * newView;
+	Redrawable * sourceView;
+	Redrawable * targetView;
 
 	String text;
 

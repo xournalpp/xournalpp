@@ -108,8 +108,9 @@ void EditSelection::finalizeSelection() {
 	if(v == NULL) {
 		this->view->getXournal()->deleteSelection();
 	} else {
-		Layer * layer = this->view->getPage()->getSelectedLayer();
-		this->contents->finalizeSelection(this->x, this->y, this->width, this->height, this->aspectRatio, layer, this->undo);
+		XojPage * page = this->view->getPage();
+		Layer * layer = page->getSelectedLayer();
+		this->contents->finalizeSelection(this->x, this->y, this->width, this->height, this->aspectRatio, layer, page, this->view, this->undo);
 
 
 		this->view->rerenderPage();
