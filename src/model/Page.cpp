@@ -3,7 +3,7 @@
 #include "Document.h"
 #include "../util/Stacktrace.h"
 
-XojPage::XojPage(double width, double heigth) {
+XojPage::XojPage(double width, double heigth, int x) {
 	XOJ_INIT_TYPE(XojPage);
 
 	this->pdfBackgroundPage = -1;
@@ -13,7 +13,7 @@ XojPage::XojPage(double width, double heigth) {
 	this->height = heigth;
 
 	this->layer = NULL;
-	this->ref = 0;
+	this->ref = 1;
 	this->currentLayer = -1;
 }
 
@@ -29,16 +29,20 @@ XojPage::~XojPage() {
 	XOJ_RELEASE_TYPE(XojPage);
 }
 
-void XojPage::reference() {
+void XojPage::reference(int debugId) {
 	XOJ_CHECK_TYPE(XojPage);
 
 	this->ref++;
+
+	printf("debug:pref:%i (%i)\n", debugId, this->ref);
 }
 
-void XojPage::unreference() {
+void XojPage::unreference(int debugId) {
 	XOJ_CHECK_TYPE(XojPage);
 
 	this->ref--;
+	// TODO: there are some bugs
+	printf("debug:punref:%i (%i)\n", debugId, this->ref);
 	if (ref < 1) {
 		delete this;
 	}

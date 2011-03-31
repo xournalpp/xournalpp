@@ -217,8 +217,7 @@ void LoadHandler::parseContents() {
 		double width = getAttribDouble("width");
 		double height = getAttribDouble("height");
 
-		this->page = new XojPage(width, height);
-		this->page->reference();
+		this->page = new XojPage(width, height, 0);
 
 		this->doc.addPage(this->page);
 	} else if (strcmp(elementName, "title") == 0) {
@@ -592,7 +591,7 @@ void LoadHandler::parserEndElement(GMarkupParseContext * context, const gchar * 
 		handler->pos = PASER_POS_FINISHED;
 	} else if (handler->pos == PARSER_POS_IN_PAGE && strcmp(element_name, "page") == 0) {
 		handler->pos = PARSER_POS_STARTED;
-		handler->page->unreference();
+		handler->page->unreference(6);
 		handler->page = NULL;
 	} else if (handler->pos == PARSER_POS_IN_LAYER && strcmp(element_name, "layer") == 0) {
 		handler->pos = PARSER_POS_IN_PAGE;

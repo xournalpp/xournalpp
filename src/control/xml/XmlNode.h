@@ -22,6 +22,10 @@ public:
 	XmlNode(const char * tag);
 	virtual ~XmlNode();
 
+private:
+	XmlNode(const XmlNode & node);
+	void operator =(const XmlNode & node);
+
 public:
 	void setAttrib(const char * attrib, const char * value);
 	void setAttrib(const char * attrib, double value);

@@ -14,7 +14,7 @@ SidebarPreview::SidebarPreview(Sidebar * sidebar, XojPage * page) {
 	this->crBuffer = NULL;
 	this->sidebar = sidebar;
 	this->page = page;
-	this->page->reference();
+	this->page->reference(8);
 	this->selected = false;
 	this->firstPainted = false;
 
@@ -31,7 +31,8 @@ SidebarPreview::~SidebarPreview() {
 	XOJ_CHECK_TYPE(SidebarPreview);
 
 	this->sidebar->getControl()->getScheduler()->removeSidebar(this);
-	this->page->unreference();
+	this->page->unreference(9);
+	this->page = NULL;
 
 	gtk_widget_destroy(this->widget);
 

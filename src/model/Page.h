@@ -60,9 +60,9 @@ private:
 
 class XojPage {
 public:
-	XojPage(double width, double heigth);
-	void reference();
-	void unreference();
+	XojPage(double width, double heigth, int x);
+	void reference(int debugId);
+	void unreference(int debugId);
 
 private:
 	XojPage(const XojPage & page);

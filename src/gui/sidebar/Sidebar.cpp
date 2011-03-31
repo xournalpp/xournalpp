@@ -229,9 +229,10 @@ void Sidebar::askInsertPdfPage(int pdfPage) {
 	doc->unlock();
 
 	if (pdf) {
-		XojPage * page = new XojPage(pdf->getWidth(), pdf->getHeight());
+		XojPage * page = new XojPage(pdf->getWidth(), pdf->getHeight(), 0);
 		page->setBackgroundPdfPageNr(pdfPage);
 		control->insertPage(page, position);
+		page->unreference(7);
 	}
 }
 

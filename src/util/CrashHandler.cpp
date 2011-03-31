@@ -111,8 +111,6 @@ static void crashHandler(int sig) {
 	g_free(filename);
 	free(messages);
 
-	emergencySave();
-
 	fprintf(fp, "\n\nTry to get a better stracktrace...\n");
 	fprintf(stderr, "\n\nTry to get a better stracktrace...\n");
 
@@ -122,6 +120,8 @@ static void crashHandler(int sig) {
 	if (fp) {
 		fclose(fp);
 	}
+
+	emergencySave();
 
 	exit(1);
 }
@@ -136,7 +136,7 @@ static void emergencySave() {
 	SaveHandler handler;
 	handler.prepareSave(document);
 
-	gchar *filename = g_strconcat(g_get_home_dir(), G_DIR_SEPARATOR_S, CONFIG_DIR, G_DIR_SEPARATOR_S, "emergencysave.xoj", NULL);
+	gchar * filename = g_strconcat(g_get_home_dir(), G_DIR_SEPARATOR_S, CONFIG_DIR, G_DIR_SEPARATOR_S, "emergencysave.xoj", NULL);
 
 	GzOutputStream * out = new GzOutputStream(filename);
 

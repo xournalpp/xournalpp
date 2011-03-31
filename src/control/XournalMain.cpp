@@ -111,6 +111,10 @@ int XournalMain::run(int argc, char * argv[]) {
 	// Init threads (used for our Sheduler, Jobs)
 	g_thread_init(NULL);
 
+#ifdef XOJ_MEMORY_LEAK_CHECK_ENABLED
+	xoj_type_initMutex();
+#endif
+
 	if(optNoPdfCompress) {
 		PdfWriter::setCompressPdfOutput(false);
 	}

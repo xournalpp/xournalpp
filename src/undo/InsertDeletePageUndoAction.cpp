@@ -10,13 +10,14 @@ InsertDeletePageUndoAction::InsertDeletePageUndoAction(XojPage * page, int pageP
 	this->inserted = inserted;
 	this->page = page;
 	this->pagePos = pagePos;
-	page->reference();
+	page->reference(16);
 }
 
 InsertDeletePageUndoAction::~InsertDeletePageUndoAction() {
 	XOJ_CHECK_TYPE(InsertDeletePageUndoAction);
 
-	page->unreference();
+	this->page->unreference(17);
+	this->page = NULL;
 
 	XOJ_RELEASE_TYPE(InsertDeletePageUndoAction);
 }

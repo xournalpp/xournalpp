@@ -865,8 +865,6 @@ bool XournalView::isPageVisible(int page, int * visibleHeight) {
 
 	Rectangle * rect = getVisibleRect(page);
 	if (rect) {
-		printf("->rect:x:%lf; y:%lf; width:%lf; heigth: %lf\n", rect->x, rect->y, rect->width, rect->height);
-
 		if (visibleHeight) {
 			*visibleHeight = rect->height;
 		}
@@ -877,9 +875,6 @@ bool XournalView::isPageVisible(int page, int * visibleHeight) {
 	if (visibleHeight) {
 		*visibleHeight = 0;
 	}
-
-	// TODO: debug
-	return true;
 
 	return false;
 }

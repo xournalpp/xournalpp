@@ -144,18 +144,17 @@ void SaveHandler::visitLayer(XmlNode * page, Layer * l) {
 
 			bool hasPresureSensitivity = false;
 			int pointCount = s->getPointCount();
-			Point * points = new Point[pointCount];
-			for (int i = 0; i < pointCount; i++) {
-				points[i] = s->getPoint(i);
-			}
 
-			stroke->setPoints(points, pointCount);
+			for (int i = 0; i < pointCount; i++) {
+				Point p = s->getPoint(i);
+				stroke->addPoint(&p);
+			}
 
 			if (s->hasPressure()) {
 				double * values = new double[pointCount + 1];
 				values[0] = s->getWidth();
 				for (int i = 0; i < pointCount; i++) {
-					values[i + 1] = points[i].z;
+					values[i + 1] = s->getPoint(i).z;
 				}
 
 				stroke->setAttrib("width", values, pointCount);

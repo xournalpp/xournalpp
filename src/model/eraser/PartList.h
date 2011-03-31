@@ -23,6 +23,10 @@ public:
 	PartList();
 	virtual ~PartList();
 
+private:
+	PartList(const PartList & list);
+	void operator = (const PartList & list);
+
 public:
 	void add(EraseableStrokePart * part);
 	PartList * clone();
