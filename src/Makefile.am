@@ -1,3 +1,4 @@
+
 INCLUDES = \
 	-DPACKAGE_DATA_DIR=\""$(datadir)"\" \
 	-DPACKAGE_LOCALE_DIR=\""$(prefix)/$(DATADIRNAME)/locale"\" \
@@ -165,6 +166,12 @@ xournalpp_SOURCES = \
 	view/PdfView.cpp \
 	view/TextView.cpp \
 	Xournalpp.cpp
+
+if ENABLE_PYTHON
+xournalpp_SOURCES += \
+	plugin/python/bindings/PyXournal.cpp \
+	plugin/python/PythonRunner.cpp
+endif
 
 xournalpp_CXXFLAGS = -g -rdynamic
 

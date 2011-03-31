@@ -3,6 +3,9 @@
 /* always defined to indicate that i18n is enabled */
 #undef ENABLE_NLS
 
+/* Define to compile with python support */
+#undef ENABLE_PYTHON
+
 /* Gettext package */
 #undef GETTEXT_PACKAGE
 
