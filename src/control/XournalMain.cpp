@@ -11,6 +11,10 @@
 #include "../pdf/PdfExport.h"
 #include "cfg.h"
 
+#ifdef ENABLE_PYTHON
+#include "../plugin/python/PythonRunner.h"
+#endif
+
 XournalMain::XournalMain() {
 	XOJ_INIT_TYPE(XournalMain);
 }
@@ -73,6 +77,9 @@ int XournalMain::run(int argc, char * argv[]) {
 	bool optNoPdfCompress = false;
 	gchar ** optFilename = NULL;
 	gchar * pdfFilename = NULL;
+#ifdef ENABLE_PYTHON
+	gchar * scriptFilename = NULL;
+#endif
 	int openAtPageNumber = -1;
 
 	GOptionEntry options[] = {
@@ -80,6 +87,10 @@ int XournalMain::run(int argc, char * argv[]) {
 		{ "pdf-no-compress",   0, 0, G_OPTION_ARG_NONE,           &optNoPdfCompress, "Don't compress PDF files (for debugging)", NULL },
 		{ "create-pdf",      'p', 0, G_OPTION_ARG_FILENAME,       &pdfFilename,      "PDF output filename", NULL },
 		{ "page",            'n', 0, G_OPTION_ARG_INT,            &openAtPageNumber, "Jump to Page (first Page: 1)", "N" },
+
+#ifdef ENABLE_PYTHON
+		{ "script",            'n', 0, G_OPTION_ARG_FILENAME,     &scriptFilename,   "Runs a Python script as plugin", NULL },
+#endif
 		{ G_OPTION_REMAINING,  0, 0, G_OPTION_ARG_FILENAME_ARRAY, &optFilename,      "<input>", NULL },
 		{ NULL }
 	};
@@ -171,11 +182,24 @@ int XournalMain::run(int argc, char * argv[]) {
 		control->newFile();
 	}
 
+#ifdef ENABLE_PYTHON
+	PythonRunner * runner = NULL;
+
+	if(scriptFilename) {
+		runner = new PythonRunner(control);
+		runner->runScript(scriptFilename, "xournalTest");
+	}
+#endif
+
 	gtk_main();
 
 	control->saveSettings();
 
 	win->getXournal()->clearSelection();
+
+#ifdef ENABLE_PYTHON
+	delete runner;
+#endif
 
 	delete win;
 	delete control;

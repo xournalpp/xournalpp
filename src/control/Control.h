@@ -51,7 +51,7 @@ public:
 	void initWindow(MainWindow * win);
 public:
 	// Menu File
-	void newFile();
+	bool newFile();
 	bool openFile(String filename = NULL, int scrollToPage = -1);
 	bool annotatePdf(String filename, bool attachPdf, bool attachToDocument);
 	void print();

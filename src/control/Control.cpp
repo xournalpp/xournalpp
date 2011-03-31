@@ -1695,11 +1695,11 @@ void Control::showSettings() {
 	delete dlg;
 }
 
-void Control::newFile() {
+bool Control::newFile() {
 	XOJ_CHECK_TYPE(Control);
 
 	if (!this->close()) {
-		return;
+		return false;
 	}
 
 	Document newDoc(this);
@@ -1718,6 +1718,8 @@ void Control::newFile() {
 	fireDocumentChanged(DOCUMENT_CHANGE_COMPLETE);
 
 	fileLoaded();
+
+	return true;
 }
 
 bool Control::openFile(String filename, int scrollToPage) {
