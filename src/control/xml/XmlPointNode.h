@@ -20,19 +20,19 @@ public:
 	XmlPointNode(const char * tag);
 	virtual ~XmlPointNode();
 
+private:
+	XmlPointNode(const XmlPointNode & node);
+	void operator =(const XmlPointNode & node);
+
 public:
-	/**
-	 * The point array is owned by the XML Node and automatically deleted
-	 */
-	void setPoints(Point * points, int count);
+	void addPoint(const Point * point);
 
 	virtual void writeOut(OutputStream * out);
 
 private:
 	XOJ_TYPE_ATTRIB;
 
-	Point * points;
-	int count;
+	GList * points;
 };
 
 #endif /* __XMLPOINTNODE_H__ */

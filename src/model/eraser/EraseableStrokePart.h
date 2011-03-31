@@ -22,6 +22,9 @@ public:
 	EraseableStrokePart(double width);
 	virtual ~EraseableStrokePart();
 
+private:
+	EraseableStrokePart(const EraseableStrokePart & part);
+
 public:
 	void addPoint(Point p);
 	double getWidth();
@@ -41,9 +44,11 @@ public:
 	double getElementWidth();
 	double getElementHeight();
 
+
+	static void printDebugStrokeParts();
+
 private:
 	XOJ_TYPE_ATTRIB;
-
 
 	double width;
 	double splitSize;

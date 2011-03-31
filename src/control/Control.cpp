@@ -888,7 +888,7 @@ void Control::addDefaultPage() {
 
 	getDefaultPagesize(width, heigth);
 
-	XojPage * page = new XojPage(width, heigth);
+	XojPage * page = new XojPage(width, heigth, 0);
 	page->setBackgroundColor(settings->getPageBackgroundColor());
 
 	if (PAGE_INSERT_TYPE_PLAIN == type) {
@@ -903,6 +903,7 @@ void Control::addDefaultPage() {
 
 	this->doc->lock();
 	this->doc->addPage(page);
+	page->unreference(5);
 	this->doc->unlock();
 
 	updateDeletePageButton();
@@ -1024,7 +1025,7 @@ void Control::insertNewPage(int position) {
 	double height = 0;
 	getDefaultPagesize(width, height);
 
-	XojPage * page = new XojPage(width, height);
+	XojPage * page = new XojPage(width, height,0);
 	page->setBackgroundColor(settings->getPageBackgroundColor());
 
 	if (PAGE_INSERT_TYPE_PLAIN == type) {
@@ -1059,7 +1060,7 @@ void Control::insertNewPage(int position) {
 			gtk_widget_destroy(dialog);
 
 			// delete page
-			page->unreference();
+			page->unreference(3);
 			return;
 		} else {
 			this->doc->lock();
@@ -1078,7 +1079,7 @@ void Control::insertNewPage(int position) {
 
 			if (selected < 0 || selected >= doc->getPdfPageCount()) {
 				// delete page
-				page->unreference();
+				page->unreference(2);
 				return;
 			}
 
@@ -1092,6 +1093,7 @@ void Control::insertNewPage(int position) {
 	}
 
 	insertPage(page, position);
+	page->unreference(1);
 }
 
 void Control::insertPage(XojPage * page, int position) {

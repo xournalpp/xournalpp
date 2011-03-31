@@ -191,10 +191,9 @@ PyXournal_getUndoRedoHandler(PyXournal * self) {
 
 static PyObject *
 PyXournal_getSelectedPage(PyXournal * self) {
-	// TODO: implememnt
-	g_warning("NOT IMPLEMENTED!\n");
+	int pageNo = self->control->getCurrentPageNo();
 
-	Py_RETURN_NONE;
+	return PyLong_FromLong(pageNo);
 }
 
 static PyObject *
@@ -214,7 +213,7 @@ PyXournal_selectPage(PyXournal * self, PyObject * args) {
 		return NULL;
 	}
 
-	// TODO: implementieren
+	self->control->getScrollHandler()->scrollToPage(page, 0);
 
 	Py_RETURN_NONE;
 }

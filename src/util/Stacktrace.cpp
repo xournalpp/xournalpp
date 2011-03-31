@@ -26,8 +26,8 @@ void Stacktrace::setExename(const char * name) {
 }
 
 void Stacktrace::printStracktrace(FILE * fp) {
-	void *trace[32];
-	char **messages = (char **) NULL;
+	void * trace[32];
+	char ** messages = (char **) NULL;
 	char buff[2048];
 
 	int trace_size = backtrace(trace, 32);

@@ -9,7 +9,7 @@ VerticalToolHandler::VerticalToolHandler(Redrawable * view, XojPage * page, doub
 	this->endY = y;
 	this->view = view;
 	this->page = page;
-	this->page->reference();
+	this->page->reference(0);
 	this->layer = this->page->getSelectedLayer();
 	this->elements = NULL;
 	this->jumpY = 0;
@@ -46,7 +46,7 @@ VerticalToolHandler::VerticalToolHandler(Redrawable * view, XojPage * page, doub
 VerticalToolHandler::~VerticalToolHandler() {
 	XOJ_CHECK_TYPE(VerticalToolHandler);
 
-	this->page->unreference();
+	this->page->unreference(0);
 	this->page = NULL;
 	this->view = NULL;
 

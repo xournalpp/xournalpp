@@ -10,23 +10,20 @@ XmlPointNode::XmlPointNode(const char * tag) :
 XmlPointNode::~XmlPointNode() {
 	XOJ_CHECK_TYPE(XmlPointNode);
 
-	delete this->points;
+	for(GList * l = this->points; l != NULL; l = l->next) {
+		Point * p = (Point *)l->data;
+		delete p;
+	}
+	g_list_free(this->points);
 	this->points = NULL;
 
 	XOJ_RELEASE_TYPE(XmlPointNode);
 }
 
-/**
- * The point array is owned by the XML Node and automatically deleted
- */
-void XmlPointNode::setPoints(Point * points, int count) {
+void XmlPointNode::addPoint(const Point * point) {
 	XOJ_CHECK_TYPE(XmlPointNode);
 
-	// Delete may old data
-	delete this->points;
-
-	this->points = points;
-	this->count = count;
+	this->points = g_list_append(this->points, new Point(*point));
 }
 
 void XmlPointNode::writeOut(OutputStream * out) {
@@ -38,12 +35,12 @@ void XmlPointNode::writeOut(OutputStream * out) {
 
 	out->write(">");
 
-	for (int i = 0; i < this->count; i++) {
-		if (i != 0) {
+	for(GList * l = this->points; l != NULL; l = l->next) {
+		Point * p = (Point *)l->data;
+		if (l != this->points) {
 			out->write(" ");
 		}
-		Point p = points[i];
-		char * tmp = g_strdup_printf("%0.2lf %0.2lf", p.x, p.y);
+		char * tmp = g_strdup_printf("%0.2lf %0.2lf", p->x, p->y);
 		out->write(tmp);
 		g_free(tmp);
 	}

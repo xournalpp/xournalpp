@@ -81,7 +81,7 @@ void Document::clearDocument(bool destroy) {
 	}
 
 	for (int i = 0; i < this->pageCount; i++) {
-		this->pages[i]->unreference();
+		this->pages[i]->unreference(10);
 	}
 	g_free(pages);
 	this->pages = NULL;
@@ -305,7 +305,7 @@ bool Document::readPdf(String filename, bool initPages, bool attachToDocument) {
 
 	if (initPages) {
 		for (int i = 0; i < this->pageCount; i++) {
-			this->pages[i]->unreference();
+			this->pages[i]->unreference(11);
 		}
 		g_free(this->pages);
 		this->pages = NULL;
@@ -316,9 +316,10 @@ bool Document::readPdf(String filename, bool initPages, bool attachToDocument) {
 	if (initPages) {
 		for (int i = 0; i < pdfDocument.getPageCount(); i++) {
 			XojPopplerPage * page = pdfDocument.getPage(i);
-			XojPage * p = new XojPage(page->getWidth(), page->getHeight());
+			XojPage * p = new XojPage(page->getWidth(), page->getHeight(), 0);
 			p->setBackgroundPdfPageNr(i);
 			addPage(p);
+			p->unreference(15);
 		}
 	}
 
@@ -352,7 +353,7 @@ String Document::getLastErrorMsg() {
 void Document::deletePage(int pNr) {
 	XOJ_CHECK_TYPE(Document);
 
-	this->pages[pNr]->unreference();
+	this->pages[pNr]->unreference(14);
 	for (int i = pNr; i < this->pageCount; i++) {
 		this->pages[i] = this->pages[i + 1];
 	}
@@ -376,7 +377,7 @@ void Document::insertPage(XojPage * p, int position) {
 	this->pages[position] = p;
 
 	this->pageCount++;
-	p->reference();
+	p->reference(13);
 
 	updateIndexPageNumbers();
 }
@@ -390,7 +391,7 @@ void Document::addPage(XojPage * p) {
 	}
 
 	this->pages[this->pageCount++] = p;
-	p->reference();
+	p->reference(12);
 
 	updateIndexPageNumbers();
 }

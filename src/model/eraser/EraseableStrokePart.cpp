@@ -109,6 +109,7 @@ void EraseableStrokePart::addPoint(Point p) {
 	XOJ_CHECK_TYPE(EraseableStrokePart);
 
 	calcSize();
+
 	this->points = g_list_append(this->points, new Point(p));
 }
 
