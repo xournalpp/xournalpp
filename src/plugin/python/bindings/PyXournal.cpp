@@ -29,7 +29,6 @@ void PyXournal_initPython(Control * control) {
 	initxournal();
 }
 
-
 static void PyXournal_dealloc(PyXournal* self) {
 	self->ob_type->tp_free((PyObject*) self);
 }
@@ -41,6 +40,7 @@ PyXournal_new(PyTypeObject *type, PyObject *args, PyObject *kwds) {
 	self = (PyXournal *) type->tp_alloc(type, 0);
 	if (self != NULL) {
 		self->control = PyXournal_control;
+		self->undoRedoHandler = PyLong_FromLong(5);
 	}
 
 	return (PyObject *) self;
@@ -51,45 +51,30 @@ static int PyXournal_init(PyXournal *self, PyObject *args, PyObject *kwds) {
 }
 
 static PyMemberDef PyXournal_members[] = {
-//	{ "number", T_INT, offsetof(PyXournal, number), 0, "noddy number" },
+	{ "undoRedoHandler", T_OBJECT, offsetof(PyXournal, undoRedoHandler), 0, "Undo- / Redohandler" },
 
 	{ NULL } /* Sentinel */
 };
 
 static PyObject *
-PyXournal_getName(PyXournal* self) {
-	static PyObject *format = NULL;
-
-	if (format == NULL) {
-		format = PyString_FromString("Xournal object");
-		if (format == NULL)
-			return NULL;
-	}
-
-	Py_DECREF(format);
-
-	return format;
-}
-
-static PyObject *
 PyXournal_newFile(PyXournal * self, PyObject * args) {
 	PyObject * force = NULL;
 
-    if(!PyArg_ParseTuple(args, "|o", &force)) {
-        PyErr_SetString(PyExc_AttributeError, "[Boolean]");
-    	return NULL;
-    }
+	if (!PyArg_ParseTuple(args, "|o", &force)) {
+		PyErr_SetString(PyExc_AttributeError, "[Boolean]");
+		return NULL;
+	}
 
-    if(!PyBool_Check(force)) {
-        PyErr_SetString(PyExc_AttributeError, "[Boolean]");
-    	return NULL;
-    }
+	if (!PyBool_Check(force)) {
+		PyErr_SetString(PyExc_AttributeError, "[Boolean]");
+		return NULL;
+	}
 
-    if(PyObject_IsTrue(force)) {
-    	self->control->getUndoRedoHandler()->clearContents();
-    }
+	if (PyObject_IsTrue(force)) {
+		self->control->getUndoRedoHandler()->clearContents();
+	}
 
-	if(self->control->newFile()) {
+	if (self->control->newFile()) {
 		Py_RETURN_TRUE;
 	}
 
@@ -100,14 +85,14 @@ static PyObject *
 PyXournal_saveFile(PyXournal * self, PyObject * args) {
 	char * path = NULL;
 
-    if(!PyArg_ParseTuple(args, "s", &path)) {
-        PyErr_SetString(PyExc_AttributeError, "String");
-    	return NULL;
-    }
+	if (!PyArg_ParseTuple(args, "s", &path)) {
+		PyErr_SetString(PyExc_AttributeError, "String");
+		return NULL;
+	}
 
-    self->control->getDocument()->setFilename(path);
+	self->control->getDocument()->setFilename(path);
 
-	if(self->control->save(true)) {
+	if (self->control->save(true)) {
 		Py_RETURN_TRUE;
 	}
 
@@ -119,24 +104,138 @@ PyXournal_openFile(PyXournal * self, PyObject * args) {
 	char * path = NULL;
 	int scrollToPage = -1;
 
-    if(!PyArg_ParseTuple(args, "s|i", &path, &scrollToPage)) {
-        PyErr_SetString(PyExc_AttributeError, "String [int]");
-    	return NULL;
-    }
+	if (!PyArg_ParseTuple(args, "s|i", &path, &scrollToPage)) {
+		PyErr_SetString(PyExc_AttributeError, "String [int]");
+		return NULL;
+	}
 
-
-	if(self->control->openFile(path, scrollToPage)) {
+	if (self->control->openFile(path, scrollToPage)) {
 		Py_RETURN_TRUE;
 	}
 
 	Py_RETURN_FALSE;
 }
+
+static PyObject *
+PyXournal_setSelectedTool(PyXournal * self, PyObject * args) {
+	int tool = -1;
+
+	if (!PyArg_ParseTuple(args, "i", &tool)) {
+		PyErr_SetString(PyExc_AttributeError, "int");
+		return NULL;
+	}
+
+	if (tool < TOOL_PEN || tool > TOOL_HAND) {
+		PyErr_SetString(PyExc_AttributeError, "Tool out of range, please use the constants TOOL_*");
+	}
+
+	self->control->getToolHandler()->selectTool((ToolType) tool);
+
+	Py_RETURN_NONE;
+}
+
+static PyObject *
+PyXournal_getSelectedTool(PyXournal* self) {
+	ToolType tt = self->control->getToolHandler()->getToolType();
+
+	return PyLong_FromLong(tt);
+}
+
+static PyObject *
+PyXournal_mousePressed(PyXournal * self, PyObject * args) {
+	int x = -1;
+	int y = -1;
+
+	if (!PyArg_ParseTuple(args, "ii", &x, &y)) {
+		PyErr_SetString(PyExc_AttributeError, "int int");
+		return NULL;
+	}
+
+	// TODO: implememnt
+	g_warning("NOT IMPLEMENTED!\n");
+
+	Py_RETURN_NONE;
+}
+
+static PyObject *
+PyXournal_mouseMoved(PyXournal * self, PyObject * args) {
+	int x = -1;
+	int y = -1;
+
+	if (!PyArg_ParseTuple(args, "ii", &x, &y)) {
+		PyErr_SetString(PyExc_AttributeError, "int int");
+		return NULL;
+	}
+
+	// TODO: implememnt
+	g_warning("NOT IMPLEMENTED!\n");
+
+	Py_RETURN_NONE;
+}
+
+static PyObject *
+PyXournal_mouseReleased(PyXournal * self) {
+	// TODO: implememnt
+	g_warning("NOT IMPLEMENTED!\n");
+
+	Py_RETURN_NONE;
+}
+
+static PyObject *
+PyXournal_getUndoRedoHandler(PyXournal * self) {
+	// TODO: implememnt
+	g_warning("NOT IMPLEMENTED!\n");
+
+	Py_RETURN_NONE;
+}
+
+static PyObject *
+PyXournal_getSelectedPage(PyXournal * self) {
+	// TODO: implememnt
+	g_warning("NOT IMPLEMENTED!\n");
+
+	Py_RETURN_NONE;
+}
+
+static PyObject *
+PyXournal_getDocument(PyXournal * self) {
+	// TODO: implememnt
+	g_warning("NOT IMPLEMENTED!\n");
+
+	Py_RETURN_NONE;
+}
+
+static PyObject *
+PyXournal_selectPage(PyXournal * self, PyObject * args) {
+	int page = -1;
+
+	if (!PyArg_ParseTuple(args, "i", &page)) {
+		PyErr_SetString(PyExc_AttributeError, "int");
+		return NULL;
+	}
+
+	// TODO: implementieren
+
+	Py_RETURN_NONE;
+}
+
 static PyMethodDef PyXournal_methods[] = {
-		{ "getName", (PyCFunction) PyXournal_getName, METH_NOARGS, "Return the name" },
-		{ "newFile", (PyCFunction) PyXournal_newFile, METH_VARARGS, "Create a new document" },
-		{ "saveFile", (PyCFunction) PyXournal_saveFile, METH_VARARGS, "Save a document as" },
-		{ "openFile", (PyCFunction) PyXournal_openFile, METH_VARARGS, "Opens a file" },
-		{ NULL } /* Sentinel */
+	{ "setSelectedTool", (PyCFunction) PyXournal_setSelectedTool, METH_VARARGS, "Selects a tool (see constatns TOOL_*" },
+	{ "getSelectedTool", (PyCFunction) PyXournal_getSelectedTool, METH_NOARGS, "Return the selected tool" },
+	{ "newFile", (PyCFunction) PyXournal_newFile, METH_VARARGS, "Create a new document" },
+	{ "saveFile", (PyCFunction) PyXournal_saveFile, METH_VARARGS, "Save a document as" },
+	{ "openFile", (PyCFunction) PyXournal_openFile, METH_VARARGS, "Opens a file" },
+	{ "mousePressed", (PyCFunction) PyXournal_mousePressed, METH_VARARGS, "Simulate a mouse press on the current view" },
+	{ "mouseMoved", (PyCFunction) PyXournal_mouseMoved, METH_VARARGS, "Simulate a mouse move on the current view" },
+	{ "mouseReleased", (PyCFunction) PyXournal_mouseReleased, METH_NOARGS, "Simulate a mouse release" },
+	{ "getUndoRedoHandler", (PyCFunction) PyXournal_getUndoRedoHandler, METH_NOARGS, "Gets the Undo- / Redohandler" },
+	{ "getDocument", (PyCFunction) PyXournal_getDocument, METH_NOARGS, "Return the Xournal Document" },
+	{ "getSelectedPage", (PyCFunction) PyXournal_getSelectedPage, METH_NOARGS, "Gets the selected page ID (first Page: 0)" },
+	{ "selectPage", (PyCFunction) PyXournal_selectPage, METH_VARARGS, "Sets the selected page (first Page: 0)" },
+//	{ "xxxxxxxxxxxxx", (PyCFunction) xxxxxxxxxxxxxxxxx, METH_VARARGS, "Xxxxxxxxxxxxxxxx" },
+//	{ "xxxxxxxxxxxxx", (PyCFunction) xxxxxxxxxxxxxxxxx, METH_VARARGS, "Xxxxxxxxxxxxxxxx" },
+//	{ "xxxxxxxxxxxxx", (PyCFunction) xxxxxxxxxxxxxxxxx, METH_VARARGS, "Xxxxxxxxxxxxxxxx" },
+	{ NULL } /* Sentinel */
 };
 
 static PyTypeObject XournalType = {
