@@ -22,7 +22,7 @@ class Stroke;
 
 class EraseUndoAction: public UndoAction {
 public:
-	EraseUndoAction(XojPage * page, Redrawable * view);
+	EraseUndoAction(PageRef page, Redrawable * view);
 	virtual ~EraseUndoAction();
 
 public:

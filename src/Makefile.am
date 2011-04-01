@@ -116,10 +116,11 @@ xournalpp_SOURCES = \
 	model/Image.cpp \
 	model/Layer.cpp \
 	model/LinkDestination.cpp \
-	model/Page.cpp \
+	model/PageRef.cpp \
 	model/Point.cpp \
 	model/Stroke.cpp \
 	model/Text.cpp \
+	model/XojPage.cpp \
 	pdf/cairo/CairoPdf.cpp \
 	pdf/poppler/XojPopplerAction.cpp \
 	pdf/poppler/XojPopplerDocument.cpp \

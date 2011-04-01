@@ -20,7 +20,7 @@ class Redrawable;
 
 class ScaleUndoAction: public UndoAction {
 public:
-	ScaleUndoAction(XojPage * page, Redrawable * view, GList * elements, double x0, double y0, double fx, double fy);
+	ScaleUndoAction(PageRef page, Redrawable * view, GList * elements, double x0, double y0, double fx, double fy);
 	virtual ~ScaleUndoAction();
 
 public:
@@ -34,7 +34,7 @@ private:
 private:
 	XOJ_TYPE_ATTRIB;
 
-	XojPage * page;
+	PageRef page;
 	Redrawable * view;
 	GList * elements;
 

@@ -40,7 +40,7 @@ public:
 	int pressureCount;
 };
 
-SizeUndoAction::SizeUndoAction(XojPage * page, Layer * layer, Redrawable * view) {
+SizeUndoAction::SizeUndoAction(PageRef page, Layer * layer, Redrawable * view) {
 	XOJ_INIT_TYPE(SizeUndoAction);
 
 	this->page = page;

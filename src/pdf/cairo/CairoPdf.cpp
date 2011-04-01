@@ -27,12 +27,12 @@ cairo_status_t CairoPdf::writeOut(CairoPdf * pdf, unsigned char * data, unsigned
 	return CAIRO_STATUS_SUCCESS;
 }
 
-void CairoPdf::drawPage(XojPage * page) {
+void CairoPdf::drawPage(PageRef page) {
 	XOJ_CHECK_TYPE(CairoPdf);
 
 	DocumentView view;
 
-	cairo_pdf_surface_set_size(this->surface, page->getWidth(), page->getHeight());
+	cairo_pdf_surface_set_size(this->surface, page.getWidth(), page.getHeight());
 
 	view.drawPage(page, this->cr, true /* dont render eraseable */);
 

@@ -13,12 +13,12 @@
 #define ERASEHANDLER_H_
 
 #include "../../util/XournalType.h"
+#include "../../model/PageRef.h"
 
 class DeleteUndoAction;
 class EraseUndoAction;
 class Layer;
 class Stroke;
-class XojPage;
 class ToolHandler;
 class Redrawable;
 class Document;
@@ -27,7 +27,7 @@ class Range;
 
 class EraseHandler {
 public:
-	EraseHandler(UndoRedoHandler * undo, Document * doc, XojPage * page, ToolHandler * handler, Redrawable * view);
+	EraseHandler(UndoRedoHandler * undo, Document * doc, PageRef page, ToolHandler * handler, Redrawable * view);
 	virtual ~EraseHandler();
 
 public:
@@ -41,7 +41,7 @@ private:
 	XOJ_TYPE_ATTRIB;
 
 
-	XojPage * page;
+	PageRef page;
 	ToolHandler * handler;
 	Redrawable * view;
 	Document * doc;

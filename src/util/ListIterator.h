@@ -31,6 +31,16 @@ public:
 		this->list = data;
 	}
 
+	ListIterator(const ListIterator & it) {
+		XOJ_INIT_TYPE(ListIterator);
+
+		*this = it;
+		if(this->copied) {
+			this->list = g_list_copy(this->data);
+			this->data = this->list;
+		}
+	}
+
 	virtual ~ListIterator() {
 		XOJ_CHECK_TYPE(ListIterator);
 

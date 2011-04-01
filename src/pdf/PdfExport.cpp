@@ -155,9 +155,9 @@ bool PdfExport::writePagesindex() {
 	this->writer->write("]\n");
 	this->writer->writef("/Count %i\n", pageCount);
 
-	XojPage * page = doc->getPage(0);
+	PageRef page = doc->getPage(0);
 
-	this->writer->writef("/MediaBox [0 0 %.2F %.2F]\n", page->getWidth(), page->getHeight());
+	this->writer->writef("/MediaBox [0 0 %.2F %.2F]\n", page.getWidth(), page.getHeight());
 	this->writer->write(">>\n");
 	this->writer->write("endobj\n");
 
@@ -464,7 +464,7 @@ bool PdfExport::addPopplerPage(XojPopplerPage * pdf, XojPopplerDocument doc) {
 bool PdfExport::writePage(int pageNr) {
 	XOJ_CHECK_TYPE(PdfExport);
 
-	XojPage * page = doc->getPage(pageNr);
+	PageRef page = doc->getPage(pageNr);
 
 	if (!page) {
 		return false;
@@ -478,7 +478,7 @@ bool PdfExport::writePage(int pageNr) {
 	this->writer->write("<</Type /Page\n");
 	this->writer->write("/Parent 1 0 R\n");
 
-	this->writer->writef("/MediaBox [0 0 %.2F %.2F]\n", page->getWidth(), page->getHeight());
+	this->writer->writef("/MediaBox [0 0 %.2F %.2F]\n", page.getWidth(), page.getHeight());
 	this->writer->write("/Resources 2 0 R\n");
 	//	if (isset($this->PageLinks[$n])) {
 	//		//Links
@@ -508,8 +508,8 @@ bool PdfExport::writePage(int pageNr) {
 	addPopplerDocument(doc->getPdfDocument());
 	currentPdfDoc = doc->getPdfDocument();
 
-	if (page->getBackgroundType() == BACKGROUND_TYPE_PDF) {
-		XojPopplerPage * pdf = doc->getPdfPage(page->getPdfPageNr());
+	if (page.getBackgroundType() == BACKGROUND_TYPE_PDF) {
+		XojPopplerPage * pdf = doc->getPdfPage(page.getPdfPageNr());
 		if (!addPopplerPage(pdf, currentPdfDoc)) {
 			return false;
 		}
@@ -566,7 +566,7 @@ bool PdfExport::createPdf(String uri, GList * range) {
 		PageRangeEntry * e = (PageRangeEntry *) l->data;
 
 		for (int i = e->getFirst(); i < e->getLast(); i++) {
-			XojPage * page = doc->getPage(i);
+			PageRef page = doc->getPage(i);
 			cPdf.drawPage(page);
 			if (this->progressListener) {
 				this->progressListener->setCurrentState(c++);
@@ -620,7 +620,7 @@ bool PdfExport::createPdf(String uri) {
 	int count = doc->getPageCount();
 
 	for (int i = 0; i < count; i++) {
-		XojPage * page = doc->getPage(i);
+		PageRef page = doc->getPage(i);
 		cPdf.drawPage(page);
 
 		if (this->progressListener) {

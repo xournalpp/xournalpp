@@ -21,7 +21,7 @@ class Layer;
 
 class RecognizerUndoAction: public UndoAction {
 public:
-	RecognizerUndoAction(XojPage * page, Redrawable * view, Layer * layer, Stroke * original, Stroke * recognized);
+	RecognizerUndoAction(PageRef page, Redrawable * view, Layer * layer, Stroke * original, Stroke * recognized);
 	virtual ~RecognizerUndoAction();
 
 public:

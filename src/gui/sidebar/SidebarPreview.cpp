@@ -4,7 +4,7 @@
 #include "../../view/PdfView.h"
 #include "../../control/Control.h"
 
-SidebarPreview::SidebarPreview(Sidebar * sidebar, XojPage * page) {
+SidebarPreview::SidebarPreview(Sidebar * sidebar, PageRef page) {
 	XOJ_INIT_TYPE(SidebarPreview);
 
 	this->widget = gtk_drawing_area_new();
@@ -14,7 +14,6 @@ SidebarPreview::SidebarPreview(Sidebar * sidebar, XojPage * page) {
 	this->crBuffer = NULL;
 	this->sidebar = sidebar;
 	this->page = page;
-	this->page->reference(8);
 	this->selected = false;
 	this->firstPainted = false;
 
@@ -31,7 +30,6 @@ SidebarPreview::~SidebarPreview() {
 	XOJ_CHECK_TYPE(SidebarPreview);
 
 	this->sidebar->getControl()->getScheduler()->removeSidebar(this);
-	this->page->unreference(9);
 	this->page = NULL;
 
 	gtk_widget_destroy(this->widget);
@@ -121,7 +119,7 @@ void SidebarPreview::paint() {
 		cairo_select_font_face(cr2, "Sans", CAIRO_FONT_SLANT_NORMAL, CAIRO_FONT_WEIGHT_BOLD);
 		cairo_set_font_size(cr2, 70.0);
 		cairo_text_extents(cr2, txtLoading, &ex);
-		cairo_move_to(cr2, (page->getWidth() - ex.width) / 2 - ex.x_bearing, (page->getHeight() - ex.height) / 2 - ex.y_bearing);
+		cairo_move_to(cr2, (page.getWidth() - ex.width) / 2 - ex.x_bearing, (page.getHeight() - ex.height) / 2 - ex.y_bearing);
 		cairo_show_text(cr2, txtLoading);
 
 		cairo_destroy(cr2);
@@ -133,8 +131,8 @@ void SidebarPreview::paint() {
 	cairo_set_source_surface(cr, this->crBuffer, 0, 0);
 	cairo_paint(cr);
 
-	double height = page->getHeight() * sidebar->getZoom();
-	double width = page->getWidth() * sidebar->getZoom();
+	double height = page.getHeight() * sidebar->getZoom();
+	double width = page.getWidth() * sidebar->getZoom();
 
 	if (this->selected) {
 		// Draw border
@@ -168,13 +166,13 @@ void SidebarPreview::updateSize() {
 int SidebarPreview::getWidth() {
 	XOJ_CHECK_TYPE(SidebarPreview);
 
-	return page->getWidth() * sidebar->getZoom() + Shadow::getShadowBottomRightSize() + Shadow::getShadowTopLeftSize() + 4;
+	return page.getWidth() * sidebar->getZoom() + Shadow::getShadowBottomRightSize() + Shadow::getShadowTopLeftSize() + 4;
 }
 
 int SidebarPreview::getHeight() {
 	XOJ_CHECK_TYPE(SidebarPreview);
 
-	return page->getHeight() * sidebar->getZoom() + Shadow::getShadowBottomRightSize() + Shadow::getShadowTopLeftSize() + 4;
+	return page.getHeight() * sidebar->getZoom() + Shadow::getShadowBottomRightSize() + Shadow::getShadowTopLeftSize() + 4;
 }
 
 GtkWidget * SidebarPreview::getWidget() {

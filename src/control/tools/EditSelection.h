@@ -16,12 +16,12 @@
 #include "../../view/ElementContainer.h"
 #include "../Tool.h"
 #include "../../model/Font.h"
+#include "../../model/PageRef.h"
 #include "CursorSelectionType.h"
 
 #include "../../util/XournalType.h"
 
 class UndoRedoHandler;
-class XojPage;
 class Layer;
 class PageView;
 class Selection;
@@ -32,16 +32,16 @@ class DeleteUndoAction;
 
 class EditSelection: public ElementContainer {
 public:
-	EditSelection(UndoRedoHandler * undo, double x, double y, double width, double height, XojPage * page, PageView * view);
+	EditSelection(UndoRedoHandler * undo, double x, double y, double width, double height, PageRef page, PageView * view);
 	EditSelection(UndoRedoHandler * undo, Selection * selection, PageView * view);
-	EditSelection(UndoRedoHandler * undo, Element * e, PageView * view, XojPage * page);
+	EditSelection(UndoRedoHandler * undo, Element * e, PageView * view, PageRef page);
 	virtual ~EditSelection();
 
 private:
 	/**
 	 * Our internal constructor
 	 */
-	void contstruct(UndoRedoHandler * undo, PageView * view, XojPage * sourcePage);
+	void contstruct(UndoRedoHandler * undo, PageView * view, PageRef sourcePage);
 
 public:
 	/**
@@ -69,7 +69,7 @@ public:
 	/**
 	 * Get the source page (where the selection was done)
 	 */
-	XojPage * getSourcePage();
+	PageRef getSourcePage();
 
 	/**
 	 * Get the X coordinate in View coordinates (absolute)
@@ -228,7 +228,7 @@ private: // DATA
 	/**
 	 * The source page (form where the Elements come)
 	 */
-	XojPage * sourcePage;
+	PageRef sourcePage;
 
 	/**
 	 * The source layer (form where the Elements come)

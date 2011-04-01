@@ -17,7 +17,7 @@
 
 class InsertDeletePageUndoAction: public UndoAction {
 public:
-	InsertDeletePageUndoAction(XojPage * page, int pagePos, bool inserted);
+	InsertDeletePageUndoAction(PageRef page, int pagePos, bool inserted);
 	virtual ~InsertDeletePageUndoAction();
 
 public:

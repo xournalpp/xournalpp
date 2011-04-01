@@ -15,7 +15,7 @@
 #include <cairo.h>
 #include "../poppler/XojPopplerPage.h"
 #include "../poppler/XojPopplerDocument.h"
-#include "../../model/Page.h"
+#include "../../model/PageRef.h"
 #include "../../util/XournalType.h"
 
 class CairoPdf {
@@ -24,7 +24,7 @@ public:
 	virtual ~CairoPdf();
 
 public:
-	void drawPage(XojPage * page);
+	void drawPage(PageRef page);
 	XojPopplerPage * getPage(int page);
 	XojPopplerDocument & getDocument();
 

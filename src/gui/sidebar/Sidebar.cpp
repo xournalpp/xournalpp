@@ -1,5 +1,6 @@
 #include "Sidebar.h"
 #include "../../model/LinkDestination.h"
+#include "../../model/XojPage.h"
 #include "../../control/Control.h"
 #include "../../control/PdfCache.h"
 #include "../GladeGui.h"
@@ -229,10 +230,9 @@ void Sidebar::askInsertPdfPage(int pdfPage) {
 	doc->unlock();
 
 	if (pdf) {
-		XojPage * page = new XojPage(pdf->getWidth(), pdf->getHeight(), 0);
-		page->setBackgroundPdfPageNr(pdfPage);
+		PageRef page = new XojPage(pdf->getWidth(), pdf->getHeight());
+		page.setBackgroundPdfPageNr(pdfPage);
 		control->insertPage(page, position);
-		page->unreference(7);
 	}
 }
 

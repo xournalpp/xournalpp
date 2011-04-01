@@ -127,7 +127,7 @@ private:
 
 	DoubleArrayBuffer pressureBuffer;
 
-	XojPage * page;
+	PageRef page;
 	Layer * layer;
 	Stroke * stroke;
 	Text * text;

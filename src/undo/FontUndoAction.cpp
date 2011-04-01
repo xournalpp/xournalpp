@@ -17,7 +17,7 @@ public:
 	XojFont newFont;
 };
 
-FontUndoAction::FontUndoAction(XojPage * page, Layer * layer, Redrawable * view) {
+FontUndoAction::FontUndoAction(PageRef page, Layer * layer, Redrawable * view) {
 	XOJ_INIT_TYPE(FontUndoAction);
 
 	this->page = page;

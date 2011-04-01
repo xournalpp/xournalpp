@@ -1,22 +1,20 @@
 #include "InsertDeletePageUndoAction.h"
-#include "../model/Page.h"
+#include "../model/PageRef.h"
 #include "../model/Document.h"
 #include "../control/Control.h"
 #include "../gui/Cursor.h"
 
-InsertDeletePageUndoAction::InsertDeletePageUndoAction(XojPage * page, int pagePos, bool inserted) {
+InsertDeletePageUndoAction::InsertDeletePageUndoAction(PageRef page, int pagePos, bool inserted) {
 	XOJ_INIT_TYPE(InsertDeletePageUndoAction);
 
 	this->inserted = inserted;
 	this->page = page;
 	this->pagePos = pagePos;
-	page->reference(16);
 }
 
 InsertDeletePageUndoAction::~InsertDeletePageUndoAction() {
 	XOJ_CHECK_TYPE(InsertDeletePageUndoAction);
 
-	this->page->unreference(17);
 	this->page = NULL;
 
 	XOJ_RELEASE_TYPE(InsertDeletePageUndoAction);

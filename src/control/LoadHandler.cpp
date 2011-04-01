@@ -1,4 +1,8 @@
 #include "LoadHandler.h"
+
+#include "../model/XojPage.h"
+#include "../model/BackgroundImage.h"
+
 #include <gtk/gtk.h>
 #include <glib.h>
 #include <glib/gstdio.h>
@@ -217,7 +221,7 @@ void LoadHandler::parseContents() {
 		double width = getAttribDouble("width");
 		double height = getAttribDouble("height");
 
-		this->page = new XojPage(width, height, 0);
+		this->page = new XojPage(width, height);
 
 		this->doc.addPage(this->page);
 	} else if (strcmp(elementName, "title") == 0) {
@@ -239,15 +243,15 @@ void LoadHandler::parseBgSolid() {
 	const char * style = getAttrib("style");
 
 	if (strcmp("plain", style) == 0) {
-		this->page->setBackgroundType(BACKGROUND_TYPE_NONE);
+		this->page.setBackgroundType(BACKGROUND_TYPE_NONE);
 	} else if (strcmp("lined", style) == 0) {
-		this->page->setBackgroundType(BACKGROUND_TYPE_LINED);
+		this->page.setBackgroundType(BACKGROUND_TYPE_LINED);
 	} else if (strcmp("ruled", style) == 0) {
-		this->page->setBackgroundType(BACKGROUND_TYPE_RULED);
+		this->page.setBackgroundType(BACKGROUND_TYPE_RULED);
 	} else if (strcmp("graph", style) == 0) {
-		this->page->setBackgroundType(BACKGROUND_TYPE_GRAPH);
+		this->page.setBackgroundType(BACKGROUND_TYPE_GRAPH);
 	} else {
-		this->page->setBackgroundType(BACKGROUND_TYPE_NONE);
+		this->page.setBackgroundType(BACKGROUND_TYPE_NONE);
 		error(_("Unknown background type parsed: \"%s\""), style);
 	}
 
@@ -270,7 +274,7 @@ void LoadHandler::parseBgSolid() {
 		parseColor(sColor, color);
 	}
 
-	this->page->setBackgroundColor(color);
+	this->page.setBackgroundColor(color);
 }
 
 void LoadHandler::parseBgPixmap() {
@@ -302,17 +306,17 @@ void LoadHandler::parseBgPixmap() {
 			g_error_free(error);
 		}
 
-		this->page->backgroundImage = img;
+		*this->page.getBackgroundImage() = img;
 	} else if (!strcmp(domain, "clone")) {
-		XojPage * p = doc.getPage(atoi(filename));
+		PageRef p = doc.getPage(atoi(filename));
 
-		if (p != NULL) {
-			this->page->backgroundImage = p->backgroundImage;
+		if (p.isValid()) {
+			*this->page.getBackgroundImage() = *p.getBackgroundImage();
 		}
 	} else {
 		error(_("Unknown pixmap::domain type: %s"), domain);
 	}
-	page->setBackgroundType(BACKGROUND_TYPE_IMAGE);
+	this->page.setBackgroundType(BACKGROUND_TYPE_IMAGE);
 }
 
 void LoadHandler::parseBgPdf() {
@@ -322,7 +326,7 @@ void LoadHandler::parseBgPdf() {
 	bool attachToDocument = false;
 	String pdfFilename;
 
-	page->setBackgroundPdfPageNr(pageno - 1);
+	this->page.setBackgroundPdfPageNr(pageno - 1);
 
 	if (!this->pdfFilenameParsed) {
 
@@ -400,8 +404,8 @@ void LoadHandler::parsePage() {
 			parseBgPixmap();
 		} else if (strcmp("pdf", type) == 0) {
 			if (this->removePdfBackgroundFlag) {
-				this->page->setBackgroundType(BACKGROUND_TYPE_NONE);
-				this->page->setBackgroundColor(0xffffff);
+				this->page.setBackgroundType(BACKGROUND_TYPE_NONE);
+				this->page.setBackgroundColor(0xffffff);
 			} else {
 				parseBgPdf();
 			}
@@ -411,7 +415,7 @@ void LoadHandler::parsePage() {
 	} else if (!strcmp(elementName, "layer")) {
 		this->pos = PARSER_POS_IN_LAYER;
 		this->layer = new Layer();
-		this->page->addLayer(this->layer);
+		this->page.addLayer(this->layer);
 	}
 }
 
@@ -591,7 +595,6 @@ void LoadHandler::parserEndElement(GMarkupParseContext * context, const gchar * 
 		handler->pos = PASER_POS_FINISHED;
 	} else if (handler->pos == PARSER_POS_IN_PAGE && strcmp(element_name, "page") == 0) {
 		handler->pos = PARSER_POS_STARTED;
-		handler->page->unreference(6);
 		handler->page = NULL;
 	} else if (handler->pos == PARSER_POS_IN_LAYER && strcmp(element_name, "layer") == 0) {
 		handler->pos = PARSER_POS_IN_PAGE;

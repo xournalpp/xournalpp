@@ -9,30 +9,23 @@
  * @license GPL
  */
 
-#ifndef __PAGE_H__
-#define __PAGE_H__
+#ifndef __XOJ_PAGE_H__
+#define __XOJ_PAGE_H__
 
 #include "Layer.h"
 #include "../util/ListIterator.h"
 #include "../util/XournalType.h"
 #include "../util/String.h"
 
-#include "BackgroundImage.h"
+#include "BackgroundType.h"
 
-enum BackgroundType {
-	BACKGROUND_TYPE_NONE = 1,
-	BACKGROUND_TYPE_PDF,
-	BACKGROUND_TYPE_IMAGE,
-	BACKGROUND_TYPE_LINED,
-	BACKGROUND_TYPE_RULED,
-	BACKGROUND_TYPE_GRAPH
-};
+class BackgroundImage;
 
 class XojPage {
 public:
-	XojPage(double width, double heigth, int x);
-	void reference(int debugId);
-	void unreference(int debugId);
+	XojPage(double width, double heigth);
+	void reference();
+	void unreference();
 
 private:
 	XojPage(const XojPage & page);
@@ -72,27 +65,51 @@ public:
 
 	Layer * getSelectedLayer();
 
-public:
-	/**
-	 * Background image, if background type is IMAGE, public because the oprator= is overloaded
-	 */
-	BackgroundImage backgroundImage;
+	BackgroundImage * getBackgroundImage();
 
 private:
 	XOJ_TYPE_ATTRIB;
 
+	/**
+	 * The reference counter
+	 */
 	int ref;
 
+	/**
+	 * The Background image if any
+	 */
+	BackgroundImage * backgroundImage;
+
+	/**
+	 * The size of the page
+	 */
 	double width;
 	double height;
 
+	/**
+	 * The layer list
+	 */
 	GList * layer;
 
+	/**
+	 * The current selected layer ID
+	 */
 	int currentLayer;
 
-	int pdfBackgroundPage;
+	/**
+	 * The Background Type of the page
+	 */
 	BackgroundType bgType;
+
+	/**
+	 * If the page has a PDF background, the page number of the PDF Page
+	 */
+	int pdfBackgroundPage;
+
+	/**
+	 * The background color if the background type is palain
+	 */
 	int backgroundColor;
 };
 
-#endif /* __PAGE_H__ */
+#endif /* __XOJ_PAGE_H__ */

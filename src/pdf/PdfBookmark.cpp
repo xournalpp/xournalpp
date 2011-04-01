@@ -171,10 +171,10 @@ void PdfBookmarks::writeOutlines(Document * doc, PdfWriter * writer, int * outli
 			writer->write(" 0 R\n");
 		}
 
-		XojPage * p = doc->getPage(b->page);
+		PageRef p = doc->getPage(b->page);
 		float top = 0;
-		if (p != NULL) {
-			top = (p->getHeight() - b->top) * 72;
+		if (p.isValid()) {
+			top = (p.getHeight() - b->top) * 72;
 		}
 
 		//Outline items

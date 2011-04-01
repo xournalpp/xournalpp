@@ -1,6 +1,7 @@
 #include "ColorUndoAction.h"
 
 #include "../model/Element.h"
+#include "../model/PageRef.h"
 #include "../gui/Redrawable.h"
 
 class ColorUndoActionEntry {
@@ -16,7 +17,7 @@ public:
 	int newColor;
 };
 
-ColorUndoAction::ColorUndoAction(XojPage * page, Layer * layer, Redrawable * view) {
+ColorUndoAction::ColorUndoAction(PageRef page, Layer * layer, Redrawable * view) {
 	XOJ_INIT_TYPE(ColorUndoAction);
 
 	this->page = page;
@@ -68,7 +69,7 @@ bool ColorUndoAction::undo(Control * control) {
 		y2 = MAX(y2, e->e->getY()+ e->e->getElementHeight());
 	}
 
-	view->rerenderArea(x1, y1, x2, y2);
+	this->view->rerenderArea(x1, y1, x2, y2);
 
 	return true;
 }
@@ -96,7 +97,7 @@ bool ColorUndoAction::redo(Control * control) {
 		y2 = MAX(y2, e->e->getY()+ e->e->getElementHeight());
 	}
 
-	view->rerenderArea(x1, y1, x2, y2);
+	this->view->rerenderArea(x1, y1, x2, y2);
 
 	return true;
 }

@@ -14,11 +14,10 @@
 #include "../undo/InsertUndoAction.h"
 #include "../control/jobs/BlockingJob.h"
 #include "../model/Image.h"
-
-#include "../model/Page.h"
+#include "../model/PageRef.h"
 #include "../model/Stroke.h"
 #include "../model/Text.h"
-
+#include "../model/Layer.h"
 #include "../control/settings/Settings.h"
 #include "../control/settings/ButtonConfig.h"
 #include "../control/SearchControl.h"
@@ -35,7 +34,7 @@
 #include <config.h>
 #include <glib/gi18n-lib.h>
 
-PageView::PageView(XournalView * xournal, XojPage * page) {
+PageView::PageView(XournalView * xournal, PageRef page) {
 	XOJ_INIT_TYPE(PageView);
 
 	this->page = page;
@@ -136,7 +135,7 @@ bool PageView::searchTextOnPage(const char * text, int * occures, double * top) 
 			return true;
 		}
 
-		int pNr = page->getPdfPageNr();
+		int pNr = this->page.getPdfPageNr();
 		XojPopplerPage * pdf = NULL;
 		if (pNr != -1) {
 			Document * doc = xournal->getControl()->getDocument();
@@ -162,7 +161,7 @@ void PageView::endText() {
 		return;
 	}
 	Text * txt = this->textEditor->getText();
-	Layer * layer = page->getSelectedLayer();
+	Layer * layer = this->page.getSelectedLayer();
 	UndoRedoHandler * undo = xournal->getControl()->getUndoRedoHandler();
 
 	// Text deleted
@@ -194,7 +193,7 @@ void PageView::startText(double x, double y) {
 
 	if (this->textEditor == NULL) {
 		// Is there already a textfield?
-		ListIterator<Element *> eit = page->getSelectedLayer()->elementIterator();
+		ListIterator<Element *> eit = this->page.getSelectedLayer()->elementIterator();
 
 		Text * text = NULL;
 
@@ -241,7 +240,7 @@ void PageView::startText(double x, double y) {
 void PageView::selectObjectAt(double x, double y) {
 	XOJ_CHECK_TYPE(PageView);
 
-	int selected = page->getSelectedLayerId();
+	int selected = this->page.getSelectedLayerId();
 	GdkRectangle matchRect = { x - 10, y - 10, 20, 20 };
 
 	Stroke * strokeMatch = NULL;
@@ -250,9 +249,9 @@ void PageView::selectObjectAt(double x, double y) {
 	Element * elementMatch = NULL;
 
 	// clear old selection anyway
-	xournal->getControl()->clearSelection();
+	this->xournal->getControl()->clearSelection();
 
-	ListIterator<Layer*> it = page->layerIterator();
+	ListIterator<Layer*> it = this->page.layerIterator();
 	while (it.hasNext() && selected) {
 		Layer * l = it.next();
 
@@ -646,7 +645,7 @@ bool PageView::paintPage(cairo_t * cr, GdkRectangle * rect) {
 		cairo_select_font_face(cr2, "Sans", CAIRO_FONT_SLANT_NORMAL, CAIRO_FONT_WEIGHT_BOLD);
 		cairo_set_font_size(cr2, 32.0);
 		cairo_text_extents(cr2, txtLoading, &ex);
-		cairo_move_to(cr2, (page->getWidth() - ex.width) / 2 - ex.x_bearing, (page->getHeight() - ex.height) / 2 - ex.y_bearing);
+		cairo_move_to(cr2, (page.getWidth() - ex.width) / 2 - ex.x_bearing, (page.getHeight() - ex.height) / 2 - ex.y_bearing);
 		cairo_show_text(cr2, txtLoading);
 
 		cairo_destroy(cr2);
@@ -767,7 +766,7 @@ int PageView::getY() {
 	return this->y;
 }
 
-XojPage * PageView::getPage() {
+PageRef PageView::getPage() {
 	XOJ_CHECK_TYPE(PageView);
 
 	return page;
@@ -782,23 +781,23 @@ XournalView * PageView::getXournal() {
 double PageView::getHeight() {
 	XOJ_CHECK_TYPE(PageView);
 
-	return this->page->getHeight();
+	return this->page.getHeight();
 }
 
 double PageView::getWidth() {
 	XOJ_CHECK_TYPE(PageView);
 
-	return this->page->getWidth();
+	return this->page.getWidth();
 }
 
 int PageView::getDisplayWidth() {
 	XOJ_CHECK_TYPE(PageView);
 
-	return this->page->getWidth() * this->xournal->getZoom();
+	return this->page.getWidth() * this->xournal->getZoom();
 }
 
 int PageView::getDisplayHeight() {
 	XOJ_CHECK_TYPE(PageView);
 
-	return this->page->getHeight() * this->xournal->getZoom();
+	return this->page.getHeight() * this->xournal->getZoom();
 }

@@ -1,12 +1,12 @@
 #include "TextUndoAction.h"
 
-#include "../model/Page.h"
+#include "../model/PageRef.h"
 #include "../model/Layer.h"
 #include "../model/Text.h"
 #include "../gui/Redrawable.h"
 #include "../gui/TextEditor.h"
 
-TextUndoAction::TextUndoAction(XojPage * page, Layer * layer, Text * text, String lastText, Redrawable * view, TextEditor * textEditor) {
+TextUndoAction::TextUndoAction(PageRef page, Layer * layer, Text * text, String lastText, Redrawable * view, TextEditor * textEditor) {
 	XOJ_INIT_TYPE(TextUndoAction);
 
 	this->page = page;

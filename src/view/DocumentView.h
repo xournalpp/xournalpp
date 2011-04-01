@@ -16,7 +16,7 @@
 #include "../model/Element.h"
 #include "../model/Stroke.h"
 #include "../model/Text.h"
-#include "../model/Page.h"
+#include "../model/PageRef.h"
 #include "../model/Image.h"
 #include "../util/XournalType.h"
 
@@ -30,7 +30,7 @@ public:
 	virtual ~DocumentView();
 
 public:
-	void drawPage(XojPage * page, cairo_t * cr, bool preview);
+	void drawPage(PageRef page, cairo_t * cr, bool preview);
 	void drawStroke(cairo_t * cr, Stroke * s, int startPoint = 0);
 	void drawEraseableStroke(cairo_t * cr, Stroke * s);
 	static void applyColor(cairo_t * cr, int c, int alpha = 255);
@@ -57,7 +57,7 @@ private:
 	XOJ_TYPE_ATTRIB;
 
 	cairo_t * cr;
-	XojPage * page;
+	PageRef page;
 	double width;
 	double height;
 	bool dontRenderEditingStroke;

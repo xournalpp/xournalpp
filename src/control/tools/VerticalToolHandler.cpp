@@ -1,16 +1,16 @@
 #include "VerticalToolHandler.h"
 #include "../../view/DocumentView.h"
 #include "../../undo/UndoRedoHandler.h"
+#include "../../model/Layer.h"
 
-VerticalToolHandler::VerticalToolHandler(Redrawable * view, XojPage * page, double y, double zoom) {
+VerticalToolHandler::VerticalToolHandler(Redrawable * view, PageRef page, double y, double zoom) {
 	XOJ_INIT_TYPE(VerticalToolHandler);
 
 	this->startY = y;
 	this->endY = y;
 	this->view = view;
 	this->page = page;
-	this->page->reference(0);
-	this->layer = this->page->getSelectedLayer();
+	this->layer = this->page.getSelectedLayer();
 	this->elements = NULL;
 	this->jumpY = 0;
 
@@ -29,9 +29,9 @@ VerticalToolHandler::VerticalToolHandler(Redrawable * view, XojPage * page, doub
 		this->jumpY = MAX(this->jumpY, e->getY() + e->getElementHeight());
 	}
 
-	this->jumpY = this->page->getHeight() - this->jumpY;
+	this->jumpY = this->page.getHeight() - this->jumpY;
 
-	this->crBuffer = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, this->page->getWidth() * zoom, (this->page->getHeight() - y) * zoom);
+	this->crBuffer = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, this->page.getWidth() * zoom, (this->page.getHeight() - y) * zoom);
 	cairo_t * cr = cairo_create(this->crBuffer);
 	cairo_scale(cr, zoom, zoom);
 	cairo_translate(cr, 0, -y);
@@ -46,8 +46,6 @@ VerticalToolHandler::VerticalToolHandler(Redrawable * view, XojPage * page, doub
 VerticalToolHandler::~VerticalToolHandler() {
 	XOJ_CHECK_TYPE(VerticalToolHandler);
 
-	this->page->unreference(0);
-	this->page = NULL;
 	this->view = NULL;
 
 	if (this->crBuffer) {
@@ -81,7 +79,7 @@ void VerticalToolHandler::paint(cairo_t * cr, GdkRectangle * rect, double zoom) 
 		height = this->startY - this->endY;
 	}
 
-	cairo_rectangle(cr, 0, y * zoom, this->page->getWidth() * zoom, height * zoom);
+	cairo_rectangle(cr, 0, y * zoom, this->page.getWidth() * zoom, height * zoom);
 
 	cairo_stroke_preserve(cr);
 	cairo_set_source_rgba(cr, selectionColor.red / 65536.0, selectionColor.green / 65536.0, selectionColor.blue / 65536.0, 0.3);
@@ -101,7 +99,7 @@ void VerticalToolHandler::currentPos(double x, double y) {
 
 	this->endY = y;
 
-	this->view->repaintRect(0, y1, this->page->getWidth(), this->page->getHeight());
+	this->view->repaintRect(0, y1, this->page.getWidth(), this->page.getHeight());
 
 	double dY = this->endY - this->startY;
 

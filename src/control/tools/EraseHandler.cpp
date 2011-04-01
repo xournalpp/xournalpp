@@ -2,7 +2,6 @@
 #include "../../model/eraser/EraseableStroke.h"
 #include "../../model/Layer.h"
 #include "../../model/Stroke.h"
-#include "../../model/Page.h"
 #include "../../model/Document.h"
 #include "../../util/Range.h"
 #include "../../util/Rectangle.h"
@@ -17,7 +16,7 @@
 
 #include <math.h>
 
-EraseHandler::EraseHandler(UndoRedoHandler * undo, Document * doc, XojPage * page, ToolHandler * handler, Redrawable * view) {
+EraseHandler::EraseHandler(UndoRedoHandler * undo, Document * doc, PageRef page, ToolHandler * handler, Redrawable * view) {
 	XOJ_INIT_TYPE(EraseHandler);
 
 	this->page = page;
@@ -48,9 +47,9 @@ EraseHandler::~EraseHandler() {
 void EraseHandler::erase(double x, double y) {
 	XOJ_CHECK_TYPE(EraseHandler);
 
-	ListIterator<Layer*> it = this->page->layerIterator();
+	ListIterator<Layer*> it = this->page.layerIterator();
 
-	int selected = page->getSelectedLayerId();
+	int selected = page.getSelectedLayerId();
 
 	this->halfEraserSize = this->handler->getThikness();
 	GdkRectangle eraserRect = { x - halfEraserSize, y - halfEraserSize, halfEraserSize * 2, halfEraserSize * 2 };

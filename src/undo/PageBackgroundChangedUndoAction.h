@@ -13,11 +13,12 @@
 #define __PAGEBACKGROUNDCHANGEDUNDOACTION_H__
 
 #include "UndoAction.h"
-#include "../model/Page.h"
+#include "../model/PageRef.h"
+#include "../model/BackgroundImage.h"
 
 class PageBackgroundChangedUndoAction: public UndoAction {
 public:
-	PageBackgroundChangedUndoAction(XojPage * page, BackgroundType origType, int origPdfPage,
+	PageBackgroundChangedUndoAction(PageRef page, BackgroundType origType, int origPdfPage,
 			BackgroundImage origBackgroundImage, double origW, double origH);
 	virtual ~PageBackgroundChangedUndoAction();
 

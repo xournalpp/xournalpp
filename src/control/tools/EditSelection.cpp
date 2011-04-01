@@ -13,10 +13,11 @@
 #include "../../gui/pageposition/PagePositionHandler.h"
 #include "../../control/Control.h"
 #include "../../model/Document.h"
+#include "../../model/Layer.h"
 
 #include "EditSelectionContents.h"
 
-EditSelection::EditSelection(UndoRedoHandler * undo, double x, double y, double width, double height, XojPage * page, PageView * view) {
+EditSelection::EditSelection(UndoRedoHandler * undo, double x, double y, double width, double height, PageRef page, PageView * view) {
 	XOJ_INIT_TYPE(EditSelection);
 
 	this->x = x;
@@ -43,7 +44,7 @@ EditSelection::EditSelection(UndoRedoHandler * undo, Selection * selection, Page
 	view->rerenderPage();
 }
 
-EditSelection::EditSelection(UndoRedoHandler * undo, Element * e, PageView * view, XojPage * page) {
+EditSelection::EditSelection(UndoRedoHandler * undo, Element * e, PageView * view, PageRef page) {
 	XOJ_INIT_TYPE(EditSelection);
 
 	this->x = e->getX();
@@ -60,13 +61,13 @@ EditSelection::EditSelection(UndoRedoHandler * undo, Element * e, PageView * vie
 /**
  * Our internal constructor
  */
-void EditSelection::contstruct(UndoRedoHandler * undo, PageView * view, XojPage * sourcePage) {
+void EditSelection::contstruct(UndoRedoHandler * undo, PageView * view, PageRef sourcePage) {
 	XOJ_CHECK_TYPE(EditSelection);
 
 	this->view = view;
 	this->undo = undo;
 	this->sourcePage = sourcePage;
-	this->sourceLayer = this->sourcePage->getSelectedLayer();
+	this->sourceLayer = this->sourcePage.getSelectedLayer();
 
 	this->aspectRatio = false;
 
@@ -108,8 +109,8 @@ void EditSelection::finalizeSelection() {
 	if(v == NULL) {
 		this->view->getXournal()->deleteSelection();
 	} else {
-		XojPage * page = this->view->getPage();
-		Layer * layer = page->getSelectedLayer();
+		PageRef page = this->view->getPage();
+		Layer * layer = page.getSelectedLayer();
 		this->contents->finalizeSelection(this->x, this->y, this->width, this->height, this->aspectRatio, layer, page, this->view, this->undo);
 
 
@@ -161,7 +162,7 @@ double EditSelection::getHeight() {
 /**
  * get the source page (where the selection was done)
  */
-XojPage * EditSelection::getSourcePage() {
+PageRef EditSelection::getSourcePage() {
 	XOJ_CHECK_TYPE(EditSelection);
 
 	return this->sourcePage;

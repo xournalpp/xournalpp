@@ -12,8 +12,8 @@
 #define __SIDEBARPREVIEW_H__
 
 #include <gtk/gtk.h>
-#include "../../model/Page.h"
 #include "../../util/Util.h"
+#include "../../model/PageRef.h"
 #include "../../util/XournalType.h"
 
 #include "../../control/PdfCache.h"
@@ -22,7 +22,7 @@ class Sidebar;
 
 class SidebarPreview {
 public:
-	SidebarPreview(Sidebar * sidebar, XojPage * page);
+	SidebarPreview(Sidebar * sidebar, PageRef page);
 	virtual ~SidebarPreview();
 
 	GtkWidget * getWidget();
@@ -48,7 +48,7 @@ private:
 	bool firstPainted;
 
 	Sidebar * sidebar;
-	XojPage * page;
+	PageRef page;
 
 	GMutex * drawingMutex;
 

@@ -14,7 +14,7 @@
 
 #include "../util/OutputStream.h"
 #include "../util/XournalType.h"
-#include "../model/Page.h"
+#include "../model/PageRef.h"
 #include "../model/Document.h"
 class XmlNode;
 
@@ -29,7 +29,7 @@ public:
 	String getErrorMessage();
 
 private:
-	void visitPage(XmlNode * root, XojPage * p, Document * doc, int id);
+	void visitPage(XmlNode * root, PageRef p, Document * doc, int id);
 	static String getSolidBgStr(BackgroundType type);
 	static String getColorStr(int c, unsigned char alpha = 0xff);
 	void visitLayer(XmlNode * page, Layer * l);

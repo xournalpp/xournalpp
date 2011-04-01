@@ -14,7 +14,7 @@
 
 #include <gtk/gtk.h>
 #include "../../model/Stroke.h"
-#include "../../model/Page.h"
+#include "../../model/PageRef.h"
 #include "../../util/XournalType.h"
 #include "../shaperecognizer/ShapeRecognizer.h"
 
@@ -30,7 +30,7 @@ public:
 public:
 	void addPointToTmpStroke(GdkEventMotion * event);
 	void draw(cairo_t * cr, double zoom);
-	void onButtonReleaseEvent(GdkEventButton * event, XojPage * page);
+	void onButtonReleaseEvent(GdkEventButton * event, PageRef page);
 	bool onMotionNotifyEvent(GdkEventMotion * event);
 	void startStroke(GdkEventButton * event, StrokeTool tool, double x, double y);
 

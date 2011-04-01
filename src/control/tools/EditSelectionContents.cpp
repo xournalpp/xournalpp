@@ -16,10 +16,11 @@
 #include "../../gui/pageposition/PagePositionHandler.h"
 #include "../../control/Control.h"
 #include "../../model/Document.h"
+#include "../../model/Layer.h"
 
 #include <math.h>
 
-EditSelectionContents::EditSelectionContents(double x, double y, double width, double height, XojPage * sourcePage, Layer * sourceLayer, PageView * sourceView) {
+EditSelectionContents::EditSelectionContents(double x, double y, double width, double height, PageRef sourcePage, Layer * sourceLayer, PageView * sourceView) {
 	XOJ_INIT_TYPE(EditSelectionContents);
 
 	this->selected = NULL;
@@ -278,7 +279,7 @@ double EditSelectionContents::getOriginalHeight() {
 /**
  * The contents of the selection
  */
-void EditSelectionContents::finalizeSelection(double x, double y, double width, double height, bool aspectRatio, Layer * layer, XojPage * targetPage, PageView * targetView, UndoRedoHandler * undo) {
+void EditSelectionContents::finalizeSelection(double x, double y, double width, double height, bool aspectRatio, Layer * layer, PageRef targetPage, PageView * targetView, UndoRedoHandler * undo) {
 	double fx = width / this->originalWidth;
 	double fy = height / this->originalHeight;
 

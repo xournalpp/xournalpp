@@ -23,8 +23,8 @@ class Redrawable;
 
 class MoveUndoAction: public UndoAction {
 public:
-	MoveUndoAction(Layer * sourceLayer, XojPage * sourcePage, Redrawable * sourceView, GList * selected, double mx, double my, Layer * targetLayer, XojPage * targetPage, Redrawable * targetView);
-	MoveUndoAction(XojPage * sourcePage, VerticalToolHandler * handler);
+	MoveUndoAction(Layer * sourceLayer, PageRef sourcePage, Redrawable * sourceView, GList * selected, double mx, double my, Layer * targetLayer, PageRef targetPage, Redrawable * targetView);
+	MoveUndoAction(PageRef sourcePage, VerticalToolHandler * handler);
 	virtual ~MoveUndoAction();
 
 public:
@@ -46,7 +46,7 @@ private:
 
 	GList * sourcePos;
 	GList * targetPos;
-	XojPage * targetPage;
+	PageRef targetPage;
 
 	Layer * sourceLayer;
 	Layer * targetLayer;
