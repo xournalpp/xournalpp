@@ -118,6 +118,7 @@ am__xournalpp_SOURCES_DIST = control/jobs/AutosaveJob.cpp \
 	gui/Shadow.cpp gui/TextEditor.cpp gui/XournalView.cpp \
 	model/eraser/EraseableStroke.cpp \
 	model/eraser/EraseableStrokePart.cpp model/eraser/PartList.cpp \
+	model/BackgroundImage.cpp model/BackgroundImageContents.cpp \
 	model/Document.cpp model/DocumentHandler.cpp \
 	model/DocumentListener.cpp model/Element.cpp model/Font.cpp \
 	model/FormatDefinitions.cpp model/Image.cpp model/Layer.cpp \
@@ -229,7 +230,10 @@ am_xournalpp_OBJECTS = xournalpp-AutosaveJob.$(OBJEXT) \
 	xournalpp-TextEditor.$(OBJEXT) xournalpp-XournalView.$(OBJEXT) \
 	xournalpp-EraseableStroke.$(OBJEXT) \
 	xournalpp-EraseableStrokePart.$(OBJEXT) \
-	xournalpp-PartList.$(OBJEXT) xournalpp-Document.$(OBJEXT) \
+	xournalpp-PartList.$(OBJEXT) \
+	xournalpp-BackgroundImage.$(OBJEXT) \
+	xournalpp-BackgroundImageContents.$(OBJEXT) \
+	xournalpp-Document.$(OBJEXT) \
 	xournalpp-DocumentHandler.$(OBJEXT) \
 	xournalpp-DocumentListener.$(OBJEXT) \
 	xournalpp-Element.$(OBJEXT) xournalpp-Font.$(OBJEXT) \
@@ -509,6 +513,7 @@ xournalpp_SOURCES = control/jobs/AutosaveJob.cpp \
 	gui/Shadow.cpp gui/TextEditor.cpp gui/XournalView.cpp \
 	model/eraser/EraseableStroke.cpp \
 	model/eraser/EraseableStrokePart.cpp model/eraser/PartList.cpp \
+	model/BackgroundImage.cpp model/BackgroundImageContents.cpp \
 	model/Document.cpp model/DocumentHandler.cpp \
 	model/DocumentListener.cpp model/Element.cpp model/Font.cpp \
 	model/FormatDefinitions.cpp model/Image.cpp model/Layer.cpp \
@@ -625,6 +630,8 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-Actions.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-Attribute.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-AutosaveJob.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-BackgroundImage.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-BackgroundImageContents.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-BlockingJob.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-ButtonConfig.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-ButtonConfigGui.Po@am__quote@
@@ -2181,6 +2188,34 @@ xournalpp-PartList.obj: model/eraser/PartList.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='model/eraser/PartList.cpp' object='xournalpp-PartList.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-PartList.obj `if test -f 'model/eraser/PartList.cpp'; then $(CYGPATH_W) 'model/eraser/PartList.cpp'; else $(CYGPATH_W) '$(srcdir)/model/eraser/PartList.cpp'; fi`
+
+xournalpp-BackgroundImage.o: model/BackgroundImage.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-BackgroundImage.o -MD -MP -MF $(DEPDIR)/xournalpp-BackgroundImage.Tpo -c -o xournalpp-BackgroundImage.o `test -f 'model/BackgroundImage.cpp' || echo '$(srcdir)/'`model/BackgroundImage.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-BackgroundImage.Tpo $(DEPDIR)/xournalpp-BackgroundImage.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='model/BackgroundImage.cpp' object='xournalpp-BackgroundImage.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-BackgroundImage.o `test -f 'model/BackgroundImage.cpp' || echo '$(srcdir)/'`model/BackgroundImage.cpp
+
+xournalpp-BackgroundImage.obj: model/BackgroundImage.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-BackgroundImage.obj -MD -MP -MF $(DEPDIR)/xournalpp-BackgroundImage.Tpo -c -o xournalpp-BackgroundImage.obj `if test -f 'model/BackgroundImage.cpp'; then $(CYGPATH_W) 'model/BackgroundImage.cpp'; else $(CYGPATH_W) '$(srcdir)/model/BackgroundImage.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-BackgroundImage.Tpo $(DEPDIR)/xournalpp-BackgroundImage.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='model/BackgroundImage.cpp' object='xournalpp-BackgroundImage.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-BackgroundImage.obj `if test -f 'model/BackgroundImage.cpp'; then $(CYGPATH_W) 'model/BackgroundImage.cpp'; else $(CYGPATH_W) '$(srcdir)/model/BackgroundImage.cpp'; fi`
+
+xournalpp-BackgroundImageContents.o: model/BackgroundImageContents.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-BackgroundImageContents.o -MD -MP -MF $(DEPDIR)/xournalpp-BackgroundImageContents.Tpo -c -o xournalpp-BackgroundImageContents.o `test -f 'model/BackgroundImageContents.cpp' || echo '$(srcdir)/'`model/BackgroundImageContents.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-BackgroundImageContents.Tpo $(DEPDIR)/xournalpp-BackgroundImageContents.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='model/BackgroundImageContents.cpp' object='xournalpp-BackgroundImageContents.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-BackgroundImageContents.o `test -f 'model/BackgroundImageContents.cpp' || echo '$(srcdir)/'`model/BackgroundImageContents.cpp
+
+xournalpp-BackgroundImageContents.obj: model/BackgroundImageContents.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-BackgroundImageContents.obj -MD -MP -MF $(DEPDIR)/xournalpp-BackgroundImageContents.Tpo -c -o xournalpp-BackgroundImageContents.obj `if test -f 'model/BackgroundImageContents.cpp'; then $(CYGPATH_W) 'model/BackgroundImageContents.cpp'; else $(CYGPATH_W) '$(srcdir)/model/BackgroundImageContents.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-BackgroundImageContents.Tpo $(DEPDIR)/xournalpp-BackgroundImageContents.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='model/BackgroundImageContents.cpp' object='xournalpp-BackgroundImageContents.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-BackgroundImageContents.obj `if test -f 'model/BackgroundImageContents.cpp'; then $(CYGPATH_W) 'model/BackgroundImageContents.cpp'; else $(CYGPATH_W) '$(srcdir)/model/BackgroundImageContents.cpp'; fi`
 
 xournalpp-Document.o: model/Document.cpp
 @am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-Document.o -MD -MP -MF $(DEPDIR)/xournalpp-Document.Tpo -c -o xournalpp-Document.o `test -f 'model/Document.cpp' || echo '$(srcdir)/'`model/Document.cpp

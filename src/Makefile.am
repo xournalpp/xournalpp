@@ -105,6 +105,8 @@ xournalpp_SOURCES = \
 	model/eraser/EraseableStroke.cpp \
 	model/eraser/EraseableStrokePart.cpp \
 	model/eraser/PartList.cpp \
+	model/BackgroundImage.cpp \
+	model/BackgroundImageContents.cpp \
 	model/Document.cpp \
 	model/DocumentHandler.cpp \
 	model/DocumentListener.cpp \

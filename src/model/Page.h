@@ -17,6 +17,8 @@
 #include "../util/XournalType.h"
 #include "../util/String.h"
 
+#include "BackgroundImage.h"
+
 enum BackgroundType {
 	BACKGROUND_TYPE_NONE = 1,
 	BACKGROUND_TYPE_PDF,
@@ -24,38 +26,6 @@ enum BackgroundType {
 	BACKGROUND_TYPE_LINED,
 	BACKGROUND_TYPE_RULED,
 	BACKGROUND_TYPE_GRAPH
-};
-
-class BackgroundImage {
-public:
-	BackgroundImage();
-	virtual ~BackgroundImage();
-
-public:
-	String getFilename();
-	void loadFile(String filename, GError ** error);
-
-	void setAttach(bool attach);
-
-	void operator =(BackgroundImage & img);
-	bool operator == (const BackgroundImage & img);
-
-	void free();
-
-	void clearSaveState();
-	int getCloneId();
-	void setCloneId(int id);
-
-	void setFilename(String filename);
-
-	bool isAttached();
-
-	GdkPixbuf * getPixbuf();
-
-private:
-	XOJ_TYPE_ATTRIB;
-
-	void * img;
 };
 
 class XojPage {
