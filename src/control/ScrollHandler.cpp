@@ -1,5 +1,4 @@
 #include "ScrollHandler.h"
-#include "../model/Page.h"
 #include "Control.h"
 #include "../gui/XournalView.h"
 
@@ -29,7 +28,7 @@ void ScrollHandler::goToNextPage() {
 	}
 }
 
-void ScrollHandler::scrollToPage(XojPage * page, double top) {
+void ScrollHandler::scrollToPage(PageRef page, double top) {
 	XOJ_CHECK_TYPE(ScrollHandler);
 
 	Document * doc = this->control->getDocument();
@@ -83,7 +82,7 @@ void ScrollHandler::scrollToAnnotatedPage(bool next) {
 	doc->lock();
 
 	for (int i = this->control->getCurrentPageNo() + step; i >= 0 && i < doc->getPageCount(); i += step) {
-		if (doc->getPage(i)->isAnnotated()) {
+		if (doc->getPage(i).isAnnotated()) {
 			scrollToPage(i);
 			break;
 		}

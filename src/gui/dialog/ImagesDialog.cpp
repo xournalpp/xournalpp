@@ -3,6 +3,7 @@
 #include <math.h>
 #include "../../util/Util.h"
 #include "../../model/Document.h"
+#include "../../model/BackgroundImage.h"
 #include "../../control/settings/Settings.h"
 
 #include <config.h>
@@ -241,10 +242,10 @@ ImagesDialog::ImagesDialog(GladeSearchpath * gladeSearchPath, Document * doc, Se
 
 	int x = 0;
 	for (int i = 0; i < doc->getPageCount(); i++) {
-		XojPage * p = doc->getPage(i);
+		PageRef p = doc->getPage(i);
 
-		if (p->getBackgroundType() == BACKGROUND_TYPE_IMAGE) {
-			if (p->backgroundImage.getPixbuf() == NULL) {
+		if (p.getBackgroundType() == BACKGROUND_TYPE_IMAGE) {
+			if (p.getBackgroundImage()->getPixbuf() == NULL) {
 				continue;
 			}
 
@@ -252,14 +253,14 @@ ImagesDialog::ImagesDialog(GladeSearchpath * gladeSearchPath, Document * doc, Se
 
 			for (GList * l = this->images; l != NULL; l = l->next) {
 				ImageView * v = (ImageView *) l->data;
-				if (v->backgroundImage == p->backgroundImage) {
+				if (v->backgroundImage == *p.getBackgroundImage()) {
 					found = true;
 					break;
 				}
 			}
 			if (!found) {
 				ImageView * page = new ImageView(x, this);
-				page->backgroundImage = p->backgroundImage;
+				page->backgroundImage = *p.getBackgroundImage();
 				page->updateSize();
 				gtk_layout_put(GTK_LAYOUT(this->widget), page->getWidget(), 0, 0);
 

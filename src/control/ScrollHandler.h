@@ -17,6 +17,7 @@ class Control;
 
 #include <gtk/gtk.h>
 #include "../util/XournalType.h"
+#include "../model/PageRef.h"
 
 class ScrollHandler {
 public:
@@ -27,7 +28,7 @@ public:
 	void goToPreviousPage();
 	void goToNextPage();
 
-	void scrollToPage(XojPage * page, double top = 0);
+	void scrollToPage(PageRef page, double top = 0);
 	void scrollToPage(int page, double top = 0);
 
 	void scrollToSpinPange();

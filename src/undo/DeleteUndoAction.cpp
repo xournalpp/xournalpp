@@ -1,10 +1,11 @@
 #include "DeleteUndoAction.h"
 #include "../model/Layer.h"
 #include "../model/Element.h"
+#include "../model/PageRef.h"
 #include "../gui/Redrawable.h"
 #include "PageLayerPosEntry.h"
 
-DeleteUndoAction::DeleteUndoAction(XojPage * page, Redrawable * view, bool eraser) {
+DeleteUndoAction::DeleteUndoAction(PageRef page, Redrawable * view, bool eraser) {
 	XOJ_INIT_TYPE(DeleteUndoAction);
 
 	this->page = page;

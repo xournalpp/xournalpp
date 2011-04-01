@@ -22,7 +22,7 @@ class Element;
 
 class ColorUndoAction: public UndoAction {
 public:
-	ColorUndoAction(XojPage * page, Layer * layer, Redrawable * view);
+	ColorUndoAction(PageRef page, Layer * layer, Redrawable * view);
 	virtual ~ColorUndoAction();
 
 public:

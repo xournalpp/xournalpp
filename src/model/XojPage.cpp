@@ -1,8 +1,9 @@
-#include "Page.h"
+#include "XojPage.h"
 
 #include "Document.h"
+#include "BackgroundImage.h"
 
-XojPage::XojPage(double width, double heigth, int x) {
+XojPage::XojPage(double width, double heigth) {
 	XOJ_INIT_TYPE(XojPage);
 
 	this->pdfBackgroundPage = -1;
@@ -12,8 +13,10 @@ XojPage::XojPage(double width, double heigth, int x) {
 	this->height = heigth;
 
 	this->layer = NULL;
-	this->ref = 1;
+	this->ref = 0;
 	this->currentLayer = -1;
+
+	this->backgroundImage = new BackgroundImage();
 }
 
 XojPage::~XojPage() {
@@ -25,23 +28,22 @@ XojPage::~XojPage() {
 	g_list_free(this->layer);
 	this->layer = NULL;
 
+	delete this->backgroundImage;
+	this->backgroundImage = NULL;
+
 	XOJ_RELEASE_TYPE(XojPage);
 }
 
-void XojPage::reference(int debugId) {
+void XojPage::reference() {
 	XOJ_CHECK_TYPE(XojPage);
 
 	this->ref++;
-
-	printf("debug:pref:%i (%i)\n", debugId, this->ref);
 }
 
-void XojPage::unreference(int debugId) {
+void XojPage::unreference() {
 	XOJ_CHECK_TYPE(XojPage);
 
 	this->ref--;
-	// TODO: there are some bugs
-	printf("debug:punref:%i (%i)\n", debugId, this->ref);
 	if (ref < 1) {
 		delete this;
 	}
@@ -162,7 +164,7 @@ void XojPage::setBackgroundType(BackgroundType bgType) {
 		this->pdfBackgroundPage = -1;
 	}
 	if (bgType != BACKGROUND_TYPE_IMAGE) {
-		this->backgroundImage.free();
+		this->backgroundImage->free();
 	}
 }
 
@@ -170,6 +172,12 @@ BackgroundType XojPage::getBackgroundType() {
 	XOJ_CHECK_TYPE(XojPage);
 
 	return this->bgType;
+}
+
+BackgroundImage * XojPage::getBackgroundImage() {
+	XOJ_CHECK_TYPE(XojPage);
+
+	return this->backgroundImage;
 }
 
 Layer * XojPage::getSelectedLayer() {

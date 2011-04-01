@@ -1,7 +1,7 @@
 #include "MoveUndoAction.h"
 
 #include "../model/Element.h"
-#include "../model/Page.h"
+#include "../model/PageRef.h"
 #include "../model/Layer.h"
 #include "../gui/Redrawable.h"
 #include "../control/tools/EditSelection.h"
@@ -20,8 +20,8 @@ public:
 	double y;
 };
 
-MoveUndoAction::MoveUndoAction(Layer * sourceLayer, XojPage * sourcePage, Redrawable * sourceView, GList * selected, double mx, double my, Layer * targetLayer,
-		XojPage * targetPage, Redrawable * targetView) {
+MoveUndoAction::MoveUndoAction(Layer * sourceLayer, PageRef sourcePage, Redrawable * sourceView, GList * selected, double mx, double my, Layer * targetLayer,
+		PageRef targetPage, Redrawable * targetView) {
 	XOJ_INIT_TYPE(MoveUndoAction);
 
 	this->page = sourcePage;
@@ -49,7 +49,7 @@ MoveUndoAction::MoveUndoAction(Layer * sourceLayer, XojPage * sourcePage, Redraw
 	}
 }
 
-MoveUndoAction::MoveUndoAction(XojPage * sourcePage, VerticalToolHandler * handler) {
+MoveUndoAction::MoveUndoAction(PageRef sourcePage, VerticalToolHandler * handler) {
 	XOJ_INIT_TYPE(MoveUndoAction);
 
 	this->page = sourcePage;

@@ -110,12 +110,12 @@ public:
 
 	bool searchTextOnPage(const char * text, int p, int * occures, double * top);
 
-	void firePageSelected(XojPage * page);
+	void firePageSelected(PageRef page);
 	void firePageSelected(int page);
 
 	void addDefaultPage();
 	void insertNewPage(int position);
-	void insertPage(XojPage * page, int position);
+	void insertPage(PageRef page, int position);
 	void deletePage();
 
 	/**
@@ -157,14 +157,14 @@ public:
 	MainWindow * getWindow();
 	RecentManager * getRecentManager();
 	ScrollHandler * getScrollHandler();
-	XojPage * getCurrentPage();
+	PageRef getCurrentPage();
 	int getCurrentPageNo();
 	Cursor * getCursor();
 	Sidebar * getSidebar();
 public:
 	// UndoRedoListener interface
 	void undoRedoChanged();
-	void undoRedoPageChanged(XojPage * page);
+	void undoRedoPageChanged(PageRef page);
 
 public:
 	// ProgressListener interface

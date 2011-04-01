@@ -18,6 +18,8 @@
 #include "../util/Stacktrace.h"
 #include "../util/XInputUtils.h"
 #include "../model/FormatDefinitions.h"
+#include "../model/XojPage.h"
+#include "../model/BackgroundImage.h"
 #include "../undo/InsertDeletePageUndoAction.h"
 #include "../undo/InsertLayerUndoAction.h"
 #include "../undo/PageBackgroundChangedUndoAction.h"
@@ -718,14 +720,14 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent *even
 
 	case ACTION_FOOTER_LAYER: {
 		clearSelectionEndText();
-		XojPage * p = getCurrentPage();
-		if (p) {
-			p->setSelectedLayerId(win->getCurrentLayer());
-			win->getXournal()->layerChanged(getCurrentPageNo());
-			win->updateLayerCombobox();
+		PageRef p = getCurrentPage();
+		if (p.isValid()) {
+			p.setSelectedLayerId(this->win->getCurrentLayer());
+			this->win->getXournal()->layerChanged(getCurrentPageNo());
+			this->win->updateLayerCombobox();
 
-			if (p) {
-				int layer = p->getSelectedLayerId();
+			if (p.isValid()) {
+				int layer = p.getSelectedLayerId();
 				fireEnableAction(ACTION_DELETE_LAYER, layer > 0);
 			}
 		}
@@ -785,7 +787,7 @@ void Control::invokeLater(ActionType type) {
 /**
  * Fire page selected, but first check if the page Number is valid
  */
-void Control::firePageSelected(XojPage * page) {
+void Control::firePageSelected(PageRef page) {
 	XOJ_CHECK_TYPE(Control);
 
 	this->doc->lock();
@@ -888,22 +890,21 @@ void Control::addDefaultPage() {
 
 	getDefaultPagesize(width, heigth);
 
-	XojPage * page = new XojPage(width, heigth, 0);
-	page->setBackgroundColor(settings->getPageBackgroundColor());
+	PageRef page = new XojPage(width, heigth);
+	page.setBackgroundColor(settings->getPageBackgroundColor());
 
 	if (PAGE_INSERT_TYPE_PLAIN == type) {
-		page->setBackgroundType(BACKGROUND_TYPE_NONE);
+		page.setBackgroundType(BACKGROUND_TYPE_NONE);
 	} else if (PAGE_INSERT_TYPE_RULED == type) {
-		page->setBackgroundType(BACKGROUND_TYPE_RULED);
+		page.setBackgroundType(BACKGROUND_TYPE_RULED);
 	} else if (PAGE_INSERT_TYPE_GRAPH == type) {
-		page->setBackgroundType(BACKGROUND_TYPE_GRAPH);
+		page.setBackgroundType(BACKGROUND_TYPE_GRAPH);
 	} else {//PAGE_INSERT_TYPE_LINED or PDF or COPY
-		page->setBackgroundType(BACKGROUND_TYPE_LINED);
+		page.setBackgroundType(BACKGROUND_TYPE_LINED);
 	}
 
 	this->doc->lock();
 	this->doc->addPage(page);
-	page->unreference(5);
 	this->doc->unlock();
 
 	updateDeletePageButton();
@@ -997,7 +998,7 @@ void Control::deletePage() {
 	}
 
 	this->doc->lock();
-	XojPage * page = doc->getPage(pNr);
+	PageRef page = doc->getPage(pNr);
 	this->doc->unlock();
 
 	// first send event, then delete page...
@@ -1025,49 +1026,47 @@ void Control::insertNewPage(int position) {
 	double height = 0;
 	getDefaultPagesize(width, height);
 
-	XojPage * page = new XojPage(width, height,0);
-	page->setBackgroundColor(settings->getPageBackgroundColor());
+	PageRef page = new XojPage(width, height);
+	page.setBackgroundColor(settings->getPageBackgroundColor());
 
 	if (PAGE_INSERT_TYPE_PLAIN == type) {
-		page->setBackgroundType(BACKGROUND_TYPE_NONE);
+		page.setBackgroundType(BACKGROUND_TYPE_NONE);
 	} else if (PAGE_INSERT_TYPE_LINED == type) {
-		page->setBackgroundType(BACKGROUND_TYPE_LINED);
+		page.setBackgroundType(BACKGROUND_TYPE_LINED);
 	} else if (PAGE_INSERT_TYPE_RULED == type) {
-		page->setBackgroundType(BACKGROUND_TYPE_RULED);
+		page.setBackgroundType(BACKGROUND_TYPE_RULED);
 	} else if (PAGE_INSERT_TYPE_GRAPH == type) {
-		page->setBackgroundType(BACKGROUND_TYPE_GRAPH);
+		page.setBackgroundType(BACKGROUND_TYPE_GRAPH);
 	} else if (PAGE_INSERT_TYPE_COPY == type) {
-		XojPage * current = getCurrentPage();
-		if (current == NULL) { // should not happen, but if you open an ivalid file or something like this...
-			page->setBackgroundType(BACKGROUND_TYPE_LINED);
+		PageRef current = getCurrentPage();
+		if (!current.isValid()) { // should not happen, but if you open an invalid file or something like this...
+			page.setBackgroundType(BACKGROUND_TYPE_LINED);
 		} else {
-			BackgroundType bg = current->getBackgroundType();
-			page->setBackgroundType(bg);
+			BackgroundType bg = current.getBackgroundType();
+			page.setBackgroundType(bg);
 			if (bg == BACKGROUND_TYPE_PDF) {
-				page->setBackgroundPdfPageNr(current->getPdfPageNr());
+				page.setBackgroundPdfPageNr(current.getPdfPageNr());
 			} else if (bg == BACKGROUND_TYPE_IMAGE) {
-				page->backgroundImage = current->backgroundImage;
+				*page.getBackgroundImage() = *current.getBackgroundImage();
 			} else {
-				page->setBackgroundColor(current->getBackgroundColor());
+				page.setBackgroundColor(current.getBackgroundColor());
 			}
 		}
 	} else if (PAGE_INSERT_TYPE_PDF_BACKGROUND == type) {
-		if (doc->getPdfPageCount() == 0) {
+		if (this->doc->getPdfPageCount() == 0) {
 			GtkWidget * dialog = gtk_message_dialog_new((GtkWindow*) *win, GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
 					_("You don't have any PDF pages to select from. Cancel operation,\n"
 							"Please select another background type: Menu \"Journal\" / \"Insert Page Type\"."));
 			gtk_dialog_run(GTK_DIALOG(dialog));
 			gtk_widget_destroy(dialog);
 
-			// delete page
-			page->unreference(3);
 			return;
 		} else {
 			this->doc->lock();
 			PdfPagesDialog * dlg = new PdfPagesDialog(this->gladeSearchPath, this->doc, this->settings);
 			for (int i = 0; i < doc->getPageCount(); i++) {
-				XojPage * p = doc->getPage(i);
-				if (p->getBackgroundType() == BACKGROUND_TYPE_PDF && p->getPdfPageNr() >= 0) {
+				PageRef p = doc->getPage(i);
+				if (p.getBackgroundType() == BACKGROUND_TYPE_PDF && p.getPdfPageNr() >= 0) {
 					dlg->setPageUsed(i);
 				}
 			}
@@ -1078,25 +1077,23 @@ void Control::insertNewPage(int position) {
 			delete dlg;
 
 			if (selected < 0 || selected >= doc->getPdfPageCount()) {
-				// delete page
-				page->unreference(2);
+				// page is automatically deleted
 				return;
 			}
 
 			// no need to set a type, if we set the page number the type is also set
-			page->setBackgroundPdfPageNr(selected);
+			page.setBackgroundPdfPageNr(selected);
 
 			XojPopplerPage * p = doc->getPdfPage(selected);
-			page->setSize(p->getWidth(), p->getHeight());
+			page.setSize(p->getWidth(), p->getHeight());
 			this->doc->unlock();
 		}
 	}
 
 	insertPage(page, position);
-	page->unreference(1);
 }
 
-void Control::insertPage(XojPage * page, int position) {
+void Control::insertPage(PageRef page, int position) {
 	XOJ_CHECK_TYPE(Control);
 
 	this->doc->lock();
@@ -1123,13 +1120,13 @@ void Control::addNewLayer() {
 	XOJ_CHECK_TYPE(Control);
 
 	clearSelectionEndText();
-	XojPage * p = getCurrentPage();
-	if (p == NULL) {
+	PageRef p = getCurrentPage();
+	if (!p.isValid()) {
 		return;
 	}
 
 	Layer * l = new Layer();
-	p->insertLayer(l, p->getSelectedLayerId());
+	p.insertLayer(l, p.getSelectedLayerId());
 	if (win) {
 		win->updateLayerCombobox();
 	}
@@ -1140,9 +1137,9 @@ void Control::addNewLayer() {
 void Control::setPageBackground(ActionType type) {
 	XOJ_CHECK_TYPE(Control);
 
-	XojPage * page = getCurrentPage();
+	PageRef page = getCurrentPage();
 
-	if (page == NULL) {
+	if (!page.isValid()) {
 		return;
 	}
 
@@ -1153,20 +1150,20 @@ void Control::setPageBackground(ActionType type) {
 		return; // should not happen...
 	}
 
-	int origPdfPage = page->getPdfPageNr();
-	BackgroundType origType = page->getBackgroundType();
-	BackgroundImage origBackgroundImage = page->backgroundImage;
-	double origW = page->getWidth();
-	double origH = page->getHeight();
+	int origPdfPage = page.getPdfPageNr();
+	BackgroundType origType = page.getBackgroundType();
+	BackgroundImage origBackgroundImage = *page.getBackgroundImage();
+	double origW = page.getWidth();
+	double origH = page.getHeight();
 
 	if (ACTION_SET_PAPER_BACKGROUND_PLAIN == type) {
-		page->setBackgroundType(BACKGROUND_TYPE_NONE);
+		page.setBackgroundType(BACKGROUND_TYPE_NONE);
 	} else if (ACTION_SET_PAPER_BACKGROUND_LINED == type) {
-		page->setBackgroundType(BACKGROUND_TYPE_LINED);
+		page.setBackgroundType(BACKGROUND_TYPE_LINED);
 	} else if (ACTION_SET_PAPER_BACKGROUND_RULED == type) {
-		page->setBackgroundType(BACKGROUND_TYPE_RULED);
+		page.setBackgroundType(BACKGROUND_TYPE_RULED);
 	} else if (ACTION_SET_PAPER_BACKGROUND_GRAPH == type) {
-		page->setBackgroundType(BACKGROUND_TYPE_GRAPH);
+		page.setBackgroundType(BACKGROUND_TYPE_GRAPH);
 	} else if (ACTION_SET_PAPER_BACKGROUND_IMAGE == type) {
 
 		this->doc->lock();
@@ -1177,8 +1174,8 @@ void Control::setPageBackground(ActionType type) {
 		BackgroundImage * img = dlg->getSelectedImage();
 		if (img) {
 			printf("image selected\n");
-			page->backgroundImage = *img;
-			page->setBackgroundType(BACKGROUND_TYPE_IMAGE);
+			*page.getBackgroundImage() = *img;
+			page.setBackgroundType(BACKGROUND_TYPE_IMAGE);
 		} else if (dlg->shouldShowFilechooser()) {
 
 			bool attach = false;
@@ -1203,14 +1200,14 @@ void Control::setPageBackground(ActionType type) {
 				g_error_free(err);
 				return;
 			} else {
-				page->backgroundImage = newImg;
-				page->setBackgroundType(BACKGROUND_TYPE_IMAGE);
+				*page.getBackgroundImage() = newImg;
+				page.setBackgroundType(BACKGROUND_TYPE_IMAGE);
 			}
 		}
 
-		GdkPixbuf * pixbuf = page->backgroundImage.getPixbuf();
+		GdkPixbuf * pixbuf = page.getBackgroundImage()->getPixbuf();
 		if (pixbuf) {
-			page->setSize(gdk_pixbuf_get_width(pixbuf), gdk_pixbuf_get_height(pixbuf));
+			page.setSize(gdk_pixbuf_get_width(pixbuf), gdk_pixbuf_get_height(pixbuf));
 			firePageSizeChanged(pageNr);
 		}
 
@@ -1228,8 +1225,8 @@ void Control::setPageBackground(ActionType type) {
 
 			PdfPagesDialog * dlg = new PdfPagesDialog(this->gladeSearchPath, this->doc, this->settings);
 			for (int i = 0; i < doc->getPageCount(); i++) {
-				XojPage * p = doc->getPage(i);
-				if (p->getBackgroundType() == BACKGROUND_TYPE_PDF && p->getPdfPageNr() >= 0) {
+				PageRef p = doc->getPage(i);
+				if (p.getBackgroundType() == BACKGROUND_TYPE_PDF && p.getPdfPageNr() >= 0) {
 					dlg->setPageUsed(i);
 				}
 			}
@@ -1246,7 +1243,7 @@ void Control::setPageBackground(ActionType type) {
 			}
 
 			// no need to set a type, if we set the page number the type is also set
-			page->setBackgroundPdfPageNr(selected);
+			page.setBackgroundPdfPageNr(selected);
 		}
 	}
 
@@ -1260,11 +1257,11 @@ void Control::updateBackgroundSizeButton() {
 	XOJ_CHECK_TYPE(Control);
 
 	// Update paper color button
-	XojPage * p = getCurrentPage();
-	if (p == NULL || win == NULL) {
+	PageRef p = getCurrentPage();
+	if (!p.isValid() || this->win == NULL) {
 		return;
 	}
-	BackgroundType bg = p->getBackgroundType();
+	BackgroundType bg = p.getBackgroundType();
 	GtkWidget * paperColor = win->get("menuJournalPaperColor");
 	GtkWidget * pageSize = win->get("menuJournalPaperFormat");
 
@@ -1281,13 +1278,13 @@ void Control::updateBackgroundSizeButton() {
 void Control::paperFormat() {
 	XOJ_CHECK_TYPE(Control);
 
-	XojPage * page = getCurrentPage();
-	if (!page || page->getBackgroundType() == BACKGROUND_TYPE_PDF) {
+	PageRef page = getCurrentPage();
+	if (!page.isValid() || page.getBackgroundType() == BACKGROUND_TYPE_PDF) {
 		return;
 	}
 	clearSelectionEndText();
 
-	FormatDialog * dlg = new FormatDialog(this->gladeSearchPath, settings, page->getWidth(), page->getHeight());
+	FormatDialog * dlg = new FormatDialog(this->gladeSearchPath, settings, page.getWidth(), page.getHeight());
 	dlg->show();
 
 	double width = dlg->getWidth();
@@ -1307,16 +1304,16 @@ void Control::changePageBackgroundColor() {
 
 	int pNr = getCurrentPageNo();
 	this->doc->lock();
-	XojPage * p = this->doc->getPage(pNr);
+	PageRef p = this->doc->getPage(pNr);
 	this->doc->unlock();
 
-	if (p == NULL) {
+	if (!p.isValid()) {
 		return;
 	}
 
 	clearSelectionEndText();
 
-	BackgroundType bg = p->getBackgroundType();
+	BackgroundType bg = p.getBackgroundType();
 	if (BACKGROUND_TYPE_NONE != bg && BACKGROUND_TYPE_LINED != bg && BACKGROUND_TYPE_RULED != bg && BACKGROUND_TYPE_GRAPH != bg) {
 		return;
 	}
@@ -1331,7 +1328,7 @@ void Control::changePageBackgroundColor() {
 	}
 
 	if (color != -1) {
-		p->setBackgroundColor(color);
+		p.setBackgroundColor(color);
 		firePageChanged(pNr);
 		settings->setPageBackgroundColor(color);
 	}
@@ -1343,19 +1340,19 @@ void Control::deleteCurrentLayer() {
 	XOJ_CHECK_TYPE(Control);
 
 	clearSelectionEndText();
-	XojPage * p = getCurrentPage();
+	PageRef p = getCurrentPage();
 	int pId = getCurrentPageNo();
-	if (p == NULL) {
+	if (!p.isValid()) {
 		return;
 	}
 
-	int lId = p->getSelectedLayerId();
+	int lId = p.getSelectedLayerId();
 	if (lId < 1) {
 		return;
 	}
-	Layer * l = p->getSelectedLayer();
+	Layer * l = p.getSelectedLayer();
 
-	p->removeLayer(l);
+	p.removeLayer(l);
 	if (win) {
 		win->getXournal()->layerChanged(pId);
 		win->updateLayerCombobox();
@@ -1369,11 +1366,11 @@ void Control::calcZoomFitSize() {
 	XOJ_CHECK_TYPE(Control);
 
 	if (this->doc && this->win) {
-		XojPage * p = getCurrentPage();
-		if (p == NULL) {
+		PageRef p = getCurrentPage();
+		if (!p.isValid()) {
 			return;
 		}
-		double width = p->getWidth() + 20;
+		double width = p.getWidth() + 20;
 
 		GtkAllocation allocation = { 0 };
 
@@ -1452,13 +1449,13 @@ bool Control::searchTextOnPage(const char * text, int p, int * occures, double *
 	return getWindow()->getXournal()->searchTextOnPage(text, p, occures, top);
 }
 
-XojPage * Control::getCurrentPage() {
+PageRef Control::getCurrentPage() {
 	XOJ_CHECK_TYPE(Control);
 
 	int page = win->getXournal()->getCurrentPage();
 
 	this->doc->lock();
-	XojPage * p = this->doc->getPage(page);
+	PageRef p = this->doc->getPage(page);
 	this->doc->unlock();
 
 	return p;
@@ -1483,15 +1480,17 @@ void Control::undoRedoChanged() {
 	updateWindowTitle();
 }
 
-void Control::undoRedoPageChanged(XojPage * page) {
+void Control::undoRedoPageChanged(PageRef page) {
 	XOJ_CHECK_TYPE(Control);
 
 	for (GList * l = this->changedPages; l != NULL; l = l->next) {
-		if (l->data == page) {
+		if (l->data == (XojPage *)page) {
 			return;
 		}
 	}
-	this->changedPages = g_list_append(this->changedPages, page);
+
+	// TODO: reference / unrefrerence!!
+	this->changedPages = g_list_append(this->changedPages, (XojPage *)page);
 }
 
 void Control::selectTool(ToolType type) {
@@ -2208,8 +2207,8 @@ void Control::clipboardPasteText(String text) {
 	}
 
 	this->doc->lock();
-	XojPage * page = this->doc->getPage(pageNr);
-	Layer * layer = page->getSelectedLayer();
+	PageRef page = this->doc->getPage(pageNr);
+	Layer * layer = page.getSelectedLayer();
 	win->getXournal()->getPasteTarget(x, y);
 
 	Text * t = new Text();
@@ -2242,7 +2241,7 @@ void Control::clipboardPasteXournal(ObjectInputStream & in) {
 	}
 
 	this->doc->lock();
-	XojPage * page = this->doc->getPage(pNr);
+	PageRef page = this->doc->getPage(pNr);
 
 	PageView * view = win->getXournal()->getViewFor(pNr);
 

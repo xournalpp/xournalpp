@@ -14,14 +14,14 @@
 
 #include <cairo.h>
 #include "../../gui/Redrawable.h"
-#include "../../model/Page.h"
+#include "../../model/PageRef.h"
 #include "../../view/ElementContainer.h"
 #include "../../undo/MoveUndoAction.h"
 #include "../../util/XournalType.h"
 
 class VerticalToolHandler: public ElementContainer {
 public:
-	VerticalToolHandler(Redrawable * view, XojPage * page, double y, double zoom);
+	VerticalToolHandler(Redrawable * view, PageRef page, double y, double zoom);
 	virtual ~VerticalToolHandler();
 
 	void paint(cairo_t * cr, GdkRectangle * rect, double zoom);
@@ -35,7 +35,7 @@ private:
 	XOJ_TYPE_ATTRIB;
 
 	Redrawable * view;
-	XojPage * page;
+	PageRef page;
 	Layer * layer;
 	GList * elements;
 

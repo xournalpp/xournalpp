@@ -2,7 +2,7 @@
 #include "../control/Control.h"
 #include "../model/Document.h"
 
-PageBackgroundChangedUndoAction::PageBackgroundChangedUndoAction(XojPage * page, BackgroundType origType,
+PageBackgroundChangedUndoAction::PageBackgroundChangedUndoAction(PageRef page, BackgroundType origType,
 		int origPdfPage, BackgroundImage origBackgroundImage, double origW, double origH) {
 	XOJ_INIT_TYPE(PageBackgroundChangedUndoAction);
 
@@ -20,11 +20,11 @@ PageBackgroundChangedUndoAction::~PageBackgroundChangedUndoAction() {
 bool PageBackgroundChangedUndoAction::undo(Control * control) {
 	XOJ_CHECK_TYPE(PageBackgroundChangedUndoAction);
 
-	this->newType = this->page->getBackgroundType();
-	this->newPdfPage = this->page->getPdfPageNr();
-	this->newBackgroundImage = this->page->backgroundImage;
-	this->newW = this->page->getWidth();
-	this->newH = this->page->getHeight();
+	this->newType = this->page.getBackgroundType();
+	this->newPdfPage = this->page.getPdfPageNr();
+	this->newBackgroundImage = *this->page.getBackgroundImage();
+	this->newW = this->page.getWidth();
+	this->newH = this->page.getHeight();
 
 	Document * doc = control->getDocument();
 	doc->lock();
@@ -36,15 +36,15 @@ bool PageBackgroundChangedUndoAction::undo(Control * control) {
 	}
 
 	if (this->newW != this->origW || this->newH != this->origH) {
-		this->page->setSize(this->origW, this->origH);
+		this->page.setSize(this->origW, this->origH);
 		control->firePageSizeChanged(pageNr);
 	}
 
-	this->page->setBackgroundType(this->origType);
+	this->page.setBackgroundType(this->origType);
 	if (this->origType == BACKGROUND_TYPE_PDF) {
-		this->page->setBackgroundPdfPageNr(this->origPdfPage);
+		this->page.setBackgroundPdfPageNr(this->origPdfPage);
 	} else if (this->origType == BACKGROUND_TYPE_IMAGE) {
-		this->page->backgroundImage = this->origBackgroundImage;
+		*this->page.getBackgroundImage() = this->origBackgroundImage;
 	}
 
 	doc->unlock();
@@ -67,15 +67,15 @@ bool PageBackgroundChangedUndoAction::redo(Control * control) {
 	}
 
 	if (this->newW != this->origW || this->newH != this->origH) {
-		this->page->setSize(this->newW, this->newH);
+		this->page.setSize(this->newW, this->newH);
 		control->firePageSizeChanged(pageNr);
 	}
 
-	this->page->setBackgroundType(this->newType);
+	this->page.setBackgroundType(this->newType);
 	if (this->newType == BACKGROUND_TYPE_PDF) {
-		this->page->setBackgroundPdfPageNr(this->newPdfPage);
+		this->page.setBackgroundPdfPageNr(this->newPdfPage);
 	} else if (this->newType == BACKGROUND_TYPE_IMAGE) {
-		this->page->backgroundImage = this->newBackgroundImage;
+		*this->page.getBackgroundImage() = this->newBackgroundImage;
 	}
 
 	control->firePageChanged(pageNr);

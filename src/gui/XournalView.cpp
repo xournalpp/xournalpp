@@ -295,7 +295,7 @@ void XournalView::pageSelected(int page) {
 		PageView * vp = viewPages[page];
 		vp->setSelected(true);
 		lastSelectedPage = page;
-		pdfPage = vp->getPage()->getPdfPageNr();
+		pdfPage = vp->getPage().getPdfPageNr();
 	}
 
 	control->updatePageNumbers(currentPage, pdfPage);
@@ -324,7 +324,7 @@ void XournalView::scrollTo(int pageNo, double y) {
 
 	PageView * p = viewPages[pageNo];
 
-	int pdfPage = p->getPage()->getPdfPageNr();
+	int pdfPage = p->getPage().getPdfPageNr();
 
 	int pos = p->getY();
 

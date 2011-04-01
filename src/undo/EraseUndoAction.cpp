@@ -6,7 +6,7 @@
 
 #include "PageLayerPosEntry.h"
 
-EraseUndoAction::EraseUndoAction(XojPage * page, Redrawable * view) {
+EraseUndoAction::EraseUndoAction(PageRef page, Redrawable * view) {
 	XOJ_INIT_TYPE(EraseUndoAction);
 
 	this->page = page;

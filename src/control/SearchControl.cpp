@@ -1,8 +1,9 @@
 #include "SearchControl.h"
 #include "../model/Text.h"
+#include "../model/Layer.h"
 #include "../view/TextView.h"
 
-SearchControl::SearchControl(XojPage * page, XojPopplerPage * pdf) {
+SearchControl::SearchControl(PageRef page, XojPopplerPage * pdf) {
 	XOJ_INIT_TYPE(SearchControl);
 
 	this->page = page;
@@ -55,12 +56,12 @@ bool SearchControl::search(const char * text, int * occures, double * top) {
 		return true;
 	}
 
-	if (pdf) {
-		this->results = pdf->findText(text);
+	if (this->pdf) {
+		this->results = this->pdf->findText(text);
 	}
 
-	int selected = page->getSelectedLayerId();
-	ListIterator<Layer*> it = page->layerIterator();
+	int selected = this->page.getSelectedLayerId();
+	ListIterator<Layer*> it = this->page.layerIterator();
 
 	while (it.hasNext() && selected) {
 		Layer * l = it.next();

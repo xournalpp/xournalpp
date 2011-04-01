@@ -471,7 +471,7 @@ void TextEditor::contentsChanged(bool forceCreateUndoAction) {
 
 	if (forceCreateUndoAction || ABS(lastText.length()-currentText.length()) > 100) {
 		if (!lastText.isEmpty() && this->undoActions && !(((TextUndoAction*) this->undoActions->data)->getUndoText() == currentText)) {
-			TextUndoAction * undo = new TextUndoAction(gui->getPage(), gui->getPage()->getSelectedLayer(), this->text, lastText, gui, this);
+			TextUndoAction * undo = new TextUndoAction(gui->getPage(), gui->getPage().getSelectedLayer(), this->text, lastText, gui, this);
 			UndoRedoHandler * handler = gui->getXournal()->getControl()->getUndoRedoHandler();
 			handler->addUndoAction(undo);
 			this->undoActions = g_list_append(this->undoActions, undo);

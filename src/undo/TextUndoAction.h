@@ -22,7 +22,7 @@ class TextEditor;
 
 class TextUndoAction: public UndoAction {
 public:
-	TextUndoAction(XojPage * page, Layer * layer, Text * text, String lastText, Redrawable * view,
+	TextUndoAction(PageRef page, Layer * layer, Text * text, String lastText, Redrawable * view,
 			TextEditor * textEditor);
 	virtual ~TextUndoAction();
 

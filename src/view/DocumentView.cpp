@@ -4,6 +4,8 @@
 #include "../control/tools/Selection.h"
 #include "../control/tools/EditSelection.h"
 #include "../model/eraser/EraseableStroke.h"
+#include "../model/Layer.h"
+#include "../model/BackgroundImage.h"
 #include "../cfg.h"
 
 #include <config.h>
@@ -220,7 +222,7 @@ void DocumentView::drawLayer(cairo_t * cr, Layer * l) {
 void DocumentView::paintBackgroundImage() {
 	XOJ_CHECK_TYPE(DocumentView);
 
-	GdkPixbuf * pixbuff = page->backgroundImage.getPixbuf();
+	GdkPixbuf * pixbuff = page.getBackgroundImage()->getPixbuf();
 	if (pixbuff) {
 		cairo_matrix_t matrix = { 0 };
 		cairo_get_matrix(cr, &matrix);
@@ -228,8 +230,8 @@ void DocumentView::paintBackgroundImage() {
 		int width = gdk_pixbuf_get_width(pixbuff);
 		int height = gdk_pixbuf_get_height(pixbuff);
 
-		double sx = page->getWidth() / width;
-		double sy = page->getHeight() / height;
+		double sx = page.getWidth() / width;
+		double sy = page.getHeight() / height;
 
 		cairo_scale(cr, sx, sy);
 
@@ -243,7 +245,7 @@ void DocumentView::paintBackgroundImage() {
 void DocumentView::paintBackgroundColor() {
 	XOJ_CHECK_TYPE(DocumentView);
 
-	applyColor(cr, page->getBackgroundColor());
+	applyColor(cr, page.getBackgroundColor());
 
 	cairo_rectangle(cr, 0, 0, width, height);
 	cairo_fill(cr);
@@ -320,38 +322,38 @@ void DocumentView::limitArea(double x, double y, double width, double heigth) {
 	this->lHeight = heigth;
 }
 
-void DocumentView::drawPage(XojPage * page, cairo_t * cr, bool dontRenderEditingStroke) {
+void DocumentView::drawPage(PageRef page, cairo_t * cr, bool dontRenderEditingStroke) {
 	XOJ_CHECK_TYPE(DocumentView);
 
 	this->cr = cr;
 	this->page = page;
-	this->width = page->getWidth();
-	this->height = page->getHeight();
+	this->width = page.getWidth();
+	this->height = page.getHeight();
 	this->dontRenderEditingStroke = dontRenderEditingStroke;
 
-	if (page->getBackgroundType() == BACKGROUND_TYPE_PDF) {
-		// not handled here
-	} else if (page->getBackgroundType() == BACKGROUND_TYPE_IMAGE) {
+	if (page.getBackgroundType() == BACKGROUND_TYPE_PDF) {
+		// Handled in PdfView
+	} else if (page.getBackgroundType() == BACKGROUND_TYPE_IMAGE) {
 		paintBackgroundImage();
-	} else if (page->getBackgroundType() == BACKGROUND_TYPE_GRAPH) {
+	} else if (page.getBackgroundType() == BACKGROUND_TYPE_GRAPH) {
 		paintBackgroundColor();
 		paintBackgroundGraph();
-	} else if (page->getBackgroundType() == BACKGROUND_TYPE_LINED) {
+	} else if (page.getBackgroundType() == BACKGROUND_TYPE_LINED) {
 		paintBackgroundColor();
 		paintBackgroundRuled();
 		paintBackgroundLined();
-	} else if (page->getBackgroundType() == BACKGROUND_TYPE_RULED) {
+	} else if (page.getBackgroundType() == BACKGROUND_TYPE_RULED) {
 		paintBackgroundColor();
 		paintBackgroundRuled();
-	} else if (page->getBackgroundType() == BACKGROUND_TYPE_NONE) {
+	} else if (page.getBackgroundType() == BACKGROUND_TYPE_NONE) {
 		paintBackgroundColor();
 	}
 
 	cairo_set_operator(cr, CAIRO_OPERATOR_SOURCE);
 
 	int layer = 0;
-	ListIterator<Layer *> it = page->layerIterator();
-	while (it.hasNext() && layer < page->getSelectedLayerId()) {
+	ListIterator<Layer *> it = page.layerIterator();
+	while (it.hasNext() && layer < page.getSelectedLayerId()) {
 		Layer * l = it.next();
 		drawLayer(cr, l);
 		layer++;

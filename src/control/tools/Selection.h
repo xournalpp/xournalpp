@@ -13,7 +13,8 @@
 #define __SELECTION_H__
 
 #include <glib.h>
-#include "../../model/Page.h"
+#include "../../model/PageRef.h"
+#include "../../model/Element.h"
 #include "../../gui/Redrawable.h"
 #include "../../util/Util.h"
 #include "../../util/XournalType.h"
@@ -24,7 +25,7 @@ public:
 	virtual ~Selection();
 
 public:
-	virtual bool finalize(XojPage * page) = 0;
+	virtual bool finalize(PageRef page) = 0;
 	virtual void paint(cairo_t * cr, GdkRectangle * rect, double zoom) = 0;
 	virtual void currentPos(double x, double y) = 0;
 	virtual void getSelectedRect(double & x, double & y, double & width, double & height);
@@ -34,7 +35,7 @@ private:
 
 protected:
 	GList * selectedElements;
-	XojPage * page;
+	PageRef page;
 	Redrawable * view;
 
 	double x1Box;
@@ -51,7 +52,7 @@ public:
 	virtual ~RectSelection();
 
 public:
-	virtual bool finalize(XojPage * page);
+	virtual bool finalize(PageRef page);
 	virtual void paint(cairo_t * cr, GdkRectangle * rect, double zoom);
 	virtual void currentPos(double x, double y);
 	virtual bool contains(double x, double y);
@@ -79,7 +80,7 @@ public:
 	virtual ~RegionSelect();
 
 public:
-	virtual bool finalize(XojPage * page);
+	virtual bool finalize(PageRef page);
 	virtual void paint(cairo_t * cr, GdkRectangle * rect, double zoom);
 	virtual void currentPos(double x, double y);
 	virtual bool contains(double x, double y);

@@ -20,7 +20,7 @@ class Control;
 class UndoRedoListener {
 public:
 	virtual void undoRedoChanged() = 0;
-	virtual void undoRedoPageChanged(XojPage * page) = 0;
+	virtual void undoRedoPageChanged(PageRef page) = 0;
 };
 
 class UndoRedoHandler {

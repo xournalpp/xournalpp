@@ -13,6 +13,7 @@
 #define __UNDOACTION_H__
 
 #include "../util/String.h"
+#include "../model/PageRef.h"
 
 #include <config.h>
 #include <glib/gi18n-lib.h>
@@ -39,7 +40,7 @@ public:
 protected:
 	XOJ_TYPE_ATTRIB;
 
-	XojPage * page;
+	PageRef page;
 	bool undone;
 };
 

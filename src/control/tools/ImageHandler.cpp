@@ -2,6 +2,7 @@
 #include "../Control.h"
 #include "../../gui/PageView.h"
 #include "../../model/Image.h"
+#include "../../model/Layer.h"
 #include "../../util/pixbuf-utils.h"
 #include "../../undo/InsertUndoAction.h"
 #include "../stockdlg/ImageOpenDlg.h"
@@ -60,11 +61,11 @@ bool ImageHandler::insertImage(GFile * file, double x, double y) {
 
 	double zoom = 1;
 
-	XojPage * page = view->getPage();
+	PageRef page = view->getPage();
 
-	if (x + width > page->getWidth() || y + height > page->getHeight()) {
-		double maxZoomX = (page->getWidth() - x) / width;
-		double maxZoomY = (page->getHeight() - y) / height;
+	if (x + width > page.getWidth() || y + height > page.getHeight()) {
+		double maxZoomX = (page.getWidth() - x) / width;
+		double maxZoomY = (page.getHeight() - y) / height;
 
 		if (maxZoomX < maxZoomY) {
 			zoom = maxZoomX;
@@ -76,9 +77,9 @@ bool ImageHandler::insertImage(GFile * file, double x, double y) {
 	img->setWidth(width * zoom);
 	img->setHeight(height * zoom);
 
-	page->getSelectedLayer()->addElement(img);
+	page.getSelectedLayer()->addElement(img);
 
-	InsertUndoAction * insertUndo = new InsertUndoAction(page, page->getSelectedLayer(), img, view);
+	InsertUndoAction * insertUndo = new InsertUndoAction(page, page.getSelectedLayer(), img, view);
 	control->getUndoRedoHandler()->addUndoAction(insertUndo);
 
 	view->rerenderElement(img);

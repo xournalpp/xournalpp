@@ -6,8 +6,10 @@
 #include "../shaperecognizer/ShapeRecognizerResult.h"
 #include "../../undo/InsertUndoAction.h"
 #include "../../undo/RecognizerUndoAction.h"
-#include <math.h>
 #include "../../view/DocumentView.h"
+#include "../../model/Layer.h"
+
+#include <math.h>
 
 #define PIXEL_MOTION_THRESHOLD 0.3
 
@@ -139,7 +141,7 @@ void InputHandler::draw(cairo_t * cr, double zoom) {
 	}
 }
 
-void InputHandler::onButtonReleaseEvent(GdkEventButton * event, XojPage * page) {
+void InputHandler::onButtonReleaseEvent(GdkEventButton * event, PageRef page) {
 	XOJ_CHECK_TYPE(InputHandler);
 
 	if (!this->tmpStroke) {
@@ -160,14 +162,14 @@ void InputHandler::onButtonReleaseEvent(GdkEventButton * event, XojPage * page) 
 
 	this->tmpStroke->freeUnusedPointItems();
 
-	if (page->getSelectedLayerId() < 1) {
+	if (page.getSelectedLayerId() < 1) {
 		// This creates a layer if none exists
-		page->getSelectedLayer();
-		page->setSelectedLayerId(1);
+		page.getSelectedLayer();
+		page.setSelectedLayerId(1);
 		xournal->getControl()->getWindow()->updateLayerCombobox();
 	}
 
-	Layer * layer = page->getSelectedLayer();
+	Layer * layer = page.getSelectedLayer();
 
 	UndoRedoHandler * undo = xournal->getControl()->getUndoRedoHandler();
 

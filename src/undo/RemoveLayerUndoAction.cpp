@@ -1,12 +1,12 @@
 #include "RemoveLayerUndoAction.h"
 
-#include "../model/Page.h"
+#include "../model/PageRef.h"
 #include "../model/Layer.h"
 #include "../control/Control.h"
 #include "../model/Document.h"
 #include "../gui/XournalView.h"
 
-RemoveLayerUndoAction::RemoveLayerUndoAction(XojPage * page, Layer * layer, int layerPos) {
+RemoveLayerUndoAction::RemoveLayerUndoAction(PageRef page, Layer * layer, int layerPos) {
 	XOJ_INIT_TYPE(RemoveLayerUndoAction);
 
 	this->page = page;
@@ -35,7 +35,7 @@ String RemoveLayerUndoAction::getText() {
 bool RemoveLayerUndoAction::undo(Control * control) {
 	XOJ_CHECK_TYPE(RemoveLayerUndoAction);
 
-	this->page->insertLayer(this->layer, layerPos);
+	this->page.insertLayer(this->layer, layerPos);
 	Document * doc = control->getDocument();
 
 	doc->lock();
@@ -56,7 +56,7 @@ bool RemoveLayerUndoAction::redo(Control * control) {
 	Document * doc = control->getDocument();
 
 	doc->lock();
-	this->page->removeLayer(this->layer);
+	this->page.removeLayer(this->layer);
 	int id = doc->indexOf(this->page);
 	doc->unlock();
 

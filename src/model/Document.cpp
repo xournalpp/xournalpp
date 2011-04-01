@@ -1,5 +1,6 @@
 #include "Document.h"
 #include "LinkDestination.h"
+#include "XojPage.h"
 
 #include <config.h>
 #include <glib/gi18n-lib.h>
@@ -12,9 +13,6 @@ Document::Document(DocumentHandler * handler) {
 
 	this->handler = handler;
 	this->contentsModel = NULL;
-	this->pages = NULL;
-	this->pageCount = 0;
-	this->pagesArrayLen = 0;
 	this->preview = NULL;
 	this->attachPdf = false;
 	this->createBackupOnSave = false;
@@ -43,12 +41,12 @@ void Document::lock() {
 
 	g_mutex_lock(this->documentLock);
 
-//		if(tryLock()) {
-//			Stacktrace::printStracktrace();
-//			fprintf(stderr, "\n\n\n\n");
-//		} else {
-//			g_mutex_lock(this->documentLock);
-//		}
+	//		if(tryLock()) {
+	//			Stacktrace::printStracktrace();
+	//			fprintf(stderr, "\n\n\n\n");
+	//		} else {
+	//			g_mutex_lock(this->documentLock);
+	//		}
 }
 
 void Document::unlock() {
@@ -80,13 +78,7 @@ void Document::clearDocument(bool destroy) {
 		}
 	}
 
-	for (int i = 0; i < this->pageCount; i++) {
-		this->pages[i]->unreference(10);
-	}
-	g_free(pages);
-	this->pages = NULL;
-	this->pageCount = 0;
-	this->pagesArrayLen = 0;
+	this->pages.clear();
 
 	this->filename = NULL;
 	this->pdfFilename = NULL;
@@ -98,7 +90,7 @@ void Document::clearDocument(bool destroy) {
 int Document::getPageCount() {
 	XOJ_CHECK_TYPE(Document);
 
-	return this->pageCount;
+	return this->pages.size();
 }
 
 int Document::getPdfPageCount() {
@@ -175,10 +167,11 @@ bool Document::isAttachPdf() {
 int Document::findPdfPage(int pdfPage) {
 	XOJ_CHECK_TYPE(Document);
 
-	for (int i = 0; i < this->pageCount; i++) {
-		XojPage * p = this->pages[i];
-		if (p->getBackgroundType() == BACKGROUND_TYPE_PDF) {
-			if (p->getPdfPageNr() == pdfPage) {
+	int count = getPageCount();
+	for (int i = 0; i < count; i++) {
+		PageRef p = this->pages[i];
+		if (p.getBackgroundType() == BACKGROUND_TYPE_PDF) {
+			if (p.getPdfPageNr() == pdfPage) {
 				return i;
 			}
 		}
@@ -304,22 +297,15 @@ bool Document::readPdf(String filename, bool initPages, bool attachToDocument) {
 	lastError = NULL;
 
 	if (initPages) {
-		for (int i = 0; i < this->pageCount; i++) {
-			this->pages[i]->unreference(11);
-		}
-		g_free(this->pages);
-		this->pages = NULL;
-		this->pageCount = 0;
-		this->pagesArrayLen = 0;
+		this->pages.clear();
 	}
 
 	if (initPages) {
 		for (int i = 0; i < pdfDocument.getPageCount(); i++) {
 			XojPopplerPage * page = pdfDocument.getPage(i);
-			XojPage * p = new XojPage(page->getWidth(), page->getHeight(), 0);
-			p->setBackgroundPdfPageNr(i);
+			PageRef p = new XojPage(page->getWidth(), page->getHeight());
+			p.setBackgroundPdfPageNr(i);
 			addPage(p);
-			p->unreference(15);
 		}
 	}
 
@@ -333,13 +319,13 @@ bool Document::readPdf(String filename, bool initPages, bool attachToDocument) {
 	return true;
 }
 
-void Document::setPageSize(XojPage * p, double width, double height) {
+void Document::setPageSize(PageRef p, double width, double height) {
 	XOJ_CHECK_TYPE(Document);
 
-	p->setSize(width, height);
+	p.setSize(width, height);
 
 	int id = indexOf(p);
-	if (id >= 0 && id < this->pageCount) {
+	if (id >= 0 && id < getPageCount()) {
 		firePageSizeChanged(id);
 	}
 }
@@ -353,54 +339,36 @@ String Document::getLastErrorMsg() {
 void Document::deletePage(int pNr) {
 	XOJ_CHECK_TYPE(Document);
 
-	this->pages[pNr]->unreference(14);
-	for (int i = pNr; i < this->pageCount; i++) {
-		this->pages[i] = this->pages[i + 1];
-	}
-	this->pageCount--;
+	std::vector< PageRef >::iterator it;
+
+	it = this->pages.begin() + pNr;
+	this->pages.erase(it);
 
 	updateIndexPageNumbers();
 }
 
-void Document::insertPage(XojPage * p, int position) {
+void Document::insertPage(PageRef p, int position) {
 	XOJ_CHECK_TYPE(Document);
 
-	if (this->pagesArrayLen <= this->pageCount + 1) {
-		this->pagesArrayLen += 100;
-		this->pages = (XojPage **) g_realloc(this->pages, sizeof(XojPage *) * this->pagesArrayLen);
-	}
-
-	for (int i = position; i < this->pageCount; i++) {
-		this->pages[i + 1] = this->pages[i];
-	}
-
-	this->pages[position] = p;
-
-	this->pageCount++;
-	p->reference(13);
+	this->pages.insert(this->pages.begin() + position, p);
 
 	updateIndexPageNumbers();
 }
 
-void Document::addPage(XojPage * p) {
+void Document::addPage(PageRef p) {
 	XOJ_CHECK_TYPE(Document);
 
-	if (this->pagesArrayLen <= this->pageCount + 1) {
-		this->pagesArrayLen += 100;
-		this->pages = (XojPage **) g_realloc(this->pages, sizeof(XojPage *) * this->pagesArrayLen);
-	}
-
-	this->pages[this->pageCount++] = p;
-	p->reference(12);
+	this->pages.push_back(p);
 
 	updateIndexPageNumbers();
 }
 
-int Document::indexOf(XojPage * page) {
+int Document::indexOf(PageRef page) {
 	XOJ_CHECK_TYPE(Document);
 
-	for (int i = 0; i < this->pageCount; i++) {
-		if (page == this->pages[i]) {
+	for (int i = 0; i < this->pages.size(); i++) {
+		PageRef pg = this->pages[i];
+		if (pg == page) {
 			return i;
 		}
 	}
@@ -408,7 +376,7 @@ int Document::indexOf(XojPage * page) {
 	return -1;
 }
 
-XojPage * Document::getPage(int page) {
+PageRef Document::getPage(int page) {
 	XOJ_CHECK_TYPE(Document);
 
 	if (getPageCount() <= page) {
@@ -451,8 +419,8 @@ void Document::operator=(Document & doc) {
 	this->pdfFilename = doc.pdfFilename;
 	this->filename = doc.filename;
 
-	for (int i = 0; i < doc.pageCount; i++) {
-		XojPage * p = doc.pages[i];
+	for (int i = 0; i < doc.pages.size(); i++) {
+		PageRef p = doc.pages[i];
 		addPage(p);
 	}
 

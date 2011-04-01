@@ -15,6 +15,7 @@
 #include <gtk/gtk.h>
 #include "../util/Range.h"
 #include "Redrawable.h"
+#include "../model/PageRef.h"
 
 class XournalView;
 class DeleteUndoAction;
@@ -30,11 +31,10 @@ class InputHandler;
 class Page;
 class Stroke;
 class Text;
-class XojPage;
 
 class PageView: public Redrawable {
 public:
-	PageView(XournalView * xournal, XojPage * page);
+	PageView(XournalView * xournal, PageRef page);
 	virtual ~PageView();
 
 public:
@@ -78,7 +78,7 @@ public:
 	int getBufferPixels();
 	int getLastVisibelTime();
 	TextEditor * getTextEditor();
-	XojPage * getPage();
+	PageRef getPage();
 	XournalView * getXournal();
 	double getHeight();
 	double getWidth();
@@ -105,7 +105,7 @@ private:
 private:
 	XOJ_TYPE_ATTRIB;
 
-	XojPage * page;
+	PageRef page;
 	XournalView * xournal;
 	Settings * settings;
 	EraseHandler * eraser;

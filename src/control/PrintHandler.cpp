@@ -18,13 +18,13 @@ void PrintHandler::drawPage(GtkPrintOperation * operation, GtkPrintContext * con
 
 	cairo_t * cr = gtk_print_context_get_cairo_context(context);
 
-	XojPage * page = handler->doc->getPage(pageNr);
-	if (page == NULL) {
+	PageRef page = handler->doc->getPage(pageNr);
+	if (!page.isValid()) {
 		return;
 	}
 
-	double width = page->getWidth();
-	double height = page->getHeight();
+	double width = page.getWidth();
+	double height = page.getHeight();
 
 	if (width > height) {
 		cairo_rotate(cr, M_PI_2);
@@ -33,8 +33,8 @@ void PrintHandler::drawPage(GtkPrintOperation * operation, GtkPrintContext * con
 
 	XojPopplerPage * popplerPage = NULL;
 
-	if (page->getBackgroundType() == BACKGROUND_TYPE_PDF) {
-		int pgNo = page->getPdfPageNr();
+	if (page.getBackgroundType() == BACKGROUND_TYPE_PDF) {
+		int pgNo = page.getPdfPageNr();
 		popplerPage = handler->doc->getPdfPage(pgNo);
 		if (popplerPage) {
 			popplerPage->render(cr, true);
@@ -48,13 +48,13 @@ void PrintHandler::drawPage(GtkPrintOperation * operation, GtkPrintContext * con
 void PrintHandler::requestPageSetup(GtkPrintOperation * operation, GtkPrintContext * context, gint pageNr, GtkPageSetup *setup, PrintHandler * handler) {
 	XOJ_CHECK_TYPE_OBJ(handler, PrintHandler);
 
-	XojPage * page = handler->doc->getPage(pageNr);
-	if (page == NULL) {
+	PageRef page = handler->doc->getPage(pageNr);
+	if (!page.isValid()) {
 		return;
 	}
 
-	double width = page->getWidth();
-	double height = page->getHeight();
+	double width = page.getWidth();
+	double height = page.getHeight();
 
 	if (width > height) {
 		gtk_page_setup_set_orientation(setup, GTK_PAGE_ORIENTATION_LANDSCAPE);

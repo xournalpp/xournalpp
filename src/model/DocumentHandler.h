@@ -13,9 +13,10 @@
 #define __DOCUMENTHANDLER_H__
 
 #include "DocumentChangeType.h"
-#include <glib.h>
-
+#include "PageRef.h"
 #include "../util/XournalType.h"
+
+#include <glib.h>
 
 class DocumentListener;
 class XojPage;
@@ -31,7 +32,7 @@ public:
 	void firePageChanged(int page);
 	void firePageInserted(int page);
 	void firePageDeleted(int page);
-	void firePageLoaded(XojPage * page);
+	void firePageLoaded(PageRef page);
 	void firePageSelected(int page);
 
 private:

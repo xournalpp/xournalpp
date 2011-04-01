@@ -83,10 +83,10 @@ void SaveJob::updatePreview() {
 	doc->lock();
 
 	if (doc->getPageCount() > 0) {
-		XojPage * page = doc->getPage(0);
+		PageRef page = doc->getPage(0);
 
-		double width = page->getWidth();
-		double height = page->getHeight();
+		double width = page.getWidth();
+		double height = page.getHeight();
 
 		double zoom = 1;
 
@@ -104,8 +104,8 @@ void SaveJob::updatePreview() {
 		cairo_scale(cr, zoom, zoom);
 		XojPopplerPage * popplerPage = NULL;
 
-		if (page->getBackgroundType() == BACKGROUND_TYPE_PDF) {
-			int pgNo = page->getPdfPageNr();
+		if (page.getBackgroundType() == BACKGROUND_TYPE_PDF) {
+			int pgNo = page.getPdfPageNr();
 			popplerPage = doc->getPdfPage(pgNo);
 			if (popplerPage) {
 				popplerPage->render(cr, false);

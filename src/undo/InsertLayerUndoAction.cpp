@@ -1,11 +1,11 @@
 #include "InsertLayerUndoAction.h"
 #include "../model/Layer.h"
-#include "../model/Page.h"
+#include "../model/PageRef.h"
 #include "../model/Document.h"
 #include "../control/Control.h"
 #include "../gui/XournalView.h"
 
-InsertLayerUndoAction::InsertLayerUndoAction(XojPage * page, Layer * layer) {
+InsertLayerUndoAction::InsertLayerUndoAction(PageRef page, Layer * layer) {
 	XOJ_INIT_TYPE(InsertLayerUndoAction);
 
 	this->page = page;
@@ -36,7 +36,7 @@ bool InsertLayerUndoAction::undo(Control * control) {
 
 	doc->lock();
 
-	this->page->removeLayer(this->layer);
+	this->page.removeLayer(this->layer);
 	int id = doc->indexOf(this->page);
 	control->getWindow()->getXournal()->layerChanged(id);
 
@@ -55,7 +55,7 @@ bool InsertLayerUndoAction::redo(Control * control) {
 
 	doc->lock();
 
-	this->page->addLayer(this->layer);
+	this->page.addLayer(this->layer);
 	int id = doc->indexOf(this->page);
 	control->getWindow()->getXournal()->layerChanged(id);
 

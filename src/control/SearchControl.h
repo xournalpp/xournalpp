@@ -12,12 +12,12 @@
 #ifndef __SEARCHCONTROL_H__
 #define __SEARCHCONTROL_H__
 
-#include "../model/Page.h"
+#include "../model/PageRef.h"
 #include "../pdf/poppler/XojPopplerPage.h"
 
 class SearchControl {
 public:
-	SearchControl(XojPage * page, XojPopplerPage * pdf);
+	SearchControl(PageRef page, XojPopplerPage * pdf);
 	virtual ~SearchControl();
 
 	bool search(const char * text, int * occures, double * top);
@@ -28,7 +28,7 @@ private:
 private:
 	XOJ_TYPE_ATTRIB;
 
-	XojPage * page;
+	PageRef page;
 	XojPopplerPage * pdf;
 
 	GList * results;

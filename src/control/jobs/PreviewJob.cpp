@@ -52,10 +52,10 @@ void PreviewJob::run() {
 	Document * doc = this->sidebarPreview->sidebar->getDocument();
 	doc->lock();
 
-	if (this->sidebarPreview->page->getBackgroundType() == BACKGROUND_TYPE_PDF) {
-		int pgNo = this->sidebarPreview->page->getPdfPageNr();
+	if (this->sidebarPreview->page.getBackgroundType() == BACKGROUND_TYPE_PDF) {
+		int pgNo = this->sidebarPreview->page.getPdfPageNr();
 		XojPopplerPage * popplerPage = doc->getPdfPage(pgNo);
-		PdfView::drawPage(this->sidebarPreview->sidebar->getCache(), popplerPage, cr2, zoom, this->sidebarPreview->page->getWidth(), this->sidebarPreview->page->getHeight());
+		PdfView::drawPage(this->sidebarPreview->sidebar->getCache(), popplerPage, cr2, zoom, this->sidebarPreview->page.getWidth(), this->sidebarPreview->page.getHeight());
 	}
 
 	DocumentView view;

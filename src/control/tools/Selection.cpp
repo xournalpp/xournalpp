@@ -1,4 +1,5 @@
 #include "Selection.h"
+#include "../../model/Layer.h"
 
 Selection::Selection(Redrawable * view) {
 	XOJ_INIT_TYPE(Selection);
@@ -66,7 +67,7 @@ RectSelection::~RectSelection() {
 	XOJ_RELEASE_TYPE(RectSelection);
 }
 
-bool RectSelection::finalize(XojPage * page) {
+bool RectSelection::finalize(PageRef page) {
 	XOJ_CHECK_TYPE(RectSelection);
 
 	this->x1 = MIN(this->sx, this->ex);
@@ -77,7 +78,7 @@ bool RectSelection::finalize(XojPage * page) {
 
 	this->page = page;
 
-	Layer * l = page->getSelectedLayer();
+	Layer * l = page.getSelectedLayer();
 	ListIterator<Element *> eit = l->elementIterator();
 	while (eit.hasNext()) {
 		Element * e = eit.next();
@@ -323,7 +324,7 @@ bool RegionSelect::contains(double x, double y) {
 	return ((hits & 1) != 0);
 }
 
-bool RegionSelect::finalize(XojPage * page) {
+bool RegionSelect::finalize(PageRef page) {
 	XOJ_CHECK_TYPE(RegionSelect);
 
 	this->page = page;
@@ -349,7 +350,7 @@ bool RegionSelect::finalize(XojPage * page) {
 		}
 	}
 
-	Layer * l = page->getSelectedLayer();
+	Layer * l = page.getSelectedLayer();
 	ListIterator<Element *> eit = l->elementIterator();
 	while (eit.hasNext()) {
 		Element * e = eit.next();

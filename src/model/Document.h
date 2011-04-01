@@ -17,7 +17,7 @@
 #include "../util/String.h"
 #include "../util/XournalType.h"
 
-#include "Page.h"
+#include "PageRef.h"
 #include "LinkDestination.h"
 
 #include "../pdf/poppler/XojPopplerDocument.h"
@@ -26,6 +26,8 @@
 #include "../pdf/poppler/XojPopplerAction.h"
 
 #include "DocumentHandler.h"
+
+#include <vector>
 
 class Document {
 public:
@@ -40,16 +42,16 @@ public:
 	XojPopplerPage * getPdfPage(int page);
 	XojPopplerDocument & getPdfDocument();
 
-	void insertPage(XojPage * p, int position);
-	void addPage(XojPage * p);
-	XojPage * getPage(int page);
+	void insertPage(PageRef p, int position);
+	void addPage(PageRef p);
+	PageRef getPage(int page);
 	void deletePage(int pNr);
 
-	void setPageSize(XojPage * p, double width, double height);
+	void setPageSize(PageRef p, double width, double height);
 
 	void firePageSizeChanged(int page);
 
-	int indexOf(XojPage * page);
+	int indexOf(PageRef page);
 
 	String getLastErrorMsg();
 
@@ -105,10 +107,14 @@ private:
 
 	String lastError;
 
-	XojPage ** pages;
-	int pageCount;
-	int pagesArrayLen;
+	/**
+	 * The pages in the document
+	 */
+	std::vector<PageRef> pages;
 
+	/**
+	 * The bookmark contents model
+	 */
 	GtkTreeModel * contentsModel;
 
 	/**

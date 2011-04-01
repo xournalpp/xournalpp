@@ -1,10 +1,10 @@
 #include "InsertUndoAction.h"
-#include "../model/Page.h"
+#include "../model/PageRef.h"
 #include "../model/Layer.h"
 #include "../model/Element.h"
 #include "../gui/Redrawable.h"
 
-InsertUndoAction::InsertUndoAction(XojPage * page, Layer * layer, Element * element, Redrawable * view) {
+InsertUndoAction::InsertUndoAction(PageRef page, Layer * layer, Element * element, Redrawable * view) {
 	XOJ_INIT_TYPE(InsertUndoAction);
 
 	this->page = page;
@@ -44,7 +44,7 @@ bool InsertUndoAction::undo(Control * control) {
 
 	this->layer->removeElement(this->element, false);
 
-	view->rerenderElement(this->element);
+	this->view->rerenderElement(this->element);
 
 	this->undone = true;
 
@@ -56,7 +56,7 @@ bool InsertUndoAction::redo(Control * control) {
 
 	this->layer->addElement(this->element);
 
-	view->rerenderElement(this->element);
+	this->view->rerenderElement(this->element);
 
 	this->undone = false;
 

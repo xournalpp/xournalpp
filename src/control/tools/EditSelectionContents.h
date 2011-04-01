@@ -20,10 +20,10 @@
 #include "../Tool.h"
 #include "../../model/Font.h"
 #include "../../model/Element.h"
+#include "../../model/PageRef.h"
 #include "../../util/ListIterator.h"
 
 class UndoRedoHandler;
-class XojPage;
 class Layer;
 class PageView;
 class Selection;
@@ -34,7 +34,7 @@ class DeleteUndoAction;
 
 class EditSelectionContents: public ElementContainer {
 public:
-	EditSelectionContents(double x, double y, double width, double height, XojPage * sourcePage, Layer * sourceLayer, PageView * sourceView);
+	EditSelectionContents(double x, double y, double width, double height, PageRef sourcePage, Layer * sourceLayer, PageView * sourceView);
 	virtual ~EditSelectionContents();
 
 public:
@@ -82,7 +82,7 @@ public:
 	/**
 	 * Finish the editing
 	 */
-	void finalizeSelection(double x, double y, double width, double height, bool aspectRatio, Layer * layer, XojPage * targetPage, PageView * targetView, UndoRedoHandler * undo);
+	void finalizeSelection(double x, double y, double width, double height, bool aspectRatio, Layer * layer, PageRef targetPage, PageView * targetView, UndoRedoHandler * undo);
 
 private:
 	/**
@@ -146,7 +146,7 @@ private:
 	/**
 	 * Source Page for Undo operations
 	 */
-	XojPage * sourcePage;
+	PageRef sourcePage;
 
 	/**
 	 * Source Layer for Undo operations

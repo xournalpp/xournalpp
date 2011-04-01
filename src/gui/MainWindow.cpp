@@ -458,13 +458,13 @@ void MainWindow::updatePageNumbers(int page, int pagecount, int pdfpage) {
 void MainWindow::updateLayerCombobox() {
 	XOJ_CHECK_TYPE(MainWindow);
 
-	XojPage * p = control->getCurrentPage();
+	PageRef p = control->getCurrentPage();
 
 	int layer = 0;
 
 	if (p) {
-		layer = p->getSelectedLayerId();
-		toolbar->setLayerCount(p->getLayerCount(), layer);
+		layer = p.getSelectedLayerId();
+		toolbar->setLayerCount(p.getLayerCount(), layer);
 	} else {
 		toolbar->setLayerCount(-1, -1);
 	}

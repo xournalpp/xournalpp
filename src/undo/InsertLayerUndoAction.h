@@ -19,7 +19,7 @@ class Layer;
 
 class InsertLayerUndoAction: public UndoAction {
 public:
-	InsertLayerUndoAction(XojPage * page, Layer * layer);
+	InsertLayerUndoAction(PageRef page, Layer * layer);
 	virtual ~InsertLayerUndoAction();
 
 public:

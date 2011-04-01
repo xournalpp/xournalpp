@@ -16,6 +16,7 @@
 #include "../util/Arrayiterator.h"
 #include "../control/ZoomControl.h"
 #include "../model/DocumentListener.h"
+#include "../model/PageRef.h"
 
 const int XOURNAL_PADDING = 20;
 const int XOURNAL_PADDING_TOP_LEFT = 10;
@@ -25,7 +26,6 @@ class PageView;
 class Document;
 class TextEditor;
 class PdfCache;
-class XojPage;
 class Rectangle;
 class RepaintHandler;
 class PagePositionHandler;
@@ -124,7 +124,7 @@ private:
 
 	void fireZoomChanged();
 
-	void addLoadPageToQue(XojPage * page, int priority);
+	void addLoadPageToQue(PageRef page, int priority);
 
 	Rectangle * getVisibleRect(int page);
 

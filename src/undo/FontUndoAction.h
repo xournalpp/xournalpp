@@ -23,7 +23,7 @@ class XojFont;
 
 class FontUndoAction: public UndoAction {
 public:
-	FontUndoAction(XojPage * page, Layer * layer, Redrawable * view);
+	FontUndoAction(PageRef page, Layer * layer, Redrawable * view);
 	virtual ~FontUndoAction();
 
 public:

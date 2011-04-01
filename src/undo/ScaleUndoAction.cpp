@@ -1,17 +1,16 @@
 #include "ScaleUndoAction.h"
 
-#include "../model/Page.h"
+#include "../model/PageRef.h"
 #include "../model/Element.h"
 #include "../util/Range.h"
 #include "../gui/Redrawable.h"
 
-ScaleUndoAction::ScaleUndoAction(XojPage * page, Redrawable * view, GList * elements, double x0, double y0, double fx, double fy) {
+ScaleUndoAction::ScaleUndoAction(PageRef page, Redrawable * view, GList * elements, double x0, double y0, double fx, double fy) {
 	XOJ_INIT_TYPE(ScaleUndoAction);
 
 	this->page = page;
 	this->view = view;
 	this->elements = g_list_copy(elements);
-	this->page->reference(19);
 	this->x0 = x0;
 	this->y0 = y0;
 	this->fx = fx;
@@ -21,7 +20,6 @@ ScaleUndoAction::ScaleUndoAction(XojPage * page, Redrawable * view, GList * elem
 ScaleUndoAction::~ScaleUndoAction() {
 	XOJ_CHECK_TYPE(ScaleUndoAction);
 
-	this->page->unreference(20);
 	this->page = NULL;
 	this->view = NULL;
 	g_list_free(this->elements);
