@@ -119,6 +119,13 @@ Control::~Control() {
 
 	this->scheduler->stop();
 
+	for (GList * l = this->changedPages; l != NULL; l = l->next) {
+		XojPage * page = (XojPage *) l->data;
+		page->unreference();
+	}
+	g_list_free(this->changedPages);
+	this->changedPages = NULL;
+
 	delete this->clipboardHandler;
 	this->clipboardHandler = NULL;
 	delete this->recent;
@@ -168,10 +175,13 @@ bool Control::checkChangedDocument(Control * control) {
 		return true;
 	}
 	for (GList * l = control->changedPages; l != NULL; l = l->next) {
-		int p = control->doc->indexOf((XojPage *) l->data);
+		XojPage * page = (XojPage *) l->data;
+		int p = control->doc->indexOf(page);
 		if (p != -1) {
 			control->firePageChanged(p);
 		}
+
+		page->unreference();
 	}
 	g_list_free(control->changedPages);
 	control->changedPages = NULL;
@@ -1489,8 +1499,9 @@ void Control::undoRedoPageChanged(PageRef page) {
 		}
 	}
 
-	// TODO: reference / unrefrerence!!
-	this->changedPages = g_list_append(this->changedPages, (XojPage *)page);
+	XojPage * p = (XojPage *)page;
+	this->changedPages = g_list_append(this->changedPages, p);
+	p->reference();
 }
 
 void Control::selectTool(ToolType type) {

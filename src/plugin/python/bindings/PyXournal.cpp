@@ -1,5 +1,7 @@
 #include "PyXournal.h"
 #include "../../../control/Control.h"
+#include "../../../gui/XournalView.h"
+#include "../../../gui/widgets/XournalWidget.h"
 
 #include <Python.h>
 #include "structmember.h"
@@ -17,6 +19,7 @@ typedef struct {
 	PyObject_HEAD
 	Control * control;
 	PyObject * undoRedoHandler;
+	PyObject * document;
 } PyXournal;
 
 static Control * PyXournal_control = NULL;
@@ -29,30 +32,29 @@ void PyXournal_initPython(Control * control) {
 	initxournal();
 }
 
-static void PyXournal_dealloc(PyXournal* self) {
-	self->ob_type->tp_free((PyObject*) self);
+static void PyXournal_dealloc(PyXournal * self) {
+	self->ob_type->tp_free((PyObject *) self);
 }
 
 static PyObject *
-PyXournal_new(PyTypeObject *type, PyObject *args, PyObject *kwds) {
+PyXournal_new(PyTypeObject * type, PyObject * args, PyObject * kwds) {
 	PyXournal *self;
 
 	self = (PyXournal *) type->tp_alloc(type, 0);
 	if (self != NULL) {
 		self->control = PyXournal_control;
 		self->undoRedoHandler = PyLong_FromLong(5);
+		self->document = PyLong_FromLong(20);
 	}
 
 	return (PyObject *) self;
 }
 
-static int PyXournal_init(PyXournal *self, PyObject *args, PyObject *kwds) {
+static int PyXournal_init(PyXournal * self, PyObject * args, PyObject * kwds) {
 	return 0;
 }
 
 static PyMemberDef PyXournal_members[] = {
-	{ "undoRedoHandler", T_OBJECT, offsetof(PyXournal, undoRedoHandler), 0, "Undo- / Redohandler" },
-
 	{ NULL } /* Sentinel */
 };
 
@@ -135,7 +137,7 @@ PyXournal_setSelectedTool(PyXournal * self, PyObject * args) {
 }
 
 static PyObject *
-PyXournal_getSelectedTool(PyXournal* self) {
+PyXournal_getSelectedTool(PyXournal * self) {
 	ToolType tt = self->control->getToolHandler()->getToolType();
 
 	return PyLong_FromLong(tt);
@@ -151,8 +153,33 @@ PyXournal_mousePressed(PyXournal * self, PyObject * args) {
 		return NULL;
 	}
 
-	// TODO: implememnt
-	g_warning("NOT IMPLEMENTED!\n");
+	MainWindow * win = self->control->getWindow();
+	if(!win) {
+		PyErr_SetString(PyExc_AttributeError, "Window not yet initialized!");
+		return NULL;
+	}
+
+	int pageNo = self->control->getCurrentPageNo();
+	XournalView * xournal = win->getXournal();
+	double zoom = xournal->getZoom();
+	PageView * v = xournal->getViewFor(pageNo);
+
+	GdkEventButton event;
+	memset(&event, 0, sizeof(GdkEventButton));
+	event.type = GDK_BUTTON_PRESS;
+	event.window = (GdkWindow *)*win;
+	event.send_event = true;
+	event.time = 0;
+	event.x = x * zoom + v->getX();
+	event.y = y * zoom + v->getY();
+	event.axes = NULL;
+	event.state = GDK_MOD2_MASK;
+	event.button = 1;
+	event.device = gdk_device_get_core_pointer();
+	event.x_root = 0;
+	event.y_root = 0;
+
+	gtk_widget_event(xournal->getWidget(), (GdkEvent *)&event);
 
 	Py_RETURN_NONE;
 }
@@ -167,26 +194,69 @@ PyXournal_mouseMoved(PyXournal * self, PyObject * args) {
 		return NULL;
 	}
 
-	// TODO: implememnt
-	g_warning("NOT IMPLEMENTED!\n");
+	MainWindow * win = self->control->getWindow();
+	if(!win) {
+		PyErr_SetString(PyExc_AttributeError, "Window not yet initialized!");
+		return NULL;
+	}
+
+	int pageNo = self->control->getCurrentPageNo();
+	XournalView * xournal = win->getXournal();
+	double zoom = xournal->getZoom();
+	PageView * v = xournal->getViewFor(pageNo);
+
+	GdkEventMotion event;
+	memset(&event, 0, sizeof(GdkEventMotion));
+	event.type = GDK_MOTION_NOTIFY;
+	event.window = (GdkWindow *)*win;
+	event.send_event = true;
+	event.time = 0;
+	event.x = x * zoom + v->getX();
+	event.y = y * zoom + v->getY();
+	event.axes = NULL;
+	event.state = GDK_MOD2_MASK;
+	event.is_hint = 0;
+	event.device = gdk_device_get_core_pointer();
+	event.x_root = 0;
+	event.y_root = 0;
+
+	gtk_widget_event(xournal->getWidget(), (GdkEvent *)&event);
 
 	Py_RETURN_NONE;
 }
 
 static PyObject *
 PyXournal_mouseReleased(PyXournal * self) {
-	// TODO: implememnt
-	g_warning("NOT IMPLEMENTED!\n");
+	MainWindow * win = self->control->getWindow();
+	if(!win) {
+		PyErr_SetString(PyExc_AttributeError, "Window not yet initialized!");
+		return NULL;
+	}
+
+	GdkEventButton event;
+	memset(&event, 0, sizeof(GdkEventButton));
+	event.type = GDK_BUTTON_RELEASE;
+	event.window = (GdkWindow *)*win;
+	event.send_event = true;
+	event.time = 0;
+	event.x = 0;
+	event.y = 0;
+	event.axes = NULL;
+	event.state = GDK_MOD2_MASK;
+	event.button = 1;
+	event.device = gdk_device_get_core_pointer();
+	event.x_root = 0;
+	event.y_root = 0;
+
+	gtk_widget_event(win->getXournal()->getWidget(), (GdkEvent *)&event);
 
 	Py_RETURN_NONE;
 }
 
 static PyObject *
 PyXournal_getUndoRedoHandler(PyXournal * self) {
-	// TODO: implememnt
-	g_warning("NOT IMPLEMENTED!\n");
-
-	Py_RETURN_NONE;
+	Py_INCREF(self->undoRedoHandler);
+	return self->undoRedoHandler;
 }
 
 static PyObject *
@@ -198,10 +268,8 @@ PyXournal_getSelectedPage(PyXournal * self) {
 
 static PyObject *
 PyXournal_getDocument(PyXournal * self) {
-	// TODO: implememnt
-	g_warning("NOT IMPLEMENTED!\n");
-
-	Py_RETURN_NONE;
+	Py_INCREF(self->document);
+	return self->document;
 }
 
 static PyObject *
@@ -304,8 +372,9 @@ void initxournal() {
 
 	m = Py_InitModule3("xournal", module_methods, "Xournal api modul");
 
-	if (m == NULL)
+	if (m == NULL) {
 		return;
+	}
 
 	Py_INCREF(&XournalType);
 	PyModule_AddObject(m, "Xournal", (PyObject *) &XournalType);

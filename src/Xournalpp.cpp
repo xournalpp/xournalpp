@@ -13,9 +13,6 @@
 #include "util/CrashHandler.h"
 #include "util/Stacktrace.h"
 
-// TODO: debug
-#include "model/eraser/EraseableStrokePart.h"
-
 int main(int argc, char * argv[]) {
 	// init crash handler
 	installCrashHandlers();

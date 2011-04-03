@@ -219,7 +219,7 @@ RepaintHandler * XournalView::getRepaintHandler() {
 	return this->repaintHandler;
 }
 
-bool XournalView::onKeyReleaseEvent(GdkEventKey *event) {
+bool XournalView::onKeyReleaseEvent(GdkEventKey * event) {
 	XOJ_CHECK_TYPE(XournalView);
 
 	int p = getCurrentPage();
