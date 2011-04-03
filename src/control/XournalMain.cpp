@@ -79,6 +79,7 @@ int XournalMain::run(int argc, char * argv[]) {
 	gchar * pdfFilename = NULL;
 #ifdef ENABLE_PYTHON
 	gchar * scriptFilename = NULL;
+	gchar * scriptArg = NULL;
 #endif
 	int openAtPageNumber = -1;
 
@@ -89,7 +90,8 @@ int XournalMain::run(int argc, char * argv[]) {
 		{ "page",            'n', 0, G_OPTION_ARG_INT,            &openAtPageNumber, "Jump to Page (first Page: 1)", "N" },
 
 #ifdef ENABLE_PYTHON
-		{ "script",            'n', 0, G_OPTION_ARG_FILENAME,     &scriptFilename,   "Runs a Python script as plugin", NULL },
+		{ "script",            0, 0, G_OPTION_ARG_STRING,         &scriptFilename,   "Runs a Python script as plugin", NULL },
+		{ "script-arg",        0, 0, G_OPTION_ARG_STRING,         &scriptArg,        "Python script parameter", NULL },
 #endif
 		{ G_OPTION_REMAINING,  0, 0, G_OPTION_ARG_FILENAME_ARRAY, &optFilename,      "<input>", NULL },
 		{ NULL }
@@ -187,11 +189,10 @@ int XournalMain::run(int argc, char * argv[]) {
 	}
 
 #ifdef ENABLE_PYTHON
-	PythonRunner * runner = NULL;
+	PythonRunner::initPythonRunner(control);
 
 	if(scriptFilename) {
-		runner = new PythonRunner(control);
-		runner->runScript(scriptFilename, "xournalTest");
+		PythonRunner::runScript(scriptFilename, "xournalTest", scriptArg);
 	}
 #endif
 
@@ -202,7 +203,7 @@ int XournalMain::run(int argc, char * argv[]) {
 	win->getXournal()->clearSelection();
 
 #ifdef ENABLE_PYTHON
-	delete runner;
+	PythonRunner::releasePythonRunner();
 #endif
 
 	delete win;
