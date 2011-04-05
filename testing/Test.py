@@ -7,8 +7,12 @@ def xournalTest(args = ''):
 
 	xoj = xournal.Xournal()
 	
+	print '=== Xournal Testsuit ===\n'
+
 	xournalRunTestInSubfolder(xoj, 'tools');
 	xournalRunTestInSubfolder(xoj, 'undo');
+
+	print '\n=== End Xournal Testsuit ===\n'
 
 
 def xournalRunTestInSubfolder(xoj, subfolder):
@@ -24,10 +28,21 @@ def xournalRunTestInSubfolder(xoj, subfolder):
 		if os.path.isdir(dirfile) and not name.startswith('.') and os.path.exists(os.path.join(dirfile, 'Test.py')):
 			print 'Run test in %s' % dirfile
 			print 'Debug: import %s from %s' % (name, subfolder + '.' + name + '.Test')
-			__import__(subfolder + '.' + name + '.Test', fromlist = name)
-			cls = globals()[name]
-		   inst = cls()
-			inst.
+
+			try:
+				sFrom = subfolder + '.' + name + '.Test'
+				moduleObject = __import__(sFrom, globals(), locals(), [name], -1)
+				classObject = getattr(moduleObject, name)
+				obj = classObject()
+				obj.test(xoj)
+			except (AssertionError) as e:
+				print type(e)     # the exception instance
+				print e.args      # arguments stored in .args
+				print e
+			except (Exception) as e:
+				print "Test %s Unexpected error:" % name, type(e)
+				print e.args      # arguments stored in .args
+				print e
 
 
 

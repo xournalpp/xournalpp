@@ -7,11 +7,19 @@
 #
 # @license GPL
 
+from XournalTest import XournalTest
 
-class UndoRedoTest:
-	def __init__(self):
-		print 'UndoRedoTest\n'
+class UndoRedoTest(XournalTest):
+	def __init__(self, xoj):
+		XournalTest.__init__(self, xoj)
 
-	def runTest(self):
-		print 'run test called!\n'
+		# TODO debug
+		print xoj.getUndoRedoHandler()
+
+	def tearUp(self, xoj):
+		print 'UndoRedoTest.tearUp'
+
+	def tearDown(self, xoj):
+		print 'UndoRedoTest.tearDown'
+
 

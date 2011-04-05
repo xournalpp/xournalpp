@@ -2,6 +2,11 @@
 
 const double zoomStep = 0.2;
 
+/**
+ * TODO: zoom is not fluently if you have much data
+ * Why?
+ */
+
 ZoomControl::ZoomControl() {
 	XOJ_INIT_TYPE(ZoomControl);
 
