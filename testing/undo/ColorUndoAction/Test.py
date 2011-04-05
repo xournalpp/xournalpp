@@ -12,5 +12,6 @@ from undo.UndoRedoTest import UndoRedoTest
 class ColorUndoAction(UndoRedoTest):
 	def __init__(self):
 		UndoRedoTest.__init__(self)
-		print 'ColorUndoAction'
+
+
 

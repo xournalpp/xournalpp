@@ -7,7 +7,9 @@
 #
 # @license GPL
 
-class ColorUndoAction(UndoRedoTest):
+class XournalTest:
+	def __init__(self, xoj):
+		self.xoj = xoj
 
 	def test(self, xoj):
 		self.tearUp(xoj)

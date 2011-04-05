@@ -30,8 +30,8 @@ EditSelectionContents::EditSelectionContents(double x, double y, double width, d
 
 	this->originalWidth = width;
 	this->originalHeight = height;
-	this->relativeX = ceil(x);
-	this->relativeY = ceil(y);
+	this->relativeX = 0;
+	this->relativeY = 0;
 
 	this->originalX = x;
 	this->originalY = y;
@@ -327,12 +327,18 @@ void EditSelectionContents::paint(cairo_t * cr, double x, double y, double width
 	double fx = width / this->originalWidth;
 	double fy = height / this->originalHeight;
 
+	int dx = (int) (x * zoom);
+	int dy = (int) (y * zoom);
+
 	if (this->crBuffer == NULL) {
 		this->crBuffer = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, width * zoom, height * zoom);
 		cairo_t * cr2 = cairo_create(this->crBuffer);
 
-		cairo_scale(cr2, zoom * fx, zoom * fy);
+		this->relativeX = dx;
+		this->relativeY = dy;
+
 		cairo_translate(cr2, -this->relativeX, -this->relativeY);
+		cairo_scale(cr2, zoom * fx, zoom * fy);
 		DocumentView view;
 		view.drawSelection(cr2, this);
 
@@ -358,9 +364,11 @@ void EditSelectionContents::paint(cairo_t * cr, double x, double y, double width
 		cairo_scale(cr, sx, sy);
 	}
 
-	cairo_set_source_surface(cr, this->crBuffer, (int) (x * zoom / sx), (int) (y * zoom / sy));
+	dx = (int) (x * zoom / sx);
+	dy = (int) (y * zoom / sy);
+
+	cairo_set_source_surface(cr, this->crBuffer, dx, dy);
 	cairo_paint(cr);
 
 	cairo_restore(cr);
-
 }

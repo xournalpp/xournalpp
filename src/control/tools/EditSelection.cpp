@@ -89,9 +89,6 @@ EditSelection::~EditSelection() {
 	delete this->contents;
 	this->contents = NULL;
 
-	this->view->rerenderPage();
-	this->view->getXournal()->repaintSelection(true);
-
 	this->view = NULL;
 	this->undo = NULL;
 
@@ -114,7 +111,7 @@ void EditSelection::finalizeSelection() {
 		this->contents->finalizeSelection(this->x, this->y, this->width, this->height, this->aspectRatio, layer, page, this->view, this->undo);
 
 
-		this->view->rerenderPage();
+		this->view->rerenderRect(this->x, this->y, this->width, this->height);
 
 		// This is needed if the selection not was 100% on a page
 		this->view->getXournal()->repaintSelection();
