@@ -36,9 +36,10 @@ class XournalTest:
 			raise AssertionError(self.diff)
 
 
-	def compareFiles(self, file1, file2):
-		f1 = gzip.open(file1, 'rb')
-		f2 = gzip.open(file2, 'rb')
+	# Compare two xournal files
+	def compareFiles(self, fileGet, fileExpected):
+		f1 = gzip.open(fileGet, 'rb')
+		f2 = gzip.open(fileExpected, 'rb')
 
 		c1 = f1.read()
 		c2 = f2.read()
@@ -57,12 +58,19 @@ class XournalTest:
 			return False
 
 		for i in range(0, len1):
-			if l1[i] != l2[i]:
-				self.diff = 'Line {0} differ:\n1:\t"{1}"\n2:\t"{1}"'.format(i, l1[i], l2[i])
+			d1 = l1[i].strip()
+			d2 = l2[i].strip()
+
+			if d1[0:9] == '<preview>' and d2[0:9] == '<preview>':
+				continue
+
+			if d1 != d2:
+				self.diff = "Line %i differ:\nGet:\t\"%s\"\nExp:\t\"%s\"" % (i, d1, d2)
 				return False
 
 		return True
 
+	# do some testinput with the defined stroke
 	def doTestInput(self):
 		points = [[40, 40]]
 		points.append([50, 51]);

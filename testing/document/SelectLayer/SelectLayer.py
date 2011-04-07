@@ -14,7 +14,7 @@ import os
 from TestNotImplementedException import TestNotImplementedException
 
 
-class ColorUndoAction(ToolTest):
+class SelectLayer(ToolTest):
 	def __init__(self, xoj):
 		ToolTest.__init__(self, xoj)
 
