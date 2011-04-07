@@ -17,7 +17,13 @@ public interface Xournal {
 	int TOOL_SIZE_THICK = 3;
 	int TOOL_SIZE_VERY_THICK = 4;
 
-
+	int BACKGROUND_TYPE_NONE = 1;
+	int BACKGROUND_TYPE_PDF = 2;
+	int BACKGROUND_TYPE_IMAGE = 3;
+	int BACKGROUND_TYPE_LINED = 4;
+	int BACKGROUND_TYPE_RULED = 5;
+	int BACKGROUND_TYPE_GRAPH = 6;
+	
 	/**
 	 * Sets the current tool
 	 * @param tool A constant defined above
@@ -72,6 +78,17 @@ public interface Xournal {
 	 */
 	boolean isShapeRecognizerEnabled();
 
+	/**
+	 * Return the background type of the current page (see BACKGROUND_TYPE_*)
+	 */
+	int getCurrentPageBackground();
+	
+	/**
+	 * Set the background type of the current page (see BACKGROUND_TYPE_*)
+	 * Don't use BACKGROUND_TYPE_PDF or BACKGROUND_TYPE_PDF
+	 */
+	void setCurrentPageBackground(int backgroundType);
+	
 	/**
 	 * Creates a new file
 	 * 

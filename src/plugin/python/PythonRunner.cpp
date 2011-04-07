@@ -73,6 +73,11 @@ void PythonRunner::releasePythonRunner() {
 }
 
 void PythonRunner::runScript(String name, String function, String parameter) {
+	if(name.isEmpty() || function.isEmpty()) {
+		g_warning("runScript::name (%s) and function (%s) should not be empty!", name.c_str(), function.c_str());
+		return;
+	}
+
 	if (instance == NULL) {
 		g_warning("PythonRunner not initialized!");
 		return;
@@ -156,6 +161,11 @@ void PythonRunner::initPython() {
 
 void PythonRunner::runScriptInt(String path, String function, String parameter) {
 	XOJ_CHECK_TYPE(PythonRunner);
+
+	if(path.isEmpty() || function.isEmpty()) {
+		g_warning("runScriptInt::path and function should not be empty!");
+		return;
+	}
 
 	initPython();
 

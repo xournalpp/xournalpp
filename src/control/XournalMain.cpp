@@ -195,7 +195,11 @@ int XournalMain::run(int argc, char * argv[]) {
 		char * name = strtok(scriptFilename, ":");
 		char * methodeName = strtok(NULL, ":");
 
-		PythonRunner::runScript(name, methodeName, scriptArg);
+		if(name == NULL || methodeName == NULL) {
+			g_warning("--script attribute should be: Package:Function! (argument was: \"%s\")", scriptFilename);
+		} else {
+			PythonRunner::runScript(name, methodeName, scriptArg);
+		}
 	}
 #endif
 
