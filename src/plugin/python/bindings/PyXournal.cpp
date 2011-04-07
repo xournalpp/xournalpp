@@ -24,6 +24,9 @@ typedef struct {
 
 static Control * PyXournal_control = NULL;
 
+
+// TODO: info pygtk: http://faq.pygtk.org/index.py?req=show&file=faq23.015.htp
+
 void initxournal();
 
 void PyXournal_initPython(Control * control) {
@@ -62,17 +65,17 @@ static PyObject *
 PyXournal_newFile(PyXournal * self, PyObject * args) {
 	PyObject * force = NULL;
 
-	if (!PyArg_ParseTuple(args, "|o", &force)) {
+	if (!PyArg_ParseTuple(args, "|O", &force)) {
+		PyErr_SetString(PyExc_AttributeError, "[Object] (should be Boolean)");
+		return NULL;
+	}
+
+	if (force != NULL && !PyBool_Check(force)) {
 		PyErr_SetString(PyExc_AttributeError, "[Boolean]");
 		return NULL;
 	}
 
-	if (!PyBool_Check(force)) {
-		PyErr_SetString(PyExc_AttributeError, "[Boolean]");
-		return NULL;
-	}
-
-	if (PyObject_IsTrue(force)) {
+	if (force != NULL && PyObject_IsTrue(force)) {
 		self->control->getUndoRedoHandler()->clearContents();
 	}
 
@@ -140,16 +143,42 @@ static PyObject *
 PyXournal_getSelectedTool(PyXournal * self) {
 	ToolType tt = self->control->getToolHandler()->getToolType();
 
-	return PyLong_FromLong(tt);
+	return PyInt_FromLong(tt);
+}
+
+static PyObject *
+PyXournal_setToolSize(PyXournal * self, PyObject * args) {
+	int size = -1;
+
+	if (!PyArg_ParseTuple(args, "i", &size)) {
+		PyErr_SetString(PyExc_AttributeError, "int");
+		return NULL;
+	}
+
+	if (size < TOOL_SIZE_VERY_FINE || size > TOOL_SIZE_VERY_THICK) {
+		PyErr_SetString(PyExc_AttributeError, "Toolsize out of range, please use the constants TOOL_SIZE_*");
+	}
+
+	self->control->getToolHandler()->setSize((ToolSize) size);
+
+
+	Py_RETURN_NONE;
+}
+
+static PyObject *
+PyXournal_getToolSize(PyXournal * self) {
+	ToolSize ts = self->control->getToolHandler()->getSize();
+
+	return PyInt_FromLong(ts);
 }
 
 static PyObject *
 PyXournal_mousePressed(PyXournal * self, PyObject * args) {
-	int x = -1;
-	int y = -1;
+	double x = -1;
+	double y = -1;
 
-	if (!PyArg_ParseTuple(args, "ii", &x, &y)) {
-		PyErr_SetString(PyExc_AttributeError, "int int");
+	if (!PyArg_ParseTuple(args, "dd", &x, &y)) {
+		PyErr_SetString(PyExc_AttributeError, "double double");
 		return NULL;
 	}
 
@@ -186,11 +215,11 @@ PyXournal_mousePressed(PyXournal * self, PyObject * args) {
 
 static PyObject *
 PyXournal_mouseMoved(PyXournal * self, PyObject * args) {
-	int x = -1;
-	int y = -1;
+	double x = -1;
+	double y = -1;
 
-	if (!PyArg_ParseTuple(args, "ii", &x, &y)) {
-		PyErr_SetString(PyExc_AttributeError, "int int");
+	if (!PyArg_ParseTuple(args, "dd", &x, &y)) {
+		PyErr_SetString(PyExc_AttributeError, "double double");
 		return NULL;
 	}
 
@@ -286,6 +315,84 @@ PyXournal_selectPage(PyXournal * self, PyObject * args) {
 	Py_RETURN_NONE;
 }
 
+static PyObject *
+PyXournal_setRulerEnabled(PyXournal * self, PyObject * args) {
+	PyObject * enable = NULL;
+
+	if (!PyArg_ParseTuple(args, "O", &enable)) {
+		PyErr_SetString(PyExc_AttributeError, "[Object] (should be Boolean)");
+		return NULL;
+	}
+
+	if (!PyBool_Check(enable)) {
+		PyErr_SetString(PyExc_AttributeError, "[Boolean]");
+		return NULL;
+	}
+
+	self->control->setRulerEnabled(PyObject_IsTrue(enable));
+
+	Py_RETURN_NONE;
+}
+
+static PyObject *
+PyXournal_isRulerEnabled(PyXournal * self) {
+	if (self->control->getToolHandler()->isRuler()) {
+		Py_RETURN_TRUE;
+	}
+
+	Py_RETURN_FALSE;
+}
+
+static PyObject *
+PyXournal_setShapeRecognizerEnabled(PyXournal * self, PyObject * args) {
+	PyObject * enable = NULL;
+
+	if (!PyArg_ParseTuple(args, "O", &enable)) {
+		PyErr_SetString(PyExc_AttributeError, "[Object] (should be Boolean)");
+		return NULL;
+	}
+
+	if (!PyBool_Check(enable)) {
+		PyErr_SetString(PyExc_AttributeError, "[Boolean]");
+		return NULL;
+	}
+
+	self->control->setShapeRecognizerEnabled(PyObject_IsTrue(enable));
+
+	Py_RETURN_NONE;
+}
+
+static PyObject *
+PyXournal_isShapeRecognizerEnabled(PyXournal * self) {
+	if (self->control->getToolHandler()->isShapeRecognizer()) {
+		Py_RETURN_TRUE;
+	}
+
+	Py_RETURN_FALSE;
+}
+
+
+static PyObject *
+PyXournal_setToolColor(PyXournal * self, PyObject * args) {
+	int color = -1;
+
+	if (!PyArg_ParseTuple(args, "i", &color)) {
+		PyErr_SetString(PyExc_AttributeError, "int");
+		return NULL;
+	}
+
+	self->control->getToolHandler()->setColor(color);
+
+	Py_RETURN_NONE;
+}
+
+static PyObject *
+PyXournal_getToolColor(PyXournal * self) {
+	int color = self->control->getToolHandler()->getColor();
+
+	return PyInt_FromLong(color);
+}
+
 static PyMethodDef PyXournal_methods[] = {
 	{ "setSelectedTool", (PyCFunction) PyXournal_setSelectedTool, METH_VARARGS, "Selects a tool (see constatns TOOL_*" },
 	{ "getSelectedTool", (PyCFunction) PyXournal_getSelectedTool, METH_NOARGS, "Return the selected tool" },
@@ -299,6 +406,19 @@ static PyMethodDef PyXournal_methods[] = {
 	{ "getDocument", (PyCFunction) PyXournal_getDocument, METH_NOARGS, "Return the Xournal Document" },
 	{ "getSelectedPage", (PyCFunction) PyXournal_getSelectedPage, METH_NOARGS, "Gets the selected page ID (first Page: 0)" },
 	{ "selectPage", (PyCFunction) PyXournal_selectPage, METH_VARARGS, "Sets the selected page (first Page: 0)" },
+	{ "setRulerEnabled", (PyCFunction) PyXournal_setRulerEnabled, METH_VARARGS, "Enables the ruler" },
+	{ "isRulerEnabled", (PyCFunction) PyXournal_isRulerEnabled, METH_NOARGS, "Return true if the ruler is enabled" },
+	{ "setShapeRecognizerEnabled", (PyCFunction) PyXournal_setShapeRecognizerEnabled, METH_VARARGS, "Enables the shape recognizer" },
+	{ "isShapeRecognizerEnabled", (PyCFunction) PyXournal_isShapeRecognizerEnabled, METH_NOARGS, "Return true if the shape recognizer is enabled" },
+	{ "setToolColor", (PyCFunction) PyXournal_setToolColor, METH_VARARGS, "Sets the tool Color in RGB" },
+	{ "getToolColor", (PyCFunction) PyXournal_getToolColor, METH_NOARGS, "Returns the tool color in RGB" },
+	{ "setToolSize", (PyCFunction) PyXournal_setToolSize, METH_VARARGS, "Sets the current tool size" },
+	{ "getToolSize", (PyCFunction) PyXournal_getToolSize, METH_NOARGS, "Return the selected tool size" },
+//	{ "xxxxxxxxxxxxx", (PyCFunction) xxxxxxxxxxxxxxxxx, METH_VARARGS, "Xxxxxxxxxxxxxxxx" },
+//	{ "xxxxxxxxxxxxx", (PyCFunction) xxxxxxxxxxxxxxxxx, METH_VARARGS, "Xxxxxxxxxxxxxxxx" },
+//	{ "xxxxxxxxxxxxx", (PyCFunction) xxxxxxxxxxxxxxxxx, METH_VARARGS, "Xxxxxxxxxxxxxxxx" },
+//	{ "xxxxxxxxxxxxx", (PyCFunction) xxxxxxxxxxxxxxxxx, METH_VARARGS, "Xxxxxxxxxxxxxxxx" },
+//	{ "xxxxxxxxxxxxx", (PyCFunction) xxxxxxxxxxxxxxxxx, METH_VARARGS, "Xxxxxxxxxxxxxxxx" },
 //	{ "xxxxxxxxxxxxx", (PyCFunction) xxxxxxxxxxxxxxxxx, METH_VARARGS, "Xxxxxxxxxxxxxxxx" },
 //	{ "xxxxxxxxxxxxx", (PyCFunction) xxxxxxxxxxxxxxxxx, METH_VARARGS, "Xxxxxxxxxxxxxxxx" },
 //	{ "xxxxxxxxxxxxx", (PyCFunction) xxxxxxxxxxxxxxxxx, METH_VARARGS, "Xxxxxxxxxxxxxxxx" },
@@ -351,7 +471,7 @@ static PyMethodDef module_methods[] = { { NULL } /* Sentinel */
 };
 
 
-#define ADD_TOOL(tool) PyDict_SetItemString(XournalType.tp_dict, #tool, PyLong_FromLong(tool));
+#define ADD_CONST(tool) PyDict_SetItemString(XournalType.tp_dict, #tool, PyLong_FromLong(tool));
 
 void initxournal() {
 	PyObject* m;
@@ -359,18 +479,24 @@ void initxournal() {
 	if (PyType_Ready(&XournalType) < 0)
 		return;
 
-	ADD_TOOL(TOOL_PEN);
-	ADD_TOOL(TOOL_ERASER);
-	ADD_TOOL(TOOL_HILIGHTER);
-	ADD_TOOL(TOOL_TEXT);
-	ADD_TOOL(TOOL_IMAGE);
-	ADD_TOOL(TOOL_SELECT_RECT);
-	ADD_TOOL(TOOL_SELECT_REGION);
-	ADD_TOOL(TOOL_SELECT_OBJECT);
-	ADD_TOOL(TOOL_VERTICAL_SPACE);
-	ADD_TOOL(TOOL_HAND);
+	ADD_CONST(TOOL_PEN);
+	ADD_CONST(TOOL_ERASER);
+	ADD_CONST(TOOL_HILIGHTER);
+	ADD_CONST(TOOL_TEXT);
+	ADD_CONST(TOOL_IMAGE);
+	ADD_CONST(TOOL_SELECT_RECT);
+	ADD_CONST(TOOL_SELECT_REGION);
+	ADD_CONST(TOOL_SELECT_OBJECT);
+	ADD_CONST(TOOL_VERTICAL_SPACE);
+	ADD_CONST(TOOL_HAND);
 
-	m = Py_InitModule3("xournal", module_methods, "Xournal api modul");
+	ADD_CONST(TOOL_SIZE_VERY_FINE);
+	ADD_CONST(TOOL_SIZE_FINE);
+	ADD_CONST(TOOL_SIZE_MEDIUM);
+	ADD_CONST(TOOL_SIZE_THICK);
+	ADD_CONST(TOOL_SIZE_VERY_THICK);
+
+	m = Py_InitModule3("xournal", module_methods, "Xournal API modul");
 
 	if (m == NULL) {
 		return;

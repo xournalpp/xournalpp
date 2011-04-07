@@ -38,6 +38,11 @@ public:
 	 */
 	void ref();
 
+	/**
+	 * Delete Job because e.g. the source was removed
+	 */
+	void deleteJob();
+
 public:
 	virtual JobType getType() = 0;
 

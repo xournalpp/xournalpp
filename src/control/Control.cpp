@@ -383,7 +383,6 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent *even
 	case ACTION_QUIT:
 		quit();
 		break;
-
 		// Menu Edit
 	case ACTION_UNDO:
 		this->clearSelection();
@@ -585,11 +584,13 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent *even
 			selectTool(TOOL_VERTICAL_SPACE);
 		}
 		break;
+
 	case ACTION_TOOL_HAND:
 		if (enabled) {
 			selectTool(TOOL_HAND);
 		}
 		break;
+
 	case ACTION_TOOL_DEFAULT:
 		if (enabled) {
 			selectDefaultTool();
@@ -597,22 +598,13 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent *even
 		break;
 
 	case ACTION_RULER:
-		this->toolHandler->setRuler(enabled);
-		fireActionSelected(GROUP_RULER, enabled ? ACTION_RULER : ACTION_NONE);
-		if (enabled) {
-			this->toolHandler->setShapeRecognizer(false);
-			fireActionSelected(GROUP_SHAPE_RECOGNIZER, ACTION_NONE);
-		}
+		setRulerEnabled(enabled);
 		break;
+
 	case ACTION_SHAPE_RECOGNIZER:
-		this->toolHandler->setShapeRecognizer(enabled);
-		fireActionSelected(GROUP_SHAPE_RECOGNIZER, enabled ? ACTION_SHAPE_RECOGNIZER : ACTION_NONE);
-		if (enabled) {
-			this->resetShapeRecognizer();
-			this->toolHandler->setRuler(false);
-			fireActionSelected(GROUP_RULER, ACTION_NONE);
-		}
+		setShapeRecognizerEnabled(enabled);
 		break;
+
 	case ACTION_SIZE_VERY_THIN:
 		if (enabled) {
 			setToolSize(TOOL_SIZE_VERY_FINE);
@@ -826,6 +818,32 @@ void Control::customizeToolbars() {
 
 	// TODO: Debug
 	//win->updateToolbarMenu();
+}
+
+void Control::setRulerEnabled(bool enabled) {
+	if(this->toolHandler->isRuler() == enabled) {
+		return;
+	}
+
+	this->toolHandler->setRuler(enabled);
+	fireActionSelected(GROUP_RULER, enabled ? ACTION_RULER : ACTION_NONE);
+	if (enabled) {
+		setShapeRecognizerEnabled(false);
+	}
+}
+
+void Control::setShapeRecognizerEnabled(bool enabled) {
+	if(this->toolHandler->isShapeRecognizer() == enabled) {
+		return;
+	}
+
+	this->toolHandler->setShapeRecognizer(enabled);
+	fireActionSelected(GROUP_SHAPE_RECOGNIZER, enabled ? ACTION_SHAPE_RECOGNIZER : ACTION_NONE);
+
+	if (enabled) {
+		this->resetShapeRecognizer();
+		setRulerEnabled(false);
+	}
 }
 
 void Control::enableFullscreen(bool enabled, bool presentation) {
@@ -1494,12 +1512,12 @@ void Control::undoRedoPageChanged(PageRef page) {
 	XOJ_CHECK_TYPE(Control);
 
 	for (GList * l = this->changedPages; l != NULL; l = l->next) {
-		if (l->data == (XojPage *)page) {
+		if (l->data == (XojPage *) page) {
 			return;
 		}
 	}
 
-	XojPage * p = (XojPage *)page;
+	XojPage * p = (XojPage *) page;
 	this->changedPages = g_list_append(this->changedPages, p);
 	p->reference();
 }
@@ -1976,6 +1994,7 @@ bool Control::save(bool synchron) {
 	bool result = true;
 	if (synchron) {
 		result = job->save();
+		unblock();
 	} else {
 		this->scheduler->addJob(job, JOB_PRIORITY_URGENT);
 	}
@@ -2131,9 +2150,12 @@ void Control::quit() {
 		return;
 	}
 
-	this->scheduler->finishTask();
+	this->scheduler->lock();
 
 	settings->save();
+
+	this->scheduler->removeAllJobs();
+	this->scheduler->unlock();
 	gtk_main_quit();
 }
 

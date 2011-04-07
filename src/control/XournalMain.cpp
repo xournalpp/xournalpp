@@ -90,7 +90,7 @@ int XournalMain::run(int argc, char * argv[]) {
 		{ "page",            'n', 0, G_OPTION_ARG_INT,            &openAtPageNumber, "Jump to Page (first Page: 1)", "N" },
 
 #ifdef ENABLE_PYTHON
-		{ "script",            0, 0, G_OPTION_ARG_STRING,         &scriptFilename,   "Runs a Python script as plugin", NULL },
+		{ "script",            0, 0, G_OPTION_ARG_STRING,         &scriptFilename,   "Runs a Python script as plugin Package:Function (e.g. \"Test:xournalTest\" to run tests)", NULL },
 		{ "script-arg",        0, 0, G_OPTION_ARG_STRING,         &scriptArg,        "Python script parameter", NULL },
 #endif
 		{ G_OPTION_REMAINING,  0, 0, G_OPTION_ARG_FILENAME_ARRAY, &optFilename,      "<input>", NULL },
@@ -192,7 +192,10 @@ int XournalMain::run(int argc, char * argv[]) {
 	PythonRunner::initPythonRunner(control);
 
 	if(scriptFilename) {
-		PythonRunner::runScript(scriptFilename, "xournalTest", scriptArg);
+		char * name = strtok(scriptFilename, ":");
+		char * methodeName = strtok(NULL, ":");
+
+		PythonRunner::runScript(name, methodeName, scriptArg);
 	}
 #endif
 

@@ -155,11 +155,9 @@ void RenderJob::run() {
 
 	g_mutex_unlock(this->view->repaintRectMutex);
 
-	callAfterRun();
-}
 
-void RenderJob::afterRun() {
-	XOJ_CHECK_TYPE(RenderJob);
+	// TODO: PORTABILITY: this is not working on Windows...
+	gdk_threads_enter();
 
 	if (this->repaintComplete) {
 		this->view->repaintPage();
@@ -172,6 +170,8 @@ void RenderJob::afterRun() {
 		g_list_free(this->repaintRect);
 		this->repaintRect = NULL;
 	}
+
+	gdk_threads_leave();
 }
 
 JobType RenderJob::getType() {

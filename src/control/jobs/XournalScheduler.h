@@ -29,7 +29,7 @@ public:
 	 */
 	void removeSidebar(SidebarPreview * preview);
 	void removePage(PageView * view);
-
+	void removeAllJobs();
 
 	void addRepaintSidebar(SidebarPreview * preview);
 	void addRepaintPage(PageView * view);

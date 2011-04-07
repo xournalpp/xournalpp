@@ -33,7 +33,6 @@ public:
 	void * getSource();
 
 	void run();
-	virtual void afterRun();
 
 public:
 	static void repaintRectangle(RenderJob * renderJob, Rectangle * rect);
