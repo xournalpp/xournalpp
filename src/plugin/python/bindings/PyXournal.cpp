@@ -132,6 +132,7 @@ PyXournal_setSelectedTool(PyXournal * self, PyObject * args) {
 
 	if (tool < TOOL_PEN || tool > TOOL_HAND) {
 		PyErr_SetString(PyExc_AttributeError, "Tool out of range, please use the constants TOOL_*");
+		return NULL;
 	}
 
 	self->control->getToolHandler()->selectTool((ToolType) tool);
@@ -157,6 +158,7 @@ PyXournal_setToolSize(PyXournal * self, PyObject * args) {
 
 	if (size < TOOL_SIZE_VERY_FINE || size > TOOL_SIZE_VERY_THICK) {
 		PyErr_SetString(PyExc_AttributeError, "Toolsize out of range, please use the constants TOOL_SIZE_*");
+		return NULL;
 	}
 
 	self->control->getToolHandler()->setSize((ToolSize) size);
@@ -371,6 +373,12 @@ PyXournal_isShapeRecognizerEnabled(PyXournal * self) {
 	Py_RETURN_FALSE;
 }
 
+static PyObject *
+PyXournal_getToolColor(PyXournal * self) {
+	int color = self->control->getToolHandler()->getColor();
+
+	return PyInt_FromLong(color);
+}
 
 static PyObject *
 PyXournal_setToolColor(PyXournal * self, PyObject * args) {
@@ -387,10 +395,51 @@ PyXournal_setToolColor(PyXournal * self, PyObject * args) {
 }
 
 static PyObject *
-PyXournal_getToolColor(PyXournal * self) {
-	int color = self->control->getToolHandler()->getColor();
+PyXournal_getCurrentPageBackground(PyXournal * self) {
+	PageRef page = self->control->getCurrentPage();
 
-	return PyInt_FromLong(color);
+	if(!page.isValid()) {
+		PyErr_SetString(PyExc_RuntimeError, "getCurrentPageBackground::No current page!");
+		return NULL;
+	}
+
+	return PyInt_FromLong(page.getBackgroundType());
+}
+
+static PyObject *
+PyXournal_setCurrentPageBackground(PyXournal * self, PyObject * args) {
+	int backgroundType = -1;
+
+	if (!PyArg_ParseTuple(args, "i", &backgroundType)) {
+		PyErr_SetString(PyExc_AttributeError, "int");
+		return NULL;
+	}
+
+	if (backgroundType < BACKGROUND_TYPE_NONE || backgroundType > BACKGROUND_TYPE_GRAPH) {
+		PyErr_SetString(PyExc_AttributeError, "Backgroundtype out of range, please use the constants BACKGROUND_TYPE_*");
+		return NULL;
+	}
+
+	if (backgroundType == BACKGROUND_TYPE_PDF) {
+		PyErr_SetString(PyExc_AttributeError, "BACKGROUND_TYPE_PDF connot be set with setCurrentPageBackground");
+		return NULL;
+	}
+
+	if (backgroundType == BACKGROUND_TYPE_IMAGE) {
+		PyErr_SetString(PyExc_AttributeError, "BACKGROUND_TYPE_PDF connot be set with setCurrentPageBackground");
+		return NULL;
+	}
+
+	PageRef page = self->control->getCurrentPage();
+
+	if(!page.isValid()) {
+		PyErr_SetString(PyExc_RuntimeError, "setCurrentPageBackground::No current page!");
+		return NULL;
+	}
+
+	page.setBackgroundType((BackgroundType)backgroundType);
+
+	Py_RETURN_NONE;
 }
 
 static PyMethodDef PyXournal_methods[] = {
@@ -414,8 +463,8 @@ static PyMethodDef PyXournal_methods[] = {
 	{ "getToolColor", (PyCFunction) PyXournal_getToolColor, METH_NOARGS, "Returns the tool color in RGB" },
 	{ "setToolSize", (PyCFunction) PyXournal_setToolSize, METH_VARARGS, "Sets the current tool size" },
 	{ "getToolSize", (PyCFunction) PyXournal_getToolSize, METH_NOARGS, "Return the selected tool size" },
-//	{ "xxxxxxxxxxxxx", (PyCFunction) xxxxxxxxxxxxxxxxx, METH_VARARGS, "Xxxxxxxxxxxxxxxx" },
-//	{ "xxxxxxxxxxxxx", (PyCFunction) xxxxxxxxxxxxxxxxx, METH_VARARGS, "Xxxxxxxxxxxxxxxx" },
+	{ "getCurrentPageBackground", (PyCFunction) PyXournal_getCurrentPageBackground, METH_NOARGS, "Return the background type of the current page (see BACKGROUND_TYPE_*)" },
+	{ "setCurrentPageBackground", (PyCFunction) PyXournal_setCurrentPageBackground, METH_VARARGS, "Set the background type of the current page (see BACKGROUND_TYPE_*)\nDon't use BACKGROUND_TYPE_PDF or BACKGROUND_TYPE_PDF" },
 //	{ "xxxxxxxxxxxxx", (PyCFunction) xxxxxxxxxxxxxxxxx, METH_VARARGS, "Xxxxxxxxxxxxxxxx" },
 //	{ "xxxxxxxxxxxxx", (PyCFunction) xxxxxxxxxxxxxxxxx, METH_VARARGS, "Xxxxxxxxxxxxxxxx" },
 //	{ "xxxxxxxxxxxxx", (PyCFunction) xxxxxxxxxxxxxxxxx, METH_VARARGS, "Xxxxxxxxxxxxxxxx" },
@@ -495,6 +544,15 @@ void initxournal() {
 	ADD_CONST(TOOL_SIZE_MEDIUM);
 	ADD_CONST(TOOL_SIZE_THICK);
 	ADD_CONST(TOOL_SIZE_VERY_THICK);
+
+
+
+	ADD_CONST(BACKGROUND_TYPE_NONE);
+	ADD_CONST(BACKGROUND_TYPE_PDF);
+	ADD_CONST(BACKGROUND_TYPE_IMAGE);
+	ADD_CONST(BACKGROUND_TYPE_LINED);
+	ADD_CONST(BACKGROUND_TYPE_RULED);
+	ADD_CONST(BACKGROUND_TYPE_GRAPH);
 
 	m = Py_InitModule3("xournal", module_methods, "Xournal API modul");
 
