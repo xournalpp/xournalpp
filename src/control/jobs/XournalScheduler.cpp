@@ -22,6 +22,29 @@ void XournalScheduler::removePage(PageView * view) {
 	removeSource(view, JOB_TYPE_RENDER, JOB_PRIORITY_URGENT);
 }
 
+void XournalScheduler::removeAllJobs() {
+	XOJ_CHECK_TYPE(XournalScheduler);
+
+	g_mutex_lock(this->jobQueueMutex);
+
+	for(int priority = JOB_PRIORITY_URGENT; priority < JOB_N_PRIORITIES; priority++) {
+		int length = g_queue_get_length(this->jobQueue[priority]);
+		for (int i = 0; i < length; i++) {
+			Job * job = (Job *) g_queue_peek_nth(this->jobQueue[priority], i);
+
+			JobType type = job->getType();
+			if (type == JOB_TYPE_PREVIEW || type == JOB_TYPE_RENDER) {
+				job->deleteJob();
+				g_queue_remove(this->jobQueue[priority], job);
+				job->unref();
+			}
+		}
+	}
+
+	g_mutex_unlock(this->jobQueueMutex);
+
+}
+
 void XournalScheduler::finishTask() {
 	XOJ_CHECK_TYPE(XournalScheduler);
 
@@ -40,6 +63,7 @@ void XournalScheduler::removeSource(void * source, JobType type, JobPriority pri
 
 		if (job->getType() == type) {
 			if (job->getSource() == source) {
+				job->deleteJob();
 				g_queue_remove(this->jobQueue[priority], job);
 				job->unref();
 				break;

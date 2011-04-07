@@ -432,29 +432,29 @@ void Sidebar::layout() {
 		width = MAX(width, p->getWidth());
 	}
 
-	gtk_layout_set_size(GTK_LAYOUT(iconViewPreview), width, y);
+	gtk_layout_set_size(GTK_LAYOUT(this->iconViewPreview), width, y);
 }
 
 Document * Sidebar::getDocument() {
 	XOJ_CHECK_TYPE(Sidebar);
 
-	return control->getDocument();
+	return this->control->getDocument();
 }
 
 Control * Sidebar::getControl() {
 	XOJ_CHECK_TYPE(Sidebar);
 
-	return control;
+	return this->control;
 }
 
 double Sidebar::getZoom() {
-	return zoom;
+	return this->zoom;
 }
 
 void Sidebar::updatePreviews() {
 	XOJ_CHECK_TYPE(Sidebar);
 
-	Document * doc = control->getDocument();
+	Document * doc = this->control->getDocument();
 	doc->lock();
 	int len = doc->getPageCount();
 
@@ -487,21 +487,21 @@ void Sidebar::documentChanged(DocumentChangeType type) {
 	XOJ_CHECK_TYPE(Sidebar);
 
 	if (type == DOCUMENT_CHANGE_CLEARED) {
-		gtk_tree_view_set_model(GTK_TREE_VIEW(treeViewBookmarks), NULL);
+		gtk_tree_view_set_model(GTK_TREE_VIEW(this->treeViewBookmarks), NULL);
 	} else if (type == DOCUMENT_CHANGE_PDF_BOOKMARKS || type == DOCUMENT_CHANGE_COMPLETE) {
 
-		Document * doc = control->getDocument();
+		Document * doc = this->control->getDocument();
 
 		doc->lock();
 		GtkTreeModel * model = doc->getContentsModel();
-		gtk_tree_view_set_model(GTK_TREE_VIEW(treeViewBookmarks), model);
+		gtk_tree_view_set_model(GTK_TREE_VIEW(this->treeViewBookmarks), model);
 		int count = expandOpenLinks(model, NULL);
 		doc->unlock();
 
 		if (count == 0) {
-			gtk_combo_box_set_active(GTK_COMBO_BOX(comboBox), 1);
+			gtk_combo_box_set_active(GTK_COMBO_BOX(this->comboBox), 1);
 		} else if (this->typeSelected) {
-			gtk_combo_box_set_active(GTK_COMBO_BOX(comboBox), 0);
+			gtk_combo_box_set_active(GTK_COMBO_BOX(this->comboBox), 0);
 		}
 	}
 

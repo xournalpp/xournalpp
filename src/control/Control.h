@@ -96,6 +96,9 @@ public:
 	void customizeToolbars();
 	void enableFullscreen(bool enabled, bool presentation = false);
 
+	void setRulerEnabled(bool enabled);
+	void setShapeRecognizerEnabled(bool enabled);
+
 	void addNewLayer();
 	void deleteCurrentLayer();
 

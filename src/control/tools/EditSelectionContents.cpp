@@ -330,15 +330,18 @@ void EditSelectionContents::paint(cairo_t * cr, double x, double y, double width
 	int dx = (int) (x * zoom);
 	int dy = (int) (y * zoom);
 
+	if(this->relativeX == 0) {
+		this->relativeX = dx;
+		this->relativeY = dy;
+	}
+
 	if (this->crBuffer == NULL) {
 		this->crBuffer = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, width * zoom, height * zoom);
 		cairo_t * cr2 = cairo_create(this->crBuffer);
 
-		this->relativeX = dx;
-		this->relativeY = dy;
-
+		cairo_scale(cr2,  fx, fy);
 		cairo_translate(cr2, -this->relativeX, -this->relativeY);
-		cairo_scale(cr2, zoom * fx, zoom * fy);
+		cairo_scale(cr2, zoom , zoom);
 		DocumentView view;
 		view.drawSelection(cr2, this);
 

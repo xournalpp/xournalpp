@@ -16,6 +16,7 @@ Scheduler::Scheduler() {
 	this->jobQueueCond = g_cond_new();
 	this->jobQueueMutex = g_mutex_new();
 	this->jobRunningMutex = g_mutex_new();
+	this->schedulerMutex = g_mutex_new();
 
 	// Queue
 	GQueue init = G_QUEUE_INIT;
@@ -40,6 +41,9 @@ Scheduler::~Scheduler() {
 
 	g_mutex_free(this->jobQueueMutex);
 	g_mutex_free(this->jobRunningMutex);
+
+	g_mutex_free(this->schedulerMutex);
+
 	g_cond_free(this->jobQueueCond);
 
 	Job * job = NULL;
@@ -88,16 +92,43 @@ Job * Scheduler::getNextJobUnlocked() {
 	return job;
 }
 
+
+/**
+ * Locks the complete scheduler
+ */
+void Scheduler::lock() {
+	XOJ_CHECK_TYPE(Scheduler);
+
+	g_mutex_lock(this->schedulerMutex);
+}
+
+/**
+ * Unlocks the complete scheduler
+ */
+void Scheduler::unlock() {
+	XOJ_CHECK_TYPE(Scheduler);
+
+	g_mutex_unlock(this->schedulerMutex);
+}
+
+
 gpointer Scheduler::jobThreadCallback(Scheduler * scheduler) {
 	XOJ_CHECK_TYPE_OBJ(scheduler, Scheduler);
 
 	while (scheduler->threadRunning) {
+		// lock the whole scheduler
+		g_mutex_lock(scheduler->schedulerMutex);
+
 		g_mutex_lock(scheduler->jobQueueMutex);
 		Job * job = scheduler->getNextJobUnlocked();
 		SDEBUG("get job: %ld\n", (long)job);
 		if (!job) {
+			// unlock the whole scheduler
+			g_mutex_unlock(scheduler->schedulerMutex);
+
 			g_cond_wait(scheduler->jobQueueCond, scheduler->jobQueueMutex);
 			g_mutex_unlock(scheduler->jobQueueMutex);
+
 			continue;
 		}
 
@@ -111,6 +142,9 @@ gpointer Scheduler::jobThreadCallback(Scheduler * scheduler) {
 
 		job->unref();
 		g_mutex_unlock(scheduler->jobRunningMutex);
+
+		// unlock the whole scheduler
+		g_mutex_unlock(scheduler->schedulerMutex);
 
 		SDEBUG("next\n", NULL);
 	}

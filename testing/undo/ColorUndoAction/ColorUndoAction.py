@@ -10,8 +10,8 @@
 from undo.UndoRedoTest import UndoRedoTest
 
 class ColorUndoAction(UndoRedoTest):
-	def __init__(self):
-		UndoRedoTest.__init__(self)
+	def __init__(self, xoj):
+		UndoRedoTest.__init__(self, xoj)
 
 
 

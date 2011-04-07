@@ -42,6 +42,13 @@ void Job::ref() {
 	g_mutex_unlock(this->refMutex);
 }
 
+void Job::deleteJob() {
+	if(this->afterRunId) {
+		g_source_remove(this->afterRunId);
+		this->unref();
+	}
+}
+
 void Job::execute() {
 	XOJ_CHECK_TYPE(Job);
 
@@ -58,6 +65,7 @@ bool Job::callAfterCallback(Job * job) {
 	XOJ_CHECK_TYPE_OBJ(job, Job);
 
 	gdk_threads_enter();
+
 	job->afterRun();
 	gdk_threads_leave();
 
@@ -74,6 +82,7 @@ void Job::callAfterRun() {
 	}
 
 	this->ref();
+
 	this->afterRunId = g_idle_add((GSourceFunc) Job::callAfterCallback, this);
 }
 

@@ -9,17 +9,17 @@
 
 from XournalTest import XournalTest
 
-class UndoRedoTest(XournalTest):
+class ToolTest(XournalTest):
 	def __init__(self, xoj):
 		XournalTest.__init__(self, xoj)
 
-		# TODO debug
-		print xoj.getUndoRedoHandler()
-
 	def tearUp(self):
-		print 'UndoRedoTest.tearUp'
+		self.xoj.newFile(True)
+		self.xoj.setToolColor(0xff0000)
+		self.xoj.setRulerEnabled(False)
+		self.xoj.setShapeRecognizerEnabled(False)
 
 	def tearDown(self):
-		print 'UndoRedoTest.tearDown'
+		print 'ToolTest.tearDown'
 
 

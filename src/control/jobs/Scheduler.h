@@ -42,6 +42,16 @@ public:
 
 	void stop();
 
+	/**
+	 * Locks the complete scheduler
+	 */
+	void lock();
+
+	/**
+	 * Unlocks the complete scheduler
+	 */
+	void unlock();
+
 private:
 	static gpointer jobThreadCallback(Scheduler * scheduler);
 	Job * getNextJobUnlocked();
@@ -55,6 +65,8 @@ protected:
 
 	GCond * jobQueueCond;
 	GMutex * jobQueueMutex;
+
+	GMutex * schedulerMutex;
 
 	// this is need to be sure there is no job running if we delete a page, else we may access delete memory...
 	GMutex * jobRunningMutex;

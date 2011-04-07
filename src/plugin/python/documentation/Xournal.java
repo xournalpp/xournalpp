@@ -9,6 +9,14 @@ public interface Xournal {
 	int TOOL_SELECT_OBJECT = 7;
 	int TOOL_VERTICAL_SPACE = 8;
 	int TOOL_HAND = 9;
+	
+	
+	int TOOL_SIZE_VERY_FINE = 0;
+	int TOOL_SIZE_FINE = 1;
+	int TOOL_SIZE_MEDIUM = 2;
+	int TOOL_SIZE_THICK = 3;
+	int TOOL_SIZE_VERY_THICK = 4;
+
 
 	/**
 	 * Sets the current tool
@@ -23,6 +31,18 @@ public interface Xournal {
 	int getSelectedTool();
 	
 	/**
+	 * Sets the current tool size
+	 * @param tool A constant defined above
+	 */
+	void setToolSize(int tool);
+	
+	/**
+	 * Return the selected tool size
+	 * @return (See constants TOOL_SIZE_*)
+	 */
+	int getToolSize();
+	
+	/**
 	 * Sets the tool Color in RGB
 	 */
 	void setToolColor(int color);
@@ -31,6 +51,26 @@ public interface Xournal {
 	 * Returns the tool color in RGB
 	 */
 	int getToolColor();
+
+	/**
+	 * Enables the ruler
+	 */
+	void setRulerEnabled(boolean enabled);
+
+	/**
+	 * Return true if the ruler is enabled
+	 */
+	boolean isRulerEnabled();
+
+	/**
+	 * Enables the shape recognizer
+	 */
+	void setShapeRecognizerEnabled(boolean enabled);
+	
+	/**
+	 * Return true if the shape recognizer is enabled
+	 */
+	boolean isShapeRecognizerEnabled();
 
 	/**
 	 * Creates a new file
@@ -61,14 +101,14 @@ public interface Xournal {
 	 * @param x The X Coordinate
 	 * @param y The Y Coordinate
 	 */
-	void mousePressed(int x, int y);
+	void mousePressed(double x, double y);
 
 	/**
 	 * Press the mouse on the selected View
 	 * @param x The X Coordinate
 	 * @param y The Y Coordinate
 	 */
-	void mouseMoved(int x, int y);
+	void mouseMoved(double x, double y);
 
 	/**
 	 * Press the mouse on the selected View
