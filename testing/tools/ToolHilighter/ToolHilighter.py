@@ -16,11 +16,10 @@ class ToolHilighter(ToolTest):
 
 	def runTest(self):
 		self.xoj.setSelectedTool(self.xoj.TOOL_HILIGHTER)
-		self.xoj.setToolSize(self.xoj.TOOL_SIZE_FINE)
+		self.xoj.setToolSize(self.xoj.TOOL_SIZE_MEDIUM)
 		self.doTestInput()
 
 		path = os.path.realpath(__file__ + '/../result.xoj')
 		self.checkContents(path)
-
 
 
