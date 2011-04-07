@@ -10,14 +10,16 @@
 from tools.ToolTest import ToolTest
 import os
 
-# TODO: remove if implemented
-from TestNotImplementedException import TestNotImplementedException
-
-
 class ToolRuler(ToolTest):
 	def __init__(self, xoj):
 		ToolTest.__init__(self, xoj)
 
 	def runTest(self):
-		raise TestNotImplementedException()
+		self.xoj.setSelectedTool(self.xoj.TOOL_PEN)
+		self.xoj.setToolSize(self.xoj.TOOL_SIZE_FINE)
+		self.xoj.setRulerEnabled(True)
+		self.doTestInput()
+
+		path = os.path.realpath(__file__ + '/../result.xoj')
+		self.checkContents(path)
 
