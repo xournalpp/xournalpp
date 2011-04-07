@@ -13,6 +13,7 @@ import os
 # TODO: remove if implemented
 from TestNotImplementedException import TestNotImplementedException
 
+#test with default stroke, stroke with pressure, stroke with ruler
 
 class ToolSelectObject(ToolTest):
 	def __init__(self, xoj):

@@ -19,5 +19,18 @@ class ToolEraser(ToolTest):
 		ToolTest.__init__(self, xoj)
 
 	def runTest(self):
+		self.testWhiteout()
+		self.testStandard()
+		self.testDeleteStroke()
 		raise TestNotImplementedException()
+
+	def testWhiteout(self):
+		pass
+
+	def testStandard(self):
+		# test with normal stroke, with pressure, with ruler
+		pass
+
+	def testDeleteStroke(self):
+		pass
 
