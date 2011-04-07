@@ -21,3 +21,4 @@ class ToolPen(ToolTest):
 
 		path = os.path.realpath(__file__ + '/../result.xoj')
 		self.checkContents(path)
+
