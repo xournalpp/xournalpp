@@ -1,5 +1,6 @@
 import xournal
 import undo.UndoRedoTest
+from TestNotImplementedException import TestNotImplementedException
 import os
 import sys
 import gtk
@@ -8,6 +9,7 @@ import gtk
 class XournalTestRunner:
 	def __init__(self):
 		self.failedTests = 0
+		self.notImplementedTests = 0
 		self.successfullyTests = 0
 		self.xoj = xournal.Xournal()
 		self.faileTest = []
@@ -15,13 +17,19 @@ class XournalTestRunner:
 	def start(self):
 		print '=== Xournal Testsuit ===\n'
 
-		self.xournalRunTestInSubfolder('tools');
-		self.xournalRunTestInSubfolder('undo');
+		subfolders = ['clipboard', 'document', 'tools', 'undo']
+		for folder in subfolders:
+			self.xournalRunTestInSubfolder(folder);
 
 		print '\n=== End Xournal Testsuit ===\n'
 
 		if self.failedTests == 0:
-			md = gtk.MessageDialog(None, 0, gtk.MESSAGE_INFO, gtk.BUTTONS_CLOSE, 'All test passed')
+			msg = 'All test passed'
+
+			if self.notImplementedTests != 0:
+				msg += ' (%i not implemented)' % self.notImplementedTests
+
+			md = gtk.MessageDialog(None, 0, gtk.MESSAGE_INFO, gtk.BUTTONS_CLOSE, msg)
 			md.run()
 			md.destroy()
 		else:
@@ -29,8 +37,13 @@ class XournalTestRunner:
 			for test in self.faileTest:
 				tests += u'\n- ' + test
 
+			notImplemented = ''
+			if self.notImplementedTests != 0:
+				notImplemented = ' (%i not implemented)' % self.notImplementedTests
+
+
 			md = gtk.MessageDialog(None, 0, gtk.MESSAGE_WARNING, gtk.BUTTONS_CLOSE, '')
-			md.set_markup('<b>%i Test failed:</b>\n%s' % (self.failedTests, tests))
+			md.set_markup('<b>%i Test failed%s:</b>\n%s' % (self.failedTests, notImplemented, tests))
 			md.run()
 			md.destroy()
 
@@ -57,9 +70,9 @@ class XournalTestRunner:
 					classObject = getattr(moduleObject, name)
 					obj = classObject(self.xoj)
 					obj.test()
-					self.successfullyTests = self.successfullyTests + 1
-				except (AssertionError) as e:
-					self.failedTests = self.failedTests + 1
+					self.successfullyTests += 1
+				except (AssertionError, IOError) as e:
+					self.failedTests += 1
 
 					self.faileTest.append(subfolder + '/' + name)
 
@@ -67,6 +80,9 @@ class XournalTestRunner:
 					print >> sys.stderr, type(e)     # the exception instance
 					print >> sys.stderr, e.args      # arguments stored in .args
 					print >> sys.stderr, e
+				except (TestNotImplementedException) as e:
+					self.notImplementedTests += 1
+					
 	#			except (Exception) as e:
 	#				print "Test %s Unexpected error:" % name, type(e)
 	#				print e.args      # arguments stored in .args
@@ -75,7 +91,7 @@ class XournalTestRunner:
 
 
 		print '\n\n\n==================================================='
-		print 'Testresult: %i successfully, %i failed!' % (self.successfullyTests, self.failedTests)
+		print 'Testresult: %i successfully, %i not implemented, %i failed!' % (self.successfullyTests, self.notImplementedTests, self.failedTests)
 		print '===================================================\n\n'
 
 
