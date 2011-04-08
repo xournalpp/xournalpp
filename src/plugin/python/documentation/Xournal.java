@@ -24,6 +24,10 @@ public interface Xournal {
 	int BACKGROUND_TYPE_RULED = 5;
 	int BACKGROUND_TYPE_GRAPH = 6;
 	
+	int ERASER_TYPE_DEFAULT = 1;
+	int ERASER_TYPE_WHITEOUT = 2;
+	int ERASER_TYPE_DELETE_STROKE = 3;
+	
 	/**
 	 * Sets the current tool
 	 * @param tool A constant defined above
@@ -78,6 +82,16 @@ public interface Xournal {
 	 */
 	boolean isShapeRecognizerEnabled();
 
+	/**
+	 * Set the eraser type (ERASER_TYPE_*)
+	 */
+	void setEraserType(int eraserType);
+	
+	/**
+	 * Returns the eraser type (ERASER_TYPE_*)
+	 */
+	int getEraserType();
+	
 	/**
 	 * Return the background type of the current page (see BACKGROUND_TYPE_*)
 	 */

@@ -442,6 +442,31 @@ PyXournal_setCurrentPageBackground(PyXournal * self, PyObject * args) {
 	Py_RETURN_NONE;
 }
 
+static PyObject *
+PyXournal_getEraserType(PyXournal * self) {
+	EraserType type = self->control->getToolHandler()->getEraserType();
+	return PyInt_FromLong(type);
+}
+
+static PyObject *
+PyXournal_setEraserType(PyXournal * self, PyObject * args) {
+	int eraserType = -1;
+
+	if (!PyArg_ParseTuple(args, "i", &eraserType)) {
+		PyErr_SetString(PyExc_AttributeError, "int");
+		return NULL;
+	}
+
+	if (eraserType < ERASER_TYPE_DEFAULT || eraserType > ERASER_TYPE_DELETE_STROKE) {
+		PyErr_SetString(PyExc_AttributeError, "Erasertype out of range, please use the constants BACKGROUND_TYPE_*");
+		return NULL;
+	}
+
+	self->control->getToolHandler()->setEraserType((EraserType)eraserType);
+
+	Py_RETURN_NONE;
+}
+
 static PyMethodDef PyXournal_methods[] = {
 	{ "setSelectedTool", (PyCFunction) PyXournal_setSelectedTool, METH_VARARGS, "Selects a tool (see constatns TOOL_*" },
 	{ "getSelectedTool", (PyCFunction) PyXournal_getSelectedTool, METH_NOARGS, "Return the selected tool" },
@@ -465,8 +490,8 @@ static PyMethodDef PyXournal_methods[] = {
 	{ "getToolSize", (PyCFunction) PyXournal_getToolSize, METH_NOARGS, "Return the selected tool size" },
 	{ "getCurrentPageBackground", (PyCFunction) PyXournal_getCurrentPageBackground, METH_NOARGS, "Return the background type of the current page (see BACKGROUND_TYPE_*)" },
 	{ "setCurrentPageBackground", (PyCFunction) PyXournal_setCurrentPageBackground, METH_VARARGS, "Set the background type of the current page (see BACKGROUND_TYPE_*)\nDon't use BACKGROUND_TYPE_PDF or BACKGROUND_TYPE_PDF" },
-//	{ "xxxxxxxxxxxxx", (PyCFunction) xxxxxxxxxxxxxxxxx, METH_VARARGS, "Xxxxxxxxxxxxxxxx" },
-//	{ "xxxxxxxxxxxxx", (PyCFunction) xxxxxxxxxxxxxxxxx, METH_VARARGS, "Xxxxxxxxxxxxxxxx" },
+	{ "setEraserType", (PyCFunction) PyXournal_setEraserType, METH_VARARGS, "Set the eraser type (ERASER_TYPE_*)" },
+	{ "getEraserType", (PyCFunction) PyXournal_getEraserType, METH_VARARGS, "Returns the eraser type (ERASER_TYPE_*)" },
 //	{ "xxxxxxxxxxxxx", (PyCFunction) xxxxxxxxxxxxxxxxx, METH_VARARGS, "Xxxxxxxxxxxxxxxx" },
 //	{ "xxxxxxxxxxxxx", (PyCFunction) xxxxxxxxxxxxxxxxx, METH_VARARGS, "Xxxxxxxxxxxxxxxx" },
 //	{ "xxxxxxxxxxxxx", (PyCFunction) xxxxxxxxxxxxxxxxx, METH_VARARGS, "Xxxxxxxxxxxxxxxx" },
@@ -545,14 +570,16 @@ void initxournal() {
 	ADD_CONST(TOOL_SIZE_THICK);
 	ADD_CONST(TOOL_SIZE_VERY_THICK);
 
-
-
 	ADD_CONST(BACKGROUND_TYPE_NONE);
 	ADD_CONST(BACKGROUND_TYPE_PDF);
 	ADD_CONST(BACKGROUND_TYPE_IMAGE);
 	ADD_CONST(BACKGROUND_TYPE_LINED);
 	ADD_CONST(BACKGROUND_TYPE_RULED);
 	ADD_CONST(BACKGROUND_TYPE_GRAPH);
+
+	ADD_CONST(ERASER_TYPE_DEFAULT);
+	ADD_CONST(ERASER_TYPE_WHITEOUT);
+	ADD_CONST(ERASER_TYPE_DELETE_STROKE);
 
 	m = Py_InitModule3("xournal", module_methods, "Xournal API modul");
 
