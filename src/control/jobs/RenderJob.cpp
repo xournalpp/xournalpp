@@ -90,6 +90,36 @@ void RenderJob::rerenderRectangle(Rectangle * rect) {
 	repaintRectangle(this, rect);
 }
 
+struct RepaintData {
+	bool complete;
+	GList * repaintRects;
+	GtkWidget * widget;
+};
+
+bool idleRepaint(struct RepaintData * data) {
+	gdk_threads_enter();
+
+	if(data->complete) {
+	} else {
+		for (GList * l = data->repaintRects; l != NULL; l = l->next) {
+			Rectangle * rect = (Rectangle *) l->data;
+//			this->view->repaintRect(rect->x, rect->y, rect->width, rect->height);
+			delete rect;
+		}
+		g_list_free(data->repaintRects);
+	}
+
+
+	// TODO: improve
+	gtk_widget_queue_draw(data->widget);
+
+	gdk_threads_leave();
+
+	g_free(data);
+	// do not call again
+	return false;
+}
+
 void RenderJob::run() {
 	XOJ_CHECK_TYPE(RenderJob);
 
@@ -155,23 +185,34 @@ void RenderJob::run() {
 
 	g_mutex_unlock(this->view->repaintRectMutex);
 
+	struct RepaintData * data = g_new(struct RepaintData, 1);
+	data->complete = this->repaintComplete;
+	data->repaintRects = this->repaintRect;
+	data->widget = this->view->getXournal()->getWidget();
 
-	// TODO: PORTABILITY: this is not working on Windows...
-	gdk_threads_enter();
-
-	if (this->repaintComplete) {
-		this->view->repaintPage();
-	} else {
-		for (GList * l = this->repaintRect; l != NULL; l = l->next) {
-			Rectangle * rect = (Rectangle *) l->data;
-			this->view->repaintRect(rect->x, rect->y, rect->width, rect->height);
-			delete rect;
-		}
-		g_list_free(this->repaintRect);
-		this->repaintRect = NULL;
+	if(this->repaintComplete && this->repaintRect) {
+		g_warning("RenderJob::run:: repaint complete but repaintRect != NULL!");
 	}
 
-	gdk_threads_leave();
+	g_idle_add((GSourceFunc)idleRepaint, data);
+
+	// PORTABILITY: this is not working on Windows...
+	//	gdk_threads_enter();
+	//
+	//	if (this->repaintComplete) {
+	//		this->view->repaintPage();
+	//	} else {
+	//		for (GList * l = this->repaintRect; l != NULL; l = l->next) {
+	//			Rectangle * rect = (Rectangle *) l->data;
+	//			this->view->repaintRect(rect->x, rect->y, rect->width, rect->height);
+	//			delete rect;
+	//		}
+	//		g_list_free(this->repaintRect);
+	//		this->repaintRect = NULL;
+	//	}
+	//
+	//	gdk_threads_leave();
+
 }
 
 JobType RenderJob::getType() {

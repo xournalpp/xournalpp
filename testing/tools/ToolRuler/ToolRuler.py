@@ -17,6 +17,7 @@ class ToolRuler(ToolTest):
 	def runTest(self):
 		self.xoj.setSelectedTool(self.xoj.TOOL_PEN)
 		self.xoj.setToolSize(self.xoj.TOOL_SIZE_FINE)
+		self.initTool()
 		self.xoj.setRulerEnabled(True)
 		self.doTestInput()
 
