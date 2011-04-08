@@ -21,16 +21,38 @@ class ToolEraser(ToolTest):
 		self.testDeleteStroke()
 
 	def testWhiteout(self):
-		path = os.path.realpath(__file__ + '/../source.xoj')
-		self.xoj.openFile(path)
+		self.xoj.setEraserType(self.xoj.ERASER_TYPE_WHITEOUT)
+
+		self.doTestInput()
 
 		path = os.path.realpath(__file__ + '/../resultWhiteout.xoj')
 		self.checkContents(path)
 
 	def testStandard(self):
-		# test with normal stroke, with pressure, with ruler
-		pass
+		self.xoj.newFile(True)
+		path = os.path.realpath(__file__ + '/../source.xoj')
+		self.xoj.openFile(path)
+
+		self.xoj.setEraserType(self.xoj.ERASER_TYPE_DEFAULT)
+
+		points = [[100, 40]]
+		points.append([150, 300]);
+		self.mouseInput(points, 1);
+
+		path = os.path.realpath(__file__ + '/../resultStandard.xoj')
+		self.checkContents(path)
 
 	def testDeleteStroke(self):
-		pass
+		self.xoj.newFile(True)
+		path = os.path.realpath(__file__ + '/../source.xoj')
+		self.xoj.openFile(path)
+
+		self.xoj.setEraserType(self.xoj.ERASER_TYPE_DELETE_STROKE)
+
+		points = [[100, 40]]
+		points.append([150, 300]);
+		self.mouseInput(points, 1);
+
+		path = os.path.realpath(__file__ + '/../resultDelete.xoj')
+		self.checkContents(path)
 
