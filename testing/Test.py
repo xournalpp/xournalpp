@@ -4,7 +4,7 @@ from TestNotImplementedException import TestNotImplementedException
 import os
 import sys
 import gtk
-
+import traceback
 
 class XournalTestRunner:
 	def __init__(self):
@@ -83,12 +83,15 @@ class XournalTestRunner:
 				except (TestNotImplementedException) as e:
 					self.notImplementedTests += 1
 					
-	#			except (Exception) as e:
-	#				print "Test %s Unexpected error:" % name, type(e)
-	#				print e.args      # arguments stored in .args
-	#				print e
+				except (Exception) as e:
+					self.failedTests += 1
 
+					self.faileTest.append(subfolder + '/' + name)
 
+					print >> sys.stderr, 'Test %s Unexpected error %s:' % (name, type(e))
+					print >> sys.stderr, e.args      # arguments stored in .args
+					print >> sys.stderr, e
+					traceback.print_exc()
 
 		print '\n\n\n==================================================='
 		print 'Testresult: %i successfully, %i not implemented, %i failed!' % (self.successfullyTests, self.notImplementedTests, self.failedTests)
