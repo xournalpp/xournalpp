@@ -395,19 +395,13 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent *even
 		this->resetShapeRecognizer();
 		break;
 	case ACTION_CUT:
-		if (!win->getXournal()->cut()) {
-			clipboardHandler->cut();
-		}
+		cut();
 		break;
 	case ACTION_COPY:
-		if (!win->getXournal()->copy()) {
-			clipboardHandler->copy();
-		}
+		copy();
 		break;
 	case ACTION_PASTE:
-		if (!win->getXournal()->paste()) {
-			clipboardHandler->paste();
-		}
+		paste();
 		break;
 	case ACTION_SEARCH:
 		clearSelectionEndText();
@@ -771,6 +765,27 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent *even
 	}
 }
 
+bool Control::copy() {
+	if (this->win && this->win->getXournal()->copy()) {
+		return true;
+	}
+	return this->clipboardHandler->copy();
+}
+
+bool Control::cut() {
+	if (this->win && this->win->getXournal()->cut()) {
+		return true;
+	}
+	return this->clipboardHandler->cut();
+}
+
+bool Control::paste() {
+	if (this->win && this->win->getXournal()->paste()) {
+		return true;
+	}
+	return this->clipboardHandler->paste();
+}
+
 void Control::clearSelectionEndText() {
 	XOJ_CHECK_TYPE(Control);
 
@@ -821,7 +836,7 @@ void Control::customizeToolbars() {
 }
 
 void Control::setRulerEnabled(bool enabled) {
-	if(this->toolHandler->isRuler() == enabled) {
+	if (this->toolHandler->isRuler() == enabled) {
 		return;
 	}
 
@@ -833,7 +848,7 @@ void Control::setRulerEnabled(bool enabled) {
 }
 
 void Control::setShapeRecognizerEnabled(bool enabled) {
-	if(this->toolHandler->isShapeRecognizer() == enabled) {
+	if (this->toolHandler->isShapeRecognizer() == enabled) {
 		return;
 	}
 

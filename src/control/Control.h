@@ -164,6 +164,11 @@ public:
 	int getCurrentPageNo();
 	Cursor * getCursor();
 	Sidebar * getSidebar();
+
+	bool copy();
+	bool cut();
+	bool paste();
+
 public:
 	// UndoRedoListener interface
 	void undoRedoChanged();

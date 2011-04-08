@@ -80,6 +80,7 @@ class XournalTestRunner:
 					print >> sys.stderr, type(e)     # the exception instance
 					print >> sys.stderr, e.args      # arguments stored in .args
 					print >> sys.stderr, e
+					traceback.print_exc()
 				except (TestNotImplementedException) as e:
 					self.notImplementedTests += 1
 					

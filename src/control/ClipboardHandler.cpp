@@ -39,21 +39,27 @@ ClipboardHandler::~ClipboardHandler() {
 
 static GdkAtom atomXournal = gdk_atom_intern_static_string("application/xournal");
 
-void ClipboardHandler::paste() {
+bool ClipboardHandler::paste() {
 	XOJ_CHECK_TYPE(ClipboardHandler);
 
 	if (this->containsXournal) {
-		gtk_clipboard_request_contents(clipboard, atomXournal, (GtkClipboardReceivedFunc) pasteClipboardContents, this);
+		gtk_clipboard_request_contents(this->clipboard, atomXournal, (GtkClipboardReceivedFunc) pasteClipboardContents, this);
+		return true;
 	} else if (this->containsText) {
-		gtk_clipboard_request_contents(clipboard, gdk_atom_intern_static_string("UTF8_STRING"), (GtkClipboardReceivedFunc) pasteClipboardContents, this);
+		gtk_clipboard_request_contents(this->clipboard, gdk_atom_intern_static_string("UTF8_STRING"), (GtkClipboardReceivedFunc) pasteClipboardContents, this);
+		return true;
 	}
+
+	return false;
 }
 
-void ClipboardHandler::cut() {
+bool ClipboardHandler::cut() {
 	XOJ_CHECK_TYPE(ClipboardHandler);
 
-	this->copy();
-	// TODO: delete selection
+	bool result = this->copy();
+	this->listener->deleteSelection();
+
+	return result;
 }
 
 gint ElementCompareFunc(Element * a, Element * b) {
@@ -112,11 +118,11 @@ static cairo_status_t svgWriteFunction(GString * string, const unsigned char *da
 	return CAIRO_STATUS_SUCCESS;
 }
 
-void ClipboardHandler::copy() {
+bool ClipboardHandler::copy() {
 	XOJ_CHECK_TYPE(ClipboardHandler);
 
 	if (!this->selection) {
-		return;
+		return false;
 	}
 
 	/////////////////////////////////////////////////////////////////
@@ -227,14 +233,16 @@ void ClipboardHandler::copy() {
 
 	ClipboardContents * contents = new ClipboardContents(text, image, svgString->str, out.getStr());
 
-	gtk_clipboard_set_with_data(clipboard, targets, n_targets, (GtkClipboardGetFunc) ClipboardContents::getFunction,
+	gtk_clipboard_set_with_data(this->clipboard, targets, n_targets, (GtkClipboardGetFunc) ClipboardContents::getFunction,
 			(GtkClipboardClearFunc) ClipboardContents::clearFunction, contents);
-	gtk_clipboard_set_can_store(clipboard, NULL, 0);
+	gtk_clipboard_set_can_store(this->clipboard, NULL, 0);
 
 	gtk_target_table_free(targets, n_targets);
 	gtk_target_list_unref(list);
 
 	g_string_free(svgString, true);
+
+	return true;
 }
 
 void ClipboardHandler::setSelection(EditSelection * selection) {

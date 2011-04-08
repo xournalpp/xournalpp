@@ -7,16 +7,16 @@
 #
 # @license GPL
 
-from tools.ToolTest import ToolTest
+from clipboard.CopyPasteTest import CopyPasteTest
 import os
 
 # TODO: remove if implemented
 from TestNotImplementedException import TestNotImplementedException
 
 
-class CopyPaste(ToolTest):
+class CopyPaste(CopyPasteTest):
 	def __init__(self, xoj):
-		ToolTest.__init__(self, xoj)
+		CopyPasteTest.__init__(self, xoj)
 
 	def runTest(self):
 		raise TestNotImplementedException()

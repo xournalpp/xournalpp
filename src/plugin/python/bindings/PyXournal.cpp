@@ -467,6 +467,33 @@ PyXournal_setEraserType(PyXournal * self, PyObject * args) {
 	Py_RETURN_NONE;
 }
 
+static PyObject *
+PyXournal_copy(PyXournal * self, PyObject * args) {
+	if(self->control->copy()) {
+		Py_RETURN_TRUE;
+	}
+
+	Py_RETURN_FALSE;
+}
+
+static PyObject *
+PyXournal_cut(PyXournal * self, PyObject * args) {
+	if(self->control->cut()) {
+		Py_RETURN_TRUE;
+	}
+
+	Py_RETURN_FALSE;
+}
+
+static PyObject *
+PyXournal_paste(PyXournal * self, PyObject * args) {
+	if(self->control->paste()) {
+		Py_RETURN_TRUE;
+	}
+
+	Py_RETURN_FALSE;
+}
+
 static PyMethodDef PyXournal_methods[] = {
 	{ "setSelectedTool", (PyCFunction) PyXournal_setSelectedTool, METH_VARARGS, "Selects a tool (see constatns TOOL_*" },
 	{ "getSelectedTool", (PyCFunction) PyXournal_getSelectedTool, METH_NOARGS, "Return the selected tool" },
@@ -492,6 +519,22 @@ static PyMethodDef PyXournal_methods[] = {
 	{ "setCurrentPageBackground", (PyCFunction) PyXournal_setCurrentPageBackground, METH_VARARGS, "Set the background type of the current page (see BACKGROUND_TYPE_*)\nDon't use BACKGROUND_TYPE_PDF or BACKGROUND_TYPE_PDF" },
 	{ "setEraserType", (PyCFunction) PyXournal_setEraserType, METH_VARARGS, "Set the eraser type (ERASER_TYPE_*)" },
 	{ "getEraserType", (PyCFunction) PyXournal_getEraserType, METH_VARARGS, "Returns the eraser type (ERASER_TYPE_*)" },
+	{ "copy", (PyCFunction) PyXournal_copy, METH_NOARGS, "Copy to clipboard" },
+	{ "cut", (PyCFunction) PyXournal_cut, METH_NOARGS, "Copy to clipboard and delete after" },
+	{ "paste", (PyCFunction) PyXournal_paste, METH_NOARGS, "Paste from clipboard (if possible)" },
+//	{ "xxxxxxxxxxxxx", (PyCFunction) xxxxxxxxxxxxxxxxx, METH_VARARGS, "Xxxxxxxxxxxxxxxx" },
+//	{ "xxxxxxxxxxxxx", (PyCFunction) xxxxxxxxxxxxxxxxx, METH_VARARGS, "Xxxxxxxxxxxxxxxx" },
+//	{ "xxxxxxxxxxxxx", (PyCFunction) xxxxxxxxxxxxxxxxx, METH_VARARGS, "Xxxxxxxxxxxxxxxx" },
+//	{ "xxxxxxxxxxxxx", (PyCFunction) xxxxxxxxxxxxxxxxx, METH_VARARGS, "Xxxxxxxxxxxxxxxx" },
+//	{ "xxxxxxxxxxxxx", (PyCFunction) xxxxxxxxxxxxxxxxx, METH_VARARGS, "Xxxxxxxxxxxxxxxx" },
+//	{ "xxxxxxxxxxxxx", (PyCFunction) xxxxxxxxxxxxxxxxx, METH_VARARGS, "Xxxxxxxxxxxxxxxx" },
+//	{ "xxxxxxxxxxxxx", (PyCFunction) xxxxxxxxxxxxxxxxx, METH_VARARGS, "Xxxxxxxxxxxxxxxx" },
+//	{ "xxxxxxxxxxxxx", (PyCFunction) xxxxxxxxxxxxxxxxx, METH_VARARGS, "Xxxxxxxxxxxxxxxx" },
+//	{ "xxxxxxxxxxxxx", (PyCFunction) xxxxxxxxxxxxxxxxx, METH_VARARGS, "Xxxxxxxxxxxxxxxx" },
+//	{ "xxxxxxxxxxxxx", (PyCFunction) xxxxxxxxxxxxxxxxx, METH_VARARGS, "Xxxxxxxxxxxxxxxx" },
+//	{ "xxxxxxxxxxxxx", (PyCFunction) xxxxxxxxxxxxxxxxx, METH_VARARGS, "Xxxxxxxxxxxxxxxx" },
+//	{ "xxxxxxxxxxxxx", (PyCFunction) xxxxxxxxxxxxxxxxx, METH_VARARGS, "Xxxxxxxxxxxxxxxx" },
+//	{ "xxxxxxxxxxxxx", (PyCFunction) xxxxxxxxxxxxxxxxx, METH_VARARGS, "Xxxxxxxxxxxxxxxx" },
 //	{ "xxxxxxxxxxxxx", (PyCFunction) xxxxxxxxxxxxxxxxx, METH_VARARGS, "Xxxxxxxxxxxxxxxx" },
 //	{ "xxxxxxxxxxxxx", (PyCFunction) xxxxxxxxxxxxxxxxx, METH_VARARGS, "Xxxxxxxxxxxxxxxx" },
 //	{ "xxxxxxxxxxxxx", (PyCFunction) xxxxxxxxxxxxxxxxx, METH_VARARGS, "Xxxxxxxxxxxxxxxx" },
