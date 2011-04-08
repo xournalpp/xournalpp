@@ -7,17 +7,25 @@
 #
 # @license GPL
 
-from tools.ToolTest import ToolTest
+from clipboard.CopyPasteTest import CopyPasteTest
 import os
 
 # TODO: remove if implemented
 from TestNotImplementedException import TestNotImplementedException
 
 
-class PasteImage(ToolTest):
+class PasteImage(CopyPasteTest):
 	def __init__(self, xoj):
-		ToolTest.__init__(self, xoj)
+		CopyPasteTest.__init__(self, xoj)
 
 	def runTest(self):
 		raise TestNotImplementedException()
+
+	def copy_image(f):
+		 assert os.path.exists(f), "file does not exist"
+		 image = gtk.gdk.pixbuf_new_from_file(f)
+
+		 clipboard = gtk.clipboard_get()
+		 clipboard.set_image(image)
+		 clipboard.store()
 

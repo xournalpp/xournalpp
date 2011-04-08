@@ -147,6 +147,27 @@ public interface Xournal {
 	void mouseReleased();
 	
 	/**
+	 * Copy to clipboard
+	 * 
+	 * @return true if successfully
+	 */
+	boolean copy();
+	
+	/**
+	 * Copy to clipboard and delete after
+	 * 
+	 * @return true if successfully
+	 */
+	boolean cut();
+	
+	/**
+	 * Paste from clipboard (if possible)
+	 * 
+	 * @return true if successfully
+	 */
+	boolean paste();
+	
+	/**
 	 * The Undo- / Redohandler
 	 */
 	UndoRedoHandler getUndoRedoHandler();

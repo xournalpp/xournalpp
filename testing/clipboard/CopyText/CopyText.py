@@ -7,17 +7,19 @@
 #
 # @license GPL
 
-from tools.ToolTest import ToolTest
+from clipboard.CopyPasteTest import CopyPasteTest
 import os
+import gtk
 
-# TODO: remove if implemented
-from TestNotImplementedException import TestNotImplementedException
-
-
-class CopyText(ToolTest):
+class CopyText(CopyPasteTest):
 	def __init__(self, xoj):
-		ToolTest.__init__(self, xoj)
+		CopyPasteTest.__init__(self, xoj)
 
 	def runTest(self):
-		raise TestNotImplementedException()
+		self.copy()
+
+		clipboard = gtk.clipboard_get()
+		text = clipboard.wait_for_text()
+		assert(text == 'Hallo')
+
 

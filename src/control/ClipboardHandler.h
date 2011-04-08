@@ -34,9 +34,9 @@ public:
 	virtual ~ClipboardHandler();
 
 public:
-	void paste();
-	void cut();
-	void copy();
+	bool paste();
+	bool cut();
+	bool copy();
 
 	void setSelection(EditSelection * selection);
 
