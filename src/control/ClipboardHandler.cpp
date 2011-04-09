@@ -12,6 +12,7 @@ ClipboardHandler::ClipboardHandler(ClipboardListener * listener, GtkWidget * wid
 	this->listener = listener;
 	this->clipboard = gtk_widget_get_clipboard(widget, GDK_SELECTION_CLIPBOARD);
 	this->containsText = false;
+	this->containsImage = false;
 	this->containsXournal = false;
 	this->selection = NULL;
 
@@ -38,6 +39,7 @@ ClipboardHandler::~ClipboardHandler() {
 }
 
 static GdkAtom atomXournal = gdk_atom_intern_static_string("application/xournal");
+static GdkAtom atomUtf8 = gdk_atom_intern_static_string("UTF8_STRING");
 
 bool ClipboardHandler::paste() {
 	XOJ_CHECK_TYPE(ClipboardHandler);
@@ -46,7 +48,11 @@ bool ClipboardHandler::paste() {
 		gtk_clipboard_request_contents(this->clipboard, atomXournal, (GtkClipboardReceivedFunc) pasteClipboardContents, this);
 		return true;
 	} else if (this->containsText) {
-		gtk_clipboard_request_contents(this->clipboard, gdk_atom_intern_static_string("UTF8_STRING"), (GtkClipboardReceivedFunc) pasteClipboardContents, this);
+		gtk_clipboard_request_contents(this->clipboard, atomUtf8, (GtkClipboardReceivedFunc) pasteClipboardContents, this);
+		//		TODO: gtk_clipboard_request_text()
+		return true;
+	} else if (this->containsImage) {
+		gtk_clipboard_request_image(this->clipboard, (GtkClipboardImageReceivedFunc) pasteClipboardImage, this);
 		return true;
 	}
 
@@ -138,7 +144,6 @@ bool ClipboardHandler::copy() {
 	int count = it.getLength();
 	out.writeObject("Selection");
 
-	//TODO: check this coordinates!! may they're wrong...
 	out.writeDouble(this->selection->getXOnView());
 	out.writeDouble(this->selection->getYOnView());
 	out.writeDouble(this->selection->getWidth());
@@ -277,6 +282,12 @@ void ClipboardHandler::clipboardUpdated(GdkAtom atom) {
 	gtk_clipboard_request_contents(clipboard, gdk_atom_intern_static_string("TARGETS"), (GtkClipboardReceivedFunc) receivedClipboardContents, this);
 }
 
+void ClipboardHandler::pasteClipboardImage(GtkClipboard * clipboard, GdkPixbuf * pixbuf, ClipboardHandler * handler) {
+	XOJ_CHECK_TYPE_OBJ(handler, ClipboardHandler);
+
+	handler->listener->clipboardPasteImage(pixbuf);
+}
+
 void ClipboardHandler::pasteClipboardContents(GtkClipboard * clipboard, GtkSelectionData * selectionData, ClipboardHandler * handler) {
 	XOJ_CHECK_TYPE_OBJ(handler, ClipboardHandler);
 
@@ -318,6 +329,9 @@ void ClipboardHandler::receivedClipboardContents(GtkClipboard * clipboard, GtkSe
 
 	handler->containsText = gtk_selection_data_targets_include_text(selectionData);
 	handler->containsXournal = gtk_selection_data_targets_include_xournal(selectionData);
+	handler->containsImage = gtk_selection_data_targets_include_image(selectionData, false);
 
-	handler->listener->clipboardPasteEnabled(handler->containsText || handler->containsXournal);
+	handler->listener->clipboardPasteEnabled(handler->containsText || handler->containsXournal || handler->containsImage);
+
+	printf("clipboard changed: %i %i %i\n", handler->containsText, handler->containsXournal, handler->containsImage);
 }

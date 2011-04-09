@@ -9,23 +9,22 @@
 
 from clipboard.CopyPasteTest import CopyPasteTest
 import os
-
-# TODO: remove if implemented
-from TestNotImplementedException import TestNotImplementedException
-
+import gtk
 
 class PasteImage(CopyPasteTest):
 	def __init__(self, xoj):
 		CopyPasteTest.__init__(self, xoj)
 
 	def runTest(self):
-		raise TestNotImplementedException()
+		path = os.path.realpath(__file__ + '/../img.png')
+		assert os.path.exists(path), "file does not exist"
+		image = gtk.gdk.pixbuf_new_from_file(path)
 
-	def copy_image(f):
-		 assert os.path.exists(f), "file does not exist"
-		 image = gtk.gdk.pixbuf_new_from_file(f)
+		clipboard = gtk.clipboard_get()
+		clipboard.set_image(image)
+		clipboard.store()
 
-		 clipboard = gtk.clipboard_get()
-		 clipboard.set_image(image)
-		 clipboard.store()
+		assert self.xoj.paste(), 'paste failed'
+
+		raise KeyboardInterrupt
 

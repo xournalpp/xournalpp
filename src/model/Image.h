@@ -26,6 +26,7 @@ public:
 
 	void setImage(unsigned char * data, int len);
 	void setImage(cairo_surface_t * image);
+	void setImage(GdkPixbuf * img);
 	cairo_surface_t * getImage();
 
 	virtual void scale(double x0, double y0, double fx, double fy);

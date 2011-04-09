@@ -17,6 +17,10 @@
 
 #include "EditSelectionContents.h"
 
+/**
+ * TODO: if a selection is paste the cursor is sometimes wrong!
+ */
+
 EditSelection::EditSelection(UndoRedoHandler * undo, double x, double y, double width, double height, PageRef page, PageView * view) {
 	XOJ_INIT_TYPE(EditSelection);
 
@@ -114,7 +118,7 @@ void EditSelection::finalizeSelection() {
 		this->view->rerenderRect(this->x, this->y, this->width, this->height);
 
 		// This is needed if the selection not was 100% on a page
-		this->view->getXournal()->repaintSelection();
+		this->view->getXournal()->repaintSelection(true);
 	}
 }
 

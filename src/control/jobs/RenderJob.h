@@ -44,8 +44,6 @@ private:
 	XOJ_TYPE_ATTRIB;
 
 	PageView * view;
-	bool repaintComplete;
-	GList * repaintRect;
 };
 
 #endif /* __RENDERJOB_H__ */

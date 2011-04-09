@@ -87,6 +87,8 @@ public:
 	int getX();
 	int getY();
 
+	virtual Rectangle * rectOnWidget(double x, double y, double width, double height);
+
 public: // event handler
 	bool onButtonPressEvent(GtkWidget * widget, GdkEventButton * event);
 	bool onButtonReleaseEvent(GtkWidget * widget, GdkEventButton * event);

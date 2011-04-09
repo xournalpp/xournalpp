@@ -1,5 +1,6 @@
 #include "Image.h"
 #include "../util/ObjectStream.h"
+#include "../util/pixbuf-utils.h"
 
 Image::Image() :
 	Element(ELEMENT_IMAGE) {
@@ -61,6 +62,10 @@ void Image::setImage(unsigned char * data, int len) {
 	}
 	this->data = data;
 	this->dLen = len;
+}
+
+void Image::setImage(GdkPixbuf * img) {
+	setImage(f_pixbuf_to_cairo_surface(img));
 }
 
 void Image::setImage(cairo_surface_t * image) {

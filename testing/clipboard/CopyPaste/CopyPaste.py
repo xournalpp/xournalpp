@@ -10,14 +10,13 @@
 from clipboard.CopyPasteTest import CopyPasteTest
 import os
 
-# TODO: remove if implemented
-from TestNotImplementedException import TestNotImplementedException
-
-
 class CopyPaste(CopyPasteTest):
 	def __init__(self, xoj):
 		CopyPasteTest.__init__(self, xoj)
 
 	def runTest(self):
-		raise TestNotImplementedException()
+		self.copy()
+		assert self.xoj.paste(), 'paste failed'
+
+		#TODO: check contents
 

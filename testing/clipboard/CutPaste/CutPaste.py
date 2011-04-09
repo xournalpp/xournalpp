@@ -21,3 +21,5 @@ class CutPaste(CopyPasteTest):
 	def runTest(self):
 		raise TestNotImplementedException()
 
+#TODO: test cut paste more times without leaving the selection
+

@@ -122,7 +122,7 @@ void Text::readSerialized(ObjectInputStream & in) throw (InputStreamException) {
 
 	in.readObject("Text");
 
-	readSerialized(in);
+	readSerializedElement(in);
 
 	this->text = in.readString();
 

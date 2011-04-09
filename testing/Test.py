@@ -16,14 +16,23 @@ class XournalTestRunner:
 
 	def start(self):
 		print '=== Xournal Testsuit ===\n'
+		
+		testCanceled = False
 
 		subfolders = ['clipboard', 'document', 'tools', 'undo']
 		for folder in subfolders:
-			self.xournalRunTestInSubfolder(folder);
+			if self.xournalRunTestInSubfolder(folder) == False:
+				print 'Cancel Testing\n'
+				testCanceled = True
+				break
 
 		print '\n=== End Xournal Testsuit ===\n'
 
-		if self.failedTests == 0:
+		if testCanceled == True:
+			md = gtk.MessageDialog(None, 0, gtk.MESSAGE_ERROR, gtk.BUTTONS_CLOSE, 'Test cancelled!')
+			md.run()
+			md.destroy()
+		elif self.failedTests == 0:
 			msg = 'All test passed'
 
 			if self.notImplementedTests != 0:
@@ -83,7 +92,10 @@ class XournalTestRunner:
 					traceback.print_exc()
 				except (TestNotImplementedException) as e:
 					self.notImplementedTests += 1
-					
+
+				except (KeyboardInterrupt):
+					return False
+
 				except (Exception) as e:
 					self.failedTests += 1
 
@@ -97,6 +109,8 @@ class XournalTestRunner:
 		print '\n\n\n==================================================='
 		print 'Testresult: %i successfully, %i not implemented, %i failed!' % (self.successfullyTests, self.notImplementedTests, self.failedTests)
 		print '===================================================\n\n'
+
+		return True
 
 
 def xournalTest(args = ''):

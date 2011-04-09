@@ -18,6 +18,7 @@
 #include <gtk/gtk.h>
 
 class Element;
+class Rectangle;
 
 class Redrawable {
 public:
@@ -67,6 +68,9 @@ public:
 
 	virtual int getX() = 0;
 	virtual int getY() = 0;
+
+
+	virtual Rectangle * rectOnWidget(double x, double y, double width, double height) = 0;
 
 };
 
