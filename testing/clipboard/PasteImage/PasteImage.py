@@ -26,5 +26,3 @@ class PasteImage(CopyPasteTest):
 
 		assert self.xoj.paste(), 'paste failed'
 
-		raise KeyboardInterrupt
-
