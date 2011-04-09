@@ -2242,7 +2242,33 @@ void Control::clipboardPasteEnabled(bool enabled) {
 void Control::clipboardPasteText(String text) {
 	XOJ_CHECK_TYPE(Control);
 
-	// TODO: debug
+	Text * t = new Text();
+	t->setText(text);
+	t->setFont(settings->getFont());
+	t->setColor(toolHandler->getColor());
+
+	clipboardPaste(t);
+}
+
+void Control::clipboardPasteImage(GdkPixbuf * img) {
+	XOJ_CHECK_TYPE(Control);
+
+	Image * image = new Image();
+	image->setImage(img);
+
+	int width = gdk_pixbuf_get_width(img);
+	int height = gdk_pixbuf_get_height(img);
+
+	image->setWidth(width);
+	image->setHeight(height);
+
+
+	clipboardPaste(image);
+}
+
+void Control::clipboardPaste(Element * e) {
+	XOJ_CHECK_TYPE(Control);
+
 	double x = 0;
 	double y = 0;
 	int pageNr = getCurrentPageNo();
@@ -2259,23 +2285,18 @@ void Control::clipboardPasteText(String text) {
 	Layer * layer = page.getSelectedLayer();
 	win->getXournal()->getPasteTarget(x, y);
 
-	Text * t = new Text();
-	t->setText(text);
-	t->setFont(settings->getFont());
-	t->setColor(toolHandler->getColor());
+	double width = e->getElementWidth();
+	double height = e->getElementHeight();
 
-	double width = t->getElementWidth();
-	double height = t->getElementHeight();
-
-	t->setX(x - width / 2);
-	t->setY(y - height / 2);
-	layer->addElement(t);
+	e->setX(x - width / 2);
+	e->setY(y - height / 2);
+	layer->addElement(e);
 
 	this->doc->unlock();
 
-	undoRedo->addUndoAction(new InsertUndoAction(page, layer, t, view));
+	undoRedo->addUndoAction(new InsertUndoAction(page, layer, e, view));
 
-	EditSelection * selection = new EditSelection(this->undoRedo, t, view, page);
+	EditSelection * selection = new EditSelection(this->undoRedo, e, view, page);
 
 	win->getXournal()->setSelection(selection);
 }

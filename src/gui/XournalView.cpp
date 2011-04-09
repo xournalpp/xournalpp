@@ -881,7 +881,6 @@ bool XournalView::isPageVisible(int page, int * visibleHeight) {
 
 void XournalView::documentChanged(DocumentChangeType type) {
 	XOJ_CHECK_TYPE(XournalView);
-	// TODO: debug
 
 	if (type != DOCUMENT_CHANGE_CLEARED && type != DOCUMENT_CHANGE_COMPLETE) {
 		return;

@@ -3,7 +3,6 @@
 #include "../../gui/PageView.h"
 #include "../../model/Image.h"
 #include "../../model/Layer.h"
-#include "../../util/pixbuf-utils.h"
 #include "../../undo/InsertUndoAction.h"
 #include "../stockdlg/ImageOpenDlg.h"
 
@@ -53,7 +52,7 @@ bool ImageHandler::insertImage(GFile * file, double x, double y) {
 	Image * img = new Image();
 	img->setX(x);
 	img->setY(y);
-	img->setImage(f_pixbuf_to_cairo_surface(pixbuf));
+	img->setImage(pixbuf);
 
 	int width = gdk_pixbuf_get_width(pixbuf);
 	int height = gdk_pixbuf_get_height(pixbuf);

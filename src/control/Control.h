@@ -181,11 +181,14 @@ public:
 
 public:
 	// ClipboardListener interface
-	void clipboardCutCopyEnabled(bool enabled);
-	void clipboardPasteEnabled(bool enabled);
-	void clipboardPasteText(String text);
-	void clipboardPasteXournal(ObjectInputStream & in);
-	void deleteSelection();
+	virtual void clipboardCutCopyEnabled(bool enabled);
+	virtual void clipboardPasteEnabled(bool enabled);
+	virtual void clipboardPasteText(String text);
+	virtual void clipboardPasteImage(GdkPixbuf * img);
+	virtual void clipboardPasteXournal(ObjectInputStream & in);
+	virtual void deleteSelection();
+
+	void clipboardPaste(Element * e);
 
 protected:
 	static bool invokeCallback(CallbackData * cb);

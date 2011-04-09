@@ -24,6 +24,7 @@ public:
 	virtual void clipboardCutCopyEnabled(bool enabled) = 0;
 	virtual void clipboardPasteEnabled(bool enabled) = 0;
 	virtual void clipboardPasteText(String text) = 0;
+	virtual void clipboardPasteImage(GdkPixbuf * img) = 0;
 	virtual void clipboardPasteXournal(ObjectInputStream & in) = 0;
 	virtual void deleteSelection() = 0;
 };
@@ -48,10 +49,10 @@ private:
 	static void receivedClipboardContents(GtkClipboard * clipboard, GtkSelectionData * selectionData, ClipboardHandler * handler);
 
 	static void pasteClipboardContents(GtkClipboard * clipboard, GtkSelectionData * selectionData, ClipboardHandler * handler);
+	static void pasteClipboardImage(GtkClipboard * clipboard, GdkPixbuf * pixbuf, ClipboardHandler * handler);
 
 private:
 	XOJ_TYPE_ATTRIB;
-
 
 	ClipboardListener * listener;
 	GtkClipboard * clipboard;
@@ -61,6 +62,7 @@ private:
 
 	bool containsText;
 	bool containsXournal;
+	bool containsImage;
 };
 
 #endif /* __CLIPBOARDHANDLER_H__ */

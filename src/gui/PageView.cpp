@@ -311,7 +311,7 @@ bool PageView::onButtonPressEvent(GtkWidget * widget, GdkEventButton * event) {
 		gtk_dialog_add_button(GTK_DIALOG(dialog), "Disable \"Extended Input\"", 1);
 		gtk_dialog_add_button(GTK_DIALOG(dialog), "Cancel", 2);
 
-		extendedWarningDisplayd = true;
+		this->extendedWarningDisplayd = true;
 
 		if (gtk_dialog_run(GTK_DIALOG(dialog)) == 1) {
 			settings->setXinputEnabled(false);
@@ -519,6 +519,14 @@ void PageView::repaintArea(double x1, double y1, double x2, double y2) {
 
 	double zoom = xournal->getZoom();
 	xournal->getRepaintHandler()->repaintPageArea(this, x1 * zoom - 10, y1 * zoom - 10, x2 * zoom + 20, y2 * zoom + 20);
+}
+
+Rectangle * PageView::rectOnWidget(double x, double y, double width, double height) {
+	XOJ_CHECK_TYPE(PageView);
+
+	double zoom = xournal->getZoom();
+
+	return new Rectangle(x * zoom - 10, y * zoom - 10, width * zoom + 20, height * zoom + 20);
 }
 
 void PageView::rerenderRect(double x, double y, double width, double heigth) {
