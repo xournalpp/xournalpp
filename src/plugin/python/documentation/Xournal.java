@@ -178,6 +178,11 @@ public interface Xournal {
 	Document getDocument();
 	
 	/**
+	 * Return the Selection or None
+	 */
+	Selection getSelection();
+	
+	/**
 	 * Gets the selected page ID (first Page: 0)
 	 */
 	int getSelectedPage();

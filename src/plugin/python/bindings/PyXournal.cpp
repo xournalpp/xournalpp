@@ -1,10 +1,12 @@
 #include "PyXournal.h"
+
+#include "PySelection.h"
+#include "PyUndoRedoHandler.h"
+#include "PyDocument.h"
+
 #include "../../../control/Control.h"
 #include "../../../gui/XournalView.h"
 #include "../../../gui/widgets/XournalWidget.h"
-
-#include <Python.h>
-#include "structmember.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -15,14 +17,16 @@ extern "C" {
 #define PyMODINIT_FUNC void
 #endif
 
+static Control * PyXournal_control = NULL;
+
+#include "structmember.h"
 typedef struct {
 	PyObject_HEAD
 	Control * control;
 	PyObject * undoRedoHandler;
 	PyObject * document;
+	PyObject * selection;
 } PyXournal;
-
-static Control * PyXournal_control = NULL;
 
 
 // TODO: info pygtk: http://faq.pygtk.org/index.py?req=show&file=faq23.015.htp
@@ -33,6 +37,9 @@ void PyXournal_initPython(Control * control) {
 	PyXournal_control = control;
 
 	initxournal();
+	initselection();
+	initdocument();
+	initundoredohandler();
 }
 
 static void PyXournal_dealloc(PyXournal * self) {
@@ -46,8 +53,9 @@ PyXournal_new(PyTypeObject * type, PyObject * args, PyObject * kwds) {
 	self = (PyXournal *) type->tp_alloc(type, 0);
 	if (self != NULL) {
 		self->control = PyXournal_control;
-		self->undoRedoHandler = PyLong_FromLong(5);
-		self->document = PyLong_FromLong(20);
+		self->undoRedoHandler = NULL;
+		self->document = NULL;
+		self->selection = NULL;
 	}
 
 	return (PyObject *) self;
@@ -284,10 +292,35 @@ PyXournal_mouseReleased(PyXournal * self) {
 	Py_RETURN_NONE;
 }
 
+#define GETTER_IMPL(attrib, constructor) \
+	if(self->attrib) { \
+		Py_IncRef(self->attrib); \
+		return self->attrib; \
+	} \
+	 \
+	PyObject * instance = constructor((PyObject *)self); \
+	if (instance) { \
+		self->attrib = instance; \
+		Py_IncRef(self->attrib); \
+		return instance; \
+	} \
+	 \
+	Py_RETURN_NONE
+
+
 static PyObject *
 PyXournal_getUndoRedoHandler(PyXournal * self) {
-	Py_INCREF(self->undoRedoHandler);
-	return self->undoRedoHandler;
+	GETTER_IMPL(undoRedoHandler, newPyUndoRedoHandler);
+}
+
+static PyObject *
+PyXournal_getSelection(PyXournal * self) {
+	GETTER_IMPL(selection, newPySelection);
+}
+
+static PyObject *
+PyXournal_getDocument(PyXournal * self) {
+	GETTER_IMPL(document, newPyDocument);
 }
 
 static PyObject *
@@ -295,12 +328,6 @@ PyXournal_getSelectedPage(PyXournal * self) {
 	int pageNo = self->control->getCurrentPageNo();
 
 	return PyLong_FromLong(pageNo);
-}
-
-static PyObject *
-PyXournal_getDocument(PyXournal * self) {
-	Py_INCREF(self->document);
-	return self->document;
 }
 
 static PyObject *
@@ -522,7 +549,7 @@ static PyMethodDef PyXournal_methods[] = {
 	{ "copy", (PyCFunction) PyXournal_copy, METH_NOARGS, "Copy to clipboard" },
 	{ "cut", (PyCFunction) PyXournal_cut, METH_NOARGS, "Copy to clipboard and delete after" },
 	{ "paste", (PyCFunction) PyXournal_paste, METH_NOARGS, "Paste from clipboard (if possible)" },
-//	{ "xxxxxxxxxxxxx", (PyCFunction) xxxxxxxxxxxxxxxxx, METH_VARARGS, "Xxxxxxxxxxxxxxxx" },
+	{ "getSelection", (PyCFunction) PyXournal_getSelection, METH_NOARGS, "Return the Selection or None" },
 //	{ "xxxxxxxxxxxxx", (PyCFunction) xxxxxxxxxxxxxxxxx, METH_VARARGS, "Xxxxxxxxxxxxxxxx" },
 //	{ "xxxxxxxxxxxxx", (PyCFunction) xxxxxxxxxxxxxxxxx, METH_VARARGS, "Xxxxxxxxxxxxxxxx" },
 //	{ "xxxxxxxxxxxxx", (PyCFunction) xxxxxxxxxxxxxxxxx, METH_VARARGS, "Xxxxxxxxxxxxxxxx" },
@@ -587,6 +614,17 @@ static PyTypeObject XournalType = {
 static PyMethodDef module_methods[] = { { NULL } /* Sentinel */
 };
 
+
+bool PyXournal_Check(PyObject * obj) {
+	return Py_TYPE(obj) == &XournalType;
+}
+
+Control * PyXournal_getControl(PyObject * obj) {
+	if(!PyXournal_Check(obj)) {
+		return NULL;
+	}
+	return ((PyXournal *)obj)->control;
+}
 
 #define ADD_CONST(tool) PyDict_SetItemString(XournalType.tp_dict, #tool, PyLong_FromLong(tool));
 

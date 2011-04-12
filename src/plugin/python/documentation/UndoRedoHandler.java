@@ -14,14 +14,21 @@ public interface UndoRedoHandler {
 
 	/**
 	 * Undo the last operation
-	 * @return false on fail
 	 */
-	boolean undo();
+	void undo();
 	
 	/**
 	 * Redo the last operation
-	 * @return false on fail
 	 */
-	boolean redo();
-
+	void redo();
+	
+	/**
+	 * Return the name of the item on top of the undo stack
+	 */
+	String getUndoItemTypeOnStack();
+	
+	/**
+	 * Return the name of the item on top of the redo stack
+	 */
+	String getRedoItemTypeOnStack();
 }

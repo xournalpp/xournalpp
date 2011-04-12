@@ -37,6 +37,8 @@ host_triplet = @host@
 target_triplet = @target@
 bin_PROGRAMS = xournalpp$(EXEEXT)
 @ENABLE_PYTHON_TRUE@am__append_1 = \
+@ENABLE_PYTHON_TRUE@	plugin/python/bindings/PyDocument.cpp \
+@ENABLE_PYTHON_TRUE@	plugin/python/bindings/PySelection.cpp \
 @ENABLE_PYTHON_TRUE@	plugin/python/bindings/PyUndoRedoHandler.cpp \
 @ENABLE_PYTHON_TRUE@	plugin/python/bindings/PyXournal.cpp \
 @ENABLE_PYTHON_TRUE@	plugin/python/PythonRunner.cpp
@@ -146,10 +148,13 @@ am__xournalpp_SOURCES_DIST = control/jobs/AutosaveJob.cpp \
 	util/Range.cpp util/Rectangle.cpp util/String.cpp \
 	util/Util.cpp util/XInputUtils.cpp util/XournalType.cpp \
 	view/DocumentView.cpp view/PdfView.cpp view/TextView.cpp \
-	Xournalpp.cpp plugin/python/bindings/PyUndoRedoHandler.cpp \
+	Xournalpp.cpp plugin/python/bindings/PyDocument.cpp \
+	plugin/python/bindings/PySelection.cpp \
+	plugin/python/bindings/PyUndoRedoHandler.cpp \
 	plugin/python/bindings/PyXournal.cpp \
 	plugin/python/PythonRunner.cpp
-@ENABLE_PYTHON_TRUE@am__objects_1 =  \
+@ENABLE_PYTHON_TRUE@am__objects_1 = xournalpp-PyDocument.$(OBJEXT) \
+@ENABLE_PYTHON_TRUE@	xournalpp-PySelection.$(OBJEXT) \
 @ENABLE_PYTHON_TRUE@	xournalpp-PyUndoRedoHandler.$(OBJEXT) \
 @ENABLE_PYTHON_TRUE@	xournalpp-PyXournal.$(OBJEXT) \
 @ENABLE_PYTHON_TRUE@	xournalpp-PythonRunner.$(OBJEXT)
@@ -717,6 +722,8 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-Point.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-PreviewJob.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-PrintHandler.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-PyDocument.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-PySelection.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-PyUndoRedoHandler.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-PyXournal.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-PythonRunner.Po@am__quote@
@@ -3091,6 +3098,34 @@ xournalpp-Xournalpp.obj: Xournalpp.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='Xournalpp.cpp' object='xournalpp-Xournalpp.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-Xournalpp.obj `if test -f 'Xournalpp.cpp'; then $(CYGPATH_W) 'Xournalpp.cpp'; else $(CYGPATH_W) '$(srcdir)/Xournalpp.cpp'; fi`
+
+xournalpp-PyDocument.o: plugin/python/bindings/PyDocument.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-PyDocument.o -MD -MP -MF $(DEPDIR)/xournalpp-PyDocument.Tpo -c -o xournalpp-PyDocument.o `test -f 'plugin/python/bindings/PyDocument.cpp' || echo '$(srcdir)/'`plugin/python/bindings/PyDocument.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-PyDocument.Tpo $(DEPDIR)/xournalpp-PyDocument.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='plugin/python/bindings/PyDocument.cpp' object='xournalpp-PyDocument.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-PyDocument.o `test -f 'plugin/python/bindings/PyDocument.cpp' || echo '$(srcdir)/'`plugin/python/bindings/PyDocument.cpp
+
+xournalpp-PyDocument.obj: plugin/python/bindings/PyDocument.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-PyDocument.obj -MD -MP -MF $(DEPDIR)/xournalpp-PyDocument.Tpo -c -o xournalpp-PyDocument.obj `if test -f 'plugin/python/bindings/PyDocument.cpp'; then $(CYGPATH_W) 'plugin/python/bindings/PyDocument.cpp'; else $(CYGPATH_W) '$(srcdir)/plugin/python/bindings/PyDocument.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-PyDocument.Tpo $(DEPDIR)/xournalpp-PyDocument.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='plugin/python/bindings/PyDocument.cpp' object='xournalpp-PyDocument.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-PyDocument.obj `if test -f 'plugin/python/bindings/PyDocument.cpp'; then $(CYGPATH_W) 'plugin/python/bindings/PyDocument.cpp'; else $(CYGPATH_W) '$(srcdir)/plugin/python/bindings/PyDocument.cpp'; fi`
+
+xournalpp-PySelection.o: plugin/python/bindings/PySelection.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-PySelection.o -MD -MP -MF $(DEPDIR)/xournalpp-PySelection.Tpo -c -o xournalpp-PySelection.o `test -f 'plugin/python/bindings/PySelection.cpp' || echo '$(srcdir)/'`plugin/python/bindings/PySelection.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-PySelection.Tpo $(DEPDIR)/xournalpp-PySelection.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='plugin/python/bindings/PySelection.cpp' object='xournalpp-PySelection.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-PySelection.o `test -f 'plugin/python/bindings/PySelection.cpp' || echo '$(srcdir)/'`plugin/python/bindings/PySelection.cpp
+
+xournalpp-PySelection.obj: plugin/python/bindings/PySelection.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-PySelection.obj -MD -MP -MF $(DEPDIR)/xournalpp-PySelection.Tpo -c -o xournalpp-PySelection.obj `if test -f 'plugin/python/bindings/PySelection.cpp'; then $(CYGPATH_W) 'plugin/python/bindings/PySelection.cpp'; else $(CYGPATH_W) '$(srcdir)/plugin/python/bindings/PySelection.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-PySelection.Tpo $(DEPDIR)/xournalpp-PySelection.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='plugin/python/bindings/PySelection.cpp' object='xournalpp-PySelection.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-PySelection.obj `if test -f 'plugin/python/bindings/PySelection.cpp'; then $(CYGPATH_W) 'plugin/python/bindings/PySelection.cpp'; else $(CYGPATH_W) '$(srcdir)/plugin/python/bindings/PySelection.cpp'; fi`
 
 xournalpp-PyUndoRedoHandler.o: plugin/python/bindings/PyUndoRedoHandler.cpp
 @am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-PyUndoRedoHandler.o -MD -MP -MF $(DEPDIR)/xournalpp-PyUndoRedoHandler.Tpo -c -o xournalpp-PyUndoRedoHandler.o `test -f 'plugin/python/bindings/PyUndoRedoHandler.cpp' || echo '$(srcdir)/'`plugin/python/bindings/PyUndoRedoHandler.cpp

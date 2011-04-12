@@ -140,12 +140,13 @@ private:
 
 		gdk_threads_enter();
 
+		gtk_widget_queue_draw(data->widget);
 		if(complete) {
-			gtk_widget_queue_draw(data->widget);
+//			gtk_widget_queue_draw(data->widget);
 		} else {
 			for (GList * l = rects; l != NULL; l = l->next) {
 				Rectangle * rect = (Rectangle *) l->data;
-				gtk_widget_queue_clear_area(widget, rect->x, rect->y, rect->width, rect->height);
+//				gtk_widget_queue_draw_area(widget, rect->x, rect->y, rect->width, rect->height);
 				delete rect;
 			}
 			g_list_free(rects);
