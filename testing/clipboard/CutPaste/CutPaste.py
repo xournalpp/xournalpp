@@ -10,16 +10,20 @@
 from clipboard.CopyPasteTest import CopyPasteTest
 import os
 
-# TODO: remove if implemented
-from TestNotImplementedException import TestNotImplementedException
-
-
 class CutPaste(CopyPasteTest):
 	def __init__(self, xoj):
 		CopyPasteTest.__init__(self, xoj)
 
 	def runTest(self):
-		raise TestNotImplementedException()
+		self.cut()
 
-#TODO: test cut paste more times without leaving the selection
+		path = os.path.realpath(__file__ + '/../empty.xoj')
+		self.checkContents(path)
 
+		assert self.xoj.paste(), 'paste failed'
+
+		# clear selection
+		self.xoj.setSelectedTool(self.xoj.TOOL_ERASER)
+
+		path = os.path.realpath(__file__ + '/../../source.xoj')
+		self.checkContents(path)

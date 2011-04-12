@@ -139,22 +139,7 @@ bool ClipboardHandler::copy() {
 
 	out.writeString(PACKAGE_STRING);
 
-	ListIterator<Element *> it = this->selection->getElements();
-
-	int count = it.getLength();
-	out.writeObject("Selection");
-
-	out.writeDouble(this->selection->getXOnView());
-	out.writeDouble(this->selection->getYOnView());
-	out.writeDouble(this->selection->getWidth());
-	out.writeDouble(this->selection->getHeight());
-	out.writeInt(count);
-	out.endObject();
-
-	while (it.hasNext()) {
-		Element * e = it.next();
-		out << e;
-	}
+	out << this->selection;
 
 	/////////////////////////////////////////////////////////////////
 	// prepare text contents
@@ -162,7 +147,8 @@ bool ClipboardHandler::copy() {
 
 	GList * textElements = NULL;
 
-	it.reset();
+	ListIterator<Element *> it = this->selection->getElements();
+
 	while (it.hasNext()) {
 		Element * e = it.next();
 		if (e->getType() == ELEMENT_TEXT) {
@@ -332,6 +318,4 @@ void ClipboardHandler::receivedClipboardContents(GtkClipboard * clipboard, GtkSe
 	handler->containsImage = gtk_selection_data_targets_include_image(selectionData, false);
 
 	handler->listener->clipboardPasteEnabled(handler->containsText || handler->containsXournal || handler->containsImage);
-
-	printf("clipboard changed: %i %i %i\n", handler->containsText, handler->containsXournal, handler->containsImage);
 }

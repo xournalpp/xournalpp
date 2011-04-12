@@ -14,20 +14,18 @@
 #include "../../control/Control.h"
 #include "../../model/Document.h"
 #include "../../model/Layer.h"
+#include "../../util/ObjectStream.h"
 
 #include "EditSelectionContents.h"
 
-/**
- * TODO: if a selection is paste the cursor is sometimes wrong!
- */
 
-EditSelection::EditSelection(UndoRedoHandler * undo, double x, double y, double width, double height, PageRef page, PageView * view) {
+EditSelection::EditSelection(UndoRedoHandler * undo, PageRef page, PageView * view) {
 	XOJ_INIT_TYPE(EditSelection);
 
-	this->x = x;
-	this->y = y;
-	this->width = width;
-	this->height = height;
+	this->x = 0;
+	this->y = 0;
+	this->width = 0;
+	this->height = 0;
 
 	contstruct(undo, view, page);
 }
@@ -107,13 +105,12 @@ void EditSelection::finalizeSelection() {
 	XOJ_CHECK_TYPE(EditSelection);
 
 	PageView * v = getBestMatchingPageView();
-	if(v == NULL) {
-		this->view->getXournal()->deleteSelection();
+	if (v == NULL) {
+		this->view->getXournal()->deleteSelection(this);
 	} else {
 		PageRef page = this->view->getPage();
 		Layer * layer = page.getSelectedLayer();
 		this->contents->finalizeSelection(this->x, this->y, this->width, this->height, this->aspectRatio, layer, page, this->view, this->undo);
-
 
 		this->view->rerenderRect(this->x, this->y, this->width, this->height);
 
@@ -622,5 +619,38 @@ PageView * EditSelection::getView() {
 	XOJ_CHECK_TYPE(EditSelection);
 
 	return this->view;
+}
+
+void EditSelection::serialize(ObjectOutputStream & out) {
+	out.writeObject("EditSelection");
+
+	out.writeDouble(this->x);
+	out.writeDouble(this->y);
+	out.writeDouble(this->width);
+	out.writeDouble(this->height);
+
+	out << this->contents;
+	out.endObject();
+
+	ListIterator<Element *> it = this->getElements();
+	int count = it.getLength();
+	out.writeInt(count);
+
+	while (it.hasNext()) {
+		Element * e = it.next();
+		out << e;
+	}
+}
+
+void EditSelection::readSerialized(ObjectInputStream & in) throw (InputStreamException) {
+	in.readObject("EditSelection");
+	this->x = in.readDouble();
+	this->y = in.readDouble();
+	this->width = in.readDouble();
+	this->height = in.readDouble();
+
+	in >> this->contents;
+
+	in.endObject();
 }
 

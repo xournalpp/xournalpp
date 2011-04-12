@@ -347,12 +347,14 @@ bool PageView::onButtonPressEvent(GtkWidget * widget, GdkEventButton * event) {
 			if (this->selection) {
 				delete this->selection;
 				this->selection = NULL;
+				repaintPage();
 			}
 			this->selection = new RectSelection(x, y, this);
 		} else if (h->getToolType() == TOOL_SELECT_REGION) {
 			if (this->selection) {
 				delete this->selection;
 				this->selection = NULL;
+				repaintPage();
 			}
 			this->selection = new RegionSelect(x, y, this);
 		} else if (h->getToolType() == TOOL_SELECT_OBJECT) {

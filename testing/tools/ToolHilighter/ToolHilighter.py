@@ -24,6 +24,5 @@ class ToolHilighter(ToolTest):
 		self.checkContents(path)
 
 		undo = self.xoj.getUndoRedoHandler()
-		print undo.getUndoStackTopTypeName()
-
+		assert undo.getUndoItemTypeOnStack() == 'InsertUndoAction', 'Undo Item wrong'
 

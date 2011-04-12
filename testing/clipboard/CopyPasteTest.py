@@ -20,15 +20,21 @@ class CopyPasteTest(XournalTest):
 		path = os.path.realpath(__file__ + '/../source.xoj')
 		self.xoj.openFile(path)
 
-
-	def copy(self):
+	def select(self):
 		self.xoj.setSelectedTool(self.xoj.TOOL_SELECT_RECT)
 
 		points = [[100, 100]]
 		points.append([300, 300]);
 		self.mouseInput(points, 300);
 
+
+	def copy(self):
+		self.select()
 		assert(self.xoj.copy() == True)
+
+	def cut(self):
+		self.select()
+		assert(self.xoj.cut() == True)
 
 
 	def tearDown(self):

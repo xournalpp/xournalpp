@@ -17,6 +17,7 @@
 #include "../../control/Control.h"
 #include "../../model/Document.h"
 #include "../../model/Layer.h"
+#include "../../util/ObjectStream.h"
 
 #include <math.h>
 
@@ -30,8 +31,8 @@ EditSelectionContents::EditSelectionContents(double x, double y, double width, d
 
 	this->originalWidth = width;
 	this->originalHeight = height;
-	this->relativeX = 0;
-	this->relativeY = 0;
+	this->relativeX = -9999999999;
+	this->relativeY = -9999999999;
 
 	this->originalX = x;
 	this->originalY = y;
@@ -327,20 +328,20 @@ void EditSelectionContents::paint(cairo_t * cr, double x, double y, double width
 	double fx = width / this->originalWidth;
 	double fy = height / this->originalHeight;
 
-	int dx = (int) (x * zoom);
-	int dy = (int) (y * zoom);
-
-	if(this->relativeX == 0) {
-		this->relativeX = dx;
-		this->relativeY = dy;
+	if(this->relativeX == -9999999999) {
+		this->relativeX = x;
+		this->relativeY = y;
 	}
 
 	if (this->crBuffer == NULL) {
 		this->crBuffer = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, width * zoom, height * zoom);
 		cairo_t * cr2 = cairo_create(this->crBuffer);
 
+		int dx = (int) (this->relativeX * zoom);
+		int dy = (int) (this->relativeY * zoom);
+
 		cairo_scale(cr2,  fx, fy);
-		cairo_translate(cr2, -this->relativeX, -this->relativeY);
+		cairo_translate(cr2, -dx, -dy);
 		cairo_scale(cr2, zoom , zoom);
 		DocumentView view;
 		view.drawSelection(cr2, this);
@@ -367,11 +368,41 @@ void EditSelectionContents::paint(cairo_t * cr, double x, double y, double width
 		cairo_scale(cr, sx, sy);
 	}
 
-	dx = (int) (x * zoom / sx);
-	dy = (int) (y * zoom / sy);
+	double dx = (int) (x * zoom / sx);
+	double dy = (int) (y * zoom / sy);
 
 	cairo_set_source_surface(cr, this->crBuffer, dx, dy);
 	cairo_paint(cr);
 
 	cairo_restore(cr);
+}
+
+void EditSelectionContents::serialize(ObjectOutputStream & out) {
+	out.writeObject("EditSelectionContents");
+
+	out.writeDouble(this->originalWidth);
+	out.writeDouble(this->originalHeight);
+
+	out.writeDouble(this->originalX);
+	out.writeDouble(this->originalY);
+
+	out.writeDouble(this->relativeX);
+	out.writeDouble(this->relativeY);
+
+	out.endObject();
+}
+
+void EditSelectionContents::readSerialized(ObjectInputStream & in) throw (InputStreamException) {
+	in.readObject("EditSelectionContents");
+
+	this->originalWidth = in.readDouble();
+	this->originalHeight = in.readDouble();
+
+	this->originalX = in.readDouble();
+	this->originalY = in.readDouble();
+
+	this->relativeX = in.readDouble();
+	this->relativeY = in.readDouble();
+
+	in.endObject();
 }

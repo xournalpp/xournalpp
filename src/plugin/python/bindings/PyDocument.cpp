@@ -83,7 +83,7 @@ static PyMemberDef PyDocument_members[] = { { NULL } /* Sentinel */
 
 static PyTypeObject SelectionType = {
 	PyObject_HEAD_INIT(NULL)0, /*ob_size*/
-	"xournal.Selection", /*tp_name*/
+	"xournal.Document", /*tp_name*/
 	sizeof(PyDocument), /*tp_basicsize*/
 	0, /*tp_itemsize*/
 	(destructor)PyDocument_dealloc, /*tp_dealloc*/
