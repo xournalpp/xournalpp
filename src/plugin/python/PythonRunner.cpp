@@ -143,6 +143,12 @@ void PythonRunner::initPython() {
 	const char * path = getcwd(buffer, sizeof(buffer));
 
 	//TODO: PYTHONPATH
+//	PuObject *my_module = PyImport_ImportModule("MyModule");
+//	PyObject *my_class = PyObject_GetAttrString(my_module, "MyClass");
+//	if (!my_class)
+//	return;
+//	PyObject *instance = PyInstance_New(my_class, NULL, NULL); // retuns NULL
+
 
 	String cmd = "import sys\n";
 

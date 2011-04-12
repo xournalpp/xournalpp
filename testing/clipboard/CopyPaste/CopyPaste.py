@@ -18,5 +18,9 @@ class CopyPaste(CopyPasteTest):
 		self.copy()
 		assert self.xoj.paste(), 'paste failed'
 
+		selection = self.xoj.getSelection()
+
+		print 'selection: %lf / %lf' % (selection.getX(), selection.getY())
+
 		#TODO: check contents
 

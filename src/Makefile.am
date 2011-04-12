@@ -172,6 +172,8 @@ xournalpp_SOURCES = \
 
 if ENABLE_PYTHON
 xournalpp_SOURCES += \
+	plugin/python/bindings/PyDocument.cpp \
+	plugin/python/bindings/PySelection.cpp \
 	plugin/python/bindings/PyUndoRedoHandler.cpp \
 	plugin/python/bindings/PyXournal.cpp \
 	plugin/python/PythonRunner.cpp
