@@ -16,11 +16,16 @@ class CopyPaste(CopyPasteTest):
 
 	def runTest(self):
 		self.copy()
-		assert self.xoj.paste(), 'paste failed'
 
 		selection = self.xoj.getSelection()
+		selX = selection.getX()
+		selY = selection.getY()
 
-		print 'selection: %lf / %lf' % (selection.getX(), selection.getY())
+		assert self.xoj.paste(), 'paste failed'
+
+		#TODO: assert selection.getX() == selX, 'Selection X position wrong'
+		#TODO: assert selection.getY() == selY, 'Selection Y position wrong'
+
 
 		#TODO: check contents
 

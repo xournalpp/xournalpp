@@ -85,7 +85,7 @@ public:
 
 	void setSelection(EditSelection * selection);
 	EditSelection * getSelection();
-	void deleteSelection();
+	void deleteSelection(EditSelection * sel = NULL);
 	void repaintSelection(bool evenWithoutSelection = false);
 
 	TextEditor * getTextEditor();

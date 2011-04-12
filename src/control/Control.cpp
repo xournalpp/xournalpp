@@ -2327,20 +2327,13 @@ void Control::clipboardPasteXournal(ObjectInputStream & in) {
 			g_warning("Paste from Xournal Version %s to Xournal Version %s", version.c_str(), PACKAGE_STRING);
 		}
 
-		in.readObject("Selection");
-		double x = in.readDouble();
-		double y = in.readDouble();
-		double width = in.readDouble();
-		double height = in.readDouble();
-
-		selection = new EditSelection(this->undoRedo, x, y, width, height, page, view);
+		selection = new EditSelection(this->undoRedo, page, view);
+		in >> selection;
 
 		// document lock not needed anymore, because we don't change the document, we only change the selection
 		this->doc->unlock();
 
 		int count = in.readInt();
-
-		in.endObject();
 
 		for (int i = 0; i < count; i++) {
 			String name = in.getNextObjectName();
@@ -2363,7 +2356,6 @@ void Control::clipboardPasteXournal(ObjectInputStream & in) {
 		}
 
 		win->getXournal()->setSelection(selection);
-		view->repaintRect(x, y, width, height);
 
 	} catch (std::exception & e) {
 		g_warning("could not paste, Exception occurred: %s", e.what());

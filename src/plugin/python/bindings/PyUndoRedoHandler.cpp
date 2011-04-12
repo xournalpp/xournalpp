@@ -135,9 +135,9 @@ static int PyUndoRedoHandler_init(PyUndoRedoHandler * self, PyObject * args, PyO
 static PyMemberDef PyUndoRedoHandler_members[] = { { NULL } /* Sentinel */
 };
 
-static PyTypeObject SelectionType = {
+static PyTypeObject UndoRedoHandlerType = {
 	PyObject_HEAD_INIT(NULL)0, /*ob_size*/
-	"xournal.Selection", /*tp_name*/
+	"xournal.UndoRedo", /*tp_name*/
 	sizeof(PyUndoRedoHandler), /*tp_basicsize*/
 	0, /*tp_itemsize*/
 	(destructor)PyUndoRedoHandler_dealloc, /*tp_dealloc*/
@@ -182,12 +182,12 @@ static PyMethodDef module_methods[] = {
 
 PyObject * newPyUndoRedoHandler(PyObject * xournal) {
 	PyObject * args = Py_BuildValue("(O)", xournal);
-	PyObject * obj = PyObject_CallObject((PyObject *)&SelectionType, args);
+	PyObject * obj = PyObject_CallObject((PyObject *)&UndoRedoHandlerType, args);
 	return obj;
 }
 
 void initundoredohandler() {
-	if (PyType_Ready(&SelectionType) < 0) {
+	if (PyType_Ready(&UndoRedoHandlerType) < 0) {
 		return;
 	}
 
@@ -197,8 +197,8 @@ void initundoredohandler() {
 		return;
 	}
 
-	Py_INCREF(&SelectionType);
-	PyModule_AddObject(m, "UndoRedo", (PyObject *) &SelectionType);
+	Py_INCREF(&UndoRedoHandlerType);
+	PyModule_AddObject(m, "UndoRedo", (PyObject *) &UndoRedoHandlerType);
 }
 
 #ifdef __cplusplus

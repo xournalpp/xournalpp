@@ -455,8 +455,8 @@ void XournalView::getPasteTarget(double & x, double & y) {
 	Rectangle * rect = getVisibleRect(pageNo);
 
 	if (rect) {
-		x = rect->width / 2 + rect->x;
-		y = rect->height / 2 + rect->y;
+		x = rect->width / 2;
+		y = rect->height / 2;
 	}
 }
 /**
@@ -639,10 +639,13 @@ void XournalView::clearSelection() {
 	control->getToolHandler()->setSelectionEditTools(false, false);
 }
 
-void XournalView::deleteSelection() {
+void XournalView::deleteSelection(EditSelection * sel) {
 	XOJ_CHECK_TYPE(XournalView);
 
-	EditSelection * sel = getSelection();
+	if(sel == NULL) {
+		sel = getSelection();
+	}
+
 	if (sel) {
 		PageView * view = sel->getView();
 		DeleteUndoAction * undo = new DeleteUndoAction(sel->getSourcePage(), view, false);
@@ -652,7 +655,7 @@ void XournalView::deleteSelection() {
 		clearSelection();
 
 		view->rerenderPage();
-		repaintSelection();
+		repaintSelection(true);
 	}
 }
 

@@ -32,7 +32,7 @@ class UndoAction;
 class EditSelectionContents;
 class DeleteUndoAction;
 
-class EditSelectionContents: public ElementContainer {
+class EditSelectionContents: public ElementContainer, public Serializeable {
 public:
 	EditSelectionContents(double x, double y, double width, double height, PageRef sourcePage, Layer * sourceLayer, PageView * sourceView);
 	virtual ~EditSelectionContents();
@@ -107,6 +107,11 @@ public:
 	 */
 	double getOriginalHeight();
 
+public:
+	// Serialize interface
+	void serialize(ObjectOutputStream & out);
+	void readSerialized(ObjectInputStream & in) throw (InputStreamException);
+
 private:
 	XOJ_TYPE_ATTRIB;
 
@@ -125,8 +130,8 @@ private:
 	/**
 	 * The offset to the original selection
 	 */
-	int relativeX;
-	int relativeY;
+	double relativeX;
+	double relativeY;
 
 	/**
 	 * The selected element (the only one which are handled by this instance)

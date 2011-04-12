@@ -30,9 +30,9 @@ class UndoAction;
 class EditSelectionContents;
 class DeleteUndoAction;
 
-class EditSelection: public ElementContainer {
+class EditSelection: public ElementContainer, public Serializeable {
 public:
-	EditSelection(UndoRedoHandler * undo, double x, double y, double width, double height, PageRef page, PageView * view);
+	EditSelection(UndoRedoHandler * undo, PageRef page, PageView * view);
 	EditSelection(UndoRedoHandler * undo, Selection * selection, PageView * view);
 	EditSelection(UndoRedoHandler * undo, Element * e, PageView * view, PageRef page);
 	virtual ~EditSelection();
@@ -172,6 +172,11 @@ public:
 
 public:
 	PageView * getView();
+
+public:
+	// Serialize interface
+	void serialize(ObjectOutputStream & out);
+	void readSerialized(ObjectInputStream & in) throw (InputStreamException);
 
 private:
 
