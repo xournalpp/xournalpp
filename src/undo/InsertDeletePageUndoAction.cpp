@@ -4,7 +4,7 @@
 #include "../control/Control.h"
 #include "../gui/Cursor.h"
 
-InsertDeletePageUndoAction::InsertDeletePageUndoAction(PageRef page, int pagePos, bool inserted) {
+InsertDeletePageUndoAction::InsertDeletePageUndoAction(PageRef page, int pagePos, bool inserted) : UndoAction("InsertDeletePageUndoAction") {
 	XOJ_INIT_TYPE(InsertDeletePageUndoAction);
 
 	this->inserted = inserted;

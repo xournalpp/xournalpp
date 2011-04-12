@@ -6,7 +6,8 @@
 #include "../model/Document.h"
 #include "../gui/XournalView.h"
 
-RemoveLayerUndoAction::RemoveLayerUndoAction(PageRef page, Layer * layer, int layerPos) {
+RemoveLayerUndoAction::RemoveLayerUndoAction(PageRef page, Layer * layer, int layerPos)
+	: UndoAction("RemoveLayerUndoAction") {
 	XOJ_INIT_TYPE(RemoveLayerUndoAction);
 
 	this->page = page;

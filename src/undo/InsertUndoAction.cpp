@@ -4,7 +4,8 @@
 #include "../model/Element.h"
 #include "../gui/Redrawable.h"
 
-InsertUndoAction::InsertUndoAction(PageRef page, Layer * layer, Element * element, Redrawable * view) {
+InsertUndoAction::InsertUndoAction(PageRef page, Layer * layer,
+		Element * element, Redrawable * view) : UndoAction("InsertUndoAction") {
 	XOJ_INIT_TYPE(InsertUndoAction);
 
 	this->page = page;

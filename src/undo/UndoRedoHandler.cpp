@@ -235,3 +235,22 @@ void UndoRedoHandler::documentSaved() {
 
 	this->savedUndoList = g_list_last(this->undoList);
 }
+
+const char * UndoRedoHandler::getUndoStackTopTypeName() {
+	GList * e = g_list_last(this->undoList);
+	if (e == NULL) {
+		return NULL;
+	}
+
+	return ((UndoAction *)e->data)->getClassName();
+}
+
+const char * UndoRedoHandler::getRedoStackTopTypeName() {
+	GList * e = g_list_last(this->redoList);
+	if (e == NULL) {
+		return NULL;
+	}
+
+	return ((UndoAction *)e->data)->getClassName();
+}
+
