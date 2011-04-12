@@ -23,7 +23,7 @@ class XojPage;
 
 class UndoAction {
 public:
-	UndoAction();
+	UndoAction(const char * className);
 	virtual ~UndoAction();
 
 public:
@@ -37,8 +37,13 @@ public:
 	 */
 	virtual XojPage ** getPages();
 
+	const char * getClassName() const;
+
 protected:
 	XOJ_TYPE_ATTRIB;
+
+	// This is only for debugging / Testing purpose
+	const char * className;
 
 	PageRef page;
 	bool undone;

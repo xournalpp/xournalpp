@@ -51,6 +51,9 @@ public:
 	void documentAutosaved();
 	void documentSaved();
 
+	const char * getUndoStackTopTypeName();
+	const char * getRedoStackTopTypeName();
+
 private:
 	void clearRedo();
 

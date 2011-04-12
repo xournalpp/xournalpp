@@ -5,7 +5,7 @@
 #include "../gui/Redrawable.h"
 #include "PageLayerPosEntry.h"
 
-DeleteUndoAction::DeleteUndoAction(PageRef page, Redrawable * view, bool eraser) {
+DeleteUndoAction::DeleteUndoAction(PageRef page, Redrawable * view, bool eraser) : UndoAction("DeleteUndoAction") {
 	XOJ_INIT_TYPE(DeleteUndoAction);
 
 	this->page = page;

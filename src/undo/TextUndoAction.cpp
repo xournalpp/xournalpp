@@ -6,7 +6,7 @@
 #include "../gui/Redrawable.h"
 #include "../gui/TextEditor.h"
 
-TextUndoAction::TextUndoAction(PageRef page, Layer * layer, Text * text, String lastText, Redrawable * view, TextEditor * textEditor) {
+TextUndoAction::TextUndoAction(PageRef page, Layer * layer, Text * text, String lastText, Redrawable * view, TextEditor * textEditor) : UndoAction("TextUndoAction") {
 	XOJ_INIT_TYPE(TextUndoAction);
 
 	this->page = page;

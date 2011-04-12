@@ -17,7 +17,7 @@ public:
 	int newColor;
 };
 
-ColorUndoAction::ColorUndoAction(PageRef page, Layer * layer, Redrawable * view) {
+ColorUndoAction::ColorUndoAction(PageRef page, Layer * layer, Redrawable * view) : UndoAction("ColorUndoAction") {
 	XOJ_INIT_TYPE(ColorUndoAction);
 
 	this->page = page;

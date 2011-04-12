@@ -56,16 +56,26 @@ static PyObject *
 PyUndoRedoHandler_getUndoItemTypeOnStack(PyUndoRedoHandler * self) {
 	UndoRedoHandler * undo = self->control->getUndoRedoHandler();
 
-	// TODO: implementieren
-	return PyString_FromString("NOT_AVAILABLE");
+	const char * name = undo->getUndoStackTopTypeName();
+
+	if(name) {
+		return PyString_FromString(name);
+	}
+
+	Py_RETURN_NONE;
 }
 
 static PyObject *
 PyUndoRedoHandler_getRedoItemTypeOnStack(PyUndoRedoHandler * self) {
 	UndoRedoHandler * undo = self->control->getUndoRedoHandler();
 
-	// TODO: implementieren
-	return PyString_FromString("NOT_AVAILABLE");
+	const char * name = undo->getRedoStackTopTypeName();
+
+	if(name) {
+		return PyString_FromString(name);
+	}
+
+	Py_RETURN_NONE;
 }
 
 static PyMethodDef PyUndoRedoHandler_methods[] = {

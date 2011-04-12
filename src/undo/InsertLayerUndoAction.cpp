@@ -5,7 +5,7 @@
 #include "../control/Control.h"
 #include "../gui/XournalView.h"
 
-InsertLayerUndoAction::InsertLayerUndoAction(PageRef page, Layer * layer) {
+InsertLayerUndoAction::InsertLayerUndoAction(PageRef page, Layer * layer) : UndoAction("InsertLayerUndoAction") {
 	XOJ_INIT_TYPE(InsertLayerUndoAction);
 
 	this->page = page;

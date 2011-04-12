@@ -1,6 +1,6 @@
 #include "UndoAction.h"
 
-UndoAction::UndoAction() {
+UndoAction::UndoAction(const char * className) : className(className) {
 	XOJ_INIT_TYPE(UndoAction);
 
 	this->undone = false;
@@ -19,5 +19,9 @@ XojPage ** UndoAction::getPages() {
 	return pages;
 
 	XOJ_RELEASE_TYPE(UndoAction);
+}
+
+const char * UndoAction::getClassName() const {
+	return this->className;
 }
 

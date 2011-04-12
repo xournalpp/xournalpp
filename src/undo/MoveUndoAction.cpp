@@ -21,7 +21,7 @@ public:
 };
 
 MoveUndoAction::MoveUndoAction(Layer * sourceLayer, PageRef sourcePage, Redrawable * sourceView, GList * selected, double mx, double my, Layer * targetLayer,
-		PageRef targetPage, Redrawable * targetView) {
+		PageRef targetPage, Redrawable * targetView) : UndoAction("MoveUndoAction") {
 	XOJ_INIT_TYPE(MoveUndoAction);
 
 	this->page = sourcePage;
@@ -49,7 +49,7 @@ MoveUndoAction::MoveUndoAction(Layer * sourceLayer, PageRef sourcePage, Redrawab
 	}
 }
 
-MoveUndoAction::MoveUndoAction(PageRef sourcePage, VerticalToolHandler * handler) {
+MoveUndoAction::MoveUndoAction(PageRef sourcePage, VerticalToolHandler * handler) : UndoAction("MoveUndoAction") {
 	XOJ_INIT_TYPE(MoveUndoAction);
 
 	this->page = sourcePage;

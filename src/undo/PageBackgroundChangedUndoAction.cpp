@@ -3,7 +3,8 @@
 #include "../model/Document.h"
 
 PageBackgroundChangedUndoAction::PageBackgroundChangedUndoAction(PageRef page, BackgroundType origType,
-		int origPdfPage, BackgroundImage origBackgroundImage, double origW, double origH) {
+		int origPdfPage, BackgroundImage origBackgroundImage, double origW, double origH)
+		: UndoAction("PageBackgroundChangedUndoAction") {
 	XOJ_INIT_TYPE(PageBackgroundChangedUndoAction);
 
 	this->page = page;

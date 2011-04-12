@@ -5,7 +5,8 @@
 #include "../util/Range.h"
 #include "../gui/Redrawable.h"
 
-ScaleUndoAction::ScaleUndoAction(PageRef page, Redrawable * view, GList * elements, double x0, double y0, double fx, double fy) {
+ScaleUndoAction::ScaleUndoAction(PageRef page, Redrawable * view, GList * elements,
+		double x0, double y0, double fx, double fy) : UndoAction("ScaleUndoAction") {
 	XOJ_INIT_TYPE(ScaleUndoAction);
 
 	this->page = page;
