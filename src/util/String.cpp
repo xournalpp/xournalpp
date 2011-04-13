@@ -363,9 +363,13 @@ String& String::operator=(const char * str) {
 String& String::operator=(const String & str) {
 	XOJ_CHECK_TYPE(String);
 
-	this->data->unreference();
+	if(this->data) {
+		this->data->unreference();
+	}
 	this->data = str.data;
-	this->data->reference();
+	if(this->data) {
+		this->data->reference();
+	}
 }
 
 bool String::operator==(const String & str) const {

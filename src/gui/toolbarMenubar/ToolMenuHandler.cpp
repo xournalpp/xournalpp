@@ -55,13 +55,8 @@ ToolMenuHandler::~ToolMenuHandler() {
 	g_list_free(this->menuItems);
 	this->menuItems = NULL;
 
-	freeToolbar();
+	freeDynamicToolbarItems();
 
-	XOJ_RELEASE_TYPE(ToolMenuHandler);
-}
-
-void ToolMenuHandler::freeToolbar() {
-	XOJ_CHECK_TYPE(ToolMenuHandler);
 
 	for (GList * l = this->toolItems; l != NULL; l = l->next) {
 		AbstractToolItem * it = (AbstractToolItem *) l->data;
@@ -76,6 +71,17 @@ void ToolMenuHandler::freeToolbar() {
 	}
 	g_list_free(this->menuItems);
 	this->menuItems = NULL;
+
+	XOJ_RELEASE_TYPE(ToolMenuHandler);
+}
+
+void ToolMenuHandler::freeDynamicToolbarItems() {
+	XOJ_CHECK_TYPE(ToolMenuHandler);
+
+	for (GList * l = this->toolItems; l != NULL; l = l->next) {
+		AbstractToolItem * it = (AbstractToolItem *) l->data;
+		it->setUsed(false);
+	}
 
 	for (GList * l = toolbarColorItems; l != NULL; l = l->next) {
 		ColorToolItem * it = (ColorToolItem *) l->data;

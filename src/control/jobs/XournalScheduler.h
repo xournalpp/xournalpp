@@ -32,7 +32,7 @@ public:
 	void removeAllJobs();
 
 	void addRepaintSidebar(SidebarPreview * preview);
-	void addRepaintPage(PageView * view);
+	void addRerenderPage(PageView * view);
 
 	void finishTask();
 

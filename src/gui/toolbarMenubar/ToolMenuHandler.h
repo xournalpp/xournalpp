@@ -36,9 +36,8 @@ public:
 	virtual ~ToolMenuHandler();
 
 public:
-
+	void freeDynamicToolbarItems();
 	void unloadToolbar(GtkWidget * tBunload);
-	void freeToolbar();
 
 	void load(ToolbarData * d, GtkWidget * toolbar, const char * toolbarName, bool horizontal);
 

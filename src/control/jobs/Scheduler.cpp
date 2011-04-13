@@ -29,7 +29,7 @@ Scheduler::Scheduler() {
 	this->jobQueue[JOB_PRIORITY_LOW] = &this->queueLow;
 	this->jobQueue[JOB_PRIORITY_NONE] = &this->queueNone;
 
-	this->thread = g_thread_create((GThreadFunc)jobThreadCallback, this, true, NULL);
+	this->thread = NULL;
 }
 
 Scheduler::~Scheduler() {
@@ -52,6 +52,11 @@ Scheduler::~Scheduler() {
 	}
 
 	XOJ_RELEASE_TYPE(Scheduler);
+}
+
+void Scheduler::start() {
+	g_return_if_fail(this->thread == NULL);
+	this->thread = g_thread_create((GThreadFunc)jobThreadCallback, this, true, NULL);
 }
 
 void Scheduler::stop() {

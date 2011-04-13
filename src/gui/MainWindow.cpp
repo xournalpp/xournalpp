@@ -292,7 +292,7 @@ void MainWindow::toolbarSelected(ToolbarData * d) {
 		this->toolbar->unloadToolbar(this->tbBottom1);
 		this->toolbar->unloadToolbar(this->tbBottom2);
 
-		this->toolbar->freeToolbar();
+		this->toolbar->freeDynamicToolbarItems();
 	}
 	this->selectedToolbar = d;
 
