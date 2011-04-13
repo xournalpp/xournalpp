@@ -507,7 +507,7 @@ void PageView::rerenderPage() {
 	XOJ_CHECK_TYPE(PageView);
 
 	this->rerenderComplete = true;
-	this->xournal->getControl()->getScheduler()->addRepaintPage(this);
+	this->xournal->getControl()->getScheduler()->addRerenderPage(this);
 }
 
 void PageView::repaintPage() {
@@ -575,7 +575,7 @@ void PageView::addRerenderRect(double x, double y, double width, double height) 
 	this->repaintRects = g_list_append(this->repaintRects, rect);
 	g_mutex_unlock(this->repaintRectMutex);
 
-	this->xournal->getControl()->getScheduler()->addRepaintPage(this);
+	this->xournal->getControl()->getScheduler()->addRerenderPage(this);
 }
 
 void PageView::setSelected(bool selected) {

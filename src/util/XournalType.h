@@ -17,8 +17,11 @@
 #ifndef __XOURNALTYPE_H__
 #define __XOURNALTYPE_H__
 
+#include "logger/Logger.h"
+
 #define XOJ_MEMORY_CHECK_ENABLED
 #define XOJ_MEMORY_LEAK_CHECK_ENABLED
+//#define XOJ_CALL_LOG_ENABLED
 
 #ifdef XOJ_MEMORY_CHECK_ENABLED
 
@@ -29,6 +32,14 @@ void xoj_memoryleak_initType(int id);
 void xoj_memoryleak_releaseType(int id);
 void xoj_momoryleak_printRemainingObjects();
 
+#endif
+
+#ifdef XOJ_CALL_LOG_ENABLED
+#define CALL_LOG(type, clazz, obj) { \
+		Log::trace(type, clazz, __FUNCTION__, (long)obj); \
+	}
+#else
+#define CALL_LOG(type, clazz, obj)
 #endif
 
 void xoj_type_initMutex();
@@ -47,13 +58,19 @@ void xoj_type_initMutex();
  * Initalize the Xournal type info, this should be called in the constructor
  */
 #ifdef XOJ_MEMORY_LEAK_CHECK_ENABLED
+
+const char * xoj_type_getName(int id);
+
+
 #define XOJ_INIT_TYPE(type) \
 		this->z__xoj_type = __XOJ_TYPE_ ## type; \
 		this->z__xoj_typeCheckvalue = 0xFFAA00AA; \
+		CALL_LOG("init", #type, this); \
 		xoj_memoryleak_initType(__XOJ_TYPE_ ## type)
 #else
 #define XOJ_INIT_TYPE(type) \
 		this->z__xoj_type = __XOJ_TYPE_ ## type; \
+		CALL_LOG("init", #type, this); \
 		this->z__xoj_typeCheckvalue = 0xFFAA00AA
 #endif
 
@@ -65,11 +82,13 @@ void xoj_type_initMutex();
 		XOJ_CHECK_TYPE(type) \
 		this->z__xoj_type = -(__XOJ_TYPE_ ## type); \
 		this->z__xoj_typeCheckvalue = 0xFFAA00AA; \
+		CALL_LOG("release", #type, this); \
 		xoj_memoryleak_releaseType(__XOJ_TYPE_ ## type); } while(false)
 #else
 #define XOJ_RELEASE_TYPE(type) do { \
 		XOJ_CHECK_TYPE(type) \
 		this->z__xoj_type = -(__XOJ_TYPE_ ## type); \
+		CALL_LOG("release", #type, this); \
 		this->z__xoj_typeCheckvalue = 0xFFAA00AA; } while(false)
 #endif
 
@@ -86,7 +105,8 @@ void xoj_type_initMutex();
 		} \
 		if(((type *)obj)->z__xoj_type != __XOJ_TYPE_ ## type) { \
 			g_warning("XojTypeCheck failed: expected %s but get %s on %s:%i", #type, xoj_type_getName(((type *)obj)->z__xoj_type), __FILE__, __LINE__);\
-		}
+		} \
+		CALL_LOG("call", #type, obj)
 
 /**
  * Checks the type of "this" and returns if "this" is not an instance of "name"
@@ -100,9 +120,9 @@ void xoj_type_initMutex();
 		} \
 		if(((type *)this)->z__xoj_type != __XOJ_TYPE_ ## type) { \
 			g_warning("XojTypeCheck failed: expected %s but get %s on %s:%i", #type, xoj_type_getName(((type *)this)->z__xoj_type), __FILE__, __LINE__);\
-		}
+		} \
+		CALL_LOG("call", #type, this)
 
-const char * xoj_type_getName(int id);
 
 #include "XournalTypeList.h"
 

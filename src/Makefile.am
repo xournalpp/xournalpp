@@ -152,6 +152,7 @@ xournalpp_SOURCES = \
 	undo/TextUndoAction.cpp \
 	undo/UndoAction.cpp \
 	undo/UndoRedoHandler.cpp \
+	util/logger/Logger.cpp \
 	util/CrashHandler.cpp \
 	util/GzHelper.cpp \
 	util/ObjectStream.cpp \

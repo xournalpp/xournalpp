@@ -40,6 +40,7 @@ public:
 	 */
 	void addJob(Job * job, JobPriority priority);
 
+	void start();
 	void stop();
 
 	/**

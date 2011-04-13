@@ -219,6 +219,7 @@ void InputHandler::onButtonReleaseEvent(GdkEventButton * event, PageRef page) {
 		}
 
 	} else {
+		// TODO: debug
 		layer->addElement(this->tmpStroke);
 		this->redrawable->rerenderElement(this->tmpStroke);
 	}

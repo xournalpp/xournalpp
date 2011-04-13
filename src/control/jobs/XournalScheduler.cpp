@@ -113,7 +113,7 @@ void XournalScheduler::addRepaintSidebar(SidebarPreview * preview) {
 	job->unref();
 }
 
-void XournalScheduler::addRepaintPage(PageView * view) {
+void XournalScheduler::addRerenderPage(PageView * view) {
 	XOJ_CHECK_TYPE(XournalScheduler);
 
 	if (existsSource(view, JOB_TYPE_RENDER, JOB_PRIORITY_URGENT)) {

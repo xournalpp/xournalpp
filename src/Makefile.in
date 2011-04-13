@@ -142,13 +142,14 @@ am__xournalpp_SOURCES_DIST = control/jobs/AutosaveJob.cpp \
 	undo/RecognizerUndoAction.cpp undo/RemoveLayerUndoAction.cpp \
 	undo/ScaleUndoAction.cpp undo/SizeUndoAction.cpp \
 	undo/TextUndoAction.cpp undo/UndoAction.cpp \
-	undo/UndoRedoHandler.cpp util/CrashHandler.cpp \
-	util/GzHelper.cpp util/ObjectStream.cpp util/OutputStream.cpp \
-	util/PageRange.cpp util/Stacktrace.cpp util/pixbuf-utils.cpp \
-	util/Range.cpp util/Rectangle.cpp util/String.cpp \
-	util/Util.cpp util/XInputUtils.cpp util/XournalType.cpp \
-	view/DocumentView.cpp view/PdfView.cpp view/TextView.cpp \
-	Xournalpp.cpp plugin/python/bindings/PyDocument.cpp \
+	undo/UndoRedoHandler.cpp util/logger/Logger.cpp \
+	util/CrashHandler.cpp util/GzHelper.cpp util/ObjectStream.cpp \
+	util/OutputStream.cpp util/PageRange.cpp util/Stacktrace.cpp \
+	util/pixbuf-utils.cpp util/Range.cpp util/Rectangle.cpp \
+	util/String.cpp util/Util.cpp util/XInputUtils.cpp \
+	util/XournalType.cpp view/DocumentView.cpp view/PdfView.cpp \
+	view/TextView.cpp Xournalpp.cpp \
+	plugin/python/bindings/PyDocument.cpp \
 	plugin/python/bindings/PySelection.cpp \
 	plugin/python/bindings/PyUndoRedoHandler.cpp \
 	plugin/python/bindings/PyXournal.cpp \
@@ -277,7 +278,7 @@ am_xournalpp_OBJECTS = xournalpp-AutosaveJob.$(OBJEXT) \
 	xournalpp-SizeUndoAction.$(OBJEXT) \
 	xournalpp-TextUndoAction.$(OBJEXT) \
 	xournalpp-UndoAction.$(OBJEXT) \
-	xournalpp-UndoRedoHandler.$(OBJEXT) \
+	xournalpp-UndoRedoHandler.$(OBJEXT) xournalpp-Logger.$(OBJEXT) \
 	xournalpp-CrashHandler.$(OBJEXT) xournalpp-GzHelper.$(OBJEXT) \
 	xournalpp-ObjectStream.$(OBJEXT) \
 	xournalpp-OutputStream.$(OBJEXT) xournalpp-PageRange.$(OBJEXT) \
@@ -544,13 +545,13 @@ xournalpp_SOURCES = control/jobs/AutosaveJob.cpp \
 	undo/RecognizerUndoAction.cpp undo/RemoveLayerUndoAction.cpp \
 	undo/ScaleUndoAction.cpp undo/SizeUndoAction.cpp \
 	undo/TextUndoAction.cpp undo/UndoAction.cpp \
-	undo/UndoRedoHandler.cpp util/CrashHandler.cpp \
-	util/GzHelper.cpp util/ObjectStream.cpp util/OutputStream.cpp \
-	util/PageRange.cpp util/Stacktrace.cpp util/pixbuf-utils.cpp \
-	util/Range.cpp util/Rectangle.cpp util/String.cpp \
-	util/Util.cpp util/XInputUtils.cpp util/XournalType.cpp \
-	view/DocumentView.cpp view/PdfView.cpp view/TextView.cpp \
-	Xournalpp.cpp $(am__append_1)
+	undo/UndoRedoHandler.cpp util/logger/Logger.cpp \
+	util/CrashHandler.cpp util/GzHelper.cpp util/ObjectStream.cpp \
+	util/OutputStream.cpp util/PageRange.cpp util/Stacktrace.cpp \
+	util/pixbuf-utils.cpp util/Range.cpp util/Rectangle.cpp \
+	util/String.cpp util/Util.cpp util/XInputUtils.cpp \
+	util/XournalType.cpp view/DocumentView.cpp view/PdfView.cpp \
+	view/TextView.cpp Xournalpp.cpp $(am__append_1)
 xournalpp_CXXFLAGS = -g -rdynamic
 xournalpp_LDADD = @PACKAGE_LIBS@ $(INTLLIBS)
 all: all-am
@@ -692,6 +693,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-Layer.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-LinkDestination.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-LoadHandler.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-Logger.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-MainWindow.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-MenuItem.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-MetadataManager.Po@am__quote@
@@ -2860,6 +2862,20 @@ xournalpp-UndoRedoHandler.obj: undo/UndoRedoHandler.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='undo/UndoRedoHandler.cpp' object='xournalpp-UndoRedoHandler.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-UndoRedoHandler.obj `if test -f 'undo/UndoRedoHandler.cpp'; then $(CYGPATH_W) 'undo/UndoRedoHandler.cpp'; else $(CYGPATH_W) '$(srcdir)/undo/UndoRedoHandler.cpp'; fi`
+
+xournalpp-Logger.o: util/logger/Logger.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-Logger.o -MD -MP -MF $(DEPDIR)/xournalpp-Logger.Tpo -c -o xournalpp-Logger.o `test -f 'util/logger/Logger.cpp' || echo '$(srcdir)/'`util/logger/Logger.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-Logger.Tpo $(DEPDIR)/xournalpp-Logger.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='util/logger/Logger.cpp' object='xournalpp-Logger.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-Logger.o `test -f 'util/logger/Logger.cpp' || echo '$(srcdir)/'`util/logger/Logger.cpp
+
+xournalpp-Logger.obj: util/logger/Logger.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-Logger.obj -MD -MP -MF $(DEPDIR)/xournalpp-Logger.Tpo -c -o xournalpp-Logger.obj `if test -f 'util/logger/Logger.cpp'; then $(CYGPATH_W) 'util/logger/Logger.cpp'; else $(CYGPATH_W) '$(srcdir)/util/logger/Logger.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-Logger.Tpo $(DEPDIR)/xournalpp-Logger.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='util/logger/Logger.cpp' object='xournalpp-Logger.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-Logger.obj `if test -f 'util/logger/Logger.cpp'; then $(CYGPATH_W) 'util/logger/Logger.cpp'; else $(CYGPATH_W) '$(srcdir)/util/logger/Logger.cpp'; fi`
 
 xournalpp-CrashHandler.o: util/CrashHandler.cpp
 @am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-CrashHandler.o -MD -MP -MF $(DEPDIR)/xournalpp-CrashHandler.Tpo -c -o xournalpp-CrashHandler.o `test -f 'util/CrashHandler.cpp' || echo '$(srcdir)/'`util/CrashHandler.cpp

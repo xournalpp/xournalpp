@@ -141,6 +141,7 @@ private:
 		gdk_threads_enter();
 
 		gtk_widget_queue_draw(data->widget);
+
 		if(complete) {
 //			gtk_widget_queue_draw(data->widget);
 		} else {
@@ -151,6 +152,8 @@ private:
 			}
 			g_list_free(rects);
 		}
+
+		gdk_flush();
 
 		gdk_threads_leave();
 

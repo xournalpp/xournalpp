@@ -184,6 +184,8 @@ int XournalMain::run(int argc, char * argv[]) {
 
 	win->show();
 
+	control->getScheduler()->start();
+
 	if (!opened) {
 		control->newFile();
 	}
