@@ -14,6 +14,8 @@
 
 // TODO: LOW PRIO: implement drag & drop
 
+// TODO: !! Multibyte is not working correct!
+
 TextEditor::TextEditor(PageView * gui, GtkWidget * widget, Text * text, bool ownText) {
 	XOJ_INIT_TYPE(TextEditor);
 

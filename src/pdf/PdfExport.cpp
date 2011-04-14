@@ -161,6 +161,7 @@ bool PdfExport::writePagesindex() {
 	this->writer->write(">>\n");
 	this->writer->write("endobj\n");
 
+	return true;
 }
 
 bool PdfExport::writeTrailer() {

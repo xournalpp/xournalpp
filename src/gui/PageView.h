@@ -149,7 +149,7 @@ private:
 	int lastVisibelTime;
 
 	GMutex * repaintRectMutex;
-	GList * repaintRects;
+	GList * rerenderRects;
 	bool rerenderComplete;
 
 	GMutex * drawingMutex;

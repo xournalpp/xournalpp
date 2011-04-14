@@ -22,5 +22,5 @@ void Redrawable::rerenderArea(double x1, double y1, double x2, double y2) {
 }
 
 void Redrawable::rerenderElement(Element * e) {
-	rerenderRect(e->getX(), e->getY(), e->getElementWidth(), e->getElementHeight());
+	rerenderRect(e->getX() - 1, e->getY() - 1, e->getElementWidth() + 2, e->getElementHeight() + 2);
 }

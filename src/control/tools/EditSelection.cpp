@@ -58,6 +58,8 @@ EditSelection::EditSelection(UndoRedoHandler * undo, Element * e, PageView * vie
 
 	addElement(e);
 	this->sourceLayer->removeElement(e, false);
+
+	view->rerenderElement(e);
 }
 
 /**
