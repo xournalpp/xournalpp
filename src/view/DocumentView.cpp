@@ -187,9 +187,9 @@ void DocumentView::drawLayer(cairo_t * cr, Layer * l) {
 		Element * e = it.next();
 
 #ifdef SHOW_ELEMENT_BOUNDS
-		cairo_set_source_rgb(cr, 1, 0, 0);
+		cairo_set_source_rgb(cr, 0, 1, 0);
 		cairo_set_line_width(cr, 1);
-		cairo_rectangle(cr, e->getXOnView(), e->getYOnView(), e->getElementWidth(), e->getElementHeight());
+		cairo_rectangle(cr, e->getX(), e->getY(), e->getElementWidth(), e->getElementHeight());
 		cairo_stroke(cr);
 #endif // SHOW_ELEMENT_BOUNDS
 		//cairo_new_path(cr);

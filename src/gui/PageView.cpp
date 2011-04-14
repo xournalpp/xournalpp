@@ -45,7 +45,7 @@ PageView::PageView(XournalView * xournal, PageRef page) {
 
 	this->drawingMutex = g_mutex_new();
 
-	this->repaintRects = NULL;
+	this->rerenderRects = NULL;
 	this->rerenderComplete = false;
 	this->repaintRectMutex = g_mutex_new();
 
@@ -85,12 +85,12 @@ PageView::~PageView() {
 	deleteViewBuffer();
 
 	g_mutex_free(this->repaintRectMutex);
-	for (GList * l = this->repaintRects; l != NULL; l = l->next) {
+	for (GList * l = this->rerenderRects; l != NULL; l = l->next) {
 		Rectangle * rect = (Rectangle *) l->data;
 		delete rect;
 	}
-	g_list_free(this->repaintRects);
-	this->repaintRects = NULL;
+	g_list_free(this->rerenderRects);
+	this->rerenderRects = NULL;
 
 	g_mutex_free(this->drawingMutex);
 	this->drawingMutex = NULL;
@@ -452,10 +452,15 @@ bool PageView::onButtonReleaseEvent(GtkWidget * widget, GdkEventButton * event) 
 	if (this->selection) {
 		if (this->selection->finalize(this->page)) {
 			xournal->setSelection(new EditSelection(control->getUndoRedoHandler(), this->selection, this));
+			delete this->selection;
+			this->selection = NULL;
+		} else {
+			delete this->selection;
+			this->selection = NULL;
+
+			repaintPage();
 		}
 
-		delete this->selection;
-		this->selection = NULL;
 	} else if (this->textEditor) {
 		this->textEditor->mouseReleased();
 	}
@@ -555,7 +560,7 @@ void PageView::addRerenderRect(double x, double y, double width, double height) 
 
 	g_mutex_lock(this->repaintRectMutex);
 
-	for (GList * l = this->repaintRects; l != NULL; l = l->next) {
+	for (GList * l = this->rerenderRects; l != NULL; l = l->next) {
 		Rectangle * r = (Rectangle *) l->data;
 
 		// its faster to redraw only one rect than repaint twice the same area
@@ -572,7 +577,7 @@ void PageView::addRerenderRect(double x, double y, double width, double height) 
 		}
 	}
 
-	this->repaintRects = g_list_append(this->repaintRects, rect);
+	this->rerenderRects = g_list_append(this->rerenderRects, rect);
 	g_mutex_unlock(this->repaintRectMutex);
 
 	this->xournal->getControl()->getScheduler()->addRerenderPage(this);

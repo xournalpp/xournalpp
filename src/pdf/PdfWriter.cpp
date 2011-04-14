@@ -240,8 +240,8 @@ void PdfWriter::endStream() {
 		data = this->stream;
 	}
 
-	writef("<<%s/Length %i>>\n", filter, this->stream->len);
-	write("stream\n");
+	writef("<<%s/Length %i>>\n", filter, data->len);
+	write("\nstream\n");
 
 	writeLen(data->str, data->len);
 

@@ -35,7 +35,7 @@ public:
 	void run();
 
 public:
-	static void repaintRectangle(RenderJob * renderJob, Rectangle * rect);
+	static void rerenderRectangle(RenderJob * renderJob, Rectangle * rect);
 
 private:
 	void rerenderRectangle(Rectangle * rect);

@@ -27,7 +27,7 @@ void * RenderJob::getSource() {
 	return this->view;
 }
 
-void RenderJob::repaintRectangle(RenderJob * renderJob, Rectangle * rect) {
+void RenderJob::rerenderRectangle(RenderJob * renderJob, Rectangle * rect) {
 	XOJ_CHECK_TYPE_OBJ(renderJob, RenderJob);
 
 	PageView * view = renderJob->view;
@@ -85,7 +85,7 @@ void RenderJob::repaintRectangle(RenderJob * renderJob, Rectangle * rect) {
 void RenderJob::rerenderRectangle(Rectangle * rect) {
 	XOJ_CHECK_TYPE(RenderJob);
 
-	repaintRectangle(this, rect);
+	rerenderRectangle(this, rect);
 }
 
 class RepaintWidgetHandler {
@@ -190,7 +190,18 @@ void RenderJob::run() {
 
 	double zoom = this->view->xournal->getZoom();
 
-	if (this->view->rerenderComplete) {
+	g_mutex_lock(this->view->repaintRectMutex);
+
+	bool rerenderComplete = this->view->rerenderComplete;
+	GList * rerenderRects = this->view->rerenderRects;
+	this->view->rerenderRects = NULL;
+
+	this->view->rerenderComplete = false;
+
+	g_mutex_unlock(this->view->repaintRectMutex);
+
+
+	if (rerenderComplete) {
 		Document * doc = this->view->xournal->getDocument();
 
 		int dispWidth = this->view->getDisplayWidth();
@@ -229,7 +240,7 @@ void RenderJob::run() {
 
 		handler->repaintComplete();
 	} else {
-		for (GList * l = this->view->repaintRects; l != NULL; l = l->next) {
+		for (GList * l = rerenderRects; l != NULL; l = l->next) {
 			Rectangle * rect = (Rectangle *) l->data;
 			rerenderRectangle(rect);
 
@@ -238,18 +249,13 @@ void RenderJob::run() {
 		}
 	}
 
-	g_mutex_lock(this->view->repaintRectMutex);
 
 	// delete all rectangles
-	this->view->rerenderComplete = false;
-	for (GList * l = this->view->repaintRects; l != NULL; l = l->next) {
+	for (GList * l = rerenderRects; l != NULL; l = l->next) {
 		Rectangle * rect = (Rectangle *) l->data;
 		delete rect;
 	}
-	g_list_free(this->view->repaintRects);
-	this->view->repaintRects = NULL;
-
-	g_mutex_unlock(this->view->repaintRectMutex);
+	g_list_free(rerenderRects);
 }
 
 JobType RenderJob::getType() {

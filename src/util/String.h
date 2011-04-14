@@ -50,8 +50,6 @@ public:
 
 	const char * c_str() const;
 
-	//	gchar * reserveBuffer(int buffer);
-
 	int indexOf(String substr, int fromIndex = 0) const;
 	int indexOfCaseInsensitiv(String substr, int fromIndex) const;
 	int lastIndexOf(String substr) const;
