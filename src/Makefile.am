@@ -63,7 +63,8 @@ xournalpp_SOURCES = \
 	gui/dialog/ButtonConfigGui.cpp \
 	gui/dialog/ExportDialog.cpp \
 	gui/dialog/FormatDialog.cpp \
-	gui/dialog/ToolbarDialog.cpp \
+	gui/dialog/ToolbarCustomizeDialog.cpp \
+	gui/dialog/ToolbarManageDialog.cpp \
 	gui/dialog/ImagesDialog.cpp \
 	gui/dialog/PdfPagesDialog.cpp \
 	gui/dialog/SelectBackgroundColorDialog.cpp \

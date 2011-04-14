@@ -33,7 +33,7 @@ MainWindow::MainWindow(GladeSearchpath * gladeSearchPath, Control * control) :
 
 	GtkRange * hrang = GTK_RANGE(get("scrollHorizontal"));
 	GtkRange * vrang = GTK_RANGE(get("scrollVertical"));
-	this->xournal = new XournalView(get("tableXournal"), hrang, vrang, control);
+	this->xournal = new XournalView(get("tableXournal"), hrang, get("btCenterPage"), vrang, control);
 
 	setSidebarVisible(control->getSettings()->isSidebarVisible());
 

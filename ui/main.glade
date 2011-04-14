@@ -823,6 +823,13 @@
                               </widget>
                             </child>
                             <child>
+                              <widget class="GtkMenuItem" id="menuViewToolbarManage">
+                                <property name="visible">True</property>
+                                <property name="label" translatable="yes">_Manage</property>
+                                <property name="use_underline">True</property>
+                              </widget>
+                            </child>
+                            <child>
                               <widget class="GtkMenuItem" id="menuViewToolbarCustomize">
                                 <property name="visible">True</property>
                                 <property name="label" translatable="yes">_Customize</property>
@@ -844,8 +851,8 @@
                         <property name="visible">True</property>
                         <property name="use_underline">True</property>
                         <property name="use_stock">True</property>
-                        <accelerator key="plus" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                         <accelerator key="KP_Add" signal="activate" modifiers="GDK_CONTROL_MASK"/>
+                        <accelerator key="plus" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                       </widget>
                     </child>
                     <child>
@@ -854,8 +861,8 @@
                         <property name="visible">True</property>
                         <property name="use_underline">True</property>
                         <property name="use_stock">True</property>
-                        <accelerator key="KP_Subtract" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                         <accelerator key="minus" signal="activate" modifiers="GDK_CONTROL_MASK"/>
+                        <accelerator key="KP_Subtract" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                       </widget>
                     </child>
                     <child>
@@ -1043,7 +1050,20 @@
                       <placeholder/>
                     </child>
                     <child>
-                      <placeholder/>
+                      <widget class="GtkToolButton" id="btCenterPage">
+                        <property name="visible">True</property>
+                        <property name="label" translatable="yes">Center current page</property>
+                        <property name="use_underline">True</property>
+                        <property name="icon">pixmaps/centerPage.svg</property>
+                      </widget>
+                      <packing>
+                        <property name="left_attach">2</property>
+                        <property name="right_attach">3</property>
+                        <property name="top_attach">1</property>
+                        <property name="bottom_attach">2</property>
+                        <property name="x_options">GTK_FILL</property>
+                        <property name="y_options">GTK_FILL</property>
+                      </packing>
                     </child>
                   </widget>
                   <packing>

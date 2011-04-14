@@ -32,6 +32,8 @@ static gboolean gtk_xournal_key_press_event(GtkWidget * widget, GdkEventKey * ev
 static gboolean gtk_xournal_key_release_event(GtkWidget * widget, GdkEventKey * event);
 gboolean gtk_xournal_scroll_event(GtkWidget * widget, GdkEventScroll * event);
 static void gtk_xournal_scroll_mouse_event(GtkXournal * xournal, GdkEventMotion * event);
+static void gtk_xournal_bt_center_page_cb(GtkButton * button, GtkXournal * xoj);
+
 
 GtkType gtk_xournal_get_type(void) {
 	static GtkType gtk_xournal_type = 0;
@@ -51,7 +53,7 @@ GtkType gtk_xournal_get_type(void) {
 	return gtk_xournal_type;
 }
 
-GtkWidget * gtk_xournal_new(XournalView * view, GtkRange * hrange, GtkRange * vrange) {
+GtkWidget * gtk_xournal_new(XournalView * view, GtkRange * hrange, GtkWidget * btCenterPage, GtkRange * vrange) {
 	GtkXournal * xoj = GTK_XOURNAL(gtk_type_new(gtk_xournal_get_type()));
 	xoj->view = view;
 	xoj->scrollX = 0;
@@ -62,6 +64,7 @@ GtkWidget * gtk_xournal_new(XournalView * view, GtkRange * hrange, GtkRange * vr
 	xoj->height = 10;
 	xoj->lastWidgetSize = 0;
 	xoj->hrange = hrange;
+	xoj->btCenterPage = btCenterPage;
 	xoj->vrange = vrange;
 	xoj->hadj = hrange->adjustment;
 	xoj->vadj = vrange->adjustment;
@@ -81,7 +84,19 @@ GtkWidget * gtk_xournal_new(XournalView * view, GtkRange * hrange, GtkRange * vr
 
 	gtk_xournal_connect_scrollbars(xoj);
 
+	g_signal_connect(btCenterPage, "clicked", G_CALLBACK(gtk_xournal_bt_center_page_cb), xoj);
+
 	return GTK_WIDGET(xoj);
+}
+
+void gtk_xournal_bt_center_page_cb(GtkButton * button, GtkXournal * xoj) {
+	g_return_if_fail(GTK_IS_XOURNAL(xoj));
+
+	int page = xoj->view->getCurrentPage();
+	PageView * v = xoj->view->getViewFor(page);
+
+	int vPos = v->getX() - (GTK_WIDGET(xoj)->allocation.width - v->getDisplayWidth()) / 2;
+	gtk_adjustment_set_value(xoj->hadj, vPos);
 }
 
 GtkAdjustment * gtk_xournal_get_hadj(GtkWidget * widget) {
@@ -142,7 +157,10 @@ void gtk_xournal_set_size(GtkWidget * widget, int width, int height) {
 	gtk_adjustment_set_upper(xournal->vadj, height);
 
 	gtk_widget_set_visible(GTK_WIDGET(xournal->vrange), widget->allocation.height < xournal->height);
-	gtk_widget_set_visible(GTK_WIDGET(xournal->hrange), widget->allocation.width < xournal->width);
+
+	bool showHorizontalScrollbar = widget->allocation.width < xournal->width;
+	gtk_widget_set_visible(GTK_WIDGET(xournal->hrange), showHorizontalScrollbar);
+	gtk_widget_set_visible(xournal->btCenterPage, showHorizontalScrollbar);
 }
 
 static void gtk_xournal_class_init(GtkXournalClass * klass) {

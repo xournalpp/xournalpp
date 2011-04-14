@@ -2,9 +2,9 @@
 <glade-interface>
   <!-- interface-requires gtk+ 2.16 -->
   <!-- interface-naming-policy project-wide -->
-  <widget class="GtkDialog" id="DialogEditToolbar">
+  <widget class="GtkDialog" id="DialogManageToolbar">
     <property name="border_width">5</property>
-    <property name="title" translatable="yes">Edit Toolbar</property>
+    <property name="title" translatable="yes">Manage Toolbar</property>
     <property name="icon">pixmaps/xournalpp.svg</property>
     <property name="type_hint">normal</property>
     <property name="has_separator">False</property>

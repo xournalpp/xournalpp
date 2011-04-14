@@ -54,6 +54,7 @@ struct _GtkXournal {
 	GtkAdjustment * vadj;
 	GtkRange * hrange;
 	GtkRange * vrange;
+	GtkWidget * btCenterPage;
 
 	PageView * currentInputPage;
 	PagePositionCache * pagePositionCache;
@@ -78,7 +79,7 @@ struct _GtkXournalClass {
 };
 
 GtkType gtk_xournal_get_type(void);
-GtkWidget * gtk_xournal_new(XournalView * view, GtkRange * hrange, GtkRange * vrange);
+GtkWidget * gtk_xournal_new(XournalView * view, GtkRange * hrange, GtkWidget * btCenterPage, GtkRange * vrange);
 
 void gtk_xournal_update_xevent(GtkWidget * widget);
 void gtk_xournal_set_size(GtkWidget * widget, int width, int height);

@@ -34,7 +34,6 @@ private:
 
 private:
 	void runScriptInt(String path, String function, String parameter);
-	void addPath(String path, String & cmd);
 
 	void initPython();
 

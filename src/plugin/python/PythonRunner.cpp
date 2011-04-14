@@ -118,15 +118,6 @@ bool PythonRunner::scriptRunner(PythonRunner * runner) {
 	return callAgain;
 }
 
-void PythonRunner::addPath(String path, String & cmd) {
-	XOJ_CHECK_TYPE(PythonRunner);
-
-	path = path.replace("\"", "\\\"");
-	cmd += "sys.path.append(\"";
-	cmd += path;
-	cmd += "\")\n";
-}
-
 void PythonRunner::initPython() {
 	XOJ_CHECK_TYPE(PythonRunner);
 
@@ -141,28 +132,25 @@ void PythonRunner::initPython() {
 
 	char buffer[512] = { 0 };
 	const char * path = getcwd(buffer, sizeof(buffer));
+	g_return_if_fail(path != NULL);
 
-	//TODO: PYTHONPATH
-//	PuObject *my_module = PyImport_ImportModule("MyModule");
-//	PyObject *my_class = PyObject_GetAttrString(my_module, "MyClass");
-//	if (!my_class)
-//	return;
-//	PyObject *instance = PyInstance_New(my_class, NULL, NULL); // retuns NULL
+	PyObject * sysModule = PyImport_ImportModule("sys");
+	g_return_if_fail(sysModule != NULL);
+	PyObject * pathObject = PyObject_GetAttrString(sysModule, "path");
+	g_return_if_fail(pathObject != NULL);
 
+	String p = path;
+	p += "/../testing";
+	PyObject * ret = PyObject_CallMethod(pathObject, "append", "s", p.c_str());
+	Py_DecRef(ret);
 
-	String cmd = "import sys\n";
+	p = path;
+	p += "/testing";
+	ret = PyObject_CallMethod(pathObject, "append", "s", p.c_str());
+	Py_DecRef(ret);
 
-	if (path != NULL) {
-		String p = path;
-		p += "/../testing";
-		addPath(p, cmd);
-
-		p = path;
-		p += "/testing";
-		addPath(p, cmd);
-	}
-
-	PyRun_SimpleString(cmd.c_str());
+	Py_DecRef(pathObject);
+	Py_DecRef(sysModule);
 }
 
 void PythonRunner::runScriptInt(String path, String function, String parameter) {
