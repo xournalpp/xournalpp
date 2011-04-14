@@ -2,6 +2,7 @@
 pixmapdir = $(datadir)/xournalpp/ui/pixmaps
 pixmap_DATA = \
 	addPage.svg \
+	centerPage.svg \
 	default.png \
 	documentNew.png \
 	empty.png \

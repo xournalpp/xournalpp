@@ -465,6 +465,7 @@ void ToolMenuHandler::initToolItems() {
 
 	registerMenupoint(gui->get("menuToolsTextFont"), ACTION_SELECT_FONT);
 
+	registerMenupoint(gui->get("menuViewToolbarManage"), ACTION_MANAGE_TOOLBAR);
 	registerMenupoint(gui->get("menuViewToolbarCustomize"), ACTION_CUSTOMIZE_TOOLBAR);
 
 	// Menu Help

@@ -93,6 +93,7 @@ public:
 	void calcZoomFitSize();
 	void setViewTwoPages(bool continous);
 	void setPageInsertType(PageInsertType type);
+	void manageToolbars();
 	void customizeToolbars();
 	void enableFullscreen(bool enabled, bool presentation = false);
 

@@ -7,7 +7,8 @@
 #include "../gui/dialog/ImagesDialog.h"
 #include "../gui/dialog/FormatDialog.h"
 #include "../gui/dialog/SelectBackgroundColorDialog.h"
-#include "../gui/dialog/ToolbarDialog.h"
+#include "../gui/dialog/ToolbarCustomizeDialog.h"
+#include "../gui/dialog/ToolbarManageDialog.h"
 #include "../cfg.h"
 #include "LoadHandler.h"
 #include "PrintHandler.h"
@@ -730,9 +731,13 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent *even
 	}
 		break;
 
-	case ACTION_CUSTOMIZE_TOOLBAR:
-		customizeToolbars();
+	case ACTION_MANAGE_TOOLBAR:
+		manageToolbars();
 		break;
+	case ACTION_CUSTOMIZE_TOOLBAR:
+		manageToolbars();
+		break;
+
 
 	case ACTION_FULLSCREEN:
 		enableFullscreen(enabled);
@@ -823,16 +828,27 @@ void Control::firePageSelected(int page) {
 	DocumentHandler::firePageSelected(page);
 }
 
-void Control::customizeToolbars() {
+void Control::manageToolbars() {
 	XOJ_CHECK_TYPE(Control);
 
-	//	ToolbarDialog dlg(this->gladeSearchPath, win->getToolbarModel());
-	//	dlg.show();
+	ToolbarManageDialog dlg(this->gladeSearchPath, win->getToolbarModel());
+	dlg.show();
 
 	printf("Not implemented yet\n");
 
 	// TODO: Debug
 	//win->updateToolbarMenu();
+}
+
+void Control::customizeToolbars() {
+	XOJ_CHECK_TYPE(Control);
+
+	ToolbarCustomizeDialog dlg(this->gladeSearchPath, win->getToolbarModel());
+	dlg.show();
+
+
+
+	printf("Not implemented yet\n");
 }
 
 void Control::setRulerEnabled(bool enabled) {
@@ -2261,7 +2277,6 @@ void Control::clipboardPasteImage(GdkPixbuf * img) {
 
 	image->setWidth(width);
 	image->setHeight(height);
-
 
 	clipboardPaste(image);
 }
