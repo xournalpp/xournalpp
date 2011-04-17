@@ -58,6 +58,7 @@ public:
 
 	GtkWidget * getSpinPageNo();
 	ToolbarModel * getToolbarModel();
+	ToolMenuHandler * getToolMenuHandler();
 
 	void setControlTmpDisabled(bool disabled);
 

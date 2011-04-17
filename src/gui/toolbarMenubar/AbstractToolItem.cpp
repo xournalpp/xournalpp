@@ -13,10 +13,10 @@ AbstractToolItem::~AbstractToolItem() {
 	XOJ_CHECK_TYPE(AbstractToolItem);
 
 	if (this->item) {
-		gtk_object_unref(GTK_OBJECT(this->item));
+		g_object_unref(GTK_OBJECT(this->item));
 	}
 	if (this->popupMenu) {
-		gtk_object_unref(GTK_OBJECT(this->popupMenu));
+		g_object_unref(GTK_OBJECT(this->popupMenu));
 	}
 
 	XOJ_RELEASE_TYPE(AbstractToolItem);
@@ -58,7 +58,6 @@ GtkToolItem * AbstractToolItem::createItem(bool horizontal) {
 	if (GTK_IS_TOOL_BUTTON(this->item) || GTK_IS_TOGGLE_TOOL_BUTTON(this->item)) {
 		g_signal_connect(this->item, "clicked", G_CALLBACK(&toolButtonCallback), this);
 	}
-	gtk_object_ref(GTK_OBJECT(this->item));
 	return this->item;
 }
 

@@ -319,7 +319,7 @@ void ToolMenuHandler::initToolItems() {
 	addToolItem(new ToolButton(listener, gui, "FULLSCREEN", ACTION_FULLSCREEN, GROUP_FULLSCREEN, "fullscreen.png", _("Toggle fullscreen"), gui->get(
 			"menuViewFullScreen")));
 
-	addToolItem(new ColorToolItem("COLOR_SELECT", listener, toolHandler, 0xff0000, "", true));
+	addToolItem(new ColorToolItem("COLOR_SELECT", listener, toolHandler, 0xff0000, _("Select color"), true));
 
 	addToolItem(new ToolButton(listener, gui, "PEN", ACTION_TOOL_PEN, GROUP_TOOL, "tool_pencil.png", _("Pen"), gui->get("menuToolsPen")));
 
@@ -405,7 +405,7 @@ void ToolMenuHandler::initToolItems() {
 	addToolItem(fontButton);
 
 	// Footer tools
-	toolPageSpinner = new ToolPageSpinner(listener, "PAGE_SPIN", ACTION_FOOTER_PAGESPIN);
+	toolPageSpinner = new ToolPageSpinner(gui, listener, "PAGE_SPIN", ACTION_FOOTER_PAGESPIN);
 	addToolItem(toolPageSpinner);
 
 	ToolZoomSlider * toolZoomSlider = new ToolZoomSlider(listener, "ZOOM_SLIDER", ACTION_FOOTER_ZOOM_SLIDER, zoom);
@@ -414,7 +414,7 @@ void ToolMenuHandler::initToolItems() {
 	addToolItem(new ToolButton(listener, gui, "TWO_PAGES", ACTION_VIEW_TWO_PAGES, GROUP_TWOPAGES, "showtwopages.png", _("Two pages"), gui->get(
 			"menuViewTwoPages")));
 
-	toolPageLayer = new ToolPageLayer(listener, "LAYER", ACTION_FOOTER_LAYER);
+	toolPageLayer = new ToolPageLayer(gui, listener, "LAYER", ACTION_FOOTER_LAYER);
 	addToolItem(toolPageLayer);
 
 	registerMenupoint(gui->get("menuEditSettings"), ACTION_SETTINGS);
@@ -529,4 +529,9 @@ ToolbarModel * ToolMenuHandler::getModel() {
 
 	return this->tbModel;
 }
+
+ListIterator<AbstractToolItem *> ToolMenuHandler::getToolItems() {
+	return ListIterator<AbstractToolItem *>(this->toolItems);
+}
+
 

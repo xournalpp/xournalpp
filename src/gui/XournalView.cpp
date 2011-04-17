@@ -19,14 +19,14 @@
 
 #include <gdk/gdkkeysyms.h>
 
-XournalView::XournalView(GtkWidget * parent, GtkRange * hrange, GtkWidget * btCenterPage, GtkRange * vrange, Control * control) {
+XournalView::XournalView(GtkWidget * parent, GtkRange * hrange, GtkRange * vrange, Control * control) {
 	XOJ_INIT_TYPE(XournalView);
 
 	this->control = control;
 	this->cache = new PdfCache(control->getSettings()->getPdfPageCacheSize());
 	registerListener(control);
 
-	this->widget = gtk_xournal_new(this, hrange, btCenterPage, vrange);
+	this->widget = gtk_xournal_new(this, hrange, vrange);
 
 	// we need to refer widget here, because wo unref it somwere twice!?
 	g_object_ref(this->widget);

@@ -21,6 +21,10 @@ ColorToolItem::ColorToolItem(String id, ActionHandler * handler, ToolHandler * t
 
 ColorToolItem::~ColorToolItem() {
 	XOJ_RELEASE_TYPE(ColorToolItem);
+
+	if (this->iconWidget) {
+		g_object_ref(this->iconWidget);
+	}
 }
 
 void ColorToolItem::actionSelected(ActionGroup group, ActionType action) {
@@ -69,7 +73,7 @@ void ColorToolItem::selectColor() {
 
 	GdkColor color = { 0 };
 
-	GtkWidget* cw = gtk_color_selection_dialog_get_color_selection(GTK_COLOR_SELECTION_DIALOG(colorDlg));
+	GtkWidget * cw = gtk_color_selection_dialog_get_color_selection(GTK_COLOR_SELECTION_DIALOG(this->colorDlg));
 	gtk_color_selection_get_current_color(GTK_COLOR_SELECTION(cw), &color);
 
 	this->color = Util::gdkColorToInt(color);
@@ -105,18 +109,18 @@ void ColorToolItem::activated(GdkEvent *event, GtkMenuItem *menuitem, GtkToolBut
 	inUpdate = true;
 
 	if (selector) {
-		colorDlg = gtk_color_selection_dialog_new(_("Select color"));
-		g_signal_connect(G_OBJECT(GTK_COLOR_SELECTION_DIALOG(colorDlg)->ok_button), "clicked", G_CALLBACK(&customColorSelected), this);
+		this->colorDlg = gtk_color_selection_dialog_new(_("Select color"));
+		g_signal_connect(G_OBJECT(GTK_COLOR_SELECTION_DIALOG(this->colorDlg)->ok_button), "clicked", G_CALLBACK(&customColorSelected), this);
 
 		GdkColor color = Util::intToGdkColor(this->color);
 
-		GtkWidget* cw = gtk_color_selection_dialog_get_color_selection(GTK_COLOR_SELECTION_DIALOG(colorDlg));
+		GtkWidget* cw = gtk_color_selection_dialog_get_color_selection(GTK_COLOR_SELECTION_DIALOG(this->colorDlg));
 		gtk_color_selection_set_current_color(GTK_COLOR_SELECTION(cw), &color);
 
-		gtk_dialog_run(GTK_DIALOG(colorDlg));
+		gtk_dialog_run(GTK_DIALOG(this->colorDlg));
 
-		gtk_widget_destroy(colorDlg);
-		colorDlg = NULL;
+		gtk_widget_destroy(this->colorDlg);
+		this->colorDlg = NULL;
 	}
 
 	toolHandler->setColor(color);
@@ -124,16 +128,47 @@ void ColorToolItem::activated(GdkEvent *event, GtkMenuItem *menuitem, GtkToolBut
 	inUpdate = false;
 }
 
+
+// TODO: low prio: add history
+//static void
+//change_color_callback (GtkWidget *button,
+//		       gpointer	  data)
+//{
+//  GtkWidget *dialog;
+//  GtkColorSelection *colorsel;
+//  gint response;
+//
+//  dialog = gtk_color_selection_dialog_new ("Changing color");
+//
+//  gtk_window_set_transient_for (GTK_WINDOW (dialog), GTK_WINDOW (window));
+//
+//  colorsel = GTK_COLOR_SELECTION (GTK_COLOR_SELECTION_DIALOG (dialog)->colorsel);
+//
+//  gtk_color_selection_set_previous_color (colorsel, &color);
+//  gtk_color_selection_set_current_color (colorsel, &color);
+//  gtk_color_selection_set_has_palette (colorsel, TRUE);
+//
+//  response = gtk_dialog_run (GTK_DIALOG (dialog));
+//
+//  if (response == GTK_RESPONSE_OK)
+//    {
+//      gtk_color_selection_get_current_color (colorsel,
+//					     &color);
+//
+//      gtk_widget_modify_bg (da, GTK_STATE_NORMAL, &color);
+//    }
+//
+//  gtk_widget_destroy (dialog);
+//}
+
 GtkToolItem * ColorToolItem::newItem() {
 	XOJ_CHECK_TYPE(ColorToolItem);
 
 	this->iconWidget = selectcolor_new(color);
+
 	selectcolor_set_circle(this->iconWidget, !this->selector);
 	GtkToolItem * it = gtk_toggle_tool_button_new();
 
-	if (this->selector) {
-		this->name = _("Select color");
-	}
 	gtk_tool_item_set_tooltip_text(GTK_TOOL_ITEM(it), this->name.c_str());
 	gtk_tool_button_set_label(GTK_TOOL_BUTTON(it), this->name.c_str());
 
@@ -147,3 +182,19 @@ void ColorToolItem::customColorSelected(GtkWidget * button, ColorToolItem * item
 
 	item->selectColor();
 }
+
+String ColorToolItem::getToolDisplayName() {
+	XOJ_CHECK_TYPE(ColorToolItem);
+
+	return this->name;
+}
+
+GtkWidget * ColorToolItem::getNewToolIcon() {
+	XOJ_CHECK_TYPE(ColorToolItem);
+
+	GtkWidget * iconWidget = selectcolor_new(color);
+	selectcolor_set_circle(iconWidget, !this->selector);
+
+	return iconWidget;
+}
+

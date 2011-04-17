@@ -88,6 +88,12 @@ GtkWidget * GladeGui::getWindow() {
 	return this->window;
 }
 
+GladeSearchpath * GladeGui::getGladeSearchPath() {
+	XOJ_CHECK_TYPE(GladeGui);
+
+	return this->gladeSearchPath;
+}
+
 GladeGui::operator GdkWindow *() {
 	XOJ_CHECK_TYPE(GladeGui);
 

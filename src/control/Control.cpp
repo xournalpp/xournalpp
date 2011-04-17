@@ -735,7 +735,7 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent *even
 		manageToolbars();
 		break;
 	case ACTION_CUSTOMIZE_TOOLBAR:
-		manageToolbars();
+		customizeToolbars();
 		break;
 
 
@@ -843,7 +843,9 @@ void Control::manageToolbars() {
 void Control::customizeToolbars() {
 	XOJ_CHECK_TYPE(Control);
 
-	ToolbarCustomizeDialog dlg(this->gladeSearchPath, win->getToolbarModel());
+	g_return_if_fail(this->win != NULL);
+
+	ToolbarCustomizeDialog dlg(this->gladeSearchPath, win);
 	dlg.show();
 
 

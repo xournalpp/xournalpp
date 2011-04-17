@@ -15,9 +15,11 @@
 #include "AbstractToolItem.h"
 #include "../../util/XournalType.h"
 
+class GladeGui;
+
 class ToolPageLayer: public AbstractToolItem {
 public:
-	ToolPageLayer(ActionHandler * handler, String id, ActionType type);
+	ToolPageLayer(GladeGui * gui, ActionHandler * handler, String id, ActionType type);
 	virtual ~ToolPageLayer();
 
 public:
@@ -26,6 +28,8 @@ public:
 	int getSelectedLayer();
 	void setSelectedLayer(int selected);
 	void setLayerCount(int layer, int selected);
+	virtual String getToolDisplayName();
+	virtual GtkWidget * getNewToolIcon();
 
 protected:
 	virtual GtkToolItem * newItem();
@@ -34,6 +38,7 @@ private:
 	XOJ_TYPE_ATTRIB;
 
 	GtkWidget * layerComboBox;
+	GladeGui * gui;
 
 	int layerCount;
 	bool inCbUpdate;

@@ -16,6 +16,7 @@
 
 #include "../../control/Actions.h"
 #include "../../util/String.h"
+#include "../../util/ListIterator.h"
 
 
 class AbstractToolItem;
@@ -62,6 +63,8 @@ public:
 	void setTmpDisabled(bool disabled);
 
 	ToolbarModel * getModel();
+
+	ListIterator<AbstractToolItem *> getToolItems();
 
 private:
 	void addToolItem(AbstractToolItem * it);

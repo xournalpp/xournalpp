@@ -28,6 +28,9 @@ public:
 	bool colorEqualsMoreOreLess(int color);
 	virtual void activated(GdkEvent * event, GtkMenuItem * menuitem, GtkToolButton * toolbutton);
 
+	virtual String getToolDisplayName();
+	virtual GtkWidget * getNewToolIcon();
+
 protected:
 	virtual GtkToolItem * newItem();
 	static void customColorSelected(GtkWidget * button, ColorToolItem * item);

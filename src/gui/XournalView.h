@@ -34,7 +34,7 @@ class EditSelection;
 
 class XournalView: public DocumentListener, public ZoomListener {
 public:
-	XournalView(GtkWidget * parent, GtkRange * hrange, GtkWidget * btCenterPage, GtkRange * vrange, Control * control);
+	XournalView(GtkWidget * parent, GtkRange * hrange, GtkRange * vrange, Control * control);
 	virtual ~XournalView();
 
 public:
