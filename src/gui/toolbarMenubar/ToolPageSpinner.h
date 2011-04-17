@@ -15,20 +15,26 @@
 #include "AbstractToolItem.h"
 #include "../../util/XournalType.h"
 
+class GladeGui;
+
 class ToolPageSpinner: public AbstractToolItem {
 public:
-	ToolPageSpinner(ActionHandler * handler, String id, ActionType type);
+	ToolPageSpinner(GladeGui * gui, ActionHandler * handler, String id, ActionType type);
 	virtual ~ToolPageSpinner();
 
 public:
 	GtkWidget * getPageSpinner();
 	void setText(String text);
+	virtual String getToolDisplayName();
+	virtual GtkWidget * getNewToolIcon();
 
 protected:
 	virtual GtkToolItem * newItem();
 
 private:
 	XOJ_TYPE_ATTRIB;
+
+	GladeGui * gui;
 
 	GtkWidget * pageSpinner;
 	GtkWidget * lbPageNo;

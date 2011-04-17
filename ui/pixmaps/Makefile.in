@@ -225,9 +225,11 @@ pixmap_DATA = \
 	fullscreen.png \
 	hand.png \
 	lasso.png \
+	layers.png \
 	nextAnnotatedPage.png \
 	object-select.png \
 	rect-select.png \
+	pageSpinner.png \
 	ruler.png \
 	shape_recognizer.png \
 	showtwopages.png \

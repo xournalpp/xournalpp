@@ -25,6 +25,8 @@ public:
 	static void sliderChanged(GtkRange *range, ZoomControl * zoom);
 	virtual void zoomChanged(double lastZoom);
 	virtual void zoomRangeValuesChanged();
+	virtual String getToolDisplayName();
+	virtual GtkWidget * getNewToolIcon();
 
 	// Should be called when the window size changes
 	void updateScaleMarks();

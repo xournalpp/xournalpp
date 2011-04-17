@@ -1,5 +1,8 @@
 #include "ToolZoomSlider.h"
 
+#include <config.h>
+#include <glib/gi18n-lib.h>
+
 ToolZoomSlider::ToolZoomSlider(ActionHandler * handler, String id, ActionType type, ZoomControl * zoom) :
 	AbstractToolItem(id, handler, type, NULL) {
 	XOJ_INIT_TYPE(ToolZoomSlider);
@@ -31,6 +34,18 @@ void ToolZoomSlider::zoomRangeValuesChanged() {
 	XOJ_CHECK_TYPE(ToolZoomSlider);
 
 	updateScaleMarks();
+}
+
+String ToolZoomSlider::getToolDisplayName() {
+	XOJ_CHECK_TYPE(ToolZoomSlider);
+
+	return _("Zoom slider");
+}
+
+GtkWidget * ToolZoomSlider::getNewToolIcon() {
+	XOJ_CHECK_TYPE(ToolZoomSlider);
+
+	return gtk_image_new_from_stock(GTK_STOCK_ZOOM_IN, GTK_ICON_SIZE_SMALL_TOOLBAR);
 }
 
 // Should be called when the window size changes

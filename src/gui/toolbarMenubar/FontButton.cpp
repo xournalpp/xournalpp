@@ -2,6 +2,9 @@
 
 #include <stdlib.h>
 
+#include <config.h>
+#include <glib/gi18n-lib.h>
+
 FontButton::FontButton(ActionHandler * handler, GladeGui * gui, String id, ActionType type, String description, GtkWidget * menuitem) :
 	AbstractToolItem(id, handler, type, menuitem) {
 	XOJ_INIT_TYPE(FontButton);
@@ -50,6 +53,18 @@ XojFont FontButton::getFont() {
 	XOJ_CHECK_TYPE(FontButton);
 
 	return font;
+}
+
+String FontButton::getToolDisplayName() {
+	XOJ_CHECK_TYPE(FontButton);
+
+	return _("Font");
+}
+
+GtkWidget * FontButton::getNewToolIcon() {
+	XOJ_CHECK_TYPE(FontButton);
+
+	return gtk_image_new_from_stock(GTK_STOCK_SELECT_FONT, GTK_ICON_SIZE_SMALL_TOOLBAR);
 }
 
 GtkToolItem * FontButton::createItem(bool horizontal) {

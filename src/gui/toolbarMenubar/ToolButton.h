@@ -26,6 +26,8 @@ public:
 
 public:
 	void updateDescription(String description);
+	virtual String getToolDisplayName();
+	virtual GtkWidget * getNewToolIcon();
 
 protected:
 	virtual GtkToolItem * newItem();

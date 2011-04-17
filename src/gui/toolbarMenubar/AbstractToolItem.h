@@ -19,14 +19,19 @@ public:
 	AbstractToolItem(String id, ActionHandler * handler, ActionType type, GtkWidget * menuitem = NULL);
 	virtual ~AbstractToolItem();
 
+public:
 	virtual void selected(ActionGroup group, ActionType action);
-	static void toolButtonCallback(GtkToolButton *toolbutton, AbstractToolItem * item);
 	virtual GtkToolItem * createItem(bool horizontal);
 	void setPopupMenu(GtkWidget * popupMenu);
 	GtkWidget * getPopupMenu();
 
 	bool isUsed();
 	void setUsed(bool used);
+
+	static void toolButtonCallback(GtkToolButton *toolbutton, AbstractToolItem * item);
+
+	virtual String getToolDisplayName() = 0;
+	virtual GtkWidget * getNewToolIcon() = 0;
 
 protected:
 	virtual GtkToolItem * newItem() = 0;

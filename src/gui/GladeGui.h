@@ -34,6 +34,7 @@ public:
 	GdkPixbuf * loadIconPixbuf(const char * filename);
 
 	GtkWidget * getWindow();
+	GladeSearchpath * getGladeSearchPath();
 
 private:
 	XOJ_TYPE_ATTRIB;

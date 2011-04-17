@@ -1,7 +1,6 @@
 #include "Tool.h"
 
-Tool::Tool(String name, ToolType type, int color, bool enableColor, bool enableSize, bool enableRuler,
-		bool enableShapreRecognizer, double * thikness) {
+Tool::Tool(String name, ToolType type, int color, bool enableColor, bool enableSize, bool enableRuler, bool enableShapreRecognizer, double * thikness) {
 
 	XOJ_INIT_TYPE(Tool);
 
@@ -129,6 +128,8 @@ String toolTypeToString(ToolType type) {
 		return "selectObject";
 	case TOOL_VERTICAL_SPACE:
 		return "verticalSpace";
+	case TOOL_HAND:
+		return "hand";
 	}
 	return "";
 }
@@ -152,7 +153,10 @@ ToolType toolTypeFromString(String type) {
 		return TOOL_SELECT_OBJECT;
 	} else if (type == "verticalSpace") {
 		return TOOL_VERTICAL_SPACE;
+	} else if (type == "hand") {
+		return TOOL_HAND;
 	}
+
 	return TOOL_NONE;
 }
 

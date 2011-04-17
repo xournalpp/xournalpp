@@ -26,6 +26,8 @@ public:
 	virtual void activated(GdkEvent * event, GtkMenuItem * menuitem, GtkToolButton * toolbutton);
 	void setFont(XojFont & font);
 	XojFont getFont();
+	virtual String getToolDisplayName();
+	virtual GtkWidget * getNewToolIcon();
 
 protected:
 	virtual GtkToolItem * createItem(bool horizontal);

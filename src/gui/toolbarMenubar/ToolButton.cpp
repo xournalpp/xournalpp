@@ -58,22 +58,39 @@ GtkToolItem * ToolButton::newItem() {
 		}
 	} else if (group != GROUP_NOGROUP) {
 		if (popupMenu) {
-			it = gtk_menu_tool_toggle_button_new(gui->loadIcon(iconName.c_str()), description.c_str());
+			it = gtk_menu_tool_toggle_button_new(this->gui->loadIcon(iconName.c_str()), description.c_str());
 			gtk_menu_tool_toggle_button_set_menu(GTK_MENU_TOOL_TOGGLE_BUTTON(it), popupMenu);
 		} else {
 			it = gtk_toggle_tool_button_new();
-			gtk_tool_button_set_icon_widget(GTK_TOOL_BUTTON(it), gui->loadIcon(iconName.c_str()));
+			gtk_tool_button_set_icon_widget(GTK_TOOL_BUTTON(it), this->gui->loadIcon(iconName.c_str()));
 		}
 	} else {
 		if (popupMenu) {
-			it = gtk_menu_tool_button_new(gui->loadIcon(iconName.c_str()), description.c_str());
+			it = gtk_menu_tool_button_new(this->gui->loadIcon(iconName.c_str()), description.c_str());
 			gtk_menu_tool_button_set_menu(GTK_MENU_TOOL_BUTTON(it), popupMenu);
 		} else {
-			it = gtk_tool_button_new(gui->loadIcon(iconName.c_str()), description.c_str());
+			it = gtk_tool_button_new(this->gui->loadIcon(iconName.c_str()), description.c_str());
 		}
 	}
 	gtk_tool_item_set_tooltip_text(GTK_TOOL_ITEM(it), description.c_str());
 	gtk_tool_button_set_label(GTK_TOOL_BUTTON(it), description.c_str());
 
 	return it;
+}
+
+String ToolButton::getToolDisplayName() {
+	XOJ_CHECK_TYPE(ToolButton);
+
+	return this->description;
+}
+
+GtkWidget * ToolButton::getNewToolIcon() {
+	XOJ_CHECK_TYPE(ToolButton);
+
+	if (!stock.isEmpty()) {
+		return gtk_image_new_from_stock(stock.c_str(), GTK_ICON_SIZE_SMALL_TOOLBAR);
+	} else if (this->gui != NULL) {
+		return this->gui->loadIcon(iconName.c_str());
+	}
+	return NULL;
 }

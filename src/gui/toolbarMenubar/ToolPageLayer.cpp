@@ -1,8 +1,11 @@
 #include "ToolPageLayer.h"
+
+#include "../GladeGui.h"
+
 #include <config.h>
 #include <glib/gi18n-lib.h>
 
-ToolPageLayer::ToolPageLayer(ActionHandler * handler, String id, ActionType type) :
+ToolPageLayer::ToolPageLayer(GladeGui * gui, ActionHandler * handler, String id, ActionType type) :
 	AbstractToolItem(id, handler, type, NULL) {
 
 	XOJ_INIT_TYPE(ToolPageLayer);
@@ -10,6 +13,7 @@ ToolPageLayer::ToolPageLayer(ActionHandler * handler, String id, ActionType type
 	this->layerComboBox = gtk_combo_box_new_text();
 	this->layerCount = -5;
 	this->inCbUpdate = false;
+	this->gui = gui;
 
 	g_signal_connect(this->layerComboBox, "changed", G_CALLBACK(&cbSelectCallback), this);
 }
@@ -72,6 +76,18 @@ void ToolPageLayer::setLayerCount(int layer, int selected) {
 
 	this->layerCount = layer;
 	this->inCbUpdate = false;
+}
+
+String ToolPageLayer::getToolDisplayName() {
+	XOJ_CHECK_TYPE(ToolPageLayer);
+
+	return _("Layer selection");
+}
+
+GtkWidget * ToolPageLayer::getNewToolIcon() {
+	XOJ_CHECK_TYPE(ToolPageLayer);
+
+	return gui->loadIcon("layers.png");
 }
 
 GtkToolItem * ToolPageLayer::newItem() {
