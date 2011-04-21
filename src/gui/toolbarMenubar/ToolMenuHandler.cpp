@@ -221,7 +221,7 @@ void ToolMenuHandler::setTmpDisabled(bool disabled) {
 		MenuItem * it = (MenuItem *) l->data;
 		it->setTmpDisabled(disabled);
 	}
-	for (GList * l = toolbarColorItems; l != NULL; l = l->next) {
+	for (GList * l = this->toolbarColorItems; l != NULL; l = l->next) {
 		ColorToolItem * it = (ColorToolItem *) l->data;
 		it->setTmpDisabled(disabled);
 	}

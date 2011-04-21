@@ -16,9 +16,17 @@ typedef struct {
 	bool horizontal;
 } ToolbarEntryDefintion;
 
-const static ToolbarEntryDefintion TOOLBAR_DEFINITIONS[] = { { "tbTop1", "toolbarTop1", true }, { "tbTop2", "toolbarTop2", true }, { "tbLeft1", "toolbarLeft1",
-		false }, { "tbLeft2", "toolbarLeft2", false }, { "tbRight1", "toolbarRight1", false }, { "tbRight2", "toolbarRight2", false }, { "tbBottom1",
-		"toolbarBottom1", true }, { "tbBottom2", "toolbarBottom2", true } };
+
+const static ToolbarEntryDefintion TOOLBAR_DEFINITIONS[] = {
+	{ "tbTop1", "toolbarTop1", true },
+	{ "tbTop2", "toolbarTop2", true },
+	{ "tbLeft1", "toolbarLeft1", false },
+	{ "tbLeft2", "toolbarLeft2", false },
+	{ "tbRight1", "toolbarRight1", false },
+	{ "tbRight2", "toolbarRight2", false },
+	{ "tbBottom1", "toolbarBottom1", true },
+	{ "tbBottom2", "toolbarBottom2", true }
+};
 
 const static int TOOLBAR_DEFINITIONS_LEN = G_N_ELEMENTS(TOOLBAR_DEFINITIONS);
 
@@ -96,13 +104,21 @@ MainWindow::MainWindow(GladeSearchpath * gladeSearchPath, Control * control) :
 
 	updateScrollbarSidebarPosition();
 
-	gtk_window_set_default_size(GTK_WINDOW(window), control->getSettings()->getMainWndWidth(), control->getSettings()->getMainWndHeight());
+	gtk_window_set_default_size(GTK_WINDOW(this->window), control->getSettings()->getMainWndWidth(), control->getSettings()->getMainWndHeight());
 
 	if (control->getSettings()->isMainWndMaximized()) {
-		gtk_window_maximize(GTK_WINDOW(window));
+		gtk_window_maximize(GTK_WINDOW(this->window));
 	} else {
-		gtk_window_unmaximize(GTK_WINDOW(window));
+		gtk_window_unmaximize(GTK_WINDOW(this->window));
 	}
+
+	// Drag and Drop
+	g_signal_connect(this->window, "drag-data-received", G_CALLBACK(dragDataRecived), this);
+
+	gtk_drag_dest_set(this->window, GTK_DEST_DEFAULT_ALL, NULL, 0, GDK_ACTION_COPY);
+	gtk_drag_dest_add_uri_targets(this->window);
+	gtk_drag_dest_add_image_targets(this->window);
+	gtk_drag_dest_add_text_targets(this->window);
 }
 
 class MenuSelectToolbarData {
@@ -145,6 +161,106 @@ MainWindow::~MainWindow() {
 	this->toolbar = NULL;
 
 	XOJ_RELEASE_TYPE(MainWindow);
+}
+
+bool cancellable_cancel(GCancellable * cancel) {
+	g_cancellable_cancel(cancel);
+
+	g_warning("Timeout... Cancel loading URL");
+
+	return false;
+}
+
+void MainWindow::dragDataRecived(GtkWidget * widget, GdkDragContext * dragContext, gint x, gint y, GtkSelectionData * data,
+		guint info, guint time, MainWindow * win) {
+
+	GtkWidget * source = gtk_drag_get_source_widget(dragContext);
+	if (source && widget == gtk_widget_get_toplevel(source)) {
+		gtk_drag_finish(dragContext, false, false, time);
+		return;
+	}
+
+	guchar * text = gtk_selection_data_get_text(data);
+	if (text) {
+		win->control->clipboardPasteText((const char *) text);
+
+		g_free(text);
+		gtk_drag_finish(dragContext, true, false, time);
+		return;
+	}
+
+	GdkPixbuf * image = gtk_selection_data_get_pixbuf(data);
+	if (image) {
+		win->control->clipboardPasteImage(image);
+
+		gdk_pixbuf_unref(image);
+		gtk_drag_finish(dragContext, true, false, time);
+		return;
+	}
+
+	// TODO: LOW PRIO: use x and y for insert location!
+
+	gchar ** uris = gtk_selection_data_get_uris(data);
+	if (uris) {
+		for (int i = 0; uris[i] != NULL && i < 3; i++) {
+			const char * uri = uris[i];
+
+			// TODO LOW PRIO: check first if its an image
+//			GSList * imageFormats = gdk_pixbuf_get_formats();
+//			for(GSList * l = imageFormats; l != NULL; l = l->next) {
+//				GdkPixbufFormat * f = (GdkPixbufFormat *)l->data;
+//				printf("", f);
+//			}
+//
+//			g_slist_free(imageFormats);
+
+			GFile * file = g_file_new_for_uri(uri);
+			GError * err = NULL;
+			GCancellable * cancel = g_cancellable_new();
+
+			int cancelTimeout = g_timeout_add(3000, (GSourceFunc)cancellable_cancel, cancel);
+
+			GFileInputStream * in = g_file_read(file, cancel, &err);
+
+			if(g_cancellable_is_cancelled(cancel)) {
+				continue;
+			}
+
+			g_object_unref(file);
+			if (err == NULL) {
+				GdkPixbuf * pixbuf = gdk_pixbuf_new_from_stream(G_INPUT_STREAM(in), cancel, NULL);
+				if(g_cancellable_is_cancelled(cancel)) {
+					continue;
+				}
+				g_input_stream_close(G_INPUT_STREAM(in), cancel, NULL);
+				if(g_cancellable_is_cancelled(cancel)) {
+					continue;
+				}
+
+				if (pixbuf) {
+					win->control->clipboardPasteImage(pixbuf);
+
+					gdk_pixbuf_unref(pixbuf);
+				}
+			} else {
+				g_error_free(err);
+			}
+
+			if(!g_cancellable_is_cancelled(cancel)) {
+				g_source_remove(cancelTimeout);
+			}
+			g_object_unref(cancel);
+
+			//TODO:LOW PRIO: handle .xoj, .pdf and Images
+			printf("open uri: %s\n", uris[i]);
+		}
+
+		gtk_drag_finish(dragContext, true, false, time);
+
+		g_strfreev(uris);
+	}
+
+	gtk_drag_finish(dragContext, false, false, time);
 }
 
 void MainWindow::viewShowSidebar(GtkCheckMenuItem * checkmenuitem, MainWindow * win) {
@@ -304,8 +420,8 @@ void MainWindow::toolbarSelected(ToolbarData * d) {
 	settings->setSelectedToolbar(d->getId());
 
 	if (selectedToolbar != NULL) {
-		for (GList * l = NULL; l != NULL; l = l->next) {
-			this->toolbar->unloadToolbar((GtkWidget *) l->data);
+		for (int i = 0; i < TOOLBAR_DEFINITIONS_LEN; i++) {
+			this->toolbar->unloadToolbar(this->toolbarWidgets[i]);
 		}
 
 		this->toolbar->freeDynamicToolbarItems();
@@ -315,6 +431,11 @@ void MainWindow::toolbarSelected(ToolbarData * d) {
 	for (int i = 0; i < TOOLBAR_DEFINITIONS_LEN; i++) {
 		this->toolbar->load(d, this->toolbarWidgets[i], TOOLBAR_DEFINITIONS[i].propName, TOOLBAR_DEFINITIONS[i].horizontal);
 	}
+}
+
+GtkWidget ** MainWindow::getToolbarWidgets(int & length) {
+	length = TOOLBAR_DEFINITIONS_LEN;
+	return this->toolbarWidgets;
 }
 
 void MainWindow::startToolbarEditMode() {
@@ -344,7 +465,7 @@ void MainWindow::startToolbarEditMode() {
 void MainWindow::endToolbarEditMode() {
 	this->toolbar->endEditMode();
 
-	for(GList * l = this->toolbarSpacerItems; l != NULL; l = l->next) {
+	for (GList * l = this->toolbarSpacerItems; l != NULL; l = l->next) {
 		GtkWidget * w = GTK_WIDGET(l->data);
 		GtkWidget * parent = gtk_widget_get_parent(w);
 		gtk_container_remove(GTK_CONTAINER(parent), w);

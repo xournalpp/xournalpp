@@ -67,6 +67,8 @@ public:
 	void startToolbarEditMode();
 	void endToolbarEditMode();
 
+	GtkWidget ** getToolbarWidgets(int & length);
+
 private:
 	void initToolbarAndMenu();
 
@@ -87,6 +89,11 @@ private:
 	 * Callback fro window states, we ned to know if the window is fullscreen
 	 */
 	static bool windowStateEventCallback(GtkWidget * window, GdkEventWindowState * event, MainWindow * win);
+
+	/**
+	 * Callback for drag & drop files
+	 */
+	static void dragDataRecived(GtkWidget * widget, GdkDragContext * dragContext, gint x, gint y, GtkSelectionData * data, guint info, guint time, MainWindow * win);
 
 private:
 	XOJ_TYPE_ATTRIB;

@@ -30,6 +30,9 @@ public:
 
 	static int getPid();
 
+	static void fakeExposeWidget(GtkWidget * widget, GdkPixmap * pixmap);
+	static GdkPixbuf * newPixbufFromWidget(GtkWidget * widget);
+
 private:
 	static String getSettingsSubfolder(String subfolder);
 };
