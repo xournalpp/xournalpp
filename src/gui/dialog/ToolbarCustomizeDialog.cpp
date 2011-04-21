@@ -6,11 +6,10 @@
 #include "../../gui/toolbarMenubar/ToolMenuHandler.h"
 #include "../../gui/toolbarMenubar/AbstractToolItem.h"
 
+#include "../../util/Util.h"
+
 #include <config.h>
 #include <glib/gi18n-lib.h>
-
-static GdkPixbuf *
-new_pixbuf_from_widget(GtkWidget * widget);
 
 static GdkAtom atomToolItem = gdk_atom_intern_static_string("application/xournal-ToolbarItem");
 
@@ -31,35 +30,175 @@ get_image_pixbuf(GtkImage *image) {
 	}
 }
 
-static void drag_begin(GtkWidget * widget, GdkDragContext * context, gpointer data) {
-	GdkPixbuf * pixbuf = get_image_pixbuf(GTK_IMAGE (data));
-	gtk_drag_set_icon_pixbuf(context, pixbuf, -2, -2);
-	g_object_unref(pixbuf);
-}
+
+typedef struct {
+	AbstractToolItem * item;
+} AbstractItemSelectionData;
 
 void drag_data_get(GtkWidget * widget, GdkDragContext * context, GtkSelectionData * selection_data, guint info, guint time, AbstractToolItem * item) {
-	String id = item->getId();
-
-	gtk_selection_data_set(selection_data, atomToolItem, 0, (const guchar *) id.c_str(), id.size() + 1);
+	AbstractItemSelectionData * d = g_new(AbstractItemSelectionData, 1);
+	d->item = item;
+	gtk_selection_data_set(selection_data, atomToolItem, 0, (const guchar *) d, sizeof(AbstractItemSelectionData));
+	g_free(d);
 }
+
+void gtk_drag_dest_add_toolbar_targets(GtkWidget * target) {
+	GtkTargetList * target_list;
+	target_list = gtk_drag_dest_get_target_list(target);
+	if (target_list) {
+		gtk_target_list_ref(target_list);
+	} else {
+		target_list = gtk_target_list_new(NULL, 0);
+	}
+	gtk_target_list_add_image_targets(target_list, 0, FALSE);
+
+	gtk_target_list_add(target_list, atomToolItem, 0, NULL);
+
+	gtk_drag_dest_set_target_list(target, target_list);
+	gtk_target_list_unref(target_list);
+}
+
+static const GtkTargetEntry dropTargetEntry = { "move-buffer", GTK_TARGET_SAME_APP, 1 };
 
 ToolbarCustomizeDialog::ToolbarCustomizeDialog(GladeSearchpath * gladeSearchPath, MainWindow * win) :
 	GladeGui(gladeSearchPath, "toolbarCustomizeDialog.glade", "DialogCustomizeToolbar") {
 	XOJ_INIT_TYPE(ToolbarCustomizeDialog);
 
 	this->win = win;
+	this->currentDragItem = NULL;
 
-	static const GtkTargetEntry dropTargetEntry = { "move-buffer", GTK_TARGET_SAME_APP, 1 };
+	rebuildIconview();
 
-	char buffer[512];
+	//	GtkWidget * ebox = gtk_event_box_new();
+	GtkWidget * target = get("viewport1");
+	gtk_drag_dest_set(target, GTK_DEST_DEFAULT_ALL, NULL, 0, GDK_ACTION_MOVE);
+
+	gtk_drag_dest_add_toolbar_targets(target);
+
+	g_signal_connect(target, "drag-data-received", G_CALLBACK(dragDataReceived), this);
+
+	// TODO only once / remove after
+	int len = 0;
+	GtkWidget ** widgets = this->win->getToolbarWidgets(len);
+
+	for (int i = 0; i < len; i++) {
+		GtkWidget * w = widgets[i];
+		gtk_drag_dest_set(w, GTK_DEST_DEFAULT_ALL, NULL, 0, GDK_ACTION_MOVE);
+		gtk_drag_dest_add_toolbar_targets(w);
+
+		//		g_signal_connect (w, "drag_drop",
+		//				G_CALLBACK (toolbar_drag_drop_cb), etoolbar);
+		g_signal_connect(w, "drag_motion", G_CALLBACK(toolbarDragMotionCb), this);
+
+		//		g_signal_connect (w, "drag_leave",
+		//				G_CALLBACK (toolbar_drag_leave_cb), etoolbar);
+		//
+		//		g_signal_connect (w, "drag_data_received",
+		//				G_CALLBACK (toolbar_drag_data_received_cb), etoolbar);
+
+		//		g_signal_connect (w, "popup_context_menu",
+		//				G_CALLBACK (popup_context_menu_cb), etoolbar);
+
+	}
+}
+
+ToolbarCustomizeDialog::~ToolbarCustomizeDialog() {
+	XOJ_RELEASE_TYPE(ToolbarCustomizeDialog);
+}
+
+typedef struct _ToolItemDragData ToolItemDragData;
+struct _ToolItemDragData {
+	ToolbarCustomizeDialog * dlg;
+	GdkPixbuf * icon;
+	AbstractToolItem * item;
+};
+
+void ToolbarCustomizeDialog::toolitemDragBegin(GtkWidget * widget, GdkDragContext * context, ToolItemDragData * data) {
+	XOJ_CHECK_TYPE_OBJ(data->dlg, ToolbarCustomizeDialog);
+	data->dlg->currentDragItem = data->item;
+
+	gtk_drag_set_icon_pixbuf(context, data->icon, -2, -2);
+}
+
+bool ToolbarCustomizeDialog::toolbarDragMotionCb(GtkToolbar * toolbar, GdkDragContext * context,
+		gint x, gint y, guint time, ToolbarCustomizeDialog * dlg) {
+	XOJ_CHECK_TYPE_OBJ(dlg, ToolbarCustomizeDialog);
+
+	GdkAtom target = gtk_drag_dest_find_target(GTK_WIDGET (toolbar), context, NULL);
+	if (target != atomToolItem) {
+		gdk_drag_status(context, (GdkDragAction) 0, time);
+		return false;
+	}
+
+	gint ipos = gtk_toolbar_get_drop_index(toolbar, x, y);
+	GtkOrientation orientation = gtk_toolbar_get_orientation(toolbar);
+	gtk_toolbar_set_drop_highlight_item(toolbar, dlg->currentDragItem->createItem(orientation == GTK_ORIENTATION_HORIZONTAL), ipos);
+
+	gdk_drag_status(context, context->suggested_action, time);
+
+	return true;
+}
+
+void ToolbarCustomizeDialog::dragDataReceived(GtkWidget * widget, GdkDragContext * dragContext,
+		gint x, gint y, GtkSelectionData * data, guint info,
+		guint time, ToolbarCustomizeDialog * dlg) {
+
+	XOJ_CHECK_TYPE_OBJ(dlg, ToolbarCustomizeDialog);
+
+	if (gtk_selection_data_get_data_type(data) != atomToolItem) {
+		gtk_drag_finish(dragContext, false, false, time);
+		return;
+	}
+
+	AbstractItemSelectionData * d = NULL;
+	d = (AbstractItemSelectionData *) gtk_selection_data_get_data(data);
+
+	AbstractToolItem * item = d->item;
+
+	if (item->isUsed()) {
+		dlg->removeFromToolbar(item);
+		dlg->rebuildIconview();
+	}
+
+	gtk_drag_finish(dragContext, true, false, time);
+}
+
+void ToolbarCustomizeDialog::removeFromToolbar(AbstractToolItem * item) {
+	XOJ_CHECK_TYPE(ToolbarCustomizeDialog);
+
+}
+
+void ToolbarCustomizeDialog::freeIconview() {
+	XOJ_CHECK_TYPE(ToolbarCustomizeDialog);
 
 	GtkTable * table = GTK_TABLE(get("tbDefaultTools"));
 
-	ListIterator<AbstractToolItem *> it = win->getToolMenuHandler()->getToolItems();
+	GList * children = gtk_container_get_children(GTK_CONTAINER(table));
+	for (GList * l = children; l != NULL; l = l->next) {
+		GtkWidget * w = (GtkWidget *) l->data;
+		gtk_container_remove(GTK_CONTAINER(table), w);
+	}
+
+	g_list_free(children);
+}
+
+void ToolbarCustomizeDialog::rebuildIconview() {
+	XOJ_CHECK_TYPE(ToolbarCustomizeDialog);
+
+	freeIconview();
+
+	GtkTable * table = GTK_TABLE(get("tbDefaultTools"));
+
+	ListIterator<AbstractToolItem *> it = this->win->getToolMenuHandler()->getToolItems();
 
 	int i = 0;
 	while (it.hasNext()) {
 		AbstractToolItem * item = it.next();
+
+		if (item->isUsed()) {
+			continue;
+		}
+
 		String name = item->getToolDisplayName();
 		GtkWidget * icon = item->getNewToolIcon();
 		g_return_if_fail(icon != NULL);
@@ -76,7 +215,7 @@ ToolbarCustomizeDialog::ToolbarCustomizeDialog(GladeSearchpath * gladeSearchPath
 		gtk_widget_show(ebox);
 
 		if (!GTK_IS_IMAGE(icon)) {
-			GdkPixbuf * pixbuf = new_pixbuf_from_widget(icon);
+			GdkPixbuf * pixbuf = Util::newPixbufFromWidget(icon);
 			icon = gtk_image_new_from_pixbuf(pixbuf);
 			gdk_pixbuf_unref(pixbuf);
 		}
@@ -87,17 +226,15 @@ ToolbarCustomizeDialog::ToolbarCustomizeDialog(GladeSearchpath * gladeSearchPath
 		/* make ebox a drag source */
 		gtk_drag_source_set(ebox, GDK_BUTTON1_MASK, &dropTargetEntry, 1, GDK_ACTION_MOVE);
 		gtk_drag_source_add_image_targets(ebox);
-		g_signal_connect (ebox, "drag-begin",
-				G_CALLBACK (drag_begin), icon);
-		g_signal_connect (ebox, "drag-data-get",
-				G_CALLBACK (drag_data_get), item);
 
-		//			/* accept drops on ebox */
-		//			gtk_drag_dest_set(ebox, GTK_DEST_DEFAULT_ALL, NULL, 0, GDK_ACTION_COPY);
-		//			gtk_drag_dest_add_image_targets(ebox);
-		//			g_signal_connect (ebox, "drag-data-received",
-		//					G_CALLBACK (drag_data_received), image);
+		// TODO: free this data!! MEMORY LEAK!
+		ToolItemDragData * data = g_new(ToolItemDragData, 1);
+		data->dlg = this;
+		data->icon = get_image_pixbuf(GTK_IMAGE(icon));;
+		data->item = item;
 
+		g_signal_connect (ebox, "drag-begin", G_CALLBACK(toolitemDragBegin), item);
+		g_signal_connect (ebox, "drag-data-get", G_CALLBACK(drag_data_get), item);
 
 		int x = i % 3;
 		int y = i / 3;
@@ -105,96 +242,6 @@ ToolbarCustomizeDialog::ToolbarCustomizeDialog(GladeSearchpath * gladeSearchPath
 
 		i++;
 	}
-}
-
-ToolbarCustomizeDialog::~ToolbarCustomizeDialog() {
-	XOJ_RELEASE_TYPE(ToolbarCustomizeDialog);
-}
-
-static void fake_expose_widget(GtkWidget * widget, GdkPixmap *pixmap) {
-	GdkWindow *tmp_window;
-	GdkEventExpose event;
-
-	event.type = GDK_EXPOSE;
-	event.window = pixmap;
-	event.send_event = FALSE;
-	event.area = widget->allocation;
-	event.region = NULL;
-	event.count = 0;
-
-	tmp_window = widget->window;
-	widget->window = pixmap;
-	gtk_widget_send_expose(widget, (GdkEvent *) &event);
-	widget->window = tmp_window;
-}
-
-/*
- * Source egg-editable-toolbar.c from evince
- *
- * We should probably experiment some more with this.
- * Right now the rendered icon is pretty good for most
- * themes. However, the icon is slightly large for themes
- * with large toolbar icons.
- */
-static GdkPixbuf *
-new_pixbuf_from_widget(GtkWidget * widget) {
-	GtkWidget *window;
-	GdkPixbuf *pixbuf;
-	GtkRequisition requisition;
-	GtkAllocation allocation;
-	GdkPixmap *pixmap;
-	GdkVisual *visual;
-	gint icon_width;
-	gint icon_height;
-	GdkScreen *screen;
-
-	icon_height = icon_width = 24;
-
-	screen = gtk_widget_get_screen(widget);
-
-	window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-
-	gtk_container_add(GTK_CONTAINER (window), widget);
-	gtk_widget_realize(window);
-	gtk_widget_show(widget);
-	gtk_widget_realize(widget);
-	gtk_widget_map(widget);
-
-	/* Gtk will never set the width or height of a window to 0. So setting the width to
-	 * 0 and than getting it will provide us with the minimum width needed to render
-	 * the icon correctly, without any additional window background noise.
-	 * This is needed mostly for pixmap based themes.
-	 */
-	gtk_window_set_default_size(GTK_WINDOW (window), icon_width, icon_height);
-	gtk_window_get_size(GTK_WINDOW (window), &icon_width, &icon_height);
-
-	gtk_widget_size_request(window, &requisition);
-	allocation.x = 0;
-	allocation.y = 0;
-	allocation.width = icon_width;
-	allocation.height = icon_height;
-	gtk_widget_size_allocate(window, &allocation);
-	gtk_widget_size_request(window, &requisition);
-
-	/* Create a pixmap */
-	visual = gtk_widget_get_visual(window);
-	pixmap = gdk_pixmap_new(NULL, icon_width, icon_height, visual->depth);
-	gdk_drawable_set_colormap(GDK_DRAWABLE (pixmap), gtk_widget_get_colormap(window));
-
-	/* Draw the window */
-	gtk_widget_ensure_style(window);
-	g_assert(window->style);
-	g_assert(window->style->font_desc);
-
-	fake_expose_widget(window, pixmap);
-	fake_expose_widget(widget, pixmap);
-
-	pixbuf = gdk_pixbuf_new(GDK_COLORSPACE_RGB, TRUE, 8, icon_width, icon_height);
-	gdk_pixbuf_get_from_drawable(pixbuf, pixmap, NULL, 0, 0, 0, 0, icon_width, icon_height);
-
-	gtk_widget_destroy(window);
-
-	return pixbuf;
 }
 
 void ToolbarCustomizeDialog::show() {
