@@ -193,7 +193,7 @@ bool PdfWriter::writeInfo(String title) {
 	const char * username = getenv("USERNAME");
 	if(username) {
 		write("/Author ");
-		writeTxt();
+		writeTxt(username);
 		write("\n");
 	}
 
