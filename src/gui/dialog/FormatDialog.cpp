@@ -189,7 +189,8 @@ void FormatDialog::spinValueChangedCb(GtkSpinButton * spinbutton, FormatDialog *
 		double w = gtk_paper_size_get_width(s, GTK_UNIT_POINTS);
 		double h = gtk_paper_size_get_height(s, GTK_UNIT_POINTS);
 
-		if (((int) (w - width) * 10) == 0 && ((int) (h - height) * 10) == 0) {
+		if ((int) (w - width) == 0 && (int) (h - height) == 0 ||
+				(int) (h - width) == 0 && (int) (w - height) == 0) {
 			gtk_combo_box_set_active(GTK_COMBO_BOX(dlg->get("cbTemplate")), i);
 			return;
 		}

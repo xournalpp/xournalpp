@@ -64,6 +64,9 @@ public:
 
 	void updateToolbarMenu();
 
+	void startToolbarEditMode();
+	void endToolbarEditMode();
+
 private:
 	void initToolbarAndMenu();
 
@@ -99,18 +102,13 @@ private:
 	ToolbarData * selectedToolbar;
 	bool toolbarIntialized;
 
+	GList * toolbarSpacerItems;
+
 	GList * toolbarMenuitems;
 
 	bool maximized;
 
-	GtkWidget * tbTop1;
-	GtkWidget * tbTop2;
-	GtkWidget * tbLeft1;
-	GtkWidget * tbLeft2;
-	GtkWidget * tbRight1;
-	GtkWidget * tbRight2;
-	GtkWidget * tbBottom1;
-	GtkWidget * tbBottom2;
+	GtkWidget ** toolbarWidgets;
 };
 
 #endif /* __MAINWINDOW_H__ */

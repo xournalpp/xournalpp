@@ -59,6 +59,10 @@ private:
 
 	double zoom;
 
+	double lastZoomValue;
+
+	bool zoomFitMode;
+
 	double zoom100Value;
 	double zoomFitValue;
 };

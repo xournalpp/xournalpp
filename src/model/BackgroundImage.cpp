@@ -32,7 +32,7 @@ void BackgroundImage::loadFile(String filename, GError ** error) {
 	XOJ_CHECK_TYPE(BackgroundImage);
 
 	if (this->img != NULL) {
-		((BackgroundImageContents *) this->img)->unreference();
+		this->img->unreference();
 	}
 	this->img = new BackgroundImageContents(filename, error);
 }

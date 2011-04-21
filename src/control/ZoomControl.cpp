@@ -2,18 +2,15 @@
 
 const double zoomStep = 0.2;
 
-/**
- * TODO: zoom is not fluently if you have much data
- * Why?
- */
-
 ZoomControl::ZoomControl() {
 	XOJ_INIT_TYPE(ZoomControl);
 
 	this->listener = NULL;
 	this->zoom = 1.0;
+	this->lastZoomValue = 1.0;
 	this->zoom100Value = 1.0;
 	this->zoomFitValue = 1.0;
+	this->zoomFitMode = true;
 }
 
 ZoomControl::~ZoomControl() {
@@ -73,6 +70,7 @@ void ZoomControl::setZoom(double zoom) {
 
 	double lastZoom = zoom;
 	this->zoom = zoom;
+	this->zoomFitMode = false;
 	fireZoomChanged(lastZoom);
 }
 
@@ -88,6 +86,12 @@ void ZoomControl::setZoomFit(double zoom) {
 
 	this->zoomFitValue = zoom;
 	fireZoomRangeValueChanged();
+
+	if(this->zoomFitMode) {
+		double lastZoom = this->zoom;
+		this->zoom = this->zoomFitValue;
+		fireZoomChanged(lastZoom);
+	}
 }
 
 double ZoomControl::getZoomFit() {
@@ -107,6 +111,7 @@ void ZoomControl::zoom100() {
 
 	double lastZoom = this->zoom;
 	this->zoom = this->zoom100Value;
+	this->zoomFitMode = false;
 	fireZoomChanged(lastZoom);
 }
 
@@ -115,6 +120,7 @@ void ZoomControl::zoomFit() {
 
 	double lastZoom = this->zoom;
 	this->zoom = this->zoomFitValue;
+	this->zoomFitMode = true;
 	fireZoomChanged(lastZoom);
 }
 
@@ -123,14 +129,16 @@ void ZoomControl::zoomIn() {
 
 	double lastZoom = this->zoom;
 	this->zoom += zoomStep;
+	this->zoomFitMode = false;
 	fireZoomChanged(lastZoom);
 }
 
 void ZoomControl::zoomOut() {
 	XOJ_CHECK_TYPE(ZoomControl);
 
-	double lastZoom = zoom;
-	zoom -= zoomStep;
+	double lastZoom = this->zoom;
+	this->zoom -= zoomStep;
+	this->zoomFitMode = false;
 	fireZoomChanged(lastZoom);
 }
 

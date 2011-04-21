@@ -53,14 +53,23 @@ public:
 	 */
 	void unlock();
 
+	/**
+	 * Don't render the next X ms so the scrolling performance is better
+	 */
+	void blockRerenderZoom();
+
 private:
 	static gpointer jobThreadCallback(Scheduler * scheduler);
-	Job * getNextJobUnlocked();
+	Job * getNextJobUnlocked(bool onlyNotRender = false, bool * hasRenderJobs = NULL);
+
+	static bool jobRenderThreadTimer(Scheduler * scheduler);
 
 protected:
 	XOJ_TYPE_ATTRIB;
 
 	bool threadRunning;
+
+	int jobRenderThreadTimerId;
 
 	GThread * thread;
 
@@ -79,6 +88,8 @@ protected:
 
 	GQueue * jobQueue[JOB_N_PRIORITIES];
 
+	GTimeVal * blockRenderZoomTime;
+	GMutex * blockRenderMutex;
 };
 
 #endif /* __SCHEDULER_H__ */

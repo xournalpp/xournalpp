@@ -221,45 +221,45 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
 		setPresureSensitivity(xmlStrcmp(value, (const xmlChar *) "true") ? false : true);
 	} else if (xmlStrcmp(name, (const xmlChar *) "useXinput") == 0) {
 		// Value is update from main after the window is created
-		useXinput = xmlStrcmp(value, (const xmlChar *) "true") ? false : true;
+		this->useXinput = xmlStrcmp(value, (const xmlChar *) "true") ? false : true;
 	} else if (xmlStrcmp(name, (const xmlChar *) "selectedToolbar") == 0) {
-		selectedToolbar = (const char *) value;
+		this->selectedToolbar = (const char *) value;
 	} else if (xmlStrcmp(name, (const xmlChar *) "lastSavePath") == 0) {
-		lastSavePath = (const char *) value;
+		this->lastSavePath = (const char *) value;
 	} else if (xmlStrcmp(name, (const xmlChar *) "lastImagePath") == 0) {
-		lastImagePath = (const char *) value;
+		this->lastImagePath = (const char *) value;
 	} else if (xmlStrcmp(name, (const xmlChar *) "displayDpi") == 0) {
-		displayDpi = g_ascii_strtoll((const char *) value, NULL, 10);
+		this->displayDpi = g_ascii_strtoll((const char *) value, NULL, 10);
 	} else if (xmlStrcmp(name, (const xmlChar *) "mainWndWidth") == 0) {
-		mainWndWidth = g_ascii_strtoll((const char *) value, NULL, 10);
+		this->mainWndWidth = g_ascii_strtoll((const char *) value, NULL, 10);
 	} else if (xmlStrcmp(name, (const xmlChar *) "mainWndHeight") == 0) {
-		mainWndHeight = g_ascii_strtoll((const char *) value, NULL, 10);
+		this->mainWndHeight = g_ascii_strtoll((const char *) value, NULL, 10);
 	} else if (xmlStrcmp(name, (const xmlChar *) "maximized") == 0) {
-		maximized = xmlStrcmp(value, (const xmlChar *) "true") ? false : true;
+		this->maximized = xmlStrcmp(value, (const xmlChar *) "true") ? false : true;
 	} else if (xmlStrcmp(name, (const xmlChar *) "showSidebar") == 0) {
-		showSidebar = xmlStrcmp(value, (const xmlChar *) "true") ? false : true;
+		this->showSidebar = xmlStrcmp(value, (const xmlChar *) "true") ? false : true;
 	} else if (xmlStrcmp(name, (const xmlChar *) "widthMinimumMultiplier") == 0) {
-		widthMinimumMultiplier = g_ascii_strtod((const char *) value, NULL);
+		this->widthMinimumMultiplier = g_ascii_strtod((const char *) value, NULL);
 	} else if (xmlStrcmp(name, (const xmlChar *) "widthMaximumMultiplier") == 0) {
-		widthMaximumMultiplier = g_ascii_strtod((const char *) value, NULL);
+		this->widthMaximumMultiplier = g_ascii_strtod((const char *) value, NULL);
 	} else if (xmlStrcmp(name, (const xmlChar *) "sidebarOnRight") == 0) {
-		sidebarOnRight = xmlStrcmp(value, (const xmlChar *) "true") ? false : true;
+		this->sidebarOnRight = xmlStrcmp(value, (const xmlChar *) "true") ? false : true;
 	} else if (xmlStrcmp(name, (const xmlChar *) "scrollbarOnLeft") == 0) {
-		scrollbarOnLeft = xmlStrcmp(value, (const xmlChar *) "true") ? false : true;
+		this->scrollbarOnLeft = xmlStrcmp(value, (const xmlChar *) "true") ? false : true;
 	} else if (xmlStrcmp(name, (const xmlChar *) "showTwoPages") == 0) {
-		showTwoPages = xmlStrcmp(value, (const xmlChar *) "true") ? false : true;
+		this->showTwoPages = xmlStrcmp(value, (const xmlChar *) "true") ? false : true;
 	} else if (xmlStrcmp(name, (const xmlChar *) "autoloadPdfXoj") == 0) {
-		autoloadPdfXoj = xmlStrcmp(value, (const xmlChar *) "true") ? false : true;
+		this->autoloadPdfXoj = xmlStrcmp(value, (const xmlChar *) "true") ? false : true;
 	} else if (xmlStrcmp(name, (const xmlChar *) "showBigCursor") == 0) {
-		showBigCursor = xmlStrcmp(value, (const xmlChar *) "true") ? false : true;
+		this->showBigCursor = xmlStrcmp(value, (const xmlChar *) "true") ? false : true;
 	} else if (xmlStrcmp(name, (const xmlChar *) "defaultSaveName") == 0) {
 		this->defaultSaveName = (const char *) value;
 	} else if (xmlStrcmp(name, (const xmlChar *) "visiblePageFormats") == 0) {
 		this->visiblePageFormats = (const char *) value;
 	} else if (xmlStrcmp(name, (const xmlChar *) "autosaveEnabled") == 0) {
-		autosaveEnabled = xmlStrcmp(value, (const xmlChar *) "true") ? false : true;
+		this->autosaveEnabled = xmlStrcmp(value, (const xmlChar *) "true") ? false : true;
 	} else if (xmlStrcmp(name, (const xmlChar *) "autosaveTimeout") == 0) {
-		autosaveTimeout = g_ascii_strtoll((const char *) value, NULL, 10);
+		this->autosaveTimeout = g_ascii_strtoll((const char *) value, NULL, 10);
 	} else if (xmlStrcmp(name, (const xmlChar *) "fullscreenHideElements") == 0) {
 		this->fullscreenHideElements = (const char *) value;
 	} else if (xmlStrcmp(name, (const xmlChar *) "presentationHideElements") == 0) {
@@ -273,7 +273,7 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
 	} else if (xmlStrcmp(name, (const xmlChar *) "selectionColor") == 0) {
 		this->selectionColor = g_ascii_strtoll((const char *) value, NULL, 10);
 	} else if (xmlStrcmp(name, (const xmlChar *) "allowScrollOutsideThePage") == 0) {
-		allowScrollOutsideThePage = xmlStrcmp(value, (const xmlChar *) "true") ? false : true;
+		this->allowScrollOutsideThePage = xmlStrcmp(value, (const xmlChar *) "true") ? false : true;
 	}
 
 	xmlFree(name);
@@ -882,6 +882,9 @@ String Settings::getLastSavePath() {
 void Settings::setLastImagePath(String path) {
 	XOJ_CHECK_TYPE(Settings);
 
+	if(this->lastImagePath == path) {
+		return;
+	}
 	this->lastImagePath = path;
 	saveTimeout();
 }

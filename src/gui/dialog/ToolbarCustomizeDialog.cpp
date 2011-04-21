@@ -12,18 +12,16 @@
 static GdkPixbuf *
 new_pixbuf_from_widget(GtkWidget * widget);
 
-
 static GdkAtom atomToolItem = gdk_atom_intern_static_string("application/xournal-ToolbarItem");
-
 
 static GdkPixbuf *
 get_image_pixbuf(GtkImage *image) {
-	gchar *stock_id;
+	gchar * stock_id;
 	GtkIconSize size;
 
 	switch (gtk_image_get_storage_type(image)) {
 	case GTK_IMAGE_PIXBUF:
-		return (GdkPixbuf *)g_object_ref(gtk_image_get_pixbuf(image));
+		return (GdkPixbuf *) g_object_ref(gtk_image_get_pixbuf(image));
 	case GTK_IMAGE_STOCK:
 		gtk_image_get_stock(image, &stock_id, &size);
 		return gtk_widget_render_icon(GTK_WIDGET (image), stock_id, size, NULL);
@@ -33,7 +31,7 @@ get_image_pixbuf(GtkImage *image) {
 	}
 }
 
-static void drag_begin(GtkWidget *widget, GdkDragContext *context, gpointer data) {
+static void drag_begin(GtkWidget * widget, GdkDragContext * context, gpointer data) {
 	GdkPixbuf * pixbuf = get_image_pixbuf(GTK_IMAGE (data));
 	gtk_drag_set_icon_pixbuf(context, pixbuf, -2, -2);
 	g_object_unref(pixbuf);
@@ -42,15 +40,16 @@ static void drag_begin(GtkWidget *widget, GdkDragContext *context, gpointer data
 void drag_data_get(GtkWidget * widget, GdkDragContext * context, GtkSelectionData * selection_data, guint info, guint time, AbstractToolItem * item) {
 	String id = item->getId();
 
-	gtk_selection_data_set(selection_data, atomToolItem, 0, (const guchar *)id.c_str(), id.size() + 1);
+	gtk_selection_data_set(selection_data, atomToolItem, 0, (const guchar *) id.c_str(), id.size() + 1);
 }
 
 ToolbarCustomizeDialog::ToolbarCustomizeDialog(GladeSearchpath * gladeSearchPath, MainWindow * win) :
 	GladeGui(gladeSearchPath, "toolbarCustomizeDialog.glade", "DialogCustomizeToolbar") {
 	XOJ_INIT_TYPE(ToolbarCustomizeDialog);
 
-	static const GtkTargetEntry dropTargetEntry = { "move-buffer", GTK_TARGET_SAME_APP, 1 };
+	this->win = win;
 
+	static const GtkTargetEntry dropTargetEntry = { "move-buffer", GTK_TARGET_SAME_APP, 1 };
 
 	char buffer[512];
 
@@ -63,6 +62,7 @@ ToolbarCustomizeDialog::ToolbarCustomizeDialog(GladeSearchpath * gladeSearchPath
 		AbstractToolItem * item = it.next();
 		String name = item->getToolDisplayName();
 		GtkWidget * icon = item->getNewToolIcon();
+		g_return_if_fail(icon != NULL);
 
 		GtkWidget * box = gtk_vbox_new(false, 3);
 		gtk_widget_show(box);
@@ -71,38 +71,37 @@ ToolbarCustomizeDialog::ToolbarCustomizeDialog(GladeSearchpath * gladeSearchPath
 		gtk_widget_show(label);
 		gtk_box_pack_end(GTK_BOX(box), label, false, false, 0);
 
-		if (icon) {
-			if(!GTK_IS_IMAGE(icon)) {
-				GdkPixbuf * pixbuf = new_pixbuf_from_widget(icon);
-				icon = gtk_image_new_from_pixbuf(pixbuf);
-				gdk_pixbuf_unref(pixbuf);
-			}
-			gtk_widget_show(icon);
+		GtkWidget * ebox = gtk_event_box_new();
+		gtk_container_add(GTK_CONTAINER (ebox), box);
+		gtk_widget_show(ebox);
 
-			GtkWidget * ebox = gtk_event_box_new();
-			gtk_container_add(GTK_CONTAINER (ebox), icon);
-			gtk_box_pack_end(GTK_BOX(box), ebox, false, false, 0);
-			gtk_widget_show(ebox);
-
-			/* make ebox a drag source */
-			gtk_drag_source_set(ebox, GDK_BUTTON1_MASK, &dropTargetEntry, 1, GDK_ACTION_MOVE);
-			gtk_drag_source_add_image_targets(ebox);
-			g_signal_connect (ebox, "drag-begin",
-					G_CALLBACK (drag_begin), icon);
-			g_signal_connect (ebox, "drag-data-get",
-					G_CALLBACK (drag_data_get), item);
-
-			//			/* accept drops on ebox */
-			//			gtk_drag_dest_set(ebox, GTK_DEST_DEFAULT_ALL, NULL, 0, GDK_ACTION_COPY);
-			//			gtk_drag_dest_add_image_targets(ebox);
-			//			g_signal_connect (ebox, "drag-data-received",
-			//					G_CALLBACK (drag_data_received), image);
-
+		if (!GTK_IS_IMAGE(icon)) {
+			GdkPixbuf * pixbuf = new_pixbuf_from_widget(icon);
+			icon = gtk_image_new_from_pixbuf(pixbuf);
+			gdk_pixbuf_unref(pixbuf);
 		}
+		gtk_widget_show(icon);
+
+		gtk_box_pack_end(GTK_BOX(box), icon, false, false, 0);
+
+		/* make ebox a drag source */
+		gtk_drag_source_set(ebox, GDK_BUTTON1_MASK, &dropTargetEntry, 1, GDK_ACTION_MOVE);
+		gtk_drag_source_add_image_targets(ebox);
+		g_signal_connect (ebox, "drag-begin",
+				G_CALLBACK (drag_begin), icon);
+		g_signal_connect (ebox, "drag-data-get",
+				G_CALLBACK (drag_data_get), item);
+
+		//			/* accept drops on ebox */
+		//			gtk_drag_dest_set(ebox, GTK_DEST_DEFAULT_ALL, NULL, 0, GDK_ACTION_COPY);
+		//			gtk_drag_dest_add_image_targets(ebox);
+		//			g_signal_connect (ebox, "drag-data-received",
+		//					G_CALLBACK (drag_data_received), image);
+
 
 		int x = i % 3;
 		int y = i / 3;
-		gtk_table_attach(table, box, x, x + 1, y, y + 1, (GtkAttachOptions) 0, (GtkAttachOptions) 0, 5, 5);
+		gtk_table_attach(table, ebox, x, x + 1, y, y + 1, (GtkAttachOptions) 0, (GtkAttachOptions) 0, 5, 5);
 
 		i++;
 	}
@@ -198,33 +197,11 @@ new_pixbuf_from_widget(GtkWidget * widget) {
 	return pixbuf;
 }
 
-//void ToolbarCustomizeDialog::initDrag(GtkWidget * widget, AbstractToolItem * item) {
-//	static const GtkTargetEntry dropTargetEntry = { "move-buffer", GTK_TARGET_SAME_APP, 1 };
-//
-//	gtk_drag_source_set(widget, GDK_BUTTON1_MASK, &dropTargetEntry, 1, GDK_ACTION_MOVE);
-//	g_signal_connect(widget, "drag-data-get", G_CALLBACK(dragDataGet), NULL);
-//
-//	GdkScreen * screen = gtk_widget_get_screen(widget);
-//	GdkCursor * cursor = gdk_cursor_new_for_display(gdk_screen_get_display(screen), GDK_HAND2);
-//	gdk_window_set_cursor(widget->window, cursor);
-//	gdk_cursor_unref(cursor);
-//
-//	GtkWidget * w = item->getNewToolIcon();
-//	GdkPixbuf * pixbuf = new_pixbuf_from_widget(w);
-//
-//	if (G_UNLIKELY(!pixbuf)) {
-//		return;
-//	}
-//	gtk_drag_source_set_icon_pixbuf(widget, pixbuf);
-//	g_object_unref(pixbuf);
-//}
-
-void ToolbarCustomizeDialog::dragDataGet(GtkWidget * widget, GdkDragContext * drag_context, GtkSelectionData * data, guint info, guint time, gpointer user_data) {
-}
-
 void ToolbarCustomizeDialog::show() {
 	XOJ_CHECK_TYPE(ToolbarCustomizeDialog);
 
+	this->win->startToolbarEditMode();
 	gtk_dialog_run(GTK_DIALOG(this->window));
 	gtk_widget_hide(this->window);
+	this->win->endToolbarEditMode();
 }

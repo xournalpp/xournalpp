@@ -508,7 +508,7 @@ void XournalView::zoomChanged(double lastZoom) {
 	layoutPages();
 
 	double zoom = control->getZoomControl()->getZoom();
-	gtk_adjustment_set_value(h, scrollY / lastZoom * control->getZoomControl()->getZoom());
+	gtk_adjustment_set_value(h, scrollY / lastZoom * zoom);
 
 	Document * doc = control->getDocument();
 	doc->lock();
@@ -516,6 +516,8 @@ void XournalView::zoomChanged(double lastZoom) {
 	doc->unlock();
 
 	control->getMetadataManager()->setDouble(file, "zoom", zoom);
+
+	this->control->getScheduler()->blockRerenderZoom();
 }
 
 void XournalView::pageSizeChanged(int page) {

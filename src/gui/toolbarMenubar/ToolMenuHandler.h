@@ -66,6 +66,8 @@ public:
 
 	ListIterator<AbstractToolItem *> getToolItems();
 
+	void startEditMode();
+	void endEditMode();
 private:
 	void addToolItem(AbstractToolItem * it);
 
