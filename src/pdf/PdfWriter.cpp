@@ -190,9 +190,12 @@ bool PdfWriter::writeInfo(String title) {
 		write("\n");
 	}
 
-	write("/Author ");
-	writeTxt(getenv("USERNAME"));
-	write("\n");
+	const char * username = getenv("USERNAME");
+	if(username) {
+		write("/Author ");
+		writeTxt();
+		write("\n");
+	}
 
 	write("/Creator ");
 	writeTxt("Cairo / Poppler " VERSION);
