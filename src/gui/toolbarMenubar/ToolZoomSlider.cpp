@@ -27,7 +27,7 @@ void ToolZoomSlider::sliderChanged(GtkRange * range, ZoomControl * zoom) {
 void ToolZoomSlider::zoomChanged(double lastZoom) {
 	XOJ_CHECK_TYPE(ToolZoomSlider);
 
-	gtk_range_set_value(GTK_RANGE(slider), zoom->getZoom());
+	gtk_range_set_value(GTK_RANGE(this->slider), this->zoom->getZoom());
 }
 
 void ToolZoomSlider::zoomRangeValuesChanged() {

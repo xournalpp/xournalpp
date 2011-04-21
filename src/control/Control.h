@@ -200,7 +200,7 @@ protected:
 
 	bool showSaveDialog();
 
-	void fileLoaded();
+	void fileLoaded(int scrollToPage = -1);
 
 	void eraserSizeChanged();
 	void penSizeChanged();

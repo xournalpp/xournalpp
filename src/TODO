@@ -1,0 +1,33 @@
+Ruler 90° einrasten
+
+Rightclick as defined Tool: Selection is not working
+>Using rectangle select as middle mouse button (pen button) doesn't work.
+
+Deselect Tool should not be possibel
+
+2) Undo seems to redraw in 2 steps, separated by a second or two, and a crash
+always soon follows.
+
+3) The Autosave/restore needs a UI.
+
+4) After strokes are drawn they are re-drawn, it appears with slightly different
+width or anti-aliasing.
+
+7) All the different types of toolbars needs to be cleaned up...
+
+8) The added grey borders are not useful, IMHO it's just wasted screen space.
+Also the red border around the active page is not needed, I think.  I assume
+this is because you want to know which page is "active" for e.g. pasting.  I
+never had any trouble with xournal this way.
+
+10) Some UI elements are now focusable with the keyboard (e.g. zoom slider).
+Long ago I submitted a patch that made all UI elements send focus back to the
+canvas so that the arrow keys on the bezel of tablet pc's would always scroll
+the page instead of e.g. changing the zoom when a UI element is focused.
+
+
+
+Scrollen mit Stift ist schwammig (warum?)
+! Radieren Normaler Modus auch
+! Schieben hängt teilweise auch
+Wenn man "ausserhalb der Seite" scrollen darf ist der initiale Scrollwert falsch bei (0/0)

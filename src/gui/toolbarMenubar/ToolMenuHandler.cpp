@@ -477,51 +477,51 @@ void ToolMenuHandler::initToolItems() {
 void ToolMenuHandler::setFontButtonFont(XojFont & font) {
 	XOJ_CHECK_TYPE(ToolMenuHandler);
 
-	fontButton->setFont(font);
+	this->fontButton->setFont(font);
 }
 
 XojFont ToolMenuHandler::getFontButtonFont() {
 	XOJ_CHECK_TYPE(ToolMenuHandler);
 
-	return fontButton->getFont();
+	return this->fontButton->getFont();
 }
 
 void ToolMenuHandler::setUndoDescription(String description) {
 	XOJ_CHECK_TYPE(ToolMenuHandler);
 
-	undoButton->updateDescription(description);
+	this->undoButton->updateDescription(description);
 	gtk_menu_item_set_label(GTK_MENU_ITEM(gui->get("menuEditUndo")), description.c_str());
 }
 
 void ToolMenuHandler::setRedoDescription(String description) {
 	XOJ_CHECK_TYPE(ToolMenuHandler);
 
-	redoButton->updateDescription(description);
+	this->redoButton->updateDescription(description);
 	gtk_menu_item_set_label(GTK_MENU_ITEM(gui->get("menuEditRedo")), description.c_str());
 }
 
 GtkWidget * ToolMenuHandler::getPageSpinner() {
 	XOJ_CHECK_TYPE(ToolMenuHandler);
 
-	return toolPageSpinner->getPageSpinner();
+	return this->toolPageSpinner->getPageSpinner();
 }
 
 void ToolMenuHandler::setPageText(String text) {
 	XOJ_CHECK_TYPE(ToolMenuHandler);
 
-	toolPageSpinner->setText(text);
+	this->toolPageSpinner->setText(text);
 }
 
 int ToolMenuHandler::getSelectedLayer() {
 	XOJ_CHECK_TYPE(ToolMenuHandler);
 
-	return toolPageLayer->getSelectedLayer();
+	return this->toolPageLayer->getSelectedLayer();
 }
 
 void ToolMenuHandler::setLayerCount(int count, int selected) {
 	XOJ_CHECK_TYPE(ToolMenuHandler);
 
-	toolPageLayer->setLayerCount(count, selected);
+	this->toolPageLayer->setLayerCount(count, selected);
 }
 
 ToolbarModel * ToolMenuHandler::getModel() {
@@ -535,3 +535,12 @@ ListIterator<AbstractToolItem *> ToolMenuHandler::getToolItems() {
 }
 
 
+void ToolMenuHandler::startEditMode() {
+	setTmpDisabled(true);
+
+}
+
+void ToolMenuHandler::endEditMode() {
+	setTmpDisabled(false);
+
+}

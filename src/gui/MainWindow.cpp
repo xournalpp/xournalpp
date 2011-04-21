@@ -10,6 +10,18 @@
 #include <config.h>
 #include <glib/gi18n-lib.h>
 
+typedef struct {
+	const char * guiName;
+	const char * propName;
+	bool horizontal;
+} ToolbarEntryDefintion;
+
+const static ToolbarEntryDefintion TOOLBAR_DEFINITIONS[] = { { "tbTop1", "toolbarTop1", true }, { "tbTop2", "toolbarTop2", true }, { "tbLeft1", "toolbarLeft1",
+		false }, { "tbLeft2", "toolbarLeft2", false }, { "tbRight1", "toolbarRight1", false }, { "tbRight2", "toolbarRight2", false }, { "tbBottom1",
+		"toolbarBottom1", true }, { "tbBottom2", "toolbarBottom2", true } };
+
+const static int TOOLBAR_DEFINITIONS_LEN = G_N_ELEMENTS(TOOLBAR_DEFINITIONS);
+
 MainWindow::MainWindow(GladeSearchpath * gladeSearchPath, Control * control) :
 	GladeGui(gladeSearchPath, "main.glade", "mainWindow") {
 
@@ -19,17 +31,19 @@ MainWindow::MainWindow(GladeSearchpath * gladeSearchPath, Control * control) :
 	this->toolbarIntialized = false;
 	this->toolbarGroup = NULL;
 	this->selectedToolbar = NULL;
-	this->tbTop1 = get("tbTop1");
-	this->tbTop2 = get("tbTop2");
-	this->tbLeft1 = get("tbLeft1");
-	this->tbLeft2 = get("tbLeft2");
-	this->tbRight1 = get("tbRight1");
-	this->tbRight2 = get("tbRight2");
-	this->tbBottom1 = get("tbBottom1");
-	this->tbBottom2 = get("tbBottom2");
+	this->toolbarWidgets = new GtkWidget*[TOOLBAR_DEFINITIONS_LEN];
+
+	for (int i = 0; i < TOOLBAR_DEFINITIONS_LEN; i++) {
+		GtkWidget * w = get(TOOLBAR_DEFINITIONS[i].guiName);
+		g_object_ref(w);
+		this->toolbarWidgets[i] = w;
+	}
+
 	this->maximized = false;
 	this->toolbarMenuData = NULL;
 	this->toolbarMenuitems = NULL;
+
+	this->toolbarSpacerItems = NULL;
 
 	GtkRange * hrang = GTK_RANGE(get("scrollHorizontal"));
 	GtkRange * vrang = GTK_RANGE(get("scrollVertical"));
@@ -111,6 +125,13 @@ MainWindow::~MainWindow() {
 		MenuSelectToolbarData * data = (MenuSelectToolbarData *) l->data;
 		delete data;
 	}
+
+	for (int i = 0; i < TOOLBAR_DEFINITIONS_LEN; i++) {
+		g_object_unref(this->toolbarWidgets[i]);
+	}
+
+	delete[] this->toolbarWidgets;
+	this->toolbarWidgets = NULL;
 
 	g_list_free(this->toolbarMenuData);
 	this->toolbarMenuData = NULL;
@@ -283,27 +304,60 @@ void MainWindow::toolbarSelected(ToolbarData * d) {
 	settings->setSelectedToolbar(d->getId());
 
 	if (selectedToolbar != NULL) {
-		this->toolbar->unloadToolbar(this->tbTop1);
-		this->toolbar->unloadToolbar(this->tbTop2);
-		this->toolbar->unloadToolbar(this->tbLeft1);
-		this->toolbar->unloadToolbar(this->tbLeft2);
-		this->toolbar->unloadToolbar(this->tbRight1);
-		this->toolbar->unloadToolbar(this->tbRight2);
-		this->toolbar->unloadToolbar(this->tbBottom1);
-		this->toolbar->unloadToolbar(this->tbBottom2);
+		for (GList * l = NULL; l != NULL; l = l->next) {
+			this->toolbar->unloadToolbar((GtkWidget *) l->data);
+		}
 
 		this->toolbar->freeDynamicToolbarItems();
 	}
 	this->selectedToolbar = d;
 
-	this->toolbar->load(d, this->tbTop1, "toolbarTop1", true);
-	this->toolbar->load(d, this->tbTop2, "toolbarTop2", true);
-	this->toolbar->load(d, this->tbLeft1, "toolbarLeft1", false);
-	this->toolbar->load(d, this->tbLeft2, "toolbarLeft2", false);
-	this->toolbar->load(d, this->tbRight1, "toolbarRight1", false);
-	this->toolbar->load(d, this->tbRight2, "toolbarRight2", false);
-	this->toolbar->load(d, this->tbBottom1, "toolbarBottom1", true);
-	this->toolbar->load(d, this->tbBottom2, "toolbarBottom2", true);
+	for (int i = 0; i < TOOLBAR_DEFINITIONS_LEN; i++) {
+		this->toolbar->load(d, this->toolbarWidgets[i], TOOLBAR_DEFINITIONS[i].propName, TOOLBAR_DEFINITIONS[i].horizontal);
+	}
+}
+
+void MainWindow::startToolbarEditMode() {
+	this->toolbar->startEditMode();
+	for (int i = 0; i < TOOLBAR_DEFINITIONS_LEN; i++) {
+		gtk_widget_show(this->toolbarWidgets[i]);
+
+		GtkToolbar * tb = GTK_TOOLBAR(this->toolbarWidgets[i]);
+		gtk_toolbar_set_icon_size(tb, GTK_ICON_SIZE_SMALL_TOOLBAR);
+
+		GtkToolItem * it = gtk_tool_item_new();
+		this->toolbarSpacerItems = g_list_append(this->toolbarSpacerItems, it);
+		gtk_toolbar_insert(tb, it, 0);
+
+		GtkOrientation orientation = gtk_toolbar_get_orientation(tb);
+		if (orientation == GTK_ORIENTATION_HORIZONTAL) {
+			GtkAllocation alloc = { 0, 0, 0, 20 };
+			gtk_widget_set_allocation(GTK_WIDGET(it), &alloc);
+		} else if (orientation == GTK_ORIENTATION_VERTICAL) {
+			GtkAllocation alloc = { 0, 0, 20, 0 };
+			gtk_widget_set_allocation(GTK_WIDGET(it), &alloc);
+		}
+	}
+	// TODO ?????????????
+}
+
+void MainWindow::endToolbarEditMode() {
+	this->toolbar->endEditMode();
+
+	for(GList * l = this->toolbarSpacerItems; l != NULL; l = l->next) {
+		GtkWidget * w = GTK_WIDGET(l->data);
+		GtkWidget * parent = gtk_widget_get_parent(w);
+		gtk_container_remove(GTK_CONTAINER(parent), w);
+	}
+	g_list_free(this->toolbarSpacerItems);
+	this->toolbarSpacerItems = NULL;
+
+	for (int i = 0; i < TOOLBAR_DEFINITIONS_LEN; i++) {
+		GtkToolbar * tb = GTK_TOOLBAR(this->toolbarWidgets[i]);
+		if (gtk_toolbar_get_n_items(tb) == 0) {
+			gtk_widget_hide(GTK_WIDGET(tb));
+		}
+	}
 }
 
 void MainWindow::setControlTmpDisabled(bool disabled) {

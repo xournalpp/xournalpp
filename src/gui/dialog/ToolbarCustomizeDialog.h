@@ -26,8 +26,6 @@ public:
 public:
 	virtual void show();
 
-	static void dragDataGet(GtkWidget * widget, GdkDragContext * drag_context, GtkSelectionData * data, guint info, guint time, gpointer user_data);
-
 private:
 	XOJ_TYPE_ATTRIB;
 

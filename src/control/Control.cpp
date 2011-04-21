@@ -1085,7 +1085,20 @@ void Control::insertNewPage(int position) {
 
 	double width = 0;
 	double height = 0;
-	getDefaultPagesize(width, height);
+
+	int lastPage = position - 1;
+	if(lastPage < 0) {
+		getDefaultPagesize(width, height);
+	} else {
+		PageRef page = doc->getPage(lastPage);
+
+		if(page.isValid()) {
+			width = page.getWidth();
+			height = page.getHeight();
+		} else {
+			getDefaultPagesize(width, height);
+		}
+	}
 
 	PageRef page = new XojPage(width, height);
 	page.setBackgroundColor(settings->getPageBackgroundColor());
@@ -1112,6 +1125,8 @@ void Control::insertNewPage(int position) {
 			} else {
 				page.setBackgroundColor(current.getBackgroundColor());
 			}
+
+			page.setSize(current.getWidth(), current.getHeight());
 		}
 	} else if (PAGE_INSERT_TYPE_PDF_BACKGROUND == type) {
 		if (this->doc->getPdfPageCount() == 0) {
@@ -1815,13 +1830,13 @@ bool Control::openFile(String filename, int scrollToPage) {
 				*this->doc = *tmp;
 				this->doc->unlock();
 
-				fileLoaded();
+				fileLoaded(scrollToPage);
 				return true;
 			}
 		}
 
 		bool an = annotatePdf(filename, false, false);
-		fileLoaded();
+		fileLoaded(scrollToPage);
 		return an;
 	}
 
@@ -1857,7 +1872,7 @@ bool Control::openFile(String filename, int scrollToPage) {
 				_("Error opening file '%s'\n%s"), filename.c_str(), h.getLastError().c_str());
 		gtk_dialog_run(GTK_DIALOG(dialog));
 		gtk_widget_destroy(dialog);
-		fileLoaded();
+		fileLoaded(scrollToPage);
 		return false;
 	} else {
 		this->doc->lock();
@@ -1866,7 +1881,12 @@ bool Control::openFile(String filename, int scrollToPage) {
 		this->doc->unlock();
 	}
 
-	GValue value = { 0 };
+	fileLoaded(scrollToPage);
+	return true;
+}
+
+void Control::fileLoaded(int scrollToPage) {
+	XOJ_CHECK_TYPE(Control);
 
 	this->doc->lock();
 	String file = this->doc->getEvMetadataFilename();
@@ -1876,6 +1896,8 @@ bool Control::openFile(String filename, int scrollToPage) {
 		double zoom = 1;
 		if (this->metadata->getDouble(file, "zoom", zoom)) {
 			this->zoom->setZoom(zoom);
+		} else {
+			this->zoom->zoomFit();
 		}
 
 		int scrollPageMetadata = 0;
@@ -1885,14 +1907,9 @@ bool Control::openFile(String filename, int scrollToPage) {
 			scrollHandler->scrollToPage(scrollPageMetadata);
 		}
 		recent->addRecentFileFilename(file.c_str());
+	} else {
+		this->zoom->zoomFit();
 	}
-
-	fileLoaded();
-	return true;
-}
-
-void Control::fileLoaded() {
-	XOJ_CHECK_TYPE(Control);
 
 	updateWindowTitle();
 	win->updateLayerCombobox();
