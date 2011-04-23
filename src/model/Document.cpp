@@ -72,7 +72,7 @@ void Document::clearDocument(bool destroy) {
 		// look aufheben
 		bool lastLock = tryLock();
 		unlock();
-		handler->fireDocumentChanged(DOCUMENT_CHANGE_CLEARED);
+		this->handler->fireDocumentChanged(DOCUMENT_CHANGE_CLEARED);
 		if (!lastLock) { // document was locked before
 			lock();
 		}
@@ -314,7 +314,7 @@ bool Document::readPdf(String filename, bool initPages, bool attachToDocument) {
 
 	unlock();
 
-	handler->fireDocumentChanged(DOCUMENT_CHANGE_PDF_BOOKMARKS);
+	this->handler->fireDocumentChanged(DOCUMENT_CHANGE_PDF_BOOKMARKS);
 
 	return true;
 }
@@ -326,7 +326,7 @@ void Document::setPageSize(PageRef p, double width, double height) {
 
 	int id = indexOf(p);
 	if (id >= 0 && id < getPageCount()) {
-		firePageSizeChanged(id);
+		this->handler->firePageSizeChanged(id);
 	}
 }
 
@@ -389,12 +389,6 @@ PageRef Document::getPage(int page) {
 	return this->pages[page];
 }
 
-void Document::firePageSizeChanged(int page) {
-	XOJ_CHECK_TYPE(Document);
-
-	this->handler->firePageSizeChanged(page);
-}
-
 XojPopplerPage * Document::getPdfPage(int page) {
 	XOJ_CHECK_TYPE(Document);
 
@@ -429,7 +423,7 @@ void Document::operator=(Document & doc) {
 
 	bool lastLock = tryLock();
 	unlock();
-	handler->fireDocumentChanged(DOCUMENT_CHANGE_COMPLETE);
+	this->handler->fireDocumentChanged(DOCUMENT_CHANGE_COMPLETE);
 	if (!lastLock) { // document was locked before
 		lock();
 	}

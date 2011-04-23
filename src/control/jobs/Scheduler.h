@@ -58,6 +58,11 @@ public:
 	 */
 	void blockRerenderZoom();
 
+	/**
+	 * Remove the blocked rendering manually
+	 */
+	void unblockRerenderZoom();
+
 private:
 	static gpointer jobThreadCallback(Scheduler * scheduler);
 	Job * getNextJobUnlocked(bool onlyNotRender = false, bool * hasRenderJobs = NULL);

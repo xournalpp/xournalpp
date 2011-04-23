@@ -34,7 +34,13 @@ private:
 			gint x, gint y, GtkSelectionData * data, guint info, guint time, ToolbarCustomizeDialog * dlg);
 	static bool toolbarDragMotionCb(GtkToolbar * toolbar, GdkDragContext * context,
 			gint x, gint y, guint time, ToolbarCustomizeDialog * dlg);
+	static void toolbarDragLeafeCb(GtkToolbar * toolbar, GdkDragContext * context,
+			guint time, ToolbarCustomizeDialog * dlg);
+	static void toolbarDragDataReceivedCb(GtkToolbar * toolbar, GdkDragContext * context,
+			gint x, gint y, GtkSelectionData * data, guint info, guint time);
 	static void toolitemDragBegin(GtkWidget * widget, GdkDragContext * context, ToolItemDragData * data);
+	static void toolitemDragEnd(GtkWidget * widget, GdkDragContext * context, ToolItemDragData * data);
+	static GdkPixbuf * getImagePixbuf(GtkImage * image);
 
 	void removeFromToolbar(AbstractToolItem * item);
 	void freeIconview();
@@ -43,6 +49,8 @@ private:
 private:
 	XOJ_TYPE_ATTRIB;
 	AbstractToolItem * currentDragItem;
+
+	GList * itemDatalist;
 
 	MainWindow * win;
 };

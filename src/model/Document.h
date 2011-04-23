@@ -49,8 +49,6 @@ public:
 
 	void setPageSize(PageRef p, double width, double height);
 
-	void firePageSizeChanged(int page);
-
 	int indexOf(PageRef page);
 
 	String getLastErrorMsg();

@@ -12,6 +12,7 @@ DocumentHandler::~DocumentHandler() {
 
 	// Do not delete the listeners!
 	g_list_free(this->listener);
+	this->listener = NULL;
 
 	XOJ_RELEASE_TYPE(DocumentHandler);
 }

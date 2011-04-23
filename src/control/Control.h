@@ -36,6 +36,7 @@ class SaveHandler;
 class GladeSearchpath;
 class MetadataManager;
 class Cursor;
+class Collaboration;
 
 class Control: public ActionHandler,
 		public ToolListener,
@@ -286,6 +287,7 @@ private:
 
 	MetadataManager * metadata;
 
+	Collaboration * collaboration;
 };
 
 class CallbackData {

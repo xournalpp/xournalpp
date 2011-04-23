@@ -145,6 +145,8 @@ void Scheduler::unlock() {
 #define ZOOM_WAIT_US_TIMEOUT 300000 // 0.3s
 
 void Scheduler::blockRerenderZoom() {
+	XOJ_CHECK_TYPE(Scheduler);
+
 	g_mutex_lock(this->blockRenderMutex);
 
 	if (this->blockRenderZoomTime == NULL) {
@@ -155,6 +157,23 @@ void Scheduler::blockRerenderZoom() {
 	g_time_val_add(this->blockRenderZoomTime, ZOOM_WAIT_US_TIMEOUT);
 
 	g_mutex_unlock(this->blockRenderMutex);
+}
+
+void Scheduler::unblockRerenderZoom() {
+	XOJ_CHECK_TYPE(Scheduler);
+
+	g_mutex_lock(this->blockRenderMutex);
+
+	g_free(this->blockRenderZoomTime);
+	this->blockRenderZoomTime = NULL;
+	if(this->jobRenderThreadTimerId) {
+		g_source_remove(this->jobRenderThreadTimerId);
+		this->jobRenderThreadTimerId = 0;
+	}
+
+	g_mutex_unlock(this->blockRenderMutex);
+
+	g_cond_broadcast(this->jobQueueCond);
 }
 
 /**
@@ -179,6 +198,8 @@ glong g_time_val_diff(GTimeVal * t1, GTimeVal * t2) {
  * we need to wakeup it later
  */
 bool Scheduler::jobRenderThreadTimer(Scheduler * scheduler) {
+	XOJ_CHECK_TYPE_OBJ(scheduler, Scheduler);
+
 	scheduler->jobRenderThreadTimerId = 0;
 
 	g_mutex_lock(scheduler->blockRenderMutex);
