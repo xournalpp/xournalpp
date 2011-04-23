@@ -13,29 +13,23 @@
 
 static GdkAtom atomToolItem = gdk_atom_intern_static_string("application/xournal-ToolbarItem");
 
-static GdkPixbuf *
-get_image_pixbuf(GtkImage *image) {
-	gchar * stock_id;
-	GtkIconSize size;
-
-	switch (gtk_image_get_storage_type(image)) {
-	case GTK_IMAGE_PIXBUF:
-		return (GdkPixbuf *) g_object_ref(gtk_image_get_pixbuf(image));
-	case GTK_IMAGE_STOCK:
-		gtk_image_get_stock(image, &stock_id, &size);
-		return gtk_widget_render_icon(GTK_WIDGET (image), stock_id, size, NULL);
-	default:
-		g_warning("Image storage type %d not handled", gtk_image_get_storage_type(image));
-		return NULL;
-	}
-}
-
-
+/**
+ * Used for transport a Toolbar item
+ */
 typedef struct {
 	AbstractToolItem * item;
 } AbstractItemSelectionData;
 
-void drag_data_get(GtkWidget * widget, GdkDragContext * context, GtkSelectionData * selection_data, guint info, guint time, AbstractToolItem * item) {
+typedef struct _ToolItemDragData ToolItemDragData;
+struct _ToolItemDragData {
+	ToolbarCustomizeDialog * dlg;
+	GdkPixbuf * icon;
+	AbstractToolItem * item;
+	GtkWidget * ebox;
+};
+
+void drag_data_get(GtkWidget * widget, GdkDragContext * context, GtkSelectionData * selection_data,
+		guint info, guint time, AbstractToolItem * item) {
 	AbstractItemSelectionData * d = g_new(AbstractItemSelectionData, 1);
 	d->item = item;
 	gtk_selection_data_set(selection_data, atomToolItem, 0, (const guchar *) d, sizeof(AbstractItemSelectionData));
@@ -50,11 +44,22 @@ void gtk_drag_dest_add_toolbar_targets(GtkWidget * target) {
 	} else {
 		target_list = gtk_target_list_new(NULL, 0);
 	}
-	gtk_target_list_add_image_targets(target_list, 0, FALSE);
-
 	gtk_target_list_add(target_list, atomToolItem, 0, NULL);
 
 	gtk_drag_dest_set_target_list(target, target_list);
+	gtk_target_list_unref(target_list);
+}
+
+void gtk_drag_source_add_toolbar_targets(GtkWidget * widget) {
+	GtkTargetList * target_list;
+
+	target_list = gtk_drag_source_get_target_list(widget);
+	if (target_list)
+		gtk_target_list_ref(target_list);
+	else
+		target_list = gtk_target_list_new(NULL, 0);
+	gtk_target_list_add(target_list, atomToolItem, 0, NULL);
+	gtk_drag_source_set_target_list(widget, target_list);
 	gtk_target_list_unref(target_list);
 }
 
@@ -66,6 +71,7 @@ ToolbarCustomizeDialog::ToolbarCustomizeDialog(GladeSearchpath * gladeSearchPath
 
 	this->win = win;
 	this->currentDragItem = NULL;
+	this->itemDatalist = NULL;
 
 	rebuildIconview();
 
@@ -89,42 +95,77 @@ ToolbarCustomizeDialog::ToolbarCustomizeDialog(GladeSearchpath * gladeSearchPath
 		//		g_signal_connect (w, "drag_drop",
 		//				G_CALLBACK (toolbar_drag_drop_cb), etoolbar);
 		g_signal_connect(w, "drag_motion", G_CALLBACK(toolbarDragMotionCb), this);
-
-		//		g_signal_connect (w, "drag_leave",
-		//				G_CALLBACK (toolbar_drag_leave_cb), etoolbar);
-		//
-		//		g_signal_connect (w, "drag_data_received",
-		//				G_CALLBACK (toolbar_drag_data_received_cb), etoolbar);
+		g_signal_connect(w, "drag_leave", G_CALLBACK(toolbarDragLeafeCb), this);
+		g_signal_connect(w, "drag_data_received", G_CALLBACK(toolbarDragDataReceivedCb), this);
 
 		//		g_signal_connect (w, "popup_context_menu",
-		//				G_CALLBACK (popup_context_menu_cb), etoolbar);
+		//				G_CALLBACK (popup_context_menu_cb), this);
 
 	}
 }
 
 ToolbarCustomizeDialog::~ToolbarCustomizeDialog() {
+	XOJ_CHECK_TYPE(ToolbarCustomizeDialog);
+
+	for(GList * l = this->itemDatalist; l != NULL; l = l->next) {
+		ToolItemDragData * data = (ToolItemDragData *)l->data;
+		gdk_pixbuf_unref(data->icon);
+		g_free(data);
+	}
+
+	g_list_free(this->itemDatalist);
+	this->itemDatalist = NULL;
+
 	XOJ_RELEASE_TYPE(ToolbarCustomizeDialog);
 }
 
-typedef struct _ToolItemDragData ToolItemDragData;
-struct _ToolItemDragData {
-	ToolbarCustomizeDialog * dlg;
-	GdkPixbuf * icon;
-	AbstractToolItem * item;
-};
+/**
+ * Get a GDK Pixbuf from GTK widget image
+ */
+GdkPixbuf * ToolbarCustomizeDialog::getImagePixbuf(GtkImage * image) {
+	gchar * stock_id;
+	GtkIconSize size;
 
+	switch (gtk_image_get_storage_type(image)) {
+	case GTK_IMAGE_PIXBUF:
+		return (GdkPixbuf *) g_object_ref(gtk_image_get_pixbuf(image));
+	case GTK_IMAGE_STOCK:
+		gtk_image_get_stock(image, &stock_id, &size);
+		return gtk_widget_render_icon(GTK_WIDGET (image), stock_id, size, NULL);
+	default:
+		g_warning("Image storage type %d not handled", gtk_image_get_storage_type(image));
+		return NULL;
+	}
+}
+
+/**
+ * Drag a Toolitem from dialog
+ */
 void ToolbarCustomizeDialog::toolitemDragBegin(GtkWidget * widget, GdkDragContext * context, ToolItemDragData * data) {
 	XOJ_CHECK_TYPE_OBJ(data->dlg, ToolbarCustomizeDialog);
 	data->dlg->currentDragItem = data->item;
 
 	gtk_drag_set_icon_pixbuf(context, data->icon, -2, -2);
+	gtk_widget_hide(data->ebox);
 }
 
+/**
+ * Drag a Toolitem from dialog STOPPED
+ */
+void ToolbarCustomizeDialog::toolitemDragEnd(GtkWidget * widget, GdkDragContext * context, ToolItemDragData * data) {
+	XOJ_CHECK_TYPE_OBJ(data->dlg, ToolbarCustomizeDialog);
+	data->dlg->currentDragItem = NULL;
+	gtk_widget_show(data->ebox);
+}
+
+/**
+ * A tool item was dragged to the toolbar
+ */
 bool ToolbarCustomizeDialog::toolbarDragMotionCb(GtkToolbar * toolbar, GdkDragContext * context,
 		gint x, gint y, guint time, ToolbarCustomizeDialog * dlg) {
 	XOJ_CHECK_TYPE_OBJ(dlg, ToolbarCustomizeDialog);
 
-	GdkAtom target = gtk_drag_dest_find_target(GTK_WIDGET (toolbar), context, NULL);
+	GdkAtom target = gtk_drag_dest_find_target(GTK_WIDGET(toolbar), context, NULL);
 	if (target != atomToolItem) {
 		gdk_drag_status(context, (GdkDragAction) 0, time);
 		return false;
@@ -139,6 +180,23 @@ bool ToolbarCustomizeDialog::toolbarDragMotionCb(GtkToolbar * toolbar, GdkDragCo
 	return true;
 }
 
+void ToolbarCustomizeDialog::toolbarDragLeafeCb(GtkToolbar * toolbar, GdkDragContext * context,
+		guint time, ToolbarCustomizeDialog * dlg) {
+	XOJ_CHECK_TYPE_OBJ(dlg, ToolbarCustomizeDialog);
+
+	gtk_toolbar_set_drop_highlight_item(toolbar, NULL, -1);
+}
+
+void ToolbarCustomizeDialog::toolbarDragDataReceivedCb(GtkToolbar * toolbar, GdkDragContext * context,
+		gint x, gint y, GtkSelectionData * data, guint info, guint time) {
+
+	int ipos = gtk_toolbar_get_drop_index(toolbar, x, y);
+// TODO ????????????????
+}
+
+/**
+ * A tool item was dragged to the dialog
+ */
 void ToolbarCustomizeDialog::dragDataReceived(GtkWidget * widget, GdkDragContext * dragContext,
 		gint x, gint y, GtkSelectionData * data, guint info,
 		guint time, ToolbarCustomizeDialog * dlg) {
@@ -163,11 +221,17 @@ void ToolbarCustomizeDialog::dragDataReceived(GtkWidget * widget, GdkDragContext
 	gtk_drag_finish(dragContext, true, false, time);
 }
 
+/**
+ * Remove a toolbar item from the tool where it was
+ */
 void ToolbarCustomizeDialog::removeFromToolbar(AbstractToolItem * item) {
 	XOJ_CHECK_TYPE(ToolbarCustomizeDialog);
 
 }
 
+/**
+ * clear the icon list
+ */
 void ToolbarCustomizeDialog::freeIconview() {
 	XOJ_CHECK_TYPE(ToolbarCustomizeDialog);
 
@@ -182,6 +246,9 @@ void ToolbarCustomizeDialog::freeIconview() {
 	g_list_free(children);
 }
 
+/**
+ * builds up the icon list
+ */
 void ToolbarCustomizeDialog::rebuildIconview() {
 	XOJ_CHECK_TYPE(ToolbarCustomizeDialog);
 
@@ -225,16 +292,19 @@ void ToolbarCustomizeDialog::rebuildIconview() {
 
 		/* make ebox a drag source */
 		gtk_drag_source_set(ebox, GDK_BUTTON1_MASK, &dropTargetEntry, 1, GDK_ACTION_MOVE);
-		gtk_drag_source_add_image_targets(ebox);
+		gtk_drag_source_add_toolbar_targets(ebox);
 
-		// TODO: free this data!! MEMORY LEAK!
 		ToolItemDragData * data = g_new(ToolItemDragData, 1);
 		data->dlg = this;
-		data->icon = get_image_pixbuf(GTK_IMAGE(icon));;
+		data->icon = getImagePixbuf(GTK_IMAGE(icon));;
 		data->item = item;
+		data->ebox = ebox;
 
-		g_signal_connect (ebox, "drag-begin", G_CALLBACK(toolitemDragBegin), item);
-		g_signal_connect (ebox, "drag-data-get", G_CALLBACK(drag_data_get), item);
+		this->itemDatalist = g_list_prepend(this->itemDatalist, data);
+
+		g_signal_connect(ebox, "drag-begin", G_CALLBACK(toolitemDragBegin), data);
+		g_signal_connect(ebox, "drag-end", G_CALLBACK(toolitemDragEnd), data);
+		g_signal_connect(ebox, "drag-data-get", G_CALLBACK(drag_data_get), item);
 
 		int x = i % 3;
 		int y = i / 3;
@@ -244,6 +314,9 @@ void ToolbarCustomizeDialog::rebuildIconview() {
 	}
 }
 
+/**
+ * Displays the dialog
+ */
 void ToolbarCustomizeDialog::show() {
 	XOJ_CHECK_TYPE(ToolbarCustomizeDialog);
 

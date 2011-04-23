@@ -501,15 +501,22 @@ void MainWindow::setControlTmpDisabled(bool disabled) {
 void MainWindow::updateToolbarMenu() {
 	XOJ_CHECK_TYPE(MainWindow);
 
+	GtkContainer * menubar = GTK_CONTAINER(get("menuViewToolbar"));
+	g_return_if_fail(menubar != NULL);
+
 	for (GList * l = this->toolbarMenuitems; l != NULL; l = l->next) {
 		GtkWidget * w = GTK_WIDGET(l->data);
-		gtk_widget_destroy(w);
+		gtk_container_remove(menubar, w);
 	}
+	g_list_free(this->toolbarMenuitems);
+	this->toolbarMenuitems = NULL;
 
 	for (GList * l = this->toolbarMenuData; l != NULL; l = l->next) {
 		MenuSelectToolbarData * data = (MenuSelectToolbarData *) l->data;
 		delete data;
 	}
+	g_list_free(this->toolbarMenuData);
+	this->toolbarMenuData = NULL;
 
 	g_slist_free(this->toolbarGroup);
 	this->toolbarGroup = NULL;
@@ -564,7 +571,7 @@ void MainWindow::initToolbarAndMenu() {
 			gtk_widget_show(separator);
 			gtk_menu_shell_insert(menubar, separator, menuPos++);
 
-			predefined = true;
+			predefined = false;
 			this->toolbarMenuitems = g_list_append(this->toolbarMenuitems, separator);
 		}
 
@@ -578,6 +585,8 @@ void MainWindow::initToolbarAndMenu() {
 		this->toolbarIntialized = true;
 		toolbarSelected(selectedData);
 	}
+
+	this->control->getScheduler()->unblockRerenderZoom();
 }
 
 int MainWindow::getCurrentLayer() {

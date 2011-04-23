@@ -6,6 +6,7 @@ INCLUDES = \
 
 bin_PROGRAMS = xournalpp
 xournalpp_SOURCES = \
+	collab/Collaboration.cpp \
 	control/jobs/AutosaveJob.cpp \
 	control/jobs/BlockingJob.cpp \
 	control/jobs/ExportJob.cpp \
@@ -116,6 +117,7 @@ xournalpp_SOURCES = \
 	model/FormatDefinitions.cpp \
 	model/Image.cpp \
 	model/Layer.cpp \
+	model/LayerListener.cpp \
 	model/LinkDestination.cpp \
 	model/PageRef.cpp \
 	model/Point.cpp \

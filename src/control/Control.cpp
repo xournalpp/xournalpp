@@ -38,6 +38,8 @@
 #include "../undo/DeleteUndoAction.h"
 #include "settings/ButtonConfig.h"
 #include "../gui/Cursor.h"
+#include "../gui/toolbarMenubar/model/ToolbarModel.h"
+#include "../collab/Collaboration.h"
 
 #include <config.h>
 #include <glib/gi18n-lib.h>
@@ -108,10 +110,17 @@ Control::Control(GladeSearchpath * gladeSearchPath) {
 	this->changedPages = NULL;
 
 	this->clipboardHandler = NULL;
+
+	this->collaboration = NULL;
 }
 
 Control::~Control() {
 	XOJ_CHECK_TYPE(Control);
+
+	if(this->collaboration) {
+		delete this->collaboration;
+		this->collaboration = NULL;
+	}
 
 	g_source_remove(this->changeTimout);
 	this->enableAutosave(false);
@@ -749,6 +758,14 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent *even
 		// nothing to do here
 		break;
 
+		// Menu collab
+	case ACTION_COLLAB_START:
+		if(this->collaboration == NULL) {
+			this->collaboration = new Collaboration(this);
+			this->collaboration->start();
+		}
+		break;
+
 		// Menu Help
 	case ACTION_HELP:
 		// TODO LOW PRIO: implement help
@@ -831,13 +848,18 @@ void Control::firePageSelected(int page) {
 void Control::manageToolbars() {
 	XOJ_CHECK_TYPE(Control);
 
-	ToolbarManageDialog dlg(this->gladeSearchPath, win->getToolbarModel());
+	ToolbarManageDialog dlg(this->gladeSearchPath, this->win->getToolbarModel());
 	dlg.show();
 
-	printf("Not implemented yet\n");
+	this->win->updateToolbarMenu();
 
-	// TODO: Debug
-	//win->updateToolbarMenu();
+	// TODO: debug
+//	char * file = g_build_filename(g_get_home_dir(), G_DIR_SEPARATOR_S, CONFIG_DIR, G_DIR_SEPARATOR_S, TOOLBAR_CONFIG, NULL);
+//	if (g_file_test(file, G_FILE_TEST_EXISTS)) {
+//		this->win->getToolbarModel()->save(file);
+//	}
+//	g_free(file);
+
 }
 
 void Control::customizeToolbars() {

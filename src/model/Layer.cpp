@@ -1,14 +1,25 @@
 #include "Layer.h"
 #include "../util/Stacktrace.h"
 
+#include "LayerListener.h"
+
 Layer::Layer() {
 	XOJ_INIT_TYPE(Layer);
 
 	this->elements = NULL;
+	this->listeners = NULL;
 }
 
 Layer::~Layer() {
 	XOJ_CHECK_TYPE(Layer);
+
+	for(GList * l = this->listeners; l != NULL; l = l->next) {
+		LayerListener * listener = (LayerListener *)l->data;
+		listener->layerDeleted();
+	}
+
+	g_list_free(this->listeners);
+	this->listeners = NULL;
 
 	for (GList * l = elements; l != NULL; l = l->next) {
 		delete (Element *) l->data;
@@ -35,6 +46,11 @@ void Layer::addElement(Element * e) {
 	}
 
 	this->elements = g_list_append(this->elements, e);
+
+	for(GList * l = this->listeners; l != NULL; l = l->next) {
+		LayerListener * listener = (LayerListener *)l->data;
+		listener->elementAdded(e);
+	}
 }
 
 void Layer::insertElement(Element * e, int pos) {
@@ -54,6 +70,11 @@ void Layer::insertElement(Element * e, int pos) {
 	}
 
 	this->elements = g_list_insert(this->elements, e, pos);
+
+	for(GList * l = this->listeners; l != NULL; l = l->next) {
+		LayerListener * listener = (LayerListener *)l->data;
+		listener->elementAdded(e);
+	}
 }
 
 int Layer::indexOf(Element * e) {
@@ -82,6 +103,11 @@ int Layer::removeElement(Element * e, bool free) {
 	int pos = g_list_position(this->elements, elem);
 	this->elements = g_list_delete_link(this->elements, elem);
 
+	for(GList * l = this->listeners; l != NULL; l = l->next) {
+		LayerListener * listener = (LayerListener *)l->data;
+		listener->elementRemoved(e);
+	}
+
 	if (free) {
 		delete e;
 	}
@@ -99,4 +125,13 @@ ListIterator<Element *> Layer::elementIterator() {
 
 	return ListIterator<Element *> (this->elements);
 }
+
+void Layer::addListener(LayerListener * listener) {
+	this->listeners = g_list_append(this->listeners, listener);
+}
+
+void Layer::removeListener(LayerListener * listener) {
+	this->listeners = g_list_remove(this->listeners, listener);
+}
+
 
