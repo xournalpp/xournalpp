@@ -147,13 +147,18 @@ am__xournalpp_SOURCES_DIST = collab/Collaboration.cpp \
 	undo/ScaleUndoAction.cpp undo/SizeUndoAction.cpp \
 	undo/TextUndoAction.cpp undo/UndoAction.cpp \
 	undo/UndoRedoHandler.cpp util/logger/Logger.cpp \
-	util/CrashHandler.cpp util/GzHelper.cpp util/ObjectStream.cpp \
-	util/OutputStream.cpp util/PageRange.cpp util/Stacktrace.cpp \
-	util/pixbuf-utils.cpp util/Range.cpp util/Rectangle.cpp \
-	util/String.cpp util/Util.cpp util/XInputUtils.cpp \
-	util/XournalType.cpp view/DocumentView.cpp view/PdfView.cpp \
-	view/TextView.cpp Xournalpp.cpp \
-	plugin/python/bindings/PyDocument.cpp \
+	util/serializing/BinObjectEncoding.cpp \
+	util/serializing/HexObjectEncoding.cpp \
+	util/serializing/InputStreamException.cpp \
+	util/serializing/ObjectEncoding.cpp \
+	util/serializing/ObjectInputStream.cpp \
+	util/serializing/ObjectOutputStream.cpp util/CrashHandler.cpp \
+	util/GzHelper.cpp util/OutputStream.cpp util/PageRange.cpp \
+	util/Stacktrace.cpp util/pixbuf-utils.cpp util/Range.cpp \
+	util/Rectangle.cpp util/String.cpp util/Util.cpp \
+	util/XInputUtils.cpp util/XournalType.cpp \
+	view/DocumentView.cpp view/PdfView.cpp view/TextView.cpp \
+	Xournalpp.cpp plugin/python/bindings/PyDocument.cpp \
 	plugin/python/bindings/PySelection.cpp \
 	plugin/python/bindings/PyUndoRedoHandler.cpp \
 	plugin/python/bindings/PyXournal.cpp \
@@ -286,8 +291,13 @@ am_xournalpp_OBJECTS = xournalpp-Collaboration.$(OBJEXT) \
 	xournalpp-TextUndoAction.$(OBJEXT) \
 	xournalpp-UndoAction.$(OBJEXT) \
 	xournalpp-UndoRedoHandler.$(OBJEXT) xournalpp-Logger.$(OBJEXT) \
+	xournalpp-BinObjectEncoding.$(OBJEXT) \
+	xournalpp-HexObjectEncoding.$(OBJEXT) \
+	xournalpp-InputStreamException.$(OBJEXT) \
+	xournalpp-ObjectEncoding.$(OBJEXT) \
+	xournalpp-ObjectInputStream.$(OBJEXT) \
+	xournalpp-ObjectOutputStream.$(OBJEXT) \
 	xournalpp-CrashHandler.$(OBJEXT) xournalpp-GzHelper.$(OBJEXT) \
-	xournalpp-ObjectStream.$(OBJEXT) \
 	xournalpp-OutputStream.$(OBJEXT) xournalpp-PageRange.$(OBJEXT) \
 	xournalpp-Stacktrace.$(OBJEXT) \
 	xournalpp-pixbuf-utils.$(OBJEXT) xournalpp-Range.$(OBJEXT) \
@@ -557,12 +567,18 @@ xournalpp_SOURCES = collab/Collaboration.cpp \
 	undo/ScaleUndoAction.cpp undo/SizeUndoAction.cpp \
 	undo/TextUndoAction.cpp undo/UndoAction.cpp \
 	undo/UndoRedoHandler.cpp util/logger/Logger.cpp \
-	util/CrashHandler.cpp util/GzHelper.cpp util/ObjectStream.cpp \
-	util/OutputStream.cpp util/PageRange.cpp util/Stacktrace.cpp \
-	util/pixbuf-utils.cpp util/Range.cpp util/Rectangle.cpp \
-	util/String.cpp util/Util.cpp util/XInputUtils.cpp \
-	util/XournalType.cpp view/DocumentView.cpp view/PdfView.cpp \
-	view/TextView.cpp Xournalpp.cpp $(am__append_1)
+	util/serializing/BinObjectEncoding.cpp \
+	util/serializing/HexObjectEncoding.cpp \
+	util/serializing/InputStreamException.cpp \
+	util/serializing/ObjectEncoding.cpp \
+	util/serializing/ObjectInputStream.cpp \
+	util/serializing/ObjectOutputStream.cpp util/CrashHandler.cpp \
+	util/GzHelper.cpp util/OutputStream.cpp util/PageRange.cpp \
+	util/Stacktrace.cpp util/pixbuf-utils.cpp util/Range.cpp \
+	util/Rectangle.cpp util/String.cpp util/Util.cpp \
+	util/XInputUtils.cpp util/XournalType.cpp \
+	view/DocumentView.cpp view/PdfView.cpp view/TextView.cpp \
+	Xournalpp.cpp $(am__append_1)
 xournalpp_CXXFLAGS = -g -rdynamic
 xournalpp_LDADD = @PACKAGE_LIBS@ $(INTLLIBS)
 all: all-am
@@ -654,6 +670,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-AutosaveJob.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-BackgroundImage.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-BackgroundImageContents.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-BinObjectEncoding.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-BlockingJob.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-ButtonConfig.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-ButtonConfigGui.Po@am__quote@
@@ -691,12 +708,14 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-GladeGui.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-GladeSearchpath.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-GzHelper.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-HexObjectEncoding.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-Image.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-ImageHandler.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-ImageOpenDlg.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-ImagesDialog.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-Inertia.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-InputHandler.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-InputStreamException.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-InsertDeletePageUndoAction.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-InsertLayerUndoAction.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-InsertUndoAction.Po@am__quote@
@@ -711,7 +730,9 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-MenuItem.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-MetadataManager.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-MoveUndoAction.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-ObjectStream.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-ObjectEncoding.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-ObjectInputStream.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-ObjectOutputStream.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-OutputStream.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-PageBackgroundChangedUndoAction.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-PagePosition.Po@am__quote@
@@ -2933,6 +2954,90 @@ xournalpp-Logger.obj: util/logger/Logger.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-Logger.obj `if test -f 'util/logger/Logger.cpp'; then $(CYGPATH_W) 'util/logger/Logger.cpp'; else $(CYGPATH_W) '$(srcdir)/util/logger/Logger.cpp'; fi`
 
+xournalpp-BinObjectEncoding.o: util/serializing/BinObjectEncoding.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-BinObjectEncoding.o -MD -MP -MF $(DEPDIR)/xournalpp-BinObjectEncoding.Tpo -c -o xournalpp-BinObjectEncoding.o `test -f 'util/serializing/BinObjectEncoding.cpp' || echo '$(srcdir)/'`util/serializing/BinObjectEncoding.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-BinObjectEncoding.Tpo $(DEPDIR)/xournalpp-BinObjectEncoding.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='util/serializing/BinObjectEncoding.cpp' object='xournalpp-BinObjectEncoding.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-BinObjectEncoding.o `test -f 'util/serializing/BinObjectEncoding.cpp' || echo '$(srcdir)/'`util/serializing/BinObjectEncoding.cpp
+
+xournalpp-BinObjectEncoding.obj: util/serializing/BinObjectEncoding.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-BinObjectEncoding.obj -MD -MP -MF $(DEPDIR)/xournalpp-BinObjectEncoding.Tpo -c -o xournalpp-BinObjectEncoding.obj `if test -f 'util/serializing/BinObjectEncoding.cpp'; then $(CYGPATH_W) 'util/serializing/BinObjectEncoding.cpp'; else $(CYGPATH_W) '$(srcdir)/util/serializing/BinObjectEncoding.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-BinObjectEncoding.Tpo $(DEPDIR)/xournalpp-BinObjectEncoding.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='util/serializing/BinObjectEncoding.cpp' object='xournalpp-BinObjectEncoding.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-BinObjectEncoding.obj `if test -f 'util/serializing/BinObjectEncoding.cpp'; then $(CYGPATH_W) 'util/serializing/BinObjectEncoding.cpp'; else $(CYGPATH_W) '$(srcdir)/util/serializing/BinObjectEncoding.cpp'; fi`
+
+xournalpp-HexObjectEncoding.o: util/serializing/HexObjectEncoding.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-HexObjectEncoding.o -MD -MP -MF $(DEPDIR)/xournalpp-HexObjectEncoding.Tpo -c -o xournalpp-HexObjectEncoding.o `test -f 'util/serializing/HexObjectEncoding.cpp' || echo '$(srcdir)/'`util/serializing/HexObjectEncoding.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-HexObjectEncoding.Tpo $(DEPDIR)/xournalpp-HexObjectEncoding.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='util/serializing/HexObjectEncoding.cpp' object='xournalpp-HexObjectEncoding.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-HexObjectEncoding.o `test -f 'util/serializing/HexObjectEncoding.cpp' || echo '$(srcdir)/'`util/serializing/HexObjectEncoding.cpp
+
+xournalpp-HexObjectEncoding.obj: util/serializing/HexObjectEncoding.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-HexObjectEncoding.obj -MD -MP -MF $(DEPDIR)/xournalpp-HexObjectEncoding.Tpo -c -o xournalpp-HexObjectEncoding.obj `if test -f 'util/serializing/HexObjectEncoding.cpp'; then $(CYGPATH_W) 'util/serializing/HexObjectEncoding.cpp'; else $(CYGPATH_W) '$(srcdir)/util/serializing/HexObjectEncoding.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-HexObjectEncoding.Tpo $(DEPDIR)/xournalpp-HexObjectEncoding.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='util/serializing/HexObjectEncoding.cpp' object='xournalpp-HexObjectEncoding.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-HexObjectEncoding.obj `if test -f 'util/serializing/HexObjectEncoding.cpp'; then $(CYGPATH_W) 'util/serializing/HexObjectEncoding.cpp'; else $(CYGPATH_W) '$(srcdir)/util/serializing/HexObjectEncoding.cpp'; fi`
+
+xournalpp-InputStreamException.o: util/serializing/InputStreamException.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-InputStreamException.o -MD -MP -MF $(DEPDIR)/xournalpp-InputStreamException.Tpo -c -o xournalpp-InputStreamException.o `test -f 'util/serializing/InputStreamException.cpp' || echo '$(srcdir)/'`util/serializing/InputStreamException.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-InputStreamException.Tpo $(DEPDIR)/xournalpp-InputStreamException.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='util/serializing/InputStreamException.cpp' object='xournalpp-InputStreamException.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-InputStreamException.o `test -f 'util/serializing/InputStreamException.cpp' || echo '$(srcdir)/'`util/serializing/InputStreamException.cpp
+
+xournalpp-InputStreamException.obj: util/serializing/InputStreamException.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-InputStreamException.obj -MD -MP -MF $(DEPDIR)/xournalpp-InputStreamException.Tpo -c -o xournalpp-InputStreamException.obj `if test -f 'util/serializing/InputStreamException.cpp'; then $(CYGPATH_W) 'util/serializing/InputStreamException.cpp'; else $(CYGPATH_W) '$(srcdir)/util/serializing/InputStreamException.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-InputStreamException.Tpo $(DEPDIR)/xournalpp-InputStreamException.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='util/serializing/InputStreamException.cpp' object='xournalpp-InputStreamException.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-InputStreamException.obj `if test -f 'util/serializing/InputStreamException.cpp'; then $(CYGPATH_W) 'util/serializing/InputStreamException.cpp'; else $(CYGPATH_W) '$(srcdir)/util/serializing/InputStreamException.cpp'; fi`
+
+xournalpp-ObjectEncoding.o: util/serializing/ObjectEncoding.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-ObjectEncoding.o -MD -MP -MF $(DEPDIR)/xournalpp-ObjectEncoding.Tpo -c -o xournalpp-ObjectEncoding.o `test -f 'util/serializing/ObjectEncoding.cpp' || echo '$(srcdir)/'`util/serializing/ObjectEncoding.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-ObjectEncoding.Tpo $(DEPDIR)/xournalpp-ObjectEncoding.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='util/serializing/ObjectEncoding.cpp' object='xournalpp-ObjectEncoding.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-ObjectEncoding.o `test -f 'util/serializing/ObjectEncoding.cpp' || echo '$(srcdir)/'`util/serializing/ObjectEncoding.cpp
+
+xournalpp-ObjectEncoding.obj: util/serializing/ObjectEncoding.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-ObjectEncoding.obj -MD -MP -MF $(DEPDIR)/xournalpp-ObjectEncoding.Tpo -c -o xournalpp-ObjectEncoding.obj `if test -f 'util/serializing/ObjectEncoding.cpp'; then $(CYGPATH_W) 'util/serializing/ObjectEncoding.cpp'; else $(CYGPATH_W) '$(srcdir)/util/serializing/ObjectEncoding.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-ObjectEncoding.Tpo $(DEPDIR)/xournalpp-ObjectEncoding.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='util/serializing/ObjectEncoding.cpp' object='xournalpp-ObjectEncoding.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-ObjectEncoding.obj `if test -f 'util/serializing/ObjectEncoding.cpp'; then $(CYGPATH_W) 'util/serializing/ObjectEncoding.cpp'; else $(CYGPATH_W) '$(srcdir)/util/serializing/ObjectEncoding.cpp'; fi`
+
+xournalpp-ObjectInputStream.o: util/serializing/ObjectInputStream.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-ObjectInputStream.o -MD -MP -MF $(DEPDIR)/xournalpp-ObjectInputStream.Tpo -c -o xournalpp-ObjectInputStream.o `test -f 'util/serializing/ObjectInputStream.cpp' || echo '$(srcdir)/'`util/serializing/ObjectInputStream.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-ObjectInputStream.Tpo $(DEPDIR)/xournalpp-ObjectInputStream.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='util/serializing/ObjectInputStream.cpp' object='xournalpp-ObjectInputStream.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-ObjectInputStream.o `test -f 'util/serializing/ObjectInputStream.cpp' || echo '$(srcdir)/'`util/serializing/ObjectInputStream.cpp
+
+xournalpp-ObjectInputStream.obj: util/serializing/ObjectInputStream.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-ObjectInputStream.obj -MD -MP -MF $(DEPDIR)/xournalpp-ObjectInputStream.Tpo -c -o xournalpp-ObjectInputStream.obj `if test -f 'util/serializing/ObjectInputStream.cpp'; then $(CYGPATH_W) 'util/serializing/ObjectInputStream.cpp'; else $(CYGPATH_W) '$(srcdir)/util/serializing/ObjectInputStream.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-ObjectInputStream.Tpo $(DEPDIR)/xournalpp-ObjectInputStream.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='util/serializing/ObjectInputStream.cpp' object='xournalpp-ObjectInputStream.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-ObjectInputStream.obj `if test -f 'util/serializing/ObjectInputStream.cpp'; then $(CYGPATH_W) 'util/serializing/ObjectInputStream.cpp'; else $(CYGPATH_W) '$(srcdir)/util/serializing/ObjectInputStream.cpp'; fi`
+
+xournalpp-ObjectOutputStream.o: util/serializing/ObjectOutputStream.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-ObjectOutputStream.o -MD -MP -MF $(DEPDIR)/xournalpp-ObjectOutputStream.Tpo -c -o xournalpp-ObjectOutputStream.o `test -f 'util/serializing/ObjectOutputStream.cpp' || echo '$(srcdir)/'`util/serializing/ObjectOutputStream.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-ObjectOutputStream.Tpo $(DEPDIR)/xournalpp-ObjectOutputStream.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='util/serializing/ObjectOutputStream.cpp' object='xournalpp-ObjectOutputStream.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-ObjectOutputStream.o `test -f 'util/serializing/ObjectOutputStream.cpp' || echo '$(srcdir)/'`util/serializing/ObjectOutputStream.cpp
+
+xournalpp-ObjectOutputStream.obj: util/serializing/ObjectOutputStream.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-ObjectOutputStream.obj -MD -MP -MF $(DEPDIR)/xournalpp-ObjectOutputStream.Tpo -c -o xournalpp-ObjectOutputStream.obj `if test -f 'util/serializing/ObjectOutputStream.cpp'; then $(CYGPATH_W) 'util/serializing/ObjectOutputStream.cpp'; else $(CYGPATH_W) '$(srcdir)/util/serializing/ObjectOutputStream.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-ObjectOutputStream.Tpo $(DEPDIR)/xournalpp-ObjectOutputStream.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='util/serializing/ObjectOutputStream.cpp' object='xournalpp-ObjectOutputStream.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-ObjectOutputStream.obj `if test -f 'util/serializing/ObjectOutputStream.cpp'; then $(CYGPATH_W) 'util/serializing/ObjectOutputStream.cpp'; else $(CYGPATH_W) '$(srcdir)/util/serializing/ObjectOutputStream.cpp'; fi`
+
 xournalpp-CrashHandler.o: util/CrashHandler.cpp
 @am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-CrashHandler.o -MD -MP -MF $(DEPDIR)/xournalpp-CrashHandler.Tpo -c -o xournalpp-CrashHandler.o `test -f 'util/CrashHandler.cpp' || echo '$(srcdir)/'`util/CrashHandler.cpp
 @am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-CrashHandler.Tpo $(DEPDIR)/xournalpp-CrashHandler.Po
@@ -2960,20 +3065,6 @@ xournalpp-GzHelper.obj: util/GzHelper.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='util/GzHelper.cpp' object='xournalpp-GzHelper.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-GzHelper.obj `if test -f 'util/GzHelper.cpp'; then $(CYGPATH_W) 'util/GzHelper.cpp'; else $(CYGPATH_W) '$(srcdir)/util/GzHelper.cpp'; fi`
-
-xournalpp-ObjectStream.o: util/ObjectStream.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-ObjectStream.o -MD -MP -MF $(DEPDIR)/xournalpp-ObjectStream.Tpo -c -o xournalpp-ObjectStream.o `test -f 'util/ObjectStream.cpp' || echo '$(srcdir)/'`util/ObjectStream.cpp
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-ObjectStream.Tpo $(DEPDIR)/xournalpp-ObjectStream.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='util/ObjectStream.cpp' object='xournalpp-ObjectStream.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-ObjectStream.o `test -f 'util/ObjectStream.cpp' || echo '$(srcdir)/'`util/ObjectStream.cpp
-
-xournalpp-ObjectStream.obj: util/ObjectStream.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-ObjectStream.obj -MD -MP -MF $(DEPDIR)/xournalpp-ObjectStream.Tpo -c -o xournalpp-ObjectStream.obj `if test -f 'util/ObjectStream.cpp'; then $(CYGPATH_W) 'util/ObjectStream.cpp'; else $(CYGPATH_W) '$(srcdir)/util/ObjectStream.cpp'; fi`
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-ObjectStream.Tpo $(DEPDIR)/xournalpp-ObjectStream.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='util/ObjectStream.cpp' object='xournalpp-ObjectStream.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-ObjectStream.obj `if test -f 'util/ObjectStream.cpp'; then $(CYGPATH_W) 'util/ObjectStream.cpp'; else $(CYGPATH_W) '$(srcdir)/util/ObjectStream.cpp'; fi`
 
 xournalpp-OutputStream.o: util/OutputStream.cpp
 @am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-OutputStream.o -MD -MP -MF $(DEPDIR)/xournalpp-OutputStream.Tpo -c -o xournalpp-OutputStream.o `test -f 'util/OutputStream.cpp' || echo '$(srcdir)/'`util/OutputStream.cpp

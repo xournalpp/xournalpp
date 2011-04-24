@@ -15,7 +15,7 @@
 #include "ExportHandler.h"
 #include "settings/MetadataManager.h"
 #include "../util/CrashHandler.h"
-#include "../util/ObjectStream.h"
+#include "../util/serializing/ObjectInputStream.h"
 #include "../util/Stacktrace.h"
 #include "../util/XInputUtils.h"
 #include "../model/FormatDefinitions.h"

@@ -49,7 +49,7 @@ void Layer::addElement(Element * e) {
 
 	for(GList * l = this->listeners; l != NULL; l = l->next) {
 		LayerListener * listener = (LayerListener *)l->data;
-		listener->elementAdded(e);
+		listener->elementAdded(e, this);
 	}
 }
 
@@ -73,7 +73,7 @@ void Layer::insertElement(Element * e, int pos) {
 
 	for(GList * l = this->listeners; l != NULL; l = l->next) {
 		LayerListener * listener = (LayerListener *)l->data;
-		listener->elementAdded(e);
+		listener->elementAdded(e, this);
 	}
 }
 
@@ -105,7 +105,7 @@ int Layer::removeElement(Element * e, bool free) {
 
 	for(GList * l = this->listeners; l != NULL; l = l->next) {
 		LayerListener * listener = (LayerListener *)l->data;
-		listener->elementRemoved(e);
+		listener->elementRemoved(e, this);
 	}
 
 	if (free) {

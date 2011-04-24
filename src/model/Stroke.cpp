@@ -2,7 +2,8 @@
 #include <glib.h>
 #include <math.h>
 #include <string.h>
-#include "../util/ObjectStream.h"
+#include "../util/serializing/ObjectOutputStream.h"
+#include "../util/serializing/ObjectInputStream.h"
 
 Stroke::Stroke() :
 	Element(ELEMENT_STROKE) {

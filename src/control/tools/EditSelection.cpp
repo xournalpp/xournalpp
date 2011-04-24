@@ -14,7 +14,8 @@
 #include "../../control/Control.h"
 #include "../../model/Document.h"
 #include "../../model/Layer.h"
-#include "../../util/ObjectStream.h"
+#include "../../util/serializing/ObjectOutputStream.h"
+#include "../../util/serializing/ObjectInputStream.h"
 
 #include "EditSelectionContents.h"
 

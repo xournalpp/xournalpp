@@ -1,5 +1,6 @@
 #include "Element.h"
-#include "../util/ObjectStream.h"
+#include "../util/serializing/ObjectOutputStream.h"
+#include "../util/serializing/ObjectInputStream.h"
 
 Element::Element(ElementType type) {
 	XOJ_INIT_TYPE(Element);

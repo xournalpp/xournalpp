@@ -22,7 +22,7 @@ void LayerListener::unregisterListener() {
 }
 
 void LayerListener::layerDeleted() {
-	this->layerDeletedCb();
+	this->layerDeletedCb(this->layer);
 	this->layer = NULL;
 }
 
