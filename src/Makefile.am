@@ -156,9 +156,14 @@ xournalpp_SOURCES = \
 	undo/UndoAction.cpp \
 	undo/UndoRedoHandler.cpp \
 	util/logger/Logger.cpp \
+	util/serializing/BinObjectEncoding.cpp \
+	util/serializing/HexObjectEncoding.cpp \
+	util/serializing/InputStreamException.cpp \
+	util/serializing/ObjectEncoding.cpp \
+	util/serializing/ObjectInputStream.cpp \
+	util/serializing/ObjectOutputStream.cpp \
 	util/CrashHandler.cpp \
 	util/GzHelper.cpp \
-	util/ObjectStream.cpp \
 	util/OutputStream.cpp \
 	util/PageRange.cpp \
 	util/Stacktrace.cpp \

@@ -5,6 +5,9 @@
 #include "../gui/PageView.h"
 #include "../gui/XournalView.h"
 
+#include "../util/serializing/ObjectOutputStream.h"
+#include "../util/serializing/HexObjectEncoding.h"
+
 Collaboration::Collaboration(Control * control) {
 	this->control = control;
 }
@@ -50,22 +53,30 @@ void Collaboration::start() {
 
 		// THIS IS NOT THREADSAVE, should be done in the gui thread
 		page.getSelectedLayer()->addListener(this);
+
+		ObjectOutputStream out(new HexObjectEncoding());
+
+		out << s;
+
+		GString * str = out.getStr();
+
+		printf("%s\n", str->str);
+		g_string_free(str, true);
 	}
 
 	doc->unlock();
-
 }
 
 
-void Collaboration::layerDeletedCb() {
+void Collaboration::layerDeletedCb(Layer * layer) {
 	printf("Layer deleted\n");
 }
 
-void Collaboration::elementAdded(Element * e) {
+void Collaboration::elementAdded(Element * e, Layer * layer) {
 	printf("Element added\n");
 }
 
-void Collaboration::elementRemoved(Element * e) {
+void Collaboration::elementRemoved(Element * e, Layer * layer) {
 	printf("Element removed\n");
 }
 

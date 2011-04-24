@@ -3,8 +3,10 @@
 #include "../util/pixbuf-utils.h"
 #include <cairo-svg.h>
 #include <config.h>
-#include "../util/ObjectStream.h"
 #include "../view/DocumentView.h"
+#include "../util/serializing/ObjectOutputStream.h"
+#include "../util/serializing/ObjectInputStream.h"
+#include "../util/serializing/BinObjectEncoding.h"
 
 ClipboardHandler::ClipboardHandler(ClipboardListener * listener, GtkWidget * widget) {
 	XOJ_INIT_TYPE(ClipboardHandler);
@@ -135,7 +137,7 @@ bool ClipboardHandler::copy() {
 	// prepare xournal contents
 	/////////////////////////////////////////////////////////////////
 
-	ObjectOutputStream out;
+	ObjectOutputStream out(new BinObjectEncoding());
 
 	out.writeString(PACKAGE_STRING);
 

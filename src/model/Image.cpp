@@ -1,5 +1,6 @@
 #include "Image.h"
-#include "../util/ObjectStream.h"
+#include "../util/serializing/ObjectOutputStream.h"
+#include "../util/serializing/ObjectInputStream.h"
 #include "../util/pixbuf-utils.h"
 
 Image::Image() :

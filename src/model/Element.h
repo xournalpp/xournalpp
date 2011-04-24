@@ -13,7 +13,7 @@
 #define __ELEMENT_H__
 
 #include <gtk/gtk.h>
-#include "../util/Serializeable.h"
+#include "../util/serializing/Serializeable.h"
 #include "../util/XournalType.h"
 
 enum ElementType {

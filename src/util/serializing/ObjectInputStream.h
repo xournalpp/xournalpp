@@ -1,7 +1,7 @@
 /*
  * Xournal++
  *
- * Object stream, this class is used to help serialize objects to a string
+ * Serialized input stream
  *
  * @author Xournal Team
  * http://xournal.sf.net
@@ -9,40 +9,12 @@
  * @license GPL
  */
 
-#ifndef __OBJECTSTREAM_H__
-#define __OBJECTSTREAM_H__
+#ifndef __OBJECTINPUTSTREAM_H__
+#define __OBJECTINPUTSTREAM_H__
 
-#include <gtk/gtk.h>
-#include "../util/String.h"
-#include "../util/Serializeable.h"
+#include "InputStreamException.h"
 
 class Serializeable;
-class ObjectOutputStream {
-public:
-	ObjectOutputStream();
-	virtual ~ObjectOutputStream();
-
-public:
-	void writeObject(const char * name);
-	void endObject();
-
-	void writeInt(int i);
-	void writeDouble(double d);
-	void writeString(const char * str);
-	void writeString(const String & s);
-
-	void writeData(const void * data, int len, int width);
-	void writeImage(cairo_surface_t * img);
-
-	ObjectOutputStream & operator <<(Serializeable * s);
-
-	GString * getStr();
-
-private:
-	XOJ_TYPE_ATTRIB;
-
-	GString * data;
-};
 
 class ObjectInputStream {
 public:
@@ -78,4 +50,4 @@ private:
 	int pos;
 };
 
-#endif /* __OBJECTSTREAM_H__ */
+#endif /* __OBJECTINPUTSTREAM_H__ */

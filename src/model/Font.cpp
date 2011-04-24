@@ -1,5 +1,6 @@
 #include "Font.h"
-#include "../util/ObjectStream.h"
+#include "../util/serializing/ObjectOutputStream.h"
+#include "../util/serializing/ObjectInputStream.h"
 
 XojFont::XojFont() {
 	XOJ_INIT_TYPE(XojFont);

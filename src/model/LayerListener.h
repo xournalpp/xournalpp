@@ -26,10 +26,10 @@ public:
 
 public:
 	void layerDeleted();
-	virtual void layerDeletedCb() = 0;
+	virtual void layerDeletedCb(Layer * layer) = 0;
 
-	virtual void elementAdded(Element * e) = 0;
-	virtual void elementRemoved(Element * e) = 0;
+	virtual void elementAdded(Element * e, Layer * layer) = 0;
+	virtual void elementRemoved(Element * e, Layer * layer) = 0;
 
 private:
 	Layer * layer;

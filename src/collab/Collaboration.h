@@ -15,6 +15,7 @@
 #include "../model/LayerListener.h"
 
 class Control;
+class Layer;
 
 class Collaboration : public LayerListener {
 public:
@@ -24,10 +25,10 @@ public:
 public:
 	void start();
 
-	virtual void layerDeletedCb();
+	virtual void layerDeletedCb(Layer * layer);
 
-	virtual void elementAdded(Element * e);
-	virtual void elementRemoved(Element * e);
+	virtual void elementAdded(Element * e, Layer * layer);
+	virtual void elementRemoved(Element * e, Layer * layer);
 
 private:
 	Control * control;
