@@ -32,7 +32,7 @@ Message::Message(int clientId, int id, int cmd, int page, GString msg) { //Recei
 
 }
 
-Message::Message(GString ecdMsg) { //Received encoded msg
+Message::Message(const GString ecdMsg) { //Received encoded msg
 	char ** fragments = g_strsplit(ecdMsg.str, ":", MESSAGE_SIZE); //allocates memory!
 
 	clientId = atoi(fragments[0]);

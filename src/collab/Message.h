@@ -13,7 +13,7 @@
 class Message {
 public:
 	Message(int clientId, int id, int cmd, int Page, GString msg);
-	Message(GString encodedMsg);
+	Message(const GString encodedMsg);
 	virtual ~Message();
 
 	//encoding functions
