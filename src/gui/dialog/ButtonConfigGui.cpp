@@ -305,7 +305,7 @@ void ButtonConfigGui::enableDisableTools() {
 
 		break;
 	case TOOL_ERASER:
-		gtk_widget_set_sensitive(cbThikness, false);
+		gtk_widget_set_sensitive(cbThikness, true);
 		gtk_widget_set_sensitive(colorButton, false);
 		gtk_widget_set_sensitive(cbDrawingType, false);
 		gtk_widget_set_sensitive(cbEraserType, true);
