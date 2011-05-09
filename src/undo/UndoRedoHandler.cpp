@@ -6,6 +6,32 @@
 #include <glib/gi18n-lib.h>
 // TODO: LOW PRIO: add memory limit
 
+
+//#define UNDO_TRACE
+
+#ifdef UNDO_TRACE
+
+void printUndoList(GList * list) {
+	for (GList * l = list; l != NULL; l = l->next) {
+		UndoAction * action = (UndoAction *) l->data;
+		printf("printUndoList: %p / %s\n", action, action->getClassName());
+	}
+}
+
+#endif //UNDO_TRACE
+
+#ifdef UNDO_TRACE
+#define PRINTCONTENTS() \
+printf("redoList\n"); \
+printUndoList(this->redoList); \
+printf("undoList\n"); \
+printUndoList(this->undoList);
+#else
+#define PRINTCONTENTS()
+#endif //UNDO_TRACE
+
+
+
 UndoRedoHandler::UndoRedoHandler(Control * control) {
 	XOJ_INIT_TYPE(UndoRedoHandler);
 
@@ -30,12 +56,19 @@ void UndoRedoHandler::clearContents() {
 
 	for (GList * l = this->undoList; l != NULL; l = l->next) {
 		UndoAction * action = (UndoAction *) l->data;
+
+#ifdef UNDO_TRACE
+		printf("clearContents()::Delete UndoAction: %p / %s\n", action, action->getClassName());
+#endif //UNDO_TRACE
+
 		delete action;
 	}
 	g_list_free(this->undoList);
 	this->undoList = NULL;
 
 	clearRedo();
+
+	PRINTCONTENTS();
 }
 
 void UndoRedoHandler::clearRedo() {
@@ -43,10 +76,17 @@ void UndoRedoHandler::clearRedo() {
 
 	for (GList * l = this->redoList; l != NULL; l = l->next) {
 		UndoAction * action = (UndoAction *) l->data;
+
+#ifdef UNDO_TRACE
+		printf("clearRedo()::Delete UndoAction: %p / %s\n", action, action->getClassName());
+#endif //UNDO_TRACE
+
 		delete action;
 	}
 	g_list_free(this->redoList);
 	this->redoList = NULL;
+
+	PRINTCONTENTS();
 }
 
 void UndoRedoHandler::undo() {
@@ -79,6 +119,8 @@ void UndoRedoHandler::undo() {
 	this->redoList = g_list_append(this->redoList, undo);
 	this->undoList = g_list_delete_link(this->undoList, e);
 	fireUpdateUndoRedoButtons(undo->getPages());
+
+	PRINTCONTENTS();
 }
 
 void UndoRedoHandler::redo() {
@@ -111,6 +153,8 @@ void UndoRedoHandler::redo() {
 	this->undoList = g_list_append(this->undoList, redo);
 	this->redoList = g_list_delete_link(this->redoList, e);
 	fireUpdateUndoRedoButtons(redo->getPages());
+
+	PRINTCONTENTS();
 }
 
 bool UndoRedoHandler::canUndo() {
@@ -131,6 +175,8 @@ void UndoRedoHandler::addUndoAction(UndoAction * action) {
 	this->undoList = g_list_append(this->undoList, action);
 	clearRedo();
 	fireUpdateUndoRedoButtons(action->getPages());
+
+	PRINTCONTENTS();
 }
 
 void UndoRedoHandler::addUndoActionBefore(UndoAction * action, UndoAction * before) {
@@ -144,6 +190,8 @@ void UndoRedoHandler::addUndoActionBefore(UndoAction * action, UndoAction * befo
 	this->undoList = g_list_insert_before(this->undoList, data, action);
 	clearRedo();
 	fireUpdateUndoRedoButtons(action->getPages());
+
+	PRINTCONTENTS();
 }
 
 bool UndoRedoHandler::removeUndoAction(UndoAction * action) {
