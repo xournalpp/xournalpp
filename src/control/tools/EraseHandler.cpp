@@ -42,7 +42,7 @@ EraseHandler::~EraseHandler() {
 }
 
 /**
- * Handle eraser event: Delete Stroke and Standard, Whiteout is not handled here
+ * Handle eraser event: "Delete Stroke" and "Standard", Whiteout is not handled here
  */
 void EraseHandler::erase(double x, double y) {
 	XOJ_CHECK_TYPE(EraseHandler);

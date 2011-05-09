@@ -52,6 +52,7 @@ bool DeleteUndoAction::undo(Control * control) {
 		view->rerenderElement(e->element);
 	}
 
+	this->undone = true;
 	return true;
 }
 
