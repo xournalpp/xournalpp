@@ -13,7 +13,8 @@ AC_PROG_CXX
 AC_PROG_RANLIB
 AC_HEADER_STDC
 
-pkg_modules="gtk+-2.0 >= 2.18.3 poppler-glib >= 0.5.4 poppler >= 0.5.4 libglade-2.0 >= 2.6.4 gthread-2.0 >= 2.4.0"
+dnl librsvg-2.0 is not really needed by Xournal++, but if you don't have it crashes while loading the SVG icons (Problem with Gentoo)
+pkg_modules="gtk+-2.0 >= 2.18.3 poppler-glib >= 0.5.4 poppler >= 0.5.4 libglade-2.0 >= 2.6.4 gthread-2.0 >= 2.4.0 librsvg-2.0 >= 2.14.0"
 PKG_CHECK_MODULES(PACKAGE, [$pkg_modules])
 AC_SUBST(PACKAGE_CFLAGS)
 AC_SUBST(PACKAGE_LIBS)

@@ -5412,7 +5412,7 @@ $as_echo "#define STDC_HEADERS 1" >>confdefs.h
 fi
 
 
-pkg_modules="gtk+-2.0 >= 2.18.3 poppler-glib >= 0.5.4 poppler >= 0.5.4 libglade-2.0 >= 2.6.4 gthread-2.0 >= 2.4.0"
+pkg_modules="gtk+-2.0 >= 2.18.3 poppler-glib >= 0.5.4 poppler >= 0.5.4 libglade-2.0 >= 2.6.4 gthread-2.0 >= 2.4.0 librsvg-2.0 >= 2.14.0"
 
 
 if test "x$ac_cv_env_PKG_CONFIG_set" != "xset"; then
