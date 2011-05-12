@@ -124,9 +124,6 @@ static int Selection_init(PySelection * self, PyObject * args, PyObject * kwds) 
 	return 0;
 }
 
-static PyMemberDef PyXournal_members[] = { { NULL } /* Sentinel */
-};
-
 static int PySelection_init(PySelection * self, PyObject * args, PyObject * kwds) {
 	PyObject * xournal = NULL;
 

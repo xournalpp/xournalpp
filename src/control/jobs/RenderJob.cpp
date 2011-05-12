@@ -130,7 +130,6 @@ private:
 		g_mutex_lock(data->mutex);
 		bool complete = data->complete;
 		GList * rects = data->rects;
-		GtkWidget * widget = data->widget;
 
 		data->rects = NULL;
 		data->complete = false;

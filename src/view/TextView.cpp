@@ -9,18 +9,28 @@ TextView::TextView() {
 TextView::~TextView() {
 }
 
-PangoLayout * TextView::initPango(cairo_t *cr, Text * t) {
+PangoLayout * TextView::initPango(cairo_t * cr, Text * t) {
 	PangoLayout * layout = pango_cairo_create_layout(cr);
-	PangoFontDescription * desc = pango_font_description_from_string(t->getFont().getName().c_str());
-	pango_font_description_set_absolute_size(desc, t->getFont().getSize() * PANGO_SCALE);
-
-	pango_layout_set_font_description(layout, desc);
-	pango_font_description_free(desc);
 
 	// TODO LOW PRIO: add autowrap and text field size for the next xournal release (with new fileformat...)
 	//pango_layout_set_wrap
 
+	//	pango_cairo_context_set_resolution(pango_layout_get_context(layout), 10);
+	//	pango_cairo_update_layout(cr, layout);
+
+
+	pango_context_set_matrix(pango_layout_get_context(layout), NULL);
+	updatePangoFont(layout, t);
 	return layout;
+}
+
+void TextView::updatePangoFont(PangoLayout * layout, Text * t) {
+	PangoFontDescription * desc = pango_font_description_from_string(t->getFont().getName().c_str());
+	pango_font_description_set_absolute_size(desc, t->getFont().getSize() * PANGO_SCALE);
+	//	pango_font_description_set_size(desc, t->getFont().getSize() * PANGO_SCALE);
+
+	pango_layout_set_font_description(layout, desc);
+	pango_font_description_free(desc);
 }
 
 void TextView::drawText(cairo_t * cr, Text * t) {
@@ -49,7 +59,6 @@ GList * TextView::findText(Text * t, const char * search) {
 	String str = t->getText();
 	pango_layout_set_text(layout, str.c_str(), str.size());
 
-
 	int pos = -1;
 
 	String text = t->getText();
@@ -62,12 +71,12 @@ GList * TextView::findText(Text * t, const char * search) {
 			XojPopplerRectangle * mark = new XojPopplerRectangle();
 			PangoRectangle rect = { 0 };
 			pango_layout_index_to_pos(layout, pos, &rect);
-			mark->x1 = ((double)rect.x) / PANGO_SCALE + t->getX();
-			mark->y1 = ((double)rect.y) / PANGO_SCALE + t->getY();
+			mark->x1 = ((double) rect.x) / PANGO_SCALE + t->getX();
+			mark->y1 = ((double) rect.y) / PANGO_SCALE + t->getY();
 
 			pango_layout_index_to_pos(layout, pos + srch.length(), &rect);
-			mark->x2 = ((double)rect.x + rect.width) / PANGO_SCALE + t->getX();
-			mark->y2 = ((double)rect.y + rect.height) / PANGO_SCALE + t->getY();
+			mark->x2 = ((double) rect.x + rect.width) / PANGO_SCALE + t->getX();
+			mark->y2 = ((double) rect.y + rect.height) / PANGO_SCALE + t->getY();
 
 			list = g_list_append(list, mark);
 		}
@@ -84,6 +93,8 @@ void TextView::calcSize(Text * t, double & width, double & height) {
 	cairo_surface_t * surface = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, 1, 1);
 	cairo_t * cr = cairo_create(surface);
 
+
+	// TODO: OPTIMIZE: cache the pango layout, check the size of pango layout first
 	PangoLayout * layout = initPango(cr, t);
 	String str = t->getText();
 	pango_layout_set_text(layout, str.c_str(), str.size());

@@ -35,7 +35,13 @@ public:
 			this->len = 0;
 		} else {
 			this->size = strlen(str);
-			this->len = length((utf8) str);
+			this->len = g_utf8_strlen(str, -1);
+
+			char ** end = NULL;
+			if (!g_utf8_validate(str, -1, NULL)) {
+				g_warning("Invalid UTF8 string: %s", str);
+				*end = 0;
+			}
 		}
 
 		this->nref = 0;
@@ -65,18 +71,6 @@ public:
 		}
 	}
 
-	int length(const utf8 string) {
-		XOJ_CHECK_TYPE(_RefStrInternal);
-
-		int len;
-		len = 0;
-		while (*string) {
-			++len;
-			SKIP_MULTI_BYTE_SEQUENCE(string);
-		}
-		return len;
-	}
-
 	char * c_str() {
 		XOJ_CHECK_TYPE(_RefStrInternal);
 		return this->s;
@@ -104,15 +98,33 @@ private:
 	}
 
 private:
-	XOJ_TYPE_ATTRIB;
+	XOJ_TYPE_ATTRIB
+	;
 
+	/**
+	 * The reference counter
+	 */
 	int nref;
 
+	/**
+	 * The string
+	 */
 	char * s;
+
+	/**
+	 * The size of the string in bytes
+	 */
 	int size;
+
+	/**
+	 * The length in Unicode chars (may multibyte <= size)
+	 */
 	int len;
 };
 
+/**
+ * Creates an empty String
+ */
 String::String() {
 	XOJ_INIT_TYPE(String);
 
@@ -120,6 +132,9 @@ String::String() {
 	this->data->reference();
 }
 
+/**
+ * Copies a String
+ */
 String::String(const String & str) {
 	XOJ_INIT_TYPE(String);
 
@@ -127,6 +142,9 @@ String::String(const String & str) {
 	this->data->reference();
 }
 
+/**
+ * Copies a const char *
+ */
 String::String(const char * str) {
 	XOJ_INIT_TYPE(String);
 
@@ -134,6 +152,9 @@ String::String(const char * str) {
 	this->data->reference();
 }
 
+/**
+ * Copies a const char * with a specific length
+ */
 String::String(const char * data, int len) {
 	XOJ_INIT_TYPE(String);
 
@@ -145,6 +166,10 @@ String::String(const char * data, int len) {
 	this->data->reference();
 }
 
+/**
+ * Uses str as internal string if freeAutomatically is true the string will be freed automatically,
+ * and NOT COPIED
+ */
 String::String(char * str, bool freeAutomatically) {
 	XOJ_INIT_TYPE(String);
 
@@ -159,68 +184,30 @@ String::String(char * str, bool freeAutomatically) {
 String::~String() {
 	XOJ_CHECK_TYPE(String);
 
-	data->unreference();
+	this->data->unreference();
+	this->data = NULL;
 
 	XOJ_RELEASE_TYPE(String);
 }
 
+/**
+ * Creates a new String, syntax like sprintf
+ */
 String String::format(const char * format, ...) {
 	va_list args;
 	va_start(args, format);
 	char * data = g_strdup_vprintf(format, args);
 
-	String str(data, true);
-	return str;
+	return String(data, true);
 }
 
-int String::indexOfCaseInsensitiv(String substr, int fromIndex) const {
+/**
+ * Searches a substr case insensitive
+ */
+int String::indexOfCaseInsensitiv(const String substr, int fromIndex) const {
 	XOJ_CHECK_TYPE(String);
 
-	const char * source = c_str();
-	const char * target = substr.c_str();
-	if (source == NULL || target == NULL) {
-		return -1;
-	}
-	int sourceCount = size();
-	int targetCount = substr.size();
-
-	if (fromIndex >= sourceCount) {
-		return (targetCount == 0 ? sourceCount : -1);
-	}
-	if (fromIndex < 0) {
-		fromIndex = 0;
-	}
-	if (targetCount == 0) {
-		return fromIndex;
-	}
-
-	int sourceOffset = 0;
-	int targetOffset = 0;
-
-	char first = tolower(target[targetOffset]);
-	int max = sourceOffset + (sourceCount - targetCount);
-
-	for (int i = sourceOffset + fromIndex; i <= max; i++) {
-		/* Look for first character. */
-		if (tolower(source[i]) != first) {
-			while (++i <= max && tolower(source[i]) != first)
-				;
-		}
-
-		/* Found first character, now look at the rest of v2 */
-		if (i <= max) {
-			int j = i + 1;
-			int end = j + targetCount - 1;
-			for (int k = targetOffset + 1; j < end && tolower(source[j]) == tolower(target[k]); j++, k++)
-				;
-
-			if (j == end) {
-				/* Found whole string. */
-				return i - sourceOffset;
-			}
-		}
-	}
-	return -1;
+	return toLowerCase().indexOf(substr.toLowerCase(), fromIndex);
 }
 
 int String::indexOf(String substr, int fromIndex) const {
@@ -266,63 +253,38 @@ int String::indexOf(String substr, int fromIndex) const {
 
 			if (j == end) {
 				/* Found whole string. */
-				return i - sourceOffset;
+				return g_utf8_pointer_to_offset(source, source + i - sourceOffset);
 			}
 		}
 	}
 	return -1;
 }
 
-int String::lastIndexOf(String substr) const {
+int String::lastIndexOf(const String substr) const {
 	XOJ_CHECK_TYPE(String);
 
-	return lastIndexOf(substr, size() - 1);
+	return lastIndexOf(substr, size());
 }
 
-int String::lastIndexOf(String substr, int fromIndex) const {
+int String::lastIndexOf(const String substr, int from) const {
 	XOJ_CHECK_TYPE(String);
+	int result = -1;
 
-	const char * source = c_str();
-	const char * target = substr.c_str();
-	if (source == NULL || target == NULL) {
-		return -1;
-	}
-	int sourceCount = size();
-	int targetCount = substr.size();
+	const char * cStr = c_str();
+	const char * cSubstr = substr.c_str();
 
-	if (fromIndex <= 0) {
-		return (targetCount == 0 ? 0 : -1);
-	}
-	if (fromIndex >= sourceCount) {
-		fromIndex = sourceCount - 1;
-	}
-	if (targetCount == 0) {
-		return fromIndex;
-	}
+	if (cStr != NULL && cSubstr != NULL) {
+		int compLen = substr.size();
 
-	char last = target[targetCount - 1];
-
-	for (int i = fromIndex; i >= targetCount; i--) {
-		/* Look for first character. */
-		if (source[i] != last) {
-			while (--i >= targetCount && source[i] != last)
-				;
-		}
-
-		/* Found last character, now look at the rest of v2 */
-		if (i >= 0) {
-			int j = i - 1;
-			int end = j - targetCount + 1;
-			for (int k = targetCount - 2; j >= end && source[j] == target[k]; j--, k--)
-				;
-
-			if (j == end) {
-				/* Found whole string. */
-				return j + 1;
+		for (int x = from - compLen; x >= 0; x--) {
+			if ((strncmp(cStr + x, cSubstr, compLen)) == 0) {
+				result = x;
+				break;
 			}
 		}
+
 	}
-	return -1;
+	return result;
 }
 
 bool String::contains(const char * substr) const {
@@ -352,24 +314,27 @@ bool String::equals(const String & s) const {
 	return equals(s.c_str());
 }
 
-String& String::operator=(const char * str) {
+String & String::operator=(const char * str) {
 	XOJ_CHECK_TYPE(String);
 
 	this->data->unreference();
 	this->data = new _RefStrInternal(g_strdup(str));
 	this->data->reference();
+
+	return *this;
 }
 
 String& String::operator=(const String & str) {
 	XOJ_CHECK_TYPE(String);
 
-	if(this->data) {
+	if (this->data) {
 		this->data->unreference();
 	}
 	this->data = str.data;
-	if(this->data) {
+	if (this->data) {
 		this->data->reference();
 	}
+	return *this;
 }
 
 bool String::operator==(const String & str) const {
@@ -413,7 +378,6 @@ void String::operator +=(const char * str) {
 		return;
 	}
 
-	char * data = NULL;
 	if (c_str() == NULL) {
 		this->data->unreference();
 		this->data = new _RefStrInternal(g_strdup(str));
@@ -514,7 +478,11 @@ String String::substring(int start, int length) const {
 		start = this->length() + start;
 	}
 
-	if (start + length > this->length() || start < 0 || length < 0) {
+	if (start + length > this->length()) {
+		g_critical("substring \"%s\" (%i, %i) out of bounds (to long)", c_str(), start, length);
+		length = this->length() - start;
+	}
+	if (start < 0 || length < 0) {
 		g_critical("substring \"%s\" (%i, %i) out of bounds", c_str(), start, length);
 		return "";
 	}
@@ -546,7 +514,7 @@ String String::substring(int start, int length) const {
 	return substr;
 }
 
-String String::trim() {
+String String::trim() const {
 	XOJ_CHECK_TYPE(String);
 
 	const char * s = c_str();
@@ -577,7 +545,10 @@ String String::trim() {
 		return *this;
 	}
 
-	return substring(start, len);
+	const char * orig = c_str();
+	char * data = g_strndup(&orig[start], len);
+
+	return String(data, true);
 }
 
 bool String::startsWith(const String & s) const {
@@ -598,8 +569,12 @@ bool String::endsWith(const String & s) const {
 	return endsWith(s.c_str());
 }
 
-bool String::equalsIgnorCase(const String & s) {
+bool String::equalsIgnorCase(const String & s) const {
 	XOJ_CHECK_TYPE(String);
+
+	if (s.size() != size()) {
+		return false;
+	}
 
 	return this->toLowerCase().equals(s.toLowerCase());
 }
@@ -613,32 +588,20 @@ bool String::endsWith(const char * s) const {
 String String::toLowerCase() const {
 	XOJ_CHECK_TYPE(String);
 
-	String s = c_str();
+	char * data = g_utf8_strdown(c_str(), size());
 
-	char * data = s.data->c_str();
-
-	for (int i = 0; i < s.size(); i++) {
-		data[i] = tolower(data[i]);
-	}
-
-	return s;
+	return String(data, true);
 }
 
 String String::toUpperCase() const {
 	XOJ_CHECK_TYPE(String);
 
-	String s = c_str();
+	char * data = g_utf8_strup(c_str(), size());
 
-	char * data = s.data->c_str();
-
-	for (int i = 0; i < s.size(); i++) {
-		data[i] = toupper(data[i]);
-	}
-
-	return s;
+	return String(data, true);
 }
 
-String String::replace(String search, String replace) const {
+String String::replace(const String search, const String replace) const {
 	XOJ_CHECK_TYPE(String);
 
 	char const * const original = c_str();
@@ -657,7 +620,7 @@ String String::replace(String search, String replace) const {
 	}
 
 	// find how many times the pattern occurs in the original string
-	for (oriptr = original; patloc = strstr(oriptr, pattern); oriptr = patloc + patlen) {
+	for (oriptr = original; (patloc = strstr(oriptr, pattern)); oriptr = patloc + patlen) {
 		patcnt++;
 	}
 
@@ -669,7 +632,7 @@ String String::replace(String search, String replace) const {
 		// copy the original string,
 		// replacing all the instances of the pattern
 		char * retptr = returned;
-		for (oriptr = original; patloc = strstr(oriptr, pattern); oriptr = patloc + patlen) {
+		for (oriptr = original; (patloc = strstr(oriptr, pattern)); oriptr = patloc + patlen) {
 			int const skplen = patloc - oriptr;
 			// copy the section until the occurence of the pattern
 			strncpy(retptr, oriptr, skplen);
@@ -688,9 +651,9 @@ String String::replace(String search, String replace) const {
 /**
  * String tokenizer
  *
- * THIS CLASS IS NOT UTF8 SAVE
+ * TODO: !!!!!THIS CLASS IS NOT UTF8 SAVE
  */
-StringTokenizer::StringTokenizer(String s, char token, bool returnToken) {
+StringTokenizer::StringTokenizer(const String s, char token, bool returnToken) {
 	XOJ_INIT_TYPE(StringTokenizer);
 
 	this->str = g_strdup(s.c_str());

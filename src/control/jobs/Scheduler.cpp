@@ -221,7 +221,7 @@ gpointer Scheduler::jobThreadCallback(Scheduler * scheduler) {
 
 		g_mutex_lock(scheduler->blockRenderMutex);
 		bool onlyNoneRenderJobs = false;
-		glong diff;
+		glong diff = 1000;
 		if (scheduler->blockRenderZoomTime) {
 			GTimeVal time;
 			g_get_current_time(&time);

@@ -261,7 +261,7 @@ public:
 private:
 	Settings(const Settings& settings) {
 	}
-	Settings & operator=(const Settings & settings) {
+	void operator=(const Settings & settings) {
 	}
 
 private:

@@ -101,7 +101,7 @@ void VerticalToolHandler::currentPos(double x, double y) {
 
 	this->view->repaintRect(0, y1, this->page.getWidth(), this->page.getHeight());
 
-	double dY = this->endY - this->startY;
+	// double dY = this->endY - this->startY;
 
 	// TODO: LOW PRIO: we should move to a *new* page, but we should it do a bit more intelligent
 	// than only move all elements...

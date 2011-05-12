@@ -38,7 +38,6 @@ GString * GzHelper::gzuncompress(GString * str) {
 GString * GzHelper::gzuncompress(const char * data, gsize len) {
 	int status;
 	unsigned int factor = 1, maxfactor = 16;
-	char *s1 = NULL, *s2 = NULL;
 
 	gsize length = 0;
 	/*

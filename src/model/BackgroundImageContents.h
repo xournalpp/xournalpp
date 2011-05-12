@@ -15,6 +15,7 @@
 #include <glib.h>
 #include "../util/String.h"
 #include "../util/XournalType.h"
+#include <gtk/gtk.h>
 
 class BackgroundImageContents {
 public:

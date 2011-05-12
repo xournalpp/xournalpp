@@ -33,7 +33,7 @@ GList * ExportDialog::getRange() {
 void ExportDialog::handleData() {
 	XOJ_CHECK_TYPE(ExportDialog);
 
-	GtkWidget * rdRangeAll = get("rdRangeAll");
+//	GtkWidget * rdRangeAll = get("rdRangeAll");
 	GtkWidget * rdRangeCurrent = get("rdRangeCurrent");
 	GtkWidget * rdRangePages = get("rdRangePages");
 
@@ -50,7 +50,7 @@ void ExportDialog::handleData() {
 	GtkWidget * rdFormatPDF = get("rdFormatPDF");
 	GtkWidget * rdFormatEPS = get("rdFormatEPS");
 	GtkWidget * rdFormatSVG = get("rdFormatSVG");
-	GtkWidget * rdFormatPNG = get("rdFormatPNG");
+//	GtkWidget * rdFormatPNG = get("rdFormatPNG");
 
 	if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(rdFormatPDF))) {
 		this->type = EXPORT_FORMAT_PDF;

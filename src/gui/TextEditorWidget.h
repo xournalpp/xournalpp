@@ -46,15 +46,7 @@ static GObject*
 gtk_invisible_constructor(GType type, guint n_construct_properties, GObjectConstructParam *construct_params);
 
 enum {
-	SELECT_ALL,
-	DELETE_FROM_CURSOR,
-	BACKSPACE,
-	CUT_CLIPBOARD,
-	COPY_CLIPBOARD,
-	PASTE_CLIPBOARD,
-	TOGGLE_OVERWRITE,
-	MOVE_CURSOR,
-	LAST_SIGNAL
+	SELECT_ALL, DELETE_FROM_CURSOR, BACKSPACE, CUT_CLIPBOARD, COPY_CLIPBOARD, PASTE_CLIPBOARD, TOGGLE_OVERWRITE, MOVE_CURSOR, LAST_SIGNAL
 };
 
 static guint signals[LAST_SIGNAL] = { 0 };
@@ -71,7 +63,7 @@ static void gtk_xoj_int_txt_move_cursor(GtkWidget *widget, gint step, gint bitma
 
 static void gtk_xoj_int_txt_delete_from_cursor(GtkWidget *widget, gint type, gint count) {
 	GtkXojIntTxt * txt = GTK_XOJ_INT_TXT (widget);
-	txt->te->deleteFromCursor((GtkDeleteType)type, count);
+	txt->te->deleteFromCursor((GtkDeleteType) type, count);
 }
 
 static void gtk_xoj_int_txt_backspace(GtkWidget *widget) {
@@ -106,12 +98,10 @@ static void add_move_binding(GtkBindingSet *binding_set, guint keyval, guint mod
 		bitmask |= 2;
 	}
 
-	gtk_binding_entry_add_signal(binding_set, keyval, (GdkModifierType) modmask, "move-cursor", 2, G_TYPE_INT, step,
-			G_TYPE_INT, bitmask);
+	gtk_binding_entry_add_signal(binding_set, keyval, (GdkModifierType) modmask, "move-cursor", 2, G_TYPE_INT, step, G_TYPE_INT, bitmask);
 
 	/* Selection-extending version */
-	gtk_binding_entry_add_signal(binding_set, keyval, (GdkModifierType) (modmask | GDK_SHIFT_MASK), "move-cursor", 2,
-			G_TYPE_INT, step, G_TYPE_INT, bitmask | 1);
+	gtk_binding_entry_add_signal(binding_set, keyval, (GdkModifierType) (modmask | GDK_SHIFT_MASK), "move-cursor", 2, G_TYPE_INT, step, G_TYPE_INT, bitmask | 1);
 }
 
 static void gtk_xoj_int_txt_class_init(GtkXojIntTxtClass *klass) {
@@ -143,37 +133,34 @@ static void gtk_xoj_int_txt_class_init(GtkXojIntTxtClass *klass) {
 	 * The default bindings for this signal are Ctrl-a and Ctrl-/
 	 * for selecting and Shift-Ctrl-a and Ctrl-\ for unselecting.
 	 */
-	signals[SELECT_ALL] = g_signal_new_class_handler("select-all", G_OBJECT_CLASS_TYPE (object_class),
-			(GSignalFlags) (G_SIGNAL_RUN_LAST | G_SIGNAL_ACTION), G_CALLBACK (gtk_xoj_int_txt_select_all), NULL, NULL,
-			gtk_marshal_VOID__VOID, G_TYPE_NONE, 0);
+	signals[SELECT_ALL] = g_signal_new_class_handler("select-all", G_OBJECT_CLASS_TYPE (object_class), (GSignalFlags) (G_SIGNAL_RUN_LAST | G_SIGNAL_ACTION),
+			G_CALLBACK (gtk_xoj_int_txt_select_all), NULL, NULL, gtk_marshal_VOID__VOID, G_TYPE_NONE, 0);
 
-	signals[MOVE_CURSOR] = g_signal_new_class_handler("move-cursor", G_OBJECT_CLASS_TYPE (object_class),
-			(GSignalFlags) (G_SIGNAL_RUN_LAST | G_SIGNAL_ACTION), G_CALLBACK (gtk_xoj_int_txt_move_cursor), NULL, NULL,
-			gtk_marshal_VOID__INT_INT, G_TYPE_NONE, 2, G_TYPE_INT, G_TYPE_INT);
+	signals[MOVE_CURSOR] = g_signal_new_class_handler("move-cursor", G_OBJECT_CLASS_TYPE (object_class), (GSignalFlags) (G_SIGNAL_RUN_LAST | G_SIGNAL_ACTION),
+			G_CALLBACK (gtk_xoj_int_txt_move_cursor), NULL, NULL, gtk_marshal_VOID__INT_INT, G_TYPE_NONE, 2, G_TYPE_INT, G_TYPE_INT);
 
 	signals[DELETE_FROM_CURSOR] = g_signal_new_class_handler("delete-from-cursor", G_OBJECT_CLASS_TYPE (object_class),
-			(GSignalFlags) (G_SIGNAL_RUN_LAST | G_SIGNAL_ACTION), G_CALLBACK (gtk_xoj_int_txt_delete_from_cursor),
-			NULL, NULL, gtk_marshal_VOID__INT_INT, G_TYPE_NONE, 2, G_TYPE_INT, G_TYPE_INT);
+			(GSignalFlags) (G_SIGNAL_RUN_LAST | G_SIGNAL_ACTION), G_CALLBACK (gtk_xoj_int_txt_delete_from_cursor), NULL, NULL, gtk_marshal_VOID__INT_INT,
+			G_TYPE_NONE, 2, G_TYPE_INT, G_TYPE_INT);
 
-	signals[BACKSPACE] = g_signal_new_class_handler("backspace", G_OBJECT_CLASS_TYPE (object_class),
-			(GSignalFlags) (G_SIGNAL_RUN_LAST | G_SIGNAL_ACTION), G_CALLBACK (gtk_xoj_int_txt_backspace), NULL, NULL,
-			gtk_marshal_VOID__VOID, G_TYPE_NONE, 0);
+	signals[BACKSPACE] = g_signal_new_class_handler("backspace", G_OBJECT_CLASS_TYPE (object_class), (GSignalFlags) (G_SIGNAL_RUN_LAST | G_SIGNAL_ACTION),
+			G_CALLBACK (gtk_xoj_int_txt_backspace), NULL, NULL, gtk_marshal_VOID__VOID, G_TYPE_NONE, 0);
 
 	signals[CUT_CLIPBOARD] = g_signal_new_class_handler("cut-clipboard", G_OBJECT_CLASS_TYPE (object_class),
-			(GSignalFlags) (G_SIGNAL_RUN_LAST | G_SIGNAL_ACTION), G_CALLBACK (gtk_xoj_int_txt_cut_clipboard), NULL,
-			NULL, gtk_marshal_VOID__VOID, G_TYPE_NONE, 0);
+			(GSignalFlags) (G_SIGNAL_RUN_LAST | G_SIGNAL_ACTION), G_CALLBACK (gtk_xoj_int_txt_cut_clipboard), NULL, NULL, gtk_marshal_VOID__VOID, G_TYPE_NONE,
+			0);
 
 	signals[COPY_CLIPBOARD] = g_signal_new_class_handler("copy-clipboard", G_OBJECT_CLASS_TYPE (object_class),
-			(GSignalFlags) (G_SIGNAL_RUN_LAST | G_SIGNAL_ACTION), G_CALLBACK (gtk_xoj_int_txt_copy_clipboard), NULL,
-			NULL, gtk_marshal_VOID__VOID, G_TYPE_NONE, 0);
+			(GSignalFlags) (G_SIGNAL_RUN_LAST | G_SIGNAL_ACTION), G_CALLBACK (gtk_xoj_int_txt_copy_clipboard), NULL, NULL, gtk_marshal_VOID__VOID, G_TYPE_NONE,
+			0);
 
 	signals[PASTE_CLIPBOARD] = g_signal_new_class_handler("paste-clipboard", G_OBJECT_CLASS_TYPE (object_class),
-			(GSignalFlags) (G_SIGNAL_RUN_LAST | G_SIGNAL_ACTION), G_CALLBACK (gtk_xoj_int_txt_paste_clipboard), NULL,
-			NULL, gtk_marshal_VOID__VOID, G_TYPE_NONE, 0);
+			(GSignalFlags) (G_SIGNAL_RUN_LAST | G_SIGNAL_ACTION), G_CALLBACK (gtk_xoj_int_txt_paste_clipboard), NULL, NULL, gtk_marshal_VOID__VOID,
+			G_TYPE_NONE, 0);
 
 	signals[TOGGLE_OVERWRITE] = g_signal_new_class_handler("toggle-overwrite", G_OBJECT_CLASS_TYPE (object_class),
-			(GSignalFlags) (G_SIGNAL_RUN_LAST | G_SIGNAL_ACTION), G_CALLBACK (gtk_xoj_int_txt_toggle_overwrite), NULL,
-			NULL, gtk_marshal_VOID__VOID, G_TYPE_NONE, 0);
+			(GSignalFlags) (G_SIGNAL_RUN_LAST | G_SIGNAL_ACTION), G_CALLBACK (gtk_xoj_int_txt_toggle_overwrite), NULL, NULL, gtk_marshal_VOID__VOID,
+			G_TYPE_NONE, 0);
 
 	////////////////////////////////////////////////////////
 	////////////////////////////////////////////////////////
@@ -238,33 +225,28 @@ static void gtk_xoj_int_txt_class_init(GtkXojIntTxtClass *klass) {
 	gtk_binding_entry_add_signal(binding_set, GDK_slash, GDK_CONTROL_MASK, "select-all", 0);
 
 	/* Deleting text */
-	gtk_binding_entry_add_signal(binding_set, GDK_Delete, (GdkModifierType) 0, "delete-from-cursor", 2, G_TYPE_INT,
-			GTK_DELETE_CHARS, G_TYPE_INT, 1);
-	gtk_binding_entry_add_signal(binding_set, GDK_KP_Delete, (GdkModifierType) 0, "delete-from-cursor", 2, G_TYPE_INT,
-			GTK_DELETE_CHARS, G_TYPE_INT, 1);
+	gtk_binding_entry_add_signal(binding_set, GDK_Delete, (GdkModifierType) 0, "delete-from-cursor", 2, G_TYPE_INT, GTK_DELETE_CHARS, G_TYPE_INT, 1);
+	gtk_binding_entry_add_signal(binding_set, GDK_KP_Delete, (GdkModifierType) 0, "delete-from-cursor", 2, G_TYPE_INT, GTK_DELETE_CHARS, G_TYPE_INT, 1);
 
 	gtk_binding_entry_add_signal(binding_set, GDK_BackSpace, (GdkModifierType) 0, "backspace", 0);
 
 	/* Make this do the same as Backspace, to help with mis-typing */
 	gtk_binding_entry_add_signal(binding_set, GDK_BackSpace, GDK_SHIFT_MASK, "backspace", 0);
 
-	gtk_binding_entry_add_signal(binding_set, GDK_Delete, GDK_CONTROL_MASK, "delete-from-cursor", 2, G_TYPE_INT,
-			GTK_DELETE_WORD_ENDS, G_TYPE_INT, 1);
+	gtk_binding_entry_add_signal(binding_set, GDK_Delete, GDK_CONTROL_MASK, "delete-from-cursor", 2, G_TYPE_INT, GTK_DELETE_WORD_ENDS, G_TYPE_INT, 1);
 
-	gtk_binding_entry_add_signal(binding_set, GDK_KP_Delete, GDK_CONTROL_MASK, "delete-from-cursor", 2, G_TYPE_INT,
-			GTK_DELETE_WORD_ENDS, G_TYPE_INT, 1);
+	gtk_binding_entry_add_signal(binding_set, GDK_KP_Delete, GDK_CONTROL_MASK, "delete-from-cursor", 2, G_TYPE_INT, GTK_DELETE_WORD_ENDS, G_TYPE_INT, 1);
 
-	gtk_binding_entry_add_signal(binding_set, GDK_BackSpace, GDK_CONTROL_MASK, "delete-from-cursor", 2, G_TYPE_INT,
-			GTK_DELETE_WORD_ENDS, G_TYPE_INT, -1);
+	gtk_binding_entry_add_signal(binding_set, GDK_BackSpace, GDK_CONTROL_MASK, "delete-from-cursor", 2, G_TYPE_INT, GTK_DELETE_WORD_ENDS, G_TYPE_INT, -1);
 
-	gtk_binding_entry_add_signal(binding_set, GDK_Delete, (GdkModifierType) (GDK_SHIFT_MASK | GDK_CONTROL_MASK),
-			"delete-from-cursor", 2, G_TYPE_INT, GTK_DELETE_PARAGRAPH_ENDS, G_TYPE_INT, 1);
+	gtk_binding_entry_add_signal(binding_set, GDK_Delete, (GdkModifierType) (GDK_SHIFT_MASK | GDK_CONTROL_MASK), "delete-from-cursor", 2, G_TYPE_INT,
+			GTK_DELETE_PARAGRAPH_ENDS, G_TYPE_INT, 1);
 
-	gtk_binding_entry_add_signal(binding_set, GDK_KP_Delete, (GdkModifierType) (GDK_SHIFT_MASK | GDK_CONTROL_MASK),
-			"delete-from-cursor", 2, G_TYPE_INT, GTK_DELETE_PARAGRAPH_ENDS, G_TYPE_INT, 1);
+	gtk_binding_entry_add_signal(binding_set, GDK_KP_Delete, (GdkModifierType) (GDK_SHIFT_MASK | GDK_CONTROL_MASK), "delete-from-cursor", 2, G_TYPE_INT,
+			GTK_DELETE_PARAGRAPH_ENDS, G_TYPE_INT, 1);
 
-	gtk_binding_entry_add_signal(binding_set, GDK_BackSpace, (GdkModifierType) (GDK_SHIFT_MASK | GDK_CONTROL_MASK),
-			"delete-from-cursor", 2, G_TYPE_INT, GTK_DELETE_PARAGRAPH_ENDS, G_TYPE_INT, -1);
+	gtk_binding_entry_add_signal(binding_set, GDK_BackSpace, (GdkModifierType) (GDK_SHIFT_MASK | GDK_CONTROL_MASK), "delete-from-cursor", 2, G_TYPE_INT,
+			GTK_DELETE_PARAGRAPH_ENDS, G_TYPE_INT, -1);
 
 	/* Cut/copy/paste */
 
@@ -336,11 +318,12 @@ static void gtk_invisible_size_allocate(GtkWidget *widget, GtkAllocation *alloca
 
 static GObject*
 gtk_invisible_constructor(GType type, guint n_construct_properties, GObjectConstructParam *construct_params) {
-	GObject *object;
+	GObject * object;
 
 	object = G_OBJECT_CLASS (gtk_xoj_int_txt_parent_class)->constructor(type, n_construct_properties, construct_params);
 
-	gtk_widget_realize(GTK_WIDGET (object));
+	GtkWidget * widget = GTK_WIDGET(object);
+	gtk_invisible_realize(widget);
 
 	return object;
 }

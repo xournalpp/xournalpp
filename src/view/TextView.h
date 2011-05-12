@@ -23,9 +23,10 @@ private:
 
 public:
 	static void calcSize(Text * t, double & width, double & height);
-	static void drawText(cairo_t *cr, Text * t);
+	static void drawText(cairo_t * cr, Text * t);
 	static GList * findText(Text * t, const char * text);
-	static PangoLayout * initPango(cairo_t *cr, Text * t);
+	static PangoLayout * initPango(cairo_t * cr, Text * t);
+	static void updatePangoFont(PangoLayout * layout, Text * t);
 };
 
 #endif /* __TEXTVIEW_H__ */

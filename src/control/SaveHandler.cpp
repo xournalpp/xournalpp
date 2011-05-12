@@ -146,7 +146,6 @@ void SaveHandler::visitLayer(XmlNode * page, Layer * l) {
 
 			stroke->setAttrib("color", getColorStr(s->getColor(), alpha).c_str());
 
-			bool hasPresureSensitivity = false;
 			int pointCount = s->getPointCount();
 
 			for (int i = 0; i < pointCount; i++) {

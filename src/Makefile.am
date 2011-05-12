@@ -188,7 +188,7 @@ xournalpp_SOURCES += \
 	plugin/python/PythonRunner.cpp
 endif
 
-xournalpp_CXXFLAGS = -g -rdynamic
+xournalpp_CXXFLAGS = -g -rdynamic -Wreturn-type -Wuninitialized -Wunused-value -Wunused-variable   
 
 xournalpp_LDADD = @PACKAGE_LIBS@ $(INTLLIBS)
 

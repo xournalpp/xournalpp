@@ -29,10 +29,6 @@ void ToolPageLayer::cbSelectCallback(GtkComboBox * widget, ToolPageLayer * tpl) 
 		return;
 	}
 
-	GtkComboBox * cb = GTK_COMBO_BOX(tpl->layerComboBox);
-	int count = gtk_tree_model_iter_n_children(gtk_combo_box_get_model(cb), NULL);
-	int selected = count - gtk_combo_box_get_active(widget) - 1;
-
 	tpl->handler->actionPerformed(ACTION_FOOTER_LAYER, GROUP_NOGROUP, NULL, NULL, NULL, true);
 }
 

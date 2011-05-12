@@ -52,7 +52,7 @@ void xoj_type_initMutex();
  */
 #define XOJ_TYPE_ATTRIB \
 	int z__xoj_type; \
-	int z__xoj_typeCheckvalue
+	unsigned int z__xoj_typeCheckvalue
 
 /**
  * Initalize the Xournal type info, this should be called in the constructor

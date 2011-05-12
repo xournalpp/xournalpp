@@ -190,7 +190,7 @@ void ToolbarCustomizeDialog::toolbarDragLeafeCb(GtkToolbar * toolbar, GdkDragCon
 void ToolbarCustomizeDialog::toolbarDragDataReceivedCb(GtkToolbar * toolbar, GdkDragContext * context,
 		gint x, gint y, GtkSelectionData * data, guint info, guint time) {
 
-	int ipos = gtk_toolbar_get_drop_index(toolbar, x, y);
+	//int ipos = gtk_toolbar_get_drop_index(toolbar, x, y);
 // TODO ????????????????
 }
 

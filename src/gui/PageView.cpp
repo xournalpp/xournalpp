@@ -716,8 +716,6 @@ bool PageView::paintPage(cairo_t * cr, GdkRectangle * rect) {
 		this->selection->paint(cr, rect, zoom);
 	}
 
-	Control * control = xournal->getControl();
-
 	if (this->search) {
 		this->search->paint(cr, rect, zoom, getSelectionColor());
 	}

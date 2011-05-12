@@ -187,7 +187,6 @@ private:
 
 		cairo_t * cr = gdk_cairo_create(this->widget->window);
 
-		double width = cairo_image_surface_get_width(this->crBuffer);
 		cairo_set_source_surface(cr, this->crBuffer, 0, 0);
 
 		cairo_paint(cr);

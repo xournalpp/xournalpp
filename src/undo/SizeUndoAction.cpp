@@ -22,9 +22,9 @@ public:
 		XOJ_CHECK_TYPE(SizeUndoActionEntry);
 
 		delete this->originalPressure;
-		this->originalPressure;
+		this->originalPressure = NULL;
 		delete this->newPressure;
-		this->newPressure;
+		this->newPressure = NULL;
 
 		XOJ_RELEASE_TYPE(SizeUndoActionEntry);
 	}
