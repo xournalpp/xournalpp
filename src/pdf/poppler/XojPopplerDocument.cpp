@@ -351,8 +351,6 @@ bool XojPopplerDocument::save(String filename, GError ** error) {
 		return false;
 	}
 
-	bool retval = false;
-
 	GooString * fname = new GooString(filename.c_str());
 	int err_code = this->data->doc->saveAs(fname);
 	delete fname;

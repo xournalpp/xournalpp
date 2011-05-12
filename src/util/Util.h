@@ -12,7 +12,7 @@
 #ifndef __UTIL_H__
 #define __UTIL_H__
 
-#include <glib.h>
+#include <gtk/gtk.h>
 #include "../util/String.h"
 
 class Util {

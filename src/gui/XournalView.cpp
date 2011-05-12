@@ -324,8 +324,6 @@ void XournalView::scrollTo(int pageNo, double y) {
 
 	PageView * p = viewPages[pageNo];
 
-	int pdfPage = p->getPage().getPdfPageNr();
-
 	int pos = p->getY();
 
 	control->firePageSelected(pageNo);
@@ -372,8 +370,6 @@ void XournalView::onScrolled() {
 
 	// next four pages are not marked as invisible,
 	// because usually you scroll forward
-
-	int visibelPageAdd = 4;
 
 	for (int page = 0; page < this->viewPagesLen; page++) {
 		PageView * p = this->viewPages[page];
@@ -522,8 +518,6 @@ void XournalView::zoomChanged(double lastZoom) {
 
 void XournalView::pageSizeChanged(int page) {
 	XOJ_CHECK_TYPE(XournalView);
-
-	PageView * v = this->viewPages[page];
 	layoutPages();
 }
 

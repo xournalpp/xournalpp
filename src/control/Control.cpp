@@ -1960,16 +1960,15 @@ bool Control::annotatePdf(String filename, bool attachPdf, bool attachToDocument
 
 	if (res) {
 		int page = 0;
-		GValue value = { 0 };
 
-		recent->addRecentFileFilename(filename.c_str());
+		this->recent->addRecentFileFilename(filename.c_str());
 
 		this->doc->lock();
 		String file = this->doc->getEvMetadataFilename();
 		this->doc->unlock();
 
 		this->metadata->getInt(file, "page", page);
-		scrollHandler->scrollToPage(page);
+		this->scrollHandler->scrollToPage(page);
 	} else {
 		this->doc->lock();
 		String errMsg = doc->getLastErrorMsg();

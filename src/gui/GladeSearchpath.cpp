@@ -15,15 +15,13 @@ GladeSearchpath::~GladeSearchpath() {
 	}
 
 	g_list_free(this->directories);
-	this->directories;
+	this->directories = NULL;
 
 	XOJ_RELEASE_TYPE(GladeSearchpath);
 }
 
 char * GladeSearchpath::findFile(const char * subdir, const char * file) {
 	XOJ_CHECK_TYPE(GladeSearchpath);
-
-	GList * elem;
 
 	char * filename = NULL;
 	if (subdir == NULL) {

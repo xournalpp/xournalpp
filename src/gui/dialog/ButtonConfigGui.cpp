@@ -253,8 +253,7 @@ void ButtonConfigGui::saveSettings() {
 		cfg->eraserMode = ERASER_TYPE_NONE;
 	}
 
-	if (withDevice) {
-		int i = 0;
+	if (this->withDevice) {
 		GList * devices = gdk_devices_list();
 		int dev = gtk_combo_box_get_active(GTK_COMBO_BOX(cbDevice));
 		GList * selected = g_list_nth(devices, dev - 1);

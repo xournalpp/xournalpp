@@ -18,7 +18,7 @@ GFile * ImageOpenDlg::show(GtkWindow * win, Settings * settings, bool localOnly,
 		gtk_file_chooser_set_current_folder_uri(GTK_FILE_CHOOSER(dialog), settings->getLastImagePath().c_str());
 	}
 
-	GtkWidget * cbAttach;
+	GtkWidget * cbAttach = NULL;
 	if (attach) {
 		cbAttach = gtk_check_button_new_with_label(_("Attach file to the journal"));
 		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(cbAttach), false);

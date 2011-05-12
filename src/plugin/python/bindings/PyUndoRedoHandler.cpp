@@ -111,9 +111,6 @@ static int Selection_init(PyUndoRedoHandler * self, PyObject * args, PyObject * 
 	return 0;
 }
 
-static PyMemberDef PyXournal_members[] = { { NULL } /* Sentinel */
-};
-
 static int PyUndoRedoHandler_init(PyUndoRedoHandler * self, PyObject * args, PyObject * kwds) {
 	PyObject * xournal = NULL;
 

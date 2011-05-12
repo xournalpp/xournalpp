@@ -215,6 +215,8 @@ int XournalMain::run(int argc, char * argv[]) {
 	PythonRunner::releasePythonRunner();
 #endif
 
+	control->getScheduler()->stop();
+
 	delete win;
 	delete control;
 	delete gladePath;

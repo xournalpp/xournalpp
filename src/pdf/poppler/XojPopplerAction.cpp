@@ -15,8 +15,6 @@ XojPopplerAction::~XojPopplerAction() {
 void XojPopplerAction::linkFromDest(LinkDestination * link, LinkDest * dest) {
 	XOJ_CHECK_TYPE(XojPopplerAction);
 
-	const char * unimplementedDest = NULL;
-
 	int pageNum = 0;
 	if (dest->isPageRef()) {
 		Ref pageRef = dest->getPageRef();

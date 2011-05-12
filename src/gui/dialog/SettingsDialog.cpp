@@ -17,8 +17,6 @@ SettingsDialog::SettingsDialog(GladeSearchpath * gladeSearchPath, Settings * set
 	callib = zoomcallib_new();
 	this->buttonConfigs = NULL;
 
-	GtkWidget * btSettingsOk = get("btSettingsOk");
-
 	GtkWidget * vbox = get("zoomVBox");
 	g_return_if_fail(vbox != NULL);
 

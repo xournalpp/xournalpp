@@ -14,6 +14,9 @@
 
 #include "InputStreamException.h"
 
+#include <gtk/gtk.h>
+
+
 class Serializeable;
 
 class ObjectInputStream {

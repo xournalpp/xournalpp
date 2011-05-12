@@ -256,7 +256,6 @@ bool Sidebar::treeClickedCallback(GtkWidget * treeview, GdkEventButton * event, 
 
 		if (gtk_tree_selection_get_selected(selection, &model, &iter)) {
 			XojLinkDest * link = NULL;
-			int first_page, last_page = -1;
 
 			gtk_tree_model_get(model, &iter, DOCUMENT_LINKS_COLUMN_LINK, &link, -1);
 			if (link && link->dest) {
@@ -340,7 +339,6 @@ bool Sidebar::selectPageNr(int page, int pdfPage, GtkTreeIter * parent) {
 		GtkTreeSelection *selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(treeViewBookmarks));
 		if (gtk_tree_selection_get_selected(selection, &model, &iter)) {
 			XojLinkDest * link = NULL;
-			int first_page, last_page = -1;
 
 			gtk_tree_model_get(model, &iter, DOCUMENT_LINKS_COLUMN_LINK, &link, -1);
 			if (link && link->dest) {

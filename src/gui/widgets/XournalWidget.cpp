@@ -593,8 +593,6 @@ static void gtk_xournal_size_request(GtkWidget * widget, GtkRequisition * requis
 	g_return_if_fail(GTK_IS_XOURNAL(widget));
 	g_return_if_fail(requisition != NULL);
 
-	GtkXournal * xournal = GTK_XOURNAL(widget);
-
 	requisition->width = 200;
 	requisition->height = 200;
 }
@@ -850,8 +848,8 @@ static gboolean gtk_xournal_expose(GtkWidget * widget, GdkEventExpose * event) {
 
 		int px = xournal->selection->getXOnView() * zoom;
 		int py = xournal->selection->getYOnView() * zoom;
-		int pw = xournal->selection->getWidth() * zoom;
-		int ph = xournal->selection->getHeight() * zoom;
+//		int pw = xournal->selection->getWidth() * zoom;
+//		int ph = xournal->selection->getHeight() * zoom;
 
 		// not visible, its on the right side of the visible area
 		if (px > lastVisibleX) {

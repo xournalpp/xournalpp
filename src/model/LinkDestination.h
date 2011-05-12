@@ -12,7 +12,7 @@
 #ifndef __LINKDESTINATION_H__
 #define __LINKDESTINATION_H__
 
-#include <glib.h>
+#include <gtk/gtk.h>
 #include "../util/String.h"
 
 typedef struct _LinkDest XojLinkDest;

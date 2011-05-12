@@ -110,8 +110,6 @@ void SidebarPreview::paint() {
 
 		cairo_scale(cr2, zoom, zoom);
 
-		XojPopplerPage * popplerPage = NULL;
-
 		const char * txtLoading = _("Loading...");
 
 		cairo_text_extents_t ex;

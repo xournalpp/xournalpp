@@ -26,12 +26,12 @@ public:
 
 	void paint(cairo_t * cr, GdkRectangle * rect, double zoom);
 
-	bool onKeyPressEvent(GdkEventKey *event);
-	bool onKeyReleaseEvent(GdkEventKey *event);
+	bool onKeyPressEvent(GdkEventKey * event);
+	bool onKeyReleaseEvent(GdkEventKey * event);
 
 	void toggleOverwrite();
 	void selectAll();
-	void moveCursor(GtkMovementStep step, int count, bool extend_selection);
+	void moveCursor(GtkMovementStep step, int count, bool extendSelection);
 	void deleteFromCursor(GtkDeleteType type, int count);
 	void backspace();
 	void copyToCliboard();
@@ -50,18 +50,22 @@ public:
 
 	void setText(String text);
 	void setFont(XojFont font);
+
 private:
-	void redrawEditor();
+	void repaintEditor();
 	void drawCursor(cairo_t * cr, double x, double y, double height, double zoom);
-	void redrawCursor();
+	void repaintCursor();
 	void resetImContext();
+
+	int getByteOffset(int charOffset);
+	int getCharOffset(int byteOffset);
 
 	static void iMCommitCallback(GtkIMContext * context, const gchar * str, TextEditor * te);
 	static void iMPreeditChangedCallback(GtkIMContext * context, TextEditor * te);
 	static bool iMRetrieveSurroundingCallback(GtkIMContext * context, TextEditor * te);
 	static bool imDeleteSurroundingCallback(GtkIMContext * context, gint offset, gint n_chars, TextEditor * te);
 
-	void moveCursor(const GtkTextIter * new_location, gboolean extend_selection);
+	void moveCursor(const GtkTextIter * newLocation, gboolean extendSelection);
 
 	static gint blinkCallback(TextEditor * te);
 
@@ -84,7 +88,7 @@ private:
 
 	GtkWidget * textWidget;
 
-	GtkIMContext *imContext;
+	GtkIMContext * imContext;
 	String preeditString;
 	bool needImReset;
 	GtkTextBuffer * buffer;

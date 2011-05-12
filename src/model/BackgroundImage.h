@@ -14,6 +14,7 @@
 
 #include "../util/XournalType.h"
 #include "../util/String.h"
+#include <gtk/gtk.h>
 
 class BackgroundImageContents;
 

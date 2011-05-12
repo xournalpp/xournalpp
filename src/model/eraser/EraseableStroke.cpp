@@ -38,7 +38,6 @@ EraseableStroke::~EraseableStroke() {
 void EraseableStroke::draw(cairo_t * cr, double x, double y, double width, double height) {
 	XOJ_CHECK_TYPE(EraseableStroke);
 
-	bool pressure = this->stroke->hasPressure();
 	Point lastPoint;
 
 	g_mutex_lock(this->partLock);

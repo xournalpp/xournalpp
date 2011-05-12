@@ -12,7 +12,7 @@
 #ifndef __STRING_H__
 #define __STRING_H__
 
-#include <gtk/gtk.h>
+#include <glib.h>
 #include "XournalType.h"
 
 class _RefStrInternal;
@@ -46,14 +46,14 @@ public:
 	void operator +=(int i);
 	void operator +=(double d);
 
-	String replace(String search, String replace) const;
+	String replace(const String search, const String replace) const;
 
 	const char * c_str() const;
 
-	int indexOf(String substr, int fromIndex = 0) const;
-	int indexOfCaseInsensitiv(String substr, int fromIndex) const;
-	int lastIndexOf(String substr) const;
-	int lastIndexOf(String substr, int fromIndex) const;
+	int indexOf(const String substr, int fromIndex = 0) const;
+	int indexOfCaseInsensitiv(const String substr, int fromIndex = 0) const;
+	int lastIndexOf(const String substr) const;
+	int lastIndexOf(const String substr, int from) const;
 
 	bool contains(const char * substr) const;
 
@@ -65,13 +65,13 @@ public:
 	bool endsWith(const String & s) const;
 	bool endsWith(const char * s) const;
 
-	bool equalsIgnorCase(const String & s);
+	bool equalsIgnorCase(const String & s) const;
 
 	int length() const;
 	int size() const;
 	String substring(int start, int length) const;
 	String substring(int start) const;
-	String trim();
+	String trim() const;
 
 	String toLowerCase() const;
 	String toUpperCase() const;
@@ -84,7 +84,7 @@ private:
 
 class StringTokenizer {
 public:
-	StringTokenizer(String s, char token, bool returnToken = false);
+	StringTokenizer(const String s, char token, bool returnToken = false);
 	virtual ~StringTokenizer();
 
 	const char * next();

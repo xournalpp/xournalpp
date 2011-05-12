@@ -106,7 +106,6 @@ void DocumentView::drawStroke(cairo_t * cr, Stroke * s, int startPoint) {
 
 	Point lastPoint1(-1, -1);
 	lastPoint1 = points.next();
-	double lastWidth = width;
 
 	while (points.hasNext()) {
 		Point p = points.next();

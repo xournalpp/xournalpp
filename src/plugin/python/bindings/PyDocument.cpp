@@ -57,9 +57,6 @@ static int Selection_init(PyDocument * self, PyObject * args, PyObject * kwds) {
 	return 0;
 }
 
-static PyMemberDef PyXournal_members[] = { { NULL } /* Sentinel */
-};
-
 static int PyDocument_init(PyDocument * self, PyObject * args, PyObject * kwds) {
 	PyObject * xournal = NULL;
 

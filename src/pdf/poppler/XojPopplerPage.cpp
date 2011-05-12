@@ -140,7 +140,6 @@ GList * XojPopplerPage::findText(const char * text) {
 	initTextPage();
 
 	ucs4 = g_utf8_to_ucs4_fast(text, -1, &ucs4_len);
-	double height = getHeight();
 
 	matches = NULL;
 	xMin = 0;

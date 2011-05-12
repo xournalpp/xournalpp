@@ -13,6 +13,7 @@
 #define __OBJECTOUTPUTSTREAM_H__
 
 #include "../String.h"
+#include <gtk/gtk.h>
 
 class Serializeable;
 class ObjectEncoding;

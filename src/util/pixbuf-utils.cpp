@@ -180,11 +180,9 @@ f_pixbuf_from_cairo_surface(cairo_surface_t *source) {
 
 	guchar *gdk_pixels = gdk_pixbuf_get_pixels(pixbuf);
 	int gdk_rowstride = gdk_pixbuf_get_rowstride(pixbuf);
-	int n_channels = gdk_pixbuf_get_n_channels(pixbuf);
 	cairo_format_t format;
 	cairo_surface_t *surface;
 	cairo_t *ctx;
-	static const cairo_user_data_key_t key = { 0 };
 	int j;
 
 	format = f_image_surface_get_format(source);
