@@ -191,7 +191,7 @@ void ToolbarCustomizeDialog::toolbarDragDataReceivedCb(GtkToolbar * toolbar, Gdk
 		gint x, gint y, GtkSelectionData * data, guint info, guint time) {
 
 	//int ipos = gtk_toolbar_get_drop_index(toolbar, x, y);
-// TODO ????????????????
+// TODO Implement toolbarDragDataReceivedCb
 }
 
 /**

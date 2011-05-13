@@ -40,7 +40,7 @@ void ShapeRecognizerResult::addSourceStroke(Stroke * s) {
 
 	GList * elem = g_list_find(this->source, s);
 	if (elem) {
-		// TODO: LOW PRIO: this is a bug in the ShapreRecognizer!!
+		// TODO LOW PRIO: this is a bug in the ShapreRecognizer!!
 //		g_warning("ShapeRecognizerResult::addSourceStroke() try to add a stroke twice!");
 //		Stacktrace::printStracktrace();
 		return;

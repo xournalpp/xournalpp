@@ -71,7 +71,7 @@ void MetadataManager::setString(String uri, const char * name, const char * valu
 void MetadataManager::updateAccessTime(String uri) {
 	XOJ_CHECK_TYPE(MetadataManager);
 
-	// TODO: low prio: newer GTK Version use _int64 instead of integer
+	// TODO LOW PRIO: newer GTK Version use _int64 instead of integer
 	g_key_file_set_integer(this->config, uri.c_str(), "atime", time(NULL));
 
 	if (this->timeoutId) {
@@ -111,7 +111,7 @@ void MetadataManager::cleanupMetadata() {
 		}
 
 		GError * error = NULL;
-		// TODO: low prio: newer GTK Version use _int64 instead of integer
+		// TODO LOW PRIO: newer GTK Version use _int64 instead of integer
 		int time = g_key_file_get_integer(this->config, group, "atime", &error);
 		if (error) {
 			g_error_free(error);

@@ -471,7 +471,7 @@ void EditSelection::moveSelection(double dx, double dy) {
 void EditSelection::ensureWithinVisibleArea() {
 	XOJ_CHECK_TYPE(EditSelection);
 
-	//TODO: scroll to this point if not in visible area
+	//TODO LOW PRIO scroll to this point if not in visible area
 
 	//	double zoom = this->view->getXournal()->getZoom();
 	//	int x = this->view->getX() - this->offsetX + this->relativeX;

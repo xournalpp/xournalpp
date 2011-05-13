@@ -714,7 +714,7 @@ void XournalView::repaintSelection(bool evenWithoutSelection) {
 	//
 	//	gtk_xournal_repaint_area(this->widget, x0 + x - 10, y0 + y - 10, w + 20, h + 20);
 
-	// TODO: OPTIMIZE ?
+	// TODO OPTIMIZE ?
 	gtk_widget_queue_draw(this->widget);
 }
 

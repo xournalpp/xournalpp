@@ -390,6 +390,30 @@ void String::operator +=(const char * str) {
 	}
 }
 
+String String::operator +(const String & str) const {
+	String newString = *this;
+	newString += str;
+	return newString;
+}
+
+String String::operator +(const char * str) const {
+	String newString = *this;
+	newString += str;
+	return newString;
+}
+
+String String::operator +(int i) const {
+	String newString = *this;
+	newString += i;
+	return newString;
+}
+
+String String::operator +(double d) const {
+	String newString = *this;
+	newString += d;
+	return newString;
+}
+
 bool String::operator <(const String & str) const {
 	XOJ_CHECK_TYPE(String);
 
@@ -650,8 +674,6 @@ String String::replace(const String search, const String replace) const {
 
 /**
  * String tokenizer
- *
- * TODO: !!!!!THIS CLASS IS NOT UTF8 SAVE
  */
 StringTokenizer::StringTokenizer(const String s, char token, bool returnToken) {
 	XOJ_INIT_TYPE(StringTokenizer);

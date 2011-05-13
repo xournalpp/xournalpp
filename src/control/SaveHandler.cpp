@@ -27,7 +27,7 @@
 
 #include <config.h>
 
-// TODO: LOW PRIO: remove all elements which are complete outside the pages
+// TODO LOW PRIO: remove all elements which are complete outside the pages
 
 SaveHandler::SaveHandler() {
 	XOJ_INIT_TYPE(SaveHandler);

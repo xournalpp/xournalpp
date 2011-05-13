@@ -198,7 +198,7 @@ void MainWindow::dragDataRecived(GtkWidget * widget, GdkDragContext * dragContex
 		return;
 	}
 
-	// TODO: LOW PRIO: use x and y for insert location!
+	// TODO LOW PRIO: use x and y for insert location!
 
 	gchar ** uris = gtk_selection_data_get_uris(data);
 	if (uris) {
@@ -251,7 +251,7 @@ void MainWindow::dragDataRecived(GtkWidget * widget, GdkDragContext * dragContex
 			}
 			g_object_unref(cancel);
 
-			//TODO:LOW PRIO: handle .xoj, .pdf and Images
+			//TODO LOW PRIO: handle .xoj, .pdf and Images
 			printf("open uri: %s\n", uris[i]);
 		}
 
@@ -459,7 +459,7 @@ void MainWindow::startToolbarEditMode() {
 			gtk_widget_set_allocation(GTK_WIDGET(it), &alloc);
 		}
 	}
-	// TODO ?????????????
+	// TODO implement startToolbarEditMode
 }
 
 void MainWindow::endToolbarEditMode() {

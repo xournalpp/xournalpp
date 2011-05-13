@@ -187,7 +187,7 @@ void ExportJob::run() {
 					XojPopplerPage * popplerPage = doc->getPdfPage(pgNo);
 
 
-					// TODO: pdf is written as image to the SVN surface!!
+					// TODO LOW PRIO pdf is written as image to the SVN surface!!
 					PdfView::drawPage(NULL, popplerPage, cr, zoom, page.getWidth(), page.getHeight());
 				}
 

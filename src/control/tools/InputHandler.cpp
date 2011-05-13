@@ -11,6 +11,8 @@
 
 #include <math.h>
 
+// TODO After strokes are drawn they are re-drawn, it appears with slightly different width or anti-aliasing.
+
 #define PIXEL_MOTION_THRESHOLD 0.3
 
 InputHandler::InputHandler(XournalView * xournal, PageView * redrawable) {
