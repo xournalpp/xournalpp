@@ -1,7 +1,7 @@
 #include "TextView.h"
 #include "../model/Text.h"
 #include <string.h>
-#include "../pdf/poppler/XojPopplerPage.h"
+#include "../pdf/popplerdirect/poppler/XojPopplerPage.h"
 
 TextView::TextView() {
 }

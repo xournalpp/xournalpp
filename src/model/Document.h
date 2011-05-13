@@ -20,10 +20,10 @@
 #include "PageRef.h"
 #include "LinkDestination.h"
 
-#include "../pdf/poppler/XojPopplerDocument.h"
-#include "../pdf/poppler/XojPopplerPage.h"
-#include "../pdf/poppler/XojPopplerIter.h"
-#include "../pdf/poppler/XojPopplerAction.h"
+#include "../pdf/popplerdirect/poppler/XojPopplerDocument.h"
+#include "../pdf/popplerdirect/poppler/XojPopplerPage.h"
+#include "../pdf/popplerdirect/poppler/XojPopplerIter.h"
+#include "../pdf/popplerdirect/poppler/XojPopplerAction.h"
 
 #include "DocumentHandler.h"
 

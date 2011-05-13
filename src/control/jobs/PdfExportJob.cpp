@@ -1,5 +1,5 @@
 #include "PdfExportJob.h"
-#include "../../pdf/PdfExport.h"
+#include "../../pdf/popplerdirect/PdfExport.h"
 #include "../Control.h"
 #include "SynchronizedProgressListener.h"
 

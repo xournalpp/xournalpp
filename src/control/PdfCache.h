@@ -13,7 +13,7 @@
 #define __PDFCACHE_H__
 
 #include <cairo/cairo.h>
-#include "../pdf/poppler/XojPopplerPage.h"
+#include "../pdf/popplerdirect/poppler/XojPopplerPage.h"
 #include "../util/XournalType.h"
 
 

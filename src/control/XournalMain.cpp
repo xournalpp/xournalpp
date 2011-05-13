@@ -8,7 +8,7 @@
 #include "LoadHandler.h"
 #include "../gui/GladeSearchpath.h"
 #include "../gui/XournalView.h"
-#include "../pdf/PdfExport.h"
+#include "../pdf/popplerdirect/PdfExport.h"
 #include "cfg.h"
 
 #ifdef ENABLE_PYTHON
