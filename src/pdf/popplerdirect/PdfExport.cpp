@@ -2,8 +2,8 @@
 #include <string.h>
 #include <config.h>
 #include <stdlib.h>
-#include "../util/GzHelper.h"
-#include "../util/PageRange.h"
+#include "../../util/GzHelper.h"
+#include "../../util/PageRange.h"
 
 #include "PdfRefEntry.h"
 #include "PdfUtil.h"

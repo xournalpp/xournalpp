@@ -13,8 +13,8 @@
 #define __CAIROPDF_H__
 
 #include <cairo.h>
-#include "../poppler/XojPopplerPage.h"
-#include "../poppler/XojPopplerDocument.h"
+#include "../popplerdirect/poppler/XojPopplerPage.h"
+#include "../popplerdirect/poppler/XojPopplerDocument.h"
 #include "../../model/PageRef.h"
 #include "../../util/XournalType.h"
 

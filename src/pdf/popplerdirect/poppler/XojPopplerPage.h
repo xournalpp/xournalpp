@@ -21,7 +21,7 @@
 #include <poppler/OptionalContent.h>
 #include <poppler/CairoOutputDev.h>
 
-#include "../../util/XournalType.h"
+#include "../../../util/XournalType.h"
 
 class Page;
 class TextPage;

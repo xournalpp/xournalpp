@@ -7,7 +7,7 @@
 #include <cairo-svg.h>
 #include "../Control.h"
 #include "ExportFormtType.h"
-#include "../../pdf/PdfExport.h"
+#include "../../pdf/popplerdirect/PdfExport.h"
 
 #include <config.h>
 #include <glib/gi18n-lib.h>

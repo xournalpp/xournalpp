@@ -12,10 +12,10 @@
 #ifndef __PDFEXPORT_H__
 #define __PDFEXPORT_H__
 
-#include "../model/Document.h"
-#include "../util/String.h"
-#include "../control/jobs/ProgressListener.h"
-#include "cairo/CairoPdf.h"
+#include "../../model/Document.h"
+#include "../../util/String.h"
+#include "../../control/jobs/ProgressListener.h"
+#include "../cairo/CairoPdf.h"
 #include "PdfXRef.h"
 #include "PdfBookmark.h"
 #include "PdfWriter.h"

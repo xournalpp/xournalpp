@@ -12,7 +12,7 @@
 #ifndef __PDFVIEW_H__
 #define __PDFVIEW_H__
 
-#include "../pdf/poppler/XojPopplerPage.h"
+#include "../pdf/popplerdirect/poppler/XojPopplerPage.h"
 #include <cairo/cairo.h>
 #include "../control/PdfCache.h"
 

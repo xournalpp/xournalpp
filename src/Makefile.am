@@ -125,20 +125,20 @@ xournalpp_SOURCES = \
 	model/Text.cpp \
 	model/XojPage.cpp \
 	pdf/cairo/CairoPdf.cpp \
-	pdf/poppler/XojPopplerAction.cpp \
-	pdf/poppler/XojPopplerDocument.cpp \
-	pdf/poppler/XojPopplerIter.cpp \
-	pdf/poppler/XojPopplerPage.cpp \
-	pdf/PdfBookmark.cpp \
-	pdf/PdfExport.cpp \
-	pdf/PdfObjectWriter.cpp \
-	pdf/PdfRefEntry.cpp \
-	pdf/PdfRefList.cpp \
-	pdf/PdfUtil.cpp \
-	pdf/PdfWriter.cpp \
-	pdf/PdfXRef.cpp \
-	pdf/UpdateRef.cpp \
-	pdf/UpdateRefKey.cpp \
+	pdf/popplerdirect/poppler/XojPopplerAction.cpp \
+	pdf/popplerdirect/poppler/XojPopplerDocument.cpp \
+	pdf/popplerdirect/poppler/XojPopplerIter.cpp \
+	pdf/popplerdirect/poppler/XojPopplerPage.cpp \
+	pdf/popplerdirect/PdfBookmark.cpp \
+	pdf/popplerdirect/PdfExport.cpp \
+	pdf/popplerdirect/PdfObjectWriter.cpp \
+	pdf/popplerdirect/PdfRefEntry.cpp \
+	pdf/popplerdirect/PdfRefList.cpp \
+	pdf/popplerdirect/PdfUtil.cpp \
+	pdf/popplerdirect/PdfWriter.cpp \
+	pdf/popplerdirect/PdfXRef.cpp \
+	pdf/popplerdirect/UpdateRef.cpp \
+	pdf/popplerdirect/UpdateRefKey.cpp \
 	undo/ColorUndoAction.cpp \
 	undo/DeleteUndoAction.cpp \
 	undo/EraseUndoAction.cpp \

@@ -1,5 +1,5 @@
 #include "PdfBookmark.h"
-#include "../model/LinkDestination.h"
+#include "../../model/LinkDestination.h"
 
 class Bookmark {
 public:

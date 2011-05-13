@@ -131,13 +131,18 @@ am__xournalpp_SOURCES_DIST = collab/Collaboration.cpp \
 	model/LayerListener.cpp model/LinkDestination.cpp \
 	model/PageRef.cpp model/Point.cpp model/Stroke.cpp \
 	model/Text.cpp model/XojPage.cpp pdf/cairo/CairoPdf.cpp \
-	pdf/poppler/XojPopplerAction.cpp \
-	pdf/poppler/XojPopplerDocument.cpp \
-	pdf/poppler/XojPopplerIter.cpp pdf/poppler/XojPopplerPage.cpp \
-	pdf/PdfBookmark.cpp pdf/PdfExport.cpp pdf/PdfObjectWriter.cpp \
-	pdf/PdfRefEntry.cpp pdf/PdfRefList.cpp pdf/PdfUtil.cpp \
-	pdf/PdfWriter.cpp pdf/PdfXRef.cpp pdf/UpdateRef.cpp \
-	pdf/UpdateRefKey.cpp undo/ColorUndoAction.cpp \
+	pdf/popplerdirect/poppler/XojPopplerAction.cpp \
+	pdf/popplerdirect/poppler/XojPopplerDocument.cpp \
+	pdf/popplerdirect/poppler/XojPopplerIter.cpp \
+	pdf/popplerdirect/poppler/XojPopplerPage.cpp \
+	pdf/popplerdirect/PdfBookmark.cpp \
+	pdf/popplerdirect/PdfExport.cpp \
+	pdf/popplerdirect/PdfObjectWriter.cpp \
+	pdf/popplerdirect/PdfRefEntry.cpp \
+	pdf/popplerdirect/PdfRefList.cpp pdf/popplerdirect/PdfUtil.cpp \
+	pdf/popplerdirect/PdfWriter.cpp pdf/popplerdirect/PdfXRef.cpp \
+	pdf/popplerdirect/UpdateRef.cpp \
+	pdf/popplerdirect/UpdateRefKey.cpp undo/ColorUndoAction.cpp \
 	undo/DeleteUndoAction.cpp undo/EraseUndoAction.cpp \
 	undo/FontUndoAction.cpp undo/InsertDeletePageUndoAction.cpp \
 	undo/InsertLayerUndoAction.cpp undo/InsertUndoAction.cpp \
@@ -551,13 +556,18 @@ xournalpp_SOURCES = collab/Collaboration.cpp \
 	model/LayerListener.cpp model/LinkDestination.cpp \
 	model/PageRef.cpp model/Point.cpp model/Stroke.cpp \
 	model/Text.cpp model/XojPage.cpp pdf/cairo/CairoPdf.cpp \
-	pdf/poppler/XojPopplerAction.cpp \
-	pdf/poppler/XojPopplerDocument.cpp \
-	pdf/poppler/XojPopplerIter.cpp pdf/poppler/XojPopplerPage.cpp \
-	pdf/PdfBookmark.cpp pdf/PdfExport.cpp pdf/PdfObjectWriter.cpp \
-	pdf/PdfRefEntry.cpp pdf/PdfRefList.cpp pdf/PdfUtil.cpp \
-	pdf/PdfWriter.cpp pdf/PdfXRef.cpp pdf/UpdateRef.cpp \
-	pdf/UpdateRefKey.cpp undo/ColorUndoAction.cpp \
+	pdf/popplerdirect/poppler/XojPopplerAction.cpp \
+	pdf/popplerdirect/poppler/XojPopplerDocument.cpp \
+	pdf/popplerdirect/poppler/XojPopplerIter.cpp \
+	pdf/popplerdirect/poppler/XojPopplerPage.cpp \
+	pdf/popplerdirect/PdfBookmark.cpp \
+	pdf/popplerdirect/PdfExport.cpp \
+	pdf/popplerdirect/PdfObjectWriter.cpp \
+	pdf/popplerdirect/PdfRefEntry.cpp \
+	pdf/popplerdirect/PdfRefList.cpp pdf/popplerdirect/PdfUtil.cpp \
+	pdf/popplerdirect/PdfWriter.cpp pdf/popplerdirect/PdfXRef.cpp \
+	pdf/popplerdirect/UpdateRef.cpp \
+	pdf/popplerdirect/UpdateRefKey.cpp undo/ColorUndoAction.cpp \
 	undo/DeleteUndoAction.cpp undo/EraseUndoAction.cpp \
 	undo/FontUndoAction.cpp undo/InsertDeletePageUndoAction.cpp \
 	undo/InsertLayerUndoAction.cpp undo/InsertUndoAction.cpp \
@@ -2520,201 +2530,201 @@ xournalpp-CairoPdf.obj: pdf/cairo/CairoPdf.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-CairoPdf.obj `if test -f 'pdf/cairo/CairoPdf.cpp'; then $(CYGPATH_W) 'pdf/cairo/CairoPdf.cpp'; else $(CYGPATH_W) '$(srcdir)/pdf/cairo/CairoPdf.cpp'; fi`
 
-xournalpp-XojPopplerAction.o: pdf/poppler/XojPopplerAction.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-XojPopplerAction.o -MD -MP -MF $(DEPDIR)/xournalpp-XojPopplerAction.Tpo -c -o xournalpp-XojPopplerAction.o `test -f 'pdf/poppler/XojPopplerAction.cpp' || echo '$(srcdir)/'`pdf/poppler/XojPopplerAction.cpp
+xournalpp-XojPopplerAction.o: pdf/popplerdirect/poppler/XojPopplerAction.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-XojPopplerAction.o -MD -MP -MF $(DEPDIR)/xournalpp-XojPopplerAction.Tpo -c -o xournalpp-XojPopplerAction.o `test -f 'pdf/popplerdirect/poppler/XojPopplerAction.cpp' || echo '$(srcdir)/'`pdf/popplerdirect/poppler/XojPopplerAction.cpp
 @am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-XojPopplerAction.Tpo $(DEPDIR)/xournalpp-XojPopplerAction.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='pdf/poppler/XojPopplerAction.cpp' object='xournalpp-XojPopplerAction.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='pdf/popplerdirect/poppler/XojPopplerAction.cpp' object='xournalpp-XojPopplerAction.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-XojPopplerAction.o `test -f 'pdf/poppler/XojPopplerAction.cpp' || echo '$(srcdir)/'`pdf/poppler/XojPopplerAction.cpp
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-XojPopplerAction.o `test -f 'pdf/popplerdirect/poppler/XojPopplerAction.cpp' || echo '$(srcdir)/'`pdf/popplerdirect/poppler/XojPopplerAction.cpp
 
-xournalpp-XojPopplerAction.obj: pdf/poppler/XojPopplerAction.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-XojPopplerAction.obj -MD -MP -MF $(DEPDIR)/xournalpp-XojPopplerAction.Tpo -c -o xournalpp-XojPopplerAction.obj `if test -f 'pdf/poppler/XojPopplerAction.cpp'; then $(CYGPATH_W) 'pdf/poppler/XojPopplerAction.cpp'; else $(CYGPATH_W) '$(srcdir)/pdf/poppler/XojPopplerAction.cpp'; fi`
+xournalpp-XojPopplerAction.obj: pdf/popplerdirect/poppler/XojPopplerAction.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-XojPopplerAction.obj -MD -MP -MF $(DEPDIR)/xournalpp-XojPopplerAction.Tpo -c -o xournalpp-XojPopplerAction.obj `if test -f 'pdf/popplerdirect/poppler/XojPopplerAction.cpp'; then $(CYGPATH_W) 'pdf/popplerdirect/poppler/XojPopplerAction.cpp'; else $(CYGPATH_W) '$(srcdir)/pdf/popplerdirect/poppler/XojPopplerAction.cpp'; fi`
 @am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-XojPopplerAction.Tpo $(DEPDIR)/xournalpp-XojPopplerAction.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='pdf/poppler/XojPopplerAction.cpp' object='xournalpp-XojPopplerAction.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='pdf/popplerdirect/poppler/XojPopplerAction.cpp' object='xournalpp-XojPopplerAction.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-XojPopplerAction.obj `if test -f 'pdf/poppler/XojPopplerAction.cpp'; then $(CYGPATH_W) 'pdf/poppler/XojPopplerAction.cpp'; else $(CYGPATH_W) '$(srcdir)/pdf/poppler/XojPopplerAction.cpp'; fi`
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-XojPopplerAction.obj `if test -f 'pdf/popplerdirect/poppler/XojPopplerAction.cpp'; then $(CYGPATH_W) 'pdf/popplerdirect/poppler/XojPopplerAction.cpp'; else $(CYGPATH_W) '$(srcdir)/pdf/popplerdirect/poppler/XojPopplerAction.cpp'; fi`
 
-xournalpp-XojPopplerDocument.o: pdf/poppler/XojPopplerDocument.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-XojPopplerDocument.o -MD -MP -MF $(DEPDIR)/xournalpp-XojPopplerDocument.Tpo -c -o xournalpp-XojPopplerDocument.o `test -f 'pdf/poppler/XojPopplerDocument.cpp' || echo '$(srcdir)/'`pdf/poppler/XojPopplerDocument.cpp
+xournalpp-XojPopplerDocument.o: pdf/popplerdirect/poppler/XojPopplerDocument.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-XojPopplerDocument.o -MD -MP -MF $(DEPDIR)/xournalpp-XojPopplerDocument.Tpo -c -o xournalpp-XojPopplerDocument.o `test -f 'pdf/popplerdirect/poppler/XojPopplerDocument.cpp' || echo '$(srcdir)/'`pdf/popplerdirect/poppler/XojPopplerDocument.cpp
 @am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-XojPopplerDocument.Tpo $(DEPDIR)/xournalpp-XojPopplerDocument.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='pdf/poppler/XojPopplerDocument.cpp' object='xournalpp-XojPopplerDocument.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='pdf/popplerdirect/poppler/XojPopplerDocument.cpp' object='xournalpp-XojPopplerDocument.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-XojPopplerDocument.o `test -f 'pdf/poppler/XojPopplerDocument.cpp' || echo '$(srcdir)/'`pdf/poppler/XojPopplerDocument.cpp
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-XojPopplerDocument.o `test -f 'pdf/popplerdirect/poppler/XojPopplerDocument.cpp' || echo '$(srcdir)/'`pdf/popplerdirect/poppler/XojPopplerDocument.cpp
 
-xournalpp-XojPopplerDocument.obj: pdf/poppler/XojPopplerDocument.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-XojPopplerDocument.obj -MD -MP -MF $(DEPDIR)/xournalpp-XojPopplerDocument.Tpo -c -o xournalpp-XojPopplerDocument.obj `if test -f 'pdf/poppler/XojPopplerDocument.cpp'; then $(CYGPATH_W) 'pdf/poppler/XojPopplerDocument.cpp'; else $(CYGPATH_W) '$(srcdir)/pdf/poppler/XojPopplerDocument.cpp'; fi`
+xournalpp-XojPopplerDocument.obj: pdf/popplerdirect/poppler/XojPopplerDocument.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-XojPopplerDocument.obj -MD -MP -MF $(DEPDIR)/xournalpp-XojPopplerDocument.Tpo -c -o xournalpp-XojPopplerDocument.obj `if test -f 'pdf/popplerdirect/poppler/XojPopplerDocument.cpp'; then $(CYGPATH_W) 'pdf/popplerdirect/poppler/XojPopplerDocument.cpp'; else $(CYGPATH_W) '$(srcdir)/pdf/popplerdirect/poppler/XojPopplerDocument.cpp'; fi`
 @am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-XojPopplerDocument.Tpo $(DEPDIR)/xournalpp-XojPopplerDocument.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='pdf/poppler/XojPopplerDocument.cpp' object='xournalpp-XojPopplerDocument.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='pdf/popplerdirect/poppler/XojPopplerDocument.cpp' object='xournalpp-XojPopplerDocument.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-XojPopplerDocument.obj `if test -f 'pdf/poppler/XojPopplerDocument.cpp'; then $(CYGPATH_W) 'pdf/poppler/XojPopplerDocument.cpp'; else $(CYGPATH_W) '$(srcdir)/pdf/poppler/XojPopplerDocument.cpp'; fi`
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-XojPopplerDocument.obj `if test -f 'pdf/popplerdirect/poppler/XojPopplerDocument.cpp'; then $(CYGPATH_W) 'pdf/popplerdirect/poppler/XojPopplerDocument.cpp'; else $(CYGPATH_W) '$(srcdir)/pdf/popplerdirect/poppler/XojPopplerDocument.cpp'; fi`
 
-xournalpp-XojPopplerIter.o: pdf/poppler/XojPopplerIter.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-XojPopplerIter.o -MD -MP -MF $(DEPDIR)/xournalpp-XojPopplerIter.Tpo -c -o xournalpp-XojPopplerIter.o `test -f 'pdf/poppler/XojPopplerIter.cpp' || echo '$(srcdir)/'`pdf/poppler/XojPopplerIter.cpp
+xournalpp-XojPopplerIter.o: pdf/popplerdirect/poppler/XojPopplerIter.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-XojPopplerIter.o -MD -MP -MF $(DEPDIR)/xournalpp-XojPopplerIter.Tpo -c -o xournalpp-XojPopplerIter.o `test -f 'pdf/popplerdirect/poppler/XojPopplerIter.cpp' || echo '$(srcdir)/'`pdf/popplerdirect/poppler/XojPopplerIter.cpp
 @am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-XojPopplerIter.Tpo $(DEPDIR)/xournalpp-XojPopplerIter.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='pdf/poppler/XojPopplerIter.cpp' object='xournalpp-XojPopplerIter.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='pdf/popplerdirect/poppler/XojPopplerIter.cpp' object='xournalpp-XojPopplerIter.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-XojPopplerIter.o `test -f 'pdf/poppler/XojPopplerIter.cpp' || echo '$(srcdir)/'`pdf/poppler/XojPopplerIter.cpp
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-XojPopplerIter.o `test -f 'pdf/popplerdirect/poppler/XojPopplerIter.cpp' || echo '$(srcdir)/'`pdf/popplerdirect/poppler/XojPopplerIter.cpp
 
-xournalpp-XojPopplerIter.obj: pdf/poppler/XojPopplerIter.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-XojPopplerIter.obj -MD -MP -MF $(DEPDIR)/xournalpp-XojPopplerIter.Tpo -c -o xournalpp-XojPopplerIter.obj `if test -f 'pdf/poppler/XojPopplerIter.cpp'; then $(CYGPATH_W) 'pdf/poppler/XojPopplerIter.cpp'; else $(CYGPATH_W) '$(srcdir)/pdf/poppler/XojPopplerIter.cpp'; fi`
+xournalpp-XojPopplerIter.obj: pdf/popplerdirect/poppler/XojPopplerIter.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-XojPopplerIter.obj -MD -MP -MF $(DEPDIR)/xournalpp-XojPopplerIter.Tpo -c -o xournalpp-XojPopplerIter.obj `if test -f 'pdf/popplerdirect/poppler/XojPopplerIter.cpp'; then $(CYGPATH_W) 'pdf/popplerdirect/poppler/XojPopplerIter.cpp'; else $(CYGPATH_W) '$(srcdir)/pdf/popplerdirect/poppler/XojPopplerIter.cpp'; fi`
 @am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-XojPopplerIter.Tpo $(DEPDIR)/xournalpp-XojPopplerIter.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='pdf/poppler/XojPopplerIter.cpp' object='xournalpp-XojPopplerIter.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='pdf/popplerdirect/poppler/XojPopplerIter.cpp' object='xournalpp-XojPopplerIter.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-XojPopplerIter.obj `if test -f 'pdf/poppler/XojPopplerIter.cpp'; then $(CYGPATH_W) 'pdf/poppler/XojPopplerIter.cpp'; else $(CYGPATH_W) '$(srcdir)/pdf/poppler/XojPopplerIter.cpp'; fi`
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-XojPopplerIter.obj `if test -f 'pdf/popplerdirect/poppler/XojPopplerIter.cpp'; then $(CYGPATH_W) 'pdf/popplerdirect/poppler/XojPopplerIter.cpp'; else $(CYGPATH_W) '$(srcdir)/pdf/popplerdirect/poppler/XojPopplerIter.cpp'; fi`
 
-xournalpp-XojPopplerPage.o: pdf/poppler/XojPopplerPage.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-XojPopplerPage.o -MD -MP -MF $(DEPDIR)/xournalpp-XojPopplerPage.Tpo -c -o xournalpp-XojPopplerPage.o `test -f 'pdf/poppler/XojPopplerPage.cpp' || echo '$(srcdir)/'`pdf/poppler/XojPopplerPage.cpp
+xournalpp-XojPopplerPage.o: pdf/popplerdirect/poppler/XojPopplerPage.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-XojPopplerPage.o -MD -MP -MF $(DEPDIR)/xournalpp-XojPopplerPage.Tpo -c -o xournalpp-XojPopplerPage.o `test -f 'pdf/popplerdirect/poppler/XojPopplerPage.cpp' || echo '$(srcdir)/'`pdf/popplerdirect/poppler/XojPopplerPage.cpp
 @am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-XojPopplerPage.Tpo $(DEPDIR)/xournalpp-XojPopplerPage.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='pdf/poppler/XojPopplerPage.cpp' object='xournalpp-XojPopplerPage.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='pdf/popplerdirect/poppler/XojPopplerPage.cpp' object='xournalpp-XojPopplerPage.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-XojPopplerPage.o `test -f 'pdf/poppler/XojPopplerPage.cpp' || echo '$(srcdir)/'`pdf/poppler/XojPopplerPage.cpp
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-XojPopplerPage.o `test -f 'pdf/popplerdirect/poppler/XojPopplerPage.cpp' || echo '$(srcdir)/'`pdf/popplerdirect/poppler/XojPopplerPage.cpp
 
-xournalpp-XojPopplerPage.obj: pdf/poppler/XojPopplerPage.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-XojPopplerPage.obj -MD -MP -MF $(DEPDIR)/xournalpp-XojPopplerPage.Tpo -c -o xournalpp-XojPopplerPage.obj `if test -f 'pdf/poppler/XojPopplerPage.cpp'; then $(CYGPATH_W) 'pdf/poppler/XojPopplerPage.cpp'; else $(CYGPATH_W) '$(srcdir)/pdf/poppler/XojPopplerPage.cpp'; fi`
+xournalpp-XojPopplerPage.obj: pdf/popplerdirect/poppler/XojPopplerPage.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-XojPopplerPage.obj -MD -MP -MF $(DEPDIR)/xournalpp-XojPopplerPage.Tpo -c -o xournalpp-XojPopplerPage.obj `if test -f 'pdf/popplerdirect/poppler/XojPopplerPage.cpp'; then $(CYGPATH_W) 'pdf/popplerdirect/poppler/XojPopplerPage.cpp'; else $(CYGPATH_W) '$(srcdir)/pdf/popplerdirect/poppler/XojPopplerPage.cpp'; fi`
 @am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-XojPopplerPage.Tpo $(DEPDIR)/xournalpp-XojPopplerPage.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='pdf/poppler/XojPopplerPage.cpp' object='xournalpp-XojPopplerPage.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='pdf/popplerdirect/poppler/XojPopplerPage.cpp' object='xournalpp-XojPopplerPage.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-XojPopplerPage.obj `if test -f 'pdf/poppler/XojPopplerPage.cpp'; then $(CYGPATH_W) 'pdf/poppler/XojPopplerPage.cpp'; else $(CYGPATH_W) '$(srcdir)/pdf/poppler/XojPopplerPage.cpp'; fi`
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-XojPopplerPage.obj `if test -f 'pdf/popplerdirect/poppler/XojPopplerPage.cpp'; then $(CYGPATH_W) 'pdf/popplerdirect/poppler/XojPopplerPage.cpp'; else $(CYGPATH_W) '$(srcdir)/pdf/popplerdirect/poppler/XojPopplerPage.cpp'; fi`
 
-xournalpp-PdfBookmark.o: pdf/PdfBookmark.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-PdfBookmark.o -MD -MP -MF $(DEPDIR)/xournalpp-PdfBookmark.Tpo -c -o xournalpp-PdfBookmark.o `test -f 'pdf/PdfBookmark.cpp' || echo '$(srcdir)/'`pdf/PdfBookmark.cpp
+xournalpp-PdfBookmark.o: pdf/popplerdirect/PdfBookmark.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-PdfBookmark.o -MD -MP -MF $(DEPDIR)/xournalpp-PdfBookmark.Tpo -c -o xournalpp-PdfBookmark.o `test -f 'pdf/popplerdirect/PdfBookmark.cpp' || echo '$(srcdir)/'`pdf/popplerdirect/PdfBookmark.cpp
 @am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-PdfBookmark.Tpo $(DEPDIR)/xournalpp-PdfBookmark.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='pdf/PdfBookmark.cpp' object='xournalpp-PdfBookmark.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='pdf/popplerdirect/PdfBookmark.cpp' object='xournalpp-PdfBookmark.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-PdfBookmark.o `test -f 'pdf/PdfBookmark.cpp' || echo '$(srcdir)/'`pdf/PdfBookmark.cpp
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-PdfBookmark.o `test -f 'pdf/popplerdirect/PdfBookmark.cpp' || echo '$(srcdir)/'`pdf/popplerdirect/PdfBookmark.cpp
 
-xournalpp-PdfBookmark.obj: pdf/PdfBookmark.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-PdfBookmark.obj -MD -MP -MF $(DEPDIR)/xournalpp-PdfBookmark.Tpo -c -o xournalpp-PdfBookmark.obj `if test -f 'pdf/PdfBookmark.cpp'; then $(CYGPATH_W) 'pdf/PdfBookmark.cpp'; else $(CYGPATH_W) '$(srcdir)/pdf/PdfBookmark.cpp'; fi`
+xournalpp-PdfBookmark.obj: pdf/popplerdirect/PdfBookmark.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-PdfBookmark.obj -MD -MP -MF $(DEPDIR)/xournalpp-PdfBookmark.Tpo -c -o xournalpp-PdfBookmark.obj `if test -f 'pdf/popplerdirect/PdfBookmark.cpp'; then $(CYGPATH_W) 'pdf/popplerdirect/PdfBookmark.cpp'; else $(CYGPATH_W) '$(srcdir)/pdf/popplerdirect/PdfBookmark.cpp'; fi`
 @am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-PdfBookmark.Tpo $(DEPDIR)/xournalpp-PdfBookmark.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='pdf/PdfBookmark.cpp' object='xournalpp-PdfBookmark.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='pdf/popplerdirect/PdfBookmark.cpp' object='xournalpp-PdfBookmark.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-PdfBookmark.obj `if test -f 'pdf/PdfBookmark.cpp'; then $(CYGPATH_W) 'pdf/PdfBookmark.cpp'; else $(CYGPATH_W) '$(srcdir)/pdf/PdfBookmark.cpp'; fi`
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-PdfBookmark.obj `if test -f 'pdf/popplerdirect/PdfBookmark.cpp'; then $(CYGPATH_W) 'pdf/popplerdirect/PdfBookmark.cpp'; else $(CYGPATH_W) '$(srcdir)/pdf/popplerdirect/PdfBookmark.cpp'; fi`
 
-xournalpp-PdfExport.o: pdf/PdfExport.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-PdfExport.o -MD -MP -MF $(DEPDIR)/xournalpp-PdfExport.Tpo -c -o xournalpp-PdfExport.o `test -f 'pdf/PdfExport.cpp' || echo '$(srcdir)/'`pdf/PdfExport.cpp
+xournalpp-PdfExport.o: pdf/popplerdirect/PdfExport.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-PdfExport.o -MD -MP -MF $(DEPDIR)/xournalpp-PdfExport.Tpo -c -o xournalpp-PdfExport.o `test -f 'pdf/popplerdirect/PdfExport.cpp' || echo '$(srcdir)/'`pdf/popplerdirect/PdfExport.cpp
 @am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-PdfExport.Tpo $(DEPDIR)/xournalpp-PdfExport.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='pdf/PdfExport.cpp' object='xournalpp-PdfExport.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='pdf/popplerdirect/PdfExport.cpp' object='xournalpp-PdfExport.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-PdfExport.o `test -f 'pdf/PdfExport.cpp' || echo '$(srcdir)/'`pdf/PdfExport.cpp
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-PdfExport.o `test -f 'pdf/popplerdirect/PdfExport.cpp' || echo '$(srcdir)/'`pdf/popplerdirect/PdfExport.cpp
 
-xournalpp-PdfExport.obj: pdf/PdfExport.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-PdfExport.obj -MD -MP -MF $(DEPDIR)/xournalpp-PdfExport.Tpo -c -o xournalpp-PdfExport.obj `if test -f 'pdf/PdfExport.cpp'; then $(CYGPATH_W) 'pdf/PdfExport.cpp'; else $(CYGPATH_W) '$(srcdir)/pdf/PdfExport.cpp'; fi`
+xournalpp-PdfExport.obj: pdf/popplerdirect/PdfExport.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-PdfExport.obj -MD -MP -MF $(DEPDIR)/xournalpp-PdfExport.Tpo -c -o xournalpp-PdfExport.obj `if test -f 'pdf/popplerdirect/PdfExport.cpp'; then $(CYGPATH_W) 'pdf/popplerdirect/PdfExport.cpp'; else $(CYGPATH_W) '$(srcdir)/pdf/popplerdirect/PdfExport.cpp'; fi`
 @am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-PdfExport.Tpo $(DEPDIR)/xournalpp-PdfExport.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='pdf/PdfExport.cpp' object='xournalpp-PdfExport.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='pdf/popplerdirect/PdfExport.cpp' object='xournalpp-PdfExport.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-PdfExport.obj `if test -f 'pdf/PdfExport.cpp'; then $(CYGPATH_W) 'pdf/PdfExport.cpp'; else $(CYGPATH_W) '$(srcdir)/pdf/PdfExport.cpp'; fi`
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-PdfExport.obj `if test -f 'pdf/popplerdirect/PdfExport.cpp'; then $(CYGPATH_W) 'pdf/popplerdirect/PdfExport.cpp'; else $(CYGPATH_W) '$(srcdir)/pdf/popplerdirect/PdfExport.cpp'; fi`
 
-xournalpp-PdfObjectWriter.o: pdf/PdfObjectWriter.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-PdfObjectWriter.o -MD -MP -MF $(DEPDIR)/xournalpp-PdfObjectWriter.Tpo -c -o xournalpp-PdfObjectWriter.o `test -f 'pdf/PdfObjectWriter.cpp' || echo '$(srcdir)/'`pdf/PdfObjectWriter.cpp
+xournalpp-PdfObjectWriter.o: pdf/popplerdirect/PdfObjectWriter.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-PdfObjectWriter.o -MD -MP -MF $(DEPDIR)/xournalpp-PdfObjectWriter.Tpo -c -o xournalpp-PdfObjectWriter.o `test -f 'pdf/popplerdirect/PdfObjectWriter.cpp' || echo '$(srcdir)/'`pdf/popplerdirect/PdfObjectWriter.cpp
 @am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-PdfObjectWriter.Tpo $(DEPDIR)/xournalpp-PdfObjectWriter.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='pdf/PdfObjectWriter.cpp' object='xournalpp-PdfObjectWriter.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='pdf/popplerdirect/PdfObjectWriter.cpp' object='xournalpp-PdfObjectWriter.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-PdfObjectWriter.o `test -f 'pdf/PdfObjectWriter.cpp' || echo '$(srcdir)/'`pdf/PdfObjectWriter.cpp
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-PdfObjectWriter.o `test -f 'pdf/popplerdirect/PdfObjectWriter.cpp' || echo '$(srcdir)/'`pdf/popplerdirect/PdfObjectWriter.cpp
 
-xournalpp-PdfObjectWriter.obj: pdf/PdfObjectWriter.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-PdfObjectWriter.obj -MD -MP -MF $(DEPDIR)/xournalpp-PdfObjectWriter.Tpo -c -o xournalpp-PdfObjectWriter.obj `if test -f 'pdf/PdfObjectWriter.cpp'; then $(CYGPATH_W) 'pdf/PdfObjectWriter.cpp'; else $(CYGPATH_W) '$(srcdir)/pdf/PdfObjectWriter.cpp'; fi`
+xournalpp-PdfObjectWriter.obj: pdf/popplerdirect/PdfObjectWriter.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-PdfObjectWriter.obj -MD -MP -MF $(DEPDIR)/xournalpp-PdfObjectWriter.Tpo -c -o xournalpp-PdfObjectWriter.obj `if test -f 'pdf/popplerdirect/PdfObjectWriter.cpp'; then $(CYGPATH_W) 'pdf/popplerdirect/PdfObjectWriter.cpp'; else $(CYGPATH_W) '$(srcdir)/pdf/popplerdirect/PdfObjectWriter.cpp'; fi`
 @am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-PdfObjectWriter.Tpo $(DEPDIR)/xournalpp-PdfObjectWriter.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='pdf/PdfObjectWriter.cpp' object='xournalpp-PdfObjectWriter.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='pdf/popplerdirect/PdfObjectWriter.cpp' object='xournalpp-PdfObjectWriter.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-PdfObjectWriter.obj `if test -f 'pdf/PdfObjectWriter.cpp'; then $(CYGPATH_W) 'pdf/PdfObjectWriter.cpp'; else $(CYGPATH_W) '$(srcdir)/pdf/PdfObjectWriter.cpp'; fi`
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-PdfObjectWriter.obj `if test -f 'pdf/popplerdirect/PdfObjectWriter.cpp'; then $(CYGPATH_W) 'pdf/popplerdirect/PdfObjectWriter.cpp'; else $(CYGPATH_W) '$(srcdir)/pdf/popplerdirect/PdfObjectWriter.cpp'; fi`
 
-xournalpp-PdfRefEntry.o: pdf/PdfRefEntry.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-PdfRefEntry.o -MD -MP -MF $(DEPDIR)/xournalpp-PdfRefEntry.Tpo -c -o xournalpp-PdfRefEntry.o `test -f 'pdf/PdfRefEntry.cpp' || echo '$(srcdir)/'`pdf/PdfRefEntry.cpp
+xournalpp-PdfRefEntry.o: pdf/popplerdirect/PdfRefEntry.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-PdfRefEntry.o -MD -MP -MF $(DEPDIR)/xournalpp-PdfRefEntry.Tpo -c -o xournalpp-PdfRefEntry.o `test -f 'pdf/popplerdirect/PdfRefEntry.cpp' || echo '$(srcdir)/'`pdf/popplerdirect/PdfRefEntry.cpp
 @am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-PdfRefEntry.Tpo $(DEPDIR)/xournalpp-PdfRefEntry.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='pdf/PdfRefEntry.cpp' object='xournalpp-PdfRefEntry.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='pdf/popplerdirect/PdfRefEntry.cpp' object='xournalpp-PdfRefEntry.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-PdfRefEntry.o `test -f 'pdf/PdfRefEntry.cpp' || echo '$(srcdir)/'`pdf/PdfRefEntry.cpp
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-PdfRefEntry.o `test -f 'pdf/popplerdirect/PdfRefEntry.cpp' || echo '$(srcdir)/'`pdf/popplerdirect/PdfRefEntry.cpp
 
-xournalpp-PdfRefEntry.obj: pdf/PdfRefEntry.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-PdfRefEntry.obj -MD -MP -MF $(DEPDIR)/xournalpp-PdfRefEntry.Tpo -c -o xournalpp-PdfRefEntry.obj `if test -f 'pdf/PdfRefEntry.cpp'; then $(CYGPATH_W) 'pdf/PdfRefEntry.cpp'; else $(CYGPATH_W) '$(srcdir)/pdf/PdfRefEntry.cpp'; fi`
+xournalpp-PdfRefEntry.obj: pdf/popplerdirect/PdfRefEntry.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-PdfRefEntry.obj -MD -MP -MF $(DEPDIR)/xournalpp-PdfRefEntry.Tpo -c -o xournalpp-PdfRefEntry.obj `if test -f 'pdf/popplerdirect/PdfRefEntry.cpp'; then $(CYGPATH_W) 'pdf/popplerdirect/PdfRefEntry.cpp'; else $(CYGPATH_W) '$(srcdir)/pdf/popplerdirect/PdfRefEntry.cpp'; fi`
 @am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-PdfRefEntry.Tpo $(DEPDIR)/xournalpp-PdfRefEntry.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='pdf/PdfRefEntry.cpp' object='xournalpp-PdfRefEntry.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='pdf/popplerdirect/PdfRefEntry.cpp' object='xournalpp-PdfRefEntry.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-PdfRefEntry.obj `if test -f 'pdf/PdfRefEntry.cpp'; then $(CYGPATH_W) 'pdf/PdfRefEntry.cpp'; else $(CYGPATH_W) '$(srcdir)/pdf/PdfRefEntry.cpp'; fi`
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-PdfRefEntry.obj `if test -f 'pdf/popplerdirect/PdfRefEntry.cpp'; then $(CYGPATH_W) 'pdf/popplerdirect/PdfRefEntry.cpp'; else $(CYGPATH_W) '$(srcdir)/pdf/popplerdirect/PdfRefEntry.cpp'; fi`
 
-xournalpp-PdfRefList.o: pdf/PdfRefList.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-PdfRefList.o -MD -MP -MF $(DEPDIR)/xournalpp-PdfRefList.Tpo -c -o xournalpp-PdfRefList.o `test -f 'pdf/PdfRefList.cpp' || echo '$(srcdir)/'`pdf/PdfRefList.cpp
+xournalpp-PdfRefList.o: pdf/popplerdirect/PdfRefList.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-PdfRefList.o -MD -MP -MF $(DEPDIR)/xournalpp-PdfRefList.Tpo -c -o xournalpp-PdfRefList.o `test -f 'pdf/popplerdirect/PdfRefList.cpp' || echo '$(srcdir)/'`pdf/popplerdirect/PdfRefList.cpp
 @am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-PdfRefList.Tpo $(DEPDIR)/xournalpp-PdfRefList.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='pdf/PdfRefList.cpp' object='xournalpp-PdfRefList.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='pdf/popplerdirect/PdfRefList.cpp' object='xournalpp-PdfRefList.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-PdfRefList.o `test -f 'pdf/PdfRefList.cpp' || echo '$(srcdir)/'`pdf/PdfRefList.cpp
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-PdfRefList.o `test -f 'pdf/popplerdirect/PdfRefList.cpp' || echo '$(srcdir)/'`pdf/popplerdirect/PdfRefList.cpp
 
-xournalpp-PdfRefList.obj: pdf/PdfRefList.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-PdfRefList.obj -MD -MP -MF $(DEPDIR)/xournalpp-PdfRefList.Tpo -c -o xournalpp-PdfRefList.obj `if test -f 'pdf/PdfRefList.cpp'; then $(CYGPATH_W) 'pdf/PdfRefList.cpp'; else $(CYGPATH_W) '$(srcdir)/pdf/PdfRefList.cpp'; fi`
+xournalpp-PdfRefList.obj: pdf/popplerdirect/PdfRefList.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-PdfRefList.obj -MD -MP -MF $(DEPDIR)/xournalpp-PdfRefList.Tpo -c -o xournalpp-PdfRefList.obj `if test -f 'pdf/popplerdirect/PdfRefList.cpp'; then $(CYGPATH_W) 'pdf/popplerdirect/PdfRefList.cpp'; else $(CYGPATH_W) '$(srcdir)/pdf/popplerdirect/PdfRefList.cpp'; fi`
 @am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-PdfRefList.Tpo $(DEPDIR)/xournalpp-PdfRefList.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='pdf/PdfRefList.cpp' object='xournalpp-PdfRefList.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='pdf/popplerdirect/PdfRefList.cpp' object='xournalpp-PdfRefList.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-PdfRefList.obj `if test -f 'pdf/PdfRefList.cpp'; then $(CYGPATH_W) 'pdf/PdfRefList.cpp'; else $(CYGPATH_W) '$(srcdir)/pdf/PdfRefList.cpp'; fi`
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-PdfRefList.obj `if test -f 'pdf/popplerdirect/PdfRefList.cpp'; then $(CYGPATH_W) 'pdf/popplerdirect/PdfRefList.cpp'; else $(CYGPATH_W) '$(srcdir)/pdf/popplerdirect/PdfRefList.cpp'; fi`
 
-xournalpp-PdfUtil.o: pdf/PdfUtil.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-PdfUtil.o -MD -MP -MF $(DEPDIR)/xournalpp-PdfUtil.Tpo -c -o xournalpp-PdfUtil.o `test -f 'pdf/PdfUtil.cpp' || echo '$(srcdir)/'`pdf/PdfUtil.cpp
+xournalpp-PdfUtil.o: pdf/popplerdirect/PdfUtil.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-PdfUtil.o -MD -MP -MF $(DEPDIR)/xournalpp-PdfUtil.Tpo -c -o xournalpp-PdfUtil.o `test -f 'pdf/popplerdirect/PdfUtil.cpp' || echo '$(srcdir)/'`pdf/popplerdirect/PdfUtil.cpp
 @am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-PdfUtil.Tpo $(DEPDIR)/xournalpp-PdfUtil.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='pdf/PdfUtil.cpp' object='xournalpp-PdfUtil.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='pdf/popplerdirect/PdfUtil.cpp' object='xournalpp-PdfUtil.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-PdfUtil.o `test -f 'pdf/PdfUtil.cpp' || echo '$(srcdir)/'`pdf/PdfUtil.cpp
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-PdfUtil.o `test -f 'pdf/popplerdirect/PdfUtil.cpp' || echo '$(srcdir)/'`pdf/popplerdirect/PdfUtil.cpp
 
-xournalpp-PdfUtil.obj: pdf/PdfUtil.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-PdfUtil.obj -MD -MP -MF $(DEPDIR)/xournalpp-PdfUtil.Tpo -c -o xournalpp-PdfUtil.obj `if test -f 'pdf/PdfUtil.cpp'; then $(CYGPATH_W) 'pdf/PdfUtil.cpp'; else $(CYGPATH_W) '$(srcdir)/pdf/PdfUtil.cpp'; fi`
+xournalpp-PdfUtil.obj: pdf/popplerdirect/PdfUtil.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-PdfUtil.obj -MD -MP -MF $(DEPDIR)/xournalpp-PdfUtil.Tpo -c -o xournalpp-PdfUtil.obj `if test -f 'pdf/popplerdirect/PdfUtil.cpp'; then $(CYGPATH_W) 'pdf/popplerdirect/PdfUtil.cpp'; else $(CYGPATH_W) '$(srcdir)/pdf/popplerdirect/PdfUtil.cpp'; fi`
 @am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-PdfUtil.Tpo $(DEPDIR)/xournalpp-PdfUtil.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='pdf/PdfUtil.cpp' object='xournalpp-PdfUtil.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='pdf/popplerdirect/PdfUtil.cpp' object='xournalpp-PdfUtil.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-PdfUtil.obj `if test -f 'pdf/PdfUtil.cpp'; then $(CYGPATH_W) 'pdf/PdfUtil.cpp'; else $(CYGPATH_W) '$(srcdir)/pdf/PdfUtil.cpp'; fi`
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-PdfUtil.obj `if test -f 'pdf/popplerdirect/PdfUtil.cpp'; then $(CYGPATH_W) 'pdf/popplerdirect/PdfUtil.cpp'; else $(CYGPATH_W) '$(srcdir)/pdf/popplerdirect/PdfUtil.cpp'; fi`
 
-xournalpp-PdfWriter.o: pdf/PdfWriter.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-PdfWriter.o -MD -MP -MF $(DEPDIR)/xournalpp-PdfWriter.Tpo -c -o xournalpp-PdfWriter.o `test -f 'pdf/PdfWriter.cpp' || echo '$(srcdir)/'`pdf/PdfWriter.cpp
+xournalpp-PdfWriter.o: pdf/popplerdirect/PdfWriter.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-PdfWriter.o -MD -MP -MF $(DEPDIR)/xournalpp-PdfWriter.Tpo -c -o xournalpp-PdfWriter.o `test -f 'pdf/popplerdirect/PdfWriter.cpp' || echo '$(srcdir)/'`pdf/popplerdirect/PdfWriter.cpp
 @am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-PdfWriter.Tpo $(DEPDIR)/xournalpp-PdfWriter.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='pdf/PdfWriter.cpp' object='xournalpp-PdfWriter.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='pdf/popplerdirect/PdfWriter.cpp' object='xournalpp-PdfWriter.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-PdfWriter.o `test -f 'pdf/PdfWriter.cpp' || echo '$(srcdir)/'`pdf/PdfWriter.cpp
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-PdfWriter.o `test -f 'pdf/popplerdirect/PdfWriter.cpp' || echo '$(srcdir)/'`pdf/popplerdirect/PdfWriter.cpp
 
-xournalpp-PdfWriter.obj: pdf/PdfWriter.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-PdfWriter.obj -MD -MP -MF $(DEPDIR)/xournalpp-PdfWriter.Tpo -c -o xournalpp-PdfWriter.obj `if test -f 'pdf/PdfWriter.cpp'; then $(CYGPATH_W) 'pdf/PdfWriter.cpp'; else $(CYGPATH_W) '$(srcdir)/pdf/PdfWriter.cpp'; fi`
+xournalpp-PdfWriter.obj: pdf/popplerdirect/PdfWriter.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-PdfWriter.obj -MD -MP -MF $(DEPDIR)/xournalpp-PdfWriter.Tpo -c -o xournalpp-PdfWriter.obj `if test -f 'pdf/popplerdirect/PdfWriter.cpp'; then $(CYGPATH_W) 'pdf/popplerdirect/PdfWriter.cpp'; else $(CYGPATH_W) '$(srcdir)/pdf/popplerdirect/PdfWriter.cpp'; fi`
 @am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-PdfWriter.Tpo $(DEPDIR)/xournalpp-PdfWriter.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='pdf/PdfWriter.cpp' object='xournalpp-PdfWriter.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='pdf/popplerdirect/PdfWriter.cpp' object='xournalpp-PdfWriter.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-PdfWriter.obj `if test -f 'pdf/PdfWriter.cpp'; then $(CYGPATH_W) 'pdf/PdfWriter.cpp'; else $(CYGPATH_W) '$(srcdir)/pdf/PdfWriter.cpp'; fi`
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-PdfWriter.obj `if test -f 'pdf/popplerdirect/PdfWriter.cpp'; then $(CYGPATH_W) 'pdf/popplerdirect/PdfWriter.cpp'; else $(CYGPATH_W) '$(srcdir)/pdf/popplerdirect/PdfWriter.cpp'; fi`
 
-xournalpp-PdfXRef.o: pdf/PdfXRef.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-PdfXRef.o -MD -MP -MF $(DEPDIR)/xournalpp-PdfXRef.Tpo -c -o xournalpp-PdfXRef.o `test -f 'pdf/PdfXRef.cpp' || echo '$(srcdir)/'`pdf/PdfXRef.cpp
+xournalpp-PdfXRef.o: pdf/popplerdirect/PdfXRef.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-PdfXRef.o -MD -MP -MF $(DEPDIR)/xournalpp-PdfXRef.Tpo -c -o xournalpp-PdfXRef.o `test -f 'pdf/popplerdirect/PdfXRef.cpp' || echo '$(srcdir)/'`pdf/popplerdirect/PdfXRef.cpp
 @am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-PdfXRef.Tpo $(DEPDIR)/xournalpp-PdfXRef.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='pdf/PdfXRef.cpp' object='xournalpp-PdfXRef.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='pdf/popplerdirect/PdfXRef.cpp' object='xournalpp-PdfXRef.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-PdfXRef.o `test -f 'pdf/PdfXRef.cpp' || echo '$(srcdir)/'`pdf/PdfXRef.cpp
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-PdfXRef.o `test -f 'pdf/popplerdirect/PdfXRef.cpp' || echo '$(srcdir)/'`pdf/popplerdirect/PdfXRef.cpp
 
-xournalpp-PdfXRef.obj: pdf/PdfXRef.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-PdfXRef.obj -MD -MP -MF $(DEPDIR)/xournalpp-PdfXRef.Tpo -c -o xournalpp-PdfXRef.obj `if test -f 'pdf/PdfXRef.cpp'; then $(CYGPATH_W) 'pdf/PdfXRef.cpp'; else $(CYGPATH_W) '$(srcdir)/pdf/PdfXRef.cpp'; fi`
+xournalpp-PdfXRef.obj: pdf/popplerdirect/PdfXRef.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-PdfXRef.obj -MD -MP -MF $(DEPDIR)/xournalpp-PdfXRef.Tpo -c -o xournalpp-PdfXRef.obj `if test -f 'pdf/popplerdirect/PdfXRef.cpp'; then $(CYGPATH_W) 'pdf/popplerdirect/PdfXRef.cpp'; else $(CYGPATH_W) '$(srcdir)/pdf/popplerdirect/PdfXRef.cpp'; fi`
 @am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-PdfXRef.Tpo $(DEPDIR)/xournalpp-PdfXRef.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='pdf/PdfXRef.cpp' object='xournalpp-PdfXRef.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='pdf/popplerdirect/PdfXRef.cpp' object='xournalpp-PdfXRef.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-PdfXRef.obj `if test -f 'pdf/PdfXRef.cpp'; then $(CYGPATH_W) 'pdf/PdfXRef.cpp'; else $(CYGPATH_W) '$(srcdir)/pdf/PdfXRef.cpp'; fi`
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-PdfXRef.obj `if test -f 'pdf/popplerdirect/PdfXRef.cpp'; then $(CYGPATH_W) 'pdf/popplerdirect/PdfXRef.cpp'; else $(CYGPATH_W) '$(srcdir)/pdf/popplerdirect/PdfXRef.cpp'; fi`
 
-xournalpp-UpdateRef.o: pdf/UpdateRef.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-UpdateRef.o -MD -MP -MF $(DEPDIR)/xournalpp-UpdateRef.Tpo -c -o xournalpp-UpdateRef.o `test -f 'pdf/UpdateRef.cpp' || echo '$(srcdir)/'`pdf/UpdateRef.cpp
+xournalpp-UpdateRef.o: pdf/popplerdirect/UpdateRef.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-UpdateRef.o -MD -MP -MF $(DEPDIR)/xournalpp-UpdateRef.Tpo -c -o xournalpp-UpdateRef.o `test -f 'pdf/popplerdirect/UpdateRef.cpp' || echo '$(srcdir)/'`pdf/popplerdirect/UpdateRef.cpp
 @am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-UpdateRef.Tpo $(DEPDIR)/xournalpp-UpdateRef.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='pdf/UpdateRef.cpp' object='xournalpp-UpdateRef.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='pdf/popplerdirect/UpdateRef.cpp' object='xournalpp-UpdateRef.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-UpdateRef.o `test -f 'pdf/UpdateRef.cpp' || echo '$(srcdir)/'`pdf/UpdateRef.cpp
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-UpdateRef.o `test -f 'pdf/popplerdirect/UpdateRef.cpp' || echo '$(srcdir)/'`pdf/popplerdirect/UpdateRef.cpp
 
-xournalpp-UpdateRef.obj: pdf/UpdateRef.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-UpdateRef.obj -MD -MP -MF $(DEPDIR)/xournalpp-UpdateRef.Tpo -c -o xournalpp-UpdateRef.obj `if test -f 'pdf/UpdateRef.cpp'; then $(CYGPATH_W) 'pdf/UpdateRef.cpp'; else $(CYGPATH_W) '$(srcdir)/pdf/UpdateRef.cpp'; fi`
+xournalpp-UpdateRef.obj: pdf/popplerdirect/UpdateRef.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-UpdateRef.obj -MD -MP -MF $(DEPDIR)/xournalpp-UpdateRef.Tpo -c -o xournalpp-UpdateRef.obj `if test -f 'pdf/popplerdirect/UpdateRef.cpp'; then $(CYGPATH_W) 'pdf/popplerdirect/UpdateRef.cpp'; else $(CYGPATH_W) '$(srcdir)/pdf/popplerdirect/UpdateRef.cpp'; fi`
 @am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-UpdateRef.Tpo $(DEPDIR)/xournalpp-UpdateRef.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='pdf/UpdateRef.cpp' object='xournalpp-UpdateRef.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='pdf/popplerdirect/UpdateRef.cpp' object='xournalpp-UpdateRef.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-UpdateRef.obj `if test -f 'pdf/UpdateRef.cpp'; then $(CYGPATH_W) 'pdf/UpdateRef.cpp'; else $(CYGPATH_W) '$(srcdir)/pdf/UpdateRef.cpp'; fi`
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-UpdateRef.obj `if test -f 'pdf/popplerdirect/UpdateRef.cpp'; then $(CYGPATH_W) 'pdf/popplerdirect/UpdateRef.cpp'; else $(CYGPATH_W) '$(srcdir)/pdf/popplerdirect/UpdateRef.cpp'; fi`
 
-xournalpp-UpdateRefKey.o: pdf/UpdateRefKey.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-UpdateRefKey.o -MD -MP -MF $(DEPDIR)/xournalpp-UpdateRefKey.Tpo -c -o xournalpp-UpdateRefKey.o `test -f 'pdf/UpdateRefKey.cpp' || echo '$(srcdir)/'`pdf/UpdateRefKey.cpp
+xournalpp-UpdateRefKey.o: pdf/popplerdirect/UpdateRefKey.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-UpdateRefKey.o -MD -MP -MF $(DEPDIR)/xournalpp-UpdateRefKey.Tpo -c -o xournalpp-UpdateRefKey.o `test -f 'pdf/popplerdirect/UpdateRefKey.cpp' || echo '$(srcdir)/'`pdf/popplerdirect/UpdateRefKey.cpp
 @am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-UpdateRefKey.Tpo $(DEPDIR)/xournalpp-UpdateRefKey.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='pdf/UpdateRefKey.cpp' object='xournalpp-UpdateRefKey.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='pdf/popplerdirect/UpdateRefKey.cpp' object='xournalpp-UpdateRefKey.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-UpdateRefKey.o `test -f 'pdf/UpdateRefKey.cpp' || echo '$(srcdir)/'`pdf/UpdateRefKey.cpp
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-UpdateRefKey.o `test -f 'pdf/popplerdirect/UpdateRefKey.cpp' || echo '$(srcdir)/'`pdf/popplerdirect/UpdateRefKey.cpp
 
-xournalpp-UpdateRefKey.obj: pdf/UpdateRefKey.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-UpdateRefKey.obj -MD -MP -MF $(DEPDIR)/xournalpp-UpdateRefKey.Tpo -c -o xournalpp-UpdateRefKey.obj `if test -f 'pdf/UpdateRefKey.cpp'; then $(CYGPATH_W) 'pdf/UpdateRefKey.cpp'; else $(CYGPATH_W) '$(srcdir)/pdf/UpdateRefKey.cpp'; fi`
+xournalpp-UpdateRefKey.obj: pdf/popplerdirect/UpdateRefKey.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-UpdateRefKey.obj -MD -MP -MF $(DEPDIR)/xournalpp-UpdateRefKey.Tpo -c -o xournalpp-UpdateRefKey.obj `if test -f 'pdf/popplerdirect/UpdateRefKey.cpp'; then $(CYGPATH_W) 'pdf/popplerdirect/UpdateRefKey.cpp'; else $(CYGPATH_W) '$(srcdir)/pdf/popplerdirect/UpdateRefKey.cpp'; fi`
 @am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-UpdateRefKey.Tpo $(DEPDIR)/xournalpp-UpdateRefKey.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='pdf/UpdateRefKey.cpp' object='xournalpp-UpdateRefKey.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='pdf/popplerdirect/UpdateRefKey.cpp' object='xournalpp-UpdateRefKey.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-UpdateRefKey.obj `if test -f 'pdf/UpdateRefKey.cpp'; then $(CYGPATH_W) 'pdf/UpdateRefKey.cpp'; else $(CYGPATH_W) '$(srcdir)/pdf/UpdateRefKey.cpp'; fi`
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-UpdateRefKey.obj `if test -f 'pdf/popplerdirect/UpdateRefKey.cpp'; then $(CYGPATH_W) 'pdf/popplerdirect/UpdateRefKey.cpp'; else $(CYGPATH_W) '$(srcdir)/pdf/popplerdirect/UpdateRefKey.cpp'; fi`
 
 xournalpp-ColorUndoAction.o: undo/ColorUndoAction.cpp
 @am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-ColorUndoAction.o -MD -MP -MF $(DEPDIR)/xournalpp-ColorUndoAction.Tpo -c -o xournalpp-ColorUndoAction.o `test -f 'undo/ColorUndoAction.cpp' || echo '$(srcdir)/'`undo/ColorUndoAction.cpp

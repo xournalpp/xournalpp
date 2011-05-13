@@ -13,7 +13,7 @@
 #define __PDFBOOKMARK_H__
 
 #include <gtk/gtk.h>
-#include "../model/Document.h"
+#include "../../model/Document.h"
 #include "PdfWriter.h"
 
 class PdfBookmarks {
