@@ -46,6 +46,11 @@ public:
 	void operator +=(int i);
 	void operator +=(double d);
 
+	String operator +(const String & str) const;
+	String operator +(const char *) const;
+	String operator +(int i) const;
+	String operator +(double d) const;
+
 	String replace(const String search, const String replace) const;
 
 	const char * c_str() const;

@@ -45,8 +45,7 @@ void AutosaveJob::run() {
 		filename += ".autosave.xoj";
 	}
 
-	// TODO: delete after saved the new file...
-	control->deleteLastAutosaveFile(filename);
+	control->renameLastAutosaveFile();
 
 	GzOutputStream * out = new GzOutputStream(filename);
 	handler.saveTo(out, filename);
@@ -55,6 +54,8 @@ void AutosaveJob::run() {
 	this->error = handler.getErrorMessage();
 	if (!this->error.isEmpty()) {
 		callAfterRun();
+	} else {
+		control->deleteLastAutosaveFile(filename);
 	}
 }
 

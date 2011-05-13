@@ -12,7 +12,7 @@
 #include "../view/DocumentView.h"
 #include "Cursor.h"
 
-// TODO: LOW PRIO: implement drag & drop
+// TODO LOW PRIO: implement drag & drop
 
 TextEditor::TextEditor(PageView * gui, GtkWidget * widget, Text * text, bool ownText) {
 	XOJ_INIT_TYPE(TextEditor);
@@ -848,7 +848,7 @@ void TextEditor::repaintEditor() {
 	//	double y = this->text->getY();
 	//	double width = this->text->getElementWidth() + 10;
 	//	double heigth = this->text->getElementHeight() + 10;
-	// TODO: OPTIMIZE redraw if the filed is getting smaller (e.g. by pressing <ENTER>)
+	// TODO OPTIMIZE redraw if the filed is getting smaller (e.g. by pressing <ENTER>)
 	//       there is a repaint problem
 	//this->gui->repaintRect(x, y, width, heigth);
 	this->gui->repaintPage();

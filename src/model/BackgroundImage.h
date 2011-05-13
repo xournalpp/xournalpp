@@ -21,6 +21,7 @@ class BackgroundImageContents;
 class BackgroundImage {
 public:
 	BackgroundImage();
+	BackgroundImage(const BackgroundImage & img);
 	virtual ~BackgroundImage();
 
 public:

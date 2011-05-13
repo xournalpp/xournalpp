@@ -150,6 +150,7 @@ public:
 	void block(const char * name);
 	void unblock();
 
+	void renameLastAutosaveFile();
 	void deleteLastAutosaveFile(String newAutosaveFile);
 	void setClipboardHandlerSelection(EditSelection * selection);
 

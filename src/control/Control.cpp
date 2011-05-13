@@ -47,7 +47,7 @@
 #include <stdio.h>
 #include <string.h>
 
-// TODO: !!!!!!!!!!!!!!!Check for error log on startup, also check for emergency save document!
+// TODO Check for error log on startup, also check for emergency save document!
 
 Control::Control(GladeSearchpath * gladeSearchPath) {
 	XOJ_INIT_TYPE(Control);
@@ -164,6 +164,22 @@ Control::~Control() {
 	this->scheduler = NULL;
 
 	XOJ_RELEASE_TYPE(Control);
+}
+
+void Control::renameLastAutosaveFile() {
+	XOJ_CHECK_TYPE(Control);
+
+	if (!this->lastAutosaveFilename.isEmpty()) {
+		String filename = this->lastAutosaveFilename;
+		int pos = filename.lastIndexOf("/") + 1;
+		String folder = filename.substring(0, pos);
+		String file = filename.substring(pos);
+		String renamed = folder + "_tmp_" + file;
+
+		GFile * file1 = g_file_new_for_path(filename.c_str());
+		GFile * file2 = g_file_new_for_path(renamed.c_str());
+		g_file_move(file1, file2, G_FILE_COPY_OVERWRITE, NULL, NULL, NULL, NULL);
+	}
 }
 
 void Control::deleteLastAutosaveFile(String newAutosaveFile) {
@@ -350,6 +366,7 @@ bool Control::shouldIgnorAction(ActionType action, ActionGroup group, bool enabl
 	return false;
 }
 
+// TODO LOW PRIO Deselect Tool should not be possibel
 void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent *event, GtkMenuItem *menuitem, GtkToolButton *toolbutton, bool enabled) {
 	XOJ_CHECK_TYPE(Control);
 
@@ -853,7 +870,7 @@ void Control::manageToolbars() {
 
 	this->win->updateToolbarMenu();
 
-	// TODO: debug
+	// TODO: implement update toolbar after editing
 //	char * file = g_build_filename(g_get_home_dir(), G_DIR_SEPARATOR_S, CONFIG_DIR, G_DIR_SEPARATOR_S, TOOLBAR_CONFIG, NULL);
 //	if (g_file_test(file, G_FILE_TEST_EXISTS)) {
 //		this->win->getToolbarModel()->save(file);

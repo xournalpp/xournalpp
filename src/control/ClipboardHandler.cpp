@@ -51,7 +51,7 @@ bool ClipboardHandler::paste() {
 		return true;
 	} else if (this->containsText) {
 		gtk_clipboard_request_contents(this->clipboard, atomUtf8, (GtkClipboardReceivedFunc) pasteClipboardContents, this);
-		//		TODO: gtk_clipboard_request_text()
+		//		TODO LOW PRIO gtk_clipboard_request_text()
 		return true;
 	} else if (this->containsImage) {
 		gtk_clipboard_request_image(this->clipboard, (GtkClipboardImageReceivedFunc) pasteClipboardImage, this);

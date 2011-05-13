@@ -540,7 +540,7 @@ String PdfExport::getLastError() {
 bool PdfExport::createPdf(String uri, GList * range) {
 	XOJ_CHECK_TYPE(PdfExport);
 
-	// TODO: LOW PRIO: handle bookmarks correct
+	// TODO LOW PRIO: handle bookmarks correct
 
 	if (range == NULL) {
 		this->lastError = "No pages to export!";

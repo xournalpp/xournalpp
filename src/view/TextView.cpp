@@ -94,7 +94,7 @@ void TextView::calcSize(Text * t, double & width, double & height) {
 	cairo_t * cr = cairo_create(surface);
 
 
-	// TODO: OPTIMIZE: cache the pango layout, check the size of pango layout first
+	// TODO OPTIMIZE: cache the pango layout, check the size of pango layout first
 	PangoLayout * layout = initPango(cr, t);
 	String str = t->getText();
 	pango_layout_set_text(layout, str.c_str(), str.size());

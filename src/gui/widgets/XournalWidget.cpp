@@ -749,7 +749,7 @@ cairo_t * gtk_xournal_create_cairo_for(GtkWidget * widget, PageView * view) {
 	double zoom = xournal->view->getZoom();
 
 
-	// TODO: LOW PRIO: stroke draw to this cairo surface look a little different than rendererd to a cairo surface
+	// TODO LOW PRIO: stroke draw to this cairo surface look a little different than rendererd to a cairo surface
 	cairo_t * cr = gdk_cairo_create(GTK_WIDGET(widget)->window);
 	int x = view->getX() - xournal->x;
 	int y = view->getY() - xournal->y;
@@ -857,7 +857,7 @@ static gboolean gtk_xournal_expose(GtkWidget * widget, GdkEventExpose * event) {
 		} else
 		// not visible, its on the left side of the visible area
 
-			// TODO: this is not working correct if the zoom is small, xournal->x is never smaller than 0
+			// TODO LOW PRIO this is not working correct if the zoom is small, xournal->x is never smaller than 0
 			//		if (px + pw < firstVisibleX) {
 //			printf("test2\n");
 //		} else

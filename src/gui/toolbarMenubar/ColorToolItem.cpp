@@ -129,7 +129,7 @@ void ColorToolItem::activated(GdkEvent *event, GtkMenuItem *menuitem, GtkToolBut
 }
 
 
-// TODO: low prio: add history
+// TODO LOW PRIO: add history
 //static void
 //change_color_callback (GtkWidget *button,
 //		       gpointer	  data)

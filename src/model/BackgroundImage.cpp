@@ -9,6 +9,13 @@ BackgroundImage::BackgroundImage() {
 	this->img = NULL;
 }
 
+BackgroundImage::BackgroundImage(const BackgroundImage & img) {
+	this->img = img.img;
+	if (this->img) {
+		this->img->reference();
+	}
+}
+
 BackgroundImage::~BackgroundImage() {
 	XOJ_CHECK_TYPE(BackgroundImage);
 
