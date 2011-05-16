@@ -17,7 +17,7 @@
 #include "../../model/PageRef.h"
 #include "../../view/ElementContainer.h"
 #include "../../undo/MoveUndoAction.h"
-#include "../../util/XournalType.h"
+#include <XournalType.h>
 
 class VerticalToolHandler: public ElementContainer {
 public:

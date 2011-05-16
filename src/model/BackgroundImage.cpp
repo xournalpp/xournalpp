@@ -1,7 +1,7 @@
 #include "BackgroundImage.h"
 #include "BackgroundImageContents.h"
 
-#include "../util/Stacktrace.h"
+#include <Stacktrace.h>
 
 BackgroundImage::BackgroundImage() {
 	XOJ_INIT_TYPE(BackgroundImage);

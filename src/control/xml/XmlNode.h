@@ -12,8 +12,8 @@
 #ifndef __XMLNODE_H__
 #define __XMLNODE_H__
 
-#include "../../util/Util.h"
-#include "../../util/OutputStream.h"
+#include <Util.h>
+#include <OutputStream.h>
 #include "Attribute.h"
 #include <glib.h>
 

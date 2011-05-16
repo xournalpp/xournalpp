@@ -14,8 +14,8 @@
 #ifndef __DOCUMENT_H__
 #define __DOCUMENT_H__
 
-#include "../util/String.h"
-#include "../util/XournalType.h"
+#include <String.h>
+#include <XournalType.h>
 
 #include "PageRef.h"
 #include "LinkDestination.h"

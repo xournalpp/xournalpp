@@ -12,7 +12,7 @@
 #ifndef __PAGEVIEWINDEX_H__
 #define __PAGEVIEWINDEX_H__
 
-#include "../../util/XournalType.h"
+#include <XournalType.h>
 #include <glib.h>
 
 class PagePosition;

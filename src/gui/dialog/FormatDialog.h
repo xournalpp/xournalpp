@@ -14,7 +14,7 @@
 
 #include "../GladeGui.h"
 #include "../../control/settings/Settings.h"
-#include "../../util/XournalType.h"
+#include <XournalType.h>
 
 enum Orientation {
 	ORIENTATION_NOT_DEFINED, ORIENTATION_LANDSCAPE, ORIENTATION_PORTRAIT

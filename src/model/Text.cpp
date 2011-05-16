@@ -3,9 +3,9 @@
 // Hack: Needed to calculate the view size
 #include "../view/TextView.h"
 
-#include "../util/serializing/ObjectOutputStream.h"
-#include "../util/serializing/ObjectInputStream.h"
-#include "../util/Stacktrace.h"
+#include <serializing/ObjectOutputStream.h>
+#include <serializing/ObjectInputStream.h>
+#include <Stacktrace.h>
 
 Text::Text() :
 	Element(ELEMENT_TEXT) {

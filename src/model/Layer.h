@@ -15,8 +15,8 @@
 #include <gtk/gtk.h>
 
 #include "Element.h"
-#include "../util/ListIterator.h"
-#include "../util/XournalType.h"
+#include <ListIterator.h>
+#include <XournalType.h>
 
 class LayerListener;
 

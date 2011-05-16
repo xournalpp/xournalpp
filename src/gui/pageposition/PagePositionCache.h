@@ -12,7 +12,7 @@
 #ifndef __PAGEPOSITIONCACHE_H__
 #define __PAGEPOSITIONCACHE_H__
 
-#include "../../util/XournalType.h"
+#include <XournalType.h>
 
 class PagePositionCache {
 public:

@@ -14,7 +14,7 @@
 
 #include <glib.h>
 #include "../Point.h"
-#include "../../util/XournalType.h"
+#include <XournalType.h>
 
 class EraseableStrokePart {
 public:

@@ -13,7 +13,7 @@
 #define __TOOLPAGELAYER_H__
 
 #include "AbstractToolItem.h"
-#include "../../util/XournalType.h"
+#include <XournalType.h>
 
 class GladeGui;
 

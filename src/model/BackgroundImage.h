@@ -12,8 +12,8 @@
 #ifndef __BACKGROUNDIMAGE_H__
 #define __BACKGROUNDIMAGE_H__
 
-#include "../util/XournalType.h"
-#include "../util/String.h"
+#include <XournalType.h>
+#include <String.h>
 #include <gtk/gtk.h>
 
 class BackgroundImageContents;

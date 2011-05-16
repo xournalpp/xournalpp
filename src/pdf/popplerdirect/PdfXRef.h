@@ -12,7 +12,7 @@
 #ifndef __PDFXREF_H__
 #define __PDFXREF_H__
 
-#include "../../util/XournalType.h"
+#include <XournalType.h>
 
 class PdfXRef {
 public:

@@ -6,5 +6,7 @@ Icon=xoj
 Patterns=*.xoj;*.XOJ;*.Xoj;
 
 Comment=Xournal note file
-Comment[fr]=Fichier Xournal
 Comment[ca]=Fitxers de nota del Xournal
+Comment[de]=Xournal Dokument
+Comment[fr]=Fichier Xournal
+

@@ -13,7 +13,7 @@
 #define ERASEABLESTROKE_H_
 
 #include "../Point.h"
-#include "../../util/XournalType.h"
+#include <XournalType.h>
 #include <gtk/gtk.h>
 
 class Stroke;

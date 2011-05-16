@@ -1,6 +1,6 @@
 #include "ColorToolItem.h"
 #include "../widgets/SelectColor.h"
-#include "../../util/Util.h"
+#include <Util.h>
 
 #include <config.h>
 #include <glib/gi18n-lib.h>

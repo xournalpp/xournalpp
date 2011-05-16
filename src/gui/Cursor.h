@@ -13,7 +13,7 @@
 #define __CURSOR_H__
 
 #include "../control/tools/CursorSelectionType.h"
-#include "../util/XournalType.h"
+#include <XournalType.h>
 
 #include <gtk/gtk.h>
 

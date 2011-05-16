@@ -12,7 +12,7 @@
 #ifndef __RECTANGLE_H__
 #define __RECTANGLE_H__
 
-#include "XournalType.h"
+#include <XournalType.h>
 
 class Range;
 

@@ -13,7 +13,7 @@
 #define __PAGEVIEW_H__
 
 #include <gtk/gtk.h>
-#include "../util/Range.h"
+#include <Range.h>
 #include "Redrawable.h"
 #include "../model/PageRef.h"
 

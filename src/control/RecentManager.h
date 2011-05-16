@@ -13,8 +13,8 @@
 #define __RECENTMANAGER_H__
 
 #include <gtk/gtk.h>
-#include "../util/String.h"
-#include "../util/XournalType.h"
+#include <String.h>
+#include <XournalType.h>
 
 class RecentManagerListener {
 public:

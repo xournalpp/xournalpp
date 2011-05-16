@@ -1,7 +1,7 @@
 #include "Image.h"
-#include "../util/serializing/ObjectOutputStream.h"
-#include "../util/serializing/ObjectInputStream.h"
-#include "../util/pixbuf-utils.h"
+#include <serializing/ObjectOutputStream.h>
+#include <serializing/ObjectInputStream.h>
+#include <pixbuf-utils.h>
 
 Image::Image() :
 	Element(ELEMENT_IMAGE) {

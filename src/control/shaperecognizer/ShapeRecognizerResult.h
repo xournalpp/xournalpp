@@ -13,8 +13,8 @@
 #define __SHAPERECOGNIZERRESULT_H__
 
 #include <glib.h>
-#include "../../util/ListIterator.h"
-#include "../../util/XournalType.h"
+#include <ListIterator.h>
+#include <XournalType.h>
 
 class Stroke;
 class ShapeRecognizer;

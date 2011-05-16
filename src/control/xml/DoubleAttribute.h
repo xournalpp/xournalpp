@@ -13,7 +13,7 @@
 #define __DOUBLEATTRIBUTE_H__
 
 #include "Attribute.h"
-#include "../../util/XournalType.h"
+#include <XournalType.h>
 
 class DoubleAttribute: public Attribute {
 public:

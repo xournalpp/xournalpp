@@ -17,7 +17,7 @@
 #include "Job.h"
 #include <glib.h>
 
-#include "../../util/XournalType.h"
+#include <XournalType.h>
 
 typedef enum {
 	JOB_PRIORITY_URGENT, // Rendering current page range

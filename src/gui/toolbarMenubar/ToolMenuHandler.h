@@ -15,8 +15,8 @@
 #include <gtk/gtk.h>
 
 #include "../../control/Actions.h"
-#include "../../util/String.h"
-#include "../../util/ListIterator.h"
+#include <String.h>
+#include <ListIterator.h>
 
 
 class AbstractToolItem;

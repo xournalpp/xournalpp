@@ -15,7 +15,7 @@
 #include "../GladeGui.h"
 #include "../../control/settings/Settings.h"
 #include "../../control/jobs/ExportFormtType.h"
-#include "../../util/XournalType.h"
+#include <XournalType.h>
 
 class ExportDialog: public GladeGui {
 public:

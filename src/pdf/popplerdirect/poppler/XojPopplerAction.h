@@ -15,7 +15,7 @@
 #include "XojPopplerDocument.h"
 
 #include "../../../model/LinkDestination.h"
-#include "../../../util/String.h"
+#include <String.h>
 
 #include <poppler/Link.h>
 

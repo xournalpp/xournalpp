@@ -14,10 +14,10 @@
 #include "PrintHandler.h"
 #include "ExportHandler.h"
 #include "settings/MetadataManager.h"
-#include "../util/CrashHandler.h"
-#include "../util/serializing/ObjectInputStream.h"
-#include "../util/Stacktrace.h"
-#include "../util/XInputUtils.h"
+#include <CrashHandler.h>
+#include <serializing/ObjectInputStream.h>
+#include <Stacktrace.h>
+#include <XInputUtils.h>
 #include "../model/FormatDefinitions.h"
 #include "../model/XojPage.h"
 #include "../model/BackgroundImage.h"

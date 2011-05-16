@@ -13,7 +13,7 @@
 #define __IMAGE_H__
 
 #include "Element.h"
-#include "../util/XournalType.h"
+#include <XournalType.h>
 
 class Image: public Element {
 public:

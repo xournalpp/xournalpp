@@ -13,7 +13,7 @@
 #define __DOCUMENTLISTENER_H__
 
 #include "DocumentChangeType.h"
-#include "../util/XournalType.h"
+#include <XournalType.h>
 
 class DocumentHandler;
 

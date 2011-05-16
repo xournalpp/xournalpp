@@ -13,8 +13,8 @@
 #define __TOOLHANDLER_H__
 
 #include "Tool.h"
-#include "../util/Arrayiterator.h"
-#include "../util/XournalType.h"
+#include <Arrayiterator.h>
+#include <XournalType.h>
 #include "settings/Settings.h"
 
 class ToolListener {

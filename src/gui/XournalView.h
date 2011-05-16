@@ -13,7 +13,7 @@
 #define __XOURNALVIEW_H__
 
 #include <gtk/gtk.h>
-#include "../util/Arrayiterator.h"
+#include <Arrayiterator.h>
 #include "../control/ZoomControl.h"
 #include "../model/DocumentListener.h"
 #include "../model/PageRef.h"

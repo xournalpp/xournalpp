@@ -17,7 +17,7 @@
 #include "Scheduler.h"
 #include "../../gui/sidebar/SidebarPreview.h"
 #include "../../gui/PageView.h"
-#include "../../util/XournalType.h"
+#include <XournalType.h>
 
 class XournalScheduler: public Scheduler {
 public:

@@ -12,8 +12,8 @@
 #ifndef __TOOL_H__
 #define __TOOL_H__
 
-#include "../util/String.h"
-#include "../util/XournalType.h"
+#include <String.h>
+#include <XournalType.h>
 
 #define TOOL_COUNT 10
 

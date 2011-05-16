@@ -13,8 +13,8 @@
 #define __PAGEREF_H__
 
 #include "BackgroundType.h"
-#include "../util/ListIterator.h"
-#include "../util/XournalType.h"
+#include <ListIterator.h>
+#include <XournalType.h>
 
 class XojPage;
 class Layer;

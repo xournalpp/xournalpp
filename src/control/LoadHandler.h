@@ -16,7 +16,7 @@
 #include "../model/Stroke.h"
 #include "../model/Text.h"
 #include "../model/Image.h"
-#include "../util/XournalType.h"
+#include <XournalType.h>
 #include <zlib.h>
 
 enum ParserPosition {

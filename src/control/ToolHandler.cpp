@@ -1,6 +1,6 @@
 #include "ToolHandler.h"
 #include <stdio.h>
-#include "../util/Util.h"
+#include <Util.h>
 #include "Actions.h"
 
 #include <gtk/gtk.h>

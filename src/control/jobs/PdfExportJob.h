@@ -13,8 +13,8 @@
 #define __PDFEXPORTJOB_H__
 
 #include "BlockingJob.h"
-#include "../../util/String.h"
-#include "../../util/XournalType.h"
+#include <String.h>
+#include <XournalType.h>
 
 class Control;
 class PdfExportJob: public BlockingJob {

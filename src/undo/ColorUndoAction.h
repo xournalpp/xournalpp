@@ -13,7 +13,7 @@
 #define __COLORUNDOACTION_H__
 
 #include "UndoAction.h"
-#include "../util/XournalType.h"
+#include <XournalType.h>
 #include <glib.h>
 
 class Layer;

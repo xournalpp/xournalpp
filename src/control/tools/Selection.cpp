@@ -118,19 +118,10 @@ void RectSelection::currentPos(double x, double y) {
 	int bY = MAX(y, this->ey);
 	bY = MAX(bY, this->sy) + 10;
 
-	if (x <= this->sx) {
-		this->sx = x;
-	} else {
-		this->ex = x;
-	}
-
-	if (y <= this->sy) {
-		this->sy = y;
-	} else {
-		this->ey = y;
-	}
-
 	view->repaintArea(aX, aY, bX, bY);
+
+	this->ex = x;
+	this->ey = y;
 }
 
 void RectSelection::paint(cairo_t * cr, GdkRectangle * rect, double zoom) {
@@ -142,10 +133,17 @@ void RectSelection::paint(cairo_t * cr, GdkRectangle * rect, double zoom) {
 	cairo_set_line_width(cr, 1 / zoom);
 	gdk_cairo_set_source_color(cr, &selectionColor);
 
-	cairo_move_to(cr, sx, sy);
-	cairo_line_to(cr, ex, sy);
-	cairo_line_to(cr, ex, ey);
-	cairo_line_to(cr, sx, ey);
+
+	int aX = MIN(this->sx, this->ex);
+	int bX = MAX(this->sx, this->ex);
+
+	int aY = MIN(this->sy, this->ey);
+	int bY = MAX(this->sy, this->ey);
+
+	cairo_move_to(cr, aX, aY);
+	cairo_line_to(cr, bX, aY);
+	cairo_line_to(cr, bX, bY);
+	cairo_line_to(cr, aX, bY);
 	cairo_close_path(cr);
 
 	cairo_stroke_preserve(cr);

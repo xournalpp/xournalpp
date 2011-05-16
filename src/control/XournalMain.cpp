@@ -3,13 +3,13 @@
 #include <gtk/gtk.h>
 #include <iostream>
 
-#include "gui/MainWindow.h"
+#include "../gui/MainWindow.h"
 #include "Control.h"
 #include "LoadHandler.h"
 #include "../gui/GladeSearchpath.h"
 #include "../gui/XournalView.h"
 #include "../pdf/popplerdirect/PdfExport.h"
-#include "cfg.h"
+#include "../cfg.h"
 
 #ifdef ENABLE_PYTHON
 #include "../plugin/python/PythonRunner.h"

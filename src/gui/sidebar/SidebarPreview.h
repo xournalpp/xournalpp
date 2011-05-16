@@ -12,9 +12,9 @@
 #define __SIDEBARPREVIEW_H__
 
 #include <gtk/gtk.h>
-#include "../../util/Util.h"
+#include <Util.h>
 #include "../../model/PageRef.h"
-#include "../../util/XournalType.h"
+#include <XournalType.h>
 
 #include "../../control/PdfCache.h"
 

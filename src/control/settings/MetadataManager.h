@@ -13,7 +13,7 @@
 #define __METADATAMANAGER_H__
 
 #include <glib.h>
-#include "../../util/String.h"
+#include <String.h>
 
 class MetadataManager {
 public:

@@ -13,8 +13,8 @@
 #define __ELEMENT_H__
 
 #include <gtk/gtk.h>
-#include "../util/serializing/Serializeable.h"
-#include "../util/XournalType.h"
+#include <serializing/Serializeable.h>
+#include <XournalType.h>
 
 enum ElementType {
 	ELEMENT_STROKE = 1, ELEMENT_IMAGE, ELEMENT_TEXT

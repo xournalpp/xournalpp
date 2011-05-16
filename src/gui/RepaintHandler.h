@@ -12,7 +12,7 @@
 #ifndef __REPAINTHANDLER_H__
 #define __REPAINTHANDLER_H__
 
-#include "../util/XournalType.h"
+#include <XournalType.h>
 
 class PageView;
 class XournalView;

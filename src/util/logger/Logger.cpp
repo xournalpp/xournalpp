@@ -1,5 +1,5 @@
 #include "Logger.h"
-#include "../XournalType.h"
+#include <XournalType.h>
 
 #ifdef XOJ_CALL_LOG_ENABLED
 

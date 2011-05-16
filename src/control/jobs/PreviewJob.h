@@ -14,7 +14,7 @@
 
 #include "Job.h"
 #include "../../gui/sidebar/SidebarPreview.h"
-#include "../../util/XournalType.h"
+#include <XournalType.h>
 
 class PreviewJob : public Job {
 public:

@@ -1,5 +1,5 @@
 #include "TextAttribute.h"
-#include "../../util/String.h"
+#include <String.h>
 
 TextAttribute::TextAttribute(const char * name, const char * value) :
 	Attribute(name) {

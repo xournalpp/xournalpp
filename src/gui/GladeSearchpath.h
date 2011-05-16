@@ -9,7 +9,7 @@
 #define __GLADESEARCHPATH_H__
 
 #include <glib.h>
-#include "../util/XournalType.h"
+#include <XournalType.h>
 
 class GladeSearchpath {
 public:

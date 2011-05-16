@@ -13,7 +13,7 @@
 #define __PAGEPOSITIONHANDLER_H__
 
 #include <glib.h>
-#include "../../util/XournalType.h"
+#include <XournalType.h>
 
 class PageView;
 class PagePosition;

@@ -12,8 +12,8 @@
 #ifndef __SAVEHANDLER_H__
 #define __SAVEHANDLER_H__
 
-#include "../util/OutputStream.h"
-#include "../util/XournalType.h"
+#include <OutputStream.h>
+#include <XournalType.h>
 #include "../model/PageRef.h"
 #include "../model/Document.h"
 class XmlNode;

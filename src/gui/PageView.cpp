@@ -8,8 +8,8 @@
 #include "../view/TextView.h"
 #include "../control/tools/Selection.h"
 #include "../control/tools/ImageHandler.h"
-#include "../util/pixbuf-utils.h"
-#include "../util/Range.h"
+#include <pixbuf-utils.h>
+#include <Range.h>
 #include "../cfg.h"
 #include "../undo/InsertUndoAction.h"
 #include "../control/jobs/BlockingJob.h"
@@ -24,7 +24,7 @@
 #include "../control/tools/VerticalToolHandler.h"
 #include "../control/tools/EraseHandler.h"
 #include "../control/tools/InputHandler.h"
-#include "../util/Rectangle.h"
+#include <Rectangle.h>
 #include "../undo/DeleteUndoAction.h"
 #include "Cursor.h"
 #include "TextEditor.h"

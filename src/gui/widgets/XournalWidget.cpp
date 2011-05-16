@@ -1,11 +1,11 @@
 #include "XournalWidget.h"
 #include "../XournalView.h"
-#include "../../util/Util.h"
-#include "../../util/Rectangle.h"
+#include <Util.h>
+#include <Rectangle.h>
 #include "../Shadow.h"
 #include "../../control/Control.h"
 #include "../../control/settings/Settings.h"
-#include "../../util/XInputUtils.h"
+#include <XInputUtils.h>
 #include "../../cfg.h"
 #include "../pageposition/PagePositionCache.h"
 #include "../pageposition/PagePositionHandler.h"

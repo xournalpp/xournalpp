@@ -12,7 +12,7 @@
 #ifndef __ELEMENTCONTAINER_H__
 #define __ELEMENTCONTAINER_H__
 
-#include "../util/ListIterator.h"
+#include <ListIterator.h>
 
 class Element;
 

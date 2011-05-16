@@ -13,7 +13,7 @@
 #define __BLOCKINGJOB_H__
 
 #include "Job.h"
-#include "../../util/XournalType.h"
+#include <XournalType.h>
 
 #include <gtk/gtk.h>
 

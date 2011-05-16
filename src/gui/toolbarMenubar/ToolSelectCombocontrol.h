@@ -14,7 +14,7 @@
 
 #include "ToolButton.h"
 #include "../GladeGui.h"
-#include "../../util/XournalType.h"
+#include <XournalType.h>
 
 class ToolMenuHandler;
 

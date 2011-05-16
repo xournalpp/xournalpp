@@ -29,7 +29,7 @@ const char BASE64_TABLE[256] = { -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
 		-1, -1, -1, -1, -1, -1, -1, -1, -1 };
 
 int main(int argc, char *argv[]) {
-	gzFile * f;
+	gzFile f;
 	FILE * fp;
 	int count;
 	unsigned char buffer[512];

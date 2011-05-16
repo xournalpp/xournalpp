@@ -1,6 +1,6 @@
 #include "ExportHandler.h"
 #include "../gui/dialog/ExportDialog.h"
-#include "../util/PageRange.h"
+#include <PageRange.h>
 #include "../model/Document.h"
 #include "../gui/dialog/ExportDialog.h"
 #include "jobs/ExportJob.h"

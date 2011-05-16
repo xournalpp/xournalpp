@@ -1,8 +1,8 @@
 #include "Cursor.h"
 #include "XournalView.h"
 #include "../control/Control.h"
-#include "../util/Util.h"
-#include "../util/pixbuf-utils.h"
+#include <Util.h>
+#include <pixbuf-utils.h>
 
 /************** drawing nice cursors *********/
 

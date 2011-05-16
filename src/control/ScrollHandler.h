@@ -16,7 +16,7 @@ class XojPage;
 class Control;
 
 #include <gtk/gtk.h>
-#include "../util/XournalType.h"
+#include <XournalType.h>
 #include "../model/PageRef.h"
 
 class ScrollHandler {

@@ -13,7 +13,7 @@
 #define __LISTITERATOR_H__
 
 #include <gtk/gtk.h>
-#include "XournalType.h"
+#include <XournalType.h>
 
 template<class T>
 class ListIterator {

@@ -12,7 +12,7 @@
 #ifndef RANGE_H_
 #define RANGE_H_
 
-#include "XournalType.h"
+#include <XournalType.h>
 
 class Range {
 public:

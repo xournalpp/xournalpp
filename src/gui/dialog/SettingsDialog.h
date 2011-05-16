@@ -14,7 +14,7 @@
 
 #include "../GladeGui.h"
 #include "../../control/settings/Settings.h"
-#include "../../util/XournalType.h"
+#include <XournalType.h>
 
 class SettingsDialog: public GladeGui {
 public:
