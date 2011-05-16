@@ -14,7 +14,7 @@
 
 #include "AbstractToolItem.h"
 #include "../../control/ZoomControl.h"
-#include "../../util/XournalType.h"
+#include <XournalType.h>
 
 class ToolZoomSlider: public AbstractToolItem, public ZoomListener {
 public:

@@ -12,7 +12,7 @@
 #ifndef __POINT_H__
 #define __POINT_H__
 
-#include "../util/XournalType.h"
+#include <XournalType.h>
 
 class Point {
 public:

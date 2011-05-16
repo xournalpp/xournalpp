@@ -13,7 +13,7 @@
 #define __STROKE_H__
 
 #include "Element.h"
-#include "../util/Arrayiterator.h"
+#include <Arrayiterator.h>
 #include "Point.h"
 
 enum StrokeTool {

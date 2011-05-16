@@ -1,5 +1,5 @@
 #include "ExportDialog.h"
-#include "../../util/PageRange.h"
+#include <PageRange.h>
 
 #include <config.h>
 #include <glib/gi18n-lib.h>

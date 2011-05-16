@@ -4,7 +4,7 @@
 #include "SettingsDialog.h"
 #include "../widgets/ZoomCallib.h"
 #include "ButtonConfigGui.h"
-#include "../../util/Util.h"
+#include <Util.h>
 #include <string.h>
 
 SettingsDialog::SettingsDialog(GladeSearchpath * gladeSearchPath, Settings * settings) :

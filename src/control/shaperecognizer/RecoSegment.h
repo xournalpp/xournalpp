@@ -16,7 +16,7 @@ class Stroke;
 class Inertia;
 
 #include "../../model/Point.h"
-#include "../../util/XournalType.h"
+#include <XournalType.h>
 
 class RecoSegment {
 public:

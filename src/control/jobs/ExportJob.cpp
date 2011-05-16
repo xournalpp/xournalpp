@@ -1,7 +1,7 @@
 #include "ExportJob.h"
 #include "../../view/DocumentView.h"
 #include "../../view/PdfView.h"
-#include "../../util/PageRange.h"
+#include <PageRange.h>
 #include "SynchronizedProgressListener.h"
 #include <cairo-ps.h>
 #include <cairo-svg.h>

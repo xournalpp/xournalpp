@@ -2,7 +2,7 @@
 #include "EraseableStrokePart.h"
 #include "PartList.h"
 #include "../Stroke.h"
-#include "../../util/Range.h"
+#include <Range.h>
 #include <math.h>
 
 EraseableStroke::EraseableStroke(Stroke * stroke) {

@@ -3,7 +3,7 @@
 #include "../model/Layer.h"
 #include "../model/Stroke.h"
 #include "../gui/Redrawable.h"
-#include "../util/Stacktrace.h"
+#include <Stacktrace.h>
 
 RecognizerUndoAction::RecognizerUndoAction(PageRef page, Redrawable * view, Layer * layer,
 		Stroke * original, Stroke * recognized) : UndoAction("RecognizerUndoAction") {

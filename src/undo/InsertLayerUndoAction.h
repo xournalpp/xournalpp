@@ -13,7 +13,7 @@
 #define __INSERTLAYERUNDOACTION_H__
 
 #include "UndoAction.h"
-#include "../util/XournalType.h"
+#include <XournalType.h>
 
 class Layer;
 

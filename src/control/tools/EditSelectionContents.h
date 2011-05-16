@@ -14,14 +14,14 @@
 #define __EDITSELECTIONCONTENTS_H__
 
 #include "../../view/ElementContainer.h"
-#include "../../util/XournalType.h"
+#include <XournalType.h>
 #include <glib.h>
 
 #include "../Tool.h"
 #include "../../model/Font.h"
 #include "../../model/Element.h"
 #include "../../model/PageRef.h"
-#include "../../util/ListIterator.h"
+#include <ListIterator.h>
 
 class UndoRedoHandler;
 class Layer;

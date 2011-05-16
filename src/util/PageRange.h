@@ -12,7 +12,7 @@
 #ifndef __PAGERANGE_H__
 #define __PAGERANGE_H__
 
-#include "../util/XournalType.h"
+#include <XournalType.h>
 #include <glib.h>
 
 class PageRangeEntry {

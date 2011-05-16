@@ -13,7 +13,7 @@
 #define __XOJ_POPPLERDOCUMENT_H__
 
 #include "XojPopplerPage.h"
-#include "../../../util/String.h"
+#include <String.h>
 
 class _IntPopplerDocument;
 class XojPopplerIter;

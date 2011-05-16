@@ -13,9 +13,9 @@
 #define __XOJ_PAGE_H__
 
 #include "Layer.h"
-#include "../util/ListIterator.h"
-#include "../util/XournalType.h"
-#include "../util/String.h"
+#include <ListIterator.h>
+#include <XournalType.h>
+#include <String.h>
 
 #include "BackgroundType.h"
 

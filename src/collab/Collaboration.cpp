@@ -5,8 +5,8 @@
 #include "../gui/PageView.h"
 #include "../gui/XournalView.h"
 
-#include "../util/serializing/ObjectOutputStream.h"
-#include "../util/serializing/HexObjectEncoding.h"
+#include <serializing/ObjectOutputStream.h>
+#include <serializing/HexObjectEncoding.h>
 
 Collaboration::Collaboration(Control * control) {
 	this->control = control;

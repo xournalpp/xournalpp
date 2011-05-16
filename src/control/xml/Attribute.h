@@ -12,8 +12,8 @@
 #ifndef __ATTRIBUTE_H__
 #define __ATTRIBUTE_H__
 
-#include "../../util/OutputStream.h"
-#include "../../util/XournalType.h"
+#include <OutputStream.h>
+#include <XournalType.h>
 
 class Attribute {
 public:

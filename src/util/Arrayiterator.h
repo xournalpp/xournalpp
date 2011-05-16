@@ -12,7 +12,7 @@
 #ifndef __ARRAYITERATOR_H__
 #define __ARRAYITERATOR_H__
 
-#include "XournalType.h"
+#include <XournalType.h>
 
 template<class T>
 class ArrayIterator {

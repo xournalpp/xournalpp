@@ -1,12 +1,12 @@
 #include "ClipboardHandler.h"
 #include "Control.h"
-#include "../util/pixbuf-utils.h"
+#include <pixbuf-utils.h>
 #include <cairo-svg.h>
 #include <config.h>
 #include "../view/DocumentView.h"
-#include "../util/serializing/ObjectOutputStream.h"
-#include "../util/serializing/ObjectInputStream.h"
-#include "../util/serializing/BinObjectEncoding.h"
+#include <serializing/ObjectOutputStream.h>
+#include <serializing/ObjectInputStream.h>
+#include <serializing/BinObjectEncoding.h>
 
 ClipboardHandler::ClipboardHandler(ClipboardListener * listener, GtkWidget * widget) {
 	XOJ_INIT_TYPE(ClipboardHandler);

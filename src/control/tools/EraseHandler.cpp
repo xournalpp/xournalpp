@@ -3,8 +3,8 @@
 #include "../../model/Layer.h"
 #include "../../model/Stroke.h"
 #include "../../model/Document.h"
-#include "../../util/Range.h"
-#include "../../util/Rectangle.h"
+#include <Range.h>
+#include <Rectangle.h>
 #include "../../undo/UndoRedoHandler.h"
 #include "../../undo/EraseUndoAction.h"
 #include "../../undo/DeleteUndoAction.h"

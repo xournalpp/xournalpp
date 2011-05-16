@@ -12,8 +12,8 @@
 #ifndef __OUTPUTSTREAM_H__
 #define __OUTPUTSTREAM_H__
 
-#include "../util/String.h"
-#include "../util/XournalType.h"
+#include <String.h>
+#include <XournalType.h>
 #include <zlib.h>
 
 class OutputStream {

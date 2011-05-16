@@ -14,7 +14,7 @@
 
 #include "AbstractToolItem.h"
 #include "../../control/ToolHandler.h"
-#include "../../util/XournalType.h"
+#include <XournalType.h>
 
 class ColorToolItem: public AbstractToolItem {
 public:

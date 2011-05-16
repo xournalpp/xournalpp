@@ -13,7 +13,7 @@
 #define __DOUBLEARRAYATTRIBUTE_H__
 
 #include "Attribute.h"
-#include "../../util/XournalType.h"
+#include <XournalType.h>
 
 class DoubleArrayAttribute: public Attribute {
 public:

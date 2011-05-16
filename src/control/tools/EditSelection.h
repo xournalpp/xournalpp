@@ -19,7 +19,7 @@
 #include "../../model/PageRef.h"
 #include "CursorSelectionType.h"
 
-#include "../../util/XournalType.h"
+#include <XournalType.h>
 
 class UndoRedoHandler;
 class Layer;

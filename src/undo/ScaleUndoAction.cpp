@@ -2,7 +2,7 @@
 
 #include "../model/PageRef.h"
 #include "../model/Element.h"
-#include "../util/Range.h"
+#include <Range.h>
 #include "../gui/Redrawable.h"
 
 ScaleUndoAction::ScaleUndoAction(PageRef page, Redrawable * view, GList * elements,

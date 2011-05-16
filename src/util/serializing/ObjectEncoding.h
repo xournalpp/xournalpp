@@ -12,7 +12,7 @@
 #ifndef __OBJECTENCODING_H__
 #define __OBJECTENCODING_H__
 
-#include "../XournalType.h"
+#include <XournalType.h>
 
 #include <glib.h>
 

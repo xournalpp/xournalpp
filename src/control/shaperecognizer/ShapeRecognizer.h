@@ -16,7 +16,7 @@
 #include "ShapeRecognizerConfig.h"
 #include "CircleRecognizer.h"
 
-#include "../../util/XournalType.h"
+#include <XournalType.h>
 #include <glib.h>
 
 class Stroke;

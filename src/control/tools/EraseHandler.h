@@ -12,7 +12,7 @@
 #ifndef ERASEHANDLER_H_
 #define ERASEHANDLER_H_
 
-#include "../../util/XournalType.h"
+#include <XournalType.h>
 #include "../../model/PageRef.h"
 
 class DeleteUndoAction;

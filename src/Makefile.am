@@ -1,12 +1,11 @@
-
-INCLUDES = \
-	-DPACKAGE_DATA_DIR=\""$(datadir)"\" \
-	-DPACKAGE_LOCALE_DIR=\""$(prefix)/$(DATADIRNAME)/locale"\" \
-	@PACKAGE_CFLAGS@
+SUBDIRS = \
+	collab \
+	util \
+	xoj-preview-extractor
 
 bin_PROGRAMS = xournalpp
+
 xournalpp_SOURCES = \
-	collab/Collaboration.cpp \
 	control/jobs/AutosaveJob.cpp \
 	control/jobs/BlockingJob.cpp \
 	control/jobs/ExportJob.cpp \
@@ -155,25 +154,6 @@ xournalpp_SOURCES = \
 	undo/TextUndoAction.cpp \
 	undo/UndoAction.cpp \
 	undo/UndoRedoHandler.cpp \
-	util/logger/Logger.cpp \
-	util/serializing/BinObjectEncoding.cpp \
-	util/serializing/HexObjectEncoding.cpp \
-	util/serializing/InputStreamException.cpp \
-	util/serializing/ObjectEncoding.cpp \
-	util/serializing/ObjectInputStream.cpp \
-	util/serializing/ObjectOutputStream.cpp \
-	util/CrashHandler.cpp \
-	util/GzHelper.cpp \
-	util/OutputStream.cpp \
-	util/PageRange.cpp \
-	util/Stacktrace.cpp \
-	util/pixbuf-utils.cpp \
-	util/Range.cpp \
-	util/Rectangle.cpp \
-	util/String.cpp \
-	util/Util.cpp \
-	util/XInputUtils.cpp \
-	util/XournalType.cpp \
 	view/DocumentView.cpp \
 	view/PdfView.cpp \
 	view/TextView.cpp \
@@ -188,7 +168,19 @@ xournalpp_SOURCES += \
 	plugin/python/PythonRunner.cpp
 endif
 
-xournalpp_CXXFLAGS = -g -rdynamic -Wreturn-type -Wuninitialized -Wunused-value -Wunused-variable   
+INCLUDES = \
+	-DPACKAGE_DATA_DIR=\""$(datadir)"\" \
+	-DPACKAGE_LOCALE_DIR=\""$(prefix)/$(DATADIRNAME)/locale"\" \
+	@PACKAGE_CFLAGS@
 
-xournalpp_LDADD = @PACKAGE_LIBS@ $(INTLLIBS)
+xournalpp_CXXFLAGS = \
+	-I$(top_srcdir)/src/util \
+	-g -rdynamic \
+	-Wreturn-type -Wuninitialized -Wunused-value -Wunused-variable   
 
+xournalpp_LDADD = \
+	@PACKAGE_LIBS@ $(INTLLIBS) \
+	$(top_builddir)/src/collab/libcollab.la \
+	$(top_builddir)/src/util/libutil.la
+
+	

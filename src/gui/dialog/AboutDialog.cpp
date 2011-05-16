@@ -1,6 +1,6 @@
 #include "AboutDialog.h"
 #include <config.h>
-#include "../../util/String.h"
+#include <String.h>
 
 #define AUTOHOR(name) authors += name; authors += "\n";
 #define CONTRIBUTOR(name) contributors += name; contributors += "\n";

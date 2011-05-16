@@ -1,7 +1,7 @@
 #include "ShapeRecognizerResult.h"
 #include "ShapeRecognizer.h"
 
-#include "../../util/Stacktrace.h"
+#include <Stacktrace.h>
 
 ShapeRecognizerResult::ShapeRecognizerResult(Stroke * result) {
 	XOJ_INIT_TYPE(ShapeRecognizerResult);

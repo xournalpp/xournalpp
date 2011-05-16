@@ -1,7 +1,7 @@
 #include "ImagesDialog.h"
 #include "../Shadow.h"
 #include <math.h>
-#include "../../util/Util.h"
+#include <Util.h>
 #include "../../model/Document.h"
 #include "../../model/BackgroundImage.h"
 #include "../../control/settings/Settings.h"

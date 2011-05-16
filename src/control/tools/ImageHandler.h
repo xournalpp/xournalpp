@@ -13,7 +13,7 @@
 #define __IMAGEHANDLER_H__
 
 #include <gtk/gtk.h>
-#include "../../util/XournalType.h"
+#include <XournalType.h>
 
 class Control;
 class PageView;

@@ -13,7 +13,7 @@
 #define __UTIL_H__
 
 #include <gtk/gtk.h>
-#include "../util/String.h"
+#include <String.h>
 
 class Util {
 private:

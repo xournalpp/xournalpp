@@ -13,7 +13,7 @@
 #define __BUTTONCONFIGGUI__
 
 #include "../../control/Actions.h"
-#include "../../util/XournalType.h"
+#include <XournalType.h>
 #include <gdk/gdk.h>
 
 class SettingsDialog;

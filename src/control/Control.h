@@ -22,7 +22,7 @@
 #include "../model/Document.h"
 #include "ZoomControl.h"
 #include "jobs/XournalScheduler.h"
-#include "../util/XournalType.h"
+#include <XournalType.h>
 
 #include "../gui/sidebar/Sidebar.h"
 #include "../gui/SearchBar.h"

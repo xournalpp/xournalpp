@@ -13,8 +13,8 @@
 #define __TOOLBARDATA_H__
 
 #include <glib.h>
-#include "../../../util/String.h"
-#include "../../../util/XournalType.h"
+#include <String.h>
+#include <XournalType.h>
 #include <vector>
 
 #include "ToolbarEntry.h"

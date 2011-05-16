@@ -6,7 +6,7 @@
 #include "../../gui/toolbarMenubar/ToolMenuHandler.h"
 #include "../../gui/toolbarMenubar/AbstractToolItem.h"
 
-#include "../../util/Util.h"
+#include <Util.h>
 
 #include <config.h>
 #include <glib/gi18n-lib.h>

@@ -12,7 +12,7 @@
 #ifndef __INERTIA_H__
 #define __INERTIA_H__
 
-#include "../../util/XournalType.h"
+#include <XournalType.h>
 
 class Point;
 

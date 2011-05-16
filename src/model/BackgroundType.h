@@ -1,8 +1,12 @@
 /*
- * BackgroundType.h
+ * Xournal++
  *
- *  Created on: 01.04.2011
- *      Author: andreas
+ * The background-type of a Xournal page
+ *
+ * @author Xournal Team
+ * http://xournal.sf.net
+ *
+ * @license GPL
  */
 
 #ifndef __BACKGROUNDTYPE_H__

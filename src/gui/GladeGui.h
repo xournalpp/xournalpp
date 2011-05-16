@@ -15,7 +15,7 @@
 #include <gtk/gtk.h>
 #include <glade/glade-xml.h>
 
-#include "../util/XournalType.h"
+#include <XournalType.h>
 
 class GladeSearchpath;
 

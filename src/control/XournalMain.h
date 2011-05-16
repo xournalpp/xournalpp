@@ -13,7 +13,7 @@
 #define __XOURNALMAIN_H__
 
 #include <config.h>
-#include "../util/XournalType.h"
+#include <XournalType.h>
 
 class GladeSearchpath;
 

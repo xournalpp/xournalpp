@@ -1,4 +1,4 @@
-#include "XInputUtils.h"
+#include <XInputUtils.h>
 #include <math.h>
 #include "../cfg.h"
 

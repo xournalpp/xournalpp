@@ -13,7 +13,7 @@
 #define __STRING_H__
 
 #include <glib.h>
-#include "XournalType.h"
+#include <XournalType.h>
 
 class _RefStrInternal;
 

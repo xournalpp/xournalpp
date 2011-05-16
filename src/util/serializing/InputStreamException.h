@@ -12,7 +12,7 @@
 #ifndef __INPUTSTREAMEXCEPTION_H__
 #define __INPUTSTREAMEXCEPTION_H__
 
-#include "../String.h"
+#include <String.h>
 #include <exception>
 
 #define INPUT_STREAM_EXCEPTION(description, ...) \

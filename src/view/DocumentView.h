@@ -18,7 +18,7 @@
 #include "../model/Text.h"
 #include "../model/PageRef.h"
 #include "../model/Image.h"
-#include "../util/XournalType.h"
+#include <XournalType.h>
 
 #include "ElementContainer.h"
 

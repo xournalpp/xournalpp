@@ -13,7 +13,7 @@
 #define __SYNCHRONIZEDPROGRESSLISTENER_H__
 
 #include "ProgressListener.h"
-#include "../../util/XournalType.h"
+#include <XournalType.h>
 
 class SynchronizedProgressListener: public ProgressListener {
 public:

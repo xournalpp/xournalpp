@@ -14,7 +14,7 @@
 
 #include "UndoAction.h"
 #include <glib.h>
-#include "../util/XournalType.h"
+#include <XournalType.h>
 
 class Layer;
 class Redrawable;

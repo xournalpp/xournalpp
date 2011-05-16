@@ -12,7 +12,7 @@
 #ifndef __XOJOPENDLG_H__
 #define __XOJOPENDLG_H__
 
-#include "../../util/String.h"
+#include <String.h>
 #include <gtk/gtk.h>
 
 #include "../settings/Settings.h"

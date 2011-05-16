@@ -13,7 +13,7 @@
 #define __PDFREFLIST_H__
 
 #include <glib.h>
-#include "../../util/String.h"
+#include <String.h>
 #include <poppler/Object.h>
 
 #include "PdfObjectWriter.h"

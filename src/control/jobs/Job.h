@@ -12,7 +12,7 @@
 #ifndef __JOB_H__
 #define __JOB_H__
 
-#include "../../util/XournalType.h"
+#include <XournalType.h>
 #include <glib.h>
 
 enum JobType {

@@ -17,8 +17,8 @@
 #include "../../control/Control.h"
 #include "../../model/Document.h"
 #include "../../model/Layer.h"
-#include "../../util/serializing/ObjectOutputStream.h"
-#include "../../util/serializing/ObjectInputStream.h"
+#include <serializing/ObjectOutputStream.h>
+#include <serializing/ObjectInputStream.h>
 
 #include <math.h>
 

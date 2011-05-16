@@ -15,7 +15,7 @@
 #include "Job.h"
 #include <gtk/gtk.h>
 
-#include "../../util/XournalType.h"
+#include <XournalType.h>
 
 class Rectangle;
 class PageView;

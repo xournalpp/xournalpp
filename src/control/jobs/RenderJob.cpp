@@ -5,7 +5,7 @@
 #include "../../view/DocumentView.h"
 #include "../../gui/PageView.h"
 #include "../../model/Document.h"
-#include "../../util/Rectangle.h"
+#include <Rectangle.h>
 
 RenderJob::RenderJob(PageView * view) {
 	XOJ_INIT_TYPE(RenderJob);

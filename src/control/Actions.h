@@ -12,7 +12,7 @@
 #ifndef __ACTIONDISPATCHER_H__
 #define __ACTIONDISPATCHER_H__
 
-#include "../util/XournalType.h"
+#include <XournalType.h>
 
 #include <gtk/gtk.h>
 

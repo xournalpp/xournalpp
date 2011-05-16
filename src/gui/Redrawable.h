@@ -12,7 +12,7 @@
 #ifndef __REDRAWABLE_H__
 #define __REDRAWABLE_H__
 
-#include "../util/Range.h"
+#include <Range.h>
 
 #include <gdk/gdktypes.h>
 #include <gtk/gtk.h>

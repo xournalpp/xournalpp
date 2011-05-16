@@ -10,8 +10,8 @@
  */
 
 #include "control/XournalMain.h"
-#include "util/CrashHandler.h"
-#include "util/Stacktrace.h"
+#include <CrashHandler.h>
+#include <Stacktrace.h>
 
 int main(int argc, char * argv[]) {
 	// init crash handler

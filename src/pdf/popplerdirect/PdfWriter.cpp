@@ -4,7 +4,7 @@
 #include <stdarg.h>
 #include <config.h>
 
-#include "../../util/GzHelper.h"
+#include <GzHelper.h>
 
 bool PdfWriter::compressPdfOutput = true;
 

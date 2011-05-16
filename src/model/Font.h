@@ -11,11 +11,11 @@
 
 #ifndef __XFONT_H__
 #define __XFONT_H__
-#include "../util/String.h"
-#include "../util/XournalType.h"
+#include <String.h>
+#include <XournalType.h>
 
 #include <gtk/gtk.h>
-#include "../util/serializing/Serializeable.h"
+#include <serializing/Serializeable.h>
 
 class XojFont: public Serializeable {
 public:

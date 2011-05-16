@@ -14,7 +14,7 @@
 
 #include <cairo/cairo.h>
 #include "../pdf/popplerdirect/poppler/XojPopplerPage.h"
-#include "../util/XournalType.h"
+#include <XournalType.h>
 
 
 class PdfCache {

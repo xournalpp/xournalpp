@@ -14,7 +14,7 @@
 #define __PARTLIST_H__
 
 #include <gtk/gtk.h>
-#include "../../util/XournalType.h"
+#include <XournalType.h>
 
 class EraseableStrokePart;
 

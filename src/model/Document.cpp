@@ -6,7 +6,7 @@
 #include <glib/gi18n-lib.h>
 
 #include <string.h>
-#include "../util/Stacktrace.h"
+#include <Stacktrace.h>
 
 Document::Document(DocumentHandler * handler) {
 	XOJ_INIT_TYPE(Document);

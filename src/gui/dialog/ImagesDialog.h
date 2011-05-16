@@ -13,7 +13,7 @@
 #define __IMAGESDIALOG_H__
 
 #include "../GladeGui.h"
-#include "../../util/XournalType.h"
+#include <XournalType.h>
 
 class Document;
 class Settings;

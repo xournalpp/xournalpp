@@ -12,6 +12,7 @@ AC_PROG_CC
 AC_PROG_CXX
 AC_PROG_RANLIB
 AC_HEADER_STDC
+AC_PROG_LIBTOOL
 
 dnl librsvg-2.0 is not really needed by Xournal++, but if you don't have it crashes while loading the SVG icons (Problem with Gentoo)
 pkg_modules="gtk+-2.0 >= 2.18.3 poppler-glib >= 0.5.4 poppler >= 0.5.4 libglade-2.0 >= 2.6.4 gthread-2.0 >= 2.4.0 librsvg-2.0 >= 2.14.0"
@@ -25,13 +26,6 @@ AC_ARG_ENABLE([python],
 	[enable_python=$enableval have_python=$enableval],
 	[enable_python=autodetect have_python=yes])
 AC_MSG_RESULT([$enable_python])
-
-if test "x$have_python" != "xno"; then
-	AM_PATH_PYTHON([2.5],[],[no])
-	if test "x$PYTHON" = "x:"; then
-		have_python=no
-	fi
-fi
 
 dnl if test "x$have_python" != "xno"; then
 dnl 	AM_CHECK_PYTHON_HEADERS([],[have_python=no])
@@ -102,6 +96,6 @@ dnl Add the languages which your application supports here.
 ALL_LINGUAS="`grep -v '^#' "$srcdir/po/LINGUAS" | tr '\n' ' '`"
 AM_GLIB_GNU_GETTEXT
 
-AC_CONFIG_FILES(Makefile src/Makefile po/Makefile.in ui/Makefile ui/pixmaps/Makefile src/xoj-preview-extractor/Makefile)
+AC_CONFIG_FILES(Makefile src/Makefile src/collab/Makefile src/util/Makefile po/Makefile.in ui/Makefile ui/pixmaps/Makefile src/xoj-preview-extractor/Makefile)
 AC_OUTPUT
 

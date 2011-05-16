@@ -12,7 +12,7 @@
 #ifndef __OBJECTOUTPUTSTREAM_H__
 #define __OBJECTOUTPUTSTREAM_H__
 
-#include "../String.h"
+#include <String.h>
 #include <gtk/gtk.h>
 
 class Serializeable;

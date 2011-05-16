@@ -13,7 +13,7 @@
 #define __TOOLBARCUSTOMIZEDIALOG_H__
 
 #include "../GladeGui.h"
-#include "../../util/XournalType.h"
+#include <XournalType.h>
 
 class MainWindow;
 class AbstractToolItem;

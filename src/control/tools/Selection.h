@@ -16,8 +16,8 @@
 #include "../../model/PageRef.h"
 #include "../../model/Element.h"
 #include "../../gui/Redrawable.h"
-#include "../../util/Util.h"
-#include "../../util/XournalType.h"
+#include <Util.h>
+#include <XournalType.h>
 
 class Selection: public ShapeContainer {
 public:
