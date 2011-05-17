@@ -11,8 +11,6 @@
 
 #include <math.h>
 
-// TODO After strokes are drawn they are re-drawn, it appears with slightly different width or anti-aliasing.
-
 #define PIXEL_MOTION_THRESHOLD 0.3
 
 InputHandler::InputHandler(XournalView * xournal, PageView * redrawable) {
@@ -129,7 +127,27 @@ void InputHandler::drawTmpStroke() {
 	if (this->tmpStroke) {
 		cairo_t * cr = gtk_xournal_create_cairo_for(this->xournal->getWidget(), this->redrawable);
 
-		this->view->drawStroke(cr, this->tmpStroke, this->tmpStrokeDrawElem);
+		double zoom = xournal->getControl()->getZoomControl()->getZoom();
+
+		/*
+		 * After strokes are drawn they are re-drawn, it appears with slightly different width or anti-aliasing.
+		 * I don't know the problem exactly, one time we draw direct to the screen (here) or to a buffer (normal drawing)
+		 * To avoid the difference I did some workaround with factors, so its nearly invisible... Hopefully with all
+		 * cairo releases
+		 *
+		 * Andreas Butti
+		 */
+
+		double factor = 1;
+		if(zoom < 0.8) {
+			factor = sqrt(zoom);
+		} else if(zoom < 1.0) {
+			factor = sqrt(zoom) - 0.3;
+		} else if(zoom < 1.5) {
+			factor = sqrt(zoom) - 0.2;
+		}
+
+		this->view->drawStroke(cr, this->tmpStroke, this->tmpStrokeDrawElem, factor);
 		this->tmpStrokeDrawElem = this->tmpStroke->getPointCount() - 1;
 		cairo_destroy(cr);
 	}

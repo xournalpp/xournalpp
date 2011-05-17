@@ -48,7 +48,7 @@ void DocumentView::drawEraseableStroke(cairo_t * cr, Stroke * s) {
 	e->draw(cr, this->lX, this->lY, this->width, this->height);
 }
 
-void DocumentView::drawStroke(cairo_t * cr, Stroke * s, int startPoint) {
+void DocumentView::drawStroke(cairo_t * cr, Stroke * s, int startPoint, double scaleFactor) {
 	XOJ_CHECK_TYPE(DocumentView);
 
 	ArrayIterator<Point> points = s->pointIterator();
@@ -83,8 +83,13 @@ void DocumentView::drawStroke(cairo_t * cr, Stroke * s, int startPoint) {
 
 	// No pressure sensitivity, easy draw a line...
 	if (!s->hasPressure()) {
-		// Set width
-		cairo_set_line_width(cr, width);
+		if(scaleFactor == 1) {
+			// Set width
+			cairo_set_line_width(cr, width);
+		} else {
+			// Set width
+			cairo_set_line_width(cr, width * scaleFactor);
+		}
 
 		while (points.hasNext()) {
 			Point p = points.next();
@@ -114,7 +119,13 @@ void DocumentView::drawStroke(cairo_t * cr, Stroke * s, int startPoint) {
 				width = lastPoint1.z;
 			}
 
-			cairo_set_line_width(cr, width);
+			if(scaleFactor == 1) {
+				// Set width
+				cairo_set_line_width(cr, width);
+			} else {
+				// Set width
+				cairo_set_line_width(cr, width * scaleFactor);
+			}
 
 			cairo_move_to(cr, lastPoint1.x, lastPoint1.y);
 			cairo_line_to(cr, p.x, p.y);
