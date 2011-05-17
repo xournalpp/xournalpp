@@ -1,8 +1,5 @@
 Ruler 90° einrasten
 
-Rightclick as defined Tool: Selection is not working
->Using rectangle select as middle mouse button (pen button) doesn't work.
-
 2) Undo seems to redraw in 2 steps, separated by a second or two, and a crash
 always soon follows.
 

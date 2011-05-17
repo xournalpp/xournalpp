@@ -517,7 +517,15 @@ gboolean gtk_xournal_button_release_event(GtkWidget * widget, GdkEventButton * e
 		xournal->currentInputPage = NULL;
 	}
 
+	EditSelection * tmpSelection = xournal->selection;
+	xournal->selection = NULL;
+
 	h->restoreLastConfig();
+
+	// we need this workaround so it's possible to select something with the middle button
+	if(tmpSelection) {
+		xournal->view->setSelection(tmpSelection);
+	}
 
 	return res;
 }
