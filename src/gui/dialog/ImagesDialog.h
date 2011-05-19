@@ -30,7 +30,7 @@ public:
 
 	void setSelected(int selected);
 
-	BackgroundImage * getSelectedImage();
+	BackgroundImage getSelectedImage();
 	bool shouldShowFilechooser();
 
 	Settings * getSettings();

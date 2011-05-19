@@ -117,7 +117,7 @@ Control::Control(GladeSearchpath * gladeSearchPath) {
 Control::~Control() {
 	XOJ_CHECK_TYPE(Control);
 
-	if(this->collaboration) {
+	if (this->collaboration) {
 		delete this->collaboration;
 		this->collaboration = NULL;
 	}
@@ -764,7 +764,6 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent *even
 		customizeToolbars();
 		break;
 
-
 	case ACTION_FULLSCREEN:
 		enableFullscreen(enabled);
 		break;
@@ -777,7 +776,7 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent *even
 
 		// Menu collab
 	case ACTION_COLLAB_START:
-		if(this->collaboration == NULL) {
+		if (this->collaboration == NULL) {
 			this->collaboration = new Collaboration(this);
 			this->collaboration->start();
 		}
@@ -870,13 +869,9 @@ void Control::manageToolbars() {
 
 	this->win->updateToolbarMenu();
 
-	// TODO: implement update toolbar after editing
-//	char * file = g_build_filename(g_get_home_dir(), G_DIR_SEPARATOR_S, CONFIG_DIR, G_DIR_SEPARATOR_S, TOOLBAR_CONFIG, NULL);
-//	if (g_file_test(file, G_FILE_TEST_EXISTS)) {
-//		this->win->getToolbarModel()->save(file);
-//	}
-//	g_free(file);
-
+	char * file = g_build_filename(g_get_home_dir(), G_DIR_SEPARATOR_S, CONFIG_DIR, G_DIR_SEPARATOR_S, TOOLBAR_CONFIG, NULL);
+	this->win->getToolbarModel()->save(file);
+	g_free(file);
 }
 
 void Control::customizeToolbars() {
@@ -886,8 +881,6 @@ void Control::customizeToolbars() {
 
 	ToolbarCustomizeDialog dlg(this->gladeSearchPath, win);
 	dlg.show();
-
-
 
 	printf("Not implemented yet\n");
 }
@@ -1126,12 +1119,12 @@ void Control::insertNewPage(int position) {
 	double height = 0;
 
 	int lastPage = position - 1;
-	if(lastPage < 0) {
+	if (lastPage < 0) {
 		getDefaultPagesize(width, height);
 	} else {
 		PageRef page = doc->getPage(lastPage);
 
-		if(page.isValid()) {
+		if (page.isValid()) {
 			width = page.getWidth();
 			height = page.getHeight();
 		} else {
@@ -1160,7 +1153,7 @@ void Control::insertNewPage(int position) {
 			if (bg == BACKGROUND_TYPE_PDF) {
 				page.setBackgroundPdfPageNr(current.getPdfPageNr());
 			} else if (bg == BACKGROUND_TYPE_IMAGE) {
-				*page.getBackgroundImage() = *current.getBackgroundImage();
+				page.setBackgroundImage(current.getBackgroundImage());
 			} else {
 				page.setBackgroundColor(current.getBackgroundColor());
 			}
@@ -1267,7 +1260,7 @@ void Control::setPageBackground(ActionType type) {
 
 	int origPdfPage = page.getPdfPageNr();
 	BackgroundType origType = page.getBackgroundType();
-	BackgroundImage origBackgroundImage = *page.getBackgroundImage();
+	BackgroundImage origBackgroundImage = page.getBackgroundImage();
 	double origW = page.getWidth();
 	double origH = page.getHeight();
 
@@ -1280,16 +1273,14 @@ void Control::setPageBackground(ActionType type) {
 	} else if (ACTION_SET_PAPER_BACKGROUND_GRAPH == type) {
 		page.setBackgroundType(BACKGROUND_TYPE_GRAPH);
 	} else if (ACTION_SET_PAPER_BACKGROUND_IMAGE == type) {
-
 		this->doc->lock();
 		ImagesDialog * dlg = new ImagesDialog(this->gladeSearchPath, this->doc, this->settings);
 		this->doc->unlock();
 
 		dlg->show();
-		BackgroundImage * img = dlg->getSelectedImage();
-		if (img) {
-			printf("image selected\n");
-			*page.getBackgroundImage() = *img;
+		BackgroundImage img = dlg->getSelectedImage();
+		if (!img.isEmpty()) {
+			page.setBackgroundImage(img);
 			page.setBackgroundType(BACKGROUND_TYPE_IMAGE);
 		} else if (dlg->shouldShowFilechooser()) {
 
@@ -1315,12 +1306,12 @@ void Control::setPageBackground(ActionType type) {
 				g_error_free(err);
 				return;
 			} else {
-				*page.getBackgroundImage() = newImg;
+				page.setBackgroundImage(newImg);
 				page.setBackgroundType(BACKGROUND_TYPE_IMAGE);
 			}
 		}
 
-		GdkPixbuf * pixbuf = page.getBackgroundImage()->getPixbuf();
+		GdkPixbuf * pixbuf = page.getBackgroundImage().getPixbuf();
 		if (pixbuf) {
 			page.setSize(gdk_pixbuf_get_width(pixbuf), gdk_pixbuf_get_height(pixbuf));
 			firePageSizeChanged(pageNr);
@@ -1365,7 +1356,7 @@ void Control::setPageBackground(ActionType type) {
 	firePageChanged(pageNr);
 	updateBackgroundSizeButton();
 
-	undoRedo->addUndoAction(new PageBackgroundChangedUndoAction(page, origType, origPdfPage, origBackgroundImage, origW, origH));
+	this->undoRedo->addUndoAction(new PageBackgroundChangedUndoAction(page, origType, origPdfPage, origBackgroundImage, origW, origH));
 }
 
 void Control::updateBackgroundSizeButton() {

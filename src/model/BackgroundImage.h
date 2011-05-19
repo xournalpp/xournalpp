@@ -42,6 +42,7 @@ public:
 	void setFilename(String filename);
 
 	bool isAttached();
+	bool isEmpty();
 
 	GdkPixbuf * getPixbuf();
 

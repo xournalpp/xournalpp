@@ -68,7 +68,8 @@ public:
 	void setSelectedLayerId(int id);
 	Layer * getSelectedLayer();
 
-	BackgroundImage * getBackgroundImage();
+	BackgroundImage & getBackgroundImage();
+	void setBackgroundImage(BackgroundImage & img);
 
 private:
 	XOJ_TYPE_ATTRIB;

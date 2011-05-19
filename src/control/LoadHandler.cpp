@@ -306,12 +306,12 @@ void LoadHandler::parseBgPixmap() {
 			g_error_free(error);
 		}
 
-		*this->page.getBackgroundImage() = img;
+		this->page.setBackgroundImage(img);
 	} else if (!strcmp(domain, "clone")) {
 		PageRef p = doc.getPage(atoi(filename));
 
 		if (p.isValid()) {
-			*this->page.getBackgroundImage() = *p.getBackgroundImage();
+			this->page.setBackgroundImage(p.getBackgroundImage());
 		}
 	} else {
 		error(_("Unknown pixmap::domain type: %s"), domain);

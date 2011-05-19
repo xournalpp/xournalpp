@@ -1,5 +1,6 @@
 #include "PageRef.h"
 #include "XojPage.h"
+#include "BackgroundImage.h"
 
 PageRef::PageRef() {
 	XOJ_INIT_TYPE(PageRef);
@@ -191,9 +192,16 @@ Layer * PageRef::getSelectedLayer() {
 	return this->page->getSelectedLayer();
 }
 
-BackgroundImage * PageRef::getBackgroundImage() {
+BackgroundImage & PageRef::getBackgroundImage() {
 	XOJ_CHECK_TYPE(PageRef);
-	g_return_val_if_fail(this->page != NULL, NULL);
 
 	return this->page->getBackgroundImage();
 }
+
+void PageRef::setBackgroundImage(BackgroundImage & img) {
+	XOJ_CHECK_TYPE(PageRef);
+	g_return_if_fail(this->page != NULL);
+
+	this->page->setBackgroundImage(img);
+}
+
