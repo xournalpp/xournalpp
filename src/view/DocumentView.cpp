@@ -232,7 +232,7 @@ void DocumentView::drawLayer(cairo_t * cr, Layer * l) {
 void DocumentView::paintBackgroundImage() {
 	XOJ_CHECK_TYPE(DocumentView);
 
-	GdkPixbuf * pixbuff = page.getBackgroundImage()->getPixbuf();
+	GdkPixbuf * pixbuff = page.getBackgroundImage().getPixbuf();
 	if (pixbuff) {
 		cairo_matrix_t matrix = { 0 };
 		cairo_get_matrix(cr, &matrix);

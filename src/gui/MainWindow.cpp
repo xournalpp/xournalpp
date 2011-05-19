@@ -16,17 +16,9 @@ typedef struct {
 	bool horizontal;
 } ToolbarEntryDefintion;
 
-
-const static ToolbarEntryDefintion TOOLBAR_DEFINITIONS[] = {
-	{ "tbTop1", "toolbarTop1", true },
-	{ "tbTop2", "toolbarTop2", true },
-	{ "tbLeft1", "toolbarLeft1", false },
-	{ "tbLeft2", "toolbarLeft2", false },
-	{ "tbRight1", "toolbarRight1", false },
-	{ "tbRight2", "toolbarRight2", false },
-	{ "tbBottom1", "toolbarBottom1", true },
-	{ "tbBottom2", "toolbarBottom2", true }
-};
+const static ToolbarEntryDefintion TOOLBAR_DEFINITIONS[] = { { "tbTop1", "toolbarTop1", true }, { "tbTop2", "toolbarTop2", true }, { "tbLeft1", "toolbarLeft1",
+		false }, { "tbLeft2", "toolbarLeft2", false }, { "tbRight1", "toolbarRight1", false }, { "tbRight2", "toolbarRight2", false }, { "tbBottom1",
+		"toolbarBottom1", true }, { "tbBottom2", "toolbarBottom2", true } };
 
 const static int TOOLBAR_DEFINITIONS_LEN = G_N_ELEMENTS(TOOLBAR_DEFINITIONS);
 
@@ -171,8 +163,8 @@ bool cancellable_cancel(GCancellable * cancel) {
 	return false;
 }
 
-void MainWindow::dragDataRecived(GtkWidget * widget, GdkDragContext * dragContext, gint x, gint y, GtkSelectionData * data,
-		guint info, guint time, MainWindow * win) {
+void MainWindow::dragDataRecived(GtkWidget * widget, GdkDragContext * dragContext, gint x, gint y, GtkSelectionData * data, guint info, guint time,
+		MainWindow * win) {
 
 	GtkWidget * source = gtk_drag_get_source_widget(dragContext);
 	if (source && widget == gtk_widget_get_toplevel(source)) {
@@ -206,34 +198,34 @@ void MainWindow::dragDataRecived(GtkWidget * widget, GdkDragContext * dragContex
 			const char * uri = uris[i];
 
 			// TODO LOW PRIO: check first if its an image
-//			GSList * imageFormats = gdk_pixbuf_get_formats();
-//			for(GSList * l = imageFormats; l != NULL; l = l->next) {
-//				GdkPixbufFormat * f = (GdkPixbufFormat *)l->data;
-//				printf("", f);
-//			}
-//
-//			g_slist_free(imageFormats);
+			//			GSList * imageFormats = gdk_pixbuf_get_formats();
+			//			for(GSList * l = imageFormats; l != NULL; l = l->next) {
+			//				GdkPixbufFormat * f = (GdkPixbufFormat *)l->data;
+			//				printf("", f);
+			//			}
+			//
+			//			g_slist_free(imageFormats);
 
 			GFile * file = g_file_new_for_uri(uri);
 			GError * err = NULL;
 			GCancellable * cancel = g_cancellable_new();
 
-			int cancelTimeout = g_timeout_add(3000, (GSourceFunc)cancellable_cancel, cancel);
+			int cancelTimeout = g_timeout_add(3000, (GSourceFunc) cancellable_cancel, cancel);
 
 			GFileInputStream * in = g_file_read(file, cancel, &err);
 
-			if(g_cancellable_is_cancelled(cancel)) {
+			if (g_cancellable_is_cancelled(cancel)) {
 				continue;
 			}
 
 			g_object_unref(file);
 			if (err == NULL) {
 				GdkPixbuf * pixbuf = gdk_pixbuf_new_from_stream(G_INPUT_STREAM(in), cancel, NULL);
-				if(g_cancellable_is_cancelled(cancel)) {
+				if (g_cancellable_is_cancelled(cancel)) {
 					continue;
 				}
 				g_input_stream_close(G_INPUT_STREAM(in), cancel, NULL);
-				if(g_cancellable_is_cancelled(cancel)) {
+				if (g_cancellable_is_cancelled(cancel)) {
 					continue;
 				}
 
@@ -246,7 +238,7 @@ void MainWindow::dragDataRecived(GtkWidget * widget, GdkDragContext * dragContex
 				g_error_free(err);
 			}
 
-			if(!g_cancellable_is_cancelled(cancel)) {
+			if (!g_cancellable_is_cancelled(cancel)) {
 				g_source_remove(cancelTimeout);
 			}
 			g_object_unref(cancel);
@@ -433,12 +425,34 @@ void MainWindow::toolbarSelected(ToolbarData * d) {
 	}
 }
 
+ToolbarData * MainWindow::getSelectedToolbar() {
+	XOJ_CHECK_TYPE(MainWindow);
+
+	return this->selectedToolbar;
+}
+
 GtkWidget ** MainWindow::getToolbarWidgets(int & length) {
+	XOJ_CHECK_TYPE(MainWindow);
+
 	length = TOOLBAR_DEFINITIONS_LEN;
 	return this->toolbarWidgets;
 }
 
+String MainWindow::getToolbarName(GtkToolbar * toolbar) {
+	XOJ_CHECK_TYPE(MainWindow);
+
+	for (int i = 0; i < TOOLBAR_DEFINITIONS_LEN; i++) {
+		if ((void *)this->toolbarWidgets[i] == (void *)toolbar) {
+			return TOOLBAR_DEFINITIONS[i].propName;
+		}
+	}
+
+	return "";
+}
+
 void MainWindow::startToolbarEditMode() {
+	XOJ_CHECK_TYPE(MainWindow);
+
 	this->toolbar->startEditMode();
 	for (int i = 0; i < TOOLBAR_DEFINITIONS_LEN; i++) {
 		gtk_widget_show(this->toolbarWidgets[i]);
@@ -463,6 +477,8 @@ void MainWindow::startToolbarEditMode() {
 }
 
 void MainWindow::endToolbarEditMode() {
+	XOJ_CHECK_TYPE(MainWindow);
+
 	this->toolbar->endEditMode();
 
 	for (GList * l = this->toolbarSpacerItems; l != NULL; l = l->next) {

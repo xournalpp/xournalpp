@@ -29,6 +29,7 @@ public:
 	const char * getColorName(const char * color);
 	void add(ToolbarData * data);
 	void remove(ToolbarData * data);
+	void save(const char * filename);
 
 private:
 	void parseGroup(GKeyFile * config, const char * group, bool predefined);

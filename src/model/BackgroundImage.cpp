@@ -10,6 +10,9 @@ BackgroundImage::BackgroundImage() {
 }
 
 BackgroundImage::BackgroundImage(const BackgroundImage & img) {
+	XOJ_INIT_TYPE(BackgroundImage);
+	XOJ_CHECK_TYPE_OBJ((&img), BackgroundImage);
+
 	this->img = img.img;
 	if (this->img) {
 		this->img->reference();
@@ -22,6 +25,7 @@ BackgroundImage::~BackgroundImage() {
 	if (this->img) {
 		this->img->unreference();
 	}
+	this->img = NULL;
 
 	XOJ_RELEASE_TYPE(BackgroundImage);
 }
@@ -122,6 +126,12 @@ bool BackgroundImage::isAttached() {
 		return this->img->isAttach();
 	}
 	return false;
+}
+
+bool BackgroundImage::isEmpty() {
+	XOJ_CHECK_TYPE(BackgroundImage);
+
+	return this->img == NULL;
 }
 
 GdkPixbuf * BackgroundImage::getPixbuf() {

@@ -18,8 +18,8 @@
 #include <String.h>
 
 #include "BackgroundType.h"
+#include "BackgroundImage.h"
 
-class BackgroundImage;
 
 class XojPage {
 public:
@@ -65,7 +65,8 @@ public:
 
 	Layer * getSelectedLayer();
 
-	BackgroundImage * getBackgroundImage();
+	BackgroundImage & getBackgroundImage();
+	void setBackgroundImage(BackgroundImage img);
 
 private:
 	XOJ_TYPE_ATTRIB;
@@ -78,7 +79,7 @@ private:
 	/**
 	 * The Background image if any
 	 */
-	BackgroundImage * backgroundImage;
+	BackgroundImage backgroundImage;
 
 	/**
 	 * The size of the page

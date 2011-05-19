@@ -33,6 +33,7 @@ public:
 
 	void setRecentMenu(GtkWidget * submenu);
 	void toolbarSelected(ToolbarData * d);
+	ToolbarData * getSelectedToolbar();
 
 	void updatePageNumbers(int page, int pagecount, int pdfpage);
 	int getCurrentLayer();
@@ -68,6 +69,7 @@ public:
 	void endToolbarEditMode();
 
 	GtkWidget ** getToolbarWidgets(int & length);
+	String getToolbarName(GtkToolbar * toolbar);
 
 private:
 	void initToolbarAndMenu();

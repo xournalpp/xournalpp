@@ -15,8 +15,6 @@ XojPage::XojPage(double width, double heigth) {
 	this->layer = NULL;
 	this->ref = 0;
 	this->currentLayer = -1;
-
-	this->backgroundImage = new BackgroundImage();
 }
 
 XojPage::~XojPage() {
@@ -27,9 +25,6 @@ XojPage::~XojPage() {
 	}
 	g_list_free(this->layer);
 	this->layer = NULL;
-
-	delete this->backgroundImage;
-	this->backgroundImage = NULL;
 
 	XOJ_RELEASE_TYPE(XojPage);
 }
@@ -164,7 +159,7 @@ void XojPage::setBackgroundType(BackgroundType bgType) {
 		this->pdfBackgroundPage = -1;
 	}
 	if (bgType != BACKGROUND_TYPE_IMAGE) {
-		this->backgroundImage->free();
+		this->backgroundImage.free();
 	}
 }
 
@@ -174,10 +169,16 @@ BackgroundType XojPage::getBackgroundType() {
 	return this->bgType;
 }
 
-BackgroundImage * XojPage::getBackgroundImage() {
+BackgroundImage & XojPage::getBackgroundImage() {
 	XOJ_CHECK_TYPE(XojPage);
 
 	return this->backgroundImage;
+}
+
+void XojPage::setBackgroundImage(BackgroundImage img) {
+	XOJ_CHECK_TYPE(XojPage);
+
+	this->backgroundImage = img;
 }
 
 Layer * XojPage::getSelectedLayer() {

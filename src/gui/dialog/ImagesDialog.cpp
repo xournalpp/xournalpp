@@ -244,7 +244,7 @@ ImagesDialog::ImagesDialog(GladeSearchpath * gladeSearchPath, Document * doc, Se
 		PageRef p = doc->getPage(i);
 
 		if (p.getBackgroundType() == BACKGROUND_TYPE_IMAGE) {
-			if (p.getBackgroundImage()->getPixbuf() == NULL) {
+			if (p.getBackgroundImage().isEmpty()) {
 				continue;
 			}
 
@@ -252,14 +252,14 @@ ImagesDialog::ImagesDialog(GladeSearchpath * gladeSearchPath, Document * doc, Se
 
 			for (GList * l = this->images; l != NULL; l = l->next) {
 				ImageView * v = (ImageView *) l->data;
-				if (v->backgroundImage == *p.getBackgroundImage()) {
+				if (v->backgroundImage == p.getBackgroundImage()) {
 					found = true;
 					break;
 				}
 			}
 			if (!found) {
 				ImageView * page = new ImageView(x, this);
-				page->backgroundImage = *p.getBackgroundImage();
+				page->backgroundImage = p.getBackgroundImage();
 				page->updateSize();
 				gtk_layout_put(GTK_LAYOUT(this->widget), page->getWidget(), 0, 0);
 
@@ -324,14 +324,14 @@ bool ImagesDialog::shouldShowFilechooser() {
 	return this->selectedPage == -2;
 }
 
-BackgroundImage * ImagesDialog::getSelectedImage() {
+BackgroundImage ImagesDialog::getSelectedImage() {
 	XOJ_CHECK_TYPE(ImagesDialog);
 
 	ImageView * p = (ImageView *) g_list_nth_data(this->images, this->selectedPage);
 	if (p == NULL) {
-		return NULL;
+		return BackgroundImage();
 	}
-	return &p->backgroundImage;
+	return p->backgroundImage;
 }
 
 void ImagesDialog::sizeAllocate(GtkWidget *widget, GtkRequisition *requisition, ImagesDialog * dlg) {

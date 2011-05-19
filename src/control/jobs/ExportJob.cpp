@@ -134,10 +134,9 @@ void ExportJob::run() {
 		PdfExport pdfe(doc, &pglistener);
 		char * path = g_strdup_printf("file://%s%c%s.pdf", this->folder.c_str(), G_DIR_SEPARATOR, this->filename.c_str());
 
-		// TODO: crashes with synchronisationproblem: xournalpp: Fatal IO error 11 (Resource temporarily unavailable) on X server :0.0.
-//		if(!pdfe.createPdf(path, this->selected)) {
-//			g_warning("Error creating PDF: %s", pdfe.getLastError().c_str());
-//		}
+		if(!pdfe.createPdf(path, this->selected)) {
+			g_warning("Error creating PDF: %s", pdfe.getLastError().c_str());
+		}
 
 		g_free(path);
 	} else { // all other formats need one file per page

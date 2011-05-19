@@ -21,35 +21,37 @@ PageBackgroundChangedUndoAction::~PageBackgroundChangedUndoAction() {
 bool PageBackgroundChangedUndoAction::undo(Control * control) {
 	XOJ_CHECK_TYPE(PageBackgroundChangedUndoAction);
 
-	this->newType = this->page.getBackgroundType();
-	this->newPdfPage = this->page.getPdfPageNr();
-	this->newBackgroundImage = *this->page.getBackgroundImage();
-	this->newW = this->page.getWidth();
-	this->newH = this->page.getHeight();
+	// TODO: CRASH!!
 
-	Document * doc = control->getDocument();
-	doc->lock();
-
-	int pageNr = doc->indexOf(this->page);
-	if (pageNr == -1) {
-		doc->unlock();
-		return false;
-	}
-
-	if (this->newW != this->origW || this->newH != this->origH) {
-		this->page.setSize(this->origW, this->origH);
-		control->firePageSizeChanged(pageNr);
-	}
-
-	this->page.setBackgroundType(this->origType);
-	if (this->origType == BACKGROUND_TYPE_PDF) {
-		this->page.setBackgroundPdfPageNr(this->origPdfPage);
-	} else if (this->origType == BACKGROUND_TYPE_IMAGE) {
-		*this->page.getBackgroundImage() = this->origBackgroundImage;
-	}
-
-	doc->unlock();
-	control->firePageChanged(pageNr);
+//	this->newType = this->page.getBackgroundType();
+//	this->newPdfPage = this->page.getPdfPageNr();
+//	this->newBackgroundImage = this->page.getBackgroundImage();
+//	this->newW = this->page.getWidth();
+//	this->newH = this->page.getHeight();
+//
+//	Document * doc = control->getDocument();
+//	doc->lock();
+//
+//	int pageNr = doc->indexOf(this->page);
+//	if (pageNr == -1) {
+//		doc->unlock();
+//		return false;
+//	}
+//
+//	if (this->newW != this->origW || this->newH != this->origH) {
+//		this->page.setSize(this->origW, this->origH);
+//		control->firePageSizeChanged(pageNr);
+//	}
+//
+//	this->page.setBackgroundType(this->origType);
+//	if (this->origType == BACKGROUND_TYPE_PDF) {
+//		this->page.setBackgroundPdfPageNr(this->origPdfPage);
+//	} else if (this->origType == BACKGROUND_TYPE_IMAGE) {
+//		this->page.setBackgroundImage(this->origBackgroundImage);
+//	}
+//
+//	doc->unlock();
+//	control->firePageChanged(pageNr);
 
 	return true;
 }
@@ -57,29 +59,29 @@ bool PageBackgroundChangedUndoAction::undo(Control * control) {
 bool PageBackgroundChangedUndoAction::redo(Control * control) {
 	XOJ_CHECK_TYPE(PageBackgroundChangedUndoAction);
 
-	Document * doc = control->getDocument();
-
-	doc->lock();
-	int pageNr = doc->indexOf(this->page);
-	doc->unlock();
-
-	if (pageNr == -1) {
-		return false;
-	}
-
-	if (this->newW != this->origW || this->newH != this->origH) {
-		this->page.setSize(this->newW, this->newH);
-		control->firePageSizeChanged(pageNr);
-	}
-
-	this->page.setBackgroundType(this->newType);
-	if (this->newType == BACKGROUND_TYPE_PDF) {
-		this->page.setBackgroundPdfPageNr(this->newPdfPage);
-	} else if (this->newType == BACKGROUND_TYPE_IMAGE) {
-		*this->page.getBackgroundImage() = this->newBackgroundImage;
-	}
-
-	control->firePageChanged(pageNr);
+//	Document * doc = control->getDocument();
+//
+//	doc->lock();
+//	int pageNr = doc->indexOf(this->page);
+//	doc->unlock();
+//
+//	if (pageNr == -1) {
+//		return false;
+//	}
+//
+//	if (this->newW != this->origW || this->newH != this->origH) {
+//		this->page.setSize(this->newW, this->newH);
+//		control->firePageSizeChanged(pageNr);
+//	}
+//
+//	this->page.setBackgroundType(this->newType);
+//	if (this->newType == BACKGROUND_TYPE_PDF) {
+//		this->page.setBackgroundPdfPageNr(this->newPdfPage);
+//	} else if (this->newType == BACKGROUND_TYPE_IMAGE) {
+//		this->page.setBackgroundImage(this->newBackgroundImage);
+//	}
+//
+//	control->firePageChanged(pageNr);
 
 	return true;
 

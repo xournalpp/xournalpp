@@ -65,10 +65,41 @@ void ToolbarData::load(GKeyFile * config, const char * group) {
 			e.entries.push_back(s.trim());
 		}
 
-		contents.push_back(e);
+		this->contents.push_back(e);
 
 		g_strfreev(list);
 	}
 
 	g_strfreev(keys);
 }
+
+void ToolbarData::addItem(String toolbar, String item, int position) {
+	g_return_if_fail(isPredefined() == false);
+
+	std::vector<ToolbarEntry>::iterator it;
+	for (it = this->contents.begin(); it != this->contents.end(); it++) {
+		ToolbarEntry & e = *it;
+
+		if (e.name.equals(toolbar)) {
+			std::vector<String>::iterator it2 = e.entries.begin();
+			it2 += position;
+			e.entries.insert(it2, item);
+		}
+	}
+}
+
+void ToolbarData::removeItem(String toolbar, int position) {
+	g_return_if_fail(isPredefined() == false);
+
+	std::vector<ToolbarEntry>::iterator it;
+	for (it = this->contents.begin(); it != this->contents.end(); it++) {
+		ToolbarEntry & e = *it;
+
+		if (e.name.equals(toolbar)) {
+			std::vector<String>::iterator it2 = e.entries.begin();
+			it2 += position;
+			e.entries.erase(it2);
+		}
+	}
+}
+

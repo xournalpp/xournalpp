@@ -16,9 +16,17 @@ static GdkAtom atomToolItem = gdk_atom_intern_static_string("application/xournal
 /**
  * Used for transport a Toolbar item
  */
-typedef struct {
+class AbstractItemSelectionData {
+public:
+	AbstractItemSelectionData(AbstractToolItem * item, ToolbarCustomizeDialog * dlg) {
+		this->item = item;
+		this->dlg = dlg;
+	}
+
 	AbstractToolItem * item;
-} AbstractItemSelectionData;
+	ToolbarCustomizeDialog * dlg;
+};
+
 
 typedef struct _ToolItemDragData ToolItemDragData;
 struct _ToolItemDragData {
@@ -28,13 +36,6 @@ struct _ToolItemDragData {
 	GtkWidget * ebox;
 };
 
-void drag_data_get(GtkWidget * widget, GdkDragContext * context, GtkSelectionData * selection_data,
-		guint info, guint time, AbstractToolItem * item) {
-	AbstractItemSelectionData * d = g_new(AbstractItemSelectionData, 1);
-	d->item = item;
-	gtk_selection_data_set(selection_data, atomToolItem, 0, (const guchar *) d, sizeof(AbstractItemSelectionData));
-	g_free(d);
-}
 
 void gtk_drag_dest_add_toolbar_targets(GtkWidget * target) {
 	GtkTargetList * target_list;
@@ -44,7 +45,11 @@ void gtk_drag_dest_add_toolbar_targets(GtkWidget * target) {
 	} else {
 		target_list = gtk_target_list_new(NULL, 0);
 	}
-	gtk_target_list_add(target_list, atomToolItem, 0, NULL);
+
+	// If not exist add, else do nothing
+	if(!gtk_target_list_find(target_list, atomToolItem, NULL)) {
+		gtk_target_list_add(target_list, atomToolItem, 0, NULL);
+	}
 
 	gtk_drag_dest_set_target_list(target, target_list);
 	gtk_target_list_unref(target_list);
@@ -72,6 +77,7 @@ ToolbarCustomizeDialog::ToolbarCustomizeDialog(GladeSearchpath * gladeSearchPath
 	this->win = win;
 	this->currentDragItem = NULL;
 	this->itemDatalist = NULL;
+	this->itemSelectionData = NULL;
 
 	rebuildIconview();
 
@@ -83,7 +89,6 @@ ToolbarCustomizeDialog::ToolbarCustomizeDialog(GladeSearchpath * gladeSearchPath
 
 	g_signal_connect(target, "drag-data-received", G_CALLBACK(dragDataReceived), this);
 
-	// TODO only once / remove after
 	int len = 0;
 	GtkWidget ** widgets = this->win->getToolbarWidgets(len);
 
@@ -98,6 +103,7 @@ ToolbarCustomizeDialog::ToolbarCustomizeDialog(GladeSearchpath * gladeSearchPath
 		g_signal_connect(w, "drag_leave", G_CALLBACK(toolbarDragLeafeCb), this);
 		g_signal_connect(w, "drag_data_received", G_CALLBACK(toolbarDragDataReceivedCb), this);
 
+		// TODO: add context menu for editing
 		//		g_signal_connect (w, "popup_context_menu",
 		//				G_CALLBACK (popup_context_menu_cb), this);
 
@@ -107,6 +113,9 @@ ToolbarCustomizeDialog::ToolbarCustomizeDialog(GladeSearchpath * gladeSearchPath
 ToolbarCustomizeDialog::~ToolbarCustomizeDialog() {
 	XOJ_CHECK_TYPE(ToolbarCustomizeDialog);
 
+	freeIconview();
+
+	// We can only delete this list at the end, it would be better to delete this list after a refresh and after drag_end is called...
 	for(GList * l = this->itemDatalist; l != NULL; l = l->next) {
 		ToolItemDragData * data = (ToolItemDragData *)l->data;
 		gdk_pixbuf_unref(data->icon);
@@ -115,6 +124,18 @@ ToolbarCustomizeDialog::~ToolbarCustomizeDialog() {
 
 	g_list_free(this->itemDatalist);
 	this->itemDatalist = NULL;
+
+
+	int len = 0;
+	GtkWidget ** widgets = this->win->getToolbarWidgets(len);
+
+	for (int i = 0; i < len; i++) {
+		GtkWidget * w = widgets[i];
+
+		g_signal_handlers_disconnect_by_func(w, (gpointer)toolbarDragMotionCb, this);
+		g_signal_handlers_disconnect_by_func(w, (gpointer)toolbarDragLeafeCb, this);
+		g_signal_handlers_disconnect_by_func(w, (gpointer)toolbarDragDataReceivedCb, this);
+	}
 
 	XOJ_RELEASE_TYPE(ToolbarCustomizeDialog);
 }
@@ -158,6 +179,11 @@ void ToolbarCustomizeDialog::toolitemDragEnd(GtkWidget * widget, GdkDragContext 
 	gtk_widget_show(data->ebox);
 }
 
+void ToolbarCustomizeDialog::toolitemDragDataGet(GtkWidget * widget, GdkDragContext * context, GtkSelectionData * selection_data,
+		guint info, guint time, AbstractItemSelectionData * item) {
+	gtk_selection_data_set(selection_data, atomToolItem, 0, (const guchar *) item, sizeof(AbstractItemSelectionData));
+}
+
 /**
  * A tool item was dragged to the toolbar
  */
@@ -190,7 +216,27 @@ void ToolbarCustomizeDialog::toolbarDragLeafeCb(GtkToolbar * toolbar, GdkDragCon
 void ToolbarCustomizeDialog::toolbarDragDataReceivedCb(GtkToolbar * toolbar, GdkDragContext * context,
 		gint x, gint y, GtkSelectionData * data, guint info, guint time) {
 
-	//int ipos = gtk_toolbar_get_drop_index(toolbar, x, y);
+	AbstractItemSelectionData * d = (AbstractItemSelectionData *)gtk_selection_data_get_data(data);
+
+	XOJ_CHECK_TYPE_OBJ(d->dlg, ToolbarCustomizeDialog);
+
+
+	int pos = gtk_toolbar_get_drop_index(toolbar, x, y);
+
+	bool horizontal = gtk_toolbar_get_orientation(toolbar) == GTK_ORIENTATION_HORIZONTAL;
+	GtkToolItem * it = d->item->createItem(horizontal);
+	gtk_widget_show_all(GTK_WIDGET(it));
+	gtk_toolbar_insert(toolbar, it, pos);
+
+	d->item->setUsed(true);
+
+	d->dlg->rebuildIconview();
+
+	ToolbarData * tb = d->dlg->win->getSelectedToolbar();
+	String name = d->dlg->win->getToolbarName(toolbar);
+
+	tb->addItem(name, d->item->getId(), pos);
+
 // TODO Implement toolbarDragDataReceivedCb
 }
 
@@ -227,6 +273,7 @@ void ToolbarCustomizeDialog::dragDataReceived(GtkWidget * widget, GdkDragContext
 void ToolbarCustomizeDialog::removeFromToolbar(AbstractToolItem * item) {
 	XOJ_CHECK_TYPE(ToolbarCustomizeDialog);
 
+	// TODO implement
 }
 
 /**
@@ -244,6 +291,13 @@ void ToolbarCustomizeDialog::freeIconview() {
 	}
 
 	g_list_free(children);
+
+
+	for(GList * l = this->itemSelectionData; l != NULL; l = l->next) {
+		delete (AbstractItemSelectionData *)l->data;
+	}
+	g_list_free(this->itemSelectionData);
+	this->itemSelectionData = NULL;
 }
 
 /**
@@ -304,7 +358,10 @@ void ToolbarCustomizeDialog::rebuildIconview() {
 
 		g_signal_connect(ebox, "drag-begin", G_CALLBACK(toolitemDragBegin), data);
 		g_signal_connect(ebox, "drag-end", G_CALLBACK(toolitemDragEnd), data);
-		g_signal_connect(ebox, "drag-data-get", G_CALLBACK(drag_data_get), item);
+
+		AbstractItemSelectionData * sd = new AbstractItemSelectionData(item, this);
+		g_signal_connect(ebox, "drag-data-get", G_CALLBACK(toolitemDragDataGet), sd);
+		this->itemSelectionData = g_list_append(this->itemSelectionData, sd);
 
 		int x = i % 3;
 		int y = i / 3;

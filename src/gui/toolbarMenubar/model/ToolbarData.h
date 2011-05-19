@@ -28,10 +28,14 @@ public:
 	String getName();
 	void setName(String name);
 	String getId();
+	bool isPredefined();
 
 	void load(GKeyFile * config, const char * group);
 
-	bool isPredefined();
+	// Editing API
+	void addItem(String toolbar, String item, int position);
+	void removeItem(String toolbar, int position);
+
 private:
 	XOJ_TYPE_ATTRIB;
 
