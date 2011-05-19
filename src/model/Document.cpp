@@ -41,17 +41,22 @@ void Document::lock() {
 
 	g_mutex_lock(this->documentLock);
 
-	//		if(tryLock()) {
-	//			Stacktrace::printStracktrace();
-	//			fprintf(stderr, "\n\n\n\n");
-	//		} else {
-	//			g_mutex_lock(this->documentLock);
-	//		}
+//	if(tryLock()) {
+//		fprintf(stderr, "Locked by\n");
+//		Stacktrace::printStracktrace();
+//		fprintf(stderr, "\n\n\n\n");
+//	} else {
+//		g_mutex_lock(this->documentLock);
+//	}
 }
 
 void Document::unlock() {
 	XOJ_CHECK_TYPE(Document);
 	g_mutex_unlock(this->documentLock);
+
+//	fprintf(stderr, "Unlocked by\n");
+//	Stacktrace::printStracktrace();
+//	fprintf(stderr, "\n\n\n\n");
 }
 
 bool Document::tryLock() {
