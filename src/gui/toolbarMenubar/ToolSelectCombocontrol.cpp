@@ -7,7 +7,7 @@
 #include <glib/gi18n-lib.h>
 
 ToolSelectCombocontrol::ToolSelectCombocontrol(ToolMenuHandler * th, ActionHandler * handler, GladeGui * gui, String id) :
-	ToolButton(handler, gui, id, ACTION_TOOL_SELECT_RECT, GROUP_TOOL, "rect-select.png", _("Select Rectangle")) {
+	ToolButton(handler, gui, id, ACTION_TOOL_SELECT_RECT, GROUP_TOOL, true, "rect-select.png", _("Select Rectangle")) {
 
 	XOJ_INIT_TYPE(ToolSelectCombocontrol);
 

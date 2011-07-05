@@ -82,6 +82,7 @@ void AbstractItem::activated(GdkEvent * event, GtkMenuItem * menuitem, GtkToolBu
 		selected = gtk_toggle_tool_button_get_active(GTK_TOGGLE_TOOL_BUTTON(toolbutton));
 	}
 
+
 	handler->actionPerformed(action, group, event, menuitem, toolbutton, selected);
 }
 

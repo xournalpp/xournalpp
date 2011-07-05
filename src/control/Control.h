@@ -198,8 +198,6 @@ protected:
 	void invokeLater(ActionType type);
 	void zoomFit();
 
-	bool shouldIgnorAction(ActionType type, ActionGroup group, bool enabled);
-
 	bool showSaveDialog();
 
 	void fileLoaded(int scrollToPage = -1);

@@ -31,6 +31,7 @@ public:
 	bool isPredefined();
 
 	void load(GKeyFile * config, const char * group);
+	void saveToKeyFile(GKeyFile * config);
 
 	// Editing API
 	void addItem(String toolbar, String item, int position);

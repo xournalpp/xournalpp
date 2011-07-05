@@ -322,58 +322,8 @@ void Control::updatePageNumbers(int page, int pdfPage) {
 	fireEnableAction(ACTION_GOTO_NEXT_ANNOTATED_PAGE, current < count - 1);
 }
 
-/**
- * If we change the state of a toggle button it will send an event,
- * to prevent our application to get in an endless loop we need to catch this events
- */
-bool Control::shouldIgnorAction(ActionType action, ActionGroup group, bool enabled) {
-	XOJ_CHECK_TYPE(Control);
-
-	// No selection events to catch
-	if (group == GROUP_NOGROUP) {
-		this->lastGroup = group;
-		return false;
-	}
-
-	// Different group, different action
-	if (this->lastGroup != group) {
-		this->lastAction = action;
-		this->lastGroup = group;
-		this->lastEnabled = enabled;
-		return false;
-	}
-
-	if (GROUP_TOGGLE_GROUP < group) {
-		if (this->lastEnabled == enabled) {
-			// same action
-			return true;
-		} else {
-			this->lastAction = action;
-			this->lastGroup = group;
-			this->lastEnabled = enabled;
-			return false;
-		}
-	}
-
-	this->lastAction = action;
-	this->lastGroup = group;
-	this->lastEnabled = enabled;
-
-	if (!enabled) {
-		return true;
-	}
-
-	return false;
-}
-
-// TODO LOW PRIO Deselect Tool should not be possibel
 void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent *event, GtkMenuItem *menuitem, GtkToolButton *toolbutton, bool enabled) {
 	XOJ_CHECK_TYPE(Control);
-
-	// Because GTK sends events if we change radio items etc.
-	if (shouldIgnorAction(type, group, enabled)) {
-		return;
-	}
 
 	switch (type) {
 	// Menu File

@@ -1,5 +1,7 @@
 #include "ToolbarData.h"
 #include <string.h>
+#include <glib.h>
+#include <gtk/gtk.h>
 
 ToolbarData::ToolbarData(bool predefined) {
 	XOJ_INIT_TYPE(ToolbarData);
@@ -71,6 +73,27 @@ void ToolbarData::load(GKeyFile * config, const char * group) {
 	}
 
 	g_strfreev(keys);
+}
+
+void ToolbarData::saveToKeyFile(GKeyFile * config) {/* TODO: Debug
+	const char * group = getId().c_str();
+
+	for (it = this->contents.begin(); it != this->contents.end(); it++) {
+		ToolbarEntry & e = *it;
+
+		std::vector<String>::iterator itItem;
+		for (itItem = e.entries.begin(); itItem != e.entries.end(); itItem++) {
+
+
+		if (e.name.equals(toolbar)) {
+			std::vector<String>::iterator it2 = e.entries.begin();
+			it2 += position;
+			e.entries.insert(it2, item);
+		}
+	}
+
+	//	g_key_file_set_string(config, )
+*/
 }
 
 void ToolbarData::addItem(String toolbar, String item, int position) {
