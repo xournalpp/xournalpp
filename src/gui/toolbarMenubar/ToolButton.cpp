@@ -2,7 +2,7 @@
 #include "../widgets/gtkmenutooltogglebutton.h"
 
 ToolButton::ToolButton(ActionHandler * handler, String id, ActionType type, String stock, String description, GtkWidget * menuitem) :
-	AbstractToolItem(id, handler, type, menuitem) {
+		AbstractToolItem(id, handler, type, menuitem) {
 	XOJ_INIT_TYPE(ToolButton);
 
 	this->stock = stock;
@@ -11,7 +11,7 @@ ToolButton::ToolButton(ActionHandler * handler, String id, ActionType type, Stri
 }
 
 ToolButton::ToolButton(ActionHandler * handler, GladeGui * gui, String id, ActionType type, String iconName, String description, GtkWidget * menuitem) :
-	AbstractToolItem(id, handler, type, menuitem) {
+		AbstractToolItem(id, handler, type, menuitem) {
 	XOJ_INIT_TYPE(ToolButton);
 
 	this->iconName = iconName;
@@ -19,15 +19,16 @@ ToolButton::ToolButton(ActionHandler * handler, GladeGui * gui, String id, Actio
 	this->description = description;
 }
 
-ToolButton::ToolButton(ActionHandler * handler, GladeGui * gui, String id, ActionType type, ActionGroup group, String iconName, String description,
-		GtkWidget * menuitem) :
-	AbstractToolItem(id, handler, type, menuitem) {
+ToolButton::ToolButton(ActionHandler * handler, GladeGui * gui, String id, ActionType type, ActionGroup group, bool toolToggleOnlyEnable, String iconName,
+		String description, GtkWidget * menuitem) :
+		AbstractToolItem(id, handler, type, menuitem) {
 	XOJ_INIT_TYPE(ToolButton);
 
 	this->iconName = iconName;
 	this->gui = gui;
 	this->description = description;
 	this->group = group;
+	this->toolToggleOnlyEnable = toolToggleOnlyEnable;
 }
 
 ToolButton::~ToolButton() {

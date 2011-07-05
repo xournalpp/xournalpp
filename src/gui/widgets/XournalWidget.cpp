@@ -64,13 +64,13 @@ GtkWidget * gtk_xournal_new(XournalView * view, GtkRange * hrange, GtkRange * vr
 	xoj->lastWidgetSize = 0;
 	xoj->hrange = hrange;
 	xoj->vrange = vrange;
-	xoj->hadj = hrange->adjustment;
-	xoj->vadj = vrange->adjustment;
+	xoj->hadj = gtk_range_get_adjustment(hrange);
+	xoj->vadj = gtk_range_get_adjustment(vrange);
 	xoj->currentInputPage = NULL;
 	xoj->pagePositionCache = new PagePositionCache();
 
-	xoj->vadj->step_increment = 20;
-	xoj->hadj->step_increment = 20;
+	gtk_adjustment_set_step_increment(xoj->vadj, 20);
+	gtk_adjustment_set_step_increment(xoj->hadj, 20);
 
 	xoj->lastMousePositionX = 0;
 	xoj->lastMousePositionY = 0;
@@ -142,9 +142,12 @@ void gtk_xournal_set_size(GtkWidget * widget, int width, int height) {
 	gtk_adjustment_set_upper(xournal->hadj, width);
 	gtk_adjustment_set_upper(xournal->vadj, height);
 
-	gtk_widget_set_visible(GTK_WIDGET(xournal->vrange), widget->allocation.height < xournal->height);
+	GtkAllocation alloc;
+	gtk_widget_get_allocation(widget, &alloc);
 
-	bool showHorizontalScrollbar = widget->allocation.width < xournal->width;
+	gtk_widget_set_visible(GTK_WIDGET(xournal->vrange), alloc.height < xournal->height);
+
+	bool showHorizontalScrollbar = alloc.width < xournal->width;
 	gtk_widget_set_visible(GTK_WIDGET(xournal->hrange), showHorizontalScrollbar);
 }
 
@@ -184,7 +187,7 @@ static gboolean gtk_xournal_key_press_event(GtkWidget * widget, GdkEventKey * ev
 	if (selection) {
 		int d = 10;
 
-		if (event->state & GDK_MOD1_MASK || event->state & GDK_SHIFT_MASK) {
+		if ((event->state & GDK_MOD1_MASK) || (event->state & GDK_SHIFT_MASK)) {
 			d = 1;
 		}
 
@@ -246,20 +249,20 @@ void gtk_xournal_scroll_relative(GtkWidget * widget, double x, double y) {
 }
 
 gdouble gtk_xournal_get_wheel_delta(GtkRange * range, GdkScrollDirection direction) {
-	GtkAdjustment * adj = range->adjustment;
+	GtkAdjustment * adj = gtk_range_get_adjustment(range);
 	gdouble delta;
 
 	if (GTK_IS_SCROLLBAR (range)) {
-		delta = pow(adj->page_size, 2.0 / 3.0);
+		delta = pow(gtk_adjustment_get_page_size(adj), 2.0 / 3.0);
 	} else {
-		delta = adj->step_increment * 2;
+		delta = gtk_adjustment_get_step_increment(adj) * 2;
 	}
 
 	if (direction == GDK_SCROLL_UP || direction == GDK_SCROLL_LEFT) {
 		delta = -delta;
 	}
 
-	if (range->inverted) {
+	if (gtk_range_get_inverted(range)) {
 		delta = -delta;
 	}
 
@@ -271,7 +274,7 @@ gboolean gtk_xournal_scroll_event(GtkWidget * widget, GdkEventScroll * event) {
 	// true: Core event, false: XInput event
 	gboolean isCore = (event->device == gdk_device_get_core_pointer());
 
-	printf("DEBUG: Scroll (%s) (x,y)=(%.2f,%.2f), direction %d, modifier %x, isCore %i\n", event->device->name, event->x, event->y, event->direction,
+	printf("DEBUG: Scroll (%s) (x,y)=(%.2f,%.2f), direction %d, modifier %x, isCore %i\n", gdk_device_get_name(event->device), event->x, event->y, event->direction,
 			event->state, isCore);
 #endif
 
@@ -288,10 +291,10 @@ gboolean gtk_xournal_scroll_event(GtkWidget * widget, GdkEventScroll * event) {
 	}
 
 	if (range && gtk_widget_get_visible(GTK_WIDGET(range))) {
-		GtkAdjustment * adj = range->adjustment;
+		GtkAdjustment * adj = gtk_range_get_adjustment(range);
 
 		double delta = gtk_xournal_get_wheel_delta(GTK_RANGE(range), event->direction);
-		double new_value = CLAMP (adj->value + delta, adj->lower, adj->upper - adj->page_size);
+		double new_value = CLAMP (gtk_adjustment_get_value(adj) + delta, gtk_adjustment_get_lower(adj), gtk_adjustment_get_upper(adj) - gtk_adjustment_get_page_size(adj));
 		gtk_adjustment_set_value(adj, new_value);
 
 		return true;
@@ -394,7 +397,7 @@ gboolean gtk_xournal_button_press_event(GtkWidget * widget, GdkEventButton * eve
 	 */
 	gboolean isCore = (event->device == gdk_device_get_core_pointer());
 
-	printf("DEBUG: ButtonPress (%s) (x,y)=(%.2f,%.2f), button %d, modifier %x, isCore %i\n", event->device->name, event->x, event->y, event->button,
+	printf("DEBUG: ButtonPress (%s) (x,y)=(%.2f,%.2f), button %d, modifier %x, isCore %i\n", gdk_device_get_name(event->device), event->x, event->y, event->button,
 			event->state, isCore);
 #endif
 	XInputUtils::fixXInputCoords((GdkEvent*) event, widget);
@@ -488,7 +491,7 @@ gboolean gtk_xournal_button_press_event(GtkWidget * widget, GdkEventButton * eve
 gboolean gtk_xournal_button_release_event(GtkWidget * widget, GdkEventButton * event) {
 #ifdef INPUT_DEBUG
 	gboolean isCore = (event->device == gdk_device_get_core_pointer());
-	printf("DEBUG: ButtonRelease (%s) (x,y)=(%.2f,%.2f), button %d, modifier %x, isCore %i\n", event->device->name, event->x, event->y, event->button,
+	printf("DEBUG: ButtonRelease (%s) (x,y)=(%.2f,%.2f), button %d, modifier %x, isCore %i\n", gdk_device_get_name(event->device), event->x, event->y, event->button,
 			event->state, isCore);
 #endif
 	XInputUtils::fixXInputCoords((GdkEvent*) event, widget);

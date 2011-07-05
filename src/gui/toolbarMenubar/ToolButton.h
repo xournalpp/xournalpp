@@ -19,7 +19,7 @@ class ToolButton: public AbstractToolItem {
 public:
 	ToolButton(ActionHandler * handler, String id, ActionType type, String stock, String description, GtkWidget * menuitem = NULL);
 	ToolButton(ActionHandler * handler, GladeGui * gui, String id, ActionType type, String iconName, String description, GtkWidget * menuitem = NULL);
-	ToolButton(ActionHandler * handler, GladeGui * gui, String id, ActionType type, ActionGroup group, String iconName, String description,
+	ToolButton(ActionHandler * handler, GladeGui * gui, String id, ActionType type, ActionGroup group, bool toolToggleOnlyEnable, String iconName, String description,
 			GtkWidget * menuitem = NULL);
 
 	virtual ~ToolButton();

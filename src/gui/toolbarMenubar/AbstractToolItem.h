@@ -45,6 +45,9 @@ protected:
 	GtkToolItem * item;
 	GtkWidget * popupMenu;
 
+	bool toolToggleButtonActive;
+	bool toolToggleOnlyEnable;
+
 	bool used;
 };
 
