@@ -17,7 +17,10 @@
 #include "../Tool.h"
 
 enum DrawingType {
-	DRAWING_TYPE_DONT_CHANGE, DRAWING_TYPE_RULER, DRAWING_TYPE_STROKE_RECOGNIZER, DRAWING_TYPE_NONE
+	DRAWING_TYPE_DONT_CHANGE = 0,
+	DRAWING_TYPE_RULER,
+	DRAWING_TYPE_STROKE_RECOGNIZER,
+	DRAWING_TYPE_NONE
 };
 
 class ToolHandler;
@@ -31,6 +34,7 @@ public:
 	void acceptActions(ToolHandler * toolHandler);
 	ToolType getAction();
 	bool getDisableDrawing();
+	DrawingType getDrawingType();
 
 private:
 	XOJ_TYPE_ATTRIB;

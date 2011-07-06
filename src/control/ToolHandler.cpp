@@ -130,7 +130,7 @@ EraserType ToolHandler::getEraserType() {
 	return this->eraserType;
 }
 
-void ToolHandler::selectTool(ToolType type) {
+void ToolHandler::selectTool(ToolType type, bool fireToolChanged) {
 	XOJ_CHECK_TYPE(ToolHandler);
 
 	if (type < 1 || type > TOOL_COUNT) {
@@ -139,6 +139,12 @@ void ToolHandler::selectTool(ToolType type) {
 	}
 	this->current = tools[type - TOOL_PEN];
 
+	if (fireToolChanged) {
+		this->fireToolChanged();
+	}
+}
+
+void ToolHandler::fireToolChanged() {
 	if (listener) {
 		listener->toolChanged();
 	}
@@ -458,7 +464,7 @@ void ToolHandler::restoreLastConfig() {
 
 	this->listener->toolColorChanged();
 	this->listener->toolSizeChanged();
-	this->listener->toolChanged();
+	this->fireToolChanged();
 }
 
 const double * ToolHandler::getToolThikness(ToolType type) {
@@ -481,6 +487,6 @@ void ToolHandler::setSelectionEditTools(bool setColor, bool setSize) {
 	if (this->current->type == TOOL_SELECT_RECT || this->current->type == TOOL_SELECT_RECT || this->current->type == TOOL_SELECT_OBJECT) {
 		this->listener->toolColorChanged();
 		this->listener->toolSizeChanged();
-		this->listener->toolChanged();
+		this->fireToolChanged();
 	}
 }

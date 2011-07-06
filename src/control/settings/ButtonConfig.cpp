@@ -23,6 +23,12 @@ bool ButtonConfig::getDisableDrawing() {
 	return this->disableDrawing;
 }
 
+DrawingType ButtonConfig::getDrawingType() {
+	XOJ_CHECK_TYPE(ButtonConfig);
+
+	return this->drawingType;
+}
+
 ToolType ButtonConfig::getAction() {
 	XOJ_CHECK_TYPE(ButtonConfig);
 
@@ -33,7 +39,7 @@ void ButtonConfig::acceptActions(ToolHandler * toolHandler) {
 	XOJ_CHECK_TYPE(ButtonConfig);
 
 	if (this->action != TOOL_NONE) {
-		toolHandler->selectTool(this->action);
+		toolHandler->selectTool(this->action, false);
 
 		if (this->action == TOOL_PEN || this->action == TOOL_HILIGHTER) {
 
@@ -62,5 +68,7 @@ void ButtonConfig::acceptActions(ToolHandler * toolHandler) {
 		if (this->action == TOOL_ERASER && this->eraserMode != ERASER_TYPE_NONE) {
 			toolHandler->setEraserType(this->eraserMode);
 		}
+
+		toolHandler->fireToolChanged();
 	}
 }
