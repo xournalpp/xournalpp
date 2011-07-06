@@ -40,6 +40,7 @@
 #include "../gui/Cursor.h"
 #include "../gui/toolbarMenubar/model/ToolbarModel.h"
 #include "../collab/Collaboration.h"
+#include "../gui/toolbarMenubar/model/ToolbarData.h"
 
 #include <config.h>
 #include <glib/gi18n-lib.h>
@@ -828,6 +829,23 @@ void Control::customizeToolbars() {
 	XOJ_CHECK_TYPE(Control);
 
 	g_return_if_fail(this->win != NULL);
+
+	if(this->win->getSelectedToolbar()->isPredefined()) {
+		GtkWidget * dialog = gtk_message_dialog_new((GtkWindow *) *this->win, GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_QUESTION, GTK_BUTTONS_YES_NO,
+				_("The Toolbarconfiguration \"%s\" is predefined, would you create a copy to edit?"), this->win->getSelectedToolbar()->getName().c_str());
+
+		int res = gtk_dialog_run(GTK_DIALOG(dialog));
+		gtk_widget_destroy(dialog);
+
+		if (res == -8) { // Yes
+			ToolbarData * data = new ToolbarData(*this->win->getSelectedToolbar());
+			this->win->getToolbarModel()->add(data);
+			this->win->toolbarSelected(data);
+			// TODO: update toolbar menu
+		} else {
+			return;
+		}
+	}
 
 	ToolbarCustomizeDialog dlg(this->gladeSearchPath, win);
 	dlg.show();
