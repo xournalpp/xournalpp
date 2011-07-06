@@ -33,6 +33,7 @@ void AbstractToolItem::selected(ActionGroup group, ActionType action) {
 			g_warning("selected action %i which is not a toggle action!", action);
 			return;
 		}
+
 		if (gtk_toggle_tool_button_get_active(GTK_TOGGLE_TOOL_BUTTON(this->item)) != (this->action == action)) {
 			this->toolToggleButtonActive = (this->action == action);
 			gtk_toggle_tool_button_set_active(GTK_TOGGLE_TOOL_BUTTON(this->item), this->toolToggleButtonActive);

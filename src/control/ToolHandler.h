@@ -56,8 +56,9 @@ public:
 	void setHilighterSize(ToolSize size);
 
 
-	void selectTool(ToolType type);
+	void selectTool(ToolType type, bool fireToolChanged = true);
 	ToolType getToolType();
+	void fireToolChanged();
 
 	void setEraserType(EraserType eraserType);
 	EraserType getEraserType();
