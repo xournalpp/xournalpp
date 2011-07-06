@@ -87,8 +87,10 @@ void ToolSelectCombocontrol::selected(ActionGroup group, ActionType action) {
 		}
 		gtk_tool_item_set_tooltip_text(GTK_TOOL_ITEM(item), description);
 
-		if (gtk_toggle_tool_button_get_active(GTK_TOGGLE_TOOL_BUTTON(item)) != (this->action == action)) {
-			gtk_toggle_tool_button_set_active(GTK_TOGGLE_TOOL_BUTTON(item), (this->action == action));
+
+		if (gtk_toggle_tool_button_get_active(GTK_TOGGLE_TOOL_BUTTON(this->item)) != (this->action == action)) {
+			this->toolToggleButtonActive = (this->action == action);
+			gtk_toggle_tool_button_set_active(GTK_TOGGLE_TOOL_BUTTON(this->item), this->toolToggleButtonActive);
 		}
 	}
 }
