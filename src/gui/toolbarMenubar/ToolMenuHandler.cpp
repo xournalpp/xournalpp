@@ -401,7 +401,7 @@ void ToolMenuHandler::initToolItems() {
 	addToolItem(new ToolButton(listener, gui, "DEFAULT_TOOL", ACTION_TOOL_DEFAULT, GROUP_NOGROUP, false, "default.png", _("Default Tool"),
 			gui->get("menuToolsDefault")));
 
-	fontButton = new FontButton(listener, gui, "SELECT_FONT", ACTION_SELECT_FONT, _("Select Font"));
+	fontButton = new FontButton(listener, gui, "SELECT_FONT", ACTION_FONT_BUTTON_CHANGED, _("Select Font"));
 	addToolItem(fontButton);
 
 	// Footer tools
@@ -486,6 +486,12 @@ XojFont ToolMenuHandler::getFontButtonFont() {
 	XOJ_CHECK_TYPE(ToolMenuHandler);
 
 	return this->fontButton->getFont();
+}
+
+void ToolMenuHandler::showFontSelectionDlg() {
+	XOJ_CHECK_TYPE(ToolMenuHandler);
+
+	this->fontButton->showFontDialog();
 }
 
 void ToolMenuHandler::setUndoDescription(String description) {

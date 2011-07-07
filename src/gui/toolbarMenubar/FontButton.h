@@ -28,6 +28,7 @@ public:
 	XojFont getFont();
 	virtual String getToolDisplayName();
 	virtual GtkWidget * getNewToolIcon();
+	void showFontDialog();
 
 protected:
 	virtual GtkToolItem * createItem(bool horizontal);

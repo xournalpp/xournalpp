@@ -31,9 +31,13 @@ public:
 
 	static void initUtils(GtkWidget * win);
 
+	static void setLeafEnterWorkaroundEnabled(bool enabled);
+
 private:
 	static int screenWidth;
 	static int screenHeight;
+
+	static int enableLeafEnterWorkaround;
 
 };
 

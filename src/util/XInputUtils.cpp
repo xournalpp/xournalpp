@@ -4,6 +4,7 @@
 
 int XInputUtils::screenWidth = 0;
 int XInputUtils::screenHeight = 0;
+int XInputUtils::enableLeafEnterWorkaround = true;
 
 XInputUtils::XInputUtils() {
 }
@@ -13,8 +14,16 @@ XInputUtils::~XInputUtils() {
 
 void XInputUtils::initUtils(GtkWidget * win) {
 	GdkScreen * screen = gtk_widget_get_screen(win);
-	screenWidth = gdk_screen_get_width(screen);
-	screenHeight = gdk_screen_get_height(screen);
+	XInputUtils::screenWidth = gdk_screen_get_width(screen);
+	XInputUtils::screenHeight = gdk_screen_get_height(screen);
+}
+
+void XInputUtils::setLeafEnterWorkaroundEnabled(bool enabled) {
+	if(XInputUtils::enableLeafEnterWorkaround == true && enabled == false) {
+		XInputUtils::onMouseEnterNotifyEvent(NULL, NULL);
+	}
+
+	XInputUtils::enableLeafEnterWorkaround = enabled;
 }
 
 #define EPSILON 1E-7
@@ -109,6 +118,11 @@ gboolean XInputUtils::onMouseEnterNotifyEvent(GtkWidget * widget, GdkEventCrossi
 #ifdef INPUT_DEBUG
 	printf("DEBUG: enter notify\n");
 #endif
+
+	if(!XInputUtils::enableLeafEnterWorkaround) {
+		return FALSE;
+	}
+
 	/* re-enable input devices after they've been emergency-disabled
 	 by leave_notify */
 	if (!gtk_check_version(2, 17, 0)) {
@@ -128,6 +142,11 @@ gboolean XInputUtils::onMouseLeaveNotifyEvent(GtkWidget * widget, GdkEventCrossi
 #ifdef INPUT_DEBUG
 	printf("DEBUG: leave notify (mode=%d, details=%d)\n", event->mode, event->detail);
 #endif
+
+	if(!XInputUtils::enableLeafEnterWorkaround) {
+		return FALSE;
+	}
+
 	/* emergency disable XInput to avoid segfaults (GTK+ 2.17) or
 	 interface non-responsiveness (GTK+ 2.18) */
 	if (!gtk_check_version(2, 17, 0)) {

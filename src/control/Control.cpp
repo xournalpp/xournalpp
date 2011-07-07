@@ -41,6 +41,7 @@
 #include "../gui/toolbarMenubar/model/ToolbarModel.h"
 #include "../collab/Collaboration.h"
 #include "../gui/toolbarMenubar/model/ToolbarData.h"
+#include "../gui/toolbarMenubar/ToolMenuHandler.h"
 
 #include <config.h>
 #include <glib/gi18n-lib.h>
@@ -268,6 +269,7 @@ void Control::initWindow(MainWindow * win) {
 	win->setFontButtonFont(settings->getFont());
 
 	XInputUtils::initUtils(win->getWindow());
+	XInputUtils::setLeafEnterWorkaroundEnabled(settings->isEnableLeafEnterWorkaround());
 }
 
 bool Control::autosaveCallback(Control * control) {
@@ -670,8 +672,14 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent *even
 		}
 		break;
 
-	case ACTION_SELECT_FONT:
+	case ACTION_FONT_BUTTON_CHANGED:
 		fontChanged();
+		break;
+
+	case ACTION_SELECT_FONT:
+		if (win) {
+			win->getToolMenuHandler()->showFontSelectionDlg();
+		}
 		break;
 
 		// Used for all colors
@@ -830,9 +838,9 @@ void Control::customizeToolbars() {
 
 	g_return_if_fail(this->win != NULL);
 
-	if(this->win->getSelectedToolbar()->isPredefined()) {
-		GtkWidget * dialog = gtk_message_dialog_new((GtkWindow *) *this->win, GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_QUESTION, GTK_BUTTONS_YES_NO,
-				_("The Toolbarconfiguration \"%s\" is predefined, would you create a copy to edit?"), this->win->getSelectedToolbar()->getName().c_str());
+	if (this->win->getSelectedToolbar()->isPredefined()) {
+		GtkWidget * dialog = gtk_message_dialog_new((GtkWindow *) *this->win, GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_QUESTION, GTK_BUTTONS_YES_NO, _(
+				"The Toolbarconfiguration \"%s\" is predefined, would you create a copy to edit?"), this->win->getSelectedToolbar()->getName().c_str());
 
 		int res = gtk_dialog_run(GTK_DIALOG(dialog));
 		gtk_widget_destroy(dialog);
@@ -1130,9 +1138,9 @@ void Control::insertNewPage(int position) {
 		}
 	} else if (PAGE_INSERT_TYPE_PDF_BACKGROUND == type) {
 		if (this->doc->getPdfPageCount() == 0) {
-			GtkWidget * dialog = gtk_message_dialog_new((GtkWindow*) *win, GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
-					_("You don't have any PDF pages to select from. Cancel operation,\n"
-							"Please select another background type: Menu \"Journal\" / \"Insert Page Type\"."));
+			GtkWidget * dialog = gtk_message_dialog_new((GtkWindow*) *win, GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, _(
+					"You don't have any PDF pages to select from. Cancel operation,\n"
+						"Please select another background type: Menu \"Journal\" / \"Insert Page Type\"."));
 			gtk_dialog_run(GTK_DIALOG(dialog));
 			gtk_widget_destroy(dialog);
 
@@ -1267,8 +1275,8 @@ void Control::setPageBackground(ActionType type) {
 			newImg.loadFile(filename, &err);
 			newImg.setAttach(attach);
 			if (err) {
-				GtkWidget * dialog = gtk_message_dialog_new((GtkWindow*) *win, GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
-						_("This image could not be loaded. Error message: %s"), err->message);
+				GtkWidget * dialog = gtk_message_dialog_new((GtkWindow*) *win, GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, _(
+						"This image could not be loaded. Error message: %s"), err->message);
 				gtk_dialog_run(GTK_DIALOG(dialog));
 				gtk_widget_destroy(dialog);
 				g_error_free(err);
@@ -1288,9 +1296,9 @@ void Control::setPageBackground(ActionType type) {
 		delete dlg;
 	} else if (ACTION_SET_PAPER_BACKGROUND_PDF == type) {
 		if (doc->getPdfPageCount() == 0) {
-			GtkWidget * dialog = gtk_message_dialog_new((GtkWindow*) *win, GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
-					_("You don't have any PDF pages to select from. Cancel operation,\n"
-							"Please select another background type: Menu \"Journal\" / \"Insert Page Type\"."));
+			GtkWidget * dialog = gtk_message_dialog_new((GtkWindow*) *win, GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, _(
+					"You don't have any PDF pages to select from. Cancel operation,\n"
+						"Please select another background type: Menu \"Journal\" / \"Insert Page Type\"."));
 			gtk_dialog_run(GTK_DIALOG(dialog));
 			gtk_widget_destroy(dialog);
 			return;
@@ -1866,8 +1874,8 @@ bool Control::openFile(String filename, int scrollToPage) {
 	}
 
 	if (!tmp) {
-		GtkWidget * dialog = gtk_message_dialog_new((GtkWindow*) *win, GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
-				_("Error opening file '%s'\n%s"), filename.c_str(), h.getLastError().c_str());
+		GtkWidget * dialog = gtk_message_dialog_new((GtkWindow*) *win, GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, _(
+				"Error opening file '%s'\n%s"), filename.c_str(), h.getLastError().c_str());
 		gtk_dialog_run(GTK_DIALOG(dialog));
 		gtk_widget_destroy(dialog);
 		fileLoaded(scrollToPage);
@@ -1950,8 +1958,8 @@ bool Control::annotatePdf(String filename, bool attachPdf, bool attachToDocument
 		String errMsg = doc->getLastErrorMsg();
 		this->doc->unlock();
 
-		GtkWidget * dialog = gtk_message_dialog_new((GtkWindow*) *win, GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
-				_("Error annotate PDF file '%s'\n%s"), filename.c_str(), errMsg.c_str());
+		GtkWidget * dialog = gtk_message_dialog_new((GtkWindow*) *win, GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, _(
+				"Error annotate PDF file '%s'\n%s"), filename.c_str(), errMsg.c_str());
 		gtk_dialog_run(GTK_DIALOG(dialog));
 		gtk_widget_destroy(dialog);
 	}
@@ -2210,8 +2218,8 @@ bool Control::close(bool destroy) {
 	XOJ_CHECK_TYPE(Control);
 
 	if (undoRedo->isChanged()) {
-		GtkWidget * dialog = gtk_message_dialog_new((GtkWindow *) *getWindow(), GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_WARNING, GTK_BUTTONS_NONE,
-				_("This document is not saved yet."));
+		GtkWidget * dialog = gtk_message_dialog_new((GtkWindow *) *getWindow(), GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_WARNING, GTK_BUTTONS_NONE, _(
+				"This document is not saved yet."));
 
 		gtk_dialog_add_button(GTK_DIALOG(dialog), _("Save"), 1);
 		gtk_dialog_add_button(GTK_DIALOG(dialog), _("Discard"), 2);
@@ -2459,6 +2467,9 @@ void Control::setToolSize(ToolSize size) {
 
 void Control::fontChanged() {
 	XOJ_CHECK_TYPE(Control);
+
+	// TODO: Debug
+	printf("change font\n");
 
 	XojFont font = win->getFontButtonFont();
 	settings->setFont(font);
