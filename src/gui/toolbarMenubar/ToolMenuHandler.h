@@ -59,6 +59,7 @@ public:
 	void setFontButtonFont(XojFont & font);
 	XojFont getFontButtonFont();
 
+	void showFontSelectionDlg();
 
 	void setTmpDisabled(bool disabled);
 

@@ -80,6 +80,8 @@ void Settings::loadDefault() {
 
 	this->allowScrollOutsideThePage = false;
 
+	this->enableLeafEnterWorkaround = true;
+
 	this->defaultSaveName = _("%F-Note-%H-%M.xoj");
 
 	this->visiblePageFormats = GTK_PAPER_NAME_A4 "," GTK_PAPER_NAME_A5 "," GTK_PAPER_NAME_LETTER ","GTK_PAPER_NAME_LEGAL;
@@ -274,7 +276,11 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
 		this->selectionColor = g_ascii_strtoll((const char *) value, NULL, 10);
 	} else if (xmlStrcmp(name, (const xmlChar *) "allowScrollOutsideThePage") == 0) {
 		this->allowScrollOutsideThePage = xmlStrcmp(value, (const xmlChar *) "true") ? false : true;
+	} else if (xmlStrcmp(name, (const xmlChar *) "enableLeafEnterWorkaround") == 0) {
+		this->enableLeafEnterWorkaround = xmlStrcmp(value, (const xmlChar *) "true") ? false : true;
 	}
+
+
 
 	xmlFree(name);
 	xmlFree(value);
@@ -569,6 +575,9 @@ void Settings::save() {
 
 	WRITE_BOOL_PROP(allowScrollOutsideThePage);
 
+	WRITE_BOOL_PROP(enableLeafEnterWorkaround);
+	WRITE_COMMENT("If Xournal crashes if you e.g. unplug your mouse set this to true. If Xournal draws only points set this to false.");
+
 	String pageInsertType = pageInsertTypeToString(this->pageInsertType);
 	WRITE_STRING_PROP(pageInsertType);
 
@@ -763,6 +772,20 @@ void Settings::setAllowScrollOutsideThePage(bool outside) {
 	XOJ_CHECK_TYPE(Settings);
 
 	this->allowScrollOutsideThePage = outside;
+
+	saveTimeout();
+}
+
+bool Settings::isEnableLeafEnterWorkaround() {
+	XOJ_CHECK_TYPE(Settings);
+
+	return this->enableLeafEnterWorkaround;
+}
+
+void Settings::setEnableLeafEnterWorkaround(bool enable) {
+	XOJ_CHECK_TYPE(Settings);
+
+	this->enableLeafEnterWorkaround = enable;
 
 	saveTimeout();
 }

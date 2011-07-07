@@ -216,6 +216,9 @@ public:
 	bool isAllowScrollOutsideThePage();
 	void setAllowScrollOutsideThePage(bool outside);
 
+	bool isEnableLeafEnterWorkaround();
+	void setEnableLeafEnterWorkaround(bool enable);
+
 	bool isShowBigCursor();
 	void setShowBigCursor(bool b);
 
@@ -383,6 +386,11 @@ private:
 	 * allow scroll outside the page
 	 */
 	bool allowScrollOutsideThePage;
+
+	/**
+	 * Enable Bugfix to prevent crash on GTK 2.18 etc
+	 */
+	bool enableLeafEnterWorkaround;
 
 	/**
 	 * Default name if you save a new document
