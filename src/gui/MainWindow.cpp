@@ -7,8 +7,10 @@
 #include "toolbarMenubar/model/ToolbarData.h"
 #include "toolbarMenubar/model/ToolbarModel.h"
 
+#ifdef ENABLE_OS
 // Overlay scrollbar
 #include "os/os.h"
+#endif
 
 #include <config.h>
 #include <glib/gi18n-lib.h>
