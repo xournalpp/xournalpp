@@ -8,6 +8,7 @@
 #include "../../undo/RecognizerUndoAction.h"
 #include "../../view/DocumentView.h"
 #include "../../model/Layer.h"
+#include "../../util/XInputUtils.h"
 
 #include <math.h>
 
@@ -34,7 +35,7 @@ InputHandler::~InputHandler() {
 	delete this->view;
 	this->view = NULL;
 
-	if(this->reco) {
+	if (this->reco) {
 		delete this->reco;
 		this->reco = NULL;
 	}
@@ -139,11 +140,11 @@ void InputHandler::drawTmpStroke() {
 		 */
 
 		double factor = 1;
-		if(zoom < 0.8) {
+		if (zoom < 0.8) {
 			factor = sqrt(zoom);
-		} else if(zoom < 1.0) {
+		} else if (zoom < 1.0) {
 			factor = sqrt(zoom) - 0.3;
-		} else if(zoom < 1.5) {
+		} else if (zoom < 1.5) {
 			factor = sqrt(zoom) - 0.2;
 		}
 
@@ -247,6 +248,7 @@ void InputHandler::onButtonReleaseEvent(GdkEventButton * event, PageRef page) {
 
 	if (currentInputDevice == event->device) {
 		currentInputDevice = NULL;
+		INPUTDBG("currentInputDevice = NULL\n", 0);
 	}
 
 	this->tmpStrokeDrawElem = 0;
@@ -255,9 +257,27 @@ void InputHandler::onButtonReleaseEvent(GdkEventButton * event, PageRef page) {
 bool InputHandler::onMotionNotifyEvent(GdkEventMotion * event) {
 	XOJ_CHECK_TYPE(InputHandler);
 
-	if (this->tmpStroke != NULL && this->currentInputDevice == event->device) {
-		this->addPointToTmpStroke(event);
-		return true;
+//	if(this->currentInputDevice) { TODO: DEBUG
+//		INPUTDBG("this->currentInputDevice == null\n", 0);
+//		return false;
+//	}
+	if (this->currentInputDevice == event->device) {
+		if (this->tmpStroke != NULL) {
+			this->addPointToTmpStroke(event);
+			return true;
+		}
+//	} else { TODO: DEBUG
+//		const char * n1 = "null";
+//		const char * n2 = "null";
+//
+//		if(this->currentInputDevice) {
+//			n1 = this->currentInputDevice->name;
+//		}
+//		if(event->device) {
+//			n2 = event->device->name;
+//		}
+//
+//		INPUTDBG("Motion ignored, not the same device as the starting device. 1: %s, 2: %s\n", n1, n2);
 	}
 	return false;
 }
@@ -266,6 +286,10 @@ void InputHandler::startStroke(GdkEventButton * event, StrokeTool tool, double x
 	XOJ_CHECK_TYPE(InputHandler);
 
 	ToolHandler * h = xournal->getControl()->getToolHandler();
+
+	if(event->device == NULL) {
+		g_warning("startStroke: event->device == null");
+	}
 
 	if (tmpStroke == NULL) {
 		currentInputDevice = event->device;

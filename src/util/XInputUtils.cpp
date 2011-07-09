@@ -115,13 +115,11 @@ void XInputUtils::handleScrollEvent(GdkEventButton * event, GtkWidget * widget) 
 }
 
 gboolean XInputUtils::onMouseEnterNotifyEvent(GtkWidget * widget, GdkEventCrossing * event) {
-#ifdef INPUT_DEBUG
-	printf("DEBUG: enter notify\n");
-#endif
-
 	if(!XInputUtils::enableLeafEnterWorkaround) {
 		return FALSE;
 	}
+
+	INPUTDBG("enter notify\n");
 
 	/* re-enable input devices after they've been emergency-disabled
 	 by leave_notify */
@@ -139,13 +137,11 @@ gboolean XInputUtils::onMouseEnterNotifyEvent(GtkWidget * widget, GdkEventCrossi
 }
 
 gboolean XInputUtils::onMouseLeaveNotifyEvent(GtkWidget * widget, GdkEventCrossing * event) {
-#ifdef INPUT_DEBUG
-	printf("DEBUG: leave notify (mode=%d, details=%d)\n", event->mode, event->detail);
-#endif
-
 	if(!XInputUtils::enableLeafEnterWorkaround) {
 		return FALSE;
 	}
+
+	INPUTDBG("leave notify (mode=%d, details=%d)\n", event->mode, event->detail);
 
 	/* emergency disable XInput to avoid segfaults (GTK+ 2.17) or
 	 interface non-responsiveness (GTK+ 2.18) */

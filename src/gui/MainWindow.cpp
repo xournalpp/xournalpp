@@ -7,6 +7,9 @@
 #include "toolbarMenubar/model/ToolbarData.h"
 #include "toolbarMenubar/model/ToolbarModel.h"
 
+// Overlay scrollbar
+#include "os/os.h"
+
 #include <config.h>
 #include <glib/gi18n-lib.h>
 
@@ -45,14 +48,28 @@ MainWindow::MainWindow(GladeSearchpath * gladeSearchPath, Control * control) :
 
 	this->toolbarSpacerItems = NULL;
 
-	GtkRange * hrang = GTK_RANGE(get("scrollHorizontal"));
-	GtkRange * vrang = GTK_RANGE(get("scrollVertical"));
-	this->xournal = new XournalView(get("tableXournal"), hrang, vrang, control);
+	GtkWidget * scrollHorizontal;
+#ifdef ENABLE_OS
+	this->scrollVertical = os_scrollbar_new(GTK_ORIENTATION_VERTICAL, NULL);
+	scrollHorizontal = os_scrollbar_new(GTK_ORIENTATION_HORIZONTAL, NULL);
+#else
+	this->scrollVertical = gtk_vscrollbar_new(NULL);
+	scrollHorizontal = gtk_hscrollbar_new(NULL);
+#endif
+
+	GtkWidget * tableXournal = get("tableXournal");
+
+
+	gtk_table_attach(GTK_TABLE(tableXournal), scrollHorizontal, 1, 2, 1, 2, (GtkAttachOptions) (GTK_EXPAND | GTK_FILL), GTK_FILL, 0, 0);
+
+	g_object_ref(this->scrollVertical);
+
+	this->xournal = new XournalView(tableXournal, GTK_RANGE(scrollHorizontal), GTK_RANGE(scrollVertical), control);
 
 	setSidebarVisible(control->getSettings()->isSidebarVisible());
 
 	// Window handler
-	g_signal_connect(this->window, "delete-event", (GCallback) & deleteEventCallback, this->control);
+	g_signal_connect(this->window, "delete-event", (GCallback) &deleteEventCallback, this->control);
 	g_signal_connect(this->window, "window_state_event", G_CALLBACK(&windowStateEventCallback), this);
 
 	g_signal_connect(get("buttonCloseSidebar"), "clicked", G_CALLBACK(buttonCloseSidebarClicked), this);
@@ -64,8 +81,8 @@ MainWindow::MainWindow(GladeSearchpath * gladeSearchPath, Control * control) :
 	ToolbarModel * tbModel = this->toolbar->getModel();
 
 	if (!tbModel->parse(file, true)) {
-		GtkWidget* dlg = gtk_message_dialog_new(GTK_WINDOW(this->window), GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
-				_("Could not parse general toolbar.ini file: %s\nNo Toolbars will be available"), file);
+		GtkWidget* dlg = gtk_message_dialog_new(GTK_WINDOW(this->window), GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, _(
+				"Could not parse general toolbar.ini file: %s\nNo Toolbars will be available"), file);
 
 		gtk_dialog_run(GTK_DIALOG(dlg));
 		gtk_widget_hide(dlg);
@@ -77,8 +94,8 @@ MainWindow::MainWindow(GladeSearchpath * gladeSearchPath, Control * control) :
 	file = g_build_filename(g_get_home_dir(), G_DIR_SEPARATOR_S, CONFIG_DIR, G_DIR_SEPARATOR_S, TOOLBAR_CONFIG, NULL);
 	if (g_file_test(file, G_FILE_TEST_EXISTS)) {
 		if (!tbModel->parse(file, false)) {
-			GtkWidget* dlg = gtk_message_dialog_new(GTK_WINDOW(this->window), GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
-					_("Could not parse custom toolbar.ini file: %s\nToolbars will not be available"), file);
+			GtkWidget* dlg = gtk_message_dialog_new(GTK_WINDOW(this->window), GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, _(
+					"Could not parse custom toolbar.ini file: %s\nToolbars will not be available"), file);
 
 			gtk_dialog_run(GTK_DIALOG(dlg));
 			gtk_widget_hide(dlg);
@@ -151,6 +168,9 @@ MainWindow::~MainWindow() {
 
 	delete this->toolbar;
 	this->toolbar = NULL;
+
+	g_object_unref(this->scrollVertical);
+	this->scrollVertical = NULL;
 
 	XOJ_RELEASE_TYPE(MainWindow);
 }
@@ -277,12 +297,12 @@ void MainWindow::updateScrollbarSidebarPosition() {
 	GtkWidget * panelMainContents = get("panelMainContents");
 	GtkWidget * sidebarContents = get("sidebarContents");
 	GtkWidget * tableXournal = get("tableXournal");
-	GtkWidget * scrollVertical = get("scrollVertical");
 
-	g_object_ref(scrollVertical);
 	bool scrollbarOnLeft = control->getSettings()->isScrollbarOnLeft();
 
-	gtk_container_remove(GTK_CONTAINER(tableXournal), scrollVertical);
+	if (gtk_widget_get_parent(this->scrollVertical) != NULL) {
+		gtk_container_remove(GTK_CONTAINER(tableXournal), scrollVertical);
+	}
 	if (scrollbarOnLeft) {
 		gtk_table_attach(GTK_TABLE(tableXournal), scrollVertical, 0, 1, 0, 1, (GtkAttachOptions) 0, GTK_FILL, 0, 0);
 	} else {
@@ -292,8 +312,6 @@ void MainWindow::updateScrollbarSidebarPosition() {
 	if (sidebar) {
 		sidebar->setBackgroundWhite();
 	}
-
-	g_object_unref(scrollVertical);
 
 	int divider = gtk_paned_get_position(GTK_PANED(panelMainContents));
 	bool sidebarRight = control->getSettings()->isSidebarOnRight();
@@ -442,7 +460,7 @@ String MainWindow::getToolbarName(GtkToolbar * toolbar) {
 	XOJ_CHECK_TYPE(MainWindow);
 
 	for (int i = 0; i < TOOLBAR_DEFINITIONS_LEN; i++) {
-		if ((void *)this->toolbarWidgets[i] == (void *)toolbar) {
+		if ((void *) this->toolbarWidgets[i] == (void *) toolbar) {
 			return TOOLBAR_DEFINITIONS[i].propName;
 		}
 	}

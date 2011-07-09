@@ -576,7 +576,7 @@ void Settings::save() {
 	WRITE_BOOL_PROP(allowScrollOutsideThePage);
 
 	WRITE_BOOL_PROP(enableLeafEnterWorkaround);
-	WRITE_COMMENT("If Xournal crashes if you e.g. unplug your mouse set this to true. If Xournal draws only points set this to false.");
+	WRITE_COMMENT("If Xournal crashes if you e.g. unplug your mouse set this to true. If you have input problems, you can turn it of with false.");
 
 	String pageInsertType = pageInsertTypeToString(this->pageInsertType);
 	WRITE_STRING_PROP(pageInsertType);

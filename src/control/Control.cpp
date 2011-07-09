@@ -2468,9 +2468,6 @@ void Control::setToolSize(ToolSize size) {
 void Control::fontChanged() {
 	XOJ_CHECK_TYPE(Control);
 
-	// TODO: Debug
-	printf("change font\n");
-
 	XojFont font = win->getFontButtonFont();
 	settings->setFont(font);
 

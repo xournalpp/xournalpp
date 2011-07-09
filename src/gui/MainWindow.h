@@ -115,6 +115,8 @@ private:
 
 	GList * toolbarMenuitems;
 
+	GtkWidget * scrollVertical;
+
 	bool maximized;
 
 	GtkWidget ** toolbarWidgets;
