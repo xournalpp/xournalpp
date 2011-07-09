@@ -10,25 +10,43 @@ AM_INIT_AUTOMAKE()
 AC_ISC_POSIX
 AC_PROG_CC
 AC_PROG_CXX
-AC_PROG_RANLIB
 AC_HEADER_STDC
 AC_PROG_LIBTOOL
 
+AC_CONFIG_MACRO_DIR([m4])
+
+AC_SUBST(ACLOCAL_AMFLAGS, "$ACLOCAL_FLAGS -I m4")
+
 dnl librsvg-2.0 is not really needed by Xournal++, but if you don't have it crashes while loading the SVG icons (Problem with Gentoo)
 pkg_modules="gtk+-2.0 >= 2.18.3 poppler-glib >= 0.5.4 poppler >= 0.5.4 libglade-2.0 >= 2.6.4 gthread-2.0 >= 2.4.0 librsvg-2.0 >= 2.14.0"
-PKG_CHECK_MODULES(PACKAGE, [$pkg_modules])
-AC_SUBST(PACKAGE_CFLAGS)
-AC_SUBST(PACKAGE_LIBS)
 
 AC_MSG_CHECKING([whether Python support is requested])
 AC_ARG_ENABLE([python],
 	AS_HELP_STRING([--enable-python],[Enable python support]),
 	[enable_python=$enableval have_python=$enableval],
-	[enable_python=autodetect have_python=yes])
+	[enable_python=autodetect have_python=no])
 AC_MSG_RESULT([$enable_python])
 
+AC_MSG_CHECKING([whether Overlay Scrollbar is enabled])
+
+AC_ARG_ENABLE([os],
+	AS_HELP_STRING([--enable-os],[Enable Overlay Scrollbar support]),
+	[enable_os=$enableval enable_os=$enableval],
+	[enable_os=autodetect enable_os=no])
+AC_MSG_RESULT([$enable_os])
+
+if test "x$enable_os" != "xno"; then
+	pkg_modules="$pkg_modules overlay-scrollbar-0.1 >= 0.1.12"
+fi
+
+PKG_CHECK_MODULES(PACKAGE, [$pkg_modules])
+AC_SUBST(PACKAGE_CFLAGS)
+AC_SUBST(PACKAGE_LIBS)
+
+
+dnl FIXME not working!!
 dnl if test "x$have_python" != "xno"; then
-dnl 	AM_CHECK_PYTHON_HEADERS([],[have_python=no])
+dnl  	AM_CHECK_PYTHON_HEADERS([],[have_python=no])
 dnl fi
 
 if test "x$have_python" != "xno"; then
@@ -74,6 +92,7 @@ if test "x$have_python" != "xno" -a "x$enable_python" != "xno"; then
 fi
 
 AM_CONDITIONAL([ENABLE_PYTHON],[test "x$enable_python" = "xyes"])
+AM_CONDITIONAL([ENABLE_OS],[test "x$enable_os" = "xyes"])
 
 
 dnl Set PACKAGE DATA & DOC DIR
@@ -98,4 +117,14 @@ AM_GLIB_GNU_GETTEXT
 
 AC_CONFIG_FILES(Makefile src/Makefile src/collab/Makefile src/util/Makefile po/Makefile.in ui/Makefile ui/pixmaps/Makefile src/xoj-preview-extractor/Makefile)
 AC_OUTPUT
+
+echo "
+
+Configuration:
+
+	Compiler:                  ${CC}
+	Python Plugins Support:    $enable_python
+	Overlay Scrollbar enabled: $enable_os
+"
+
 

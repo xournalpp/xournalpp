@@ -14,6 +14,12 @@
 
 #include <gtk/gtk.h>
 
+#ifdef INPUT_DEBUG
+#define INPUTDBG(msg, ...) printf("INPUT:: " msg, __VA_ARGS__)
+#else
+#define INPUTDBG(msg, ...)
+#endif
+
 class XInputUtils {
 private:
 	XInputUtils();

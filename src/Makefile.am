@@ -178,6 +178,11 @@ xournalpp_CXXFLAGS = \
 	-g -rdynamic \
 	-Wreturn-type -Wuninitialized -Wunused-value -Wunused-variable   
 
+if ENABLE_OS
+xournalpp_CXXFLAGS += \
+	-DENABLE_OS
+endif
+
 xournalpp_LDADD = \
 	@PACKAGE_LIBS@ $(INTLLIBS) \
 	$(top_builddir)/src/collab/libcollab.la \

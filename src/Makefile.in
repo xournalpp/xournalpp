@@ -43,10 +43,16 @@ bin_PROGRAMS = xournalpp$(EXEEXT)
 @ENABLE_PYTHON_TRUE@	plugin/python/bindings/PyXournal.cpp \
 @ENABLE_PYTHON_TRUE@	plugin/python/PythonRunner.cpp
 
+@ENABLE_OS_TRUE@am__append_2 = \
+@ENABLE_OS_TRUE@	-DENABLE_OS
+
 subdir = src
 DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in TODO
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
-am__aclocal_m4_deps = $(top_srcdir)/configure.ac
+am__aclocal_m4_deps = $(top_srcdir)/m4/libtool.m4 \
+	$(top_srcdir)/m4/ltoptions.m4 $(top_srcdir)/m4/ltsugar.m4 \
+	$(top_srcdir)/m4/ltversion.m4 $(top_srcdir)/m4/lt~obsolete.m4 \
+	$(top_srcdir)/configure.ac
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 	$(ACLOCAL_M4)
 mkinstalldirs = $(install_sh) -d
@@ -352,6 +358,7 @@ am__relativize = \
   done; \
   reldir="$$dir2"
 ACLOCAL = @ACLOCAL@
+ACLOCAL_AMFLAGS = @ACLOCAL_AMFLAGS@
 ALL_LINGUAS = @ALL_LINGUAS@
 AMTAR = @AMTAR@
 AR = @AR@
@@ -613,11 +620,9 @@ INCLUDES = \
 	-DPACKAGE_LOCALE_DIR=\""$(prefix)/$(DATADIRNAME)/locale"\" \
 	@PACKAGE_CFLAGS@
 
-xournalpp_CXXFLAGS = \
-	-I$(top_srcdir)/src/util \
-	-g -rdynamic \
-	-Wreturn-type -Wuninitialized -Wunused-value -Wunused-variable   
-
+xournalpp_CXXFLAGS = -I$(top_srcdir)/src/util -g -rdynamic \
+	-Wreturn-type -Wuninitialized -Wunused-value -Wunused-variable \
+	$(am__append_2)
 xournalpp_LDADD = \
 	@PACKAGE_LIBS@ $(INTLLIBS) \
 	$(top_builddir)/src/collab/libcollab.la \
