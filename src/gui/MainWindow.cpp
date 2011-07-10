@@ -59,7 +59,7 @@ MainWindow::MainWindow(GladeSearchpath * gladeSearchPath, Control * control) :
 	g_object_ref(this->scrollVertical);
 	g_object_ref(this->scrollHorizontal);
 
-	this->xournal = new XournalView(tableXournal, GTK_RANGE(this->scrollHorizontal), GTK_RANGE(scrollVertical), control);
+	this->xournal = new XournalView(tableXournal, GTK_RANGE(this->scrollHorizontal), GTK_RANGE(this->scrollVertical), control);
 
 	setSidebarVisible(control->getSettings()->isSidebarVisible());
 

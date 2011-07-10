@@ -307,6 +307,10 @@ void Control::enableAutosave(bool enable) {
 void Control::updatePageNumbers(int page, int pdfPage) {
 	XOJ_CHECK_TYPE(Control);
 
+	if(this->win == NULL) {
+		return;
+	}
+
 	this->win->updatePageNumbers(page, this->doc->getPageCount(), pdfPage);
 	this->sidebar->selectPageNr(page, pdfPage);
 
@@ -1337,6 +1341,10 @@ void Control::setPageBackground(ActionType type) {
 
 void Control::updateBackgroundSizeButton() {
 	XOJ_CHECK_TYPE(Control);
+
+	if(this->win == NULL) {
+		return;
+	}
 
 	// Update paper color button
 	PageRef p = getCurrentPage();
