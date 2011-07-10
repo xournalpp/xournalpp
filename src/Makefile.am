@@ -95,6 +95,7 @@ xournalpp_SOURCES = \
 	gui/widgets/XournalWidget.cpp \
 	gui/widgets/ZoomCallib.cpp \
 	gui/Cursor.cpp \
+	gui/CursorTheme.cpp \	
 	gui/GladeGui.cpp \
 	gui/GladeSearchpath.cpp \
 	gui/MainWindow.cpp \
