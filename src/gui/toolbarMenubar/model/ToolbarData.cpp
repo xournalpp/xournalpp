@@ -9,6 +9,11 @@ ToolbarData::ToolbarData(bool predefined) {
 	this->predefined = predefined;
 }
 
+ToolbarData::ToolbarData(const ToolbarData & data) {
+	*this = data;
+	this->predefined = false;
+}
+
 ToolbarData::~ToolbarData() {
 	XOJ_RELEASE_TYPE(ToolbarData);
 }

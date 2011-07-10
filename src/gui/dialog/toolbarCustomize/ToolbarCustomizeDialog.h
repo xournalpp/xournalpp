@@ -12,12 +12,14 @@
 #ifndef __TOOLBARCUSTOMIZEDIALOG_H__
 #define __TOOLBARCUSTOMIZEDIALOG_H__
 
-#include "../GladeGui.h"
+#include "../../GladeGui.h"
 #include <XournalType.h>
 
 class MainWindow;
 class AbstractToolItem;
 class AbstractItemSelectionData;
+
+class ToolbarDragDropHandler;
 
 typedef struct _ToolItemDragData ToolItemDragData;
 struct _ToolItemDragData;
@@ -51,6 +53,7 @@ private:
 private:
 	XOJ_TYPE_ATTRIB;
 	AbstractToolItem * currentDragItem;
+	ToolbarDragDropHandler * tbhandler;
 
 	GList * itemDatalist;
 
