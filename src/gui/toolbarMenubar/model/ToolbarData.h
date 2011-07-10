@@ -22,6 +22,7 @@
 class ToolbarData {
 public:
 	ToolbarData(bool predefined);
+	ToolbarData(const ToolbarData & data);
 	virtual ~ToolbarData();
 
 public:

@@ -7,7 +7,7 @@
 #include "../gui/dialog/ImagesDialog.h"
 #include "../gui/dialog/FormatDialog.h"
 #include "../gui/dialog/SelectBackgroundColorDialog.h"
-#include "../gui/dialog/ToolbarCustomizeDialog.h"
+#include "../gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.h"
 #include "../gui/dialog/ToolbarManageDialog.h"
 #include "../cfg.h"
 #include "LoadHandler.h"

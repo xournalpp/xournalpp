@@ -220,6 +220,23 @@ void Cursor::updateCursor() {
 			}
 		} else if (type == TOOL_PEN) {
 			cursor = getPenCursor();
+
+
+//			GdkPixbuf * source = gdk_pixbuf_new_from_file("/home/andreas/Desktop/cursor/foreground.png", NULL);
+//			GdkPixbuf * mask = gdk_pixbuf_new_from_file("/home/andreas/Desktop/cursor/mask.png", NULL);
+////
+////
+////			GdkColor bg = { 65535, 65535, 65535, 65535 };
+////			GdkColor fg = { 0, 65535, 0, 0 };
+//
+//			mask->_GdkPixbuf
+//
+//			cursor = gdk_cursor_new_from_pixbuf(gdk_display_get_default(), mask, 10, 10 );
+//
+//			gdk_bitmap_unref(source);
+//			gdk_bitmap_unref(mask);
+
+
 		} else if (type == TOOL_ERASER) {
 			GdkColor bg = { 0, 65535, 65535, 65535 };
 			GdkColor fg = { 0, 0, 0, 0 };

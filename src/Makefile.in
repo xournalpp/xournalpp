@@ -98,7 +98,9 @@ am__xournalpp_SOURCES_DIST = control/jobs/AutosaveJob.cpp \
 	control/XournalMain.cpp gui/dialog/AboutDialog.cpp \
 	gui/dialog/ButtonConfigGui.cpp gui/dialog/ExportDialog.cpp \
 	gui/dialog/FormatDialog.cpp \
-	gui/dialog/ToolbarCustomizeDialog.cpp \
+	gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp \
+	gui/dialog/toolbarCustomize/ToolbarDragDropHandler.cpp \
+	gui/dialog/toolbarCustomize/ToolbarDragDropHelper.cpp \
 	gui/dialog/ToolbarManageDialog.cpp gui/dialog/ImagesDialog.cpp \
 	gui/dialog/PdfPagesDialog.cpp \
 	gui/dialog/SelectBackgroundColorDialog.cpp \
@@ -215,6 +217,8 @@ am_xournalpp_OBJECTS = xournalpp-AutosaveJob.$(OBJEXT) \
 	xournalpp-ExportDialog.$(OBJEXT) \
 	xournalpp-FormatDialog.$(OBJEXT) \
 	xournalpp-ToolbarCustomizeDialog.$(OBJEXT) \
+	xournalpp-ToolbarDragDropHandler.$(OBJEXT) \
+	xournalpp-ToolbarDragDropHelper.$(OBJEXT) \
 	xournalpp-ToolbarManageDialog.$(OBJEXT) \
 	xournalpp-ImagesDialog.$(OBJEXT) \
 	xournalpp-PdfPagesDialog.$(OBJEXT) \
@@ -554,7 +558,9 @@ xournalpp_SOURCES = control/jobs/AutosaveJob.cpp \
 	control/XournalMain.cpp gui/dialog/AboutDialog.cpp \
 	gui/dialog/ButtonConfigGui.cpp gui/dialog/ExportDialog.cpp \
 	gui/dialog/FormatDialog.cpp \
-	gui/dialog/ToolbarCustomizeDialog.cpp \
+	gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp \
+	gui/dialog/toolbarCustomize/ToolbarDragDropHandler.cpp \
+	gui/dialog/toolbarCustomize/ToolbarDragDropHelper.cpp \
 	gui/dialog/ToolbarManageDialog.cpp gui/dialog/ImagesDialog.cpp \
 	gui/dialog/PdfPagesDialog.cpp \
 	gui/dialog/SelectBackgroundColorDialog.cpp \
@@ -846,6 +852,8 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-ToolZoomSlider.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-ToolbarCustomizeDialog.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-ToolbarData.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-ToolbarDragDropHandler.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-ToolbarDragDropHelper.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-ToolbarManageDialog.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-ToolbarModel.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-UndoAction.Po@am__quote@
@@ -1692,19 +1700,47 @@ xournalpp-FormatDialog.obj: gui/dialog/FormatDialog.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-FormatDialog.obj `if test -f 'gui/dialog/FormatDialog.cpp'; then $(CYGPATH_W) 'gui/dialog/FormatDialog.cpp'; else $(CYGPATH_W) '$(srcdir)/gui/dialog/FormatDialog.cpp'; fi`
 
-xournalpp-ToolbarCustomizeDialog.o: gui/dialog/ToolbarCustomizeDialog.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-ToolbarCustomizeDialog.o -MD -MP -MF $(DEPDIR)/xournalpp-ToolbarCustomizeDialog.Tpo -c -o xournalpp-ToolbarCustomizeDialog.o `test -f 'gui/dialog/ToolbarCustomizeDialog.cpp' || echo '$(srcdir)/'`gui/dialog/ToolbarCustomizeDialog.cpp
+xournalpp-ToolbarCustomizeDialog.o: gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-ToolbarCustomizeDialog.o -MD -MP -MF $(DEPDIR)/xournalpp-ToolbarCustomizeDialog.Tpo -c -o xournalpp-ToolbarCustomizeDialog.o `test -f 'gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp' || echo '$(srcdir)/'`gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp
 @am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-ToolbarCustomizeDialog.Tpo $(DEPDIR)/xournalpp-ToolbarCustomizeDialog.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='gui/dialog/ToolbarCustomizeDialog.cpp' object='xournalpp-ToolbarCustomizeDialog.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp' object='xournalpp-ToolbarCustomizeDialog.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-ToolbarCustomizeDialog.o `test -f 'gui/dialog/ToolbarCustomizeDialog.cpp' || echo '$(srcdir)/'`gui/dialog/ToolbarCustomizeDialog.cpp
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-ToolbarCustomizeDialog.o `test -f 'gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp' || echo '$(srcdir)/'`gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp
 
-xournalpp-ToolbarCustomizeDialog.obj: gui/dialog/ToolbarCustomizeDialog.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-ToolbarCustomizeDialog.obj -MD -MP -MF $(DEPDIR)/xournalpp-ToolbarCustomizeDialog.Tpo -c -o xournalpp-ToolbarCustomizeDialog.obj `if test -f 'gui/dialog/ToolbarCustomizeDialog.cpp'; then $(CYGPATH_W) 'gui/dialog/ToolbarCustomizeDialog.cpp'; else $(CYGPATH_W) '$(srcdir)/gui/dialog/ToolbarCustomizeDialog.cpp'; fi`
+xournalpp-ToolbarCustomizeDialog.obj: gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-ToolbarCustomizeDialog.obj -MD -MP -MF $(DEPDIR)/xournalpp-ToolbarCustomizeDialog.Tpo -c -o xournalpp-ToolbarCustomizeDialog.obj `if test -f 'gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp'; then $(CYGPATH_W) 'gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp'; else $(CYGPATH_W) '$(srcdir)/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp'; fi`
 @am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-ToolbarCustomizeDialog.Tpo $(DEPDIR)/xournalpp-ToolbarCustomizeDialog.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='gui/dialog/ToolbarCustomizeDialog.cpp' object='xournalpp-ToolbarCustomizeDialog.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp' object='xournalpp-ToolbarCustomizeDialog.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-ToolbarCustomizeDialog.obj `if test -f 'gui/dialog/ToolbarCustomizeDialog.cpp'; then $(CYGPATH_W) 'gui/dialog/ToolbarCustomizeDialog.cpp'; else $(CYGPATH_W) '$(srcdir)/gui/dialog/ToolbarCustomizeDialog.cpp'; fi`
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-ToolbarCustomizeDialog.obj `if test -f 'gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp'; then $(CYGPATH_W) 'gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp'; else $(CYGPATH_W) '$(srcdir)/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp'; fi`
+
+xournalpp-ToolbarDragDropHandler.o: gui/dialog/toolbarCustomize/ToolbarDragDropHandler.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-ToolbarDragDropHandler.o -MD -MP -MF $(DEPDIR)/xournalpp-ToolbarDragDropHandler.Tpo -c -o xournalpp-ToolbarDragDropHandler.o `test -f 'gui/dialog/toolbarCustomize/ToolbarDragDropHandler.cpp' || echo '$(srcdir)/'`gui/dialog/toolbarCustomize/ToolbarDragDropHandler.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-ToolbarDragDropHandler.Tpo $(DEPDIR)/xournalpp-ToolbarDragDropHandler.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='gui/dialog/toolbarCustomize/ToolbarDragDropHandler.cpp' object='xournalpp-ToolbarDragDropHandler.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-ToolbarDragDropHandler.o `test -f 'gui/dialog/toolbarCustomize/ToolbarDragDropHandler.cpp' || echo '$(srcdir)/'`gui/dialog/toolbarCustomize/ToolbarDragDropHandler.cpp
+
+xournalpp-ToolbarDragDropHandler.obj: gui/dialog/toolbarCustomize/ToolbarDragDropHandler.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-ToolbarDragDropHandler.obj -MD -MP -MF $(DEPDIR)/xournalpp-ToolbarDragDropHandler.Tpo -c -o xournalpp-ToolbarDragDropHandler.obj `if test -f 'gui/dialog/toolbarCustomize/ToolbarDragDropHandler.cpp'; then $(CYGPATH_W) 'gui/dialog/toolbarCustomize/ToolbarDragDropHandler.cpp'; else $(CYGPATH_W) '$(srcdir)/gui/dialog/toolbarCustomize/ToolbarDragDropHandler.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-ToolbarDragDropHandler.Tpo $(DEPDIR)/xournalpp-ToolbarDragDropHandler.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='gui/dialog/toolbarCustomize/ToolbarDragDropHandler.cpp' object='xournalpp-ToolbarDragDropHandler.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-ToolbarDragDropHandler.obj `if test -f 'gui/dialog/toolbarCustomize/ToolbarDragDropHandler.cpp'; then $(CYGPATH_W) 'gui/dialog/toolbarCustomize/ToolbarDragDropHandler.cpp'; else $(CYGPATH_W) '$(srcdir)/gui/dialog/toolbarCustomize/ToolbarDragDropHandler.cpp'; fi`
+
+xournalpp-ToolbarDragDropHelper.o: gui/dialog/toolbarCustomize/ToolbarDragDropHelper.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-ToolbarDragDropHelper.o -MD -MP -MF $(DEPDIR)/xournalpp-ToolbarDragDropHelper.Tpo -c -o xournalpp-ToolbarDragDropHelper.o `test -f 'gui/dialog/toolbarCustomize/ToolbarDragDropHelper.cpp' || echo '$(srcdir)/'`gui/dialog/toolbarCustomize/ToolbarDragDropHelper.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-ToolbarDragDropHelper.Tpo $(DEPDIR)/xournalpp-ToolbarDragDropHelper.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='gui/dialog/toolbarCustomize/ToolbarDragDropHelper.cpp' object='xournalpp-ToolbarDragDropHelper.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-ToolbarDragDropHelper.o `test -f 'gui/dialog/toolbarCustomize/ToolbarDragDropHelper.cpp' || echo '$(srcdir)/'`gui/dialog/toolbarCustomize/ToolbarDragDropHelper.cpp
+
+xournalpp-ToolbarDragDropHelper.obj: gui/dialog/toolbarCustomize/ToolbarDragDropHelper.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-ToolbarDragDropHelper.obj -MD -MP -MF $(DEPDIR)/xournalpp-ToolbarDragDropHelper.Tpo -c -o xournalpp-ToolbarDragDropHelper.obj `if test -f 'gui/dialog/toolbarCustomize/ToolbarDragDropHelper.cpp'; then $(CYGPATH_W) 'gui/dialog/toolbarCustomize/ToolbarDragDropHelper.cpp'; else $(CYGPATH_W) '$(srcdir)/gui/dialog/toolbarCustomize/ToolbarDragDropHelper.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-ToolbarDragDropHelper.Tpo $(DEPDIR)/xournalpp-ToolbarDragDropHelper.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='gui/dialog/toolbarCustomize/ToolbarDragDropHelper.cpp' object='xournalpp-ToolbarDragDropHelper.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-ToolbarDragDropHelper.obj `if test -f 'gui/dialog/toolbarCustomize/ToolbarDragDropHelper.cpp'; then $(CYGPATH_W) 'gui/dialog/toolbarCustomize/ToolbarDragDropHelper.cpp'; else $(CYGPATH_W) '$(srcdir)/gui/dialog/toolbarCustomize/ToolbarDragDropHelper.cpp'; fi`
 
 xournalpp-ToolbarManageDialog.o: gui/dialog/ToolbarManageDialog.cpp
 @am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-ToolbarManageDialog.o -MD -MP -MF $(DEPDIR)/xournalpp-ToolbarManageDialog.Tpo -c -o xournalpp-ToolbarManageDialog.o `test -f 'gui/dialog/ToolbarManageDialog.cpp' || echo '$(srcdir)/'`gui/dialog/ToolbarManageDialog.cpp

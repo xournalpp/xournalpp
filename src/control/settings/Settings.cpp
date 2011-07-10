@@ -74,6 +74,7 @@ void Settings::loadDefault() {
 
 	this->autoloadPdfXoj = true;
 	this->showBigCursor = false;
+	this->scrollbarHideType = SCROLLBAR_HIDE_NONE;
 
 	this->autosaveTimeout = 1;
 	this->autosaveEnabled = true;
@@ -110,7 +111,6 @@ void Settings::loadDefault() {
 
 void Settings::parseData(xmlNodePtr cur, SElement & elem) {
 	XOJ_CHECK_TYPE(Settings);
-
 
 	for (xmlNodePtr x = cur->children; x != NULL; x = x->next) {
 		if (!xmlStrcmp(x->name, (const xmlChar *) "data")) {
@@ -278,9 +278,17 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
 		this->allowScrollOutsideThePage = xmlStrcmp(value, (const xmlChar *) "true") ? false : true;
 	} else if (xmlStrcmp(name, (const xmlChar *) "enableLeafEnterWorkaround") == 0) {
 		this->enableLeafEnterWorkaround = xmlStrcmp(value, (const xmlChar *) "true") ? false : true;
+	} else if (xmlStrcmp(name, (const xmlChar *) "scrollbarHideType") == 0) {
+		if (xmlStrcmp(value, (const xmlChar *) "both") == 0) {
+			this->scrollbarHideType = SCROLLBAR_HIDE_BOTH;
+		} else if (xmlStrcmp(value, (const xmlChar *) "horizontal") == 0) {
+			this->scrollbarHideType = SCROLLBAR_HIDE_HORIZONTAL;
+		} else if (xmlStrcmp(value, (const xmlChar *) "vertical") == 0) {
+			this->scrollbarHideType = SCROLLBAR_HIDE_VERTICAL;
+		} else {
+			this->scrollbarHideType = SCROLLBAR_HIDE_NONE;
+		}
 	}
-
-
 
 	xmlFree(name);
 	xmlFree(value);
@@ -564,7 +572,20 @@ void Settings::save() {
 
 	WRITE_BOOL_PROP(showBigCursor);
 
+	if (this->scrollbarHideType == SCROLLBAR_HIDE_BOTH) {
+		saveProperty((const char *) "scrollbarHideType", "both", root);
+	} else if (this->scrollbarHideType == SCROLLBAR_HIDE_HORIZONTAL) {
+		saveProperty((const char *) "scrollbarHideType", "horizontal", root);
+	} else if (this->scrollbarHideType == SCROLLBAR_HIDE_VERTICAL) {
+		saveProperty((const char *) "scrollbarHideType", "vertical", root);
+	} else {
+		saveProperty((const char *) "scrollbarHideType", "none", root);
+	}
+
+
 	WRITE_BOOL_PROP(autoloadPdfXoj);
+	WRITE_COMMENT("Hides scroolbars in the main window, allowed values: \"none\", \"horizontal\", \"vertical\", \"both\"");
+
 	WRITE_STRING_PROP(defaultSaveName);
 
 	WRITE_STRING_PROP(visiblePageFormats);
@@ -799,7 +820,29 @@ bool Settings::isShowBigCursor() {
 void Settings::setShowBigCursor(bool b) {
 	XOJ_CHECK_TYPE(Settings);
 
+	if (this->showBigCursor == b) {
+		return;
+	}
+
 	this->showBigCursor = b;
+	saveTimeout();
+}
+
+ScrollbarHideType Settings::getScrollbarHideType() {
+	XOJ_CHECK_TYPE(Settings);
+
+	return this->scrollbarHideType;
+}
+
+void Settings::setScrollbarHideType(ScrollbarHideType type) {
+	XOJ_CHECK_TYPE(Settings);
+
+	if (this->scrollbarHideType == type) {
+		return;
+	}
+
+	this->scrollbarHideType = type;
+
 	saveTimeout();
 }
 
@@ -905,7 +948,7 @@ String Settings::getLastSavePath() {
 void Settings::setLastImagePath(String path) {
 	XOJ_CHECK_TYPE(Settings);
 
-	if(this->lastImagePath == path) {
+	if (this->lastImagePath == path) {
 		return;
 	}
 	this->lastImagePath = path;
