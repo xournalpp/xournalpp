@@ -2237,7 +2237,9 @@ bool Control::close(bool destroy) {
 
 		// save
 		if (res == 1) {
-			if (!this->save(true)) {
+			if (this->save(true)) {
+				return true;
+			} else {
 				// if not saved cancel, else close
 				return false;
 			}
