@@ -1,18 +1,64 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <glade-interface>
   <!-- interface-requires gtk+ 2.6 -->
   <!-- interface-naming-policy project-wide -->
   <widget class="GtkDialog" id="settingsDialog">
+    <property name="can_focus">False</property>
     <property name="border_width">5</property>
     <property name="title" translatable="yes">Xournal++ Preferences</property>
     <property name="window_position">center</property>
     <property name="icon">pixmaps/xournalpp.svg</property>
     <property name="type_hint">normal</property>
-    <signal name="close" handler="gtk_widget_hide"/>
+    <signal name="close" handler="gtk_widget_hide" swapped="no"/>
     <child internal-child="vbox">
       <widget class="GtkVBox" id="dialog-vbox3">
         <property name="visible">True</property>
+        <property name="can_focus">False</property>
         <property name="spacing">2</property>
+        <child internal-child="action_area">
+          <widget class="GtkHButtonBox" id="btSettingsButton">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="layout_style">end</property>
+            <child>
+              <widget class="GtkButton" id="btSettingsCancel">
+                <property name="label">gtk-cancel</property>
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">True</property>
+                <property name="use_action_appearance">False</property>
+                <property name="use_stock">True</property>
+              </widget>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">False</property>
+                <property name="position">0</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="GtkButton" id="btSettingsOk">
+                <property name="label">gtk-ok</property>
+                <property name="response_id">1</property>
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">True</property>
+                <property name="use_action_appearance">False</property>
+                <property name="use_stock">True</property>
+              </widget>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">False</property>
+                <property name="position">1</property>
+              </packing>
+            </child>
+          </widget>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="pack_type">end</property>
+            <property name="position">0</property>
+          </packing>
+        </child>
         <child>
           <widget class="GtkNotebook" id="notebook1">
             <property name="visible">True</property>
@@ -20,16 +66,19 @@
             <child>
               <widget class="GtkVBox" id="vbox2">
                 <property name="visible">True</property>
+                <property name="can_focus">False</property>
                 <child>
                   <widget class="GtkCheckButton" id="cbSettingXinput">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">False</property>
+                    <property name="use_action_appearance">False</property>
                     <property name="draw_indicator">True</property>
-                    <signal name="toggled" handler="on_cbSettingCheckbox_toggled"/>
+                    <signal name="toggled" handler="on_cbSettingCheckbox_toggled" swapped="no"/>
                     <child>
                       <widget class="GtkLabel" id="label28">
                         <property name="visible">True</property>
+                        <property name="can_focus">False</property>
                         <property name="label" translatable="yes">&lt;b&gt;Extended Input&lt;/b&gt;</property>
                         <property name="use_markup">True</property>
                       </widget>
@@ -37,6 +86,7 @@
                   </widget>
                   <packing>
                     <property name="expand">False</property>
+                    <property name="fill">True</property>
                     <property name="padding">5</property>
                     <property name="position">0</property>
                   </packing>
@@ -44,12 +94,15 @@
                 <child>
                   <widget class="GtkHBox" id="hbox5">
                     <property name="visible">True</property>
+                    <property name="can_focus">False</property>
                     <child>
                       <widget class="GtkLayout" id="layout1">
                         <property name="visible">True</property>
+                        <property name="can_focus">False</property>
                       </widget>
                       <packing>
                         <property name="expand">False</property>
+                        <property name="fill">True</property>
                         <property name="padding">11</property>
                         <property name="position">0</property>
                       </packing>
@@ -57,12 +110,15 @@
                     <child>
                       <widget class="GtkVBox" id="vbox1">
                         <property name="visible">True</property>
+                        <property name="can_focus">False</property>
                         <child>
                           <widget class="GtkHBox" id="hbox6">
                             <property name="visible">True</property>
+                            <property name="can_focus">False</property>
                             <child>
                               <widget class="GtkLabel" id="labeXInput">
                                 <property name="visible">True</property>
+                                <property name="can_focus">False</property>
                                 <property name="label" translatable="yes">&lt;i&gt;If you enable &lt;b&gt;Extended Input&lt;/b&gt; you get more precise
 inputif you have a supported Tablet Device
 Disable if you use a Mouse or Touchpad and
@@ -71,12 +127,14 @@ stroken are not drawn under the cursor &lt;/i&gt;</property>
                               </widget>
                               <packing>
                                 <property name="expand">False</property>
+                                <property name="fill">True</property>
                                 <property name="position">0</property>
                               </packing>
                             </child>
                           </widget>
                           <packing>
                             <property name="expand">False</property>
+                            <property name="fill">True</property>
                             <property name="position">0</property>
                           </packing>
                         </child>
@@ -85,10 +143,12 @@ stroken are not drawn under the cursor &lt;/i&gt;</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="receives_default">False</property>
+                            <property name="use_action_appearance">False</property>
                             <property name="draw_indicator">True</property>
                             <child>
                               <widget class="GtkLabel" id="label32">
                                 <property name="visible">True</property>
+                                <property name="can_focus">False</property>
                                 <property name="label" translatable="yes">&lt;b&gt;Presure sensitivity&lt;/b&gt;</property>
                                 <property name="use_markup">True</property>
                               </widget>
@@ -96,6 +156,7 @@ stroken are not drawn under the cursor &lt;/i&gt;</property>
                           </widget>
                           <packing>
                             <property name="expand">False</property>
+                            <property name="fill">True</property>
                             <property name="padding">5</property>
                             <property name="position">1</property>
                           </packing>
@@ -103,9 +164,11 @@ stroken are not drawn under the cursor &lt;/i&gt;</property>
                         <child>
                           <widget class="GtkHBox" id="hbox7">
                             <property name="visible">True</property>
+                            <property name="can_focus">False</property>
                             <child>
                               <widget class="GtkLabel" id="labePresureSensitivity">
                                 <property name="visible">True</property>
+                                <property name="can_focus">False</property>
                                 <property name="label" translatable="yes">&lt;i&gt;If you have a tablet pen you get a different width of the line&lt;/i&gt;</property>
                                 <property name="use_markup">True</property>
                               </widget>
@@ -118,26 +181,79 @@ stroken are not drawn under the cursor &lt;/i&gt;</property>
                           </widget>
                           <packing>
                             <property name="expand">False</property>
+                            <property name="fill">True</property>
                             <property name="position">2</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <widget class="GtkCheckButton" id="cbIgnorCoreEvents">
+                            <property name="visible">True</property>
+                            <property name="can_focus">True</property>
+                            <property name="receives_default">False</property>
+                            <property name="use_action_appearance">False</property>
+                            <property name="draw_indicator">True</property>
+                            <child>
+                              <widget class="GtkLabel" id="label38">
+                                <property name="visible">True</property>
+                                <property name="can_focus">False</property>
+                                <property name="label" translatable="yes">&lt;b&gt;Ignor core events&lt;/b&gt;</property>
+                                <property name="use_markup">True</property>
+                              </widget>
+                            </child>
+                          </widget>
+                          <packing>
+                            <property name="expand">False</property>
+                            <property name="fill">True</property>
+                            <property name="padding">5</property>
+                            <property name="position">3</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <widget class="GtkHBox" id="hbox35">
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <child>
+                              <widget class="GtkLabel" id="labeIgnorCoreEvents">
+                                <property name="visible">True</property>
+                                <property name="can_focus">False</property>
+                                <property name="label" translatable="yes">If sometimes only points appear instead of lines</property>
+                                <property name="use_markup">True</property>
+                              </widget>
+                              <packing>
+                                <property name="expand">False</property>
+                                <property name="fill">False</property>
+                                <property name="position">0</property>
+                              </packing>
+                            </child>
+                          </widget>
+                          <packing>
+                            <property name="expand">False</property>
+                            <property name="fill">True</property>
+                            <property name="position">4</property>
                           </packing>
                         </child>
                       </widget>
                       <packing>
+                        <property name="expand">True</property>
+                        <property name="fill">True</property>
                         <property name="position">1</property>
                       </packing>
                     </child>
                   </widget>
                   <packing>
                     <property name="expand">False</property>
+                    <property name="fill">True</property>
                     <property name="position">1</property>
                   </packing>
                 </child>
                 <child>
                   <widget class="GtkFixed" id="fixed7">
                     <property name="visible">True</property>
+                    <property name="can_focus">False</property>
                   </widget>
                   <packing>
                     <property name="expand">False</property>
+                    <property name="fill">True</property>
                     <property name="padding">5</property>
                     <property name="position">2</property>
                   </packing>
@@ -147,10 +263,12 @@ stroken are not drawn under the cursor &lt;/i&gt;</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">False</property>
+                    <property name="use_action_appearance">False</property>
                     <property name="draw_indicator">True</property>
                     <child>
                       <widget class="GtkLabel" id="label30">
                         <property name="visible">True</property>
+                        <property name="can_focus">False</property>
                         <property name="label" translatable="yes">&lt;b&gt;Allow scroll outside the page&lt;/b&gt;</property>
                         <property name="use_markup">True</property>
                       </widget>
@@ -158,6 +276,7 @@ stroken are not drawn under the cursor &lt;/i&gt;</property>
                   </widget>
                   <packing>
                     <property name="expand">False</property>
+                    <property name="fill">True</property>
                     <property name="padding">5</property>
                     <property name="position">3</property>
                   </packing>
@@ -165,12 +284,15 @@ stroken are not drawn under the cursor &lt;/i&gt;</property>
                 <child>
                   <widget class="GtkHBox" id="hbox22">
                     <property name="visible">True</property>
+                    <property name="can_focus">False</property>
                     <child>
                       <widget class="GtkLayout" id="layout5">
                         <property name="visible">True</property>
+                        <property name="can_focus">False</property>
                       </widget>
                       <packing>
                         <property name="expand">False</property>
+                        <property name="fill">True</property>
                         <property name="padding">11</property>
                         <property name="position">0</property>
                       </packing>
@@ -178,35 +300,43 @@ stroken are not drawn under the cursor &lt;/i&gt;</property>
                     <child>
                       <widget class="GtkVBox" id="vbox11">
                         <property name="visible">True</property>
+                        <property name="can_focus">False</property>
                         <child>
                           <widget class="GtkHBox" id="hbox23">
                             <property name="visible">True</property>
+                            <property name="can_focus">False</property>
                             <child>
                               <widget class="GtkLabel" id="labeXInput1">
                                 <property name="visible">True</property>
+                                <property name="can_focus">False</property>
                                 <property name="label" translatable="yes">&lt;i&gt;If you enable this you can move the border of a page to the
 center of the screen.&lt;/i&gt;</property>
                                 <property name="use_markup">True</property>
                               </widget>
                               <packing>
                                 <property name="expand">False</property>
+                                <property name="fill">True</property>
                                 <property name="position">0</property>
                               </packing>
                             </child>
                           </widget>
                           <packing>
                             <property name="expand">False</property>
+                            <property name="fill">True</property>
                             <property name="position">0</property>
                           </packing>
                         </child>
                       </widget>
                       <packing>
+                        <property name="expand">True</property>
+                        <property name="fill">True</property>
                         <property name="position">1</property>
                       </packing>
                     </child>
                   </widget>
                   <packing>
                     <property name="expand">False</property>
+                    <property name="fill">True</property>
                     <property name="position">4</property>
                   </packing>
                 </child>
@@ -215,6 +345,7 @@ center of the screen.&lt;/i&gt;</property>
             <child>
               <widget class="GtkLabel" id="label1">
                 <property name="visible">True</property>
+                <property name="can_focus">False</property>
                 <property name="label" translatable="yes">Input</property>
               </widget>
               <packing>
@@ -225,15 +356,18 @@ center of the screen.&lt;/i&gt;</property>
             <child>
               <widget class="GtkVBox" id="vbox3">
                 <property name="visible">True</property>
+                <property name="can_focus">False</property>
                 <child>
                   <widget class="GtkCheckButton" id="cbAutosave">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">False</property>
+                    <property name="use_action_appearance">False</property>
                     <property name="draw_indicator">True</property>
                     <child>
                       <widget class="GtkLabel" id="label26">
                         <property name="visible">True</property>
+                        <property name="can_focus">False</property>
                         <property name="label" translatable="yes">&lt;b&gt;Autosave&lt;/b&gt;</property>
                         <property name="use_markup">True</property>
                       </widget>
@@ -241,6 +375,7 @@ center of the screen.&lt;/i&gt;</property>
                   </widget>
                   <packing>
                     <property name="expand">False</property>
+                    <property name="fill">True</property>
                     <property name="padding">5</property>
                     <property name="position">0</property>
                   </packing>
@@ -248,12 +383,15 @@ center of the screen.&lt;/i&gt;</property>
                 <child>
                   <widget class="GtkHBox" id="hbox24">
                     <property name="visible">True</property>
+                    <property name="can_focus">False</property>
                     <child>
                       <widget class="GtkLayout" id="layout7">
                         <property name="visible">True</property>
+                        <property name="can_focus">False</property>
                       </widget>
                       <packing>
                         <property name="expand">False</property>
+                        <property name="fill">True</property>
                         <property name="padding">11</property>
                         <property name="position">0</property>
                       </packing>
@@ -261,19 +399,24 @@ center of the screen.&lt;/i&gt;</property>
                     <child>
                       <widget class="GtkVBox" id="vbox12">
                         <property name="visible">True</property>
+                        <property name="can_focus">False</property>
                         <child>
                           <widget class="GtkHBox" id="hbox25">
                             <property name="visible">True</property>
+                            <property name="can_focus">False</property>
                             <child>
                               <widget class="GtkHBox" id="hbox8">
                                 <property name="visible">True</property>
+                                <property name="can_focus">False</property>
                                 <child>
                                   <widget class="GtkLabel" id="lbAutosaveTimeout">
                                     <property name="visible">True</property>
+                                    <property name="can_focus">False</property>
                                     <property name="label" translatable="yes">Autosave every ... minute:</property>
                                   </widget>
                                   <packing>
                                     <property name="expand">False</property>
+                                    <property name="fill">True</property>
                                     <property name="position">0</property>
                                   </packing>
                                 </child>
@@ -281,11 +424,16 @@ center of the screen.&lt;/i&gt;</property>
                                   <widget class="GtkSpinButton" id="spAutosaveTimeout">
                                     <property name="visible">True</property>
                                     <property name="can_focus">True</property>
-                                    <property name="invisible_char">&#x25CF;</property>
+                                    <property name="invisible_char">●</property>
+                                    <property name="primary_icon_activatable">False</property>
+                                    <property name="secondary_icon_activatable">False</property>
+                                    <property name="primary_icon_sensitive">True</property>
+                                    <property name="secondary_icon_sensitive">True</property>
                                     <property name="adjustment">1 1 100 1 10 0</property>
                                   </widget>
                                   <packing>
                                     <property name="expand">False</property>
+                                    <property name="fill">True</property>
                                     <property name="padding">10</property>
                                     <property name="position">1</property>
                                   </packing>
@@ -293,18 +441,21 @@ center of the screen.&lt;/i&gt;</property>
                               </widget>
                               <packing>
                                 <property name="expand">False</property>
+                                <property name="fill">True</property>
                                 <property name="position">0</property>
                               </packing>
                             </child>
                           </widget>
                           <packing>
                             <property name="expand">False</property>
+                            <property name="fill">True</property>
                             <property name="position">0</property>
                           </packing>
                         </child>
                         <child>
                           <widget class="GtkLabel" id="label25">
                             <property name="visible">True</property>
+                            <property name="can_focus">False</property>
                             <property name="label" translatable="yes">&lt;b&gt;Autosave Folder&lt;/b&gt;
 &lt;i&gt;If the document already was saved you can find it in the same folder
 with the extension .autosave.xoj
@@ -314,38 +465,46 @@ It the file was not saved you can find it in your home folder, in
                           </widget>
                           <packing>
                             <property name="expand">False</property>
+                            <property name="fill">True</property>
                             <property name="position">1</property>
                           </packing>
                         </child>
                         <child>
                           <widget class="GtkHBox" id="hbox26">
                             <property name="visible">True</property>
+                            <property name="can_focus">False</property>
                             <child>
                               <placeholder/>
                             </child>
                           </widget>
                           <packing>
                             <property name="expand">False</property>
+                            <property name="fill">True</property>
                             <property name="position">2</property>
                           </packing>
                         </child>
                       </widget>
                       <packing>
+                        <property name="expand">True</property>
+                        <property name="fill">True</property>
                         <property name="position">1</property>
                       </packing>
                     </child>
                   </widget>
                   <packing>
                     <property name="expand">False</property>
+                    <property name="fill">True</property>
                     <property name="position">1</property>
                   </packing>
                 </child>
                 <child>
                   <widget class="GtkFixed" id="fixed8">
                     <property name="visible">True</property>
+                    <property name="can_focus">False</property>
                   </widget>
                   <packing>
                     <property name="expand">False</property>
+                    <property name="fill">True</property>
                     <property name="padding">5</property>
                     <property name="position">2</property>
                   </packing>
@@ -353,20 +512,24 @@ It the file was not saved you can find it in your home folder, in
                 <child>
                   <widget class="GtkHBox" id="hbox9">
                     <property name="visible">True</property>
+                    <property name="can_focus">False</property>
                     <child>
                       <widget class="GtkLabel" id="label7">
                         <property name="visible">True</property>
+                        <property name="can_focus">False</property>
                         <property name="label" translatable="yes">&lt;b&gt;Default save name&lt;/b&gt;</property>
                         <property name="use_markup">True</property>
                       </widget>
                       <packing>
                         <property name="expand">False</property>
+                        <property name="fill">True</property>
                         <property name="position">0</property>
                       </packing>
                     </child>
                   </widget>
                   <packing>
                     <property name="expand">False</property>
+                    <property name="fill">True</property>
                     <property name="padding">3</property>
                     <property name="position">3</property>
                   </packing>
@@ -374,12 +537,15 @@ It the file was not saved you can find it in your home folder, in
                 <child>
                   <widget class="GtkHBox" id="hbox27">
                     <property name="visible">True</property>
+                    <property name="can_focus">False</property>
                     <child>
                       <widget class="GtkLayout" id="layout8">
                         <property name="visible">True</property>
+                        <property name="can_focus">False</property>
                       </widget>
                       <packing>
                         <property name="expand">False</property>
+                        <property name="fill">True</property>
                         <property name="padding">11</property>
                         <property name="position">0</property>
                       </packing>
@@ -387,22 +553,28 @@ It the file was not saved you can find it in your home folder, in
                     <child>
                       <widget class="GtkVBox" id="vbox13">
                         <property name="visible">True</property>
+                        <property name="can_focus">False</property>
                         <child>
                           <widget class="GtkHBox" id="hbox28">
                             <property name="visible">True</property>
+                            <property name="can_focus">False</property>
                             <child>
                               <widget class="GtkLabel" id="label17">
                                 <property name="visible">True</property>
+                                <property name="can_focus">False</property>
                                 <property name="label" translatable="yes">&lt;i&gt;This name will be proposed if you save a new document&lt;/i&gt;</property>
                                 <property name="use_markup">True</property>
                               </widget>
                               <packing>
                                 <property name="expand">False</property>
+                                <property name="fill">True</property>
                                 <property name="position">0</property>
                               </packing>
                             </child>
                           </widget>
                           <packing>
+                            <property name="expand">True</property>
+                            <property name="fill">True</property>
                             <property name="position">0</property>
                           </packing>
                         </child>
@@ -410,10 +582,15 @@ It the file was not saved you can find it in your home folder, in
                           <widget class="GtkEntry" id="txtDefaultSaveName">
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
-                            <property name="invisible_char">&#x25CF;</property>
+                            <property name="invisible_char">●</property>
+                            <property name="primary_icon_activatable">False</property>
+                            <property name="secondary_icon_activatable">False</property>
+                            <property name="primary_icon_sensitive">True</property>
+                            <property name="secondary_icon_sensitive">True</property>
                           </widget>
                           <packing>
                             <property name="expand">False</property>
+                            <property name="fill">True</property>
                             <property name="padding">3</property>
                             <property name="position">1</property>
                           </packing>
@@ -421,28 +598,34 @@ It the file was not saved you can find it in your home folder, in
                         <child>
                           <widget class="GtkHBox" id="hbox30">
                             <property name="visible">True</property>
+                            <property name="can_focus">False</property>
                             <child>
                               <widget class="GtkHBox" id="hbox12">
                                 <property name="visible">True</property>
+                                <property name="can_focus">False</property>
                                 <child>
                                   <widget class="GtkLabel" id="label16">
                                     <property name="visible">True</property>
+                                    <property name="can_focus">False</property>
                                     <property name="label" translatable="yes">&lt;b&gt;Default name:&lt;/b&gt;</property>
                                     <property name="use_markup">True</property>
                                   </widget>
                                   <packing>
                                     <property name="expand">False</property>
+                                    <property name="fill">True</property>
                                     <property name="position">0</property>
                                   </packing>
                                 </child>
                                 <child>
                                   <widget class="GtkLabel" id="lbDefaultSavename">
                                     <property name="visible">True</property>
+                                    <property name="can_focus">False</property>
                                     <property name="label" translatable="yes">%F-Note-%H-%M.xoj</property>
                                     <property name="selectable">True</property>
                                   </widget>
                                   <packing>
                                     <property name="expand">False</property>
+                                    <property name="fill">True</property>
                                     <property name="padding">3</property>
                                     <property name="position">1</property>
                                   </packing>
@@ -450,12 +633,14 @@ It the file was not saved you can find it in your home folder, in
                               </widget>
                               <packing>
                                 <property name="expand">False</property>
+                                <property name="fill">True</property>
                                 <property name="position">0</property>
                               </packing>
                             </child>
                           </widget>
                           <packing>
                             <property name="expand">False</property>
+                            <property name="fill">True</property>
                             <property name="padding">3</property>
                             <property name="position">2</property>
                           </packing>
@@ -467,6 +652,7 @@ It the file was not saved you can find it in your home folder, in
                             <child>
                               <widget class="GtkLabel" id="label8">
                                 <property name="visible">True</property>
+                                <property name="can_focus">False</property>
                                 <property name="label" translatable="yes">%a	Abbreviated weekday name 	(e.g. Thu)
 %A	Full weekday name (e.g. Thursday)
 %b	Abbreviated month name (e.g. Aug)
@@ -495,23 +681,29 @@ It the file was not saved you can find it in your home folder, in
                             <child>
                               <widget class="GtkHBox" id="hbox11">
                                 <property name="visible">True</property>
+                                <property name="can_focus">False</property>
                                 <child>
                                   <widget class="GtkImage" id="image1">
                                     <property name="visible">True</property>
+                                    <property name="can_focus">False</property>
                                     <property name="stock">gtk-dialog-info</property>
                                   </widget>
                                   <packing>
+                                    <property name="expand">True</property>
+                                    <property name="fill">True</property>
                                     <property name="position">0</property>
                                   </packing>
                                 </child>
                                 <child>
                                   <widget class="GtkLabel" id="label15">
                                     <property name="visible">True</property>
+                                    <property name="can_focus">False</property>
                                     <property name="label" translatable="yes">&lt;b&gt;Help&lt;/b&gt; (Placeholders)</property>
                                     <property name="use_markup">True</property>
                                   </widget>
                                   <packing>
                                     <property name="expand">False</property>
+                                    <property name="fill">True</property>
                                     <property name="padding">5</property>
                                     <property name="position">1</property>
                                   </packing>
@@ -524,30 +716,37 @@ It the file was not saved you can find it in your home folder, in
                           </widget>
                           <packing>
                             <property name="expand">False</property>
+                            <property name="fill">True</property>
                             <property name="padding">3</property>
                             <property name="position">3</property>
                           </packing>
                         </child>
                       </widget>
                       <packing>
+                        <property name="expand">True</property>
+                        <property name="fill">True</property>
                         <property name="position">1</property>
                       </packing>
                     </child>
                   </widget>
                   <packing>
                     <property name="expand">False</property>
+                    <property name="fill">True</property>
                     <property name="position">4</property>
                   </packing>
                 </child>
                 <child>
                   <widget class="GtkHBox" id="hbox20">
                     <property name="visible">True</property>
+                    <property name="can_focus">False</property>
                     <child>
                       <widget class="GtkFixed" id="fixed10">
                         <property name="visible">True</property>
+                        <property name="can_focus">False</property>
                       </widget>
                       <packing>
                         <property name="expand">False</property>
+                        <property name="fill">True</property>
                         <property name="padding">5</property>
                         <property name="position">0</property>
                       </packing>
@@ -555,15 +754,18 @@ It the file was not saved you can find it in your home folder, in
                   </widget>
                   <packing>
                     <property name="expand">False</property>
+                    <property name="fill">True</property>
                     <property name="position">5</property>
                   </packing>
                 </child>
                 <child>
                   <widget class="GtkFixed" id="fixed11">
                     <property name="visible">True</property>
+                    <property name="can_focus">False</property>
                   </widget>
                   <packing>
                     <property name="expand">False</property>
+                    <property name="fill">True</property>
                     <property name="padding">5</property>
                     <property name="position">6</property>
                   </packing>
@@ -571,12 +773,15 @@ It the file was not saved you can find it in your home folder, in
                 <child>
                   <widget class="GtkHBox" id="hbox13">
                     <property name="visible">True</property>
+                    <property name="can_focus">False</property>
                     <child>
                       <widget class="GtkFixed" id="fixed9">
                         <property name="visible">True</property>
+                        <property name="can_focus">False</property>
                       </widget>
                       <packing>
                         <property name="expand">False</property>
+                        <property name="fill">True</property>
                         <property name="padding">5</property>
                         <property name="position">0</property>
                       </packing>
@@ -584,6 +789,7 @@ It the file was not saved you can find it in your home folder, in
                   </widget>
                   <packing>
                     <property name="expand">False</property>
+                    <property name="fill">True</property>
                     <property name="position">7</property>
                   </packing>
                 </child>
@@ -592,10 +798,12 @@ It the file was not saved you can find it in your home folder, in
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">False</property>
+                    <property name="use_action_appearance">False</property>
                     <property name="draw_indicator">True</property>
                     <child>
                       <widget class="GtkLabel" id="label31">
                         <property name="visible">True</property>
+                        <property name="can_focus">False</property>
                         <property name="label" translatable="yes">&lt;b&gt;Autoload .pdf.xoj&lt;/b&gt;</property>
                         <property name="use_markup">True</property>
                       </widget>
@@ -603,6 +811,7 @@ It the file was not saved you can find it in your home folder, in
                   </widget>
                   <packing>
                     <property name="expand">False</property>
+                    <property name="fill">True</property>
                     <property name="padding">5</property>
                     <property name="position">8</property>
                   </packing>
@@ -610,12 +819,15 @@ It the file was not saved you can find it in your home folder, in
                 <child>
                   <widget class="GtkHBox" id="hbox29">
                     <property name="visible">True</property>
+                    <property name="can_focus">False</property>
                     <child>
                       <widget class="GtkLayout" id="layout9">
                         <property name="visible">True</property>
+                        <property name="can_focus">False</property>
                       </widget>
                       <packing>
                         <property name="expand">False</property>
+                        <property name="fill">True</property>
                         <property name="padding">11</property>
                         <property name="position">0</property>
                       </packing>
@@ -623,21 +835,26 @@ It the file was not saved you can find it in your home folder, in
                     <child>
                       <widget class="GtkVBox" id="vbox14">
                         <property name="visible">True</property>
+                        <property name="can_focus">False</property>
                         <child>
                           <widget class="GtkHBox" id="hbox31">
                             <property name="visible">True</property>
+                            <property name="can_focus">False</property>
                             <child>
                               <widget class="GtkHBox" id="hbox1">
                                 <property name="visible">True</property>
+                                <property name="can_focus">False</property>
                                 <child>
                                   <widget class="GtkLabel" id="label4">
                                     <property name="visible">True</property>
+                                    <property name="can_focus">False</property>
                                     <property name="label" translatable="yes">&lt;i&gt;If you open a PDF and there is a
 Xournal file with the same name it will open it&lt;/i&gt;</property>
                                     <property name="use_markup">True</property>
                                   </widget>
                                   <packing>
                                     <property name="expand">False</property>
+                                    <property name="fill">True</property>
                                     <property name="padding">18</property>
                                     <property name="position">0</property>
                                   </packing>
@@ -645,11 +862,14 @@ Xournal file with the same name it will open it&lt;/i&gt;</property>
                               </widget>
                               <packing>
                                 <property name="expand">False</property>
+                                <property name="fill">True</property>
                                 <property name="position">0</property>
                               </packing>
                             </child>
                           </widget>
                           <packing>
+                            <property name="expand">True</property>
+                            <property name="fill">True</property>
                             <property name="position">0</property>
                           </packing>
                         </child>
@@ -664,12 +884,15 @@ Xournal file with the same name it will open it&lt;/i&gt;</property>
                         </child>
                       </widget>
                       <packing>
+                        <property name="expand">True</property>
+                        <property name="fill">True</property>
                         <property name="position">1</property>
                       </packing>
                     </child>
                   </widget>
                   <packing>
                     <property name="expand">False</property>
+                    <property name="fill">True</property>
                     <property name="position">9</property>
                   </packing>
                 </child>
@@ -681,6 +904,7 @@ Xournal file with the same name it will open it&lt;/i&gt;</property>
             <child>
               <widget class="GtkLabel" id="label2">
                 <property name="visible">True</property>
+                <property name="can_focus">False</property>
                 <property name="label" translatable="yes">Load / Save</property>
               </widget>
               <packing>
@@ -692,9 +916,11 @@ Xournal file with the same name it will open it&lt;/i&gt;</property>
             <child>
               <widget class="GtkVBox" id="zoomVBox2">
                 <property name="visible">True</property>
+                <property name="can_focus">False</property>
                 <child>
                   <widget class="GtkLabel" id="label5">
                     <property name="visible">True</property>
+                    <property name="can_focus">False</property>
                     <property name="label" translatable="yes">&lt;i&gt;Put a rouler on your screen to callibrate the zoom level to fit your screen
 The units are cm for the rouler, dpi for the slider&lt;/i&gt;</property>
                     <property name="use_markup">True</property>
@@ -703,6 +929,7 @@ The units are cm for the rouler, dpi for the slider&lt;/i&gt;</property>
                   </widget>
                   <packing>
                     <property name="expand">False</property>
+                    <property name="fill">True</property>
                     <property name="padding">5</property>
                     <property name="position">0</property>
                   </packing>
@@ -716,6 +943,7 @@ The units are cm for the rouler, dpi for the slider&lt;/i&gt;</property>
                   </widget>
                   <packing>
                     <property name="expand">False</property>
+                    <property name="fill">True</property>
                     <property name="padding">10</property>
                     <property name="position">1</property>
                   </packing>
@@ -723,22 +951,26 @@ The units are cm for the rouler, dpi for the slider&lt;/i&gt;</property>
                 <child>
                   <widget class="GtkVBox" id="zoomVBox">
                     <property name="visible">True</property>
+                    <property name="can_focus">False</property>
                     <child>
                       <placeholder/>
                     </child>
                   </widget>
                   <packing>
                     <property name="expand">False</property>
+                    <property name="fill">True</property>
                     <property name="position">2</property>
                   </packing>
                 </child>
                 <child>
                   <widget class="GtkLabel" id="label34">
                     <property name="visible">True</property>
+                    <property name="can_focus">False</property>
                     <property name="label" translatable="yes">The unit of the ruler is cm</property>
                   </widget>
                   <packing>
                     <property name="expand">False</property>
+                    <property name="fill">True</property>
                     <property name="padding">10</property>
                     <property name="position">3</property>
                   </packing>
@@ -751,6 +983,7 @@ The units are cm for the rouler, dpi for the slider&lt;/i&gt;</property>
             <child>
               <widget class="GtkLabel" id="label3">
                 <property name="visible">True</property>
+                <property name="can_focus">False</property>
                 <property name="label" translatable="yes">Zoom</property>
               </widget>
               <packing>
@@ -762,9 +995,11 @@ The units are cm for the rouler, dpi for the slider&lt;/i&gt;</property>
             <child>
               <widget class="GtkVBox" id="vbox4">
                 <property name="visible">True</property>
+                <property name="can_focus">False</property>
                 <child>
                   <widget class="GtkLabel" id="label13">
                     <property name="visible">True</property>
+                    <property name="can_focus">False</property>
                     <property name="label" translatable="yes">&lt;i&gt;Here can you define wich tools will be selected if you press
 a button, after you release the button the previous selected
 tool will be selected&lt;/i&gt;</property>
@@ -772,14 +1007,18 @@ tool will be selected&lt;/i&gt;</property>
                   </widget>
                   <packing>
                     <property name="expand">False</property>
+                    <property name="fill">True</property>
                     <property name="position">0</property>
                   </packing>
                 </child>
                 <child>
                   <widget class="GtkFixed" id="fixed4">
                     <property name="visible">True</property>
+                    <property name="can_focus">False</property>
                   </widget>
                   <packing>
+                    <property name="expand">True</property>
+                    <property name="fill">True</property>
                     <property name="padding">5</property>
                     <property name="position">1</property>
                   </packing>
@@ -787,26 +1026,31 @@ tool will be selected&lt;/i&gt;</property>
                 <child>
                   <widget class="GtkHBox" id="hbox2">
                     <property name="visible">True</property>
+                    <property name="can_focus">False</property>
                     <child>
                       <widget class="GtkLabel" id="label10">
                         <property name="visible">True</property>
+                        <property name="can_focus">False</property>
                         <property name="label" translatable="yes">&lt;b&gt;Middle Mouse Button&lt;/b&gt;</property>
                         <property name="use_markup">True</property>
                       </widget>
                       <packing>
                         <property name="expand">False</property>
+                        <property name="fill">True</property>
                         <property name="position">0</property>
                       </packing>
                     </child>
                   </widget>
                   <packing>
                     <property name="expand">False</property>
+                    <property name="fill">True</property>
                     <property name="position">2</property>
                   </packing>
                 </child>
                 <child>
                   <widget class="GtkHBox" id="hboxMidleMouse">
                     <property name="visible">True</property>
+                    <property name="can_focus">False</property>
                     <child>
                       <placeholder/>
                     </child>
@@ -815,14 +1059,19 @@ tool will be selected&lt;/i&gt;</property>
                     </child>
                   </widget>
                   <packing>
+                    <property name="expand">True</property>
+                    <property name="fill">True</property>
                     <property name="position">3</property>
                   </packing>
                 </child>
                 <child>
                   <widget class="GtkFixed" id="fixed3">
                     <property name="visible">True</property>
+                    <property name="can_focus">False</property>
                   </widget>
                   <packing>
+                    <property name="expand">True</property>
+                    <property name="fill">True</property>
                     <property name="padding">5</property>
                     <property name="position">4</property>
                   </packing>
@@ -830,26 +1079,31 @@ tool will be selected&lt;/i&gt;</property>
                 <child>
                   <widget class="GtkHBox" id="hbox4">
                     <property name="visible">True</property>
+                    <property name="can_focus">False</property>
                     <child>
                       <widget class="GtkLabel" id="label11">
                         <property name="visible">True</property>
+                        <property name="can_focus">False</property>
                         <property name="label" translatable="yes">&lt;b&gt;Right Mouse Button&lt;/b&gt;</property>
                         <property name="use_markup">True</property>
                       </widget>
                       <packing>
                         <property name="expand">False</property>
+                        <property name="fill">True</property>
                         <property name="position">0</property>
                       </packing>
                     </child>
                   </widget>
                   <packing>
                     <property name="expand">False</property>
+                    <property name="fill">True</property>
                     <property name="position">5</property>
                   </packing>
                 </child>
                 <child>
                   <widget class="GtkHBox" id="hboxRightMouse">
                     <property name="visible">True</property>
+                    <property name="can_focus">False</property>
                     <child>
                       <placeholder/>
                     </child>
@@ -858,6 +1112,8 @@ tool will be selected&lt;/i&gt;</property>
                     </child>
                   </widget>
                   <packing>
+                    <property name="expand">True</property>
+                    <property name="fill">True</property>
                     <property name="position">6</property>
                   </packing>
                 </child>
@@ -869,6 +1125,7 @@ tool will be selected&lt;/i&gt;</property>
             <child>
               <widget class="GtkLabel" id="label9">
                 <property name="visible">True</property>
+                <property name="can_focus">False</property>
                 <property name="label" translatable="yes">Mouse Button</property>
               </widget>
               <packing>
@@ -880,9 +1137,11 @@ tool will be selected&lt;/i&gt;</property>
             <child>
               <widget class="GtkVBox" id="vbox7">
                 <property name="visible">True</property>
+                <property name="can_focus">False</property>
                 <child>
                   <widget class="GtkLabel" id="label19">
                     <property name="visible">True</property>
+                    <property name="can_focus">False</property>
                     <property name="label" translatable="yes">&lt;i&gt;Here can you define wich tools will be selected If you
 use the eraser or other device.
 Here you can disable your touchscreen.&lt;/i&gt;</property>
@@ -890,6 +1149,7 @@ Here you can disable your touchscreen.&lt;/i&gt;</property>
                   </widget>
                   <packing>
                     <property name="expand">False</property>
+                    <property name="fill">True</property>
                     <property name="position">0</property>
                   </packing>
                 </child>
@@ -899,26 +1159,31 @@ Here you can disable your touchscreen.&lt;/i&gt;</property>
                 <child>
                   <widget class="GtkHBox" id="hbox10">
                     <property name="visible">True</property>
+                    <property name="can_focus">False</property>
                     <child>
                       <widget class="GtkLabel" id="label12">
                         <property name="visible">True</property>
+                        <property name="can_focus">False</property>
                         <property name="label" translatable="yes">&lt;b&gt;Eraser&lt;/b&gt;</property>
                         <property name="use_markup">True</property>
                       </widget>
                       <packing>
                         <property name="expand">False</property>
+                        <property name="fill">True</property>
                         <property name="position">0</property>
                       </packing>
                     </child>
                   </widget>
                   <packing>
                     <property name="expand">False</property>
+                    <property name="fill">True</property>
                     <property name="position">2</property>
                   </packing>
                 </child>
                 <child>
                   <widget class="GtkHBox" id="hboxEraser">
                     <property name="visible">True</property>
+                    <property name="can_focus">False</property>
                     <child>
                       <placeholder/>
                     </child>
@@ -927,14 +1192,19 @@ Here you can disable your touchscreen.&lt;/i&gt;</property>
                     </child>
                   </widget>
                   <packing>
+                    <property name="expand">True</property>
+                    <property name="fill">True</property>
                     <property name="position">3</property>
                   </packing>
                 </child>
                 <child>
                   <widget class="GtkFixed" id="fixed1">
                     <property name="visible">True</property>
+                    <property name="can_focus">False</property>
                   </widget>
                   <packing>
+                    <property name="expand">True</property>
+                    <property name="fill">True</property>
                     <property name="padding">5</property>
                     <property name="position">4</property>
                   </packing>
@@ -942,20 +1212,24 @@ Here you can disable your touchscreen.&lt;/i&gt;</property>
                 <child>
                   <widget class="GtkHBox" id="hbox14">
                     <property name="visible">True</property>
+                    <property name="can_focus">False</property>
                     <child>
                       <widget class="GtkLabel" id="label18">
                         <property name="visible">True</property>
+                        <property name="can_focus">False</property>
                         <property name="label" translatable="yes">&lt;b&gt;Touch Screen&lt;/b&gt; &lt;i&gt;You can also configure other device like mice&lt;/i&gt;</property>
                         <property name="use_markup">True</property>
                       </widget>
                       <packing>
                         <property name="expand">False</property>
+                        <property name="fill">True</property>
                         <property name="position">0</property>
                       </packing>
                     </child>
                   </widget>
                   <packing>
                     <property name="expand">False</property>
+                    <property name="fill">True</property>
                     <property name="padding">3</property>
                     <property name="position">5</property>
                   </packing>
@@ -963,20 +1237,24 @@ Here you can disable your touchscreen.&lt;/i&gt;</property>
                 <child>
                   <widget class="GtkHBox" id="hbox15">
                     <property name="visible">True</property>
+                    <property name="can_focus">False</property>
                     <child>
                       <widget class="GtkLabel" id="label20">
                         <property name="visible">True</property>
+                        <property name="can_focus">False</property>
                         <property name="label" translatable="yes">Notice: &lt;i&gt;You need to enable XInput (Page "Input") else it won't work.&lt;/i&gt;</property>
                         <property name="use_markup">True</property>
                       </widget>
                       <packing>
                         <property name="expand">False</property>
+                        <property name="fill">True</property>
                         <property name="position">0</property>
                       </packing>
                     </child>
                   </widget>
                   <packing>
                     <property name="expand">False</property>
+                    <property name="fill">True</property>
                     <property name="padding">3</property>
                     <property name="position">6</property>
                   </packing>
@@ -984,6 +1262,7 @@ Here you can disable your touchscreen.&lt;/i&gt;</property>
                 <child>
                   <widget class="GtkHBox" id="hboxTouch">
                     <property name="visible">True</property>
+                    <property name="can_focus">False</property>
                     <child>
                       <placeholder/>
                     </child>
@@ -992,6 +1271,8 @@ Here you can disable your touchscreen.&lt;/i&gt;</property>
                     </child>
                   </widget>
                   <packing>
+                    <property name="expand">True</property>
+                    <property name="fill">True</property>
                     <property name="position">7</property>
                   </packing>
                 </child>
@@ -1003,6 +1284,7 @@ Here you can disable your touchscreen.&lt;/i&gt;</property>
             <child>
               <widget class="GtkLabel" id="label21">
                 <property name="visible">True</property>
+                <property name="can_focus">False</property>
                 <property name="label" translatable="yes">Input Device</property>
               </widget>
               <packing>
@@ -1014,35 +1296,43 @@ Here you can disable your touchscreen.&lt;/i&gt;</property>
             <child>
               <widget class="GtkVBox" id="vbox5">
                 <property name="visible">True</property>
+                <property name="can_focus">False</property>
                 <child>
                   <widget class="GtkHBox" id="hbox3">
                     <property name="visible">True</property>
+                    <property name="can_focus">False</property>
                     <child>
                       <widget class="GtkLabel" id="label14">
                         <property name="visible">True</property>
+                        <property name="can_focus">False</property>
                         <property name="label" translatable="yes">&lt;b&gt;Left / Right&lt;/b&gt;</property>
                         <property name="use_markup">True</property>
                       </widget>
                       <packing>
                         <property name="expand">False</property>
+                        <property name="fill">True</property>
                         <property name="position">0</property>
                       </packing>
                     </child>
                   </widget>
                   <packing>
                     <property name="expand">False</property>
+                    <property name="fill">True</property>
                     <property name="position">0</property>
                   </packing>
                 </child>
                 <child>
                   <widget class="GtkHBox" id="hboxMidleMouse1">
                     <property name="visible">True</property>
+                    <property name="can_focus">False</property>
                     <child>
                       <widget class="GtkLayout" id="layout6">
                         <property name="visible">True</property>
+                        <property name="can_focus">False</property>
                       </widget>
                       <packing>
                         <property name="expand">False</property>
+                        <property name="fill">True</property>
                         <property name="padding">11</property>
                         <property name="position">0</property>
                       </packing>
@@ -1050,15 +1340,19 @@ Here you can disable your touchscreen.&lt;/i&gt;</property>
                     <child>
                       <widget class="GtkVBox" id="vbox6">
                         <property name="visible">True</property>
+                        <property name="can_focus">False</property>
                         <child>
                           <widget class="GtkCheckButton" id="cbShowSidebarRight">
                             <property name="label" translatable="yes">Show sidebar on the right side</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="receives_default">False</property>
+                            <property name="use_action_appearance">False</property>
                             <property name="draw_indicator">True</property>
                           </widget>
                           <packing>
+                            <property name="expand">True</property>
+                            <property name="fill">True</property>
                             <property name="position">0</property>
                           </packing>
                         </child>
@@ -1068,9 +1362,12 @@ Here you can disable your touchscreen.&lt;/i&gt;</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="receives_default">False</property>
+                            <property name="use_action_appearance">False</property>
                             <property name="draw_indicator">True</property>
                           </widget>
                           <packing>
+                            <property name="expand">True</property>
+                            <property name="fill">True</property>
                             <property name="position">1</property>
                           </packing>
                         </child>
@@ -1079,21 +1376,26 @@ Here you can disable your touchscreen.&lt;/i&gt;</property>
                         </child>
                       </widget>
                       <packing>
+                        <property name="expand">True</property>
+                        <property name="fill">True</property>
                         <property name="position">1</property>
                       </packing>
                     </child>
                   </widget>
                   <packing>
                     <property name="expand">False</property>
+                    <property name="fill">True</property>
                     <property name="position">1</property>
                   </packing>
                 </child>
                 <child>
                   <widget class="GtkFixed" id="fixed2">
                     <property name="visible">True</property>
+                    <property name="can_focus">False</property>
                   </widget>
                   <packing>
                     <property name="expand">False</property>
+                    <property name="fill">True</property>
                     <property name="padding">5</property>
                     <property name="position">2</property>
                   </packing>
@@ -1101,32 +1403,39 @@ Here you can disable your touchscreen.&lt;/i&gt;</property>
                 <child>
                   <widget class="GtkHBox" id="hbox16">
                     <property name="visible">True</property>
+                    <property name="can_focus">False</property>
                     <child>
                       <widget class="GtkLabel" id="label22">
                         <property name="visible">True</property>
+                        <property name="can_focus">False</property>
                         <property name="label" translatable="yes">&lt;b&gt;Selection Border&lt;/b&gt;</property>
                         <property name="use_markup">True</property>
                       </widget>
                       <packing>
                         <property name="expand">False</property>
+                        <property name="fill">True</property>
                         <property name="position">0</property>
                       </packing>
                     </child>
                   </widget>
                   <packing>
                     <property name="expand">False</property>
+                    <property name="fill">True</property>
                     <property name="position">3</property>
                   </packing>
                 </child>
                 <child>
                   <widget class="GtkHBox" id="hboxMidleMouse2">
                     <property name="visible">True</property>
+                    <property name="can_focus">False</property>
                     <child>
                       <widget class="GtkLayout" id="layout2">
                         <property name="visible">True</property>
+                        <property name="can_focus">False</property>
                       </widget>
                       <packing>
                         <property name="expand">False</property>
+                        <property name="fill">True</property>
                         <property name="padding">11</property>
                         <property name="position">0</property>
                       </packing>
@@ -1134,16 +1443,20 @@ Here you can disable your touchscreen.&lt;/i&gt;</property>
                     <child>
                       <widget class="GtkVBox" id="vbox8">
                         <property name="visible">True</property>
+                        <property name="can_focus">False</property>
                         <child>
                           <widget class="GtkHBox" id="hbox17">
                             <property name="visible">True</property>
+                            <property name="can_focus">False</property>
                             <child>
                               <widget class="GtkLabel" id="label24">
                                 <property name="visible">True</property>
+                                <property name="can_focus">False</property>
                                 <property name="label" translatable="yes">Border color for current page and other selections</property>
                               </widget>
                               <packing>
                                 <property name="expand">False</property>
+                                <property name="fill">True</property>
                                 <property name="position">0</property>
                               </packing>
                             </child>
@@ -1152,17 +1465,21 @@ Here you can disable your touchscreen.&lt;/i&gt;</property>
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
                                 <property name="receives_default">True</property>
+                                <property name="use_action_appearance">False</property>
                                 <property name="title" translatable="yes">Border color</property>
                                 <property name="color">#ffff00000000</property>
                               </widget>
                               <packing>
                                 <property name="expand">False</property>
+                                <property name="fill">True</property>
                                 <property name="pack_type">end</property>
                                 <property name="position">1</property>
                               </packing>
                             </child>
                           </widget>
                           <packing>
+                            <property name="expand">True</property>
+                            <property name="fill">True</property>
                             <property name="position">0</property>
                           </packing>
                         </child>
@@ -1174,21 +1491,26 @@ Here you can disable your touchscreen.&lt;/i&gt;</property>
                         </child>
                       </widget>
                       <packing>
+                        <property name="expand">True</property>
+                        <property name="fill">True</property>
                         <property name="position">1</property>
                       </packing>
                     </child>
                   </widget>
                   <packing>
                     <property name="expand">False</property>
+                    <property name="fill">True</property>
                     <property name="position">4</property>
                   </packing>
                 </child>
                 <child>
                   <widget class="GtkFixed" id="fixed5">
                     <property name="visible">True</property>
+                    <property name="can_focus">False</property>
                   </widget>
                   <packing>
                     <property name="expand">False</property>
+                    <property name="fill">True</property>
                     <property name="padding">5</property>
                     <property name="position">5</property>
                   </packing>
@@ -1196,32 +1518,39 @@ Here you can disable your touchscreen.&lt;/i&gt;</property>
                 <child>
                   <widget class="GtkHBox" id="hbox18">
                     <property name="visible">True</property>
+                    <property name="can_focus">False</property>
                     <child>
                       <widget class="GtkLabel" id="label23">
                         <property name="visible">True</property>
+                        <property name="can_focus">False</property>
                         <property name="label" translatable="yes">&lt;b&gt;Fullscreen&lt;/b&gt;</property>
                         <property name="use_markup">True</property>
                       </widget>
                       <packing>
                         <property name="expand">False</property>
+                        <property name="fill">True</property>
                         <property name="position">0</property>
                       </packing>
                     </child>
                   </widget>
                   <packing>
                     <property name="expand">False</property>
+                    <property name="fill">True</property>
                     <property name="position">6</property>
                   </packing>
                 </child>
                 <child>
                   <widget class="GtkHBox" id="hboxMidleMouse3">
                     <property name="visible">True</property>
+                    <property name="can_focus">False</property>
                     <child>
                       <widget class="GtkLayout" id="layout3">
                         <property name="visible">True</property>
+                        <property name="can_focus">False</property>
                       </widget>
                       <packing>
                         <property name="expand">False</property>
+                        <property name="fill">True</property>
                         <property name="padding">11</property>
                         <property name="position">0</property>
                       </packing>
@@ -1229,15 +1558,19 @@ Here you can disable your touchscreen.&lt;/i&gt;</property>
                     <child>
                       <widget class="GtkVBox" id="vbox9">
                         <property name="visible">True</property>
+                        <property name="can_focus">False</property>
                         <child>
                           <widget class="GtkCheckButton" id="cbHideFullscreenMenubar">
                             <property name="label" translatable="yes">Hide Menubar</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="receives_default">False</property>
+                            <property name="use_action_appearance">False</property>
                             <property name="draw_indicator">True</property>
                           </widget>
                           <packing>
+                            <property name="expand">True</property>
+                            <property name="fill">True</property>
                             <property name="position">0</property>
                           </packing>
                         </child>
@@ -1247,9 +1580,12 @@ Here you can disable your touchscreen.&lt;/i&gt;</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="receives_default">False</property>
+                            <property name="use_action_appearance">False</property>
                             <property name="draw_indicator">True</property>
                           </widget>
                           <packing>
+                            <property name="expand">True</property>
+                            <property name="fill">True</property>
                             <property name="position">1</property>
                           </packing>
                         </child>
@@ -1258,21 +1594,26 @@ Here you can disable your touchscreen.&lt;/i&gt;</property>
                         </child>
                       </widget>
                       <packing>
+                        <property name="expand">True</property>
+                        <property name="fill">True</property>
                         <property name="position">1</property>
                       </packing>
                     </child>
                   </widget>
                   <packing>
                     <property name="expand">False</property>
+                    <property name="fill">True</property>
                     <property name="position">7</property>
                   </packing>
                 </child>
                 <child>
                   <widget class="GtkFixed" id="fixed6">
                     <property name="visible">True</property>
+                    <property name="can_focus">False</property>
                   </widget>
                   <packing>
                     <property name="expand">False</property>
+                    <property name="fill">True</property>
                     <property name="padding">5</property>
                     <property name="position">8</property>
                   </packing>
@@ -1280,32 +1621,39 @@ Here you can disable your touchscreen.&lt;/i&gt;</property>
                 <child>
                   <widget class="GtkHBox" id="hbox21">
                     <property name="visible">True</property>
+                    <property name="can_focus">False</property>
                     <child>
                       <widget class="GtkLabel" id="label27">
                         <property name="visible">True</property>
+                        <property name="can_focus">False</property>
                         <property name="label" translatable="yes">&lt;b&gt;Presentation&lt;/b&gt; Another Fullscreen Modus, &lt;i&gt;Start with F5&lt;/i&gt;</property>
                         <property name="use_markup">True</property>
                       </widget>
                       <packing>
                         <property name="expand">False</property>
+                        <property name="fill">True</property>
                         <property name="position">0</property>
                       </packing>
                     </child>
                   </widget>
                   <packing>
                     <property name="expand">False</property>
+                    <property name="fill">True</property>
                     <property name="position">9</property>
                   </packing>
                 </child>
                 <child>
                   <widget class="GtkHBox" id="hboxMidleMouse4">
                     <property name="visible">True</property>
+                    <property name="can_focus">False</property>
                     <child>
                       <widget class="GtkLayout" id="layout4">
                         <property name="visible">True</property>
+                        <property name="can_focus">False</property>
                       </widget>
                       <packing>
                         <property name="expand">False</property>
+                        <property name="fill">True</property>
                         <property name="padding">11</property>
                         <property name="position">0</property>
                       </packing>
@@ -1313,15 +1661,19 @@ Here you can disable your touchscreen.&lt;/i&gt;</property>
                     <child>
                       <widget class="GtkVBox" id="vbox10">
                         <property name="visible">True</property>
+                        <property name="can_focus">False</property>
                         <child>
                           <widget class="GtkCheckButton" id="cbHidePresentationMenubar">
                             <property name="label" translatable="yes">Hide Menubar</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="receives_default">False</property>
+                            <property name="use_action_appearance">False</property>
                             <property name="draw_indicator">True</property>
                           </widget>
                           <packing>
+                            <property name="expand">True</property>
+                            <property name="fill">True</property>
                             <property name="position">0</property>
                           </packing>
                         </child>
@@ -1331,75 +1683,97 @@ Here you can disable your touchscreen.&lt;/i&gt;</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="receives_default">False</property>
+                            <property name="use_action_appearance">False</property>
                             <property name="draw_indicator">True</property>
                           </widget>
                           <packing>
+                            <property name="expand">True</property>
+                            <property name="fill">True</property>
                             <property name="position">1</property>
                           </packing>
                         </child>
                         <child>
                           <widget class="GtkHBox" id="hbox19">
                             <property name="visible">True</property>
+                            <property name="can_focus">False</property>
                             <child>
                               <widget class="GtkLabel" id="label29">
+                                <property name="can_focus">False</property>
                                 <property name="label" translatable="yes">Select toolbar:</property>
                               </widget>
                               <packing>
                                 <property name="expand">False</property>
+                                <property name="fill">True</property>
                                 <property name="position">0</property>
                               </packing>
                             </child>
                             <child>
-                              <widget class="GtkComboBox" id="cbPresentationToolbar"/>
+                              <widget class="GtkComboBox" id="cbPresentationToolbar">
+                                <property name="can_focus">False</property>
+                              </widget>
                               <packing>
+                                <property name="expand">True</property>
+                                <property name="fill">True</property>
                                 <property name="position">1</property>
                               </packing>
                             </child>
                           </widget>
                           <packing>
+                            <property name="expand">True</property>
+                            <property name="fill">True</property>
                             <property name="position">2</property>
                           </packing>
                         </child>
                       </widget>
                       <packing>
+                        <property name="expand">True</property>
+                        <property name="fill">True</property>
                         <property name="position">1</property>
                       </packing>
                     </child>
                   </widget>
                   <packing>
                     <property name="expand">False</property>
+                    <property name="fill">True</property>
                     <property name="position">10</property>
                   </packing>
                 </child>
                 <child>
                   <widget class="GtkHBox" id="hbox32">
                     <property name="visible">True</property>
+                    <property name="can_focus">False</property>
                     <child>
                       <widget class="GtkLabel" id="label33">
                         <property name="visible">True</property>
+                        <property name="can_focus">False</property>
                         <property name="label" translatable="yes">&lt;b&gt;Cursor&lt;/b&gt;</property>
                         <property name="use_markup">True</property>
                       </widget>
                       <packing>
                         <property name="expand">False</property>
+                        <property name="fill">True</property>
                         <property name="position">0</property>
                       </packing>
                     </child>
                   </widget>
                   <packing>
                     <property name="expand">False</property>
+                    <property name="fill">True</property>
                     <property name="position">11</property>
                   </packing>
                 </child>
                 <child>
                   <widget class="GtkHBox" id="hboxMidleMouse5">
                     <property name="visible">True</property>
+                    <property name="can_focus">False</property>
                     <child>
                       <widget class="GtkLayout" id="layout10">
                         <property name="visible">True</property>
+                        <property name="can_focus">False</property>
                       </widget>
                       <packing>
                         <property name="expand">False</property>
+                        <property name="fill">True</property>
                         <property name="padding">11</property>
                         <property name="position">0</property>
                       </packing>
@@ -1407,15 +1781,19 @@ Here you can disable your touchscreen.&lt;/i&gt;</property>
                     <child>
                       <widget class="GtkVBox" id="vbox15">
                         <property name="visible">True</property>
+                        <property name="can_focus">False</property>
                         <child>
                           <widget class="GtkCheckButton" id="cbBigCursor">
                             <property name="label" translatable="yes">Big cursor for pen</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="receives_default">False</property>
+                            <property name="use_action_appearance">False</property>
                             <property name="draw_indicator">True</property>
                           </widget>
                           <packing>
+                            <property name="expand">True</property>
+                            <property name="fill">True</property>
                             <property name="position">0</property>
                           </packing>
                         </child>
@@ -1427,12 +1805,15 @@ Here you can disable your touchscreen.&lt;/i&gt;</property>
                         </child>
                       </widget>
                       <packing>
+                        <property name="expand">True</property>
+                        <property name="fill">True</property>
                         <property name="position">1</property>
                       </packing>
                     </child>
                   </widget>
                   <packing>
                     <property name="expand">False</property>
+                    <property name="fill">True</property>
                     <property name="position">12</property>
                   </packing>
                 </child>
@@ -1447,6 +1828,7 @@ Here you can disable your touchscreen.&lt;/i&gt;</property>
             <child>
               <widget class="GtkLabel" id="label6">
                 <property name="visible">True</property>
+                <property name="can_focus">False</property>
                 <property name="label" translatable="yes">View</property>
               </widget>
               <packing>
@@ -1458,27 +1840,33 @@ Here you can disable your touchscreen.&lt;/i&gt;</property>
             <child>
               <widget class="GtkVBox" id="vbox16">
                 <property name="visible">True</property>
+                <property name="can_focus">False</property>
                 <child>
                   <widget class="GtkHBox" id="hbox33">
                     <property name="visible">True</property>
+                    <property name="can_focus">False</property>
                     <child>
                       <widget class="GtkImage" id="image2">
                         <property name="visible">True</property>
+                        <property name="can_focus">False</property>
                         <property name="pixbuf">pixmaps/default.png</property>
                       </widget>
                       <packing>
                         <property name="expand">False</property>
+                        <property name="fill">True</property>
                         <property name="position">0</property>
                       </packing>
                     </child>
                     <child>
                       <widget class="GtkLabel" id="label36">
                         <property name="visible">True</property>
+                        <property name="can_focus">False</property>
                         <property name="label" translatable="yes">&lt;b&gt;Default&lt;/b&gt;</property>
                         <property name="use_markup">True</property>
                       </widget>
                       <packing>
                         <property name="expand">False</property>
+                        <property name="fill">True</property>
                         <property name="padding">5</property>
                         <property name="position">1</property>
                       </packing>
@@ -1486,25 +1874,30 @@ Here you can disable your touchscreen.&lt;/i&gt;</property>
                   </widget>
                   <packing>
                     <property name="expand">False</property>
+                    <property name="fill">True</property>
                     <property name="position">0</property>
                   </packing>
                 </child>
                 <child>
                   <widget class="GtkHBox" id="hbox34">
                     <property name="visible">True</property>
+                    <property name="can_focus">False</property>
                     <child>
                       <widget class="GtkLabel" id="label37">
                         <property name="visible">True</property>
+                        <property name="can_focus">False</property>
                         <property name="label" translatable="yes">Select the tool and Settings if you press the Default Button</property>
                       </widget>
                       <packing>
                         <property name="expand">False</property>
+                        <property name="fill">True</property>
                         <property name="position">0</property>
                       </packing>
                     </child>
                   </widget>
                   <packing>
                     <property name="expand">False</property>
+                    <property name="fill">True</property>
                     <property name="padding">5</property>
                     <property name="position">1</property>
                   </packing>
@@ -1512,6 +1905,7 @@ Here you can disable your touchscreen.&lt;/i&gt;</property>
                 <child>
                   <widget class="GtkHBox" id="hboxDefault">
                     <property name="visible">True</property>
+                    <property name="can_focus">False</property>
                     <child>
                       <placeholder/>
                     </child>
@@ -1520,6 +1914,8 @@ Here you can disable your touchscreen.&lt;/i&gt;</property>
                     </child>
                   </widget>
                   <packing>
+                    <property name="expand">True</property>
+                    <property name="fill">True</property>
                     <property name="position">2</property>
                   </packing>
                 </child>
@@ -1531,6 +1927,7 @@ Here you can disable your touchscreen.&lt;/i&gt;</property>
             <child>
               <widget class="GtkLabel" id="label35">
                 <property name="visible">True</property>
+                <property name="can_focus">False</property>
                 <property name="label" translatable="yes">Defaults</property>
               </widget>
               <packing>
@@ -1541,47 +1938,9 @@ Here you can disable your touchscreen.&lt;/i&gt;</property>
             </child>
           </widget>
           <packing>
+            <property name="expand">True</property>
+            <property name="fill">True</property>
             <property name="position">1</property>
-          </packing>
-        </child>
-        <child internal-child="action_area">
-          <widget class="GtkHButtonBox" id="btSettingsButton">
-            <property name="visible">True</property>
-            <property name="layout_style">end</property>
-            <child>
-              <widget class="GtkButton" id="btSettingsCancel">
-                <property name="label">gtk-cancel</property>
-                <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="receives_default">True</property>
-                <property name="use_stock">True</property>
-              </widget>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">False</property>
-                <property name="position">0</property>
-              </packing>
-            </child>
-            <child>
-              <widget class="GtkButton" id="btSettingsOk">
-                <property name="label">gtk-ok</property>
-                <property name="response_id">1</property>
-                <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="receives_default">True</property>
-                <property name="use_stock">True</property>
-              </widget>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">False</property>
-                <property name="position">1</property>
-              </packing>
-            </child>
-          </widget>
-          <packing>
-            <property name="expand">False</property>
-            <property name="pack_type">end</property>
-            <property name="position">0</property>
           </packing>
         </child>
       </widget>

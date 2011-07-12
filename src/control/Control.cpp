@@ -307,7 +307,7 @@ void Control::enableAutosave(bool enable) {
 void Control::updatePageNumbers(int page, int pdfPage) {
 	XOJ_CHECK_TYPE(Control);
 
-	if(this->win == NULL) {
+	if (this->win == NULL) {
 		return;
 	}
 
@@ -1083,6 +1083,12 @@ void Control::deletePage() {
 
 	updateDeletePageButton();
 	this->undoRedo->addUndoAction(new InsertDeletePageUndoAction(page, pNr, false));
+
+	if (pNr >= this->doc->getPageCount()) {
+		pNr = this->doc->getPageCount() - 1;
+	}
+
+	scrollHandler->scrollToPage(pNr, 0);
 }
 
 void Control::insertNewPage(int position) {
@@ -1342,7 +1348,7 @@ void Control::setPageBackground(ActionType type) {
 void Control::updateBackgroundSizeButton() {
 	XOJ_CHECK_TYPE(Control);
 
-	if(this->win == NULL) {
+	if (this->win == NULL) {
 		return;
 	}
 

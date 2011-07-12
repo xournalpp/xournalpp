@@ -155,6 +155,12 @@ public:
 	void setXinputEnabled(gboolean useXinput);
 
 	/**
+	 * Disable Core events if XInput is enabled
+	 */
+	bool isIgnoreCoreEvents();
+	void setIgnoreCoreEvents(bool ignor);
+
+	/**
 	 * XInput is available
 	 */
 	bool isXInputAvailable();
@@ -309,6 +315,11 @@ private:
 	 * Use pen pressure to control stroke width?
 	 */
 	bool presureSensitivity;
+
+	/**
+	 * Ignore core events if XInput is enabled
+	 */
+	bool ignoreCoreEvents;
 
 	/**
 	 * If the sidebar is visible
