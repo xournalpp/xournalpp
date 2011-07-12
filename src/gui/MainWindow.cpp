@@ -173,6 +173,14 @@ MainWindow::~MainWindow() {
 	XOJ_RELEASE_TYPE(MainWindow);
 }
 
+GtkWidget * MainWindow::getScrollHorizontal() {
+	return this->scrollHorizontal;
+}
+
+GtkWidget * MainWindow::getScrollVertical() {
+	return this->scrollVertical;
+}
+
 bool cancellable_cancel(GCancellable * cancel) {
 	g_cancellable_cancel(cancel);
 

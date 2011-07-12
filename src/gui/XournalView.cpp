@@ -836,17 +836,18 @@ void XournalView::layoutPages() {
 		}
 	}
 
-	gtk_widget_queue_draw(this->widget);
-
 	this->pagePosition->update(this->viewPages, this->viewPagesLen, height);
 
-	if (allowScrollOutsideThePage) {
-		GtkAdjustment * hadj = gtk_xournal_get_hadj(this->widget);
-		gtk_adjustment_set_value(hadj, width / 4);
-
-		GtkAdjustment * vadj = gtk_xournal_get_vadj(this->widget);
-		gtk_adjustment_set_value(vadj, additionalHeight / 2 - gtk_adjustment_get_page_size(vadj) + 20);
-	}
+	gtk_widget_queue_draw(this->widget);
+	
+	// TODO low prio: scrol on right position on start
+//	if (allowScrollOutsideThePage) {
+//		GtkAdjustment * hadj = gtk_xournal_get_hadj(this->widget);
+//		gtk_adjustment_set_value(hadj, width / 4);
+//
+//		GtkAdjustment * vadj = gtk_xournal_get_vadj(this->widget);
+//		gtk_adjustment_set_value(vadj, additionalHeight / 2 - gtk_adjustment_get_page_size(vadj) + 20);
+//	}
 }
 
 bool XournalView::isPageVisible(int page, int * visibleHeight) {

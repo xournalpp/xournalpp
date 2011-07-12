@@ -36,6 +36,7 @@ void AutosaveJob::run() {
 	String filename = doc->getFilename();
 	doc->unlock();
 
+	// TODO: incrementel autosave
 	if (filename.isEmpty()) {
 		filename = Util::getAutosaveFilename();
 	} else {

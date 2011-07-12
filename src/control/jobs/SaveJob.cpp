@@ -137,6 +137,7 @@ bool SaveJob::save() {
 	String filename = doc->getFilename();
 	doc->unlock();
 
+	// TODO: better backup handler
 	if (doc->shouldCreateBackupOnSave()) {
 		String backup = doc->getFilename();
 		backup += ".bak";

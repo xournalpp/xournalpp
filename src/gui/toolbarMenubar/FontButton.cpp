@@ -11,7 +11,7 @@ FontButton::FontButton(ActionHandler * handler, GladeGui * gui, String id, Actio
 
 	this->gui = gui;
 	this->description = description;
-	fontButton = NULL;
+	this->fontButton = NULL;
 }
 
 FontButton::~FontButton() {
@@ -84,6 +84,10 @@ GtkToolItem * FontButton::createItem(bool horizontal) {
 
 void FontButton::showFontDialog() {
 	XOJ_CHECK_TYPE(FontButton);
+
+	if(this->fontButton == NULL) {
+		newItem();
+	}
 
 	gtk_button_clicked(GTK_BUTTON(this->fontButton));
 }

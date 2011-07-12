@@ -71,6 +71,9 @@ public:
 	GtkWidget ** getToolbarWidgets(int & length);
 	String getToolbarName(GtkToolbar * toolbar);
 
+	GtkWidget * getScrollHorizontal();
+	GtkWidget * getScrollVertical();
+
 private:
 	void initToolbarAndMenu();
 

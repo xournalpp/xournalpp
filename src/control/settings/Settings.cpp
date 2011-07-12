@@ -50,6 +50,7 @@ void Settings::loadDefault() {
 
 	this->useXinput = true;
 	this->presureSensitivity = true;
+	this->ignoreCoreEvents = false;
 	this->saved = true;
 	this->canXIput = false;
 
@@ -224,6 +225,8 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
 	} else if (xmlStrcmp(name, (const xmlChar *) "useXinput") == 0) {
 		// Value is update from main after the window is created
 		this->useXinput = xmlStrcmp(value, (const xmlChar *) "true") ? false : true;
+	} else if (xmlStrcmp(name, (const xmlChar *) "ignoreCoreEvents") == 0) {
+		this->ignoreCoreEvents = xmlStrcmp(value, (const xmlChar *) "true") ? false : true;
 	} else if (xmlStrcmp(name, (const xmlChar *) "selectedToolbar") == 0) {
 		this->selectedToolbar = (const char *) value;
 	} else if (xmlStrcmp(name, (const xmlChar *) "lastSavePath") == 0) {
@@ -549,6 +552,7 @@ void Settings::save() {
 
 	WRITE_BOOL_PROP(useXinput);
 	WRITE_BOOL_PROP(presureSensitivity);
+	WRITE_BOOL_PROP(ignoreCoreEvents);
 
 	WRITE_STRING_PROP(selectedToolbar);
 	WRITE_STRING_PROP(lastSavePath);
@@ -711,6 +715,23 @@ bool Settings::isXinputEnabled() {
 	XOJ_CHECK_TYPE(Settings);
 
 	return this->useXinput;
+}
+
+bool Settings::isIgnoreCoreEvents() {
+	XOJ_CHECK_TYPE(Settings);
+
+	return this->ignoreCoreEvents;
+}
+
+void Settings::setIgnoreCoreEvents(bool ignor) {
+	XOJ_CHECK_TYPE(Settings);
+
+	if(this->ignoreCoreEvents == ignor) {
+		return;
+	}
+
+	this->ignoreCoreEvents = ignor;
+	saveTimeout();
 }
 
 bool Settings::isSidebarOnRight() {

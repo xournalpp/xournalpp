@@ -131,8 +131,6 @@ void RecentManager::setMaxRecent(int maxRecent) {
 void RecentManager::openRecent(String uri) {
 	XOJ_CHECK_TYPE(RecentManager);
 
-	printf("openRecent: %s\n", uri.c_str());
-
 	if (uri.startsWith("file://")) {
 		uri = uri.substring(7);
 	}
