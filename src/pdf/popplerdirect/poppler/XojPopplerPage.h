@@ -19,7 +19,7 @@
 #include <poppler/TextOutputDev.h>
 #include <poppler/Catalog.h>
 #include <poppler/OptionalContent.h>
-#include <poppler/CairoOutputDev.h>
+#include "../workaround/workaround.h"
 
 #include <XournalType.h>
 

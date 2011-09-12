@@ -3,7 +3,6 @@
 
 #include <glib.h>
 #include <poppler/PDFDoc.h>
-#include <poppler/CairoOutputDev.h>
 #include <poppler/GlobalParams.h>
 #include <poppler/ErrorCodes.h>
 #include <poppler/Outline.h>

@@ -1,9 +1,9 @@
 #include "XojPopplerPage.h"
 #include <poppler/TextOutputDev.h>
-#include <poppler/CairoOutputDev.h>
 #include <poppler/PDFDoc.h>
 #include <poppler/Gfx.h>
 #include <poppler/OutputDev.h>
+#include "../workaround/workaround.h"
 
 XojPopplerPage::XojPopplerPage(PDFDoc * doc, GMutex * docMutex, CairoOutputDev * outputDev, Page * page, int index) {
 	XOJ_INIT_TYPE(XojPopplerPage);
