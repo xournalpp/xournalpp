@@ -19401,6 +19401,8 @@ $as_echo "$as_me: WARNING: unrecognized options: $ac_unrecognized_opts" >&2;}
 fi
 
 
+bash `dirname $0`/src/pdf/popplerdirect/workaround/workaround.sh
+
 echo "
 
 Configuration:
