@@ -22,6 +22,7 @@ class ToolMenuHandler;
 class ToolbarData;
 class ToolbarModel;
 class XournalView;
+class Layout;
 
 class MainWindow: public GladeGui {
 public:
@@ -71,8 +72,7 @@ public:
 	GtkWidget ** getToolbarWidgets(int & length);
 	String getToolbarName(GtkToolbar * toolbar);
 
-	GtkWidget * getScrollHorizontal();
-	GtkWidget * getScrollVertical();
+	Layout * getLayout();
 
 private:
 	void initToolbarAndMenu();
@@ -117,9 +117,6 @@ private:
 	GList * toolbarSpacerItems;
 
 	GList * toolbarMenuitems;
-
-	GtkWidget * scrollVertical;
-	GtkWidget * scrollHorizontal;
 
 	bool maximized;
 

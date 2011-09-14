@@ -257,27 +257,27 @@ void InputHandler::onButtonReleaseEvent(GdkEventButton * event, PageRef page) {
 bool InputHandler::onMotionNotifyEvent(GdkEventMotion * event) {
 	XOJ_CHECK_TYPE(InputHandler);
 
-//	if(this->currentInputDevice) { TODO: DEBUG
-//		INPUTDBG("this->currentInputDevice == null\n", 0);
-//		return false;
-//	}
+	if(this->currentInputDevice) {
+		INPUTDBG("this->currentInputDevice == null\n", 0);
+		return false;
+	}
 	if (this->currentInputDevice == event->device) {
 		if (this->tmpStroke != NULL) {
 			this->addPointToTmpStroke(event);
 			return true;
 		}
-//	} else { TODO: DEBUG
-//		const char * n1 = "null";
-//		const char * n2 = "null";
-//
-//		if(this->currentInputDevice) {
-//			n1 = this->currentInputDevice->name;
-//		}
-//		if(event->device) {
-//			n2 = event->device->name;
-//		}
-//
-//		INPUTDBG("Motion ignored, not the same device as the starting device. 1: %s, 2: %s\n", n1, n2);
+	} else {
+		const char * n1 = "null";
+		const char * n2 = "null";
+
+		if(this->currentInputDevice) {
+			n1 = this->currentInputDevice->name;
+		}
+		if(event->device) {
+			n2 = event->device->name;
+		}
+
+		INPUTDBG("Motion ignored, not the same device as the starting device. 1: %s, 2: %s\n", n1, n2);
 	}
 	return false;
 }

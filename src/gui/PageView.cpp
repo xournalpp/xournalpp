@@ -67,10 +67,6 @@ PageView::PageView(XournalView * xournal, PageRef page) {
 			xournal->getControl()->getToolHandler(), this);
 
 	this->inputHandler = new InputHandler(this->xournal, this);
-
-	this->x = 0;
-	this->y = 0;
-
 }
 
 PageView::~PageView() {
@@ -124,7 +120,7 @@ void PageView::deleteViewBuffer() {
 bool PageView::containsPoint(int x, int y) {
 	XOJ_CHECK_TYPE(PageView);
 
-	return this->x <= x && this->x + this->getDisplayWidth() >= x && this->y <= y && this->y + this->getDisplayHeight() >= y;
+	return this->layout.getLayoutAbsoluteX() <= x && this->layout.getLayoutAbsoluteX() + this->getDisplayWidth() >= this->layout.getLayoutAbsoluteX() && this->layout.getLayoutAbsoluteY() <= y && this->layout.getLayoutAbsoluteY() + this->getDisplayHeight() >= this->layout.getLayoutAbsoluteY();
 }
 
 bool PageView::searchTextOnPage(const char * text, int * occures, double * top) {
@@ -501,13 +497,6 @@ bool PageView::onKeyReleaseEvent(GdkEventKey * event) {
 	return false;
 }
 
-void PageView::setPos(int x, int y) {
-	XOJ_CHECK_TYPE(PageView);
-
-	this->x = x;
-	this->y = y;
-}
-
 void PageView::rerenderPage() {
 	XOJ_CHECK_TYPE(PageView);
 
@@ -770,13 +759,13 @@ TextEditor * PageView::getTextEditor() {
 int PageView::getX() {
 	XOJ_CHECK_TYPE(PageView);
 
-	return this->x;
+	return this->layout.getLayoutAbsoluteX();
 }
 
 int PageView::getY() {
 	XOJ_CHECK_TYPE(PageView);
 
-	return this->y;
+	return this->layout.getLayoutAbsoluteY();
 }
 
 PageRef PageView::getPage() {

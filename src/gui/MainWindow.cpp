@@ -6,11 +6,8 @@
 #include "../gui/GladeSearchpath.h"
 #include "toolbarMenubar/model/ToolbarData.h"
 #include "toolbarMenubar/model/ToolbarModel.h"
-
-#ifdef ENABLE_OS
-// Overlay scrollbar
-#include <os/os.h>
-#endif
+#include "Layout.h"
+#include "widgets/XournalWidget.h"
 
 #include <config.h>
 #include <glib/gi18n-lib.h>
@@ -40,27 +37,18 @@ MainWindow::MainWindow(GladeSearchpath * gladeSearchPath, Control * control) :
 
 	this->toolbarSpacerItems = NULL;
 
-#ifdef ENABLE_OS
-	this->scrollVertical = os_scrollbar_new(GTK_ORIENTATION_VERTICAL, NULL);
-	this->scrollHorizontal = os_scrollbar_new(GTK_ORIENTATION_HORIZONTAL, NULL);
-#else
-	this->scrollVertical = gtk_vscrollbar_new(NULL);
-	this->scrollHorizontal = gtk_hscrollbar_new(NULL);
-#endif
-
 	GtkWidget * tableXournal = get("tableXournal");
 
-	ScrollbarHideType type = this->getControl()->getSettings()->getScrollbarHideType();
+	this->xournal = new XournalView(tableXournal, control);
+
+	ScrollbarHideType type = control->getSettings()->getScrollbarHideType();
 
 	if (type == SCROLLBAR_HIDE_NONE || type == SCROLLBAR_HIDE_VERTICAL) {
-		gtk_table_attach(GTK_TABLE(tableXournal), this->scrollHorizontal, 1, 2, 1, 2, (GtkAttachOptions) (GTK_EXPAND | GTK_FILL), GTK_FILL, 0, 0);
+		Layout * layout = gtk_xournal_get_layout(this->xournal->getWidget());
+		gtk_table_attach(GTK_TABLE(tableXournal),layout->getScrollbarHorizontal(), 1, 2, 1, 2, (GtkAttachOptions) (GTK_EXPAND | GTK_FILL), GTK_FILL, 0, 0);
 	}
 
-	g_object_ref(this->scrollVertical);
-	g_object_ref(this->scrollHorizontal);
-
-	this->xournal = new XournalView(tableXournal, GTK_RANGE(this->scrollHorizontal), GTK_RANGE(this->scrollVertical), control);
-
+	
 	setSidebarVisible(control->getSettings()->isSidebarVisible());
 
 	// Window handler
@@ -164,21 +152,14 @@ MainWindow::~MainWindow() {
 	delete this->toolbar;
 	this->toolbar = NULL;
 
-	g_object_unref(this->scrollVertical);
-	this->scrollVertical = NULL;
-
-	g_object_unref(this->scrollHorizontal);
-	this->scrollHorizontal = NULL;
-
 	XOJ_RELEASE_TYPE(MainWindow);
 }
 
-GtkWidget * MainWindow::getScrollHorizontal() {
-	return this->scrollHorizontal;
-}
+Layout * MainWindow::getLayout() {
+	XOJ_CHECK_TYPE(MainWindow);
 
-GtkWidget * MainWindow::getScrollVertical() {
-	return this->scrollVertical;
+	Layout * layout = gtk_xournal_get_layout(GTK_WIDGET(this->xournal->getWidget()));
+	return layout;
 }
 
 bool cancellable_cancel(GCancellable * cancel) {
@@ -306,17 +287,23 @@ void MainWindow::updateScrollbarSidebarPosition() {
 
 	bool scrollbarOnLeft = control->getSettings()->isScrollbarOnLeft();
 
-	if (gtk_widget_get_parent(this->scrollVertical) != NULL) {
-		gtk_container_remove(GTK_CONTAINER(tableXournal), this->scrollVertical);
+	Layout * layout = this->getLayout();
+
+	GtkWidget * h = layout->getScrollbarHorizontal();
+	GtkWidget * v = layout->getScrollbarVertical();
+
+
+	if (gtk_widget_get_parent(v) != NULL) {
+		gtk_container_remove(GTK_CONTAINER(tableXournal), v);
 	}
 
 	ScrollbarHideType type = this->getControl()->getSettings()->getScrollbarHideType();
 
 	if (type == SCROLLBAR_HIDE_NONE || type == SCROLLBAR_HIDE_HORIZONTAL) {
 		if (scrollbarOnLeft) {
-			gtk_table_attach(GTK_TABLE(tableXournal), this->scrollVertical, 0, 1, 0, 1, (GtkAttachOptions) 0, GTK_FILL, 0, 0);
+			gtk_table_attach(GTK_TABLE(tableXournal), v, 0, 1, 0, 1, (GtkAttachOptions) 0, GTK_FILL, 0, 0);
 		} else {
-			gtk_table_attach(GTK_TABLE(tableXournal), this->scrollVertical, 2, 3, 0, 1, (GtkAttachOptions) 0, GTK_FILL, 0, 0);
+			gtk_table_attach(GTK_TABLE(tableXournal), v, 2, 3, 0, 1, (GtkAttachOptions) 0, GTK_FILL, 0, 0);
 		}
 	}
 

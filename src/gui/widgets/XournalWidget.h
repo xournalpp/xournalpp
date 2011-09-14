@@ -25,6 +25,7 @@ class PageView;
 class PagePositionCache;
 class EditSelection;
 class Rectangle;
+class Layout;
 
 typedef struct _GtkXournal GtkXournal;
 typedef struct _GtkXournalClass GtkXournalClass;
@@ -37,23 +38,16 @@ struct _GtkXournal {
 	 */
 	XournalView * view;
 
-	int scrollX;
-	int scrollY;
-
 	/**
 	 * Visible area
 	 */
 	int x;
 	int y;
-	int width;
-	int height;
 
-	int lastWidgetSize;
+	int scrollX;
+	int scrollY;
 
-	GtkAdjustment * hadj;
-	GtkAdjustment * vadj;
-	GtkRange * hrange;
-	GtkRange * vrange;
+	Layout * layout;
 
 	PageView * currentInputPage;
 	PagePositionCache * pagePositionCache;
@@ -78,20 +72,17 @@ struct _GtkXournalClass {
 };
 
 GtkType gtk_xournal_get_type(void);
-GtkWidget * gtk_xournal_new(XournalView * view, GtkRange * hrange, GtkRange * vrange);
+GtkWidget * gtk_xournal_new(XournalView * view);
 
 void gtk_xournal_update_xevent(GtkWidget * widget);
-void gtk_xournal_set_size(GtkWidget * widget, int width, int height);
 
 cairo_t * gtk_xournal_create_cairo_for(GtkWidget * widget, PageView * view);
 
+Layout * gtk_xournal_get_layout(GtkWidget * widget);
+
 void gtk_xournal_scroll_relative(GtkWidget * widget, double x, double y);
 
-GtkAdjustment * gtk_xournal_get_hadj(GtkWidget * widget);
-GtkAdjustment * gtk_xournal_get_vadj(GtkWidget * widget);
-
 void gtk_xournal_repaint_area(GtkWidget * widget, int x1, int y1, int x2, int y2);
-void gtk_xournal_ensure_rect_is_visible(GtkWidget * widget, int x, int y, int width, int height);
 
 Rectangle * gtk_xournal_get_visible_area(GtkWidget * widget, PageView * p);
 

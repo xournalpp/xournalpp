@@ -63,7 +63,7 @@ ToolbarCustomizeDialog::ToolbarCustomizeDialog(GladeSearchpath * gladeSearchPath
 	int len = 0;
 	GtkWidget ** widgets = this->win->getToolbarWidgets(len);
 
-	// TODO: Debug
+	// TODO: TOOLBAR-DRAG-DROP
 
 //	for (int i = 0; i < len; i++) {
 //		GtkWidget * w = widgets[i];
@@ -151,7 +151,7 @@ void ToolbarCustomizeDialog::toolitemDragEnd(GtkWidget * widget, GdkDragContext 
 
 void ToolbarCustomizeDialog::toolitemDragDataGet(GtkWidget * widget, GdkDragContext * context, GtkSelectionData * selection_data, guint info, guint time,
 		AbstractItemSelectionData * item) {
-	// TODO: Debug
+	// TODO: TOOLBAR-DRAG-DROP
 //	gtk_selection_data_set(selection_data, atomToolItem, 0, (const guchar *) item, sizeof(AbstractItemSelectionData));
 }
 
@@ -161,7 +161,7 @@ void ToolbarCustomizeDialog::toolitemDragDataGet(GtkWidget * widget, GdkDragCont
 bool ToolbarCustomizeDialog::toolbarDragMotionCb(GtkToolbar * toolbar, GdkDragContext * context, gint x, gint y, guint time, ToolbarCustomizeDialog * dlg) {
 	XOJ_CHECK_TYPE_OBJ(dlg, ToolbarCustomizeDialog);
 
-	// TODO: Debug
+	// TODO: TOOLBAR-DRAG-DROP
 //	GdkAtom target = gtk_drag_dest_find_target(GTK_WIDGET(toolbar), context, NULL);
 //	if (target != atomToolItem) {
 //		gdk_drag_status(context, (GdkDragAction) 0, time);
@@ -217,7 +217,7 @@ void ToolbarCustomizeDialog::dragDataReceived(GtkWidget * widget, GdkDragContext
 
 	XOJ_CHECK_TYPE_OBJ(dlg, ToolbarCustomizeDialog);
 
-	// TODO: debug
+	// TODO: TOOLBAR-DRAG-DROP
 //	if (gtk_selection_data_get_data_type(data) != atomToolItem) {
 //		gtk_drag_finish(dragContext, false, false, time);
 //		return;
@@ -242,7 +242,7 @@ void ToolbarCustomizeDialog::dragDataReceived(GtkWidget * widget, GdkDragContext
 void ToolbarCustomizeDialog::removeFromToolbar(AbstractToolItem * item) {
 	XOJ_CHECK_TYPE(ToolbarCustomizeDialog);
 
-	// TODO implement
+	// TODO TOOLBAR-DRAG-DROP
 }
 
 /**

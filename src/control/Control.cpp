@@ -1533,8 +1533,8 @@ bool Control::invokeCallback(CallbackData * cb) {
 int Control::getCurrentPageNo() {
 	XOJ_CHECK_TYPE(Control);
 
-	if (win) {
-		return win->getXournal()->getCurrentPage();
+	if (this->win) {
+		return this->win->getXournal()->getCurrentPage();
 	}
 	return 0;
 }
@@ -1548,7 +1548,7 @@ bool Control::searchTextOnPage(const char * text, int p, int * occures, double *
 PageRef Control::getCurrentPage() {
 	XOJ_CHECK_TYPE(Control);
 
-	int page = win->getXournal()->getCurrentPage();
+	int page = this->win->getXournal()->getCurrentPage();
 
 	this->doc->lock();
 	PageRef p = this->doc->getPage(page);
@@ -1778,7 +1778,9 @@ void Control::showSettings() {
 	}
 
 	if (allowScrollOutside != settings->isAllowScrollOutsideThePage()) {
+		int currentPage = getCurrentPageNo();
 		win->getXournal()->layoutPages();
+		scrollHandler->scrollToPage(currentPage);
 	}
 
 	if (bigCursor != settings->isShowBigCursor()) {

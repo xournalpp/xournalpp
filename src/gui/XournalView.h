@@ -18,9 +18,6 @@
 #include "../model/DocumentListener.h"
 #include "../model/PageRef.h"
 
-const int XOURNAL_PADDING = 20;
-const int XOURNAL_PADDING_TOP_LEFT = 10;
-
 class Control;
 class PageView;
 class Document;
@@ -31,10 +28,11 @@ class RepaintHandler;
 class PagePositionHandler;
 class Cursor;
 class EditSelection;
+class Layout;
 
 class XournalView: public DocumentListener, public ZoomListener {
 public:
-	XournalView(GtkWidget * parent, GtkRange * hrange, GtkRange * vrange, Control * control);
+	XournalView(GtkWidget * parent, Control * control);
 	virtual ~XournalView();
 
 public:
@@ -58,8 +56,6 @@ public:
 	void layerChanged(int page);
 
 	void requestFocus();
-
-	void onScrolled();
 
 	void forceUpdatePagenumbers();
 
@@ -99,9 +95,6 @@ public:
 	GtkWidget * getWidget();
 	Cursor * getCursor();
 
-	int getMaxAreaX();
-	int getMaxAreaY();
-
 public:
 	//ZoomListener interface
 	void zoomChanged(double lastZoom);
@@ -120,7 +113,6 @@ public:
 	bool onKeyReleaseEvent(GdkEventKey * event);
 
 private:
-	static void onVscrollChanged(GtkAdjustment * adjustment, XournalView * xournal);
 
 	void fireZoomChanged();
 
@@ -129,6 +121,7 @@ private:
 	Rectangle * getVisibleRect(int page);
 
 	static gboolean clearMemoryTimer(XournalView * widget);
+
 private:
 	XOJ_TYPE_ATTRIB;
 
@@ -159,6 +152,8 @@ private:
 	 * Memory cleanup timeout
 	 */
 	int cleanupTimeout;
+
+	friend class Layout;
 };
 
 #endif /* __XOURNALVIEW_H__ */

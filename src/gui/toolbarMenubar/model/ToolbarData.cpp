@@ -80,7 +80,7 @@ void ToolbarData::load(GKeyFile * config, const char * group) {
 	g_strfreev(keys);
 }
 
-void ToolbarData::saveToKeyFile(GKeyFile * config) {/* TODO: Debug
+void ToolbarData::saveToKeyFile(GKeyFile * config) {/* TODO: TOOLBAR-DRAG-DROP
 	const char * group = getId().c_str();
 
 	for (it = this->contents.begin(); it != this->contents.end(); it++) {

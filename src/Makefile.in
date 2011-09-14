@@ -124,12 +124,14 @@ am__xournalpp_SOURCES_DIST = control/jobs/AutosaveJob.cpp \
 	gui/toolbarMenubar/ToolSelectCombocontrol.cpp \
 	gui/toolbarMenubar/ToolZoomSlider.cpp \
 	gui/widgets/gtkmenutooltogglebutton.cpp \
-	gui/widgets/SelectColor.cpp gui/widgets/XournalWidget.cpp \
-	gui/widgets/ZoomCallib.cpp gui/Cursor.cpp gui/CursorTheme.cpp \
-	gui/GladeGui.cpp gui/GladeSearchpath.cpp gui/MainWindow.cpp \
-	gui/PageView.cpp gui/Redrawable.cpp gui/RepaintHandler.cpp \
-	gui/SearchBar.cpp gui/Shadow.cpp gui/TextEditor.cpp \
-	gui/XournalView.cpp model/eraser/EraseableStroke.cpp \
+	gui/widgets/Scrollbar.cpp gui/widgets/SelectColor.cpp \
+	gui/widgets/XournalWidget.cpp gui/widgets/ZoomCallib.cpp \
+	gui/Cursor.cpp gui/CursorTheme.cpp gui/GladeGui.cpp \
+	gui/GladeSearchpath.cpp gui/Layout.cpp gui/LayoutData.cpp \
+	gui/MainWindow.cpp gui/PageView.cpp gui/Redrawable.cpp \
+	gui/RepaintHandler.cpp gui/SearchBar.cpp gui/Shadow.cpp \
+	gui/TextEditor.cpp gui/XournalView.cpp \
+	model/eraser/EraseableStroke.cpp \
 	model/eraser/EraseableStrokePart.cpp model/eraser/PartList.cpp \
 	model/BackgroundImage.cpp model/BackgroundImageContents.cpp \
 	model/Document.cpp model/DocumentHandler.cpp \
@@ -242,13 +244,13 @@ am_xournalpp_OBJECTS = xournalpp-AutosaveJob.$(OBJEXT) \
 	xournalpp-ToolSelectCombocontrol.$(OBJEXT) \
 	xournalpp-ToolZoomSlider.$(OBJEXT) \
 	xournalpp-gtkmenutooltogglebutton.$(OBJEXT) \
-	xournalpp-SelectColor.$(OBJEXT) \
+	xournalpp-Scrollbar.$(OBJEXT) xournalpp-SelectColor.$(OBJEXT) \
 	xournalpp-XournalWidget.$(OBJEXT) \
 	xournalpp-ZoomCallib.$(OBJEXT) xournalpp-Cursor.$(OBJEXT) \
 	xournalpp-CursorTheme.$(OBJEXT) xournalpp-GladeGui.$(OBJEXT) \
-	xournalpp-GladeSearchpath.$(OBJEXT) \
-	xournalpp-MainWindow.$(OBJEXT) xournalpp-PageView.$(OBJEXT) \
-	xournalpp-Redrawable.$(OBJEXT) \
+	xournalpp-GladeSearchpath.$(OBJEXT) xournalpp-Layout.$(OBJEXT) \
+	xournalpp-LayoutData.$(OBJEXT) xournalpp-MainWindow.$(OBJEXT) \
+	xournalpp-PageView.$(OBJEXT) xournalpp-Redrawable.$(OBJEXT) \
 	xournalpp-RepaintHandler.$(OBJEXT) \
 	xournalpp-SearchBar.$(OBJEXT) xournalpp-Shadow.$(OBJEXT) \
 	xournalpp-TextEditor.$(OBJEXT) xournalpp-XournalView.$(OBJEXT) \
@@ -584,12 +586,14 @@ xournalpp_SOURCES = control/jobs/AutosaveJob.cpp \
 	gui/toolbarMenubar/ToolSelectCombocontrol.cpp \
 	gui/toolbarMenubar/ToolZoomSlider.cpp \
 	gui/widgets/gtkmenutooltogglebutton.cpp \
-	gui/widgets/SelectColor.cpp gui/widgets/XournalWidget.cpp \
-	gui/widgets/ZoomCallib.cpp gui/Cursor.cpp gui/CursorTheme.cpp \
-	gui/GladeGui.cpp gui/GladeSearchpath.cpp gui/MainWindow.cpp \
-	gui/PageView.cpp gui/Redrawable.cpp gui/RepaintHandler.cpp \
-	gui/SearchBar.cpp gui/Shadow.cpp gui/TextEditor.cpp \
-	gui/XournalView.cpp model/eraser/EraseableStroke.cpp \
+	gui/widgets/Scrollbar.cpp gui/widgets/SelectColor.cpp \
+	gui/widgets/XournalWidget.cpp gui/widgets/ZoomCallib.cpp \
+	gui/Cursor.cpp gui/CursorTheme.cpp gui/GladeGui.cpp \
+	gui/GladeSearchpath.cpp gui/Layout.cpp gui/LayoutData.cpp \
+	gui/MainWindow.cpp gui/PageView.cpp gui/Redrawable.cpp \
+	gui/RepaintHandler.cpp gui/SearchBar.cpp gui/Shadow.cpp \
+	gui/TextEditor.cpp gui/XournalView.cpp \
+	model/eraser/EraseableStroke.cpp \
 	model/eraser/EraseableStrokePart.cpp model/eraser/PartList.cpp \
 	model/BackgroundImage.cpp model/BackgroundImageContents.cpp \
 	model/Document.cpp model/DocumentHandler.cpp \
@@ -777,6 +781,8 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-Job.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-Layer.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-LayerListener.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-Layout.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-LayoutData.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-LinkDestination.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-LoadHandler.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-MainWindow.Po@am__quote@
@@ -823,6 +829,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-ScaleUndoAction.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-Scheduler.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-ScrollHandler.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-Scrollbar.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-SearchBar.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-SearchControl.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-SelectBackgroundColorDialog.Po@am__quote@
@@ -2093,6 +2100,20 @@ xournalpp-gtkmenutooltogglebutton.obj: gui/widgets/gtkmenutooltogglebutton.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-gtkmenutooltogglebutton.obj `if test -f 'gui/widgets/gtkmenutooltogglebutton.cpp'; then $(CYGPATH_W) 'gui/widgets/gtkmenutooltogglebutton.cpp'; else $(CYGPATH_W) '$(srcdir)/gui/widgets/gtkmenutooltogglebutton.cpp'; fi`
 
+xournalpp-Scrollbar.o: gui/widgets/Scrollbar.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-Scrollbar.o -MD -MP -MF $(DEPDIR)/xournalpp-Scrollbar.Tpo -c -o xournalpp-Scrollbar.o `test -f 'gui/widgets/Scrollbar.cpp' || echo '$(srcdir)/'`gui/widgets/Scrollbar.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-Scrollbar.Tpo $(DEPDIR)/xournalpp-Scrollbar.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='gui/widgets/Scrollbar.cpp' object='xournalpp-Scrollbar.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-Scrollbar.o `test -f 'gui/widgets/Scrollbar.cpp' || echo '$(srcdir)/'`gui/widgets/Scrollbar.cpp
+
+xournalpp-Scrollbar.obj: gui/widgets/Scrollbar.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-Scrollbar.obj -MD -MP -MF $(DEPDIR)/xournalpp-Scrollbar.Tpo -c -o xournalpp-Scrollbar.obj `if test -f 'gui/widgets/Scrollbar.cpp'; then $(CYGPATH_W) 'gui/widgets/Scrollbar.cpp'; else $(CYGPATH_W) '$(srcdir)/gui/widgets/Scrollbar.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-Scrollbar.Tpo $(DEPDIR)/xournalpp-Scrollbar.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='gui/widgets/Scrollbar.cpp' object='xournalpp-Scrollbar.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-Scrollbar.obj `if test -f 'gui/widgets/Scrollbar.cpp'; then $(CYGPATH_W) 'gui/widgets/Scrollbar.cpp'; else $(CYGPATH_W) '$(srcdir)/gui/widgets/Scrollbar.cpp'; fi`
+
 xournalpp-SelectColor.o: gui/widgets/SelectColor.cpp
 @am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-SelectColor.o -MD -MP -MF $(DEPDIR)/xournalpp-SelectColor.Tpo -c -o xournalpp-SelectColor.o `test -f 'gui/widgets/SelectColor.cpp' || echo '$(srcdir)/'`gui/widgets/SelectColor.cpp
 @am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-SelectColor.Tpo $(DEPDIR)/xournalpp-SelectColor.Po
@@ -2190,6 +2211,34 @@ xournalpp-GladeSearchpath.obj: gui/GladeSearchpath.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='gui/GladeSearchpath.cpp' object='xournalpp-GladeSearchpath.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-GladeSearchpath.obj `if test -f 'gui/GladeSearchpath.cpp'; then $(CYGPATH_W) 'gui/GladeSearchpath.cpp'; else $(CYGPATH_W) '$(srcdir)/gui/GladeSearchpath.cpp'; fi`
+
+xournalpp-Layout.o: gui/Layout.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-Layout.o -MD -MP -MF $(DEPDIR)/xournalpp-Layout.Tpo -c -o xournalpp-Layout.o `test -f 'gui/Layout.cpp' || echo '$(srcdir)/'`gui/Layout.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-Layout.Tpo $(DEPDIR)/xournalpp-Layout.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='gui/Layout.cpp' object='xournalpp-Layout.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-Layout.o `test -f 'gui/Layout.cpp' || echo '$(srcdir)/'`gui/Layout.cpp
+
+xournalpp-Layout.obj: gui/Layout.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-Layout.obj -MD -MP -MF $(DEPDIR)/xournalpp-Layout.Tpo -c -o xournalpp-Layout.obj `if test -f 'gui/Layout.cpp'; then $(CYGPATH_W) 'gui/Layout.cpp'; else $(CYGPATH_W) '$(srcdir)/gui/Layout.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-Layout.Tpo $(DEPDIR)/xournalpp-Layout.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='gui/Layout.cpp' object='xournalpp-Layout.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-Layout.obj `if test -f 'gui/Layout.cpp'; then $(CYGPATH_W) 'gui/Layout.cpp'; else $(CYGPATH_W) '$(srcdir)/gui/Layout.cpp'; fi`
+
+xournalpp-LayoutData.o: gui/LayoutData.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-LayoutData.o -MD -MP -MF $(DEPDIR)/xournalpp-LayoutData.Tpo -c -o xournalpp-LayoutData.o `test -f 'gui/LayoutData.cpp' || echo '$(srcdir)/'`gui/LayoutData.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-LayoutData.Tpo $(DEPDIR)/xournalpp-LayoutData.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='gui/LayoutData.cpp' object='xournalpp-LayoutData.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-LayoutData.o `test -f 'gui/LayoutData.cpp' || echo '$(srcdir)/'`gui/LayoutData.cpp
+
+xournalpp-LayoutData.obj: gui/LayoutData.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-LayoutData.obj -MD -MP -MF $(DEPDIR)/xournalpp-LayoutData.Tpo -c -o xournalpp-LayoutData.obj `if test -f 'gui/LayoutData.cpp'; then $(CYGPATH_W) 'gui/LayoutData.cpp'; else $(CYGPATH_W) '$(srcdir)/gui/LayoutData.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-LayoutData.Tpo $(DEPDIR)/xournalpp-LayoutData.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='gui/LayoutData.cpp' object='xournalpp-LayoutData.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-LayoutData.obj `if test -f 'gui/LayoutData.cpp'; then $(CYGPATH_W) 'gui/LayoutData.cpp'; else $(CYGPATH_W) '$(srcdir)/gui/LayoutData.cpp'; fi`
 
 xournalpp-MainWindow.o: gui/MainWindow.cpp
 @am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-MainWindow.o -MD -MP -MF $(DEPDIR)/xournalpp-MainWindow.Tpo -c -o xournalpp-MainWindow.o `test -f 'gui/MainWindow.cpp' || echo '$(srcdir)/'`gui/MainWindow.cpp
