@@ -458,7 +458,7 @@ void ToolHandler::restoreLastConfig() {
 
 	if (this->lastSelectedTool == NULL) {
 
-		// TODO: Debug
+		// TODO: TOOLBAR-DRAG-DROP
 		printf("this->lastSelectedTool == NULL\n");
 		return;
 	}

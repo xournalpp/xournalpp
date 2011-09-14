@@ -91,6 +91,7 @@ xournalpp_SOURCES = \
 	gui/toolbarMenubar/ToolSelectCombocontrol.cpp \
 	gui/toolbarMenubar/ToolZoomSlider.cpp \
 	gui/widgets/gtkmenutooltogglebutton.cpp \
+	gui/widgets/Scrollbar.cpp \
 	gui/widgets/SelectColor.cpp \
 	gui/widgets/XournalWidget.cpp \
 	gui/widgets/ZoomCallib.cpp \
@@ -98,6 +99,8 @@ xournalpp_SOURCES = \
 	gui/CursorTheme.cpp \
 	gui/GladeGui.cpp \
 	gui/GladeSearchpath.cpp \
+	gui/Layout.cpp \
+	gui/LayoutData.cpp \
 	gui/MainWindow.cpp \
 	gui/PageView.cpp \
 	gui/Redrawable.cpp \

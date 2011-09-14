@@ -28,7 +28,7 @@
 // Enable debugging ///////////////////
 
 // Input debugging, e.g. eraser events etc.
- #define INPUT_DEBUG
+// #define INPUT_DEBUG
 
 // Shape recognizer debug: output score etc.
 // #define RECOGNIZER_DEBUG

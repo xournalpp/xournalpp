@@ -16,6 +16,7 @@
 #include <Range.h>
 #include "Redrawable.h"
 #include "../model/PageRef.h"
+#include "LayoutData.h"
 
 class XournalView;
 class DeleteUndoAction;
@@ -69,8 +70,6 @@ public:
 
 	void deleteViewBuffer();
 
-	void setPos(int x, int y);
-
 	bool containsPoint(int x, int y);
 	bool containsY(int y);
 
@@ -104,6 +103,10 @@ private:
 
 	void addRerenderRect(double x, double y, double width, double height);
 
+public:
+	// position in the layout
+	LayoutData layout;
+
 private:
 	XOJ_TYPE_ATTRIB;
 
@@ -112,10 +115,6 @@ private:
 	Settings * settings;
 	EraseHandler * eraser;
 	InputHandler * inputHandler;
-
-	// position in px on screen
-	int x;
-	int y;
 
 	/**
 	 * The selected (while selection)

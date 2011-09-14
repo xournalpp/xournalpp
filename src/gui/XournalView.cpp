@@ -14,19 +14,20 @@
 #include "pageposition/PagePositionHandler.h"
 #include "Cursor.h"
 #include "../undo/DeleteUndoAction.h"
+#include "Layout.h"
 
 #include "RepaintHandler.h"
 
 #include <gdk/gdkkeysyms.h>
 
-XournalView::XournalView(GtkWidget * parent, GtkRange * hrange, GtkRange * vrange, Control * control) {
+XournalView::XournalView(GtkWidget * parent, Control * control) {
 	XOJ_INIT_TYPE(XournalView);
 
 	this->control = control;
 	this->cache = new PdfCache(control->getSettings()->getPdfPageCacheSize());
 	registerListener(control);
 
-	this->widget = gtk_xournal_new(this, hrange, vrange);
+	this->widget = gtk_xournal_new(this);
 
 	// we need to refer widget here, because wo unref it somwere twice!?
 	g_object_ref(this->widget);
@@ -42,8 +43,6 @@ XournalView::XournalView(GtkWidget * parent, GtkRange * hrange, GtkRange * vrang
 	this->margin = 75;
 	this->currentPage = 0;
 	this->lastSelectedPage = -1;
-
-	g_signal_connect(gtk_range_get_adjustment(vrange), "value-changed", G_CALLBACK(onVscrollChanged), this);
 
 	control->getZoomControl()->addZoomListener(this);
 
@@ -122,12 +121,6 @@ gboolean XournalView::clearMemoryTimer(XournalView * widget) {
 	return true;
 }
 
-void XournalView::onVscrollChanged(GtkAdjustment * adjustment, XournalView * xournal) {
-	XOJ_CHECK_TYPE_OBJ(xournal, XournalView);
-
-	xournal->onScrolled();
-}
-
 int XournalView::getCurrentPage() {
 	XOJ_CHECK_TYPE(XournalView);
 
@@ -165,6 +158,8 @@ bool XournalView::onKeyPressEvent(GdkEventKey * event) {
 
 	guint state = event->state & gtk_accelerator_get_default_mod_mask();
 
+	Layout * layout = gtk_xournal_get_layout(this->widget);
+
 	if (state & GDK_SHIFT_MASK) {
 		if (event->keyval == GDK_Page_Down) {
 			control->getScrollHandler()->goToNextPage();
@@ -180,32 +175,32 @@ bool XournalView::onKeyPressEvent(GdkEventKey * event) {
 		int windowHeight = alloc.height - scrollKeySize;
 
 		if (event->keyval == GDK_Page_Down) {
-			gtk_xournal_scroll_relative(this->widget, 0, windowHeight);
+			layout->scrollRelativ(0, windowHeight);
 			return true;
 		}
 		if (event->keyval == GDK_Page_Up) {
-			gtk_xournal_scroll_relative(this->widget, 0, -windowHeight);
+			layout->scrollRelativ(0, -windowHeight);
 			return true;
 		}
 	}
 
 	if (event->keyval == GDK_Up) {
-		gtk_xournal_scroll_relative(this->widget, 0, -scrollKeySize);
+		layout->scrollRelativ(0, -scrollKeySize);
 		return true;
 	}
 
 	if (event->keyval == GDK_Down) {
-		gtk_xournal_scroll_relative(this->widget, 0, scrollKeySize);
+		layout->scrollRelativ(0, scrollKeySize);
 		return true;
 	}
 
 	if (event->keyval == GDK_Left) {
-		gtk_xournal_scroll_relative(this->widget, -scrollKeySize, 0);
+		layout->scrollRelativ(-scrollKeySize, 0);
 		return true;
 	}
 
 	if (event->keyval == GDK_Right) {
-		gtk_xournal_scroll_relative(this->widget, scrollKeySize, 0);
+		layout->scrollRelativ(scrollKeySize, 0);
 		return true;
 	}
 
@@ -308,118 +303,17 @@ Control * XournalView::getControl() {
 	return control;
 }
 
-void XournalView::scrollTo(int pageNo, double y) {
+void XournalView::scrollTo(int pageNo, double yDocument) {
 	XOJ_CHECK_TYPE(XournalView);
 
-	if (this->currentPage == pageNo) {
-		return;
-	}
 	if (pageNo < 0 || pageNo >= this->viewPagesLen) {
 		return;
 	}
-	// TODO LOW PRIO: handle horizontal scrolling (dual page view)
 
-	GtkAdjustment * h = gtk_xournal_get_vadj(this->widget);
+	PageView * v = this->viewPages[pageNo];
 
-	PageView * p = viewPages[pageNo];
-
-	int pos = p->getY();
-
-	control->firePageSelected(pageNo);
-
-	y = y * control->getZoomControl()->getZoom();
-
-	if (y == 0) {
-		y = -10; // show the shadow on top
-	}
-
-	double v = (double) pos + y;
-	double upper = gtk_adjustment_get_upper(h) - gtk_adjustment_get_page_size(h);
-
-	if (upper < v) {
-		v = upper;
-	}
-
-	gtk_adjustment_set_value(h, v);
-}
-
-void XournalView::onScrolled() {
-	XOJ_CHECK_TYPE(XournalView);
-
-	GtkAdjustment * h = gtk_xournal_get_vadj(this->widget);
-	GtkAllocation allocation = { 0 };
-	gtk_widget_get_allocation(this->widget, &allocation);
-
-	int scrollY = gtk_adjustment_get_value(h);
-
-	int viewHeight = allocation.height;
-	bool twoPages = control->getSettings()->isShowTwoPages();
-
-	if (scrollY < 1) {
-		if (twoPages && this->viewPagesLen > 1 && this->viewPages[1]->isSelected()) {
-			// page 2 already selected
-		} else {
-			this->control->firePageSelected(0);
-		}
-		return;
-	}
-
-	int mostPageNr = 0;
-	double mostPagePercent = 0;
-
-	// next four pages are not marked as invisible,
-	// because usually you scroll forward
-
-	for (int page = 0; page < this->viewPagesLen; page++) {
-		PageView * p = this->viewPages[page];
-		int y = p->getY();
-
-		int pageHeight = p->getDisplayHeight();
-
-		if (y > scrollY + viewHeight) {
-			p->setIsVisibel(false);
-			for (; page < this->viewPagesLen; page++) {
-				p = this->viewPages[page];
-				p->setIsVisibel(false);
-			}
-
-			break;
-		}
-		if (y + pageHeight >= scrollY) {
-			int startY = 0;
-			int endY = pageHeight;
-			if (y <= scrollY) {
-				startY = scrollY - y;
-			}
-			if (y + pageHeight > scrollY + viewHeight) {
-				endY = pageHeight - ((y + pageHeight) - (scrollY + viewHeight));
-			}
-
-			double percent = ((double) (endY - startY)) / ((double) pageHeight);
-
-			if (percent > mostPagePercent) {
-				mostPagePercent = percent;
-				mostPageNr = page;
-			}
-
-			p->setIsVisibel(true);
-		} else {
-			p->setIsVisibel(false);
-		}
-	}
-
-	if (twoPages && mostPageNr < this->viewPagesLen - 1) {
-		int y1 = this->viewPages[mostPageNr]->getY();
-		int y2 = this->viewPages[mostPageNr + 1]->getY();
-
-		if (y1 != y2 || !this->viewPages[mostPageNr + 1]->isSelected()) {
-			// if the second page is selected DON'T select the first page.
-			// Only select the first page if none is selected
-			this->control->firePageSelected(mostPageNr);
-		}
-	} else {
-		this->control->firePageSelected(mostPageNr);
-	}
+	Layout * layout = gtk_xournal_get_layout(this->widget);
+	layout->ensureRectIsVisible(v->layout.getLayoutAbsoluteX(), v->layout.getLayoutAbsoluteY(), v->getDisplayWidth(), v->getDisplayHeight());
 }
 
 void XournalView::endTextSelection() {
@@ -491,26 +385,27 @@ void XournalView::zoomOut() {
 void XournalView::ensureRectIsVisible(int x, int y, int width, int heigth) {
 	XOJ_CHECK_TYPE(XournalView);
 
-	gtk_xournal_ensure_rect_is_visible(this->widget, x, y, width, heigth);
+	Layout * layout = gtk_xournal_get_layout(this->widget);
+	layout->ensureRectIsVisible(x, y, width, heigth);
 }
 
 void XournalView::zoomChanged(double lastZoom) {
 	XOJ_CHECK_TYPE(XournalView);
 
-	GtkAdjustment * h = gtk_xournal_get_vadj(this->widget);
-	double scrollY = gtk_adjustment_get_value(h);
+	Layout * layout = gtk_xournal_get_layout(this->widget);
+	int currentPage = this->getCurrentPage();
+	double pageTop = layout->getVisiblePageTop(currentPage);
 
-	layoutPages();
+	layout->layoutPages();
 
-	double zoom = control->getZoomControl()->getZoom();
-	gtk_adjustment_set_value(h, scrollY / lastZoom * zoom);
+	this->scrollTo(currentPage, pageTop);
 
 	Document * doc = control->getDocument();
 	doc->lock();
 	String file = doc->getEvMetadataFilename();
 	doc->unlock();
 
-	control->getMetadataManager()->setDouble(file, "zoom", zoom);
+	control->getMetadataManager()->setDouble(file, "zoom", getZoom());
 
 	this->control->getScheduler()->blockRerenderZoom();
 }
@@ -531,6 +426,8 @@ void XournalView::pageChanged(int page) {
 void XournalView::pageDeleted(int page) {
 	XOJ_CHECK_TYPE(XournalView);
 
+	int currentPage = control->getCurrentPageNo();
+
 	delete this->viewPages[page];
 	for (int i = page; i < this->viewPagesLen; i++) {
 		this->viewPages[i] = this->viewPages[i + 1];
@@ -538,7 +435,12 @@ void XournalView::pageDeleted(int page) {
 
 	this->viewPagesLen--;
 
+	if (currentPage >= page) {
+		currentPage--;
+	}
+
 	layoutPages();
+	control->getScrollHandler()->scrollToPage(currentPage);
 }
 
 TextEditor * XournalView::getTextEditor() {
@@ -603,10 +505,9 @@ void XournalView::pageInserted(int page) {
 
 	this->viewPages[page] = pageView;
 
-	layoutPages();
-
-	// Update scroll info, so we can call isPageVisible after
-	onScrolled();
+	Layout * layout = gtk_xournal_get_layout(this->widget);
+	layout->layoutPages();
+	layout->checkSelectedPage();
 }
 
 double XournalView::getZoom() {
@@ -720,134 +621,8 @@ void XournalView::repaintSelection(bool evenWithoutSelection) {
 void XournalView::layoutPages() {
 	XOJ_CHECK_TYPE(XournalView);
 
-	GtkAllocation alloc = { 0 };
-
-	gtk_widget_get_allocation(this->widget, &alloc);
-
-	Settings * settings = getControl()->getSettings();
-
-	bool showTwoPages = settings->isShowTwoPages();
-
-	bool allowScrollOutsideThePage = settings->isAllowScrollOutsideThePage();
-
-	int width = alloc.width;
-	int height = XOURNAL_PADDING_TOP_LEFT;
-
-	int additionalHeight = 0;
-
-	if (showTwoPages) {
-		// TODO LOW PRIO: handle single landscape page better
-		// If there is a landscape page, display them on a single line, not with another page
-
-		// calc size for the widget
-		for (int i = 0; i < this->viewPagesLen; i++) {
-			int w = this->viewPages[i]->getDisplayWidth() + XOURNAL_PADDING_TOP_LEFT + XOURNAL_PADDING;
-			int h = this->viewPages[i]->getDisplayHeight();
-			if (i < this->viewPagesLen - 1) {
-
-				i++;
-				w += this->viewPages[i]->getDisplayWidth();
-				w += XOURNAL_PADDING;
-				h = MAX(h, this->viewPages[i]->getDisplayHeight());
-			}
-			if (width < w) {
-				width = w;
-			}
-			height += h;
-			height += XOURNAL_PADDING;
-		}
-
-		int y = XOURNAL_PADDING_TOP_LEFT;
-
-		if (viewPagesLen > 0) {
-			additionalHeight = this->viewPages[0]->getDisplayHeight();
-		}
-
-		if (allowScrollOutsideThePage && viewPagesLen > 0) {
-			y += this->viewPages[0]->getDisplayHeight() / 2;
-			height += additionalHeight;
-			width *= 2;
-		}
-
-		// layout pages
-		for (int i = 0; i < viewPagesLen; i++) {
-			int x = 0;
-			int h = this->viewPages[i]->getDisplayHeight();
-			if (i < this->viewPagesLen - 1) {
-				x = width - this->viewPages[i]->getDisplayWidth() - this->viewPages[i + 1]->getDisplayWidth() - XOURNAL_PADDING - XOURNAL_PADDING_TOP_LEFT;
-				x /= 2;
-
-				this->viewPages[i]->setPos(x, y);
-
-				x += this->viewPages[i]->getDisplayWidth() + XOURNAL_PADDING;
-
-				i++;
-
-				h = MAX(h, this->viewPages[i]->getDisplayHeight());
-			} else {
-				x = width - this->viewPages[i]->getDisplayWidth();
-				x /= 2;
-			}
-
-			this->viewPages[i]->setPos(x, y);
-			y += h;
-			y += XOURNAL_PADDING;
-		}
-
-		gtk_xournal_set_size(this->widget, width, height);
-	} else { // single page
-		// calc size for the widget
-		for (int i = 0; i < this->viewPagesLen; i++) {
-			PageView * pageView = this->viewPages[i];
-			int w = pageView->getDisplayWidth() + 20; // 20px for shadow
-
-			if (width < w) {
-				width = w;
-			}
-			height += pageView->getDisplayHeight();
-			height += XOURNAL_PADDING;
-		}
-
-		int y = XOURNAL_PADDING_TOP_LEFT;
-		int x = XOURNAL_PADDING_TOP_LEFT;
-
-		if (this->viewPagesLen > 0) {
-			additionalHeight = this->viewPages[0]->getDisplayHeight();
-		}
-
-		if (allowScrollOutsideThePage && this->viewPagesLen > 0) {
-			y += this->viewPages[0]->getHeight() / 2;
-			height += additionalHeight;
-			width *= 2;
-		}
-
-		gtk_xournal_set_size(this->widget, width, height);
-
-		// layout pages
-		for (int i = 0; i < this->viewPagesLen; i++) {
-			PageView * pageView = this->viewPages[i];
-
-			x = width - pageView->getDisplayWidth();
-			x /= 2;
-
-			pageView->setPos(x, y);
-			y += pageView->getDisplayHeight();
-			y += XOURNAL_PADDING;
-		}
-	}
-
-	this->pagePosition->update(this->viewPages, this->viewPagesLen, height);
-
-	gtk_widget_queue_draw(this->widget);
-	
-	// TODO low prio: scrol on right position on start
-//	if (allowScrollOutsideThePage) {
-//		GtkAdjustment * hadj = gtk_xournal_get_hadj(this->widget);
-//		gtk_adjustment_set_value(hadj, width / 4);
-//
-//		GtkAdjustment * vadj = gtk_xournal_get_vadj(this->widget);
-//		gtk_adjustment_set_value(vadj, additionalHeight / 2 - gtk_adjustment_get_page_size(vadj) + 20);
-//	}
+	Layout * layout = gtk_xournal_get_layout(this->widget);
+	layout->layoutPages();
 }
 
 bool XournalView::isPageVisible(int page, int * visibleHeight) {
@@ -901,6 +676,7 @@ void XournalView::documentChanged(DocumentChangeType type) {
 	doc->unlock();
 
 	layoutPages();
+	scrollTo(0, 0);
 
 	scheduler->unlock();
 }
@@ -984,23 +760,5 @@ EditSelection * XournalView::getSelection() {
 	g_return_val_if_fail(GTK_IS_XOURNAL(this->widget), NULL);
 
 	return GTK_XOURNAL(this->widget)->selection;
-}
-
-int XournalView::getMaxAreaX() {
-	XOJ_CHECK_TYPE(XournalView);
-
-	g_return_val_if_fail(this->widget != NULL, 0);
-	g_return_val_if_fail(GTK_IS_XOURNAL(this->widget), 0);
-
-	return GTK_XOURNAL(this->widget)->width;
-}
-
-int XournalView::getMaxAreaY() {
-	XOJ_CHECK_TYPE(XournalView);
-
-	g_return_val_if_fail(this->widget != NULL, 0);
-	g_return_val_if_fail(GTK_IS_XOURNAL(this->widget), 0);
-
-	return GTK_XOURNAL(this->widget)->height;
 }
 
