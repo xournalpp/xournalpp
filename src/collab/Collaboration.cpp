@@ -9,6 +9,7 @@
 #include <serializing/HexObjectEncoding.h>
 
 Collaboration::Collaboration(Control * control) {
+	printf("test");
 	this->control = control;
 }
 
