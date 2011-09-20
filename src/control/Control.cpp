@@ -747,7 +747,7 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent *even
 
 		// Menu Help
 	case ACTION_HELP:
-		// TODO LOW PRIO: implement help
+		this->help();
 		break;
 	case ACTION_ABOUT:
 		showAbout();
@@ -763,6 +763,27 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent *even
 		if (type == at && !enabled) {
 			fireActionSelected(GROUP_TOOL, at);
 		}
+	}
+}
+
+// TODO: create help for Xournal++
+#if OFFLINE_HELP_ENABLED
+#define XOJ_HELP "ghelp:evince"
+#else
+#define XOJ_HELP "http://library.gnome.org/users/evince/stable/"
+#endif
+
+void Control::help() {
+	GError * error = NULL;
+
+	gtk_show_uri(gtk_window_get_screen(GTK_WINDOW(this->win->getWindow())), XOJ_HELP, gtk_get_current_event_time(), &error);
+	if (error) {
+		GtkWidget * dialog = gtk_message_dialog_new((GtkWindow *) getWindow(), GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, _("There was an error displaying help: %s"),
+				error->message);
+		gtk_dialog_run(GTK_DIALOG(dialog));
+		gtk_widget_destroy(dialog);
+
+		g_error_free(error);
 	}
 }
 
@@ -799,7 +820,7 @@ void Control::clearSelectionEndText() {
 void Control::invokeLater(ActionType type) {
 	XOJ_CHECK_TYPE(Control);
 
-	g_idle_add((GSourceFunc) &invokeCallback, new CallbackData(this, type));
+	g_idle_add((GSourceFunc) & invokeCallback, new CallbackData(this, type));
 }
 
 /**
@@ -1833,10 +1854,7 @@ bool Control::openFile(String filename, int scrollToPage) {
 		bool attachPdf = false;
 		filename = XojOpenDlg::showOpenDialog((GtkWindow *) *win, this->settings, false, attachPdf);
 
-
 		printf("Filename: %s\n", filename.c_str());
-
-
 
 		if (filename.isEmpty()) {
 			return false;

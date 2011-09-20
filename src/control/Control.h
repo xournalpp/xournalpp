@@ -172,6 +172,8 @@ public:
 	bool cut();
 	bool paste();
 
+	void help();
+
 public:
 	// UndoRedoListener interface
 	void undoRedoChanged();

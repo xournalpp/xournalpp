@@ -457,11 +457,6 @@ void EditSelection::moveSelection(double dx, double dy) {
 
 	ensureWithinVisibleArea();
 
-	int x = this->view->getX();
-	int y = this->view->getY();
-	double zoom = this->view->getXournal()->getZoom();
-	this->view->getXournal()->ensureRectIsVisible(x, y, this->width * zoom, this->height * zoom);
-
 	this->view->getXournal()->repaintSelection();
 }
 
@@ -471,26 +466,10 @@ void EditSelection::moveSelection(double dx, double dy) {
 void EditSelection::ensureWithinVisibleArea() {
 	XOJ_CHECK_TYPE(EditSelection);
 
-	//TODO LOW PRIO scroll to this point if not in visible area
-
-	//	double zoom = this->view->getXournal()->getZoom();
-	//	int x = this->view->getX() - this->offsetX + this->relativeX;
-	//	if (x < 0) {
-	//		this->offsetX += x;
-	//	}
-	//	int maxX = this->view->getXournal()->getMaxAreaX();
-	//	if (maxX < x + this->width * zoom) {
-	//		this->offsetX += (x + this->width * zoom) - maxX;
-	//	}
-	//
-	//	int y = this->view->getY() - this->offsetY + this->relativeY;
-	//	if (y < 0) {
-	//		this->offsetY += y;
-	//	}
-	//	int maxY = this->view->getXournal()->getMaxAreaY();
-	//	if (maxY < y + this->height * zoom) {
-	//		this->offsetY += (y + this->height * zoom) - maxY;
-	//	}
+	int x = this->view->getX();
+	int y = this->view->getY();
+	double zoom = this->view->getXournal()->getZoom();
+	this->view->getXournal()->ensureRectIsVisible(x, y, this->width * zoom, this->height * zoom);
 }
 
 /**
