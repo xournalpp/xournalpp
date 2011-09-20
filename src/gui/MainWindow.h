@@ -36,6 +36,13 @@ public:
 	void toolbarSelected(ToolbarData * d);
 	ToolbarData * getSelectedToolbar();
 
+	/**
+	 * This methods are only used internally and for toolbar configuration
+	 */
+	ToolbarData * clearToolbar();
+	void loadToolbar(ToolbarData * d);
+
+
 	void updatePageNumbers(int page, int pagecount, int pdfpage);
 	int getCurrentLayer();
 
@@ -65,9 +72,6 @@ public:
 	void setControlTmpDisabled(bool disabled);
 
 	void updateToolbarMenu();
-
-	void startToolbarEditMode();
-	void endToolbarEditMode();
 
 	GtkWidget ** getToolbarWidgets(int & length);
 	String getToolbarName(GtkToolbar * toolbar);
@@ -113,8 +117,6 @@ private:
 	GList * toolbarMenuData;
 	ToolbarData * selectedToolbar;
 	bool toolbarIntialized;
-
-	GList * toolbarSpacerItems;
 
 	GList * toolbarMenuitems;
 

@@ -31,24 +31,25 @@ public:
 
 public:
 	virtual void show();
+	void rebuildIconview();
 
 private:
 	static void dragDataReceived(GtkWidget * widget, GdkDragContext * dragContext, gint x, gint y, GtkSelectionData * data, guint info, guint time,
 			ToolbarCustomizeDialog * dlg);
-	static bool toolbarDragMotionCb(GtkToolbar * toolbar, GdkDragContext * context, gint x, gint y, guint time, ToolbarCustomizeDialog * dlg);
 	static void toolbarDragLeafeCb(GtkToolbar * toolbar, GdkDragContext * context, guint time, ToolbarCustomizeDialog * dlg);
-	static void toolbarDragDataReceivedCb(GtkToolbar * toolbar, GdkDragContext * context, gint x, gint y, GtkSelectionData * data, guint info, guint time);
+	static void toolbarDragDataReceivedCb(GtkToolbar * toolbar, GdkDragContext * context, gint x, gint y, GtkSelectionData * data, guint info, guint time,
+			ToolbarCustomizeDialog * dlg);
 
 	static void toolitemDragBegin(GtkWidget * widget, GdkDragContext * context, ToolItemDragData * data);
 	static void toolitemDragEnd(GtkWidget * widget, GdkDragContext * context, ToolItemDragData * data);
-	static void toolitemDragDataGet(GtkWidget * widget, GdkDragContext * context, GtkSelectionData * selection_data, guint info,
-			guint time, AbstractItemSelectionData * item);
-
-	static GdkPixbuf * getImagePixbuf(GtkImage * image);
+	static void toolitemDragDataGet(GtkWidget * widget, GdkDragContext * context, GtkSelectionData * selection_data, guint info, guint time,
+			AbstractItemSelectionData * item);
 
 	void removeFromToolbar(AbstractToolItem * item);
 	void freeIconview();
-	void rebuildIconview();
+
+	void prepareToolbarsItemsDrag();
+	void cleanupToolbarsItemsDrag();
 
 private:
 	XOJ_TYPE_ATTRIB;

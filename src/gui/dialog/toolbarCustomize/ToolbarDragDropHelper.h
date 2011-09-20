@@ -23,8 +23,11 @@ public:
 	static void dragDestAddToolbar(GtkWidget * target);
 	static void dragSourceAddToolbar(GtkWidget * widget);
 
+	static GdkPixbuf * getImagePixbuf(GtkImage * image);
+
 public:
 	static GdkAtom atomToolItem;
+	static GtkTargetEntry dropTargetEntry;
 };
 
 #endif /* __TOOLBARDRAGDROPHELPER_H__ */

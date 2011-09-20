@@ -542,13 +542,3 @@ ListIterator<AbstractToolItem *> ToolMenuHandler::getToolItems() {
 	return ListIterator<AbstractToolItem *>(this->toolItems);
 }
 
-
-void ToolMenuHandler::startEditMode() {
-	setTmpDisabled(true);
-
-}
-
-void ToolMenuHandler::endEditMode() {
-	setTmpDisabled(false);
-
-}

@@ -35,8 +35,6 @@ MainWindow::MainWindow(GladeSearchpath * gladeSearchPath, Control * control) :
 	this->toolbarMenuData = NULL;
 	this->toolbarMenuitems = NULL;
 
-	this->toolbarSpacerItems = NULL;
-
 	GtkWidget * tableXournal = get("tableXournal");
 
 	this->xournal = new XournalView(tableXournal, control);
@@ -289,7 +287,6 @@ void MainWindow::updateScrollbarSidebarPosition() {
 
 	Layout * layout = this->getLayout();
 
-	GtkWidget * h = layout->getScrollbarHorizontal();
 	GtkWidget * v = layout->getScrollbarVertical();
 
 
@@ -428,13 +425,31 @@ void MainWindow::toolbarSelected(ToolbarData * d) {
 	Settings * settings = control->getSettings();
 	settings->setSelectedToolbar(d->getId());
 
-	if (selectedToolbar != NULL) {
+	this->clearToolbar();
+	this->loadToolbar(d);
+}
+
+ToolbarData * MainWindow::clearToolbar() {
+	XOJ_CHECK_TYPE(MainWindow);
+
+	if (this->selectedToolbar != NULL) {
 		for (int i = 0; i < TOOLBAR_DEFINITIONS_LEN; i++) {
 			this->toolbar->unloadToolbar(this->toolbarWidgets[i]);
 		}
 
 		this->toolbar->freeDynamicToolbarItems();
 	}
+
+	ToolbarData * oldData = this->selectedToolbar;
+
+	this->selectedToolbar = NULL;
+
+	return oldData;
+}
+
+void MainWindow::loadToolbar(ToolbarData * d) {
+	XOJ_CHECK_TYPE(MainWindow);
+
 	this->selectedToolbar = d;
 
 	for (int i = 0; i < TOOLBAR_DEFINITIONS_LEN; i++) {
@@ -465,53 +480,6 @@ String MainWindow::getToolbarName(GtkToolbar * toolbar) {
 	}
 
 	return "";
-}
-
-void MainWindow::startToolbarEditMode() {
-	XOJ_CHECK_TYPE(MainWindow);
-
-	this->toolbar->startEditMode();
-	for (int i = 0; i < TOOLBAR_DEFINITIONS_LEN; i++) {
-		gtk_widget_show(this->toolbarWidgets[i]);
-
-		GtkToolbar * tb = GTK_TOOLBAR(this->toolbarWidgets[i]);
-		gtk_toolbar_set_icon_size(tb, GTK_ICON_SIZE_SMALL_TOOLBAR);
-
-		GtkToolItem * it = gtk_tool_item_new();
-		this->toolbarSpacerItems = g_list_append(this->toolbarSpacerItems, it);
-		gtk_toolbar_insert(tb, it, 0);
-
-		GtkOrientation orientation = gtk_toolbar_get_orientation(tb);
-		if (orientation == GTK_ORIENTATION_HORIZONTAL) {
-			GtkAllocation alloc = { 0, 0, 0, 20 };
-			gtk_widget_set_allocation(GTK_WIDGET(it), &alloc);
-		} else if (orientation == GTK_ORIENTATION_VERTICAL) {
-			GtkAllocation alloc = { 0, 0, 20, 0 };
-			gtk_widget_set_allocation(GTK_WIDGET(it), &alloc);
-		}
-	}
-	// TODO implement startToolbarEditMode
-}
-
-void MainWindow::endToolbarEditMode() {
-	XOJ_CHECK_TYPE(MainWindow);
-
-	this->toolbar->endEditMode();
-
-	for (GList * l = this->toolbarSpacerItems; l != NULL; l = l->next) {
-		GtkWidget * w = GTK_WIDGET(l->data);
-		GtkWidget * parent = gtk_widget_get_parent(w);
-		gtk_container_remove(GTK_CONTAINER(parent), w);
-	}
-	g_list_free(this->toolbarSpacerItems);
-	this->toolbarSpacerItems = NULL;
-
-	for (int i = 0; i < TOOLBAR_DEFINITIONS_LEN; i++) {
-		GtkToolbar * tb = GTK_TOOLBAR(this->toolbarWidgets[i]);
-		if (gtk_toolbar_get_n_items(tb) == 0) {
-			gtk_widget_hide(GTK_WIDGET(tb));
-		}
-	}
 }
 
 void MainWindow::setControlTmpDisabled(bool disabled) {

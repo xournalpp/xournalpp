@@ -7,7 +7,7 @@
 #include "../gui/dialog/ImagesDialog.h"
 #include "../gui/dialog/FormatDialog.h"
 #include "../gui/dialog/SelectBackgroundColorDialog.h"
-#include "../gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.h"
+#include "../gui/dialog/toolbarCustomize/ToolbarDragDropHandler.h"
 #include "../gui/dialog/ToolbarManageDialog.h"
 #include "../cfg.h"
 #include "LoadHandler.h"
@@ -864,8 +864,8 @@ void Control::customizeToolbars() {
 	g_return_if_fail(this->win != NULL);
 
 	if (this->win->getSelectedToolbar()->isPredefined()) {
-		GtkWidget * dialog = gtk_message_dialog_new((GtkWindow *) *this->win, GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_QUESTION, GTK_BUTTONS_YES_NO, _(
-				"The Toolbarconfiguration \"%s\" is predefined, would you create a copy to edit?"), this->win->getSelectedToolbar()->getName().c_str());
+		GtkWidget * dialog = gtk_message_dialog_new((GtkWindow *) *this->win, GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_QUESTION, GTK_BUTTONS_YES_NO,
+				_("The Toolbarconfiguration \"%s\" is predefined, would you create a copy to edit?"), this->win->getSelectedToolbar()->getName().c_str());
 
 		int res = gtk_dialog_run(GTK_DIALOG(dialog));
 		gtk_widget_destroy(dialog);
@@ -874,16 +874,16 @@ void Control::customizeToolbars() {
 			ToolbarData * data = new ToolbarData(*this->win->getSelectedToolbar());
 			this->win->getToolbarModel()->add(data);
 			this->win->toolbarSelected(data);
-			// TODO: update toolbar menu
+			// TODO: !!! update toolbar menu
 		} else {
 			return;
 		}
 	}
 
-	ToolbarCustomizeDialog dlg(this->gladeSearchPath, win);
-	dlg.show();
+	ToolbarDragDropHandler * handler = new ToolbarDragDropHandler();
+	handler->configure(this);
 
-	printf("Not implemented yet\n");
+	delete handler;
 }
 
 void Control::setRulerEnabled(bool enabled) {
@@ -2595,6 +2595,12 @@ TextEditor * Control::getTextEditor() {
 		return this->win->getXournal()->getTextEditor();
 	}
 	return NULL;
+}
+
+GladeSearchpath * Control::getGladeSearchPath() {
+	XOJ_CHECK_TYPE(Control);
+
+	return this->gladeSearchPath;
 }
 
 Settings * Control::getSettings() {
