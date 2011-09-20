@@ -281,12 +281,10 @@ bool Document::readPdf(String filename, bool initPages, bool attachToDocument) {
 	XOJ_CHECK_TYPE(Document);
 
 	GError * popplerError = NULL;
-	String uri = "file://";
-	uri += filename;
 
 	lock();
 
-	if (!pdfDocument.load(uri.c_str(), password.c_str(), &popplerError)) {
+	if (!pdfDocument.load(filename.c_str(), password.c_str(), &popplerError)) {
 		char * txt = g_strdup_printf("Document not loaded! (%s), %s", filename.c_str(), popplerError->message);
 		lastError = txt;
 		g_free(txt);

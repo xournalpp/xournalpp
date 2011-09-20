@@ -1832,6 +1832,12 @@ bool Control::openFile(String filename, int scrollToPage) {
 	if (filename.isEmpty()) {
 		bool attachPdf = false;
 		filename = XojOpenDlg::showOpenDialog((GtkWindow *) *win, this->settings, false, attachPdf);
+
+
+		printf("Filename: %s\n", filename.c_str());
+
+
+
 		if (filename.isEmpty()) {
 			return false;
 		}
