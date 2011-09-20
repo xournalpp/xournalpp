@@ -457,8 +457,6 @@ void ToolHandler::restoreLastConfig() {
 	XOJ_CHECK_TYPE(ToolHandler);
 
 	if (this->lastSelectedTool == NULL) {
-
-		// TODO: (2) TOOLBAR-DRAG-DROP
 		printf("this->lastSelectedTool == NULL\n");
 		return;
 	}

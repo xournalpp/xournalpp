@@ -1,7 +1,7 @@
 /*
  * Xournal++
  *
- * Toolbar edit helper for toolbar
+ * Toolbar drag & drop controller
  *
  * @author Xournal Team
  * http://xournal.sf.net
@@ -13,15 +13,32 @@
 #define __TOOLBARDRAGDROPHANDLER_H__
 
 #include <XournalType.h>
+#include "ToolbarAdapter.h"
+#include "ToolbarListener.h"
 
-class ToolbarDragDropHandler {
+class Control;
+class ToolbarAdapter;
+class ToolbarCustomizeDialog;
+
+class ToolbarDragDropHandler : public ToolbarListener {
 public:
 	ToolbarDragDropHandler();
 	virtual ~ToolbarDragDropHandler();
 
+public:
+	void configure(Control * control);
+
+	virtual void toolbarDataChanged();
+
+protected:
+	void prepareToolbarsForDragAndDrop(Control * control);
+	void clearToolbarsFromDragAndDrop();
+
 private:
 	XOJ_TYPE_ATTRIB;
 
+	ToolbarAdapter ** toolbars;
+	ToolbarCustomizeDialog * customizeDialog;
 };
 
 #endif /* __TOOLBARDRAGDROPHANDLER_H__ */

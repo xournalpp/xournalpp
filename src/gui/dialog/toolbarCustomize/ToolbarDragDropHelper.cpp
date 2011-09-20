@@ -1,11 +1,32 @@
 #include "ToolbarDragDropHelper.h"
 
 GdkAtom ToolbarDragDropHelper::atomToolItem = gdk_atom_intern_static_string("application/xournal-ToolbarItem");
+GtkTargetEntry ToolbarDragDropHelper::dropTargetEntry = { "move-buffer", GTK_TARGET_SAME_APP, 1 };
+
 
 ToolbarDragDropHelper::ToolbarDragDropHelper() {
 }
 
 ToolbarDragDropHelper::~ToolbarDragDropHelper() {
+}
+
+/**
+ * Get a GDK Pixbuf from GTK widget image
+ */
+GdkPixbuf * ToolbarDragDropHelper::getImagePixbuf(GtkImage * image) {
+	gchar * stock_id;
+	GtkIconSize size;
+
+	switch (gtk_image_get_storage_type(image)) {
+	case GTK_IMAGE_PIXBUF:
+		return (GdkPixbuf *) g_object_ref(gtk_image_get_pixbuf(image));
+	case GTK_IMAGE_STOCK:
+		gtk_image_get_stock(image, &stock_id, &size);
+		return gtk_widget_render_icon(GTK_WIDGET(image), stock_id, size, NULL);
+	default:
+		g_warning("Image storage type %d not handled", gtk_image_get_storage_type(image));
+		return NULL;
+	}
 }
 
 void ToolbarDragDropHelper::dragDestAddToolbar(GtkWidget * target) {

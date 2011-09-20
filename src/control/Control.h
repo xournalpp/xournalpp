@@ -143,6 +143,8 @@ public:
 
 	TextEditor * getTextEditor();
 
+	GladeSearchpath * getGladeSearchPath();
+
 	void disableSidebarTmp(bool disabled);
 
 	XournalScheduler * getScheduler();

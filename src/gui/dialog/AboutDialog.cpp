@@ -3,7 +3,6 @@
 #include <String.h>
 
 #define AUTOHOR(name) authors += name; authors += "\n";
-#define CONTRIBUTOR(name) contributors += name; contributors += "\n";
 
 AboutDialog::AboutDialog(GladeSearchpath * gladeSearchPath) :
 	GladeGui(gladeSearchPath, "about.glade", "aboutDialog") {
@@ -18,20 +17,13 @@ AboutDialog::AboutDialog(GladeSearchpath * gladeSearchPath) :
 	gtk_box_pack_start_defaults(GTK_BOX(w), linkButton);
 
 	String authors = "";
-	String contributors = "";
 
 	// Authors of the application
-	AUTOHOR("Denis Auroux");
-	AUTOHOR("Andreas Butti");
-
-	// Contributors, please insert in alphabetically order
-	CONTRIBUTOR("D M German");
+	AUTOHOR("Denis Auroux, 2006 - 2010");
+	AUTOHOR("Andreas Butti, 2010 - 2011");
 
 	w = get("lbAuthors");
 	gtk_label_set_text(GTK_LABEL(w), authors.c_str());
-
-	w = get("lbContributors");
-	gtk_label_set_text(GTK_LABEL(w), contributors.c_str());
 }
 
 AboutDialog::~AboutDialog() {
