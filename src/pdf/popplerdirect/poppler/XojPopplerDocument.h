@@ -37,7 +37,7 @@ public:
 	int getPageCount();
 
 	void load(char * data, int length);
-	bool load(const char * uri, const char * password, GError ** error);
+	bool load(const char * filename, const char * password, GError ** error);
 
 	PDFDoc * getDoc();
 

@@ -240,19 +240,17 @@ void XojPopplerDocument::load(char * data, int length) {
 	this->data = new _IntPopplerDocument(newDoc);
 }
 
-bool XojPopplerDocument::load(const char * uri, const char * password, GError ** error) {
+bool XojPopplerDocument::load(const char * filename, const char * password, GError ** error) {
 	XOJ_CHECK_TYPE(XojPopplerDocument);
 
 	PDFDoc * newDoc;
 	GooString * filename_g;
 	GooString * password_g;
-	char * filename;
 
 	if (!globalParams) {
 		globalParams = new GlobalParams();
 	}
 
-	filename = g_filename_from_uri(uri, NULL, error);
 	if (!filename) {
 		return false;
 	}
@@ -272,24 +270,22 @@ bool XojPopplerDocument::load(const char * uri, const char * password, GError **
 
 #ifdef G_OS_WIN32
 	wchar_t *filenameW;
-	int xxxxxxxxxxxx;
+	int wlen;
 
-	xxxxxxxxxxxx = MultiByteToWideChar(CP_UTF8, 0, filename, -1, NULL, 0);
+	wlen = MultiByteToWideChar(CP_UTF8, 0, filename, -1, NULL, 0);
 
-	filenameW = new WCHAR[xxxxxxxxxxxx];
+	filenameW = new WCHAR[wlen];
 	if (!filenameW)
 	return NULL;
 
-	xxxxxxxxxxxx = MultiByteToWideChar(CP_UTF8, 0, filename, -1, filenameW, xxxxxxxxxxxx);
+	wlen = MultiByteToWideChar(CP_UTF8, 0, filename, -1, filenameW, wlen);
 
-	newDoc = new PDFDoc(filenameW, xxxxxxxxxxxx, password_g, password_g);
+	newDoc = new PDFDoc(filenameW, wlen, password_g, password_g);
 	delete filenameW;
 #else
 	filename_g = new GooString(filename);
 	newDoc = new PDFDoc(filename_g, password_g, password_g);
 #endif
-	g_free(filename);
-
 	delete password_g;
 
 	if (!newDoc->isOk()) {
