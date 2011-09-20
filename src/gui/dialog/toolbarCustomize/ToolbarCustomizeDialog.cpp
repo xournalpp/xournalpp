@@ -14,7 +14,6 @@
 #include <config.h>
 #include <glib/gi18n-lib.h>
 
-
 /**
  * Used for transport a Toolbar item
  */
@@ -63,19 +62,17 @@ ToolbarCustomizeDialog::ToolbarCustomizeDialog(GladeSearchpath * gladeSearchPath
 	int len = 0;
 	GtkWidget ** widgets = this->win->getToolbarWidgets(len);
 
-	// TODO: TOOLBAR-DRAG-DROP
+	for (int i = 0; i < len; i++) {
+		GtkWidget * w = widgets[i];
+		gtk_drag_dest_set(w, GTK_DEST_DEFAULT_ALL, NULL, 0, GDK_ACTION_MOVE);
+		ToolbarDragDropHelper::dragDestAddToolbar(w);
 
-//	for (int i = 0; i < len; i++) {
-//		GtkWidget * w = widgets[i];
-//		gtk_drag_dest_set(w, GTK_DEST_DEFAULT_ALL, NULL, 0, GDK_ACTION_MOVE);
-//		gtk_drag_dest_add_toolbar_targets(w);
-//
-//		//		g_signal_connect (w, "drag_drop",
-//		//				G_CALLBACK (toolbar_drag_drop_cb), etoolbar);
-//		g_signal_connect(w, "drag_motion", G_CALLBACK(toolbarDragMotionCb), this);
-//		g_signal_connect(w, "drag_leave", G_CALLBACK(toolbarDragLeafeCb), this);
-//		g_signal_connect(w, "drag_data_received", G_CALLBACK(toolbarDragDataReceivedCb), this);
-//	}
+		//		g_signal_connect (w, "drag_drop",
+		//				G_CALLBACK (toolbar_drag_drop_cb), etoolbar);
+		g_signal_connect(w, "drag_motion", G_CALLBACK(toolbarDragMotionCb), this);
+		g_signal_connect(w, "drag_leave", G_CALLBACK(toolbarDragLeafeCb), this);
+		g_signal_connect(w, "drag_data_received", G_CALLBACK(toolbarDragDataReceivedCb), this);
+	}
 }
 
 ToolbarCustomizeDialog::~ToolbarCustomizeDialog() {
@@ -149,42 +146,44 @@ void ToolbarCustomizeDialog::toolitemDragEnd(GtkWidget * widget, GdkDragContext 
 	gtk_widget_show(data->ebox);
 }
 
-void ToolbarCustomizeDialog::toolitemDragDataGet(GtkWidget * widget, GdkDragContext * context, GtkSelectionData * selection_data, guint info, guint time,
-		AbstractItemSelectionData * item) {
-	// TODO: TOOLBAR-DRAG-DROP
-//	gtk_selection_data_set(selection_data, atomToolItem, 0, (const guchar *) item, sizeof(AbstractItemSelectionData));
+void ToolbarCustomizeDialog::toolitemDragDataGet(GtkWidget * widget, GdkDragContext * context,
+		GtkSelectionData * selection_data, guint info, guint time, AbstractItemSelectionData * item) {
+	gtk_selection_data_set(selection_data, ToolbarDragDropHelper::atomToolItem, 0, (const guchar *) item,
+			sizeof(AbstractItemSelectionData));
 }
 
 /**
  * A tool item was dragged to the toolbar
  */
-bool ToolbarCustomizeDialog::toolbarDragMotionCb(GtkToolbar * toolbar, GdkDragContext * context, gint x, gint y, guint time, ToolbarCustomizeDialog * dlg) {
+bool ToolbarCustomizeDialog::toolbarDragMotionCb(GtkToolbar * toolbar, GdkDragContext * context, gint x, gint y,
+		guint time, ToolbarCustomizeDialog * dlg) {
 	XOJ_CHECK_TYPE_OBJ(dlg, ToolbarCustomizeDialog);
 
-	// TODO: TOOLBAR-DRAG-DROP
-//	GdkAtom target = gtk_drag_dest_find_target(GTK_WIDGET(toolbar), context, NULL);
-//	if (target != atomToolItem) {
-//		gdk_drag_status(context, (GdkDragAction) 0, time);
-//		return false;
-//	}
-//
-//	gint ipos = gtk_toolbar_get_drop_index(toolbar, x, y);
-//	GtkOrientation orientation = gtk_toolbar_get_orientation(toolbar);
-//	gtk_toolbar_set_drop_highlight_item(toolbar, dlg->currentDragItem->createItem(orientation == GTK_ORIENTATION_HORIZONTAL), ipos);
-//
-//	gdk_drag_status(context, context->suggested_action, time);
+	GdkAtom target = gtk_drag_dest_find_target(GTK_WIDGET(toolbar), context, NULL);
+	if (target != ToolbarDragDropHelper::atomToolItem) {
+		gdk_drag_status(context, (GdkDragAction) 0, time);
+		return false;
+	}
+
+	gint ipos = gtk_toolbar_get_drop_index(toolbar, x, y);
+	GtkOrientation orientation = gtk_toolbar_get_orientation(toolbar);
+	gtk_toolbar_set_drop_highlight_item(toolbar, dlg->currentDragItem->createItem(orientation
+			== GTK_ORIENTATION_HORIZONTAL), ipos);
+
+	gdk_drag_status(context, context->suggested_action, time);
 
 	return true;
 }
 
-void ToolbarCustomizeDialog::toolbarDragLeafeCb(GtkToolbar * toolbar, GdkDragContext * context, guint time, ToolbarCustomizeDialog * dlg) {
+void ToolbarCustomizeDialog::toolbarDragLeafeCb(GtkToolbar * toolbar, GdkDragContext * context, guint time,
+		ToolbarCustomizeDialog * dlg) {
 	XOJ_CHECK_TYPE_OBJ(dlg, ToolbarCustomizeDialog);
 
 	gtk_toolbar_set_drop_highlight_item(toolbar, NULL, -1);
 }
 
-void ToolbarCustomizeDialog::toolbarDragDataReceivedCb(GtkToolbar * toolbar, GdkDragContext * context, gint x, gint y, GtkSelectionData * data, guint info,
-		guint time) {
+void ToolbarCustomizeDialog::toolbarDragDataReceivedCb(GtkToolbar * toolbar, GdkDragContext * context, gint x, gint y,
+		GtkSelectionData * data, guint info, guint time) {
 
 	AbstractItemSelectionData * d = (AbstractItemSelectionData *) gtk_selection_data_get_data(data);
 
@@ -212,28 +211,27 @@ void ToolbarCustomizeDialog::toolbarDragDataReceivedCb(GtkToolbar * toolbar, Gdk
 /**
  * A tool item was dragged to the dialog
  */
-void ToolbarCustomizeDialog::dragDataReceived(GtkWidget * widget, GdkDragContext * dragContext, gint x, gint y, GtkSelectionData * data, guint info,
-		guint time, ToolbarCustomizeDialog * dlg) {
+void ToolbarCustomizeDialog::dragDataReceived(GtkWidget * widget, GdkDragContext * dragContext, gint x, gint y,
+		GtkSelectionData * data, guint info, guint time, ToolbarCustomizeDialog * dlg) {
 
 	XOJ_CHECK_TYPE_OBJ(dlg, ToolbarCustomizeDialog);
 
-	// TODO: TOOLBAR-DRAG-DROP
-//	if (gtk_selection_data_get_data_type(data) != atomToolItem) {
-//		gtk_drag_finish(dragContext, false, false, time);
-//		return;
-//	}
-//
-//	AbstractItemSelectionData * d = NULL;
-//	d = (AbstractItemSelectionData *) gtk_selection_data_get_data(data);
-//
-//	AbstractToolItem * item = d->item;
-//
-//	if (item->isUsed()) {
-//		dlg->removeFromToolbar(item);
-//		dlg->rebuildIconview();
-//	}
-//
-//	gtk_drag_finish(dragContext, true, false, time);
+	if (gtk_selection_data_get_data_type(data) != ToolbarDragDropHelper::atomToolItem) {
+		gtk_drag_finish(dragContext, false, false, time);
+		return;
+	}
+
+	AbstractItemSelectionData * d = NULL;
+	d = (AbstractItemSelectionData *) gtk_selection_data_get_data(data);
+
+	AbstractToolItem * item = d->item;
+
+	if (item->isUsed()) {
+		dlg->removeFromToolbar(item);
+		dlg->rebuildIconview();
+	}
+
+	gtk_drag_finish(dragContext, true, false, time);
 }
 
 /**
@@ -242,7 +240,7 @@ void ToolbarCustomizeDialog::dragDataReceived(GtkWidget * widget, GdkDragContext
 void ToolbarCustomizeDialog::removeFromToolbar(AbstractToolItem * item) {
 	XOJ_CHECK_TYPE(ToolbarCustomizeDialog);
 
-	// TODO TOOLBAR-DRAG-DROP
+	// TODO (2) TOOLBAR-DRAG-DROP
 }
 
 /**

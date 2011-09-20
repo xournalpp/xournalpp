@@ -23,7 +23,7 @@ public:
 	static void dragDestAddToolbar(GtkWidget * target);
 	static void dragSourceAddToolbar(GtkWidget * widget);
 
-private:
+public:
 	static GdkAtom atomToolItem;
 };
 

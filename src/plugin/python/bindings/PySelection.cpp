@@ -64,7 +64,7 @@ static PyObject *
 PySelection_setX(PySelection * self, PyObject * args) {
 	GET_SELECTION();
 
-	// TODO: not implemented
+	// TODO: LOW PRIO, python: not implemented
 //	selection->mo
 	Py_RETURN_NONE;
 }
@@ -73,7 +73,7 @@ static PyObject *
 PySelection_setY(PySelection * self, PyObject * args) {
 	GET_SELECTION();
 
-	// TODO: not implemented
+	// TODO: LOW PRIO, python: not implemented
 //	selection->mo
 	Py_RETURN_NONE;
 }
