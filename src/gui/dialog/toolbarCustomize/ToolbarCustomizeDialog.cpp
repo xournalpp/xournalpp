@@ -24,11 +24,12 @@ struct _ToolItemDragData {
 	GtkWidget * ebox;
 };
 
-ToolbarCustomizeDialog::ToolbarCustomizeDialog(GladeSearchpath * gladeSearchPath, MainWindow * win) :
+ToolbarCustomizeDialog::ToolbarCustomizeDialog(GladeSearchpath * gladeSearchPath, MainWindow * win, ToolbarDragDropHandler * handler) :
 	GladeGui(gladeSearchPath, "toolbarCustomizeDialog.glade", "DialogCustomizeToolbar") {
 	XOJ_INIT_TYPE(ToolbarCustomizeDialog);
 
 	this->win = win;
+	this->handler = handler;
 	this->currentDragItem = NULL;
 	this->itemDatalist = NULL;
 	this->itemSelectionData = NULL;
@@ -187,6 +188,7 @@ void ToolbarCustomizeDialog::removeFromToolbar(AbstractToolItem * item) {
 void ToolbarCustomizeDialog::freeIconview() {
 	XOJ_CHECK_TYPE(ToolbarCustomizeDialog);
 
+	printf("freeIconview\n");
 	GtkTable * table = GTK_TABLE(get("tbDefaultTools"));
 
 	GList * children = gtk_container_get_children(GTK_CONTAINER(table));
@@ -202,6 +204,10 @@ void ToolbarCustomizeDialog::freeIconview() {
 	}
 	g_list_free(this->itemSelectionData);
 	this->itemSelectionData = NULL;
+
+
+	printf("end freeIconview\n");
+
 }
 
 /**
@@ -212,7 +218,9 @@ void ToolbarCustomizeDialog::rebuildIconview() {
 
 	freeIconview();
 
+	printf("rebuildIconview()\n");
 	GtkTable * table = GTK_TABLE(get("tbDefaultTools"));
+
 
 	ListIterator<AbstractToolItem *> it = this->win->getToolMenuHandler()->getToolItems();
 
@@ -248,7 +256,7 @@ void ToolbarCustomizeDialog::rebuildIconview() {
 
 		gtk_box_pack_end(GTK_BOX(box), icon, false, false, 0);
 
-		/* make ebox a drag source */
+		// make ebox a drag source
 		gtk_drag_source_set(ebox, GDK_BUTTON1_MASK, &ToolbarDragDropHelper::dropTargetEntry, 1, GDK_ACTION_MOVE);
 		ToolbarDragDropHelper::dragSourceAddToolbar(ebox);
 
@@ -273,6 +281,17 @@ void ToolbarCustomizeDialog::rebuildIconview() {
 
 		i++;
 	}
+
+	printf("end rebuildIconview()\n");
+
+}
+
+void ToolbarCustomizeDialog::windowResponseCb(GtkDialog * dialog, int response, ToolbarCustomizeDialog * dlg) {
+	XOJ_CHECK_TYPE_OBJ(dlg, ToolbarCustomizeDialog);
+
+    gtk_widget_destroy (GTK_WIDGET (dialog));
+
+    dlg->handler->toolbarConfigDialogClosed();
 }
 
 /**
@@ -281,6 +300,10 @@ void ToolbarCustomizeDialog::rebuildIconview() {
 void ToolbarCustomizeDialog::show() {
 	XOJ_CHECK_TYPE(ToolbarCustomizeDialog);
 
-	gtk_dialog_run(GTK_DIALOG(this->window));
-	gtk_widget_hide(this->window);
+	g_signal_connect(this->window, "response", G_CALLBACK(windowResponseCb), this);
+
+	gtk_window_set_transient_for(GTK_WINDOW(this->window), GTK_WINDOW(this->win->getWindow()));
+
+	gtk_widget_show_all(this->window);
+
 }

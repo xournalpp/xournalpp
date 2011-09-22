@@ -30,12 +30,19 @@ public:
 
 	virtual void toolbarDataChanged();
 
+	void ref();
+	void unref();
+
+	void toolbarConfigDialogClosed();
+
 protected:
 	void prepareToolbarsForDragAndDrop(Control * control);
 	void clearToolbarsFromDragAndDrop();
 
 private:
 	XOJ_TYPE_ATTRIB;
+
+	int refcount;
 
 	ToolbarAdapter ** toolbars;
 	ToolbarCustomizeDialog * customizeDialog;

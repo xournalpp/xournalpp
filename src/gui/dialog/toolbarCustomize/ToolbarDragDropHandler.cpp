@@ -14,10 +14,27 @@ ToolbarDragDropHandler::ToolbarDragDropHandler() {
 
 	this->toolbars = NULL;
 	this->customizeDialog = NULL;
+	this->refcount = 1;
 }
 
 ToolbarDragDropHandler::~ToolbarDragDropHandler() {
 	XOJ_RELEASE_TYPE(ToolbarDragDropHandler);
+}
+
+
+void ToolbarDragDropHandler::ref() {
+	XOJ_CHECK_TYPE(ToolbarDragDropHandler);
+
+	this->refcount++;
+}
+
+void ToolbarDragDropHandler::unref() {
+	XOJ_CHECK_TYPE(ToolbarDragDropHandler);
+
+	this->refcount--;
+	if(this->refcount == 0) {
+		delete this;
+	}
 }
 
 void ToolbarDragDropHandler::prepareToolbarsForDragAndDrop(Control * control) {
@@ -52,23 +69,25 @@ void ToolbarDragDropHandler::toolbarDataChanged() {
 	this->customizeDialog->rebuildIconview();
 }
 
-void ToolbarDragDropHandler::configure(Control * control) {
+void ToolbarDragDropHandler::toolbarConfigDialogClosed() {
 	XOJ_CHECK_TYPE(ToolbarDragDropHandler);
-
-	// remove original tool items
-	ToolbarData * oldData = control->getWindow()->clearToolbar();
-
-	this->prepareToolbarsForDragAndDrop(control);
-
-	this->customizeDialog = new ToolbarCustomizeDialog(control->getGladeSearchPath(), control->getWindow());
-
-	this->customizeDialog->show();
 
 	delete this->customizeDialog;
 	this->customizeDialog = NULL;
 
 	this->clearToolbarsFromDragAndDrop();
 
-	// restore original tool items
-	control->getWindow()->loadToolbar(oldData);
+	this->unref();
+}
+
+void ToolbarDragDropHandler::configure(Control * control) {
+	XOJ_CHECK_TYPE(ToolbarDragDropHandler);
+
+	this->ref();
+
+	this->prepareToolbarsForDragAndDrop(control);
+
+	this->customizeDialog = new ToolbarCustomizeDialog(control->getGladeSearchPath(), control->getWindow(), this);
+
+	this->customizeDialog->show();
 }
