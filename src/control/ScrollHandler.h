@@ -18,8 +18,9 @@ class Control;
 #include <gtk/gtk.h>
 #include <XournalType.h>
 #include "../model/PageRef.h"
+#include "../gui/widgets/SpinPageAdapter.h"
 
-class ScrollHandler {
+class ScrollHandler: public SpinPageListener {
 public:
 	ScrollHandler(Control * control);
 	virtual ~ScrollHandler();
@@ -36,6 +37,9 @@ public:
 	void scrollToAnnotatedPage(bool next);
 
 	bool isPageVisible(int page, int * visibleHeight = NULL);
+
+public:
+	virtual void pageChanged(int page);
 
 private:
 	XOJ_TYPE_ATTRIB;

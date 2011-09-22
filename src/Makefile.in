@@ -125,12 +125,12 @@ am__xournalpp_SOURCES_DIST = control/jobs/AutosaveJob.cpp \
 	gui/toolbarMenubar/ToolZoomSlider.cpp \
 	gui/widgets/gtkmenutooltogglebutton.cpp \
 	gui/widgets/Scrollbar.cpp gui/widgets/SelectColor.cpp \
-	gui/widgets/XournalWidget.cpp gui/widgets/ZoomCallib.cpp \
-	gui/Cursor.cpp gui/CursorTheme.cpp gui/GladeGui.cpp \
-	gui/GladeSearchpath.cpp gui/Layout.cpp gui/LayoutData.cpp \
-	gui/MainWindow.cpp gui/PageView.cpp gui/Redrawable.cpp \
-	gui/RepaintHandler.cpp gui/SearchBar.cpp gui/Shadow.cpp \
-	gui/TextEditor.cpp gui/XournalView.cpp \
+	gui/widgets/SpinPageAdapter.cpp gui/widgets/XournalWidget.cpp \
+	gui/widgets/ZoomCallib.cpp gui/Cursor.cpp gui/CursorTheme.cpp \
+	gui/GladeGui.cpp gui/GladeSearchpath.cpp gui/Layout.cpp \
+	gui/LayoutData.cpp gui/MainWindow.cpp gui/PageView.cpp \
+	gui/Redrawable.cpp gui/RepaintHandler.cpp gui/SearchBar.cpp \
+	gui/Shadow.cpp gui/TextEditor.cpp gui/XournalView.cpp \
 	model/eraser/EraseableStroke.cpp \
 	model/eraser/EraseableStrokePart.cpp model/eraser/PartList.cpp \
 	model/BackgroundImage.cpp model/BackgroundImageContents.cpp \
@@ -245,6 +245,7 @@ am_xournalpp_OBJECTS = xournalpp-AutosaveJob.$(OBJEXT) \
 	xournalpp-ToolZoomSlider.$(OBJEXT) \
 	xournalpp-gtkmenutooltogglebutton.$(OBJEXT) \
 	xournalpp-Scrollbar.$(OBJEXT) xournalpp-SelectColor.$(OBJEXT) \
+	xournalpp-SpinPageAdapter.$(OBJEXT) \
 	xournalpp-XournalWidget.$(OBJEXT) \
 	xournalpp-ZoomCallib.$(OBJEXT) xournalpp-Cursor.$(OBJEXT) \
 	xournalpp-CursorTheme.$(OBJEXT) xournalpp-GladeGui.$(OBJEXT) \
@@ -587,12 +588,12 @@ xournalpp_SOURCES = control/jobs/AutosaveJob.cpp \
 	gui/toolbarMenubar/ToolZoomSlider.cpp \
 	gui/widgets/gtkmenutooltogglebutton.cpp \
 	gui/widgets/Scrollbar.cpp gui/widgets/SelectColor.cpp \
-	gui/widgets/XournalWidget.cpp gui/widgets/ZoomCallib.cpp \
-	gui/Cursor.cpp gui/CursorTheme.cpp gui/GladeGui.cpp \
-	gui/GladeSearchpath.cpp gui/Layout.cpp gui/LayoutData.cpp \
-	gui/MainWindow.cpp gui/PageView.cpp gui/Redrawable.cpp \
-	gui/RepaintHandler.cpp gui/SearchBar.cpp gui/Shadow.cpp \
-	gui/TextEditor.cpp gui/XournalView.cpp \
+	gui/widgets/SpinPageAdapter.cpp gui/widgets/XournalWidget.cpp \
+	gui/widgets/ZoomCallib.cpp gui/Cursor.cpp gui/CursorTheme.cpp \
+	gui/GladeGui.cpp gui/GladeSearchpath.cpp gui/Layout.cpp \
+	gui/LayoutData.cpp gui/MainWindow.cpp gui/PageView.cpp \
+	gui/Redrawable.cpp gui/RepaintHandler.cpp gui/SearchBar.cpp \
+	gui/Shadow.cpp gui/TextEditor.cpp gui/XournalView.cpp \
 	model/eraser/EraseableStroke.cpp \
 	model/eraser/EraseableStrokePart.cpp model/eraser/PartList.cpp \
 	model/BackgroundImage.cpp model/BackgroundImageContents.cpp \
@@ -843,6 +844,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-Sidebar.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-SidebarPreview.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-SizeUndoAction.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-SpinPageAdapter.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-Stroke.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-SynchronizedProgressListener.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-Text.Po@am__quote@
@@ -2127,6 +2129,20 @@ xournalpp-SelectColor.obj: gui/widgets/SelectColor.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='gui/widgets/SelectColor.cpp' object='xournalpp-SelectColor.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-SelectColor.obj `if test -f 'gui/widgets/SelectColor.cpp'; then $(CYGPATH_W) 'gui/widgets/SelectColor.cpp'; else $(CYGPATH_W) '$(srcdir)/gui/widgets/SelectColor.cpp'; fi`
+
+xournalpp-SpinPageAdapter.o: gui/widgets/SpinPageAdapter.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-SpinPageAdapter.o -MD -MP -MF $(DEPDIR)/xournalpp-SpinPageAdapter.Tpo -c -o xournalpp-SpinPageAdapter.o `test -f 'gui/widgets/SpinPageAdapter.cpp' || echo '$(srcdir)/'`gui/widgets/SpinPageAdapter.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-SpinPageAdapter.Tpo $(DEPDIR)/xournalpp-SpinPageAdapter.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='gui/widgets/SpinPageAdapter.cpp' object='xournalpp-SpinPageAdapter.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-SpinPageAdapter.o `test -f 'gui/widgets/SpinPageAdapter.cpp' || echo '$(srcdir)/'`gui/widgets/SpinPageAdapter.cpp
+
+xournalpp-SpinPageAdapter.obj: gui/widgets/SpinPageAdapter.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-SpinPageAdapter.obj -MD -MP -MF $(DEPDIR)/xournalpp-SpinPageAdapter.Tpo -c -o xournalpp-SpinPageAdapter.obj `if test -f 'gui/widgets/SpinPageAdapter.cpp'; then $(CYGPATH_W) 'gui/widgets/SpinPageAdapter.cpp'; else $(CYGPATH_W) '$(srcdir)/gui/widgets/SpinPageAdapter.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-SpinPageAdapter.Tpo $(DEPDIR)/xournalpp-SpinPageAdapter.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='gui/widgets/SpinPageAdapter.cpp' object='xournalpp-SpinPageAdapter.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-SpinPageAdapter.obj `if test -f 'gui/widgets/SpinPageAdapter.cpp'; then $(CYGPATH_W) 'gui/widgets/SpinPageAdapter.cpp'; else $(CYGPATH_W) '$(srcdir)/gui/widgets/SpinPageAdapter.cpp'; fi`
 
 xournalpp-XournalWidget.o: gui/widgets/XournalWidget.cpp
 @am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-XournalWidget.o -MD -MP -MF $(DEPDIR)/xournalpp-XournalWidget.Tpo -c -o xournalpp-XournalWidget.o `test -f 'gui/widgets/XournalWidget.cpp' || echo '$(srcdir)/'`gui/widgets/XournalWidget.cpp

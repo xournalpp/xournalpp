@@ -508,7 +508,7 @@ void ToolMenuHandler::setRedoDescription(String description) {
 	gtk_menu_item_set_label(GTK_MENU_ITEM(gui->get("menuEditRedo")), description.c_str());
 }
 
-GtkWidget * ToolMenuHandler::getPageSpinner() {
+SpinPageAdapter * ToolMenuHandler::getPageSpinner() {
 	XOJ_CHECK_TYPE(ToolMenuHandler);
 
 	return this->toolPageSpinner->getPageSpinner();

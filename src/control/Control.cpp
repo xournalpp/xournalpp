@@ -813,7 +813,7 @@ void Control::clearSelectionEndText() {
 
 	clearSelection();
 	if (win) {
-		win->getXournal()->endTextSelection();
+		win->getXournal()->endTextAllPages();
 	}
 }
 
@@ -1664,7 +1664,7 @@ void Control::toolChanged() {
 
 	if (type != TOOL_TEXT) {
 		if (win) {
-			win->getXournal()->endTextSelection();
+			win->getXournal()->endTextAllPages();
 		}
 	}
 }

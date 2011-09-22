@@ -71,7 +71,7 @@ public:
 
 	bool actionDelete();
 
-	void endTextSelection();
+	void endTextAllPages(PageView * except = NULL);
 
 	void resetShapeRecognizer();
 

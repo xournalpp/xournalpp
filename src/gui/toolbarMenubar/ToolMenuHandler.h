@@ -30,6 +30,7 @@ class ToolHandler;
 class XojFont;
 class GladeGui;
 class ToolbarModel;
+class SpinPageAdapter;
 
 class ToolMenuHandler {
 public:
@@ -50,7 +51,7 @@ public:
 	void setUndoDescription(String description);
 	void setRedoDescription(String description);
 
-	GtkWidget * getPageSpinner();
+	SpinPageAdapter * getPageSpinner();
 	void setPageText(String text);
 
 	int getSelectedLayer();

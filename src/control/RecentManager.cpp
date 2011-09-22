@@ -33,6 +33,9 @@ RecentManager::~RecentManager() {
 	}
 	this->menu = NULL;
 
+	g_list_free(this->listener);
+	this->listener = NULL;
+
 	XOJ_RELEASE_TYPE(RecentManager);
 }
 
@@ -131,17 +134,19 @@ void RecentManager::setMaxRecent(int maxRecent) {
 void RecentManager::openRecent(String uri) {
 	XOJ_CHECK_TYPE(RecentManager);
 
-	if (uri.startsWith("file://")) {
-		uri = uri.substring(7);
-	}
-	if (!uri.startsWith("/")) {
+	if (!uri.startsWith("file://")) {
 		g_warning("could not handle URI: %s", uri.c_str());
+		return;
+	}
+
+	char * filename = g_filename_from_uri(uri.c_str(), NULL, NULL);
+	if (!filename) {
 		return;
 	}
 
 	for (GList * l = this->listener; l != NULL; l = l->next) {
 		RecentManagerListener * listener = (RecentManagerListener *) l->data;
-		listener->fileOpened(uri.c_str());
+		listener->fileOpened(filename);
 	}
 }
 

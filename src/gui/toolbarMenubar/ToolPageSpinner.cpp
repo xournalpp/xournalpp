@@ -2,6 +2,8 @@
 
 #include "../GladeGui.h"
 
+#include "../widgets/SpinPageAdapter.h"
+
 #include <config.h>
 #include <glib/gi18n-lib.h>
 
@@ -12,15 +14,20 @@ ToolPageSpinner::ToolPageSpinner(GladeGui * gui, ActionHandler * handler, String
 
 	this->gui = gui;
 
-	this->pageSpinner = gtk_spin_button_new_with_range(0, 0, 1);
+	this->pageSpinner = new SpinPageAdapter();
 	this->lbPageNo = NULL;
 }
 
 ToolPageSpinner::~ToolPageSpinner() {
+	XOJ_CHECK_TYPE(ToolPageSpinner);
+
+	delete this->pageSpinner;
+	this->pageSpinner = NULL;
+
 	XOJ_RELEASE_TYPE(ToolPageSpinner);
 }
 
-GtkWidget * ToolPageSpinner::getPageSpinner() {
+SpinPageAdapter * ToolPageSpinner::getPageSpinner() {
 	XOJ_CHECK_TYPE(ToolPageSpinner);
 
 	return pageSpinner;
@@ -54,7 +61,7 @@ GtkToolItem * ToolPageSpinner::newItem() {
 	GtkWidget * hbox = gtk_hbox_new(false, 1);
 	gtk_box_pack_start(GTK_BOX(hbox), gtk_label_new(_("Page")), false, false, 7);
 
-	gtk_box_pack_start(GTK_BOX(hbox), this->pageSpinner, false, false, 0);
+	gtk_box_pack_start(GTK_BOX(hbox), this->pageSpinner->getWidget(), false, false, 0);
 
 	this->lbPageNo = gtk_label_new("");
 	gtk_box_pack_start(GTK_BOX(hbox), this->lbPageNo, false, false, 0);

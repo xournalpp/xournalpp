@@ -8,6 +8,7 @@
 #include "toolbarMenubar/model/ToolbarModel.h"
 #include "Layout.h"
 #include "widgets/XournalWidget.h"
+#include "widgets/SpinPageAdapter.h"
 
 #include <config.h>
 #include <glib/gi18n-lib.h>
@@ -43,27 +44,28 @@ MainWindow::MainWindow(GladeSearchpath * gladeSearchPath, Control * control) :
 
 	if (type == SCROLLBAR_HIDE_NONE || type == SCROLLBAR_HIDE_VERTICAL) {
 		Layout * layout = gtk_xournal_get_layout(this->xournal->getWidget());
-		gtk_table_attach(GTK_TABLE(tableXournal),layout->getScrollbarHorizontal(), 1, 2, 1, 2, (GtkAttachOptions) (GTK_EXPAND | GTK_FILL), GTK_FILL, 0, 0);
+		gtk_table_attach(GTK_TABLE(tableXournal), layout->getScrollbarHorizontal(), 1, 2, 1, 2, (GtkAttachOptions)(
+				GTK_EXPAND | GTK_FILL), GTK_FILL, 0, 0);
 	}
 
-	
 	setSidebarVisible(control->getSettings()->isSidebarVisible());
 
 	// Window handler
-	g_signal_connect(this->window, "delete-event", (GCallback) &deleteEventCallback, this->control);
+	g_signal_connect(this->window, "delete-event", (GCallback) & deleteEventCallback, this->control);
 	g_signal_connect(this->window, "window_state_event", G_CALLBACK(&windowStateEventCallback), this);
 
 	g_signal_connect(get("buttonCloseSidebar"), "clicked", G_CALLBACK(buttonCloseSidebarClicked), this);
 
-	this->toolbar = new ToolMenuHandler(this->control, this->control->getZoomControl(), this, this->control->getToolHandler());
+	this->toolbar = new ToolMenuHandler(this->control, this->control->getZoomControl(), this,
+			this->control->getToolHandler());
 
 	char * file = gladeSearchPath->findFile(NULL, "toolbar.ini");
 
 	ToolbarModel * tbModel = this->toolbar->getModel();
 
 	if (!tbModel->parse(file, true)) {
-		GtkWidget* dlg = gtk_message_dialog_new(GTK_WINDOW(this->window), GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, _(
-				"Could not parse general toolbar.ini file: %s\nNo Toolbars will be available"), file);
+		GtkWidget* dlg = gtk_message_dialog_new(GTK_WINDOW(this->window), GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR,
+				GTK_BUTTONS_OK, _("Could not parse general toolbar.ini file: %s\nNo Toolbars will be available"), file);
 
 		gtk_dialog_run(GTK_DIALOG(dlg));
 		gtk_widget_hide(dlg);
@@ -75,8 +77,8 @@ MainWindow::MainWindow(GladeSearchpath * gladeSearchPath, Control * control) :
 	file = g_build_filename(g_get_home_dir(), G_DIR_SEPARATOR_S, CONFIG_DIR, G_DIR_SEPARATOR_S, TOOLBAR_CONFIG, NULL);
 	if (g_file_test(file, G_FILE_TEST_EXISTS)) {
 		if (!tbModel->parse(file, false)) {
-			GtkWidget* dlg = gtk_message_dialog_new(GTK_WINDOW(this->window), GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, _(
-					"Could not parse custom toolbar.ini file: %s\nToolbars will not be available"), file);
+			GtkWidget* dlg = gtk_message_dialog_new(GTK_WINDOW(this->window), GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR,
+					GTK_BUTTONS_OK, _("Could not parse custom toolbar.ini file: %s\nToolbars will not be available"), file);
 
 			gtk_dialog_run(GTK_DIALOG(dlg));
 			gtk_widget_hide(dlg);
@@ -87,20 +89,21 @@ MainWindow::MainWindow(GladeSearchpath * gladeSearchPath, Control * control) :
 
 	initToolbarAndMenu();
 
-	g_signal_connect(getSpinPageNo(), "value-changed", G_CALLBACK(pageNrSpinChangedCallback), this);
-
 	GtkWidget * menuViewSidebarVisible = get("menuViewSidebarVisible");
 	g_signal_connect(menuViewSidebarVisible, "toggled", (GCallback) viewShowSidebar, this);
 
 	updateScrollbarSidebarPosition();
 
-	gtk_window_set_default_size(GTK_WINDOW(this->window), control->getSettings()->getMainWndWidth(), control->getSettings()->getMainWndHeight());
+	gtk_window_set_default_size(GTK_WINDOW(this->window), control->getSettings()->getMainWndWidth(),
+			control->getSettings()->getMainWndHeight());
 
 	if (control->getSettings()->isMainWndMaximized()) {
 		gtk_window_maximize(GTK_WINDOW(this->window));
 	} else {
 		gtk_window_unmaximize(GTK_WINDOW(this->window));
 	}
+
+	getSpinPageNo()->addListener(this->control->getScrollHandler());
 
 	// Drag and Drop
 	g_signal_connect(this->window, "drag-data-received", G_CALLBACK(dragDataRecived), this);
@@ -168,8 +171,8 @@ bool cancellable_cancel(GCancellable * cancel) {
 	return false;
 }
 
-void MainWindow::dragDataRecived(GtkWidget * widget, GdkDragContext * dragContext, gint x, gint y, GtkSelectionData * data, guint info, guint time,
-		MainWindow * win) {
+void MainWindow::dragDataRecived(GtkWidget * widget, GdkDragContext * dragContext, gint x, gint y,
+		GtkSelectionData * data, guint info, guint time, MainWindow * win) {
 
 	GtkWidget * source = gtk_drag_get_source_widget(dragContext);
 	if (source && widget == gtk_widget_get_toplevel(source)) {
@@ -289,7 +292,6 @@ void MainWindow::updateScrollbarSidebarPosition() {
 
 	GtkWidget * v = layout->getScrollbarVertical();
 
-
 	if (gtk_widget_get_parent(v) != NULL) {
 		gtk_container_remove(GTK_CONTAINER(tableXournal), v);
 	}
@@ -359,25 +361,6 @@ void MainWindow::setSidebarVisible(bool visible) {
 
 	GtkWidget * w = get("menuViewSidebarVisible");
 	gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(w), visible);
-}
-
-bool pageNrSpinChangedTimerCallback(Control * control) {
-	gdk_threads_enter();
-	control->getScrollHandler()->scrollToSpinPange();
-	gdk_threads_leave();
-	return false;
-}
-
-void MainWindow::pageNrSpinChangedCallback(GtkSpinButton * spinbutton, MainWindow * win) {
-	XOJ_CHECK_TYPE_OBJ(win, MainWindow);
-
-	static int lastId = 0;
-	if (lastId) {
-		g_source_remove(lastId);
-	}
-
-	// Give the spin button some time to realease, if we don't do he will send new events...
-	lastId = g_timeout_add(100, (GSourceFunc) &pageNrSpinChangedTimerCallback, win->control);
 }
 
 void tbSelectMenuitemActivated(GtkMenuItem * menuitem, MenuSelectToolbarData * data) {
@@ -453,7 +436,8 @@ void MainWindow::loadToolbar(ToolbarData * d) {
 	this->selectedToolbar = d;
 
 	for (int i = 0; i < TOOLBAR_DEFINITIONS_LEN; i++) {
-		this->toolbar->load(d, this->toolbarWidgets[i], TOOLBAR_DEFINITIONS[i].propName, TOOLBAR_DEFINITIONS[i].horizontal);
+		this->toolbar->load(d, this->toolbarWidgets[i], TOOLBAR_DEFINITIONS[i].propName,
+				TOOLBAR_DEFINITIONS[i].horizontal);
 	}
 }
 
@@ -610,8 +594,7 @@ XojFont MainWindow::getFontButtonFont() {
 
 void MainWindow::updatePageNumbers(int page, int pagecount, int pdfpage) {
 	XOJ_CHECK_TYPE(MainWindow);
-
-	GtkWidget * spinPageNo = getSpinPageNo();
+	SpinPageAdapter * spinPageNo = getSpinPageNo();
 
 	int min = 1;
 	int max = pagecount;
@@ -623,8 +606,8 @@ void MainWindow::updatePageNumbers(int page, int pagecount, int pdfpage) {
 		page++;
 	}
 
-	gtk_spin_button_set_range(GTK_SPIN_BUTTON(spinPageNo), min, max);
-	gtk_spin_button_set_value(GTK_SPIN_BUTTON(spinPageNo), page);
+	spinPageNo->setMinMaxPage(min, max);
+	spinPageNo->setPage(page);
 
 	char * pdfText = NULL;
 	if (pdfpage < 0) {
@@ -683,7 +666,7 @@ void MainWindow::setRedoDescription(String description) {
 	toolbar->setRedoDescription(description);
 }
 
-GtkWidget * MainWindow::getSpinPageNo() {
+SpinPageAdapter * MainWindow::getSpinPageNo() {
 	XOJ_CHECK_TYPE(MainWindow);
 
 	return toolbar->getPageSpinner();

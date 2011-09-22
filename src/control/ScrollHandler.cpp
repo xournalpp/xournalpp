@@ -1,6 +1,7 @@
 #include "ScrollHandler.h"
 #include "Control.h"
 #include "../gui/XournalView.h"
+#include "../gui/widgets/SpinPageAdapter.h"
 
 ScrollHandler::ScrollHandler(Control * control) {
 	XOJ_INIT_TYPE(ScrollHandler);
@@ -56,8 +57,8 @@ void ScrollHandler::scrollToSpinPange() {
 	if (!this->control->getWindow()) {
 		return;
 	}
-	GtkWidget * spinPageNo = this->control->getWindow()->getSpinPageNo();
-	int page = gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(spinPageNo));
+	SpinPageAdapter * spinPageNo = this->control->getWindow()->getSpinPageNo();
+	int page = spinPageNo->getPage();
 	if (page == 0) {
 		return;
 	}
@@ -103,4 +104,11 @@ bool ScrollHandler::isPageVisible(int page, int * visibleHeight) {
 
 	return this->control->getWindow()->getXournal()->isPageVisible(page, visibleHeight);
 }
+
+void ScrollHandler::pageChanged(int page) {
+	XOJ_CHECK_TYPE(ScrollHandler);
+
+	scrollToSpinPange();
+}
+
 
