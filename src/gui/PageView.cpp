@@ -187,6 +187,8 @@ void PageView::endText() {
 void PageView::startText(double x, double y) {
 	XOJ_CHECK_TYPE(PageView);
 
+	this->xournal->endTextAllPages(this);
+
 	if (this->textEditor == NULL) {
 		// Is there already a textfield?
 		ListIterator<Element *> eit = this->page.getSelectedLayer()->elementIterator();

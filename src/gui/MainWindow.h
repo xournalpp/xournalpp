@@ -23,6 +23,7 @@ class ToolbarData;
 class ToolbarModel;
 class XournalView;
 class Layout;
+class SpinPageAdapter;
 
 class MainWindow: public GladeGui {
 public:
@@ -65,7 +66,7 @@ public:
 
 	void updateLayerCombobox();
 
-	GtkWidget * getSpinPageNo();
+	SpinPageAdapter * getSpinPageNo();
 	ToolbarModel * getToolbarModel();
 	ToolMenuHandler * getToolMenuHandler();
 
@@ -81,7 +82,6 @@ public:
 private:
 	void initToolbarAndMenu();
 
-	static void pageNrSpinChangedCallback(GtkSpinButton * spinbutton, MainWindow * win);
 	static void buttonCloseSidebarClicked(GtkButton * button, MainWindow * win);
 
 	/**

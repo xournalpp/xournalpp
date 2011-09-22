@@ -16,6 +16,7 @@
 #include <XournalType.h>
 
 class GladeGui;
+class SpinPageAdapter;
 
 class ToolPageSpinner: public AbstractToolItem {
 public:
@@ -23,7 +24,7 @@ public:
 	virtual ~ToolPageSpinner();
 
 public:
-	GtkWidget * getPageSpinner();
+	SpinPageAdapter * getPageSpinner();
 	void setText(String text);
 	virtual String getToolDisplayName();
 	virtual GtkWidget * getNewToolIcon();
@@ -36,7 +37,7 @@ private:
 
 	GladeGui * gui;
 
-	GtkWidget * pageSpinner;
+	SpinPageAdapter * pageSpinner;
 	GtkWidget * lbPageNo;
 };
 
