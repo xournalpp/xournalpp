@@ -883,7 +883,7 @@ void Control::customizeToolbars() {
 	ToolbarDragDropHandler * handler = new ToolbarDragDropHandler();
 	handler->configure(this);
 
-	delete handler;
+	handler->unref();
 }
 
 void Control::setRulerEnabled(bool enabled) {

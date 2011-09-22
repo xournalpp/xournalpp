@@ -19,72 +19,42 @@
 
 class ToolbarAdapter {
 public:
-	ToolbarAdapter(GtkWidget * w, ToolbarListener * listener) {
+	ToolbarAdapter(GtkWidget * toolbar, ToolbarListener * listener) {
 		XOJ_INIT_TYPE( ToolbarAdapter);
 
-		this->w = w;
+		this->w = toolbar;
 		this->listener = listener;
 
 		// prepare drag & drop
-		gtk_drag_dest_set(w, GTK_DEST_DEFAULT_ALL, NULL, 0, GDK_ACTION_MOVE);
-		ToolbarDragDropHelper::dragDestAddToolbar(w);
+		gtk_drag_dest_set(toolbar, GTK_DEST_DEFAULT_ALL, NULL, 0, GDK_ACTION_MOVE);
+		ToolbarDragDropHelper::dragDestAddToolbar(toolbar);
 
-		g_signal_connect(w, "drag_motion", G_CALLBACK(toolbarDragMotionCb), this);
-		g_signal_connect(w, "drag_leave", G_CALLBACK(toolbarDragLeafeCb), this);
-		g_signal_connect(w, "drag_data_received", G_CALLBACK(toolbarDragDataReceivedCb), this);
+		g_signal_connect(toolbar, "drag_motion", G_CALLBACK(toolbarDragMotionCb), this);
+		g_signal_connect(toolbar, "drag_leave", G_CALLBACK(toolbarDragLeafeCb), this);
+		g_signal_connect(toolbar, "drag_data_received", G_CALLBACK(toolbarDragDataReceivedCb), this);
 
 		showToolbar();
 
+
+/*
+
 		GtkToolItem * toolbarItemContents = gtk_tool_button_new_from_stock(GTK_STOCK_JUSTIFY_CENTER);
-		GtkToolbar * tb = GTK_TOOLBAR(this->w);
+		GtkToolbar * tb = GTK_TOOLBAR(toolbar);
 
 		gtk_widget_show(GTK_WIDGET(toolbarItemContents));
 		gtk_toolbar_insert(tb, toolbarItemContents, 0);
 
-
-//
-//
-//		GtkToolItem * toolItemToolbar = gtk_tool_item_new();
-//
-//
-//
-//
-//		GtkWidget * ebox = gtk_event_box_new();
-//		gtk_container_add(GTK_CONTAINER(ebox), GTK_WIDGET(toolbarItemContents));
-//
-//		/* make ebox a drag source */
-//		gtk_drag_source_set(ebox, GDK_BUTTON1_MASK, &ToolbarDragDropHelper::dropTargetEntry, 1, GDK_ACTION_MOVE);
-//		ToolbarDragDropHelper::dragSourceAddToolbar(ebox);
-//
-//		g_signal_connect(ebox, "drag-begin", G_CALLBACK(TESTtoolitemDragBegin), NULL);
-//		g_signal_connect(ebox, "drag-end", G_CALLBACK(TESTtoolitemDragEnd), NULL);
-//
-//		gtk_container_add(GTK_CONTAINER(toolItemToolbar), ebox);
-//
-//
-//
-//		gtk_widget_show_all(GTK_WIDGET(toolItemToolbar));
-//
-//
-//
-////		AbstractItemSelectionData * sd = new AbstractItemSelectionData(item);
-////		g_signal_connect(test, "drag-data-get", G_CALLBACK(toolitemDragDataGet), sd);
-//
-//		gtk_toolbar_insert(tb, toolItemToolbar, 0);
+		gtk_tool_item_set_use_drag_window(toolbarItemContents, TRUE);
+		gtk_drag_source_set(GTK_WIDGET (toolbarItemContents), GDK_BUTTON1_MASK, &ToolbarDragDropHelper::dropTargetEntry, 1, GDK_ACTION_MOVE);
 
 
-//		  g_signal_connect (toolbar, "drag_drop",
-//				    G_CALLBACK (toolbar_drag_drop), label);
-
-	}
+*/
 
 
-	static void TESTtoolitemDragBegin(GtkWidget * widget, GdkDragContext * context, void * data) {
-		gtk_widget_hide(widget);
-	}
 
-	static void TESTtoolitemDragEnd(GtkWidget * widget, GdkDragContext * context, void * data) {
-		gtk_widget_show(widget);
+    	  // TODO: cursor wider löschen
+	 // gdk_window_set_cursor (gtk_widget_get_window (GTK_WIDGET(item)), NULL);
+
 	}
 
 

@@ -24,9 +24,11 @@ class ToolbarDragDropHandler;
 typedef struct _ToolItemDragData ToolItemDragData;
 struct _ToolItemDragData;
 
+
+
 class ToolbarCustomizeDialog: public GladeGui {
 public:
-	ToolbarCustomizeDialog(GladeSearchpath * gladeSearchPath, MainWindow * win);
+	ToolbarCustomizeDialog(GladeSearchpath * gladeSearchPath, MainWindow * win, ToolbarDragDropHandler * handler);
 	virtual ~ToolbarCustomizeDialog();
 
 public:
@@ -52,6 +54,9 @@ private:
 	void cleanupToolbarsItemsDrag();
 
 private:
+	static void windowResponseCb(GtkDialog * dialog, int response, ToolbarCustomizeDialog * dlg);
+
+private:
 	XOJ_TYPE_ATTRIB;
 	AbstractToolItem * currentDragItem;
 	ToolbarDragDropHandler * tbhandler;
@@ -59,6 +64,8 @@ private:
 	GList * itemDatalist;
 
 	MainWindow * win;
+
+	ToolbarDragDropHandler * handler;
 
 	GList * itemSelectionData;
 };
