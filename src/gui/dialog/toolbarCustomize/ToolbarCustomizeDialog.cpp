@@ -70,32 +70,6 @@ ToolbarCustomizeDialog::~ToolbarCustomizeDialog() {
 	XOJ_RELEASE_TYPE(ToolbarCustomizeDialog);
 }
 
-void ToolbarCustomizeDialog::prepareToolbarsItemsDrag() {
-	XOJ_CHECK_TYPE(ToolbarCustomizeDialog);
-
-	//	int len = 0;
-	//	GtkWidget ** widgets = this->win->getToolbarWidgets(len);
-	//
-	//	for (int i = 0; i < len; i++) {
-	//		GtkToolbar * tb = GTK_TOOLBAR(widgets[i]);
-	//
-	//		int count = gtk_toolbar_get_n_items(tb);
-	//		for (int j = 0; j < count; j++) {
-	//			GtkToolItem * it = gtk_toolbar_get_nth_item(tb, j);
-	//			AbstractToolItem * ti = xoj_tool_item_get_abstract_tool_item(it);
-	//
-	//			if(ti == NULL) {
-	//				g_warning("ToolbarItem %i/%i is not an XOJ_TOOLBAR_ITEM!", i, j);
-	//				continue;
-	//			} else {
-	//				printf("ToolbarItem %i/%i: %s\n", i, j, ti->getId().c_str());
-	//			}
-	//
-	//			ti->enableDrag();
-	//		}
-	//	}
-}
-
 void ToolbarCustomizeDialog::cleanupToolbarsItemsDrag() {
 	XOJ_CHECK_TYPE(ToolbarCustomizeDialog);
 
@@ -167,7 +141,7 @@ void ToolbarCustomizeDialog::dragDataReceived(GtkWidget * widget, GdkDragContext
 	if (item == NULL) {
 		printf("NULL AbstractItemSelectionData dropped\n");
 	} else if (item->isUsed()) {
-		dlg->removeFromToolbar(item, d->toolbar, d->position);
+		dlg->removeFromToolbar(item, d->toolbar, d->id);
 		dlg->rebuildIconview();
 	}
 
@@ -177,21 +151,17 @@ void ToolbarCustomizeDialog::dragDataReceived(GtkWidget * widget, GdkDragContext
 /**
  * Remove a toolbar item from the tool where it was
  */
-void ToolbarCustomizeDialog::removeFromToolbar(AbstractToolItem * item, String toolbarName, int position) {
+void ToolbarCustomizeDialog::removeFromToolbar(AbstractToolItem * item, String toolbarName, int id) {
 	XOJ_CHECK_TYPE(ToolbarCustomizeDialog);
 
 	ToolbarData * d = this->win->getSelectedToolbar();
-	if (d->removeItem(toolbarName, position)) {
-		printf("Removed tool item %s from Toolbar %s Position %i\n", item->getId().c_str(), toolbarName.c_str(), position);
+	if (d->removeItemByID(toolbarName, id)) {
+		printf("Removed tool item %s from Toolbar %s ID %i\n", item->getId().c_str(), toolbarName.c_str(), id);
 	} else {
-		printf("Could not removed tool item %s from Toolbar %s Position %i\n", item->getId().c_str(), toolbarName.c_str(), position);
+		printf("Could not removed tool item %s from Toolbar %s Position %i\n", item->getId().c_str(), toolbarName.c_str(), id);
 	}
 
 	this->win->reloadToolbars();
-
-	printf("ToolbarCustomizeDialog::removeFromToolbar\n");
-
-	// TODO (2) TOOLBAR-DRAG-DROP
 }
 
 /**

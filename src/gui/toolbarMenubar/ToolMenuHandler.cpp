@@ -103,45 +103,20 @@ void ToolMenuHandler::unloadToolbar(GtkWidget * toolbar) {
 	gtk_widget_hide(toolbar);
 }
 
-const char * ATTACH_TB_NAME = "XOJ_TB_NAME";
-const char * ATTACH_NAME = "XOJ_NAME";
-const char * ATTACH_POS = "XOJ_POS";
+const char * ATTACH_DRAG_DROP_ID = "XOJ_DRAG_DROP_ID";
 
-void ToolMenuHandler::attachMetadata(GtkWidget * w, const char * toolbarName, const char * name, int pos) {
-	g_object_set_data_full(G_OBJECT(w), ATTACH_TB_NAME, g_strdup(toolbarName), (GDestroyNotify) g_free);
-	g_object_set_data_full(G_OBJECT(w), ATTACH_NAME, g_strdup(name), (GDestroyNotify) g_free);
+void ToolMenuHandler::attachMetadata(GtkWidget * w, int id) {
+	int * idData = (int *)g_new(int, 1);
+	*idData = id;
 
-	int * posData = (int *)g_new(int, 1);
-	*posData = pos;
-
-	g_object_set_data_full(G_OBJECT(w), ATTACH_POS, posData, (GDestroyNotify) g_free);
+	g_object_set_data_full(G_OBJECT(w), ATTACH_DRAG_DROP_ID, idData, (GDestroyNotify) g_free);
 }
 
-const char * ToolMenuHandler::metadataGetToolbarName(GtkWidget * w) {
-	const char * str = (const char *)g_object_get_data(G_OBJECT(w), ATTACH_TB_NAME);
-
-	if(str == NULL) {
-		g_warning("Could not get Metadata %s from %s\n", ATTACH_TB_NAME, g_type_name (G_TYPE_FROM_INSTANCE(w)));
-	}
-
-	return str;
-}
-
-const char * ToolMenuHandler::metadataGetName(GtkWidget * w) {
-	const char * str = (const char *)g_object_get_data(G_OBJECT(w), ATTACH_NAME);
-
-	if(str == NULL) {
-		g_warning("Could not get Metadata %s from %s\n", ATTACH_NAME, g_type_name (G_TYPE_FROM_INSTANCE(w)));
-	}
-
-	return str;
-}
-
-int ToolMenuHandler::metadataGetPos(GtkWidget * w) {
-	const int * ptr = (const int *)g_object_get_data(G_OBJECT(w), ATTACH_POS);
+int ToolMenuHandler::metadataGetDragDropId(GtkWidget * w) {
+	const int * ptr = (const int *)g_object_get_data(G_OBJECT(w), ATTACH_DRAG_DROP_ID);
 
 	if(ptr == NULL) {
-		g_warning("Could not get Metadata %s from %s\n", ATTACH_POS, g_type_name (G_TYPE_FROM_INSTANCE(w)));
+		g_warning("Could not get Metadata %s from %s\n", ATTACH_DRAG_DROP_ID, g_type_name (G_TYPE_FROM_INSTANCE(w)));
 		return -1;
 	}
 
@@ -161,9 +136,10 @@ void ToolMenuHandler::load(ToolbarData * d, GtkWidget * toolbar, const char * to
 		if (e.name.equals(toolbarName)) {
 			int pos = 0;
 
-			std::vector<String>::iterator itItem;
+			std::vector<ToolbarItem>::iterator itItem;
 			for (itItem = e.entries.begin(); itItem != e.entries.end(); itItem++, pos++) {
-				String name = *itItem;
+				ToolbarItem dataItem = *itItem;
+				String name = dataItem;
 
 				if (name.equals("SEPARATOR")) {
 					GtkToolItem* toolItem = gtk_tool_item_new();
@@ -179,7 +155,7 @@ void ToolMenuHandler::load(ToolbarData * d, GtkWidget * toolbar, const char * to
 					gtk_widget_show(separator);
 					gtk_container_add(GTK_CONTAINER(toolItem), separator);
 
-					ToolMenuHandler::attachMetadata(GTK_WIDGET(toolItem), toolbarName, name.c_str(), pos);
+					ToolMenuHandler::attachMetadata(GTK_WIDGET(toolItem), dataItem.getId());
 
 					continue;
 				}
@@ -191,7 +167,7 @@ void ToolMenuHandler::load(ToolbarData * d, GtkWidget * toolbar, const char * to
 					gtk_widget_show(GTK_WIDGET(toolItem));
 					gtk_toolbar_insert(GTK_TOOLBAR(toolbar), toolItem, -1);
 
-					ToolMenuHandler::attachMetadata(GTK_WIDGET(toolItem), toolbarName, name.c_str(), pos);
+					ToolMenuHandler::attachMetadata(GTK_WIDGET(toolItem),  dataItem.getId());
 					continue;
 				}
 				if (name.startsWith("COLOR(") && name.size() == 15) {
@@ -221,7 +197,7 @@ void ToolMenuHandler::load(ToolbarData * d, GtkWidget * toolbar, const char * to
 					gtk_widget_show_all(GTK_WIDGET(it));
 					gtk_toolbar_insert(GTK_TOOLBAR(toolbar), it, -1);
 
-					ToolMenuHandler::attachMetadata(GTK_WIDGET(it), toolbarName, name.c_str(), pos);
+					ToolMenuHandler::attachMetadata(GTK_WIDGET(it), dataItem.getId());
 
 					continue;
 				}
@@ -242,7 +218,7 @@ void ToolMenuHandler::load(ToolbarData * d, GtkWidget * toolbar, const char * to
 						gtk_widget_show_all(GTK_WIDGET(it));
 						gtk_toolbar_insert(GTK_TOOLBAR(toolbar), GTK_TOOL_ITEM(it), -1);
 
-						ToolMenuHandler::attachMetadata(GTK_WIDGET(it), toolbarName, name.c_str(), pos);
+						ToolMenuHandler::attachMetadata(GTK_WIDGET(it), dataItem.getId());
 
 						found = true;
 						break;
@@ -257,7 +233,7 @@ void ToolMenuHandler::load(ToolbarData * d, GtkWidget * toolbar, const char * to
 		}
 	}
 
-	if (count == 0 && false) { //TODO: DEBUG
+	if (count == 0) {
 		gtk_widget_hide(toolbar);
 	} else {
 		gtk_widget_show(toolbar);

@@ -38,6 +38,12 @@ String ToolbarData::getId() {
 	return this->id;
 }
 
+void ToolbarData::setId(String id) {
+	XOJ_CHECK_TYPE(ToolbarData);
+
+	this->id = id;
+}
+
 bool ToolbarData::isPredefined() {
 	XOJ_CHECK_TYPE(ToolbarData);
 
@@ -82,25 +88,27 @@ void ToolbarData::load(GKeyFile * config, const char * group) {
 	g_strfreev(keys);
 }
 
-void ToolbarData::saveToKeyFile(GKeyFile * config) {/* TODO: TOOLBAR-DRAG-DROP
- const char * group = getId().c_str();
+void ToolbarData::saveToKeyFile(GKeyFile * config) {
+	const char * group = getId().c_str();
 
- for (it = this->contents.begin(); it != this->contents.end(); it++) {
- ToolbarEntry & e = *it;
+	std::vector<ToolbarEntry>::iterator it;
+	for (it = this->contents.begin(); it != this->contents.end(); it++) {
+		ToolbarEntry & e = *it;
 
- std::vector<String>::iterator itItem;
- for (itItem = e.entries.begin(); itItem != e.entries.end(); itItem++) {
+		String line = "";
 
+		std::vector<ToolbarItem>::iterator itItem;
+		for (itItem = e.entries.begin(); itItem != e.entries.end(); itItem++) {
+			line += ",";
+			line += *itItem;
+		}
 
- if (e.name.equals(toolbar)) {
- std::vector<String>::iterator it2 = e.entries.begin();
- it2 += position;
- e.entries.insert(it2, item);
- }
- }
+		if (line.length() < 2) {
+			g_key_file_set_string(config, group, e.name.c_str(), line.substring(1).c_str());
+		}
+	}
 
- //	g_key_file_set_string(config, )
- */
+	g_key_file_set_string(config, group, "name", this->name.c_str());
 }
 
 void ToolbarData::addItem(String toolbar, String item, int position) {
@@ -111,11 +119,42 @@ void ToolbarData::addItem(String toolbar, String item, int position) {
 		ToolbarEntry & e = *it;
 
 		if (e.name.equals(toolbar)) {
-			std::vector<String>::iterator it2 = e.entries.begin();
+			std::vector<ToolbarItem>::iterator it2 = e.entries.begin();
 			it2 += position;
-			e.entries.insert(it2, item);
+			e.entries.insert(it2, ToolbarItem(item));
+			return;
 		}
 	}
+
+	ToolbarEntry newEntry;
+	newEntry.name = toolbar;
+	newEntry.entries.push_back(ToolbarItem(item));
+	this->contents.push_back(newEntry);
+}
+
+bool ToolbarData::removeItemByID(String toolbar, int id) {
+	g_return_val_if_fail(isPredefined() == false, false);
+
+	std::vector<ToolbarEntry>::iterator it;
+	for (it = this->contents.begin(); it != this->contents.end(); it++) {
+		ToolbarEntry & e = *it;
+
+		if (e.name.equals(toolbar)) {
+			std::vector<ToolbarItem>::iterator it2 = e.entries.begin();
+
+			for (; it2 != e.entries.end(); it2++) {
+				if ((*it2).getId() == id) {
+					String erased = *it2;
+					e.entries.erase(it2);
+
+					printf("removeItemByID %s from Toolbar %s\n", erased.c_str(), toolbar.c_str());
+					return true;
+				}
+			}
+		}
+	}
+
+	return false;
 }
 
 bool ToolbarData::removeItem(String toolbar, int position) {
@@ -126,7 +165,7 @@ bool ToolbarData::removeItem(String toolbar, int position) {
 		ToolbarEntry & e = *it;
 
 		if (e.name.equals(toolbar)) {
-			std::vector<String>::iterator it2 = e.entries.begin();
+			std::vector<ToolbarItem>::iterator it2 = e.entries.begin();
 			it2 += position;
 			String erased = *it2;
 			e.entries.erase(it2);

@@ -8,7 +8,8 @@
 #include "ToolbarCustomizeDialog.h"
 
 #include "ToolbarAdapter.h"
-
+#include "../../MainWindow.h"
+#include "../../toolbarMenubar/model/ToolbarModel.h"
 
 AbstractToolItem * ToolbarAdapter::currentDragItem = NULL;
 
@@ -22,6 +23,10 @@ ToolbarDragDropHandler::ToolbarDragDropHandler() {
 }
 
 ToolbarDragDropHandler::~ToolbarDragDropHandler() {
+	XOJ_CHECK_TYPE(ToolbarDragDropHandler);
+
+	this->win->setInDragAndDropToolbar(true);
+
 	XOJ_RELEASE_TYPE(ToolbarDragDropHandler);
 }
 
@@ -72,6 +77,7 @@ void ToolbarDragDropHandler::toolbarDataChanged() {
 	XOJ_CHECK_TYPE(ToolbarDragDropHandler);
 
 	this->customizeDialog->rebuildIconview();
+	this->win->reloadToolbars();
 }
 
 void ToolbarDragDropHandler::toolbarConfigDialogClosed() {
@@ -82,6 +88,10 @@ void ToolbarDragDropHandler::toolbarConfigDialogClosed() {
 
 	this->clearToolbarsFromDragAndDrop();
 
+	char * file = g_build_filename(g_get_home_dir(), G_DIR_SEPARATOR_S, CONFIG_DIR, G_DIR_SEPARATOR_S, TOOLBAR_CONFIG, NULL);
+	this->win->getToolbarModel()->save(file);
+	g_free(file);
+
 	this->unref();
 }
 
@@ -90,9 +100,13 @@ void ToolbarDragDropHandler::configure(Control * control) {
 
 	this->ref();
 
+	this->win = control->getWindow();
+
 	this->prepareToolbarsForDragAndDrop(control);
 
 	this->customizeDialog = new ToolbarCustomizeDialog(control->getGladeSearchPath(), control->getWindow(), this);
+
+	this->win->setInDragAndDropToolbar(true);
 
 	this->customizeDialog->show();
 }
