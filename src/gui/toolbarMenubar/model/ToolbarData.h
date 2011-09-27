@@ -36,7 +36,7 @@ public:
 
 	// Editing API
 	void addItem(String toolbar, String item, int position);
-	void removeItem(String toolbar, int position);
+	bool removeItem(String toolbar, int position);
 
 private:
 	XOJ_TYPE_ATTRIB;

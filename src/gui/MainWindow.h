@@ -36,6 +36,7 @@ public:
 	void setRecentMenu(GtkWidget * submenu);
 	void toolbarSelected(ToolbarData * d);
 	ToolbarData * getSelectedToolbar();
+	void reloadToolbars();
 
 	/**
 	 * This methods are only used internally and for toolbar configuration

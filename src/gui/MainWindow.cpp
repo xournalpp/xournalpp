@@ -395,6 +395,17 @@ bool MainWindow::windowStateEventCallback(GtkWidget * window, GdkEventWindowStat
 	return false;
 }
 
+void MainWindow::reloadToolbars() {
+	XOJ_CHECK_TYPE(MainWindow);
+
+	printf("MainWindow::reloadToolbars\n");
+
+	ToolbarData * d = this->selectedToolbar;
+
+	this->clearToolbar();
+	this->toolbarSelected(d);
+}
+
 void MainWindow::toolbarSelected(ToolbarData * d) {
 	XOJ_CHECK_TYPE(MainWindow);
 

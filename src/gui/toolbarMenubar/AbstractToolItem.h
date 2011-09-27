@@ -22,11 +22,14 @@ public:
 public:
 	virtual void selected(ActionGroup group, ActionType action);
 	virtual GtkToolItem * createItem(bool horizontal);
+	virtual GtkToolItem * createTmpItem(bool horizontal);
 	void setPopupMenu(GtkWidget * popupMenu);
 	GtkWidget * getPopupMenu();
 
 	bool isUsed();
 	void setUsed(bool used);
+
+	bool containsWidget(GtkWidget * widget);
 
 	static void toolButtonCallback(GtkToolButton *toolbutton, AbstractToolItem * item);
 
@@ -38,7 +41,7 @@ protected:
 
 	virtual void enable(bool enabled);
 
-private:
+public:
 	XOJ_TYPE_ATTRIB;
 
 protected:

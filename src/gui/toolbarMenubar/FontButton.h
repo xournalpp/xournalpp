@@ -32,6 +32,7 @@ public:
 
 protected:
 	virtual GtkToolItem * createItem(bool horizontal);
+	virtual GtkToolItem * createTmpItem(bool horizontal);
 	virtual GtkToolItem * newItem();
 
 private:

@@ -83,24 +83,24 @@ void ToolbarData::load(GKeyFile * config, const char * group) {
 }
 
 void ToolbarData::saveToKeyFile(GKeyFile * config) {/* TODO: TOOLBAR-DRAG-DROP
-	const char * group = getId().c_str();
+ const char * group = getId().c_str();
 
-	for (it = this->contents.begin(); it != this->contents.end(); it++) {
-		ToolbarEntry & e = *it;
+ for (it = this->contents.begin(); it != this->contents.end(); it++) {
+ ToolbarEntry & e = *it;
 
-		std::vector<String>::iterator itItem;
-		for (itItem = e.entries.begin(); itItem != e.entries.end(); itItem++) {
+ std::vector<String>::iterator itItem;
+ for (itItem = e.entries.begin(); itItem != e.entries.end(); itItem++) {
 
 
-		if (e.name.equals(toolbar)) {
-			std::vector<String>::iterator it2 = e.entries.begin();
-			it2 += position;
-			e.entries.insert(it2, item);
-		}
-	}
+ if (e.name.equals(toolbar)) {
+ std::vector<String>::iterator it2 = e.entries.begin();
+ it2 += position;
+ e.entries.insert(it2, item);
+ }
+ }
 
-	//	g_key_file_set_string(config, )
-*/
+ //	g_key_file_set_string(config, )
+ */
 }
 
 void ToolbarData::addItem(String toolbar, String item, int position) {
@@ -118,8 +118,8 @@ void ToolbarData::addItem(String toolbar, String item, int position) {
 	}
 }
 
-void ToolbarData::removeItem(String toolbar, int position) {
-	g_return_if_fail(isPredefined() == false);
+bool ToolbarData::removeItem(String toolbar, int position) {
+	g_return_val_if_fail(isPredefined() == false, false);
 
 	std::vector<ToolbarEntry>::iterator it;
 	for (it = this->contents.begin(); it != this->contents.end(); it++) {
@@ -128,8 +128,14 @@ void ToolbarData::removeItem(String toolbar, int position) {
 		if (e.name.equals(toolbar)) {
 			std::vector<String>::iterator it2 = e.entries.begin();
 			it2 += position;
+			String erased = *it2;
 			e.entries.erase(it2);
+
+			printf("removeItem %s from Toolbar %s\n", erased.c_str(), toolbar.c_str());
+			return true;
 		}
 	}
+
+	return false;
 }
 

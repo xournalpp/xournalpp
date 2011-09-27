@@ -79,18 +79,30 @@ GtkToolItem * ToolZoomSlider::createItem(bool horizontal) {
 	XOJ_CHECK_TYPE(ToolZoomSlider);
 
 	this->horizontal = horizontal;
+	this->item = newItem();
+	g_object_ref(this->item);
+
+	if (GTK_IS_TOOL_ITEM(this->item)) {
+		gtk_tool_item_set_homogeneous(GTK_TOOL_ITEM(this->item), false);
+	}
+	if (GTK_IS_TOOL_BUTTON(this->item) || GTK_IS_TOGGLE_TOOL_BUTTON(this->item)) {
+		g_signal_connect(this->item, "clicked", G_CALLBACK(&toolButtonCallback), this);
+	}
+	return this->item;
+}
+
+GtkToolItem * ToolZoomSlider::createTmpItem(bool horizontal) {
 	GtkToolItem * item = newItem();
 	g_object_ref(item);
 
 	if (GTK_IS_TOOL_ITEM(item)) {
 		gtk_tool_item_set_homogeneous(GTK_TOOL_ITEM(item), false);
 	}
-	if (GTK_IS_TOOL_BUTTON(item) || GTK_IS_TOGGLE_TOOL_BUTTON(item)) {
-		g_signal_connect(item, "clicked", G_CALLBACK(&toolButtonCallback), this);
-	}
-	gtk_object_ref(GTK_OBJECT(item));
-	return item;
 
+	// no slider marks, but don't matter, because it's only a preview
+
+	gtk_widget_show_all(GTK_WIDGET(item));
+	return item;
 }
 
 void ToolZoomSlider::enable(bool enabled) {
