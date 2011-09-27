@@ -19,6 +19,7 @@
 class Control;
 class ToolbarAdapter;
 class ToolbarCustomizeDialog;
+class MainWindow;
 
 class ToolbarDragDropHandler : public ToolbarListener {
 public:
@@ -43,6 +44,8 @@ private:
 	XOJ_TYPE_ATTRIB;
 
 	int refcount;
+
+	MainWindow * win;
 
 	ToolbarAdapter ** toolbars;
 	ToolbarCustomizeDialog * customizeDialog;

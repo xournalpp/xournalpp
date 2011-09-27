@@ -112,6 +112,7 @@ am__xournalpp_SOURCES_DIST = control/jobs/AutosaveJob.cpp \
 	gui/sidebar/SidebarPreview.cpp \
 	gui/toolbarMenubar/model/ToolbarModel.cpp \
 	gui/toolbarMenubar/model/ToolbarData.cpp \
+	gui/toolbarMenubar/model/ToolbarItem.cpp \
 	gui/toolbarMenubar/AbstractItem.cpp \
 	gui/toolbarMenubar/AbstractToolItem.cpp \
 	gui/toolbarMenubar/ColorToolItem.cpp \
@@ -233,6 +234,7 @@ am_xournalpp_OBJECTS = xournalpp-AutosaveJob.$(OBJEXT) \
 	xournalpp-SidebarPreview.$(OBJEXT) \
 	xournalpp-ToolbarModel.$(OBJEXT) \
 	xournalpp-ToolbarData.$(OBJEXT) \
+	xournalpp-ToolbarItem.$(OBJEXT) \
 	xournalpp-AbstractItem.$(OBJEXT) \
 	xournalpp-AbstractToolItem.$(OBJEXT) \
 	xournalpp-ColorToolItem.$(OBJEXT) \
@@ -575,6 +577,7 @@ xournalpp_SOURCES = control/jobs/AutosaveJob.cpp \
 	gui/sidebar/SidebarPreview.cpp \
 	gui/toolbarMenubar/model/ToolbarModel.cpp \
 	gui/toolbarMenubar/model/ToolbarData.cpp \
+	gui/toolbarMenubar/model/ToolbarItem.cpp \
 	gui/toolbarMenubar/AbstractItem.cpp \
 	gui/toolbarMenubar/AbstractToolItem.cpp \
 	gui/toolbarMenubar/ColorToolItem.cpp \
@@ -864,6 +867,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-ToolbarData.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-ToolbarDragDropHandler.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-ToolbarDragDropHelper.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-ToolbarItem.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-ToolbarManageDialog.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-ToolbarModel.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-UndoAction.Po@am__quote@
@@ -1933,6 +1937,20 @@ xournalpp-ToolbarData.obj: gui/toolbarMenubar/model/ToolbarData.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='gui/toolbarMenubar/model/ToolbarData.cpp' object='xournalpp-ToolbarData.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-ToolbarData.obj `if test -f 'gui/toolbarMenubar/model/ToolbarData.cpp'; then $(CYGPATH_W) 'gui/toolbarMenubar/model/ToolbarData.cpp'; else $(CYGPATH_W) '$(srcdir)/gui/toolbarMenubar/model/ToolbarData.cpp'; fi`
+
+xournalpp-ToolbarItem.o: gui/toolbarMenubar/model/ToolbarItem.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-ToolbarItem.o -MD -MP -MF $(DEPDIR)/xournalpp-ToolbarItem.Tpo -c -o xournalpp-ToolbarItem.o `test -f 'gui/toolbarMenubar/model/ToolbarItem.cpp' || echo '$(srcdir)/'`gui/toolbarMenubar/model/ToolbarItem.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-ToolbarItem.Tpo $(DEPDIR)/xournalpp-ToolbarItem.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='gui/toolbarMenubar/model/ToolbarItem.cpp' object='xournalpp-ToolbarItem.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-ToolbarItem.o `test -f 'gui/toolbarMenubar/model/ToolbarItem.cpp' || echo '$(srcdir)/'`gui/toolbarMenubar/model/ToolbarItem.cpp
+
+xournalpp-ToolbarItem.obj: gui/toolbarMenubar/model/ToolbarItem.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-ToolbarItem.obj -MD -MP -MF $(DEPDIR)/xournalpp-ToolbarItem.Tpo -c -o xournalpp-ToolbarItem.obj `if test -f 'gui/toolbarMenubar/model/ToolbarItem.cpp'; then $(CYGPATH_W) 'gui/toolbarMenubar/model/ToolbarItem.cpp'; else $(CYGPATH_W) '$(srcdir)/gui/toolbarMenubar/model/ToolbarItem.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-ToolbarItem.Tpo $(DEPDIR)/xournalpp-ToolbarItem.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='gui/toolbarMenubar/model/ToolbarItem.cpp' object='xournalpp-ToolbarItem.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-ToolbarItem.obj `if test -f 'gui/toolbarMenubar/model/ToolbarItem.cpp'; then $(CYGPATH_W) 'gui/toolbarMenubar/model/ToolbarItem.cpp'; else $(CYGPATH_W) '$(srcdir)/gui/toolbarMenubar/model/ToolbarItem.cpp'; fi`
 
 xournalpp-AbstractItem.o: gui/toolbarMenubar/AbstractItem.cpp
 @am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-AbstractItem.o -MD -MP -MF $(DEPDIR)/xournalpp-AbstractItem.Tpo -c -o xournalpp-AbstractItem.o `test -f 'gui/toolbarMenubar/AbstractItem.cpp' || echo '$(srcdir)/'`gui/toolbarMenubar/AbstractItem.cpp

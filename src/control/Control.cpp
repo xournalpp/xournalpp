@@ -872,6 +872,10 @@ void Control::customizeToolbars() {
 
 		if (res == -8) { // Yes
 			ToolbarData * data = new ToolbarData(*this->win->getSelectedToolbar());
+
+			data->setName(data->getName() + _(" Copy"));
+			data->setId(data->getId() + _(" Copy"));
+
 			this->win->getToolbarModel()->add(data);
 			this->win->toolbarSelected(data);
 			// TODO: !!! update toolbar menu

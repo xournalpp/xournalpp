@@ -24,8 +24,7 @@
 
 class ToolbarAdapter {
 public:
-	ToolbarAdapter(GtkWidget * toolbar, String toolbarName, ToolbarListener * listener, ToolMenuHandler * toolHandler,
-			MainWindow * window) {
+	ToolbarAdapter(GtkWidget * toolbar, String toolbarName, ToolbarListener * listener, ToolMenuHandler * toolHandler, MainWindow * window) {
 		XOJ_INIT_TYPE( ToolbarAdapter);
 
 		this->w = toolbar;
@@ -92,16 +91,15 @@ private:
 		gtk_widget_show(widget);
 	}
 
-	static void toolitemDragDataGet(GtkWidget * widget, GdkDragContext * context, GtkSelectionData * selection_data,
-			guint info, guint time, AbstractItemSelectionData * item) {
+	static void toolitemDragDataGet(GtkWidget * widget, GdkDragContext * context, GtkSelectionData * selection_data, guint info, guint time,
+			AbstractItemSelectionData * item) {
 		if (item == NULL) {
 			printf("toolitemDragDataGet: ait == NULL\n");
 			return;
 		}
 		XOJ_CHECK_TYPE_OBJ(item->item, AbstractToolItem);
 
-		gtk_selection_data_set(selection_data, ToolbarDragDropHelper::atomToolItem, 0, (const guchar *) item,
-				sizeof(AbstractItemSelectionData));
+		gtk_selection_data_set(selection_data, ToolbarDragDropHelper::atomToolItem, 0, (const guchar *) item, sizeof(AbstractItemSelectionData));
 	}
 	//
 	//	/**
@@ -140,8 +138,7 @@ private:
 			gtk_widget_set_sensitive(GTK_WIDGET(it), true);
 
 			gtk_tool_item_set_use_drag_window(it, true);
-			gtk_drag_source_set(GTK_WIDGET(it), GDK_BUTTON1_MASK, &ToolbarDragDropHelper::dropTargetEntry, 1,
-					GDK_ACTION_MOVE);
+			gtk_drag_source_set(GTK_WIDGET(it), GDK_BUTTON1_MASK, &ToolbarDragDropHelper::dropTargetEntry, 1, GDK_ACTION_MOVE);
 			ToolbarDragDropHelper::dragSourceAddToolbar(GTK_WIDGET(it));
 
 			g_signal_connect(it, "drag-begin", G_CALLBACK(toolitemDragBegin), this);
@@ -149,7 +146,7 @@ private:
 
 			AbstractToolItem * ait = this->toolHandler->getItemFor(GTK_WIDGET(it));
 
-			AbstractItemSelectionData * sd = new AbstractItemSelectionData(ait, this->toolbarName, ToolMenuHandler::metadataGetPos(GTK_WIDGET(it)));
+			AbstractItemSelectionData * sd = new AbstractItemSelectionData(ait, this->toolbarName, ToolMenuHandler::metadataGetDragDropId(GTK_WIDGET(it)));
 			g_signal_connect(it, "drag-data-get", G_CALLBACK(toolitemDragDataGet), sd);
 
 		}
@@ -175,6 +172,7 @@ private:
 		GtkToolItem * it = gtk_tool_item_new();
 		this->spacerItem = it;
 		gtk_toolbar_insert(tb, it, 0);
+		ToolMenuHandler::attachMetadata(GTK_WIDGET(it), -2);
 
 		GtkOrientation orientation = gtk_toolbar_get_orientation(tb);
 		if (orientation == GTK_ORIENTATION_HORIZONTAL) {
@@ -191,8 +189,7 @@ private:
 	/**
 	 * A tool item was dragged to the toolbar
 	 */
-	static bool toolbarDragMotionCb(GtkToolbar * toolbar, GdkDragContext * context, gint x, gint y, guint time,
-			ToolbarAdapter * adapter) {
+	static bool toolbarDragMotionCb(GtkToolbar * toolbar, GdkDragContext * context, gint x, gint y, guint time, ToolbarAdapter * adapter) {
 		XOJ_CHECK_TYPE_OBJ(adapter, ToolbarAdapter);
 
 		GdkAtom target = gtk_drag_dest_find_target(GTK_WIDGET(toolbar), context, NULL);
@@ -207,8 +204,7 @@ private:
 
 		g_return_val_if_fail(ToolbarAdapter::currentDragItem != NULL, true);
 
-		gtk_toolbar_set_drop_highlight_item(toolbar, ToolbarAdapter::currentDragItem->createTmpItem(orientation
-				== GTK_ORIENTATION_HORIZONTAL), ipos);
+		gtk_toolbar_set_drop_highlight_item(toolbar, ToolbarAdapter::currentDragItem->createTmpItem(orientation == GTK_ORIENTATION_HORIZONTAL), ipos);
 
 		return true;
 	}
@@ -219,28 +215,28 @@ private:
 		gtk_toolbar_set_drop_highlight_item(toolbar, NULL, -1);
 	}
 
-	static void toolbarDragDataReceivedCb(GtkToolbar * toolbar, GdkDragContext * context, gint x, gint y,
-			GtkSelectionData * data, guint info, guint time, ToolbarAdapter * adapter) {
+	static void toolbarDragDataReceivedCb(GtkToolbar * toolbar, GdkDragContext * context, gint x, gint y, GtkSelectionData * data, guint info, guint time,
+			ToolbarAdapter * adapter) {
 		XOJ_CHECK_TYPE_OBJ(adapter, ToolbarAdapter);
 
 		AbstractItemSelectionData * d = (AbstractItemSelectionData *) gtk_selection_data_get_data(data);
 
 		int pos = gtk_toolbar_get_drop_index(toolbar, x, y);
 
-		bool horizontal = gtk_toolbar_get_orientation(toolbar) == GTK_ORIENTATION_HORIZONTAL;
-
-		GtkToolItem * it = d->item->createItem(horizontal);
-		gtk_widget_show_all(GTK_WIDGET(it));
-		gtk_toolbar_insert(toolbar, it, pos);
+		// Not needed anymore
+		//		bool horizontal = gtk_toolbar_get_orientation(toolbar) == GTK_ORIENTATION_HORIZONTAL;
+		//		GtkToolItem * it = d->item->createItem(horizontal);
+		//		gtk_widget_show_all(GTK_WIDGET(it));
+		//		gtk_toolbar_insert(toolbar, it, pos);
 
 		d->item->setUsed(true);
-
-		adapter->listener->toolbarDataChanged();
 
 		ToolbarData * tb = adapter->window->getSelectedToolbar();
 		String name = adapter->window->getToolbarName(toolbar);
 
 		tb->addItem(name, d->item->getId(), pos);
+
+		adapter->listener->toolbarDataChanged();
 	}
 
 private:

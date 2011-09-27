@@ -24,6 +24,7 @@ MainWindow::MainWindow(GladeSearchpath * gladeSearchPath, Control * control) :
 	this->toolbarIntialized = false;
 	this->toolbarGroup = NULL;
 	this->selectedToolbar = NULL;
+	this->inDragAndDropToolbar = false;
 	this->toolbarWidgets = new GtkWidget*[TOOLBAR_DEFINITIONS_LEN];
 
 	for (int i = 0; i < TOOLBAR_DEFINITIONS_LEN; i++) {
@@ -44,7 +45,7 @@ MainWindow::MainWindow(GladeSearchpath * gladeSearchPath, Control * control) :
 
 	if (type == SCROLLBAR_HIDE_NONE || type == SCROLLBAR_HIDE_VERTICAL) {
 		Layout * layout = gtk_xournal_get_layout(this->xournal->getWidget());
-		gtk_table_attach(GTK_TABLE(tableXournal), layout->getScrollbarHorizontal(), 1, 2, 1, 2, (GtkAttachOptions)(GTK_EXPAND | GTK_FILL), GTK_FILL, 0, 0);
+		gtk_table_attach(GTK_TABLE(tableXournal), layout->getScrollbarHorizontal(), 1, 2, 1, 2, (GtkAttachOptions) (GTK_EXPAND | GTK_FILL), GTK_FILL, 0, 0);
 	}
 
 	setSidebarVisible(control->getSettings()->isSidebarVisible());
@@ -151,6 +152,18 @@ MainWindow::~MainWindow() {
 	this->toolbar = NULL;
 
 	XOJ_RELEASE_TYPE(MainWindow);
+}
+
+void MainWindow::setInDragAndDropToolbar(bool inDragAndDropToolbar) {
+	XOJ_CHECK_TYPE(MainWindow);
+
+	this->inDragAndDropToolbar = inDragAndDropToolbar;
+}
+
+bool MainWindow::isInDragAndDropToolbar() {
+	XOJ_CHECK_TYPE(MainWindow);
+
+	return this->inDragAndDropToolbar;
 }
 
 Layout * MainWindow::getLayout() {
@@ -398,7 +411,9 @@ bool MainWindow::windowStateEventCallback(GtkWidget * window, GdkEventWindowStat
 void MainWindow::reloadToolbars() {
 	XOJ_CHECK_TYPE(MainWindow);
 
-	printf("MainWindow::reloadToolbars\n");
+	bool inDragAndDrop = this->isInDragAndDropToolbar();
+
+	/// TODO !!!!!!!!!!!!!!!
 
 	ToolbarData * d = this->selectedToolbar;
 

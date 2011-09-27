@@ -12,10 +12,12 @@
 #ifndef __TOOLBARENTRY_H__
 #define __TOOLBARENTRY_H__
 
+#include "ToolbarItem.h"
+
 class ToolbarEntry {
 private:
 	String name;
-	std::vector<String> entries;
+	std::vector<ToolbarItem> entries;
 
 	friend class ToolMenuHandler;
 	friend class ToolbarData;

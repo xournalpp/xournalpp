@@ -29,6 +29,7 @@ public:
 	String getName();
 	void setName(String name);
 	String getId();
+	void setId(String id);
 	bool isPredefined();
 
 	void load(GKeyFile * config, const char * group);
@@ -37,6 +38,7 @@ public:
 	// Editing API
 	void addItem(String toolbar, String item, int position);
 	bool removeItem(String toolbar, int position);
+	bool removeItemByID(String toolbar, int id);
 
 private:
 	XOJ_TYPE_ATTRIB;

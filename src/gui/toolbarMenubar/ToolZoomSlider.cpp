@@ -7,7 +7,7 @@ ToolZoomSlider::ToolZoomSlider(ActionHandler * handler, String id, ActionType ty
 	AbstractToolItem(id, handler, type, NULL) {
 	XOJ_INIT_TYPE(ToolZoomSlider);
 
-	slider = NULL;
+	this->slider = NULL;
 	this->zoom = zoom;
 
 	this->horizontal = true;
@@ -26,6 +26,10 @@ void ToolZoomSlider::sliderChanged(GtkRange * range, ZoomControl * zoom) {
 
 void ToolZoomSlider::zoomChanged(double lastZoom) {
 	XOJ_CHECK_TYPE(ToolZoomSlider);
+
+	if (this->slider == NULL) {
+		return;
+	}
 
 	gtk_range_set_value(GTK_RANGE(this->slider), this->zoom->getZoom());
 }
@@ -52,12 +56,13 @@ GtkWidget * ToolZoomSlider::getNewToolIcon() {
 void ToolZoomSlider::updateScaleMarks() {
 	XOJ_CHECK_TYPE(ToolZoomSlider);
 
-	if (!slider) {
+	if (this->slider == NULL) {
 		return;
 	}
-	gtk_scale_clear_marks( GTK_SCALE(slider));
-	gtk_scale_add_mark(GTK_SCALE(slider), zoom->getZoom100(), horizontal ? GTK_POS_BOTTOM : GTK_POS_RIGHT, NULL);
-	gtk_scale_add_mark(GTK_SCALE(slider), zoom->getZoomFit(), horizontal ? GTK_POS_BOTTOM : GTK_POS_RIGHT, NULL);
+
+	gtk_scale_clear_marks( GTK_SCALE(this->slider));
+	gtk_scale_add_mark(GTK_SCALE(this->slider), zoom->getZoom100(), horizontal ? GTK_POS_BOTTOM : GTK_POS_RIGHT, NULL);
+	gtk_scale_add_mark(GTK_SCALE(this->slider), zoom->getZoomFit(), horizontal ? GTK_POS_BOTTOM : GTK_POS_RIGHT, NULL);
 }
 
 void ToolZoomSlider::setHorizontal(bool horizontal) {
@@ -65,12 +70,12 @@ void ToolZoomSlider::setHorizontal(bool horizontal) {
 
 	if (horizontal) {
 		GtkAllocation alloc = { 0, 0, 120, 30 };
-		gtk_widget_set_allocation(fixed, &alloc);
-		gtk_widget_set_size_request(slider, 120, 25);
+		gtk_widget_set_allocation(this->fixed, &alloc);
+		gtk_widget_set_size_request(this->slider, 120, 25);
 	} else {
 		GtkAllocation alloc = { 0, 0, 30, 120 };
-		gtk_widget_set_allocation(fixed, &alloc);
-		gtk_widget_set_size_request(slider, 25, 120);
+		gtk_widget_set_allocation(this->fixed, &alloc);
+		gtk_widget_set_size_request(this->slider, 25, 120);
 	}
 	updateScaleMarks();
 }

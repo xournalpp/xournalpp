@@ -70,10 +70,8 @@ public:
 	ListIterator<AbstractToolItem *> getToolItems();
 
 public:
-	static void attachMetadata(GtkWidget * w, const char * toolbarName, const char * name, int pos);
-	static const char * metadataGetToolbarName(GtkWidget * w);
-	static const char * metadataGetName(GtkWidget * w);
-	static int metadataGetPos(GtkWidget * w);
+	static void attachMetadata(GtkWidget * w, int pos);
+	static int metadataGetDragDropId(GtkWidget * w);
 
 private:
 	void addToolItem(AbstractToolItem * it);

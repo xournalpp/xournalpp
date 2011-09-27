@@ -22,15 +22,15 @@ class AbstractToolItem;
  */
 class AbstractItemSelectionData {
 public:
-	AbstractItemSelectionData(AbstractToolItem * item, String toolbar, int position) {
+	AbstractItemSelectionData(AbstractToolItem * item, String toolbar, int id) {
 		this->item = item;
 		this->toolbar = toolbar;
-		this->position = position;
+		this->id = id;
 	}
 
 	AbstractToolItem * item;
 	String toolbar;
-	int position;
+	int id;
 };
 
 #endif /* __ABSTRACTITEMSELECTIONDATA_H__ */

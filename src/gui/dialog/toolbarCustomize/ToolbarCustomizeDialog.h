@@ -50,7 +50,6 @@ private:
 	void removeFromToolbar(AbstractToolItem * item, String toolbarName, int pos);
 	void freeIconview();
 
-	void prepareToolbarsItemsDrag();
 	void cleanupToolbarsItemsDrag();
 
 private:

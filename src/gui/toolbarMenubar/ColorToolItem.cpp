@@ -17,6 +17,7 @@ ColorToolItem::ColorToolItem(String id, ActionHandler * handler, ToolHandler * t
 	this->group = GROUP_COLOR;
 	this->colorDlg = NULL;
 	this->name = name;
+	this->iconWidget = NULL;
 }
 
 ColorToolItem::~ColorToolItem() {
