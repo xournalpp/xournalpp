@@ -5,7 +5,8 @@
 #include <config.h>
 #include <glib/gi18n-lib.h>
 
-FontButton::FontButton(ActionHandler * handler, GladeGui * gui, String id, ActionType type, String description, GtkWidget * menuitem) :
+FontButton::FontButton(ActionHandler * handler, GladeGui * gui, String id, ActionType type, String description,
+		GtkWidget * menuitem) :
 	AbstractToolItem(id, handler, type, menuitem) {
 	XOJ_INIT_TYPE(FontButton);
 
@@ -36,7 +37,7 @@ void FontButton::setFont(XojFont & font) {
 	XOJ_CHECK_TYPE(FontButton);
 
 	this->font = font;
-	if(this->fontButton == NULL) {
+	if (this->fontButton == NULL) {
 		return;
 	}
 
@@ -70,22 +71,29 @@ GtkWidget * FontButton::getNewToolIcon() {
 GtkToolItem * FontButton::createItem(bool horizontal) {
 	XOJ_CHECK_TYPE(FontButton);
 
-	if (item) {
-		return item;
+	if (this->item) {
+		return this->item;
 	}
 
-	item = newItem();
-	g_object_ref(item);
-	gtk_tool_item_set_homogeneous(GTK_TOOL_ITEM(item), false);
-	gtk_object_ref(GTK_OBJECT(item));
+	this->item = newItem();
+	g_object_ref(this->item);
+	gtk_tool_item_set_homogeneous(GTK_TOOL_ITEM(this->item), false);
 	g_signal_connect(fontButton, "font_set", G_CALLBACK(&toolButtonCallback), this);
+	return this->item;
+}
+
+GtkToolItem * FontButton::createTmpItem(bool horizontal) {
+	GtkToolItem * item = newItem();
+	gtk_tool_item_set_homogeneous(GTK_TOOL_ITEM(item), false);
+
+	gtk_widget_show_all(GTK_WIDGET(item));
 	return item;
 }
 
 void FontButton::showFontDialog() {
 	XOJ_CHECK_TYPE(FontButton);
 
-	if(this->fontButton == NULL) {
+	if (this->fontButton == NULL) {
 		newItem();
 	}
 
@@ -110,7 +118,7 @@ GtkToolItem * FontButton::newItem() {
 
 	gtk_tool_item_set_tooltip_text(it, this->description.c_str());
 
-	if(!this->font.getName().isEmpty()) {
+	if (!this->font.getName().isEmpty()) {
 		setFont(this->font);
 	}
 

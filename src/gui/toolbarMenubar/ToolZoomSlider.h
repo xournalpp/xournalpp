@@ -32,6 +32,7 @@ public:
 	void updateScaleMarks();
 	virtual void setHorizontal(bool horizontal);
 	virtual GtkToolItem * createItem(bool horizontal);
+	virtual GtkToolItem * createTmpItem(bool horizontal);
 
 protected:
 	virtual void enable(bool enabled);

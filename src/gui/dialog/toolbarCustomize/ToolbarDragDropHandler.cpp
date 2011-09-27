@@ -9,6 +9,10 @@
 
 #include "ToolbarAdapter.h"
 
+
+AbstractToolItem * ToolbarAdapter::currentDragItem = NULL;
+
+
 ToolbarDragDropHandler::ToolbarDragDropHandler() {
 	XOJ_INIT_TYPE(ToolbarDragDropHandler);
 
@@ -41,14 +45,15 @@ void ToolbarDragDropHandler::prepareToolbarsForDragAndDrop(Control * control) {
 	XOJ_CHECK_TYPE(ToolbarDragDropHandler);
 
 	int len = 0;
-	GtkWidget ** widgets = control->getWindow()->getToolbarWidgets(len);
+	MainWindow * win = control->getWindow();
+	GtkWidget ** widgets = win->getToolbarWidgets(len);
 
 	this->toolbars = new ToolbarAdapter*[len + 1];
 	this->toolbars[len] = NULL;
 
 	for (int i = 0; i < len; i++) {
 		GtkWidget * w = widgets[i];
-		this->toolbars[i] = new ToolbarAdapter(w, this);
+		this->toolbars[i] = new ToolbarAdapter(w, win->getToolbarName(GTK_TOOLBAR(w)), this, control->getWindow()->getToolMenuHandler(), control->getWindow());
 	}
 }
 

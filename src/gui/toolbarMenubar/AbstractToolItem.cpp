@@ -71,16 +71,25 @@ GtkToolItem * AbstractToolItem::createItem(bool horizontal) {
 		return this->item;
 	}
 
-	this->item = newItem();
+	this->item = createTmpItem(horizontal);
 	g_object_ref(this->item);
 
-	if (GTK_IS_TOOL_ITEM(this->item)) {
-		gtk_tool_item_set_homogeneous(GTK_TOOL_ITEM(this->item), false);
-	}
 	if (GTK_IS_TOOL_BUTTON(this->item) || GTK_IS_TOGGLE_TOOL_BUTTON(this->item)) {
 		g_signal_connect(this->item, "clicked", G_CALLBACK(&toolButtonCallback), this);
 	}
+
 	return this->item;
+}
+
+GtkToolItem * AbstractToolItem::createTmpItem(bool horizontal) {
+	GtkToolItem * item = newItem();
+
+	if (GTK_IS_TOOL_ITEM(item)) {
+		gtk_tool_item_set_homogeneous(GTK_TOOL_ITEM(item), false);
+	}
+
+	gtk_widget_show_all(GTK_WIDGET(item));
+	return item;
 }
 
 void AbstractToolItem::setPopupMenu(GtkWidget * popupMenu) {
@@ -120,4 +129,10 @@ void AbstractToolItem::enable(bool enabled) {
 	if (this->item) {
 		gtk_widget_set_sensitive(GTK_WIDGET(this->item), enabled);
 	}
+}
+
+bool AbstractToolItem::containsWidget(GtkWidget * widget) {
+	XOJ_CHECK_TYPE(AbstractToolItem);
+
+	return (GtkWidget *)this->item == widget;
 }
