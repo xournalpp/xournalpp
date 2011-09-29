@@ -34,8 +34,6 @@ ToolbarCustomizeDialog::ToolbarCustomizeDialog(GladeSearchpath * gladeSearchPath
 	this->itemDatalist = NULL;
 	this->itemSelectionData = NULL;
 
-	this->tbhandler = new ToolbarDragDropHandler();
-
 	rebuildIconview();
 
 	GtkWidget * target = get("viewport1");
@@ -63,9 +61,6 @@ ToolbarCustomizeDialog::~ToolbarCustomizeDialog() {
 	this->itemDatalist = NULL;
 
 	this->cleanupToolbarsItemsDrag();
-
-	delete this->tbhandler;
-	this->tbhandler = NULL;
 
 	XOJ_RELEASE_TYPE(ToolbarCustomizeDialog);
 }
@@ -246,7 +241,8 @@ void ToolbarCustomizeDialog::rebuildIconview() {
 		g_signal_connect(ebox, "drag-begin", G_CALLBACK(toolitemDragBegin), data);
 		g_signal_connect(ebox, "drag-end", G_CALLBACK(toolitemDragEnd), data);
 
-		AbstractItemSelectionData * sd = new AbstractItemSelectionData(item, "", -1);
+		// TODO: MEMORY LEAK
+		AbstractItemSelectionData * sd = new AbstractItemSelectionData(item, "", -1, ebox);
 		g_signal_connect(ebox, "drag-data-get", G_CALLBACK(toolitemDragDataGet), sd);
 		this->itemSelectionData = g_list_append(this->itemSelectionData, sd);
 

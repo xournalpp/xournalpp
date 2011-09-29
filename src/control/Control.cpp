@@ -71,7 +71,8 @@ Control::Control(GladeSearchpath * gladeSearchPath) {
 	this->lastEnabled = false;
 	this->fullscreen = false;
 
-	String name = String::format("%s%c%s%c%s", g_get_home_dir(), G_DIR_SEPARATOR, CONFIG_DIR, G_DIR_SEPARATOR, SETTINGS_XML_FILE);
+	String name = String::format("%s%c%s%c%s", g_get_home_dir(), G_DIR_SEPARATOR, CONFIG_DIR, G_DIR_SEPARATOR,
+			SETTINGS_XML_FILE);
 	this->settings = new Settings(name);
 	this->settings->load();
 
@@ -114,6 +115,7 @@ Control::Control(GladeSearchpath * gladeSearchPath) {
 	this->clipboardHandler = NULL;
 
 	this->collaboration = NULL;
+	this->dragDropHandler = NULL;
 }
 
 Control::~Control() {
@@ -164,6 +166,8 @@ Control::~Control() {
 	this->zoom = NULL;
 	delete this->scheduler;
 	this->scheduler = NULL;
+	delete this->dragDropHandler;
+	this->dragDropHandler = NULL;
 
 	XOJ_RELEASE_TYPE(Control);
 }
@@ -329,7 +333,8 @@ void Control::updatePageNumbers(int page, int pdfPage) {
 	fireEnableAction(ACTION_GOTO_NEXT_ANNOTATED_PAGE, current < count - 1);
 }
 
-void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent *event, GtkMenuItem *menuitem, GtkToolButton *toolbutton, bool enabled) {
+void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent *event, GtkMenuItem *menuitem,
+		GtkToolButton *toolbutton, bool enabled) {
 	XOJ_CHECK_TYPE(Control);
 
 	switch (type) {
@@ -776,10 +781,11 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent *even
 void Control::help() {
 	GError * error = NULL;
 
-	gtk_show_uri(gtk_window_get_screen(GTK_WINDOW(this->win->getWindow())), XOJ_HELP, gtk_get_current_event_time(), &error);
+	gtk_show_uri(gtk_window_get_screen(GTK_WINDOW(this->win->getWindow())), XOJ_HELP, gtk_get_current_event_time(),
+			&error);
 	if (error) {
-		GtkWidget * dialog = gtk_message_dialog_new((GtkWindow *) getWindow(), GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, _("There was an error displaying help: %s"),
-				error->message);
+		GtkWidget * dialog = gtk_message_dialog_new((GtkWindow *) getWindow(), GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR,
+				GTK_BUTTONS_OK, _("There was an error displaying help: %s"), error->message);
 		gtk_dialog_run(GTK_DIALOG(dialog));
 		gtk_widget_destroy(dialog);
 
@@ -853,7 +859,8 @@ void Control::manageToolbars() {
 
 	this->win->updateToolbarMenu();
 
-	char * file = g_build_filename(g_get_home_dir(), G_DIR_SEPARATOR_S, CONFIG_DIR, G_DIR_SEPARATOR_S, TOOLBAR_CONFIG, NULL);
+	char * file = g_build_filename(g_get_home_dir(), G_DIR_SEPARATOR_S, CONFIG_DIR, G_DIR_SEPARATOR_S, TOOLBAR_CONFIG,
+			NULL);
 	this->win->getToolbarModel()->save(file);
 	g_free(file);
 }
@@ -864,8 +871,10 @@ void Control::customizeToolbars() {
 	g_return_if_fail(this->win != NULL);
 
 	if (this->win->getSelectedToolbar()->isPredefined()) {
-		GtkWidget * dialog = gtk_message_dialog_new((GtkWindow *) *this->win, GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_QUESTION, GTK_BUTTONS_YES_NO,
-				_("The Toolbarconfiguration \"%s\" is predefined, would you create a copy to edit?"), this->win->getSelectedToolbar()->getName().c_str());
+		GtkWidget * dialog = gtk_message_dialog_new((GtkWindow *) *this->win, GTK_DIALOG_DESTROY_WITH_PARENT,
+				GTK_MESSAGE_QUESTION, GTK_BUTTONS_YES_NO, _(
+						"The Toolbarconfiguration \"%s\" is predefined, would you create a copy to edit?"),
+				this->win->getSelectedToolbar()->getName().c_str());
 
 		int res = gtk_dialog_run(GTK_DIALOG(dialog));
 		gtk_widget_destroy(dialog);
@@ -884,13 +893,45 @@ void Control::customizeToolbars() {
 		}
 	}
 
-	ToolbarDragDropHandler * handler = new ToolbarDragDropHandler();
-	handler->configure(this);
+	if (!this->dragDropHandler) {
+		this->dragDropHandler = new ToolbarDragDropHandler(this);
+	}
+	this->dragDropHandler->configure();
+}
 
-	handler->unref();
+void Control::endDragDropToolbar() {
+	XOJ_CHECK_TYPE(Control);
+
+	if (!this->dragDropHandler) {
+		return;
+	}
+
+	this->dragDropHandler->clearToolbarsFromDragAndDrop();
+}
+
+void Control::startDragDropToolbar() {
+	XOJ_CHECK_TYPE(Control);
+
+	if (!this->dragDropHandler) {
+		return;
+	}
+
+	this->dragDropHandler->prepareToolbarsForDragAndDrop();
+}
+
+bool Control::isInDragAndDropToolbar() {
+	XOJ_CHECK_TYPE(Control);
+
+	if (!this->dragDropHandler) {
+		return false;
+	}
+
+	return this->dragDropHandler->isInDragAndDrop();
 }
 
 void Control::setRulerEnabled(bool enabled) {
+	XOJ_CHECK_TYPE(Control);
+
 	if (this->toolHandler->isRuler() == enabled) {
 		return;
 	}
@@ -903,6 +944,8 @@ void Control::setRulerEnabled(bool enabled) {
 }
 
 void Control::setShapeRecognizerEnabled(bool enabled) {
+	XOJ_CHECK_TYPE(Control);
+
 	if (this->toolHandler->isShapeRecognizer() == enabled) {
 		return;
 	}
@@ -939,7 +982,9 @@ void Control::enableFullscreen(bool enabled, bool presentation) {
 			} else {
 				GtkWidget * w = win->get(part);
 				if (w == NULL) {
-					g_warning("Fullscreen: Try to hide \"%s\", but coulden't find it. Wrong entry in ~/" CONFIG_DIR "/" SETTINGS_XML_FILE "?", part);
+					g_warning(
+							"Fullscreen: Try to hide \"%s\", but coulden't find it. Wrong entry in ~/" CONFIG_DIR "/" SETTINGS_XML_FILE "?",
+							part);
 				} else {
 					if (gtk_widget_get_visible(w)) {
 						gtk_widget_hide(w);
@@ -1013,7 +1058,8 @@ void Control::getDefaultPagesize(double & width, double & height) {
 
 	if (this->defaultHeight < 0) {
 		SElement & format = settings->getCustomElement("format");
-		format.setComment("paperformat", "Available values are: system, A4, Letter, Custom: For custom you have to create the tags width and height.");
+		format.setComment("paperformat",
+				"Available values are: system, A4, Letter, Custom: For custom you have to create the tags width and height.");
 		String settingsPaperFormat;
 
 		double w = 0;
@@ -1173,8 +1219,8 @@ void Control::insertNewPage(int position) {
 		}
 	} else if (PAGE_INSERT_TYPE_PDF_BACKGROUND == type) {
 		if (this->doc->getPdfPageCount() == 0) {
-			GtkWidget * dialog = gtk_message_dialog_new((GtkWindow*) *win, GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, _(
-					"You don't have any PDF pages to select from. Cancel operation,\n"
+			GtkWidget * dialog = gtk_message_dialog_new((GtkWindow*) *win, GTK_DIALOG_DESTROY_WITH_PARENT,
+					GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, _("You don't have any PDF pages to select from. Cancel operation,\n"
 						"Please select another background type: Menu \"Journal\" / \"Insert Page Type\"."));
 			gtk_dialog_run(GTK_DIALOG(dialog));
 			gtk_widget_destroy(dialog);
@@ -1310,8 +1356,9 @@ void Control::setPageBackground(ActionType type) {
 			newImg.loadFile(filename, &err);
 			newImg.setAttach(attach);
 			if (err) {
-				GtkWidget * dialog = gtk_message_dialog_new((GtkWindow*) *win, GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, _(
-						"This image could not be loaded. Error message: %s"), err->message);
+				GtkWidget * dialog = gtk_message_dialog_new((GtkWindow*) *win, GTK_DIALOG_DESTROY_WITH_PARENT,
+						GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, _("This image could not be loaded. Error message: %s"),
+						err->message);
 				gtk_dialog_run(GTK_DIALOG(dialog));
 				gtk_widget_destroy(dialog);
 				g_error_free(err);
@@ -1331,8 +1378,8 @@ void Control::setPageBackground(ActionType type) {
 		delete dlg;
 	} else if (ACTION_SET_PAPER_BACKGROUND_PDF == type) {
 		if (doc->getPdfPageCount() == 0) {
-			GtkWidget * dialog = gtk_message_dialog_new((GtkWindow*) *win, GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, _(
-					"You don't have any PDF pages to select from. Cancel operation,\n"
+			GtkWidget * dialog = gtk_message_dialog_new((GtkWindow*) *win, GTK_DIALOG_DESTROY_WITH_PARENT,
+					GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, _("You don't have any PDF pages to select from. Cancel operation,\n"
 						"Please select another background type: Menu \"Journal\" / \"Insert Page Type\"."));
 			gtk_dialog_run(GTK_DIALOG(dialog));
 			gtk_widget_destroy(dialog);
@@ -1367,7 +1414,8 @@ void Control::setPageBackground(ActionType type) {
 	firePageChanged(pageNr);
 	updateBackgroundSizeButton();
 
-	this->undoRedo->addUndoAction(new PageBackgroundChangedUndoAction(page, origType, origPdfPage, origBackgroundImage, origW, origH));
+	this->undoRedo->addUndoAction(new PageBackgroundChangedUndoAction(page, origType, origPdfPage, origBackgroundImage,
+			origW, origH));
 }
 
 void Control::updateBackgroundSizeButton() {
@@ -1386,7 +1434,8 @@ void Control::updateBackgroundSizeButton() {
 	GtkWidget * paperColor = win->get("menuJournalPaperColor");
 	GtkWidget * pageSize = win->get("menuJournalPaperFormat");
 
-	if (BACKGROUND_TYPE_NONE != bg && BACKGROUND_TYPE_LINED != bg && BACKGROUND_TYPE_RULED != bg && BACKGROUND_TYPE_GRAPH != bg) {
+	if (BACKGROUND_TYPE_NONE != bg && BACKGROUND_TYPE_LINED != bg && BACKGROUND_TYPE_RULED != bg
+			&& BACKGROUND_TYPE_GRAPH != bg) {
 		gtk_widget_set_sensitive(paperColor, false);
 	} else {
 		gtk_widget_set_sensitive(paperColor, true);
@@ -1435,7 +1484,8 @@ void Control::changePageBackgroundColor() {
 	clearSelectionEndText();
 
 	BackgroundType bg = p.getBackgroundType();
-	if (BACKGROUND_TYPE_NONE != bg && BACKGROUND_TYPE_LINED != bg && BACKGROUND_TYPE_RULED != bg && BACKGROUND_TYPE_GRAPH != bg) {
+	if (BACKGROUND_TYPE_NONE != bg && BACKGROUND_TYPE_LINED != bg && BACKGROUND_TYPE_RULED != bg
+			&& BACKGROUND_TYPE_GRAPH != bg) {
 		return;
 	}
 
@@ -1661,7 +1711,8 @@ void Control::toolChanged() {
 		toolColorChanged();
 	}
 
-	fireActionSelected(GROUP_SHAPE_RECOGNIZER, toolHandler->isShapeRecognizer() ? ACTION_SHAPE_RECOGNIZER : ACTION_NOT_SELECTED);
+	fireActionSelected(GROUP_SHAPE_RECOGNIZER, toolHandler->isShapeRecognizer() ? ACTION_SHAPE_RECOGNIZER
+			: ACTION_NOT_SELECTED);
 	fireActionSelected(GROUP_RULER, toolHandler->isRuler() ? ACTION_RULER : ACTION_NOT_SELECTED);
 
 	getCursor()->updateCursor();
@@ -1834,7 +1885,8 @@ bool Control::newFile() {
 	this->doc->unlock();
 
 	PageInsertType type = settings->getPageInsertType();
-	if (type != PAGE_INSERT_TYPE_PLAIN && type != PAGE_INSERT_TYPE_LINED && type != PAGE_INSERT_TYPE_RULED && type != PAGE_INSERT_TYPE_GRAPH) {
+	if (type != PAGE_INSERT_TYPE_PLAIN && type != PAGE_INSERT_TYPE_LINED && type != PAGE_INSERT_TYPE_RULED && type
+			!= PAGE_INSERT_TYPE_GRAPH) {
 		type = PAGE_INSERT_TYPE_LINED;
 	}
 
@@ -1895,8 +1947,9 @@ bool Control::openFile(String filename, int scrollToPage) {
 		// give the user a second chance to select a new PDF file, or to discard the PDF
 
 
-		GtkWidget * dialog = gtk_message_dialog_new((GtkWindow *) *getWindow(), GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_QUESTION, GTK_BUTTONS_NONE,
-				h.isAttachedPdfMissing() ? _("The attached background PDF could not be found.") : _("The background PDF could not be found."));
+		GtkWidget * dialog = gtk_message_dialog_new((GtkWindow *) *getWindow(), GTK_DIALOG_DESTROY_WITH_PARENT,
+				GTK_MESSAGE_QUESTION, GTK_BUTTONS_NONE, h.isAttachedPdfMissing() ? _(
+						"The attached background PDF could not be found.") : _("The background PDF could not be found."));
 
 		gtk_dialog_add_button(GTK_DIALOG(dialog), _("Select another PDF"), 1);
 		gtk_dialog_add_button(GTK_DIALOG(dialog), _("Remove PDF Background"), 2);
@@ -1918,8 +1971,8 @@ bool Control::openFile(String filename, int scrollToPage) {
 	}
 
 	if (!tmp) {
-		GtkWidget * dialog = gtk_message_dialog_new((GtkWindow*) *win, GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, _(
-				"Error opening file '%s'\n%s"), filename.c_str(), h.getLastError().c_str());
+		GtkWidget * dialog = gtk_message_dialog_new((GtkWindow*) *win, GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR,
+				GTK_BUTTONS_OK, _("Error opening file '%s'\n%s"), filename.c_str(), h.getLastError().c_str());
 		gtk_dialog_run(GTK_DIALOG(dialog));
 		gtk_widget_destroy(dialog);
 		fileLoaded(scrollToPage);
@@ -2002,8 +2055,8 @@ bool Control::annotatePdf(String filename, bool attachPdf, bool attachToDocument
 		String errMsg = doc->getLastErrorMsg();
 		this->doc->unlock();
 
-		GtkWidget * dialog = gtk_message_dialog_new((GtkWindow*) *win, GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, _(
-				"Error annotate PDF file '%s'\n%s"), filename.c_str(), errMsg.c_str());
+		GtkWidget * dialog = gtk_message_dialog_new((GtkWindow*) *win, GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR,
+				GTK_BUTTONS_OK, _("Error annotate PDF file '%s'\n%s"), filename.c_str(), errMsg.c_str());
 		gtk_dialog_run(GTK_DIALOG(dialog));
 		gtk_widget_destroy(dialog);
 	}
@@ -2116,8 +2169,8 @@ String Control::getFilename(String uri) {
 bool Control::showSaveDialog() {
 	XOJ_CHECK_TYPE(Control);
 
-	GtkWidget * dialog = gtk_file_chooser_dialog_new(_("Save File"), (GtkWindow*) *win, GTK_FILE_CHOOSER_ACTION_SAVE, GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-			GTK_STOCK_SAVE, GTK_RESPONSE_OK, NULL);
+	GtkWidget * dialog = gtk_file_chooser_dialog_new(_("Save File"), (GtkWindow*) *win, GTK_FILE_CHOOSER_ACTION_SAVE,
+			GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL, GTK_STOCK_SAVE, GTK_RESPONSE_OK, NULL);
 	gtk_file_chooser_set_local_only(GTK_FILE_CHOOSER(dialog), true);
 
 	GtkFileFilter * filterXoj = gtk_file_filter_new();
@@ -2261,9 +2314,11 @@ void Control::quit() {
 bool Control::close(bool destroy) {
 	XOJ_CHECK_TYPE(Control);
 
+	clearSelectionEndText();
+
 	if (undoRedo->isChanged()) {
-		GtkWidget * dialog = gtk_message_dialog_new((GtkWindow *) *getWindow(), GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_WARNING, GTK_BUTTONS_NONE, _(
-				"This document is not saved yet."));
+		GtkWidget * dialog = gtk_message_dialog_new((GtkWindow *) *getWindow(), GTK_DIALOG_DESTROY_WITH_PARENT,
+				GTK_MESSAGE_WARNING, GTK_BUTTONS_NONE, _("This document is not saved yet."));
 
 		gtk_dialog_add_button(GTK_DIALOG(dialog), _("Save"), 1);
 		gtk_dialog_add_button(GTK_DIALOG(dialog), _("Discard"), 2);
@@ -2502,8 +2557,8 @@ void Control::setToolSize(ToolSize size) {
 	}
 
 	if (sel) {
-		UndoAction * undo = sel->setSize(size, toolHandler->getToolThikness(TOOL_PEN), toolHandler->getToolThikness(TOOL_HILIGHTER),
-				toolHandler->getToolThikness(TOOL_ERASER));
+		UndoAction * undo = sel->setSize(size, toolHandler->getToolThikness(TOOL_PEN), toolHandler->getToolThikness(
+				TOOL_HILIGHTER), toolHandler->getToolThikness(TOOL_ERASER));
 		if (undo) {
 			undoRedo->addUndoAction(undo);
 		}

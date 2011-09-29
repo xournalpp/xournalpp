@@ -49,6 +49,11 @@ void ToolbarDragDropHelper::dragDestAddToolbar(GtkWidget * target) {
 void ToolbarDragDropHelper::dragSourceAddToolbar(GtkWidget * widget) {
 	GtkTargetList * targetList = gtk_drag_source_get_target_list(widget);
 	if (targetList) {
+		// List contains already this type
+		if(gtk_target_list_find(targetList, atomToolItem, NULL)) {
+			return;
+		}
+
 		gtk_target_list_ref(targetList);
 	} else {
 		targetList = gtk_target_list_new(NULL, 0);

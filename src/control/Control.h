@@ -37,6 +37,8 @@ class GladeSearchpath;
 class MetadataManager;
 class Cursor;
 class Collaboration;
+class ToolbarDragDropHandler;
+
 
 class Control: public ActionHandler,
 		public ToolListener,
@@ -108,6 +110,10 @@ public:
 	void changePageBackgroundColor();
 	void setPageBackground(ActionType type);
 	void updateBackgroundSizeButton();
+
+	void endDragDropToolbar();
+	void startDragDropToolbar();
+	bool isInDragAndDropToolbar();
 
 	bool isFullscreen();
 
@@ -242,6 +248,8 @@ private:
 	bool sidebarHidden;
 
 	ScrollHandler * scrollHandler;
+
+	ToolbarDragDropHandler * dragDropHandler;
 
 	/**
 	 * The cursor handler

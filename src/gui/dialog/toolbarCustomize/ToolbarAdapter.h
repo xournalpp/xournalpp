@@ -33,6 +33,8 @@ public:
 		this->toolHandler = toolHandler;
 		this->window = window;
 
+		this->dragDropData = NULL;
+
 		// prepare drag & drop
 		gtk_drag_dest_set(toolbar, GTK_DEST_DEFAULT_ALL, NULL, 0, GDK_ACTION_MOVE);
 		ToolbarDragDropHelper::dragDestAddToolbar(toolbar);
@@ -57,6 +59,10 @@ public:
 		g_signal_handlers_disconnect_by_func(this->w, (gpointer) toolbarDragMotionCb, this);
 		g_signal_handlers_disconnect_by_func(this->w, (gpointer) toolbarDragLeafeCb, this);
 		g_signal_handlers_disconnect_by_func(this->w, (gpointer) toolbarDragDataReceivedCb, this);
+
+
+		// TODO: !!!! auch beim verschrieben in den DIalog die Handler entfernen!
+		cleanupToolbars();
 
 		XOJ_RELEASE_TYPE(ToolbarAdapter);
 	}
@@ -146,9 +152,10 @@ private:
 
 			AbstractToolItem * ait = this->toolHandler->getItemFor(GTK_WIDGET(it));
 
-			AbstractItemSelectionData * sd = new AbstractItemSelectionData(ait, this->toolbarName, ToolMenuHandler::metadataGetDragDropId(GTK_WIDGET(it)));
+			AbstractItemSelectionData * sd = new AbstractItemSelectionData(ait, this->toolbarName, ToolMenuHandler::metadataGetDragDropId(GTK_WIDGET(it)), GTK_WIDGET(it));
 			g_signal_connect(it, "drag-data-get", G_CALLBACK(toolitemDragDataGet), sd);
 
+			this->dragDropData =  g_slist_prepend(this->dragDropData, sd);
 		}
 	}
 
@@ -157,10 +164,25 @@ private:
 		GtkWidget * parent = gtk_widget_get_parent(w);
 		gtk_container_remove(GTK_CONTAINER(parent), w);
 
-		//		GtkToolbar * tb = GTK_TOOLBAR(this->w);
-		//		if (gtk_toolbar_get_n_items(tb) == 0) {
-		//			gtk_widget_hide(GTK_WIDGET(tb));
-		//		}
+
+		for(GSList * l = this->dragDropData; l!=NULL; l=l->next) {
+			AbstractItemSelectionData * sd = (AbstractItemSelectionData *)l->data;
+
+			gtk_tool_item_set_use_drag_window(GTK_TOOL_ITEM(sd->w), false);
+
+			gtk_drag_source_unset(sd->w);
+
+			g_signal_handlers_disconnect_by_func(sd->w, (gpointer) toolitemDragBegin, this);
+			g_signal_handlers_disconnect_by_func(sd->w, (gpointer) toolitemDragEnd, this);
+
+
+			g_signal_handlers_disconnect_by_func(sd->w, (gpointer) toolitemDragDataGet, sd);
+
+			delete sd;
+		}
+
+		g_slist_free(this->dragDropData);
+		this->dragDropData = NULL;
 	}
 
 	void showToolbar() {

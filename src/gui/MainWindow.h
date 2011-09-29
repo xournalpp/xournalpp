@@ -80,9 +80,6 @@ public:
 
 	Layout * getLayout();
 
-	void setInDragAndDropToolbar(bool inDragAndDropToolbar);
-	bool isInDragAndDropToolbar();
-
 private:
 	void initToolbarAndMenu();
 
@@ -127,8 +124,6 @@ private:
 	bool maximized;
 
 	GtkWidget ** toolbarWidgets;
-
-	bool inDragAndDropToolbar;
 
 };
 

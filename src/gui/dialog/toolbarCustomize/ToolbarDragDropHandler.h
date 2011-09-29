@@ -23,29 +23,25 @@ class MainWindow;
 
 class ToolbarDragDropHandler : public ToolbarListener {
 public:
-	ToolbarDragDropHandler();
+	ToolbarDragDropHandler(Control * control);
 	virtual ~ToolbarDragDropHandler();
 
 public:
-	void configure(Control * control);
+	void configure();
 
 	virtual void toolbarDataChanged();
 
-	void ref();
-	void unref();
-
 	void toolbarConfigDialogClosed();
 
-protected:
-	void prepareToolbarsForDragAndDrop(Control * control);
+	bool isInDragAndDrop();
+public:
+	void prepareToolbarsForDragAndDrop();
 	void clearToolbarsFromDragAndDrop();
 
 private:
 	XOJ_TYPE_ATTRIB;
 
-	int refcount;
-
-	MainWindow * win;
+	Control * control;
 
 	ToolbarAdapter ** toolbars;
 	ToolbarCustomizeDialog * customizeDialog;
