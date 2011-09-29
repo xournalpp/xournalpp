@@ -150,7 +150,7 @@ gboolean gtk_xournal_scroll_event(GtkWidget * widget, GdkEventScroll * event) {
 	// true: Core event, false: XInput event
 	gboolean isCore = (event->device == gdk_device_get_core_pointer());
 
-	printf("DEBUG: Scroll (%s) (x,y)=(%.2f,%.2f), direction %d, modifier %x, isCore %i\n", gdk_device_get_name(event->device), event->x, event->y,
+	INPUTDBG("Scroll (%s) (x,y)=(%.2f,%.2f), direction %d, modifier %x, isCore %i", gdk_device_get_name(event->device), event->x, event->y,
 			event->direction, event->state, isCore);
 #endif
 
@@ -252,25 +252,27 @@ gboolean gtk_xournal_button_press_event(GtkWidget * widget, GdkEventButton * eve
 	 */
 	gboolean isCore = (event->device == gdk_device_get_core_pointer());
 
-#ifdef INPUT_DEBUG
-	printf("DEBUG: ButtonPress (%s) (x,y)=(%.2f,%.2f), button %d, modifier %x, isCore %i\n", gdk_device_get_name(event->device), event->x, event->y,
+	INPUTDBG("ButtonPress (%s) (x,y)=(%.2f,%.2f), button %d, modifier %x, isCore %i", gdk_device_get_name(event->device), event->x, event->y,
 			event->button, event->state, isCore);
-#endif
+
 	GtkXournal * xournal = GTK_XOURNAL(widget);
 	Settings * settings = xournal->view->getControl()->getSettings();
 
 	if(isCore && settings->isXinputEnabled() && settings->isIgnoreCoreEvents()) {
+		INPUTDBG2("gtk_xournal_button_press_event return false (ignore core)");
 		return false;
 	}
 
 	XInputUtils::fixXInputCoords((GdkEvent*) event, widget);
 
 	if (event->type != GDK_BUTTON_PRESS) {
+		INPUTDBG2("gtk_xournal_button_press_event return false (event->type != GDK_BUTTON_PRESS)");
 		return false; // this event is not handled here
 	}
 
 	if (event->button > 3) { // scroll wheel events
 		XInputUtils::handleScrollEvent(event, widget);
+		INPUTDBG2("gtk_xournal_button_press_event return true handled scroll event");
 		return true;
 	}
 
@@ -280,6 +282,8 @@ gboolean gtk_xournal_button_press_event(GtkWidget * widget, GdkEventButton * eve
 
 	// none button release event was sent, send one now
 	if (xournal->currentInputPage) {
+		INPUTDBG2("gtk_xournal_button_press_event (xournal->currentInputPage != NULL)");
+
 		GdkEventButton ev = *event;
 		xournal->currentInputPage->translateEvent((GdkEvent*) &ev, xournal->x, xournal->y);
 		xournal->currentInputPage->onButtonReleaseEvent(widget, &ev);
@@ -322,6 +326,7 @@ gboolean gtk_xournal_button_press_event(GtkWidget * widget, GdkEventButton * eve
 		xournal->inScrolling = true;
 		gtk_widget_get_pointer(widget, &xournal->lastMousePositionX, &xournal->lastMousePositionY);
 
+		INPUTDBG2("gtk_xournal_button_press_event (h->getToolType() == TOOL_HAND) return true");
 		return true;
 	} else if (xournal->selection) {
 		EditSelection * selection = xournal->selection;
@@ -333,6 +338,7 @@ gboolean gtk_xournal_button_press_event(GtkWidget * widget, GdkEventButton * eve
 		if (selType) {
 			xournal->view->getCursor()->setMouseDown(true);
 			xournal->selection->mouseDown(selType, ev.x, ev.y);
+			INPUTDBG2("gtk_xournal_button_press_event (selection) return true");
 			return true;
 		} else {
 			xournal->view->clearSelection();
@@ -343,16 +349,18 @@ gboolean gtk_xournal_button_press_event(GtkWidget * widget, GdkEventButton * eve
 	if (pv) {
 		xournal->currentInputPage = pv;
 		pv->translateEvent((GdkEvent*) event, xournal->x, xournal->y);
+		INPUTDBG2("gtk_xournal_button_press_event (pv->onButtonPressEvent) return");
 		return pv->onButtonPressEvent(widget, event);
 	}
 
+	INPUTDBG2("gtk_xournal_button_press_event (not handled) return false");
 	return false; // not handled
 }
 
 gboolean gtk_xournal_button_release_event(GtkWidget * widget, GdkEventButton * event) {
 #ifdef INPUT_DEBUG
 	gboolean isCore = (event->device == gdk_device_get_core_pointer());
-	printf("DEBUG: ButtonRelease (%s) (x,y)=(%.2f,%.2f), button %d, modifier %x, isCore %i\n", gdk_device_get_name(event->device), event->x, event->y,
+	INPUTDBG("ButtonRelease (%s) (x,y)=(%.2f,%.2f), button %d, modifier %x, isCore %i", gdk_device_get_name(event->device), event->x, event->y,
 			event->button, event->state, isCore);
 #endif
 	XInputUtils::fixXInputCoords((GdkEvent*) event, widget);
@@ -397,7 +405,7 @@ gboolean gtk_xournal_button_release_event(GtkWidget * widget, GdkEventButton * e
 gboolean gtk_xournal_motion_notify_event(GtkWidget * widget, GdkEventMotion * event) {
 #ifdef INPUT_DEBUG
 		bool is_core = (event->device == gdk_device_get_core_pointer());
-		printf("DEBUG: MotionNotify (%s) (x,y)=(%.2f,%.2f), modifier %x\n", is_core ? "core" : "xinput", event->x, event->y, event->state);
+		INPUTDBG("MotionNotify (%s) (x,y)=(%.2f,%.2f), modifier %x", is_core ? "core" : "xinput", event->x, event->y, event->state);
 #endif
 
 	XInputUtils::fixXInputCoords((GdkEvent*) event, widget);

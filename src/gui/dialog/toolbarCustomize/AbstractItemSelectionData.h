@@ -22,12 +22,14 @@ class AbstractToolItem;
  */
 class AbstractItemSelectionData {
 public:
-	AbstractItemSelectionData(AbstractToolItem * item, String toolbar, int id) {
+	AbstractItemSelectionData(AbstractToolItem * item, String toolbar, int id, GtkWidget * w) {
 		this->item = item;
 		this->toolbar = toolbar;
 		this->id = id;
+		this->w = w;
 	}
 
+	GtkWidget * w;
 	AbstractToolItem * item;
 	String toolbar;
 	int id;

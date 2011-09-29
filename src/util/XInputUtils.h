@@ -15,9 +15,11 @@
 #include <gtk/gtk.h>
 
 #ifdef INPUT_DEBUG
-#define INPUTDBG(msg, ...) printf("INPUT:: " msg, __VA_ARGS__)
+#define INPUTDBG(msg, ...) printf("INPUT:: " msg, __VA_ARGS__); printf(" on %s:%i\n",  __FILE__, __LINE__)
+#define INPUTDBG2(msg)     printf("INPUT:: " msg " on %s:%i\n",  __FILE__, __LINE__)
 #else
 #define INPUTDBG(msg, ...)
+#define INPUTDBG2(msg)
 #endif
 
 class XInputUtils {

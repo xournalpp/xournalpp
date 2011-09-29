@@ -19,7 +19,6 @@
 class MainWindow;
 class AbstractToolItem;
 class AbstractItemSelectionData;
-
 class ToolbarDragDropHandler;
 
 typedef struct _ToolItemDragData ToolItemDragData;
@@ -57,7 +56,6 @@ private:
 
 private:
 	XOJ_TYPE_ATTRIB;
-	ToolbarDragDropHandler * tbhandler;
 
 	GList * itemDatalist;
 

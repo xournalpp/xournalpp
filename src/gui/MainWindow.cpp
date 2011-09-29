@@ -24,7 +24,6 @@ MainWindow::MainWindow(GladeSearchpath * gladeSearchPath, Control * control) :
 	this->toolbarIntialized = false;
 	this->toolbarGroup = NULL;
 	this->selectedToolbar = NULL;
-	this->inDragAndDropToolbar = false;
 	this->toolbarWidgets = new GtkWidget*[TOOLBAR_DEFINITIONS_LEN];
 
 	for (int i = 0; i < TOOLBAR_DEFINITIONS_LEN; i++) {
@@ -152,18 +151,6 @@ MainWindow::~MainWindow() {
 	this->toolbar = NULL;
 
 	XOJ_RELEASE_TYPE(MainWindow);
-}
-
-void MainWindow::setInDragAndDropToolbar(bool inDragAndDropToolbar) {
-	XOJ_CHECK_TYPE(MainWindow);
-
-	this->inDragAndDropToolbar = inDragAndDropToolbar;
-}
-
-bool MainWindow::isInDragAndDropToolbar() {
-	XOJ_CHECK_TYPE(MainWindow);
-
-	return this->inDragAndDropToolbar;
 }
 
 Layout * MainWindow::getLayout() {
@@ -411,14 +398,20 @@ bool MainWindow::windowStateEventCallback(GtkWidget * window, GdkEventWindowStat
 void MainWindow::reloadToolbars() {
 	XOJ_CHECK_TYPE(MainWindow);
 
-	bool inDragAndDrop = this->isInDragAndDropToolbar();
+	bool inDragAndDrop = this->control->isInDragAndDropToolbar();
 
-	/// TODO !!!!!!!!!!!!!!!
+	ToolbarData * d = getSelectedToolbar();
 
-	ToolbarData * d = this->selectedToolbar;
+	if(inDragAndDrop){
+		this->control->endDragDropToolbar();
+	}
 
 	this->clearToolbar();
 	this->toolbarSelected(d);
+
+	if(inDragAndDrop){
+		this->control->startDragDropToolbar();
+	}
 }
 
 void MainWindow::toolbarSelected(ToolbarData * d) {
