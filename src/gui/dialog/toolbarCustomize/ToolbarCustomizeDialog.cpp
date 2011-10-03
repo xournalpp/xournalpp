@@ -14,8 +14,6 @@
 #include <config.h>
 #include <glib/gi18n-lib.h>
 
-#include "AbstractItemSelectionData.h"
-
 typedef struct _ToolItemDragData ToolItemDragData;
 struct _ToolItemDragData {
 	ToolbarCustomizeDialog * dlg;
@@ -111,9 +109,20 @@ void ToolbarCustomizeDialog::toolitemDragEnd(GtkWidget * widget, GdkDragContext 
 }
 
 void ToolbarCustomizeDialog::toolitemDragDataGet(GtkWidget * widget, GdkDragContext * context,
-		GtkSelectionData * selection_data, guint info, guint time, AbstractItemSelectionData * item) {
-	gtk_selection_data_set(selection_data, ToolbarDragDropHelper::atomToolItem, 0, (const guchar *) item,
-			sizeof(AbstractItemSelectionData));
+		GtkSelectionData * selection_data, guint info, guint time, ToolItemDragData * data) {
+
+	g_return_if_fail(data != NULL);
+	g_return_if_fail(data->item != NULL);
+
+	data->item->setUsed(true);
+	data->dlg->rebuildIconview();
+
+	ToolItemDragDropData * it = ToolitemDragDrop::ToolItemDragDropData_new(data->item);
+
+	gtk_selection_data_set(selection_data, ToolbarDragDropHelper::atomToolItem, 0, (const guchar *) it,
+			sizeof(ToolItemDragDropData));
+
+	g_free(it);
 }
 
 /**
@@ -128,15 +137,13 @@ void ToolbarCustomizeDialog::dragDataReceived(GtkWidget * widget, GdkDragContext
 		return;
 	}
 
-	AbstractItemSelectionData * d = NULL;
-	d = (AbstractItemSelectionData *) gtk_selection_data_get_data(data);
+	ToolItemDragDropData * d = (ToolItemDragDropData *) gtk_selection_data_get_data(data);
+	g_return_if_fail(ToolitemDragDrop::checkToolItemDragDropData(d));
 
-	AbstractToolItem * item = d->item;
-
-	if (item == NULL) {
-		printf("NULL AbstractItemSelectionData dropped\n");
-	} else if (item->isUsed()) {
-		dlg->removeFromToolbar(item, d->toolbar, d->id);
+	// TODO: !!!!!!!!!!!!!
+	if (d->type == TOOL_ITEM_ITEM) {
+//		dlg->removeFromToolbar(item, d->toolbar, d->id);
+		d->item->setUsed(false);
 		dlg->rebuildIconview();
 	}
 
@@ -241,10 +248,7 @@ void ToolbarCustomizeDialog::rebuildIconview() {
 		g_signal_connect(ebox, "drag-begin", G_CALLBACK(toolitemDragBegin), data);
 		g_signal_connect(ebox, "drag-end", G_CALLBACK(toolitemDragEnd), data);
 
-		// TODO: MEMORY LEAK
-		AbstractItemSelectionData * sd = new AbstractItemSelectionData(item, "", -1, ebox);
-		g_signal_connect(ebox, "drag-data-get", G_CALLBACK(toolitemDragDataGet), sd);
-		this->itemSelectionData = g_list_append(this->itemSelectionData, sd);
+		g_signal_connect(ebox, "drag-data-get", G_CALLBACK(toolitemDragDataGet), data);
 
 		int x = i % 3;
 		int y = i / 3;

@@ -29,8 +29,6 @@ public:
 	bool isUsed();
 	void setUsed(bool used);
 
-	bool containsWidget(GtkWidget * widget);
-
 	static void toolButtonCallback(GtkToolButton *toolbutton, AbstractToolItem * item);
 
 	virtual String getToolDisplayName() = 0;

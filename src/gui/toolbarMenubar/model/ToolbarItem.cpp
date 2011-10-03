@@ -11,6 +11,11 @@ ToolbarItem::ToolbarItem(String name) {
 	}
 }
 
+ToolbarItem::ToolbarItem() {
+	this->name = "";
+	this->id = -100;
+}
+
 ToolbarItem::~ToolbarItem() {
 }
 

@@ -22,6 +22,8 @@
 #include "model/ToolbarModel.h"
 #include "model/ToolbarData.h"
 
+#include "../ToolitemDragDrop.h"
+
 ToolMenuHandler::ToolMenuHandler(ActionHandler * listener, ZoomControl * zoom, GladeGui * gui,
 		ToolHandler * toolHandler) {
 	XOJ_INIT_TYPE(ToolMenuHandler);
@@ -103,26 +105,6 @@ void ToolMenuHandler::unloadToolbar(GtkWidget * toolbar) {
 	gtk_widget_hide(toolbar);
 }
 
-const char * ATTACH_DRAG_DROP_ID = "XOJ_DRAG_DROP_ID";
-
-void ToolMenuHandler::attachMetadata(GtkWidget * w, int id) {
-	int * idData = (int *)g_new(int, 1);
-	*idData = id;
-
-	g_object_set_data_full(G_OBJECT(w), ATTACH_DRAG_DROP_ID, idData, (GDestroyNotify) g_free);
-}
-
-int ToolMenuHandler::metadataGetDragDropId(GtkWidget * w) {
-	const int * ptr = (const int *)g_object_get_data(G_OBJECT(w), ATTACH_DRAG_DROP_ID);
-
-	if(ptr == NULL) {
-		g_warning("Could not get Metadata %s from %s\n", ATTACH_DRAG_DROP_ID, g_type_name (G_TYPE_FROM_INSTANCE(w)));
-		return -1;
-	}
-
-	return *ptr;
-}
-
 void ToolMenuHandler::load(ToolbarData * d, GtkWidget * toolbar, const char * toolbarName, bool horizontal) {
 	XOJ_CHECK_TYPE(ToolMenuHandler);
 
@@ -133,13 +115,11 @@ void ToolMenuHandler::load(ToolbarData * d, GtkWidget * toolbar, const char * to
 	for (it = d->contents.begin(); it != d->contents.end(); it++) {
 		ToolbarEntry & e = *it;
 
-		if (e.name.equals(toolbarName)) {
-			int pos = 0;
-
-			std::vector<ToolbarItem>::iterator itItem;
-			for (itItem = e.entries.begin(); itItem != e.entries.end(); itItem++, pos++) {
-				ToolbarItem dataItem = *itItem;
-				String name = dataItem;
+		if (e.getName().equals(toolbarName)) {
+			ListIterator<ToolbarItem *> it = e.iterator();
+			while (it.hasNext()) {
+				ToolbarItem * dataItem = it.next();
+				String name = *dataItem;
 
 				if (name.equals("SEPARATOR")) {
 					GtkToolItem* toolItem = gtk_tool_item_new();
@@ -155,7 +135,8 @@ void ToolMenuHandler::load(ToolbarData * d, GtkWidget * toolbar, const char * to
 					gtk_widget_show(separator);
 					gtk_container_add(GTK_CONTAINER(toolItem), separator);
 
-					ToolMenuHandler::attachMetadata(GTK_WIDGET(toolItem), dataItem.getId());
+					// TODO !!!!!!!!! separator
+//					ToolitemDragDrop::attachMetadata(GTK_WIDGET(toolItem), dataItem.getId(), name);
 
 					continue;
 				}
@@ -167,7 +148,9 @@ void ToolMenuHandler::load(ToolbarData * d, GtkWidget * toolbar, const char * to
 					gtk_widget_show(GTK_WIDGET(toolItem));
 					gtk_toolbar_insert(GTK_TOOLBAR(toolbar), toolItem, -1);
 
-					ToolMenuHandler::attachMetadata(GTK_WIDGET(toolItem),  dataItem.getId());
+					// TODO !!!!!!!!! SPACER
+//					ToolitemDragDrop::attachMetadata(GTK_WIDGET(toolItem), dataItem.getId(), name);
+
 					continue;
 				}
 				if (name.startsWith("COLOR(") && name.size() == 15) {
@@ -182,22 +165,23 @@ void ToolMenuHandler::load(ToolbarData * d, GtkWidget * toolbar, const char * to
 					gint c = g_ascii_strtoll(color.c_str(), NULL, 16);
 
 					const char * colorName = this->tbModel->getColorName(color.c_str());
-					String name;
+					String itemName;
 					if (colorName == NULL) {
 						g_warning("No color name in toolbar.ini for %s defined!", color.c_str());
-						name = color;
+						itemName = color;
 					} else {
-						name = colorName;
+						itemName = colorName;
 					}
 
-					ColorToolItem * item = new ColorToolItem("", listener, toolHandler, c, name);
+					ColorToolItem * item = new ColorToolItem("", listener, toolHandler, c, itemName);
 					toolbarColorItems = g_list_append(toolbarColorItems, item);
 
 					GtkToolItem * it = item->createItem(horizontal);
 					gtk_widget_show_all(GTK_WIDGET(it));
 					gtk_toolbar_insert(GTK_TOOLBAR(toolbar), it, -1);
 
-					ToolMenuHandler::attachMetadata(GTK_WIDGET(it), dataItem.getId());
+					// TODO !!!!!!!!! COLOR
+//					ToolitemDragDrop::attachMetadata(GTK_WIDGET(it), dataItem.getId(), name);
 
 					continue;
 				}
@@ -218,7 +202,7 @@ void ToolMenuHandler::load(ToolbarData * d, GtkWidget * toolbar, const char * to
 						gtk_widget_show_all(GTK_WIDGET(it));
 						gtk_toolbar_insert(GTK_TOOLBAR(toolbar), GTK_TOOL_ITEM(it), -1);
 
-						ToolMenuHandler::attachMetadata(GTK_WIDGET(it), dataItem.getId());
+						ToolitemDragDrop::attachMetadata(GTK_WIDGET(it), dataItem->getId(), item);
 
 						found = true;
 						break;
@@ -585,22 +569,6 @@ ToolbarModel * ToolMenuHandler::getModel() {
 	XOJ_CHECK_TYPE(ToolMenuHandler);
 
 	return this->tbModel;
-}
-
-AbstractToolItem * ToolMenuHandler::getItemFor(GtkWidget * w) {
-	XOJ_CHECK_TYPE(ToolMenuHandler);
-
-	for (GList * l = this->toolItems; l != NULL; l = l->next) {
-		AbstractToolItem * it = (AbstractToolItem *) l->data;
-		if (it->containsWidget(w)) {
-			return it;
-		}
-	}
-
-	printf("ToolMenuHandler::getItemFor: widget not found\n");
-
-	// Not found or SEPARATOR
-	return NULL;
 }
 
 ListIterator<AbstractToolItem *> ToolMenuHandler::getToolItems() {

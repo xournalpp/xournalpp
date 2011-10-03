@@ -9,6 +9,7 @@
 #include "Layout.h"
 #include "widgets/XournalWidget.h"
 #include "widgets/SpinPageAdapter.h"
+#include "ToolitemDragDrop.h"
 
 #include <config.h>
 #include <glib/gi18n-lib.h>
@@ -469,7 +470,7 @@ GtkWidget ** MainWindow::getToolbarWidgets(int & length) {
 	return this->toolbarWidgets;
 }
 
-String MainWindow::getToolbarName(GtkToolbar * toolbar) {
+const char * MainWindow::getToolbarName(GtkToolbar * toolbar) {
 	XOJ_CHECK_TYPE(MainWindow);
 
 	for (int i = 0; i < TOOLBAR_DEFINITIONS_LEN; i++) {

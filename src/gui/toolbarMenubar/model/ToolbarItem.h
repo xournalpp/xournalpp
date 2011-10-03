@@ -17,6 +17,7 @@
 class ToolbarItem {
 public:
 	ToolbarItem(String name);
+	ToolbarItem();
 	virtual ~ToolbarItem();
 
 	operator String();

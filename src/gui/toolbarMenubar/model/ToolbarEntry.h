@@ -13,14 +13,32 @@
 #define __TOOLBARENTRY_H__
 
 #include "ToolbarItem.h"
+#include <gtk/gtk.h>
+#include "../../../util/ListIterator.h"
 
 class ToolbarEntry {
-private:
-	String name;
-	std::vector<ToolbarItem> entries;
+public:
+	ToolbarEntry();
+	ToolbarEntry(const ToolbarEntry & e);
+	~ToolbarEntry();
 
-	friend class ToolMenuHandler;
-	friend class ToolbarData;
+	void operator = (const ToolbarEntry & e);
+
+public:
+	String getName();
+	void setName(String name);
+
+	void addItem(String item);
+	bool removeItemById(int id);
+	void insertItem(String item, int position);
+
+	ListIterator<ToolbarItem *> iterator();
+
+private:
+	XOJ_TYPE_ATTRIB;
+
+	String name;
+	GList * entries;
 };
 
 #endif /* __TOOLBARENTRY_H__ */

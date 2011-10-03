@@ -66,12 +66,7 @@ public:
 
 	ToolbarModel * getModel();
 
-	AbstractToolItem * getItemFor(GtkWidget * w);
 	ListIterator<AbstractToolItem *> getToolItems();
-
-public:
-	static void attachMetadata(GtkWidget * w, int pos);
-	static int metadataGetDragDropId(GtkWidget * w);
 
 private:
 	void addToolItem(AbstractToolItem * it);
