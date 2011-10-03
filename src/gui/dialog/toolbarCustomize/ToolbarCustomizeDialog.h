@@ -44,7 +44,7 @@ private:
 	static void toolitemDragBegin(GtkWidget * widget, GdkDragContext * context, ToolItemDragData * data);
 	static void toolitemDragEnd(GtkWidget * widget, GdkDragContext * context, ToolItemDragData * data);
 	static void toolitemDragDataGet(GtkWidget * widget, GdkDragContext * context, GtkSelectionData * selection_data,
-			guint info, guint time, AbstractItemSelectionData * item);
+			guint info, guint time, ToolItemDragData * data);
 
 	void removeFromToolbar(AbstractToolItem * item, String toolbarName, int pos);
 	void freeIconview();

@@ -72,12 +72,12 @@ void ToolbarData::load(GKeyFile * config, const char * group) {
 
 		ToolbarEntry e;
 		gsize keyLen = 0;
-		e.name = keys[i];
+		e.setName(keys[i]);
 		gchar ** list = g_key_file_get_string_list(config, group, keys[i], &keyLen, NULL);
 
 		for (gsize x = 0; x < keyLen; x++) {
 			String s = list[x];
-			e.entries.push_back(s.trim());
+			e.addItem(s.trim());
 		}
 
 		this->contents.push_back(e);
@@ -89,6 +89,8 @@ void ToolbarData::load(GKeyFile * config, const char * group) {
 }
 
 void ToolbarData::saveToKeyFile(GKeyFile * config) {
+	XOJ_CHECK_TYPE(ToolbarData);
+
 	const char * group = getId().c_str();
 
 	std::vector<ToolbarEntry>::iterator it;
@@ -97,81 +99,58 @@ void ToolbarData::saveToKeyFile(GKeyFile * config) {
 
 		String line = "";
 
-		std::vector<ToolbarItem>::iterator itItem;
-		for (itItem = e.entries.begin(); itItem != e.entries.end(); itItem++) {
+		ListIterator<ToolbarItem *> it = e.iterator();
+		while (it.hasNext()) {
 			line += ",";
-			line += *itItem;
+			line += *it.next();
 		}
 
 		if (line.length() < 2) {
-			g_key_file_set_string(config, group, e.name.c_str(), line.substring(1).c_str());
+			g_key_file_set_string(config, group, e.getName().c_str(), line.substring(1).c_str());
 		}
 	}
 
 	g_key_file_set_string(config, group, "name", this->name.c_str());
 }
 
-void ToolbarData::addItem(String toolbar, String item, int position) {
+void ToolbarData::insertItem(String toolbar, String item, int position) {
+	XOJ_CHECK_TYPE(ToolbarData);
+
+	printf("ToolbarData::insertItem(%s, %s, %i);\n", toolbar.c_str(), item.c_str(), position);
+
 	g_return_if_fail(isPredefined() == false);
 
 	std::vector<ToolbarEntry>::iterator it;
 	for (it = this->contents.begin(); it != this->contents.end(); it++) {
 		ToolbarEntry & e = *it;
 
-		if (e.name.equals(toolbar)) {
-			std::vector<ToolbarItem>::iterator it2 = e.entries.begin();
-			it2 += position;
-			e.entries.insert(it2, ToolbarItem(item));
+		if (e.getName().equals(toolbar)) {
+			printf("Toolbar found: %s\n", toolbar.c_str());
+
+			e.insertItem(item, position);
+
+			printf("return\n");
 			return;
 		}
 	}
 
 	ToolbarEntry newEntry;
-	newEntry.name = toolbar;
-	newEntry.entries.push_back(ToolbarItem(item));
+	newEntry.setName(toolbar);
+	newEntry.addItem(item);
 	this->contents.push_back(newEntry);
 }
 
 bool ToolbarData::removeItemByID(String toolbar, int id) {
+	XOJ_CHECK_TYPE(ToolbarData);
+
 	g_return_val_if_fail(isPredefined() == false, false);
 
 	std::vector<ToolbarEntry>::iterator it;
 	for (it = this->contents.begin(); it != this->contents.end(); it++) {
 		ToolbarEntry & e = *it;
 
-		if (e.name.equals(toolbar)) {
-			std::vector<ToolbarItem>::iterator it2 = e.entries.begin();
-
-			for (; it2 != e.entries.end(); it2++) {
-				if ((*it2).getId() == id) {
-					String erased = *it2;
-					e.entries.erase(it2);
-
-					printf("removeItemByID %s from Toolbar %s\n", erased.c_str(), toolbar.c_str());
-					return true;
-				}
-			}
-		}
-	}
-
-	return false;
-}
-
-bool ToolbarData::removeItem(String toolbar, int position) {
-	g_return_val_if_fail(isPredefined() == false, false);
-
-	std::vector<ToolbarEntry>::iterator it;
-	for (it = this->contents.begin(); it != this->contents.end(); it++) {
-		ToolbarEntry & e = *it;
-
-		if (e.name.equals(toolbar)) {
-			std::vector<ToolbarItem>::iterator it2 = e.entries.begin();
-			it2 += position;
-			String erased = *it2;
-			e.entries.erase(it2);
-
-			printf("removeItem %s from Toolbar %s\n", erased.c_str(), toolbar.c_str());
-			return true;
+		if (e.getName().equals(toolbar)) {
+			return e.removeItemById(id);
 		}
 	}
 

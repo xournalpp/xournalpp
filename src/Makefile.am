@@ -79,6 +79,7 @@ xournalpp_SOURCES = \
 	gui/sidebar/SidebarPreview.cpp \
 	gui/toolbarMenubar/model/ToolbarModel.cpp \
 	gui/toolbarMenubar/model/ToolbarData.cpp \
+	gui/toolbarMenubar/model/ToolbarEntry.cpp \
 	gui/toolbarMenubar/model/ToolbarItem.cpp \
 	gui/toolbarMenubar/AbstractItem.cpp \
 	gui/toolbarMenubar/AbstractToolItem.cpp \
@@ -110,6 +111,7 @@ xournalpp_SOURCES = \
 	gui/SearchBar.cpp \
 	gui/Shadow.cpp \
 	gui/TextEditor.cpp \
+	gui/ToolitemDragDrop.cpp \
 	gui/XournalView.cpp \
 	model/eraser/EraseableStroke.cpp \
 	model/eraser/EraseableStrokePart.cpp \

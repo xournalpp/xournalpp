@@ -36,8 +36,7 @@ public:
 	void saveToKeyFile(GKeyFile * config);
 
 	// Editing API
-	void addItem(String toolbar, String item, int position);
-	bool removeItem(String toolbar, int position);
+	void insertItem(String toolbar, String item, int position);
 	bool removeItemByID(String toolbar, int id);
 
 private:

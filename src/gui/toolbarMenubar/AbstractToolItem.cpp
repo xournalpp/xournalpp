@@ -131,8 +131,3 @@ void AbstractToolItem::enable(bool enabled) {
 	}
 }
 
-bool AbstractToolItem::containsWidget(GtkWidget * widget) {
-	XOJ_CHECK_TYPE(AbstractToolItem);
-
-	return (GtkWidget *)this->item == widget;
-}

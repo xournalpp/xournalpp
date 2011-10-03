@@ -76,7 +76,7 @@ public:
 	void updateToolbarMenu();
 
 	GtkWidget ** getToolbarWidgets(int & length);
-	String getToolbarName(GtkToolbar * toolbar);
+	const char * getToolbarName(GtkToolbar * toolbar);
 
 	Layout * getLayout();
 

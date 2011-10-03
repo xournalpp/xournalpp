@@ -269,6 +269,7 @@ libgui_la_SOURCES = \
 	sidebar/SidebarPreview.cpp \
 	toolbarMenubar/model/ToolbarModel.cpp \
 	toolbarMenubar/model/ToolbarData.cpp \
+	toolbarMenubar/model/ToolbarEntry.cpp \
 	toolbarMenubar/AbstractItem.cpp \
 	toolbarMenubar/AbstractToolItem.cpp \
 	toolbarMenubar/ColorToolItem.cpp \
