@@ -69,6 +69,11 @@ private:
 		GtkWidget * w = GTK_WIDGET(this->spacerItem);
 		GtkWidget * parent = gtk_widget_get_parent(w);
 		gtk_container_remove(GTK_CONTAINER(parent), w);
+
+		GtkToolbar * tb = GTK_TOOLBAR(this->w);
+		if(gtk_toolbar_get_n_items(tb) == 0) {
+			gtk_widget_hide(this->w);
+		}
 	}
 
 	void showToolbar() {
@@ -81,7 +86,7 @@ private:
 		this->spacerItem = it;
 		gtk_toolbar_insert(tb, it, 0);
 
-		// TODO: ist hier wirklich metadata nötig?
+		// TODO: !!!! ist hier wirklich metadata nötig?
 		//		ToolitemDragDrop::attachMetadata(GTK_WIDGET(it), -2, NULL);
 
 		GtkOrientation orientation = gtk_toolbar_get_orientation(tb);

@@ -97,6 +97,20 @@ bool ToolbarModel::parse(const char * file, bool predefined) {
 	return true;
 }
 
+bool ToolbarModel::existsId(String id) {
+	XOJ_CHECK_TYPE(ToolbarModel);
+
+	for(GList * l = this->toolbars; l != NULL; l = l->next) {
+		ToolbarData * data = (ToolbarData *) l->data;
+		if(data->getName() == id) {
+			return true;
+		}
+	}
+
+	return false;
+}
+
+
 const char * TOOLBAR_INI_HEADER =
 "# Xournal++ Toolbar configuration\n"
 "# Here you can customize the Toolbars\n"
@@ -144,6 +158,10 @@ void ToolbarModel::save(const char * filename) {
 
 	gsize len = 0;
 	char * data = g_key_file_to_data(config, &len, NULL);
+
+	printf("->%s\n", data);
+
+
 	FILE * fp = fopen(filename, "w");
 	fwrite(data, 1, len, fp);
 	fclose(fp);
