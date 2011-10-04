@@ -15,6 +15,7 @@
 #include <glib.h>
 #include <ListIterator.h>
 #include <XournalType.h>
+#include <String.h>
 
 class ToolbarData;
 
@@ -30,6 +31,7 @@ public:
 	void add(ToolbarData * data);
 	void remove(ToolbarData * data);
 	void save(const char * filename);
+	bool existsId(String id);
 
 private:
 	void parseGroup(GKeyFile * config, const char * group, bool predefined);

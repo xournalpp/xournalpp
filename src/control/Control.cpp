@@ -882,10 +882,24 @@ void Control::customizeToolbars() {
 		if (res == -8) { // Yes
 			ToolbarData * data = new ToolbarData(*this->win->getSelectedToolbar());
 
-			data->setName(data->getName() + _(" Copy"));
-			data->setId(data->getId() + _(" Copy"));
+			ToolbarModel * model = this->win->getToolbarModel();
 
-			this->win->getToolbarModel()->add(data);
+			for (int i = 0; i < 100; i++) {
+				String id = data->getId() + " Copy";
+
+				if(i != 0) {
+					id += " ";
+					id += i;
+				}
+
+				if (!model->existsId(id)) {
+					data->setName(data->getName() + _(" Copy"));
+					data->setId(data->getId() + " Copy");
+					break;
+				}
+			}
+
+			model->add(data);
 			this->win->toolbarSelected(data);
 			// TODO: !!! update toolbar menu
 		} else {

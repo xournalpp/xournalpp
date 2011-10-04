@@ -105,7 +105,7 @@ void ToolbarData::saveToKeyFile(GKeyFile * config) {
 			line += *it.next();
 		}
 
-		if (line.length() < 2) {
+		if (line.length() > 2) {
 			g_key_file_set_string(config, group, e.getName().c_str(), line.substring(1).c_str());
 		}
 	}
