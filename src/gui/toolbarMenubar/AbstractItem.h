@@ -38,6 +38,7 @@ public:
 	String getId();
 
 	void setTmpDisabled(bool disabled);
+	bool isEnabled();
 
 protected:
 	virtual void enable(bool enabled);

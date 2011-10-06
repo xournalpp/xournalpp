@@ -112,3 +112,8 @@ void AbstractItem::enable(bool enabled) {
 	XOJ_CHECK_TYPE(AbstractItem);
 }
 
+bool AbstractItem::isEnabled() {
+	XOJ_CHECK_TYPE(AbstractItem);
+
+	return this->enabled;
+}

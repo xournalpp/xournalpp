@@ -13,10 +13,12 @@
 #define __TOOLBARITEM_H__
 
 #include <String.h>
+#include <XournalType.h>
 
 class ToolbarItem {
 public:
 	ToolbarItem(String name);
+	ToolbarItem(const ToolbarItem & item);
 	ToolbarItem();
 	virtual ~ToolbarItem();
 
@@ -27,6 +29,8 @@ public:
 	int getId();
 
 private:
+	XOJ_TYPE_ATTRIB;
+
 	String name;
 	int id;
 

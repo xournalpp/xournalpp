@@ -151,22 +151,6 @@ void ToolbarCustomizeDialog::dragDataReceived(GtkWidget * widget, GdkDragContext
 }
 
 /**
- * Remove a toolbar item from the tool where it was
- */
-void ToolbarCustomizeDialog::removeFromToolbar(AbstractToolItem * item, String toolbarName, int id) {
-	XOJ_CHECK_TYPE(ToolbarCustomizeDialog);
-
-	ToolbarData * d = this->win->getSelectedToolbar();
-	if (d->removeItemByID(toolbarName, id)) {
-		printf("Removed tool item %s from Toolbar %s ID %i\n", item->getId().c_str(), toolbarName.c_str(), id);
-	} else {
-		printf("Could not removed tool item %s from Toolbar %s Position %i\n", item->getId().c_str(), toolbarName.c_str(), id);
-	}
-
-	this->win->reloadToolbars();
-}
-
-/**
  * clear the icon list
  */
 void ToolbarCustomizeDialog::freeIconview() {

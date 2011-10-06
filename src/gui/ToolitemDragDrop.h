@@ -45,12 +45,9 @@ public:
 public:
 	static ToolItemDragDropData * ToolItemDragDropData_new(AbstractToolItem * item);
 	static bool checkToolItemDragDropData(ToolItemDragDropData * d);
+	static bool isToolItemEnabled(ToolItemDragDropData * d);
 
-private:
-	static void toolitemDragBegin(GtkWidget * widget, GdkDragContext * context, void * data);
-	static void toolitemDragEnd(GtkWidget * widget, GdkDragContext * context, void * data);
-	static void toolitemDragDataGet(GtkWidget * widget, GdkDragContext * context, GtkSelectionData * selection_data,
-			guint info, guint time, void * data);
+	static ToolItemDragDropData * metadataGetMetadata(GtkWidget * w);
 
 public:
 	static void removeFromToolbarForMove(GtkWidget * widget);

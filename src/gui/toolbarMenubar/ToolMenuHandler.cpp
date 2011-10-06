@@ -122,18 +122,9 @@ void ToolMenuHandler::load(ToolbarData * d, GtkWidget * toolbar, const char * to
 				String name = *dataItem;
 
 				if (name.equals("SEPARATOR")) {
-					GtkToolItem* toolItem = gtk_tool_item_new();
-					gtk_widget_show(GTK_WIDGET(toolItem));
-					gtk_toolbar_insert(GTK_TOOLBAR(toolbar), toolItem, -1);
-
-					GtkWidget * separator = NULL;
-					if (horizontal) {
-						separator = gtk_vseparator_new();
-					} else {
-						separator = gtk_hseparator_new();
-					}
-					gtk_widget_show(separator);
-					gtk_container_add(GTK_CONTAINER(toolItem), separator);
+					GtkToolItem * it = gtk_separator_tool_item_new();
+					gtk_widget_show(GTK_WIDGET(it));
+					gtk_toolbar_insert(GTK_TOOLBAR(toolbar), it, -1);
 
 					// TODO !!!!!!!!! separator
 //					ToolitemDragDrop::attachMetadata(GTK_WIDGET(toolItem), dataItem.getId(), name);
@@ -174,7 +165,7 @@ void ToolMenuHandler::load(ToolbarData * d, GtkWidget * toolbar, const char * to
 					}
 
 					ColorToolItem * item = new ColorToolItem("", listener, toolHandler, c, itemName);
-					toolbarColorItems = g_list_append(toolbarColorItems, item);
+					this->toolbarColorItems = g_list_append(this->toolbarColorItems, item);
 
 					GtkToolItem * it = item->createItem(horizontal);
 					gtk_widget_show_all(GTK_WIDGET(it));
