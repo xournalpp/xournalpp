@@ -24,6 +24,8 @@ public:
 
 	void operator = (const ToolbarEntry & e);
 
+	void clearList();
+
 public:
 	String getName();
 	void setName(String name);

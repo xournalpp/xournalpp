@@ -25,8 +25,7 @@
 
 class ToolbarAdapter {
 public:
-	ToolbarAdapter(GtkWidget * toolbar, String toolbarName, ToolbarListener * listener, ToolMenuHandler * toolHandler,
-			MainWindow * window) {
+	ToolbarAdapter(GtkWidget * toolbar, String toolbarName, ToolbarListener * listener, ToolMenuHandler * toolHandler, MainWindow * window) {
 		XOJ_INIT_TYPE( ToolbarAdapter);
 
 		this->w = toolbar;
@@ -44,6 +43,7 @@ public:
 		g_signal_connect(toolbar, "drag_data_received", G_CALLBACK(toolbarDragDataReceivedCb), this);
 
 		showToolbar();
+		prepareToolItems();
 
 		// TODO: !!! cursor wider löschen
 		// gdk_window_set_cursor (gtk_widget_get_window (GTK_WIDGET(item)), NULL);
@@ -66,17 +66,125 @@ public:
 private:
 
 	void cleanupToolbars() {
+		XOJ_CHECK_TYPE( ToolbarAdapter);
+
 		GtkWidget * w = GTK_WIDGET(this->spacerItem);
 		GtkWidget * parent = gtk_widget_get_parent(w);
 		gtk_container_remove(GTK_CONTAINER(parent), w);
 
 		GtkToolbar * tb = GTK_TOOLBAR(this->w);
-		if(gtk_toolbar_get_n_items(tb) == 0) {
+		if (gtk_toolbar_get_n_items(tb) == 0) {
 			gtk_widget_hide(this->w);
+		} else {
+			for (int i = 0; i < gtk_toolbar_get_n_items(tb); i++) {
+				GtkToolItem * it = gtk_toolbar_get_nth_item(tb, i);
+				clearToolItem(it);
+			}
 		}
 	}
 
+	void prepareToolItems() {
+		XOJ_CHECK_TYPE( ToolbarAdapter);
+
+		GtkToolbar * tb = GTK_TOOLBAR(this->w);
+
+		for (int i = 0; i < gtk_toolbar_get_n_items(tb); i++) {
+			GtkToolItem * it = gtk_toolbar_get_nth_item(tb, i);
+			prepareToolItem(it);
+		}
+	}
+
+	void clearToolItem(GtkToolItem * it) {
+		XOJ_CHECK_TYPE( ToolbarAdapter);
+
+		ToolItemDragDropData * data = ToolitemDragDrop::metadataGetMetadata(GTK_WIDGET(it));
+		if(data) {
+			gtk_widget_set_sensitive(GTK_WIDGET(it), ToolitemDragDrop::isToolItemEnabled(data));
+		}
+
+		gtk_tool_item_set_use_drag_window(it, false);
+		gtk_drag_source_unset(GTK_WIDGET(it));
+
+
+		g_signal_handlers_disconnect_by_func(it, (gpointer)toolitemDragBegin, NULL);
+		g_signal_handlers_disconnect_by_func(it, (gpointer)toolitemDragEnd, NULL);
+
+		g_signal_handlers_disconnect_by_func(it, (gpointer)toolitemDragDataGet, this);
+	}
+
+	void prepareToolItem(GtkToolItem * it) {
+		XOJ_CHECK_TYPE( ToolbarAdapter);
+
+		// if disable drag an drop is not possible
+		gtk_widget_set_sensitive(GTK_WIDGET(it), true);
+
+		gtk_tool_item_set_use_drag_window(it, true);
+
+		GdkPixbuf * pixbuf = NULL;
+
+		GdkScreen * screen = gtk_widget_get_screen(GTK_WIDGET(it));
+		GdkCursor * cursor = gdk_cursor_new_for_display(gdk_screen_get_display(screen), GDK_HAND2);
+		gdk_window_set_cursor(GTK_WIDGET(it)->window, cursor);
+		gdk_cursor_unref(cursor);
+
+		gtk_drag_source_set(GTK_WIDGET(it), GDK_BUTTON1_MASK, &ToolbarDragDropHelper::dropTargetEntry, 1, GDK_ACTION_MOVE);
+		ToolbarDragDropHelper::dragSourceAddToolbar(GTK_WIDGET(it));
+
+		g_signal_connect(it, "drag-begin", G_CALLBACK(toolitemDragBegin), NULL);
+		g_signal_connect(it, "drag-end", G_CALLBACK(toolitemDragEnd), NULL);
+
+		g_signal_connect(it, "drag-data-get", G_CALLBACK(toolitemDragDataGet), this);
+
+//		gtk_drag_source_set(widget, GDK_BUTTON1_MASK, dest_drag_types, G_N_ELEMENTS (dest_drag_types), GDK_ACTION_MOVE);
+//		if (GTK_IS_SEPARATOR_TOOL_ITEM (item)) {
+//			pixbuf = new_separator_pixbuf();
+//		} else {
+//			char *icon_name = NULL;
+//			char *stock_id = NULL;
+//			GtkAction *action;
+//			char *name;
+//
+//			name = g_object_get_data(G_OBJECT (widget), EGG_ITEM_NAME);
+//			action = name ? find_action(etoolbar, name) : NULL;
+//
+//			if (action) {
+//				g_object_get(action, "icon-name", &icon_name, "stock-id", &stock_id, NULL);
+//			}
+//			if (icon_name) {
+//				GdkScreen *screen;
+//				GtkIconTheme *icon_theme;
+//				GtkSettings *settings;
+//				gint width, height;
+//
+//				screen = gtk_widget_get_screen(widget);
+//				icon_theme = gtk_icon_theme_get_for_screen(screen);
+//				settings = gtk_settings_get_for_screen(screen);
+//
+//				if (!gtk_icon_size_lookup_for_settings(settings, GTK_ICON_SIZE_LARGE_TOOLBAR, &width, &height)) {
+//					width = height = 24;
+//				}
+//
+//				pixbuf = gtk_icon_theme_load_icon(icon_theme, icon_name, MIN (width, height), 0, NULL);
+//			}
+//			else if (stock_id)
+//			{
+//				pixbuf = gtk_widget_render_icon (widget, stock_id,
+//						GTK_ICON_SIZE_LARGE_TOOLBAR, NULL);
+//			}
+//			g_free(icon_name);
+//			g_free(stock_id);
+//		}
+//
+//		if (G_UNLIKELY (!pixbuf)) {
+//			return;
+//		}
+//		gtk_drag_source_set_icon_pixbuf(widget, pixbuf);
+//		g_object_unref(pixbuf);
+	}
+
 	void showToolbar() {
+		XOJ_CHECK_TYPE( ToolbarAdapter);
+
 		gtk_widget_show(this->w);
 
 		GtkToolbar * tb = GTK_TOOLBAR(this->w);
@@ -86,8 +194,8 @@ private:
 		this->spacerItem = it;
 		gtk_toolbar_insert(tb, it, 0);
 
-		// TODO: !!!! ist hier wirklich metadata nötig?
-		//		ToolitemDragDrop::attachMetadata(GTK_WIDGET(it), -2, NULL);
+// TODO: !!!! ist hier wirklich metadata nötig?
+//		ToolitemDragDrop::attachMetadata(GTK_WIDGET(it), -2, NULL);
 
 		GtkOrientation orientation = gtk_toolbar_get_orientation(tb);
 		if (orientation == GTK_ORIENTATION_HORIZONTAL) {
@@ -102,10 +210,75 @@ private:
 private:
 
 	/**
+	 * Drag a Toolitem from toolbar
+	 */
+	static void toolitemDragBegin(GtkWidget * widget, GdkDragContext * context, void * unused) {
+		ToolItemDragDropData * data = ToolitemDragDrop::metadataGetMetadata(widget);
+
+		g_return_if_fail(data != NULL);
+
+		ToolbarAdapter::currentDragItem = data->item;
+
+		// TODO !! Set icon
+//		gtk_drag_set_icon_pixbuf(context, data->icon, -2, -2);
+		gtk_widget_hide(widget);
+	}
+
+	/**
+	 * Drag a Toolitem from toolbar STOPPED
+	 */
+	static void toolitemDragEnd(GtkWidget * widget, GdkDragContext * context, void * unused) {
+		ToolbarAdapter::currentDragItem = NULL;
+		gtk_widget_show(widget);
+	}
+
+
+	/**
+	 * Remove a toolbar item from the tool where it was
+	 */
+	void removeFromToolbar(AbstractToolItem * item, String toolbarName, int id) {
+		XOJ_CHECK_TYPE( ToolbarAdapter);
+
+		ToolbarData * d = this->window->getSelectedToolbar();
+		if (d->removeItemByID(toolbarName, id)) {
+			printf("Removed tool item %s from Toolbar %s ID %i\n", item->getId().c_str(), toolbarName.c_str(), id);
+		} else {
+			printf("Could not removed tool item %s from Toolbar %s Position %i\n", item->getId().c_str(), toolbarName.c_str(), id);
+		}
+	}
+
+	static void toolitemDragDataGet(GtkWidget * widget, GdkDragContext * context, GtkSelectionData * selection_data, guint info, guint time, ToolbarAdapter * adapter) {
+		XOJ_CHECK_TYPE_OBJ(adapter, ToolbarAdapter);
+
+		ToolItemDragDropData * data = ToolitemDragDrop::metadataGetMetadata(widget);
+
+		g_return_if_fail(data != NULL);
+
+		GtkToolbar * tb = GTK_TOOLBAR(adapter->w);
+		int position = -1;
+		for (int i = 0; i < gtk_toolbar_get_n_items(tb); i++) {
+			GtkToolItem * it = gtk_toolbar_get_nth_item(tb, i);
+
+			if((void *)it == (void *)widget) {
+				adapter->clearToolItem(it);
+				gtk_toolbar_remove_space(tb, i);
+				position = i;
+				break;
+			}
+		}
+
+		g_return_if_fail(position != -1);
+
+		adapter->removeFromToolbar(data->item, adapter->toolbarName, data->id);
+
+		gtk_selection_data_set(selection_data, ToolbarDragDropHelper::atomToolItem, 0, (const guchar *) data,
+				sizeof(ToolItemDragDropData));
+	}
+
+	/**
 	 * A tool item was dragged to the toolbar
 	 */
-	static bool toolbarDragMotionCb(GtkToolbar * toolbar, GdkDragContext * context, gint x, gint y, guint time,
-			ToolbarAdapter * adapter) {
+	static bool toolbarDragMotionCb(GtkToolbar * toolbar, GdkDragContext * context, gint x, gint y, guint time, ToolbarAdapter * adapter) {
 		XOJ_CHECK_TYPE_OBJ(adapter, ToolbarAdapter);
 
 		GdkAtom target = gtk_drag_dest_find_target(GTK_WIDGET(toolbar), context, NULL);
@@ -120,8 +293,7 @@ private:
 
 		g_return_val_if_fail(ToolbarAdapter::currentDragItem != NULL, true);
 
-		gtk_toolbar_set_drop_highlight_item(toolbar, ToolbarAdapter::currentDragItem->createTmpItem(orientation
-				== GTK_ORIENTATION_HORIZONTAL), ipos);
+		gtk_toolbar_set_drop_highlight_item(toolbar, ToolbarAdapter::currentDragItem->createTmpItem(orientation == GTK_ORIENTATION_HORIZONTAL), ipos);
 
 		return true;
 	}
@@ -132,33 +304,45 @@ private:
 		gtk_toolbar_set_drop_highlight_item(toolbar, NULL, -1);
 	}
 
-	static void toolbarDragDataReceivedCb(GtkToolbar * toolbar, GdkDragContext * context, gint x, gint y,
-			GtkSelectionData * data, guint info, guint time, ToolbarAdapter * adapter) {
+	static void toolbarDragDataReceivedCb(GtkToolbar * toolbar, GdkDragContext * context, gint x, gint y, GtkSelectionData * data, guint info, guint time,
+			ToolbarAdapter * adapter) {
 		XOJ_CHECK_TYPE_OBJ(adapter, ToolbarAdapter);
 
-		// TODO !!!!!!!!!!!!!!!!!!!!!!!
 		ToolItemDragDropData * d = (ToolItemDragDropData *) gtk_selection_data_get_data(data);
 		g_return_if_fail(ToolitemDragDrop::checkToolItemDragDropData(d));
 
 		int pos = gtk_toolbar_get_drop_index(toolbar, x, y);
 
 		if (d->type == TOOL_ITEM_ITEM) {
-
 			bool horizontal = gtk_toolbar_get_orientation(toolbar) == GTK_ORIENTATION_HORIZONTAL;
 			GtkToolItem * it = d->item->createItem(horizontal);
 			gtk_widget_show_all(GTK_WIDGET(it));
 			gtk_toolbar_insert(toolbar, it, pos);
-
-			d->item->setUsed(true);
 
 			ToolbarData * tb = adapter->window->getSelectedToolbar();
 			const char * name = adapter->window->getToolbarName(toolbar);
 
 			const char * id = d->item->getId().c_str();
 
-			printf("id=%s; name=%s\n", id, name);
-
 			tb->insertItem(name, id, pos);
+//		} else if (d->type == TOOL_ITEM_COLOR) {
+//			// TODO !!!!!!!!!!!!!!!!!!!!!!!
+//
+//		} else if (d->type == TOOL_ITEM_SEPARATOR) {
+//			bool horizontal = gtk_toolbar_get_orientation(toolbar) == GTK_ORIENTATION_HORIZONTAL;
+//			GtkToolItem * it = d->item->createItem(horizontal);
+//			gtk_widget_show_all(GTK_WIDGET(it));
+//			gtk_toolbar_insert(toolbar, it, pos);
+//
+//			d->item->setUsed(true);
+//
+//			ToolbarData * tb = adapter->window->getSelectedToolbar();
+//			const char * name = adapter->window->getToolbarName(toolbar);
+//
+//			const char * id = d->item->getId().c_str();
+//
+//			tb->insertItem(name, id, pos);
+
 		} else {
 			g_warning("toolbarDragDataReceivedCb: ToolItemType %i not handled!", d->type);
 		}
