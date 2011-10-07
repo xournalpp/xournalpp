@@ -32,12 +32,14 @@ public:
 	static void toolButtonCallback(GtkToolButton *toolbutton, AbstractToolItem * item);
 
 	virtual String getToolDisplayName() = 0;
-	virtual GtkWidget * getNewToolIcon() = 0;
+	virtual GtkWidget * getNewToolIcon();
 
 protected:
 	virtual GtkToolItem * newItem() = 0;
 
 	virtual void enable(bool enabled);
+
+	virtual GtkWidget * getNewToolIconImpl() = 0;
 
 public:
 	XOJ_TYPE_ATTRIB;

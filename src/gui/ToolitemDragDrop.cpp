@@ -51,6 +51,7 @@ ToolItemDragDropData * ToolitemDragDrop::metadataGetMetadata(GtkWidget * w) {
 
 	if (ptr == NULL) {
 		g_warning("ToolitemDragDrop::metadataGetMetadata Could not get Metadata %s from %s\n", ATTACH_DRAG_DROP_DATA, g_type_name(G_TYPE_FROM_INSTANCE(w)));
+		return NULL;
 	}
 
 	if(!checkToolItemDragDropData((ToolItemDragDropData *)ptr)) {

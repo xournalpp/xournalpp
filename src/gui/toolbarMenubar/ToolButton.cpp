@@ -85,7 +85,7 @@ String ToolButton::getToolDisplayName() {
 	return this->description;
 }
 
-GtkWidget * ToolButton::getNewToolIcon() {
+GtkWidget * ToolButton::getNewToolIconImpl() {
 	XOJ_CHECK_TYPE(ToolButton);
 
 	if (!stock.isEmpty()) {

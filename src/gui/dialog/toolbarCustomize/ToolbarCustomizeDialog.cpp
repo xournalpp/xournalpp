@@ -9,8 +9,6 @@
 #include "ToolbarDragDropHandler.h"
 #include "ToolbarDragDropHelper.h"
 
-#include <Util.h>
-
 #include <config.h>
 #include <glib/gi18n-lib.h>
 
@@ -142,7 +140,6 @@ void ToolbarCustomizeDialog::dragDataReceived(GtkWidget * widget, GdkDragContext
 
 	// TODO: !!!!!!!!!!!!!
 	if (d->type == TOOL_ITEM_ITEM) {
-//		dlg->removeFromToolbar(item, d->toolbar, d->id);
 		d->item->setUsed(false);
 		dlg->rebuildIconview();
 	}
@@ -208,11 +205,6 @@ void ToolbarCustomizeDialog::rebuildIconview() {
 		gtk_container_add(GTK_CONTAINER(ebox), box);
 		gtk_widget_show(ebox);
 
-		if (!GTK_IS_IMAGE(icon)) {
-			GdkPixbuf * pixbuf = Util::newPixbufFromWidget(icon);
-			icon = gtk_image_new_from_pixbuf(pixbuf);
-			gdk_pixbuf_unref(pixbuf);
-		}
 		gtk_widget_show(icon);
 
 		gtk_box_pack_end(GTK_BOX(box), icon, false, false, 0);

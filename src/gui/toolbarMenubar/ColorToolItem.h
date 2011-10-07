@@ -29,7 +29,7 @@ public:
 	virtual void activated(GdkEvent * event, GtkMenuItem * menuitem, GtkToolButton * toolbutton);
 
 	virtual String getToolDisplayName();
-	virtual GtkWidget * getNewToolIcon();
+	virtual GtkWidget * getNewToolIconImpl();
 
 protected:
 	virtual GtkToolItem * newItem();

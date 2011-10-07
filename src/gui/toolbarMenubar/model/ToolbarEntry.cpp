@@ -55,11 +55,13 @@ void ToolbarEntry::setName(String name) {
 	this->name = name;
 }
 
-void ToolbarEntry::addItem(String item) {
+int ToolbarEntry::addItem(String item) {
 	XOJ_CHECK_TYPE(ToolbarEntry);
 
 	ToolbarItem * it = new ToolbarItem(item);
 	this->entries = g_list_append(this->entries, it);
+
+	return it->getId();
 }
 
 bool ToolbarEntry::removeItemById(int id) {
@@ -76,11 +78,13 @@ bool ToolbarEntry::removeItemById(int id) {
 	return false;
 }
 
-void ToolbarEntry::insertItem(String item, int position) {
+int ToolbarEntry::insertItem(String item, int position) {
 	XOJ_CHECK_TYPE(ToolbarEntry);
 
 	ToolbarItem * it = new ToolbarItem(item);
 	this->entries = g_list_insert(this->entries, it, position);
+
+	return it->getId();
 }
 
 ListIterator<ToolbarItem *> ToolbarEntry::iterator() {

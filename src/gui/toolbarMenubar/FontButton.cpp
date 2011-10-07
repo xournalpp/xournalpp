@@ -33,6 +33,16 @@ void FontButton::activated(GdkEvent *event, GtkMenuItem *menuitem, GtkToolButton
 	handler->actionPerformed(ACTION_FONT_BUTTON_CHANGED, GROUP_NOGROUP, event, menuitem, NULL, true);
 }
 
+void FontButton::setFontFontButton(GtkWidget * fontButton, XojFont & font) {
+	GtkFontButton * button = GTK_FONT_BUTTON(fontButton);
+
+	String txt = font.getName();
+	txt += " ";
+	txt += font.getSize();
+
+	gtk_font_button_set_font_name(button, txt.c_str());
+}
+
 void FontButton::setFont(XojFont & font) {
 	XOJ_CHECK_TYPE(FontButton);
 
@@ -41,13 +51,7 @@ void FontButton::setFont(XojFont & font) {
 		return;
 	}
 
-	GtkFontButton * button = GTK_FONT_BUTTON(fontButton);
-
-	String txt = font.getName();
-	txt += " ";
-	txt += font.getSize();
-
-	gtk_font_button_set_font_name(button, txt.c_str());
+	setFontFontButton(this->fontButton, font);
 }
 
 XojFont FontButton::getFont() {
@@ -62,7 +66,7 @@ String FontButton::getToolDisplayName() {
 	return _("Font");
 }
 
-GtkWidget * FontButton::getNewToolIcon() {
+GtkWidget * FontButton::getNewToolIconImpl() {
 	XOJ_CHECK_TYPE(FontButton);
 
 	return gtk_image_new_from_stock(GTK_STOCK_SELECT_FONT, GTK_ICON_SIZE_SMALL_TOOLBAR);
@@ -77,17 +81,25 @@ GtkToolItem * FontButton::createItem(bool horizontal) {
 
 	this->item = newItem();
 	g_object_ref(this->item);
-	gtk_tool_item_set_homogeneous(GTK_TOOL_ITEM(this->item), false);
 	g_signal_connect(fontButton, "font_set", G_CALLBACK(&toolButtonCallback), this);
 	return this->item;
 }
 
 GtkToolItem * FontButton::createTmpItem(bool horizontal) {
-	GtkToolItem * item = newItem();
-	gtk_tool_item_set_homogeneous(GTK_TOOL_ITEM(item), false);
+	GtkWidget * fontButton = newFontButton();
 
-	gtk_widget_show_all(GTK_WIDGET(item));
-	return item;
+	GtkToolItem * it = gtk_tool_item_new();
+
+	gtk_container_add(GTK_CONTAINER(it), fontButton);
+	gtk_tool_item_set_tooltip_text(it, this->description.c_str());
+	gtk_tool_item_set_homogeneous(GTK_TOOL_ITEM(it), false);
+
+	if (!this->font.getName().isEmpty()) {
+		setFontFontButton(fontButton, this->font);
+	}
+
+	gtk_widget_show_all(GTK_WIDGET(it));
+	return it;
 }
 
 void FontButton::showFontDialog() {
@@ -100,23 +112,27 @@ void FontButton::showFontDialog() {
 	gtk_button_clicked(GTK_BUTTON(this->fontButton));
 }
 
+GtkWidget * FontButton::newFontButton() {
+	GtkWidget * w = gtk_font_button_new();
+	gtk_widget_show(w);
+	gtk_font_button_set_use_font(GTK_FONT_BUTTON(w), TRUE);
+	gtk_button_set_focus_on_click(GTK_BUTTON(w), FALSE);
+
+	return w;
+}
+
 GtkToolItem * FontButton::newItem() {
 	XOJ_CHECK_TYPE(FontButton);
 
 	if (this->fontButton) {
 		g_object_unref(this->fontButton);
 	}
-	GtkToolItem * it;
+	GtkToolItem * it = gtk_tool_item_new();
 
-	it = gtk_tool_item_new();
-
-	this->fontButton = gtk_font_button_new();
-	gtk_widget_show(this->fontButton);
+	this->fontButton = newFontButton();
 	gtk_container_add(GTK_CONTAINER(it), this->fontButton);
-	gtk_font_button_set_use_font(GTK_FONT_BUTTON(this->fontButton), TRUE);
-	gtk_button_set_focus_on_click(GTK_BUTTON(this->fontButton), FALSE);
-
 	gtk_tool_item_set_tooltip_text(it, this->description.c_str());
+	gtk_tool_item_set_homogeneous(GTK_TOOL_ITEM(it), false);
 
 	if (!this->font.getName().isEmpty()) {
 		setFont(this->font);

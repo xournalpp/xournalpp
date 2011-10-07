@@ -41,7 +41,7 @@ void ToolbarDragDropHandler::prepareToolbarsForDragAndDrop() {
 
 	for (int i = 0; i < len; i++) {
 		GtkWidget * w = widgets[i];
-		this->toolbars[i] = new ToolbarAdapter(w, win->getToolbarName(GTK_TOOLBAR(w)), this,
+		this->toolbars[i] = new ToolbarAdapter(w, win->getToolbarName(GTK_TOOLBAR(w)),
 				control->getWindow()->getToolMenuHandler(), control->getWindow());
 	}
 }
@@ -59,16 +59,6 @@ void ToolbarDragDropHandler::clearToolbarsFromDragAndDrop() {
 	delete[] this->toolbars;
 
 	this->toolbars = NULL;
-}
-
-void ToolbarDragDropHandler::toolbarDataChanged() {
-	XOJ_CHECK_TYPE(ToolbarDragDropHandler);
-
-	this->customizeDialog->rebuildIconview();
-
-	MainWindow * win = control->getWindow();
-
-	win->reloadToolbars();
 }
 
 void ToolbarDragDropHandler::toolbarConfigDialogClosed() {

@@ -47,7 +47,7 @@ String ToolPageSpinner::getToolDisplayName() {
 	return _("Page number");
 }
 
-GtkWidget * ToolPageSpinner::getNewToolIcon() {
+GtkWidget * ToolPageSpinner::getNewToolIconImpl() {
 	XOJ_CHECK_TYPE(ToolPageSpinner);
 
 	return this->gui->loadIcon("pageSpinner.png");

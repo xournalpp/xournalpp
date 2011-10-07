@@ -12,7 +12,6 @@
 #ifndef __TOOLBARADAPTER_H__
 #define __TOOLBARADAPTER_H__
 
-#include "ToolbarListener.h"
 #include "ToolbarDragDropHelper.h"
 #include "../../toolbarMenubar/AbstractToolItem.h"
 #include "../../toolbarMenubar/ToolMenuHandler.h"
@@ -25,12 +24,11 @@
 
 class ToolbarAdapter {
 public:
-	ToolbarAdapter(GtkWidget * toolbar, String toolbarName, ToolbarListener * listener, ToolMenuHandler * toolHandler, MainWindow * window) {
+	ToolbarAdapter(GtkWidget * toolbar, String toolbarName, ToolMenuHandler * toolHandler, MainWindow * window) {
 		XOJ_INIT_TYPE( ToolbarAdapter);
 
 		this->w = toolbar;
 		this->toolbarName = toolbarName;
-		this->listener = listener;
 		this->toolHandler = toolHandler;
 		this->window = window;
 
@@ -219,8 +217,12 @@ private:
 
 		ToolbarAdapter::currentDragItem = data->item;
 
-		// TODO !! Set icon
-//		gtk_drag_set_icon_pixbuf(context, data->icon, -2, -2);
+		GtkWidget * icon = data->item->getNewToolIcon();
+
+		gtk_drag_set_icon_pixbuf(context, ToolbarDragDropHelper::getImagePixbuf(GTK_IMAGE(icon)), -2, -2);
+
+		gtk_widget_unref(icon);
+
 		gtk_widget_hide(widget);
 	}
 
@@ -261,7 +263,7 @@ private:
 
 			if((void *)it == (void *)widget) {
 				adapter->clearToolItem(it);
-				gtk_toolbar_remove_space(tb, i);
+				gtk_container_remove(GTK_CONTAINER(tb), GTK_WIDGET(it));
 				position = i;
 				break;
 			}
@@ -316,6 +318,9 @@ private:
 		if (d->type == TOOL_ITEM_ITEM) {
 			bool horizontal = gtk_toolbar_get_orientation(toolbar) == GTK_ORIENTATION_HORIZONTAL;
 			GtkToolItem * it = d->item->createItem(horizontal);
+
+			adapter->prepareToolItem(it);
+
 			gtk_widget_show_all(GTK_WIDGET(it));
 			gtk_toolbar_insert(toolbar, it, pos);
 
@@ -324,7 +329,9 @@ private:
 
 			const char * id = d->item->getId().c_str();
 
-			tb->insertItem(name, id, pos);
+			int newId = tb->insertItem(name, id, pos);
+			ToolitemDragDrop::attachMetadata(GTK_WIDGET(it), newId, d->item);
+
 //		} else if (d->type == TOOL_ITEM_COLOR) {
 //			// TODO !!!!!!!!!!!!!!!!!!!!!!!
 //
@@ -346,9 +353,6 @@ private:
 		} else {
 			g_warning("toolbarDragDataReceivedCb: ToolItemType %i not handled!", d->type);
 		}
-
-		// TODO !!!!!!!!!
-		//adapter->listener->toolbarDataChanged();
 	}
 
 private:
@@ -359,7 +363,6 @@ private:
 	MainWindow * window;
 
 	GtkToolItem * spacerItem;
-	ToolbarListener * listener;
 	ToolMenuHandler * toolHandler;
 
 public:

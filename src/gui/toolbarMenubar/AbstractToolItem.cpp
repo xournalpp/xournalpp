@@ -1,4 +1,5 @@
 #include "AbstractToolItem.h"
+#include <Util.h>
 
 AbstractToolItem::AbstractToolItem(String id, ActionHandler * handler, ActionType type, GtkWidget * menuitem) :
 		AbstractItem(id, handler, type, menuitem) {
@@ -130,4 +131,20 @@ void AbstractToolItem::enable(bool enabled) {
 		gtk_widget_set_sensitive(GTK_WIDGET(this->item), enabled);
 	}
 }
+
+GtkWidget * AbstractToolItem::getNewToolIcon() {
+	XOJ_CHECK_TYPE(AbstractToolItem);
+
+	GtkWidget * icon = this->getNewToolIconImpl();
+
+	if (!GTK_IS_IMAGE(icon)) {
+		GdkPixbuf * pixbuf = Util::newPixbufFromWidget(icon);
+		gtk_widget_unref(icon);
+		icon = gtk_image_new_from_pixbuf(pixbuf);
+		gdk_pixbuf_unref(pixbuf);
+	}
+
+	return icon;
+}
+
 

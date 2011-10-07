@@ -887,14 +887,18 @@ void Control::customizeToolbars() {
 			for (int i = 0; i < 100; i++) {
 				String id = data->getId() + " Copy";
 
-				if(i != 0) {
+				if (i != 0) {
 					id += " ";
 					id += i;
 				}
 
 				if (!model->existsId(id)) {
-					data->setName(data->getName() + _(" Copy"));
-					data->setId(data->getId() + " Copy");
+					if (i != 0) {
+						data->setName(data->getName() + _(" Copy") + " " + 1);
+					} else {
+						data->setName(data->getName() + _(" Copy"));
+					}
+					data->setId(id);
 					break;
 				}
 			}

@@ -46,7 +46,7 @@ String ToolZoomSlider::getToolDisplayName() {
 	return _("Zoom slider");
 }
 
-GtkWidget * ToolZoomSlider::getNewToolIcon() {
+GtkWidget * ToolZoomSlider::getNewToolIconImpl() {
 	XOJ_CHECK_TYPE(ToolZoomSlider);
 
 	return gtk_image_new_from_stock(GTK_STOCK_ZOOM_IN, GTK_ICON_SIZE_SMALL_TOOLBAR);

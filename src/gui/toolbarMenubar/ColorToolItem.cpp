@@ -190,10 +190,10 @@ String ColorToolItem::getToolDisplayName() {
 	return this->name;
 }
 
-GtkWidget * ColorToolItem::getNewToolIcon() {
+GtkWidget * ColorToolItem::getNewToolIconImpl() {
 	XOJ_CHECK_TYPE(ColorToolItem);
 
-	GtkWidget * iconWidget = selectcolor_new(color);
+	GtkWidget * iconWidget = selectcolor_new(this->color);
 	selectcolor_set_circle(iconWidget, !this->selector);
 
 	return iconWidget;
