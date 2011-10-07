@@ -159,9 +159,6 @@ void ToolbarModel::save(const char * filename) {
 	gsize len = 0;
 	char * data = g_key_file_to_data(config, &len, NULL);
 
-	printf("->%s\n", data);
-
-
 	FILE * fp = fopen(filename, "w");
 	fwrite(data, 1, len, fp);
 	fclose(fp);

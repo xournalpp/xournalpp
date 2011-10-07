@@ -27,10 +27,10 @@ public:
 	SpinPageAdapter * getPageSpinner();
 	void setText(String text);
 	virtual String getToolDisplayName();
-	virtual GtkWidget * getNewToolIcon();
 
 protected:
 	virtual GtkToolItem * newItem();
+	virtual GtkWidget * getNewToolIconImpl();
 
 private:
 	XOJ_TYPE_ATTRIB;

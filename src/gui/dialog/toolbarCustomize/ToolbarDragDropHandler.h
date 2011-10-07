@@ -14,22 +14,19 @@
 
 #include <XournalType.h>
 #include "ToolbarAdapter.h"
-#include "ToolbarListener.h"
 
 class Control;
 class ToolbarAdapter;
 class ToolbarCustomizeDialog;
 class MainWindow;
 
-class ToolbarDragDropHandler : public ToolbarListener {
+class ToolbarDragDropHandler {
 public:
 	ToolbarDragDropHandler(Control * control);
 	virtual ~ToolbarDragDropHandler();
 
 public:
 	void configure();
-
-	virtual void toolbarDataChanged();
 
 	void toolbarConfigDialogClosed();
 

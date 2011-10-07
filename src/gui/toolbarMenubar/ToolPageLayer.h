@@ -29,10 +29,10 @@ public:
 	void setSelectedLayer(int selected);
 	void setLayerCount(int layer, int selected);
 	virtual String getToolDisplayName();
-	virtual GtkWidget * getNewToolIcon();
 
 protected:
 	virtual GtkToolItem * newItem();
+	virtual GtkWidget * getNewToolIconImpl();
 
 private:
 	XOJ_TYPE_ATTRIB;

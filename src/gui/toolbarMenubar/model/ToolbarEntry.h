@@ -30,9 +30,16 @@ public:
 	String getName();
 	void setName(String name);
 
-	void addItem(String item);
+	/**
+	 * Adds a new item and return the ID of the item
+	 */
+	int addItem(String item);
 	bool removeItemById(int id);
-	void insertItem(String item, int position);
+
+	/**
+	 * Insert a new item and return the ID of the item
+	 */
+	int insertItem(String item, int position);
 
 	ListIterator<ToolbarItem *> iterator();
 

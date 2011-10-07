@@ -26,7 +26,6 @@ public:
 	virtual void zoomChanged(double lastZoom);
 	virtual void zoomRangeValuesChanged();
 	virtual String getToolDisplayName();
-	virtual GtkWidget * getNewToolIcon();
 
 	// Should be called when the window size changes
 	void updateScaleMarks();
@@ -37,6 +36,7 @@ public:
 protected:
 	virtual void enable(bool enabled);
 	virtual GtkToolItem * newItem();
+	virtual GtkWidget * getNewToolIconImpl();
 
 private:
 	XOJ_TYPE_ATTRIB;

@@ -27,13 +27,17 @@ public:
 	void setFont(XojFont & font);
 	XojFont getFont();
 	virtual String getToolDisplayName();
-	virtual GtkWidget * getNewToolIcon();
 	void showFontDialog();
 
 protected:
 	virtual GtkToolItem * createItem(bool horizontal);
 	virtual GtkToolItem * createTmpItem(bool horizontal);
 	virtual GtkToolItem * newItem();
+
+	GtkWidget * newFontButton();
+	static void setFontFontButton(GtkWidget * fontButton, XojFont & font);
+
+	virtual GtkWidget * getNewToolIconImpl();
 
 private:
 	XOJ_TYPE_ATTRIB;
