@@ -162,6 +162,7 @@ void Layout::layoutPages() {
 		}
 	}
 
+
 	int marginLeft = 0;
 	int marginRight = 0;
 	int marginTop = 0;
@@ -180,6 +181,8 @@ void Layout::layoutPages() {
 	gtk_widget_get_allocation(this->view->getWidget(), &alloc);
 
 	marginLeft = marginRight = (alloc.width - width) / 2;
+	marginLeft = MAX(marginLeft, 10);
+	marginRight = MAX(marginRight, 10);
 
 	if (allowScrollOutsideThePage) {
 		marginLeft += size[0] / 2;

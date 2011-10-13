@@ -66,6 +66,7 @@ xournalpp_SOURCES = \
 	gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp \
 	gui/dialog/toolbarCustomize/ToolbarDragDropHandler.cpp \
 	gui/dialog/toolbarCustomize/ToolbarDragDropHelper.cpp \
+	gui/dialog/toolbarCustomize/ToolItemDragCurrentData.cpp \
 	gui/dialog/ToolbarManageDialog.cpp \
 	gui/dialog/ImagesDialog.cpp \
 	gui/dialog/PdfPagesDialog.cpp \

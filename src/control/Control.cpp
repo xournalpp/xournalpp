@@ -894,7 +894,7 @@ void Control::customizeToolbars() {
 
 				if (!model->existsId(id)) {
 					if (i != 0) {
-						data->setName(data->getName() + _(" Copy") + " " + 1);
+						data->setName(data->getName() + _(" Copy") + " " + i);
 					} else {
 						data->setName(data->getName() + _(" Copy"));
 					}
@@ -905,7 +905,7 @@ void Control::customizeToolbars() {
 
 			model->add(data);
 			this->win->toolbarSelected(data);
-			// TODO: !!! update toolbar menu
+			this->win->updateToolbarMenu();
 		} else {
 			return;
 		}

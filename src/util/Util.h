@@ -32,6 +32,7 @@ public:
 
 	static void fakeExposeWidget(GtkWidget * widget, GdkPixmap * pixmap);
 	static GdkPixbuf * newPixbufFromWidget(GtkWidget * widget);
+	static GtkWidget * newSepeartorImage();
 
 private:
 	static String getSettingsSubfolder(String subfolder);

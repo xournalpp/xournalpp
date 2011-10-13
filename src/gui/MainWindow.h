@@ -82,6 +82,7 @@ public:
 
 private:
 	void initToolbarAndMenu();
+	void freeToolMenu();
 
 	static void buttonCloseSidebarClicked(GtkButton * button, MainWindow * win);
 

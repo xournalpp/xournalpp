@@ -126,8 +126,7 @@ void ToolMenuHandler::load(ToolbarData * d, GtkWidget * toolbar, const char * to
 					gtk_widget_show(GTK_WIDGET(it));
 					gtk_toolbar_insert(GTK_TOOLBAR(toolbar), it, -1);
 
-					// TODO !!!!!!!!! separator
-//					ToolitemDragDrop::attachMetadata(GTK_WIDGET(toolItem), dataItem.getId(), name);
+					ToolitemDragDrop::attachMetadata(GTK_WIDGET(it), dataItem->getId(), TOOL_ITEM_SEPARATOR);
 
 					continue;
 				}

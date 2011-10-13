@@ -8,6 +8,7 @@
 
 #include "ToolbarDragDropHandler.h"
 #include "ToolbarDragDropHelper.h"
+#include "ToolItemDragCurrentData.h"
 
 #include <config.h>
 #include <glib/gi18n-lib.h>
@@ -39,6 +40,36 @@ ToolbarCustomizeDialog::ToolbarCustomizeDialog(GladeSearchpath * gladeSearchPath
 	ToolbarDragDropHelper::dragDestAddToolbar(target);
 
 	g_signal_connect(target, "drag-data-received", G_CALLBACK(dragDataReceived), this);
+
+	// init separator
+	GtkWidget * tbSeparator = get("tbSeparator");
+
+	GtkWidget * icon = Util::newSepeartorImage();
+	GtkWidget * box = gtk_vbox_new(false, 3);
+	gtk_widget_show(box);
+
+	GtkWidget * label = gtk_label_new(_("Separator"));
+	gtk_widget_show(label);
+	gtk_box_pack_end(GTK_BOX(box), label, false, false, 0);
+
+	GtkWidget * ebox = gtk_event_box_new();
+	gtk_container_add(GTK_CONTAINER(ebox), box);
+	gtk_widget_show(ebox);
+
+	gtk_widget_show(icon);
+
+	gtk_box_pack_end(GTK_BOX(box), icon, false, false, 0);
+
+	// make ebox a drag source
+	gtk_drag_source_set(ebox, GDK_BUTTON1_MASK, &ToolbarDragDropHelper::dropTargetEntry, 1, GDK_ACTION_MOVE);
+	ToolbarDragDropHelper::dragSourceAddToolbar(ebox);
+
+	g_signal_connect(ebox, "drag-begin", G_CALLBACK(toolitemDragBeginSeparator), NULL);
+	g_signal_connect(ebox, "drag-end", G_CALLBACK(toolitemDragEndSeparator), NULL);
+
+	g_signal_connect(ebox, "drag-data-get", G_CALLBACK(toolitemDragDataGetSeparator), NULL);
+
+	gtk_table_attach(GTK_TABLE(tbSeparator), ebox, 0, 1, 0, 1, (GtkAttachOptions) 0, (GtkAttachOptions) 0, 5, 5);
 }
 
 ToolbarCustomizeDialog::~ToolbarCustomizeDialog() {
@@ -86,12 +117,37 @@ void ToolbarCustomizeDialog::cleanupToolbarsItemsDrag() {
 
 }
 
+void ToolbarCustomizeDialog::toolitemDragBeginSeparator(GtkWidget * widget, GdkDragContext * context, void * unused) {
+	ToolItemDragCurrentData::setData(TOOL_ITEM_SEPARATOR, -1, NULL);
+
+	GtkWidget * icon = Util::newSepeartorImage();
+	gtk_drag_set_icon_pixbuf(context, ToolbarDragDropHelper::getImagePixbuf(GTK_IMAGE(icon)), -2, -2);
+	gtk_widget_unref(icon);
+}
+
+void ToolbarCustomizeDialog::toolitemDragEndSeparator(GtkWidget * widget, GdkDragContext * context, void * unused) {
+	ToolItemDragCurrentData::clearData();
+}
+
+void ToolbarCustomizeDialog::toolitemDragDataGetSeparator(GtkWidget * widget, GdkDragContext * context,
+		GtkSelectionData * selection_data, guint info, guint time, void * unused) {
+
+	ToolItemDragDropData * it = ToolitemDragDrop::ToolItemDragDropData_new(NULL);
+	it->type = TOOL_ITEM_SEPARATOR;
+
+	gtk_selection_data_set(selection_data, ToolbarDragDropHelper::atomToolItem, 0, (const guchar *) it,
+			sizeof(ToolItemDragDropData));
+
+	g_free(it);
+}
+
 /**
  * Drag a Toolitem from dialog
  */
 void ToolbarCustomizeDialog::toolitemDragBegin(GtkWidget * widget, GdkDragContext * context, ToolItemDragData * data) {
 	XOJ_CHECK_TYPE_OBJ(data->dlg, ToolbarCustomizeDialog);
-	ToolbarAdapter::currentDragItem = data->item;
+
+	ToolItemDragCurrentData::setData(TOOL_ITEM_ITEM, -1, data->item);
 
 	gtk_drag_set_icon_pixbuf(context, data->icon, -2, -2);
 	gtk_widget_hide(data->ebox);
@@ -102,7 +158,7 @@ void ToolbarCustomizeDialog::toolitemDragBegin(GtkWidget * widget, GdkDragContex
  */
 void ToolbarCustomizeDialog::toolitemDragEnd(GtkWidget * widget, GdkDragContext * context, ToolItemDragData * data) {
 	XOJ_CHECK_TYPE_OBJ(data->dlg, ToolbarCustomizeDialog);
-	ToolbarAdapter::currentDragItem = NULL;
+	ToolItemDragCurrentData::clearData();
 	gtk_widget_show(data->ebox);
 }
 
@@ -142,6 +198,10 @@ void ToolbarCustomizeDialog::dragDataReceived(GtkWidget * widget, GdkDragContext
 	if (d->type == TOOL_ITEM_ITEM) {
 		d->item->setUsed(false);
 		dlg->rebuildIconview();
+	} else if (d->type == TOOL_ITEM_SEPARATOR) {
+		// simple ignore the separator
+	} else {
+		g_warning("ToolbarCustomizeDialog::dragDataReceived unhandled type: %i", d->type);
 	}
 
 	gtk_drag_finish(dragContext, true, false, time);

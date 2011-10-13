@@ -11,8 +11,6 @@
 #include "../../MainWindow.h"
 #include "../../toolbarMenubar/model/ToolbarModel.h"
 
-AbstractToolItem * ToolbarAdapter::currentDragItem = NULL;
-
 ToolbarDragDropHandler::ToolbarDragDropHandler(Control * control) {
 	XOJ_INIT_TYPE(ToolbarDragDropHandler);
 

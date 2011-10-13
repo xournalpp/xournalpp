@@ -40,7 +40,7 @@ private:
 
 public:
 	static void attachMetadata(GtkWidget * w, int id, AbstractToolItem * ait);
-	static void attachMetadata(GtkWidget * w, int id, String type);
+	static void attachMetadata(GtkWidget * w, int id, ToolItemType type);
 
 public:
 	static ToolItemDragDropData * ToolItemDragDropData_new(AbstractToolItem * item);
@@ -48,6 +48,8 @@ public:
 	static bool isToolItemEnabled(ToolItemDragDropData * d);
 
 	static ToolItemDragDropData * metadataGetMetadata(GtkWidget * w);
+
+	static GtkWidget * getIcon(ToolItemDragDropData * data);
 
 public:
 	static void removeFromToolbarForMove(GtkWidget * widget);
