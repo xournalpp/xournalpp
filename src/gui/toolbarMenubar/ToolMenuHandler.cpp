@@ -404,6 +404,9 @@ void ToolMenuHandler::initToolItems() {
 			_("Select Region"), gui->get("menuToolsSelectRegion")));
 	addToolItem(new ToolButton(listener, gui, "SELECT_RECTANGLE", ACTION_TOOL_SELECT_RECT, GROUP_TOOL, true,
 			"rect-select.png", _("Select Rectangle"), gui->get("menuToolsSelectRectangle")));
+	addToolItem(new ToolButton(listener, gui, "SELECT_OBJECT", ACTION_TOOL_SELECT_OBJECT, GROUP_TOOL, true,
+			"object-select.png", _("Select Object"), gui->get("menuToolsSelectObject")));
+
 	addToolItem(new ToolButton(listener, gui, "VERTICAL_SPACE", ACTION_TOOL_VERTICAL_SPACE, GROUP_TOOL, true,
 			"stretch.png", _("Vertical Space"), gui->get("menuToolsVerticalSpace")));
 	addToolItem(new ToolButton(listener, gui, "HAND", ACTION_TOOL_HAND, GROUP_TOOL, true, "hand.png", _("Hand"),
@@ -414,12 +417,9 @@ void ToolMenuHandler::initToolItems() {
 	addToolItem(new ToolButton(listener, gui, "RULER", ACTION_RULER, GROUP_RULER, false, "ruler.png", _("Ruler"),
 			gui->get("menuToolsRuler")));
 
-	addToolItem(new ToolButton(listener, gui, "FINE", ACTION_SIZE_FINE, GROUP_SIZE, true, "thickness_thin.png",
-			_("Thin")));
-	addToolItem(new ToolButton(listener, gui, "MEDIUM", ACTION_SIZE_MEDIUM, GROUP_SIZE, true, "thickness_medium.png", _(
-			"Medium")));
-	addToolItem(new ToolButton(listener, gui, "THICK", ACTION_SIZE_THICK, GROUP_SIZE, true, "thickness_thick.png", _(
-			"Thik")));
+	addToolItem(new ToolButton(listener, gui, "FINE", ACTION_SIZE_FINE, GROUP_SIZE, true, "thickness_thin.png", _("Thin")));
+	addToolItem(new ToolButton(listener, gui, "MEDIUM", ACTION_SIZE_MEDIUM, GROUP_SIZE, true, "thickness_medium.png", _("Medium")));
+	addToolItem(new ToolButton(listener, gui, "THICK", ACTION_SIZE_THICK, GROUP_SIZE, true, "thickness_thick.png", _("Thik")));
 
 	addToolItem(new ToolButton(listener, gui, "DEFAULT_TOOL", ACTION_TOOL_DEFAULT, GROUP_NOGROUP, false, "default.png",
 			_("Default Tool"), gui->get("menuToolsDefault")));
