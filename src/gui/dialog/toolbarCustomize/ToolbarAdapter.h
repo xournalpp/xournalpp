@@ -190,9 +190,6 @@ private:
 		this->spacerItem = it;
 		gtk_toolbar_insert(tb, it, 0);
 
-		// TODO: !!!! ist hier wirklich metadata nötig?
-		//		ToolitemDragDrop::attachMetadata(GTK_WIDGET(it), -2, NULL);
-
 		GtkOrientation orientation = gtk_toolbar_get_orientation(tb);
 		if (orientation == GTK_ORIENTATION_HORIZONTAL) {
 			GtkAllocation alloc = { 0, 0, 0, 20 };
@@ -240,10 +237,18 @@ private:
 
 		ToolbarData * d = this->window->getSelectedToolbar();
 		if (d->removeItemByID(toolbarName, id)) {
-			printf("Removed tool item %s from Toolbar %s ID %i\n", item->getId().c_str(), toolbarName.c_str(), id);
+			if (item != NULL) {
+				printf("Removed tool item %s from Toolbar %s ID %i\n", item->getId().c_str(), toolbarName.c_str(), id);
+			} else {
+				printf("Removed tool item from Toolbar %s ID %i\n", toolbarName.c_str(), id);
+			}
 		} else {
-			printf("Could not removed tool item %s from Toolbar %s Position %i\n", item->getId().c_str(),
-					toolbarName.c_str(), id);
+			if (item != NULL) {
+				printf("Could not removed tool item %s from Toolbar %s Position %i\n", item->getId().c_str(),
+						toolbarName.c_str(), id);
+			} else {
+				printf("Could not removed tool item from Toolbar %s Position %i\n", toolbarName.c_str(), id);
+			}
 		}
 	}
 
@@ -297,9 +302,13 @@ private:
 
 		g_return_val_if_fail(d != NULL, NULL);
 
-		if(d->type == TOOL_ITEM_ITEM) {
-			gtk_toolbar_set_drop_highlight_item(toolbar, d->item->createTmpItem(orientation
-					== GTK_ORIENTATION_HORIZONTAL), ipos);
+		if (d->type == TOOL_ITEM_ITEM) {
+			gtk_toolbar_set_drop_highlight_item(toolbar,
+					d->item->createTmpItem(orientation == GTK_ORIENTATION_HORIZONTAL), ipos);
+		} else if (d->type == TOOL_ITEM_SEPARATOR) {
+			GtkToolItem * it = gtk_separator_tool_item_new();
+			gtk_toolbar_set_drop_highlight_item(toolbar, it, ipos);
+			// TODO: Memory leak?! gtk_widget_unref(GTK_WIDGET(it));
 		} else {
 			g_warning("ToolbarAdapter::toolbarDragMotionCb Unhandled type %i", d->type);
 		}
@@ -339,24 +348,21 @@ private:
 			int newId = tb->insertItem(name, id, pos);
 			ToolitemDragDrop::attachMetadata(GTK_WIDGET(it), newId, d->item);
 
-			//		} else if (d->type == TOOL_ITEM_COLOR) {
-			//			// TODO !!!!!!!!!!!!!!!!!!!!!!!
-			//
-			//		} else if (d->type == TOOL_ITEM_SEPARATOR) {
-			//			bool horizontal = gtk_toolbar_get_orientation(toolbar) == GTK_ORIENTATION_HORIZONTAL;
-			//			GtkToolItem * it = d->item->createItem(horizontal);
-			//			gtk_widget_show_all(GTK_WIDGET(it));
-			//			gtk_toolbar_insert(toolbar, it, pos);
-			//
-			//			d->item->setUsed(true);
-			//
-			//			ToolbarData * tb = adapter->window->getSelectedToolbar();
-			//			const char * name = adapter->window->getToolbarName(toolbar);
-			//
-			//			const char * id = d->item->getId().c_str();
-			//
-			//			tb->insertItem(name, id, pos);
+		} else if (d->type == TOOL_ITEM_COLOR) {
+			// TODO !!!!!!!!!!!!!!!!!!!!!!!
 
+		} else if (d->type == TOOL_ITEM_SEPARATOR) {
+			GtkToolItem * it = gtk_separator_tool_item_new();
+			gtk_widget_show_all(GTK_WIDGET(it));
+			gtk_toolbar_insert(toolbar, it, pos);
+
+			adapter->prepareToolItem(it);
+
+			ToolbarData * tb = adapter->window->getSelectedToolbar();
+			const char * name = adapter->window->getToolbarName(toolbar);
+
+			int newId = tb->insertItem(name, "SEPARATOR", pos);
+			ToolitemDragDrop::attachMetadata(GTK_WIDGET(it), newId, TOOL_ITEM_SEPARATOR);
 		} else {
 			g_warning("toolbarDragDataReceivedCb: ToolItemType %i not handled!", d->type);
 		}
