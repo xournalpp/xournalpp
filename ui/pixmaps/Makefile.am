@@ -7,6 +7,7 @@ pixmap_DATA = \
 	documentNew.png \
 	empty.png \
 	fullscreen.png \
+	goto.svg \
 	hand.png \
 	lasso.png \
 	layers.png \

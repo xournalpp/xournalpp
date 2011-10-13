@@ -97,7 +97,8 @@ am__xournalpp_SOURCES_DIST = control/jobs/AutosaveJob.cpp \
 	control/ToolHandler.cpp control/ZoomControl.cpp \
 	control/XournalMain.cpp gui/dialog/AboutDialog.cpp \
 	gui/dialog/ButtonConfigGui.cpp gui/dialog/ExportDialog.cpp \
-	gui/dialog/FormatDialog.cpp \
+	gui/dialog/FormatDialog.cpp gui/dialog/GotoDialog.cpp \
+	gui/dialog/toolbarCustomize/CustomizeableColorList.cpp \
 	gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp \
 	gui/dialog/toolbarCustomize/ToolbarDragDropHandler.cpp \
 	gui/dialog/toolbarCustomize/ToolbarDragDropHelper.cpp \
@@ -221,6 +222,8 @@ am_xournalpp_OBJECTS = xournalpp-AutosaveJob.$(OBJEXT) \
 	xournalpp-ButtonConfigGui.$(OBJEXT) \
 	xournalpp-ExportDialog.$(OBJEXT) \
 	xournalpp-FormatDialog.$(OBJEXT) \
+	xournalpp-GotoDialog.$(OBJEXT) \
+	xournalpp-CustomizeableColorList.$(OBJEXT) \
 	xournalpp-ToolbarCustomizeDialog.$(OBJEXT) \
 	xournalpp-ToolbarDragDropHandler.$(OBJEXT) \
 	xournalpp-ToolbarDragDropHelper.$(OBJEXT) \
@@ -568,7 +571,8 @@ xournalpp_SOURCES = control/jobs/AutosaveJob.cpp \
 	control/ToolHandler.cpp control/ZoomControl.cpp \
 	control/XournalMain.cpp gui/dialog/AboutDialog.cpp \
 	gui/dialog/ButtonConfigGui.cpp gui/dialog/ExportDialog.cpp \
-	gui/dialog/FormatDialog.cpp \
+	gui/dialog/FormatDialog.cpp gui/dialog/GotoDialog.cpp \
+	gui/dialog/toolbarCustomize/CustomizeableColorList.cpp \
 	gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp \
 	gui/dialog/toolbarCustomize/ToolbarDragDropHandler.cpp \
 	gui/dialog/toolbarCustomize/ToolbarDragDropHelper.cpp \
@@ -756,6 +760,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-Control.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-Cursor.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-CursorTheme.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-CustomizeableColorList.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-DeleteUndoAction.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-Document.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-DocumentHandler.Po@am__quote@
@@ -780,6 +785,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-FormatDialog.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-GladeGui.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-GladeSearchpath.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-GotoDialog.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-Image.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-ImageHandler.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-ImageOpenDlg.Po@am__quote@
@@ -1724,6 +1730,34 @@ xournalpp-FormatDialog.obj: gui/dialog/FormatDialog.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='gui/dialog/FormatDialog.cpp' object='xournalpp-FormatDialog.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-FormatDialog.obj `if test -f 'gui/dialog/FormatDialog.cpp'; then $(CYGPATH_W) 'gui/dialog/FormatDialog.cpp'; else $(CYGPATH_W) '$(srcdir)/gui/dialog/FormatDialog.cpp'; fi`
+
+xournalpp-GotoDialog.o: gui/dialog/GotoDialog.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-GotoDialog.o -MD -MP -MF $(DEPDIR)/xournalpp-GotoDialog.Tpo -c -o xournalpp-GotoDialog.o `test -f 'gui/dialog/GotoDialog.cpp' || echo '$(srcdir)/'`gui/dialog/GotoDialog.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-GotoDialog.Tpo $(DEPDIR)/xournalpp-GotoDialog.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='gui/dialog/GotoDialog.cpp' object='xournalpp-GotoDialog.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-GotoDialog.o `test -f 'gui/dialog/GotoDialog.cpp' || echo '$(srcdir)/'`gui/dialog/GotoDialog.cpp
+
+xournalpp-GotoDialog.obj: gui/dialog/GotoDialog.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-GotoDialog.obj -MD -MP -MF $(DEPDIR)/xournalpp-GotoDialog.Tpo -c -o xournalpp-GotoDialog.obj `if test -f 'gui/dialog/GotoDialog.cpp'; then $(CYGPATH_W) 'gui/dialog/GotoDialog.cpp'; else $(CYGPATH_W) '$(srcdir)/gui/dialog/GotoDialog.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-GotoDialog.Tpo $(DEPDIR)/xournalpp-GotoDialog.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='gui/dialog/GotoDialog.cpp' object='xournalpp-GotoDialog.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-GotoDialog.obj `if test -f 'gui/dialog/GotoDialog.cpp'; then $(CYGPATH_W) 'gui/dialog/GotoDialog.cpp'; else $(CYGPATH_W) '$(srcdir)/gui/dialog/GotoDialog.cpp'; fi`
+
+xournalpp-CustomizeableColorList.o: gui/dialog/toolbarCustomize/CustomizeableColorList.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-CustomizeableColorList.o -MD -MP -MF $(DEPDIR)/xournalpp-CustomizeableColorList.Tpo -c -o xournalpp-CustomizeableColorList.o `test -f 'gui/dialog/toolbarCustomize/CustomizeableColorList.cpp' || echo '$(srcdir)/'`gui/dialog/toolbarCustomize/CustomizeableColorList.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-CustomizeableColorList.Tpo $(DEPDIR)/xournalpp-CustomizeableColorList.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='gui/dialog/toolbarCustomize/CustomizeableColorList.cpp' object='xournalpp-CustomizeableColorList.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-CustomizeableColorList.o `test -f 'gui/dialog/toolbarCustomize/CustomizeableColorList.cpp' || echo '$(srcdir)/'`gui/dialog/toolbarCustomize/CustomizeableColorList.cpp
+
+xournalpp-CustomizeableColorList.obj: gui/dialog/toolbarCustomize/CustomizeableColorList.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-CustomizeableColorList.obj -MD -MP -MF $(DEPDIR)/xournalpp-CustomizeableColorList.Tpo -c -o xournalpp-CustomizeableColorList.obj `if test -f 'gui/dialog/toolbarCustomize/CustomizeableColorList.cpp'; then $(CYGPATH_W) 'gui/dialog/toolbarCustomize/CustomizeableColorList.cpp'; else $(CYGPATH_W) '$(srcdir)/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-CustomizeableColorList.Tpo $(DEPDIR)/xournalpp-CustomizeableColorList.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='gui/dialog/toolbarCustomize/CustomizeableColorList.cpp' object='xournalpp-CustomizeableColorList.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-CustomizeableColorList.obj `if test -f 'gui/dialog/toolbarCustomize/CustomizeableColorList.cpp'; then $(CYGPATH_W) 'gui/dialog/toolbarCustomize/CustomizeableColorList.cpp'; else $(CYGPATH_W) '$(srcdir)/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp'; fi`
 
 xournalpp-ToolbarCustomizeDialog.o: gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp
 @am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-ToolbarCustomizeDialog.o -MD -MP -MF $(DEPDIR)/xournalpp-ToolbarCustomizeDialog.Tpo -c -o xournalpp-ToolbarCustomizeDialog.o `test -f 'gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp' || echo '$(srcdir)/'`gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp

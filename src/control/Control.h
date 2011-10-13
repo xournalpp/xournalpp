@@ -100,6 +100,8 @@ public:
 	void customizeToolbars();
 	void enableFullscreen(bool enabled, bool presentation = false);
 
+	void gotoPage();
+
 	void setRulerEnabled(bool enabled);
 	void setShapeRecognizerEnabled(bool enabled);
 
