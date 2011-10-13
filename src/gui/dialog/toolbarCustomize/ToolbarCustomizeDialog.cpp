@@ -5,10 +5,12 @@
 #include "../../../gui/MainWindow.h"
 #include "../../../gui/toolbarMenubar/ToolMenuHandler.h"
 #include "../../../gui/toolbarMenubar/AbstractToolItem.h"
+#include "../../widgets/SelectColor.h"
 
 #include "ToolbarDragDropHandler.h"
 #include "ToolbarDragDropHelper.h"
 #include "ToolItemDragCurrentData.h"
+#include "CustomizeableColorList.h"
 
 #include <config.h>
 #include <glib/gi18n-lib.h>
@@ -293,6 +295,57 @@ void ToolbarCustomizeDialog::rebuildIconview() {
 		i++;
 	}
 
+
+	table = GTK_TABLE(get("tbColors"));
+
+//	// rebuild color items TODO: !!! get unused colors
+//	for(int i = 0; i < 16; i++) {
+//		int color = CustomizeableColorList::PREDEFINED_COLORS[i];
+//
+//		GtkWidget * icon = selectcolor_new(color);
+//		selectcolor_set_size(icon, 32);
+//		selectcolor_set_circle(icon, true);
+//		GtkToolItem * toolButton = gtk_tool_button_new(icon, "");
+//
+//		GtkWidget * box = gtk_vbox_new(false, 3);
+//		gtk_widget_show(box);
+//
+//		GtkWidget * label = gtk_label_new("TODO"); // TODO !!! color name
+//		gtk_widget_show(label);
+//		gtk_box_pack_end(GTK_BOX(box), label, false, false, 0);
+//
+//		GtkWidget * ebox = gtk_event_box_new();
+//		gtk_container_add(GTK_CONTAINER(ebox), box);
+//		gtk_widget_show(ebox);
+//
+//		gtk_widget_show(icon);
+//		gtk_widget_show(GTK_WIDGET(toolButton));
+//
+//		gtk_box_pack_end(GTK_BOX(box), GTK_WIDGET(toolButton), false, false, 0);
+//
+////		// make ebox a drag source
+////		gtk_drag_source_set(ebox, GDK_BUTTON1_MASK, &ToolbarDragDropHelper::dropTargetEntry, 1, GDK_ACTION_MOVE);
+////		ToolbarDragDropHelper::dragSourceAddToolbar(ebox);
+////
+////		ToolItemDragData * data = g_new(ToolItemDragData, 1);
+////		data->dlg = this;
+////		data->icon = ToolbarDragDropHelper::getImagePixbuf(GTK_IMAGE(icon));
+////		data->item = item;
+////		data->ebox = ebox;
+////
+////		this->itemDatalist = g_list_prepend(this->itemDatalist, data);
+////
+////		g_signal_connect(ebox, "drag-begin", G_CALLBACK(toolitemDragBegin), data);
+////		g_signal_connect(ebox, "drag-end", G_CALLBACK(toolitemDragEnd), data);
+////
+////		g_signal_connect(ebox, "drag-data-get", G_CALLBACK(toolitemDragDataGet), data);
+//
+//		int x = i % 3;
+//		int y = i / 3;
+//		gtk_table_attach(table, ebox, x, x + 1, y, y + 1, (GtkAttachOptions) 0, (GtkAttachOptions) 0, 5, 5);
+//
+//		i++;
+//	}
 }
 
 void ToolbarCustomizeDialog::windowResponseCb(GtkDialog * dialog, int response, ToolbarCustomizeDialog * dlg) {

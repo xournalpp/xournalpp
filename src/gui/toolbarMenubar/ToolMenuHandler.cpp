@@ -313,6 +313,13 @@ void ToolMenuHandler::initToolItems() {
 			gui->get("menuViewFirstPage")));
 	addToolItem(new ToolButton(listener, "GOTO_BACK", ACTION_GOTO_BACK, GTK_STOCK_GO_BACK, _("Back"), gui->get(
 			"menuNavigationPreviousPage")));
+
+	addToolItem(new ToolButton(listener, "GOTO_BACK", ACTION_GOTO_BACK, GTK_STOCK_GO_BACK, _("Back"), gui->get(
+			"menuNavigationPreviousPage")));
+
+	addToolItem(new ToolButton(listener, gui, "GOTO_PAGE", ACTION_GOTO_PAGE,
+			"goto.svg", _("Goto page"), gui->get("menuNavigationGotoPage")));
+
 	addToolItem(new ToolButton(listener, "GOTO_NEXT", ACTION_GOTO_NEXT, GTK_STOCK_GO_FORWARD, _("Next"), gui->get(
 			"menuNavigationNextPage")));
 	addToolItem(new ToolButton(listener, "GOTO_LAST", ACTION_GOTO_LAST, GTK_STOCK_GOTO_LAST, _("Go to last page"),

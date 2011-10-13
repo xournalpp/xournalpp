@@ -6,6 +6,7 @@
 #include "../gui/dialog/PdfPagesDialog.h"
 #include "../gui/dialog/ImagesDialog.h"
 #include "../gui/dialog/FormatDialog.h"
+#include "../gui/dialog/GotoDialog.h"
 #include "../gui/dialog/SelectBackgroundColorDialog.h"
 #include "../gui/dialog/toolbarCustomize/ToolbarDragDropHandler.h"
 #include "../gui/dialog/ToolbarManageDialog.h"
@@ -328,6 +329,8 @@ void Control::updatePageNumbers(int page, int pdfPage) {
 	fireEnableAction(ACTION_GOTO_BACK, current != 0);
 	fireEnableAction(ACTION_GOTO_PREVIOUS_ANNOTATED_PAGE, current != 0);
 
+	fireEnableAction(ACTION_GOTO_PAGE, count > 1);
+
 	fireEnableAction(ACTION_GOTO_NEXT, current < count - 1);
 	fireEnableAction(ACTION_GOTO_LAST, current < count - 1);
 	fireEnableAction(ACTION_GOTO_NEXT_ANNOTATED_PAGE, current < count - 1);
@@ -411,6 +414,9 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent *even
 		break;
 	case ACTION_GOTO_BACK:
 		scrollHandler->goToPreviousPage();
+		break;
+	case ACTION_GOTO_PAGE:
+		gotoPage();
 		break;
 	case ACTION_GOTO_NEXT:
 		scrollHandler->goToNextPage();
@@ -1434,6 +1440,19 @@ void Control::setPageBackground(ActionType type) {
 
 	this->undoRedo->addUndoAction(new PageBackgroundChangedUndoAction(page, origType, origPdfPage, origBackgroundImage,
 			origW, origH));
+}
+
+void Control::gotoPage() {
+	GotoDialog * dlg = new GotoDialog(this->gladeSearchPath, this->doc->getPageCount());
+
+	dlg->show();
+	int page = dlg->getSelectedPage();
+
+	if(page != -1) {
+		this->scrollHandler->scrollToPage(page - 1, 0);
+	}
+
+	delete dlg;
 }
 
 void Control::updateBackgroundSizeButton() {
