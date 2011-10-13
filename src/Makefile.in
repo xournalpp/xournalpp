@@ -101,6 +101,7 @@ am__xournalpp_SOURCES_DIST = control/jobs/AutosaveJob.cpp \
 	gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp \
 	gui/dialog/toolbarCustomize/ToolbarDragDropHandler.cpp \
 	gui/dialog/toolbarCustomize/ToolbarDragDropHelper.cpp \
+	gui/dialog/toolbarCustomize/ToolItemDragCurrentData.cpp \
 	gui/dialog/ToolbarManageDialog.cpp gui/dialog/ImagesDialog.cpp \
 	gui/dialog/PdfPagesDialog.cpp \
 	gui/dialog/SelectBackgroundColorDialog.cpp \
@@ -223,6 +224,7 @@ am_xournalpp_OBJECTS = xournalpp-AutosaveJob.$(OBJEXT) \
 	xournalpp-ToolbarCustomizeDialog.$(OBJEXT) \
 	xournalpp-ToolbarDragDropHandler.$(OBJEXT) \
 	xournalpp-ToolbarDragDropHelper.$(OBJEXT) \
+	xournalpp-ToolItemDragCurrentData.$(OBJEXT) \
 	xournalpp-ToolbarManageDialog.$(OBJEXT) \
 	xournalpp-ImagesDialog.$(OBJEXT) \
 	xournalpp-PdfPagesDialog.$(OBJEXT) \
@@ -570,6 +572,7 @@ xournalpp_SOURCES = control/jobs/AutosaveJob.cpp \
 	gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp \
 	gui/dialog/toolbarCustomize/ToolbarDragDropHandler.cpp \
 	gui/dialog/toolbarCustomize/ToolbarDragDropHelper.cpp \
+	gui/dialog/toolbarCustomize/ToolItemDragCurrentData.cpp \
 	gui/dialog/ToolbarManageDialog.cpp gui/dialog/ImagesDialog.cpp \
 	gui/dialog/PdfPagesDialog.cpp \
 	gui/dialog/SelectBackgroundColorDialog.cpp \
@@ -863,6 +866,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-Tool.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-ToolButton.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-ToolHandler.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-ToolItemDragCurrentData.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-ToolMenuHandler.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-ToolPageLayer.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-ToolPageSpinner.Po@am__quote@
@@ -1762,6 +1766,20 @@ xournalpp-ToolbarDragDropHelper.obj: gui/dialog/toolbarCustomize/ToolbarDragDrop
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='gui/dialog/toolbarCustomize/ToolbarDragDropHelper.cpp' object='xournalpp-ToolbarDragDropHelper.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-ToolbarDragDropHelper.obj `if test -f 'gui/dialog/toolbarCustomize/ToolbarDragDropHelper.cpp'; then $(CYGPATH_W) 'gui/dialog/toolbarCustomize/ToolbarDragDropHelper.cpp'; else $(CYGPATH_W) '$(srcdir)/gui/dialog/toolbarCustomize/ToolbarDragDropHelper.cpp'; fi`
+
+xournalpp-ToolItemDragCurrentData.o: gui/dialog/toolbarCustomize/ToolItemDragCurrentData.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-ToolItemDragCurrentData.o -MD -MP -MF $(DEPDIR)/xournalpp-ToolItemDragCurrentData.Tpo -c -o xournalpp-ToolItemDragCurrentData.o `test -f 'gui/dialog/toolbarCustomize/ToolItemDragCurrentData.cpp' || echo '$(srcdir)/'`gui/dialog/toolbarCustomize/ToolItemDragCurrentData.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-ToolItemDragCurrentData.Tpo $(DEPDIR)/xournalpp-ToolItemDragCurrentData.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='gui/dialog/toolbarCustomize/ToolItemDragCurrentData.cpp' object='xournalpp-ToolItemDragCurrentData.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-ToolItemDragCurrentData.o `test -f 'gui/dialog/toolbarCustomize/ToolItemDragCurrentData.cpp' || echo '$(srcdir)/'`gui/dialog/toolbarCustomize/ToolItemDragCurrentData.cpp
+
+xournalpp-ToolItemDragCurrentData.obj: gui/dialog/toolbarCustomize/ToolItemDragCurrentData.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-ToolItemDragCurrentData.obj -MD -MP -MF $(DEPDIR)/xournalpp-ToolItemDragCurrentData.Tpo -c -o xournalpp-ToolItemDragCurrentData.obj `if test -f 'gui/dialog/toolbarCustomize/ToolItemDragCurrentData.cpp'; then $(CYGPATH_W) 'gui/dialog/toolbarCustomize/ToolItemDragCurrentData.cpp'; else $(CYGPATH_W) '$(srcdir)/gui/dialog/toolbarCustomize/ToolItemDragCurrentData.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-ToolItemDragCurrentData.Tpo $(DEPDIR)/xournalpp-ToolItemDragCurrentData.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='gui/dialog/toolbarCustomize/ToolItemDragCurrentData.cpp' object='xournalpp-ToolItemDragCurrentData.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-ToolItemDragCurrentData.obj `if test -f 'gui/dialog/toolbarCustomize/ToolItemDragCurrentData.cpp'; then $(CYGPATH_W) 'gui/dialog/toolbarCustomize/ToolItemDragCurrentData.cpp'; else $(CYGPATH_W) '$(srcdir)/gui/dialog/toolbarCustomize/ToolItemDragCurrentData.cpp'; fi`
 
 xournalpp-ToolbarManageDialog.o: gui/dialog/ToolbarManageDialog.cpp
 @am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-ToolbarManageDialog.o -MD -MP -MF $(DEPDIR)/xournalpp-ToolbarManageDialog.Tpo -c -o xournalpp-ToolbarManageDialog.o `test -f 'gui/dialog/ToolbarManageDialog.cpp' || echo '$(srcdir)/'`gui/dialog/ToolbarManageDialog.cpp

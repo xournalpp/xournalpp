@@ -46,6 +46,11 @@ private:
 	static void toolitemDragDataGet(GtkWidget * widget, GdkDragContext * context, GtkSelectionData * selection_data,
 			guint info, guint time, ToolItemDragData * data);
 
+	static void toolitemDragBeginSeparator(GtkWidget * widget, GdkDragContext * context, void * unused);
+	static void toolitemDragEndSeparator(GtkWidget * widget, GdkDragContext * context, void * unused);
+	static void toolitemDragDataGetSeparator(GtkWidget * widget, GdkDragContext * context, GtkSelectionData * selection_data,
+			guint info, guint time, void * unused);
+
 	void freeIconview();
 
 	void cleanupToolbarsItemsDrag();

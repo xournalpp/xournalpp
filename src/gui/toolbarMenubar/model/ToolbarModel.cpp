@@ -102,7 +102,8 @@ bool ToolbarModel::existsId(String id) {
 
 	for(GList * l = this->toolbars; l != NULL; l = l->next) {
 		ToolbarData * data = (ToolbarData *) l->data;
-		if(data->getName() == id) {
+
+		if(data->getId() == id) {
 			return true;
 		}
 	}
@@ -148,11 +149,7 @@ void ToolbarModel::save(const char * filename) {
 	for(GList * l = this->toolbars; l != NULL; l = l->next) {
 		ToolbarData * data = (ToolbarData *) l->data;
 		if (!data->isPredefined()) {
-			printf("not predefined: %s:%s\n", data->id.c_str(), data->name.c_str());
-
 			data->saveToKeyFile(config);
-		} else {
-			printf("predefined: %s:%s\n", data->id.c_str(), data->name.c_str());
 		}
 	}
 

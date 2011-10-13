@@ -48,6 +48,15 @@ String Util::getSettingsSubfolder(String subfolder) {
 	return path;
 }
 
+GtkWidget * Util::newSepeartorImage() {
+	GtkWidget * separator = gtk_vseparator_new();
+	GdkPixbuf * pixbuf = Util::newPixbufFromWidget(separator);
+	gtk_widget_unref(separator);
+	GtkWidget * w = gtk_image_new_from_pixbuf(pixbuf);
+	gdk_pixbuf_unref(pixbuf);
+	return w;
+}
+
 void Util::fakeExposeWidget(GtkWidget * widget, GdkPixmap * pixmap) {
 	GdkWindow *tmp_window;
 	GdkEventExpose event;

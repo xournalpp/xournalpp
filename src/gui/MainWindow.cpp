@@ -45,7 +45,8 @@ MainWindow::MainWindow(GladeSearchpath * gladeSearchPath, Control * control) :
 
 	if (type == SCROLLBAR_HIDE_NONE || type == SCROLLBAR_HIDE_VERTICAL) {
 		Layout * layout = gtk_xournal_get_layout(this->xournal->getWidget());
-		gtk_table_attach(GTK_TABLE(tableXournal), layout->getScrollbarHorizontal(), 1, 2, 1, 2, (GtkAttachOptions) (GTK_EXPAND | GTK_FILL), GTK_FILL, 0, 0);
+		gtk_table_attach(GTK_TABLE(tableXournal), layout->getScrollbarHorizontal(), 1, 2, 1, 2, (GtkAttachOptions)(
+				GTK_EXPAND | GTK_FILL), GTK_FILL, 0, 0);
 	}
 
 	setSidebarVisible(control->getSettings()->isSidebarVisible());
@@ -56,15 +57,16 @@ MainWindow::MainWindow(GladeSearchpath * gladeSearchPath, Control * control) :
 
 	g_signal_connect(get("buttonCloseSidebar"), "clicked", G_CALLBACK(buttonCloseSidebarClicked), this);
 
-	this->toolbar = new ToolMenuHandler(this->control, this->control->getZoomControl(), this, this->control->getToolHandler());
+	this->toolbar = new ToolMenuHandler(this->control, this->control->getZoomControl(), this,
+			this->control->getToolHandler());
 
 	char * file = gladeSearchPath->findFile(NULL, "toolbar.ini");
 
 	ToolbarModel * tbModel = this->toolbar->getModel();
 
 	if (!tbModel->parse(file, true)) {
-		GtkWidget* dlg = gtk_message_dialog_new(GTK_WINDOW(this->window), GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, _(
-				"Could not parse general toolbar.ini file: %s\nNo Toolbars will be available"), file);
+		GtkWidget* dlg = gtk_message_dialog_new(GTK_WINDOW(this->window), GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR,
+				GTK_BUTTONS_OK, _("Could not parse general toolbar.ini file: %s\nNo Toolbars will be available"), file);
 
 		gtk_dialog_run(GTK_DIALOG(dlg));
 		gtk_widget_hide(dlg);
@@ -76,8 +78,8 @@ MainWindow::MainWindow(GladeSearchpath * gladeSearchPath, Control * control) :
 	file = g_build_filename(g_get_home_dir(), G_DIR_SEPARATOR_S, CONFIG_DIR, G_DIR_SEPARATOR_S, TOOLBAR_CONFIG, NULL);
 	if (g_file_test(file, G_FILE_TEST_EXISTS)) {
 		if (!tbModel->parse(file, false)) {
-			GtkWidget* dlg = gtk_message_dialog_new(GTK_WINDOW(this->window), GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, _(
-					"Could not parse custom toolbar.ini file: %s\nToolbars will not be available"), file);
+			GtkWidget* dlg = gtk_message_dialog_new(GTK_WINDOW(this->window), GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR,
+					GTK_BUTTONS_OK, _("Could not parse custom toolbar.ini file: %s\nToolbars will not be available"), file);
 
 			gtk_dialog_run(GTK_DIALOG(dlg));
 			gtk_widget_hide(dlg);
@@ -93,7 +95,8 @@ MainWindow::MainWindow(GladeSearchpath * gladeSearchPath, Control * control) :
 
 	updateScrollbarSidebarPosition();
 
-	gtk_window_set_default_size(GTK_WINDOW(this->window), control->getSettings()->getMainWndWidth(), control->getSettings()->getMainWndHeight());
+	gtk_window_set_default_size(GTK_WINDOW(this->window), control->getSettings()->getMainWndWidth(),
+			control->getSettings()->getMainWndHeight());
 
 	if (control->getSettings()->isMainWndMaximized()) {
 		gtk_window_maximize(GTK_WINDOW(this->window));
@@ -169,8 +172,8 @@ bool cancellable_cancel(GCancellable * cancel) {
 	return false;
 }
 
-void MainWindow::dragDataRecived(GtkWidget * widget, GdkDragContext * dragContext, gint x, gint y, GtkSelectionData * data, guint info, guint time,
-		MainWindow * win) {
+void MainWindow::dragDataRecived(GtkWidget * widget, GdkDragContext * dragContext, gint x, gint y,
+		GtkSelectionData * data, guint info, guint time, MainWindow * win) {
 
 	GtkWidget * source = gtk_drag_get_source_widget(dragContext);
 	if (source && widget == gtk_widget_get_toplevel(source)) {
@@ -361,10 +364,6 @@ void MainWindow::setSidebarVisible(bool visible) {
 	gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(w), visible);
 }
 
-void tbSelectMenuitemActivated(GtkMenuItem * menuitem, MenuSelectToolbarData * data) {
-	data->win->toolbarSelected(data->d);
-}
-
 void MainWindow::setMaximized(bool maximized) {
 	XOJ_CHECK_TYPE(MainWindow);
 
@@ -403,14 +402,14 @@ void MainWindow::reloadToolbars() {
 
 	ToolbarData * d = getSelectedToolbar();
 
-	if(inDragAndDrop){
+	if (inDragAndDrop) {
 		this->control->endDragDropToolbar();
 	}
 
 	this->clearToolbar();
 	this->toolbarSelected(d);
 
-	if(inDragAndDrop){
+	if (inDragAndDrop) {
 		this->control->startDragDropToolbar();
 	}
 }
@@ -418,7 +417,7 @@ void MainWindow::reloadToolbars() {
 void MainWindow::toolbarSelected(ToolbarData * d) {
 	XOJ_CHECK_TYPE(MainWindow);
 
-	if (!toolbarIntialized || this->selectedToolbar == d) {
+	if (!this->toolbarIntialized || this->selectedToolbar == d) {
 		return;
 	}
 
@@ -453,7 +452,8 @@ void MainWindow::loadToolbar(ToolbarData * d) {
 	this->selectedToolbar = d;
 
 	for (int i = 0; i < TOOLBAR_DEFINITIONS_LEN; i++) {
-		this->toolbar->load(d, this->toolbarWidgets[i], TOOLBAR_DEFINITIONS[i].propName, TOOLBAR_DEFINITIONS[i].horizontal);
+		this->toolbar->load(d, this->toolbarWidgets[i], TOOLBAR_DEFINITIONS[i].propName,
+				TOOLBAR_DEFINITIONS[i].horizontal);
 	}
 }
 
@@ -512,6 +512,21 @@ void MainWindow::updateToolbarMenu() {
 	g_list_free(this->toolbarMenuitems);
 	this->toolbarMenuitems = NULL;
 
+	this->freeToolMenu();
+
+	g_slist_free(this->toolbarGroup);
+	this->toolbarGroup = NULL;
+
+	initToolbarAndMenu();
+}
+
+static void container_remove_foreach(GtkWidget * widget, GtkContainer * container) {
+	gtk_container_remove(container, widget);
+}
+
+void MainWindow::freeToolMenu() {
+	XOJ_CHECK_TYPE(MainWindow);
+
 	for (GList * l = this->toolbarMenuData; l != NULL; l = l->next) {
 		MenuSelectToolbarData * data = (MenuSelectToolbarData *) l->data;
 		delete data;
@@ -519,10 +534,15 @@ void MainWindow::updateToolbarMenu() {
 	g_list_free(this->toolbarMenuData);
 	this->toolbarMenuData = NULL;
 
-	g_slist_free(this->toolbarGroup);
-	this->toolbarGroup = NULL;
+	GtkMenuShell * menubar = GTK_MENU_SHELL(get("menuViewToolbar"));
+	g_return_if_fail(menubar != NULL);
 
-	initToolbarAndMenu();
+	gtk_container_forall(GTK_CONTAINER(menubar), (GtkCallback) container_remove_foreach, GTK_CONTAINER(menubar));
+
+}
+
+void tbSelectMenuitemActivated(GtkMenuItem * menuitem, MenuSelectToolbarData * data) {
+	data->win->toolbarSelected(data->d);
 }
 
 void MainWindow::initToolbarAndMenu() {
