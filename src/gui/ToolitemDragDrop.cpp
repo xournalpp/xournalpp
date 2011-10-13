@@ -48,6 +48,10 @@ bool ToolitemDragDrop::isToolItemEnabled(ToolItemDragDropData * d) {
 		return false;
 	}
 
+	if(d->type == TOOL_ITEM_SEPARATOR) {
+		return true;
+	}
+
 	g_return_val_if_fail(d->item != NULL, true);
 
 	return d->item->isEnabled();
