@@ -13,7 +13,6 @@
 #define __TOOLBARDRAGDROPHANDLER_H__
 
 #include <XournalType.h>
-#include "ToolbarAdapter.h"
 
 class Control;
 class ToolbarAdapter;
@@ -31,6 +30,7 @@ public:
 	void toolbarConfigDialogClosed();
 
 	bool isInDragAndDrop();
+
 public:
 	void prepareToolbarsForDragAndDrop();
 	void clearToolbarsFromDragAndDrop();

@@ -64,6 +64,7 @@ void ToolbarModel::add(ToolbarData * data) {
 }
 
 const char * ToolbarModel::getColorName(const char * color) {
+	// TODO !!! COLOR name
 	return (char *) g_hash_table_lookup(this->colorNameTable, color);
 }
 

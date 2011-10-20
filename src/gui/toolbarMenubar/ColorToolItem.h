@@ -18,7 +18,7 @@
 
 class ColorToolItem: public AbstractToolItem {
 public:
-	ColorToolItem(String id, ActionHandler * handler, ToolHandler * toolHandler, int color, String name, bool selector = false);
+	ColorToolItem(ActionHandler * handler, ToolHandler * toolHandler, int color, bool selektor = false);
 	virtual ~ColorToolItem();
 
 public:
@@ -31,17 +31,21 @@ public:
 	virtual String getToolDisplayName();
 	virtual GtkWidget * getNewToolIconImpl();
 
+	virtual String getId();
+
+	int getColor();
+
 protected:
 	virtual GtkToolItem * newItem();
 	static void customColorSelected(GtkWidget * button, ColorToolItem * item);
+	void updateName();
+	bool isSelector();
 
 private:
 	XOJ_TYPE_ATTRIB;
 
-
 	int color;
 	String name;
-	bool selector;
 	GtkWidget * iconWidget;
 	GtkWidget * colorDlg;
 

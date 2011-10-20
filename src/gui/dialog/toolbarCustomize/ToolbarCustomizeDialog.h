@@ -16,9 +16,10 @@
 #include <XournalType.h>
 #include <String.h>
 
+#include "CustomizeableColorList.h"
+
 class MainWindow;
 class AbstractToolItem;
-class AbstractItemSelectionData;
 class ToolbarDragDropHandler;
 
 typedef struct _ToolItemDragData ToolItemDragData;
@@ -32,6 +33,7 @@ public:
 public:
 	virtual void show();
 	void rebuildIconview();
+	void rebuildColorIcons();
 
 private:
 	static void dragDataReceived(GtkWidget * widget, GdkDragContext * dragContext, gint x, gint y,
@@ -46,14 +48,18 @@ private:
 	static void toolitemDragDataGet(GtkWidget * widget, GdkDragContext * context, GtkSelectionData * selection_data,
 			guint info, guint time, ToolItemDragData * data);
 
+	static void toolitemColorDragBegin(GtkWidget * widget, GdkDragContext * context, void * data);
+	static void toolitemColorDragEnd(GtkWidget * widget, GdkDragContext * context, ToolbarCustomizeDialog * dlg);
+	static void toolitemColorDragDataGet(GtkWidget * widget, GdkDragContext * context,
+			GtkSelectionData * selection_data, guint info, guint time, void * data);
+
 	static void toolitemDragBeginSeparator(GtkWidget * widget, GdkDragContext * context, void * unused);
 	static void toolitemDragEndSeparator(GtkWidget * widget, GdkDragContext * context, void * unused);
-	static void toolitemDragDataGetSeparator(GtkWidget * widget, GdkDragContext * context, GtkSelectionData * selection_data,
-			guint info, guint time, void * unused);
+	static void toolitemDragDataGetSeparator(GtkWidget * widget, GdkDragContext * context,
+			GtkSelectionData * selection_data, guint info, guint time, void * unused);
 
 	void freeIconview();
-
-	void cleanupToolbarsItemsDrag();
+	void freeColorIconview();
 
 private:
 	static void windowResponseCb(GtkDialog * dialog, int response, ToolbarCustomizeDialog * dlg);
@@ -61,13 +67,13 @@ private:
 private:
 	XOJ_TYPE_ATTRIB;
 
+	CustomizeableColorList * colorList;
+
 	GList * itemDatalist;
 
 	MainWindow * win;
 
 	ToolbarDragDropHandler * handler;
-
-	GList * itemSelectionData;
 };
 
 #endif /* __TOOLBARCUSTOMIZEDIALOG_H__ */

@@ -82,7 +82,7 @@ void Util::fakeExposeWidget(GtkWidget * widget, GdkPixmap * pixmap) {
  * themes. However, the icon is slightly large for themes
  * with large toolbar icons.
  */
-GdkPixbuf * Util::newPixbufFromWidget(GtkWidget * widget) {
+GdkPixbuf * Util::newPixbufFromWidget(GtkWidget * widget, int iconSize) {
 	GtkWidget *window;
 	GdkPixbuf *pixbuf;
 	GtkRequisition requisition;
@@ -93,7 +93,7 @@ GdkPixbuf * Util::newPixbufFromWidget(GtkWidget * widget) {
 	gint icon_height;
 	GdkScreen *screen;
 
-	icon_height = icon_width = 24;
+	icon_height = icon_width = iconSize;
 
 	screen = gtk_widget_get_screen(widget);
 

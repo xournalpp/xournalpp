@@ -64,9 +64,14 @@ public:
 
 	void setTmpDisabled(bool disabled);
 
+	void removeColorToolItem(AbstractToolItem * it);
+	void addColorToolItem(AbstractToolItem * it);
+
 	ToolbarModel * getModel();
 
 	ListIterator<AbstractToolItem *> getToolItems();
+
+	bool isColorInUse(int color);
 
 private:
 	void addToolItem(AbstractToolItem * it);

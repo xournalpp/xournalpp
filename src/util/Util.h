@@ -31,7 +31,7 @@ public:
 	static int getPid();
 
 	static void fakeExposeWidget(GtkWidget * widget, GdkPixmap * pixmap);
-	static GdkPixbuf * newPixbufFromWidget(GtkWidget * widget);
+	static GdkPixbuf * newPixbufFromWidget(GtkWidget * widget, int iconSize = 24);
 	static GtkWidget * newSepeartorImage();
 
 private:

@@ -135,7 +135,8 @@ am__xournalpp_SOURCES_DIST = control/jobs/AutosaveJob.cpp \
 	gui/LayoutData.cpp gui/MainWindow.cpp gui/PageView.cpp \
 	gui/Redrawable.cpp gui/RepaintHandler.cpp gui/SearchBar.cpp \
 	gui/Shadow.cpp gui/TextEditor.cpp gui/ToolitemDragDrop.cpp \
-	gui/XournalView.cpp model/eraser/EraseableStroke.cpp \
+	gui/XojColor.cpp gui/XournalView.cpp \
+	model/eraser/EraseableStroke.cpp \
 	model/eraser/EraseableStrokePart.cpp model/eraser/PartList.cpp \
 	model/BackgroundImage.cpp model/BackgroundImageContents.cpp \
 	model/Document.cpp model/DocumentHandler.cpp \
@@ -265,7 +266,7 @@ am_xournalpp_OBJECTS = xournalpp-AutosaveJob.$(OBJEXT) \
 	xournalpp-SearchBar.$(OBJEXT) xournalpp-Shadow.$(OBJEXT) \
 	xournalpp-TextEditor.$(OBJEXT) \
 	xournalpp-ToolitemDragDrop.$(OBJEXT) \
-	xournalpp-XournalView.$(OBJEXT) \
+	xournalpp-XojColor.$(OBJEXT) xournalpp-XournalView.$(OBJEXT) \
 	xournalpp-EraseableStroke.$(OBJEXT) \
 	xournalpp-EraseableStrokePart.$(OBJEXT) \
 	xournalpp-PartList.$(OBJEXT) \
@@ -609,7 +610,8 @@ xournalpp_SOURCES = control/jobs/AutosaveJob.cpp \
 	gui/LayoutData.cpp gui/MainWindow.cpp gui/PageView.cpp \
 	gui/Redrawable.cpp gui/RepaintHandler.cpp gui/SearchBar.cpp \
 	gui/Shadow.cpp gui/TextEditor.cpp gui/ToolitemDragDrop.cpp \
-	gui/XournalView.cpp model/eraser/EraseableStroke.cpp \
+	gui/XojColor.cpp gui/XournalView.cpp \
+	model/eraser/EraseableStroke.cpp \
 	model/eraser/EraseableStrokePart.cpp model/eraser/PartList.cpp \
 	model/BackgroundImage.cpp model/BackgroundImageContents.cpp \
 	model/Document.cpp model/DocumentHandler.cpp \
@@ -897,6 +899,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-XmlPointNode.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-XmlStrokeNode.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-XmlTextNode.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-XojColor.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-XojOpenDlg.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-XojPage.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-XojPopplerAction.Po@am__quote@
@@ -2458,6 +2461,20 @@ xournalpp-ToolitemDragDrop.obj: gui/ToolitemDragDrop.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='gui/ToolitemDragDrop.cpp' object='xournalpp-ToolitemDragDrop.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-ToolitemDragDrop.obj `if test -f 'gui/ToolitemDragDrop.cpp'; then $(CYGPATH_W) 'gui/ToolitemDragDrop.cpp'; else $(CYGPATH_W) '$(srcdir)/gui/ToolitemDragDrop.cpp'; fi`
+
+xournalpp-XojColor.o: gui/XojColor.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-XojColor.o -MD -MP -MF $(DEPDIR)/xournalpp-XojColor.Tpo -c -o xournalpp-XojColor.o `test -f 'gui/XojColor.cpp' || echo '$(srcdir)/'`gui/XojColor.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-XojColor.Tpo $(DEPDIR)/xournalpp-XojColor.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='gui/XojColor.cpp' object='xournalpp-XojColor.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-XojColor.o `test -f 'gui/XojColor.cpp' || echo '$(srcdir)/'`gui/XojColor.cpp
+
+xournalpp-XojColor.obj: gui/XojColor.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-XojColor.obj -MD -MP -MF $(DEPDIR)/xournalpp-XojColor.Tpo -c -o xournalpp-XojColor.obj `if test -f 'gui/XojColor.cpp'; then $(CYGPATH_W) 'gui/XojColor.cpp'; else $(CYGPATH_W) '$(srcdir)/gui/XojColor.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-XojColor.Tpo $(DEPDIR)/xournalpp-XojColor.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='gui/XojColor.cpp' object='xournalpp-XojColor.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-XojColor.obj `if test -f 'gui/XojColor.cpp'; then $(CYGPATH_W) 'gui/XojColor.cpp'; else $(CYGPATH_W) '$(srcdir)/gui/XojColor.cpp'; fi`
 
 xournalpp-XournalView.o: gui/XournalView.cpp
 @am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-XournalView.o -MD -MP -MF $(DEPDIR)/xournalpp-XournalView.Tpo -c -o xournalpp-XournalView.o `test -f 'gui/XournalView.cpp' || echo '$(srcdir)/'`gui/XournalView.cpp

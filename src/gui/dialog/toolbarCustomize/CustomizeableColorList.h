@@ -14,19 +14,27 @@
 
 #include <XournalType.h>
 #include <glib.h>
+#include <String.h>
+#include <ListIterator.h>
+
+#include "../../XojColor.h"
+
 
 class CustomizeableColorList {
 public:
 	CustomizeableColorList();
 	virtual ~CustomizeableColorList();
 
+public:
+	ListIterator<XojColor *> getPredefinedColors();
+
+private:
+	void addPredefinedColor(int color, String name);
+
 private:
 	XOJ_TYPE_ATTRIB;
 
-	GList * customColors;
-
-public:
-	static const int PREDEFINED_COLORS[16];
+	GList * colors;
 
 };
 
