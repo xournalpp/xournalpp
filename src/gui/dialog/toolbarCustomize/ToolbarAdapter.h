@@ -20,8 +20,10 @@
 #include "../../toolbarMenubar/model/ToolbarData.h"
 
 #include "../../../util/Util.h"
-
 #include "../../ToolitemDragDrop.h"
+#include "../../widgets/SelectColor.h"
+#include "../../toolbarMenubar/ColorToolItem.h"
+#include "../../../control/Control.h"
 
 class ToolbarAdapter {
 public:
@@ -116,8 +118,6 @@ private:
 
 		gtk_tool_item_set_use_drag_window(it, true);
 
-		GdkPixbuf * pixbuf = NULL;
-
 		GdkScreen * screen = gtk_widget_get_screen(GTK_WIDGET(it));
 		GdkCursor * cursor = gdk_cursor_new_for_display(gdk_screen_get_display(screen), GDK_HAND2);
 		gdk_window_set_cursor(GTK_WIDGET(it)->window, cursor);
@@ -130,52 +130,6 @@ private:
 		g_signal_connect(it, "drag-end", G_CALLBACK(toolitemDragEnd), NULL);
 
 		g_signal_connect(it, "drag-data-get", G_CALLBACK(toolitemDragDataGet), this);
-
-		//		gtk_drag_source_set(widget, GDK_BUTTON1_MASK, dest_drag_types, G_N_ELEMENTS (dest_drag_types), GDK_ACTION_MOVE);
-		//		if (GTK_IS_SEPARATOR_TOOL_ITEM (item)) {
-		//			pixbuf = new_separator_pixbuf();
-		//		} else {
-		//			char *icon_name = NULL;
-		//			char *stock_id = NULL;
-		//			GtkAction *action;
-		//			char *name;
-		//
-		//			name = g_object_get_data(G_OBJECT (widget), EGG_ITEM_NAME);
-		//			action = name ? find_action(etoolbar, name) : NULL;
-		//
-		//			if (action) {
-		//				g_object_get(action, "icon-name", &icon_name, "stock-id", &stock_id, NULL);
-		//			}
-		//			if (icon_name) {
-		//				GdkScreen *screen;
-		//				GtkIconTheme *icon_theme;
-		//				GtkSettings *settings;
-		//				gint width, height;
-		//
-		//				screen = gtk_widget_get_screen(widget);
-		//				icon_theme = gtk_icon_theme_get_for_screen(screen);
-		//				settings = gtk_settings_get_for_screen(screen);
-		//
-		//				if (!gtk_icon_size_lookup_for_settings(settings, GTK_ICON_SIZE_LARGE_TOOLBAR, &width, &height)) {
-		//					width = height = 24;
-		//				}
-		//
-		//				pixbuf = gtk_icon_theme_load_icon(icon_theme, icon_name, MIN (width, height), 0, NULL);
-		//			}
-		//			else if (stock_id)
-		//			{
-		//				pixbuf = gtk_widget_render_icon (widget, stock_id,
-		//						GTK_ICON_SIZE_LARGE_TOOLBAR, NULL);
-		//			}
-		//			g_free(icon_name);
-		//			g_free(stock_id);
-		//		}
-		//
-		//		if (G_UNLIKELY (!pixbuf)) {
-		//			return;
-		//		}
-		//		gtk_drag_source_set_icon_pixbuf(widget, pixbuf);
-		//		g_object_unref(pixbuf);
 	}
 
 	void showToolbar() {
@@ -308,7 +262,12 @@ private:
 		} else if (d->type == TOOL_ITEM_SEPARATOR) {
 			GtkToolItem * it = gtk_separator_tool_item_new();
 			gtk_toolbar_set_drop_highlight_item(toolbar, it, ipos);
-			// TODO: Memory leak?! gtk_widget_unref(GTK_WIDGET(it));
+		} else if (d->type == TOOL_ITEM_COLOR) {
+			GtkWidget * iconWidget = selectcolor_new(d->color);
+			selectcolor_set_size(iconWidget, 16);
+			selectcolor_set_circle(iconWidget, true);
+			GtkToolItem * it = gtk_tool_button_new(iconWidget, "");
+			gtk_toolbar_set_drop_highlight_item(toolbar, it, ipos);
 		} else {
 			g_warning("ToolbarAdapter::toolbarDragMotionCb Unhandled type %i", d->type);
 		}
@@ -343,14 +302,31 @@ private:
 			ToolbarData * tb = adapter->window->getSelectedToolbar();
 			const char * name = adapter->window->getToolbarName(toolbar);
 
-			const char * id = d->item->getId().c_str();
+			String id = d->item->getId();
 
 			int newId = tb->insertItem(name, id, pos);
 			ToolitemDragDrop::attachMetadata(GTK_WIDGET(it), newId, d->item);
-
 		} else if (d->type == TOOL_ITEM_COLOR) {
-			// TODO !!!!!!!!!!!!!!!!!!!!!!!
+			ColorToolItem * item = new ColorToolItem(adapter->window->getControl(), adapter->window->getControl()->getToolHandler(), d->color);
 
+			bool horizontal = gtk_toolbar_get_orientation(toolbar) == GTK_ORIENTATION_HORIZONTAL;
+			GtkToolItem * it = item->createItem(horizontal);
+
+			adapter->prepareToolItem(it);
+
+			gtk_widget_show_all(GTK_WIDGET(it));
+			gtk_toolbar_insert(toolbar, it, pos);
+
+			ToolbarData * tb = adapter->window->getSelectedToolbar();
+			const char * name = adapter->window->getToolbarName(toolbar);
+
+			String id = item->getId();
+
+			int newId = tb->insertItem(name, id, pos);
+			printf("TOOL_ITEM_COLOR attach metadata\n");
+			ToolitemDragDrop::attachMetadataColor(GTK_WIDGET(it), newId, d->color, item);
+
+			adapter->window->getToolMenuHandler()->addColorToolItem(item);
 		} else if (d->type == TOOL_ITEM_SEPARATOR) {
 			GtkToolItem * it = gtk_separator_tool_item_new();
 			gtk_widget_show_all(GTK_WIDGET(it));

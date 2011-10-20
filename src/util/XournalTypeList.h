@@ -187,7 +187,7 @@ XOJ_DECLARE_TYPE(Layout, 175);
 XOJ_DECLARE_TYPE(LayoutData, 176);
 XOJ_DECLARE_TYPE(ToolbarAdapter, 177);
 XOJ_DECLARE_TYPE(SpinPageAdapter, 178);
-XOJ_DECLARE_TYPE(AbstractItemSelectionData, 179);
+XOJ_DECLARE_TYPE(XojColor, 179);
 XOJ_DECLARE_TYPE(ToolbarEntry, 180);
 XOJ_DECLARE_TYPE(ToolbarItem, 181);
 XOJ_DECLARE_TYPE(CustomizeableColorList, 182);

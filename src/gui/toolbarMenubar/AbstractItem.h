@@ -35,7 +35,7 @@ public:
 	virtual void actionEnabledAction(ActionType action, bool enabled);
 	virtual void activated(GdkEvent * event, GtkMenuItem * menuitem, GtkToolButton * toolbutton);
 
-	String getId();
+	virtual String getId();
 
 	void setTmpDisabled(bool disabled);
 	bool isEnabled();

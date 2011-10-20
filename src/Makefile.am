@@ -115,6 +115,7 @@ xournalpp_SOURCES = \
 	gui/Shadow.cpp \
 	gui/TextEditor.cpp \
 	gui/ToolitemDragDrop.cpp \
+	gui/XojColor.cpp \
 	gui/XournalView.cpp \
 	model/eraser/EraseableStroke.cpp \
 	model/eraser/EraseableStrokePart.cpp \

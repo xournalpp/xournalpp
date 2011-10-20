@@ -138,8 +138,7 @@ void ToolMenuHandler::load(ToolbarData * d, GtkWidget * toolbar, const char * to
 					gtk_widget_show(GTK_WIDGET(toolItem));
 					gtk_toolbar_insert(GTK_TOOLBAR(toolbar), toolItem, -1);
 
-					// TODO !!!!!!!!! SPACER
-//					ToolitemDragDrop::attachMetadata(GTK_WIDGET(toolItem), dataItem.getId(), name);
+					ToolitemDragDrop::attachMetadata(GTK_WIDGET(toolItem), dataItem->getId(), TOO_ITEM_SPACER);
 
 					continue;
 				}
@@ -154,24 +153,14 @@ void ToolMenuHandler::load(ToolbarData * d, GtkWidget * toolbar, const char * to
 					color = color.substring(2);
 					gint c = g_ascii_strtoll(color.c_str(), NULL, 16);
 
-					const char * colorName = this->tbModel->getColorName(color.c_str());
-					String itemName;
-					if (colorName == NULL) {
-						g_warning("No color name in toolbar.ini for %s defined!", color.c_str());
-						itemName = color;
-					} else {
-						itemName = colorName;
-					}
-
-					ColorToolItem * item = new ColorToolItem("", listener, toolHandler, c, itemName);
+					ColorToolItem * item = new ColorToolItem(listener, toolHandler, c);
 					this->toolbarColorItems = g_list_append(this->toolbarColorItems, item);
 
 					GtkToolItem * it = item->createItem(horizontal);
 					gtk_widget_show_all(GTK_WIDGET(it));
 					gtk_toolbar_insert(GTK_TOOLBAR(toolbar), it, -1);
 
-					// TODO !!!!!!!!! COLOR
-//					ToolitemDragDrop::attachMetadata(GTK_WIDGET(it), dataItem.getId(), name);
+					ToolitemDragDrop::attachMetadataColor(GTK_WIDGET(it), dataItem->getId(), c, item);
 
 					continue;
 				}
@@ -212,6 +201,21 @@ void ToolMenuHandler::load(ToolbarData * d, GtkWidget * toolbar, const char * to
 	} else {
 		gtk_widget_show(toolbar);
 	}
+}
+
+void ToolMenuHandler::removeColorToolItem(AbstractToolItem * it) {
+	XOJ_CHECK_TYPE(ToolMenuHandler);
+
+	g_return_if_fail(it != NULL);
+	this->toolbarColorItems = g_list_remove(this->toolbarColorItems, it);
+	delete (ColorToolItem *)it;
+}
+
+void ToolMenuHandler::addColorToolItem(AbstractToolItem * it) {
+	XOJ_CHECK_TYPE(ToolMenuHandler);
+
+	g_return_if_fail(it != NULL);
+	this->toolbarColorItems = g_list_append(this->toolbarColorItems, it);
 }
 
 void ToolMenuHandler::setTmpDisabled(bool disabled) {
@@ -340,7 +344,7 @@ void ToolMenuHandler::initToolItems() {
 	addToolItem(new ToolButton(listener, gui, "FULLSCREEN", ACTION_FULLSCREEN, GROUP_FULLSCREEN, false,
 			"fullscreen.png", _("Toggle fullscreen"), gui->get("menuViewFullScreen")));
 
-	addToolItem(new ColorToolItem("COLOR_SELECT", listener, toolHandler, 0xff0000, _("Select color"), true));
+	addToolItem(new ColorToolItem(listener, toolHandler, 0xff0000, true));
 
 	addToolItem(new ToolButton(listener, gui, "PEN", ACTION_TOOL_PEN, GROUP_TOOL, true, "tool_pencil.png", _("Pen"),
 			gui->get("menuToolsPen")));
@@ -568,7 +572,22 @@ ToolbarModel * ToolMenuHandler::getModel() {
 	return this->tbModel;
 }
 
+bool ToolMenuHandler::isColorInUse(int color) {
+	XOJ_CHECK_TYPE(ToolMenuHandler);
+
+	for(GList * l = this->toolbarColorItems; l != NULL; l = l->next) {
+		ColorToolItem * it = (ColorToolItem *)l->data;
+		if(it->getColor() == color) {
+			return true;
+		}
+	}
+
+	return false;
+}
+
 ListIterator<AbstractToolItem *> ToolMenuHandler::getToolItems() {
+	XOJ_CHECK_TYPE(ToolMenuHandler);
+
 	return ListIterator<AbstractToolItem *> (this->toolItems);
 }
 
