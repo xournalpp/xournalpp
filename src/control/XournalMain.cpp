@@ -4,6 +4,7 @@
 #include <iostream>
 
 #include "../gui/MainWindow.h"
+#include "../gui/toolbarMenubar/model/ToolbarColorNames.h"
 #include "Control.h"
 #include "LoadHandler.h"
 #include "../gui/GladeSearchpath.h"
@@ -148,6 +149,10 @@ int XournalMain::run(int argc, char * argv[]) {
 		}
 	}
 
+	// init singleton
+	gchar * colorNameFile = g_build_filename(g_get_home_dir(), G_DIR_SEPARATOR_S, CONFIG_DIR, "colornames.ini", NULL);
+	ToolbarColorNames::getInstance().loadFile(colorNameFile);
+
 	Control * control = new Control(gladePath);
 
 	MainWindow * win = new MainWindow(gladePath, control);
@@ -220,6 +225,11 @@ int XournalMain::run(int argc, char * argv[]) {
 	delete win;
 	delete control;
 	delete gladePath;
+
+
+	ToolbarColorNames::getInstance().saveFile(colorNameFile);
+	g_free(colorNameFile);
+	ToolbarColorNames::freeInstance();
 
 	return 0;
 }

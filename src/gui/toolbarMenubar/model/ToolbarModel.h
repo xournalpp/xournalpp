@@ -27,7 +27,6 @@ public:
 public:
 	ListIterator<ToolbarData *> iterator();
 	bool parse(const char * file, bool predefined);
-	const char * getColorName(const char * color);
 	void add(ToolbarData * data);
 	void remove(ToolbarData * data);
 	void save(const char * filename);
@@ -35,13 +34,11 @@ public:
 
 private:
 	void parseGroup(GKeyFile * config, const char * group, bool predefined);
-	void parseColors(GKeyFile * config, const char * group);
 
 private:
 	XOJ_TYPE_ATTRIB;
 
 	GList * toolbars;
-	GHashTable * colorNameTable;
 };
 
 #endif /* __TOOLBARMODEL_H__ */

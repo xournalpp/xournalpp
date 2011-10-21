@@ -5,6 +5,9 @@
 #include <config.h>
 #include <glib/gi18n-lib.h>
 
+#include "model/ToolbarColorNames.h"
+
+
 bool ColorToolItem::inUpdate = false;
 
 ColorToolItem::ColorToolItem(ActionHandler * handler, ToolHandler * toolHandler, int color, bool selektor) :
@@ -36,9 +39,7 @@ void ColorToolItem::updateName() {
 	if(this->action == ACTION_SELECT_COLOR_CUSTOM) {
 		this->name = _("Select color");
 	} else {
-		// TODO: !! Color names
-
-		this->name = String::format("COLOR(0x%06x)", this->color);
+		this->name = ToolbarColorNames::getInstance().getColorName(this->color);
 	}
 }
 
@@ -97,8 +98,6 @@ String ColorToolItem::getId() {
 	}
 
 	String id = String::format("COLOR(0x%06x)", this->color);
-
-	printf("getId(): %s\n", id.c_str());
 
 	return id;
 }
@@ -164,7 +163,7 @@ void ColorToolItem::activated(GdkEvent *event, GtkMenuItem *menuitem, GtkToolBut
 }
 
 
-// TODO LOW PRIO: add history
+// TODO !! add history
 //static void
 //change_color_callback (GtkWidget *button,
 //		       gpointer	  data)
