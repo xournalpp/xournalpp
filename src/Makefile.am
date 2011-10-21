@@ -80,10 +80,11 @@ xournalpp_SOURCES = \
 	gui/pageposition/PageViewIndex.cpp \
 	gui/sidebar/Sidebar.cpp \
 	gui/sidebar/SidebarPreview.cpp \
-	gui/toolbarMenubar/model/ToolbarModel.cpp \
+	gui/toolbarMenubar/model/ToolbarColorNames.cpp \
 	gui/toolbarMenubar/model/ToolbarData.cpp \
 	gui/toolbarMenubar/model/ToolbarEntry.cpp \
 	gui/toolbarMenubar/model/ToolbarItem.cpp \
+	gui/toolbarMenubar/model/ToolbarModel.cpp \
 	gui/toolbarMenubar/AbstractItem.cpp \
 	gui/toolbarMenubar/AbstractToolItem.cpp \
 	gui/toolbarMenubar/ColorToolItem.cpp \

@@ -2,6 +2,7 @@
  * Xournal++
  *
  * Names for the toolbar color items (e.g. 0xff000 is called red)
+ * Singleton
  *
  * @author Xournal Team
  * http://xournal.sf.net
@@ -13,11 +14,17 @@
 #define __TOOLBARCOLORNAMES_H__
 
 #include <XournalType.h>
+#include <glib.h>
+#include <String.h>
 
 class ToolbarColorNames {
-public:
+private:
 	ToolbarColorNames();
 	virtual ~ToolbarColorNames();
+
+public:
+	static ToolbarColorNames & getInstance();
+	static void freeInstance();
 
 public:
 	void loadFile(const char * file);
@@ -32,6 +39,9 @@ private:
 
 private:
 	XOJ_TYPE_ATTRIB;
+
+	GKeyFile * config;
+	GHashTable * predefinedColorNames;
 };
 
 #endif /* __TOOLBARCOLORNAMES_H__ */
