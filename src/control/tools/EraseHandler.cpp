@@ -51,7 +51,7 @@ void EraseHandler::erase(double x, double y) {
 
 	int selected = page.getSelectedLayerId();
 
-	this->halfEraserSize = this->handler->getThikness();
+	this->halfEraserSize = this->handler->getThickness();
 	GdkRectangle eraserRect = { x - halfEraserSize, y - halfEraserSize, halfEraserSize * 2, halfEraserSize * 2 };
 
 	Range * range = new Range(x, y);

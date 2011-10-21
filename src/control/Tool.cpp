@@ -1,12 +1,12 @@
 #include "Tool.h"
 
-Tool::Tool(String name, ToolType type, int color, bool enableColor, bool enableSize, bool enableRuler, bool enableShapreRecognizer, double * thikness) {
+Tool::Tool(String name, ToolType type, int color, bool enableColor, bool enableSize, bool enableRuler, bool enableShapreRecognizer, double * thickness) {
 
 	XOJ_INIT_TYPE(Tool);
 
 	this->name = name;
 	this->type = type;
-	this->thikness = thikness;
+	this->thickness = thickness;
 
 	this->enableColor = enableColor;
 	this->enableSize = enableSize;
@@ -23,7 +23,7 @@ Tool::Tool(String name, ToolType type, int color, bool enableColor, bool enableS
 Tool::~Tool() {
 	XOJ_CHECK_TYPE(Tool);
 
-	delete[] this->thikness;
+	delete[] this->thickness;
 
 	XOJ_RELEASE_TYPE(Tool);
 }

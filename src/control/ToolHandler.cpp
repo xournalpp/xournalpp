@@ -29,33 +29,33 @@ void ToolHandler::initTools() {
 		tools[i] = NULL;
 	}
 
-	double * thikness = new double[5];
+	double * thickness = new double[5];
 	// pen thicknesses = 0.15, 0.3, 0.5, 0.8, 2 mm
-	thikness[TOOL_SIZE_VERY_FINE] = 0.42;
-	thikness[TOOL_SIZE_FINE] = 0.85;
-	thikness[TOOL_SIZE_MEDIUM] = 1.41;
-	thikness[TOOL_SIZE_THICK] = 2.26;
-	thikness[TOOL_SIZE_VERY_THICK] = 5.67;
-	t = new Tool("pen", TOOL_PEN, 0x3333CC, true, true, true, true, thikness);
+	thickness[TOOL_SIZE_VERY_FINE] = 0.42;
+	thickness[TOOL_SIZE_FINE] = 0.85;
+	thickness[TOOL_SIZE_MEDIUM] = 1.41;
+	thickness[TOOL_SIZE_THICK] = 2.26;
+	thickness[TOOL_SIZE_VERY_THICK] = 5.67;
+	t = new Tool("pen", TOOL_PEN, 0x3333CC, true, true, true, true, thickness);
 	tools[TOOL_PEN - TOOL_PEN] = t;
 
-	thikness = new double[5];
-	thikness[TOOL_SIZE_VERY_FINE] = 2.83;
-	thikness[TOOL_SIZE_FINE] = 2.83;
-	thikness[TOOL_SIZE_MEDIUM] = 8.50;
-	thikness[TOOL_SIZE_THICK] = 19.84;
-	thikness[TOOL_SIZE_VERY_THICK] = 19.84;
-	t = new Tool("eraser", TOOL_ERASER, 0x000000, false, true, false, false, thikness);
+	thickness = new double[5];
+	thickness[TOOL_SIZE_VERY_FINE] = 2.83;
+	thickness[TOOL_SIZE_FINE] = 2.83;
+	thickness[TOOL_SIZE_MEDIUM] = 8.50;
+	thickness[TOOL_SIZE_THICK] = 19.84;
+	thickness[TOOL_SIZE_VERY_THICK] = 19.84;
+	t = new Tool("eraser", TOOL_ERASER, 0x000000, false, true, false, false, thickness);
 	tools[TOOL_ERASER - TOOL_PEN] = t;
 
 	// highlighter thicknesses = 1, 3, 7 mm
-	thikness = new double[5];
-	thikness[TOOL_SIZE_VERY_FINE] = 2.83;
-	thikness[TOOL_SIZE_FINE] = 2.83;
-	thikness[TOOL_SIZE_MEDIUM] = 8.50;
-	thikness[TOOL_SIZE_THICK] = 19.84;
-	thikness[TOOL_SIZE_VERY_THICK] = 19.84;
-	t = new Tool("hilighter", TOOL_HILIGHTER, 0xFFFF00, true, true, true, true, thikness);
+	thickness = new double[5];
+	thickness[TOOL_SIZE_VERY_FINE] = 2.83;
+	thickness[TOOL_SIZE_FINE] = 2.83;
+	thickness[TOOL_SIZE_MEDIUM] = 8.50;
+	thickness[TOOL_SIZE_THICK] = 19.84;
+	thickness[TOOL_SIZE_VERY_THICK] = 19.84;
+	t = new Tool("hilighter", TOOL_HILIGHTER, 0xFFFF00, true, true, true, true, thickness);
 	tools[TOOL_HILIGHTER - TOOL_PEN] = t;
 
 	t = new Tool("text", TOOL_TEXT, 0x000000, true, false, false, false, NULL);
@@ -258,11 +258,11 @@ void ToolHandler::setHilighterSize(ToolSize size) {
 	}
 }
 
-double ToolHandler::getThikness() {
+double ToolHandler::getThickness() {
 	XOJ_CHECK_TYPE(ToolHandler);
 
-	if (this->current->thikness) {
-		return this->current->thikness[this->current->size];
+	if (this->current->thickness) {
+		return this->current->thickness[this->current->size];
 	} else {
 		g_warning("Request size of \"%s\"", this->current->getName().c_str());
 		return 0;
@@ -468,10 +468,10 @@ void ToolHandler::restoreLastConfig() {
 	this->fireToolChanged();
 }
 
-const double * ToolHandler::getToolThikness(ToolType type) {
+const double * ToolHandler::getToolThickness(ToolType type) {
 	XOJ_CHECK_TYPE(ToolHandler);
 
-	return this->tools[type - TOOL_PEN]->thikness;
+	return this->tools[type - TOOL_PEN]->thickness;
 }
 
 void ToolHandler::setSelectionEditTools(bool setColor, bool setSize) {

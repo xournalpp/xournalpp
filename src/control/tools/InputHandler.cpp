@@ -296,7 +296,7 @@ void InputHandler::startStroke(GdkEventButton * event, StrokeTool tool, double x
 	if (tmpStroke == NULL) {
 		currentInputDevice = event->device;
 		tmpStroke = new Stroke();
-		tmpStroke->setWidth(h->getThikness());
+		tmpStroke->setWidth(h->getThickness());
 		tmpStroke->setColor(h->getColor());
 		tmpStroke->setToolType(tool);
 		tmpStroke->addPoint(Point(x, y));

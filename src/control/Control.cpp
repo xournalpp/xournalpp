@@ -2594,8 +2594,8 @@ void Control::setToolSize(ToolSize size) {
 	}
 
 	if (sel) {
-		UndoAction * undo = sel->setSize(size, toolHandler->getToolThikness(TOOL_PEN), toolHandler->getToolThikness(
-				TOOL_HILIGHTER), toolHandler->getToolThikness(TOOL_ERASER));
+		UndoAction * undo = sel->setSize(size, toolHandler->getToolThickness(TOOL_PEN), toolHandler->getToolThickness(
+				TOOL_HILIGHTER), toolHandler->getToolThickness(TOOL_ERASER));
 		if (undo) {
 			undoRedo->addUndoAction(undo);
 		}

@@ -72,7 +72,7 @@ PageInsertType pageInsertTypeFromString(String type);
 
 class Tool {
 public:
-	Tool(String name, ToolType tool, int color, bool enableColor, bool enableSize, bool enableRuler, bool enableShapreRecognizer, double * thikness);
+	Tool(String name, ToolType tool, int color, bool enableColor, bool enableSize, bool enableRuler, bool enableShapreRecognizer, double * thickness);
 	virtual ~Tool();
 
 	String getName();
@@ -105,7 +105,7 @@ private:
 
 	int color;
 	ToolSize size;
-	double * thikness;
+	double * thickness;
 
 	bool shapeRecognizer;
 	bool ruler;
