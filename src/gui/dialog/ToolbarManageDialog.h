@@ -24,7 +24,7 @@ public:
 	virtual ~ToolbarManageDialog();
 
 public:
-	void show();
+	virtual void show(GtkWindow * parent);
 
 private:
 	static void treeSelectionChangedCallback(GtkTreeSelection * selection, ToolbarManageDialog * dlg);

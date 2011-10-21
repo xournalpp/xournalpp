@@ -233,9 +233,10 @@ int SelectBackgroundColorDialog::getSelectedColor() {
 	return this->selected;
 }
 
-void SelectBackgroundColorDialog::show() {
+void SelectBackgroundColorDialog::show(GtkWindow * parent) {
 	XOJ_CHECK_TYPE(SelectBackgroundColorDialog);
 
+	gtk_window_set_transient_for(GTK_WINDOW(this->window), parent);
 	gtk_dialog_run(GTK_DIALOG(this->window));
 	gtk_widget_hide(this->window);
 }

@@ -25,7 +25,8 @@ public:
 	virtual ~ImagesDialog();
 
 public:
-	void show();
+	virtual void show(GtkWindow * parent);
+
 	void setBackgroundWhite();
 
 	void setSelected(int selected);

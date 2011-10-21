@@ -23,7 +23,7 @@ public:
 	virtual ~SelectBackgroundColorDialog();
 
 public:
-	void show();
+	virtual void show(GtkWindow * parent);
 
 	int getSelectedColor();
 

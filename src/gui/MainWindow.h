@@ -31,7 +31,7 @@ public:
 	virtual ~MainWindow();
 
 public:
-	void show();
+	virtual void show(GtkWindow * parent);
 
 	void setRecentMenu(GtkWidget * submenu);
 	void toolbarSelected(ToolbarData * d);

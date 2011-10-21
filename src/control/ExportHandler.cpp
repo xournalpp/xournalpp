@@ -20,7 +20,7 @@ void ExportHandler::runExportWithDialog(GladeSearchpath * gladeSearchPath, Setti
 	doc->lock();
 	int count = doc->getPageCount();
 	ExportDialog * dlg = new ExportDialog(gladeSearchPath, settings, count, current);
-	dlg->show();
+	dlg->show(GTK_WINDOW(control->getWindow()->getWindow()));
 
 	GList * selected = dlg->getRange();
 

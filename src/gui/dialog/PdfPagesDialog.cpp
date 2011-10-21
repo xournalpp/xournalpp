@@ -48,13 +48,15 @@ public:
 	int getWidth() {
 		XOJ_CHECK_TYPE(PdfPage);
 
-		return page->getWidth() * dlg->getZoom() + Shadow::getShadowBottomRightSize() + Shadow::getShadowTopLeftSize() + 4;
+		return page->getWidth() * dlg->getZoom() + Shadow::getShadowBottomRightSize() + Shadow::getShadowTopLeftSize()
+				+ 4;
 	}
 
 	int getHeight() {
 		XOJ_CHECK_TYPE(PdfPage);
 
-		return page->getHeight() * dlg->getZoom() + Shadow::getShadowBottomRightSize() + Shadow::getShadowTopLeftSize() + 4;
+		return page->getHeight() * dlg->getZoom() + Shadow::getShadowBottomRightSize() + Shadow::getShadowTopLeftSize()
+				+ 4;
 	}
 
 	void setSelected(bool selected) {
@@ -142,9 +144,11 @@ private:
 			cairo_rectangle(cr2, 0, 0, alloc.width, Shadow::getShadowTopLeftSize() + 2);
 
 			//right
-			cairo_rectangle(cr2, alloc.width - Shadow::getShadowBottomRightSize() - 2, 0, Shadow::getShadowBottomRightSize() + 2, alloc.height);
+			cairo_rectangle(cr2, alloc.width - Shadow::getShadowBottomRightSize() - 2, 0,
+					Shadow::getShadowBottomRightSize() + 2, alloc.height);
 			//bottom
-			cairo_rectangle(cr2, 0, alloc.height - Shadow::getShadowBottomRightSize() - 2, alloc.width, Shadow::getShadowBottomRightSize() + 2);
+			cairo_rectangle(cr2, 0, alloc.height - Shadow::getShadowBottomRightSize() - 2, alloc.width,
+					Shadow::getShadowBottomRightSize() + 2);
 			cairo_fill(cr2);
 
 			cairo_set_operator(cr2, CAIRO_OPERATOR_ATOP);
@@ -156,13 +160,16 @@ private:
 				cairo_set_line_cap(cr2, CAIRO_LINE_CAP_BUTT);
 				cairo_set_line_join(cr2, CAIRO_LINE_JOIN_BEVEL);
 
-				cairo_rectangle(cr2, Shadow::getShadowTopLeftSize(), Shadow::getShadowTopLeftSize(), width + 3.5, height + 3.5);
+				cairo_rectangle(cr2, Shadow::getShadowTopLeftSize(), Shadow::getShadowTopLeftSize(), width + 3.5, height
+						+ 3.5);
 
 				cairo_stroke(cr2);
 
-				Shadow::drawShadow(cr2, Shadow::getShadowTopLeftSize(), Shadow::getShadowTopLeftSize(), width + 5, height + 5);
+				Shadow::drawShadow(cr2, Shadow::getShadowTopLeftSize(), Shadow::getShadowTopLeftSize(), width + 5, height
+						+ 5);
 			} else {
-				Shadow::drawShadow(cr2, Shadow::getShadowTopLeftSize() + 2, Shadow::getShadowTopLeftSize() + 2, width, height);
+				Shadow::drawShadow(cr2, Shadow::getShadowTopLeftSize() + 2, Shadow::getShadowTopLeftSize() + 2, width,
+						height);
 			}
 
 			int x = 35;
@@ -367,7 +374,7 @@ void PdfPagesDialog::sizeAllocate(GtkWidget *widget, GtkRequisition *requisition
 	dlg->layout();
 }
 
-void PdfPagesDialog::show() {
+void PdfPagesDialog::show(GtkWindow * parent) {
 	XOJ_CHECK_TYPE(PdfPagesDialog);
 
 	GtkWidget * w = get("cbOnlyNotUsed");
@@ -389,6 +396,7 @@ void PdfPagesDialog::show() {
 	gtk_button_set_label(GTK_BUTTON(w), txt);
 	g_free(txt);
 
+	gtk_window_set_transient_for(GTK_WINDOW(this->window), parent);
 	gtk_dialog_run(GTK_DIALOG(this->window));
 	gtk_widget_hide(this->window);
 }

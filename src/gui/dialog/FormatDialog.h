@@ -26,7 +26,7 @@ public:
 	virtual ~FormatDialog();
 
 public:
-	void show();
+	virtual void show(GtkWindow * parent);
 
 	double getWidth();
 	double getHeight();

@@ -58,7 +58,7 @@ MainWindow::MainWindow(GladeSearchpath * gladeSearchPath, Control * control) :
 	g_signal_connect(get("buttonCloseSidebar"), "clicked", G_CALLBACK(buttonCloseSidebarClicked), this);
 
 	this->toolbar = new ToolMenuHandler(this->control, this->control->getZoomControl(), this,
-			this->control->getToolHandler());
+			this->control->getToolHandler(), GTK_WINDOW(getWindow()));
 
 	char * file = gladeSearchPath->findFile(NULL, "toolbar.ini");
 
@@ -68,6 +68,7 @@ MainWindow::MainWindow(GladeSearchpath * gladeSearchPath, Control * control) :
 		GtkWidget* dlg = gtk_message_dialog_new(GTK_WINDOW(this->window), GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR,
 				GTK_BUTTONS_OK, _("Could not parse general toolbar.ini file: %s\nNo Toolbars will be available"), file);
 
+		gtk_window_set_transient_for(GTK_WINDOW(dlg), GTK_WINDOW(getWindow()));
 		gtk_dialog_run(GTK_DIALOG(dlg));
 		gtk_widget_hide(dlg);
 		gtk_widget_destroy(dlg);
@@ -81,6 +82,7 @@ MainWindow::MainWindow(GladeSearchpath * gladeSearchPath, Control * control) :
 			GtkWidget* dlg = gtk_message_dialog_new(GTK_WINDOW(this->window), GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR,
 					GTK_BUTTONS_OK, _("Could not parse custom toolbar.ini file: %s\nToolbars will not be available"), file);
 
+			gtk_window_set_transient_for(GTK_WINDOW(dlg), GTK_WINDOW(this->control->getWindow()->getWindow()));
 			gtk_dialog_run(GTK_DIALOG(dlg));
 			gtk_widget_hide(dlg);
 			gtk_widget_destroy(dlg);
@@ -684,7 +686,7 @@ void MainWindow::setRecentMenu(GtkWidget * submenu) {
 	gtk_menu_item_set_submenu(GTK_MENU_ITEM(menuitem), submenu);
 }
 
-void MainWindow::show() {
+void MainWindow::show(GtkWindow * parent) {
 	XOJ_CHECK_TYPE(MainWindow);
 
 	gtk_widget_show(this->window);

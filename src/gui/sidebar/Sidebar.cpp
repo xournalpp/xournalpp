@@ -209,6 +209,7 @@ void Sidebar::askInsertPdfPage(int pdfPage) {
 	gtk_dialog_add_button(GTK_DIALOG(dialog), "Insert after", 2);
 	gtk_dialog_add_button(GTK_DIALOG(dialog), "Insert at end", 3);
 
+	gtk_window_set_transient_for(GTK_WINDOW(dialog), GTK_WINDOW(this->control->getWindow()->getWindow()));
 	int res = gtk_dialog_run(GTK_DIALOG(dialog));
 	gtk_widget_destroy(dialog);
 	if (res == 1) {

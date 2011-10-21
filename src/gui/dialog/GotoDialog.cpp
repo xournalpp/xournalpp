@@ -19,9 +19,10 @@ int GotoDialog::getSelectedPage() {
 	return this->selectedPage;
 }
 
-void GotoDialog::show() {
+void GotoDialog::show(GtkWindow * parent) {
 	XOJ_CHECK_TYPE(GotoDialog);
 
+	gtk_window_set_transient_for(GTK_WINDOW(this->window), parent);
 	int returnCode = gtk_dialog_run(GTK_DIALOG(this->window));
 	gtk_widget_hide(this->window);
 

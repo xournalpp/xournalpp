@@ -24,7 +24,7 @@ public:
 	GladeGui(GladeSearchpath * gladeSearchPath, const char * glade, const char * mainWnd);
 	virtual ~GladeGui();
 
-	virtual void show() = 0;
+	virtual void show(GtkWindow * parent) = 0;
 
 	operator GtkWindow *();
 	operator GdkWindow *();

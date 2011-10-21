@@ -50,6 +50,7 @@ String XojOpenDlg::showOpenDialog(GtkWindow * win, Settings * settings, bool pdf
 	g_signal_connect(dialog, "update-preview", G_CALLBACK(updatePreviewCallback), NULL);
 
 
+	gtk_window_set_transient_for(GTK_WINDOW(dialog), win);
 	if (gtk_dialog_run(GTK_DIALOG(dialog)) != GTK_RESPONSE_OK) {
 		gtk_widget_destroy(dialog);
 		return NULL;
