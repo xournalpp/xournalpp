@@ -34,7 +34,7 @@ class SpinPageAdapter;
 
 class ToolMenuHandler {
 public:
-	ToolMenuHandler(ActionHandler * listener, ZoomControl * zoom, GladeGui * gui, ToolHandler * toolHandler);
+	ToolMenuHandler(ActionHandler * listener, ZoomControl * zoom, GladeGui * gui, ToolHandler * toolHandler, GtkWindow * parent);
 	virtual ~ToolMenuHandler();
 
 public:
@@ -82,6 +82,7 @@ private:
 	XOJ_TYPE_ATTRIB;
 
 	GList * toolbarColorItems;
+	GtkWindow * parent;
 
 	GList * toolItems;
 	GList * menuItems;

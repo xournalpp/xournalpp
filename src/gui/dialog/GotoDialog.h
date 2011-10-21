@@ -21,7 +21,8 @@ public:
 	virtual ~GotoDialog();
 
 public:
-	virtual void show();
+	virtual void show(GtkWindow * parent);
+
 	// returns the selected page or -1 if closed
 	int getSelectedPage();
 

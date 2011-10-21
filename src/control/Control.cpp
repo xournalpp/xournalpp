@@ -792,6 +792,7 @@ void Control::help() {
 	if (error) {
 		GtkWidget * dialog = gtk_message_dialog_new((GtkWindow *) getWindow(), GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR,
 				GTK_BUTTONS_OK, _("There was an error displaying help: %s"), error->message);
+		gtk_window_set_transient_for(GTK_WINDOW(dialog), GTK_WINDOW(this->getWindow()->getWindow()));
 		gtk_dialog_run(GTK_DIALOG(dialog));
 		gtk_widget_destroy(dialog);
 
@@ -861,7 +862,7 @@ void Control::manageToolbars() {
 	XOJ_CHECK_TYPE(Control);
 
 	ToolbarManageDialog dlg(this->gladeSearchPath, this->win->getToolbarModel());
-	dlg.show();
+	dlg.show(GTK_WINDOW(this->win->getWindow()));
 
 	this->win->updateToolbarMenu();
 
@@ -882,6 +883,7 @@ void Control::customizeToolbars() {
 						"The Toolbarconfiguration \"%s\" is predefined, would you create a copy to edit?"),
 				this->win->getSelectedToolbar()->getName().c_str());
 
+		gtk_window_set_transient_for(GTK_WINDOW(dialog), GTK_WINDOW(this->getWindow()->getWindow()));
 		int res = gtk_dialog_run(GTK_DIALOG(dialog));
 		gtk_widget_destroy(dialog);
 
@@ -1246,6 +1248,7 @@ void Control::insertNewPage(int position) {
 			GtkWidget * dialog = gtk_message_dialog_new((GtkWindow*) *win, GTK_DIALOG_DESTROY_WITH_PARENT,
 					GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, _("You don't have any PDF pages to select from. Cancel operation,\n"
 						"Please select another background type: Menu \"Journal\" / \"Insert Page Type\"."));
+			gtk_window_set_transient_for(GTK_WINDOW(dialog), GTK_WINDOW(this->getWindow()->getWindow()));
 			gtk_dialog_run(GTK_DIALOG(dialog));
 			gtk_widget_destroy(dialog);
 
@@ -1260,7 +1263,7 @@ void Control::insertNewPage(int position) {
 				}
 			}
 
-			dlg->show();
+			dlg->show(GTK_WINDOW(this->win->getWindow()));
 
 			int selected = dlg->getSelectedPage();
 			delete dlg;
@@ -1358,7 +1361,7 @@ void Control::setPageBackground(ActionType type) {
 		ImagesDialog * dlg = new ImagesDialog(this->gladeSearchPath, this->doc, this->settings);
 		this->doc->unlock();
 
-		dlg->show();
+		dlg->show(GTK_WINDOW(this->win->getWindow()));
 		BackgroundImage img = dlg->getSelectedImage();
 		if (!img.isEmpty()) {
 			page.setBackgroundImage(img);
@@ -1383,6 +1386,7 @@ void Control::setPageBackground(ActionType type) {
 				GtkWidget * dialog = gtk_message_dialog_new((GtkWindow*) *win, GTK_DIALOG_DESTROY_WITH_PARENT,
 						GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, _("This image could not be loaded. Error message: %s"),
 						err->message);
+				gtk_window_set_transient_for(GTK_WINDOW(dialog), GTK_WINDOW(this->getWindow()->getWindow()));
 				gtk_dialog_run(GTK_DIALOG(dialog));
 				gtk_widget_destroy(dialog);
 				g_error_free(err);
@@ -1405,6 +1409,7 @@ void Control::setPageBackground(ActionType type) {
 			GtkWidget * dialog = gtk_message_dialog_new((GtkWindow*) *win, GTK_DIALOG_DESTROY_WITH_PARENT,
 					GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, _("You don't have any PDF pages to select from. Cancel operation,\n"
 						"Please select another background type: Menu \"Journal\" / \"Insert Page Type\"."));
+			gtk_window_set_transient_for(GTK_WINDOW(dialog), GTK_WINDOW(this->getWindow()->getWindow()));
 			gtk_dialog_run(GTK_DIALOG(dialog));
 			gtk_widget_destroy(dialog);
 			return;
@@ -1421,7 +1426,7 @@ void Control::setPageBackground(ActionType type) {
 
 			this->doc->unlock();
 
-			dlg->show();
+			dlg->show(GTK_WINDOW(this->win->getWindow()));
 
 			int selected = dlg->getSelectedPage();
 			delete dlg;
@@ -1445,7 +1450,7 @@ void Control::setPageBackground(ActionType type) {
 void Control::gotoPage() {
 	GotoDialog * dlg = new GotoDialog(this->gladeSearchPath, this->doc->getPageCount());
 
-	dlg->show();
+	dlg->show(GTK_WINDOW(this->win->getWindow()));
 	int page = dlg->getSelectedPage();
 
 	if(page != -1) {
@@ -1492,7 +1497,7 @@ void Control::paperFormat() {
 	clearSelectionEndText();
 
 	FormatDialog * dlg = new FormatDialog(this->gladeSearchPath, settings, page.getWidth(), page.getHeight());
-	dlg->show();
+	dlg->show(GTK_WINDOW(this->win->getWindow()));
 
 	double width = dlg->getWidth();
 	double height = dlg->getHeight();
@@ -1527,7 +1532,7 @@ void Control::changePageBackgroundColor() {
 	}
 
 	SelectBackgroundColorDialog * dlg = new SelectBackgroundColorDialog(this->gladeSearchPath, this);
-	dlg->show();
+	dlg->show(GTK_WINDOW(this->win->getWindow()));
 	int color = dlg->getSelectedColor();
 
 	if (color == -2) {
@@ -1880,7 +1885,7 @@ void Control::showSettings() {
 	bool bigCursor = settings->isShowBigCursor();
 
 	SettingsDialog * dlg = new SettingsDialog(this->gladeSearchPath, settings);
-	dlg->show();
+	dlg->show(GTK_WINDOW(this->win->getWindow()));
 
 	if (xeventEnabled != settings->isUseXInput()) {
 		win->getXournal()->updateXEvents();
@@ -1991,6 +1996,7 @@ bool Control::openFile(String filename, int scrollToPage) {
 		gtk_dialog_add_button(GTK_DIALOG(dialog), _("Select another PDF"), 1);
 		gtk_dialog_add_button(GTK_DIALOG(dialog), _("Remove PDF Background"), 2);
 		gtk_dialog_add_button(GTK_DIALOG(dialog), _("Cancel"), 3);
+		gtk_window_set_transient_for(GTK_WINDOW(dialog), GTK_WINDOW(this->getWindow()->getWindow()));
 		int res = gtk_dialog_run(GTK_DIALOG(dialog));
 		gtk_widget_destroy(dialog);
 
@@ -2010,6 +2016,7 @@ bool Control::openFile(String filename, int scrollToPage) {
 	if (!tmp) {
 		GtkWidget * dialog = gtk_message_dialog_new((GtkWindow*) *win, GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR,
 				GTK_BUTTONS_OK, _("Error opening file '%s'\n%s"), filename.c_str(), h.getLastError().c_str());
+		gtk_window_set_transient_for(GTK_WINDOW(dialog), GTK_WINDOW(this->getWindow()->getWindow()));
 		gtk_dialog_run(GTK_DIALOG(dialog));
 		gtk_widget_destroy(dialog);
 		fileLoaded(scrollToPage);
@@ -2094,6 +2101,7 @@ bool Control::annotatePdf(String filename, bool attachPdf, bool attachToDocument
 
 		GtkWidget * dialog = gtk_message_dialog_new((GtkWindow*) *win, GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR,
 				GTK_BUTTONS_OK, _("Error annotate PDF file '%s'\n%s"), filename.c_str(), errMsg.c_str());
+		gtk_window_set_transient_for(GTK_WINDOW(dialog), GTK_WINDOW(this->getWindow()->getWindow()));
 		gtk_dialog_run(GTK_DIALOG(dialog));
 		gtk_widget_destroy(dialog);
 	}
@@ -2239,6 +2247,7 @@ bool Control::showSaveDialog() {
 	gtk_file_chooser_set_current_name(GTK_FILE_CHOOSER(dialog), saveFilename.c_str());
 	gtk_file_chooser_set_do_overwrite_confirmation(GTK_FILE_CHOOSER(dialog), true);
 
+	gtk_window_set_transient_for(GTK_WINDOW(dialog), GTK_WINDOW(this->getWindow()->getWindow()));
 	if (gtk_dialog_run(GTK_DIALOG(dialog)) != GTK_RESPONSE_OK) {
 		gtk_widget_destroy(dialog);
 		return false;
@@ -2360,6 +2369,7 @@ bool Control::close(bool destroy) {
 		gtk_dialog_add_button(GTK_DIALOG(dialog), _("Save"), 1);
 		gtk_dialog_add_button(GTK_DIALOG(dialog), _("Discard"), 2);
 		gtk_dialog_add_button(GTK_DIALOG(dialog), _("Cancel"), 3);
+		gtk_window_set_transient_for(GTK_WINDOW(dialog), GTK_WINDOW(this->getWindow()->getWindow()));
 		int res = gtk_dialog_run(GTK_DIALOG(dialog));
 		gtk_widget_destroy(dialog);
 
@@ -2401,7 +2411,7 @@ void Control::showAbout() {
 	XOJ_CHECK_TYPE(Control);
 
 	AboutDialog dlg(this->gladeSearchPath);
-	dlg.show();
+	dlg.show(GTK_WINDOW(this->win->getWindow()));
 }
 
 void Control::clipboardCutCopyEnabled(bool enabled) {

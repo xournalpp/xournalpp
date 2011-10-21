@@ -23,7 +23,8 @@ public:
 	virtual ~ExportDialog();
 
 public:
-	void show();
+	virtual void show(GtkWindow * parent);
+
 	GList * getRange();
 	int getPngDpi();
 	ExportFormtType getFormatType();

@@ -25,9 +25,10 @@
 #include "../ToolitemDragDrop.h"
 
 ToolMenuHandler::ToolMenuHandler(ActionHandler * listener, ZoomControl * zoom, GladeGui * gui,
-		ToolHandler * toolHandler) {
+		ToolHandler * toolHandler, GtkWindow * parent) {
 	XOJ_INIT_TYPE(ToolMenuHandler);
 
+	this->parent = parent;
 	this->toolItems = NULL;
 	this->toolbarColorItems = NULL;
 	this->menuItems = NULL;
@@ -153,7 +154,7 @@ void ToolMenuHandler::load(ToolbarData * d, GtkWidget * toolbar, const char * to
 					color = color.substring(2);
 					gint c = g_ascii_strtoll(color.c_str(), NULL, 16);
 
-					ColorToolItem * item = new ColorToolItem(listener, toolHandler, c);
+					ColorToolItem * item = new ColorToolItem(listener, toolHandler, this->parent, c);
 					this->toolbarColorItems = g_list_append(this->toolbarColorItems, item);
 
 					GtkToolItem * it = item->createItem(horizontal);
@@ -208,7 +209,7 @@ void ToolMenuHandler::removeColorToolItem(AbstractToolItem * it) {
 
 	g_return_if_fail(it != NULL);
 	this->toolbarColorItems = g_list_remove(this->toolbarColorItems, it);
-	delete (ColorToolItem *)it;
+	delete (ColorToolItem *) it;
 }
 
 void ToolMenuHandler::addColorToolItem(AbstractToolItem * it) {
@@ -321,8 +322,8 @@ void ToolMenuHandler::initToolItems() {
 	addToolItem(new ToolButton(listener, "GOTO_BACK", ACTION_GOTO_BACK, GTK_STOCK_GO_BACK, _("Back"), gui->get(
 			"menuNavigationPreviousPage")));
 
-	addToolItem(new ToolButton(listener, gui, "GOTO_PAGE", ACTION_GOTO_PAGE,
-			"goto.svg", _("Goto page"), gui->get("menuNavigationGotoPage")));
+	addToolItem(new ToolButton(listener, gui, "GOTO_PAGE", ACTION_GOTO_PAGE, "goto.svg", _("Goto page"), gui->get(
+			"menuNavigationGotoPage")));
 
 	addToolItem(new ToolButton(listener, "GOTO_NEXT", ACTION_GOTO_NEXT, GTK_STOCK_GO_FORWARD, _("Next"), gui->get(
 			"menuNavigationNextPage")));
@@ -344,7 +345,7 @@ void ToolMenuHandler::initToolItems() {
 	addToolItem(new ToolButton(listener, gui, "FULLSCREEN", ACTION_FULLSCREEN, GROUP_FULLSCREEN, false,
 			"fullscreen.png", _("Toggle fullscreen"), gui->get("menuViewFullScreen")));
 
-	addToolItem(new ColorToolItem(listener, toolHandler, 0xff0000, true));
+	addToolItem(new ColorToolItem(listener, toolHandler, this->parent, 0xff0000, true));
 
 	addToolItem(new ToolButton(listener, gui, "PEN", ACTION_TOOL_PEN, GROUP_TOOL, true, "tool_pencil.png", _("Pen"),
 			gui->get("menuToolsPen")));
@@ -428,9 +429,12 @@ void ToolMenuHandler::initToolItems() {
 	addToolItem(new ToolButton(listener, gui, "RULER", ACTION_RULER, GROUP_RULER, false, "ruler.png", _("Ruler"),
 			gui->get("menuToolsRuler")));
 
-	addToolItem(new ToolButton(listener, gui, "FINE", ACTION_SIZE_FINE, GROUP_SIZE, true, "thickness_thin.png", _("Thin")));
-	addToolItem(new ToolButton(listener, gui, "MEDIUM", ACTION_SIZE_MEDIUM, GROUP_SIZE, true, "thickness_medium.png", _("Medium")));
-	addToolItem(new ToolButton(listener, gui, "THICK", ACTION_SIZE_THICK, GROUP_SIZE, true, "thickness_thick.png", _("Thik")));
+	addToolItem(new ToolButton(listener, gui, "FINE", ACTION_SIZE_FINE, GROUP_SIZE, true, "thickness_thin.png",
+			_("Thin")));
+	addToolItem(new ToolButton(listener, gui, "MEDIUM", ACTION_SIZE_MEDIUM, GROUP_SIZE, true, "thickness_medium.png",
+			_("Medium")));
+	addToolItem(new ToolButton(listener, gui, "THICK", ACTION_SIZE_THICK, GROUP_SIZE, true, "thickness_thick.png",
+			_("Thik")));
 
 	addToolItem(new ToolButton(listener, gui, "DEFAULT_TOOL", ACTION_TOOL_DEFAULT, GROUP_NOGROUP, false, "default.png",
 			_("Default Tool"), gui->get("menuToolsDefault")));
@@ -575,9 +579,9 @@ ToolbarModel * ToolMenuHandler::getModel() {
 bool ToolMenuHandler::isColorInUse(int color) {
 	XOJ_CHECK_TYPE(ToolMenuHandler);
 
-	for(GList * l = this->toolbarColorItems; l != NULL; l = l->next) {
-		ColorToolItem * it = (ColorToolItem *)l->data;
-		if(it->getColor() == color) {
+	for (GList * l = this->toolbarColorItems; l != NULL; l = l->next) {
+		ColorToolItem * it = (ColorToolItem *) l->data;
+		if (it->getColor() == color) {
 			return true;
 		}
 	}

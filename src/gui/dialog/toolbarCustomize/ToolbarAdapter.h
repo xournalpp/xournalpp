@@ -307,7 +307,8 @@ private:
 			int newId = tb->insertItem(name, id, pos);
 			ToolitemDragDrop::attachMetadata(GTK_WIDGET(it), newId, d->item);
 		} else if (d->type == TOOL_ITEM_COLOR) {
-			ColorToolItem * item = new ColorToolItem(adapter->window->getControl(), adapter->window->getControl()->getToolHandler(), d->color);
+			ColorToolItem * item = new ColorToolItem(adapter->window->getControl(),
+					adapter->window->getControl()->getToolHandler(), GTK_WINDOW(adapter->window->getWindow()), d->color);
 
 			bool horizontal = gtk_toolbar_get_orientation(toolbar) == GTK_ORIENTATION_HORIZONTAL;
 			GtkToolItem * it = item->createItem(horizontal);

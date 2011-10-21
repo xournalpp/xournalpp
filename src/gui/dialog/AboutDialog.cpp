@@ -30,9 +30,10 @@ AboutDialog::~AboutDialog() {
 	XOJ_RELEASE_TYPE(AboutDialog);
 }
 
-void AboutDialog::show() {
+void AboutDialog::show(GtkWindow * parent) {
 	XOJ_CHECK_TYPE(AboutDialog);
 
+	gtk_window_set_transient_for(GTK_WINDOW(this->window), parent);
 	gtk_dialog_run(GTK_DIALOG(this->window));
 	gtk_widget_hide(this->window);
 }

@@ -20,7 +20,8 @@ public:
 	AboutDialog(GladeSearchpath * gladeSearchPath);
 	virtual ~AboutDialog();
 
-	void show();
+public:
+	virtual void show(GtkWindow * parent);
 
 private:
 	XOJ_TYPE_ATTRIB;

@@ -311,6 +311,7 @@ bool PageView::onButtonPressEvent(GtkWidget * widget, GdkEventButton * event) {
 
 		this->extendedWarningDisplayd = true;
 
+		gtk_window_set_transient_for(GTK_WINDOW(dialog), GTK_WINDOW(this->xournal->getControl()->getWindow()->getWindow()));
 		if (gtk_dialog_run(GTK_DIALOG(dialog)) == 1) {
 			settings->setXinputEnabled(false);
 			xournal->updateXEvents();

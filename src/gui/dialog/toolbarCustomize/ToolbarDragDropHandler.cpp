@@ -86,7 +86,7 @@ void ToolbarDragDropHandler::configure() {
 
 	this->customizeDialog = new ToolbarCustomizeDialog(control->getGladeSearchPath(), win, this);
 
-	this->customizeDialog->show();
+	this->customizeDialog->show(GTK_WINDOW(win->getWindow()));
 }
 
 bool ToolbarDragDropHandler::isInDragAndDrop() {

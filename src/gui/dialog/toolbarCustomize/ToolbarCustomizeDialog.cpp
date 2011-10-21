@@ -398,12 +398,12 @@ void ToolbarCustomizeDialog::windowResponseCb(GtkDialog * dialog, int response, 
 /**
  * Displays the dialog
  */
-void ToolbarCustomizeDialog::show() {
+void ToolbarCustomizeDialog::show(GtkWindow * parent) {
 	XOJ_CHECK_TYPE(ToolbarCustomizeDialog);
 
 	g_signal_connect(this->window, "response", G_CALLBACK(windowResponseCb), this);
 
-	gtk_window_set_transient_for(GTK_WINDOW(this->window), GTK_WINDOW(this->win->getWindow()));
+	gtk_window_set_transient_for(GTK_WINDOW(this->window), parent);
 
 	gtk_widget_show_all(this->window);
 

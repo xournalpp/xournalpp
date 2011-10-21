@@ -164,6 +164,7 @@ int XournalMain::run(int argc, char * argv[]) {
 			GtkWidget * dialog = gtk_message_dialog_new((GtkWindow*) *win, GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
 					_("Sorry, Xournal can only open one file from the command line.\n"
 							"Others are ignored."));
+			gtk_window_set_transient_for(GTK_WINDOW(dialog), GTK_WINDOW(win->getWindow()));
 			gtk_dialog_run(GTK_DIALOG(dialog));
 			gtk_widget_destroy(dialog);
 		}
@@ -182,12 +183,13 @@ int XournalMain::run(int argc, char * argv[]) {
 			GtkWidget * dialog = gtk_message_dialog_new((GtkWindow*) *win, GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
 					_("Sorry, Xournal cannot open remote files at the moment.\n"
 							"You have to copy the file to a local directory."));
+			gtk_window_set_transient_for(GTK_WINDOW(dialog), GTK_WINDOW(win->getWindow()));
 			gtk_dialog_run(GTK_DIALOG(dialog));
 			gtk_widget_destroy(dialog);
 		}
 	}
 
-	win->show();
+	win->show(NULL);
 
 	control->getScheduler()->start();
 

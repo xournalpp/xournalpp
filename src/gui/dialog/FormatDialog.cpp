@@ -294,11 +294,13 @@ void FormatDialog::landscapeSelectedCb(GtkToggleToolButton * bt, FormatDialog * 
 	}
 }
 
-void FormatDialog::show() {
+void FormatDialog::show(GtkWindow * parent) {
 	XOJ_CHECK_TYPE(FormatDialog);
 
 	int ret = 0;
 	while (ret == 0) {
+
+		gtk_window_set_transient_for(GTK_WINDOW(this->window), parent);
 		ret = gtk_dialog_run(GTK_DIALOG(this->window));
 		if (ret == 0) {
 			gtk_spin_button_set_value(GTK_SPIN_BUTTON(get("spinWidth")), this->origWidth / this->scale);

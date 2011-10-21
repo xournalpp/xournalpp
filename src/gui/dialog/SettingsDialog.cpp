@@ -84,11 +84,12 @@ void SettingsDialog::setDpi(int dpi) {
 	zoomcallib_set_val(ZOOM_CALLIB(callib), dpi);
 }
 
-void SettingsDialog::show() {
+void SettingsDialog::show(GtkWindow * parent) {
 	XOJ_CHECK_TYPE(SettingsDialog);
 
 	load();
 
+	gtk_window_set_transient_for(GTK_WINDOW(this->window), parent);
 	int res = gtk_dialog_run(GTK_DIALOG(this->window));
 
 	if (res == 1) {

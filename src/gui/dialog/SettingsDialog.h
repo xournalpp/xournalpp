@@ -22,7 +22,8 @@ public:
 	virtual ~SettingsDialog();
 
 public:
-	void show();
+	virtual void show(GtkWindow * parent);
+
 	void save();
 
 	void setDpi(int dpi);

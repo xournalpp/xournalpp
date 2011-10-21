@@ -22,7 +22,8 @@ public:
 	virtual ~PdfPagesDialog();
 
 public:
-	void show();
+	virtual void show(GtkWindow * parent);
+
 	void setBackgroundWhite();
 	double getZoom();
 

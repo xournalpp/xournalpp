@@ -164,11 +164,12 @@ bool ExportDialog::validate() {
 	return true;
 }
 
-void ExportDialog::show() {
+void ExportDialog::show(GtkWindow * parent) {
 	XOJ_CHECK_TYPE(ExportDialog);
 
 	int res = 0;
 	do {
+		gtk_window_set_transient_for(GTK_WINDOW(this->window), parent);
 		res = gtk_dialog_run(GTK_DIALOG(this->window));
 		if (res == 2) {
 			if (validate()) {

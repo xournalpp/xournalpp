@@ -346,12 +346,13 @@ void ImagesDialog::sizeAllocate(GtkWidget *widget, GtkRequisition *requisition, 
 	dlg->layout();
 }
 
-void ImagesDialog::show() {
+void ImagesDialog::show(GtkWindow * parent) {
 	XOJ_CHECK_TYPE(ImagesDialog);
 
 	if (this->images == NULL) {
 		this->selectedPage = -2;
 	} else {
+		gtk_window_set_transient_for(GTK_WINDOW(this->window), parent);
 		gtk_dialog_run(GTK_DIALOG(this->window));
 		gtk_widget_hide(this->window);
 	}

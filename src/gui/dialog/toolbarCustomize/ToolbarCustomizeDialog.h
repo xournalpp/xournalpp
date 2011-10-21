@@ -31,7 +31,8 @@ public:
 	virtual ~ToolbarCustomizeDialog();
 
 public:
-	virtual void show();
+	virtual void show(GtkWindow * parent);
+
 	void rebuildIconview();
 	void rebuildColorIcons();
 
