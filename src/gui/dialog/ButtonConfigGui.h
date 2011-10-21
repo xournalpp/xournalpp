@@ -45,7 +45,7 @@ private:
 	GtkWidget * cbDisableDrawing;
 
 	GtkWidget * cbTool;
-	GtkWidget * cbThikness;
+	GtkWidget * cbThickness;
 	GtkWidget * colorButton;
 	GtkWidget * cbEraserType;
 	GtkWidget * cbDrawingType;

@@ -1072,7 +1072,7 @@ msgid "Thick"
 msgstr ""
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:94
-msgid "Thikness"
+msgid "Thickness"
 msgstr ""
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:98

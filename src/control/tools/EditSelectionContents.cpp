@@ -81,7 +81,7 @@ ListIterator<Element *> EditSelectionContents::getElements() {
  * Sets the tool size for pen or eraser, returs an undo action
  * (or NULL if nothing is done)
  */
-UndoAction * EditSelectionContents::setSize(ToolSize size, const double * thiknessPen, const double * thiknessHilighter, const double * thiknessEraser) {
+UndoAction * EditSelectionContents::setSize(ToolSize size, const double * thicknessPen, const double * thicknessHilighter, const double * thicknessEraser) {
 	XOJ_CHECK_TYPE(EditSelectionContents);
 
 	SizeUndoAction * undo = new SizeUndoAction(this->sourcePage, this->sourceLayer, this->sourceView);
@@ -100,11 +100,11 @@ UndoAction * EditSelectionContents::setSize(ToolSize size, const double * thikne
 			double * originalPressure = SizeUndoAction::getPressure(s);
 
 			if (tool == STROKE_TOOL_PEN) {
-				s->setWidth(thiknessPen[size]);
+				s->setWidth(thicknessPen[size]);
 			} else if (tool == STROKE_TOOL_HIGHLIGHTER) {
-				s->setWidth(thiknessHilighter[size]);
+				s->setWidth(thicknessHilighter[size]);
 			} else if (tool == STROKE_TOOL_ERASER) {
-				s->setWidth(thiknessEraser[size]);
+				s->setWidth(thicknessEraser[size]);
 			}
 
 			// scale the stroke

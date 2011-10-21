@@ -46,7 +46,7 @@ public:
 
 	ToolSize getSize();
 	void setSize(ToolSize size);
-	double getThikness();
+	double getThickness();
 
 	ToolSize getPenSize();
 	ToolSize getEraserSize();
@@ -79,7 +79,7 @@ public:
 
 	void setSelectionEditTools(bool setColor, bool setSize);
 
-	const double * getToolThikness(ToolType type);
+	const double * getToolThickness(ToolType type);
 
 protected:
 	void initTools();

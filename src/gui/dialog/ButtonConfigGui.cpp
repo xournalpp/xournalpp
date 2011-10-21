@@ -86,15 +86,15 @@ ButtonConfigGui::ButtonConfigGui(SettingsDialog * dlg, GtkWidget * w, Settings *
 	gtk_table_attach(GTK_TABLE(table), newLabel(_("Tool")), 0, 1, 2, 3, GTK_FILL, GTK_FILL, 20, 0);
 	gtk_table_attach(GTK_TABLE(table), cbTool, 1, 2, 2, 3, (GtkAttachOptions) (GTK_EXPAND | GTK_FILL), (GtkAttachOptions) (GTK_FILL), 0, 0);
 
-	this->cbThikness = gtk_combo_box_new_text();
-	gtk_combo_box_append_text(GTK_COMBO_BOX(cbThikness), _("Don't change"));
-	gtk_combo_box_append_text(GTK_COMBO_BOX(cbThikness), _("Thin"));
-	gtk_combo_box_append_text(GTK_COMBO_BOX(cbThikness), _("Medium"));
-	gtk_combo_box_append_text(GTK_COMBO_BOX(cbThikness), _("Thick"));
-	gtk_combo_box_set_active(GTK_COMBO_BOX(cbThikness), 0);
+	this->cbThickness = gtk_combo_box_new_text();
+	gtk_combo_box_append_text(GTK_COMBO_BOX(cbThickness), _("Don't change"));
+	gtk_combo_box_append_text(GTK_COMBO_BOX(cbThickness), _("Thin"));
+	gtk_combo_box_append_text(GTK_COMBO_BOX(cbThickness), _("Medium"));
+	gtk_combo_box_append_text(GTK_COMBO_BOX(cbThickness), _("Thick"));
+	gtk_combo_box_set_active(GTK_COMBO_BOX(cbThickness), 0);
 
-	gtk_table_attach(GTK_TABLE(table), newLabel(_("Thikness")), 0, 1, 3, 4, GTK_FILL, GTK_FILL, 20, 0);
-	gtk_table_attach(GTK_TABLE(table), this->cbThikness, 1, 2, 3, 4, (GtkAttachOptions) (GTK_EXPAND | GTK_FILL), (GtkAttachOptions) (GTK_FILL), 0, 0);
+	gtk_table_attach(GTK_TABLE(table), newLabel(_("Thickness")), 0, 1, 3, 4, GTK_FILL, GTK_FILL, 20, 0);
+	gtk_table_attach(GTK_TABLE(table), this->cbThickness, 1, 2, 3, 4, (GtkAttachOptions) (GTK_EXPAND | GTK_FILL), (GtkAttachOptions) (GTK_FILL), 0, 0);
 
 	this->colorButton = gtk_color_button_new();
 	gtk_table_attach(GTK_TABLE(table), newLabel(_("Color")), 0, 1, 4, 5, GTK_FILL, GTK_FILL, 20, 0);
@@ -160,13 +160,13 @@ void ButtonConfigGui::loadSettings() {
 	} while (gtk_tree_model_iter_next(model, &iter));
 
 	if (cfg->size == TOOL_SIZE_FINE) {
-		gtk_combo_box_set_active(GTK_COMBO_BOX(cbThikness), 1);
+		gtk_combo_box_set_active(GTK_COMBO_BOX(cbThickness), 1);
 	} else if (cfg->size == TOOL_SIZE_MEDIUM) {
-		gtk_combo_box_set_active(GTK_COMBO_BOX(cbThikness), 2);
+		gtk_combo_box_set_active(GTK_COMBO_BOX(cbThickness), 2);
 	} else if (cfg->size == TOOL_SIZE_THICK) {
-		gtk_combo_box_set_active(GTK_COMBO_BOX(cbThikness), 3);
+		gtk_combo_box_set_active(GTK_COMBO_BOX(cbThickness), 3);
 	} else {
-		gtk_combo_box_set_active(GTK_COMBO_BOX(cbThikness), 0);
+		gtk_combo_box_set_active(GTK_COMBO_BOX(cbThickness), 0);
 	}
 
 	GdkColor color = { 0, 0, 0, 0 };
@@ -222,13 +222,13 @@ void ButtonConfigGui::saveSettings() {
 
 	cfg->action = action;
 
-	int thikness = gtk_combo_box_get_active(GTK_COMBO_BOX(cbThikness));
+	int thickness = gtk_combo_box_get_active(GTK_COMBO_BOX(cbThickness));
 
-	if (thikness == 1) {
+	if (thickness == 1) {
 		cfg->size = TOOL_SIZE_FINE;
-	} else if (thikness == 2) {
+	} else if (thickness == 2) {
 		cfg->size = TOOL_SIZE_MEDIUM;
-	} else if (thikness == 3) {
+	} else if (thickness == 3) {
 		cfg->size = TOOL_SIZE_THICK;
 	} else {
 		cfg->size = TOOL_SIZE_NONE;
@@ -297,21 +297,21 @@ void ButtonConfigGui::enableDisableTools() {
 	switch (action) {
 	case TOOL_PEN:
 	case TOOL_HILIGHTER:
-		gtk_widget_set_sensitive(cbThikness, true);
+		gtk_widget_set_sensitive(cbThickness, true);
 		gtk_widget_set_sensitive(colorButton, true);
 		gtk_widget_set_sensitive(cbDrawingType, true);
 		gtk_widget_set_sensitive(cbEraserType, false);
 
 		break;
 	case TOOL_ERASER:
-		gtk_widget_set_sensitive(cbThikness, true);
+		gtk_widget_set_sensitive(cbThickness, true);
 		gtk_widget_set_sensitive(colorButton, false);
 		gtk_widget_set_sensitive(cbDrawingType, false);
 		gtk_widget_set_sensitive(cbEraserType, true);
 
 		break;
 	case TOOL_TEXT:
-		gtk_widget_set_sensitive(cbThikness, false);
+		gtk_widget_set_sensitive(cbThickness, false);
 		gtk_widget_set_sensitive(colorButton, true);
 		gtk_widget_set_sensitive(cbDrawingType, false);
 		gtk_widget_set_sensitive(cbEraserType, false);
@@ -323,7 +323,7 @@ void ButtonConfigGui::enableDisableTools() {
 	case TOOL_SELECT_REGION:
 	case TOOL_VERTICAL_SPACE:
 	case TOOL_HAND:
-		gtk_widget_set_sensitive(cbThikness, false);
+		gtk_widget_set_sensitive(cbThickness, false);
 		gtk_widget_set_sensitive(colorButton, false);
 		gtk_widget_set_sensitive(cbDrawingType, false);
 		gtk_widget_set_sensitive(cbEraserType, false);

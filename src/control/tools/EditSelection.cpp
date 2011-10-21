@@ -213,10 +213,10 @@ int EditSelection::getViewHeight() {
  * Sets the tool size for pen or eraser, returs an undo action
  * (or NULL if nothing is done)
  */
-UndoAction * EditSelection::setSize(ToolSize size, const double * thiknessPen, const double * thiknessHilighter, const double * thiknessEraser) {
+UndoAction * EditSelection::setSize(ToolSize size, const double * thicknessPen, const double * thicknessHilighter, const double * thicknessEraser) {
 	XOJ_CHECK_TYPE(EditSelection);
 
-	return this->contents->setSize(size, thiknessPen, thiknessHilighter, thiknessEraser);
+	return this->contents->setSize(size, thicknessPen, thicknessHilighter, thicknessEraser);
 }
 
 /**
