@@ -4,6 +4,7 @@ uidir = $(datadir)/xournalpp/ui
 ui_DATA = \
 	about.glade \
 	export.glade \
+	goto.glade \
 	images.glade \
 	main.glade \
 	page-background-color.glade \
