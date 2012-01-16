@@ -90,7 +90,7 @@ Sidebar::Sidebar(GladeGui * gui, Control * control) {
 	gtk_combo_box_append_text(comboBox, _("Preview"));
 	gtk_combo_box_set_active(comboBox, 0);
 
-	g_signal_connect(treeViewBookmarks, "button_press_event", G_CALLBACK(treeClickedCallback), this);
+	g_signal_connect(treeViewBookmarks, "cursor-changed", G_CALLBACK(treeBookmarkSelected), this);
 	g_signal_connect(comboBox, "changed", G_CALLBACK(cbChangedCallback), this);
 
 	registerListener(control);
@@ -237,23 +237,18 @@ void Sidebar::askInsertPdfPage(int pdfPage) {
 	}
 }
 
-bool Sidebar::treeClickedCallback(GtkWidget * treeview, GdkEventButton * event, Sidebar * sidebar) {
+bool Sidebar::treeBookmarkSelected(GtkWidget * treeview, Sidebar * sidebar) {
 	XOJ_CHECK_TYPE_OBJ(sidebar, Sidebar);
 
-	GtkTreePath * path = NULL;
 	sidebar->typeSelected = true;
 
 	gtk_widget_grab_focus(GTK_WIDGET(treeview));
 
-	if (gtk_tree_view_get_path_at_pos(GTK_TREE_VIEW(treeview), event->x, event->y, &path, NULL, NULL, NULL)) {
-		// Not editable
-		gtk_tree_view_set_cursor(GTK_TREE_VIEW(treeview), path, NULL, FALSE);
-		gtk_tree_path_free(path);
+	GtkTreeSelection * selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(treeview));
 
+	if (selection) {
 		GtkTreeModel *model = NULL;
 		GtkTreeIter iter = { 0 };
-
-		GtkTreeSelection *selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(treeview));
 
 		if (gtk_tree_selection_get_selected(selection, &model, &iter)) {
 			XojLinkDest * link = NULL;
