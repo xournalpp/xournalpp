@@ -350,6 +350,8 @@ gboolean gtk_xournal_button_press_event(GtkWidget * widget, GdkEventButton * eve
 		xournal->currentInputPage = pv;
 		pv->translateEvent((GdkEvent*) event, xournal->x, xournal->y);
 		INPUTDBG2("gtk_xournal_button_press_event (pv->onButtonPressEvent) return");
+
+		xournal->view->getDocument()->indexOf(pv->getPage());
 		return pv->onButtonPressEvent(widget, event);
 	}
 

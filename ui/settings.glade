@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <glade-interface>
-  <!-- interface-requires gtk+ 2.6 -->
+  <!-- interface-requires gtk+ 2.24 -->
   <!-- interface-naming-policy project-wide -->
   <widget class="GtkDialog" id="settingsDialog">
     <property name="can_focus">False</property>
@@ -1746,7 +1746,7 @@ Here you can disable your touchscreen.&lt;/i&gt;</property>
                       <widget class="GtkLabel" id="label33">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="label" translatable="yes">&lt;b&gt;Cursor&lt;/b&gt;</property>
+                        <property name="label" translatable="yes">&lt;b&gt;Cursor Theme&lt;/b&gt;</property>
                         <property name="use_markup">True</property>
                       </widget>
                       <packing>
@@ -1783,13 +1783,9 @@ Here you can disable your touchscreen.&lt;/i&gt;</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <child>
-                          <widget class="GtkCheckButton" id="cbBigCursor">
-                            <property name="label" translatable="yes">Big cursor for pen</property>
+                          <widget class="GtkComboBox" id="cbCursorTheme">
                             <property name="visible">True</property>
-                            <property name="can_focus">True</property>
-                            <property name="receives_default">False</property>
-                            <property name="use_action_appearance">False</property>
-                            <property name="draw_indicator">True</property>
+                            <property name="can_focus">False</property>
                           </widget>
                           <packing>
                             <property name="expand">True</property>

@@ -838,18 +838,21 @@ void Control::invokeLater(ActionType type) {
 
 /**
  * Fire page selected, but first check if the page Number is valid
+ *
+ * @return the page ID or -1 if the page is not found
  */
-void Control::firePageSelected(PageRef page) {
+int Control::firePageSelected(PageRef page) {
 	XOJ_CHECK_TYPE(Control);
 
 	this->doc->lock();
-	int p = this->doc->indexOf(page);
+	int pageId = this->doc->indexOf(page);
 	this->doc->unlock();
-	if (p == -1) {
-		return;
+	if (pageId == -1) {
+		return -1;
 	}
 
-	DocumentHandler::firePageSelected(p);
+	DocumentHandler::firePageSelected(pageId);
+	return pageId;
 }
 
 void Control::firePageSelected(int page) {

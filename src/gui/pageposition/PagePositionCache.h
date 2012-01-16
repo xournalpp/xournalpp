@@ -22,6 +22,9 @@ public:
 private:
 	XOJ_TYPE_ATTRIB;
 
+	/**
+	 * PagePositionCache ID
+	 */
 	int ppId;
 
 	friend class PagePositionHandler;

@@ -120,7 +120,12 @@ void PageView::deleteViewBuffer() {
 bool PageView::containsPoint(int x, int y) {
 	XOJ_CHECK_TYPE(PageView);
 
-	return this->layout.getLayoutAbsoluteX() <= x && this->layout.getLayoutAbsoluteX() + this->getDisplayWidth() >= this->layout.getLayoutAbsoluteX() && this->layout.getLayoutAbsoluteY() <= y && this->layout.getLayoutAbsoluteY() + this->getDisplayHeight() >= this->layout.getLayoutAbsoluteY();
+	bool leftOk = this->layout.getLayoutAbsoluteX() <= x;
+	bool rightOk = x <= this->layout.getLayoutAbsoluteX() + this->getDisplayWidth();
+	bool topOk = this->layout.getLayoutAbsoluteY() <= y;
+	bool bottomOk = y <= this->layout.getLayoutAbsoluteY() + this->getDisplayHeight();
+
+	return leftOk && rightOk && topOk && bottomOk;
 }
 
 bool PageView::searchTextOnPage(const char * text, int * occures, double * top) {

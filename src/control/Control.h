@@ -123,7 +123,12 @@ public:
 
 	bool searchTextOnPage(const char * text, int p, int * occures, double * top);
 
-	void firePageSelected(PageRef page);
+	/**
+	 * Fire page selected, but first check if the page Number is valid
+	 *
+	 * @return the page ID or -1 if the page is not found
+	 */
+	int firePageSelected(PageRef page);
 	void firePageSelected(int page);
 
 	void addDefaultPage();
