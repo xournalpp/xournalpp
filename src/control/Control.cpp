@@ -50,7 +50,7 @@
 #include <stdio.h>
 #include <string.h>
 
-// TODO Check for error log on startup, also check for emergency save document!
+// TODO Check for emergency save document!
 
 Control::Control(GladeSearchpath * gladeSearchPath) {
 	XOJ_INIT_TYPE(Control);

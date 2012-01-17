@@ -37,7 +37,6 @@ public:
 
 protected:
 	virtual GtkToolItem * newItem();
-	static void customColorSelected(GtkWidget * button, ColorToolItem * item);
 	void updateName();
 	bool isSelector();
 

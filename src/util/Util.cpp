@@ -3,6 +3,11 @@
 #include <unistd.h>
 #include <sys/stat.h>
 #include "../cfg.h"
+#include <stdlib.h>
+
+#include <config.h>
+#include <glib/gi18n-lib.h>
+
 
 GdkColor Util::intToGdkColor(int c) {
 	GdkColor color = { 0, 0, 0, 0 };
@@ -140,5 +145,47 @@ GdkPixbuf * Util::newPixbufFromWidget(GtkWidget * widget, int iconSize) {
 	gtk_widget_destroy(window);
 
 	return pixbuf;
+}
+
+void Util::openFileWithDefaultApplicaion(const char * filename) {
+#ifdef __APPLE__
+#define OPEN_PATTERN "open \"%s\""
+#elif _WIN32 // note the underscore: without it, it's not msdn official!
+#define OPEN_PATTERN "start \"%s\""
+#else // linux, unix, ...
+#define OPEN_PATTERN "xdg-open \"%s\""
+#endif
+
+	String escaped = String(filename).replace("\\", "\\\\").replace("\"", "\\\"");
+
+	char * command = g_strdup_printf(OPEN_PATTERN, escaped.c_str());
+	printf("XPP Execute command: «%s»\n", command);
+	if(system(command) != 0) {
+		GtkWidget * dlgError = gtk_message_dialog_new(NULL, GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, "%s", _("File could not be opened. You have to open it manual\n:URL: %s"), filename, filename);
+		gtk_dialog_run(GTK_DIALOG(dlgError));
+	}
+	g_free(command);
+}
+
+void Util::openFileWithFilebrowser(const char * filename) {
+#undef OPEN_PATTERN
+
+#ifdef __APPLE__
+#define OPEN_PATTERN "open \"%s\""
+#elif _WIN32 // note the underscore: without it, it's not msdn official!
+#define OPEN_PATTERN "explorer.exe /n,/e,\"%s\""
+#else // linux, unix, ...
+#define OPEN_PATTERN "nautilus \"file://%s\" || konqueror \"file://%s\""
+#endif
+
+	String escaped = String(filename).replace("\\", "\\\\").replace("\"", "\\\"");
+
+	char * command = g_strdup_printf(OPEN_PATTERN, escaped.c_str(), escaped.c_str()); // twice for linux...
+	printf("XPP show file in filebrowser command: «%s»\n", command);
+	if(system(command) != 0) {
+		GtkWidget * dlgError = gtk_message_dialog_new(NULL, GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, "%s", _("File could not be opened. You have to open it manual\n:URL: %s"), filename, filename);
+		gtk_dialog_run(GTK_DIALOG(dlgError));
+	}
+	g_free(command);
 }
 

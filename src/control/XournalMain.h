@@ -30,6 +30,8 @@ private:
 	void initLocalisation();
 #endif
 
+	void checkForErrorlog();
+
 	int exportPdf(const char * input, const char * output);
 	GladeSearchpath * initPath(const char * argv0);
 

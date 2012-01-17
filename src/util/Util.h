@@ -34,6 +34,9 @@ public:
 	static GdkPixbuf * newPixbufFromWidget(GtkWidget * widget, int iconSize = 24);
 	static GtkWidget * newSepeartorImage();
 
+	static void openFileWithDefaultApplicaion(const char * filename);
+	static void openFileWithFilebrowser(const char * filename);
+
 private:
 	static String getSettingsSubfolder(String subfolder);
 };

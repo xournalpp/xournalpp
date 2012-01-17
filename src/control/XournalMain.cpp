@@ -1,7 +1,8 @@
 #include "XournalMain.h"
 #include <glib/gi18n-lib.h>
-#include <gtk/gtk.h>
 #include <iostream>
+#include <gtk/gtk.h>
+#include <glib/gstdio.h>
 
 #include "../gui/MainWindow.h"
 #include "../gui/toolbarMenubar/model/ToolbarColorNames.h"
@@ -11,6 +12,7 @@
 #include "../gui/XournalView.h"
 #include "../pdf/popplerdirect/PdfExport.h"
 #include "../cfg.h"
+
 
 #ifdef ENABLE_PYTHON
 #include "../plugin/python/PythonRunner.h"
@@ -33,6 +35,38 @@ void XournalMain::initLocalisation() {
 	textdomain(GETTEXT_PACKAGE);
 }
 #endif
+
+void XournalMain::checkForErrorlog() {
+	XOJ_CHECK_TYPE(XournalMain);
+
+	gchar *filename = g_strconcat(g_get_home_dir(), G_DIR_SEPARATOR_S, CONFIG_DIR, G_DIR_SEPARATOR_S, "errorlog.log", NULL);
+	if (g_file_test(filename, G_FILE_TEST_EXISTS)) {
+		GtkWidget * dialog = gtk_message_dialog_new(NULL, GTK_DIALOG_MODAL, GTK_MESSAGE_QUESTION, GTK_BUTTONS_NONE, _(
+				"There is an errorlogfile from Xournal++. Please send a Bugreport, so the bug may been fixed.\nLogfile: %s"), filename);
+		gtk_dialog_add_button(GTK_DIALOG(dialog), _("Send Bugreport"), 1);
+		gtk_dialog_add_button(GTK_DIALOG(dialog), _("Open Logfile"), 2);
+		gtk_dialog_add_button(GTK_DIALOG(dialog), _("Delete Logfile"), 3);
+		gtk_dialog_add_button(GTK_DIALOG(dialog), _("Cancel"), 4);
+
+		int res = gtk_dialog_run(GTK_DIALOG(dialog));
+
+		if (res == 1) { // Send Bugreport
+			Util::openFileWithDefaultApplicaion("http://sourceforge.net/tracker/?group_id=163434&atid=827733");
+		} else if (res == 2) { // Open Logfile
+			Util::openFileWithFilebrowser(filename);
+		} else if (res == 3) { // Delete Logfile
+			if (g_unlink(filename) != 0) {
+				GtkWidget * dlgError = gtk_message_dialog_new(NULL, GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, "%s", _(
+						"Errorlog could not be deleted. You have to delete it manually.\nLogfile: %s"), filename);
+				gtk_dialog_run(GTK_DIALOG(dlgError));
+			}
+		} else if (res == 4) { // Cancel
+			// Nothing to do
+		}
+
+		gtk_widget_destroy(dialog);
+	}
+}
 
 int XournalMain::exportPdf(const char * input, const char * output) {
 	XOJ_CHECK_TYPE(XournalMain);
@@ -112,13 +146,13 @@ int XournalMain::run(int argc, char * argv[]) {
 	g_option_context_free(context);
 
 	// Init threads (used for our Sheduler, Jobs)
-	g_thread_init(NULL);
+	g_thread_init( NULL);
 
 #ifdef XOJ_MEMORY_LEAK_CHECK_ENABLED
 	xoj_type_initMutex();
 #endif
 
-	if(optNoPdfCompress) {
+	if (optNoPdfCompress) {
 		PdfWriter::setCompressPdfOutput(false);
 	}
 
@@ -132,14 +166,13 @@ int XournalMain::run(int argc, char * argv[]) {
 	GladeSearchpath * gladePath = initPath(argv[0]);
 
 	if (!optNoWarnSVN) {
-		GtkWidget * dialog = gtk_message_dialog_new(NULL, GTK_DIALOG_MODAL, GTK_MESSAGE_WARNING, GTK_BUTTONS_YES_NO,
-				_("You are using a development release of Xournal\n"
-						"You can find the current release in CVS!\n"
-						"DO NOT USE THIS RELEASE FOR PRODUCTIVE ENVIRONMENT!\n"
-						"Are you sure you wish to start this release?\n\n\n"
-						"If you don't want to show this warning, you can run\n"
-						"\"xournalpp --help\"\n"
-				));
+		GtkWidget * dialog = gtk_message_dialog_new(NULL, GTK_DIALOG_MODAL, GTK_MESSAGE_WARNING, GTK_BUTTONS_YES_NO, _(
+				"You are using a development release of Xournal\n"
+					"You can find the current release in CVS!\n"
+					"DO NOT USE THIS RELEASE FOR PRODUCTIVE ENVIRONMENT!\n"
+					"Are you sure you wish to start this release?\n\n\n"
+					"If you don't want to show this warning, you can run\n"
+					"\"xournalpp --help\"\n"));
 
 		int result = gtk_dialog_run(GTK_DIALOG(dialog));
 		gtk_widget_destroy(dialog);
@@ -161,9 +194,9 @@ int XournalMain::run(int argc, char * argv[]) {
 	bool opened = false;
 	if (optFilename) {
 		if (g_strv_length(optFilename) != 1) {
-			GtkWidget * dialog = gtk_message_dialog_new((GtkWindow*) *win, GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
-					_("Sorry, Xournal can only open one file from the command line.\n"
-							"Others are ignored."));
+			GtkWidget * dialog = gtk_message_dialog_new((GtkWindow*) *win, GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, _(
+					"Sorry, Xournal can only open one file from the command line.\n"
+						"Others are ignored."));
 			gtk_window_set_transient_for(GTK_WINDOW(dialog), GTK_WINDOW(win->getWindow()));
 			gtk_dialog_run(GTK_DIALOG(dialog));
 			gtk_widget_destroy(dialog);
@@ -180,9 +213,9 @@ int XournalMain::run(int argc, char * argv[]) {
 			opened = control->openFile(filename, openAtPageNumber);
 			g_free(filename);
 		} else {
-			GtkWidget * dialog = gtk_message_dialog_new((GtkWindow*) *win, GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
-					_("Sorry, Xournal cannot open remote files at the moment.\n"
-							"You have to copy the file to a local directory."));
+			GtkWidget * dialog = gtk_message_dialog_new((GtkWindow*) *win, GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, _(
+					"Sorry, Xournal cannot open remote files at the moment.\n"
+						"You have to copy the file to a local directory."));
 			gtk_window_set_transient_for(GTK_WINDOW(dialog), GTK_WINDOW(win->getWindow()));
 			gtk_dialog_run(GTK_DIALOG(dialog));
 			gtk_widget_destroy(dialog);
@@ -212,6 +245,8 @@ int XournalMain::run(int argc, char * argv[]) {
 	}
 #endif
 
+	checkForErrorlog();
+
 	gtk_main();
 
 	control->saveSettings();
@@ -227,7 +262,6 @@ int XournalMain::run(int argc, char * argv[]) {
 	delete win;
 	delete control;
 	delete gladePath;
-
 
 	ToolbarColorNames::getInstance().saveFile(colorNameFile);
 	g_free(colorNameFile);
