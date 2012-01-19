@@ -903,9 +903,9 @@ void Control::customizeToolbars() {
 
 				if (!model->existsId(id)) {
 					if (i != 0) {
-						data->setName(data->getName() + _(" Copy") + " " + i);
+						data->setName(data->getName() + " " + _("Copy") + " " + i);
 					} else {
-						data->setName(data->getName() + _(" Copy"));
+						data->setName(data->getName() + " " + _("Copy"));
 					}
 					data->setId(id);
 					break;

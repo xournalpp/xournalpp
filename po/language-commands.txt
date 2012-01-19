@@ -1,2 +1,4 @@
 Command to update locale: (e.g. German)
 intltool-update de
+
+Recreate makefile: intltoolize --force

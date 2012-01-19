@@ -1,0 +1,1 @@
+/usr/share/aclocal/intltool.m4
