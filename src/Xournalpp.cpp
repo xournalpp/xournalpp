@@ -13,6 +13,8 @@
 #include <CrashHandler.h>
 #include <Stacktrace.h>
 
+// TODO: if in text change color is not possible!
+
 int main(int argc, char * argv[]) {
 	// init crash handler
 	installCrashHandlers();

@@ -171,8 +171,15 @@ bool UndoRedoHandler::canRedo() {
 	return this->redoList != NULL;
 }
 
+/**
+ * Adds an undo Action to the list, or if NULL does nothing
+ */
 void UndoRedoHandler::addUndoAction(UndoAction * action) {
 	XOJ_CHECK_TYPE(UndoRedoHandler);
+
+	if(action == NULL) {
+		return;
+	}
 
 	this->undoList = g_list_append(this->undoList, action);
 	clearRedo();

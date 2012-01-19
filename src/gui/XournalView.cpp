@@ -127,7 +127,7 @@ int XournalView::getCurrentPage() {
 	return currentPage;
 }
 
-const int scrollKeySize = 10;
+const int scrollKeySize = 30;
 
 bool XournalView::onKeyPressEvent(GdkEventKey * event) {
 	XOJ_CHECK_TYPE(XournalView);

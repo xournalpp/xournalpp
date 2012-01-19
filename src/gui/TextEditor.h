@@ -50,6 +50,7 @@ public:
 
 	void setText(String text);
 	void setFont(XojFont font);
+	UndoAction * setColor(int color);
 
 private:
 	void repaintEditor();

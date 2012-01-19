@@ -37,10 +37,9 @@ public:
 			this->size = strlen(str);
 			this->len = g_utf8_strlen(str, -1);
 
-			char ** end = NULL;
-			if (!g_utf8_validate(str, -1, NULL)) {
+			const char * end = NULL;
+			if (!g_utf8_validate(str, -1, &end)) {
 				g_warning("Invalid UTF8 string: %s", str);
-				*end = 0;
 			}
 		}
 
@@ -98,8 +97,7 @@ private:
 	}
 
 private:
-	XOJ_TYPE_ATTRIB
-	;
+	XOJ_TYPE_ATTRIB;
 
 	/**
 	 * The reference counter

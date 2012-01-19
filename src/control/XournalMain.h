@@ -31,6 +31,7 @@ private:
 #endif
 
 	void checkForErrorlog();
+	void checkForEmergencySave();
 
 	int exportPdf(const char * input, const char * output);
 	GladeSearchpath * initPath(const char * argv0);

@@ -39,7 +39,7 @@ void XournalMain::initLocalisation() {
 void XournalMain::checkForErrorlog() {
 	XOJ_CHECK_TYPE(XournalMain);
 
-	gchar *filename = g_strconcat(g_get_home_dir(), G_DIR_SEPARATOR_S, CONFIG_DIR, G_DIR_SEPARATOR_S, "errorlog.log", NULL);
+	gchar * filename = g_strconcat(g_get_home_dir(), G_DIR_SEPARATOR_S, CONFIG_DIR, G_DIR_SEPARATOR_S, "errorlog.log", NULL);
 	if (g_file_test(filename, G_FILE_TEST_EXISTS)) {
 		GtkWidget * dialog = gtk_message_dialog_new(NULL, GTK_DIALOG_MODAL, GTK_MESSAGE_QUESTION, GTK_BUTTONS_NONE, _(
 				"There is an errorlogfile from Xournal++. Please send a Bugreport, so the bug may been fixed.\nLogfile: %s"), filename);
@@ -66,6 +66,37 @@ void XournalMain::checkForErrorlog() {
 
 		gtk_widget_destroy(dialog);
 	}
+}
+
+void XournalMain::checkForEmergencySave() {
+	// TODO Check for emergency save document!
+//	gchar * filename = g_strconcat(g_get_home_dir(), G_DIR_SEPARATOR_S, CONFIG_DIR, G_DIR_SEPARATOR_S, "errorlog.log", NULL);
+//	if (g_file_test(filename, G_FILE_TEST_EXISTS)) {
+//		GtkWidget * dialog = gtk_message_dialog_new(NULL, GTK_DIALOG_MODAL, GTK_MESSAGE_QUESTION, GTK_BUTTONS_NONE, _(
+//				"There is an errorlogfile from Xournal++. Please send a Bugreport, so the bug may been fixed.\nLogfile: %s"), filename);
+//		gtk_dialog_add_button(GTK_DIALOG(dialog), _("Send Bugreport"), 1);
+//		gtk_dialog_add_button(GTK_DIALOG(dialog), _("Open Logfile"), 2);
+//		gtk_dialog_add_button(GTK_DIALOG(dialog), _("Delete Logfile"), 3);
+//		gtk_dialog_add_button(GTK_DIALOG(dialog), _("Cancel"), 4);
+//
+//		int res = gtk_dialog_run(GTK_DIALOG(dialog));
+//
+//		if (res == 1) { // Send Bugreport
+//			Util::openFileWithDefaultApplicaion("http://sourceforge.net/tracker/?group_id=163434&atid=827733");
+//		} else if (res == 2) { // Open Logfile
+//			Util::openFileWithFilebrowser(filename);
+//		} else if (res == 3) { // Delete Logfile
+//			if (g_unlink(filename) != 0) {
+//				GtkWidget * dlgError = gtk_message_dialog_new(NULL, GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, "%s", _(
+//						"Errorlog could not be deleted. You have to delete it manually.\nLogfile: %s"), filename);
+//				gtk_dialog_run(GTK_DIALOG(dlgError));
+//			}
+//		} else if (res == 4) { // Cancel
+//			// Nothing to do
+//		}
+//
+//		gtk_widget_destroy(dialog);
+//	}
 }
 
 int XournalMain::exportPdf(const char * input, const char * output) {
@@ -195,8 +226,8 @@ int XournalMain::run(int argc, char * argv[]) {
 	if (optFilename) {
 		if (g_strv_length(optFilename) != 1) {
 			GtkWidget * dialog = gtk_message_dialog_new((GtkWindow*) *win, GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, _(
-					"Sorry, Xournal can only open one file from the command line.\n"
-						"Others are ignored."));
+					"Sorry, Xournal can open only one file from command line.\n"
+						"All others are ignored."));
 			gtk_window_set_transient_for(GTK_WINDOW(dialog), GTK_WINDOW(win->getWindow()));
 			gtk_dialog_run(GTK_DIALOG(dialog));
 			gtk_widget_destroy(dialog);
@@ -246,6 +277,7 @@ int XournalMain::run(int argc, char * argv[]) {
 #endif
 
 	checkForErrorlog();
+	checkForEmergencySave();
 
 	gtk_main();
 

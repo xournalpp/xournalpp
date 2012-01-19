@@ -457,7 +457,6 @@ void ToolHandler::restoreLastConfig() {
 	XOJ_CHECK_TYPE(ToolHandler);
 
 	if (this->lastSelectedTool == NULL) {
-		printf("this->lastSelectedTool == NULL\n");
 		return;
 	}
 	this->current = this->lastSelectedTool;

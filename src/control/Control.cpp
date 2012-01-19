@@ -50,8 +50,6 @@
 #include <stdio.h>
 #include <string.h>
 
-// TODO Check for emergency save document!
-
 Control::Control(GladeSearchpath * gladeSearchPath) {
 	XOJ_INIT_TYPE(Control);
 
@@ -1866,9 +1864,15 @@ void Control::toolColorChanged() {
 		EditSelection * sel = this->win->getXournal()->getSelection();
 		if (sel) {
 			UndoAction * undo = sel->setColor(toolHandler->getColor());
-			if (undo) {
-				undoRedo->addUndoAction(undo);
-			}
+			undoRedo->addUndoAction(undo);
+		}
+
+		TextEditor * edit = getTextEditor();
+
+
+		if(this->toolHandler->getToolType() == TOOL_TEXT && edit != NULL) {
+			UndoAction * undo = edit->setColor(toolHandler->getColor());
+			undoRedo->addUndoAction(undo);
 		}
 	}
 }

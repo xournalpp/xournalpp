@@ -9,6 +9,7 @@
 
 #include "TextEditorWidget.h"
 #include "../undo/TextUndoAction.h"
+#include "../undo/ColorUndoAction.h"
 #include "../view/DocumentView.h"
 #include "Cursor.h"
 
@@ -98,6 +99,7 @@ TextEditor::~TextEditor() {
 
 	if (this->ownText) {
 		delete this->text;
+		this->text = NULL;
 	}
 
 	g_object_unref(this->buffer);
@@ -140,6 +142,26 @@ void TextEditor::setText(String text) {
 	GtkTextIter first = { 0 };
 	gtk_text_buffer_get_iter_at_offset(this->buffer, &first, 0);
 	gtk_text_buffer_place_cursor(this->buffer, &first);
+}
+
+UndoAction * TextEditor::setColor(int color) {
+	XOJ_CHECK_TYPE(TextEditor);
+
+
+	int origColor = this->text->getColor();
+	this->text->setColor(color);
+
+	repaintEditor();
+
+	// This is a new text, so we don't need to create a undo action
+	if(this->ownText) {
+		return NULL;
+	}
+
+	ColorUndoAction * undo = new ColorUndoAction(gui->getPage(), gui->getPage().getSelectedLayer(), this->gui);
+	undo->addStroke(this->text, origColor, color);
+
+	return undo;
 }
 
 void TextEditor::setFont(XojFont font) {
