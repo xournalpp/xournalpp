@@ -1,15 +1,1 @@
-Ruler 90° einrasten
-
-2) Undo seems to redraw in 2 steps, separated by a second or two, and a crash
-always soon follows.
-
-3) The Autosave/restore needs a UI.
-
-7) All the different types of toolbars needs to be cleaned up...
-
-Scrollen mit Stift ist schwammig (warum?)
-! Radieren Normaler Modus auch
-! Schieben hängt teilweise auch
-Wenn man "ausserhalb der Seite" scrollen darf ist der initiale Scrollwert falsch bei (0/0)
-
-
+Todo's are maked with TODO in the source files

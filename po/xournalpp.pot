@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-01-19 21:52+0100\n"
+"POT-Creation-Date: 2012-01-21 15:43+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1257,12 +1257,12 @@ msgstr ""
 msgid "Open '%s'"
 msgstr ""
 
-#: ../src/control/SaveHandler.cpp:234
+#: ../src/control/SaveHandler.cpp:236
 #, c-format
 msgid "Could not write background \"%s\", %s"
 msgstr ""
 
-#: ../src/control/SaveHandler.cpp:309
+#: ../src/control/SaveHandler.cpp:311
 #, c-format
 msgid "Could not write background \"%s\". Continuing anyway."
 msgstr ""
@@ -1535,25 +1535,26 @@ msgid ""
 "Toolbars will not be available"
 msgstr ""
 
-#: ../src/gui/MainWindow.cpp:654
+#: ../src/gui/MainWindow.cpp:649
 #, c-format
 msgid ", PDF Page %i"
 msgstr ""
 
-#: ../src/gui/MainWindow.cpp:657
+#: ../src/gui/MainWindow.cpp:652
 #, c-format
 msgid "of %i%s"
 msgstr ""
 
-#: ../src/gui/sidebar/Sidebar.cpp:89
-msgid "Bookmarks"
-msgstr ""
-
-#: ../src/gui/sidebar/Sidebar.cpp:90
+#: ../src/gui/sidebar/previews/SidebarPreviews.cpp:133
 msgid "Preview"
 msgstr ""
 
-#: ../src/gui/sidebar/Sidebar.cpp:205
+#: ../src/gui/sidebar/previews/SidebarPreviewPage.cpp:115
+#: ../src/gui/PageView.cpp:653
+msgid "Loading..."
+msgstr ""
+
+#: ../src/gui/sidebar/indextree/SidebarIndexPage.cpp:70
 #, c-format
 msgid ""
 "Your current document does not contain PDF Page %i\n"
@@ -1563,8 +1564,8 @@ msgid ""
 "PDF page."
 msgstr ""
 
-#: ../src/gui/sidebar/SidebarPreview.cpp:113 ../src/gui/PageView.cpp:653
-msgid "Loading..."
+#: ../src/gui/sidebar/indextree/SidebarIndexPage.cpp:235
+msgid "Contents"
 msgstr ""
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:25

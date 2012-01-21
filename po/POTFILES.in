@@ -186,8 +186,13 @@ src/gui/ToolitemDragDrop.cpp
 src/gui/RepaintHandler.cpp
 src/gui/TextEditor.cpp
 src/gui/XojColor.cpp
+src/gui/sidebar/AbstractSidebarPage.cpp
 src/gui/sidebar/Sidebar.cpp
-src/gui/sidebar/SidebarPreview.cpp
+src/gui/sidebar/previews/SidebarToolbar.cpp
+src/gui/sidebar/previews/SidebarPreviews.cpp
+src/gui/sidebar/previews/SidebarLayout.cpp
+src/gui/sidebar/previews/SidebarPreviewPage.cpp
+src/gui/sidebar/indextree/SidebarIndexPage.cpp
 src/gui/LayoutData.cpp
 src/gui/dialog/ButtonConfigGui.cpp
 src/gui/dialog/SettingsDialog.cpp

@@ -1,11 +1,13 @@
 #include "PreviewJob.h"
-#include "../../gui/sidebar/Sidebar.h"
+#include "../../gui/sidebar/previews/SidebarPreviews.h"
+#include "../../gui/sidebar/previews/SidebarPreviewPage.h"
 #include "../../gui/Shadow.h"
 #include "../../view/PdfView.h"
 #include "../../view/DocumentView.h"
 #include "../../model/Document.h"
+#include "../../control/Control.h"
 
-PreviewJob::PreviewJob(SidebarPreview * sidebar) {
+PreviewJob::PreviewJob(SidebarPreviewPage * sidebar) {
 	XOJ_INIT_TYPE(PreviewJob);
 
 	this->sidebarPreview = sidebar;
@@ -49,7 +51,7 @@ void PreviewJob::run() {
 
 	cairo_scale(cr2, zoom, zoom);
 
-	Document * doc = this->sidebarPreview->sidebar->getDocument();
+	Document * doc = this->sidebarPreview->sidebar->getControl()->getDocument();
 	doc->lock();
 
 	if (this->sidebarPreview->page.getBackgroundType() == BACKGROUND_TYPE_PDF) {

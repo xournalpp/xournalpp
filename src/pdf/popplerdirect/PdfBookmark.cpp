@@ -45,6 +45,8 @@ void PdfBookmarks::createBookmarks(GtkTreeModel * model, GList * &data, GtkTreeI
 		gtk_tree_model_get(model, iter, DOCUMENT_LINKS_COLUMN_LINK, &link, -1);
 		dest = link->dest;
 
+		g_object_unref(link);
+
 		int page = doc->findPdfPage(dest->getPdfPage());
 		if (page == -1) {
 			continue;

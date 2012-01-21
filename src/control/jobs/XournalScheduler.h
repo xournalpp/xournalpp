@@ -15,7 +15,7 @@
 #define __XOURNALSCHEDULER_H__
 
 #include "Scheduler.h"
-#include "../../gui/sidebar/SidebarPreview.h"
+#include "../../gui/sidebar/previews/SidebarPreviewPage.h"
 #include "../../gui/PageView.h"
 #include <XournalType.h>
 
@@ -27,11 +27,11 @@ public:
 	/**
 	 * Remove source, e.g. if a page is removed they don't need to repaint
 	 */
-	void removeSidebar(SidebarPreview * preview);
+	void removeSidebar(SidebarPreviewPage * preview);
 	void removePage(PageView * view);
 	void removeAllJobs();
 
-	void addRepaintSidebar(SidebarPreview * preview);
+	void addRepaintSidebar(SidebarPreviewPage * preview);
 	void addRerenderPage(PageView * view);
 
 	void finishTask();

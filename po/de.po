@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xournalpp 0.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-01-19 21:52+0100\n"
-"PO-Revision-Date: 2012-01-19 22:03+0100\n"
+"POT-Creation-Date: 2012-01-21 15:43+0100\n"
+"PO-Revision-Date: 2012-01-21 15:43+0100\n"
 "Last-Translator: Andreas Butti <andreasb123@users.sourceforge.net>\n"
 "Language-Team: DE\n"
 "Language: \n"
@@ -1351,12 +1351,12 @@ msgstr "Verwerfen"
 msgid "Open '%s'"
 msgstr "Öffne '%s'"
 
-#: ../src/control/SaveHandler.cpp:234
+#: ../src/control/SaveHandler.cpp:236
 #, c-format
 msgid "Could not write background \"%s\", %s"
 msgstr "Konnte Hintergrund \"%s\" nicht speichern, %s"
 
-#: ../src/control/SaveHandler.cpp:309
+#: ../src/control/SaveHandler.cpp:311
 #, c-format
 msgid "Could not write background \"%s\". Continuing anyway."
 msgstr "Konnte Hintergrund nicht speichern \"%s\". Fahre trotzdem weiter."
@@ -1636,25 +1636,26 @@ msgstr ""
 "Konnte die benutzerdefinierte Toolbarkonfigurationsdatei nicht lesen: %s\n"
 "Es werden keine Toolbars zur Verfügung stehen"
 
-#: ../src/gui/MainWindow.cpp:654
+#: ../src/gui/MainWindow.cpp:649
 #, c-format
 msgid ", PDF Page %i"
 msgstr ", PDF Seite %i"
 
-#: ../src/gui/MainWindow.cpp:657
+#: ../src/gui/MainWindow.cpp:652
 #, c-format
 msgid "of %i%s"
 msgstr "von %i%s"
 
-#: ../src/gui/sidebar/Sidebar.cpp:89
-msgid "Bookmarks"
-msgstr "Lesezeichen"
-
-#: ../src/gui/sidebar/Sidebar.cpp:90
+#: ../src/gui/sidebar/previews/SidebarPreviews.cpp:133
 msgid "Preview"
 msgstr "Vorschau"
 
-#: ../src/gui/sidebar/Sidebar.cpp:205
+#: ../src/gui/sidebar/previews/SidebarPreviewPage.cpp:115
+#: ../src/gui/PageView.cpp:653
+msgid "Loading..."
+msgstr "Laden..."
+
+#: ../src/gui/sidebar/indextree/SidebarIndexPage.cpp:70
 #, c-format
 msgid ""
 "Your current document does not contain PDF Page %i\n"
@@ -1667,10 +1668,9 @@ msgstr ""
 "\n"
 "Tipp: Sie können im Menü Journal / Seitenhintergrund / PDF Hintergrund eine beliebige PDF Seite infügen."
 
-#: ../src/gui/sidebar/SidebarPreview.cpp:113
-#: ../src/gui/PageView.cpp:653
-msgid "Loading..."
-msgstr "Laden..."
+#: ../src/gui/sidebar/indextree/SidebarIndexPage.cpp:235
+msgid "Contents"
+msgstr "Inhalt"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:25
 msgid "No device"
@@ -1835,6 +1835,9 @@ msgstr ""
 #: ../src/view/PdfView.cpp:32
 msgid "PDF background missing"
 msgstr "PDF Hingergrund fehlt"
+
+#~ msgid "Bookmarks"
+#~ msgstr "Lesezeichen"
 
 #~ msgid "Goto page"
 #~ msgstr "Gehen zur Seite"

@@ -41,22 +41,22 @@ void Document::lock() {
 
 	g_mutex_lock(this->documentLock);
 
-//	if(tryLock()) {
-//		fprintf(stderr, "Locked by\n");
-//		Stacktrace::printStracktrace();
-//		fprintf(stderr, "\n\n\n\n");
-//	} else {
-//		g_mutex_lock(this->documentLock);
-//	}
+	//	if(tryLock()) {
+	//		fprintf(stderr, "Locked by\n");
+	//		Stacktrace::printStracktrace();
+	//		fprintf(stderr, "\n\n\n\n");
+	//	} else {
+	//		g_mutex_lock(this->documentLock);
+	//	}
 }
 
 void Document::unlock() {
 	XOJ_CHECK_TYPE(Document);
 	g_mutex_unlock(this->documentLock);
 
-//	fprintf(stderr, "Unlocked by\n");
-//	Stacktrace::printStracktrace();
-//	fprintf(stderr, "\n\n\n\n");
+	//	fprintf(stderr, "Unlocked by\n");
+	//	Stacktrace::printStracktrace();
+	//	fprintf(stderr, "\n\n\n\n");
 }
 
 bool Document::tryLock() {
@@ -236,7 +236,6 @@ void Document::buildContentsModel() {
 	}
 
 	this->contentsModel = (GtkTreeModel *) gtk_tree_store_new(4, G_TYPE_STRING, G_TYPE_OBJECT, G_TYPE_BOOLEAN, G_TYPE_STRING);
-	g_object_ref(this->contentsModel);
 	buildTreeContentsModel(NULL, iter);
 	delete iter;
 }
@@ -252,7 +251,7 @@ bool Document::fillPageLabels(GtkTreeModel * treeModel, GtkTreePath * path, GtkT
 
 	gtk_tree_model_get(treeModel, iter, DOCUMENT_LINKS_COLUMN_LINK, &link, -1);
 
-	if (!link) {
+	if (link == NULL) {
 		return false;
 	}
 
@@ -262,7 +261,7 @@ bool Document::fillPageLabels(GtkTreeModel * treeModel, GtkTreePath * path, GtkT
 	if (page != -1) {
 		pageLabel = g_strdup_printf("%i", page + 1);
 	}
-	gtk_tree_store_set(GTK_TREE_STORE (treeModel), iter, DOCUMENT_LINKS_COLUMN_PAGE_NUMBER, pageLabel, -1);
+	gtk_tree_store_set(GTK_TREE_STORE(treeModel), iter, DOCUMENT_LINKS_COLUMN_PAGE_NUMBER, pageLabel, -1);
 	g_free(pageLabel);
 
 	g_object_unref(link);
@@ -342,7 +341,7 @@ String Document::getLastErrorMsg() {
 void Document::deletePage(int pNr) {
 	XOJ_CHECK_TYPE(Document);
 
-	std::vector< PageRef >::iterator it;
+	std::vector<PageRef>::iterator it;
 
 	it = this->pages.begin() + pNr;
 	this->pages.erase(it);

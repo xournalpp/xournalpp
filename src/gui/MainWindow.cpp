@@ -309,11 +309,6 @@ void MainWindow::updateScrollbarSidebarPosition() {
 		}
 	}
 
-	Sidebar * sidebar = this->control->getSidebar();
-	if (sidebar) {
-		sidebar->setBackgroundWhite();
-	}
-
 	int divider = gtk_paned_get_position(GTK_PANED(panelMainContents));
 	bool sidebarRight = control->getSettings()->isSidebarOnRight();
 	if (sidebarRight == (gtk_paned_get_child2(GTK_PANED(panelMainContents)) == sidebarContents)) {

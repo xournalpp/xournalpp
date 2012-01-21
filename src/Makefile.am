@@ -78,8 +78,13 @@ xournalpp_SOURCES = \
 	gui/pageposition/PagePositionCache.cpp \
 	gui/pageposition/PagePositionHandler.cpp \
 	gui/pageposition/PageViewIndex.cpp \
+	gui/sidebar/AbstractSidebarPage.cpp \
 	gui/sidebar/Sidebar.cpp \
-	gui/sidebar/SidebarPreview.cpp \
+	gui/sidebar/indextree/SidebarIndexPage.cpp \
+	gui/sidebar/previews/SidebarLayout.cpp \
+	gui/sidebar/previews/SidebarPreviewPage.cpp \
+	gui/sidebar/previews/SidebarPreviews.cpp \
+	gui/sidebar/previews/SidebarToolbar.cpp \
 	gui/toolbarMenubar/model/ToolbarColorNames.cpp \
 	gui/toolbarMenubar/model/ToolbarData.cpp \
 	gui/toolbarMenubar/model/ToolbarEntry.cpp \

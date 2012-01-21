@@ -1,11 +1,13 @@
-#include "SidebarPreview.h"
-#include "Sidebar.h"
-#include "../Shadow.h"
-#include "../../view/PdfView.h"
-#include "../../control/Control.h"
+#include "SidebarPreviewPage.h"
+#include "SidebarPreviews.h"
+#include "../../Shadow.h"
+#include "../../../view/PdfView.h"
+#include "../../../control/Control.h"
 
-SidebarPreview::SidebarPreview(Sidebar * sidebar, PageRef page) {
-	XOJ_INIT_TYPE(SidebarPreview);
+// TODO: allow drag & drop reordering of pages
+
+SidebarPreviewPage::SidebarPreviewPage(SidebarPreviews * sidebar, PageRef page) {
+	XOJ_INIT_TYPE(SidebarPreviewPage);
 
 	this->widget = gtk_drawing_area_new();
 	gtk_widget_show(this->widget);
@@ -26,8 +28,8 @@ SidebarPreview::SidebarPreview(Sidebar * sidebar, PageRef page) {
 	g_signal_connect(this->widget, "button-press-event", G_CALLBACK(mouseButtonPressCallback), this);
 }
 
-SidebarPreview::~SidebarPreview() {
-	XOJ_CHECK_TYPE(SidebarPreview);
+SidebarPreviewPage::~SidebarPreviewPage() {
+	XOJ_CHECK_TYPE(SidebarPreviewPage);
 
 	this->sidebar->getControl()->getScheduler()->removeSidebar(this);
 	this->page = NULL;
@@ -42,25 +44,25 @@ SidebarPreview::~SidebarPreview() {
 	g_mutex_free(this->drawingMutex);
 	this->drawingMutex = NULL;
 
-	XOJ_RELEASE_TYPE(SidebarPreview);
+	XOJ_RELEASE_TYPE(SidebarPreviewPage);
 }
 
-gboolean SidebarPreview::exposeEventCallback(GtkWidget * widget, GdkEventExpose * event, SidebarPreview * preview) {
-	XOJ_CHECK_TYPE_OBJ(preview, SidebarPreview);
+gboolean SidebarPreviewPage::exposeEventCallback(GtkWidget * widget, GdkEventExpose * event, SidebarPreviewPage * preview) {
+	XOJ_CHECK_TYPE_OBJ(preview, SidebarPreviewPage);
 
 	preview->paint();
 	return true;
 }
 
-gboolean SidebarPreview::mouseButtonPressCallback(GtkWidget * widget, GdkEventButton * event, SidebarPreview * preview) {
-	XOJ_CHECK_TYPE_OBJ(preview, SidebarPreview);
+gboolean SidebarPreviewPage::mouseButtonPressCallback(GtkWidget * widget, GdkEventButton * event, SidebarPreviewPage * preview) {
+	XOJ_CHECK_TYPE_OBJ(preview, SidebarPreviewPage);
 
 	preview->sidebar->getControl()->getScrollHandler()->scrollToPage(preview->page);
 	return true;
 }
 
-void SidebarPreview::setSelected(bool selected) {
-	XOJ_CHECK_TYPE(SidebarPreview);
+void SidebarPreviewPage::setSelected(bool selected) {
+	XOJ_CHECK_TYPE(SidebarPreviewPage);
 
 	if (this->selected == selected) {
 		return;
@@ -70,14 +72,14 @@ void SidebarPreview::setSelected(bool selected) {
 	gtk_widget_queue_draw(this->widget);
 }
 
-void SidebarPreview::repaint() {
-	XOJ_CHECK_TYPE(SidebarPreview);
+void SidebarPreviewPage::repaint() {
+	XOJ_CHECK_TYPE(SidebarPreviewPage);
 
 	sidebar->getControl()->getScheduler()->addRepaintSidebar(this);
 }
 
-void SidebarPreview::paint() {
-	XOJ_CHECK_TYPE(SidebarPreview);
+void SidebarPreviewPage::paint() {
+	XOJ_CHECK_TYPE(SidebarPreviewPage);
 
 	sidebar->setBackgroundWhite();
 
@@ -155,26 +157,26 @@ void SidebarPreview::paint() {
 	g_mutex_unlock(this->drawingMutex);
 }
 
-void SidebarPreview::updateSize() {
-	XOJ_CHECK_TYPE(SidebarPreview);
+void SidebarPreviewPage::updateSize() {
+	XOJ_CHECK_TYPE(SidebarPreviewPage);
 
 	gtk_widget_set_size_request(this->widget, getWidth(), getHeight());
 }
 
-int SidebarPreview::getWidth() {
-	XOJ_CHECK_TYPE(SidebarPreview);
+int SidebarPreviewPage::getWidth() {
+	XOJ_CHECK_TYPE(SidebarPreviewPage);
 
 	return page.getWidth() * sidebar->getZoom() + Shadow::getShadowBottomRightSize() + Shadow::getShadowTopLeftSize() + 4;
 }
 
-int SidebarPreview::getHeight() {
-	XOJ_CHECK_TYPE(SidebarPreview);
+int SidebarPreviewPage::getHeight() {
+	XOJ_CHECK_TYPE(SidebarPreviewPage);
 
 	return page.getHeight() * sidebar->getZoom() + Shadow::getShadowBottomRightSize() + Shadow::getShadowTopLeftSize() + 4;
 }
 
-GtkWidget * SidebarPreview::getWidget() {
-	XOJ_CHECK_TYPE(SidebarPreview);
+GtkWidget * SidebarPreviewPage::getWidget() {
+	XOJ_CHECK_TYPE(SidebarPreviewPage);
 
 	return this->widget;
 }

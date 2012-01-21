@@ -1,7 +1,12 @@
 #include "Tool.h"
 
-Tool::Tool(String name, ToolType type, int color, bool enableColor, bool enableSize, bool enableRuler, bool enableShapreRecognizer, double * thickness) {
+// TODO: NEXT-RELEASE add fill tool
+// TODO: NEXT-RELEASE allow grouping
+// TODO: NEXT-RELEASE allow drag & drop of images and text
+// TODO LOW PRIO select object: best match instead of first match
+// TODO LOW PRIO: rouler every 90° latch
 
+Tool::Tool(String name, ToolType type, int color, bool enableColor, bool enableSize, bool enableRuler, bool enableShapreRecognizer, double * thickness) {
 	XOJ_INIT_TYPE(Tool);
 
 	this->name = name;

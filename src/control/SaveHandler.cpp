@@ -28,6 +28,8 @@
 #include <config.h>
 
 // TODO LOW PRIO: remove all elements which are complete outside the pages
+// TODO LOW PRIO: remove 0 width line parts
+// TODO NEXT-RELEASE: Save Shapes as shapes instead of lines
 
 SaveHandler::SaveHandler() {
 	XOJ_INIT_TYPE(SaveHandler);

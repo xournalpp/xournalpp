@@ -13,12 +13,13 @@
 #define __PREVIEWJOB_H__
 
 #include "Job.h"
-#include "../../gui/sidebar/SidebarPreview.h"
 #include <XournalType.h>
+
+class SidebarPreviewPage;
 
 class PreviewJob : public Job {
 public:
-	PreviewJob(SidebarPreview * sidebar);
+	PreviewJob(SidebarPreviewPage * sidebar);
 
 protected:
 	virtual ~PreviewJob();
@@ -33,7 +34,7 @@ public:
 private:
 	XOJ_TYPE_ATTRIB;
 
-	SidebarPreview * sidebarPreview;
+	SidebarPreviewPage * sidebarPreview;
 };
 
 #endif /* __PREVIEWJOB_H__ */

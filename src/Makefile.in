@@ -110,8 +110,13 @@ am__xournalpp_SOURCES_DIST = control/jobs/AutosaveJob.cpp \
 	gui/pageposition/PagePosition.cpp \
 	gui/pageposition/PagePositionCache.cpp \
 	gui/pageposition/PagePositionHandler.cpp \
-	gui/pageposition/PageViewIndex.cpp gui/sidebar/Sidebar.cpp \
-	gui/sidebar/SidebarPreview.cpp \
+	gui/pageposition/PageViewIndex.cpp \
+	gui/sidebar/AbstractSidebarPage.cpp gui/sidebar/Sidebar.cpp \
+	gui/sidebar/indextree/SidebarIndexPage.cpp \
+	gui/sidebar/previews/SidebarLayout.cpp \
+	gui/sidebar/previews/SidebarPreviewPage.cpp \
+	gui/sidebar/previews/SidebarPreviews.cpp \
+	gui/sidebar/previews/SidebarToolbar.cpp \
 	gui/toolbarMenubar/model/ToolbarColorNames.cpp \
 	gui/toolbarMenubar/model/ToolbarData.cpp \
 	gui/toolbarMenubar/model/ToolbarEntry.cpp \
@@ -238,8 +243,14 @@ am_xournalpp_OBJECTS = xournalpp-AutosaveJob.$(OBJEXT) \
 	xournalpp-PagePosition.$(OBJEXT) \
 	xournalpp-PagePositionCache.$(OBJEXT) \
 	xournalpp-PagePositionHandler.$(OBJEXT) \
-	xournalpp-PageViewIndex.$(OBJEXT) xournalpp-Sidebar.$(OBJEXT) \
-	xournalpp-SidebarPreview.$(OBJEXT) \
+	xournalpp-PageViewIndex.$(OBJEXT) \
+	xournalpp-AbstractSidebarPage.$(OBJEXT) \
+	xournalpp-Sidebar.$(OBJEXT) \
+	xournalpp-SidebarIndexPage.$(OBJEXT) \
+	xournalpp-SidebarLayout.$(OBJEXT) \
+	xournalpp-SidebarPreviewPage.$(OBJEXT) \
+	xournalpp-SidebarPreviews.$(OBJEXT) \
+	xournalpp-SidebarToolbar.$(OBJEXT) \
 	xournalpp-ToolbarColorNames.$(OBJEXT) \
 	xournalpp-ToolbarData.$(OBJEXT) \
 	xournalpp-ToolbarEntry.$(OBJEXT) \
@@ -587,8 +598,13 @@ xournalpp_SOURCES = control/jobs/AutosaveJob.cpp \
 	gui/pageposition/PagePosition.cpp \
 	gui/pageposition/PagePositionCache.cpp \
 	gui/pageposition/PagePositionHandler.cpp \
-	gui/pageposition/PageViewIndex.cpp gui/sidebar/Sidebar.cpp \
-	gui/sidebar/SidebarPreview.cpp \
+	gui/pageposition/PageViewIndex.cpp \
+	gui/sidebar/AbstractSidebarPage.cpp gui/sidebar/Sidebar.cpp \
+	gui/sidebar/indextree/SidebarIndexPage.cpp \
+	gui/sidebar/previews/SidebarLayout.cpp \
+	gui/sidebar/previews/SidebarPreviewPage.cpp \
+	gui/sidebar/previews/SidebarPreviews.cpp \
+	gui/sidebar/previews/SidebarToolbar.cpp \
 	gui/toolbarMenubar/model/ToolbarColorNames.cpp \
 	gui/toolbarMenubar/model/ToolbarData.cpp \
 	gui/toolbarMenubar/model/ToolbarEntry.cpp \
@@ -748,6 +764,7 @@ distclean-compile:
 
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-AboutDialog.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-AbstractItem.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-AbstractSidebarPage.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-AbstractToolItem.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-Actions.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-Attribute.Po@am__quote@
@@ -864,7 +881,11 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-ShapeRecognizer.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-ShapeRecognizerResult.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-Sidebar.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-SidebarPreview.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-SidebarIndexPage.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-SidebarLayout.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-SidebarPreviewPage.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-SidebarPreviews.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-SidebarToolbar.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-SizeUndoAction.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-SpinPageAdapter.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-Stroke.Po@am__quote@
@@ -1948,6 +1969,20 @@ xournalpp-PageViewIndex.obj: gui/pageposition/PageViewIndex.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-PageViewIndex.obj `if test -f 'gui/pageposition/PageViewIndex.cpp'; then $(CYGPATH_W) 'gui/pageposition/PageViewIndex.cpp'; else $(CYGPATH_W) '$(srcdir)/gui/pageposition/PageViewIndex.cpp'; fi`
 
+xournalpp-AbstractSidebarPage.o: gui/sidebar/AbstractSidebarPage.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-AbstractSidebarPage.o -MD -MP -MF $(DEPDIR)/xournalpp-AbstractSidebarPage.Tpo -c -o xournalpp-AbstractSidebarPage.o `test -f 'gui/sidebar/AbstractSidebarPage.cpp' || echo '$(srcdir)/'`gui/sidebar/AbstractSidebarPage.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-AbstractSidebarPage.Tpo $(DEPDIR)/xournalpp-AbstractSidebarPage.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='gui/sidebar/AbstractSidebarPage.cpp' object='xournalpp-AbstractSidebarPage.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-AbstractSidebarPage.o `test -f 'gui/sidebar/AbstractSidebarPage.cpp' || echo '$(srcdir)/'`gui/sidebar/AbstractSidebarPage.cpp
+
+xournalpp-AbstractSidebarPage.obj: gui/sidebar/AbstractSidebarPage.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-AbstractSidebarPage.obj -MD -MP -MF $(DEPDIR)/xournalpp-AbstractSidebarPage.Tpo -c -o xournalpp-AbstractSidebarPage.obj `if test -f 'gui/sidebar/AbstractSidebarPage.cpp'; then $(CYGPATH_W) 'gui/sidebar/AbstractSidebarPage.cpp'; else $(CYGPATH_W) '$(srcdir)/gui/sidebar/AbstractSidebarPage.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-AbstractSidebarPage.Tpo $(DEPDIR)/xournalpp-AbstractSidebarPage.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='gui/sidebar/AbstractSidebarPage.cpp' object='xournalpp-AbstractSidebarPage.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-AbstractSidebarPage.obj `if test -f 'gui/sidebar/AbstractSidebarPage.cpp'; then $(CYGPATH_W) 'gui/sidebar/AbstractSidebarPage.cpp'; else $(CYGPATH_W) '$(srcdir)/gui/sidebar/AbstractSidebarPage.cpp'; fi`
+
 xournalpp-Sidebar.o: gui/sidebar/Sidebar.cpp
 @am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-Sidebar.o -MD -MP -MF $(DEPDIR)/xournalpp-Sidebar.Tpo -c -o xournalpp-Sidebar.o `test -f 'gui/sidebar/Sidebar.cpp' || echo '$(srcdir)/'`gui/sidebar/Sidebar.cpp
 @am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-Sidebar.Tpo $(DEPDIR)/xournalpp-Sidebar.Po
@@ -1962,19 +1997,75 @@ xournalpp-Sidebar.obj: gui/sidebar/Sidebar.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-Sidebar.obj `if test -f 'gui/sidebar/Sidebar.cpp'; then $(CYGPATH_W) 'gui/sidebar/Sidebar.cpp'; else $(CYGPATH_W) '$(srcdir)/gui/sidebar/Sidebar.cpp'; fi`
 
-xournalpp-SidebarPreview.o: gui/sidebar/SidebarPreview.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-SidebarPreview.o -MD -MP -MF $(DEPDIR)/xournalpp-SidebarPreview.Tpo -c -o xournalpp-SidebarPreview.o `test -f 'gui/sidebar/SidebarPreview.cpp' || echo '$(srcdir)/'`gui/sidebar/SidebarPreview.cpp
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-SidebarPreview.Tpo $(DEPDIR)/xournalpp-SidebarPreview.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='gui/sidebar/SidebarPreview.cpp' object='xournalpp-SidebarPreview.o' libtool=no @AMDEPBACKSLASH@
+xournalpp-SidebarIndexPage.o: gui/sidebar/indextree/SidebarIndexPage.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-SidebarIndexPage.o -MD -MP -MF $(DEPDIR)/xournalpp-SidebarIndexPage.Tpo -c -o xournalpp-SidebarIndexPage.o `test -f 'gui/sidebar/indextree/SidebarIndexPage.cpp' || echo '$(srcdir)/'`gui/sidebar/indextree/SidebarIndexPage.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-SidebarIndexPage.Tpo $(DEPDIR)/xournalpp-SidebarIndexPage.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='gui/sidebar/indextree/SidebarIndexPage.cpp' object='xournalpp-SidebarIndexPage.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-SidebarPreview.o `test -f 'gui/sidebar/SidebarPreview.cpp' || echo '$(srcdir)/'`gui/sidebar/SidebarPreview.cpp
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-SidebarIndexPage.o `test -f 'gui/sidebar/indextree/SidebarIndexPage.cpp' || echo '$(srcdir)/'`gui/sidebar/indextree/SidebarIndexPage.cpp
 
-xournalpp-SidebarPreview.obj: gui/sidebar/SidebarPreview.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-SidebarPreview.obj -MD -MP -MF $(DEPDIR)/xournalpp-SidebarPreview.Tpo -c -o xournalpp-SidebarPreview.obj `if test -f 'gui/sidebar/SidebarPreview.cpp'; then $(CYGPATH_W) 'gui/sidebar/SidebarPreview.cpp'; else $(CYGPATH_W) '$(srcdir)/gui/sidebar/SidebarPreview.cpp'; fi`
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-SidebarPreview.Tpo $(DEPDIR)/xournalpp-SidebarPreview.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='gui/sidebar/SidebarPreview.cpp' object='xournalpp-SidebarPreview.obj' libtool=no @AMDEPBACKSLASH@
+xournalpp-SidebarIndexPage.obj: gui/sidebar/indextree/SidebarIndexPage.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-SidebarIndexPage.obj -MD -MP -MF $(DEPDIR)/xournalpp-SidebarIndexPage.Tpo -c -o xournalpp-SidebarIndexPage.obj `if test -f 'gui/sidebar/indextree/SidebarIndexPage.cpp'; then $(CYGPATH_W) 'gui/sidebar/indextree/SidebarIndexPage.cpp'; else $(CYGPATH_W) '$(srcdir)/gui/sidebar/indextree/SidebarIndexPage.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-SidebarIndexPage.Tpo $(DEPDIR)/xournalpp-SidebarIndexPage.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='gui/sidebar/indextree/SidebarIndexPage.cpp' object='xournalpp-SidebarIndexPage.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-SidebarPreview.obj `if test -f 'gui/sidebar/SidebarPreview.cpp'; then $(CYGPATH_W) 'gui/sidebar/SidebarPreview.cpp'; else $(CYGPATH_W) '$(srcdir)/gui/sidebar/SidebarPreview.cpp'; fi`
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-SidebarIndexPage.obj `if test -f 'gui/sidebar/indextree/SidebarIndexPage.cpp'; then $(CYGPATH_W) 'gui/sidebar/indextree/SidebarIndexPage.cpp'; else $(CYGPATH_W) '$(srcdir)/gui/sidebar/indextree/SidebarIndexPage.cpp'; fi`
+
+xournalpp-SidebarLayout.o: gui/sidebar/previews/SidebarLayout.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-SidebarLayout.o -MD -MP -MF $(DEPDIR)/xournalpp-SidebarLayout.Tpo -c -o xournalpp-SidebarLayout.o `test -f 'gui/sidebar/previews/SidebarLayout.cpp' || echo '$(srcdir)/'`gui/sidebar/previews/SidebarLayout.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-SidebarLayout.Tpo $(DEPDIR)/xournalpp-SidebarLayout.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='gui/sidebar/previews/SidebarLayout.cpp' object='xournalpp-SidebarLayout.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-SidebarLayout.o `test -f 'gui/sidebar/previews/SidebarLayout.cpp' || echo '$(srcdir)/'`gui/sidebar/previews/SidebarLayout.cpp
+
+xournalpp-SidebarLayout.obj: gui/sidebar/previews/SidebarLayout.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-SidebarLayout.obj -MD -MP -MF $(DEPDIR)/xournalpp-SidebarLayout.Tpo -c -o xournalpp-SidebarLayout.obj `if test -f 'gui/sidebar/previews/SidebarLayout.cpp'; then $(CYGPATH_W) 'gui/sidebar/previews/SidebarLayout.cpp'; else $(CYGPATH_W) '$(srcdir)/gui/sidebar/previews/SidebarLayout.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-SidebarLayout.Tpo $(DEPDIR)/xournalpp-SidebarLayout.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='gui/sidebar/previews/SidebarLayout.cpp' object='xournalpp-SidebarLayout.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-SidebarLayout.obj `if test -f 'gui/sidebar/previews/SidebarLayout.cpp'; then $(CYGPATH_W) 'gui/sidebar/previews/SidebarLayout.cpp'; else $(CYGPATH_W) '$(srcdir)/gui/sidebar/previews/SidebarLayout.cpp'; fi`
+
+xournalpp-SidebarPreviewPage.o: gui/sidebar/previews/SidebarPreviewPage.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-SidebarPreviewPage.o -MD -MP -MF $(DEPDIR)/xournalpp-SidebarPreviewPage.Tpo -c -o xournalpp-SidebarPreviewPage.o `test -f 'gui/sidebar/previews/SidebarPreviewPage.cpp' || echo '$(srcdir)/'`gui/sidebar/previews/SidebarPreviewPage.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-SidebarPreviewPage.Tpo $(DEPDIR)/xournalpp-SidebarPreviewPage.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='gui/sidebar/previews/SidebarPreviewPage.cpp' object='xournalpp-SidebarPreviewPage.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-SidebarPreviewPage.o `test -f 'gui/sidebar/previews/SidebarPreviewPage.cpp' || echo '$(srcdir)/'`gui/sidebar/previews/SidebarPreviewPage.cpp
+
+xournalpp-SidebarPreviewPage.obj: gui/sidebar/previews/SidebarPreviewPage.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-SidebarPreviewPage.obj -MD -MP -MF $(DEPDIR)/xournalpp-SidebarPreviewPage.Tpo -c -o xournalpp-SidebarPreviewPage.obj `if test -f 'gui/sidebar/previews/SidebarPreviewPage.cpp'; then $(CYGPATH_W) 'gui/sidebar/previews/SidebarPreviewPage.cpp'; else $(CYGPATH_W) '$(srcdir)/gui/sidebar/previews/SidebarPreviewPage.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-SidebarPreviewPage.Tpo $(DEPDIR)/xournalpp-SidebarPreviewPage.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='gui/sidebar/previews/SidebarPreviewPage.cpp' object='xournalpp-SidebarPreviewPage.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-SidebarPreviewPage.obj `if test -f 'gui/sidebar/previews/SidebarPreviewPage.cpp'; then $(CYGPATH_W) 'gui/sidebar/previews/SidebarPreviewPage.cpp'; else $(CYGPATH_W) '$(srcdir)/gui/sidebar/previews/SidebarPreviewPage.cpp'; fi`
+
+xournalpp-SidebarPreviews.o: gui/sidebar/previews/SidebarPreviews.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-SidebarPreviews.o -MD -MP -MF $(DEPDIR)/xournalpp-SidebarPreviews.Tpo -c -o xournalpp-SidebarPreviews.o `test -f 'gui/sidebar/previews/SidebarPreviews.cpp' || echo '$(srcdir)/'`gui/sidebar/previews/SidebarPreviews.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-SidebarPreviews.Tpo $(DEPDIR)/xournalpp-SidebarPreviews.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='gui/sidebar/previews/SidebarPreviews.cpp' object='xournalpp-SidebarPreviews.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-SidebarPreviews.o `test -f 'gui/sidebar/previews/SidebarPreviews.cpp' || echo '$(srcdir)/'`gui/sidebar/previews/SidebarPreviews.cpp
+
+xournalpp-SidebarPreviews.obj: gui/sidebar/previews/SidebarPreviews.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-SidebarPreviews.obj -MD -MP -MF $(DEPDIR)/xournalpp-SidebarPreviews.Tpo -c -o xournalpp-SidebarPreviews.obj `if test -f 'gui/sidebar/previews/SidebarPreviews.cpp'; then $(CYGPATH_W) 'gui/sidebar/previews/SidebarPreviews.cpp'; else $(CYGPATH_W) '$(srcdir)/gui/sidebar/previews/SidebarPreviews.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-SidebarPreviews.Tpo $(DEPDIR)/xournalpp-SidebarPreviews.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='gui/sidebar/previews/SidebarPreviews.cpp' object='xournalpp-SidebarPreviews.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-SidebarPreviews.obj `if test -f 'gui/sidebar/previews/SidebarPreviews.cpp'; then $(CYGPATH_W) 'gui/sidebar/previews/SidebarPreviews.cpp'; else $(CYGPATH_W) '$(srcdir)/gui/sidebar/previews/SidebarPreviews.cpp'; fi`
+
+xournalpp-SidebarToolbar.o: gui/sidebar/previews/SidebarToolbar.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-SidebarToolbar.o -MD -MP -MF $(DEPDIR)/xournalpp-SidebarToolbar.Tpo -c -o xournalpp-SidebarToolbar.o `test -f 'gui/sidebar/previews/SidebarToolbar.cpp' || echo '$(srcdir)/'`gui/sidebar/previews/SidebarToolbar.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-SidebarToolbar.Tpo $(DEPDIR)/xournalpp-SidebarToolbar.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='gui/sidebar/previews/SidebarToolbar.cpp' object='xournalpp-SidebarToolbar.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-SidebarToolbar.o `test -f 'gui/sidebar/previews/SidebarToolbar.cpp' || echo '$(srcdir)/'`gui/sidebar/previews/SidebarToolbar.cpp
+
+xournalpp-SidebarToolbar.obj: gui/sidebar/previews/SidebarToolbar.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-SidebarToolbar.obj -MD -MP -MF $(DEPDIR)/xournalpp-SidebarToolbar.Tpo -c -o xournalpp-SidebarToolbar.obj `if test -f 'gui/sidebar/previews/SidebarToolbar.cpp'; then $(CYGPATH_W) 'gui/sidebar/previews/SidebarToolbar.cpp'; else $(CYGPATH_W) '$(srcdir)/gui/sidebar/previews/SidebarToolbar.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-SidebarToolbar.Tpo $(DEPDIR)/xournalpp-SidebarToolbar.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='gui/sidebar/previews/SidebarToolbar.cpp' object='xournalpp-SidebarToolbar.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-SidebarToolbar.obj `if test -f 'gui/sidebar/previews/SidebarToolbar.cpp'; then $(CYGPATH_W) 'gui/sidebar/previews/SidebarToolbar.cpp'; else $(CYGPATH_W) '$(srcdir)/gui/sidebar/previews/SidebarToolbar.cpp'; fi`
 
 xournalpp-ToolbarColorNames.o: gui/toolbarMenubar/model/ToolbarColorNames.cpp
 @am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-ToolbarColorNames.o -MD -MP -MF $(DEPDIR)/xournalpp-ToolbarColorNames.Tpo -c -o xournalpp-ToolbarColorNames.o `test -f 'gui/toolbarMenubar/model/ToolbarColorNames.cpp' || echo '$(srcdir)/'`gui/toolbarMenubar/model/ToolbarColorNames.cpp
