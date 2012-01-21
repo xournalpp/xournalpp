@@ -43,6 +43,11 @@ public:
 	virtual const char * getName() = 0;
 
 	/**
+	 * The name of this sidebar page
+	 */
+	virtual const char * getIconName() = 0;
+
+	/**
 	 * If this sidebar page has data for the current document, e.g. if there are bookmarks or not
 	 */
 	virtual bool hasData() = 0;
@@ -75,6 +80,12 @@ protected:
 	 * The Control of the Application
 	 */
 	Control * control;
+
+public:
+	/**
+	 * The Sidebar button
+	 */
+	GtkToolItem * tabButton;
 
 };
 

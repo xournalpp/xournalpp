@@ -34,6 +34,11 @@ public:
 	/**
 	 * @overwrite
 	 */
+	virtual const char * getIconName();
+
+	/**
+	 * @overwrite
+	 */
 	virtual bool hasData();
 
 	/**

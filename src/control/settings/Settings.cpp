@@ -66,6 +66,8 @@ void Settings::loadDefault() {
 	this->mainWndHeight = 600;
 
 	this->showSidebar = true;
+	this->sidebarWidth = 150;
+
 	this->sidebarOnRight = false;
 
 	this->scrollbarOnLeft = false;
@@ -243,6 +245,8 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
 		this->maximized = xmlStrcmp(value, (const xmlChar *) "true") ? false : true;
 	} else if (xmlStrcmp(name, (const xmlChar *) "showSidebar") == 0) {
 		this->showSidebar = xmlStrcmp(value, (const xmlChar *) "true") ? false : true;
+	} else if (xmlStrcmp(name, (const xmlChar *) "sidebarWidth") == 0) {
+		this->sidebarWidth = g_ascii_strtoll((const char *) value, NULL, 10);
 	} else if (xmlStrcmp(name, (const xmlChar *) "widthMinimumMultiplier") == 0) {
 		this->widthMinimumMultiplier = g_ascii_strtod((const char *) value, NULL);
 	} else if (xmlStrcmp(name, (const xmlChar *) "widthMaximumMultiplier") == 0) {
@@ -564,6 +568,8 @@ void Settings::save() {
 	WRITE_BOOL_PROP(maximized);
 
 	WRITE_BOOL_PROP(showSidebar);
+	WRITE_INT_PROP(sidebarWidth);
+
 	WRITE_BOOL_PROP(sidebarOnRight);
 	WRITE_BOOL_PROP(scrollbarOnLeft);
 	WRITE_BOOL_PROP(showTwoPages);
@@ -1005,6 +1011,22 @@ void Settings::setSidebarVisible(bool visible) {
 		return;
 	}
 	this->showSidebar = visible;
+	saveTimeout();
+}
+
+int Settings::getSidebarWidth() {
+	XOJ_CHECK_TYPE(Settings);
+
+	return this->sidebarWidth;
+}
+
+void Settings::setSidebarWidth(int width) {
+	XOJ_CHECK_TYPE(Settings);
+
+	if (this->sidebarWidth == width) {
+		return;
+	}
+	this->sidebarWidth = width;
 	saveTimeout();
 }
 

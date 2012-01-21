@@ -143,6 +143,12 @@ const char * SidebarPreviews::getName() {
 	return _("Preview");
 }
 
+const char * SidebarPreviews::getIconName() {
+	XOJ_CHECK_TYPE(SidebarPreviews);
+
+	return "sidebar_previews.png";
+}
+
 bool SidebarPreviews::hasData() {
 	XOJ_CHECK_TYPE(SidebarPreviews);
 

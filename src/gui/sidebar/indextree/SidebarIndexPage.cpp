@@ -9,7 +9,7 @@
 SidebarIndexPage::SidebarIndexPage(Control * control) : AbstractSidebarPage(control) {
 	XOJ_INIT_TYPE(SidebarIndexPage);
 
-	this->searchTimeout = NULL;
+	this->searchTimeout = 0;
 	this->hasContents = false;
 
 	this->treeViewBookmarks = gtk_tree_view_new();
@@ -233,6 +233,12 @@ const char * SidebarIndexPage::getName() {
 	XOJ_CHECK_TYPE(SidebarIndexPage);
 
 	return _("Contents");
+}
+
+const char * SidebarIndexPage::getIconName() {
+	XOJ_CHECK_TYPE(SidebarIndexPage);
+
+	return "sidebar_index.png";
 }
 
 bool SidebarIndexPage::hasData() {

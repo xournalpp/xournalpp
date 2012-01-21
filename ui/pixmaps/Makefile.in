@@ -248,6 +248,9 @@ pixmap_DATA = \
 	ruler.png \
 	shape_recognizer.png \
 	showtwopages.png \
+	sidebar_bookmarks.svg \
+	sidebar_index.png \
+	sidebar_previews.png \
 	stretch.png \
 	thickness_medium.png \
 	thickness_thick.png \

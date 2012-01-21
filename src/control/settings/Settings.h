@@ -206,6 +206,9 @@ public:
 	bool isSidebarVisible();
 	void setSidebarVisible(bool visible);
 
+	int getSidebarWidth();
+	void setSidebarWidth(int width);
+
 	bool isSidebarOnRight();
 	void setSidebarOnRight(bool right);
 
@@ -325,6 +328,11 @@ private:
 	 * If the sidebar is visible
 	 */
 	bool showSidebar;
+
+	/**
+	 * The Width of the Sidebar
+	 */
+	int sidebarWidth;
 
 	/**
 	 * If the sidebar is on the right

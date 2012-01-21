@@ -1258,7 +1258,7 @@
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <child>
-                          <widget class="GtkComboBox" id="cbSelectSidebar">
+                          <widget class="GtkToolbar" id="tbSelectSidebarPage">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
                           </widget>

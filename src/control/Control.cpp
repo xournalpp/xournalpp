@@ -236,6 +236,12 @@ void Control::saveSettings() {
 		this->settings->setMainWndSize(width, height);
 	}
 	this->settings->setMainWndMaximized(this->win->isMaximized());
+
+	GtkWidget * sidebar = this->win->get("sidebarContents");
+	GtkAllocation alloc;
+	gtk_widget_get_allocation(sidebar, &alloc);
+
+	this->settings->setSidebarWidth(alloc.width);
 }
 
 void Control::initWindow(MainWindow * win) {

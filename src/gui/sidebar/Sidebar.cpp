@@ -17,51 +17,41 @@ Sidebar::Sidebar(GladeGui * gui, Control * control) {
 
 	this->control = control;
 	this->pages = NULL;
-	this->comboBox = GTK_COMBO_BOX(gui->get("cbSelectSidebar"));
+	this->tbSelectPage = GTK_TOOLBAR(gui->get("tbSelectSidebarPage"));
 	this->buttonCloseSidebar = gui->get("buttonCloseSidebar");
 	this->visiblePage = NULL;
 
 	GtkWidget * sidebar = gui->get("sidebarContents");
 
-	this->initPages(sidebar);
+	gtk_widget_set_size_request(sidebar, control->getSettings()->getSidebarWidth(), 100);
+
+	this->initPages(sidebar, gui);
 
 	gtk_widget_set_visible(GTK_WIDGET(sidebar), control->getSettings()->isSidebarVisible());
+
+	registerListener(control);
 }
 
-void Sidebar::initPages(GtkWidget * sidebar) {
+void Sidebar::initPages(GtkWidget * sidebar, GladeGui * gui) {
 	XOJ_CHECK_TYPE(Sidebar);
 
 	addPage(new SidebarIndexPage(this->control));
 	addPage(new SidebarPreviews(this->control));
 
-	// Init combobox with names
-
-	GtkListStore * store = gtk_list_store_new(1, G_TYPE_STRING);
-	gtk_combo_box_set_model(this->comboBox, GTK_TREE_MODEL(store));
-	g_object_unref(store);
-
-	GtkCellRenderer * cell = gtk_cell_renderer_text_new();
-	gtk_cell_layout_pack_start(GTK_CELL_LAYOUT(this->comboBox), cell, TRUE);
-	gtk_cell_layout_set_attributes(GTK_CELL_LAYOUT(this->comboBox), cell, "text", 0, NULL);
-
-	int selected = -1;
-	GtkWidget * selectedWidget = NULL;
+	// Init toolbar with icons
 
 	int i = 0;
 	for (GList * l = this->pages; l != NULL; l = l->next) {
 		AbstractSidebarPage * p = (AbstractSidebarPage *) l->data;
+		GtkToolItem * it = gtk_toggle_tool_button_new();
+		p->tabButton = it;
 
-		gtk_combo_box_append_text(comboBox, p->getName());
+		gtk_tool_button_set_icon_widget(GTK_TOOL_BUTTON(it), gui->loadIcon(p->getIconName()));
+		g_signal_connect(it, "clicked", G_CALLBACK(&buttonClicked), new SidebarPageButton(this, i, p));
+		gtk_tool_item_set_tooltip_text(it, p->getName());
+		gtk_tool_button_set_label(GTK_TOOL_BUTTON(it), p->getName());
 
-		if (selectedWidget == NULL) {
-			selectedWidget = p->getWidget();
-		}
-
-		if (p->hasData() && selected == -1) {
-			// first entry with data
-			selected = i;
-			selectedWidget = p->getWidget();
-		}
+		gtk_toolbar_insert(tbSelectPage, it, -1);
 
 		// Add widget to sidebar
 		gtk_box_pack_start(GTK_BOX(sidebar), p->getWidget(), TRUE, TRUE, 0);
@@ -69,16 +59,21 @@ void Sidebar::initPages(GtkWidget * sidebar) {
 		i++;
 	}
 
-	if (selected < 0) {
-		selected = 0;
+	gtk_widget_show_all(GTK_WIDGET(this->tbSelectPage));
+
+	updateEnableDisableButtons();
+}
+
+void Sidebar::buttonClicked(GtkToolButton * toolbutton, SidebarPageButton * buttonData) {
+	XOJ_CHECK_TYPE_OBJ(buttonData->sidebar, Sidebar);
+
+	if (gtk_toggle_tool_button_get_active(GTK_TOGGLE_TOOL_BUTTON(toolbutton))) {
+		if (buttonData->sidebar->visiblePage != buttonData->page->getWidget()) {
+			buttonData->sidebar->setSelectedPage(buttonData->index);
+		}
+	} else if (buttonData->sidebar->visiblePage == buttonData->page->getWidget()) {
+		gtk_toggle_tool_button_set_active(GTK_TOGGLE_TOOL_BUTTON(toolbutton), true);
 	}
-
-	gtk_widget_show(selectedWidget);
-	this->visiblePage = selectedWidget;
-
-	gtk_combo_box_set_active(this->comboBox, selected);
-
-	g_signal_connect(this->comboBox, "changed", G_CALLBACK(cbChangedCallback), this);
 }
 
 void Sidebar::addPage(AbstractSidebarPage * page) {
@@ -96,7 +91,6 @@ Sidebar::~Sidebar() {
 		AbstractSidebarPage * p = (AbstractSidebarPage *) l->data;
 		delete p;
 	}
-
 	g_list_free(this->pages);
 	this->pages = NULL;
 
@@ -112,25 +106,56 @@ void Sidebar::selectPageNr(int page, int pdfPage) {
 	}
 }
 
-void Sidebar::cbChangedCallback(GtkComboBox * widget, Sidebar * sidebar) {
-	XOJ_CHECK_TYPE_OBJ(sidebar, Sidebar);
+void Sidebar::setSelectedPage(int page) {
+	int i = 0;
 
-	int selected = gtk_combo_box_get_active(widget);
+	AbstractSidebarPage * currentPage = (AbstractSidebarPage *)g_list_nth(this->pages, page)->data;
+	this->visiblePage = currentPage->getWidget();
 
-	gtk_widget_hide(sidebar->visiblePage);
+	for (GList * l = this->pages; l != NULL; l = l->next) {
+		AbstractSidebarPage * p = (AbstractSidebarPage *) l->data;
 
-	GList * entry = g_list_nth(sidebar->pages, selected);
-	if (entry) {
-		AbstractSidebarPage * page = (AbstractSidebarPage *) entry->data;
-		sidebar->visiblePage = page->getWidget();
-		gtk_widget_show(sidebar->visiblePage);
+		if(page == i) {
+			gtk_widget_show(p->getWidget());
+			gtk_toggle_tool_button_set_active(GTK_TOGGLE_TOOL_BUTTON(p->tabButton), true);
+		} else {
+			gtk_widget_hide(p->getWidget());
+			gtk_toggle_tool_button_set_active(GTK_TOGGLE_TOOL_BUTTON(p->tabButton), false);
+		}
+
+		i++;
 	}
+}
+
+void Sidebar::updateEnableDisableButtons() {
+	int i = 0;
+	int selected = -1;
+
+
+	printf("updateEnableDisableButtons()\n");
+
+	for (GList * l = this->pages; l != NULL; l = l->next) {
+		AbstractSidebarPage * p = (AbstractSidebarPage *) l->data;
+
+		gtk_widget_set_sensitive(GTK_WIDGET(p->tabButton), p->hasData());
+
+		printf("XX %i = %i\n", i, p->hasData());
+
+		if(p->hasData() && selected == -1) {
+			selected = i;
+		}
+
+		i++;
+	}
+
+	setSelectedPage(selected);
 }
 
 void Sidebar::setTmpDisabled(bool disabled) {
 	XOJ_CHECK_TYPE(Sidebar);
 
 	gtk_widget_set_sensitive(this->buttonCloseSidebar, !disabled);
+	gtk_widget_set_sensitive(GTK_WIDGET(this->tbSelectPage), !disabled);
 
 	for (GList * l = this->pages; l != NULL; l = l->next) {
 		AbstractSidebarPage * p = (AbstractSidebarPage *) l->data;
@@ -144,5 +169,26 @@ Control * Sidebar::getControl() {
 	XOJ_CHECK_TYPE(Sidebar);
 
 	return this->control;
+}
+
+void Sidebar::documentChanged(DocumentChangeType type) {
+	XOJ_CHECK_TYPE(Sidebar);
+
+	if(type == DOCUMENT_CHANGE_CLEARED || type == DOCUMENT_CHANGE_COMPLETE || type == DOCUMENT_CHANGE_PDF_BOOKMARKS) {
+		updateEnableDisableButtons();
+	}
+}
+
+void Sidebar::pageSizeChanged(int page) {}
+void Sidebar::pageChanged(int page) {}
+void Sidebar::pageInserted(int page) {}
+void Sidebar::pageDeleted(int page) {}
+void Sidebar::pageSelected(int page) {}
+
+
+SidebarPageButton::SidebarPageButton(Sidebar * sidebar, int index, AbstractSidebarPage * page) {
+	this->sidebar = sidebar;
+	this->index = index;
+	this->page = page;
 }
 

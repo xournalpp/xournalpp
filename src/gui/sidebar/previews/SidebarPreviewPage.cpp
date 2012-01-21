@@ -58,6 +58,7 @@ gboolean SidebarPreviewPage::mouseButtonPressCallback(GtkWidget * widget, GdkEve
 	XOJ_CHECK_TYPE_OBJ(preview, SidebarPreviewPage);
 
 	preview->sidebar->getControl()->getScrollHandler()->scrollToPage(preview->page);
+	preview->sidebar->getControl()->firePageSelected(preview->page);
 	return true;
 }
 

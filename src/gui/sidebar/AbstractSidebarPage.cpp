@@ -4,6 +4,7 @@ AbstractSidebarPage::AbstractSidebarPage(Control * control) {
 	XOJ_INIT_TYPE(AbstractSidebarPage);
 
 	this->control = control;
+	this->tabButton = NULL;
 }
 
 AbstractSidebarPage::~AbstractSidebarPage() {
