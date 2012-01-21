@@ -41,16 +41,17 @@ void Layout::scrolled(Scrollbar * scrollbar) {
  * Check which page should be selected
  */
 void Layout::checkSelectedPage() {
-	// TODO: LOW PRIO, select the horizontal most visible page
-
 
 	GtkAllocation allocation = { 0 };
 	gtk_widget_get_allocation(this->view->getWidget(), &allocation);
 
 	int scrollY = this->scrollVertical->getValue();
+	int scrollX = this->scrollHorizontal->getValue();
+
 	Control * control = this->view->getControl();
 
 	int viewHeight = allocation.height;
+	int viewWidth = allocation.width;
 	bool twoPages = control->getSettings()->isShowTwoPages();
 
 	if (scrollY < 1) {
@@ -71,8 +72,10 @@ void Layout::checkSelectedPage() {
 	for (int page = 0; page < this->view->viewPagesLen; page++) {
 		PageView * p = this->view->viewPages[page];
 		int y = p->getY();
+		int x = p->getX();
 
 		int pageHeight = p->getDisplayHeight();
+		int pageWidth = p->getDisplayWidth();
 
 		if (y > scrollY + viewHeight) {
 			p->setIsVisibel(false);
@@ -93,7 +96,19 @@ void Layout::checkSelectedPage() {
 				endY = pageHeight - ((y + pageHeight) - (scrollY + viewHeight));
 			}
 
+			int startX = 0;
+			int endX = pageWidth;
+
+			if (x <= scrollX) {
+				startX = scrollX - x;
+			}
+			if (x + pageWidth > scrollX + viewWidth) {
+				endX = pageWidth - ((y + pageWidth) - (scrollX + viewWidth));
+			}
+
+
 			double percent = ((double) (endY - startY)) / ((double) pageHeight);
+			percent *= ((double) (endX - startX)) / ((double) pageWidth);
 
 			if (percent > mostPagePercent) {
 				mostPagePercent = percent;

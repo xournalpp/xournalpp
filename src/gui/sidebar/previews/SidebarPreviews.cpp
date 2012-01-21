@@ -3,6 +3,7 @@
 
 #include "../../../control/Control.h"
 #include "../../../control/PdfCache.h"
+#include "SidebarLayout.h"
 
 SidebarPreviews::SidebarPreviews(Control * control) :
 	AbstractSidebarPage(control) {
@@ -11,6 +12,8 @@ SidebarPreviews::SidebarPreviews(Control * control) :
 	this->previews = NULL;
 	this->previewCount = 0;
 	this->backgroundInitialized = false;
+
+	this->layoutmanager = new SidebarLayout();
 
 	this->zoom = 0.15;
 
@@ -32,6 +35,8 @@ SidebarPreviews::SidebarPreviews(Control * control) :
 	gtk_widget_show(this->iconViewPreview);
 
 	registerListener(this->control);
+
+	g_signal_connect(this->scrollPreview, "size-allocate", G_CALLBACK(sizeChanged), this);
 }
 
 SidebarPreviews::~SidebarPreviews() {
@@ -43,6 +48,9 @@ SidebarPreviews::~SidebarPreviews() {
 	delete this->cache;
 	this->cache = NULL;
 
+	delete this->layoutmanager;
+	this->layoutmanager = NULL;
+
 	for (int i = 0; i < this->previewCount; i++) {
 		delete this->previews[i];
 	}
@@ -51,6 +59,21 @@ SidebarPreviews::~SidebarPreviews() {
 	this->previews = NULL;
 
 	XOJ_RELEASE_TYPE(SidebarPreviews);
+}
+
+void SidebarPreviews::sizeChanged(GtkWidget * widget, GtkAllocation * allocation, SidebarPreviews * sidebar) {
+	XOJ_CHECK_TYPE_OBJ(sidebar, SidebarPreviews);
+
+	static int lastWidth = -1;
+
+	if(lastWidth == -1) {
+		lastWidth = allocation->width;
+	}
+
+	if(ABS(lastWidth - allocation->width) > 20) {
+		sidebar->layout();
+		lastWidth = allocation->width;
+	}
 }
 
 void SidebarPreviews::setBackgroundWhite() {
@@ -79,20 +102,7 @@ PdfCache * SidebarPreviews::getCache() {
 void SidebarPreviews::layout() {
 	XOJ_CHECK_TYPE(SidebarPreviews);
 
-	// TODO !!! extract layouting to class SidebarLayout
-
-	int x = 0;
-	int y = 0;
-	int width = 0;
-
-	for (int i = 0; i < this->previewCount; i++) {
-		SidebarPreviewPage * p = this->previews[i];
-		gtk_layout_move(GTK_LAYOUT(this->iconViewPreview), p->getWidget(), x, y);
-		y += p->getHeight();
-		width = MAX(width, p->getWidth());
-	}
-
-	gtk_layout_set_size(GTK_LAYOUT(this->iconViewPreview), width, y);
+	this->layoutmanager->layout(this);
 }
 
 void SidebarPreviews::updatePreviews() {

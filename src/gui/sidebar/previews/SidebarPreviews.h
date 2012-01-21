@@ -19,6 +19,7 @@
 
 class SidebarPreviewPage;
 class PdfCache;
+class SidebarLayout;
 
 class SidebarPreviews : public AbstractSidebarPage {
 public:
@@ -81,6 +82,10 @@ private:
 	 */
 	static bool scrollToPreview(SidebarPreviews * sidebar);
 
+	/**
+	 * The size of the sidebar has chnaged
+	 */
+	static void sizeChanged(GtkWidget * widget, GtkAllocation * allocation, SidebarPreviews * sidebar);
 private:
 	XOJ_TYPE_ATTRIB;
 
@@ -120,6 +125,13 @@ private:
 	 */
 	PdfCache * cache;
 
+	/**
+	 * The layouting class for the prviews
+	 */
+	SidebarLayout * layoutmanager;
+
+
+	friend class SidebarLayout;
 };
 
 #endif /* __SIDEBARPREVIEWS_H__ */
