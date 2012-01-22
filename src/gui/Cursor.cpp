@@ -20,6 +20,8 @@ Cursor::Cursor(Control * control) {
 	this->invisible = false;
 	this->selectionType = CURSOR_SELECTION_NONE;
 	this->insidePage = false;
+
+	this->mouseDown = false;
 }
 
 Cursor::~Cursor() {

@@ -33,6 +33,8 @@ Scheduler::Scheduler() {
 	this->thread = NULL;
 
 	this->blockRenderZoomTime = NULL;
+
+	this->jobRenderThreadTimerId = 0;
 }
 
 Scheduler::~Scheduler() {

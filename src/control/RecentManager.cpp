@@ -327,9 +327,10 @@ void RecentManager::recentsMenuActivateCallback(GtkAction * action, RecentManage
 
 	const char * uri = gtk_recent_info_get_uri(info);
 	recentManager->openRecent(uri);
+	gtk_recent_info_unref(info);
 }
 
-void RecentManager::addRecentMenu(GtkRecentInfo *info, int i) {
+void RecentManager::addRecentMenu(GtkRecentInfo * info, int i) {
 	XOJ_CHECK_TYPE(RecentManager);
 
 	gchar * label = NULL;

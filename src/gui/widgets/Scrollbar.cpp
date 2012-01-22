@@ -25,8 +25,9 @@ Scrollbar::Scrollbar(bool horizontal) {
 
 	gtk_adjustment_set_step_increment(this->adj, 20);
 
+	this->value = 50;
 	this->setMax(100);
-	this->setValue(50);
+	this->setValue(this->value);
 
 	g_signal_connect(this->adj, "value-changed", G_CALLBACK(scrolled), this);
 }

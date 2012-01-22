@@ -1,0 +1,1 @@
+G_SLIgc-friendly valgrind --tool=memcheck --leak-check=full --leak-resolution=high --num-callers=20 --track-origins=yes --log-file=vgdump --suppressions=gtk.suppression ./src/xournalpp -w

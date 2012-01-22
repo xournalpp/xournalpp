@@ -55,7 +55,11 @@ GtkWidget * GladeGui::loadIcon(const char * filename) {
 		return gtk_image_new();
 	}
 
-	return gtk_image_new_from_pixbuf(icon);
+	GtkWidget * w = gtk_image_new_from_pixbuf(icon);
+
+	g_object_unref(icon);
+
+	return w;
 }
 
 GdkPixbuf * GladeGui::loadIconPixbuf(const char * filename) {

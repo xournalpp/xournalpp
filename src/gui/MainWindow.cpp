@@ -491,9 +491,6 @@ void MainWindow::setControlTmpDisabled(bool disabled) {
 
 	GtkWidget * menuFileRecent = get("menuFileRecent");
 	gtk_widget_set_sensitive(menuFileRecent, !disabled);
-
-	GtkWidget * w = get("cbSelectSidebar");
-	gtk_widget_set_sensitive(w, !disabled);
 }
 
 void MainWindow::updateToolbarMenu() {
