@@ -4,6 +4,7 @@
 #include "../../../control/Control.h"
 #include "../../../control/PdfCache.h"
 #include "SidebarLayout.h"
+#include "SidebarToolbar.h"
 
 SidebarPreviews::SidebarPreviews(Control * control) :
 	AbstractSidebarPage(control) {
@@ -14,6 +15,7 @@ SidebarPreviews::SidebarPreviews(Control * control) :
 	this->backgroundInitialized = false;
 
 	this->layoutmanager = new SidebarLayout();
+	this->toolbar = new SidebarToolbar(control);
 
 	this->zoom = 0.15;
 
@@ -31,12 +33,19 @@ SidebarPreviews::SidebarPreviews(Control * control) :
 	gtk_scrolled_window_set_shadow_type(GTK_SCROLLED_WINDOW(this->scrollPreview), GTK_SHADOW_IN);
 
 	gtk_container_add(GTK_CONTAINER(this->scrollPreview), this->iconViewPreview);
+	gtk_widget_show(this->scrollPreview);
 
 	gtk_widget_show(this->iconViewPreview);
 
 	registerListener(this->control);
 
 	g_signal_connect(this->scrollPreview, "size-allocate", G_CALLBACK(sizeChanged), this);
+
+	this->table = GTK_TABLE(gtk_table_new(2, 1, false));
+	g_object_ref(this->table);
+
+	gtk_table_attach(this->table, this->scrollPreview, 0, 1, 0, 1, (GtkAttachOptions) (GTK_FILL | GTK_EXPAND), (GtkAttachOptions) (GTK_FILL | GTK_EXPAND), 0, 0);
+	gtk_table_attach(this->table, this->toolbar->getWidget(), 0, 1, 1, 2, (GtkAttachOptions) (GTK_FILL | GTK_EXPAND), GTK_FILL, 0, 0);
 }
 
 SidebarPreviews::~SidebarPreviews() {
@@ -50,6 +59,11 @@ SidebarPreviews::~SidebarPreviews() {
 
 	delete this->layoutmanager;
 	this->layoutmanager = NULL;
+
+	delete this->toolbar;
+	this->toolbar = NULL;
+
+	g_object_unref(this->table);
 
 	for (int i = 0; i < this->previewCount; i++) {
 		delete this->previews[i];
@@ -66,11 +80,11 @@ void SidebarPreviews::sizeChanged(GtkWidget * widget, GtkAllocation * allocation
 
 	static int lastWidth = -1;
 
-	if(lastWidth == -1) {
+	if (lastWidth == -1) {
 		lastWidth = allocation->width;
 	}
 
-	if(ABS(lastWidth - allocation->width) > 20) {
+	if (ABS(lastWidth - allocation->width) > 20) {
 		sidebar->layout();
 		lastWidth = allocation->width;
 	}
@@ -158,7 +172,7 @@ bool SidebarPreviews::hasData() {
 GtkWidget * SidebarPreviews::getWidget() {
 	XOJ_CHECK_TYPE(SidebarPreviews);
 
-	return this->scrollPreview;
+	return GTK_WIDGET(this->table);
 }
 
 void SidebarPreviews::documentChanged(DocumentChangeType type) {
@@ -294,6 +308,14 @@ void SidebarPreviews::pageSelected(int page) {
 		SidebarPreviewPage * p = this->previews[this->selectedPage];
 		p->setSelected(true);
 		scrollToPreview(this);
-	}
+
+		this->toolbar->setButtonEnabled(
+				page != 0 && this->previewCount != 0,
+				page != this->previewCount - 1 && this->previewCount != 0,
+				true,
+				this->previewCount > 1,
+				this->control->getDocument()->getPage(page)
+			);
+}
 }
 

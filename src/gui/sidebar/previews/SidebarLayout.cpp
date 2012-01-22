@@ -64,6 +64,10 @@ public:
 		this->currentWidth = 0;
 	}
 
+	int getCount() {
+		return g_list_length(this->list);
+	}
+
 	int getWidth() {
 		return this->currentWidth;
 	}
@@ -112,6 +116,7 @@ void SidebarLayout::layout(SidebarPreviews * sidebar) {
 
 	for (int i = 0; i < sidebar->previewCount; i++) {
 		SidebarPreviewPage * p = sidebar->previews[i];
+
 		if(row.isSpaceFor(p)) {
 			row.add(p);
 		} else {
@@ -123,6 +128,16 @@ void SidebarLayout::layout(SidebarPreviews * sidebar) {
 			row.add(p);
 		}
 	}
+
+	if(row.getCount() != 0) {
+		y += row.placeAt(y, GTK_LAYOUT(sidebar->iconViewPreview));
+
+		width = MAX(width, row.getWidth());
+
+		row.clear();
+	}
+
+
 
 	gtk_layout_set_size(GTK_LAYOUT(sidebar->iconViewPreview), width, y);
 }

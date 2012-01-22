@@ -30,7 +30,7 @@ Stroke::~Stroke() {
 	XOJ_RELEASE_TYPE(Stroke);
 }
 
-Stroke * Stroke::clone() const {
+Stroke * Stroke::cloneStroke() const {
 	XOJ_CHECK_TYPE(Stroke);
 
 	Stroke * s = new Stroke();
@@ -44,6 +44,13 @@ Stroke * Stroke::clone() const {
 
 	return s;
 }
+
+Element * Stroke::clone() {
+	XOJ_CHECK_TYPE(Stroke);
+
+	return this->cloneStroke();
+}
+
 
 void Stroke::serialize(ObjectOutputStream & out) {
 	XOJ_CHECK_TYPE(Stroke);

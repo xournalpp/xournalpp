@@ -68,6 +68,11 @@ public:
 	BackgroundImage & getBackgroundImage();
 	void setBackgroundImage(BackgroundImage img);
 
+	/**
+	 * Copies this page an all it's contents to a new page
+	 */
+	XojPage * clone();
+
 private:
 	XOJ_TYPE_ATTRIB;
 

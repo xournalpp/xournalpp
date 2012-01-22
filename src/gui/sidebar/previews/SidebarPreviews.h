@@ -20,6 +20,7 @@
 class SidebarPreviewPage;
 class PdfCache;
 class SidebarLayout;
+class SidebarToolbar;
 
 class SidebarPreviews : public AbstractSidebarPage {
 public:
@@ -105,6 +106,11 @@ private:
 	GtkWidget * scrollPreview;
 
 	/**
+	 * The Table with the Toolbar and the Scrollbar
+	 */
+	GtkTable * table;
+
+	/**
 	 * The previews
 	 */
 	SidebarPreviewPage ** previews;
@@ -135,6 +141,10 @@ private:
 	 */
 	SidebarLayout * layoutmanager;
 
+	/**
+	 * The Toolbar to move, copy & delete pages
+	 */
+	SidebarToolbar * toolbar;
 
 	friend class SidebarLayout;
 };

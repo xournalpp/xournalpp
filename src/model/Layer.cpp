@@ -30,6 +30,19 @@ Layer::~Layer() {
 	XOJ_RELEASE_TYPE(Layer);
 }
 
+Layer * Layer::clone() {
+	XOJ_CHECK_TYPE(Layer);
+
+	Layer * layer = new Layer();
+
+	for (GList * l = elements; l != NULL; l = l->next) {
+		Element * e = (Element *) l->data;
+		layer->addElement(e->clone());
+	}
+
+	return layer;
+}
+
 void Layer::addElement(Element * e) {
 	XOJ_CHECK_TYPE(Layer);
 

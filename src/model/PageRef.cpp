@@ -48,6 +48,10 @@ void PageRef::operator=(XojPage * page) {
 	}
 }
 
+PageRef PageRef::clone() {
+	return PageRef(this->page->clone());
+}
+
 bool PageRef::isValid() {
 	XOJ_CHECK_TYPE(PageRef);
 

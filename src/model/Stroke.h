@@ -28,7 +28,8 @@ public:
 	virtual ~Stroke();
 
 public:
-	Stroke * clone() const;
+	Stroke * cloneStroke() const;
+	virtual Element * clone();
 
 	void setWidth(double width);
 	double getWidth() const;
@@ -67,6 +68,7 @@ public:
 	void setEraseable(EraseableStroke * eraseable);
 
 	void debugPrint();
+
 public:
 	// Serialize interface
 	void serialize(ObjectOutputStream & out);

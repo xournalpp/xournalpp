@@ -36,6 +36,8 @@ public:
 	void operator=(const PageRef & ref);
 	void operator=(XojPage * page);
 
+	PageRef clone();
+
 public:
 	// Also set the size over doc->setPageSize!
 	void setBackgroundPdfPageNr(int page);

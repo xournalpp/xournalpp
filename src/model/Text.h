@@ -39,6 +39,11 @@ public:
 
 	virtual bool rescaleOnlyAspectRatio();
 
+	/**
+	 * @overwrite
+	 */
+	virtual Element * clone();
+
 public:
 	// Serialize interface
 	void serialize(ObjectOutputStream & out);

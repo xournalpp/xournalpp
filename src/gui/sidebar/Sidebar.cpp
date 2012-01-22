@@ -131,15 +131,10 @@ void Sidebar::updateEnableDisableButtons() {
 	int i = 0;
 	int selected = -1;
 
-
-	printf("updateEnableDisableButtons()\n");
-
 	for (GList * l = this->pages; l != NULL; l = l->next) {
 		AbstractSidebarPage * p = (AbstractSidebarPage *) l->data;
 
 		gtk_widget_set_sensitive(GTK_WIDGET(p->tabButton), p->hasData());
-
-		printf("XX %i = %i\n", i, p->hasData());
 
 		if(p->hasData() && selected == -1) {
 			selected = i;

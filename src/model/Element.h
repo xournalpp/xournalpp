@@ -56,6 +56,11 @@ public:
 
 	virtual bool rescaleOnlyAspectRatio();
 
+	/**
+	 * Take 1:1 copy of this element
+	 */
+	virtual Element * clone() = 0;
+
 private:
 	XOJ_TYPE_ATTRIB;
 

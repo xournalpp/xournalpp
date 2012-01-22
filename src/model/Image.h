@@ -31,6 +31,11 @@ public:
 
 	virtual void scale(double x0, double y0, double fx, double fy);
 
+	/**
+	 * @overwrite
+	 */
+	virtual Element * clone();
+
 public:
 	// Serialize interface
 	void serialize(ObjectOutputStream & out);

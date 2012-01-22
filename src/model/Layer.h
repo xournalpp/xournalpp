@@ -35,6 +35,11 @@ public:
 
 	bool isAnnotated();
 
+	/**
+	 * Create a recursive 1:1 copy of this layer
+	 */
+	Layer * clone();
+
 public:
 	void addListener(LayerListener * listener);
 	void removeListener(LayerListener * listener);

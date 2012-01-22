@@ -20,6 +20,20 @@ Text::~Text() {
 	XOJ_RELEASE_TYPE(Text);
 }
 
+Element * Text::clone() {
+	XOJ_CHECK_TYPE(Text);
+
+	Text * text = new Text();
+	text->font = this->font;
+	text->text = this->text;
+	text->setColor(this->getColor());
+	text->x = this->x;
+	text->y = this->y;
+
+	return text;
+}
+
+
 XojFont & Text::getFont() {
 	XOJ_CHECK_TYPE(Text);
 

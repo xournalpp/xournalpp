@@ -44,6 +44,23 @@ void XojPage::unreference() {
 	}
 }
 
+XojPage * XojPage::clone() {
+	XojPage * page = new XojPage(this->width, this->height);
+
+	page->backgroundImage = this->backgroundImage;
+	for (GList * l = this->layer; l != NULL; l = l->next) {
+		Layer * layer = (Layer *) l->data;
+		page->addLayer(layer->clone());
+	}
+
+	page->currentLayer = this->currentLayer;
+	page->bgType = this->bgType;
+	page->pdfBackgroundPage = this->pdfBackgroundPage;
+	page->backgroundColor = this->backgroundColor;
+
+	return page;
+}
+
 void XojPage::addLayer(Layer * layer) {
 	XOJ_CHECK_TYPE(XojPage);
 

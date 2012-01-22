@@ -3,6 +3,8 @@
 #include <serializing/ObjectInputStream.h>
 #include <pixbuf-utils.h>
 
+#include <string.h> // memcpy
+
 Image::Image() :
 	Element(ELEMENT_IMAGE) {
 
@@ -25,6 +27,27 @@ Image::~Image() {
 
 	XOJ_RELEASE_TYPE(Image);
 }
+
+Element * Image::clone() {
+	XOJ_CHECK_TYPE(Image);
+
+	Image * img = new Image();
+
+	img->x = this->x;
+	img->y = this->y;
+	img->setColor(this->getColor());
+	img->width = this->width;
+	img->height = this->height;
+
+	img->data = (unsigned char *)g_malloc(this->dLen);
+	img->dLen = this->dLen;
+	memcpy(img->data, this->data, this->dLen);
+
+	img->image = cairo_surface_reference(this->image);
+
+	return img;
+}
+
 
 void Image::setWidth(double width) {
 	XOJ_CHECK_TYPE(Image);
