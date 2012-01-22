@@ -47,30 +47,22 @@ EraseHandler::~EraseHandler() {
 void EraseHandler::erase(double x, double y) {
 	XOJ_CHECK_TYPE(EraseHandler);
 
-	ListIterator<Layer*> it = this->page.layerIterator();
-
-	int selected = page.getSelectedLayerId();
-
 	this->halfEraserSize = this->handler->getThickness();
 	GdkRectangle eraserRect = { x - halfEraserSize, y - halfEraserSize, halfEraserSize * 2, halfEraserSize * 2 };
 
 	Range * range = new Range(x, y);
 
-	while (it.hasNext() && selected) {
-		Layer * l = it.next();
+	Layer * l = page.getSelectedLayer();
 
-		ListIterator<Element *> eit = l->elementIterator();
-		eit.freeze();
-		while (eit.hasNext()) {
-			Element * e = eit.next();
-			if (e->getType() == ELEMENT_STROKE && e->intersectsArea(&eraserRect)) {
-				Stroke * s = (Stroke *) e;
+	ListIterator<Element *> eit = l->elementIterator();
+	eit.freeze();
+	while (eit.hasNext()) {
+		Element * e = eit.next();
+		if (e->getType() == ELEMENT_STROKE && e->intersectsArea(&eraserRect)) {
+			Stroke * s = (Stroke *) e;
 
-				eraseStroke(l, s, x, y, range);
-			}
+			eraseStroke(l, s, x, y, range);
 		}
-
-		selected--;
 	}
 
 	this->view->rerenderRange(*range);
