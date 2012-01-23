@@ -43,3 +43,4 @@ private:
 };
 
 #endif /* __COLORUNDOACTION_H__ */
+

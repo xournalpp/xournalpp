@@ -54,3 +54,4 @@ void GladeSearchpath::addSearchDirectory(const char * directory) {
 
 	this->directories = g_list_append(this->directories, g_strdup(directory));
 }
+

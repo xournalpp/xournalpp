@@ -15,22 +15,26 @@
 #include <String.h>
 #include <XournalType.h>
 
-#define TOOL_COUNT 10
-
 // Has to be in the same order as in Action.h: ActionType!
 enum ToolType {
-	TOOL_NONE = 0,
-	TOOL_PEN = 1,
-	TOOL_ERASER,
-	TOOL_HILIGHTER,
-	TOOL_TEXT,
-	TOOL_IMAGE,
-	TOOL_SELECT_RECT,
-	TOOL_SELECT_REGION,
-	TOOL_SELECT_OBJECT,
-	TOOL_VERTICAL_SPACE,
-	TOOL_HAND
+	TOOL_NONE           =  0,
+
+	// First valid tool, often used starting Index 0
+	TOOL_PEN            =  1,
+	TOOL_ERASER         =  2,
+	TOOL_HILIGHTER      =  3,
+	TOOL_TEXT           =  4,
+	TOOL_IMAGE          =  5,
+	TOOL_SELECT_RECT    =  6,
+	TOOL_SELECT_REGION  =  7,
+	TOOL_SELECT_OBJECT  =  8,
+	TOOL_VERTICAL_SPACE =  9,
+	TOOL_HAND           = 10
 };
+
+// The count of tools
+#define TOOL_COUNT 10
+
 
 String toolTypeToString(ToolType type);
 ToolType toolTypeFromString(String type);

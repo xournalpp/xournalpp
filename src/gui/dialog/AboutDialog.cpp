@@ -9,7 +9,8 @@ AboutDialog::AboutDialog(GladeSearchpath * gladeSearchPath) :
 	XOJ_INIT_TYPE(AboutDialog);
 
 	GtkLabel * labelTitle = GTK_LABEL(get("labelTitle"));
-	gtk_label_set_markup(labelTitle, "<span size=\"xx-large\" weight=\"bold\">Xournal++ " VERSION "</span>\n<i>The next generation</i>");
+	gtk_label_set_markup(labelTitle, "<span size=\"xx-large\" weight=\"bold\">Xournal++ " VERSION "</span>\n<i>The next generation</i>\n"
+			"Build: " __DATE__);
 
 	GtkWidget * w = get("vbox1");
 	GtkWidget * linkButton = gtk_link_button_new("http://xournal.sourceforge.net/");
@@ -20,7 +21,7 @@ AboutDialog::AboutDialog(GladeSearchpath * gladeSearchPath) :
 
 	// Authors of the application
 	AUTOHOR("Denis Auroux, 2006 - 2010");
-	AUTOHOR("Andreas Butti, 2010 - 2011");
+	AUTOHOR("Andreas Butti, 2010 - 2012");
 
 	w = get("lbAuthors");
 	gtk_label_set_text(GTK_LABEL(w), authors.c_str());

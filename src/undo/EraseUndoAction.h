@@ -15,7 +15,6 @@
 #include "UndoAction.h"
 #include <XournalType.h>
 
-class XojPage;
 class Redrawable;
 class Layer;
 class Stroke;

@@ -624,6 +624,7 @@ XojFont MainWindow::getFontButtonFont() {
 
 void MainWindow::updatePageNumbers(int page, int pagecount, int pdfpage) {
 	XOJ_CHECK_TYPE(MainWindow);
+
 	SpinPageAdapter * spinPageNo = getSpinPageNo();
 
 	int min = 1;
@@ -713,3 +714,4 @@ ToolMenuHandler * MainWindow::getToolMenuHandler() {
 
 	return this->toolbar;
 }
+

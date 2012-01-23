@@ -19,7 +19,6 @@
 #include <glib.h>
 
 class DocumentListener;
-class XojPage;
 
 class DocumentHandler {
 public:

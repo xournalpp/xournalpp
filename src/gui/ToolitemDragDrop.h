@@ -18,7 +18,10 @@
 class AbstractToolItem;
 
 enum ToolItemType {
-	TOOL_ITEM_SEPARATOR = 0, TOO_ITEM_SPACER, TOOL_ITEM_ITEM, TOOL_ITEM_COLOR
+	TOOL_ITEM_SEPARATOR = 0,
+	TOO_ITEM_SPACER,
+	TOOL_ITEM_ITEM,
+	TOOL_ITEM_COLOR
 };
 
 #define ToolItemDragDropData_Identify 0xFA090201

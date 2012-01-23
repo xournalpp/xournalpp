@@ -18,6 +18,10 @@ public:
 
 public:
 	void addSearchDirectory(const char * directory);
+
+	/**
+	 * Searches for a path, the returning string has to be freed
+	 */
 	char * findFile(const char * subdir, const char * file);
 
 private:

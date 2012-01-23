@@ -74,6 +74,10 @@ public:
 
 	int length() const;
 	int size() const;
+
+	/**
+	 * like in php, negative start and length are working, and are from end instead of start
+	 */
 	String substring(int start, int length) const;
 	String substring(int start) const;
 	String trim() const;

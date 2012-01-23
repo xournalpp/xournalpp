@@ -9,8 +9,8 @@
  * @license GPL
  */
 
-#ifndef RANGE_H_
-#define RANGE_H_
+#ifndef __RANGE_H__
+#define __RANGE_H__
 
 #include <XournalType.h>
 
@@ -38,4 +38,4 @@ private:
 	double x2;
 };
 
-#endif /* RANGE_H_ */
+#endif /* __RANGE_H__ */

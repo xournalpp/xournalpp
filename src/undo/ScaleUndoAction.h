@@ -15,7 +15,6 @@
 #include "UndoAction.h"
 #include <glib.h>
 
-class XojPage;
 class Redrawable;
 
 class ScaleUndoAction: public UndoAction {

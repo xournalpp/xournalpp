@@ -6,7 +6,6 @@
 #include <glib/gi18n-lib.h>
 // TODO LOW PRIO: add memory limit
 
-
 //#define UNDO_TRACE
 
 #ifdef UNDO_TRACE

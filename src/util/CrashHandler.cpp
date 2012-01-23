@@ -27,9 +27,6 @@
 static bool alreadyCrashed = false;
 static Document * document = NULL;
 
-const char * crashHandlerMemoryCorruptionFile = NULL;
-int crashHandlerMemoryCorruptionLine = -1;
-
 void setEmergencyDocument(Document * doc) {
 	document = doc;
 }

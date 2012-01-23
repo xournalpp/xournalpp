@@ -20,6 +20,7 @@ class PdfView {
 private:
 	PdfView();
 	virtual ~PdfView();
+
 public:
 	static void drawPage(PdfCache * cache, XojPopplerPage * popplerPage, cairo_t * cr, double zoom, double width, double height, bool forPrinting = false);
 };

@@ -17,6 +17,7 @@ ZoomControl::~ZoomControl() {
 	XOJ_CHECK_TYPE(ZoomControl);
 
 	g_list_free(this->listener);
+	this->listener = NULL;
 
 	XOJ_RELEASE_TYPE(ZoomControl);
 }

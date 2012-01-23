@@ -11,8 +11,19 @@
 
 
 typedef struct {
+	/**
+	 * The name in the glade.xml file
+	 */
 	const char * guiName;
+
+	/**
+	 * The name in the .ini file
+	 */
 	const char * propName;
+
+	/**
+	 * if horizontal (true) or vertical (false)
+	 */
 	bool horizontal;
 } ToolbarEntryDefintion;
 
@@ -28,3 +39,4 @@ const static ToolbarEntryDefintion TOOLBAR_DEFINITIONS[] = {
 };
 
 const static int TOOLBAR_DEFINITIONS_LEN = G_N_ELEMENTS(TOOLBAR_DEFINITIONS);
+

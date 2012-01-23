@@ -14,7 +14,6 @@
 
 #include "UndoAction.h"
 
-class XojPage;
 class Redrawable;
 class Stroke;
 class Layer;

@@ -14,7 +14,6 @@
 
 #include "UndoAction.h"
 
-class XojPage;
 class Layer;
 class Text;
 class Redrawable;
@@ -49,3 +48,4 @@ private:
 };
 
 #endif /* __TEXTUNDOACTION_H__ */
+

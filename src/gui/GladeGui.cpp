@@ -71,14 +71,14 @@ GdkPixbuf * GladeGui::loadIconPixbuf(const char * filename) {
 
 	char * pathname = this->gladeSearchPath->findFile("pixmaps", filename);
 
-	if (!pathname) {
+	if (pathname == NULL) {
 		g_warning("GladeGui::get: Couldn't find pixmap file: %s", filename);
 		return NULL;
 	}
 
 	GError * error = NULL;
 	GdkPixbuf * pixbuf = gdk_pixbuf_new_from_file(pathname, &error);
-	if (!pixbuf) {
+	if (pixbuf == NULL) {
 		g_error("Failed to load pixbuf file: %s: %s\n", pathname, error->message);
 		g_error_free(error);
 	}

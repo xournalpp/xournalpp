@@ -16,7 +16,4 @@ class Document;
 void setEmergencyDocument(Document * doc);
 void installCrashHandlers(void);
 
-extern const char * crashHandlerMemoryCorruptionFile;
-extern int crashHandlerMemoryCorruptionLine;
-
 #endif // __CRASH_HANDLER_H__

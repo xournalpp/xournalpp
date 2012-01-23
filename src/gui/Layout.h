@@ -14,7 +14,7 @@
 
 #include <gtk/gtk.h>
 #include <XournalType.h>
-#include "widgets/Scrollbar.h"
+#include "widgets/Scrollbar.h" // because of extends ScrollbarListener
 
 class PageView;
 class XournalView;
@@ -73,3 +73,4 @@ private:
 };
 
 #endif /* __LAYOUT_H__ */
+

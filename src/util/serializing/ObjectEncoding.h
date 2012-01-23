@@ -34,3 +34,4 @@ public:
 };
 
 #endif /* __OBJECTENCODING_H__ */
+

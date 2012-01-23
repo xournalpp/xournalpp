@@ -93,6 +93,11 @@ private:
 
 	EraserType eraserType;
 
+	/**
+	 * If a color is selected, it may be in the list,
+	 * so its a "predefined" color for us, but may it is
+	 * not in the list, so its a "custom" color for us
+	 */
 	bool colorFound;
 	ToolListener * listener;
 	ActionHandler * actionHandler;

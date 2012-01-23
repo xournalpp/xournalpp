@@ -23,7 +23,7 @@ ToolHandler::ToolHandler(ToolListener * listener, ActionHandler * actionHandler,
 void ToolHandler::initTools() {
 	XOJ_CHECK_TYPE(ToolHandler);
 
-	Tool * t;
+	Tool * t = NULL;
 
 	for (int i = 0; i < TOOL_COUNT; i++) {
 		tools[i] = NULL;
@@ -87,7 +87,9 @@ ToolHandler::~ToolHandler() {
 
 	for (int i = 0; i < TOOL_COUNT; i++) {
 		delete tools[i];
+		tools[i] = NULL;
 	}
+
 	// Do not delete settings!
 	this->settings = NULL;
 
@@ -145,6 +147,8 @@ void ToolHandler::selectTool(ToolType type, bool fireToolChanged) {
 }
 
 void ToolHandler::fireToolChanged() {
+	XOJ_CHECK_TYPE(ToolHandler);
+
 	if (listener) {
 		listener->toolChanged();
 	}

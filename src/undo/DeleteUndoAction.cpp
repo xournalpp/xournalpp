@@ -109,4 +109,3 @@ String DeleteUndoAction::getText() {
 	}
 	return text;
 }
-

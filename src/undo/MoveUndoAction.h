@@ -15,7 +15,6 @@
 #include "UndoAction.h"
 #include <glib.h>
 
-class EditSelection;
 class VerticalToolHandler;
 class XojPage;
 class Layer;
@@ -60,3 +59,4 @@ private:
 };
 
 #endif /* __MOVEUNDOACTION_H__ */
+

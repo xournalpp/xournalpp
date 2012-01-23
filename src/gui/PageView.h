@@ -19,7 +19,6 @@
 #include "LayoutData.h"
 
 class XournalView;
-class DeleteUndoAction;
 class Selection;
 class TextEditor;
 class EraseHandler;
@@ -27,11 +26,6 @@ class VerticalToolHandler;
 class SearchControl;
 class Settings;
 class InputHandler;
-
-// Model
-class Page;
-class Stroke;
-class Text;
 
 class PageView: public Redrawable {
 public:
