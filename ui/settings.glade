@@ -1783,9 +1783,13 @@ Here you can disable your touchscreen.&lt;/i&gt;</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <child>
-                          <widget class="GtkComboBox" id="cbCursorTheme">
+                          <widget class="GtkCheckButton" id="cbBigCursor">
+                            <property name="label" translatable="yes">Big cursor for pen</property>
                             <property name="visible">True</property>
-                            <property name="can_focus">False</property>
+                            <property name="can_focus">True</property>
+                            <property name="receives_default">False</property>
+                            <property name="use_action_appearance">False</property>
+                            <property name="draw_indicator">True</property>
                           </widget>
                           <packing>
                             <property name="expand">True</property>

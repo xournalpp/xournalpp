@@ -160,8 +160,6 @@ void SettingsDialog::load() {
 	loadCheckbox("cbAutoloadXoj", settings->isAutloadPdfXoj());
 	loadCheckbox("cbAutosave", settings->isAutosaveEnabled());
 	loadCheckbox("cbSettingScrollOutside", settings->isAllowScrollOutsideThePage());
-
-	// TODO !!! cbBigCursor
 	loadCheckbox("cbBigCursor", settings->isShowBigCursor());
 
 	GtkWidget * txtDefaultSaveName = get("txtDefaultSaveName");

@@ -118,14 +118,14 @@ GdkCursor * Cursor::getPenCursor() {
 
 	bool big = control->getSettings()->isShowBigCursor();
 
-	int heigth = 3;
+	int height = 3;
 	int width = 3;
 	if (big) {
-		heigth = 22;
+		height = 22;
 		width = 15;
 	}
 
-	cairo_surface_t * crCursor = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, width, heigth);
+	cairo_surface_t * crCursor = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, width, height);
 	cairo_t * cr = cairo_create(crCursor);
 
 	Util::cairo_set_source_rgbi(cr, handler->getColor());
@@ -156,9 +156,10 @@ GdkCursor * Cursor::getPenCursor() {
 
 	cairo_destroy(cr);
 
-	GdkPixbuf * pixbuf = f_pixbuf_from_cairo_surface(crCursor);
-	//	cairo_surface_write_to_png(crCursor, "/home/andreas/tmp/01/1.png");
-	//	gdk_pixbuf_save(pixbuf, "/home/andreas/tmp/01/2.png", "PNG", NULL, NULL);
+	GdkPixbuf * pixbuf = xoj_pixbuf_get_from_surface(crCursor, 0, 0, width, height);
+
+//	cairo_surface_write_to_png(crCursor, "/home/andreas/xoj-cursor-orig.png");
+//	gdk_pixbuf_save(pixbuf, "/home/andreas/xoj-cursor.png", "png", NULL, NULL);
 
 	cairo_surface_destroy(crCursor);
 
