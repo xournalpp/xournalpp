@@ -115,7 +115,7 @@ dnl Add the languages which your application supports here.
 ALL_LINGUAS="`grep -v '^#' "$srcdir/po/LINGUAS" | tr '\n' ' '`"
 AM_GLIB_GNU_GETTEXT
 
-AC_CONFIG_FILES(Makefile src/Makefile src/collab/Makefile src/util/Makefile po/Makefile.in ui/Makefile ui/pixmaps/Makefile src/xoj-preview-extractor/Makefile)
+AC_CONFIG_FILES(Makefile src/Makefile src/util/Makefile po/Makefile.in ui/Makefile ui/pixmaps/Makefile src/xoj-preview-extractor/Makefile)
 AC_OUTPUT
 
 bash `dirname $0`/src/pdf/popplerdirect/workaround/workaround.sh

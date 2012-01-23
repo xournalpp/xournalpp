@@ -66,8 +66,6 @@ src/pdf/popplerdirect/PdfRefEntry.cpp
 src/pdf/popplerdirect/PdfUtil.cpp
 src/pdf/popplerdirect/PdfObjectWriter.cpp
 src/pdf/popplerdirect/PdfXRef.cpp
-src/collab/Collaboration.cpp
-src/collab/Message.cpp
 src/plugin/python/bindings/PyDocument.cpp
 src/plugin/python/bindings/PySelection.cpp
 src/plugin/python/bindings/PyUndoRedoHandler.cpp
@@ -85,7 +83,6 @@ src/model/XojPage.cpp
 src/model/DocumentListener.cpp
 src/model/DocumentHandler.cpp
 src/model/Font.cpp
-src/model/LayerListener.cpp
 src/model/eraser/PartList.cpp
 src/model/eraser/EraseableStrokePart.cpp
 src/model/eraser/EraseableStroke.cpp

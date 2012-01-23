@@ -1,5 +1,4 @@
 SUBDIRS = \
-	collab \
 	util \
 	xoj-preview-extractor
 
@@ -136,7 +135,6 @@ xournalpp_SOURCES = \
 	model/FormatDefinitions.cpp \
 	model/Image.cpp \
 	model/Layer.cpp \
-	model/LayerListener.cpp \
 	model/LinkDestination.cpp \
 	model/PageRef.cpp \
 	model/Point.cpp \
@@ -205,7 +203,6 @@ endif
 
 xournalpp_LDADD = \
 	@PACKAGE_LIBS@ $(INTLLIBS) \
-	$(top_builddir)/src/collab/libcollab.la \
 	$(top_builddir)/src/util/libutil.la
 
 	

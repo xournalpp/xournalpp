@@ -40,7 +40,6 @@
 #include "settings/ButtonConfig.h"
 #include "../gui/Cursor.h"
 #include "../gui/toolbarMenubar/model/ToolbarModel.h"
-#include "../collab/Collaboration.h"
 #include "../gui/toolbarMenubar/model/ToolbarData.h"
 #include "../gui/toolbarMenubar/ToolMenuHandler.h"
 
@@ -750,14 +749,6 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent *even
 	case ACTION_FOOTER_PAGESPIN:
 	case ACTION_FOOTER_ZOOM_SLIDER:
 		// nothing to do here
-		break;
-
-		// Menu collab
-	case ACTION_COLLAB_START:
-		if (this->collaboration == NULL) {
-			this->collaboration = new Collaboration(this);
-			this->collaboration->start();
-		}
 		break;
 
 		// Menu Help

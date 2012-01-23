@@ -18,8 +18,6 @@
 #include <ListIterator.h>
 #include <XournalType.h>
 
-class LayerListener;
-
 class Layer {
 public:
 	Layer();
@@ -40,16 +38,11 @@ public:
 	 */
 	Layer * clone();
 
-public:
-	void addListener(LayerListener * listener);
-	void removeListener(LayerListener * listener);
-
 private:
 	XOJ_TYPE_ATTRIB;
 
 	GList * elements;
 
-	GList * listeners;
 };
 
 #endif /* __LAYER_H__ */

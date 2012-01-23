@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-01-21 15:43+0100\n"
+"POT-Creation-Date: 2012-01-23 17:07+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -50,7 +50,7 @@ msgstr ""
 msgid "Select Image"
 msgstr ""
 
-#: ..//ui/settings.glade.h:2 ../src/control/settings/Settings.cpp:87
+#: ..//ui/settings.glade.h:2 ../src/control/settings/Settings.cpp:89
 #, no-c-format
 msgid "%F-Note-%H-%M.xoj"
 msgstr ""
@@ -611,158 +611,150 @@ msgid "_Annotate PDF"
 msgstr ""
 
 #: ..//ui/main.glade.h:42
-msgid "_Collaboration"
-msgstr ""
-
-#: ..//ui/main.glade.h:43
 msgid "_Customize"
 msgstr ""
 
-#: ..//ui/main.glade.h:44
+#: ..//ui/main.glade.h:43
 msgid "_Default Tool"
 msgstr ""
 
-#: ..//ui/main.glade.h:45
+#: ..//ui/main.glade.h:44
 msgid "_Delete Page"
 msgstr ""
 
-#: ..//ui/main.glade.h:46
+#: ..//ui/main.glade.h:45
 msgid "_Edit"
 msgstr ""
 
-#: ..//ui/main.glade.h:47
+#: ..//ui/main.glade.h:46
 msgid "_Eraser"
 msgstr ""
 
-#: ..//ui/main.glade.h:48
+#: ..//ui/main.glade.h:47
 msgid "_Export as PDF"
 msgstr ""
 
-#: ..//ui/main.glade.h:49
+#: ..//ui/main.glade.h:48
 msgid "_File"
 msgstr ""
 
-#: ..//ui/main.glade.h:50
+#: ..//ui/main.glade.h:49
 msgid "_First Page"
 msgstr ""
 
-#: ..//ui/main.glade.h:51
+#: ..//ui/main.glade.h:50
 msgid "_Goto page"
 msgstr ""
 
-#: ..//ui/main.glade.h:52
+#: ..//ui/main.glade.h:51
 msgid "_Graph"
 msgstr ""
 
-#: ..//ui/main.glade.h:53
+#: ..//ui/main.glade.h:52
 msgid "_Help"
 msgstr ""
 
-#: ..//ui/main.glade.h:54
+#: ..//ui/main.glade.h:53
 msgid "_Highlighter"
 msgstr ""
 
-#: ..//ui/main.glade.h:55
+#: ..//ui/main.glade.h:54
 msgid "_Image"
 msgstr ""
 
-#: ..//ui/main.glade.h:56
+#: ..//ui/main.glade.h:55
 msgid "_Journal"
 msgstr ""
 
-#: ..//ui/main.glade.h:57
+#: ..//ui/main.glade.h:56
 msgid "_Last Page"
 msgstr ""
 
-#: ..//ui/main.glade.h:58
+#: ..//ui/main.glade.h:57
 msgid "_Lined"
 msgstr ""
 
-#: ..//ui/main.glade.h:59
+#: ..//ui/main.glade.h:58
 msgid "_Manage"
 msgstr ""
 
-#: ..//ui/main.glade.h:60
+#: ..//ui/main.glade.h:59
 msgid "_Navigation"
 msgstr ""
 
-#: ..//ui/main.glade.h:61
+#: ..//ui/main.glade.h:60
 msgid "_Next Page"
 msgstr ""
 
-#: ..//ui/main.glade.h:62
+#: ..//ui/main.glade.h:61
 msgid "_Pen"
 msgstr ""
 
-#: ..//ui/main.glade.h:63
+#: ..//ui/main.glade.h:62
 msgid "_Plain"
 msgstr ""
 
-#: ..//ui/main.glade.h:64
+#: ..//ui/main.glade.h:63
 msgid "_Previous Page"
 msgstr ""
 
-#: ..//ui/main.glade.h:65
+#: ..//ui/main.glade.h:64
 msgid "_Ruled"
 msgstr ""
 
-#: ..//ui/main.glade.h:66
+#: ..//ui/main.glade.h:65
 msgid "_Shape Recognizer"
 msgstr ""
 
-#: ..//ui/main.glade.h:67
-msgid "_Start"
-msgstr ""
-
-#: ..//ui/main.glade.h:68
+#: ..//ui/main.glade.h:66
 msgid "_Text"
 msgstr ""
 
-#: ..//ui/main.glade.h:69
+#: ..//ui/main.glade.h:67
 msgid "_Tools"
 msgstr ""
 
-#: ..//ui/main.glade.h:70
+#: ..//ui/main.glade.h:68
 msgid "_Two Pages"
 msgstr ""
 
-#: ..//ui/main.glade.h:71
+#: ..//ui/main.glade.h:69
 msgid "_Vertical Space"
 msgstr ""
 
-#: ..//ui/main.glade.h:72
+#: ..//ui/main.glade.h:70
 msgid "_View"
 msgstr ""
 
-#: ..//ui/main.glade.h:73
+#: ..//ui/main.glade.h:71
 msgid "_delete strokes"
 msgstr ""
 
-#: ..//ui/main.glade.h:74
+#: ..//ui/main.glade.h:72
 msgid "_fine"
 msgstr ""
 
-#: ..//ui/main.glade.h:75
+#: ..//ui/main.glade.h:73
 msgid "_medium"
 msgstr ""
 
-#: ..//ui/main.glade.h:76
+#: ..//ui/main.glade.h:74
 msgid "_standard"
 msgstr ""
 
-#: ..//ui/main.glade.h:77
+#: ..//ui/main.glade.h:75
 msgid "_thick"
 msgstr ""
 
-#: ..//ui/main.glade.h:78
+#: ..//ui/main.glade.h:76
 msgid "_very fine"
 msgstr ""
 
-#: ..//ui/main.glade.h:79
+#: ..//ui/main.glade.h:77
 msgid "_whiteout"
 msgstr ""
 
-#: ..//ui/main.glade.h:80
+#: ..//ui/main.glade.h:78
 msgid "ver_y thick"
 msgstr ""
 
@@ -926,29 +918,29 @@ msgstr ""
 msgid "points"
 msgstr ""
 
-#: ../src/control/stockdlg/XojOpenDlg.cpp:7
+#: ../src/control/stockdlg/XojOpenDlg.cpp:8
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:303
 msgid "Open file"
 msgstr ""
 
-#: ../src/control/stockdlg/XojOpenDlg.cpp:12
+#: ../src/control/stockdlg/XojOpenDlg.cpp:14
 msgid "All files"
 msgstr ""
 
-#: ../src/control/stockdlg/XojOpenDlg.cpp:16 ../src/control/Control.cpp:2229
+#: ../src/control/stockdlg/XojOpenDlg.cpp:18 ../src/control/Control.cpp:2226
 msgid "Xournal files"
 msgstr ""
 
-#: ../src/control/stockdlg/XojOpenDlg.cpp:20
+#: ../src/control/stockdlg/XojOpenDlg.cpp:22
 #: ../src/control/jobs/PdfExportJob.cpp:27
 msgid "PDF files"
 msgstr ""
 
-#: ../src/control/stockdlg/XojOpenDlg.cpp:25
+#: ../src/control/stockdlg/XojOpenDlg.cpp:27
 msgid "Supported files"
 msgstr ""
 
-#: ../src/control/stockdlg/XojOpenDlg.cpp:43
+#: ../src/control/stockdlg/XojOpenDlg.cpp:45
 #: ../src/control/stockdlg/ImageOpenDlg.cpp:23
 msgid "Attach file to the journal"
 msgstr ""
@@ -1077,7 +1069,7 @@ msgstr ""
 msgid "Document is not complete (may the end is cut off?)"
 msgstr ""
 
-#: ../src/control/jobs/SaveJob.cpp:11 ../src/control/Control.cpp:2376
+#: ../src/control/jobs/SaveJob.cpp:11 ../src/control/Control.cpp:2373
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:299
 msgid "Save"
 msgstr ""
@@ -1126,8 +1118,8 @@ msgstr ""
 msgid "Delete Logfile"
 msgstr ""
 
-#: ../src/control/XournalMain.cpp:49 ../src/control/Control.cpp:2005
-#: ../src/control/Control.cpp:2378 ../src/gui/dialog/ExportDialog.cpp:127
+#: ../src/control/XournalMain.cpp:49 ../src/control/Control.cpp:2002
+#: ../src/control/Control.cpp:2375 ../src/gui/dialog/ExportDialog.cpp:127
 msgid "Cancel"
 msgstr ""
 
@@ -1166,93 +1158,93 @@ msgid ""
 "You have to copy the file to a local directory."
 msgstr ""
 
-#: ../src/control/Control.cpp:282
+#: ../src/control/Control.cpp:287
 #, c-format
 msgid "Info: autosave not necessary, nothing changed...\n"
 msgstr ""
 
-#: ../src/control/Control.cpp:286
+#: ../src/control/Control.cpp:291
 #, c-format
 msgid "Info: autosave document...\n"
 msgstr ""
 
-#: ../src/control/Control.cpp:792
+#: ../src/control/Control.cpp:789
 #, c-format
 msgid "There was an error displaying help: %s"
 msgstr ""
 
-#: ../src/control/Control.cpp:884
+#: ../src/control/Control.cpp:881
 #, c-format
 msgid ""
 "The Toolbarconfiguration \"%s\" is predefined, would you create a copy to "
 "edit?"
 msgstr ""
 
-#: ../src/control/Control.cpp:906 ../src/control/Control.cpp:908
+#: ../src/control/Control.cpp:903 ../src/control/Control.cpp:905
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:306
 msgid "Copy"
 msgstr ""
 
-#: ../src/control/Control.cpp:1250 ../src/control/Control.cpp:1411
+#: ../src/control/Control.cpp:1247 ../src/control/Control.cpp:1408
 msgid ""
 "You don't have any PDF pages to select from. Cancel operation,\n"
 "Please select another background type: Menu \"Journal\" / \"Insert Page Type"
 "\"."
 msgstr ""
 
-#: ../src/control/Control.cpp:1388 ../src/control/tools/ImageHandler.cpp:45
+#: ../src/control/Control.cpp:1385 ../src/control/tools/ImageHandler.cpp:45
 #, c-format
 msgid "This image could not be loaded. Error message: %s"
 msgstr ""
 
-#: ../src/control/Control.cpp:2001
+#: ../src/control/Control.cpp:1998
 msgid "The attached background PDF could not be found."
 msgstr ""
 
-#: ../src/control/Control.cpp:2001
+#: ../src/control/Control.cpp:1998
 msgid "The background PDF could not be found."
 msgstr ""
 
-#: ../src/control/Control.cpp:2003
+#: ../src/control/Control.cpp:2000
 msgid "Select another PDF"
 msgstr ""
 
-#: ../src/control/Control.cpp:2004
+#: ../src/control/Control.cpp:2001
 msgid "Remove PDF Background"
 msgstr ""
 
-#: ../src/control/Control.cpp:2025
+#: ../src/control/Control.cpp:2022
 #, c-format
 msgid ""
 "Error opening file '%s'\n"
 "%s"
 msgstr ""
 
-#: ../src/control/Control.cpp:2110
+#: ../src/control/Control.cpp:2107
 #, c-format
 msgid ""
 "Error annotate PDF file '%s'\n"
 "%s"
 msgstr ""
 
-#: ../src/control/Control.cpp:2224
+#: ../src/control/Control.cpp:2221
 msgid "Save File"
 msgstr ""
 
-#: ../src/control/Control.cpp:2290
+#: ../src/control/Control.cpp:2287
 msgid "Unsaved Document"
 msgstr ""
 
-#: ../src/control/Control.cpp:2374
+#: ../src/control/Control.cpp:2371
 msgid "This document is not saved yet."
 msgstr ""
 
-#: ../src/control/Control.cpp:2377
+#: ../src/control/Control.cpp:2374
 msgid "Discard"
 msgstr ""
 
 #. Translators: %s is a URI
-#: ../src/control/RecentManager.cpp:353
+#: ../src/control/RecentManager.cpp:354
 #, c-format
 msgid "Open '%s'"
 msgstr ""
@@ -1535,21 +1527,21 @@ msgid ""
 "Toolbars will not be available"
 msgstr ""
 
-#: ../src/gui/MainWindow.cpp:649
+#: ../src/gui/MainWindow.cpp:646
 #, c-format
 msgid ", PDF Page %i"
 msgstr ""
 
-#: ../src/gui/MainWindow.cpp:652
+#: ../src/gui/MainWindow.cpp:649
 #, c-format
 msgid "of %i%s"
 msgstr ""
 
-#: ../src/gui/sidebar/previews/SidebarPreviews.cpp:133
+#: ../src/gui/sidebar/previews/SidebarPreviews.cpp:157
 msgid "Preview"
 msgstr ""
 
-#: ../src/gui/sidebar/previews/SidebarPreviewPage.cpp:115
+#: ../src/gui/sidebar/previews/SidebarPreviewPage.cpp:116
 #: ../src/gui/PageView.cpp:653
 msgid "Loading..."
 msgstr ""

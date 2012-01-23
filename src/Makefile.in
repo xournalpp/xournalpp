@@ -49,10 +49,10 @@ bin_PROGRAMS = xournalpp$(EXEEXT)
 subdir = src
 DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in TODO
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
-am__aclocal_m4_deps = $(top_srcdir)/m4/libtool.m4 \
-	$(top_srcdir)/m4/ltoptions.m4 $(top_srcdir)/m4/ltsugar.m4 \
-	$(top_srcdir)/m4/ltversion.m4 $(top_srcdir)/m4/lt~obsolete.m4 \
-	$(top_srcdir)/configure.ac
+am__aclocal_m4_deps = $(top_srcdir)/m4/intltool.m4 \
+	$(top_srcdir)/m4/libtool.m4 $(top_srcdir)/m4/ltoptions.m4 \
+	$(top_srcdir)/m4/ltsugar.m4 $(top_srcdir)/m4/ltversion.m4 \
+	$(top_srcdir)/m4/lt~obsolete.m4 $(top_srcdir)/configure.ac
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 	$(ACLOCAL_M4)
 mkinstalldirs = $(install_sh) -d
@@ -148,9 +148,9 @@ am__xournalpp_SOURCES_DIST = control/jobs/AutosaveJob.cpp \
 	model/Document.cpp model/DocumentHandler.cpp \
 	model/DocumentListener.cpp model/Element.cpp model/Font.cpp \
 	model/FormatDefinitions.cpp model/Image.cpp model/Layer.cpp \
-	model/LayerListener.cpp model/LinkDestination.cpp \
-	model/PageRef.cpp model/Point.cpp model/Stroke.cpp \
-	model/Text.cpp model/XojPage.cpp pdf/cairo/CairoPdf.cpp \
+	model/LinkDestination.cpp model/PageRef.cpp model/Point.cpp \
+	model/Stroke.cpp model/Text.cpp model/XojPage.cpp \
+	pdf/cairo/CairoPdf.cpp \
 	pdf/popplerdirect/poppler/XojPopplerAction.cpp \
 	pdf/popplerdirect/poppler/XojPopplerDocument.cpp \
 	pdf/popplerdirect/poppler/XojPopplerIter.cpp \
@@ -291,7 +291,6 @@ am_xournalpp_OBJECTS = xournalpp-AutosaveJob.$(OBJEXT) \
 	xournalpp-Element.$(OBJEXT) xournalpp-Font.$(OBJEXT) \
 	xournalpp-FormatDefinitions.$(OBJEXT) \
 	xournalpp-Image.$(OBJEXT) xournalpp-Layer.$(OBJEXT) \
-	xournalpp-LayerListener.$(OBJEXT) \
 	xournalpp-LinkDestination.$(OBJEXT) \
 	xournalpp-PageRef.$(OBJEXT) xournalpp-Point.$(OBJEXT) \
 	xournalpp-Stroke.$(OBJEXT) xournalpp-Text.$(OBJEXT) \
@@ -328,7 +327,6 @@ am_xournalpp_OBJECTS = xournalpp-AutosaveJob.$(OBJEXT) \
 xournalpp_OBJECTS = $(am_xournalpp_OBJECTS)
 am__DEPENDENCIES_1 =
 xournalpp_DEPENDENCIES = $(am__DEPENDENCIES_1) \
-	$(top_builddir)/src/collab/libcollab.la \
 	$(top_builddir)/src/util/libutil.la
 xournalpp_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(xournalpp_CXXFLAGS) \
@@ -545,7 +543,6 @@ top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 SUBDIRS = \
-	collab \
 	util \
 	xoj-preview-extractor
 
@@ -636,9 +633,9 @@ xournalpp_SOURCES = control/jobs/AutosaveJob.cpp \
 	model/Document.cpp model/DocumentHandler.cpp \
 	model/DocumentListener.cpp model/Element.cpp model/Font.cpp \
 	model/FormatDefinitions.cpp model/Image.cpp model/Layer.cpp \
-	model/LayerListener.cpp model/LinkDestination.cpp \
-	model/PageRef.cpp model/Point.cpp model/Stroke.cpp \
-	model/Text.cpp model/XojPage.cpp pdf/cairo/CairoPdf.cpp \
+	model/LinkDestination.cpp model/PageRef.cpp model/Point.cpp \
+	model/Stroke.cpp model/Text.cpp model/XojPage.cpp \
+	pdf/cairo/CairoPdf.cpp \
 	pdf/popplerdirect/poppler/XojPopplerAction.cpp \
 	pdf/popplerdirect/poppler/XojPopplerDocument.cpp \
 	pdf/popplerdirect/poppler/XojPopplerIter.cpp \
@@ -672,7 +669,6 @@ xournalpp_CXXFLAGS = -I$(top_srcdir)/src/util -g -rdynamic \
 	$(am__append_2)
 xournalpp_LDADD = \
 	@PACKAGE_LIBS@ $(INTLLIBS) \
-	$(top_builddir)/src/collab/libcollab.la \
 	$(top_builddir)/src/util/libutil.la
 
 all: all-recursive
@@ -820,7 +816,6 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-IntAttribute.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-Job.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-Layer.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-LayerListener.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-Layout.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-LayoutData.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-LinkDestination.Po@am__quote@
@@ -2780,20 +2775,6 @@ xournalpp-Layer.obj: model/Layer.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='model/Layer.cpp' object='xournalpp-Layer.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-Layer.obj `if test -f 'model/Layer.cpp'; then $(CYGPATH_W) 'model/Layer.cpp'; else $(CYGPATH_W) '$(srcdir)/model/Layer.cpp'; fi`
-
-xournalpp-LayerListener.o: model/LayerListener.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-LayerListener.o -MD -MP -MF $(DEPDIR)/xournalpp-LayerListener.Tpo -c -o xournalpp-LayerListener.o `test -f 'model/LayerListener.cpp' || echo '$(srcdir)/'`model/LayerListener.cpp
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-LayerListener.Tpo $(DEPDIR)/xournalpp-LayerListener.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='model/LayerListener.cpp' object='xournalpp-LayerListener.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-LayerListener.o `test -f 'model/LayerListener.cpp' || echo '$(srcdir)/'`model/LayerListener.cpp
-
-xournalpp-LayerListener.obj: model/LayerListener.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-LayerListener.obj -MD -MP -MF $(DEPDIR)/xournalpp-LayerListener.Tpo -c -o xournalpp-LayerListener.obj `if test -f 'model/LayerListener.cpp'; then $(CYGPATH_W) 'model/LayerListener.cpp'; else $(CYGPATH_W) '$(srcdir)/model/LayerListener.cpp'; fi`
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-LayerListener.Tpo $(DEPDIR)/xournalpp-LayerListener.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='model/LayerListener.cpp' object='xournalpp-LayerListener.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-LayerListener.obj `if test -f 'model/LayerListener.cpp'; then $(CYGPATH_W) 'model/LayerListener.cpp'; else $(CYGPATH_W) '$(srcdir)/model/LayerListener.cpp'; fi`
 
 xournalpp-LinkDestination.o: model/LinkDestination.cpp
 @am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-LinkDestination.o -MD -MP -MF $(DEPDIR)/xournalpp-LinkDestination.Tpo -c -o xournalpp-LinkDestination.o `test -f 'model/LinkDestination.cpp' || echo '$(srcdir)/'`model/LinkDestination.cpp

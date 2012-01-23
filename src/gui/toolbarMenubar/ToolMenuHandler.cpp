@@ -506,8 +506,6 @@ void ToolMenuHandler::initToolItems() {
 	registerMenupoint(gui->get("menuViewToolbarManage"), ACTION_MANAGE_TOOLBAR);
 	registerMenupoint(gui->get("menuViewToolbarCustomize"), ACTION_CUSTOMIZE_TOOLBAR);
 
-	registerMenupoint(gui->get("menuitemCollaborationStart"), ACTION_COLLAB_START);
-
 	// Menu Help
 	registerMenupoint(gui->get("menuHelpAbout"), ACTION_ABOUT);
 	registerMenupoint(gui->get("menuHelpHelp"), ACTION_HELP);
