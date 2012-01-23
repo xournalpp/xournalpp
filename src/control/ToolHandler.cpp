@@ -484,7 +484,7 @@ void ToolHandler::setSelectionEditTools(bool setColor, bool setSize) {
 		t->color = -1;
 	}
 
-	if (this->current->type == TOOL_SELECT_RECT || this->current->type == TOOL_SELECT_RECT || this->current->type == TOOL_SELECT_OBJECT) {
+	if (this->current->type == TOOL_SELECT_RECT || this->current->type == TOOL_SELECT_REGION || this->current->type == TOOL_SELECT_OBJECT) {
 		this->listener->toolColorChanged();
 		this->listener->toolSizeChanged();
 		this->fireToolChanged();
