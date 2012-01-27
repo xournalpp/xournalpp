@@ -170,40 +170,6 @@ GdkCursor * Cursor::getPenCursor() {
 	return cursor;
 }
 
-//void fix_buffer_after_cairo(GdkPixbuf * pixbuf)
-//{
-//  guint8 * pixels = gdk_pixbuf_get_pixels(pixbuf);
-//  int height = gdk_pixbuf_get_height(pixbuf);
-//  int width = gdk_pixbuf_get_height(pixbuf);
-//  int rowstride = gdk_pixbuf_get_rowstride(pixbuf);
-//
-//  guint8 tmp;
-//  guint8* p;
-//  guint8* end;
-//
-//  for (int j = height; j > 0; --j)
-//  {
-//    p = pixels;
-//    end = p + 4 * width;
-//    while (p < end)
-//    {
-//      tmp = p[0];
-//      if (G_BYTE_ORDER == G_LITTLE_ENDIAN)
-//      {
-//        p[0] = p[2]; p[2] = tmp;
-//      }
-//      else
-//      {
-//        p[0] = p[1]; p[1] = p[2]; p[2] = p[3]; p[3] = tmp;
-//      }
-//      p += 4;
-//    }
-//    pixels += rowstride;
-//  }
-//}
-//}
-
-
 void Cursor::updateCursor() {
 	XOJ_CHECK_TYPE(Cursor);
 
@@ -261,46 +227,6 @@ void Cursor::updateCursor() {
 			}
 		} else if (type == TOOL_PEN) {
 			cursor = getPenCursor();
-
-
-			// TODO: Cursor
-//			int width = 20;
-//			int height = 20;
-//			GdkPixbuf *  pixbuf = gdk_pixbuf_new(GDK_COLORSPACE_RGB, true, 8, width, height);
-//
-//			cairo_surface_t * surface = cairo_image_surface_create_for_data(gdk_pixbuf_get_pixels(pixbuf), CAIRO_FORMAT_ARGB32,
-//					width, height, gdk_pixbuf_get_rowstride(pixbuf));
-//
-//			cairo_t * cr = cairo_create(surface);
-//
-//			cairo_save(cr);
-//			cairo_set_operator(cr, CAIRO_OPERATOR_CLEAR);
-//			cairo_paint(cr);
-//			cairo_restore(cr);
-//
-//			cairo_rectangle(cr, 2, 2, 16, 16);
-//			cairo_set_source_rgba(cr, 1, 0, 0 , 0.5);
-//			cairo_fill(cr);
-//			cairo_destroy(cr);
-//
-//			cursor = gdk_cursor_new_from_pixbuf(gdk_display_get_default(), pixbuf, 10, 10 );
-
-
-
-//			GdkPixbuf * source = gdk_pixbuf_new_from_file("/home/andreas/Desktop/cursor/foreground.png", NULL);
-//			GdkPixbuf * mask = gdk_pixbuf_new_from_file("/home/andreas/Desktop/cursor/mask.png", NULL);
-////
-////
-////			GdkColor bg = { 65535, 65535, 65535, 65535 };
-////			GdkColor fg = { 0, 65535, 0, 0 };
-//
-//			mask->_GdkPixbuf
-//
-//			cursor = gdk_cursor_new_from_pixbuf(gdk_display_get_default(), mask, 10, 10 );
-//
-//			gdk_bitmap_unref(source);
-//			gdk_bitmap_unref(mask);
-
 
 		} else if (type == TOOL_ERASER) {
 			GdkColor bg = { 0, 65535, 65535, 65535 };

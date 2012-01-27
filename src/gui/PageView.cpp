@@ -41,7 +41,7 @@ PageView::PageView(XournalView * xournal, PageRef page) {
 	this->xournal = xournal;
 	this->selected = false;
 	this->settings = xournal->getControl()->getSettings();
-	this->lastVisibelTime = -1;
+	this->lastVisibleTime = -1;
 
 	this->drawingMutex = g_mutex_new();
 
@@ -98,12 +98,22 @@ void PageView::setIsVisibel(bool visibel) {
 	XOJ_CHECK_TYPE(PageView);
 
 	if (visibel) {
-		this->lastVisibelTime = -1;
-	} else if (this->lastVisibelTime == -1) {
+		this->lastVisibleTime = 0;
+	} else if (this->lastVisibleTime <= 0) {
 		GTimeVal val;
 		g_get_current_time(&val);
-		this->lastVisibelTime = val.tv_sec;
+		this->lastVisibleTime = val.tv_sec;
 	}
+}
+
+int PageView::getLastVisibelTime() {
+	XOJ_CHECK_TYPE(PageView);
+
+	if(this->crBuffer == NULL) {
+		return -1;
+	}
+
+	return this->lastVisibleTime;
 }
 
 void PageView::deleteViewBuffer() {
@@ -634,6 +644,8 @@ bool PageView::actionDelete() {
 bool PageView::paintPage(cairo_t * cr, GdkRectangle * rect) {
 	XOJ_CHECK_TYPE(PageView);
 
+	static const char * txtLoading = _("Loading...");
+
 	double zoom = xournal->getZoom();
 
 	g_mutex_lock(this->drawingMutex);
@@ -649,8 +661,6 @@ bool PageView::paintPage(cairo_t * cr, GdkRectangle * rect) {
 		cairo_fill(cr2);
 
 		cairo_scale(cr2, zoom, zoom);
-
-		const char * txtLoading = _("Loading...");
 
 		cairo_text_extents_t ex;
 		cairo_set_source_rgb(cr2, 0.5, 0.5, 0.5);
@@ -730,12 +740,6 @@ bool PageView::containsY(int y) {
 /**
  * GETTER / SETTER
  */
-
-int PageView::getLastVisibelTime() {
-	XOJ_CHECK_TYPE(PageView);
-
-	return this->lastVisibelTime;
-}
 
 bool PageView::isSelected() {
 	XOJ_CHECK_TYPE(PageView);

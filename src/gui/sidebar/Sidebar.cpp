@@ -21,7 +21,7 @@ Sidebar::Sidebar(GladeGui * gui, Control * control) {
 	this->buttonCloseSidebar = gui->get("buttonCloseSidebar");
 	this->visiblePage = NULL;
 
-	GtkWidget * sidebar = gui->get("sidebarContents");
+	this->sidebar = gui->get("sidebarContents");
 
 	gtk_widget_set_size_request(sidebar, control->getSettings()->getSidebarWidth(), 100);
 
@@ -94,6 +94,8 @@ Sidebar::~Sidebar() {
 	g_list_free(this->pages);
 	this->pages = NULL;
 
+	this->sidebar = NULL;
+
 	XOJ_RELEASE_TYPE(Sidebar);
 }
 
@@ -158,6 +160,15 @@ void Sidebar::setTmpDisabled(bool disabled) {
 	}
 
 	gdk_display_sync(gdk_display_get_default());
+}
+
+void Sidebar::saveSize() {
+	XOJ_CHECK_TYPE(Sidebar);
+
+	GtkAllocation alloc;
+	gtk_widget_get_allocation(this->sidebar, &alloc);
+
+	this->control->getSettings()->setSidebarWidth(alloc.width);
 }
 
 Control * Sidebar::getControl() {

@@ -69,6 +69,12 @@ public:
 
 	GdkColor getSelectionColor();
 	int getBufferPixels();
+
+	/**
+	 * 0 if currently visible
+	 * -1 if no image is saved (never visible or cleanup)
+	 * else the time in Seconds
+	 */
 	int getLastVisibelTime();
 	TextEditor * getTextEditor();
 	PageRef getPage();
@@ -139,7 +145,7 @@ private:
 	/**
 	 * Unixtimestam when the page was last time in the visible area
 	 */
-	int lastVisibelTime;
+	int lastVisibleTime;
 
 	GMutex * repaintRectMutex;
 	GList * rerenderRects;

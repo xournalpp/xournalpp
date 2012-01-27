@@ -353,9 +353,19 @@ bool MainWindow::deleteEventCallback(GtkWidget * widget, GdkEvent * event, Contr
 void MainWindow::setSidebarVisible(bool visible) {
 	XOJ_CHECK_TYPE(MainWindow);
 
+	Settings * settings = control->getSettings();
+
+	if(!visible) {
+		control->getSidebar()->saveSize();
+	}
+
 	GtkWidget * sidebar = get("sidebarContents");
 	gtk_widget_set_visible(sidebar, visible);
-	control->getSettings()->setSidebarVisible(visible);
+	settings->setSidebarVisible(visible);
+
+	if(visible) {
+		gtk_widget_set_size_request(sidebar, settings->getSidebarWidth(), 100);
+	}
 
 	GtkWidget * w = get("menuViewSidebarVisible");
 	gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(w), visible);

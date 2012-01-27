@@ -63,6 +63,11 @@ public:
 	 */
 	void setTmpDisabled(bool disabled);
 
+	/**
+	 * Saves the current size to the settings
+	 */
+	void saveSize();
+
 public:
 	// DocumentListener interface
 	virtual void documentChanged(DocumentChangeType type);
@@ -104,6 +109,10 @@ private:
 	 */
 	GtkWidget * visiblePage;
 
+	/**
+	 * The sidebar widget
+	 */
+	GtkWidget * sidebar;
 };
 
 class SidebarPageButton {

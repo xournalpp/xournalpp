@@ -67,6 +67,7 @@ void PrintHandler::requestPageSetup(GtkPrintOperation * operation, GtkPrintConte
 	gtk_paper_size_free(size);
 }
 
+// TODO Another feature that's available in xournal but still missing in xournalpp is the "print paper ruling" checkbox. My workaround: Set the background to blank before printing/exporting.
 void PrintHandler::print(Document * doc, int currentPage) {
 	XOJ_CHECK_TYPE(PrintHandler);
 
