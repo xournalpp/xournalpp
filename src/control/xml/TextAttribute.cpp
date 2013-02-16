@@ -21,5 +21,5 @@ void TextAttribute::writeOut(OutputStream * out) {
 	XOJ_CHECK_TYPE(TextAttribute);
 
 	String v = this->value;
-	out->write(v.replace("\"", "&quot;"));
+	out->write(v.replace("&", "&amp;").replace("\"", "&quot;").replace("<", "&lt;").replace(">", "&gt;"));
 }
