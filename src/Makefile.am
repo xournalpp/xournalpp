@@ -167,6 +167,7 @@ xournalpp_SOURCES = \
 	undo/ScaleUndoAction.cpp \
 	undo/SizeUndoAction.cpp \
 	undo/TextUndoAction.cpp \
+	undo/TextBoxUndoAction.cpp \
 	undo/UndoAction.cpp \
 	undo/UndoRedoHandler.cpp \
 	view/DocumentView.cpp \

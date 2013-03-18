@@ -152,6 +152,7 @@ src/xoj-preview-extractor/xournal-thumbnailer.cpp
 src/undo/InsertDeletePageUndoAction.cpp
 src/undo/EraseUndoAction.cpp
 src/undo/TextUndoAction.cpp
+src/undo/TextBoxUndoAction.cpp
 src/undo/FontUndoAction.cpp
 src/undo/InsertLayerUndoAction.cpp
 src/undo/MoveUndoAction.cpp
