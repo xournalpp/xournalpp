@@ -106,6 +106,7 @@ void ToolbarColorNames::initPredefinedColors() {
 	XOJ_CHECK_TYPE(ToolbarColorNames);
 
 	// Here you can add predefined color names
+	// this ordering fixes #2
 	adddColor(0x000000, _("Black"), true);
 	adddColor(0x008000, _("Green"), true);
 	adddColor(0x00c0ff, _("Light Blue"), true);
