@@ -34,6 +34,11 @@
 #include <config.h>
 #include <glib/gi18n-lib.h>
 
+//for the save file undo
+//#include "../undo/TextUndoAction.h"
+#include "../undo/TextBoxUndoAction.h"
+
+
 PageView::PageView(XournalView * xournal, PageRef page) {
 	XOJ_INIT_TYPE(PageView);
 
@@ -60,6 +65,10 @@ PageView::PageView(XournalView * xournal, PageRef page) {
 	this->selection = NULL;
 
 	this->textEditor = NULL;
+
+	//this does not have to be deleted afterwards:
+	//(we need it for undo commands)
+	this->oldtext = NULL;
 
 	this->search = NULL;
 
@@ -163,13 +172,19 @@ void PageView::endText() {
 	// Text deleted
 	if (txt->getText().isEmpty()) {
 		// old element
-		int pos = layer->indexOf(txt);
-		if (pos != -1) {
-			DeleteUndoAction * eraseDeleteUndoAction = new DeleteUndoAction(page, this, true);
-			layer->removeElement(txt, false);
-			eraseDeleteUndoAction->addElement(layer, txt, pos);
-			undo->addUndoAction(eraseDeleteUndoAction);
-		}
+		//int pos = layer->indexOf(txt);
+		//if (pos != -1) {
+		//	DeleteUndoAction * eraseDeleteUndoAction = new DeleteUndoAction(page, this, true);
+		//	layer->removeElement(txt, false);
+		//	eraseDeleteUndoAction->addElement(layer, txt, pos);
+		//	undo->addUndoAction(eraseDeleteUndoAction);
+		//}
+		//else if(!this->textEditor->getFirstUndoAction())
+		//else
+		//{
+		undo->addUndoAction(new TextBoxUndoAction(page, layer, txt, this->oldtext, this));
+			//undo->addUndoAction(new InsertUndoAction(page,layer,this->oldtext,this));
+		//}
 	} else {
 		// new element
 		if (layer->indexOf(txt) == -1) {
@@ -177,6 +192,22 @@ void PageView::endText() {
 			layer->addElement(txt);
 			this->textEditor->textCopyed();
 		}
+		//or if the file was saved and reopened
+		//and/or if we click away from the text window
+		////may need to change this to a solid else
+		//else if(!this->textEditor->getFirstUndoAction())
+		else
+		{
+			//TextUndoAction does not work because the textEdit object is destroyed
+			//after endText() so we need to instead copy the information between an
+			//old and new element that we can push and pop to recover.
+			undo->addUndoAction(new TextBoxUndoAction(page, layer, txt, this->oldtext, this));
+
+			//need to alter the deleted routine as well since this breaks things
+
+		}
+		
+
 	}
 
 	delete this->textEditor;
@@ -217,13 +248,26 @@ void PageView::startText(double x, double y) {
 			text->setColor(h->getColor());
 			text->setFont(settings->getFont());
 		}
+		else{
 
+		//We can try to add an undo action here. The initial text shows up in this
+		//textEditor element.
+			this->oldtext = text;
+			text = new Text(*oldtext);
+		//need to clone the old text so that references still work properly.
+
+			Layer * layer = this->page.getSelectedLayer();
+			layer->removeElement(this->oldtext,false);
+			layer->addElement(text);
+			//perform the old swap onto the new text drawn.
+		}
+		
 		this->textEditor = new TextEditor(this, xournal->getWidget(), text, ownText);
 		if (!ownText) {
 			this->textEditor->mousePressed(x - text->getX(), y - text->getY());
 		}
 
-		rerenderPage();
+		this->rerenderPage();
 	} else {
 		Text * text = this->textEditor->getText();
 		GdkRectangle matchRect = { x - 10, y - 10, 20, 20 };
@@ -463,6 +507,10 @@ bool PageView::onButtonReleaseEvent(GtkWidget * widget, GdkEventButton * event) 
 	} else if (this->textEditor) {
 		this->textEditor->mouseReleased();
 	}
+
+	//added to hopefully fix a render bug
+	//this->rerenderPage();
+	//does not fix it
 
 	return false;
 }

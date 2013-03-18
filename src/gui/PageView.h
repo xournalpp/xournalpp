@@ -126,6 +126,9 @@ private:
 	 */
 	TextEditor * textEditor;
 
+	//For keeping old text changes to undo!
+	Text * oldtext;
+
 	bool selected;
 
 	cairo_surface_t * crBuffer;
