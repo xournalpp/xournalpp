@@ -5,18 +5,22 @@ Description
 ---------------------
 
 Xournalpp is a modified and extended Xournal. New features include:
-support for image insertion
-a better eraser
-reduced memory usage
+	support for image insertion
+	a better eraser
+	reduced memory usage
 
 Hopefully you enjoy it! Just build with
 
+```bash
 ./configure
 make
+```
 
 The binary will be in the src/ subdirectory.
 
+```bash
 make install
+```
 
 should also work.
 
@@ -31,6 +35,3 @@ files, I also found the po/ directory to contain useful as well as the Makefile.
 in the src directory. I could not get the php buildsystem to work the way I wanted. 
 I have a feeling automake is the way to go for this.
 
-
-Cheers,
-Wilson
