@@ -5,7 +5,8 @@ AC_INIT(Xournalpp, 0.1)
 AM_CONFIG_HEADER(config.h)
 
 AC_CANONICAL_SYSTEM
-AM_INIT_AUTOMAKE()
+#So we can use README.md
+AM_INIT_AUTOMAKE([foreign])
 
 AC_ISC_POSIX
 AC_PROG_CC
