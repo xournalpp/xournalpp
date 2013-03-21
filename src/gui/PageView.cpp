@@ -172,17 +172,17 @@ void PageView::endText() {
 	// Text deleted
 	if (txt->getText().isEmpty()) {
 		// old element
-		//int pos = layer->indexOf(txt);
-		//if (pos != -1) {
-		//	DeleteUndoAction * eraseDeleteUndoAction = new DeleteUndoAction(page, this, true);
-		//	layer->removeElement(txt, false);
-		//	eraseDeleteUndoAction->addElement(layer, txt, pos);
-		//	undo->addUndoAction(eraseDeleteUndoAction);
-		//}
+		int pos = layer->indexOf(txt);
+		if (pos != -1) {
+			DeleteUndoAction * eraseDeleteUndoAction = new DeleteUndoAction(page, this, true);
+			layer->removeElement(txt, false);
+			eraseDeleteUndoAction->addElement(layer, txt, pos);
+			undo->addUndoAction(eraseDeleteUndoAction);
+		}
 		//else if(!this->textEditor->getFirstUndoAction())
 		//else
 		//{
-		undo->addUndoAction(new TextBoxUndoAction(page, layer, txt, this->oldtext, this));
+			//undo->addUndoAction(new TextBoxUndoAction(page, layer, txt, this->oldtext, this));
 			//undo->addUndoAction(new InsertUndoAction(page,layer,this->oldtext,this));
 		//}
 	} else {
