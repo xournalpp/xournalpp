@@ -20,13 +20,21 @@ TextBoxUndoAction::~TextBoxUndoAction() {
 
 	if (this->undone) {
 		// Insert was undone, so this is not needed anymore
-		delete this->element;
-	//	delete this->oldelement;
+		if(this->layer->indexOf(element) == -1)
+		{
+			delete this->element;
+		}
 	//	we won't be able to delete the old element, as it will
 	//	get cleaned up in the next TextBoxUndoAction cleanup.
 	}
+	else if(this->layer->indexOf(oldelement) == -1)
+	{
+		delete this->oldelement;
+		//if it hasn't been undone we clear out the old element,
+		//since that won't be used in the future and isn't drawn.
+	}
 	this->element = NULL;
-	//this->oldelement = NULL;
+	this->oldelement = NULL;
 
 	XOJ_RELEASE_TYPE(TextBoxUndoAction);
 }
@@ -42,9 +50,6 @@ bool TextBoxUndoAction::undo(Control * control) {
 
 	this->layer->removeElement(this->element, false);
 	this->layer->addElement(this->oldelement);
-
-	//this->view->rerenderElement(this->element);
-	//this->view->rerenderElement(this->oldelement);
 
         double x1 = element->getX();
         double y1 = element->getY();
@@ -69,18 +74,15 @@ bool TextBoxUndoAction::redo(Control * control) {
 	this->layer->removeElement(this->oldelement, false);
 	this->layer->addElement(this->element);
 
-	this->view->rerenderElement(this->oldelement);
-	this->view->rerenderElement(this->element);
+        double x1 = oldelement->getX();
+        double y1 = oldelement->getY();
+        double x2 = oldelement->getX() + oldelement->getElementWidth();
+        double y2 = oldelement->getY() + oldelement->getElementHeight();
 
-        double x1 = element->getX();
-        double y1 = element->getY();
-        double x2 = element->getX() + element->getElementWidth();
-        double y2 = element->getY() + element->getElementHeight();
-
-        x1 = MIN(x1, oldelement->getX());
-        y1 = MIN(y1, oldelement->getY());
-        x2 = MAX(x2, oldelement->getX() + oldelement->getElementWidth());
-        y2 = MAX(y2, oldelement->getY() + oldelement->getElementHeight());
+        x1 = MIN(x1, element->getX());
+        y1 = MIN(y1, element->getY());
+        x2 = MAX(x2, element->getX() + element->getElementWidth());
+        y2 = MAX(y2, element->getY() + element->getElementHeight());
 
         this->view->rerenderArea(x1, y1, x2, y2);
 	

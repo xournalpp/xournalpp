@@ -194,16 +194,12 @@ void PageView::endText() {
 		}
 		//or if the file was saved and reopened
 		//and/or if we click away from the text window
-		////may need to change this to a solid else
-		//else if(!this->textEditor->getFirstUndoAction())
 		else
 		{
 			//TextUndoAction does not work because the textEdit object is destroyed
 			//after endText() so we need to instead copy the information between an
 			//old and new element that we can push and pop to recover.
 			undo->addUndoAction(new TextBoxUndoAction(page, layer, txt, this->oldtext, this));
-
-			//need to alter the deleted routine as well since this breaks things
 
 		}
 		
@@ -253,8 +249,15 @@ void PageView::startText(double x, double y) {
 		//We can try to add an undo action here. The initial text shows up in this
 		//textEditor element.
 			this->oldtext = text;
-			text = new Text(*oldtext);
+			//text = new Text(*oldtext);
 		//need to clone the old text so that references still work properly.
+		//cloning breaks things a little. do it manually
+			text = new Text();
+			text->setX(oldtext->getX());
+			text->setY(oldtext->getY());
+			text->setColor(oldtext->getColor());
+			text->setFont(oldtext->getFont());
+			text->setText(oldtext->getText());
 
 			Layer * layer = this->page.getSelectedLayer();
 			layer->removeElement(this->oldtext,false);
@@ -604,6 +607,8 @@ void PageView::addRerenderRect(double x, double y, double width, double height) 
 		Rectangle * r = (Rectangle *) l->data;
 
 		// its faster to redraw only one rect than repaint twice the same area
+		// so loop through the rectangles to be redrawn and if one is entirely
+		// enclosed by this one, we will not add it to the redraw queue.
 		if (r->intersect(rect, &dest)) {
 			r->x = dest.x;
 			r->y = dest.y;
