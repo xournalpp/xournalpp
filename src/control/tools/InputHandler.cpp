@@ -70,7 +70,15 @@ void InputHandler::addPointToTmpStroke(GdkEventMotion * event) {
 		}
 		Point p = tmpStroke->getPoint(0);
 
-		this->redrawable->rerenderElement(this->tmpStroke);
+		//Draw the initial stroke or else rerender it
+		if (count == 1)
+		{
+			drawTmpStroke();
+		}
+		else
+		{
+			this->redrawable->rerenderElement(this->tmpStroke);
+		}
 		return;
 	}
 
