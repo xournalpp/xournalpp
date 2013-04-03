@@ -196,7 +196,7 @@ stroken are not drawn under the cursor &lt;/i&gt;</property>
                               <widget class="GtkLabel" id="label38">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
-                                <property name="label" translatable="yes">&lt;b&gt;Ignor core events&lt;/b&gt;</property>
+                                <property name="label" translatable="yes">&lt;b&gt;Ignore core events&lt;/b&gt;</property>
                                 <property name="use_markup">True</property>
                               </widget>
                             </child>
