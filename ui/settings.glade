@@ -120,7 +120,7 @@
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="label" translatable="yes">&lt;i&gt;If you enable &lt;b&gt;Extended Input&lt;/b&gt; you get more precise
-inputif you have a supported Tablet Device
+input if you have a supported Tablet Device
 Disable if you use a Mouse or Touchpad and
 stroken are not drawn under the cursor &lt;/i&gt;</property>
                                 <property name="use_markup">True</property>
@@ -149,7 +149,7 @@ stroken are not drawn under the cursor &lt;/i&gt;</property>
                               <widget class="GtkLabel" id="label32">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
-                                <property name="label" translatable="yes">&lt;b&gt;Presure sensitivity&lt;/b&gt;</property>
+                                <property name="label" translatable="yes">&lt;b&gt;Pressure sensitivity&lt;/b&gt;</property>
                                 <property name="use_markup">True</property>
                               </widget>
                             </child>
@@ -169,7 +169,7 @@ stroken are not drawn under the cursor &lt;/i&gt;</property>
                               <widget class="GtkLabel" id="labePresureSensitivity">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
-                                <property name="label" translatable="yes">&lt;i&gt;If you have a tablet pen you get a different width of the line&lt;/i&gt;</property>
+                                <property name="label" translatable="yes">&lt;i&gt;If you have a tablet pen you can get different line widths&lt;/i&gt;</property>
                                 <property name="use_markup">True</property>
                               </widget>
                               <packing>
@@ -921,7 +921,7 @@ Xournal file with the same name it will open it&lt;/i&gt;</property>
                   <widget class="GtkLabel" id="label5">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <property name="label" translatable="yes">&lt;i&gt;Put a rouler on your screen to callibrate the zoom level to fit your screen
+                    <property name="label" translatable="yes">&lt;i&gt;Put a ruler on your screen to calibrate the zoom level to fit your screen.
 The units are cm for the rouler, dpi for the slider&lt;/i&gt;</property>
                     <property name="use_markup">True</property>
                     <property name="justify">center</property>
@@ -1001,7 +1001,7 @@ The units are cm for the rouler, dpi for the slider&lt;/i&gt;</property>
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <property name="label" translatable="yes">&lt;i&gt;Here can you define wich tools will be selected if you press
-a button, after you release the button the previous selected
+a button; after you release the button the previous selected
 tool will be selected&lt;/i&gt;</property>
                     <property name="use_markup">True</property>
                   </widget>
@@ -1242,7 +1242,7 @@ Here you can disable your touchscreen.&lt;/i&gt;</property>
                       <widget class="GtkLabel" id="label20">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="label" translatable="yes">Notice: &lt;i&gt;You need to enable XInput (Page "Input") else it won't work.&lt;/i&gt;</property>
+                        <property name="label" translatable="yes">Notice: &lt;i&gt;You need to enable XInput (Page "Input") or else this won't work.&lt;/i&gt;</property>
                         <property name="use_markup">True</property>
                       </widget>
                       <packing>
@@ -1626,7 +1626,7 @@ Here you can disable your touchscreen.&lt;/i&gt;</property>
                       <widget class="GtkLabel" id="label27">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="label" translatable="yes">&lt;b&gt;Presentation&lt;/b&gt; Another Fullscreen Modus, &lt;i&gt;Start with F5&lt;/i&gt;</property>
+                        <property name="label" translatable="yes">&lt;b&gt;Presentation&lt;/b&gt; Another Fullscreen Mode, &lt;i&gt;Start with F5&lt;/i&gt;</property>
                         <property name="use_markup">True</property>
                       </widget>
                       <packing>
