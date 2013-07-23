@@ -1309,6 +1309,33 @@ void Control::insertPage(PageRef page, int position) {
 
 	undoRedo->addUndoAction(new InsertDeletePageUndoAction(page, position, true));
 }
+void Control::duplicatePage(PageRef page, int position) {
+	XOJ_CHECK_TYPE(Control);
+
+	this->doc->lock();
+	this->doc->insertPage(page, position);
+	this->doc->unlock();
+	firePageInserted(position);
+
+	getCursor()->updateCursor();
+
+	int visibleHeight = 0;
+	scrollHandler->isPageVisible(position, &visibleHeight);
+
+	if (visibleHeight < 10) {
+		scrollHandler->scrollToPage(position);
+	}
+	firePageSelected(position);
+
+	updateDeletePageButton();
+
+	undoRedo->addUndoAction(new InsertDeletePageUndoAction(page, position, true));
+	//now add the copied material to the page.
+	if (paste())
+	{
+		printf("Paste failed");
+	}
+}
 
 void Control::addNewLayer() {
 	XOJ_CHECK_TYPE(Control);

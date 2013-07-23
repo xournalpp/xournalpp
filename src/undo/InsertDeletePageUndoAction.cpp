@@ -45,6 +45,10 @@ bool InsertDeletePageUndoAction::insertPage(Control * control) {
 
 	Document * doc = control->getDocument();
 
+	//just in case there would be a hang here,
+	//we'll clear the selection in redo as well
+	control->clearSelectionEndText();
+
 	doc->lock();
 	doc->insertPage(this->page, this->pagePos);
 	doc->unlock();
@@ -61,6 +65,11 @@ bool InsertDeletePageUndoAction::deletePage(Control * control) {
 	XOJ_CHECK_TYPE(InsertDeletePageUndoAction);
 
 	Document * doc = control->getDocument();
+
+	//in order to fix the hang, we need to get out
+	//of text mode
+	//***This might kill whatever we've got selected
+	control->clearSelectionEndText();
 
 	doc->lock();
 	int pNr = doc->indexOf(page);

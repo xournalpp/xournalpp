@@ -128,6 +128,9 @@ public:
 
 	void addDefaultPage();
 	void insertNewPage(int position);
+	//this creates a new page and pastes the current copy stack
+	//into the new page
+	void duplicatePage(PageRef page, int position);
 	void insertPage(PageRef page, int position);
 	void deletePage();
 
