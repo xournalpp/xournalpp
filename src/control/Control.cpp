@@ -2562,6 +2562,8 @@ void Control::clipboardPasteXournal(ObjectInputStream & in) {
 				element = new Stroke();
 			} else if (name == "Image") {
 				element = new Image();
+			} else if (name == "TexImage") {
+				element = new TexImage();
 			} else if (name == "Text") {
 				element = new Text();
 			} else {
@@ -2751,6 +2753,7 @@ void Control::runLatex() {
 
 	this->doc->unlock();
 
+	undoRedo->addUndoAction(new InsertUndoAction(page, layer, img, view));
 
 }
 
