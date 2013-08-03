@@ -93,3 +93,8 @@ void LatexAction::mathtexModImage(TexImage * img, Layer * layer)
 	
 }
 
+gchar * LatexAction::getFileName()
+{
+	//gets the filename for our image
+	return this->texfilefull;
+}

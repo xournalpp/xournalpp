@@ -2686,6 +2686,72 @@ void Control::runLatex() {
 	PageRef page = this->doc->getPage(pageNr);
 	Layer * layer = page.getSelectedLayer();
 
+	TexImage * img = view->getSelectedTex(layer);
+
+	double imgx = 10;
+	double imgy = 10;
+	gchar * imgTex = NULL;
+	if(img)
+	{
+		imgx = img->getX();
+		imgy = img->getY();
+		//fix this typecast:
+		imgTex = (gchar *) img->getText();
+	}
+
+	//now call the image handlers
+	this->doc->unlock();
+	LatexGlade * mytex = new LatexGlade(this->gladeSearchPath);
+	//determine if we should set a specific string
+	mytex->setTex(imgTex);
+	mytex->show(GTK_WINDOW(this->win->getWindow()));
+	gchar * tmp = mytex->getTex();
+	delete mytex;
+	printf("%s\n",tmp);
+
+	if(tmp == "")
+	{
+		return;
+	}
+	if(img)
+	{
+		layer->removeElement((Element *) img, false);
+	}
+
+	//now do all the LatexAction stuff
+	LatexAction texAction(tmp);
+	texAction.runCommand();
+
+	this->doc->lock();
+
+	GFile * mygfile = g_file_new_for_path(texAction.getFileName());
+	printf("About to insert image...");
+	GError *err = NULL;
+	GFileInputStream * in = g_file_read(mygfile,NULL,&err);
+	g_object_unref(mygfile);
+
+	GdkPixbuf * pixbuf = NULL;
+	pixbuf = gdk_pixbuf_new_from_stream(G_INPUT_STREAM(in),NULL,&err);
+	g_input_stream_close(G_INPUT_STREAM(in),NULL,NULL);
+
+	img = new TexImage();
+	img->setX(imgx);
+        img->setY(imgy);
+        img->setImage(pixbuf);
+        img->setText((unsigned char*)tmp,0);
+
+        img->setWidth(gdk_pixbuf_get_width(pixbuf));
+        img->setHeight(gdk_pixbuf_get_height(pixbuf));
+
+        layer->addElement(img);
+        view->rerenderElement(img);
+
+
+        printf("Image inserted!\n");
+
+	this->doc->unlock();
+
+
 }
 
 

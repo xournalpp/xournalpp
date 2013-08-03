@@ -859,3 +859,45 @@ int PageView::getDisplayHeight() {
 
 	return this->page.getHeight() * this->xournal->getZoom();
 }
+
+TexImage * PageView::getSelectedTex(Layer * layer) {
+	XOJ_CHECK_TYPE(PageView);
+
+	double x,y,width,height;
+	EditSelection * theSelection = this->xournal->getSelection();
+	if(!theSelection)
+	{
+		printf("No selection found.\n");
+		return NULL;
+	}
+	printf("Selection found!\n");
+	x = theSelection->getXOnView();
+	y = theSelection->getYOnView();
+	width = theSelection->getWidth();
+	height = theSelection->getHeight();
+
+	printf("Getting layer and creating the rectangle.\n");
+	GdkRectangle matchRect = { x - 10, y - 10, width + 20, height + 20 };
+
+	TexImage * texMatch = NULL;
+
+                ListIterator<Element *> eit = layer->elementIterator();
+                printf("There are %i elements.\n",eit.getLength());
+                while (eit.hasNext()) {
+                        Element * e = eit.next();
+                        if (e->intersectsArea(&matchRect)) {
+                                if (e->getType() == ELEMENT_TEXIMAGE) {
+                                        texMatch = (TexImage *) e;
+                                        printf("Texmatch found! The string was %s.\n",texMatch->getText());
+                                }
+                                else
+                                {
+                                        printf("Object in rectangle but it didn't match type.\n");
+                                }
+                        }
+                        printf("Element existed but not in rectangle.\n");
+                }
+
+	return texMatch;
+	
+}

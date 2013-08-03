@@ -17,6 +17,7 @@
 #include "Redrawable.h"
 #include "../model/PageRef.h"
 #include "LayoutData.h"
+#include "../model/TexImage.h"
 
 class XournalView;
 class DeleteUndoAction;
@@ -87,6 +88,8 @@ public:
 	int getY();
 
 	virtual Rectangle * rectOnWidget(double x, double y, double width, double height);
+
+	TexImage * getSelectedTex(Layer * layer);
 
 public: // event handler
 	bool onButtonPressEvent(GtkWidget * widget, GdkEventButton * event);
