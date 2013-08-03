@@ -171,6 +171,28 @@ void DocumentView::drawImage(cairo_t *cr, Image * i) {
 
 	cairo_set_matrix(cr, &defaultMatrix);
 }
+void DocumentView::drawTexImage(cairo_t *cr, TexImage * i) {
+	XOJ_CHECK_TYPE(DocumentView);
+
+	cairo_matrix_t defaultMatrix = { 0 };
+	cairo_get_matrix(cr, &defaultMatrix);
+
+	cairo_surface_t * img = i->getImage();
+	int width = cairo_image_surface_get_width(img);
+	int height = cairo_image_surface_get_height(img);
+
+	cairo_set_operator(cr, CAIRO_OPERATOR_OVER);
+
+	double xFactor = i->getElementWidth() / width;
+	double yFactor = i->getElementHeight() / height;
+
+	cairo_scale(cr, xFactor, yFactor);
+
+	cairo_set_source_surface(cr, img, i->getX() / xFactor, i->getY() / yFactor);
+	cairo_paint(cr);
+
+	cairo_set_matrix(cr, &defaultMatrix);
+}
 
 void DocumentView::drawElement(cairo_t * cr, Element * e) {
 	XOJ_CHECK_TYPE(DocumentView);
@@ -181,6 +203,8 @@ void DocumentView::drawElement(cairo_t * cr, Element * e) {
 		drawText(cr, (Text *) e);
 	} else if (e->getType() == ELEMENT_IMAGE) {
 		drawImage(cr, (Image *) e);
+	} else if (e->getType() == ELEMENT_TEXIMAGE) {
+		drawImage(cr, (TexImage *) e);
 	}
 }
 
