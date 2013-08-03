@@ -2678,7 +2678,7 @@ void Control::runLatex() {
 	if (pageNr == -1) {
 		return;
 	}
-	PageView * veiw = win->getXournal()->getViewFor(pageNr);
+	PageView * view = win->getXournal()->getViewFor(pageNr);
 	if (view == NULL) {
 		return;
 	}

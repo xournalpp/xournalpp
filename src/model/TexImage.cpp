@@ -1,4 +1,4 @@
-#include "TexTexImage.h"
+#include "TexImage.h"
 #include <serializing/ObjectOutputStream.h>
 #include <serializing/ObjectInputStream.h>
 #include <pixbuf-utils.h>
@@ -70,7 +70,7 @@ void TexImage::setImage(unsigned char * data, int len) {
 }
 
 void TexImage::setImage(GdkPixbuf * img) {
-	setTexImage(f_pixbuf_to_cairo_surface(img));
+	setImage(f_pixbuf_to_cairo_surface(img));
 }
 
 void TexImage::setImage(cairo_surface_t * image) {
@@ -138,7 +138,7 @@ void TexImage::serialize(ObjectOutputStream & out) {
 	out.writeDouble(this->width);
 	out.writeDouble(this->height);
 
-	out.writeTexImage(this->image);
+	out.writeImage(this->image);
 
 	out.endObject();
 }
@@ -158,7 +158,7 @@ void TexImage::readSerialized(ObjectInputStream & in) throw (InputStreamExceptio
 		this->image = NULL;
 	}
 
-	this->image = in.readTexImage();
+	this->image = in.readImage();
 
 	in.endObject();
 }

@@ -1,7 +1,7 @@
 /*
  * Xournal++
  *
- * An Image on the document
+ * A TexImage on the document
  *
  * @author Xournal Team
  * http://xournal.sf.net
@@ -9,8 +9,8 @@
  * @license GPL
  */
 
-#ifndef __IMAGE_H__
-#define __IMAGE_H__
+#ifndef __TEXIMAGE_H__
+#define __TEXIMAGE_H__
 
 #include "Element.h"
 #include <XournalType.h>
@@ -44,7 +44,7 @@ public:
 private:
 	virtual void calcSize();
 
-	static cairo_status_t cairoReadFunction(Image * image, unsigned char *data, unsigned int length);
+	static cairo_status_t cairoReadFunction(TexImage * image, unsigned char *data, unsigned int length);
 private:
 	XOJ_TYPE_ATTRIB;
 
@@ -60,4 +60,4 @@ private:
 	int textlen;
 };
 
-#endif /* __IMAGE_H__ */
+#endif /* __TEXIMAGE_H__ */
