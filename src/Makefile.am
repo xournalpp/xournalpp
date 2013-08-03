@@ -74,6 +74,7 @@ xournalpp_SOURCES = \
 	gui/dialog/PdfPagesDialog.cpp \
 	gui/dialog/SelectBackgroundColorDialog.cpp \
 	gui/dialog/SettingsDialog.cpp \
+	gui/dialog/LatexGlade.cpp \
 	gui/pageposition/PagePosition.cpp \
 	gui/pageposition/PagePositionCache.cpp \
 	gui/pageposition/PagePositionHandler.cpp \
@@ -136,6 +137,7 @@ xournalpp_SOURCES = \
 	model/PageRef.cpp \
 	model/Point.cpp \
 	model/Stroke.cpp \
+	model/TexImage.cpp \
 	model/Text.cpp \
 	model/XojPage.cpp \
 	pdf/cairo/CairoPdf.cpp \

@@ -704,6 +704,9 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent *even
 	case ACTION_SELECT_COLOR_CUSTOM:
 		// nothing to do here, the color toolbar item handles the color
 		break;
+	case ACTION_TEX:
+		runLatex();
+		break;
 
 		// Menu View
 	case ACTION_ZOOM_100:
@@ -2664,6 +2667,28 @@ void Control::fontChanged() {
 		editor->setFont(font);
 	}
 }
+
+//The core handler for inserting latex
+void Control::runLatex() {
+	XOJ_CHECK_TYPE(Control);
+
+	this->doc->lock();
+
+	int pageNr = getCurrentPageNo();
+	if (pageNr == -1) {
+		return;
+	}
+	PageView * veiw = win->getXournal()->getViewFor(pageNr);
+	if (view == NULL) {
+		return;
+	}
+	//we get the selection
+	PageRef page = this->doc->getPage(pageNr);
+	Layer * layer = page.getSelectedLayer();
+
+}
+
+
 
 /**
  * GETTER / SETTER

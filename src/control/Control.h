@@ -18,6 +18,8 @@
 #include "../undo/UndoRedoHandler.h"
 #include "ClipboardHandler.h"
 #include "settings/Settings.h"
+#include "../util/LatexAction.h"
+#include "../gui/dialog/LatexGlade.h"
 #include "ToolHandler.h"
 #include "../model/Document.h"
 #include "ZoomControl.h"
@@ -69,6 +71,9 @@ public:
 
 	// Menu edit
 	void showSettings();
+
+	// Menu tools
+	void runLatex();
 
 	// Menu Help
 	void showAbout();
