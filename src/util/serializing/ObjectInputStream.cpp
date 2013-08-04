@@ -198,14 +198,17 @@ cairo_surface_t * ObjectInputStream::readImage() throw (InputStreamException) {
 	}
 
 	int len = *((int *) (this->str->str + this->pos));
-	this->pos += sizeof(int);
+	//this->pos += sizeof(int);
+	//totally not equivalent!
+	this->pos += sizeof(gsize);
 
 	if (this->pos + len >= this->str->len) {
 		throw InputStreamException("End reached, but try to read an image", __FILE__, __LINE__);
 	}
 
 	PngDatasource source(this->str->str + this->pos, len);
-	cairo_surface_t * img = cairo_image_surface_create_from_png_stream((cairo_read_func_t) cairoReadFunction, &source);
+	//cairo_surface_t * img = cairo_image_surface_create_from_png_stream((cairo_read_func_t) cairoReadFunction, &source);
+	cairo_surface_t * img = cairo_image_surface_create_from_png_stream((cairo_read_func_t) &cairoReadFunction, &source);
 
 	this->pos += len;
 
