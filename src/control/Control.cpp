@@ -2762,7 +2762,7 @@ void Control::runLatex() {
 	img->setX(imgx);
         img->setY(imgy);
         img->setImage(pixbuf);
-        img->setText((const char*)tmp,0);
+        img->setText((const char*)tmp);
 
         img->setWidth(gdk_pixbuf_get_width(pixbuf));
         img->setHeight(gdk_pixbuf_get_height(pixbuf));

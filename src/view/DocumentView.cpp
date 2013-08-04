@@ -204,7 +204,7 @@ void DocumentView::drawElement(cairo_t * cr, Element * e) {
 	} else if (e->getType() == ELEMENT_IMAGE) {
 		drawImage(cr, (Image *) e);
 	} else if (e->getType() == ELEMENT_TEXIMAGE) {
-		drawImage(cr, (TexImage *) e);
+		drawTexImage(cr, (TexImage *) e);
 	}
 }
 
