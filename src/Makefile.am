@@ -40,6 +40,7 @@ xournalpp_SOURCES = \
 	control/xml/IntAttribute.cpp \
 	control/xml/TextAttribute.cpp \
 	control/xml/XmlImageNode.cpp \
+	control/xml/XmlTexNode.cpp \
 	control/xml/XmlNode.cpp \
 	control/xml/XmlPointNode.cpp \
 	control/xml/XmlStrokeNode.cpp \
