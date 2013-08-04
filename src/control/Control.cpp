@@ -2484,6 +2484,21 @@ void Control::clipboardPasteImage(GdkPixbuf * img) {
 
 	clipboardPaste(image);
 }
+void Control::clipboardPasteTex(GdkPixbuf * img, const char * text) {
+	XOJ_CHECK_TYPE(Control);
+
+	TexImage * image = new TexImage();
+	image->setImage(img);
+
+	int width = gdk_pixbuf_get_width(img);
+	int height = gdk_pixbuf_get_height(img);
+
+	image->setWidth(width);
+	image->setHeight(height);
+	image->setText(text);
+
+	clipboardPaste(image);
+}
 
 void Control::clipboardPaste(Element * e) {
 	XOJ_CHECK_TYPE(Control);
@@ -2703,6 +2718,10 @@ void Control::runLatex() {
 
 	//now call the image handlers
 	this->doc->unlock();
+
+	//need to do this otherwise we can't remove the image for its replacement
+	clearSelectionEndText();
+
 	LatexGlade * mytex = new LatexGlade(this->gladeSearchPath);
 	//determine if we should set a specific string
 	mytex->setTex(imgTex);
@@ -2718,6 +2737,9 @@ void Control::runLatex() {
 	if(img)
 	{
 		layer->removeElement((Element *) img, false);
+		view->rerenderElement(img);
+		delete img;
+		img = NULL;
 	}
 
 	//now do all the LatexAction stuff
@@ -2740,7 +2762,7 @@ void Control::runLatex() {
 	img->setX(imgx);
         img->setY(imgy);
         img->setImage(pixbuf);
-        img->setText((unsigned char*)tmp,0);
+        img->setText((const char*)tmp,0);
 
         img->setWidth(gdk_pixbuf_get_width(pixbuf));
         img->setHeight(gdk_pixbuf_get_height(pixbuf));

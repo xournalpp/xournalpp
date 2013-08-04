@@ -16,6 +16,7 @@
 #include "../model/Stroke.h"
 #include "../model/Text.h"
 #include "../model/Image.h"
+#include "../model/TexImage.h"
 #include <XournalType.h>
 #include <zlib.h>
 
@@ -27,6 +28,7 @@ enum ParserPosition {
 	PARSER_POS_IN_STROKE, // Starting layer tag read
 	PARSER_POS_IN_TEXT, // Starting text tag read
 	PARSER_POS_IN_IMAGE, // Starting image tag read
+	PARSER_POS_IN_TEXIMAGE, // Starting latex tag read
 
 	PASER_POS_FINISHED // Document is parsed
 };
@@ -74,6 +76,7 @@ private:
 	void parseStroke();
 	void parseText();
 	void parseImage();
+	void parseTexImage();
 
 private:
 	void initAttributes();
@@ -102,6 +105,7 @@ private:
 	void parseBgPdf();
 
 	void readImage(const gchar * base64_str, gsize base64_strlen);
+	void readTexImage(const gchar * base64_str, gsize base64_strlen);
 
 private:
 	XOJ_TYPE_ATTRIB;
@@ -132,6 +136,7 @@ private:
 	Stroke * stroke;
 	Text * text;
 	Image * image;
+	TexImage * teximage;
 
 	String xournalFilename;
 
