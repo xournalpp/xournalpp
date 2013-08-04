@@ -2703,7 +2703,7 @@ void Control::runLatex() {
 	PageRef page = this->doc->getPage(pageNr);
 	Layer * layer = page.getSelectedLayer();
 
-	TexImage * img = view->getSelectedTex(layer);
+	TexImage * img = view->getSelectedTex();
 
 	double imgx = 10;
 	double imgy = 10;

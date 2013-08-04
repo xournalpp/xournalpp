@@ -32,9 +32,8 @@ public:
 	virtual void scale(double x0, double y0, double fx, double fy);
 
 	//text tag to alow latex
-	void setText(unsigned char * text, int textlen);
-	//returns length
-	unsigned char * getText();
+	void setText(const char * text);
+	const char * getText();
 
 public:
 	// Serialize interface
@@ -56,8 +55,7 @@ private:
 
 	int read;
 	//text
-	unsigned char * text;
-	int textlen;
+	const char * text;
 };
 
 #endif /* __TEXIMAGE_H__ */

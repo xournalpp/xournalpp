@@ -2,6 +2,7 @@
 #include <serializing/ObjectOutputStream.h>
 #include <serializing/ObjectInputStream.h>
 #include <pixbuf-utils.h>
+#include <string.h>
 
 TexImage::TexImage() :
 	Element(ELEMENT_TEXIMAGE) {
@@ -16,7 +17,6 @@ TexImage::TexImage() :
 
 	//text tags
 	this->text = NULL;
-	this->textlen = 0;
 }
 
 TexImage::~TexImage() {
@@ -25,6 +25,10 @@ TexImage::~TexImage() {
 	if (this->image) {
 		cairo_surface_destroy(this->image);
 		this->image = NULL;
+	}
+	if (this->text) {
+		delete this->text;
+		this->text = NULL;
 	}
 
 	XOJ_RELEASE_TYPE(TexImage);
@@ -89,13 +93,12 @@ void TexImage::setImage(cairo_surface_t * image) {
 	this->image = image;
 }
 
-void TexImage::setText(unsigned char * text, int textlen)
+void TexImage::setText(const char * text)
 {
 	this->text = text;
-	this->textlen = textlen;
 }
 
-unsigned char * TexImage::getText()
+const char * TexImage::getText()
 {
 	return this->text;
 }
@@ -137,6 +140,7 @@ void TexImage::serialize(ObjectOutputStream & out) {
 
 	out.writeDouble(this->width);
 	out.writeDouble(this->height);
+	out.writeString(this->text);
 
 	out.writeImage(this->image);
 
@@ -152,6 +156,11 @@ void TexImage::readSerialized(ObjectInputStream & in) throw (InputStreamExceptio
 
 	this->width = in.readDouble();
 	this->height = in.readDouble();
+	String tmp = in.readString();
+	//cast this
+	char * tmpcstring = new char[tmp.size()];
+	strcpy(tmpcstring,tmp.c_str());
+	this->text = tmpcstring;
 
 	if (this->image) {
 		cairo_surface_destroy(this->image);

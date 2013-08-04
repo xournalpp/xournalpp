@@ -89,7 +89,7 @@ public:
 
 	virtual Rectangle * rectOnWidget(double x, double y, double width, double height);
 
-	TexImage * getSelectedTex(Layer * layer);
+	TexImage * getSelectedTex();
 
 public: // event handler
 	bool onButtonPressEvent(GtkWidget * widget, GdkEventButton * event);
