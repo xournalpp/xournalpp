@@ -28,6 +28,8 @@ class SearchControl;
 class Settings;
 class InputHandler;
 
+class Text;
+
 class PageView: public Redrawable {
 public:
 	PageView(XournalView * xournal, PageRef page);

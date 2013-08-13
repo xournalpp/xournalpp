@@ -34,6 +34,30 @@ TexImage::~TexImage() {
 	XOJ_RELEASE_TYPE(TexImage);
 }
 
+Element * TexImage::clone() {
+	XOJ_CHECK_TYPE(TexImage);
+
+	TexImage * img = new TexImage();
+
+	img->x = this->x;
+	img->y = this->y;
+	img->setColor(this->getColor());
+	img->width = this->width;
+	img->height = this->height;
+	char * tmpcstring = new char[strlen(this->text)];
+	strcpy(tmpcstring,this->text);
+	img->text = tmpcstring;
+
+	img->data = (unsigned char *)g_malloc(this->dLen);
+	img->dLen = this->dLen;
+	memcpy(img->data, this->data, this->dLen);
+
+	img->image = cairo_surface_reference(this->image);
+
+	return img;
+}
+
+
 void TexImage::setWidth(double width) {
 	XOJ_CHECK_TYPE(TexImage);
 

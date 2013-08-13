@@ -35,6 +35,8 @@ public:
 	void setText(const char * text);
 	const char * getText();
 
+	virtual Element * clone();
+
 public:
 	// Serialize interface
 	void serialize(ObjectOutputStream & out);

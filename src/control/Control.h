@@ -38,7 +38,6 @@ class SaveHandler;
 class GladeSearchpath;
 class MetadataManager;
 class Cursor;
-class Collaboration;
 class ToolbarDragDropHandler;
 
 
@@ -311,7 +310,6 @@ private:
 
 	MetadataManager * metadata;
 
-	Collaboration * collaboration;
 };
 
 class CallbackData {

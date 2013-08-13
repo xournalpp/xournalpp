@@ -114,17 +114,12 @@ Control::Control(GladeSearchpath * gladeSearchPath) {
 
 	this->clipboardHandler = NULL;
 
-	this->collaboration = NULL;
 	this->dragDropHandler = NULL;
 }
 
 Control::~Control() {
 	XOJ_CHECK_TYPE(Control);
 
-	if (this->collaboration) {
-		delete this->collaboration;
-		this->collaboration = NULL;
-	}
 
 	g_source_remove(this->changeTimout);
 	this->enableAutosave(false);
