@@ -995,30 +995,6 @@
               </widget>
             </child>
             <child>
-              <widget class="GtkMenuItem" id="menuitemCollaboration">
-                <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <property name="use_action_appearance">False</property>
-                <property name="label" translatable="yes">_Collaboration</property>
-                <property name="use_underline">True</property>
-                <child>
-                  <widget class="GtkMenu" id="menu3">
-                    <property name="visible">True</property>
-                    <property name="can_focus">False</property>
-                    <child>
-                      <widget class="GtkMenuItem" id="menuitemCollaborationStart">
-                        <property name="visible">True</property>
-                        <property name="can_focus">False</property>
-                        <property name="use_action_appearance">False</property>
-                        <property name="label" translatable="yes">_Start</property>
-                        <property name="use_underline">True</property>
-                      </widget>
-                    </child>
-                  </widget>
-                </child>
-              </widget>
-            </child>
-            <child>
               <widget class="GtkMenuItem" id="menuitemView">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
