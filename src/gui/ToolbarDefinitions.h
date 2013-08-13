@@ -39,4 +39,3 @@ const static ToolbarEntryDefintion TOOLBAR_DEFINITIONS[] = {
 };
 
 const static int TOOLBAR_DEFINITIONS_LEN = G_N_ELEMENTS(TOOLBAR_DEFINITIONS);
-

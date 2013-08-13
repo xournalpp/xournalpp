@@ -49,6 +49,8 @@
 #include <stdio.h>
 #include <string.h>
 
+// TODO Check for error log on startup, also check for emergency save document!
+
 Control::Control(GladeSearchpath * gladeSearchPath) {
 	XOJ_INIT_TYPE(Control);
 
@@ -377,6 +379,8 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent *even
 		// Menu Edit
 	case ACTION_UNDO:
 		this->clearSelection();
+		//Move out of text mode to allow textboxundo to work
+		clearSelectionEndText();
 		undoRedo->undo();
 		this->resetShapeRecognizer();
 		break;
@@ -700,6 +704,9 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent *even
 	case ACTION_SELECT_COLOR:
 	case ACTION_SELECT_COLOR_CUSTOM:
 		// nothing to do here, the color toolbar item handles the color
+		break;
+	case ACTION_TEX:
+		runLatex();
 		break;
 
 		// Menu View
@@ -2452,6 +2459,21 @@ void Control::clipboardPasteImage(GdkPixbuf * img) {
 
 	clipboardPaste(image);
 }
+void Control::clipboardPasteTex(GdkPixbuf * img, const char * text) {
+	XOJ_CHECK_TYPE(Control);
+
+	TexImage * image = new TexImage();
+	image->setImage(img);
+
+	int width = gdk_pixbuf_get_width(img);
+	int height = gdk_pixbuf_get_height(img);
+
+	image->setWidth(width);
+	image->setHeight(height);
+	image->setText(text);
+
+	clipboardPaste(image);
+}
 
 void Control::clipboardPaste(Element * e) {
 	XOJ_CHECK_TYPE(Control);
@@ -2530,6 +2552,8 @@ void Control::clipboardPasteXournal(ObjectInputStream & in) {
 				element = new Stroke();
 			} else if (name == "Image") {
 				element = new Image();
+			} else if (name == "TexImage") {
+				element = new TexImage();
 			} else if (name == "Text") {
 				element = new Text();
 			} else {
@@ -2635,6 +2659,102 @@ void Control::fontChanged() {
 		editor->setFont(font);
 	}
 }
+
+//The core handler for inserting latex
+void Control::runLatex() {
+	XOJ_CHECK_TYPE(Control);
+
+	this->doc->lock();
+
+	int pageNr = getCurrentPageNo();
+	if (pageNr == -1) {
+		return;
+	}
+	PageView * view = win->getXournal()->getViewFor(pageNr);
+	if (view == NULL) {
+		return;
+	}
+	//we get the selection
+	PageRef page = this->doc->getPage(pageNr);
+	Layer * layer = page.getSelectedLayer();
+
+	TexImage * img = view->getSelectedTex();
+
+	double imgx = 10;
+	double imgy = 10;
+	gchar * imgTex = NULL;
+	if(img)
+	{
+		imgx = img->getX();
+		imgy = img->getY();
+		//fix this typecast:
+		imgTex = (gchar *) img->getText();
+	}
+
+	//now call the image handlers
+	this->doc->unlock();
+
+	//need to do this otherwise we can't remove the image for its replacement
+	clearSelectionEndText();
+
+	LatexGlade * mytex = new LatexGlade(this->gladeSearchPath);
+	//determine if we should set a specific string
+	mytex->setTex(imgTex);
+	mytex->show(GTK_WINDOW(this->win->getWindow()));
+	gchar * tmp = mytex->getTex();
+	delete mytex;
+	printf("%s\n",tmp);
+
+	if(tmp == "")
+	{
+		return;
+	}
+	if(img)
+	{
+		layer->removeElement((Element *) img, false);
+		view->rerenderElement(img);
+		delete img;
+		img = NULL;
+	}
+
+	//now do all the LatexAction stuff
+	LatexAction texAction(tmp);
+	texAction.runCommand();
+
+	this->doc->lock();
+
+	GFile * mygfile = g_file_new_for_path(texAction.getFileName());
+	printf("About to insert image...");
+	GError *err = NULL;
+	GFileInputStream * in = g_file_read(mygfile,NULL,&err);
+	g_object_unref(mygfile);
+
+	GdkPixbuf * pixbuf = NULL;
+	pixbuf = gdk_pixbuf_new_from_stream(G_INPUT_STREAM(in),NULL,&err);
+	g_input_stream_close(G_INPUT_STREAM(in),NULL,NULL);
+
+	img = new TexImage();
+	img->setX(imgx);
+        img->setY(imgy);
+        img->setImage(pixbuf);
+        img->setText((const char*)tmp);
+
+        img->setWidth(gdk_pixbuf_get_width(pixbuf));
+        img->setHeight(gdk_pixbuf_get_height(pixbuf));
+
+        layer->addElement(img);
+        view->rerenderElement(img);
+
+
+        printf("Image inserted!\n");
+
+	this->doc->unlock();
+
+	undoRedo->addUndoAction(new InsertUndoAction(page, layer, img, view));
+
+}
+
+
 
 /**
  * GETTER / SETTER

@@ -225,9 +225,9 @@ int XournalMain::run(int argc, char * argv[]) {
 	bool opened = false;
 	if (optFilename) {
 		if (g_strv_length(optFilename) != 1) {
-			GtkWidget * dialog = gtk_message_dialog_new((GtkWindow*) *win, GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, _(
-					"Sorry, Xournal can open only one file from command line.\n"
-						"All others are ignored."));
+			GtkWidget * dialog = gtk_message_dialog_new((GtkWindow*) *win, GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
+					"Sorry, Xournal can only open one file from the command line.\n"
+							"Others are ignored."));
 			gtk_window_set_transient_for(GTK_WINDOW(dialog), GTK_WINDOW(win->getWindow()));
 			gtk_dialog_run(GTK_DIALOG(dialog));
 			gtk_widget_destroy(dialog);

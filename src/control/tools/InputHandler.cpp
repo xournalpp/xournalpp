@@ -70,6 +70,7 @@ void InputHandler::addPointToTmpStroke(GdkEventMotion * event) {
 		}
 		Point p = tmpStroke->getPoint(0);
 
+//TODO: This needs fixing on Debian Squeeze
 		this->redrawable->rerenderElement(this->tmpStroke);
 		return;
 	}

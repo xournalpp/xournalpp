@@ -11,6 +11,7 @@ ui_DATA = \
 	pagesize.glade \
 	pdfpages.glade \
 	settings.glade \
+	texdialog.glade \
 	toolbarCustomizeDialog.glade \
 	toolbarManageDialog.glade \
 	toolbar.ini

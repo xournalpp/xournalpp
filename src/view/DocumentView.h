@@ -18,6 +18,7 @@
 #include "../model/Text.h"
 #include "../model/PageRef.h"
 #include "../model/Image.h"
+#include "../model/TexImage.h"
 #include <XournalType.h>
 
 #include "ElementContainer.h"
@@ -43,6 +44,7 @@ public:
 private:
 	void drawText(cairo_t * cr, Text * t);
 	void drawImage(cairo_t * cr, Image * i);
+	void drawTexImage(cairo_t * cr, TexImage * i);
 
 	void drawElement(cairo_t * cr, Element * e);
 	void drawLayer(cairo_t * cr, Layer * l);

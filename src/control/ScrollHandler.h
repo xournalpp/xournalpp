@@ -12,6 +12,7 @@
 #ifndef __SCROLLHANDLER_H__
 #define __SCROLLHANDLER_H__
 
+class XojPage;
 class Control;
 
 #include <gtk/gtk.h>

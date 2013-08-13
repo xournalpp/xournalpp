@@ -11,6 +11,7 @@ libutil_la_SOURCES = \
 	serializing/ObjectOutputStream.cpp \
 	CrashHandler.cpp \
 	GzHelper.cpp \
+	LatexAction.cpp \
 	OutputStream.cpp \
 	PageRange.cpp \
 	Stacktrace.cpp \

@@ -80,7 +80,7 @@ void xoj_momoryleak_printRemainingObjects() {
 		}
 	}
 
-	printf("MemoryLeak: sum %i objects", sum);
+	printf("MemoryLeak: sum %i objects.\n", sum);
 }
 
 #endif

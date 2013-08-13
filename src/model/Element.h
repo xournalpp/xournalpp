@@ -17,7 +17,7 @@
 #include <XournalType.h>
 
 enum ElementType {
-	ELEMENT_STROKE = 1, ELEMENT_IMAGE, ELEMENT_TEXT
+	ELEMENT_STROKE = 1, ELEMENT_IMAGE, ELEMENT_TEXIMAGE, ELEMENT_TEXT
 };
 
 class ShapeContainer {

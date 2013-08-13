@@ -12,6 +12,7 @@
 #include "../model/Stroke.h"
 #include "../model/Text.h"
 #include "../model/Image.h"
+#include "../model/TexImage.h"
 #include "../model/Document.h"
 #include "../model/Layer.h"
 #include "../model/BackgroundImage.h"
@@ -20,6 +21,7 @@
 #include "xml/XmlNode.h"
 #include "xml/XmlTextNode.h"
 #include "xml/XmlImageNode.h"
+#include "xml/XmlTexNode.h"
 #include "xml/XmlPointNode.h"
 
 #include <config.h>
@@ -185,6 +187,19 @@ void SaveHandler::visitLayer(XmlNode * page, Layer * l) {
 			layer->addChild(image);
 
 			image->setImage(i->getImage());
+
+			image->setAttrib("left", i->getX());
+			image->setAttrib("top", i->getY());
+			image->setAttrib("right", i->getX() + i->getElementWidth());
+			image->setAttrib("bottom", i->getY() + i->getElementHeight());
+		} else if (e->getType() == ELEMENT_TEXIMAGE) {
+			TexImage * i = (TexImage *) e;
+			XmlTexNode * image = new XmlTexNode("teximage");
+			layer->addChild(image);
+
+			image->setImage(i->getImage());
+
+			image->setAttrib("text", i->getText());
 
 			image->setAttrib("left", i->getX());
 			image->setAttrib("top", i->getY());

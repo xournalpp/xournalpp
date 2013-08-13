@@ -35,6 +35,8 @@ String InsertUndoAction::getText() {
 		return _("Write text");
 	} else if (element->getType() == ELEMENT_IMAGE) {
 		return _("Insert image");
+	} else if (element->getType() == ELEMENT_TEXIMAGE) {
+		return _("Insert latex");
 	} else {
 		return NULL;
 	}

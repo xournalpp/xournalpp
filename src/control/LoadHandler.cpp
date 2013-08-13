@@ -61,6 +61,7 @@ void LoadHandler::initAttributes() {
 	this->layer = NULL;
 	this->stroke = NULL;
 	this->image = NULL;
+	this->teximage = NULL;
 	this->text = NULL;
 }
 
@@ -535,6 +536,28 @@ void LoadHandler::parseImage() {
 	this->image->setHeight(bottom - top);
 }
 
+void LoadHandler::parseTexImage() {
+	XOJ_CHECK_TYPE(LoadHandler);
+
+	double left = getAttribDouble("left");
+	double top = getAttribDouble("top");
+	double right = getAttribDouble("right");
+	double bottom = getAttribDouble("bottom");
+
+	const char * imText = getAttrib("text");
+
+	this->teximage = new TexImage();
+	this->layer->addElement(this->teximage);
+	this->teximage->setX(left);
+	this->teximage->setY(top);
+	this->teximage->setWidth(right - left);
+	this->teximage->setHeight(bottom - top);
+	//need to allocate memory for the image
+	char * tmp = new char[sizeof(&imText[0])];
+	strcpy(tmp,imText);
+	this->teximage->setText(tmp);
+}
+
 void LoadHandler::parseLayer() {
 	XOJ_CHECK_TYPE(LoadHandler);
 
@@ -547,6 +570,9 @@ void LoadHandler::parseLayer() {
 	} else if (!strcmp(elementName, "image")) { // start of a image item
 		this->pos = PARSER_POS_IN_IMAGE;
 		parseImage();
+	} else if (!strcmp(elementName, "teximage")) { // start of a image item
+		this->pos = PARSER_POS_IN_TEXIMAGE;
+		parseTexImage();
 	}
 }
 
@@ -608,6 +634,9 @@ void LoadHandler::parserEndElement(GMarkupParseContext * context, const gchar * 
 	} else if (handler->pos == PARSER_POS_IN_IMAGE && strcmp(element_name, "image") == 0) {
 		handler->pos = PARSER_POS_IN_LAYER;
 		handler->image = NULL;
+	} else if (handler->pos == PARSER_POS_IN_TEXIMAGE && strcmp(element_name, "teximage") == 0) {
+		handler->pos = PARSER_POS_IN_LAYER;
+		handler->teximage = NULL;
 	}
 }
 
@@ -670,6 +699,8 @@ void LoadHandler::parserText(GMarkupParseContext * context, const gchar * text, 
 		g_free(txt);
 	} else if (handler->pos == PARSER_POS_IN_IMAGE) {
 		handler->readImage(text, textLen);
+	} else if (handler->pos == PARSER_POS_IN_TEXIMAGE) {
+		handler->readTexImage(text, textLen);
 	}
 }
 
@@ -687,6 +718,22 @@ void LoadHandler::readImage(const gchar * base64_str, gsize base64_strlen) {
 
 	this->image->setImage(png_buf, png_buflen);
 }
+
+void LoadHandler::readTexImage(const gchar * base64_str, gsize base64_strlen) {
+	XOJ_CHECK_TYPE(LoadHandler);
+
+	gsize png_buflen;
+
+	// We have to copy the string in order to null terminate it, sigh.
+	gchar * base64_str2 = (gchar*) g_memdup(base64_str, base64_strlen + 1);
+	base64_str2[base64_strlen] = '\0';
+
+	guchar * png_buf = g_base64_decode(base64_str2, &png_buflen);
+	g_free(base64_str2);
+
+	this->teximage->setImage(png_buf, png_buflen);
+}
+
 
 bool LoadHandler::parseXml() {
 	XOJ_CHECK_TYPE(LoadHandler);

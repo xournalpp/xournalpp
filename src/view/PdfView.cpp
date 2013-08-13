@@ -3,6 +3,7 @@
 #include <glib/gi18n-lib.h>
 
 PdfView::PdfView() {
+
 }
 
 PdfView::~PdfView() {

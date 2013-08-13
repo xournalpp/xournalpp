@@ -59,4 +59,3 @@ private:
 };
 
 #endif /* __MOVEUNDOACTION_H__ */
-

@@ -104,6 +104,8 @@ String DeleteUndoAction::getText() {
 				text += _(" text");
 			} else if (type == ELEMENT_IMAGE) {
 				text += _(" image");
+			} else if (type == ELEMENT_TEXIMAGE) {
+				text += _(" latex");
 			}
 		}
 	}

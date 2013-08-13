@@ -47,4 +47,3 @@ private:
 };
 
 #endif /* __ARRAYITERATOR_H__ */
-

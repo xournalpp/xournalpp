@@ -17,6 +17,7 @@
 #include "Redrawable.h"
 #include "../model/PageRef.h"
 #include "LayoutData.h"
+#include "../model/TexImage.h"
 
 class XournalView;
 class Selection;
@@ -88,6 +89,8 @@ public:
 
 	virtual Rectangle * rectOnWidget(double x, double y, double width, double height);
 
+	TexImage * getSelectedTex();
+
 public: // event handler
 	bool onButtonPressEvent(GtkWidget * widget, GdkEventButton * event);
 	bool onButtonReleaseEvent(GtkWidget * widget, GdkEventButton * event);
@@ -125,6 +128,9 @@ private:
 	 * The text editor View
 	 */
 	TextEditor * textEditor;
+
+	//For keeping old text changes to undo!
+	Text * oldtext;
 
 	bool selected;
 

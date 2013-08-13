@@ -48,4 +48,3 @@ private:
 };
 
 #endif /* __TEXTUNDOACTION_H__ */
-
