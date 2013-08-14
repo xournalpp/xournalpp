@@ -1,0 +1,13 @@
+prefix=/usr/local
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: poppler-qt
+Description: Qt bindings for poppler
+Version: 0.12.4
+Requires: 
+Requires.private: poppler = 0.12.4
+
+Libs: -L${libdir} -lpoppler-qt
+Cflags: -I${includedir}/poppler/qt3

@@ -1,0 +1,3 @@
+PopplerCache.lo: PopplerCache.cc PopplerCache.h
+
+PopplerCache.h:

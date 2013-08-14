@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" 
+               "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+<book id="index" xmlns:xi="http://www.w3.org/2003/XInclude">
+  <bookinfo>
+    <title>Poppler Reference Manual</title>
+  </bookinfo>
+
+  <chapter>
+    <title>Poppler</title>
+    <xi:include href="xml/poppler.xml"/>
+    <xi:include href="xml/poppler-document.xml"/>
+    <xi:include href="xml/poppler-page.xml"/>
+    <xi:include href="xml/poppler-action.xml"/>
+    <xi:include href="xml/poppler-attachment.xml"/>
+    <xi:include href="xml/poppler-form-field.xml"/>
+    <xi:include href="xml/poppler-enums.xml"/>
+    <xi:include href="xml/poppler-annot.xml"/>
+    <xi:include href="xml/poppler-layer.xml"/>
+    <xi:include href="xml/poppler-features.xml"/>
+  </chapter>
+</book>

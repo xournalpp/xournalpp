@@ -1,0 +1,8 @@
+SplashFontFileID.lo: SplashFontFileID.cc ../config.h SplashFontFileID.h \
+ ../goo/gtypes.h
+
+../config.h:
+
+SplashFontFileID.h:
+
+../goo/gtypes.h:

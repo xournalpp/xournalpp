@@ -1,0 +1,511 @@
+<?xml version="1.0"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" 
+               "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+<refentry id="poppler-poppler-annot">
+<refmeta>
+<refentrytitle role="top_of_page" id="poppler-poppler-annot.top_of_page">PopplerAnnot</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>POPPLER Library</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>PopplerAnnot</refname>
+<refpurpose>Annotations</refpurpose>
+</refnamediv>
+
+<refsynopsisdiv id="poppler-poppler-annot.synopsis" role="synopsis">
+<title role="synopsis.title">Synopsis</title>
+
+<synopsis>
+                    <link linkend="PopplerAnnot">PopplerAnnot</link>;
+<link linkend="PopplerAnnotCalloutLine">PopplerAnnotCalloutLine</link> * <link linkend="poppler-annot-callout-line-copy">poppler_annot_callout_line_copy</link>
+                                                        (<link linkend="PopplerAnnotCalloutLine">PopplerAnnotCalloutLine</link> *callout);
+<link linkend="void">void</link>                <link linkend="poppler-annot-callout-line-free">poppler_annot_callout_line_free</link>     (<link linkend="PopplerAnnotCalloutLine">PopplerAnnotCalloutLine</link> *callout);
+<link linkend="GType">GType</link>               <link linkend="poppler-annot-callout-line-get-type">poppler_annot_callout_line_get_type</link> (void);
+<link linkend="PopplerAnnotCalloutLine">PopplerAnnotCalloutLine</link> * <link linkend="poppler-annot-callout-line-new">poppler_annot_callout_line_new</link>
+                                                        (void);
+<link linkend="GType">GType</link>               <link linkend="poppler-annot-external-data-type-get-type">poppler_annot_external_data_type_get_type</link>
+                                                        (void);
+<link linkend="GType">GType</link>               <link linkend="poppler-annot-flag-get-type">poppler_annot_flag_get_type</link>         (void);
+<link linkend="PopplerAnnotCalloutLine">PopplerAnnotCalloutLine</link> * <link linkend="poppler-annot-free-text-get-callout-line">poppler_annot_free_text_get_callout_line</link>
+                                                        (<link linkend="PopplerAnnotFreeText">PopplerAnnotFreeText</link> *poppler_annot);
+<link linkend="PopplerAnnotFreeTextQuadding">PopplerAnnotFreeTextQuadding</link>  <link linkend="poppler-annot-free-text-get-quadding">poppler_annot_free_text_get_quadding</link>
+                                                        (<link linkend="PopplerAnnotFreeText">PopplerAnnotFreeText</link> *poppler_annot);
+<link linkend="GType">GType</link>               <link linkend="poppler-annot-free-text-get-type">poppler_annot_free_text_get_type</link>    (void);
+<link linkend="GType">GType</link>               <link linkend="poppler-annot-free-text-quadding-get-type">poppler_annot_free_text_quadding_get_type</link>
+                                                        (void);
+<link linkend="PopplerAnnotType">PopplerAnnotType</link>    <link linkend="poppler-annot-get-annot-type">poppler_annot_get_annot_type</link>        (<link linkend="PopplerAnnot">PopplerAnnot</link> *poppler_annot);
+<link linkend="PopplerColor">PopplerColor</link> *      <link linkend="poppler-annot-get-color">poppler_annot_get_color</link>             (<link linkend="PopplerAnnot">PopplerAnnot</link> *poppler_annot);
+<link linkend="gchar">gchar</link> *             <link linkend="poppler-annot-get-contents">poppler_annot_get_contents</link>          (<link linkend="PopplerAnnot">PopplerAnnot</link> *poppler_annot);
+<link linkend="PopplerAnnotFlag">PopplerAnnotFlag</link>    <link linkend="poppler-annot-get-flags">poppler_annot_get_flags</link>             (<link linkend="PopplerAnnot">PopplerAnnot</link> *poppler_annot);
+<link linkend="gchar">gchar</link> *             <link linkend="poppler-annot-get-modified">poppler_annot_get_modified</link>          (<link linkend="PopplerAnnot">PopplerAnnot</link> *poppler_annot);
+<link linkend="gchar">gchar</link> *             <link linkend="poppler-annot-get-name">poppler_annot_get_name</link>              (<link linkend="PopplerAnnot">PopplerAnnot</link> *poppler_annot);
+<link linkend="GType">GType</link>               <link linkend="poppler-annot-get-type">poppler_annot_get_type</link>              (void);
+<link linkend="PopplerAnnotMapping">PopplerAnnotMapping</link> * <link linkend="poppler-annot-mapping-copy">poppler_annot_mapping_copy</link>        (<link linkend="PopplerAnnotMapping">PopplerAnnotMapping</link> *mapping);
+<link linkend="void">void</link>                <link linkend="poppler-annot-mapping-free">poppler_annot_mapping_free</link>          (<link linkend="PopplerAnnotMapping">PopplerAnnotMapping</link> *mapping);
+<link linkend="GType">GType</link>               <link linkend="poppler-annot-mapping-get-type">poppler_annot_mapping_get_type</link>      (void);
+<link linkend="PopplerAnnotMapping">PopplerAnnotMapping</link> * <link linkend="poppler-annot-mapping-new">poppler_annot_mapping_new</link>         (void);
+<link linkend="GDate">GDate</link> *             <link linkend="poppler-annot-markup-get-date">poppler_annot_markup_get_date</link>       (<link linkend="PopplerAnnotMarkup">PopplerAnnotMarkup</link> *poppler_annot);
+<link linkend="PopplerAnnotExternalDataType">PopplerAnnotExternalDataType</link>  <link linkend="poppler-annot-markup-get-external-data">poppler_annot_markup_get_external_data</link>
+                                                        (<link linkend="PopplerAnnotMarkup">PopplerAnnotMarkup</link> *poppler_annot);
+<link linkend="gchar">gchar</link> *             <link linkend="poppler-annot-markup-get-label">poppler_annot_markup_get_label</link>      (<link linkend="PopplerAnnotMarkup">PopplerAnnotMarkup</link> *poppler_annot);
+<link linkend="gdouble">gdouble</link>             <link linkend="poppler-annot-markup-get-opacity">poppler_annot_markup_get_opacity</link>    (<link linkend="PopplerAnnotMarkup">PopplerAnnotMarkup</link> *poppler_annot);
+<link linkend="gboolean">gboolean</link>            <link linkend="poppler-annot-markup-get-popup-is-open">poppler_annot_markup_get_popup_is_open</link>
+                                                        (<link linkend="PopplerAnnotMarkup">PopplerAnnotMarkup</link> *poppler_annot);
+<link linkend="PopplerAnnotMarkupReplyType">PopplerAnnotMarkupReplyType</link>  <link linkend="poppler-annot-markup-get-reply-to">poppler_annot_markup_get_reply_to</link>
+                                                        (<link linkend="PopplerAnnotMarkup">PopplerAnnotMarkup</link> *poppler_annot);
+<link linkend="gchar">gchar</link> *             <link linkend="poppler-annot-markup-get-subject">poppler_annot_markup_get_subject</link>    (<link linkend="PopplerAnnotMarkup">PopplerAnnotMarkup</link> *poppler_annot);
+<link linkend="GType">GType</link>               <link linkend="poppler-annot-markup-get-type">poppler_annot_markup_get_type</link>       (void);
+<link linkend="GType">GType</link>               <link linkend="poppler-annot-markup-reply-type-get-type">poppler_annot_markup_reply_type_get_type</link>
+                                                        (void);
+<link linkend="gchar">gchar</link> *             <link linkend="poppler-annot-text-get-icon">poppler_annot_text_get_icon</link>         (<link linkend="PopplerAnnotText">PopplerAnnotText</link> *poppler_annot);
+<link linkend="gboolean">gboolean</link>            <link linkend="poppler-annot-text-get-is-open">poppler_annot_text_get_is_open</link>      (<link linkend="PopplerAnnotText">PopplerAnnotText</link> *poppler_annot);
+<link linkend="PopplerAnnotTextState">PopplerAnnotTextState</link>  <link linkend="poppler-annot-text-get-state">poppler_annot_text_get_state</link>     (<link linkend="PopplerAnnotText">PopplerAnnotText</link> *poppler_annot);
+<link linkend="GType">GType</link>               <link linkend="poppler-annot-text-get-type">poppler_annot_text_get_type</link>         (void);
+<link linkend="GType">GType</link>               <link linkend="poppler-annot-text-state-get-type">poppler_annot_text_state_get_type</link>   (void);
+<link linkend="GType">GType</link>               <link linkend="poppler-annot-type-get-type">poppler_annot_type_get_type</link>         (void);
+</synopsis>
+</refsynopsisdiv>
+
+
+
+
+
+
+
+
+
+<refsect1 id="poppler-poppler-annot.description" role="desc">
+<title role="desc.title">Description</title>
+<para>
+</para>
+</refsect1>
+
+<refsect1 id="poppler-poppler-annot.details" role="details">
+<title role="details.title">Details</title>
+<refsect2 id="PopplerAnnot" role="struct">
+<title>PopplerAnnot</title>
+<indexterm zone="PopplerAnnot"><primary sortas="PopplerAnnot">PopplerAnnot</primary></indexterm><programlisting>typedef struct _PopplerAnnot PopplerAnnot;</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="poppler-annot-callout-line-copy" role="function">
+<title>poppler_annot_callout_line_copy ()</title>
+<indexterm zone="poppler-annot-callout-line-copy"><primary sortas="poppler_annot_callout_line_copy">poppler_annot_callout_line_copy</primary></indexterm><programlisting><link linkend="PopplerAnnotCalloutLine">PopplerAnnotCalloutLine</link> * poppler_annot_callout_line_copy
+                                                        (<link linkend="PopplerAnnotCalloutLine">PopplerAnnotCalloutLine</link> *callout);</programlisting>
+<para>
+It does copy <parameter>callout</parameter> to a new <link linkend="PopplerAnnotCalloutLine"><type>PopplerAnnotCalloutLine</type></link>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>callout</parameter>&#160;:</term>
+<listitem><simpara> the <link linkend="PopplerAnnotCalloutline"><type>PopplerAnnotCalloutline</type></link> to be copied.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> a new allocated <link linkend="PopplerAnnotCalloutLine"><type>PopplerAnnotCalloutLine</type></link> as exact copy of
+              <parameter>callout</parameter>, NULL in other case. It must be freed when done.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="poppler-annot-callout-line-free" role="function">
+<title>poppler_annot_callout_line_free ()</title>
+<indexterm zone="poppler-annot-callout-line-free"><primary sortas="poppler_annot_callout_line_free">poppler_annot_callout_line_free</primary></indexterm><programlisting><link linkend="void">void</link>                poppler_annot_callout_line_free     (<link linkend="PopplerAnnotCalloutLine">PopplerAnnotCalloutLine</link> *callout);</programlisting>
+<para>
+Frees the memory used by <link linkend="PopplerAnnotCalloutLine"><type>PopplerAnnotCalloutLine</type></link>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>callout</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="PopplerAnnotCalloutLine"><type>PopplerAnnotCalloutLine</type></link>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="poppler-annot-callout-line-get-type" role="function">
+<title>poppler_annot_callout_line_get_type ()</title>
+<indexterm zone="poppler-annot-callout-line-get-type"><primary sortas="poppler_annot_callout_line_get_type">poppler_annot_callout_line_get_type</primary></indexterm><programlisting><link linkend="GType">GType</link>               poppler_annot_callout_line_get_type (void);</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="poppler-annot-callout-line-new" role="function">
+<title>poppler_annot_callout_line_new ()</title>
+<indexterm zone="poppler-annot-callout-line-new"><primary sortas="poppler_annot_callout_line_new">poppler_annot_callout_line_new</primary></indexterm><programlisting><link linkend="PopplerAnnotCalloutLine">PopplerAnnotCalloutLine</link> * poppler_annot_callout_line_new
+                                                        (void);</programlisting>
+<para>
+Creates a new empty <link linkend="PopplerAnnotCalloutLine"><type>PopplerAnnotCalloutLine</type></link>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> a new allocated <link linkend="PopplerAnnotCalloutLine"><type>PopplerAnnotCalloutLine</type></link>, NULL in other case.
+              It must be freed when done.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="poppler-annot-external-data-type-get-type" role="function">
+<title>poppler_annot_external_data_type_get_type ()</title>
+<indexterm zone="poppler-annot-external-data-type-get-type"><primary sortas="poppler_annot_external_data_type_get_type">poppler_annot_external_data_type_get_type</primary></indexterm><programlisting><link linkend="GType">GType</link>               poppler_annot_external_data_type_get_type
+                                                        (void);</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="poppler-annot-flag-get-type" role="function">
+<title>poppler_annot_flag_get_type ()</title>
+<indexterm zone="poppler-annot-flag-get-type"><primary sortas="poppler_annot_flag_get_type">poppler_annot_flag_get_type</primary></indexterm><programlisting><link linkend="GType">GType</link>               poppler_annot_flag_get_type         (void);</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="poppler-annot-free-text-get-callout-line" role="function">
+<title>poppler_annot_free_text_get_callout_line ()</title>
+<indexterm zone="poppler-annot-free-text-get-callout-line"><primary sortas="poppler_annot_free_text_get_callout_line">poppler_annot_free_text_get_callout_line</primary></indexterm><programlisting><link linkend="PopplerAnnotCalloutLine">PopplerAnnotCalloutLine</link> * poppler_annot_free_text_get_callout_line
+                                                        (<link linkend="PopplerAnnotFreeText">PopplerAnnotFreeText</link> *poppler_annot);</programlisting>
+<para>
+Retrieves a <link linkend="PopplerCalloutLine"><type>PopplerCalloutLine</type></link> of four or six numbers specifying a callout
+line attached to the <parameter>poppler_annot</parameter>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>poppler_annot</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="PopplerAnnotFreeText"><type>PopplerAnnotFreeText</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> a new allocated <link linkend="PopplerCalloutLine"><type>PopplerCalloutLine</type></link> if the annot has a callout
+              line, NULL in other case. It must be freed with <link linkend="g-free"><function>g_free()</function></link> when
+              done.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="poppler-annot-free-text-get-quadding" role="function">
+<title>poppler_annot_free_text_get_quadding ()</title>
+<indexterm zone="poppler-annot-free-text-get-quadding"><primary sortas="poppler_annot_free_text_get_quadding">poppler_annot_free_text_get_quadding</primary></indexterm><programlisting><link linkend="PopplerAnnotFreeTextQuadding">PopplerAnnotFreeTextQuadding</link>  poppler_annot_free_text_get_quadding
+                                                        (<link linkend="PopplerAnnotFreeText">PopplerAnnotFreeText</link> *poppler_annot);</programlisting>
+<para>
+Retrieves the justification of the text of <parameter>poppler_annot</parameter>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>poppler_annot</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="PopplerAnnotFreeText"><type>PopplerAnnotFreeText</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> <link linkend="PopplerAnnotFreeTextQuadding"><type>PopplerAnnotFreeTextQuadding</type></link> of <parameter>poppler_annot</parameter>.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="poppler-annot-free-text-get-type" role="function">
+<title>poppler_annot_free_text_get_type ()</title>
+<indexterm zone="poppler-annot-free-text-get-type"><primary sortas="poppler_annot_free_text_get_type">poppler_annot_free_text_get_type</primary></indexterm><programlisting><link linkend="GType">GType</link>               poppler_annot_free_text_get_type    (void);</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="poppler-annot-free-text-quadding-get-type" role="function">
+<title>poppler_annot_free_text_quadding_get_type ()</title>
+<indexterm zone="poppler-annot-free-text-quadding-get-type"><primary sortas="poppler_annot_free_text_quadding_get_type">poppler_annot_free_text_quadding_get_type</primary></indexterm><programlisting><link linkend="GType">GType</link>               poppler_annot_free_text_quadding_get_type
+                                                        (void);</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="poppler-annot-get-annot-type" role="function">
+<title>poppler_annot_get_annot_type ()</title>
+<indexterm zone="poppler-annot-get-annot-type"><primary sortas="poppler_annot_get_annot_type">poppler_annot_get_annot_type</primary></indexterm><programlisting><link linkend="PopplerAnnotType">PopplerAnnotType</link>    poppler_annot_get_annot_type        (<link linkend="PopplerAnnot">PopplerAnnot</link> *poppler_annot);</programlisting>
+<para>
+Gets the type of <parameter>poppler_annot</parameter></para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>poppler_annot</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="PopplerAnnot"><type>PopplerAnnot</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> <link linkend="PopplerAnnotType"><type>PopplerAnnotType</type></link> of <parameter>poppler_annot</parameter>.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="poppler-annot-get-color" role="function">
+<title>poppler_annot_get_color ()</title>
+<indexterm zone="poppler-annot-get-color"><primary sortas="poppler_annot_get_color">poppler_annot_get_color</primary></indexterm><programlisting><link linkend="PopplerColor">PopplerColor</link> *      poppler_annot_get_color             (<link linkend="PopplerAnnot">PopplerAnnot</link> *poppler_annot);</programlisting>
+<para>
+Retrieves the color of <parameter>poppler_annot</parameter>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>poppler_annot</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="PopplerAnnot"><type>PopplerAnnot</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> a new allocated <link linkend="PopplerColor"><type>PopplerColor</type></link> with the color values of
+              <parameter>poppler_annot</parameter>, or <link linkend="NULL--CAPS"><literal>NULL</literal></link>. It must be freed with <link linkend="g-free"><function>g_free()</function></link> when done.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="poppler-annot-get-contents" role="function">
+<title>poppler_annot_get_contents ()</title>
+<indexterm zone="poppler-annot-get-contents"><primary sortas="poppler_annot_get_contents">poppler_annot_get_contents</primary></indexterm><programlisting><link linkend="gchar">gchar</link> *             poppler_annot_get_contents          (<link linkend="PopplerAnnot">PopplerAnnot</link> *poppler_annot);</programlisting>
+<para>
+Retrieves the contents of <parameter>poppler_annot</parameter>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>poppler_annot</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="PopplerAnnot"><type>PopplerAnnot</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> a new allocated string with the contents of <parameter>poppler_annot</parameter>. It
+              must be freed with <link linkend="g-free"><function>g_free()</function></link> when done.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="poppler-annot-get-flags" role="function">
+<title>poppler_annot_get_flags ()</title>
+<indexterm zone="poppler-annot-get-flags"><primary sortas="poppler_annot_get_flags">poppler_annot_get_flags</primary></indexterm><programlisting><link linkend="PopplerAnnotFlag">PopplerAnnotFlag</link>    poppler_annot_get_flags             (<link linkend="PopplerAnnot">PopplerAnnot</link> *poppler_annot);</programlisting>
+<para>
+Retrieves the flag field specifying various characteristics of the
+<parameter>poppler_annot</parameter>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>poppler_annot</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="PopplerAnnot"><type>PopplerAnnot</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the flag field of <parameter>poppler_annot</parameter>.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="poppler-annot-get-modified" role="function">
+<title>poppler_annot_get_modified ()</title>
+<indexterm zone="poppler-annot-get-modified"><primary sortas="poppler_annot_get_modified">poppler_annot_get_modified</primary></indexterm><programlisting><link linkend="gchar">gchar</link> *             poppler_annot_get_modified          (<link linkend="PopplerAnnot">PopplerAnnot</link> *poppler_annot);</programlisting>
+<para>
+Retrieves the last modification data of <parameter>poppler_annot</parameter>. The returned
+string will be either a PDF format date or a text string.
+See also #<link linkend="poppler-date-parse"><function>poppler_date_parse()</function></link></para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>poppler_annot</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="PopplerAnnot"><type>PopplerAnnot</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> a new allocated string with the last modification data of
+              <parameter>poppler_annot</parameter>. It must be freed with <link linkend="g-free"><function>g_free()</function></link> when done.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="poppler-annot-get-name" role="function">
+<title>poppler_annot_get_name ()</title>
+<indexterm zone="poppler-annot-get-name"><primary sortas="poppler_annot_get_name">poppler_annot_get_name</primary></indexterm><programlisting><link linkend="gchar">gchar</link> *             poppler_annot_get_name              (<link linkend="PopplerAnnot">PopplerAnnot</link> *poppler_annot);</programlisting>
+<para>
+Retrieves the name of <parameter>poppler_annot</parameter>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>poppler_annot</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="PopplerAnnot"><type>PopplerAnnot</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> a new allocated string with the name of <parameter>poppler_annot</parameter>. It must
+              be freed with <link linkend="g-free"><function>g_free()</function></link> when done.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="poppler-annot-get-type" role="function">
+<title>poppler_annot_get_type ()</title>
+<indexterm zone="poppler-annot-get-type"><primary sortas="poppler_annot_get_type">poppler_annot_get_type</primary></indexterm><programlisting><link linkend="GType">GType</link>               poppler_annot_get_type              (void);</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="poppler-annot-mapping-copy" role="function">
+<title>poppler_annot_mapping_copy ()</title>
+<indexterm zone="poppler-annot-mapping-copy"><primary sortas="poppler_annot_mapping_copy">poppler_annot_mapping_copy</primary></indexterm><programlisting><link linkend="PopplerAnnotMapping">PopplerAnnotMapping</link> * poppler_annot_mapping_copy        (<link linkend="PopplerAnnotMapping">PopplerAnnotMapping</link> *mapping);</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>mapping</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="poppler-annot-mapping-free" role="function">
+<title>poppler_annot_mapping_free ()</title>
+<indexterm zone="poppler-annot-mapping-free"><primary sortas="poppler_annot_mapping_free">poppler_annot_mapping_free</primary></indexterm><programlisting><link linkend="void">void</link>                poppler_annot_mapping_free          (<link linkend="PopplerAnnotMapping">PopplerAnnotMapping</link> *mapping);</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>mapping</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="poppler-annot-mapping-get-type" role="function">
+<title>poppler_annot_mapping_get_type ()</title>
+<indexterm zone="poppler-annot-mapping-get-type"><primary sortas="poppler_annot_mapping_get_type">poppler_annot_mapping_get_type</primary></indexterm><programlisting><link linkend="GType">GType</link>               poppler_annot_mapping_get_type      (void);</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="poppler-annot-mapping-new" role="function">
+<title>poppler_annot_mapping_new ()</title>
+<indexterm zone="poppler-annot-mapping-new"><primary sortas="poppler_annot_mapping_new">poppler_annot_mapping_new</primary></indexterm><programlisting><link linkend="PopplerAnnotMapping">PopplerAnnotMapping</link> * poppler_annot_mapping_new         (void);</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="poppler-annot-markup-get-date" role="function">
+<title>poppler_annot_markup_get_date ()</title>
+<indexterm zone="poppler-annot-markup-get-date"><primary sortas="poppler_annot_markup_get_date">poppler_annot_markup_get_date</primary></indexterm><programlisting><link linkend="GDate">GDate</link> *             poppler_annot_markup_get_date       (<link linkend="PopplerAnnotMarkup">PopplerAnnotMarkup</link> *poppler_annot);</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>poppler_annot</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="poppler-annot-markup-get-external-data" role="function">
+<title>poppler_annot_markup_get_external_data ()</title>
+<indexterm zone="poppler-annot-markup-get-external-data"><primary sortas="poppler_annot_markup_get_external_data">poppler_annot_markup_get_external_data</primary></indexterm><programlisting><link linkend="PopplerAnnotExternalDataType">PopplerAnnotExternalDataType</link>  poppler_annot_markup_get_external_data
+                                                        (<link linkend="PopplerAnnotMarkup">PopplerAnnotMarkup</link> *poppler_annot);</programlisting>
+<para>
+Gets the external data type of <parameter>poppler_annot</parameter>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>poppler_annot</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="PopplerAnnotMarkup"><type>PopplerAnnotMarkup</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> <link linkend="PopplerAnnotExternalDataType"><type>PopplerAnnotExternalDataType</type></link> of <parameter>poppler_annot</parameter>.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="poppler-annot-markup-get-label" role="function">
+<title>poppler_annot_markup_get_label ()</title>
+<indexterm zone="poppler-annot-markup-get-label"><primary sortas="poppler_annot_markup_get_label">poppler_annot_markup_get_label</primary></indexterm><programlisting><link linkend="gchar">gchar</link> *             poppler_annot_markup_get_label      (<link linkend="PopplerAnnotMarkup">PopplerAnnotMarkup</link> *poppler_annot);</programlisting>
+<para>
+Retrieves the label text of <parameter>poppler_annot</parameter>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>poppler_annot</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="PopplerAnnotMarkup"><type>PopplerAnnotMarkup</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the label text of <parameter>poppler_annot</parameter>.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="poppler-annot-markup-get-opacity" role="function">
+<title>poppler_annot_markup_get_opacity ()</title>
+<indexterm zone="poppler-annot-markup-get-opacity"><primary sortas="poppler_annot_markup_get_opacity">poppler_annot_markup_get_opacity</primary></indexterm><programlisting><link linkend="gdouble">gdouble</link>             poppler_annot_markup_get_opacity    (<link linkend="PopplerAnnotMarkup">PopplerAnnotMarkup</link> *poppler_annot);</programlisting>
+<para>
+Retrieves the opacity value of <parameter>poppler_annot</parameter>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>poppler_annot</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="PopplerAnnotMarkup"><type>PopplerAnnotMarkup</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the opacity value of <parameter>poppler_annot</parameter>.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="poppler-annot-markup-get-popup-is-open" role="function">
+<title>poppler_annot_markup_get_popup_is_open ()</title>
+<indexterm zone="poppler-annot-markup-get-popup-is-open"><primary sortas="poppler_annot_markup_get_popup_is_open">poppler_annot_markup_get_popup_is_open</primary></indexterm><programlisting><link linkend="gboolean">gboolean</link>            poppler_annot_markup_get_popup_is_open
+                                                        (<link linkend="PopplerAnnotMarkup">PopplerAnnotMarkup</link> *poppler_annot);</programlisting>
+<para>
+Retrieves the state of the popup annot related to <parameter>poppler_annot</parameter>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>poppler_annot</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="PopplerAnnotMarkup"><type>PopplerAnnotMarkup</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the state of <parameter>poppler_annot</parameter>. <link linkend="TRUE--CAPS"><literal>TRUE</literal></link> if it's open, <link linkend="FALSE--CAPS"><literal>FALSE</literal></link> in
+              other case.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="poppler-annot-markup-get-reply-to" role="function">
+<title>poppler_annot_markup_get_reply_to ()</title>
+<indexterm zone="poppler-annot-markup-get-reply-to"><primary sortas="poppler_annot_markup_get_reply_to">poppler_annot_markup_get_reply_to</primary></indexterm><programlisting><link linkend="PopplerAnnotMarkupReplyType">PopplerAnnotMarkupReplyType</link>  poppler_annot_markup_get_reply_to
+                                                        (<link linkend="PopplerAnnotMarkup">PopplerAnnotMarkup</link> *poppler_annot);</programlisting>
+<para>
+Gets the reply type of <parameter>poppler_annot</parameter>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>poppler_annot</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="PopplerAnnotMarkup"><type>PopplerAnnotMarkup</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> <link linkend="PopplerAnnotMarkupReplyType"><type>PopplerAnnotMarkupReplyType</type></link> of <parameter>poppler_annot</parameter>.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="poppler-annot-markup-get-subject" role="function">
+<title>poppler_annot_markup_get_subject ()</title>
+<indexterm zone="poppler-annot-markup-get-subject"><primary sortas="poppler_annot_markup_get_subject">poppler_annot_markup_get_subject</primary></indexterm><programlisting><link linkend="gchar">gchar</link> *             poppler_annot_markup_get_subject    (<link linkend="PopplerAnnotMarkup">PopplerAnnotMarkup</link> *poppler_annot);</programlisting>
+<para>
+Retrives the subject text of <parameter>poppler_annot</parameter>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>poppler_annot</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="PopplerAnnotMarkup"><type>PopplerAnnotMarkup</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the subject text of <parameter>poppler_annot</parameter>.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="poppler-annot-markup-get-type" role="function">
+<title>poppler_annot_markup_get_type ()</title>
+<indexterm zone="poppler-annot-markup-get-type"><primary sortas="poppler_annot_markup_get_type">poppler_annot_markup_get_type</primary></indexterm><programlisting><link linkend="GType">GType</link>               poppler_annot_markup_get_type       (void);</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="poppler-annot-markup-reply-type-get-type" role="function">
+<title>poppler_annot_markup_reply_type_get_type ()</title>
+<indexterm zone="poppler-annot-markup-reply-type-get-type"><primary sortas="poppler_annot_markup_reply_type_get_type">poppler_annot_markup_reply_type_get_type</primary></indexterm><programlisting><link linkend="GType">GType</link>               poppler_annot_markup_reply_type_get_type
+                                                        (void);</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="poppler-annot-text-get-icon" role="function">
+<title>poppler_annot_text_get_icon ()</title>
+<indexterm zone="poppler-annot-text-get-icon"><primary sortas="poppler_annot_text_get_icon">poppler_annot_text_get_icon</primary></indexterm><programlisting><link linkend="gchar">gchar</link> *             poppler_annot_text_get_icon         (<link linkend="PopplerAnnotText">PopplerAnnotText</link> *poppler_annot);</programlisting>
+<para>
+Gets the icon type of <parameter>poppler_annot</parameter>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>poppler_annot</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="PopplerAnnotText"><type>PopplerAnnotText</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> <link linkend="PopplerAnnotTextIcon"><type>PopplerAnnotTextIcon</type></link> of <parameter>poppler_annot</parameter>.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="poppler-annot-text-get-is-open" role="function">
+<title>poppler_annot_text_get_is_open ()</title>
+<indexterm zone="poppler-annot-text-get-is-open"><primary sortas="poppler_annot_text_get_is_open">poppler_annot_text_get_is_open</primary></indexterm><programlisting><link linkend="gboolean">gboolean</link>            poppler_annot_text_get_is_open      (<link linkend="PopplerAnnotText">PopplerAnnotText</link> *poppler_annot);</programlisting>
+<para>
+Retrieves the state of <parameter>poppler_annot</parameter>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>poppler_annot</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="PopplerAnnotText"><type>PopplerAnnotText</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the state of <parameter>poppler_annot</parameter>. <link linkend="TRUE--CAPS"><literal>TRUE</literal></link> if it's open, <link linkend="FALSE--CAPS"><literal>FALSE</literal></link> in
+              other case.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="poppler-annot-text-get-state" role="function">
+<title>poppler_annot_text_get_state ()</title>
+<indexterm zone="poppler-annot-text-get-state"><primary sortas="poppler_annot_text_get_state">poppler_annot_text_get_state</primary></indexterm><programlisting><link linkend="PopplerAnnotTextState">PopplerAnnotTextState</link>  poppler_annot_text_get_state     (<link linkend="PopplerAnnotText">PopplerAnnotText</link> *poppler_annot);</programlisting>
+<para>
+Retrieves the state of <parameter>poppler_annot</parameter>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>poppler_annot</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="PopplerAnnotText"><type>PopplerAnnotText</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> <link linkend="PopplerAnnotTextState"><type>PopplerAnnotTextState</type></link> of <parameter>poppler_annot</parameter>.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="poppler-annot-text-get-type" role="function">
+<title>poppler_annot_text_get_type ()</title>
+<indexterm zone="poppler-annot-text-get-type"><primary sortas="poppler_annot_text_get_type">poppler_annot_text_get_type</primary></indexterm><programlisting><link linkend="GType">GType</link>               poppler_annot_text_get_type         (void);</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="poppler-annot-text-state-get-type" role="function">
+<title>poppler_annot_text_state_get_type ()</title>
+<indexterm zone="poppler-annot-text-state-get-type"><primary sortas="poppler_annot_text_state_get_type">poppler_annot_text_state_get_type</primary></indexterm><programlisting><link linkend="GType">GType</link>               poppler_annot_text_state_get_type   (void);</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="poppler-annot-type-get-type" role="function">
+<title>poppler_annot_type_get_type ()</title>
+<indexterm zone="poppler-annot-type-get-type"><primary sortas="poppler_annot_type_get_type">poppler_annot_type_get_type</primary></indexterm><programlisting><link linkend="GType">GType</link>               poppler_annot_type_get_type         (void);</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+
+</refsect1>
+
+
+
+
+</refentry>

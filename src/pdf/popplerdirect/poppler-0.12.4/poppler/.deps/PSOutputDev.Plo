@@ -1,0 +1,271 @@
+PSOutputDev.lo: PSOutputDev.cc ../config.h /usr/include/stdio.h \
+ /usr/include/features.h /usr/include/bits/predefs.h \
+ /usr/include/sys/cdefs.h /usr/include/bits/wordsize.h \
+ /usr/include/gnu/stubs.h /usr/include/gnu/stubs-64.h \
+ /usr/lib/gcc/x86_64-linux-gnu/4.4.5/include/stddef.h \
+ /usr/include/bits/types.h /usr/include/bits/typesizes.h \
+ /usr/include/libio.h /usr/include/_G_config.h /usr/include/wchar.h \
+ /usr/lib/gcc/x86_64-linux-gnu/4.4.5/include/stdarg.h \
+ /usr/include/bits/stdio_lim.h /usr/include/bits/sys_errlist.h \
+ /usr/include/bits/stdio.h /usr/include/signal.h \
+ /usr/include/bits/sigset.h /usr/include/bits/signum.h \
+ /usr/include/time.h /usr/include/bits/siginfo.h \
+ /usr/include/bits/sigaction.h /usr/include/bits/sigcontext.h \
+ /usr/include/bits/sigstack.h /usr/include/sys/ucontext.h \
+ /usr/include/bits/pthreadtypes.h /usr/include/bits/sigthread.h \
+ /usr/include/math.h /usr/include/bits/huge_val.h \
+ /usr/include/bits/huge_valf.h /usr/include/bits/huge_vall.h \
+ /usr/include/bits/inf.h /usr/include/bits/nan.h \
+ /usr/include/bits/mathdef.h /usr/include/bits/mathcalls.h \
+ /usr/include/bits/mathinline.h \
+ /usr/lib/gcc/x86_64-linux-gnu/4.4.5/include-fixed/limits.h \
+ /usr/lib/gcc/x86_64-linux-gnu/4.4.5/include-fixed/syslimits.h \
+ /usr/include/limits.h /usr/include/bits/posix1_lim.h \
+ /usr/include/bits/local_lim.h /usr/include/linux/limits.h \
+ /usr/include/bits/posix2_lim.h /usr/include/bits/xopen_lim.h \
+ ../goo/GooString.h /usr/include/stdlib.h /usr/include/bits/waitflags.h \
+ /usr/include/bits/waitstatus.h /usr/include/endian.h \
+ /usr/include/bits/endian.h /usr/include/bits/byteswap.h \
+ /usr/include/xlocale.h /usr/include/sys/types.h \
+ /usr/include/sys/select.h /usr/include/bits/select.h \
+ /usr/include/bits/time.h /usr/include/sys/sysmacros.h \
+ /usr/include/alloca.h ../goo/gtypes.h ../goo/GooList.h poppler-config.h \
+ GlobalParams.h /usr/include/assert.h \
+ /usr/include/fontconfig/fontconfig.h /usr/include/sys/stat.h \
+ /usr/include/bits/stat.h /usr/include/unistd.h \
+ /usr/include/bits/posix_opt.h /usr/include/bits/environments.h \
+ /usr/include/bits/confname.h /usr/include/getopt.h ../goo/gtypes.h \
+ CharTypes.h ../goo/GooMutex.h /usr/include/pthread.h \
+ /usr/include/sched.h /usr/include/bits/sched.h \
+ /usr/include/bits/setjmp.h Object.h /usr/include/string.h ../goo/gmem.h \
+ ../poppler/poppler-config.h Error.h Array.h Dict.h Stream.h Function.h \
+ Gfx.h GfxState.h PopplerCache.h GfxFont.h UnicodeMap.h \
+ ../fofi/FoFiType1C.h ../fofi/FoFiBase.h ../fofi/FoFiTrueType.h Catalog.h \
+ Page.h Annot.h XRef.h PreScanOutputDev.h OutputDev.h FileSpec.h \
+ ../splash/Splash.h ../splash/SplashTypes.h ../splash/SplashClip.h \
+ ../splash/SplashMath.h ../splash/SplashBitmap.h SplashOutputDev.h \
+ ../splash/SplashTypes.h PSOutputDev.h
+
+../config.h:
+
+/usr/include/stdio.h:
+
+/usr/include/features.h:
+
+/usr/include/bits/predefs.h:
+
+/usr/include/sys/cdefs.h:
+
+/usr/include/bits/wordsize.h:
+
+/usr/include/gnu/stubs.h:
+
+/usr/include/gnu/stubs-64.h:
+
+/usr/lib/gcc/x86_64-linux-gnu/4.4.5/include/stddef.h:
+
+/usr/include/bits/types.h:
+
+/usr/include/bits/typesizes.h:
+
+/usr/include/libio.h:
+
+/usr/include/_G_config.h:
+
+/usr/include/wchar.h:
+
+/usr/lib/gcc/x86_64-linux-gnu/4.4.5/include/stdarg.h:
+
+/usr/include/bits/stdio_lim.h:
+
+/usr/include/bits/sys_errlist.h:
+
+/usr/include/bits/stdio.h:
+
+/usr/include/signal.h:
+
+/usr/include/bits/sigset.h:
+
+/usr/include/bits/signum.h:
+
+/usr/include/time.h:
+
+/usr/include/bits/siginfo.h:
+
+/usr/include/bits/sigaction.h:
+
+/usr/include/bits/sigcontext.h:
+
+/usr/include/bits/sigstack.h:
+
+/usr/include/sys/ucontext.h:
+
+/usr/include/bits/pthreadtypes.h:
+
+/usr/include/bits/sigthread.h:
+
+/usr/include/math.h:
+
+/usr/include/bits/huge_val.h:
+
+/usr/include/bits/huge_valf.h:
+
+/usr/include/bits/huge_vall.h:
+
+/usr/include/bits/inf.h:
+
+/usr/include/bits/nan.h:
+
+/usr/include/bits/mathdef.h:
+
+/usr/include/bits/mathcalls.h:
+
+/usr/include/bits/mathinline.h:
+
+/usr/lib/gcc/x86_64-linux-gnu/4.4.5/include-fixed/limits.h:
+
+/usr/lib/gcc/x86_64-linux-gnu/4.4.5/include-fixed/syslimits.h:
+
+/usr/include/limits.h:
+
+/usr/include/bits/posix1_lim.h:
+
+/usr/include/bits/local_lim.h:
+
+/usr/include/linux/limits.h:
+
+/usr/include/bits/posix2_lim.h:
+
+/usr/include/bits/xopen_lim.h:
+
+../goo/GooString.h:
+
+/usr/include/stdlib.h:
+
+/usr/include/bits/waitflags.h:
+
+/usr/include/bits/waitstatus.h:
+
+/usr/include/endian.h:
+
+/usr/include/bits/endian.h:
+
+/usr/include/bits/byteswap.h:
+
+/usr/include/xlocale.h:
+
+/usr/include/sys/types.h:
+
+/usr/include/sys/select.h:
+
+/usr/include/bits/select.h:
+
+/usr/include/bits/time.h:
+
+/usr/include/sys/sysmacros.h:
+
+/usr/include/alloca.h:
+
+../goo/gtypes.h:
+
+../goo/GooList.h:
+
+poppler-config.h:
+
+GlobalParams.h:
+
+/usr/include/assert.h:
+
+/usr/include/fontconfig/fontconfig.h:
+
+/usr/include/sys/stat.h:
+
+/usr/include/bits/stat.h:
+
+/usr/include/unistd.h:
+
+/usr/include/bits/posix_opt.h:
+
+/usr/include/bits/environments.h:
+
+/usr/include/bits/confname.h:
+
+/usr/include/getopt.h:
+
+../goo/gtypes.h:
+
+CharTypes.h:
+
+../goo/GooMutex.h:
+
+/usr/include/pthread.h:
+
+/usr/include/sched.h:
+
+/usr/include/bits/sched.h:
+
+/usr/include/bits/setjmp.h:
+
+Object.h:
+
+/usr/include/string.h:
+
+../goo/gmem.h:
+
+../poppler/poppler-config.h:
+
+Error.h:
+
+Array.h:
+
+Dict.h:
+
+Stream.h:
+
+Function.h:
+
+Gfx.h:
+
+GfxState.h:
+
+PopplerCache.h:
+
+GfxFont.h:
+
+UnicodeMap.h:
+
+../fofi/FoFiType1C.h:
+
+../fofi/FoFiBase.h:
+
+../fofi/FoFiTrueType.h:
+
+Catalog.h:
+
+Page.h:
+
+Annot.h:
+
+XRef.h:
+
+PreScanOutputDev.h:
+
+OutputDev.h:
+
+FileSpec.h:
+
+../splash/Splash.h:
+
+../splash/SplashTypes.h:
+
+../splash/SplashClip.h:
+
+../splash/SplashMath.h:
+
+../splash/SplashBitmap.h:
+
+SplashOutputDev.h:
+
+../splash/SplashTypes.h:
+
+PSOutputDev.h:

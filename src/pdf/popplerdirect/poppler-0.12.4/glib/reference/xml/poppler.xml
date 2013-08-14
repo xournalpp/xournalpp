@@ -1,0 +1,362 @@
+<?xml version="1.0"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" 
+               "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+<refentry id="poppler-poppler">
+<refmeta>
+<refentrytitle role="top_of_page" id="poppler-poppler.top_of_page">poppler</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>POPPLER Library</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>poppler</refname>
+<refpurpose></refpurpose>
+</refnamediv>
+
+<refsynopsisdiv id="poppler-poppler.synopsis" role="synopsis">
+<title role="synopsis.title">Synopsis</title>
+<anchor id="PopplerDocument"/><anchor id="PopplerPage"/>
+<synopsis>
+<link linkend="GQuark">GQuark</link>              <link linkend="poppler-error-quark">poppler_error_quark</link>                 (void);
+#define             <link linkend="POPPLER-ERROR--CAPS">POPPLER_ERROR</link>
+enum                <link linkend="PopplerError">PopplerError</link>;
+enum                <link linkend="PopplerOrientation">PopplerOrientation</link>;
+                    <link linkend="PopplerDocument-struct">PopplerDocument</link>;
+                    <link linkend="PopplerIndexIter">PopplerIndexIter</link>;
+                    <link linkend="PopplerFontsIter">PopplerFontsIter</link>;
+                    <link linkend="PopplerRectangle">PopplerRectangle</link>;
+enum                <link linkend="PopplerSelectionStyle">PopplerSelectionStyle</link>;
+enum                <link linkend="PopplerPageTransitionType">PopplerPageTransitionType</link>;
+enum                <link linkend="PopplerPageTransitionAlignment">PopplerPageTransitionAlignment</link>;
+enum                <link linkend="PopplerPageTransitionDirection">PopplerPageTransitionDirection</link>;
+                    <link linkend="PopplerLinkMapping">PopplerLinkMapping</link>;
+                    <link linkend="PopplerPage-struct">PopplerPage</link>;
+                    <link linkend="PopplerFontInfo">PopplerFontInfo</link>;
+                    <link linkend="PopplerPSFile">PopplerPSFile</link>;
+enum                <link linkend="PopplerBackend">PopplerBackend</link>;
+<link linkend="PopplerBackend">PopplerBackend</link>      <link linkend="poppler-get-backend">poppler_get_backend</link>                 (void);
+const <link linkend="char">char</link> *        <link linkend="poppler-get-version">poppler_get_version</link>                 (void);
+</synopsis>
+</refsynopsisdiv>
+
+<refsect1 id="poppler-poppler.object-hierarchy" role="object_hierarchy">
+<title role="object_hierarchy.title">Object Hierarchy</title>
+<synopsis>
+  <link linkend="GObject">GObject</link>
+   +----PopplerDocument
+</synopsis>
+<synopsis>
+  <link linkend="GObject">GObject</link>
+   +----PopplerPage
+</synopsis>
+</refsect1>
+
+
+
+
+
+<refsect1 id="poppler-poppler.properties" role="properties">
+<title role="properties.title">Properties</title>
+<synopsis>
+  &quot;<link linkend="PopplerDocument--author">author</link>&quot;                   <link linkend="gchar">gchar</link>*                : Read
+  &quot;<link linkend="PopplerDocument--creation-date">creation-date</link>&quot;            <link linkend="gint">gint</link>                  : Read
+  &quot;<link linkend="PopplerDocument--creator">creator</link>&quot;                  <link linkend="gchar">gchar</link>*                : Read
+  &quot;<link linkend="PopplerDocument--format">format</link>&quot;                   <link linkend="gchar">gchar</link>*                : Read
+  &quot;<link linkend="PopplerDocument--format-major">format-major</link>&quot;             <link linkend="guint">guint</link>                 : Read
+  &quot;<link linkend="PopplerDocument--format-minor">format-minor</link>&quot;             <link linkend="guint">guint</link>                 : Read
+  &quot;<link linkend="PopplerDocument--keywords">keywords</link>&quot;                 <link linkend="gchar">gchar</link>*                : Read
+  &quot;<link linkend="PopplerDocument--linearized">linearized</link>&quot;               <link linkend="gchar">gchar</link>*                : Read
+  &quot;<link linkend="PopplerDocument--metadata">metadata</link>&quot;                 <link linkend="gchar">gchar</link>*                : Read
+  &quot;<link linkend="PopplerDocument--mod-date">mod-date</link>&quot;                 <link linkend="gint">gint</link>                  : Read
+  &quot;<link linkend="PopplerDocument--page-layout">page-layout</link>&quot;              <link linkend="PopplerPageLayout">PopplerPageLayout</link>     : Read
+  &quot;<link linkend="PopplerDocument--page-mode">page-mode</link>&quot;                <link linkend="PopplerPageMode">PopplerPageMode</link>       : Read
+  &quot;<link linkend="PopplerDocument--permissions">permissions</link>&quot;              <link linkend="PopplerPermissions">PopplerPermissions</link>    : Read
+  &quot;<link linkend="PopplerDocument--producer">producer</link>&quot;                 <link linkend="gchar">gchar</link>*                : Read
+  &quot;<link linkend="PopplerDocument--subject">subject</link>&quot;                  <link linkend="gchar">gchar</link>*                : Read
+  &quot;<link linkend="PopplerDocument--title">title</link>&quot;                    <link linkend="gchar">gchar</link>*                : Read
+  &quot;<link linkend="PopplerDocument--viewer-preferences">viewer-preferences</link>&quot;       <link linkend="PopplerViewerPreferences">PopplerViewerPreferences</link>  : Read
+  &quot;<link linkend="PopplerPage--label">label</link>&quot;                    <link linkend="gchar">gchar</link>*                : Read
+</synopsis>
+</refsect1>
+
+
+
+<refsect1 id="poppler-poppler.description" role="desc">
+<title role="desc.title">Description</title>
+<para>
+</para>
+</refsect1>
+
+<refsect1 id="poppler-poppler.details" role="details">
+<title role="details.title">Details</title>
+<refsect2 id="poppler-error-quark" role="function">
+<title>poppler_error_quark ()</title>
+<indexterm zone="poppler-error-quark"><primary sortas="poppler_error_quark">poppler_error_quark</primary></indexterm><programlisting><link linkend="GQuark">GQuark</link>              poppler_error_quark                 (void);</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="POPPLER-ERROR--CAPS" role="macro">
+<title>POPPLER_ERROR</title>
+<indexterm zone="POPPLER-ERROR--CAPS"><primary sortas="POPPLER_ERROR">POPPLER_ERROR</primary></indexterm><programlisting>#define POPPLER_ERROR poppler_error_quark ()
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="PopplerError" role="enum">
+<title>enum PopplerError</title>
+<indexterm zone="PopplerError"><primary sortas="PopplerError">PopplerError</primary></indexterm><programlisting>typedef enum
+{
+  POPPLER_ERROR_INVALID,
+  POPPLER_ERROR_ENCRYPTED,
+  POPPLER_ERROR_OPEN_FILE,
+  POPPLER_ERROR_BAD_CATALOG,
+  POPPLER_ERROR_DAMAGED
+} PopplerError;
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="PopplerOrientation" role="enum">
+<title>enum PopplerOrientation</title>
+<indexterm zone="PopplerOrientation"><primary sortas="PopplerOrientation">PopplerOrientation</primary></indexterm><programlisting>typedef enum
+{
+  POPPLER_ORIENTATION_PORTRAIT,
+  POPPLER_ORIENTATION_LANDSCAPE,
+  POPPLER_ORIENTATION_UPSIDEDOWN,
+  POPPLER_ORIENTATION_SEASCAPE
+} PopplerOrientation;
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="PopplerDocument-struct" role="struct">
+<title>PopplerDocument</title>
+<indexterm zone="PopplerDocument-struct"><primary sortas="PopplerDocument">PopplerDocument</primary></indexterm><programlisting>typedef struct _PopplerDocument PopplerDocument;</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="PopplerIndexIter" role="struct">
+<title>PopplerIndexIter</title>
+<indexterm zone="PopplerIndexIter"><primary sortas="PopplerIndexIter">PopplerIndexIter</primary></indexterm><programlisting>typedef struct _PopplerIndexIter PopplerIndexIter;</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="PopplerFontsIter" role="struct">
+<title>PopplerFontsIter</title>
+<indexterm zone="PopplerFontsIter"><primary sortas="PopplerFontsIter">PopplerFontsIter</primary></indexterm><programlisting>typedef struct _PopplerFontsIter PopplerFontsIter;</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="PopplerRectangle" role="struct">
+<title>PopplerRectangle</title>
+<indexterm zone="PopplerRectangle"><primary sortas="PopplerRectangle">PopplerRectangle</primary></indexterm><programlisting>typedef struct {
+  gdouble x1;
+  gdouble y1;
+  gdouble x2;
+  gdouble y2;
+} PopplerRectangle;
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="PopplerSelectionStyle" role="enum">
+<title>enum PopplerSelectionStyle</title>
+<indexterm zone="PopplerSelectionStyle"><primary sortas="PopplerSelectionStyle">PopplerSelectionStyle</primary></indexterm><programlisting>typedef enum
+{
+  POPPLER_SELECTION_GLYPH,
+  POPPLER_SELECTION_WORD,
+  POPPLER_SELECTION_LINE
+} PopplerSelectionStyle;
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="PopplerPageTransitionType" role="enum">
+<title>enum PopplerPageTransitionType</title>
+<indexterm zone="PopplerPageTransitionType"><primary sortas="PopplerPageTransitionType">PopplerPageTransitionType</primary></indexterm><programlisting>typedef enum
+{
+  POPPLER_PAGE_TRANSITION_REPLACE,
+  POPPLER_PAGE_TRANSITION_SPLIT,
+  POPPLER_PAGE_TRANSITION_BLINDS,
+  POPPLER_PAGE_TRANSITION_BOX,
+  POPPLER_PAGE_TRANSITION_WIPE,
+  POPPLER_PAGE_TRANSITION_DISSOLVE,
+  POPPLER_PAGE_TRANSITION_GLITTER,
+  POPPLER_PAGE_TRANSITION_FLY,
+  POPPLER_PAGE_TRANSITION_PUSH,
+  POPPLER_PAGE_TRANSITION_COVER,
+  POPPLER_PAGE_TRANSITION_UNCOVER,
+  POPPLER_PAGE_TRANSITION_FADE
+} PopplerPageTransitionType;
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="PopplerPageTransitionAlignment" role="enum">
+<title>enum PopplerPageTransitionAlignment</title>
+<indexterm zone="PopplerPageTransitionAlignment"><primary sortas="PopplerPageTransitionAlignment">PopplerPageTransitionAlignment</primary></indexterm><programlisting>typedef enum
+{
+  POPPLER_PAGE_TRANSITION_HORIZONTAL,
+  POPPLER_PAGE_TRANSITION_VERTICAL
+} PopplerPageTransitionAlignment;
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="PopplerPageTransitionDirection" role="enum">
+<title>enum PopplerPageTransitionDirection</title>
+<indexterm zone="PopplerPageTransitionDirection"><primary sortas="PopplerPageTransitionDirection">PopplerPageTransitionDirection</primary></indexterm><programlisting>typedef enum
+{
+  POPPLER_PAGE_TRANSITION_INWARD,
+  POPPLER_PAGE_TRANSITION_OUTWARD
+} PopplerPageTransitionDirection;
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="PopplerLinkMapping" role="struct">
+<title>PopplerLinkMapping</title>
+<indexterm zone="PopplerLinkMapping"><primary sortas="PopplerLinkMapping">PopplerLinkMapping</primary></indexterm><programlisting>typedef struct {
+  PopplerRectangle area;
+  PopplerAction *action;
+} PopplerLinkMapping;
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="PopplerPage-struct" role="struct">
+<title>PopplerPage</title>
+<indexterm zone="PopplerPage-struct"><primary sortas="PopplerPage">PopplerPage</primary></indexterm><programlisting>typedef struct _PopplerPage PopplerPage;</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="PopplerFontInfo" role="struct">
+<title>PopplerFontInfo</title>
+<indexterm zone="PopplerFontInfo"><primary sortas="PopplerFontInfo">PopplerFontInfo</primary></indexterm><programlisting>typedef struct {
+  GObject parent_instance;
+  PopplerDocument *document;
+  FontInfoScanner *scanner;
+} PopplerFontInfo;
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="PopplerPSFile" role="struct">
+<title>PopplerPSFile</title>
+<indexterm zone="PopplerPSFile"><primary sortas="PopplerPSFile">PopplerPSFile</primary></indexterm><programlisting>typedef struct {
+  GObject parent_instance;
+
+  PopplerDocument *document;
+  PSOutputDev *out;
+  char *filename;
+  int first_page;
+  int last_page;
+  double paper_width;
+  double paper_height;
+  gboolean duplex;
+} PopplerPSFile;
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="PopplerBackend" role="enum">
+<title>enum PopplerBackend</title>
+<indexterm zone="PopplerBackend"><primary sortas="PopplerBackend">PopplerBackend</primary></indexterm><programlisting>typedef enum
+{
+  POPPLER_BACKEND_UNKNOWN,
+  POPPLER_BACKEND_SPLASH,
+  POPPLER_BACKEND_CAIRO
+} PopplerBackend;
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="poppler-get-backend" role="function">
+<title>poppler_get_backend ()</title>
+<indexterm zone="poppler-get-backend"><primary sortas="poppler_get_backend">poppler_get_backend</primary></indexterm><programlisting><link linkend="PopplerBackend">PopplerBackend</link>      poppler_get_backend                 (void);</programlisting>
+<para>
+Returns the backend compiled into the poppler library.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> The backend used by poppler
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="poppler-get-version" role="function">
+<title>poppler_get_version ()</title>
+<indexterm zone="poppler-get-version"><primary sortas="poppler_get_version">poppler_get_version</primary></indexterm><programlisting>const <link linkend="char">char</link> *        poppler_get_version                 (void);</programlisting>
+<para>
+Returns the version of poppler in use.  This result is not to be freed.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the version of poppler.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+
+</refsect1>
+<refsect1 id="poppler-poppler.property-details" role="property_details">
+<title role="property_details.title">Property Details</title>
+<refsect2 id="PopplerDocument--author" role="property"><title>The <literal>&quot;author&quot;</literal> property</title>
+<indexterm zone="PopplerDocument--author"><primary sortas="PopplerDocument:author">PopplerDocument:author</primary></indexterm><programlisting>  &quot;author&quot;                   <link linkend="gchar">gchar</link>*                : Read</programlisting>
+<para>The author of the document.</para><para>Default value: NULL</para>
+</refsect2>
+<refsect2 id="PopplerDocument--creation-date" role="property"><title>The <literal>&quot;creation-date&quot;</literal> property</title>
+<indexterm zone="PopplerDocument--creation-date"><primary sortas="PopplerDocument:creation-date">PopplerDocument:creation-date</primary></indexterm><programlisting>  &quot;creation-date&quot;            <link linkend="gint">gint</link>                  : Read</programlisting>
+<para>The date and time the document was created.</para><para>Allowed values: &gt;= 0</para>
+<para>Default value: 0</para>
+</refsect2>
+<refsect2 id="PopplerDocument--creator" role="property"><title>The <literal>&quot;creator&quot;</literal> property</title>
+<indexterm zone="PopplerDocument--creator"><primary sortas="PopplerDocument:creator">PopplerDocument:creator</primary></indexterm><programlisting>  &quot;creator&quot;                  <link linkend="gchar">gchar</link>*                : Read</programlisting>
+<para>The software that created the document.</para><para>Default value: NULL</para>
+</refsect2>
+<refsect2 id="PopplerDocument--format" role="property"><title>The <literal>&quot;format&quot;</literal> property</title>
+<indexterm zone="PopplerDocument--format"><primary sortas="PopplerDocument:format">PopplerDocument:format</primary></indexterm><programlisting>  &quot;format&quot;                   <link linkend="gchar">gchar</link>*                : Read</programlisting>
+<para>The PDF version of the document.</para><para>Default value: NULL</para>
+</refsect2>
+<refsect2 id="PopplerDocument--format-major" role="property"><title>The <literal>&quot;format-major&quot;</literal> property</title>
+<indexterm zone="PopplerDocument--format-major"><primary sortas="PopplerDocument:format-major">PopplerDocument:format-major</primary></indexterm><programlisting>  &quot;format-major&quot;             <link linkend="guint">guint</link>                 : Read</programlisting>
+<para>The PDF major version number of the document.</para><para>Default value: 1</para>
+</refsect2>
+<refsect2 id="PopplerDocument--format-minor" role="property"><title>The <literal>&quot;format-minor&quot;</literal> property</title>
+<indexterm zone="PopplerDocument--format-minor"><primary sortas="PopplerDocument:format-minor">PopplerDocument:format-minor</primary></indexterm><programlisting>  &quot;format-minor&quot;             <link linkend="guint">guint</link>                 : Read</programlisting>
+<para>The PDF minor version number of the document.</para><para>Default value: 0</para>
+</refsect2>
+<refsect2 id="PopplerDocument--keywords" role="property"><title>The <literal>&quot;keywords&quot;</literal> property</title>
+<indexterm zone="PopplerDocument--keywords"><primary sortas="PopplerDocument:keywords">PopplerDocument:keywords</primary></indexterm><programlisting>  &quot;keywords&quot;                 <link linkend="gchar">gchar</link>*                : Read</programlisting>
+<para>Keywords.</para><para>Default value: NULL</para>
+</refsect2>
+<refsect2 id="PopplerDocument--linearized" role="property"><title>The <literal>&quot;linearized&quot;</literal> property</title>
+<indexterm zone="PopplerDocument--linearized"><primary sortas="PopplerDocument:linearized">PopplerDocument:linearized</primary></indexterm><programlisting>  &quot;linearized&quot;               <link linkend="gchar">gchar</link>*                : Read</programlisting>
+<para>Is the document optimized for web viewing?.</para><para>Default value: NULL</para>
+</refsect2>
+<refsect2 id="PopplerDocument--metadata" role="property"><title>The <literal>&quot;metadata&quot;</literal> property</title>
+<indexterm zone="PopplerDocument--metadata"><primary sortas="PopplerDocument:metadata">PopplerDocument:metadata</primary></indexterm><programlisting>  &quot;metadata&quot;                 <link linkend="gchar">gchar</link>*                : Read</programlisting>
+<para>Embedded XML metadata.</para><para>Default value: NULL</para>
+</refsect2>
+<refsect2 id="PopplerDocument--mod-date" role="property"><title>The <literal>&quot;mod-date&quot;</literal> property</title>
+<indexterm zone="PopplerDocument--mod-date"><primary sortas="PopplerDocument:mod-date">PopplerDocument:mod-date</primary></indexterm><programlisting>  &quot;mod-date&quot;                 <link linkend="gint">gint</link>                  : Read</programlisting>
+<para>The date and time the document was modified.</para><para>Allowed values: &gt;= 0</para>
+<para>Default value: 0</para>
+</refsect2>
+<refsect2 id="PopplerDocument--page-layout" role="property"><title>The <literal>&quot;page-layout&quot;</literal> property</title>
+<indexterm zone="PopplerDocument--page-layout"><primary sortas="PopplerDocument:page-layout">PopplerDocument:page-layout</primary></indexterm><programlisting>  &quot;page-layout&quot;              <link linkend="PopplerPageLayout">PopplerPageLayout</link>     : Read</programlisting>
+<para>Initial Page Layout.</para><para>Default value: POPPLER_PAGE_LAYOUT_UNSET</para>
+</refsect2>
+<refsect2 id="PopplerDocument--page-mode" role="property"><title>The <literal>&quot;page-mode&quot;</literal> property</title>
+<indexterm zone="PopplerDocument--page-mode"><primary sortas="PopplerDocument:page-mode">PopplerDocument:page-mode</primary></indexterm><programlisting>  &quot;page-mode&quot;                <link linkend="PopplerPageMode">PopplerPageMode</link>       : Read</programlisting>
+<para>Page Mode.</para><para>Default value: POPPLER_PAGE_MODE_UNSET</para>
+</refsect2>
+<refsect2 id="PopplerDocument--permissions" role="property"><title>The <literal>&quot;permissions&quot;</literal> property</title>
+<indexterm zone="PopplerDocument--permissions"><primary sortas="PopplerDocument:permissions">PopplerDocument:permissions</primary></indexterm><programlisting>  &quot;permissions&quot;              <link linkend="PopplerPermissions">PopplerPermissions</link>    : Read</programlisting>
+<para>Permissions.</para><para>Default value: POPPLER_PERMISSIONS_OK_TO_PRINT|POPPLER_PERMISSIONS_OK_TO_MODIFY|POPPLER_PERMISSIONS_OK_TO_COPY|POPPLER_PERMISSIONS_OK_TO_ADD_NOTES|POPPLER_PERMISSIONS_OK_TO_FILL_FORM</para>
+</refsect2>
+<refsect2 id="PopplerDocument--producer" role="property"><title>The <literal>&quot;producer&quot;</literal> property</title>
+<indexterm zone="PopplerDocument--producer"><primary sortas="PopplerDocument:producer">PopplerDocument:producer</primary></indexterm><programlisting>  &quot;producer&quot;                 <link linkend="gchar">gchar</link>*                : Read</programlisting>
+<para>The software that converted the document.</para><para>Default value: NULL</para>
+</refsect2>
+<refsect2 id="PopplerDocument--subject" role="property"><title>The <literal>&quot;subject&quot;</literal> property</title>
+<indexterm zone="PopplerDocument--subject"><primary sortas="PopplerDocument:subject">PopplerDocument:subject</primary></indexterm><programlisting>  &quot;subject&quot;                  <link linkend="gchar">gchar</link>*                : Read</programlisting>
+<para>Subjects the document touches.</para><para>Default value: NULL</para>
+</refsect2>
+<refsect2 id="PopplerDocument--title" role="property"><title>The <literal>&quot;title&quot;</literal> property</title>
+<indexterm zone="PopplerDocument--title"><primary sortas="PopplerDocument:title">PopplerDocument:title</primary></indexterm><programlisting>  &quot;title&quot;                    <link linkend="gchar">gchar</link>*                : Read</programlisting>
+<para>The title of the document.</para><para>Default value: NULL</para>
+</refsect2>
+<refsect2 id="PopplerDocument--viewer-preferences" role="property"><title>The <literal>&quot;viewer-preferences&quot;</literal> property</title>
+<indexterm zone="PopplerDocument--viewer-preferences"><primary sortas="PopplerDocument:viewer-preferences">PopplerDocument:viewer-preferences</primary></indexterm><programlisting>  &quot;viewer-preferences&quot;       <link linkend="PopplerViewerPreferences">PopplerViewerPreferences</link>  : Read</programlisting>
+<para>Viewer Preferences.</para></refsect2>
+<refsect2 id="PopplerPage--label" role="property"><title>The <literal>&quot;label&quot;</literal> property</title>
+<indexterm zone="PopplerPage--label"><primary sortas="PopplerPage:label">PopplerPage:label</primary></indexterm><programlisting>  &quot;label&quot;                    <link linkend="gchar">gchar</link>*                : Read</programlisting>
+<para>The label of the page.</para><para>Default value: NULL</para>
+</refsect2>
+</refsect1>
+
+
+
+
+</refentry>

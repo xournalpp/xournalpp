@@ -1,0 +1,114 @@
+<?xml version="1.0"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" 
+               "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+<refentry id="poppler-poppler-features">
+<refmeta>
+<refentrytitle role="top_of_page" id="poppler-poppler-features.top_of_page">Version and Features Information</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>POPPLER Library</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>Version and Features Information</refname>
+<refpurpose>Variables and functions to check the poppler version and features</refpurpose>
+</refnamediv>
+
+<refsynopsisdiv id="poppler-poppler-features.synopsis" role="synopsis">
+<title role="synopsis.title">Synopsis</title>
+
+<synopsis>
+#define             <link linkend="POPPLER-HAS-CAIRO--CAPS">POPPLER_HAS_CAIRO</link>
+#define             <link linkend="POPPLER-WITH-GDK--CAPS">POPPLER_WITH_GDK</link>
+#define             <link linkend="POPPLER-MAJOR-VERSION--CAPS">POPPLER_MAJOR_VERSION</link>
+#define             <link linkend="POPPLER-MINOR-VERSION--CAPS">POPPLER_MINOR_VERSION</link>
+#define             <link linkend="POPPLER-MICRO-VERSION--CAPS">POPPLER_MICRO_VERSION</link>
+#define             <link linkend="POPPLER-CHECK-VERSION--CAPS">POPPLER_CHECK_VERSION</link>               (major,minor,micro)
+</synopsis>
+</refsynopsisdiv>
+
+
+
+
+
+
+
+
+
+<refsect1 id="poppler-poppler-features.description" role="desc">
+<title role="desc.title">Description</title>
+<para>
+Poppler provides version information, and information about features
+enabled at compile time. This is primarily useful in configure checks
+for builds that have a configure script, or for allowing code to optionally
+depend but not require a specific poppler version.
+</para>
+</refsect1>
+
+<refsect1 id="poppler-poppler-features.details" role="details">
+<title role="details.title">Details</title>
+<refsect2 id="POPPLER-HAS-CAIRO--CAPS" role="macro">
+<title>POPPLER_HAS_CAIRO</title>
+<indexterm zone="POPPLER-HAS-CAIRO--CAPS"><primary sortas="POPPLER_HAS_CAIRO">POPPLER_HAS_CAIRO</primary></indexterm><programlisting>#define POPPLER_HAS_CAIRO 1
+</programlisting>
+<para>
+Defined if poppler was compiled with cairo support.
+</para></refsect2>
+<refsect2 id="POPPLER-WITH-GDK--CAPS" role="macro">
+<title>POPPLER_WITH_GDK</title>
+<indexterm zone="POPPLER-WITH-GDK--CAPS"><primary sortas="POPPLER_WITH_GDK">POPPLER_WITH_GDK</primary></indexterm><programlisting>#define POPPLER_WITH_GDK 1
+</programlisting>
+<para>
+Defined if poppler was compiled with GDK support.
+</para></refsect2>
+<refsect2 id="POPPLER-MAJOR-VERSION--CAPS" role="macro">
+<title>POPPLER_MAJOR_VERSION</title>
+<indexterm zone="POPPLER-MAJOR-VERSION--CAPS"><primary sortas="POPPLER_MAJOR_VERSION">POPPLER_MAJOR_VERSION</primary></indexterm><programlisting>#define POPPLER_MAJOR_VERSION (0)
+</programlisting>
+<para>
+The major version number of the poppler header files (e.g. in poppler version
+0.1.2 this is 0.)
+</para>
+Since: 0.11</refsect2>
+<refsect2 id="POPPLER-MINOR-VERSION--CAPS" role="macro">
+<title>POPPLER_MINOR_VERSION</title>
+<indexterm zone="POPPLER-MINOR-VERSION--CAPS"><primary sortas="POPPLER_MINOR_VERSION">POPPLER_MINOR_VERSION</primary></indexterm><programlisting>#define POPPLER_MINOR_VERSION (12)
+</programlisting>
+<para>
+</para>
+The major version number of the poppler header files (e.g. in poppler version
+0.1.2 this is 1.)
+Since: 0.11</refsect2>
+<refsect2 id="POPPLER-MICRO-VERSION--CAPS" role="macro">
+<title>POPPLER_MICRO_VERSION</title>
+<indexterm zone="POPPLER-MICRO-VERSION--CAPS"><primary sortas="POPPLER_MICRO_VERSION">POPPLER_MICRO_VERSION</primary></indexterm><programlisting>#define POPPLER_MICRO_VERSION (4)
+</programlisting>
+<para>
+The micro version number of the poppler header files (e.g. in poppler version
+0.1.2 this is 2.)
+</para>
+Since: 0.11</refsect2>
+<refsect2 id="POPPLER-CHECK-VERSION--CAPS" role="macro">
+<title>POPPLER_CHECK_VERSION()</title>
+<indexterm zone="POPPLER-CHECK-VERSION--CAPS"><primary sortas="POPPLER_CHECK_VERSION">POPPLER_CHECK_VERSION</primary></indexterm><programlisting>#define             POPPLER_CHECK_VERSION(major,minor,micro)</programlisting>
+<para>
+Returns <link linkend="TRUE--CAPS"><literal>TRUE</literal></link> if the version of the poppler header files is the same
+as or newer than the passed-in version.
+</para><variablelist role="params">
+<varlistentry><term><parameter>major</parameter>&#160;:</term>
+<listitem><simpara>major version (e.g. 0 for version 0.1.2)
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>minor</parameter>&#160;:</term>
+<listitem><simpara>minor version (e.g. 1 for version 0.1.2)
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>micro</parameter>&#160;:</term>
+<listitem><simpara>micro version (e.g. 2 for version 0.1.2)
+Since: 0.11
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+
+</refsect1>
+
+
+
+
+</refentry>

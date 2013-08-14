@@ -1,0 +1,205 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>PopplerAttachment</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.75.1">
+<link rel="home" href="index.html" title="Poppler Reference Manual">
+<link rel="up" href="ch01.html" title="Poppler">
+<link rel="prev" href="poppler-poppler-action.html" title="PopplerAction">
+<link rel="next" href="poppler-poppler-form-field.html" title="PopplerFormField">
+<meta name="generator" content="GTK-Doc V1.11 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+<link rel="chapter" href="ch01.html" title="Poppler">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
+<tr valign="middle">
+<td><a accesskey="p" href="poppler-poppler-action.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="ch01.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">Poppler Reference Manual</th>
+<td><a accesskey="n" href="poppler-poppler-form-field.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr>
+<tr><td colspan="5" class="shortcuts">
+<a href="#poppler-poppler-attachment.synopsis" class="shortcut">Top</a>
+                 | 
+                <a href="#poppler-poppler-attachment.description" class="shortcut">Description</a>
+</td></tr>
+</table>
+<div class="refentry" title="PopplerAttachment">
+<a name="poppler-poppler-attachment"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="poppler-poppler-attachment.top_of_page"></a>PopplerAttachment</span></h2>
+<p>PopplerAttachment</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsynopsisdiv" title="Synopsis">
+<a name="poppler-poppler-attachment.synopsis"></a><h2>Synopsis</h2>
+<a name="PopplerAttachment"></a><pre class="synopsis">
+                    <a class="link" href="poppler-poppler-attachment.html#PopplerAttachment-struct" title="PopplerAttachment">PopplerAttachment</a>;
+gboolean            <a class="link" href="poppler-poppler-attachment.html#poppler-attachment-save" title="poppler_attachment_save ()">poppler_attachment_save</a>             (<a class="link" href="poppler-poppler-attachment.html#PopplerAttachment">PopplerAttachment</a> *attachment,
+                                                         const char *filename,
+                                                         GError **error);
+gboolean            <a class="link" href="poppler-poppler-attachment.html#poppler-attachment-save-to-callback" title="poppler_attachment_save_to_callback ()">poppler_attachment_save_to_callback</a> (<a class="link" href="poppler-poppler-attachment.html#PopplerAttachment">PopplerAttachment</a> *attachment,
+                                                         <a class="link" href="poppler-poppler-attachment.html#PopplerAttachmentSaveFunc" title="PopplerAttachmentSaveFunc ()">PopplerAttachmentSaveFunc</a> save_func,
+                                                         gpointer user_data,
+                                                         GError **error);
+gboolean            (<a class="link" href="poppler-poppler-attachment.html#PopplerAttachmentSaveFunc" title="PopplerAttachmentSaveFunc ()">*PopplerAttachmentSaveFunc</a>)        (const gchar *buf,
+                                                         gsize count,
+                                                         gpointer data,
+                                                         GError **error);
+</pre>
+</div>
+<div class="refsect1" title="Description">
+<a name="poppler-poppler-attachment.description"></a><h2>Description</h2>
+<p>
+</p>
+</div>
+<div class="refsect1" title="Details">
+<a name="poppler-poppler-attachment.details"></a><h2>Details</h2>
+<div class="refsect2" title="PopplerAttachment">
+<a name="PopplerAttachment-struct"></a><h3>PopplerAttachment</h3>
+<pre class="programlisting">typedef struct _PopplerAttachment PopplerAttachment;</pre>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2" title="poppler_attachment_save ()">
+<a name="poppler-attachment-save"></a><h3>poppler_attachment_save ()</h3>
+<pre class="programlisting">gboolean            poppler_attachment_save             (<a class="link" href="poppler-poppler-attachment.html#PopplerAttachment">PopplerAttachment</a> *attachment,
+                                                         const char *filename,
+                                                         GError **error);</pre>
+<p>
+Saves <em class="parameter"><code>attachment</code></em> to a file indicated by <em class="parameter"><code>filename</code></em>.  If <em class="parameter"><code>error</code></em> is set, <code class="literal">FALSE</code>
+will be returned. Possible errors include those in the <span class="type">G_FILE_ERROR</span> domain
+and whatever the save function generates.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>attachment</code></em> :</span></p></td>
+<td> A <a class="link" href="poppler-poppler-attachment.html#PopplerAttachment"><span class="type">PopplerAttachment</span></a>.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>filename</code></em> :</span></p></td>
+<td> name of file to save
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>error</code></em> :</span></p></td>
+<td> return location for error, or <code class="literal">NULL</code>.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> <code class="literal">TRUE</code>, if the file successfully saved
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="poppler_attachment_save_to_callback ()">
+<a name="poppler-attachment-save-to-callback"></a><h3>poppler_attachment_save_to_callback ()</h3>
+<pre class="programlisting">gboolean            poppler_attachment_save_to_callback (<a class="link" href="poppler-poppler-attachment.html#PopplerAttachment">PopplerAttachment</a> *attachment,
+                                                         <a class="link" href="poppler-poppler-attachment.html#PopplerAttachmentSaveFunc" title="PopplerAttachmentSaveFunc ()">PopplerAttachmentSaveFunc</a> save_func,
+                                                         gpointer user_data,
+                                                         GError **error);</pre>
+<p>
+Saves <em class="parameter"><code>attachment</code></em> by feeding the produced data to <em class="parameter"><code>save_func</code></em>. Can be used
+when you want to store the attachment to something other than a file, such as
+an in-memory buffer or a socket. If <em class="parameter"><code>error</code></em> is set, <code class="literal">FALSE</code> will be
+returned. Possible errors include those in the <span class="type">G_FILE_ERROR</span> domain and
+whatever the save function generates.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>attachment</code></em> :</span></p></td>
+<td> A <a class="link" href="poppler-poppler-attachment.html#PopplerAttachment"><span class="type">PopplerAttachment</span></a>.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>save_func</code></em> :</span></p></td>
+<td> a function that is called to save each block of data that the save routine generates.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
+<td> user data to pass to the save function.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>error</code></em> :</span></p></td>
+<td> return location for error, or <code class="literal">NULL</code>.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> <code class="literal">TRUE</code>, if the save successfully completed
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="PopplerAttachmentSaveFunc ()">
+<a name="PopplerAttachmentSaveFunc"></a><h3>PopplerAttachmentSaveFunc ()</h3>
+<pre class="programlisting">gboolean            (*PopplerAttachmentSaveFunc)        (const gchar *buf,
+                                                         gsize count,
+                                                         gpointer data,
+                                                         GError **error);</pre>
+<p>
+Specifies the type of the function passed to
+<a class="link" href="poppler-poppler-attachment.html#poppler-attachment-save-to-callback" title="poppler_attachment_save_to_callback ()"><code class="function">poppler_attachment_save_to_callback()</code></a>.  It is called once for each block of
+bytes that is "written" by <a class="link" href="poppler-poppler-attachment.html#poppler-attachment-save-to-callback" title="poppler_attachment_save_to_callback ()"><code class="function">poppler_attachment_save_to_callback()</code></a>.  If
+successful it should return <code class="literal">TRUE</code>.  If an error occurs it should set
+<em class="parameter"><code>error</code></em> and return <code class="literal">FALSE</code>, in which case <a class="link" href="poppler-poppler-attachment.html#poppler-attachment-save-to-callback" title="poppler_attachment_save_to_callback ()"><code class="function">poppler_attachment_save_to_callback()</code></a>
+will fail with the same error.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>buf</code></em> :</span></p></td>
+<td>buffer containing bytes to be written.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>count</code></em> :</span></p></td>
+<td>number of bytes in <em class="parameter"><code>buf</code></em>.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>data</code></em> :</span></p></td>
+<td>A location to return an error.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>error</code></em> :</span></p></td>
+<td>user data passed to <a class="link" href="poppler-poppler-attachment.html#poppler-attachment-save-to-callback" title="poppler_attachment_save_to_callback ()"><code class="function">poppler_attachment_save_to_callback()</code></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>%TRUE if successful, <code class="literal">FALSE</code> (with <em class="parameter"><code>error</code></em> set) if failed.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.11</div>
+</body>
+</html>

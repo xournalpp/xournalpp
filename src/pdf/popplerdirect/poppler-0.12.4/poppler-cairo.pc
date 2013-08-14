@@ -1,0 +1,9 @@
+prefix=/usr/local
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: poppler-cairo
+Description: Cairo backend for Poppler PDF rendering library
+Version: 0.12.4
+Requires: poppler = 0.12.4 cairo >= 1.8.4

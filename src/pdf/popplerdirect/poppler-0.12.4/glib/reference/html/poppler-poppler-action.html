@@ -1,0 +1,386 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>PopplerAction</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.75.1">
+<link rel="home" href="index.html" title="Poppler Reference Manual">
+<link rel="up" href="ch01.html" title="Poppler">
+<link rel="prev" href="poppler-poppler-page.html" title="PopplerPage">
+<link rel="next" href="poppler-poppler-attachment.html" title="PopplerAttachment">
+<meta name="generator" content="GTK-Doc V1.11 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+<link rel="chapter" href="ch01.html" title="Poppler">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
+<tr valign="middle">
+<td><a accesskey="p" href="poppler-poppler-page.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="ch01.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">Poppler Reference Manual</th>
+<td><a accesskey="n" href="poppler-poppler-attachment.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr>
+<tr><td colspan="5" class="shortcuts">
+<a href="#poppler-poppler-action.synopsis" class="shortcut">Top</a>
+                 | 
+                <a href="#poppler-poppler-action.description" class="shortcut">Description</a>
+</td></tr>
+</table>
+<div class="refentry" title="PopplerAction">
+<a name="poppler-poppler-action"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="poppler-poppler-action.top_of_page"></a>PopplerAction</span></h2>
+<p>PopplerAction — Action links</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsynopsisdiv" title="Synopsis">
+<a name="poppler-poppler-action.synopsis"></a><h2>Synopsis</h2>
+<pre class="synopsis">
+enum                <a class="link" href="poppler-poppler-action.html#PopplerActionType" title="enum PopplerActionType">PopplerActionType</a>;
+enum                <a class="link" href="poppler-poppler-action.html#PopplerDestType" title="enum PopplerDestType">PopplerDestType</a>;
+                    <a class="link" href="poppler-poppler-action.html#PopplerActionAny" title="PopplerActionAny">PopplerActionAny</a>;
+                    <a class="link" href="poppler-poppler-action.html#PopplerActionGotoDest" title="PopplerActionGotoDest">PopplerActionGotoDest</a>;
+                    <a class="link" href="poppler-poppler-action.html#PopplerActionGotoRemote" title="PopplerActionGotoRemote">PopplerActionGotoRemote</a>;
+                    <a class="link" href="poppler-poppler-action.html#PopplerActionLaunch" title="PopplerActionLaunch">PopplerActionLaunch</a>;
+                    <a class="link" href="poppler-poppler-action.html#PopplerActionUri" title="PopplerActionUri">PopplerActionUri</a>;
+                    <a class="link" href="poppler-poppler-action.html#PopplerActionNamed" title="PopplerActionNamed">PopplerActionNamed</a>;
+                    <a class="link" href="poppler-poppler-action.html#PopplerActionMovie" title="PopplerActionMovie">PopplerActionMovie</a>;
+                    <a class="link" href="poppler-poppler-action.html#PopplerDest" title="PopplerDest">PopplerDest</a>;
+union               <a class="link" href="poppler-poppler-action.html#PopplerAction" title="union PopplerAction">PopplerAction</a>;
+#define             <a class="link" href="poppler-poppler-action.html#POPPLER-TYPE-ACTION--CAPS" title="POPPLER_TYPE_ACTION">POPPLER_TYPE_ACTION</a>
+#define             <a class="link" href="poppler-poppler-action.html#POPPLER-ACTION--CAPS" title="POPPLER_ACTION()">POPPLER_ACTION</a>                      (obj)
+GType               <a class="link" href="poppler-poppler-action.html#poppler-action-get-type" title="poppler_action_get_type ()">poppler_action_get_type</a>             (void);
+<a class="link" href="poppler-poppler-action.html#PopplerAction" title="union PopplerAction">PopplerAction</a> *     <a class="link" href="poppler-poppler-action.html#poppler-action-copy" title="poppler_action_copy ()">poppler_action_copy</a>                 (<a class="link" href="poppler-poppler-action.html#PopplerAction" title="union PopplerAction">PopplerAction</a> *action);
+void                <a class="link" href="poppler-poppler-action.html#poppler-action-free" title="poppler_action_free ()">poppler_action_free</a>                 (<a class="link" href="poppler-poppler-action.html#PopplerAction" title="union PopplerAction">PopplerAction</a> *action);
+#define             <a class="link" href="poppler-poppler-action.html#POPPLER-TYPE-DEST--CAPS" title="POPPLER_TYPE_DEST">POPPLER_TYPE_DEST</a>
+GType               <a class="link" href="poppler-poppler-action.html#poppler-dest-get-type" title="poppler_dest_get_type ()">poppler_dest_get_type</a>               (void);
+<a class="link" href="poppler-poppler-action.html#PopplerDest" title="PopplerDest">PopplerDest</a> *       <a class="link" href="poppler-poppler-action.html#poppler-dest-copy" title="poppler_dest_copy ()">poppler_dest_copy</a>                   (<a class="link" href="poppler-poppler-action.html#PopplerDest" title="PopplerDest">PopplerDest</a> *dest);
+void                <a class="link" href="poppler-poppler-action.html#poppler-dest-free" title="poppler_dest_free ()">poppler_dest_free</a>                   (<a class="link" href="poppler-poppler-action.html#PopplerDest" title="PopplerDest">PopplerDest</a> *dest);
+</pre>
+</div>
+<div class="refsect1" title="Description">
+<a name="poppler-poppler-action.description"></a><h2>Description</h2>
+<p>
+</p>
+</div>
+<div class="refsect1" title="Details">
+<a name="poppler-poppler-action.details"></a><h2>Details</h2>
+<div class="refsect2" title="enum PopplerActionType">
+<a name="PopplerActionType"></a><h3>enum PopplerActionType</h3>
+<pre class="programlisting">typedef enum
+{
+	POPPLER_ACTION_UNKNOWN,		/* unknown action */
+	POPPLER_ACTION_NONE,            /* no action specified */
+	POPPLER_ACTION_GOTO_DEST,	/* go to destination */
+	POPPLER_ACTION_GOTO_REMOTE,	/* go to destination in new file */
+	POPPLER_ACTION_LAUNCH,		/* launch app (or open document) */
+	POPPLER_ACTION_URI,		/* URI */
+	POPPLER_ACTION_NAMED,		/* named action*/
+	POPPLER_ACTION_MOVIE		/* movie action */
+} PopplerActionType;
+</pre>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2" title="enum PopplerDestType">
+<a name="PopplerDestType"></a><h3>enum PopplerDestType</h3>
+<pre class="programlisting">typedef enum
+{
+	POPPLER_DEST_UNKNOWN,
+	POPPLER_DEST_XYZ,
+	POPPLER_DEST_FIT,
+	POPPLER_DEST_FITH,
+	POPPLER_DEST_FITV,
+	POPPLER_DEST_FITR,
+	POPPLER_DEST_FITB,
+	POPPLER_DEST_FITBH,
+	POPPLER_DEST_FITBV,
+	POPPLER_DEST_NAMED
+} PopplerDestType;
+</pre>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2" title="PopplerActionAny">
+<a name="PopplerActionAny"></a><h3>PopplerActionAny</h3>
+<pre class="programlisting">typedef struct {
+	PopplerActionType type;
+	gchar *title;
+} PopplerActionAny;
+</pre>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2" title="PopplerActionGotoDest">
+<a name="PopplerActionGotoDest"></a><h3>PopplerActionGotoDest</h3>
+<pre class="programlisting">typedef struct {
+	PopplerActionType type;
+	gchar *title;
+
+	PopplerDest *dest;
+} PopplerActionGotoDest;
+</pre>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2" title="PopplerActionGotoRemote">
+<a name="PopplerActionGotoRemote"></a><h3>PopplerActionGotoRemote</h3>
+<pre class="programlisting">typedef struct {
+	PopplerActionType type;
+	gchar *title;
+
+	gchar *file_name;
+	PopplerDest *dest;
+} PopplerActionGotoRemote;
+</pre>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2" title="PopplerActionLaunch">
+<a name="PopplerActionLaunch"></a><h3>PopplerActionLaunch</h3>
+<pre class="programlisting">typedef struct {
+	PopplerActionType type;
+	gchar *title;
+
+	gchar *file_name;
+	gchar *params;
+} PopplerActionLaunch;
+</pre>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2" title="PopplerActionUri">
+<a name="PopplerActionUri"></a><h3>PopplerActionUri</h3>
+<pre class="programlisting">typedef struct {
+	PopplerActionType type;
+	gchar *title;
+
+	char *uri;
+} PopplerActionUri;
+</pre>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2" title="PopplerActionNamed">
+<a name="PopplerActionNamed"></a><h3>PopplerActionNamed</h3>
+<pre class="programlisting">typedef struct {
+	PopplerActionType type;
+	gchar *title;
+
+	gchar *named_dest;
+} PopplerActionNamed;
+</pre>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2" title="PopplerActionMovie">
+<a name="PopplerActionMovie"></a><h3>PopplerActionMovie</h3>
+<pre class="programlisting">typedef struct {
+	PopplerActionType type;
+	gchar *title;
+} PopplerActionMovie;
+</pre>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2" title="PopplerDest">
+<a name="PopplerDest"></a><h3>PopplerDest</h3>
+<pre class="programlisting">typedef struct {
+	PopplerDestType type;
+
+	int page_num;
+	double left;
+	double bottom;
+	double right;
+	double top;
+	double zoom;
+	gchar *named_dest;
+	guint change_left : 1;
+	guint change_top : 1;
+	guint change_zoom : 1;
+} PopplerDest;
+</pre>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2" title="union PopplerAction">
+<a name="PopplerAction"></a><h3>union PopplerAction</h3>
+<pre class="programlisting">union PopplerAction
+{
+	PopplerActionType type;
+	PopplerActionAny any;
+	PopplerActionGotoDest goto_dest;
+	PopplerActionGotoRemote goto_remote;
+	PopplerActionLaunch launch;
+	PopplerActionUri uri;
+	PopplerActionNamed named;
+	PopplerActionMovie movie;
+};
+</pre>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2" title="POPPLER_TYPE_ACTION">
+<a name="POPPLER-TYPE-ACTION--CAPS"></a><h3>POPPLER_TYPE_ACTION</h3>
+<pre class="programlisting">#define POPPLER_TYPE_ACTION             (poppler_action_get_type ())
+</pre>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2" title="POPPLER_ACTION()">
+<a name="POPPLER-ACTION--CAPS"></a><h3>POPPLER_ACTION()</h3>
+<pre class="programlisting">#define POPPLER_ACTION(obj)             (G_TYPE_CHECK_INSTANCE_CAST ((obj), POPPLER_TYPE_ACTION, PopplerAction))
+</pre>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>obj</code></em> :</span></p></td>
+<td>
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="poppler_action_get_type ()">
+<a name="poppler-action-get-type"></a><h3>poppler_action_get_type ()</h3>
+<pre class="programlisting">GType               poppler_action_get_type             (void);</pre>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="poppler_action_copy ()">
+<a name="poppler-action-copy"></a><h3>poppler_action_copy ()</h3>
+<pre class="programlisting"><a class="link" href="poppler-poppler-action.html#PopplerAction" title="union PopplerAction">PopplerAction</a> *     poppler_action_copy                 (<a class="link" href="poppler-poppler-action.html#PopplerAction" title="union PopplerAction">PopplerAction</a> *action);</pre>
+<p>
+Copies <em class="parameter"><code>action</code></em>, creating an identical <a class="link" href="poppler-poppler-action.html#PopplerAction" title="union PopplerAction"><span class="type">PopplerAction</span></a>.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>action</code></em> :</span></p></td>
+<td> a <a class="link" href="poppler-poppler-action.html#PopplerAction" title="union PopplerAction"><span class="type">PopplerAction</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> a new action identical to <em class="parameter"><code>action</code></em>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="poppler_action_free ()">
+<a name="poppler-action-free"></a><h3>poppler_action_free ()</h3>
+<pre class="programlisting">void                poppler_action_free                 (<a class="link" href="poppler-poppler-action.html#PopplerAction" title="union PopplerAction">PopplerAction</a> *action);</pre>
+<p>
+Frees <em class="parameter"><code>action</code></em></p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>action</code></em> :</span></p></td>
+<td> a <a class="link" href="poppler-poppler-action.html#PopplerAction" title="union PopplerAction"><span class="type">PopplerAction</span></a>
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="POPPLER_TYPE_DEST">
+<a name="POPPLER-TYPE-DEST--CAPS"></a><h3>POPPLER_TYPE_DEST</h3>
+<pre class="programlisting">#define POPPLER_TYPE_DEST              (poppler_dest_get_type ())
+</pre>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2" title="poppler_dest_get_type ()">
+<a name="poppler-dest-get-type"></a><h3>poppler_dest_get_type ()</h3>
+<pre class="programlisting">GType               poppler_dest_get_type               (void);</pre>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="poppler_dest_copy ()">
+<a name="poppler-dest-copy"></a><h3>poppler_dest_copy ()</h3>
+<pre class="programlisting"><a class="link" href="poppler-poppler-action.html#PopplerDest" title="PopplerDest">PopplerDest</a> *       poppler_dest_copy                   (<a class="link" href="poppler-poppler-action.html#PopplerDest" title="PopplerDest">PopplerDest</a> *dest);</pre>
+<p>
+Copies <em class="parameter"><code>dest</code></em>, creating an identical <a class="link" href="poppler-poppler-action.html#PopplerDest" title="PopplerDest"><span class="type">PopplerDest</span></a>.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>dest</code></em> :</span></p></td>
+<td> a <a class="link" href="poppler-poppler-action.html#PopplerDest" title="PopplerDest"><span class="type">PopplerDest</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> a new destination identical to <em class="parameter"><code>dest</code></em>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="poppler_dest_free ()">
+<a name="poppler-dest-free"></a><h3>poppler_dest_free ()</h3>
+<pre class="programlisting">void                poppler_dest_free                   (<a class="link" href="poppler-poppler-action.html#PopplerDest" title="PopplerDest">PopplerDest</a> *dest);</pre>
+<p>
+Frees <em class="parameter"><code>dest</code></em></p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>dest</code></em> :</span></p></td>
+<td> a <a class="link" href="poppler-poppler-action.html#PopplerDest" title="PopplerDest"><span class="type">PopplerDest</span></a>
+</td>
+</tr></tbody>
+</table></div>
+</div>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.11</div>
+</body>
+</html>

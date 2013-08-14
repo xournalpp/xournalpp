@@ -1,0 +1,333 @@
+<!-- ##### SECTION Title ##### -->
+PopplerAnnot
+
+<!-- ##### SECTION Short_Description ##### -->
+Annotations
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### STRUCT PopplerAnnot ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### FUNCTION poppler_annot_callout_line_copy ##### -->
+<para>
+
+</para>
+
+@callout: 
+@Returns: 
+
+
+<!-- ##### FUNCTION poppler_annot_callout_line_free ##### -->
+<para>
+
+</para>
+
+@callout: 
+
+
+<!-- ##### FUNCTION poppler_annot_callout_line_get_type ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+
+<!-- ##### FUNCTION poppler_annot_callout_line_new ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+
+<!-- ##### FUNCTION poppler_annot_external_data_type_get_type ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+
+<!-- ##### FUNCTION poppler_annot_flag_get_type ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+
+<!-- ##### FUNCTION poppler_annot_free_text_get_callout_line ##### -->
+<para>
+
+</para>
+
+@poppler_annot: 
+@Returns: 
+
+
+<!-- ##### FUNCTION poppler_annot_free_text_get_quadding ##### -->
+<para>
+
+</para>
+
+@poppler_annot: 
+@Returns: 
+
+
+<!-- ##### FUNCTION poppler_annot_free_text_get_type ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+
+<!-- ##### FUNCTION poppler_annot_free_text_quadding_get_type ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+
+<!-- ##### FUNCTION poppler_annot_get_annot_type ##### -->
+<para>
+
+</para>
+
+@poppler_annot: 
+@Returns: 
+
+
+<!-- ##### FUNCTION poppler_annot_get_color ##### -->
+<para>
+
+</para>
+
+@poppler_annot: 
+@Returns: 
+
+
+<!-- ##### FUNCTION poppler_annot_get_contents ##### -->
+<para>
+
+</para>
+
+@poppler_annot: 
+@Returns: 
+
+
+<!-- ##### FUNCTION poppler_annot_get_flags ##### -->
+<para>
+
+</para>
+
+@poppler_annot: 
+@Returns: 
+
+
+<!-- ##### FUNCTION poppler_annot_get_modified ##### -->
+<para>
+
+</para>
+
+@poppler_annot: 
+@Returns: 
+
+
+<!-- ##### FUNCTION poppler_annot_get_name ##### -->
+<para>
+
+</para>
+
+@poppler_annot: 
+@Returns: 
+
+
+<!-- ##### FUNCTION poppler_annot_get_type ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+
+<!-- ##### FUNCTION poppler_annot_mapping_copy ##### -->
+<para>
+
+</para>
+
+@mapping: 
+@Returns: 
+
+
+<!-- ##### FUNCTION poppler_annot_mapping_free ##### -->
+<para>
+
+</para>
+
+@mapping: 
+
+
+<!-- ##### FUNCTION poppler_annot_mapping_get_type ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+
+<!-- ##### FUNCTION poppler_annot_mapping_new ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+
+<!-- ##### FUNCTION poppler_annot_markup_get_date ##### -->
+<para>
+
+</para>
+
+@poppler_annot: 
+@Returns: 
+
+
+<!-- ##### FUNCTION poppler_annot_markup_get_external_data ##### -->
+<para>
+
+</para>
+
+@poppler_annot: 
+@Returns: 
+
+
+<!-- ##### FUNCTION poppler_annot_markup_get_label ##### -->
+<para>
+
+</para>
+
+@poppler_annot: 
+@Returns: 
+
+
+<!-- ##### FUNCTION poppler_annot_markup_get_opacity ##### -->
+<para>
+
+</para>
+
+@poppler_annot: 
+@Returns: 
+
+
+<!-- ##### FUNCTION poppler_annot_markup_get_popup_is_open ##### -->
+<para>
+
+</para>
+
+@poppler_annot: 
+@Returns: 
+
+
+<!-- ##### FUNCTION poppler_annot_markup_get_reply_to ##### -->
+<para>
+
+</para>
+
+@poppler_annot: 
+@Returns: 
+
+
+<!-- ##### FUNCTION poppler_annot_markup_get_subject ##### -->
+<para>
+
+</para>
+
+@poppler_annot: 
+@Returns: 
+
+
+<!-- ##### FUNCTION poppler_annot_markup_get_type ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+
+<!-- ##### FUNCTION poppler_annot_markup_reply_type_get_type ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+
+<!-- ##### FUNCTION poppler_annot_text_get_icon ##### -->
+<para>
+
+</para>
+
+@poppler_annot: 
+@Returns: 
+
+
+<!-- ##### FUNCTION poppler_annot_text_get_is_open ##### -->
+<para>
+
+</para>
+
+@poppler_annot: 
+@Returns: 
+
+
+<!-- ##### FUNCTION poppler_annot_text_get_state ##### -->
+<para>
+
+</para>
+
+@poppler_annot: 
+@Returns: 
+
+
+<!-- ##### FUNCTION poppler_annot_text_get_type ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+
+<!-- ##### FUNCTION poppler_annot_text_state_get_type ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+
+<!-- ##### FUNCTION poppler_annot_type_get_type ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+

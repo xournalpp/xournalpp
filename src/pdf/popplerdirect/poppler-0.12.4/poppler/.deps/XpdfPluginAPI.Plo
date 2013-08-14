@@ -1,0 +1,3 @@
+XpdfPluginAPI.lo: XpdfPluginAPI.cc ../config.h
+
+../config.h:

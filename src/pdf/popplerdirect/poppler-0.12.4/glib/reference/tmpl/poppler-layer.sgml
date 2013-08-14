@@ -1,0 +1,79 @@
+<!-- ##### SECTION Title ##### -->
+PopplerLayer
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### FUNCTION poppler_layer_get_type ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+
+<!-- ##### FUNCTION poppler_layer_get_title ##### -->
+<para>
+
+</para>
+
+@layer: 
+@Returns: 
+
+
+<!-- ##### FUNCTION poppler_layer_is_visible ##### -->
+<para>
+
+</para>
+
+@layer: 
+@Returns: 
+
+
+<!-- ##### FUNCTION poppler_layer_show ##### -->
+<para>
+
+</para>
+
+@layer: 
+
+
+<!-- ##### FUNCTION poppler_layer_hide ##### -->
+<para>
+
+</para>
+
+@layer: 
+
+
+<!-- ##### FUNCTION poppler_layer_is_parent ##### -->
+<para>
+
+</para>
+
+@layer: 
+@Returns: 
+
+
+<!-- ##### FUNCTION poppler_layer_get_radio_button_group_id ##### -->
+<para>
+
+</para>
+
+@layer: 
+@Returns: 
+
+

@@ -1,0 +1,65 @@
+<!-- ##### SECTION Title ##### -->
+PopplerAttachment
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### STRUCT PopplerAttachment ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### FUNCTION poppler_attachment_save ##### -->
+<para>
+
+</para>
+
+@attachment: 
+@filename: 
+@error: 
+@Returns: 
+
+
+<!-- ##### FUNCTION poppler_attachment_save_to_callback ##### -->
+<para>
+
+</para>
+
+@attachment: 
+@save_func: 
+@user_data: 
+@error: 
+@Returns: 
+
+
+<!-- ##### USER_FUNCTION PopplerAttachmentSaveFunc ##### -->
+<para>
+Specifies the type of the function passed to
+poppler_attachment_save_to_callback().  It is called once for each block of
+bytes that is "written" by poppler_attachment_save_to_callback().  If
+successful it should return %TRUE.  If an error occurs it should set
+@error and return %FALSE, in which case poppler_attachment_save_to_callback()
+will fail with the same error.
+</para>
+
+@buf: buffer containing bytes to be written.
+@count: number of bytes in @buf.
+@data: A location to return an error.
+@error: user data passed to poppler_attachment_save_to_callback()
+@Returns: %TRUE if successful, %FALSE (with @error set) if failed.
+
+

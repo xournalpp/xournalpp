@@ -1,0 +1,483 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>poppler</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.75.1">
+<link rel="home" href="index.html" title="Poppler Reference Manual">
+<link rel="up" href="ch01.html" title="Poppler">
+<link rel="prev" href="ch01.html" title="Poppler">
+<link rel="next" href="poppler-poppler-document.html" title="PopplerDocument">
+<meta name="generator" content="GTK-Doc V1.11 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+<link rel="chapter" href="ch01.html" title="Poppler">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
+<tr valign="middle">
+<td><a accesskey="p" href="ch01.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="ch01.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">Poppler Reference Manual</th>
+<td><a accesskey="n" href="poppler-poppler-document.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr>
+<tr><td colspan="5" class="shortcuts">
+<a href="#poppler-poppler.synopsis" class="shortcut">Top</a>
+                 | 
+                <a href="#poppler-poppler.description" class="shortcut">Description</a>
+                 | 
+                <a href="#poppler-poppler.object-hierarchy" class="shortcut">Object Hierarchy</a>
+                 | 
+                <a href="#poppler-poppler.properties" class="shortcut">Properties</a>
+</td></tr>
+</table>
+<div class="refentry" title="poppler">
+<a name="poppler-poppler"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="poppler-poppler.top_of_page"></a>poppler</span></h2>
+<p>poppler</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsynopsisdiv" title="Synopsis">
+<a name="poppler-poppler.synopsis"></a><h2>Synopsis</h2>
+<a name="PopplerDocument"></a><a name="PopplerPage"></a><pre class="synopsis">
+GQuark              <a class="link" href="poppler-poppler.html#poppler-error-quark" title="poppler_error_quark ()">poppler_error_quark</a>                 (void);
+#define             <a class="link" href="poppler-poppler.html#POPPLER-ERROR--CAPS" title="POPPLER_ERROR">POPPLER_ERROR</a>
+enum                <a class="link" href="poppler-poppler.html#PopplerError" title="enum PopplerError">PopplerError</a>;
+enum                <a class="link" href="poppler-poppler.html#PopplerOrientation" title="enum PopplerOrientation">PopplerOrientation</a>;
+                    <a class="link" href="poppler-poppler.html#PopplerDocument-struct" title="PopplerDocument">PopplerDocument</a>;
+                    <a class="link" href="poppler-poppler.html#PopplerIndexIter" title="PopplerIndexIter">PopplerIndexIter</a>;
+                    <a class="link" href="poppler-poppler.html#PopplerFontsIter" title="PopplerFontsIter">PopplerFontsIter</a>;
+                    <a class="link" href="poppler-poppler.html#PopplerRectangle" title="PopplerRectangle">PopplerRectangle</a>;
+enum                <a class="link" href="poppler-poppler.html#PopplerSelectionStyle" title="enum PopplerSelectionStyle">PopplerSelectionStyle</a>;
+enum                <a class="link" href="poppler-poppler.html#PopplerPageTransitionType" title="enum PopplerPageTransitionType">PopplerPageTransitionType</a>;
+enum                <a class="link" href="poppler-poppler.html#PopplerPageTransitionAlignment" title="enum PopplerPageTransitionAlignment">PopplerPageTransitionAlignment</a>;
+enum                <a class="link" href="poppler-poppler.html#PopplerPageTransitionDirection" title="enum PopplerPageTransitionDirection">PopplerPageTransitionDirection</a>;
+                    <a class="link" href="poppler-poppler.html#PopplerLinkMapping" title="PopplerLinkMapping">PopplerLinkMapping</a>;
+                    <a class="link" href="poppler-poppler.html#PopplerPage-struct" title="PopplerPage">PopplerPage</a>;
+                    <a class="link" href="poppler-poppler.html#PopplerFontInfo" title="PopplerFontInfo">PopplerFontInfo</a>;
+                    <a class="link" href="poppler-poppler.html#PopplerPSFile" title="PopplerPSFile">PopplerPSFile</a>;
+enum                <a class="link" href="poppler-poppler.html#PopplerBackend" title="enum PopplerBackend">PopplerBackend</a>;
+<a class="link" href="poppler-poppler.html#PopplerBackend" title="enum PopplerBackend">PopplerBackend</a>      <a class="link" href="poppler-poppler.html#poppler-get-backend" title="poppler_get_backend ()">poppler_get_backend</a>                 (void);
+const char *        <a class="link" href="poppler-poppler.html#poppler-get-version" title="poppler_get_version ()">poppler_get_version</a>                 (void);
+</pre>
+</div>
+<div class="refsect1" title="Object Hierarchy">
+<a name="poppler-poppler.object-hierarchy"></a><h2>Object Hierarchy</h2>
+<pre class="synopsis">
+  GObject
+   +----PopplerDocument
+</pre>
+<pre class="synopsis">
+  GObject
+   +----PopplerPage
+</pre>
+</div>
+<div class="refsect1" title="Properties">
+<a name="poppler-poppler.properties"></a><h2>Properties</h2>
+<pre class="synopsis">
+  "<a class="link" href="poppler-poppler.html#PopplerDocument--author" title='The "author" property'>author</a>"                   gchar*                : Read
+  "<a class="link" href="poppler-poppler.html#PopplerDocument--creation-date" title='The "creation-date" property'>creation-date</a>"            gint                  : Read
+  "<a class="link" href="poppler-poppler.html#PopplerDocument--creator" title='The "creator" property'>creator</a>"                  gchar*                : Read
+  "<a class="link" href="poppler-poppler.html#PopplerDocument--format" title='The "format" property'>format</a>"                   gchar*                : Read
+  "<a class="link" href="poppler-poppler.html#PopplerDocument--format-major" title='The "format-major" property'>format-major</a>"             guint                 : Read
+  "<a class="link" href="poppler-poppler.html#PopplerDocument--format-minor" title='The "format-minor" property'>format-minor</a>"             guint                 : Read
+  "<a class="link" href="poppler-poppler.html#PopplerDocument--keywords" title='The "keywords" property'>keywords</a>"                 gchar*                : Read
+  "<a class="link" href="poppler-poppler.html#PopplerDocument--linearized" title='The "linearized" property'>linearized</a>"               gchar*                : Read
+  "<a class="link" href="poppler-poppler.html#PopplerDocument--metadata" title='The "metadata" property'>metadata</a>"                 gchar*                : Read
+  "<a class="link" href="poppler-poppler.html#PopplerDocument--mod-date" title='The "mod-date" property'>mod-date</a>"                 gint                  : Read
+  "<a class="link" href="poppler-poppler.html#PopplerDocument--page-layout" title='The "page-layout" property'>page-layout</a>"              <a class="link" href="poppler-poppler-document.html#PopplerPageLayout" title="enum PopplerPageLayout">PopplerPageLayout</a>     : Read
+  "<a class="link" href="poppler-poppler.html#PopplerDocument--page-mode" title='The "page-mode" property'>page-mode</a>"                <a class="link" href="poppler-poppler-document.html#PopplerPageMode" title="enum PopplerPageMode">PopplerPageMode</a>       : Read
+  "<a class="link" href="poppler-poppler.html#PopplerDocument--permissions" title='The "permissions" property'>permissions</a>"              <a class="link" href="poppler-poppler-document.html#PopplerPermissions" title="enum PopplerPermissions">PopplerPermissions</a>    : Read
+  "<a class="link" href="poppler-poppler.html#PopplerDocument--producer" title='The "producer" property'>producer</a>"                 gchar*                : Read
+  "<a class="link" href="poppler-poppler.html#PopplerDocument--subject" title='The "subject" property'>subject</a>"                  gchar*                : Read
+  "<a class="link" href="poppler-poppler.html#PopplerDocument--title" title='The "title" property'>title</a>"                    gchar*                : Read
+  "<a class="link" href="poppler-poppler.html#PopplerDocument--viewer-preferences" title='The "viewer-preferences" property'>viewer-preferences</a>"       <a class="link" href="poppler-poppler-document.html#PopplerViewerPreferences" title="enum PopplerViewerPreferences">PopplerViewerPreferences</a>  : Read
+  "<a class="link" href="poppler-poppler.html#PopplerPage--label" title='The "label" property'>label</a>"                    gchar*                : Read
+</pre>
+</div>
+<div class="refsect1" title="Description">
+<a name="poppler-poppler.description"></a><h2>Description</h2>
+<p>
+</p>
+</div>
+<div class="refsect1" title="Details">
+<a name="poppler-poppler.details"></a><h2>Details</h2>
+<div class="refsect2" title="poppler_error_quark ()">
+<a name="poppler-error-quark"></a><h3>poppler_error_quark ()</h3>
+<pre class="programlisting">GQuark              poppler_error_quark                 (void);</pre>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="POPPLER_ERROR">
+<a name="POPPLER-ERROR--CAPS"></a><h3>POPPLER_ERROR</h3>
+<pre class="programlisting">#define POPPLER_ERROR poppler_error_quark ()
+</pre>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2" title="enum PopplerError">
+<a name="PopplerError"></a><h3>enum PopplerError</h3>
+<pre class="programlisting">typedef enum
+{
+  POPPLER_ERROR_INVALID,
+  POPPLER_ERROR_ENCRYPTED,
+  POPPLER_ERROR_OPEN_FILE,
+  POPPLER_ERROR_BAD_CATALOG,
+  POPPLER_ERROR_DAMAGED
+} PopplerError;
+</pre>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2" title="enum PopplerOrientation">
+<a name="PopplerOrientation"></a><h3>enum PopplerOrientation</h3>
+<pre class="programlisting">typedef enum
+{
+  POPPLER_ORIENTATION_PORTRAIT,
+  POPPLER_ORIENTATION_LANDSCAPE,
+  POPPLER_ORIENTATION_UPSIDEDOWN,
+  POPPLER_ORIENTATION_SEASCAPE
+} PopplerOrientation;
+</pre>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2" title="PopplerDocument">
+<a name="PopplerDocument-struct"></a><h3>PopplerDocument</h3>
+<pre class="programlisting">typedef struct _PopplerDocument PopplerDocument;</pre>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2" title="PopplerIndexIter">
+<a name="PopplerIndexIter"></a><h3>PopplerIndexIter</h3>
+<pre class="programlisting">typedef struct _PopplerIndexIter PopplerIndexIter;</pre>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2" title="PopplerFontsIter">
+<a name="PopplerFontsIter"></a><h3>PopplerFontsIter</h3>
+<pre class="programlisting">typedef struct _PopplerFontsIter PopplerFontsIter;</pre>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2" title="PopplerRectangle">
+<a name="PopplerRectangle"></a><h3>PopplerRectangle</h3>
+<pre class="programlisting">typedef struct {
+  gdouble x1;
+  gdouble y1;
+  gdouble x2;
+  gdouble y2;
+} PopplerRectangle;
+</pre>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2" title="enum PopplerSelectionStyle">
+<a name="PopplerSelectionStyle"></a><h3>enum PopplerSelectionStyle</h3>
+<pre class="programlisting">typedef enum
+{
+  POPPLER_SELECTION_GLYPH,
+  POPPLER_SELECTION_WORD,
+  POPPLER_SELECTION_LINE
+} PopplerSelectionStyle;
+</pre>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2" title="enum PopplerPageTransitionType">
+<a name="PopplerPageTransitionType"></a><h3>enum PopplerPageTransitionType</h3>
+<pre class="programlisting">typedef enum
+{
+  POPPLER_PAGE_TRANSITION_REPLACE,
+  POPPLER_PAGE_TRANSITION_SPLIT,
+  POPPLER_PAGE_TRANSITION_BLINDS,
+  POPPLER_PAGE_TRANSITION_BOX,
+  POPPLER_PAGE_TRANSITION_WIPE,
+  POPPLER_PAGE_TRANSITION_DISSOLVE,
+  POPPLER_PAGE_TRANSITION_GLITTER,
+  POPPLER_PAGE_TRANSITION_FLY,
+  POPPLER_PAGE_TRANSITION_PUSH,
+  POPPLER_PAGE_TRANSITION_COVER,
+  POPPLER_PAGE_TRANSITION_UNCOVER,
+  POPPLER_PAGE_TRANSITION_FADE
+} PopplerPageTransitionType;
+</pre>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2" title="enum PopplerPageTransitionAlignment">
+<a name="PopplerPageTransitionAlignment"></a><h3>enum PopplerPageTransitionAlignment</h3>
+<pre class="programlisting">typedef enum
+{
+  POPPLER_PAGE_TRANSITION_HORIZONTAL,
+  POPPLER_PAGE_TRANSITION_VERTICAL
+} PopplerPageTransitionAlignment;
+</pre>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2" title="enum PopplerPageTransitionDirection">
+<a name="PopplerPageTransitionDirection"></a><h3>enum PopplerPageTransitionDirection</h3>
+<pre class="programlisting">typedef enum
+{
+  POPPLER_PAGE_TRANSITION_INWARD,
+  POPPLER_PAGE_TRANSITION_OUTWARD
+} PopplerPageTransitionDirection;
+</pre>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2" title="PopplerLinkMapping">
+<a name="PopplerLinkMapping"></a><h3>PopplerLinkMapping</h3>
+<pre class="programlisting">typedef struct {
+  PopplerRectangle area;
+  PopplerAction *action;
+} PopplerLinkMapping;
+</pre>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2" title="PopplerPage">
+<a name="PopplerPage-struct"></a><h3>PopplerPage</h3>
+<pre class="programlisting">typedef struct _PopplerPage PopplerPage;</pre>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2" title="PopplerFontInfo">
+<a name="PopplerFontInfo"></a><h3>PopplerFontInfo</h3>
+<pre class="programlisting">typedef struct {
+  GObject parent_instance;
+  PopplerDocument *document;
+  FontInfoScanner *scanner;
+} PopplerFontInfo;
+</pre>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2" title="PopplerPSFile">
+<a name="PopplerPSFile"></a><h3>PopplerPSFile</h3>
+<pre class="programlisting">typedef struct {
+  GObject parent_instance;
+
+  PopplerDocument *document;
+  PSOutputDev *out;
+  char *filename;
+  int first_page;
+  int last_page;
+  double paper_width;
+  double paper_height;
+  gboolean duplex;
+} PopplerPSFile;
+</pre>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2" title="enum PopplerBackend">
+<a name="PopplerBackend"></a><h3>enum PopplerBackend</h3>
+<pre class="programlisting">typedef enum
+{
+  POPPLER_BACKEND_UNKNOWN,
+  POPPLER_BACKEND_SPLASH,
+  POPPLER_BACKEND_CAIRO
+} PopplerBackend;
+</pre>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2" title="poppler_get_backend ()">
+<a name="poppler-get-backend"></a><h3>poppler_get_backend ()</h3>
+<pre class="programlisting"><a class="link" href="poppler-poppler.html#PopplerBackend" title="enum PopplerBackend">PopplerBackend</a>      poppler_get_backend                 (void);</pre>
+<p>
+Returns the backend compiled into the poppler library.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> The backend used by poppler
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="poppler_get_version ()">
+<a name="poppler-get-version"></a><h3>poppler_get_version ()</h3>
+<pre class="programlisting">const char *        poppler_get_version                 (void);</pre>
+<p>
+Returns the version of poppler in use.  This result is not to be freed.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> the version of poppler.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+</div>
+<div class="refsect1" title="Property Details">
+<a name="poppler-poppler.property-details"></a><h2>Property Details</h2>
+<div class="refsect2" title='The "author" property'>
+<a name="PopplerDocument--author"></a><h3>The <code class="literal">"author"</code> property</h3>
+<pre class="programlisting">  "author"                   gchar*                : Read</pre>
+<p>The author of the document.</p>
+<p>Default value: NULL</p>
+</div>
+<hr>
+<div class="refsect2" title='The "creation-date" property'>
+<a name="PopplerDocument--creation-date"></a><h3>The <code class="literal">"creation-date"</code> property</h3>
+<pre class="programlisting">  "creation-date"            gint                  : Read</pre>
+<p>The date and time the document was created.</p>
+<p>Allowed values: &gt;= 0</p>
+<p>Default value: 0</p>
+</div>
+<hr>
+<div class="refsect2" title='The "creator" property'>
+<a name="PopplerDocument--creator"></a><h3>The <code class="literal">"creator"</code> property</h3>
+<pre class="programlisting">  "creator"                  gchar*                : Read</pre>
+<p>The software that created the document.</p>
+<p>Default value: NULL</p>
+</div>
+<hr>
+<div class="refsect2" title='The "format" property'>
+<a name="PopplerDocument--format"></a><h3>The <code class="literal">"format"</code> property</h3>
+<pre class="programlisting">  "format"                   gchar*                : Read</pre>
+<p>The PDF version of the document.</p>
+<p>Default value: NULL</p>
+</div>
+<hr>
+<div class="refsect2" title='The "format-major" property'>
+<a name="PopplerDocument--format-major"></a><h3>The <code class="literal">"format-major"</code> property</h3>
+<pre class="programlisting">  "format-major"             guint                 : Read</pre>
+<p>The PDF major version number of the document.</p>
+<p>Default value: 1</p>
+</div>
+<hr>
+<div class="refsect2" title='The "format-minor" property'>
+<a name="PopplerDocument--format-minor"></a><h3>The <code class="literal">"format-minor"</code> property</h3>
+<pre class="programlisting">  "format-minor"             guint                 : Read</pre>
+<p>The PDF minor version number of the document.</p>
+<p>Default value: 0</p>
+</div>
+<hr>
+<div class="refsect2" title='The "keywords" property'>
+<a name="PopplerDocument--keywords"></a><h3>The <code class="literal">"keywords"</code> property</h3>
+<pre class="programlisting">  "keywords"                 gchar*                : Read</pre>
+<p>Keywords.</p>
+<p>Default value: NULL</p>
+</div>
+<hr>
+<div class="refsect2" title='The "linearized" property'>
+<a name="PopplerDocument--linearized"></a><h3>The <code class="literal">"linearized"</code> property</h3>
+<pre class="programlisting">  "linearized"               gchar*                : Read</pre>
+<p>Is the document optimized for web viewing?.</p>
+<p>Default value: NULL</p>
+</div>
+<hr>
+<div class="refsect2" title='The "metadata" property'>
+<a name="PopplerDocument--metadata"></a><h3>The <code class="literal">"metadata"</code> property</h3>
+<pre class="programlisting">  "metadata"                 gchar*                : Read</pre>
+<p>Embedded XML metadata.</p>
+<p>Default value: NULL</p>
+</div>
+<hr>
+<div class="refsect2" title='The "mod-date" property'>
+<a name="PopplerDocument--mod-date"></a><h3>The <code class="literal">"mod-date"</code> property</h3>
+<pre class="programlisting">  "mod-date"                 gint                  : Read</pre>
+<p>The date and time the document was modified.</p>
+<p>Allowed values: &gt;= 0</p>
+<p>Default value: 0</p>
+</div>
+<hr>
+<div class="refsect2" title='The "page-layout" property'>
+<a name="PopplerDocument--page-layout"></a><h3>The <code class="literal">"page-layout"</code> property</h3>
+<pre class="programlisting">  "page-layout"              <a class="link" href="poppler-poppler-document.html#PopplerPageLayout" title="enum PopplerPageLayout">PopplerPageLayout</a>     : Read</pre>
+<p>Initial Page Layout.</p>
+<p>Default value: POPPLER_PAGE_LAYOUT_UNSET</p>
+</div>
+<hr>
+<div class="refsect2" title='The "page-mode" property'>
+<a name="PopplerDocument--page-mode"></a><h3>The <code class="literal">"page-mode"</code> property</h3>
+<pre class="programlisting">  "page-mode"                <a class="link" href="poppler-poppler-document.html#PopplerPageMode" title="enum PopplerPageMode">PopplerPageMode</a>       : Read</pre>
+<p>Page Mode.</p>
+<p>Default value: POPPLER_PAGE_MODE_UNSET</p>
+</div>
+<hr>
+<div class="refsect2" title='The "permissions" property'>
+<a name="PopplerDocument--permissions"></a><h3>The <code class="literal">"permissions"</code> property</h3>
+<pre class="programlisting">  "permissions"              <a class="link" href="poppler-poppler-document.html#PopplerPermissions" title="enum PopplerPermissions">PopplerPermissions</a>    : Read</pre>
+<p>Permissions.</p>
+<p>Default value: POPPLER_PERMISSIONS_OK_TO_PRINT|POPPLER_PERMISSIONS_OK_TO_MODIFY|POPPLER_PERMISSIONS_OK_TO_COPY|POPPLER_PERMISSIONS_OK_TO_ADD_NOTES|POPPLER_PERMISSIONS_OK_TO_FILL_FORM</p>
+</div>
+<hr>
+<div class="refsect2" title='The "producer" property'>
+<a name="PopplerDocument--producer"></a><h3>The <code class="literal">"producer"</code> property</h3>
+<pre class="programlisting">  "producer"                 gchar*                : Read</pre>
+<p>The software that converted the document.</p>
+<p>Default value: NULL</p>
+</div>
+<hr>
+<div class="refsect2" title='The "subject" property'>
+<a name="PopplerDocument--subject"></a><h3>The <code class="literal">"subject"</code> property</h3>
+<pre class="programlisting">  "subject"                  gchar*                : Read</pre>
+<p>Subjects the document touches.</p>
+<p>Default value: NULL</p>
+</div>
+<hr>
+<div class="refsect2" title='The "title" property'>
+<a name="PopplerDocument--title"></a><h3>The <code class="literal">"title"</code> property</h3>
+<pre class="programlisting">  "title"                    gchar*                : Read</pre>
+<p>The title of the document.</p>
+<p>Default value: NULL</p>
+</div>
+<hr>
+<div class="refsect2" title='The "viewer-preferences" property'>
+<a name="PopplerDocument--viewer-preferences"></a><h3>The <code class="literal">"viewer-preferences"</code> property</h3>
+<pre class="programlisting">  "viewer-preferences"       <a class="link" href="poppler-poppler-document.html#PopplerViewerPreferences" title="enum PopplerViewerPreferences">PopplerViewerPreferences</a>  : Read</pre>
+<p>Viewer Preferences.</p>
+</div>
+<hr>
+<div class="refsect2" title='The "label" property'>
+<a name="PopplerPage--label"></a><h3>The <code class="literal">"label"</code> property</h3>
+<pre class="programlisting">  "label"                    gchar*                : Read</pre>
+<p>The label of the page.</p>
+<p>Default value: NULL</p>
+</div>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.11</div>
+</body>
+</html>

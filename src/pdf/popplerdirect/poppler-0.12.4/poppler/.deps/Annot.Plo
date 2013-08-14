@@ -1,0 +1,201 @@
+Annot.lo: Annot.cc ../config.h /usr/include/stdlib.h \
+ /usr/include/features.h /usr/include/bits/predefs.h \
+ /usr/include/sys/cdefs.h /usr/include/bits/wordsize.h \
+ /usr/include/gnu/stubs.h /usr/include/gnu/stubs-64.h \
+ /usr/lib/gcc/x86_64-linux-gnu/4.4.5/include/stddef.h \
+ /usr/include/bits/waitflags.h /usr/include/bits/waitstatus.h \
+ /usr/include/endian.h /usr/include/bits/endian.h \
+ /usr/include/bits/byteswap.h /usr/include/xlocale.h \
+ /usr/include/sys/types.h /usr/include/bits/types.h \
+ /usr/include/bits/typesizes.h /usr/include/time.h \
+ /usr/include/sys/select.h /usr/include/bits/select.h \
+ /usr/include/bits/sigset.h /usr/include/bits/time.h \
+ /usr/include/sys/sysmacros.h /usr/include/bits/pthreadtypes.h \
+ /usr/include/alloca.h /usr/include/math.h /usr/include/bits/huge_val.h \
+ /usr/include/bits/huge_valf.h /usr/include/bits/huge_vall.h \
+ /usr/include/bits/inf.h /usr/include/bits/nan.h \
+ /usr/include/bits/mathdef.h /usr/include/bits/mathcalls.h \
+ /usr/include/bits/mathinline.h /usr/include/assert.h ../goo/gmem.h \
+ /usr/include/stdio.h /usr/include/libio.h /usr/include/_G_config.h \
+ /usr/include/wchar.h \
+ /usr/lib/gcc/x86_64-linux-gnu/4.4.5/include/stdarg.h \
+ /usr/include/bits/stdio_lim.h /usr/include/bits/sys_errlist.h \
+ /usr/include/bits/stdio.h ../poppler/poppler-config.h ../goo/gstrtod.h \
+ ../goo/GooList.h ../goo/gtypes.h Error.h poppler-config.h Object.h \
+ /usr/include/string.h ../goo/gtypes.h ../goo/GooString.h Array.h Dict.h \
+ Stream.h Catalog.h Gfx.h ../goo/GooList.h GfxState.h Function.h \
+ PopplerCache.h Lexer.h Annot.h GfxFont.h CharTypes.h CharCodeToUnicode.h \
+ ../goo/GooMutex.h /usr/include/pthread.h /usr/include/sched.h \
+ /usr/include/bits/sched.h /usr/include/signal.h \
+ /usr/include/bits/setjmp.h PDFDocEncoding.h Form.h ../goo/GooVector.h \
+ Page.h XRef.h Movie.h OptionalContent.h Sound.h FileSpec.h DateInfo.h
+
+../config.h:
+
+/usr/include/stdlib.h:
+
+/usr/include/features.h:
+
+/usr/include/bits/predefs.h:
+
+/usr/include/sys/cdefs.h:
+
+/usr/include/bits/wordsize.h:
+
+/usr/include/gnu/stubs.h:
+
+/usr/include/gnu/stubs-64.h:
+
+/usr/lib/gcc/x86_64-linux-gnu/4.4.5/include/stddef.h:
+
+/usr/include/bits/waitflags.h:
+
+/usr/include/bits/waitstatus.h:
+
+/usr/include/endian.h:
+
+/usr/include/bits/endian.h:
+
+/usr/include/bits/byteswap.h:
+
+/usr/include/xlocale.h:
+
+/usr/include/sys/types.h:
+
+/usr/include/bits/types.h:
+
+/usr/include/bits/typesizes.h:
+
+/usr/include/time.h:
+
+/usr/include/sys/select.h:
+
+/usr/include/bits/select.h:
+
+/usr/include/bits/sigset.h:
+
+/usr/include/bits/time.h:
+
+/usr/include/sys/sysmacros.h:
+
+/usr/include/bits/pthreadtypes.h:
+
+/usr/include/alloca.h:
+
+/usr/include/math.h:
+
+/usr/include/bits/huge_val.h:
+
+/usr/include/bits/huge_valf.h:
+
+/usr/include/bits/huge_vall.h:
+
+/usr/include/bits/inf.h:
+
+/usr/include/bits/nan.h:
+
+/usr/include/bits/mathdef.h:
+
+/usr/include/bits/mathcalls.h:
+
+/usr/include/bits/mathinline.h:
+
+/usr/include/assert.h:
+
+../goo/gmem.h:
+
+/usr/include/stdio.h:
+
+/usr/include/libio.h:
+
+/usr/include/_G_config.h:
+
+/usr/include/wchar.h:
+
+/usr/lib/gcc/x86_64-linux-gnu/4.4.5/include/stdarg.h:
+
+/usr/include/bits/stdio_lim.h:
+
+/usr/include/bits/sys_errlist.h:
+
+/usr/include/bits/stdio.h:
+
+../poppler/poppler-config.h:
+
+../goo/gstrtod.h:
+
+../goo/GooList.h:
+
+../goo/gtypes.h:
+
+Error.h:
+
+poppler-config.h:
+
+Object.h:
+
+/usr/include/string.h:
+
+../goo/gtypes.h:
+
+../goo/GooString.h:
+
+Array.h:
+
+Dict.h:
+
+Stream.h:
+
+Catalog.h:
+
+Gfx.h:
+
+../goo/GooList.h:
+
+GfxState.h:
+
+Function.h:
+
+PopplerCache.h:
+
+Lexer.h:
+
+Annot.h:
+
+GfxFont.h:
+
+CharTypes.h:
+
+CharCodeToUnicode.h:
+
+../goo/GooMutex.h:
+
+/usr/include/pthread.h:
+
+/usr/include/sched.h:
+
+/usr/include/bits/sched.h:
+
+/usr/include/signal.h:
+
+/usr/include/bits/setjmp.h:
+
+PDFDocEncoding.h:
+
+Form.h:
+
+../goo/GooVector.h:
+
+Page.h:
+
+XRef.h:
+
+Movie.h:
+
+OptionalContent.h:
+
+Sound.h:
+
+FileSpec.h:
+
+DateInfo.h:

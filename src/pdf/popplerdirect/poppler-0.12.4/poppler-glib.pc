@@ -1,0 +1,13 @@
+prefix=/usr/local
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: poppler-glib
+Description: GLib wrapper for poppler
+Version: 0.12.4
+Requires:  gobject-2.0 gdk-2.0 gdk-pixbuf-2.0 cairo
+Requires.private: poppler = 0.12.4
+
+Libs: -L${libdir} -lpoppler-glib
+Cflags: -I${includedir}/poppler/glib

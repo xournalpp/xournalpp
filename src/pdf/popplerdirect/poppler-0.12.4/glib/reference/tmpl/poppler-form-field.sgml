@@ -1,0 +1,315 @@
+<!-- ##### SECTION Title ##### -->
+PopplerFormField
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### STRUCT PopplerFormField ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### ENUM PopplerFormButtonType ##### -->
+<para>
+
+</para>
+
+@POPPLER_FORM_BUTTON_PUSH: 
+@POPPLER_FORM_BUTTON_CHECK: 
+@POPPLER_FORM_BUTTON_RADIO: 
+
+<!-- ##### ENUM PopplerFormChoiceType ##### -->
+<para>
+
+</para>
+
+@POPPLER_FORM_CHOICE_COMBO: 
+@POPPLER_FORM_CHOICE_LIST: 
+
+<!-- ##### ENUM PopplerFormFieldType ##### -->
+<para>
+
+</para>
+
+@POPPLER_FORM_FIELD_UNKNOWN: 
+@POPPLER_FORM_FIELD_BUTTON: 
+@POPPLER_FORM_FIELD_TEXT: 
+@POPPLER_FORM_FIELD_CHOICE: 
+@POPPLER_FORM_FIELD_SIGNATURE: 
+
+<!-- ##### ENUM PopplerFormTextType ##### -->
+<para>
+
+</para>
+
+@POPPLER_FORM_TEXT_NORMAL: 
+@POPPLER_FORM_TEXT_MULTILINE: 
+@POPPLER_FORM_TEXT_FILE_SELECT: 
+
+<!-- ##### FUNCTION poppler_form_field_get_id ##### -->
+<para>
+
+</para>
+
+@field: 
+@Returns: 
+
+
+<!-- ##### FUNCTION poppler_form_field_get_field_type ##### -->
+<para>
+
+</para>
+
+@field: 
+@Returns: 
+
+
+<!-- ##### FUNCTION poppler_form_field_is_read_only ##### -->
+<para>
+
+</para>
+
+@field: 
+@Returns: 
+
+
+<!-- ##### FUNCTION poppler_form_field_get_font_size ##### -->
+<para>
+
+</para>
+
+@field: 
+@Returns: 
+
+
+<!-- ##### FUNCTION poppler_form_field_button_get_button_type ##### -->
+<para>
+
+</para>
+
+@field: 
+@Returns: 
+
+
+<!-- ##### FUNCTION poppler_form_field_button_get_state ##### -->
+<para>
+
+</para>
+
+@field: 
+@Returns: 
+
+
+<!-- ##### FUNCTION poppler_form_field_button_set_state ##### -->
+<para>
+
+</para>
+
+@field: 
+@state: 
+
+
+<!-- ##### FUNCTION poppler_form_field_choice_can_select_multiple ##### -->
+<para>
+
+</para>
+
+@field: 
+@Returns: 
+
+
+<!-- ##### FUNCTION poppler_form_field_choice_commit_on_change ##### -->
+<para>
+
+</para>
+
+@field: 
+@Returns: 
+
+
+<!-- ##### FUNCTION poppler_form_field_choice_do_spell_check ##### -->
+<para>
+
+</para>
+
+@field: 
+@Returns: 
+
+
+<!-- ##### FUNCTION poppler_form_field_choice_get_choice_type ##### -->
+<para>
+
+</para>
+
+@field: 
+@Returns: 
+
+
+<!-- ##### FUNCTION poppler_form_field_choice_get_item ##### -->
+<para>
+
+</para>
+
+@field: 
+@index: 
+@Returns: 
+
+
+<!-- ##### FUNCTION poppler_form_field_choice_get_n_items ##### -->
+<para>
+
+</para>
+
+@field: 
+@Returns: 
+
+
+<!-- ##### FUNCTION poppler_form_field_choice_get_text ##### -->
+<para>
+
+</para>
+
+@field: 
+@Returns: 
+
+
+<!-- ##### FUNCTION poppler_form_field_choice_is_editable ##### -->
+<para>
+
+</para>
+
+@field: 
+@Returns: 
+
+
+<!-- ##### FUNCTION poppler_form_field_choice_is_item_selected ##### -->
+<para>
+
+</para>
+
+@field: 
+@index: 
+@Returns: 
+
+
+<!-- ##### FUNCTION poppler_form_field_choice_select_item ##### -->
+<para>
+
+</para>
+
+@field: 
+@index: 
+
+
+<!-- ##### FUNCTION poppler_form_field_choice_set_text ##### -->
+<para>
+
+</para>
+
+@field: 
+@text: 
+
+
+<!-- ##### FUNCTION poppler_form_field_choice_toggle_item ##### -->
+<para>
+
+</para>
+
+@field: 
+@index: 
+
+
+<!-- ##### FUNCTION poppler_form_field_choice_unselect_all ##### -->
+<para>
+
+</para>
+
+@field: 
+
+
+<!-- ##### FUNCTION poppler_form_field_text_do_scroll ##### -->
+<para>
+
+</para>
+
+@field: 
+@Returns: 
+
+
+<!-- ##### FUNCTION poppler_form_field_text_do_spell_check ##### -->
+<para>
+
+</para>
+
+@field: 
+@Returns: 
+
+
+<!-- ##### FUNCTION poppler_form_field_text_get_max_len ##### -->
+<para>
+
+</para>
+
+@field: 
+@Returns: 
+
+
+<!-- ##### FUNCTION poppler_form_field_text_get_text ##### -->
+<para>
+
+</para>
+
+@field: 
+@Returns: 
+
+
+<!-- ##### FUNCTION poppler_form_field_text_get_text_type ##### -->
+<para>
+
+</para>
+
+@field: 
+@Returns: 
+
+
+<!-- ##### FUNCTION poppler_form_field_text_is_password ##### -->
+<para>
+
+</para>
+
+@field: 
+@Returns: 
+
+
+<!-- ##### FUNCTION poppler_form_field_text_is_rich_text ##### -->
+<para>
+
+</para>
+
+@field: 
+@Returns: 
+
+
+<!-- ##### FUNCTION poppler_form_field_text_set_text ##### -->
+<para>
+
+</para>
+
+@field: 
+@text: 
+
+

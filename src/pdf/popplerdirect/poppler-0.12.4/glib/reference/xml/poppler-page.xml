@@ -1,0 +1,819 @@
+<?xml version="1.0"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" 
+               "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+<refentry id="poppler-poppler-page">
+<refmeta>
+<refentrytitle role="top_of_page" id="poppler-poppler-page.top_of_page">PopplerPage</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>POPPLER Library</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>PopplerPage</refname>
+<refpurpose>Information about a page in a document</refpurpose>
+</refnamediv>
+
+<refsynopsisdiv id="poppler-poppler-page.synopsis" role="synopsis">
+<title role="synopsis.title">Synopsis</title>
+
+<synopsis>
+<link linkend="void">void</link>                <link linkend="poppler-page-render">poppler_page_render</link>                 (<link linkend="PopplerPage">PopplerPage</link> *page,
+                                                         <link linkend="cairo-t">cairo_t</link> *cairo);
+<link linkend="void">void</link>                <link linkend="poppler-page-render-to-pixbuf">poppler_page_render_to_pixbuf</link>       (<link linkend="PopplerPage">PopplerPage</link> *page,
+                                                         <link linkend="int">int</link> src_x,
+                                                         <link linkend="int">int</link> src_y,
+                                                         <link linkend="int">int</link> src_width,
+                                                         <link linkend="int">int</link> src_height,
+                                                         <link linkend="double">double</link> scale,
+                                                         <link linkend="int">int</link> rotation,
+                                                         <link linkend="GdkPixbuf">GdkPixbuf</link> *pixbuf);
+<link linkend="void">void</link>                <link linkend="poppler-page-get-size">poppler_page_get_size</link>               (<link linkend="PopplerPage">PopplerPage</link> *page,
+                                                         <link linkend="double">double</link> *width,
+                                                         <link linkend="double">double</link> *height);
+<link linkend="int">int</link>                 <link linkend="poppler-page-get-index">poppler_page_get_index</link>              (<link linkend="PopplerPage">PopplerPage</link> *page);
+<link linkend="cairo-surface-t">cairo_surface_t</link> *   <link linkend="poppler-page-get-thumbnail">poppler_page_get_thumbnail</link>          (<link linkend="PopplerPage">PopplerPage</link> *page);
+<link linkend="gboolean">gboolean</link>            <link linkend="poppler-page-get-thumbnail-size">poppler_page_get_thumbnail_size</link>     (<link linkend="PopplerPage">PopplerPage</link> *page,
+                                                         <link linkend="int">int</link> *width,
+                                                         <link linkend="int">int</link> *height);
+<link linkend="void">void</link>                <link linkend="poppler-page-render-to-ps">poppler_page_render_to_ps</link>           (<link linkend="PopplerPage">PopplerPage</link> *page,
+                                                         <link linkend="PopplerPSFile">PopplerPSFile</link> *ps_file);
+<link linkend="GList">GList</link> *             <link linkend="poppler-page-find-text">poppler_page_find_text</link>              (<link linkend="PopplerPage">PopplerPage</link> *page,
+                                                         const <link linkend="char">char</link> *text);
+<link linkend="char">char</link> *              <link linkend="poppler-page-get-text">poppler_page_get_text</link>               (<link linkend="PopplerPage">PopplerPage</link> *page,
+                                                         <link linkend="PopplerSelectionStyle">PopplerSelectionStyle</link> style,
+                                                         <link linkend="PopplerRectangle">PopplerRectangle</link> *rect);
+<link linkend="double">double</link>              <link linkend="poppler-page-get-duration">poppler_page_get_duration</link>           (<link linkend="PopplerPage">PopplerPage</link> *page);
+<link linkend="PopplerPageTransition">PopplerPageTransition</link> * <link linkend="poppler-page-get-transition">poppler_page_get_transition</link>     (<link linkend="PopplerPage">PopplerPage</link> *page);
+<link linkend="GList">GList</link> *             <link linkend="poppler-page-get-link-mapping">poppler_page_get_link_mapping</link>       (<link linkend="PopplerPage">PopplerPage</link> *page);
+<link linkend="void">void</link>                <link linkend="poppler-page-free-link-mapping">poppler_page_free_link_mapping</link>      (<link linkend="GList">GList</link> *list);
+<link linkend="GList">GList</link> *             <link linkend="poppler-page-get-image-mapping">poppler_page_get_image_mapping</link>      (<link linkend="PopplerPage">PopplerPage</link> *page);
+<link linkend="void">void</link>                <link linkend="poppler-page-free-image-mapping">poppler_page_free_image_mapping</link>     (<link linkend="GList">GList</link> *list);
+<link linkend="GList">GList</link> *             <link linkend="poppler-page-get-form-field-mapping">poppler_page_get_form_field_mapping</link> (<link linkend="PopplerPage">PopplerPage</link> *page);
+<link linkend="void">void</link>                <link linkend="poppler-page-free-form-field-mapping">poppler_page_free_form_field_mapping</link>
+                                                        (<link linkend="GList">GList</link> *list);
+<link linkend="GList">GList</link> *             <link linkend="poppler-page-get-selection-region">poppler_page_get_selection_region</link>   (<link linkend="PopplerPage">PopplerPage</link> *page,
+                                                         <link linkend="gdouble">gdouble</link> scale,
+                                                         <link linkend="PopplerSelectionStyle">PopplerSelectionStyle</link> style,
+                                                         <link linkend="PopplerRectangle">PopplerRectangle</link> *selection);
+<link linkend="void">void</link>                <link linkend="poppler-page-render-selection">poppler_page_render_selection</link>       (<link linkend="PopplerPage">PopplerPage</link> *page,
+                                                         <link linkend="cairo-t">cairo_t</link> *cairo,
+                                                         <link linkend="PopplerRectangle">PopplerRectangle</link> *selection,
+                                                         <link linkend="PopplerRectangle">PopplerRectangle</link> *old_selection,
+                                                         <link linkend="PopplerSelectionStyle">PopplerSelectionStyle</link> style,
+                                                         <link linkend="PopplerColor">PopplerColor</link> *glyph_color,
+                                                         <link linkend="PopplerColor">PopplerColor</link> *background_color);
+<link linkend="void">void</link>                <link linkend="poppler-page-render-selection-to-pixbuf">poppler_page_render_selection_to_pixbuf</link>
+                                                        (<link linkend="PopplerPage">PopplerPage</link> *page,
+                                                         <link linkend="gdouble">gdouble</link> scale,
+                                                         <link linkend="int">int</link> rotation,
+                                                         <link linkend="GdkPixbuf">GdkPixbuf</link> *pixbuf,
+                                                         <link linkend="PopplerRectangle">PopplerRectangle</link> *selection,
+                                                         <link linkend="PopplerRectangle">PopplerRectangle</link> *old_selection,
+                                                         <link linkend="PopplerSelectionStyle">PopplerSelectionStyle</link> style,
+                                                         <link linkend="GdkColor">GdkColor</link> *glyph_color,
+                                                         <link linkend="GdkColor">GdkColor</link> *background_color);
+#define             <link linkend="POPPLER-TYPE-RECTANGLE--CAPS">POPPLER_TYPE_RECTANGLE</link>
+                    <link linkend="PopplerRectangle">PopplerRectangle</link>;
+<link linkend="GType">GType</link>               <link linkend="poppler-rectangle-get-type">poppler_rectangle_get_type</link>          (void);
+<link linkend="PopplerRectangle">PopplerRectangle</link> *  <link linkend="poppler-rectangle-new">poppler_rectangle_new</link>               (void);
+<link linkend="PopplerRectangle">PopplerRectangle</link> *  <link linkend="poppler-rectangle-copy">poppler_rectangle_copy</link>              (<link linkend="PopplerRectangle">PopplerRectangle</link> *rectangle);
+<link linkend="void">void</link>                <link linkend="poppler-rectangle-free">poppler_rectangle_free</link>              (<link linkend="PopplerRectangle">PopplerRectangle</link> *rectangle);
+#define             <link linkend="POPPLER-TYPE-PAGE-TRANSITION--CAPS">POPPLER_TYPE_PAGE_TRANSITION</link>
+                    <link linkend="PopplerPageTransition">PopplerPageTransition</link>;
+<link linkend="GType">GType</link>               <link linkend="poppler-page-transition-get-type">poppler_page_transition_get_type</link>    (void);
+<link linkend="PopplerPageTransition">PopplerPageTransition</link> * <link linkend="poppler-page-transition-new">poppler_page_transition_new</link>     (void);
+<link linkend="PopplerPageTransition">PopplerPageTransition</link> * <link linkend="poppler-page-transition-copy">poppler_page_transition_copy</link>    (<link linkend="PopplerPageTransition">PopplerPageTransition</link> *transition);
+<link linkend="void">void</link>                <link linkend="poppler-page-transition-free">poppler_page_transition_free</link>        (<link linkend="PopplerPageTransition">PopplerPageTransition</link> *transition);
+#define             <link linkend="POPPLER-TYPE-LINK-MAPPING--CAPS">POPPLER_TYPE_LINK_MAPPING</link>
+                    <link linkend="PopplerLinkMapping">PopplerLinkMapping</link>;
+<link linkend="GType">GType</link>               <link linkend="poppler-link-mapping-get-type">poppler_link_mapping_get_type</link>       (void);
+<link linkend="PopplerLinkMapping">PopplerLinkMapping</link> * <link linkend="poppler-link-mapping-new">poppler_link_mapping_new</link>           (void);
+<link linkend="PopplerLinkMapping">PopplerLinkMapping</link> * <link linkend="poppler-link-mapping-copy">poppler_link_mapping_copy</link>          (<link linkend="PopplerLinkMapping">PopplerLinkMapping</link> *mapping);
+<link linkend="void">void</link>                <link linkend="poppler-link-mapping-free">poppler_link_mapping_free</link>           (<link linkend="PopplerLinkMapping">PopplerLinkMapping</link> *mapping);
+#define             <link linkend="POPPLER-TYPE-IMAGE-MAPPING--CAPS">POPPLER_TYPE_IMAGE_MAPPING</link>
+                    <link linkend="PopplerImageMapping">PopplerImageMapping</link>;
+<link linkend="GType">GType</link>               <link linkend="poppler-image-mapping-get-type">poppler_image_mapping_get_type</link>      (void);
+<link linkend="PopplerImageMapping">PopplerImageMapping</link> * <link linkend="poppler-image-mapping-new">poppler_image_mapping_new</link>         (void);
+<link linkend="PopplerImageMapping">PopplerImageMapping</link> * <link linkend="poppler-image-mapping-copy">poppler_image_mapping_copy</link>        (<link linkend="PopplerImageMapping">PopplerImageMapping</link> *mapping);
+<link linkend="void">void</link>                <link linkend="poppler-image-mapping-free">poppler_image_mapping_free</link>          (<link linkend="PopplerImageMapping">PopplerImageMapping</link> *mapping);
+#define             <link linkend="POPPLER-TYPE-FORM-FIELD-MAPPING--CAPS">POPPLER_TYPE_FORM_FIELD_MAPPING</link>
+                    <link linkend="PopplerFormFieldMapping">PopplerFormFieldMapping</link>;
+<link linkend="GType">GType</link>               <link linkend="poppler-form-field-mapping-get-type">poppler_form_field_mapping_get_type</link> (void);
+<link linkend="PopplerFormFieldMapping">PopplerFormFieldMapping</link> * <link linkend="poppler-form-field-mapping-new">poppler_form_field_mapping_new</link>
+                                                        (void);
+<link linkend="PopplerFormFieldMapping">PopplerFormFieldMapping</link> * <link linkend="poppler-form-field-mapping-copy">poppler_form_field_mapping_copy</link>
+                                                        (<link linkend="PopplerFormFieldMapping">PopplerFormFieldMapping</link> *mapping);
+<link linkend="void">void</link>                <link linkend="poppler-form-field-mapping-free">poppler_form_field_mapping_free</link>     (<link linkend="PopplerFormFieldMapping">PopplerFormFieldMapping</link> *mapping);
+</synopsis>
+</refsynopsisdiv>
+
+
+
+
+
+
+
+
+
+<refsect1 id="poppler-poppler-page.description" role="desc">
+<title role="desc.title">Description</title>
+<para>
+</para>
+</refsect1>
+
+<refsect1 id="poppler-poppler-page.details" role="details">
+<title role="details.title">Details</title>
+<refsect2 id="poppler-page-render" role="function">
+<title>poppler_page_render ()</title>
+<indexterm zone="poppler-page-render"><primary sortas="poppler_page_render">poppler_page_render</primary></indexterm><programlisting><link linkend="void">void</link>                poppler_page_render                 (<link linkend="PopplerPage">PopplerPage</link> *page,
+                                                         <link linkend="cairo-t">cairo_t</link> *cairo);</programlisting>
+<para>
+Render the page to the given cairo context. This function
+is for rendering a page that will be displayed. If you want
+to render a page that will be printed use
+<link linkend="poppler-page-render-for-printing"><function>poppler_page_render_for_printing()</function></link> instead</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>page</parameter>&#160;:</term>
+<listitem><simpara> the page to render from
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>cairo</parameter>&#160;:</term>
+<listitem><simpara> cairo context to render to
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="poppler-page-render-to-pixbuf" role="function">
+<title>poppler_page_render_to_pixbuf ()</title>
+<indexterm zone="poppler-page-render-to-pixbuf"><primary sortas="poppler_page_render_to_pixbuf">poppler_page_render_to_pixbuf</primary></indexterm><programlisting><link linkend="void">void</link>                poppler_page_render_to_pixbuf       (<link linkend="PopplerPage">PopplerPage</link> *page,
+                                                         <link linkend="int">int</link> src_x,
+                                                         <link linkend="int">int</link> src_y,
+                                                         <link linkend="int">int</link> src_width,
+                                                         <link linkend="int">int</link> src_height,
+                                                         <link linkend="double">double</link> scale,
+                                                         <link linkend="int">int</link> rotation,
+                                                         <link linkend="GdkPixbuf">GdkPixbuf</link> *pixbuf);</programlisting>
+<para>
+First scale the document to match the specified pixels per point,
+then render the rectangle given by the upper left corner at
+(src_x, src_y) and src_width and src_height.
+This function is for rendering a page that will be displayed.
+If you want to render a page that will be printed use
+<link linkend="poppler-page-render-to-pixbuf-for-printing"><function>poppler_page_render_to_pixbuf_for_printing()</function></link> instead</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>page</parameter>&#160;:</term>
+<listitem><simpara> the page to render from
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>src_x</parameter>&#160;:</term>
+<listitem><simpara> x coordinate of upper left corner  
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>src_y</parameter>&#160;:</term>
+<listitem><simpara> y coordinate of upper left corner  
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>src_width</parameter>&#160;:</term>
+<listitem><simpara> width of rectangle to render  
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>src_height</parameter>&#160;:</term>
+<listitem><simpara> height of rectangle to render
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>scale</parameter>&#160;:</term>
+<listitem><simpara> scale specified as pixels per point
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>rotation</parameter>&#160;:</term>
+<listitem><simpara> rotate the document by the specified degree
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>pixbuf</parameter>&#160;:</term>
+<listitem><simpara> pixbuf to render into
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="poppler-page-get-size" role="function">
+<title>poppler_page_get_size ()</title>
+<indexterm zone="poppler-page-get-size"><primary sortas="poppler_page_get_size">poppler_page_get_size</primary></indexterm><programlisting><link linkend="void">void</link>                poppler_page_get_size               (<link linkend="PopplerPage">PopplerPage</link> *page,
+                                                         <link linkend="double">double</link> *width,
+                                                         <link linkend="double">double</link> *height);</programlisting>
+<para>
+Gets the size of <parameter>page</parameter> at the current scale and rotation.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>page</parameter>&#160;:</term>
+<listitem><simpara> A <link linkend="PopplerPage"><type>PopplerPage</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>width</parameter>&#160;:</term>
+<listitem><simpara> return location for the width of <parameter>page</parameter>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>height</parameter>&#160;:</term>
+<listitem><simpara> return location for the height of <parameter>page</parameter>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="poppler-page-get-index" role="function">
+<title>poppler_page_get_index ()</title>
+<indexterm zone="poppler-page-get-index"><primary sortas="poppler_page_get_index">poppler_page_get_index</primary></indexterm><programlisting><link linkend="int">int</link>                 poppler_page_get_index              (<link linkend="PopplerPage">PopplerPage</link> *page);</programlisting>
+<para>
+Returns the index of <parameter>page</parameter></para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>page</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="PopplerPage"><type>PopplerPage</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> index value of <parameter>page</parameter>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="poppler-page-get-thumbnail" role="function">
+<title>poppler_page_get_thumbnail ()</title>
+<indexterm zone="poppler-page-get-thumbnail"><primary sortas="poppler_page_get_thumbnail">poppler_page_get_thumbnail</primary></indexterm><programlisting><link linkend="cairo-surface-t">cairo_surface_t</link> *   poppler_page_get_thumbnail          (<link linkend="PopplerPage">PopplerPage</link> *page);</programlisting>
+<para>
+Get the embedded thumbnail for the specified page.  If the document
+doesn't have an embedded thumbnail for the page, this function
+returns <link linkend="NULL--CAPS"><literal>NULL</literal></link>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>page</parameter>&#160;:</term>
+<listitem><simpara> the <link linkend="PopperPage"><type>PopperPage</type></link> to get the thumbnail for
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the tumbnail as a cairo_surface_t or <link linkend="NULL--CAPS"><literal>NULL</literal></link> if the document
+doesn't have a thumbnail for this page.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="poppler-page-get-thumbnail-size" role="function">
+<title>poppler_page_get_thumbnail_size ()</title>
+<indexterm zone="poppler-page-get-thumbnail-size"><primary sortas="poppler_page_get_thumbnail_size">poppler_page_get_thumbnail_size</primary></indexterm><programlisting><link linkend="gboolean">gboolean</link>            poppler_page_get_thumbnail_size     (<link linkend="PopplerPage">PopplerPage</link> *page,
+                                                         <link linkend="int">int</link> *width,
+                                                         <link linkend="int">int</link> *height);</programlisting>
+<para>
+Returns <link linkend="TRUE--CAPS"><literal>TRUE</literal></link> if <parameter>page</parameter> has a thumbnail associated with it.  It also
+fills in <parameter>width</parameter> and <parameter>height</parameter> with the width and height of the
+thumbnail.  The values of width and height are not changed if no
+appropriate thumbnail exists.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>page</parameter>&#160;:</term>
+<listitem><simpara> A <link linkend="PopplerPage"><type>PopplerPage</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>width</parameter>&#160;:</term>
+<listitem><simpara> return location for width
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>height</parameter>&#160;:</term>
+<listitem><simpara> return location for height
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> <link linkend="TRUE--CAPS"><literal>TRUE</literal></link>, if <parameter>page</parameter> has a thumbnail associated with it.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="poppler-page-render-to-ps" role="function">
+<title>poppler_page_render_to_ps ()</title>
+<indexterm zone="poppler-page-render-to-ps"><primary sortas="poppler_page_render_to_ps">poppler_page_render_to_ps</primary></indexterm><programlisting><link linkend="void">void</link>                poppler_page_render_to_ps           (<link linkend="PopplerPage">PopplerPage</link> *page,
+                                                         <link linkend="PopplerPSFile">PopplerPSFile</link> *ps_file);</programlisting>
+<para>
+Render the page on a postscript file</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>page</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="PopplerPage"><type>PopplerPage</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>ps_file</parameter>&#160;:</term>
+<listitem><simpara> the PopplerPSFile to render to
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="poppler-page-find-text" role="function">
+<title>poppler_page_find_text ()</title>
+<indexterm zone="poppler-page-find-text"><primary sortas="poppler_page_find_text">poppler_page_find_text</primary></indexterm><programlisting><link linkend="GList">GList</link> *             poppler_page_find_text              (<link linkend="PopplerPage">PopplerPage</link> *page,
+                                                         const <link linkend="char">char</link> *text);</programlisting>
+<para>
+A <link linkend="GList"><type>GList</type></link> of rectangles for each occurance of the text on the page.
+The coordinates are in PDF points.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>page</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="PopplerPage"><type>PopplerPage</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>text</parameter>&#160;:</term>
+<listitem><simpara> the text to search for (UTF-8 encoded)
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> a <link linkend="GList"><type>GList</type></link> of PopplerRectangle, 
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="poppler-page-get-text" role="function">
+<title>poppler_page_get_text ()</title>
+<indexterm zone="poppler-page-get-text"><primary sortas="poppler_page_get_text">poppler_page_get_text</primary></indexterm><programlisting><link linkend="char">char</link> *              poppler_page_get_text               (<link linkend="PopplerPage">PopplerPage</link> *page,
+                                                         <link linkend="PopplerSelectionStyle">PopplerSelectionStyle</link> style,
+                                                         <link linkend="PopplerRectangle">PopplerRectangle</link> *rect);</programlisting>
+<para>
+Retrieves the contents of the specified <parameter>selection</parameter> as text.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>page</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="PopplerPage"><type>PopplerPage</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>style</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="PopplerSelectionStyle"><type>PopplerSelectionStyle</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>rect</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> a pointer to the contents of the <parameter>selection</parameter>
+              as a string
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="poppler-page-get-duration" role="function">
+<title>poppler_page_get_duration ()</title>
+<indexterm zone="poppler-page-get-duration"><primary sortas="poppler_page_get_duration">poppler_page_get_duration</primary></indexterm><programlisting><link linkend="double">double</link>              poppler_page_get_duration           (<link linkend="PopplerPage">PopplerPage</link> *page);</programlisting>
+<para>
+Returns the duration of <parameter>page</parameter></para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>page</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="PopplerPage"><type>PopplerPage</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> duration in seconds of <parameter>page</parameter> or -1.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="poppler-page-get-transition" role="function">
+<title>poppler_page_get_transition ()</title>
+<indexterm zone="poppler-page-get-transition"><primary sortas="poppler_page_get_transition">poppler_page_get_transition</primary></indexterm><programlisting><link linkend="PopplerPageTransition">PopplerPageTransition</link> * poppler_page_get_transition     (<link linkend="PopplerPage">PopplerPage</link> *page);</programlisting>
+<para>
+Returns the transition effect of <parameter>page</parameter></para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>page</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="PopplerPage"><type>PopplerPage</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> a <link linkend="PopplerPageTransition"><type>PopplerPageTransition</type></link> or NULL.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="poppler-page-get-link-mapping" role="function">
+<title>poppler_page_get_link_mapping ()</title>
+<indexterm zone="poppler-page-get-link-mapping"><primary sortas="poppler_page_get_link_mapping">poppler_page_get_link_mapping</primary></indexterm><programlisting><link linkend="GList">GList</link> *             poppler_page_get_link_mapping       (<link linkend="PopplerPage">PopplerPage</link> *page);</programlisting>
+<para>
+Returns a list of <link linkend="PopplerLinkMapping"><type>PopplerLinkMapping</type></link> items that map from a
+location on <parameter>page</parameter> to a <link linkend="PopplerAction"><type>PopplerAction</type></link>.  This list must be freed
+with <link linkend="poppler-page-free-link-mapping"><function>poppler_page_free_link_mapping()</function></link> when done.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>page</parameter>&#160;:</term>
+<listitem><simpara> A <link linkend="PopplerPage"><type>PopplerPage</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> A <link linkend="GList"><type>GList</type></link> of <link linkend="PopplerLinkMapping"><type>PopplerLinkMapping</type></link>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="poppler-page-free-link-mapping" role="function">
+<title>poppler_page_free_link_mapping ()</title>
+<indexterm zone="poppler-page-free-link-mapping"><primary sortas="poppler_page_free_link_mapping">poppler_page_free_link_mapping</primary></indexterm><programlisting><link linkend="void">void</link>                poppler_page_free_link_mapping      (<link linkend="GList">GList</link> *list);</programlisting>
+<para>
+Frees a list of <link linkend="PopplerLinkMapping"><type>PopplerLinkMapping</type></link><!-- -->s allocated by
+<link linkend="poppler-page-get-link-mapping"><function>poppler_page_get_link_mapping()</function></link>.  It also frees the <link linkend="PopplerAction"><type>PopplerAction</type></link><!-- -->s
+that each mapping contains, so if you want to keep them around, you need to
+copy them with <link linkend="poppler-action-copy"><function>poppler_action_copy()</function></link>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>list</parameter>&#160;:</term>
+<listitem><simpara> A list of <link linkend="PopplerLinkMapping"><type>PopplerLinkMapping</type></link><!-- -->s
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="poppler-page-get-image-mapping" role="function">
+<title>poppler_page_get_image_mapping ()</title>
+<indexterm zone="poppler-page-get-image-mapping"><primary sortas="poppler_page_get_image_mapping">poppler_page_get_image_mapping</primary></indexterm><programlisting><link linkend="GList">GList</link> *             poppler_page_get_image_mapping      (<link linkend="PopplerPage">PopplerPage</link> *page);</programlisting>
+<para>
+Returns a list of <link linkend="PopplerImageMapping"><type>PopplerImageMapping</type></link> items that map from a
+location on <parameter>page</parameter> to an image of the page. This list must be freed
+with <link linkend="poppler-page-free-image-mapping"><function>poppler_page_free_image_mapping()</function></link> when done.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>page</parameter>&#160;:</term>
+<listitem><simpara> A <link linkend="PopplerPage"><type>PopplerPage</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> A <link linkend="GList"><type>GList</type></link> of <link linkend="PopplerImageMapping"><type>PopplerImageMapping</type></link>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="poppler-page-free-image-mapping" role="function">
+<title>poppler_page_free_image_mapping ()</title>
+<indexterm zone="poppler-page-free-image-mapping"><primary sortas="poppler_page_free_image_mapping">poppler_page_free_image_mapping</primary></indexterm><programlisting><link linkend="void">void</link>                poppler_page_free_image_mapping     (<link linkend="GList">GList</link> *list);</programlisting>
+<para>
+Frees a list of <link linkend="PopplerImageMapping"><type>PopplerImageMapping</type></link><!-- -->s allocated by
+<link linkend="poppler-page-get-image-mapping"><function>poppler_page_get_image_mapping()</function></link>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>list</parameter>&#160;:</term>
+<listitem><simpara> A list of <link linkend="PopplerImageMapping"><type>PopplerImageMapping</type></link><!-- -->s
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="poppler-page-get-form-field-mapping" role="function">
+<title>poppler_page_get_form_field_mapping ()</title>
+<indexterm zone="poppler-page-get-form-field-mapping"><primary sortas="poppler_page_get_form_field_mapping">poppler_page_get_form_field_mapping</primary></indexterm><programlisting><link linkend="GList">GList</link> *             poppler_page_get_form_field_mapping (<link linkend="PopplerPage">PopplerPage</link> *page);</programlisting>
+<para>
+Returns a list of <link linkend="PopplerFormFieldMapping"><type>PopplerFormFieldMapping</type></link> items that map from a
+location on <parameter>page</parameter> to a form field.  This list must be freed
+with <link linkend="poppler-page-free-form-field-mapping"><function>poppler_page_free_form_field_mapping()</function></link> when done.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>page</parameter>&#160;:</term>
+<listitem><simpara> A <link linkend="PopplerPage"><type>PopplerPage</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> A <link linkend="GList"><type>GList</type></link> of <link linkend="PopplerFormFieldMapping"><type>PopplerFormFieldMapping</type></link>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="poppler-page-free-form-field-mapping" role="function">
+<title>poppler_page_free_form_field_mapping ()</title>
+<indexterm zone="poppler-page-free-form-field-mapping"><primary sortas="poppler_page_free_form_field_mapping">poppler_page_free_form_field_mapping</primary></indexterm><programlisting><link linkend="void">void</link>                poppler_page_free_form_field_mapping
+                                                        (<link linkend="GList">GList</link> *list);</programlisting>
+<para>
+Frees a list of <link linkend="PopplerFormFieldMapping"><type>PopplerFormFieldMapping</type></link><!-- -->s allocated by
+<link linkend="poppler-page-get-form-field-mapping"><function>poppler_page_get_form_field_mapping()</function></link>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>list</parameter>&#160;:</term>
+<listitem><simpara> A list of <link linkend="PopplerFormFieldMapping"><type>PopplerFormFieldMapping</type></link><!-- -->s
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="poppler-page-get-selection-region" role="function">
+<title>poppler_page_get_selection_region ()</title>
+<indexterm zone="poppler-page-get-selection-region"><primary sortas="poppler_page_get_selection_region">poppler_page_get_selection_region</primary></indexterm><programlisting><link linkend="GList">GList</link> *             poppler_page_get_selection_region   (<link linkend="PopplerPage">PopplerPage</link> *page,
+                                                         <link linkend="gdouble">gdouble</link> scale,
+                                                         <link linkend="PopplerSelectionStyle">PopplerSelectionStyle</link> style,
+                                                         <link linkend="PopplerRectangle">PopplerRectangle</link> *selection);</programlisting>
+<para>
+Returns a region containing the area that would be rendered by
+<link linkend="poppler-page-render-selection"><function>poppler_page_render_selection()</function></link> or 
+<link linkend="poppler-page-render-selection-to-pixbuf"><function>poppler_page_render_selection_to_pixbuf()</function></link> as a <link linkend="GList"><type>GList</type></link> of
+<link linkend="PopplerRectangle"><type>PopplerRectangle</type></link>. The returned list must be freed with
+<link linkend="poppler-page-selection-region-free"><function>poppler_page_selection_region_free()</function></link>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>page</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="PopplerPage"><type>PopplerPage</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>scale</parameter>&#160;:</term>
+<listitem><simpara> scale specified as pixels per point
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>style</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="PopplerSelectionStyle"><type>PopplerSelectionStyle</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>selection</parameter>&#160;:</term>
+<listitem><simpara> start and end point of selection as a rectangle
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> a <link linkend="GList"><type>GList</type></link> of <link linkend="PopplerRectangle"><type>PopplerRectangle</type></link>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="poppler-page-render-selection" role="function">
+<title>poppler_page_render_selection ()</title>
+<indexterm zone="poppler-page-render-selection"><primary sortas="poppler_page_render_selection">poppler_page_render_selection</primary></indexterm><programlisting><link linkend="void">void</link>                poppler_page_render_selection       (<link linkend="PopplerPage">PopplerPage</link> *page,
+                                                         <link linkend="cairo-t">cairo_t</link> *cairo,
+                                                         <link linkend="PopplerRectangle">PopplerRectangle</link> *selection,
+                                                         <link linkend="PopplerRectangle">PopplerRectangle</link> *old_selection,
+                                                         <link linkend="PopplerSelectionStyle">PopplerSelectionStyle</link> style,
+                                                         <link linkend="PopplerColor">PopplerColor</link> *glyph_color,
+                                                         <link linkend="PopplerColor">PopplerColor</link> *background_color);</programlisting>
+<para>
+Render the selection specified by <parameter>selection</parameter> for <parameter>page</parameter> to
+the given cairo context.  The selection will be rendered, using
+<parameter>glyph_color</parameter> for the glyphs and <parameter>background_color</parameter> for the selection
+background.
+</para>
+<para>
+If non-NULL, <parameter>old_selection</parameter> specifies the selection that is already
+rendered to <parameter>cairo</parameter>, in which case this function will (some day)
+only render the changed part of the selection.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>page</parameter>&#160;:</term>
+<listitem><simpara> the <link linkend="PopplerPage"><type>PopplerPage</type></link> for which to render selection
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>cairo</parameter>&#160;:</term>
+<listitem><simpara> cairo context to render to
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>selection</parameter>&#160;:</term>
+<listitem><simpara> start and end point of selection as a rectangle
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>old_selection</parameter>&#160;:</term>
+<listitem><simpara> previous selection
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>style</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="PopplerSelectionStyle"><type>PopplerSelectionStyle</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>glyph_color</parameter>&#160;:</term>
+<listitem><simpara> color to use for drawing glyphs
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>background_color</parameter>&#160;:</term>
+<listitem><simpara> color to use for the selection background
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="poppler-page-render-selection-to-pixbuf" role="function">
+<title>poppler_page_render_selection_to_pixbuf ()</title>
+<indexterm zone="poppler-page-render-selection-to-pixbuf"><primary sortas="poppler_page_render_selection_to_pixbuf">poppler_page_render_selection_to_pixbuf</primary></indexterm><programlisting><link linkend="void">void</link>                poppler_page_render_selection_to_pixbuf
+                                                        (<link linkend="PopplerPage">PopplerPage</link> *page,
+                                                         <link linkend="gdouble">gdouble</link> scale,
+                                                         <link linkend="int">int</link> rotation,
+                                                         <link linkend="GdkPixbuf">GdkPixbuf</link> *pixbuf,
+                                                         <link linkend="PopplerRectangle">PopplerRectangle</link> *selection,
+                                                         <link linkend="PopplerRectangle">PopplerRectangle</link> *old_selection,
+                                                         <link linkend="PopplerSelectionStyle">PopplerSelectionStyle</link> style,
+                                                         <link linkend="GdkColor">GdkColor</link> *glyph_color,
+                                                         <link linkend="GdkColor">GdkColor</link> *background_color);</programlisting>
+<para>
+Render the selection specified by <parameter>selection</parameter> for <parameter>page</parameter> into
+<parameter>pixbuf</parameter>.  The selection will be rendered at <parameter>scale</parameter>, using
+<parameter>glyph_color</parameter> for the glyphs and <parameter>background_color</parameter> for the selection
+background.
+</para>
+<para>
+If non-NULL, <parameter>old_selection</parameter> specifies the selection that is already
+rendered in <parameter>pixbuf</parameter>, in which case this function will (some day)
+only render the changed part of the selection.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>page</parameter>&#160;:</term>
+<listitem><simpara> the <link linkend="PopplerPage"><type>PopplerPage</type></link> for which to render selection
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>scale</parameter>&#160;:</term>
+<listitem><simpara> scale specified as pixels per point
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>rotation</parameter>&#160;:</term>
+<listitem><simpara> rotate the document by the specified degree
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>pixbuf</parameter>&#160;:</term>
+<listitem><simpara> pixbuf to render to
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>selection</parameter>&#160;:</term>
+<listitem><simpara> start and end point of selection as a rectangle
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>old_selection</parameter>&#160;:</term>
+<listitem><simpara> previous selection
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>style</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="PopplerSelectionStyle"><type>PopplerSelectionStyle</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>glyph_color</parameter>&#160;:</term>
+<listitem><simpara> color to use for drawing glyphs
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>background_color</parameter>&#160;:</term>
+<listitem><simpara> color to use for the selection background
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="POPPLER-TYPE-RECTANGLE--CAPS" role="macro">
+<title>POPPLER_TYPE_RECTANGLE</title>
+<indexterm zone="POPPLER-TYPE-RECTANGLE--CAPS"><primary sortas="POPPLER_TYPE_RECTANGLE">POPPLER_TYPE_RECTANGLE</primary></indexterm><programlisting>#define POPPLER_TYPE_RECTANGLE             (poppler_rectangle_get_type ())
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="PopplerRectangle" role="struct">
+<title>PopplerRectangle</title>
+<indexterm zone="PopplerRectangle"><primary sortas="PopplerRectangle">PopplerRectangle</primary></indexterm><programlisting>typedef struct {
+  gdouble x1;
+  gdouble y1;
+  gdouble x2;
+  gdouble y2;
+} PopplerRectangle;
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="poppler-rectangle-get-type" role="function">
+<title>poppler_rectangle_get_type ()</title>
+<indexterm zone="poppler-rectangle-get-type"><primary sortas="poppler_rectangle_get_type">poppler_rectangle_get_type</primary></indexterm><programlisting><link linkend="GType">GType</link>               poppler_rectangle_get_type          (void);</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="poppler-rectangle-new" role="function">
+<title>poppler_rectangle_new ()</title>
+<indexterm zone="poppler-rectangle-new"><primary sortas="poppler_rectangle_new">poppler_rectangle_new</primary></indexterm><programlisting><link linkend="PopplerRectangle">PopplerRectangle</link> *  poppler_rectangle_new               (void);</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="poppler-rectangle-copy" role="function">
+<title>poppler_rectangle_copy ()</title>
+<indexterm zone="poppler-rectangle-copy"><primary sortas="poppler_rectangle_copy">poppler_rectangle_copy</primary></indexterm><programlisting><link linkend="PopplerRectangle">PopplerRectangle</link> *  poppler_rectangle_copy              (<link linkend="PopplerRectangle">PopplerRectangle</link> *rectangle);</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>rectangle</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="poppler-rectangle-free" role="function">
+<title>poppler_rectangle_free ()</title>
+<indexterm zone="poppler-rectangle-free"><primary sortas="poppler_rectangle_free">poppler_rectangle_free</primary></indexterm><programlisting><link linkend="void">void</link>                poppler_rectangle_free              (<link linkend="PopplerRectangle">PopplerRectangle</link> *rectangle);</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>rectangle</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="POPPLER-TYPE-PAGE-TRANSITION--CAPS" role="macro">
+<title>POPPLER_TYPE_PAGE_TRANSITION</title>
+<indexterm zone="POPPLER-TYPE-PAGE-TRANSITION--CAPS"><primary sortas="POPPLER_TYPE_PAGE_TRANSITION">POPPLER_TYPE_PAGE_TRANSITION</primary></indexterm><programlisting>#define POPPLER_TYPE_PAGE_TRANSITION                (poppler_page_transition_get_type ())
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="PopplerPageTransition" role="struct">
+<title>PopplerPageTransition</title>
+<indexterm zone="PopplerPageTransition"><primary sortas="PopplerPageTransition">PopplerPageTransition</primary></indexterm><programlisting>typedef struct {
+  PopplerPageTransitionType type;
+  PopplerPageTransitionAlignment alignment;
+  PopplerPageTransitionDirection direction;
+  gint duration;
+  gint angle;
+  gdouble scale;
+  gboolean rectangular;
+} PopplerPageTransition;
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="poppler-page-transition-get-type" role="function">
+<title>poppler_page_transition_get_type ()</title>
+<indexterm zone="poppler-page-transition-get-type"><primary sortas="poppler_page_transition_get_type">poppler_page_transition_get_type</primary></indexterm><programlisting><link linkend="GType">GType</link>               poppler_page_transition_get_type    (void);</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="poppler-page-transition-new" role="function">
+<title>poppler_page_transition_new ()</title>
+<indexterm zone="poppler-page-transition-new"><primary sortas="poppler_page_transition_new">poppler_page_transition_new</primary></indexterm><programlisting><link linkend="PopplerPageTransition">PopplerPageTransition</link> * poppler_page_transition_new     (void);</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="poppler-page-transition-copy" role="function">
+<title>poppler_page_transition_copy ()</title>
+<indexterm zone="poppler-page-transition-copy"><primary sortas="poppler_page_transition_copy">poppler_page_transition_copy</primary></indexterm><programlisting><link linkend="PopplerPageTransition">PopplerPageTransition</link> * poppler_page_transition_copy    (<link linkend="PopplerPageTransition">PopplerPageTransition</link> *transition);</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>transition</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="poppler-page-transition-free" role="function">
+<title>poppler_page_transition_free ()</title>
+<indexterm zone="poppler-page-transition-free"><primary sortas="poppler_page_transition_free">poppler_page_transition_free</primary></indexterm><programlisting><link linkend="void">void</link>                poppler_page_transition_free        (<link linkend="PopplerPageTransition">PopplerPageTransition</link> *transition);</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>transition</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="POPPLER-TYPE-LINK-MAPPING--CAPS" role="macro">
+<title>POPPLER_TYPE_LINK_MAPPING</title>
+<indexterm zone="POPPLER-TYPE-LINK-MAPPING--CAPS"><primary sortas="POPPLER_TYPE_LINK_MAPPING">POPPLER_TYPE_LINK_MAPPING</primary></indexterm><programlisting>#define POPPLER_TYPE_LINK_MAPPING             (poppler_link_mapping_get_type ())
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="PopplerLinkMapping" role="struct">
+<title>PopplerLinkMapping</title>
+<indexterm zone="PopplerLinkMapping"><primary sortas="PopplerLinkMapping">PopplerLinkMapping</primary></indexterm><programlisting>typedef struct {
+  PopplerRectangle area;
+  PopplerAction *action;
+} PopplerLinkMapping;
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="poppler-link-mapping-get-type" role="function">
+<title>poppler_link_mapping_get_type ()</title>
+<indexterm zone="poppler-link-mapping-get-type"><primary sortas="poppler_link_mapping_get_type">poppler_link_mapping_get_type</primary></indexterm><programlisting><link linkend="GType">GType</link>               poppler_link_mapping_get_type       (void);</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="poppler-link-mapping-new" role="function">
+<title>poppler_link_mapping_new ()</title>
+<indexterm zone="poppler-link-mapping-new"><primary sortas="poppler_link_mapping_new">poppler_link_mapping_new</primary></indexterm><programlisting><link linkend="PopplerLinkMapping">PopplerLinkMapping</link> * poppler_link_mapping_new           (void);</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="poppler-link-mapping-copy" role="function">
+<title>poppler_link_mapping_copy ()</title>
+<indexterm zone="poppler-link-mapping-copy"><primary sortas="poppler_link_mapping_copy">poppler_link_mapping_copy</primary></indexterm><programlisting><link linkend="PopplerLinkMapping">PopplerLinkMapping</link> * poppler_link_mapping_copy          (<link linkend="PopplerLinkMapping">PopplerLinkMapping</link> *mapping);</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>mapping</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="poppler-link-mapping-free" role="function">
+<title>poppler_link_mapping_free ()</title>
+<indexterm zone="poppler-link-mapping-free"><primary sortas="poppler_link_mapping_free">poppler_link_mapping_free</primary></indexterm><programlisting><link linkend="void">void</link>                poppler_link_mapping_free           (<link linkend="PopplerLinkMapping">PopplerLinkMapping</link> *mapping);</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>mapping</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="POPPLER-TYPE-IMAGE-MAPPING--CAPS" role="macro">
+<title>POPPLER_TYPE_IMAGE_MAPPING</title>
+<indexterm zone="POPPLER-TYPE-IMAGE-MAPPING--CAPS"><primary sortas="POPPLER_TYPE_IMAGE_MAPPING">POPPLER_TYPE_IMAGE_MAPPING</primary></indexterm><programlisting>#define POPPLER_TYPE_IMAGE_MAPPING             (poppler_image_mapping_get_type ())
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="PopplerImageMapping" role="struct">
+<title>PopplerImageMapping</title>
+<indexterm zone="PopplerImageMapping"><primary sortas="PopplerImageMapping">PopplerImageMapping</primary></indexterm><programlisting>typedef struct {
+  PopplerRectangle area;
+  gint image_id;	
+} PopplerImageMapping;
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="poppler-image-mapping-get-type" role="function">
+<title>poppler_image_mapping_get_type ()</title>
+<indexterm zone="poppler-image-mapping-get-type"><primary sortas="poppler_image_mapping_get_type">poppler_image_mapping_get_type</primary></indexterm><programlisting><link linkend="GType">GType</link>               poppler_image_mapping_get_type      (void);</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="poppler-image-mapping-new" role="function">
+<title>poppler_image_mapping_new ()</title>
+<indexterm zone="poppler-image-mapping-new"><primary sortas="poppler_image_mapping_new">poppler_image_mapping_new</primary></indexterm><programlisting><link linkend="PopplerImageMapping">PopplerImageMapping</link> * poppler_image_mapping_new         (void);</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="poppler-image-mapping-copy" role="function">
+<title>poppler_image_mapping_copy ()</title>
+<indexterm zone="poppler-image-mapping-copy"><primary sortas="poppler_image_mapping_copy">poppler_image_mapping_copy</primary></indexterm><programlisting><link linkend="PopplerImageMapping">PopplerImageMapping</link> * poppler_image_mapping_copy        (<link linkend="PopplerImageMapping">PopplerImageMapping</link> *mapping);</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>mapping</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="poppler-image-mapping-free" role="function">
+<title>poppler_image_mapping_free ()</title>
+<indexterm zone="poppler-image-mapping-free"><primary sortas="poppler_image_mapping_free">poppler_image_mapping_free</primary></indexterm><programlisting><link linkend="void">void</link>                poppler_image_mapping_free          (<link linkend="PopplerImageMapping">PopplerImageMapping</link> *mapping);</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>mapping</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="POPPLER-TYPE-FORM-FIELD-MAPPING--CAPS" role="macro">
+<title>POPPLER_TYPE_FORM_FIELD_MAPPING</title>
+<indexterm zone="POPPLER-TYPE-FORM-FIELD-MAPPING--CAPS"><primary sortas="POPPLER_TYPE_FORM_FIELD_MAPPING">POPPLER_TYPE_FORM_FIELD_MAPPING</primary></indexterm><programlisting>#define POPPLER_TYPE_FORM_FIELD_MAPPING               (poppler_form_field_mapping_get_type ())
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="PopplerFormFieldMapping" role="struct">
+<title>PopplerFormFieldMapping</title>
+<indexterm zone="PopplerFormFieldMapping"><primary sortas="PopplerFormFieldMapping">PopplerFormFieldMapping</primary></indexterm><programlisting>typedef struct {
+  PopplerRectangle area;
+  PopplerFormField *field;
+} PopplerFormFieldMapping;
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="poppler-form-field-mapping-get-type" role="function">
+<title>poppler_form_field_mapping_get_type ()</title>
+<indexterm zone="poppler-form-field-mapping-get-type"><primary sortas="poppler_form_field_mapping_get_type">poppler_form_field_mapping_get_type</primary></indexterm><programlisting><link linkend="GType">GType</link>               poppler_form_field_mapping_get_type (void);</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="poppler-form-field-mapping-new" role="function">
+<title>poppler_form_field_mapping_new ()</title>
+<indexterm zone="poppler-form-field-mapping-new"><primary sortas="poppler_form_field_mapping_new">poppler_form_field_mapping_new</primary></indexterm><programlisting><link linkend="PopplerFormFieldMapping">PopplerFormFieldMapping</link> * poppler_form_field_mapping_new
+                                                        (void);</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="poppler-form-field-mapping-copy" role="function">
+<title>poppler_form_field_mapping_copy ()</title>
+<indexterm zone="poppler-form-field-mapping-copy"><primary sortas="poppler_form_field_mapping_copy">poppler_form_field_mapping_copy</primary></indexterm><programlisting><link linkend="PopplerFormFieldMapping">PopplerFormFieldMapping</link> * poppler_form_field_mapping_copy
+                                                        (<link linkend="PopplerFormFieldMapping">PopplerFormFieldMapping</link> *mapping);</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>mapping</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="poppler-form-field-mapping-free" role="function">
+<title>poppler_form_field_mapping_free ()</title>
+<indexterm zone="poppler-form-field-mapping-free"><primary sortas="poppler_form_field_mapping_free">poppler_form_field_mapping_free</primary></indexterm><programlisting><link linkend="void">void</link>                poppler_form_field_mapping_free     (<link linkend="PopplerFormFieldMapping">PopplerFormFieldMapping</link> *mapping);</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>mapping</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+
+</refsect1>
+
+
+
+
+</refentry>

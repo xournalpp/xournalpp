@@ -1,0 +1,80 @@
+<!-- ##### SECTION Title ##### -->
+Version and Features Information
+
+<!-- ##### SECTION Short_Description ##### -->
+Variables and functions to check the poppler version and features
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+Poppler provides version information, and information about features
+enabled at compile time. This is primarily useful in configure checks
+for builds that have a configure script, or for allowing code to optionally
+depend but not require a specific poppler version.
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### MACRO POPPLER_HAS_CAIRO ##### -->
+<para>
+Defined if poppler was compiled with cairo support.
+</para>
+
+
+
+<!-- ##### MACRO POPPLER_WITH_GDK ##### -->
+<para>
+Defined if poppler was compiled with GDK support.
+</para>
+
+
+
+<!-- ##### MACRO POPPLER_MAJOR_VERSION ##### -->
+<para>
+The major version number of the poppler header files (e.g. in poppler version
+0.1.2 this is 0.)
+</para>
+
+Since: 0.11
+
+
+
+<!-- ##### MACRO POPPLER_MINOR_VERSION ##### -->
+<para>
+
+</para>
+The major version number of the poppler header files (e.g. in poppler version
+0.1.2 this is 1.)
+
+Since: 0.11
+
+
+
+<!-- ##### MACRO POPPLER_MICRO_VERSION ##### -->
+<para>
+The micro version number of the poppler header files (e.g. in poppler version
+0.1.2 this is 2.)
+</para>
+
+Since: 0.11
+
+
+
+<!-- ##### MACRO POPPLER_CHECK_VERSION ##### -->
+<para>
+Returns %TRUE if the version of the poppler header files is the same
+as or newer than the passed-in version.
+</para>
+
+@major: major version (e.g. 0 for version 0.1.2)
+@minor: minor version (e.g. 1 for version 0.1.2)
+@micro: micro version (e.g. 2 for version 0.1.2)
+
+Since: 0.11
+
+

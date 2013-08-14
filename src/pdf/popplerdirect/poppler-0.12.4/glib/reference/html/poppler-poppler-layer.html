@@ -1,0 +1,214 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>PopplerLayer</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.75.1">
+<link rel="home" href="index.html" title="Poppler Reference Manual">
+<link rel="up" href="ch01.html" title="Poppler">
+<link rel="prev" href="poppler-poppler-annot.html" title="PopplerAnnot">
+<link rel="next" href="poppler-poppler-features.html" title="Version and Features Information">
+<meta name="generator" content="GTK-Doc V1.11 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+<link rel="chapter" href="ch01.html" title="Poppler">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
+<tr valign="middle">
+<td><a accesskey="p" href="poppler-poppler-annot.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="ch01.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">Poppler Reference Manual</th>
+<td><a accesskey="n" href="poppler-poppler-features.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr>
+<tr><td colspan="5" class="shortcuts">
+<a href="#poppler-poppler-layer.synopsis" class="shortcut">Top</a>
+                 | 
+                <a href="#poppler-poppler-layer.description" class="shortcut">Description</a>
+</td></tr>
+</table>
+<div class="refentry" title="PopplerLayer">
+<a name="poppler-poppler-layer"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="poppler-poppler-layer.top_of_page"></a>PopplerLayer</span></h2>
+<p>PopplerLayer</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsynopsisdiv" title="Synopsis">
+<a name="poppler-poppler-layer.synopsis"></a><h2>Synopsis</h2>
+<pre class="synopsis">
+GType               <a class="link" href="poppler-poppler-layer.html#poppler-layer-get-type" title="poppler_layer_get_type ()">poppler_layer_get_type</a>              (void);
+const gchar *       <a class="link" href="poppler-poppler-layer.html#poppler-layer-get-title" title="poppler_layer_get_title ()">poppler_layer_get_title</a>             (PopplerLayer *layer);
+gboolean            <a class="link" href="poppler-poppler-layer.html#poppler-layer-is-visible" title="poppler_layer_is_visible ()">poppler_layer_is_visible</a>            (PopplerLayer *layer);
+void                <a class="link" href="poppler-poppler-layer.html#poppler-layer-show" title="poppler_layer_show ()">poppler_layer_show</a>                  (PopplerLayer *layer);
+void                <a class="link" href="poppler-poppler-layer.html#poppler-layer-hide" title="poppler_layer_hide ()">poppler_layer_hide</a>                  (PopplerLayer *layer);
+gboolean            <a class="link" href="poppler-poppler-layer.html#poppler-layer-is-parent" title="poppler_layer_is_parent ()">poppler_layer_is_parent</a>             (PopplerLayer *layer);
+gint                <a class="link" href="poppler-poppler-layer.html#poppler-layer-get-radio-button-group-id" title="poppler_layer_get_radio_button_group_id ()">poppler_layer_get_radio_button_group_id</a>
+                                                        (PopplerLayer *layer);
+</pre>
+</div>
+<div class="refsect1" title="Description">
+<a name="poppler-poppler-layer.description"></a><h2>Description</h2>
+<p>
+</p>
+</div>
+<div class="refsect1" title="Details">
+<a name="poppler-poppler-layer.details"></a><h2>Details</h2>
+<div class="refsect2" title="poppler_layer_get_type ()">
+<a name="poppler-layer-get-type"></a><h3>poppler_layer_get_type ()</h3>
+<pre class="programlisting">GType               poppler_layer_get_type              (void);</pre>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="poppler_layer_get_title ()">
+<a name="poppler-layer-get-title"></a><h3>poppler_layer_get_title ()</h3>
+<pre class="programlisting">const gchar *       poppler_layer_get_title             (PopplerLayer *layer);</pre>
+<p>
+Returns the name of the layer suitable for
+presentation as a title in a viewer's GUI</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>layer</code></em> :</span></p></td>
+<td> a <span class="type">PopplerLayer</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> a string containing the title of the layer
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="poppler_layer_is_visible ()">
+<a name="poppler-layer-is-visible"></a><h3>poppler_layer_is_visible ()</h3>
+<pre class="programlisting">gboolean            poppler_layer_is_visible            (PopplerLayer *layer);</pre>
+<p>
+Returns whether <em class="parameter"><code>layer</code></em> is visible</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>layer</code></em> :</span></p></td>
+<td> a <span class="type">PopplerLayer</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> <code class="literal">TRUE</code> if <em class="parameter"><code>layer</code></em> is visible
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="poppler_layer_show ()">
+<a name="poppler-layer-show"></a><h3>poppler_layer_show ()</h3>
+<pre class="programlisting">void                poppler_layer_show                  (PopplerLayer *layer);</pre>
+<p>
+Shows <em class="parameter"><code>layer</code></em></p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>layer</code></em> :</span></p></td>
+<td> a <span class="type">PopplerLayer</span>
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="poppler_layer_hide ()">
+<a name="poppler-layer-hide"></a><h3>poppler_layer_hide ()</h3>
+<pre class="programlisting">void                poppler_layer_hide                  (PopplerLayer *layer);</pre>
+<p>
+Hides <em class="parameter"><code>layer</code></em>. If <em class="parameter"><code>layer</code></em> is the parent of other nested layers,
+such layers will be also hidden and will be blocked until <em class="parameter"><code>layer</code></em>
+is shown again</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>layer</code></em> :</span></p></td>
+<td> a <span class="type">PopplerLayer</span>
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="poppler_layer_is_parent ()">
+<a name="poppler-layer-is-parent"></a><h3>poppler_layer_is_parent ()</h3>
+<pre class="programlisting">gboolean            poppler_layer_is_parent             (PopplerLayer *layer);</pre>
+<p>
+Returns whether <em class="parameter"><code>layer</code></em> is parent of other nested layers.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>layer</code></em> :</span></p></td>
+<td> a <span class="type">PopplerLayer</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> <code class="literal">TRUE</code> if <em class="parameter"><code>layer</code></em> is a parent layer
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="poppler_layer_get_radio_button_group_id ()">
+<a name="poppler-layer-get-radio-button-group-id"></a><h3>poppler_layer_get_radio_button_group_id ()</h3>
+<pre class="programlisting">gint                poppler_layer_get_radio_button_group_id
+                                                        (PopplerLayer *layer);</pre>
+<p>
+Returns the numeric ID the radio button group associated with <em class="parameter"><code>layer</code></em>.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>layer</code></em> :</span></p></td>
+<td> a <span class="type">PopplerLayer</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> the ID of the radio button group associated with <em class="parameter"><code>layer</code></em>,
+or 0 if the layer is not associated to any radio button group
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.11</div>
+</body>
+</html>

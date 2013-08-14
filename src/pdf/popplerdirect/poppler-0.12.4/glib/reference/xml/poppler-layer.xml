@@ -1,0 +1,140 @@
+<?xml version="1.0"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" 
+               "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+<refentry id="poppler-poppler-layer">
+<refmeta>
+<refentrytitle role="top_of_page" id="poppler-poppler-layer.top_of_page">PopplerLayer</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>POPPLER Library</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>PopplerLayer</refname>
+<refpurpose></refpurpose>
+</refnamediv>
+
+<refsynopsisdiv id="poppler-poppler-layer.synopsis" role="synopsis">
+<title role="synopsis.title">Synopsis</title>
+
+<synopsis>
+<link linkend="GType">GType</link>               <link linkend="poppler-layer-get-type">poppler_layer_get_type</link>              (void);
+const <link linkend="gchar">gchar</link> *       <link linkend="poppler-layer-get-title">poppler_layer_get_title</link>             (<link linkend="PopplerLayer">PopplerLayer</link> *layer);
+<link linkend="gboolean">gboolean</link>            <link linkend="poppler-layer-is-visible">poppler_layer_is_visible</link>            (<link linkend="PopplerLayer">PopplerLayer</link> *layer);
+<link linkend="void">void</link>                <link linkend="poppler-layer-show">poppler_layer_show</link>                  (<link linkend="PopplerLayer">PopplerLayer</link> *layer);
+<link linkend="void">void</link>                <link linkend="poppler-layer-hide">poppler_layer_hide</link>                  (<link linkend="PopplerLayer">PopplerLayer</link> *layer);
+<link linkend="gboolean">gboolean</link>            <link linkend="poppler-layer-is-parent">poppler_layer_is_parent</link>             (<link linkend="PopplerLayer">PopplerLayer</link> *layer);
+<link linkend="gint">gint</link>                <link linkend="poppler-layer-get-radio-button-group-id">poppler_layer_get_radio_button_group_id</link>
+                                                        (<link linkend="PopplerLayer">PopplerLayer</link> *layer);
+</synopsis>
+</refsynopsisdiv>
+
+
+
+
+
+
+
+
+
+<refsect1 id="poppler-poppler-layer.description" role="desc">
+<title role="desc.title">Description</title>
+<para>
+</para>
+</refsect1>
+
+<refsect1 id="poppler-poppler-layer.details" role="details">
+<title role="details.title">Details</title>
+<refsect2 id="poppler-layer-get-type" role="function">
+<title>poppler_layer_get_type ()</title>
+<indexterm zone="poppler-layer-get-type"><primary sortas="poppler_layer_get_type">poppler_layer_get_type</primary></indexterm><programlisting><link linkend="GType">GType</link>               poppler_layer_get_type              (void);</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="poppler-layer-get-title" role="function">
+<title>poppler_layer_get_title ()</title>
+<indexterm zone="poppler-layer-get-title"><primary sortas="poppler_layer_get_title">poppler_layer_get_title</primary></indexterm><programlisting>const <link linkend="gchar">gchar</link> *       poppler_layer_get_title             (<link linkend="PopplerLayer">PopplerLayer</link> *layer);</programlisting>
+<para>
+Returns the name of the layer suitable for
+presentation as a title in a viewer's GUI</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>layer</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="PopplerLayer"><type>PopplerLayer</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> a string containing the title of the layer
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="poppler-layer-is-visible" role="function">
+<title>poppler_layer_is_visible ()</title>
+<indexterm zone="poppler-layer-is-visible"><primary sortas="poppler_layer_is_visible">poppler_layer_is_visible</primary></indexterm><programlisting><link linkend="gboolean">gboolean</link>            poppler_layer_is_visible            (<link linkend="PopplerLayer">PopplerLayer</link> *layer);</programlisting>
+<para>
+Returns whether <parameter>layer</parameter> is visible</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>layer</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="PopplerLayer"><type>PopplerLayer</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> <link linkend="TRUE--CAPS"><literal>TRUE</literal></link> if <parameter>layer</parameter> is visible
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="poppler-layer-show" role="function">
+<title>poppler_layer_show ()</title>
+<indexterm zone="poppler-layer-show"><primary sortas="poppler_layer_show">poppler_layer_show</primary></indexterm><programlisting><link linkend="void">void</link>                poppler_layer_show                  (<link linkend="PopplerLayer">PopplerLayer</link> *layer);</programlisting>
+<para>
+Shows <parameter>layer</parameter></para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>layer</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="PopplerLayer"><type>PopplerLayer</type></link>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="poppler-layer-hide" role="function">
+<title>poppler_layer_hide ()</title>
+<indexterm zone="poppler-layer-hide"><primary sortas="poppler_layer_hide">poppler_layer_hide</primary></indexterm><programlisting><link linkend="void">void</link>                poppler_layer_hide                  (<link linkend="PopplerLayer">PopplerLayer</link> *layer);</programlisting>
+<para>
+Hides <parameter>layer</parameter>. If <parameter>layer</parameter> is the parent of other nested layers,
+such layers will be also hidden and will be blocked until <parameter>layer</parameter>
+is shown again</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>layer</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="PopplerLayer"><type>PopplerLayer</type></link>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="poppler-layer-is-parent" role="function">
+<title>poppler_layer_is_parent ()</title>
+<indexterm zone="poppler-layer-is-parent"><primary sortas="poppler_layer_is_parent">poppler_layer_is_parent</primary></indexterm><programlisting><link linkend="gboolean">gboolean</link>            poppler_layer_is_parent             (<link linkend="PopplerLayer">PopplerLayer</link> *layer);</programlisting>
+<para>
+Returns whether <parameter>layer</parameter> is parent of other nested layers.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>layer</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="PopplerLayer"><type>PopplerLayer</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> <link linkend="TRUE--CAPS"><literal>TRUE</literal></link> if <parameter>layer</parameter> is a parent layer
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="poppler-layer-get-radio-button-group-id" role="function">
+<title>poppler_layer_get_radio_button_group_id ()</title>
+<indexterm zone="poppler-layer-get-radio-button-group-id"><primary sortas="poppler_layer_get_radio_button_group_id">poppler_layer_get_radio_button_group_id</primary></indexterm><programlisting><link linkend="gint">gint</link>                poppler_layer_get_radio_button_group_id
+                                                        (<link linkend="PopplerLayer">PopplerLayer</link> *layer);</programlisting>
+<para>
+Returns the numeric ID the radio button group associated with <parameter>layer</parameter>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>layer</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="PopplerLayer"><type>PopplerLayer</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the ID of the radio button group associated with <parameter>layer</parameter>,
+or 0 if the layer is not associated to any radio button group
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+
+</refsect1>
+
+
+
+
+</refentry>
