@@ -6,7 +6,8 @@
 #ifdef HAVE_POPPLER_CAIRO_OUTPUT_DEV
 #include <poppler/CairoOutputDev.h>
 #else
-#include "CairoOutputDev.h"
+//#include "CairoOutputDev.h"
+#include "../poppler-0.12.4/poppler/CairoOutputDev.h"
 #endif
 
 #endif // __WORKAROUND_H__

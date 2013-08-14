@@ -13,12 +13,12 @@
 #define __XOJ_POPPLERPAGE_H__
 
 #include <gtk/gtk.h>
-#include <poppler/PDFDoc.h>
-#include <poppler/Gfx.h>
-#include <poppler/FontInfo.h>
-#include <poppler/TextOutputDev.h>
-#include <poppler/Catalog.h>
-#include <poppler/OptionalContent.h>
+#include "../poppler-0.12.4/poppler/PDFDoc.h"
+#include "../poppler-0.12.4/poppler/Gfx.h"
+#include "../poppler-0.12.4/poppler/FontInfo.h"
+#include "../poppler-0.12.4/poppler/TextOutputDev.h"
+#include "../poppler-0.12.4/poppler/Catalog.h"
+#include "../poppler-0.12.4/poppler/OptionalContent.h"
 #include "../workaround/workaround.h"
 
 #include <XournalType.h>
