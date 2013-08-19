@@ -210,7 +210,7 @@ xournalpp_LDADD = \
 	pdf/libpoppler.a \
 	pdf/libpoppler-glib.a \
 	/usr/lib/liblcms.so.1 \
-	/usr/lib/libopenjpeg.so.2 \
+	/usr/lib/libopenjpeg.so \
 	/usr/lib/libjpeg.so.62
 
 	
