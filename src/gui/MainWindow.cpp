@@ -355,7 +355,7 @@ void MainWindow::setSidebarVisible(bool visible) {
 
 	Settings * settings = control->getSettings();
 
-	if(!visible) {
+	if(!visible && (control->getSidebar() != NULL)) {
 		control->getSidebar()->saveSize();
 	}
 
