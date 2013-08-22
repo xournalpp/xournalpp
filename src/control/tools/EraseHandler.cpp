@@ -88,10 +88,12 @@ void EraseHandler::eraseStroke(Layer * l, Stroke * s, double x, double y, Range 
 		range->addPoint(s->getX(), s->getY());
 		range->addPoint(s->getX() + s->getElementWidth(), s->getY() + s->getElementHeight());
 
-		if (!this->eraseDeleteUndoAction) {
+		//removed the if statement - this prevents us from putting multiple elements into a
+		//stroke erase operation, but it also prevents the crashing and layer issues!
+//		if (!this->eraseDeleteUndoAction) {
 			this->eraseDeleteUndoAction = new DeleteUndoAction(this->page, this->view, true);
 			this->undo->addUndoAction(this->eraseDeleteUndoAction);
-		}
+//		}
 
 		this->eraseDeleteUndoAction->addElement(l, s, pos);
 	} else { // Default eraser
