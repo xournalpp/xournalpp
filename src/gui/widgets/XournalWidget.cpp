@@ -713,7 +713,7 @@ static gboolean gtk_xournal_expose(GtkWidget * widget, GdkEventExpose * event) {
 
 		// not visible, its on the right side of the visible area
 		if (px > lastVisibleX) {
-			printf("test1\n");
+			printf("Warning: object on right side of visible area.\n");
 		} else
 		// not visible, its on the left side of the visible area
 
@@ -723,7 +723,7 @@ static gboolean gtk_xournal_expose(GtkWidget * widget, GdkEventExpose * event) {
 		//		} else
 		// not visible, its on the bottom side of the visible area
 		if (py > lastVisibleY) {
-			printf("test3\n");
+			printf("Warning: object below visible area.\n");
 			//		} else
 			//		// not visible, its on the top side of the visible area
 			//		if (py + ph < firstVisibleY) {
