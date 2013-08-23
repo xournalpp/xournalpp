@@ -14,7 +14,9 @@ LatexGlade::LatexGlade(GladeSearchpath * gladeSearchPath) :
 	//GtkWidget * vbox = get("texVBox");	
 	//g_return_if_fail(vbox != NULL);
 	this->texBox = get("texEntry");
-	gtk_entry_set_max_length(GTK_ENTRY(this->texBox),50);
+	//gtk_entry_set_max_length(GTK_ENTRY(this->texBox),50);
+	//increase the maximum length to something reasonable.
+	gtk_entry_set_max_length(GTK_ENTRY(this->texBox),500);
 
 	gtk_widget_show(this->texBox);
 }
