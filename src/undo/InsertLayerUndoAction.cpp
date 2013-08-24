@@ -34,7 +34,9 @@ bool InsertLayerUndoAction::undo(Control * control) {
 
 	Document * doc = control->getDocument();
 
-	doc->lock();
+	//perform the same thing we did to InsertDeletePage
+	//to prevent a double lock (we're already locked here)
+	//doc->lock();
 
 	this->page.removeLayer(this->layer);
 	int id = doc->indexOf(this->page);
@@ -44,7 +46,7 @@ bool InsertLayerUndoAction::undo(Control * control) {
 
 	this->undone = true;
 
-	doc->unlock();
+	//doc->unlock();
 	return true;
 }
 
@@ -53,7 +55,7 @@ bool InsertLayerUndoAction::redo(Control * control) {
 
 	Document * doc = control->getDocument();
 
-	doc->lock();
+	//doc->lock();
 
 	this->page.addLayer(this->layer);
 	int id = doc->indexOf(this->page);
@@ -63,7 +65,7 @@ bool InsertLayerUndoAction::redo(Control * control) {
 
 	this->undone = false;
 
-	doc->unlock();
+	//doc->unlock();
 
 	return true;
 }
