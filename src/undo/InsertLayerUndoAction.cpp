@@ -42,11 +42,14 @@ bool InsertLayerUndoAction::undo(Control * control) {
 	int id = doc->indexOf(this->page);
 	control->getWindow()->getXournal()->layerChanged(id);
 
+	//the combobox is also threadsafe
+	doc->unlock();
 	control->getWindow()->updateLayerCombobox();
 
 	this->undone = true;
 
 	//doc->unlock();
+	doc->lock();
 	return true;
 }
 
@@ -61,11 +64,14 @@ bool InsertLayerUndoAction::redo(Control * control) {
 	int id = doc->indexOf(this->page);
 	control->getWindow()->getXournal()->layerChanged(id);
 
+	//the combobox is also threadsafe
+	doc->unlock();
 	control->getWindow()->updateLayerCombobox();
 
 	this->undone = false;
 
 	//doc->unlock();
+	doc->lock();
 
 	return true;
 }
