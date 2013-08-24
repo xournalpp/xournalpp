@@ -277,7 +277,7 @@ bool Control::autosaveCallback(Control * control) {
 	XOJ_CHECK_TYPE_OBJ(control, Control);
 
 	if (!control->undoRedo->isChangedAutosave()) {
-		printf(_("Info: autosave not necessary, nothing changed...\n"));
+		//printf(_("Info: autosave not necessary, nothing changed...\n"));
 		// do nothing, nothing changed
 		return true;
 	} else {
