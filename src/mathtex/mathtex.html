@@ -1,0 +1,2991 @@
+<!--
+ ****************************************************************************
+ * Copyright(c) 2007-2012, John Forkosh Associates, Inc. All rights reserved.
+ *           http://www.forkosh.com   mailto: john@forkosh.com
+ * ==========================================================================
+ * This file is part of mathTeX, which is free software. You may redistribute
+ * and/or modify it under the terms of the GNU General Public License,
+ * version 3 or later, as published by the Free Software Foundation.
+ *      MathTeX is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY, not even the implied warranty of MERCHANTABILITY.
+ * See the GNU General Public License for specific details.
+ *      By using mathTeX, you warrant that you have read, understood and
+ * agreed to these terms and conditions, and that you possess the legal
+ * right and ability to enter into this agreement and to use mathTeX
+ * in accordance with it.
+ *      Your mathtex.zip distribution should contain the file COPYING,
+ * an ascii text copy of the GNU General Public License, version 3.
+ * If not, point your browser to  http://www.gnu.org/licenses/
+ * or write to the Free Software Foundation, Inc.,
+ * 59 Temple Place, Suite 330,  Boston, MA 02111-1307 USA.
+ ****************************************************************************
+ -->
+
+<!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ Preamble
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+<html>
+  <head>
+    <title> mathTeX manual </title>
+    <meta HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+    <style type="text/css">
+      body      { background-image:  none; /* none; or :url(); */
+                  /*background-image:  url(GBCBindBorder.gif);*/ /*or :none;*/
+                  /*background-repeat: repeat-y;*/
+                  /*background-attachment: scroll;*/ /* fixed; or scroll; */
+                  /*margin-left: 4.0em;*/
+                  background-color:  #ffffff;   color: #000000;
+                  margin-left: 0.5em;  margin-right: 0.1em;
+                  font-size: large;
+                  clear: both }
+      A:active  { color: blue/*#0000FF*/; text-decoration: none }
+      A:link    { color: blue/*#0000FF*/; text-decoration: none }
+      A:visited { color: blue/*#0000FF*/; text-decoration: none }
+      A:hover   { color: red/*#FF0000*/;  text-decoration: underline
+                /*font-style: italic; font-weight: bold;*/
+                /*font-size: medium;  line-height: normal*/ }
+      h2        { color: maroon;  text-decoration: underline;
+                  font-style: normal;  /* italic oblique */
+                  padding-top: 2.0em;
+                  letter-spacing: 0.25em }
+      h3        { color: maroon; /*black;   text-decoration: underline;*/
+                  font-style: normal;  /* italic oblique */
+                  font-size: large;
+                  margin-left: 1em;
+                  padding-top: 0.5em;
+                  letter-spacing: 0.15em }
+      h4        { color: maroon; /*black;   text-decoration: underline;*/
+                  font-style: normal;  /* italic oblique */
+                  font-size: large;
+                  margin-left: 1.5em; margin-bottom: 0.0em;
+                  padding-top: 0.5em; padding-bottom: 0.0em;
+                  letter-spacing: 0.125em }
+      table     { font-size: large }
+      dl        { font-size: large;
+                  margin-left: 2.0em;   margin-right: 2.5em }
+      dt        { color:maroon }
+      dd        { margin-left: 1.0em;   margin-bottom: 0.5em }
+      ul        { margin-left: 1.0em;   margin-right: 2.5em;
+                  list-style-type: square }
+      ul ul     { margin-left: -0.5em;  margin-right: 3.5em;
+                  list-style-type: disc }
+      p         { margin-left: 1.5em;   margin-right: 1.5em }
+    /*pre       { margin-left: 4.0em; font-size: medium }*/
+      pre       { margin-left: 1.5em }
+      pre.medium { margin-left: 1.5em; font-size:medium }
+      p:first-letter
+                { font-size: x-large;   font-weight: bold;
+                  color: maroon }
+      p.continue { margin-left: 1.5em;   margin-right: 1.5em;
+                   padding-top: -0.1em }
+      p.continue:first-letter
+                { font-size: large;   font-weight: normal;
+                  color: black }
+      p.warning { color: red } /* defines p class="warning"... */
+      td.paragraph:first-letter
+                { font-size: x-large;   font-weight: bold;
+                  color: maroon }
+    </style>
+    <style type="text/css">
+      a.info{
+        position:relative;
+        z-index:24;
+        /*background-color:#8692A5;*/
+        visibility: inherit;
+        text-decoration: none; }
+      a.info:hover{
+        z-index:25;
+        /*background-color:#999999;
+        color: #FFFF00;*/
+        text-decoration: none; }
+      a.info span{
+        display: none;
+        /*color: #FFFF00;*/ }
+      a.info:hover span{
+        display:block;
+        position:absolute;
+        top:2em;
+        left:2em;
+        /*width:15em;*/
+        border:1px solid #330066;
+        background-color:#FFFF99;
+        color:#660000;
+        text-align: left;
+        font-size: 13px;
+        font-weight: normal;
+        margin: 3px;
+        padding: 6px; }
+      a.info:link {
+        text-decoration: none;
+        /*color: #FFFF00;*/ /*themecolour1%0;*/ }
+      a.info:visited {
+        text-decoration: none;
+        /*color: #FFFF00;*/ /*themecolour1%0;*/ }
+    </style>
+    <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    + php functions
+    +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+    <?php
+    $mathtexurl = "../cgi-bin/mathtex.cgi?";
+    //$mathtexurl = "http://psi7star/cgi-bin/mathtex.cgi?";
+    //$mathtexurl = "http://www.forkosh.com/cgi-bin/mathtex.cgi?";
+    function mathtextag( $label, $valign, $expression ) {
+      global $mathtexurl;
+      $url    = $mathtexurl . $expression;
+      echo  '<a href="#preview" class="info"><img id="',$label,'" ';
+      echo  ' onclick="eqntext(',"'",$label,"'",')"  ';
+      echo  ' src="',$url,'" ';
+      echo  ' style="Vertical-Align:',$valign,'px" ';
+      //echo  ' align="absmiddle" ';
+      echo  ' alt="" border=0>';
+      echo  '<span>',$expression,'</span>';
+      echo  '</a>', "\n";
+      }
+    ?>
+    <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    + javascript functions
+    +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+    <script type="text/javascript">
+      <!--
+      // add/clear text to expression
+      function eqntext(eqn)
+        { var eqnSrc = document.getElementById(eqn).src;
+          var texSrc = eqnSrc.substring(eqnSrc.indexOf('?')+1,eqnSrc.length);
+          addtext(texSrc); }
+      function addtext(text)
+        { cleartext();
+          document.expression.formdata.value += unescape(text);
+          document.expression.formdata.focus(); }
+      function cleartext()
+        { document.expression.formdata.value = "";
+          //document.inlineframe.value = "";
+          document.expression.formdata.focus(); }
+      -->
+    </script>
+  </head>
+<body>
+
+<!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ Banner across top of page containing title and two example mathTeX images
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+<br>
+<hr size=4>
+<center>
+ <table cellspacing=10>
+  <tr>
+   <td align="center">
+      <?php mathtextag('imageTop1',0,
+      'f=b_o+\frac{a_1}{b_1+\frac{a_2}
+      {b_2+\frac{a_3}{b_3+a_4}}}'); ?> </td>
+   <td align="center" valign="middle">
+      <center><font color="maroon" size=4><b>
+      <nobr>m a t h T e X &nbsp; <!-- u s e r s &nbsp; -->
+      m a n u a l</nobr></b> <br>
+      <font size=3>( for mathTeX version 1.04 )</font> <br>
+      <font size=3> <b>Click for:</b> &nbsp;
+        <a href="http://www.forkosh.com/mathtex.zip">
+        <font size=4>download&nbsp;mathTeX</font></a> </font>
+      </font></center> </td>
+   <td align="center">
+      <?php mathtextag('imageTop2',0,
+      '\usepackage{mathrsfs}{\mathscr J}^{ij}=\frac12\varepsilon_{ijk}
+      \left[\begin{array}{cc}\sigma_k&0\\\\0&\sigma_k\end{array}\right]'); ?>
+      <br> <a href="#examples">more_examples...</a> </td>
+  </tr>
+  <tr> <td align="center" colspan="3"> <font size="3">
+   This page discusses mathTeX, a program that displays math on the web.<br>
+   See <a href="http://www.americanscientist.org/issues/pub/2009/3/writing-math-on-the-web/1"
+   target="_top">Writing&nbsp;Math&nbsp;on&nbsp;the&nbsp;Web</a>
+   for a more general discussion. </font> </td> </tr>
+ </table>
+</center>
+<hr size=4>
+<center><b><font color="maroon" size=3>
+Copyright <font size=5>&copy;</font> 2007-2012,
+<a href="http://www.forkosh.com">John Forkosh Associates, Inc.</a> <br>
+email: <a href="mailto:john&#64;forkosh&#46;com">john&#64;forkosh&#46;com</a>
+</font></b> <br><br>
+<a href="#preview"><img id="timestamp1" onclick="eqntext('timestamp1')"
+src="../cgi-bin/mathtex.cgi?\parstyle\usepackage{color}
+\large\color{blue}\begin{center}\today\\\time\end{center}"
+alt="" border=0 align=middle></a> </center>
+
+<!--
+<p id="notice">&nbsp;</p> <center>
+<table border="1" frame="box">
+<tr><td align="center">
+<font color="red"> <font size="5"> &#151;&#151;
+Important Notice &#151;&#151; </font> <br> <nobr> <u> &nbsp; f o r  &nbsp;
+p u b l i c  &nbsp;  m a t h T e X  &nbsp;  w e b  &nbsp;  s e r v i c e
+&nbsp;  u s e r s  &nbsp; </u> </nobr> </font>
+</td></tr>
+<tr><td align="left"> <font color="blue">
+mathTeX's ISP no longer permits subdomains. <br>
+That means your &lt;img&gt; tags of the form <br>
+<font color="red"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+&lt;img src="http://www.forkosh.dreamhost.com/mathtex.cgi?c=\sqrt{a^2+b^2}"
+&gt; </font> <br>
+will not work after November 30, 2011. <br>
+Change them all to <br>
+<font color="red"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+&lt;img src="http://www.forkosh.com/mathtex.cgi?c=\sqrt{a^2+b^2}" &gt;
+</font> <br>
+That is, just remove the &quot;<font color="red">dreamhost.</font>&quot;
+from all tags.<br>
+That works now. And the pesky message that brought you here disappears.<br>
+To repeat, the address of the
+<a href="#webservice">public mathTeX server</a> is now <br>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+http://www.forkosh.com/mathtex.cgi <br>
+so write tags of the form <br>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+&lt;img src="http://www.forkosh.com/mathtex.cgi?c=\sqrt{a^2+b^2}" &gt; <br>
+to access it. Thanks.
+</font> </td> </tr>
+<tr><td align="left"> <font color="#333333">
+I'm sorry if this change is inconvenient, particularly for
+<a href="http://wordpress.org/extend/plugins/youngwhans-simple-latex/"
+target="_top">wordpress</a> or
+<a href="http://www.mediawiki.org/wiki/Mediawiki_and_LaTeX_on_a_host_with_shell_access"
+target="_top">mediawiki</a> or<br>
+other users who may not even know
+their application's LaTeX plugin uses mathTeX.<br>
+Just edit your plugin and remove
+&quot;<font color="red">dreamhost.</font>&quot;
+from any &lt;img&gt; tag that contains it,<br>
+as illustrated above.<br>
+&nbsp; &nbsp; &nbsp;
+Or contact <a href="http://dreamhost.com/contact/"
+target="_top">http://dreamhost.com/contact/</a>
+with any complaints, as I can't change<br>
+the situation, and dreamhost refused my request to make
+an exception for mathTeX.
+</font> </td> </tr> </table> </center>
+-->
+
+<!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ Table of Contents and QuickStart Summary
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+<br>
+<p> <font color="blue"> This manual contains more information
+than you'll probably need to read.  If you follow the
+QuickStart instructions below, try installing mathTeX immediately.
+If you need more information,
+continue reading until you feel comfortable trying to install mathTeX.
+Return to the manual as needed.
+Prerequisites are: some knowledge of Unix shell, of installing cgi's,
+of LaTeX. </font>
+<font color="maroon"> <br>
+&nbsp; &nbsp; &nbsp; &nbsp;
+     <b>&quot</b><i>Computers are like Old Testament gods<b>:</b>
+     lots of rules and no mercy.</i><b>&quot</b><br>
+&nbsp; &nbsp; &nbsp; &nbsp;
+     Joseph Campbell, The Power of Myth &nbsp;
+     (Doubleday 1988, page 18) </font> </p>
+
+<br> <center>
+<table border="0">
+<tr> <!-- banner -->
+ <td align="center">
+   <b><font color="maroon" size=4>
+   <u> &nbsp; &nbsp; C o n t e n t s &nbsp; &nbsp; </u></font></b></td>
+ <td> &nbsp; </td>
+ <td align="center"><b><font color="maroon" size=4>
+   <u> &nbsp; &nbsp; Q u i c k S t a r t &nbsp; &nbsp;
+   </u></font></b></td>
+</tr>
+<tr>
+ <td valign="top"> <!-- table of contents -->
+  <table cellspacing=0>
+   <tr>
+    <td valign="top" align="left">
+     <font size=4>
+      <a href="#introduction">  (1) Introduction </a><br>
+        &nbsp; &nbsp; &nbsp; <a href="#dependencies"> dependencies </a><br>
+        &nbsp; &nbsp; &nbsp; <a href="#plugins">           plugins </a><br>
+        &nbsp; &nbsp; &nbsp; <a href="#alternatives"> alternatives </a><br>
+        &nbsp; &nbsp; &nbsp; <a href="#webservice">   web services </a><br>
+      <a href="#latexmarkup">   (2) LaTeX markup </a><br>
+        &nbsp; &nbsp; &nbsp; <a href="#preview">        input form </a><br>
+        &nbsp; &nbsp; &nbsp; <a href="#examples">         examples </a><br>
+      <a href="#mathtexmarkup"> (3) MathTeX markup </a><br>
+        &nbsp; &nbsp; &nbsp; <a href="#directives"> extra directives </a><br>
+      <a href="#install">       (4) Installation </a><br>
+        &nbsp; &nbsp; &nbsp; <a href="#messages">   error messages </a><br>
+        &nbsp; &nbsp; &nbsp; <a href="#switches"> compile switches </a><br>
+        &nbsp; &nbsp; &nbsp; <a href="#shell">      run from shell </a><br>
+ <!-- <a href="#weblog">       () mathTeX Forum </a><br> -->
+      <a href="#gpl">           (5) GPL License </a><br>
+      <font color="maroon" size=4> <br> <b><u> &nbsp;
+      Related &nbsp; Pages &nbsp; </u></b></font> <br>
+      <a href="http://www.forkosh.com/mathtextutorial.html" target="_top">
+         <font size=4>LaTeX Tutorial</font></a> <br>
+      <a href="http://www.forkosh.com/mathtexchangelog.html" target="_top">
+         <font size=4>mathTeX changeLog</font></a> <br>
+      <a href="http://www.forkosh.com/cgi-bin/weblist.cgi?-t=weblist
+     &-f=sources/weblistemplate.html
+     &files=@sources/sourcecode/mathtex.lis&copyright=2007-2011&counter=mathtex
+     &title=mathtex&description=m a t h T e X  S o u r c e   L i s t i n g"
+       target="_top">
+         <font size=4>mathTeX Listing</font></a> <br>
+     </font>
+    </td>
+   </tr>
+  </table>
+ </td>
+ <td> &nbsp; </td>
+ <td valign="top"> <!-- summary -->
+  <table border="0" cellpadding="0" cellspacing="0" hspace="0" vspace="0">
+    <!-- tr><td colspan="2" align="left" valign="top">
+       <font color="maroon" size="-1">
+       <b>&quot</b><i>Computers are like Old Testament gods<b>:</b>
+       lots of rules and no mercy.</i><b>&quot</b><br>
+       Joseph Campbell, The Power of Myth &nbsp;
+       (Doubleday 1988, page 18) </font> </td></tr -->
+    <tr><td align="right" valign="top">
+      <a href="#install">Installation</a>: &nbsp; &nbsp; </td>
+      <td> <font color="maroon"><b>Note: The current release of mathTeX
+       only <br> runs under Unix-like operating systems.</b></font> <br>
+       First, install mathTeX's <a href="#dependencies">dependencies</a>: <br>
+       <b> &nbsp; &nbsp; </b> a recent <a href="http://www.latex-project.org/ftp.html"
+       target="_top">TeX&nbsp;distribution</a> with
+       <a href="http://savannah.nongnu.org/projects/dvipng/"
+       target="_top">dvipng</a>,
+       <!-- and
+       <a href="http://www.imagemagick.org" target="_top">ImageMagick</a --> 
+       on <br>
+       <b> &nbsp; &nbsp; </b> your server.  Or see
+       <a href="http://www.forkosh.com/mimetex.html"
+       target="_top">mimeTeX</a> if you can't. <br>
+       Then, download <a href="http://www.forkosh.com/mathtex.zip">
+       mathtex.zip</a> and type <br>
+       <b> &nbsp; &nbsp; unzip mathtex.zip</b> <br>
+       <b> &nbsp; &nbsp; cc mathtex.c &nbsp; \ <br>
+       &nbsp; &nbsp; &nbsp; &#150;DLATEX=\"$(which latex)\" &nbsp; \ <br>
+       &nbsp; &nbsp; &nbsp; &#150;DDVIPNG=\"$(which dvipng)\" &nbsp; \ <br>
+       <!-- &nbsp; &nbsp; &nbsp; &#150;DDVIPS=\"$(which dvips)\" &nbsp; \ <br>
+       &nbsp; &nbsp; &nbsp; &#150;DCONVERT=\"$(which convert)\" &nbsp; \ <br -->
+       &nbsp; &nbsp; &nbsp; &#150;o mathtex.cgi</b> <br>
+       <nobr> &nbsp; &nbsp; (see
+       <a href="#pathswitches">&#150;D<i>switches</i></a>
+       for more information). </nobr> <br>
+       Finally, just <br>
+       <b> &nbsp; &nbsp; mv mathtex.cgi </b> to your <b>cgi-bin/</b>
+       directory, <br>
+       <!-- b> &nbsp; &nbsp; mkdir&nbsp;cgi-bin/mathtex </b>
+       for mathTeX's cache, <br -->
+       <b> &nbsp; &nbsp; chmod </b> permissions as necessary, <br>
+       and you're all done.
+       </td></tr>
+    <tr><td colspan="2"> &nbsp; </td></tr>
+    <tr><td align="right" valign="top">
+      <a href="#introduction">Usage</a>: &nbsp; &nbsp; </td>
+      <td>To see the image <br> <b> &nbsp; &nbsp; </b>
+       <?php mathtextag('summary1',0,'x=\frac{-b\pm\sqrt{b^2-4ac}}{2a}'); ?>
+       <br> in your html page, just write the tag <br>
+       <b> &nbsp; &nbsp; &lt;img&nbsp;src="/cgi-bin/mathtex.cgi?<br>
+       &nbsp; &nbsp; x=\frac{-b\pm\sqrt{b^2-4ac}}{2a}"&gt;</b> </td></tr>
+  </table>
+ </td>
+</tr>
+</table>
+</center>
+
+
+<!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ INTRODUCTION
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+<h2 id="introduction"> (1) Introduction &nbsp; </h2>
+
+<p> <font color="maroon">MathTeX, licensed under the
+    <a href="http://www.gnu.org/licenses/gpl.html" target="_top">gpl</a>,
+    is a <a href="http://www.w3.org/CGI/" target="_top">cgi</a> program
+    that lets you easily embed
+    <a href="http://www-h.eng.cam.ac.uk/help/tpl/textprocessing/latex_maths+pix/latex_maths+pix.html"
+    target="_top">LaTeX&nbsp;math</a>
+    in your own  html pages, blogs, wikis, etc.</font>
+    It parses a LaTeX math expression and immediately emits the
+    corresponding gif (or png) image, rather than the usual
+    <a href="http://en.wikipedia.org/wiki/DVI_(file_format)"
+    target="_top">TeX&nbsp;dvi</a>.
+    So just place an html &lt;img&gt; tag in your document
+    wherever you want to see the corresponding LaTeX expression.
+    For example, </p>
+<pre>   <b>&lt;img&nbsp;src="/cgi-bin/mathtex.cgi?f(x)=\int_{-\infty}^xe^{-t^2}dt"
+    alt="" border=0 align="middle"&gt;</b></pre>
+    <p class="continue"> immediately generates the corresponding gif,
+    displaying
+    <?php mathtextag('imageA1',-13,
+    '\small f(x)=\int_{-\infty}^xe^{-t^2}dt'); ?>
+    wherever you put that &lt;img&gt tag. </p>
+
+<h3> <a name="dependencies"> </a>
+mathTeX dependencies<font size=5>...</font> </h3>
+<p> MathTeX's uses the
+    <a href="http://en.wikipedia.org/wiki/LaTeX" target="_top">latex</a> and
+    <a href="http://en.wikipedia.org/wiki/Dvipng" target="_top">dvipng</a>
+    programs, along with all necessary fonts, etc, from your
+    <a href="http://www.latex-project.org/ftp.html"
+    target="_top">TeX&nbsp;distribution</a>.  Occasionally, you may need to
+    <a href="http://savannah.nongnu.org/projects/dvipng/"
+    target="_top">download&nbsp;dvipng</a> separately. <br>
+    &nbsp; &nbsp; If you can't, or don't want to,
+    install dvipng, then you may optionally specify the
+    <a href="#dvipsswitch">
+    &#150;DDVIPS&nbsp;and&nbsp;&#150;DCONVERT</a>&nbsp;switches when
+    <a href="#compilestep">compiling&nbsp;mathTeX</a>.  Then mathTeX uses
+    <a href="http://en.wikipedia.org/wiki/Dvips" target="_top">dvips</a>
+    from your TeX&nbsp;distribution,
+    and <a href="http://www.imagemagick.org/script/convert.php"
+    target="_top">convert</a> from the
+    <a href="http://www.imagemagick.org" target="_top">ImageMagick</a>
+    package, instead of dvipng. </p>
+
+<p style="margin-bottom:0;"> That is, </p>
+    <pre class="medium" style="margin-top:0;margin-bottom:0"
+>   <b>cc &#150;</b>DLATEX<b>=\"</b><i>path</i><b>/</b><i>to</i><b>/</b>latex<b>\"</b> <b>&#150;</b>DDVIPNG<b>=\"</b><i>path</i><b>/</b><i>to</i><b>/</b>dvipng<b>\"</b> mathtex.c <b>&#150;o</b> mathtex.cgi</pre>
+<p class="continue" style="margin-bottom:0;margin-top:0;">
+    compiles mathtex.cgi with dependencies latex and dvipng, whereas, </p>
+    <pre class="medium" style="margin-top:0;margin-bottom:0"
+>   <b>cc &#150;</b>DLATEX<b>=\"</b><i>path</i><b>/</b><i>to</i><b>/</b>latex<b>\"</b> <b>&#150;</b>DDVIPS<b>=\"</b><i>path</i><b>/</b><i>to</i><b>/</b>dvips<b>\"</b> <b>\</b>
+   <b>&#150;</b>DCONVERT<b>=\"</b><i>path</i><b>/</b><i>to</i><b>/</b>convert<b>\"</b> mathtex.c <b>&#150;o</b> mathtex.cgi</pre>
+<p class="continue" style="margin-top:0;">
+    compiles mathtex.cgi with dependencies latex and dvips and convert. <br>
+    <b>(</b>Note:&nbsp;dvipng is easily twice as fast
+    as dvips/convert, and it produces somewhat smaller image files,
+    with no discernible (to me) loss of quality or other downside.
+    So I recommend its use if you have it installed or can
+    install it.<b>)</b> </p>
+
+<p> These dependencies  &#151; always latex and either dvipng or
+    dvips/convert &#151; must all be installed on your server
+    before you can run mathTeX.   Ask your ISP or sysadmin if
+    you have any questions or problems installing them.  Or see
+    <a href="http://www.forkosh.com/mimetex.html" target="_top">mimeTeX</a>
+    if you can't install them. </p>
+
+<h4> <a name="convertadvisory"> </a> Advisory for
+    <a href="http://en.wikipedia.org/wiki/Dvips" target="_top">
+    dvips</a>/<a href="http://www.imagemagick.org/script/convert.php"
+    target="_top">convert</a> users:</h4>
+<p class="continue" style="margin-top:0.0em;"> If you're using
+    <a href="http://en.wikipedia.org/wiki/Dvips" target="_top">dvips</a> and
+    and <a href="http://www.imagemagick.org/script/convert.php"
+    target="_top">convert</a> (rather than
+    <a href="http://en.wikipedia.org/wiki/Dvipng" target="_top">dvipng</a>),
+    then be advised that recent versions of
+    <a href="http://www.imagemagick.org/script/convert.php"
+    target="_top">convert</a> seem to exhibit a minor bug whereby
+    the program's <b>&#150;gamma</b>&nbsp;correction option is ignored
+    when converting postscript images to any other format.
+    The default, and unchangeable, gamma renders
+    acceptable-looking png images, but unacceptably light gif images.
+    Earlier versions of
+    <a href="http://www.imagemagick.org/script/convert.php"
+    target="_top">convert</a> seem to respect the
+    <b>&#150;gamma</b>&nbsp;option and, moreover, render acceptable
+    default gif images anyway.
+    So if you're using
+    <a href="http://en.wikipedia.org/wiki/Dvips" target="_top">
+    dvips</a>/<a href="http://www.imagemagick.org/script/convert.php"
+    target="_top">convert</a> and are seeing very light images,
+    I'd recommend downloading
+    <a href="http://www.imagemagick.org/"
+    target="_top">ImageMagick</a>&nbsp;version&nbsp;6.2.6 source from
+    <a href="http://sourceforge.net/projects/imagemagick/files/"
+    target="_top">http://sourceforge.net/projects/imagemagick/files/</a>
+    and building your own version of
+    <a href="http://www.imagemagick.org/script/convert.php"
+    target="_top">convert</a>.  That should fix your problem.
+    Alternatively, an even easier fix is to <!-- you can simply -->
+    compile mathtex with the <a href="#gifswitch">-DPNG</a>&nbsp;switch,
+    which renders acceptable-looking default png images regardless of
+    <a href="http://www.imagemagick.org/script/convert.php"
+    target="_top">convert</a> version.
+    </p>
+
+
+<h4> <a name="pictureenviron"> </a> Additional dependencies for
+    LaTeX's picture environment: </h4>
+<p> LaTeX's picture environment provides a rudimentary markup
+    for drawing simple diagrams.  For example, you can submit a
+    rather <!-- elaborate --> complicated &lt;img&gt; tag
+    to mathTeX like </p>
+<pre>   <b>&lt;img&nbsp;src=&quot;/cgi-bin/mathtex.cgi?
+      \png
+      \definecolor{blueblack}{RGB}{0,0,135}
+      \color{blueblack}
+      \begin{picture}(4,1.75)
+        \thicklines
+        \put(2,0.01){\arc{3}{3.53588}{5.8888}}
+        \put(.375,.575){\line(1,0){3.25}}
+        \put(1.22,1.375){\makebox(0,0){\footnotesize$ds$}}
+        \put(.6,.5){\makebox(0,0){\footnotesize$x=0$}}
+        \put(3.36,.5){\makebox(0,0){\footnotesize$x=\ell$}}
+        \dottedline{.05}(1.0,.575)(1.0,1.10)
+        \put(1.0,.5){\makebox(0,0){\footnotesize$x$}}
+        \dottedline{.05}(1.5,.575)(1.5,1.40)
+        \put(1.5,.5){\makebox(0,0){\footnotesize$x+dx$}}
+        \put(1.22,.65){\makebox(0,0){\footnotesize$dx$}}
+        \dottedline{.04}(0.6,1.12)(1.25,1.12)
+        \put(1.0,1.14){\vector(-1,-1){.45}}
+        \put(.58,0.83){\makebox(0,0){\footnotesize$T$}}
+        \put(.77,1.05){\makebox(0,0){\scriptsize$\theta(x)$}}
+        \put(1.18,1.16){\makebox(0,0){\scriptsize$\theta(x)$}}
+        \dottedline{.04}(1.5,1.41)(2.1,1.41)
+        \put(1.5,1.44){\vector(4,1){.67}}
+        \put(2.22,1.59){\makebox(0,0){\footnotesize$T$}}
+        \put(1.95,1.45){\makebox(0,0){\scriptsize$\theta(x+dx)$}}
+      \end{picture}&quot;
+    alt="" border=0 align="middle"&gt;</b></pre>
+<p class="continue"> which, in this case, uses LaTeX's
+    &nbsp; \begin{picture}...\end{picture} &nbsp; environment
+    to render the image </p>
+    <center>
+    <a href="#preview"><img id="picenv1" onclick="eqntext('picenv1')"
+    src="../cgi-bin/mathtex.cgi?\png
+      \definecolor{blueblack}{RGB}{0,0,135}
+      \color{blueblack}
+      \begin{picture}(4,1.75)
+        \thicklines
+        \put(2,0.01){\arc{3}{3.53588}{5.8888}}
+        \put(.375,.575){\line(1,0){3.25}}
+        \put(1.22,1.375){\makebox(0,0){\footnotesize$ds$}}
+        \put(.6,.5){\makebox(0,0){\footnotesize$x=0$}}
+        \put(3.36,.5){\makebox(0,0){\footnotesize$x=\ell$}}
+        \dottedline{.05}(1.0,.575)(1.0,1.10)
+        \put(1.0,.5){\makebox(0,0){\footnotesize$x$}}
+        \dottedline{.05}(1.5,.575)(1.5,1.40)
+        \put(1.5,.5){\makebox(0,0){\footnotesize$x+dx$}}
+        \put(1.22,.65){\makebox(0,0){\footnotesize$dx$}}
+        \dottedline{.04}(0.6,1.12)(1.25,1.12)
+        \put(1.0,1.14){\vector(-1,-1){.45}}
+        \put(.58,0.83){\makebox(0,0){\footnotesize$T$}}
+        \put(.77,1.05){\makebox(0,0){\scriptsize$\theta(x)$}}
+        \put(1.18,1.16){\makebox(0,0){\scriptsize$\theta(x)$}}
+        \dottedline{.04}(1.5,1.41)(2.1,1.41)
+        \put(1.5,1.44){\vector(4,1){.67}}
+        \put(2.22,1.59){\makebox(0,0){\footnotesize$T$}}
+        \put(1.95,1.45){\makebox(0,0){\scriptsize$\theta(x+dx)$}}
+      \end{picture}"
+    alt="" border=0 align=middle></a> </center>
+<p class="continue"> Diagrams like this <!-- the one illustrated above -->
+    are more often drawn using separate drawing programs.
+    However, for example, if you're posting to
+    a bulletin&nbsp;board/blog/wiki that supports mathTeX but doesn't
+    let you upload separate images, then mathTeX &lt;img&gt; tags
+    <!-- like this --> may be a satisfactory alternative.
+    And note the special mathTeX <a href="#gifdirective">\png</a>
+    directive at the very beginning of the example expression above.
+    That's removed before LaTeX sees your expression, but first it
+    directs mathTeX to generate a png image even if the default
+    is gif.  Png's seem to produce slightly sharper picture images:
+    try clicking the above image, change the \png to \gif, submit
+    the expression and compare images. </p>
+
+<p> Using &nbsp; \begin{picture}...\end{picture} &nbsp;
+    has a few mathTeX dependency requirements.
+    The dvipng program doesn't recognize LaTeX
+    postscript \specials generated in the picture environment.
+    So you must compile mathTeX with the &#150;DDVIPS and
+    &#150;DCONVERT switches described above, and (of course)
+    these two programs must be available on your server.
+    Moreover, even dvips has problems generating encapsulated
+    postscript (which is what mathTeX uses) containing these
+    \specials.  So a separate script, ps2epsi, that's usually
+    included with <a href="http://pages.cs.wisc.edu/~ghost/index.htm"
+    target="_top">ghostscript</a> distributions, is used by mathTeX
+    to "encapsulate" dvips's output.  Therefore, the ps2epsi script
+    must also be available on your server, and you must compile
+    mathTeX with the additional switch &#150;DPS2EPSI=\"path/to/ps2epsi\"
+    that specifies the path to it. </p>
+
+<p class="continue" style="margin-bottom:0;"> Note that you can,
+    and should if possible, also compile mathTeX with the &#150;DDVIPNG
+    switch if the dvipng program is also available on your server.
+    Then your compile line will look something like </p>
+    <pre class="medium" style="margin-top:0;margin-bottom:0"
+>   <b>cc  &#150;</b>DLATEX<b>=\"</b><i>path</i><b>/</b><i>to</i><b>/</b>latex<b>\"</b>  <b>&#150;</b>DDVIPNG<b>=\"</b><i>path</i><b>/</b><i>to</i><b>/</b>dvipng<b>\"</b>  <b>&#150;</b>DDVIPS<b>=\"</b><i>path</i><b>/</b><i>to</i><b>/</b>dvips<b>\"</b> <b>\</b>
+   <b>&#150;</b>DCONVERT<b>=\"</b><i>path</i><b>/</b><i>to</i><b>/</b>convert<b>\"</b>  <b>&#150;</b>DPS2EPSI<b>=\"</b><i>path</i><b>/</b><i>to</i><b>/</b>ps2epsi<b>\"</b>  mathtex.c <b>&#150;o</b> mathtex.cgi</pre>
+<p class="continue" style="margin-top:0;">
+    In this case mathTeX defaults to dvipng unless your expression
+    contains \begin{picture}, when it automatically uses
+    dvips/ps2epsi/convert instead.
+    And when your expression contains \begin{picture}, mathTeX
+    also automatically runs LaTeX with \usepackage{eepic}. </p>
+
+
+<h3> <a name="plugins"> </a>
+mathTeX plugins<font size=5>...</font> </h3>
+<p> There's no inherent need to repeatedly write the cumbersome
+    &lt;img&gt; tag illustrated above.  You can write your own <a href=
+    "http://java.sun.com/j2ee/1.4/docs/tutorial/doc/JSPIntro9.html#wp73314"
+    target="_top">custom&nbsp;tags</a>,
+    or write a wrapper&nbsp;script around mathTeX to simplify the
+    notation. </p>
+
+<p style="margin-bottom:0">  For example,
+    the following javascript snippet (based on
+    <a href="http://www.mathtran.org" target="_top">mathtran</a>'s
+    <a href="http://www.mathtran.org/js/mathtran_img.js"
+    target="_top">mathtran_img.js</a>) lets you just write &nbsp;
+    <b>&lt;img&nbsp;alt="mathtex:c=\sqrt{a^2+b^2}"&gt;</b> &nbsp;
+    wherever you want to see
+    <a href="#preview"><img id="imageJS1" onclick="eqntext('imageJS1')"
+    src="../cgi-bin/mathtex.cgi?\footnotesize c=\sqrt{a^2+b^2}"
+    alt="" border=0 align=middle></a>&nbsp; </p>
+    <pre class="medium" style="margin-top:0;margin-bottom:0"
+>   &lt;script type="text/javascript"&gt;
+   &lt;!--
+   // Create a namespace to hold variables and functions
+   mathtex = new Object();
+   // Change this to use your server
+   mathtex.imgSrc = "http://www.<i>yourdomain</i>.com/cgi-bin/mathtex.cgi?";
+   // Transform the whole document: add src to each img with
+   // alt text starting with "mathtex:", unless img already has a src.
+   mathtex.init = function () {
+       if (! document.getElementsByTagName) return;
+       var objs = document.getElementsByTagName("img");
+       var len  = objs.length;
+       for (i=0; i&lt;len; i++) {
+          var img = objs[i];
+          if (img.alt.substring(0,8) == 'mathtex:')
+             if (!img.src) {
+                var tex_src = img.alt.substring(8);
+                img.src = mathtex.imgSrc + encodeURIComponent(tex_src);
+                // Append TEX to the class of the IMG.
+                img.className +=' tex'; }
+          }
+       mathtex.hideElementById("mathtex.error"); }
+   // Utility function
+   mathtex.hideElementById = function (id) {
+       var obj = document.getElementById(id);
+       if (obj) obj.style.display = 'none'; }
+   // resolve a cross-browser issue (see <a href="http://scottandrew.com/weblog/articles/cbs-events" target="_top">CBS&nbsp;events</a>)
+   mathtex.addEvent = function (obj, evType, fn, useCapture) {
+       if (obj.addEventListener) { //For Mozilla.
+           obj.addEventListener(evType, fn, useCapture);
+           return true; }
+       else if (obj.attachEvent) { //For Internet Explorer.
+           var r = obj.attachEvent("on"+evType, fn);
+           return r; }
+       }
+   // Initialize after entire document is loaded
+   mathtex.addEvent(window, 'load', mathtex.init, false);
+   --&gt;
+   &lt;/script&gt;</pre>
+
+<p style="margin-bottom:0">
+    Bulletin boards, wikis, etc, can also incorporate mathTeX images
+    with short scripts.  For example, if you're using
+    <a href="http://www.phpbb.com" target="_top">phpBB2</a>, then
+    <a href="http://www.themathforum.com/" target="_top">Jameson</a>
+    contributed the following <!-- typical --> one-line mod that lets
+    you write <b>[tex]&nbsp;...&nbsp;[/tex]</b> for mathTeX images: </p>
+    <pre class="medium" style="margin-top:0;margin-bottom:0"
+>   #--------[open]-----------------------------------------------------
+     /includes/bbcode.php
+   #--------[find]-----------------------------------------------------
+     // Remove our padding from the string..
+   #--------[before, add]----------------------------------------------
+     $text = preg_replace('/\[tex\](.*?)\[\/tex\]/ie',
+     "'&lt;img src=\"/cgi-bin/mathtex.cgi?'.rawurlencode('$1').'\" align=\"middle\" /&gt;'",
+     $text);</pre>
+<p class="continue" style="margin-top:0">
+    <!-- &nbsp; &nbsp; &nbsp; --> Similarly, if you're using
+    <a href="http://www.phpbb.com" target="_top">phpBB3</a>,
+    then no mod is even needed.
+    Just click Postings from the Administrator Control Panel,
+    and add the Custom BBCode&nbsp;<b>[tex]{TEXT}[/tex]</b> &nbsp;
+    with the HTML replacement
+    <b>&lt;img&nbsp;src="/cgi-bin/mathtex.cgi?{TEXT}"&nbsp;align=middle&gt;</b>
+    &nbsp; Now you can also write <b>[tex]&nbsp;...&nbsp;[/tex]</b>
+    to obtain mathTeX images of the enclosed expression.
+
+<p> Plugins for several additional packages already exist for my other
+    math-rendering program, 
+    <a href="http://www.forkosh.com/mimetex.html" target="_top">mimeTeX</a>,
+    which runs without dependencies, but produces slightly lower
+    quality images than LaTeX.  These plugins also work with mathTeX.
+    Just substitute <b>mathtex.cgi</b> wherever the instructions say
+    <b>mimetex.cgi</b>. </p>
+    <center><table>
+     <tr> <td align=center> <u>&nbsp;<b>Package</b>&nbsp;</u> </td>
+      <td> &nbsp; </td>
+      <td align=center> <u>&nbsp;&nbsp;<b>Plugin</b>&nbsp;&nbsp;</u> </td>
+      </tr>
+     <tr> <td align=center>
+	  <a href="http://www.pmwiki.org/" target="_top">
+	  PmWiki</a> </td> <td> &nbsp; </td>
+	  <td align=center>
+	  <a href="http://www.pmwiki.org/wiki/Cookbook/MimeTeX"
+	  target="_top">mimeTeX&nbsp;plugin</a> </td> </tr>
+     <tr> <td align=center>
+	  <!-- a href="http://www.wikimedia.org/wiki/Main_Page" target="_top">
+	  Wikimedia</a> </td -->
+	  <a href="http://www.mediawiki.org/wiki/MediaWiki" target="_top">
+	  MediaWiki</a> </td>
+	  <td align=center> &nbsp; </td>
+	  <td align=center>
+	  <!-- a href="http://meta.wikimedia.org/wiki/Mimetex_alternative" -->
+	  <a href="http://www.mediawiki.org/wiki/Mimetex_alternative"
+	  target="_top">&quot;mimeTeX&nbsp;alternative&quot;</a> </td> </tr>
+     <tr> <td align=center>
+	  <a href="http://www.unitorganizer.com/mathwiki/index.php/Main_Page"
+	  target="_top">MathWiki</a> </td> <td> &nbsp; </td>
+	  <td align=center> <a href=
+	  "http://www.unitorganizer.com/mathwiki/index.php/MimetexParser"
+	  target="_top">&quot;mimeTeX&nbsp;Parser&quot;</a> </td> </tr>
+     <tr> <td align=center>
+	  <a href="http://forums.punbb.org/" target="_top">PunBB</a> </td>
+	  <td> &nbsp; </td> <td align=center>
+	  <a href="http://www.math-linux.com/spip.php?article44"
+	  target="_top">mimeTeX&nbsp;plugin</a> </td> </tr>
+     <tr> <td align=center>
+	  <a href="http://www.sixapart.com/movabletype/" target="_top">
+	  Movable&nbsp;Type</a> </td> <td> &nbsp; </td>
+	  <td align=center> <a href=
+	  "http://www.unitorganizer.com/myblog/2006/08/creating_equations_in_movable.html"
+          target="_top">mimeTeX&nbsp;plugin</a> </td> </tr>
+     <tr> <td align=center>
+	  <a href="http://wordpress.org/" target="_top">WordPress</a> </td>
+	  <td> &nbsp; </td> <td align=center> <a href=
+	  "http://www.anlak.com/?page_id=66" target="_top">
+     <!-- "http://sixthform.info/steve/wordpress/index.php?p=13&page=2" -->
+	  mimeTeX&nbsp;plugin</a> <!-- &nbsp; (see item 9) --> </td> </tr>
+     <!--- dead links --->
+     <!-- tr> <td align=center>
+	  <a href="http://www.phpbb.com" target="_top">phpBB</a> </td>
+	  <td> &nbsp; </td> <td align=center>
+	  <a href=
+	  "http://www.themathforum.com/math/showthread.php?p=621#post621"
+	  target="_top">mimeTeX&nbsp;plugin</a> </td> </tr -->
+     <!-- tr> <td align=center>
+	  <a href="http://www.mamboserver.com/" target="_top">Mambo</a> </td>
+	  <td> &nbsp; </td> <td align=center>
+	  <a href="http://mamboxchange.com/projects/mimetexbot/"
+	  target="_top">&quot;mimeTeX&nbsp;bot&quot;</a> </td> </tr -->
+    </table></center>
+
+<p> <b>Please note:</b> If you're writing your own plugin for mathTeX,
+    please write code using <b>system(&nbsp;)</b>, or any other
+    shell escape mechanisms, carefully.  <b>system(&nbsp;)</b> raises
+    security issues, either real ones if used carelessly, or just in
+    the minds of system administrators.  Either way, I've received emails
+    from people unable to use mathTeX because of unnecessary
+    <b>system(&nbsp;)</b> calls prohibited by security-conscious sysadmins.
+    MathTeX itself poses minimal risk when used as illustrated above,
+    but you're responsible for any plugin/wrapper script you write
+    around it. </p>
+
+<h3> <a name="valignment"> </a>
+vertical alignment<font size=5>...</font> </h3>
+<p> An image like
+    <a href="#preview"><img id="imageAV1" onclick="eqntext('imageAV1')"
+    src="../cgi-bin/mathtex.cgi?
+    \small f(x)=\int\limits_{-\infty}^xe^{-t^2}dt"
+    alt="" border=0 align=middle></a>
+    doesn't look as good as the same image
+    <a href="#preview"><img id="imageAV2" onclick="eqntext('imageAV2')"
+    src="../cgi-bin/mathtex.cgi?
+    \small f(x)=\int\limits_{-\infty}^xe^{-t^2}dt"
+    alt="" border=0 style="Vertical-Align:-21px"></a>
+    that's vertically aligned with your surrounding text.
+    Along with several standard 
+    <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html">
+    HTTP&nbsp;header&nbsp;fields</a>, mathTeX can also emit a special
+    &nbsp; <b>Vertical-Align:&nbsp;&#150;<i>nn</i></b> &nbsp;
+    header, where <b>&#150;<i>nn</i></b> is the number of pixels
+    (usually negative as illustrated) needed for a
+    &nbsp; <b>style="Vertical-Align:&nbsp;&#150;<i>nn</i>&nbsp;px"</b>
+    &nbsp; attribute in the <b>&lt;img&gt;</b>&nbsp;tag used to
+    render your expression.
+    To obtain its vertical-align information, mathTeX places
+    your expression inside a LaTeX&nbsp;lrbox, where additional
+    environments like <nobr>\begin{gather*}...\end{gather*}</nobr>
+    are not permitted.
+    If your expression is compatible with LaTeX's&nbsp;lrbox-environment,
+    the Vertical-Align&nbsp;header is obtained by
+    placing the directive &nbsp; <b>\depth</b> &nbsp; anywhere
+    in your expression. </p>
+
+<p> But mathTeX's special Vertical-Align: header
+    is unrecognized and ignored by your browser.  You have to get the
+    header, interpret it, and write the corresponding &lt;img&gt; tag.
+    The only feasible way to do all this is using a scripting language,
+    as illustrated by the following, rather naive, php code </p>
+    <pre class="medium" style="margin-top:.5em;margin-bottom:.5em"
+>   &lt;?php
+   $mathtexurl = "http://www.<i>yourdomain</i>.com/cgi-bin/mathtex.cgi?";
+   function verticalalign( $expression ) {
+      global $mathtexurl;
+      // note: curl_init() stops at the first whitespace char in $url argument
+      $expression = ereg_replace(" ","~",$expression); // so remove whitespace
+      $url     = $mathtexurl . "\depth~" . $expression;
+      $valign  = "0";
+      $ch      = curl_init( $url );
+      curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+      curl_setopt( $ch, CURLOPT_HEADER, true );
+      $gif     = curl_exec( $ch );
+      $errno   = curl_errno( $ch );
+      curl_close( $ch );
+      if ( $errno == 0 ) {
+        $fields = explode("Vertical-Align:",$gif);
+        $vfield = trim($fields[1]);
+        $fldlen = strspn($vfield,"+-0123456789");
+        $valign = substr($vfield,0,$fldlen); }
+      return $valign;
+      }
+   function mathtextag( $expression ) {
+      global $mathtexurl;
+      $valign = verticalalign($expression);
+      $url    = $mathtexurl . "\depth~" . $expression;
+      echo ' &lt;img src="',$url,'" ';
+      echo ' style="Vertical-Align:',$valign,'px" ';
+      echo ' alt="" border=0&gt;', "\n";
+      }
+   ?&gt;</pre>
+
+<p> Now you can write &nbsp;
+    &lt;?php&nbsp;mathtextag('\frac12\left(a^2+b^2\right)');&nbsp;?&gt;
+    wherever you want to see
+    <a href="#preview"><img id="imageAV5" onclick="eqntext('imageAV5')"
+    src="../cgi-bin/mathtex.cgi?
+    \small\frac12\left(a^2+b^2\right)"
+    alt="" border=0 style="Vertical-Align:-10px"></a>
+    correctly aligned. Note that the php code automatically prepends
+    &nbsp; <b>\depth</b> &nbsp; to your expression for you.
+    <b>(</b>And also note that this code calls mathTeX twice
+    to render each expression, once to get the Vertical-Align: header
+    and build an &lt;img&gt; tag, and then again to render that tag.
+    If you're a good php programmer and write better code,
+    please email me a copy.<b>)</b> </p>
+
+<h3> <a name="alternatives"> </a>
+mathTeX alternatives<font size=5>...</font> </h3>
+<p> Other math-on-the-web solutions are discussed at
+    <a href="http://www.tug.org/interest.html#web" target="_top">
+    www.tug.org/interest.html</a>, and in the
+    <a href="http://www.tex.ac.uk/cgi-bin/texfaq2html?label=LaTeX2HTML"
+    target="_top">tex-faq/LaTex2Html</a> and
+    <a href="http://www.tex.ac.uk/cgi-bin/texfaq2html?label=mathml"
+    target="_top">tex-faq/mathml</a>.
+    Several LaTeX-based solutions
+    similar to mathTeX that you may want to look at are
+    <a href="http://www.mayer.dial.pipex.com/tex.htm#latexrender"
+    target="_top">latexrender</a>,
+    <a href="http://www.mathtran.org" target="_top">mathtran</a>,
+    <a href="http://www.fourmilab.ch/webtools/textogif/textogif.html"
+    target="_top">textogif</a>, and
+    <a href="http://www.math.uio.no/~martingu/gladtex/"
+    target="_top">gladTeX</a>.
+    However, if you can't install a
+    <a href="http://www.latex-project.org/ftp.html" target="_top">
+    TeX&nbsp;distribution</a>
+    <!-- and suitable image conversion utilities like
+    <a href="http://www.imagemagick.org" target="_top">ImageMagick</a -->
+    on your server, then you may prefer to look at a stand-alone
+    math rendering program like
+    <a href="http://www.forkosh.com/mimetex.html" target="_top">mimeTeX</a>,
+    which has no dependencies whatsoever, but which produces slightly
+    lower quality images than LaTeX.
+    Alternative kinds of solutions that you may want to look at are
+    <a href="http://www.math.union.edu/~dpvc/jsMath/" target="_top">jsmath</a>
+    and <a href="http://www.integretechpub.com/techexplorer/"
+    target="_top">techexplorer</a>. </p>
+
+<h3> <a name="webservice"> </a>
+mathTeX web services<font size=5>...</font> </h3>
+ <p> If you have trouble installing mathTeX on your own server, a
+     mathTeX web service is currently <!-- (but maybe not permanently) -->
+     available.  An &lt;img&gt; tag of the form </p>
+<pre><b>  &lt;img&nbsp;src="http://www.forkosh.com/mathtex.cgi?c=\sqrt{a^2+b^2}"
+   alt="" border=0 align=middle&gt;</b></pre>
+ <p class="continue"> displays
+     <a href="#preview"><img id="public1" onclick="eqntext('public1')"
+     src="../cgi-bin/mathtex.cgi?\small c=\sqrt{a^2+b^2}"
+     alt="" border=0></a> wherever you put that &lt;img&gt tag
+     in your own document.  Note that the typical
+     <b>/cgi-bin/mathtex.cgi?</b> has been replaced by
+     <b>http://www.forkosh.com/mathtex.cgi?</b>
+     in this &lt;img&gt; tag, using mathTeX on my
+     server to render your expression for you.
+     For production use, please install mathTeX on your own server. </p>
+
+<!-- +++++++++++++++++++++++++++
+ <p> To encourage you to install mathTeX on your own server,
+     one request out of every 25 submitted to mine is
+     randomly selected to be rendered with the
+     &quot;<a href="#adswitches">advertisement</a>&quot; <br>
+     &nbsp; &nbsp; &nbsp;
+     <a href="#preview"><img id="public2" onclick="eqntext('public2')"
+     src="../cgi-bin/mathtex.cgi?\advertisement c=\sqrt{a^2+b^2}"
+     alt="" align="middle" border=0></a> &nbsp; &nbsp; instead of
+     just &nbsp; &nbsp;
+     <a href="#preview"><img id="public3" onclick="eqntext('public3')"
+     src="../cgi-bin/mathtex.cgi?c=\sqrt{a^2+b^2}"
+     alt="" border=0></a> <br>
+     Advertisements are completely disabled when you compile
+     mathTeX yourself.  To enable them you must include the
+     <a href="#adfrequencyswitch">&#150;DADFREQUENCY</a> switch.
+     And in this case you'd typically also include the
+     <a href="#advertisementswitch">&#150;DADVERTISEMENT</a> switch
+     to define your own advertisement, replacing my default message
+     illustrated above. </p>
+++++++++++++++++++++++++++++ -->
+
+ <p> Installing mathTeX on your own server sets up a <i>de&nbsp;facto</i>
+     web service, unless you compile it with the
+   <a href="#refererswitch">&#150;DREFERER=<b>\"</b><i>domain</i><b>\"</b></a>
+     switch, restricting requests to that specific <i>domain</i>.
+     Until <a href="http://www.w3.org/Math/" target="_top">mathML</a>
+     becomes widespread, LaTeX-based web services,
+     like mathTeX or <a href="#alternatives">alternatives</a>,
+     may be the best math-on-the-web solutions.  If you set one up that's
+     intended for public access, <!-- then --> email me its url,
+     and I'll add it to the following list... </p>
+       <center><table border="1" cellpadding=3 cellspacing=0>
+        <tr align="center">
+         <td>url of service</td> <td>test</td> </tr>
+        <tr align="center">
+         <td> http://www.forkosh.com/mathtex.cgi </td>
+         <td> <a href="#preview"> <img id="server1" onclick="eqntext('server1')"
+         src="http://www.forkosh.com/mathtex.cgi?
+         c=\sqrt{a^2+b^2}" border=0> </a> </td> </tr>
+        <tr align="center">
+         <td> http://www.cyberroadie.org/cgi-bin/mathtex.cgi </td>
+         <td> <a href="#preview">
+	      <img id="server2" onclick="eqntext('server2')"
+         src="http://www.cyberroadie.org/cgi-bin/mathtex.cgi?
+         c=\sqrt{a^2+b^2}" border=0> </a> <!-- unavailable --> </td> </tr>
+<!-- to comment out cyberroadie...
+ +      <tr align="center">
+ +       <td> http://www.cyberroadie.org/cgi-bin/mathtex.cgi </td>
+ +       <td> <++++!-- a href="#preview"> <img id="server2" onclick="eqntext('server2')"
+ +       src="http://www.cyberroadie.org/cgi-bin/mathtex.cgi?
+ +       c=\sqrt{a^2+b^2}" border=0> </a --++++> unavailable </td> </tr>
+ +++++++++++++++++++++++++++++ -->
+        <tr align="center">
+         <td> http://www.problem-solving.be/cgi-bin/mathtex.cgi </td>
+         <td> <!-- a href="#preview">
+	      <img id="server3" onclick="eqntext('server3')"
+         src="http://www.problem-solving.be/cgi-bin/mathtex.cgi?
+         c=\sqrt{a^2+b^2}" border=0> </a --> unavailable </td> </tr>
+        <tr align="center">
+         <td> http://www.openmaths.org/cgi-bin/mathtex.cgi </td>
+         <td> <!-- a href="#preview">
+              <img id="server4" onclick="eqntext('server4')"
+         src="http://www.openmaths.org/cgi-bin/mathtex.cgi?
+         c=\sqrt{a^2+b^2}" border=0> </a --> unavailable </td> </tr>
+        <!-- tr align="center">
+         <td> http://www.quantnet.com/cgi-bin/mathtex.cgi </td>
+         <td> <XXX!-- a href="#preview">
+              <img id="server5" onclick="eqntext('server5')"
+         src="http://www.quantnet.com/cgi-bin/mathtex.cgi?
+         c=\sqrt{a^2+b^2}" border=0> </a --XXX> unavailable </td> </tr -->
+       </table></center>
+     <p class="continue"> The "test" column just exercises the link
+     to its left.  Thanks to everyone. </p>
+
+ <p> An alternative mathTeX-based public web service you may also want to
+     consider is <a href="http://mathcache.appspot.com/static/docs.html"
+     target="_top">Embedding&nbsp;math&nbsp;with&nbsp;replacemath.js</a>,
+     which allows you to embed math in your html pages without any
+     &lt;img&gt;&nbsp;tags at all, just by writing LaTeX math markup
+     between&nbsp;<nobr>&#036;&#036;...&#036;&#036;</nobr>&nbsp;.
+     Just prepare your html document in the form </p>
+<pre><b>  &lt;HTML&gt; &lt;HEAD&gt; &lt;TITLE&gt; test page &lt;/TITLE&gt; &lt;/HEAD&gt;
+    &lt;BODY&gt;
+      Put any LaTeX math expression you like between <code>$$</code>...<code>$$</code>,
+      for example &#036;&#036;y=\frac1{1-x^2}&#036;&#036; renders <img src="../cgi-bin/mathtex.cgi?\small y=\frac1{1-x^2}" alt="" border=0 align="absmiddle">
+    &lt;/BODY&gt;
+      &lt;script type="text/javascript"
+        src="http://mathcache.s3.amazonaws.com/replacemath.js"&gt; &lt;/script&gt;
+      &lt;script type="text/javascript"&gt;
+        replaceMath( document.body ); &lt;/script&gt;
+  &lt;/HTML&gt;</b></pre>
+<p class="continue"> That is, near the bottom of your document,
+    after the &lt;<b>/</b>BODY&gt;&nbsp;tag, place exactly the
+    two &lt;script&gt;&nbsp;tags shown.  Then, anywhere in
+    your document, any LaTeX math expressions surrounded
+    by&nbsp;<nobr>&#036;&#036;...&#036;&#036;</nobr> will be rendered
+    for you by their public web service. </p>
+
+<!-- +++++++++++++++++++++++++++
+ <p> The drawback to hosting public mathTeX web services is the
+     compute and disk resources necessary to run LaTeX and cache its
+     results for many thousands of different images (and I may
+     be unable to host this one permanently).
+     One possible incentive might be a method to monetize the effort.
+     Advertising seems to be the standard internet way to monetize
+     anything.  With those two thoughts in mind, I built a rudimentary
+     <a href="#adswitches">advertising&nbsp;facility</a> into
+     mathTeX. <comment , as you can see illustrated above. comment/> </p>
+
+ <p> MathTeX web services could also be monetized by direct subscription.
+     Instead of validating users with its
+   <a href="#refererswitch">&#150;DREFERER=<b>\"</b><i>domain</i><b>\"</b></a>
+     switch, a small MySQL database of valid domains would easily support
+     a mathTeX-based subscription service.  You could also provide
+     free math&nbsp;rendering with&nbsp;advertisements, whereas paid
+     subscribers receive images without&nbsp;ads.  But I haven't programmed
+     these enhancements into mathTeX's current release. </p>
+
+ <p> Whether mathTeX's current
+     <a href="#adswitches">advertising&nbsp;facility</a>,
+     or an enhanced subscription facility,
+     serve any useful purpose remains to be seen.
+     Perhaps they will just stimulate better ideas
+     about proliferating LaTeX-based, math-rendering web services.
+     It would be terrific if
+     <a href="http://www.tug.org" target="_top">www.tug.org</a>,
+     or other supported TeX organizations, host some such free services. </p>
+++++++++++++++++++++++++++++ -->
+
+
+<!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ LATEX MATH MARKUP
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+<h2 id="latexmarkup"> (2) LaTeX math markup &nbsp; </h2>
+
+ <p> MathTeX uses latex to render images,
+     and you must already be familiar with LaTeX
+     math markup to use it.  If you're not, many online
+     <a href="http://www.tug.org/begin.html#doc" target="_top">
+     LaTeX&nbsp;tutorials</a> are readily available.
+     You may also want to browse Andrew Roberts'
+     <a href="http://www.andy-roberts.net/misc/latex/latextutorial9.html"
+     target="_top">Latex&nbsp;Math&nbsp;I</a> and
+     <a href="http://www.andy-roberts.net/misc/latex/latextutorial10.html"
+     target="_top">Latex&nbsp;Math&nbsp;II</a>, or my own
+     <a href="http://www.forkosh.com/mimetextutorial.html" target="_top">
+     LaTeX&nbsp;math&nbsp;tutorial</a>.
+     You can also download and read the
+     <a href="http://www.ams.org/tex/" target="_top">AMS</a>'s
+     <a href="ftp://ftp.ams.org/pub/tex/doc/amsmath/short-math-guide.pdf">
+     Short&nbsp;math&nbsp;guide</a>. </p>
+
+<h3>  <a name="preview"> </a>
+LaTeX markup<font size=5>...</font> </h3>
+ <p> Now, to try out mathTeX, just enter any <!-- LaTeX math -->
+     expression you like in the Query Box below.  I've started
+     you out with a little example already in the box, or
+     you can Click any of the <a href="#examples">Examples</a> below
+     to place that corresponding expression in the Query Box.
+     Then press the Submit button, and mathTeX's rendering should be
+     displayed in the little window immediately below it. </p>
+     <center>
+      <table border="2" cellpadding="5" cellspacing="0">
+       <tr align="center"><td>
+         <form name="expression" action="../cgi-bin/mathtex.cgi"
+         method="get" target="inlineframe">
+           <table border="0" cellpadding="0" cellspacing="1">
+             <tr align="left"><td align="center">
+               <b>First enter your own LaTeX expression,
+                or Click any example...</b> <br>
+               <textarea name="formdata" rows="5" cols="72"
+                >\Large f(x)=\int_{-\infty}^x e^{-t^2}dt</textarea> <br>
+             </td></tr>
+             <tr align="center"><td>
+               <font size="-1"> <input type="button" onClick="cleartext()"
+               value="Clear Expression"> &nbsp; &nbsp;
+               &nbsp; <input type="submit" value="Submit Expression"> </font>
+             </td></tr>
+           </table>
+         </form> </td></tr>  <tr align="left"><td align="center">
+         <b>Now click Submit to see it rendered below...</b> <br>
+         <iframe name="inlineframe" align="middle" width="85%" height="110">
+         &lt;p&gt;iframe's not supported if you see this.&lt;/p&gt; 
+         </iframe>
+       </td></tr>
+      </table>
+     </center>
+ <p class="continue"> You should see &nbsp;
+     <a href="#preview"><img id="imageB3" onclick="eqntext('imageB3')"
+     src="../cgi-bin/mathtex.cgi?\small
+     f(x)=\int\limits_{-\infty}^x~e^{-t^2}dt"
+     alt="" border=0 align=middle></a> if you submit the sample expression
+     already in the box. </p>
+
+<h3> <a name="examples"> </a>
+Examples<font size=5>...</font> </h3>
+ <p> Here are various additional random examples further demonstrating
+     mathTeX's features and usage.  To see how they're done, Click any
+     one of them to place its corresponding expression in the
+     <a href="#preview">Query&nbsp;Box</a> above.  Then press Submit
+     to re-render it, or you can edit the expression first to suit
+     your own purposes.
+     <!-- You may also want to look at a
+     <a href="lint1d.html">sample&nbsp;document</a>
+     prepared using mathTeX to render equations. --> </p>
+
+<table cellspacing=15>
+<!-- first example:  taylor series for e^x at various font sizes
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+ <tr>
+  <td>
+    <font size=5><a name="example1">(1)</a></font> &nbsp;&nbsp;&nbsp; </td>
+  <td align="left" colspan=4>
+   <nobr>
+    <a href="#preview">
+      <img id="example1a" onclick="eqntext('example1a')"
+      src="../cgi-bin/mathtex.cgi?\usepackage{color}\color{red}\large
+      e^x=\sum_{n=0}^\infty\frac{x^n}{n!}"
+      alt="" border=0 align=middle></a> &nbsp &nbsp
+    <a href="#preview">
+      <img id="example1b" onclick="eqntext('example1b')"
+      src="../cgi-bin/mathtex.cgi?\usepackage{color}\color{blue}\Large
+      e^x=\sum_{n=0}^\infty\frac{x^n}{n!}"
+      alt="" border=0 align=middle></a> &nbsp &nbsp
+    <a href="#preview">
+      <img id="example1c" onclick="eqntext('example1c')"
+      src="../cgi-bin/mathtex.cgi?\Large
+      e^x=\lim_{n\to\infty} \left(1+\frac xn\right)^n"
+      alt="" border=0 align=middle></a>
+   </nobr>
+  </td>
+ </tr>
+
+<!-- second example:  definition of derivative
+++++++++++++++++++++++++++++++++++++++++++++++ -->
+ <tr>
+  <td>
+    <font size=5>(2)</font> </td>
+  <td align="left" colspan=4>
+    <table>
+      <tr>
+       <td align="left">
+         <a href="#preview">
+         <img id="example2" onclick="eqntext('example2')"
+         src="../cgi-bin/mathtex.cgi?\large f^\prime(x)\ =
+         \lim_{\Delta x\to0}\frac{f(x+\Delta x)-f(x)}{\Delta x}"
+         alt="" border=0 align=middle></a> </td>
+       <td>
+         definition of derivative </td>
+      </tr>
+    </table> </td>
+ </tr>
+
+<!-- third example:  demonstrating  \left\{ ... \right.
++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+ <tr>
+  <td>
+    <font size=5>(3)</font> </td>
+  <td align="left">
+    <a href="#preview">
+    <img id="example3" onclick="eqntext('example3')"
+    src="../cgi-bin/mathtex.cgi?\LARGE\tilde y=\left\{
+    {\ddot x\mbox{ if $\widevec x$ odd}
+    \atop\widehat{\,\bar x+1}\mbox{ if even}}\right."
+    alt="" border=0 align=middle></a> </td>
+  <td>
+    illustrating <b>\left\{...\right<font size=5>.</font></b> <br>
+    and note the accents </td>
+ </tr>
+
+<!-- fourth example:  demonstrating \overbrace \underbrace
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+ <tr>
+  <td>
+    <font size=5>(4)</font> </td>
+  <td align="center">
+    <a href="#preview">
+    <img id="example4" onclick="eqntext('example4')"
+    src="../cgi-bin/mathtex.cgi?\small\overbrace{a,...,a}^{\mbox{k a's}},
+    \underbrace{b,...,b}_{\mbox{l b's}}\hspace{10}
+    \large\underbrace{\overbrace{a...a}^{\mbox{k a's}},
+    \overbrace{b...b}^{\mbox{l b's}}}_{\mbox{k+l elements}}"
+    alt="" border=0 align=middle></a> </td>
+  <td>
+    <b>\overbrace{}^{}</b> and <b>\underbrace{}_{}</b> <br>
+    (TeXbook page 181, Exercise 18.41) </td>
+ </tr>
+
+<!-- fifth example:  demonstrating \array
++++++++++++++++++++++++++++++++++++++++++ -->
+ <tr>
+  <td>
+    <font size=5>(5)</font> </td>
+  <td align="left" colspan=4>
+    <table>
+      <tr>
+        <td align="left">
+         <a href="#preview">
+         <img id="example5" onclick="eqntext('example5')"
+         src="../cgi-bin/mathtex.cgi?\large A\ =\ \left(
+         \begin{array}{cccc}
+         a_{11}&a_{12}&\cdots&a_{1n}\\
+         a_{21}&a_{22}&\cdots&a_{2n}\\
+         \vdots&\vdots&\ddots&\vdots\\
+         a_{n1}&a_{n2}&\cdots&a_{nn}\end{array}\right)"
+         alt="" border=0 align=middle></a> </td>
+        <td>
+         <b>\begin{array}</b> </td>
+      </tr>
+    </table> </td>
+ </tr>
+
+<!-- sixth example:  demonstrating eqnarray to align equations
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+ <tr>
+  <td>
+    <font size=5>(6)</font> </td>
+  <td align="center">
+    <a href="#preview">
+    <img id="example6" onclick="eqntext('example6')"
+    src="../cgi-bin/mathtex.cgi?\large\parstyle\begin{eqnarray*}
+    x+y+z&=&3\\2y&=&x+z\\2x+y&=&z\end{eqnarray*}"
+    alt="" border=0 align=middle></a> </td>
+  <td>
+    using <b>\begin{eqnarray*}</b> to align equations </td>
+ </tr>
+
+<!-- end-of-examples
+++++++++++++++++++++ -->
+</table>
+
+
+<!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ MATHTEX MARKUP EXTENSIONS
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+<h2 id="mathtexmarkup"> (3) MathTeX markup extensions &nbsp; </h2>
+ <p> To facilitate its use in html &lt;img&gt; tags,
+     mathTeX recognizes several special <b>\</b><i>directives</i>
+     <!-- in your math expression --> that modify latex's <!-- underlying -->
+     behavior. <!-- , and several <b>&#150;</b><i>directives</i> that modify
+     dvipng's (or convert's) behavior. -->
+     These <b>\</b><i>directives</i>
+     <!-- and <b>&#150;</b><i>directives</i> -->
+     are usually interpreted by mathTeX, and then removed from
+     your expression before it's submitted to latex for rendering. </p>
+
+ <p style="margin-bottom:0em;"> For example, </p>
+     <ul style="margin-top:0em;">
+     <li> &lt;img&nbsp;src=<b>"</b>/cgi-bin/mathtex.cgi?<b>\png&nbsp;x^2"</b>&gt;
+     renders <b>x^2</b> as a png image
+     <a href="#preview"> <img id="markup1" onclick="eqntext('markup1')"
+     src="../cgi-bin/mathtex.cgi?\png x^2" border=0> </a> instead
+     of the <a href="#gifswitch">default&nbsp;gif</a> format. </li>
+     <li> &lt;img&nbsp;src=<b>"</b>/cgi-bin/mathtex.cgi?<b>\usepackage{color}\color{blue}x^2"</b>&gt;
+     renders
+       <a href="#preview"> <img id="markup2" onclick="eqntext('markup2')"
+       src="../cgi-bin/mathtex.cgi?\usepackage{color}\color{blue}x^2"
+       border=0> </a> in blue.  In this case, mathTeX removes the familiar
+     LaTeX <b>\</b>usepackage directive from your math expression, and
+     places it in the preamble where it belongs. </li>
+     </ul>
+
+ <p> You can have as many special mathTeX <b>\</b><i>directives</i>
+     <!-- and <b>&#150;</b><i>directives</i> --> in an expression
+     as you like.  They're recognized anywhere at all in an expression,
+     though these examples show them at the beginning.
+     To simplify readability, additional examples below are
+     more tersely illustrated as
+     <b>"</b><i>query-string</i><b>"</b> rather than as
+     &lt;img&nbsp;src=<b>"</b>/cgi-bin/mathtex.cgi?<i>query-string</i><b>"</b>&gt;.
+     </p>
+
+<h3> <a name="directives"> </a>
+mathTeX directives<font size=5>...</font> </h3>
+     <dl>
+      <dt> <a name="styledirective"> </a> <b>\displaystyle</b> or
+      <b>\textstyle</b> or <b>\parstyle</b> </dt>
+       <dd> mathTeX's usual <a href="#styleswitch">default</a>
+       wraps the ?query-string expression
+       &nbsp; <b>"\int_0^1&nbsp;f(x)dx"</b> &nbsp; as &nbsp;
+       <b>\[&nbsp;\int_0^1&nbsp;f(x)dx&nbsp;\]</b>, &nbsp; rendering
+       it in LaTeX's <b>\</b>displaystyle math mode as
+       <a href="#preview"> <img id="styledir1" onclick="eqntext('styledir1')"
+       src="../cgi-bin/mathtex.cgi?\int_0^1f(x)dx" border=0
+       align="middle"></a>. <br>
+          &nbsp; &nbsp; &nbsp; But the expression &nbsp;
+       <b>"\textstyle&nbsp;\int_0^1&nbsp;f(x)dx"</b> &nbsp; is wrapped
+       as &nbsp; <b>$&nbsp;\int_0^1&nbsp;f(x)dx&nbsp;$</b>, &nbsp;
+       rendering
+       <a href="#preview"> <img id="styledir2" onclick="eqntext('styledir2')"
+       src="../cgi-bin/mathtex.cgi?\textstyle\int_0^1f(x)dx"
+       border=0 align="middle"></a> instead.
+       However, if you compiled mathtex.cgi with the
+       <a href="#styleswitch">-DTEXTSTYLE</a> option, then
+       <b>\</b>textstyle is the default, and you can write &nbsp;
+       <b>\displaystyle</b> &nbsp; in your expressions to override it. <br>
+          &nbsp; &nbsp; &nbsp; Finally, writing &nbsp; <b>\parstyle</b>
+       &nbsp; in an expression leaves it completely unwrapped, and rendered
+       in LaTeX's paragraph mode.  When using &nbsp; <b>\parstyle</b>,
+       &nbsp; write your own <b>\[&nbsp;\]</b>'s and <b>$&nbsp;$</b>'s
+       as needed.  For example, &nbsp;
+       <b>"\parstyle\noindent&nbsp;the&nbsp;answer&nbsp;is&nbsp;$\frac89$"</b>
+       &nbsp; renders &nbsp;
+       <a href="#preview"> <img id="styledir3" onclick="eqntext('styledir3')"
+       src="../cgi-bin/mathtex.cgi?\parstyle\noindent the anwser is $\frac89$"
+       border=0 align="middle"></a>. &nbsp;
+       <!-- The special &nbsp; <b>\parstyle</b> &nbsp; directive is
+       interpreted and removed by mathTeX, whereas <b>\</b>noindent is
+       passed on to LaTeX. -->
+       In this case you could just as easily write a LaTeX
+       <b>\</b>mbox{&nbsp;} in math mode.  But you may find
+       &nbsp; <b>\parstyle</b> &nbsp; useful for expressions
+       using LaTeX's eqnarray environment, or for other purposes. </dd>
+
+      <dt> <a name="usepackagedirective"> </a>
+      <b>\usepackage{</b><i>packagename</i><b>}</b> </dt>
+       <dd> When mathTeX sees a \usepackage in your expression,
+       it's removed from the expression and placed in the preamble.
+       So, for example, &nbsp;
+       <b>\usepackage{color}&nbsp;\color{blue}&nbsp;x^2+y^2</b> &nbsp;
+       renders
+       <a href="#preview"> <img id="pkgdir1" onclick="eqntext('pkgdir1')"
+       src="../cgi-bin/mathtex.cgi?\usepackage{color}\color{blue}x^2+y^2"
+       border=0></a> in blue.  You can have up to nine
+       \usepackages's in an expression.  The preamble of mathTeX's
+       <a href="#usepackageswitch">default</a> wrapper script already
+       contains \usepackage[latin1]{inputenc}, \usepackage{amsmath}
+       \usepackage{amsfonts} and \usepackage{amssymb}. </dd>
+
+      <dt> <a name="fontsizedirective"> </a>
+      <b>\tiny</b> thru <b>\Huge</b> </dt>
+       <dd> mathTeX moves LaTeX's ten standard size directives
+       outside the math mode wrapper, so that they can have their
+       intended effect.  For example, the expression &nbsp;
+       <b>"\Large&nbsp;x^2"</b> &nbsp; is wrapped as &nbsp;
+       <b>\Large&nbsp;\[&nbsp;x^2&nbsp;\]</b>, &nbsp; rendering
+       <a href="#preview"> <img id="fontdir1" onclick="eqntext('fontdir1')"
+       src="../cgi-bin/mathtex.cgi?\Large x^2" border=0></a>. &nbsp;
+       LaTeX's <a href="#fontsizeswitch"><b>\</b>normalsize&nbsp;default</a>
+       renders
+       <a href="#preview"> <img id="fontdir2" onclick="eqntext('fontdir2')"
+       src="../cgi-bin/mathtex.cgi?x^2" border=0></a>. <!-- br>
+          &nbsp; &nbsp; --> &nbsp; However, if your expression contains
+       mathTeX's &nbsp; <b>\parstyle</b> &nbsp; directive, then any
+       LaTeX size directives are left in place, exactly where
+       you've written them. <!-- br>
+          &nbsp; &nbsp; &nbsp; LaTeX note: &nbsp;
+      <b>\tiny</b> thru <b>\Huge</b> select a font size for your _entire_
+      expression.  Use LaTeX's <b>\mbox{&nbsp;}</b> to resize a part, e.g.,
+      <b>\Large&nbsp;e^{-\mbox{\small&nbsp;$x^2$}}</b>
+      selects \Large as the overall font size
+      but sets x^2 as \small. --> </dd>
+
+      <dt> <a name="dpidirective"> </a>
+      <b>\dpi{</b><i>dots-per-inch</i><b>}</b> </dt>
+       <dd> mathTeX runs dvipng (or convert) at
+       <a href="#dpiswitch">default&nbsp;screen&nbsp;resolution</a>
+       of 120dpi.
+       The directive <b>\dpi{300}</b> generates a much larger
+       300dpi image instead.  Here are samples of several
+       dpi's rendered at \scriptsize and \normalsize,
+         <center><table border="1" cellpadding=3 cellspacing=0>
+           <tr align="center">
+             <td>dpi</td> <td>\scriptsize</td> <td>\normalsize</td> </tr>
+           <tr align="center">
+             <td> <b>100</b> </td>
+             <td> <a href="#preview"> <img id="dpi1" onclick="eqntext('dpi1')"
+              src="../cgi-bin/mathtex.cgi?\dpi{100}
+              \scriptsize c=\sqrt{a^2+b^2}" border=0> </a> </td>
+             <td> <a href="#preview"> <img id="dpi2" onclick="eqntext('dpi2')"
+              src="../cgi-bin/mathtex.cgi?\dpi{100}
+              \normalsize c=\sqrt{a^2+b^2}" border=0> </a> </td> </tr>
+           <tr align="center">
+             <td> <b>120</b> </td>
+             <td> <a href="#preview"> <img id="dpi3" onclick="eqntext('dpi3')"
+              src="../cgi-bin/mathtex.cgi?\dpi{120}
+              \scriptsize c=\sqrt{a^2+b^2}" border=0> </a> </td>
+             <td> <a href="#preview"> <img id="dpi4" onclick="eqntext('dpi4')"
+              src="../cgi-bin/mathtex.cgi?\dpi{120}
+              \normalsize c=\sqrt{a^2+b^2}" border=0> </a> </td> </tr>
+           <tr align="center">
+             <td> <b>160</b> </td>
+             <td> <a href="#preview"> <img id="dpi5" onclick="eqntext('dpi5')"
+              src="../cgi-bin/mathtex.cgi?\dpi{160}
+              \scriptsize c=\sqrt{a^2+b^2}" border=0> </a> </td>
+             <td> <a href="#preview"> <img id="dpi6" onclick="eqntext('dpi6')"
+              src="../cgi-bin/mathtex.cgi?\dpi{160}
+              \normalsize c=\sqrt{a^2+b^2}" border=0> </a> </td> </tr>
+           <tr align="center">
+             <td> <b>200</b> </td>
+             <td> <a href="#preview"> <img id="dpi7" onclick="eqntext('dpi7')"
+              src="../cgi-bin/mathtex.cgi?\dpi{200}
+              \scriptsize c=\sqrt{a^2+b^2}" border=0> </a> </td>
+             <td> <a href="#preview"> <img id="dpi8" onclick="eqntext('dpi8')"
+              src="../cgi-bin/mathtex.cgi?\dpi{200}
+              \normalsize c=\sqrt{a^2+b^2}" border=0> </a> </td> </tr>
+         </table></center> </dd>
+
+      <dt> <a name="gammadirective"> </a>
+      <b>\gammacorrection{</b><i>gamma-correction</i><b>}</b> </dt>
+       <dd> mathTeX runs dvipng with
+       <a href="#gammaswitch">default&nbsp;gamma</a>=2.5
+       (or convert with default&nbsp;0.5).
+       The directive <b>\gammacorrection{3.5}</b> renders a
+       darker-than-usual gamma=3.5 image when run with dvipng
+       (or lighter-than-usual when run with convert).
+       <!-- See <a href="#gammaswitch">&#150;DGAMMA&nbsp;switch</a>
+       for some samples. --> <br>
+            &nbsp; &nbsp; &nbsp; <b>Note:</b> This gamma&nbsp;correction
+       confusion arises, I believe, as follows.  Consider a grayscale from
+       x=0&nbsp;for&nbsp;black&nbsp;to&nbsp;x=1&nbsp;for&nbsp;white.
+       Then, the canonical formula to apply
+       gamma&nbsp;correction&nbsp;<img src="../cgi-bin/mathtex.cgi?
+       \gamma" align="bottom">&nbsp;is&nbsp;<img
+       src="../cgi-bin/mathtex.cgi?\mbox{x}\mapsto \mbox{x}^{1/\gamma}"
+       align="bottom">, whereby
+       <img src="../cgi-bin/mathtex.cgi?\mbox{\raisebox{.5mm}{$\gamma$}}<1"
+       align="bottom">&nbsp;becomes&nbsp;blacker and
+       <img src="../cgi-bin/mathtex.cgi?\mbox{\raisebox{.5mm}{$\gamma$}}>1"
+       align="bottom">&nbsp;becomes&nbsp;whiter.  The convert program
+       appears to follow this convention, whereas dvipng applies
+       <img src="../cgi-bin/mathtex.cgi?\mbox{x}\mapsto \mbox{x}^{\gamma}"
+       align="bottom"> instead. <br>
+            &nbsp; &nbsp; &nbsp; Here are some samples (unchanging
+       grayscale values up and down a column signal the corresponding
+       program is unavailable) <br>
+         <center><table border="1" cellpadding=3 cellspacing=0>
+           <tr align="center">
+             <td> gamma </td> <td> dvipng </td> <td> dvips/convert </td> </tr>
+           <!-- tr align="center">
+             <td> <b>0.125</b> </td>
+             <td> <a href="#preview"> <img id="gam1a" onclick="eqntext('gam1a')"
+              src="../cgi-bin/mathtex.cgi?\dvipng
+              \gammacorrection{0.125} c=\sqrt{a^2+b^2}" border=0> </a> </td>
+             <td> <a href="#preview"> <img id="gam2a" onclick="eqntext('gam2a')"
+      src="../cgi-bin/mathtex.cgi?\dvips
+      \gammacorrection{0.125} c=\sqrt{a^2+b^2}" border=0> </a> </td> </tr -->
+           <tr align="center">
+             <td> <b>0.25</b> </td>
+             <td> <a href="#preview"> <img id="gam1" onclick="eqntext('gam1')"
+              src="../cgi-bin/mathtex.cgi?\dvipng
+              \gammacorrection{0.25} c=\sqrt{a^2+b^2}" border=0> </a> </td>
+             <td> <a href="#preview"> <img id="gam2" onclick="eqntext('gam2')"
+              src="../cgi-bin/mathtex.cgi?\dvips
+              \gammacorrection{0.25} c=\sqrt{a^2+b^2}" border=0> </a> </td> </tr>
+           <tr align="center">
+             <td> <b>0.50</b> </td>
+             <td> <a href="#preview"> <img id="gam3" onclick="eqntext('gam3')"
+              src="../cgi-bin/mathtex.cgi?\dvipng
+              \gammacorrection{0.50} c=\sqrt{a^2+b^2}" border=0> </a> </td>
+             <td> <a href="#preview"> <img id="gam4" onclick="eqntext('gam4')"
+              src="../cgi-bin/mathtex.cgi?\dvips
+              \gammacorrection{0.50} c=\sqrt{a^2+b^2}" border=0> </a> </td> </tr>
+           <tr align="center">
+             <td> <b>1.0</b> </td>
+             <td> <a href="#preview"> <img id="gam5" onclick="eqntext('gam5')"
+              src="../cgi-bin/mathtex.cgi?\dvipng
+              \gammacorrection{1.0} c=\sqrt{a^2+b^2}" border=0> </a> </td>
+             <td> <a href="#preview"> <img id="gam6" onclick="eqntext('gam6')"
+              src="../cgi-bin/mathtex.cgi?\dvips
+              \gammacorrection{1.0} c=\sqrt{a^2+b^2}" border=0> </a> </td> </tr>
+           <tr align="center">
+             <td> <b>2.0</b> </td>
+             <td> <a href="#preview"> <img id="gam7" onclick="eqntext('gam7')"
+              src="../cgi-bin/mathtex.cgi?\dvipng
+              \gammacorrection{2.0} c=\sqrt{a^2+b^2}" border=0> </a> </td>
+             <td> <a href="#preview"> <img id="gam8" onclick="eqntext('gam8')"
+              src="../cgi-bin/mathtex.cgi?\dvips
+              \gammacorrection{2.0} c=\sqrt{a^2+b^2}" border=0> </a> </td> </tr>
+           <tr align="center">
+             <td> <b>4.0</b> </td>
+             <td> <a href="#preview"> <img id="gam9" onclick="eqntext('gam9')"
+              src="../cgi-bin/mathtex.cgi?\dvipng
+              \gammacorrection{4.0} c=\sqrt{a^2+b^2}" border=0> </a> </td>
+             <td> <a href="#preview"> <img id="gam10" onclick="eqntext('gam10')"
+              src="../cgi-bin/mathtex.cgi?\dvips
+              \gammacorrection{4.0} c=\sqrt{a^2+b^2}" border=0> </a> </td> </tr>
+           <!-- tr align="center">
+             <td> <b>8.0</b> </td>
+             <td> <a href="#preview"> <img id="gam11" onclick="eqntext('gam11')"
+              src="../cgi-bin/mathtex.cgi?\dvipng
+              \gammacorrection{8.0} c=\sqrt{a^2+b^2}" border=0> </a> </td>
+             <td> <a href="#preview"> <img id="gam12" onclick="eqntext('gam12')"
+              src="../cgi-bin/mathtex.cgi?\dvips
+              \gammacorrection{8.0} c=\sqrt{a^2+b^2}" border=0> </a> </td> </tr -->
+         </table></center> </dd>
+
+      <dt> <a name="gifdirective"> </a>
+      <b>\gif</b> or <b>\png</b> </dt>
+       <dd> mathTeX's <a href="#gifswitch">default</a> renders
+       expressions as gif images.
+       If you want a png image instead, write the directive
+       &nbsp; <b>\png</b> &nbsp; in your expression.
+       However, if you compiled mathtex.cgi with the
+       <a href="#gifswitch">&#150;DPNG&nbsp;switch</a>,
+       then png is the default, and you can write
+       &nbsp; <b>\gif</b> &nbsp; in your expression to obtain
+       a gif image. </dd>
+
+      <dt> <a name="dvipngdirective"> </a>
+      <b>\dvips</b> or <b>\dvipng</b> </dt>
+       <dd> mathTeX uses dvipng when it's available,
+       or dvips and convert otherwise, to render LaTeX's
+       dvi output as gif or png images.  If all three programs
+       are available on your server, then expressions containing
+       &nbsp; <b>\dvips</b> &nbsp; are rendered using dvips/convert
+       instead of dvipng.  Or, when dvips/convert is the default
+       (see <a href="#switchesdirective">\switches</a> below),
+       expressions containing &nbsp; <b>\dvipng</b> &nbsp; are
+       rendered using dvipng instead of dvips/convert. </dd>
+
+      <dt> <a name="quietdirective"> </a>
+      <b>\quiet</b> or <b>\noquiet</b> or <b>\nquiet{<i>n</i>}</b> </dt>
+       <dd> If any "!&nbsp;LaTeX&nbsp;Error:" is emitted while
+       processing your expression, mathTeX's
+       <a href="#quietswitch">default</a> replies
+       &lt;Enter&gt; to the first three errors, and then
+       replies&nbsp;"x", halting LaTeX before it produces a&nbsp;.dvi file.
+       But if your expression contains &nbsp; <b>\quiet</b>, &nbsp;
+       then mathTeX replies&nbsp;"q" to the first error,
+       making LaTeX enter batchmode,
+       whereas if your expression contains &nbsp; <b>\noquiet</b>, &nbsp;
+       then mathTeX replies&nbsp;"x" to the first error,
+       halting LaTeX immediately.
+       If your expression contains &nbsp;<b>\nquiet{<i>n</i>}</b>, &nbsp;
+       then mathTeX replies &lt;Enter&gt; to the first&nbsp;<i>n</i> errors,
+       and then replies&nbsp;"x". </dd>
+
+      <dt> <a name="depthdirective"> </a> <b>\depth</b> </dt>
+       <dd> The special &nbsp; <b>\depth</b> &nbsp; directive
+       signals mathTeX to emit an extra
+       <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html">
+       HTTP&nbsp;header&nbsp;field</a>, of the form
+       &nbsp;<b>Vertical-Align:&nbsp;&#150;<i>nn</i></b>&nbsp;,
+       where <b>&#150;<i>nn</i></b> is the number of pixels
+       (usually negative as illustrated) needed for a
+       &nbsp; <b>style="Vertical-Align:&nbsp;&#150;<i>nn</i>&nbsp;px"</b>
+       &nbsp; attribute in the <b>&lt;img&gt;</b>&nbsp;tag used to
+       render your expression.
+       The <a href="#valignment">vertical&nbsp;alignment</a> section
+       of this document discusses its use in more detail. </dd>
+
+      <dt> <a name="cachedirective"> </a>
+      <b>\cache</b> or <b>\nocache</b> </dt>
+       <dd> By default, mathTeX saves each new image
+       in its <a href="#cacheswitch">cache&nbsp;directory</a>,
+       rather than re-rendering the same image every time
+       the same expression is submitted.  But expressions
+       containing &nbsp; <b>\nocache</b> &nbsp; are not cached.
+       Expressions containing <b>\today</b> and/or
+       <a href="#timedirective">\time</a> are automatically
+       not cached.  Otherwise, include <b>\nocache</b> in your
+       expression if it contains volatile information that might
+       affect its appearance between renderings.
+       (The <b>\cache</b> directive forces the image of that
+       expression to be cached, but is usually unnecessary
+       since caching is the default.) </dd>
+
+      <dt> <a name="msgleveldirective"> </a>
+      <b>\msglevel{</b><i>verbosity</i><b>}</b> </dt>
+       <dd> To help debug problems that matheTeX's
+       <a href="#messages">error&nbsp;messages</a>
+       don't resolve, resubmit the same failed expression
+       with &nbsp; <b>\msglevel{9}</b> &nbsp; added. <br>
+            &nbsp; &nbsp; &nbsp; After it fails again,
+       login to a shell on your server, and
+       &nbsp; <b>cd&nbsp;cgi-bin/mathtex/</b> &nbsp; to
+       mathTeX's cache directory.  Then &nbsp;
+       <b>ls&nbsp;-alt|less</b> &nbsp; to see the most recent
+       files.  These should include &nbsp;
+       <i>yourexpression</i><b>.out</b> &nbsp;
+       (and <i>yourexpression</i><b>.gif</b> if an image was created),
+       where filename <i>yourexpression</i> is the 32-character
+       MD5&nbsp;hash of your failed expression. <br>
+            &nbsp; &nbsp; &nbsp; Now &nbsp; <b>cd&nbsp;..</b> &nbsp;
+       back up to your cgi-bin/ directory, and you should see a new
+       directory <b>cgi-bin/</b><i>yourexpression</i><b>/</b>
+       created by mathTeX. &nbsp; <b>cd</b> to it, and follow
+       the <a href="#commandlineerrors">command-line&nbsp;error</a>
+       instructions below.  When done, you should probably
+       &nbsp; <b>rm&nbsp;-r&nbsp;cgi-bin/</b><i>yourexpression</i><b>/</b>
+       &nbsp; which is no longer needed (ditto the .out and .gif files
+       in mathTeX's cache if you want to clean up completely). </dd>
+
+      <dt> <a name="whichdirective"> </a>
+      <b>\which{</b><i>programname</i><b>}</b> </dt>
+       <dd> mathTeX must be compiled with several
+       <a href="#pathswitches">&#150;D<i>switches</i></a>
+       that specify paths to its <a href="#dependencies">dependencies</a>.
+       If you can't determine these required paths, mathTeX's
+       &nbsp; <b>\which{</b><i>programname</i><b>}</b> &nbsp;
+       may provide some help (also see
+       <a href="#switchesdirective">\switches</a> below).
+       For example, <!-- on this machine, -->
+         <center><table border="1" cellpadding=3 cellspacing=0>
+           <tr align="center">
+             <td>directive</td> <td>renders</td> </tr>
+           <tr align="center">
+             <td> \which{latex} </td>
+             <td> <a href="#preview"> <img id="which1" onclick="eqntext('which1')"
+             src="../cgi-bin/mathtex.cgi?\which{latex}"
+             border=0> </a> </td> </tr>
+           <tr align="center">
+             <td> \which{dvipng} </td>
+             <td> <a href="#preview"> <img id="which2" onclick="eqntext('which2')"
+             src="../cgi-bin/mathtex.cgi?\which{dvipng}"
+             border=0> </a> </td> </tr>
+           <tr align="center">
+             <td> \which{dvips} </td>
+             <td> <a href="#preview"> <img id="which3" onclick="eqntext('which3')"
+             src="../cgi-bin/mathtex.cgi?\which{dvips}"
+             border=0> </a> </td> </tr>
+           <tr align="center">
+             <td> \which{convert} </td>
+             <td> <a href="#preview"> <img id="which4" onclick="eqntext('which4')"
+             src="../cgi-bin/mathtex.cgi?\which{convert}"
+             border=0> </a> </td> </tr>
+         </table></center>
+       displays known paths to mathTeX's dependencies, as they're
+       installed on this server.
+       However, there's a small "Catch-22" (circular logic that
+       may bite you)<b>:</b> mathTeX must already know these paths
+       before it runs the programs that display them.
+       You may be able to temporarily circumvent this
+       problem by compiling <br>
+    <pre style="margin-top:0;margin-bottom:0"
+>   <b>cc</b> mathtex.c <b>&#150;o</b> mathtex.cgi</pre>
+       without any required switches at all.  When compiled like this,
+       mathTeX uses <b>which</b> to determine the
+       required paths.  If they're found, then mathTeX will run
+       and display them<b>;</b>
+       if not, you'll likely see <a href="#message7">message&nbsp;7</a>
+       or <a href="#message9">message&nbsp;9</a> instead. <!-- br>
+            &nbsp; &nbsp; &nbsp; --> If mathTeX does run, and displays
+       the required paths, you should immediately re-compile it with
+       the required <a href="#pathswitches">&#150;D<i>switches</i></a>.
+       Execution time can be doubled, or even worse, when mathTeX
+       has to find these paths itself. <br>
+            &nbsp; &nbsp; &nbsp; When <b>\which{</b><i>programname</i><b>}</b>
+       can't find the path, mathTeX displays
+       <img src="../cgi-bin/mathtex.cgi?\parstyle\fbox{\footnotesize
+       which(programname) = not found}" align="middle" border=0> instead.
+       But mathTeX may also display
+       <img src="../cgi-bin/mathtex.cgi?\parstyle\fbox{\footnotesize
+       locate(programname) = /path/to/programname}" align="middle" border=0>,
+       signalling that Unix&nbsp;which failed.  In this case, mathTeX
+       searches your server's locate&nbsp;database, if it exists,
+       and displays that path instead.  The "not&nbsp;found" message
+       signals which and locate both failed. </dd>
+
+      <dt> <a name="switchesdirective"> </a>
+      <b>\switches</b> </dt>
+       <dd> Submitting the expression &nbsp; <b>\switches</b> &nbsp;
+       to mathTeX renders <center>
+       <a href="#preview"><img id="switch1" onclick="eqntext('switch1')"
+       src="../cgi-bin/mathtex.cgi?\switches" align="bottom"
+       border=0></a>&nbsp;<font size="+3"><b>,</b></font> </center>
+       displaying several (more will be added) of mathTeX's
+       <a href="#switches">compile-line&nbsp;switches</a>.
+       "Program&nbsp;image" isn't really a switch: it's the filename
+       of the running program, usually &nbsp; mathtex.cgi &nbsp;
+       unless you compiled it differently. <br>
+            &nbsp; &nbsp; &nbsp; "Paths" displays what mathTeX knows
+       about the full&nbsp;paths to its
+       <a href="#dependencies">dependencies</a>.  On the
+       right-hand&nbsp;side of each path is the source of that information.
+       There are four possible sources, listed in order of reliablility
+       (most reliable first):
+       <ul>
+        <li> <b>(switch)</b> &nbsp; means you compiled mathTeX with a
+          <a href="#pathswitches">&#150;D<i>switch</i></a> for that path.
+          You should always compile mathTeX with its
+          <a href="#dependencies">dependencies</a><b>:</b> &nbsp;
+          <b>&#150;DLATEX</b>, and either <b>&#150;DDVIPNG</b> or both
+          <b>&#150;DDVIPS</b>&nbsp;and&nbsp;<b>&#150;DCONVERT</b>.
+          When that's not possible, read
+          <a href="#whichdirective">\which{&nbsp;}</a> above
+          and temporarily compile mathTeX without them. </li>
+        <li> <b>(which)</b> &nbsp; means the corresponding
+          <a href="#pathswitches">&#150;D<i>switch</i></a> was not
+          supplied, but Unix&nbsp;which found the program.  If that's
+          latex or another of your
+          <a href="#dependencies">dependencies</a>, then re-compile
+          mathTeX with a &#150;D<i>switch</i> containing the displayed
+          information. </li>
+        <li> <b>(locate)</b> &nbsp; means Unix&nbsp;which failed,
+          but your server's locate&nbsp;database found the path.
+          Again, re-compile mathTeX if that's one of your
+          <a href="#dependencies">dependencies</a>. </li>
+        <li> <b>(default)</b> &nbsp; means no path information
+          was found.  A default path programmed into mathTeX is
+          displayed instead.  This default is frequently wrong.
+          In fact, <b>(default)</b> typically means that the
+          corresponding program isn't installed on your server at all.
+          In that case, if the program is one of your
+          <a href="#dependencies">dependencies</a>, you'll likely
+          see <a href="#message7">message&nbsp;7</a> or
+          <a href="#message9">message&nbsp;9</a> instead of the
+          \switches output illustrated above. </li>
+       </ul>
+       Either dvipng or dvips&nbsp;and&nbsp;convert
+       can render LaTeX's dvi output as gif or png images.
+       MathTeX's default choice is based on the reliablity of path
+       information to these programs<b>:</b> &nbsp; (switch)
+       is most reliable, followed by (which) or (locate),
+       rated equally, and finally (default) is least realiable.
+       If a (switch) path to dvipng is available (i.e., if you compiled
+       mathTeX with a &#150;DDVIPNG switch), then dvipng is default.
+       Otherwise, if (switch) paths to both dvips and convert are
+       available, then they're default.  Otherwise, (which) or (locate)
+       paths are preferred to (default), and dvipng wins a "tie".
+       </dd>
+
+      <dt> <a name="evaldirective"> </a>
+      <b>\eval{&nbsp;<i>expression</i>&nbsp;}</b> </dt>
+       <dd> mathTeX can evaluate arithmetic expressions,
+       which is a feature intended primarily for use in
+       <a href="#newcommandswitch">\newcommand</a>'s discussed below.
+       Expressions can be built up from the following elements
+       <ul>
+         <li> digits &nbsp; <b>0</b>-<b>9</b>
+           &nbsp; and numbers composed of uninterrupted (no whitespace)
+           sequences of digits, </li>
+         <li> binary operators &nbsp;
+           <b>+</b>,&nbsp;<b>-</b>,&nbsp;<b>*</b>,&nbsp;<b>/</b>,&nbsp;<b>%</b>
+           &nbsp; (<b>+</b>&nbsp;and&nbsp;<b>-</b> can be unary, preceding
+           the first number in an expression, and&nbsp;<b>%</b>&nbsp;is
+           the modulo operator), </li>
+         <li> balanced &nbsp; <b>(</b>&nbsp;...&nbsp;<b>)</b>
+           &nbsp; parentheses nested to any level (see below), </li>
+         <li> whitespace anywhere
+           (except between digits comprising a number), </li>
+         <li> also interpreted by <b>\eval{&nbsp;}</b>
+           is a construction similar to (but not identical to) the
+           <a href="http://wikipedia.org/wiki/Conditional_(programming)#As_a_ternary_operator"
+           target="_top">?:&nbsp;conditional</a>, as follows.
+           The expression <b>(i?v0:v1:v2:<i>etc</i>)</b>, usually
+           parenthesized as illustrated, evaluates to <b>v0</b>
+           if <b>i</b> evaluates to <b>0</b>, or evaluates to <b>v1</b>
+           if <b>i</b> evaluates to <b>1</b>, etc. If <b>i&nbsp;&lt;&nbsp;0</b>
+           then <b>v0</b> is used, and if <b>i</b> is too large, the last
+           <b>v</b> is used. All components, <b>i</b> and all <b>v</b>'s,
+           can themselves be expressions, even another
+           <b>(i?v0:v1:v2:<i>etc</i>)</b>, which in this case must be
+           parenthesized. The only situation where parentheses aren't
+           required is when <b>i?v0:v1:v2:<i>etc</i></b> comprises
+           your entire expression.
+           For example, <center>
+             <b>\eval{1+2?10:11:12:13:14:15}</b> renders
+            <a href="#preview"><img id="eval1" onclick="eqntext('eval1')"
+            src="../cgi-bin/mathtex.cgi?\large\eval{1+2?10:11:12:13:14:15}"
+            alt="" border=0 align=bottom></a></center> </li>
+         <li> and <u>&nbsp;most&nbsp;importantly,&nbsp;</u>
+             the built-in variable<br>
+             &nbsp; &nbsp; &nbsp; <b>fs</b> for current fontsize,<br>
+             &nbsp; &nbsp; &nbsp;
+             with 1=\tiny, 2=\scriptsize, ..., 10=\Huge,<br>
+           which provides the capability for useful constructions,
+           as follows... </li>
+       </ul>
+       All optional <b>[</b>&nbsp;</b>]</b> and mandatory
+       <b>{</b>&nbsp;</b>}</b> numeric arguments for &nbsp;
+       <b>\rule[<i>lift</i>]{<i>width</i>}{<i>height</i>}</b>, &nbsp;
+       <b>\raisebox{<i>lift</i>}[<i>height</i>][<i>depth</i>]{&nbsp;}</b>,
+       &nbsp; etc, &nbsp; can be <b>\eval{&nbsp;}</b>expressions as
+       described above, rather than just numeric constants. By using
+       the <b>fs</b> variable, you can construct
+       <a href="#newcommandswitch">\newcommand</a>
+       expressions that properly scale with font&nbsp;size.
+       For example,<br>
+       &nbsp; &nbsp; &nbsp;
+         <b>\small a\rule{1}{\eval{2*fs}pt}b</b> renders
+         <a href="#preview"><img id="eval2" onclick="eqntext('eval2')"
+         src="../cgi-bin/mathtex.cgi?\small a\rule{1}{\eval{2*fs}pt}b"
+         alt="" border=0 align=bottom></a> <br>
+       &nbsp; &nbsp; &nbsp;
+         <b>\large a\rule{1}{\eval{2*fs}pt}b</b> renders
+         <a href="#preview"><img id="eval3" onclick="eqntext('eval3')"
+         src="../cgi-bin/mathtex.cgi?\large a\rule{1}{\eval{2*fs}pt}b"
+         alt="" border=0 align=bottom></a> <br>
+       whose rendering automatically varies appropriately with
+       font&nbsp;size. This kind of
+       <a href="#newcommandswitch">\newcommand</a> construction
+       is the primary use intended for mathTeX's expression
+       evaluation feature. <br>
+       &nbsp; &nbsp; &nbsp;
+          But mathTeX also provides the <b>\eval{<i>expression</i>}</b>
+       command to make the expression evaluation feature render
+       &quot;visible&quot; results. It's not particularly useful,
+       but an expression like &nbsp; <b>1+2+3+4+5=\eval{1+2+3+4+5}</b> &nbsp;
+       renders &nbsp;
+        <a href="#preview"><img id="eval2" onclick="eqntext('eval2')"
+        src="../cgi-bin/mathtex.cgi?\small 1+2+3+4+5=\eval{1+2+3+4+5}"
+        alt="" border=0 align="bottom"></a>. <br>
+       &nbsp; &nbsp; &nbsp;
+          Finally, one little &quot;gotcha&quot; is mathTeX's
+       order&nbsp;of&nbsp;evaluation when interpreting expressions.
+       Parentheses are respected as you'd expect. But within
+       &nbsp; <b>(</b>...<b>)</b> &nbsp; parentheses, or in an
+       unparenthesized expression, mathTeX finds the first (reading
+       from the left) operator, then iteratively evaluates the
+       separate subexpressions to that operator's left and to its right,
+       and then finally combines those two separate results.
+       So an expression like <b>2*3+4</b>&nbsp;renders&nbsp;<b>14</b>,
+       and you need to write <b>(2*3)+4</b>&nbsp;to&nbsp;get&nbsp;<b>10</b>.
+       </dd>
+
+      <dt> <a name="timedirective"> </a>
+      <b>\time</b> </dt>
+       <dd> LaTeX's <b>\</b>today is usually sufficient for the
+       slow-paced world of print.  But you may want finer-grained
+       resolution for the faster-paced online world.  mathTeX provides
+       &nbsp; <b>\time</b> &nbsp; for this purpose, replacing it with
+       the current hh:mm:ss wherever it occurs.  The
+       <a href="#timestamp1">date/timestamp</a>
+       at the top of this document is rendered by mathTeX with an
+       expression like &nbsp;
+       "\parstyle\begin{center}\today\\\time\end{center}". &nbsp;
+       You can see the exact expression by clicking on
+       <a href="#timestamp1">that&nbsp;image</a>.
+       I'm not reproducing it here because mathTeX doesn't
+       cache images containing <b>\</b>today or <b>\</b>time.
+       So use &nbsp; <b>\time</b> &nbsp; sparingly because
+       every occurrence is re-rendered through LaTeX. </dd>
+
+      <dt> <a name="advertisementdirective"> </a>
+      <b>\advertisement</b> </dt>
+       <dd> An expression containing &nbsp; <b>\advertisement</b> &nbsp;
+       is displayed along with your
+       <a href="#adswitches">mathTeX&nbsp;advertisement</a>
+       rather than by itself, regardless of
+       <a href="#adfrequencyswitch">-DADFREQUENCY</a>. For example,
+       <center><table border="0">
+       <tr align="center"> <td>
+         <b><u> &nbsp; c=\sqrt{a^2+b^2} &nbsp; </u></b> </td>
+         <td> &nbsp; &nbsp; &nbsp; </td> <td>
+         <b><u> &nbsp; \advertisement c=\sqrt{a^2+b^2} &nbsp; </u></b>
+         </td> </tr>
+       <tr align="center"> <td>
+         <a href="#preview"><img id="addir1" onclick="eqntext('addir1')"
+         src="../cgi-bin/mathtex.cgi?c=\sqrt{a^2+b^2}"
+         alt="" border=0> </a> </td> <td> &nbsp; </td> <td>
+         <a href="#preview"><img id="addir2" onclick="eqntext('addir2')"
+         src="../cgi-bin/mathtex.cgi?\advertisement c=\sqrt{a^2+b^2}"
+         alt="" align="middle" border=0> </a> </td> </tr>
+       </table></center>
+       See <a href="#advertisementswitch">Advertisement</a>
+       to replace the default advertisement, illustrated above,
+       with your own. </dd>
+
+      <dt> <a name="versiondirective"> </a>
+      <b>\version</b> </dt>
+       <dd> An expression containing &nbsp; <b>\version</b> &nbsp;
+       is displayed along with mathTeX's current version number.
+       For example,
+       <center><table border="0">
+       <tr align="center"> <td>
+         <b><u> &nbsp; \version c=\sqrt{a^2+b^2} &nbsp; </u></b>
+         </td> </tr>
+       <tr align="center"> <td>
+         <a href="#preview"><img id="verdir1" onclick="eqntext('verdir1')"
+         src="../cgi-bin/mathtex.cgi?\version c=\sqrt{a^2+b^2}"
+         alt="" align="middle" border=0> </a> </td> </tr>
+       </table></center> </dd>
+
+      <dt> <a name="environmentdirective"> </a>
+      <b>\environment</b> </dt>
+       <dd> Submitting the expression &nbsp; <b>\environment</b> &nbsp;
+       to mathTeX renders <center>
+       <a href="#preview"><img id="environ1" onclick="eqntext('environ1')"
+       src="../cgi-bin/mathtex.cgi?\environment" align="bottom"
+       border=0></a></center>
+       displaying the http environment variables known to mathTeX.
+       This is primarily a programming aid, showing information
+       available to mathTeX that might facilitate future enhancements. </dd>
+     </dl>
+
+
+<!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ INSTALLATION AND TESTING
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+<h2 id="install"> (4) Installation and Testing &nbsp; </h2>
+<font color="maroon"><b>Note: The current release of mathTeX only runs <br>
+on Unix-like operating systems.</b></font> <br>
+    <table border="0" cellpadding="0" cellspacing="0">
+      <tr><td colspan=2><hr size="2">
+          Very quickly &nbsp; --- &nbsp;
+          First, install mathTeX's
+          <a href="#dependencies">dependencies</a>: </td></tr>
+      <tr><td> &nbsp; &nbsp; &nbsp; &nbsp; </td>
+          <td>a recent </b><a href="http://www.latex-project.org/ftp.html"
+          target="_top">TeX&nbsp;distribution</a>
+          with <a href="http://savannah.nongnu.org/projects/dvipng/"
+          target="_top">dvipng</a>,
+          <!-- and <a href="http://www.imagemagick.org"
+          target="_top">ImageMagick</a> --> <br>
+          on your server, or see
+          <a href="http://www.forkosh.com/mimetex.html"
+          target="_top">mimeTeX</a> if you can't. </td></tr>
+      <tr><td colspan=2>
+          Then, download
+          <a href="http://www.forkosh.com/mathtex.zip">mathtex.zip</a>
+          and type </td></tr>
+      <tr><td> &nbsp; &nbsp; &nbsp; &nbsp; </td>
+          <td><b>unzip mathtex.zip</b> <br>
+              <b>cc mathtex.c &#150;DLATEX=\"$(which latex)\" &nbsp; \ <br>
+              &nbsp; &#150;DDVIPNG=\"$(which dvipng)\" &nbsp; \ <br>
+              <!-- &nbsp; &#150;DCONVERT=\"$(which convert)\" &nbsp; \ <br -->
+              &nbsp; &#150;o mathtex.cgi</b> <br>
+              <nobr>(see
+              <a href="#pathswitches">&#150;D<i>switches</i></a>
+              below for more information). </nobr> </td></tr>
+      <tr><td colspan=2> Finally, </td></tr>
+      <tr><td> &nbsp; &nbsp; &nbsp; &nbsp; </td>
+          <td> <b>mv&nbsp;mathtex.cgi</b> &nbsp; to your
+               <b>cgi-bin/</b> directory, <br>
+               <!-- b>mkdir&nbsp;cgi-bin/mathtex/</b>
+               &nbsp; for mathTeX's cache, <br -->
+               <b>chmod</b> permissions as necessary,
+               and you're all done. </td></tr>
+      <tr><td colspan=2>
+        Read the rest of this section only if you want
+        more information.<hr size="2"></td>
+     </tr></table>
+
+<p class="continue"> mathTeX's source code is standard Unix C,
+    which should compile and run without change on
+    any posix-compliant Unix platform.
+    <font color="maroon"><b>The current release of mathTeX only
+    runs under Unix-like operating systems.</b></font>
+    <!-- Instructions below are for Unix.  Modify them as necessary
+    for your particular situation (note the -DWINDOWS switch if
+    applicable). -->
+    The three steps needed to compile, install and test
+    mathTeX are: </p>
+
+  <h3 style="margin-bottom:0;">
+  (1) Install LaTeX <!-- and ImageMagick, -->
+  and download mathTeX<font size=5>...</font> </h3>
+  <ul style="margin-top:0">
+   <li> First, make sure you have a recent <br>
+        <nobr> <b> &nbsp; &nbsp; &nbsp; &nbsp; </b>
+          <a href="http://www.latex-project.org/ftp.html"
+          target="_top">TeX&nbsp;distribution</a>
+          with <a href="http://savannah.nongnu.org/projects/dvipng/"
+          target="_top">dvipng</a>
+          installed on your server. </nobr> <br>
+        MathTeX's <a href="#dependencies">dependencies</a> are the
+        <a href="http://en.wikipedia.org/wiki/LaTeX"
+        target="_top">latex</a> and
+        <a href="http://en.wikipedia.org/wiki/Dvipng"
+        target="_top">dvipng</a>
+        programs, along with all necessary fonts, etc, from your
+        TeX&nbsp;distribution. <br>
+        <b> &nbsp; &nbsp; &nbsp; &nbsp; </b>
+             If you prefer to compile mathTeX with the optional
+        <a href="#dvipsswitch">&#150;DDVIPS&nbsp;and&nbsp;&#150;DCONVERT</a>
+        switches (<a href="#compilestep">Step&nbsp;2</a> immediately below),
+        then <a href="http://en.wikipedia.org/wiki/Dvips"
+        target="_top">dvips</a>
+        from your TeX&nbsp;distribution, and
+        <a href="http://www.imagemagick.org/script/convert.php"
+        target="_top">convert</a> from the
+        <a href="http://www.imagemagick.org" target="_top">ImageMagick</a>
+        package, are used instead of dvipng. <br>
+        <b> &nbsp; &nbsp; &nbsp; &nbsp; </b>
+             These  <a href="#dependencies">dependencies</a>
+        &#151; always latex and either dvipng or dvips/convert &#151;
+        must all be installed on your server
+        before you can run mathTeX.  Ask your ISP or sysadmin
+        if you have any questions or problems installing them.
+        Or see <a href="http://www.forkosh.com/mimetex.html"
+        target="_top">mimeTeX</a> if you can't install them.
+        </li>
+   <li> Then download and unzip 
+        <a href="http://www.forkosh.com/mathtex.zip">
+        mathtex.zip</a> in any convenient working directory.
+        Your working directory should now contain
+        <center> <table cellpadding=0 cellspacing=0>
+         <tr><td width=100>README</td> <td>mathTeX release notes</td></tr>
+          <tr><td>COPYING</td>    <td>GPL license, version 3, under which
+                                     you may use mathTeX</td></tr>
+          <tr><td>mathtex.c</td>  <td>mathTeX source program and all
+                                     required functions</td></tr>
+          <tr><td>mathtex.html</td> <td>this file, the mathTeX user
+                                     manual</td></tr>
+        </table> </center> </li>
+  </ul>
+
+  <h3 style="margin-bottom:0;"> <a name="compilestep"> </a>
+  (2) Compile mathTeX and test it
+  from the Unix shell<font size=5>...</font> </h3>
+  <ul style="margin-top:0">
+   <li> To compile a mathTeX executable that emits default
+        gif images generated by dvipng (recommended), just type <br>
+        <nobr><b> &nbsp; &nbsp; &nbsp; &nbsp;
+              cc &nbsp; mathtex.c &nbsp;
+              &#150;DLATEX=\"$(which latex)\" &nbsp; \ </b></nobr><br>
+        <nobr><b> &nbsp; &nbsp; &nbsp; &nbsp;
+              &#150;DDVIPNG=\"$(which dvipng)\" &nbsp;
+              &#150;o &nbsp; mathtex.cgi </b></nobr><br>
+        Alternatively, to compile a mathTeX executable that emits default
+        gif images generated by dvips/convert, just type <br>
+        <nobr><b> &nbsp; &nbsp; &nbsp; &nbsp;
+              cc &nbsp; mathtex.c &nbsp;
+              &#150;DLATEX=\"$(which latex)\" &nbsp; \ </b></nobr><br>
+        <nobr><b> &nbsp; &nbsp; &nbsp; &nbsp;
+              &#150;DDVIPS=\"$(which dvips)\" &nbsp;
+              &#150;DCONVERT=\"$(which convert)\" &nbsp; \ </b></nobr><br>
+        <nobr><b> &nbsp; &nbsp; &nbsp; &nbsp;
+              &#150;o &nbsp; mathtex.cgi </b></nobr><br>
+        But note that dvipng is easily twice as fast
+        as dvips/convert, and it produces somewhat smaller image files. <br>
+        &nbsp; &nbsp; &nbsp; &nbsp;
+             For default png (instead of gif) images, add the optional
+        <b>&#150;DPNG</b>&nbsp;switch to either <b>cc</b>&nbsp;command
+        above.  All of mathTeX's optional
+        <a href="#switches">compile-line&nbsp;switches</a> are discussed
+        below. <br>
+        &nbsp; &nbsp; &nbsp; &nbsp;
+             The <a href="#pathswitches">required&nbsp;switches</a>
+        shown above define paths to mathTeX's
+        <a href="#dependencies">dependencies</a>, either latex and dvipng,
+        or latex and dvips/convert.
+        See <a href="#pathswitches">required&nbsp;switches</a>&nbsp;below
+        for additional information about these path switches, including
+        discussion of that <b>$(which</b>&nbsp;<i>program</i><b>)</b>
+        construction.
+        <!-- If not explicitly supplied on the compile line,
+        they default to <br>
+        <nobr><b> &nbsp; &nbsp; &nbsp; &nbsp;
+              &#150;DLATEX=\"/usr/share/texmf/bin/latex\" </b></nobr> <br>
+        <nobr><b> &nbsp; &nbsp; &nbsp; &nbsp;
+              &#150;DDVIPNG=\"/usr/share/texmf/bin/dvipng\" </b></nobr> <br>
+        <nobr><b> &nbsp; &nbsp; &nbsp; &nbsp;
+              &#150;DCONVERT=\"/usr/bin/convert\" </b></nobr> <br> -->
+        </li>
+   <!-- li> Windows compile notes: <ul>
+        <li> If (and only if) you're compiling a Windows executable,
+        then add <b>&#150;DWINDOWS</b><br>
+             <nobr>&nbsp; &nbsp; &nbsp; &nbsp; <b>gcc -DWINDOWS
+             mathtex.c &#150;o mathtex.exe</b></nobr> <br>
+        The above Unix-like syntax works with
+        <a href="http://www.mingw.org" target="_top">MinGW</a> and
+        <a href="http://www.delorie.com/djgpp/" target="_top">djgpp</a>
+        Windows compilers, but probably not with most others,
+        where it's only intended as a "template". </li>
+        </ul> <br> </li -->
+   <li> Immediately after compiling mathTeX, test it
+        from the Unix shell by typing <br>
+        <nobr><b> &nbsp; &nbsp; &nbsp; &nbsp;
+              ./mathtex.cgi &nbsp; "x^2+y^2" &nbsp; &#150;m 9
+              &nbsp; &#150;o test </b></nobr> <br>
+        at the command prompt.  After the copyright notice,
+        screen output should look something like
+    <pre class="medium" style="margin-top:0;margin-bottom:0;">
+    mathTeX> running image:     ./mathtex.cgi
+    mathTeX> input expression:  "x^2+y^2"
+    mathTeX> working directory: 8dfaf8281769c217b7e78b27a4747285/
+    mathTeX> output image file: test.gif </pre>
+        Bring up the output&nbsp;file <b>test.gif</b> in your browser,
+        which should display the rendered image of <b>x^2+y^2</b>.
+        If it does, you can <b>rm&nbsp;-r</b> that working directory
+        and proceed to the next (Install) step.
+        If not, there's some error that <b>_must_</b> be fixed before
+        proceeding<b>:</b> mathTeX is not going to emit gifs from
+        your server if it won't run from the command line. <br>
+        <font color="maroon"> <a name="commandlineerrors"> </a>
+        <b>To troubleshoot command-line errors...</b></font>
+        <ul>
+        <li> First, &nbsp; <b>cd&nbsp;8dfaf8281769c217b7e78b27a4747285/</b>
+         &nbsp; to that working&nbsp;directory (whose name is the
+         32-character MD5 hash of your expression)
+         shown on the screen output above. </li>
+        <li> If it's not an empty file, &nbsp; <b>view&nbsp;latex.err</b>
+         &nbsp; A message something like
+         &nbsp; <b>latex:&nbsp;command&nbsp;not&nbsp;found</b> &nbsp;
+         probably means that your
+         &nbsp; <b>&#150;DLATEX=\"path/to/latex\"</b> &nbsp;
+         is wrong, or that latex is installed wrong.
+         Fix that, or any other indicated error, and then
+         re-compile mathTeX and test it again. </li>
+        <li> Otherwise, if latex.err is empty, then
+         &nbsp; <b>view&nbsp;latex.out</b> &nbsp; which
+         contains runtime messages issued by latex,
+         including messages reporting unresolved errors.
+         For example, <b>\usepackage{junk}</b> reports the error
+         <b>File&nbsp;`junk.sty'&nbsp;not&nbsp;found.</b> &nbsp;
+         Find and fix any reported errors, and then
+         re-compile mathTeX and test it again. </li>
+        <li> If latex.err and latex.out contain no errors,
+         then latex.dvi should contain the dvi image of
+         your expression.  Check it with <b>xdvi</b> or any
+         other dvi&nbsp;viewer supplied with your latex distribution.
+         Then view dvipng.err and dvipng.out for any reported errors
+         (note that dvipng emits a benign copyright message to dvipng.out).
+         <!-- Then view dvips.err and dvips.out for any reported errors
+         (note that dvips emits a benign copyright message to dvips.err),
+         and check dvips.ps with <b>gv</b> or any other
+         postscript viewer.  Finally, view convert.err and convert.out
+         for any reported errors. --> </li>
+        <li> You should have found some error along the way.
+         Troubleshoot as necessary.
+         Your most likely (and most obvious) problems are:
+         <a href="#dependencies">mathTeX's&nbsp;dependencies</a>
+         are installed incorrectly or not at all, you compiled
+         mathtex.cgi with the wrong paths (check <b>which</b>'s
+         output), or you don't have rw permissions in the directory
+         you're testing from. </li>
+        </ul> </li>
+  </ul>
+
+  <h3 style="margin-bottom:0;">
+  (3) Install mathTeX and test it from a browser<font size=5>...</font> </h3>
+  <ul style="margin-top:0">
+   <li> Install your compiled mathtex.cgi executable only after
+        successfully testing it from the Unix shell.  Just <br>
+        <nobr><b> &nbsp; &nbsp; &nbsp; &nbsp;
+              mv&nbsp;mathtex.cgi</b> &nbsp; to your web server's
+              <b>cgi-bin/</b> directory, </nobr> <br>
+        <!-- nobr><b> &nbsp; &nbsp; &nbsp; &nbsp;
+              mkdir&nbsp;cgi-bin/mathtex/</b>
+              &nbsp; for mathTeX's cache, </nobr> <br -->
+        <nobr><b> &nbsp; &nbsp; &nbsp; &nbsp;
+              chmod</b> permissions as necessary,
+              and you're all done. </nobr> <br>
+        <b>cgi-bin/mathtex.cgi</b> must be executable by your web server,
+        and it must have <b>rw</b> permissions in the <b>cgi-bin/</b>
+        directory where it's installed.  The first time it runs,
+        mathtex.cgi will <b>mkdir&nbsp;mathtex/</b>, where rendered
+        images are subsequently cached.  Permissions and ownerships
+        must be set to allow this.
+        <!-- and the <b>cgi-bin/mathtex/</b> cache directory must be <b>rw</b>
+        by mathtex.cgi. --> <b>chmod&nbsp;755</b> typically works,
+        <!-- for both, --> but ask your ISP or sysadmin if you have
+        any questions or problems. </li>
+   <li> Immediately after installation, type a url into your browser's
+        locator window something like <br>
+        &nbsp; &nbsp; &nbsp; &nbsp;
+     <b>http://www.</b><i>yourdomain</i><b>.com/cgi-bin/mathtex.cgi?\message</b> <br>
+        which should display <a href="#message1">message&nbsp;1</a><br>
+        &nbsp; &nbsp; &nbsp; &nbsp;
+        <img src="../cgi-bin/mathtex.cgi?\message" alt="" border=0
+        align=middle> <br>
+        in the upper-left corner of your window.  If, instead, you see
+        <a href="#message0a">Not&nbsp;Found</a> or
+        <a href="#message0b">Error&nbsp;500</a> emitted by your server,
+        then mathTeX isn't running.  Check that you installed
+        it in the correct directory, set its permissions properly, etc. </li>
+   <li> The preceding test just checked that mathtex.cgi runs from
+        your server.  This current test checks that your &#150DLATEX, etc,
+        paths are correct, and that mathtex.cgi has rw permissions in your
+        cgi-bin/ directory.  Type a url into your browser's locator
+        window something like <br>
+        &nbsp; &nbsp; &nbsp; &nbsp;
+     <b>http://www.</b><i>yourdomain</i><b>.com/cgi-bin/mathtex.cgi?x^2+y^2</b> <br>
+        which should display &nbsp;
+        <img src="../cgi-bin/mathtex.cgi?x^2+y^2" alt="" border=0
+        align=middle> &nbsp; in the upper-left corner of your window,
+        just like clicking this link does, which tests my mathtex.cgi, <br>
+        &nbsp; &nbsp; &nbsp; &nbsp;
+        <a href="http://www.forkosh.com/cgi-bin/mathtex.cgi?x^2+y^2"
+        target="_top">http://www.forkosh.com/cgi-bin/mathtex.cgi?x^2+y^2</a>
+        <br> If you see the same image from your own
+        &nbsp; <i>yourdomain</i> &nbsp; link, then you've completed
+        a successful mathTeX installation. <br>
+        &nbsp; &nbsp; &nbsp; &nbsp;
+             Otherwise, you'll probably see one of mathTeX's
+        <a href="#messages">error&nbsp;messages</a> illustrated below.
+        Read the accompanying description, and try to resolve the
+        problem accordingly. </li>
+  </ul>
+
+<h3> <a name="messages"> </a>
+Run-time error messages<font size=5>...</font></h3>
+ <p> Gif images for 15 messages are embedded in mathTeX,
+     displayable so long as mathtex.cgi can run from your server,
+     even without latex and without rw permissions
+     in your cgi-bin/ directory.  In addition, your server may display
+     the first two messages below if mathtex.cgi can't run.
+     Any embedded mathTeX message can be intentionally displayed
+     by submitting an expression containing the
+     special mathTeX directive <b>\message{1}</b> through
+     <b>\message{15}</b> (an out-of-bounds argument, or
+     <b>\message</b> with no argument, displays message&nbsp;<b>1</b>).
+     Otherwise, various errors signal "unintentional" displays of
+     the corresponding message, e.g., if your &#150;DLATEX&nbsp;switch
+     specifies the wrong path to latex, then you'll see
+     <a href="#message7">message&nbsp;7</a> (unless some earlier
+     error supercedes it). </p>
+     <center> <table cellspacing=0 cellpadding=2 width="95%" border=0>
+      <tr> <td align="center">
+         <u><b> &nbsp; &nbsp; Message &nbsp; &nbsp; </b></u> </td>
+         <td align="center">
+         <u><b> &nbsp; &nbsp; Description &nbsp; &nbsp; </b></u> </td> </tr>
+      <tr> <td> <a name="message0a"> </a> </td> </tr>
+      <tr> <!-- maybe tr valign="top" --> <td align="center">
+         <b>The requested URL was not found.</b> </td>
+         <td class="paragraph" align="left">
+         You typed the wrong url, or mathtex.cgi is not
+         installed where you think it is.
+         </td> </tr>
+      <tr> <td> <a name="message0b"> </a> </td> </tr>
+      <tr> <td align="center">
+         <b>Internal server error 500</b> </td>
+         <td class="paragraph" align="left">
+         If mathtex.cgi's permissions are chmod'ed improperly,
+         if your account isn't set up to run cgi's, etc,
+         then mathTeX will not run at all.
+         You'll probably see this error message emitted by your
+         server instead.
+         </td> </tr>
+      <tr> <td> <a name="message1"> </a> </td> </tr>
+      <tr> <td align="center">
+         <img src="../cgi-bin/mathtex.cgi?\message{1}"
+         alt="" align="middle" border=0> </td>
+         <td class="paragraph" align="left">
+         Immediately after installing mathtex.cgi
+         to your cgi-bin/ directory, type a url of the form <br>
+         <nobr> &nbsp; &nbsp; <font size="-1"><b><i>yourdomain</i>.com/cgi-bin/mathtex.cgi?\message</b></font></nobr> <br>
+         into your browser.  You should see this message.
+         It means mathtex.cgi ran successfully,
+         its permissions are set properly, and the account hosting
+         <i>yourdomain</i> can run cgi's.
+         </td> </tr>
+      <tr> <td> <a name="message2"> </a> </td> </tr>
+      <tr> <td align="center">
+         </a><img src="../cgi-bin/mathtex.cgi?\message{2}"
+         alt="" align="middle" border=0> </td>
+         <td class="paragraph" align="left">
+         Traps any otherwise unidentified error condition.
+         </td> </tr>
+      <tr> <td> <a name="message3"> </a> </td> </tr>
+      <tr> <td align="center">
+         <img src="../cgi-bin/mathtex.cgi?\message{3}"
+         alt="" align="middle" border=0> </td>
+         <td class="paragraph" align="left">
+         The combination of permissions/ownerships on mathtex.cgi itself,
+         and on the cgi-bin/ directory where it's installed, prohibit mathTeX
+         from creating its cache directory mathtex/ underneath
+         cgi-bin/.  Change permissions/ownerships as needed.
+         </td> </tr>
+      <tr> <td> <a name="message4"> </a> </td> </tr>
+      <tr> <td align="center">
+         <img src="../cgi-bin/mathtex.cgi?\message{4}"
+         alt="" align="middle" border=0> </td>
+         <td class="paragraph" align="left"> Same problem
+         as <a href="#message3">message&nbsp;3</a> above,
+         except this time mathTeX can't create a temporary
+         work directory under cgi-bin/.
+         </td> </tr>
+      <tr> <td> <a name="message5"> </a> </td> </tr>
+      <tr> <td align="center">
+         <img src="../cgi-bin/mathtex.cgi?\message{5}"
+         alt="" align="middle" border=0> </td>
+         <td class="paragraph" align="left">
+         Unanticipated error.  MathTeX should be able to
+         cd to a directory it just created.
+         </td> </tr>
+      <tr> <td> <a name="message6"> </a> </td> </tr>
+      <tr> <td align="center">
+         <img src="../cgi-bin/mathtex.cgi?\message{6}"
+         alt="" align="middle" border=0> </td>
+         <td class="paragraph" align="left">
+         Unanticipated error.  MathTeX should be able to
+         open a file (for write) in a directory it just created.
+         </td> </tr>
+      <tr> <td> <a name="message7"> </a> </td> </tr>
+      <tr> <td align="center">
+         <img src="../cgi-bin/mathtex.cgi?\message{7}"
+         alt="" align="middle" border=0> </td>
+         <td class="paragraph" align="left">
+         Either latex is not installed,
+         or your <b>&#150;DLATEX</b> path to it is incorrect.
+         It's also possible that the shell host on which you compiled
+         mathTeX has different volumes or mount points than your server
+         (see <a href="#pathswitches">path&nbsp;switches</a>).
+         Check with your ISP or sysadmin, or try mathTeX's
+         <a href="#whichdirective">\which&nbsp;directive</a>.
+         </td> </tr>
+      <tr> <td> <a name="message8"> </a> </td> </tr>
+      <tr> <td align="center">
+         <img src="../cgi-bin/mathtex.cgi?\message{8}"
+         alt="" align="middle" border=0> </td>
+         <td class="paragraph" align="left">
+         A simple latex error, like \alfa instead of \alpha,
+         should not cause this problem (unless your expression
+         contains <a href="#quietdirective">\noquiet</a>).
+         It's more likely caused by a missing font or package,
+         etc.  Simplify your expression until it works, and see
+         if that helps identify the cause.  Or add
+         <a href="#msgleveldirective">\msglevel{9}</a>
+         to your expression, and check files latex.out and latex.err
+         for error messages.
+         </td> </tr>
+      <tr> <td> <a name="message9"> </a> </td> </tr>
+      <tr> <td align="center">
+         <img src="../cgi-bin/mathtex.cgi?\message{9}"
+         alt="" align="middle" border=0> </td>
+         <td class="paragraph" align="left">
+         Either dvipng is not installed,
+         or your <b>&#150;DDVIPNG</b> path to it is incorrect.
+         Also see the remark in <a href="#message7">message&nbsp;7</a>.
+         </td> </tr>
+      <tr> <td> <a name="message10"> </a> </td> </tr>
+      <tr> <td align="center">
+         <img src="../cgi-bin/mathtex.cgi?\message{10}"
+         alt="" align="middle" border=0> </td>
+         <td class="paragraph" align="left">
+         Rerun the same expression with
+         <a href="#msgleveldirective">\msglevel{9}</a>
+         added.  Then check files latex.out and latex.err,
+         and dvipng.out and dvipng.err for any clues to
+         the cause of this error.
+         </td> </tr>
+      <tr> <td> <a name="message11"> </a> </td> </tr>
+      <tr> <td align="center">
+         <img src="../cgi-bin/mathtex.cgi?\message{11}"
+         alt="" align="middle" border=0> </td>
+         <td class="paragraph" align="left">
+         Either dvips is not installed,
+         or your <b>&#150;DDVIPS</b> path to it is incorrect.
+         Also see the remark in <a href="#message7">message&nbsp;7</a>.
+         </td> </tr>
+      <tr> <td> <a name="message12"> </a> </td> </tr>
+      <tr> <td align="center">
+         <img src="../cgi-bin/mathtex.cgi?\message{12}"
+         alt="" align="middle" border=0> </td>
+         <td class="paragraph" align="left">
+         Rerun the same expression with
+         <a href="#msgleveldirective">\msglevel{9}</a>
+         added.  Then check files latex.out and latex.err,
+         and dvips.out and dvips.err for any clues to
+         the cause of this error.
+         </td> </tr>
+      <tr> <td> <a name="message13"> </a> </td> </tr>
+      <tr> <td align="center">
+         <img src="../cgi-bin/mathtex.cgi?\message{13}"
+         alt="" align="middle" border=0> </td>
+         <td class="paragraph" align="left">
+         Either convert is not installed,
+         or your <b>&#150;DCONVERT</b> path to it is incorrect.
+         Also see the remark in <a href="#message7">message&nbsp;7</a>.
+         </td> </tr>
+      <tr> <td> <a name="message14"> </a> </td> </tr>
+      <tr> <td align="center">
+         <img src="../cgi-bin/mathtex.cgi?\message{14}"
+         alt="" align="middle" border=0> </td>
+         <td class="paragraph" align="left">
+         Rerun the same expression with
+         <a href="#msgleveldirective">\msglevel{9}</a>
+         added.  Then check files latex.out and latex.err,
+         dvips.out and dvips.err, and convert.out and
+         convert.err for any clues to the cause of this error.
+         </td> </tr>
+      <tr> <td> <a name="message15"> </a> </td> </tr>
+      <tr> <td align="center">
+         <img src="../cgi-bin/mathtex.cgi?\message{15}"
+         alt="" align="middle" border=0> </td>
+         <td class="paragraph" align="left">
+         An image file was apparently created successfully,
+         but is now inaccessible to mathTeX.  Rerun the same
+         expression.  If it fails again, rerun it with
+         <a href="#msgleveldirective">\msglevel{9}</a>
+         added.  Then check all .out and .err files
+         for any clues to the cause of this error.
+         </td> </tr>
+      </table> </center>
+
+<h3> <a name="switches"> </a>
+Compile-line switches<font size=5>...</font></h3>
+
+     <dl>
+      <dt> <a name="pathswitches"> </a> <font color="black">
+      <b>Required switches</b><font size=5>...</font></font> <br> </dt>
+       <dd style="margin-left:0em;">
+       &nbsp; &nbsp; &nbsp;
+            MathTeX's required <b>&#150;D</b> switches
+       specify paths to the programs it needs to render
+       LaTeX expressions as images.  Your Unix <b>PATH</b> environment
+       variable usually contains the directories where these programs
+       reside.  And in that case, the Unix shell command
+       &nbsp; <b>which</b>&nbsp;<i>progname</i> &nbsp; emits the
+       string &nbsp; <i>/path/to/progname</i>. <br>
+       &nbsp; &nbsp; &nbsp;
+            Then you can manually copy <b>which</b>'s
+       output to the switch, e.g., if &nbsp; <b>which&nbsp;latex</b>
+       &nbsp; emits &nbsp; <b>/usr/bin/latex</b> &nbsp;
+       then just write the switch &nbsp;
+       <b>&#150;DLATEX=\"/usr/bin/latex\"</b> &nbsp;
+       Alternatively, you can use the Unix shell's
+       &nbsp; <b>$(&nbsp;)</b> &nbsp; construction to automatically
+       pipe <b>which</b>'s output into the switch, e.g., &nbsp;
+       <b>&#150;DLATEX=\"$(which&nbsp;latex)\"</b> &nbsp;
+       automatically places that same path to latex between the
+       literal <b>\"&nbsp;&nbsp;\"</b> quotes. <br>
+       &nbsp; &nbsp; &nbsp;
+            If <b>which</b> doesn't work, you must nevertheless
+       make sure that latex and mathTeX's other
+       <a href="#dependencies">dependencies</a> are all installed
+       on your server.  Then determine the proper paths to them
+       yourself (ask your ISP or sysadmin, or try mathTeX's
+       <a href="#whichdirective">\which&nbsp;directive</a>),
+       and manually write mathTeX's required <b>&#150;D</b>
+       switches as described above.<br>
+       &nbsp; &nbsp; &nbsp;
+            Occasionally, <b>which</b> may seem
+       to work, but actually doesn't, because your shell account
+       and internet server are hosted on different machines,
+       with different volumes mounted and/or different mount
+       points.  When this happens, server volumes are
+       nfs-mounted by your shell machine, so you can work
+       on your internet files.  Conversely, shell volumes aren't
+       necessarily mounted by the server, so latex could be
+       visible from your shell but not from the server.
+       Check with your ISP or sysadmin about network topology
+       if you suspect something like this, or mathTeX's
+       <a href="#whichdirective">\which&nbsp;directive</a>
+       may help.  In any case,
+       mathTeX's <a href="#dependencies">dependencies</a>,
+       latex and either dvipng or dvips/convert, must be
+       available to your server, and you must compile
+       mathtex.cgi with their paths on your server. </dd>
+
+      <dt> <b>&#150;DLATEX=\"/</b><i>path</i><b>/</b><i>to</i><b>/latex\" <br>
+      &#150;DDVIPNG=\"/</b><i>path</i><b>/</b><i>to</i><b>/dvipng\" </b> </dt>
+       <dd> mathTeX always requires the <b>&#150;DLATEX</b>&nbsp;switch,
+       and its recommended default (using
+       <a href="http://en.wikipedia.org/wiki/Dvipng"
+       target="_top">dvipng</a> to render
+       latex's dvi output as gif or png images)
+       also requires the <b>&#150;DDVIPNG</b>&nbsp;switch.
+       So your standard <b>cc</b> command to compile mathTeX looks like <br>
+       &nbsp; &nbsp; &nbsp;
+         <b> cc &nbsp; mathtex.c &nbsp; \ </b> <br>
+       &nbsp; &nbsp; &nbsp; &nbsp;
+         <b> &#150;DLATEX=\"$(which latex)\" &nbsp; \ </b> <br>
+       &nbsp; &nbsp; &nbsp; &nbsp;
+         <b> &#150;DDVIPNG=\"$(which dvipng)\" &nbsp; \ </b> <br>
+       &nbsp; &nbsp; &nbsp; &nbsp;
+         <b> &#150;o &nbsp; mathtex.cgi </b> <br>
+       </dd>
+
+      <dt> <a name="dvipsswitch"> </a>
+      <b>&#150;DDVIPS=\"/</b><i>path</i><b>/</b><i>to</i><b>/dvips\" <br>
+      &#150;DCONVERT=\"/</b><i>path</i><b>/</b><i>to</i><b>/convert\" </b> </dt>
+       <dd> If you can't (or don't want to) use dvipng, 
+       then compile mathTeX with the <b>&#150;DDVIPS</b> and
+       <b>&#150;DCONVERT</b>&nbsp;switches (instead of &#150;DDVIPNG).
+       Then
+       <a href="http://en.wikipedia.org/wiki/Dvips" target="_top">dvips</a>
+       from your <a href="http://www.latex-project.org/ftp.html"
+       target="_top">TeX&nbsp;distribution</a>, and
+       <a href="http://www.imagemagick.org/script/convert.php"
+       target="_top">convert</a> from the
+       <a href="http://www.imagemagick.org" target="_top">ImageMagick</a>
+       package, are used (instead of dvipng) to render latex's dvi output
+       as gif or png images.
+       In this case, your <b>cc</b> command to compile mathTeX looks like <br>
+       &nbsp; &nbsp; &nbsp;
+         <b> cc &nbsp; mathtex.c &nbsp; \ </b> <br>
+       &nbsp; &nbsp; &nbsp; &nbsp;
+         <b> &#150;DLATEX=\"$(which latex)\" &nbsp; \ </b> <br>
+       &nbsp; &nbsp; &nbsp; &nbsp;
+         <b> &#150;DDVIPS=\"$(which dvips)\" &nbsp; \ </b> <br>
+       &nbsp; &nbsp; &nbsp; &nbsp;
+         <b> &#150;DCONVERT=\"$(which convert)\" &nbsp; \ </b> <br>
+       &nbsp; &nbsp; &nbsp; &nbsp;
+         <b> &#150;o &nbsp; mathtex.cgi </b> <br>
+       Finally, if all three programs (dvipng and dvips and convert)
+       are installed on your server, you can compile mathTeX with all
+       the <b>&#150;D</b>&nbsp;switches.  This defaults to dvipng,
+       but permits users to submit expressions containing the special
+       <a href="#dvipsdirective">\dvips</a> and
+       <a href="#dvipsdirective">\dvipng</a> directives, regardless of
+       mathTeX's default.  So a comprehensive <b>cc</b> command looks
+       like <br>
+       &nbsp; &nbsp; &nbsp;
+         <b> cc &nbsp; mathtex.c &nbsp; \ </b> <br>
+       &nbsp; &nbsp; &nbsp; &nbsp;
+         <b> &#150;DLATEX=\"$(which latex)\" &nbsp; \ </b> <br>
+       &nbsp; &nbsp; &nbsp; &nbsp;
+         <b> &#150;DDVIPNG=\"$(which dvipng)\" &nbsp; \ </b> <br>
+       &nbsp; &nbsp; &nbsp; &nbsp;
+         <b> &#150;DDVIPS=\"$(which dvips)\" &nbsp; \ </b> <br>
+       &nbsp; &nbsp; &nbsp; &nbsp;
+         <b> &#150;DCONVERT=\"$(which convert)\" &nbsp; \ </b> <br>
+       &nbsp; &nbsp; &nbsp; &nbsp;
+         <b> &#150;o &nbsp; mathtex.cgi </b> <br>
+       along with any other optional switches you choose
+       from those described below, </dd>
+
+      <dt> <a name="optionalswitches"> </a> <font color="black">
+      <b>Optional switches</b><font size=5>...</font></font> <br> </dt>
+       <dd style="margin-left:0em;">
+       &nbsp; &nbsp; &nbsp;
+            In addition to the &#150;DLATEX and &#150;DDVIPNG
+       switches required on the mathTeX's compile line, as discussed above,
+       you may also include the following optional <b>&#150;D</b> switches,
+       whose functionality is discussed below.  Whenever a switch takes
+       a value, its <font color="maroon"><b>default&nbsp;value</b></font>
+       is illustrated.  An
+       <font color="maroon"><i>italicized&nbsp;value</i></font>
+       means there is no default. </dd>
+
+      <dt> <a name="cacheswitch"> </a> <b>&#150;DCACHE=\"mathtex/\"</b> </dt>
+       <dd> By default, mathTeX saves each new image it renders
+       to a file in directory &nbsp; <b>mathtex/</b> &nbsp; (relative
+       to the cgi-bin/ directory where you installed mathtex.cgi).
+       Then, every time it's given the same expression, mathTeX
+       reads that file rather than re-rendering the same image.
+       You can specify any other cache directory with the &nbsp;
+       <b>&#150;DCACHE=\"</b><i>path</i><b>/\"</b> &nbsp; switch.
+       Either way, mathTeX's cache directory must be read/writable by
+       it, so set permissions (typically chmod&nbsp;755) as necessary. <br>
+       &nbsp; &nbsp; &nbsp; mathTeX occasionally disables caching,
+       e.g., expressions containing <b>\today</b> are
+       always re-rendered since the date may have changed.
+       Otherwise, caching is mandatory and cannot be disabled. <br>
+       &nbsp; &nbsp; &nbsp; Cached image files are named
+       <i>filename</i><b>.gif</b> or <i>filename</i><b>.png</b>,
+       where <i>filename</i> is the 32-character MD5 hash of the
+       LaTeX expression.  When caching a new image, mathTeX also
+       updates the file <i>path</i><b>/mathtex.log</b> containing
+       a timestamp, filename, LaTeX expression, and http&nbsp;referer
+       for each new file created.  A sample entry looks like
+<pre>---------------------------------------------------------------------
+2007-10-11:09:00:53am            f8ccc8dd93c8eeb1d9c40b353ef781e0.gif
+\LARGE x=\frac{-b\pm\sqrt{b^2-4ac}}{2a}
+http://www.forkosh.com/mathtex.html
+---------------------------------------------------------------------</pre></dd>
+
+      <dt> <a name="gifswitch"> </a><b>&#150;DGIF</b>
+      &nbsp; or &nbsp; <b>&#150;DPNG</b> </dt>
+       <dd> mathTeX generates gif or png images.  Users can specify
+       which format they want by including a 
+       <a href="#gifdirective"><b>\gif</b>&nbsp;or&nbsp;<b>\png</b></a>
+       mathTeX&nbsp;directive in submitted
+       expressions.  Otherwise, mathTeX's default is specified at
+       compile time by a &nbsp; <b>&#150;DGIF</b> &nbsp; or
+       &nbsp; <b>&#150;DPNG</b> &nbsp; switch.  If a submitted expression
+       contains neither directive, and if mathTeX was compiled with
+       neither switch, then gif is the default. </dd>
+
+      <dt> <a name="styleswitch"> </a> <b>&#150;DDISPLAYSTYLE</b>
+      &nbsp; or &nbsp;  <b>&#150;DTEXTSTYLE</b>
+      &nbsp; or &nbsp; <b>&#150;DPARSTYLE</b> </dt>
+       <dd> mathTeX's default wraps user expressions inside
+       &nbsp; <b>\[&nbsp;&nbsp;\]</b>, &nbsp; rendering
+       generated images in LaTeX's <b>\</b>displaystyle math mode.
+       The &nbsp; <b>&#150;DTEXTSTYLE</b> &nbsp; switch wraps expressions
+       inside &nbsp; <b>$&nbsp;&nbsp;$</b>, &nbsp; rendering
+       generated images in LaTeX's <b>\</b>textstyle math mode.
+       And the &nbsp; <b>&#150;DPARSTYLE</b> &nbsp; switch
+       leaves expressions unwrapped, rendering
+       generated images in LaTeX's default paragraph mode.
+       Users can override any compiled default with a mathTeX
+       <a href="#styledirective">style&nbsp;directive</a>. </dd>
+
+      <dt> <a name="fontsizeswitch"> </a> <b>&#150;DFONTSIZE=5</b> </dt>
+       <dd> You can specify &nbsp; <b>&#150;DFONTSIZE=1</b> &nbsp;
+       thru &nbsp; <b>&#150;DFONTSIZE=10</b> &nbsp; on mathTeX's
+       compile line, corresponding to default LaTeX font sizes
+       <b>\</b>tiny thru <b>\</b>Huge.  If no switch is supplied,
+       the default&nbsp;<b>5</b> corresponds to <b>\</b>normalsize.
+       Users can override any compiled default with a mathTeX
+       <a href="#fontsizedirective">\tiny...\Huge&nbsp;directive</a>. </dd>
+
+      <dt> <a name="dpiswitch"> </a> <b>&#150;DDPI=\"120\"</b> </dt>
+       <dd> The &nbsp; <b>&#150;DPI</b> &nbsp; switch changes mathTeX's
+       default <a href="#dpidirective">screen&nbsp;resolution</a>
+       of <b>\"120\"</b> dots-per-inch, which you enter as a string.
+       <a href="#dpidirective">Some&nbsp;samples</a>
+       are illustrated above. </dd>
+
+      <dt> <a name="gammaswitch"> </a> <b>&#150;DGAMMA=\"2.5\"</b> </dt>
+       <dd> The &nbsp; <b>&#150;DGAMMA</b> &nbsp; switch changes mathTeX's
+       default <a href="#gammadirective">gamma&nbsp;correction</a>
+       of <b>\"2.5\"</b>&nbsp;(for&nbsp;dvipng), which you enter
+       as a string.  <a href="#gammadirective">Some&nbsp;samples</a>
+       are illustrated above. </dd>
+
+      <dt> <a name="quietswitch"> </a>
+      <b>&#150;DQUIET</b> &nbsp; &nbsp; or <br>
+      <b>&#150;DNOQUIET</b> &nbsp; &nbsp; or <br>
+      <b>&#150;DNQUIET=</b><i>n</i> </dt>
+       <dd> If any "!&nbsp;LaTeX&nbsp;Error:" is emitted while
+       processing your expression, mathTeX's default replies
+       &lt;Enter&gt; to the first three errors, and then
+       replies&nbsp;"x", halting LaTeX before it produces a&nbsp;.dvi file.
+       Compiling mathTeX with &nbsp; <b>&#150;DQUIET</b> &nbsp;
+       replies&nbsp;"q" to the first error, making LaTeX enter batchmode,
+       whereas compiling with &nbsp; <b>&#150;DNOQUIET</b> &nbsp;
+       replies&nbsp;"x" to the first error, halting LaTeX immediately.
+       Compiling mathTeX with &nbsp; <b>&#150;DNQUIET=</b><i>n</i> &nbsp;
+       replies &lt;Enter&gt; to the first&nbsp;<i>n</i> errors, and then
+       replies&nbsp;"x".
+       User expressions may contain <a href="#quietdirective">
+       <b>\quiet</b>,&nbsp;<b>\noquiet</b>&nbsp;or&nbsp;<b>\nquiet{</b><i>n</i><b>}</b></a>
+       to override any compiled default. </dd>
+
+      <dt> <a name="refererswitch"> </a>
+      <b>&#150;DREFERER=\"</b><i>domain</i><b>\"</b> &nbsp; &nbsp; or <br>
+      <b>&#150;DREFERER=\"</b><i>domain1,domain2,etc</i><b>\"</b> </dt>
+       <dd> If you compile mathTeX without a &nbsp;
+       <b>&#150;DREFERER=\"&nbsp;\"</b> &nbsp; switch, then anyone on
+       the internet can use your mathtex.cgi program by writing a url
+       of the form &nbsp;
+       <b>http://www.</b><i>yourdomain</i><b>.com/cgi-bin/mathtex.cgi?x^2+y^2</b>.
+       &nbsp;  So you're essentially providing mathTeX as a free
+       <a href="#webservice">web&nbsp;service</a>.  I encourage this if
+       you have the compute and disk resources to spare. </br>
+       &nbsp; &nbsp; &nbsp; Otherwise, if compiled with &nbsp;
+       <b>&#150;DREFERER=\"</b><i>domain</i><b>\"</b>, &nbsp; then mathTeX
+       performs a case-insensitive search of the environment variable
+       HTTP_REFERER to verify that it contains the authorized
+       &nbsp; <i>domain</i> &nbsp; as a substring. <br>
+       &nbsp; &nbsp; &nbsp; Or, if given a comma-separated list
+       containing several &nbsp; <i>domain</i>'s</i> &nbsp; (second
+       form of the switch), then HTTP_REFERER must contain either
+       <i>domain1</i> or <i>domain2</i>, or <i>etc</i>, as a
+       (case-insensitive) substring. <br>
+       &nbsp; &nbsp; &nbsp; If HTTP_REFERER doesn't contain a substring
+       matching any of these <i>domain</i>(s), then mathTeX emits the
+       error message image (reporting HTTP_REFERER on the first line) <br>
+       &nbsp; &nbsp; &nbsp;
+       <img src="../cgi-bin/mathtex.cgi?\invalidreferer\small\sqrt{a^2+b^2}"
+       alt="" border=0> <br>
+       instead of the requested image. </dd>
+
+      <dt> <a name="killtimeswitch"> </a>
+      <b>&#150;DKILLTIME=10</b> </dt>
+       <dd> Some expressions can unintentionally (or not) force LaTeX
+       to loop endlessly, causing mathTeX to hang.  To avoid this problem,
+       if LaTeX fails to complete within KILLTIME seconds, mathTeX
+       kills it and emits an error.  The built-in code for this purpose
+       is in mathTeX's timelimit(&nbsp;) function, which was adapted from
+       <a href="http://devel.ringlet.net/sysutils/timelimit/"
+       target="_top">timelimit-1.4</a>.
+       Compiling mathTeX with &nbsp; <b>&#150;KILLTIME=0</b> &nbsp;
+       places no timelimit restrictions on LaTeX whatsoever;
+       probably not a good idea. </dd>
+
+      <dt> <a name="timelimitswitch"> </a>
+      <b>&#150;DTIMELIMIT=\"/</b><i>path</i><b>/</b><i>to</i><b>/timelimit\"
+      </b> </dt>
+       <dd> Rather than using mathTeX's built-in timelimit(&nbsp;) code to
+       throttle LaTeX (see <a href="#killtimeswitch">&#150;DKILLTIME</a>
+       immediately above), you may optionally install a standalone
+       copy of <a href="http://devel.ringlet.net/sysutils/timelimit/"
+       target="_top">timelimit-1.4</a> and use that instead.
+       Compiling mathTeX with a switch of the form
+       &nbsp; <b>&#150;TIMELIMIT=\"$(which&nbsp;timelimit)\"</b> &nbsp;
+       uses your installed program instead of mathTeX's built-in
+       timelimit(&nbsp;) function to throttle LaTeX.
+       </dd>
+
+      <dt> <a name="maxmsglevelswitch"> </a>
+      <b>&#150;DMAXMSGLEVEL=999999</b> </dt>
+       <dd> If you're running mathTeX as a
+       <a href="#webservice">web&nbsp;service</a>,
+       you should probably compile it with the
+       &nbsp; <b>&#150;DMAXMSGLEVEL=0</b> &nbsp; switch.
+       This sets the maximum verbosity allowed in a
+       <a href="#msgleveldirective">\msglevel{&nbsp;}&nbsp;directive</a>.
+       At <b>9</b> and above, the work directory and files
+       temporarily created by mathTeX to run latex are left in place
+       as a debugging aid.  These remain on your file&nbsp;system
+       unless manually removed.  And remote users can't
+       access them, anyway. </dd>
+
+      <dt> <a name="usepackageswitch"> </a>
+      <b>&#150;DUSEPACKAGE=\"</b><i>filename</i><b>\"</b> </dt>
+       <dd> The preamble of mathTeX's default LaTeX wrapper script
+       already contains \usepackage[latin1]{inputenc}, \usepackage{amsmath}
+       \usepackage{amsfonts} and \usepackage{amssymb}.  All these packages
+       are used with every expression submitted to mathTeX for rendering.
+       And a specific expression may contain one or more
+       <a href="#usepackagedirective">
+       <b>\usepackage{&nbsp;}</b>&nbsp;directive</a>'s
+       applied to that expression only.
+       However, if you want additional packages applied to every
+       expression, edit a file containing lines of the form <br>
+       &nbsp; &nbsp; &nbsp; <b>"\\</b>usepackage{color}<b>\n"</b> <br>
+       &nbsp; &nbsp; &nbsp; <b>"\\</b>usepackage{bm}<b>\n"</b> <br>
+       &nbsp; &nbsp; &nbsp; <b>"</b><i>etc</i><b>\n"</b> <br>
+       and place a corresponding
+       <b>&#150;</b>DUSEPACKAGE=\"<i>filename</i><b>\"</b>
+       switch on mathTeX's compile line.
+       Every line in the file is enclosed in <b>"</b>quotes<b>"</b>,
+       contains a <b>\n</b> before the closing quote, and
+       all other backslashes are written as double-backslashes <b>\\</b>.
+       And note that, although <b>\</b>usepackage's are illustrated,
+       you aren't limited to them.
+       All directives from this file are just placed in mathTeX's preamble.
+       So you can modify the preamble any way you like. </dd>
+
+      <dt> <a name="newcommandswitch"> </a>
+      <b>&#150;DNEWCOMMAND=\"</b><i>filename</i><b>\"</b> </dt>
+       <dd> Besides modifying the preamble, you may also
+       want to modify the LaTeX wrapper script's body,
+       particularly with (though not limited to)
+       <b>\</b>newcommand's.
+       Again, edit a file containing lines of the form <br>
+       <nobr>&nbsp; &nbsp; &nbsp; <b>"\\</b>newcommand{\\vec}[2]{\\left({#1}_1,\\ldots,{#1}_{#2}\\right)}<b>\n"</b></nobr> <br>
+       <!-- &nbsp; &nbsp; &nbsp; <b>"\\</b>newcommand{}{}<b>\n"</b> <br> -->
+       &nbsp; &nbsp; &nbsp; <b>"</b><i>etc</i><b>\n"</b> <br>
+       and place a corresponding
+       <b>&#150;</b>DNEWCOMMAND=\"<i>filename</i><b>\"</b>
+       switch on mathTeX's compile line.
+       The same editing rules apply: every line in the file is
+       enclosed in <b>"</b>quotes<b>"</b>,
+       contains a <b>\n</b> before the closing quote, and all other
+       backslashes are written as double-backslashes <b>\\</b>. <br>
+       &nbsp; &nbsp; &nbsp; <b>\</b>renewcommand's in this file are
+       useful to disable LaTeX commands that might pose security risks
+       in mathTeX.  For example, although Unix's /etc/passwd file
+       doesn't actually contain passwords, you probably don't want
+       users submitting expressions like <b>\</b>input{/etc/passwd}.
+       MathTeX already disables <b>\</b>input with <br>
+       <nobr>&nbsp; &nbsp; &nbsp; <b>"\\</b>renewcommand{\\input}[1]{\\mbox{[[$\\backslash$input\\{#1\\} illegal]]}}\n"</b></nobr> <br>
+       which just displays &nbsp; [[<b>\</b>input{file}&nbsp;illegal]]
+       &nbsp; when the user tries to &nbsp; <b>\</b>input{file}. &nbsp;
+       You may want to disable other commands as well. </dd>
+
+      <dt> <a name="adswitches"> </a> <font color="black">
+      <b>Advertising switches</b><font size=5>...</font></font> <br> </dt>
+       <dd style="margin-left:0em;"> The next three switches
+       set up a mathTeX web service that embeds advertising messages
+       along with rendered images.  See
+       <a href="#webservice">mathTeX&nbsp;web&nbsp;service</a> above
+       for further discussion. </dd>
+
+      <dt> <a name="adfrequencyswitch"> </a>
+      <b>&#150;DADFREQUENCY=0</b> </dt>
+       <dd> If ADFREQUENCY is defined as a positive number <b><i>n</i></b>,
+       then one request out of every <b><i>n</i></b> submitted to mathTeX
+       is randomly selected to be displayed along with a pre-defined
+       "advertisement".  For example, if your expression is
+       &nbsp; <b>\large\int_0^xe^{-x^2}dx</b>, &nbsp; then the default
+       advertisement displays <br>
+       &nbsp; &nbsp; &nbsp;
+       <a href="#preview"><img id="adswitch1" onclick="eqntext('adswitch1')"
+        src="../cgi-bin/mathtex.cgi?\large\advertisement
+        \int_0^xe^{-x^2}dx" alt="" align="middle" border=0></a>
+       &nbsp; &nbsp; instead of just &nbsp; &nbsp;
+       <a href="#preview"><img id="adswitch2" onclick="eqntext('adswitch2')"
+        src="../cgi-bin/mathtex.cgi?\large
+        \int_0^xe^{-x^2}dx" alt="" align="middle" border=0></a> <br>
+       See the <b>&#150;DADVERTISEMENT</b> switch <!-- immediately -->
+       below for instructions to define your own advertisement replacing
+       my default. </dd>
+
+      <dt> <a name="adhostswitch"> </a>
+      <b>&#150;DHOST_SHOWAD=\"\\000\"</b> </dt>
+       <dd> Advertisement messages are usually displayed randomly,
+       in one request to mathTeX out of every <b><i>n</i></b>,
+       as defined by the <b>&#150;DADFREQUENCY</b> switch above.
+       But if a HOST_SHOWAD string is also defined,
+       then advertisements are only displayed when mathTeX is running
+       on a host whose HTTP_HOST (or SERVER_NAME) environment variable
+       contains that string. For example,
+       <b>&#150;DHOST_SHOWAD=\"mathsite\"</b> displays advertisements
+       on www.mathsite.com but never on www.mathhouse.com&nbsp;.
+       The default HOST_SHOWAD value is an empty string,
+       which displays advertisements on any host. </dd>
+
+      <dt> <a name="advertisementswitch"> </a>
+      <b>&#150;DADVERTISEMENT=\"</b><i>filename</i><b>\"</b> </dt>
+       <dd> To define your own advertisement, replacing my default
+       illustrated immediately above, edit a file containing lines
+       of the form <br>
+	<nobr>&nbsp; &nbsp; &nbsp; <b>"\\</b>begin{center}<b>\n"</b></nobr><br>
+	<nobr>&nbsp; &nbsp; &nbsp; <b>"\\</b>fbox{$<b>\\</b>mbox{<b>\\</b>footnotesize<b>\\</b>LaTeX{} rendering courtesy of}<b>\n"</b></nobr><br>
+	<nobr>&nbsp; &nbsp; &nbsp; <b>"\\</b>atop <b>\\</b>mbox{<b>\\</b>scriptsize http://www.forkosh.com/mathtex.html}$}<b>\\\\ \n"</b></nobr><br>
+        <nobr>&nbsp; &nbsp; &nbsp; <b>"\\</b>vspace*{-4mm}<b>\n"</b></nobr><br>
+	<nobr>&nbsp; &nbsp; &nbsp; <b>"</b> %%beginmath%% %%expression%% %%endmath%% <b>\n"</b></nobr><br>
+	<nobr>&nbsp; &nbsp; &nbsp; <b>"\\</b>end{center}<b>\n"</b></nobr><br>
+       Use the same editing rules as &#150;DUSEPACKAGE and &#150;DNEWCOMMAND
+       above: every line in the file is enclosed in <b>"</b>quotes<b>"</b>,
+       contains a <b>\n</b> before the closing quote, and all other
+       backslashes are written as double-backslashes <b>\\</b>.
+       Note <b>\\\\</b> at the end of the third line,
+       which LaTeX sees as <b>\\</b>.  The entire example shows how my
+       default advertisement is defined. <br>
+       &nbsp; &nbsp; &nbsp; Your advertisement may consist of any valid
+       LaTeX commands you like.  But it must somewhere contain the line <br>
+	<nobr>&nbsp; &nbsp; &nbsp; <b>"</b> %%beginmath%% %%expression%% %%endmath%% <b>\n"</b></nobr><br>
+       which is replaced by the user's expression, surrounded by whatever
+       math mode delimiters it specifies.  The document remains in paragraph
+       mode, allowing &nbsp; <b>$&nbsp;$</b> &nbsp; and
+       &nbsp; <b>\[&nbsp;\]</b> &nbsp; to be placed wherever you like. <br>
+       &nbsp; &nbsp; &nbsp; Once mathTeX is compiled with your advertisement,
+       test it by submitting an expression like &nbsp;
+       <b>\advertisement&nbsp;x^2+y^2</b> &nbsp; containing the special
+       mathTeX
+       <a href="#advertisementdirective">\advertisement&nbsp;directive</a>,
+       which forces that
+       expression to be rendered with your advertisement.  In this case
+       (and with my default advertisement message) we see <br>
+       &nbsp; &nbsp; &nbsp;
+       <a href="#preview"><img id="adswitch3" onclick="eqntext('adswitch3')"
+       src="../cgi-bin/mathtex.cgi?\advertisement x^2+y^2"
+       alt="" align="middle" border=0></a> &nbsp; &nbsp; instead of
+       just &nbsp; &nbsp;
+       <a href="#preview"><img id="adswitch4" onclick="eqntext('adswitch4')"
+       src="../cgi-bin/mathtex.cgi?\png x^2+y^2"
+       alt="" border=0></a> <br>
+       regardless of your ADFREQUENCY value. </dd>
+     </dl>
+
+<h3> <a name="shell">
+Running mathTeX from the shell<font size=5>...</font></a> </h3>
+ <p> MathTeX is usually run by your web server as a cgi program,
+     obtaining its input expression from the query-string of an
+     html &lt;img&gt; tag.  But you can also run mathTeX from your Unix
+     shell, supplying all input on the command line.  For example,
+     &nbsp; <b>./mathtex.cgi&nbsp;"x^2+y^2"&nbsp;&#150;o&nbsp;equation1</b>
+     &nbsp; renders an image of <b>x^2+y^2</b> in file <b>equation1.gif</b>.
+     And with the &nbsp; <b>&#150;m&nbsp;9</b> &nbsp; switch, it's
+     also useful for testing. </p>
+
+ <p> The complete command-line syntax for mathTeX is </p>
+   <pre>
+   ./mathtex.cgi "expression"     expression in quotes, e.g., "x^2+y^2",
+               | -f input_file    or read (unquoted) expression from input_file
+               [ -o output_file ] write image to ouput_file instead of cache
+               [ -m msglevel ]    verbosity of debugging message level
+               [ -c cache_directory ]   path to cache directory
+
+   "expression"    Either place LaTeX expression directly on
+        the command line, between "quotes", with no -switch
+        preceding it, or.....
+
+   -f input_file   .....read (unquoted) expression from input_file.
+        The input_file may contain the expression on one line
+        or spread out over many lines.  If -o is not also given,
+        it defaults to the same filename, e.g., -f expression.tex
+        produces output file expression.tex.gif unless an
+        explicit -o switch is given.
+
+   -o output_file  write output gif or png image to this filename,
+        with .gif or .png extension added to it.  If you want the
+        image file written in a directory other than your pwd,
+        then specify  -o path/output_file  instead.
+
+   -m msglevel     0-99, controls verbosity/message level for
+        debugging output.  If msglevel>=9 then the temporary
+        directory containing latex-dvips-convert output is
+        not removed.  This is your major debugging aid.
+
+   -c cache_directory  If you specify  -o output_file  then no
+        cache directory is used (-c is ignored even if you supply it).
+        But if you don't specify  -o output_file  then mathTeX writes
+        the rendered image to a filename in its usual cache directory
+        path.  This switch maintains the standard mathTeX filename
+        convention, but writes files into the specified cache directory
+        instead.
+
+   Test or Debugging Example:
+
+     ./mathtex.cgi "\Large\frac1{\sqrt{x^2+y^2}}" -o equation1 -m 9
+        creates file equation1.gif and saves all the intermediate
+        work in temp subdirectory 673d88e172f77f0aafabf6d72e5777ba/
+        which is the MD5 hash of the input expression.
+
+     After the copyright notice, screen output from the above command
+     should look something like
+        mathTeX> running image:     ./mathtex.cgi
+        mathTeX> input expression:  "\Large\frac1{\sqrt{x^2+y^2}}"
+        mathTeX> working directory: 673d88e172f77f0aafabf6d72e5777ba/
+        mathTeX> output image file: equation1.gif
+
+   Production Example (same as above, but without -m 9):
+
+     ./mathtex.cgi "\Large\frac1{\sqrt{x^2+y^2}}" -o equation1
+        creates file equation1.gif containing an image of
+        the expression (all intermediate work files are removed).
+
+     After the copyright notice, screen output from the above command
+     should look something like
+        mathTeX> input expression:  "\Large\frac1{\sqrt{x^2+y^2}}"
+        mathTeX> output image file: equation1.gif
+     Redirect stdout to /dev/null if you don't want to see it.
+   </pre>
+
+
+<!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ GPL
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+<h2 id="gpl"> (5) GPL License &nbsp; </h2>
+
+<font color="black">
+<b>&quot</b><i>My grandfather once told me there are two kinds of people:<br>
+&nbsp &nbsp Those who do the work and those who take the credit.<br>
+&nbsp &nbsp He told me to try to be in the first group; there was much
+less competition.</i><b>&quot</b><br>
+Indira Gandhi, the late Prime Minister of India</font> <br>
+
+ <p> MathTeX's copyright is registered by me with the US Copyright Office,
+     and I hereby license it to you under the terms and conditions of the
+     <a href="http://www.gnu.org/licenses/gpl.html" target="_top">GPL</a>.
+     There is no official support of any kind whatsoever,
+     and you use mathTeX entirely at your own risk, with no guarantee
+     of any kind, in particular with no warranty of merchantability. </p>
+
+ <p> By using mathTeX, you warrant that you have read, understood
+     and agreed to these terms and conditions, and that you possess
+     the legal right and ability to enter into this agreement
+     and to use mathTeX in accordance with it. </p>
+
+ <p> Hopefully, the law and ethics regarding computer programs will
+     evolve to make this kind of obnoxious banter unnecessary.
+     In the meantime, please forgive me my paranoia. </p>
+
+ <p> To protect your own intellectual property, I recommend (both pdf)
+     <a href="http://www.copyright.gov/circs/circ01.pdf"
+     target="_top">Copyright&nbsp;Basics</a> from The Library of Congress,
+     in particular <a href="http://www.copyright.gov/circs/circ61.pdf"
+     target="_top">Circular&nbsp;61</a>, Copyright Registration for
+     Computer Programs.
+     <!-- and similarly,
+     <a href="http://www.abanet.org/intelprop/comm106/106copy.html"
+     target="_top">Copyright Basics</a> from The American Bar Association. -->
+     Very briefly, download
+     <a href="http://www.copyright.gov/forms/formtxi.pdf">Form&nbsp;TX</a>
+     and follow the included instructions.
+     In principle, you automatically own the copyright
+     to anything you write the moment it's on paper.  In practice,
+     if the matter comes under dispute, the courts look _very_ favorably
+     on you for demonstrating your intent by registering the copyright.
+     For example, courts will stop unauthorized use of unregistered
+     material, but monetary damages are awarded _only_ if you
+     register the copyright before infringement occurs. </p>
+
+
+<!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ CONCLUDING REMARKS
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+<h2 id="remarks"> Concluding Remarks &nbsp; </h2>
+
+<p> I hope you find mathTeX useful.  If so, a contribution to your
+  country's <a href="http://www.tug.org" target="_top">TeX Users Group</a>,
+  or to the <a href="http://www.gnu.org" target="_top">GNU</a> project, is
+  suggested, especially if you're a company that's currently profitable. </p>
+  
+
+<!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ Footer across bottom of page
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+<hr size=4>
+<table> <tr>
+ <td align="left" width="70%"> <font size=3 color="maroon"> <b>
+  <nobr>Copyright <font size=5>&copy;</font> 2007-2012,
+  <a href="http://www.forkosh.com">John Forkosh Associates, Inc.</a>
+  </nobr><br>
+  email: <a href="mailto:john&#64;forkosh&#46;com">john&#64;forkosh&#46;com</a>
+  </b> </font> </td>
+<!-- -->
+ <td align="left" width="30%">
+      <img src="../cgi-bin/mimetex.cgi?\blue{\small\rm You're the }
+       \Large\counter[mathtexcounters.log]
+       {mathtexcounters.txt:mathtex.html}\\[0]
+       {\small\rm visitor to this page.}" alt="" border=0 align=bottom> </td>
+<!-- -->
+</tr> </table>
+</body>
+<!--
+<script type="text/javascript"
+    src="http://mathcache.s3.amazonaws.com/replacemath.js"> </script>
+<script type="text/javascript">
+    replaceMath( document.body ); </script>
+-->
+</html>
+<!-- end-of-file mathtex.html -->
+
