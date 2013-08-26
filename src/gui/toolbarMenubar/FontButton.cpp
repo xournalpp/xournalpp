@@ -57,7 +57,12 @@ void FontButton::setFont(XojFont & font) {
 XojFont FontButton::getFont() {
 	XOJ_CHECK_TYPE(FontButton);
 
-	return font;
+	//essentially, copy the font object to prevent a memory leak.
+	XojFont newfont;
+	newfont.setName(font.getName());
+	newfont.setSize(font.getSize());
+
+	return newfont;
 }
 
 String FontButton::getToolDisplayName() {
