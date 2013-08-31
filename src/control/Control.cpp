@@ -2677,12 +2677,16 @@ void Control::runLatex() {
 
 	double imgx = 10;
 	double imgy = 10;
+	double imgwidth = 0;
+	double imgheight = 0;
 	gchar * imgTex = NULL;
 	int imgTexLen = 0;
 	if(img)
 	{
 		imgx = img->getX();
 		imgy = img->getY();
+		imgwidth = img->getElementWidth();
+		imgheight = img->getElementHeight();
 		//fix this typecast:
 		imgTex = (gchar *) img->getText();
 		imgTexLen = img->getTextLen();
@@ -2737,8 +2741,16 @@ void Control::runLatex() {
         img->setImage(pixbuf);
         img->setText((const char*)tmp,tmplen);
 
-        img->setWidth(gdk_pixbuf_get_width(pixbuf));
-        img->setHeight(gdk_pixbuf_get_height(pixbuf));
+	if(imgwidth)
+	{
+		img->setWidth(imgwidth);
+		img->setHeight(imgheight);
+	}
+	else
+	{
+		img->setWidth(gdk_pixbuf_get_width(pixbuf));
+		img->setHeight(gdk_pixbuf_get_height(pixbuf));
+	}
 
         layer->addElement(img);
         view->rerenderElement(img);
