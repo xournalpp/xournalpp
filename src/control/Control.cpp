@@ -2677,7 +2677,7 @@ void Control::runLatex() {
 
 	double imgx = 10;
 	double imgy = 10;
-	double imgwidth = 0;
+	double imgheight = 0;
 	gchar * imgTex = NULL;
 	int imgTexLen = 0;
 	if(img)
