@@ -200,6 +200,7 @@ void SaveHandler::visitLayer(XmlNode * page, Layer * l) {
 			image->setImage(i->getImage());
 
 			image->setAttrib("text", i->getText());
+			image->setAttrib("texlength", i->getTextLen());
 
 			image->setAttrib("left", i->getX());
 			image->setAttrib("top", i->getY());

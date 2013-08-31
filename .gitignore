@@ -1,0 +1,17 @@
+.deps
+.libs
+*.o
+*.lo
+*.la
+Makefile
+Makefile.in
+missing
+libtool
+aclocal.m4
+autom4te.cache
+config.guess
+config.log
+config.status
+config.sub
+depcomp
+

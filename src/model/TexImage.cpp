@@ -17,6 +17,7 @@ TexImage::TexImage() :
 
 	//text tags
 	this->text = NULL;
+	this->textlen = 0;
 }
 
 TexImage::~TexImage() {
@@ -27,7 +28,7 @@ TexImage::~TexImage() {
 		this->image = NULL;
 	}
 	if (this->text) {
-		delete this->text;
+		delete[] this->text;
 		this->text = NULL;
 	}
 
@@ -44,9 +45,10 @@ Element * TexImage::clone() {
 	img->setColor(this->getColor());
 	img->width = this->width;
 	img->height = this->height;
-	char * tmpcstring = new char[strlen(this->text)];
+	char * tmpcstring = new char[this->textlen + 1];
 	strcpy(tmpcstring,this->text);
 	img->text = tmpcstring;
+	img->textlen = this->textlen;
 
 	img->data = (unsigned char *)g_malloc(this->dLen);
 	img->dLen = this->dLen;
@@ -117,14 +119,25 @@ void TexImage::setImage(cairo_surface_t * image) {
 	this->image = image;
 }
 
-void TexImage::setText(const char * text)
+void TexImage::setText(const char * text, int textlength)
 {
+	if(this->text)
+	{
+		delete[] this->text;
+		this->text = NULL;
+	}
 	this->text = text;
+	this->textlen = textlength;
 }
 
 const char * TexImage::getText()
 {
 	return this->text;
+}
+
+int TexImage::getTextLen()
+{
+	return this->textlen;
 }
 
 cairo_surface_t * TexImage::getImage() {
@@ -182,7 +195,8 @@ void TexImage::readSerialized(ObjectInputStream & in) throw (InputStreamExceptio
 	this->height = in.readDouble();
 	String tmp = in.readString();
 	//cast this
-	char * tmpcstring = new char[tmp.size()];
+	this->textlen = tmp.size();
+	char * tmpcstring = new char[this->textlen + 1];
 	strcpy(tmpcstring,tmp.c_str());
 	this->text = tmpcstring;
 
