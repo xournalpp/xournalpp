@@ -545,6 +545,13 @@ void LoadHandler::parseTexImage() {
 	double bottom = getAttribDouble("bottom");
 
 	const char * imText = getAttrib("text");
+	const char * compatibilityTest = getAttrib("texlength");
+	int imTextLen = 500;
+	if(compatibilityTest != NULL)
+	{
+		imTextLen = getAttribInt("texlength");
+	}
+
 
 	this->teximage = new TexImage();
 	this->layer->addElement(this->teximage);
@@ -553,9 +560,9 @@ void LoadHandler::parseTexImage() {
 	this->teximage->setWidth(right - left);
 	this->teximage->setHeight(bottom - top);
 	//need to allocate memory for the image
-	char * tmp = new char[sizeof(&imText[0])];
+	char * tmp = new char[imTextLen+1];
 	strcpy(tmp,imText);
-	this->teximage->setText(tmp);
+	this->teximage->setText(tmp,imTextLen);
 }
 
 void LoadHandler::parseLayer() {

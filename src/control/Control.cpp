@@ -2454,7 +2454,7 @@ void Control::clipboardPasteImage(GdkPixbuf * img) {
 
 	clipboardPaste(image);
 }
-void Control::clipboardPasteTex(GdkPixbuf * img, const char * text) {
+void Control::clipboardPasteTex(GdkPixbuf * img, const char * text, int textLength) {
 	XOJ_CHECK_TYPE(Control);
 
 	TexImage * image = new TexImage();
@@ -2465,7 +2465,7 @@ void Control::clipboardPasteTex(GdkPixbuf * img, const char * text) {
 
 	image->setWidth(width);
 	image->setHeight(height);
-	image->setText(text);
+	image->setText(text, textLength);
 
 	clipboardPaste(image);
 }
@@ -2678,12 +2678,14 @@ void Control::runLatex() {
 	double imgx = 10;
 	double imgy = 10;
 	gchar * imgTex = NULL;
+	int imgTexLen = 0;
 	if(img)
 	{
 		imgx = img->getX();
 		imgy = img->getY();
 		//fix this typecast:
 		imgTex = (gchar *) img->getText();
+		imgTexLen = img->getTextLen();
 	}
 
 	//now call the image handlers
@@ -2694,9 +2696,10 @@ void Control::runLatex() {
 
 	LatexGlade * mytex = new LatexGlade(this->gladeSearchPath);
 	//determine if we should set a specific string
-	mytex->setTex(imgTex);
+	mytex->setTex(imgTex,imgTexLen);
 	mytex->show(GTK_WINDOW(this->win->getWindow()));
 	gchar * tmp = mytex->getTex();
+	int tmplen = mytex->getTexLen();
 	delete mytex;
 	printf("%s\n",tmp);
 
@@ -2732,7 +2735,7 @@ void Control::runLatex() {
 	img->setX(imgx);
         img->setY(imgy);
         img->setImage(pixbuf);
-        img->setText((const char*)tmp);
+        img->setText((const char*)tmp,tmplen);
 
         img->setWidth(gdk_pixbuf_get_width(pixbuf));
         img->setHeight(gdk_pixbuf_get_height(pixbuf));

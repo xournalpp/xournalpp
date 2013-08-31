@@ -32,8 +32,9 @@ public:
 	virtual void scale(double x0, double y0, double fx, double fy);
 
 	//text tag to alow latex
-	void setText(const char * text);
+	void setText(const char * text, int textlength);
 	const char * getText();
+	int getTextLen();
 
 	virtual Element * clone();
 
@@ -58,6 +59,7 @@ private:
 	int read;
 	//text
 	const char * text;
+	int textlen;
 };
 
 #endif /* __TEXIMAGE_H__ */
