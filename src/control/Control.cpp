@@ -2678,14 +2678,12 @@ void Control::runLatex() {
 	double imgx = 10;
 	double imgy = 10;
 	double imgwidth = 0;
-	double imgheight = 0;
 	gchar * imgTex = NULL;
 	int imgTexLen = 0;
 	if(img)
 	{
 		imgx = img->getX();
 		imgy = img->getY();
-		imgwidth = img->getElementWidth();
 		imgheight = img->getElementHeight();
 		//fix this typecast:
 		imgTex = (gchar *) img->getText();
@@ -2741,9 +2739,10 @@ void Control::runLatex() {
         img->setImage(pixbuf);
         img->setText((const char*)tmp,tmplen);
 
-	if(imgwidth)
+	if(imgheight)
 	{
-		img->setWidth(imgwidth);
+		double ratio = gdk_pixbuf_get_width(pixbuf)/gdk_pixbuf_get_height(pixbuf);
+		img->setWidth(imgheight*ratio);
 		img->setHeight(imgheight);
 	}
 	else
