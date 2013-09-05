@@ -108,7 +108,7 @@
               <widget class="GtkLabel" id="lbComunity">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="label" translatable="yes">With help from the comunity
+                <property name="label" translatable="yes">With help from the community
 </property>
                 <property name="use_markup">True</property>
                 <property name="justify">center</property>
