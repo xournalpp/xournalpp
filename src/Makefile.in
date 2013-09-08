@@ -86,18 +86,19 @@ am__xournalpp_SOURCES_DIST = control/jobs/AutosaveJob.cpp \
 	control/xml/Attribute.cpp control/xml/DoubleArrayAttribute.cpp \
 	control/xml/DoubleAttribute.cpp control/xml/IntAttribute.cpp \
 	control/xml/TextAttribute.cpp control/xml/XmlImageNode.cpp \
-	control/xml/XmlNode.cpp control/xml/XmlPointNode.cpp \
-	control/xml/XmlStrokeNode.cpp control/xml/XmlTextNode.cpp \
-	control/Actions.cpp control/ClipboardHandler.cpp \
-	control/ExportHandler.cpp control/Control.cpp \
-	control/LoadHandler.cpp control/PdfCache.cpp \
-	control/PrintHandler.cpp control/RecentManager.cpp \
-	control/SaveHandler.cpp control/ScrollHandler.cpp \
-	control/SearchControl.cpp control/Tool.cpp \
-	control/ToolHandler.cpp control/ZoomControl.cpp \
-	control/XournalMain.cpp gui/dialog/AboutDialog.cpp \
-	gui/dialog/ButtonConfigGui.cpp gui/dialog/ExportDialog.cpp \
-	gui/dialog/FormatDialog.cpp gui/dialog/GotoDialog.cpp \
+	control/xml/XmlTexNode.cpp control/xml/XmlNode.cpp \
+	control/xml/XmlPointNode.cpp control/xml/XmlStrokeNode.cpp \
+	control/xml/XmlTextNode.cpp control/Actions.cpp \
+	control/ClipboardHandler.cpp control/ExportHandler.cpp \
+	control/Control.cpp control/LoadHandler.cpp \
+	control/PdfCache.cpp control/PrintHandler.cpp \
+	control/RecentManager.cpp control/SaveHandler.cpp \
+	control/ScrollHandler.cpp control/SearchControl.cpp \
+	control/Tool.cpp control/ToolHandler.cpp \
+	control/ZoomControl.cpp control/XournalMain.cpp \
+	gui/dialog/AboutDialog.cpp gui/dialog/ButtonConfigGui.cpp \
+	gui/dialog/ExportDialog.cpp gui/dialog/FormatDialog.cpp \
+	gui/dialog/GotoDialog.cpp \
 	gui/dialog/toolbarCustomize/CustomizeableColorList.cpp \
 	gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp \
 	gui/dialog/toolbarCustomize/ToolbarDragDropHandler.cpp \
@@ -106,7 +107,7 @@ am__xournalpp_SOURCES_DIST = control/jobs/AutosaveJob.cpp \
 	gui/dialog/ToolbarManageDialog.cpp gui/dialog/ImagesDialog.cpp \
 	gui/dialog/PdfPagesDialog.cpp \
 	gui/dialog/SelectBackgroundColorDialog.cpp \
-	gui/dialog/SettingsDialog.cpp \
+	gui/dialog/SettingsDialog.cpp gui/dialog/LatexGlade.cpp \
 	gui/pageposition/PagePosition.cpp \
 	gui/pageposition/PagePositionCache.cpp \
 	gui/pageposition/PagePositionHandler.cpp \
@@ -148,8 +149,8 @@ am__xournalpp_SOURCES_DIST = control/jobs/AutosaveJob.cpp \
 	model/DocumentListener.cpp model/Element.cpp model/Font.cpp \
 	model/FormatDefinitions.cpp model/Image.cpp model/Layer.cpp \
 	model/LinkDestination.cpp model/PageRef.cpp model/Point.cpp \
-	model/Stroke.cpp model/Text.cpp model/XojPage.cpp \
-	pdf/cairo/CairoPdf.cpp \
+	model/Stroke.cpp model/TexImage.cpp model/Text.cpp \
+	model/XojPage.cpp pdf/cairo/CairoPdf.cpp \
 	pdf/popplerdirect/poppler/XojPopplerAction.cpp \
 	pdf/popplerdirect/poppler/XojPopplerDocument.cpp \
 	pdf/popplerdirect/poppler/XojPopplerIter.cpp \
@@ -169,10 +170,10 @@ am__xournalpp_SOURCES_DIST = control/jobs/AutosaveJob.cpp \
 	undo/PageBackgroundChangedUndoAction.cpp \
 	undo/RecognizerUndoAction.cpp undo/RemoveLayerUndoAction.cpp \
 	undo/ScaleUndoAction.cpp undo/SizeUndoAction.cpp \
-	undo/TextUndoAction.cpp undo/UndoAction.cpp \
-	undo/UndoRedoHandler.cpp view/DocumentView.cpp \
-	view/PdfView.cpp view/TextView.cpp Xournalpp.cpp \
-	plugin/python/bindings/PyDocument.cpp \
+	undo/TextUndoAction.cpp undo/TextBoxUndoAction.cpp \
+	undo/UndoAction.cpp undo/UndoRedoHandler.cpp \
+	view/DocumentView.cpp view/PdfView.cpp view/TextView.cpp \
+	Xournalpp.cpp plugin/python/bindings/PyDocument.cpp \
 	plugin/python/bindings/PySelection.cpp \
 	plugin/python/bindings/PyUndoRedoHandler.cpp \
 	plugin/python/bindings/PyXournal.cpp \
@@ -209,7 +210,8 @@ am_xournalpp_OBJECTS = xournalpp-AutosaveJob.$(OBJEXT) \
 	xournalpp-DoubleAttribute.$(OBJEXT) \
 	xournalpp-IntAttribute.$(OBJEXT) \
 	xournalpp-TextAttribute.$(OBJEXT) \
-	xournalpp-XmlImageNode.$(OBJEXT) xournalpp-XmlNode.$(OBJEXT) \
+	xournalpp-XmlImageNode.$(OBJEXT) \
+	xournalpp-XmlTexNode.$(OBJEXT) xournalpp-XmlNode.$(OBJEXT) \
 	xournalpp-XmlPointNode.$(OBJEXT) \
 	xournalpp-XmlStrokeNode.$(OBJEXT) \
 	xournalpp-XmlTextNode.$(OBJEXT) xournalpp-Actions.$(OBJEXT) \
@@ -239,6 +241,7 @@ am_xournalpp_OBJECTS = xournalpp-AutosaveJob.$(OBJEXT) \
 	xournalpp-PdfPagesDialog.$(OBJEXT) \
 	xournalpp-SelectBackgroundColorDialog.$(OBJEXT) \
 	xournalpp-SettingsDialog.$(OBJEXT) \
+	xournalpp-LatexGlade.$(OBJEXT) \
 	xournalpp-PagePosition.$(OBJEXT) \
 	xournalpp-PagePositionCache.$(OBJEXT) \
 	xournalpp-PagePositionHandler.$(OBJEXT) \
@@ -292,8 +295,9 @@ am_xournalpp_OBJECTS = xournalpp-AutosaveJob.$(OBJEXT) \
 	xournalpp-Image.$(OBJEXT) xournalpp-Layer.$(OBJEXT) \
 	xournalpp-LinkDestination.$(OBJEXT) \
 	xournalpp-PageRef.$(OBJEXT) xournalpp-Point.$(OBJEXT) \
-	xournalpp-Stroke.$(OBJEXT) xournalpp-Text.$(OBJEXT) \
-	xournalpp-XojPage.$(OBJEXT) xournalpp-CairoPdf.$(OBJEXT) \
+	xournalpp-Stroke.$(OBJEXT) xournalpp-TexImage.$(OBJEXT) \
+	xournalpp-Text.$(OBJEXT) xournalpp-XojPage.$(OBJEXT) \
+	xournalpp-CairoPdf.$(OBJEXT) \
 	xournalpp-XojPopplerAction.$(OBJEXT) \
 	xournalpp-XojPopplerDocument.$(OBJEXT) \
 	xournalpp-XojPopplerIter.$(OBJEXT) \
@@ -318,6 +322,7 @@ am_xournalpp_OBJECTS = xournalpp-AutosaveJob.$(OBJEXT) \
 	xournalpp-ScaleUndoAction.$(OBJEXT) \
 	xournalpp-SizeUndoAction.$(OBJEXT) \
 	xournalpp-TextUndoAction.$(OBJEXT) \
+	xournalpp-TextBoxUndoAction.$(OBJEXT) \
 	xournalpp-UndoAction.$(OBJEXT) \
 	xournalpp-UndoRedoHandler.$(OBJEXT) \
 	xournalpp-DocumentView.$(OBJEXT) xournalpp-PdfView.$(OBJEXT) \
@@ -570,18 +575,19 @@ xournalpp_SOURCES = control/jobs/AutosaveJob.cpp \
 	control/xml/Attribute.cpp control/xml/DoubleArrayAttribute.cpp \
 	control/xml/DoubleAttribute.cpp control/xml/IntAttribute.cpp \
 	control/xml/TextAttribute.cpp control/xml/XmlImageNode.cpp \
-	control/xml/XmlNode.cpp control/xml/XmlPointNode.cpp \
-	control/xml/XmlStrokeNode.cpp control/xml/XmlTextNode.cpp \
-	control/Actions.cpp control/ClipboardHandler.cpp \
-	control/ExportHandler.cpp control/Control.cpp \
-	control/LoadHandler.cpp control/PdfCache.cpp \
-	control/PrintHandler.cpp control/RecentManager.cpp \
-	control/SaveHandler.cpp control/ScrollHandler.cpp \
-	control/SearchControl.cpp control/Tool.cpp \
-	control/ToolHandler.cpp control/ZoomControl.cpp \
-	control/XournalMain.cpp gui/dialog/AboutDialog.cpp \
-	gui/dialog/ButtonConfigGui.cpp gui/dialog/ExportDialog.cpp \
-	gui/dialog/FormatDialog.cpp gui/dialog/GotoDialog.cpp \
+	control/xml/XmlTexNode.cpp control/xml/XmlNode.cpp \
+	control/xml/XmlPointNode.cpp control/xml/XmlStrokeNode.cpp \
+	control/xml/XmlTextNode.cpp control/Actions.cpp \
+	control/ClipboardHandler.cpp control/ExportHandler.cpp \
+	control/Control.cpp control/LoadHandler.cpp \
+	control/PdfCache.cpp control/PrintHandler.cpp \
+	control/RecentManager.cpp control/SaveHandler.cpp \
+	control/ScrollHandler.cpp control/SearchControl.cpp \
+	control/Tool.cpp control/ToolHandler.cpp \
+	control/ZoomControl.cpp control/XournalMain.cpp \
+	gui/dialog/AboutDialog.cpp gui/dialog/ButtonConfigGui.cpp \
+	gui/dialog/ExportDialog.cpp gui/dialog/FormatDialog.cpp \
+	gui/dialog/GotoDialog.cpp \
 	gui/dialog/toolbarCustomize/CustomizeableColorList.cpp \
 	gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp \
 	gui/dialog/toolbarCustomize/ToolbarDragDropHandler.cpp \
@@ -590,7 +596,7 @@ xournalpp_SOURCES = control/jobs/AutosaveJob.cpp \
 	gui/dialog/ToolbarManageDialog.cpp gui/dialog/ImagesDialog.cpp \
 	gui/dialog/PdfPagesDialog.cpp \
 	gui/dialog/SelectBackgroundColorDialog.cpp \
-	gui/dialog/SettingsDialog.cpp \
+	gui/dialog/SettingsDialog.cpp gui/dialog/LatexGlade.cpp \
 	gui/pageposition/PagePosition.cpp \
 	gui/pageposition/PagePositionCache.cpp \
 	gui/pageposition/PagePositionHandler.cpp \
@@ -632,8 +638,8 @@ xournalpp_SOURCES = control/jobs/AutosaveJob.cpp \
 	model/DocumentListener.cpp model/Element.cpp model/Font.cpp \
 	model/FormatDefinitions.cpp model/Image.cpp model/Layer.cpp \
 	model/LinkDestination.cpp model/PageRef.cpp model/Point.cpp \
-	model/Stroke.cpp model/Text.cpp model/XojPage.cpp \
-	pdf/cairo/CairoPdf.cpp \
+	model/Stroke.cpp model/TexImage.cpp model/Text.cpp \
+	model/XojPage.cpp pdf/cairo/CairoPdf.cpp \
 	pdf/popplerdirect/poppler/XojPopplerAction.cpp \
 	pdf/popplerdirect/poppler/XojPopplerDocument.cpp \
 	pdf/popplerdirect/poppler/XojPopplerIter.cpp \
@@ -653,10 +659,10 @@ xournalpp_SOURCES = control/jobs/AutosaveJob.cpp \
 	undo/PageBackgroundChangedUndoAction.cpp \
 	undo/RecognizerUndoAction.cpp undo/RemoveLayerUndoAction.cpp \
 	undo/ScaleUndoAction.cpp undo/SizeUndoAction.cpp \
-	undo/TextUndoAction.cpp undo/UndoAction.cpp \
-	undo/UndoRedoHandler.cpp view/DocumentView.cpp \
-	view/PdfView.cpp view/TextView.cpp Xournalpp.cpp \
-	$(am__append_1)
+	undo/TextUndoAction.cpp undo/TextBoxUndoAction.cpp \
+	undo/UndoAction.cpp undo/UndoRedoHandler.cpp \
+	view/DocumentView.cpp view/PdfView.cpp view/TextView.cpp \
+	Xournalpp.cpp $(am__append_1)
 INCLUDES = \
 	-DPACKAGE_DATA_DIR=\""$(datadir)"\" \
 	-DPACKAGE_LOCALE_DIR=\""$(prefix)/$(DATADIRNAME)/locale"\" \
@@ -812,6 +818,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-InsertUndoAction.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-IntAttribute.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-Job.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-LatexGlade.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-Layer.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-Layout.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-LayoutData.Po@am__quote@
@@ -882,8 +889,10 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-SpinPageAdapter.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-Stroke.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-SynchronizedProgressListener.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-TexImage.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-Text.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-TextAttribute.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-TextBoxUndoAction.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-TextEditor.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-TextUndoAction.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-TextView.Po@am__quote@
@@ -915,6 +924,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-XmlNode.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-XmlPointNode.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-XmlStrokeNode.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-XmlTexNode.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-XmlTextNode.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-XojColor.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xournalpp-XojOpenDlg.Po@am__quote@
@@ -1429,6 +1439,20 @@ xournalpp-XmlImageNode.obj: control/xml/XmlImageNode.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-XmlImageNode.obj `if test -f 'control/xml/XmlImageNode.cpp'; then $(CYGPATH_W) 'control/xml/XmlImageNode.cpp'; else $(CYGPATH_W) '$(srcdir)/control/xml/XmlImageNode.cpp'; fi`
 
+xournalpp-XmlTexNode.o: control/xml/XmlTexNode.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-XmlTexNode.o -MD -MP -MF $(DEPDIR)/xournalpp-XmlTexNode.Tpo -c -o xournalpp-XmlTexNode.o `test -f 'control/xml/XmlTexNode.cpp' || echo '$(srcdir)/'`control/xml/XmlTexNode.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-XmlTexNode.Tpo $(DEPDIR)/xournalpp-XmlTexNode.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='control/xml/XmlTexNode.cpp' object='xournalpp-XmlTexNode.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-XmlTexNode.o `test -f 'control/xml/XmlTexNode.cpp' || echo '$(srcdir)/'`control/xml/XmlTexNode.cpp
+
+xournalpp-XmlTexNode.obj: control/xml/XmlTexNode.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-XmlTexNode.obj -MD -MP -MF $(DEPDIR)/xournalpp-XmlTexNode.Tpo -c -o xournalpp-XmlTexNode.obj `if test -f 'control/xml/XmlTexNode.cpp'; then $(CYGPATH_W) 'control/xml/XmlTexNode.cpp'; else $(CYGPATH_W) '$(srcdir)/control/xml/XmlTexNode.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-XmlTexNode.Tpo $(DEPDIR)/xournalpp-XmlTexNode.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='control/xml/XmlTexNode.cpp' object='xournalpp-XmlTexNode.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-XmlTexNode.obj `if test -f 'control/xml/XmlTexNode.cpp'; then $(CYGPATH_W) 'control/xml/XmlTexNode.cpp'; else $(CYGPATH_W) '$(srcdir)/control/xml/XmlTexNode.cpp'; fi`
+
 xournalpp-XmlNode.o: control/xml/XmlNode.cpp
 @am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-XmlNode.o -MD -MP -MF $(DEPDIR)/xournalpp-XmlNode.Tpo -c -o xournalpp-XmlNode.o `test -f 'control/xml/XmlNode.cpp' || echo '$(srcdir)/'`control/xml/XmlNode.cpp
 @am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-XmlNode.Tpo $(DEPDIR)/xournalpp-XmlNode.Po
@@ -1904,6 +1928,20 @@ xournalpp-SettingsDialog.obj: gui/dialog/SettingsDialog.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='gui/dialog/SettingsDialog.cpp' object='xournalpp-SettingsDialog.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-SettingsDialog.obj `if test -f 'gui/dialog/SettingsDialog.cpp'; then $(CYGPATH_W) 'gui/dialog/SettingsDialog.cpp'; else $(CYGPATH_W) '$(srcdir)/gui/dialog/SettingsDialog.cpp'; fi`
+
+xournalpp-LatexGlade.o: gui/dialog/LatexGlade.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-LatexGlade.o -MD -MP -MF $(DEPDIR)/xournalpp-LatexGlade.Tpo -c -o xournalpp-LatexGlade.o `test -f 'gui/dialog/LatexGlade.cpp' || echo '$(srcdir)/'`gui/dialog/LatexGlade.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-LatexGlade.Tpo $(DEPDIR)/xournalpp-LatexGlade.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='gui/dialog/LatexGlade.cpp' object='xournalpp-LatexGlade.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-LatexGlade.o `test -f 'gui/dialog/LatexGlade.cpp' || echo '$(srcdir)/'`gui/dialog/LatexGlade.cpp
+
+xournalpp-LatexGlade.obj: gui/dialog/LatexGlade.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-LatexGlade.obj -MD -MP -MF $(DEPDIR)/xournalpp-LatexGlade.Tpo -c -o xournalpp-LatexGlade.obj `if test -f 'gui/dialog/LatexGlade.cpp'; then $(CYGPATH_W) 'gui/dialog/LatexGlade.cpp'; else $(CYGPATH_W) '$(srcdir)/gui/dialog/LatexGlade.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-LatexGlade.Tpo $(DEPDIR)/xournalpp-LatexGlade.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='gui/dialog/LatexGlade.cpp' object='xournalpp-LatexGlade.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-LatexGlade.obj `if test -f 'gui/dialog/LatexGlade.cpp'; then $(CYGPATH_W) 'gui/dialog/LatexGlade.cpp'; else $(CYGPATH_W) '$(srcdir)/gui/dialog/LatexGlade.cpp'; fi`
 
 xournalpp-PagePosition.o: gui/pageposition/PagePosition.cpp
 @am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-PagePosition.o -MD -MP -MF $(DEPDIR)/xournalpp-PagePosition.Tpo -c -o xournalpp-PagePosition.o `test -f 'gui/pageposition/PagePosition.cpp' || echo '$(srcdir)/'`gui/pageposition/PagePosition.cpp
@@ -2815,6 +2853,20 @@ xournalpp-Stroke.obj: model/Stroke.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-Stroke.obj `if test -f 'model/Stroke.cpp'; then $(CYGPATH_W) 'model/Stroke.cpp'; else $(CYGPATH_W) '$(srcdir)/model/Stroke.cpp'; fi`
 
+xournalpp-TexImage.o: model/TexImage.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-TexImage.o -MD -MP -MF $(DEPDIR)/xournalpp-TexImage.Tpo -c -o xournalpp-TexImage.o `test -f 'model/TexImage.cpp' || echo '$(srcdir)/'`model/TexImage.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-TexImage.Tpo $(DEPDIR)/xournalpp-TexImage.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='model/TexImage.cpp' object='xournalpp-TexImage.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-TexImage.o `test -f 'model/TexImage.cpp' || echo '$(srcdir)/'`model/TexImage.cpp
+
+xournalpp-TexImage.obj: model/TexImage.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-TexImage.obj -MD -MP -MF $(DEPDIR)/xournalpp-TexImage.Tpo -c -o xournalpp-TexImage.obj `if test -f 'model/TexImage.cpp'; then $(CYGPATH_W) 'model/TexImage.cpp'; else $(CYGPATH_W) '$(srcdir)/model/TexImage.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-TexImage.Tpo $(DEPDIR)/xournalpp-TexImage.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='model/TexImage.cpp' object='xournalpp-TexImage.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-TexImage.obj `if test -f 'model/TexImage.cpp'; then $(CYGPATH_W) 'model/TexImage.cpp'; else $(CYGPATH_W) '$(srcdir)/model/TexImage.cpp'; fi`
+
 xournalpp-Text.o: model/Text.cpp
 @am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-Text.o -MD -MP -MF $(DEPDIR)/xournalpp-Text.Tpo -c -o xournalpp-Text.o `test -f 'model/Text.cpp' || echo '$(srcdir)/'`model/Text.cpp
 @am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-Text.Tpo $(DEPDIR)/xournalpp-Text.Po
@@ -3248,6 +3300,20 @@ xournalpp-TextUndoAction.obj: undo/TextUndoAction.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='undo/TextUndoAction.cpp' object='xournalpp-TextUndoAction.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-TextUndoAction.obj `if test -f 'undo/TextUndoAction.cpp'; then $(CYGPATH_W) 'undo/TextUndoAction.cpp'; else $(CYGPATH_W) '$(srcdir)/undo/TextUndoAction.cpp'; fi`
+
+xournalpp-TextBoxUndoAction.o: undo/TextBoxUndoAction.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-TextBoxUndoAction.o -MD -MP -MF $(DEPDIR)/xournalpp-TextBoxUndoAction.Tpo -c -o xournalpp-TextBoxUndoAction.o `test -f 'undo/TextBoxUndoAction.cpp' || echo '$(srcdir)/'`undo/TextBoxUndoAction.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-TextBoxUndoAction.Tpo $(DEPDIR)/xournalpp-TextBoxUndoAction.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='undo/TextBoxUndoAction.cpp' object='xournalpp-TextBoxUndoAction.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-TextBoxUndoAction.o `test -f 'undo/TextBoxUndoAction.cpp' || echo '$(srcdir)/'`undo/TextBoxUndoAction.cpp
+
+xournalpp-TextBoxUndoAction.obj: undo/TextBoxUndoAction.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-TextBoxUndoAction.obj -MD -MP -MF $(DEPDIR)/xournalpp-TextBoxUndoAction.Tpo -c -o xournalpp-TextBoxUndoAction.obj `if test -f 'undo/TextBoxUndoAction.cpp'; then $(CYGPATH_W) 'undo/TextBoxUndoAction.cpp'; else $(CYGPATH_W) '$(srcdir)/undo/TextBoxUndoAction.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/xournalpp-TextBoxUndoAction.Tpo $(DEPDIR)/xournalpp-TextBoxUndoAction.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='undo/TextBoxUndoAction.cpp' object='xournalpp-TextBoxUndoAction.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -c -o xournalpp-TextBoxUndoAction.obj `if test -f 'undo/TextBoxUndoAction.cpp'; then $(CYGPATH_W) 'undo/TextBoxUndoAction.cpp'; else $(CYGPATH_W) '$(srcdir)/undo/TextBoxUndoAction.cpp'; fi`
 
 xournalpp-UndoAction.o: undo/UndoAction.cpp
 @am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xournalpp_CXXFLAGS) $(CXXFLAGS) -MT xournalpp-UndoAction.o -MD -MP -MF $(DEPDIR)/xournalpp-UndoAction.Tpo -c -o xournalpp-UndoAction.o `test -f 'undo/UndoAction.cpp' || echo '$(srcdir)/'`undo/UndoAction.cpp

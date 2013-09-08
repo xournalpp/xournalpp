@@ -56,10 +56,11 @@ am_libutil_la_OBJECTS = libutil_la-Logger.lo \
 	libutil_la-InputStreamException.lo \
 	libutil_la-ObjectEncoding.lo libutil_la-ObjectInputStream.lo \
 	libutil_la-ObjectOutputStream.lo libutil_la-CrashHandler.lo \
-	libutil_la-GzHelper.lo libutil_la-OutputStream.lo \
-	libutil_la-PageRange.lo libutil_la-Stacktrace.lo \
-	libutil_la-String.lo libutil_la-pixbuf-utils.lo \
-	libutil_la-Range.lo libutil_la-Rectangle.lo libutil_la-Util.lo \
+	libutil_la-GzHelper.lo libutil_la-LatexAction.lo \
+	libutil_la-OutputStream.lo libutil_la-PageRange.lo \
+	libutil_la-Stacktrace.lo libutil_la-String.lo \
+	libutil_la-pixbuf-utils.lo libutil_la-Range.lo \
+	libutil_la-Rectangle.lo libutil_la-Util.lo \
 	libutil_la-XInputUtils.lo libutil_la-XournalType.lo
 libutil_la_OBJECTS = $(am_libutil_la_OBJECTS)
 libutil_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
@@ -251,6 +252,7 @@ libutil_la_SOURCES = \
 	serializing/ObjectOutputStream.cpp \
 	CrashHandler.cpp \
 	GzHelper.cpp \
+	LatexAction.cpp \
 	OutputStream.cpp \
 	PageRange.cpp \
 	Stacktrace.cpp \
@@ -329,6 +331,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libutil_la-GzHelper.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libutil_la-HexObjectEncoding.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libutil_la-InputStreamException.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libutil_la-LatexAction.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libutil_la-Logger.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libutil_la-ObjectEncoding.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libutil_la-ObjectInputStream.Plo@am__quote@
@@ -427,6 +430,13 @@ libutil_la-GzHelper.lo: GzHelper.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='GzHelper.cpp' object='libutil_la-GzHelper.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(LIBTOOL)  --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libutil_la_CXXFLAGS) $(CXXFLAGS) -c -o libutil_la-GzHelper.lo `test -f 'GzHelper.cpp' || echo '$(srcdir)/'`GzHelper.cpp
+
+libutil_la-LatexAction.lo: LatexAction.cpp
+@am__fastdepCXX_TRUE@	$(LIBTOOL)  --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libutil_la_CXXFLAGS) $(CXXFLAGS) -MT libutil_la-LatexAction.lo -MD -MP -MF $(DEPDIR)/libutil_la-LatexAction.Tpo -c -o libutil_la-LatexAction.lo `test -f 'LatexAction.cpp' || echo '$(srcdir)/'`LatexAction.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/libutil_la-LatexAction.Tpo $(DEPDIR)/libutil_la-LatexAction.Plo
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='LatexAction.cpp' object='libutil_la-LatexAction.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(LIBTOOL)  --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libutil_la_CXXFLAGS) $(CXXFLAGS) -c -o libutil_la-LatexAction.lo `test -f 'LatexAction.cpp' || echo '$(srcdir)/'`LatexAction.cpp
 
 libutil_la-OutputStream.lo: OutputStream.cpp
 @am__fastdepCXX_TRUE@	$(LIBTOOL)  --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libutil_la_CXXFLAGS) $(CXXFLAGS) -MT libutil_la-OutputStream.lo -MD -MP -MF $(DEPDIR)/libutil_la-OutputStream.Tpo -c -o libutil_la-OutputStream.lo `test -f 'OutputStream.cpp' || echo '$(srcdir)/'`OutputStream.cpp

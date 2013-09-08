@@ -787,6 +787,8 @@ INTLTOOL_UPDATE
 USE_NLS
 PACKAGE_DATA_DIR
 NO_PREFIX_PACKAGE_DATA_DIR
+ENABLE_MATHTEX_FALSE
+ENABLE_MATHTEX_TRUE
 ENABLE_OS_FALSE
 ENABLE_OS_TRUE
 ENABLE_PYTHON_FALSE
@@ -929,6 +931,7 @@ with_gnu_ld
 enable_libtool_lock
 enable_python
 enable_os
+enable_mathtex
 enable_nls
 '
       ac_precious_vars='build_alias
@@ -1579,6 +1582,7 @@ Optional Features:
   --disable-libtool-lock  avoid locking (might break parallel builds)
   --enable-python         Enable python support
   --enable-os             Enable Overlay Scrollbar support
+  --enable-mathtex        Enable Mathtex
   --disable-nls           do not use Native Language Support
 
 Optional Packages:
@@ -6078,13 +6082,13 @@ if test "${lt_cv_nm_interface+set}" = set; then :
 else
   lt_cv_nm_interface="BSD nm"
   echo "int some_variable = 0;" > conftest.$ac_ext
-  (eval echo "\"\$as_me:6081: $ac_compile\"" >&5)
+  (eval echo "\"\$as_me:6085: $ac_compile\"" >&5)
   (eval "$ac_compile" 2>conftest.err)
   cat conftest.err >&5
-  (eval echo "\"\$as_me:6084: $NM \\\"conftest.$ac_objext\\\"\"" >&5)
+  (eval echo "\"\$as_me:6088: $NM \\\"conftest.$ac_objext\\\"\"" >&5)
   (eval "$NM \"conftest.$ac_objext\"" 2>conftest.err > conftest.out)
   cat conftest.err >&5
-  (eval echo "\"\$as_me:6087: output\"" >&5)
+  (eval echo "\"\$as_me:6091: output\"" >&5)
   cat conftest.out >&5
   if $GREP 'External.*some_variable' conftest.out > /dev/null; then
     lt_cv_nm_interface="MS dumpbin"
@@ -7289,7 +7293,7 @@ ia64-*-hpux*)
   ;;
 *-*-irix6*)
   # Find out which ABI we are using.
-  echo '#line 7292 "configure"' > conftest.$ac_ext
+  echo '#line 7296 "configure"' > conftest.$ac_ext
   if { { eval echo "\"\$as_me\":${as_lineno-$LINENO}: \"$ac_compile\""; } >&5
   (eval $ac_compile) 2>&5
   ac_status=$?
@@ -9095,11 +9099,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:9098: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:9102: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:9102: \$? = $ac_status" >&5
+   echo "$as_me:9106: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings other than the usual output.
@@ -9434,11 +9438,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:9437: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:9441: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:9441: \$? = $ac_status" >&5
+   echo "$as_me:9445: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings other than the usual output.
@@ -9539,11 +9543,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:9542: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:9546: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:9546: \$? = $ac_status" >&5
+   echo "$as_me:9550: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -9594,11 +9598,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:9597: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:9601: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:9601: \$? = $ac_status" >&5
+   echo "$as_me:9605: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -11978,7 +11982,7 @@ else
   lt_dlunknown=0; lt_dlno_uscore=1; lt_dlneed_uscore=2
   lt_status=$lt_dlunknown
   cat > conftest.$ac_ext <<_LT_EOF
-#line 11981 "configure"
+#line 11985 "configure"
 #include "confdefs.h"
 
 #if HAVE_DLFCN_H
@@ -12074,7 +12078,7 @@ else
   lt_dlunknown=0; lt_dlno_uscore=1; lt_dlneed_uscore=2
   lt_status=$lt_dlunknown
   cat > conftest.$ac_ext <<_LT_EOF
-#line 12077 "configure"
+#line 12081 "configure"
 #include "confdefs.h"
 
 #if HAVE_DLFCN_H
@@ -14030,11 +14034,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:14033: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:14037: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:14037: \$? = $ac_status" >&5
+   echo "$as_me:14041: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings other than the usual output.
@@ -14129,11 +14133,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:14132: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:14136: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:14136: \$? = $ac_status" >&5
+   echo "$as_me:14140: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -14181,11 +14185,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:14184: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:14188: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:14188: \$? = $ac_status" >&5
+   echo "$as_me:14192: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -15154,6 +15158,8 @@ ac_compiler_gnu=$ac_cv_c_compiler_gnu
 ACLOCAL_AMFLAGS="$ACLOCAL_FLAGS -I m4"
 
 
+#We also need poppler-dev to be less than or equal to 0.12.5
+#This will be implemented in the future when I purge pkg_modules and replace it with AC_CHECK_LIB
 pkg_modules="gtk+-2.0 >= 2.18.3 poppler-glib >= 0.5.4 poppler >= 0.5.4 libglade-2.0 >= 2.6.4 gthread-2.0 >= 2.4.0 librsvg-2.0 >= 2.14.0 zlib"
 
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether Python support is requested" >&5
@@ -15180,6 +15186,21 @@ fi
 
 { $as_echo "$as_me:${as_lineno-$LINENO}: result: $enable_os" >&5
 $as_echo "$enable_os" >&6; }
+
+
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking whether Mathtex is to be enabled" >&5
+$as_echo_n "checking whether Mathtex is to be enabled... " >&6; }
+# Check whether --enable-mathtex was given.
+if test "${enable_mathtex+set}" = set; then :
+  enableval=$enable_mathtex; enable_mathtex=$enableval enable_mathtex=$enableval
+else
+  enable_mathtex=autodetect enable_mathtex=no
+fi
+
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $enable_mathtex" >&5
+$as_echo "$enable_mathtex" >&6; }
+
+
 
 if test "x$enable_os" != "xno"; then
 	pkg_modules="$pkg_modules overlay-scrollbar-0.1 >= 0.1.12"
@@ -15459,6 +15480,15 @@ else
   ENABLE_OS_FALSE=
 fi
 
+
+
+ if test "x$enable_mathtex" = "xyes"; then
+  ENABLE_MATHTEX_TRUE=
+  ENABLE_MATHTEX_FALSE='#'
+else
+  ENABLE_MATHTEX_TRUE='#'
+  ENABLE_MATHTEX_FALSE=
+fi
 
 
 packagedatadir=share/${PACKAGE}
@@ -16876,6 +16906,10 @@ Usually this means the macro was only invoked conditionally." "$LINENO" 5
 fi
 if test -z "${ENABLE_OS_TRUE}" && test -z "${ENABLE_OS_FALSE}"; then
   as_fn_error $? "conditional \"ENABLE_OS\" was never defined.
+Usually this means the macro was only invoked conditionally." "$LINENO" 5
+fi
+if test -z "${ENABLE_MATHTEX_TRUE}" && test -z "${ENABLE_MATHTEX_FALSE}"; then
+  as_fn_error $? "conditional \"ENABLE_MATHTEX\" was never defined.
 Usually this means the macro was only invoked conditionally." "$LINENO" 5
 fi
 
@@ -19409,6 +19443,7 @@ Configuration:
 	Compiler:                  ${CC}
 	Python Plugins Support:    $enable_python
 	Overlay Scrollbar enabled: $enable_os
+	Mathtex enabled:	   $enable_mathtex
 "
 
 
