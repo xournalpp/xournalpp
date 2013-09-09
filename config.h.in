@@ -27,11 +27,20 @@
 /* Define if your <locale.h> file defines LC_MESSAGES. */
 #undef HAVE_LC_MESSAGES
 
+/* Have JPEG library */
+#undef HAVE_LIBJPEG
+
+/* Define to 1 if you have the `openjpeg' library (-lopenjpeg). */
+#undef HAVE_LIBOPENJPEG
+
 /* Define to 1 if you have the <locale.h> header file. */
 #undef HAVE_LOCALE_H
 
 /* Define to 1 if you have the <memory.h> header file. */
 #undef HAVE_MEMORY_H
+
+/* Define to 1 if you have the <openjpeg.h> header file. */
+#undef HAVE_OPENJPEG_H
 
 /* Define to 1 if you have the <stdint.h> header file. */
 #undef HAVE_STDINT_H

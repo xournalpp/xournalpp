@@ -163,7 +163,9 @@ INTLTOOL_PERL = @INTLTOOL_PERL@
 INTLTOOL_UPDATE = @INTLTOOL_UPDATE@
 LD = @LD@
 LDFLAGS = @LDFLAGS@
+LIBJPEG = @LIBJPEG@
 LIBOBJS = @LIBOBJS@
+LIBOPENJPEG_LIBS = @LIBOPENJPEG_LIBS@
 LIBS = @LIBS@
 LIBTOOL = @LIBTOOL@
 LIPO = @LIPO@
@@ -281,6 +283,7 @@ ui_DATA = \
 	pagesize.glade \
 	pdfpages.glade \
 	settings.glade \
+	texdialog.glade \
 	toolbarCustomizeDialog.glade \
 	toolbarManageDialog.glade \
 	toolbar.ini

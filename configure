@@ -787,10 +787,16 @@ INTLTOOL_UPDATE
 USE_NLS
 PACKAGE_DATA_DIR
 NO_PREFIX_PACKAGE_DATA_DIR
+ENABLE_MATHTEX_FALSE
+ENABLE_MATHTEX_TRUE
 ENABLE_OS_FALSE
 ENABLE_OS_TRUE
 ENABLE_PYTHON_FALSE
 ENABLE_PYTHON_TRUE
+LIBJPEG
+HAVE_LIBJPEG_FALSE
+HAVE_LIBJPEG_TRUE
+LIBOPENJPEG_LIBS
 PYTHON_EXTRA_LIBS
 PYTHON_CFLAGS
 PYTHON_LIB_LOC
@@ -929,6 +935,9 @@ with_gnu_ld
 enable_libtool_lock
 enable_python
 enable_os
+enable_mathtex
+enable_libopenjpeg
+with_libjpeg
 enable_nls
 '
       ac_precious_vars='build_alias
@@ -1579,6 +1588,8 @@ Optional Features:
   --disable-libtool-lock  avoid locking (might break parallel builds)
   --enable-python         Enable python support
   --enable-os             Enable Overlay Scrollbar support
+  --enable-mathtex        Enable Mathtex
+  --disable-libopenjpeg   Will not build against libopenjpeg.
   --disable-nls           do not use Native Language Support
 
 Optional Packages:
@@ -1587,6 +1598,7 @@ Optional Packages:
   --with-pic              try to use only PIC/non-PIC objects [default=use
                           both]
   --with-gnu-ld           assume the C compiler uses GNU ld [default=no]
+  --without-libjpeg       disable JPEG
 
 Some influential environment variables:
   CC          C compiler command
@@ -6078,13 +6090,13 @@ if test "${lt_cv_nm_interface+set}" = set; then :
 else
   lt_cv_nm_interface="BSD nm"
   echo "int some_variable = 0;" > conftest.$ac_ext
-  (eval echo "\"\$as_me:6081: $ac_compile\"" >&5)
+  (eval echo "\"\$as_me:6093: $ac_compile\"" >&5)
   (eval "$ac_compile" 2>conftest.err)
   cat conftest.err >&5
-  (eval echo "\"\$as_me:6084: $NM \\\"conftest.$ac_objext\\\"\"" >&5)
+  (eval echo "\"\$as_me:6096: $NM \\\"conftest.$ac_objext\\\"\"" >&5)
   (eval "$NM \"conftest.$ac_objext\"" 2>conftest.err > conftest.out)
   cat conftest.err >&5
-  (eval echo "\"\$as_me:6087: output\"" >&5)
+  (eval echo "\"\$as_me:6099: output\"" >&5)
   cat conftest.out >&5
   if $GREP 'External.*some_variable' conftest.out > /dev/null; then
     lt_cv_nm_interface="MS dumpbin"
@@ -7289,7 +7301,7 @@ ia64-*-hpux*)
   ;;
 *-*-irix6*)
   # Find out which ABI we are using.
-  echo '#line 7292 "configure"' > conftest.$ac_ext
+  echo '#line 7304 "configure"' > conftest.$ac_ext
   if { { eval echo "\"\$as_me\":${as_lineno-$LINENO}: \"$ac_compile\""; } >&5
   (eval $ac_compile) 2>&5
   ac_status=$?
@@ -9095,11 +9107,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:9098: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:9110: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:9102: \$? = $ac_status" >&5
+   echo "$as_me:9114: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings other than the usual output.
@@ -9434,11 +9446,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:9437: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:9449: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:9441: \$? = $ac_status" >&5
+   echo "$as_me:9453: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings other than the usual output.
@@ -9539,11 +9551,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:9542: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:9554: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:9546: \$? = $ac_status" >&5
+   echo "$as_me:9558: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -9594,11 +9606,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:9597: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:9609: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:9601: \$? = $ac_status" >&5
+   echo "$as_me:9613: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -11978,7 +11990,7 @@ else
   lt_dlunknown=0; lt_dlno_uscore=1; lt_dlneed_uscore=2
   lt_status=$lt_dlunknown
   cat > conftest.$ac_ext <<_LT_EOF
-#line 11981 "configure"
+#line 11993 "configure"
 #include "confdefs.h"
 
 #if HAVE_DLFCN_H
@@ -12074,7 +12086,7 @@ else
   lt_dlunknown=0; lt_dlno_uscore=1; lt_dlneed_uscore=2
   lt_status=$lt_dlunknown
   cat > conftest.$ac_ext <<_LT_EOF
-#line 12077 "configure"
+#line 12089 "configure"
 #include "confdefs.h"
 
 #if HAVE_DLFCN_H
@@ -14030,11 +14042,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:14033: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:14045: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:14037: \$? = $ac_status" >&5
+   echo "$as_me:14049: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings other than the usual output.
@@ -14129,11 +14141,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:14132: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:14144: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:14136: \$? = $ac_status" >&5
+   echo "$as_me:14148: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -14181,11 +14193,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:14184: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:14196: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:14188: \$? = $ac_status" >&5
+   echo "$as_me:14200: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -15154,7 +15166,8 @@ ac_compiler_gnu=$ac_cv_c_compiler_gnu
 ACLOCAL_AMFLAGS="$ACLOCAL_FLAGS -I m4"
 
 
-pkg_modules="gtk+-2.0 >= 2.18.3 poppler-glib >= 0.5.4 poppler >= 0.5.4 libglade-2.0 >= 2.6.4 gthread-2.0 >= 2.4.0 librsvg-2.0 >= 2.14.0 zlib"
+#We also are compiling with libpoppler so we require a number of extra packages
+pkg_modules="gtk+-2.0 >= 2.18.3 libglade-2.0 >= 2.6.4 gthread-2.0 >= 2.4.0 librsvg-2.0 >= 2.14.0 zlib fontconfig lcms"
 
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether Python support is requested" >&5
 $as_echo_n "checking whether Python support is requested... " >&6; }
@@ -15180,6 +15193,21 @@ fi
 
 { $as_echo "$as_me:${as_lineno-$LINENO}: result: $enable_os" >&5
 $as_echo "$enable_os" >&6; }
+
+
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking whether Mathtex is to be enabled" >&5
+$as_echo_n "checking whether Mathtex is to be enabled... " >&6; }
+# Check whether --enable-mathtex was given.
+if test "${enable_mathtex+set}" = set; then :
+  enableval=$enable_mathtex; enable_mathtex=$enableval enable_mathtex=$enableval
+else
+  enable_mathtex=autodetect enable_mathtex=no
+fi
+
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $enable_mathtex" >&5
+$as_echo "$enable_mathtex" >&6; }
+
+
 
 if test "x$enable_os" != "xno"; then
 	pkg_modules="$pkg_modules overlay-scrollbar-0.1 >= 0.1.12"
@@ -15426,6 +15454,243 @@ if test "x$have_python" != "xno"; then
 	PACKAGE_LIBS="$PACKAGE_LIBS $PYTHON_LIBS $PYTHON_LIB_LOC $PYTHON_CFLAGS $PYTHON_EXTRA_LIBS"
 fi
 
+# Check whether --enable-libopenjpeg was given.
+if test "${enable_libopenjpeg+set}" = set; then :
+  enableval=$enable_libopenjpeg; enable_libopenjpeg=$enableval
+else
+  enable_libopenjpeg="try"
+fi
+
+if test x$enable_libopenjpeg = xyes; then
+  { $as_echo "$as_me:${as_lineno-$LINENO}: checking for opj_cio_open in -lopenjpeg" >&5
+$as_echo_n "checking for opj_cio_open in -lopenjpeg... " >&6; }
+if test "${ac_cv_lib_openjpeg_opj_cio_open+set}" = set; then :
+  $as_echo_n "(cached) " >&6
+else
+  ac_check_lib_save_LIBS=$LIBS
+LIBS="-lopenjpeg  $LIBS"
+cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+/* Override any GCC internal prototype to avoid an error.
+   Use char because int might match the return type of a GCC
+   builtin and then its argument prototype would still apply.  */
+#ifdef __cplusplus
+extern "C"
+#endif
+char opj_cio_open ();
+int
+main ()
+{
+return opj_cio_open ();
+  ;
+  return 0;
+}
+_ACEOF
+if ac_fn_c_try_link "$LINENO"; then :
+  ac_cv_lib_openjpeg_opj_cio_open=yes
+else
+  ac_cv_lib_openjpeg_opj_cio_open=no
+fi
+rm -f core conftest.err conftest.$ac_objext \
+    conftest$ac_exeext conftest.$ac_ext
+LIBS=$ac_check_lib_save_LIBS
+fi
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_lib_openjpeg_opj_cio_open" >&5
+$as_echo "$ac_cv_lib_openjpeg_opj_cio_open" >&6; }
+if test "x$ac_cv_lib_openjpeg_opj_cio_open" = x""yes; then :
+  cat >>confdefs.h <<_ACEOF
+#define HAVE_LIBOPENJPEG 1
+_ACEOF
+
+  LIBS="-lopenjpeg $LIBS"
+
+else
+  as_fn_error $? "\"*** libopenjpeg library not found ***\"" "$LINENO" 5
+fi
+
+  for ac_header in openjpeg.h
+do :
+  ac_fn_c_check_header_mongrel "$LINENO" "openjpeg.h" "ac_cv_header_openjpeg_h" "$ac_includes_default"
+if test "x$ac_cv_header_openjpeg_h" = x""yes; then :
+  cat >>confdefs.h <<_ACEOF
+#define HAVE_OPENJPEG_H 1
+_ACEOF
+
+else
+  as_fn_error $? "\"*** libopenjpeg headers not found ***\"" "$LINENO" 5
+fi
+
+done
+
+elif test x$enable_libopenjpeg = xtry; then
+  { $as_echo "$as_me:${as_lineno-$LINENO}: checking for opj_cio_open in -lopenjpeg" >&5
+$as_echo_n "checking for opj_cio_open in -lopenjpeg... " >&6; }
+if test "${ac_cv_lib_openjpeg_opj_cio_open+set}" = set; then :
+  $as_echo_n "(cached) " >&6
+else
+  ac_check_lib_save_LIBS=$LIBS
+LIBS="-lopenjpeg  $LIBS"
+cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+/* Override any GCC internal prototype to avoid an error.
+   Use char because int might match the return type of a GCC
+   builtin and then its argument prototype would still apply.  */
+#ifdef __cplusplus
+extern "C"
+#endif
+char opj_cio_open ();
+int
+main ()
+{
+return opj_cio_open ();
+  ;
+  return 0;
+}
+_ACEOF
+if ac_fn_c_try_link "$LINENO"; then :
+  ac_cv_lib_openjpeg_opj_cio_open=yes
+else
+  ac_cv_lib_openjpeg_opj_cio_open=no
+fi
+rm -f core conftest.err conftest.$ac_objext \
+    conftest$ac_exeext conftest.$ac_ext
+LIBS=$ac_check_lib_save_LIBS
+fi
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_lib_openjpeg_opj_cio_open" >&5
+$as_echo "$ac_cv_lib_openjpeg_opj_cio_open" >&6; }
+if test "x$ac_cv_lib_openjpeg_opj_cio_open" = x""yes; then :
+  enable_libopenjpeg="yes"
+else
+  enable_libopenjpeg="no"
+fi
+
+  for ac_header in openjpeg.h
+do :
+  ac_fn_c_check_header_mongrel "$LINENO" "openjpeg.h" "ac_cv_header_openjpeg_h" "$ac_includes_default"
+if test "x$ac_cv_header_openjpeg_h" = x""yes; then :
+  cat >>confdefs.h <<_ACEOF
+#define HAVE_OPENJPEG_H 1
+_ACEOF
+
+else
+  enable_libopenjpeg="no"
+fi
+
+done
+
+fi
+
+if test x$enable_libopenjpeg = xyes; then
+  LIBOPENJPEG_LIBS="-lopenjpeg"
+
+fi
+
+
+
+
+# Check whether --with-libjpeg was given.
+if test "${with_libjpeg+set}" = set; then :
+  withval=$with_libjpeg;
+fi
+
+if test x$with_libjpeg != xno && test -z "$LIBJPEG"; then
+  { $as_echo "$as_me:${as_lineno-$LINENO}: checking for jpeg_destroy_decompress in -ljpeg" >&5
+$as_echo_n "checking for jpeg_destroy_decompress in -ljpeg... " >&6; }
+if test "${ac_cv_lib_jpeg_jpeg_destroy_decompress+set}" = set; then :
+  $as_echo_n "(cached) " >&6
+else
+  ac_check_lib_save_LIBS=$LIBS
+LIBS="-ljpeg  $LIBS"
+cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+/* Override any GCC internal prototype to avoid an error.
+   Use char because int might match the return type of a GCC
+   builtin and then its argument prototype would still apply.  */
+#ifdef __cplusplus
+extern "C"
+#endif
+char jpeg_destroy_decompress ();
+int
+main ()
+{
+return jpeg_destroy_decompress ();
+  ;
+  return 0;
+}
+_ACEOF
+if ac_fn_c_try_link "$LINENO"; then :
+  ac_cv_lib_jpeg_jpeg_destroy_decompress=yes
+else
+  ac_cv_lib_jpeg_jpeg_destroy_decompress=no
+fi
+rm -f core conftest.err conftest.$ac_objext \
+    conftest$ac_exeext conftest.$ac_ext
+LIBS=$ac_check_lib_save_LIBS
+fi
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_lib_jpeg_jpeg_destroy_decompress" >&5
+$as_echo "$ac_cv_lib_jpeg_jpeg_destroy_decompress" >&6; }
+if test "x$ac_cv_lib_jpeg_jpeg_destroy_decompress" = x""yes; then :
+  jpeg_ok=yes
+else
+  jpeg_ok=no
+               { $as_echo "$as_me:${as_lineno-$LINENO}: WARNING: *** JPEG will not be built (JPEG library not found) ***" >&5
+$as_echo "$as_me: WARNING: *** JPEG will not be built (JPEG library not found) ***" >&2;}
+fi
+
+  if test "$jpeg_ok" = yes; then
+    { $as_echo "$as_me:${as_lineno-$LINENO}: checking for jpeglib.h" >&5
+$as_echo_n "checking for jpeglib.h... " >&6; }
+    cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+#include <stdio.h>
+#undef PACKAGE
+#undef VERSION
+#undef HAVE_STDLIB_H
+#include <jpeglib.h>
+_ACEOF
+if ac_fn_c_try_cpp "$LINENO"; then :
+  jpeg_ok=yes
+else
+  jpeg_ok=no
+fi
+rm -f conftest.err conftest.i conftest.$ac_ext
+    { $as_echo "$as_me:${as_lineno-$LINENO}: result: $jpeg_ok" >&5
+$as_echo "$jpeg_ok" >&6; }
+    if test "$jpeg_ok" = yes; then
+      LIBJPEG='-ljpeg'
+    else
+        { $as_echo "$as_me:${as_lineno-$LINENO}: WARNING: *** JPEG loader will not be built (JPEG header file not found) ***" >&5
+$as_echo "$as_me: WARNING: *** JPEG loader will not be built (JPEG header file not found) ***" >&2;}
+    fi
+  fi
+
+  if test x$with_libjpeg != xno && test -z "$LIBJPEG"; then
+     as_fn_error $? "
+*** Checks for JPEG failed. You can build without it by passing
+*** --without-libjpeg to configure" "$LINENO" 5
+  else
+
+$as_echo "#define HAVE_LIBJPEG 1" >>confdefs.h
+
+  fi
+fi
+
+ if test ! -z "$LIBJPEG"; then
+  HAVE_LIBJPEG_TRUE=
+  HAVE_LIBJPEG_FALSE='#'
+else
+  HAVE_LIBJPEG_TRUE='#'
+  HAVE_LIBJPEG_FALSE=
+fi
+
+
+
+PACKAGE_LIBS="$PACKAGE_LIBS $LIBJPEG $LIBOPENJPEG_LIBS"
+
+
 if test "x$have_python" != "xyes"; then
 	if test "x$enable_python" = "xyes"; then
 		as_fn_error $? "Python not found" "$LINENO" 5
@@ -15459,6 +15724,15 @@ else
   ENABLE_OS_FALSE=
 fi
 
+
+
+ if test "x$enable_mathtex" = "xyes"; then
+  ENABLE_MATHTEX_TRUE=
+  ENABLE_MATHTEX_FALSE='#'
+else
+  ENABLE_MATHTEX_TRUE='#'
+  ENABLE_MATHTEX_FALSE=
+fi
 
 
 packagedatadir=share/${PACKAGE}
@@ -16870,12 +17144,20 @@ if test -z "${am__fastdepCXX_TRUE}" && test -z "${am__fastdepCXX_FALSE}"; then
   as_fn_error $? "conditional \"am__fastdepCXX\" was never defined.
 Usually this means the macro was only invoked conditionally." "$LINENO" 5
 fi
+if test -z "${HAVE_LIBJPEG_TRUE}" && test -z "${HAVE_LIBJPEG_FALSE}"; then
+  as_fn_error $? "conditional \"HAVE_LIBJPEG\" was never defined.
+Usually this means the macro was only invoked conditionally." "$LINENO" 5
+fi
 if test -z "${ENABLE_PYTHON_TRUE}" && test -z "${ENABLE_PYTHON_FALSE}"; then
   as_fn_error $? "conditional \"ENABLE_PYTHON\" was never defined.
 Usually this means the macro was only invoked conditionally." "$LINENO" 5
 fi
 if test -z "${ENABLE_OS_TRUE}" && test -z "${ENABLE_OS_FALSE}"; then
   as_fn_error $? "conditional \"ENABLE_OS\" was never defined.
+Usually this means the macro was only invoked conditionally." "$LINENO" 5
+fi
+if test -z "${ENABLE_MATHTEX_TRUE}" && test -z "${ENABLE_MATHTEX_FALSE}"; then
+  as_fn_error $? "conditional \"ENABLE_MATHTEX\" was never defined.
 Usually this means the macro was only invoked conditionally." "$LINENO" 5
 fi
 
@@ -19409,6 +19691,7 @@ Configuration:
 	Compiler:                  ${CC}
 	Python Plugins Support:    $enable_python
 	Overlay Scrollbar enabled: $enable_os
+	Mathtex enabled:	   $enable_mathtex
 "
 
 
