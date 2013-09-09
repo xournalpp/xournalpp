@@ -15,6 +15,7 @@
 #ifdef ENABLE_LIBPNG
 
 #include "poppler/Error.h"
+#include "zlib.h"
 
 PNGWriter::PNGWriter()
 {

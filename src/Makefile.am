@@ -208,9 +208,5 @@ xournalpp_LDADD = \
 	@PACKAGE_LIBS@ $(INTLLIBS) \
 	$(top_builddir)/src/util/libutil.la \
 	pdf/libpoppler.a \
-	pdf/libpoppler-glib.a \
-	/usr/lib/liblcms.so.1 \
-	/usr/lib/libopenjpeg.so \
-	/usr/lib/libjpeg.so.62
+	pdf/libpoppler-glib.a
 
-	

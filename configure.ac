@@ -18,10 +18,8 @@ AC_CONFIG_MACRO_DIR([m4])
 AC_SUBST(ACLOCAL_AMFLAGS, "$ACLOCAL_FLAGS -I m4")
 
 dnl librsvg-2.0 is not really needed by Xournal++, but if you don't have it crashes while loading the SVG icons (Problem with Gentoo)
-#We also need poppler-dev to be less than or equal to 0.12.5
-#This will be implemented in the future when I purge pkg_modules and replace it with AC_CHECK_LIB
-#pkg_modules="gtk+-2.0 >= 2.18.3 poppler-glib >= 0.5.4 poppler >= 0.5.4 libglade-2.0 >= 2.6.4 gthread-2.0 >= 2.4.0 librsvg-2.0 >= 2.14.0 zlib"
-pkg_modules="gtk+-2.0 >= 2.18.3 libglade-2.0 >= 2.6.4 gthread-2.0 >= 2.4.0 librsvg-2.0 >= 2.14.0 libopenjpeg >= 1.2 zlib"
+#We also are compiling with libpoppler so we require a number of extra packages
+pkg_modules="gtk+-2.0 >= 2.18.3 libglade-2.0 >= 2.6.4 gthread-2.0 >= 2.4.0 librsvg-2.0 >= 2.14.0 zlib fontconfig lcms"
 
 AC_MSG_CHECKING([whether Python support is requested])
 AC_ARG_ENABLE([python],
@@ -89,6 +87,78 @@ if test "x$have_python" != "xno"; then
 	PACKAGE_CFLAGS="$PACKAGE_CFLAGS $PYTHON_CFLAGS"
 	PACKAGE_LIBS="$PACKAGE_LIBS $PYTHON_LIBS $PYTHON_LIB_LOC $PYTHON_CFLAGS $PYTHON_EXTRA_LIBS"
 fi
+
+dnl Test for libopenjpeg
+AC_ARG_ENABLE(libopenjpeg,
+	      AC_HELP_STRING([--disable-libopenjpeg],
+	                     [Will not build against libopenjpeg.]),
+              enable_libopenjpeg=$enableval,
+              enable_libopenjpeg="try")
+if test x$enable_libopenjpeg = xyes; then
+  AC_CHECK_LIB([openjpeg], [opj_cio_open],,
+	       AC_MSG_ERROR("*** libopenjpeg library not found ***"))
+  AC_CHECK_HEADERS([openjpeg.h],,
+		   AC_MSG_ERROR("*** libopenjpeg headers not found ***"))
+elif test x$enable_libopenjpeg = xtry; then
+  AC_CHECK_LIB([openjpeg], [opj_cio_open],
+               [enable_libopenjpeg="yes"],
+	       [enable_libopenjpeg="no"])
+  AC_CHECK_HEADERS([openjpeg.h],,
+		   [enable_libopenjpeg="no"])
+fi
+
+if test x$enable_libopenjpeg = xyes; then
+  LIBOPENJPEG_LIBS="-lopenjpeg"
+  AC_SUBST(LIBOPENJPEG_LIBS)
+dnl  AC_DEFINE(ENABLE_LIBOPENJPEG)
+fi
+
+dnl AM_CONDITIONAL(BUILD_LIBOPENJPEG, test x$enable_libopenjpeg = xyes)
+dnl AH_TEMPLATE([ENABLE_LIBOPENJPEG],
+dnl 	    [Use libopenjpeg instead of builtin jpeg2000 decoder.])
+
+
+dnl libjpeg
+AC_ARG_WITH(libjpeg,
+            [AC_HELP_STRING([--without-libjpeg],
+                            [disable JPEG])])
+if test x$with_libjpeg != xno && test -z "$LIBJPEG"; then
+  AC_CHECK_LIB(jpeg, jpeg_destroy_decompress,
+               jpeg_ok=yes,
+               jpeg_ok=no
+               AC_MSG_WARN(*** JPEG will not be built (JPEG library not found) ***))
+  if test "$jpeg_ok" = yes; then
+    AC_MSG_CHECKING([for jpeglib.h])
+    AC_TRY_CPP(
+[#include <stdio.h>
+#undef PACKAGE
+#undef VERSION
+#undef HAVE_STDLIB_H
+#include <jpeglib.h>],
+        jpeg_ok=yes,
+        jpeg_ok=no)
+    AC_MSG_RESULT($jpeg_ok)
+    if test "$jpeg_ok" = yes; then
+      LIBJPEG='-ljpeg'
+    else
+        AC_MSG_WARN(*** JPEG loader will not be built (JPEG header file not found) ***)
+    fi
+  fi
+
+  if test x$with_libjpeg != xno && test -z "$LIBJPEG"; then
+     AC_MSG_ERROR([
+*** Checks for JPEG failed. You can build without it by passing
+*** --without-libjpeg to configure])
+  else
+    AC_DEFINE(HAVE_LIBJPEG, [1], [Have JPEG library])
+  fi
+fi
+
+AM_CONDITIONAL(HAVE_LIBJPEG, test ! -z "$LIBJPEG")
+AC_SUBST(LIBJPEG)
+
+PACKAGE_LIBS="$PACKAGE_LIBS $LIBJPEG $LIBOPENJPEG_LIBS"
+
 
 if test "x$have_python" != "xyes"; then
 	if test "x$enable_python" = "xyes"; then

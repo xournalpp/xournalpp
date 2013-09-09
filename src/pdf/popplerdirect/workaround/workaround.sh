@@ -18,7 +18,7 @@ echo '#ifdef HAVE_POPPLER_CAIRO_OUTPUT_DEV' >> ${CONF}
 echo '# undef HAVE_POPPLER_CAIRO_OUTPUT_DEV' >> ${CONF}
 echo '#endif' >> ${CONF}
 cd src/pdf/popplerdirect/poppler-0.12.4/
-./configure && make
+./configure --enable-cms --enable-libopenjpeg --enable-libjpeg && make
 cd ../../
 ln -fs popplerdirect/poppler-0.12.4/poppler/.libs/libpoppler.a ./
 ln -fs popplerdirect/poppler-0.12.4/glib/.libs/libpoppler-glib.a ./
