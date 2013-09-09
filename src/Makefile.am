@@ -205,8 +205,8 @@ xournalpp_CXXFLAGS += \
 endif
 
 xournalpp_LDADD = \
-	@PACKAGE_LIBS@ $(INTLLIBS) \
-	$(top_builddir)/src/util/libutil.la \
 	pdf/libpoppler.a \
-	pdf/libpoppler-glib.a
+	pdf/libpoppler-glib.a \
+	@PACKAGE_LIBS@ $(INTLLIBS) \
+	$(top_builddir)/src/util/libutil.la
 
