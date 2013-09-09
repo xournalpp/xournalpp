@@ -2659,6 +2659,7 @@ void Control::fontChanged() {
 void Control::runLatex() {
 	XOJ_CHECK_TYPE(Control);
 
+#ifdef ENABLE_MATHTEX
 	this->doc->lock();
 
 	int pageNr = getCurrentPageNo();
@@ -2760,6 +2761,9 @@ void Control::runLatex() {
 	this->doc->unlock();
 
 	undoRedo->addUndoAction(new InsertUndoAction(page, layer, img, view));
+#else
+	 printf("Mathtex is disabled. Recompile with ./configure --enable-mathtex, ensuring you have the mathtex command on your system.\n");
+#endif
 
 }
 

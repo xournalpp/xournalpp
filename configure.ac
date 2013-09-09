@@ -38,6 +38,16 @@ AC_ARG_ENABLE([os],
 	[enable_os=autodetect enable_os=no])
 AC_MSG_RESULT([$enable_os])
 
+
+AC_MSG_CHECKING([whether Mathtex is to be enabled])
+AC_ARG_ENABLE([mathtex],
+             AS_HELP_STRING([--enable-mathtex],[Enable Mathtex]),
+             [enable_mathtex=$enableval enable_mathtex=$enableval],
+             [enable_mathtex=autodetect enable_mathtex=no])
+AC_MSG_RESULT([$enable_mathtex])
+
+
+
 if test "x$enable_os" != "xno"; then
 	pkg_modules="$pkg_modules overlay-scrollbar-0.1 >= 0.1.12"
 fi
@@ -98,6 +108,9 @@ AM_CONDITIONAL([ENABLE_PYTHON],[test "x$enable_python" = "xyes"])
 AM_CONDITIONAL([ENABLE_OS],[test "x$enable_os" = "xyes"])
 
 
+dnl Compile with mathtex
+AM_CONDITIONAL([ENABLE_MATHTEX],[test "x$enable_mathtex" = "xyes"])
+
 dnl Set PACKAGE DATA & DOC DIR
 packagedatadir=share/${PACKAGE}
 packagedocdir=doc/${PACKAGE}
@@ -130,6 +143,7 @@ Configuration:
 	Compiler:                  ${CC}
 	Python Plugins Support:    $enable_python
 	Overlay Scrollbar enabled: $enable_os
+	Mathtex enabled:	   $enable_mathtex
 "
 
 
