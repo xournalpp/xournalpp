@@ -179,6 +179,9 @@ AM_CONDITIONAL([ENABLE_OS],[test "x$enable_os" = "xyes"])
 
 
 dnl Compile with mathtex
+if test "x$enable_mathtex" != "xno"; then
+	AC_DEFINE([ENABLE_MATHTEX],[1],[Define to enable mathtex support])
+fi
 AM_CONDITIONAL([ENABLE_MATHTEX],[test "x$enable_mathtex" = "xyes"])
 
 dnl Set PACKAGE DATA & DOC DIR
