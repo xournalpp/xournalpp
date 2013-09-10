@@ -17,8 +17,8 @@ echo "workaround.sh: CairoOutputDev.h not found, use our version, which may not 
 echo '#ifdef HAVE_POPPLER_CAIRO_OUTPUT_DEV' >> ${CONF}
 echo '# undef HAVE_POPPLER_CAIRO_OUTPUT_DEV' >> ${CONF}
 echo '#endif' >> ${CONF}
-cd src/pdf/popplerdirect/poppler-0.12.4/
+cd src/pdf/popplerdirect/poppler-0.24.1/
 ./configure --enable-cms --enable-libopenjpeg --enable-libjpeg && make
 cd ../../
-ln -fs popplerdirect/poppler-0.12.4/poppler/.libs/libpoppler.a ./
-ln -fs popplerdirect/poppler-0.12.4/glib/.libs/libpoppler-glib.a ./
+ln -fs popplerdirect/poppler-0.24.1/poppler/.libs/libpoppler.a ./
+ln -fs popplerdirect/poppler-0.24.1/glib/.libs/libpoppler-glib.a ./

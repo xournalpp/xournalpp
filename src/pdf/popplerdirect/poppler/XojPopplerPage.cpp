@@ -1,11 +1,12 @@
 #include "XojPopplerPage.h"
-#include "../poppler-0.12.4/poppler/TextOutputDev.h"
-#include "../poppler-0.12.4/poppler/PDFDoc.h"
-#include "../poppler-0.12.4/poppler/Gfx.h"
-#include "../poppler-0.12.4/poppler/OutputDev.h"
+#include "../poppler-0.24.1/poppler/TextOutputDev.h"
+#include "../poppler-0.24.1/poppler/PDFDoc.h"
+#include "../poppler-0.24.1/poppler/Gfx.h"
+#include "../poppler-0.24.1/poppler/OutputDev.h"
 #include "../workaround/workaround.h"
 
-XojPopplerPage::XojPopplerPage(PDFDoc * doc, GMutex * docMutex, CairoOutputDev * outputDev, Page * page, int index) {
+XojPopplerPage::XojPopplerPage(PDFDoc * doc, GMutex * docMutex,
+		CairoOutputDev * outputDev, Page * page, int index) {
 	XOJ_INIT_TYPE(XojPopplerPage);
 
 	this->doc = doc;
@@ -85,9 +86,14 @@ void XojPopplerPage::render(cairo_t * cr, bool forPrinting) {
 
 	g_mutex_lock(this->docMutex);
 
-	this->page->displaySlice(this->outputDev, 72.0, 72.0, 0, false, /* useMediaBox */
-	true, /* Crop */
-	-1, -1, -1, -1, forPrinting, this->doc->getCatalog(), NULL, NULL, forPrinting ? poppler_print_annot_cb : NULL, NULL);
+	this->page->displaySlice(this->outputDev, 72.0 /* hDPI */, 72.0 /* vDPI */,
+			0 /* rotate */, false, /* useMediaBox */
+			true, /* Crop */
+			-1 /* sliceX */, -1 /* sliceY */, -1 /* sliceW */, -1 /* sliceH */,
+			forPrinting /* printing */);
+
+	// TODO POPPLER ,this->doc->getCatalog(), NULL, NULL, forPrinting ? poppler_print_annot_cb : NULL, NULL);
+
 	cairo_restore(cr);
 
 	g_mutex_unlock(this->docMutex);
@@ -105,11 +111,15 @@ void XojPopplerPage::initTextPage() {
 
 	if (this->text == NULL) {
 		g_mutex_lock(this->docMutex);
-		TextOutputDev *textDev = new TextOutputDev(NULL, true, false, false);
+		TextOutputDev *textDev = new TextOutputDev(NULL, true, /* TODO POPPLER : Check value */
+				0, false, false);
+
 		Gfx *gfx = this->page->createGfx(textDev, 72.0, 72.0, 0, false, /* useMediaBox */
 		true, /* Crop */
 		-1, -1, -1, -1, false, /* printing */
-		this->doc->getCatalog(), NULL, NULL, NULL, NULL);
+		NULL, NULL);
+
+
 		this->page->display(gfx);
 		textDev->endPage();
 
@@ -159,12 +169,12 @@ GList * XojPopplerPage::findText(const char * text) {
 	//			 double *xMin, double *yMin,
 	//			 double *xMax, double *yMax);
 
-
 	bool atTop = true;
 
 	while (this->text->findText(ucs4, ucs4_len, atTop, true, // startAtTop, stopAtBottom
 			!atTop, false, // startAtLast, stopAtLast
 			false, false, // caseSensitive, backwards
+			false, // GBool wholeWord,
 			&xMin, &yMin, &xMax, &yMax)) {
 
 		match = new XojPopplerRectangle();

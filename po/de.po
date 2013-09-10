@@ -1829,9 +1829,6 @@ msgstr ""
 msgid "PDF background missing"
 msgstr "PDF Hingergrund fehlt"
 
-#~ msgid "_Collaboration"
-#~ msgstr "_Zusammenarbeit"
-
 #~ msgid "_Start"
 #~ msgstr "_Start"
 

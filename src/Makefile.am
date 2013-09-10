@@ -196,6 +196,8 @@ INCLUDES = \
 
 xournalpp_CXXFLAGS = \
 	-I$(top_srcdir)/src/util \
+	-I$(top_srcdir)/src/pdf/popplerdirect/poppler-0.24.1 \
+	-I$(top_srcdir)/src/pdf/popplerdirect/poppler-0.24.1/poppler \
 	-g -rdynamic \
 	-Wreturn-type -Wuninitialized -Wunused-value -Wunused-variable   
 

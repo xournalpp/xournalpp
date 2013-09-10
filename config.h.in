@@ -1,5 +1,8 @@
 /* config.h.in.  Generated from configure.ac by autoheader.  */
 
+/* Define to enable mathtex support */
+#undef ENABLE_MATHTEX
+
 /* always defined to indicate that i18n is enabled */
 #undef ENABLE_NLS
 

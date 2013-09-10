@@ -7,7 +7,7 @@
 #include <poppler/CairoOutputDev.h>
 #else
 //#include "CairoOutputDev.h"
-#include "../poppler-0.12.4/poppler/CairoOutputDev.h"
+#include "../poppler-0.24.1/poppler/CairoOutputDev.h"
 #endif
 
 #endif // __WORKAROUND_H__

@@ -2,10 +2,10 @@
 #include "XojPopplerIter.h"
 
 #include <glib.h>
-#include "../poppler-0.12.4/poppler/PDFDoc.h"
-#include "../poppler-0.12.4/poppler/GlobalParams.h"
-#include "../poppler-0.12.4/poppler/ErrorCodes.h"
-#include "../poppler-0.12.4/poppler/Outline.h"
+#include "../poppler-0.24.1/poppler/PDFDoc.h"
+#include "../poppler-0.24.1/poppler/GlobalParams.h"
+#include "../poppler-0.24.1/poppler/ErrorCodes.h"
+#include "../poppler-0.24.1/poppler/Outline.h"
 
 #include <config.h>
 #include <glib/gi18n-lib.h>
@@ -22,7 +22,7 @@ public:
 		this->docMutex = g_mutex_new();
 
 		output_dev = new CairoOutputDev();
-		output_dev->startDoc(this->doc->getXRef(), this->doc->getCatalog());
+		output_dev->startDoc(this->doc);
 
 		Catalog * catalog = this->doc->getCatalog();
 
@@ -346,23 +346,27 @@ bool XojPopplerDocument::save(String filename, GError ** error) {
 		return false;
 	}
 
-	GooString * fname = new GooString(filename.c_str());
-	int err_code = this->data->doc->saveAs(fname);
-	delete fname;
 
-	switch (err_code) {
-	case errNone:
-		break;
-	case errOpenFile:
-		g_set_error(error, 0, 0, _("Failed to open file for writing"));
-		break;
-	case errEncrypted:
-		g_set_error(error, 0, 0, _("Document is encrypted"));
-		break;
-	default:
-		g_set_error(error, 0, 0, _("Failed to save document"));
-	}
+	// TODO !!!!!!
+	return false;
 
-	return err_code == errNone;
+//	GooString * fname = new GooString(filename.c_str());
+//	int err_code = this->data->doc->saveAs(fname);
+//	delete fname;
+//
+//	switch (err_code) {
+//	case errNone:
+//		break;
+//	case errOpenFile:
+//		g_set_error(error, 0, 0, _("Failed to open file for writing"));
+//		break;
+//	case errEncrypted:
+//		g_set_error(error, 0, 0, _("Document is encrypted"));
+//		break;
+//	default:
+//		g_set_error(error, 0, 0, _("Failed to save document"));
+//	}
+//
+//	return err_code == errNone;
 }
 

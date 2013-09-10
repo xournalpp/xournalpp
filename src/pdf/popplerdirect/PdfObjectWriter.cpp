@@ -162,7 +162,7 @@ void PdfObjectWriter::writeRawStream(Stream * str, XojPopplerDocument doc) {
 	Object obj1;
 	str->getDict()->lookup("Length", &obj1);
 	if (!obj1.isInt()) {
-		error(-1, "PDFDoc::writeRawStream, no Length in stream dict");
+		printf("PDFDoc::writeRawStream, no Length in stream dict");
 		return;
 	}
 

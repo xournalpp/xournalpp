@@ -1,3 +1,0 @@
-FixedPoint.lo: FixedPoint.cc ../config.h
-
-../config.h:

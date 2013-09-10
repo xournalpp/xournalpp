@@ -1,3 +1,0 @@
-SplashT1FontFile.lo: SplashT1FontFile.cc ../config.h
-
-../config.h:

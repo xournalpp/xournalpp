@@ -52,8 +52,6 @@
 		<file>pdf/popplerdirect/PdfUtil.cpp</file>
 		<file>pdf/popplerdirect/PdfObjectWriter.cpp</file>
 		<file>pdf/popplerdirect/PdfXRef.cpp</file>
-		<file>collab/Collaboration.cpp</file>
-		<file>collab/Message.cpp</file>
 		<file>model/Point.cpp</file>
 		<file>model/Document.cpp</file>
 		<file>model/BackgroundImageContents.cpp</file>

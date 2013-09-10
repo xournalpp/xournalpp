@@ -1,9 +1,9 @@
 #include "XojPopplerIter.h"
 #include "XojPopplerDocument.h"
 
-#include "../poppler-0.12.4/poppler/Outline.h"
-#include "../poppler-0.12.4/poppler/GlobalParams.h"
-#include "../poppler-0.12.4/poppler/UnicodeMap.h"
+#include "../poppler-0.24.1/poppler/Outline.h"
+#include "../poppler-0.24.1/poppler/GlobalParams.h"
+#include "../poppler-0.24.1/poppler/UnicodeMap.h"
 
 XojPopplerIter::XojPopplerIter(XojPopplerDocument doc, GooList *items) {
 	XOJ_INIT_TYPE(XojPopplerIter);

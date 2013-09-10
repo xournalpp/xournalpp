@@ -1,5 +1,0 @@
-PDFDocEncoding.lo: PDFDocEncoding.cc PDFDocEncoding.h CharTypes.h
-
-PDFDocEncoding.h:
-
-CharTypes.h:
