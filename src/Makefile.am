@@ -2,6 +2,11 @@ SUBDIRS = \
 	util \
 	xoj-preview-extractor
 
+if ENABLE_MATHTEX
+SUBDIRS += \
+	mathtex
+endif
+
 bin_PROGRAMS = xournalpp
 
 xournalpp_SOURCES = \
