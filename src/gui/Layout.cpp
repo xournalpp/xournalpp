@@ -103,7 +103,7 @@ void Layout::checkSelectedPage() {
 				startX = scrollX - x;
 			}
 			if (x + pageWidth > scrollX + viewWidth) {
-				endX = pageWidth - ((y + pageWidth) - (scrollX + viewWidth));
+				endX = pageWidth - ((x + pageWidth) - (scrollX + viewWidth));
 			}
 
 
