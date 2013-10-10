@@ -13,7 +13,7 @@ AboutDialog::AboutDialog(GladeSearchpath * gladeSearchPath) :
 			"Build: " __DATE__);
 
 	GtkWidget * w = get("vbox1");
-	GtkWidget * linkButton = gtk_link_button_new("http://xournal.sourceforge.net/");
+	GtkWidget * linkButton = gtk_link_button_new("http://github.com/xournalpp/xournalpp");
 	gtk_widget_show(linkButton);
 	gtk_box_pack_start_defaults(GTK_BOX(w), linkButton);
 
@@ -22,6 +22,7 @@ AboutDialog::AboutDialog(GladeSearchpath * gladeSearchPath) :
 	// Authors of the application
 	AUTOHOR("Denis Auroux, 2006 - 2010");
 	AUTOHOR("Andreas Butti, 2010 - 2012");
+	AUTOHOR("Wilson Brenna (tex support), 2012 - 2013");
 
 	w = get("lbAuthors");
 	gtk_label_set_text(GTK_LABEL(w), authors.c_str());

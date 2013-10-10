@@ -32,7 +32,7 @@ POST_INSTALL = :
 NORMAL_UNINSTALL = :
 PRE_UNINSTALL = :
 POST_UNINSTALL = :
-bin_PROGRAMS = mathtex.cgi$(EXEEXT)
+bin_PROGRAMS = mathtex-xournalpp.cgi$(EXEEXT)
 subdir = .
 DIST_COMMON = README $(am__configure_deps) $(srcdir)/../../depcomp \
 	$(srcdir)/../../install-sh $(srcdir)/../../missing \
@@ -51,9 +51,9 @@ CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
 am__installdirs = "$(DESTDIR)$(bindir)"
 PROGRAMS = $(bin_PROGRAMS)
-am_mathtex_cgi_OBJECTS = mathtex.$(OBJEXT)
-mathtex_cgi_OBJECTS = $(am_mathtex_cgi_OBJECTS)
-mathtex_cgi_LDADD = $(LDADD)
+am_mathtex_xournalpp_cgi_OBJECTS = mathtex.$(OBJEXT)
+mathtex_xournalpp_cgi_OBJECTS = $(am_mathtex_xournalpp_cgi_OBJECTS)
+mathtex_xournalpp_cgi_LDADD = $(LDADD)
 DEFAULT_INCLUDES = -I.@am__isrc@
 depcomp = $(SHELL) $(top_srcdir)/../../depcomp
 am__depfiles_maybe = depfiles
@@ -62,8 +62,8 @@ COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
 	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
 CCLD = $(CC)
 LINK = $(CCLD) $(AM_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
-SOURCES = $(mathtex_cgi_SOURCES)
-DIST_SOURCES = $(mathtex_cgi_SOURCES)
+SOURCES = $(mathtex_xournalpp_cgi_SOURCES)
+DIST_SOURCES = $(mathtex_xournalpp_cgi_SOURCES)
 ETAGS = etags
 CTAGS = ctags
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
@@ -166,7 +166,7 @@ target_alias = @target_alias@
 top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
-mathtex_cgi_SOURCES = mathtex.c
+mathtex_xournalpp_cgi_SOURCES = mathtex.c
 all: config.h
 	$(MAKE) $(AM_MAKEFLAGS) all-am
 
@@ -260,9 +260,9 @@ uninstall-binPROGRAMS:
 
 clean-binPROGRAMS:
 	-test -z "$(bin_PROGRAMS)" || rm -f $(bin_PROGRAMS)
-mathtex.cgi$(EXEEXT): $(mathtex_cgi_OBJECTS) $(mathtex_cgi_DEPENDENCIES) 
-	@rm -f mathtex.cgi$(EXEEXT)
-	$(LINK) $(mathtex_cgi_OBJECTS) $(mathtex_cgi_LDADD) $(LIBS)
+mathtex-xournalpp.cgi$(EXEEXT): $(mathtex_xournalpp_cgi_OBJECTS) $(mathtex_xournalpp_cgi_DEPENDENCIES) 
+	@rm -f mathtex-xournalpp.cgi$(EXEEXT)
+	$(LINK) $(mathtex_xournalpp_cgi_OBJECTS) $(mathtex_xournalpp_cgi_LDADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)

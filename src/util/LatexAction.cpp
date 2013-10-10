@@ -41,7 +41,7 @@ void LatexAction::runCommand(){
 	 * at some point, I may need to sanitize theLatex
 	 */
 	printf("Command is being run.\n");
-	const gchar* mtex = "mathtex";
+	const gchar* mtex = "mathtex-xournalpp.cgi";
 	gchar* mathtex = g_find_program_in_path(mtex);
 	if (!mathtex)
 	{
@@ -73,25 +73,6 @@ void LatexAction::runCommand(){
 
 }
 
-void LatexAction::mathtexAddImage(Control * control, double x, double y) {
-	printf("Adding element\n");
-}
-
-void LatexAction::mathtexModImage(TexImage * img, Layer * layer)
-{
-	//get the image we're looking at and take care of all that
-
-	//get theLatex and query for modifications
-	//this->texlen = img->getText(this->theLatex);
-
-	this->myx = img->getX();
-	this->myy = img->getY();
-
-	//remove image
-	//
-	layer->removeElement(img,false);
-	
-}
 
 gchar * LatexAction::getFileName()
 {
