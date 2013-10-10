@@ -1017,6 +1017,10 @@ void Settings::setSidebarVisible(bool visible) {
 int Settings::getSidebarWidth() {
 	XOJ_CHECK_TYPE(Settings);
 
+	if(!this->sidebarWidth)
+	{
+		setSidebarWidth(150);
+	}
 	return this->sidebarWidth;
 }
 
