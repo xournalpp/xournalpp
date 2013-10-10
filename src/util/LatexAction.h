@@ -26,8 +26,6 @@ public:
 	virtual ~LatexAction();
 
 public:
-	void mathtexModImage(TexImage * img, Layer * layer);
-	void mathtexAddImage(Control * control, double x, double y);
 	void runCommand();
 	gchar * getFileName();
 

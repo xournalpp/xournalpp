@@ -9,7 +9,7 @@ Xournalpp is a modified and extended Xournal. New features include:
 * support for image insertion
 * a better eraser
 * reduced memory usage
-* LaTex support (required Mathtex)
+* LaTeX support (requires a working LaTeX install and ```--enable-mathtex``` flag)
 * advanced page sorting
 
 Hopefully you enjoy it! Just build with
@@ -25,7 +25,8 @@ The binary will be in the src/ subdirectory.
 make install
 ```
 
-should also work.
+will then install it in your system path.
+For more details on installation, visit the wiki at <a href="http://github.com/xournalpp/xournalpp/wiki">Xournalpp Wiki</a>.
 
 
 Development
@@ -37,3 +38,4 @@ updated accordingly.
 I could not get the php buildsystem to work so the instructions above were what
 worked for me.
 
+See <a href="http://github.com/xournalpp/xournalpp">Github:xournalpp</a> for current development.
