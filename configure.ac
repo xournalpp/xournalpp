@@ -1,7 +1,7 @@
 dnl Process this file with autoconf to produce a configure script.
 
 AC_PREREQ(2.59)
-AC_INIT(Xournalpp, 0.9.1)
+AC_INIT(Xournalpp, 0.9.2)
 AM_CONFIG_HEADER(config.h)
 
 AC_CANONICAL_SYSTEM
@@ -180,7 +180,7 @@ AM_CONDITIONAL([ENABLE_OS],[test "x$enable_os" = "xyes"])
 
 dnl Compile with mathtex
 if test "x$enable_mathtex" != "xno"; then
-	AC_DEFINE([ENABLE_MATHTEX],[1],[Define to enable mathtex support])
+	AC_DEFINE([ENABLE_MATHTEX],[1],[Define to compile with mathtex support])
 fi
 AM_CONDITIONAL([ENABLE_MATHTEX],[test "x$enable_mathtex" = "xyes"])
 

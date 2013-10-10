@@ -2,6 +2,11 @@ SUBDIRS = \
 	util \
 	xoj-preview-extractor
 
+if ENABLE_MATHTEX
+SUBDIRS += \
+	mathtex
+endif
+
 bin_PROGRAMS = xournalpp
 
 xournalpp_SOURCES = \
@@ -211,4 +216,3 @@ xournalpp_LDADD = \
 	pdf/libpoppler-glib.a \
 	@PACKAGE_LIBS@ $(INTLLIBS) \
 	$(top_builddir)/src/util/libutil.la
-
