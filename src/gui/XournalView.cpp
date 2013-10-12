@@ -161,15 +161,6 @@ bool XournalView::onKeyPressEvent(GdkEventKey * event) {
 	Layout * layout = gtk_xournal_get_layout(this->widget);
 
 	if (state & GDK_SHIFT_MASK) {
-		if (event->keyval == GDK_Page_Down) {
-			control->getScrollHandler()->goToNextPage();
-			return true;
-		}
-		if (event->keyval == GDK_Page_Up) {
-			control->getScrollHandler()->goToPreviousPage();
-			return true;
-		}
-	} else {
 		GtkAllocation alloc = { 0 };
 		gtk_widget_get_allocation(gtk_widget_get_parent(this->widget), &alloc);
 		int windowHeight = alloc.height - scrollKeySize;
@@ -182,7 +173,17 @@ bool XournalView::onKeyPressEvent(GdkEventKey * event) {
 			layout->scrollRelativ(0, -windowHeight);
 			return true;
 		}
+	} else {
+		if (event->keyval == GDK_Page_Down) {
+			control->getScrollHandler()->goToNextPage();
+			return true;
+		}
+		if (event->keyval == GDK_Page_Up) {
+			control->getScrollHandler()->goToPreviousPage();
+			return true;
+		}
 	}
+
 
 	if (event->keyval == GDK_Up) {
 		layout->scrollRelativ(0, -scrollKeySize);
