@@ -111,23 +111,30 @@ static gboolean gtk_xournal_key_press_event(GtkWidget * widget, GdkEventKey * ev
 
 	EditSelection * selection = xournal->selection;
 	if (selection) {
-		int d = 10;
+		int d = 3;
 
 		if ((event->state & GDK_MOD1_MASK) || (event->state & GDK_SHIFT_MASK)) {
-			d = 1;
+			if ( event->state & GDK_MOD1_MASK )
+			{
+				d = 1;
+			}
+			else
+			{
+				d = 10;
+			}
 		}
 
 		if (event->keyval == GDK_Left) {
-			selection->moveSelection(-d, 0);
-			return true;
-		} else if (event->keyval == GDK_Up) {
-			selection->moveSelection(0, -d);
-			return true;
-		} else if (event->keyval == GDK_Right) {
 			selection->moveSelection(d, 0);
 			return true;
-		} else if (event->keyval == GDK_Down) {
+		} else if (event->keyval == GDK_Up) {
 			selection->moveSelection(0, d);
+			return true;
+		} else if (event->keyval == GDK_Right) {
+			selection->moveSelection(-d, 0);
+			return true;
+		} else if (event->keyval == GDK_Down) {
+			selection->moveSelection(0, -d);
 			return true;
 		}
 	}
