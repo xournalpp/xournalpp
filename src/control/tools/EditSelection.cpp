@@ -466,10 +466,12 @@ void EditSelection::moveSelection(double dx, double dy) {
 void EditSelection::ensureWithinVisibleArea() {
 	XOJ_CHECK_TYPE(EditSelection);
 
-	int x = this->view->getX();
-	int y = this->view->getY();
+	int viewx = this->view->getX();
+	int viewy = this->view->getY();
 	double zoom = this->view->getXournal()->getZoom();
-	this->view->getXournal()->ensureRectIsVisible(x, y, this->width * zoom, this->height * zoom);
+	//need to modify this to take into account the position
+	//of the object, plus typecast because PageView takes ints
+	this->view->getXournal()->ensureRectIsVisible((int)(viewx+this->x*zoom), (int)(viewy+this->y*zoom), (int)(this->width * zoom), (int)(this->height * zoom));
 }
 
 /**
