@@ -120,7 +120,7 @@ static gboolean gtk_xournal_key_press_event(GtkWidget * widget, GdkEventKey * ev
 			}
 			else
 			{
-				d = 10;
+				d = 20;
 			}
 		}
 
