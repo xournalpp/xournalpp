@@ -2515,6 +2515,7 @@ void Control::clipboardPasteXournal(ObjectInputStream & in) {
 
 	this->doc->lock();
 	PageRef page = this->doc->getPage(pNr);
+	Layer * layer = page.getSelectedLayer();
 
 	PageView * view = win->getXournal()->getViewFor(pNr);
 
@@ -2557,6 +2558,7 @@ void Control::clipboardPasteXournal(ObjectInputStream & in) {
 
 			in >> element;
 
+			undoRedo->addUndoAction(new InsertUndoAction(page, layer, element, view));
 			selection->addElement(element);
 			element = NULL;
 		}
