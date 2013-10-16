@@ -1,14 +1,14 @@
-m4trace:/usr/share/aclocal-1.11/amversion.m4:14: -1- AC_DEFUN([AM_AUTOMAKE_VERSION], [am__api_version='1.11'
+m4trace:/usr/share/aclocal-1.11/amversion.m4:17: -1- AC_DEFUN([AM_AUTOMAKE_VERSION], [am__api_version='1.11'
 dnl Some users find AM_AUTOMAKE_VERSION and mistake it for a way to
 dnl require some minimum version.  Point them to the right macro.
-m4_if([$1], [1.11.1], [],
+m4_if([$1], [1.11.6], [],
       [AC_FATAL([Do not call $0, use AM_INIT_AUTOMAKE([$1]).])])dnl
 ])
-m4trace:/usr/share/aclocal-1.11/amversion.m4:33: -1- AC_DEFUN([AM_SET_CURRENT_AUTOMAKE_VERSION], [AM_AUTOMAKE_VERSION([1.11.1])dnl
+m4trace:/usr/share/aclocal-1.11/amversion.m4:36: -1- AC_DEFUN([AM_SET_CURRENT_AUTOMAKE_VERSION], [AM_AUTOMAKE_VERSION([1.11.6])dnl
 m4_ifndef([AC_AUTOCONF_VERSION],
   [m4_copy([m4_PACKAGE_VERSION], [AC_AUTOCONF_VERSION])])dnl
 _AM_AUTOCONF_VERSION(m4_defn([AC_AUTOCONF_VERSION]))])
-m4trace:/usr/share/aclocal-1.11/auxdir.m4:47: -1- AC_DEFUN([AM_AUX_DIR_EXPAND], [dnl Rely on autoconf to set up CDPATH properly.
+m4trace:/usr/share/aclocal-1.11/auxdir.m4:49: -1- AC_DEFUN([AM_AUX_DIR_EXPAND], [dnl Rely on autoconf to set up CDPATH properly.
 AC_PREREQ([2.50])dnl
 # expand $ac_aux_dir to an absolute path
 am_aux_dir=`cd $ac_aux_dir && pwd`
@@ -53,6 +53,7 @@ AC_CACHE_CHECK([dependency style of $depcc],
   # instance it was reported that on HP-UX the gcc test will end up
   # making a dummy file named `D' -- because `-MD' means `put the output
   # in D'.
+  rm -rf conftest.dir
   mkdir conftest.dir
   # Copy depcomp to subdir because otherwise we won't find it if we're
   # using a relative directory.
@@ -117,7 +118,7 @@ AC_CACHE_CHECK([dependency style of $depcc],
 	break
       fi
       ;;
-    msvisualcpp | msvcmsys)
+    msvc7 | msvc7msys | msvisualcpp | msvcmsys)
       # This compiler won't grok `-c -o', but also, the minuso test has
       # not run yet.  These depmodes are late enough in the game, and
       # so weak that their functioning should not be impacted.
@@ -161,19 +162,22 @@ AM_CONDITIONAL([am__fastdep$1], [
   test "x$enable_dependency_tracking" != xno \
   && test "$am_cv_$1_dependencies_compiler_type" = gcc3])
 ])
-m4trace:/usr/share/aclocal-1.11/depend.m4:163: -1- AC_DEFUN([AM_SET_DEPDIR], [AC_REQUIRE([AM_SET_LEADING_DOT])dnl
+m4trace:/usr/share/aclocal-1.11/depend.m4:164: -1- AC_DEFUN([AM_SET_DEPDIR], [AC_REQUIRE([AM_SET_LEADING_DOT])dnl
 AC_SUBST([DEPDIR], ["${am__leading_dot}deps"])dnl
 ])
-m4trace:/usr/share/aclocal-1.11/depend.m4:171: -1- AC_DEFUN([AM_DEP_TRACK], [AC_ARG_ENABLE(dependency-tracking,
+m4trace:/usr/share/aclocal-1.11/depend.m4:172: -1- AC_DEFUN([AM_DEP_TRACK], [AC_ARG_ENABLE(dependency-tracking,
 [  --disable-dependency-tracking  speeds up one-time build
   --enable-dependency-tracking   do not reject slow dependency extractors])
 if test "x$enable_dependency_tracking" != xno; then
   am_depcomp="$ac_aux_dir/depcomp"
   AMDEPBACKSLASH='\'
+  am__nodep='_no'
 fi
 AM_CONDITIONAL([AMDEP], [test "x$enable_dependency_tracking" != xno])
 AC_SUBST([AMDEPBACKSLASH])dnl
 _AM_SUBST_NOTMAKE([AMDEPBACKSLASH])dnl
+AC_SUBST([am__nodep])dnl
+_AM_SUBST_NOTMAKE([am__nodep])dnl
 ])
 m4trace:/usr/share/aclocal-1.11/depout.m4:14: -1- AC_DEFUN([_AM_OUTPUT_DEPENDENCY_COMMANDS], [{
   # Autoconf 2.62 quotes --file arguments for eval, but not when files
@@ -326,7 +330,7 @@ for _am_header in $config_headers :; do
   esac
 done
 echo "timestamp for $_am_arg" >`AS_DIRNAME(["$_am_arg"])`/stamp-h[]$_am_stamp_count])
-m4trace:/usr/share/aclocal-1.11/install-sh.m4:11: -1- AC_DEFUN([AM_PROG_INSTALL_SH], [AC_REQUIRE([AM_AUX_DIR_EXPAND])dnl
+m4trace:/usr/share/aclocal-1.11/install-sh.m4:14: -1- AC_DEFUN([AM_PROG_INSTALL_SH], [AC_REQUIRE([AM_AUX_DIR_EXPAND])dnl
 if test x"${install_sh}" != xset; then
   case $am_aux_dir in
   *\ * | *\	*)
@@ -403,7 +407,7 @@ else
   AC_MSG_WARN([`missing' script is too old or missing])
 fi
 ])
-m4trace:/usr/share/aclocal-1.11/mkdirp.m4:11: -1- AC_DEFUN([AM_PROG_MKDIR_P], [AC_PREREQ([2.60])dnl
+m4trace:/usr/share/aclocal-1.11/mkdirp.m4:14: -1- AC_DEFUN([AM_PROG_MKDIR_P], [AC_PREREQ([2.60])dnl
 AC_REQUIRE([AC_PROG_MKDIR_P])dnl
 dnl Automake 1.8 to 1.9.6 used to define mkdir_p.  We now use MKDIR_P,
 dnl while keeping a definition of mkdir_p for backward compatibility.
@@ -418,11 +422,11 @@ case $mkdir_p in
   */*) mkdir_p="\$(top_builddir)/$mkdir_p" ;;
 esac
 ])
-m4trace:/usr/share/aclocal-1.11/options.m4:13: -1- AC_DEFUN([_AM_MANGLE_OPTION], [[_AM_OPTION_]m4_bpatsubst($1, [[^a-zA-Z0-9_]], [_])])
-m4trace:/usr/share/aclocal-1.11/options.m4:19: -1- AC_DEFUN([_AM_SET_OPTION], [m4_define(_AM_MANGLE_OPTION([$1]), 1)])
-m4trace:/usr/share/aclocal-1.11/options.m4:25: -1- AC_DEFUN([_AM_SET_OPTIONS], [m4_foreach_w([_AM_Option], [$1], [_AM_SET_OPTION(_AM_Option)])])
-m4trace:/usr/share/aclocal-1.11/options.m4:31: -1- AC_DEFUN([_AM_IF_OPTION], [m4_ifset(_AM_MANGLE_OPTION([$1]), [$2], [$3])])
-m4trace:/usr/share/aclocal-1.11/runlog.m4:12: -1- AC_DEFUN([AM_RUN_LOG], [{ echo "$as_me:$LINENO: $1" >&AS_MESSAGE_LOG_FD
+m4trace:/usr/share/aclocal-1.11/options.m4:14: -1- AC_DEFUN([_AM_MANGLE_OPTION], [[_AM_OPTION_]m4_bpatsubst($1, [[^a-zA-Z0-9_]], [_])])
+m4trace:/usr/share/aclocal-1.11/options.m4:20: -1- AC_DEFUN([_AM_SET_OPTION], [m4_define(_AM_MANGLE_OPTION([$1]), 1)])
+m4trace:/usr/share/aclocal-1.11/options.m4:26: -1- AC_DEFUN([_AM_SET_OPTIONS], [m4_foreach_w([_AM_Option], [$1], [_AM_SET_OPTION(_AM_Option)])])
+m4trace:/usr/share/aclocal-1.11/options.m4:32: -1- AC_DEFUN([_AM_IF_OPTION], [m4_ifset(_AM_MANGLE_OPTION([$1]), [$2], [$3])])
+m4trace:/usr/share/aclocal-1.11/runlog.m4:14: -1- AC_DEFUN([AM_RUN_LOG], [{ echo "$as_me:$LINENO: $1" >&AS_MESSAGE_LOG_FD
    ($1) >&AS_MESSAGE_LOG_FD 2>&AS_MESSAGE_LOG_FD
    ac_status=$?
    echo "$as_me:$LINENO: \$? = $ac_status" >&AS_MESSAGE_LOG_FD
@@ -485,12 +489,42 @@ yes) AM_DEFAULT_VERBOSITY=0;;
 no)  AM_DEFAULT_VERBOSITY=1;;
 *)   AM_DEFAULT_VERBOSITY=m4_if([$1], [yes], [0], [1]);;
 esac
+dnl
+dnl A few `make' implementations (e.g., NonStop OS and NextStep)
+dnl do not support nested variable expansions.
+dnl See automake bug#9928 and bug#10237.
+am_make=${MAKE-make}
+AC_CACHE_CHECK([whether $am_make supports nested variables],
+   [am_cv_make_support_nested_variables],
+   [if AS_ECHO([['TRUE=$(BAR$(V))
+BAR0=false
+BAR1=true
+V=1
+am__doit:
+	@$(TRUE)
+.PHONY: am__doit']]) | $am_make -f - >/dev/null 2>&1; then
+  am_cv_make_support_nested_variables=yes
+else
+  am_cv_make_support_nested_variables=no
+fi])
+if test $am_cv_make_support_nested_variables = yes; then
+  dnl Using `$V' instead of `$(V)' breaks IRIX make.
+  AM_V='$(V)'
+  AM_DEFAULT_V='$(AM_DEFAULT_VERBOSITY)'
+else
+  AM_V=$AM_DEFAULT_VERBOSITY
+  AM_DEFAULT_V=$AM_DEFAULT_VERBOSITY
+fi
+AC_SUBST([AM_V])dnl
+AM_SUBST_NOTMAKE([AM_V])dnl
+AC_SUBST([AM_DEFAULT_V])dnl
+AM_SUBST_NOTMAKE([AM_DEFAULT_V])dnl
 AC_SUBST([AM_DEFAULT_VERBOSITY])dnl
 AM_BACKSLASH='\'
 AC_SUBST([AM_BACKSLASH])dnl
 _AM_SUBST_NOTMAKE([AM_BACKSLASH])dnl
 ])
-m4trace:/usr/share/aclocal-1.11/strip.m4:17: -1- AC_DEFUN([AM_PROG_INSTALL_STRIP], [AC_REQUIRE([AM_PROG_INSTALL_SH])dnl
+m4trace:/usr/share/aclocal-1.11/strip.m4:19: -1- AC_DEFUN([AM_PROG_INSTALL_STRIP], [AC_REQUIRE([AM_PROG_INSTALL_SH])dnl
 # Installed binaries are usually stripped using `strip' when the user
 # run `make install-strip'.  However `strip' might not be the right
 # tool to use in cross-compilation environments, therefore Automake
@@ -503,10 +537,11 @@ INSTALL_STRIP_PROGRAM="\$(install_sh) -c -s"
 AC_SUBST([INSTALL_STRIP_PROGRAM])])
 m4trace:/usr/share/aclocal-1.11/substnot.m4:14: -1- AC_DEFUN([_AM_SUBST_NOTMAKE])
 m4trace:/usr/share/aclocal-1.11/substnot.m4:19: -1- AC_DEFUN([AM_SUBST_NOTMAKE], [_AM_SUBST_NOTMAKE($@)])
-m4trace:/usr/share/aclocal-1.11/tar.m4:24: -1- AC_DEFUN([_AM_PROG_TAR], [# Always define AMTAR for backward compatibility.
-AM_MISSING_PROG([AMTAR], [tar])
+m4trace:/usr/share/aclocal-1.11/tar.m4:24: -1- AC_DEFUN([_AM_PROG_TAR], [# Always define AMTAR for backward compatibility.  Yes, it's still used
+# in the wild :-(  We should find a proper way to deprecate it ...
+AC_SUBST([AMTAR], ['$${TAR-tar}'])
 m4_if([$1], [v7],
-     [am__tar='${AMTAR} chof - "$$tardir"'; am__untar='${AMTAR} xf -'],
+     [am__tar='$${TAR-tar} chof - "$$tardir"' am__untar='$${TAR-tar} xf -'],
      [m4_case([$1], [ustar],, [pax],,
               [m4_fatal([Unknown tar format])])
 AC_MSG_CHECKING([how to create a $1 tar archive])
@@ -628,8 +663,8 @@ m4trace:configure.in:5: -1- m4_pattern_allow([^target_alias$])
 m4trace:configure.in:6: -1- AM_INIT_AUTOMAKE
 m4trace:configure.in:6: -1- m4_pattern_allow([^AM_[A-Z]+FLAGS$])
 m4trace:configure.in:6: -1- AM_SET_CURRENT_AUTOMAKE_VERSION
-m4trace:configure.in:6: -1- AM_AUTOMAKE_VERSION([1.11.1])
-m4trace:configure.in:6: -1- _AM_AUTOCONF_VERSION([2.67])
+m4trace:configure.in:6: -1- AM_AUTOMAKE_VERSION([1.11.6])
+m4trace:configure.in:6: -1- _AM_AUTOCONF_VERSION([2.68])
 m4trace:configure.in:6: -1- m4_pattern_allow([^INSTALL_PROGRAM$])
 m4trace:configure.in:6: -1- m4_pattern_allow([^INSTALL_SCRIPT$])
 m4trace:configure.in:6: -1- m4_pattern_allow([^INSTALL_DATA$])
@@ -675,7 +710,6 @@ m4trace:configure.in:6: -2- _AM_MANGLE_OPTION([tar-ustar])
 m4trace:configure.in:6: -1- _AM_IF_OPTION([tar-pax], [_AM_PROG_TAR([pax])], [_AM_PROG_TAR([v7])])
 m4trace:configure.in:6: -2- _AM_MANGLE_OPTION([tar-pax])
 m4trace:configure.in:6: -1- _AM_PROG_TAR([v7])
-m4trace:configure.in:6: -1- AM_MISSING_PROG([AMTAR], [tar])
 m4trace:configure.in:6: -1- m4_pattern_allow([^AMTAR$])
 m4trace:configure.in:6: -1- m4_pattern_allow([^am__tar$])
 m4trace:configure.in:6: -1- m4_pattern_allow([^am__untar$])
@@ -722,6 +756,8 @@ m4trace:configure.in:12: -1- _AM_SUBST_NOTMAKE([AMDEP_TRUE])
 m4trace:configure.in:12: -1- _AM_SUBST_NOTMAKE([AMDEP_FALSE])
 m4trace:configure.in:12: -1- m4_pattern_allow([^AMDEPBACKSLASH$])
 m4trace:configure.in:12: -1- _AM_SUBST_NOTMAKE([AMDEPBACKSLASH])
+m4trace:configure.in:12: -1- m4_pattern_allow([^am__nodep$])
+m4trace:configure.in:12: -1- _AM_SUBST_NOTMAKE([am__nodep])
 m4trace:configure.in:12: -1- m4_pattern_allow([^CCDEPMODE$])
 m4trace:configure.in:12: -1- AM_CONDITIONAL([am__fastdepCC], [
   test "x$enable_dependency_tracking" != xno \
