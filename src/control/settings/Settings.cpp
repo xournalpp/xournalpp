@@ -1017,7 +1017,7 @@ void Settings::setSidebarVisible(bool visible) {
 int Settings::getSidebarWidth() {
 	XOJ_CHECK_TYPE(Settings);
 
-	if(!this->sidebarWidth)
+	if(this->sidebarWidth < 50)
 	{
 		setSidebarWidth(150);
 	}
