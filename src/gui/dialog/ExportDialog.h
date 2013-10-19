@@ -35,6 +35,7 @@ public:
 private:
 	bool validate();
 	void handleData();
+	static void exportSelectionChanged(GtkFileChooser *chooser, GtkEntry *newFolder);
 
 private:
 	XOJ_TYPE_ATTRIB;
@@ -44,6 +45,8 @@ private:
 	int currentPage;
 	int resolution;
 	ExportFormtType type;
+
+	GtkEntry *folderFollower;
 
 	GList * range;
 

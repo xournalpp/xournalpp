@@ -18,6 +18,8 @@ ExportDialog::ExportDialog(GladeSearchpath * gladeSearchPath, Settings * setting
 
 	GtkFileChooser * chooser = GTK_FILE_CHOOSER(get("fcOutput"));
 	gtk_file_chooser_set_current_folder(chooser, settings->getLastSavePath().c_str());
+	GtkEntry * folderFollower = GTK_ENTRY(get("fcOutText"));
+	g_signal_connect(get("fcOutput"),"selection-changed", G_CALLBACK(&exportSelectionChanged),folderFollower);
 }
 
 ExportDialog::~ExportDialog() {
@@ -28,6 +30,12 @@ GList * ExportDialog::getRange() {
 	XOJ_CHECK_TYPE(ExportDialog);
 
 	return this->range;
+}
+
+void ExportDialog::exportSelectionChanged(GtkFileChooser *chooser, GtkEntry *newFolder)
+{
+	char * folder = gtk_file_chooser_get_current_folder(chooser);
+	gtk_entry_set_text(newFolder,folder);
 }
 
 void ExportDialog::handleData() {
