@@ -405,8 +405,8 @@ msgstr "Exportieren"
 
 #: ..//ui/export.glade.h:10
 msgid ""
-"Filename (without extension), if neccessary numbers\n"
-"are extended to the filename"
+"Filename (without extension); if necessary, numbers\n"
+"will be added to the filename"
 msgstr ""
 "Dateiname (ohne Endung), wenn nötig werden\n"
 "Nummern an den Namen angehängt"

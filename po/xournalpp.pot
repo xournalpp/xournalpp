@@ -355,8 +355,8 @@ msgstr ""
 
 #: ..//ui/export.glade.h:10
 msgid ""
-"Filename (without extension), if neccessary numbers\n"
-"are extended to the filename"
+"Filename (without extension); if necessary, numbers\n"
+"will be added to the filename"
 msgstr ""
 
 #: ..//ui/export.glade.h:12
