@@ -105,8 +105,10 @@ bool ExportJob::freeSurface(int id) {
 
 		g_free(path);
 	}
-
-	cairo_surface_destroy(this->surface);
+	else
+	{
+		cairo_surface_destroy(this->surface);
+	}
 	return true;
 }
 
@@ -134,7 +136,7 @@ void ExportJob::run() {
 		PdfExport pdfe(doc, &pglistener);
 		char * path = g_strdup_printf("file://%s%c%s.pdf", this->folder.c_str(), G_DIR_SEPARATOR, this->filename.c_str());
 
-		if(!pdfe.createPdf(path, this->selected)) {
+		if(!pdfe.createPdf(path)) {
 			g_warning("Error creating PDF: %s", pdfe.getLastError().c_str());
 		}
 
