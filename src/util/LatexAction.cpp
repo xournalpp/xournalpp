@@ -54,10 +54,10 @@ void LatexAction::runCommand(){
 	//can change font colour later with more features
 	const gchar * fontcolour = "black";
 	command = g_strdup_printf(
-			"%s -m 0 \'\\png\\usepackage{color}\\color{%s}\\dpi{300}\\%s %s\' -o %s",
+			"%s -m 0 \"\\png\\usepackage{color}\\color{%s}\\dpi{300}\\%s %s\" -o %s",
 			mtex, strlen(fontcolour) ? fontcolour : "black", 
 			"normalsize",
-			this->theLatex, this->texfile);
+			g_strescape(this->theLatex,NULL), this->texfile);
 	
 	gint rt = 0;
 	void(*texhandler)(int) = signal(SIGCHLD,SIG_DFL);
