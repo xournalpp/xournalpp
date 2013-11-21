@@ -617,11 +617,13 @@ cairo_t * gtk_xournal_create_cairo_for(GtkWidget * widget, PageView * view) {
 	double zoom = xournal->view->getZoom();
 
 	// TODO LOW PRIO: stroke draw to this cairo surface look a little different than rendererd to a cairo surface
+	gdk_threads_enter();
 	cairo_t * cr = gdk_cairo_create(GTK_WIDGET(widget)->window);
 	int x = view->getX() - xournal->x;
 	int y = view->getY() - xournal->y;
 	cairo_translate(cr, x, y);
 	cairo_scale(cr, zoom, zoom);
+	gdk_threads_leave();
 
 	return cr;
 }
@@ -658,6 +660,7 @@ static gboolean gtk_xournal_expose(GtkWidget * widget, GdkEventExpose * event) {
 
 	GtkXournal * xournal = GTK_XOURNAL(widget);
 
+	gdk_threads_enter();
 	cairo_t * cr = gdk_cairo_create(GTK_WIDGET(widget)->window);
 
 	ArrayIterator<PageView *> it = xournal->view->pageViewIterator();
@@ -744,6 +747,7 @@ static gboolean gtk_xournal_expose(GtkWidget * widget, GdkEventExpose * event) {
 	}
 
 	cairo_destroy(cr);
+	gdk_threads_leave();
 
 	return true;
 }

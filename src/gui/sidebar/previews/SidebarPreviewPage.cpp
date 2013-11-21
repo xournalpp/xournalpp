@@ -90,8 +90,10 @@ void SidebarPreviewPage::paint() {
 		}
 
 		this->firstPainted = true;
+		gdk_threads_enter();
 		gdk_window_set_background(widget->window, &widget->style->white);
 		gtk_widget_queue_draw(this->widget);
+		gdk_threads_leave();
 		return;
 	}
 
@@ -128,6 +130,7 @@ void SidebarPreviewPage::paint() {
 		repaint();
 	}
 
+	gdk_threads_enter();
 	cairo_t * cr = gdk_cairo_create(widget->window);
 	cairo_set_source_surface(cr, this->crBuffer, 0, 0);
 	cairo_paint(cr);
@@ -154,6 +157,7 @@ void SidebarPreviewPage::paint() {
 	}
 
 	cairo_destroy(cr);
+	gdk_threads_leave();
 
 	g_mutex_unlock(this->drawingMutex);
 }

@@ -261,6 +261,7 @@ void DocumentView::paintBackgroundImage() {
 		cairo_matrix_t matrix = { 0 };
 		cairo_get_matrix(cr, &matrix);
 
+		gdk_threads_enter();
 		int width = gdk_pixbuf_get_width(pixbuff);
 		int height = gdk_pixbuf_get_height(pixbuff);
 
@@ -273,6 +274,7 @@ void DocumentView::paintBackgroundImage() {
 		cairo_paint(cr);
 
 		cairo_set_matrix(cr, &matrix);
+		gdk_threads_leave();
 	}
 }
 
