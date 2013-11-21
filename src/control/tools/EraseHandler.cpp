@@ -95,6 +95,7 @@ void EraseHandler::eraseStroke(Layer * l, Stroke * s, double x, double y, Range 
 			this->undo->addUndoAction(this->eraseDeleteUndoAction);
 //		}
 
+			//TODO: see whether or not I can comment this out. I forget what it's doing.
 		this->eraseDeleteUndoAction->addElement(l, s, pos);
 	} else { // Default eraser
 		int pos = l->indexOf(s);

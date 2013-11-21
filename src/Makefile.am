@@ -164,6 +164,7 @@ xournalpp_SOURCES = \
 	pdf/popplerdirect/UpdateRef.cpp \
 	pdf/popplerdirect/UpdateRefKey.cpp \
 	undo/ColorUndoAction.cpp \
+	undo/AddUndoAction.cpp \
 	undo/DeleteUndoAction.cpp \
 	undo/EraseUndoAction.cpp \
 	undo/FontUndoAction.cpp \
