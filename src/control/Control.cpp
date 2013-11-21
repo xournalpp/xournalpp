@@ -37,6 +37,7 @@
 #include "stockdlg/XojOpenDlg.h"
 #include "../gui/TextEditor.h"
 #include "../undo/DeleteUndoAction.h"
+#include "../undo/AddUndoAction.h"
 #include "settings/ButtonConfig.h"
 #include "../gui/Cursor.h"
 #include "../gui/toolbarMenubar/model/ToolbarModel.h"
@@ -2540,6 +2541,9 @@ void Control::clipboardPasteXournal(ObjectInputStream & in) {
 
 		int count = in.readInt();
 
+		AddUndoAction * pasteAddUndoAction = new AddUndoAction(page,view,false);
+		//this will undo a group of elements that are inserted
+
 		for (int i = 0; i < count; i++) {
 			String name = in.getNextObjectName();
 			element = NULL;
@@ -2558,10 +2562,12 @@ void Control::clipboardPasteXournal(ObjectInputStream & in) {
 
 			in >> element;
 
-			undoRedo->addUndoAction(new InsertUndoAction(page, layer, element, view));
+			//undoRedo->addUndoAction(new InsertUndoAction(page, layer, element, view));
+			pasteAddUndoAction->addElement(layer,element,layer->indexOf(element));
 			selection->addElement(element);
 			element = NULL;
 		}
+		undoRedo->addUndoAction(pasteAddUndoAction);
 
 		win->getXournal()->setSelection(selection);
 
