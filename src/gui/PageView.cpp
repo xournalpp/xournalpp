@@ -100,6 +100,11 @@ PageView::~PageView() {
 	g_mutex_free(this->drawingMutex);
 	this->drawingMutex = NULL;
 
+	if(this->search) {
+		delete this->search;
+	}
+	this->search = NULL;
+
 	XOJ_RELEASE_TYPE(PageView);
 }
 
