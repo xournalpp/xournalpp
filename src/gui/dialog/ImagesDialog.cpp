@@ -131,6 +131,7 @@ private:
 		GtkAllocation alloc;
 		gtk_widget_get_allocation(this->widget, &alloc);
 
+		gdk_threads_enter();
 		if (this->crBuffer == NULL) {
 			this->crBuffer = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, alloc.width, alloc.height);
 
@@ -191,6 +192,7 @@ private:
 
 		cairo_paint(cr);
 		cairo_destroy(cr);
+		gdk_threads_leave();
 	}
 
 public:

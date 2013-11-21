@@ -60,9 +60,11 @@ void ToolZoomSlider::updateScaleMarks() {
 		return;
 	}
 
+	gdk_threads_enter();
 	gtk_scale_clear_marks( GTK_SCALE(this->slider));
 	gtk_scale_add_mark(GTK_SCALE(this->slider), zoom->getZoom100(), horizontal ? GTK_POS_BOTTOM : GTK_POS_RIGHT, NULL);
 	gtk_scale_add_mark(GTK_SCALE(this->slider), zoom->getZoomFit(), horizontal ? GTK_POS_BOTTOM : GTK_POS_RIGHT, NULL);
+	gdk_threads_leave();
 }
 
 void ToolZoomSlider::setHorizontal(bool horizontal) {

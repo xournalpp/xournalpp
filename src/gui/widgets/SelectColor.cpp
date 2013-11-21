@@ -147,6 +147,7 @@ static gboolean selectcolor_expose(GtkWidget *widget, GdkEventExpose *event) {
 
 static void selectcolor_paint(GtkWidget *widget) {
 	cairo_t *cr;
+	gdk_threads_enter();
 	cr = gdk_cairo_create(widget->window);
 	cairo_fill(cr);
 
@@ -203,6 +204,7 @@ static void selectcolor_paint(GtkWidget *widget) {
 	cairo_stroke(cr);
 
 	cairo_destroy(cr);
+	gdk_threads_leave();
 }
 
 static void selectcolor_destroy(GtkObject *object) {
