@@ -28,7 +28,7 @@ At the moment compiling Xournal++ from source is tricky business.
 You should therefore first visit the wiki in order to see if there is a known working guide for your system:
 <a href="https://github.com/xournalpp/xournalpp/wiki/">Xournal++ Wiki</a>.
 There will be some binaries appearing in the near future, so ideally you can make use of those as well.
-They'll be at <a href="https://github.com/xournalpp/xournalpp/releases"Xournal++ releases</a>.
+They'll be at <a href="https://github.com/xournalpp/xournalpp/releases">Xournal++ releases</a>.
 
 If at a loss, you can try to build with
 ```bash
