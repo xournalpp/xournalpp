@@ -51,7 +51,8 @@ void XournalMain::checkForErrorlog() {
 		int res = gtk_dialog_run(GTK_DIALOG(dialog));
 
 		if (res == 1) { // Send Bugreport
-			Util::openFileWithDefaultApplicaion("http://sourceforge.net/tracker/?group_id=163434&atid=827733");
+			Util::openFileWithDefaultApplicaion("https://github.com/xournalpp/xournalpp/issues/new");
+			Util::openFileWithFilebrowser(filename);
 		} else if (res == 2) { // Open Logfile
 			Util::openFileWithFilebrowser(filename);
 		} else if (res == 3) { // Delete Logfile
