@@ -50,8 +50,7 @@ will then install it in your system path (along with, provided everything works,
 the mathtex-xournalpp executable for latex support).
 
 Often problems with this method arise, especially due to autotools.
-Some general strategies are to reconfigure autotools by running
-```autoreconf```
+Some general strategies are to reconfigure autotools by running ```autoreconf```
 in the xournalpp/ directory, before a ```./configure && make```.
 
 
