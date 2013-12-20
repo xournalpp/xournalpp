@@ -141,7 +141,7 @@ GtkWidget * AbstractToolItem::getNewToolIcon() {
 		GdkPixbuf * pixbuf = Util::newPixbufFromWidget(icon);
 		gtk_widget_unref(icon);
 		icon = gtk_image_new_from_pixbuf(pixbuf);
-		gdk_pixbuf_unref(pixbuf);
+		g_object_unref(pixbuf);
 	}
 
 	return icon;

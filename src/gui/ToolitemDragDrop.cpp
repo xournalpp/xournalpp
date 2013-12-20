@@ -56,7 +56,7 @@ GtkWidget * ToolitemDragDrop::getIcon(ToolItemDragDropData * data) {
 	} else if (data->type == TOOL_ITEM_COLOR) {
 		GdkPixbuf * pixbuf = ToolbarDragDropHelper::getColorImage(data->color);
 		GtkWidget * w = gtk_image_new_from_pixbuf(pixbuf);
-		gdk_pixbuf_unref(pixbuf);
+		g_object_unref(pixbuf);
 		return w;
 	} else if (data->type == TOOL_ITEM_SEPARATOR) {
 		return Util::newSepeartorImage();

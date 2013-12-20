@@ -196,7 +196,7 @@ void MainWindow::dragDataRecived(GtkWidget * widget, GdkDragContext * dragContex
 	if (image) {
 		win->control->clipboardPasteImage(image);
 
-		gdk_pixbuf_unref(image);
+		g_object_unref(image);
 		gtk_drag_finish(dragContext, true, false, time);
 		return;
 	}
@@ -243,7 +243,7 @@ void MainWindow::dragDataRecived(GtkWidget * widget, GdkDragContext * dragContex
 				if (pixbuf) {
 					win->control->clipboardPasteImage(pixbuf);
 
-					gdk_pixbuf_unref(pixbuf);
+					g_object_unref(pixbuf);
 				}
 			} else {
 				g_error_free(err);

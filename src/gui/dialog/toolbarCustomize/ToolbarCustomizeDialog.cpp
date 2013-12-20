@@ -86,7 +86,7 @@ ToolbarCustomizeDialog::~ToolbarCustomizeDialog() {
 	// We can only delete this list at the end, it would be better to delete this list after a refresh and after drag_end is called...
 	for (GList * l = this->itemDatalist; l != NULL; l = l->next) {
 		ToolItemDragData * data = (ToolItemDragData *) l->data;
-		gdk_pixbuf_unref(data->icon);
+		g_object_unref(data->icon);
 		g_free(data);
 	}
 
@@ -171,7 +171,7 @@ void ToolbarCustomizeDialog::toolitemColorDragBegin(GtkWidget * widget, GdkDragC
 
 	gtk_drag_set_icon_pixbuf(context, image, -2, -2);
 
-	gdk_pixbuf_unref(image);
+	g_object_unref(image);
 	gtk_widget_hide(widget);
 }
 
