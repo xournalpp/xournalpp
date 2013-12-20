@@ -57,7 +57,7 @@ bool ImageHandler::insertImage(GFile * file, double x, double y) {
 
 	int width = gdk_pixbuf_get_width(pixbuf);
 	int height = gdk_pixbuf_get_height(pixbuf);
-	gdk_pixbuf_unref(pixbuf);
+	g_object_unref(pixbuf);
 
 	double zoom = 1;
 

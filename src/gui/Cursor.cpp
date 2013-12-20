@@ -165,7 +165,7 @@ GdkCursor * Cursor::getPenCursor() {
 
 	GdkCursor * cursor = gdk_cursor_new_from_pixbuf(gtk_widget_get_display(control->getWindow()->getXournal()->getWidget()), pixbuf, 1, 1);
 
-	gdk_pixbuf_unref(pixbuf);
+	g_object_unref(pixbuf);
 
 	return cursor;
 }

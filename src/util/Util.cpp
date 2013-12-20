@@ -58,7 +58,7 @@ GtkWidget * Util::newSepeartorImage() {
 	GdkPixbuf * pixbuf = Util::newPixbufFromWidget(separator);
 	gtk_widget_unref(separator);
 	GtkWidget * w = gtk_image_new_from_pixbuf(pixbuf);
-	gdk_pixbuf_unref(pixbuf);
+	g_object_unref(pixbuf);
 	return w;
 }
 

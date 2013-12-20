@@ -90,7 +90,7 @@ public:
 	}
 
 	~ClipboardContents() {
-		gdk_pixbuf_unref(this->image);
+		g_object_unref(this->image);
 		g_string_free(this->str, true);
 	}
 

@@ -13,7 +13,7 @@ BackgroundImageContents::BackgroundImageContents(String filename, GError ** erro
 BackgroundImageContents::~BackgroundImageContents() {
 	XOJ_CHECK_TYPE(BackgroundImageContents);
 
-	gdk_pixbuf_unref(this->pixbuf);
+	g_object_unref(this->pixbuf);
 
 	XOJ_RELEASE_TYPE(BackgroundImageContents);
 }
