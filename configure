@@ -1992,12 +1992,12 @@ fi
 
 } # ac_fn_cxx_try_link
 
-# ac_fn_c_check_header_mongrel LINENO HEADER VAR INCLUDES
-# -------------------------------------------------------
+# ac_fn_cxx_check_header_mongrel LINENO HEADER VAR INCLUDES
+# ---------------------------------------------------------
 # Tests whether HEADER exists, giving a warning if it cannot be compiled using
 # the include files in INCLUDES and setting the cache variable VAR
 # accordingly.
-ac_fn_c_check_header_mongrel ()
+ac_fn_cxx_check_header_mongrel ()
 {
   as_lineno=${as_lineno-"$1"} as_lineno_stack=as_lineno_stack=$as_lineno_stack
   if eval \${$3+:} false; then :
@@ -2018,7 +2018,7 @@ cat confdefs.h - <<_ACEOF >conftest.$ac_ext
 $4
 #include <$2>
 _ACEOF
-if ac_fn_c_try_compile "$LINENO"; then :
+if ac_fn_cxx_try_compile "$LINENO"; then :
   ac_header_compiler=yes
 else
   ac_header_compiler=no
@@ -2034,7 +2034,7 @@ cat confdefs.h - <<_ACEOF >conftest.$ac_ext
 /* end confdefs.h.  */
 #include <$2>
 _ACEOF
-if ac_fn_c_try_cpp "$LINENO"; then :
+if ac_fn_cxx_try_cpp "$LINENO"; then :
   ac_header_preproc=yes
 else
   ac_header_preproc=no
@@ -2044,7 +2044,7 @@ rm -f conftest.err conftest.i conftest.$ac_ext
 $as_echo "$ac_header_preproc" >&6; }
 
 # So?  What about this header?
-case $ac_header_compiler:$ac_header_preproc:$ac_c_preproc_warn_flag in #((
+case $ac_header_compiler:$ac_header_preproc:$ac_cxx_preproc_warn_flag in #((
   yes:no: )
     { $as_echo "$as_me:${as_lineno-$LINENO}: WARNING: $2: accepted by the compiler, rejected by the preprocessor!" >&5
 $as_echo "$as_me: WARNING: $2: accepted by the compiler, rejected by the preprocessor!" >&2;}
@@ -2077,7 +2077,74 @@ $as_echo "$ac_res" >&6; }
 fi
   eval $as_lineno_stack; ${as_lineno_stack:+:} unset as_lineno
 
-} # ac_fn_c_check_header_mongrel
+} # ac_fn_cxx_check_header_mongrel
+
+# ac_fn_cxx_check_func LINENO FUNC VAR
+# ------------------------------------
+# Tests whether FUNC exists, setting the cache variable VAR accordingly
+ac_fn_cxx_check_func ()
+{
+  as_lineno=${as_lineno-"$1"} as_lineno_stack=as_lineno_stack=$as_lineno_stack
+  { $as_echo "$as_me:${as_lineno-$LINENO}: checking for $2" >&5
+$as_echo_n "checking for $2... " >&6; }
+if eval \${$3+:} false; then :
+  $as_echo_n "(cached) " >&6
+else
+  cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+/* Define $2 to an innocuous variant, in case <limits.h> declares $2.
+   For example, HP-UX 11i <limits.h> declares gettimeofday.  */
+#define $2 innocuous_$2
+
+/* System header to define __stub macros and hopefully few prototypes,
+    which can conflict with char $2 (); below.
+    Prefer <limits.h> to <assert.h> if __STDC__ is defined, since
+    <limits.h> exists even on freestanding compilers.  */
+
+#ifdef __STDC__
+# include <limits.h>
+#else
+# include <assert.h>
+#endif
+
+#undef $2
+
+/* Override any GCC internal prototype to avoid an error.
+   Use char because int might match the return type of a GCC
+   builtin and then its argument prototype would still apply.  */
+#ifdef __cplusplus
+extern "C"
+#endif
+char $2 ();
+/* The GNU C library defines this for functions which it implements
+    to always fail with ENOSYS.  Some functions are actually named
+    something starting with __ and the normal name is an alias.  */
+#if defined __stub_$2 || defined __stub___$2
+choke me
+#endif
+
+int
+main ()
+{
+return $2 ();
+  ;
+  return 0;
+}
+_ACEOF
+if ac_fn_cxx_try_link "$LINENO"; then :
+  eval "$3=yes"
+else
+  eval "$3=no"
+fi
+rm -f core conftest.err conftest.$ac_objext \
+    conftest$ac_exeext conftest.$ac_ext
+fi
+eval ac_res=\$$3
+	       { $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_res" >&5
+$as_echo "$ac_res" >&6; }
+  eval $as_lineno_stack; ${as_lineno_stack:+:} unset as_lineno
+
+} # ac_fn_cxx_check_func
 cat >config.log <<_ACEOF
 This file contains any messages produced by compilers while
 running configure, to aid debugging if configure makes a mistake.
@@ -16100,6 +16167,53 @@ ac_compiler_gnu=$ac_cv_c_compiler_gnu
 
 
 
+ac_ext=cpp
+ac_cpp='$CXXCPP $CPPFLAGS'
+ac_compile='$CXX -c $CXXFLAGS $CPPFLAGS conftest.$ac_ext >&5'
+ac_link='$CXX -o conftest$ac_exeext $CXXFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $LIBS >&5'
+ac_compiler_gnu=$ac_cv_cxx_compiler_gnu
+
+
+# Check whether --enable-silent-rules was given.
+if test "${enable_silent_rules+set}" = set; then :
+  enableval=$enable_silent_rules;
+fi
+
+case $enable_silent_rules in # (((
+  yes) AM_DEFAULT_VERBOSITY=0;;
+   no) AM_DEFAULT_VERBOSITY=1;;
+    *) AM_DEFAULT_VERBOSITY=0;;
+esac
+am_make=${MAKE-make}
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking whether $am_make supports nested variables" >&5
+$as_echo_n "checking whether $am_make supports nested variables... " >&6; }
+if ${am_cv_make_support_nested_variables+:} false; then :
+  $as_echo_n "(cached) " >&6
+else
+  if $as_echo 'TRUE=$(BAR$(V))
+BAR0=false
+BAR1=true
+V=1
+am__doit:
+	@$(TRUE)
+.PHONY: am__doit' | $am_make -f - >/dev/null 2>&1; then
+  am_cv_make_support_nested_variables=yes
+else
+  am_cv_make_support_nested_variables=no
+fi
+fi
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $am_cv_make_support_nested_variables" >&5
+$as_echo "$am_cv_make_support_nested_variables" >&6; }
+if test $am_cv_make_support_nested_variables = yes; then
+    AM_V='$(V)'
+  AM_DEFAULT_V='$(AM_DEFAULT_VERBOSITY)'
+else
+  AM_V=$AM_DEFAULT_VERBOSITY
+  AM_DEFAULT_V=$AM_DEFAULT_VERBOSITY
+fi
+AM_BACKSLASH='\'
+
+
 
 
 ACLOCAL_AMFLAGS="$ACLOCAL_FLAGS -I m4"
@@ -16429,7 +16543,7 @@ return opj_cio_open ();
   return 0;
 }
 _ACEOF
-if ac_fn_c_try_link "$LINENO"; then :
+if ac_fn_cxx_try_link "$LINENO"; then :
   ac_cv_lib_openjpeg_opj_cio_open=yes
 else
   ac_cv_lib_openjpeg_opj_cio_open=no
@@ -16451,9 +16565,10 @@ else
   as_fn_error $? "\"*** libopenjpeg library not found ***\"" "$LINENO" 5
 fi
 
-  for ac_header in openjpeg.h
+
+for ac_header in openjpeg.h
 do :
-  ac_fn_c_check_header_mongrel "$LINENO" "openjpeg.h" "ac_cv_header_openjpeg_h" "$ac_includes_default"
+  ac_fn_cxx_check_header_mongrel "$LINENO" "openjpeg.h" "ac_cv_header_openjpeg_h" "$ac_includes_default"
 if test "x$ac_cv_header_openjpeg_h" = xyes; then :
   cat >>confdefs.h <<_ACEOF
 #define HAVE_OPENJPEG_H 1
@@ -16491,7 +16606,7 @@ return opj_cio_open ();
   return 0;
 }
 _ACEOF
-if ac_fn_c_try_link "$LINENO"; then :
+if ac_fn_cxx_try_link "$LINENO"; then :
   ac_cv_lib_openjpeg_opj_cio_open=yes
 else
   ac_cv_lib_openjpeg_opj_cio_open=no
@@ -16510,7 +16625,7 @@ fi
 
   for ac_header in openjpeg.h
 do :
-  ac_fn_c_check_header_mongrel "$LINENO" "openjpeg.h" "ac_cv_header_openjpeg_h" "$ac_includes_default"
+  ac_fn_cxx_check_header_mongrel "$LINENO" "openjpeg.h" "ac_cv_header_openjpeg_h" "$ac_includes_default"
 if test "x$ac_cv_header_openjpeg_h" = xyes; then :
   cat >>confdefs.h <<_ACEOF
 #define HAVE_OPENJPEG_H 1
@@ -16563,7 +16678,7 @@ return jpeg_destroy_decompress ();
   return 0;
 }
 _ACEOF
-if ac_fn_c_try_link "$LINENO"; then :
+if ac_fn_cxx_try_link "$LINENO"; then :
   ac_cv_lib_jpeg_jpeg_destroy_decompress=yes
 else
   ac_cv_lib_jpeg_jpeg_destroy_decompress=no
@@ -16593,7 +16708,7 @@ $as_echo_n "checking for jpeglib.h... " >&6; }
 #undef HAVE_STDLIB_H
 #include <jpeglib.h>
 _ACEOF
-if ac_fn_c_try_cpp "$LINENO"; then :
+if ac_fn_cxx_try_cpp "$LINENO"; then :
   jpeg_ok=yes
 else
   jpeg_ok=no
@@ -17243,12 +17358,12 @@ extern int _nl_msg_cat_cntr;
   return 0;
 }
 _ACEOF
-if ac_fn_c_try_link "$LINENO"; then :
+if ac_fn_cxx_try_link "$LINENO"; then :
   DATADIRNAME=share
 else
   case $host in
     *-*-solaris*)
-                        ac_fn_c_check_func "$LINENO" "bind_textdomain_codeset" "ac_cv_func_bind_textdomain_codeset"
+                        ac_fn_cxx_check_func "$LINENO" "bind_textdomain_codeset" "ac_cv_func_bind_textdomain_codeset"
 if test "x$ac_cv_func_bind_textdomain_codeset" = xyes; then :
   DATADIRNAME=share
 else
@@ -17282,7 +17397,7 @@ ALL_LINGUAS="`grep -v '^#' "$srcdir/po/LINGUAS" | tr '\n' ' '`"
 
    for ac_header in locale.h
 do :
-  ac_fn_c_check_header_mongrel "$LINENO" "locale.h" "ac_cv_header_locale_h" "$ac_includes_default"
+  ac_fn_cxx_check_header_mongrel "$LINENO" "locale.h" "ac_cv_header_locale_h" "$ac_includes_default"
 if test "x$ac_cv_header_locale_h" = xyes; then :
   cat >>confdefs.h <<_ACEOF
 #define HAVE_LOCALE_H 1
@@ -17309,7 +17424,7 @@ return LC_MESSAGES
   return 0;
 }
 _ACEOF
-if ac_fn_c_try_link "$LINENO"; then :
+if ac_fn_cxx_try_link "$LINENO"; then :
   am_cv_val_LC_MESSAGES=yes
 else
   am_cv_val_LC_MESSAGES=no
@@ -17334,7 +17449,7 @@ $as_echo "#define HAVE_LC_MESSAGES 1" >>confdefs.h
     XGETTEXT=:
     INTLLIBS=
 
-    ac_fn_c_check_header_mongrel "$LINENO" "libintl.h" "ac_cv_header_libintl_h" "$ac_includes_default"
+    ac_fn_cxx_check_header_mongrel "$LINENO" "libintl.h" "ac_cv_header_libintl_h" "$ac_includes_default"
 if test "x$ac_cv_header_libintl_h" = xyes; then :
   gt_cv_func_dgettext_libintl="no"
       libintl_extra_libs=""
@@ -17360,7 +17475,7 @@ return !ngettext ("","", 1)
   return 0;
 }
 _ACEOF
-if ac_fn_c_try_link "$LINENO"; then :
+if ac_fn_cxx_try_link "$LINENO"; then :
   gt_cv_func_ngettext_libc=yes
 else
   gt_cv_func_ngettext_libc=no
@@ -17391,7 +17506,7 @@ return !dgettext ("","")
   return 0;
 }
 _ACEOF
-if ac_fn_c_try_link "$LINENO"; then :
+if ac_fn_cxx_try_link "$LINENO"; then :
   gt_cv_func_dgettext_libc=yes
 else
   gt_cv_func_dgettext_libc=no
@@ -17407,7 +17522,7 @@ $as_echo "$gt_cv_func_dgettext_libc" >&6; }
       if test "$gt_cv_func_ngettext_libc" = "yes" ; then
         for ac_func in bind_textdomain_codeset
 do :
-  ac_fn_c_check_func "$LINENO" "bind_textdomain_codeset" "ac_cv_func_bind_textdomain_codeset"
+  ac_fn_cxx_check_func "$LINENO" "bind_textdomain_codeset" "ac_cv_func_bind_textdomain_codeset"
 if test "x$ac_cv_func_bind_textdomain_codeset" = xyes; then :
   cat >>confdefs.h <<_ACEOF
 #define HAVE_BIND_TEXTDOMAIN_CODESET 1
@@ -17450,7 +17565,7 @@ return bindtextdomain ();
   return 0;
 }
 _ACEOF
-if ac_fn_c_try_link "$LINENO"; then :
+if ac_fn_cxx_try_link "$LINENO"; then :
   ac_cv_lib_intl_bindtextdomain=yes
 else
   ac_cv_lib_intl_bindtextdomain=no
@@ -17487,7 +17602,7 @@ return ngettext ();
   return 0;
 }
 _ACEOF
-if ac_fn_c_try_link "$LINENO"; then :
+if ac_fn_cxx_try_link "$LINENO"; then :
   ac_cv_lib_intl_ngettext=yes
 else
   ac_cv_lib_intl_ngettext=no
@@ -17524,7 +17639,7 @@ return dgettext ();
   return 0;
 }
 _ACEOF
-if ac_fn_c_try_link "$LINENO"; then :
+if ac_fn_cxx_try_link "$LINENO"; then :
   ac_cv_lib_intl_dgettext=yes
 else
   ac_cv_lib_intl_dgettext=no
@@ -17574,7 +17689,7 @@ return ngettext ();
   return 0;
 }
 _ACEOF
-if ac_fn_c_try_link "$LINENO"; then :
+if ac_fn_cxx_try_link "$LINENO"; then :
   ac_cv_lib_intl_ngettext=yes
 else
   ac_cv_lib_intl_ngettext=no
@@ -17611,7 +17726,7 @@ return dcgettext ();
   return 0;
 }
 _ACEOF
-if ac_fn_c_try_link "$LINENO"; then :
+if ac_fn_cxx_try_link "$LINENO"; then :
   ac_cv_lib_intl_dcgettext=yes
 else
   ac_cv_lib_intl_dcgettext=no
@@ -17646,7 +17761,7 @@ fi
           unset ac_cv_func_bind_textdomain_codeset
           for ac_func in bind_textdomain_codeset
 do :
-  ac_fn_c_check_func "$LINENO" "bind_textdomain_codeset" "ac_cv_func_bind_textdomain_codeset"
+  ac_fn_cxx_check_func "$LINENO" "bind_textdomain_codeset" "ac_cv_func_bind_textdomain_codeset"
 if test "x$ac_cv_func_bind_textdomain_codeset" = xyes; then :
   cat >>confdefs.h <<_ACEOF
 #define HAVE_BIND_TEXTDOMAIN_CODESET 1
@@ -17721,7 +17836,7 @@ fi
           LIBS="$LIBS $INTLLIBS"
 	  for ac_func in dcgettext
 do :
-  ac_fn_c_check_func "$LINENO" "dcgettext" "ac_cv_func_dcgettext"
+  ac_fn_cxx_check_func "$LINENO" "dcgettext" "ac_cv_func_dcgettext"
 if test "x$ac_cv_func_dcgettext" = xyes; then :
   cat >>confdefs.h <<_ACEOF
 #define HAVE_DCGETTEXT 1
@@ -17848,13 +17963,13 @@ extern int _nl_msg_cat_cntr;
   return 0;
 }
 _ACEOF
-if ac_fn_c_try_link "$LINENO"; then :
+if ac_fn_cxx_try_link "$LINENO"; then :
   CATOBJEXT=.gmo
              DATADIRNAME=share
 else
   case $host in
 	    *-*-solaris*)
-	    	                	    	                ac_fn_c_check_func "$LINENO" "bind_textdomain_codeset" "ac_cv_func_bind_textdomain_codeset"
+	    	                	    	                ac_fn_cxx_check_func "$LINENO" "bind_textdomain_codeset" "ac_cv_func_bind_textdomain_codeset"
 if test "x$ac_cv_func_bind_textdomain_codeset" = xyes; then :
   CATOBJEXT=.gmo
                DATADIRNAME=share
