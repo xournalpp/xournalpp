@@ -16,7 +16,7 @@ XojPopplerPage::XojPopplerPage(PDFDoc * doc, GMutex * docMutex,
 	this->outputDev = outputDev;
 	this->text = NULL;
 
-	this->renderMutex = g_mutex_new();
+	g_mutex_init(&this->renderMutex);
 	this->docMutex = docMutex;
 }
 
@@ -26,9 +26,6 @@ XojPopplerPage::~XojPopplerPage() {
 	if (this->text) {
 		this->text->decRefCnt();
 	}
-
-	g_mutex_free(this->renderMutex);
-	this->renderMutex = NULL;
 
 	this->docMutex = NULL;
 
@@ -67,7 +64,7 @@ static GBool poppler_print_annot_cb(Annot * annot, void * user_data) {
 void XojPopplerPage::render(cairo_t * cr, bool forPrinting) {
 	XOJ_CHECK_TYPE(XojPopplerPage);
 
-	g_mutex_lock(this->renderMutex);
+	g_mutex_lock(&this->renderMutex);
 
 	this->outputDev->setCairo(cr);
 	this->outputDev->setPrinting(forPrinting);
@@ -101,13 +98,13 @@ void XojPopplerPage::render(cairo_t * cr, bool forPrinting) {
 	this->outputDev->setCairo(NULL);
 	this->outputDev->setTextPage(NULL);
 
-	g_mutex_unlock(this->renderMutex);
+	g_mutex_unlock(&this->renderMutex);
 }
 
 void XojPopplerPage::initTextPage() {
 	XOJ_CHECK_TYPE(XojPopplerPage);
 
-	g_mutex_lock(this->renderMutex);
+	g_mutex_lock(&this->renderMutex);
 
 	if (this->text == NULL) {
 		g_mutex_lock(this->docMutex);
@@ -129,7 +126,7 @@ void XojPopplerPage::initTextPage() {
 		g_mutex_unlock(this->docMutex);
 	}
 
-	g_mutex_unlock(this->renderMutex);
+	g_mutex_unlock(&this->renderMutex);
 }
 
 Page * XojPopplerPage::getPage() {

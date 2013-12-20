@@ -46,7 +46,7 @@ private:
 	XOJ_TYPE_ATTRIB;
 
 
-	GMutex * partLock;
+	GMutex partLock;
 	PartList * parts;
 
 	Range * repaintRect;

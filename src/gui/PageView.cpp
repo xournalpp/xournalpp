@@ -48,11 +48,11 @@ PageView::PageView(XournalView * xournal, PageRef page) {
 	this->settings = xournal->getControl()->getSettings();
 	this->lastVisibleTime = -1;
 
-	this->drawingMutex = g_mutex_new();
+	g_mutex_init(&this->drawingMutex);
 
 	this->rerenderRects = NULL;
 	this->rerenderComplete = false;
-	this->repaintRectMutex = g_mutex_new();
+	g_mutex_init(&this->repaintRectMutex);
 
 	this->crBuffer = NULL;
 
@@ -89,16 +89,12 @@ PageView::~PageView() {
 	endText();
 	deleteViewBuffer();
 
-	g_mutex_free(this->repaintRectMutex);
 	for (GList * l = this->rerenderRects; l != NULL; l = l->next) {
 		Rectangle * rect = (Rectangle *) l->data;
 		delete rect;
 	}
 	g_list_free(this->rerenderRects);
 	this->rerenderRects = NULL;
-
-	g_mutex_free(this->drawingMutex);
-	this->drawingMutex = NULL;
 
 	if(this->search) {
 		delete this->search;
@@ -133,12 +129,12 @@ int PageView::getLastVisibelTime() {
 void PageView::deleteViewBuffer() {
 	XOJ_CHECK_TYPE(PageView);
 
-	g_mutex_lock(this->drawingMutex);
+	g_mutex_lock(&this->drawingMutex);
 	if (this->crBuffer) {
 		cairo_surface_destroy(this->crBuffer);
 		this->crBuffer = NULL;
 	}
-	g_mutex_unlock(this->drawingMutex);
+	g_mutex_unlock(&this->drawingMutex);
 }
 
 bool PageView::containsPoint(int x, int y) {
@@ -611,7 +607,7 @@ void PageView::addRerenderRect(double x, double y, double width, double height) 
 
 	Rectangle dest;
 
-	g_mutex_lock(this->repaintRectMutex);
+	g_mutex_lock(&this->repaintRectMutex);
 
 	for (GList * l = this->rerenderRects; l != NULL; l = l->next) {
 		Rectangle * r = (Rectangle *) l->data;
@@ -627,13 +623,13 @@ void PageView::addRerenderRect(double x, double y, double width, double height) 
 
 			delete rect;
 
-			g_mutex_unlock(this->repaintRectMutex);
+			g_mutex_unlock(&this->repaintRectMutex);
 			return;
 		}
 	}
 
 	this->rerenderRects = g_list_append(this->rerenderRects, rect);
-	g_mutex_unlock(this->repaintRectMutex);
+	g_mutex_unlock(&this->repaintRectMutex);
 
 	this->xournal->getControl()->getScheduler()->addRerenderPage(this);
 }
@@ -696,7 +692,7 @@ bool PageView::paintPage(cairo_t * cr, GdkRectangle * rect) {
 
 	double zoom = xournal->getZoom();
 
-	g_mutex_lock(this->drawingMutex);
+	g_mutex_lock(&this->drawingMutex);
 
 	int dispWidth = getDisplayWidth();
 	int dispHeight = getDisplayHeight();
@@ -775,7 +771,7 @@ bool PageView::paintPage(cairo_t * cr, GdkRectangle * rect) {
 		this->search->paint(cr, rect, zoom, getSelectionColor());
 	}
 	this->inputHandler->draw(cr, zoom);
-	g_mutex_unlock(this->drawingMutex);
+	g_mutex_unlock(&this->drawingMutex);
 	return true;
 }
 

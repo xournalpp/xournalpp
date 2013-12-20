@@ -19,7 +19,7 @@ SidebarPreviewPage::SidebarPreviewPage(SidebarPreviews * sidebar, PageRef page) 
 	this->selected = false;
 	this->firstPainted = false;
 
-	this->drawingMutex = g_mutex_new();
+	g_mutex_init(&this->drawingMutex);
 
 	updateSize();
 	gtk_widget_set_events(widget, GDK_EXPOSURE_MASK | GDK_BUTTON_PRESS_MASK);
@@ -40,9 +40,6 @@ SidebarPreviewPage::~SidebarPreviewPage() {
 		cairo_surface_destroy(this->crBuffer);
 		this->crBuffer = NULL;
 	}
-
-	g_mutex_free(this->drawingMutex);
-	this->drawingMutex = NULL;
 
 	XOJ_RELEASE_TYPE(SidebarPreviewPage);
 }
@@ -100,7 +97,7 @@ void SidebarPreviewPage::paint() {
 	GtkAllocation alloc;
 	gtk_widget_get_allocation(widget, &alloc);
 
-	g_mutex_lock(this->drawingMutex);
+	g_mutex_lock(&this->drawingMutex);
 
 	if (this->crBuffer == NULL) {
 		this->crBuffer = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, alloc.width, alloc.height);
@@ -159,7 +156,7 @@ void SidebarPreviewPage::paint() {
 	cairo_destroy(cr);
 	gdk_threads_leave();
 
-	g_mutex_unlock(this->drawingMutex);
+	g_mutex_unlock(&this->drawingMutex);
 }
 
 void SidebarPreviewPage::updateSize() {

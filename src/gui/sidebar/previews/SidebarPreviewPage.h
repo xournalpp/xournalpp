@@ -65,7 +65,7 @@ private:
 	/**
 	 * Mutex
 	 */
-	GMutex * drawingMutex;
+	GMutex drawingMutex;
 
 	/**
 	 * The Widget wich is used for drawing

@@ -81,7 +81,7 @@ void PreviewJob::run() {
 
 	doc->unlock();
 
-	g_mutex_lock(this->sidebarPreview->drawingMutex);
+	g_mutex_lock(&this->sidebarPreview->drawingMutex);
 
 	if (this->sidebarPreview->crBuffer) {
 		cairo_surface_destroy(this->sidebarPreview->crBuffer);
@@ -92,5 +92,5 @@ void PreviewJob::run() {
 	gtk_widget_queue_draw(this->sidebarPreview->widget);
 	gdk_threads_leave();
 
-	g_mutex_unlock(this->sidebarPreview->drawingMutex);
+	g_mutex_unlock(&this->sidebarPreview->drawingMutex);
 }

@@ -19,7 +19,7 @@ public:
 
 		this->doc = doc;
 
-		this->docMutex = g_mutex_new();
+		g_mutex_init(&this->docMutex);
 
 		output_dev = new CairoOutputDev();
 		output_dev->startDoc(this->doc);
@@ -30,7 +30,7 @@ public:
 		for (int i = 0; i < doc->getNumPages(); i++) {
 			Page * page = catalog->getPage(i + 1);
 
-			pages[i] = new XojPopplerPage(doc, this->docMutex, output_dev, page, i);
+			pages[i] = new XojPopplerPage(doc, &this->docMutex, output_dev, page, i);
 		}
 	}
 
@@ -50,9 +50,6 @@ private:
 		this->output_dev = NULL;
 		delete doc;
 		this->doc = NULL;
-
-		g_mutex_free(this->docMutex);
-		this->docMutex = NULL;
 
 		XOJ_RELEASE_TYPE(_IntPopplerDocument);
 	}
@@ -123,7 +120,7 @@ public:
 private:
 	int ref;
 
-	GMutex * docMutex;
+	GMutex docMutex;
 
 };
 
