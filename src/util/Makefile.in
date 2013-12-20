@@ -95,17 +95,19 @@ CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
 LTLIBRARIES = $(noinst_LTLIBRARIES)
 libutil_la_LIBADD =
-am_libutil_la_OBJECTS = libutil_la-Logger.lo \
-	libutil_la-BinObjectEncoding.lo \
-	libutil_la-HexObjectEncoding.lo \
-	libutil_la-InputStreamException.lo \
-	libutil_la-ObjectEncoding.lo libutil_la-ObjectInputStream.lo \
-	libutil_la-ObjectOutputStream.lo libutil_la-CrashHandler.lo \
-	libutil_la-GzHelper.lo libutil_la-LatexAction.lo \
-	libutil_la-OutputStream.lo libutil_la-PageRange.lo \
-	libutil_la-Stacktrace.lo libutil_la-String.lo \
-	libutil_la-pixbuf-utils.lo libutil_la-Range.lo \
-	libutil_la-Rectangle.lo libutil_la-Util.lo \
+am__dirstamp = $(am__leading_dot)dirstamp
+am_libutil_la_OBJECTS = logger/libutil_la-Logger.lo \
+	serializing/libutil_la-BinObjectEncoding.lo \
+	serializing/libutil_la-HexObjectEncoding.lo \
+	serializing/libutil_la-InputStreamException.lo \
+	serializing/libutil_la-ObjectEncoding.lo \
+	serializing/libutil_la-ObjectInputStream.lo \
+	serializing/libutil_la-ObjectOutputStream.lo \
+	libutil_la-CrashHandler.lo libutil_la-GzHelper.lo \
+	libutil_la-LatexAction.lo libutil_la-OutputStream.lo \
+	libutil_la-PageRange.lo libutil_la-Stacktrace.lo \
+	libutil_la-String.lo libutil_la-pixbuf-utils.lo \
+	libutil_la-Range.lo libutil_la-Rectangle.lo libutil_la-Util.lo \
 	libutil_la-XInputUtils.lo libutil_la-XournalType.lo
 libutil_la_OBJECTS = $(am_libutil_la_OBJECTS)
 AM_V_lt = $(am__v_lt_@AM_V@)
@@ -367,7 +369,7 @@ libutil_la_SOURCES = \
 	XInputUtils.cpp \
 	XournalType.cpp
 
-INCLUDES = \
+AM_CPPFLAGS = \
 	-DPACKAGE_DATA_DIR=\""$(datadir)"\" \
 	-DPACKAGE_LOCALE_DIR=\""$(prefix)/$(DATADIRNAME)/locale"\" \
 	@PACKAGE_CFLAGS@
@@ -424,26 +426,54 @@ clean-noinstLTLIBRARIES:
 	  echo rm -f $${locs}; \
 	  rm -f $${locs}; \
 	}
+logger/$(am__dirstamp):
+	@$(MKDIR_P) logger
+	@: > logger/$(am__dirstamp)
+logger/$(DEPDIR)/$(am__dirstamp):
+	@$(MKDIR_P) logger/$(DEPDIR)
+	@: > logger/$(DEPDIR)/$(am__dirstamp)
+logger/libutil_la-Logger.lo: logger/$(am__dirstamp) \
+	logger/$(DEPDIR)/$(am__dirstamp)
+serializing/$(am__dirstamp):
+	@$(MKDIR_P) serializing
+	@: > serializing/$(am__dirstamp)
+serializing/$(DEPDIR)/$(am__dirstamp):
+	@$(MKDIR_P) serializing/$(DEPDIR)
+	@: > serializing/$(DEPDIR)/$(am__dirstamp)
+serializing/libutil_la-BinObjectEncoding.lo:  \
+	serializing/$(am__dirstamp) \
+	serializing/$(DEPDIR)/$(am__dirstamp)
+serializing/libutil_la-HexObjectEncoding.lo:  \
+	serializing/$(am__dirstamp) \
+	serializing/$(DEPDIR)/$(am__dirstamp)
+serializing/libutil_la-InputStreamException.lo:  \
+	serializing/$(am__dirstamp) \
+	serializing/$(DEPDIR)/$(am__dirstamp)
+serializing/libutil_la-ObjectEncoding.lo: serializing/$(am__dirstamp) \
+	serializing/$(DEPDIR)/$(am__dirstamp)
+serializing/libutil_la-ObjectInputStream.lo:  \
+	serializing/$(am__dirstamp) \
+	serializing/$(DEPDIR)/$(am__dirstamp)
+serializing/libutil_la-ObjectOutputStream.lo:  \
+	serializing/$(am__dirstamp) \
+	serializing/$(DEPDIR)/$(am__dirstamp)
 
 libutil.la: $(libutil_la_OBJECTS) $(libutil_la_DEPENDENCIES) $(EXTRA_libutil_la_DEPENDENCIES) 
 	$(AM_V_CXXLD)$(libutil_la_LINK)  $(libutil_la_OBJECTS) $(libutil_la_LIBADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
+	-rm -f logger/*.$(OBJEXT)
+	-rm -f logger/*.lo
+	-rm -f serializing/*.$(OBJEXT)
+	-rm -f serializing/*.lo
 
 distclean-compile:
 	-rm -f *.tab.c
 
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libutil_la-BinObjectEncoding.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libutil_la-CrashHandler.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libutil_la-GzHelper.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libutil_la-HexObjectEncoding.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libutil_la-InputStreamException.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libutil_la-LatexAction.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libutil_la-Logger.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libutil_la-ObjectEncoding.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libutil_la-ObjectInputStream.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libutil_la-ObjectOutputStream.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libutil_la-OutputStream.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libutil_la-PageRange.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libutil_la-Range.Plo@am__quote@
@@ -454,76 +484,86 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libutil_la-XInputUtils.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libutil_la-XournalType.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libutil_la-pixbuf-utils.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@logger/$(DEPDIR)/libutil_la-Logger.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@serializing/$(DEPDIR)/libutil_la-BinObjectEncoding.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@serializing/$(DEPDIR)/libutil_la-HexObjectEncoding.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@serializing/$(DEPDIR)/libutil_la-InputStreamException.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@serializing/$(DEPDIR)/libutil_la-ObjectEncoding.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@serializing/$(DEPDIR)/libutil_la-ObjectInputStream.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@serializing/$(DEPDIR)/libutil_la-ObjectOutputStream.Plo@am__quote@
 
 .cpp.o:
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXXCOMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/$*.Tpo $(DEPDIR)/$*.Po
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)depbase=`echo $@ | sed 's|[^/]*$$|$(DEPDIR)/&|;s|\.o$$||'`;\
+@am__fastdepCXX_TRUE@	$(CXXCOMPILE) -MT $@ -MD -MP -MF $$depbase.Tpo -c -o $@ $< &&\
+@am__fastdepCXX_TRUE@	$(am__mv) $$depbase.Tpo $$depbase.Po
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='$<' object='$@' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXXCOMPILE) -c -o $@ $<
 
 .cpp.obj:
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXXCOMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ `$(CYGPATH_W) '$<'`
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/$*.Tpo $(DEPDIR)/$*.Po
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)depbase=`echo $@ | sed 's|[^/]*$$|$(DEPDIR)/&|;s|\.obj$$||'`;\
+@am__fastdepCXX_TRUE@	$(CXXCOMPILE) -MT $@ -MD -MP -MF $$depbase.Tpo -c -o $@ `$(CYGPATH_W) '$<'` &&\
+@am__fastdepCXX_TRUE@	$(am__mv) $$depbase.Tpo $$depbase.Po
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='$<' object='$@' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXXCOMPILE) -c -o $@ `$(CYGPATH_W) '$<'`
 
 .cpp.lo:
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LTCXXCOMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/$*.Tpo $(DEPDIR)/$*.Plo
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)depbase=`echo $@ | sed 's|[^/]*$$|$(DEPDIR)/&|;s|\.lo$$||'`;\
+@am__fastdepCXX_TRUE@	$(LTCXXCOMPILE) -MT $@ -MD -MP -MF $$depbase.Tpo -c -o $@ $< &&\
+@am__fastdepCXX_TRUE@	$(am__mv) $$depbase.Tpo $$depbase.Plo
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='$<' object='$@' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LTCXXCOMPILE) -c -o $@ $<
 
-libutil_la-Logger.lo: logger/Logger.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libutil_la_CXXFLAGS) $(CXXFLAGS) -MT libutil_la-Logger.lo -MD -MP -MF $(DEPDIR)/libutil_la-Logger.Tpo -c -o libutil_la-Logger.lo `test -f 'logger/Logger.cpp' || echo '$(srcdir)/'`logger/Logger.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libutil_la-Logger.Tpo $(DEPDIR)/libutil_la-Logger.Plo
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='logger/Logger.cpp' object='libutil_la-Logger.lo' libtool=yes @AMDEPBACKSLASH@
+logger/libutil_la-Logger.lo: logger/Logger.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libutil_la_CXXFLAGS) $(CXXFLAGS) -MT logger/libutil_la-Logger.lo -MD -MP -MF logger/$(DEPDIR)/libutil_la-Logger.Tpo -c -o logger/libutil_la-Logger.lo `test -f 'logger/Logger.cpp' || echo '$(srcdir)/'`logger/Logger.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) logger/$(DEPDIR)/libutil_la-Logger.Tpo logger/$(DEPDIR)/libutil_la-Logger.Plo
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='logger/Logger.cpp' object='logger/libutil_la-Logger.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libutil_la_CXXFLAGS) $(CXXFLAGS) -c -o libutil_la-Logger.lo `test -f 'logger/Logger.cpp' || echo '$(srcdir)/'`logger/Logger.cpp
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libutil_la_CXXFLAGS) $(CXXFLAGS) -c -o logger/libutil_la-Logger.lo `test -f 'logger/Logger.cpp' || echo '$(srcdir)/'`logger/Logger.cpp
 
-libutil_la-BinObjectEncoding.lo: serializing/BinObjectEncoding.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libutil_la_CXXFLAGS) $(CXXFLAGS) -MT libutil_la-BinObjectEncoding.lo -MD -MP -MF $(DEPDIR)/libutil_la-BinObjectEncoding.Tpo -c -o libutil_la-BinObjectEncoding.lo `test -f 'serializing/BinObjectEncoding.cpp' || echo '$(srcdir)/'`serializing/BinObjectEncoding.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libutil_la-BinObjectEncoding.Tpo $(DEPDIR)/libutil_la-BinObjectEncoding.Plo
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='serializing/BinObjectEncoding.cpp' object='libutil_la-BinObjectEncoding.lo' libtool=yes @AMDEPBACKSLASH@
+serializing/libutil_la-BinObjectEncoding.lo: serializing/BinObjectEncoding.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libutil_la_CXXFLAGS) $(CXXFLAGS) -MT serializing/libutil_la-BinObjectEncoding.lo -MD -MP -MF serializing/$(DEPDIR)/libutil_la-BinObjectEncoding.Tpo -c -o serializing/libutil_la-BinObjectEncoding.lo `test -f 'serializing/BinObjectEncoding.cpp' || echo '$(srcdir)/'`serializing/BinObjectEncoding.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) serializing/$(DEPDIR)/libutil_la-BinObjectEncoding.Tpo serializing/$(DEPDIR)/libutil_la-BinObjectEncoding.Plo
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='serializing/BinObjectEncoding.cpp' object='serializing/libutil_la-BinObjectEncoding.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libutil_la_CXXFLAGS) $(CXXFLAGS) -c -o libutil_la-BinObjectEncoding.lo `test -f 'serializing/BinObjectEncoding.cpp' || echo '$(srcdir)/'`serializing/BinObjectEncoding.cpp
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libutil_la_CXXFLAGS) $(CXXFLAGS) -c -o serializing/libutil_la-BinObjectEncoding.lo `test -f 'serializing/BinObjectEncoding.cpp' || echo '$(srcdir)/'`serializing/BinObjectEncoding.cpp
 
-libutil_la-HexObjectEncoding.lo: serializing/HexObjectEncoding.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libutil_la_CXXFLAGS) $(CXXFLAGS) -MT libutil_la-HexObjectEncoding.lo -MD -MP -MF $(DEPDIR)/libutil_la-HexObjectEncoding.Tpo -c -o libutil_la-HexObjectEncoding.lo `test -f 'serializing/HexObjectEncoding.cpp' || echo '$(srcdir)/'`serializing/HexObjectEncoding.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libutil_la-HexObjectEncoding.Tpo $(DEPDIR)/libutil_la-HexObjectEncoding.Plo
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='serializing/HexObjectEncoding.cpp' object='libutil_la-HexObjectEncoding.lo' libtool=yes @AMDEPBACKSLASH@
+serializing/libutil_la-HexObjectEncoding.lo: serializing/HexObjectEncoding.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libutil_la_CXXFLAGS) $(CXXFLAGS) -MT serializing/libutil_la-HexObjectEncoding.lo -MD -MP -MF serializing/$(DEPDIR)/libutil_la-HexObjectEncoding.Tpo -c -o serializing/libutil_la-HexObjectEncoding.lo `test -f 'serializing/HexObjectEncoding.cpp' || echo '$(srcdir)/'`serializing/HexObjectEncoding.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) serializing/$(DEPDIR)/libutil_la-HexObjectEncoding.Tpo serializing/$(DEPDIR)/libutil_la-HexObjectEncoding.Plo
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='serializing/HexObjectEncoding.cpp' object='serializing/libutil_la-HexObjectEncoding.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libutil_la_CXXFLAGS) $(CXXFLAGS) -c -o libutil_la-HexObjectEncoding.lo `test -f 'serializing/HexObjectEncoding.cpp' || echo '$(srcdir)/'`serializing/HexObjectEncoding.cpp
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libutil_la_CXXFLAGS) $(CXXFLAGS) -c -o serializing/libutil_la-HexObjectEncoding.lo `test -f 'serializing/HexObjectEncoding.cpp' || echo '$(srcdir)/'`serializing/HexObjectEncoding.cpp
 
-libutil_la-InputStreamException.lo: serializing/InputStreamException.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libutil_la_CXXFLAGS) $(CXXFLAGS) -MT libutil_la-InputStreamException.lo -MD -MP -MF $(DEPDIR)/libutil_la-InputStreamException.Tpo -c -o libutil_la-InputStreamException.lo `test -f 'serializing/InputStreamException.cpp' || echo '$(srcdir)/'`serializing/InputStreamException.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libutil_la-InputStreamException.Tpo $(DEPDIR)/libutil_la-InputStreamException.Plo
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='serializing/InputStreamException.cpp' object='libutil_la-InputStreamException.lo' libtool=yes @AMDEPBACKSLASH@
+serializing/libutil_la-InputStreamException.lo: serializing/InputStreamException.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libutil_la_CXXFLAGS) $(CXXFLAGS) -MT serializing/libutil_la-InputStreamException.lo -MD -MP -MF serializing/$(DEPDIR)/libutil_la-InputStreamException.Tpo -c -o serializing/libutil_la-InputStreamException.lo `test -f 'serializing/InputStreamException.cpp' || echo '$(srcdir)/'`serializing/InputStreamException.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) serializing/$(DEPDIR)/libutil_la-InputStreamException.Tpo serializing/$(DEPDIR)/libutil_la-InputStreamException.Plo
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='serializing/InputStreamException.cpp' object='serializing/libutil_la-InputStreamException.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libutil_la_CXXFLAGS) $(CXXFLAGS) -c -o libutil_la-InputStreamException.lo `test -f 'serializing/InputStreamException.cpp' || echo '$(srcdir)/'`serializing/InputStreamException.cpp
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libutil_la_CXXFLAGS) $(CXXFLAGS) -c -o serializing/libutil_la-InputStreamException.lo `test -f 'serializing/InputStreamException.cpp' || echo '$(srcdir)/'`serializing/InputStreamException.cpp
 
-libutil_la-ObjectEncoding.lo: serializing/ObjectEncoding.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libutil_la_CXXFLAGS) $(CXXFLAGS) -MT libutil_la-ObjectEncoding.lo -MD -MP -MF $(DEPDIR)/libutil_la-ObjectEncoding.Tpo -c -o libutil_la-ObjectEncoding.lo `test -f 'serializing/ObjectEncoding.cpp' || echo '$(srcdir)/'`serializing/ObjectEncoding.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libutil_la-ObjectEncoding.Tpo $(DEPDIR)/libutil_la-ObjectEncoding.Plo
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='serializing/ObjectEncoding.cpp' object='libutil_la-ObjectEncoding.lo' libtool=yes @AMDEPBACKSLASH@
+serializing/libutil_la-ObjectEncoding.lo: serializing/ObjectEncoding.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libutil_la_CXXFLAGS) $(CXXFLAGS) -MT serializing/libutil_la-ObjectEncoding.lo -MD -MP -MF serializing/$(DEPDIR)/libutil_la-ObjectEncoding.Tpo -c -o serializing/libutil_la-ObjectEncoding.lo `test -f 'serializing/ObjectEncoding.cpp' || echo '$(srcdir)/'`serializing/ObjectEncoding.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) serializing/$(DEPDIR)/libutil_la-ObjectEncoding.Tpo serializing/$(DEPDIR)/libutil_la-ObjectEncoding.Plo
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='serializing/ObjectEncoding.cpp' object='serializing/libutil_la-ObjectEncoding.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libutil_la_CXXFLAGS) $(CXXFLAGS) -c -o libutil_la-ObjectEncoding.lo `test -f 'serializing/ObjectEncoding.cpp' || echo '$(srcdir)/'`serializing/ObjectEncoding.cpp
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libutil_la_CXXFLAGS) $(CXXFLAGS) -c -o serializing/libutil_la-ObjectEncoding.lo `test -f 'serializing/ObjectEncoding.cpp' || echo '$(srcdir)/'`serializing/ObjectEncoding.cpp
 
-libutil_la-ObjectInputStream.lo: serializing/ObjectInputStream.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libutil_la_CXXFLAGS) $(CXXFLAGS) -MT libutil_la-ObjectInputStream.lo -MD -MP -MF $(DEPDIR)/libutil_la-ObjectInputStream.Tpo -c -o libutil_la-ObjectInputStream.lo `test -f 'serializing/ObjectInputStream.cpp' || echo '$(srcdir)/'`serializing/ObjectInputStream.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libutil_la-ObjectInputStream.Tpo $(DEPDIR)/libutil_la-ObjectInputStream.Plo
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='serializing/ObjectInputStream.cpp' object='libutil_la-ObjectInputStream.lo' libtool=yes @AMDEPBACKSLASH@
+serializing/libutil_la-ObjectInputStream.lo: serializing/ObjectInputStream.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libutil_la_CXXFLAGS) $(CXXFLAGS) -MT serializing/libutil_la-ObjectInputStream.lo -MD -MP -MF serializing/$(DEPDIR)/libutil_la-ObjectInputStream.Tpo -c -o serializing/libutil_la-ObjectInputStream.lo `test -f 'serializing/ObjectInputStream.cpp' || echo '$(srcdir)/'`serializing/ObjectInputStream.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) serializing/$(DEPDIR)/libutil_la-ObjectInputStream.Tpo serializing/$(DEPDIR)/libutil_la-ObjectInputStream.Plo
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='serializing/ObjectInputStream.cpp' object='serializing/libutil_la-ObjectInputStream.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libutil_la_CXXFLAGS) $(CXXFLAGS) -c -o libutil_la-ObjectInputStream.lo `test -f 'serializing/ObjectInputStream.cpp' || echo '$(srcdir)/'`serializing/ObjectInputStream.cpp
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libutil_la_CXXFLAGS) $(CXXFLAGS) -c -o serializing/libutil_la-ObjectInputStream.lo `test -f 'serializing/ObjectInputStream.cpp' || echo '$(srcdir)/'`serializing/ObjectInputStream.cpp
 
-libutil_la-ObjectOutputStream.lo: serializing/ObjectOutputStream.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libutil_la_CXXFLAGS) $(CXXFLAGS) -MT libutil_la-ObjectOutputStream.lo -MD -MP -MF $(DEPDIR)/libutil_la-ObjectOutputStream.Tpo -c -o libutil_la-ObjectOutputStream.lo `test -f 'serializing/ObjectOutputStream.cpp' || echo '$(srcdir)/'`serializing/ObjectOutputStream.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libutil_la-ObjectOutputStream.Tpo $(DEPDIR)/libutil_la-ObjectOutputStream.Plo
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='serializing/ObjectOutputStream.cpp' object='libutil_la-ObjectOutputStream.lo' libtool=yes @AMDEPBACKSLASH@
+serializing/libutil_la-ObjectOutputStream.lo: serializing/ObjectOutputStream.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libutil_la_CXXFLAGS) $(CXXFLAGS) -MT serializing/libutil_la-ObjectOutputStream.lo -MD -MP -MF serializing/$(DEPDIR)/libutil_la-ObjectOutputStream.Tpo -c -o serializing/libutil_la-ObjectOutputStream.lo `test -f 'serializing/ObjectOutputStream.cpp' || echo '$(srcdir)/'`serializing/ObjectOutputStream.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) serializing/$(DEPDIR)/libutil_la-ObjectOutputStream.Tpo serializing/$(DEPDIR)/libutil_la-ObjectOutputStream.Plo
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='serializing/ObjectOutputStream.cpp' object='serializing/libutil_la-ObjectOutputStream.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libutil_la_CXXFLAGS) $(CXXFLAGS) -c -o libutil_la-ObjectOutputStream.lo `test -f 'serializing/ObjectOutputStream.cpp' || echo '$(srcdir)/'`serializing/ObjectOutputStream.cpp
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libutil_la_CXXFLAGS) $(CXXFLAGS) -c -o serializing/libutil_la-ObjectOutputStream.lo `test -f 'serializing/ObjectOutputStream.cpp' || echo '$(srcdir)/'`serializing/ObjectOutputStream.cpp
 
 libutil_la-CrashHandler.lo: CrashHandler.cpp
 @am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libutil_la_CXXFLAGS) $(CXXFLAGS) -MT libutil_la-CrashHandler.lo -MD -MP -MF $(DEPDIR)/libutil_la-CrashHandler.Tpo -c -o libutil_la-CrashHandler.lo `test -f 'CrashHandler.cpp' || echo '$(srcdir)/'`CrashHandler.cpp
@@ -621,6 +661,8 @@ mostlyclean-libtool:
 
 clean-libtool:
 	-rm -rf .libs _libs
+	-rm -rf logger/.libs logger/_libs
+	-rm -rf serializing/.libs serializing/_libs
 
 ID: $(am__tagged_files)
 	$(am__define_uniq_tagged_files); mkid -fID $$unique
@@ -734,6 +776,10 @@ clean-generic:
 distclean-generic:
 	-test -z "$(CONFIG_CLEAN_FILES)" || rm -f $(CONFIG_CLEAN_FILES)
 	-test . = "$(srcdir)" || test -z "$(CONFIG_CLEAN_VPATH_FILES)" || rm -f $(CONFIG_CLEAN_VPATH_FILES)
+	-rm -f logger/$(DEPDIR)/$(am__dirstamp)
+	-rm -f logger/$(am__dirstamp)
+	-rm -f serializing/$(DEPDIR)/$(am__dirstamp)
+	-rm -f serializing/$(am__dirstamp)
 
 maintainer-clean-generic:
 	@echo "This command is intended for maintainers to use"
@@ -744,7 +790,7 @@ clean-am: clean-generic clean-libtool clean-noinstLTLIBRARIES \
 	mostlyclean-am
 
 distclean: distclean-am
-	-rm -rf ./$(DEPDIR)
+	-rm -rf ./$(DEPDIR) logger/$(DEPDIR) serializing/$(DEPDIR)
 	-rm -f Makefile
 distclean-am: clean-am distclean-compile distclean-generic \
 	distclean-tags
@@ -790,7 +836,7 @@ install-ps-am:
 installcheck-am:
 
 maintainer-clean: maintainer-clean-am
-	-rm -rf ./$(DEPDIR)
+	-rm -rf ./$(DEPDIR) logger/$(DEPDIR) serializing/$(DEPDIR)
 	-rm -f Makefile
 maintainer-clean-am: distclean-am maintainer-clean-generic
 

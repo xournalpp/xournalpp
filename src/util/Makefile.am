@@ -23,7 +23,7 @@ libutil_la_SOURCES = \
 	XInputUtils.cpp \
 	XournalType.cpp
 
-INCLUDES = \
+AM_CPPFLAGS = \
 	-DPACKAGE_DATA_DIR=\""$(datadir)"\" \
 	-DPACKAGE_LOCALE_DIR=\""$(prefix)/$(DATADIRNAME)/locale"\" \
 	@PACKAGE_CFLAGS@
