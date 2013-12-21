@@ -18105,6 +18105,10 @@ $as_echo "$LINGUAS" >&6; }
 
 ac_config_files="$ac_config_files Makefile src/Makefile src/mathtex/Makefile src/util/Makefile po/Makefile.in ui/Makefile ui/pixmaps/Makefile src/xoj-preview-extractor/Makefile"
 
+
+ac_config_files="$ac_config_files src/pdf/popplerdirect/workaround/workaround.sh"
+
+
 cat >confcache <<\_ACEOF
 # This file is a shell script that caches the results of configure
 # tests run on this system so they can be shared between configure
@@ -19245,6 +19249,7 @@ do
     "ui/Makefile") CONFIG_FILES="$CONFIG_FILES ui/Makefile" ;;
     "ui/pixmaps/Makefile") CONFIG_FILES="$CONFIG_FILES ui/pixmaps/Makefile" ;;
     "src/xoj-preview-extractor/Makefile") CONFIG_FILES="$CONFIG_FILES src/xoj-preview-extractor/Makefile" ;;
+    "src/pdf/popplerdirect/workaround/workaround.sh") CONFIG_FILES="$CONFIG_FILES src/pdf/popplerdirect/workaround/workaround.sh" ;;
     "po/stamp-it") CONFIG_COMMANDS="$CONFIG_COMMANDS po/stamp-it" ;;
 
   *) as_fn_error $? "invalid argument: \`$ac_config_target'" "$LINENO" 5;;
@@ -20734,6 +20739,7 @@ _LT_EOF
     "default-1":C) case "$CONFIG_FILES" in *po/Makefile.in*)
         sed -e "/POTFILES =/r po/POTFILES" po/Makefile.in > po/Makefile
       esac ;;
+    "src/pdf/popplerdirect/workaround/workaround.sh":F) chmod +x src/pdf/popplerdirect/workaround/workaround.sh ;;
     "po/stamp-it":C)
     if  ! grep "^# INTLTOOL_MAKEFILE$" "po/Makefile.in" > /dev/null ; then
        as_fn_error $? "po/Makefile.in.in was not created by intltoolize." "$LINENO" 5
@@ -20792,8 +20798,6 @@ if test -n "$ac_unrecognized_opts" && test "$enable_option_checking" != no; then
 $as_echo "$as_me: WARNING: unrecognized options: $ac_unrecognized_opts" >&2;}
 fi
 
-
-bash `dirname $0`/src/pdf/popplerdirect/workaround/workaround.sh
 
 echo "
 

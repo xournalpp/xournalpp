@@ -1,0 +1,42 @@
+#/bin/bash
+
+# Build a static version of libpoppler
+# to be included in Xournal++
+# 
+# The library and the header files are symlinked
+# for later use
+
+poppler_version="0.24.1"
+
+abs_top_srcdir="@abs_top_srcdir@"
+abs_top_builddir="@abs_top_builddir@"
+
+poppler_srcdir="${abs_top_srcdir}/src/pdf/popplerdirect/poppler-${poppler_version}"
+poppler_dir="${abs_top_builddir}/src/pdf/popplerdirect"
+poppler_builddir="${poppler_dir}/poppler-${poppler_version}_build"
+
+cd "${poppler_dir}"
+
+if [ -e "${poppler_dir}/libpoppler.a" ] && \
+   [ -e "${poppler_dir}/libpoppler-glib.a" ] && \
+   [ -e "${poppler_dir}/poppler-config.h" ]
+then
+  echo "No need to rebuild libpoppler, exiting..."
+  exit 0
+else
+  echo "Rebuilding libpoppler..."
+fi
+
+autoreconf -i "${poppler_srcdir}"
+
+mkdir -p "${poppler_builddir}"
+
+cd "${poppler_builddir}"
+
+"${poppler_srcdir}/configure" --enable-cms --enable-libopenjpeg --enable-libjpeg
+
+make
+
+ln -s "${poppler_builddir}/poppler/.libs/libpoppler.a" "${poppler_dir}"
+ln -s "${poppler_builddir}/glib/.libs/libpoppler-glib.a" "${poppler_dir}"
+ln -s "${poppler_builddir}/poppler/poppler-config.h" "${poppler_dir}"

@@ -410,8 +410,6 @@ am_xournalpp_OBJECTS = control/jobs/xournalpp-AutosaveJob.$(OBJEXT) \
 	xournalpp-Xournalpp.$(OBJEXT) $(am__objects_1)
 xournalpp_OBJECTS = $(am_xournalpp_OBJECTS)
 am__DEPENDENCIES_1 =
-xournalpp_DEPENDENCIES = pdf/libpoppler.a pdf/libpoppler-glib.a \
-	$(am__DEPENDENCIES_1) $(top_builddir)/src/util/libutil.la
 AM_V_lt = $(am__v_lt_@AM_V@)
 am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
 am__v_lt_0 = --silent
@@ -806,6 +804,7 @@ xournalpp_SOURCES = control/jobs/AutosaveJob.cpp \
 AM_CPPFLAGS = \
 	-DPACKAGE_DATA_DIR=\""$(datadir)"\" \
 	-DPACKAGE_LOCALE_DIR=\""$(prefix)/$(DATADIRNAME)/locale"\" \
+	-I"$(abs_top_builddir)/src/pdf/popplerdirect" \
 	@PACKAGE_CFLAGS@
 
 xournalpp_CXXFLAGS = -I$(top_srcdir)/src/util \
@@ -813,9 +812,10 @@ xournalpp_CXXFLAGS = -I$(top_srcdir)/src/util \
 	-I$(top_srcdir)/src/pdf/popplerdirect/poppler-0.24.1/poppler \
 	-g -rdynamic -Wreturn-type -Wuninitialized -Wunused-value \
 	-Wunused-variable $(am__append_3)
+xournalpp_DEPENDENCIES = poppler
 xournalpp_LDADD = \
-	pdf/libpoppler.a \
-	pdf/libpoppler-glib.a \
+	$(abs_top_builddir)/src/pdf/popplerdirect/libpoppler.a \
+	$(abs_top_builddir)/src/pdf/popplerdirect/libpoppler-glib.a \
 	@PACKAGE_LIBS@ $(INTLLIBS) \
 	$(top_builddir)/src/util/libutil.la
 
@@ -4620,6 +4620,11 @@ uninstall-am: uninstall-binPROGRAMS
 	mostlyclean-libtool pdf pdf-am ps ps-am tags tags-am uninstall \
 	uninstall-am uninstall-binPROGRAMS
 
+
+.PHONY: poppler
+
+poppler:
+	$(abs_top_builddir)/src/pdf/popplerdirect/workaround/workaround.sh
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.

@@ -198,6 +198,7 @@ endif
 AM_CPPFLAGS = \
 	-DPACKAGE_DATA_DIR=\""$(datadir)"\" \
 	-DPACKAGE_LOCALE_DIR=\""$(prefix)/$(DATADIRNAME)/locale"\" \
+	-I"$(abs_top_builddir)/src/pdf/popplerdirect" \
 	@PACKAGE_CFLAGS@
 
 xournalpp_CXXFLAGS = \
@@ -212,8 +213,15 @@ xournalpp_CXXFLAGS += \
 	-DENABLE_OS
 endif
 
+.PHONY: poppler
+
+poppler:
+	$(abs_top_builddir)/src/pdf/popplerdirect/workaround/workaround.sh
+
+xournalpp_DEPENDENCIES = poppler
+
 xournalpp_LDADD = \
-	pdf/libpoppler.a \
-	pdf/libpoppler-glib.a \
+	$(abs_top_builddir)/src/pdf/popplerdirect/libpoppler.a \
+	$(abs_top_builddir)/src/pdf/popplerdirect/libpoppler-glib.a \
 	@PACKAGE_LIBS@ $(INTLLIBS) \
 	$(top_builddir)/src/util/libutil.la
