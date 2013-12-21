@@ -21,7 +21,7 @@ AC_CONFIG_MACRO_DIR([m4])
 
 AC_SUBST(ACLOCAL_AMFLAGS, "$ACLOCAL_FLAGS -I m4")
 
-dnl librsvg-2.0 is not really needed by Xournal++, but if you don't have it crashes while loading the SVG icons (Problem with Gentoo)
+dnl librsvg-2.0 is not really needed by Xournal++, but if you dont have it crashes while loading the SVG icons (Problem with Gentoo)
 #We also are compiling with libpoppler so we require a number of extra packages
 pkg_modules="gtk+-2.0 >= 2.18.3 libglade-2.0 >= 2.6.4 gthread-2.0 >= 2.4.0 librsvg-2.0 >= 2.14.0 zlib fontconfig lcms"
 
@@ -208,10 +208,19 @@ dnl Add the languages which your application supports here.
 ALL_LINGUAS="`grep -v '^#' "$srcdir/po/LINGUAS" | tr '\n' ' '`"
 AM_GLIB_GNU_GETTEXT
 
-AC_CONFIG_FILES(Makefile src/Makefile src/mathtex/Makefile src/util/Makefile po/Makefile.in ui/Makefile ui/pixmaps/Makefile src/xoj-preview-extractor/Makefile)
-AC_OUTPUT
+AC_CONFIG_FILES(Makefile
+		src/Makefile
+		src/mathtex/Makefile
+		src/util/Makefile
+		po/Makefile.in
+		ui/Makefile
+		ui/pixmaps/Makefile
+		src/xoj-preview-extractor/Makefile)
 
-bash `dirname $0`/src/pdf/popplerdirect/workaround/workaround.sh
+AC_CONFIG_FILES(src/pdf/popplerdirect/workaround/workaround.sh,
+		[chmod +x src/pdf/popplerdirect/workaround/workaround.sh])
+
+AC_OUTPUT
 
 echo "
 

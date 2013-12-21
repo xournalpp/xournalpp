@@ -26,6 +26,7 @@ libutil_la_SOURCES = \
 AM_CPPFLAGS = \
 	-DPACKAGE_DATA_DIR=\""$(datadir)"\" \
 	-DPACKAGE_LOCALE_DIR=\""$(prefix)/$(DATADIRNAME)/locale"\" \
+	-I"$(abs_top_builddir)/src/pdf/popplerdirect" \
 	@PACKAGE_CFLAGS@
 
 libutil_la_CXXFLAGS = \
@@ -35,3 +36,7 @@ libutil_la_CXXFLAGS = \
 	-g -rdynamic \
 	-Wreturn-type -Wuninitialized -Wunused-value -Wunused-variable
 
+$(abs_top_builddir)/src/pdf/popplerdirect/poppler-config.h:
+	$(abs_top_builddir)/src/pdf/popplerdirect/workaround/workaround.sh
+
+BUILT_SOURCES = $(abs_top_builddir)/src/pdf/popplerdirect/poppler-config.h
