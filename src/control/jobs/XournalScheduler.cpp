@@ -4,6 +4,8 @@
 
 XournalScheduler::XournalScheduler() {
 	XOJ_INIT_TYPE(XournalScheduler);
+
+	this->name = "XournalScheduler";
 }
 
 XournalScheduler::~XournalScheduler() {
@@ -25,7 +27,7 @@ void XournalScheduler::removePage(PageView * view) {
 void XournalScheduler::removeAllJobs() {
 	XOJ_CHECK_TYPE(XournalScheduler);
 
-	g_mutex_lock(this->jobQueueMutex);
+	g_mutex_lock(&this->jobQueueMutex);
 
 	for(int priority = JOB_PRIORITY_URGENT; priority < JOB_N_PRIORITIES; priority++) {
 		int length = g_queue_get_length(this->jobQueue[priority]);
@@ -41,21 +43,21 @@ void XournalScheduler::removeAllJobs() {
 		}
 	}
 
-	g_mutex_unlock(this->jobQueueMutex);
+	g_mutex_unlock(&this->jobQueueMutex);
 
 }
 
 void XournalScheduler::finishTask() {
 	XOJ_CHECK_TYPE(XournalScheduler);
 
-	g_mutex_lock(this->jobRunningMutex);
-	g_mutex_unlock(this->jobRunningMutex);
+	g_mutex_lock(&this->jobRunningMutex);
+	g_mutex_unlock(&this->jobRunningMutex);
 }
 
 void XournalScheduler::removeSource(void * source, JobType type, JobPriority priority) {
 	XOJ_CHECK_TYPE(XournalScheduler);
 
-	g_mutex_lock(this->jobQueueMutex);
+	g_mutex_lock(&this->jobQueueMutex);
 
 	int length = g_queue_get_length(this->jobQueue[priority]);
 	for (int i = 0; i < length; i++) {
@@ -75,14 +77,14 @@ void XournalScheduler::removeSource(void * source, JobType type, JobPriority pri
 	// we can be sure we don't access "source"
 	finishTask();
 
-	g_mutex_unlock(this->jobQueueMutex);
+	g_mutex_unlock(&this->jobQueueMutex);
 }
 
 bool XournalScheduler::existsSource(void * source, JobType type, JobPriority priority) {
 	XOJ_CHECK_TYPE(XournalScheduler);
 
 	bool exists = false;
-	g_mutex_lock(this->jobQueueMutex);
+	g_mutex_lock(&this->jobQueueMutex);
 
 	int length = g_queue_get_length(this->jobQueue[priority]);
 	for (int i = 0; i < length; i++) {
@@ -96,7 +98,7 @@ bool XournalScheduler::existsSource(void * source, JobType type, JobPriority pri
 		}
 	}
 
-	g_mutex_unlock(this->jobQueueMutex);
+	g_mutex_unlock(&this->jobQueueMutex);
 
 	return exists;
 }

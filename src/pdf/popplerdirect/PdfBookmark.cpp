@@ -69,7 +69,7 @@ GList * PdfBookmarks::exportBookmarksFromTreeModel(GtkTreeModel * model, Documen
 	GtkTreeIter iter = { 0 };
 
 	if (!gtk_tree_model_get_iter_first(model, &iter)) {
-		return false;
+		return NULL;
 	}
 
 	createBookmarks(model, data, &iter, 0, doc);

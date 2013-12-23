@@ -8,14 +8,11 @@ Job::Job() {
 	this->afterRunId = 0;
 
 	this->refCount = 1;
-	this->refMutex = g_mutex_new();
+	g_mutex_init(&this->refMutex);
 }
 
 Job::~Job() {
 	XOJ_CHECK_TYPE(Job);
-
-	g_mutex_free(this->refMutex);
-	this->refMutex = NULL;
 
 	XOJ_RELEASE_TYPE(Job);
 }
@@ -23,23 +20,23 @@ Job::~Job() {
 void Job::unref() {
 	XOJ_CHECK_TYPE(Job);
 
-	g_mutex_lock(this->refMutex);
+	g_mutex_lock(&this->refMutex);
 	this->refCount--;
 
 	if (this->refCount == 0) {
-		g_mutex_unlock(this->refMutex);
+		g_mutex_unlock(&this->refMutex);
 		delete this;
 	} else {
-		g_mutex_unlock(this->refMutex);
+		g_mutex_unlock(&this->refMutex);
 	}
 }
 
 void Job::ref() {
 	XOJ_CHECK_TYPE(Job);
 
-	g_mutex_lock(this->refMutex);
+	g_mutex_lock(&this->refMutex);
 	this->refCount++;
-	g_mutex_unlock(this->refMutex);
+	g_mutex_unlock(&this->refMutex);
 }
 
 void Job::deleteJob() {

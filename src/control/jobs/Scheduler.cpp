@@ -11,13 +11,16 @@
 Scheduler::Scheduler() {
 	XOJ_INIT_TYPE(Scheduler);
 
+	this->name = "Scheduler";
+
 	// Thread
 	this->threadRunning = true;
-	this->jobQueueCond = g_cond_new();
-	this->jobQueueMutex = g_mutex_new();
-	this->jobRunningMutex = g_mutex_new();
-	this->schedulerMutex = g_mutex_new();
-	this->blockRenderMutex = g_mutex_new();
+	g_cond_init(&this->jobQueueCond);
+
+	g_mutex_init(&this->jobQueueMutex);
+	g_mutex_init(&this->jobRunningMutex);
+	g_mutex_init(&this->schedulerMutex);
+	g_mutex_init(&this->blockRenderMutex);
 
 	// Queue
 	GQueue init = G_QUEUE_INIT;
@@ -49,15 +52,6 @@ Scheduler::~Scheduler() {
 
 	stop();
 
-	g_mutex_free(this->jobQueueMutex);
-	g_mutex_free(this->jobRunningMutex);
-
-	g_mutex_free(this->schedulerMutex);
-
-	g_mutex_free(this->blockRenderMutex);
-
-	g_cond_free(this->jobQueueCond);
-
 	Job * job = NULL;
 	while (job = getNextJobUnlocked()) {
 		job->unref();
@@ -72,7 +66,8 @@ Scheduler::~Scheduler() {
 
 void Scheduler::start() {
 	g_return_if_fail(this->thread == NULL);
-	this->thread = g_thread_create((GThreadFunc)jobThreadCallback, this, true, NULL);
+	
+	this->thread = g_thread_new(name, (GThreadFunc)jobThreadCallback, this);
 }
 
 void Scheduler::stop() {
@@ -80,22 +75,22 @@ void Scheduler::stop() {
 		return;
 	}
 	this->threadRunning = false;
-	g_cond_broadcast(this->jobQueueCond);
+	g_cond_broadcast(&this->jobQueueCond);
 	g_thread_join(this->thread);
 }
 
 void Scheduler::addJob(Job * job, JobPriority priority) {
 	XOJ_CHECK_TYPE(Scheduler);
 
-	g_mutex_lock(this->jobQueueMutex);
+	g_mutex_lock(&this->jobQueueMutex);
 
 	job->ref();
 	g_queue_push_tail(this->jobQueue[priority], job);
-	g_cond_broadcast(this->jobQueueCond);
+	g_cond_broadcast(&this->jobQueueCond);
 
 	SDEBUG("add job: %ld\n", (long)job);
 
-	g_mutex_unlock(this->jobQueueMutex);
+	g_mutex_unlock(&this->jobQueueMutex);
 }
 
 Job * Scheduler::getNextJobUnlocked(bool onlyNotRender, bool * hasRenderJobs) {
@@ -132,7 +127,7 @@ Job * Scheduler::getNextJobUnlocked(bool onlyNotRender, bool * hasRenderJobs) {
 void Scheduler::lock() {
 	XOJ_CHECK_TYPE(Scheduler);
 
-	g_mutex_lock(this->schedulerMutex);
+	g_mutex_lock(&this->schedulerMutex);
 }
 
 /**
@@ -141,7 +136,7 @@ void Scheduler::lock() {
 void Scheduler::unlock() {
 	XOJ_CHECK_TYPE(Scheduler);
 
-	g_mutex_unlock(this->schedulerMutex);
+	g_mutex_unlock(&this->schedulerMutex);
 }
 
 #define ZOOM_WAIT_US_TIMEOUT 300000 // 0.3s
@@ -149,7 +144,7 @@ void Scheduler::unlock() {
 void Scheduler::blockRerenderZoom() {
 	XOJ_CHECK_TYPE(Scheduler);
 
-	g_mutex_lock(this->blockRenderMutex);
+	g_mutex_lock(&this->blockRenderMutex);
 
 	if (this->blockRenderZoomTime == NULL) {
 		this->blockRenderZoomTime = g_new(GTimeVal, 1);
@@ -158,13 +153,13 @@ void Scheduler::blockRerenderZoom() {
 	g_get_current_time(this->blockRenderZoomTime);
 	g_time_val_add(this->blockRenderZoomTime, ZOOM_WAIT_US_TIMEOUT);
 
-	g_mutex_unlock(this->blockRenderMutex);
+	g_mutex_unlock(&this->blockRenderMutex);
 }
 
 void Scheduler::unblockRerenderZoom() {
 	XOJ_CHECK_TYPE(Scheduler);
 
-	g_mutex_lock(this->blockRenderMutex);
+	g_mutex_lock(&this->blockRenderMutex);
 
 	g_free(this->blockRenderZoomTime);
 	this->blockRenderZoomTime = NULL;
@@ -173,9 +168,9 @@ void Scheduler::unblockRerenderZoom() {
 		this->jobRenderThreadTimerId = 0;
 	}
 
-	g_mutex_unlock(this->blockRenderMutex);
+	g_mutex_unlock(&this->blockRenderMutex);
 
-	g_cond_broadcast(this->jobQueueCond);
+	g_cond_broadcast(&this->jobQueueCond);
 }
 
 /**
@@ -204,12 +199,12 @@ bool Scheduler::jobRenderThreadTimer(Scheduler * scheduler) {
 
 	scheduler->jobRenderThreadTimerId = 0;
 
-	g_mutex_lock(scheduler->blockRenderMutex);
+	g_mutex_lock(&scheduler->blockRenderMutex);
 	g_free(scheduler->blockRenderZoomTime);
 	scheduler->blockRenderZoomTime = NULL;
-	g_mutex_unlock(scheduler->blockRenderMutex);
+	g_mutex_unlock(&scheduler->blockRenderMutex);
 
-	g_cond_broadcast(scheduler->jobQueueCond);
+	g_cond_broadcast(&scheduler->jobQueueCond);
 
 	return false;
 }
@@ -219,9 +214,9 @@ gpointer Scheduler::jobThreadCallback(Scheduler * scheduler) {
 
 	while (scheduler->threadRunning) {
 		// lock the whole scheduler
-		g_mutex_lock(scheduler->schedulerMutex);
+		g_mutex_lock(&scheduler->schedulerMutex);
 
-		g_mutex_lock(scheduler->blockRenderMutex);
+		g_mutex_lock(&scheduler->blockRenderMutex);
 		bool onlyNoneRenderJobs = false;
 		glong diff = 1000;
 		if (scheduler->blockRenderZoomTime) {
@@ -236,9 +231,9 @@ gpointer Scheduler::jobThreadCallback(Scheduler * scheduler) {
 				onlyNoneRenderJobs = true;
 			}
 		}
-		g_mutex_unlock(scheduler->blockRenderMutex);
+		g_mutex_unlock(&scheduler->blockRenderMutex);
 
-		g_mutex_lock(scheduler->jobQueueMutex);
+		g_mutex_lock(&scheduler->jobQueueMutex);
 		bool hasOnlyRenderJobs = false;
 		Job * job = scheduler->getNextJobUnlocked(onlyNoneRenderJobs, &hasOnlyRenderJobs);
 		if(job != NULL) {
@@ -249,7 +244,7 @@ gpointer Scheduler::jobThreadCallback(Scheduler * scheduler) {
 
 		if (!job) {
 			// unlock the whole scheduler
-			g_mutex_unlock(scheduler->schedulerMutex);
+			g_mutex_unlock(&scheduler->schedulerMutex);
 
 			if(hasOnlyRenderJobs) {
 				if(scheduler->jobRenderThreadTimerId) {
@@ -258,25 +253,25 @@ gpointer Scheduler::jobThreadCallback(Scheduler * scheduler) {
 				scheduler->jobRenderThreadTimerId = g_timeout_add(diff, (GSourceFunc)jobRenderThreadTimer, scheduler);
 			}
 
-			g_cond_wait(scheduler->jobQueueCond, scheduler->jobQueueMutex);
-			g_mutex_unlock(scheduler->jobQueueMutex);
+			g_cond_wait(&scheduler->jobQueueCond, &scheduler->jobQueueMutex);
+			g_mutex_unlock(&scheduler->jobQueueMutex);
 
 			continue;
 		}
 
 		SDEBUG("do job: %ld\n", (long)job);
 
-		g_mutex_unlock(scheduler->jobQueueMutex);
+		g_mutex_unlock(&scheduler->jobQueueMutex);
 
-		g_mutex_lock(scheduler->jobRunningMutex);
+		g_mutex_lock(&scheduler->jobRunningMutex);
 
 		job->execute();
 
 		job->unref();
-		g_mutex_unlock(scheduler->jobRunningMutex);
+		g_mutex_unlock(&scheduler->jobRunningMutex);
 
 		// unlock the whole scheduler
-		g_mutex_unlock(scheduler->schedulerMutex);
+		g_mutex_unlock(&scheduler->schedulerMutex);
 
 		SDEBUG("next\n", NULL);
 	}

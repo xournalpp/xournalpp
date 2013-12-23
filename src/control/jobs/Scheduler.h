@@ -78,13 +78,13 @@ protected:
 
 	GThread * thread;
 
-	GCond * jobQueueCond;
-	GMutex * jobQueueMutex;
+	GCond jobQueueCond;
+	GMutex jobQueueMutex;
 
-	GMutex * schedulerMutex;
+	GMutex schedulerMutex;
 
 	// this is need to be sure there is no job running if we delete a page, else we may access delete memory...
-	GMutex * jobRunningMutex;
+	GMutex jobRunningMutex;
 
 	GQueue queueUrgent;
 	GQueue queueHigh;
@@ -94,7 +94,9 @@ protected:
 	GQueue * jobQueue[JOB_N_PRIORITIES];
 
 	GTimeVal * blockRenderZoomTime;
-	GMutex * blockRenderMutex;
+	GMutex blockRenderMutex;
+
+	const char *name;
 };
 
 #endif /* __SCHEDULER_H__ */

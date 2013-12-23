@@ -17,7 +17,7 @@ Document::Document(DocumentHandler * handler) {
 	this->attachPdf = false;
 	this->createBackupOnSave = false;
 
-	this->documentLock = g_mutex_new();
+	g_mutex_init(&this->documentLock);
 }
 
 Document::~Document() {
@@ -30,29 +30,26 @@ Document::~Document() {
 		this->contentsModel = NULL;
 	}
 
-	g_mutex_free(this->documentLock);
-	this->documentLock = NULL;
-
 	XOJ_RELEASE_TYPE(Document);
 }
 
 void Document::lock() {
 	XOJ_CHECK_TYPE(Document);
 
-	g_mutex_lock(this->documentLock);
+	g_mutex_lock(&this->documentLock);
 
 	//	if(tryLock()) {
 	//		fprintf(stderr, "Locked by\n");
 	//		Stacktrace::printStracktrace();
 	//		fprintf(stderr, "\n\n\n\n");
 	//	} else {
-	//		g_mutex_lock(this->documentLock);
+	//		g_mutex_lock(&this->documentLock);
 	//	}
 }
 
 void Document::unlock() {
 	XOJ_CHECK_TYPE(Document);
-	g_mutex_unlock(this->documentLock);
+	g_mutex_unlock(&this->documentLock);
 
 	//	fprintf(stderr, "Unlocked by\n");
 	//	Stacktrace::printStracktrace();
@@ -62,7 +59,7 @@ void Document::unlock() {
 bool Document::tryLock() {
 	XOJ_CHECK_TYPE(Document);
 
-	return g_mutex_trylock(this->documentLock);
+	return g_mutex_trylock(&this->documentLock);
 }
 
 void Document::clearDocument(bool destroy) {

@@ -81,7 +81,7 @@ private:
 	int afterRunId;
 
 	int refCount;
-	GMutex * refMutex;
+	GMutex refMutex;
 };
 
 #endif /* __JOB_H__ */
