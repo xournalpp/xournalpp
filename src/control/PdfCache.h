@@ -38,7 +38,7 @@ private:
 private:
 	XOJ_TYPE_ATTRIB;
 
-	GMutex * renderMutex;
+	GMutex renderMutex;
 
 	GList * data;
 	int size;

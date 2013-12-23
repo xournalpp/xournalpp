@@ -67,7 +67,7 @@ void RenderJob::rerenderRectangle(RenderJob * renderJob, Rectangle * rect) {
 
 	cairo_destroy(crRect);
 
-	g_mutex_lock(view->drawingMutex);
+	g_mutex_lock(&view->drawingMutex);
 	cairo_t * crPageBuffer = cairo_create(view->crBuffer);
 
 	cairo_set_operator(crPageBuffer, CAIRO_OPERATOR_SOURCE);
@@ -79,7 +79,7 @@ void RenderJob::rerenderRectangle(RenderJob * renderJob, Rectangle * rect) {
 
 	cairo_surface_destroy(rectBuffer);
 
-	g_mutex_unlock(view->drawingMutex);
+	g_mutex_unlock(&view->drawingMutex);
 }
 
 void RenderJob::rerenderRectangle(Rectangle * rect) {
@@ -91,7 +91,7 @@ void RenderJob::rerenderRectangle(Rectangle * rect) {
 class RepaintWidgetHandler {
 public:
 	RepaintWidgetHandler(GtkWidget * width) {
-		this->mutex = g_mutex_new();
+		g_mutex_init(&this->mutex);
 		this->widget = width;
 		this->complete = false;
 		this->rects = NULL;
@@ -100,7 +100,7 @@ public:
 
 public:
 	void repaintComplete() {
-		g_mutex_lock(this->mutex);
+		g_mutex_lock(&this->mutex);
 		this->complete = true;
 		for(GList * l = this->rects; l != NULL; l = l->next) {
 			delete (Rectangle *)l->data;
@@ -110,11 +110,11 @@ public:
 
 		addRepaintCallback();
 
-		g_mutex_unlock(this->mutex);
+		g_mutex_unlock(&this->mutex);
 	}
 
 	void repaintRects(Rectangle * rect) {
-		g_mutex_lock(this->mutex);
+		g_mutex_lock(&this->mutex);
 		if(this->complete) {
 			delete rect;
 		} else {
@@ -122,12 +122,12 @@ public:
 		}
 		addRepaintCallback();
 
-		g_mutex_unlock(this->mutex);
+		g_mutex_unlock(&this->mutex);
 	}
 
 private:
 	static bool idleRepaint(RepaintWidgetHandler * data) {
-		g_mutex_lock(data->mutex);
+		g_mutex_lock(&data->mutex);
 		bool complete = data->complete;
 		GList * rects = data->rects;
 
@@ -135,7 +135,7 @@ private:
 		data->complete = false;
 		data->rescaleId = 0;
 
-		g_mutex_unlock(data->mutex);
+		g_mutex_unlock(&data->mutex);
 
 		gdk_threads_enter();
 
@@ -169,7 +169,7 @@ private:
 	}
 
 private:
-	GMutex * mutex;
+	GMutex mutex;
 
 	int rescaleId;
 
@@ -189,7 +189,7 @@ void RenderJob::run() {
 
 	double zoom = this->view->xournal->getZoom();
 
-	g_mutex_lock(this->view->repaintRectMutex);
+	g_mutex_lock(&this->view->repaintRectMutex);
 
 	bool rerenderComplete = this->view->rerenderComplete;
 	GList * rerenderRects = this->view->rerenderRects;
@@ -197,7 +197,7 @@ void RenderJob::run() {
 
 	this->view->rerenderComplete = false;
 
-	g_mutex_unlock(this->view->repaintRectMutex);
+	g_mutex_unlock(&this->view->repaintRectMutex);
 
 
 	if (rerenderComplete) {
@@ -227,14 +227,14 @@ void RenderJob::run() {
 		view.drawPage(this->view->page, cr2, false);
 
 		cairo_destroy(cr2);
-		g_mutex_lock(this->view->drawingMutex);
+		g_mutex_lock(&this->view->drawingMutex);
 
 		if (this->view->crBuffer) {
 			cairo_surface_destroy(this->view->crBuffer);
 		}
 		this->view->crBuffer = crBuffer;
 
-		g_mutex_unlock(this->view->drawingMutex);
+		g_mutex_unlock(&this->view->drawingMutex);
 		doc->unlock();
 
 		handler->repaintComplete();

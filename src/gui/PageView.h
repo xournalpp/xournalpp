@@ -155,11 +155,11 @@ private:
 	 */
 	int lastVisibleTime;
 
-	GMutex * repaintRectMutex;
+	GMutex repaintRectMutex;
 	GList * rerenderRects;
 	bool rerenderComplete;
 
-	GMutex * drawingMutex;
+	GMutex drawingMutex;
 
 	friend class InsertImageRunnable;
 	friend class RenderJob;
