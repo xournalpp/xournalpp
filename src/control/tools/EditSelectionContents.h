@@ -87,8 +87,14 @@ public:
 	 * Finish the editing
 	 */
 	void finalizeSelection(double x, double y, double width, double height,
-	                       bool aspectRatio, Layer* layer, PageRef targetPage, PageView* targetView,
+	                       bool aspectRatio, Layer* layer, PageRef targetPage,
+	                       PageView* targetView,
 	                       UndoRedoHandler* undo);
+
+	void updateContent(double x, double y, double width, double height,
+	                   bool aspectRatio, Layer* layer, PageRef targetPage,
+	                   PageView* targetView,
+	                   UndoRedoHandler* undo);
 
 private:
 	/**
@@ -124,14 +130,14 @@ private:
 	/**
 	 * The original size to calculate the zoom factor for reascaling the items
 	 */
-	double originalWidth;
-	double originalHeight;
+	double originalWidth, originalHeight;
+	double lastWidth, lastHeight;
 
 	/**
 	 * The original position, to calculate the offset for moving the objects
 	 */
-	double originalX;
-	double originalY;
+	double originalX, originalY;
+	double lastX, lastY;
 
 	/**
 	 * The offset to the original selection

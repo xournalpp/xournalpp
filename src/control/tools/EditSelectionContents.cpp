@@ -11,6 +11,7 @@
 #include "../../undo/FontUndoAction.h"
 #include "../../undo/ScaleUndoAction.h"
 #include "../../undo/MoveUndoAction.h"
+#include "../../undo/RelMoveUndoAction.h"
 #include "../../undo/DeleteUndoAction.h"
 #include "../../gui/XournalView.h"
 #include "../../gui/pageposition/PagePositionHandler.h"
@@ -32,13 +33,13 @@ EditSelectionContents::EditSelectionContents(double x, double y, double width,
 
 	this->rescaleId = 0;
 
-	this->originalWidth = width;
-	this->originalHeight = height;
+	this->lastWidth = this->originalWidth = width;
+	this->lastHeight = this->originalHeight = height;
 	this->relativeX = -9999999999;
 	this->relativeY = -9999999999;
 
-	this->originalX = x;
-	this->originalY = y;
+	this->lastX = this->originalX = x;
+	this->lastY = this->originalY = y;
 
 	this->sourcePage = sourcePage;
 	this->sourceLayer = sourceLayer;
@@ -325,28 +326,32 @@ double EditSelectionContents::getOriginalHeight()
  * The contents of the selection
  */
 void EditSelectionContents::finalizeSelection(double x, double y, double width,
-                                              double height, bool aspectRatio, Layer* layer, PageRef targetPage,
+                                              double height, bool aspectRatio, Layer* layer,
+                                              PageRef targetPage,
                                               PageView* targetView, UndoRedoHandler* undo)
 {
 	double fx = width / this->originalWidth;
 	double fy = height / this->originalHeight;
 
-	bool scale = false;
 	if (aspectRatio)
 	{
 		double f = (fx + fy) / 2;
 		fx = f;
 		fy = f;
 	}
-	if (width != this->originalWidth || height != this->originalHeight)
-	{
-		scale = true;
-	}
+	bool scale =
+	  (width != this->originalWidth || height != this->originalHeight);
 
 	double mx = x - this->originalX;
 	double my = y - this->originalY;
 
 	bool move = mx != 0 || my != 0;
+
+	if(move)
+	{
+		g_message("finalizeSelection(): Moving: (%f, %f) -> (%f, %f)",
+		          this->originalX, this->originalY, x, y);
+	}
 
 	for (GList* l = this->selected; l != NULL; l = l->next)
 	{
@@ -361,20 +366,57 @@ void EditSelectionContents::finalizeSelection(double x, double y, double width,
 		}
 		layer->addElement(e);
 	}
+}
+
+void EditSelectionContents::updateContent(double x, double y, double width, double height,
+                                          bool aspectRatio, Layer* layer,
+                                          PageRef targetPage, PageView* targetView,
+                                          UndoRedoHandler* undo)
+{
+	double mx = x - this->lastX;
+	double my = y - this->lastY;
+
+	double fx = width / this->lastWidth;
+	double fy = height / this->lastHeight;
+
+	if (aspectRatio)
+	{
+		double f = (fx + fy) / 2;
+		fx = f;
+		fy = f;
+	}
+	bool scale =
+	  (width != this->lastWidth || height != this->lastHeight);
+
+	bool move = mx != 0 || my != 0;
 
 	if(move)
 	{
-		MoveUndoAction* moveUndo = new MoveUndoAction(this->sourceLayer,
-		                                              this->sourcePage, this->sourceView, this->selected, mx, my, layer, targetPage,
-		                                              targetView);
-		undo->addUndoAction(moveUndo);
-	}
+		g_message("updateContent(): Adding undo for move: (%f, %f) -> (%f, %f)",
+		          this->lastX, this->lastY, x, y);
 
-	if (scale)
+		g_message("Offset: (%f, %f)", mx, my);
+
+		RelMoveUndoAction* moveUndo = new RelMoveUndoAction(this->sourceLayer,
+		                                                    this->sourcePage, this->sourceView,
+		                                                    this->selected,
+		                                                    mx, my, layer, targetPage,
+		                                                    targetView);
+
+		undo->addUndoAction(moveUndo);
+
+		this->lastX = x;
+		this->lastY = y;
+	}
+	if(scale)
 	{
 		ScaleUndoAction* scaleUndo = new ScaleUndoAction(this->sourcePage,
-		                                                 this->sourceView, this->selected, x, y, fx, fy);
+		                                                 this->sourceView, this->selected,
+		                                                 x, y, fx, fy);
 		undo->addUndoAction(scaleUndo);
+
+		this->lastWidth = width;
+		this->lastHeight = height;
 	}
 }
 

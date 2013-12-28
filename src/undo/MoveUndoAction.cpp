@@ -150,6 +150,10 @@ bool MoveUndoAction::redo(Control* control)
 	return true;
 }
 
+/**
+ * Move all of the elements to the positions
+ * determined by the entries in the given list
+ */
 void MoveUndoAction::acceptPositions(GList* pos)
 {
 	XOJ_CHECK_TYPE(MoveUndoAction);

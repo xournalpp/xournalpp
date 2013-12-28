@@ -126,6 +126,8 @@ void EditSelection::finalizeSelection()
 	}
 	else
 	{
+		this->view = v;
+
 		PageRef page = this->view->getPage();
 		Layer* layer = page.getSelectedLayer();
 		this->contents->finalizeSelection(this->x, this->y, this->width, this->height,
@@ -310,6 +312,14 @@ ListIterator<Element*> EditSelection::getElements()
 void EditSelection::mouseUp()
 {
 	XOJ_CHECK_TYPE(EditSelection);
+
+	PageRef page = this->view->getPage();
+	Layer* layer = page.getSelectedLayer();
+
+	this->contents->updateContent(this->x, this->y,
+	                              this->width, this->height,
+	                              this->aspectRatio, layer, page,
+	                              this->view, this->undo);
 
 	this->mouseDownType = CURSOR_SELECTION_NONE;
 }
