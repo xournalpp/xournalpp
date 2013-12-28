@@ -1,6 +1,9 @@
 #include "SidebarToolbar.h"
 #include "../../../control/Control.h"
 
+#include "undo/CopyUndoAction.h"
+#include "undo/SwapUndoAction.h"
+
 SidebarToolbar::SidebarToolbar(Control * control) {
 	XOJ_INIT_TYPE(SidebarToolbar);
 
@@ -43,36 +46,57 @@ void SidebarToolbar::btUpClicked(GtkToolButton * toolbutton, SidebarToolbar * to
 	XOJ_CHECK_TYPE_OBJ(toolbar, SidebarToolbar);
 
 	Document * doc = toolbar->control->getDocument();
+	PageRef swapped_page, other_page;
 	doc->lock();
 
 	int page = doc->indexOf(toolbar->currentPage);
+	swapped_page = toolbar->currentPage;
+	other_page = doc->getPage(page - 1);
 	if (page != -1) {
 		doc->deletePage(page);
 		doc->insertPage(toolbar->currentPage, page - 1);
 	}
 	doc->unlock();
 
+	UndoRedoHandler* undo = toolbar->control->getUndoRedoHandler();
+	undo->addUndoAction(new SwapUndoAction(page - 1, true,
+	                                       swapped_page,
+	                                       other_page));
+
 	toolbar->control->firePageDeleted(page);
 	toolbar->control->firePageInserted(page - 1);
 	toolbar->control->firePageSelected(page - 1);
+
+	toolbar->control->getScrollHandler()->scrollToPage(page - 1);
 }
 
 void SidebarToolbar::btDownClicked(GtkToolButton * toolbutton, SidebarToolbar * toolbar) {
 	XOJ_CHECK_TYPE_OBJ(toolbar, SidebarToolbar);
 
 	Document * doc = toolbar->control->getDocument();
+	PageRef swapped_page, other_page;
 	doc->lock();
 
 	int page = doc->indexOf(toolbar->currentPage);
+	swapped_page = toolbar->currentPage;
+	other_page = doc->getPage(page + 1);
 	if (page != -1) {
 		doc->deletePage(page);
 		doc->insertPage(toolbar->currentPage, page + 1);
 	}
 	doc->unlock();
 
+	UndoRedoHandler* undo = toolbar->control->getUndoRedoHandler();
+	undo->addUndoAction(new SwapUndoAction(page,
+	                                       false,
+	                                       swapped_page,
+	                                       other_page));
+
 	toolbar->control->firePageDeleted(page);
 	toolbar->control->firePageInserted(page + 1);
 	toolbar->control->firePageSelected(page + 1);
+
+	toolbar->control->getScrollHandler()->scrollToPage(page + 1);
 }
 
 void SidebarToolbar::btCopyClicked(GtkToolButton * toolbutton, SidebarToolbar * toolbar) {
@@ -88,9 +112,13 @@ void SidebarToolbar::btCopyClicked(GtkToolButton * toolbutton, SidebarToolbar * 
 
 	doc->unlock();
 
+	UndoRedoHandler * undo = toolbar->control->getUndoRedoHandler();
+	undo->addUndoAction(new CopyUndoAction(newPage, page + 1));
+
 	toolbar->control->firePageInserted(page + 1);
 	toolbar->control->firePageSelected(page + 1);
 
+	toolbar->control->getScrollHandler()->scrollToPage(page + 1);
 }
 
 void SidebarToolbar::btDeleteClicked(GtkToolButton * toolbutton, SidebarToolbar * toolbar) {
