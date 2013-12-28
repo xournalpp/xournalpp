@@ -37,4 +37,24 @@ private:
 	Redrawable * view;
 };
 
+class InsertsUndoAction : public UndoAction {
+public:
+	InsertsUndoAction(PageRef page, Layer * layer, GList * elements, Redrawable * view);
+	virtual ~InsertsUndoAction();
+
+public:
+	virtual bool undo(Control * control);
+	virtual bool redo(Control * control);
+
+	virtual String getText();
+
+private:
+	XOJ_TYPE_ATTRIB;
+	
+	Layer * layer;
+	GList * elements;
+	Redrawable * view;
+	
+};
+
 #endif /* __INSERTUNDOACTION_H__ */

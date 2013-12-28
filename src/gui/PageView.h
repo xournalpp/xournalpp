@@ -20,6 +20,7 @@
 #include "../model/TexImage.h"
 
 class XournalView;
+class EditSelection;
 class Selection;
 class TextEditor;
 class EraseHandler;
@@ -92,6 +93,8 @@ public:
 	virtual Rectangle * rectOnWidget(double x, double y, double width, double height);
 
 	TexImage * getSelectedTex();
+
+	void copySelection(EditSelection * selection);
 
 public: // event handler
 	bool onButtonPressEvent(GtkWidget * widget, GdkEventButton * event);
