@@ -347,12 +347,6 @@ void EditSelectionContents::finalizeSelection(double x, double y, double width,
 
 	bool move = mx != 0 || my != 0;
 
-	if(move)
-	{
-		g_message("finalizeSelection(): Moving: (%f, %f) -> (%f, %f)",
-		          this->originalX, this->originalY, x, y);
-	}
-
 	for (GList* l = this->selected; l != NULL; l = l->next)
 	{
 		Element* e = (Element*) l->data;
@@ -392,11 +386,6 @@ void EditSelectionContents::updateContent(double x, double y, double width, doub
 
 	if(move)
 	{
-		g_message("updateContent(): Adding undo for move: (%f, %f) -> (%f, %f)",
-		          this->lastX, this->lastY, x, y);
-
-		g_message("Offset: (%f, %f)", mx, my);
-
 		RelMoveUndoAction* moveUndo = new RelMoveUndoAction(this->sourceLayer,
 		                                                    this->sourcePage, this->sourceView,
 		                                                    this->selected,

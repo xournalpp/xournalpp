@@ -103,13 +103,15 @@ void EraseHandler::eraseStroke(Layer* l, Stroke* s, double x, double y,
 
 		//removed the if statement - this prevents us from putting multiple elements into a
 		//stroke erase operation, but it also prevents the crashing and layer issues!
-		//		if (!this->eraseDeleteUndoAction) {
-		this->eraseDeleteUndoAction = new DeleteUndoAction(this->page, this->view,
-		                                                   true);
-		this->undo->addUndoAction(this->eraseDeleteUndoAction);
-		//		}
+		if(!this->eraseDeleteUndoAction)
+		{
+			this->eraseDeleteUndoAction = new DeleteUndoAction(this->page,
+			                                                   this->view,
+			                                                   true);
 
-		//TODO: see whether or not I can comment this out. I forget what it's doing.
+			this->undo->addUndoAction(this->eraseDeleteUndoAction);
+		}
+		
 		this->eraseDeleteUndoAction->addElement(l, s, pos);
 	}
 	else     // Default eraser
@@ -148,9 +150,13 @@ void EraseHandler::finalize()
 {
 	XOJ_CHECK_TYPE(EraseHandler);
 
-	if (this->eraseUndoAction)
+	if(this->eraseUndoAction)
 	{
 		this->eraseUndoAction->finalize();
 		this->eraseUndoAction = NULL;
+	}
+	else if(this->eraseDeleteUndoAction)
+	{
+		this->eraseDeleteUndoAction = NULL;
 	}
 }
