@@ -422,7 +422,7 @@ gboolean gtk_xournal_button_press_event(GtkWidget* widget,
 
 			if(selType == CURSOR_SELECTION_MOVE && event->button == 3)
 			{
-				view->copySelection(xournal->selection);
+				selection->copySelection();
 			}
 
 			xournal->view->getCursor()->setMouseDown(true);

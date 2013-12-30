@@ -96,8 +96,6 @@ public:
 
 	TexImage* getSelectedTex();
 
-	void copySelection(EditSelection* selection);
-
 public: // event handler
 	bool onButtonPressEvent(GtkWidget* widget, GdkEventButton* event);
 	bool onButtonReleaseEvent(GtkWidget* widget, GdkEventButton* event);

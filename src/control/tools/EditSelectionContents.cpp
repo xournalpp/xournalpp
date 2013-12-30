@@ -10,6 +10,7 @@
 #include "../../undo/ColorUndoAction.h"
 #include "../../undo/FontUndoAction.h"
 #include "../../undo/ScaleUndoAction.h"
+#include "../../undo/InsertUndoAction.h"
 #include "../../undo/MoveUndoAction.h"
 #include "../../undo/RelMoveUndoAction.h"
 #include "../../undo/DeleteUndoAction.h"
@@ -470,6 +471,33 @@ void EditSelectionContents::paint(cairo_t* cr, double x, double y, double width,
 	cairo_paint(cr);
 
 	cairo_restore(cr);
+}
+
+UndoAction* EditSelectionContents::copySelection(PageRef page,
+                                                 PageView *view,
+                                                 double x, double y)
+{
+	ListIterator<Element*> eit = getElements();
+	Layer* layer = page.getSelectedLayer();
+
+	GList* new_elems = NULL;
+
+	while(eit.hasNext())
+	{
+		Element* e = eit.next();
+		Element* ec = e->clone();
+
+		ec->move(x - this->originalX, y - this->originalY);
+
+		layer->addElement(ec);
+		new_elems = g_list_append(new_elems, ec);
+	}
+
+	// TODO: implement this more efficiently: rerendering the entire
+	//       page is not necessary...
+	view->rerenderPage();
+
+	return new InsertsUndoAction(page, layer, new_elems, view);
 }
 
 void EditSelectionContents::serialize(ObjectOutputStream& out)

@@ -119,6 +119,9 @@ public:
 	 */
 	double getOriginalHeight();
 
+	UndoAction* copySelection(PageRef page, PageView *view,
+	                          double x, double y);
+
 public:
 	// Serialize interface
 	void serialize(ObjectOutputStream& out);

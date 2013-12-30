@@ -172,6 +172,8 @@ public:
 	 */
 	bool isMoving();
 
+	void copySelection();
+
 public:
 	PageView* getView();
 

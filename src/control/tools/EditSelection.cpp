@@ -521,6 +521,13 @@ void EditSelection::translateToView(PageView* v)
 	}
 }
 
+void EditSelection::copySelection()
+{
+	undo->addUndoAction(contents->copySelection(this->view->getPage(),
+	                                            this->view,
+	                                            this->x, this->y));
+}
+
 /**
  * If the selection should moved (or rescaled)
  */
@@ -754,4 +761,5 @@ void EditSelection::readSerialized(ObjectInputStream& in) throw (
 
 	in.endObject();
 }
+
 

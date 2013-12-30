@@ -1067,29 +1067,3 @@ TexImage* PageView::getSelectedTex()
 	return texMatch;
 
 }
-
-void PageView::copySelection(EditSelection* selection)
-{
-	ListIterator<Element*> eit = selection->getElements();
-	Layer* layer = this->page.getSelectedLayer();
-	UndoRedoHandler* undo = xournal->getControl()->getUndoRedoHandler();
-
-	GList* new_elems = NULL;
-
-	while(eit.hasNext())
-	{
-		Element* e = eit.next();
-		Element* ec = e->clone();
-
-		layer->addElement(ec);
-		new_elems = g_list_append(new_elems, ec);
-	}
-
-	// TODO: implement this more efficiently: rerendering the entire
-	//       page is not necessary...
-	rerenderPage();
-
-	undo->addUndoAction(new InsertsUndoAction(this->page, layer, new_elems, this));
-
-	return;
-}
