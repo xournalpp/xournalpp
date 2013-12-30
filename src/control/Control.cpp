@@ -3225,6 +3225,16 @@ void Control::runLatex()
 	GError* err = NULL;
 	GFileInputStream* in = g_file_read(mygfile, NULL, &err);
 	g_object_unref(mygfile);
+	if(err)
+	{
+		this->doc->unlock();
+
+		fprintf(stderr, "Could not retrieve latex image file: %s\n",
+		        err->message);
+
+		g_error_free (err);
+		return;
+	}
 
 	GdkPixbuf* pixbuf = NULL;
 	pixbuf = gdk_pixbuf_new_from_stream(G_INPUT_STREAM(in), NULL, &err);

@@ -98,7 +98,6 @@ void ScrollHandler::scrollToAnnotatedPage(bool next)
 	}
 
 	Document* doc = this->control->getDocument();
-	doc->lock();
 
 	for (int i = this->control->getCurrentPageNo() + step; i >= 0 &&
 	     i < doc->getPageCount(); i += step)
@@ -109,8 +108,6 @@ void ScrollHandler::scrollToAnnotatedPage(bool next)
 			break;
 		}
 	}
-
-	doc->unlock();
 }
 
 bool ScrollHandler::isPageVisible(int page, int* visibleHeight)
