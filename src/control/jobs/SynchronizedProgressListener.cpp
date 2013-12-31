@@ -1,7 +1,9 @@
 #include "SynchronizedProgressListener.h"
 #include <gtk/gtk.h>
 
-SynchronizedProgressListener::SynchronizedProgressListener(ProgressListener * target) {
+SynchronizedProgressListener::SynchronizedProgressListener(
+    ProgressListener* target)
+{
 	XOJ_INIT_TYPE(SynchronizedProgressListener);
 
 	this->target = target;
@@ -13,23 +15,28 @@ SynchronizedProgressListener::SynchronizedProgressListener(ProgressListener * ta
 	this->current = 0;
 }
 
-SynchronizedProgressListener::~SynchronizedProgressListener() {
+SynchronizedProgressListener::~SynchronizedProgressListener()
+{
 	XOJ_CHECK_TYPE(SynchronizedProgressListener);
 
 	this->target = NULL;
 
-	if (this->maxIdleId) {
+	if (this->maxIdleId)
+	{
 		g_source_remove(this->maxIdleId);
 		this->maxIdleId = 0;
 	}
-	if (this->currentIdleId) {
+	if (this->currentIdleId)
+	{
 		g_source_remove(this->currentIdleId);
 		this->currentIdleId = 0;
 	}
 	XOJ_RELEASE_TYPE(SynchronizedProgressListener);
 }
 
-bool SynchronizedProgressListener::setMaxCallback(SynchronizedProgressListener * listener) {
+bool SynchronizedProgressListener::setMaxCallback(SynchronizedProgressListener*
+                                                  listener)
+{
 	XOJ_CHECK_TYPE_OBJ(listener, SynchronizedProgressListener);
 
 	gdk_threads_enter();
@@ -40,7 +47,9 @@ bool SynchronizedProgressListener::setMaxCallback(SynchronizedProgressListener *
 	return false; // do not call again
 }
 
-bool SynchronizedProgressListener::setCurrentCallback(SynchronizedProgressListener * listener) {
+bool SynchronizedProgressListener::setCurrentCallback(
+    SynchronizedProgressListener* listener)
+{
 	XOJ_CHECK_TYPE_OBJ(listener, SynchronizedProgressListener);
 
 	gdk_threads_enter();
@@ -51,21 +60,25 @@ bool SynchronizedProgressListener::setCurrentCallback(SynchronizedProgressListen
 	return false; // do not call again
 }
 
-void SynchronizedProgressListener::setMaximumState(int max) {
+void SynchronizedProgressListener::setMaximumState(int max)
+{
 	XOJ_CHECK_TYPE(SynchronizedProgressListener);
 
 	this->max = max;
-	if(this->maxIdleId) {
+	if(this->maxIdleId)
+	{
 		return;
 	}
 	this->maxIdleId = g_idle_add((GSourceFunc) setMaxCallback, this);
 }
 
-void SynchronizedProgressListener::setCurrentState(int state) {
+void SynchronizedProgressListener::setCurrentState(int state)
+{
 	XOJ_CHECK_TYPE(SynchronizedProgressListener);
 
 	this->current = state;
-	if(this->currentIdleId) {
+	if(this->currentIdleId)
+	{
 		return;
 	}
 	this->currentIdleId = g_idle_add((GSourceFunc) setCurrentCallback, this);

@@ -24,19 +24,21 @@ G_BEGIN_DECLS
 typedef struct _ZoomCallib ZoomCallib;
 typedef struct _ZoomCallibClass ZoomCallibClass;
 
-struct _ZoomCallib {
+struct _ZoomCallib
+{
 	GtkWidget widget;
 
 	gint val;
 };
 
-struct _ZoomCallibClass {
+struct _ZoomCallibClass
+{
 	GtkWidgetClass parent_class;
 };
 
 GtkType zoomcallib_get_type(void);
-void zoomcallib_set_val(ZoomCallib *cpu, gint val);
-GtkWidget * zoomcallib_new();
+void zoomcallib_set_val(ZoomCallib* cpu, gint val);
+GtkWidget* zoomcallib_new();
 
 G_END_DECLS
 

@@ -1,46 +1,59 @@
 #include "XojPopplerAction.h"
 #include "XojPopplerDocument.h"
 
-XojPopplerAction::XojPopplerAction(XojPopplerDocument doc, LinkAction * linkAction, String title) :
-	doc(doc), title(title) {
+XojPopplerAction::XojPopplerAction(XojPopplerDocument doc,
+                                   LinkAction* linkAction, String title) :
+	doc(doc), title(title)
+{
 	XOJ_INIT_TYPE(XojPopplerAction);
 
 	this->linkAction = linkAction;
 }
 
-XojPopplerAction::~XojPopplerAction() {
+XojPopplerAction::~XojPopplerAction()
+{
 	XOJ_RELEASE_TYPE(XojPopplerAction);
 }
 
-void XojPopplerAction::linkFromDest(LinkDestination * link, LinkDest * dest) {
+void XojPopplerAction::linkFromDest(LinkDestination* link, LinkDest* dest)
+{
 	XOJ_CHECK_TYPE(XojPopplerAction);
 
 	int pageNum = 0;
-	if (dest->isPageRef()) {
+	if (dest->isPageRef())
+	{
 		Ref pageRef = dest->getPageRef();
 		pageNum = doc.getDoc()->findPage(pageRef.num, pageRef.gen);
-	} else {
+	}
+	else
+	{
 		pageNum = dest->getPageNum();
 	}
 	pageNum--;
 
-	switch (dest->getKind()) {
-	case destXYZ: {
-		XojPopplerPage * popplerPage = doc.getPage(MAX(0, pageNum));
-		if (!popplerPage) {
+	switch (dest->getKind())
+	{
+	case destXYZ:
+	{
+		XojPopplerPage* popplerPage = doc.getPage(MAX(0, pageNum));
+		if (!popplerPage)
+		{
 			return;
 		}
 		double height = popplerPage->getHeight();
 
-		if (dest->getChangeLeft()) {
+		if (dest->getChangeLeft())
+		{
 			link->setChangeLeft(dest->getLeft());
 		}
 
-		if (dest->getChangeTop()) {
+		if (dest->getChangeTop())
+		{
 			link->setChangeTop(height - MIN(height, dest->getTop()));
 		}
 
-		if (dest->getChangeZoom()) {
+		if (dest->getChangeZoom())
+		{
 			link->setChangeZoom(dest->getZoom());
 		}
 
@@ -51,7 +64,8 @@ void XojPopplerAction::linkFromDest(LinkDestination * link, LinkDest * dest) {
 		//		ev_dest = ev_link_dest_new_fit(dest->page_num - 1);
 		break;
 	case destFitBH:
-	case destFitH: {
+	case destFitH:
+	{
 		//		PopplerPage *popplerPage = getPage(MAX (0, dest->page_num - 1));
 		//		if (!popplerPage) {
 		//			return;
@@ -65,7 +79,8 @@ void XojPopplerAction::linkFromDest(LinkDestination * link, LinkDest * dest) {
 	case destFitV:
 		//		ev_dest = ev_link_dest_new_fitv(dest->page_num - 1, dest->left, dest->change_left);
 		break;
-	case destFitR: {
+	case destFitR:
+	{
 		//		PopplerPage *poppler_page;
 		//		double height;
 		//
@@ -81,32 +96,38 @@ void XojPopplerAction::linkFromDest(LinkDestination * link, LinkDest * dest) {
 	link->setPdfPage(pageNum);
 }
 
-XojLinkDest * XojPopplerAction::getDestination() {
+XojLinkDest* XojPopplerAction::getDestination()
+{
 	XOJ_CHECK_TYPE(XojPopplerAction);
 
-	XojLinkDest * dest = link_dest_new();
+	XojLinkDest* dest = link_dest_new();
 	dest->dest = new LinkDestination();
 	dest->dest->setName(this->title);
 
-	if (this->linkAction == NULL) {
+	if (this->linkAction == NULL)
+	{
 		return dest;
 	}
 
 	// every other action is not supported in Xournal
-	if (this->linkAction->getKind() == actionGoTo) {
-		LinkGoTo * link = dynamic_cast<LinkGoTo *> (this->linkAction);
+	if (this->linkAction->getKind() == actionGoTo)
+	{
+		LinkGoTo* link = dynamic_cast<LinkGoTo*> (this->linkAction);
 
-		GooString * namedDest = link->getNamedDest();
-		LinkDest * d = NULL;
-		if (namedDest) {
+		GooString* namedDest = link->getNamedDest();
+		LinkDest* d = NULL;
+		if (namedDest)
+		{
 			d = doc.getDoc()->findDest(namedDest);
 		}
 
-		if (!d) {
+		if (!d)
+		{
 			d = link->getDest();
 		}
 
-		if (d) {
+		if (d)
+		{
 			linkFromDest(dest->dest, d);
 		}
 	}
@@ -114,7 +135,8 @@ XojLinkDest * XojPopplerAction::getDestination() {
 	return dest;
 }
 
-String XojPopplerAction::getTitle() {
+String XojPopplerAction::getTitle()
+{
 	XOJ_CHECK_TYPE(XojPopplerAction);
 
 	return this->title;

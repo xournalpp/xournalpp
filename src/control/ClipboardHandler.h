@@ -19,19 +19,21 @@
 
 class ObjectInputStream;
 
-class ClipboardListener {
+class ClipboardListener
+{
 public:
 	virtual void clipboardCutCopyEnabled(bool enabled) = 0;
 	virtual void clipboardPasteEnabled(bool enabled) = 0;
 	virtual void clipboardPasteText(String text) = 0;
-	virtual void clipboardPasteImage(GdkPixbuf * img) = 0;
-	virtual void clipboardPasteXournal(ObjectInputStream & in) = 0;
+	virtual void clipboardPasteImage(GdkPixbuf* img) = 0;
+	virtual void clipboardPasteXournal(ObjectInputStream& in) = 0;
 	virtual void deleteSelection() = 0;
 };
 
-class ClipboardHandler {
+class ClipboardHandler
+{
 public:
-	ClipboardHandler(ClipboardListener * listener, GtkWidget * widget);
+	ClipboardHandler(ClipboardListener* listener, GtkWidget* widget);
 	virtual ~ClipboardHandler();
 
 public:
@@ -39,26 +41,30 @@ public:
 	bool cut();
 	bool copy();
 
-	void setSelection(EditSelection * selection);
+	void setSelection(EditSelection* selection);
 
 	void setCopyPasteEnabled(bool enabled);
 
 private:
-	static void ownerChangedCallback(GtkClipboard * clip, GdkEvent * event, ClipboardHandler * handler);
+	static void ownerChangedCallback(GtkClipboard* clip, GdkEvent* event,
+	                                 ClipboardHandler* handler);
 	void clipboardUpdated(GdkAtom atom);
-	static void receivedClipboardContents(GtkClipboard * clipboard, GtkSelectionData * selectionData, ClipboardHandler * handler);
+	static void receivedClipboardContents(GtkClipboard* clipboard,
+	                                      GtkSelectionData* selectionData, ClipboardHandler* handler);
 
-	static void pasteClipboardContents(GtkClipboard * clipboard, GtkSelectionData * selectionData, ClipboardHandler * handler);
-	static void pasteClipboardImage(GtkClipboard * clipboard, GdkPixbuf * pixbuf, ClipboardHandler * handler);
+	static void pasteClipboardContents(GtkClipboard* clipboard,
+	                                   GtkSelectionData* selectionData, ClipboardHandler* handler);
+	static void pasteClipboardImage(GtkClipboard* clipboard, GdkPixbuf* pixbuf,
+	                                ClipboardHandler* handler);
 
 private:
 	XOJ_TYPE_ATTRIB;
 
-	ClipboardListener * listener;
-	GtkClipboard * clipboard;
+	ClipboardListener* listener;
+	GtkClipboard* clipboard;
 	gulong hanlderId;
 
-	EditSelection * selection;
+	EditSelection* selection;
 
 	bool containsText;
 	bool containsXournal;

@@ -18,18 +18,19 @@
 class PagePosition;
 class PageView;
 
-class PageViewIndex {
+class PageViewIndex
+{
 public:
 	PageViewIndex(int x, int y, int width, int height);
 	virtual ~PageViewIndex();
 
 public:
-	void add(PagePosition * pp, int y);
+	void add(PagePosition* pp, int y);
 
-	PageView * getHighestIntersects();
+	PageView* getHighestIntersects();
 
 private:
-	void addView(PageView * v);
+	void addView(PageView* v);
 
 private:
 	XOJ_TYPE_ATTRIB;
@@ -39,7 +40,7 @@ private:
 	int width;
 	int height;
 
-	GList * data;
+	GList* data;
 };
 
 #endif /* __PAGEVIEWINDEX_H__ */

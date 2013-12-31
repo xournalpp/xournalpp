@@ -16,21 +16,22 @@
 
 #include <glib.h>
 
-class ObjectEncoding {
+class ObjectEncoding
+{
 public:
 	ObjectEncoding();
 	virtual ~ObjectEncoding();
 
 public:
-	void addStr(const char * str);
-	virtual void addData(const void * data, int len) = 0;
+	void addStr(const char* str);
+	virtual void addData(const void* data, int len) = 0;
 
-	GString * getData();
+	GString* getData();
 
 public:
 	XOJ_TYPE_ATTRIB;
 
-	GString * data;
+	GString* data;
 };
 
 #endif /* __OBJECTENCODING_H__ */

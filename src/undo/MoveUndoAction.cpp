@@ -7,21 +7,26 @@
 #include "../control/tools/EditSelection.h"
 #include "../control/tools/VerticalToolHandler.h"
 
-class MoveUndoEntry {
+class MoveUndoEntry
+{
 public:
-	MoveUndoEntry(Element * e, double x, double y) {
+	MoveUndoEntry(Element* e, double x, double y)
+	{
 		this->e = e;
 		this->x = x;
 		this->y = y;
 	}
 
-	Element * e;
+	Element* e;
 	double x;
 	double y;
 };
 
-MoveUndoAction::MoveUndoAction(Layer * sourceLayer, PageRef sourcePage, Redrawable * sourceView, GList * selected, double mx, double my, Layer * targetLayer,
-		PageRef targetPage, Redrawable * targetView) : UndoAction("MoveUndoAction") {
+MoveUndoAction::MoveUndoAction(Layer* sourceLayer, PageRef sourcePage,
+                               Redrawable* sourceView, GList* selected, double mx, double my,
+                               Layer* targetLayer,
+                               PageRef targetPage, Redrawable* targetView) : UndoAction("MoveUndoAction")
+{
 	XOJ_INIT_TYPE(MoveUndoAction);
 
 	this->page = sourcePage;
@@ -36,20 +41,26 @@ MoveUndoAction::MoveUndoAction(Layer * sourceLayer, PageRef sourcePage, Redrawab
 	this->targetPos = NULL;
 	this->sourcePos = NULL;
 
-	for (GList * l = selected; l != NULL; l = l->next) {
-		Element * e = (Element *) l->data;
-		this->sourcePos = g_list_append(this->sourcePos, new MoveUndoEntry(e, e->getX() - mx, e->getY() - my));
-		this->targetPos = g_list_append(this->targetPos, new MoveUndoEntry(e, e->getX(), e->getY()));
+	for (GList* l = selected; l != NULL; l = l->next)
+	{
+		Element* e = (Element*) l->data;
+		this->sourcePos = g_list_append(this->sourcePos, new MoveUndoEntry(e,
+		                                                                   e->getX() - mx, e->getY() - my));
+		this->targetPos = g_list_append(this->targetPos, new MoveUndoEntry(e, e->getX(),
+		                                                                   e->getY()));
 	}
 
-	if (this->page != targetPage) {
+	if (this->page != targetPage)
+	{
 		this->targetPage = targetPage;
 		this->targetLayer = targetLayer;
 		this->targetView = targetView;
 	}
 }
 
-MoveUndoAction::MoveUndoAction(PageRef sourcePage, VerticalToolHandler * handler) : UndoAction("MoveUndoAction") {
+MoveUndoAction::MoveUndoAction(PageRef sourcePage,
+                               VerticalToolHandler* handler) : UndoAction("MoveUndoAction")
+{
 	XOJ_INIT_TYPE(MoveUndoAction);
 
 	this->page = sourcePage;
@@ -62,25 +73,30 @@ MoveUndoAction::MoveUndoAction(PageRef sourcePage, VerticalToolHandler * handler
 	this->targetView = NULL;
 	this->text = _("Vertical Space");
 
-	ListIterator<Element *> it = handler->getElements();
-	while (it.hasNext()) {
-		Element * e = it.next();
-		this->sourcePos = g_list_append(this->sourcePos, new MoveUndoEntry(e, e->getX(), e->getY()));
+	ListIterator<Element*> it = handler->getElements();
+	while (it.hasNext())
+	{
+		Element* e = it.next();
+		this->sourcePos = g_list_append(this->sourcePos, new MoveUndoEntry(e, e->getX(),
+		                                                                   e->getY()));
 	}
 }
 
-MoveUndoAction::~MoveUndoAction() {
+MoveUndoAction::~MoveUndoAction()
+{
 	XOJ_CHECK_TYPE(MoveUndoAction);
 
-	for (GList * l = this ->sourcePos; l != NULL; l = l->next) {
-		MoveUndoEntry * u = (MoveUndoEntry *) l->data;
+	for (GList* l = this ->sourcePos; l != NULL; l = l->next)
+	{
+		MoveUndoEntry* u = (MoveUndoEntry*) l->data;
 		delete u;
 	}
 	g_list_free(this->sourcePos);
 	this->sourcePos = NULL;
 
-	for (GList * l = this->targetPos; l != NULL; l = l->next) {
-		MoveUndoEntry * u = (MoveUndoEntry *) l->data;
+	for (GList* l = this->targetPos; l != NULL; l = l->next)
+	{
+		MoveUndoEntry* u = (MoveUndoEntry*) l->data;
 		delete u;
 	}
 	g_list_free(this->targetPos);
@@ -89,20 +105,25 @@ MoveUndoAction::~MoveUndoAction() {
 	XOJ_RELEASE_TYPE(MoveUndoAction);
 }
 
-void MoveUndoAction::finalize(VerticalToolHandler * handler) {
+void MoveUndoAction::finalize(VerticalToolHandler* handler)
+{
 	XOJ_CHECK_TYPE(MoveUndoAction);
 
-	ListIterator<Element *> it = handler->getElements();
-	while (it.hasNext()) {
-		Element * e = it.next();
-		this ->targetPos = g_list_append(this->targetPos, new MoveUndoEntry(e, e->getX(), e->getY()));
+	ListIterator<Element*> it = handler->getElements();
+	while (it.hasNext())
+	{
+		Element* e = it.next();
+		this ->targetPos = g_list_append(this->targetPos, new MoveUndoEntry(e,
+		                                                                    e->getX(), e->getY()));
 	}
 }
 
-bool MoveUndoAction::undo(Control * control) {
+bool MoveUndoAction::undo(Control* control)
+{
 	XOJ_CHECK_TYPE(MoveUndoAction);
 
-	if (this->sourceLayer != this->targetLayer && this->targetLayer != NULL) {
+	if (this->sourceLayer != this->targetLayer && this->targetLayer != NULL)
+	{
 		switchLayer(this->sourcePos, this->targetLayer, this->sourceLayer);
 	}
 
@@ -113,10 +134,12 @@ bool MoveUndoAction::undo(Control * control) {
 	return true;
 }
 
-bool MoveUndoAction::redo(Control * control) {
+bool MoveUndoAction::redo(Control* control)
+{
 	XOJ_CHECK_TYPE(MoveUndoAction);
 
-	if (this->sourceLayer != this->targetLayer && this->targetLayer != NULL) {
+	if (this->sourceLayer != this->targetLayer && this->targetLayer != NULL)
+	{
 		switchLayer(this->sourcePos, this->sourceLayer, this->targetLayer);
 	}
 
@@ -127,42 +150,54 @@ bool MoveUndoAction::redo(Control * control) {
 	return true;
 }
 
-void MoveUndoAction::acceptPositions(GList * pos) {
+/**
+ * Move all of the elements to the positions
+ * determined by the entries in the given list
+ */
+void MoveUndoAction::acceptPositions(GList* pos)
+{
 	XOJ_CHECK_TYPE(MoveUndoAction);
 
-	for (GList * l = pos; l != NULL; l = l->next) {
-		MoveUndoEntry * u = (MoveUndoEntry *) l->data;
-		Element * e = u->e;
+	for (GList* l = pos; l != NULL; l = l->next)
+	{
+		MoveUndoEntry* u = (MoveUndoEntry*) l->data;
+		Element* e = u->e;
 
 		e->move(u->x - e->getX(), u->y - e->getY());
 	}
 }
 
-void MoveUndoAction::switchLayer(GList * entries, Layer * oldLayer, Layer * newLayer) {
+void MoveUndoAction::switchLayer(GList* entries, Layer* oldLayer,
+                                 Layer* newLayer)
+{
 	XOJ_CHECK_TYPE(MoveUndoAction);
 
-	for (GList * l = this->sourcePos; l != NULL; l = l->next) {
-		MoveUndoEntry * u = (MoveUndoEntry *) l->data;
+	for (GList* l = this->sourcePos; l != NULL; l = l->next)
+	{
+		MoveUndoEntry* u = (MoveUndoEntry*) l->data;
 		oldLayer->removeElement(u->e, false);
 		newLayer->addElement(u->e);
 	}
 }
 
-void MoveUndoAction::repaint(Redrawable * view, GList * list, GList * list2) {
+void MoveUndoAction::repaint(Redrawable* view, GList* list, GList* list2)
+{
 	XOJ_CHECK_TYPE(MoveUndoAction);
 
-	MoveUndoEntry * u = (MoveUndoEntry *) list->data;
+	MoveUndoEntry* u = (MoveUndoEntry*) list->data;
 
 	Range range(u->x, u->y);
 
-	for (GList * l = list; l != NULL; l = l->next) {
-		u = (MoveUndoEntry *) l->data;
+	for (GList* l = list; l != NULL; l = l->next)
+	{
+		u = (MoveUndoEntry*) l->data;
 		range.addPoint(u->x, u->y);
 		range.addPoint(u->x + u->e->getElementWidth(), u->y + u->e->getElementHeight());
 	}
 
-	for (GList * l = list2; l != NULL; l = l->next) {
-		u = (MoveUndoEntry *) l->data;
+	for (GList* l = list2; l != NULL; l = l->next)
+	{
+		u = (MoveUndoEntry*) l->data;
 		range.addPoint(u->x, u->y);
 		range.addPoint(u->x + u->e->getElementWidth(), u->y + u->e->getElementHeight());
 	}
@@ -170,32 +205,39 @@ void MoveUndoAction::repaint(Redrawable * view, GList * list, GList * list2) {
 	view->rerenderRange(range);
 }
 
-void MoveUndoAction::repaint() {
+void MoveUndoAction::repaint()
+{
 	XOJ_CHECK_TYPE(MoveUndoAction);
 
-	if (!this->sourcePos) {
+	if (!this->sourcePos)
+	{
 		return;
 	}
 
-	if(this->targetView == NULL) {
+	if(this->targetView == NULL)
+	{
 		repaint(this->sourceView, this->sourcePos, this->targetPos);
-	} else {
+	}
+	else
+	{
 		repaint(this->sourceView, this->sourcePos);
 		repaint(this->targetView, this->targetPos);
 	}
 }
 
-XojPage ** MoveUndoAction::getPages() {
+XojPage** MoveUndoAction::getPages()
+{
 	XOJ_CHECK_TYPE(MoveUndoAction);
 
-	XojPage ** pages = new XojPage *[3];
+	XojPage** pages = new XojPage *[3];
 	pages[0] = this->page;
 	pages[1] = this->targetPage;
 	pages[2] = NULL;
 	return pages;
 }
 
-String MoveUndoAction::getText() {
+String MoveUndoAction::getText()
+{
 	XOJ_CHECK_TYPE(MoveUndoAction);
 
 	return text;

@@ -1,6 +1,7 @@
 #include "UpdateRef.h"
 
-UpdateRef::UpdateRef(int objectId, XojPopplerDocument doc) {
+UpdateRef::UpdateRef(int objectId, XojPopplerDocument doc)
+{
 	XOJ_INIT_TYPE(UpdateRef);
 
 	this->objectId = objectId;
@@ -8,10 +9,12 @@ UpdateRef::UpdateRef(int objectId, XojPopplerDocument doc) {
 	this->doc = doc;
 }
 
-UpdateRef::~UpdateRef() {
+UpdateRef::~UpdateRef()
+{
 	XOJ_RELEASE_TYPE(UpdateRef);
 }
 
-void UpdateRef::destroyDelete(UpdateRef * data) {
+void UpdateRef::destroyDelete(UpdateRef* data)
+{
 	delete data;
 }

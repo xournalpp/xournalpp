@@ -18,30 +18,31 @@
 #include <ListIterator.h>
 #include <XournalType.h>
 
-class Layer {
+class Layer
+{
 public:
 	Layer();
 	virtual ~Layer();
 
 public:
-	void addElement(Element * e);
-	void insertElement(Element * e, int pos);
-	int indexOf(Element * e);
-	int removeElement(Element * e, bool free);
+	void addElement(Element* e);
+	void insertElement(Element* e, int pos);
+	int indexOf(Element* e);
+	int removeElement(Element* e, bool free);
 
-	ListIterator<Element *> elementIterator();
+	ListIterator<Element*> elementIterator();
 
 	bool isAnnotated();
 
 	/**
 	 * Create a recursive 1:1 copy of this layer
 	 */
-	Layer * clone();
+	Layer* clone();
 
 private:
 	XOJ_TYPE_ATTRIB;
 
-	GList * elements;
+	GList* elements;
 
 };
 

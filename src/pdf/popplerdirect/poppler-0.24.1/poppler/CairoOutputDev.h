@@ -53,28 +53,37 @@ class CairoFont;
 //------------------------------------------------------------------------
 // CairoImage
 //------------------------------------------------------------------------
-class CairoImage {
+class CairoImage
+{
 public:
-  // Constructor.
-  CairoImage (double x1, double y1, double x2, double y2);
+	// Constructor.
+	CairoImage (double x1, double y1, double x2, double y2);
 
-  // Destructor.
-  ~CairoImage ();
+	// Destructor.
+	~CairoImage ();
 
-  // Set the image cairo surface
-  void setImage (cairo_surface_t *image);
-  
-  // Get the image cairo surface
-  cairo_surface_t *getImage () const { return image; }
+	// Set the image cairo surface
+	void setImage (cairo_surface_t* image);
 
-  // Get the image rectangle
-  void getRect (double *xa1, double *ya1, double *xa2, double *ya2)
-	  { *xa1 = x1; *ya1 = y1; *xa2 = x2; *ya2 = y2; }
-  
+	// Get the image cairo surface
+	cairo_surface_t* getImage () const
+	{
+		return image;
+	}
+
+	// Get the image rectangle
+	void getRect (double* xa1, double* ya1, double* xa2, double* ya2)
+	{
+		*xa1 = x1;
+		*ya1 = y1;
+		*xa2 = x2;
+		*ya2 = y2;
+	}
+
 private:
-  cairo_surface_t *image;  // image cairo surface
-  double x1, y1;          // upper left corner
-  double x2, y2;          // lower right corner
+	cairo_surface_t* image;  // image cairo surface
+	double x1, y1;          // upper left corner
+	double x2, y2;          // lower right corner
 };
 
 
@@ -82,7 +91,8 @@ private:
 // CairoOutputDev
 //------------------------------------------------------------------------
 
-class CairoOutputDev: public OutputDev {
+class CairoOutputDev: public OutputDev
+{
 public:
 
   // Constructor.
@@ -358,7 +368,8 @@ protected:
 //------------------------------------------------------------------------
 
 //XXX: this should ideally not inherit from CairoOutputDev but use it instead perhaps
-class CairoImageOutputDev: public CairoOutputDev {
+class CairoImageOutputDev: public CairoOutputDev
+{
 public:
 
   // Constructor.

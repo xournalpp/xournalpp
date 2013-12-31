@@ -16,20 +16,22 @@
 #include <Arrayiterator.h>
 #include "Point.h"
 
-enum StrokeTool {
-	STROKE_TOOL_PEN, STROKE_TOOL_ERASER, STROKE_TOOL_HIGHLIGHTER
+enum StrokeTool
+{
+    STROKE_TOOL_PEN, STROKE_TOOL_ERASER, STROKE_TOOL_HIGHLIGHTER
 };
 
 class EraseableStroke;
 
-class Stroke: public Element {
+class Stroke: public Element
+{
 public:
 	Stroke();
 	virtual ~Stroke();
 
 public:
-	Stroke * cloneStroke() const;
-	virtual Element * clone();
+	Stroke* cloneStroke() const;
+	virtual Element* clone();
 
 	void setWidth(double width);
 	double getWidth() const;
@@ -40,7 +42,7 @@ public:
 	void freeUnusedPointItems();
 	ArrayIterator<Point> pointIterator() const;
 	Point getPoint(int index) const;
-	const Point * getPoints() const;
+	const Point* getPoints() const;
 
 	void deletePoint(int index);
 	void deletePointsFrom(int index);
@@ -48,11 +50,11 @@ public:
 	void setToolType(StrokeTool type);
 	StrokeTool getToolType() const;
 
-	const double * getWidths() const;
+	const double* getWidths() const;
 
-	bool intersects(double x, double y, double halfSize, double * gap = NULL);
+	bool intersects(double x, double y, double halfSize, double* gap = NULL);
 
-	void setPressure(const double * data);
+	void setPressure(const double* data);
 	void setLastPressure(double pressure);
 	void clearPressure();
 	void scalePressure(double factor);
@@ -62,17 +64,17 @@ public:
 	virtual void move(double dx, double dy);
 	virtual void scale(double x0, double y0, double fx, double fy);
 
-	virtual bool isInSelection(ShapeContainer * container);
+	virtual bool isInSelection(ShapeContainer* container);
 
-	EraseableStroke * getEraseable();
-	void setEraseable(EraseableStroke * eraseable);
+	EraseableStroke* getEraseable();
+	void setEraseable(EraseableStroke* eraseable);
 
 	void debugPrint();
 
 public:
 	// Serialize interface
-	void serialize(ObjectOutputStream & out);
-	void readSerialized(ObjectInputStream & in) throw (InputStreamException);
+	void serialize(ObjectOutputStream& out);
+	void readSerialized(ObjectInputStream& in) throw (InputStreamException);
 
 protected:
 	virtual void calcSize();
@@ -87,11 +89,11 @@ private:
 	StrokeTool toolType;
 
 	// The array with the points
-	Point * points;
+	Point* points;
 	int pointCount;
 	int pointAllocCount;
 
-	EraseableStroke * eraseable;
+	EraseableStroke* eraseable;
 };
 
 #endif /* __STROKE_H__ */

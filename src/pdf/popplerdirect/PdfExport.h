@@ -23,26 +23,27 @@
 #include "PdfObjectWriter.h"
 #include <glib.h>
 
-class PdfExport {
+class PdfExport
+{
 public:
-	PdfExport(Document * doc, ProgressListener * progressListener);
+	PdfExport(Document* doc, ProgressListener* progressListener);
 	virtual ~PdfExport();
 
 public:
 	bool createPdf(String uri);
-	bool createPdf(String uri, GList * range);
+	bool createPdf(String uri, GList* range);
 	String getLastError();
 
 private:
 	void addPopplerDocument(XojPopplerDocument doc);
 
-	bool addPopplerPage(XojPopplerPage * pdf, XojPopplerDocument doc);
+	bool addPopplerPage(XojPopplerPage* pdf, XojPopplerDocument doc);
 	bool writePage(int page);
 
-	void writeGzStream(Stream * str, GList * replacementList);
-	void writePlainStream(Stream * str, GList * replacementList);
+	void writeGzStream(Stream* str, GList* replacementList);
+	void writePlainStream(Stream* str, GList* replacementList);
 
-	void writeStream(const char * str, int len, GList * replacementList);
+	void writeStream(const char* str, int len, GList* replacementList);
 
 	bool parseFooter();
 	bool writeFooter();
@@ -57,29 +58,29 @@ private:
 private:
 	XOJ_TYPE_ATTRIB;
 
-	Document * doc;
+	Document* doc;
 	XojPopplerDocument currentPdfDoc;
 
-	ProgressListener * progressListener;
+	ProgressListener* progressListener;
 
 	String lastError;
 
 	int dataXrefStart;
 
-	GList * pageIds;
+	GList* pageIds;
 
 	int outlineRoot;
 
-	Dict * resources;
+	Dict* resources;
 
-	GList * documents;
+	GList* documents;
 
-	GHashTable * refListsOther;
+	GHashTable* refListsOther;
 
-	PdfXRef * xref;
+	PdfXRef* xref;
 	PdfBookmarks bookmarks;
-	PdfWriter * writer;
-	PdfObjectWriter * objectWriter;
+	PdfWriter* writer;
+	PdfObjectWriter* objectWriter;
 
 	CairoPdf cPdf;
 };

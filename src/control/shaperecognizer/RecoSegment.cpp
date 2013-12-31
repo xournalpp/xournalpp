@@ -6,7 +6,8 @@
 
 #include <glib.h>
 
-RecoSegment::RecoSegment() {
+RecoSegment::RecoSegment()
+{
 	XOJ_INIT_TYPE(RecoSegment);
 
 	this->stroke = NULL;
@@ -24,15 +25,18 @@ RecoSegment::RecoSegment() {
 	this->ycenter = 0;
 }
 
-RecoSegment::~RecoSegment() {
+RecoSegment::~RecoSegment()
+{
 	XOJ_RELEASE_TYPE(RecoSegment);
 }
 
-Point RecoSegment::calcEdgeIsect(RecoSegment * r2) {
+Point RecoSegment::calcEdgeIsect(RecoSegment* r2)
+{
 	XOJ_CHECK_TYPE(RecoSegment);
 
 	double t;
-	t = (r2->xcenter - this->xcenter) * sin(r2->angle) - (r2->ycenter - this->ycenter) * cos(r2->angle);
+	t = (r2->xcenter - this->xcenter) * sin(r2->angle) - (r2->ycenter -
+	                                                      this->ycenter) * cos(r2->angle);
 	t /= sin(r2->angle - this->angle);
 	double x = this->xcenter + t * cos(this->angle);
 	double y = this->ycenter + t * sin(this->angle);
@@ -43,7 +47,9 @@ Point RecoSegment::calcEdgeIsect(RecoSegment * r2) {
 /*
  * find the geometry of a recognized segment
  */
-void RecoSegment::calcSegmentGeometry(const Point * pt, int start, int end, Inertia * s) {
+void RecoSegment::calcSegmentGeometry(const Point* pt, int start, int end,
+                                      Inertia* s)
+{
 	XOJ_CHECK_TYPE(RecoSegment);
 
 	this->xcenter = s->centerX();
@@ -59,13 +65,17 @@ void RecoSegment::calcSegmentGeometry(const Point * pt, int start, int end, Iner
 	double lmin = 0;
 	double lmax = 0;
 
-	for (int i = start; i <= end; i++) {
-		double l = (pt[i].x - this->xcenter) * cos(this->angle) + (pt[i].y - this->ycenter) * sin(this->angle);
-		if (l < lmin) {
+	for (int i = start; i <= end; i++)
+	{
+		double l = (pt[i].x - this->xcenter) * cos(this->angle) +
+		           (pt[i].y - this->ycenter) * sin(this->angle);
+		if (l < lmin)
+		{
 			lmin = l;
 		}
 
-		if (l > lmax) {
+		if (l > lmax)
+		{
 			lmax = l;
 		}
 	}

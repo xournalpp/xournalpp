@@ -2,48 +2,56 @@
 #include <serializing/ObjectOutputStream.h>
 #include <serializing/ObjectInputStream.h>
 
-XojFont::XojFont() {
+XojFont::XojFont()
+{
 	XOJ_INIT_TYPE(XojFont);
 
 	this->size = 0;
 }
 
-XojFont::~XojFont() {
+XojFont::~XojFont()
+{
 	XOJ_RELEASE_TYPE(XojFont);
 }
 
-String XojFont::getName() {
+String XojFont::getName()
+{
 	XOJ_CHECK_TYPE(XojFont);
 
 	return this->name;
 }
 
-void XojFont::setName(String name) {
+void XojFont::setName(String name)
+{
 	XOJ_CHECK_TYPE(XojFont);
 
 	this->name = name;
 }
 
-double XojFont::getSize() {
+double XojFont::getSize()
+{
 	XOJ_CHECK_TYPE(XojFont);
 
 	return size;
 }
 
-void XojFont::setSize(double size) {
+void XojFont::setSize(double size)
+{
 	XOJ_CHECK_TYPE(XojFont);
 
 	this->size = size;
 }
 
-void XojFont::operator =(const XojFont & font) {
+void XojFont::operator =(const XojFont& font)
+{
 	XOJ_CHECK_TYPE(XojFont);
 
 	this->name = font.name;
 	this->size = font.size;
 }
 
-void XojFont::serialize(ObjectOutputStream & out) {
+void XojFont::serialize(ObjectOutputStream& out)
+{
 	XOJ_CHECK_TYPE(XojFont);
 
 	out.writeObject("XojFont");
@@ -54,7 +62,9 @@ void XojFont::serialize(ObjectOutputStream & out) {
 	out.endObject();
 }
 
-void XojFont::readSerialized(ObjectInputStream & in) throw (InputStreamException) {
+void XojFont::readSerialized(ObjectInputStream& in) throw (
+    InputStreamException)
+{
 	XOJ_CHECK_TYPE(XojFont);
 
 	in.readObject("XojFont");

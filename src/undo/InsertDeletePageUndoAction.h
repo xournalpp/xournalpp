@@ -15,19 +15,20 @@
 #include "UndoAction.h"
 #include <XournalType.h>
 
-class InsertDeletePageUndoAction: public UndoAction {
+class InsertDeletePageUndoAction: public UndoAction
+{
 public:
 	InsertDeletePageUndoAction(PageRef page, int pagePos, bool inserted);
 	virtual ~InsertDeletePageUndoAction();
 
 public:
-	virtual bool undo(Control * control);
-	virtual bool redo(Control * control);
+	virtual bool undo(Control* control);
+	virtual bool redo(Control* control);
 
 	virtual String getText();
 private:
-	bool insertPage(Control * control);
-	bool deletePage(Control * control);
+	bool insertPage(Control* control);
+	bool deletePage(Control* control);
 
 private:
 	XOJ_TYPE_ATTRIB;

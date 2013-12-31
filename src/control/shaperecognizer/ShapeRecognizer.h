@@ -23,21 +23,23 @@ class Stroke;
 class Point;
 class ShapeRecognizerResult;
 
-class ShapeRecognizer {
+class ShapeRecognizer
+{
 public:
 	ShapeRecognizer();
 	virtual ~ShapeRecognizer();
 
-	ShapeRecognizerResult * recognizePatterns(Stroke * stroke);
+	ShapeRecognizerResult* recognizePatterns(Stroke* stroke);
 	void resetRecognizer();
 private:
-	Stroke * tryRectangle();
-	Stroke * tryArrow();
+	Stroke* tryRectangle();
+	Stroke* tryArrow();
 
-	Stroke * tryClosedPolygon(int nsides);
-	void optimizePolygonal(const Point * pt, int nsides, int * breaks, Inertia * ss);
+	Stroke* tryClosedPolygon(int nsides);
+	void optimizePolygonal(const Point* pt, int nsides, int* breaks, Inertia* ss);
 
-	int findPolygonal(const Point * pt, int start, int end, int nsides, int * breaks, Inertia * ss);
+	int findPolygonal(const Point* pt, int start, int end, int nsides, int* breaks,
+	                  Inertia* ss);
 
 private:
 	XOJ_TYPE_ATTRIB;
@@ -45,7 +47,7 @@ private:
 	RecoSegment queue[MAX_POLYGON_SIDES + 1];
 	int queueLength;
 
-	Stroke * stroke;
+	Stroke* stroke;
 
 	friend class ShapeRecognizerResult;
 };

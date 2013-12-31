@@ -24,15 +24,16 @@ class PdfExport;
 class PdfWriter;
 class PdfRefEntry;
 
-class RefReplacement {
+class RefReplacement
+{
 public:
-	RefReplacement(String name, int newId, const char * type, PdfRefEntry * refEntry);
+	RefReplacement(String name, int newId, const char* type, PdfRefEntry* refEntry);
 	virtual ~RefReplacement();
 
 public:
 	String name;
 	int newId;
-	char * type;
+	char* type;
 
 public:
 	/**
@@ -45,36 +46,40 @@ private:
 
 	bool used;
 
-	PdfRefEntry * refEntry;
+	PdfRefEntry* refEntry;
 };
 
-class PdfRefList {
+class PdfRefList
+{
 public:
 	/**
 	 * Type char is ownd by PdfRefList and should not be freed
 	 */
-	PdfRefList(PdfXRef * xref, PdfObjectWriter * objectWriter, PdfWriter * writer, char * type);
+	PdfRefList(PdfXRef* xref, PdfObjectWriter* objectWriter, PdfWriter* writer,
+	           char* type);
 	virtual ~PdfRefList();
 
 public:
 	void writeObjects();
-	void writeRefList(const char * type);
+	void writeRefList(const char* type);
 
-	int lookup(Ref ref, Object * object, XojPopplerDocument doc, PdfRefEntry * &refEntry);
-	void parse(Dict * dict, int index, XojPopplerDocument doc, GList * &replacementList);
+	int lookup(Ref ref, Object* object, XojPopplerDocument doc,
+	           PdfRefEntry*& refEntry);
+	void parse(Dict* dict, int index, XojPopplerDocument doc,
+	           GList*& replacementList);
 
-	static void deletePdfRefList(PdfRefList * ref);
+	static void deletePdfRefList(PdfRefList* ref);
 
 private:
 	XOJ_TYPE_ATTRIB;
 
 	int id;
-	GList * data;
+	GList* data;
 
-	PdfXRef * xref;
-	PdfObjectWriter * objectWriter;
-	PdfWriter * writer;
-	char * type;
+	PdfXRef* xref;
+	PdfObjectWriter* objectWriter;
+	PdfWriter* writer;
+	char* type;
 };
 
 #endif /* PDFREFLIST_H_ */

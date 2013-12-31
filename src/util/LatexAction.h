@@ -20,21 +20,22 @@
 
 class Control;
 
-class LatexAction {
+class LatexAction
+{
 public:
-	LatexAction(gchar * myTex);
+	LatexAction(gchar* myTex);
 	virtual ~LatexAction();
 
 public:
 	void runCommand();
-	gchar * getFileName();
+	gchar* getFileName();
 
 
 private:
-//	Control * control;
-	gchar * theLatex;
-	gchar * texfile;
-	gchar * texfilefull;
+	//	Control * control;
+	gchar* theLatex;
+	gchar* texfile;
+	gchar* texfilefull;
 	double myx, myy;
 };
 

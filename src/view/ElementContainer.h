@@ -16,9 +16,10 @@
 
 class Element;
 
-class ElementContainer {
+class ElementContainer
+{
 public:
-	virtual ListIterator<Element *> getElements() = 0;
+	virtual ListIterator<Element*> getElements() = 0;
 };
 
 #endif /* __ELEMENTCONTAINER_H__ */

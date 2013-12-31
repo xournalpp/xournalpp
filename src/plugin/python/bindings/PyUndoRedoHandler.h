@@ -17,9 +17,9 @@ class Control;
 
 extern "C" {
 
-void initundoredohandler();
+	void initundoredohandler();
 
-PyObject * newPyUndoRedoHandler(PyObject * xournal);
+	PyObject* newPyUndoRedoHandler(PyObject* xournal);
 
 }
 

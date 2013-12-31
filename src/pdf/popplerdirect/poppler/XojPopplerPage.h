@@ -28,19 +28,21 @@ class TextPage;
 class Annots;
 class XojPopplerImage;
 
-class XojPopplerPage {
+class XojPopplerPage
+{
 private:
-	XojPopplerPage(PDFDoc * doc, GMutex * docMutex, CairoOutputDev * outputDev, Page * page, int index);
+	XojPopplerPage(PDFDoc* doc, GMutex* docMutex, CairoOutputDev* outputDev,
+	               Page* page, int index);
 	virtual ~XojPopplerPage();
 public:
 	double getWidth();
 	double getHeight();
 
-	void render(cairo_t * cr, bool forPrinting = false);
+	void render(cairo_t* cr, bool forPrinting = false);
 
-	GList * findText(const char * text);
+	GList* findText(const char* text);
 
-	Page * getPage();
+	Page* getPage();
 
 private:
 	void initTextPage();
@@ -51,18 +53,19 @@ private:
 	GMutex renderMutex;
 	GMutex * docMutex;
 
-	CairoOutputDev * outputDev;
-	PDFDoc * doc;
-	Page * page;
+	CairoOutputDev* outputDev;
+	PDFDoc* doc;
+	Page* page;
 	int index;
 
-	TextPage * text;
-	Annots * annots;
+	TextPage* text;
+	Annots* annots;
 
 	friend class _IntPopplerDocument;
 };
 
-class XojPopplerRectangle {
+class XojPopplerRectangle
+{
 public:
 	XojPopplerRectangle();
 

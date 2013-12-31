@@ -16,20 +16,21 @@
 #include <String.h>
 #include "PdfXRef.h"
 
-class PdfWriter {
+class PdfWriter
+{
 public:
-	PdfWriter(PdfXRef * xref);
+	PdfWriter(PdfXRef* xref);
 	virtual ~PdfWriter();
 
 public:
 	void close();
-	bool openFile(const char * uri);
+	bool openFile(const char* uri);
 
 public:
-	bool writeLen(const char * data, int len);
-	bool write(const char * data);
-	bool writef(const char * data, ...);
-	bool writeTxt(const char * data);
+	bool writeLen(const char* data, int len);
+	bool write(const char* data);
+	bool writef(const char* data, ...);
+	bool writeTxt(const char* data);
 	bool write(int data);
 
 	void startStream();
@@ -55,13 +56,13 @@ private:
 
 	int dataCount;
 	bool inStream;
-	GString * stream;
+	GString* stream;
 
-	GFileOutputStream * out;
+	GFileOutputStream* out;
 
 	String lastError;
 
-	PdfXRef * xref;
+	PdfXRef* xref;
 
 	int objectId;
 

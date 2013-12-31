@@ -20,21 +20,22 @@ class XojPage;
 class Layer;
 class BackgroundImage;
 
-class PageRef {
+class PageRef
+{
 public:
 	PageRef();
-	PageRef(const PageRef & ref);
-	PageRef(XojPage * page);
+	PageRef(const PageRef& ref);
+	PageRef(XojPage* page);
 	virtual ~PageRef();
 
 public:
 	bool isValid();
 
-	operator XojPage *();
+	operator XojPage* ();
 
-	bool operator==(const PageRef & ref);
-	void operator=(const PageRef & ref);
-	void operator=(XojPage * page);
+	bool operator==(const PageRef& ref);
+	void operator=(const PageRef& ref);
+	void operator=(XojPage* page);
 
 	PageRef clone();
 
@@ -53,9 +54,9 @@ public:
 	double getWidth();
 	double getHeight();
 
-	void addLayer(Layer * layer);
-	void insertLayer(Layer * layer, int index);
-	void removeLayer(Layer * layer);
+	void addLayer(Layer* layer);
+	void insertLayer(Layer* layer, int index);
+	void removeLayer(Layer* layer);
 
 	int getPdfPageNr();
 
@@ -68,15 +69,15 @@ public:
 	int getLayerCount();
 	int getSelectedLayerId();
 	void setSelectedLayerId(int id);
-	Layer * getSelectedLayer();
+	Layer* getSelectedLayer();
 
-	BackgroundImage & getBackgroundImage();
-	void setBackgroundImage(BackgroundImage & img);
+	BackgroundImage& getBackgroundImage();
+	void setBackgroundImage(BackgroundImage& img);
 
 private:
 	XOJ_TYPE_ATTRIB;
 
-	XojPage * page;
+	XojPage* page;
 };
 
 #endif /* __PAGEREF_H__ */

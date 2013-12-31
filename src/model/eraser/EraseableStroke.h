@@ -21,24 +21,27 @@ class EraseableStrokePart;
 class PartList;
 class Range;
 
-class EraseableStroke {
+class EraseableStroke
+{
 public:
-	EraseableStroke(Stroke * stroke);
+	EraseableStroke(Stroke* stroke);
 	virtual ~EraseableStroke();
 
 public:
 	/**
 	 * Returns a repaint rectangle or NULL, the rectangle is own by the caller
 	 */
-	Range * erase(double x, double y, double halfEraserSize, Range * range = NULL);
+	Range* erase(double x, double y, double halfEraserSize, Range* range = NULL);
 
-	GList * getStroke(Stroke * original);
+	GList* getStroke(Stroke* original);
 
-	void draw(cairo_t * cr, double x, double y, double width, double height);
+	void draw(cairo_t* cr, double x, double y, double width, double height);
 
 private:
-	void erase(double x, double y, double halfEraserSize, EraseableStrokePart * part, PartList * list);
-	bool erasePart(double x, double y, double halfEraserSize, EraseableStrokePart * part, PartList * list, bool * deleteStrokeAfter);
+	void erase(double x, double y, double halfEraserSize, EraseableStrokePart* part,
+	           PartList* list);
+	bool erasePart(double x, double y, double halfEraserSize,
+	               EraseableStrokePart* part, PartList* list, bool* deleteStrokeAfter);
 
 	void addRepaintRect(double x, double y, double width, double height);
 
@@ -49,9 +52,9 @@ private:
 	GMutex partLock;
 	PartList * parts;
 
-	Range * repaintRect;
+	Range* repaintRect;
 
-	Stroke * stroke;
+	Stroke* stroke;
 };
 
 #endif /* ERASEABLESTROKE_H_ */

@@ -3,34 +3,40 @@
 
 #include "../Control.h"
 
-AutosaveJob::AutosaveJob(Control * control) {
+AutosaveJob::AutosaveJob(Control* control)
+{
 	XOJ_INIT_TYPE(AutosaveJob);
 
 	this->control = control;
 }
 
-AutosaveJob::~AutosaveJob() {
+AutosaveJob::~AutosaveJob()
+{
 	XOJ_RELEASE_TYPE(AutosaveJob);
 }
 
-void AutosaveJob::afterRun() {
+void AutosaveJob::afterRun()
+{
 	XOJ_CHECK_TYPE(AutosaveJob);
 
-	GtkWidget * dialog = gtk_message_dialog_new((GtkWindow *) control->getWindow(), GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, _("Autosave: %s"),
-			this->error.c_str());
-	gtk_window_set_transient_for(GTK_WINDOW(dialog), GTK_WINDOW(this->control->getWindow()->getWindow()));
+	GtkWidget* dialog = gtk_message_dialog_new((GtkWindow*) control->getWindow(),
+	                                           GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, _("Autosave: %s"),
+	                                           this->error.c_str());
+	gtk_window_set_transient_for(GTK_WINDOW(dialog),
+	                             GTK_WINDOW(this->control->getWindow()->getWindow()));
 	gtk_dialog_run(GTK_DIALOG(dialog));
 	gtk_widget_destroy(dialog);
 }
 
-void AutosaveJob::run() {
+void AutosaveJob::run()
+{
 	XOJ_CHECK_TYPE(AutosaveJob);
 
 	SaveHandler handler;
 
 	control->getUndoRedoHandler()->documentAutosaved();
 
-	Document * doc = control->getDocument();
+	Document* doc = control->getDocument();
 
 	doc->lock();
 	handler.prepareSave(doc);
@@ -38,10 +44,14 @@ void AutosaveJob::run() {
 	doc->unlock();
 
 	// TODO: incrementel autosave
-	if (filename.isEmpty()) {
+	if (filename.isEmpty())
+	{
 		filename = Util::getAutosaveFilename();
-	} else {
-		if (filename.length() > 5 && filename.substring(-4) == ".xoj") {
+	}
+	else
+	{
+		if (filename.length() > 5 && filename.substring(-4) == ".xoj")
+		{
 			filename = filename.substring(0, -4);
 		}
 		filename += ".autosave.xoj";
@@ -49,19 +59,23 @@ void AutosaveJob::run() {
 
 	control->renameLastAutosaveFile();
 
-	GzOutputStream * out = new GzOutputStream(filename);
+	GzOutputStream* out = new GzOutputStream(filename);
 	handler.saveTo(out, filename);
 	delete out;
 
 	this->error = handler.getErrorMessage();
-	if (!this->error.isEmpty()) {
+	if (!this->error.isEmpty())
+	{
 		callAfterRun();
-	} else {
+	}
+	else
+	{
 		control->deleteLastAutosaveFile(filename);
 	}
 }
 
-JobType AutosaveJob::getType() {
+JobType AutosaveJob::getType()
+{
 	XOJ_CHECK_TYPE(AutosaveJob);
 	return JOB_TYPE_AUTOSAVE;
 }

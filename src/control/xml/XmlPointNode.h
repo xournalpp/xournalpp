@@ -15,24 +15,25 @@
 #include "XmlNode.h"
 #include "../../model/Point.h"
 
-class XmlPointNode: public XmlNode {
+class XmlPointNode: public XmlNode
+{
 public:
-	XmlPointNode(const char * tag);
+	XmlPointNode(const char* tag);
 	virtual ~XmlPointNode();
 
 private:
-	XmlPointNode(const XmlPointNode & node);
-	void operator =(const XmlPointNode & node);
+	XmlPointNode(const XmlPointNode& node);
+	void operator =(const XmlPointNode& node);
 
 public:
-	void addPoint(const Point * point);
+	void addPoint(const Point* point);
 
-	virtual void writeOut(OutputStream * out);
+	virtual void writeOut(OutputStream* out);
 
 private:
 	XOJ_TYPE_ATTRIB;
 
-	GList * points;
+	GList* points;
 };
 
 #endif /* __XMLPOINTNODE_H__ */

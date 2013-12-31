@@ -16,7 +16,8 @@
 #include <glib.h>
 #include <String.h>
 
-class XojColor {
+class XojColor
+{
 public:
 	XojColor(int color, String name);
 	virtual ~XojColor();

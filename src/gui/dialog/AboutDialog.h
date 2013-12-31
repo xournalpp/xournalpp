@@ -15,13 +15,14 @@
 #include "../GladeGui.h"
 #include <XournalType.h>
 
-class AboutDialog: public GladeGui {
+class AboutDialog: public GladeGui
+{
 public:
-	AboutDialog(GladeSearchpath * gladeSearchPath);
+	AboutDialog(GladeSearchpath* gladeSearchPath);
 	virtual ~AboutDialog();
 
 public:
-	virtual void show(GtkWindow * parent);
+	virtual void show(GtkWindow* parent);
 
 private:
 	XOJ_TYPE_ATTRIB;

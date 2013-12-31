@@ -16,25 +16,26 @@
 #include "../Point.h"
 #include <XournalType.h>
 
-class EraseableStrokePart {
+class EraseableStrokePart
+{
 public:
 	EraseableStrokePart(Point a, Point b);
 	EraseableStrokePart(double width);
 	virtual ~EraseableStrokePart();
 
 private:
-	EraseableStrokePart(const EraseableStrokePart & part);
+	EraseableStrokePart(const EraseableStrokePart& part);
 
 public:
 	void addPoint(Point p);
 	double getWidth();
 
-	GList * getPoints();
+	GList* getPoints();
 
 	void clearSplitData();
 	void splitFor(double halfEraserSize);
 
-	EraseableStrokePart * clone();
+	EraseableStrokePart* clone();
 
 	void calcSize();
 
@@ -53,7 +54,7 @@ private:
 	double width;
 	double splitSize;
 
-	GList * points;
+	GList* points;
 
 	double x;
 	double y;

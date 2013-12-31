@@ -19,9 +19,11 @@
 class SettingsDialog;
 class Settings;
 
-class ButtonConfigGui {
+class ButtonConfigGui
+{
 public:
-	ButtonConfigGui(SettingsDialog * dlg, GtkWidget * w, Settings * settings, int button, bool withDevice);
+	ButtonConfigGui(SettingsDialog* dlg, GtkWidget* w, Settings* settings,
+	                int button, bool withDevice);
 	virtual ~ButtonConfigGui();
 
 public:
@@ -29,26 +31,26 @@ public:
 	void saveSettings();
 
 private:
-	static GtkWidget * newLabel(const char * text);
-	static void cbSelectCallback(GtkComboBox *widget, ButtonConfigGui * gui);
+	static GtkWidget* newLabel(const char* text);
+	static void cbSelectCallback(GtkComboBox* widget, ButtonConfigGui* gui);
 	void enableDisableTools();
 
 private:
 	XOJ_TYPE_ATTRIB;
 
 
-	Settings * settings;
+	Settings* settings;
 	int button;
 	bool withDevice;
 
-	GtkWidget * cbDevice;
-	GtkWidget * cbDisableDrawing;
+	GtkWidget* cbDevice;
+	GtkWidget* cbDisableDrawing;
 
-	GtkWidget * cbTool;
-	GtkWidget * cbThickness;
-	GtkWidget * colorButton;
-	GtkWidget * cbEraserType;
-	GtkWidget * cbDrawingType;
+	GtkWidget* cbTool;
+	GtkWidget* cbThickness;
+	GtkWidget* colorButton;
+	GtkWidget* cbEraserType;
+	GtkWidget* cbDrawingType;
 };
 
 #endif /* __BUTTONCONFIGGUI__ */

@@ -15,11 +15,13 @@
 #include <XournalType.h>
 #include <glib.h>
 
-enum JobType {
-	JOB_TYPE_BLOCKING, JOB_TYPE_PREVIEW, JOB_TYPE_RENDER, JOB_TYPE_AUTOSAVE
+enum JobType
+{
+    JOB_TYPE_BLOCKING, JOB_TYPE_PREVIEW, JOB_TYPE_RENDER, JOB_TYPE_AUTOSAVE
 };
 
-class Job {
+class Job
+{
 public:
 	Job();
 
@@ -52,7 +54,7 @@ public:
 	 */
 	virtual void execute();
 
-	virtual void * getSource();
+	virtual void* getSource();
 
 protected:
 	/**
@@ -73,7 +75,7 @@ protected:
 	virtual void afterRun();
 
 private:
-	static bool callAfterCallback(Job * job);
+	static bool callAfterCallback(Job* job);
 
 private:
 	XOJ_TYPE_ATTRIB;

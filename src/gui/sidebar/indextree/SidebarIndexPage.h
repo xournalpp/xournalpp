@@ -19,9 +19,10 @@
 
 class Control;
 
-class SidebarIndexPage : public AbstractSidebarPage {
+class SidebarIndexPage : public AbstractSidebarPage
+{
 public:
-	SidebarIndexPage(Control * control);
+	SidebarIndexPage(Control* control);
 	virtual ~SidebarIndexPage();
 
 public:
@@ -29,12 +30,12 @@ public:
 	/**
 	 * @overwrite
 	 */
-	virtual const char * getName();
+	virtual const char* getName();
 
 	/**
 	 * @overwrite
 	 */
-	virtual const char * getIconName();
+	virtual const char* getIconName();
 
 	/**
 	 * @overwrite
@@ -44,7 +45,7 @@ public:
 	/**
 	 * @overwrite
 	 */
-	virtual GtkWidget * getWidget();
+	virtual GtkWidget* getWidget();
 
 	/**
 	 * @overwrite
@@ -54,7 +55,7 @@ public:
 	/**
 	 * Select page in the tree
 	 */
-	bool selectPageNr(int page, int pdfPage, GtkTreeIter * parent);
+	bool selectPageNr(int page, int pdfPage, GtkTreeIter* parent);
 
 	/**
 	 * @overwrite
@@ -65,12 +66,14 @@ private:
 	/**
 	 * Tree search function if you type chars within the tree. Source: Pidgin
 	 */
-	static gboolean treeSearchFunction(GtkTreeModel * model, gint column, const gchar * key, GtkTreeIter * iter, SidebarIndexPage * sidebar);
+	static gboolean treeSearchFunction(GtkTreeModel* model, gint column,
+	                                   const gchar* key, GtkTreeIter* iter, SidebarIndexPage* sidebar);
 
 	/**
 	 * A bookmark was selected
 	 */
-	static bool treeBookmarkSelected(GtkWidget * treeview, SidebarIndexPage * sidebar);
+	static bool treeBookmarkSelected(GtkWidget* treeview,
+	                                 SidebarIndexPage* sidebar);
 
 	/**
 	 * If you select a Bookmark wich is currently not in the Xournal document, only in the PDF (page deleted or so)
@@ -80,7 +83,7 @@ private:
 	/**
 	 * The function which is called after a search timeout
 	 */
-	static bool searchTimeoutFunc(SidebarIndexPage * sidebar);
+	static bool searchTimeoutFunc(SidebarIndexPage* sidebar);
 
 private:
 	XOJ_TYPE_ATTRIB;
@@ -90,17 +93,17 @@ private:
 	/**
 	 * Expand links
 	 */
-	int expandOpenLinks(GtkTreeModel * model, GtkTreeIter * parent);
+	int expandOpenLinks(GtkTreeModel* model, GtkTreeIter* parent);
 
 	/**
 	 * The Tree with the Bookmarks
 	 */
-	GtkWidget * treeViewBookmarks;
+	GtkWidget* treeViewBookmarks;
 
 	/**
 	 * The scrollbars for the Tree
 	 */
-	GtkWidget * scrollBookmarks;
+	GtkWidget* scrollBookmarks;
 
 	/**
 	 * If currently searching, scroll to the page is disable, else search is not really working

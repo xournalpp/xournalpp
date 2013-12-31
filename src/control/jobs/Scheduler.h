@@ -19,15 +19,17 @@
 
 #include <XournalType.h>
 
-typedef enum {
-	JOB_PRIORITY_URGENT, // Rendering current page range
-	JOB_PRIORITY_HIGH, // Rendering current thumbnail range
-	JOB_PRIORITY_LOW, // Rendering pages not in current range
-	JOB_PRIORITY_NONE, // Any other job: load, save, print, ...
-	JOB_N_PRIORITIES
+typedef enum
+{
+    JOB_PRIORITY_URGENT, // Rendering current page range
+    JOB_PRIORITY_HIGH, // Rendering current thumbnail range
+    JOB_PRIORITY_LOW, // Rendering pages not in current range
+    JOB_PRIORITY_NONE, // Any other job: load, save, print, ...
+    JOB_N_PRIORITIES
 } JobPriority;
 
-class Scheduler {
+class Scheduler
+{
 public:
 	Scheduler();
 	virtual ~Scheduler();
@@ -38,7 +40,7 @@ public:
 	 *
 	 * The Job is now owned by the scheduler, and automatically freed if it is done
 	 */
-	void addJob(Job * job, JobPriority priority);
+	void addJob(Job* job, JobPriority priority);
 
 	void start();
 	void stop();
@@ -64,10 +66,10 @@ public:
 	void unblockRerenderZoom();
 
 private:
-	static gpointer jobThreadCallback(Scheduler * scheduler);
-	Job * getNextJobUnlocked(bool onlyNotRender = false, bool * hasRenderJobs = NULL);
+	static gpointer jobThreadCallback(Scheduler* scheduler);
+	Job* getNextJobUnlocked(bool onlyNotRender = false, bool* hasRenderJobs = NULL);
 
-	static bool jobRenderThreadTimer(Scheduler * scheduler);
+	static bool jobRenderThreadTimer(Scheduler* scheduler);
 
 protected:
 	XOJ_TYPE_ATTRIB;
@@ -76,7 +78,7 @@ protected:
 
 	int jobRenderThreadTimerId;
 
-	GThread * thread;
+	GThread* thread;
 
 	GCond jobQueueCond;
 	GMutex jobQueueMutex;
@@ -91,7 +93,7 @@ protected:
 	GQueue queueLow;
 	GQueue queueNone;
 
-	GQueue * jobQueue[JOB_N_PRIORITIES];
+	GQueue* jobQueue[JOB_N_PRIORITIES];
 
 	GTimeVal * blockRenderZoomTime;
 	GMutex blockRenderMutex;

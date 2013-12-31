@@ -6,7 +6,8 @@
 #include <string.h> // memcpy
 
 Image::Image() :
-	Element(ELEMENT_IMAGE) {
+	Element(ELEMENT_IMAGE)
+{
 
 	XOJ_INIT_TYPE(Image);
 
@@ -17,10 +18,12 @@ Image::Image() :
 	this->read = false;
 }
 
-Image::~Image() {
+Image::~Image()
+{
 	XOJ_CHECK_TYPE(Image);
 
-	if (this->image) {
+	if (this->image)
+	{
 		cairo_surface_destroy(this->image);
 		this->image = NULL;
 	}
@@ -28,10 +31,11 @@ Image::~Image() {
 	XOJ_RELEASE_TYPE(Image);
 }
 
-Element * Image::clone() {
+Element* Image::clone()
+{
 	XOJ_CHECK_TYPE(Image);
 
-	Image * img = new Image();
+	Image* img = new Image();
 
 	img->x = this->x;
 	img->y = this->y;
@@ -39,7 +43,7 @@ Element * Image::clone() {
 	img->width = this->width;
 	img->height = this->height;
 
-	img->data = (unsigned char *)g_malloc(this->dLen);
+	img->data = (unsigned char*)g_malloc(this->dLen);
 	img->dLen = this->dLen;
 	memcpy(img->data, this->data, this->dLen);
 
@@ -49,23 +53,29 @@ Element * Image::clone() {
 }
 
 
-void Image::setWidth(double width) {
+void Image::setWidth(double width)
+{
 	XOJ_CHECK_TYPE(Image);
 
 	this->width = width;
 }
 
-void Image::setHeight(double height) {
+void Image::setHeight(double height)
+{
 	XOJ_CHECK_TYPE(Image);
 
 	this->height = height;
 }
 
-cairo_status_t Image::cairoReadFunction(Image * image, unsigned char * data, unsigned int length) {
+cairo_status_t Image::cairoReadFunction(Image* image, unsigned char* data,
+                                        unsigned int length)
+{
 	XOJ_CHECK_TYPE_OBJ(image, Image);
 
-	for (int i = 0; i < length; i++, image->read++) {
-		if (image->read >= image->dLen) {
+	for (int i = 0; i < length; i++, image->read++)
+	{
+		if (image->read >= image->dLen)
+		{
 			return CAIRO_STATUS_READ_ERROR;
 		}
 		data[i] = image->data[image->read];
@@ -74,32 +84,39 @@ cairo_status_t Image::cairoReadFunction(Image * image, unsigned char * data, uns
 	return CAIRO_STATUS_SUCCESS;
 }
 
-void Image::setImage(unsigned char * data, int len) {
+void Image::setImage(unsigned char* data, int len)
+{
 	XOJ_CHECK_TYPE(Image);
 
-	if (this->image) {
+	if (this->image)
+	{
 		cairo_surface_destroy(this->image);
 		this->image = NULL;
 	}
-	if (this->data) {
+	if (this->data)
+	{
 		g_free(this->data);
 	}
 	this->data = data;
 	this->dLen = len;
 }
 
-void Image::setImage(GdkPixbuf * img) {
+void Image::setImage(GdkPixbuf* img)
+{
 	setImage(f_pixbuf_to_cairo_surface(img));
 }
 
-void Image::setImage(cairo_surface_t * image) {
+void Image::setImage(cairo_surface_t* image)
+{
 	XOJ_CHECK_TYPE(Image);
 
-	if (this->image) {
+	if (this->image)
+	{
 		cairo_surface_destroy(this->image);
 		this->image = NULL;
 	}
-	if (this->data) {
+	if (this->data)
+	{
 		g_free(this->data);
 	}
 	this->data = NULL;
@@ -108,12 +125,15 @@ void Image::setImage(cairo_surface_t * image) {
 	this->image = image;
 }
 
-cairo_surface_t * Image::getImage() {
+cairo_surface_t* Image::getImage()
+{
 	XOJ_CHECK_TYPE(Image);
 
-	if (this->image == NULL && this->dLen != 0) {
+	if (this->image == NULL && this->dLen != 0)
+	{
 		this->read = 0;
-		this->image = cairo_image_surface_create_from_png_stream((cairo_read_func_t) &cairoReadFunction, this);
+		this->image = cairo_image_surface_create_from_png_stream((
+		                                                             cairo_read_func_t) &cairoReadFunction, this);
 		g_free(this->data);
 		this->data = NULL;
 		this->dLen = 0;
@@ -122,7 +142,8 @@ cairo_surface_t * Image::getImage() {
 	return this->image;
 }
 
-void Image::scale(double x0, double y0, double fx, double fy) {
+void Image::scale(double x0, double y0, double fx, double fy)
+{
 	XOJ_CHECK_TYPE(Image);
 
 	this->x -= x0;
@@ -136,7 +157,8 @@ void Image::scale(double x0, double y0, double fx, double fy) {
 	this->height *= fy;
 }
 
-void Image::serialize(ObjectOutputStream & out) {
+void Image::serialize(ObjectOutputStream& out)
+{
 	XOJ_CHECK_TYPE(Image);
 
 	out.writeObject("Image");
@@ -151,7 +173,8 @@ void Image::serialize(ObjectOutputStream & out) {
 	out.endObject();
 }
 
-void Image::readSerialized(ObjectInputStream & in) throw (InputStreamException) {
+void Image::readSerialized(ObjectInputStream& in) throw (InputStreamException)
+{
 	XOJ_CHECK_TYPE(Image);
 
 	in.readObject("Image");
@@ -161,7 +184,8 @@ void Image::readSerialized(ObjectInputStream & in) throw (InputStreamException) 
 	this->width = in.readDouble();
 	this->height = in.readDouble();
 
-	if (this->image) {
+	if (this->image)
+	{
 		cairo_surface_destroy(this->image);
 		this->image = NULL;
 	}
@@ -171,7 +195,8 @@ void Image::readSerialized(ObjectInputStream & in) throw (InputStreamException) 
 	in.endObject();
 }
 
-void Image::calcSize() {
+void Image::calcSize()
+{
 	XOJ_CHECK_TYPE(Image);
 }
 

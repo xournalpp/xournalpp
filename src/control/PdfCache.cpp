@@ -1,15 +1,18 @@
 #include "PdfCache.h"
 #include <stdio.h>
 
-class PdfCacheEntry {
+class PdfCacheEntry
+{
 public:
-	PdfCacheEntry(XojPopplerPage * popplerPage, cairo_surface_t * img) {
+	PdfCacheEntry(XojPopplerPage* popplerPage, cairo_surface_t* img)
+	{
 		XOJ_INIT_TYPE(PdfCacheEntry);
 
 		this->popplerPage = popplerPage;
 		this->rendered = img;
 	}
-	~PdfCacheEntry() {
+	~PdfCacheEntry()
+	{
 		XOJ_CHECK_TYPE(PdfCacheEntry);
 
 		this->popplerPage = NULL;
@@ -21,11 +24,12 @@ public:
 
 	XOJ_TYPE_ATTRIB;
 
-	XojPopplerPage * popplerPage;
-	cairo_surface_t * rendered;
+	XojPopplerPage* popplerPage;
+	cairo_surface_t* rendered;
 };
 
-PdfCache::PdfCache(int size) {
+PdfCache::PdfCache(int size)
+{
 	XOJ_INIT_TYPE(PdfCache);
 
 	this->data = NULL;
@@ -35,7 +39,8 @@ PdfCache::PdfCache(int size) {
 	g_mutex_init(&this->renderMutex);
 }
 
-PdfCache::~PdfCache() {
+PdfCache::~PdfCache()
+{
 	XOJ_CHECK_TYPE(PdfCache);
 
 	clearCache();
@@ -44,10 +49,12 @@ PdfCache::~PdfCache() {
 	XOJ_RELEASE_TYPE(PdfCache);
 }
 
-void PdfCache::setZoom(double zoom) {
+void PdfCache::setZoom(double zoom)
+{
 	XOJ_CHECK_TYPE(PdfCache);
 
-	if (this->zoom == zoom) {
+	if (this->zoom == zoom)
+	{
 		return;
 	}
 	this->zoom = zoom;
@@ -55,24 +62,29 @@ void PdfCache::setZoom(double zoom) {
 	clearCache();
 }
 
-void PdfCache::clearCache() {
+void PdfCache::clearCache()
+{
 	XOJ_CHECK_TYPE(PdfCache);
 
-	for (GList * l = this->data; l != NULL; l = l->next) {
-		PdfCacheEntry * e = (PdfCacheEntry *) l->data;
+	for (GList* l = this->data; l != NULL; l = l->next)
+	{
+		PdfCacheEntry* e = (PdfCacheEntry*) l->data;
 		delete e;
 	}
 	g_list_free(this->data);
 	this->data = NULL;
 }
 
-cairo_surface_t * PdfCache::lookup(XojPopplerPage * popplerPage) {
+cairo_surface_t* PdfCache::lookup(XojPopplerPage* popplerPage)
+{
 	XOJ_CHECK_TYPE(PdfCache);
 
-	for (GList * l = this->data; l != NULL; l = l->next) {
-		PdfCacheEntry * e = (PdfCacheEntry *) l->data;
+	for (GList* l = this->data; l != NULL; l = l->next)
+	{
+		PdfCacheEntry* e = (PdfCacheEntry*) l->data;
 		XOJ_CHECK_TYPE_OBJ(e, PdfCacheEntry);
-		if (e->popplerPage == popplerPage) {
+		if (e->popplerPage == popplerPage)
+		{
 			return e->rendered;
 		}
 	}
@@ -80,38 +92,44 @@ cairo_surface_t * PdfCache::lookup(XojPopplerPage * popplerPage) {
 	return NULL;
 }
 
-void PdfCache::cache(XojPopplerPage * popplerPage, cairo_surface_t * img) {
+void PdfCache::cache(XojPopplerPage* popplerPage, cairo_surface_t* img)
+{
 	XOJ_CHECK_TYPE(PdfCache);
 
-	PdfCacheEntry * ne = new PdfCacheEntry(popplerPage, img);
+	PdfCacheEntry* ne = new PdfCacheEntry(popplerPage, img);
 	this->data = g_list_insert(this->data, ne, 0);
 	int i = 0;
-	for (GList * l = this->data; l != NULL; i++) {
-		PdfCacheEntry * e = (PdfCacheEntry *) l->data;
+	for (GList* l = this->data; l != NULL; i++)
+	{
+		PdfCacheEntry* e = (PdfCacheEntry*) l->data;
 		XOJ_CHECK_TYPE_OBJ(e, PdfCacheEntry);
 
-		GList * le = l;
+		GList* le = l;
 
 		l = l->next;
 
-		if (i >= this->size) {
+		if (i >= this->size)
+		{
 			delete e;
 			this->data = g_list_delete_link(this->data, le);
 		}
 	}
 }
 
-void PdfCache::render(cairo_t * cr, XojPopplerPage * popplerPage, double zoom) {
+void PdfCache::render(cairo_t* cr, XojPopplerPage* popplerPage, double zoom)
+{
 	XOJ_CHECK_TYPE(PdfCache);
 
 	g_mutex_lock(&this->renderMutex);
 
 	this->setZoom(zoom);
 
-	cairo_surface_t * img = lookup(popplerPage);
-	if (img == NULL) {
-		img = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, popplerPage->getWidth() * this->zoom, popplerPage->getHeight() * this->zoom);
-		cairo_t * cr2 = cairo_create(img);
+	cairo_surface_t* img = lookup(popplerPage);
+	if (img == NULL)
+	{
+		img = cairo_image_surface_create(CAIRO_FORMAT_ARGB32,
+		                                 popplerPage->getWidth() * this->zoom, popplerPage->getHeight() * this->zoom);
+		cairo_t* cr2 = cairo_create(img);
 
 		cairo_scale(cr2, this->zoom, this->zoom);
 		popplerPage->render(cr2, false);

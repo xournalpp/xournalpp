@@ -20,9 +20,10 @@ class Control;
 #include "../model/PageRef.h"
 #include "../gui/widgets/SpinPageAdapter.h"
 
-class ScrollHandler: public SpinPageListener {
+class ScrollHandler: public SpinPageListener
+{
 public:
-	ScrollHandler(Control * control);
+	ScrollHandler(Control* control);
 	virtual ~ScrollHandler();
 
 public:
@@ -36,7 +37,7 @@ public:
 
 	void scrollToAnnotatedPage(bool next);
 
-	bool isPageVisible(int page, int * visibleHeight = NULL);
+	bool isPageVisible(int page, int* visibleHeight = NULL);
 
 public:
 	virtual void pageChanged(int page);
@@ -44,7 +45,7 @@ public:
 private:
 	XOJ_TYPE_ATTRIB;
 
-	Control * control;
+	Control* control;
 };
 
 #endif /* __SCROLLHANDLER_H__ */

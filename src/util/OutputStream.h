@@ -16,31 +16,33 @@
 #include <XournalType.h>
 #include <zlib.h>
 
-class OutputStream {
+class OutputStream
+{
 public:
 	OutputStream();
 	virtual ~OutputStream();
 
 public:
-	virtual void write(const char * data);
-	virtual void write(const char * data, int len) = 0;
-	virtual void write(const String & str);
+	virtual void write(const char* data);
+	virtual void write(const char* data, int len) = 0;
+	virtual void write(const String& str);
 
 	virtual void close() = 0;
 };
 
-class GzOutputStream : public OutputStream {
+class GzOutputStream : public OutputStream
+{
 public:
 	GzOutputStream(String filename);
 	virtual ~GzOutputStream();
 
 public:
-	virtual void write(const char * data, int len);
+	virtual void write(const char* data, int len);
 
 	virtual void close();
 
 
-	String & getLastError();
+	String& getLastError();
 
 private:
 	XOJ_TYPE_ATTRIB;

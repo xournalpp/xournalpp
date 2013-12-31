@@ -14,18 +14,20 @@
 
 #include "poppler/XojPopplerDocument.h"
 
-class UpdateRefKey {
+class UpdateRefKey
+{
 public:
-	UpdateRefKey(Ref ref, XojPopplerDocument doc) {
+	UpdateRefKey(Ref ref, XojPopplerDocument doc)
+	{
 		this->ref = ref;
 		this->doc = doc;
 	}
 
 public:
-	static guint hashFunction(UpdateRefKey * key);
-	static bool equalFunction(UpdateRefKey * a, UpdateRefKey * b);
+	static guint hashFunction(UpdateRefKey* key);
+	static bool equalFunction(UpdateRefKey* a, UpdateRefKey* b);
 
-	static void destroyDelete(UpdateRefKey * data);
+	static void destroyDelete(UpdateRefKey* data);
 
 public:
 

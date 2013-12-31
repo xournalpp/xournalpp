@@ -17,21 +17,22 @@
 
 class Layer;
 
-class InsertLayerUndoAction: public UndoAction {
+class InsertLayerUndoAction: public UndoAction
+{
 public:
-	InsertLayerUndoAction(PageRef page, Layer * layer);
+	InsertLayerUndoAction(PageRef page, Layer* layer);
 	virtual ~InsertLayerUndoAction();
 
 public:
-	virtual bool undo(Control * control);
-	virtual bool redo(Control * control);
+	virtual bool undo(Control* control);
+	virtual bool redo(Control* control);
 
 	virtual String getText();
 
 private:
 	XOJ_TYPE_ATTRIB;
 
-	Layer * layer;
+	Layer* layer;
 };
 
 #endif /* __INSERTLAYERUNDOACTION_H__ */

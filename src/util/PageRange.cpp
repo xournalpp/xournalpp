@@ -2,52 +2,65 @@
 #include <ctype.h>
 #include <stdlib.h>
 
-PageRangeEntry::PageRangeEntry(int first, int last) {
+PageRangeEntry::PageRangeEntry(int first, int last)
+{
 	XOJ_INIT_TYPE(PageRangeEntry);
 
 	this->first = first;
 	this->last = last;
 }
-PageRangeEntry::~PageRangeEntry() {
+PageRangeEntry::~PageRangeEntry()
+{
 	XOJ_RELEASE_TYPE(PageRangeEntry);
 }
 
-int PageRangeEntry::getLast() {
+int PageRangeEntry::getLast()
+{
 	XOJ_CHECK_TYPE(PageRangeEntry);
 
 	return this->last;
 }
-int PageRangeEntry::getFirst() {
+int PageRangeEntry::getFirst()
+{
 	XOJ_CHECK_TYPE(PageRangeEntry);
 
 	return this->first;
 }
 
-bool PageRange::isSeparator(char c) {
+bool PageRange::isSeparator(char c)
+{
 	return (c == ',' || c == ';' || c == ':');
 }
 
-GList * PageRange::parse(const char * str) {
-	GList * data = NULL;
+GList* PageRange::parse(const char* str)
+{
+	GList* data = NULL;
 
-	if (*str == 0) {
+	if (*str == 0)
+	{
 		return NULL;
 	}
 
 	int start, end;
-	char * next = NULL;
-	const char * p = str;
-	while (*p) {
-		while (isspace(*p)) {
+	char* next = NULL;
+	const char* p = str;
+	while (*p)
+	{
+		while (isspace(*p))
+		{
 			p++;
 		}
 
-		if (*p == '-') {
+		if (*p == '-')
+		{
 			// a half-open range like -2
 			start = 1;
-		} else {
+		}
+		else
+		{
 			start = (int) strtol(p, &next, 10);
-			if (start < 1) {
+			if (start < 1)
+			{
 				start = 1;
 			}
 			p = next;
@@ -55,16 +68,21 @@ GList * PageRange::parse(const char * str) {
 
 		end = start;
 
-		while (isspace(*p)) {
+		while (isspace(*p))
+		{
 			p++;
 		}
 
-		if (*p == '-') {
+		if (*p == '-')
+		{
 			p++;
 			end = (int) strtol(p, &next, 10);
-			if (next == p) { // a half-open range like 2-
+			if (next == p)   // a half-open range like 2-
+			{
 				end = 0;
-			} else if (end < start) {
+			}
+			else if (end < start)
+			{
 				end = start;
 			}
 		}
@@ -72,12 +90,14 @@ GList * PageRange::parse(const char * str) {
 		data = g_list_append(data, new PageRangeEntry(start - 1, end - 1));
 
 		// Skip until end or separator
-		while (*p && !isSeparator(*p)) {
+		while (*p && !isSeparator(*p))
+		{
 			p++;
 		}
 
 		// if not at end, skip separator
-		if (*p) {
+		if (*p)
+		{
 			p++;
 		}
 	}

@@ -18,19 +18,20 @@
 
 class Control;
 
-class PythonRunner {
+class PythonRunner
+{
 private:
-	PythonRunner(Control * control);
+	PythonRunner(Control* control);
 	virtual ~PythonRunner();
 
 public:
-	static void initPythonRunner(Control * control);
+	static void initPythonRunner(Control* control);
 	static void releasePythonRunner();
 
 	static void runScript(String name, String function, String parameter = NULL);
 
 private:
-	static bool scriptRunner(PythonRunner * runner);
+	static bool scriptRunner(PythonRunner* runner);
 
 private:
 	void runScriptInt(String path, String function, String parameter);
@@ -40,14 +41,14 @@ private:
 private:
 	XOJ_TYPE_ATTRIB;
 
-	static PythonRunner * instance;
+	static PythonRunner* instance;
 
-	GMutex * mutex;
+	GMutex* mutex;
 
-	GList * scripts;
+	GList* scripts;
 
 	bool pythonInitialized;
-	Control * control;
+	Control* control;
 
 	int callbackId;
 };

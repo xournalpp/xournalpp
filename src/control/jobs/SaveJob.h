@@ -16,9 +16,10 @@
 #include <String.h>
 #include <XournalType.h>
 
-class SaveJob : public BlockingJob {
+class SaveJob : public BlockingJob
+{
 public:
-	SaveJob(Control * control);
+	SaveJob(Control* control);
 
 protected:
 	virtual ~SaveJob();
@@ -29,7 +30,8 @@ public:
 	bool save();
 
 private:
-	static void copyProgressCallback(goffset current_num_bytes, goffset total_num_bytes, Control * control);
+	static void copyProgressCallback(goffset current_num_bytes,
+	                                 goffset total_num_bytes, Control* control);
 	bool copyFile(String source, String target);
 
 	void updatePreview();

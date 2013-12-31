@@ -19,15 +19,17 @@ class Text;
 class Redrawable;
 class TextEditor;
 
-class TextUndoAction: public UndoAction {
+class TextUndoAction: public UndoAction
+{
 public:
-	TextUndoAction(PageRef page, Layer * layer, Text * text, String lastText, Redrawable * view,
-			TextEditor * textEditor);
+	TextUndoAction(PageRef page, Layer* layer, Text* text, String lastText,
+	               Redrawable* view,
+	               TextEditor* textEditor);
 	virtual ~TextUndoAction();
 
 public:
-	virtual bool undo(Control * control);
-	virtual bool redo(Control * control);
+	virtual bool undo(Control* control);
+	virtual bool redo(Control* control);
 
 	virtual String getText();
 
@@ -38,13 +40,13 @@ public:
 private:
 	XOJ_TYPE_ATTRIB;
 
-	Layer * layer;
-	Text * text;
+	Layer* layer;
+	Text* text;
 	String lastText;
 	String newText;
-	Redrawable * view;
+	Redrawable* view;
 
-	TextEditor * textEditor;
+	TextEditor* textEditor;
 };
 
 #endif /* __TEXTUNDOACTION_H__ */

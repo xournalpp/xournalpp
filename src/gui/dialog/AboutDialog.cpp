@@ -4,16 +4,20 @@
 
 #define AUTOHOR(name) authors += name; authors += "\n";
 
-AboutDialog::AboutDialog(GladeSearchpath * gladeSearchPath) :
-	GladeGui(gladeSearchPath, "about.glade", "aboutDialog") {
+AboutDialog::AboutDialog(GladeSearchpath* gladeSearchPath) :
+	GladeGui(gladeSearchPath, "about.glade", "aboutDialog")
+{
 	XOJ_INIT_TYPE(AboutDialog);
 
-	GtkLabel * labelTitle = GTK_LABEL(get("labelTitle"));
-	gtk_label_set_markup(labelTitle, "<span size=\"xx-large\" weight=\"bold\">Xournal++ " VERSION "</span>\n<i>The next generation</i>\n"
-			"Build: " __DATE__);
+	GtkLabel* labelTitle = GTK_LABEL(get("labelTitle"));
+	gtk_label_set_markup(labelTitle,
+	                     "<span size=\"xx-large\" weight=\"bold\">Xournal++ " VERSION
+	                     "</span>\n<i>The next generation</i>\n"
+	                     "Build: " __DATE__);
 
-	GtkWidget * w = get("vbox1");
-	GtkWidget * linkButton = gtk_link_button_new("http://github.com/xournalpp/xournalpp");
+	GtkWidget* w = get("vbox1");
+	GtkWidget* linkButton =
+	    gtk_link_button_new("http://github.com/xournalpp/xournalpp");
 	gtk_widget_show(linkButton);
 	gtk_box_pack_start_defaults(GTK_BOX(w), linkButton);
 
@@ -28,11 +32,13 @@ AboutDialog::AboutDialog(GladeSearchpath * gladeSearchPath) :
 	gtk_label_set_text(GTK_LABEL(w), authors.c_str());
 }
 
-AboutDialog::~AboutDialog() {
+AboutDialog::~AboutDialog()
+{
 	XOJ_RELEASE_TYPE(AboutDialog);
 }
 
-void AboutDialog::show(GtkWindow * parent) {
+void AboutDialog::show(GtkWindow* parent)
+{
 	XOJ_CHECK_TYPE(AboutDialog);
 
 	gtk_window_set_transient_for(GTK_WINDOW(this->window), parent);

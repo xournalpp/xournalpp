@@ -14,10 +14,10 @@
 
 #include <gtk/gtk.h>
 
-cairo_surface_t * f_pixbuf_to_cairo_surface(GdkPixbuf *pixbuf);
+cairo_surface_t* f_pixbuf_to_cairo_surface(GdkPixbuf* pixbuf);
 
-GdkPixbuf *
-xoj_pixbuf_get_from_surface  (cairo_surface_t *surface,
+GdkPixbuf*
+xoj_pixbuf_get_from_surface  (cairo_surface_t* surface,
                               gint             src_x,
                               gint             src_y,
                               gint             width,

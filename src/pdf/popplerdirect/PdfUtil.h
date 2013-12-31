@@ -12,7 +12,8 @@
 #ifndef __PDFUTIL_H__
 #define __PDFUTIL_H__
 
-class PdfUtil {
+class PdfUtil
+{
 private:
 	PdfUtil();
 	virtual ~PdfUtil();

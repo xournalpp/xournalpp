@@ -16,15 +16,16 @@
 
 inline std::string NowTime()
 {
-    const int MAX_LEN = 200;
-    char buffer[MAX_LEN];
-    if (GetTimeFormatA(LOCALE_USER_DEFAULT, 0, 0, "HH':'mm':'ss", buffer, MAX_LEN) == 0)
-        return "Error in NowTime()";
+	const int MAX_LEN = 200;
+	char buffer[MAX_LEN];
+	if (GetTimeFormatA(LOCALE_USER_DEFAULT, 0, 0, "HH':'mm':'ss", buffer,
+	                   MAX_LEN) == 0)
+		return "Error in NowTime()";
 
-    char result[100] = {0};
-    static DWORD first = GetTickCount();
-    sprintf_s(result, 100, "%s.%06ld", buffer, (long)(GetTickCount() - first));
-    return result;
+	char result[100] = {0};
+	static DWORD first = GetTickCount();
+	sprintf_s(result, 100, "%s.%06ld", buffer, (long)(GetTickCount() - first));
+	return result;
 }
 
 #else
@@ -33,40 +34,47 @@ inline std::string NowTime()
 
 inline std::string NowTime()
 {
-    struct timeval tv;
-    gettimeofday(&tv, 0);
-    char buffer[100];
-    tm r;
-    strftime(buffer, sizeof(buffer), "%X", localtime_r(&tv.tv_sec, &r));
-    char result[100];
-    sprintf(result, "%s.%06ld", buffer, (long)tv.tv_usec);
-    return result;
+	struct timeval tv;
+	gettimeofday(&tv, 0);
+	char buffer[100];
+	tm r;
+	strftime(buffer, sizeof(buffer), "%X", localtime_r(&tv.tv_sec, &r));
+	char result[100];
+	sprintf(result, "%s.%06ld", buffer, (long)tv.tv_usec);
+	return result;
 }
 
 #endif //WIN32
 
-Log::Log() {
+Log::Log()
+{
 }
 
-Log::~Log() {
+Log::~Log()
+{
 }
 
 std::ofstream logfile;
 
-void Log::trace(const char * callType, const char * clazz, const char * function, long obj) {
+void Log::trace(const char* callType, const char* clazz, const char* function,
+                long obj)
+{
 	std::ostringstream os;
 
 	os << NowTime() << " - ";
-	os << callType << " " << clazz << ":" << function << " (" << obj << ")" << std::endl;
+	os << callType << " " << clazz << ":" << function << " (" << obj << ")" <<
+	   std::endl;
 
 	logfile << os.str();
 }
 
-void Log::initlog() {
+void Log::initlog()
+{
 	logfile.open("xournalCalls.log");
 }
 
-void Log::closelog() {
+void Log::closelog()
+{
 	logfile.close();
 }
 

@@ -15,21 +15,22 @@
 #include <OutputStream.h>
 #include <XournalType.h>
 
-class Attribute {
+class Attribute
+{
 public:
-	Attribute(const char * name);
+	Attribute(const char* name);
 	virtual ~Attribute();
 
 public:
-	virtual void writeOut(OutputStream * out) = 0;
+	virtual void writeOut(OutputStream* out) = 0;
 
-	const char * getName();
+	const char* getName();
 
 private:
 	XOJ_TYPE_ATTRIB;
 
 
-	char * name;
+	char* name;
 };
 
 #endif /* __ATTRIBUTE_H__ */

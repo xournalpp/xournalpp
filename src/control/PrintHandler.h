@@ -20,24 +20,27 @@ class Document;
 class Settings;
 class SElement;
 
-class PrintHandler {
+class PrintHandler
+{
 public:
 	PrintHandler();
 	virtual ~PrintHandler();
 
 public:
-	void print(Document * doc, int currentPage);
+	void print(Document* doc, int currentPage);
 
 private:
-	static void drawPage(GtkPrintOperation *operation, GtkPrintContext *context, int pageNr, PrintHandler * handler);
-	static void requestPageSetup(GtkPrintOperation * operation, GtkPrintContext * context, gint pageNr,
-			GtkPageSetup *setup, PrintHandler * handler);
+	static void drawPage(GtkPrintOperation* operation, GtkPrintContext* context,
+	                     int pageNr, PrintHandler* handler);
+	static void requestPageSetup(GtkPrintOperation* operation,
+	                             GtkPrintContext* context, gint pageNr,
+	                             GtkPageSetup* setup, PrintHandler* handler);
 
 private:
 	XOJ_TYPE_ATTRIB;
 
 
-	Document * doc;
+	Document* doc;
 };
 
 #endif /* __PRINTHANDLER_H__ */

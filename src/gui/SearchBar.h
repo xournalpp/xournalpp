@@ -18,30 +18,32 @@
 
 class Control;
 
-class SearchBar {
+class SearchBar
+{
 public:
-	SearchBar(Control * control);
+	SearchBar(Control* control);
 	virtual ~SearchBar();
 
 	void showSearchBar(bool show);
 
 private:
-	static void buttonCloseSearchClicked(GtkButton *button, SearchBar * searchBar);
-	static void searchTextChangedCallback(GtkEntry *entry, SearchBar * searchBar);
+	static void buttonCloseSearchClicked(GtkButton* button, SearchBar* searchBar);
+	static void searchTextChangedCallback(GtkEntry* entry, SearchBar* searchBar);
 
-	static void buttonNextSearchClicked(GtkButton *button, SearchBar * searchBar);
-	static void buttonPreviousSearchClicked(GtkButton *button, SearchBar * searchBar);
+	static void buttonNextSearchClicked(GtkButton* button, SearchBar* searchBar);
+	static void buttonPreviousSearchClicked(GtkButton* button,
+	                                        SearchBar* searchBar);
 
 	void searchNext();
 	void searchPrevious();
 
-	void search(const char * text);
-	bool searchTextonCurrentPage(const char * text, int * occures, double * top);
+	void search(const char* text);
+	bool searchTextonCurrentPage(const char* text, int* occures, double* top);
 
 private:
 	XOJ_TYPE_ATTRIB;
 
-	Control * control;
+	Control* control;
 	GdkColor defaultColor;
 };
 

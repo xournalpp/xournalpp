@@ -7,13 +7,15 @@
 #include "../../model/Document.h"
 #include <Rectangle.h>
 
-RenderJob::RenderJob(PageView * view) {
+RenderJob::RenderJob(PageView* view)
+{
 	XOJ_INIT_TYPE(RenderJob);
 
 	this->view = view;
 }
 
-RenderJob::~RenderJob() {
+RenderJob::~RenderJob()
+{
 	XOJ_CHECK_TYPE(RenderJob);
 
 	this->view = NULL;
@@ -21,18 +23,20 @@ RenderJob::~RenderJob() {
 	XOJ_RELEASE_TYPE(RenderJob);
 }
 
-void * RenderJob::getSource() {
+void* RenderJob::getSource()
+{
 	XOJ_CHECK_TYPE(RenderJob);
 
 	return this->view;
 }
 
-void RenderJob::rerenderRectangle(RenderJob * renderJob, Rectangle * rect) {
+void RenderJob::rerenderRectangle(RenderJob* renderJob, Rectangle* rect)
+{
 	XOJ_CHECK_TYPE_OBJ(renderJob, RenderJob);
 
-	PageView * view = renderJob->view;
+	PageView* view = renderJob->view;
 	double zoom = view->xournal->getZoom();
-	Document * doc = view->xournal->getDocument();
+	Document* doc = view->xournal->getDocument();
 
 	doc->lock();
 
@@ -46,18 +50,20 @@ void RenderJob::rerenderRectangle(RenderJob * renderJob, Rectangle * rect) {
 	int width = rect->width * zoom;
 	int height = rect->height * zoom;
 
-	cairo_surface_t * rectBuffer = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, width, height);
-	cairo_t * crRect = cairo_create(rectBuffer);
+	cairo_surface_t* rectBuffer = cairo_image_surface_create(CAIRO_FORMAT_ARGB32,
+	                                                         width, height);
+	cairo_t* crRect = cairo_create(rectBuffer);
 	cairo_translate(crRect, -x, -y);
 	cairo_scale(crRect, zoom, zoom);
 
 	DocumentView v;
 	v.limitArea(rect->x, rect->y, rect->width, rect->height);
 
-	if (view->page.getBackgroundType() == BACKGROUND_TYPE_PDF) {
+	if (view->page.getBackgroundType() == BACKGROUND_TYPE_PDF)
+	{
 		int pgNo = view->page.getPdfPageNr();
-		XojPopplerPage * popplerPage = doc->getPdfPage(pgNo);
-		PdfCache * cache = view->xournal->getCache();
+		XojPopplerPage* popplerPage = doc->getPdfPage(pgNo);
+		PdfCache* cache = view->xournal->getCache();
 		PdfView::drawPage(cache, popplerPage, crRect, zoom, pageWidth, pageHeight);
 	}
 
@@ -82,13 +88,15 @@ void RenderJob::rerenderRectangle(RenderJob * renderJob, Rectangle * rect) {
 	g_mutex_unlock(&view->drawingMutex);
 }
 
-void RenderJob::rerenderRectangle(Rectangle * rect) {
+void RenderJob::rerenderRectangle(Rectangle* rect)
+{
 	XOJ_CHECK_TYPE(RenderJob);
 
 	rerenderRectangle(this, rect);
 }
 
-class RepaintWidgetHandler {
+class RepaintWidgetHandler
+{
 public:
 	RepaintWidgetHandler(GtkWidget * width) {
 		g_mutex_init(&this->mutex);
@@ -102,8 +110,9 @@ public:
 	void repaintComplete() {
 		g_mutex_lock(&this->mutex);
 		this->complete = true;
-		for(GList * l = this->rects; l != NULL; l = l->next) {
-			delete (Rectangle *)l->data;
+		for(GList* l = this->rects; l != NULL; l = l->next)
+		{
+			delete (Rectangle*)l->data;
 		}
 		g_list_free(this->rects);
 		this->rects = NULL;
@@ -117,7 +126,9 @@ public:
 		g_mutex_lock(&this->mutex);
 		if(this->complete) {
 			delete rect;
-		} else {
+		}
+		else
+		{
 			this->rects = g_list_prepend(this->rects, rect);
 		}
 		addRepaintCallback();
@@ -129,7 +140,7 @@ private:
 	static bool idleRepaint(RepaintWidgetHandler * data) {
 		g_mutex_lock(&data->mutex);
 		bool complete = data->complete;
-		GList * rects = data->rects;
+		GList* rects = data->rects;
 
 		data->rects = NULL;
 		data->complete = false;
@@ -141,12 +152,16 @@ private:
 
 		gtk_widget_queue_draw(data->widget);
 
-		if(complete) {
-//			gtk_widget_queue_draw(data->widget);
-		} else {
-			for (GList * l = rects; l != NULL; l = l->next) {
-				Rectangle * rect = (Rectangle *) l->data;
-//				gtk_widget_queue_draw_area(widget, rect->x, rect->y, rect->width, rect->height);
+		if(complete)
+		{
+			//			gtk_widget_queue_draw(data->widget);
+		}
+		else
+		{
+			for (GList* l = rects; l != NULL; l = l->next)
+			{
+				Rectangle* rect = (Rectangle*) l->data;
+				//				gtk_widget_queue_draw_area(widget, rect->x, rect->y, rect->width, rect->height);
 				delete rect;
 			}
 			g_list_free(rects);
@@ -160,8 +175,10 @@ private:
 		return false;
 	}
 
-	void addRepaintCallback() {
-		if(this->rescaleId) {
+	void addRepaintCallback()
+	{
+		if(this->rescaleId)
+		{
 			return;
 		}
 
@@ -174,16 +191,18 @@ private:
 	int rescaleId;
 
 	bool complete;
-	GList * rects;
-	GtkWidget * widget;
+	GList* rects;
+	GtkWidget* widget;
 };
 
-RepaintWidgetHandler * handler = NULL;
+RepaintWidgetHandler* handler = NULL;
 
-void RenderJob::run() {
+void RenderJob::run()
+{
 	XOJ_CHECK_TYPE(RenderJob);
 
-	if(handler == NULL) {
+	if(handler == NULL)
+	{
 		handler = new RepaintWidgetHandler(this->view->getXournal()->getWidget());
 	}
 
@@ -192,7 +211,7 @@ void RenderJob::run() {
 	g_mutex_lock(&this->view->repaintRectMutex);
 
 	bool rerenderComplete = this->view->rerenderComplete;
-	GList * rerenderRects = this->view->rerenderRects;
+	GList* rerenderRects = this->view->rerenderRects;
 	this->view->rerenderRects = NULL;
 
 	this->view->rerenderComplete = false;
@@ -200,21 +219,24 @@ void RenderJob::run() {
 	g_mutex_unlock(&this->view->repaintRectMutex);
 
 
-	if (rerenderComplete) {
-		Document * doc = this->view->xournal->getDocument();
+	if (rerenderComplete)
+	{
+		Document* doc = this->view->xournal->getDocument();
 
 		int dispWidth = this->view->getDisplayWidth();
 		int dispHeight = this->view->getDisplayHeight();
 
-		cairo_surface_t * crBuffer = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, dispWidth, dispHeight);
-		cairo_t * cr2 = cairo_create(crBuffer);
+		cairo_surface_t* crBuffer = cairo_image_surface_create(CAIRO_FORMAT_ARGB32,
+		                                                       dispWidth, dispHeight);
+		cairo_t* cr2 = cairo_create(crBuffer);
 		cairo_scale(cr2, zoom, zoom);
 
-		XojPopplerPage * popplerPage = NULL;
+		XojPopplerPage* popplerPage = NULL;
 
 		doc->lock();
 
-		if (this->view->page.getBackgroundType() == BACKGROUND_TYPE_PDF) {
+		if (this->view->page.getBackgroundType() == BACKGROUND_TYPE_PDF)
+		{
 			int pgNo = this->view->page.getPdfPageNr();
 			popplerPage = doc->getPdfPage(pgNo);
 		}
@@ -223,13 +245,15 @@ void RenderJob::run() {
 		int width = this->view->page.getWidth();
 		int height = this->view->page.getHeight();
 
-		PdfView::drawPage(this->view->xournal->getCache(), popplerPage, cr2, zoom, width, height);
+		PdfView::drawPage(this->view->xournal->getCache(), popplerPage, cr2, zoom,
+		                  width, height);
 		view.drawPage(this->view->page, cr2, false);
 
 		cairo_destroy(cr2);
 		g_mutex_lock(&this->view->drawingMutex);
 
-		if (this->view->crBuffer) {
+		if (this->view->crBuffer)
+		{
 			cairo_surface_destroy(this->view->crBuffer);
 		}
 		this->view->crBuffer = crBuffer;
@@ -238,9 +262,12 @@ void RenderJob::run() {
 		doc->unlock();
 
 		handler->repaintComplete();
-	} else {
-		for (GList * l = rerenderRects; l != NULL; l = l->next) {
-			Rectangle * rect = (Rectangle *) l->data;
+	}
+	else
+	{
+		for (GList* l = rerenderRects; l != NULL; l = l->next)
+		{
+			Rectangle* rect = (Rectangle*) l->data;
 			rerenderRectangle(rect);
 
 			rect = this->view->rectOnWidget(rect->x, rect->y, rect->width, rect->height);
@@ -250,14 +277,16 @@ void RenderJob::run() {
 
 
 	// delete all rectangles
-	for (GList * l = rerenderRects; l != NULL; l = l->next) {
-		Rectangle * rect = (Rectangle *) l->data;
+	for (GList* l = rerenderRects; l != NULL; l = l->next)
+	{
+		Rectangle* rect = (Rectangle*) l->data;
 		delete rect;
 	}
 	g_list_free(rerenderRects);
 }
 
-JobType RenderJob::getType() {
+JobType RenderJob::getType()
+{
 	XOJ_CHECK_TYPE(RenderJob);
 
 	return JOB_TYPE_RENDER;

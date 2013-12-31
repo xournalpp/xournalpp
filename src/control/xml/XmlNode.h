@@ -17,40 +17,41 @@
 #include "Attribute.h"
 #include <glib.h>
 
-class XmlNode {
+class XmlNode
+{
 public:
-	XmlNode(const char * tag);
+	XmlNode(const char* tag);
 	virtual ~XmlNode();
 
 private:
-	XmlNode(const XmlNode & node);
-	void operator =(const XmlNode & node);
+	XmlNode(const XmlNode& node);
+	void operator =(const XmlNode& node);
 
 public:
-	void setAttrib(const char * attrib, const char * value);
-	void setAttrib(const char * attrib, double value);
-	void setAttrib(const char * attrib, int value);
+	void setAttrib(const char* attrib, const char* value);
+	void setAttrib(const char* attrib, double value);
+	void setAttrib(const char* attrib, int value);
 
 	/**
 	 * The double array is now owned by XmlNode and automatically deleted!
 	 */
-	void setAttrib(const char * attrib, double * value, int count);
+	void setAttrib(const char* attrib, double* value, int count);
 
-	virtual void writeOut(OutputStream * out);
-	void addChild(XmlNode * node);
+	virtual void writeOut(OutputStream* out);
+	void addChild(XmlNode* node);
 
 protected:
-	void putAttrib(Attribute * a);
-	void writeAttributes(OutputStream * out);
+	void putAttrib(Attribute* a);
+	void writeAttributes(OutputStream* out);
 
 public:
 	XOJ_TYPE_ATTRIB;
 
 protected:
-	GList * children;
-	GList * attributes;
+	GList* children;
+	GList* attributes;
 
-	char * tag;
+	char* tag;
 };
 
 #endif /* __XMLNODE_H__ */

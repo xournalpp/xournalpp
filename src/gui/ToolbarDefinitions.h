@@ -10,16 +10,17 @@
  */
 
 
-typedef struct {
+typedef struct
+{
 	/**
 	 * The name in the glade.xml file
 	 */
-	const char * guiName;
+	const char* guiName;
 
 	/**
 	 * The name in the .ini file
 	 */
-	const char * propName;
+	const char* propName;
 
 	/**
 	 * if horizontal (true) or vertical (false)
@@ -27,15 +28,16 @@ typedef struct {
 	bool horizontal;
 } ToolbarEntryDefintion;
 
-const static ToolbarEntryDefintion TOOLBAR_DEFINITIONS[] = {
-		{ "tbTop1",    "toolbarTop1",    true  },
-		{ "tbTop2",    "toolbarTop2",    true  },
-		{ "tbLeft1",   "toolbarLeft1",   false },
-		{ "tbLeft2",   "toolbarLeft2",   false },
-		{ "tbRight1",  "toolbarRight1",  false },
-		{ "tbRight2",  "toolbarRight2",  false },
-		{ "tbBottom1", "toolbarBottom1", true  },
-		{ "tbBottom2", "toolbarBottom2", true  }
+const static ToolbarEntryDefintion TOOLBAR_DEFINITIONS[] =
+{
+	{ "tbTop1",    "toolbarTop1",    true  },
+	{ "tbTop2",    "toolbarTop2",    true  },
+	{ "tbLeft1",   "toolbarLeft1",   false },
+	{ "tbLeft2",   "toolbarLeft2",   false },
+	{ "tbRight1",  "toolbarRight1",  false },
+	{ "tbRight2",  "toolbarRight2",  false },
+	{ "tbBottom1", "toolbarBottom1", true  },
+	{ "tbBottom2", "toolbarBottom2", true  }
 };
 
 const static int TOOLBAR_DEFINITIONS_LEN = G_N_ELEMENTS(TOOLBAR_DEFINITIONS);

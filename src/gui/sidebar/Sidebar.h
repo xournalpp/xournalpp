@@ -24,14 +24,15 @@ class AbstractSidebarPage;
 class GladeGui;
 class SidebarPageButton;
 
-class Sidebar : public DocumentListener {
+class Sidebar : public DocumentListener
+{
 public:
-	Sidebar(GladeGui * gui, Control * control);
+	Sidebar(GladeGui* gui, Control* control);
 	virtual ~Sidebar();
 
 private:
-	void initPages(GtkWidget * sidebar, GladeGui * gui);
-	void addPage(AbstractSidebarPage * page);
+	void initPages(GtkWidget* sidebar, GladeGui* gui);
+	void addPage(AbstractSidebarPage* page);
 
 public:
 
@@ -46,7 +47,7 @@ public:
 	 */
 	void selectPageNr(int page, int pdfPage);
 
-	Control * getControl();
+	Control* getControl();
 
 	/**
 	 * Sets the current selected page
@@ -82,47 +83,49 @@ private:
 	/**
 	 * Page selected
 	 */
-	static void buttonClicked(GtkToolButton * toolbutton, SidebarPageButton * buttonData);
+	static void buttonClicked(GtkToolButton* toolbutton,
+	                          SidebarPageButton* buttonData);
 
 private:
 	XOJ_TYPE_ATTRIB;
 
-	Control * control;
+	Control* control;
 
 	/**
 	 * The sidebar pages
 	 */
-	GList * pages;
+	GList* pages;
 
 	/**
 	 * The Toolbar with the pages
 	 */
-	GtkToolbar * tbSelectPage;
+	GtkToolbar* tbSelectPage;
 
 	/**
 	 * The close button of the sidebar
 	 */
-	GtkWidget * buttonCloseSidebar;
+	GtkWidget* buttonCloseSidebar;
 
 	/**
 	 * The current visible page in the sidebar
 	 */
-	GtkWidget * visiblePage;
+	GtkWidget* visiblePage;
 
 	/**
 	 * The sidebar widget
 	 */
-	GtkWidget * sidebar;
+	GtkWidget* sidebar;
 };
 
-class SidebarPageButton {
+class SidebarPageButton
+{
 public:
-	SidebarPageButton(Sidebar * sidebar, int index, AbstractSidebarPage * page);
+	SidebarPageButton(Sidebar* sidebar, int index, AbstractSidebarPage* page);
 
 public:
-	Sidebar * sidebar;
+	Sidebar* sidebar;
 	int index;
-	AbstractSidebarPage * page;
+	AbstractSidebarPage* page;
 
 };
 

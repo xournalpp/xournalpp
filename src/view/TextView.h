@@ -16,7 +16,8 @@
 
 class Text;
 
-class TextView {
+class TextView
+{
 private:
 	TextView();
 	virtual ~TextView();
@@ -25,27 +26,27 @@ public:
 	/**
 	 * Calculates the size of a Text model
 	 */
-	static void calcSize(Text * t, double & width, double & height);
+	static void calcSize(Text* t, double& width, double& height);
 
 	/**
 	 * Draws a Text modle to a cairo surface
 	 */
-	static void drawText(cairo_t * cr, Text * t);
+	static void drawText(cairo_t* cr, Text* t);
 
 	/**
 	 * Searches text within a Text model, returns XojPopplerRectangle, have to been freed
 	 */
-	static GList * findText(Text * t, const char * text);
+	static GList* findText(Text* t, const char* text);
 
 	/**
 	 * Initialize a Pango layout
 	 */
-	static PangoLayout * initPango(cairo_t * cr, Text * t);
+	static PangoLayout* initPango(cairo_t* cr, Text* t);
 
 	/**
 	 * Sets the font name from Text model
 	 */
-	static void updatePangoFont(PangoLayout * layout, Text * t);
+	static void updatePangoFont(PangoLayout* layout, Text* t);
 };
 
 #endif /* __TEXTVIEW_H__ */

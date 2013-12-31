@@ -18,27 +18,29 @@
 class GladeGui;
 class SpinPageAdapter;
 
-class ToolPageSpinner: public AbstractToolItem {
+class ToolPageSpinner: public AbstractToolItem
+{
 public:
-	ToolPageSpinner(GladeGui * gui, ActionHandler * handler, String id, ActionType type);
+	ToolPageSpinner(GladeGui* gui, ActionHandler* handler, String id,
+	                ActionType type);
 	virtual ~ToolPageSpinner();
 
 public:
-	SpinPageAdapter * getPageSpinner();
+	SpinPageAdapter* getPageSpinner();
 	void setText(String text);
 	virtual String getToolDisplayName();
 
 protected:
-	virtual GtkToolItem * newItem();
-	virtual GtkWidget * getNewToolIconImpl();
+	virtual GtkToolItem* newItem();
+	virtual GtkWidget* getNewToolIconImpl();
 
 private:
 	XOJ_TYPE_ATTRIB;
 
-	GladeGui * gui;
+	GladeGui* gui;
 
-	SpinPageAdapter * pageSpinner;
-	GtkWidget * lbPageNo;
+	SpinPageAdapter* pageSpinner;
+	GtkWidget* lbPageNo;
 };
 
 #endif /* __TOOLPAGESPINNER_H__ */

@@ -4,20 +4,24 @@
 #include "../model/Text.h"
 #include "../gui/Redrawable.h"
 
-class FontUndoActionEntry {
+class FontUndoActionEntry
+{
 public:
-	FontUndoActionEntry(Text * e, XojFont & oldFont, XojFont & newFont) {
+	FontUndoActionEntry(Text* e, XojFont& oldFont, XojFont& newFont)
+	{
 		this->e = e;
 		this->oldFont = oldFont;
 		this->newFont = newFont;
 	}
 
-	Text * e;
+	Text* e;
 	XojFont oldFont;
 	XojFont newFont;
 };
 
-FontUndoAction::FontUndoAction(PageRef page, Layer * layer, Redrawable * view) : UndoAction("FontUndoAction") {
+FontUndoAction::FontUndoAction(PageRef page, Layer* layer,
+                               Redrawable* view) : UndoAction("FontUndoAction")
+{
 	XOJ_INIT_TYPE(FontUndoAction);
 
 	this->page = page;
@@ -26,11 +30,13 @@ FontUndoAction::FontUndoAction(PageRef page, Layer * layer, Redrawable * view) :
 	this->data = NULL;
 }
 
-FontUndoAction::~FontUndoAction() {
+FontUndoAction::~FontUndoAction()
+{
 	XOJ_CHECK_TYPE(FontUndoAction);
 
-	for (GList * l = this->data; l != NULL; l = l->next) {
-		FontUndoActionEntry * e = (FontUndoActionEntry *) l->data;
+	for (GList* l = this->data; l != NULL; l = l->next)
+	{
+		FontUndoActionEntry* e = (FontUndoActionEntry*) l->data;
 		delete e;
 	}
 
@@ -40,41 +46,46 @@ FontUndoAction::~FontUndoAction() {
 	XOJ_RELEASE_TYPE(FontUndoAction);
 }
 
-void FontUndoAction::addStroke(Text * e, XojFont & oldFont, XojFont & newFont) {
+void FontUndoAction::addStroke(Text* e, XojFont& oldFont, XojFont& newFont)
+{
 	XOJ_CHECK_TYPE(FontUndoAction);
 
-	this->data = g_list_append(this->data, new FontUndoActionEntry(e, oldFont, newFont));
+	this->data = g_list_append(this->data, new FontUndoActionEntry(e, oldFont,
+	                                                               newFont));
 }
 
-bool FontUndoAction::undo(Control * control) {
+bool FontUndoAction::undo(Control* control)
+{
 	XOJ_CHECK_TYPE(FontUndoAction);
 
-	if (this->data == NULL) {
+	if (this->data == NULL)
+	{
 		return true;
 	}
 
-	FontUndoActionEntry * e = (FontUndoActionEntry *) this->data->data;
+	FontUndoActionEntry* e = (FontUndoActionEntry*) this->data->data;
 	double x1 = e->e->getX();
 	double x2 = e->e->getX() + e->e->getElementWidth();
 	double y1 = e->e->getY();
 	double y2 = e->e->getY() + e->e->getElementHeight();
 
-	for (GList * l = this->data; l != NULL; l = l->next) {
-		FontUndoActionEntry * e = (FontUndoActionEntry *) l->data;
+	for (GList* l = this->data; l != NULL; l = l->next)
+	{
+		FontUndoActionEntry* e = (FontUndoActionEntry*) l->data;
 
 		// size with old font
 		x1 = MIN(x1, e->e->getX());
-		x2 = MAX(x2, e->e->getX()+ e->e->getElementWidth());
+		x2 = MAX(x2, e->e->getX() + e->e->getElementWidth());
 		y1 = MIN(y1, e->e->getY());
-		y2 = MAX(y2, e->e->getY()+ e->e->getElementHeight());
+		y2 = MAX(y2, e->e->getY() + e->e->getElementHeight());
 
 		e->e->setFont(e->oldFont);
 
 		// size with new font
 		x1 = MIN(x1, e->e->getX());
-		x2 = MAX(x2, e->e->getX()+ e->e->getElementWidth());
+		x2 = MAX(x2, e->e->getX() + e->e->getElementWidth());
 		y1 = MIN(y1, e->e->getY());
-		y2 = MAX(y2, e->e->getY()+ e->e->getElementHeight());
+		y2 = MAX(y2, e->e->getY() + e->e->getElementHeight());
 	}
 
 	view->rerenderArea(x1, y1, x2, y2);
@@ -82,35 +93,38 @@ bool FontUndoAction::undo(Control * control) {
 	return true;
 }
 
-bool FontUndoAction::redo(Control * control) {
+bool FontUndoAction::redo(Control* control)
+{
 	XOJ_CHECK_TYPE(FontUndoAction);
 
-	if (this->data == NULL) {
+	if (this->data == NULL)
+	{
 		return true;
 	}
 
-	FontUndoActionEntry * e = (FontUndoActionEntry *) this->data->data;
+	FontUndoActionEntry* e = (FontUndoActionEntry*) this->data->data;
 	double x1 = e->e->getX();
 	double x2 = e->e->getX() + e->e->getElementWidth();
 	double y1 = e->e->getY();
 	double y2 = e->e->getY() + e->e->getElementHeight();
 
-	for (GList * l = this->data; l != NULL; l = l->next) {
-		FontUndoActionEntry * e = (FontUndoActionEntry *) l->data;
+	for (GList* l = this->data; l != NULL; l = l->next)
+	{
+		FontUndoActionEntry* e = (FontUndoActionEntry*) l->data;
 
 		// size with old font
 		x1 = MIN(x1, e->e->getX());
-		x2 = MAX(x2, e->e->getX()+ e->e->getElementWidth());
+		x2 = MAX(x2, e->e->getX() + e->e->getElementWidth());
 		y1 = MIN(y1, e->e->getY());
-		y2 = MAX(y2, e->e->getY()+ e->e->getElementHeight());
+		y2 = MAX(y2, e->e->getY() + e->e->getElementHeight());
 
 		e->e->setFont(e->newFont);
 
 		// size with new font
 		x1 = MIN(x1, e->e->getX());
-		x2 = MAX(x2, e->e->getX()+ e->e->getElementWidth());
+		x2 = MAX(x2, e->e->getX() + e->e->getElementWidth());
 		y1 = MIN(y1, e->e->getY());
-		y2 = MAX(y2, e->e->getY()+ e->e->getElementHeight());
+		y2 = MAX(y2, e->e->getY() + e->e->getElementHeight());
 	}
 
 	view->rerenderArea(x1, y1, x2, y2);
@@ -118,7 +132,8 @@ bool FontUndoAction::redo(Control * control) {
 	return true;
 }
 
-String FontUndoAction::getText() {
+String FontUndoAction::getText()
+{
 	XOJ_CHECK_TYPE(FontUndoAction);
 
 	return _("Change font");

@@ -20,12 +20,13 @@
 
 class Sidebar;
 
-class SidebarPreview {
+class SidebarPreview
+{
 public:
-	SidebarPreview(Sidebar * sidebar, PageRef page);
+	SidebarPreview(Sidebar* sidebar, PageRef page);
 	virtual ~SidebarPreview();
 
-	GtkWidget * getWidget();
+	GtkWidget* getWidget();
 	int getWidth();
 	int getHeight();
 
@@ -35,8 +36,10 @@ public:
 	void updateSize();
 
 private:
-	static gboolean exposeEventCallback(GtkWidget * widget, GdkEventExpose * event, SidebarPreview * preview);
-	static gboolean mouseButtonPressCallback(GtkWidget * widget, GdkEventButton * event, SidebarPreview * preview);
+	static gboolean exposeEventCallback(GtkWidget* widget, GdkEventExpose* event,
+	                                    SidebarPreview* preview);
+	static gboolean mouseButtonPressCallback(GtkWidget* widget,
+	                                         GdkEventButton* event, SidebarPreview* preview);
 
 	void paint();
 
@@ -47,14 +50,14 @@ private:
 
 	bool firstPainted;
 
-	Sidebar * sidebar;
+	Sidebar* sidebar;
 	PageRef page;
 
-	GMutex * drawingMutex;
+	GMutex* drawingMutex;
 
-	GtkWidget * widget;
+	GtkWidget* widget;
 
-	cairo_surface_t * crBuffer;
+	cairo_surface_t* crBuffer;
 
 	friend class PreviewJob;
 };

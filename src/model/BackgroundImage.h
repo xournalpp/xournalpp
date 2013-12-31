@@ -18,20 +18,21 @@
 
 class BackgroundImageContents;
 
-class BackgroundImage {
+class BackgroundImage
+{
 public:
 	BackgroundImage();
-	BackgroundImage(const BackgroundImage & img);
+	BackgroundImage(const BackgroundImage& img);
 	virtual ~BackgroundImage();
 
 public:
 	String getFilename();
-	void loadFile(String filename, GError ** error);
+	void loadFile(String filename, GError** error);
 
 	void setAttach(bool attach);
 
-	void operator =(BackgroundImage & img);
-	bool operator == (const BackgroundImage & img);
+	void operator =(BackgroundImage& img);
+	bool operator == (const BackgroundImage& img);
 
 	void free();
 
@@ -44,12 +45,12 @@ public:
 	bool isAttached();
 	bool isEmpty();
 
-	GdkPixbuf * getPixbuf();
+	GdkPixbuf* getPixbuf();
 
 private:
 	XOJ_TYPE_ATTRIB;
 
-	BackgroundImageContents * img;
+	BackgroundImageContents* img;
 };
 
 #endif /* __BACKGROUNDIMAGE_H__ */

@@ -22,9 +22,10 @@ class PdfCache;
 class SidebarLayout;
 class SidebarToolbar;
 
-class SidebarPreviews : public AbstractSidebarPage {
+class SidebarPreviews : public AbstractSidebarPage
+{
 public:
-	SidebarPreviews(Control * control);
+	SidebarPreviews(Control* control);
 	virtual ~SidebarPreviews();
 
 public:
@@ -41,12 +42,12 @@ public:
 	/**
 	 * @overwrite
 	 */
-	virtual const char * getName();
+	virtual const char* getName();
 
 	/**
 	 * @overwrite
 	 */
-	virtual const char * getIconName();
+	virtual const char* getIconName();
 
 	/**
 	 * @overwrite
@@ -56,7 +57,7 @@ public:
 	/**
 	 * @overwrite
 	 */
-	virtual GtkWidget * getWidget();
+	virtual GtkWidget* getWidget();
 
 	/**
 	 * Setts the Background of the panel white, before the first draw
@@ -71,7 +72,7 @@ public:
 	/**
 	 * Gets the PDF cache for preview rendering
 	 */
-	PdfCache * getCache();
+	PdfCache* getCache();
 
 public:
 	// DocumentListener interface
@@ -86,34 +87,35 @@ private:
 	/**
 	 * Timeout callback to scroll to a page
 	 */
-	static bool scrollToPreview(SidebarPreviews * sidebar);
+	static bool scrollToPreview(SidebarPreviews* sidebar);
 
 	/**
 	 * The size of the sidebar has chnaged
 	 */
-	static void sizeChanged(GtkWidget * widget, GtkAllocation * allocation, SidebarPreviews * sidebar);
+	static void sizeChanged(GtkWidget* widget, GtkAllocation* allocation,
+	                        SidebarPreviews* sidebar);
 private:
 	XOJ_TYPE_ATTRIB;
 
 	/**
 	 * The widget within the scrollarea with the page icons
 	 */
-	GtkWidget * iconViewPreview;
+	GtkWidget* iconViewPreview;
 
 	/**
 	 * The scrollbar with the icons
 	 */
-	GtkWidget * scrollPreview;
+	GtkWidget* scrollPreview;
 
 	/**
 	 * The Table with the Toolbar and the Scrollbar
 	 */
-	GtkTable * table;
+	GtkTable* table;
 
 	/**
 	 * The previews
 	 */
-	SidebarPreviewPage ** previews;
+	SidebarPreviewPage** previews;
 	int previewCount;
 
 	/**
@@ -134,17 +136,17 @@ private:
 	/**
 	 * For preview rendering
 	 */
-	PdfCache * cache;
+	PdfCache* cache;
 
 	/**
 	 * The layouting class for the prviews
 	 */
-	SidebarLayout * layoutmanager;
+	SidebarLayout* layoutmanager;
 
 	/**
 	 * The Toolbar to move, copy & delete pages
 	 */
-	SidebarToolbar * toolbar;
+	SidebarToolbar* toolbar;
 
 	friend class SidebarLayout;
 };

@@ -18,23 +18,24 @@
 
 class EraseableStrokePart;
 
-class PartList {
+class PartList
+{
 public:
 	PartList();
 	virtual ~PartList();
 
 private:
-	PartList(const PartList & list);
-	void operator = (const PartList & list);
+	PartList(const PartList& list);
+	void operator = (const PartList& list);
 
 public:
-	void add(EraseableStrokePart * part);
-	PartList * clone();
+	void add(EraseableStrokePart* part);
+	PartList* clone();
 
 private:
 	XOJ_TYPE_ATTRIB;
 
-	GList * data;
+	GList* data;
 
 	friend class EraseableStroke;
 };

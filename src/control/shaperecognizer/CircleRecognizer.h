@@ -15,17 +15,18 @@
 class Stroke;
 class Inertia;
 
-class CircleRecognizer {
+class CircleRecognizer
+{
 private:
 	CircleRecognizer();
 	virtual ~CircleRecognizer();
 
 public:
-	static Stroke * recognize(Stroke * s);
+	static Stroke* recognize(Stroke* s);
 
 private:
-	static Stroke * makeCircleShape(Stroke * originalStroke, Inertia & inertia);
-	static double scoreCircle(Stroke * s, Inertia & inertia);
+	static Stroke* makeCircleShape(Stroke* originalStroke, Inertia& inertia);
+	static double scoreCircle(Stroke* s, Inertia& inertia);
 
 };
 

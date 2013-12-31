@@ -16,10 +16,11 @@
 
 class Point;
 
-class Inertia {
+class Inertia
+{
 public:
 	Inertia();
-	Inertia(const Inertia & inertia);
+	Inertia(const Inertia& inertia);
 	virtual ~Inertia();
 
 public:
@@ -37,7 +38,7 @@ public:
 	double getMass();
 
 	void increase(Point p1, Point p2, int coef);
-	void calc(const Point * pt, int start, int end);
+	void calc(const Point* pt, int start, int end);
 
 private:
 	XOJ_TYPE_ATTRIB;
