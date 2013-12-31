@@ -201,6 +201,8 @@ static void selectcolor_paint(GtkWidget *widget) {
 	} else {
 		cairo_rectangle(cr, x + 1, y + 1, width - 2, width - 2);
 	}
+
+	cairo_set_line_width(cr, 0.8);
 	cairo_stroke(cr);
 
 	cairo_destroy(cr);
