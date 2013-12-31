@@ -157,8 +157,9 @@ gboolean gtk_xournal_scroll_event(GtkWidget * widget, GdkEventScroll * event) {
 	// true: Core event, false: XInput event
 	gboolean isCore = (event->device == gdk_device_get_core_pointer());
 
-	INPUTDBG("Scroll (%s) (x,y)=(%.2f,%.2f), direction %d, modifier %x, isCore %i", gdk_device_get_name(event->device), event->x, event->y,
-			event->direction, event->state, isCore);
+	INPUTDBG("Scroll (%s) (x,y)=(%.2f,%.2f), direction %d, modifier %x, isCore %i",
+	         gdk_device_get_name(event->device), event->x, event->y,
+	         event->direction, event->state, isCore);
 #endif
 
 	g_return_val_if_fail(GTK_XOURNAL(widget), FALSE);
@@ -253,14 +254,47 @@ Layout * gtk_xournal_get_layout(GtkWidget * widget) {
 	return xournal->layout;
 }
 
+static bool change_tool(Settings * settings, GdkEventButton * event, GtkXournal *xournal) {
+	ButtonConfig * cfg = NULL;
+	ButtonConfig * cfgTouch = settings->getTouchButtonConfig();
+	ToolHandler * h = xournal->view->getControl()->getToolHandler();
+
+	if (event->button == 2) { // Middle Button
+		cfg = settings->getMiddleButtonConfig();
+	} else if (event->button == 3 && !xournal->selection) { // Right Button
+		cfg = settings->getRightButtonConfig();
+	} else if (event->device->source == GDK_SOURCE_ERASER) {
+		cfg = settings->getEraserButtonConfig();
+	} else if (cfgTouch->device == event->device->name) {
+		cfg = cfgTouch;
+
+		// If an action is defined we do it, even if it's a drawing action...
+		if (cfg->getDisableDrawing() && cfg->getAction() == TOOL_NONE) {
+			ToolType tool = h->getToolType();
+			if (tool == TOOL_PEN || tool == TOOL_ERASER || tool == TOOL_HILIGHTER) {
+				printf("ignore touchscreen for drawing!\n");
+				return true;
+			}
+		}
+	}
+
+	if (cfg && cfg->getAction() != TOOL_NONE) {
+		h->copyCurrentConfig();
+		cfg->acceptActions(h);
+	}
+
+	return false;
+}
+
 gboolean gtk_xournal_button_press_event(GtkWidget * widget, GdkEventButton * event) {
 	/**
 	 * true: Core event, false: XInput event
 	 */
 	gboolean isCore = (event->device == gdk_device_get_core_pointer());
 
-	INPUTDBG("ButtonPress (%s) (x,y)=(%.2f,%.2f), button %d, modifier %x, isCore %i", gdk_device_get_name(event->device), event->x, event->y,
-			event->button, event->state, isCore);
+	INPUTDBG("ButtonPress (%s) (x,y)=(%.2f,%.2f), button %d, modifier %x, isCore %i",
+	         gdk_device_get_name(event->device), event->x, event->y,
+			     event->button, event->state, isCore);
 
 	GtkXournal * xournal = GTK_XOURNAL(widget);
 	Settings * settings = xournal->view->getControl()->getSettings();
@@ -285,8 +319,6 @@ gboolean gtk_xournal_button_press_event(GtkWidget * widget, GdkEventButton * eve
 
 	gtk_widget_grab_focus(widget);
 
-	ToolHandler * h = xournal->view->getControl()->getToolHandler();
-
 	// none button release event was sent, send one now
 	if (xournal->currentInputPage) {
 		INPUTDBG2("gtk_xournal_button_press_event (xournal->currentInputPage != NULL)");
@@ -296,32 +328,11 @@ gboolean gtk_xournal_button_press_event(GtkWidget * widget, GdkEventButton * eve
 		xournal->currentInputPage->onButtonReleaseEvent(widget, &ev);
 	}
 
+	ToolHandler * h = xournal->view->getControl()->getToolHandler();
+
 	// Change the tool depending on the key or device
-	ButtonConfig * cfg = NULL;
-	ButtonConfig * cfgTouch = settings->getTouchButtonConfig();
-	if (event->button == 2) { // Middle Button
-		cfg = settings->getMiddleButtonConfig();
-	} else if (event->button == 3) { // Right Button
-		cfg = settings->getRightButtonConfig();
-	} else if (event->device->source == GDK_SOURCE_ERASER) {
-		cfg = settings->getEraserButtonConfig();
-	} else if (cfgTouch->device == event->device->name) {
-		cfg = cfgTouch;
-
-		// If an action is defined we do it, even if it's a drawing action...
-		if (cfg->getDisableDrawing() && cfg->getAction() == TOOL_NONE) {
-			ToolType tool = h->getToolType();
-			if (tool == TOOL_PEN || tool == TOOL_ERASER || tool == TOOL_HILIGHTER) {
-				printf("ignore touchscreen for drawing!\n");
-				return true;
-			}
-		}
-	}
-
-	if (cfg && cfg->getAction() != TOOL_NONE) {
-		h->copyCurrentConfig();
-		cfg->acceptActions(h);
-	}
+	if(change_tool(settings, event, xournal))
+		return true;
 
 	// hand tool don't change the selection, so you can scroll e.g.
 	// with your touchscreen without remove the selection
@@ -343,12 +354,20 @@ gboolean gtk_xournal_button_press_event(GtkWidget * widget, GdkEventButton * eve
 		view->translateEvent((GdkEvent*) &ev, xournal->x, xournal->y);
 		CursorSelectionType selType = selection->getSelectionTypeForPos(ev.x, ev.y, xournal->view->getZoom());
 		if (selType) {
+
+			if(selType == CURSOR_SELECTION_MOVE && event->button == 3)
+			{
+				view->copySelection(xournal->selection);
+			}
+
 			xournal->view->getCursor()->setMouseDown(true);
 			xournal->selection->mouseDown(selType, ev.x, ev.y);
 			INPUTDBG2("gtk_xournal_button_press_event (selection) return true");
 			return true;
 		} else {
 			xournal->view->clearSelection();
+			if(change_tool(settings, event, xournal))
+				return true;
 		}
 	}
 
@@ -369,8 +388,9 @@ gboolean gtk_xournal_button_press_event(GtkWidget * widget, GdkEventButton * eve
 gboolean gtk_xournal_button_release_event(GtkWidget * widget, GdkEventButton * event) {
 #ifdef INPUT_DEBUG
 	gboolean isCore = (event->device == gdk_device_get_core_pointer());
-	INPUTDBG("ButtonRelease (%s) (x,y)=(%.2f,%.2f), button %d, modifier %x, isCore %i", gdk_device_get_name(event->device), event->x, event->y,
-			event->button, event->state, isCore);
+	INPUTDBG("ButtonRelease (%s) (x,y)=(%.2f,%.2f), button %d, modifier %x, isCore %i",
+	         gdk_device_get_name(event->device), event->x, event->y,
+	         event->button, event->state, isCore);
 #endif
 	XInputUtils::fixXInputCoords((GdkEvent*) event, widget);
 
@@ -414,7 +434,10 @@ gboolean gtk_xournal_button_release_event(GtkWidget * widget, GdkEventButton * e
 gboolean gtk_xournal_motion_notify_event(GtkWidget * widget, GdkEventMotion * event) {
 #ifdef INPUT_DEBUG
 		bool is_core = (event->device == gdk_device_get_core_pointer());
-		INPUTDBG("MotionNotify (%s) (x,y)=(%.2f,%.2f), modifier %x", is_core ? "core" : "xinput", event->x, event->y, event->state);
+		INPUTDBG("MotionNotify (%s) (x,y)=(%.2f,%.2f), modifier %x",
+		         is_core ? "core" : "xinput",
+		         event->x, event->y,
+		         event->state);
 #endif
 
 	XInputUtils::fixXInputCoords((GdkEvent*) event, widget);
