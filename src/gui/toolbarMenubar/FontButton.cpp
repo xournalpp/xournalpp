@@ -91,6 +91,7 @@ GtkToolItem * FontButton::createItem(bool horizontal) {
 }
 
 GtkToolItem * FontButton::createTmpItem(bool horizontal) {
+	XOJ_CHECK_TYPE(FontButton);
 	GtkWidget * fontButton = newFontButton();
 
 	GtkToolItem * it = gtk_tool_item_new();
@@ -118,6 +119,7 @@ void FontButton::showFontDialog() {
 }
 
 GtkWidget * FontButton::newFontButton() {
+	XOJ_CHECK_TYPE(FontButton);
 	GtkWidget * w = gtk_font_button_new();
 	gtk_widget_show(w);
 	gtk_font_button_set_use_font(GTK_FONT_BUTTON(w), TRUE);
@@ -138,6 +140,9 @@ GtkToolItem * FontButton::newItem() {
 	gtk_container_add(GTK_CONTAINER(it), this->fontButton);
 	gtk_tool_item_set_tooltip_text(it, this->description.c_str());
 	gtk_tool_item_set_homogeneous(GTK_TOOL_ITEM(it), false);
+
+	g_signal_connect(this->fontButton, "font_set",
+				G_CALLBACK(&toolButtonCallback), this);
 
 	if (!this->font.getName().isEmpty()) {
 		setFont(this->font);
