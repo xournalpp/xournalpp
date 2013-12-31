@@ -1,7 +1,8 @@
 #include "Selection.h"
 #include "../../model/Layer.h"
 
-Selection::Selection(Redrawable * view) {
+Selection::Selection(Redrawable* view)
+{
 	XOJ_INIT_TYPE(Selection);
 
 	this->view = view;
@@ -9,7 +10,8 @@ Selection::Selection(Redrawable * view) {
 	this->page = NULL;
 }
 
-Selection::~Selection() {
+Selection::~Selection()
+{
 	XOJ_CHECK_TYPE(Selection);
 
 	this->view = NULL;
@@ -20,10 +22,13 @@ Selection::~Selection() {
 	XOJ_RELEASE_TYPE(Selection);
 }
 
-void Selection::getSelectedRect(double & x, double & y, double & width, double & height) {
+void Selection::getSelectedRect(double& x, double& y, double& width,
+                                double& height)
+{
 	XOJ_CHECK_TYPE(Selection);
 
-	if (this->selectedElements == NULL) {
+	if (this->selectedElements == NULL)
+	{
 		x = 0;
 		y = 0;
 		width = 0;
@@ -31,14 +36,16 @@ void Selection::getSelectedRect(double & x, double & y, double & width, double &
 		return;
 	}
 
-	Element * first = (Element *) this->selectedElements->data;
+	Element* first = (Element*) this->selectedElements->data;
 	Range range(first->getX(), first->getY());
 
-	for (GList * l = this->selectedElements; l != NULL; l = l->next) {
-		Element * e = (Element *) l->data;
+	for (GList* l = this->selectedElements; l != NULL; l = l->next)
+	{
+		Element* e = (Element*) l->data;
 
 		range.addPoint(e->getX(), e->getY());
-		range.addPoint(e->getX() + e->getElementWidth(), e->getY() + e->getElementHeight());
+		range.addPoint(e->getX() + e->getElementWidth(),
+		               e->getY() + e->getElementHeight());
 	}
 
 	x = range.getX() - 3;
@@ -49,8 +56,9 @@ void Selection::getSelectedRect(double & x, double & y, double & width, double &
 
 //////////////////////////////////////////////////////////
 
-RectSelection::RectSelection(double x, double y, Redrawable * view) :
-	Selection(view) {
+RectSelection::RectSelection(double x, double y, Redrawable* view) :
+	Selection(view)
+{
 	XOJ_INIT_TYPE(RectSelection);
 
 	this->sx = x;
@@ -63,11 +71,13 @@ RectSelection::RectSelection(double x, double y, Redrawable * view) :
 	this->y2 = 0;
 }
 
-RectSelection::~RectSelection() {
+RectSelection::~RectSelection()
+{
 	XOJ_RELEASE_TYPE(RectSelection);
 }
 
-bool RectSelection::finalize(PageRef page) {
+bool RectSelection::finalize(PageRef page)
+{
 	XOJ_CHECK_TYPE(RectSelection);
 
 	this->x1 = MIN(this->sx, this->ex);
@@ -78,11 +88,13 @@ bool RectSelection::finalize(PageRef page) {
 
 	this->page = page;
 
-	Layer * l = page.getSelectedLayer();
-	ListIterator<Element *> eit = l->elementIterator();
-	while (eit.hasNext()) {
-		Element * e = eit.next();
-		if (e->isInSelection(this)) {
+	Layer* l = page.getSelectedLayer();
+	ListIterator<Element*> eit = l->elementIterator();
+	while (eit.hasNext())
+	{
+		Element* e = eit.next();
+		if (e->isInSelection(this))
+		{
 			this->selectedElements = g_list_append(this->selectedElements, e);
 		}
 	}
@@ -90,20 +102,24 @@ bool RectSelection::finalize(PageRef page) {
 	return this->selectedElements != NULL;
 }
 
-bool RectSelection::contains(double x, double y) {
+bool RectSelection::contains(double x, double y)
+{
 	XOJ_CHECK_TYPE(RectSelection);
 
-	if (x < this->x1 || x > this->x2) {
+	if (x < this->x1 || x > this->x2)
+	{
 		return false;
 	}
-	if (y < this->y1 || y > this->y2) {
+	if (y < this->y1 || y > this->y2)
+	{
 		return false;
 	}
 
 	return true;
 }
 
-void RectSelection::currentPos(double x, double y) {
+void RectSelection::currentPos(double x, double y)
+{
 	XOJ_CHECK_TYPE(RectSelection);
 
 	int aX = MIN(x, this->ex);
@@ -124,7 +140,8 @@ void RectSelection::currentPos(double x, double y) {
 	this->ey = y;
 }
 
-void RectSelection::paint(cairo_t * cr, GdkRectangle * rect, double zoom) {
+void RectSelection::paint(cairo_t* cr, GdkRectangle* rect, double zoom)
+{
 	XOJ_CHECK_TYPE(RectSelection);
 
 	GdkColor selectionColor = view->getSelectionColor();
@@ -149,16 +166,19 @@ void RectSelection::paint(cairo_t * cr, GdkRectangle * rect, double zoom) {
 	cairo_close_path(cr);
 
 	cairo_stroke_preserve(cr);
-	cairo_set_source_rgba(cr, selectionColor.red / 65536.0, selectionColor.green / 65536.0, selectionColor.blue / 65536.0, 0.3);
+	cairo_set_source_rgba(cr, selectionColor.red / 65536.0,
+	                      selectionColor.green / 65536.0, selectionColor.blue / 65536.0, 0.3);
 	cairo_fill(cr);
 }
 
 //////////////////////////////////////////////////////////
 
 
-class RegionPoint {
+class RegionPoint
+{
 public:
-	RegionPoint(double x, double y) {
+	RegionPoint(double x, double y)
+	{
 		this->x = x;
 		this->y = y;
 	}
@@ -167,30 +187,35 @@ public:
 	double y;
 };
 
-RegionSelect::RegionSelect(double x, double y, Redrawable * view) :
-	Selection(view) {
+RegionSelect::RegionSelect(double x, double y, Redrawable* view) :
+	Selection(view)
+{
 	XOJ_INIT_TYPE(RegionSelect);
 
 	this->points = NULL;
 	currentPos(x, y);
 }
 
-RegionSelect::~RegionSelect() {
+RegionSelect::~RegionSelect()
+{
 	XOJ_CHECK_TYPE(RegionSelect);
 
-	for (GList * l = this->points; l != NULL; l = l->next) {
-		delete (RegionPoint *) l->data;
+	for (GList* l = this->points; l != NULL; l = l->next)
+	{
+		delete (RegionPoint*) l->data;
 	}
 	g_list_free(this->points);
 
 	XOJ_RELEASE_TYPE(RegionSelect);
 }
 
-void RegionSelect::paint(cairo_t * cr, GdkRectangle * rect, double zoom) {
+void RegionSelect::paint(cairo_t* cr, GdkRectangle* rect, double zoom)
+{
 	XOJ_CHECK_TYPE(RegionSelect);
 
 	// at least three points needed
-	if (this->points && this->points->next && this->points->next->next) {
+	if (this->points && this->points->next && this->points->next->next)
+	{
 		GdkColor selectionColor = view->getSelectionColor();
 
 		// set the line always the same size on display
@@ -199,48 +224,57 @@ void RegionSelect::paint(cairo_t * cr, GdkRectangle * rect, double zoom) {
 		gdk_cairo_set_source_color(cr, &selectionColor);
 		gdk_threads_leave();
 
-		RegionPoint * r0 = (RegionPoint *) this->points->data;
+		RegionPoint* r0 = (RegionPoint*) this->points->data;
 		cairo_move_to(cr, r0->x, r0->y);
 
-		for (GList * l = this->points->next; l != NULL; l = l->next) {
-			RegionPoint * r = (RegionPoint *) l->data;
+		for (GList* l = this->points->next; l != NULL; l = l->next)
+		{
+			RegionPoint* r = (RegionPoint*) l->data;
 			cairo_line_to(cr, r->x, r->y);
 		}
 
 		cairo_line_to(cr, r0->x, r0->y);
 
 		cairo_stroke_preserve(cr);
-		cairo_set_source_rgba(cr, selectionColor.red / 65536.0, selectionColor.green / 65536.0, selectionColor.blue / 65536.0, 0.3);
+		cairo_set_source_rgba(cr, selectionColor.red / 65536.0,
+		                      selectionColor.green / 65536.0, selectionColor.blue / 65536.0, 0.3);
 		cairo_fill(cr);
 	}
 }
 
-void RegionSelect::currentPos(double x, double y) {
+void RegionSelect::currentPos(double x, double y)
+{
 	XOJ_CHECK_TYPE(RegionSelect);
 
 	this->points = g_list_append(this->points, new RegionPoint(x, y));
 
 	// at least three points needed
-	if (this->points && this->points->next && this->points->next->next) {
+	if (this->points && this->points->next && this->points->next->next)
+	{
 
-		RegionPoint * r0 = (RegionPoint *) this->points->data;
+		RegionPoint* r0 = (RegionPoint*) this->points->data;
 		double ax = r0->x;
 		double bx = r0->x;
 		double ay = r0->y;
 		double by = r0->y;
 
-		for (GList * l = this->points; l != NULL; l = l->next) {
-			RegionPoint * r = (RegionPoint *) l->data;
-			if (ax > r->x) {
+		for (GList* l = this->points; l != NULL; l = l->next)
+		{
+			RegionPoint* r = (RegionPoint*) l->data;
+			if (ax > r->x)
+			{
 				ax = r->x;
 			}
-			if (bx < r->x) {
+			if (bx < r->x)
+			{
 				bx = r->x;
 			}
-			if (ay > r->y) {
+			if (ay > r->y)
+			{
 				ay = r->y;
 			}
-			if (by < r->y) {
+			if (by < r->y)
+			{
 				by = r->y;
 			}
 		}
@@ -249,66 +283,85 @@ void RegionSelect::currentPos(double x, double y) {
 	}
 }
 
-bool RegionSelect::contains(double x, double y) {
+bool RegionSelect::contains(double x, double y)
+{
 	XOJ_CHECK_TYPE(RegionSelect);
 
-	if (x < this->x1Box || x > this->x2Box) {
+	if (x < this->x1Box || x > this->x2Box)
+	{
 		return false;
 	}
-	if (y < this->y1Box || y > this->y2Box) {
+	if (y < this->y1Box || y > this->y2Box)
+	{
 		return false;
 	}
-	if (this->points == NULL || this->points->next == NULL) {
+	if (this->points == NULL || this->points->next == NULL)
+	{
 		return false;
 	}
 
 	int hits = 0;
 
-	RegionPoint * last = (RegionPoint *) g_list_last(this->points)->data;
+	RegionPoint* last = (RegionPoint*) g_list_last(this->points)->data;
 
 	double lastx = last->x;
 	double lasty = last->y;
 	double curx, cury;
 
 	// Walk the edges of the polygon
-	for (GList * l = this->points; l != NULL; lastx = curx, lasty = cury, l = l->next) {
-		RegionPoint * last = (RegionPoint *) l->data;
+	for (GList* l = this->points; l != NULL;
+	     lastx = curx, lasty = cury, l = l->next)
+	{
+		RegionPoint* last = (RegionPoint*) l->data;
 		curx = last->x;
 		cury = last->y;
 
-		if (cury == lasty) {
+		if (cury == lasty)
+		{
 			continue;
 		}
 
 		int leftx;
-		if (curx < lastx) {
-			if (x >= lastx) {
+		if (curx < lastx)
+		{
+			if (x >= lastx)
+			{
 				continue;
 			}
 			leftx = curx;
-		} else {
-			if (x >= curx) {
+		}
+		else
+		{
+			if (x >= curx)
+			{
 				continue;
 			}
 			leftx = lastx;
 		}
 
 		double test1, test2;
-		if (cury < lasty) {
-			if (y < cury || y >= lasty) {
+		if (cury < lasty)
+		{
+			if (y < cury || y >= lasty)
+			{
 				continue;
 			}
-			if (x < leftx) {
+			if (x < leftx)
+			{
 				hits++;
 				continue;
 			}
 			test1 = x - curx;
 			test2 = y - cury;
-		} else {
-			if (y < lasty || y >= cury) {
+		}
+		else
+		{
+			if (y < lasty || y >= cury)
+			{
 				continue;
 			}
-			if (x < leftx) {
+			if (x < leftx)
+			{
 				hits++;
 				continue;
 			}
@@ -316,7 +369,8 @@ bool RegionSelect::contains(double x, double y) {
 			test2 = y - lasty;
 		}
 
-		if (test1 < (test2 / (lasty - cury) * (lastx - curx))) {
+		if (test1 < (test2 / (lasty - cury) * (lastx - curx)))
+		{
 			hits++;
 		}
 	}
@@ -324,7 +378,8 @@ bool RegionSelect::contains(double x, double y) {
 	return ((hits & 1) != 0);
 }
 
-bool RegionSelect::finalize(PageRef page) {
+bool RegionSelect::finalize(PageRef page)
+{
 	XOJ_CHECK_TYPE(RegionSelect);
 
 	this->page = page;
@@ -334,27 +389,36 @@ bool RegionSelect::finalize(PageRef page) {
 	this->y1Box = 0;
 	this->y2Box = 0;
 
-	for (GList * l = this->points; l != NULL; l = l->next) {
-		RegionPoint * p = (RegionPoint *) l->data;
+	for (GList* l = this->points; l != NULL; l = l->next)
+	{
+		RegionPoint* p = (RegionPoint*) l->data;
 
-		if (p->x < this->x1Box) {
+		if (p->x < this->x1Box)
+		{
 			this->x1Box = p->x;
-		} else if (p->x > this->x2Box) {
+		}
+		else if (p->x > this->x2Box)
+		{
 			this->x2Box = p->x;
 		}
 
-		if (p->y < this->y1Box) {
+		if (p->y < this->y1Box)
+		{
 			this->y1Box = p->y;
-		} else if (p->y > this->y2Box) {
+		}
+		else if (p->y > this->y2Box)
+		{
 			this->y2Box = p->y;
 		}
 	}
 
-	Layer * l = page.getSelectedLayer();
-	ListIterator<Element *> eit = l->elementIterator();
-	while (eit.hasNext()) {
-		Element * e = eit.next();
-		if (e->isInSelection(this)) {
+	Layer* l = page.getSelectedLayer();
+	ListIterator<Element*> eit = l->elementIterator();
+	while (eit.hasNext())
+	{
+		Element* e = eit.next();
+		if (e->isInSelection(this))
+		{
 			this->selectedElements = g_list_append(this->selectedElements, e);
 		}
 	}

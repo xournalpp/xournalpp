@@ -13,7 +13,8 @@
 /**
  * This class uses some inspiration from FPDF (PHP Class)
  */
-PdfExport::PdfExport(Document * doc, ProgressListener * progressListener) {
+PdfExport::PdfExport(Document* doc, ProgressListener* progressListener)
+{
 	XOJ_INIT_TYPE(PdfExport);
 
 	this->doc = doc;
@@ -26,7 +27,9 @@ PdfExport::PdfExport(Document * doc, ProgressListener * progressListener) {
 
 	this->pageIds = NULL;
 
-	this->refListsOther = g_hash_table_new_full((GHashFunc) g_str_hash, (GEqualFunc) g_str_equal, g_free, (GDestroyNotify) PdfRefList::deletePdfRefList);
+	this->refListsOther = g_hash_table_new_full((GHashFunc) g_str_hash,
+	                                            (GEqualFunc) g_str_equal, g_free,
+	                                            (GDestroyNotify) PdfRefList::deletePdfRefList);
 
 	this->documents = NULL;
 
@@ -38,11 +41,13 @@ PdfExport::PdfExport(Document * doc, ProgressListener * progressListener) {
 	this->outlineRoot = 0;
 }
 
-PdfExport::~PdfExport() {
+PdfExport::~PdfExport()
+{
 	XOJ_CHECK_TYPE(PdfExport);
 
-	for (GList * l = this->documents; l != NULL; l = l->next) {
-		XojPopplerDocument * doc = (XojPopplerDocument *) l->data;
+	for (GList* l = this->documents; l != NULL; l = l->next)
+	{
+		XojPopplerDocument* doc = (XojPopplerDocument*) l->data;
 		delete doc;
 	}
 	g_list_free(this->documents);
@@ -69,10 +74,12 @@ PdfExport::~PdfExport() {
 	XOJ_RELEASE_TYPE(PdfExport);
 }
 
-bool PdfExport::writeCatalog() {
+bool PdfExport::writeCatalog()
+{
 	XOJ_CHECK_TYPE(PdfExport);
 
-	if (!writer->writeObj()) {
+	if (!writer->writeObj())
+	{
 		return false;
 	}
 
@@ -102,8 +109,9 @@ bool PdfExport::writeCatalog() {
 	//	elseif($this->LayoutMode=='two')
 	//		$this->_out('/PageLayout /TwoColumnLeft');
 
-	if (this->outlineRoot) {
-		char * outline = g_strdup_printf("/Outlines %i 0 R\n", this->outlineRoot);
+	if (this->outlineRoot)
+	{
+		char* outline = g_strdup_printf("/Outlines %i 0 R\n", this->outlineRoot);
 		writer->write(outline);
 		g_free(outline);
 		writer->write("/PageMode /UseOutlines\n");
@@ -114,13 +122,14 @@ bool PdfExport::writeCatalog() {
 	return writer->getLastError().isEmpty();
 }
 
-bool PdfExport::writeCrossRef() {
+bool PdfExport::writeCrossRef()
+{
 	XOJ_CHECK_TYPE(PdfExport);
 
 	this->dataXrefStart = this->writer->getDataCount();
 	this->writer->write("xref\n");
 	this->writer->write("0 ");
-	char * tmp = g_strdup_printf("%i", this->writer->getObjectId());
+	char* tmp = g_strdup_printf("%i", this->writer->getObjectId());
 	this->writer->write(tmp);
 	g_free(tmp);
 	this->writer->write("\n");
@@ -129,7 +138,8 @@ bool PdfExport::writeCrossRef() {
 
 	char buffer[64];
 
-	for (int i = 0; i < this->xref->getXrefCount(); i++) {
+	for (int i = 0; i < this->xref->getXrefCount(); i++)
+	{
 		sprintf(buffer, "%010d 00000 n \n", this->xref->getXref(i));
 		this->writer->write(buffer);
 	}
@@ -137,7 +147,8 @@ bool PdfExport::writeCrossRef() {
 	return this->writer->getLastError().isEmpty();
 }
 
-bool PdfExport::writePagesindex() {
+bool PdfExport::writePagesindex()
+{
 	XOJ_CHECK_TYPE(PdfExport);
 
 	this->xref->setXref(1, this->writer->getDataCount());
@@ -147,8 +158,9 @@ bool PdfExport::writePagesindex() {
 	this->writer->write("/Kids [");
 
 	int pageCount = 0;
-	for (GList * l = this->pageIds; l != NULL; l = l->next) {
-		int id = *((int *) l->data);
+	for (GList* l = this->pageIds; l != NULL; l = l->next)
+	{
+		int id = *((int*) l->data);
 		this->writer->writef("%i 0 R ", id);
 		pageCount++;
 	}
@@ -157,14 +169,16 @@ bool PdfExport::writePagesindex() {
 
 	PageRef page = doc->getPage(0);
 
-	this->writer->writef("/MediaBox [0 0 %.2F %.2F]\n", page.getWidth(), page.getHeight());
+	this->writer->writef("/MediaBox [0 0 %.2F %.2F]\n", page.getWidth(),
+	                     page.getHeight());
 	this->writer->write(">>\n");
 	this->writer->write("endobj\n");
 
 	return true;
 }
 
-bool PdfExport::writeTrailer() {
+bool PdfExport::writeTrailer()
+{
 	XOJ_CHECK_TYPE(PdfExport);
 
 	this->writer->write("trailer\n");
@@ -182,11 +196,13 @@ bool PdfExport::writeTrailer() {
 	return this->writer->getLastError().isEmpty();
 }
 
-void writeOutRef(char * key, PdfRefList * list, gpointer user_data) {
+void writeOutRef(char* key, PdfRefList* list, gpointer user_data)
+{
 	list->writeRefList(key);
 }
 
-bool PdfExport::writeResourcedict() {
+bool PdfExport::writeResourcedict()
+{
 	XOJ_CHECK_TYPE(PdfExport);
 
 	this->writer->write("/ProcSet [/PDF /Text /ImageB /ImageC /ImageI]\n");
@@ -196,11 +212,13 @@ bool PdfExport::writeResourcedict() {
 	return true;
 }
 
-void writeOutRefObj(char * key, PdfRefList * list, gpointer user_data) {
+void writeOutRefObj(char* key, PdfRefList* list, gpointer user_data)
+{
 	list->writeObjects();
 }
 
-bool PdfExport::writeResources() {
+bool PdfExport::writeResources()
+{
 	XOJ_CHECK_TYPE(PdfExport);
 
 	g_hash_table_foreach(this->refListsOther, (GHFunc) writeOutRefObj, this);
@@ -212,7 +230,8 @@ bool PdfExport::writeResources() {
 
 	this->writer->write("2 0 obj\n");
 	this->writer->write("<<\n");
-	if (!writeResourcedict()) {
+	if (!writeResourcedict())
+	{
 		return false;
 	}
 	this->writer->write(">>\n");
@@ -221,37 +240,45 @@ bool PdfExport::writeResources() {
 	return true;
 }
 
-bool PdfExport::writeFooter() {
+bool PdfExport::writeFooter()
+{
 	XOJ_CHECK_TYPE(PdfExport);
 
-	if (!writePagesindex()) {
+	if (!writePagesindex())
+	{
 		g_warning("failed to write outlines");
 		return false;
 	}
 
-	if (!writeResources()) {
+	if (!writeResources())
+	{
 		g_warning("failed to write resources");
 		return false;
 	}
 
-	this->bookmarks.writeOutlines(this->doc, this->writer, &this->outlineRoot, this->pageIds);
+	this->bookmarks.writeOutlines(this->doc, this->writer, &this->outlineRoot,
+	                              this->pageIds);
 
-	if (!writer->writeInfo(doc->getFilename())) {
+	if (!writer->writeInfo(doc->getFilename()))
+	{
 		g_warning("failed to write info");
 		return false;
 	}
 
-	if (!writeCatalog()) {
+	if (!writeCatalog())
+	{
 		g_warning("failed to write catalog");
 		return false;
 	}
 
-	if (!writeCrossRef()) {
+	if (!writeCrossRef())
+	{
 		g_warning("failed to write cross ref");
 		return false;
 	}
 
-	if (!writeTrailer()) {
+	if (!writeTrailer())
+	{
 		g_warning("failed to write trailer");
 		return false;
 	}
@@ -259,12 +286,14 @@ bool PdfExport::writeFooter() {
 	return true;
 }
 
-void PdfExport::writeGzStream(Stream * str, GList * replacementList) {
+void PdfExport::writeGzStream(Stream* str, GList* replacementList)
+{
 	XOJ_CHECK_TYPE(PdfExport);
 
 	Object obj1;
 	str->getDict()->lookup("Length", &obj1);
-	if (!obj1.isInt()) {
+	if (!obj1.isInt())
+	{
 		g_error("PDFDoc::writeGzStream, no Length in stream dict");
 		return;
 	}
@@ -272,14 +301,15 @@ void PdfExport::writeGzStream(Stream * str, GList * replacementList) {
 	const int length = obj1.getInt();
 	obj1.free();
 
-	char * buffer = new char[length];
+	char* buffer = new char[length];
 
 	str->unfilteredReset();
-	for (int i = 0; i < length; i++) {
+	for (int i = 0; i < length; i++)
+	{
 		int c = str->getUnfilteredChar();
 		buffer[i] = c;
 	}
-	GString * text = GzHelper::gzuncompress(buffer, length);
+	GString* text = GzHelper::gzuncompress(buffer, length);
 	writeStream(text->str, text->len, replacementList);
 
 	g_string_free(text, true);
@@ -289,12 +319,14 @@ void PdfExport::writeGzStream(Stream * str, GList * replacementList) {
 	str->reset();
 }
 
-void PdfExport::writePlainStream(Stream * str, GList * replacementList) {
+void PdfExport::writePlainStream(Stream* str, GList* replacementList)
+{
 	XOJ_CHECK_TYPE(PdfExport);
 
 	Object obj1;
 	str->getDict()->lookup("Length", &obj1);
-	if (!obj1.isInt()) {
+	if (!obj1.isInt())
+	{
 		g_error("PDFDoc::writePlainStream, no Length in stream dict");
 		return;
 	}
@@ -304,9 +336,10 @@ void PdfExport::writePlainStream(Stream * str, GList * replacementList) {
 
 	str->unfilteredReset();
 
-	GString * buffer = g_string_sized_new(10240);
+	GString* buffer = g_string_sized_new(10240);
 
-	for (int i = 0; i < length; i++) {
+	for (int i = 0; i < length; i++)
+	{
 		int c = str->getUnfilteredChar();
 		buffer = g_string_append_c(buffer, c);
 	}
@@ -318,7 +351,8 @@ void PdfExport::writePlainStream(Stream * str, GList * replacementList) {
 	str->reset();
 }
 
-void PdfExport::writeStream(const char * str, int len, GList * replacementList) {
+void PdfExport::writeStream(const char* str, int len, GList* replacementList)
+{
 	XOJ_CHECK_TYPE(PdfExport);
 
 	int lastWritten = 0;
@@ -326,32 +360,43 @@ void PdfExport::writeStream(const char * str, int len, GList * replacementList) 
 
 	char lastChar = 0;
 
-	for (int i = 0; i < len; i++) {
+	for (int i = 0; i < len; i++)
+	{
 		char c = str[i];
-		if (c == '(' && lastChar != '\\') {
+		if (c == '(' && lastChar != '\\')
+		{
 			brackets++;
-		} else if (c == ')' && lastChar != '\\') {
+		}
+		else if (c == ')' && lastChar != '\\')
+		{
 			brackets--;
-			if (brackets < 0) {
+			if (brackets < 0)
+			{
 				brackets = 0;
 			}
-		} else if (brackets == 0 && str[i] == '/') {
+		}
+		else if (brackets == 0 && str[i] == '/')
+		{
 			this->writer->writeLen(str + lastWritten, i - lastWritten);
 			lastWritten = i++;
 
 			char buffer[512];
 			int u = i;
-			for (; u < len && (u - i) < 512; u++) {
+			for (; u < len && (u - i) < 512; u++)
+			{
 				buffer[u - i] = str[u];
-				if (PdfUtil::isWhitespace(str[u])) {
+				if (PdfUtil::isWhitespace(str[u]))
+				{
 					buffer[u - i] = 0;
 					break;
 				}
 			}
 
-			for (GList * l = replacementList; l != NULL; l = l->next) {
-				RefReplacement * f = (RefReplacement *) l->data;
-				if (f->name == buffer) {
+			for (GList* l = replacementList; l != NULL; l = l->next)
+			{
+				RefReplacement* f = (RefReplacement*) l->data;
+				if (f->name == buffer)
+				{
 					this->writer->writef("/%s%i", f->type, f->newId);
 					f->markAsUsed();
 					lastWritten = u;
@@ -369,52 +414,69 @@ void PdfExport::writeStream(const char * str, int len, GList * replacementList) 
 	this->writer->writeLen(str + lastWritten, len - lastWritten);
 }
 
-void PdfExport::addPopplerDocument(XojPopplerDocument doc) {
+void PdfExport::addPopplerDocument(XojPopplerDocument doc)
+{
 	XOJ_CHECK_TYPE(PdfExport);
 
-	for (GList * l = this->documents; l != NULL; l = l->next) {
-		XojPopplerDocument * d = (XojPopplerDocument *) l->data;
-		if (*d == doc) {
+	for (GList* l = this->documents; l != NULL; l = l->next)
+	{
+		XojPopplerDocument* d = (XojPopplerDocument*) l->data;
+		if (*d == doc)
+		{
 			return;
 		}
 	}
 
-	XojPopplerDocument * d = new XojPopplerDocument();
+	XojPopplerDocument* d = new XojPopplerDocument();
 	*d = doc;
 
 	this->documents = g_list_append(this->documents, d);
 }
 
-bool PdfExport::addPopplerPage(XojPopplerPage * pdf, XojPopplerDocument doc) {
+bool PdfExport::addPopplerPage(XojPopplerPage* pdf, XojPopplerDocument doc)
+{
 	XOJ_CHECK_TYPE(PdfExport);
 
-	Page * page = pdf->getPage();
+	Page* page = pdf->getPage();
 	static int otherObjectId = 1;
 
 	this->resources = page->getResourceDict();
 
-	GList * replacementList = NULL;
+	GList* replacementList = NULL;
 
-	Dict * dict = page->getResourceDict();
-	for (int i = 0; i < dict->getLength(); i++) {
-		const char * cDictName = dict->getKey(i);
-		PdfRefList * refList = (PdfRefList *) g_hash_table_lookup(this->refListsOther, cDictName);
-		if (!refList) {
-			char * indexName = NULL;
-			if (strcmp(cDictName, "Font") == 0) {
+	Dict* dict = page->getResourceDict();
+	for (int i = 0; i < dict->getLength(); i++)
+	{
+		const char* cDictName = dict->getKey(i);
+		PdfRefList* refList = (PdfRefList*) g_hash_table_lookup(this->refListsOther,
+		                                                        cDictName);
+		if (!refList)
+		{
+			char* indexName = NULL;
+			if (strcmp(cDictName, "Font") == 0)
+			{
 				indexName = g_strdup("F");
-			} else if (strcmp(cDictName, "XObject") == 0) {
+			}
+			else if (strcmp(cDictName, "XObject") == 0)
+			{
 				indexName = g_strdup("I");
-			} else if (strcmp(cDictName, "ExtGState") == 0) {
+			}
+			else if (strcmp(cDictName, "ExtGState") == 0)
+			{
 				indexName = g_strdup("Gs");
-			} else if (strcmp(cDictName, "Pattern") == 0) {
+			}
+			else if (strcmp(cDictName, "Pattern") == 0)
+			{
 				indexName = g_strdup("p");
-			} else {
+			}
+			else
+			{
 				indexName = g_strdup_printf("o%i-", otherObjectId++);
 			}
 
-			refList = new PdfRefList(this->xref, this->objectWriter, this->writer, indexName);
-			char * dictName = g_strdup(dict->getKey(i));
+			refList = new PdfRefList(this->xref, this->objectWriter, this->writer,
+			                         indexName);
+			char* dictName = g_strdup(dict->getKey(i));
 
 			// insert the new RefList into the hash table
 			g_hash_table_insert(this->refListsOther, dictName, refList);
@@ -424,11 +486,12 @@ bool PdfExport::addPopplerPage(XojPopplerPage * pdf, XojPopplerDocument doc) {
 
 	}
 
-	Object * o = new Object();
+	Object* o = new Object();
 	page->getContents(o);
 
-	if (o->getType() == objStream) {
-		Dict * dict = o->getStream()->getDict();
+	if (o->getType() == objStream)
+	{
+		Dict* dict = o->getStream()->getDict();
 
 		Object filter;
 		dict->lookup("Filter", &filter);
@@ -438,19 +501,27 @@ bool PdfExport::addPopplerPage(XojPopplerPage * pdf, XojPopplerDocument doc) {
 		//			Stream * txtStream = stream->addFilters(oDict);
 		//			writePlainStream(txtStream);
 
-		if (filter.isNull()) {
+		if (filter.isNull())
+		{
 			writePlainStream(o->getStream(), replacementList);
-		} else if (filter.isName("FlateDecode")) {
+		}
+		else if (filter.isName("FlateDecode"))
+		{
 			writeGzStream(o->getStream(), replacementList);
-		} else if (filter.isName()) {
+		}
+		else if (filter.isName())
+		{
 			g_warning("Unhandled stream filter: %s\n", filter.getName());
 		}
-	} else {
+	}
+	else
+	{
 		g_warning("other poppler type: %i\n", o->getType());
 	}
 
-	for (GList * l = replacementList; l != NULL; l = l->next) {
-		RefReplacement * f = (RefReplacement *) l->data;
+	for (GList* l = replacementList; l != NULL; l = l->next)
+	{
+		RefReplacement* f = (RefReplacement*) l->data;
 		delete f;
 	}
 	g_list_free(replacementList);
@@ -462,16 +533,18 @@ bool PdfExport::addPopplerPage(XojPopplerPage * pdf, XojPopplerDocument doc) {
 	return true;
 }
 
-bool PdfExport::writePage(int pageNr) {
+bool PdfExport::writePage(int pageNr)
+{
 	XOJ_CHECK_TYPE(PdfExport);
 
 	PageRef page = doc->getPage(pageNr);
 
-	if (!page) {
+	if (!page)
+	{
 		return false;
 	}
 
-	int * pageId = (int *) g_malloc(sizeof(int));
+	int* pageId = (int*) g_malloc(sizeof(int));
 	*pageId = this->writer->getObjectId();
 	this->pageIds = g_list_append(this->pageIds, pageId);
 
@@ -479,7 +552,8 @@ bool PdfExport::writePage(int pageNr) {
 	this->writer->write("<</Type /Page\n");
 	this->writer->write("/Parent 1 0 R\n");
 
-	this->writer->writef("/MediaBox [0 0 %.2F %.2F]\n", page.getWidth(), page.getHeight());
+	this->writer->writef("/MediaBox [0 0 %.2F %.2F]\n", page.getWidth(),
+	                     page.getHeight());
 	this->writer->write("/Resources 2 0 R\n");
 	//	if (isset($this->PageLinks[$n])) {
 	//		//Links
@@ -509,15 +583,18 @@ bool PdfExport::writePage(int pageNr) {
 	addPopplerDocument(doc->getPdfDocument());
 	currentPdfDoc = doc->getPdfDocument();
 
-	if (page.getBackgroundType() == BACKGROUND_TYPE_PDF) {
-		XojPopplerPage * pdf = doc->getPdfPage(page.getPdfPageNr());
-		if (!addPopplerPage(pdf, currentPdfDoc)) {
+	if (page.getBackgroundType() == BACKGROUND_TYPE_PDF)
+	{
+		XojPopplerPage* pdf = doc->getPdfPage(page.getPdfPageNr());
+		if (!addPopplerPage(pdf, currentPdfDoc))
+		{
 			return false;
 		}
 	}
 
 	currentPdfDoc = cPdf.getDocument();
-	if (!addPopplerPage(cPdf.getPage(pageNr), currentPdfDoc)) {
+	if (!addPopplerPage(cPdf.getPage(pageNr), currentPdfDoc))
+	{
 		return false;
 	}
 
@@ -528,46 +605,56 @@ bool PdfExport::writePage(int pageNr) {
 	return true;
 }
 
-String PdfExport::getLastError() {
+String PdfExport::getLastError()
+{
 	XOJ_CHECK_TYPE(PdfExport);
 
-	if (this->lastError.isEmpty()) {
+	if (this->lastError.isEmpty())
+	{
 		return this->writer->getLastError();
 	}
 	return this->lastError;
 }
 
-bool PdfExport::createPdf(String uri, GList * range) {
+bool PdfExport::createPdf(String uri, GList* range)
+{
 	XOJ_CHECK_TYPE(PdfExport);
 
-	if (range == NULL) {
+	if (range == NULL)
+	{
 		this->lastError = "No pages to export!";
 		return false;
 	}
 
-	if (!this->writer->openFile(uri.c_str())) {
+	if (!this->writer->openFile(uri.c_str()))
+	{
 		return false;
 	}
 	this->writer->write("%PDF-1.4\n");
 
 	int count = 0;
-	for (GList * l = range; l != NULL; l = l->next) {
-		PageRangeEntry * e = (PageRangeEntry *) l->data;
+	for (GList* l = range; l != NULL; l = l->next)
+	{
+		PageRangeEntry* e = (PageRangeEntry*) l->data;
 		count += e->getLast() - e->getFirst();
 	}
 
-	if (this->progressListener) {
+	if (this->progressListener)
+	{
 		this->progressListener->setMaximumState(count * 2);
 	}
 
 	int c = 0;
-	for (GList * l = range; l != NULL; l = l->next) {
-		PageRangeEntry * e = (PageRangeEntry *) l->data;
+	for (GList* l = range; l != NULL; l = l->next)
+	{
+		PageRangeEntry* e = (PageRangeEntry*) l->data;
 
-		for (int i = e->getFirst(); i < e->getLast(); i++) {
+		for (int i = e->getFirst(); i < e->getLast(); i++)
+		{
 			PageRef page = doc->getPage(i);
 			cPdf.drawPage(page);
-			if (this->progressListener) {
+			if (this->progressListener)
+			{
 				this->progressListener->setCurrentState(c++);
 			}
 		}
@@ -576,19 +663,23 @@ bool PdfExport::createPdf(String uri, GList * range) {
 	cPdf.finalize();
 	addPopplerDocument(cPdf.getDocument());
 
-	for (int i = 0; i < count; i++) {
-		if (!writePage(i)) {
+	for (int i = 0; i < count; i++)
+	{
+		if (!writePage(i))
+		{
 			g_warning("error writing page %i", i + 1);
 			return false;
 		}
 
-		if (this->progressListener) {
+		if (this->progressListener)
+		{
 			this->progressListener->setCurrentState(i + count);
 		}
 	}
 
 	// Write our own footer
-	if (!writeFooter()) {
+	if (!writeFooter())
+	{
 		g_warning("error writing footer");
 		return false;
 	}
@@ -598,50 +689,60 @@ bool PdfExport::createPdf(String uri, GList * range) {
 	return true;
 }
 
-bool PdfExport::createPdf(String uri) {
+bool PdfExport::createPdf(String uri)
+{
 	XOJ_CHECK_TYPE(PdfExport);
 
-	if (doc->getPageCount() < 1) {
+	if (doc->getPageCount() < 1)
+	{
 		lastError = "No pages to export!";
 		return false;
 	}
 
-	if (!this->writer->openFile(uri.c_str())) {
+	if (!this->writer->openFile(uri.c_str()))
+	{
 		return false;
 	}
 
 	this->writer->write("%PDF-1.4\n");
 
-	if (this->progressListener) {
+	if (this->progressListener)
+	{
 		this->progressListener->setMaximumState(doc->getPageCount() * 2);
 	}
 
 	int count = doc->getPageCount();
 
-	for (int i = 0; i < count; i++) {
+	for (int i = 0; i < count; i++)
+	{
 		PageRef page = doc->getPage(i);
 		cPdf.drawPage(page);
 
-		if (this->progressListener) {
+		if (this->progressListener)
+		{
 			this->progressListener->setCurrentState(i);
 		}
 	}
 	cPdf.finalize();
 	addPopplerDocument(cPdf.getDocument());
 
-	for (int i = 0; i < count; i++) {
-		if (!writePage(i)) {
+	for (int i = 0; i < count; i++)
+	{
+		if (!writePage(i))
+		{
 			g_warning("error writing page %i", i + 1);
 			return false;
 		}
 
-		if (this->progressListener) {
+		if (this->progressListener)
+		{
 			this->progressListener->setCurrentState(i + count);
 		}
 	}
 
 	// Write our own footer
-	if (!writeFooter()) {
+	if (!writeFooter())
+	{
 		g_warning("error writing footer");
 		return false;
 	}

@@ -21,29 +21,30 @@
 class Control;
 class XojPage;
 
-class UndoAction {
+class UndoAction
+{
 public:
-	UndoAction(const char * className);
+	UndoAction(const char* className);
 	virtual ~UndoAction();
 
 public:
-	virtual bool undo(Control * control) = 0;
-	virtual bool redo(Control * control) = 0;
+	virtual bool undo(Control* control) = 0;
+	virtual bool redo(Control* control) = 0;
 
 	virtual String getText() = 0;
 
 	/**
 	 * Get the affected pages, the Array is terminated with NULL and should be freed with delete[]
 	 */
-	virtual XojPage ** getPages();
+	virtual XojPage** getPages();
 
-	const char * getClassName() const;
+	const char* getClassName() const;
 
 protected:
 	XOJ_TYPE_ATTRIB;
 
 	// This is only for debugging / Testing purpose
-	const char * className;
+	const char* className;
 
 	PageRef page;
 	bool undone;

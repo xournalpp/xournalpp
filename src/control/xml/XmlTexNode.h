@@ -14,24 +14,26 @@
 
 #include "XmlNode.h"
 
-class XmlTexNode: public XmlNode {
+class XmlTexNode: public XmlNode
+{
 public:
-	XmlTexNode(const char * tag);
+	XmlTexNode(const char* tag);
 	virtual ~XmlTexNode();
 
 public:
-	void setImage(cairo_surface_t * img);
+	void setImage(cairo_surface_t* img);
 
-	static cairo_status_t pngWriteFunction(XmlTexNode * image, unsigned char *data, unsigned int length);
+	static cairo_status_t pngWriteFunction(XmlTexNode* image, unsigned char* data,
+	                                       unsigned int length);
 
-	virtual void writeOut(OutputStream * out);
+	virtual void writeOut(OutputStream* out);
 
 private:
 	XOJ_TYPE_ATTRIB;
 
-	cairo_surface_t * img;
+	cairo_surface_t* img;
 
-	OutputStream * out;
+	OutputStream* out;
 	int pos;
 	unsigned char buffer[30];
 };

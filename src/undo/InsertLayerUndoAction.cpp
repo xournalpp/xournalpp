@@ -5,17 +5,21 @@
 #include "../control/Control.h"
 #include "../gui/XournalView.h"
 
-InsertLayerUndoAction::InsertLayerUndoAction(PageRef page, Layer * layer) : UndoAction("InsertLayerUndoAction") {
+InsertLayerUndoAction::InsertLayerUndoAction(PageRef page,
+                                             Layer* layer) : UndoAction("InsertLayerUndoAction")
+{
 	XOJ_INIT_TYPE(InsertLayerUndoAction);
 
 	this->page = page;
 	this->layer = layer;
 }
 
-InsertLayerUndoAction::~InsertLayerUndoAction() {
+InsertLayerUndoAction::~InsertLayerUndoAction()
+{
 	XOJ_CHECK_TYPE(InsertLayerUndoAction);
 
-	if (this->undone) {
+	if (this->undone)
+	{
 		// The layer was undone, also deleted
 		delete this->layer;
 	}
@@ -23,16 +27,18 @@ InsertLayerUndoAction::~InsertLayerUndoAction() {
 	XOJ_RELEASE_TYPE(InsertLayerUndoAction);
 }
 
-String InsertLayerUndoAction::getText() {
+String InsertLayerUndoAction::getText()
+{
 	XOJ_CHECK_TYPE(InsertLayerUndoAction);
 
 	return _("Insert layer");
 }
 
-bool InsertLayerUndoAction::undo(Control * control) {
+bool InsertLayerUndoAction::undo(Control* control)
+{
 	XOJ_CHECK_TYPE(InsertLayerUndoAction);
 
-	Document * doc = control->getDocument();
+	Document* doc = control->getDocument();
 
 	//perform the same thing we did to InsertDeletePage
 	//to prevent a double lock (we're already locked here)
@@ -53,10 +59,11 @@ bool InsertLayerUndoAction::undo(Control * control) {
 	return true;
 }
 
-bool InsertLayerUndoAction::redo(Control * control) {
+bool InsertLayerUndoAction::redo(Control* control)
+{
 	XOJ_CHECK_TYPE(InsertLayerUndoAction);
 
-	Document * doc = control->getDocument();
+	Document* doc = control->getDocument();
 
 	//doc->lock();
 

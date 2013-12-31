@@ -17,14 +17,15 @@
 #include "Font.h"
 #include <gtk/gtk.h>
 
-class Text: public Element {
+class Text: public Element
+{
 public:
 	Text();
 	virtual ~Text();
 
 public:
-	void setFont(XojFont & font);
-	XojFont & getFont();
+	void setFont(XojFont& font);
+	XojFont& getFont();
 
 	String getText();
 	void setText(String text);
@@ -42,12 +43,12 @@ public:
 	/**
 	 * @overwrite
 	 */
-	virtual Element * clone();
+	virtual Element* clone();
 
 public:
 	// Serialize interface
-	void serialize(ObjectOutputStream & out);
-	void readSerialized(ObjectInputStream & in) throw (InputStreamException);
+	void serialize(ObjectOutputStream& out);
+	void readSerialized(ObjectInputStream& in) throw (InputStreamException);
 
 protected:
 	virtual void calcSize();

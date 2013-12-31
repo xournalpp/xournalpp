@@ -18,9 +18,10 @@
 
 class Control;
 
-class AutosaveJob: public Job {
+class AutosaveJob: public Job
+{
 public:
-	AutosaveJob(Control * control);
+	AutosaveJob(Control* control);
 
 protected:
 	virtual ~AutosaveJob();
@@ -35,7 +36,7 @@ private:
 	XOJ_TYPE_ATTRIB;
 
 
-	Control * control;
+	Control* control;
 	String error;
 };
 

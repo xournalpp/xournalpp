@@ -17,9 +17,10 @@
 #include <XournalType.h>
 
 class Control;
-class PdfExportJob: public BlockingJob {
+class PdfExportJob: public BlockingJob
+{
 public:
-	PdfExportJob(Control * control);
+	PdfExportJob(Control* control);
 
 protected:
 	virtual ~PdfExportJob();

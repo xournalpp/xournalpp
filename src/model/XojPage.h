@@ -21,16 +21,17 @@
 #include "BackgroundImage.h"
 
 
-class XojPage {
+class XojPage
+{
 public:
 	XojPage(double width, double heigth);
 	void reference();
 	void unreference();
 
 private:
-	XojPage(const XojPage & page);
+	XojPage(const XojPage& page);
 	virtual ~XojPage();
-	void operator=(const XojPage & p);
+	void operator=(const XojPage& p);
 
 public:
 	// Also set the size over doc->setPageSize!
@@ -47,9 +48,9 @@ public:
 	double getWidth();
 	double getHeight();
 
-	void addLayer(Layer * layer);
-	void insertLayer(Layer * layer, int index);
-	void removeLayer(Layer * layer);
+	void addLayer(Layer* layer);
+	void insertLayer(Layer* layer, int index);
+	void removeLayer(Layer* layer);
 
 	int getPdfPageNr();
 
@@ -63,15 +64,15 @@ public:
 	int getSelectedLayerId();
 	void setSelectedLayerId(int id);
 
-	Layer * getSelectedLayer();
+	Layer* getSelectedLayer();
 
-	BackgroundImage & getBackgroundImage();
+	BackgroundImage& getBackgroundImage();
 	void setBackgroundImage(BackgroundImage img);
 
 	/**
 	 * Copies this page an all it's contents to a new page
 	 */
-	XojPage * clone();
+	XojPage* clone();
 
 private:
 	XOJ_TYPE_ATTRIB;
@@ -95,7 +96,7 @@ private:
 	/**
 	 * The layer list
 	 */
-	GList * layer;
+	GList* layer;
 
 	/**
 	 * The current selected layer ID

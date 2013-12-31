@@ -19,30 +19,32 @@ class PageView;
 class PagePosition;
 class PagePositionCache;
 
-class PagePositionHandler {
+class PagePositionHandler
+{
 public:
 	PagePositionHandler();
 	virtual ~PagePositionHandler();
 
 public:
-	void update(PageView ** viewPages, int viewPagesLen, int maxY);
+	void update(PageView** viewPages, int viewPagesLen, int maxY);
 
-	PageView * getViewAt(int x, int y, PagePositionCache * cache = NULL);
-	PageView * getBestMatchingView(int x, int y, int width, int heigth);
+	PageView* getViewAt(int x, int y, PagePositionCache* cache = NULL);
+	PageView* getBestMatchingView(int x, int y, int width, int heigth);
 
 private:
-	void addData(PagePosition * p);
+	void addData(PagePosition* p);
 	void allocDataSize(int size);
 	void freeData();
 
-	PagePosition * binarySearch(PagePosition ** sortedArray, int first, int last, int y, int & index);
+	PagePosition* binarySearch(PagePosition** sortedArray, int first, int last,
+	                           int y, int& index);
 
 private:
 	XOJ_TYPE_ATTRIB;
 
 	int dataCount;
 	int dataAllocSize;
-	PagePosition ** data;
+	PagePosition** data;
 
 	int maxY;
 };

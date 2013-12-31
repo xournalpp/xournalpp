@@ -15,16 +15,17 @@
 #include <String.h>
 #include <XournalType.h>
 
-class ToolbarItem {
+class ToolbarItem
+{
 public:
 	ToolbarItem(String name);
-	ToolbarItem(const ToolbarItem & item);
+	ToolbarItem(const ToolbarItem& item);
 	ToolbarItem();
 	virtual ~ToolbarItem();
 
 	operator String();
 
-	bool operator == (ToolbarItem & other);
+	bool operator == (ToolbarItem& other);
 
 	int getId();
 

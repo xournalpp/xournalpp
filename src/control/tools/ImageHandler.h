@@ -18,20 +18,21 @@
 class Control;
 class PageView;
 
-class ImageHandler {
+class ImageHandler
+{
 public:
-	ImageHandler(Control * control, PageView * view);
+	ImageHandler(Control* control, PageView* view);
 	virtual ~ImageHandler();
 
 public:
 	bool insertImage(double x, double y);
-	bool insertImage(GFile * file, double x, double y);
+	bool insertImage(GFile* file, double x, double y);
 
 private:
 	XOJ_TYPE_ATTRIB;
 
-	Control * control;
-	PageView * view;
+	Control* control;
+	PageView* view;
 };
 
 #endif /* __IMAGEHANDLER_H__ */

@@ -19,23 +19,24 @@
 
 #include "../poppler-0.24.1/poppler/Link.h"
 
-class XojPopplerAction  {
+class XojPopplerAction
+{
 public:
-	XojPopplerAction(XojPopplerDocument doc, LinkAction * linkAction, String title);
+	XojPopplerAction(XojPopplerDocument doc, LinkAction* linkAction, String title);
 	virtual ~XojPopplerAction();
 
 public:
-	XojLinkDest * getDestination();
+	XojLinkDest* getDestination();
 	String getTitle();
 
 private:
-	void linkFromDest(LinkDestination *link, LinkDest *dest);
+	void linkFromDest(LinkDestination* link, LinkDest* dest);
 
 private:
 	XOJ_TYPE_ATTRIB;
 
 	XojPopplerDocument doc;
-	LinkAction * linkAction;
+	LinkAction* linkAction;
 	String title;
 };
 

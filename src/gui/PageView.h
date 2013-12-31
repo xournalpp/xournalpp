@@ -31,9 +31,10 @@ class InputHandler;
 
 class Text;
 
-class PageView: public Redrawable {
+class PageView: public Redrawable
+{
 public:
-	PageView(XournalView * xournal, PageRef page);
+	PageView(XournalView* xournal, PageRef page);
 	virtual ~PageView();
 
 public:
@@ -53,10 +54,10 @@ public:
 
 	void endText();
 
-	bool searchTextOnPage(const char * text, int * occures, double * top);
+	bool searchTextOnPage(const char* text, int* occures, double* top);
 
-	bool onKeyPressEvent(GdkEventKey *event);
-	bool onKeyReleaseEvent(GdkEventKey *event);
+	bool onKeyPressEvent(GdkEventKey* event);
+	bool onKeyReleaseEvent(GdkEventKey* event);
 
 	bool cut();
 	bool copy();
@@ -80,9 +81,9 @@ public:
 	 * else the time in Seconds
 	 */
 	int getLastVisibelTime();
-	TextEditor * getTextEditor();
+	TextEditor* getTextEditor();
 	PageRef getPage();
-	XournalView * getXournal();
+	XournalView* getXournal();
 	double getHeight();
 	double getWidth();
 	int getDisplayWidth();
@@ -90,21 +91,20 @@ public:
 	int getX();
 	int getY();
 
-	virtual Rectangle * rectOnWidget(double x, double y, double width, double height);
+	virtual Rectangle* rectOnWidget(double x, double y, double width,
+	                                double height);
 
-	TexImage * getSelectedTex();
-
-	void copySelection(EditSelection * selection);
+	TexImage* getSelectedTex();
 
 public: // event handler
-	bool onButtonPressEvent(GtkWidget * widget, GdkEventButton * event);
-	bool onButtonReleaseEvent(GtkWidget * widget, GdkEventButton * event);
-	bool onMotionNotifyEvent(GtkWidget * widget, GdkEventMotion * event);
-	void translateEvent(GdkEvent * event, int xOffset, int yOffset);
-	bool paintPage(cairo_t * cr, GdkRectangle * rect);
+	bool onButtonPressEvent(GtkWidget* widget, GdkEventButton* event);
+	bool onButtonReleaseEvent(GtkWidget* widget, GdkEventButton* event);
+	bool onMotionNotifyEvent(GtkWidget* widget, GdkEventMotion* event);
+	void translateEvent(GdkEvent* event, int xOffset, int yOffset);
+	bool paintPage(cairo_t* cr, GdkRectangle* rect);
 
 private:
-	void handleScrollEvent(GdkEventButton * event);
+	void handleScrollEvent(GdkEventButton* event);
 
 	void startText(double x, double y);
 	void selectObjectAt(double x, double y);
@@ -119,50 +119,50 @@ private:
 	XOJ_TYPE_ATTRIB;
 
 	PageRef page;
-	XournalView * xournal;
-	Settings * settings;
-	EraseHandler * eraser;
-	InputHandler * inputHandler;
+	XournalView* xournal;
+	Settings* settings;
+	EraseHandler* eraser;
+	InputHandler* inputHandler;
 
 	/**
 	 * The selected (while selection)
 	 */
-	Selection * selection;
+	Selection* selection;
 
 	/**
 	 * The text editor View
 	 */
-	TextEditor * textEditor;
+	TextEditor* textEditor;
 
 	//For keeping old text changes to undo!
-	Text * oldtext;
+	Text* oldtext;
 
 	bool selected;
 
-	cairo_surface_t * crBuffer;
+	cairo_surface_t* crBuffer;
 
 	bool inEraser;
 
 	bool extendedWarningDisplayd;
 
 	// Vertical Space
-	VerticalToolHandler * verticalSpace;
+	VerticalToolHandler* verticalSpace;
 
 	/**
 	 * Search handling
 	 */
-	SearchControl * search;
+	SearchControl* search;
 
 	/**
 	 * Unixtimestam when the page was last time in the visible area
 	 */
 	int lastVisibleTime;
 
-	GMutex * repaintRectMutex;
-	GList * rerenderRects;
+	GMutex* repaintRectMutex;
+	GList* rerenderRects;
 	bool rerenderComplete;
 
-	GMutex * drawingMutex;
+	GMutex* drawingMutex;
 
 	friend class InsertImageRunnable;
 	friend class RenderJob;

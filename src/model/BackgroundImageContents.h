@@ -17,14 +17,15 @@
 #include <XournalType.h>
 #include <gtk/gtk.h>
 
-class BackgroundImageContents {
+class BackgroundImageContents
+{
 public:
-	BackgroundImageContents(String filename, GError ** error);
+	BackgroundImageContents(String filename, GError** error);
 
 private:
 	BackgroundImageContents();
-	BackgroundImageContents(const BackgroundImageContents & contents);
-	void operator =(const BackgroundImageContents & contents);
+	BackgroundImageContents(const BackgroundImageContents& contents);
+	void operator =(const BackgroundImageContents& contents);
 
 private:
 	virtual ~BackgroundImageContents();
@@ -43,7 +44,7 @@ public:
 	int getPageId();
 	void setPageId(int id);
 
-	GdkPixbuf * getPixbuf();
+	GdkPixbuf* getPixbuf();
 
 private:
 	XOJ_TYPE_ATTRIB;
@@ -52,7 +53,7 @@ private:
 	String filename;
 	bool attach;
 	int pageId;
-	GdkPixbuf * pixbuf;
+	GdkPixbuf* pixbuf;
 };
 
 #endif /* __BACKGROUNDIMAGECONTENTS_H__ */

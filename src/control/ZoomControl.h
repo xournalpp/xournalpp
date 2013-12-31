@@ -16,13 +16,15 @@
 
 #include <XournalType.h>
 
-class ZoomListener {
+class ZoomListener
+{
 public:
 	virtual void zoomChanged(double lastZoom) = 0;
 	virtual void zoomRangeValuesChanged();
 };
 
-class ZoomControl {
+class ZoomControl
+{
 public:
 	ZoomControl();
 	virtual ~ZoomControl();
@@ -42,20 +44,21 @@ public:
 	double getZoomFit();
 	double getZoom100();
 
-	void addZoomListener(ZoomListener * listener);
+	void addZoomListener(ZoomListener* listener);
 
-	void initZoomHandler(GtkWidget * widget);
+	void initZoomHandler(GtkWidget* widget);
 
 protected:
 	void fireZoomChanged(double lastZoom);
 	void fireZoomRangeValueChanged();
 
-	static bool onScrolledwindowMainScrollEvent(GtkWidget * widget, GdkEventScroll * event, ZoomControl * zoom);
+	static bool onScrolledwindowMainScrollEvent(GtkWidget* widget,
+	                                            GdkEventScroll* event, ZoomControl* zoom);
 
 private:
 	XOJ_TYPE_ATTRIB;
 
-	GList * listener;
+	GList* listener;
 
 	double zoom;
 

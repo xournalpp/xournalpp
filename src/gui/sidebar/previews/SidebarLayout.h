@@ -17,7 +17,8 @@
 
 class SidebarPreviews;
 
-class SidebarLayout {
+class SidebarLayout
+{
 public:
 	SidebarLayout();
 	virtual ~SidebarLayout();
@@ -26,7 +27,7 @@ public:
 	/**
 	 * Layouts the sidebar
 	 */
-	void layout(SidebarPreviews * sidebar);
+	void layout(SidebarPreviews* sidebar);
 
 private:
 	XOJ_TYPE_ATTRIB;

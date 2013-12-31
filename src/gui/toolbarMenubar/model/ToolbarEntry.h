@@ -16,13 +16,14 @@
 #include <gtk/gtk.h>
 #include "../../../util/ListIterator.h"
 
-class ToolbarEntry {
+class ToolbarEntry
+{
 public:
 	ToolbarEntry();
-	ToolbarEntry(const ToolbarEntry & e);
+	ToolbarEntry(const ToolbarEntry& e);
 	~ToolbarEntry();
 
-	void operator = (const ToolbarEntry & e);
+	void operator = (const ToolbarEntry& e);
 
 	void clearList();
 
@@ -41,13 +42,13 @@ public:
 	 */
 	int insertItem(String item, int position);
 
-	ListIterator<ToolbarItem *> iterator();
+	ListIterator<ToolbarItem*> iterator();
 
 private:
 	XOJ_TYPE_ATTRIB;
 
 	String name;
-	GList * entries;
+	GList* entries;
 };
 
 #endif /* __TOOLBARENTRY_H__ */

@@ -20,9 +20,10 @@
 class Rectangle;
 class PageView;
 
-class RenderJob: public Job {
+class RenderJob: public Job
+{
 public:
-	RenderJob(PageView * view);
+	RenderJob(PageView* view);
 
 protected:
 	virtual ~RenderJob();
@@ -30,20 +31,20 @@ protected:
 public:
 	virtual JobType getType();
 
-	void * getSource();
+	void* getSource();
 
 	void run();
 
 public:
-	static void rerenderRectangle(RenderJob * renderJob, Rectangle * rect);
+	static void rerenderRectangle(RenderJob* renderJob, Rectangle* rect);
 
 private:
-	void rerenderRectangle(Rectangle * rect);
+	void rerenderRectangle(Rectangle* rect);
 
 private:
 	XOJ_TYPE_ATTRIB;
 
-	PageView * view;
+	PageView* view;
 };
 
 #endif /* __RENDERJOB_H__ */

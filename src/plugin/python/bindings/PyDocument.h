@@ -17,9 +17,9 @@ class Control;
 
 extern "C" {
 
-void initdocument();
+	void initdocument();
 
-PyObject * newPyDocument(PyObject * xournal);
+	PyObject* newPyDocument(PyObject* xournal);
 
 }
 

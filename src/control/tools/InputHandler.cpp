@@ -14,7 +14,8 @@
 
 #define PIXEL_MOTION_THRESHOLD 0.3
 
-InputHandler::InputHandler(XournalView * xournal, PageView * redrawable) {
+InputHandler::InputHandler(XournalView* xournal, PageView* redrawable)
+{
 	XOJ_INIT_TYPE(InputHandler);
 
 	this->tmpStroke = NULL;
@@ -26,7 +27,8 @@ InputHandler::InputHandler(XournalView * xournal, PageView * redrawable) {
 	this->reco = NULL;
 }
 
-InputHandler::~InputHandler() {
+InputHandler::~InputHandler()
+{
 	XOJ_CHECK_TYPE(InputHandler);
 
 	this->tmpStroke = NULL;
@@ -35,7 +37,8 @@ InputHandler::~InputHandler() {
 	delete this->view;
 	this->view = NULL;
 
-	if (this->reco) {
+	if (this->reco)
+	{
 		delete this->reco;
 		this->reco = NULL;
 	}
@@ -43,44 +46,57 @@ InputHandler::~InputHandler() {
 	XOJ_RELEASE_TYPE(InputHandler);
 }
 
-void InputHandler::addPointToTmpStroke(GdkEventMotion * event) {
+void InputHandler::addPointToTmpStroke(GdkEventMotion* event)
+{
 	XOJ_CHECK_TYPE(InputHandler);
 
 	double zoom = xournal->getZoom();
 	double x = event->x / zoom;
 	double y = event->y / zoom;
-	bool presureSensitivity = xournal->getControl()->getSettings()->isPresureSensitivity();
+	bool presureSensitivity =
+	    xournal->getControl()->getSettings()->isPresureSensitivity();
 
-	if (tmpStroke->getPointCount() > 0) {
+	if (tmpStroke->getPointCount() > 0)
+	{
 		Point p = tmpStroke->getPoint(tmpStroke->getPointCount() - 1);
 
-		if (hypot(p.x - x, p.y - y) < PIXEL_MOTION_THRESHOLD) {
+		if (hypot(p.x - x, p.y - y) < PIXEL_MOTION_THRESHOLD)
+		{
 			return; // not a meaningful motion
 		}
 	}
 
-	ToolHandler * h = xournal->getControl()->getToolHandler();
+	ToolHandler* h = xournal->getControl()->getToolHandler();
 
-	if (h->isRuler()) {
+	if (h->isRuler())
+	{
 		int count = tmpStroke->getPointCount();
-		if (count < 2) {
+		if (count < 2)
+		{
 			tmpStroke->addPoint(Point(x, y));
-		} else {
+		}
+		else
+		{
 			tmpStroke->setLastPoint(x, y);
 		}
 		Point p = tmpStroke->getPoint(0);
 
-//TODO: This needs fixing on Debian Squeeze
+		//TODO: This needs fixing on Debian Squeeze
 		this->redrawable->rerenderElement(this->tmpStroke);
 		return;
 	}
 
-	if (presureSensitivity) {
+	if (presureSensitivity)
+	{
 		double pressure = Point::NO_PRESURE;
-		if (h->getToolType() == TOOL_PEN) {
-			if (getPressureMultiplier((GdkEvent *) event, pressure)) {
+		if (h->getToolType() == TOOL_PEN)
+		{
+			if (getPressureMultiplier((GdkEvent*) event, pressure))
+			{
 				pressure = pressure * tmpStroke->getWidth();
-			} else {
+			}
+			else
+			{
 				pressure = Point::NO_PRESURE;
 			}
 		}
@@ -92,42 +108,52 @@ void InputHandler::addPointToTmpStroke(GdkEventMotion * event) {
 	drawTmpStroke();
 }
 
-bool InputHandler::getPressureMultiplier(GdkEvent * event, double & presure) {
+bool InputHandler::getPressureMultiplier(GdkEvent* event, double& presure)
+{
 	XOJ_CHECK_TYPE(InputHandler);
 
-	double * axes = NULL;
-	GdkDevice * device = NULL;
+	double* axes = NULL;
+	GdkDevice* device = NULL;
 
-	if (event->type == GDK_MOTION_NOTIFY) {
+	if (event->type == GDK_MOTION_NOTIFY)
+	{
 		axes = event->motion.axes;
 		device = event->motion.device;
-	} else {
+	}
+	else
+	{
 		axes = event->button.axes;
 		device = event->button.device;
 	}
 
-	if (device == gdk_device_get_core_pointer() || device->num_axes <= 2) {
+	if (device == gdk_device_get_core_pointer() || device->num_axes <= 2)
+	{
 		presure = 1.0;
 		return false;
 	}
 
 	double rawpressure = axes[2] / (device->axes[2].max - device->axes[2].min);
-	if (!finite(rawpressure)) {
+	if (!finite(rawpressure))
+	{
 		presure = 1.0;
 		return false;
 	}
 
-	Settings * settings = xournal->getControl()->getSettings();
+	Settings* settings = xournal->getControl()->getSettings();
 
-	presure = ((1 - rawpressure) * settings->getWidthMinimumMultiplier() + rawpressure * settings->getWidthMaximumMultiplier());
+	presure = ((1 - rawpressure) * settings->getWidthMinimumMultiplier() +
+	           rawpressure * settings->getWidthMaximumMultiplier());
 	return true;
 }
 
-void InputHandler::drawTmpStroke() {
+void InputHandler::drawTmpStroke()
+{
 	XOJ_CHECK_TYPE(InputHandler);
 
-	if (this->tmpStroke) {
-		cairo_t * cr = gtk_xournal_create_cairo_for(this->xournal->getWidget(), this->redrawable);
+	if (this->tmpStroke)
+	{
+		cairo_t* cr = gtk_xournal_create_cairo_for(this->xournal->getWidget(),
+		                                           this->redrawable);
 
 		double zoom = xournal->getControl()->getZoomControl()->getZoom();
 
@@ -141,11 +167,16 @@ void InputHandler::drawTmpStroke() {
 		 */
 
 		double factor = 1;
-		if (zoom < 0.8) {
+		if (zoom < 0.8)
+		{
 			factor = sqrt(zoom);
-		} else if (zoom < 1.0) {
+		}
+		else if (zoom < 1.0)
+		{
 			factor = sqrt(zoom) - 0.3;
-		} else if (zoom < 1.5) {
+		}
+		else if (zoom < 1.5)
+		{
 			factor = sqrt(zoom) - 0.2;
 		}
 
@@ -155,27 +186,33 @@ void InputHandler::drawTmpStroke() {
 	}
 }
 
-void InputHandler::draw(cairo_t * cr, double zoom) {
+void InputHandler::draw(cairo_t* cr, double zoom)
+{
 	XOJ_CHECK_TYPE(InputHandler);
 
-	if (this->tmpStroke) {
+	if (this->tmpStroke)
+	{
 		this->view->drawStroke(cr, this->tmpStroke, zoom);
 	}
 }
 
-void InputHandler::onButtonReleaseEvent(GdkEventButton * event, PageRef page) {
+void InputHandler::onButtonReleaseEvent(GdkEventButton* event, PageRef page)
+{
 	XOJ_CHECK_TYPE(InputHandler);
 
-	if (!this->tmpStroke) {
+	if (!this->tmpStroke)
+	{
 		return;
 	}
 
 	// Backward compatibility and also easier to handle for me;-)
 	// I cannot draw a line with one point, to draw a visible line I need two points,
 	// twice the same Point is also OK
-	if (this->tmpStroke->getPointCount() == 1) {
+	if (this->tmpStroke->getPointCount() == 1)
+	{
 		ArrayIterator<Point> it = this->tmpStroke->pointIterator();
-		if (it.hasNext()) {
+		if (it.hasNext())
+		{
 			this->tmpStroke->addPoint(it.next());
 		}
 		// No pressure sensitivity
@@ -184,70 +221,85 @@ void InputHandler::onButtonReleaseEvent(GdkEventButton * event, PageRef page) {
 
 	this->tmpStroke->freeUnusedPointItems();
 
-	if (page.getSelectedLayerId() < 1) {
+	if (page.getSelectedLayerId() < 1)
+	{
 		// This creates a layer if none exists
 		page.getSelectedLayer();
 		page.setSelectedLayerId(1);
 		xournal->getControl()->getWindow()->updateLayerCombobox();
 	}
 
-	Layer * layer = page.getSelectedLayer();
+	Layer* layer = page.getSelectedLayer();
 
-	UndoRedoHandler * undo = xournal->getControl()->getUndoRedoHandler();
+	UndoRedoHandler* undo = xournal->getControl()->getUndoRedoHandler();
 
-	undo->addUndoAction(new InsertUndoAction(page, layer, this->tmpStroke, this->redrawable));
+	undo->addUndoAction(new InsertUndoAction(page, layer, this->tmpStroke,
+	                                         this->redrawable));
 
-	ToolHandler * h = xournal->getControl()->getToolHandler();
-	if (h->isShapeRecognizer()) {
-		if (this->reco == NULL) {
+	ToolHandler* h = xournal->getControl()->getToolHandler();
+	if (h->isShapeRecognizer())
+	{
+		if (this->reco == NULL)
+		{
 			this->reco = new ShapeRecognizer();
 		}
-		ShapeRecognizerResult * result = this->reco->recognizePatterns(this->tmpStroke);
+		ShapeRecognizerResult* result = this->reco->recognizePatterns(this->tmpStroke);
 
-		if (result != NULL) {
-			UndoRedoHandler * undo = xournal->getControl()->getUndoRedoHandler();
+		if (result != NULL)
+		{
+			UndoRedoHandler* undo = xournal->getControl()->getUndoRedoHandler();
 
-			Stroke * recognized = result->getRecognized();
+			Stroke* recognized = result->getRecognized();
 
-			RecognizerUndoAction * recognizerUndo = new RecognizerUndoAction(page, this->redrawable, layer, this->tmpStroke, recognized);
+			RecognizerUndoAction* recognizerUndo = new RecognizerUndoAction(page,
+			                                                                this->redrawable, layer, this->tmpStroke, recognized);
 			undo->addUndoAction(recognizerUndo);
 			layer->addElement(result->getRecognized());
 
 			Range range(recognized->getX(), recognized->getY());
-			range.addPoint(recognized->getX() + recognized->getElementWidth(), recognized->getY() + recognized->getElementHeight());
+			range.addPoint(recognized->getX() + recognized->getElementWidth(),
+			               recognized->getY() + recognized->getElementHeight());
 
 			range.addPoint(this->tmpStroke->getX(), this->tmpStroke->getY());
-			range.addPoint(this->tmpStroke->getX() + this->tmpStroke->getElementWidth(), this->tmpStroke->getY() + this->tmpStroke->getElementHeight());
+			range.addPoint(this->tmpStroke->getX() + this->tmpStroke->getElementWidth(),
+			               this->tmpStroke->getY() + this->tmpStroke->getElementHeight());
 
-			ListIterator<Stroke *> l = result->getSources();
-			while (l.hasNext()) {
-				Stroke * s = l.next();
+			ListIterator<Stroke*> l = result->getSources();
+			while (l.hasNext())
+			{
+				Stroke* s = l.next();
 
 				layer->removeElement(s, false);
 
 				recognizerUndo->addSourceElement(s);
 
 				range.addPoint(s->getX(), s->getY());
-				range.addPoint(s->getX() + s->getElementWidth(), s->getY() + s->getElementHeight());
+				range.addPoint(s->getX() + s->getElementWidth(),
+				               s->getY() + s->getElementHeight());
 			}
 
 			this->redrawable->rerenderRange(range);
 
 			// delete the result object, this is not needed anymore, the stroke are not deleted with this
 			delete result;
-		} else {
+		}
+		else
+		{
 			layer->addElement(this->tmpStroke);
 			this->redrawable->rerenderElement(this->tmpStroke);
 		}
 
-	} else {
+	}
+	else
+	{
 		layer->addElement(this->tmpStroke);
 		this->redrawable->rerenderElement(this->tmpStroke);
 	}
 
 	this->tmpStroke = NULL;
 
-	if (currentInputDevice == event->device) {
+	if (currentInputDevice == event->device)
+	{
 		currentInputDevice = NULL;
 		INPUTDBG("currentInputDevice = NULL\n", 0);
 	}
@@ -255,46 +307,52 @@ void InputHandler::onButtonReleaseEvent(GdkEventButton * event, PageRef page) {
 	this->tmpStrokeDrawElem = 0;
 }
 
-bool InputHandler::onMotionNotifyEvent(GdkEventMotion * event) {
+bool InputHandler::onMotionNotifyEvent(GdkEventMotion* event)
+{
 	XOJ_CHECK_TYPE(InputHandler);
 
 	// TODO: LOW PRIO: this->currentInputDevice should not be NULL!
-//	if(this->currentInputDevice) {
-//		INPUTDBG("this->currentInputDevice == null\n", 0);
-//		return false;
-//	}
+	//	if(this->currentInputDevice) {
+	//		INPUTDBG("this->currentInputDevice == null\n", 0);
+	//		return false;
+	//	}
 
-//	if (this->currentInputDevice == event->device || this->currentInputDevice == NULL) {
-		if (this->tmpStroke != NULL) {
-			this->addPointToTmpStroke(event);
-			return true;
-		}
-//	} else {
-//		const char * n1 = "null";
-//		const char * n2 = "null";
-//
-//		if(this->currentInputDevice) {
-//			n1 = this->currentInputDevice->name;
-//		}
-//		if(event->device) {
-//			n2 = event->device->name;
-//		}
-//
-//		INPUTDBG("Motion ignored, not the same device as the starting device. 1: %s, 2: %s\n", n1, n2);
-//	}
+	//	if (this->currentInputDevice == event->device || this->currentInputDevice == NULL) {
+	if (this->tmpStroke != NULL)
+	{
+		this->addPointToTmpStroke(event);
+		return true;
+	}
+	//	} else {
+	//		const char * n1 = "null";
+	//		const char * n2 = "null";
+	//
+	//		if(this->currentInputDevice) {
+	//			n1 = this->currentInputDevice->name;
+	//		}
+	//		if(event->device) {
+	//			n2 = event->device->name;
+	//		}
+	//
+	//		INPUTDBG("Motion ignored, not the same device as the starting device. 1: %s, 2: %s\n", n1, n2);
+	//	}
 	return false;
 }
 
-void InputHandler::startStroke(GdkEventButton * event, StrokeTool tool, double x, double y) {
+void InputHandler::startStroke(GdkEventButton* event, StrokeTool tool, double x,
+                               double y)
+{
 	XOJ_CHECK_TYPE(InputHandler);
 
-	ToolHandler * h = xournal->getControl()->getToolHandler();
+	ToolHandler* h = xournal->getControl()->getToolHandler();
 
-	if(event->device == NULL) {
+	if(event->device == NULL)
+	{
 		g_warning("startStroke: event->device == null");
 	}
 
-	if (tmpStroke == NULL) {
+	if (tmpStroke == NULL)
+	{
 		currentInputDevice = event->device;
 		tmpStroke = new Stroke();
 		tmpStroke->setWidth(h->getThickness());
@@ -304,16 +362,19 @@ void InputHandler::startStroke(GdkEventButton * event, StrokeTool tool, double x
 	}
 }
 
-Stroke * InputHandler::getTmpStroke() {
+Stroke* InputHandler::getTmpStroke()
+{
 	XOJ_CHECK_TYPE(InputHandler);
 
 	return tmpStroke;
 }
 
-void InputHandler::resetShapeRecognizer() {
+void InputHandler::resetShapeRecognizer()
+{
 	XOJ_CHECK_TYPE(InputHandler);
 
-	if (this->reco) {
+	if (this->reco)
+	{
 		delete this->reco;
 		this->reco = NULL;
 	}

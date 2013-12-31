@@ -59,19 +59,19 @@ void xoj_type_initMutex();
  */
 #ifdef XOJ_MEMORY_LEAK_CHECK_ENABLED
 
-const char * xoj_type_getName(int id);
+const char* xoj_type_getName(int id);
 
 
 #define XOJ_INIT_TYPE(type) \
-		this->z__xoj_type = __XOJ_TYPE_ ## type; \
-		this->z__xoj_typeCheckvalue = 0xFFAA00AA; \
-		CALL_LOG("init", #type, this); \
-		xoj_memoryleak_initType(__XOJ_TYPE_ ## type)
+	this->z__xoj_type = __XOJ_TYPE_ ## type; \
+	this->z__xoj_typeCheckvalue = 0xFFAA00AA; \
+	CALL_LOG("init", #type, this); \
+	xoj_memoryleak_initType(__XOJ_TYPE_ ## type)
 #else
 #define XOJ_INIT_TYPE(type) \
-		this->z__xoj_type = __XOJ_TYPE_ ## type; \
-		CALL_LOG("init", #type, this); \
-		this->z__xoj_typeCheckvalue = 0xFFAA00AA
+	this->z__xoj_type = __XOJ_TYPE_ ## type; \
+	CALL_LOG("init", #type, this); \
+	this->z__xoj_typeCheckvalue = 0xFFAA00AA
 #endif
 
 /**
@@ -97,31 +97,31 @@ const char * xoj_type_getName(int id);
  * Checks the type of "this" and returns if "this" is not an instance of "name"
  */
 #define XOJ_CHECK_TYPE_OBJ(obj, type) \
-		if(obj == NULL) { \
-			g_warning("XojTypeCheck failed: NULL %s:%i", __FILE__, __LINE__);\
-		} \
-		if(((type *)obj)->z__xoj_typeCheckvalue != 0xFFAA00AA) { \
-			g_warning("XojTypeCheck failed: expected %s but get something else on %s:%i", #type, __FILE__, __LINE__);\
-		} \
-		if(((type *)obj)->z__xoj_type != __XOJ_TYPE_ ## type) { \
-			g_warning("XojTypeCheck failed: expected %s but get %s on %s:%i", #type, xoj_type_getName(((type *)obj)->z__xoj_type), __FILE__, __LINE__);\
-		} \
-		CALL_LOG("call", #type, obj)
+	if(obj == NULL) { \
+		g_warning("XojTypeCheck failed: NULL %s:%i", __FILE__, __LINE__);\
+	} \
+	if(((type *)obj)->z__xoj_typeCheckvalue != 0xFFAA00AA) { \
+		g_warning("XojTypeCheck failed: expected %s but get something else on %s:%i", #type, __FILE__, __LINE__);\
+	} \
+	if(((type *)obj)->z__xoj_type != __XOJ_TYPE_ ## type) { \
+		g_warning("XojTypeCheck failed: expected %s but get %s on %s:%i", #type, xoj_type_getName(((type *)obj)->z__xoj_type), __FILE__, __LINE__);\
+	} \
+	CALL_LOG("call", #type, obj)
 
 /**
  * Checks the type of "this" and returns if "this" is not an instance of "name"
  */
 #define XOJ_CHECK_TYPE(type) \
-		if(this == NULL) { \
-			g_warning("XojTypeCheck failed: NULL %s:%i", __FILE__, __LINE__);\
-		} \
-		if(((type *)this)->z__xoj_typeCheckvalue != 0xFFAA00AA) { \
-			g_warning("XojTypeCheck failed: expected %s but get something else on %s:%i", #type, __FILE__, __LINE__);\
-		} \
-		if(((type *)this)->z__xoj_type != __XOJ_TYPE_ ## type) { \
-			g_warning("XojTypeCheck failed: expected %s but get %s on %s:%i", #type, xoj_type_getName(((type *)this)->z__xoj_type), __FILE__, __LINE__);\
-		} \
-		CALL_LOG("call", #type, this)
+	if(this == NULL) { \
+		g_warning("XojTypeCheck failed: NULL %s:%i", __FILE__, __LINE__);\
+	} \
+	if(((type *)this)->z__xoj_typeCheckvalue != 0xFFAA00AA) { \
+		g_warning("XojTypeCheck failed: expected %s but get something else on %s:%i", #type, __FILE__, __LINE__);\
+	} \
+	if(((type *)this)->z__xoj_type != __XOJ_TYPE_ ## type) { \
+		g_warning("XojTypeCheck failed: expected %s but get %s on %s:%i", #type, xoj_type_getName(((type *)this)->z__xoj_type), __FILE__, __LINE__);\
+	} \
+	CALL_LOG("call", #type, this)
 
 
 #include "XournalTypeList.h"

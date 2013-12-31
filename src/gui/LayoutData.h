@@ -10,7 +10,8 @@
 
 #include <XournalType.h>
 
-class LayoutData {
+class LayoutData
+{
 public:
 	LayoutData();
 	~LayoutData();

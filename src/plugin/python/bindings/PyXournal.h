@@ -18,10 +18,10 @@ class Control;
 
 extern "C" {
 
-void PyXournal_initPython(Control * control);
-Control * PyXournal_getControl(PyObject * obj);
+	void PyXournal_initPython(Control* control);
+	Control* PyXournal_getControl(PyObject* obj);
 
-bool PyXournal_Check(PyObject * obj);
+	bool PyXournal_Check(PyObject* obj);
 
 }
 

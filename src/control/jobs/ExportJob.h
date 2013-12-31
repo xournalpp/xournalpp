@@ -17,9 +17,11 @@
 #include <String.h>
 #include <XournalType.h>
 
-class ExportJob : public BlockingJob {
+class ExportJob : public BlockingJob
+{
 public:
-	ExportJob(Control * control, GList * selected, ExportFormtType type, int dpi, String folder, String filename);
+	ExportJob(Control* control, GList* selected, ExportFormtType type, int dpi,
+	          String folder, String filename);
 
 protected:
 	virtual ~ExportJob();
@@ -35,10 +37,10 @@ private:
 	XOJ_TYPE_ATTRIB;
 
 
-	GList * selected;
+	GList* selected;
 
-	cairo_surface_t * surface;
-	cairo_t * cr;
+	cairo_surface_t* surface;
+	cairo_t* cr;
 
 	int dpi;
 	ExportFormtType type;

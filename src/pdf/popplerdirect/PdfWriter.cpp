@@ -8,7 +8,8 @@
 
 bool PdfWriter::compressPdfOutput = true;
 
-PdfWriter::PdfWriter(PdfXRef * xref) {
+PdfWriter::PdfWriter(PdfXRef* xref)
+{
 	XOJ_INIT_TYPE(PdfWriter);
 
 	this->inStream = false;
@@ -19,10 +20,12 @@ PdfWriter::PdfWriter(PdfXRef * xref) {
 	this->objectId = 3;
 }
 
-PdfWriter::~PdfWriter() {
+PdfWriter::~PdfWriter()
+{
 	XOJ_CHECK_TYPE(PdfWriter);
 
-	if (this->stream) {
+	if (this->stream)
+	{
 		g_string_free(this->stream, true);
 	}
 	this->stream = NULL;
@@ -32,27 +35,32 @@ PdfWriter::~PdfWriter() {
 	XOJ_RELEASE_TYPE(PdfWriter);
 }
 
-void PdfWriter::setCompressPdfOutput(bool compress) {
+void PdfWriter::setCompressPdfOutput(bool compress)
+{
 	PdfWriter::compressPdfOutput = compress;
 }
 
-void PdfWriter::close() {
+void PdfWriter::close()
+{
 	XOJ_CHECK_TYPE(PdfWriter);
 
 	g_output_stream_close(G_OUTPUT_STREAM(this->out), NULL, NULL);
 }
 
-bool PdfWriter::openFile(const char * uri) {
+bool PdfWriter::openFile(const char* uri)
+{
 	XOJ_CHECK_TYPE(PdfWriter);
 
-	GError * error = NULL;
+	GError* error = NULL;
 
-	GFile * file = g_file_new_for_uri(uri);
-	this->out = g_file_replace(file, NULL, false, (GFileCreateFlags) 0, NULL, &error);
+	GFile* file = g_file_new_for_uri(uri);
+	this->out = g_file_replace(file, NULL, false, (GFileCreateFlags) 0, NULL,
+	                           &error);
 
 	g_object_unref(file);
 
-	if (error) {
+	if (error)
+	{
 		lastError = "Error opening file for writing: ";
 		lastError += error->message;
 		lastError += ", File: ";
@@ -63,61 +71,71 @@ bool PdfWriter::openFile(const char * uri) {
 	return true;
 }
 
-bool PdfWriter::write(const char * data) {
+bool PdfWriter::write(const char* data)
+{
 	XOJ_CHECK_TYPE(PdfWriter);
 
 	return writeLen(data, strlen(data));
 }
 
-bool PdfWriter::writef(const char * format, ...) {
+bool PdfWriter::writef(const char* format, ...)
+{
 	XOJ_CHECK_TYPE(PdfWriter);
 
 	va_list args;
 	va_start(args, format);
-	char * data = g_strdup_vprintf(format, args);
+	char* data = g_strdup_vprintf(format, args);
 	bool res = writeLen(data, strlen(data));
 	g_free(data);
 	return res;
 }
 
-bool PdfWriter::write(int data) {
+bool PdfWriter::write(int data)
+{
 	XOJ_CHECK_TYPE(PdfWriter);
 
 	return writef("%i", data);;
 }
 
-String PdfWriter::getLastError() {
+String PdfWriter::getLastError()
+{
 	XOJ_CHECK_TYPE(PdfWriter);
 
 	return lastError;
 }
 
-int PdfWriter::getObjectId() {
+int PdfWriter::getObjectId()
+{
 	XOJ_CHECK_TYPE(PdfWriter);
 
 	return this->objectId;
 }
 
-int PdfWriter::getNextObjectId() {
+int PdfWriter::getNextObjectId()
+{
 	XOJ_CHECK_TYPE(PdfWriter);
 
 	return this->objectId++;
 }
 
-int PdfWriter::getDataCount() {
+int PdfWriter::getDataCount()
+{
 	XOJ_CHECK_TYPE(PdfWriter);
 
 	return this->dataCount;
 }
 
-bool PdfWriter::writeTxt(const char * data) {
+bool PdfWriter::writeTxt(const char* data)
+{
 	XOJ_CHECK_TYPE(PdfWriter);
 
-	GString * str = g_string_sized_new(strlen(data) + 100);
+	GString* str = g_string_sized_new(strlen(data) + 100);
 	g_string_append(str, "(");
 
-	while (*data) {
-		if (*data == '\\' || *data == '(' || *data == ')' || *data == '\r') {
+	while (*data)
+	{
+		if (*data == '\\' || *data == '(' || *data == ')' || *data == '\r')
+		{
 			g_string_append_c(str, '\\');
 		}
 		g_string_append_c(str, *data);
@@ -130,21 +148,24 @@ bool PdfWriter::writeTxt(const char * data) {
 	g_string_free(str, true);
 }
 
-bool PdfWriter::writeLen(const char * data, int len) {
+bool PdfWriter::writeLen(const char* data, int len)
+{
 	XOJ_CHECK_TYPE(PdfWriter);
 
-	if (this->inStream) {
+	if (this->inStream)
+	{
 		g_string_append_len(this->stream, data, len);
 		return true;
 	}
 
-	GError * err = NULL;
+	GError* err = NULL;
 
 	g_output_stream_write(G_OUTPUT_STREAM(this->out), data, len, NULL, &err);
 
 	this->dataCount += len;
 
-	if (err) {
+	if (err)
+	{
 		this->lastError = "Error writing stream: ";
 		this->lastError += err->message;
 
@@ -156,22 +177,26 @@ bool PdfWriter::writeLen(const char * data, int len) {
 	return true;
 }
 
-bool PdfWriter::writeObj() {
+bool PdfWriter::writeObj()
+{
 	XOJ_CHECK_TYPE(PdfWriter);
 
 	this->xref->addXref(this->dataCount);
 	bool res = this->writef("%i 0 obj\n", this->objectId++);
-	if (!res) {
+	if (!res)
+	{
 		this->lastError = "Internal PDF error #8";
 	}
 
 	return res;
 }
 
-bool PdfWriter::writeInfo(String title) {
+bool PdfWriter::writeInfo(String title)
+{
 	XOJ_CHECK_TYPE(PdfWriter);
 
-	if (!writeObj()) {
+	if (!writeObj())
+	{
 		return false;
 	}
 
@@ -181,17 +206,20 @@ bool PdfWriter::writeInfo(String title) {
 	writeTxt("Xournal++");
 	write("\n");
 
-	if (!title.isEmpty()) {
+	if (!title.isEmpty())
+	{
 		write("/Title ");
-		if (title.length() > 4 && title.substring(-4, 1) == ".") {
+		if (title.length() > 4 && title.substring(-4, 1) == ".")
+		{
 			title = title.substring(0, -4);
 		}
 		writeTxt(title.c_str());
 		write("\n");
 	}
 
-	const char * username = getenv("USERNAME");
-	if(username) {
+	const char* username = getenv("USERNAME");
+	if(username)
+	{
 		write("/Author ");
 		writeTxt(username);
 		write("\n");
@@ -214,32 +242,39 @@ bool PdfWriter::writeInfo(String title) {
 	return this->lastError.isEmpty();
 }
 
-void PdfWriter::startStream() {
+void PdfWriter::startStream()
+{
 	XOJ_CHECK_TYPE(PdfWriter);
 
 	this->inStream = true;
-	if (this->stream == NULL) {
+	if (this->stream == NULL)
+	{
 		this->stream = g_string_new("");
 	}
 }
 
-void PdfWriter::endStream() {
+void PdfWriter::endStream()
+{
 	XOJ_CHECK_TYPE(PdfWriter);
 
 	this->inStream = false;
 
-	GString * data = NULL;
-	GString * compressed = NULL;
+	GString* data = NULL;
+	GString* compressed = NULL;
 
-	if (PdfWriter::compressPdfOutput) {
+	if (PdfWriter::compressPdfOutput)
+	{
 		compressed = GzHelper::gzcompress(this->stream);
 	}
 
-	const char * filter = "";
-	if (compressed) {
+	const char* filter = "";
+	if (compressed)
+	{
 		filter = "/Filter /FlateDecode ";
 		data = compressed;
-	} else {
+	}
+	else
+	{
 		data = this->stream;
 	}
 
@@ -250,7 +285,8 @@ void PdfWriter::endStream() {
 
 	write("\nendstream\n");
 
-	if (compressed) {
+	if (compressed)
+	{
 		g_string_free(compressed, true);
 	}
 

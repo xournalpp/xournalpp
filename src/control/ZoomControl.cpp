@@ -2,7 +2,8 @@
 
 const double zoomStep = 0.2;
 
-ZoomControl::ZoomControl() {
+ZoomControl::ZoomControl()
+{
 	XOJ_INIT_TYPE(ZoomControl);
 
 	this->listener = NULL;
@@ -13,7 +14,8 @@ ZoomControl::ZoomControl() {
 	this->zoomFitMode = true;
 }
 
-ZoomControl::~ZoomControl() {
+ZoomControl::~ZoomControl()
+{
 	XOJ_CHECK_TYPE(ZoomControl);
 
 	g_list_free(this->listener);
@@ -22,51 +24,62 @@ ZoomControl::~ZoomControl() {
 	XOJ_RELEASE_TYPE(ZoomControl);
 }
 
-void ZoomControl::addZoomListener(ZoomListener * listener) {
+void ZoomControl::addZoomListener(ZoomListener* listener)
+{
 	XOJ_CHECK_TYPE(ZoomControl);
 
 	this->listener = g_list_append(this->listener, listener);
 }
 
-void ZoomControl::initZoomHandler(GtkWidget * widget) {
+void ZoomControl::initZoomHandler(GtkWidget* widget)
+{
 	XOJ_CHECK_TYPE(ZoomControl);
 
-	g_signal_connect(widget, "scroll_event", G_CALLBACK(onScrolledwindowMainScrollEvent), this);
+	g_signal_connect(widget, "scroll_event",
+	                 G_CALLBACK(onScrolledwindowMainScrollEvent), this);
 }
 
-void ZoomControl::fireZoomChanged(double lastZoom) {
+void ZoomControl::fireZoomChanged(double lastZoom)
+{
 	XOJ_CHECK_TYPE(ZoomControl);
 
-	if (this->zoom < 0.3) {
+	if (this->zoom < 0.3)
+	{
 		this->zoom = 0.3;
 	}
 
-	if (this->zoom > 5) {
+	if (this->zoom > 5)
+	{
 		this->zoom = 5;
 	}
 
-	for (GList * l = this->listener; l != NULL; l = l->next) {
-		ZoomListener * z = (ZoomListener *) l->data;
+	for (GList* l = this->listener; l != NULL; l = l->next)
+	{
+		ZoomListener* z = (ZoomListener*) l->data;
 		z->zoomChanged(lastZoom);
 	}
 }
 
-void ZoomControl::fireZoomRangeValueChanged() {
+void ZoomControl::fireZoomRangeValueChanged()
+{
 	XOJ_CHECK_TYPE(ZoomControl);
 
-	for (GList * l = this->listener; l != NULL; l = l->next) {
-		ZoomListener * z = (ZoomListener *) l->data;
+	for (GList* l = this->listener; l != NULL; l = l->next)
+	{
+		ZoomListener* z = (ZoomListener*) l->data;
 		z->zoomRangeValuesChanged();
 	}
 }
 
-double ZoomControl::getZoom() {
+double ZoomControl::getZoom()
+{
 	XOJ_CHECK_TYPE(ZoomControl);
 
 	return this->zoom;
 }
 
-void ZoomControl::setZoom(double zoom) {
+void ZoomControl::setZoom(double zoom)
+{
 	XOJ_CHECK_TYPE(ZoomControl);
 
 	double lastZoom = zoom;
@@ -75,39 +88,45 @@ void ZoomControl::setZoom(double zoom) {
 	fireZoomChanged(lastZoom);
 }
 
-void ZoomControl::setZoom100(double zoom) {
+void ZoomControl::setZoom100(double zoom)
+{
 	XOJ_CHECK_TYPE(ZoomControl);
 
 	this->zoom100Value = zoom;
 	fireZoomRangeValueChanged();
 }
 
-void ZoomControl::setZoomFit(double zoom) {
+void ZoomControl::setZoomFit(double zoom)
+{
 	XOJ_CHECK_TYPE(ZoomControl);
 
 	this->zoomFitValue = zoom;
 	fireZoomRangeValueChanged();
 
-	if(this->zoomFitMode) {
+	if(this->zoomFitMode)
+	{
 		double lastZoom = this->zoom;
 		this->zoom = this->zoomFitValue;
 		fireZoomChanged(lastZoom);
 	}
 }
 
-double ZoomControl::getZoomFit() {
+double ZoomControl::getZoomFit()
+{
 	XOJ_CHECK_TYPE(ZoomControl);
 
 	return this->zoomFitValue;
 }
 
-double ZoomControl::getZoom100() {
+double ZoomControl::getZoom100()
+{
 	XOJ_CHECK_TYPE(ZoomControl);
 
 	return this->zoom100Value;
 }
 
-void ZoomControl::zoom100() {
+void ZoomControl::zoom100()
+{
 	XOJ_CHECK_TYPE( ZoomControl);
 
 	double lastZoom = this->zoom;
@@ -116,7 +135,8 @@ void ZoomControl::zoom100() {
 	fireZoomChanged(lastZoom);
 }
 
-void ZoomControl::zoomFit() {
+void ZoomControl::zoomFit()
+{
 	XOJ_CHECK_TYPE(ZoomControl);
 
 	double lastZoom = this->zoom;
@@ -125,7 +145,8 @@ void ZoomControl::zoomFit() {
 	fireZoomChanged(lastZoom);
 }
 
-void ZoomControl::zoomIn() {
+void ZoomControl::zoomIn()
+{
 	XOJ_CHECK_TYPE(ZoomControl);
 
 	double lastZoom = this->zoom;
@@ -134,7 +155,8 @@ void ZoomControl::zoomIn() {
 	fireZoomChanged(lastZoom);
 }
 
-void ZoomControl::zoomOut() {
+void ZoomControl::zoomOut()
+{
 	XOJ_CHECK_TYPE(ZoomControl);
 
 	double lastZoom = this->zoom;
@@ -143,20 +165,27 @@ void ZoomControl::zoomOut() {
 	fireZoomChanged(lastZoom);
 }
 
-bool ZoomControl::onScrolledwindowMainScrollEvent(GtkWidget * widget, GdkEventScroll * event, ZoomControl * zoom) {
+bool ZoomControl::onScrolledwindowMainScrollEvent(GtkWidget* widget,
+                                                  GdkEventScroll* event, ZoomControl* zoom)
+{
 	XOJ_CHECK_TYPE_OBJ(zoom, ZoomControl);
 
 	guint state = event->state & gtk_accelerator_get_default_mod_mask();
 
 	// do not handle e.g. ALT + Scroll (e.g. Compiz use this shortcut for setting transparency...)
-	if (state != 0 && state & ~(GDK_CONTROL_MASK | GDK_SHIFT_MASK)) {
+	if (state != 0 && state & ~(GDK_CONTROL_MASK | GDK_SHIFT_MASK))
+	{
 		return true;
 	}
 
-	if (state & GDK_CONTROL_MASK) {
-		if (event->direction == GDK_SCROLL_UP || event->direction == GDK_SCROLL_LEFT) {
+	if (state & GDK_CONTROL_MASK)
+	{
+		if (event->direction == GDK_SCROLL_UP || event->direction == GDK_SCROLL_LEFT)
+		{
 			zoom->zoomIn();
-		} else {
+		}
+		else
+		{
 			zoom->zoomOut();
 		}
 
@@ -164,14 +193,22 @@ bool ZoomControl::onScrolledwindowMainScrollEvent(GtkWidget * widget, GdkEventSc
 	}
 
 	// Shift + Wheel scrolls the in the perpendicular direction
-	if (state & GDK_SHIFT_MASK) {
-		if (event->direction == GDK_SCROLL_UP) {
+	if (state & GDK_SHIFT_MASK)
+	{
+		if (event->direction == GDK_SCROLL_UP)
+		{
 			event->direction = GDK_SCROLL_LEFT;
-		} else if (event->direction == GDK_SCROLL_LEFT) {
+		}
+		else if (event->direction == GDK_SCROLL_LEFT)
+		{
 			event->direction = GDK_SCROLL_UP;
-		} else if (event->direction == GDK_SCROLL_DOWN) {
+		}
+		else if (event->direction == GDK_SCROLL_DOWN)
+		{
 			event->direction = GDK_SCROLL_RIGHT;
-		} else if (event->direction == GDK_SCROLL_RIGHT) {
+		}
+		else if (event->direction == GDK_SCROLL_RIGHT)
+		{
 			event->direction = GDK_SCROLL_DOWN;
 		}
 
@@ -182,6 +219,7 @@ bool ZoomControl::onScrolledwindowMainScrollEvent(GtkWidget * widget, GdkEventSc
 	return false;
 }
 
-void ZoomListener::zoomRangeValuesChanged() {
+void ZoomListener::zoomRangeValuesChanged()
+{
 }
 

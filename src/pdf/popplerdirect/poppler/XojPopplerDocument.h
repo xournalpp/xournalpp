@@ -18,37 +18,38 @@
 class _IntPopplerDocument;
 class XojPopplerIter;
 
-class XojPopplerDocument {
+class XojPopplerDocument
+{
 public:
 	XojPopplerDocument();
-	XojPopplerDocument(const XojPopplerDocument & doc);
+	XojPopplerDocument(const XojPopplerDocument& doc);
 	virtual ~XojPopplerDocument();
 
 public:
-	void operator=(XojPopplerDocument & doc);
-	bool operator==(XojPopplerDocument & doc);
+	void operator=(XojPopplerDocument& doc);
+	bool operator==(XojPopplerDocument& doc);
 
-	XojPopplerIter * getContentsIter();
+	XojPopplerIter* getContentsIter();
 
-	XojPopplerPage * getPage(int page);
+	XojPopplerPage* getPage(int page);
 
 	bool isLoaded();
 
 	int getPageCount();
 
-	void load(char * data, int length);
-	bool load(const char * filename, const char * password, GError ** error);
+	void load(char* data, int length);
+	bool load(const char* filename, const char* password, GError** error);
 
-	PDFDoc * getDoc();
+	PDFDoc* getDoc();
 
 	gsize getId();
 
-	bool save(String filename, GError ** error);
+	bool save(String filename, GError** error);
 
 private:
 	XOJ_TYPE_ATTRIB;
 
-	_IntPopplerDocument * data;
+	_IntPopplerDocument* data;
 };
 
 #endif /* __XOJ_POPPLERDOCUMENT_H__ */

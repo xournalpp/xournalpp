@@ -18,32 +18,33 @@
 #include "../model/Document.h"
 class XmlNode;
 
-class SaveHandler {
+class SaveHandler
+{
 public:
 	SaveHandler();
 	virtual ~SaveHandler();
 
 public:
-	void prepareSave(Document * doc);
-	void saveTo(OutputStream * out, String filename);
+	void prepareSave(Document* doc);
+	void saveTo(OutputStream* out, String filename);
 	String getErrorMessage();
 
 private:
-	void visitPage(XmlNode * root, PageRef p, Document * doc, int id);
+	void visitPage(XmlNode* root, PageRef p, Document* doc, int id);
 	static String getSolidBgStr(BackgroundType type);
 	static String getColorStr(int c, unsigned char alpha = 0xff);
-	void visitLayer(XmlNode * page, Layer * l);
+	void visitLayer(XmlNode* page, Layer* l);
 
 private:
 	XOJ_TYPE_ATTRIB;
 
-	XmlNode * root;
+	XmlNode* root;
 	bool firstPdfPageVisited;
 	int attachBgId;
 
 	String errorMessage;
 
-	GList * backgroundImages;
+	GList* backgroundImages;
 };
 
 #endif /* __SAVEHANDLER_H__ */

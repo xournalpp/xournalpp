@@ -24,7 +24,8 @@ G_BEGIN_DECLS
 typedef struct _SelectColor SelectColor;
 typedef struct _SelectColorClass SelectColorClass;
 
-struct _SelectColor {
+struct _SelectColor
+{
 	//	GtkWidget widget;
 	GtkMisc widget;
 
@@ -34,15 +35,16 @@ struct _SelectColor {
 	gint size;
 };
 
-struct _SelectColorClass {
+struct _SelectColorClass
+{
 	GtkMiscClass parent_class;
 };
 
 GtkType selectcolor_get_type(void);
-GtkWidget * selectcolor_new(gint color);
-void selectcolor_set_color(GtkWidget * sc, gint color);
-void selectcolor_set_circle(GtkWidget * sc, gboolean circle);
-void selectcolor_set_size(GtkWidget * sc, gint size);
+GtkWidget* selectcolor_new(gint color);
+void selectcolor_set_color(GtkWidget* sc, gint color);
+void selectcolor_set_circle(GtkWidget* sc, gboolean circle);
+void selectcolor_set_size(GtkWidget* sc, gint size);
 
 G_END_DECLS
 

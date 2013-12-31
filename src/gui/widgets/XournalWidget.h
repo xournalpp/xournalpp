@@ -30,13 +30,14 @@ class Layout;
 typedef struct _GtkXournal GtkXournal;
 typedef struct _GtkXournalClass GtkXournalClass;
 
-struct _GtkXournal {
+struct _GtkXournal
+{
 	GtkWidget widget;
 
 	/**
 	 * The view class
 	 */
-	XournalView * view;
+	XournalView* view;
 
 	/**
 	 * Visible area
@@ -47,10 +48,10 @@ struct _GtkXournal {
 	int scrollX;
 	int scrollY;
 
-	Layout * layout;
+	Layout* layout;
 
-	PageView * currentInputPage;
-	PagePositionCache * pagePositionCache;
+	PageView* currentInputPage;
+	PagePositionCache* pagePositionCache;
 
 	/**
 	 * The last Mouse Position, for scrolling
@@ -64,27 +65,29 @@ struct _GtkXournal {
 	/**
 	 * Selected content, if any
 	 */
-	EditSelection * selection;
+	EditSelection* selection;
 };
 
-struct _GtkXournalClass {
+struct _GtkXournalClass
+{
 	GtkWidgetClass parent_class;
 };
 
 GtkType gtk_xournal_get_type(void);
-GtkWidget * gtk_xournal_new(XournalView * view);
+GtkWidget* gtk_xournal_new(XournalView* view);
 
-void gtk_xournal_update_xevent(GtkWidget * widget);
+void gtk_xournal_update_xevent(GtkWidget* widget);
 
-cairo_t * gtk_xournal_create_cairo_for(GtkWidget * widget, PageView * view);
+cairo_t* gtk_xournal_create_cairo_for(GtkWidget* widget, PageView* view);
 
-Layout * gtk_xournal_get_layout(GtkWidget * widget);
+Layout* gtk_xournal_get_layout(GtkWidget* widget);
 
-void gtk_xournal_scroll_relative(GtkWidget * widget, double x, double y);
+void gtk_xournal_scroll_relative(GtkWidget* widget, double x, double y);
 
-void gtk_xournal_repaint_area(GtkWidget * widget, int x1, int y1, int x2, int y2);
+void gtk_xournal_repaint_area(GtkWidget* widget, int x1, int y1, int x2,
+                              int y2);
 
-Rectangle * gtk_xournal_get_visible_area(GtkWidget * widget, PageView * p);
+Rectangle* gtk_xournal_get_visible_area(GtkWidget* widget, PageView* p);
 
 G_END_DECLS
 

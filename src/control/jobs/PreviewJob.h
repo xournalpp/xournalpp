@@ -17,15 +17,16 @@
 
 class SidebarPreviewPage;
 
-class PreviewJob : public Job {
+class PreviewJob : public Job
+{
 public:
-	PreviewJob(SidebarPreviewPage * sidebar);
+	PreviewJob(SidebarPreviewPage* sidebar);
 
 protected:
 	virtual ~PreviewJob();
 
 public:
-	virtual void * getSource();
+	virtual void* getSource();
 
 	virtual void run();
 
@@ -34,7 +35,7 @@ public:
 private:
 	XOJ_TYPE_ATTRIB;
 
-	SidebarPreviewPage * sidebarPreview;
+	SidebarPreviewPage* sidebarPreview;
 };
 
 #endif /* __PREVIEWJOB_H__ */

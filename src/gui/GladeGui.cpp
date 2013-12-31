@@ -7,17 +7,21 @@
 
 #include "GladeSearchpath.h"
 
-GladeGui::GladeGui(GladeSearchpath * gladeSearchPath, const char * glade, const char * mainWnd) {
+GladeGui::GladeGui(GladeSearchpath* gladeSearchPath, const char* glade,
+                   const char* mainWnd)
+{
 	XOJ_INIT_TYPE(GladeGui);
 
 	this->window = NULL;
 	this->gladeSearchPath = gladeSearchPath;
 
-	char * filename = this->gladeSearchPath->findFile(NULL, glade);
+	char* filename = this->gladeSearchPath->findFile(NULL, glade);
 	this->xml = glade_xml_new(filename, NULL, NULL);
-	if (!this->xml) {
-		GtkWidget * dialog = gtk_message_dialog_new(NULL, GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR, GTK_BUTTONS_CLOSE,
-				_("Error loading glade file '%s' (try to load '%s')"), glade, filename);
+	if (!this->xml)
+	{
+		GtkWidget* dialog = gtk_message_dialog_new(NULL, GTK_DIALOG_DESTROY_WITH_PARENT,
+		                                           GTK_MESSAGE_ERROR, GTK_BUTTONS_CLOSE,
+		                                           _("Error loading glade file '%s' (try to load '%s')"), glade, filename);
 		gtk_dialog_run(GTK_DIALOG(dialog));
 		gtk_widget_destroy(GTK_WIDGET(dialog));
 		exit(-1);
@@ -28,7 +32,8 @@ GladeGui::GladeGui(GladeSearchpath * gladeSearchPath, const char * glade, const 
 	g_free(filename);
 }
 
-GladeGui::~GladeGui() {
+GladeGui::~GladeGui()
+{
 	XOJ_CHECK_TYPE(GladeGui);
 
 	gtk_widget_destroy(this->window);
@@ -37,48 +42,56 @@ GladeGui::~GladeGui() {
 	XOJ_RELEASE_TYPE(GladeGui);
 }
 
-GtkWidget * GladeGui::get(const char * name) {
+GtkWidget* GladeGui::get(const char* name)
+{
 	XOJ_CHECK_TYPE(GladeGui);
 
-	GtkWidget * w = glade_xml_get_widget(xml, name);
-	if (w == NULL) {
+	GtkWidget* w = glade_xml_get_widget(xml, name);
+	if (w == NULL)
+	{
 		g_warning("GladeGui::get: Could not find glade Widget: \"%s\"", name);
 	}
 	return w;
 }
 
-GtkWidget * GladeGui::loadIcon(const char * filename) {
+GtkWidget* GladeGui::loadIcon(const char* filename)
+{
 	XOJ_CHECK_TYPE(GladeGui);
 
-	GdkPixbuf * icon = loadIconPixbuf(filename);
-	if (icon == NULL) {
+	GdkPixbuf* icon = loadIconPixbuf(filename);
+	if (icon == NULL)
+	{
 		return gtk_image_new();
 	}
 
-	GtkWidget * w = gtk_image_new_from_pixbuf(icon);
+	GtkWidget* w = gtk_image_new_from_pixbuf(icon);
 
 	g_object_unref(icon);
 
 	return w;
 }
 
-GdkPixbuf * GladeGui::loadIconPixbuf(const char * filename) {
+GdkPixbuf* GladeGui::loadIconPixbuf(const char* filename)
+{
 	XOJ_CHECK_TYPE(GladeGui);
 
-	if (!filename || !filename[0]) {
+	if (!filename || !filename[0])
+	{
 		return NULL;
 	}
 
-	char * pathname = this->gladeSearchPath->findFile("pixmaps", filename);
+	char* pathname = this->gladeSearchPath->findFile("pixmaps", filename);
 
-	if (pathname == NULL) {
+	if (pathname == NULL)
+	{
 		g_warning("GladeGui::get: Couldn't find pixmap file: %s", filename);
 		return NULL;
 	}
 
-	GError * error = NULL;
-	GdkPixbuf * pixbuf = gdk_pixbuf_new_from_file(pathname, &error);
-	if (pixbuf == NULL) {
+	GError* error = NULL;
+	GdkPixbuf* pixbuf = gdk_pixbuf_new_from_file(pathname, &error);
+	if (pixbuf == NULL)
+	{
 		g_error("Failed to load pixbuf file: %s: %s\n", pathname, error->message);
 		g_error_free(error);
 	}
@@ -86,25 +99,29 @@ GdkPixbuf * GladeGui::loadIconPixbuf(const char * filename) {
 	return pixbuf;
 }
 
-GtkWidget * GladeGui::getWindow() {
+GtkWidget* GladeGui::getWindow()
+{
 	XOJ_CHECK_TYPE(GladeGui);
 
 	return this->window;
 }
 
-GladeSearchpath * GladeGui::getGladeSearchPath() {
+GladeSearchpath* GladeGui::getGladeSearchPath()
+{
 	XOJ_CHECK_TYPE(GladeGui);
 
 	return this->gladeSearchPath;
 }
 
-GladeGui::operator GdkWindow *() {
+GladeGui::operator GdkWindow* ()
+{
 	XOJ_CHECK_TYPE(GladeGui);
 
 	return GTK_WIDGET(getWindow())->window;
 }
 
-GladeGui::operator GtkWindow *() {
+GladeGui::operator GtkWindow* ()
+{
 	XOJ_CHECK_TYPE(GladeGui);
 
 	return GTK_WINDOW(getWindow());

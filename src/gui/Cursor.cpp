@@ -7,12 +7,15 @@
 /************** drawing nice cursors *********/
 
 static char CURSOR_HIGLIGHTER_BITS[] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf8, 0x0f, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08,
-		0x08, 0x08, 0x08, 0xf8, 0x0f, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
+                                        0x08, 0x08, 0x08, 0xf8, 0x0f, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+                                       };
 
 static char CURSOR_HILIGHTER_MASK[] = { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf8, 0x0f, 0xf8, 0x0f, 0xf8, 0x0f, 0xf8, 0x0f, 0xf8, 0x0f, 0xf8, 0x0f, 0xf8, 0x0f,
-		0xf8, 0x0f, 0xf8, 0x0f, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
+                                        0xf8, 0x0f, 0xf8, 0x0f, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+                                      };
 
-Cursor::Cursor(Control * control) {
+Cursor::Cursor(Control* control)
+{
 	XOJ_INIT_TYPE(Cursor);
 
 	this->control = control;
@@ -24,60 +27,74 @@ Cursor::Cursor(Control * control) {
 	this->mouseDown = false;
 }
 
-Cursor::~Cursor() {
+Cursor::~Cursor()
+{
 	XOJ_RELEASE_TYPE(Cursor);
 }
 
-void Cursor::setMouseDown(bool mouseDown) {
+void Cursor::setMouseDown(bool mouseDown)
+{
 	XOJ_CHECK_TYPE(Cursor);
 
-	if (this->mouseDown == mouseDown) {
+	if (this->mouseDown == mouseDown)
+	{
 		return;
 	}
 
 	this->mouseDown = mouseDown;
-	ToolHandler * handler = control->getToolHandler();
+	ToolHandler* handler = control->getToolHandler();
 	ToolType type = handler->getToolType();
 
 	// Not always an update is needed
-	if (type == TOOL_HAND || type == TOOL_VERTICAL_SPACE) {
+	if (type == TOOL_HAND || type == TOOL_VERTICAL_SPACE)
+	{
 		updateCursor();
 	}
 }
 
-void Cursor::setMouseSelectionType(CursorSelectionType selectionType) {
+void Cursor::setMouseSelectionType(CursorSelectionType selectionType)
+{
 	XOJ_CHECK_TYPE(Cursor);
 
-	if (this->selectionType == selectionType) {
+	if (this->selectionType == selectionType)
+	{
 		return;
 	}
 	this->selectionType = selectionType;
 	updateCursor();
 }
 
-void Cursor::setCursorBusy(bool busy) {
+void Cursor::setCursorBusy(bool busy)
+{
 	XOJ_CHECK_TYPE(Cursor);
 
-	MainWindow * win = control->getWindow();
-	if (!win) {
+	MainWindow* win = control->getWindow();
+	if (!win)
+	{
 		return;
 	}
 
-	if (this->busy == busy) {
+	if (this->busy == busy)
+	{
 		return;
 	}
 
 	this->busy = busy;
 
-	if (busy) {
-		GdkCursor * cursor = gdk_cursor_new(GDK_WATCH);
-		if (gtk_widget_get_window(win->getWindow())) {
+	if (busy)
+	{
+		GdkCursor* cursor = gdk_cursor_new(GDK_WATCH);
+		if (gtk_widget_get_window(win->getWindow()))
+		{
 			gdk_window_set_cursor(gtk_widget_get_window(win->getWindow()), cursor);
 		}
 
 		gdk_cursor_unref(cursor);
-	} else {
-		if (gtk_widget_get_window(win->getWindow())) {
+	}
+	else
+	{
+		if (gtk_widget_get_window(win->getWindow()))
+		{
 			gdk_window_set_cursor(gtk_widget_get_window(win->getWindow()), NULL);
 		}
 	}
@@ -85,10 +102,12 @@ void Cursor::setCursorBusy(bool busy) {
 	updateCursor();
 }
 
-void Cursor::setInsidePage(bool insidePage) {
+void Cursor::setInsidePage(bool insidePage)
+{
 	XOJ_CHECK_TYPE(Cursor);
 
-	if(this->insidePage == insidePage) {
+	if(this->insidePage == insidePage)
+	{
 		return;
 	}
 
@@ -97,12 +116,14 @@ void Cursor::setInsidePage(bool insidePage) {
 	updateCursor();
 }
 
-void Cursor::setInvisible(bool invisible) {
+void Cursor::setInvisible(bool invisible)
+{
 	XOJ_CHECK_TYPE(Cursor);
 
 	g_return_if_fail(this != NULL);
 
-	if (this->invisible == invisible) {
+	if (this->invisible == invisible)
+	{
 		return;
 	}
 
@@ -111,26 +132,30 @@ void Cursor::setInvisible(bool invisible) {
 	updateCursor();
 }
 
-GdkCursor * Cursor::getPenCursor() {
+GdkCursor* Cursor::getPenCursor()
+{
 	XOJ_CHECK_TYPE(Cursor);
 
-	ToolHandler * handler = control->getToolHandler();
+	ToolHandler* handler = control->getToolHandler();
 
 	bool big = control->getSettings()->isShowBigCursor();
 
 	int height = 3;
 	int width = 3;
-	if (big) {
+	if (big)
+	{
 		height = 22;
 		width = 15;
 	}
 
-	cairo_surface_t * crCursor = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, width, height);
-	cairo_t * cr = cairo_create(crCursor);
+	cairo_surface_t* crCursor = cairo_image_surface_create(CAIRO_FORMAT_ARGB32,
+	                                                       width, height);
+	cairo_t* cr = cairo_create(crCursor);
 
 	Util::cairo_set_source_rgbi(cr, handler->getColor());
 
-	if (big) {
+	if (big)
+	{
 		cairo_set_source_rgb(cr, 1, 1, 1);
 		cairo_set_line_width(cr, 1.2);
 		cairo_move_to(cr, 1.5, 1.5);
@@ -149,58 +174,76 @@ GdkCursor * Cursor::getPenCursor() {
 		Util::cairo_set_source_rgbi(cr, handler->getColor());
 		cairo_rectangle(cr, 0, 0, 3, 3);
 		cairo_fill(cr);
-	} else {
+	}
+	else
+	{
 		cairo_rectangle(cr, 0, 0, 3, 3);
 		cairo_fill(cr);
 	}
 
 	cairo_destroy(cr);
 
-	GdkPixbuf * pixbuf = xoj_pixbuf_get_from_surface(crCursor, 0, 0, width, height);
+	GdkPixbuf* pixbuf = xoj_pixbuf_get_from_surface(crCursor, 0, 0, width, height);
 
-//	cairo_surface_write_to_png(crCursor, "/home/andreas/xoj-cursor-orig.png");
-//	gdk_pixbuf_save(pixbuf, "/home/andreas/xoj-cursor.png", "png", NULL, NULL);
+	//	cairo_surface_write_to_png(crCursor, "/home/andreas/xoj-cursor-orig.png");
+	//	gdk_pixbuf_save(pixbuf, "/home/andreas/xoj-cursor.png", "png", NULL, NULL);
 
 	cairo_surface_destroy(crCursor);
 
-	GdkCursor * cursor = gdk_cursor_new_from_pixbuf(gtk_widget_get_display(control->getWindow()->getXournal()->getWidget()), pixbuf, 1, 1);
+	GdkCursor* cursor = gdk_cursor_new_from_pixbuf(gtk_widget_get_display(
+	                                                   control->getWindow()->getXournal()->getWidget()), pixbuf, 1, 1);
 
 	g_object_unref(pixbuf);
 
 	return cursor;
 }
 
-void Cursor::updateCursor() {
+void Cursor::updateCursor()
+{
 	XOJ_CHECK_TYPE(Cursor);
 
-	MainWindow * win = control->getWindow();
-	if (!win) {
+	MainWindow* win = control->getWindow();
+	if (!win)
+	{
 		return;
 	}
 
-	XournalView * xournal = win->getXournal();
-	if (!xournal) {
+	XournalView* xournal = win->getXournal();
+	if (!xournal)
+	{
 		return;
 	}
 
-	GdkCursor * cursor = NULL;
+	GdkCursor* cursor = NULL;
 
-	if (this->busy) {
+	if (this->busy)
+	{
 		cursor = gdk_cursor_new(GDK_WATCH);
-	} else {
-		ToolHandler * handler = control->getToolHandler();
+	}
+	else
+	{
+		ToolHandler* handler = control->getToolHandler();
 		ToolType type = handler->getToolType();
 
-		if (type == TOOL_HAND) {
-			if (this->mouseDown) {
+		if (type == TOOL_HAND)
+		{
+			if (this->mouseDown)
+			{
 				cursor = gdk_cursor_new(GDK_FLEUR);
-			} else {
+			}
+			else
+			{
 				cursor = gdk_cursor_new(GDK_HAND1);
 			}
-		} else if(!this->insidePage) {
+		}
+		else if(!this->insidePage)
+		{
 			// not inside page: so use default cursor
-		} else if (this->selectionType) {
-			switch (this->selectionType) {
+		}
+		else if (this->selectionType)
+		{
+			switch (this->selectionType)
+			{
 			case CURSOR_SELECTION_MOVE:
 				cursor = gdk_cursor_new(GDK_FLEUR);
 				break;
@@ -225,43 +268,67 @@ void Cursor::updateCursor() {
 				cursor = gdk_cursor_new(GDK_SB_V_DOUBLE_ARROW);
 				break;
 			}
-		} else if (type == TOOL_PEN) {
+		}
+		else if (type == TOOL_PEN)
+		{
 			cursor = getPenCursor();
 
-		} else if (type == TOOL_ERASER) {
+		}
+		else if (type == TOOL_ERASER)
+		{
 			GdkColor bg = { 0, 65535, 65535, 65535 };
 			GdkColor fg = { 0, 0, 0, 0 };
-			GdkPixmap * source = gdk_bitmap_create_from_data(NULL, CURSOR_HIGLIGHTER_BITS, 16, 16);
-			GdkPixmap * mask = gdk_bitmap_create_from_data(NULL, CURSOR_HILIGHTER_MASK, 16, 16);
+			GdkPixmap* source = gdk_bitmap_create_from_data(NULL, CURSOR_HIGLIGHTER_BITS,
+			                                                16, 16);
+			GdkPixmap* mask = gdk_bitmap_create_from_data(NULL, CURSOR_HILIGHTER_MASK, 16,
+			                                              16);
 			cursor = gdk_cursor_new_from_pixmap(source, mask, &fg, &bg, 7, 7);
 			gdk_bitmap_unref(source);
 			gdk_bitmap_unref(mask);
-		} else if (type == TOOL_HILIGHTER) {
+		}
+		else if (type == TOOL_HILIGHTER)
+		{
 			GdkColor fg = { 0, 0, 0, 0 };
 			GdkColor bg = handler->getGdkColor();
-			GdkPixmap * source = gdk_bitmap_create_from_data(NULL, CURSOR_HIGLIGHTER_BITS, 16, 16);
-			GdkPixmap * mask = gdk_bitmap_create_from_data(NULL, CURSOR_HILIGHTER_MASK, 16, 16);
+			GdkPixmap* source = gdk_bitmap_create_from_data(NULL, CURSOR_HIGLIGHTER_BITS,
+			                                                16, 16);
+			GdkPixmap* mask = gdk_bitmap_create_from_data(NULL, CURSOR_HILIGHTER_MASK, 16,
+			                                              16);
 			cursor = gdk_cursor_new_from_pixmap(source, mask, &fg, &bg, 7, 7);
 			gdk_bitmap_unref(source);
 			gdk_bitmap_unref(mask);
-		} else if (type == TOOL_TEXT) {
-			if (this->invisible) {
+		}
+		else if (type == TOOL_TEXT)
+		{
+			if (this->invisible)
+			{
 				cursor = gdk_cursor_new(GDK_BLANK_CURSOR);
-			} else {
+			}
+			else
+			{
 				cursor = gdk_cursor_new(GDK_XTERM);
 			}
-		} else if (type == TOOL_IMAGE) {
+		}
+		else if (type == TOOL_IMAGE)
+		{
 			// No special cursor needed
-		} else if (type == TOOL_VERTICAL_SPACE) {
-			if (this->mouseDown) {
+		}
+		else if (type == TOOL_VERTICAL_SPACE)
+		{
+			if (this->mouseDown)
+			{
 				cursor = gdk_cursor_new(GDK_SB_V_DOUBLE_ARROW);
 			}
-		} else if (type != TOOL_SELECT_OBJECT) { // other selections are handled before anyway, because you can move a selection with every tool
+		}
+		else if (type !=
+		         TOOL_SELECT_OBJECT)     // other selections are handled before anyway, because you can move a selection with every tool
+		{
 			cursor = gdk_cursor_new(GDK_TCROSS);
 		}
 	}
 
-	if (gtk_widget_get_window(xournal->getWidget())) {
+	if (gtk_widget_get_window(xournal->getWidget()))
+	{
 		gdk_window_set_cursor(gtk_widget_get_window(xournal->getWidget()), cursor);
 
 		gtk_widget_set_sensitive(xournal->getWidget(), !this->busy);
@@ -269,7 +336,8 @@ void Cursor::updateCursor() {
 
 	gdk_display_sync(gdk_display_get_default());
 
-	if (cursor) {
+	if (cursor)
+	{
 		gdk_cursor_unref(cursor);
 	}
 }

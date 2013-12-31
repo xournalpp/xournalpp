@@ -19,10 +19,11 @@
 
 #include "ToolbarEntry.h"
 
-class ToolbarData {
+class ToolbarData
+{
 public:
 	ToolbarData(bool predefined);
-	ToolbarData(const ToolbarData & data);
+	ToolbarData(const ToolbarData& data);
 	virtual ~ToolbarData();
 
 public:
@@ -32,8 +33,8 @@ public:
 	void setId(String id);
 	bool isPredefined();
 
-	void load(GKeyFile * config, const char * group);
-	void saveToKeyFile(GKeyFile * config);
+	void load(GKeyFile* config, const char* group);
+	void saveToKeyFile(GKeyFile* config);
 
 	// Editing API
 	int insertItem(String toolbar, String item, int position);

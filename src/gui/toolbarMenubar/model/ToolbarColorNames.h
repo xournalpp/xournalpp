@@ -17,18 +17,19 @@
 #include <glib.h>
 #include <String.h>
 
-class ToolbarColorNames {
+class ToolbarColorNames
+{
 private:
 	ToolbarColorNames();
 	virtual ~ToolbarColorNames();
 
 public:
-	static ToolbarColorNames & getInstance();
+	static ToolbarColorNames& getInstance();
 	static void freeInstance();
 
 public:
-	void loadFile(const char * file);
-	void saveFile(const char * file);
+	void loadFile(const char* file);
+	void saveFile(const char* file);
 
 	void adddColor(int color, String name, bool predefined);
 
@@ -40,8 +41,8 @@ private:
 private:
 	XOJ_TYPE_ATTRIB;
 
-	GKeyFile * config;
-	GHashTable * predefinedColorNames;
+	GKeyFile* config;
+	GHashTable* predefinedColorNames;
 };
 
 #endif /* __TOOLBARCOLORNAMES_H__ */

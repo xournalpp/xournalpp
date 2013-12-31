@@ -3,79 +3,94 @@
 #include <glib.h>
 #include <gtk/gtk.h>
 
-ToolbarData::ToolbarData(bool predefined) {
+ToolbarData::ToolbarData(bool predefined)
+{
 	XOJ_INIT_TYPE(ToolbarData);
 
 	this->predefined = predefined;
 }
 
-ToolbarData::ToolbarData(const ToolbarData & data) {
+ToolbarData::ToolbarData(const ToolbarData& data)
+{
 	XOJ_INIT_TYPE(ToolbarData);
 
 	*this = data;
 	this->predefined = false;
 }
 
-ToolbarData::~ToolbarData() {
+ToolbarData::~ToolbarData()
+{
 	XOJ_RELEASE_TYPE(ToolbarData);
 }
 
-String ToolbarData::getName() {
+String ToolbarData::getName()
+{
 	XOJ_CHECK_TYPE(ToolbarData);
 
 	return this->name;
 }
 
-void ToolbarData::setName(String name) {
+void ToolbarData::setName(String name)
+{
 	XOJ_CHECK_TYPE(ToolbarData);
 
 	this->name = name;
 }
 
-String ToolbarData::getId() {
+String ToolbarData::getId()
+{
 	XOJ_CHECK_TYPE(ToolbarData);
 
 	return this->id;
 }
 
-void ToolbarData::setId(String id) {
+void ToolbarData::setId(String id)
+{
 	XOJ_CHECK_TYPE(ToolbarData);
 
 	this->id = id;
 }
 
-bool ToolbarData::isPredefined() {
+bool ToolbarData::isPredefined()
+{
 	XOJ_CHECK_TYPE(ToolbarData);
 
 	return this->predefined;
 }
 
-void ToolbarData::load(GKeyFile * config, const char * group) {
+void ToolbarData::load(GKeyFile* config, const char* group)
+{
 	XOJ_CHECK_TYPE(ToolbarData);
 
 	gsize length = 0;
-	gchar ** keys = g_key_file_get_keys(config, group, &length, NULL);
-	if (keys == NULL) {
+	gchar** keys = g_key_file_get_keys(config, group, &length, NULL);
+	if (keys == NULL)
+	{
 		return;
 	}
 
-	gchar * name = g_key_file_get_locale_string(config, group, "name", NULL, NULL);
-	if (name != NULL) {
+	gchar* name = g_key_file_get_locale_string(config, group, "name", NULL, NULL);
+	if (name != NULL)
+	{
 		this->name = name;
 		g_free(name);
 	}
 
-	for (gsize i = 0; i < length; i++) {
-		if (strcmp(keys[i], "name") == 0 || strncmp(keys[i], "name[", 5) == 0) {
+	for (gsize i = 0; i < length; i++)
+	{
+		if (strcmp(keys[i], "name") == 0 || strncmp(keys[i], "name[", 5) == 0)
+		{
 			continue;
 		}
 
 		ToolbarEntry e;
 		gsize keyLen = 0;
 		e.setName(keys[i]);
-		gchar ** list = g_key_file_get_string_list(config, group, keys[i], &keyLen, NULL);
+		gchar** list = g_key_file_get_string_list(config, group, keys[i], &keyLen,
+		                                          NULL);
 
-		for (gsize x = 0; x < keyLen; x++) {
+		for (gsize x = 0; x < keyLen; x++)
+		{
 			String s = list[x];
 			e.addItem(s.trim());
 		}
@@ -88,43 +103,52 @@ void ToolbarData::load(GKeyFile * config, const char * group) {
 	g_strfreev(keys);
 }
 
-void ToolbarData::saveToKeyFile(GKeyFile * config) {
+void ToolbarData::saveToKeyFile(GKeyFile* config)
+{
 	XOJ_CHECK_TYPE(ToolbarData);
 
-	const char * group = getId().c_str();
+	const char* group = getId().c_str();
 
 	std::vector<ToolbarEntry>::iterator it;
-	for (it = this->contents.begin(); it != this->contents.end(); it++) {
-		ToolbarEntry & e = *it;
+	for (it = this->contents.begin(); it != this->contents.end(); it++)
+	{
+		ToolbarEntry& e = *it;
 
 		String line = "";
 
-		ListIterator<ToolbarItem *> it = e.iterator();
-		while (it.hasNext()) {
+		ListIterator<ToolbarItem*> it = e.iterator();
+		while (it.hasNext())
+		{
 			line += ",";
 			line += *it.next();
 		}
 
-		if (line.length() > 2) {
-			g_key_file_set_string(config, group, e.getName().c_str(), line.substring(1).c_str());
+		if (line.length() > 2)
+		{
+			g_key_file_set_string(config, group, e.getName().c_str(),
+			                      line.substring(1).c_str());
 		}
 	}
 
 	g_key_file_set_string(config, group, "name", this->name.c_str());
 }
 
-int ToolbarData::insertItem(String toolbar, String item, int position) {
+int ToolbarData::insertItem(String toolbar, String item, int position)
+{
 	XOJ_CHECK_TYPE(ToolbarData);
 
-	printf("ToolbarData::insertItem(%s, %s, %i);\n", toolbar.c_str(), item.c_str(), position);
+	printf("ToolbarData::insertItem(%s, %s, %i);\n", toolbar.c_str(), item.c_str(),
+	       position);
 
 	g_return_val_if_fail(isPredefined() == false, -1);
 
 	std::vector<ToolbarEntry>::iterator it;
-	for (it = this->contents.begin(); it != this->contents.end(); it++) {
-		ToolbarEntry & e = *it;
+	for (it = this->contents.begin(); it != this->contents.end(); it++)
+	{
+		ToolbarEntry& e = *it;
 
-		if (e.getName().equals(toolbar)) {
+		if (e.getName().equals(toolbar))
+		{
 			printf("Toolbar found: %s\n", toolbar.c_str());
 
 			int id = e.insertItem(item, position);
@@ -142,16 +166,19 @@ int ToolbarData::insertItem(String toolbar, String item, int position) {
 	return id;
 }
 
-bool ToolbarData::removeItemByID(String toolbar, int id) {
+bool ToolbarData::removeItemByID(String toolbar, int id)
+{
 	XOJ_CHECK_TYPE(ToolbarData);
 
 	g_return_val_if_fail(isPredefined() == false, false);
 
 	std::vector<ToolbarEntry>::iterator it;
-	for (it = this->contents.begin(); it != this->contents.end(); it++) {
-		ToolbarEntry & e = *it;
+	for (it = this->contents.begin(); it != this->contents.end(); it++)
+	{
+		ToolbarEntry& e = *it;
 
-		if (e.getName().equals(toolbar)) {
+		if (e.getName().equals(toolbar))
+		{
 			return e.removeItemById(id);
 		}
 	}

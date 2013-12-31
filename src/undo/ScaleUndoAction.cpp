@@ -5,8 +5,10 @@
 #include <Range.h>
 #include "../gui/Redrawable.h"
 
-ScaleUndoAction::ScaleUndoAction(PageRef page, Redrawable * view, GList * elements,
-		double x0, double y0, double fx, double fy) : UndoAction("ScaleUndoAction") {
+ScaleUndoAction::ScaleUndoAction(PageRef page, Redrawable* view,
+                                 GList* elements,
+                                 double x0, double y0, double fx, double fy) : UndoAction("ScaleUndoAction")
+{
 	XOJ_INIT_TYPE(ScaleUndoAction);
 
 	this->page = page;
@@ -18,7 +20,8 @@ ScaleUndoAction::ScaleUndoAction(PageRef page, Redrawable * view, GList * elemen
 	this->fy = fy;
 }
 
-ScaleUndoAction::~ScaleUndoAction() {
+ScaleUndoAction::~ScaleUndoAction()
+{
 	XOJ_CHECK_TYPE(ScaleUndoAction);
 
 	this->page = NULL;
@@ -29,7 +32,8 @@ ScaleUndoAction::~ScaleUndoAction() {
 	XOJ_RELEASE_TYPE(ScaleUndoAction);
 }
 
-bool ScaleUndoAction::undo(Control * control) {
+bool ScaleUndoAction::undo(Control* control)
+{
 	XOJ_CHECK_TYPE(ScaleUndoAction);
 
 	applayScale(1 / this->fx, 1 / this->fy);
@@ -37,7 +41,8 @@ bool ScaleUndoAction::undo(Control * control) {
 	return true;
 }
 
-bool ScaleUndoAction::redo(Control * control) {
+bool ScaleUndoAction::redo(Control* control)
+{
 	XOJ_CHECK_TYPE(ScaleUndoAction);
 
 	applayScale(this->fx, this->fy);
@@ -45,18 +50,21 @@ bool ScaleUndoAction::redo(Control * control) {
 	return true;
 }
 
-void ScaleUndoAction::applayScale(double fx, double fy) {
+void ScaleUndoAction::applayScale(double fx, double fy)
+{
 	XOJ_CHECK_TYPE(ScaleUndoAction);
 
-	if (this->elements == NULL) {
+	if (this->elements == NULL)
+	{
 		return;
 	}
 
-	Element * first = (Element *) elements->data;
+	Element* first = (Element*) elements->data;
 	Range r(first->getX(), first->getY());
 
-	for (GList * l = this->elements; l != NULL; l = l->next) {
-		Element * e = (Element *) l->data;
+	for (GList* l = this->elements; l != NULL; l = l->next)
+	{
+		Element* e = (Element*) l->data;
 		r.addPoint(e->getX(), e->getY());
 		r.addPoint(e->getX() + e->getElementWidth(), e->getY() + e->getElementHeight());
 		e->scale(this->x0, this->y0, fx, fy);
@@ -67,7 +75,8 @@ void ScaleUndoAction::applayScale(double fx, double fy) {
 	this->view->rerenderRange(r);
 }
 
-String ScaleUndoAction::getText() {
+String ScaleUndoAction::getText()
+{
 	XOJ_CHECK_TYPE(ScaleUndoAction);
 
 	return _("Scale");

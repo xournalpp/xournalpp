@@ -13,9 +13,11 @@
 #define __PAGELAYERPOSENTRY_H__
 
 template<class T>
-class PageLayerPosEntry {
+class PageLayerPosEntry
+{
 public:
-	PageLayerPosEntry(Layer * layer, T * element, int pos) {
+	PageLayerPosEntry(Layer* layer, T* element, int pos)
+	{
 		this->element = element;
 		this->pos = pos;
 		this->layer = layer;
@@ -23,11 +25,12 @@ public:
 
 	XOJ_TYPE_ATTRIB;
 
-	Layer * layer;
-	T * element;
+	Layer* layer;
+	T* element;
 	int pos;
 
-	static int cmp(PageLayerPosEntry<T> * a, PageLayerPosEntry<T> * b) {
+	static int cmp(PageLayerPosEntry<T>* a, PageLayerPosEntry<T>* b)
+	{
 		return a->pos - b->pos;
 	}
 };

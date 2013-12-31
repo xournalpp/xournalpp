@@ -15,17 +15,19 @@
 #include <gtk/gtk.h>
 class Settings;
 
-class ImageOpenDlg {
+class ImageOpenDlg
+{
 private:
 	ImageOpenDlg();
 	virtual ~ImageOpenDlg();
 
 public:
-	static GFile * show(GtkWindow * win, Settings * settings, bool localOnly = false, bool * attach = NULL);
+	static GFile* show(GtkWindow* win, Settings* settings, bool localOnly = false,
+	                   bool* attach = NULL);
 
 private:
-	static void updatePreviewCallback(GtkFileChooser * fileChooser, void * userData);
-	static GdkPixbuf * pixbufScaleDownIfNecessary(GdkPixbuf * pixbuf, gint maxSize);
+	static void updatePreviewCallback(GtkFileChooser* fileChooser, void* userData);
+	static GdkPixbuf* pixbufScaleDownIfNecessary(GdkPixbuf* pixbuf, gint maxSize);
 };
 
 #endif /* __IMAGEOPENDLG_H__ */

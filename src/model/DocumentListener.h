@@ -17,13 +17,14 @@
 
 class DocumentHandler;
 
-class DocumentListener {
+class DocumentListener
+{
 public:
 	DocumentListener();
 	virtual ~DocumentListener();
 
 public:
-	void registerListener(DocumentHandler * handler);
+	void registerListener(DocumentHandler* handler);
 	void unregisterListener();
 
 	virtual void documentChanged(DocumentChangeType type) = 0;
@@ -36,7 +37,7 @@ public:
 private:
 	XOJ_TYPE_ATTRIB;
 
-	DocumentHandler * handler;
+	DocumentHandler* handler;
 };
 
 #endif /* __DOCUMENTLISTENER_H__ */

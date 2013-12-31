@@ -2,9 +2,12 @@
 #include "../control/Control.h"
 #include "../model/Document.h"
 
-PageBackgroundChangedUndoAction::PageBackgroundChangedUndoAction(PageRef page, BackgroundType origType,
-		int origPdfPage, BackgroundImage origBackgroundImage, double origW, double origH)
-		: UndoAction("PageBackgroundChangedUndoAction") {
+PageBackgroundChangedUndoAction::PageBackgroundChangedUndoAction(PageRef page,
+                                                                 BackgroundType origType,
+                                                                 int origPdfPage, BackgroundImage origBackgroundImage, double origW,
+                                                                 double origH)
+	: UndoAction("PageBackgroundChangedUndoAction")
+{
 	XOJ_INIT_TYPE(PageBackgroundChangedUndoAction);
 
 	this->page = page;
@@ -14,11 +17,13 @@ PageBackgroundChangedUndoAction::PageBackgroundChangedUndoAction(PageRef page, B
 	this->origW = origW;
 	this->origH = origH;
 }
-PageBackgroundChangedUndoAction::~PageBackgroundChangedUndoAction() {
+PageBackgroundChangedUndoAction::~PageBackgroundChangedUndoAction()
+{
 	XOJ_RELEASE_TYPE(PageBackgroundChangedUndoAction);
 }
 
-bool PageBackgroundChangedUndoAction::undo(Control * control) {
+bool PageBackgroundChangedUndoAction::undo(Control* control)
+{
 	XOJ_CHECK_TYPE(PageBackgroundChangedUndoAction);
 
 	this->newType = this->page.getBackgroundType();
@@ -27,21 +32,26 @@ bool PageBackgroundChangedUndoAction::undo(Control * control) {
 	this->newW = this->page.getWidth();
 	this->newH = this->page.getHeight();
 
-	Document * doc = control->getDocument();
+	Document* doc = control->getDocument();
 	int pageNr = doc->indexOf(this->page);
-	if (pageNr == -1) {
+	if (pageNr == -1)
+	{
 		return false;
 	}
 
-	if (this->newW != this->origW || this->newH != this->origH) {
+	if (this->newW != this->origW || this->newH != this->origH)
+	{
 		this->page.setSize(this->origW, this->origH);
 		control->firePageSizeChanged(pageNr);
 	}
 
 	this->page.setBackgroundType(this->origType);
-	if (this->origType == BACKGROUND_TYPE_PDF) {
+	if (this->origType == BACKGROUND_TYPE_PDF)
+	{
 		this->page.setBackgroundPdfPageNr(this->origPdfPage);
-	} else if (this->origType == BACKGROUND_TYPE_IMAGE) {
+	}
+	else if (this->origType == BACKGROUND_TYPE_IMAGE)
+	{
 		this->page.setBackgroundImage(this->origBackgroundImage);
 	}
 
@@ -50,26 +60,32 @@ bool PageBackgroundChangedUndoAction::undo(Control * control) {
 	return true;
 }
 
-bool PageBackgroundChangedUndoAction::redo(Control * control) {
+bool PageBackgroundChangedUndoAction::redo(Control* control)
+{
 	XOJ_CHECK_TYPE(PageBackgroundChangedUndoAction);
 
-	Document * doc = control->getDocument();
+	Document* doc = control->getDocument();
 
 	int pageNr = doc->indexOf(this->page);
 
-	if (pageNr == -1) {
+	if (pageNr == -1)
+	{
 		return false;
 	}
 
-	if (this->newW != this->origW || this->newH != this->origH) {
+	if (this->newW != this->origW || this->newH != this->origH)
+	{
 		this->page.setSize(this->newW, this->newH);
 		control->firePageSizeChanged(pageNr);
 	}
 
 	this->page.setBackgroundType(this->newType);
-	if (this->newType == BACKGROUND_TYPE_PDF) {
+	if (this->newType == BACKGROUND_TYPE_PDF)
+	{
 		this->page.setBackgroundPdfPageNr(this->newPdfPage);
-	} else if (this->newType == BACKGROUND_TYPE_IMAGE) {
+	}
+	else if (this->newType == BACKGROUND_TYPE_IMAGE)
+	{
 		this->page.setBackgroundImage(this->newBackgroundImage);
 	}
 
@@ -79,7 +95,8 @@ bool PageBackgroundChangedUndoAction::redo(Control * control) {
 
 }
 
-String PageBackgroundChangedUndoAction::getText() {
+String PageBackgroundChangedUndoAction::getText()
+{
 	XOJ_CHECK_TYPE(PageBackgroundChangedUndoAction);
 
 	return _("Page background changed");

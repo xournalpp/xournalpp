@@ -20,45 +20,48 @@
 #include <XournalType.h>
 #include <zlib.h>
 
-enum ParserPosition {
-	PARSER_POS_NOT_STARTED = 1, // Waiting for opening <xounal> tag
-	PARSER_POS_STARTED, // Waiting for Metainfo or contents like <page>
-	PARSER_POS_IN_PAGE, // Starting page tag read
-	PARSER_POS_IN_LAYER, // Starting layer tag read
-	PARSER_POS_IN_STROKE, // Starting layer tag read
-	PARSER_POS_IN_TEXT, // Starting text tag read
-	PARSER_POS_IN_IMAGE, // Starting image tag read
-	PARSER_POS_IN_TEXIMAGE, // Starting latex tag read
+enum ParserPosition
+{
+    PARSER_POS_NOT_STARTED = 1, // Waiting for opening <xounal> tag
+    PARSER_POS_STARTED, // Waiting for Metainfo or contents like <page>
+    PARSER_POS_IN_PAGE, // Starting page tag read
+    PARSER_POS_IN_LAYER, // Starting layer tag read
+    PARSER_POS_IN_STROKE, // Starting layer tag read
+    PARSER_POS_IN_TEXT, // Starting text tag read
+    PARSER_POS_IN_IMAGE, // Starting image tag read
+    PARSER_POS_IN_TEXIMAGE, // Starting latex tag read
 
-	PASER_POS_FINISHED // Document is parsed
+    PASER_POS_FINISHED // Document is parsed
 };
 
-class DoubleArrayBuffer {
+class DoubleArrayBuffer
+{
 public:
 	DoubleArrayBuffer();
 	virtual ~DoubleArrayBuffer();
 
 public:
 	void clear();
-	const double * getData();
+	const double* getData();
 	int size();
 	void add(double d);
 
 private:
 	XOJ_TYPE_ATTRIB;
 
-	double * data;
+	double* data;
 	int len;
 	int allocCount;
 };
 
-class LoadHandler {
+class LoadHandler
+{
 public:
 	LoadHandler();
 	virtual ~LoadHandler();
 
 public:
-	Document * loadDocument(String filename);
+	Document* loadDocument(String filename);
 
 	String getLastError();
 	bool isAttachedPdfMissing();
@@ -82,30 +85,34 @@ private:
 	void initAttributes();
 
 	String readLine();
-	int readFile(char * buffer, int len);
+	int readFile(char* buffer, int len);
 	bool closeFile();
 	bool openFile(String filename);
 	bool parseXml();
 
-	bool parseColor(const char * text, int & color);
+	bool parseColor(const char* text, int& color);
 
-	static void parserText(GMarkupParseContext * context, const gchar * text, gsize text_len, gpointer userdata,
-			GError ** error);
-	static void parserEndElement(GMarkupParseContext * context, const gchar * element_name, gpointer userdata,
-			GError ** error);
-	static void parserStartElement(GMarkupParseContext * context, const gchar * element_name,
-			const gchar ** attribute_names, const gchar ** attribute_values, gpointer userdata, GError ** error);
+	static void parserText(GMarkupParseContext* context, const gchar* text,
+	                       gsize text_len, gpointer userdata,
+	                       GError** error);
+	static void parserEndElement(GMarkupParseContext* context,
+	                             const gchar* element_name, gpointer userdata,
+	                             GError** error);
+	static void parserStartElement(GMarkupParseContext* context,
+	                               const gchar* element_name,
+	                               const gchar** attribute_names, const gchar** attribute_values,
+	                               gpointer userdata, GError** error);
 
-	const char * getAttrib(const char * name, bool optional = false);
-	double getAttribDouble(const char * name);
-	int getAttribInt(const char * name);
+	const char* getAttrib(const char* name, bool optional = false);
+	double getAttribDouble(const char* name);
+	int getAttribInt(const char* name);
 
 	void parseBgSolid();
 	void parseBgPixmap();
 	void parseBgPdf();
 
-	void readImage(const gchar * base64_str, gsize base64_strlen);
-	void readTexImage(const gchar * base64_str, gsize base64_strlen);
+	void readImage(const gchar* base64_str, gsize base64_strlen);
+	void readTexImage(const gchar* base64_str, gsize base64_strlen);
 
 private:
 	XOJ_TYPE_ATTRIB;
@@ -132,18 +139,18 @@ private:
 	DoubleArrayBuffer pressureBuffer;
 
 	PageRef page;
-	Layer * layer;
-	Stroke * stroke;
-	Text * text;
-	Image * image;
-	TexImage * teximage;
+	Layer* layer;
+	Stroke* stroke;
+	Text* text;
+	Image* image;
+	TexImage* teximage;
 
 	String xournalFilename;
 
-	GError * error;
-	const gchar **attributeNames;
-	const gchar **attributeValues;
-	const gchar * elementName;
+	GError* error;
+	const gchar** attributeNames;
+	const gchar** attributeValues;
+	const gchar* elementName;
 
 	DocumentHandler dHanlder;
 	Document doc;

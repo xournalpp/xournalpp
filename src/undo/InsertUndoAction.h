@@ -18,43 +18,47 @@ class Layer;
 class Element;
 class Redrawable;
 
-class InsertUndoAction: public UndoAction {
+class InsertUndoAction: public UndoAction
+{
 public:
-	InsertUndoAction(PageRef page, Layer * layer, Element * element, Redrawable * view);
+	InsertUndoAction(PageRef page, Layer* layer, Element* element,
+	                 Redrawable* view);
 	virtual ~InsertUndoAction();
 
 public:
-	virtual bool undo(Control * control);
-	virtual bool redo(Control * control);
+	virtual bool undo(Control* control);
+	virtual bool redo(Control* control);
 
 	virtual String getText();
 
 private:
 	XOJ_TYPE_ATTRIB;
 
-	Layer * layer;
-	Element * element;
-	Redrawable * view;
+	Layer* layer;
+	Element* element;
+	Redrawable* view;
 };
 
-class InsertsUndoAction : public UndoAction {
+class InsertsUndoAction : public UndoAction
+{
 public:
-	InsertsUndoAction(PageRef page, Layer * layer, GList * elements, Redrawable * view);
+	InsertsUndoAction(PageRef page, Layer* layer, GList* elements,
+	                  Redrawable* view);
 	virtual ~InsertsUndoAction();
 
 public:
-	virtual bool undo(Control * control);
-	virtual bool redo(Control * control);
+	virtual bool undo(Control* control);
+	virtual bool redo(Control* control);
 
 	virtual String getText();
 
 private:
 	XOJ_TYPE_ATTRIB;
-	
-	Layer * layer;
-	GList * elements;
-	Redrawable * view;
-	
+
+	Layer* layer;
+	GList* elements;
+	Redrawable* view;
+
 };
 
 #endif /* __INSERTUNDOACTION_H__ */

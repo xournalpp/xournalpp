@@ -1,8 +1,9 @@
- #include "Rectangle.h"
+#include "Rectangle.h"
 #include "Range.h"
 #include <glib.h>
 
-Rectangle::Rectangle() {
+Rectangle::Rectangle()
+{
 	XOJ_INIT_TYPE(Rectangle);
 
 	this->x = 0;
@@ -11,7 +12,8 @@ Rectangle::Rectangle() {
 	this->height = 0;
 }
 
-Rectangle::Rectangle(double x, double y, double width, double height) {
+Rectangle::Rectangle(double x, double y, double width, double height)
+{
 	XOJ_INIT_TYPE(Rectangle);
 
 	this->x = x;
@@ -20,7 +22,8 @@ Rectangle::Rectangle(double x, double y, double width, double height) {
 	this->height = height;
 }
 
-Rectangle::Rectangle(Range & rect) {
+Rectangle::Rectangle(Range& rect)
+{
 	XOJ_INIT_TYPE(Rectangle);
 
 	this->x = rect.getX();
@@ -29,7 +32,8 @@ Rectangle::Rectangle(Range & rect) {
 	this->height = rect.getHeight();
 }
 
-Rectangle::~Rectangle() {
+Rectangle::~Rectangle()
+{
 	XOJ_RELEASE_TYPE(Rectangle);
 }
 
@@ -48,7 +52,8 @@ Rectangle::~Rectangle() {
  *
  * Returns: %TRUE if the rectangles intersect.
  */
-bool Rectangle::intersect(const Rectangle * src, Rectangle * dest = NULL) {
+bool Rectangle::intersect(const Rectangle* src, Rectangle* dest = NULL)
+{
 	XOJ_CHECK_TYPE(Rectangle);
 
 	double destX, destY;
@@ -63,15 +68,19 @@ bool Rectangle::intersect(const Rectangle * src, Rectangle * dest = NULL) {
 	destW = MIN(this->x + this->width, src->x + src->width) - destX;
 	destH = MIN(this->y + this->height, src->y + src->height) - destY;
 
-	if (destW > 0 && destH > 0) {
-		if (dest) {
+	if (destW > 0 && destH > 0)
+	{
+		if (dest)
+		{
 			dest->x = destX;
 			dest->y = destY;
 			dest->width = destW;
 			dest->height = destH;
 		}
 		returnVal = true;
-	} else if (dest) {
+	}
+	else if (dest)
+	{
 		dest->width = 0;
 		dest->height = 0;
 	}
@@ -79,10 +88,12 @@ bool Rectangle::intersect(const Rectangle * src, Rectangle * dest = NULL) {
 	return returnVal;
 }
 
-void Rectangle::add(double x, double y, double width, double height) {
+void Rectangle::add(double x, double y, double width, double height)
+{
 	XOJ_CHECK_TYPE(Rectangle);
 
-	if (width <= 0 || height <= 0) {
+	if (width <= 0 || height <= 0)
+	{
 		return;
 	}
 

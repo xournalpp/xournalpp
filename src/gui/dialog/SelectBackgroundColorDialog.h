@@ -17,13 +17,14 @@
 class Control;
 class ColorEntry;
 
-class SelectBackgroundColorDialog: public GladeGui {
+class SelectBackgroundColorDialog: public GladeGui
+{
 public:
-	SelectBackgroundColorDialog(GladeSearchpath * gladeSearchPath, Control * control);
+	SelectBackgroundColorDialog(GladeSearchpath* gladeSearchPath, Control* control);
 	virtual ~SelectBackgroundColorDialog();
 
 public:
-	virtual void show(GtkWindow * parent);
+	virtual void show(GtkWindow* parent);
 
 	int getSelectedColor();
 
@@ -32,19 +33,20 @@ public:
 private:
 	void updateLastUsedColors();
 
-	static void buttonSelectedCallback(GtkButton * button, ColorEntry * e);
-	static void buttonCustomCallback(GtkButton * button, SelectBackgroundColorDialog * dlg);
+	static void buttonSelectedCallback(GtkButton* button, ColorEntry* e);
+	static void buttonCustomCallback(GtkButton* button,
+	                                 SelectBackgroundColorDialog* dlg);
 
 private:
 	XOJ_TYPE_ATTRIB;
 
-	Control * control;
+	Control* control;
 
 	int selected;
 
-	GList * colors;
+	GList* colors;
 
-	GtkWidget * colorDlg;
+	GtkWidget* colorDlg;
 };
 
 #endif /* __SELECTBACKGROUNDCOLORDIALOG_H__ */

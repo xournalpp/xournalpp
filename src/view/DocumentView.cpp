@@ -13,7 +13,8 @@
 
 #include <typeinfo>
 
-DocumentView::DocumentView() {
+DocumentView::DocumentView()
+{
 	XOJ_INIT_TYPE(DocumentView);
 	this->page = NULL;
 	this->cr = NULL;
@@ -24,15 +25,18 @@ DocumentView::DocumentView() {
 	this->dontRenderEditingStroke = 0;
 }
 
-DocumentView::~DocumentView() {
+DocumentView::~DocumentView()
+{
 	XOJ_RELEASE_TYPE(DocumentView);
 }
 
-void DocumentView::applyColor(cairo_t * cr, Element * e, int alpha) {
+void DocumentView::applyColor(cairo_t* cr, Element* e, int alpha)
+{
 	applyColor(cr, e->getColor(), alpha);
 }
 
-void DocumentView::applyColor(cairo_t * cr, int c, int alpha) {
+void DocumentView::applyColor(cairo_t* cr, int c, int alpha)
+{
 	double r = ((c >> 16) & 0xff) / 255.0;
 	double g = ((c >> 8) & 0xff) / 255.0;
 	double b = (c & 0xff) / 255.0;
@@ -40,30 +44,37 @@ void DocumentView::applyColor(cairo_t * cr, int c, int alpha) {
 	cairo_set_source_rgba(cr, r, g, b, alpha / 255.0);
 }
 
-void DocumentView::drawEraseableStroke(cairo_t * cr, Stroke * s) {
+void DocumentView::drawEraseableStroke(cairo_t* cr, Stroke* s)
+{
 	XOJ_CHECK_TYPE(DocumentView);
 
-	EraseableStroke * e = s->getEraseable();
+	EraseableStroke* e = s->getEraseable();
 
 	e->draw(cr, this->lX, this->lY, this->width, this->height);
 }
 
-void DocumentView::drawStroke(cairo_t * cr, Stroke * s, int startPoint, double scaleFactor) {
+void DocumentView::drawStroke(cairo_t* cr, Stroke* s, int startPoint,
+                              double scaleFactor)
+{
 	XOJ_CHECK_TYPE(DocumentView);
 
 	ArrayIterator<Point> points = s->pointIterator();
 
-	if (!points.hasNext()) {
+	if (!points.hasNext())
+	{
 		// Should not happen
 		g_warning("DocumentView::drawStroke empty stroke...");
 		return;
 	}
 
-	if (s->getToolType() == STROKE_TOOL_HIGHLIGHTER) {
+	if (s->getToolType() == STROKE_TOOL_HIGHLIGHTER)
+	{
 		cairo_set_operator(cr, CAIRO_OPERATOR_OVER);
 		// Set the color
 		applyColor(cr, s, 120);
-	} else {
+	}
+	else
+	{
 		cairo_set_operator(cr, CAIRO_OPERATOR_SOURCE);
 		// Set the color
 		applyColor(cr, s);
@@ -73,28 +84,36 @@ void DocumentView::drawStroke(cairo_t * cr, Stroke * s, int startPoint, double s
 	cairo_set_line_cap(cr, CAIRO_LINE_CAP_ROUND);
 
 	// don't render eraseable for previews
-	if (s->getEraseable() && !this->dontRenderEditingStroke) {
+	if (s->getEraseable() && !this->dontRenderEditingStroke)
+	{
 		drawEraseableStroke(cr, s);
 		return;
 	}
 
-	int count = 1; // we need to start on the last point (or need cairo_move_to first)
+	int count =
+	    1; // we need to start on the last point (or need cairo_move_to first)
 	double width = s->getWidth();
 
 	// No pressure sensitivity, easy draw a line...
-	if (!s->hasPressure()) {
-		if(scaleFactor == 1) {
+	if (!s->hasPressure())
+	{
+		if(scaleFactor == 1)
+		{
 			// Set width
 			cairo_set_line_width(cr, width);
-		} else {
+		}
+		else
+		{
 			// Set width
 			cairo_set_line_width(cr, width * scaleFactor);
 		}
 
-		while (points.hasNext()) {
+		while (points.hasNext())
+		{
 			Point p = points.next();
 
-			if (startPoint <= count) {
+			if (startPoint <= count)
+			{
 				cairo_line_to(cr, p.x, p.y);
 			}
 			count++;
@@ -112,17 +131,23 @@ void DocumentView::drawStroke(cairo_t * cr, Stroke * s, int startPoint, double s
 	Point lastPoint1(-1, -1);
 	lastPoint1 = points.next();
 
-	while (points.hasNext()) {
+	while (points.hasNext())
+	{
 		Point p = points.next();
-		if (startPoint <= count) {
-			if (lastPoint1.z != Point::NO_PRESURE) {
+		if (startPoint <= count)
+		{
+			if (lastPoint1.z != Point::NO_PRESURE)
+			{
 				width = lastPoint1.z;
 			}
 
-			if(scaleFactor == 1) {
+			if(scaleFactor == 1)
+			{
 				// Set width
 				cairo_set_line_width(cr, width);
-			} else {
+			}
+			else
+			{
 				// Set width
 				cairo_set_line_width(cr, width * scaleFactor);
 			}
@@ -138,10 +163,12 @@ void DocumentView::drawStroke(cairo_t * cr, Stroke * s, int startPoint, double s
 	cairo_stroke(cr);
 }
 
-void DocumentView::drawText(cairo_t *cr, Text * t) {
+void DocumentView::drawText(cairo_t* cr, Text* t)
+{
 	XOJ_CHECK_TYPE(DocumentView);
 
-	if (t->isInEditing()) {
+	if (t->isInEditing())
+	{
 		return;
 	}
 	applyColor(cr, t);
@@ -149,13 +176,14 @@ void DocumentView::drawText(cairo_t *cr, Text * t) {
 	TextView::drawText(cr, t);
 }
 
-void DocumentView::drawImage(cairo_t *cr, Image * i) {
+void DocumentView::drawImage(cairo_t* cr, Image* i)
+{
 	XOJ_CHECK_TYPE(DocumentView);
 
 	cairo_matrix_t defaultMatrix = { 0 };
 	cairo_get_matrix(cr, &defaultMatrix);
 
-	cairo_surface_t * img = i->getImage();
+	cairo_surface_t* img = i->getImage();
 	int width = cairo_image_surface_get_width(img);
 	int height = cairo_image_surface_get_height(img);
 
@@ -171,13 +199,14 @@ void DocumentView::drawImage(cairo_t *cr, Image * i) {
 
 	cairo_set_matrix(cr, &defaultMatrix);
 }
-void DocumentView::drawTexImage(cairo_t *cr, TexImage * i) {
+void DocumentView::drawTexImage(cairo_t* cr, TexImage* i)
+{
 	XOJ_CHECK_TYPE(DocumentView);
 
 	cairo_matrix_t defaultMatrix = { 0 };
 	cairo_get_matrix(cr, &defaultMatrix);
 
-	cairo_surface_t * img = i->getImage();
+	cairo_surface_t* img = i->getImage();
 	int width = cairo_image_surface_get_width(img);
 	int height = cairo_image_surface_get_height(img);
 
@@ -194,53 +223,70 @@ void DocumentView::drawTexImage(cairo_t *cr, TexImage * i) {
 	cairo_set_matrix(cr, &defaultMatrix);
 }
 
-void DocumentView::drawElement(cairo_t * cr, Element * e) {
+void DocumentView::drawElement(cairo_t* cr, Element* e)
+{
 	XOJ_CHECK_TYPE(DocumentView);
 
-	if (e->getType() == ELEMENT_STROKE) {
-		drawStroke(cr, (Stroke *) e);
-	} else if (e->getType() == ELEMENT_TEXT) {
-		drawText(cr, (Text *) e);
-	} else if (e->getType() == ELEMENT_IMAGE) {
-		drawImage(cr, (Image *) e);
-	} else if (e->getType() == ELEMENT_TEXIMAGE) {
-		drawTexImage(cr, (TexImage *) e);
+	if (e->getType() == ELEMENT_STROKE)
+	{
+		drawStroke(cr, (Stroke*) e);
+	}
+	else if (e->getType() == ELEMENT_TEXT)
+	{
+		drawText(cr, (Text*) e);
+	}
+	else if (e->getType() == ELEMENT_IMAGE)
+	{
+		drawImage(cr, (Image*) e);
+	}
+	else if (e->getType() == ELEMENT_TEXIMAGE)
+	{
+		drawTexImage(cr, (TexImage*) e);
 	}
 }
 
-void DocumentView::drawLayer(cairo_t * cr, Layer * l) {
+void DocumentView::drawLayer(cairo_t* cr, Layer* l)
+{
 	XOJ_CHECK_TYPE(DocumentView);
 
-	ListIterator<Element *> it = l->elementIterator();
+	ListIterator<Element*> it = l->elementIterator();
 
 #ifdef SHOW_REPAINT_BOUNDS
 	int drawed = 0;
 	int notDrawed = 0;
 #endif //SHOW_REPAINT_BOUNDS
-	while (it.hasNext()) {
-		Element * e = it.next();
+	while (it.hasNext())
+	{
+		Element* e = it.next();
 
 #ifdef SHOW_ELEMENT_BOUNDS
 		cairo_set_source_rgb(cr, 0, 1, 0);
 		cairo_set_line_width(cr, 1);
-		cairo_rectangle(cr, e->getX(), e->getY(), e->getElementWidth(), e->getElementHeight());
+		cairo_rectangle(cr, e->getX(), e->getY(), e->getElementWidth(),
+		                e->getElementHeight());
 		cairo_stroke(cr);
 #endif // SHOW_ELEMENT_BOUNDS
 		//cairo_new_path(cr);
 
-		if (this->lX != -1) {
-			if (e->intersectsArea(this->lX, this->lY, this->width, this->height)) {
+		if (this->lX != -1)
+		{
+			if (e->intersectsArea(this->lX, this->lY, this->width, this->height))
+			{
 				drawElement(cr, e);
 #ifdef SHOW_REPAINT_BOUNDS
 				drawed++;
 #endif //SHOW_REPAINT_BOUNDS
-			} else {
+			}
+			else
+			{
 #ifdef SHOW_REPAINT_BOUNDS
 				notDrawed++;
 #endif //SHOW_REPAINT_BOUNDS
 			}
 
-		} else {
+		}
+		else
+		{
 #ifdef SHOW_REPAINT_BOUNDS
 			drawed++;
 #endif //SHOW_REPAINT_BOUNDS
@@ -253,11 +299,13 @@ void DocumentView::drawLayer(cairo_t * cr, Layer * l) {
 #endif //SHOW_REPAINT_BOUNDS
 }
 
-void DocumentView::paintBackgroundImage() {
+void DocumentView::paintBackgroundImage()
+{
 	XOJ_CHECK_TYPE(DocumentView);
 
-	GdkPixbuf * pixbuff = page.getBackgroundImage().getPixbuf();
-	if (pixbuff) {
+	GdkPixbuf* pixbuff = page.getBackgroundImage().getPixbuf();
+	if (pixbuff)
+	{
 		cairo_matrix_t matrix = { 0 };
 		cairo_get_matrix(cr, &matrix);
 
@@ -278,7 +326,8 @@ void DocumentView::paintBackgroundImage() {
 	}
 }
 
-void DocumentView::paintBackgroundColor() {
+void DocumentView::paintBackgroundColor()
+{
 	XOJ_CHECK_TYPE(DocumentView);
 
 	applyColor(cr, page.getBackgroundColor());
@@ -289,19 +338,22 @@ void DocumentView::paintBackgroundColor() {
 
 const double graphSize = 14.17;
 
-void DocumentView::paintBackgroundGraph() {
+void DocumentView::paintBackgroundGraph()
+{
 	XOJ_CHECK_TYPE(DocumentView);
 
 	applyColor(cr, 0x40A0FF);
 
 	cairo_set_line_width(cr, 0.5);
 
-	for (double x = graphSize; x < width; x += graphSize) {
+	for (double x = graphSize; x < width; x += graphSize)
+	{
 		cairo_move_to(cr, x, 0);
 		cairo_line_to(cr, x, height);
 	}
 
-	for (double y = graphSize; y < height; y += graphSize) {
+	for (double y = graphSize; y < height; y += graphSize)
+	{
 		cairo_move_to(cr, 0, y);
 		cairo_line_to(cr, width, y);
 	}
@@ -311,14 +363,16 @@ void DocumentView::paintBackgroundGraph() {
 
 const double roulingSize = 24;
 
-void DocumentView::paintBackgroundRuled() {
+void DocumentView::paintBackgroundRuled()
+{
 	XOJ_CHECK_TYPE(DocumentView);
 
 	applyColor(cr, 0x40A0FF);
 
 	cairo_set_line_width(cr, 0.5);
 
-	for (double y = 80; y < height; y += roulingSize) {
+	for (double y = 80; y < height; y += roulingSize)
+	{
 		cairo_move_to(cr, 0, y);
 		cairo_line_to(cr, width, y);
 	}
@@ -326,7 +380,8 @@ void DocumentView::paintBackgroundRuled() {
 	cairo_stroke(cr);
 }
 
-void DocumentView::paintBackgroundLined() {
+void DocumentView::paintBackgroundLined()
+{
 	XOJ_CHECK_TYPE(DocumentView);
 
 	applyColor(cr, 0x40A0FF);
@@ -339,17 +394,20 @@ void DocumentView::paintBackgroundLined() {
 	cairo_stroke(cr);
 }
 
-void DocumentView::drawSelection(cairo_t * cr, ElementContainer * container) {
+void DocumentView::drawSelection(cairo_t* cr, ElementContainer* container)
+{
 	XOJ_CHECK_TYPE(DocumentView);
 
-	ListIterator<Element *> it = container->getElements();
-	while (it.hasNext()) {
-		Element * e = it.next();
+	ListIterator<Element*> it = container->getElements();
+	while (it.hasNext())
+	{
+		Element* e = it.next();
 		drawElement(cr, e);
 	}
 }
 
-void DocumentView::limitArea(double x, double y, double width, double heigth) {
+void DocumentView::limitArea(double x, double y, double width, double heigth)
+{
 	XOJ_CHECK_TYPE(DocumentView);
 
 	this->lX = x;
@@ -358,7 +416,9 @@ void DocumentView::limitArea(double x, double y, double width, double heigth) {
 	this->lHeight = heigth;
 }
 
-void DocumentView::drawPage(PageRef page, cairo_t * cr, bool dontRenderEditingStroke) {
+void DocumentView::drawPage(PageRef page, cairo_t* cr,
+                            bool dontRenderEditingStroke)
+{
 	XOJ_CHECK_TYPE(DocumentView);
 
 	this->cr = cr;
@@ -367,42 +427,58 @@ void DocumentView::drawPage(PageRef page, cairo_t * cr, bool dontRenderEditingSt
 	this->height = page.getHeight();
 	this->dontRenderEditingStroke = dontRenderEditingStroke;
 
-	if (page.getBackgroundType() == BACKGROUND_TYPE_PDF) {
+	if (page.getBackgroundType() == BACKGROUND_TYPE_PDF)
+	{
 		// Handled in PdfView
-	} else if (page.getBackgroundType() == BACKGROUND_TYPE_IMAGE) {
+	}
+	else if (page.getBackgroundType() == BACKGROUND_TYPE_IMAGE)
+	{
 		paintBackgroundImage();
-	} else if (page.getBackgroundType() == BACKGROUND_TYPE_GRAPH) {
+	}
+	else if (page.getBackgroundType() == BACKGROUND_TYPE_GRAPH)
+	{
 		paintBackgroundColor();
 		paintBackgroundGraph();
-	} else if (page.getBackgroundType() == BACKGROUND_TYPE_LINED) {
+	}
+	else if (page.getBackgroundType() == BACKGROUND_TYPE_LINED)
+	{
 		paintBackgroundColor();
 		paintBackgroundRuled();
 		paintBackgroundLined();
-	} else if (page.getBackgroundType() == BACKGROUND_TYPE_RULED) {
+	}
+	else if (page.getBackgroundType() == BACKGROUND_TYPE_RULED)
+	{
 		paintBackgroundColor();
 		paintBackgroundRuled();
-	} else if (page.getBackgroundType() == BACKGROUND_TYPE_NONE) {
+	}
+	else if (page.getBackgroundType() == BACKGROUND_TYPE_NONE)
+	{
 		paintBackgroundColor();
 	}
 
 	cairo_set_operator(cr, CAIRO_OPERATOR_SOURCE);
 
 	int layer = 0;
-	ListIterator<Layer *> it = page.layerIterator();
-	while (it.hasNext() && layer < page.getSelectedLayerId()) {
-		Layer * l = it.next();
+	ListIterator<Layer*> it = page.layerIterator();
+	while (it.hasNext() && layer < page.getSelectedLayerId())
+	{
+		Layer* l = it.next();
 		drawLayer(cr, l);
 		layer++;
 	}
 
 #ifdef SHOW_REPAINT_BOUNDS
-	if (this->lX != -1) {
+	if (this->lX != -1)
+	{
 		printf("DBG:repaint area\n");
 		cairo_set_source_rgb(cr, 1, 0, 0);
 		cairo_set_line_width(cr, 1);
-		cairo_rectangle(cr, this->lX + 3, this->lY + 3, this->lWidth - 6, this->lHeight - 6);
+		cairo_rectangle(cr, this->lX + 3, this->lY + 3, this->lWidth - 6,
+		                this->lHeight - 6);
 		cairo_stroke(cr);
-	} else {
+	}
+	else
+	{
 		printf("DBG:repaint complete\n");
 	}
 #endif //SHOW_REPAINT_BOUNDS

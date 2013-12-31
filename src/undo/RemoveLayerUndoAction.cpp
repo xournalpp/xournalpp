@@ -6,8 +6,10 @@
 #include "../model/Document.h"
 #include "../gui/XournalView.h"
 
-RemoveLayerUndoAction::RemoveLayerUndoAction(PageRef page, Layer * layer, int layerPos)
-	: UndoAction("RemoveLayerUndoAction") {
+RemoveLayerUndoAction::RemoveLayerUndoAction(PageRef page, Layer* layer,
+                                             int layerPos)
+	: UndoAction("RemoveLayerUndoAction")
+{
 	XOJ_INIT_TYPE(RemoveLayerUndoAction);
 
 	this->page = page;
@@ -15,10 +17,12 @@ RemoveLayerUndoAction::RemoveLayerUndoAction(PageRef page, Layer * layer, int la
 	this->layerPos = layerPos;
 }
 
-RemoveLayerUndoAction::~RemoveLayerUndoAction() {
+RemoveLayerUndoAction::~RemoveLayerUndoAction()
+{
 	XOJ_CHECK_TYPE(RemoveLayerUndoAction);
 
-	if (!this->undone) {
+	if (!this->undone)
+	{
 		// The layer was NOT undone, also NOT restored
 		delete this->layer;
 	}
@@ -27,17 +31,19 @@ RemoveLayerUndoAction::~RemoveLayerUndoAction() {
 	XOJ_RELEASE_TYPE(RemoveLayerUndoAction);
 }
 
-String RemoveLayerUndoAction::getText() {
+String RemoveLayerUndoAction::getText()
+{
 	XOJ_CHECK_TYPE(RemoveLayerUndoAction);
 
 	return _("Delete layer");
 }
 
-bool RemoveLayerUndoAction::undo(Control * control) {
+bool RemoveLayerUndoAction::undo(Control* control)
+{
 	XOJ_CHECK_TYPE(RemoveLayerUndoAction);
 
 	this->page.insertLayer(this->layer, layerPos);
-	Document * doc = control->getDocument();
+	Document* doc = control->getDocument();
 
 	doc->lock();
 	int id = doc->indexOf(this->page);
@@ -51,10 +57,11 @@ bool RemoveLayerUndoAction::undo(Control * control) {
 	return true;
 }
 
-bool RemoveLayerUndoAction::redo(Control * control) {
+bool RemoveLayerUndoAction::redo(Control* control)
+{
 	XOJ_CHECK_TYPE(RemoveLayerUndoAction);
 
-	Document * doc = control->getDocument();
+	Document* doc = control->getDocument();
 
 	doc->lock();
 	this->page.removeLayer(this->layer);

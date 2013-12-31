@@ -17,26 +17,31 @@
 #include "../cfg.h"
 #include <glib.h>
 
-LatexAction::LatexAction(gchar * myTex) {
+LatexAction::LatexAction(gchar* myTex)
+{
 	//this->control = control;
 
 	this->theLatex = myTex;
 
-	this->texfile = g_strconcat(g_get_home_dir(), G_DIR_SEPARATOR_S, CONFIG_DIR, G_DIR_SEPARATOR_S, "tex", NULL);
-	this->texfilefull = g_strconcat(g_get_home_dir(), G_DIR_SEPARATOR_S, CONFIG_DIR, G_DIR_SEPARATOR_S, "tex.png", NULL);
-	printf("%s \n",this->texfile);
+	this->texfile = g_strconcat(g_get_home_dir(), G_DIR_SEPARATOR_S, CONFIG_DIR,
+	                            G_DIR_SEPARATOR_S, "tex", NULL);
+	this->texfilefull = g_strconcat(g_get_home_dir(), G_DIR_SEPARATOR_S, CONFIG_DIR,
+	                                G_DIR_SEPARATOR_S, "tex.png", NULL);
+	printf("%s \n", this->texfile);
 
 	//set up the default positions.
 	this->myx = 0;
 	this->myy = 0;
 }
 
-LatexAction::~LatexAction() {
+LatexAction::~LatexAction()
+{
 	g_free(this->texfile);
 	g_free(this->texfilefull);
 }
 
-void LatexAction::runCommand(){
+void LatexAction::runCommand()
+{
 	/*
 	 * at some point, I may need to sanitize theLatex
 	 */
@@ -52,29 +57,30 @@ void LatexAction::runCommand(){
 	g_free(mathtex);
 	gchar* command = NULL;
 	//can change font colour later with more features
-	const gchar * fontcolour = "black";
+	const gchar* fontcolour = "black";
 	command = g_strdup_printf(
-			"%s -m 0 \"\\png\\usepackage{color}\\color{%s}\\dpi{300}\\%s %s\" -o %s",
-			mtex, strlen(fontcolour) ? fontcolour : "black", 
-			"normalsize",
-			g_strescape(this->theLatex,NULL), this->texfile);
-	
+	              "%s -m 0 \"\\png\\usepackage{color}\\color{%s}\\dpi{300}\\%s %s\" -o %s",
+	              mtex, strlen(fontcolour) ? fontcolour : "black",
+	              "normalsize",
+	              g_strescape(this->theLatex, NULL), this->texfile);
+
 	gint rt = 0;
-	void(*texhandler)(int) = signal(SIGCHLD,SIG_DFL);
-	gboolean success = g_spawn_command_line_sync(command,NULL,NULL,&rt,NULL);
-	signal(SIGCHLD,texhandler);
+	void(*texhandler)(int) = signal(SIGCHLD, SIG_DFL);
+	gboolean success = g_spawn_command_line_sync(command, NULL, NULL, &rt, NULL);
+	signal(SIGCHLD, texhandler);
 	if (!success)
 	{
 		printf("Latex Command execution failed.\n");
 		return;
 	}
 	g_free(command);
-	printf("Tex command: \"%s\" was successful; in file %s.\n",this->theLatex,this->texfilefull);
+	printf("Tex command: \"%s\" was successful; in file %s.\n", this->theLatex,
+	       this->texfilefull);
 
 }
 
 
-gchar * LatexAction::getFileName()
+gchar* LatexAction::getFileName()
 {
 	//gets the filename for our image
 	return this->texfilefull;

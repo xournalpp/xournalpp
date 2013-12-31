@@ -14,15 +14,16 @@
 
 #include <glib.h>
 
-class GzHelper {
+class GzHelper
+{
 private:
 	GzHelper();
 	virtual ~GzHelper();
 
 public:
-	static GString * gzcompress(GString* str, int level = -1);
-	static GString * gzuncompress(GString* str);
-	static GString * gzuncompress(const char * str, gsize len);
+	static GString* gzcompress(GString* str, int level = -1);
+	static GString* gzuncompress(GString* str);
+	static GString* gzuncompress(const char* str, gsize len);
 
 };
 

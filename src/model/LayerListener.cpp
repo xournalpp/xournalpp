@@ -1,27 +1,33 @@
 #include "LayerListener.h"
 #include "Layer.h"
 
-LayerListener::LayerListener() {
+LayerListener::LayerListener()
+{
 	this->layer = NULL;
 }
 
-LayerListener::~LayerListener() {
+LayerListener::~LayerListener()
+{
 	unregisterListener();
 }
 
-void LayerListener::registerListener(Layer * layer) {
+void LayerListener::registerListener(Layer* layer)
+{
 	this->layer = layer;
 	this->layer->addListener(this);
 }
 
-void LayerListener::unregisterListener() {
-	if(this->layer) {
+void LayerListener::unregisterListener()
+{
+	if(this->layer)
+	{
 		this->layer->removeListener(this);
 		this->layer = NULL;
 	}
 }
 
-void LayerListener::layerDeleted() {
+void LayerListener::layerDeleted()
+{
 	this->layerDeletedCb(this->layer);
 	this->layer = NULL;
 }

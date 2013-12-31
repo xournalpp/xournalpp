@@ -20,23 +20,26 @@
 
 #include <map>
 
-enum AttributeType {
-	ATTRIBUTE_TYPE_NONE, ATTRIBUTE_TYPE_STRING, ATTRIBUTE_TYPE_INT, ATTRIBUTE_TYPE_DOUBLE, ATTRIBUTE_TYPE_INT_HEX, ATTRIBUTE_TYPE_BOOLEAN,
+enum AttributeType
+{
+    ATTRIBUTE_TYPE_NONE, ATTRIBUTE_TYPE_STRING, ATTRIBUTE_TYPE_INT, ATTRIBUTE_TYPE_DOUBLE, ATTRIBUTE_TYPE_INT_HEX, ATTRIBUTE_TYPE_BOOLEAN,
 };
 
-enum ScrollbarHideType {
-	SCROLLBAR_HIDE_NONE = 0,
-	SCROLLBAR_HIDE_HORIZONTAL = 1,
-	SCROLLBAR_HIDE_VERTICAL = 2,
-	SCROLLBAR_HIDE_BOTH = 3
+enum ScrollbarHideType
+{
+    SCROLLBAR_HIDE_NONE = 0,
+    SCROLLBAR_HIDE_HORIZONTAL = 1,
+    SCROLLBAR_HIDE_VERTICAL = 2,
+    SCROLLBAR_HIDE_BOTH = 3
 };
 
 class ButtonConfig;
 
-class SAttribute {
+class SAttribute
+{
 public:
 	SAttribute();
-	SAttribute(const SAttribute & attrib);
+	SAttribute(const SAttribute& attrib);
 	virtual ~SAttribute();
 
 public:
@@ -53,7 +56,8 @@ public:
 
 class SElement;
 
-class __RefSElement {
+class __RefSElement
+{
 public:
 	__RefSElement();
 	virtual ~__RefSElement();
@@ -73,7 +77,8 @@ private:
 	friend class SElement;
 };
 
-class SElement {
+class SElement
+{
 public:
 	SElement();
 	SElement(const SElement& elem);
@@ -84,7 +89,7 @@ public:
 
 	void clear();
 
-	SElement & child(String name);
+	SElement& child(String name);
 
 	void setIntHex(const String name, const int value);
 	void setInt(const String name, const int value);
@@ -94,28 +99,29 @@ public:
 
 	void setComment(const String name, const String comment);
 
-	bool getInt(const String name, int & value);
-	bool getDouble(const String name, double & value);
-	bool getBool(const String name, bool & value);
-	bool getString(const String name, String & value);
+	bool getInt(const String name, int& value);
+	bool getDouble(const String name, double& value);
+	bool getBool(const String name, bool& value);
+	bool getString(const String name, String& value);
 
-	std::map<String, SAttribute> & attributes();
-	std::map<String, SElement> & children();
+	std::map<String, SAttribute>& attributes();
+	std::map<String, SElement>& children();
 
 private:
 	XOJ_TYPE_ATTRIB;
 
-	__RefSElement * element;
+	__RefSElement* element;
 };
 
-class Settings {
+class Settings
+{
 public:
 	Settings(String filename);
 	virtual ~Settings();
 
 public:
 	bool load();
-	void parseData(xmlNodePtr cur, SElement & elem);
+	void parseData(xmlNodePtr cur, SElement& elem);
 
 	void save();
 
@@ -131,15 +137,17 @@ public:
 private:
 	void loadDefault();
 	void saveTimeout();
-	static gboolean saveCallback(Settings * data);
+	static gboolean saveCallback(Settings* data);
 
 	void parseItem(xmlDocPtr doc, xmlNodePtr cur);
 
-	xmlNodePtr savePropertyDouble(const gchar * key, double value, xmlNodePtr parent);
-	xmlNodePtr saveProperty(const gchar * key, int value, xmlNodePtr parent);
-	xmlNodePtr saveProperty(const gchar * key, const gchar * value, xmlNodePtr parent);
+	xmlNodePtr savePropertyDouble(const gchar* key, double value,
+	                              xmlNodePtr parent);
+	xmlNodePtr saveProperty(const gchar* key, int value, xmlNodePtr parent);
+	xmlNodePtr saveProperty(const gchar* key, const gchar* value,
+	                        xmlNodePtr parent);
 
-	void saveData(xmlNodePtr root, String name, SElement & elem);
+	void saveData(xmlNodePtr root, String name, SElement& elem);
 
 	void saveButtonConfig();
 	void loadButtonConfig();
@@ -173,8 +181,8 @@ public:
 	/**
 	 * The last used font
 	 */
-	XojFont & getFont();
-	void setFont(const XojFont & font);
+	XojFont& getFont();
+	void setFont(const XojFont& font);
 
 	/**
 	 * The selected Toolbar
@@ -244,13 +252,13 @@ public:
 	String getDefaultSaveName();
 	void setDefaultSaveName(String name);
 
-	ButtonConfig * getButtonConfig(int id);
+	ButtonConfig* getButtonConfig(int id);
 
-	ButtonConfig * getEraserButtonConfig();
-	ButtonConfig * getMiddleButtonConfig();
-	ButtonConfig * getRightButtonConfig();
-	ButtonConfig * getTouchButtonConfig();
-	ButtonConfig * getDefaultButtonConfig();
+	ButtonConfig* getEraserButtonConfig();
+	ButtonConfig* getMiddleButtonConfig();
+	ButtonConfig* getRightButtonConfig();
+	ButtonConfig* getTouchButtonConfig();
+	ButtonConfig* getDefaultButtonConfig();
 
 	String getFullscreenHideElements();
 	void setFullscreenHideElements(String elements);
@@ -273,7 +281,7 @@ public:
 	String getVisiblePageFormats();
 public:
 	// Custom settings
-	SElement & getCustomElement(String name);
+	SElement& getCustomElement(String name);
 
 	/**
 	 * Call this after you have done all custom settings changes
@@ -281,9 +289,11 @@ public:
 	void customSettingsChanged();
 
 private:
-	Settings(const Settings& settings) {
+	Settings(const Settings& settings)
+	{
 	}
-	void operator=(const Settings & settings) {
+	void operator=(const Settings& settings)
+	{
 	}
 
 private:
@@ -440,7 +450,7 @@ private:
 	 * 3: touch screen
 	 * 4: default
 	 */
-	ButtonConfig * buttonConfig[5];
+	ButtonConfig* buttonConfig[5];
 
 	/**
 	 * Which gui elements are hidden if you are in Fullscreen mode, separated by a colon (,)

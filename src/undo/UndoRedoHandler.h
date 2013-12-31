@@ -17,15 +17,17 @@
 
 class Control;
 
-class UndoRedoListener {
+class UndoRedoListener
+{
 public:
 	virtual void undoRedoChanged() = 0;
 	virtual void undoRedoPageChanged(PageRef page) = 0;
 };
 
-class UndoRedoHandler {
+class UndoRedoHandler
+{
 public:
-	UndoRedoHandler(Control * control);
+	UndoRedoHandler(Control* control);
 	virtual ~UndoRedoHandler();
 
 	void undo();
@@ -34,25 +36,25 @@ public:
 	bool canUndo();
 	bool canRedo();
 
-	void addUndoAction(UndoAction * action);
-	void addUndoActionBefore(UndoAction * action, UndoAction * before);
-	bool removeUndoAction(UndoAction * action);
+	void addUndoAction(UndoAction* action);
+	void addUndoActionBefore(UndoAction* action, UndoAction* before);
+	bool removeUndoAction(UndoAction* action);
 
 	String undoDescription();
 	String redoDescription();
 
 	void clearContents();
 
-	void fireUpdateUndoRedoButtons(XojPage ** pages);
-	void addUndoRedoListener(UndoRedoListener * listener);
+	void fireUpdateUndoRedoButtons(XojPage** pages);
+	void addUndoRedoListener(UndoRedoListener* listener);
 
 	bool isChanged();
 	bool isChangedAutosave();
 	void documentAutosaved();
 	void documentSaved();
 
-	const char * getUndoStackTopTypeName();
-	const char * getRedoStackTopTypeName();
+	const char* getUndoStackTopTypeName();
+	const char* getRedoStackTopTypeName();
 
 private:
 	void clearRedo();
@@ -60,16 +62,16 @@ private:
 private:
 	XOJ_TYPE_ATTRIB;
 
-	GList * undoList;
-	GList * redoList;
+	GList* undoList;
+	GList* redoList;
 
-	GList * savedUndoList;
-	GList * autosavedUndoList;
+	GList* savedUndoList;
+	GList* autosavedUndoList;
 
 
-	GList * listener;
+	GList* listener;
 
-	Control * control;
+	Control* control;
 };
 
 #endif /* __UNDOREDOHANDLER_H__ */

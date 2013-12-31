@@ -2,7 +2,8 @@
 #include <stdio.h>
 #include <gtk/gtk.h>
 
-Job::Job() {
+Job::Job()
+{
 	XOJ_INIT_TYPE(Job);
 
 	this->afterRunId = 0;
@@ -11,7 +12,8 @@ Job::Job() {
 	this->refMutex = g_mutex_new();
 }
 
-Job::~Job() {
+Job::~Job()
+{
 	XOJ_CHECK_TYPE(Job);
 
 	g_mutex_free(this->refMutex);
@@ -20,21 +22,26 @@ Job::~Job() {
 	XOJ_RELEASE_TYPE(Job);
 }
 
-void Job::unref() {
+void Job::unref()
+{
 	XOJ_CHECK_TYPE(Job);
 
 	g_mutex_lock(this->refMutex);
 	this->refCount--;
 
-	if (this->refCount == 0) {
+	if (this->refCount == 0)
+	{
 		g_mutex_unlock(this->refMutex);
 		delete this;
-	} else {
+	}
+	else
+	{
 		g_mutex_unlock(this->refMutex);
 	}
 }
 
-void Job::ref() {
+void Job::ref()
+{
 	XOJ_CHECK_TYPE(Job);
 
 	g_mutex_lock(this->refMutex);
@@ -42,26 +49,31 @@ void Job::ref() {
 	g_mutex_unlock(this->refMutex);
 }
 
-void Job::deleteJob() {
-	if(this->afterRunId) {
+void Job::deleteJob()
+{
+	if(this->afterRunId)
+	{
 		g_source_remove(this->afterRunId);
 		this->unref();
 	}
 }
 
-void Job::execute() {
+void Job::execute()
+{
 	XOJ_CHECK_TYPE(Job);
 
 	this->run();
 }
 
-void * Job::getSource() {
+void* Job::getSource()
+{
 	XOJ_CHECK_TYPE(Job);
 
 	return NULL;
 }
 
-bool Job::callAfterCallback(Job * job) {
+bool Job::callAfterCallback(Job* job)
+{
 	XOJ_CHECK_TYPE_OBJ(job, Job);
 
 	gdk_threads_enter();
@@ -74,10 +86,12 @@ bool Job::callAfterCallback(Job * job) {
 	return false; // do not call again
 }
 
-void Job::callAfterRun() {
+void Job::callAfterRun()
+{
 	XOJ_CHECK_TYPE(Job);
 
-	if(this->afterRunId) {
+	if(this->afterRunId)
+	{
 		return;
 	}
 
@@ -86,5 +100,6 @@ void Job::callAfterRun() {
 	this->afterRunId = g_idle_add((GSourceFunc) Job::callAfterCallback, this);
 }
 
-void Job::afterRun() {
+void Job::afterRun()
+{
 }

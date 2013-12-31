@@ -17,7 +17,8 @@
 #include <XournalType.h>
 #include "settings/Settings.h"
 
-class ToolListener {
+class ToolListener
+{
 public:
 	virtual void toolColorChanged() = 0;
 	virtual void setCustomColorSelected() = 0;
@@ -27,9 +28,11 @@ public:
 
 class ActionHandler;
 
-class ToolHandler {
+class ToolHandler
+{
 public:
-	ToolHandler(ToolListener * listener, ActionHandler * actionHandler, Settings * settings);
+	ToolHandler(ToolListener* listener, ActionHandler* actionHandler,
+	            Settings* settings);
 	virtual ~ToolHandler();
 
 	void setColor(int color);
@@ -75,11 +78,11 @@ public:
 	void copyCurrentConfig();
 	void restoreLastConfig();
 
-	ArrayIterator<Tool *> iterator();
+	ArrayIterator<Tool*> iterator();
 
 	void setSelectionEditTools(bool setColor, bool setSize);
 
-	const double * getToolThickness(ToolType type);
+	const double* getToolThickness(ToolType type);
 
 protected:
 	void initTools();
@@ -87,9 +90,9 @@ protected:
 private:
 	XOJ_TYPE_ATTRIB;
 
-	Tool * tools[TOOL_COUNT];
-	Tool * current;
-	Tool * lastSelectedTool;
+	Tool* tools[TOOL_COUNT];
+	Tool* current;
+	Tool* lastSelectedTool;
 
 	EraserType eraserType;
 
@@ -99,10 +102,10 @@ private:
 	 * not in the list, so its a "custom" color for us
 	 */
 	bool colorFound;
-	ToolListener * listener;
-	ActionHandler * actionHandler;
+	ToolListener* listener;
+	ActionHandler* actionHandler;
 
-	Settings * settings;
+	Settings* settings;
 };
 
 #endif /* __TOOLHANDLER_H__ */

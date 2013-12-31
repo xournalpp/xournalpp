@@ -9,18 +9,22 @@
 /*
  * create circle stroke for inertia
  */
-Stroke * CircleRecognizer::makeCircleShape(Stroke * originalStroke, Inertia & inertia) {
+Stroke* CircleRecognizer::makeCircleShape(Stroke* originalStroke,
+                                          Inertia& inertia)
+{
 	int npts = (int) (2 * inertia.rad());
-	if (npts < 12) {
+	if (npts < 12)
+	{
 		npts = 12; // min. number of points
 	}
 
-	Stroke * s = new Stroke();
+	Stroke* s = new Stroke();
 	s->setWidth(originalStroke->getWidth());
 	s->setToolType(originalStroke->getToolType());
 	s->setColor(originalStroke->getColor());
 
-	for (int i = 0; i <= npts; i++) {
+	for (int i = 0; i <= npts; i++)
+	{
 		double x = inertia.centerX() + inertia.rad() * cos((2 * M_PI * i) / npts);
 		double y = inertia.centerY() + inertia.rad() * sin((2 * M_PI * i) / npts);
 		s->addPoint(Point(x, y));
@@ -32,8 +36,10 @@ Stroke * CircleRecognizer::makeCircleShape(Stroke * originalStroke, Inertia & in
 /*
  *  test if we have a circle; inertia has been precomputed by caller
  */
-double CircleRecognizer::scoreCircle(Stroke * s, Inertia & inertia) {
-	if (inertia.getMass() == 0.0) {
+double CircleRecognizer::scoreCircle(Stroke* s, Inertia& inertia)
+{
+	if (inertia.getMass() == 0.0)
+	{
 		return 0;
 	}
 
@@ -44,13 +50,15 @@ double CircleRecognizer::scoreCircle(Stroke * s, Inertia & inertia) {
 
 	ArrayIterator<Point> it = s->pointIterator();
 
-	if (!it.hasNext()) {
+	if (!it.hasNext())
+	{
 		return 0;
 	}
 
 	Point p1 = it.next();
 
-	while (it.hasNext()) {
+	while (it.hasNext())
+	{
 		Point p2 = it.next();
 
 		double dm = hypot(p2.x - p1.x, p2.y - p1.y);
@@ -63,16 +71,20 @@ double CircleRecognizer::scoreCircle(Stroke * s, Inertia & inertia) {
 	return sum / (inertia.getMass() * r0);
 }
 
-Stroke * CircleRecognizer::recognize(Stroke * stroke) {
+Stroke* CircleRecognizer::recognize(Stroke* stroke)
+{
 	Inertia s;
 	s.calc(stroke->getPoints(), 0, stroke->getPointCount());
 	RDEBUG("Mass=%.0f, Center=(%.1f,%.1f), I=(%.0f,%.0f, %.0f), "
-		"Rad=%.2f, Det=%.4f \n", s.getMass(), s.centerX(), s.centerY(), s.xx(), s.yy(), s.xy(), s.rad(), s.det());
+	       "Rad=%.2f, Det=%.4f \n", s.getMass(), s.centerX(), s.centerY(), s.xx(), s.yy(),
+	       s.xy(), s.rad(), s.det());
 
-	if (s.det() > CIRCLE_MIN_DET) {
+	if (s.det() > CIRCLE_MIN_DET)
+	{
 		double score = CircleRecognizer::scoreCircle(stroke, s);
 		RDEBUG("Circle score: %.2f\n", score);
-		if (score < CIRCLE_MAX_SCORE) {
+		if (score < CIRCLE_MAX_SCORE)
+		{
 			return CircleRecognizer::makeCircleShape(stroke, s);
 		}
 	}

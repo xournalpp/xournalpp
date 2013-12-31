@@ -12,7 +12,8 @@
 #ifndef __PROGRESSLISTENER_H__
 #define __PROGRESSLISTENER_H__
 
-class ProgressListener {
+class ProgressListener
+{
 public:
 	virtual void setMaximumState(int max) = 0;
 	virtual void setCurrentState(int state) = 0;

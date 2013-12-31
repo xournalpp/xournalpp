@@ -17,25 +17,26 @@
 
 class GooList;
 
-class XojPopplerIter {
+class XojPopplerIter
+{
 public:
-	XojPopplerIter(XojPopplerDocument doc, GooList *items);
+	XojPopplerIter(XojPopplerDocument doc, GooList* items);
 	virtual ~XojPopplerIter();
 
 public:
 	bool next();
 	bool isOpen();
-	XojPopplerIter * getChildIter();
-	XojPopplerAction * getAction();
+	XojPopplerIter* getChildIter();
+	XojPopplerAction* getAction();
 
 private:
-	static String unicodeToChar(Unicode * unicode, int len);
+	static String unicodeToChar(Unicode* unicode, int len);
 
 private:
 	XOJ_TYPE_ATTRIB;
 
 	XojPopplerDocument doc;
-	GooList *items;
+	GooList* items;
 	int index;
 };
 

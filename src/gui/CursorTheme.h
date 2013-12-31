@@ -17,7 +17,8 @@
 
 #include <glib.h>
 
-class CursorTheme {
+class CursorTheme
+{
 public:
 	CursorTheme();
 	virtual ~CursorTheme();
@@ -26,8 +27,8 @@ public:
 	bool loadTheme(String name);
 
 public:
-//	GdkCursor * getForPen(ToolSize size, int color);
-//	GdkCursor * getForEraser(ToolSize size, EraserType type);
+	//	GdkCursor * getForPen(ToolSize size, int color);
+	//	GdkCursor * getForEraser(ToolSize size, EraserType type);
 
 private:
 	XOJ_TYPE_ATTRIB;

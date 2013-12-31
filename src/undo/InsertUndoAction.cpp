@@ -4,8 +4,9 @@
 #include "../model/Element.h"
 #include "../gui/Redrawable.h"
 
-InsertUndoAction::InsertUndoAction(PageRef page, Layer * layer,
-		Element * element, Redrawable * view) : UndoAction("InsertUndoAction") {
+InsertUndoAction::InsertUndoAction(PageRef page, Layer* layer,
+                                   Element* element, Redrawable* view) : UndoAction("InsertUndoAction")
+{
 	XOJ_INIT_TYPE(InsertUndoAction);
 
 	this->page = page;
@@ -14,10 +15,12 @@ InsertUndoAction::InsertUndoAction(PageRef page, Layer * layer,
 	this->view = view;
 }
 
-InsertUndoAction::~InsertUndoAction() {
+InsertUndoAction::~InsertUndoAction()
+{
 	XOJ_CHECK_TYPE(InsertUndoAction);
 
-	if (this->undone) {
+	if (this->undone)
+	{
 		// Insert was undone, so this is not needed anymore
 		delete this->element;
 	}
@@ -26,23 +29,34 @@ InsertUndoAction::~InsertUndoAction() {
 	XOJ_RELEASE_TYPE(InsertUndoAction);
 }
 
-String InsertUndoAction::getText() {
+String InsertUndoAction::getText()
+{
 	XOJ_CHECK_TYPE(InsertUndoAction);
 
-	if (element->getType() == ELEMENT_STROKE) {
+	if (element->getType() == ELEMENT_STROKE)
+	{
 		return _("Draw stroke");
-	} else if (element->getType() == ELEMENT_TEXT) {
+	}
+	else if (element->getType() == ELEMENT_TEXT)
+	{
 		return _("Write text");
-	} else if (element->getType() == ELEMENT_IMAGE) {
+	}
+	else if (element->getType() == ELEMENT_IMAGE)
+	{
 		return _("Insert image");
-	} else if (element->getType() == ELEMENT_TEXIMAGE) {
+	}
+	else if (element->getType() == ELEMENT_TEXIMAGE)
+	{
 		return _("Insert latex");
-	} else {
+	}
+	else
+	{
 		return NULL;
 	}
 }
 
-bool InsertUndoAction::undo(Control * control) {
+bool InsertUndoAction::undo(Control* control)
+{
 	XOJ_CHECK_TYPE(InsertUndoAction);
 
 	this->layer->removeElement(this->element, false);
@@ -54,7 +68,8 @@ bool InsertUndoAction::undo(Control * control) {
 	return true;
 }
 
-bool InsertUndoAction::redo(Control * control) {
+bool InsertUndoAction::redo(Control* control)
+{
 	XOJ_CHECK_TYPE(InsertUndoAction);
 
 	this->layer->addElement(this->element);
@@ -68,7 +83,9 @@ bool InsertUndoAction::redo(Control * control) {
 
 
 InsertsUndoAction::InsertsUndoAction(PageRef page,
-		Layer * layer, GList * elements, Redrawable * view) : UndoAction("InsertsUndoAction") {
+                                     Layer* layer, GList* elements,
+                                     Redrawable* view) : UndoAction("InsertsUndoAction")
+{
 	XOJ_INIT_TYPE(InsertsUndoAction);
 
 	this->page = page;
@@ -77,15 +94,17 @@ InsertsUndoAction::InsertsUndoAction(PageRef page,
 	this->view = view;
 }
 
-InsertsUndoAction::~InsertsUndoAction() {
+InsertsUndoAction::~InsertsUndoAction()
+{
 	XOJ_CHECK_TYPE(InsertsUndoAction);
 
-	if (this->undone) {
+	if (this->undone)
+	{
 		// Insert was undone, so this is not needed anymore
-		for(GList * elem = this->elements;
+		for(GList* elem = this->elements;
 		    elem != NULL; elem = elem->next)
 		{
-			Element * e = (Element *) elem->data;
+			Element* e = (Element*) elem->data;
 			delete e;
 			elem->data = NULL;
 		}
@@ -96,19 +115,21 @@ InsertsUndoAction::~InsertsUndoAction() {
 	XOJ_RELEASE_TYPE(InsertsUndoAction);
 }
 
-String InsertsUndoAction::getText() {
+String InsertsUndoAction::getText()
+{
 	XOJ_CHECK_TYPE(InsertsUndoAction);
 
 	return _("Insert elements");
 }
 
-bool InsertsUndoAction::undo(Control * control) {
+bool InsertsUndoAction::undo(Control* control)
+{
 	XOJ_CHECK_TYPE(InsertsUndoAction);
 
-	for(GList * elem = this->elements;
-			elem != NULL; elem = elem->next)
+	for(GList* elem = this->elements;
+	    elem != NULL; elem = elem->next)
 	{
-		this->layer->removeElement((Element *) elem->data, false);
+		this->layer->removeElement((Element*) elem->data, false);
 	}
 
 	this->view->rerenderPage();
@@ -118,13 +139,14 @@ bool InsertsUndoAction::undo(Control * control) {
 	return true;
 }
 
-bool InsertsUndoAction::redo(Control * control) {
+bool InsertsUndoAction::redo(Control* control)
+{
 	XOJ_CHECK_TYPE(InsertsUndoAction);
 
-	for(GList * elem = this->elements;
-			elem != NULL; elem = elem->next)
+	for(GList* elem = this->elements;
+	    elem != NULL; elem = elem->next)
 	{
-		this->layer->addElement((Element *) elem->data);
+		this->layer->addElement((Element*) elem->data);
 	}
 
 	this->view->rerenderPage();

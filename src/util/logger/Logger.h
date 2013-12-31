@@ -12,7 +12,8 @@
 #ifndef __LOGGER_H__
 #define __LOGGER_H__
 
-class Log {
+class Log
+{
 private:
 	Log();
 	virtual ~Log();
@@ -23,7 +24,8 @@ public:
 	static void initlog();
 	static void closelog();
 
-	static void trace(const char * callType, const char * clazz, const char * function, long obj);
+	static void trace(const char* callType, const char* clazz, const char* function,
+	                  long obj);
 };
 
 #endif /* __LOGGER_H__ */

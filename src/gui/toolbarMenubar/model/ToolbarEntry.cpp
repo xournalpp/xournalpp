@@ -1,11 +1,13 @@
 #include "ToolbarEntry.h"
 
-ToolbarEntry::ToolbarEntry() {
+ToolbarEntry::ToolbarEntry()
+{
 	XOJ_INIT_TYPE(ToolbarEntry);
 	this->entries = NULL;
 }
 
-ToolbarEntry::ToolbarEntry(const ToolbarEntry & e) {
+ToolbarEntry::ToolbarEntry(const ToolbarEntry& e)
+{
 	XOJ_INIT_TYPE(ToolbarEntry);
 
 	this->entries = NULL;
@@ -13,19 +15,22 @@ ToolbarEntry::ToolbarEntry(const ToolbarEntry & e) {
 	*this = e;
 }
 
-void ToolbarEntry::operator =(const ToolbarEntry & e) {
+void ToolbarEntry::operator =(const ToolbarEntry& e)
+{
 	XOJ_CHECK_TYPE(ToolbarEntry);
 
 	this->name = e.name;
 	clearList();
 
-	for (GList * l = e.entries; l != NULL; l = l->next) {
-		ToolbarItem * item = (ToolbarItem *) l->data;
+	for (GList* l = e.entries; l != NULL; l = l->next)
+	{
+		ToolbarItem* item = (ToolbarItem*) l->data;
 		this->entries = g_list_append(this->entries, new ToolbarItem(*item));
 	}
 }
 
-ToolbarEntry::~ToolbarEntry() {
+ToolbarEntry::~ToolbarEntry()
+{
 	XOJ_CHECK_TYPE(ToolbarEntry);
 
 	clearList();
@@ -33,9 +38,11 @@ ToolbarEntry::~ToolbarEntry() {
 	XOJ_RELEASE_TYPE(ToolbarEntry);
 }
 
-void ToolbarEntry::clearList() {
-	for (GList * l = this->entries; l != NULL; l = l->next) {
-		ToolbarItem * item = (ToolbarItem *) l->data;
+void ToolbarEntry::clearList()
+{
+	for (GList* l = this->entries; l != NULL; l = l->next)
+	{
+		ToolbarItem* item = (ToolbarItem*) l->data;
 		delete item;
 	}
 
@@ -43,33 +50,39 @@ void ToolbarEntry::clearList() {
 	this->entries = NULL;
 }
 
-String ToolbarEntry::getName() {
+String ToolbarEntry::getName()
+{
 	XOJ_CHECK_TYPE(ToolbarEntry);
 
 	return this->name;
 }
 
-void ToolbarEntry::setName(String name) {
+void ToolbarEntry::setName(String name)
+{
 	XOJ_CHECK_TYPE(ToolbarEntry);
 
 	this->name = name;
 }
 
-int ToolbarEntry::addItem(String item) {
+int ToolbarEntry::addItem(String item)
+{
 	XOJ_CHECK_TYPE(ToolbarEntry);
 
-	ToolbarItem * it = new ToolbarItem(item);
+	ToolbarItem* it = new ToolbarItem(item);
 	this->entries = g_list_append(this->entries, it);
 
 	return it->getId();
 }
 
-bool ToolbarEntry::removeItemById(int id) {
+bool ToolbarEntry::removeItemById(int id)
+{
 	XOJ_CHECK_TYPE(ToolbarEntry);
 
-	for (GList * l = this->entries; l != NULL; l = l->next) {
-		ToolbarItem * item = (ToolbarItem *) l->data;
-		if (item->getId() == id) {
+	for (GList* l = this->entries; l != NULL; l = l->next)
+	{
+		ToolbarItem* item = (ToolbarItem*) l->data;
+		if (item->getId() == id)
+		{
 			this->entries = g_list_delete_link(this->entries, l);
 			delete item;
 			return true;
@@ -78,17 +91,19 @@ bool ToolbarEntry::removeItemById(int id) {
 	return false;
 }
 
-int ToolbarEntry::insertItem(String item, int position) {
+int ToolbarEntry::insertItem(String item, int position)
+{
 	XOJ_CHECK_TYPE(ToolbarEntry);
 
-	ToolbarItem * it = new ToolbarItem(item);
+	ToolbarItem* it = new ToolbarItem(item);
 	this->entries = g_list_insert(this->entries, it, position);
 
 	return it->getId();
 }
 
-ListIterator<ToolbarItem *> ToolbarEntry::iterator() {
+ListIterator<ToolbarItem*> ToolbarEntry::iterator()
+{
 	XOJ_CHECK_TYPE(ToolbarEntry);
 
-	return ListIterator<ToolbarItem *> (this->entries);
+	return ListIterator<ToolbarItem*> (this->entries);
 }

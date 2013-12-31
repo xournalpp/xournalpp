@@ -14,10 +14,11 @@
 
 #include <XournalType.h>
 
-class Point {
+class Point
+{
 public:
 	Point();
-	Point(const Point & p);
+	Point(const Point& p);
 	Point(double x, double y);
 	Point(double x, double y, double z);
 	virtual ~Point();

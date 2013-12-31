@@ -16,21 +16,22 @@
 
 class Layer;
 
-class RemoveLayerUndoAction: public UndoAction {
+class RemoveLayerUndoAction: public UndoAction
+{
 public:
-	RemoveLayerUndoAction(PageRef page, Layer * layer, int layerPos);
+	RemoveLayerUndoAction(PageRef page, Layer* layer, int layerPos);
 	virtual ~RemoveLayerUndoAction();
 
 public:
-	virtual bool undo(Control * control);
-	virtual bool redo(Control * control);
+	virtual bool undo(Control* control);
+	virtual bool redo(Control* control);
 
 	virtual String getText();
 
 private:
 	XOJ_TYPE_ATTRIB;
 
-	Layer * layer;
+	Layer* layer;
 	int layerPos;
 };
 

@@ -19,24 +19,25 @@ class Redrawable;
 class Element;
 class Layer;
 
-class DeleteUndoAction: public UndoAction {
+class DeleteUndoAction: public UndoAction
+{
 public:
-	DeleteUndoAction(PageRef page, Redrawable * view, bool eraser);
+	DeleteUndoAction(PageRef page, Redrawable* view, bool eraser);
 	virtual ~DeleteUndoAction();
 
 public:
-	virtual bool undo(Control * control);
-	virtual bool redo(Control * control);
+	virtual bool undo(Control* control);
+	virtual bool redo(Control* control);
 
-	void addElement(Layer * layer, Element * e, int pos);
+	void addElement(Layer* layer, Element* e, int pos);
 
 	virtual String getText();
 
 private:
 	XOJ_TYPE_ATTRIB;
 
-	GList * elements;
-	Redrawable * view;
+	GList* elements;
+	Redrawable* view;
 	bool eraser;
 };
 
