@@ -6,7 +6,9 @@
 
 #include "PageLayerPosEntry.h"
 
-EraseUndoAction::EraseUndoAction(PageRef page, Redrawable * view) : UndoAction("EraseUndoAction") {
+EraseUndoAction::EraseUndoAction(PageRef page,
+                                 Redrawable* view) : UndoAction("EraseUndoAction")
+{
 	XOJ_INIT_TYPE(EraseUndoAction);
 
 	this->page = page;
@@ -15,12 +17,15 @@ EraseUndoAction::EraseUndoAction(PageRef page, Redrawable * view) : UndoAction("
 	this->original = NULL;
 }
 
-EraseUndoAction::~EraseUndoAction() {
+EraseUndoAction::~EraseUndoAction()
+{
 	XOJ_CHECK_TYPE(EraseUndoAction);
 
-	for (GList * l = this->original; l != NULL; l = l->next) {
-		PageLayerPosEntry<Stroke> * e = (PageLayerPosEntry<Stroke>*) l->data;
-		if (!undone) {
+	for (GList* l = this->original; l != NULL; l = l->next)
+	{
+		PageLayerPosEntry<Stroke>* e = (PageLayerPosEntry<Stroke>*) l->data;
+		if (!undone)
+		{
 			delete e->element;
 		}
 		delete e;
@@ -28,9 +33,11 @@ EraseUndoAction::~EraseUndoAction() {
 	g_list_free(this->original);
 	this->original = NULL;
 
-	for (GList * l = this->edited; l != NULL; l = l->next) {
-		PageLayerPosEntry<Stroke> * e = (PageLayerPosEntry<Stroke>*) l->data;
-		if (undone) {
+	for (GList* l = this->edited; l != NULL; l = l->next)
+	{
+		PageLayerPosEntry<Stroke>* e = (PageLayerPosEntry<Stroke>*) l->data;
+		if (undone)
+		{
 			delete e->element;
 		}
 		delete e;
@@ -41,26 +48,33 @@ EraseUndoAction::~EraseUndoAction() {
 	XOJ_RELEASE_TYPE(EraseUndoAction);
 }
 
-void EraseUndoAction::addOriginal(Layer * layer, Stroke * element, int pos) {
+void EraseUndoAction::addOriginal(Layer* layer, Stroke* element, int pos)
+{
 	XOJ_CHECK_TYPE(EraseUndoAction);
 
-	this->original = g_list_insert_sorted(this->original, new PageLayerPosEntry<Stroke> (layer, element, pos),
-			(GCompareFunc) PageLayerPosEntry<Stroke>::cmp);
+	this->original = g_list_insert_sorted(this->original,
+	                                      new PageLayerPosEntry<Stroke> (layer, element, pos),
+	                                      (GCompareFunc) PageLayerPosEntry<Stroke>::cmp);
 }
 
-void EraseUndoAction::addEdited(Layer * layer, Stroke * element, int pos) {
+void EraseUndoAction::addEdited(Layer* layer, Stroke* element, int pos)
+{
 	XOJ_CHECK_TYPE(EraseUndoAction);
 
-	this->edited = g_list_insert_sorted(this->edited, new PageLayerPosEntry<Stroke> (layer, element, pos),
-			(GCompareFunc) PageLayerPosEntry<Stroke>::cmp);
+	this->edited = g_list_insert_sorted(this->edited,
+	                                    new PageLayerPosEntry<Stroke> (layer, element, pos),
+	                                    (GCompareFunc) PageLayerPosEntry<Stroke>::cmp);
 }
 
-void EraseUndoAction::removeEdited(Stroke * element) {
+void EraseUndoAction::removeEdited(Stroke* element)
+{
 	XOJ_CHECK_TYPE(EraseUndoAction);
 
-	for (GList * l = this->edited; l != NULL; l = l->next) {
-		PageLayerPosEntry<Stroke> * p = (PageLayerPosEntry<Stroke> *) l->data;
-		if (p->element == element) {
+	for (GList* l = this->edited; l != NULL; l = l->next)
+	{
+		PageLayerPosEntry<Stroke>* p = (PageLayerPosEntry<Stroke>*) l->data;
+		if (p->element == element)
+		{
 			this->edited = g_list_delete_link(this->edited, l);
 			delete p;
 			return;
@@ -68,26 +82,32 @@ void EraseUndoAction::removeEdited(Stroke * element) {
 	}
 }
 
-void EraseUndoAction::finalize() {
+void EraseUndoAction::finalize()
+{
 	XOJ_CHECK_TYPE(EraseUndoAction);
 
-	for (GList * l = this->original; l != NULL;) {
-		PageLayerPosEntry<Stroke> * p = (PageLayerPosEntry<Stroke> *) l->data;
-		GList * del = l;
+	for (GList* l = this->original; l != NULL;)
+	{
+		PageLayerPosEntry<Stroke>* p = (PageLayerPosEntry<Stroke>*) l->data;
+		GList* del = l;
 		l = l->next;
 
-		if (p->element->getPointCount() == 0) {
+		if (p->element->getPointCount() == 0)
+		{
 			this->edited = g_list_delete_link(this->edited, del);
 			delete p;
-		} else {
+		}
+		else
+		{
 
 			// Remove the original and add the copy
 			int pos = p->layer->removeElement(p->element, false);
 
-			EraseableStroke * e = p->element->getEraseable();
-			GList * stroke = e->getStroke(p->element);
-			for (GList * ls = stroke; ls != NULL; ls = ls->next) {
-				Stroke * copy = (Stroke *) ls->data;
+			EraseableStroke* e = p->element->getEraseable();
+			GList* stroke = e->getStroke(p->element);
+			for (GList* ls = stroke; ls != NULL; ls = ls->next)
+			{
+				Stroke* copy = (Stroke*) ls->data;
 				p->layer->insertElement(copy, pos);
 				this->addEdited(p->layer, copy, pos);
 				pos++;
@@ -100,24 +120,28 @@ void EraseUndoAction::finalize() {
 	view->rerenderPage();
 }
 
-String EraseUndoAction::getText() {
+String EraseUndoAction::getText()
+{
 	XOJ_CHECK_TYPE(EraseUndoAction);
 
 	return _("Erase stroke");
 }
 
-bool EraseUndoAction::undo(Control * control) {
+bool EraseUndoAction::undo(Control* control)
+{
 	XOJ_CHECK_TYPE(EraseUndoAction);
 
-	for (GList * l = this->edited; l != NULL; l = l->next) {
-		PageLayerPosEntry<Stroke> * e = (PageLayerPosEntry<Stroke>*) l->data;
+	for (GList* l = this->edited; l != NULL; l = l->next)
+	{
+		PageLayerPosEntry<Stroke>* e = (PageLayerPosEntry<Stroke>*) l->data;
 
 		e->layer->removeElement(e->element, false);
 		view->rerenderElement(e->element);
 	}
 
-	for (GList * l = this->original; l != NULL; l = l->next) {
-		PageLayerPosEntry<Stroke> * e = (PageLayerPosEntry<Stroke>*) l->data;
+	for (GList* l = this->original; l != NULL; l = l->next)
+	{
+		PageLayerPosEntry<Stroke>* e = (PageLayerPosEntry<Stroke>*) l->data;
 
 		e->layer->insertElement(e->element, e->pos);
 		view->rerenderElement(e->element);
@@ -127,18 +151,21 @@ bool EraseUndoAction::undo(Control * control) {
 	return true;
 }
 
-bool EraseUndoAction::redo(Control * control) {
+bool EraseUndoAction::redo(Control* control)
+{
 	XOJ_CHECK_TYPE(EraseUndoAction);
 
-	for (GList * l = this->original; l != NULL; l = l->next) {
-		PageLayerPosEntry<Stroke> * e = (PageLayerPosEntry<Stroke>*) l->data;
+	for (GList* l = this->original; l != NULL; l = l->next)
+	{
+		PageLayerPosEntry<Stroke>* e = (PageLayerPosEntry<Stroke>*) l->data;
 
 		e->layer->removeElement(e->element, false);
 		view->rerenderElement(e->element);
 	}
 
-	for (GList * l = this->edited; l != NULL; l = l->next) {
-		PageLayerPosEntry<Stroke> * e = (PageLayerPosEntry<Stroke>*) l->data;
+	for (GList* l = this->edited; l != NULL; l = l->next)
+	{
+		PageLayerPosEntry<Stroke>* e = (PageLayerPosEntry<Stroke>*) l->data;
 
 		e->layer->insertElement(e->element, e->pos);
 		view->rerenderElement(e->element);

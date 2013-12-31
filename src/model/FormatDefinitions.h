@@ -12,8 +12,9 @@
 #ifndef __FORMATDEFINITIONS_H__
 #define __FORMATDEFINITIONS_H__
 
-typedef struct {
-	const char * name;
+typedef struct
+{
+	const char* name;
 	const double scale;
 } FormatUnits;
 

@@ -30,18 +30,19 @@ class Cursor;
 class EditSelection;
 class Layout;
 
-class XournalView: public DocumentListener, public ZoomListener {
+class XournalView: public DocumentListener, public ZoomListener
+{
 public:
-	XournalView(GtkWidget * parent, Control * control);
+	XournalView(GtkWidget* parent, Control* control);
 	virtual ~XournalView();
 
 public:
 	void zoomIn();
 	void zoomOut();
 
-	bool paint(GtkWidget * widget, GdkEventExpose * event);
+	bool paint(GtkWidget* widget, GdkEventExpose* event);
 
-	void requestPage(PageView * page);
+	void requestPage(PageView* page);
 
 	void layoutPages();
 
@@ -59,41 +60,41 @@ public:
 
 	void forceUpdatePagenumbers();
 
-	PageView * getViewFor(int pageNr);
+	PageView* getViewFor(int pageNr);
 
-	bool searchTextOnPage(const char * text, int p, int * occures, double * top);
+	bool searchTextOnPage(const char* text, int p, int* occures, double* top);
 
 	bool cut();
 	bool copy();
 	bool paste();
 
-	void getPasteTarget(double & x, double & y);
+	void getPasteTarget(double& x, double& y);
 
 	bool actionDelete();
 
-	void endTextAllPages(PageView * except = NULL);
+	void endTextAllPages(PageView* except = NULL);
 
 	void resetShapeRecognizer();
 
-	bool isPageVisible(int page, int * visibleHeight);
+	bool isPageVisible(int page, int* visibleHeight);
 
 	void ensureRectIsVisible(int x, int y, int width, int heigth);
 
-	void setSelection(EditSelection * selection);
-	EditSelection * getSelection();
-	void deleteSelection(EditSelection * sel = NULL);
+	void setSelection(EditSelection* selection);
+	EditSelection* getSelection();
+	void deleteSelection(EditSelection* sel = NULL);
 	void repaintSelection(bool evenWithoutSelection = false);
 
-	TextEditor * getTextEditor();
-	ArrayIterator<PageView *> pageViewIterator();
-	Control * getControl();
+	TextEditor* getTextEditor();
+	ArrayIterator<PageView*> pageViewIterator();
+	Control* getControl();
 	double getZoom();
-	Document * getDocument();
-	PagePositionHandler * getPagePositionHandler();
-	PdfCache * getCache();
-	RepaintHandler * getRepaintHandler();
-	GtkWidget * getWidget();
-	Cursor * getCursor();
+	Document* getDocument();
+	PagePositionHandler* getPagePositionHandler();
+	PdfCache* getCache();
+	RepaintHandler* getRepaintHandler();
+	GtkWidget* getWidget();
+	Cursor* getCursor();
 
 public:
 	//ZoomListener interface
@@ -109,8 +110,8 @@ public:
 	void documentChanged(DocumentChangeType type);
 
 public:
-	bool onKeyPressEvent(GdkEventKey * event);
-	bool onKeyReleaseEvent(GdkEventKey * event);
+	bool onKeyPressEvent(GdkEventKey* event);
+	bool onKeyReleaseEvent(GdkEventKey* event);
 
 private:
 
@@ -118,35 +119,35 @@ private:
 
 	void addLoadPageToQue(PageRef page, int priority);
 
-	Rectangle * getVisibleRect(int page);
+	Rectangle* getVisibleRect(int page);
 
-	static gboolean clearMemoryTimer(XournalView * widget);
+	static gboolean clearMemoryTimer(XournalView* widget);
 
 private:
 	XOJ_TYPE_ATTRIB;
 
-	GtkWidget * widget;
+	GtkWidget* widget;
 	double margin;
 
-	PageView ** viewPages;
+	PageView** viewPages;
 	int viewPagesLen;
 
-	Control * control;
+	Control* control;
 
 	int currentPage;
 	int lastSelectedPage;
 
-	PdfCache * cache;
+	PdfCache* cache;
 
 	/**
 	 * Handler for rerendering pages / repainting pages
 	 */
-	RepaintHandler * repaintHandler;
+	RepaintHandler* repaintHandler;
 
 	/**
 	 * The positions of all pages
 	 */
-	PagePositionHandler * pagePosition;
+	PagePositionHandler* pagePosition;
 
 	/**
 	 * Memory cleanup timeout

@@ -19,38 +19,39 @@
 class PageView;
 class XournalView;
 
-class Layout : public ScrollbarListener {
+class Layout : public ScrollbarListener
+{
 public:
-	Layout(XournalView * view);
+	Layout(XournalView* view);
 	virtual ~Layout();
 
 public:
 	void setSize(int widgetWidth, int widgetHeight);
 	void scrollRelativ(int x, int y);
-	bool scrollEvent(GdkEventScroll * event);
+	bool scrollEvent(GdkEventScroll* event);
 	void ensureRectIsVisible(int x, int y, int width, int height);
 	double getVisiblePageTop(int page);
 
 	void layoutPages();
 
-	GtkWidget * getScrollbarVertical();
-	GtkWidget * getScrollbarHorizontal();
+	GtkWidget* getScrollbarVertical();
+	GtkWidget* getScrollbarHorizontal();
 
 	void setLayoutSize(int width, int height);
 
 	void updateRepaintWidget();
 
-	virtual void scrolled(Scrollbar * scrollbar);
+	virtual void scrolled(Scrollbar* scrollbar);
 
 	void checkSelectedPage();
 
 private:
 	XOJ_TYPE_ATTRIB;
 
-	XournalView * view;
+	XournalView* view;
 
-	Scrollbar * scrollVertical;
-	Scrollbar * scrollHorizontal;
+	Scrollbar* scrollVertical;
+	Scrollbar* scrollHorizontal;
 
 	/**
 	 * Outer border of the complete layout

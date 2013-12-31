@@ -19,34 +19,36 @@
 
 class Control;
 
-class SidebarToolbar {
+class SidebarToolbar
+{
 public:
-	SidebarToolbar(Control * control);
+	SidebarToolbar(Control* control);
 	virtual ~SidebarToolbar();
 
 public:
-	GtkWidget * getWidget();
+	GtkWidget* getWidget();
 
 	/**
 	 * Sets the button enabled / disabled
 	 */
-	void setButtonEnabled(bool enableUp, bool enableDown, bool enableCopy, bool enableDelete, PageRef currentPage);
+	void setButtonEnabled(bool enableUp, bool enableDown, bool enableCopy,
+	                      bool enableDelete, PageRef currentPage);
 
 private:
 	XOJ_TYPE_ATTRIB;
 
 private:
-	static void btUpClicked(GtkToolButton * toolbutton, SidebarToolbar * toolbar);
-	static void btDownClicked(GtkToolButton * toolbutton, SidebarToolbar * toolbar);
-	static void btCopyClicked(GtkToolButton * toolbutton, SidebarToolbar * toolbar);
-	static void btDeleteClicked(GtkToolButton * toolbutton, SidebarToolbar * toolbar);
+	static void btUpClicked(GtkToolButton* toolbutton, SidebarToolbar* toolbar);
+	static void btDownClicked(GtkToolButton* toolbutton, SidebarToolbar* toolbar);
+	static void btCopyClicked(GtkToolButton* toolbutton, SidebarToolbar* toolbar);
+	static void btDeleteClicked(GtkToolButton* toolbutton, SidebarToolbar* toolbar);
 
 private:
 
 	/**
 	 * The Application Controller
 	 */
-	Control * control;
+	Control* control;
 
 	/**
 	 * The current selected page
@@ -56,27 +58,27 @@ private:
 	/**
 	 * The Toolbar
 	 */
-	GtkToolbar * toolbar;
+	GtkToolbar* toolbar;
 
 	/**
 	 * Button move Page up
 	 */
-	GtkToolItem * btUp;
+	GtkToolItem* btUp;
 
 	/**
 	 * Button move Page down
 	 */
-	GtkToolItem * btDown;
+	GtkToolItem* btDown;
 
 	/**
 	 * Button copy current page
 	 */
-	GtkToolItem * btCopy;
+	GtkToolItem* btCopy;
 
 	/**
 	 * Button delete page
 	 */
-	GtkToolItem * btDelete;
+	GtkToolItem* btDelete;
 };
 
 #endif /* __SIDEBARTOOLBAR_H__ */

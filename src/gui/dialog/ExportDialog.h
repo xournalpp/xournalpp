@@ -17,15 +17,17 @@
 #include "../../control/jobs/ExportFormtType.h"
 #include <XournalType.h>
 
-class ExportDialog: public GladeGui {
+class ExportDialog: public GladeGui
+{
 public:
-	ExportDialog(GladeSearchpath * gladeSearchPath, Settings * settings, int pageCount, int currentPage);
+	ExportDialog(GladeSearchpath* gladeSearchPath, Settings* settings,
+	             int pageCount, int currentPage);
 	virtual ~ExportDialog();
 
 public:
-	virtual void show(GtkWindow * parent);
+	virtual void show(GtkWindow* parent);
 
-	GList * getRange();
+	GList* getRange();
 	int getPngDpi();
 	ExportFormtType getFormatType();
 
@@ -35,7 +37,8 @@ public:
 private:
 	bool validate();
 	void handleData();
-	static void exportSelectionChanged(GtkFileChooser *chooser, GtkEntry *newFolder);
+	static void exportSelectionChanged(GtkFileChooser* chooser,
+	                                   GtkEntry* newFolder);
 
 private:
 	XOJ_TYPE_ATTRIB;
@@ -46,11 +49,11 @@ private:
 	int resolution;
 	ExportFormtType type;
 
-	GtkEntry *folderFollower;
+	GtkEntry* folderFollower;
 
-	GList * range;
+	GList* range;
 
-	Settings * settings;
+	Settings* settings;
 };
 
 #endif /* __EXPORTDIALOG_H__ */

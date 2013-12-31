@@ -5,7 +5,8 @@
 #include <string.h>
 
 TexImage::TexImage() :
-	Element(ELEMENT_TEXIMAGE) {
+	Element(ELEMENT_TEXIMAGE)
+{
 
 	XOJ_INIT_TYPE(TexImage);
 
@@ -20,14 +21,17 @@ TexImage::TexImage() :
 	this->textlen = 0;
 }
 
-TexImage::~TexImage() {
+TexImage::~TexImage()
+{
 	XOJ_CHECK_TYPE(TexImage);
 
-	if (this->image) {
+	if (this->image)
+	{
 		cairo_surface_destroy(this->image);
 		this->image = NULL;
 	}
-	if (this->text) {
+	if (this->text)
+	{
 		delete[] this->text;
 		this->text = NULL;
 	}
@@ -35,22 +39,23 @@ TexImage::~TexImage() {
 	XOJ_RELEASE_TYPE(TexImage);
 }
 
-Element * TexImage::clone() {
+Element* TexImage::clone()
+{
 	XOJ_CHECK_TYPE(TexImage);
 
-	TexImage * img = new TexImage();
+	TexImage* img = new TexImage();
 
 	img->x = this->x;
 	img->y = this->y;
 	img->setColor(this->getColor());
 	img->width = this->width;
 	img->height = this->height;
-	char * tmpcstring = new char[this->textlen + 1];
-	strcpy(tmpcstring,this->text);
+	char* tmpcstring = new char[this->textlen + 1];
+	strcpy(tmpcstring, this->text);
 	img->text = tmpcstring;
 	img->textlen = this->textlen;
 
-	img->data = (unsigned char *)g_malloc(this->dLen);
+	img->data = (unsigned char*)g_malloc(this->dLen);
 	img->dLen = this->dLen;
 	memcpy(img->data, this->data, this->dLen);
 
@@ -60,23 +65,29 @@ Element * TexImage::clone() {
 }
 
 
-void TexImage::setWidth(double width) {
+void TexImage::setWidth(double width)
+{
 	XOJ_CHECK_TYPE(TexImage);
 
 	this->width = width;
 }
 
-void TexImage::setHeight(double height) {
+void TexImage::setHeight(double height)
+{
 	XOJ_CHECK_TYPE(TexImage);
 
 	this->height = height;
 }
 
-cairo_status_t TexImage::cairoReadFunction(TexImage * image, unsigned char * data, unsigned int length) {
+cairo_status_t TexImage::cairoReadFunction(TexImage* image, unsigned char* data,
+                                           unsigned int length)
+{
 	XOJ_CHECK_TYPE_OBJ(image, TexImage);
 
-	for (int i = 0; i < length; i++, image->read++) {
-		if (image->read >= image->dLen) {
+	for (int i = 0; i < length; i++, image->read++)
+	{
+		if (image->read >= image->dLen)
+		{
 			return CAIRO_STATUS_READ_ERROR;
 		}
 		data[i] = image->data[image->read];
@@ -85,32 +96,39 @@ cairo_status_t TexImage::cairoReadFunction(TexImage * image, unsigned char * dat
 	return CAIRO_STATUS_SUCCESS;
 }
 
-void TexImage::setImage(unsigned char * data, int len) {
+void TexImage::setImage(unsigned char* data, int len)
+{
 	XOJ_CHECK_TYPE(TexImage);
 
-	if (this->image) {
+	if (this->image)
+	{
 		cairo_surface_destroy(this->image);
 		this->image = NULL;
 	}
-	if (this->data) {
+	if (this->data)
+	{
 		g_free(this->data);
 	}
 	this->data = data;
 	this->dLen = len;
 }
 
-void TexImage::setImage(GdkPixbuf * img) {
+void TexImage::setImage(GdkPixbuf* img)
+{
 	setImage(f_pixbuf_to_cairo_surface(img));
 }
 
-void TexImage::setImage(cairo_surface_t * image) {
+void TexImage::setImage(cairo_surface_t* image)
+{
 	XOJ_CHECK_TYPE(TexImage);
 
-	if (this->image) {
+	if (this->image)
+	{
 		cairo_surface_destroy(this->image);
 		this->image = NULL;
 	}
-	if (this->data) {
+	if (this->data)
+	{
 		g_free(this->data);
 	}
 	this->data = NULL;
@@ -119,7 +137,7 @@ void TexImage::setImage(cairo_surface_t * image) {
 	this->image = image;
 }
 
-void TexImage::setText(const char * text, int textlength)
+void TexImage::setText(const char* text, int textlength)
 {
 	if(this->text)
 	{
@@ -130,7 +148,7 @@ void TexImage::setText(const char * text, int textlength)
 	this->textlen = textlength;
 }
 
-const char * TexImage::getText()
+const char* TexImage::getText()
 {
 	return this->text;
 }
@@ -140,12 +158,15 @@ int TexImage::getTextLen()
 	return this->textlen;
 }
 
-cairo_surface_t * TexImage::getImage() {
+cairo_surface_t* TexImage::getImage()
+{
 	XOJ_CHECK_TYPE(TexImage);
 
-	if (this->image == NULL && this->dLen != 0) {
+	if (this->image == NULL && this->dLen != 0)
+	{
 		this->read = 0;
-		this->image = cairo_image_surface_create_from_png_stream((cairo_read_func_t) &cairoReadFunction, this);
+		this->image = cairo_image_surface_create_from_png_stream((
+		                                                             cairo_read_func_t) &cairoReadFunction, this);
 		g_free(this->data);
 		this->data = NULL;
 		this->dLen = 0;
@@ -154,7 +175,8 @@ cairo_surface_t * TexImage::getImage() {
 	return this->image;
 }
 
-void TexImage::scale(double x0, double y0, double fx, double fy) {
+void TexImage::scale(double x0, double y0, double fx, double fy)
+{
 	XOJ_CHECK_TYPE(TexImage);
 
 	this->x -= x0;
@@ -168,7 +190,8 @@ void TexImage::scale(double x0, double y0, double fx, double fy) {
 	this->height *= fy;
 }
 
-void TexImage::serialize(ObjectOutputStream & out) {
+void TexImage::serialize(ObjectOutputStream& out)
+{
 	XOJ_CHECK_TYPE(TexImage);
 
 	out.writeObject("TexImage");
@@ -184,7 +207,9 @@ void TexImage::serialize(ObjectOutputStream & out) {
 	out.endObject();
 }
 
-void TexImage::readSerialized(ObjectInputStream & in) throw (InputStreamException) {
+void TexImage::readSerialized(ObjectInputStream& in) throw (
+    InputStreamException)
+{
 	XOJ_CHECK_TYPE(TexImage);
 
 	in.readObject("TexImage");
@@ -196,11 +221,12 @@ void TexImage::readSerialized(ObjectInputStream & in) throw (InputStreamExceptio
 	String tmp = in.readString();
 	//cast this
 	this->textlen = tmp.size();
-	char * tmpcstring = new char[this->textlen + 1];
-	strcpy(tmpcstring,tmp.c_str());
+	char* tmpcstring = new char[this->textlen + 1];
+	strcpy(tmpcstring, tmp.c_str());
 	this->text = tmpcstring;
 
-	if (this->image) {
+	if (this->image)
+	{
 		cairo_surface_destroy(this->image);
 		this->image = NULL;
 	}
@@ -210,7 +236,8 @@ void TexImage::readSerialized(ObjectInputStream & in) throw (InputStreamExceptio
 	in.endObject();
 }
 
-void TexImage::calcSize() {
+void TexImage::calcSize()
+{
 	XOJ_CHECK_TYPE(TexImage);
 }
 

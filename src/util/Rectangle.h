@@ -16,10 +16,11 @@
 
 class Range;
 
-class Rectangle {
+class Rectangle
+{
 public:
 	Rectangle();
-	Rectangle(Range & rect);
+	Rectangle(Range& rect);
 	Rectangle(double x, double y, double width, double height);
 	virtual ~Rectangle();
 
@@ -39,7 +40,7 @@ public:
 	 *
 	 * Returns: %TRUE if the rectangles intersect.
 	 */
-	bool intersect(const Rectangle * src, Rectangle * dest);
+	bool intersect(const Rectangle* src, Rectangle* dest);
 
 	void add(double x, double y, double width, double height);
 

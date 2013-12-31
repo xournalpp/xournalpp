@@ -2,18 +2,22 @@
 #include "UpdateRef.h"
 #include "UpdateRefKey.h"
 
-PdfObjectWriter::PdfObjectWriter(PdfWriter * writer, PdfXRef * xref) {
+PdfObjectWriter::PdfObjectWriter(PdfWriter* writer, PdfXRef* xref)
+{
 	XOJ_INIT_TYPE(PdfObjectWriter);
 
 	this->writer = writer;
 	this->xref = xref;
 
-	this->updatedReferenced = g_hash_table_new_full((GHashFunc) UpdateRefKey::hashFunction, (GEqualFunc) UpdateRefKey::equalFunction,
-			(GDestroyNotify) UpdateRefKey::destroyDelete, (GDestroyNotify) UpdateRef::destroyDelete);
+	this->updatedReferenced = g_hash_table_new_full((GHashFunc)
+	                                                UpdateRefKey::hashFunction, (GEqualFunc) UpdateRefKey::equalFunction,
+	                                                (GDestroyNotify) UpdateRefKey::destroyDelete,
+	                                                (GDestroyNotify) UpdateRef::destroyDelete);
 
 }
 
-PdfObjectWriter::~PdfObjectWriter() {
+PdfObjectWriter::~PdfObjectWriter()
+{
 	XOJ_CHECK_TYPE(PdfObjectWriter);
 
 	this->writer = NULL;
@@ -25,15 +29,20 @@ PdfObjectWriter::~PdfObjectWriter() {
 	XOJ_RELEASE_TYPE(PdfObjectWriter);
 }
 
-void PdfObjectWriter::writeCopiedObjects() {
+void PdfObjectWriter::writeCopiedObjects()
+{
 	XOJ_CHECK_TYPE(PdfObjectWriter);
 
 	bool allWritten = false;
-	while (!allWritten) {
+	while (!allWritten)
+	{
 		allWritten = true;
-		for (GList * l = g_hash_table_get_values(this->updatedReferenced); l != NULL; l = l->next) {
-			UpdateRef * uref = (UpdateRef *) l->data;
-			if (!uref->wroteOut) {
+		for (GList* l = g_hash_table_get_values(this->updatedReferenced); l != NULL;
+		     l = l->next)
+		{
+			UpdateRef* uref = (UpdateRef*) l->data;
+			if (!uref->wroteOut)
+			{
 				this->xref->setXref(uref->objectId, this->writer->getDataCount());
 				this->writer->writef("%i 0 obj\n", uref->objectId);
 
@@ -43,22 +52,27 @@ void PdfObjectWriter::writeCopiedObjects() {
 				break;
 			}
 		}
-		for (GList * l = g_hash_table_get_values(this->updatedReferenced); l != NULL; l = l->next) {
-			UpdateRef * uref = (UpdateRef *) l->data;
-			if (!uref->wroteOut) {
+		for (GList* l = g_hash_table_get_values(this->updatedReferenced); l != NULL;
+		     l = l->next)
+		{
+			UpdateRef* uref = (UpdateRef*) l->data;
+			if (!uref->wroteOut)
+			{
 				allWritten = false;
 			}
 		}
 	}
 }
 
-void PdfObjectWriter::writeObject(Object * obj, XojPopplerDocument doc) {
+void PdfObjectWriter::writeObject(Object* obj, XojPopplerDocument doc)
+{
 	XOJ_CHECK_TYPE(PdfObjectWriter);
 
-	Array * array;
+	Array* array;
 	Object obj1;
 
-	switch (obj->getType()) {
+	switch (obj->getType())
+	{
 	case objBool:
 		this->writer->writef("%s ", obj->getBool() ? "true" : "false");
 		break;
@@ -71,9 +85,10 @@ void PdfObjectWriter::writeObject(Object * obj, XojPopplerDocument doc) {
 	case objString:
 		this->writeString(obj->getString());
 		break;
-	case objName: {
+	case objName:
+	{
 		GooString name(obj->getName());
-		GooString * nameToPrint = name.sanitizedName(gFalse /* non ps mode */);
+		GooString* nameToPrint = name.sanitizedName(gFalse /* non ps mode */);
 		this->writer->writef("/%s ", nameToPrint->getCString());
 		delete nameToPrint;
 		break;
@@ -84,7 +99,8 @@ void PdfObjectWriter::writeObject(Object * obj, XojPopplerDocument doc) {
 	case objArray:
 		array = obj->getArray();
 		this->writer->write("[");
-		for (int i = 0; i < array->getLength(); i++) {
+		for (int i = 0; i < array->getLength(); i++)
+		{
 			writeObject(array->getNF(i, &obj1), doc);
 			obj1.free();
 		}
@@ -93,16 +109,19 @@ void PdfObjectWriter::writeObject(Object * obj, XojPopplerDocument doc) {
 	case objDict:
 		writeDictionnary(obj->getDict(), doc);
 		break;
-	case objStream: {
+	case objStream:
+	{
 		// Poppler: We can't modify stream with the current implementation (no write functions in Stream API)
 		// Poppler: => the only type of streams which that have been modified are internal streams (=strWeird)
-		Stream *stream = obj->getStream();
-		if (stream->getKind() == strWeird) {
+		Stream* stream = obj->getStream();
+		if (stream->getKind() == strWeird)
+		{
 			//we write the stream unencoded
 			stream->reset();
 			//recalculate stream length
 			int tmp = 0;
-			for (int c = stream->getChar(); c != EOF; c = stream->getChar()) {
+			for (int c = stream->getChar(); c != EOF; c = stream->getChar())
+			{
 				tmp++;
 			}
 			obj1.initInt(tmp);
@@ -115,29 +134,37 @@ void PdfObjectWriter::writeObject(Object * obj, XojPopplerDocument doc) {
 			writeDictionnary(stream->getDict(), doc);
 			writeStream(stream);
 			obj1.free();
-		} else {
+		}
+		else
+		{
 			//raw stream copy
 			writeDictionnary(stream->getDict(), doc);
 			writeRawStream(stream, doc);
 		}
 		break;
 	}
-	case objRef: {
+	case objRef:
+	{
 		UpdateRefKey key(obj->getRef(), doc);
-		UpdateRef * uref = (UpdateRef *) g_hash_table_lookup(this->updatedReferenced, &key);
-		if (uref) {
+		UpdateRef* uref = (UpdateRef*) g_hash_table_lookup(this->updatedReferenced,
+		                                                   &key);
+		if (uref)
+		{
 			this->writer->writef("%i %i R ", uref->objectId, 0);
-		} else {
-			UpdateRef * uref = new UpdateRef(this->writer->getNextObjectId(), doc);
+		}
+		else
+		{
+			UpdateRef* uref = new UpdateRef(this->writer->getNextObjectId(), doc);
 			this->xref->addXref(0);
 			this->writer->writef("%i %i R ", uref->objectId, 0);
 
 			obj->fetch(doc.getDoc()->getXRef(), &uref->object);
 
-			g_hash_table_insert(this->updatedReferenced, new UpdateRefKey(obj->getRef(), doc), uref);
+			g_hash_table_insert(this->updatedReferenced, new UpdateRefKey(obj->getRef(),
+			                                                              doc), uref);
 		}
 	}
-		break;
+	break;
 	case objCmd:
 		this->writer->write("cmd\r\n");
 		break;
@@ -151,17 +178,20 @@ void PdfObjectWriter::writeObject(Object * obj, XojPopplerDocument doc) {
 		this->writer->write("none\r\n");
 		break;
 	default:
-		g_error("Unhandled objType : %i, please report a bug with a testcase\r\n", obj->getType());
+		g_error("Unhandled objType : %i, please report a bug with a testcase\r\n",
+		        obj->getType());
 		break;
 	}
 }
 
-void PdfObjectWriter::writeRawStream(Stream * str, XojPopplerDocument doc) {
+void PdfObjectWriter::writeRawStream(Stream* str, XojPopplerDocument doc)
+{
 	XOJ_CHECK_TYPE(PdfObjectWriter);
 
 	Object obj1;
 	str->getDict()->lookup("Length", &obj1);
-	if (!obj1.isInt()) {
+	if (!obj1.isInt())
+	{
 		error(-1, "PDFDoc::writeRawStream, no Length in stream dict");
 		return;
 	}
@@ -174,7 +204,8 @@ void PdfObjectWriter::writeRawStream(Stream * str, XojPopplerDocument doc) {
 
 	char buffer[1];
 
-	for (int i = 0; i < length; i++) {
+	for (int i = 0; i < length; i++)
+	{
 		int c = str->getUnfilteredChar();
 		buffer[0] = c;
 		this->writer->writeLen(buffer, 1);
@@ -183,25 +214,29 @@ void PdfObjectWriter::writeRawStream(Stream * str, XojPopplerDocument doc) {
 	this->writer->write("\nendstream\n");
 }
 
-void PdfObjectWriter::writeStream(Stream * str) {
+void PdfObjectWriter::writeStream(Stream* str)
+{
 	XOJ_CHECK_TYPE(PdfObjectWriter);
 
 	this->writer->write("stream\r\n");
 	str->reset();
-	for (int c = str->getChar(); c != EOF; c = str->getChar()) {
+	for (int c = str->getChar(); c != EOF; c = str->getChar())
+	{
 		this->writer->writef("%c", c);
 	}
 	this->writer->write("\r\nendstream\r\n");
 }
 
-void PdfObjectWriter::writeDictionnary(Dict * dict, XojPopplerDocument doc) {
+void PdfObjectWriter::writeDictionnary(Dict* dict, XojPopplerDocument doc)
+{
 	XOJ_CHECK_TYPE(PdfObjectWriter);
 
 	Object obj1;
 	this->writer->write("<<");
-	for (int i = 0; i < dict->getLength(); i++) {
+	for (int i = 0; i < dict->getLength(); i++)
+	{
 		GooString keyName(dict->getKey(i));
-		GooString *keyNameToPrint = keyName.sanitizedName(gFalse /* non ps mode */);
+		GooString* keyNameToPrint = keyName.sanitizedName(gFalse /* non ps mode */);
 		this->writer->writef("/%s ", keyNameToPrint->getCString());
 		delete keyNameToPrint;
 		writeObject(dict->getValNF(i, &obj1), doc);
@@ -210,29 +245,37 @@ void PdfObjectWriter::writeDictionnary(Dict * dict, XojPopplerDocument doc) {
 	this->writer->write(">> ");
 }
 
-void PdfObjectWriter::writeString(GooString * s) {
+void PdfObjectWriter::writeString(GooString* s)
+{
 	XOJ_CHECK_TYPE(PdfObjectWriter);
 
-	if (s->hasUnicodeMarker()) {
+	if (s->hasUnicodeMarker())
+	{
 		//unicode string don't necessary end with \0
 		const char* c = s->getCString();
 		this->writer->write("(");
-		for (int i = 0; i < s->getLength(); i++) {
+		for (int i = 0; i < s->getLength(); i++)
+		{
 			char unescaped = *(c + i) & 0x000000ff;
 			//escape if needed
-			if (unescaped == '(' || unescaped == ')' || unescaped == '\\') {
+			if (unescaped == '(' || unescaped == ')' || unescaped == '\\')
+			{
 				this->writer->writef("%c", '\\');
 			}
 			this->writer->writef("%c", unescaped);
 		}
 		this->writer->write(") ");
-	} else {
+	}
+	else
+	{
 		const char* c = s->getCString();
 		this->writer->write("(");
-		while (*c != '\0') {
+		while (*c != '\0')
+		{
 			char unescaped = (*c) & 0x000000ff;
 			//escape if needed
-			if (unescaped == '(' || unescaped == ')' || unescaped == '\\') {
+			if (unescaped == '(' || unescaped == ')' || unescaped == '\\')
+			{
 				this->writer->writef("%c", '\\');
 			}
 			this->writer->writef("%c", unescaped);

@@ -6,7 +6,10 @@
 #include "../gui/Redrawable.h"
 #include "../gui/TextEditor.h"
 
-TextUndoAction::TextUndoAction(PageRef page, Layer * layer, Text * text, String lastText, Redrawable * view, TextEditor * textEditor) : UndoAction("TextUndoAction") {
+TextUndoAction::TextUndoAction(PageRef page, Layer* layer, Text* text,
+                               String lastText, Redrawable* view,
+                               TextEditor* textEditor) : UndoAction("TextUndoAction")
+{
 	XOJ_INIT_TYPE(TextUndoAction);
 
 	this->page = page;
@@ -17,29 +20,34 @@ TextUndoAction::TextUndoAction(PageRef page, Layer * layer, Text * text, String 
 	this->textEditor = textEditor;
 }
 
-TextUndoAction::~TextUndoAction() {
+TextUndoAction::~TextUndoAction()
+{
 	XOJ_RELEASE_TYPE(TextUndoAction);
 }
 
-String TextUndoAction::getUndoText() {
+String TextUndoAction::getUndoText()
+{
 	XOJ_CHECK_TYPE(TextUndoAction);
 
 	return this->lastText;
 }
 
-void TextUndoAction::textEditFinished() {
+void TextUndoAction::textEditFinished()
+{
 	XOJ_CHECK_TYPE(TextUndoAction);
 
 	this->textEditor = NULL;
 }
 
-String TextUndoAction::getText() {
+String TextUndoAction::getText()
+{
 	XOJ_CHECK_TYPE(TextUndoAction);
 
 	return _("Text changes");
 }
 
-bool TextUndoAction::undo(Control * control) {
+bool TextUndoAction::undo(Control* control)
+{
 	XOJ_CHECK_TYPE(TextUndoAction);
 
 	double x1 = text->getX();
@@ -52,7 +60,7 @@ bool TextUndoAction::undo(Control * control) {
 	this->textEditor->setText(lastText);
 
 	x1 = MIN(x1, text->getX());
-	y1 = MIN(y1,text->getY());
+	y1 = MIN(y1, text->getY());
 	x2 = MAX(x2, text->getX() + text->getElementWidth());
 	y2 = MAX(y2, text->getY() + text->getElementHeight());
 
@@ -62,7 +70,8 @@ bool TextUndoAction::undo(Control * control) {
 	return true;
 }
 
-bool TextUndoAction::redo(Control * control) {
+bool TextUndoAction::redo(Control* control)
+{
 	XOJ_CHECK_TYPE(TextUndoAction);
 
 	double x1 = text->getX();
@@ -74,7 +83,7 @@ bool TextUndoAction::redo(Control * control) {
 	this->textEditor->setText(newText);
 
 	x1 = MIN(x1, text->getX());
-	y1 = MIN(y1,text->getY());
+	y1 = MIN(y1, text->getY());
 	x2 = MAX(x2, text->getX() + text->getElementWidth());
 	y2 = MAX(y2, text->getY() + text->getElementHeight());
 

@@ -32,9 +32,11 @@ class UndoAction;
 class EditSelectionContents;
 class DeleteUndoAction;
 
-class EditSelectionContents: public ElementContainer, public Serializeable {
+class EditSelectionContents: public ElementContainer, public Serializeable
+{
 public:
-	EditSelectionContents(double x, double y, double width, double height, PageRef sourcePage, Layer * sourceLayer, PageView * sourceView);
+	EditSelectionContents(double x, double y, double width, double height,
+	                      PageRef sourcePage, Layer* sourceLayer, PageView* sourceView);
 	virtual ~EditSelectionContents();
 
 public:
@@ -42,47 +44,51 @@ public:
 	 * Sets the tool size for pen or eraser, returs an undo action
 	 * (or NULL if nothing is done)
 	 */
-	UndoAction * setSize(ToolSize size, const double * thicknessPen, const double * thicknessHilighter, const double * thicknessEraser);
+	UndoAction* setSize(ToolSize size, const double* thicknessPen,
+	                    const double* thicknessHilighter, const double* thicknessEraser);
 
 	/**
 	 * Set the color of all elements, return an undo action
 	 * (Or NULL if nothing done, e.g. because there is only an image)
 	 */
-	UndoAction * setColor(int color);
+	UndoAction* setColor(int color);
 
 	/**
 	 * Sets the font of all containing text elements, return an undo action
 	 * (or NULL if there are no Text elements)
 	 */
-	UndoAction * setFont(XojFont & font);
+	UndoAction* setFont(XojFont& font);
 
 	/**
 	 * Fills de undo item if the selection is deleted
 	 * the selection is cleared after
 	 */
-	void fillUndoItem(DeleteUndoAction * undo);
+	void fillUndoItem(DeleteUndoAction* undo);
 
 public:
 	/**
 	 * Add an element to the this selection
 	 */
-	void addElement(Element * e);
+	void addElement(Element* e);
 
 	/**
 	 * Returns all containig elements of this selections
 	 */
-	ListIterator<Element *> getElements();
+	ListIterator<Element*> getElements();
 
 public:
 	/**
 	 * paints the selection
 	 */
-	void paint(cairo_t * cr, double x, double y, double width, double height, double zoom);
+	void paint(cairo_t* cr, double x, double y, double width, double height,
+	           double zoom);
 
 	/**
 	 * Finish the editing
 	 */
-	void finalizeSelection(double x, double y, double width, double height, bool aspectRatio, Layer * layer, PageRef targetPage, PageView * targetView, UndoRedoHandler * undo);
+	void finalizeSelection(double x, double y, double width, double height,
+	                       bool aspectRatio, Layer* layer, PageRef targetPage, PageView* targetView,
+	                       UndoRedoHandler* undo);
 
 private:
 	/**
@@ -94,7 +100,7 @@ private:
 	/**
 	 * Callback to redrawing the buffer asynchrony
 	 */
-	static bool repaintSelection(EditSelectionContents * selection);
+	static bool repaintSelection(EditSelectionContents* selection);
 
 public:
 	/**
@@ -109,8 +115,8 @@ public:
 
 public:
 	// Serialize interface
-	void serialize(ObjectOutputStream & out);
-	void readSerialized(ObjectInputStream & in) throw (InputStreamException);
+	void serialize(ObjectOutputStream& out);
+	void readSerialized(ObjectInputStream& in) throw (InputStreamException);
 
 private:
 	XOJ_TYPE_ATTRIB;
@@ -136,12 +142,12 @@ private:
 	/**
 	 * The selected element (the only one which are handled by this instance)
 	 */
-	GList * selected;
+	GList* selected;
 
 	/**
 	 * The rendered elements
 	 */
-	cairo_surface_t * crBuffer;
+	cairo_surface_t* crBuffer;
 
 	/**
 	 * The source id for the rescaling task
@@ -156,12 +162,12 @@ private:
 	/**
 	 * Source Layer for Undo operations
 	 */
-	Layer * sourceLayer;
+	Layer* sourceLayer;
 
 	/**
 	 * Source View for Undo operations
 	 */
-	PageView * sourceView;
+	PageView* sourceView;
 };
 
 #endif /* __EDITSELECTIONCONTENTS_H__ */

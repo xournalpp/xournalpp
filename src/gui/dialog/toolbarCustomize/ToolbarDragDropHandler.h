@@ -19,9 +19,10 @@ class ToolbarAdapter;
 class ToolbarCustomizeDialog;
 class MainWindow;
 
-class ToolbarDragDropHandler {
+class ToolbarDragDropHandler
+{
 public:
-	ToolbarDragDropHandler(Control * control);
+	ToolbarDragDropHandler(Control* control);
 	virtual ~ToolbarDragDropHandler();
 
 public:
@@ -38,10 +39,10 @@ public:
 private:
 	XOJ_TYPE_ATTRIB;
 
-	Control * control;
+	Control* control;
 
-	ToolbarAdapter ** toolbars;
-	ToolbarCustomizeDialog * customizeDialog;
+	ToolbarAdapter** toolbars;
+	ToolbarCustomizeDialog* customizeDialog;
 };
 
 #endif /* __TOOLBARDRAGDROPHANDLER_H__ */

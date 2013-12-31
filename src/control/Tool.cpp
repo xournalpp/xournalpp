@@ -6,7 +6,10 @@
 // TODO LOW PRIO select object: best match instead of first match
 // TODO LOW PRIO: rouler every 90° latch
 
-Tool::Tool(String name, ToolType type, int color, bool enableColor, bool enableSize, bool enableRuler, bool enableShapreRecognizer, double * thickness) {
+Tool::Tool(String name, ToolType type, int color, bool enableColor,
+           bool enableSize, bool enableRuler, bool enableShapreRecognizer,
+           double* thickness)
+{
 	XOJ_INIT_TYPE(Tool);
 
 	this->name = name;
@@ -25,7 +28,8 @@ Tool::Tool(String name, ToolType type, int color, bool enableColor, bool enableS
 	this->size = TOOL_SIZE_MEDIUM;
 }
 
-Tool::~Tool() {
+Tool::~Tool()
+{
 	XOJ_CHECK_TYPE(Tool);
 
 	delete[] this->thickness;
@@ -34,86 +38,101 @@ Tool::~Tool() {
 	XOJ_RELEASE_TYPE(Tool);
 }
 
-String Tool::getName() {
+String Tool::getName()
+{
 	XOJ_CHECK_TYPE(Tool);
 
 	return this->name;
 }
 
-int Tool::getColor() {
+int Tool::getColor()
+{
 	XOJ_CHECK_TYPE(Tool);
 
 	return this->color;
 }
 
-void Tool::setColor(int color) {
+void Tool::setColor(int color)
+{
 	XOJ_CHECK_TYPE(Tool);
 
 	this->color = color;
 }
 
-ToolSize Tool::getSize() {
+ToolSize Tool::getSize()
+{
 	XOJ_CHECK_TYPE(Tool);
 
 	return this->size;
 }
 
-void Tool::setSize(ToolSize size) {
+void Tool::setSize(ToolSize size)
+{
 	XOJ_CHECK_TYPE(Tool);
 
 	this->size = size;
 }
 
-bool Tool::isEnableColor() {
+bool Tool::isEnableColor()
+{
 	XOJ_CHECK_TYPE(Tool);
 
 	return this->enableColor;
 }
 
-bool Tool::isEnableSize() {
+bool Tool::isEnableSize()
+{
 	XOJ_CHECK_TYPE(Tool);
 
 	return this->enableSize;
 }
 
-bool Tool::isEnableRuler() {
+bool Tool::isEnableRuler()
+{
 	XOJ_CHECK_TYPE(Tool);
 
 	return this->enableRuler;
 }
 
-bool Tool::isEnableShapeRecognizer() {
+bool Tool::isEnableShapeRecognizer()
+{
 	XOJ_CHECK_TYPE(Tool);
 
 	return this->enableShapeRecognizer;
 }
 
-bool Tool::isShapeRecognizer() {
+bool Tool::isShapeRecognizer()
+{
 	XOJ_CHECK_TYPE(Tool);
 
 	return this->shapeRecognizer;
 }
 
-bool Tool::isRuler() {
+bool Tool::isRuler()
+{
 	XOJ_CHECK_TYPE(Tool);
 
 	return this->ruler;
 }
 
-void Tool::setShapeRecognizer(bool enabled) {
+void Tool::setShapeRecognizer(bool enabled)
+{
 	XOJ_CHECK_TYPE(Tool);
 
 	this->shapeRecognizer = enabled;
 }
 
-void Tool::setRuler(bool enabled) {
+void Tool::setRuler(bool enabled)
+{
 	XOJ_CHECK_TYPE(Tool);
 
 	this->ruler = enabled;
 }
 
-String toolTypeToString(ToolType type) {
-	switch (type) {
+String toolTypeToString(ToolType type)
+{
+	switch (type)
+	{
 	case TOOL_NONE:
 		return "none";
 	case TOOL_PEN:
@@ -140,34 +159,56 @@ String toolTypeToString(ToolType type) {
 	return "";
 }
 
-ToolType toolTypeFromString(String type) {
-	if (type == "none") {
+ToolType toolTypeFromString(String type)
+{
+	if (type == "none")
+	{
 		return TOOL_NONE;
-	} else if (type == "pen") {
+	}
+	else if (type == "pen")
+	{
 		return TOOL_PEN;
-	} else if (type == "eraser") {
+	}
+	else if (type == "eraser")
+	{
 		return TOOL_ERASER;
-	} else if (type == "hilighter") {
+	}
+	else if (type == "hilighter")
+	{
 		return TOOL_HILIGHTER;
-	} else if (type == "image") {
+	}
+	else if (type == "image")
+	{
 		return TOOL_IMAGE;
-	} else if (type == "selectRect") {
+	}
+	else if (type == "selectRect")
+	{
 		return TOOL_SELECT_RECT;
-	} else if (type == "selectRegion") {
+	}
+	else if (type == "selectRegion")
+	{
 		return TOOL_SELECT_REGION;
-	} else if (type == "selectObject") {
+	}
+	else if (type == "selectObject")
+	{
 		return TOOL_SELECT_OBJECT;
-	} else if (type == "verticalSpace") {
+	}
+	else if (type == "verticalSpace")
+	{
 		return TOOL_VERTICAL_SPACE;
-	} else if (type == "hand") {
+	}
+	else if (type == "hand")
+	{
 		return TOOL_HAND;
 	}
 
 	return TOOL_NONE;
 }
 
-String toolSizeToString(ToolSize size) {
-	switch (size) {
+String toolSizeToString(ToolSize size)
+{
+	switch (size)
+	{
 	case TOOL_SIZE_NONE:
 		return "none";
 	case TOOL_SIZE_VERY_FINE:
@@ -185,26 +226,40 @@ String toolSizeToString(ToolSize size) {
 	return "";
 }
 
-ToolSize toolSizeFromString(String size) {
-	if (size == "veryThin") {
+ToolSize toolSizeFromString(String size)
+{
+	if (size == "veryThin")
+	{
 		return TOOL_SIZE_VERY_FINE;
-	} else if (size == "thin") {
+	}
+	else if (size == "thin")
+	{
 		return TOOL_SIZE_FINE;
-	} else if (size == "medium") {
+	}
+	else if (size == "medium")
+	{
 		return TOOL_SIZE_MEDIUM;
-	} else if (size == "thick") {
+	}
+	else if (size == "thick")
+	{
 		return TOOL_SIZE_THICK;
-	} else if (size == "veryThick") {
+	}
+	else if (size == "veryThick")
+	{
 		return TOOL_SIZE_VERY_THICK;
-	} else if (size == "none") {
+	}
+	else if (size == "none")
+	{
 		return TOOL_SIZE_NONE;
 	}
 
 	return TOOL_SIZE_NONE;
 }
 
-String eraserTypeToString(EraserType type) {
-	switch (type) {
+String eraserTypeToString(EraserType type)
+{
+	switch (type)
+	{
 	case ERASER_TYPE_NONE:
 		return "none";
 	case ERASER_TYPE_DEFAULT:
@@ -217,48 +272,80 @@ String eraserTypeToString(EraserType type) {
 	return "";
 }
 
-EraserType eraserTypeFromString(String type) {
-	if (type == "none") {
+EraserType eraserTypeFromString(String type)
+{
+	if (type == "none")
+	{
 		return ERASER_TYPE_NONE;
-	} else if (type == "default") {
+	}
+	else if (type == "default")
+	{
 		return ERASER_TYPE_DEFAULT;
-	} else if (type == "whiteout") {
+	}
+	else if (type == "whiteout")
+	{
 		return ERASER_TYPE_WHITEOUT;
-	} else if (type == "deleteStroke") {
+	}
+	else if (type == "deleteStroke")
+	{
 		return ERASER_TYPE_DELETE_STROKE;
 	}
 	return ERASER_TYPE_NONE;
 }
 
-String pageInsertTypeToString(PageInsertType type) {
-	if (type == PAGE_INSERT_TYPE_PLAIN) {
+String pageInsertTypeToString(PageInsertType type)
+{
+	if (type == PAGE_INSERT_TYPE_PLAIN)
+	{
 		return "plain";
-	} else if (type == PAGE_INSERT_TYPE_LINED) {
+	}
+	else if (type == PAGE_INSERT_TYPE_LINED)
+	{
 		return "lined";
-	} else if (type == PAGE_INSERT_TYPE_RULED) {
+	}
+	else if (type == PAGE_INSERT_TYPE_RULED)
+	{
 		return "ruled";
-	} else if (type == PAGE_INSERT_TYPE_GRAPH) {
+	}
+	else if (type == PAGE_INSERT_TYPE_GRAPH)
+	{
 		return "graph";
-	} else if (type == PAGE_INSERT_TYPE_COPY) {
+	}
+	else if (type == PAGE_INSERT_TYPE_COPY)
+	{
 		return "copyPage";
-	} else if (type == PAGE_INSERT_TYPE_PDF_BACKGROUND) {
+	}
+	else if (type == PAGE_INSERT_TYPE_PDF_BACKGROUND)
+	{
 		return "pdfBackground";
 	}
 	return "";
 }
 
-PageInsertType pageInsertTypeFromString(String type) {
-	if (type == "plain") {
+PageInsertType pageInsertTypeFromString(String type)
+{
+	if (type == "plain")
+	{
 		return PAGE_INSERT_TYPE_PLAIN;
-	} else if (type == "lined") {
+	}
+	else if (type == "lined")
+	{
 		return PAGE_INSERT_TYPE_LINED;
-	} else if (type == "ruled") {
+	}
+	else if (type == "ruled")
+	{
 		return PAGE_INSERT_TYPE_RULED;
-	} else if (type == "graph") {
+	}
+	else if (type == "graph")
+	{
 		return PAGE_INSERT_TYPE_GRAPH;
-	} else if (type == "copyPage") {
+	}
+	else if (type == "copyPage")
+	{
 		return PAGE_INSERT_TYPE_COPY;
-	} else if (type == "pdfBackground") {
+	}
+	else if (type == "pdfBackground")
+	{
 		return PAGE_INSERT_TYPE_PDF_BACKGROUND;
 	}
 

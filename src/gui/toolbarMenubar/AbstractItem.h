@@ -18,13 +18,16 @@
 
 #include <gtk/gtk.h>
 
-class AbstractItem: public ActionEnabledListener, public ActionSelectionListener {
+class AbstractItem: public ActionEnabledListener,
+	public ActionSelectionListener
+{
 public:
-	AbstractItem(String id, ActionHandler * handler, ActionType action, GtkWidget * menuitem = NULL);
+	AbstractItem(String id, ActionHandler* handler, ActionType action,
+	             GtkWidget* menuitem = NULL);
 	virtual ~AbstractItem();
 
 public:
-	static void menuCallback(GtkMenuItem * menuitem, AbstractItem * toolItem);
+	static void menuCallback(GtkMenuItem* menuitem, AbstractItem* toolItem);
 	virtual void actionSelected(ActionGroup group, ActionType action);
 
 	/**
@@ -33,7 +36,8 @@ public:
 	virtual void selected(ActionGroup group, ActionType action);
 
 	virtual void actionEnabledAction(ActionType action, bool enabled);
-	virtual void activated(GdkEvent * event, GtkMenuItem * menuitem, GtkToolButton * toolbutton);
+	virtual void activated(GdkEvent* event, GtkMenuItem* menuitem,
+	                       GtkToolButton* toolbutton);
 
 	virtual String getId();
 
@@ -52,13 +56,13 @@ protected:
 
 	String id;
 
-	ActionHandler * handler;
+	ActionHandler* handler;
 
 	bool enabled;
 
 private:
 	gulong menuSignalHandler;
-	GtkWidget * menuitem;
+	GtkWidget* menuitem;
 };
 
 #endif /* __ABSTRACTITEM_H__ */

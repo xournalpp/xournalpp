@@ -25,15 +25,17 @@
 #include "../cfg.h"
 
 static bool alreadyCrashed = false;
-static Document * document = NULL;
+static Document* document = NULL;
 
-void setEmergencyDocument(Document * doc) {
+void setEmergencyDocument(Document* doc)
+{
 	document = doc;
 }
 
 static void crashHandler(int sig);
 
-void installCrashHandlers() {
+void installCrashHandlers()
+{
 	sigset_t mask;
 
 	sigemptyset(&mask);
@@ -67,8 +69,10 @@ static void emergencySave();
 /**
  * Print crash log to config directory
  */
-static void crashHandler(int sig) {
-	if (alreadyCrashed) { // crasehd again on emergency save
+static void crashHandler(int sig)
+{
+	if (alreadyCrashed)   // crasehd again on emergency save
+	{
 		exit(2);
 	}
 	alreadyCrashed = true;
@@ -76,18 +80,20 @@ static void crashHandler(int sig) {
 	fprintf(stderr, "Crash Handler::Crashed with signal %i\n", sig);
 
 	time_t lt;
-	void *array[100];
-	char ** messages;
+	void* array[100];
+	char** messages;
 
 	size_t size;
 
 	// get void*'s for all entries on the stack
 	size = backtrace(array, 100);
 
-	gchar *filename = g_strconcat(g_get_home_dir(), G_DIR_SEPARATOR_S, CONFIG_DIR, G_DIR_SEPARATOR_S, "errorlog.log", NULL);
+	gchar* filename = g_strconcat(g_get_home_dir(), G_DIR_SEPARATOR_S, CONFIG_DIR,
+	                              G_DIR_SEPARATOR_S, "errorlog.log", NULL);
 
-	FILE * fp = fopen(filename, "w");
-	if (fp) {
+	FILE* fp = fopen(filename, "w");
+	if (fp)
+	{
 		fprintf(stderr, "Crash Handler::wrote crash log to: %s\n", filename);
 	}
 
@@ -100,7 +106,8 @@ static void crashHandler(int sig) {
 
 	messages = backtrace_symbols(array, size);
 
-	for (int i = 0; i < size; i++) {
+	for (int i = 0; i < size; i++)
+	{
 		fprintf(fp, "[bt]: (%d) %s\n", i, messages[i]);
 		fprintf(stderr, "[bt]: (%d) %s\n", i, messages[i]);
 	}
@@ -114,7 +121,8 @@ static void crashHandler(int sig) {
 	Stacktrace::printStracktrace(fp);
 	Stacktrace::printStracktrace(stderr);
 
-	if (fp) {
+	if (fp)
+	{
 		fclose(fp);
 	}
 
@@ -123,8 +131,10 @@ static void crashHandler(int sig) {
 	exit(1);
 }
 
-static void emergencySave() {
-	if (document == NULL) {
+static void emergencySave()
+{
+	if (document == NULL)
+	{
 		return;
 	}
 
@@ -133,11 +143,13 @@ static void emergencySave() {
 	SaveHandler handler;
 	handler.prepareSave(document);
 
-	gchar * filename = g_strconcat(g_get_home_dir(), G_DIR_SEPARATOR_S, CONFIG_DIR, G_DIR_SEPARATOR_S, "emergencysave.xoj", NULL);
+	gchar* filename = g_strconcat(g_get_home_dir(), G_DIR_SEPARATOR_S, CONFIG_DIR,
+	                              G_DIR_SEPARATOR_S, "emergencysave.xoj", NULL);
 
-	GzOutputStream * out = new GzOutputStream(filename);
+	GzOutputStream* out = new GzOutputStream(filename);
 
-	if (!out->getLastError().isEmpty()) {
+	if (!out->getLastError().isEmpty())
+	{
 		fprintf(stderr, "error: %s\n", out->getLastError().c_str());
 		delete out;
 		g_free(filename);
@@ -147,9 +159,12 @@ static void emergencySave() {
 	handler.saveTo(out, filename);
 	out->close();
 
-	if (!out->getLastError().isEmpty()) {
+	if (!out->getLastError().isEmpty())
+	{
 		fprintf(stderr, "error: %s\n", out->getLastError().c_str());
-	} else {
+	}
+	else
+	{
 		fprintf(stderr, "Successfully saved document to \"%s\"\n", filename);
 	}
 

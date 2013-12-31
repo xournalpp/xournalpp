@@ -18,26 +18,28 @@
 
 class ToolMenuHandler;
 
-class ToolSelectCombocontrol: public ToolButton {
+class ToolSelectCombocontrol: public ToolButton
+{
 public:
-	ToolSelectCombocontrol(ToolMenuHandler * th, ActionHandler * handler, GladeGui * gui, String id);
+	ToolSelectCombocontrol(ToolMenuHandler* th, ActionHandler* handler,
+	                       GladeGui* gui, String id);
 	virtual ~ToolSelectCombocontrol();
 
 public:
 	virtual void selected(ActionGroup group, ActionType action);
 
 protected:
-	virtual GtkToolItem * newItem();
+	virtual GtkToolItem* newItem();
 
 private:
 	XOJ_TYPE_ATTRIB;
 
-	GtkWidget * iconWidget;
-	GtkWidget * labelWidget;
+	GtkWidget* iconWidget;
+	GtkWidget* labelWidget;
 
-	GdkPixbuf * iconSelectRect;
-	GdkPixbuf * iconSelectRgion;
-	GdkPixbuf * iconSelectObject;
+	GdkPixbuf* iconSelectRect;
+	GdkPixbuf* iconSelectRgion;
+	GdkPixbuf* iconSelectObject;
 };
 
 #endif /* __TOOLSELECTCOMBOCONTROL_H__ */

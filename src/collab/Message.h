@@ -10,17 +10,18 @@
 
 #include <glib-2.0/glib.h>
 
-class Message {
+class Message
+{
 public:
 	Message(int clientId, int id, int cmd, int Page, GString msg);
 	Message(const GString encodedMsg);
 	virtual ~Message();
 
 	//encoding functions
-	gchar * getEncoded();
+	gchar* getEncoded();
 
 	//decoding functions
-	gchar * getMsg();
+	gchar* getMsg();
 	int getId();
 	int getClientId();
 	int getCmd();

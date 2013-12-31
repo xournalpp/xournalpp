@@ -18,7 +18,8 @@
 typedef struct _LinkDest XojLinkDest;
 typedef struct _LinkDestClass XojLinkDestClass;
 
-class LinkDestination {
+class LinkDestination
+{
 public:
 	LinkDestination();
 	virtual ~LinkDestination();
@@ -61,16 +62,18 @@ private:
 	String name;
 };
 
-struct _LinkDest {
+struct _LinkDest
+{
 	GObject base_instance;
-	LinkDestination *dest;
+	LinkDestination* dest;
 };
 
-enum {
-	DOCUMENT_LINKS_COLUMN_NAME,
-	DOCUMENT_LINKS_COLUMN_LINK,
-	DOCUMENT_LINKS_COLUMN_EXPAND,
-	DOCUMENT_LINKS_COLUMN_PAGE_NUMBER
+enum
+{
+    DOCUMENT_LINKS_COLUMN_NAME,
+    DOCUMENT_LINKS_COLUMN_LINK,
+    DOCUMENT_LINKS_COLUMN_EXPAND,
+    DOCUMENT_LINKS_COLUMN_PAGE_NUMBER
 };
 
 #define TYPE_LINK_DEST              (link_dest_get_type())
@@ -81,6 +84,6 @@ enum {
 #define LINK_DEST_GET_CLASS(object) (G_TYPE_INSTANCE_GET_CLASS((object), TYPE_LINK_DEST, XojLinkDestClass))
 
 GType link_dest_get_type(void) G_GNUC_CONST;
-XojLinkDest * link_dest_new();
+XojLinkDest* link_dest_new();
 
 #endif /* __LINKDESTINATION_H__ */

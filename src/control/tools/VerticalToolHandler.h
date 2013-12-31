@@ -19,27 +19,28 @@
 #include "../../undo/MoveUndoAction.h"
 #include <XournalType.h>
 
-class VerticalToolHandler: public ElementContainer {
+class VerticalToolHandler: public ElementContainer
+{
 public:
-	VerticalToolHandler(Redrawable * view, PageRef page, double y, double zoom);
+	VerticalToolHandler(Redrawable* view, PageRef page, double y, double zoom);
 	virtual ~VerticalToolHandler();
 
-	void paint(cairo_t * cr, GdkRectangle * rect, double zoom);
+	void paint(cairo_t* cr, GdkRectangle* rect, double zoom);
 	void currentPos(double x, double y);
 
-	MoveUndoAction * finalize();
+	MoveUndoAction* finalize();
 
-	ListIterator<Element *> getElements();
+	ListIterator<Element*> getElements();
 
 private:
 	XOJ_TYPE_ATTRIB;
 
-	Redrawable * view;
+	Redrawable* view;
 	PageRef page;
-	Layer * layer;
-	GList * elements;
+	Layer* layer;
+	GList* elements;
 
-	cairo_surface_t * crBuffer;
+	cairo_surface_t* crBuffer;
 
 	double startY;
 	double endY;

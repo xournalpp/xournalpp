@@ -14,13 +14,14 @@
 
 #include "poppler/XojPopplerDocument.h"
 
-class UpdateRef {
+class UpdateRef
+{
 public:
 	UpdateRef(int objectId, XojPopplerDocument doc);
 	virtual ~UpdateRef();
 
 public:
-	static void destroyDelete(UpdateRef * data);
+	static void destroyDelete(UpdateRef* data);
 
 public:
 	XOJ_TYPE_ATTRIB;

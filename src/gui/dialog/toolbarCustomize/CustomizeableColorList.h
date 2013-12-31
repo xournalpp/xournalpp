@@ -20,13 +20,14 @@
 #include "../../XojColor.h"
 
 
-class CustomizeableColorList {
+class CustomizeableColorList
+{
 public:
 	CustomizeableColorList();
 	virtual ~CustomizeableColorList();
 
 public:
-	ListIterator<XojColor *> getPredefinedColors();
+	ListIterator<XojColor*> getPredefinedColors();
 
 private:
 	void addPredefinedColor(int color, String name);
@@ -34,7 +35,7 @@ private:
 private:
 	XOJ_TYPE_ATTRIB;
 
-	GList * colors;
+	GList* colors;
 
 };
 

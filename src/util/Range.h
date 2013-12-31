@@ -14,7 +14,8 @@
 
 #include <XournalType.h>
 
-class Range {
+class Range
+{
 public:
 	Range(double x, double y);
 	virtual ~Range();

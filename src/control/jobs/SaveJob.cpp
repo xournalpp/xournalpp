@@ -7,36 +7,46 @@
 #include "../Control.h"
 #include "../../view/DocumentView.h"
 
-SaveJob::SaveJob(Control * control) :
-	BlockingJob(control, _("Save")) {
+SaveJob::SaveJob(Control* control) :
+	BlockingJob(control, _("Save"))
+{
 	XOJ_INIT_TYPE(SaveJob);
 }
 
-SaveJob::~SaveJob() {
+SaveJob::~SaveJob()
+{
 	XOJ_RELEASE_TYPE(SaveJob);
 }
 
-void SaveJob::run() {
+void SaveJob::run()
+{
 	XOJ_CHECK_TYPE(SaveJob);
 
 	save();
 
-	if (this->control->getWindow()) {
+	if (this->control->getWindow())
+	{
 		callAfterRun();
 	}
 }
 
-void SaveJob::afterRun() {
+void SaveJob::afterRun()
+{
 	XOJ_CHECK_TYPE(SaveJob);
 
-	if (!this->lastError.isEmpty()) {
-		GtkWidget * dialog = gtk_message_dialog_new((GtkWindow *) *control->getWindow(), GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
-				"%s", this->lastError.c_str());
-		gtk_window_set_transient_for(GTK_WINDOW(dialog), GTK_WINDOW(this->control->getWindow()->getWindow()));
+	if (!this->lastError.isEmpty())
+	{
+		GtkWidget* dialog = gtk_message_dialog_new((GtkWindow*) *control->getWindow(),
+		                                           GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
+		                                           "%s", this->lastError.c_str());
+		gtk_window_set_transient_for(GTK_WINDOW(dialog),
+		                             GTK_WINDOW(this->control->getWindow()->getWindow()));
 		gtk_dialog_run(GTK_DIALOG(dialog));
 		gtk_widget_destroy(dialog);
-	} else {
-		Document * doc = this->control->getDocument();
+	}
+	else
+	{
+		Document* doc = this->control->getDocument();
 
 		doc->lock();
 		String filename = doc->getFilename();
@@ -48,25 +58,32 @@ void SaveJob::afterRun() {
 	}
 }
 
-void SaveJob::copyProgressCallback(goffset current_num_bytes, goffset total_num_bytes, Control * control) {
-	printf("copyProgressCallback: %i, %i\n", (int) current_num_bytes, (int) total_num_bytes);
+void SaveJob::copyProgressCallback(goffset current_num_bytes,
+                                   goffset total_num_bytes, Control* control)
+{
+	printf("copyProgressCallback: %i, %i\n", (int) current_num_bytes,
+	       (int) total_num_bytes);
 }
 
-bool SaveJob::copyFile(String source, String target) {
+bool SaveJob::copyFile(String source, String target)
+{
 	XOJ_CHECK_TYPE(SaveJob);
 
 	// we need to build the GFile from a path.
 	// But if future versions support URIs, this has to be changed
-	GFile * src = g_file_new_for_path(source.c_str());
-	GFile * trg = g_file_new_for_path(target.c_str());
-	GError * err = NULL;
+	GFile* src = g_file_new_for_path(source.c_str());
+	GFile* trg = g_file_new_for_path(target.c_str());
+	GError* err = NULL;
 
-	bool ok = g_file_copy(src, trg, G_FILE_COPY_OVERWRITE, NULL, (GFileProgressCallback) &copyProgressCallback, this, &err);
+	bool ok = g_file_copy(src, trg, G_FILE_COPY_OVERWRITE, NULL,
+	                      (GFileProgressCallback) &copyProgressCallback, this, &err);
 
-	if (!err && !ok) {
+	if (!err && !ok)
+	{
 		this->copyError = "Copy error: return false, but didn't set error message";
 	}
-	if (err) {
+	if (err)
+	{
 		ok = false;
 		this->copyError = err->message;
 		g_error_free(err);
@@ -74,16 +91,18 @@ bool SaveJob::copyFile(String source, String target) {
 	return ok;
 }
 
-void SaveJob::updatePreview() {
+void SaveJob::updatePreview()
+{
 	XOJ_CHECK_TYPE(SaveJob);
 
 	const int previewSize = 128;
 
-	Document * doc = this->control->getDocument();
+	Document* doc = this->control->getDocument();
 
 	doc->lock();
 
-	if (doc->getPageCount() > 0) {
+	if (doc->getPageCount() > 0)
+	{
 		PageRef page = doc->getPage(0);
 
 		double width = page.getWidth();
@@ -91,24 +110,30 @@ void SaveJob::updatePreview() {
 
 		double zoom = 1;
 
-		if (width < height) {
+		if (width < height)
+		{
 			zoom = previewSize / height;
-		} else {
+		}
+		else
+		{
 			zoom = previewSize / width;
 		}
 		width *= zoom;
 		height *= zoom;
 
-		cairo_surface_t * crBuffer = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, width, height);
+		cairo_surface_t* crBuffer = cairo_image_surface_create(CAIRO_FORMAT_ARGB32,
+		                                                       width, height);
 
-		cairo_t * cr = cairo_create(crBuffer);
+		cairo_t* cr = cairo_create(crBuffer);
 		cairo_scale(cr, zoom, zoom);
-		XojPopplerPage * popplerPage = NULL;
+		XojPopplerPage* popplerPage = NULL;
 
-		if (page.getBackgroundType() == BACKGROUND_TYPE_PDF) {
+		if (page.getBackgroundType() == BACKGROUND_TYPE_PDF)
+		{
 			int pgNo = page.getPdfPageNr();
 			popplerPage = doc->getPdfPage(pgNo);
-			if (popplerPage) {
+			if (popplerPage)
+			{
 				popplerPage->render(cr, false);
 			}
 		}
@@ -118,18 +143,21 @@ void SaveJob::updatePreview() {
 		cairo_destroy(cr);
 		doc->setPreview(crBuffer);
 		cairo_surface_destroy(crBuffer);
-	} else {
+	}
+	else
+	{
 		doc->setPreview(NULL);
 	}
 
 	doc->unlock();
 }
 
-bool SaveJob::save() {
+bool SaveJob::save()
+{
 	XOJ_CHECK_TYPE(SaveJob);
 
 	updatePreview();
-	Document * doc = this->control->getDocument();
+	Document* doc = this->control->getDocument();
 
 	SaveHandler h;
 
@@ -139,25 +167,31 @@ bool SaveJob::save() {
 	doc->unlock();
 
 	// TODO: better backup handler
-	if (doc->shouldCreateBackupOnSave()) {
+	if (doc->shouldCreateBackupOnSave())
+	{
 		String backup = doc->getFilename();
 		backup += ".bak";
-		if (!copyFile(doc->getFilename(), backup)) {
-			g_warning("Could not create backup! (The file was created from an older Xournal version)\n%s\n", this->copyError.c_str());
+		if (!copyFile(doc->getFilename(), backup))
+		{
+			g_warning("Could not create backup! (The file was created from an older Xournal version)\n%s\n",
+			          this->copyError.c_str());
 		}
 
 		doc->setCreateBackupOnSave(false);
 	}
 
-	GzOutputStream * out = new GzOutputStream(filename);
+	GzOutputStream* out = new GzOutputStream(filename);
 
-	if (!out->getLastError().isEmpty()) {
-		if (!control->getWindow()) {
+	if (!out->getLastError().isEmpty())
+	{
+		if (!control->getWindow())
+		{
 			g_error(_("Open file error: %s"), out->getLastError().c_str());
 			return false;
 		}
 
-		this->lastError = String::format(_("Open file error: %s"), out->getLastError().c_str());
+		this->lastError = String::format(_("Open file error: %s"),
+		                                 out->getLastError().c_str());
 
 		delete out;
 		return false;
@@ -166,9 +200,12 @@ bool SaveJob::save() {
 	h.saveTo(out, filename);
 	out->close();
 
-	if (!out->getLastError().isEmpty()) {
-		this->lastError = String::format(_("Open file error: %s"), out->getLastError().c_str());
-		if (!control->getWindow()) {
+	if (!out->getLastError().isEmpty())
+	{
+		this->lastError = String::format(_("Open file error: %s"),
+		                                 out->getLastError().c_str());
+		if (!control->getWindow())
+		{
 			g_error("%s", this->lastError.c_str());
 			return false;
 		}

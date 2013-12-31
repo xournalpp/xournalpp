@@ -19,13 +19,15 @@ class Document;
 class Settings;
 class BackgroundImage;
 
-class ImagesDialog: public GladeGui {
+class ImagesDialog: public GladeGui
+{
 public:
-	ImagesDialog(GladeSearchpath * gladeSearchPath, Document * doc, Settings * settings);
+	ImagesDialog(GladeSearchpath* gladeSearchPath, Document* doc,
+	             Settings* settings);
 	virtual ~ImagesDialog();
 
 public:
-	virtual void show(GtkWindow * parent);
+	virtual void show(GtkWindow* parent);
 
 	void setBackgroundWhite();
 
@@ -34,31 +36,32 @@ public:
 	BackgroundImage getSelectedImage();
 	bool shouldShowFilechooser();
 
-	Settings * getSettings();
+	Settings* getSettings();
 private:
 	void layout();
 	void updateOkButton();
 
-	static void sizeAllocate(GtkWidget * widget, GtkRequisition * requisition, ImagesDialog * dlg);
-	static void okButtonCallback(GtkButton * button, ImagesDialog * dlg);
-	static void filechooserButtonCallback(GtkButton * button, ImagesDialog * dlg);
+	static void sizeAllocate(GtkWidget* widget, GtkRequisition* requisition,
+	                         ImagesDialog* dlg);
+	static void okButtonCallback(GtkButton* button, ImagesDialog* dlg);
+	static void filechooserButtonCallback(GtkButton* button, ImagesDialog* dlg);
 
 private:
 	XOJ_TYPE_ATTRIB;
 
 	bool backgroundInitialized;
 
-	Settings * settings;
+	Settings* settings;
 
 	int selected;
 	int lastWidth;
 
 	int selectedPage;
 
-	GList * images;
+	GList* images;
 
-	GtkWidget * scrollPreview;
-	GtkWidget * widget;
+	GtkWidget* scrollPreview;
+	GtkWidget* widget;
 };
 
 #endif /* __IMAGESDIALOG_H__ */

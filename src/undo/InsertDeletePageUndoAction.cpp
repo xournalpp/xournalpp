@@ -4,7 +4,9 @@
 #include "../control/Control.h"
 #include "../gui/Cursor.h"
 
-InsertDeletePageUndoAction::InsertDeletePageUndoAction(PageRef page, int pagePos, bool inserted) : UndoAction("InsertDeletePageUndoAction") {
+InsertDeletePageUndoAction::InsertDeletePageUndoAction(PageRef page,
+                                                       int pagePos, bool inserted) : UndoAction("InsertDeletePageUndoAction")
+{
 	XOJ_INIT_TYPE(InsertDeletePageUndoAction);
 
 	this->inserted = inserted;
@@ -12,7 +14,8 @@ InsertDeletePageUndoAction::InsertDeletePageUndoAction(PageRef page, int pagePos
 	this->pagePos = pagePos;
 }
 
-InsertDeletePageUndoAction::~InsertDeletePageUndoAction() {
+InsertDeletePageUndoAction::~InsertDeletePageUndoAction()
+{
 	XOJ_CHECK_TYPE(InsertDeletePageUndoAction);
 
 	this->page = NULL;
@@ -20,30 +23,39 @@ InsertDeletePageUndoAction::~InsertDeletePageUndoAction() {
 	XOJ_RELEASE_TYPE(InsertDeletePageUndoAction);
 }
 
-bool InsertDeletePageUndoAction::undo(Control * control) {
+bool InsertDeletePageUndoAction::undo(Control* control)
+{
 	XOJ_CHECK_TYPE(InsertDeletePageUndoAction);
 
-	if (this->inserted) {
+	if (this->inserted)
+	{
 		return deletePage(control);
-	} else {
+	}
+	else
+	{
 		return insertPage(control);
 	}
 }
 
-bool InsertDeletePageUndoAction::redo(Control * control) {
+bool InsertDeletePageUndoAction::redo(Control* control)
+{
 	XOJ_CHECK_TYPE(InsertDeletePageUndoAction);
 
-	if (this->inserted) {
+	if (this->inserted)
+	{
 		return insertPage(control);
-	} else {
+	}
+	else
+	{
 		return deletePage(control);
 	}
 }
 
-bool InsertDeletePageUndoAction::insertPage(Control * control) {
+bool InsertDeletePageUndoAction::insertPage(Control* control)
+{
 	XOJ_CHECK_TYPE(InsertDeletePageUndoAction);
 
-	Document * doc = control->getDocument();
+	Document* doc = control->getDocument();
 
 	//just in case there would be a hang here,
 	//we'll clear the selection in redo as well
@@ -65,10 +77,11 @@ bool InsertDeletePageUndoAction::insertPage(Control * control) {
 	return true;
 }
 
-bool InsertDeletePageUndoAction::deletePage(Control * control) {
+bool InsertDeletePageUndoAction::deletePage(Control* control)
+{
 	XOJ_CHECK_TYPE(InsertDeletePageUndoAction);
 
-	Document * doc = control->getDocument();
+	Document* doc = control->getDocument();
 
 	//in order to fix the hang, we need to get out
 	//of text mode
@@ -80,8 +93,9 @@ bool InsertDeletePageUndoAction::deletePage(Control * control) {
 	//It's not great practise but it works.
 	//doc->lock();
 	int pNr = doc->indexOf(page);
-	if (pNr == -1) {
-	//	doc->unlock();
+	if (pNr == -1)
+	{
+		//	doc->unlock();
 		// this should not happen
 		return false;
 	}
@@ -99,12 +113,16 @@ bool InsertDeletePageUndoAction::deletePage(Control * control) {
 	return true;
 }
 
-String InsertDeletePageUndoAction::getText() {
+String InsertDeletePageUndoAction::getText()
+{
 	XOJ_CHECK_TYPE(InsertDeletePageUndoAction);
 
-	if (this->inserted) {
+	if (this->inserted)
+	{
 		return _("Page inserted");
-	} else {
+	}
+	else
+	{
 		return _("Page deleted");
 	}
 }

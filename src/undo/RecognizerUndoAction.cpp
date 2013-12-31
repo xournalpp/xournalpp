@@ -5,8 +5,10 @@
 #include "../gui/Redrawable.h"
 #include <Stacktrace.h>
 
-RecognizerUndoAction::RecognizerUndoAction(PageRef page, Redrawable * view, Layer * layer,
-		Stroke * original, Stroke * recognized) : UndoAction("RecognizerUndoAction") {
+RecognizerUndoAction::RecognizerUndoAction(PageRef page, Redrawable* view,
+                                           Layer* layer,
+                                           Stroke* original, Stroke* recognized) : UndoAction("RecognizerUndoAction")
+{
 	XOJ_INIT_TYPE(RecognizerUndoAction);
 
 	this->page = page;
@@ -18,14 +20,19 @@ RecognizerUndoAction::RecognizerUndoAction(PageRef page, Redrawable * view, Laye
 	addSourceElement(original);
 }
 
-RecognizerUndoAction::~RecognizerUndoAction() {
+RecognizerUndoAction::~RecognizerUndoAction()
+{
 	XOJ_CHECK_TYPE(RecognizerUndoAction);
 
-	if (this->undone) {
+	if (this->undone)
+	{
 		delete this->recognized;
-	} else {
-		for (GList * l = this->original; l != NULL; l = l->next) {
-			Stroke * s = (Stroke *) l->data;
+	}
+	else
+	{
+		for (GList* l = this->original; l != NULL; l = l->next)
+		{
+			Stroke* s = (Stroke*) l->data;
 			delete s;
 		}
 	}
@@ -35,11 +42,13 @@ RecognizerUndoAction::~RecognizerUndoAction() {
 	XOJ_RELEASE_TYPE(RecognizerUndoAction);
 }
 
-void RecognizerUndoAction::addSourceElement(Stroke * s) {
+void RecognizerUndoAction::addSourceElement(Stroke* s)
+{
 	XOJ_CHECK_TYPE(RecognizerUndoAction);
 
-	GList * elem2 = g_list_find(this->original, s);
-	if (elem2) {
+	GList* elem2 = g_list_find(this->original, s);
+	if (elem2)
+	{
 		g_warning("RecognizerUndoAction::addSourceElement() twice the same\n");
 		Stacktrace::printStracktrace();
 		return;
@@ -48,14 +57,16 @@ void RecognizerUndoAction::addSourceElement(Stroke * s) {
 	this->original = g_list_append(this->original, s);
 }
 
-bool RecognizerUndoAction::undo(Control * control) {
+bool RecognizerUndoAction::undo(Control* control)
+{
 	XOJ_CHECK_TYPE(RecognizerUndoAction);
 
 	int pos = this->layer->removeElement(this->recognized, false);
 	this->view->rerenderElement(this->recognized);
 	int i = 0;
-	for (GList * l = this->original; l != NULL; l = l->next) {
-		Stroke * s = (Stroke *) l->data;
+	for (GList* l = this->original; l != NULL; l = l->next)
+	{
+		Stroke* s = (Stroke*) l->data;
 		this->layer->insertElement(s, pos);
 		this->view->rerenderElement(s);
 		i++;
@@ -65,12 +76,14 @@ bool RecognizerUndoAction::undo(Control * control) {
 	return true;
 }
 
-bool RecognizerUndoAction::redo(Control * control) {
+bool RecognizerUndoAction::redo(Control* control)
+{
 	XOJ_CHECK_TYPE(RecognizerUndoAction);
 
 	int pos = 0;
-	for (GList * l = this->original; l != NULL; l = l->next) {
-		Stroke * s = (Stroke *) l->data;
+	for (GList* l = this->original; l != NULL; l = l->next)
+	{
+		Stroke* s = (Stroke*) l->data;
 		pos = this->layer->removeElement(s, false);
 		this->view->rerenderElement(s);
 	}
@@ -82,7 +95,8 @@ bool RecognizerUndoAction::redo(Control * control) {
 	return true;
 }
 
-String RecognizerUndoAction::getText() {
+String RecognizerUndoAction::getText()
+{
 	XOJ_CHECK_TYPE(RecognizerUndoAction);
 
 	return _("Stroke recognizer");

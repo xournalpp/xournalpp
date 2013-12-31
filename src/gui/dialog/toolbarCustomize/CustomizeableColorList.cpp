@@ -2,7 +2,8 @@
 #include <config.h>
 #include <glib/gi18n-lib.h>
 
-CustomizeableColorList::CustomizeableColorList() {
+CustomizeableColorList::CustomizeableColorList()
+{
 	XOJ_INIT_TYPE(CustomizeableColorList);
 
 	this->colors = NULL;
@@ -20,11 +21,13 @@ CustomizeableColorList::CustomizeableColorList() {
 	this->addPredefinedColor(0xffffff, _("White"));
 }
 
-CustomizeableColorList::~CustomizeableColorList() {
+CustomizeableColorList::~CustomizeableColorList()
+{
 	XOJ_CHECK_TYPE(CustomizeableColorList);
 
-	for (GList * l = this->colors; l != NULL; l = l->next) {
-		delete (XojColor *) l->data;
+	for (GList* l = this->colors; l != NULL; l = l->next)
+	{
+		delete (XojColor*) l->data;
 	}
 	g_list_free(this->colors);
 	this->colors = NULL;
@@ -32,12 +35,14 @@ CustomizeableColorList::~CustomizeableColorList() {
 	XOJ_RELEASE_TYPE(CustomizeableColorList);
 }
 
-ListIterator<XojColor *> CustomizeableColorList::getPredefinedColors() {
+ListIterator<XojColor*> CustomizeableColorList::getPredefinedColors()
+{
 	XOJ_CHECK_TYPE(CustomizeableColorList);
 
-	return ListIterator<XojColor *>(this->colors);
+	return ListIterator<XojColor*>(this->colors);
 }
 
-void CustomizeableColorList::addPredefinedColor(int color, String name) {
+void CustomizeableColorList::addPredefinedColor(int color, String name)
+{
 	this->colors = g_list_append(this->colors, new XojColor(color, name));
 }

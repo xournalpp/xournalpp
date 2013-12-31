@@ -17,38 +17,41 @@
 
 class SpinPageListener;
 
-class SpinPageAdapter {
+class SpinPageAdapter
+{
 public:
 	SpinPageAdapter();
 	virtual ~SpinPageAdapter();
 
 public:
-	GtkWidget * getWidget();
+	GtkWidget* getWidget();
 
 	int getPage();
 	void setPage(int page);
 	void setMinMaxPage(int min, int max);
 
-	void addListener(SpinPageListener * listener);
-	void removeListener(SpinPageListener * listener);
+	void addListener(SpinPageListener* listener);
+	void removeListener(SpinPageListener* listener);
 
 private:
-	static bool pageNrSpinChangedTimerCallback(SpinPageAdapter * adapter);
-	static void pageNrSpinChangedCallback(GtkSpinButton * spinbutton, SpinPageAdapter * adapter);
+	static bool pageNrSpinChangedTimerCallback(SpinPageAdapter* adapter);
+	static void pageNrSpinChangedCallback(GtkSpinButton* spinbutton,
+	                                      SpinPageAdapter* adapter);
 
 	void firePageChanged();
 
 private:
 	XOJ_TYPE_ATTRIB;
 
-	GtkWidget * widget;
+	GtkWidget* widget;
 	int page;
 
 	int lastTimeoutId;
-	GList * listener;
+	GList* listener;
 };
 
-class SpinPageListener {
+class SpinPageListener
+{
 public:
 	virtual void pageChanged(int page) = 0;
 };

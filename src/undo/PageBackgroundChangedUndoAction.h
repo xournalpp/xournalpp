@@ -16,15 +16,17 @@
 #include "../model/PageRef.h"
 #include "../model/BackgroundImage.h"
 
-class PageBackgroundChangedUndoAction: public UndoAction {
+class PageBackgroundChangedUndoAction: public UndoAction
+{
 public:
-	PageBackgroundChangedUndoAction(PageRef page, BackgroundType origType, int origPdfPage,
-			BackgroundImage origBackgroundImage, double origW, double origH);
+	PageBackgroundChangedUndoAction(PageRef page, BackgroundType origType,
+	                                int origPdfPage,
+	                                BackgroundImage origBackgroundImage, double origW, double origH);
 	virtual ~PageBackgroundChangedUndoAction();
 
 public:
-	virtual bool undo(Control * control);
-	virtual bool redo(Control * control);
+	virtual bool undo(Control* control);
+	virtual bool redo(Control* control);
 
 	virtual String getText();
 

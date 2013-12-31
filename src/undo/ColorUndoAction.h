@@ -20,26 +20,27 @@ class Layer;
 class Redrawable;
 class Element;
 
-class ColorUndoAction: public UndoAction {
+class ColorUndoAction: public UndoAction
+{
 public:
-	ColorUndoAction(PageRef page, Layer * layer, Redrawable * view);
+	ColorUndoAction(PageRef page, Layer* layer, Redrawable* view);
 	virtual ~ColorUndoAction();
 
 public:
-	virtual bool undo(Control * control);
-	virtual bool redo(Control * control);
+	virtual bool undo(Control* control);
+	virtual bool redo(Control* control);
 	virtual String getText();
 
-	void addStroke(Element * e, int originalColor, double newColor);
+	void addStroke(Element* e, int originalColor, double newColor);
 
 private:
 	XOJ_TYPE_ATTRIB;
 
 
-	GList * data;
+	GList* data;
 
-	Layer * layer;
-	Redrawable * view;
+	Layer* layer;
+	Redrawable* view;
 };
 
 #endif /* __COLORUNDOACTION_H__ */

@@ -2,14 +2,16 @@
 #include "../Control.h"
 #include "../SaveHandler.h"
 
-BlockingJob::BlockingJob(Control * control, const char * name) {
+BlockingJob::BlockingJob(Control* control, const char* name)
+{
 	XOJ_INIT_TYPE(BlockingJob);
 
 	this->control = control;
 	control->block(name);
 }
 
-BlockingJob::~BlockingJob() {
+BlockingJob::~BlockingJob()
+{
 	XOJ_CHECK_TYPE(BlockingJob);
 
 	this->control = NULL;
@@ -17,7 +19,8 @@ BlockingJob::~BlockingJob() {
 	XOJ_RELEASE_TYPE(BlockingJob);
 }
 
-void BlockingJob::execute() {
+void BlockingJob::execute()
+{
 	XOJ_CHECK_TYPE(BlockingJob);
 
 	this->run();
@@ -25,7 +28,8 @@ void BlockingJob::execute() {
 	g_idle_add((GSourceFunc) finished, this->control);
 }
 
-bool BlockingJob::finished(Control * control) {
+bool BlockingJob::finished(Control* control)
+{
 	gdk_threads_enter();
 	control->unblock();
 	gdk_threads_leave();
@@ -34,6 +38,7 @@ bool BlockingJob::finished(Control * control) {
 	return false;
 }
 
-JobType BlockingJob::getType() {
+JobType BlockingJob::getType()
+{
 	return JOB_TYPE_BLOCKING;
 }

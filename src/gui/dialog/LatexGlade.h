@@ -20,24 +20,25 @@
 #include "../../gui/GladeGui.h"
 
 
-class LatexGlade : public GladeGui {
+class LatexGlade : public GladeGui
+{
 public:
-	LatexGlade(GladeSearchpath * gladeSearchPath);
+	LatexGlade(GladeSearchpath* gladeSearchPath);
 	virtual ~LatexGlade();
 
 public:
-	virtual void show(GtkWindow * parent);
+	virtual void show(GtkWindow* parent);
 	void save();
 	void load();
-	void setTex(gchar * texString, int texLength);
-	gchar * getTex();
+	void setTex(gchar* texString, int texLength);
+	gchar* getTex();
 	int getTexLen();
 
 
 private:
 	XOJ_TYPE_ATTRIB;
-	GtkWidget * texBox;
-	gchar * theLatex;
+	GtkWidget* texBox;
+	gchar* theLatex;
 	int theLatexLength;
 };
 

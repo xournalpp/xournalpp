@@ -15,26 +15,27 @@
 #include "XmlNode.h"
 #include "../../model/Point.h"
 
-class XmlStrokeNode: public XmlNode {
+class XmlStrokeNode: public XmlNode
+{
 public:
-	XmlStrokeNode(const char * tag);
+	XmlStrokeNode(const char* tag);
 	virtual ~XmlStrokeNode();
 
 public:
-	void setPoints(Point * points, int pointLength);
-	void setWidth(double width, double * widths, int widthsLength);
+	void setPoints(Point* points, int pointLength);
+	void setWidth(double width, double* widths, int widthsLength);
 
-	virtual void writeOut(OutputStream * out);
+	virtual void writeOut(OutputStream* out);
 
 private:
 	XOJ_TYPE_ATTRIB;
 
-	Point * points;
+	Point* points;
 	int pointLength;
 
 	double width;
 
-	double * widths;
+	double* widths;
 	int widthsLength;
 };
 

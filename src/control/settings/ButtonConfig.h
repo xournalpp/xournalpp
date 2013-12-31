@@ -16,22 +16,25 @@
 #include <XournalType.h>
 #include "../Tool.h"
 
-enum DrawingType {
-	DRAWING_TYPE_DONT_CHANGE = 0,
-	DRAWING_TYPE_RULER,
-	DRAWING_TYPE_STROKE_RECOGNIZER,
-	DRAWING_TYPE_NONE
+enum DrawingType
+{
+    DRAWING_TYPE_DONT_CHANGE = 0,
+    DRAWING_TYPE_RULER,
+    DRAWING_TYPE_STROKE_RECOGNIZER,
+    DRAWING_TYPE_NONE
 };
 
 class ToolHandler;
 
-class ButtonConfig {
+class ButtonConfig
+{
 public:
-	ButtonConfig(ToolType action, int color, ToolSize size, DrawingType drawingType, EraserType eraserMode);
+	ButtonConfig(ToolType action, int color, ToolSize size, DrawingType drawingType,
+	             EraserType eraserMode);
 	virtual ~ButtonConfig();
 
 public:
-	void acceptActions(ToolHandler * toolHandler);
+	void acceptActions(ToolHandler* toolHandler);
 	ToolType getAction();
 	bool getDisableDrawing();
 	DrawingType getDrawingType();

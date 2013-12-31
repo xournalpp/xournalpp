@@ -8,7 +8,8 @@
 #include <Stacktrace.h>
 
 Text::Text() :
-	Element(ELEMENT_TEXT) {
+	Element(ELEMENT_TEXT)
+{
 	XOJ_INIT_TYPE(Text);
 
 	this->font.setName("Sans");
@@ -16,14 +17,16 @@ Text::Text() :
 	this->inEditing = false;
 }
 
-Text::~Text() {
+Text::~Text()
+{
 	XOJ_RELEASE_TYPE(Text);
 }
 
-Element * Text::clone() {
+Element* Text::clone()
+{
 	XOJ_CHECK_TYPE(Text);
 
-	Text * text = new Text();
+	Text* text = new Text();
 	text->font = this->font;
 	text->text = this->text;
 	text->setColor(this->getColor());
@@ -34,25 +37,29 @@ Element * Text::clone() {
 }
 
 
-XojFont & Text::getFont() {
+XojFont& Text::getFont()
+{
 	XOJ_CHECK_TYPE(Text);
 
 	return font;
 }
 
-void Text::setFont(XojFont & font) {
+void Text::setFont(XojFont& font)
+{
 	XOJ_CHECK_TYPE(Text);
 
 	this->font = font;
 }
 
-String Text::getText() {
+String Text::getText()
+{
 	XOJ_CHECK_TYPE(Text);
 
 	return this->text;
 }
 
-void Text::setText(String text) {
+void Text::setText(String text)
+{
 	XOJ_CHECK_TYPE(Text);
 
 	this->text = text;
@@ -60,35 +67,41 @@ void Text::setText(String text) {
 	calcSize();
 }
 
-void Text::calcSize() {
+void Text::calcSize()
+{
 	XOJ_CHECK_TYPE(Text);
 
 	TextView::calcSize(this, this->width, this->height);
 }
 
-void Text::setWidth(double width) {
+void Text::setWidth(double width)
+{
 	XOJ_CHECK_TYPE(Text);
 
 	this->width = width;
 }
 
-void Text::setHeight(double height) {
+void Text::setHeight(double height)
+{
 	XOJ_CHECK_TYPE(Text);
 
 	this->height = height;
 }
 
-void Text::setInEditing(bool inEditing) {
+void Text::setInEditing(bool inEditing)
+{
 	XOJ_CHECK_TYPE(Text);
 
 	this->inEditing = inEditing;
 }
 
-void Text::scale(double x0, double y0, double fx, double fy) {
+void Text::scale(double x0, double y0, double fx, double fy)
+{
 	XOJ_CHECK_TYPE(Text);
 
 	// only proportional scale allowed...
-	if (fx != fy) {
+	if (fx != fy)
+	{
 		g_warning("rescale font with fx != fy not supported: %lf / %lf", fx, fy);
 		Stacktrace::printStracktrace();
 	}
@@ -106,19 +119,22 @@ void Text::scale(double x0, double y0, double fx, double fy) {
 	this->sizeCalculated = false;
 }
 
-bool Text::isInEditing() {
+bool Text::isInEditing()
+{
 	XOJ_CHECK_TYPE(Text);
 
 	return this->inEditing;
 }
 
-bool Text::rescaleOnlyAspectRatio() {
+bool Text::rescaleOnlyAspectRatio()
+{
 	XOJ_CHECK_TYPE(Text);
 
 	return true;
 }
 
-void Text::serialize(ObjectOutputStream & out) {
+void Text::serialize(ObjectOutputStream& out)
+{
 	XOJ_CHECK_TYPE(Text);
 
 	out.writeObject("Text");
@@ -132,7 +148,8 @@ void Text::serialize(ObjectOutputStream & out) {
 	out.endObject();
 }
 
-void Text::readSerialized(ObjectInputStream & in) throw (InputStreamException) {
+void Text::readSerialized(ObjectInputStream& in) throw (InputStreamException)
+{
 	XOJ_CHECK_TYPE(Text);
 
 	in.readObject("Text");

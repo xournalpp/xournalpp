@@ -5,15 +5,19 @@
 
 #include <stdio.h>
 
-ToolbarColorNames::ToolbarColorNames() {
+ToolbarColorNames::ToolbarColorNames()
+{
 	XOJ_INIT_TYPE(ToolbarColorNames);
-	this->predefinedColorNames = g_hash_table_new_full(g_int_hash, g_int_equal, g_free, g_free);
+	this->predefinedColorNames = g_hash_table_new_full(g_int_hash, g_int_equal,
+	                                                   g_free, g_free);
 	this->config = g_key_file_new();
-	g_key_file_set_string(this->config, "info", "about", "Xournalpp custom color names");
+	g_key_file_set_string(this->config, "info", "about",
+	                      "Xournalpp custom color names");
 	initPredefinedColors();
 }
 
-ToolbarColorNames::~ToolbarColorNames() {
+ToolbarColorNames::~ToolbarColorNames()
+{
 	XOJ_CHECK_TYPE(ToolbarColorNames);
 
 	g_hash_table_destroy(this->predefinedColorNames);
@@ -23,86 +27,103 @@ ToolbarColorNames::~ToolbarColorNames() {
 	XOJ_RELEASE_TYPE(ToolbarColorNames);
 }
 
-static ToolbarColorNames * instance = NULL;
+static ToolbarColorNames* instance = NULL;
 
-ToolbarColorNames & ToolbarColorNames::getInstance() {
-	if (instance == NULL) {
+ToolbarColorNames& ToolbarColorNames::getInstance()
+{
+	if (instance == NULL)
+	{
 		instance = new ToolbarColorNames();
 	}
 
 	return *instance;
 }
 
-void ToolbarColorNames::freeInstance() {
+void ToolbarColorNames::freeInstance()
+{
 	delete instance;
 	instance = NULL;
 }
 
-void ToolbarColorNames::loadFile(const char * file) {
+void ToolbarColorNames::loadFile(const char* file)
+{
 	XOJ_CHECK_TYPE(ToolbarColorNames);
 
-	GError * error = NULL;
-	if (!g_key_file_load_from_file(config, file, G_KEY_FILE_NONE, &error)) {
+	GError* error = NULL;
+	if (!g_key_file_load_from_file(config, file, G_KEY_FILE_NONE, &error))
+	{
 		g_warning("Failed to load \"colornames.ini\" (%s): %s\n", file, error->message);
 		g_error_free(error);
 		return;
 	}
 
-	g_key_file_set_string(this->config, "info", "about", "Xournalpp custom color names");
+	g_key_file_set_string(this->config, "info", "about",
+	                      "Xournalpp custom color names");
 }
 
-void ToolbarColorNames::saveFile(const char * file) {
+void ToolbarColorNames::saveFile(const char* file)
+{
 	XOJ_CHECK_TYPE(ToolbarColorNames);
 
 	gsize len = 0;
-	char * data = g_key_file_to_data(this->config, &len, NULL);
+	char* data = g_key_file_to_data(this->config, &len, NULL);
 
-	FILE * fp = fopen(file, "w");
+	FILE* fp = fopen(file, "w");
 	fwrite(data, 1, len, fp);
 	fclose(fp);
 	g_free(data);
 }
 
-void ToolbarColorNames::adddColor(int color, String name, bool predefined) {
+void ToolbarColorNames::adddColor(int color, String name, bool predefined)
+{
 	XOJ_CHECK_TYPE(ToolbarColorNames);
 
-	int * key = g_new(int, 1);
+	int* key = g_new(int, 1);
 	*key = color;
 
-	if (predefined) {
+	if (predefined)
+	{
 		g_hash_table_insert(this->predefinedColorNames, key, g_strdup(name.c_str()));
-	} else {
+	}
+	else
+	{
 		String colorHex = String::format("%06x", color);
 		g_key_file_set_string(this->config, "custom", colorHex.c_str(), name.c_str());
 	}
 }
 
-String ToolbarColorNames::getColorName(int color) {
+String ToolbarColorNames::getColorName(int color)
+{
 	XOJ_CHECK_TYPE(ToolbarColorNames);
 
 	String colorName;
 
 	String colorHex = String::format("%06x", color);
 
-	char * name = g_key_file_get_string(this->config, "custom", colorHex.c_str(), NULL);
-	if (name != NULL) {
+	char* name = g_key_file_get_string(this->config, "custom", colorHex.c_str(),
+	                                   NULL);
+	if (name != NULL)
+	{
 		colorName = name;
 	}
 	g_free(name);
 
-	if (!colorName.isEmpty()) {
+	if (!colorName.isEmpty())
+	{
 		return colorName;
 	}
 
-	char * value = (char *) g_hash_table_lookup(this->predefinedColorNames, &color);
-	if (value) {
+	char* value = (char*) g_hash_table_lookup(this->predefinedColorNames, &color);
+	if (value)
+	{
 		return value;
 	}
 
 	return colorHex;
 }
 
-void ToolbarColorNames::initPredefinedColors() {
+void ToolbarColorNames::initPredefinedColors()
+{
 	XOJ_CHECK_TYPE(ToolbarColorNames);
 
 	// Here you can add predefined color names

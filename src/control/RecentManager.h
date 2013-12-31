@@ -16,21 +16,23 @@
 #include <String.h>
 #include <XournalType.h>
 
-class RecentManagerListener {
+class RecentManagerListener
+{
 public:
-	virtual void fileOpened(const char * uri) = 0;
+	virtual void fileOpened(const char* uri) = 0;
 };
 
-class RecentManager {
+class RecentManager
+{
 public:
 	RecentManager();
 	virtual ~RecentManager();
 
 public:
-	void addRecentFileFilename(const char * filename);
-	void addRecentFileUri(const char * uri);
-	void removeRecentFileFilename(const char * filename);
-	void removeRecentFileUri(const char * uri);
+	void addRecentFileFilename(const char* filename);
+	void addRecentFileUri(const char* uri);
+	void removeRecentFileFilename(const char* filename);
+	void removeRecentFileUri(const char* uri);
 
 	void freeOldMenus();
 	void updateMenu();
@@ -40,17 +42,19 @@ public:
 
 	void openRecent(String uri);
 
-	GtkWidget * getMenu();
+	GtkWidget* getMenu();
 
-	void addListener(RecentManagerListener * listener);
+	void addListener(RecentManagerListener* listener);
 
 private:
-	GList * filterRecent(GList * items, bool xoj);
-	void addRecentMenu(GtkRecentInfo * info, int i);
+	GList* filterRecent(GList* items, bool xoj);
+	void addRecentMenu(GtkRecentInfo* info, int i);
 
-	static void recentManagerChangedCallback(GtkRecentManager * manager, RecentManager * recentManager);
-	static void recentsMenuActivateCallback(GtkAction * action, RecentManager * recentManager);
-	static int sortRecentsEntries(GtkRecentInfo * a, GtkRecentInfo * b);
+	static void recentManagerChangedCallback(GtkRecentManager* manager,
+	                                         RecentManager* recentManager);
+	static void recentsMenuActivateCallback(GtkAction* action,
+	                                        RecentManager* recentManager);
+	static int sortRecentsEntries(GtkRecentInfo* a, GtkRecentInfo* b);
 
 private:
 	XOJ_TYPE_ATTRIB;
@@ -59,10 +63,10 @@ private:
 	int maxRecent;
 	int recentHandlerId;
 
-	GList * listener;
+	GList* listener;
 
-	GtkWidget * menu;
-	GList * menuItemList;
+	GtkWidget* menu;
+	GList* menuItemList;
 };
 
 #endif /* __RECENTMANAGER_H__ */

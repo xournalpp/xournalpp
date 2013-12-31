@@ -16,14 +16,19 @@
 #include <XournalType.h>
 
 template<class T>
-class ListIterator {
+class ListIterator
+{
 public:
-	ListIterator(GList * data, bool reverse = false) {
+	ListIterator(GList* data, bool reverse = false)
+	{
 		XOJ_INIT_TYPE(ListIterator);
 
-		if (reverse) {
+		if (reverse)
+		{
 			this->data = g_list_last(data);
-		} else {
+		}
+		else
+		{
 			this->data = data;
 		}
 		this->reverse = reverse;
@@ -31,20 +36,24 @@ public:
 		this->list = data;
 	}
 
-	ListIterator(const ListIterator & it) {
+	ListIterator(const ListIterator& it)
+	{
 		XOJ_INIT_TYPE(ListIterator);
 
 		*this = it;
-		if(this->copied) {
+		if(this->copied)
+		{
 			this->list = g_list_copy(this->data);
 			this->data = this->list;
 		}
 	}
 
-	virtual ~ListIterator() {
+	virtual ~ListIterator()
+	{
 		XOJ_CHECK_TYPE(ListIterator);
 
-		if (this->copied) {
+		if (this->copied)
+		{
 			g_list_free(this->list);
 		}
 		this->copied = false;
@@ -56,10 +65,12 @@ public:
 	/**
 	 * If the source changes while you are using the iterator nothing happens
 	 */
-	void freeze() {
+	void freeze()
+	{
 		XOJ_CHECK_TYPE(ListIterator);
 
-		if (this->copied) {
+		if (this->copied)
+		{
 			return;
 		}
 		this->copied = true;
@@ -67,36 +78,46 @@ public:
 		this->data = this->list;
 	}
 
-	bool hasNext() {
+	bool hasNext()
+	{
 		XOJ_CHECK_TYPE(ListIterator);
 
 		return this->data != NULL;
 	}
 
-	T next() {
+	T next()
+	{
 		XOJ_CHECK_TYPE(ListIterator);
 
 		T d = (T) this->data->data;
-		if (reverse) {
+		if (reverse)
+		{
 			this->data = this->data->prev;
-		} else {
+		}
+		else
+		{
 			this->data = this->data->next;
 		}
 		return d;
 	}
 
-	int getLength() {
+	int getLength()
+	{
 		XOJ_CHECK_TYPE(ListIterator);
 
 		return g_list_length(this->list);
 	}
 
-	void reset() {
+	void reset()
+	{
 		XOJ_CHECK_TYPE(ListIterator);
 
-		if (this->reverse) {
+		if (this->reverse)
+		{
 			this->data = g_list_last(this->list);
-		} else {
+		}
+		else
+		{
 			this->data = this->list;
 		}
 	}
@@ -104,8 +125,8 @@ public:
 private:
 	XOJ_TYPE_ATTRIB;
 
-	GList * list;
-	GList * data;
+	GList* list;
+	GList* data;
 	bool reverse;
 	bool copied;
 };

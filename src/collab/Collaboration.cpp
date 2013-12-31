@@ -8,12 +8,14 @@
 #include <serializing/ObjectOutputStream.h>
 #include <serializing/HexObjectEncoding.h>
 
-Collaboration::Collaboration(Control * control) {
+Collaboration::Collaboration(Control* control)
+{
 	printf("test");
 	this->control = control;
 }
 
-Collaboration::~Collaboration() {
+Collaboration::~Collaboration()
+{
 }
 
 /**
@@ -21,23 +23,25 @@ Collaboration::~Collaboration() {
  *
  * first you can implement it hardcoded.
  */
-void Collaboration::start() {
+void Collaboration::start()
+{
 	printf("Collaboration::start()\n");
 
 	// example insert an element
-	Document * doc = control->getDocument();
+	Document* doc = control->getDocument();
 
 	// you have always to lock the document before doing anything!
 	doc->lock();
 	// now we can access the document, from every thread, it sould be threadsave;-)
 
 	PageRef page = doc->getPage(0);
-	if(page.isValid()) { // Page 0 should always be valid, but we check this,
-		Stroke * s = new Stroke();
+	if(page.isValid())   // Page 0 should always be valid, but we check this,
+	{
+		Stroke* s = new Stroke();
 		s->setColor(0xff0000);
 		s->setWidth(1);
 		s->setToolType(STROKE_TOOL_PEN);
-		s->addPoint(Point(0,0)); // in document coordinates
+		s->addPoint(Point(0, 0)); // in document coordinates
 		s->addPoint(Point(100, 100));
 		page.getSelectedLayer()->addElement(s);
 
@@ -45,7 +49,7 @@ void Collaboration::start() {
 		// MVC pattern usually do this automatically, but we cannot do this automatically, because
 		// if we change a lot of things we only repaints once the whole area its much faster
 
-		PageView * view = control->getWindow()->getXournal()->getViewFor(0);
+		PageView* view = control->getWindow()->getXournal()->getViewFor(0);
 
 		// this call should also be threadsave;-) Hopefully...
 		view->rerenderElement(s);
@@ -59,7 +63,7 @@ void Collaboration::start() {
 
 		out << s;
 
-		GString * str = out.getStr();
+		GString* str = out.getStr();
 
 		printf("%s\n", str->str);
 		g_string_free(str, true);
@@ -69,15 +73,18 @@ void Collaboration::start() {
 }
 
 
-void Collaboration::layerDeletedCb(Layer * layer) {
+void Collaboration::layerDeletedCb(Layer* layer)
+{
 	printf("Layer deleted\n");
 }
 
-void Collaboration::elementAdded(Element * e, Layer * layer) {
+void Collaboration::elementAdded(Element* e, Layer* layer)
+{
 	printf("Element added\n");
 }
 
-void Collaboration::elementRemoved(Element * e, Layer * layer) {
+void Collaboration::elementRemoved(Element* e, Layer* layer)
+{
 	printf("Element removed\n");
 }
 

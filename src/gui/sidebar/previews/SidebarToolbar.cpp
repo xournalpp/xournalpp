@@ -4,7 +4,8 @@
 #include "undo/CopyUndoAction.h"
 #include "undo/SwapUndoAction.h"
 
-SidebarToolbar::SidebarToolbar(Control * control) {
+SidebarToolbar::SidebarToolbar(Control* control)
+{
 	XOJ_INIT_TYPE(SidebarToolbar);
 
 	this->control = control;
@@ -33,7 +34,8 @@ SidebarToolbar::SidebarToolbar(Control * control) {
 	gtk_widget_show_all(GTK_WIDGET(this->toolbar));
 }
 
-SidebarToolbar::~SidebarToolbar() {
+SidebarToolbar::~SidebarToolbar()
+{
 	XOJ_RELEASE_TYPE(SidebarToolbar);
 
 	gtk_widget_unref(GTK_WIDGET(this->toolbar));
@@ -42,17 +44,20 @@ SidebarToolbar::~SidebarToolbar() {
 	this->control = NULL;
 }
 
-void SidebarToolbar::btUpClicked(GtkToolButton * toolbutton, SidebarToolbar * toolbar) {
+void SidebarToolbar::btUpClicked(GtkToolButton* toolbutton,
+                                 SidebarToolbar* toolbar)
+{
 	XOJ_CHECK_TYPE_OBJ(toolbar, SidebarToolbar);
 
-	Document * doc = toolbar->control->getDocument();
+	Document* doc = toolbar->control->getDocument();
 	PageRef swapped_page, other_page;
 	doc->lock();
 
 	int page = doc->indexOf(toolbar->currentPage);
 	swapped_page = toolbar->currentPage;
 	other_page = doc->getPage(page - 1);
-	if (page != -1) {
+	if (page != -1)
+	{
 		doc->deletePage(page);
 		doc->insertPage(toolbar->currentPage, page - 1);
 	}
@@ -70,17 +75,20 @@ void SidebarToolbar::btUpClicked(GtkToolButton * toolbutton, SidebarToolbar * to
 	toolbar->control->getScrollHandler()->scrollToPage(page - 1);
 }
 
-void SidebarToolbar::btDownClicked(GtkToolButton * toolbutton, SidebarToolbar * toolbar) {
+void SidebarToolbar::btDownClicked(GtkToolButton* toolbutton,
+                                   SidebarToolbar* toolbar)
+{
 	XOJ_CHECK_TYPE_OBJ(toolbar, SidebarToolbar);
 
-	Document * doc = toolbar->control->getDocument();
+	Document* doc = toolbar->control->getDocument();
 	PageRef swapped_page, other_page;
 	doc->lock();
 
 	int page = doc->indexOf(toolbar->currentPage);
 	swapped_page = toolbar->currentPage;
 	other_page = doc->getPage(page + 1);
-	if (page != -1) {
+	if (page != -1)
+	{
 		doc->deletePage(page);
 		doc->insertPage(toolbar->currentPage, page + 1);
 	}
@@ -99,10 +107,12 @@ void SidebarToolbar::btDownClicked(GtkToolButton * toolbutton, SidebarToolbar * 
 	toolbar->control->getScrollHandler()->scrollToPage(page + 1);
 }
 
-void SidebarToolbar::btCopyClicked(GtkToolButton * toolbutton, SidebarToolbar * toolbar) {
+void SidebarToolbar::btCopyClicked(GtkToolButton* toolbutton,
+                                   SidebarToolbar* toolbar)
+{
 	XOJ_CHECK_TYPE_OBJ(toolbar, SidebarToolbar);
 
-	Document * doc = toolbar->control->getDocument();
+	Document* doc = toolbar->control->getDocument();
 	doc->lock();
 
 	int page = doc->indexOf(toolbar->currentPage);
@@ -112,7 +122,7 @@ void SidebarToolbar::btCopyClicked(GtkToolButton * toolbutton, SidebarToolbar * 
 
 	doc->unlock();
 
-	UndoRedoHandler * undo = toolbar->control->getUndoRedoHandler();
+	UndoRedoHandler* undo = toolbar->control->getUndoRedoHandler();
 	undo->addUndoAction(new CopyUndoAction(newPage, page + 1));
 
 	toolbar->control->firePageInserted(page + 1);
@@ -121,13 +131,17 @@ void SidebarToolbar::btCopyClicked(GtkToolButton * toolbutton, SidebarToolbar * 
 	toolbar->control->getScrollHandler()->scrollToPage(page + 1);
 }
 
-void SidebarToolbar::btDeleteClicked(GtkToolButton * toolbutton, SidebarToolbar * toolbar) {
+void SidebarToolbar::btDeleteClicked(GtkToolButton* toolbutton,
+                                     SidebarToolbar* toolbar)
+{
 	XOJ_CHECK_TYPE_OBJ(toolbar, SidebarToolbar);
 
 	toolbar->control->deletePage();
 }
 
-void SidebarToolbar::setButtonEnabled(bool enableUp, bool enableDown, bool enableCopy, bool enableDelete, PageRef currentPage) {
+void SidebarToolbar::setButtonEnabled(bool enableUp, bool enableDown,
+                                      bool enableCopy, bool enableDelete, PageRef currentPage)
+{
 	XOJ_CHECK_TYPE(SidebarToolbar);
 
 	gtk_widget_set_sensitive(GTK_WIDGET(this->btUp), enableUp);
@@ -138,7 +152,8 @@ void SidebarToolbar::setButtonEnabled(bool enableUp, bool enableDown, bool enabl
 	this->currentPage = currentPage;
 }
 
-GtkWidget * SidebarToolbar::getWidget() {
+GtkWidget* SidebarToolbar::getWidget()
+{
 	XOJ_CHECK_TYPE(SidebarToolbar);
 
 	return GTK_WIDGET(this->toolbar);

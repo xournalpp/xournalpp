@@ -1,14 +1,16 @@
 #include "XmlTextNode.h"
 
-XmlTextNode::XmlTextNode(const char * tag, const char * text) :
-	XmlNode(tag) {
+XmlTextNode::XmlTextNode(const char* tag, const char* text) :
+	XmlNode(tag)
+{
 	XOJ_INIT_TYPE(XmlTextNode);
 
 	this->text = g_strdup(text);
 }
 
-XmlTextNode::XmlTextNode(const char * tag) :
-	XmlNode(tag) {
+XmlTextNode::XmlTextNode(const char* tag) :
+	XmlNode(tag)
+{
 	XOJ_INIT_TYPE(XmlTextNode);
 
 	this->text = NULL;
@@ -16,7 +18,8 @@ XmlTextNode::XmlTextNode(const char * tag) :
 	XOJ_RELEASE_TYPE(XmlTextNode);
 }
 
-XmlTextNode::~XmlTextNode() {
+XmlTextNode::~XmlTextNode()
+{
 	XOJ_CHECK_TYPE(XmlTextNode);
 
 	g_free(this->text);
@@ -25,14 +28,16 @@ XmlTextNode::~XmlTextNode() {
 	XOJ_RELEASE_TYPE(XmlTextNode);
 }
 
-void XmlTextNode::setText(const char * text) {
+void XmlTextNode::setText(const char* text)
+{
 	XOJ_CHECK_TYPE(XmlTextNode);
 
 	g_free(this->text);
 	this->text = g_strdup(text);
 }
 
-void XmlTextNode::writeOut(OutputStream * out) {
+void XmlTextNode::writeOut(OutputStream* out)
+{
 	XOJ_CHECK_TYPE(XmlTextNode);
 
 	out->write("<");

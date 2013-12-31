@@ -15,7 +15,8 @@
 #include <XournalType.h>
 #include <glib.h>
 
-class PageRangeEntry {
+class PageRangeEntry
+{
 public:
 	PageRangeEntry(int first, int last);
 	virtual ~PageRangeEntry();
@@ -31,14 +32,15 @@ private:
 	int last;
 };
 
-class PageRange {
+class PageRange
+{
 private:
 	PageRange();
 	virtual ~PageRange();
 
 public:
 	static bool isSeparator(char c);
-	static GList * parse(const char * str);
+	static GList* parse(const char* str);
 };
 
 #endif /* __PAGERANGE_H__ */

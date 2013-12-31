@@ -14,7 +14,8 @@
 
 #include <XournalType.h>
 
-class PdfXRef {
+class PdfXRef
+{
 public:
 	PdfXRef();
 	virtual ~PdfXRef();
@@ -29,7 +30,7 @@ public:
 private:
 	XOJ_TYPE_ATTRIB;
 
-	int * xref;
+	int* xref;
 	int xrefLenght;
 	int xrefNr;
 

@@ -17,9 +17,9 @@ class Control;
 
 extern "C" {
 
-void initselection();
+	void initselection();
 
-PyObject * newPySelection(PyObject * xournal);
+	PyObject* newPySelection(PyObject* xournal);
 
 }
 

@@ -15,26 +15,32 @@
 #include <XournalType.h>
 
 template<class T>
-class ArrayIterator {
+class ArrayIterator
+{
 public:
-	ArrayIterator(const T * data, const int count) {
+	ArrayIterator(const T* data, const int count)
+	{
 		this->data = data;
 		this->i = 0;
 		this->count = count;
 	}
 
-	virtual ~ArrayIterator() {
+	virtual ~ArrayIterator()
+	{
 	}
 
-	bool hasNext() const {
+	bool hasNext() const
+	{
 		return i < count;
 	}
 
-	T next() {
+	T next()
+	{
 		return data[i++];
 	}
 
-	T get() const {
+	T get() const
+	{
 		return data[i];
 	}
 
@@ -43,7 +49,7 @@ private:
 
 	int i;
 	int count;
-	const T * data;
+	const T* data;
 };
 
 #endif /* __ARRAYITERATOR_H__ */

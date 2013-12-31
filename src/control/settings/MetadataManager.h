@@ -15,7 +15,8 @@
 #include <glib.h>
 #include <String.h>
 
-class MetadataManager {
+class MetadataManager
+{
 public:
 	MetadataManager();
 	virtual ~MetadataManager();
@@ -25,17 +26,17 @@ public:
 	 * Setter / Getter: if uri is NULL the request will be ignored
 	 */
 
-	void setInt(String uri, const char * name, int value);
-	void setDouble(String uri, const char * name, double value);
-	void setString(String uri, const char * name, const char * value);
+	void setInt(String uri, const char* name, int value);
+	void setDouble(String uri, const char* name, double value);
+	void setString(String uri, const char* name, const char* value);
 
-	bool getInt(String uri, const char * name, int &value);
-	bool getDouble(String uri, const char * name, double &value);
+	bool getInt(String uri, const char* name, int& value);
+	bool getDouble(String uri, const char* name, double& value);
 
 	/**
 	 * The returned String should be freed with g_free
 	 */
-	bool getString(String uri, const char * name, char * &value);
+	bool getString(String uri, const char* name, char*& value);
 
 	void move(String source, String target);
 
@@ -45,14 +46,14 @@ private:
 
 	void cleanupMetadata();
 
-	static bool save(MetadataManager * manager);
+	static bool save(MetadataManager* manager);
 
 
 private:
 	XOJ_TYPE_ATTRIB;
 
 	int timeoutId;
-	GKeyFile * config;
+	GKeyFile* config;
 };
 
 #endif /* __METADATAMANAGER_H__ */

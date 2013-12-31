@@ -29,9 +29,10 @@
 
 #include <vector>
 
-class Document {
+class Document
+{
 public:
-	Document(DocumentHandler * handler);
+	Document(DocumentHandler* handler);
 	virtual ~Document();
 
 public:
@@ -39,8 +40,8 @@ public:
 
 	int getPageCount();
 	int getPdfPageCount();
-	XojPopplerPage * getPdfPage(int page);
-	XojPopplerDocument & getPdfDocument();
+	XojPopplerPage* getPdfPage(int page);
+	XojPopplerDocument& getPdfDocument();
 
 	void insertPage(PageRef p, int position);
 	void addPage(PageRef p);
@@ -56,7 +57,7 @@ public:
 	bool isPdfDocumentLoaded();
 	int findPdfPage(int pdfPage);
 
-	void operator=(Document & doc);
+	void operator=(Document& doc);
 
 	void setFilename(String filename);
 	String getFilename();
@@ -64,7 +65,7 @@ public:
 
 	String getEvMetadataFilename();
 
-	GtkTreeModel * getContentsModel();
+	GtkTreeModel* getContentsModel();
 
 	void setCreateBackupOnSave(bool backup);
 	bool shouldCreateBackupOnSave();
@@ -73,8 +74,8 @@ public:
 
 	bool isAttachPdf();
 
-	cairo_surface_t * getPreview();
-	void setPreview(cairo_surface_t * preview);
+	cairo_surface_t* getPreview();
+	void setPreview(cairo_surface_t* preview);
 
 	void lock();
 	void unlock();
@@ -82,15 +83,16 @@ public:
 
 private:
 	void buildContentsModel();
-	void buildTreeContentsModel(GtkTreeIter * parent, XojPopplerIter * iter);
+	void buildTreeContentsModel(GtkTreeIter* parent, XojPopplerIter* iter);
 	void updateIndexPageNumbers();
-	static bool fillPageLabels(GtkTreeModel * tree_model, GtkTreePath * path, GtkTreeIter * iter, Document * doc);
+	static bool fillPageLabels(GtkTreeModel* tree_model, GtkTreePath* path,
+	                           GtkTreeIter* iter, Document* doc);
 
 private:
 	XOJ_TYPE_ATTRIB;
 
 
-	DocumentHandler * handler;
+	DocumentHandler* handler;
 
 	XojPopplerDocument pdfDocument;
 
@@ -113,7 +115,7 @@ private:
 	/**
 	 * The bookmark contents model
 	 */
-	GtkTreeModel * contentsModel;
+	GtkTreeModel* contentsModel;
 
 	/**
 	 * create a backup before save, because the original file was an older fileversion
@@ -123,12 +125,12 @@ private:
 	/**
 	 * The preview for the file
 	 */
-	cairo_surface_t * preview;
+	cairo_surface_t* preview;
 
 	/**
 	 * The lock of the document
 	 */
-	GMutex * documentLock;
+	GMutex* documentLock;
 };
 
 #endif /* __DOCUMENT_H__ */

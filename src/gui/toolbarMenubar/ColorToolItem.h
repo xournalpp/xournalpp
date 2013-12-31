@@ -16,9 +16,11 @@
 #include "../../control/ToolHandler.h"
 #include <XournalType.h>
 
-class ColorToolItem: public AbstractToolItem {
+class ColorToolItem: public AbstractToolItem
+{
 public:
-	ColorToolItem(ActionHandler * handler, ToolHandler * toolHandler, GtkWindow * parent, int color, bool selektor = false);
+	ColorToolItem(ActionHandler* handler, ToolHandler* toolHandler,
+	              GtkWindow* parent, int color, bool selektor = false);
 	virtual ~ColorToolItem();
 
 public:
@@ -26,17 +28,18 @@ public:
 	void enableColor(int color);
 	void selectColor();
 	bool colorEqualsMoreOreLess(int color);
-	virtual void activated(GdkEvent * event, GtkMenuItem * menuitem, GtkToolButton * toolbutton);
+	virtual void activated(GdkEvent* event, GtkMenuItem* menuitem,
+	                       GtkToolButton* toolbutton);
 
 	virtual String getToolDisplayName();
-	virtual GtkWidget * getNewToolIconImpl();
+	virtual GtkWidget* getNewToolIconImpl();
 
 	virtual String getId();
 
 	int getColor();
 
 protected:
-	virtual GtkToolItem * newItem();
+	virtual GtkToolItem* newItem();
 	void updateName();
 	bool isSelector();
 
@@ -45,11 +48,11 @@ private:
 
 	int color;
 	String name;
-	GtkWidget * iconWidget;
-	GtkWidget * colorDlg;
-	GtkWindow * parent;
+	GtkWidget* iconWidget;
+	GtkWidget* colorDlg;
+	GtkWindow* parent;
 
-	ToolHandler * toolHandler;
+	ToolHandler* toolHandler;
 
 	static bool inUpdate;
 };

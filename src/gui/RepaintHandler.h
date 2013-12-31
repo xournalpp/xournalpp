@@ -17,31 +17,32 @@
 class PageView;
 class XournalView;
 
-class RepaintHandler {
+class RepaintHandler
+{
 public:
-	RepaintHandler(XournalView * xournal);
+	RepaintHandler(XournalView* xournal);
 	virtual ~RepaintHandler();
 
 public:
 	/**
 	 * Repaint a page
 	 */
-	void repaintPage(PageView * view);
+	void repaintPage(PageView* view);
 
 	/**
 	 * Repaint a page area, coordinates are in view coordinates
 	 */
-	void repaintPageArea(PageView * view, int x1, int y1, int x2, int y2);
+	void repaintPageArea(PageView* view, int x1, int y1, int x2, int y2);
 
 	/**
 	 * Repaints the page border (at least)
 	 */
-	void repaintPageBorder(PageView * view);
+	void repaintPageBorder(PageView* view);
 
 private:
 	XOJ_TYPE_ATTRIB;
 
-	XournalView * xournal;
+	XournalView* xournal;
 };
 
 #endif /* __REPAINTHANDLER_H__ */

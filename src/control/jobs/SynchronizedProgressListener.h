@@ -15,9 +15,10 @@
 #include "ProgressListener.h"
 #include <XournalType.h>
 
-class SynchronizedProgressListener: public ProgressListener {
+class SynchronizedProgressListener: public ProgressListener
+{
 public:
-	SynchronizedProgressListener(ProgressListener * target);
+	SynchronizedProgressListener(ProgressListener* target);
 	virtual ~SynchronizedProgressListener();
 
 public:
@@ -25,13 +26,13 @@ public:
 	virtual void setCurrentState(int state);
 
 private:
-	static bool setMaxCallback(SynchronizedProgressListener * listener);
-	static bool setCurrentCallback(SynchronizedProgressListener * listener);
+	static bool setMaxCallback(SynchronizedProgressListener* listener);
+	static bool setCurrentCallback(SynchronizedProgressListener* listener);
 
 public:
 	XOJ_TYPE_ATTRIB;
 
-	ProgressListener * target;
+	ProgressListener* target;
 
 	int maxIdleId;
 	int currentIdleId;

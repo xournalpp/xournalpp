@@ -4,7 +4,7 @@
 #include "../gui/Cursor.h"
 
 CopyUndoAction::CopyUndoAction(PageRef pageref, int pageNr)
-  : UndoAction("CopyUndoAction")
+	: UndoAction("CopyUndoAction")
 {
 	XOJ_INIT_TYPE(CopyUndoAction);
 
@@ -21,11 +21,11 @@ CopyUndoAction::~CopyUndoAction()
 	XOJ_RELEASE_TYPE(CopyUndoAction);
 }
 
-bool CopyUndoAction::undo(Control * control)
+bool CopyUndoAction::undo(Control* control)
 {
 	XOJ_CHECK_TYPE(CopyUndoAction);
 
-	Document * doc = control->getDocument();
+	Document* doc = control->getDocument();
 
 	//in order to fix the hang, we need to get out
 	//of text mode
@@ -45,11 +45,11 @@ bool CopyUndoAction::undo(Control * control)
 	return true;
 }
 
-bool CopyUndoAction::redo(Control * control)
+bool CopyUndoAction::redo(Control* control)
 {
 	XOJ_CHECK_TYPE(CopyUndoAction);
 
-	Document * doc = control->getDocument();
+	Document* doc = control->getDocument();
 
 	//just in case there would be a hang here,
 	//we'll clear the selection in redo as well

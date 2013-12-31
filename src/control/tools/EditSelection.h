@@ -30,18 +30,19 @@ class UndoAction;
 class EditSelectionContents;
 class DeleteUndoAction;
 
-class EditSelection: public ElementContainer, public Serializeable {
+class EditSelection: public ElementContainer, public Serializeable
+{
 public:
-	EditSelection(UndoRedoHandler * undo, PageRef page, PageView * view);
-	EditSelection(UndoRedoHandler * undo, Selection * selection, PageView * view);
-	EditSelection(UndoRedoHandler * undo, Element * e, PageView * view, PageRef page);
+	EditSelection(UndoRedoHandler* undo, PageRef page, PageView* view);
+	EditSelection(UndoRedoHandler* undo, Selection* selection, PageView* view);
+	EditSelection(UndoRedoHandler* undo, Element* e, PageView* view, PageRef page);
 	virtual ~EditSelection();
 
 private:
 	/**
 	 * Our internal constructor
 	 */
-	void contstruct(UndoRedoHandler * undo, PageView * view, PageRef sourcePage);
+	void contstruct(UndoRedoHandler* undo, PageView* view, PageRef sourcePage);
 
 public:
 	/**
@@ -96,36 +97,37 @@ public:
 	 * Sets the tool size for pen or eraser, returs an undo action
 	 * (or NULL if nothing is done)
 	 */
-	UndoAction * setSize(ToolSize size, const double * thicknessPen, const double * thicknessHilighter, const double * thicknessEraser);
+	UndoAction* setSize(ToolSize size, const double* thicknessPen,
+	                    const double* thicknessHilighter, const double* thicknessEraser);
 
 	/**
 	 * Set the color of all elements, return an undo action
 	 * (Or NULL if nothing done, e.g. because there is only an image)
 	 */
-	UndoAction * setColor(int color);
+	UndoAction* setColor(int color);
 
 	/**
 	 * Sets the font of all containing text elements, return an undo action
 	 * (or NULL if there are no Text elements)
 	 */
-	UndoAction * setFont(XojFont & font);
+	UndoAction* setFont(XojFont& font);
 
 	/**
 	 * Fills de undo item if the selection is deleted
 	 * the selection is cleared after
 	 */
-	void fillUndoItem(DeleteUndoAction * undo);
+	void fillUndoItem(DeleteUndoAction* undo);
 
 public:
 	/**
 	 * Add an element to the this selection
 	 */
-	void addElement(Element * e);
+	void addElement(Element* e);
 
 	/**
 	 * Returns all containig elements of this selections
 	 */
-	ListIterator<Element *> getElements();
+	ListIterator<Element*> getElements();
 
 	/**
 	 * Finish the current movement
@@ -147,7 +149,7 @@ public:
 	 * Paints the selection to cr, with the given zoom factor. The coordinates of cr
 	 * should be relative to the provided view by getView() (use translateEvent())
 	 */
-	void paint(cairo_t * cr, double zoom);
+	void paint(cairo_t* cr, double zoom);
 
 	/**
 	 * If the selection is outside the visible area correct the coordinates
@@ -171,19 +173,19 @@ public:
 	bool isMoving();
 
 public:
-	PageView * getView();
+	PageView* getView();
 
 public:
 	// Serialize interface
-	void serialize(ObjectOutputStream & out);
-	void readSerialized(ObjectInputStream & in) throw (InputStreamException);
+	void serialize(ObjectOutputStream& out);
+	void readSerialized(ObjectInputStream& in) throw (InputStreamException);
 
 private:
 
 	/**
 	 * Draws an indicator where you can scale the selection
 	 */
-	void drawAnchorRect(cairo_t * cr, double x, double y, double zoom);
+	void drawAnchorRect(cairo_t* cr, double x, double y, double zoom);
 
 	/**
 	 * Finishes all pending changes, move the elements, scale the elements and add
@@ -194,13 +196,13 @@ private:
 	/**
 	 * Gets the PageView where the selection is located on
 	 */
-	PageView * getBestMatchingPageView();
+	PageView* getBestMatchingPageView();
 
 	/**
 	 * Translate all coordinates which are relative to the current view to the new view,
 	 * and set the attribute view to the new view
 	 */
-	void translateToView(PageView * v);
+	void translateToView(PageView* v);
 
 private: // DATA
 	XOJ_TYPE_ATTRIB;
@@ -238,23 +240,23 @@ private: // DATA
 	/**
 	 * The source layer (form where the Elements come)
 	 */
-	Layer * sourceLayer;
+	Layer* sourceLayer;
 
 	/**
 	 * The contents of the selection
 	 */
-	EditSelectionContents * contents;
+	EditSelectionContents* contents;
 
 private: // HANDLER
 	/**
 	 * The page view for the anchor
 	 */
-	PageView * view;
+	PageView* view;
 
 	/**
 	 * Undo redo handler
 	 */
-	UndoRedoHandler * undo;
+	UndoRedoHandler* undo;
 
 };
 

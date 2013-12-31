@@ -19,22 +19,24 @@
 
 class GladeSearchpath;
 
-class GladeGui {
+class GladeGui
+{
 public:
-	GladeGui(GladeSearchpath * gladeSearchPath, const char * glade, const char * mainWnd);
+	GladeGui(GladeSearchpath* gladeSearchPath, const char* glade,
+	         const char* mainWnd);
 	virtual ~GladeGui();
 
-	virtual void show(GtkWindow * parent) = 0;
+	virtual void show(GtkWindow* parent) = 0;
 
-	operator GtkWindow *();
-	operator GdkWindow *();
+	operator GtkWindow* ();
+	operator GdkWindow* ();
 
-	GtkWidget * get(const char * name);
-	GtkWidget * loadIcon(const char * name);
-	GdkPixbuf * loadIconPixbuf(const char * filename);
+	GtkWidget* get(const char* name);
+	GtkWidget* loadIcon(const char* name);
+	GdkPixbuf* loadIconPixbuf(const char* filename);
 
-	GtkWidget * getWindow();
-	GladeSearchpath * getGladeSearchPath();
+	GtkWidget* getWindow();
+	GladeSearchpath* getGladeSearchPath();
 
 private:
 	XOJ_TYPE_ATTRIB;
@@ -42,18 +44,18 @@ private:
 	/**
 	 * The Glade resources
 	 */
-	GladeXML * xml;
+	GladeXML* xml;
 
 	/**
 	 * Our search paths
 	 */
-	GladeSearchpath * gladeSearchPath;
+	GladeSearchpath* gladeSearchPath;
 
 protected:
 	/**
 	 * This window
 	 */
-	GtkWidget * window;
+	GtkWidget* window;
 };
 
 #endif /* __GLADEGUI_H__ */

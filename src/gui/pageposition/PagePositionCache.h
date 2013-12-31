@@ -14,7 +14,8 @@
 
 #include <XournalType.h>
 
-class PagePositionCache {
+class PagePositionCache
+{
 public:
 	PagePositionCache();
 	virtual ~PagePositionCache();

@@ -5,7 +5,9 @@
 #include <poppler/OutputDev.h>
 #include "../workaround/workaround.h"
 
-XojPopplerPage::XojPopplerPage(PDFDoc * doc, GMutex * docMutex, CairoOutputDev * outputDev, Page * page, int index) {
+XojPopplerPage::XojPopplerPage(PDFDoc* doc, GMutex* docMutex,
+                               CairoOutputDev* outputDev, Page* page, int index)
+{
 	XOJ_INIT_TYPE(XojPopplerPage);
 
 	this->doc = doc;
@@ -19,10 +21,12 @@ XojPopplerPage::XojPopplerPage(PDFDoc * doc, GMutex * docMutex, CairoOutputDev *
 	this->docMutex = docMutex;
 }
 
-XojPopplerPage::~XojPopplerPage() {
+XojPopplerPage::~XojPopplerPage()
+{
 	XOJ_CHECK_TYPE(XojPopplerPage);
 
-	if (this->text) {
+	if (this->text)
+	{
 		this->text->decRefCnt();
 	}
 
@@ -34,36 +38,47 @@ XojPopplerPage::~XojPopplerPage() {
 	XOJ_RELEASE_TYPE(XojPopplerPage);
 }
 
-double XojPopplerPage::getWidth() {
+double XojPopplerPage::getWidth()
+{
 	XOJ_CHECK_TYPE(XojPopplerPage);
 
 	int rotate = this->page->getRotate();
-	if (rotate == 90 || rotate == 270) {
+	if (rotate == 90 || rotate == 270)
+	{
 		return this->page->getCropHeight();
-	} else {
+	}
+	else
+	{
 		return this->page->getCropWidth();
 	}
 }
 
-double XojPopplerPage::getHeight() {
+double XojPopplerPage::getHeight()
+{
 	XOJ_CHECK_TYPE(XojPopplerPage);
 
 	int rotate = this->page->getRotate();
-	if (rotate == 90 || rotate == 270) {
+	if (rotate == 90 || rotate == 270)
+	{
 		return this->page->getCropWidth();
-	} else {
+	}
+	else
+	{
 		return this->page->getCropHeight();
 	}
 }
 
-static GBool poppler_print_annot_cb(Annot * annot, void * user_data) {
-	if (annot->getFlags() & Annot::flagPrint) {
+static GBool poppler_print_annot_cb(Annot* annot, void* user_data)
+{
+	if (annot->getFlags() & Annot::flagPrint)
+	{
 		return true;
 	}
 	return (annot->getType() == Annot::typeWidget);
 }
 
-void XojPopplerPage::render(cairo_t * cr, bool forPrinting) {
+void XojPopplerPage::render(cairo_t* cr, bool forPrinting)
+{
 	XOJ_CHECK_TYPE(XojPopplerPage);
 
 	g_mutex_lock(this->renderMutex);
@@ -71,8 +86,10 @@ void XojPopplerPage::render(cairo_t * cr, bool forPrinting) {
 	this->outputDev->setCairo(cr);
 	this->outputDev->setPrinting(forPrinting);
 
-	if (!forPrinting) {
-		if (!this->text) {
+	if (!forPrinting)
+	{
+		if (!this->text)
+		{
 			this->text = new TextPage(false);
 		}
 
@@ -85,9 +102,11 @@ void XojPopplerPage::render(cairo_t * cr, bool forPrinting) {
 
 	g_mutex_lock(this->docMutex);
 
-	this->page->displaySlice(this->outputDev, 72.0, 72.0, 0, false, /* useMediaBox */
-	true, /* Crop */
-	-1, -1, -1, -1, forPrinting, this->doc->getCatalog(), NULL, NULL, forPrinting ? poppler_print_annot_cb : NULL, NULL);
+	this->page->displaySlice(this->outputDev, 72.0, 72.0, 0,
+	                         false, /* useMediaBox */
+	                         true, /* Crop */
+	                         -1, -1, -1, -1, forPrinting, this->doc->getCatalog(), NULL, NULL,
+	                         forPrinting ? poppler_print_annot_cb : NULL, NULL);
 	cairo_restore(cr);
 
 	g_mutex_unlock(this->docMutex);
@@ -98,18 +117,21 @@ void XojPopplerPage::render(cairo_t * cr, bool forPrinting) {
 	g_mutex_unlock(this->renderMutex);
 }
 
-void XojPopplerPage::initTextPage() {
+void XojPopplerPage::initTextPage()
+{
 	XOJ_CHECK_TYPE(XojPopplerPage);
 
 	g_mutex_lock(this->renderMutex);
 
-	if (this->text == NULL) {
+	if (this->text == NULL)
+	{
 		g_mutex_lock(this->docMutex);
-		TextOutputDev *textDev = new TextOutputDev(NULL, true, false, false);
-		Gfx *gfx = this->page->createGfx(textDev, 72.0, 72.0, 0, false, /* useMediaBox */
-		true, /* Crop */
-		-1, -1, -1, -1, false, /* printing */
-		this->doc->getCatalog(), NULL, NULL, NULL, NULL);
+		TextOutputDev* textDev = new TextOutputDev(NULL, true, false, false);
+		Gfx* gfx = this->page->createGfx(textDev, 72.0, 72.0, 0,
+		                                 false, /* useMediaBox */
+		                                 true, /* Crop */
+		                                 -1, -1, -1, -1, false, /* printing */
+		                                 this->doc->getCatalog(), NULL, NULL, NULL, NULL);
 		this->page->display(gfx);
 		textDev->endPage();
 
@@ -122,19 +144,21 @@ void XojPopplerPage::initTextPage() {
 	g_mutex_unlock(this->renderMutex);
 }
 
-Page * XojPopplerPage::getPage() {
+Page* XojPopplerPage::getPage()
+{
 	XOJ_CHECK_TYPE(XojPopplerPage);
 
 	return this->page;
 }
 
-GList * XojPopplerPage::findText(const char * text) {
+GList* XojPopplerPage::findText(const char* text)
+{
 	XOJ_CHECK_TYPE(XojPopplerPage);
 
-	XojPopplerRectangle *match;
-	GList *matches;
+	XojPopplerRectangle* match;
+	GList* matches;
 	double xMin, yMin, xMax, yMax;
-	gunichar *ucs4;
+	gunichar* ucs4;
 	glong ucs4_len;
 
 	initTextPage();
@@ -162,10 +186,12 @@ GList * XojPopplerPage::findText(const char * text) {
 
 	bool atTop = true;
 
-	while (this->text->findText(ucs4, ucs4_len, atTop, true, // startAtTop, stopAtBottom
-			!atTop, false, // startAtLast, stopAtLast
-			false, false, // caseSensitive, backwards
-			&xMin, &yMin, &xMax, &yMax)) {
+	while (this->text->findText(ucs4, ucs4_len, atTop,
+	                            true, // startAtTop, stopAtBottom
+	                            !atTop, false, // startAtLast, stopAtLast
+	                            false, false, // caseSensitive, backwards
+	                            &xMin, &yMin, &xMax, &yMax))
+	{
 
 		match = new XojPopplerRectangle();
 		match->x1 = xMin;
@@ -181,7 +207,8 @@ GList * XojPopplerPage::findText(const char * text) {
 	return g_list_reverse(matches);
 }
 
-XojPopplerRectangle::XojPopplerRectangle() {
+XojPopplerRectangle::XojPopplerRectangle()
+{
 	this->x1 = -1;
 	this->x2 = -1;
 	this->y1 = -1;

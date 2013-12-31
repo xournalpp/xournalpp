@@ -17,19 +17,20 @@
 
 class PageView;
 
-class PagePosition {
+class PagePosition
+{
 public:
 	PagePosition();
-	PagePosition(PageView * pv);
+	PagePosition(PageView* pv);
 	virtual ~PagePosition();
 
 public:
-	bool add(PageView * pv);
+	bool add(PageView* pv);
 	bool containsY(int y);
 	bool isYSmallerThan(int y);
 	bool isYGraterThan(int y);
 
-	PageView * getViewAt(int x, int y);
+	PageView* getViewAt(int x, int y);
 
 private:
 	XOJ_TYPE_ATTRIB;
@@ -37,7 +38,7 @@ private:
 	int y1;
 	int y2;
 
-	GList * views;
+	GList* views;
 
 	friend class PagePositionHandler;
 };

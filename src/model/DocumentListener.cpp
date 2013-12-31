@@ -1,13 +1,15 @@
 #include "DocumentListener.h"
 #include "DocumentHandler.h"
 
-DocumentListener::DocumentListener() {
+DocumentListener::DocumentListener()
+{
 	XOJ_INIT_TYPE(DocumentListener);
 
 	this->handler = NULL;
 }
 
-DocumentListener::~DocumentListener() {
+DocumentListener::~DocumentListener()
+{
 	XOJ_CHECK_TYPE(DocumentListener);
 
 	unregisterListener();
@@ -15,17 +17,20 @@ DocumentListener::~DocumentListener() {
 	XOJ_RELEASE_TYPE(DocumentListener);
 }
 
-void DocumentListener::registerListener(DocumentHandler * handler) {
+void DocumentListener::registerListener(DocumentHandler* handler)
+{
 	XOJ_CHECK_TYPE(DocumentListener);
 
 	this->handler = handler;
 	handler->addListener(this);
 }
 
-void DocumentListener::unregisterListener() {
+void DocumentListener::unregisterListener()
+{
 	XOJ_CHECK_TYPE(DocumentListener);
 
-	if (this->handler) {
+	if (this->handler)
+	{
 		this->handler->removeListener(this);
 	}
 }

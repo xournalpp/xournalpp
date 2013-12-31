@@ -25,40 +25,41 @@ class XournalView;
 class Layout;
 class SpinPageAdapter;
 
-class MainWindow: public GladeGui {
+class MainWindow: public GladeGui
+{
 public:
-	MainWindow(GladeSearchpath * gladeSearchPath, Control * control);
+	MainWindow(GladeSearchpath* gladeSearchPath, Control* control);
 	virtual ~MainWindow();
 
 public:
-	virtual void show(GtkWindow * parent);
+	virtual void show(GtkWindow* parent);
 
-	void setRecentMenu(GtkWidget * submenu);
-	void toolbarSelected(ToolbarData * d);
-	ToolbarData * getSelectedToolbar();
+	void setRecentMenu(GtkWidget* submenu);
+	void toolbarSelected(ToolbarData* d);
+	ToolbarData* getSelectedToolbar();
 	void reloadToolbars();
 
 	/**
 	 * This methods are only used internally and for toolbar configuration
 	 */
-	ToolbarData * clearToolbar();
-	void loadToolbar(ToolbarData * d);
+	ToolbarData* clearToolbar();
+	void loadToolbar(ToolbarData* d);
 
 
 	void updatePageNumbers(int page, int pagecount, int pdfpage);
 	int getCurrentLayer();
 
-	void setFontButtonFont(XojFont & font);
+	void setFontButtonFont(XojFont& font);
 	XojFont getFontButtonFont();
 
 	void setMaximized(bool maximized);
 	bool isMaximized();
 
-	XournalView * getXournal();
+	XournalView* getXournal();
 
 	void setSidebarVisible(bool visible);
 
-	Control * getControl();
+	Control* getControl();
 
 	void updateScrollbarSidebarPosition();
 
@@ -67,64 +68,69 @@ public:
 
 	void updateLayerCombobox();
 
-	SpinPageAdapter * getSpinPageNo();
-	ToolbarModel * getToolbarModel();
-	ToolMenuHandler * getToolMenuHandler();
+	SpinPageAdapter* getSpinPageNo();
+	ToolbarModel* getToolbarModel();
+	ToolMenuHandler* getToolMenuHandler();
 
 	void setControlTmpDisabled(bool disabled);
 
 	void updateToolbarMenu();
 
-	GtkWidget ** getToolbarWidgets(int & length);
-	const char * getToolbarName(GtkToolbar * toolbar);
+	GtkWidget** getToolbarWidgets(int& length);
+	const char* getToolbarName(GtkToolbar* toolbar);
 
-	Layout * getLayout();
+	Layout* getLayout();
 
 private:
 	void initToolbarAndMenu();
 	void freeToolMenu();
 
-	static void buttonCloseSidebarClicked(GtkButton * button, MainWindow * win);
+	static void buttonCloseSidebarClicked(GtkButton* button, MainWindow* win);
 
 	/**
 	 * Sidebar show / hidden
 	 */
-	static void viewShowSidebar(GtkCheckMenuItem * checkmenuitem, MainWindow * control);
+	static void viewShowSidebar(GtkCheckMenuItem* checkmenuitem,
+	                            MainWindow* control);
 
 	/**
 	 * Window close Button is pressed
 	 */
-	static bool deleteEventCallback(GtkWidget * widget, GdkEvent * event, Control * control);
+	static bool deleteEventCallback(GtkWidget* widget, GdkEvent* event,
+	                                Control* control);
 
 	/**
 	 * Callback fro window states, we ned to know if the window is fullscreen
 	 */
-	static bool windowStateEventCallback(GtkWidget * window, GdkEventWindowState * event, MainWindow * win);
+	static bool windowStateEventCallback(GtkWidget* window,
+	                                     GdkEventWindowState* event, MainWindow* win);
 
 	/**
 	 * Callback for drag & drop files
 	 */
-	static void dragDataRecived(GtkWidget * widget, GdkDragContext * dragContext, gint x, gint y, GtkSelectionData * data, guint info, guint time, MainWindow * win);
+	static void dragDataRecived(GtkWidget* widget, GdkDragContext* dragContext,
+	                            gint x, gint y, GtkSelectionData* data, guint info, guint time,
+	                            MainWindow* win);
 
 private:
 	XOJ_TYPE_ATTRIB;
 
-	Control * control;
+	Control* control;
 
-	XournalView * xournal;
+	XournalView* xournal;
 
 	// Toolbars
-	ToolMenuHandler * toolbar;
-	GSList * toolbarGroup;
-	GList * toolbarMenuData;
-	ToolbarData * selectedToolbar;
+	ToolMenuHandler* toolbar;
+	GSList* toolbarGroup;
+	GList* toolbarMenuData;
+	ToolbarData* selectedToolbar;
 	bool toolbarIntialized;
 
-	GList * toolbarMenuitems;
+	GList* toolbarMenuitems;
 
 	bool maximized;
 
-	GtkWidget ** toolbarWidgets;
+	GtkWidget** toolbarWidgets;
 
 };
 

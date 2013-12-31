@@ -16,7 +16,9 @@
 
 #include <math.h>
 
-EraseHandler::EraseHandler(UndoRedoHandler * undo, Document * doc, PageRef page, ToolHandler * handler, Redrawable * view) {
+EraseHandler::EraseHandler(UndoRedoHandler* undo, Document* doc, PageRef page,
+                           ToolHandler* handler, Redrawable* view)
+{
 	XOJ_INIT_TYPE(EraseHandler);
 
 	this->page = page;
@@ -31,10 +33,12 @@ EraseHandler::EraseHandler(UndoRedoHandler * undo, Document * doc, PageRef page,
 	this->halfEraserSize = 0;
 }
 
-EraseHandler::~EraseHandler() {
+EraseHandler::~EraseHandler()
+{
 	XOJ_CHECK_TYPE(EraseHandler);
 
-	if (this->eraseDeleteUndoAction) {
+	if (this->eraseDeleteUndoAction)
+	{
 		this->finalize();
 	}
 
@@ -44,22 +48,25 @@ EraseHandler::~EraseHandler() {
 /**
  * Handle eraser event: "Delete Stroke" and "Standard", Whiteout is not handled here
  */
-void EraseHandler::erase(double x, double y) {
+void EraseHandler::erase(double x, double y)
+{
 	XOJ_CHECK_TYPE(EraseHandler);
 
 	this->halfEraserSize = this->handler->getThickness();
 	GdkRectangle eraserRect = { x - halfEraserSize, y - halfEraserSize, halfEraserSize * 2, halfEraserSize * 2 };
 
-	Range * range = new Range(x, y);
+	Range* range = new Range(x, y);
 
-	Layer * l = page.getSelectedLayer();
+	Layer* l = page.getSelectedLayer();
 
-	ListIterator<Element *> eit = l->elementIterator();
+	ListIterator<Element*> eit = l->elementIterator();
 	eit.freeze();
-	while (eit.hasNext()) {
-		Element * e = eit.next();
-		if (e->getType() == ELEMENT_STROKE && e->intersectsArea(&eraserRect)) {
-			Stroke * s = (Stroke *) e;
+	while (eit.hasNext())
+	{
+		Element* e = eit.next();
+		if (e->getType() == ELEMENT_STROKE && e->intersectsArea(&eraserRect))
+		{
+			Stroke* s = (Stroke*) e;
 
 			eraseStroke(l, s, x, y, range);
 		}
@@ -69,53 +76,67 @@ void EraseHandler::erase(double x, double y) {
 	delete range;
 }
 
-void EraseHandler::eraseStroke(Layer * l, Stroke * s, double x, double y, Range * range) {
+void EraseHandler::eraseStroke(Layer* l, Stroke* s, double x, double y,
+                               Range* range)
+{
 	XOJ_CHECK_TYPE(EraseHandler);
 
-	if (!s->intersects(x, y, halfEraserSize)) {
+	if (!s->intersects(x, y, halfEraserSize))
+	{
 		return;
 	}
 
 	// delete complete element
-	if (this->handler->getEraserType() == ERASER_TYPE_DELETE_STROKE) {
+	if (this->handler->getEraserType() == ERASER_TYPE_DELETE_STROKE)
+	{
 		this->doc->lock();
 		int pos = l->removeElement(s, false);
 		this->doc->unlock();
 
-		if (pos == -1) {
+		if (pos == -1)
+		{
 			return;
 		}
 		range->addPoint(s->getX(), s->getY());
-		range->addPoint(s->getX() + s->getElementWidth(), s->getY() + s->getElementHeight());
+		range->addPoint(s->getX() + s->getElementWidth(),
+		                s->getY() + s->getElementHeight());
 
 		//removed the if statement - this prevents us from putting multiple elements into a
 		//stroke erase operation, but it also prevents the crashing and layer issues!
-//		if (!this->eraseDeleteUndoAction) {
-			this->eraseDeleteUndoAction = new DeleteUndoAction(this->page, this->view, true);
-			this->undo->addUndoAction(this->eraseDeleteUndoAction);
-//		}
+		//		if (!this->eraseDeleteUndoAction) {
+		this->eraseDeleteUndoAction = new DeleteUndoAction(this->page, this->view,
+		                                                   true);
+		this->undo->addUndoAction(this->eraseDeleteUndoAction);
+		//		}
 
-			//TODO: see whether or not I can comment this out. I forget what it's doing.
+		//TODO: see whether or not I can comment this out. I forget what it's doing.
 		this->eraseDeleteUndoAction->addElement(l, s, pos);
-	} else { // Default eraser
+	}
+	else     // Default eraser
+	{
 		int pos = l->indexOf(s);
-		if (pos == -1) {
+		if (pos == -1)
+		{
 			return;
 		}
 
-		if (eraseUndoAction == NULL) {
+		if (eraseUndoAction == NULL)
+		{
 			eraseUndoAction = new EraseUndoAction(this->page, this->view);
 			this->undo->addUndoAction(eraseUndoAction);
 		}
 
-		EraseableStroke * eraseable = NULL;
-		if (s->getEraseable() == NULL) {
+		EraseableStroke* eraseable = NULL;
+		if (s->getEraseable() == NULL)
+		{
 			doc->lock();
 			eraseable = new EraseableStroke(s);
 			s->setEraseable(eraseable);
 			doc->unlock();
 			eraseUndoAction->addOriginal(l, s, pos);
-		} else {
+		}
+		else
+		{
 			eraseable = s->getEraseable();
 		}
 
@@ -123,10 +144,12 @@ void EraseHandler::eraseStroke(Layer * l, Stroke * s, double x, double y, Range 
 	}
 }
 
-void EraseHandler::finalize() {
+void EraseHandler::finalize()
+{
 	XOJ_CHECK_TYPE(EraseHandler);
 
-	if (this->eraseUndoAction) {
+	if (this->eraseUndoAction)
+	{
 		this->eraseUndoAction->finalize();
 		this->eraseUndoAction = NULL;
 	}

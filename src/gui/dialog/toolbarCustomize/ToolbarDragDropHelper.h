@@ -14,17 +14,18 @@
 
 #include <gtk/gtk.h>
 
-class ToolbarDragDropHelper {
+class ToolbarDragDropHelper
+{
 private:
 	ToolbarDragDropHelper();
 	virtual ~ToolbarDragDropHelper();
 
 public:
-	static void dragDestAddToolbar(GtkWidget * target);
-	static void dragSourceAddToolbar(GtkWidget * widget);
+	static void dragDestAddToolbar(GtkWidget* target);
+	static void dragSourceAddToolbar(GtkWidget* widget);
 
-	static GdkPixbuf * getImagePixbuf(GtkImage * image);
-	static GdkPixbuf * getColorImage(int color);
+	static GdkPixbuf* getImagePixbuf(GtkImage* image);
+	static GdkPixbuf* getColorImage(int color);
 
 public:
 	static GdkAtom atomToolItem;

@@ -24,13 +24,15 @@
 
 class Scrollbar;
 
-class ScrollbarListener {
+class ScrollbarListener
+{
 public:
-	virtual void scrolled(Scrollbar * scrollbar) = 0;
+	virtual void scrolled(Scrollbar* scrollbar) = 0;
 };
 
 
-class Scrollbar {
+class Scrollbar
+{
 public:
 	Scrollbar(bool horizontal);
 	~Scrollbar();
@@ -53,20 +55,20 @@ public:
 
 	void ensureAreaIsVisible(int lower, int upper);
 
-	void addListener(ScrollbarListener * listener);
-	void removeScrollbarListener(ScrollbarListener * listener);
+	void addListener(ScrollbarListener* listener);
+	void removeScrollbarListener(ScrollbarListener* listener);
 
-	GtkWidget * getWidget();
+	GtkWidget* getWidget();
 
 private:
-	static void scrolled(GtkAdjustment * adjustment, Scrollbar * scrollbar);
+	static void scrolled(GtkAdjustment* adjustment, Scrollbar* scrollbar);
 
 private:
 	XOJ_TYPE_ATTRIB;
 
-	GtkWidget * scrollbar;
-	GtkAdjustment * adj;
-	GList * listener;
+	GtkWidget* scrollbar;
+	GtkAdjustment* adj;
+	GList* listener;
 
 	int value;
 };

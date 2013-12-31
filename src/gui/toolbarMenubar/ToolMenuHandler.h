@@ -32,74 +32,77 @@ class GladeGui;
 class ToolbarModel;
 class SpinPageAdapter;
 
-class ToolMenuHandler {
+class ToolMenuHandler
+{
 public:
-	ToolMenuHandler(ActionHandler * listener, ZoomControl * zoom, GladeGui * gui, ToolHandler * toolHandler, GtkWindow * parent);
+	ToolMenuHandler(ActionHandler* listener, ZoomControl* zoom, GladeGui* gui,
+	                ToolHandler* toolHandler, GtkWindow* parent);
 	virtual ~ToolMenuHandler();
 
 public:
 	void freeDynamicToolbarItems();
-	void unloadToolbar(GtkWidget * tBunload);
+	void unloadToolbar(GtkWidget* tBunload);
 
-	void load(ToolbarData * d, GtkWidget * toolbar, const char * toolbarName, bool horizontal);
+	void load(ToolbarData* d, GtkWidget* toolbar, const char* toolbarName,
+	          bool horizontal);
 
-	void registerMenupoint(GtkWidget * widget, ActionType type);
-	void registerMenupoint(GtkWidget * widget, ActionType type, ActionGroup group);
+	void registerMenupoint(GtkWidget* widget, ActionType type);
+	void registerMenupoint(GtkWidget* widget, ActionType type, ActionGroup group);
 
 	void initToolItems();
 
 	void setUndoDescription(String description);
 	void setRedoDescription(String description);
 
-	SpinPageAdapter * getPageSpinner();
+	SpinPageAdapter* getPageSpinner();
 	void setPageText(String text);
 
 	int getSelectedLayer();
 	void setLayerCount(int count, int selected);
 
-	void setFontButtonFont(XojFont & font);
+	void setFontButtonFont(XojFont& font);
 	XojFont getFontButtonFont();
 
 	void showFontSelectionDlg();
 
 	void setTmpDisabled(bool disabled);
 
-	void removeColorToolItem(AbstractToolItem * it);
-	void addColorToolItem(AbstractToolItem * it);
+	void removeColorToolItem(AbstractToolItem* it);
+	void addColorToolItem(AbstractToolItem* it);
 
-	ToolbarModel * getModel();
+	ToolbarModel* getModel();
 
-	ListIterator<AbstractToolItem *> getToolItems();
+	ListIterator<AbstractToolItem*> getToolItems();
 
 	bool isColorInUse(int color);
 
 private:
-	void addToolItem(AbstractToolItem * it);
+	void addToolItem(AbstractToolItem* it);
 
 	void initEraserToolItem();
 
 private:
 	XOJ_TYPE_ATTRIB;
 
-	GList * toolbarColorItems;
-	GtkWindow * parent;
+	GList* toolbarColorItems;
+	GtkWindow* parent;
 
-	GList * toolItems;
-	GList * menuItems;
+	GList* toolItems;
+	GList* menuItems;
 
-	ToolButton * undoButton;
-	ToolButton * redoButton;
+	ToolButton* undoButton;
+	ToolButton* redoButton;
 
-	ToolPageSpinner * toolPageSpinner;
-	ToolPageLayer * toolPageLayer;
-	FontButton * fontButton;
+	ToolPageSpinner* toolPageSpinner;
+	ToolPageLayer* toolPageLayer;
+	FontButton* fontButton;
 
-	ActionHandler * listener;
-	ZoomControl * zoom;
-	GladeGui * gui;
-	ToolHandler * toolHandler;
+	ActionHandler* listener;
+	ZoomControl* zoom;
+	GladeGui* gui;
+	ToolHandler* toolHandler;
 
-	ToolbarModel * tbModel;
+	ToolbarModel* tbModel;
 };
 
 #endif /* EDITABLETOOLBAR_H_ */

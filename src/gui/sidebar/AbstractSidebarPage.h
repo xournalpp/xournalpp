@@ -20,9 +20,10 @@
 
 class Control;
 
-class AbstractSidebarPage : public DocumentListener {
+class AbstractSidebarPage : public DocumentListener
+{
 public:
-	AbstractSidebarPage(Control * control);
+	AbstractSidebarPage(Control* control);
 	virtual ~AbstractSidebarPage();
 
 public:
@@ -40,12 +41,12 @@ public:
 	/**
 	 * The name of this sidebar page
 	 */
-	virtual const char * getName() = 0;
+	virtual const char* getName() = 0;
 
 	/**
 	 * The name of this sidebar page
 	 */
-	virtual const char * getIconName() = 0;
+	virtual const char* getIconName() = 0;
 
 	/**
 	 * If this sidebar page has data for the current document, e.g. if there are bookmarks or not
@@ -55,7 +56,7 @@ public:
 	/**
 	 * Gets the Widget to display
 	 */
-	virtual GtkWidget * getWidget() = 0;
+	virtual GtkWidget* getWidget() = 0;
 
 	/**
 	 * Temporary disable Sidebar (e.g. while saving)
@@ -70,7 +71,7 @@ public:
 	/**
 	 * Returns the Application controller
 	 */
-	Control * getControl();
+	Control* getControl();
 
 private:
 	XOJ_TYPE_ATTRIB;
@@ -79,13 +80,13 @@ protected:
 	/**
 	 * The Control of the Application
 	 */
-	Control * control;
+	Control* control;
 
 public:
 	/**
 	 * The Sidebar button
 	 */
-	GtkToolItem * tabButton;
+	GtkToolItem* tabButton;
 
 };
 

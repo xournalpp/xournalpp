@@ -13,10 +13,12 @@
 #include <CrashHandler.h>
 #include <Stacktrace.h>
 
-int main(int argc, char * argv[]) {
+int main(int argc, char* argv[])
+{
 	// init crash handler
 	installCrashHandlers();
-	if (argc) {
+	if (argc)
+	{
 		// Filename is needed to get backtracke with filenumbers
 		Stacktrace::setExename(argv[0]);
 	}
@@ -25,7 +27,7 @@ int main(int argc, char * argv[]) {
 	Log::initlog();
 #endif
 
-	XournalMain * main = new XournalMain();
+	XournalMain* main = new XournalMain();
 	int result = main->run(argc, argv);
 	delete main;
 

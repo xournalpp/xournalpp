@@ -18,26 +18,27 @@
 #include "PdfWriter.h"
 #include "PdfXRef.h"
 
-class PdfObjectWriter {
+class PdfObjectWriter
+{
 public:
-	PdfObjectWriter(PdfWriter * writer, PdfXRef * xref);
+	PdfObjectWriter(PdfWriter* writer, PdfXRef* xref);
 	virtual ~PdfObjectWriter();
 
 public:
-	void writeObject(Object * obj, XojPopplerDocument doc);
-	void writeString(GooString * s);
-	void writeDictionnary(Dict * dict, XojPopplerDocument doc);
-	void writeRawStream(Stream * str, XojPopplerDocument doc);
-	void writeStream(Stream * str);
+	void writeObject(Object* obj, XojPopplerDocument doc);
+	void writeString(GooString* s);
+	void writeDictionnary(Dict* dict, XojPopplerDocument doc);
+	void writeRawStream(Stream* str, XojPopplerDocument doc);
+	void writeStream(Stream* str);
 	void writeCopiedObjects();
 
 private:
 	XOJ_TYPE_ATTRIB;
 
-	PdfWriter * writer;
-	PdfXRef * xref;
+	PdfWriter* writer;
+	PdfXRef* xref;
 
-	GHashTable * updatedReferenced;
+	GHashTable* updatedReferenced;
 };
 
 #endif /* __PDFOBJECTWRITER_H__ */

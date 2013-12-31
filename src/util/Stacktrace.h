@@ -14,16 +14,17 @@
 
 #include <stdio.h>
 
-class Stacktrace {
+class Stacktrace
+{
 private:
 	Stacktrace();
 	virtual ~Stacktrace();
 
 public:
-	static void setExename(const char * name);
+	static void setExename(const char* name);
 
 	static void printStracktrace();
-	static void printStracktrace(FILE * fp);
+	static void printStracktrace(FILE* fp);
 };
 
 #endif /* __STACKTRACE_H__ */

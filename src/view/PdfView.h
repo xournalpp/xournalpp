@@ -16,13 +16,15 @@
 #include <cairo/cairo.h>
 #include "../control/PdfCache.h"
 
-class PdfView {
+class PdfView
+{
 private:
 	PdfView();
 	virtual ~PdfView();
 
 public:
-	static void drawPage(PdfCache * cache, XojPopplerPage * popplerPage, cairo_t * cr, double zoom, double width, double height, bool forPrinting = false);
+	static void drawPage(PdfCache* cache, XojPopplerPage* popplerPage, cairo_t* cr,
+	                     double zoom, double width, double height, bool forPrinting = false);
 };
 
 #endif /* __PDFVIEW_H__ */

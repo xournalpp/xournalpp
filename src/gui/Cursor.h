@@ -19,9 +19,10 @@
 
 class Control;
 
-class Cursor {
+class Cursor
+{
 public:
-	Cursor(Control * control);
+	Cursor(Control* control);
 	virtual ~Cursor();
 
 	void setCursorBusy(bool busy);
@@ -34,13 +35,13 @@ public:
 	void setInsidePage(bool insidePage);
 
 private:
-	GdkCursor * getPenCursor();
+	GdkCursor* getPenCursor();
 
 private:
 	XOJ_TYPE_ATTRIB;
 
 
-	Control * control;
+	Control* control;
 	bool busy;
 	bool insidePage;
 	CursorSelectionType selectionType;

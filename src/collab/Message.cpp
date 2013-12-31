@@ -23,7 +23,9 @@ using namespace std;
 //remember to update when changing protocol
 #define MESSAGE_SIZE 5 //number of fragments in message
 
-Message::Message(int clientId, int id, int cmd, int page, GString msg) { //Received decoded msg
+Message::Message(int clientId, int id, int cmd, int page,
+                 GString msg)   //Received decoded msg
+{
 	this->clientId = clientId;
 	this->id = id;
 	this->cmd = cmd;
@@ -32,8 +34,10 @@ Message::Message(int clientId, int id, int cmd, int page, GString msg) { //Recei
 
 }
 
-Message::Message(const GString ecdMsg) { //Received encoded msg
-	char ** fragments = g_strsplit(ecdMsg.str, ":", MESSAGE_SIZE); //allocates memory!
+Message::Message(const GString ecdMsg)   //Received encoded msg
+{
+	char** fragments = g_strsplit(ecdMsg.str, ":",
+	                              MESSAGE_SIZE);  //allocates memory!
 
 	clientId = atoi(fragments[0]);
 	id = atoi(fragments[1]);
@@ -44,34 +48,41 @@ Message::Message(const GString ecdMsg) { //Received encoded msg
 	g_strfreev(fragments);
 }
 
-Message::~Message() {
+Message::~Message()
+{
 	g_free(msg);
 }
 
-gchar * Message::getEncoded() {
+gchar* Message::getEncoded()
+{
 	ostringstream s;
 
 	s << clientId << ":" << id << ":" << cmd << ":" << page << ":" << msg;
 
-	return (gchar *)s.str().c_str();
+	return (gchar*)s.str().c_str();
 }
 
-int Message::getClientId() {
+int Message::getClientId()
+{
 	return clientId;
 }
 
-int Message::getId() {
+int Message::getId()
+{
 	return id;
 }
 
-int Message::getCmd(){
+int Message::getCmd()
+{
 	return cmd;
 }
 
-int Message::getPage(){
+int Message::getPage()
+{
 	return page;
 }
 
-gchar * Message::getMsg() {
+gchar* Message::getMsg()
+{
 	return msg;
 }

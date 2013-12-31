@@ -17,21 +17,22 @@
 class Control;
 class Layer;
 
-class Collaboration : public LayerListener {
+class Collaboration : public LayerListener
+{
 public:
-	Collaboration(Control * control);
+	Collaboration(Control* control);
 	virtual ~Collaboration();
 
 public:
 	void start();
 
-	virtual void layerDeletedCb(Layer * layer);
+	virtual void layerDeletedCb(Layer* layer);
 
-	virtual void elementAdded(Element * e, Layer * layer);
-	virtual void elementRemoved(Element * e, Layer * layer);
+	virtual void elementAdded(Element* e, Layer* layer);
+	virtual void elementRemoved(Element* e, Layer* layer);
 
 private:
-	Control * control;
+	Control* control;
 };
 
 #endif /* __COLLABORATION_H__ */

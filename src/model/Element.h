@@ -16,16 +16,19 @@
 #include <serializing/Serializeable.h>
 #include <XournalType.h>
 
-enum ElementType {
-	ELEMENT_STROKE = 1, ELEMENT_IMAGE, ELEMENT_TEXIMAGE, ELEMENT_TEXT
+enum ElementType
+{
+    ELEMENT_STROKE = 1, ELEMENT_IMAGE, ELEMENT_TEXIMAGE, ELEMENT_TEXT
 };
 
-class ShapeContainer {
+class ShapeContainer
+{
 public:
 	virtual bool contains(double x, double y) = 0;
 };
 
-class Element: public Serializeable {
+class Element: public Serializeable
+{
 protected:
 	Element(ElementType type);
 
@@ -49,17 +52,17 @@ public:
 	double getElementWidth();
 	double getElementHeight();
 
-	virtual bool intersectsArea(const GdkRectangle * src);
+	virtual bool intersectsArea(const GdkRectangle* src);
 	virtual bool intersectsArea(double x, double y, double width, double height);
 
-	virtual bool isInSelection(ShapeContainer * container);
+	virtual bool isInSelection(ShapeContainer* container);
 
 	virtual bool rescaleOnlyAspectRatio();
 
 	/**
 	 * Take 1:1 copy of this element
 	 */
-	virtual Element * clone() = 0;
+	virtual Element* clone() = 0;
 
 private:
 	XOJ_TYPE_ATTRIB;
@@ -74,8 +77,8 @@ protected:
 	double width;
 	double height;
 
-	void serializeElement(ObjectOutputStream & out);
-	void readSerializedElement(ObjectInputStream & in) throw (InputStreamException);
+	void serializeElement(ObjectOutputStream& out);
+	void readSerializedElement(ObjectInputStream& in) throw (InputStreamException);
 
 protected:
 	// If the size has been calculated

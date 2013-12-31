@@ -16,13 +16,15 @@
 #include "../../control/settings/Settings.h"
 #include <XournalType.h>
 
-class PdfPagesDialog: public GladeGui {
+class PdfPagesDialog: public GladeGui
+{
 public:
-	PdfPagesDialog(GladeSearchpath * gladeSearchPath, Document * doc, Settings * settings);
+	PdfPagesDialog(GladeSearchpath* gladeSearchPath, Document* doc,
+	               Settings* settings);
 	virtual ~PdfPagesDialog();
 
 public:
-	virtual void show(GtkWindow * parent);
+	virtual void show(GtkWindow* parent);
 
 	void setBackgroundWhite();
 	double getZoom();
@@ -33,15 +35,16 @@ public:
 
 	int getSelectedPage();
 
-	Settings * getSettings();
+	Settings* getSettings();
 
 private:
 	void layout();
 	void updateOkButton();
 
-	static void sizeAllocate(GtkWidget * widget, GtkRequisition * requisition, PdfPagesDialog * dlg);
-	static void onlyNotUsedCallback(GtkToggleButton * tb, PdfPagesDialog * dlg);
-	static void okButtonCallback(GtkButton * button, PdfPagesDialog * dlg);
+	static void sizeAllocate(GtkWidget* widget, GtkRequisition* requisition,
+	                         PdfPagesDialog* dlg);
+	static void onlyNotUsedCallback(GtkToggleButton* tb, PdfPagesDialog* dlg);
+	static void okButtonCallback(GtkButton* button, PdfPagesDialog* dlg);
 
 private:
 	XOJ_TYPE_ATTRIB;
@@ -51,16 +54,16 @@ private:
 	int selected;
 	int lastWidth;
 
-	Settings * settings;
+	Settings* settings;
 
 	int selectedPage;
 
-	GList * pages;
-	bool * usedPages;
+	GList* pages;
+	bool* usedPages;
 	int count;
 
-	GtkWidget * scrollPreview;
-	GtkWidget * widget;
+	GtkWidget* scrollPreview;
+	GtkWidget* widget;
 };
 
 #endif /* __PDFPAGESDIALOG_H__ */

@@ -42,17 +42,18 @@ class ToolbarDragDropHandler;
 
 
 class Control: public ActionHandler,
-		public ToolListener,
-		public DocumentHandler,
-		public RecentManagerListener,
-		public UndoRedoListener,
-		public ClipboardListener,
-		public ProgressListener {
+	public ToolListener,
+	public DocumentHandler,
+	public RecentManagerListener,
+	public UndoRedoListener,
+	public ClipboardListener,
+	public ProgressListener
+{
 public:
-	Control(GladeSearchpath * gladeSearchPath);
+	Control(GladeSearchpath* gladeSearchPath);
 	virtual ~Control();
 
-	void initWindow(MainWindow * win);
+	void initWindow(MainWindow* win);
 public:
 	// Menu File
 	bool newFile();
@@ -77,7 +78,9 @@ public:
 	// Menu Help
 	void showAbout();
 
-	virtual void actionPerformed(ActionType type, ActionGroup group, GdkEvent *event, GtkMenuItem *menuitem, GtkToolButton *toolbutton, bool enabled);
+	virtual void actionPerformed(ActionType type, ActionGroup group,
+	                             GdkEvent* event, GtkMenuItem* menuitem, GtkToolButton* toolbutton,
+	                             bool enabled);
 
 	virtual void toolColorChanged();
 	virtual void setCustomColorSelected();
@@ -89,7 +92,7 @@ public:
 
 	void updatePageNumbers(int page, int pdfPage);
 
-	virtual void fileOpened(const char * uri);
+	virtual void fileOpened(const char* uri);
 
 	/**
 	 * Save current state (selected tool etc.)
@@ -125,7 +128,7 @@ public:
 
 	static String getFilename(String uri);
 
-	bool searchTextOnPage(const char * text, int p, int * occures, double * top);
+	bool searchTextOnPage(const char* text, int p, int* occures, double* top);
 
 	/**
 	 * Fire page selected, but first check if the page Number is valid
@@ -152,40 +155,40 @@ public:
 
 	void enableAutosave(bool enable);
 
-	void getDefaultPagesize(double & width, double & height);
+	void getDefaultPagesize(double& width, double& height);
 
 	void clearSelectionEndText();
 
 	void setToolSize(ToolSize size);
 
-	TextEditor * getTextEditor();
+	TextEditor* getTextEditor();
 
-	GladeSearchpath * getGladeSearchPath();
+	GladeSearchpath* getGladeSearchPath();
 
 	void disableSidebarTmp(bool disabled);
 
-	XournalScheduler * getScheduler();
+	XournalScheduler* getScheduler();
 
-	void block(const char * name);
+	void block(const char* name);
 	void unblock();
 
 	void renameLastAutosaveFile();
 	void deleteLastAutosaveFile(String newAutosaveFile);
-	void setClipboardHandlerSelection(EditSelection * selection);
+	void setClipboardHandlerSelection(EditSelection* selection);
 
-	MetadataManager * getMetadataManager();
-	Settings * getSettings();
-	ToolHandler * getToolHandler();
-	ZoomControl * getZoomControl();
-	Document * getDocument();
-	UndoRedoHandler * getUndoRedoHandler();
-	MainWindow * getWindow();
-	RecentManager * getRecentManager();
-	ScrollHandler * getScrollHandler();
+	MetadataManager* getMetadataManager();
+	Settings* getSettings();
+	ToolHandler* getToolHandler();
+	ZoomControl* getZoomControl();
+	Document* getDocument();
+	UndoRedoHandler* getUndoRedoHandler();
+	MainWindow* getWindow();
+	RecentManager* getRecentManager();
+	ScrollHandler* getScrollHandler();
 	PageRef getCurrentPage();
 	int getCurrentPageNo();
-	Cursor * getCursor();
-	Sidebar * getSidebar();
+	Cursor* getCursor();
+	Sidebar* getSidebar();
 
 	bool copy();
 	bool cut();
@@ -208,15 +211,16 @@ public:
 	virtual void clipboardCutCopyEnabled(bool enabled);
 	virtual void clipboardPasteEnabled(bool enabled);
 	virtual void clipboardPasteText(String text);
-	virtual void clipboardPasteImage(GdkPixbuf * img);
-	virtual void clipboardPasteTex(GdkPixbuf * img, const char * text, int textLength);
-	virtual void clipboardPasteXournal(ObjectInputStream & in);
+	virtual void clipboardPasteImage(GdkPixbuf* img);
+	virtual void clipboardPasteTex(GdkPixbuf* img, const char* text,
+	                               int textLength);
+	virtual void clipboardPasteXournal(ObjectInputStream& in);
 	virtual void deleteSelection();
 
-	void clipboardPaste(Element * e);
+	void clipboardPaste(Element* e);
 
 protected:
-	static bool invokeCallback(CallbackData * cb);
+	static bool invokeCallback(CallbackData* cb);
 	void invokeLater(ActionType type);
 	void zoomFit();
 
@@ -228,8 +232,8 @@ protected:
 	void penSizeChanged();
 	void hilighterSizeChanged();
 
-	static bool checkChangedDocument(Control * control);
-	static bool autosaveCallback(Control * control);
+	static bool checkChangedDocument(Control* control);
+	static bool autosaveCallback(Control* control);
 
 	void fontChanged();
 
@@ -237,36 +241,36 @@ private:
 	XOJ_TYPE_ATTRIB;
 
 
-	RecentManager * recent;
-	UndoRedoHandler * undoRedo;
-	ZoomControl * zoom;
+	RecentManager* recent;
+	UndoRedoHandler* undoRedo;
+	ZoomControl* zoom;
 	bool fullscreen;
 
-	Settings * settings;
-	MainWindow * win;
+	Settings* settings;
+	MainWindow* win;
 
-	Document * doc;
+	Document* doc;
 
-	Sidebar * sidebar;
-	SearchBar * searchBar;
+	Sidebar* sidebar;
+	SearchBar* searchBar;
 
-	ToolHandler * toolHandler;
+	ToolHandler* toolHandler;
 
 	ActionType lastAction;
 	ActionGroup lastGroup;
 	bool lastEnabled;
 
-	GList * hiddenFullscreenWidgets;
+	GList* hiddenFullscreenWidgets;
 	bool sidebarHidden;
 
-	ScrollHandler * scrollHandler;
+	ScrollHandler* scrollHandler;
 
-	ToolbarDragDropHandler * dragDropHandler;
+	ToolbarDragDropHandler* dragDropHandler;
 
 	/**
 	 * The cursor handler
 	 */
-	Cursor * cursor;
+	Cursor* cursor;
 
 	/**
 	 * Timeout id: the timeout watches the changes and actualizes the previews from time to time
@@ -276,12 +280,12 @@ private:
 	/**
 	 * The pages wihch has changed since the last update (for preview update)
 	 */
-	GList * changedPages;
+	GList* changedPages;
 
 	/**
 	 * Our clipboard abstraction
 	 */
-	ClipboardHandler * clipboardHandler;
+	ClipboardHandler* clipboardHandler;
 
 	/**
 	 * The autosave handler ID
@@ -295,32 +299,34 @@ private:
 	double defaultWidth;
 	double defaultHeight;
 
-	XournalScheduler * scheduler;
+	XournalScheduler* scheduler;
 
 	/**
 	 * State / Blocking attributes
 	 */
-	GtkWidget * statusbar;
-	GtkLabel * lbState;
-	GtkProgressBar * pgState;
+	GtkWidget* statusbar;
+	GtkLabel* lbState;
+	GtkProgressBar* pgState;
 	int maxState;
 	bool isBlocking;
 
-	GladeSearchpath * gladeSearchPath;
+	GladeSearchpath* gladeSearchPath;
 
-	MetadataManager * metadata;
+	MetadataManager* metadata;
 
 };
 
-class CallbackData {
+class CallbackData
+{
 public:
-	CallbackData(Control * control, ActionType type) {
+	CallbackData(Control* control, ActionType type)
+	{
 		this->control = control;
 		this->type = type;
 	}
 
 	ActionType type;
-	Control * control;
+	Control* control;
 };
 
 #endif /* __CONTROL_H__ */

@@ -17,16 +17,18 @@
 
 #include "../settings/Settings.h"
 
-class XojOpenDlg {
+class XojOpenDlg
+{
 private:
 	XojOpenDlg();
 	virtual ~XojOpenDlg();
 
 public:
-	static String showOpenDialog(GtkWindow * win, Settings * settings, bool pdf, bool & attachPdf);
+	static String showOpenDialog(GtkWindow* win, Settings* settings, bool pdf,
+	                             bool& attachPdf);
 
 private:
-	static void updatePreviewCallback(GtkFileChooser * fileChooser, void * userData);
+	static void updatePreviewCallback(GtkFileChooser* fileChooser, void* userData);
 };
 
 #endif /* __XOJOPENDLG_H__ */

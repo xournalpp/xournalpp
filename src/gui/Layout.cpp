@@ -5,7 +5,8 @@
 #include "pageposition/PagePositionHandler.h"
 #include "widgets/XournalWidget.h"
 
-Layout::Layout(XournalView * view) {
+Layout::Layout(XournalView* view)
+{
 	XOJ_INIT_TYPE(Layout);
 
 	this->scrollVertical = new Scrollbar(false);
@@ -22,7 +23,8 @@ Layout::Layout(XournalView * view) {
 	this->view = view;
 }
 
-Layout::~Layout() {
+Layout::~Layout()
+{
 	XOJ_RELEASE_TYPE(Layout);
 
 	delete this->scrollHorizontal;
@@ -32,7 +34,8 @@ Layout::~Layout() {
 	this->view = NULL;
 }
 
-void Layout::scrolled(Scrollbar * scrollbar) {
+void Layout::scrolled(Scrollbar* scrollbar)
+{
 	updateRepaintWidget();
 	checkSelectedPage();
 }
@@ -40,7 +43,8 @@ void Layout::scrolled(Scrollbar * scrollbar) {
 /**
  * Check which page should be selected
  */
-void Layout::checkSelectedPage() {
+void Layout::checkSelectedPage()
+{
 
 	GtkAllocation allocation = { 0 };
 	gtk_widget_get_allocation(this->view->getWidget(), &allocation);
@@ -48,16 +52,21 @@ void Layout::checkSelectedPage() {
 	int scrollY = this->scrollVertical->getValue();
 	int scrollX = this->scrollHorizontal->getValue();
 
-	Control * control = this->view->getControl();
+	Control* control = this->view->getControl();
 
 	int viewHeight = allocation.height;
 	int viewWidth = allocation.width;
 	bool twoPages = control->getSettings()->isShowTwoPages();
 
-	if (scrollY < 1) {
-		if (twoPages && this->view->viewPagesLen > 1 && this->view->viewPages[1]->isSelected()) {
+	if (scrollY < 1)
+	{
+		if (twoPages && this->view->viewPagesLen > 1 &&
+		    this->view->viewPages[1]->isSelected())
+		{
 			// page 2 already selected
-		} else {
+		}
+		else
+		{
 			control->firePageSelected(0);
 		}
 		return;
@@ -69,40 +78,48 @@ void Layout::checkSelectedPage() {
 	// next four pages are not marked as invisible,
 	// because usually you scroll forward
 
-	for (int page = 0; page < this->view->viewPagesLen; page++) {
-		PageView * p = this->view->viewPages[page];
+	for (int page = 0; page < this->view->viewPagesLen; page++)
+	{
+		PageView* p = this->view->viewPages[page];
 		int y = p->getY();
 		int x = p->getX();
 
 		int pageHeight = p->getDisplayHeight();
 		int pageWidth = p->getDisplayWidth();
 
-		if (y > scrollY + viewHeight) {
+		if (y > scrollY + viewHeight)
+		{
 			p->setIsVisibel(false);
-			for (; page < this->view->viewPagesLen; page++) {
+			for (; page < this->view->viewPagesLen; page++)
+			{
 				p = this->view->viewPages[page];
 				p->setIsVisibel(false);
 			}
 
 			break;
 		}
-		if (y + pageHeight >= scrollY) {
+		if (y + pageHeight >= scrollY)
+		{
 			int startY = 0;
 			int endY = pageHeight;
-			if (y <= scrollY) {
+			if (y <= scrollY)
+			{
 				startY = scrollY - y;
 			}
-			if (y + pageHeight > scrollY + viewHeight) {
+			if (y + pageHeight > scrollY + viewHeight)
+			{
 				endY = pageHeight - ((y + pageHeight) - (scrollY + viewHeight));
 			}
 
 			int startX = 0;
 			int endX = pageWidth;
 
-			if (x <= scrollX) {
+			if (x <= scrollX)
+			{
 				startX = scrollX - x;
 			}
-			if (x + pageWidth > scrollX + viewWidth) {
+			if (x + pageWidth > scrollX + viewWidth)
+			{
 				endX = pageWidth - ((x + pageWidth) - (scrollX + viewWidth));
 			}
 
@@ -110,27 +127,34 @@ void Layout::checkSelectedPage() {
 			double percent = ((double) (endY - startY)) / ((double) pageHeight);
 			percent *= ((double) (endX - startX)) / ((double) pageWidth);
 
-			if (percent > mostPagePercent) {
+			if (percent > mostPagePercent)
+			{
 				mostPagePercent = percent;
 				mostPageNr = page;
 			}
 
 			p->setIsVisibel(true);
-		} else {
+		}
+		else
+		{
 			p->setIsVisibel(false);
 		}
 	}
 
-	if (twoPages && mostPageNr < this->view->viewPagesLen - 1) {
+	if (twoPages && mostPageNr < this->view->viewPagesLen - 1)
+	{
 		int y1 = this->view->viewPages[mostPageNr]->getY();
 		int y2 = this->view->viewPages[mostPageNr + 1]->getY();
 
-		if (y1 != y2 || !this->view->viewPages[mostPageNr + 1]->isSelected()) {
+		if (y1 != y2 || !this->view->viewPages[mostPageNr + 1]->isSelected())
+		{
 			// if the second page is selected DON'T select the first page.
 			// Only select the first page if none is selected
 			control->firePageSelected(mostPageNr);
 		}
-	} else {
+	}
+	else
+	{
 		control->firePageSelected(mostPageNr);
 	}
 }
@@ -145,34 +169,39 @@ const int XOURNAL_PADDING = 10;
  */
 const int XOURNAL_PADDING_BETWEEN = 15;
 
-void Layout::layoutPages() {
+void Layout::layoutPages()
+{
 	XOJ_CHECK_TYPE(Layout);
 
 	int y = 0;
 
 	int len = this->view->viewPagesLen;
 
-	Settings * settings = this->view->getControl()->getSettings();
+	Settings* settings = this->view->getControl()->getSettings();
 	bool allowScrollOutsideThePage = settings->isAllowScrollOutsideThePage();
 	bool dualPage = settings->isShowTwoPages();
 
 	int size[2] = { 0, 0 };
 
 	// we need at least 2 page for dual page view
-	if (len < 2) {
+	if (len < 2)
+	{
 		dualPage = false;
 	}
 
 	// calculate maximum size
-	for (int i = 0; i < len; i++) {
-		PageView * v = this->view->viewPages[i];
+	for (int i = 0; i < len; i++)
+	{
+		PageView* v = this->view->viewPages[i];
 
 		int rId = 0;
-		if (dualPage && i % 2 == 1) {
+		if (dualPage && i % 2 == 1)
+		{
 			rId = 1;
 		}
 
-		if (size[rId] < v->getDisplayWidth()) {
+		if (size[rId] < v->getDisplayWidth())
+		{
 			size[rId] = v->getDisplayWidth();
 		}
 	}
@@ -186,9 +215,12 @@ void Layout::layoutPages() {
 	y += XOURNAL_PADDING;
 
 	int width = XOURNAL_PADDING + size[0];
-	if (dualPage) {
+	if (dualPage)
+	{
 		width += XOURNAL_PADDING_BETWEEN + size[1] + XOURNAL_PADDING;
-	} else {
+	}
+	else
+	{
 		width += XOURNAL_PADDING;
 	}
 
@@ -199,25 +231,32 @@ void Layout::layoutPages() {
 	marginLeft = MAX(marginLeft, 10);
 	marginRight = MAX(marginRight, 10);
 
-	if (allowScrollOutsideThePage) {
+	if (allowScrollOutsideThePage)
+	{
 		marginLeft += size[0] / 2;
-		if (dualPage) {
+		if (dualPage)
+		{
 			marginRight += size[1] / 2;
-		} else {
+		}
+		else
+		{
 			marginRight += size[0] / 2;
 		}
-		if (len > 0) {
+		if (len > 0)
+		{
 			marginTop += this->view->viewPages[0]->getDisplayHeight() / 2;
 			marginBottom += this->view->viewPages[len - 1]->getDisplayHeight() / 2;
 		}
 	}
 
-	for (int i = 0; i < len; i++) {
-		PageView * v = this->view->viewPages[i];
+	for (int i = 0; i < len; i++)
+	{
+		PageView* v = this->view->viewPages[i];
 
 		int height = 0;
 
-		if (dualPage) {
+		if (dualPage)
+		{
 			/**
 			 * Align the left page right and the right page left, like this
 			 * (first page at right)
@@ -226,7 +265,8 @@ void Layout::layoutPages() {
 			 *  [==] [=]
 			 * [===] [===]
 			 */
-			if (i == 0) {
+			if (i == 0)
+			{
 				int x = XOURNAL_PADDING + size[0] + XOURNAL_PADDING_BETWEEN;
 
 				v->layout.setX(x);
@@ -235,15 +275,19 @@ void Layout::layoutPages() {
 				v->layout.setMarginTop(marginTop);
 
 				height = v->getDisplayHeight();
-			} else {
-				PageView * v2 = NULL;
+			}
+			else
+			{
+				PageView* v2 = NULL;
 				height = v->getDisplayHeight();
 
-				if (i + 1 < len) {
+				if (i + 1 < len)
+				{
 					i++;
 
 					v2 = this->view->viewPages[i];
-					if (height < v2->getDisplayHeight()) {
+					if (height < v2->getDisplayHeight())
+					{
 						height = v2->getDisplayHeight();
 					}
 				}
@@ -256,7 +300,8 @@ void Layout::layoutPages() {
 				v->layout.setMarginTop(marginTop);
 
 				// if right page available, align left
-				if (v2 != NULL) {
+				if (v2 != NULL)
+				{
 					int x2 = XOURNAL_PADDING + size[0] + XOURNAL_PADDING_BETWEEN;
 
 					v2->layout.setX(x2);
@@ -265,7 +310,9 @@ void Layout::layoutPages() {
 					v2->layout.setMarginTop(marginTop);
 				}
 			}
-		} else {
+		}
+		else
+		{
 			/**
 			 * Center vertically, like this
 			 *
@@ -297,11 +344,12 @@ void Layout::layoutPages() {
 	this->updateRepaintWidget();
 }
 
-void Layout::updateRepaintWidget() {
+void Layout::updateRepaintWidget()
+{
 	XOJ_CHECK_TYPE(Layout);
 
-	GtkWidget * widget = this->view->getWidget();
-	GtkXournal * xournal = GTK_XOURNAL(widget);
+	GtkWidget* widget = this->view->getWidget();
+	GtkXournal* xournal = GTK_XOURNAL(widget);
 
 	xournal->x = this->scrollHorizontal->getValue();
 	xournal->y = this->scrollVertical->getValue();
@@ -309,7 +357,8 @@ void Layout::updateRepaintWidget() {
 	gtk_widget_queue_draw(widget);
 }
 
-void Layout::setLayoutSize(int width, int height) {
+void Layout::setLayoutSize(int width, int height)
+{
 	XOJ_CHECK_TYPE(Layout);
 
 	this->layoutHeight = height;
@@ -328,75 +377,93 @@ void Layout::setLayoutSize(int width, int height) {
 	this->scrollVertical->setPageSize(alloc.height);
 }
 
-GtkWidget * Layout::getScrollbarVertical() {
+GtkWidget* Layout::getScrollbarVertical()
+{
 	XOJ_CHECK_TYPE(Layout);
 
 	return this->scrollVertical->getWidget();
 }
 
-GtkWidget * Layout::getScrollbarHorizontal() {
+GtkWidget* Layout::getScrollbarHorizontal()
+{
 	XOJ_CHECK_TYPE(Layout);
 
 	return this->scrollHorizontal->getWidget();
 }
 
-void Layout::setSize(int widgetWidth, int widgetHeight) {
+void Layout::setSize(int widgetWidth, int widgetHeight)
+{
 	XOJ_CHECK_TYPE(Layout);
 
-	if (this->lastWidgetWidth != widgetWidth) {
+	if (this->lastWidgetWidth != widgetWidth)
+	{
 		this->layoutPages();
 		this->lastWidgetWidth = widgetWidth;
-	} else {
+	}
+	else
+	{
 		this->setLayoutSize(this->layoutWidth, this->layoutHeight);
 	}
 
 	this->view->getControl()->calcZoomFitSize();
 }
 
-void Layout::scrollRelativ(int x, int y) {
+void Layout::scrollRelativ(int x, int y)
+{
 	XOJ_CHECK_TYPE(Layout);
 
 	this->scrollHorizontal->scroll(x);
 	this->scrollVertical->scroll(y);
 }
 
-double Layout::getVisiblePageTop(int page) {
+double Layout::getVisiblePageTop(int page)
+{
 	XOJ_CHECK_TYPE(Layout);
 
-	if (page < 0) {
+	if (page < 0)
+	{
 		return 0;
 	}
-	if (page > this->view->viewPagesLen) {
+	if (page > this->view->viewPagesLen)
+	{
 		return 0;
 	}
 
-	if (this->view->viewPagesLen == 0) {
+	if (this->view->viewPagesLen == 0)
+	{
 		return 0;
 	}
 
-	double y = this->view->viewPages[page]->getY() + this->scrollVertical->getValue();
+	double y = this->view->viewPages[page]->getY() +
+	           this->scrollVertical->getValue();
 
 	return y / this->view->getZoom();
 }
 
-void Layout::ensureRectIsVisible(int x, int y, int width, int height) {
+void Layout::ensureRectIsVisible(int x, int y, int width, int height)
+{
 	XOJ_CHECK_TYPE(Layout);
 
 	this->scrollHorizontal->ensureAreaIsVisible(x - 5, x + width + 10);
 	this->scrollVertical->ensureAreaIsVisible(y - 5, y + height + 10);
 }
 
-bool Layout::scrollEvent(GdkEventScroll * event) {
+bool Layout::scrollEvent(GdkEventScroll* event)
+{
 	XOJ_CHECK_TYPE(Layout);
 
-	Scrollbar * scroll;
-	if (event->direction == GDK_SCROLL_UP || event->direction == GDK_SCROLL_DOWN) {
+	Scrollbar* scroll;
+	if (event->direction == GDK_SCROLL_UP || event->direction == GDK_SCROLL_DOWN)
+	{
 		scroll = this->scrollVertical;
-	} else {
+	}
+	else
+	{
 		scroll = this->scrollHorizontal;
 	}
 
-	if (scroll && gtk_widget_get_visible(scroll->getWidget())) {
+	if (scroll && gtk_widget_get_visible(scroll->getWidget()))
+	{
 		double delta = scroll->getWheelDelta(event->direction);
 		scroll->scroll(delta);
 		return true;

@@ -7,8 +7,10 @@
 #include <Util.h>
 #include <string.h>
 
-SettingsDialog::SettingsDialog(GladeSearchpath * gladeSearchPath, Settings * settings) :
-	GladeGui(gladeSearchPath, "settings.glade", "settingsDialog") {
+SettingsDialog::SettingsDialog(GladeSearchpath* gladeSearchPath,
+                               Settings* settings) :
+	GladeGui(gladeSearchPath, "settings.glade", "settingsDialog")
+{
 
 	XOJ_INIT_TYPE(SettingsDialog);
 
@@ -17,16 +19,20 @@ SettingsDialog::SettingsDialog(GladeSearchpath * gladeSearchPath, Settings * set
 	callib = zoomcallib_new();
 	this->buttonConfigs = NULL;
 
-	GtkWidget * vbox = get("zoomVBox");
+	GtkWidget* vbox = get("zoomVBox");
 	g_return_if_fail(vbox != NULL);
 
-	GtkWidget * slider = get("zoomCallibSlider");
+	GtkWidget* slider = get("zoomCallibSlider");
 	g_return_if_fail(slider != NULL);
-	g_signal_connect(slider, "change-value", G_CALLBACK(&zoomcallibSliderChanged), this);
+	g_signal_connect(slider, "change-value", G_CALLBACK(&zoomcallibSliderChanged),
+	                 this);
 
-	g_signal_connect(get("cbSettingXinput"), "toggled", G_CALLBACK(&toolboxToggledCallback), this);
-	g_signal_connect(get("cbSettingPresureSensitivity"), "toggled", G_CALLBACK(&toolboxToggledCallback), this);
-	g_signal_connect(get("cbAutosave"), "toggled", G_CALLBACK(&toolboxToggledCallback), this);
+	g_signal_connect(get("cbSettingXinput"), "toggled",
+	                 G_CALLBACK(&toolboxToggledCallback), this);
+	g_signal_connect(get("cbSettingPresureSensitivity"), "toggled",
+	                 G_CALLBACK(&toolboxToggledCallback), this);
+	g_signal_connect(get("cbAutosave"), "toggled",
+	                 G_CALLBACK(&toolboxToggledCallback), this);
 
 	gtk_box_pack_start(GTK_BOX(vbox), callib, false, true, 0);
 	gtk_widget_show(callib);
@@ -34,11 +40,13 @@ SettingsDialog::SettingsDialog(GladeSearchpath * gladeSearchPath, Settings * set
 	initMouseButtonEvents();
 }
 
-SettingsDialog::~SettingsDialog() {
+SettingsDialog::~SettingsDialog()
+{
 	XOJ_CHECK_TYPE(SettingsDialog);
 
-	for (GList * l = this->buttonConfigs; l != NULL; l = l->next) {
-		delete (ButtonConfigGui *) l->data;
+	for (GList* l = this->buttonConfigs; l != NULL; l = l->next)
+	{
+		delete (ButtonConfigGui*) l->data;
 	}
 	g_list_free(this->buttonConfigs);
 
@@ -48,7 +56,9 @@ SettingsDialog::~SettingsDialog() {
 	XOJ_RELEASE_TYPE(SettingsDialog);
 }
 
-gboolean SettingsDialog::zoomcallibSliderChanged(GtkRange * range, GtkScrollType scroll, gdouble value, SettingsDialog * dlg) {
+gboolean SettingsDialog::zoomcallibSliderChanged(GtkRange* range,
+                                                 GtkScrollType scroll, gdouble value, SettingsDialog* dlg)
+{
 	XOJ_CHECK_TYPE_OBJ(dlg, SettingsDialog);
 
 	dlg->setDpi((int) value);
@@ -56,13 +66,17 @@ gboolean SettingsDialog::zoomcallibSliderChanged(GtkRange * range, GtkScrollType
 	return false;
 }
 
-void SettingsDialog::initMouseButtonEvents(const char * hbox, int button, bool withDevice) {
+void SettingsDialog::initMouseButtonEvents(const char* hbox, int button,
+                                           bool withDevice)
+{
 	XOJ_CHECK_TYPE(SettingsDialog);
 
-	this->buttonConfigs = g_list_append(this->buttonConfigs, new ButtonConfigGui(this, get(hbox), settings, button, withDevice));
+	this->buttonConfigs = g_list_append(this->buttonConfigs,
+	                                    new ButtonConfigGui(this, get(hbox), settings, button, withDevice));
 }
 
-void SettingsDialog::initMouseButtonEvents() {
+void SettingsDialog::initMouseButtonEvents()
+{
 	XOJ_CHECK_TYPE(SettingsDialog);
 
 	initMouseButtonEvents("hboxMidleMouse", 1);
@@ -73,10 +87,12 @@ void SettingsDialog::initMouseButtonEvents() {
 	initMouseButtonEvents("hboxDefault", 4);
 }
 
-void SettingsDialog::setDpi(int dpi) {
+void SettingsDialog::setDpi(int dpi)
+{
 	XOJ_CHECK_TYPE(SettingsDialog);
 
-	if (this->dpi == dpi) {
+	if (this->dpi == dpi)
+	{
 		return;
 	}
 
@@ -84,7 +100,8 @@ void SettingsDialog::setDpi(int dpi) {
 	zoomcallib_set_val(ZOOM_CALLIB(callib), dpi);
 }
 
-void SettingsDialog::show(GtkWindow * parent) {
+void SettingsDialog::show(GtkWindow* parent)
+{
 	XOJ_CHECK_TYPE(SettingsDialog);
 
 	load();
@@ -92,54 +109,62 @@ void SettingsDialog::show(GtkWindow * parent) {
 	gtk_window_set_transient_for(GTK_WINDOW(this->window), parent);
 	int res = gtk_dialog_run(GTK_DIALOG(this->window));
 
-	if (res == 1) {
+	if (res == 1)
+	{
 		this->save();
 	}
 
 	gtk_widget_hide(this->window);
 }
 
-void SettingsDialog::loadCheckbox(const char * name, gboolean value) {
+void SettingsDialog::loadCheckbox(const char* name, gboolean value)
+{
 	XOJ_CHECK_TYPE(SettingsDialog);
 
-	GtkToggleButton * b = GTK_TOGGLE_BUTTON(get(name));
+	GtkToggleButton* b = GTK_TOGGLE_BUTTON(get(name));
 	gtk_toggle_button_set_active(b, value);
 }
 
-bool SettingsDialog::getCheckbox(const char * name) {
+bool SettingsDialog::getCheckbox(const char* name)
+{
 	XOJ_CHECK_TYPE(SettingsDialog);
 
-	GtkToggleButton * b = GTK_TOGGLE_BUTTON(get(name));
+	GtkToggleButton* b = GTK_TOGGLE_BUTTON(get(name));
 	return gtk_toggle_button_get_active(b);
 }
 
-void SettingsDialog::toolboxToggledCallback(GtkToggleButton * togglebutton, SettingsDialog * sd) {
+void SettingsDialog::toolboxToggledCallback(GtkToggleButton* togglebutton,
+                                            SettingsDialog* sd)
+{
 	XOJ_CHECK_TYPE_OBJ(sd, SettingsDialog);
 
 	sd->toolboxToggled();
 }
 
-void SettingsDialog::toolboxToggled() {
+void SettingsDialog::toolboxToggled()
+{
 	XOJ_CHECK_TYPE(SettingsDialog);
 
-	GtkToggleButton * cbSettingXinput = GTK_TOGGLE_BUTTON(get("cbSettingXinput"));
+	GtkToggleButton* cbSettingXinput = GTK_TOGGLE_BUTTON(get("cbSettingXinput"));
 	GtkWidget* cbSettingPresureSensitivity = get("cbSettingPresureSensitivity");
 	GtkWidget* labePresureSensitivity = get("labePresureSensitivity");
 	GtkWidget* labeIgnorCoreEvents = get("labeIgnorCoreEvents");
 	GtkWidget* cbIgnorCoreEvents = get("cbIgnorCoreEvents");
-	GtkWidget * labeXInput = get("labeXInput");
+	GtkWidget* labeXInput = get("labeXInput");
 
 	gboolean xInputEnabled = gtk_toggle_button_get_active(cbSettingXinput);
 
-	if (!settings->isXInputAvailable()) {
+	if (!settings->isXInputAvailable())
+	{
 		xInputEnabled = false;
 
 		gtk_widget_set_sensitive(GTK_WIDGET(cbSettingXinput), xInputEnabled);
 		gtk_widget_set_sensitive(labeXInput, xInputEnabled);
 	}
 
-	GtkWidget * cbAutosave = get("cbAutosave");
-	bool autosaveEnabled = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(cbAutosave));
+	GtkWidget* cbAutosave = get("cbAutosave");
+	bool autosaveEnabled = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(
+	                                                        cbAutosave));
 	gtk_widget_set_sensitive(get("lbAutosaveTimeout"), autosaveEnabled);
 	gtk_widget_set_sensitive(get("spAutosaveTimeout"), autosaveEnabled);
 
@@ -149,7 +174,8 @@ void SettingsDialog::toolboxToggled() {
 	gtk_widget_set_sensitive(cbIgnorCoreEvents, xInputEnabled);
 }
 
-void SettingsDialog::load() {
+void SettingsDialog::load()
+{
 	XOJ_CHECK_TYPE(SettingsDialog);
 
 	loadCheckbox("cbSettingXinput", settings->isXinputEnabled());
@@ -162,22 +188,24 @@ void SettingsDialog::load() {
 	loadCheckbox("cbSettingScrollOutside", settings->isAllowScrollOutsideThePage());
 	loadCheckbox("cbBigCursor", settings->isShowBigCursor());
 
-	GtkWidget * txtDefaultSaveName = get("txtDefaultSaveName");
-	const char * txt = settings->getDefaultSaveName().c_str();
-	if (txt == NULL) {
+	GtkWidget* txtDefaultSaveName = get("txtDefaultSaveName");
+	const char* txt = settings->getDefaultSaveName().c_str();
+	if (txt == NULL)
+	{
 		txt = "";
 	}
 	gtk_entry_set_text(GTK_ENTRY(txtDefaultSaveName), txt);
 
-	GtkWidget * spAutosaveTimeout = get("spAutosaveTimeout");
-	gtk_spin_button_set_value(GTK_SPIN_BUTTON(spAutosaveTimeout), settings->getAutosaveTimeout());
+	GtkWidget* spAutosaveTimeout = get("spAutosaveTimeout");
+	gtk_spin_button_set_value(GTK_SPIN_BUTTON(spAutosaveTimeout),
+	                          settings->getAutosaveTimeout());
 
-	GtkWidget * slider = get("zoomCallibSlider");
+	GtkWidget* slider = get("zoomCallibSlider");
 
 	this->setDpi(settings->getDisplayDpi());
 	gtk_range_set_value(GTK_RANGE(slider), dpi);
 
-	GtkWidget * colorBorder = get("colorBorder");
+	GtkWidget* colorBorder = get("colorBorder");
 	GdkColor color = Util::intToGdkColor(settings->getSelectionColor());
 	gtk_color_button_set_color(GTK_COLOR_BUTTON(colorBorder), &color);
 
@@ -187,13 +215,17 @@ void SettingsDialog::load() {
 	bool hidePresentationSidebar = false;
 
 	String hidden = settings->getFullscreenHideElements();
-	const char * element;
+	const char* element;
 	StringTokenizer tokenF(hidden, ',');
 	element = tokenF.next();
-	while (element) {
-		if (!strcmp("mainMenubar", element)) {
+	while (element)
+	{
+		if (!strcmp("mainMenubar", element))
+		{
 			hideFullscreenMenubar = true;
-		} else if (!strcmp("sidebarContents", element)) {
+		}
+		else if (!strcmp("sidebarContents", element))
+		{
 			hideFullscreenSidebar = true;
 		}
 		element = tokenF.next();
@@ -202,10 +234,14 @@ void SettingsDialog::load() {
 	hidden = settings->getPresentationHideElements();
 	StringTokenizer token(hidden, ',');
 	element = token.next();
-	while (element) {
-		if (!strcmp("mainMenubar", element)) {
+	while (element)
+	{
+		if (!strcmp("mainMenubar", element))
+		{
 			hidePresentationMenubar = true;
-		} else if (!strcmp("sidebarContents", element)) {
+		}
+		else if (!strcmp("sidebarContents", element))
+		{
 			hidePresentationSidebar = true;
 		}
 		element = token.next();
@@ -219,32 +255,45 @@ void SettingsDialog::load() {
 	toolboxToggled();
 }
 
-String SettingsDialog::updateHideString(String hidden, bool hideMenubar, bool hideSidebar) {
+String SettingsDialog::updateHideString(String hidden, bool hideMenubar,
+                                        bool hideSidebar)
+{
 	XOJ_CHECK_TYPE(SettingsDialog);
 
 	String newHidden = "";
 
-	const char * element;
+	const char* element;
 	StringTokenizer token(hidden, ',');
 	element = token.next();
-	while (element) {
-		if (!strcmp("mainMenubar", element)) {
-			if (hideMenubar) {
+	while (element)
+	{
+		if (!strcmp("mainMenubar", element))
+		{
+			if (hideMenubar)
+			{
 				hideMenubar = false;
-			} else {
+			}
+			else
+			{
 				element = token.next();
 				continue;
 			}
-		} else if (!strcmp("sidebarContents", element)) {
-			if (hideSidebar) {
+		}
+		else if (!strcmp("sidebarContents", element))
+		{
+			if (hideSidebar)
+			{
 				hideSidebar = false;
-			} else {
+			}
+			else
+			{
 				element = token.next();
 				continue;
 			}
 		}
 
-		if (!newHidden.isEmpty()) {
+		if (!newHidden.isEmpty())
+		{
 			newHidden += ",";
 		}
 		newHidden += element;
@@ -252,15 +301,19 @@ String SettingsDialog::updateHideString(String hidden, bool hideMenubar, bool hi
 		element = token.next();
 	}
 
-	if (hideMenubar) {
-		if (!newHidden.isEmpty()) {
+	if (hideMenubar)
+	{
+		if (!newHidden.isEmpty())
+		{
 			newHidden += ",";
 		}
 		newHidden += "mainMenubar";
 	}
 
-	if (hideSidebar) {
-		if (!newHidden.isEmpty()) {
+	if (hideSidebar)
+	{
+		if (!newHidden.isEmpty())
+		{
 			newHidden += ",";
 		}
 		newHidden += "sidebarContents";
@@ -269,7 +322,8 @@ String SettingsDialog::updateHideString(String hidden, bool hideMenubar, bool hi
 	return newHidden;
 }
 
-void SettingsDialog::save() {
+void SettingsDialog::save()
+{
 	XOJ_CHECK_TYPE(SettingsDialog);
 
 	settings->setXinputEnabled(getCheckbox("cbSettingXinput"));
@@ -282,7 +336,7 @@ void SettingsDialog::save() {
 	settings->setAllowScrollOutsideThePage(getCheckbox("cbSettingScrollOutside"));
 	settings->setShowBigCursor(getCheckbox("cbBigCursor"));
 
-	GtkWidget * colorBorder = get("colorBorder");
+	GtkWidget* colorBorder = get("colorBorder");
 	GdkColor color = { 0 };
 	gtk_color_button_get_color(GTK_COLOR_BUTTON(colorBorder), &color);
 	int selectionColor = Util::gdkColorToInt(color);
@@ -290,23 +344,29 @@ void SettingsDialog::save() {
 
 	bool hideFullscreenMenubar = getCheckbox("cbHideFullscreenMenubar");
 	bool hideFullscreenSidebar = getCheckbox("cbHideFullscreenSidebar");
-	settings->setFullscreenHideElements(updateHideString(settings->getFullscreenHideElements(), hideFullscreenMenubar, hideFullscreenSidebar));
+	settings->setFullscreenHideElements(updateHideString(
+	                                        settings->getFullscreenHideElements(), hideFullscreenMenubar,
+	                                        hideFullscreenSidebar));
 
 	bool hidePresentationMenubar = getCheckbox("cbHidePresentationMenubar");
 	bool hidePresentationSidebar = getCheckbox("cbHidePresentationSidebar");
-	settings->setPresentationHideElements(updateHideString(settings->getPresentationHideElements(), hidePresentationMenubar, hidePresentationSidebar));
+	settings->setPresentationHideElements(updateHideString(
+	                                          settings->getPresentationHideElements(), hidePresentationMenubar,
+	                                          hidePresentationSidebar));
 
-	GtkWidget * txtDefaultSaveName = get("txtDefaultSaveName");
-	const char * txt = gtk_entry_get_text(GTK_ENTRY(txtDefaultSaveName));
+	GtkWidget* txtDefaultSaveName = get("txtDefaultSaveName");
+	const char* txt = gtk_entry_get_text(GTK_ENTRY(txtDefaultSaveName));
 	settings->setDefaultSaveName(txt);
 
-	GtkWidget * spAutosaveTimeout = get("spAutosaveTimeout");
-	int autosaveTimeout = gtk_spin_button_get_value(GTK_SPIN_BUTTON(spAutosaveTimeout));
+	GtkWidget* spAutosaveTimeout = get("spAutosaveTimeout");
+	int autosaveTimeout = gtk_spin_button_get_value(GTK_SPIN_BUTTON(
+	                                                    spAutosaveTimeout));
 	settings->setAutosaveTimeout(autosaveTimeout);
 
 	settings->setDisplayDpi(dpi);
 
-	for (GList * l = this->buttonConfigs; l != NULL; l = l->next) {
-		((ButtonConfigGui *) l->data)->saveSettings();
+	for (GList* l = this->buttonConfigs; l != NULL; l = l->next)
+	{
+		((ButtonConfigGui*) l->data)->saveSettings();
 	}
 }

@@ -15,13 +15,14 @@
 #include "Attribute.h"
 #include <XournalType.h>
 
-class DoubleAttribute: public Attribute {
+class DoubleAttribute: public Attribute
+{
 public:
-	DoubleAttribute(const char * name, double value);
+	DoubleAttribute(const char* name, double value);
 	virtual ~DoubleAttribute();
 
 public:
-	virtual void writeOut(OutputStream * out);
+	virtual void writeOut(OutputStream* out);
 
 private:
 	XOJ_TYPE_ATTRIB;

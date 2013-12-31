@@ -20,7 +20,8 @@
 
 class DocumentListener;
 
-class DocumentHandler {
+class DocumentHandler
+{
 public:
 	DocumentHandler();
 	virtual ~DocumentHandler();
@@ -35,14 +36,14 @@ public:
 	void firePageSelected(int page);
 
 private:
-	void addListener(DocumentListener * l);
-	void removeListener(DocumentListener * l);
+	void addListener(DocumentListener* l);
+	void removeListener(DocumentListener* l);
 
 private:
 	XOJ_TYPE_ATTRIB;
 
 
-	GList * listener;
+	GList* listener;
 
 	friend class DocumentListener;
 };

@@ -18,29 +18,31 @@ class Layer;
 class Redrawable;
 class Stroke;
 
-class SizeUndoAction: public UndoAction {
+class SizeUndoAction: public UndoAction
+{
 public:
-	SizeUndoAction(PageRef page, Layer * layer, Redrawable * view);
+	SizeUndoAction(PageRef page, Layer* layer, Redrawable* view);
 	virtual ~SizeUndoAction();
 
 public:
-	virtual bool undo(Control * control);
-	virtual bool redo(Control * control);
+	virtual bool undo(Control* control);
+	virtual bool redo(Control* control);
 	virtual String getText();
 
-	void addStroke(Stroke * s, double originalWidth, double newWidt, double * originalPressure, double * newPressure,
-			int pressureCount);
+	void addStroke(Stroke* s, double originalWidth, double newWidt,
+	               double* originalPressure, double* newPressure,
+	               int pressureCount);
 
 public:
-	static double * getPressure(Stroke * s);
+	static double* getPressure(Stroke* s);
 
 private:
 	XOJ_TYPE_ATTRIB;
 
-	GList * data;
+	GList* data;
 
-	Layer * layer;
-	Redrawable * view;
+	Layer* layer;
+	Redrawable* view;
 };
 
 #endif /* __SIZEUNDOACTION_H__ */

@@ -19,22 +19,23 @@
 class Stroke;
 class ShapeRecognizer;
 
-class ShapeRecognizerResult {
+class ShapeRecognizerResult
+{
 public:
-	ShapeRecognizerResult(Stroke * result);
-	ShapeRecognizerResult(Stroke * result, ShapeRecognizer * recognizer);
+	ShapeRecognizerResult(Stroke* result);
+	ShapeRecognizerResult(Stroke* result, ShapeRecognizer* recognizer);
 	virtual ~ShapeRecognizerResult();
 
 public:
-	void addSourceStroke(Stroke * s);
-	Stroke * getRecognized();
-	ListIterator<Stroke *> getSources();
+	void addSourceStroke(Stroke* s);
+	Stroke* getRecognized();
+	ListIterator<Stroke*> getSources();
 
 private:
 	XOJ_TYPE_ATTRIB;
 
-	Stroke * recognized;
-	GList * source;
+	Stroke* recognized;
+	GList* source;
 };
 
 #endif /* __SHAPERECOGNIZERRESULT_H__ */

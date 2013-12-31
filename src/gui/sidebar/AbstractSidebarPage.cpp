@@ -1,19 +1,22 @@
 #include "AbstractSidebarPage.h"
 
-AbstractSidebarPage::AbstractSidebarPage(Control * control) {
+AbstractSidebarPage::AbstractSidebarPage(Control* control)
+{
 	XOJ_INIT_TYPE(AbstractSidebarPage);
 
 	this->control = control;
 	this->tabButton = NULL;
 }
 
-AbstractSidebarPage::~AbstractSidebarPage() {
+AbstractSidebarPage::~AbstractSidebarPage()
+{
 	XOJ_RELEASE_TYPE(AbstractSidebarPage);
 
 	this->control = NULL;
 }
 
-bool AbstractSidebarPage::selectPageNr(int page, int pdfPage) {
+bool AbstractSidebarPage::selectPageNr(int page, int pdfPage)
+{
 	XOJ_CHECK_TYPE(AbstractSidebarPage);
 
 	// TODO LOW PRIO why not pageSelected?
@@ -21,54 +24,65 @@ bool AbstractSidebarPage::selectPageNr(int page, int pdfPage) {
 	return false;
 }
 
-void AbstractSidebarPage::documentChanged(DocumentChangeType type) {
+void AbstractSidebarPage::documentChanged(DocumentChangeType type)
+{
 	XOJ_CHECK_TYPE(AbstractSidebarPage);
 }
 
-void AbstractSidebarPage::pageSizeChanged(int page) {
+void AbstractSidebarPage::pageSizeChanged(int page)
+{
 	XOJ_CHECK_TYPE(AbstractSidebarPage);
 }
 
-void AbstractSidebarPage::pageChanged(int page) {
+void AbstractSidebarPage::pageChanged(int page)
+{
 	XOJ_CHECK_TYPE(AbstractSidebarPage);
 }
 
-void AbstractSidebarPage::pageInserted(int page) {
+void AbstractSidebarPage::pageInserted(int page)
+{
 	XOJ_CHECK_TYPE(AbstractSidebarPage);
 }
 
-void AbstractSidebarPage::pageDeleted(int page) {
+void AbstractSidebarPage::pageDeleted(int page)
+{
 	XOJ_CHECK_TYPE(AbstractSidebarPage);
 
 }
 
-void AbstractSidebarPage::pageSelected(int page) {
+void AbstractSidebarPage::pageSelected(int page)
+{
 	XOJ_CHECK_TYPE(AbstractSidebarPage);
 }
 
-Control * AbstractSidebarPage::getControl() {
+Control* AbstractSidebarPage::getControl()
+{
 	XOJ_CHECK_TYPE(AbstractSidebarPage);
 
 	return this->control;
 }
 
-void AbstractSidebarPage::setTmpDisabled(bool disabled) {
+void AbstractSidebarPage::setTmpDisabled(bool disabled)
+{
 	XOJ_CHECK_TYPE(AbstractSidebarPage);
 
-	GdkCursor * cursor = NULL;
+	GdkCursor* cursor = NULL;
 
-	if (disabled) {
+	if (disabled)
+	{
 		cursor = gdk_cursor_new(GDK_WATCH);
 	}
 
-	if (gtk_widget_get_window(this->getWidget())) {
+	if (gtk_widget_get_window(this->getWidget()))
+	{
 		gdk_window_set_cursor(gtk_widget_get_window(this->getWidget()), cursor);
 	}
 
 	gtk_widget_set_sensitive(this->getWidget(), !disabled);
 
 
-	if (cursor) {
+	if (cursor)
+	{
 		gdk_cursor_unref(cursor);
 	}
 }

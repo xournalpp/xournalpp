@@ -3,9 +3,11 @@
 
 #include "bindings/PyXournal.h"
 
-class ScriptData {
+class ScriptData
+{
 public:
-	ScriptData(String name, String function, String parameter) {
+	ScriptData(String name, String function, String parameter)
+	{
 		this->name = name;
 		this->function = function;
 		this->parameter = parameter;
@@ -17,9 +19,10 @@ public:
 	String parameter;
 };
 
-PythonRunner * PythonRunner::instance = NULL;
+PythonRunner* PythonRunner::instance = NULL;
 
-PythonRunner::PythonRunner(Control * control) {
+PythonRunner::PythonRunner(Control* control)
+{
 	XOJ_INIT_TYPE(PythonRunner);
 
 	this->control = control;
@@ -31,23 +34,27 @@ PythonRunner::PythonRunner(Control * control) {
 	this->scripts = NULL;
 }
 
-PythonRunner::~PythonRunner() {
+PythonRunner::~PythonRunner()
+{
 	XOJ_CHECK_TYPE(PythonRunner);
 
-	if (this->callbackId) {
+	if (this->callbackId)
+	{
 		g_source_remove(this->callbackId);
 		this->callbackId = 0;
 	}
 
-	if (this->pythonInitialized) {
+	if (this->pythonInitialized)
+	{
 		Py_Finalize();
 	}
 
 	g_mutex_free(this->mutex);
 	this->mutex = NULL;
 
-	for (GList * l = this->scripts; l != NULL; l = l->next) {
-		ScriptData * s = (ScriptData *) l->data;
+	for (GList* l = this->scripts; l != NULL; l = l->next)
+	{
+		ScriptData* s = (ScriptData*) l->data;
 		delete s;
 	}
 	g_list_free(this->scripts);
@@ -56,8 +63,10 @@ PythonRunner::~PythonRunner() {
 	XOJ_RELEASE_TYPE(PythonRunner);
 }
 
-void PythonRunner::initPythonRunner(Control * control) {
-	if (instance) {
+void PythonRunner::initPythonRunner(Control* control)
+{
+	if (instance)
+	{
 		g_warning("PythonRunner already initialized!");
 		return;
 	}
@@ -65,39 +74,48 @@ void PythonRunner::initPythonRunner(Control * control) {
 	instance = new PythonRunner(control);
 }
 
-void PythonRunner::releasePythonRunner() {
-	if (instance) {
+void PythonRunner::releasePythonRunner()
+{
+	if (instance)
+	{
 		delete instance;
 		instance = NULL;
 	}
 }
 
-void PythonRunner::runScript(String name, String function, String parameter) {
-	if(name.isEmpty() || function.isEmpty()) {
-		g_warning("runScript::name (%s) and function (%s) should not be empty!", name.c_str(), function.c_str());
+void PythonRunner::runScript(String name, String function, String parameter)
+{
+	if(name.isEmpty() || function.isEmpty())
+	{
+		g_warning("runScript::name (%s) and function (%s) should not be empty!",
+		          name.c_str(), function.c_str());
 		return;
 	}
 
-	if (instance == NULL) {
+	if (instance == NULL)
+	{
 		g_warning("PythonRunner not initialized!");
 		return;
 	}
 
 	g_mutex_lock(instance->mutex);
 
-	if (instance->callbackId == 0) {
+	if (instance->callbackId == 0)
+	{
 		instance->callbackId = g_idle_add((GSourceFunc) scriptRunner, instance);
 	}
 
-	instance->scripts = g_list_append(instance->scripts, new ScriptData(name, function, parameter));
+	instance->scripts = g_list_append(instance->scripts, new ScriptData(name,
+	                                                                    function, parameter));
 
 	g_mutex_unlock(instance->mutex);
 }
 
-bool PythonRunner::scriptRunner(PythonRunner * runner) {
+bool PythonRunner::scriptRunner(PythonRunner* runner)
+{
 	g_mutex_lock(runner->mutex);
-	GList * first = g_list_first(runner->scripts);
-	ScriptData * data = (ScriptData *) first->data;
+	GList* first = g_list_first(runner->scripts);
+	ScriptData* data = (ScriptData*) first->data;
 	runner->scripts = g_list_delete_link(runner->scripts, first);
 	g_mutex_unlock(runner->mutex);
 
@@ -107,9 +125,12 @@ bool PythonRunner::scriptRunner(PythonRunner * runner) {
 
 	bool callAgain = false;
 	g_mutex_lock(runner->mutex);
-	if (runner->scripts) {
+	if (runner->scripts)
+	{
 		callAgain = true;
-	} else {
+	}
+	else
+	{
 		callAgain = false;
 		runner->callbackId = 0;
 	}
@@ -118,10 +139,12 @@ bool PythonRunner::scriptRunner(PythonRunner * runner) {
 	return callAgain;
 }
 
-void PythonRunner::initPython() {
+void PythonRunner::initPython()
+{
 	XOJ_CHECK_TYPE(PythonRunner);
 
-	if (this->pythonInitialized) {
+	if (this->pythonInitialized)
+	{
 		return;
 	}
 	Py_SetProgramName("Xournal");
@@ -131,17 +154,17 @@ void PythonRunner::initPython() {
 	PyXournal_initPython(this->control);
 
 	char buffer[512] = { 0 };
-	const char * path = getcwd(buffer, sizeof(buffer));
+	const char* path = getcwd(buffer, sizeof(buffer));
 	g_return_if_fail(path != NULL);
 
-	PyObject * sysModule = PyImport_ImportModule("sys");
+	PyObject* sysModule = PyImport_ImportModule("sys");
 	g_return_if_fail(sysModule != NULL);
-	PyObject * pathObject = PyObject_GetAttrString(sysModule, "path");
+	PyObject* pathObject = PyObject_GetAttrString(sysModule, "path");
 	g_return_if_fail(pathObject != NULL);
 
 	String p = path;
 	p += "/../testing";
-	PyObject * ret = PyObject_CallMethod(pathObject, "append", "s", p.c_str());
+	PyObject* ret = PyObject_CallMethod(pathObject, "append", "s", p.c_str());
 	Py_DecRef(ret);
 
 	p = path;
@@ -153,56 +176,71 @@ void PythonRunner::initPython() {
 	Py_DecRef(sysModule);
 }
 
-void PythonRunner::runScriptInt(String path, String function, String parameter) {
+void PythonRunner::runScriptInt(String path, String function, String parameter)
+{
 	XOJ_CHECK_TYPE(PythonRunner);
 
-	if(path.isEmpty() || function.isEmpty()) {
+	if(path.isEmpty() || function.isEmpty())
+	{
 		g_warning("runScriptInt::path and function should not be empty!");
 		return;
 	}
 
 	initPython();
 
-	PyObject * pName = PyString_FromString(path.c_str());
+	PyObject* pName = PyString_FromString(path.c_str());
 	/* Error checking of pName left out */
 
-	PyObject * pModule = PyImport_Import(pName);
+	PyObject* pModule = PyImport_Import(pName);
 	Py_DECREF(pName);
 
-	if (pModule != NULL) {
-		PyObject * pFunc = PyObject_GetAttrString(pModule, function.c_str());
+	if (pModule != NULL)
+	{
+		PyObject* pFunc = PyObject_GetAttrString(pModule, function.c_str());
 		/* pFunc is a new reference */
 
-		if (pFunc && PyCallable_Check(pFunc)) {
-			PyObject * pArgs = NULL;
+		if (pFunc && PyCallable_Check(pFunc))
+		{
+			PyObject* pArgs = NULL;
 
-			if (parameter.c_str() == NULL) {
+			if (parameter.c_str() == NULL)
+			{
 				pArgs = PyTuple_New(0);
-			} else {
+			}
+			else
+			{
 				pArgs = PyTuple_New(1);
 				PyTuple_SetItem(pArgs, 0, PyString_FromString(parameter.c_str()));
 			}
 
-			PyObject * pValue = PyObject_CallObject(pFunc, pArgs);
+			PyObject* pValue = PyObject_CallObject(pFunc, pArgs);
 			Py_DECREF(pArgs);
-			if (pValue != NULL) {
+			if (pValue != NULL)
+			{
 				printf("Result of call: %ld\n", PyInt_AsLong(pValue));
 				Py_DECREF(pValue);
-			} else {
+			}
+			else
+			{
 				Py_DECREF(pFunc);
 				Py_DECREF(pModule);
 				PyErr_Print();
 				fprintf(stderr, "Call failed\n");
 			}
-		} else {
-			if (PyErr_Occurred()) {
+		}
+		else
+		{
+			if (PyErr_Occurred())
+			{
 				PyErr_Print();
 			}
 			fprintf(stderr, "Cannot find function \"%s\"\n", function.c_str());
 		}
 		Py_XDECREF(pFunc);
 		Py_DECREF(pModule);
-	} else {
+	}
+	else
+	{
 		PyErr_Print();
 		fprintf(stderr, "Failed to load \"%s\"\n", path.c_str());
 	}

@@ -2,16 +2,19 @@
 #include "PagePosition.h"
 #include "../PageView.h"
 
-class PageViewIndexEntry {
+class PageViewIndexEntry
+{
 public:
-	PageViewIndexEntry(PageView * view, int area) {
+	PageViewIndexEntry(PageView* view, int area)
+	{
 		XOJ_INIT_TYPE(PageViewIndexEntry);
 
 		this->view = view;
 		this->area = area;
 	}
 
-	~PageViewIndexEntry() {
+	~PageViewIndexEntry()
+	{
 		XOJ_CHECK_TYPE(PageViewIndexEntry);
 
 		this->view = NULL;
@@ -23,11 +26,12 @@ public:
 public:
 	XOJ_TYPE_ATTRIB;
 
-	PageView * view;
+	PageView* view;
 	int area;
 };
 
-PageViewIndex::PageViewIndex(int x, int y, int width, int height) {
+PageViewIndex::PageViewIndex(int x, int y, int width, int height)
+{
 	XOJ_INIT_TYPE(PageViewIndex);
 
 	this->x = x;
@@ -38,11 +42,13 @@ PageViewIndex::PageViewIndex(int x, int y, int width, int height) {
 	this->data = NULL;
 }
 
-PageViewIndex::~PageViewIndex() {
+PageViewIndex::~PageViewIndex()
+{
 	XOJ_RELEASE_TYPE(PageViewIndex);
 
-	for(GList * l = this->data; l!=NULL;l=l->next) {
-		PageViewIndexEntry * e = (PageViewIndexEntry *)l->data;
+	for(GList* l = this->data; l != NULL; l = l->next)
+	{
+		PageViewIndexEntry* e = (PageViewIndexEntry*)l->data;
 		delete e;
 	}
 
@@ -50,7 +56,8 @@ PageViewIndex::~PageViewIndex() {
 	this->data = NULL;
 }
 
-void PageViewIndex::addView(PageView * v) {
+void PageViewIndex::addView(PageView* v)
+{
 	GdkRectangle r1;
 	GdkRectangle r2;
 	GdkRectangle r3;
@@ -72,34 +79,41 @@ void PageViewIndex::addView(PageView * v) {
 	this->data = g_list_append(this->data, new PageViewIndexEntry(v, area));
 }
 
-void PageViewIndex::add(PagePosition * pp, int y) {
+void PageViewIndex::add(PagePosition* pp, int y)
+{
 	XOJ_CHECK_TYPE(PageViewIndex);
 
-	PageView * v1 = pp->getViewAt(this->x, y);
-	PageView * v2 = pp->getViewAt(this->x + this->width, y);
+	PageView* v1 = pp->getViewAt(this->x, y);
+	PageView* v2 = pp->getViewAt(this->x + this->width, y);
 
-	if(v1 != NULL) {
+	if(v1 != NULL)
+	{
 		addView(v1);
 	}
-	if(v2 != NULL && v1 != v2) {
+	if(v2 != NULL && v1 != v2)
+	{
 		addView(v2);
 	}
 }
 
-PageView * PageViewIndex::getHighestIntersects() {
+PageView* PageViewIndex::getHighestIntersects()
+{
 	XOJ_CHECK_TYPE(PageViewIndex);
 
-	PageViewIndexEntry * b = NULL;
+	PageViewIndexEntry* b = NULL;
 
-	for(GList * l = this->data; l != NULL;l = l->next) {
-		PageViewIndexEntry * e = (PageViewIndexEntry *)l->data;
+	for(GList* l = this->data; l != NULL; l = l->next)
+	{
+		PageViewIndexEntry* e = (PageViewIndexEntry*)l->data;
 
-		if(b == NULL || b->area < e->area) {
+		if(b == NULL || b->area < e->area)
+		{
 			b = e;
 		}
 	}
 
-	if(b != NULL) {
+	if(b != NULL)
+	{
 		return b->view;
 	}
 

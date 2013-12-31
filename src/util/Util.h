@@ -15,27 +15,28 @@
 #include <gtk/gtk.h>
 #include <String.h>
 
-class Util {
+class Util
+{
 private:
 	Util();
 	virtual ~Util();
 
 public:
 	static GdkColor intToGdkColor(int c);
-	static int gdkColorToInt(const GdkColor & c);
+	static int gdkColorToInt(const GdkColor& c);
 
-	static void cairo_set_source_rgbi(cairo_t *cr, int color);
+	static void cairo_set_source_rgbi(cairo_t* cr, int color);
 
 	static String getAutosaveFilename();
 
 	static int getPid();
 
-	static void fakeExposeWidget(GtkWidget * widget, GdkPixmap * pixmap);
-	static GdkPixbuf * newPixbufFromWidget(GtkWidget * widget, int iconSize = 24);
-	static GtkWidget * newSepeartorImage();
+	static void fakeExposeWidget(GtkWidget* widget, GdkPixmap* pixmap);
+	static GdkPixbuf* newPixbufFromWidget(GtkWidget* widget, int iconSize = 24);
+	static GtkWidget* newSepeartorImage();
 
-	static void openFileWithDefaultApplicaion(const char * filename);
-	static void openFileWithFilebrowser(const char * filename);
+	static void openFileWithDefaultApplicaion(const char* filename);
+	static void openFileWithFilebrowser(const char* filename);
 
 private:
 	static String getSettingsSubfolder(String subfolder);

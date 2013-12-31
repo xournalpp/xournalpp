@@ -19,9 +19,10 @@
 
 class Control;
 
-class BlockingJob: public Job {
+class BlockingJob: public Job
+{
 public:
-	BlockingJob(Control * control, const char * name);
+	BlockingJob(Control* control, const char* name);
 
 protected:
 	virtual ~BlockingJob();
@@ -32,13 +33,13 @@ public:
 	virtual JobType getType();
 
 protected:
-	static bool finished(Control * control);
+	static bool finished(Control* control);
 
 private:
 	XOJ_TYPE_ATTRIB;
 
 protected:
-	Control * control;
+	Control* control;
 };
 
 #endif /* __BLOCKINGJOB_H__ */

@@ -20,7 +20,8 @@
 class Element;
 class Rectangle;
 
-class Redrawable {
+class Redrawable
+{
 public:
 	/**
 	 * Call this if you only need to repaint the view, this means the buffer will be painted again,
@@ -30,8 +31,8 @@ public:
 	 */
 	virtual void repaintArea(double x1, double y1, double x2, double y2) = 0;
 	void repaintRect(double x, double y, double width, double height);
-	void repaintRange(Range & r);
-	void repaintElement(Element * e);
+	void repaintRange(Range& r);
+	void repaintElement(Element* e);
 
 	/**
 	 * Call this if you only need to readraw the view, this means the buffer will be painted again,
@@ -49,8 +50,8 @@ public:
 	/**
 	 * Call this if you add an element, remove an element etc.
 	 */
-	void rerenderElement(Element * e);
-	void rerenderRange(Range & r);
+	void rerenderElement(Element* e);
+	void rerenderRange(Range& r);
 
 	/**
 	 * This updated the view buffer and then rerender the the region, call this if you changed the document
@@ -70,7 +71,8 @@ public:
 	virtual int getY() = 0;
 
 
-	virtual Rectangle * rectOnWidget(double x, double y, double width, double height) = 0;
+	virtual Rectangle* rectOnWidget(double x, double y, double width,
+	                                double height) = 0;
 
 };
 
