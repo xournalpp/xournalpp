@@ -37,6 +37,6 @@ cd "${poppler_builddir}"
 
 make
 
-ln -s "${poppler_builddir}/poppler/.libs/libpoppler.a" "${poppler_dir}"
-ln -s "${poppler_builddir}/glib/.libs/libpoppler-glib.a" "${poppler_dir}"
-ln -s "${poppler_builddir}/poppler/poppler-config.h" "${poppler_dir}"
+ln -fs "${poppler_builddir}/poppler/.libs/libpoppler.a" "${poppler_dir}"
+ln -fs "${poppler_builddir}/glib/.libs/libpoppler-glib.a" "${poppler_dir}"
+ln -fs "${poppler_builddir}/poppler/poppler-config.h" "${poppler_dir}"
