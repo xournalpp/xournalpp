@@ -411,6 +411,7 @@ void XournalView::getPasteTarget(double& x, double& y)
 	{
 		x = rect->width / 2;
 		y = rect->height / 2;
+		delete rect;
 	}
 }
 /**
