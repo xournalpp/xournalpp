@@ -141,8 +141,8 @@ void SidebarPreviewPage::paint()
 		                       CAIRO_FONT_WEIGHT_BOLD);
 		cairo_set_font_size(cr2, 70.0);
 		cairo_text_extents(cr2, txtLoading, &ex);
-		cairo_move_to(cr2, (page.getWidth() - ex.width) / 2 - ex.x_bearing,
-		              (page.getHeight() - ex.height) / 2 - ex.y_bearing);
+		cairo_move_to(cr2, (page->getWidth() - ex.width) / 2 - ex.x_bearing,
+		              (page->getHeight() - ex.height) / 2 - ex.y_bearing);
 		cairo_show_text(cr2, txtLoading);
 
 		cairo_destroy(cr2);
@@ -155,8 +155,8 @@ void SidebarPreviewPage::paint()
 	cairo_set_source_surface(cr, this->crBuffer, 0, 0);
 	cairo_paint(cr);
 
-	double height = page.getHeight() * sidebar->getZoom();
-	double width = page.getWidth() * sidebar->getZoom();
+	double height = page->getHeight() * sidebar->getZoom();
+	double width = page->getWidth() * sidebar->getZoom();
 
 	if (this->selected)
 	{
@@ -200,7 +200,7 @@ int SidebarPreviewPage::getWidth()
 {
 	XOJ_CHECK_TYPE(SidebarPreviewPage);
 
-	return page.getWidth() * sidebar->getZoom() + Shadow::getShadowBottomRightSize()
+	return page->getWidth() * sidebar->getZoom() + Shadow::getShadowBottomRightSize()
 	       + Shadow::getShadowTopLeftSize() + 4;
 }
 
@@ -208,7 +208,7 @@ int SidebarPreviewPage::getHeight()
 {
 	XOJ_CHECK_TYPE(SidebarPreviewPage);
 
-	return page.getHeight() * sidebar->getZoom() +
+	return page->getHeight() * sidebar->getZoom() +
 	       Shadow::getShadowBottomRightSize() + Shadow::getShadowTopLeftSize() + 4;
 }
 

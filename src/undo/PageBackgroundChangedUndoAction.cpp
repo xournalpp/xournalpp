@@ -26,11 +26,11 @@ bool PageBackgroundChangedUndoAction::undo(Control* control)
 {
 	XOJ_CHECK_TYPE(PageBackgroundChangedUndoAction);
 
-	this->newType = this->page.getBackgroundType();
-	this->newPdfPage = this->page.getPdfPageNr();
-	this->newBackgroundImage = this->page.getBackgroundImage();
-	this->newW = this->page.getWidth();
-	this->newH = this->page.getHeight();
+	this->newType = this->page->getBackgroundType();
+	this->newPdfPage = this->page->getPdfPageNr();
+	this->newBackgroundImage = this->page->getBackgroundImage();
+	this->newW = this->page->getWidth();
+	this->newH = this->page->getHeight();
 
 	Document* doc = control->getDocument();
 	int pageNr = doc->indexOf(this->page);
@@ -41,18 +41,18 @@ bool PageBackgroundChangedUndoAction::undo(Control* control)
 
 	if (this->newW != this->origW || this->newH != this->origH)
 	{
-		this->page.setSize(this->origW, this->origH);
+		this->page->setSize(this->origW, this->origH);
 		control->firePageSizeChanged(pageNr);
 	}
 
-	this->page.setBackgroundType(this->origType);
+	this->page->setBackgroundType(this->origType);
 	if (this->origType == BACKGROUND_TYPE_PDF)
 	{
-		this->page.setBackgroundPdfPageNr(this->origPdfPage);
+		this->page->setBackgroundPdfPageNr(this->origPdfPage);
 	}
 	else if (this->origType == BACKGROUND_TYPE_IMAGE)
 	{
-		this->page.setBackgroundImage(this->origBackgroundImage);
+		this->page->setBackgroundImage(this->origBackgroundImage);
 	}
 
 	control->firePageChanged(pageNr);
@@ -75,18 +75,18 @@ bool PageBackgroundChangedUndoAction::redo(Control* control)
 
 	if (this->newW != this->origW || this->newH != this->origH)
 	{
-		this->page.setSize(this->newW, this->newH);
+		this->page->setSize(this->newW, this->newH);
 		control->firePageSizeChanged(pageNr);
 	}
 
-	this->page.setBackgroundType(this->newType);
+	this->page->setBackgroundType(this->newType);
 	if (this->newType == BACKGROUND_TYPE_PDF)
 	{
-		this->page.setBackgroundPdfPageNr(this->newPdfPage);
+		this->page->setBackgroundPdfPageNr(this->newPdfPage);
 	}
 	else if (this->newType == BACKGROUND_TYPE_IMAGE)
 	{
-		this->page.setBackgroundImage(this->newBackgroundImage);
+		this->page->setBackgroundImage(this->newBackgroundImage);
 	}
 
 	control->firePageChanged(pageNr);

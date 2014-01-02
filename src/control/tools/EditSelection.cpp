@@ -81,7 +81,7 @@ void EditSelection::contstruct(UndoRedoHandler* undo, PageView* view,
 	this->view = view;
 	this->undo = undo;
 	this->sourcePage = sourcePage;
-	this->sourceLayer = this->sourcePage.getSelectedLayer();
+	this->sourceLayer = this->sourcePage->getSelectedLayer();
 
 	this->aspectRatio = false;
 
@@ -129,7 +129,7 @@ void EditSelection::finalizeSelection()
 		this->view = v;
 
 		PageRef page = this->view->getPage();
-		Layer* layer = page.getSelectedLayer();
+		Layer* layer = page->getSelectedLayer();
 		this->contents->finalizeSelection(this->x, this->y, this->width, this->height,
 		                                  this->aspectRatio, layer, page, this->view, this->undo);
 
@@ -314,7 +314,7 @@ void EditSelection::mouseUp()
 	XOJ_CHECK_TYPE(EditSelection);
 
 	PageRef page = this->view->getPage();
-	Layer* layer = page.getSelectedLayer();
+	Layer* layer = page->getSelectedLayer();
 
 	this->contents->updateContent(this->x, this->y,
 	                              this->width, this->height,

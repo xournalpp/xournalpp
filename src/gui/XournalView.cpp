@@ -85,7 +85,7 @@ XournalView::~XournalView()
 
 gint pageViewCmpSize(PageView* a, PageView* b)
 {
-	return a->getLastVisibelTime() - b->getLastVisibelTime();
+	return a->getLastVisibleTime() - b->getLastVisibleTime();
 }
 
 gboolean XournalView::clearMemoryTimer(XournalView* widget)
@@ -97,7 +97,7 @@ gboolean XournalView::clearMemoryTimer(XournalView* widget)
 	for (int i = 0; i < widget->viewPagesLen; i++)
 	{
 		PageView* v = widget->viewPages[i];
-		if (v->getLastVisibelTime() > 0)
+		if (v->getLastVisibleTime() > 0)
 		{
 			list = g_list_insert_sorted(list, v, (GCompareFunc) pageViewCmpSize);
 		}
@@ -339,7 +339,7 @@ void XournalView::pageSelected(int page)
 		PageView* vp = viewPages[page];
 		vp->setSelected(true);
 		lastSelectedPage = page;
-		pdfPage = vp->getPage().getPdfPageNr();
+		pdfPage = vp->getPage()->getPdfPageNr();
 	}
 
 	control->updatePageNumbers(currentPage, pdfPage);

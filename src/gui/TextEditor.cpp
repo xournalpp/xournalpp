@@ -178,7 +178,8 @@ UndoAction* TextEditor::setColor(int color)
 	}
 
 	ColorUndoAction* undo = new ColorUndoAction(gui->getPage(),
-	                                            gui->getPage().getSelectedLayer(), this->gui);
+	                                            gui->getPage()->getSelectedLayer(),
+	                                            this->gui);
 	undo->addStroke(this->text, origColor, color);
 
 	return undo;
@@ -593,7 +594,8 @@ void TextEditor::contentsChanged(bool forceCreateUndoAction)
 		    !(((TextUndoAction*) this->undoActions->data)->getUndoText() == currentText))
 		{
 			TextUndoAction* undo = new TextUndoAction(gui->getPage(),
-			                                          gui->getPage().getSelectedLayer(), this->text, lastText, gui, this);
+			                                          gui->getPage()->getSelectedLayer(),
+			                                          this->text, lastText, gui, this);
 			UndoRedoHandler* handler =
 			    gui->getXournal()->getControl()->getUndoRedoHandler();
 			handler->addUndoAction(undo);

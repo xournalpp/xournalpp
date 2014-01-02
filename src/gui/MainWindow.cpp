@@ -798,8 +798,8 @@ void MainWindow::updateLayerCombobox()
 
 	if (p)
 	{
-		layer = p.getSelectedLayerId();
-		toolbar->setLayerCount(p.getLayerCount(), layer);
+		layer = p->getSelectedLayerId();
+		toolbar->setLayerCount(p->getLayerCount(), layer);
 	}
 	else
 	{

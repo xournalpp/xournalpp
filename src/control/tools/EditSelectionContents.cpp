@@ -478,7 +478,7 @@ UndoAction* EditSelectionContents::copySelection(PageRef page,
                                                  double x, double y)
 {
 	ListIterator<Element*> eit = getElements();
-	Layer* layer = page.getSelectedLayer();
+	Layer* layer = page->getSelectedLayer();
 
 	GList* new_elems = NULL;
 

@@ -40,8 +40,8 @@ void RenderJob::rerenderRectangle(RenderJob* renderJob, Rectangle* rect)
 
 	doc->lock();
 
-	double pageWidth = view->page.getWidth();
-	double pageHeight = view->page.getHeight();
+	double pageWidth = view->page->getWidth();
+	double pageHeight = view->page->getHeight();
 
 	doc->unlock();
 
@@ -59,9 +59,9 @@ void RenderJob::rerenderRectangle(RenderJob* renderJob, Rectangle* rect)
 	DocumentView v;
 	v.limitArea(rect->x, rect->y, rect->width, rect->height);
 
-	if (view->page.getBackgroundType() == BACKGROUND_TYPE_PDF)
+	if (view->page->getBackgroundType() == BACKGROUND_TYPE_PDF)
 	{
-		int pgNo = view->page.getPdfPageNr();
+		int pgNo = view->page->getPdfPageNr();
 		XojPopplerPage* popplerPage = doc->getPdfPage(pgNo);
 		PdfCache* cache = view->xournal->getCache();
 		PdfView::drawPage(cache, popplerPage, crRect, zoom, pageWidth, pageHeight);
@@ -240,15 +240,15 @@ void RenderJob::run()
 
 		doc->lock();
 
-		if (this->view->page.getBackgroundType() == BACKGROUND_TYPE_PDF)
+		if (this->view->page->getBackgroundType() == BACKGROUND_TYPE_PDF)
 		{
-			int pgNo = this->view->page.getPdfPageNr();
+			int pgNo = this->view->page->getPdfPageNr();
 			popplerPage = doc->getPdfPage(pgNo);
 		}
 
 		DocumentView view;
-		int width = this->view->page.getWidth();
-		int height = this->view->page.getHeight();
+		int width = this->view->page->getWidth();
+		int height = this->view->page->getHeight();
 
 		PdfView::drawPage(this->view->xournal->getCache(), popplerPage, cr2, zoom,
 		                  width, height);

@@ -57,7 +57,7 @@ void EraseHandler::erase(double x, double y)
 
 	Range* range = new Range(x, y);
 
-	Layer* l = page.getSelectedLayer();
+	Layer* l = page->getSelectedLayer();
 
 	ListIterator<Element*> eit = l->elementIterator();
 	eit.freeze();

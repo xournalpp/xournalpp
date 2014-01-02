@@ -792,13 +792,13 @@ void Control::actionPerformed(ActionType type, ActionGroup group,
 		PageRef p = getCurrentPage();
 		if (p.isValid())
 		{
-			p.setSelectedLayerId(this->win->getCurrentLayer());
+			p->setSelectedLayerId(this->win->getCurrentLayer());
 			this->win->getXournal()->layerChanged(getCurrentPageNo());
 			this->win->updateLayerCombobox();
 
 			if (p.isValid())
 			{
-				int layer = p.getSelectedLayerId();
+				int layer = p->getSelectedLayerId();
 				fireEnableAction(ACTION_DELETE_LAYER, layer > 0);
 			}
 		}
@@ -1198,23 +1198,23 @@ void Control::addDefaultPage()
 	getDefaultPagesize(width, heigth);
 
 	PageRef page = new XojPage(width, heigth);
-	page.setBackgroundColor(settings->getPageBackgroundColor());
+	page->setBackgroundColor(settings->getPageBackgroundColor());
 
 	if (PAGE_INSERT_TYPE_PLAIN == type)
 	{
-		page.setBackgroundType(BACKGROUND_TYPE_NONE);
+		page->setBackgroundType(BACKGROUND_TYPE_NONE);
 	}
 	else if (PAGE_INSERT_TYPE_RULED == type)
 	{
-		page.setBackgroundType(BACKGROUND_TYPE_RULED);
+		page->setBackgroundType(BACKGROUND_TYPE_RULED);
 	}
 	else if (PAGE_INSERT_TYPE_GRAPH == type)
 	{
-		page.setBackgroundType(BACKGROUND_TYPE_GRAPH);
+		page->setBackgroundType(BACKGROUND_TYPE_GRAPH);
 	}
 	else    //PAGE_INSERT_TYPE_LINED or PDF or COPY
 	{
-		page.setBackgroundType(BACKGROUND_TYPE_LINED);
+		page->setBackgroundType(BACKGROUND_TYPE_LINED);
 	}
 
 	this->doc->lock();
@@ -1382,8 +1382,8 @@ void Control::insertNewPage(int position)
 
 		if (page.isValid())
 		{
-			width = page.getWidth();
-			height = page.getHeight();
+			width = page->getWidth();
+			height = page->getHeight();
 		}
 		else
 		{
@@ -1392,49 +1392,49 @@ void Control::insertNewPage(int position)
 	}
 
 	PageRef page = new XojPage(width, height);
-	page.setBackgroundColor(settings->getPageBackgroundColor());
+	page->setBackgroundColor(settings->getPageBackgroundColor());
 
 	if (PAGE_INSERT_TYPE_PLAIN == type)
 	{
-		page.setBackgroundType(BACKGROUND_TYPE_NONE);
+		page->setBackgroundType(BACKGROUND_TYPE_NONE);
 	}
 	else if (PAGE_INSERT_TYPE_LINED == type)
 	{
-		page.setBackgroundType(BACKGROUND_TYPE_LINED);
+		page->setBackgroundType(BACKGROUND_TYPE_LINED);
 	}
 	else if (PAGE_INSERT_TYPE_RULED == type)
 	{
-		page.setBackgroundType(BACKGROUND_TYPE_RULED);
+		page->setBackgroundType(BACKGROUND_TYPE_RULED);
 	}
 	else if (PAGE_INSERT_TYPE_GRAPH == type)
 	{
-		page.setBackgroundType(BACKGROUND_TYPE_GRAPH);
+		page->setBackgroundType(BACKGROUND_TYPE_GRAPH);
 	}
 	else if (PAGE_INSERT_TYPE_COPY == type)
 	{
 		PageRef current = getCurrentPage();
 		if (!current.isValid())   // should not happen, but if you open an invalid file or something like this...
 		{
-			page.setBackgroundType(BACKGROUND_TYPE_LINED);
+			page->setBackgroundType(BACKGROUND_TYPE_LINED);
 		}
 		else
 		{
-			BackgroundType bg = current.getBackgroundType();
-			page.setBackgroundType(bg);
+			BackgroundType bg = current->getBackgroundType();
+			page->setBackgroundType(bg);
 			if (bg == BACKGROUND_TYPE_PDF)
 			{
-				page.setBackgroundPdfPageNr(current.getPdfPageNr());
+				page->setBackgroundPdfPageNr(current->getPdfPageNr());
 			}
 			else if (bg == BACKGROUND_TYPE_IMAGE)
 			{
-				page.setBackgroundImage(current.getBackgroundImage());
+				page->setBackgroundImage(current->getBackgroundImage());
 			}
 			else
 			{
-				page.setBackgroundColor(current.getBackgroundColor());
+				page->setBackgroundColor(current->getBackgroundColor());
 			}
 
-			page.setSize(current.getWidth(), current.getHeight());
+			page->setSize(current->getWidth(), current->getHeight());
 		}
 	}
 	else if (PAGE_INSERT_TYPE_PDF_BACKGROUND == type)
@@ -1461,7 +1461,7 @@ void Control::insertNewPage(int position)
 			for (int i = 0; i < doc->getPageCount(); i++)
 			{
 				PageRef p = doc->getPage(i);
-				if (p.getBackgroundType() == BACKGROUND_TYPE_PDF && p.getPdfPageNr() >= 0)
+				if (p->getBackgroundType() == BACKGROUND_TYPE_PDF && p->getPdfPageNr() >= 0)
 				{
 					dlg->setPageUsed(i);
 				}
@@ -1479,10 +1479,10 @@ void Control::insertNewPage(int position)
 			}
 
 			// no need to set a type, if we set the page number the type is also set
-			page.setBackgroundPdfPageNr(selected);
+			page->setBackgroundPdfPageNr(selected);
 
 			XojPopplerPage* p = doc->getPdfPage(selected);
-			page.setSize(p->getWidth(), p->getHeight());
+			page->setSize(p->getWidth(), p->getHeight());
 			this->doc->unlock();
 		}
 	}
@@ -1527,7 +1527,7 @@ void Control::addNewLayer()
 	}
 
 	Layer* l = new Layer();
-	p.insertLayer(l, p.getSelectedLayerId());
+	p->insertLayer(l, p->getSelectedLayerId());
 	if (win)
 	{
 		win->updateLayerCombobox();
@@ -1555,27 +1555,27 @@ void Control::setPageBackground(ActionType type)
 		return; // should not happen...
 	}
 
-	int origPdfPage = page.getPdfPageNr();
-	BackgroundType origType = page.getBackgroundType();
-	BackgroundImage origBackgroundImage = page.getBackgroundImage();
-	double origW = page.getWidth();
-	double origH = page.getHeight();
+	int origPdfPage = page->getPdfPageNr();
+	BackgroundType origType = page->getBackgroundType();
+	BackgroundImage origBackgroundImage = page->getBackgroundImage();
+	double origW = page->getWidth();
+	double origH = page->getHeight();
 
 	if (ACTION_SET_PAPER_BACKGROUND_PLAIN == type)
 	{
-		page.setBackgroundType(BACKGROUND_TYPE_NONE);
+		page->setBackgroundType(BACKGROUND_TYPE_NONE);
 	}
 	else if (ACTION_SET_PAPER_BACKGROUND_LINED == type)
 	{
-		page.setBackgroundType(BACKGROUND_TYPE_LINED);
+		page->setBackgroundType(BACKGROUND_TYPE_LINED);
 	}
 	else if (ACTION_SET_PAPER_BACKGROUND_RULED == type)
 	{
-		page.setBackgroundType(BACKGROUND_TYPE_RULED);
+		page->setBackgroundType(BACKGROUND_TYPE_RULED);
 	}
 	else if (ACTION_SET_PAPER_BACKGROUND_GRAPH == type)
 	{
-		page.setBackgroundType(BACKGROUND_TYPE_GRAPH);
+		page->setBackgroundType(BACKGROUND_TYPE_GRAPH);
 	}
 	else if (ACTION_SET_PAPER_BACKGROUND_IMAGE == type)
 	{
@@ -1588,8 +1588,8 @@ void Control::setPageBackground(ActionType type)
 		BackgroundImage img = dlg->getSelectedImage();
 		if (!img.isEmpty())
 		{
-			page.setBackgroundImage(img);
-			page.setBackgroundType(BACKGROUND_TYPE_IMAGE);
+			page->setBackgroundImage(img);
+			page->setBackgroundType(BACKGROUND_TYPE_IMAGE);
 		}
 		else if (dlg->shouldShowFilechooser())
 		{
@@ -1625,15 +1625,15 @@ void Control::setPageBackground(ActionType type)
 			}
 			else
 			{
-				page.setBackgroundImage(newImg);
-				page.setBackgroundType(BACKGROUND_TYPE_IMAGE);
+				page->setBackgroundImage(newImg);
+				page->setBackgroundType(BACKGROUND_TYPE_IMAGE);
 			}
 		}
 
-		GdkPixbuf* pixbuf = page.getBackgroundImage().getPixbuf();
+		GdkPixbuf* pixbuf = page->getBackgroundImage().getPixbuf();
 		if (pixbuf)
 		{
-			page.setSize(gdk_pixbuf_get_width(pixbuf), gdk_pixbuf_get_height(pixbuf));
+			page->setSize(gdk_pixbuf_get_width(pixbuf), gdk_pixbuf_get_height(pixbuf));
 			firePageSizeChanged(pageNr);
 		}
 
@@ -1663,7 +1663,7 @@ void Control::setPageBackground(ActionType type)
 			for (int i = 0; i < doc->getPageCount(); i++)
 			{
 				PageRef p = doc->getPage(i);
-				if (p.getBackgroundType() == BACKGROUND_TYPE_PDF && p.getPdfPageNr() >= 0)
+				if (p->getBackgroundType() == BACKGROUND_TYPE_PDF && p->getPdfPageNr() >= 0)
 				{
 					dlg->setPageUsed(i);
 				}
@@ -1682,7 +1682,7 @@ void Control::setPageBackground(ActionType type)
 			}
 
 			// no need to set a type, if we set the page number the type is also set
-			page.setBackgroundPdfPageNr(selected);
+			page->setBackgroundPdfPageNr(selected);
 		}
 	}
 
@@ -1725,7 +1725,7 @@ void Control::updateBackgroundSizeButton()
 	{
 		return;
 	}
-	BackgroundType bg = p.getBackgroundType();
+	BackgroundType bg = p->getBackgroundType();
 	GtkWidget* paperColor = win->get("menuJournalPaperColor");
 	GtkWidget* pageSize = win->get("menuJournalPaperFormat");
 
@@ -1749,14 +1749,14 @@ void Control::paperFormat()
 	XOJ_CHECK_TYPE(Control);
 
 	PageRef page = getCurrentPage();
-	if (!page.isValid() || page.getBackgroundType() == BACKGROUND_TYPE_PDF)
+	if (!page.isValid() || page->getBackgroundType() == BACKGROUND_TYPE_PDF)
 	{
 		return;
 	}
 	clearSelectionEndText();
 
 	FormatDialog* dlg = new FormatDialog(this->gladeSearchPath, settings,
-	                                     page.getWidth(), page.getHeight());
+	                                     page->getWidth(), page->getHeight());
 	dlg->show(GTK_WINDOW(this->win->getWindow()));
 
 	double width = dlg->getWidth();
@@ -1788,7 +1788,7 @@ void Control::changePageBackgroundColor()
 
 	clearSelectionEndText();
 
-	BackgroundType bg = p.getBackgroundType();
+	BackgroundType bg = p->getBackgroundType();
 	if (BACKGROUND_TYPE_NONE != bg && BACKGROUND_TYPE_LINED != bg &&
 	    BACKGROUND_TYPE_RULED != bg
 	    && BACKGROUND_TYPE_GRAPH != bg)
@@ -1809,7 +1809,7 @@ void Control::changePageBackgroundColor()
 
 	if (color != -1)
 	{
-		p.setBackgroundColor(color);
+		p->setBackgroundColor(color);
 		firePageChanged(pNr);
 		settings->setPageBackgroundColor(color);
 	}
@@ -1829,14 +1829,14 @@ void Control::deleteCurrentLayer()
 		return;
 	}
 
-	int lId = p.getSelectedLayerId();
+	int lId = p->getSelectedLayerId();
 	if (lId < 1)
 	{
 		return;
 	}
-	Layer* l = p.getSelectedLayer();
+	Layer* l = p->getSelectedLayer();
 
-	p.removeLayer(l);
+	p->removeLayer(l);
 	if (win)
 	{
 		win->getXournal()->layerChanged(pId);
@@ -1858,7 +1858,7 @@ void Control::calcZoomFitSize()
 		{
 			return;
 		}
-		double width = p.getWidth() + 20;
+		double width = p->getWidth() + 20;
 
 		GtkAllocation allocation = { 0 };
 
@@ -2934,7 +2934,7 @@ void Control::clipboardPaste(Element* e)
 
 	this->doc->lock();
 	PageRef page = this->doc->getPage(pageNr);
-	Layer* layer = page.getSelectedLayer();
+	Layer* layer = page->getSelectedLayer();
 	win->getXournal()->getPasteTarget(x, y);
 
 	double width = e->getElementWidth();
@@ -2965,7 +2965,7 @@ void Control::clipboardPasteXournal(ObjectInputStream& in)
 
 	this->doc->lock();
 	PageRef page = this->doc->getPage(pNr);
-	Layer* layer = page.getSelectedLayer();
+	Layer* layer = page->getSelectedLayer();
 
 	PageView* view = win->getXournal()->getViewFor(pNr);
 
@@ -3168,7 +3168,7 @@ void Control::runLatex()
 	}
 	//we get the selection
 	PageRef page = this->doc->getPage(pageNr);
-	Layer* layer = page.getSelectedLayer();
+	Layer* layer = page->getSelectedLayer();
 
 	TexImage* img = view->getSelectedTex();
 

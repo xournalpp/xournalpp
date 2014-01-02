@@ -74,8 +74,8 @@ bool SearchControl::search(const char* text, int* occures, double* top)
 		this->results = this->pdf->findText(text);
 	}
 
-	int selected = this->page.getSelectedLayerId();
-	ListIterator<Layer*> it = this->page.layerIterator();
+	int selected = this->page->getSelectedLayerId();
+	ListIterator<Layer*> it = this->page->layerIterator();
 
 	while (it.hasNext() && selected)
 	{

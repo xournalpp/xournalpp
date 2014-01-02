@@ -48,7 +48,7 @@ public:
 
 	void setSelected(bool selected);
 
-	void setIsVisibel(bool visibel);
+	void setIsVisible(bool visible);
 
 	bool isSelected();
 
@@ -80,7 +80,7 @@ public:
 	 * -1 if no image is saved (never visible or cleanup)
 	 * else the time in Seconds
 	 */
-	int getLastVisibelTime();
+	int getLastVisibleTime();
 	TextEditor* getTextEditor();
 	PageRef getPage();
 	XournalView* getXournal();

@@ -221,15 +221,15 @@ void InputHandler::onButtonReleaseEvent(GdkEventButton* event, PageRef page)
 
 	this->tmpStroke->freeUnusedPointItems();
 
-	if (page.getSelectedLayerId() < 1)
+	if (page->getSelectedLayerId() < 1)
 	{
 		// This creates a layer if none exists
-		page.getSelectedLayer();
-		page.setSelectedLayerId(1);
+		page->getSelectedLayer();
+		page->setSelectedLayerId(1);
 		xournal->getControl()->getWindow()->updateLayerCombobox();
 	}
 
-	Layer* layer = page.getSelectedLayer();
+	Layer* layer = page->getSelectedLayer();
 
 	UndoRedoHandler* undo = xournal->getControl()->getUndoRedoHandler();
 

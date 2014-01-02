@@ -169,8 +169,8 @@ bool PdfExport::writePagesindex()
 
 	PageRef page = doc->getPage(0);
 
-	this->writer->writef("/MediaBox [0 0 %.2F %.2F]\n", page.getWidth(),
-	                     page.getHeight());
+	this->writer->writef("/MediaBox [0 0 %.2F %.2F]\n", page->getWidth(),
+	                     page->getHeight());
 	this->writer->write(">>\n");
 	this->writer->write("endobj\n");
 
@@ -552,8 +552,8 @@ bool PdfExport::writePage(int pageNr)
 	this->writer->write("<</Type /Page\n");
 	this->writer->write("/Parent 1 0 R\n");
 
-	this->writer->writef("/MediaBox [0 0 %.2F %.2F]\n", page.getWidth(),
-	                     page.getHeight());
+	this->writer->writef("/MediaBox [0 0 %.2F %.2F]\n", page->getWidth(),
+	                     page->getHeight());
 	this->writer->write("/Resources 2 0 R\n");
 	//	if (isset($this->PageLinks[$n])) {
 	//		//Links
@@ -583,9 +583,9 @@ bool PdfExport::writePage(int pageNr)
 	addPopplerDocument(doc->getPdfDocument());
 	currentPdfDoc = doc->getPdfDocument();
 
-	if (page.getBackgroundType() == BACKGROUND_TYPE_PDF)
+	if (page->getBackgroundType() == BACKGROUND_TYPE_PDF)
 	{
-		XojPopplerPage* pdf = doc->getPdfPage(page.getPdfPageNr());
+		XojPopplerPage* pdf = doc->getPdfPage(page->getPdfPageNr());
 		if (!addPopplerPage(pdf, currentPdfDoc))
 		{
 			return false;
