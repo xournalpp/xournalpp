@@ -506,12 +506,14 @@ void XournalView::pageDeleted(int page)
 	int currentPage = control->getCurrentPageNo();
 
 	delete this->viewPages[page];
-	for (int i = page; i < this->viewPagesLen; i++)
+
+	for (int i = page; i < this->viewPagesLen - 1; i++)
 	{
 		this->viewPages[i] = this->viewPages[i + 1];
 	}
 
 	this->viewPagesLen--;
+	this->viewPages[this->viewPagesLen] = NULL;
 
 	if (currentPage >= page)
 	{
