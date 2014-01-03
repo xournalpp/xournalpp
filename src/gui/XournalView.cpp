@@ -640,7 +640,7 @@ void XournalView::deleteSelection(EditSelection* sel)
 	if (sel)
 	{
 		PageView* view = sel->getView();
-		DeleteUndoAction* undo = new DeleteUndoAction(sel->getSourcePage(), view,
+		DeleteUndoAction* undo = new DeleteUndoAction(sel->getSourcePage(),
 		                                              false);
 		sel->fillUndoItem(undo);
 		control->getUndoRedoHandler()->addUndoAction(undo);

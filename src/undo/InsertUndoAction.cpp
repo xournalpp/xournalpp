@@ -5,14 +5,13 @@
 #include "../gui/Redrawable.h"
 
 InsertUndoAction::InsertUndoAction(PageRef page, Layer* layer,
-                                   Element* element, Redrawable* view) : UndoAction("InsertUndoAction")
+                                   Element* element) : UndoAction("InsertUndoAction")
 {
 	XOJ_INIT_TYPE(InsertUndoAction);
 
 	this->page = page;
 	this->layer = layer;
 	this->element = element;
-	this->view = view;
 }
 
 InsertUndoAction::~InsertUndoAction()
@@ -61,7 +60,7 @@ bool InsertUndoAction::undo(Control* control)
 
 	this->layer->removeElement(this->element, false);
 
-	this->view->rerenderElement(this->element);
+	this->page->fireElementChanged(this->element);
 
 	this->undone = true;
 
@@ -74,7 +73,7 @@ bool InsertUndoAction::redo(Control* control)
 
 	this->layer->addElement(this->element);
 
-	this->view->rerenderElement(this->element);
+	this->page->fireElementChanged(this->element);
 
 	this->undone = false;
 
@@ -83,15 +82,14 @@ bool InsertUndoAction::redo(Control* control)
 
 
 InsertsUndoAction::InsertsUndoAction(PageRef page,
-                                     Layer* layer, GList* elements,
-                                     Redrawable* view) : UndoAction("InsertsUndoAction")
+                                     Layer* layer,
+                                     GList* elements) : UndoAction("InsertsUndoAction")
 {
 	XOJ_INIT_TYPE(InsertsUndoAction);
 
 	this->page = page;
 	this->layer = layer;
 	this->elements = elements;
-	this->view = view;
 }
 
 InsertsUndoAction::~InsertsUndoAction()
@@ -126,13 +124,14 @@ bool InsertsUndoAction::undo(Control* control)
 {
 	XOJ_CHECK_TYPE(InsertsUndoAction);
 
-	for(GList* elem = this->elements;
-	    elem != NULL; elem = elem->next)
+	for(GList* l = this->elements;
+	    l != NULL; l = l->next)
 	{
-		this->layer->removeElement((Element*) elem->data, false);
-	}
+		Element* elem = (Element*) l->data;
 
-	this->view->rerenderPage();
+		this->layer->removeElement(elem, false);
+		this->page->fireElementChanged(elem);
+	}
 
 	this->undone = true;
 
@@ -143,13 +142,14 @@ bool InsertsUndoAction::redo(Control* control)
 {
 	XOJ_CHECK_TYPE(InsertsUndoAction);
 
-	for(GList* elem = this->elements;
-	    elem != NULL; elem = elem->next)
+	for(GList* l = this->elements;
+	    l != NULL; l = l->next)
 	{
-		this->layer->addElement((Element*) elem->data);
-	}
+		Element* elem = (Element*) l->data;
 
-	this->view->rerenderPage();
+		this->layer->removeElement(elem, false);
+		this->page->fireElementChanged(elem);
+	}
 
 	this->undone = false;
 

@@ -22,7 +22,7 @@ class Stroke;
 class EraseUndoAction: public UndoAction
 {
 public:
-	EraseUndoAction(PageRef page, Redrawable* view);
+	EraseUndoAction(PageRef page);
 	virtual ~EraseUndoAction();
 
 public:
@@ -38,9 +38,6 @@ public:
 	virtual String getText();
 private:
 	XOJ_TYPE_ATTRIB;
-
-
-	Redrawable* view;
 
 	GList* edited;
 	GList* original;

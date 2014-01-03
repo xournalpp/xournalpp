@@ -233,8 +233,9 @@ void InputHandler::onButtonReleaseEvent(GdkEventButton* event, PageRef page)
 
 	UndoRedoHandler* undo = xournal->getControl()->getUndoRedoHandler();
 
-	undo->addUndoAction(new InsertUndoAction(page, layer, this->tmpStroke,
-	                                         this->redrawable));
+	undo->addUndoAction(new InsertUndoAction(page,
+	                                         layer,
+	                                         this->tmpStroke));
 
 	ToolHandler* h = xournal->getControl()->getToolHandler();
 	if (h->isShapeRecognizer())
@@ -252,7 +253,10 @@ void InputHandler::onButtonReleaseEvent(GdkEventButton* event, PageRef page)
 			Stroke* recognized = result->getRecognized();
 
 			RecognizerUndoAction* recognizerUndo = new RecognizerUndoAction(page,
-			                                                                this->redrawable, layer, this->tmpStroke, recognized);
+			                                                                layer,
+			                                                                this->tmpStroke,
+			                                                                recognized);
+
 			undo->addUndoAction(recognizerUndo);
 			layer->addElement(result->getRecognized());
 

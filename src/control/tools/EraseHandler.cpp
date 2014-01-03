@@ -106,7 +106,6 @@ void EraseHandler::eraseStroke(Layer* l, Stroke* s, double x, double y,
 		if(!this->eraseDeleteUndoAction)
 		{
 			this->eraseDeleteUndoAction = new DeleteUndoAction(this->page,
-			                                                   this->view,
 			                                                   true);
 
 			this->undo->addUndoAction(this->eraseDeleteUndoAction);
@@ -124,7 +123,7 @@ void EraseHandler::eraseStroke(Layer* l, Stroke* s, double x, double y,
 
 		if (eraseUndoAction == NULL)
 		{
-			eraseUndoAction = new EraseUndoAction(this->page, this->view);
+			eraseUndoAction = new EraseUndoAction(this->page);
 			this->undo->addUndoAction(eraseUndoAction);
 		}
 

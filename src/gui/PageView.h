@@ -18,6 +18,7 @@
 #include "../model/PageRef.h"
 #include "LayoutData.h"
 #include "../model/TexImage.h"
+#include "../model/PageListener.h"
 
 class XournalView;
 class EditSelection;
@@ -31,7 +32,7 @@ class InputHandler;
 
 class Text;
 
-class PageView: public Redrawable
+class PageView: public Redrawable, public PageListener
 {
 public:
 	PageView(XournalView* xournal, PageRef page);
@@ -102,6 +103,11 @@ public: // event handler
 	bool onMotionNotifyEvent(GtkWidget* widget, GdkEventMotion* event);
 	void translateEvent(GdkEvent* event, int xOffset, int yOffset);
 	bool paintPage(cairo_t* cr, GdkRectangle* rect);
+
+public: // listener
+	void rectChanged(Rectangle& rect);
+	void rangeChanged(Range &range);
+	void elementChanged(Element* elem);
 
 private:
 	void handleScrollEvent(GdkEventButton* event);

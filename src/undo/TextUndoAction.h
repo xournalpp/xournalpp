@@ -22,8 +22,8 @@ class TextEditor;
 class TextUndoAction: public UndoAction
 {
 public:
-	TextUndoAction(PageRef page, Layer* layer, Text* text, String lastText,
-	               Redrawable* view,
+	TextUndoAction(PageRef page, Layer* layer,
+	               Text* text, String lastText,
 	               TextEditor* textEditor);
 	virtual ~TextUndoAction();
 
@@ -44,7 +44,6 @@ private:
 	Text* text;
 	String lastText;
 	String newText;
-	Redrawable* view;
 
 	TextEditor* textEditor;
 };

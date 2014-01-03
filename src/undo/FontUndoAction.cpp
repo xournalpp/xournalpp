@@ -4,6 +4,8 @@
 #include "../model/Text.h"
 #include "../gui/Redrawable.h"
 
+#include <Rectangle.h>
+
 class FontUndoActionEntry
 {
 public:
@@ -19,14 +21,12 @@ public:
 	XojFont newFont;
 };
 
-FontUndoAction::FontUndoAction(PageRef page, Layer* layer,
-                               Redrawable* view) : UndoAction("FontUndoAction")
+FontUndoAction::FontUndoAction(PageRef page, Layer* layer) : UndoAction("FontUndoAction")
 {
 	XOJ_INIT_TYPE(FontUndoAction);
 
 	this->page = page;
 	this->layer = layer;
-	this->view = view;
 	this->data = NULL;
 }
 
@@ -88,7 +88,8 @@ bool FontUndoAction::undo(Control* control)
 		y2 = MAX(y2, e->e->getY() + e->e->getElementHeight());
 	}
 
-	view->rerenderArea(x1, y1, x2, y2);
+	Rectangle rect(x1, y1, x2 - x1, y2 - y1);
+	this->page->fireRectChanged(rect);
 
 	return true;
 }
@@ -127,7 +128,8 @@ bool FontUndoAction::redo(Control* control)
 		y2 = MAX(y2, e->e->getY() + e->e->getElementHeight());
 	}
 
-	view->rerenderArea(x1, y1, x2, y2);
+	Rectangle rect(x1, y1, x2 - x1, y2 - y1);
+	this->page->fireRectChanged(rect);
 
 	return true;
 }

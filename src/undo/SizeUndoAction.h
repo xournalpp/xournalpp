@@ -21,7 +21,7 @@ class Stroke;
 class SizeUndoAction: public UndoAction
 {
 public:
-	SizeUndoAction(PageRef page, Layer* layer, Redrawable* view);
+	SizeUndoAction(PageRef page, Layer* layer);
 	virtual ~SizeUndoAction();
 
 public:
@@ -42,7 +42,6 @@ private:
 	GList* data;
 
 	Layer* layer;
-	Redrawable* view;
 };
 
 #endif /* __SIZEUNDOACTION_H__ */

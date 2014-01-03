@@ -2946,9 +2946,10 @@ void Control::clipboardPaste(Element* e)
 
 	this->doc->unlock();
 
-	undoRedo->addUndoAction(new InsertUndoAction(page, layer, e, view));
+	undoRedo->addUndoAction(new InsertUndoAction(page, layer, e));
 
-	EditSelection* selection = new EditSelection(this->undoRedo, e, view, page);
+	EditSelection* selection = new EditSelection(this->undoRedo, e,
+	                                             view, page);
 
 	win->getXournal()->setSelection(selection);
 }
@@ -2994,7 +2995,7 @@ void Control::clipboardPasteXournal(ObjectInputStream& in)
 
 		int count = in.readInt();
 
-		AddUndoAction* pasteAddUndoAction = new AddUndoAction(page, view, false);
+		AddUndoAction* pasteAddUndoAction = new AddUndoAction(page, false);
 		//this will undo a group of elements that are inserted
 
 		for (int i = 0; i < count; i++)
@@ -3266,9 +3267,10 @@ void Control::runLatex()
 
 	this->doc->unlock();
 
-	undoRedo->addUndoAction(new InsertUndoAction(page, layer, img, view));
+	undoRedo->addUndoAction(new InsertUndoAction(page, layer, img));
 #else
-	printf("Mathtex is disabled. Recompile with ./configure --enable-mathtex, ensuring you have the mathtex command on your system.\n");
+	printf("Mathtex is disabled. Recompile with ./configure --enable-mathtex, "
+	       "ensuring you have the mathtex command on your system.\n");
 #endif
 
 }

@@ -6,8 +6,10 @@
 #include "../gui/Redrawable.h"
 #include "../gui/TextEditor.h"
 
-TextUndoAction::TextUndoAction(PageRef page, Layer* layer, Text* text,
-                               String lastText, Redrawable* view,
+#include <Rectangle.h>
+
+TextUndoAction::TextUndoAction(PageRef page, Layer* layer,
+                               Text* text, String lastText,
                                TextEditor* textEditor) : UndoAction("TextUndoAction")
 {
 	XOJ_INIT_TYPE(TextUndoAction);
@@ -16,7 +18,6 @@ TextUndoAction::TextUndoAction(PageRef page, Layer* layer, Text* text,
 	this->layer = layer;
 	this->text = text;
 	this->lastText = lastText;
-	this->view = view;
 	this->textEditor = textEditor;
 }
 
@@ -64,7 +65,8 @@ bool TextUndoAction::undo(Control* control)
 	x2 = MAX(x2, text->getX() + text->getElementWidth());
 	y2 = MAX(y2, text->getY() + text->getElementHeight());
 
-	view->rerenderArea(x1, y1, x2, y2);
+	Rectangle rect(x1, y1, x2 - x1, y2 - y1);
+	this->page->fireRectChanged(rect);
 
 	this->undone = true;
 	return true;
@@ -87,7 +89,8 @@ bool TextUndoAction::redo(Control* control)
 	x2 = MAX(x2, text->getX() + text->getElementWidth());
 	y2 = MAX(y2, text->getY() + text->getElementHeight());
 
-	view->rerenderArea(x1, y1, x2, y2);
+	Rectangle rect(x1, y1, x2 - x1, y2 - y1);
+	this->page->fireRectChanged(rect);
 
 	this->undone = false;
 	return true;

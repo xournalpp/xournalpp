@@ -95,8 +95,7 @@ UndoAction* EditSelectionContents::setSize(ToolSize size,
 {
 	XOJ_CHECK_TYPE(EditSelectionContents);
 
-	SizeUndoAction* undo = new SizeUndoAction(this->sourcePage, this->sourceLayer,
-	                                          this->sourceView);
+	SizeUndoAction* undo = new SizeUndoAction(this->sourcePage, this->sourceLayer);
 
 	bool found = false;
 
@@ -166,8 +165,8 @@ UndoAction* EditSelectionContents::setFont(XojFont& font)
 	double y1 = 0.0 / 0.0;
 	double y2 = 0.0 / 0.0;
 
-	FontUndoAction* undo = new FontUndoAction(this->sourcePage, this->sourceLayer,
-	                                          this->sourceView);
+	FontUndoAction* undo = new FontUndoAction(this->sourcePage,
+	                                          this->sourceLayer);
 
 	for (GList* l = this->selected; l != NULL; l = l->next)
 	{
@@ -223,8 +222,7 @@ UndoAction* EditSelectionContents::setColor(int color)
 {
 	XOJ_CHECK_TYPE(EditSelectionContents);
 
-	ColorUndoAction* undo = new ColorUndoAction(this->sourcePage, this->sourceLayer,
-	                                            this->sourceView);
+	ColorUndoAction* undo = new ColorUndoAction(this->sourcePage, this->sourceLayer);
 
 	bool found = false;
 
@@ -388,10 +386,10 @@ void EditSelectionContents::updateContent(double x, double y, double width, doub
 	if(move)
 	{
 		RelMoveUndoAction* moveUndo = new RelMoveUndoAction(this->sourceLayer,
-		                                                    this->sourcePage, this->sourceView,
+		                                                    this->sourcePage,
 		                                                    this->selected,
-		                                                    mx, my, layer, targetPage,
-		                                                    targetView);
+		                                                    mx, my, layer,
+		                                                    targetPage);
 
 		undo->addUndoAction(moveUndo);
 
@@ -401,7 +399,7 @@ void EditSelectionContents::updateContent(double x, double y, double width, doub
 	if(scale)
 	{
 		ScaleUndoAction* scaleUndo = new ScaleUndoAction(this->sourcePage,
-		                                                 this->sourceView, this->selected,
+		                                                 this->selected,
 		                                                 x, y, fx, fy);
 		undo->addUndoAction(scaleUndo);
 
@@ -497,7 +495,7 @@ UndoAction* EditSelectionContents::copySelection(PageRef page,
 	//       page is not necessary...
 	view->rerenderPage();
 
-	return new InsertsUndoAction(page, layer, new_elems, view);
+	return new InsertsUndoAction(page, layer, new_elems);
 }
 
 void EditSelectionContents::serialize(ObjectOutputStream& out)

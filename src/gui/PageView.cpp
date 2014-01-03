@@ -44,6 +44,7 @@ PageView::PageView(XournalView* xournal, PageRef page)
 	XOJ_INIT_TYPE(PageView);
 
 	this->page = page;
+	this->registerListener(this->page);
 	this->xournal = xournal;
 	this->selected = false;
 	this->settings = xournal->getControl()->getSettings();
@@ -217,7 +218,7 @@ void PageView::endText()
 		int pos = layer->indexOf(txt);
 		if (pos != -1)
 		{
-			DeleteUndoAction* eraseDeleteUndoAction = new DeleteUndoAction(page, this,
+			DeleteUndoAction* eraseDeleteUndoAction = new DeleteUndoAction(page,
 			                                                               true);
 			layer->removeElement(txt, false);
 			eraseDeleteUndoAction->addElement(layer, txt, pos);
@@ -229,7 +230,7 @@ void PageView::endText()
 		// new element
 		if (layer->indexOf(txt) == -1)
 		{
-			undo->addUndoActionBefore(new InsertUndoAction(page, layer, txt, this),
+			undo->addUndoActionBefore(new InsertUndoAction(page, layer, txt),
 			                          this->textEditor->getFirstUndoAction());
 			layer->addElement(txt);
 			this->textEditor->textCopyed();
@@ -241,8 +242,8 @@ void PageView::endText()
 			//TextUndoAction does not work because the textEdit object is destroyed
 			//after endText() so we need to instead copy the information between an
 			//old and new element that we can push and pop to recover.
-			undo->addUndoAction(new TextBoxUndoAction(page, layer, txt, this->oldtext,
-			                                          this));
+			undo->addUndoAction(new TextBoxUndoAction(page, layer,
+			                                          txt, this->oldtext));
 
 		}
 
@@ -1067,3 +1068,19 @@ TexImage* PageView::getSelectedTex()
 	return texMatch;
 
 }
+
+void PageView::rectChanged(Rectangle& rect)
+{
+	rerenderRect(rect.x, rect.y, rect.width, rect.height);
+}
+
+void PageView::rangeChanged(Range &range)
+{
+	rerenderRange(range);
+}
+
+void PageView::elementChanged(Element* elem)
+{
+	rerenderElement(elem);
+}
+

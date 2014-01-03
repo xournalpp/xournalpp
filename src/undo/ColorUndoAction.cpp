@@ -4,6 +4,8 @@
 #include "../model/PageRef.h"
 #include "../gui/Redrawable.h"
 
+#include <Rectangle.h>
+
 class ColorUndoActionEntry
 {
 public:
@@ -19,14 +21,13 @@ public:
 	int newColor;
 };
 
-ColorUndoAction::ColorUndoAction(PageRef page, Layer* layer,
-                                 Redrawable* view) : UndoAction("ColorUndoAction")
+ColorUndoAction::ColorUndoAction(PageRef page,
+                                 Layer* layer) : UndoAction("ColorUndoAction")
 {
 	XOJ_INIT_TYPE(ColorUndoAction);
 
 	this->page = page;
 	this->layer = layer;
-	this->view = view;
 	this->data = NULL;
 }
 
@@ -80,7 +81,8 @@ bool ColorUndoAction::undo(Control* control)
 		y2 = MAX(y2, e->e->getY() + e->e->getElementHeight());
 	}
 
-	this->view->rerenderArea(x1, y1, x2, y2);
+	Rectangle rect(x1, y1, x2 - x1, y2 - y1);
+	this->page->fireRectChanged(rect);
 
 	return true;
 }
@@ -111,7 +113,8 @@ bool ColorUndoAction::redo(Control* control)
 		y2 = MAX(y2, e->e->getY() + e->e->getElementHeight());
 	}
 
-	this->view->rerenderArea(x1, y1, x2, y2);
+	Rectangle rect(x1, y1, x2 - x1, y2 - y1);
+	this->page->fireRectChanged(rect);
 
 	return true;
 }
