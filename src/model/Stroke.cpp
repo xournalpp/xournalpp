@@ -293,7 +293,7 @@ void Stroke::scale(double x0, double y0, double fx, double fy)
 			p.z *= fz;
 		}
 	}
-	//this->width *= fz;
+	this->width *= fz;
 
 	this->sizeCalculated = false;
 }
