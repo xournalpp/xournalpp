@@ -1079,6 +1079,11 @@ void PageView::rangeChanged(Range &range)
 	rerenderRange(range);
 }
 
+void PageView::pageChanged()
+{
+	rerenderPage();
+}
+
 void PageView::elementChanged(Element* elem)
 {
 	rerenderElement(elem);
