@@ -107,6 +107,7 @@ public: // event handler
 public: // listener
 	void rectChanged(Rectangle& rect);
 	void rangeChanged(Range &range);
+	void pageChanged();
 	void elementChanged(Element* elem);
 
 private:
