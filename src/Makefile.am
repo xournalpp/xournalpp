@@ -142,6 +142,8 @@ xournalpp_SOURCES = \
 	model/Image.cpp \
 	model/Layer.cpp \
 	model/LinkDestination.cpp \
+	model/PageHandler.cpp \
+	model/PageListener.cpp \
 	model/PageRef.cpp \
 	model/Point.cpp \
 	model/Stroke.cpp \

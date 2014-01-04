@@ -28,8 +28,8 @@ void PrintHandler::drawPage(GtkPrintOperation* operation,
 		return;
 	}
 
-	double width = page.getWidth();
-	double height = page.getHeight();
+	double width = page->getWidth();
+	double height = page->getHeight();
 
 	if (width > height)
 	{
@@ -39,9 +39,9 @@ void PrintHandler::drawPage(GtkPrintOperation* operation,
 
 	XojPopplerPage* popplerPage = NULL;
 
-	if (page.getBackgroundType() == BACKGROUND_TYPE_PDF)
+	if (page->getBackgroundType() == BACKGROUND_TYPE_PDF)
 	{
-		int pgNo = page.getPdfPageNr();
+		int pgNo = page->getPdfPageNr();
 		popplerPage = handler->doc->getPdfPage(pgNo);
 		if (popplerPage)
 		{
@@ -65,8 +65,8 @@ void PrintHandler::requestPageSetup(GtkPrintOperation* operation,
 		return;
 	}
 
-	double width = page.getWidth();
-	double height = page.getHeight();
+	double width = page->getWidth();
+	double height = page->getHeight();
 
 	if (width > height)
 	{

@@ -44,6 +44,7 @@ PageView::PageView(XournalView* xournal, PageRef page)
 	XOJ_INIT_TYPE(PageView);
 
 	this->page = page;
+	this->registerListener(this->page);
 	this->xournal = xournal;
 	this->selected = false;
 	this->settings = xournal->getControl()->getSettings();
@@ -113,11 +114,11 @@ PageView::~PageView()
 	XOJ_RELEASE_TYPE(PageView);
 }
 
-void PageView::setIsVisibel(bool visibel)
+void PageView::setIsVisible(bool visible)
 {
 	XOJ_CHECK_TYPE(PageView);
 
-	if (visibel)
+	if (visible)
 	{
 		this->lastVisibleTime = 0;
 	}
@@ -129,7 +130,7 @@ void PageView::setIsVisibel(bool visibel)
 	}
 }
 
-int PageView::getLastVisibelTime()
+int PageView::getLastVisibleTime()
 {
 	XOJ_CHECK_TYPE(PageView);
 
@@ -178,7 +179,7 @@ bool PageView::searchTextOnPage(const char* text, int* occures, double* top)
 			return true;
 		}
 
-		int pNr = this->page.getPdfPageNr();
+		int pNr = this->page->getPdfPageNr();
 		XojPopplerPage* pdf = NULL;
 		if (pNr != -1)
 		{
@@ -207,7 +208,7 @@ void PageView::endText()
 		return;
 	}
 	Text* txt = this->textEditor->getText();
-	Layer* layer = this->page.getSelectedLayer();
+	Layer* layer = this->page->getSelectedLayer();
 	UndoRedoHandler* undo = xournal->getControl()->getUndoRedoHandler();
 
 	// Text deleted
@@ -217,7 +218,7 @@ void PageView::endText()
 		int pos = layer->indexOf(txt);
 		if (pos != -1)
 		{
-			DeleteUndoAction* eraseDeleteUndoAction = new DeleteUndoAction(page, this,
+			DeleteUndoAction* eraseDeleteUndoAction = new DeleteUndoAction(page,
 			                                                               true);
 			layer->removeElement(txt, false);
 			eraseDeleteUndoAction->addElement(layer, txt, pos);
@@ -229,7 +230,7 @@ void PageView::endText()
 		// new element
 		if (layer->indexOf(txt) == -1)
 		{
-			undo->addUndoActionBefore(new InsertUndoAction(page, layer, txt, this),
+			undo->addUndoActionBefore(new InsertUndoAction(page, layer, txt),
 			                          this->textEditor->getFirstUndoAction());
 			layer->addElement(txt);
 			this->textEditor->textCopyed();
@@ -241,8 +242,8 @@ void PageView::endText()
 			//TextUndoAction does not work because the textEdit object is destroyed
 			//after endText() so we need to instead copy the information between an
 			//old and new element that we can push and pop to recover.
-			undo->addUndoAction(new TextBoxUndoAction(page, layer, txt, this->oldtext,
-			                                          this));
+			undo->addUndoAction(new TextBoxUndoAction(page, layer,
+			                                          txt, this->oldtext));
 
 		}
 
@@ -263,7 +264,7 @@ void PageView::startText(double x, double y)
 	if (this->textEditor == NULL)
 	{
 		// Is there already a textfield?
-		ListIterator<Element*> eit = this->page.getSelectedLayer()->elementIterator();
+		ListIterator<Element*> eit = this->page->getSelectedLayer()->elementIterator();
 
 		Text* text = NULL;
 
@@ -309,7 +310,7 @@ void PageView::startText(double x, double y)
 			text->setFont(oldtext->getFont());
 			text->setText(oldtext->getText());
 
-			Layer* layer = this->page.getSelectedLayer();
+			Layer* layer = this->page->getSelectedLayer();
 			layer->removeElement(this->oldtext, false);
 			layer->addElement(text);
 			//perform the old swap onto the new text drawn.
@@ -342,7 +343,7 @@ void PageView::selectObjectAt(double x, double y)
 {
 	XOJ_CHECK_TYPE(PageView);
 
-	int selected = this->page.getSelectedLayerId();
+	int selected = this->page->getSelectedLayerId();
 	GdkRectangle matchRect = { x - 10, y - 10, 20, 20 };
 
 	Stroke* strokeMatch = NULL;
@@ -353,7 +354,7 @@ void PageView::selectObjectAt(double x, double y)
 	// clear old selection anyway
 	this->xournal->getControl()->clearSelection();
 
-	ListIterator<Layer*> it = this->page.layerIterator();
+	ListIterator<Layer*> it = this->page->layerIterator();
 	while (it.hasNext() && selected)
 	{
 		Layer* l = it.next();
@@ -868,8 +869,8 @@ bool PageView::paintPage(cairo_t* cr, GdkRectangle* rect)
 		                       CAIRO_FONT_WEIGHT_BOLD);
 		cairo_set_font_size(cr2, 32.0);
 		cairo_text_extents(cr2, txtLoading, &ex);
-		cairo_move_to(cr2, (page.getWidth() - ex.width) / 2 - ex.x_bearing,
-		              (page.getHeight() - ex.height) / 2 - ex.y_bearing);
+		cairo_move_to(cr2, (page->getWidth() - ex.width) / 2 - ex.x_bearing,
+		              (page->getHeight() - ex.height) / 2 - ex.y_bearing);
 		cairo_show_text(cr2, txtLoading);
 
 		cairo_destroy(cr2);
@@ -1019,28 +1020,28 @@ double PageView::getHeight()
 {
 	XOJ_CHECK_TYPE(PageView);
 
-	return this->page.getHeight();
+	return this->page->getHeight();
 }
 
 double PageView::getWidth()
 {
 	XOJ_CHECK_TYPE(PageView);
 
-	return this->page.getWidth();
+	return this->page->getWidth();
 }
 
 int PageView::getDisplayWidth()
 {
 	XOJ_CHECK_TYPE(PageView);
 
-	return this->page.getWidth() * this->xournal->getZoom();
+	return this->page->getWidth() * this->xournal->getZoom();
 }
 
 int PageView::getDisplayHeight()
 {
 	XOJ_CHECK_TYPE(PageView);
 
-	return this->page.getHeight() * this->xournal->getZoom();
+	return this->page->getHeight() * this->xournal->getZoom();
 }
 
 TexImage* PageView::getSelectedTex()
@@ -1067,3 +1068,19 @@ TexImage* PageView::getSelectedTex()
 	return texMatch;
 
 }
+
+void PageView::rectChanged(Rectangle& rect)
+{
+	rerenderRect(rect.x, rect.y, rect.width, rect.height);
+}
+
+void PageView::rangeChanged(Range &range)
+{
+	rerenderRange(range);
+}
+
+void PageView::elementChanged(Element* elem)
+{
+	rerenderElement(elem);
+}
+

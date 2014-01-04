@@ -203,9 +203,9 @@ int Document::findPdfPage(int pdfPage)
 	for (int i = 0; i < count; i++)
 	{
 		PageRef p = this->pages[i];
-		if (p.getBackgroundType() == BACKGROUND_TYPE_PDF)
+		if (p->getBackgroundType() == BACKGROUND_TYPE_PDF)
 		{
-			if (p.getPdfPageNr() == pdfPage)
+			if (p->getPdfPageNr() == pdfPage)
 			{
 				return i;
 			}
@@ -362,7 +362,7 @@ bool Document::readPdf(String filename, bool initPages, bool attachToDocument)
 		{
 			XojPopplerPage* page = pdfDocument.getPage(i);
 			PageRef p = new XojPage(page->getWidth(), page->getHeight());
-			p.setBackgroundPdfPageNr(i);
+			p->setBackgroundPdfPageNr(i);
 			addPage(p);
 		}
 	}
@@ -381,7 +381,7 @@ void Document::setPageSize(PageRef p, double width, double height)
 {
 	XOJ_CHECK_TYPE(Document);
 
-	p.setSize(width, height);
+	p->setSize(width, height);
 
 	int id = indexOf(p);
 	if (id >= 0 && id < getPageCount())

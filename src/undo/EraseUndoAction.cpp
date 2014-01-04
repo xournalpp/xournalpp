@@ -6,13 +6,11 @@
 
 #include "PageLayerPosEntry.h"
 
-EraseUndoAction::EraseUndoAction(PageRef page,
-                                 Redrawable* view) : UndoAction("EraseUndoAction")
+EraseUndoAction::EraseUndoAction(PageRef page) : UndoAction("EraseUndoAction")
 {
 	XOJ_INIT_TYPE(EraseUndoAction);
 
 	this->page = page;
-	this->view = view;
 	this->edited = NULL;
 	this->original = NULL;
 }
@@ -117,7 +115,8 @@ void EraseUndoAction::finalize()
 			p->element->setEraseable(NULL);
 		}
 	}
-	view->rerenderPage();
+
+	this->page->firePageChanged();
 }
 
 String EraseUndoAction::getText()
@@ -136,7 +135,7 @@ bool EraseUndoAction::undo(Control* control)
 		PageLayerPosEntry<Stroke>* e = (PageLayerPosEntry<Stroke>*) l->data;
 
 		e->layer->removeElement(e->element, false);
-		view->rerenderElement(e->element);
+		this->page->fireElementChanged(e->element);
 	}
 
 	for (GList* l = this->original; l != NULL; l = l->next)
@@ -144,7 +143,7 @@ bool EraseUndoAction::undo(Control* control)
 		PageLayerPosEntry<Stroke>* e = (PageLayerPosEntry<Stroke>*) l->data;
 
 		e->layer->insertElement(e->element, e->pos);
-		view->rerenderElement(e->element);
+		this->page->fireElementChanged(e->element);
 	}
 
 	this->undone = true;
@@ -160,7 +159,7 @@ bool EraseUndoAction::redo(Control* control)
 		PageLayerPosEntry<Stroke>* e = (PageLayerPosEntry<Stroke>*) l->data;
 
 		e->layer->removeElement(e->element, false);
-		view->rerenderElement(e->element);
+		this->page->fireElementChanged(e->element);
 	}
 
 	for (GList* l = this->edited; l != NULL; l = l->next)
@@ -168,7 +167,7 @@ bool EraseUndoAction::redo(Control* control)
 		PageLayerPosEntry<Stroke>* e = (PageLayerPosEntry<Stroke>*) l->data;
 
 		e->layer->insertElement(e->element, e->pos);
-		view->rerenderElement(e->element);
+		this->page->fireElementChanged(e->element);
 	}
 
 	this->undone = false;

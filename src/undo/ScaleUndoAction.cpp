@@ -5,14 +5,14 @@
 #include <Range.h>
 #include "../gui/Redrawable.h"
 
-ScaleUndoAction::ScaleUndoAction(PageRef page, Redrawable* view,
+ScaleUndoAction::ScaleUndoAction(PageRef page,
                                  GList* elements,
-                                 double x0, double y0, double fx, double fy) : UndoAction("ScaleUndoAction")
+                                 double x0, double y0,
+                                 double fx, double fy) : UndoAction("ScaleUndoAction")
 {
 	XOJ_INIT_TYPE(ScaleUndoAction);
 
 	this->page = page;
-	this->view = view;
 	this->elements = g_list_copy(elements);
 	this->x0 = x0;
 	this->y0 = y0;
@@ -25,7 +25,6 @@ ScaleUndoAction::~ScaleUndoAction()
 	XOJ_CHECK_TYPE(ScaleUndoAction);
 
 	this->page = NULL;
-	this->view = NULL;
 	g_list_free(this->elements);
 	this->elements = NULL;
 
@@ -72,7 +71,7 @@ void ScaleUndoAction::applayScale(double fx, double fy)
 		r.addPoint(e->getX() + e->getElementWidth(), e->getY() + e->getElementHeight());
 	}
 
-	this->view->rerenderRange(r);
+	this->page->fireRangeChanged(r);
 }
 
 String ScaleUndoAction::getText()

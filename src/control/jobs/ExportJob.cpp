@@ -224,21 +224,22 @@ void ExportJob::run()
 				PageRef page = doc->getPage(i);
 				doc->unlock();
 
-				if (!createSurface(id, page.getWidth(), page.getHeight()))
+				if (!createSurface(id, page->getWidth(), page->getHeight()))
 				{
 					// could not create this file...
 					continue;
 				}
 
-				if (page.getBackgroundType() == BACKGROUND_TYPE_PDF)
+				if (page->getBackgroundType() == BACKGROUND_TYPE_PDF)
 				{
-					int pgNo = page.getPdfPageNr();
+					int pgNo = page->getPdfPageNr();
 					XojPopplerPage* popplerPage = doc->getPdfPage(pgNo);
 
 
 					// TODO LOW PRIO pdf is written as image to the SVN surface!!
-					PdfView::drawPage(NULL, popplerPage, cr, zoom, page.getWidth(),
-					                  page.getHeight());
+					PdfView::drawPage(NULL, popplerPage, cr, zoom,
+					                  page->getWidth(),
+					                  page->getHeight());
 				}
 
 				view.drawPage(page, this->cr, true);

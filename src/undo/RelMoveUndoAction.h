@@ -22,9 +22,9 @@ class Redrawable;
 class RelMoveUndoAction: public UndoAction
 {
 public:
-	RelMoveUndoAction(Layer* sourceLayer, PageRef sourcePage, Redrawable* sourceView,
-	                  GList* selected, double mx, double my, Layer* targetLayer, PageRef targetPage,
-	                  Redrawable* targetView);
+	RelMoveUndoAction(Layer* sourceLayer, PageRef sourcePage,
+	                  GList* selected, double mx, double my,
+	                  Layer* targetLayer, PageRef targetPage);
 	virtual ~RelMoveUndoAction();
 
 public:
@@ -35,7 +35,7 @@ public:
 
 private:
 	void switchLayer(GList* entries, Layer* oldLayer, Layer* newLayer);
-	void repaint(Redrawable *view, bool target);
+	void repaint(PageRef& page, bool target);
 	void repaint();
 	void move();
 
@@ -47,9 +47,6 @@ private:
 
 	Layer* sourceLayer;
 	Layer* targetLayer;
-
-	Redrawable* sourceView;
-	Redrawable* targetView;
 
 	String text;
 

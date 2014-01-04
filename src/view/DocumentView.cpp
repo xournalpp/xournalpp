@@ -303,7 +303,7 @@ void DocumentView::paintBackgroundImage()
 {
 	XOJ_CHECK_TYPE(DocumentView);
 
-	GdkPixbuf* pixbuff = page.getBackgroundImage().getPixbuf();
+	GdkPixbuf* pixbuff = page->getBackgroundImage().getPixbuf();
 	if (pixbuff)
 	{
 		cairo_matrix_t matrix = { 0 };
@@ -313,8 +313,8 @@ void DocumentView::paintBackgroundImage()
 		int width = gdk_pixbuf_get_width(pixbuff);
 		int height = gdk_pixbuf_get_height(pixbuff);
 
-		double sx = page.getWidth() / width;
-		double sy = page.getHeight() / height;
+		double sx = page->getWidth() / width;
+		double sy = page->getHeight() / height;
 
 		cairo_scale(cr, sx, sy);
 
@@ -330,7 +330,7 @@ void DocumentView::paintBackgroundColor()
 {
 	XOJ_CHECK_TYPE(DocumentView);
 
-	applyColor(cr, page.getBackgroundColor());
+	applyColor(cr, page->getBackgroundColor());
 
 	cairo_rectangle(cr, 0, 0, width, height);
 	cairo_fill(cr);
@@ -423,35 +423,35 @@ void DocumentView::drawPage(PageRef page, cairo_t* cr,
 
 	this->cr = cr;
 	this->page = page;
-	this->width = page.getWidth();
-	this->height = page.getHeight();
+	this->width = page->getWidth();
+	this->height = page->getHeight();
 	this->dontRenderEditingStroke = dontRenderEditingStroke;
 
-	if (page.getBackgroundType() == BACKGROUND_TYPE_PDF)
+	if (page->getBackgroundType() == BACKGROUND_TYPE_PDF)
 	{
 		// Handled in PdfView
 	}
-	else if (page.getBackgroundType() == BACKGROUND_TYPE_IMAGE)
+	else if (page->getBackgroundType() == BACKGROUND_TYPE_IMAGE)
 	{
 		paintBackgroundImage();
 	}
-	else if (page.getBackgroundType() == BACKGROUND_TYPE_GRAPH)
+	else if (page->getBackgroundType() == BACKGROUND_TYPE_GRAPH)
 	{
 		paintBackgroundColor();
 		paintBackgroundGraph();
 	}
-	else if (page.getBackgroundType() == BACKGROUND_TYPE_LINED)
+	else if (page->getBackgroundType() == BACKGROUND_TYPE_LINED)
 	{
 		paintBackgroundColor();
 		paintBackgroundRuled();
 		paintBackgroundLined();
 	}
-	else if (page.getBackgroundType() == BACKGROUND_TYPE_RULED)
+	else if (page->getBackgroundType() == BACKGROUND_TYPE_RULED)
 	{
 		paintBackgroundColor();
 		paintBackgroundRuled();
 	}
-	else if (page.getBackgroundType() == BACKGROUND_TYPE_NONE)
+	else if (page->getBackgroundType() == BACKGROUND_TYPE_NONE)
 	{
 		paintBackgroundColor();
 	}
@@ -459,8 +459,8 @@ void DocumentView::drawPage(PageRef page, cairo_t* cr,
 	cairo_set_operator(cr, CAIRO_OPERATOR_SOURCE);
 
 	int layer = 0;
-	ListIterator<Layer*> it = page.layerIterator();
-	while (it.hasNext() && layer < page.getSelectedLayerId())
+	ListIterator<Layer*> it = page->layerIterator();
+	while (it.hasNext() && layer < page->getSelectedLayerId())
 	{
 		Layer* l = it.next();
 		drawLayer(cr, l);

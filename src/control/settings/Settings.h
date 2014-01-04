@@ -22,7 +22,12 @@
 
 enum AttributeType
 {
-    ATTRIBUTE_TYPE_NONE, ATTRIBUTE_TYPE_STRING, ATTRIBUTE_TYPE_INT, ATTRIBUTE_TYPE_DOUBLE, ATTRIBUTE_TYPE_INT_HEX, ATTRIBUTE_TYPE_BOOLEAN,
+    ATTRIBUTE_TYPE_NONE,
+    ATTRIBUTE_TYPE_STRING,
+    ATTRIBUTE_TYPE_INT,
+    ATTRIBUTE_TYPE_DOUBLE,
+    ATTRIBUTE_TYPE_INT_HEX,
+    ATTRIBUTE_TYPE_BOOLEAN,
 };
 
 enum ScrollbarHideType
@@ -350,7 +355,7 @@ private:
 	bool sidebarOnRight;
 
 	/**
-	 * Show a better visibel cursor for pen
+	 * Show a better visible cursor for pen
 	 */
 	bool showBigCursor;
 
@@ -479,7 +484,7 @@ private:
 	int selectionColor;
 
 	/**
-	 * The page format which are visibel
+	 * The page format which are visible
 	 */
 	String visiblePageFormats;
 };

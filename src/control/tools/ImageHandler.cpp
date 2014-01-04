@@ -74,10 +74,10 @@ bool ImageHandler::insertImage(GFile* file, double x, double y)
 
 	PageRef page = view->getPage();
 
-	if (x + width > page.getWidth() || y + height > page.getHeight())
+	if (x + width > page->getWidth() || y + height > page->getHeight())
 	{
-		double maxZoomX = (page.getWidth() - x) / width;
-		double maxZoomY = (page.getHeight() - y) / height;
+		double maxZoomX = (page->getWidth() - x) / width;
+		double maxZoomY = (page->getHeight() - y) / height;
 
 		if (maxZoomX < maxZoomY)
 		{
@@ -92,10 +92,11 @@ bool ImageHandler::insertImage(GFile* file, double x, double y)
 	img->setWidth(width * zoom);
 	img->setHeight(height * zoom);
 
-	page.getSelectedLayer()->addElement(img);
+	page->getSelectedLayer()->addElement(img);
 
 	InsertUndoAction* insertUndo = new InsertUndoAction(page,
-	                                                    page.getSelectedLayer(), img, view);
+	                                                    page->getSelectedLayer(),
+	                                                    img);
 	control->getUndoRedoHandler()->addUndoAction(insertUndo);
 
 	view->rerenderElement(img);

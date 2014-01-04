@@ -5,14 +5,14 @@
 #include "../gui/Redrawable.h"
 #include <Stacktrace.h>
 
-RecognizerUndoAction::RecognizerUndoAction(PageRef page, Redrawable* view,
+RecognizerUndoAction::RecognizerUndoAction(PageRef page,
                                            Layer* layer,
-                                           Stroke* original, Stroke* recognized) : UndoAction("RecognizerUndoAction")
+                                           Stroke* original,
+                                           Stroke* recognized) : UndoAction("RecognizerUndoAction")
 {
 	XOJ_INIT_TYPE(RecognizerUndoAction);
 
 	this->page = page;
-	this->view = view;
 	this->layer = layer;
 	this->original = NULL;
 	this->recognized = recognized;
@@ -62,13 +62,14 @@ bool RecognizerUndoAction::undo(Control* control)
 	XOJ_CHECK_TYPE(RecognizerUndoAction);
 
 	int pos = this->layer->removeElement(this->recognized, false);
-	this->view->rerenderElement(this->recognized);
+	this->page->fireElementChanged(this->recognized);
+
 	int i = 0;
 	for (GList* l = this->original; l != NULL; l = l->next)
 	{
 		Stroke* s = (Stroke*) l->data;
 		this->layer->insertElement(s, pos);
-		this->view->rerenderElement(s);
+		this->page->fireElementChanged(s);
 		i++;
 	}
 
@@ -85,11 +86,11 @@ bool RecognizerUndoAction::redo(Control* control)
 	{
 		Stroke* s = (Stroke*) l->data;
 		pos = this->layer->removeElement(s, false);
-		this->view->rerenderElement(s);
+		this->page->fireElementChanged(s);
 	}
 	this->layer->insertElement(this->recognized, pos);
 
-	this->view->rerenderElement(this->recognized);
+	this->page->fireElementChanged(this->recognized);
 
 	this->undone = false;
 	return true;

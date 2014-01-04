@@ -274,7 +274,7 @@ void LoadHandler::parseContents()
 	}
 	else
 	{
-		error(_("Unexpected tag in document: \"%s\""), elementName);
+		//error(_("Unexpected tag in document: \"%s\""), elementName);
 	}
 }
 const char* RULINGSTR_NONE = "plain";
@@ -290,23 +290,23 @@ void LoadHandler::parseBgSolid()
 
 	if (strcmp("plain", style) == 0)
 	{
-		this->page.setBackgroundType(BACKGROUND_TYPE_NONE);
+		this->page->setBackgroundType(BACKGROUND_TYPE_NONE);
 	}
 	else if (strcmp("lined", style) == 0)
 	{
-		this->page.setBackgroundType(BACKGROUND_TYPE_LINED);
+		this->page->setBackgroundType(BACKGROUND_TYPE_LINED);
 	}
 	else if (strcmp("ruled", style) == 0)
 	{
-		this->page.setBackgroundType(BACKGROUND_TYPE_RULED);
+		this->page->setBackgroundType(BACKGROUND_TYPE_RULED);
 	}
 	else if (strcmp("graph", style) == 0)
 	{
-		this->page.setBackgroundType(BACKGROUND_TYPE_GRAPH);
+		this->page->setBackgroundType(BACKGROUND_TYPE_GRAPH);
 	}
 	else
 	{
-		this->page.setBackgroundType(BACKGROUND_TYPE_NONE);
+		this->page->setBackgroundType(BACKGROUND_TYPE_NONE);
 		error(_("Unknown background type parsed: \"%s\""), style);
 	}
 
@@ -342,7 +342,7 @@ void LoadHandler::parseBgSolid()
 		parseColor(sColor, color);
 	}
 
-	this->page.setBackgroundColor(color);
+	this->page->setBackgroundColor(color);
 }
 
 void LoadHandler::parseBgPixmap()
@@ -381,7 +381,7 @@ void LoadHandler::parseBgPixmap()
 			g_error_free(error);
 		}
 
-		this->page.setBackgroundImage(img);
+		this->page->setBackgroundImage(img);
 	}
 	else if (!strcmp(domain, "clone"))
 	{
@@ -389,14 +389,14 @@ void LoadHandler::parseBgPixmap()
 
 		if (p.isValid())
 		{
-			this->page.setBackgroundImage(p.getBackgroundImage());
+			this->page->setBackgroundImage(p->getBackgroundImage());
 		}
 	}
 	else
 	{
 		error(_("Unknown pixmap::domain type: %s"), domain);
 	}
-	this->page.setBackgroundType(BACKGROUND_TYPE_IMAGE);
+	this->page->setBackgroundType(BACKGROUND_TYPE_IMAGE);
 }
 
 void LoadHandler::parseBgPdf()
@@ -407,7 +407,7 @@ void LoadHandler::parseBgPdf()
 	bool attachToDocument = false;
 	String pdfFilename;
 
-	this->page.setBackgroundPdfPageNr(pageno - 1);
+	this->page->setBackgroundPdfPageNr(pageno - 1);
 
 	if (!this->pdfFilenameParsed)
 	{
@@ -514,8 +514,8 @@ void LoadHandler::parsePage()
 		{
 			if (this->removePdfBackgroundFlag)
 			{
-				this->page.setBackgroundType(BACKGROUND_TYPE_NONE);
-				this->page.setBackgroundColor(0xffffff);
+				this->page->setBackgroundType(BACKGROUND_TYPE_NONE);
+				this->page->setBackgroundColor(0xffffff);
 			}
 			else
 			{
@@ -531,7 +531,7 @@ void LoadHandler::parsePage()
 	{
 		this->pos = PARSER_POS_IN_LAYER;
 		this->layer = new Layer();
-		this->page.addLayer(this->layer);
+		this->page->addLayer(this->layer);
 	}
 }
 

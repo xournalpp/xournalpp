@@ -44,7 +44,7 @@ bool InsertLayerUndoAction::undo(Control* control)
 	//to prevent a double lock (we're already locked here)
 	//doc->lock();
 
-	this->page.removeLayer(this->layer);
+	this->page->removeLayer(this->layer);
 	int id = doc->indexOf(this->page);
 	control->getWindow()->getXournal()->layerChanged(id);
 
@@ -67,7 +67,7 @@ bool InsertLayerUndoAction::redo(Control* control)
 
 	//doc->lock();
 
-	this->page.addLayer(this->layer);
+	this->page->addLayer(this->layer);
 	int id = doc->indexOf(this->page);
 	control->getWindow()->getXournal()->layerChanged(id);
 

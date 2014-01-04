@@ -119,7 +119,7 @@ void SidebarIndexPage::askInsertPdfPage(int pdfPage)
 	if (pdf)
 	{
 		PageRef page = new XojPage(pdf->getWidth(), pdf->getHeight());
-		page.setBackgroundPdfPageNr(pdfPage);
+		page->setBackgroundPdfPageNr(pdfPage);
 		control->insertPage(page, position);
 	}
 }

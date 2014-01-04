@@ -22,7 +22,7 @@ class Layer;
 class DeleteUndoAction: public UndoAction
 {
 public:
-	DeleteUndoAction(PageRef page, Redrawable* view, bool eraser);
+	DeleteUndoAction(PageRef page, bool eraser);
 	virtual ~DeleteUndoAction();
 
 public:
@@ -37,7 +37,6 @@ private:
 	XOJ_TYPE_ATTRIB;
 
 	GList* elements;
-	Redrawable* view;
 	bool eraser;
 };
 

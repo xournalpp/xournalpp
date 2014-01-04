@@ -291,11 +291,12 @@ void SidebarPreviews::pageDeleted(int page)
 	XOJ_CHECK_TYPE(SidebarPreviews);
 
 	delete this->previews[page];
-	for (int i = page; i < this->previewCount; i++)
+	for (int i = page; i < this->previewCount - 1; i++)
 	{
 		this->previews[i] = this->previews[i + 1];
 	}
 	this->previewCount--;
+	this->previews[this->previewCount] = NULL;
 
 	layout();
 }

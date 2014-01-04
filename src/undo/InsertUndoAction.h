@@ -21,8 +21,7 @@ class Redrawable;
 class InsertUndoAction: public UndoAction
 {
 public:
-	InsertUndoAction(PageRef page, Layer* layer, Element* element,
-	                 Redrawable* view);
+	InsertUndoAction(PageRef page, Layer* layer, Element* element);
 	virtual ~InsertUndoAction();
 
 public:
@@ -36,14 +35,12 @@ private:
 
 	Layer* layer;
 	Element* element;
-	Redrawable* view;
 };
 
 class InsertsUndoAction : public UndoAction
 {
 public:
-	InsertsUndoAction(PageRef page, Layer* layer, GList* elements,
-	                  Redrawable* view);
+	InsertsUndoAction(PageRef page, Layer* layer, GList* elements);
 	virtual ~InsertsUndoAction();
 
 public:
@@ -57,7 +54,6 @@ private:
 
 	Layer* layer;
 	GList* elements;
-	Redrawable* view;
 
 };
 

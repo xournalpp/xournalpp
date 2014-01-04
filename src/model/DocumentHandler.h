@@ -1,7 +1,7 @@
 /*
  * Xournal++
  *
- * Document listener
+ * Document handler
  *
  * @author Xournal Team
  * http://xournal.sf.net

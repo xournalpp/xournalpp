@@ -4,9 +4,11 @@
 #include "../model/Element.h"
 #include "../gui/Redrawable.h"
 
+#include <Rectangle.h>
+
 TextBoxUndoAction::TextBoxUndoAction(PageRef page, Layer* layer,
-                                     Element* element, Element* oldelement,
-                                     Redrawable* view) : UndoAction("TextBoxUndoAction")
+                                     Element* element,
+                                     Element* oldelement) : UndoAction("TextBoxUndoAction")
 {
 	XOJ_INIT_TYPE(TextBoxUndoAction);
 
@@ -14,7 +16,6 @@ TextBoxUndoAction::TextBoxUndoAction(PageRef page, Layer* layer,
 	this->layer = layer;
 	this->element = element;
 	this->oldelement = oldelement;
-	this->view = view;
 }
 
 TextBoxUndoAction::~TextBoxUndoAction()
@@ -67,7 +68,8 @@ bool TextBoxUndoAction::undo(Control* control)
 	x2 = MAX(x2, oldelement->getX() + oldelement->getElementWidth());
 	y2 = MAX(y2, oldelement->getY() + oldelement->getElementHeight());
 
-	this->view->rerenderArea(x1, y1, x2, y2);
+	Rectangle rect(x1, y1, x2 - x1, y2 - y1);
+	this->page->fireRectChanged(rect);
 
 	this->undone = true;
 
@@ -91,7 +93,8 @@ bool TextBoxUndoAction::redo(Control* control)
 	x2 = MAX(x2, element->getX() + element->getElementWidth());
 	y2 = MAX(y2, element->getY() + element->getElementHeight());
 
-	this->view->rerenderArea(x1, y1, x2, y2);
+	Rectangle rect(x1, y1, x2 - x1, y2 - y1);
+	this->page->fireRectChanged(rect);
 
 	this->undone = false;
 

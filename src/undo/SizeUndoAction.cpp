@@ -44,14 +44,12 @@ public:
 	int pressureCount;
 };
 
-SizeUndoAction::SizeUndoAction(PageRef page, Layer* layer,
-                               Redrawable* view) : UndoAction("SizeUndoAction")
+SizeUndoAction::SizeUndoAction(PageRef page, Layer* layer) : UndoAction("SizeUndoAction")
 {
 	XOJ_INIT_TYPE(SizeUndoAction);
 
 	this->page = page;
 	this->layer = layer;
-	this->view = view;
 	this->data = NULL;
 }
 
@@ -117,7 +115,7 @@ bool SizeUndoAction::undo(Control* control)
 		               e->s->getY() + e->s->getElementHeight());
 	}
 
-	view->rerenderRange(range);
+	this->page->fireRangeChanged(range);
 
 	return true;
 }
@@ -145,7 +143,7 @@ bool SizeUndoAction::redo(Control* control)
 		               e->s->getY() + e->s->getElementHeight());
 	}
 
-	view->rerenderRange(range);
+	this->page->fireRangeChanged(range);
 
 	return true;
 }

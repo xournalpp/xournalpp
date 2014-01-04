@@ -288,9 +288,9 @@ ImagesDialog::ImagesDialog(GladeSearchpath* gladeSearchPath, Document* doc,
 	{
 		PageRef p = doc->getPage(i);
 
-		if (p.getBackgroundType() == BACKGROUND_TYPE_IMAGE)
+		if (p->getBackgroundType() == BACKGROUND_TYPE_IMAGE)
 		{
-			if (p.getBackgroundImage().isEmpty())
+			if (p->getBackgroundImage().isEmpty())
 			{
 				continue;
 			}
@@ -300,7 +300,7 @@ ImagesDialog::ImagesDialog(GladeSearchpath* gladeSearchPath, Document* doc,
 			for (GList* l = this->images; l != NULL; l = l->next)
 			{
 				ImageView* v = (ImageView*) l->data;
-				if (v->backgroundImage == p.getBackgroundImage())
+				if (v->backgroundImage == p->getBackgroundImage())
 				{
 					found = true;
 					break;
@@ -309,7 +309,7 @@ ImagesDialog::ImagesDialog(GladeSearchpath* gladeSearchPath, Document* doc,
 			if (!found)
 			{
 				ImageView* page = new ImageView(x, this);
-				page->backgroundImage = p.getBackgroundImage();
+				page->backgroundImage = p->getBackgroundImage();
 				page->updateSize();
 				gtk_layout_put(GTK_LAYOUT(this->widget), page->getWidget(), 0, 0);
 
