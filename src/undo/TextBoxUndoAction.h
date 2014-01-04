@@ -23,7 +23,7 @@ class TextBoxUndoAction: public UndoAction
 {
 public:
 	TextBoxUndoAction(PageRef page, Layer* layer, Element* element,
-	                  Element* oldelement, Redrawable* view);
+	                  Element* oldelement);
 	virtual ~TextBoxUndoAction();
 
 public:
@@ -38,7 +38,6 @@ private:
 	Layer* layer;
 	Element* element;
 	Element* oldelement;
-	Redrawable* view;
 };
 
 #endif /* __TEXTBOXUNDOACTION_H__ */

@@ -9,18 +9,16 @@
 
 
 RelMoveUndoAction::RelMoveUndoAction(Layer* sourceLayer, PageRef sourcePage,
-                               Redrawable* sourceView, GList* selected, double mx, double my,
-                               Layer* targetLayer,
-                               PageRef targetPage, Redrawable* targetView) : UndoAction("RelMoveUndoAction")
+                                     GList* selected, double mx, double my,
+                                     Layer* targetLayer,
+                                     PageRef targetPage) : UndoAction("RelMoveUndoAction")
 {
 	XOJ_INIT_TYPE(RelMoveUndoAction);
 
 	this->page = sourcePage;
 	this->sourceLayer = sourceLayer;
-	this->sourceView = sourceView;
 	this->text = _("Move");
 
-	this->targetView = NULL;
 	this->targetLayer = NULL;
 	this->targetPage = NULL;
 
@@ -33,7 +31,6 @@ RelMoveUndoAction::RelMoveUndoAction(Layer* sourceLayer, PageRef sourcePage,
 	{
 		this->targetPage = targetPage;
 		this->targetLayer = targetLayer;
-		this->targetView = targetView;
 	}
 
 	this->undone = false;
@@ -116,7 +113,7 @@ void RelMoveUndoAction::switchLayer(GList* entries, Layer* oldLayer,
 	}
 }
 
-void RelMoveUndoAction::repaint(Redrawable *view,
+void RelMoveUndoAction::repaint(PageRef& page,
                                 bool target)
 {
 	Element *e = (Element*) this->elements->data;
@@ -145,7 +142,7 @@ void RelMoveUndoAction::repaint(Redrawable *view,
 		               ey + e->getElementHeight());
 	}
 
-	view->rerenderRange(range);
+	page->fireRangeChanged(range);
 }
 
 void RelMoveUndoAction::repaint()
@@ -157,9 +154,9 @@ void RelMoveUndoAction::repaint()
 		return;
 	}
 
-	sourceView->rerenderPage();
-	if(targetView)
-		targetView->rerenderPage();
+	this->page->firePageChanged();
+	if(targetPage.isValid())
+		this->targetPage->firePageChanged();
 }
 
 XojPage** RelMoveUndoAction::getPages()

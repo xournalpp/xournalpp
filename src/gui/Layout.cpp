@@ -89,11 +89,11 @@ void Layout::checkSelectedPage()
 
 		if (y > scrollY + viewHeight)
 		{
-			p->setIsVisibel(false);
+			p->setIsVisible(false);
 			for (; page < this->view->viewPagesLen; page++)
 			{
 				p = this->view->viewPages[page];
-				p->setIsVisibel(false);
+				p->setIsVisible(false);
 			}
 
 			break;
@@ -133,11 +133,11 @@ void Layout::checkSelectedPage()
 				mostPageNr = page;
 			}
 
-			p->setIsVisibel(true);
+			p->setIsVisible(true);
 		}
 		else
 		{
-			p->setIsVisibel(false);
+			p->setIsVisible(false);
 		}
 	}
 

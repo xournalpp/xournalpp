@@ -23,18 +23,16 @@ public:
 };
 
 MoveUndoAction::MoveUndoAction(Layer* sourceLayer, PageRef sourcePage,
-                               Redrawable* sourceView, GList* selected, double mx, double my,
+                               GList* selected, double mx, double my,
                                Layer* targetLayer,
-                               PageRef targetPage, Redrawable* targetView) : UndoAction("MoveUndoAction")
+                               PageRef targetPage) : UndoAction("MoveUndoAction")
 {
 	XOJ_INIT_TYPE(MoveUndoAction);
 
 	this->page = sourcePage;
 	this->sourceLayer = sourceLayer;
-	this->sourceView = sourceView;
 	this->text = _("Move");
 
-	this->targetView = NULL;
 	this->targetLayer = NULL;
 	this->targetPage = NULL;
 
@@ -54,7 +52,6 @@ MoveUndoAction::MoveUndoAction(Layer* sourceLayer, PageRef sourcePage,
 	{
 		this->targetPage = targetPage;
 		this->targetLayer = targetLayer;
-		this->targetView = targetView;
 	}
 }
 
@@ -69,8 +66,6 @@ MoveUndoAction::MoveUndoAction(PageRef sourcePage,
 	this->targetPos = NULL;
 	this->sourceLayer = handler->layer;
 	this->targetLayer = NULL;
-	this->sourceView = handler->view;
-	this->targetView = NULL;
 	this->text = _("Vertical Space");
 
 	ListIterator<Element*> it = handler->getElements();
@@ -180,7 +175,7 @@ void MoveUndoAction::switchLayer(GList* entries, Layer* oldLayer,
 	}
 }
 
-void MoveUndoAction::repaint(Redrawable* view, GList* list, GList* list2)
+void MoveUndoAction::repaint(PageRef &page, GList* list, GList* list2)
 {
 	XOJ_CHECK_TYPE(MoveUndoAction);
 
@@ -202,7 +197,7 @@ void MoveUndoAction::repaint(Redrawable* view, GList* list, GList* list2)
 		range.addPoint(u->x + u->e->getElementWidth(), u->y + u->e->getElementHeight());
 	}
 
-	view->rerenderRange(range);
+	page->fireRangeChanged(range);
 }
 
 void MoveUndoAction::repaint()
@@ -214,14 +209,14 @@ void MoveUndoAction::repaint()
 		return;
 	}
 
-	if(this->targetView == NULL)
+	if(!this->targetPage.isValid())
 	{
-		repaint(this->sourceView, this->sourcePos, this->targetPos);
+		repaint(this->page, this->sourcePos, this->targetPos);
 	}
 	else
 	{
-		repaint(this->sourceView, this->sourcePos);
-		repaint(this->targetView, this->targetPos);
+		repaint(this->page, this->sourcePos);
+		repaint(this->targetPage, this->targetPos);
 	}
 }
 

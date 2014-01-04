@@ -88,7 +88,7 @@ bool RectSelection::finalize(PageRef page)
 
 	this->page = page;
 
-	Layer* l = page.getSelectedLayer();
+	Layer* l = page->getSelectedLayer();
 	ListIterator<Element*> eit = l->elementIterator();
 	while (eit.hasNext())
 	{
@@ -412,7 +412,7 @@ bool RegionSelect::finalize(PageRef page)
 		}
 	}
 
-	Layer* l = page.getSelectedLayer();
+	Layer* l = page->getSelectedLayer();
 	ListIterator<Element*> eit = l->elementIterator();
 	while (eit.hasNext())
 	{

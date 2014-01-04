@@ -208,7 +208,7 @@ void PdfBookmarks::writeOutlines(Document* doc, PdfWriter* writer,
 		float top = 0;
 		if (p.isValid())
 		{
-			top = (p.getHeight() - b->top) * 72;
+			top = (p->getHeight() - b->top) * 72;
 		}
 
 		//Outline items

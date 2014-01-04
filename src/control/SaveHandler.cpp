@@ -97,7 +97,7 @@ void SaveHandler::prepareSave(Document* doc)
 	for (int i = 0; i < doc->getPageCount(); i++)
 	{
 		PageRef p = doc->getPage(i);
-		p.getBackgroundImage().clearSaveState();
+		p->getBackgroundImage().clearSaveState();
 	}
 
 	for (int i = 0; i < doc->getPageCount(); i++)
@@ -250,13 +250,13 @@ void SaveHandler::visitPage(XmlNode* root, PageRef p, Document* doc, int id)
 
 	XmlNode* page = new XmlNode("page");
 	root->addChild(page);
-	page->setAttrib("width", p.getWidth());
-	page->setAttrib("height", p.getHeight());
+	page->setAttrib("width", p->getWidth());
+	page->setAttrib("height", p->getHeight());
 
 	XmlNode* background = new XmlNode("background");
 	page->addChild(background);
 
-	switch (p.getBackgroundType())
+	switch (p->getBackgroundType())
 	{
 	case BACKGROUND_TYPE_PDF:
 
@@ -304,20 +304,20 @@ void SaveHandler::visitPage(XmlNode* root, PageRef p, Document* doc, int id)
 				background->setAttrib("filename", pdfName.c_str());
 			}
 		}
-		background->setAttrib("pageno", p.getPdfPageNr() + 1);
+		background->setAttrib("pageno", p->getPdfPageNr() + 1);
 		break;
 	case BACKGROUND_TYPE_NONE:
 	case BACKGROUND_TYPE_LINED:
 	case BACKGROUND_TYPE_RULED:
 	case BACKGROUND_TYPE_GRAPH:
 		background->setAttrib("type", "solid");
-		background->setAttrib("color", getColorStr(p.getBackgroundColor()).c_str());
-		background->setAttrib("style", getSolidBgStr(p.getBackgroundType()).c_str());
+		background->setAttrib("color", getColorStr(p->getBackgroundColor()).c_str());
+		background->setAttrib("style", getSolidBgStr(p->getBackgroundType()).c_str());
 		break;
 	case BACKGROUND_TYPE_IMAGE:
 		background->setAttrib("type", "pixmap");
 
-		int cloneId = p.getBackgroundImage().getCloneId();
+		int cloneId = p->getBackgroundImage().getCloneId();
 		if (cloneId != -1)
 		{
 			background->setAttrib("domain", "clone");
@@ -325,32 +325,32 @@ void SaveHandler::visitPage(XmlNode* root, PageRef p, Document* doc, int id)
 			background->setAttrib("filename", filename);
 			g_free(filename);
 		}
-		else if (p.getBackgroundImage().isAttached() &&
-		         p.getBackgroundImage().getPixbuf())
+		else if (p->getBackgroundImage().isAttached() &&
+		         p->getBackgroundImage().getPixbuf())
 		{
 			char* filename = g_strdup_printf("bg_%d.png", this->attachBgId++);
 			background->setAttrib("domain", "attach");
 			background->setAttrib("filename", filename);
-			p.getBackgroundImage().setFilename(filename);
+			p->getBackgroundImage().setFilename(filename);
 
 			BackgroundImage* img = new BackgroundImage();
-			*img = p.getBackgroundImage();
+			*img = p->getBackgroundImage();
 			this->backgroundImages = g_list_append(this->backgroundImages, img);
 
 			g_free(filename);
-			p.getBackgroundImage().setCloneId(id);
+			p->getBackgroundImage().setCloneId(id);
 		}
 		else
 		{
 			background->setAttrib("domain", "absolute");
-			background->setAttrib("filename", p.getBackgroundImage().getFilename().c_str());
-			p.getBackgroundImage().setCloneId(id);
+			background->setAttrib("filename", p->getBackgroundImage().getFilename().c_str());
+			p->getBackgroundImage().setCloneId(id);
 		}
 
 		break;
 	}
 
-	ListIterator<Layer*> it = p.layerIterator();
+	ListIterator<Layer*> it = p->layerIterator();
 
 	if (!it.hasNext())   // no layer, but we need to write one layer, else the old Xournal cannot read the file
 	{

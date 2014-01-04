@@ -19,9 +19,10 @@
 
 #include "BackgroundType.h"
 #include "BackgroundImage.h"
+#include "PageHandler.h"
 
 
-class XojPage
+class XojPage : public PageHandler
 {
 public:
 	XojPage(double width, double heigth);

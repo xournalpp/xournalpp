@@ -13,10 +13,11 @@
 #define __PAGEREF_H__
 
 #include "BackgroundType.h"
+#include "XojPage.h"
 #include <ListIterator.h>
 #include <XournalType.h>
 
-class XojPage;
+
 class Layer;
 class BackgroundImage;
 
@@ -37,42 +38,13 @@ public:
 	void operator=(const PageRef& ref);
 	void operator=(XojPage* page);
 
+	XojPage &operator*();
+	XojPage *operator->();
+
+	const XojPage &operator*() const;
+	const XojPage *operator->() const;
+
 	PageRef clone();
-
-public:
-	// Also set the size over doc->setPageSize!
-	void setBackgroundPdfPageNr(int page);
-
-	void setBackgroundType(BackgroundType bgType);
-	BackgroundType getBackgroundType();
-
-	/**
-	 * Do not call this, cal doc->setPageSize(Page * p, double width, double height);
-	 */
-	void setSize(double width, double height);
-
-	double getWidth();
-	double getHeight();
-
-	void addLayer(Layer* layer);
-	void insertLayer(Layer* layer, int index);
-	void removeLayer(Layer* layer);
-
-	int getPdfPageNr();
-
-	bool isAnnotated();
-
-	void setBackgroundColor(int color);
-	int getBackgroundColor();
-
-	ListIterator<Layer*> layerIterator();
-	int getLayerCount();
-	int getSelectedLayerId();
-	void setSelectedLayerId(int id);
-	Layer* getSelectedLayer();
-
-	BackgroundImage& getBackgroundImage();
-	void setBackgroundImage(BackgroundImage& img);
 
 private:
 	XOJ_TYPE_ATTRIB;

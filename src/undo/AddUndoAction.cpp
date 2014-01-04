@@ -5,13 +5,12 @@
 #include "../gui/Redrawable.h"
 #include "PageLayerPosEntry.h"
 
-AddUndoAction::AddUndoAction(PageRef page, Redrawable* view,
+AddUndoAction::AddUndoAction(PageRef page,
                              bool eraser) : UndoAction("AddUndoAction")
 {
 	XOJ_INIT_TYPE(AddUndoAction);
 
 	this->page = page;
-	this->view = view;
 	this->eraser = eraser;
 	this->elements = NULL;
 }
@@ -60,7 +59,7 @@ bool AddUndoAction::redo(Control* control)
 	{
 		PageLayerPosEntry<Element>* e = (PageLayerPosEntry<Element>*) l->data;
 		e->layer->insertElement(e->element, e->pos);
-		view->rerenderElement(e->element);
+		this->page->fireElementChanged(e->element);
 	}
 
 	this->undone = true;
@@ -83,7 +82,7 @@ bool AddUndoAction::undo(Control* control)
 	{
 		PageLayerPosEntry<Element>* e = (PageLayerPosEntry<Element>*) l->data;
 		e->layer->removeElement(e->element, false);
-		view->rerenderElement(e->element);
+		this->page->fireElementChanged(e->element);
 	}
 
 	this->undone = false;

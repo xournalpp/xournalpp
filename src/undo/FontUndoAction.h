@@ -24,7 +24,7 @@ class XojFont;
 class FontUndoAction: public UndoAction
 {
 public:
-	FontUndoAction(PageRef page, Layer* layer, Redrawable* view);
+	FontUndoAction(PageRef page, Layer* layer);
 	virtual ~FontUndoAction();
 
 public:
@@ -41,7 +41,6 @@ private:
 	GList* data;
 
 	Layer* layer;
-	Redrawable* view;
 };
 
 #endif /* __FONTUNDOACTION_H__ */

@@ -23,7 +23,7 @@ class Element;
 class ColorUndoAction: public UndoAction
 {
 public:
-	ColorUndoAction(PageRef page, Layer* layer, Redrawable* view);
+	ColorUndoAction(PageRef page, Layer* layer);
 	virtual ~ColorUndoAction();
 
 public:
@@ -40,7 +40,6 @@ private:
 	GList* data;
 
 	Layer* layer;
-	Redrawable* view;
 };
 
 #endif /* __COLORUNDOACTION_H__ */
