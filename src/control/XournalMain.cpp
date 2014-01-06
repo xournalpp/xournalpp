@@ -251,6 +251,8 @@ int XournalMain::run(int argc, char* argv[])
 	MainWindow* win = new MainWindow(gladePath, control);
 	control->initWindow(win);
 
+	win->show(NULL);
+
 	bool opened = false;
 	if (optFilename)
 	{
@@ -288,8 +290,6 @@ int XournalMain::run(int argc, char* argv[])
 			gtk_widget_destroy(dialog);
 		}
 	}
-
-	win->show(NULL);
 
 	control->getScheduler()->start();
 
