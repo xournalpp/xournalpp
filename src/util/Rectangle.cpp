@@ -1,6 +1,5 @@
 #include "Rectangle.h"
 #include "Range.h"
-#include <glib.h>
 
 Rectangle::Rectangle()
 {
@@ -52,21 +51,20 @@ Rectangle::~Rectangle()
  *
  * Returns: %TRUE if the rectangles intersect.
  */
-bool Rectangle::intersect(const Rectangle* src, Rectangle* dest = NULL)
+bool Rectangle::intersects(const Rectangle& other,
+                           Rectangle* dest) const
 {
 	XOJ_CHECK_TYPE(Rectangle);
 
 	double destX, destY;
 	double destW, destH;
 
-	g_return_val_if_fail(src != NULL, false);
-
 	bool returnVal = false;
 
-	destX = MAX(this->x, src->x);
-	destY = MAX(this->y, src->y);
-	destW = MIN(this->x + this->width, src->x + src->width) - destX;
-	destH = MIN(this->y + this->height, src->y + src->height) - destY;
+	destX = MAX(this->x, other.x);
+	destY = MAX(this->y, other.y);
+	destW = MIN(this->x + this->width, other.x + other.width) - destX;
+	destH = MIN(this->y + this->height, other.y + other.height) - destY;
 
 	if (destW > 0 && destH > 0)
 	{
@@ -107,5 +105,10 @@ void Rectangle::add(double x, double y, double width, double height)
 	this->y = y1;
 	this->width = x2 - x1;
 	this->height = y2 - y1;
+}
+
+void Rectangle::add(const Rectangle &other)
+{
+	add(other.x, other.y, other.width, other.height);
 }
 
