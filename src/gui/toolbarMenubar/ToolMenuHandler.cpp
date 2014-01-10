@@ -422,7 +422,8 @@ void ToolMenuHandler::initToolItems()
 
 	addToolItem(new ToolButton(listener, gui, "FULLSCREEN", ACTION_FULLSCREEN,
 	                           GROUP_FULLSCREEN, false,
-	                           "fullscreen.png", _("Toggle fullscreen"), gui->get("menuViewFullScreen")));
+	                           "fullscreen.png", _("Toggle fullscreen"),
+	                           gui->get("menuViewFullScreen")));
 
 	addToolItem(new ColorToolItem(listener, toolHandler, this->parent, 0xff0000,
 	                              true));
@@ -432,6 +433,10 @@ void ToolMenuHandler::initToolItems()
 	                           gui->get("menuToolsPen")));
 
 	initEraserToolItem();
+
+	addToolItem(new ToolButton(listener, gui, "DELETE_CURRENT_PAGE",
+	                           ACTION_DELETE_PAGE,
+	                           "delPage.svg", _("Delete current page")));
 
 	addToolItem(new ToolSelectCombocontrol(this, listener, gui, "SELECT"));
 
