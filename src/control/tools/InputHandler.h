@@ -40,7 +40,8 @@ public:
 	void resetShapeRecognizer();
 private:
 	bool getPressureMultiplier(GdkEvent* event, double& presure);
-	void drawTmpStroke();
+	void drawTmpStroke(bool do_redraw = false);
+	double getZoomFactor(double zoom);
 
 private:
 	XOJ_TYPE_ATTRIB;
