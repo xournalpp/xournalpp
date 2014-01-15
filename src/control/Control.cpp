@@ -181,14 +181,19 @@ void Control::renameLastAutosaveFile()
 	{
 		String filename = this->lastAutosaveFilename;
 		int pos = filename.lastIndexOf("/") + 1;
-		String folder = filename.substring(0, pos);
+		//String folder = filename.substring(0, pos);
 		String file = filename.substring(pos);
-		String renamed = folder + "_tmp_" + file;
+		String renamed = Util::getAutosaveFilename().substring(0,-4) + file;
 
 		GFile* file1 = g_file_new_for_path(filename.c_str());
 		GFile* file2 = g_file_new_for_path(renamed.c_str());
 		g_file_move(file1, file2, G_FILE_COPY_OVERWRITE, NULL, NULL, NULL, NULL);
 	}
+}
+
+void Control::setLastAutosaveFile(String newAutosaveFile)
+{
+	this->lastAutosaveFilename = newAutosaveFile;
 }
 
 void Control::deleteLastAutosaveFile(String newAutosaveFile)
