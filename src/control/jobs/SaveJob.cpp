@@ -61,8 +61,8 @@ void SaveJob::afterRun()
 void SaveJob::copyProgressCallback(goffset current_num_bytes,
                                    goffset total_num_bytes, Control* control)
 {
-	printf("copyProgressCallback: %i, %i\n", (int) current_num_bytes,
-	       (int) total_num_bytes);
+	//printf("copyProgressCallback: %i, %i\n", (int) current_num_bytes,
+	//       (int) total_num_bytes);
 }
 
 bool SaveJob::copyFile(String source, String target)
@@ -169,7 +169,9 @@ bool SaveJob::save()
 	// TODO: better backup handler
 	if (doc->shouldCreateBackupOnSave())
 	{
-		String backup = doc->getFilename();
+		int pos = doc->getFilename().lastIndexOf("/") + 1;
+		String backup = doc->getFilename().substring(0,pos) 
+			+ "." + doc->getFilename().substring(pos);
 		backup += ".bak";
 		if (!copyFile(doc->getFilename(), backup))
 		{

@@ -50,9 +50,13 @@ void AutosaveJob::run()
 	}
 	else
 	{
-		if (filename.length() > 5 && filename.substring(-4) == ".xoj")
+		int pos = filename.lastIndexOf("/") + 1;
+		String folder = filename.substring(0,pos);
+		String file = filename.substring(pos);
+		filename = folder + ".";
+		if (file.length() > 5 && file.substring(-4) == ".xoj")
 		{
-			filename = filename.substring(0, -4);
+			filename += file.substring(0,-4);
 		}
 		filename += ".autosave.xoj";
 	}
@@ -70,7 +74,8 @@ void AutosaveJob::run()
 	}
 	else
 	{
-		control->deleteLastAutosaveFile(filename);
+		//control->deleteLastAutosaveFile(filename);
+		control->setLastAutosaveFile(filename);
 	}
 }
 

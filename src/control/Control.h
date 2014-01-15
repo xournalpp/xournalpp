@@ -173,6 +173,7 @@ public:
 	void unblock();
 
 	void renameLastAutosaveFile();
+	void setLastAutosaveFile(String newAutosaveFile);
 	void deleteLastAutosaveFile(String newAutosaveFile);
 	void setClipboardHandlerSelection(EditSelection* selection);
 
