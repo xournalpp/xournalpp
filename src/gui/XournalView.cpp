@@ -239,6 +239,18 @@ bool XournalView::onKeyPressEvent(GdkEventKey* event)
 		return true;
 	}
 
+	if(event->keyval == GDK_End)
+	{
+		control->getScrollHandler()->goToLastPage();
+		return true;
+	}
+
+	if(event->keyval == GDK_Home)
+	{
+		control->getScrollHandler()->goToFirstPage();
+		return true;
+	}
+
 	return false;
 }
 

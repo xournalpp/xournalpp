@@ -35,6 +35,26 @@ void ScrollHandler::goToNextPage()
 	}
 }
 
+void ScrollHandler::goToLastPage()
+{
+	XOJ_CHECK_TYPE(ScrollHandler);
+
+	if (this->control->getWindow())
+	{
+		scrollToPage(this->control->getDocument()->getPageCount() - 1);
+	}
+}
+
+void ScrollHandler::goToFirstPage()
+{
+	XOJ_CHECK_TYPE(ScrollHandler);
+
+	if (this->control->getWindow())
+	{
+		scrollToPage(0);
+	}
+}
+
 void ScrollHandler::scrollToPage(PageRef page, double top)
 {
 	XOJ_CHECK_TYPE(ScrollHandler);
