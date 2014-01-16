@@ -12,6 +12,7 @@
 #ifndef __RECTANGLE_H__
 #define __RECTANGLE_H__
 
+#include <glib.h>
 #include <XournalType.h>
 
 class Range;
@@ -27,22 +28,27 @@ public:
 public:
 
 	/**
-	 * @src1: a #Rectangle
-	 * @src2: a #Rectangle
-	 * @dest: return location for the intersection of @src1 and @src2, or %NULL
+	 * Returns whether this rectangle intersects another
 	 *
-	 * Calculates the intersection of two rectangles. It is allowed for
-	 * @dest to be the same as either @src1 or @src2. If the rectangles
-	 * do not intersect, @dest's width and height is set to 0 and its x
-	 * and y values are undefined. If you are only interested in whether
-	 * the rectangles intersect, but not in the intersecting area itself,
-	 * pass %NULL for @dest.
+	 * @param other the other rectangle
+	 * @param dest  if this is not NULL, the rectangle will
+	 *              be modified to contain the intersection
 	 *
-	 * Returns: %TRUE if the rectangles intersect.
+	 * @return whether the rectangles intersect
 	 */
-	bool intersect(const Rectangle* src, Rectangle* dest);
+	bool intersects(const Rectangle& other,
+	                Rectangle* dest = NULL) const;
 
+	/**
+	 * Computes the union of this rectangle with the one
+	 * given by the parameters
+	 */
 	void add(double x, double y, double width, double height);
+
+	/**
+	 * Same as the above, provided for convenience
+	 */
+	void add(const Rectangle &other);
 
 public:
 	XOJ_TYPE_ATTRIB;

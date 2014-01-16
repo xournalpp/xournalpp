@@ -90,8 +90,7 @@ void DocumentView::drawStroke(cairo_t* cr, Stroke* s, int startPoint,
 		return;
 	}
 
-	int count =
-	    1; // we need to start on the last point (or need cairo_move_to first)
+	int count = 1;
 	double width = s->getWidth();
 
 	// No pressure sensitivity, easy draw a line...
@@ -112,11 +111,14 @@ void DocumentView::drawStroke(cairo_t* cr, Stroke* s, int startPoint,
 		{
 			Point p = points.next();
 
-			if (startPoint <= count)
+			if (startPoint <= count++)
 			{
 				cairo_line_to(cr, p.x, p.y);
 			}
-			count++;
+			else
+			{
+				cairo_move_to(cr, p.x, p.y);
+			}
 		}
 
 		cairo_stroke(cr);

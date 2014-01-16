@@ -749,14 +749,11 @@ void PageView::addRerenderRect(double x, double y, double width, double height)
 		Rectangle* r = (Rectangle*) l->data;
 
 		// its faster to redraw only one rect than repaint twice the same area
-		// so loop through the rectangles to be redrawn and if one is entirely
-		// enclosed by this one, we will not add it to the redraw queue.
-		if (r->intersect(rect, &dest))
+		// so loop through the rectangles to be redrawn, if new rectangle
+		// intersects any of them, replace it by the union with the new one
+		if (r->intersects(*rect))
 		{
-			r->x = dest.x;
-			r->y = dest.y;
-			r->width = dest.width;
-			r->height = dest.height;
+			r->add(*rect);
 
 			delete rect;
 

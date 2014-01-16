@@ -9,6 +9,7 @@
 #include "../../view/DocumentView.h"
 #include "../../model/Layer.h"
 #include "../../util/XInputUtils.h"
+#include "../../util/Rectangle.h"
 
 #include <math.h>
 
@@ -71,6 +72,11 @@ void InputHandler::addPointToTmpStroke(GdkEventMotion* event)
 	if (h->isRuler())
 	{
 		int count = tmpStroke->getPointCount();
+
+		this->redrawable->repaintRect(tmpStroke->getX(), tmpStroke->getY(),
+		                              tmpStroke->getElementWidth(),
+		                              tmpStroke->getElementHeight());
+
 		if (count < 2)
 		{
 			tmpStroke->addPoint(Point(x, y));
@@ -81,8 +87,7 @@ void InputHandler::addPointToTmpStroke(GdkEventMotion* event)
 		}
 		Point p = tmpStroke->getPoint(0);
 
-		//TODO: This needs fixing on Debian Squeeze
-		this->redrawable->rerenderElement(this->tmpStroke);
+		drawTmpStroke(true);
 		return;
 	}
 
@@ -146,7 +151,7 @@ bool InputHandler::getPressureMultiplier(GdkEvent* event, double& presure)
 	return true;
 }
 
-void InputHandler::drawTmpStroke()
+void InputHandler::drawTmpStroke(bool do_redraw)
 {
 	XOJ_CHECK_TYPE(InputHandler);
 
@@ -166,24 +171,34 @@ void InputHandler::drawTmpStroke()
 		 * Andreas Butti
 		 */
 
-		double factor = 1;
-		if (zoom < 0.8)
-		{
-			factor = sqrt(zoom);
-		}
-		else if (zoom < 1.0)
-		{
-			factor = sqrt(zoom) - 0.3;
-		}
-		else if (zoom < 1.5)
-		{
-			factor = sqrt(zoom) - 0.2;
-		}
+		this->view->drawStroke(cr,
+		                       this->tmpStroke,
+		                       do_redraw ? 0 : this->tmpStrokeDrawElem,
+		                       getZoomFactor(zoom));
 
-		this->view->drawStroke(cr, this->tmpStroke, this->tmpStrokeDrawElem, factor);
 		this->tmpStrokeDrawElem = this->tmpStroke->getPointCount() - 1;
 		cairo_destroy(cr);
 	}
+}
+
+double InputHandler::getZoomFactor(double zoom)
+{
+	double factor = 1;
+
+	if (zoom < 0.8)
+	{
+		factor = sqrt(zoom);
+	}
+	else if (zoom < 1.0)
+	{
+		factor = sqrt(zoom) - 0.3;
+	}
+	else if (zoom < 1.5)
+	{
+		factor = sqrt(zoom) - 0.2;
+	}
+
+	return factor;
 }
 
 void InputHandler::draw(cairo_t* cr, double zoom)
@@ -192,7 +207,7 @@ void InputHandler::draw(cairo_t* cr, double zoom)
 
 	if (this->tmpStroke)
 	{
-		this->view->drawStroke(cr, this->tmpStroke, zoom);
+		this->view->drawStroke(cr, this->tmpStroke, true, getZoomFactor(zoom));
 	}
 }
 
@@ -282,7 +297,7 @@ void InputHandler::onButtonReleaseEvent(GdkEventButton* event, PageRef page)
 				               s->getY() + s->getElementHeight());
 			}
 
-			this->redrawable->rerenderRange(range);
+			page->fireRangeChanged(range);
 
 			// delete the result object, this is not needed anymore, the stroke are not deleted with this
 			delete result;
@@ -290,14 +305,14 @@ void InputHandler::onButtonReleaseEvent(GdkEventButton* event, PageRef page)
 		else
 		{
 			layer->addElement(this->tmpStroke);
-			this->redrawable->rerenderElement(this->tmpStroke);
+			page->fireElementChanged(this->tmpStroke);
 		}
 
 	}
 	else
 	{
 		layer->addElement(this->tmpStroke);
-		this->redrawable->rerenderElement(this->tmpStroke);
+		page->fireElementChanged(this->tmpStroke);
 	}
 
 	this->tmpStroke = NULL;
