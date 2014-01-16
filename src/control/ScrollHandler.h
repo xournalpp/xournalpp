@@ -30,6 +30,9 @@ public:
 	void goToPreviousPage();
 	void goToNextPage();
 
+	void goToLastPage();
+	void goToFirstPage();
+
 	void scrollToPage(PageRef page, double top = 0);
 	void scrollToPage(int page, double top = 0);
 
