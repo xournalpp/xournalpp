@@ -489,6 +489,10 @@ Stroke* ShapeRecognizer::tryClosedPolygon(int nsides)
 {
 	XOJ_CHECK_TYPE(ShapeRecognizer);
 
+	//to eliminate bug #52, remove this until it's perfected
+	return NULL;
+
+
 	RecoSegment* r1 = NULL;
 	RecoSegment* r2 = NULL;
 
