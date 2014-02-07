@@ -921,8 +921,8 @@ Xournal file with the same name it will open it&lt;/i&gt;</property>
                   <widget class="GtkLabel" id="label5">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <property name="label" translatable="yes">&lt;i&gt;Put a ruler on your screen to calibrate the zoom level to fit your screen.
-The units are cm for the rouler, dpi for the slider&lt;/i&gt;</property>
+                    <property name="label" translatable="yes">&lt;i&gt;Put a ruler on your screen to calibrate the zoom level to fit your screen. Takes effect after restarting xournalpp.
+The units are cm for the ruler, dpi for the slider.&lt;/i&gt;</property>
                     <property name="use_markup">True</property>
                     <property name="justify">center</property>
                     <property name="wrap">True</property>

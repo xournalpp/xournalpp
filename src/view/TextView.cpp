@@ -19,21 +19,28 @@ PangoLayout* TextView::initPango(cairo_t* cr, Text* t)
 	// TODO LOW PRIO: add autowrap and text field size for the next xournal release (with new fileformat...)
 	//pango_layout_set_wrap
 
-	String settingsname = String::format("%s%c%s%c%s", g_get_home_dir(), G_DIR_SEPARATOR,
-					CONFIG_DIR, G_DIR_SEPARATOR,
-					SETTINGS_XML_FILE);
-	Settings* mySettings = new Settings(settingsname);
-	mySettings->load();
-
-	pango_cairo_context_set_resolution(pango_layout_get_context(layout), mySettings->getDisplayDpi());
-	delete mySettings;
-
+	pango_cairo_context_set_resolution(pango_layout_get_context(layout), TextView::getDPI());
 	pango_cairo_update_layout(cr, layout);
 
 
 	pango_context_set_matrix(pango_layout_get_context(layout), NULL);
 	updatePangoFont(layout, t);
 	return layout;
+}
+
+int TextView::getDPI()
+{
+	static int myDPI;
+	if(myDPI != 0)
+		return myDPI;
+	String settingsname = String::format("%s%c%s%c%s", g_get_home_dir(), G_DIR_SEPARATOR,
+			CONFIG_DIR, G_DIR_SEPARATOR,
+			SETTINGS_XML_FILE);
+	Settings* mySettings = new Settings(settingsname);
+	mySettings->load();
+	myDPI = mySettings->getDisplayDpi();
+	delete mySettings;
+	return myDPI;
 }
 
 void TextView::updatePangoFont(PangoLayout* layout, Text* t)
