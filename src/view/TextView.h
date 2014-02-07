@@ -47,6 +47,9 @@ public:
 	 * Sets the font name from Text model
 	 */
 	static void updatePangoFont(PangoLayout* layout, Text* t);
+
+	//Sets up DPI
+	static int getDPI();
 };
 
 #endif /* __TEXTVIEW_H__ */

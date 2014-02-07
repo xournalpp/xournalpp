@@ -2,6 +2,7 @@
 #include "../model/Text.h"
 #include <string.h>
 #include "../pdf/popplerdirect/poppler/XojPopplerPage.h"
+#include "../control/settings/Settings.h"
 
 TextView::TextView()
 {
@@ -18,8 +19,8 @@ PangoLayout* TextView::initPango(cairo_t* cr, Text* t)
 	// TODO LOW PRIO: add autowrap and text field size for the next xournal release (with new fileformat...)
 	//pango_layout_set_wrap
 
-	//	pango_cairo_context_set_resolution(pango_layout_get_context(layout), 10);
-	//	pango_cairo_update_layout(cr, layout);
+	pango_cairo_context_set_resolution(pango_layout_get_context(layout), TextView::getDPI());
+	pango_cairo_update_layout(cr, layout);
 
 
 	pango_context_set_matrix(pango_layout_get_context(layout), NULL);
@@ -27,13 +28,28 @@ PangoLayout* TextView::initPango(cairo_t* cr, Text* t)
 	return layout;
 }
 
+int TextView::getDPI()
+{
+	static int myDPI;
+	if(myDPI != 0)
+		return myDPI;
+	String settingsname = String::format("%s%c%s%c%s", g_get_home_dir(), G_DIR_SEPARATOR,
+			CONFIG_DIR, G_DIR_SEPARATOR,
+			SETTINGS_XML_FILE);
+	Settings* mySettings = new Settings(settingsname);
+	mySettings->load();
+	myDPI = mySettings->getDisplayDpi();
+	delete mySettings;
+	return myDPI;
+}
+
 void TextView::updatePangoFont(PangoLayout* layout, Text* t)
 {
 	PangoFontDescription* desc = pango_font_description_from_string(
 	                                 t->getFont().getName().c_str());
-	pango_font_description_set_absolute_size(desc,
-	                                         t->getFont().getSize() * PANGO_SCALE);
-	//	pango_font_description_set_size(desc, t->getFont().getSize() * PANGO_SCALE);
+	//pango_font_description_set_absolute_size(desc,
+	//                                         t->getFont().getSize() * PANGO_SCALE);
+	pango_font_description_set_size(desc, t->getFont().getSize() * PANGO_SCALE);
 
 	pango_layout_set_font_description(layout, desc);
 	pango_font_description_free(desc);

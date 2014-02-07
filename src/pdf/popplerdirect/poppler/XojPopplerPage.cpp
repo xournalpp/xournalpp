@@ -4,6 +4,7 @@
 #include "../poppler-0.24.1/poppler/Gfx.h"
 #include "../poppler-0.24.1/poppler/OutputDev.h"
 #include "../workaround/workaround.h"
+#include "../../../control/settings/Settings.h"
 
 XojPopplerPage::XojPopplerPage(PDFDoc * doc, GMutex * docMutex,
 		CairoOutputDev * outputDev, Page * page, int index) {
@@ -18,6 +19,17 @@ XojPopplerPage::XojPopplerPage(PDFDoc * doc, GMutex * docMutex,
 
 	this->renderMutex = g_mutex_new();
 	this->docMutex = docMutex;
+
+	/*
+	//Set up DPI
+	String settingsname = String::format("%s%c%s%c%s", g_get_home_dir(), G_DIR_SEPARATOR,
+					CONFIG_DIR, G_DIR_SEPARATOR,
+					SETTINGS_XML_FILE);
+	Settings* mysettings =  new Settings(settingsname);
+	mysettings->load();
+	this->pdfDpi = (double) mysettings->getDisplayDpi();
+	*/
+
 }
 
 XojPopplerPage::~XojPopplerPage()
