@@ -4,6 +4,7 @@
 #include <poppler/Gfx.h>
 #include <poppler/OutputDev.h>
 #include "../workaround/workaround.h"
+#include "../../../control/settings/Settings.h"
 
 XojPopplerPage::XojPopplerPage(PDFDoc* doc, GMutex* docMutex,
                                CairoOutputDev* outputDev, Page* page, int index)
@@ -19,6 +20,17 @@ XojPopplerPage::XojPopplerPage(PDFDoc* doc, GMutex* docMutex,
 
 	this->renderMutex = g_mutex_new();
 	this->docMutex = docMutex;
+
+	/*
+	//Set up DPI
+	String settingsname = String::format("%s%c%s%c%s", g_get_home_dir(), G_DIR_SEPARATOR,
+					CONFIG_DIR, G_DIR_SEPARATOR,
+					SETTINGS_XML_FILE);
+	Settings* mysettings =  new Settings(settingsname);
+	mysettings->load();
+	this->pdfDpi = (double) mysettings->getDisplayDpi();
+	*/
+
 }
 
 XojPopplerPage::~XojPopplerPage()
@@ -103,6 +115,7 @@ void XojPopplerPage::render(cairo_t* cr, bool forPrinting)
 	g_mutex_lock(this->docMutex);
 
 	this->page->displaySlice(this->outputDev, 72.0, 72.0, 0,
+	//this->page->displaySlice(this->outputDev, this->pdfDpi, this->pdfDpi, 0,
 	                         false, /* useMediaBox */
 	                         true, /* Crop */
 	                         -1, -1, -1, -1, forPrinting, this->doc->getCatalog(), NULL, NULL,
@@ -128,6 +141,7 @@ void XojPopplerPage::initTextPage()
 		g_mutex_lock(this->docMutex);
 		TextOutputDev* textDev = new TextOutputDev(NULL, true, false, false);
 		Gfx* gfx = this->page->createGfx(textDev, 72.0, 72.0, 0,
+		//Gfx* gfx = this->page->createGfx(textDev, this->pdfDpi, this->pdfDpi, 0,
 		                                 false, /* useMediaBox */
 		                                 true, /* Crop */
 		                                 -1, -1, -1, -1, false, /* printing */

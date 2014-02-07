@@ -251,9 +251,9 @@ msgstr ""
 
 #: ..//ui/settings.glade.h:65
 msgid ""
-"<i>Put a rouler on your screen to callibrate the zoom level to fit your "
-"screen\n"
-"The units are cm for the rouler, dpi for the slider</i>"
+"<i>Put a ruler on your screen to calibrate the zoom level to fit your "
+"screen. Takes effect after restarting xournalpp.\n"
+"The units are cm for the ruler, dpi for the slider.</i>"
 msgstr ""
 "<i>Legen Sie einen Massstab auf den Bildschirm um die\n"
 "Bildschirm DPI zu kallibrieren</i>"
