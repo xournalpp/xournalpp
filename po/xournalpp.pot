@@ -165,29 +165,29 @@ msgstr ""
 
 #: ..//ui/settings.glade.h:49
 msgid ""
-"<b>Touch Screen</b> <i>You can also configure other device like mice</i>"
+"<b>Touch Screen</b> <i>You can also configure other devices like mice</i>"
 msgstr ""
 
 #: ..//ui/settings.glade.h:50
 msgid ""
-"<i>Here can you define wich tools will be selected If you\n"
+"<i>Here you can define which tools will be selected If you\n"
 "use the eraser or other device.\n"
 "Here you can disable your touchscreen.</i>"
 msgstr ""
 
 #: ..//ui/settings.glade.h:53
 msgid ""
-"<i>Here can you define wich tools will be selected if you press\n"
-"a button, after you release the button the previous selected\n"
+"<i>Here you can define which tools will be selected if you press\n"
+"a button, after you release the button the previously selected\n"
 "tool will be selected</i>"
 msgstr ""
 
 #: ..//ui/settings.glade.h:56
 msgid ""
 "<i>If you enable <b>Extended Input</b> you get more precise\n"
-"inputif you have a supported Tablet Device\n"
+"input if you have a supported Tablet Device.\n"
 "Disable if you use a Mouse or Touchpad and\n"
-"stroken are not drawn under the cursor </i>"
+"strokes are not drawn under the cursor. </i>"
 msgstr ""
 
 #: ..//ui/settings.glade.h:60
@@ -203,7 +203,7 @@ msgstr ""
 #: ..//ui/settings.glade.h:63
 msgid ""
 "<i>If you open a PDF and there is a\n"
-"Xournal file with the same name it will open it</i>"
+"Xournal file with the same name it will open the xoj file.</i>"
 msgstr ""
 
 #: ..//ui/settings.glade.h:65

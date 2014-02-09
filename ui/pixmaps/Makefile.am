@@ -4,6 +4,7 @@ pixmap_DATA = \
 	addPage.svg \
 	centerPage.svg \
 	default.png \
+	delPage.svg \
 	documentNew.png \
 	empty.png \
 	fullscreen.png \

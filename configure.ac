@@ -1,7 +1,7 @@
 dnl Process this file with autoconf to produce a configure script.
 
 AC_PREREQ(2.59)
-AC_INIT(Xournalpp, 0.9.2)
+AC_INIT(Xournalpp, 1.0.0)
 AM_CONFIG_HEADER(config.h)
 
 AC_CANONICAL_SYSTEM
