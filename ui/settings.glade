@@ -120,9 +120,9 @@
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="label" translatable="yes">&lt;i&gt;If you enable &lt;b&gt;Extended Input&lt;/b&gt; you get more precise
-input if you have a supported Tablet Device
+input if you have a supported Tablet Device.
 Disable if you use a Mouse or Touchpad and
-stroken are not drawn under the cursor &lt;/i&gt;</property>
+strokes are not drawn under the cursor. &lt;/i&gt;</property>
                                 <property name="use_markup">True</property>
                               </widget>
                               <packing>
@@ -849,7 +849,7 @@ It the file was not saved you can find it in your home folder, in
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="label" translatable="yes">&lt;i&gt;If you open a PDF and there is a
-Xournal file with the same name it will open it&lt;/i&gt;</property>
+Xournal file with the same name it will open the xoj file.&lt;/i&gt;</property>
                                     <property name="use_markup">True</property>
                                   </widget>
                                   <packing>
@@ -1000,8 +1000,8 @@ The units are cm for the ruler, dpi for the slider.&lt;/i&gt;</property>
                   <widget class="GtkLabel" id="label13">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <property name="label" translatable="yes">&lt;i&gt;Here can you define wich tools will be selected if you press
-a button; after you release the button the previous selected
+                    <property name="label" translatable="yes">&lt;i&gt;Here you can define which tools will be selected if you press
+a button; after you release the button the previously selected
 tool will be selected&lt;/i&gt;</property>
                     <property name="use_markup">True</property>
                   </widget>
@@ -1142,7 +1142,7 @@ tool will be selected&lt;/i&gt;</property>
                   <widget class="GtkLabel" id="label19">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <property name="label" translatable="yes">&lt;i&gt;Here can you define wich tools will be selected If you
+                    <property name="label" translatable="yes">&lt;i&gt;Here you can define which tools will be selected If you
 use the eraser or other device.
 Here you can disable your touchscreen.&lt;/i&gt;</property>
                     <property name="use_markup">True</property>
@@ -1217,7 +1217,7 @@ Here you can disable your touchscreen.&lt;/i&gt;</property>
                       <widget class="GtkLabel" id="label18">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="label" translatable="yes">&lt;b&gt;Touch Screen&lt;/b&gt; &lt;i&gt;You can also configure other device like mice&lt;/i&gt;</property>
+                        <property name="label" translatable="yes">&lt;b&gt;Touch Screen&lt;/b&gt; &lt;i&gt;You can also configure other devices like mice&lt;/i&gt;</property>
                         <property name="use_markup">True</property>
                       </widget>
                       <packing>
