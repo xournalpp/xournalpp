@@ -87,7 +87,8 @@ void Settings::loadDefault()
 	this->autosaveTimeout = 1;
 	this->autosaveEnabled = true;
 
-	this->allowScrollOutsideThePage = false;
+	this->addHorizontalSpace = false;
+	this->addVerticalSpace = false;
 
 	this->enableLeafEnterWorkaround = true;
 
@@ -385,10 +386,15 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur)
 	{
 		this->selectionColor = g_ascii_strtoll((const char*) value, NULL, 10);
 	}
-	else if (xmlStrcmp(name, (const xmlChar*) "allowScrollOutsideThePage") == 0)
+	else if (xmlStrcmp(name, (const xmlChar*) "addVerticalSpace") == 0)
 	{
-		this->allowScrollOutsideThePage = xmlStrcmp(value,
-		                                            (const xmlChar*) "true") ? false : true;
+		this->addVerticalSpace = xmlStrcmp(value,
+		                                   (const xmlChar*) "true") ? false : true;
+	}
+	else if (xmlStrcmp(name, (const xmlChar*) "addHorizontalSpace") == 0)
+	{
+		this->addHorizontalSpace = xmlStrcmp(value,
+	                                       (const xmlChar*) "true") ? false : true;
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "enableLeafEnterWorkaround") == 0)
 	{
@@ -786,7 +792,8 @@ void Settings::save()
 	WRITE_BOOL_PROP(autosaveEnabled);
 	WRITE_INT_PROP(autosaveTimeout);
 
-	WRITE_BOOL_PROP(allowScrollOutsideThePage);
+	WRITE_BOOL_PROP(addHorizontalSpace);
+	WRITE_BOOL_PROP(addVerticalSpace);
 
 	WRITE_BOOL_PROP(enableLeafEnterWorkaround);
 	WRITE_COMMENT("If Xournal crashes if you e.g. unplug your mouse set this to true. If you have input problems, you can turn it of with false.");
@@ -1029,21 +1036,33 @@ void Settings::setAutosaveEnabled(bool autosave)
 	saveTimeout();
 }
 
-bool Settings::isAllowScrollOutsideThePage()
+bool Settings::getAddVerticalSpace()
 {
 	XOJ_CHECK_TYPE(Settings);
 
-	return this->allowScrollOutsideThePage;
+	return this->addVerticalSpace;
 }
 
-void Settings::setAllowScrollOutsideThePage(bool outside)
+void Settings::setAddVerticalSpace(bool space)
 {
 	XOJ_CHECK_TYPE(Settings);
 
-	this->allowScrollOutsideThePage = outside;
-
-	saveTimeout();
+	this->addVerticalSpace = space;
 }
+
+bool Settings::getAddHorizontalSpace()
+{
+	XOJ_CHECK_TYPE(Settings);
+
+	return this->addHorizontalSpace;
+}
+void Settings::setAddHorizontalSpace(bool space)
+{
+	XOJ_CHECK_TYPE(Settings);
+
+	this->addHorizontalSpace = space;
+}
+
 
 bool Settings::isEnableLeafEnterWorkaround()
 {

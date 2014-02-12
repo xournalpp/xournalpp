@@ -2213,7 +2213,8 @@ void Control::showSettings()
 
 	bool xeventEnabled = settings->isUseXInput();
 	int selectionColor = settings->getSelectionColor();
-	bool allowScrollOutside = settings->isAllowScrollOutsideThePage();
+	bool verticalSpace = settings->getAddVerticalSpace(),
+	     horizontalSpace = settings->getAddHorizontalSpace();
 	bool bigCursor = settings->isShowBigCursor();
 
 	SettingsDialog* dlg = new SettingsDialog(this->gladeSearchPath, settings);
@@ -2229,7 +2230,8 @@ void Control::showSettings()
 		win->getXournal()->forceUpdatePagenumbers();
 	}
 
-	if (allowScrollOutside != settings->isAllowScrollOutsideThePage())
+	if (verticalSpace != settings->getAddVerticalSpace() ||
+	    horizontalSpace != settings->getAddHorizontalSpace())
 	{
 		int currentPage = getCurrentPageNo();
 		win->getXournal()->layoutPages();

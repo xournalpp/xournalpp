@@ -242,8 +242,11 @@ public:
 	bool isAutosaveEnabled();
 	void setAutosaveEnabled(bool autosave);
 
-	bool isAllowScrollOutsideThePage();
-	void setAllowScrollOutsideThePage(bool outside);
+	bool getAddVerticalSpace();
+	void setAddVerticalSpace(bool space);
+
+	bool getAddHorizontalSpace();
+	void setAddHorizontalSpace(bool space);
 
 	bool isEnableLeafEnterWorkaround();
 	void setEnableLeafEnterWorkaround(bool enable);
@@ -434,7 +437,7 @@ private:
 	/**
 	 * allow scroll outside the page
 	 */
-	bool allowScrollOutsideThePage;
+	bool addHorizontalSpace, addVerticalSpace;
 
 	/**
 	 * Enable Bugfix to prevent crash on GTK 2.18 etc
