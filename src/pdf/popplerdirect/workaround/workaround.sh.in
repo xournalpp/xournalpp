@@ -10,33 +10,66 @@ poppler_version="0.24.1"
 
 abs_top_srcdir="@abs_top_srcdir@"
 abs_top_builddir="@abs_top_builddir@"
+enable_libopenjpeg="@enable_libopenjpeg@"
 
 poppler_srcdir="${abs_top_srcdir}/src/pdf/popplerdirect/poppler-${poppler_version}"
 poppler_dir="${abs_top_builddir}/src/pdf/popplerdirect"
 poppler_builddir="${poppler_dir}/poppler-${poppler_version}_build"
 
-cd "${poppler_dir}"
+build()
+{
+  cd "${poppler_dir}"
 
-if [ -e "${poppler_dir}/libpoppler.a" ] && \
-   [ -e "${poppler_dir}/libpoppler-glib.a" ] && \
-   [ -e "${poppler_dir}/poppler-config.h" ]
-then
-  echo "No need to rebuild libpoppler, exiting..."
-  exit 0
-else
-  echo "Rebuilding libpoppler..."
-fi
+  if [ -e "${poppler_dir}/libpoppler.a" ] && \
+     [ -e "${poppler_dir}/libpoppler-glib.a" ] && \
+     [ -e "${poppler_dir}/poppler-config.h" ]
+  then
+    echo "No need to rebuild libpoppler, exiting..."
+    exit 0
+  else
+    echo "Rebuilding libpoppler..."
+  fi
 
-autoreconf -i "${poppler_srcdir}"
+  autoreconf -i "${poppler_srcdir}"
 
-mkdir -p "${poppler_builddir}"
+  mkdir -p "${poppler_builddir}"
 
-cd "${poppler_builddir}"
+  cd "${poppler_builddir}"
 
-"${poppler_srcdir}/configure" --enable-cms --enable-libopenjpeg --enable-libjpeg
+  "${poppler_srcdir}/configure" --enable-cms --enable-libopenjpeg="${enable_libopenjpeg}" --enable-libjpeg
 
-make
+  make
 
-ln -fs "${poppler_builddir}/poppler/.libs/libpoppler.a" "${poppler_dir}"
-ln -fs "${poppler_builddir}/glib/.libs/libpoppler-glib.a" "${poppler_dir}"
-ln -fs "${poppler_builddir}/poppler/poppler-config.h" "${poppler_dir}"
+  ln -s "${poppler_builddir}/poppler/.libs/libpoppler.a" "${poppler_dir}"
+  ln -s "${poppler_builddir}/glib/.libs/libpoppler-glib.a" "${poppler_dir}"
+  ln -s "${poppler_builddir}/poppler/poppler-config.h" "${poppler_dir}"
+}
+
+clean()
+{
+  echo "Cleaning libpoppler build..."
+  
+  for file in libpoppler.a libpoppler-glib.a poppler-config.h; do
+    fullname="${poppler_dir}/${file}"
+    [ -f "${fullname}" ] && rm "${fullname}"
+  done
+  
+  
+  [ -d "${poppler_builddir}" ] && rm -r "${poppler_builddir}"
+}
+
+case "$1" in
+
+  "build")
+    build
+    ;;
+  
+  "clean")
+    clean
+    ;;
+  
+  *)
+    echo "Unknown argument: " "$1"
+    exit 1
+  
+esac

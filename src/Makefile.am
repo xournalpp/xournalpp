@@ -204,7 +204,7 @@ AM_CPPFLAGS = \
 	-DPACKAGE_DATA_DIR=\""$(datadir)"\" \
 	-DPACKAGE_LOCALE_DIR=\""$(prefix)/$(DATADIRNAME)/locale"\" \
 	-I"$(abs_top_builddir)/src/pdf/popplerdirect" \
-	@PACKAGE_CFLAGS@
+	@DEPENDENCIES_CFLAGS@
 
 xournalpp_CXXFLAGS = \
 	-I$(top_srcdir)/src/util \
@@ -221,12 +221,15 @@ endif
 .PHONY: poppler
 
 poppler:
-	$(abs_top_builddir)/src/pdf/popplerdirect/workaround/workaround.sh
+	$(abs_top_builddir)/src/pdf/popplerdirect/workaround/workaround.sh build
+
+clean-local:
+	$(abs_top_builddir)/src/pdf/popplerdirect/workaround/workaround.sh clean
 
 xournalpp_DEPENDENCIES = poppler
 
 xournalpp_LDADD = \
 	$(abs_top_builddir)/src/pdf/popplerdirect/libpoppler.a \
 	$(abs_top_builddir)/src/pdf/popplerdirect/libpoppler-glib.a \
-	@PACKAGE_LIBS@ $(INTLLIBS) \
+	@DEPENDENCIES_LIBS@ $(INTLLIBS) \
 	$(top_builddir)/src/util/libutil.la
