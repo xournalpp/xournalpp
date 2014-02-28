@@ -178,7 +178,8 @@ void Layout::layoutPages()
 	int len = this->view->viewPagesLen;
 
 	Settings* settings = this->view->getControl()->getSettings();
-	bool allowScrollOutsideThePage = settings->isAllowScrollOutsideThePage();
+	bool verticalSpace = settings->getAddVerticalSpace(),
+	     horizontalSpace = settings->getAddHorizontalSpace();
 	bool dualPage = settings->isShowTwoPages();
 
 	int size[2] = { 0, 0 };
@@ -231,7 +232,7 @@ void Layout::layoutPages()
 	marginLeft = MAX(marginLeft, 10);
 	marginRight = MAX(marginRight, 10);
 
-	if (allowScrollOutsideThePage)
+	if (horizontalSpace)
 	{
 		marginLeft += size[0] / 2;
 		if (dualPage)
@@ -242,11 +243,12 @@ void Layout::layoutPages()
 		{
 			marginRight += size[0] / 2;
 		}
-		if (len > 0)
-		{
-			marginTop += this->view->viewPages[0]->getDisplayHeight() / 2;
-			marginBottom += this->view->viewPages[len - 1]->getDisplayHeight() / 2;
-		}
+	}
+
+	if (len > 0 && verticalSpace)
+	{
+		marginTop += this->view->viewPages[0]->getDisplayHeight() * 0.75;
+		marginBottom += this->view->viewPages[len - 1]->getDisplayHeight() * 0.75;
 	}
 
 	for (int i = 0; i < len; i++)
@@ -471,4 +473,5 @@ bool Layout::scrollEvent(GdkEventScroll* event)
 
 	return false;
 }
+
 

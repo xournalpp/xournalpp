@@ -185,7 +185,8 @@ void SettingsDialog::load()
 	loadCheckbox("cbShowScrollbarLeft", settings->isScrollbarOnLeft());
 	loadCheckbox("cbAutoloadXoj", settings->isAutloadPdfXoj());
 	loadCheckbox("cbAutosave", settings->isAutosaveEnabled());
-	loadCheckbox("cbSettingScrollOutside", settings->isAllowScrollOutsideThePage());
+	loadCheckbox("cbAddVerticalSpace", settings->getAddVerticalSpace());
+	loadCheckbox("cbAddHorizontalSpace", settings->getAddHorizontalSpace());
 	loadCheckbox("cbBigCursor", settings->isShowBigCursor());
 
 	GtkWidget* txtDefaultSaveName = get("txtDefaultSaveName");
@@ -333,7 +334,8 @@ void SettingsDialog::save()
 	settings->setScrollbarOnLeft(getCheckbox("cbShowScrollbarLeft"));
 	settings->setAutoloadPdfXoj(getCheckbox("cbAutoloadXoj"));
 	settings->setAutosaveEnabled(getCheckbox("cbAutosave"));
-	settings->setAllowScrollOutsideThePage(getCheckbox("cbSettingScrollOutside"));
+	settings->setAddVerticalSpace(getCheckbox("cbAddVerticalSpace"));
+	settings->setAddHorizontalSpace(getCheckbox("cbAddHorizontalSpace"));
 	settings->setShowBigCursor(getCheckbox("cbBigCursor"));
 
 	GtkWidget* colorBorder = get("colorBorder");
