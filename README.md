@@ -32,6 +32,7 @@ They'll be at <a href="https://github.com/xournalpp/xournalpp/releases">Xournal+
 
 If at a loss, you can try to build with
 ```bash
+autoreconf
 ./configure --enable-mathtex
 make
 ```
