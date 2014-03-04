@@ -3,7 +3,6 @@
 #include "../model/PageRef.h"
 #include "../model/Element.h"
 #include <Range.h>
-#include "../gui/Redrawable.h"
 
 ScaleUndoAction::ScaleUndoAction(PageRef page,
                                  GList* elements,
@@ -35,7 +34,7 @@ bool ScaleUndoAction::undo(Control* control)
 {
 	XOJ_CHECK_TYPE(ScaleUndoAction);
 
-	applayScale(1 / this->fx, 1 / this->fy);
+	applyScale(1 / this->fx, 1 / this->fy);
 	this->undone = true;
 	return true;
 }
@@ -44,12 +43,12 @@ bool ScaleUndoAction::redo(Control* control)
 {
 	XOJ_CHECK_TYPE(ScaleUndoAction);
 
-	applayScale(this->fx, this->fy);
+	applyScale(this->fx, this->fy);
 	this->undone = false;
 	return true;
 }
 
-void ScaleUndoAction::applayScale(double fx, double fy)
+void ScaleUndoAction::applyScale(double fx, double fy)
 {
 	XOJ_CHECK_TYPE(ScaleUndoAction);
 
