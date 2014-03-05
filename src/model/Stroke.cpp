@@ -274,7 +274,7 @@ void Stroke::scale(double x0, double y0, double fx, double fy)
 {
 	XOJ_CHECK_TYPE(Stroke);
 
-	double fz = (fx + fy) / 2;
+	double fz = sqrt(fx*fy);
 
 	for (int i = 0; i < this->pointCount; i++)
 	{
