@@ -21,6 +21,7 @@
 #include "../../model/Font.h"
 #include "../../model/Element.h"
 #include "../../model/PageRef.h"
+#include "CursorSelectionType.h"
 #include <ListIterator.h>
 
 class UndoRedoHandler;
@@ -94,7 +95,8 @@ public:
 	void updateContent(double x, double y, double width, double height,
 	                   bool aspectRatio, Layer* layer, PageRef targetPage,
 	                   PageView* targetView,
-	                   UndoRedoHandler* undo);
+	                   UndoRedoHandler* undo,
+	                   CursorSelectionType type);
 
 private:
 	/**
