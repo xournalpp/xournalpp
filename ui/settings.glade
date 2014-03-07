@@ -9,7 +9,7 @@
     <property name="window_position">center</property>
     <property name="icon">pixmaps/xournalpp.svg</property>
     <property name="type_hint">normal</property>
-    <signal name="close" handler="gtk_widget_hide" swapped="no"/>
+    <signal name="close" handler="gtk_widget_hide" />
     <child internal-child="vbox">
       <widget class="GtkVBox" id="dialog-vbox3">
         <property name="visible">True</property>
@@ -71,7 +71,7 @@
                     <property name="can_focus">True</property>
                     <property name="receives_default">False</property>
                     <property name="draw_indicator">True</property>
-                    <signal name="toggled" handler="on_cbSettingCheckbox_toggled" swapped="no"/>
+                    <signal name="toggled" handler="on_cbSettingCheckbox_toggled" />
                     <child>
                       <widget class="GtkLabel" id="label28">
                         <property name="visible">True</property>
