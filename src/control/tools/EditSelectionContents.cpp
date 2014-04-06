@@ -12,7 +12,6 @@
 #include "../../undo/ScaleUndoAction.h"
 #include "../../undo/InsertUndoAction.h"
 #include "../../undo/MoveUndoAction.h"
-#include "../../undo/RelMoveUndoAction.h"
 #include "../../undo/DeleteUndoAction.h"
 #include "../../gui/XournalView.h"
 #include "../../gui/pageposition/PagePositionHandler.h"
@@ -381,11 +380,11 @@ void EditSelectionContents::updateContent(double x, double y, double width, doub
 	bool scale =
 	  (width != this->lastWidth || height != this->lastHeight);
 
-	bool move = mx != 0 || my != 0;
+	bool move = (mx != 0 || my != 0);
 
 	if(move)
 	{
-		RelMoveUndoAction* moveUndo = new RelMoveUndoAction(this->sourceLayer,
+		MoveUndoAction* moveUndo = new MoveUndoAction(this->sourceLayer,
 		                                                    this->sourcePage,
 		                                                    this->selected,
 		                                                    mx, my, layer,
