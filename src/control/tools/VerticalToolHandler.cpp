@@ -37,7 +37,9 @@ VerticalToolHandler::VerticalToolHandler(Redrawable* view, PageRef page,
 	this->jumpY = this->page->getHeight() - this->jumpY;
 
 	this->crBuffer = cairo_image_surface_create(CAIRO_FORMAT_ARGB32,
-	                                            this->page->getWidth() * zoom, (this->page->getHeight() - y) * zoom);
+	                                            this->page->getWidth() * zoom,
+	                                            (this->page->getHeight() - y) * zoom);
+
 	cairo_t* cr = cairo_create(this->crBuffer);
 	cairo_scale(cr, zoom, zoom);
 	cairo_translate(cr, 0, -y);
@@ -145,7 +147,12 @@ MoveUndoAction* VerticalToolHandler::finalize()
 
 	double dY = this->endY - this->startY;
 
-	MoveUndoAction* undo = new MoveUndoAction(this->page, this);
+	MoveUndoAction* undo = new MoveUndoAction(this->layer,
+	                                                this->page,
+	                                                this->elements,
+	                                                0, dY,
+	                                                this->layer,
+	                                                this->page);
 
 	for (GList* l = this->elements; l != NULL; l = l->next)
 	{
@@ -154,8 +161,6 @@ MoveUndoAction* VerticalToolHandler::finalize()
 
 		this->layer->addElement(e);
 	}
-
-	undo->finalize(this);
 
 	view->rerenderPage();
 

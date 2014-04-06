@@ -248,6 +248,9 @@ public:
 	bool getAddHorizontalSpace();
 	void setAddHorizontalSpace(bool space);
 
+	bool getfixXinput();
+	void setfixXinput(bool fix);
+
 	bool isEnableLeafEnterWorkaround();
 	void setEnableLeafEnterWorkaround(bool enable);
 
@@ -438,6 +441,11 @@ private:
 	 * allow scroll outside the page
 	 */
 	bool addHorizontalSpace, addVerticalSpace;
+
+	/**
+	 * apply the xinput fix
+	 */
+	bool fixXinput;
 
 	/**
 	 * Enable Bugfix to prevent crash on GTK 2.18 etc

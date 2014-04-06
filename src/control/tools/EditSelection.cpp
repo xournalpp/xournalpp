@@ -240,8 +240,10 @@ int EditSelection::getViewHeight()
  * Sets the tool size for pen or eraser, returs an undo action
  * (or NULL if nothing is done)
  */
-UndoAction* EditSelection::setSize(ToolSize size, const double* thicknessPen,
-                                   const double* thicknessHilighter, const double* thicknessEraser)
+UndoAction* EditSelection::setSize(ToolSize size,
+                                   const double* thicknessPen,
+                                   const double* thicknessHilighter,
+                                   const double* thicknessEraser)
 {
 	XOJ_CHECK_TYPE(EditSelection);
 
@@ -319,7 +321,8 @@ void EditSelection::mouseUp()
 	this->contents->updateContent(this->x, this->y,
 	                              this->width, this->height,
 	                              this->aspectRatio, layer, page,
-	                              this->view, this->undo);
+	                              this->view, this->undo,
+	                              this->mouseDownType);
 
 	this->mouseDownType = CURSOR_SELECTION_NONE;
 }
@@ -351,8 +354,6 @@ void EditSelection::mouseMove(double x, double y)
 	{
 		this->x = x - this->relMousePosX;
 		this->y = y - this->relMousePosY;
-
-		this->view->getXournal()->repaintSelection();
 	}
 	else if (this->mouseDownType == CURSOR_SELECTION_TOP_LEFT)
 	{
@@ -375,8 +376,6 @@ void EditSelection::mouseMove(double x, double y)
 
 		this->x += oldW - this->width;
 		this->y += oldH - this->height;
-
-		this->view->getXournal()->repaintSelection();
 	}
 	else if (this->mouseDownType == CURSOR_SELECTION_TOP_RIGHT)
 	{
@@ -397,8 +396,6 @@ void EditSelection::mouseMove(double x, double y)
 		this->height *= f;
 
 		this->y += oldH - this->height;
-
-		this->view->getXournal()->repaintSelection();
 	}
 	else if (this->mouseDownType == CURSOR_SELECTION_BOTTOM_LEFT)
 	{
@@ -419,8 +416,6 @@ void EditSelection::mouseMove(double x, double y)
 		this->height *= f;
 
 		this->x += oldW - this->width;
-
-		this->view->getXournal()->repaintSelection();
 	}
 	else if (this->mouseDownType == CURSOR_SELECTION_BOTTOM_RIGHT)
 	{
@@ -438,36 +433,31 @@ void EditSelection::mouseMove(double x, double y)
 
 		this->width *= f;
 		this->height *= f;
-
-		this->view->getXournal()->repaintSelection();
 	}
 	else if (this->mouseDownType == CURSOR_SELECTION_TOP)
 	{
 		double dy = y - this->y;
 		this->height -= dy;
 		this->y += dy;
-		this->view->getXournal()->repaintSelection();
 	}
 	else if (this->mouseDownType == CURSOR_SELECTION_BOTTOM)
 	{
 		double dy = y - this->y - this->height;
 		this->height += dy;
-		this->view->getXournal()->repaintSelection();
 	}
 	else if (this->mouseDownType == CURSOR_SELECTION_LEFT)
 	{
 		double dx = x - this->x;
 		this->width -= dx;
 		this->x += dx;
-
-		this->view->getXournal()->repaintSelection();
 	}
 	else if (this->mouseDownType == CURSOR_SELECTION_RIGHT)
 	{
 		double dx = x - this->x - this->width;
 		this->width += dx;
-		this->view->getXournal()->repaintSelection();
 	}
+
+	this->view->getXournal()->repaintSelection();
 
 	PageView* v = getBestMatchingPageView();
 
