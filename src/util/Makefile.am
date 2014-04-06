@@ -37,6 +37,6 @@ libutil_la_CXXFLAGS = \
 	-Wreturn-type -Wuninitialized -Wunused-value -Wunused-variable
 
 $(abs_top_builddir)/src/pdf/popplerdirect/poppler-config.h:
-	$(abs_top_builddir)/src/pdf/popplerdirect/workaround/workaround.sh
+	$(abs_top_builddir)/src/pdf/popplerdirect/workaround/workaround.sh build
 
 BUILT_SOURCES = $(abs_top_builddir)/src/pdf/popplerdirect/poppler-config.h
