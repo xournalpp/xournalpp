@@ -12,7 +12,6 @@
 #include "../../undo/ScaleUndoAction.h"
 #include "../../undo/InsertUndoAction.h"
 #include "../../undo/MoveUndoAction.h"
-#include "../../undo/RelMoveUndoAction.h"
 #include "../../undo/DeleteUndoAction.h"
 #include "../../gui/XournalView.h"
 #include "../../gui/pageposition/PagePositionHandler.h"
@@ -25,7 +24,8 @@
 #include <math.h>
 
 EditSelectionContents::EditSelectionContents(double x, double y, double width,
-                                             double height, PageRef sourcePage, Layer* sourceLayer, PageView* sourceView)
+                                             double height, PageRef sourcePage,
+                                             Layer* sourceLayer, PageView* sourceView)
 {
 	XOJ_INIT_TYPE(EditSelectionContents);
 
@@ -90,7 +90,8 @@ ListIterator<Element*> EditSelectionContents::getElements()
  * (or NULL if nothing is done)
  */
 UndoAction* EditSelectionContents::setSize(ToolSize size,
-                                           const double* thicknessPen, const double* thicknessHilighter,
+                                           const double* thicknessPen,
+                                           const double* thicknessHilighter,
                                            const double* thicknessEraser)
 {
 	XOJ_CHECK_TYPE(EditSelectionContents);
@@ -361,10 +362,12 @@ void EditSelectionContents::finalizeSelection(double x, double y, double width,
 	}
 }
 
-void EditSelectionContents::updateContent(double x, double y, double width, double height,
+void EditSelectionContents::updateContent(double x, double y,
+                                          double width, double height,
                                           bool aspectRatio, Layer* layer,
                                           PageRef targetPage, PageView* targetView,
-                                          UndoRedoHandler* undo)
+                                          UndoRedoHandler* undo,
+                                          CursorSelectionType type)
 {
 	double mx = x - this->lastX;
 	double my = y - this->lastY;
@@ -381,11 +384,9 @@ void EditSelectionContents::updateContent(double x, double y, double width, doub
 	bool scale =
 	  (width != this->lastWidth || height != this->lastHeight);
 
-	bool move = mx != 0 || my != 0;
-
-	if(move)
+	if(type == CURSOR_SELECTION_MOVE)
 	{
-		RelMoveUndoAction* moveUndo = new RelMoveUndoAction(this->sourceLayer,
+		MoveUndoAction* moveUndo = new MoveUndoAction(this->sourceLayer,
 		                                                    this->sourcePage,
 		                                                    this->selected,
 		                                                    mx, my, layer,
@@ -393,19 +394,49 @@ void EditSelectionContents::updateContent(double x, double y, double width, doub
 
 		undo->addUndoAction(moveUndo);
 
-		this->lastX = x;
-		this->lastY = y;
 	}
-	if(scale)
+	else if(scale)
 	{
+		// The coordinates which are the center of the scaling
+		// operation. Their coordinates depend on the scaling
+		// operation performed
+		double px = this->lastX;
+		double py = this->lastY;
+		
+		switch(type)
+		{
+			case CURSOR_SELECTION_TOP_LEFT:
+			case CURSOR_SELECTION_BOTTOM_LEFT:
+			case CURSOR_SELECTION_LEFT:
+				px = (this->lastWidth + this->lastX);
+				break;
+			default:
+				break;
+		}
+		
+		switch(type)
+		{
+			case CURSOR_SELECTION_TOP_LEFT:
+			case CURSOR_SELECTION_TOP_RIGHT:
+			case CURSOR_SELECTION_TOP:
+				py = (this->lastHeight + this->lastY);
+				break;
+			default:
+				break;
+		}
+		
 		ScaleUndoAction* scaleUndo = new ScaleUndoAction(this->sourcePage,
 		                                                 this->selected,
-		                                                 x, y, fx, fy);
+		                                                 px, py, fx, fy);
 		undo->addUndoAction(scaleUndo);
 
-		this->lastWidth = width;
-		this->lastHeight = height;
 	}
+	
+	this->lastX = x;
+	this->lastY = y;
+	
+	this->lastWidth = width;
+	this->lastHeight = height;
 }
 
 /**

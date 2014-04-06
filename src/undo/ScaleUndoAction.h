@@ -15,13 +15,12 @@
 #include "UndoAction.h"
 #include <glib.h>
 
-class Redrawable;
-
 class ScaleUndoAction: public UndoAction
 {
 public:
-	ScaleUndoAction(PageRef page, GList* elements, double x0,
-	                double y0, double fx, double fy);
+	ScaleUndoAction(PageRef page, GList* elements,
+	                double x0, double y0,
+	                double fx, double fy);
 	virtual ~ScaleUndoAction();
 
 public:
@@ -30,7 +29,7 @@ public:
 	virtual String getText();
 
 private:
-	void applayScale(double fx, double fy);
+	void applyScale(double fx, double fy);
 
 private:
 	XOJ_TYPE_ATTRIB;

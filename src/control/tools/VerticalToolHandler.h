@@ -49,8 +49,6 @@ private:
 	 * When we create a new page
 	 */
 	double jumpY;
-
-	friend class MoveUndoAction;
 };
 
 #endif /* __VERTICALTOOLHANDLER_H__ */

@@ -9,7 +9,7 @@
     <property name="window_position">center</property>
     <property name="icon">pixmaps/xournalpp.svg</property>
     <property name="type_hint">normal</property>
-    <signal name="close" handler="gtk_widget_hide" swapped="no"/>
+    <signal name="close" handler="gtk_widget_hide" />
     <child internal-child="vbox">
       <widget class="GtkVBox" id="dialog-vbox3">
         <property name="visible">True</property>
@@ -71,7 +71,7 @@
                     <property name="can_focus">True</property>
                     <property name="receives_default">False</property>
                     <property name="draw_indicator">True</property>
-                    <signal name="toggled" handler="on_cbSettingCheckbox_toggled" swapped="no"/>
+                    <signal name="toggled" handler="on_cbSettingCheckbox_toggled" />
                     <child>
                       <widget class="GtkLabel" id="label28">
                         <property name="visible">True</property>
@@ -211,7 +211,7 @@ strokes are not drawn under the cursor. &lt;/i&gt;</property>
                               <widget class="GtkLabel" id="labeIgnorCoreEvents">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
-                                <property name="label" translatable="yes">If sometimes only points appear instead of lines</property>
+                                <property name="label" translatable="yes">&lt;i&gt;If sometimes only points appear instead of lines&lt;/i&gt;</property>
                                 <property name="use_markup">True</property>
                               </widget>
                               <packing>
@@ -225,6 +225,53 @@ strokes are not drawn under the cursor. &lt;/i&gt;</property>
                             <property name="expand">False</property>
                             <property name="fill">True</property>
                             <property name="position">4</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <widget class="GtkCheckButton" id="cbFixXinput">
+                            <property name="visible">True</property>
+                            <property name="can_focus">True</property>
+                            <property name="receives_default">False</property>
+                            <property name="draw_indicator">True</property>
+                            <child>
+                              <widget class="GtkLabel" id="label42">
+                                <property name="visible">True</property>
+                                <property name="can_focus">False</property>
+                                <property name="label" translatable="yes">&lt;b&gt;Special treatment of input coordinates&lt;/b&gt;</property>
+                                <property name="use_markup">True</property>
+                              </widget>
+                            </child>
+                          </widget>
+                          <packing>
+                            <property name="expand">False</property>
+                            <property name="fill">True</property>
+                            <property name="padding">5</property>
+                            <property name="position">5</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <widget class="GtkHBox" id="hbox37">
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <child>
+                              <widget class="GtkLabel" id="labelFixXinput">
+                                <property name="visible">True</property>
+                                <property name="can_focus">False</property>
+                                <property name="label" translatable="yes">&lt;i&gt;If there is an offset between pointer position and drawing position after rotating the screen&lt;/i&gt;</property>
+                                <property name="use_markup">True</property>
+                                <property name="wrap">True</property>
+                              </widget>
+                              <packing>
+                                <property name="expand">False</property>
+                                <property name="fill">False</property>
+                                <property name="position">0</property>
+                              </packing>
+                            </child>
+                          </widget>
+                          <packing>
+                            <property name="expand">False</property>
+                            <property name="fill">True</property>
+                            <property name="position">6</property>
                           </packing>
                         </child>
                       </widget>

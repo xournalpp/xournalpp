@@ -90,6 +90,8 @@ void Settings::loadDefault()
 	this->addHorizontalSpace = false;
 	this->addVerticalSpace = false;
 
+	this->fixXinput = false;
+
 	this->enableLeafEnterWorkaround = true;
 
 	this->defaultSaveName = _("%F-Note-%H-%M.xoj");
@@ -395,6 +397,10 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur)
 	{
 		this->addHorizontalSpace = xmlStrcmp(value,
 	                                       (const xmlChar*) "true") ? false : true;
+	}
+	else if (xmlStrcmp(name, (const xmlChar*) "fixXinput") == 0)
+	{
+		this->fixXinput = xmlStrcmp(value, (const xmlChar*) "true") ? false : true;
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "enableLeafEnterWorkaround") == 0)
 	{
@@ -795,6 +801,8 @@ void Settings::save()
 	WRITE_BOOL_PROP(addHorizontalSpace);
 	WRITE_BOOL_PROP(addVerticalSpace);
 
+	WRITE_BOOL_PROP(fixXinput);
+
 	WRITE_BOOL_PROP(enableLeafEnterWorkaround);
 	WRITE_COMMENT("If Xournal crashes if you e.g. unplug your mouse set this to true. If you have input problems, you can turn it of with false.");
 
@@ -1063,6 +1071,18 @@ void Settings::setAddHorizontalSpace(bool space)
 	this->addHorizontalSpace = space;
 }
 
+bool Settings::getfixXinput()
+{
+	XOJ_CHECK_TYPE(Settings);
+
+	return this->fixXinput;
+}
+void Settings::setfixXinput(bool fix)
+{
+	XOJ_CHECK_TYPE(Settings);
+
+	this->fixXinput = fix;
+}
 
 bool Settings::isEnableLeafEnterWorkaround()
 {
@@ -1323,10 +1343,11 @@ void Settings::checkCanXInput()
 		{
 
 			// get around a GDK bug: map the valuator range CORRECTLY to [0,1]
-#ifdef ENABLE_XINPUT_BUGFIX
-			gdk_device_set_axis_use(device, 0, GDK_AXIS_IGNORE);
-			gdk_device_set_axis_use(device, 1, GDK_AXIS_IGNORE);
-#endif
+			if(this->getfixXinput())
+			{
+				gdk_device_set_axis_use(device, 0, GDK_AXIS_IGNORE);
+				gdk_device_set_axis_use(device, 1, GDK_AXIS_IGNORE);
+			}
 			gdk_device_set_mode(device, GDK_MODE_SCREEN);
 			if (g_str_has_suffix(device->name, "eraser"))
 			{
