@@ -22,7 +22,9 @@ RecentManager::RecentManager()
 	this->recentHandlerId = g_signal_connect(recentManager, "changed",
 	                                         G_CALLBACK (recentManagerChangedCallback), this);
 
+	gdk_threads_enter();
 	updateMenu();
+	gdk_threads_leave();
 }
 
 RecentManager::~RecentManager()
@@ -187,6 +189,7 @@ void RecentManager::freeOldMenus()
 	for (GList* l = menuItemList; l != NULL; l = l->next)
 	{
 		w = (GtkWidget*) l->data;
+
 		gtk_widget_destroy(w);
 	}
 
@@ -372,7 +375,6 @@ void RecentManager::recentsMenuActivateCallback(GtkAction* action,
 
 	const char* uri = gtk_recent_info_get_uri(info);
 	recentManager->openRecent(uri);
-	gtk_recent_info_unref(info);
 }
 
 void RecentManager::addRecentMenu(GtkRecentInfo* info, int i)
@@ -452,6 +454,7 @@ void RecentManager::updateMenu()
 	GtkWidget* separator = gtk_separator_menu_item_new();
 	gtk_menu_shell_append(GTK_MENU_SHELL(menu), separator);
 	gtk_widget_set_visible(GTK_WIDGET(separator), true);
+
 	this->menuItemList = g_list_append(this->menuItemList, separator);
 
 	i = 0;
