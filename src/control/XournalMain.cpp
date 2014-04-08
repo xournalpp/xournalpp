@@ -18,6 +18,8 @@
 #include "../plugin/python/PythonRunner.h"
 #endif
 
+#include "util/Threading.h"
+
 XournalMain::XournalMain()
 {
 	XOJ_INIT_TYPE(XournalMain);
@@ -165,6 +167,7 @@ int XournalMain::run(int argc, char* argv[])
 
 	bool optNoWarnSVN = false;
 	bool optNoPdfCompress = false;
+        bool optNoThreads = false;
 	gchar** optFilename = NULL;
 	gchar* pdfFilename = NULL;
 #ifdef ENABLE_PYTHON
@@ -175,6 +178,7 @@ int XournalMain::run(int argc, char* argv[])
 
 	GOptionEntry options[] =
 	{
+                { "no-threads",      't', 0, G_OPTION_ARG_NONE,           &optNoThreads,     "Disable threads", NULL },
 		{ "no-warn-svn",     'w', 0, G_OPTION_ARG_NONE,           &optNoWarnSVN,     "Do not warn this is a development release", NULL },
 		{ "pdf-no-compress",   0, 0, G_OPTION_ARG_NONE,           &optNoPdfCompress, "Don't compress PDF files (for debugging)", NULL },
 		{ "create-pdf",      'p', 0, G_OPTION_ARG_FILENAME,       &pdfFilename,      "PDF output filename", NULL },
@@ -246,7 +250,7 @@ int XournalMain::run(int argc, char* argv[])
 	                                        CONFIG_DIR, "colornames.ini", NULL);
 	ToolbarColorNames::getInstance().loadFile(colorNameFile);
 
-	Control* control = new Control(gladePath);
+	Control* control = new Control(gladePath, optNoThreads);
 
 	MainWindow* win = new MainWindow(gladePath, control);
 	control->initWindow(win);
@@ -321,9 +325,10 @@ int XournalMain::run(int argc, char* argv[])
 	checkForErrorlog();
 	checkForEmergencySave();
 
-	gdk_threads_enter();
-	gtk_main();
-	gdk_threads_leave();
+	{
+		Lock lk(GdkMutex);
+		gtk_main();
+	}
 
 	control->saveSettings();
 

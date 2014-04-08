@@ -52,7 +52,7 @@
 
 // TODO Check for error log on startup, also check for emergency save document!
 
-Control::Control(GladeSearchpath* gladeSearchPath)
+Control::Control(GladeSearchpath* gladeSearchPath, bool noThreads)
 {
 	XOJ_INIT_TYPE(Control);
 
@@ -84,7 +84,7 @@ Control::Control(GladeSearchpath* gladeSearchPath)
 
 	this->scrollHandler = new ScrollHandler(this);
 
-	this->scheduler = new XournalScheduler();
+	this->scheduler = new XournalScheduler(noThreads);
 
 	this->hiddenFullscreenWidgets = NULL;
 	this->sidebarHidden = false;

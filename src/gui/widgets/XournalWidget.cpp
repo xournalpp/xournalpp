@@ -792,7 +792,6 @@ static gboolean gtk_xournal_expose(GtkWidget* widget, GdkEventExpose* event)
 
 	GtkXournal* xournal = GTK_XOURNAL(widget);
 
-	gdk_threads_enter();
 	cairo_t* cr = gdk_cairo_create(GTK_WIDGET(widget)->window);
 
 	ArrayIterator<PageView*> it = xournal->view->pageViewIterator();
@@ -890,7 +889,6 @@ static gboolean gtk_xournal_expose(GtkWidget* widget, GdkEventExpose* event)
 	}
 
 	cairo_destroy(cr);
-	gdk_threads_leave();
 
 	return true;
 }

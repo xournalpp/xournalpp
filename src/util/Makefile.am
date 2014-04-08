@@ -16,6 +16,7 @@ libutil_la_SOURCES = \
 	PageRange.cpp \
 	Stacktrace.cpp \
 	String.cpp \
+	Threading.cpp \
 	pixbuf-utils.cpp \
 	Range.cpp \
 	Rectangle.cpp \

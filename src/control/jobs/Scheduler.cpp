@@ -8,11 +8,12 @@
 #define SDEBUG(msg, ...) {}
 #endif
 
-Scheduler::Scheduler()
+Scheduler::Scheduler(bool noThreads)
 {
 	XOJ_INIT_TYPE(Scheduler);
 
 	this->name = "Scheduler";
+        this->noThreads = noThreads;
 
 	// Thread
 	this->threadRunning = true;
@@ -72,7 +73,8 @@ void Scheduler::start()
 {
 	g_return_if_fail(this->thread == NULL);
 	
-	this->thread = g_thread_new(name, (GThreadFunc)jobThreadCallback, this);
+	if(!this->noThreads)
+		this->thread = g_thread_new(name, (GThreadFunc)jobThreadCallback, this);
 }
 
 void Scheduler::stop()
@@ -83,12 +85,20 @@ void Scheduler::stop()
 	}
 	this->threadRunning = false;
 	g_cond_broadcast(&this->jobQueueCond);
-	g_thread_join(this->thread);
+        
+        if(this->thread)
+                g_thread_join(this->thread);
 }
 
 void Scheduler::addJob(Job* job, JobPriority priority)
 {
 	XOJ_CHECK_TYPE(Scheduler);
+        
+        if(this->noThreads)
+        {
+                job->execute();
+                return;
+        }
 
 	g_mutex_lock(&this->jobQueueMutex);
 

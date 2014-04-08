@@ -91,7 +91,9 @@ void SidebarPreviewPage::repaint()
 void SidebarPreviewPage::paint()
 {
 	XOJ_CHECK_TYPE(SidebarPreviewPage);
-
+        
+        bool doRepaint = false;
+        
 	sidebar->setBackgroundWhite();
 
 	if (!this->firstPainted)
@@ -144,7 +146,7 @@ void SidebarPreviewPage::paint()
 
 		cairo_destroy(cr2);
 
-		repaint();
+		doRepaint = true;
 	}
 
 	gdk_threads_enter();
@@ -184,6 +186,9 @@ void SidebarPreviewPage::paint()
 	gdk_threads_leave();
 
 	g_mutex_unlock(&this->drawingMutex);
+        
+        if(doRepaint)
+                repaint();
 }
 
 void SidebarPreviewPage::updateSize()

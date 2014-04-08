@@ -22,7 +22,7 @@
 class XournalScheduler: public Scheduler
 {
 public:
-	XournalScheduler();
+	XournalScheduler(bool noThreads = false);
 	virtual ~XournalScheduler();
 public:
 	/**
@@ -30,11 +30,18 @@ public:
 	 */
 	void removeSidebar(SidebarPreviewPage* preview);
 	void removePage(PageView* view);
+        
+        /**
+         * Removes all PreviewJob%s / RenderJob%s scheduled to be run
+         */
 	void removeAllJobs();
 
 	void addRepaintSidebar(SidebarPreviewPage* preview);
 	void addRerenderPage(PageView* view);
-
+        
+        /**
+         * Blocks until all currently running Job%s have been executed
+         */
 	void finishTask();
 
 private:
