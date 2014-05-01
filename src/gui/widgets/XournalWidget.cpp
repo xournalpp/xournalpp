@@ -44,6 +44,8 @@ gboolean gtk_xournal_scroll_event(GtkWidget* widget, GdkEventScroll* event);
 static void gtk_xournal_scroll_mouse_event(GtkXournal* xournal,
                                            GdkEventMotion* event);
 
+PageView *current_view;
+
 GtkType gtk_xournal_get_type(void)
 {
 	static GtkType gtk_xournal_type = 0;
@@ -440,6 +442,9 @@ gboolean gtk_xournal_button_press_event(GtkWidget* widget,
 
 	PageView* pv = gtk_xournal_get_page_view_for_pos_cached(xournal, event->x,
 	                                                        event->y);
+
+	current_view = pv;
+
 	if (pv)
 	{
 		xournal->currentInputPage = pv;
@@ -469,6 +474,8 @@ gboolean gtk_xournal_button_release_event(GtkWidget* widget,
 	{
 		return true;
 	}
+
+	current_view = NULL;
 
 	GtkXournal* xournal = GTK_XOURNAL(widget);
 
@@ -553,9 +560,21 @@ gboolean gtk_xournal_motion_notify_event(GtkWidget* widget,
 		return true;
 	}
 
-	PageView* pv = gtk_xournal_get_page_view_for_pos_cached(xournal, event->x,
-	                                                        event->y);
+	PageView* pv = NULL;
+
+	if(current_view)
+	{
+		pv = current_view;
+	}
+	else
+	{
+		pv = gtk_xournal_get_page_view_for_pos_cached(xournal,
+	                                                event->x,
+	                                                event->y);
+	}
+
 	xournal->view->getCursor()->setInsidePage(pv != NULL);
+
 	if (pv)
 	{
 		// allow events only to a single page!
