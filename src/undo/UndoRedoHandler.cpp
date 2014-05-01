@@ -6,27 +6,44 @@
 #include <glib/gi18n-lib.h>
 // TODO LOW PRIO: add memory limit
 
-//#define UNDO_TRACE
+#define UNDO_TRACE
 
 #ifdef UNDO_TRACE
+
+void printAction(UndoAction* action)
+{
+	if(action)
+	{
+		printf("%p / %s\n", action, action->getClassName());
+	}
+	else
+	{
+		printf("(null)\n");
+	}
+}
 
 void printUndoList(GList* list)
 {
 	for (GList* l = list; l != NULL; l = l->next)
 	{
 		UndoAction* action = (UndoAction*) l->data;
-		printf("printUndoList: %p / %s\n", action, action->getClassName());
+		printAction(action);
 	}
 }
 
 #endif //UNDO_TRACE
 
 #ifdef UNDO_TRACE
-#define PRINTCONTENTS() \
-	printf("redoList\n"); \
-	printUndoList(this->redoList); \
-	printf("undoList\n"); \
-	printUndoList(this->undoList);
+#define PRINTCONTENTS()                                    \
+	printf("redoList\n");                                    \
+	printUndoList(this->redoList);                           \
+	printf("undoList\n");                                    \
+	printUndoList(this->undoList);                           \
+	printf("\nsavedUndo\n");                                 \
+	if(this->savedUndo)                                      \
+	{                                                        \
+		printAction(this->savedUndo);                          \
+	}                                                        
 #else
 #define PRINTCONTENTS()
 #endif //UNDO_TRACE
@@ -38,8 +55,8 @@ UndoRedoHandler::UndoRedoHandler(Control* control)
 	XOJ_INIT_TYPE(UndoRedoHandler);
 
 	this->undoList = NULL;
-	this->savedUndoList = NULL;
-	this->autosavedUndoList = NULL;
+	this->savedUndo = NULL;
+	this->autosavedUndo = NULL;
 	this->redoList = NULL;
 	this->listener = NULL;
 	this->control = control;
@@ -316,28 +333,48 @@ bool UndoRedoHandler::isChanged()
 {
 	XOJ_CHECK_TYPE(UndoRedoHandler);
 
-	return this->savedUndoList != g_list_last(this->undoList);
+	if(!this->undoList)
+		return this->savedUndo;
+
+	return this->savedUndo != g_list_last(this->undoList)->data;
 }
 
 bool UndoRedoHandler::isChangedAutosave()
 {
 	XOJ_CHECK_TYPE(UndoRedoHandler);
 
-	return this->autosavedUndoList != g_list_last(this->undoList);
+	if(!this->redoList)
+		return this->autosavedUndo;
+
+	return this->autosavedUndo != g_list_last(this->undoList)->data;
 }
 
 void UndoRedoHandler::documentAutosaved()
 {
 	XOJ_CHECK_TYPE(UndoRedoHandler);
 
-	this->autosavedUndoList = g_list_last(this->undoList);
+	if(this->undoList)
+	{
+		this->autosavedUndo = (UndoAction*) g_list_last(this->undoList)->data;
+	}
+	else
+	{
+		this->autosavedUndo = NULL;
+	}
 }
 
 void UndoRedoHandler::documentSaved()
 {
 	XOJ_CHECK_TYPE(UndoRedoHandler);
 
-	this->savedUndoList = g_list_last(this->undoList);
+	if(this->undoList)
+	{
+		this->savedUndo = (UndoAction*) g_list_last(this->undoList)->data;
+	}
+	else
+	{
+		this->savedUndo = NULL;
+	}
 }
 
 const char* UndoRedoHandler::getUndoStackTopTypeName()
