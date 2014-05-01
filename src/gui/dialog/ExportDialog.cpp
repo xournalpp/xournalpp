@@ -179,6 +179,8 @@ void ExportDialog::handleData()
 
 	this->resolution = gtk_spin_button_get_value(GTK_SPIN_BUTTON(
 	                                                 get("spPngResolution")));
+
+	this->settings->setLastSavePath(this->getFolder());
 }
 
 ExportFormtType ExportDialog::getFormatType()
