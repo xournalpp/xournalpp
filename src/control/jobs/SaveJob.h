@@ -16,8 +16,6 @@
 #include <String.h>
 #include <XournalType.h>
 
-class ProgressListener;
-
 class SaveJob : public BlockingJob
 {
 public:
