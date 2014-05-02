@@ -99,6 +99,9 @@ bool RectSelection::finalize(PageRef page)
 		}
 	}
 
+	view->repaintArea(this->x1 - 10, this->y1 - 10,
+	                  this->x2 + 10, this->y2 + 10);
+
 	return this->selectedElements != NULL;
 }
 
@@ -422,6 +425,9 @@ bool RegionSelect::finalize(PageRef page)
 			this->selectedElements = g_list_append(this->selectedElements, e);
 		}
 	}
+
+	view->repaintArea(this->x1Box - 10, this->y1Box - 10,
+	                  this->x2Box + 10, this->y2Box + 10);
 
 	return this->selectedElements != NULL;
 }

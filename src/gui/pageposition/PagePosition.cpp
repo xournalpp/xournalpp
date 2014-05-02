@@ -68,21 +68,21 @@ PageView* PagePosition::getViewAt(int x, int y)
 	return NULL;
 }
 
-bool PagePosition::containsY(int y)
+bool PagePosition::containsY(int y) const
 {
 	XOJ_CHECK_TYPE(PagePosition);
 
 	return (y >= this->y1 && y <= this->y2);
 }
 
-bool PagePosition::isYSmallerThan(int y)
+bool PagePosition::isYSmallerThan(int y) const
 {
 	XOJ_CHECK_TYPE(PagePosition);
 
 	return y > this->y2;
 }
 
-bool PagePosition::isYGraterThan(int y)
+bool PagePosition::isYGraterThan(int y) const
 {
 	XOJ_CHECK_TYPE(PagePosition);
 

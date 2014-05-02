@@ -148,17 +148,27 @@ void PageView::deleteViewBuffer()
 	g_mutex_unlock(&this->drawingMutex);
 }
 
-bool PageView::containsPoint(int x, int y)
+bool PageView::containsPoint(int x, int y, bool local)
 {
 	XOJ_CHECK_TYPE(PageView);
 
-	bool leftOk = this->layout.getLayoutAbsoluteX() <= x;
-	bool rightOk = x <= this->layout.getLayoutAbsoluteX() + this->getDisplayWidth();
-	bool topOk = this->layout.getLayoutAbsoluteY() <= y;
-	bool bottomOk = y <= this->layout.getLayoutAbsoluteY() +
-	                this->getDisplayHeight();
+	if(!local)
+	{
+		bool leftOk = this->layout.getLayoutAbsoluteX() <= x;
+		bool rightOk = x <= this->layout.getLayoutAbsoluteX() + this->getDisplayWidth();
+		bool topOk = this->layout.getLayoutAbsoluteY() <= y;
+		bool bottomOk = y <= this->layout.getLayoutAbsoluteY() +
+										this->getDisplayHeight();
 
-	return leftOk && rightOk && topOk && bottomOk;
+		return leftOk && rightOk && topOk && bottomOk;
+	}
+	else
+	{
+		return x >= 0 &&
+		       y >= 0 &&
+		       x <= this->getWidth() &&
+		       y <= this->getHeight();
+	}
 }
 
 bool PageView::searchTextOnPage(const char* text, int* occures, double* top)
@@ -530,7 +540,8 @@ bool PageView::onMotionNotifyEvent(GtkWidget* widget, GdkEventMotion* event)
 
 	ToolHandler* h = xournal->getControl()->getToolHandler();
 
-	if (this->inputHandler->onMotionNotifyEvent(event))
+	if (containsPoint(x, y, true) &&
+	    this->inputHandler->onMotionNotifyEvent(event))
 	{
 		//input	handler used this event
 	}

@@ -70,7 +70,11 @@ public:
 
 	void deleteViewBuffer();
 
-	bool containsPoint(int x, int y);
+	/**
+	 * Returns whether this PageView contains the
+	 * given point on the display
+	 */
+	bool containsPoint(int x, int y, bool local = false);
 	bool containsY(int y);
 
 	GdkColor getSelectionColor();
@@ -83,15 +87,52 @@ public:
 	 */
 	int getLastVisibleTime();
 	TextEditor* getTextEditor();
+
+	/**
+	 * Returns a reference to the XojPage belonging to
+	 * this PageView
+	 */
 	PageRef getPage();
+
 	XournalView* getXournal();
-	double getHeight();
+
+	/**
+	 * Returns the width of this PageView
+	 */
 	double getWidth();
+
+	/**
+	 * Returns the height of this PageView
+	 */
+	double getHeight();
+
+	/**
+	 * Returns the width of this PageView as displayed
+	 * on the display taking into account the current zoom
+	 */
 	int getDisplayWidth();
+	/**
+	 * Returns the height of this PageView as displayed
+	 * on the display taking into account the current zoom
+	 */
 	int getDisplayHeight();
+
+	/**
+	 * Returns the x coordinate of this PageView with
+	 * respect to the display
+	 */
 	int getX();
+
+	/**
+	 * Returns the y coordinate of this PageView with
+	 * respect to the display
+	 */
 	int getY();
 
+	/**
+	 * Maps a Rectangle from display coordinates to local
+	 * coordinates
+	 */
 	virtual Rectangle* rectOnWidget(double x, double y, double width,
 	                                double height);
 
