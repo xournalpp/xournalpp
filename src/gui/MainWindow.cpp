@@ -109,7 +109,7 @@ MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control) :
 	}
 	g_free(file);
 
-	initToolbarAndMenu();
+	createToolbarAndMenu(true);
 
 	GtkWidget* menuViewSidebarVisible = get("menuViewSidebarVisible");
 	g_signal_connect(menuViewSidebarVisible, "toggled", (GCallback) viewShowSidebar,
@@ -621,7 +621,7 @@ void MainWindow::updateToolbarMenu()
 	g_slist_free(this->toolbarGroup);
 	this->toolbarGroup = NULL;
 
-	initToolbarAndMenu();
+	createToolbarAndMenu(false);
 }
 
 static void container_remove_foreach(GtkWidget* widget,
@@ -656,7 +656,7 @@ void tbSelectMenuitemActivated(GtkMenuItem* menuitem,
 	data->win->toolbarSelected(data->d);
 }
 
-void MainWindow::initToolbarAndMenu()
+void MainWindow::createToolbarAndMenu(bool initial)
 {
 	XOJ_CHECK_TYPE(MainWindow);
 
@@ -723,6 +723,16 @@ void MainWindow::initToolbarAndMenu()
 		gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(selectedItem), TRUE);
 		this->toolbarIntialized = true;
 		toolbarSelected(selectedData);
+	}
+
+	if(!initial)
+	{
+		GtkWidget* separator = gtk_separator_menu_item_new();
+		gtk_widget_show(separator);
+
+		gtk_menu_shell_insert(menubar, separator, menuPos++);
+		gtk_menu_shell_insert(menubar, get("menuViewToolbarManage"), menuPos++);
+		gtk_menu_shell_insert(menubar, get("menuViewToolbarCustomize"), menuPos++);
 	}
 
 	this->control->getScheduler()->unblockRerenderZoom();

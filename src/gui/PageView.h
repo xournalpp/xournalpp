@@ -173,6 +173,7 @@ private:
 
 	friend class InsertImageRunnable;
 	friend class RenderJob;
+	friend class InputHandler;
 };
 
 #endif /* __PAGEVIEW_H__ */

@@ -25,17 +25,48 @@ public:
 	virtual ~Layer();
 
 public:
+	/**
+	 * Appends an Element to this Layer
+	 *
+	 * @note Performs a check to determine whether the element
+	 *       is already contained in the Layer
+	 */
 	void addElement(Element* e);
+
+	/**
+	 * Inserts an Element in the specified position of the Layer%s
+	 * internal list
+	 *
+	 * @note Performs a check to determine whether the element
+	 *       is already contained in the Layer
+	 */
 	void insertElement(Element* e, int pos);
+
+	/**
+	 * Returns the index of the given Element with respect
+	 * to the internal list
+	 */
 	int indexOf(Element* e);
+
+	/**
+	 * Removes an Element from the Layer and optionally deletes it
+	 */
 	int removeElement(Element* e, bool free);
 
+	/**
+	 * Returns an iterator over the Element%s contained
+	 * in this Layer
+	 */
 	ListIterator<Element*> elementIterator();
 
+	/**
+	 * Returns whether or not the Layer is empty
+	 */
 	bool isAnnotated();
 
 	/**
-	 * Create a recursive 1:1 copy of this layer
+	 * Creates a deep copy of this Layer by copying all
+	 * of the Element%s contained in it
 	 */
 	Layer* clone();
 

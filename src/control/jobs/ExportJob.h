@@ -46,6 +46,7 @@ private:
 	ExportFormtType type;
 	String filename;
 	String folder;
+	String front, back;
 };
 
 #endif /* __EXPORTJOB_H__ */

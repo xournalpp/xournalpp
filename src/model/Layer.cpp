@@ -102,7 +102,7 @@ int Layer::removeElement(Element* e, bool free)
 
 	if (elem == NULL)
 	{
-		g_warning("could not remove element from layer, its not on the layer!");
+		g_warning("Could not remove element from layer, it's not on the layer!");
 		Stacktrace::printStracktrace();
 		return -1;
 	}
