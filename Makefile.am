@@ -7,6 +7,15 @@ EXTRA_DIST = \
 	po/de.mo \
 	xournal.xml x-xoj.desktop xournalpp.desktop
 
+poppler clean-local:
+	for dir in $(SUBDIRS); do \
+		if [ $$dir == "src" ]; then \
+			$(MAKE) -C $$dir $@; \
+		else \
+			$(MAKE) -C $$dir; \
+		fi; \
+	done
+
 desktop-install:
 	if test "$(datadir)" = "/usr/share"; then \
 	  desktopdir=/usr/share; \
