@@ -147,7 +147,7 @@ bool InsertsUndoAction::redo(Control* control)
 	{
 		Element* elem = (Element*) l->data;
 
-		this->layer->removeElement(elem, false);
+		this->layer->addElement(elem);
 		this->page->fireElementChanged(elem);
 	}
 

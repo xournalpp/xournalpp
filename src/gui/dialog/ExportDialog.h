@@ -37,8 +37,32 @@ public:
 private:
 	bool validate();
 	void handleData();
-	static void exportSelectionChanged(GtkFileChooser* chooser,
-	                                   GtkEntry* newFolder);
+
+	/**
+	 * Callback for a changed selection of an output file
+	 */
+	static void selectionChanged(GtkFileChooser* chooser,
+	                             gpointer user_data);
+
+	static gboolean rangeFocused(GtkWidget* widget,
+	                             GdkEvent* event,
+	                             gpointer user_data);
+
+	static void fileTypeSelected(GtkTreeView* treeview,
+	                             gpointer user_data);
+
+	void addFileType(const char* typeDesc,
+	                 const char* pattern,
+	                 gint type = 0,
+	                 const char* filterName = NULL,
+	                 bool select = false);
+
+	void setupModel();
+
+	bool validFilename();
+	bool validExtension();
+
+	bool fileTypeByExtension();
 
 private:
 	XOJ_TYPE_ATTRIB;
@@ -49,11 +73,18 @@ private:
 	int resolution;
 	ExportFormtType type;
 
-	GtkEntry* folderFollower;
-
 	GList* range;
 
 	Settings* settings;
+	GtkListStore* typesModel;
+	GtkTreeView* typesView;
+
+	enum ColIndex
+	{
+		COL_FILEDESC=0,
+		COL_EXTENSION=1,
+		COL_TYPE=2
+	};
 };
 
 #endif /* __EXPORTDIALOG_H__ */

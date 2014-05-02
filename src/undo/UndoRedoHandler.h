@@ -65,8 +65,8 @@ private:
 	GList* undoList;
 	GList* redoList;
 
-	GList* savedUndoList;
-	GList* autosavedUndoList;
+	UndoAction* savedUndo;
+	UndoAction* autosavedUndo;
 
 
 	GList* listener;
