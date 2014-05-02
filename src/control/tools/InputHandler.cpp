@@ -171,7 +171,7 @@ void InputHandler::drawTmpStroke(bool do_redraw)
 		 * Andreas Butti
 		 */
 
-		g_mutex_lock(this->redrawable->drawingMutex);
+		g_mutex_lock(&this->redrawable->drawingMutex);
 
 		this->view->drawStroke(cr,
 		                       this->tmpStroke,
@@ -181,7 +181,7 @@ void InputHandler::drawTmpStroke(bool do_redraw)
 		this->tmpStrokeDrawElem = this->tmpStroke->getPointCount() - 1;
 		cairo_destroy(cr);
 
-		g_mutex_unlock(this->redrawable->drawingMutex);
+		g_mutex_unlock(&this->redrawable->drawingMutex);
 	}
 }
 
