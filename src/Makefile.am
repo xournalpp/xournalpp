@@ -203,7 +203,7 @@ AM_CPPFLAGS = \
 	-DPACKAGE_DATA_DIR=\""$(datadir)"\" \
 	-DPACKAGE_LOCALE_DIR=\""$(prefix)/$(DATADIRNAME)/locale"\" \
 	-I"$(abs_top_builddir)/src/pdf/popplerdirect" \
-	@DEPENDENCIES_CFLAGS@
+	@PACKAGE_CFLAGS@
 
 xournalpp_CXXFLAGS = \
 	-I$(top_srcdir)/src/util \
@@ -230,5 +230,5 @@ xournalpp_DEPENDENCIES = poppler
 xournalpp_LDADD = \
 	$(abs_top_builddir)/src/pdf/popplerdirect/libpoppler.a \
 	$(abs_top_builddir)/src/pdf/popplerdirect/libpoppler-glib.a \
-	@DEPENDENCIES_LIBS@ $(INTLLIBS) \
+	@PACKAGE_LIBS@ $(INTLLIBS) \
 	$(top_builddir)/src/util/libutil.la
