@@ -431,7 +431,7 @@ int Document::indexOf(PageRef page)
 {
 	XOJ_CHECK_TYPE(Document);
 
-	for (int i = 0; i < this->pages.size(); i++)
+	for (unsigned int i = 0; i < this->pages.size(); i++)
 	{
 		PageRef pg = this->pages[i];
 		if (pg == page)
@@ -486,7 +486,7 @@ void Document::operator=(Document& doc)
 	this->pdfFilename = doc.pdfFilename;
 	this->filename = doc.filename;
 
-	for (int i = 0; i < doc.pages.size(); i++)
+	for (unsigned int i = 0; i < doc.pages.size(); i++)
 	{
 		PageRef p = doc.pages[i];
 		addPage(p);

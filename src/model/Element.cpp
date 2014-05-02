@@ -116,7 +116,10 @@ bool Element::intersectsArea(const GdkRectangle* src)
 {
 	XOJ_CHECK_TYPE(Element);
 
-	GdkRectangle rect = { getX(), getY(), getElementWidth(), getElementHeight() };
+	GdkRectangle rect = { gint(getX()),
+	                      gint(getY()),
+	                      gint(getElementWidth()),
+	                      gint(getElementHeight()) };
 
 	return gdk_rectangle_intersect(src, &rect, NULL);
 }

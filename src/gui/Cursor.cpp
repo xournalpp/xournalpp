@@ -6,13 +6,13 @@
 
 /************** drawing nice cursors *********/
 
-static char CURSOR_HIGLIGHTER_BITS[] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf8, 0x0f, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08,
-                                        0x08, 0x08, 0x08, 0xf8, 0x0f, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-                                       };
+static unsigned char CURSOR_HIGLIGHTER_BITS[] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf8, 0x0f, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08,
+                                                 0x08, 0x08, 0x08, 0xf8, 0x0f, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+                                                };
 
-static char CURSOR_HILIGHTER_MASK[] = { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf8, 0x0f, 0xf8, 0x0f, 0xf8, 0x0f, 0xf8, 0x0f, 0xf8, 0x0f, 0xf8, 0x0f, 0xf8, 0x0f,
-                                        0xf8, 0x0f, 0xf8, 0x0f, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-                                      };
+static unsigned char CURSOR_HILIGHTER_MASK[] = { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf8, 0x0f, 0xf8, 0x0f, 0xf8, 0x0f, 0xf8, 0x0f, 0xf8, 0x0f, 0xf8, 0x0f, 0xf8, 0x0f,
+                                                0xf8, 0x0f, 0xf8, 0x0f, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+                                               };
 
 Cursor::Cursor(Control* control)
 {
@@ -278,10 +278,10 @@ void Cursor::updateCursor()
 		{
 			GdkColor bg = { 0, 65535, 65535, 65535 };
 			GdkColor fg = { 0, 0, 0, 0 };
-			GdkPixmap* source = gdk_bitmap_create_from_data(NULL, CURSOR_HIGLIGHTER_BITS,
+			GdkPixmap* source = gdk_bitmap_create_from_data(NULL, (gchar*) CURSOR_HIGLIGHTER_BITS,
 			                                                16, 16);
-			GdkPixmap* mask = gdk_bitmap_create_from_data(NULL, CURSOR_HILIGHTER_MASK, 16,
-			                                              16);
+			GdkPixmap* mask = gdk_bitmap_create_from_data(NULL, (gchar*) CURSOR_HILIGHTER_MASK,
+			                                              16, 16);
 			cursor = gdk_cursor_new_from_pixmap(source, mask, &fg, &bg, 7, 7);
 			gdk_bitmap_unref(source);
 			gdk_bitmap_unref(mask);
@@ -290,10 +290,10 @@ void Cursor::updateCursor()
 		{
 			GdkColor fg = { 0, 0, 0, 0 };
 			GdkColor bg = handler->getGdkColor();
-			GdkPixmap* source = gdk_bitmap_create_from_data(NULL, CURSOR_HIGLIGHTER_BITS,
+			GdkPixmap* source = gdk_bitmap_create_from_data(NULL, (gchar*) CURSOR_HIGLIGHTER_BITS,
 			                                                16, 16);
-			GdkPixmap* mask = gdk_bitmap_create_from_data(NULL, CURSOR_HILIGHTER_MASK, 16,
-			                                              16);
+			GdkPixmap* mask = gdk_bitmap_create_from_data(NULL, (gchar*) CURSOR_HILIGHTER_MASK,
+			                                              16, 16);
 			cursor = gdk_cursor_new_from_pixmap(source, mask, &fg, &bg, 7, 7);
 			gdk_bitmap_unref(source);
 			gdk_bitmap_unref(mask);

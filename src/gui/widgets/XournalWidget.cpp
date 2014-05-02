@@ -27,15 +27,12 @@ static void gtk_xournal_size_allocate(GtkWidget* widget,
 static void gtk_xournal_realize(GtkWidget* widget);
 static gboolean gtk_xournal_expose(GtkWidget* widget, GdkEventExpose* event);
 static void gtk_xournal_destroy(GtkObject* object);
-static void gtk_xournal_connect_scrollbars(GtkXournal* xournal);
 static gboolean gtk_xournal_button_press_event(GtkWidget* widget,
                                                GdkEventButton* event);
 static gboolean gtk_xournal_button_release_event(GtkWidget* widget,
                                                  GdkEventButton* event);
 static gboolean gtk_xournal_motion_notify_event(GtkWidget* widget,
                                                 GdkEventMotion* event);
-static void gtk_xournal_set_adjustment_upper(GtkAdjustment* adj, gdouble upper,
-                                             gboolean always_emit_changed);
 static gboolean gtk_xournal_key_press_event(GtkWidget* widget,
                                             GdkEventKey* event);
 static gboolean gtk_xournal_key_release_event(GtkWidget* widget,
@@ -52,7 +49,7 @@ GtkType gtk_xournal_get_type(void)
 	{
 		static const GtkTypeInfo gtk_xournal_info =
 		{
-			"GtkXournal",
+			g_strdup("GtkXournal"),
 			sizeof(GtkXournal),
 			sizeof(GtkXournalClass),
 			(GtkClassInitFunc) gtk_xournal_class_init,
@@ -619,36 +616,6 @@ static void gtk_xournal_size_allocate(GtkWidget* widget,
 	GtkXournal* xournal = GTK_XOURNAL(widget);
 
 	xournal->layout->setSize(allocation->width, allocation->height);
-}
-
-static void gtk_xournal_set_adjustment_upper(GtkAdjustment* adj, gdouble upper,
-                                             gboolean always_emit_changed)
-{
-	gboolean changed = FALSE;
-	gboolean value_changed = FALSE;
-
-	gdouble min = MAX(0., upper - adj->page_size);
-
-	if (upper != adj->upper)
-	{
-		adj->upper = upper;
-		changed = TRUE;
-	}
-
-	if (adj->value > min)
-	{
-		adj->value = min;
-		value_changed = TRUE;
-	}
-
-	if (changed || always_emit_changed)
-	{
-		gtk_adjustment_changed(adj);
-	}
-	if (value_changed)
-	{
-		gtk_adjustment_value_changed(adj);
-	}
 }
 
 static void gtk_xournal_realize(GtkWidget* widget)
