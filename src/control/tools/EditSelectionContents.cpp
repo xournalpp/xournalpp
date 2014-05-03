@@ -350,7 +350,11 @@ void EditSelectionContents::finalizeSelection(double x, double y, double width,
 	for (GList* l = this->selected; l != NULL; l = l->next)
 	{
 		Element* e = (Element*) l->data;
-		if(move)
+		if ((e->getType() == ELEMENT_TEXIMAGE))
+		{
+			//do nothing - TeXImage updates position on move rather than finalize
+		}
+		else if (move)
 		{
 			e->move(mx, my);
 		}
@@ -393,7 +397,15 @@ void EditSelectionContents::updateContent(double x, double y,
 		                                                    targetPage);
 
 		undo->addUndoAction(moveUndo);
-
+		for (GList* l = this->selected; l != NULL; l = l->next)
+		{
+			Element* e = (Element*) l->data;
+			if (e->getType() == ELEMENT_TEXIMAGE)
+			{
+				//move TexImage on update
+				e->move(mx, my);
+			}
+		}
 	}
 	else if(scale)
 	{
