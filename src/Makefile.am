@@ -105,6 +105,7 @@ xournalpp_SOURCES = \
 	gui/toolbarMenubar/ToolMenuHandler.cpp \
 	gui/toolbarMenubar/ToolPageLayer.cpp \
 	gui/toolbarMenubar/ToolPageSpinner.cpp \
+	gui/toolbarMenubar/ToolDrawCombocontrol.cpp \
 	gui/toolbarMenubar/ToolSelectCombocontrol.cpp \
 	gui/toolbarMenubar/ToolZoomSlider.cpp \
 	gui/widgets/gtkmenutooltogglebutton.cpp \

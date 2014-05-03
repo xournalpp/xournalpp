@@ -635,6 +635,25 @@ void Control::actionPerformed(ActionType type, ActionGroup group,
 		}
 		break;
 
+	case ACTION_TOOL_DRAW_RECT:
+		if (enabled)
+		{
+			selectTool(TOOL_DRAW_RECT);
+		}
+		break;
+	case ACTION_TOOL_DRAW_CIRCLE:
+		if (enabled)
+		{
+			selectTool(TOOL_DRAW_CIRCLE);
+		}
+		break;
+	case ACTION_TOOL_DRAW_ARROW:
+		if (enabled)
+		{
+			selectTool(TOOL_DRAW_ARROW);
+		}
+		break;
+
 	case ACTION_TOOL_DEFAULT:
 		if (enabled)
 		{

@@ -89,6 +89,19 @@ void ToolHandler::initTools()
 	t = new Tool("hand", TOOL_HAND, 0x000000, false, false, false, false, NULL);
 	tools[TOOL_HAND - TOOL_PEN] = t;
 
+	t = new Tool("drawRect", TOOL_DRAW_RECT, 0x000000, false, false, false,
+	             false, NULL);
+	tools[TOOL_DRAW_RECT - TOOL_PEN] = t;
+
+	t = new Tool("drawCircle", TOOL_DRAW_CIRCLE, 0x000000, false, false, false,
+	             false, NULL);
+	tools[TOOL_DRAW_CIRCLE - TOOL_PEN] = t;
+
+	t = new Tool("drawArrow", TOOL_DRAW_ARROW, 0x000000, false, false, false,
+	             false, NULL);
+	tools[TOOL_DRAW_ARROW - TOOL_PEN] = t;
+
+
 	selectTool(TOOL_PEN);
 }
 
