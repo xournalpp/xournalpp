@@ -542,7 +542,7 @@ void ToolMenuHandler::initToolItems()
 	addToolItem(new ToolButton(listener, gui, "DRAW_RECTANGLE",
 	                           ACTION_TOOL_DRAW_RECT, GROUP_TOOL, true,
 	                           "rect-select.png", _("Draw Rectangle"),
-	                           gui->get("menuToolsDrawRectangle")));
+	                           gui->get("menuToolsDrawRect")));
 	addToolItem(new ToolButton(listener, gui, "DRAW_ARROW",
 	                           ACTION_TOOL_DRAW_ARROW, GROUP_TOOL, true,
 	                           "object-select.png", _("Draw Arrow"), gui->get("menuToolsDrawArrow")));
