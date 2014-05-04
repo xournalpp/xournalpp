@@ -59,10 +59,12 @@ void SaveJob::afterRun()
 }
 
 void SaveJob::copyProgressCallback(goffset current_num_bytes,
-                                   goffset total_num_bytes, Control* control)
+                                   goffset total_num_bytes, 
+				   gpointer user_data)
 {
-	//printf("copyProgressCallback: %i, %i\n", (int) current_num_bytes,
-	//       (int) total_num_bytes);
+	g_message("copyProgressCallback: %i, %i\n",
+			(int) current_num_bytes,
+			(int) total_num_bytes);
 }
 
 bool SaveJob::copyFile(String source, String target)
@@ -199,7 +201,7 @@ bool SaveJob::save()
 		return false;
 	}
 
-	h.saveTo(out, filename);
+	h.saveTo(out, filename, this->control);
 	out->close();
 
 	if (!out->getLastError().isEmpty())

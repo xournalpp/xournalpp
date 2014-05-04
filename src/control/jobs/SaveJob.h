@@ -31,7 +31,8 @@ public:
 
 private:
 	static void copyProgressCallback(goffset current_num_bytes,
-	                                 goffset total_num_bytes, Control* control);
+	                                 goffset total_num_bytes,
+	                                 gpointer user_data);
 	bool copyFile(String source, String target);
 
 	void updatePreview();
