@@ -2108,6 +2108,9 @@ void Control::toolChanged()
 	fireEnableAction(ACTION_SELECT_COLOR_CUSTOM, toolHandler->isEnableColor());
 
 	fireEnableAction(ACTION_RULER, toolHandler->isEnableRuler());
+	fireEnableAction(ACTION_TOOL_DRAW_RECT, toolHandler->isEnableRectangle());
+	fireEnableAction(ACTION_TOOL_DRAW_CIRCLE, toolHandler->isEnableCircle());
+	fireEnableAction(ACTION_TOOL_DRAW_ARROW, toolHandler->isEnableArrow());
 	fireEnableAction(ACTION_SHAPE_RECOGNIZER,
 	                 toolHandler->isEnableShapreRecognizer());
 
@@ -2135,6 +2138,12 @@ void Control::toolChanged()
 	                   : ACTION_NOT_SELECTED);
 	fireActionSelected(GROUP_RULER,
 	                   toolHandler->isRuler() ? ACTION_RULER : ACTION_NOT_SELECTED);
+	fireActionSelected(GROUP_RULER,
+	                   toolHandler->isRectangle() ? ACTION_TOOL_DRAW_RECT : ACTION_NOT_SELECTED);
+	fireActionSelected(GROUP_RULER,
+	                   toolHandler->isCircle() ? ACTION_TOOL_DRAW_CIRCLE : ACTION_NOT_SELECTED);
+	fireActionSelected(GROUP_RULER,
+	                   toolHandler->isArrow() ? ACTION_TOOL_DRAW_ARROW : ACTION_NOT_SELECTED);
 
 	getCursor()->updateCursor();
 

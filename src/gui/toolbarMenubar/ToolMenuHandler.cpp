@@ -537,14 +537,14 @@ void ToolMenuHandler::initToolItems()
 	                           "object-select.png", _("Select Object"), gui->get("menuToolsSelectObject")));
 
 	addToolItem(new ToolButton(listener, gui, "DRAW_CIRCLE",
-	                           ACTION_TOOL_DRAW_CIRCLE, GROUP_RULER, true, "circle-draw.png",
+	                           ACTION_TOOL_DRAW_CIRCLE, GROUP_RULER, false, "circle-draw.png",
 	                           _("Draw Circle"), gui->get("menuToolsDrawCircle")));
 	addToolItem(new ToolButton(listener, gui, "DRAW_RECTANGLE",
-	                           ACTION_TOOL_DRAW_RECT, GROUP_RULER, true,
+	                           ACTION_TOOL_DRAW_RECT, GROUP_RULER, false,
 	                           "rect-draw.png", _("Draw Rectangle"),
 	                           gui->get("menuToolsDrawRect")));
 	addToolItem(new ToolButton(listener, gui, "DRAW_ARROW",
-	                           ACTION_TOOL_DRAW_ARROW, GROUP_RULER, true,
+	                           ACTION_TOOL_DRAW_ARROW, GROUP_RULER, false,
 	                           "arrow-draw.png", _("Draw Arrow"), gui->get("menuToolsDrawArrow")));
 
 	addToolItem(new ToolButton(listener, gui, "VERTICAL_SPACE",
