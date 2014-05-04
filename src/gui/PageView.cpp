@@ -277,7 +277,7 @@ void PageView::startText(double x, double y)
 
 			if (e->getType() == ELEMENT_TEXT)
 			{
-				GdkRectangle matchRect = { x - 10, y - 10, 20, 20 };
+				GdkRectangle matchRect = { gint(x - 10), gint(y - 10), 20, 20 };
 				if (e->intersectsArea(&matchRect))
 				{
 					text = (Text*) e;
@@ -330,7 +330,7 @@ void PageView::startText(double x, double y)
 	else
 	{
 		Text* text = this->textEditor->getText();
-		GdkRectangle matchRect = { x - 10, y - 10, 20, 20 };
+		GdkRectangle matchRect = {gint(x - 10), gint(y - 10), 20, 20 };
 		if (!text->intersectsArea(&matchRect))
 		{
 			endText();
@@ -347,7 +347,7 @@ void PageView::selectObjectAt(double x, double y)
 	XOJ_CHECK_TYPE(PageView);
 
 	int selected = this->page->getSelectedLayerId();
-	GdkRectangle matchRect = { x - 10, y - 10, 20, 20 };
+	GdkRectangle matchRect = { gint(x - 10), gint(y - 10), 20, 20 };
 
 	Stroke* strokeMatch = NULL;
 	double gap = 1000000000;

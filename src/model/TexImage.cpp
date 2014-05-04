@@ -84,7 +84,7 @@ cairo_status_t TexImage::cairoReadFunction(TexImage* image, unsigned char* data,
 {
 	XOJ_CHECK_TYPE_OBJ(image, TexImage);
 
-	for (int i = 0; i < length; i++, image->read++)
+	for (unsigned int i = 0; i < length; i++, image->read++)
 	{
 		if (image->read >= image->dLen)
 		{

@@ -72,7 +72,7 @@ cairo_status_t Image::cairoReadFunction(Image* image, unsigned char* data,
 {
 	XOJ_CHECK_TYPE_OBJ(image, Image);
 
-	for (int i = 0; i < length; i++, image->read++)
+	for (unsigned int i = 0; i < length; i++, image->read++)
 	{
 		if (image->read >= image->dLen)
 		{

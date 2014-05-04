@@ -53,7 +53,10 @@ void EraseHandler::erase(double x, double y)
 	XOJ_CHECK_TYPE(EraseHandler);
 
 	this->halfEraserSize = this->handler->getThickness();
-	GdkRectangle eraserRect = { x - halfEraserSize, y - halfEraserSize, halfEraserSize * 2, halfEraserSize * 2 };
+	GdkRectangle eraserRect = { gint(x - halfEraserSize),
+	                            gint(y - halfEraserSize),
+	                            gint(halfEraserSize * 2),
+	                            gint(halfEraserSize * 2) };
 
 	Range* range = new Range(x, y);
 
