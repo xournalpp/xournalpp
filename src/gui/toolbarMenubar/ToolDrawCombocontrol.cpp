@@ -23,9 +23,11 @@ ToolDrawCombocontrol::ToolDrawCombocontrol(ToolMenuHandler* th,
 	this->iconDrawRect = gui->loadIconPixbuf("rect-draw.png");
 	this->iconDrawCirc = gui->loadIconPixbuf("circle-draw.png");
 	this->iconDrawArr = gui->loadIconPixbuf("arrow-draw.png");
+	this->iconDrawLine = gui->loadIconPixbuf("ruler.png");
 	g_object_ref(this->iconDrawRect);
 	g_object_ref(this->iconDrawCirc);
 	g_object_ref(this->iconDrawArr);
+	g_object_ref(this->iconDrawLine);
 
 	menuItem = gtk_image_menu_item_new_with_label(_("Draw Rectangle"));
 	gtk_container_add(GTK_CONTAINER(popup), menuItem);
@@ -51,6 +53,14 @@ ToolDrawCombocontrol::ToolDrawCombocontrol(ToolMenuHandler* th,
 	                              gui->loadIcon("arrow-draw.png"));
 	gtk_widget_show_all(menuItem);
 
+	menuItem = gtk_image_menu_item_new_with_label(_("Draw Line"));
+	gtk_container_add(GTK_CONTAINER(popup), menuItem);
+	th->registerMenupoint(menuItem, ACTION_RULER, GROUP_TOOL);
+	gtk_image_menu_item_set_always_show_image(GTK_IMAGE_MENU_ITEM(menuItem), true);
+	gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuItem),
+	                              gui->loadIcon("ruler.png"));
+	gtk_widget_show_all(menuItem);
+
 	setPopupMenu(popup);
 }
 
@@ -61,6 +71,7 @@ ToolDrawCombocontrol::~ToolDrawCombocontrol()
 	g_object_unref(this->iconDrawRect);
 	g_object_unref(this->iconDrawCirc);
 	g_object_unref(this->iconDrawArr);
+	g_object_unref(this->iconDrawLine);
 
 	XOJ_RELEASE_TYPE(ToolDrawCombocontrol);
 }
@@ -102,6 +113,14 @@ void ToolDrawCombocontrol::selected(ActionGroup group, ActionType action)
 			gtk_image_set_from_pixbuf(GTK_IMAGE(iconWidget), this->iconDrawArr);
 
 			description = _("Draw Arrow");
+		}
+		else if (action == ACTION_RULER &&
+		         this->action != ACTION_RULER)
+		{
+			this->action = ACTION_RULER;
+			gtk_image_set_from_pixbuf(GTK_IMAGE(iconWidget), this->iconDrawLine);
+
+			description = _("Draw Line");
 		}
 		gtk_tool_item_set_tooltip_text(GTK_TOOL_ITEM(item), description);
 
