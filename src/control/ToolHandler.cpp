@@ -40,7 +40,7 @@ void ToolHandler::initTools()
 	thickness[TOOL_SIZE_MEDIUM] = 1.41;
 	thickness[TOOL_SIZE_THICK] = 2.26;
 	thickness[TOOL_SIZE_VERY_THICK] = 5.67;
-	t = new Tool("pen", TOOL_PEN, 0x3333CC, true, true, true, true, thickness);
+	t = new Tool("pen", TOOL_PEN, 0x3333CC, true, true, true, true, true, true, true, thickness);
 	tools[TOOL_PEN - TOOL_PEN] = t;
 
 	thickness = new double[5];
@@ -49,7 +49,7 @@ void ToolHandler::initTools()
 	thickness[TOOL_SIZE_MEDIUM] = 8.50;
 	thickness[TOOL_SIZE_THICK] = 19.84;
 	thickness[TOOL_SIZE_VERY_THICK] = 19.84;
-	t = new Tool("eraser", TOOL_ERASER, 0x000000, false, true, false, false,
+	t = new Tool("eraser", TOOL_ERASER, 0x000000, false, true, false, false, false, false, false,
 	             thickness);
 	tools[TOOL_ERASER - TOOL_PEN] = t;
 
@@ -60,34 +60,49 @@ void ToolHandler::initTools()
 	thickness[TOOL_SIZE_MEDIUM] = 8.50;
 	thickness[TOOL_SIZE_THICK] = 19.84;
 	thickness[TOOL_SIZE_VERY_THICK] = 19.84;
-	t = new Tool("hilighter", TOOL_HILIGHTER, 0xFFFF00, true, true, true, true,
+	t = new Tool("hilighter", TOOL_HILIGHTER, 0xFFFF00, true, true, true, true, true, true, true,
 	             thickness);
 	tools[TOOL_HILIGHTER - TOOL_PEN] = t;
 
-	t = new Tool("text", TOOL_TEXT, 0x000000, true, false, false, false, NULL);
+	t = new Tool("text", TOOL_TEXT, 0x000000, true, false, false, false, false, false, false, NULL);
 	tools[TOOL_TEXT - TOOL_PEN] = t;
 
-	t = new Tool("image", TOOL_IMAGE, 0x000000, false, false, false, false, NULL);
+	t = new Tool("image", TOOL_IMAGE, 0x000000, false, false, false, false, false, false, false, NULL);
 	tools[TOOL_IMAGE - TOOL_PEN] = t;
 
-	t = new Tool("selectRect", TOOL_SELECT_RECT, 0x000000, false, false, false,
+	t = new Tool("selectRect", TOOL_SELECT_RECT, 0x000000, false, false, false, false, false, false,
 	             false, NULL);
 	tools[TOOL_SELECT_RECT - TOOL_PEN] = t;
 
-	t = new Tool("selectRegion", TOOL_SELECT_REGION, 0x000000, false, false, false,
+	t = new Tool("selectRegion", TOOL_SELECT_REGION, 0x000000, false, false, false, false, false, false,
 	             false, NULL);
 	tools[TOOL_SELECT_REGION - TOOL_PEN] = t;
 
-	t = new Tool("selectObject", TOOL_SELECT_OBJECT, 0x000000, false, false, false,
+	t = new Tool("selectObject", TOOL_SELECT_OBJECT, 0x000000, false, false, false, false, false, false,
 	             false, NULL);
 	tools[TOOL_SELECT_OBJECT - TOOL_PEN] = t;
 
-	t = new Tool("verticalSpace", TOOL_VERTICAL_SPACE, 0x000000, false, false,
+	t = new Tool("verticalSpace", TOOL_VERTICAL_SPACE, 0x000000, false, false, false, false, false,
 	             false, false, NULL);
 	tools[TOOL_VERTICAL_SPACE - TOOL_PEN] = t;
 
-	t = new Tool("hand", TOOL_HAND, 0x000000, false, false, false, false, NULL);
+	t = new Tool("hand", TOOL_HAND, 0x000000, false, false, false, false, false, false, false, NULL);
 	tools[TOOL_HAND - TOOL_PEN] = t;
+
+	/*
+	t = new Tool("drawRect", TOOL_DRAW_RECT, 0x000000, false, false, false, false, false, false,
+	             false, NULL);
+	tools[TOOL_DRAW_RECT - TOOL_PEN] = t;
+
+	t = new Tool("drawCircle", TOOL_DRAW_CIRCLE, 0x000000, false, false, false, false, false, false,
+	             false, NULL);
+	tools[TOOL_DRAW_CIRCLE - TOOL_PEN] = t;
+
+	t = new Tool("drawArrow", TOOL_DRAW_ARROW, 0x000000, false, false, false, false, false, false,
+	             false, NULL);
+	tools[TOOL_DRAW_ARROW - TOOL_PEN] = t;
+	*/
+
 
 	selectTool(TOOL_PEN);
 }
@@ -206,6 +221,24 @@ bool ToolHandler::isEnableRuler()
 
 	return current->enableRuler;
 }
+bool ToolHandler::isEnableRectangle()
+{
+	XOJ_CHECK_TYPE(ToolHandler);
+
+	return current->enableRectangle;
+}
+bool ToolHandler::isEnableCircle()
+{
+	XOJ_CHECK_TYPE(ToolHandler);
+
+	return current->enableCircle;
+}
+bool ToolHandler::isEnableArrow()
+{
+	XOJ_CHECK_TYPE(ToolHandler);
+
+	return current->enableArrow;
+}
 
 bool ToolHandler::isEnableShapreRecognizer()
 {
@@ -220,12 +253,48 @@ void ToolHandler::setRuler(bool ruler)
 
 	this->current->ruler = ruler;
 }
+void ToolHandler::setRectangle(bool rectangle)
+{
+	XOJ_CHECK_TYPE(ToolHandler);
+
+	this->current->rectangle = rectangle;
+}
+void ToolHandler::setCircle(bool circle)
+{
+	XOJ_CHECK_TYPE(ToolHandler);
+
+	this->current->circle = circle;
+}
+void ToolHandler::setArrow(bool arrow)
+{
+	XOJ_CHECK_TYPE(ToolHandler);
+
+	this->current->arrow = arrow;
+}
 
 bool ToolHandler::isRuler()
 {
 	XOJ_CHECK_TYPE(ToolHandler);
 
 	return this->current->ruler;
+}
+bool ToolHandler::isRectangle()
+{
+	XOJ_CHECK_TYPE(ToolHandler);
+
+	return this->current->rectangle;
+}
+bool ToolHandler::isCircle()
+{
+	XOJ_CHECK_TYPE(ToolHandler);
+
+	return this->current->circle;
+}
+bool ToolHandler::isArrow()
+{
+	XOJ_CHECK_TYPE(ToolHandler);
+
+	return this->current->arrow;
 }
 
 void ToolHandler::setShapeRecognizer(bool reco)
@@ -401,6 +470,18 @@ void ToolHandler::saveSettings()
 		{
 			st.setBool("ruler", t->isRuler());
 		}
+		if (t->isEnableRectangle())
+		{
+			st.setBool("rectangle", t->isRectangle());
+		}
+		if (t->isEnableCircle())
+		{
+			st.setBool("circle", t->isCircle());
+		}
+		if (t->isEnableArrow())
+		{
+			st.setBool("arrow", t->isArrow());
+		}
 		if (t->isEnableShapeRecognizer())
 		{
 			st.setBool("shapeRecognizer", t->isShapeRecognizer());
@@ -484,6 +565,18 @@ void ToolHandler::loadSettings()
 		if (t->isEnableRuler() && st.getBool("ruler", enabled))
 		{
 			t->setRuler(enabled);
+		}
+		if (t->isEnableRectangle() && st.getBool("rectangle", enabled))
+		{
+			t->setRectangle(enabled);
+		}
+		if (t->isEnableCircle() && st.getBool("circle", enabled))
+		{
+			t->setCircle(enabled);
+		}
+		if (t->isEnableArrow() && st.getBool("arrow", enabled))
+		{
+			t->setArrow(enabled);
 		}
 		if (t->isEnableShapeRecognizer() && st.getBool("shapeRecognizer", enabled))
 		{

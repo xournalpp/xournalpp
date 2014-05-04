@@ -7,7 +7,8 @@
 // TODO LOW PRIO: rouler every 90° latch
 
 Tool::Tool(String name, ToolType type, int color, bool enableColor,
-           bool enableSize, bool enableRuler, bool enableShapreRecognizer,
+           bool enableSize, bool enableRuler, bool enableRectangle,
+	   bool enableCircle, bool enableArrow, bool enableShapreRecognizer,
            double* thickness)
 {
 	XOJ_INIT_TYPE(Tool);
@@ -20,8 +21,14 @@ Tool::Tool(String name, ToolType type, int color, bool enableColor,
 	this->enableSize = enableSize;
 	this->enableShapeRecognizer = enableShapreRecognizer;
 	this->enableRuler = enableRuler;
+	this->enableRectangle = enableRectangle;
+	this->enableCircle = enableCircle;
+	this->enableArrow = enableArrow;
 
 	this->ruler = false;
+	this->rectangle = false;
+	this->circle = false;
+	this->arrow = false;
 	this->shapeRecognizer = false;
 
 	this->color = color;
@@ -93,6 +100,24 @@ bool Tool::isEnableRuler()
 
 	return this->enableRuler;
 }
+bool Tool::isEnableRectangle()
+{
+	XOJ_CHECK_TYPE(Tool);
+
+	return this->enableRectangle;
+}
+bool Tool::isEnableCircle()
+{
+	XOJ_CHECK_TYPE(Tool);
+
+	return this->enableCircle;
+}
+bool Tool::isEnableArrow()
+{
+	XOJ_CHECK_TYPE(Tool);
+
+	return this->enableArrow;
+}
 
 bool Tool::isEnableShapeRecognizer()
 {
@@ -114,6 +139,24 @@ bool Tool::isRuler()
 
 	return this->ruler;
 }
+bool Tool::isRectangle()
+{
+	XOJ_CHECK_TYPE(Tool);
+
+	return this->rectangle;
+}
+bool Tool::isCircle()
+{
+	XOJ_CHECK_TYPE(Tool);
+
+	return this->circle;
+}
+bool Tool::isArrow()
+{
+	XOJ_CHECK_TYPE(Tool);
+
+	return this->arrow;
+}
 
 void Tool::setShapeRecognizer(bool enabled)
 {
@@ -127,6 +170,25 @@ void Tool::setRuler(bool enabled)
 	XOJ_CHECK_TYPE(Tool);
 
 	this->ruler = enabled;
+}
+
+void Tool::setRectangle(bool enabled)
+{
+	XOJ_CHECK_TYPE(Tool);
+
+	this->rectangle = enabled;
+}
+void Tool::setCircle(bool enabled)
+{
+	XOJ_CHECK_TYPE(Tool);
+
+	this->circle = enabled;
+}
+void Tool::setArrow(bool enabled)
+{
+	XOJ_CHECK_TYPE(Tool);
+
+	this->arrow = enabled;
 }
 
 String toolTypeToString(ToolType type)
@@ -155,6 +217,14 @@ String toolTypeToString(ToolType type)
 		return "verticalSpace";
 	case TOOL_HAND:
 		return "hand";
+	/*
+	case TOOL_DRAW_RECT:
+		return "drawRect";
+	case TOOL_DRAW_CIRCLE:
+		return "drawCircle";
+	case TOOL_DRAW_ARROW:
+		return "drawArrow";
+	*/
 	}
 	return "";
 }
@@ -201,6 +271,20 @@ ToolType toolTypeFromString(String type)
 	{
 		return TOOL_HAND;
 	}
+	/*
+	else if (type == "drawRect")
+	{
+		return TOOL_DRAW_RECT;
+	}
+	else if (type == "drawCircle")
+	{
+		return TOOL_DRAW_CIRCLE;
+	}
+	else if (type == "drawArrow")
+	{
+		return TOOL_DRAW_ARROW;
+	}
+	*/
 
 	return TOOL_NONE;
 }

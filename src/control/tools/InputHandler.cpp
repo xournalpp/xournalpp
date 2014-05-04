@@ -90,6 +90,129 @@ void InputHandler::addPointToTmpStroke(GdkEventMotion* event)
 		drawTmpStroke(true);
 		return;
 	}
+	else if (h->isRectangle())
+	{
+		//printf("Drawing rectangle\n");
+		int count = tmpStroke->getPointCount();
+		this->redrawable->repaintRect(tmpStroke->getX(), tmpStroke->getY(),
+					      tmpStroke->getElementWidth(),
+					      tmpStroke->getElementHeight());
+
+		if (count < 1)
+		{
+			tmpStroke->addPoint(Point(x,y));
+		}
+		else
+		{
+			Point p = tmpStroke->getPoint(0);
+			if (count > 3)
+			{
+				tmpStroke->deletePoint(4);
+				tmpStroke->deletePoint(3);
+				tmpStroke->deletePoint(2);
+				tmpStroke->deletePoint(1);
+			}
+			tmpStroke->addPoint(Point(x,p.y));
+			tmpStroke->addPoint(Point(x,y));
+			tmpStroke->addPoint(Point(p.x,y));
+			tmpStroke->addPoint(p);
+		}
+		drawTmpStroke(true);
+		return;
+
+	}
+	else if (h->isCircle())
+	{
+		int count = tmpStroke->getPointCount();
+		this->redrawable->repaintRect(tmpStroke->getX(), tmpStroke->getY(),
+					      tmpStroke->getElementWidth(),
+					      tmpStroke->getElementHeight());
+
+		//g_mutex_lock(this->redrawable->drawingMutex);
+		if (count < 2)
+		{
+			tmpStroke->addPoint(Point(x,y));
+		}
+		else
+		{
+			Point p = tmpStroke->getPoint(0);
+			//set resolution proportional to radius
+			double diameter = sqrt(pow(x-p.x,2.0) + pow(y-p.y,2.0));
+			int npts = (int) ( diameter/2.0 );
+			double center_x = (x + p.x)/2.0;
+			double center_y = (y + p.y)/2.0;
+			double angle = atan2( (y-p.y) , (x-p.x) );
+
+
+			if (npts < 12)
+			{
+				npts = 12; // min. number of points
+			}
+
+			//remove previous points
+			count = tmpStroke->getPointCount();
+			tmpStroke->deletePointsFrom(1);
+			for (int i = 1; i < npts; i++)
+			{
+				double xp = center_x + diameter/2.0 * cos((2 * M_PI * i ) / npts + angle + M_PI);
+				double yp = center_y + diameter/2.0 * sin((2 * M_PI * i ) / npts + angle + M_PI);
+				tmpStroke->addPoint(Point(xp, yp));
+			}
+			tmpStroke->addPoint(Point(p.x,p.y));
+		}
+		//g_mutex_unlock(this->redrawable->drawingMutex);
+
+		drawTmpStroke(true);
+		return;
+	}
+	else if (h->isArrow())
+	{
+		int count = tmpStroke->getPointCount();
+		this->redrawable->repaintRect(tmpStroke->getX(), tmpStroke->getY(),
+					      tmpStroke->getElementWidth(),
+					      tmpStroke->getElementHeight());
+
+		if (count < 1)
+		{
+			tmpStroke->addPoint(Point(x,y));
+		}
+		else
+		{
+			Point p = tmpStroke->getPoint(0);
+
+			if (count > 3)
+			{
+				//remove previous points
+				tmpStroke->deletePoint(4);
+				tmpStroke->deletePoint(3);
+				tmpStroke->deletePoint(2);
+				tmpStroke->deletePoint(1);
+			}
+
+			//We've now computed the line points for the arrow
+			//so we just have to build the head
+			
+			//set up the size of the arrowhead to be 1/8 the length of arrow
+			double dist = sqrt( pow(x-p.x,2.0) + pow(y-p.y,2.0) )/8.0;
+			
+			double angle = atan2( (y-p.y) , (x-p.x) );
+			//an appropriate delta is Pi/3 radians for an arrow shape
+			double delta = M_PI / 6.0;
+
+
+			tmpStroke->addPoint(Point(x, y));
+
+			tmpStroke->addPoint(Point(x - dist * cos(angle + delta),
+					  y - dist * sin(angle + delta)));
+
+			tmpStroke->addPoint(Point(x, y));
+
+			tmpStroke->addPoint(Point(x - dist * cos(angle - delta),
+					  y - dist * sin(angle - delta)));
+		}
+		drawTmpStroke(true);
+		return;
+	}
 
 	if (presureSensitivity)
 	{

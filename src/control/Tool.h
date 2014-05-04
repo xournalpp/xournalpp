@@ -30,11 +30,17 @@ enum ToolType
     TOOL_SELECT_REGION  =  7,
     TOOL_SELECT_OBJECT  =  8,
     TOOL_VERTICAL_SPACE =  9,
-    TOOL_HAND           = 10
+    TOOL_HAND           = 10,
+    /*
+    TOOL_DRAW_RECT    	= 11,
+    TOOL_DRAW_CIRCLE	= 12,
+    TOOL_DRAW_ARROW 	= 13
+    */
 };
 
 // The count of tools
 #define TOOL_COUNT 10
+//#define TOOL_COUNT 13
 
 
 String toolTypeToString(ToolType type);
@@ -82,7 +88,8 @@ class Tool
 {
 public:
 	Tool(String name, ToolType tool, int color, bool enableColor, bool enableSize,
-	     bool enableRuler, bool enableShapreRecognizer, double* thickness);
+	     bool enableRuler, bool enableRectangle, bool enableCircle, bool enableArrow,
+	     bool enableShapreRecognizer, double* thickness);
 	virtual ~Tool();
 
 	String getName();
@@ -96,11 +103,20 @@ public:
 	bool isShapeRecognizer();
 	void setShapeRecognizer(bool enabled);
 	bool isRuler();
+	bool isRectangle();
+	bool isCircle();
+	bool isArrow();
 	void setRuler(bool enabled);
+	void setRectangle(bool enabled);
+	void setCircle(bool enabled);
+	void setArrow(bool enabled);
 
 	bool isEnableColor();
 	bool isEnableSize();
 	bool isEnableRuler();
+	bool isEnableRectangle();
+	bool isEnableCircle();
+	bool isEnableArrow();
 	bool isEnableShapeRecognizer();
 
 private:
@@ -119,10 +135,16 @@ private:
 
 	bool shapeRecognizer;
 	bool ruler;
+	bool rectangle;
+	bool circle;
+	bool arrow;
 
 	bool enableColor;
 	bool enableSize;
 	bool enableRuler;
+	bool enableRectangle;
+	bool enableCircle;
+	bool enableArrow;
 	bool enableShapeRecognizer;
 
 	friend class ToolHandler;

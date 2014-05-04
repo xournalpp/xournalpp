@@ -481,6 +481,22 @@ bool PageView::onButtonPressEvent(GtkWidget* widget, GdkEventButton* event)
 	{
 		this->verticalSpace = new VerticalToolHandler(this, this->page, y, zoom);
 	}
+	/*
+	else if (h->getToolType() == TOOL_DRAW_RECT ||
+	         h->getToolType() == TOOL_DRAW_CIRCLE ||
+	         h->getToolType() == TOOL_DRAW_ARROW)
+	{
+		if (h->getToolType() == TOOL_DRAW_RECT)
+		{
+		}
+		else if (h->getToolType() == TOOL_DRAW_CIRCLE)
+		{
+		}
+		else if (h->getToolType() == TOOL_DRAW_ARROW)
+		{
+		}
+	}
+	*/
 	else if (h->getToolType() == TOOL_SELECT_RECT ||
 	         h->getToolType() == TOOL_SELECT_REGION ||
 	         h->getToolType() == TOOL_SELECT_OBJECT)

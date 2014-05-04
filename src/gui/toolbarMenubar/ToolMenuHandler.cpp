@@ -14,6 +14,7 @@
 #include "MenuItem.h"
 #include "ToolButton.h"
 #include "ToolSelectCombocontrol.h"
+#include "ToolDrawCombocontrol.h"
 #include "FontButton.h"
 #include "ToolPageSpinner.h"
 #include "ToolZoomSlider.h"
@@ -440,6 +441,8 @@ void ToolMenuHandler::initToolItems()
 
 	addToolItem(new ToolSelectCombocontrol(this, listener, gui, "SELECT"));
 
+	addToolItem(new ToolDrawCombocontrol(this, listener, gui, "DRAW"));
+
 	ToolButton* tbInsertNewPage = new ToolButton(listener, gui, "INSERT_NEW_PAGE",
 	                                             ACTION_NEW_PAGE_AFTER,
 	                                             "addPage.svg", _("Insert page"));
@@ -532,6 +535,17 @@ void ToolMenuHandler::initToolItems()
 	addToolItem(new ToolButton(listener, gui, "SELECT_OBJECT",
 	                           ACTION_TOOL_SELECT_OBJECT, GROUP_TOOL, true,
 	                           "object-select.png", _("Select Object"), gui->get("menuToolsSelectObject")));
+
+	addToolItem(new ToolButton(listener, gui, "DRAW_CIRCLE",
+	                           ACTION_TOOL_DRAW_CIRCLE, GROUP_RULER, false, "circle-draw.png",
+	                           _("Draw Circle"), gui->get("menuToolsDrawCircle")));
+	addToolItem(new ToolButton(listener, gui, "DRAW_RECTANGLE",
+	                           ACTION_TOOL_DRAW_RECT, GROUP_RULER, false,
+	                           "rect-draw.png", _("Draw Rectangle"),
+	                           gui->get("menuToolsDrawRect")));
+	addToolItem(new ToolButton(listener, gui, "DRAW_ARROW",
+	                           ACTION_TOOL_DRAW_ARROW, GROUP_RULER, false,
+	                           "arrow-draw.png", _("Draw Arrow"), gui->get("menuToolsDrawArrow")));
 
 	addToolItem(new ToolButton(listener, gui, "VERTICAL_SPACE",
 	                           ACTION_TOOL_VERTICAL_SPACE, GROUP_TOOL, true,
