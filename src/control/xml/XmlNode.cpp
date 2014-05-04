@@ -4,6 +4,8 @@
 #include "IntAttribute.h"
 #include "DoubleArrayAttribute.h"
 
+#include "../jobs/ProgressListener.h"
+
 #include <string.h>
 
 XmlNode::XmlNode(const char* tag)
@@ -76,7 +78,7 @@ void XmlNode::setAttrib(const char* attrib, double* value, int count)
 	putAttrib(new DoubleArrayAttribute(attrib, value, count));
 }
 
-void XmlNode::writeOut(OutputStream* out)
+void XmlNode::writeOut(OutputStream* out, ProgressListener* listener)
 {
 	XOJ_CHECK_TYPE(XmlNode);
 
@@ -92,10 +94,21 @@ void XmlNode::writeOut(OutputStream* out)
 	{
 		out->write(">\n");
 
-		for (GList* l = this->children; l != NULL; l = l->next)
+		if(listener)
+		{
+			listener->setMaximumState(g_list_length(this->children));
+		}
+
+		guint i = 1;
+
+		for (GList* l = this->children; l != NULL; l = l->next, ++i)
 		{
 			XmlNode* node = (XmlNode*) l->data;
 			node->writeOut(out);
+			if(listener)
+			{
+				listener->setCurrentState(i);
+			}
 		}
 
 		out->write("</");

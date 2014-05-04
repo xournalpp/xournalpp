@@ -17,6 +17,8 @@
 #include "Attribute.h"
 #include <glib.h>
 
+class ProgressListener;
+
 class XmlNode
 {
 public:
@@ -37,7 +39,14 @@ public:
 	 */
 	void setAttrib(const char* attrib, double* value, int count);
 
-	virtual void writeOut(OutputStream* out);
+	void writeOut(OutputStream* out,
+	              ProgressListener* _listener);
+
+	virtual void writeOut(OutputStream* out)
+	{
+		writeOut(out, NULL);
+	}
+
 	void addChild(XmlNode* node);
 
 protected:
