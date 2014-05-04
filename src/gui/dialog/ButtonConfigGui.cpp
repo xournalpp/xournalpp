@@ -88,8 +88,8 @@ ButtonConfigGui::ButtonConfigGui(SettingsDialog* dlg, GtkWidget* w,
 	ADD_TYPE_CB("stretch.png", _("Vertical space"), TOOL_VERTICAL_SPACE);
 	ADD_TYPE_CB("lasso.png", _("Select region"), TOOL_SELECT_REGION);
 	ADD_TYPE_CB("rect-select.png", _("Select rectangle"), TOOL_SELECT_RECT);
-	ADD_TYPE_CB("rect-select.png", _("Draw rectangle"), TOOL_DRAW_RECT);
-	ADD_TYPE_CB("lasso.png", _("Draw circle"), TOOL_DRAW_CIRCLE);
+	ADD_TYPE_CB("rect-draw.png", _("Draw rectangle"), TOOL_DRAW_RECT);
+	ADD_TYPE_CB("circle-draw.png", _("Draw circle"), TOOL_DRAW_CIRCLE);
 	ADD_TYPE_CB("hand.png", _("Hand"), TOOL_HAND);
 
 	GtkCellRenderer* renderer = NULL;

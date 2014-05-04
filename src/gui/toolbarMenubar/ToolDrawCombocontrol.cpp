@@ -9,7 +9,7 @@
 ToolDrawCombocontrol::ToolDrawCombocontrol(ToolMenuHandler* th,
                                                ActionHandler* handler, GladeGui* gui, String id) :
 	ToolButton(handler, gui, id, ACTION_TOOL_DRAW_RECT, GROUP_TOOL, true,
-	           "rect-select.png", _("Draw Rectangle"))
+	           "rect-draw.png", _("Draw Rectangle"))
 {
 
 	XOJ_INIT_TYPE(ToolDrawCombocontrol);
@@ -20,9 +20,9 @@ ToolDrawCombocontrol::ToolDrawCombocontrol(ToolMenuHandler* th,
 
 	GtkWidget* menuItem;
 
-	this->iconDrawRect = gui->loadIconPixbuf("rect-select.png");
-	this->iconDrawCirc = gui->loadIconPixbuf("lasso.png");
-	this->iconDrawArr = gui->loadIconPixbuf("object-select.png");
+	this->iconDrawRect = gui->loadIconPixbuf("rect-draw.png");
+	this->iconDrawCirc = gui->loadIconPixbuf("circle-draw.png");
+	this->iconDrawArr = gui->loadIconPixbuf("arrow-draw.png");
 	g_object_ref(this->iconDrawRect);
 	g_object_ref(this->iconDrawCirc);
 	g_object_ref(this->iconDrawArr);
@@ -32,7 +32,7 @@ ToolDrawCombocontrol::ToolDrawCombocontrol(ToolMenuHandler* th,
 	th->registerMenupoint(menuItem, ACTION_TOOL_DRAW_RECT, GROUP_TOOL);
 	gtk_image_menu_item_set_always_show_image(GTK_IMAGE_MENU_ITEM(menuItem), true);
 	gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuItem),
-	                              gui->loadIcon("rect-select.png"));
+	                              gui->loadIcon("rect-draw.png"));
 	gtk_widget_show_all(menuItem);
 
 	menuItem = gtk_image_menu_item_new_with_label(_("Draw Circle"));
@@ -40,7 +40,7 @@ ToolDrawCombocontrol::ToolDrawCombocontrol(ToolMenuHandler* th,
 	th->registerMenupoint(menuItem, ACTION_TOOL_DRAW_CIRCLE, GROUP_TOOL);
 	gtk_image_menu_item_set_always_show_image(GTK_IMAGE_MENU_ITEM(menuItem), true);
 	gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuItem),
-	                              gui->loadIcon("lasso.png"));
+	                              gui->loadIcon("circle-draw.png"));
 	gtk_widget_show_all(menuItem);
 
 	menuItem = gtk_image_menu_item_new_with_label(_("Draw Arrow"));
@@ -48,7 +48,7 @@ ToolDrawCombocontrol::ToolDrawCombocontrol(ToolMenuHandler* th,
 	th->registerMenupoint(menuItem, ACTION_TOOL_DRAW_ARROW, GROUP_TOOL);
 	gtk_image_menu_item_set_always_show_image(GTK_IMAGE_MENU_ITEM(menuItem), true);
 	gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuItem),
-	                              gui->loadIcon("object-select.png"));
+	                              gui->loadIcon("arrow-draw.png"));
 	gtk_widget_show_all(menuItem);
 
 	setPopupMenu(popup);
