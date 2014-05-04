@@ -5,7 +5,7 @@
   <widget class="GtkDialog" id="texDialog">
     <property name="width_request">320</property>
     <property name="can_focus">False</property>
-    <property name="title" translatable="yes">Insert Latex - Xournal</property>
+    <property name="title" translatable="yes">Insert Latex</property>
     <property name="resizable">False</property>
     <property name="window_position">center</property>
     <property name="icon_name">dialog-information</property>
