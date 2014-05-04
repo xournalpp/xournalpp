@@ -92,7 +92,7 @@ void InputHandler::addPointToTmpStroke(GdkEventMotion* event)
 	}
 	else if (h->isRectangle())
 	{
-		printf("Drawing rectangle\n");
+		//printf("Drawing rectangle\n");
 		int count = tmpStroke->getPointCount();
 		this->redrawable->repaintRect(tmpStroke->getX(), tmpStroke->getY(),
 					      tmpStroke->getElementWidth(),
@@ -104,7 +104,7 @@ void InputHandler::addPointToTmpStroke(GdkEventMotion* event)
 		}
 		else
 		{
-			//Point p = tmpStroke->getPoint(0);
+			Point p = tmpStroke->getPoint(0);
 			if (count > 3)
 			{
 				tmpStroke->deletePoint(4);
@@ -112,10 +112,10 @@ void InputHandler::addPointToTmpStroke(GdkEventMotion* event)
 				tmpStroke->deletePoint(2);
 				tmpStroke->deletePoint(1);
 			}
-			tmpStroke->addPoint(Point(x,tmpStroke->getY()));
+			tmpStroke->addPoint(Point(x,p.y));
 			tmpStroke->addPoint(Point(x,y));
-			tmpStroke->addPoint(Point(tmpStroke->getX(),y));
-			tmpStroke->setLastPoint(tmpStroke->getX(),tmpStroke->getY());
+			tmpStroke->addPoint(Point(p.x,y));
+			tmpStroke->addPoint(p);
 		}
 		drawTmpStroke(true);
 		return;
