@@ -341,7 +341,7 @@ bool UndoRedoHandler::isChangedAutosave()
 {
 	XOJ_CHECK_TYPE(UndoRedoHandler);
 
-	if(!this->redoList)
+	if(!this->undoList)
 		return this->autosavedUndo;
 
 	return this->autosavedUndo != g_list_last(this->undoList)->data;
