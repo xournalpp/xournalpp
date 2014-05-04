@@ -17,6 +17,7 @@
 #include "../model/PageRef.h"
 #include "../model/Document.h"
 class XmlNode;
+class ProgressListener;
 
 class SaveHandler
 {
@@ -26,7 +27,9 @@ public:
 
 public:
 	void prepareSave(Document* doc);
-	void saveTo(OutputStream* out, String filename);
+	void saveTo(OutputStream* out,
+	            String filename,
+	            ProgressListener* listener = NULL);
 	String getErrorMessage();
 
 private:

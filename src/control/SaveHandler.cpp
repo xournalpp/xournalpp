@@ -17,6 +17,7 @@
 #include "../model/Layer.h"
 #include "../model/BackgroundImage.h"
 #include "SaveHandler.h"
+#include "jobs/ProgressListener.h"
 
 #include "xml/XmlNode.h"
 #include "xml/XmlTextNode.h"
@@ -364,12 +365,14 @@ void SaveHandler::visitPage(XmlNode* root, PageRef p, Document* doc, int id)
 	}
 }
 
-void SaveHandler::saveTo(OutputStream* out, String filename)
+void SaveHandler::saveTo(OutputStream* out,
+                         String filename,
+                         ProgressListener* listener)
 {
 	XOJ_CHECK_TYPE(SaveHandler);
 
 	out->write("<?xml version=\"1.0\" standalone=\"no\"?>\n");
-	root->writeOut(out);
+	root->writeOut(out, listener);
 
 	for (GList* l = this->backgroundImages; l != NULL; l = l->next)
 	{
