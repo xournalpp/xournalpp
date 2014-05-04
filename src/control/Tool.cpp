@@ -209,7 +209,7 @@ ToolType toolTypeFromString(String type)
 	}
 	else if (type == "drawRect")
 	{
-		return TOOL_Draw_RECT;
+		return TOOL_DRAW_RECT;
 	}
 	else if (type == "drawCircle")
 	{
