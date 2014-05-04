@@ -31,13 +31,16 @@ enum ToolType
     TOOL_SELECT_OBJECT  =  8,
     TOOL_VERTICAL_SPACE =  9,
     TOOL_HAND           = 10,
+    /*
     TOOL_DRAW_RECT    	= 11,
     TOOL_DRAW_CIRCLE	= 12,
     TOOL_DRAW_ARROW 	= 13
+    */
 };
 
 // The count of tools
-#define TOOL_COUNT 13
+#define TOOL_COUNT 10
+//#define TOOL_COUNT 13
 
 
 String toolTypeToString(ToolType type);

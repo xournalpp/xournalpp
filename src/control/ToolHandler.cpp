@@ -89,6 +89,7 @@ void ToolHandler::initTools()
 	t = new Tool("hand", TOOL_HAND, 0x000000, false, false, false, false, false, false, false, NULL);
 	tools[TOOL_HAND - TOOL_PEN] = t;
 
+	/*
 	t = new Tool("drawRect", TOOL_DRAW_RECT, 0x000000, false, false, false, false, false, false,
 	             false, NULL);
 	tools[TOOL_DRAW_RECT - TOOL_PEN] = t;
@@ -100,6 +101,7 @@ void ToolHandler::initTools()
 	t = new Tool("drawArrow", TOOL_DRAW_ARROW, 0x000000, false, false, false, false, false, false,
 	             false, NULL);
 	tools[TOOL_DRAW_ARROW - TOOL_PEN] = t;
+	*/
 
 
 	selectTool(TOOL_PEN);
@@ -564,15 +566,15 @@ void ToolHandler::loadSettings()
 		{
 			t->setRuler(enabled);
 		}
-		else if (t->isEnableRectangle() && st.getBool("rectangle", enabled))
+		if (t->isEnableRectangle() && st.getBool("rectangle", enabled))
 		{
 			t->setRectangle(enabled);
 		}
-		else if (t->isEnableCircle() && st.getBool("circle", enabled))
+		if (t->isEnableCircle() && st.getBool("circle", enabled))
 		{
 			t->setCircle(enabled);
 		}
-		else if (t->isEnableArrow() && st.getBool("arrow", enabled))
+		if (t->isEnableArrow() && st.getBool("arrow", enabled))
 		{
 			t->setArrow(enabled);
 		}

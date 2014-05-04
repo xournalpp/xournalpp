@@ -217,12 +217,14 @@ String toolTypeToString(ToolType type)
 		return "verticalSpace";
 	case TOOL_HAND:
 		return "hand";
+	/*
 	case TOOL_DRAW_RECT:
 		return "drawRect";
 	case TOOL_DRAW_CIRCLE:
 		return "drawCircle";
 	case TOOL_DRAW_ARROW:
 		return "drawArrow";
+	*/
 	}
 	return "";
 }
@@ -269,6 +271,7 @@ ToolType toolTypeFromString(String type)
 	{
 		return TOOL_HAND;
 	}
+	/*
 	else if (type == "drawRect")
 	{
 		return TOOL_DRAW_RECT;
@@ -281,6 +284,7 @@ ToolType toolTypeFromString(String type)
 	{
 		return TOOL_DRAW_ARROW;
 	}
+	*/
 
 	return TOOL_NONE;
 }

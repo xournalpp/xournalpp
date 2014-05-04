@@ -138,7 +138,7 @@ void InputHandler::addPointToTmpStroke(GdkEventMotion* event)
 			Point p = tmpStroke->getPoint(0);
 			//set resolution proportional to radius
 			double diameter = sqrt(pow(x-p.x,2.0) + pow(y-p.y,2.0));
-			int npts = (int) ( diameter/3.0 );
+			int npts = (int) ( diameter/2.0 );
 			double center_x = (x + p.x)/2.0;
 			double center_y = (y + p.y)/2.0;
 			double angle = atan2( (y-p.y) , (x-p.x) );
@@ -192,8 +192,8 @@ void InputHandler::addPointToTmpStroke(GdkEventMotion* event)
 			//We've now computed the line points for the arrow
 			//so we just have to build the head
 			
-			//set up the size of the arrowhead to be 1/10 the length of arrow
-			double dist = sqrt( pow(x-p.x,2.0) + pow(y-p.y,2.0) )/10.0;
+			//set up the size of the arrowhead to be 1/8 the length of arrow
+			double dist = sqrt( pow(x-p.x,2.0) + pow(y-p.y,2.0) )/8.0;
 			
 			double angle = atan2( (y-p.y) , (x-p.x) );
 			//an appropriate delta is Pi/3 radians for an arrow shape

@@ -639,7 +639,6 @@ void Control::actionPerformed(ActionType type, ActionGroup group,
 		setRectangleEnabled(enabled);
 		break;
 	case ACTION_TOOL_DRAW_CIRCLE:
-		//	selectTool(TOOL_DRAW_CIRCLE);
 		setCircleEnabled(enabled);
 		break;
 	case ACTION_TOOL_DRAW_ARROW:
@@ -1177,6 +1176,9 @@ void Control::setShapeRecognizerEnabled(bool enabled)
 	{
 		this->resetShapeRecognizer();
 		setRulerEnabled(false);
+		setArrowEnabled(false);
+		setCircleEnabled(false);
+		setRectangleEnabled(false);
 	}
 }
 

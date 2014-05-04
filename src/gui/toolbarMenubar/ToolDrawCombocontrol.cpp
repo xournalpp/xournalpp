@@ -8,7 +8,7 @@
 
 ToolDrawCombocontrol::ToolDrawCombocontrol(ToolMenuHandler* th,
                                                ActionHandler* handler, GladeGui* gui, String id) :
-	ToolButton(handler, gui, id, ACTION_TOOL_DRAW_RECT, GROUP_TOOL, true,
+	ToolButton(handler, gui, id, ACTION_TOOL_DRAW_RECT, GROUP_RULER, true,
 	           "rect-draw.png", _("Draw Rectangle"))
 {
 
@@ -31,7 +31,7 @@ ToolDrawCombocontrol::ToolDrawCombocontrol(ToolMenuHandler* th,
 
 	menuItem = gtk_image_menu_item_new_with_label(_("Draw Rectangle"));
 	gtk_container_add(GTK_CONTAINER(popup), menuItem);
-	th->registerMenupoint(menuItem, ACTION_TOOL_DRAW_RECT, GROUP_TOOL);
+	th->registerMenupoint(menuItem, ACTION_TOOL_DRAW_RECT, GROUP_RULER);
 	gtk_image_menu_item_set_always_show_image(GTK_IMAGE_MENU_ITEM(menuItem), true);
 	gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuItem),
 	                              gui->loadIcon("rect-draw.png"));
@@ -39,7 +39,7 @@ ToolDrawCombocontrol::ToolDrawCombocontrol(ToolMenuHandler* th,
 
 	menuItem = gtk_image_menu_item_new_with_label(_("Draw Circle"));
 	gtk_container_add(GTK_CONTAINER(popup), menuItem);
-	th->registerMenupoint(menuItem, ACTION_TOOL_DRAW_CIRCLE, GROUP_TOOL);
+	th->registerMenupoint(menuItem, ACTION_TOOL_DRAW_CIRCLE, GROUP_RULER);
 	gtk_image_menu_item_set_always_show_image(GTK_IMAGE_MENU_ITEM(menuItem), true);
 	gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuItem),
 	                              gui->loadIcon("circle-draw.png"));
@@ -47,7 +47,7 @@ ToolDrawCombocontrol::ToolDrawCombocontrol(ToolMenuHandler* th,
 
 	menuItem = gtk_image_menu_item_new_with_label(_("Draw Arrow"));
 	gtk_container_add(GTK_CONTAINER(popup), menuItem);
-	th->registerMenupoint(menuItem, ACTION_TOOL_DRAW_ARROW, GROUP_TOOL);
+	th->registerMenupoint(menuItem, ACTION_TOOL_DRAW_ARROW, GROUP_RULER);
 	gtk_image_menu_item_set_always_show_image(GTK_IMAGE_MENU_ITEM(menuItem), true);
 	gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuItem),
 	                              gui->loadIcon("arrow-draw.png"));
@@ -55,7 +55,7 @@ ToolDrawCombocontrol::ToolDrawCombocontrol(ToolMenuHandler* th,
 
 	menuItem = gtk_image_menu_item_new_with_label(_("Draw Line"));
 	gtk_container_add(GTK_CONTAINER(popup), menuItem);
-	th->registerMenupoint(menuItem, ACTION_RULER, GROUP_TOOL);
+	th->registerMenupoint(menuItem, ACTION_RULER, GROUP_RULER);
 	gtk_image_menu_item_set_always_show_image(GTK_IMAGE_MENU_ITEM(menuItem), true);
 	gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuItem),
 	                              gui->loadIcon("ruler.png"));
