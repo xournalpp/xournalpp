@@ -90,6 +90,18 @@ void InputHandler::addPointToTmpStroke(GdkEventMotion* event)
 		drawTmpStroke(true);
 		return;
 	}
+	else if (h->isRectangle())
+	{
+
+	}
+	else if (h->isCircle())
+	{
+
+	}
+	else if (h->isArrow())
+	{
+
+	}
 
 	if (presureSensitivity)
 	{

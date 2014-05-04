@@ -636,22 +636,15 @@ void Control::actionPerformed(ActionType type, ActionGroup group,
 		break;
 
 	case ACTION_TOOL_DRAW_RECT:
-		if (enabled)
-		{
-			selectTool(TOOL_DRAW_RECT);
-		}
+		setRectangleEnabled(enabled);
 		break;
 	case ACTION_TOOL_DRAW_CIRCLE:
-		if (enabled)
-		{
-			selectTool(TOOL_DRAW_CIRCLE);
-		}
+		//	selectTool(TOOL_DRAW_CIRCLE);
+		setCircleEnabled(enabled);
 		break;
 	case ACTION_TOOL_DRAW_ARROW:
-		if (enabled)
-		{
-			selectTool(TOOL_DRAW_ARROW);
-		}
+	//		selectTool(TOOL_DRAW_ARROW);
+		setArrowEnabled(enabled);
 		break;
 
 	case ACTION_TOOL_DEFAULT:
@@ -1104,6 +1097,66 @@ void Control::setRulerEnabled(bool enabled)
 	if (enabled)
 	{
 		setShapeRecognizerEnabled(false);
+		setCircleEnabled(false);
+		setArrowEnabled(false);
+		setRectangleEnabled(false);
+	}
+}
+void Control::setRectangleEnabled(bool enabled)
+{
+	XOJ_CHECK_TYPE(Control);
+
+	if (this->toolHandler->isRectangle() == enabled)
+	{
+		return;
+	}
+
+	this->toolHandler->setRectangle(enabled);
+	fireActionSelected(GROUP_RULER, enabled ? ACTION_TOOL_DRAW_RECT : ACTION_NONE);
+	if (enabled)
+	{
+		setShapeRecognizerEnabled(false);
+		setCircleEnabled(false);
+		setArrowEnabled(false);
+		setRulerEnabled(false);
+	}
+}
+void Control::setArrowEnabled(bool enabled)
+{
+	XOJ_CHECK_TYPE(Control);
+
+	if (this->toolHandler->isArrow() == enabled)
+	{
+		return;
+	}
+
+	this->toolHandler->setArrow(enabled);
+	fireActionSelected(GROUP_RULER, enabled ? ACTION_TOOL_DRAW_ARROW : ACTION_NONE);
+	if (enabled)
+	{
+		setShapeRecognizerEnabled(false);
+		setCircleEnabled(false);
+		setRectangleEnabled(false);
+		setRulerEnabled(false);
+	}
+}
+void Control::setCircleEnabled(bool enabled)
+{
+	XOJ_CHECK_TYPE(Control);
+
+	if (this->toolHandler->isCircle() == enabled)
+	{
+		return;
+	}
+
+	this->toolHandler->setCircle(enabled);
+	fireActionSelected(GROUP_RULER, enabled ? ACTION_TOOL_DRAW_CIRCLE : ACTION_NONE);
+	if (enabled)
+	{
+		setShapeRecognizerEnabled(false);
+		setArrowEnabled(false);
+		setRectangleEnabled(false);
+		setRulerEnabled(false);
 	}
 }
 

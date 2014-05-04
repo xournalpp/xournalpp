@@ -85,7 +85,8 @@ class Tool
 {
 public:
 	Tool(String name, ToolType tool, int color, bool enableColor, bool enableSize,
-	     bool enableRuler, bool enableShapreRecognizer, double* thickness);
+	     bool enableRuler, bool enableRectangle, bool enableCircle, bool enableArrow,
+	     bool enableShapreRecognizer, double* thickness);
 	virtual ~Tool();
 
 	String getName();
@@ -99,11 +100,20 @@ public:
 	bool isShapeRecognizer();
 	void setShapeRecognizer(bool enabled);
 	bool isRuler();
+	bool isRectangle();
+	bool isCircle();
+	bool isArrow();
 	void setRuler(bool enabled);
+	void setRectangle(bool enabled);
+	void setCircle(bool enabled);
+	void setArrow(bool enabled);
 
 	bool isEnableColor();
 	bool isEnableSize();
 	bool isEnableRuler();
+	bool isEnableRectangle();
+	bool isEnableCircle();
+	bool isEnableArrow();
 	bool isEnableShapeRecognizer();
 
 private:
@@ -122,10 +132,16 @@ private:
 
 	bool shapeRecognizer;
 	bool ruler;
+	bool rectangle;
+	bool circle;
+	bool arrow;
 
 	bool enableColor;
 	bool enableSize;
 	bool enableRuler;
+	bool enableRectangle;
+	bool enableCircle;
+	bool enableArrow;
 	bool enableShapeRecognizer;
 
 	friend class ToolHandler;

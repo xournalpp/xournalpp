@@ -59,16 +59,49 @@ void ButtonConfig::acceptActions(ToolHandler* toolHandler)
 			else if (this->drawingType == DRAWING_TYPE_STROKE_RECOGNIZER)
 			{
 				toolHandler->setRuler(false);
+				toolHandler->setRectangle(false);
+				toolHandler->setCircle(false);
+				toolHandler->setArrow(false);
 				toolHandler->setShapeRecognizer(true);
 			}
 			else if (this->drawingType == DRAWING_TYPE_RULER)
 			{
 				toolHandler->setRuler(true);
+				toolHandler->setRectangle(false);
+				toolHandler->setCircle(false);
+				toolHandler->setArrow(false);
+				toolHandler->setShapeRecognizer(false);
+			}
+			else if (this->drawingType == DRAWING_TYPE_RECTANGLE)
+			{
+				toolHandler->setRuler(false);
+				toolHandler->setRectangle(true);
+				toolHandler->setCircle(false);
+				toolHandler->setArrow(false);
+				toolHandler->setShapeRecognizer(false);
+			}
+			else if (this->drawingType == DRAWING_TYPE_CIRCLE)
+			{
+				toolHandler->setRuler(false);
+				toolHandler->setRectangle(false);
+				toolHandler->setCircle(true);
+				toolHandler->setArrow(false);
+				toolHandler->setShapeRecognizer(false);
+			}
+			else if (this->drawingType == DRAWING_TYPE_ARROW)
+			{
+				toolHandler->setRuler(false);
+				toolHandler->setRectangle(false);
+				toolHandler->setCircle(false);
+				toolHandler->setArrow(true);
 				toolHandler->setShapeRecognizer(false);
 			}
 			else if (this->drawingType == DRAWING_TYPE_NONE)
 			{
 				toolHandler->setRuler(false);
+				toolHandler->setRectangle(false);
+				toolHandler->setCircle(false);
+				toolHandler->setArrow(false);
 				toolHandler->setShapeRecognizer(false);
 			}
 
