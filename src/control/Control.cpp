@@ -2740,7 +2740,7 @@ void Control::updateWindowTitle()
 	}
 	this->doc->unlock();
 
-	title += " - Xournal";
+	title += " - Xournal++";
 
 	gtk_window_set_title((GtkWindow*) *win, title.c_str());
 }
