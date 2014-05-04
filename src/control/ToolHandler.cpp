@@ -470,15 +470,15 @@ void ToolHandler::saveSettings()
 		{
 			st.setBool("ruler", t->isRuler());
 		}
-		else if (t->isEnableRectangle())
+		if (t->isEnableRectangle())
 		{
 			st.setBool("rectangle", t->isRectangle());
 		}
-		else if (t->isEnableCircle())
+		if (t->isEnableCircle())
 		{
 			st.setBool("circle", t->isCircle());
 		}
-		else if (t->isEnableArrow())
+		if (t->isEnableArrow())
 		{
 			st.setBool("arrow", t->isArrow());
 		}

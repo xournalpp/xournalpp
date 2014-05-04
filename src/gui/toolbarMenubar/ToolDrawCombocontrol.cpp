@@ -8,7 +8,7 @@
 
 ToolDrawCombocontrol::ToolDrawCombocontrol(ToolMenuHandler* th,
                                                ActionHandler* handler, GladeGui* gui, String id) :
-	ToolButton(handler, gui, id, ACTION_TOOL_DRAW_RECT, GROUP_RULER, true,
+	ToolButton(handler, gui, id, ACTION_TOOL_DRAW_RECT, GROUP_RULER, false,
 	           "rect-draw.png", _("Draw Rectangle"))
 {
 
