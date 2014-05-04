@@ -114,7 +114,7 @@ void InputHandler::addPointToTmpStroke(GdkEventMotion* event)
 			}
 			tmpStroke->addPoint(Point(x,tmpStroke->getY()));
 			tmpStroke->addPoint(Point(x,y));
-			tmpStroke->addPoint(tmpStroke->getX(),y);
+			tmpStroke->addPoint(Point(tmpStroke->getX(),y));
 			tmpStroke->setLastPoint(tmpStroke->getX(),tmpStroke->getY());
 		}
 		drawTmpStroke(true);
