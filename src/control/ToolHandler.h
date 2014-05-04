@@ -40,7 +40,13 @@ public:
 	GdkColor getGdkColor();
 
 	void setRuler(bool ruler);
+	void setRectangle(bool rectangle);
+	void setCircle(bool circle);
+	void setArrow(bool arrow);
 	bool isRuler();
+	bool isRectangle();
+	bool isCircle();
+	bool isArrow();
 
 	void setShapeRecognizer(bool reco);
 	bool isShapeRecognizer();
@@ -70,6 +76,9 @@ public:
 	bool isEnableColor();
 	bool isEnableSize();
 	bool isEnableRuler();
+	bool isEnableRectangle();
+	bool isEnableCircle();
+	bool isEnableArrow();
 	bool isEnableShapreRecognizer();
 
 	void saveSettings();

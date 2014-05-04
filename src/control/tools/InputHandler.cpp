@@ -92,15 +92,44 @@ void InputHandler::addPointToTmpStroke(GdkEventMotion* event)
 	}
 	else if (h->isRectangle())
 	{
+		printf("Drawing rectangle\n");
+		int count = tmpStroke->getPointCount();
+		this->redrawable->repaintRect(tmpStroke->getX(), tmpStroke->getY(),
+					      tmpStroke->getElementWidth(),
+					      tmpStroke->getElementHeight());
+
+		if (count < 2)
+		{
+			tmpStroke->addPoint(Point(x,y));
+		}
+		else
+		{
+			//Point p = tmpStroke->getPoint(0);
+			if (count > 3)
+			{
+				tmpStroke->deletePoint(4);
+				tmpStroke->deletePoint(3);
+				tmpStroke->deletePoint(2);
+				tmpStroke->deletePoint(1);
+			}
+			tmpStroke->addPoint(Point(x,tmpStroke->getY()));
+			tmpStroke->addPoint(Point(x,y));
+			tmpStroke->addPoint(tmpStroke->getX(),y);
+			tmpStroke->setLastPoint(tmpStroke->getX(),tmpStroke->getY());
+		}
+		drawTmpStroke(true);
+		return;
 
 	}
 	else if (h->isCircle())
 	{
-
+		printf("Drawing circle\n");
+		return;
 	}
 	else if (h->isArrow())
 	{
-
+		printf("Drawing arrow\n");
+		return;
 	}
 
 	if (presureSensitivity)

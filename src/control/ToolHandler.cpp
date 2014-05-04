@@ -219,6 +219,24 @@ bool ToolHandler::isEnableRuler()
 
 	return current->enableRuler;
 }
+bool ToolHandler::isEnableRectangle()
+{
+	XOJ_CHECK_TYPE(ToolHandler);
+
+	return current->enableRectangle;
+}
+bool ToolHandler::isEnableCircle()
+{
+	XOJ_CHECK_TYPE(ToolHandler);
+
+	return current->enableCircle;
+}
+bool ToolHandler::isEnableArrow()
+{
+	XOJ_CHECK_TYPE(ToolHandler);
+
+	return current->enableArrow;
+}
 
 bool ToolHandler::isEnableShapreRecognizer()
 {
@@ -233,12 +251,48 @@ void ToolHandler::setRuler(bool ruler)
 
 	this->current->ruler = ruler;
 }
+void ToolHandler::setRectangle(bool rectangle)
+{
+	XOJ_CHECK_TYPE(ToolHandler);
+
+	this->current->rectangle = rectangle;
+}
+void ToolHandler::setCircle(bool circle)
+{
+	XOJ_CHECK_TYPE(ToolHandler);
+
+	this->current->circle = circle;
+}
+void ToolHandler::setArrow(bool arrow)
+{
+	XOJ_CHECK_TYPE(ToolHandler);
+
+	this->current->arrow = arrow;
+}
 
 bool ToolHandler::isRuler()
 {
 	XOJ_CHECK_TYPE(ToolHandler);
 
 	return this->current->ruler;
+}
+bool ToolHandler::isRectangle()
+{
+	XOJ_CHECK_TYPE(ToolHandler);
+
+	return this->current->rectangle;
+}
+bool ToolHandler::isCircle()
+{
+	XOJ_CHECK_TYPE(ToolHandler);
+
+	return this->current->circle;
+}
+bool ToolHandler::isArrow()
+{
+	XOJ_CHECK_TYPE(ToolHandler);
+
+	return this->current->arrow;
 }
 
 void ToolHandler::setShapeRecognizer(bool reco)
@@ -414,6 +468,18 @@ void ToolHandler::saveSettings()
 		{
 			st.setBool("ruler", t->isRuler());
 		}
+		else if (t->isEnableRectangle())
+		{
+			st.setBool("rectangle", t->isRectangle());
+		}
+		else if (t->isEnableCircle())
+		{
+			st.setBool("circle", t->isCircle());
+		}
+		else if (t->isEnableArrow())
+		{
+			st.setBool("arrow", t->isArrow());
+		}
 		if (t->isEnableShapeRecognizer())
 		{
 			st.setBool("shapeRecognizer", t->isShapeRecognizer());
@@ -497,6 +563,18 @@ void ToolHandler::loadSettings()
 		if (t->isEnableRuler() && st.getBool("ruler", enabled))
 		{
 			t->setRuler(enabled);
+		}
+		else if (t->isEnableRectangle() && st.getBool("rectangle", enabled))
+		{
+			t->setRectangle(enabled);
+		}
+		else if (t->isEnableCircle() && st.getBool("circle", enabled))
+		{
+			t->setCircle(enabled);
+		}
+		else if (t->isEnableArrow() && st.getBool("arrow", enabled))
+		{
+			t->setArrow(enabled);
 		}
 		if (t->isEnableShapeRecognizer() && st.getBool("shapeRecognizer", enabled))
 		{
