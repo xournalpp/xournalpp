@@ -2648,7 +2648,10 @@ void Control::setCurrentState(int state)
 {
 	XOJ_CHECK_TYPE(Control);
 
-	gtk_progress_bar_set_fraction(this->pgState, (double) state / this->maxState);
+	gdk_threads_enter();
+	gtk_progress_bar_set_fraction(this->pgState,
+	                              double(state) / this->maxState);
+	gdk_threads_leave();
 }
 
 bool Control::save(bool synchron)
