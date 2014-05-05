@@ -1005,7 +1005,7 @@ bool LoadHandler::parseXml()
 
 	if (this->pos != PASER_POS_FINISHED && this->lastError == NULL)
 	{
-		lastError = _("Document is not complete (may the end is cut off?)");
+		lastError = _("Document is not complete (maybe the end is cut off?)");
 		return false;
 	}
 
