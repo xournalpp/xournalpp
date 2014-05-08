@@ -354,13 +354,16 @@ void EditSelectionContents::finalizeSelection(double x, double y, double width,
 		{
 			//do nothing - TeXImage updates position on move rather than finalize
 		}
-		else if (move)
+		else
 		{
-			e->move(mx, my);
-		}
-		if (scale)
-		{
-			e->scale(x, y, fx, fy);
+			if (move)
+			{
+				e->move(mx, my);
+			}
+			if (scale)
+			{
+				e->scale(x, y, fx, fy);
+			}
 		}
 		layer->addElement(e);
 	}
@@ -441,7 +444,15 @@ void EditSelectionContents::updateContent(double x, double y,
 		                                                 this->selected,
 		                                                 px, py, fx, fy);
 		undo->addUndoAction(scaleUndo);
-
+		for (GList* l = this->selected; l != NULL; l = l->next)
+		{
+			Element* e = (Element*) l->data;
+			if (e->getType() == ELEMENT_TEXIMAGE)
+			{
+				//scale TexImage on update
+				e->scale(px, py, fx, fy);
+			}
+		}
 	}
 	
 	this->lastX = x;
@@ -528,7 +539,14 @@ UndoAction* EditSelectionContents::copySelection(PageRef page,
 		Element* e = eit.next();
 		Element* ec = e->clone();
 
-		ec->move(x - this->originalX, y - this->originalY);
+		if ((e->getType() == ELEMENT_TEXIMAGE))
+		{
+			ec->move(x - this->lastX, y - this->lastY);
+		}
+		else
+		{
+			ec->move(x - this->originalX, y - this->originalY);
+		}
 
 		layer->addElement(ec);
 		new_elems = g_list_append(new_elems, ec);
