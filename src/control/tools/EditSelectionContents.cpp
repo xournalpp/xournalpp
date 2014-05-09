@@ -73,6 +73,9 @@ void EditSelectionContents::addElement(Element* e)
 	XOJ_CHECK_TYPE(EditSelectionContents);
 
 	this->selected = g_list_append(this->selected, e);
+	//this fixes the move issues for TeXImage after a paste
+	this->lastY = e->getY();
+	this->lastX = e->getX();
 }
 
 /**
