@@ -103,7 +103,7 @@ String AddUndoAction::getText()
 	}
 	else
 	{
-		text = _("Delete");
+		text = _("Paste");
 
 		if (this->elements != NULL)
 		{
