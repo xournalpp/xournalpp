@@ -24,7 +24,8 @@ AddUndoAction::~AddUndoAction()
 		PageLayerPosEntry<Element>* e = (PageLayerPosEntry<Element>*) l->data;
 		if (!undone)
 		{
-			delete e->element;
+			//The element will be deleted when the layer is removed.
+			//delete e->element;
 		}
 		delete e;
 	}
