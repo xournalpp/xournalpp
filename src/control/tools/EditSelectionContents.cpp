@@ -332,8 +332,6 @@ void EditSelectionContents::finalizeSelection(double x, double y, double width,
 {
 	double fx = width / this->originalWidth;
 	double fy = height / this->originalHeight;
-	double fx_last = width / this->lastWidth;
-	double fy_last = height / this->lastHeight;
 
 	if (aspectRatio)
 	{
@@ -343,30 +341,18 @@ void EditSelectionContents::finalizeSelection(double x, double y, double width,
 	}
 	bool scale =
 	  (width != this->originalWidth || height != this->originalHeight);
-	bool scale_last =
-	  (width != this->lastWidth || height != this->lastHeight);
 
 	double mx = x - this->originalX;
 	double my = y - this->originalY;
-	double mx_last = x - this->lastX;
-	double my_last = y - this->lastY;
 
 	bool move = mx != 0 || my != 0;
-	bool move_last = mx_last != 0 || my_last != 0;
 
 	for (GList* l = this->selected; l != NULL; l = l->next)
 	{
 		Element* e = (Element*) l->data;
 		if ((e->getType() == ELEMENT_TEXIMAGE))
 		{
-			if (move_last)
-			{
-				e->move(mx_last, my_last);
-			}
-			if (scale_last)
-			{
-				e->scale(x, y, fx_last, fy_last);
-			}
+			//do nothing - TeXImage updates position on move rather than finalize
 		}
 		else
 		{
