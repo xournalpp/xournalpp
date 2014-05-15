@@ -3274,8 +3274,13 @@ void Control::runLatex()
 	int imgTexLen = 0;
 	if(img)
 	{
-		imgx = img->getX();
-		imgy = img->getY();
+		//this will get the position of the Latex properly
+		EditSelection* theSelection = win->getXournal()->getSelection();
+		//imgx = img->getX();
+		//imgy = img->getY();
+		imgx = theSelection->getXOnView();
+		imgy = theSelection->getYOnView();
+
 		imgheight = img->getElementHeight();
 		imgwidth = img->getElementWidth();
 		//fix this typecast:
