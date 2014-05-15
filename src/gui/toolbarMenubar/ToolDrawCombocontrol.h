@@ -41,6 +41,7 @@ private:
 	GdkPixbuf* iconDrawCirc;
 	GdkPixbuf* iconDrawArr;
 	GdkPixbuf* iconDrawLine;
+	GdkPixbuf* iconAutoDrawLine;
 };
 
 #endif /* __TOOLDRAWCOMBOCONTROL_H__ */

@@ -24,7 +24,7 @@ ToolDrawCombocontrol::ToolDrawCombocontrol(ToolMenuHandler* th,
 	this->iconDrawCirc = gui->loadIconPixbuf("circle-draw.png");
 	this->iconDrawArr = gui->loadIconPixbuf("arrow-draw.png");
 	this->iconDrawLine = gui->loadIconPixbuf("ruler.png");
-	this->iconAutoDrawLine = gui->loadIconPixbuf("shape-recognizer.png");
+	this->iconAutoDrawLine = gui->loadIconPixbuf("shape_recognizer.png");
 	g_object_ref(this->iconDrawRect);
 	g_object_ref(this->iconDrawCirc);
 	g_object_ref(this->iconDrawArr);
@@ -68,7 +68,7 @@ ToolDrawCombocontrol::ToolDrawCombocontrol(ToolMenuHandler* th,
 	th->registerMenupoint(menuItem, ACTION_SHAPE_RECOGNIZER, GROUP_SHAPE_RECOGNIZER);
 	gtk_image_menu_item_set_always_show_image(GTK_IMAGE_MENU_ITEM(menuItem), true);
 	gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuItem),
-	                              gui->loadIcon("shape-recognizer.png"));
+	                              gui->loadIcon("shape_recognizer.png"));
 	gtk_widget_show_all(menuItem);
 
 
