@@ -24,10 +24,12 @@ ToolDrawCombocontrol::ToolDrawCombocontrol(ToolMenuHandler* th,
 	this->iconDrawCirc = gui->loadIconPixbuf("circle-draw.png");
 	this->iconDrawArr = gui->loadIconPixbuf("arrow-draw.png");
 	this->iconDrawLine = gui->loadIconPixbuf("ruler.png");
+	this->iconAutoDrawLine = gui->loadIconPixbuf("shape-recognizer.png");
 	g_object_ref(this->iconDrawRect);
 	g_object_ref(this->iconDrawCirc);
 	g_object_ref(this->iconDrawArr);
 	g_object_ref(this->iconDrawLine);
+	g_object_ref(this->iconAutoDrawLine);
 
 	menuItem = gtk_image_menu_item_new_with_label(_("Draw Rectangle"));
 	gtk_container_add(GTK_CONTAINER(popup), menuItem);
@@ -61,6 +63,15 @@ ToolDrawCombocontrol::ToolDrawCombocontrol(ToolMenuHandler* th,
 	                              gui->loadIcon("ruler.png"));
 	gtk_widget_show_all(menuItem);
 
+	menuItem = gtk_image_menu_item_new_with_label(_("Recognize Lines"));
+	gtk_container_add(GTK_CONTAINER(popup), menuItem);
+	th->registerMenupoint(menuItem, ACTION_SHAPE_RECOGNIZER, GROUP_SHAPE_RECOGNIZER);
+	gtk_image_menu_item_set_always_show_image(GTK_IMAGE_MENU_ITEM(menuItem), true);
+	gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuItem),
+	                              gui->loadIcon("shape-recognizer.png"));
+	gtk_widget_show_all(menuItem);
+
+
 	setPopupMenu(popup);
 }
 
@@ -72,6 +83,7 @@ ToolDrawCombocontrol::~ToolDrawCombocontrol()
 	g_object_unref(this->iconDrawCirc);
 	g_object_unref(this->iconDrawArr);
 	g_object_unref(this->iconDrawLine);
+	g_object_unref(this->iconAutoDrawLine);
 
 	XOJ_RELEASE_TYPE(ToolDrawCombocontrol);
 }
@@ -121,6 +133,14 @@ void ToolDrawCombocontrol::selected(ActionGroup group, ActionType action)
 			gtk_image_set_from_pixbuf(GTK_IMAGE(iconWidget), this->iconDrawLine);
 
 			description = _("Draw Line");
+		}
+		else if (action == ACTION_SHAPE_RECOGNIZER &&
+		         this->action != ACTION_SHAPE_RECOGNIZER)
+		{
+			this->action = ACTION_SHAPE_RECOGNIZER;
+			gtk_image_set_from_pixbuf(GTK_IMAGE(iconWidget), this->iconAutoDrawLine);
+
+			description = _("Recognize Lines");
 		}
 		gtk_tool_item_set_tooltip_text(GTK_TOOL_ITEM(item), description);
 
