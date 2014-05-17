@@ -23,7 +23,7 @@ class Control;
 class LatexAction
 {
 public:
-	LatexAction(gchar* myTex);
+	LatexAction(gchar* myTex, double tArea);
 	virtual ~LatexAction();
 
 public:
@@ -37,6 +37,7 @@ private:
 	gchar* texfile;
 	gchar* texfilefull;
 	double myx, myy;
+	double texArea;
 };
 
 #endif /* __LATEXACTION_H__ */

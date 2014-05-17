@@ -3316,7 +3316,7 @@ void Control::runLatex()
 	}
 
 	//now do all the LatexAction stuff
-	LatexAction texAction(tmp);
+	LatexAction texAction(tmp,imgheight*imgwidth);
 	texAction.runCommand();
 
 	this->doc->lock();
