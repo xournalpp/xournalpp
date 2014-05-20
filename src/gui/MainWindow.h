@@ -103,7 +103,7 @@ private:
 	 * Key is pressed
 	 */
 	static bool onKeyPressCallback(GtkWidget* widget, GdkEventKey* event,
-	                                Layout* layout);
+	                                MainWindow* win);
 
 	/**
 	 * Callback fro window states, we ned to know if the window is fullscreen

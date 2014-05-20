@@ -68,7 +68,7 @@ MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control) :
 
 	//"watch over" all events
 	g_signal_connect(this->window, "key-press-event",
-	                 (GCallback) & onKeyPressCallback, this->getLayout());
+	                 (GCallback) & onKeyPressCallback, this);
 
 	this->toolbar = new ToolMenuHandler(this->control,
 	                                    this->control->getZoomControl(), this,
@@ -420,16 +420,21 @@ void MainWindow::buttonCloseSidebarClicked(GtkButton* button, MainWindow* win)
 	win->setSidebarVisible(false);
 }
 
-bool MainWindow::onKeyPressCallback(GtkWidget* widget, GdkEventKey* event, Layout* layout)
+bool MainWindow::onKeyPressCallback(GtkWidget* widget, GdkEventKey* event, MainWindow* win)
 {
-	if (event->keyval == GDK_Down)
+	if(win->getXournal()->getSelection())
 	{
-		layout->scrollRelativ(0, 30);
+		//something is selected - give that control
+		return false;
+	}
+	else if (event->keyval == GDK_Down)
+	{
+		win->getLayout()->scrollRelativ(0, 30);
 		return true;
 	}
 	else if (event->keyval == GDK_Up)
 	{
-		layout->scrollRelativ(0, -30);
+		win->getLayout()->scrollRelativ(0, -30);
 		return true;
 	}
 	else
