@@ -102,6 +102,7 @@ public:
 	void updateWindowTitle();
 	void calcZoomFitSize();
 	void setViewTwoPages(bool continous);
+	void setViewPresentationMode(bool continous);
 	void setPageInsertType(PageInsertType type);
 	void manageToolbars();
 	void customizeToolbars();

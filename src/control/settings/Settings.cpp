@@ -61,6 +61,7 @@ void Settings::loadDefault()
 
 	this->maximized = false;
 	this->showTwoPages = false;
+	this->presentationMode = false;
 
 	this->displayDpi = 72;
 
@@ -338,6 +339,10 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur)
 	else if (xmlStrcmp(name, (const xmlChar*) "showTwoPages") == 0)
 	{
 		this->showTwoPages = xmlStrcmp(value, (const xmlChar*) "true") ? false : true;
+	}
+	else if (xmlStrcmp(name, (const xmlChar*) "presentationMode") == 0)
+	{
+		this->presentationMode = xmlStrcmp(value, (const xmlChar*) "true") ? false : true;
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "autoloadPdfXoj") == 0)
 	{
@@ -823,6 +828,7 @@ void Settings::save()
 	WRITE_BOOL_PROP(sidebarOnRight);
 	WRITE_BOOL_PROP(scrollbarOnLeft);
 	WRITE_BOOL_PROP(showTwoPages);
+	WRITE_BOOL_PROP(presentationMode);
 
 	WRITE_STRING_PROP(fullscreenHideElements);
 	WRITE_COMMENT("Which gui elements are hidden if you are in Fullscreen mode, separated by a colon (,)");
@@ -1269,6 +1275,26 @@ bool Settings::isShowTwoPages()
 	XOJ_CHECK_TYPE(Settings);
 
 	return this->showTwoPages;
+}
+
+void Settings::setPresentationMode(bool presentationMode)
+{
+	XOJ_CHECK_TYPE(Settings);
+
+	if (this->presentationMode == presentationMode)
+	{
+		return;
+	}
+
+	this->presentationMode = presentationMode;
+	saveTimeout();
+}
+
+bool Settings::isPresentationMode()
+{
+	XOJ_CHECK_TYPE(Settings);
+
+	return this->presentationMode;
 }
 
 /**

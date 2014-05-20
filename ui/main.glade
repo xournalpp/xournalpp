@@ -299,6 +299,15 @@
                       </widget>
                     </child>
                     <child>
+                      <widget class="GtkCheckMenuItem" id="menuViewPresMode">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="use_action_appearance">False</property>
+                        <property name="label" translatable="yes">_Presentation Mode</property>
+                        <property name="use_underline">True</property>
+                      </widget>
+                    </child>
+                    <child>
                       <widget class="GtkCheckMenuItem" id="menuViewFullScreen">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>

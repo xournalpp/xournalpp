@@ -593,6 +593,10 @@ void ToolMenuHandler::initToolItems()
 	                           GROUP_TWOPAGES, false,
 	                           "showtwopages.png", _("Two pages"), gui->get("menuViewTwoPages")));
 
+	addToolItem(new ToolButton(listener, gui, "PRESENTATION_MODE", ACTION_VIEW_PRESENTATION_MODE,
+	                           GROUP_PRESENTATION_MODE, false,
+	                           "showtwopages.png", _("Presentation mode"), gui->get("menuViewPresMode")));
+
 	toolPageLayer = new ToolPageLayer(gui, listener, "LAYER", ACTION_FOOTER_LAYER);
 	addToolItem(toolPageLayer);
 

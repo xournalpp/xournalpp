@@ -17,7 +17,7 @@
 #include "../cfg.h"
 #include <glib.h>
 
-LatexAction::LatexAction(gchar* myTex)
+LatexAction::LatexAction(gchar* myTex, double tArea)
 {
 	//this->control = control;
 
@@ -32,6 +32,8 @@ LatexAction::LatexAction(gchar* myTex)
 	//set up the default positions.
 	this->myx = 0;
 	this->myy = 0;
+
+	this->texArea = tArea;
 }
 
 LatexAction::~LatexAction()
@@ -53,14 +55,42 @@ void LatexAction::runCommand()
 		printf("Error: problem finding mathtex. Doing nothing...\n");
 		return;
 	}
-	printf("Found mathtex in your path!\n");
+	printf("Found mathtex in your path! Area is %f\n",this->texArea);
 	g_free(mathtex);
 	gchar* command = NULL;
 	//can change font colour later with more features
 	const gchar* fontcolour = "black";
+	//dpi 300 is a good balance
+	gchar* texres = "";
+	if (this->texArea < 1000)
+	{
+		texres = "300";
+	}
+	else if (this->texArea < 4000)
+	{
+		texres = "400";
+	}
+	else if (this->texArea < 8000)
+	{
+		texres = "500";
+	}
+	else if (this->texArea < 16000)
+	{
+		texres = "600";
+	}
+	else if (this->texArea < 32000)
+	{
+		texres = "800";
+	}
+	else
+	{
+		texres = "1000";
+		
+	}
 	command = g_strdup_printf(
-	              "%s -m 0 \"\\png\\usepackage{color}\\color{%s}\\dpi{300}\\%s %s\" -o %s",
+	              "%s -m 0 \"\\png\\usepackage{color}\\color{%s}\\dpi{%s}\\%s %s\" -o %s",
 	              mtex, strlen(fontcolour) ? fontcolour : "black",
+		      texres,
 	              "normalsize",
 	              g_strescape(this->theLatex, NULL), this->texfile);
 
