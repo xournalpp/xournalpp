@@ -422,9 +422,14 @@ void MainWindow::buttonCloseSidebarClicked(GtkButton* button, MainWindow* win)
 
 bool MainWindow::onKeyPressCallback(GtkWidget* widget, GdkEventKey* event, MainWindow* win)
 {
-	if(win->getXournal()->getSelection())
+	if (win->getXournal()->getSelection())
 	{
 		//something is selected - give that control
+		return false;
+	}
+	else if (win->getXournal()->getTextEditor())
+	{
+		//editing text - give that control
 		return false;
 	}
 	else if (event->keyval == GDK_Down)
