@@ -234,6 +234,9 @@ public:
 	void setShowTwoPages(bool showTwoPages);
 	bool isShowTwoPages();
 
+	void setPresentationMode(bool presentationMode);
+	bool isPresentationMode();
+
 	bool isAutloadPdfXoj();
 	void setAutoloadPdfXoj(bool load);
 
@@ -415,6 +418,11 @@ private:
 	 * Displays two pages
 	 */
 	bool showTwoPages;
+
+	/**
+	 * Sets presentation mode
+	 */
+	bool presentationMode;
 
 	/**
 	 * Automatically load filename.pdf.xoj instead of filename.pdf (true/false)
