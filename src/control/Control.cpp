@@ -277,6 +277,7 @@ void Control::initWindow(MainWindow* win)
 	undoRedoChanged();
 
 	setViewTwoPages(settings->isShowTwoPages());
+	setViewPresentationMode(settings->isPresentationMode());
 
 	setPageInsertType(settings->getPageInsertType());
 
@@ -800,6 +801,10 @@ void Control::actionPerformed(ActionType type, ActionGroup group,
 
 	case ACTION_VIEW_TWO_PAGES:
 		setViewTwoPages(enabled);
+		break;
+
+	case ACTION_VIEW_PRESENTATION_MODE:
+		setViewPresentationMode(enabled);
 		break;
 
 	case ACTION_FOOTER_LAYER:
@@ -1962,6 +1967,19 @@ void Control::setViewTwoPages(bool twoPages)
 	settings->setShowTwoPages(twoPages);
 	fireActionSelected(GROUP_TWOPAGES,
 	                   twoPages ? ACTION_VIEW_TWO_PAGES : ACTION_NOT_SELECTED);
+
+	int currentPage = getCurrentPageNo();
+	win->getXournal()->layoutPages();
+	scrollHandler->scrollToPage(currentPage);
+}
+
+void Control::setViewPresentationMode(bool presentationMode)
+{
+	XOJ_CHECK_TYPE(Control);
+
+	settings->setPresentationMode(presentationMode);
+	fireActionSelected(GROUP_PRESENTATION_MODE,
+			   presentationMode ? ACTION_VIEW_PRESENTATION_MODE : ACTION_NOT_SELECTED);
 
 	int currentPage = getCurrentPageNo();
 	win->getXournal()->layoutPages();
@@ -3316,7 +3334,7 @@ void Control::runLatex()
 	}
 
 	//now do all the LatexAction stuff
-	LatexAction texAction(tmp);
+	LatexAction texAction(tmp,imgheight*imgwidth);
 	texAction.runCommand();
 
 	this->doc->lock();
