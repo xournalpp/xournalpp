@@ -804,7 +804,7 @@ void Control::actionPerformed(ActionType type, ActionGroup group,
 		break;
 
 	case ACTION_VIEW_PRESENTATION_MODE:
-		setPresentationMode(enabled);
+		setViewPresentationMode(enabled);
 		break;
 
 	case ACTION_FOOTER_LAYER:
