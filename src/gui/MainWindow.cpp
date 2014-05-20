@@ -16,6 +16,8 @@
 
 #include "ToolbarDefinitions.h"
 
+#include <gdk/gdkkeysyms.h>
+
 MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control) :
 	GladeGui(gladeSearchPath, "main.glade", "mainWindow")
 {
@@ -63,6 +65,10 @@ MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control) :
 
 	g_signal_connect(get("buttonCloseSidebar"), "clicked",
 	                 G_CALLBACK(buttonCloseSidebarClicked), this);
+
+	//"watch over" all events
+	g_signal_connect(this->window, "key-press-event",
+	                 (GCallback) & onKeyPressCallback, this);
 
 	this->toolbar = new ToolMenuHandler(this->control,
 	                                    this->control->getZoomControl(), this,
@@ -412,6 +418,34 @@ void MainWindow::buttonCloseSidebarClicked(GtkButton* button, MainWindow* win)
 	XOJ_CHECK_TYPE_OBJ(win, MainWindow);
 
 	win->setSidebarVisible(false);
+}
+
+bool MainWindow::onKeyPressCallback(GtkWidget* widget, GdkEventKey* event, MainWindow* win)
+{
+	if (win->getXournal()->getSelection())
+	{
+		//something is selected - give that control
+		return false;
+	}
+	else if (win->getXournal()->getTextEditor())
+	{
+		//editing text - give that control
+		return false;
+	}
+	else if (event->keyval == GDK_Down)
+	{
+		win->getLayout()->scrollRelativ(0, 30);
+		return true;
+	}
+	else if (event->keyval == GDK_Up)
+	{
+		win->getLayout()->scrollRelativ(0, -30);
+		return true;
+	}
+	else
+	{
+		return false;
+	}
 }
 
 bool MainWindow::deleteEventCallback(GtkWidget* widget, GdkEvent* event,
