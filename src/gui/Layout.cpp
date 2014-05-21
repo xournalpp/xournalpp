@@ -245,10 +245,12 @@ void Layout::layoutPages()
 		}
 	}
 
+	int verticalSpaceBetweenSlides = 0;
 	if (len > 0 && verticalSpace)
 	{
 		marginTop += this->view->viewPages[0]->getDisplayHeight() * 0.75;
 		marginBottom += this->view->viewPages[len - 1]->getDisplayHeight() * 0.75;
+		verticalSpaceBetweenSlides = this->view->viewPages[0]->getDisplayHeight() * 0.75;
 	}
 
 	for (int i = 0; i < len; i++)
@@ -335,7 +337,7 @@ void Layout::layoutPages()
 
 		y += height;
 
-		y += XOURNAL_PADDING_BETWEEN;
+		y += XOURNAL_PADDING_BETWEEN + verticalSpaceBetweenSlides;
 	}
 
 	int height = marginTop + XOURNAL_PADDING + y + XOURNAL_PADDING + marginBottom;

@@ -1,6 +1,6 @@
 #include "ZoomControl.h"
 
-const double zoomStep = 0.2;
+const double zoomStep = 0.04;
 
 ZoomControl::ZoomControl()
 {
