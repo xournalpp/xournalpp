@@ -31,6 +31,7 @@ public:
 	bool scrollEvent(GdkEventScroll* event);
 	void ensureRectIsVisible(int x, int y, int width, int height);
 	double getVisiblePageTop(int page);
+	double getDisplayHeight();
 
 	void layoutPages();
 

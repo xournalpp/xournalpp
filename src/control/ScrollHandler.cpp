@@ -21,7 +21,22 @@ void ScrollHandler::goToPreviousPage()
 
 	if (this->control->getWindow())
 	{
-		scrollToPage(this->control->getWindow()->getXournal()->getCurrentPage() - 1);
+		if (this->control->getSettings()->isPresentationMode())
+		{
+			PageView* view = this->control->getWindow()->getXournal()->getViewFor(this->control->getWindow()->getXournal()->getCurrentPage() - 1);
+			if (view)
+			{
+				double dHeight = view->getDisplayHeight();
+				double disHeight = this->control->getWindow()->getLayout()->getDisplayHeight();
+				double top = (dHeight - disHeight)/2.0 + 7.5;
+					//the magic 7.5 is from XOURNAL_PADDING_BETWEEN/2
+				scrollToPage(this->control->getWindow()->getXournal()->getCurrentPage() - 1, top);
+			}
+		}
+		else
+		{
+			scrollToPage(this->control->getWindow()->getXournal()->getCurrentPage() - 1);
+		}
 	}
 }
 
@@ -31,7 +46,23 @@ void ScrollHandler::goToNextPage()
 
 	if (this->control->getWindow())
 	{
-		scrollToPage(this->control->getWindow()->getXournal()->getCurrentPage() + 1);
+		if (this->control->getSettings()->isPresentationMode())
+		{
+			PageView* view = this->control->getWindow()->getXournal()->getViewFor(this->control->getWindow()->getXournal()->getCurrentPage() + 1);
+			if (view)
+			{
+				double dHeight = view->getDisplayHeight();
+				double disHeight = this->control->getWindow()->getLayout()->getDisplayHeight();
+				//this gets reversed when we are going down if the page is smaller than the display height
+				double top = (-dHeight + disHeight)/2.0 - 7.5;
+				//the magic 7.5 is from XOURNAL_PADDING_BETWEEN/2
+				scrollToPage(this->control->getWindow()->getXournal()->getCurrentPage() + 1, top);
+			}
+		}
+		else
+		{
+			scrollToPage(this->control->getWindow()->getXournal()->getCurrentPage() + 1);
+		}
 	}
 }
 

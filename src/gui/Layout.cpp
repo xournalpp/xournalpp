@@ -395,6 +395,13 @@ GtkWidget* Layout::getScrollbarHorizontal()
 	return this->scrollHorizontal->getWidget();
 }
 
+double Layout::getDisplayHeight()
+{
+	XOJ_CHECK_TYPE(Layout);
+
+	return this->scrollVertical->getPageSize();
+}
+
 void Layout::setSize(int widgetWidth, int widgetHeight)
 {
 	XOJ_CHECK_TYPE(Layout);
