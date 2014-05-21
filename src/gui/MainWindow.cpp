@@ -434,13 +434,29 @@ bool MainWindow::onKeyPressCallback(GtkWidget* widget, GdkEventKey* event, MainW
 	}
 	else if (event->keyval == GDK_Down)
 	{
-		win->getLayout()->scrollRelativ(0, 30);
-		return true;
+		if (win->getControl()->getSettings()->isPresentationMode())
+		{
+			win->getControl()->getScrollHandler()->goToNextPage();
+			return true;
+		}
+		else
+		{
+			win->getLayout()->scrollRelativ(0, 30);
+			return true;
+		}
 	}
 	else if (event->keyval == GDK_Up)
 	{
-		win->getLayout()->scrollRelativ(0, -30);
-		return true;
+		if (win->getControl()->getSettings()->isPresentationMode())
+		{
+			win->getControl()->getScrollHandler()->goToPreviousPage();
+			return true;
+		}
+		else
+		{
+			win->getLayout()->scrollRelativ(0, -30);
+			return true;
+		}
 	}
 	else
 	{
