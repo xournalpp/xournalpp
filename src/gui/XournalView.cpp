@@ -496,7 +496,8 @@ void XournalView::zoomChanged(double lastZoom)
 
 	Layout* layout = gtk_xournal_get_layout(this->widget);
 	int currentPage = this->getCurrentPage();
-	double pageTop = layout->getVisiblePageTop(currentPage);
+	//double pageTop = layout->getVisiblePageTop(currentPage);
+	double pageTop = 0.0;
 
 	layout->layoutPages();
 

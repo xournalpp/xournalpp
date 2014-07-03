@@ -226,7 +226,7 @@ bool PdfWriter::writeInfo(String title)
 	}
 
 	write("/Creator ");
-	writeTxt("Cairo / Poppler " VERSION);
+	writeTxt("Cairo / Poppler / Xournal++ v." VERSION);
 	write("\n");
 
 	time_t curtime = time(NULL);
