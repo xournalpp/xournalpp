@@ -2944,7 +2944,8 @@ bool Control::close(bool destroy)
 	this->doc->clearDocument(destroy);
 	this->doc->unlock();
 
-	updateWindowTitle();
+	//updateWindowTitle();
+	undoRedoChanged();
 	return true;
 }
 
