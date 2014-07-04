@@ -18,7 +18,7 @@
 #include "../plugin/python/PythonRunner.h"
 #endif
 
-#include "util/Threading.h"
+//#include "util/Threading.h"
 
 XournalMain::XournalMain()
 {
@@ -326,7 +326,7 @@ int XournalMain::run(int argc, char* argv[])
 	checkForEmergencySave();
 
 	{
-		Lock lk(GdkMutex);
+		//Lock lk(GdkMutex);
 		gtk_main();
 	}
 

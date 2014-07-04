@@ -19,11 +19,12 @@ BlockingJob::~BlockingJob()
 	XOJ_RELEASE_TYPE(BlockingJob);
 }
 
-void BlockingJob::execute()
+void BlockingJob::execute(bool noThreads)
 {
 	XOJ_CHECK_TYPE(BlockingJob);
 
-	this->run();
+	printf("Running blockingJob.\n");
+	this->run(false);
 
 	g_idle_add((GSourceFunc) finished, this->control);
 }

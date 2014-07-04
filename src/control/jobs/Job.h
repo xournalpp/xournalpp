@@ -52,7 +52,7 @@ public:
 	/**
 	 * this method is called
 	 */
-	virtual void execute();
+	virtual void execute(bool noThreads);
 
 	virtual void* getSource();
 
@@ -60,7 +60,7 @@ protected:
 	/**
 	 * override this method
 	 */
-	virtual void run() = 0;
+	virtual void run(bool noThreads) = 0;
 
 	/**
 	 * This method should be called as _last_ operation in run

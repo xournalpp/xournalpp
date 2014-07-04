@@ -29,7 +29,7 @@
 // #define RECOGNIZER_DEBUG
 
 // Scheduler debug: show jobs etc.
-// #define SHEDULER_DEBUG
+// #define SCHEDULER_DEBUG
 
 // draw a surrounding border to all elements
 // #define SHOW_ELEMENT_BOUNDS

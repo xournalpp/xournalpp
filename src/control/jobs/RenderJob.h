@@ -33,13 +33,13 @@ public:
 
 	void* getSource();
 
-	void run();
+	void run(bool noThreads);
 
 public:
-	static void rerenderRectangle(RenderJob* renderJob, Rectangle* rect);
+	static void rerenderRectangle(RenderJob* renderJob, Rectangle* rect, bool noThreads);
 
 private:
-	void rerenderRectangle(Rectangle* rect);
+	void rerenderRectangle(Rectangle* rect, bool noThreads);
 
 private:
 	XOJ_TYPE_ATTRIB;

@@ -161,7 +161,7 @@ bool ExportJob::freeSurface(int id)
 	return true;
 }
 
-void ExportJob::run()
+void ExportJob::run(bool noThreads)
 {
 	XOJ_CHECK_TYPE(ExportJob);
 

@@ -27,7 +27,7 @@ protected:
 	virtual ~AutosaveJob();
 
 public:
-	virtual void run();
+	virtual void run(bool noThreads);
 	void afterRun();
 
 	virtual JobType getType();

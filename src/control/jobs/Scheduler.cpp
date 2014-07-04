@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include "../../cfg.h"
 
-#ifdef SHEDULER_DEBUG
+#ifdef SCHEDULER_DEBUG
 #define SDEBUG(msg, ...) printf("Scheduler:: " msg, __VA_ARGS__)
 #else
 #define SDEBUG(msg, ...) {}
@@ -71,6 +71,7 @@ Scheduler::~Scheduler()
 
 void Scheduler::start()
 {
+	SDEBUG("Starting scheduler\n",0);
 	g_return_if_fail(this->thread == NULL);
 	
 	if(!this->noThreads)
@@ -79,6 +80,7 @@ void Scheduler::start()
 
 void Scheduler::stop()
 {
+	SDEBUG("Stopping scheduler\n",0);
 	if (!this->threadRunning)
 	{
 		return;
@@ -93,10 +95,12 @@ void Scheduler::stop()
 void Scheduler::addJob(Job* job, JobPriority priority)
 {
 	XOJ_CHECK_TYPE(Scheduler);
+	SDEBUG("Adding job...\n",0);
         
         if(this->noThreads)
         {
-                job->execute();
+		SDEBUG("job is: %ld\n", (long)job);
+                job->execute(true);
                 return;
         }
 
@@ -283,9 +287,9 @@ gpointer Scheduler::jobThreadCallback(Scheduler* scheduler)
 		if(job != NULL)
 		{
 			hasOnlyRenderJobs = false;
+			SDEBUG("get job: %ld\n", (long)job);
 		}
 
-		SDEBUG("get job: %ld\n", (long)job);
 
 		if (!job)
 		{
@@ -314,7 +318,7 @@ gpointer Scheduler::jobThreadCallback(Scheduler* scheduler)
 
 		g_mutex_lock(&scheduler->jobRunningMutex);
 
-		job->execute();
+		job->execute(false);
 
 		job->unref();
 		g_mutex_unlock(&scheduler->jobRunningMutex);

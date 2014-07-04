@@ -37,9 +37,11 @@ JobType PreviewJob::getType()
 	return JOB_TYPE_PREVIEW;
 }
 
-void PreviewJob::run()
+void PreviewJob::run(bool noThreads)
 {
 	XOJ_CHECK_TYPE(PreviewJob);
+
+	printf("Running previewJob.\n");
 
 	GtkAllocation alloc;
 	gtk_widget_get_allocation(this->sidebarPreview->widget, &alloc);
@@ -59,7 +61,8 @@ void PreviewJob::run()
 	cairo_scale(cr2, zoom, zoom);
 
 	Document* doc = this->sidebarPreview->sidebar->getControl()->getDocument();
-	doc->lock();
+	if(!noThreads)
+		doc->lock();
 
 	if (this->sidebarPreview->page->getBackgroundType() == BACKGROUND_TYPE_PDF)
 	{
@@ -92,9 +95,12 @@ void PreviewJob::run()
 	cairo_destroy(cr2);
 
 
-	doc->unlock();
+	if(!noThreads)
+	{
+		doc->unlock();
 
-	g_mutex_lock(&this->sidebarPreview->drawingMutex);
+		g_mutex_lock(&this->sidebarPreview->drawingMutex);
+	}
 
 	if (this->sidebarPreview->crBuffer)
 	{
@@ -102,9 +108,13 @@ void PreviewJob::run()
 	}
 	this->sidebarPreview->crBuffer = crBuffer;
 
-	gdk_threads_enter();
+	if(!noThreads)
+		gdk_threads_enter();
 	gtk_widget_queue_draw(this->sidebarPreview->widget);
-	gdk_threads_leave();
+	if(!noThreads)
+	{
+		gdk_threads_leave();
 
-	g_mutex_unlock(&this->sidebarPreview->drawingMutex);
+		g_mutex_unlock(&this->sidebarPreview->drawingMutex);
+	}
 }
