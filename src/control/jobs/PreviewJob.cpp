@@ -41,7 +41,7 @@ void PreviewJob::run(bool noThreads)
 {
 	XOJ_CHECK_TYPE(PreviewJob);
 
-	printf("Running previewJob.\n");
+	//printf("Running previewJob.\n");
 
 	GtkAllocation alloc;
 	gtk_widget_get_allocation(this->sidebarPreview->widget, &alloc);

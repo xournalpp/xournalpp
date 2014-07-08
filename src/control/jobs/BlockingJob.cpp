@@ -23,7 +23,7 @@ void BlockingJob::execute(bool noThreads)
 {
 	XOJ_CHECK_TYPE(BlockingJob);
 
-	printf("Running blockingJob.\n");
+	//printf("Running blockingJob.\n");
 	this->run(false);
 
 	g_idle_add((GSourceFunc) finished, this->control);
