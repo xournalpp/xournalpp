@@ -570,7 +570,7 @@ void ToolMenuHandler::initToolItems()
 	                           _("Medium")));
 	addToolItem(new ToolButton(listener, gui, "THICK", ACTION_SIZE_THICK,
 	                           GROUP_SIZE, true, "thickness_thick.png",
-	                           _("Thik")));
+	                           _("Thick")));
 
 	addToolItem(new ToolButton(listener, gui, "DEFAULT_TOOL", ACTION_TOOL_DEFAULT,
 	                           GROUP_NOGROUP, false, "default.png",

@@ -1438,7 +1438,7 @@ msgid "Medium"
 msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:437
-msgid "Thik"
+msgid "Thick"
 msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:440
