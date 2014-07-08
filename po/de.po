@@ -1532,7 +1532,7 @@ msgid "Medium"
 msgstr "Mittel"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:437
-msgid "Thik"
+msgid "Thick"
 msgstr "Dick"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:440
