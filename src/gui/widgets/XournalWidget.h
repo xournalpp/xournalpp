@@ -16,9 +16,9 @@
 
 G_BEGIN_DECLS
 
-#define GTK_XOURNAL(obj) GTK_CHECK_CAST(obj, gtk_xournal_get_type (), GtkXournal)
+#define GTK_XOURNAL(obj) G_TYPE_CHECK_INSTANCE_CAST(obj, gtk_xournal_get_type (), GtkXournal)
 #define GTK_XOURNAL_CLASS(klass) GTK_CHECK_CLASS_CAST(klass, gtk_xournal_get_type(), GtkXournalClass)
-#define GTK_IS_XOURNAL(obj) GTK_CHECK_TYPE(obj, gtk_xournal_get_type())
+#define GTK_IS_XOURNAL(obj) G_TYPE_CHECK_INSTANCE_TYPE(obj, gtk_xournal_get_type())
 
 class XournalView;
 class PageView;
@@ -73,7 +73,7 @@ struct _GtkXournalClass
 	GtkWidgetClass parent_class;
 };
 
-GtkType gtk_xournal_get_type(void);
+GType gtk_xournal_get_type(void);
 GtkWidget* gtk_xournal_new(XournalView* view);
 
 void gtk_xournal_update_xevent(GtkWidget* widget);

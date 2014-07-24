@@ -39,13 +39,15 @@ GdkPixbuf* ToolbarDragDropHelper::getImagePixbuf(GtkImage* image)
 
 GdkPixbuf* ToolbarDragDropHelper::getColorImage(int color)
 {
+	/*
 	GtkWidget* icon = selectcolor_new(color);
 	selectcolor_set_size(icon, 16);
 	selectcolor_set_circle(icon, true);
 	GdkPixbuf* image = Util::newPixbufFromWidget(icon, 16);
-	gtk_widget_unref(icon);
+	g_object_unref(icon);
+	*/
 
-	return image;
+	return NULL;
 }
 
 void ToolbarDragDropHelper::dragDestAddToolbar(GtkWidget* target)

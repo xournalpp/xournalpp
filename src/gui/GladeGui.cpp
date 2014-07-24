@@ -16,14 +16,25 @@ GladeGui::GladeGui(GladeSearchpath* gladeSearchPath, const char* glade,
 	this->gladeSearchPath = gladeSearchPath;
 
 	char* filename = this->gladeSearchPath->findFile(NULL, glade);
-	this->xml = glade_xml_new(filename, NULL, NULL);
-	if (!this->xml)
+
+
+	GError* error = NULL;
+	builder = gtk_builder_new();
+
+	if(!gtk_builder_add_from_file(builder, filename, &error))
 	{
+		g_warning ("Couldn't load builder file: %s", error->message);
+
 		GtkWidget* dialog = gtk_message_dialog_new(NULL, GTK_DIALOG_DESTROY_WITH_PARENT,
 		                                           GTK_MESSAGE_ERROR, GTK_BUTTONS_CLOSE,
-		                                           _("Error loading glade file '%s' (try to load '%s')"), glade, filename);
+		                                           _("Error finding glade resource '%s', error on opening file '%s': %s"),
+		                                           glade, filename, error->message);
+
 		gtk_dialog_run(GTK_DIALOG(dialog));
 		gtk_widget_destroy(GTK_WIDGET(dialog));
+		
+		g_error_free (error);
+		
 		exit(-1);
 	}
 
@@ -36,8 +47,9 @@ GladeGui::~GladeGui()
 {
 	XOJ_CHECK_TYPE(GladeGui);
 
-	gtk_widget_destroy(this->window);
-	g_object_unref(this->xml);
+	// TODO: this causes a segfault... do we need this?
+	//gtk_widget_destroy(this->window);
+	g_object_unref(builder);
 
 	XOJ_RELEASE_TYPE(GladeGui);
 }
@@ -46,8 +58,9 @@ GtkWidget* GladeGui::get(const char* name)
 {
 	XOJ_CHECK_TYPE(GladeGui);
 
-	GtkWidget* w = glade_xml_get_widget(xml, name);
-	if (w == NULL)
+	GtkWidget* w = GTK_WIDGET(gtk_builder_get_object(builder, name));
+
+	if (!w)
 	{
 		g_warning("GladeGui::get: Could not find glade Widget: \"%s\"", name);
 	}
@@ -113,14 +126,14 @@ GladeSearchpath* GladeGui::getGladeSearchPath()
 	return this->gladeSearchPath;
 }
 
-GladeGui::operator GdkWindow* ()
+GladeGui::operator GdkWindow*()
 {
 	XOJ_CHECK_TYPE(GladeGui);
 
-	return GTK_WIDGET(getWindow())->window;
+	return gtk_widget_get_window(GTK_WIDGET(getWindow()));
 }
 
-GladeGui::operator GtkWindow* ()
+GladeGui::operator GtkWindow*()
 {
 	XOJ_CHECK_TYPE(GladeGui);
 

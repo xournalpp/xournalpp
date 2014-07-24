@@ -74,7 +74,7 @@ void ToolbarColorNames::saveFile(const char* file)
 	g_free(data);
 }
 
-void ToolbarColorNames::adddColor(int color, String name, bool predefined)
+void ToolbarColorNames::addColor(int color, String name, bool predefined)
 {
 	XOJ_CHECK_TYPE(ToolbarColorNames);
 
@@ -128,15 +128,15 @@ void ToolbarColorNames::initPredefinedColors()
 
 	// Here you can add predefined color names
 	// this ordering fixes #2
-	adddColor(0x000000, _("Black"), true);
-	adddColor(0x008000, _("Green"), true);
-	adddColor(0x00c0ff, _("Light Blue"), true);
-	adddColor(0x00ff00, _("Light Green"), true);
-	adddColor(0x3333cc, _("Blue"), true);
-	adddColor(0x808080, _("Gray"), true);
-	adddColor(0xff0000, _("Red"), true);
-	adddColor(0xff00ff, _("Mangenta"), true);
-	adddColor(0xff8000, _("Orange"), true);
-	adddColor(0xffff00, _("Yellow"), true);
-	adddColor(0xffffff, _("White"), true);
+	addColor(0x000000, _("Black"), true);
+	addColor(0x008000, _("Green"), true);
+	addColor(0x00c0ff, _("Light Blue"), true);
+	addColor(0x00ff00, _("Light Green"), true);
+	addColor(0x3333cc, _("Blue"), true);
+	addColor(0x808080, _("Gray"), true);
+	addColor(0xff0000, _("Red"), true);
+	addColor(0xff00ff, _("Mangenta"), true);
+	addColor(0xff8000, _("Orange"), true);
+	addColor(0xffff00, _("Yellow"), true);
+	addColor(0xffffff, _("White"), true);
 }

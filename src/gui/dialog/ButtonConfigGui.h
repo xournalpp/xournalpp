@@ -51,6 +51,7 @@ private:
 	GtkWidget* colorButton;
 	GtkWidget* cbEraserType;
 	GtkWidget* cbDrawingType;
+	GdkDeviceManager* deviceManager;
 };
 
 #endif /* __BUTTONCONFIGGUI__ */

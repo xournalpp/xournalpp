@@ -54,7 +54,8 @@ ToolbarCustomizeDialog::ToolbarCustomizeDialog(GladeSearchpath* gladeSearchPath,
 	// init separator
 	GtkWidget* tbSeparator = get("tbSeparator");
 
-	GtkWidget* icon = Util::newSepeartorImage();
+	//GtkWidget* icon = Util::newSepeartorImage();
+	GtkWidget* icon = NULL;
 	GtkWidget* box = gtk_vbox_new(false, 3);
 	gtk_widget_show(box);
 
@@ -82,8 +83,7 @@ ToolbarCustomizeDialog::ToolbarCustomizeDialog(GladeSearchpath* gladeSearchPath,
 	g_signal_connect(ebox, "drag-data-get",
 	                 G_CALLBACK(toolitemDragDataGetSeparator), NULL);
 
-	gtk_table_attach(GTK_TABLE(tbSeparator), ebox, 0, 1, 0, 1, (GtkAttachOptions) 0,
-	                 (GtkAttachOptions) 0, 5, 5);
+	gtk_grid_attach(GTK_GRID(tbSeparator), ebox, 0, 0, 1, 1);
 }
 
 ToolbarCustomizeDialog::~ToolbarCustomizeDialog()
@@ -113,10 +113,12 @@ void ToolbarCustomizeDialog::toolitemDragBeginSeparator(GtkWidget* widget,
 {
 	ToolItemDragCurrentData::setData(TOOL_ITEM_SEPARATOR, -1, NULL);
 
+	/*
 	GtkWidget* icon = Util::newSepeartorImage();
 	gtk_drag_set_icon_pixbuf(context,
 	                         ToolbarDragDropHelper::getImagePixbuf(GTK_IMAGE(icon)), -2, -2);
 	gtk_widget_unref(icon);
+	*/
 }
 
 void ToolbarCustomizeDialog::toolitemDragEndSeparator(GtkWidget* widget,
@@ -286,13 +288,13 @@ void ToolbarCustomizeDialog::freeIconview()
 {
 	XOJ_CHECK_TYPE(ToolbarCustomizeDialog);
 
-	GtkTable* table = GTK_TABLE(get("tbDefaultTools"));
+	GtkGrid* grid = GTK_GRID(get("tbDefaultTools"));
 
-	GList* children = gtk_container_get_children(GTK_CONTAINER(table));
+	GList* children = gtk_container_get_children(GTK_CONTAINER(grid));
 	for (GList* l = children; l != NULL; l = l->next)
 	{
 		GtkWidget* w = (GtkWidget*) l->data;
-		gtk_container_remove(GTK_CONTAINER(table), w);
+		gtk_container_remove(GTK_CONTAINER(grid), w);
 	}
 
 	g_list_free(children);
@@ -307,7 +309,7 @@ void ToolbarCustomizeDialog::rebuildIconview()
 
 	freeIconview();
 
-	GtkTable* table = GTK_TABLE(get("tbDefaultTools"));
+	GtkGrid* grid = GTK_GRID(get("tbDefaultTools"));
 
 	ListIterator<AbstractToolItem*> itt =
 	    this->win->getToolMenuHandler()->getToolItems();
@@ -361,8 +363,7 @@ void ToolbarCustomizeDialog::rebuildIconview()
 
 		int x = i % 3;
 		int y = i / 3;
-		gtk_table_attach(table, ebox, x, x + 1, y, y + 1, (GtkAttachOptions) 0,
-		                 (GtkAttachOptions) 0, 5, 5);
+		gtk_grid_attach(grid, ebox, x, y, 1, 1);
 
 		i++;
 	}
@@ -375,13 +376,14 @@ void ToolbarCustomizeDialog::freeColorIconview()
 {
 	XOJ_CHECK_TYPE(ToolbarCustomizeDialog);
 
-	GtkTable* table = GTK_TABLE(get("tbColor"));
+	GtkGrid* grid = GTK_GRID(get("tbColor"));
 
-	GList* children = gtk_container_get_children(GTK_CONTAINER(table));
+	GList* children = gtk_container_get_children(GTK_CONTAINER(grid));
+
 	for (GList* l = children; l != NULL; l = l->next)
 	{
 		GtkWidget* w = (GtkWidget*) l->data;
-		gtk_container_remove(GTK_CONTAINER(table), w);
+		gtk_container_remove(GTK_CONTAINER(grid), w);
 	}
 
 	g_list_free(children);
@@ -390,8 +392,8 @@ void ToolbarCustomizeDialog::freeColorIconview()
 
 void ToolbarCustomizeDialog::rebuildColorIcons()
 {
-	GtkTable* table = GTK_TABLE(get("tbColor"));
-	g_return_if_fail(table != NULL);
+	GtkGrid* grid = GTK_GRID(get("tbColor"));
+	g_return_if_fail(grid != NULL);
 
 	freeColorIconview();
 
@@ -444,11 +446,10 @@ void ToolbarCustomizeDialog::rebuildColorIcons()
 		int x = i % 5;
 		int y = i / 5;
 		i++;
-		gtk_table_attach(table, ebox, x, x + 1, y, y + 1, (GtkAttachOptions) 0,
-		                 (GtkAttachOptions) 0, 5, 5);
+		gtk_grid_attach(grid, ebox, x, y, 1, 1);
 	}
 
-	gtk_widget_show_all(GTK_WIDGET(table));
+	gtk_widget_show_all(GTK_WIDGET(grid));
 }
 
 void ToolbarCustomizeDialog::windowResponseCb(GtkDialog* dialog, int response,

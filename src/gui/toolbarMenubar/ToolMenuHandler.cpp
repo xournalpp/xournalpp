@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <string.h>
 #include <glib.h>
-#include <glade/glade-xml.h>
 
 #include <config.h>
 #include <glib/gi18n-lib.h>

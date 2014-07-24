@@ -31,9 +31,12 @@ public:
 
 	static int getPid();
 
+	/*
 	static void fakeExposeWidget(GtkWidget* widget, GdkPixmap* pixmap);
-	static GdkPixbuf* newPixbufFromWidget(GtkWidget* widget, int iconSize = 24);
 	static GtkWidget* newSepeartorImage();
+	*/
+
+	static GdkPixbuf* newPixbufFromWidget(GtkWidget* widget, int iconSize = 24);
 
 	static void openFileWithDefaultApplicaion(const char* filename);
 	static void openFileWithFilebrowser(const char* filename);

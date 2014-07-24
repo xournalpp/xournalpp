@@ -33,7 +33,9 @@ XournalView::XournalView(GtkWidget* parent, Control* control)
 	// we need to refer widget here, because wo unref it somwere twice!?
 	g_object_ref(this->widget);
 
-	gtk_table_attach_defaults(GTK_TABLE(parent), this->widget, 1, 2, 0, 1);
+  //                                                           l, r, t, b
+	//gtk_table_attach_defaults(GTK_TABLE(parent), this->widget, 1, 2, 0, 1);
+	gtk_grid_attach(GTK_GRID(parent), this->widget, 1, 0, 1, 1);
 	gtk_widget_show(this->widget);
 
 	this->repaintHandler = new RepaintHandler(this);
@@ -160,7 +162,7 @@ bool XournalView::onKeyPressEvent(GdkEventKey* event)
 	}
 
 	// Esc leaves fullscreen mode
-	if (event->keyval == GDK_Escape || event->keyval == GDK_F11)
+	if (event->keyval == GDK_KEY_Escape || event->keyval == GDK_KEY_F11)
 	{
 		if (control->isFullscreen())
 		{
@@ -170,7 +172,7 @@ bool XournalView::onKeyPressEvent(GdkEventKey* event)
 	}
 
 	// F5 starts presentation modus
-	if (event->keyval == GDK_F5)
+	if (event->keyval == GDK_KEY_F5)
 	{
 		if (!control->isFullscreen())
 		{
@@ -189,12 +191,12 @@ bool XournalView::onKeyPressEvent(GdkEventKey* event)
 		gtk_widget_get_allocation(gtk_widget_get_parent(this->widget), &alloc);
 		int windowHeight = alloc.height - scrollKeySize;
 
-		if (event->keyval == GDK_Page_Down)
+		if (event->keyval == GDK_KEY_Page_Down)
 		{
 			layout->scrollRelativ(0, windowHeight);
 			return true;
 		}
-		if (event->keyval == GDK_Page_Up)
+		if (event->keyval == GDK_KEY_Page_Up)
 		{
 			layout->scrollRelativ(0, -windowHeight);
 			return true;
@@ -202,12 +204,12 @@ bool XournalView::onKeyPressEvent(GdkEventKey* event)
 	}
 	else
 	{
-		if (event->keyval == GDK_Page_Down)
+		if (event->keyval == GDK_KEY_Page_Down)
 		{
 			control->getScrollHandler()->goToNextPage();
 			return true;
 		}
-		if (event->keyval == GDK_Page_Up)
+		if (event->keyval == GDK_KEY_Page_Up)
 		{
 			control->getScrollHandler()->goToPreviousPage();
 			return true;
@@ -215,7 +217,7 @@ bool XournalView::onKeyPressEvent(GdkEventKey* event)
 	}
 
 
-	if (event->keyval == GDK_Up)
+	if (event->keyval == GDK_KEY_Up)
 	{
 		if (control->getSettings()->isPresentationMode())
 		{
@@ -229,7 +231,7 @@ bool XournalView::onKeyPressEvent(GdkEventKey* event)
 		}
 	}
 
-	if (event->keyval == GDK_Down)
+	if (event->keyval == GDK_KEY_Down)
 	{
 		if (control->getSettings()->isPresentationMode())
 		{
@@ -243,25 +245,25 @@ bool XournalView::onKeyPressEvent(GdkEventKey* event)
 		}
 	}
 
-	if (event->keyval == GDK_Left)
+	if (event->keyval == GDK_KEY_Left)
 	{
 		layout->scrollRelativ(-scrollKeySize, 0);
 		return true;
 	}
 
-	if (event->keyval == GDK_Right)
+	if (event->keyval == GDK_KEY_Right)
 	{
 		layout->scrollRelativ(scrollKeySize, 0);
 		return true;
 	}
 
-	if(event->keyval == GDK_End)
+	if(event->keyval == GDK_KEY_End)
 	{
 		control->getScrollHandler()->goToLastPage();
 		return true;
 	}
 
-	if(event->keyval == GDK_Home)
+	if(event->keyval == GDK_KEY_Home)
 	{
 		control->getScrollHandler()->goToFirstPage();
 		return true;

@@ -176,6 +176,8 @@ void ColorToolItem::activated(GdkEvent* event, GtkMenuItem* menuitem,
 	}
 	inUpdate = true;
 
+	/*
+	 * TODO: rewrite this from scratch
 	if (isSelector())
 	{
 		this->colorDlg = gtk_color_selection_dialog_new(_("Select color"));
@@ -207,6 +209,7 @@ void ColorToolItem::activated(GdkEvent* event, GtkMenuItem* menuitem,
 		gtk_widget_destroy(this->colorDlg);
 		this->colorDlg = NULL;
 	}
+	*/
 
 	toolHandler->setColor(this->color);
 

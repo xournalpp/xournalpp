@@ -19,7 +19,7 @@ AboutDialog::AboutDialog(GladeSearchpath* gladeSearchPath) :
 	GtkWidget* linkButton =
 	    gtk_link_button_new("http://github.com/xournalpp/xournalpp");
 	gtk_widget_show(linkButton);
-	gtk_box_pack_start_defaults(GTK_BOX(w), linkButton);
+	gtk_box_pack_start(GTK_BOX(w), linkButton, TRUE, TRUE, 0);
 
 	String authors = "";
 

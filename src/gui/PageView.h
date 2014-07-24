@@ -77,7 +77,7 @@ public:
 	bool containsPoint(int x, int y, bool local = false);
 	bool containsY(int y);
 
-	GdkColor getSelectionColor();
+	GdkRGBA getSelectionColor();
 	int getBufferPixels();
 
 	/**

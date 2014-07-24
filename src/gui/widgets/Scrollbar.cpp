@@ -43,7 +43,7 @@ Scrollbar::~Scrollbar()
 {
 	XOJ_RELEASE_TYPE(Scrollbar);
 
-	gtk_widget_unref(this->scrollbar);
+	g_object_unref(this->scrollbar);
 	this->scrollbar = NULL;
 	g_list_free(this->listener);
 	this->listener = NULL;

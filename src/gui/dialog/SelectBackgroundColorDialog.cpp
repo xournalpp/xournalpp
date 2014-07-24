@@ -134,9 +134,15 @@ void SelectBackgroundColorDialog::showColorchooser()
 {
 	XOJ_CHECK_TYPE(SelectBackgroundColorDialog);
 
+	GValue value;
+	memset(&value, 0, sizeof(value));
+
 	this->colorDlg = gtk_color_selection_dialog_new(_("Select color"));
+
+	g_object_get_property(G_OBJECT(this->colorDlg), "ok_button", &value);
+	
 	g_signal_connect(G_OBJECT
-	                 (GTK_COLOR_SELECTION_DIALOG(this->colorDlg)->ok_button),
+	                 (GTK_WIDGET(&value)),
 	                 "clicked", G_CALLBACK(&buttonSelectedCallback),
 	                 this->colors->data); // first entry
 

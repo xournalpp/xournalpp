@@ -70,6 +70,7 @@ xournalpp_SOURCES = \
 	gui/dialog/FormatDialog.cpp \
 	gui/dialog/GotoDialog.cpp \
 	gui/dialog/toolbarCustomize/CustomizeableColorList.cpp \
+	gui/dialog/toolbarCustomize/ToolbarAdapter.cpp \
 	gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp \
 	gui/dialog/toolbarCustomize/ToolbarDragDropHandler.cpp \
 	gui/dialog/toolbarCustomize/ToolbarDragDropHelper.cpp \

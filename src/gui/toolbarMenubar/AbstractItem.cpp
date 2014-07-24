@@ -11,6 +11,7 @@ AbstractItem::AbstractItem(String id, ActionHandler* handler, ActionType action,
 	this->menuSignalHandler = 0;
 	this->group = GROUP_NOGROUP;
 	this->enabled = true;
+	this->ignoreMenuCallback = false;
 
 	ActionEnabledListener::registerListener(handler);
 	ActionSelectionListener::registerListener(handler);
@@ -19,7 +20,7 @@ AbstractItem::AbstractItem(String id, ActionHandler* handler, ActionType action,
 	{
 		menuSignalHandler = g_signal_connect(menuitem, "activate",
 		                                     G_CALLBACK(&menuCallback), this);
-		gtk_object_ref(GTK_OBJECT(menuitem));
+		g_object_ref(G_OBJECT(menuitem));
 		this->menuitem = menuitem;
 	}
 }
@@ -31,7 +32,7 @@ AbstractItem::~AbstractItem()
 	if (this->menuitem)
 	{
 		g_signal_handler_disconnect(this->menuitem, menuSignalHandler);
-		gtk_object_unref(GTK_OBJECT(this->menuitem));
+		g_object_unref(G_OBJECT(this->menuitem));
 	}
 
 	XOJ_RELEASE_TYPE(AbstractItem);
@@ -40,6 +41,9 @@ AbstractItem::~AbstractItem()
 void AbstractItem::menuCallback(GtkMenuItem* menuitem, AbstractItem* toolItem)
 {
 	XOJ_CHECK_TYPE_OBJ(toolItem, AbstractItem);
+
+	if(toolItem->ignoreMenuCallback)
+		return;
 
 	toolItem->activated(NULL, menuitem, NULL);
 }
@@ -56,8 +60,12 @@ void AbstractItem::actionSelected(ActionGroup group, ActionType action)
 			if (gtk_check_menu_item_get_active(GTK_CHECK_MENU_ITEM(this->menuitem)) !=
 			    (this->action == action))
 			{
+				this->ignoreMenuCallback = true;
+				
 				gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(this->menuitem),
 				                               this->action == action);
+
+				this->ignoreMenuCallback = false;
 			}
 		}
 		selected(group, action);

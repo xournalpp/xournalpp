@@ -8,15 +8,14 @@ static void selectcolor_size_request(GtkWidget* widget,
 static void selectcolor_size_allocate(GtkWidget* widget,
                                       GtkAllocation* allocation);
 static void selectcolor_realize(GtkWidget* widget);
-static gboolean selectcolor_expose(GtkWidget* widget, GdkEventExpose* event);
-static void selectcolor_paint(GtkWidget* widget);
-static void selectcolor_destroy(GtkObject* object);
+static gboolean selectcolor_draw(GtkWidget* widget, cairo_t* cr);
+static void selectcolor_destroy(GtkWidget* object);
 
 G_DEFINE_TYPE (SelectColor, selectcolor, GTK_TYPE_MISC)
 
 GtkWidget* selectcolor_new(gint color)
 {
-	GtkWidget* w = GTK_WIDGET(gtk_type_new(selectcolor_get_type()));
+	GtkWidget* w = GTK_WIDGET(g_object_new(selectcolor_get_type(), NULL));
 	selectcolor_set_color(w, color);
 	SELECT_COLOR(w)->circle = false;
 	SELECT_COLOR(w)->size = 16;
@@ -31,10 +30,7 @@ void selectcolor_set_color(GtkWidget* sc, gint color)
 
 	SELECT_COLOR(sc)->color = color;
 
-	if (gtk_widget_is_drawable(GTK_WIDGET(sc)))
-	{
-		selectcolor_paint(sc);
-	}
+	gtk_widget_queue_draw(sc);
 }
 
 void selectcolor_set_circle(GtkWidget* sc, gboolean circle)
@@ -44,10 +40,7 @@ void selectcolor_set_circle(GtkWidget* sc, gboolean circle)
 
 	SELECT_COLOR(sc)->circle = circle;
 
-	if (gtk_widget_is_drawable(GTK_WIDGET(sc)))
-	{
-		selectcolor_paint(sc);
-	}
+	gtk_widget_queue_draw(sc);
 }
 
 void selectcolor_set_size(GtkWidget* sc, gint size)
@@ -58,41 +51,58 @@ void selectcolor_set_size(GtkWidget* sc, gint size)
 	SELECT_COLOR(sc)->size = size;
 }
 
+static void
+selectcolor_get_preferred_width(GtkWidget *widget,
+                                gint* minimal_width,
+                                gint* natural_width)
+{
+  GtkRequisition requisition;
+
+  selectcolor_size_request(widget, &requisition);
+
+  *minimal_width = *natural_width = requisition.width;
+}
+
+static void
+selectcolor_get_preferred_height(GtkWidget* widget,
+                                 gint* minimal_height,
+                                 gint* natural_height)
+{
+  GtkRequisition requisition;
+
+  selectcolor_size_request(widget, &requisition);
+
+  *minimal_height = *natural_height = requisition.height;
+}
+
 static void selectcolor_class_init(SelectColorClass* klass)
 {
 	GtkWidgetClass* widget_class;
-	GtkObjectClass* object_class;
 
 	widget_class = (GtkWidgetClass*) klass;
-	object_class = (GtkObjectClass*) klass;
 
 	//	widget_class->realize = selectcolor_realize;
-	widget_class->size_request = selectcolor_size_request;
+	//widget_class->size_request = selectcolor_size_request;
+	
+	widget_class->get_preferred_width = selectcolor_get_preferred_width;
+	widget_class->get_preferred_height = selectcolor_get_preferred_height;
+	
 	//	widget_class->size_allocate = selectcolor_size_allocate;
-	widget_class->expose_event = selectcolor_expose;
-	object_class->destroy = selectcolor_destroy;
+	widget_class->draw = selectcolor_draw;
+	widget_class->destroy = selectcolor_destroy;
 }
 
-gboolean exposeEvent(GtkWidget* widget, GdkEventExpose* event,
-                     gpointer user_data)
-{
-	g_return_val_if_fail(widget != NULL, FALSE);
-	g_return_val_if_fail(IS_SELECT_COLOR(widget), FALSE);
-	g_return_val_if_fail(event != NULL, FALSE);
-
-	selectcolor_paint(widget);
-
-	return FALSE;
-}
 
 static void selectcolor_init(SelectColor* sc)
 {
 	sc->color = 0xffffffff;
-	GTK_WIDGET_SET_FLAGS (sc, GTK_NO_WINDOW);
+	gtk_widget_set_has_window(GTK_WIDGET(sc), FALSE);
 
 	gtk_widget_add_events(GTK_WIDGET(sc), GDK_ALL_EVENTS_MASK);
 
+	/* TODO: I hope we don't need this anymore
 	g_signal_connect(sc, "expose-event", G_CALLBACK(exposeEvent), sc);
+	*/
 }
 
 static void selectcolor_size_request(GtkWidget* widget,
@@ -113,11 +123,12 @@ static void selectcolor_size_allocate(GtkWidget* widget,
 	g_return_if_fail(IS_SELECT_COLOR(widget));
 	g_return_if_fail(allocation != NULL);
 
-	widget->allocation = *allocation;
+	gtk_widget_set_allocation(widget, allocation);
 
-	if (GTK_WIDGET_REALIZED(widget))
+	if (gtk_widget_get_realized(widget))
 	{
-		gdk_window_move_resize(widget->window, allocation->x, allocation->y,
+		gdk_window_move_resize(gtk_widget_get_window(widget),
+		                       allocation->x, allocation->y,
 		                       allocation->width, allocation->height);
 	}
 }
@@ -126,51 +137,46 @@ static void selectcolor_realize(GtkWidget* widget)
 {
 	GdkWindowAttr attributes;
 	guint attributes_mask;
+	GtkAllocation allocation;
 
 	g_return_if_fail(widget != NULL);
 	g_return_if_fail(IS_SELECT_COLOR(widget));
 
-	GTK_WIDGET_SET_FLAGS(widget, GTK_REALIZED);
+	gtk_widget_set_realized(widget, TRUE);
+
+	gtk_widget_get_allocation(widget, &allocation);
 
 	attributes.window_type = GDK_WINDOW_CHILD;
-	attributes.x = widget->allocation.x;
-	attributes.y = widget->allocation.y;
-	attributes.width = widget->allocation.width;
-	attributes.height = widget->allocation.height;
+	attributes.x = allocation.x;
+	attributes.y = allocation.y;
+	attributes.width = allocation.width;
+	attributes.height = allocation.height;
 
 	attributes.wclass = GDK_INPUT_OUTPUT;
 	attributes.event_mask = gtk_widget_get_events(widget) | GDK_EXPOSURE_MASK;
 
 	attributes_mask = GDK_WA_X | GDK_WA_Y;
 
-	widget->window = gdk_window_new(gtk_widget_get_parent_window(widget),
-	                                &attributes, attributes_mask);
+	gtk_widget_set_window(widget, gdk_window_new(gtk_widget_get_parent_window(widget),
+	                                             &attributes, attributes_mask));
 
-	gdk_window_set_user_data(widget->window, widget);
+	gdk_window_set_user_data(gtk_widget_get_window(widget), widget);
 
-	widget->style = gtk_style_attach(widget->style, widget->window);
-	gtk_style_set_background(widget->style, widget->window, GTK_STATE_NORMAL);
+	gtk_widget_style_attach(widget);
+
+	gtk_style_set_background(gtk_widget_get_style(widget),
+	                         gtk_widget_get_window(widget),
+	                         GTK_STATE_NORMAL);
 
 	GtkWidget* parent = gtk_widget_get_parent(widget);
-	widget->window = parent->window;
+	gtk_widget_set_window(widget, gtk_widget_get_window(parent));
 }
 
-static gboolean selectcolor_expose(GtkWidget* widget, GdkEventExpose* event)
+static gboolean selectcolor_draw(GtkWidget* widget, cairo_t* cr)
 {
-	g_return_val_if_fail(widget != NULL, FALSE);
-	g_return_val_if_fail(IS_SELECT_COLOR(widget), FALSE);
-	g_return_val_if_fail(event != NULL, FALSE);
+	GtkAllocation allocation;
 
-	selectcolor_paint(widget);
-
-	return FALSE;
-}
-
-static void selectcolor_paint(GtkWidget* widget)
-{
-	cairo_t* cr;
 	gdk_threads_enter();
-	cr = gdk_cairo_create(widget->window);
 	cairo_fill(cr);
 
 	gint color = SELECT_COLOR(widget)->color;
@@ -179,36 +185,29 @@ static void selectcolor_paint(GtkWidget* widget)
 	double r = ((color & 0xff0000) >> 16) / 255.0;
 	double g = ((color & 0xff00) >> 8) / 255.0;
 	double b = ((color & 0xff)) / 255.0;
+	gtk_widget_get_allocation(widget, &allocation);
 
-	gboolean sensitiv = gtk_widget_is_sensitive(widget);
-
-	int x = widget->allocation.x;
-	int y = widget->allocation.y;
+	int x = 0;
+	int y = 0;
 	int width = 10;
-
-	if (!sensitiv)
-	{
-		r = r / 2 + 0.5;
-		g = g / 2 + 0.5;
-		b = b / 2 + 0.5;
-	}
 
 	double radius = 0;
 
-	if (widget->allocation.width > widget->allocation.height)
+	if (allocation.width > allocation.height)
 	{
-		width = widget->allocation.height;
-		x += (widget->allocation.width - width) / 2;
-		radius = widget->allocation.height / 2.0;
+		width = allocation.height;
+		x += (allocation.width - width) / 2;
+		radius = allocation.height / 2.0;
 	}
 	else
 	{
-		width = widget->allocation.width;
-		y += (widget->allocation.height - width) / 2;
-		radius = widget->allocation.width / 2.0;
+		width = allocation.width;
+		y += (allocation.height - width) / 2;
+		radius = allocation.width / 2.0;
 	}
 
 	cairo_set_source_rgb(cr, r, g, b);
+
 	if (circle)
 	{
 		cairo_arc(cr, radius + x, radius + y, radius - 1, 0, 2 * M_PI);
@@ -219,14 +218,7 @@ static void selectcolor_paint(GtkWidget* widget)
 	}
 	cairo_fill(cr);
 
-	if (sensitiv)
-	{
-		cairo_set_source_rgb(cr, 0, 0, 0);
-	}
-	else
-	{
-		cairo_set_source_rgb(cr, 0.5, 0.5, 0.5);
-	}
+	cairo_set_source_rgb(cr, 0, 0, 0);
 
 	if (circle)
 	{
@@ -239,13 +231,12 @@ static void selectcolor_paint(GtkWidget* widget)
 
 	cairo_set_line_width(cr, 0.8);
 	cairo_stroke(cr);
-
-	cairo_destroy(cr);
-	gdk_threads_leave();
 }
 
-static void selectcolor_destroy(GtkObject* object)
+static void selectcolor_destroy(GtkWidget* object)
 {
+	/*
+	 * TODO: how to destroy this object?
 	SelectColor* sc;
 	SelectColorClass* klass;
 
@@ -256,8 +247,9 @@ static void selectcolor_destroy(GtkObject* object)
 
 	klass = (SelectColorClass*) gtk_type_class(gtk_widget_get_type());
 
-	if (GTK_OBJECT_CLASS(klass)->destroy)
+	if (GTK_WIDGET_CLASS(klass)->destroy)
 	{
-		(*GTK_OBJECT_CLASS(klass)->destroy)(object);
+		(*GTK_WIDGET_CLASS(klass)->destroy)(object);
 	}
+	*/
 }

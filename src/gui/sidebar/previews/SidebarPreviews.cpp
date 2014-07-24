@@ -113,8 +113,8 @@ void SidebarPreviews::setBackgroundWhite()
 	}
 	this->backgroundInitialized = true;
 
-	gdk_window_set_background(GTK_LAYOUT(this->iconViewPreview)->bin_window,
-	                          &this->iconViewPreview->style->white);
+	gdk_window_set_background(gtk_layout_get_bin_window(GTK_LAYOUT(this->iconViewPreview)),
+	                          &gtk_widget_get_style(iconViewPreview)->white);
 }
 
 double SidebarPreviews::getZoom()
@@ -259,17 +259,20 @@ bool SidebarPreviews::scrollToPreview(SidebarPreviews* sidebar)
 	    sidebar->selectedPage < sidebar->previewCount)
 	{
 		gdk_threads_enter();
+
 		SidebarPreviewPage* p = sidebar->previews[sidebar->selectedPage];
+		GtkWidget* widget = p->getWidget();
+		GtkAllocation allocation;
+		gtk_widget_get_allocation(widget, &allocation);
 
 		// scroll to preview
 		GtkAdjustment* hadj = gtk_scrolled_window_get_hadjustment(GTK_SCROLLED_WINDOW(
 		                                                              sidebar->scrollPreview));
 		GtkAdjustment* vadj = gtk_scrolled_window_get_vadjustment(GTK_SCROLLED_WINDOW(
 		                                                              sidebar->scrollPreview));
-		GtkWidget* widget = p->getWidget();
 
-		int x = widget->allocation.x;
-		int y = widget->allocation.y;
+		int x = allocation.x;
+		int y = allocation.y;
 		gdk_threads_leave();
 
 		if (x == -1)
@@ -279,8 +282,8 @@ bool SidebarPreviews::scrollToPreview(SidebarPreviews* sidebar)
 		}
 
 		gdk_threads_enter();
-		gtk_adjustment_clamp_page(vadj, y, y + widget->allocation.height);
-		gtk_adjustment_clamp_page(hadj, x, x + widget->allocation.width);
+		gtk_adjustment_clamp_page(vadj, y, y + allocation.height);
+		gtk_adjustment_clamp_page(hadj, x, x + allocation.width);
 		gdk_threads_leave();
 	}
 	return false;

@@ -158,6 +158,11 @@ bool Tool::isArrow()
 	return this->arrow;
 }
 
+double Tool::getThickness(ToolSize size)
+{
+	return this->thickness[size - TOOL_SIZE_VERY_FINE];
+}
+
 void Tool::setShapeRecognizer(bool enabled)
 {
 	XOJ_CHECK_TYPE(Tool);

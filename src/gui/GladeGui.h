@@ -13,7 +13,6 @@
 #define __GLADEGUI_H__
 
 #include <gtk/gtk.h>
-#include <glade/glade-xml.h>
 
 #include <XournalType.h>
 
@@ -44,7 +43,7 @@ private:
 	/**
 	 * The Glade resources
 	 */
-	GladeXML* xml;
+	GtkBuilder* builder;
 
 	/**
 	 * Our search paths

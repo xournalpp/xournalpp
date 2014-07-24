@@ -15,10 +15,9 @@
 	} \
 	xojTypeList[id] = #name
 
-static bool listInited = false;
 static const char* xojTypeList[XOURNAL_TYPE_LIST_LENGTH] = { 0 };
 
-GMutex* mutex = NULL;
+GMutex mutex;
 
 static void initXournalClassList()
 {
@@ -26,23 +25,18 @@ static void initXournalClassList()
 #include "XournalTypeList.h"
 }
 
-void xoj_type_initMutex()
+struct Init
 {
-	mutex = g_mutex_new();
-}
+	Init()
+	{
+		initXournalClassList();
+		g_mutex_init(&mutex);
+	}
+	
+} init;
 
 const char* xoj_type_getName(int id)
 {
-	if (!listInited)
-	{
-		initXournalClassList();
-	}
-
-	if (mutex)
-	{
-		g_mutex_unlock(mutex);
-	}
-
 	if (id < 0)
 	{
 		g_warning("Type check: id was negative (%i), object is already deleted!?", id);
@@ -58,28 +52,21 @@ static int xojInstanceList[XOURNAL_TYPE_LIST_LENGTH] = { 0 };
 
 void xoj_memoryleak_initType(int id)
 {
-	if (mutex)
-	{
-		g_mutex_lock(mutex);
-	}
+	g_mutex_lock(&mutex);
+
 	xojInstanceList[id]++;
-	if (mutex)
-	{
-		g_mutex_unlock(mutex);
-	}
+
+	g_mutex_unlock(&mutex);
 }
 
 void xoj_memoryleak_releaseType(int id)
 {
-	if (mutex)
-	{
-		g_mutex_lock(mutex);
-	}
+	g_mutex_lock(&mutex);
+
 	xojInstanceList[id]--;
-	if (mutex)
-	{
-		g_mutex_unlock(mutex);
-	}
+
+	g_mutex_unlock(&mutex);
+
 }
 
 void xoj_momoryleak_printRemainingObjects()

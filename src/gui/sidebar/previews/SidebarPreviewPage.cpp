@@ -25,7 +25,7 @@ SidebarPreviewPage::SidebarPreviewPage(SidebarPreviews* sidebar, PageRef page)
 	updateSize();
 	gtk_widget_set_events(widget, GDK_EXPOSURE_MASK | GDK_BUTTON_PRESS_MASK);
 
-	g_signal_connect(this->widget, "expose_event", G_CALLBACK(exposeEventCallback),
+	g_signal_connect(this->widget, "draw", G_CALLBACK(drawCallback),
 	                 this);
 	g_signal_connect(this->widget, "button-press-event",
 	                 G_CALLBACK(mouseButtonPressCallback), this);
@@ -49,13 +49,14 @@ SidebarPreviewPage::~SidebarPreviewPage()
 	XOJ_RELEASE_TYPE(SidebarPreviewPage);
 }
 
-gboolean SidebarPreviewPage::exposeEventCallback(GtkWidget* widget,
-                                                 GdkEventExpose* event, SidebarPreviewPage* preview)
+gboolean SidebarPreviewPage::drawCallback(GtkWidget* widget,
+                                          cairo_t* cr,
+                                          SidebarPreviewPage* preview)
 {
 	XOJ_CHECK_TYPE_OBJ(preview, SidebarPreviewPage);
 
-	preview->paint();
-	return true;
+	preview->paint(cr);
+	return TRUE;
 }
 
 gboolean SidebarPreviewPage::mouseButtonPressCallback(GtkWidget* widget,
@@ -65,7 +66,7 @@ gboolean SidebarPreviewPage::mouseButtonPressCallback(GtkWidget* widget,
 
 	preview->sidebar->getControl()->getScrollHandler()->scrollToPage(preview->page);
 	preview->sidebar->getControl()->firePageSelected(preview->page);
-	return true;
+	return TRUE;
 }
 
 void SidebarPreviewPage::setSelected(bool selected)
@@ -88,24 +89,25 @@ void SidebarPreviewPage::repaint()
 	sidebar->getControl()->getScheduler()->addRepaintSidebar(this);
 }
 
-void SidebarPreviewPage::paint()
+void SidebarPreviewPage::paint(cairo_t* cr)
 {
 	XOJ_CHECK_TYPE(SidebarPreviewPage);
-        
-        bool doRepaint = false;
-        
+
+	bool doRepaint = false;
+
 	sidebar->setBackgroundWhite();
 
 	if (!this->firstPainted)
 	{
-		if (!GDK_IS_WINDOW(widget->window))
+		if (!GDK_IS_WINDOW(gtk_widget_get_window(widget)))
 		{
 			return;
 		}
 
 		this->firstPainted = true;
 		gdk_threads_enter();
-		gdk_window_set_background(widget->window, &widget->style->white);
+		gdk_window_set_background(gtk_widget_get_window(widget),
+		                          &gtk_widget_get_style(widget)->white);
 		gtk_widget_queue_draw(this->widget);
 		gdk_threads_leave();
 		return;
@@ -149,8 +151,6 @@ void SidebarPreviewPage::paint()
 		doRepaint = true;
 	}
 
-	gdk_threads_enter();
-	cairo_t* cr = gdk_cairo_create(widget->window);
 	cairo_set_source_surface(cr, this->crBuffer, 0, 0);
 	cairo_paint(cr);
 
@@ -182,13 +182,10 @@ void SidebarPreviewPage::paint()
 		                   Shadow::getShadowTopLeftSize() + 2, width, height);
 	}
 
-	cairo_destroy(cr);
-	gdk_threads_leave();
-
 	g_mutex_unlock(&this->drawingMutex);
-        
-        if(doRepaint)
-                repaint();
+
+	if(doRepaint)
+		repaint();
 }
 
 void SidebarPreviewPage::updateSize()

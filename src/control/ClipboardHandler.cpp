@@ -65,8 +65,8 @@ bool ClipboardHandler::paste()
 	}
 	else if (this->containsText)
 	{
-		gtk_clipboard_request_contents(this->clipboard, atomUtf8,
-		                               (GtkClipboardReceivedFunc) pasteClipboardContents, this);
+		gtk_clipboard_request_text(this->clipboard,
+		                           (GtkClipboardTextReceivedFunc) pasteClipboardText, this);
 		return true;
 	}
 	else if (this->containsImage)
@@ -105,12 +105,12 @@ static GdkAtom atomSvg2 = gdk_atom_intern_static_string("image/svg+xml");
 class ClipboardContents
 {
 public:
-	ClipboardContents(String text, GdkPixbuf* image, String svg, GString* str)
+	ClipboardContents(String _text,
+	                  GdkPixbuf* _image,
+	                  String _svg,
+	                  GString* _str)
+	  : text(_text), image(_image), svg(_svg), str(_str)
 	{
-		this->text = text;
-		this->image = image;
-		this->svg = svg;
-		this->str = str;
 	}
 
 	~ClipboardContents() {
@@ -122,25 +122,26 @@ public:
 	static void getFunction(GtkClipboard* clipboard, GtkSelectionData* selection,
 	                        guint info, ClipboardContents* contents)
 	{
+		GdkAtom target = gtk_selection_data_get_target(selection);
 
-		if (selection->target == gdk_atom_intern_static_string("UTF8_STRING"))
+		if (target == gdk_atom_intern_static_string("UTF8_STRING"))
 		{
 			gtk_selection_data_set_text(selection, contents->text.c_str(), -1);
 		}
-		else if (selection->target == gdk_atom_intern_static_string("image/png") ||
-		         selection->target == gdk_atom_intern_static_string("image/jpeg")
-		         || selection->target == gdk_atom_intern_static_string("image/gif"))
+		else if (target == gdk_atom_intern_static_string("image/png") ||
+		         target == gdk_atom_intern_static_string("image/jpeg") ||
+		         target == gdk_atom_intern_static_string("image/gif"))
 		{
 			gtk_selection_data_set_pixbuf(selection, contents->image);
 		}
-		else if (atomSvg1 == selection->target || atomSvg2 == selection->target)
+		else if (atomSvg1 == target || atomSvg2 == target)
 		{
-			gtk_selection_data_set(selection, selection->target, 8,
+			gtk_selection_data_set(selection, target, 8,
 			                       (guchar*) contents->svg.c_str(), contents->svg.size());
 		}
-		else if (atomXournal == selection->target)
+		else if (atomXournal == target)
 		{
-			gtk_selection_data_set(selection, selection->target, 8,
+			gtk_selection_data_set(selection, target, 8,
 			                       (guchar*) contents->str->str, contents->str->len);
 		}
 	}
@@ -274,7 +275,9 @@ bool ClipboardHandler::copy()
 
 	targets = gtk_target_table_new_from_list(list, &n_targets);
 
-	ClipboardContents* contents = new ClipboardContents(text, image, svgString->str,
+	ClipboardContents* contents = new ClipboardContents(text,
+	                                                    image,
+	                                                    svgString->str,
 	                                                    out.getStr());
 
 	gtk_clipboard_set_with_data(this->clipboard, targets, n_targets,
@@ -346,23 +349,22 @@ void ClipboardHandler::pasteClipboardContents(GtkClipboard* clipboard,
 {
 	XOJ_CHECK_TYPE_OBJ(handler, ClipboardHandler);
 
-	if (atomXournal == selectionData->target)
-	{
-		ObjectInputStream in;
+	ObjectInputStream in;
 
-		if (in.read((const char*) selectionData->data, selectionData->length))
-		{
-			handler->listener->clipboardPasteXournal(in);
-		}
-	}
-	else
+	if (in.read((const char*) gtk_selection_data_get_data(selectionData),
+	            gtk_selection_data_get_length(selectionData)))
 	{
-		guchar* text = gtk_selection_data_get_text(selectionData);
-		if (text != NULL)
-		{
-			handler->listener->clipboardPasteText((const char*) text);
-			g_free(text);
-		}
+		handler->listener->clipboardPasteXournal(in);
+	}
+}
+
+void ClipboardHandler::pasteClipboardText(GtkClipboard* clipboard,
+                                          const gchar* text,
+                                          ClipboardHandler* handler)
+{
+	if(text)
+	{
+		handler->listener->clipboardPasteText(text);
 	}
 }
 

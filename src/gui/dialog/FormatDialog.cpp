@@ -52,11 +52,14 @@ FormatDialog::FormatDialog(GladeSearchpath* gladeSearchPath, Settings* settings,
 	gtk_cell_layout_pack_start(GTK_CELL_LAYOUT (cbUnit), cell, TRUE);
 	gtk_cell_layout_set_attributes(GTK_CELL_LAYOUT (cbUnit), cell, "text", 0, NULL);
 
+	/*
+	 * TODO: FIX
 	for (int i = 0; i < XOJ_UNIT_COUNT; i++)
 	{
 		gtk_combo_box_append_text(GTK_COMBO_BOX(cbUnit), XOJ_UNITS[i].name);
 	}
 	gtk_combo_box_set_active(GTK_COMBO_BOX(cbUnit), this->selectedScale);
+	*/
 
 	GtkWidget* cbTemplate = get("cbTemplate");
 	store = gtk_list_store_new(2, G_TYPE_STRING, G_TYPE_POINTER);

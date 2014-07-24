@@ -35,12 +35,11 @@ public:
 	void updateSize();
 
 private:
-	static gboolean exposeEventCallback(GtkWidget* widget, GdkEventExpose* event,
-	                                    SidebarPreviewPage* preview);
+	static gboolean drawCallback(GtkWidget* widget, cairo_t* cr, SidebarPreviewPage* preview);
 	static gboolean mouseButtonPressCallback(GtkWidget* widget,
 	                                         GdkEventButton* event, SidebarPreviewPage* preview);
 
-	void paint();
+	void paint(cairo_t* cr);
 
 private:
 	XOJ_TYPE_ATTRIB;

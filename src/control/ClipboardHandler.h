@@ -57,6 +57,10 @@ private:
 	static void pasteClipboardImage(GtkClipboard* clipboard, GdkPixbuf* pixbuf,
 	                                ClipboardHandler* handler);
 
+	static void pasteClipboardText(GtkClipboard* clipboard,
+	                               const gchar* text,
+	                               ClipboardHandler* handler);
+
 private:
 	XOJ_TYPE_ATTRIB;
 
