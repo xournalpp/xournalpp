@@ -33,8 +33,6 @@ XournalView::XournalView(GtkWidget* parent, Control* control)
 	// we need to refer widget here, because wo unref it somwere twice!?
 	g_object_ref(this->widget);
 
-  //                                                           l, r, t, b
-	//gtk_table_attach_defaults(GTK_TABLE(parent), this->widget, 1, 2, 0, 1);
 	gtk_grid_attach(GTK_GRID(parent), this->widget, 1, 0, 1, 1);
 	gtk_widget_show(this->widget);
 

@@ -17,11 +17,11 @@ Scrollbar::Scrollbar(bool horizontal)
 #else
 	if (horizontal)
 	{
-		this->scrollbar = gtk_hscrollbar_new(NULL);
+		this->scrollbar = gtk_scrollbar_new(GTK_ORIENTATION_HORIZONTAL, NULL);
 	}
 	else
 	{
-		this->scrollbar = gtk_vscrollbar_new(NULL);
+		this->scrollbar = gtk_scrollbar_new(GTK_ORIENTATION_VERTICAL, NULL);
 	}
 #endif
 
