@@ -1,5 +1,5 @@
 #include "TextEditor.h"
-#include <gtk/gtkimcontextsimple.h>
+#include <gtk/gtk.h>
 #include "XournalView.h"
 #include "PageView.h"
 #include "../view/TextView.h"
