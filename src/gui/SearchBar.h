@@ -44,7 +44,6 @@ private:
 	XOJ_TYPE_ATTRIB;
 
 	Control* control;
-	GdkColor defaultColor;
 };
 
 #endif /* __SEARCHBAR_H__ */

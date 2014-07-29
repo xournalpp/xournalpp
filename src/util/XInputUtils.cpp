@@ -88,7 +88,8 @@ void XInputUtils::fixXInputCoords(GdkEvent* event, GtkWidget* widget)
 #else
 	if (!finite(*px) || !finite(*py) || (*px == 0. && *py == 0.))
 	{
-		gdk_window_get_pointer(GTK_WIDGET(widget)->window, &ix, &iy, NULL);
+		gdk_window_get_pointer(gtk_widget_get_window(GTK_WIDGET(widget)),
+		                       &ix, &iy, NULL);
 		*px = ix;
 		*py = iy;
 	}
@@ -98,7 +99,8 @@ void XInputUtils::fixXInputCoords(GdkEvent* event, GtkWidget* widget)
 		 GdkWindow isn't even the same for ButtonDown as for MotionNotify... */
 		if (gtk_major_version == 2 && gtk_minor_version == 17)   // GTK+ 2.17 issues !!
 		{
-			gdk_window_get_position(GTK_WIDGET(widget)->window, &wx, &wy);
+			gdk_window_get_position(gtk_widget_get_window(GTK_WIDGET(widget)),
+			                        &wx, &wy);
 			*px += wx;
 			*py += wy;
 		}
@@ -154,7 +156,7 @@ gboolean XInputUtils::onMouseEnterNotifyEvent(GtkWidget* widget,
 	INPUTDBG("enter notify\n");
 
 	/* re-enable input devices after they've been emergency-disabled
-	 by leave_notify */
+	 by leave_notify
 	if (!gtk_check_version(2, 17, 0))
 	{
 		gdk_flush();
@@ -168,6 +170,8 @@ gboolean XInputUtils::onMouseEnterNotifyEvent(GtkWidget* widget,
 		gdk_flush();
 		gdk_error_trap_pop();
 	}
+	*/
+
 	return FALSE;
 }
 
@@ -182,7 +186,7 @@ gboolean XInputUtils::onMouseLeaveNotifyEvent(GtkWidget* widget,
 	INPUTDBG("leave notify (mode=%d, details=%d)\n", event->mode, event->detail);
 
 	/* emergency disable XInput to avoid segfaults (GTK+ 2.17) or
-	 interface non-responsiveness (GTK+ 2.18) */
+	 interface non-responsiveness (GTK+ 2.18)
 	if (!gtk_check_version(2, 17, 0))
 	{
 		gdk_flush();
@@ -197,4 +201,5 @@ gboolean XInputUtils::onMouseLeaveNotifyEvent(GtkWidget* widget,
 		gdk_error_trap_pop();
 	}
 	return FALSE;
+	*/
 }

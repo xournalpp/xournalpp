@@ -13,7 +13,6 @@ ToolZoomSlider::ToolZoomSlider(ActionHandler* handler, String id,
 	this->zoom = zoom;
 
 	this->horizontal = true;
-	this->fixed = NULL;
 
 	zoom->addZoomListener(this);
 }
@@ -58,7 +57,7 @@ GtkWidget* ToolZoomSlider::getNewToolIconImpl()
 {
 	XOJ_CHECK_TYPE(ToolZoomSlider);
 
-	return gtk_image_new_from_stock(GTK_STOCK_ZOOM_IN, GTK_ICON_SIZE_SMALL_TOOLBAR);
+	return gtk_image_new_from_icon_name(GTK_STOCK_ZOOM_IN, GTK_ICON_SIZE_SMALL_TOOLBAR);
 }
 
 // Should be called when the window size changes
@@ -86,14 +85,10 @@ void ToolZoomSlider::setHorizontal(bool horizontal)
 
 	if (horizontal)
 	{
-		GtkAllocation alloc = { 0, 0, 120, 30 };
-		gtk_widget_set_allocation(this->fixed, &alloc);
 		gtk_widget_set_size_request(this->slider, 120, 25);
 	}
 	else
 	{
-		GtkAllocation alloc = { 0, 0, 30, 120 };
-		gtk_widget_set_allocation(this->fixed, &alloc);
 		gtk_widget_set_size_request(this->slider, 25, 120);
 	}
 	updateScaleMarks();
@@ -162,40 +157,29 @@ GtkToolItem* ToolZoomSlider::newItem()
 
 	if (this->horizontal)
 	{
-		this->slider = gtk_hscale_new_with_range(0.3, 3, 0.1);
+		this->slider = gtk_scale_new_with_range(GTK_ORIENTATION_HORIZONTAL,
+		                                        0.3, 3, 0.1);
 	}
 	else
 	{
-		this->slider = gtk_vscale_new_with_range(0.3, 3, 0.1);
+		this->slider = gtk_scale_new_with_range(GTK_ORIENTATION_VERTICAL,
+		                                        0.3, 3, 0.1);
 		gtk_range_set_inverted(GTK_RANGE(this->slider), true);
 	}
 	g_signal_connect(this->slider, "value-changed", G_CALLBACK(sliderChanged),
 	                 this->zoom);
 	gtk_scale_set_draw_value(GTK_SCALE(this->slider), false);
 
-	this->fixed = gtk_fixed_new();
-
-	GtkAllocation alloc = { 0, 0, 125, 30 };
-	if (!this->horizontal)
+	if(this->horizontal)
 	{
-		alloc.width = 30;
-		alloc.height = 125;
-	}
-
-	gtk_widget_set_allocation(this->fixed, &alloc);
-
-	if (this->horizontal)
-	{
-		gtk_fixed_put(GTK_FIXED(this->fixed), this->slider, 0, 5);
-		gtk_widget_set_size_request(this->slider, 120, 25);
+		gtk_widget_set_size_request(GTK_WIDGET(this->slider), 120, 0);
 	}
 	else
 	{
-		gtk_fixed_put(GTK_FIXED(this->fixed), this->slider, 5, 0);
-		gtk_widget_set_size_request(this->slider, 25, 120);
+		gtk_widget_set_size_request(GTK_WIDGET(this->slider), 0, 120);
 	}
 
-	gtk_container_add(GTK_CONTAINER(it), this->fixed);
+	gtk_container_add(GTK_CONTAINER(it), this->slider);
 	gtk_range_set_value(GTK_RANGE(this->slider), this->zoom->getZoom());
 	updateScaleMarks();
 

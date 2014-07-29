@@ -671,7 +671,7 @@ bool PageView::onKeyPressEvent(GdkEventKey* event)
 	XOJ_CHECK_TYPE(PageView);
 
 	// Esc leaves text edition
-	if (event->keyval == GDK_Escape)
+	if (event->keyval == GDK_KEY_Escape)
 	{
 		if (this->textEditor)
 		{
@@ -956,6 +956,7 @@ bool PageView::paintPage(cairo_t* cr, GdkRectangle* rect)
 	{
 		this->search->paint(cr, rect, zoom, getSelectionColor());
 	}
+
 	this->inputHandler->draw(cr, zoom);
 	g_mutex_unlock(&this->drawingMutex);
 	return true;
@@ -991,11 +992,19 @@ int PageView::getBufferPixels()
 	return 0;
 }
 
-GdkColor PageView::getSelectionColor()
+GdkRGBA PageView::getSelectionColor()
 {
 	XOJ_CHECK_TYPE(PageView);
 
-	return this->xournal->getWidget()->style->base[GTK_STATE_SELECTED];
+	GtkStyleContext *context =
+		gtk_widget_get_style_context(getXournal()->getWidget());
+
+	GdkRGBA col;
+	
+	// TODO: GTK_STATE_FLAG_SELECTED looks horrible, but this is not much better...
+	gtk_style_context_get_color(context, GTK_STATE_FLAG_NORMAL, &col);
+
+	return col;
 }
 
 TextEditor* PageView::getTextEditor()

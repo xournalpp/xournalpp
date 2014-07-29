@@ -230,7 +230,7 @@ private:
 			cairo_destroy(cr2);
 		}
 
-		cairo_t* cr = gdk_cairo_create(widget->window);
+		cairo_t* cr = gdk_cairo_create(gtk_widget_get_window(widget));
 
 		double width = cairo_image_surface_get_width(crBuffer);
 		if (width != alloc.width)
@@ -479,8 +479,8 @@ void PdfPagesDialog::setBackgroundWhite()
 		return;
 	}
 	this->backgroundInitialized = true;
-	gdk_window_set_background(GTK_LAYOUT(this->widget)->bin_window,
-	                          &this->widget->style->white);
+	gdk_window_set_background(gtk_layout_get_bin_window(GTK_LAYOUT(this->widget)),
+	                          &gtk_widget_get_style(widget)->white);
 }
 
 void PdfPagesDialog::setSelected(int selected)

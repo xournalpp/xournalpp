@@ -224,7 +224,7 @@ private:
 			cairo_destroy(cr2);
 		}
 
-		cairo_t* cr = gdk_cairo_create(this->widget->window);
+		cairo_t* cr = gdk_cairo_create(gtk_widget_get_window(this->widget));
 
 		cairo_set_source_surface(cr, this->crBuffer, 0, 0);
 
@@ -438,8 +438,9 @@ void ImagesDialog::setBackgroundWhite()
 		return;
 	}
 	this->backgroundInitialized = true;
-	gdk_window_set_background(GTK_LAYOUT(this->widget)->bin_window,
-	                          &this->widget->style->white);
+
+	gdk_window_set_background(gtk_layout_get_bin_window(GTK_LAYOUT(this->widget)),
+	                          &gtk_widget_get_style(widget)->white);
 }
 
 void ImagesDialog::setSelected(int selected)

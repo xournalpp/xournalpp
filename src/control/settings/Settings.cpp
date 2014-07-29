@@ -1422,6 +1422,7 @@ void Settings::checkCanXInput()
 {
 	XOJ_CHECK_TYPE(Settings);
 
+	/*
 	this->canXIput = FALSE;
 	GList* devList = gdk_devices_list();
 
@@ -1438,7 +1439,7 @@ void Settings::checkCanXInput()
 				gdk_device_set_axis_use(device, 1, GDK_AXIS_IGNORE);
 			}
 			gdk_device_set_mode(device, GDK_MODE_SCREEN);
-			if (g_str_has_suffix(device->name, "eraser"))
+			if (g_str_has_suffix(gdk_device_get_name(device), "eraser"))
 			{
 				gdk_device_set_source(device, GDK_SOURCE_ERASER);
 			}
@@ -1446,6 +1447,7 @@ void Settings::checkCanXInput()
 		}
 		devList = devList->next;
 	}
+	*/
 }
 
 void Settings::setMainWndSize(int width, int height)

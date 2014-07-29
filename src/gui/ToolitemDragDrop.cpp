@@ -74,7 +74,11 @@ GtkWidget* ToolitemDragDrop::getIcon(ToolItemDragDropData* data)
 	}
 	else if (data->type == TOOL_ITEM_SEPARATOR)
 	{
-		return Util::newSepeartorImage();
+		/*
+		 * TODO: Actually return something
+		 */
+		return NULL;
+		//return Util::newSepeartorImage();
 	}
 
 	g_warning("ToolitemDragDrop::getIcon unhandled type: %i\n", data->type);

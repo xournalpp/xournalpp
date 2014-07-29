@@ -236,41 +236,38 @@ void InputHandler::addPointToTmpStroke(GdkEventMotion* event)
 	drawTmpStroke();
 }
 
-bool InputHandler::getPressureMultiplier(GdkEvent* event, double& presure)
+bool InputHandler::getPressureMultiplier(GdkEvent* event, double& pressure)
 {
 	XOJ_CHECK_TYPE(InputHandler);
 
-	double* axes = NULL;
-	GdkDevice* device = NULL;
+	GdkDevice* device = gdk_event_get_device(event);
+	gdouble axes[GDK_AXIS_LAST];
 
-	if (event->type == GDK_MOTION_NOTIFY)
-	{
-		axes = event->motion.axes;
-		device = event->motion.device;
-	}
-	else
-	{
-		axes = event->button.axes;
-		device = event->button.device;
-	}
+	pressure = 1.0;
 
-	if (device == gdk_device_get_core_pointer() || device->num_axes <= 2)
+	gdk_device_get_state(device,
+	                     gtk_widget_get_parent_window(xournal->getWidget()),
+	                     axes, NULL);
+
+	if(!gdk_device_get_axis(device, axes, GDK_AXIS_PRESSURE, &pressure))
 	{
-		presure = 1.0;
+		pressure = 1.0;
 		return false;
 	}
 
-	double rawpressure = axes[2] / (device->axes[2].max - device->axes[2].min);
-	if (!finite(rawpressure))
-	{
-		presure = 1.0;
-		return false;
-	}
+	// from the documentation:
+	// "The pressure field is a a double value ranging from 0.0 to 1.0"
 
 	Settings* settings = xournal->getControl()->getSettings();
 
-	presure = ((1 - rawpressure) * settings->getWidthMinimumMultiplier() +
-	           rawpressure * settings->getWidthMaximumMultiplier());
+	if(!finite(pressure))
+	{
+		pressure = 1.0;
+	}
+
+	pressure = ((1 - pressure) * settings->getWidthMinimumMultiplier() +
+	           pressure * settings->getWidthMaximumMultiplier());
+
 	return true;
 }
 

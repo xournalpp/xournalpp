@@ -31,7 +31,7 @@ public:
 	void loadFile(const char* file);
 	void saveFile(const char* file);
 
-	void adddColor(int color, String name, bool predefined);
+	void addColor(int color, String name, bool predefined);
 
 	String getColorName(int color);
 

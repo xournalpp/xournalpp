@@ -14,7 +14,6 @@
 
 #include <Range.h>
 
-#include <gdk/gdktypes.h>
 #include <gtk/gtk.h>
 
 class Element;
@@ -62,7 +61,7 @@ public:
 	/**
 	 * Return the GTK selection color
 	 */
-	virtual GdkColor getSelectionColor() = 0;
+	virtual GdkRGBA getSelectionColor() = 0;
 
 
 	virtual void deleteViewBuffer() = 0;

@@ -27,8 +27,6 @@ SearchBar::SearchBar(Control* control)
 	g_signal_connect (searchTextField, "changed",
 	                  G_CALLBACK (searchTextChangedCallback),
 	                  this);
-
-	defaultColor = searchTextField->style->base[GTK_STATE_NORMAL];
 }
 
 SearchBar::~SearchBar()
@@ -88,15 +86,6 @@ void SearchBar::search(const char* text)
 	{
 		searchTextonCurrentPage(NULL, NULL, NULL);
 		gtk_label_set_text(GTK_LABEL(lbSearchState), "");
-	}
-
-	if (found)
-	{
-		gtk_widget_modify_base(searchTextField, GTK_STATE_NORMAL, &defaultColor);
-	}
-	else
-	{
-		gtk_widget_modify_base(searchTextField, GTK_STATE_NORMAL, &color);
 	}
 }
 

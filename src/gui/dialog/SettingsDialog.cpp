@@ -17,6 +17,7 @@ SettingsDialog::SettingsDialog(GladeSearchpath* gladeSearchPath,
 	this->settings = settings;
 	this->dpi = 72;
 	callib = zoomcallib_new();
+
 	this->buttonConfigs = NULL;
 
 	GtkWidget* vbox = get("zoomVBox");
@@ -151,6 +152,8 @@ void SettingsDialog::toolboxToggled()
 	GtkWidget* labeIgnorCoreEvents = get("labeIgnorCoreEvents");
 	GtkWidget* cbIgnorCoreEvents = get("cbIgnorCoreEvents");
 	GtkWidget* labeXInput = get("labeXInput");
+	GtkWidget* cbFixXinput = get("cbFixXinput");
+	GtkWidget* labeFixXinput = get("labeFixXinput");
 
 	gboolean xInputEnabled = gtk_toggle_button_get_active(cbSettingXinput);
 
@@ -172,6 +175,8 @@ void SettingsDialog::toolboxToggled()
 	gtk_widget_set_sensitive(labePresureSensitivity, xInputEnabled);
 	gtk_widget_set_sensitive(labeIgnorCoreEvents, xInputEnabled);
 	gtk_widget_set_sensitive(cbIgnorCoreEvents, xInputEnabled);
+	gtk_widget_set_sensitive(labeFixXinput, xInputEnabled);
+	gtk_widget_set_sensitive(cbFixXinput, xInputEnabled);
 }
 
 void SettingsDialog::load()

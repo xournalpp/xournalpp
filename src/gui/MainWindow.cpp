@@ -50,9 +50,13 @@ MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control) :
 	if (type == SCROLLBAR_HIDE_NONE || type == SCROLLBAR_HIDE_VERTICAL)
 	{
 		Layout* layout = gtk_xournal_get_layout(this->xournal->getWidget());
+		/*
 		gtk_table_attach(GTK_TABLE(tableXournal), layout->getScrollbarHorizontal(), 1,
 		                 2, 1, 2, (GtkAttachOptions)(
 		                     GTK_EXPAND | GTK_FILL), GTK_FILL, 0, 0);
+		*/
+		gtk_grid_attach(GTK_GRID(tableXournal), layout->getScrollbarHorizontal(),
+		                1, 1 ,1, 1);
 	}
 
 	setSidebarVisible(control->getSettings()->isSidebarVisible());
@@ -367,13 +371,19 @@ void MainWindow::updateScrollbarSidebarPosition()
 	{
 		if (scrollbarOnLeft)
 		{
+			gtk_grid_attach(GTK_GRID(tableXournal), v, 0, 0, 1, 1);
+			/*
 			gtk_table_attach(GTK_TABLE(tableXournal), v, 0, 1, 0, 1, (GtkAttachOptions) 0,
 			                 GTK_FILL, 0, 0);
+			*/
 		}
 		else
 		{
+			gtk_grid_attach(GTK_GRID(tableXournal), v, 2, 0, 1, 1);
+			/*
 			gtk_table_attach(GTK_TABLE(tableXournal), v, 2, 3, 0, 1, (GtkAttachOptions) 0,
 			                 GTK_FILL, 0, 0);
+			*/
 		}
 	}
 
@@ -432,7 +442,7 @@ bool MainWindow::onKeyPressCallback(GtkWidget* widget, GdkEventKey* event, MainW
 		//editing text - give that control
 		return false;
 	}
-	else if (event->keyval == GDK_Down)
+	else if (event->keyval == GDK_KEY_Down)
 	{
 		if (win->getControl()->getSettings()->isPresentationMode())
 		{
@@ -445,7 +455,7 @@ bool MainWindow::onKeyPressCallback(GtkWidget* widget, GdkEventKey* event, MainW
 			return true;
 		}
 	}
-	else if (event->keyval == GDK_Up)
+	else if (event->keyval == GDK_KEY_Up)
 	{
 		if (win->getControl()->getSettings()->isPresentationMode())
 		{

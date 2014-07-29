@@ -119,6 +119,8 @@ public:
 	bool isEnableArrow();
 	bool isEnableShapeRecognizer();
 
+	double getThickness(ToolSize size);
+
 private:
 	Tool(const Tool& t);
 	void operator = (const Tool& t);

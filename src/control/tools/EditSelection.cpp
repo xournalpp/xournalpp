@@ -650,21 +650,22 @@ void EditSelection::paint(cairo_t* cr, double zoom)
 
 	cairo_set_operator(cr, CAIRO_OPERATOR_OVER);
 
-	GdkColor selectionColor = view->getSelectionColor();
+	GdkRGBA selectionColor = view->getSelectionColor();
 
 	// set the line always the same size on display
 	cairo_set_line_width(cr, 1);
 
 	const double dashes[] = { 10.0, 10.0 };
 	cairo_set_dash(cr, dashes, sizeof(dashes) / sizeof(dashes[0]), 0);
-	cairo_set_source_rgb(cr, selectionColor.red / 65536.0,
-	                     selectionColor.green / 65536.0, selectionColor.blue / 65536.0);
+	gdk_cairo_set_source_rgba(cr, &selectionColor);
 
 	cairo_rectangle(cr, x * zoom, y * zoom, width * zoom, height * zoom);
 
 	cairo_stroke_preserve(cr);
-	cairo_set_source_rgba(cr, selectionColor.red / 65536.0,
-	                      selectionColor.green / 65536.0, selectionColor.blue / 65536.0, 0.3);
+	cairo_set_source_rgba(cr,
+	                      selectionColor.red,
+	                      selectionColor.green,
+	                      selectionColor.blue, 0.3);
 	cairo_fill(cr);
 
 	cairo_set_dash(cr, NULL, 0, 0);
@@ -699,9 +700,8 @@ void EditSelection::drawAnchorRect(cairo_t* cr, double x, double y,
 {
 	XOJ_CHECK_TYPE(EditSelection);
 
-	GdkColor selectionColor = view->getSelectionColor();
-	cairo_set_source_rgb(cr, selectionColor.red / 65536.0,
-	                     selectionColor.green / 65536.0, selectionColor.blue / 65536.0);
+	GdkRGBA selectionColor = view->getSelectionColor();
+	gdk_cairo_set_source_rgba(cr, &selectionColor);
 	cairo_rectangle(cr, x * zoom - 4, y * zoom - 4, 8, 8);
 	cairo_stroke_preserve(cr);
 	cairo_set_source_rgb(cr, 1, 1, 1);

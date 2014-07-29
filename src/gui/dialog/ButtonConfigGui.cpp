@@ -21,37 +21,43 @@ ButtonConfigGui::ButtonConfigGui(SettingsDialog* dlg, GtkWidget* w,
 
 	GtkWidget* table = gtk_table_new(8, 2, false);
 
+	GdkDisplay* display = gtk_widget_get_display(w);
+	deviceManager = gdk_display_get_device_manager(display);
+
 	if (withDevice)
 	{
-		this->cbDevice = gtk_combo_box_new_text();
+		this->cbDevice = gtk_combo_box_text_new();
 
-		gtk_combo_box_append_text(GTK_COMBO_BOX(this->cbDevice), _("No device"));
+		gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(this->cbDevice),
+		                               _("No device"));
 
-		GList* devices = gdk_devices_list();
+		// TODO: I hope those are the correct devices
+		GList* devices = gdk_device_manager_list_devices(deviceManager,
+		                                                 GDK_DEVICE_TYPE_SLAVE);
 		for (GList* l = devices; l != NULL; l = l->next)
 		{
 			GdkDevice* dev = (GdkDevice*) l->data;
 
 			const char* devType = "";
-			if (dev->source == GDK_SOURCE_MOUSE)
+			if (gdk_device_get_source(dev) == GDK_SOURCE_MOUSE)
 			{
 				devType = _("mouse");
 			}
-			else if (dev->source == GDK_SOURCE_PEN)
+			else if (gdk_device_get_source(dev) == GDK_SOURCE_PEN)
 			{
 				devType = _("pen");
 			}
-			else if (dev->source == GDK_SOURCE_ERASER)
+			else if (gdk_device_get_source(dev) == GDK_SOURCE_ERASER)
 			{
 				devType = _("eraser");
 			}
-			else if (dev->source == GDK_SOURCE_CURSOR)
+			else if (gdk_device_get_source(dev) == GDK_SOURCE_CURSOR)
 			{
 				devType = _("cursor");
 			}
 
-			char* txt = g_strdup_printf("%s (%s)", dev->name, devType);
-			gtk_combo_box_append_text(GTK_COMBO_BOX(this->cbDevice), txt);
+			char* txt = g_strdup_printf("%s (%s)", gdk_device_get_name(dev), devType);
+			gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(this->cbDevice), txt);
 			g_free(txt);
 		}
 
@@ -113,11 +119,11 @@ ButtonConfigGui::ButtonConfigGui(SettingsDialog* dlg, GtkWidget* w,
 	                 (GtkAttachOptions) (GTK_EXPAND | GTK_FILL), (GtkAttachOptions) (GTK_FILL), 0,
 	                 0);
 
-	this->cbThickness = gtk_combo_box_new_text();
-	gtk_combo_box_append_text(GTK_COMBO_BOX(cbThickness), _("Don't change"));
-	gtk_combo_box_append_text(GTK_COMBO_BOX(cbThickness), _("Thin"));
-	gtk_combo_box_append_text(GTK_COMBO_BOX(cbThickness), _("Medium"));
-	gtk_combo_box_append_text(GTK_COMBO_BOX(cbThickness), _("Thick"));
+	this->cbThickness = gtk_combo_box_text_new();
+	gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(cbThickness), _("Don't change"));
+	gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(cbThickness), _("Thin"));
+	gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(cbThickness), _("Medium"));
+	gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(cbThickness), _("Thick"));
 	gtk_combo_box_set_active(GTK_COMBO_BOX(cbThickness), 0);
 
 	gtk_table_attach(GTK_TABLE(table), newLabel(_("Thickness")), 0, 1, 3, 4,
@@ -133,15 +139,15 @@ ButtonConfigGui::ButtonConfigGui(SettingsDialog* dlg, GtkWidget* w,
 	                 (GtkAttachOptions) (GTK_EXPAND | GTK_FILL), (GtkAttachOptions) (GTK_FILL), 0,
 	                 0);
 
-	this->cbDrawingType = gtk_combo_box_new_text();
-	gtk_combo_box_append_text(GTK_COMBO_BOX(this->cbDrawingType),
-	                          _("Don't change"));
-	gtk_combo_box_append_text(GTK_COMBO_BOX(this->cbDrawingType),
-	                          _("Enable Ruler"));
-	gtk_combo_box_append_text(GTK_COMBO_BOX(this->cbDrawingType),
-	                          _("Enable Stroke Recognizer"));
-	gtk_combo_box_append_text(GTK_COMBO_BOX(this->cbDrawingType),
-	                          _("Disable Ruler & Stroke Recognizer"));
+	this->cbDrawingType = gtk_combo_box_text_new();
+	gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(this->cbDrawingType),
+	                               _("Don't change"));
+	gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(this->cbDrawingType),
+	                               _("Enable Ruler"));
+	gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(this->cbDrawingType),
+	                               _("Enable Stroke Recognizer"));
+	gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(this->cbDrawingType),
+	                               _("Disable Ruler & Stroke Recognizer"));
 
 	gtk_table_attach(GTK_TABLE(table), newLabel(_("Ruler & Stroke Reco.")), 0, 1, 5,
 	                 6, GTK_FILL, GTK_FILL, 20, 0);
@@ -149,12 +155,12 @@ ButtonConfigGui::ButtonConfigGui(SettingsDialog* dlg, GtkWidget* w,
 	                 (GtkAttachOptions) (GTK_EXPAND | GTK_FILL), (GtkAttachOptions) (GTK_FILL), 0,
 	                 0);
 
-	this->cbEraserType = gtk_combo_box_new_text();
-	gtk_combo_box_append_text(GTK_COMBO_BOX(this->cbEraserType), _("Don't change"));
-	gtk_combo_box_append_text(GTK_COMBO_BOX(this->cbEraserType), _("Standard"));
-	gtk_combo_box_append_text(GTK_COMBO_BOX(this->cbEraserType), _("Whiteout"));
-	gtk_combo_box_append_text(GTK_COMBO_BOX(this->cbEraserType),
-	                          _("Delete stroke"));
+	this->cbEraserType = gtk_combo_box_text_new();
+	gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(this->cbEraserType), _("Don't change"));
+	gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(this->cbEraserType), _("Standard"));
+	gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(this->cbEraserType), _("Whiteout"));
+	gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(this->cbEraserType),
+	                               _("Delete stroke"));
 
 	gtk_table_attach(GTK_TABLE(table), newLabel(_("Eraser type")), 0, 1, 8, 9,
 	                 GTK_FILL, GTK_FILL, 20, 0);
@@ -257,11 +263,14 @@ void ButtonConfigGui::loadSettings()
 		gtk_combo_box_set_active(GTK_COMBO_BOX(cbDevice), 0);
 
 		int i = 0;
-		GList* devices = gdk_devices_list();
+
+		GList* devices = gdk_device_manager_list_devices(deviceManager,
+		                                                 GDK_DEVICE_TYPE_SLAVE);
+
 		for (GList* l = devices; l != NULL; l = l->next, i++)
 		{
 			GdkDevice* dev = (GdkDevice*) l->data;
-			if (cfg->device == dev->name)
+			if (cfg->device == gdk_device_get_name(dev))
 			{
 				gtk_combo_box_set_active(GTK_COMBO_BOX(cbDevice), i + 1);
 				break;
@@ -340,7 +349,9 @@ void ButtonConfigGui::saveSettings()
 
 	if (this->withDevice)
 	{
-		GList* devices = gdk_devices_list();
+		GList* devices = gdk_device_manager_list_devices(deviceManager,
+		                                                 GDK_DEVICE_TYPE_SLAVE);
+
 		int dev = gtk_combo_box_get_active(GTK_COMBO_BOX(cbDevice));
 		GList* selected = g_list_nth(devices, dev - 1);
 		if (selected == 0)
@@ -349,7 +360,7 @@ void ButtonConfigGui::saveSettings()
 		}
 		else
 		{
-			cfg->device = ((GdkDevice*) selected->data)->name;
+			cfg->device = gdk_device_get_name(((GdkDevice*) selected->data));
 		}
 
 		cfg->disableDrawing = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(

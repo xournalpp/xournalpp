@@ -3,16 +3,8 @@
 #include "../control/Control.h"
 #include <Util.h>
 #include <pixbuf-utils.h>
+#include <math.h>
 
-/************** drawing nice cursors *********/
-
-static unsigned char CURSOR_HIGLIGHTER_BITS[] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf8, 0x0f, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08,
-                                                 0x08, 0x08, 0x08, 0xf8, 0x0f, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-                                                };
-
-static unsigned char CURSOR_HILIGHTER_MASK[] = { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf8, 0x0f, 0xf8, 0x0f, 0xf8, 0x0f, 0xf8, 0x0f, 0xf8, 0x0f, 0xf8, 0x0f, 0xf8, 0x0f,
-                                                0xf8, 0x0f, 0xf8, 0x0f, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-                                               };
 
 Cursor::Cursor(Control* control)
 {
@@ -185,9 +177,6 @@ GdkCursor* Cursor::getPenCursor()
 
 	GdkPixbuf* pixbuf = xoj_pixbuf_get_from_surface(crCursor, 0, 0, width, height);
 
-	//	cairo_surface_write_to_png(crCursor, "/home/andreas/xoj-cursor-orig.png");
-	//	gdk_pixbuf_save(pixbuf, "/home/andreas/xoj-cursor.png", "png", NULL, NULL);
-
 	cairo_surface_destroy(crCursor);
 
 	GdkCursor* cursor = gdk_cursor_new_from_pixbuf(gtk_widget_get_display(
@@ -276,27 +265,11 @@ void Cursor::updateCursor()
 		}
 		else if (type == TOOL_ERASER)
 		{
-			GdkColor bg = { 0, 65535, 65535, 65535 };
-			GdkColor fg = { 0, 0, 0, 0 };
-			GdkPixmap* source = gdk_bitmap_create_from_data(NULL, (gchar*) CURSOR_HIGLIGHTER_BITS,
-			                                                16, 16);
-			GdkPixmap* mask = gdk_bitmap_create_from_data(NULL, (gchar*) CURSOR_HILIGHTER_MASK,
-			                                              16, 16);
-			cursor = gdk_cursor_new_from_pixmap(source, mask, &fg, &bg, 7, 7);
-			gdk_bitmap_unref(source);
-			gdk_bitmap_unref(mask);
+			cursor = eraserCursor();
 		}
 		else if (type == TOOL_HILIGHTER)
 		{
-			GdkColor fg = { 0, 0, 0, 0 };
-			GdkColor bg = handler->getGdkColor();
-			GdkPixmap* source = gdk_bitmap_create_from_data(NULL, (gchar*) CURSOR_HIGLIGHTER_BITS,
-			                                                16, 16);
-			GdkPixmap* mask = gdk_bitmap_create_from_data(NULL, (gchar*) CURSOR_HILIGHTER_MASK,
-			                                              16, 16);
-			cursor = gdk_cursor_new_from_pixmap(source, mask, &fg, &bg, 7, 7);
-			gdk_bitmap_unref(source);
-			gdk_bitmap_unref(mask);
+			cursor = highlighterCursor();
 		}
 		else if (type == TOOL_TEXT)
 		{
@@ -320,8 +293,7 @@ void Cursor::updateCursor()
 				cursor = gdk_cursor_new(GDK_SB_V_DOUBLE_ARROW);
 			}
 		}
-		else if (type !=
-		         TOOL_SELECT_OBJECT)     // other selections are handled before anyway, because you can move a selection with every tool
+		else if (type != TOOL_SELECT_OBJECT)     // other selections are handled before anyway, because you can move a selection with every tool
 		{
 			cursor = gdk_cursor_new(GDK_TCROSS);
 		}
@@ -340,4 +312,98 @@ void Cursor::updateCursor()
 	{
 		gdk_cursor_unref(cursor);
 	}
+}
+
+GdkCursor* Cursor::eraserCursor()
+{
+	g_message("Creating eraser cursor");
+
+	Tool& eraser = control->getToolHandler()->getTool(TOOL_ERASER);
+	GdkCursor* cursor = NULL;
+
+	/*
+	const double zoom = control->getZoomControl()->getZoom();
+	const double cursorSize = 2*zoom*thickness;
+	const double thickness = eraser.getThickness(eraser.getSize());
+	*/
+
+	const double cursorSize = 8;
+
+	g_message("Cursor size: %f", cursorSize);
+
+	cairo_surface_t* surface = cairo_image_surface_create(CAIRO_FORMAT_ARGB32,
+	                                                      cursorSize,
+	                                                      cursorSize);
+
+	cairo_t* cr = cairo_create(surface);
+
+	cairo_rectangle(cr, 0, 0, cursorSize, cursorSize);
+
+	cairo_set_source_rgb(cr, 1, 1, 1);
+	cairo_fill(cr);
+
+	cairo_rectangle(cr, 0, 0, cursorSize, cursorSize);
+
+	cairo_set_source_rgb(cr, 0, 0, 0);
+	cairo_stroke(cr);
+
+	cairo_destroy(cr);
+
+	cursor = gdk_cursor_new_from_surface(gdk_display_get_default(),
+	                                    surface,
+	                                    cursorSize/2.,
+	                                    cursorSize/2.);
+
+	cairo_surface_destroy(surface);
+
+	return cursor;
+}
+
+GdkCursor* Cursor::highlighterCursor()
+{
+	Tool& highlighter = control->getToolHandler()->getTool(TOOL_HILIGHTER);
+
+	/*
+	const double thickness = highlighter.getThickness(highlighter.getSize());
+	const double zoom = control->getZoomControl()->getZoom();
+	const double cursorSize = zoom*thickness;
+	*/
+
+	const double cursorSize = 8;
+
+	GdkCursor* cursor = NULL;
+	int rgb = highlighter.getColor();
+
+	double r = ((rgb >> 16) & 0xff) / 255.0;
+	double g = ((rgb >> 8) & 0xff) / 255.0;
+	double b = (rgb & 0xff) / 255.0;
+
+	cairo_surface_t* surface = cairo_image_surface_create(CAIRO_FORMAT_ARGB32,
+	                                                      cursorSize,
+	                                                      cursorSize);
+
+	cairo_t* cr = cairo_create(surface);
+
+	cairo_rectangle(cr, 0, 0, cursorSize, cursorSize);
+	cairo_set_source_rgba(cr, 1, 1, 1, 0);
+	cairo_fill(cr);
+
+	cairo_arc(cr, cursorSize/2., cursorSize/2., cursorSize/2.-1, 0, 2*M_PI);
+
+	cairo_set_source_rgba(cr, r, g, b, 120/255.);
+
+	cairo_set_operator(cr, CAIRO_OPERATOR_OVER);
+
+	cairo_fill(cr);
+
+	cairo_destroy(cr);
+
+	cursor = gdk_cursor_new_from_surface(gdk_display_get_default(),
+	                                     surface,
+	                                     cursorSize/2.,
+	                                     cursorSize/2.);
+
+	cairo_surface_destroy(surface);
+
+	return cursor;
 }
