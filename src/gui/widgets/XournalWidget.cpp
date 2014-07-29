@@ -321,6 +321,9 @@ static bool change_tool(Settings* settings, GdkEventButton* event,
 	ButtonConfig* cfgTouch = settings->getTouchButtonConfig();
 	ToolHandler* h = xournal->view->getControl()->getToolHandler();
 
+	GdkEvent* rawEvent = (GdkEvent*) event;
+	GdkDevice* device = gdk_event_get_source_device(rawEvent);
+
 	if (event->button == 2)   // Middle Button
 	{
 		cfg = settings->getMiddleButtonConfig();
@@ -329,11 +332,11 @@ static bool change_tool(Settings* settings, GdkEventButton* event,
 	{
 		cfg = settings->getRightButtonConfig();
 	}
-	else if (gdk_device_get_source(event->device) == GDK_SOURCE_ERASER)
+	else if (gdk_device_get_source(device) == GDK_SOURCE_ERASER)
 	{
 		cfg = settings->getEraserButtonConfig();
 	}
-	else if (cfgTouch->device == gdk_device_get_name(event->device))
+	else if (cfgTouch->device == gdk_device_get_name(device))
 	{
 		cfg = cfgTouch;
 
