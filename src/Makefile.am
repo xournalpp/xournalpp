@@ -36,6 +36,8 @@ xournalpp_SOURCES = \
 	control/tools/EraseHandler.cpp \
 	control/tools/ImageHandler.cpp \
 	control/tools/InputHandler.cpp \
+	control/tools/RulerHandler.cpp \
+	control/tools/StrokeHandler.cpp \
 	control/tools/Selection.cpp \
 	control/tools/VerticalToolHandler.cpp \
 	control/xml/Attribute.cpp \
@@ -212,7 +214,7 @@ xournalpp_CXXFLAGS = \
 	-I$(top_srcdir)/src/pdf/popplerdirect/poppler-0.24.1 \
 	-I$(top_srcdir)/src/pdf/popplerdirect/poppler-0.24.1/poppler \
 	-g -rdynamic \
-	-Wreturn-type -Wuninitialized -Wunused-value -Wunused-variable   
+	-Wreturn-type -Wuninitialized -Wunused-value -Wunused-variable
 
 if ENABLE_OS
 xournalpp_CXXFLAGS += \

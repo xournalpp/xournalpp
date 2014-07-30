@@ -458,7 +458,12 @@ Rectangle* XournalView::getVisibleRect(int page)
 	}
 	PageView* p = this->viewPages[page];
 
-	return gtk_xournal_get_visible_area(this->widget, p);
+	return getVisibleRect(p);
+}
+
+Rectangle* XournalView::getVisibleRect(PageView* redrawable)
+{
+	return gtk_xournal_get_visible_area(this->widget, redrawable);
 }
 
 GtkWidget* XournalView::getWidget()

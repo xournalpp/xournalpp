@@ -680,26 +680,6 @@ static void gtk_xournal_draw_shadow(GtkXournal* xournal, cairo_t* cr, int left,
 	}
 }
 
-cairo_t* gtk_xournal_create_cairo_for(GtkWidget* widget, PageView* view)
-{
-	g_return_val_if_fail(widget != NULL, FALSE);
-	g_return_val_if_fail(GTK_IS_XOURNAL(widget), FALSE);
-
-	GtkXournal* xournal = GTK_XOURNAL(widget);
-	double zoom = xournal->view->getZoom();
-
-	// TODO LOW PRIO: stroke draw to this cairo surface look a little different than rendererd to a cairo surface
-	gdk_threads_enter();
-	cairo_t* cr = gdk_cairo_create(gtk_widget_get_window(GTK_WIDGET(widget)));
-	int x = view->getX() - xournal->x;
-	int y = view->getY() - xournal->y;
-	cairo_translate(cr, x, y);
-	cairo_scale(cr, zoom, zoom);
-	gdk_threads_leave();
-
-	return cr;
-}
-
 void gtk_xournal_repaint_area(GtkWidget* widget, int x1, int y1, int x2,
                               int y2)
 {
