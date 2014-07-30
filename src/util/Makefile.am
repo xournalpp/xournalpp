@@ -20,7 +20,6 @@ libutil_la_SOURCES = \
 	Range.cpp \
 	Rectangle.cpp \
 	Util.cpp \
-	XInputUtils.cpp \
 	XournalType.cpp
 
 AM_CPPFLAGS = \

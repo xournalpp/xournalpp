@@ -8,7 +8,6 @@
 #include "../../undo/RecognizerUndoAction.h"
 #include "../../view/DocumentView.h"
 #include "../../model/Layer.h"
-#include "../../util/XInputUtils.h"
 #include "../../util/Rectangle.h"
 
 #include <math.h>
@@ -444,7 +443,6 @@ void InputHandler::onButtonReleaseEvent(GdkEventButton* event, PageRef page)
 	if (currentInputDevice == event->device)
 	{
 		currentInputDevice = NULL;
-		INPUTDBG("currentInputDevice = NULL\n", 0);
 	}
 
 	this->tmpStrokeDrawElem = 0;

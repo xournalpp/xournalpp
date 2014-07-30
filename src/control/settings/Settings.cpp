@@ -28,8 +28,6 @@ Settings::Settings(String filename)
 	this->saved = true;
 
 	loadDefault();
-
-	checkCanXInput();
 }
 
 Settings::~Settings()
@@ -53,11 +51,8 @@ void Settings::loadDefault()
 {
 	XOJ_CHECK_TYPE(Settings);
 
-	this->useXinput = true;
 	this->presureSensitivity = true;
-	this->ignoreCoreEvents = false;
 	this->saved = true;
-	this->canXIput = false;
 
 	this->maximized = false;
 	this->showTwoPages = false;
@@ -90,8 +85,6 @@ void Settings::loadDefault()
 
 	this->addHorizontalSpace = false;
 	this->addVerticalSpace = false;
-
-	this->fixXinput = false;
 
 	this->enableLeafEnterWorkaround = true;
 
@@ -273,16 +266,6 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur)
 	{
 		setPresureSensitivity(xmlStrcmp(value, (const xmlChar*) "true") ? false : true);
 	}
-	else if (xmlStrcmp(name, (const xmlChar*) "useXinput") == 0)
-	{
-		// Value is update from main after the window is created
-		this->useXinput = xmlStrcmp(value, (const xmlChar*) "true") ? false : true;
-	}
-	else if (xmlStrcmp(name, (const xmlChar*) "ignoreCoreEvents") == 0)
-	{
-		this->ignoreCoreEvents = xmlStrcmp(value,
-		                                   (const xmlChar*) "true") ? false : true;
-	}
 	else if (xmlStrcmp(name, (const xmlChar*) "selectedToolbar") == 0)
 	{
 		this->selectedToolbar = (const char*) value;
@@ -402,10 +385,6 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur)
 	{
 		this->addHorizontalSpace = xmlStrcmp(value,
 	                                       (const xmlChar*) "true") ? false : true;
-	}
-	else if (xmlStrcmp(name, (const xmlChar*) "fixXinput") == 0)
-	{
-		this->fixXinput = xmlStrcmp(value, (const xmlChar*) "true") ? false : true;
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "enableLeafEnterWorkaround") == 0)
 	{
@@ -809,9 +788,7 @@ void Settings::save()
 	                               "the others are commented in this file, but handle with care!");
 	xmlAddPrevSibling(root, com);
 
-	WRITE_BOOL_PROP(useXinput);
 	WRITE_BOOL_PROP(presureSensitivity);
-	WRITE_BOOL_PROP(ignoreCoreEvents);
 
 	WRITE_STRING_PROP(selectedToolbar);
 	WRITE_STRING_PROP(lastSavePath);
@@ -869,8 +846,6 @@ void Settings::save()
 
 	WRITE_BOOL_PROP(addHorizontalSpace);
 	WRITE_BOOL_PROP(addVerticalSpace);
-
-	WRITE_BOOL_PROP(fixXinput);
 
 	WRITE_BOOL_PROP(enableLeafEnterWorkaround);
 	WRITE_COMMENT("If Xournal crashes if you e.g. unplug your mouse set this to true. If you have input problems, you can turn it of with false.");
@@ -1004,33 +979,6 @@ bool Settings::isPresureSensitivity()
 	return this->presureSensitivity;
 }
 
-bool Settings::isXinputEnabled()
-{
-	XOJ_CHECK_TYPE(Settings);
-
-	return this->useXinput;
-}
-
-bool Settings::isIgnoreCoreEvents()
-{
-	XOJ_CHECK_TYPE(Settings);
-
-	return this->ignoreCoreEvents;
-}
-
-void Settings::setIgnoreCoreEvents(bool ignor)
-{
-	XOJ_CHECK_TYPE(Settings);
-
-	if(this->ignoreCoreEvents == ignor)
-	{
-		return;
-	}
-
-	this->ignoreCoreEvents = ignor;
-	saveTimeout();
-}
-
 bool Settings::isSidebarOnRight()
 {
 	XOJ_CHECK_TYPE(Settings);
@@ -1138,19 +1086,6 @@ void Settings::setAddHorizontalSpace(bool space)
 	XOJ_CHECK_TYPE(Settings);
 
 	this->addHorizontalSpace = space;
-}
-
-bool Settings::getfixXinput()
-{
-	XOJ_CHECK_TYPE(Settings);
-
-	return this->fixXinput;
-}
-void Settings::setfixXinput(bool fix)
-{
-	XOJ_CHECK_TYPE(Settings);
-
-	this->fixXinput = fix;
 }
 
 bool Settings::isEnableLeafEnterWorkaround()
@@ -1297,26 +1232,6 @@ bool Settings::isPresentationMode()
 	return this->presentationMode;
 }
 
-/**
- * XInput is available
- */
-bool Settings::isXInputAvailable()
-{
-	XOJ_CHECK_TYPE(Settings);
-
-	return this->canXIput;
-}
-
-/**
- * XInput should be used in the application
- */
-bool Settings::isUseXInput()
-{
-	XOJ_CHECK_TYPE(Settings);
-
-	return this->useXinput && this->canXIput;
-}
-
 void Settings::setPresureSensitivity(gboolean presureSensitivity)
 {
 	XOJ_CHECK_TYPE(Settings);
@@ -1418,38 +1333,6 @@ void Settings::setSidebarWidth(int width)
 	saveTimeout();
 }
 
-void Settings::checkCanXInput()
-{
-	XOJ_CHECK_TYPE(Settings);
-
-	/*
-	this->canXIput = FALSE;
-	GList* devList = gdk_devices_list();
-
-	while (devList != NULL)
-	{
-		GdkDevice* device = (GdkDevice*) devList->data;
-		if (device != gdk_device_get_core_pointer())
-		{
-
-			// get around a GDK bug: map the valuator range CORRECTLY to [0,1]
-			if(this->getfixXinput())
-			{
-				gdk_device_set_axis_use(device, 0, GDK_AXIS_IGNORE);
-				gdk_device_set_axis_use(device, 1, GDK_AXIS_IGNORE);
-			}
-			gdk_device_set_mode(device, GDK_MODE_SCREEN);
-			if (g_str_has_suffix(gdk_device_get_name(device), "eraser"))
-			{
-				gdk_device_set_source(device, GDK_SOURCE_ERASER);
-			}
-			canXIput = TRUE;
-		}
-		devList = devList->next;
-	}
-	*/
-}
-
 void Settings::setMainWndSize(int width, int height)
 {
 	XOJ_CHECK_TYPE(Settings);
@@ -1486,20 +1369,6 @@ void Settings::setMainWndMaximized(bool max)
 	XOJ_CHECK_TYPE(Settings);
 
 	this->maximized = max;
-}
-
-void Settings::setXinputEnabled(gboolean useXinput)
-{
-	XOJ_CHECK_TYPE(Settings);
-
-	if (this->useXinput == useXinput)
-	{
-		return;
-	}
-
-	this->useXinput = useXinput;
-
-	saveTimeout();
 }
 
 double Settings::getWidthMinimumMultiplier()

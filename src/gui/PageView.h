@@ -191,8 +191,6 @@ private:
 
 	bool inEraser;
 
-	bool extendedWarningDisplayd;
-
 	// Vertical Space
 	VerticalToolHandler* verticalSpace;
 

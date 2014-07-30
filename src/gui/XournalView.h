@@ -50,8 +50,6 @@ public:
 
 	int getCurrentPage();
 
-	void updateXEvents();
-
 	void clearSelection();
 
 	void layerChanged(int page);

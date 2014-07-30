@@ -60,8 +60,6 @@ PageView::PageView(XournalView* xournal, PageRef page)
 
 	this->inEraser = false;
 
-	this->extendedWarningDisplayd = false;
-
 	this->verticalSpace = NULL;
 
 	this->selection = NULL;
@@ -424,29 +422,9 @@ bool PageView::onButtonPressEvent(GtkWidget* widget, GdkEventButton* event)
 	double x = event->x;
 	double y = event->y;
 
-	if ((x < 0 || y < 0) && !extendedWarningDisplayd &&
-	    settings->isXinputEnabled())
+	if ((x < 0 || y < 0))
 	{
-		GtkWidget* dialog = gtk_message_dialog_new((GtkWindow*)
-		                                           *xournal->getControl()->getWindow(), GTK_DIALOG_DESTROY_WITH_PARENT,
-		                                           GTK_MESSAGE_ERROR,
-		                                           GTK_BUTTONS_NONE,
-		                                           _("There was a wrong input event, input is not working.\nDo you want to disable \"Extended Input\"?"));
-
-		gtk_dialog_add_button(GTK_DIALOG(dialog), "Disable \"Extended Input\"", 1);
-		gtk_dialog_add_button(GTK_DIALOG(dialog), "Cancel", 2);
-
-		this->extendedWarningDisplayd = true;
-
-		gtk_window_set_transient_for(GTK_WINDOW(dialog),
-		                             GTK_WINDOW(this->xournal->getControl()->getWindow()->getWindow()));
-		if (gtk_dialog_run(GTK_DIALOG(dialog)) == 1)
-		{
-			settings->setXinputEnabled(false);
-			xournal->updateXEvents();
-		}
-		gtk_widget_destroy(dialog);
-		return true;
+		return FALSE;
 	}
 
 	double zoom = xournal->getZoom();
@@ -996,13 +974,30 @@ GdkRGBA PageView::getSelectionColor()
 {
 	XOJ_CHECK_TYPE(PageView);
 
+	GtkWidget* widget = getXournal()->getWidget();
+
 	GtkStyleContext *context =
-		gtk_widget_get_style_context(getXournal()->getWidget());
+		gtk_widget_get_style_context(widget);
+
+	gtk_style_context_save(context);
+	gtk_style_context_add_class(context, GTK_STYLE_CLASS_RUBBERBAND);
 
 	GdkRGBA col;
-	
-	// TODO: GTK_STATE_FLAG_SELECTED looks horrible, but this is not much better...
-	gtk_style_context_get_color(context, GTK_STATE_FLAG_NORMAL, &col);
+
+	gtk_style_context_get_border_color(context,
+                                     gtk_widget_get_state_flags(widget),
+                                     &col);
+
+	// TODO: The correct border color is not sufficient,
+	//       we should also get the actual color and the GtkBorder
+	//       to draw the selection correctly
+
+	/*
+	gtk_style_context_get_border (context, state,
+	                              &border);
+	*/
+
+	gtk_style_context_restore(context);
 
 	return col;
 }
