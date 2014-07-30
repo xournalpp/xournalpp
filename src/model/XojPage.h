@@ -46,8 +46,8 @@ public:
 	 */
 	void setSize(double width, double height);
 
-	double getWidth();
-	double getHeight();
+	double getWidth() const;
+	double getHeight() const;
 
 	void addLayer(Layer* layer);
 	void insertLayer(Layer* layer, int index);

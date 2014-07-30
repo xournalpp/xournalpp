@@ -66,8 +66,8 @@ public:
 
 	virtual void deleteViewBuffer() = 0;
 
-	virtual int getX() = 0;
-	virtual int getY() = 0;
+	virtual int getX() const = 0;
+	virtual int getY() const = 0;
 
 
 	virtual Rectangle* rectOnWidget(double x, double y, double width,

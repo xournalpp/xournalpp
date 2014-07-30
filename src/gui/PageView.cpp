@@ -23,7 +23,8 @@
 #include "../control/SearchControl.h"
 #include "../control/tools/VerticalToolHandler.h"
 #include "../control/tools/EraseHandler.h"
-#include "../control/tools/InputHandler.h"
+#include "../control/tools/RulerHandler.h"
+#include "../control/tools/StrokeHandler.h"
 #include <Rectangle.h>
 #include "../undo/DeleteUndoAction.h"
 #include "Cursor.h"
@@ -76,7 +77,7 @@ PageView::PageView(XournalView* xournal, PageRef page)
 	                                xournal->getControl()->getDocument(), this->page,
 	                                xournal->getControl()->getToolHandler(), this);
 
-	this->inputHandler = new InputHandler(this->xournal, this);
+	this->inputHandler = NULL;
 }
 
 PageView::~PageView()
@@ -102,6 +103,12 @@ PageView::~PageView()
 		delete this->search;
 	}
 	this->search = NULL;
+
+	if(this->inputHandler)
+	{
+		delete this->inputHandler;
+		this->inputHandler = NULL;
+	}
 
 	XOJ_RELEASE_TYPE(PageView);
 }
@@ -434,14 +441,31 @@ bool PageView::onButtonPressEvent(GtkWidget* widget, GdkEventButton* event)
 	Cursor* cursor = xournal->getCursor();
 	cursor->setMouseDown(true);
 
-	if (h->getToolType() == TOOL_PEN)
+	if (h->getToolType() == TOOL_PEN ||
+	    h->getToolType() == TOOL_HILIGHTER ||
+	    (h->getToolType() == TOOL_ERASER &&
+	     h->getEraserType() == ERASER_TYPE_WHITEOUT))
 	{
-		this->inputHandler->startStroke(event, STROKE_TOOL_PEN, x, y);
+		delete this->inputHandler;
+		this->inputHandler = NULL;
+
+		if(!h->isRuler())
+		{
+			this->inputHandler = new StrokeHandler(this->xournal, this, getPage());
+		}
+		else
+		{
+			this->inputHandler = new RulerHandler(this->xournal, this, getPage());
+		}
+
+		this->inputHandler->onButtonPressEvent(event);
 	}
-	else if (h->getToolType() == TOOL_HILIGHTER)
+	else if(h->getToolType() == TOOL_ERASER)
 	{
-		this->inputHandler->startStroke(event, STROKE_TOOL_HIGHLIGHTER, x, y);
+		this->eraser->erase(x, y);
+		this->inEraser = true;
 	}
+	/*
 	else if (h->getToolType() == TOOL_ERASER)
 	{
 		if (h->getEraserType() == ERASER_TYPE_WHITEOUT)
@@ -455,6 +479,7 @@ bool PageView::onButtonPressEvent(GtkWidget* widget, GdkEventButton* event)
 			this->inEraser = true;
 		}
 	}
+	*/
 	else if (h->getToolType() == TOOL_VERTICAL_SPACE)
 	{
 		this->verticalSpace = new VerticalToolHandler(this, this->page, y, zoom);
@@ -517,13 +542,6 @@ bool PageView::onButtonPressEvent(GtkWidget* widget, GdkEventButton* event)
 	return true;
 }
 
-void PageView::resetShapeRecognizer()
-{
-	XOJ_CHECK_TYPE(PageView);
-
-	this->inputHandler->resetShapeRecognizer();
-}
-
 bool PageView::onMotionNotifyEvent(GtkWidget* widget, GdkEventMotion* event)
 {
 	XOJ_CHECK_TYPE(PageView);
@@ -535,6 +553,7 @@ bool PageView::onMotionNotifyEvent(GtkWidget* widget, GdkEventMotion* event)
 	ToolHandler* h = xournal->getControl()->getToolHandler();
 
 	if (containsPoint(x, y, true) &&
+	    this->inputHandler &&
 	    this->inputHandler->onMotionNotifyEvent(event))
 	{
 		//input	handler used this event
@@ -562,6 +581,14 @@ bool PageView::onMotionNotifyEvent(GtkWidget* widget, GdkEventMotion* event)
 	}
 
 	return false;
+}
+
+void PageView::resetShapeRecognizer()
+{
+	XOJ_CHECK_TYPE(PageView);
+
+	// TODO: implement this
+	//this->inputHandler->resetShapeRecognizer();
 }
 
 void PageView::translateEvent(GdkEvent* event, int xOffset, int yOffset)
@@ -599,7 +626,12 @@ bool PageView::onButtonReleaseEvent(GtkWidget* widget, GdkEventButton* event)
 
 	Control* control = xournal->getControl();
 
-	this->inputHandler->onButtonReleaseEvent(event, this->page);
+	if(this->inputHandler)
+	{
+		this->inputHandler->onButtonReleaseEvent(event);
+		delete this->inputHandler;
+		this->inputHandler = NULL;
+	}
 
 	if (this->inEraser)
 	{
@@ -919,23 +951,28 @@ bool PageView::paintPage(cairo_t* cr, GdkRectangle* rect)
 		this->verticalSpace->paint(cr, rect, zoom);
 	}
 
-	cairo_scale(cr, zoom, zoom);
-
 	if (this->textEditor)
 	{
+		cairo_scale(cr, zoom, zoom);
 		this->textEditor->paint(cr, rect, zoom);
 	}
 	if (this->selection)
 	{
+		cairo_scale(cr, zoom, zoom);
 		this->selection->paint(cr, rect, zoom);
 	}
 
 	if (this->search)
 	{
+		cairo_scale(cr, zoom, zoom);
 		this->search->paint(cr, rect, zoom, getSelectionColor());
 	}
 
-	this->inputHandler->draw(cr, zoom);
+	if(this->inputHandler)
+	{
+		this->inputHandler->draw(cr);
+	}
+
 	g_mutex_unlock(&this->drawingMutex);
 	return true;
 }
@@ -1009,14 +1046,14 @@ TextEditor* PageView::getTextEditor()
 	return textEditor;
 }
 
-int PageView::getX()
+int PageView::getX() const
 {
 	XOJ_CHECK_TYPE(PageView);
 
 	return this->layout.getLayoutAbsoluteX();
 }
 
-int PageView::getY()
+int PageView::getY() const
 {
 	XOJ_CHECK_TYPE(PageView);
 
@@ -1037,28 +1074,28 @@ XournalView* PageView::getXournal()
 	return this->xournal;
 }
 
-double PageView::getHeight()
+double PageView::getHeight() const
 {
 	XOJ_CHECK_TYPE(PageView);
 
 	return this->page->getHeight();
 }
 
-double PageView::getWidth()
+double PageView::getWidth() const
 {
 	XOJ_CHECK_TYPE(PageView);
 
 	return this->page->getWidth();
 }
 
-int PageView::getDisplayWidth()
+int PageView::getDisplayWidth() const
 {
 	XOJ_CHECK_TYPE(PageView);
 
 	return this->page->getWidth() * this->xournal->getZoom();
 }
 
-int PageView::getDisplayHeight()
+int PageView::getDisplayHeight() const
 {
 	XOJ_CHECK_TYPE(PageView);
 
@@ -1090,6 +1127,25 @@ TexImage* PageView::getSelectedTex()
 
 }
 
+Rectangle* PageView::getVisibleRect()
+{
+	Rectangle* rect = xournal->getVisibleRect(this);
+
+	if(!rect)
+		return NULL;
+
+	(*rect) *= xournal->getZoom();
+
+	(*rect) = rect->translated(-getX(), -getY());
+	
+	return rect;
+}
+
+Rectangle PageView::getRect()
+{
+	return Rectangle(getX(), getY(), getDisplayWidth(), getDisplayHeight());
+}
+
 void PageView::rectChanged(Rectangle& rect)
 {
 	rerenderRect(rect.x, rect.y, rect.width, rect.height);
@@ -1107,6 +1163,21 @@ void PageView::pageChanged()
 
 void PageView::elementChanged(Element* elem)
 {
-	rerenderElement(elem);
+	if(this->inputHandler && elem == this->inputHandler->getStroke())
+	{
+		g_mutex_lock(&this->drawingMutex);
+
+		cairo_t* cr = cairo_create(this->crBuffer);
+
+		this->inputHandler->draw(cr);
+
+		cairo_destroy(cr);
+
+		g_mutex_unlock(&this->drawingMutex);
+	}
+	else
+	{
+		rerenderElement(elem);
+	}
 }
 
