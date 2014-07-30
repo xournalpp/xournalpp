@@ -131,11 +131,6 @@ public:
 	void save();
 
 	/**
-	 * Check if there is an XInput device
-	 */
-	void checkCanXInput();
-
-	/**
 	 * Enables / disables extended events
 	 */
 	//	void updateXEvents();
@@ -160,28 +155,6 @@ public:
 	// Getter- / Setter
 	bool isPresureSensitivity();
 	void setPresureSensitivity(gboolean presureSensitivity);
-
-	/**
-	 * XInput is enabled by the user
-	 */
-	bool isXinputEnabled();
-	void setXinputEnabled(gboolean useXinput);
-
-	/**
-	 * Disable Core events if XInput is enabled
-	 */
-	bool isIgnoreCoreEvents();
-	void setIgnoreCoreEvents(bool ignor);
-
-	/**
-	 * XInput is available
-	 */
-	bool isXInputAvailable();
-
-	/**
-	 * XInput should be used in the application
-	 */
-	bool isUseXInput();
 
 	/**
 	 * The last used font
@@ -250,9 +223,6 @@ public:
 
 	bool getAddHorizontalSpace();
 	void setAddHorizontalSpace(bool space);
-
-	bool getfixXinput();
-	void setfixXinput(bool fix);
 
 	bool isEnableLeafEnterWorkaround();
 	void setEnableLeafEnterWorkaround(bool enable);
@@ -329,24 +299,9 @@ private:
 	std::map<String, SElement> data;
 
 	/**
-	 * Use XInput
-	 */
-	bool useXinput;
-
-	/**
-	 * If there is an XInput device available
-	 */
-	bool canXIput;
-
-	/**
 	 * Use pen pressure to control stroke width?
 	 */
 	bool presureSensitivity;
-
-	/**
-	 * Ignore core events if XInput is enabled
-	 */
-	bool ignoreCoreEvents;
 
 	/**
 	 * If the sidebar is visible
@@ -449,11 +404,6 @@ private:
 	 * allow scroll outside the page
 	 */
 	bool addHorizontalSpace, addVerticalSpace;
-
-	/**
-	 * apply the xinput fix
-	 */
-	bool fixXinput;
 
 	/**
 	 * Enable Bugfix to prevent crash on GTK 2.18 etc
