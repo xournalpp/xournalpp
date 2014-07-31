@@ -50,8 +50,6 @@ public:
 
 	int getCurrentPage();
 
-	void updateXEvents();
-
 	void clearSelection();
 
 	void layerChanged(int page);
@@ -96,6 +94,9 @@ public:
 	GtkWidget* getWidget();
 	Cursor* getCursor();
 
+	Rectangle* getVisibleRect(int page);
+	Rectangle* getVisibleRect(PageView* redrawable);
+
 public:
 	//ZoomListener interface
 	void zoomChanged(double lastZoom);
@@ -118,8 +119,6 @@ private:
 	void fireZoomChanged();
 
 	void addLoadPageToQue(PageRef page, int priority);
-
-	Rectangle* getVisibleRect(int page);
 
 	static gboolean clearMemoryTimer(XournalView* widget);
 

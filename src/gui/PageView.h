@@ -99,35 +99,35 @@ public:
 	/**
 	 * Returns the width of this PageView
 	 */
-	double getWidth();
+	double getWidth() const;
 
 	/**
 	 * Returns the height of this PageView
 	 */
-	double getHeight();
+	double getHeight() const;
 
 	/**
 	 * Returns the width of this PageView as displayed
 	 * on the display taking into account the current zoom
 	 */
-	int getDisplayWidth();
+	int getDisplayWidth() const;
 	/**
 	 * Returns the height of this PageView as displayed
 	 * on the display taking into account the current zoom
 	 */
-	int getDisplayHeight();
+	int getDisplayHeight() const;
 
 	/**
 	 * Returns the x coordinate of this PageView with
 	 * respect to the display
 	 */
-	int getX();
+	int getX() const;
 
 	/**
 	 * Returns the y coordinate of this PageView with
 	 * respect to the display
 	 */
-	int getY();
+	int getY() const;
 
 	/**
 	 * Maps a Rectangle from display coordinates to local
@@ -138,11 +138,19 @@ public:
 
 	TexImage* getSelectedTex();
 
+	Rectangle* getVisibleRect();
+	Rectangle getRect();
+
 public: // event handler
 	bool onButtonPressEvent(GtkWidget* widget, GdkEventButton* event);
 	bool onButtonReleaseEvent(GtkWidget* widget, GdkEventButton* event);
 	bool onMotionNotifyEvent(GtkWidget* widget, GdkEventMotion* event);
 	void translateEvent(GdkEvent* event, int xOffset, int yOffset);
+
+	/**
+	 * This method actually repaints the PageView, triggering
+	 * a rerender call if necessary
+	 */
 	bool paintPage(cairo_t* cr, GdkRectangle* rect);
 
 public: // listener
@@ -190,8 +198,6 @@ private:
 	cairo_surface_t* crBuffer;
 
 	bool inEraser;
-
-	bool extendedWarningDisplayd;
 
 	// Vertical Space
 	VerticalToolHandler* verticalSpace;

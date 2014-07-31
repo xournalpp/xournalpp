@@ -18,7 +18,6 @@
 #include <CrashHandler.h>
 #include <serializing/ObjectInputStream.h>
 #include <Stacktrace.h>
-#include <XInputUtils.h>
 #include "../model/FormatDefinitions.h"
 #include "../model/XojPage.h"
 #include "../model/BackgroundImage.h"
@@ -292,10 +291,6 @@ void Control::initWindow(MainWindow* win)
 	this->enableAutosave(settings->isAutosaveEnabled());
 
 	win->setFontButtonFont(settings->getFont());
-
-	XInputUtils::initUtils(win->getWindow());
-	XInputUtils::setLeafEnterWorkaroundEnabled(
-	    settings->isEnableLeafEnterWorkaround());
 }
 
 bool Control::autosaveCallback(Control* control)
@@ -2312,7 +2307,6 @@ void Control::showSettings()
 {
 	XOJ_CHECK_TYPE(Control);
 
-	bool xeventEnabled = settings->isUseXInput();
 	int selectionColor = settings->getSelectionColor();
 	bool verticalSpace = settings->getAddVerticalSpace(),
 	     horizontalSpace = settings->getAddHorizontalSpace();
@@ -2320,11 +2314,6 @@ void Control::showSettings()
 
 	SettingsDialog* dlg = new SettingsDialog(this->gladeSearchPath, settings);
 	dlg->show(GTK_WINDOW(this->win->getWindow()));
-
-	if (xeventEnabled != settings->isUseXInput())
-	{
-		win->getXournal()->updateXEvents();
-	}
 
 	if (selectionColor != settings->getSelectionColor())
 	{

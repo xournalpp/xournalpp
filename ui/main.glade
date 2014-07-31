@@ -77,8 +77,8 @@
                         <property name="can_focus">False</property>
                         <property name="use_underline">True</property>
                         <property name="use_stock">True</property>
-                        <accelerator key="s" signal="activate" modifiers="GDK_SHIFT_MASK | GDK_CONTROL_MASK"/>
                         <accelerator key="u" signal="activate" modifiers="GDK_CONTROL_MASK"/>
+                        <accelerator key="s" signal="activate" modifiers="GDK_SHIFT_MASK | GDK_CONTROL_MASK"/>
                       </object>
                     </child>
                     <child>
@@ -102,8 +102,8 @@
                         <property name="can_focus">False</property>
                         <property name="label" translatable="yes">Export as...</property>
                         <property name="use_underline">True</property>
-                        <accelerator key="e" signal="activate" modifiers="GDK_SHIFT_MASK | GDK_CONTROL_MASK"/>
                         <accelerator key="i" signal="activate" modifiers="GDK_CONTROL_MASK"/>
+                        <accelerator key="e" signal="activate" modifiers="GDK_SHIFT_MASK | GDK_CONTROL_MASK"/>
                       </object>
                     </child>
                     <child>
@@ -369,8 +369,8 @@
                         <property name="can_focus">False</property>
                         <property name="use_underline">True</property>
                         <property name="use_stock">True</property>
-                        <accelerator key="plus" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                         <accelerator key="KP_Add" signal="activate" modifiers="GDK_CONTROL_MASK"/>
+                        <accelerator key="plus" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                       </object>
                     </child>
                     <child>
@@ -380,8 +380,8 @@
                         <property name="can_focus">False</property>
                         <property name="use_underline">True</property>
                         <property name="use_stock">True</property>
-                        <accelerator key="minus" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                         <accelerator key="KP_Subtract" signal="activate" modifiers="GDK_CONTROL_MASK"/>
+                        <accelerator key="minus" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                       </object>
                     </child>
                     <child>
@@ -1500,7 +1500,7 @@
           </packing>
         </child>
         <child>
-          <object class="GtkBox" id="statusBar">
+          <object class="GtkBox" id="statusbar">
             <property name="can_focus">False</property>
             <child>
               <object class="GtkLabel" id="lbState">

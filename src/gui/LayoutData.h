@@ -26,8 +26,8 @@ public:
 	int getPageIndex();
 	void setPageIndex(int pageIndex);
 
-	int getLayoutAbsoluteX();
-	int getLayoutAbsoluteY();
+	int getLayoutAbsoluteX() const;
+	int getLayoutAbsoluteY() const;
 
 	int getMarginLeft();
 	void setMarginLeft(int left);

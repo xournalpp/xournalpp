@@ -78,6 +78,13 @@ void VerticalToolHandler::paint(cairo_t* cr, GdkRectangle* rect, double zoom)
 	cairo_set_line_width(cr, 1);
 
 	gdk_threads_enter();
+
+	cairo_rectangle(cr, 0, 0,
+	                this->page->getWidth() * zoom,
+	                this->page->getHeight() * zoom);
+
+	cairo_clip(cr);
+
 	gdk_cairo_set_source_rgba(cr, &selectionColor);
 
 	double y;
@@ -151,11 +158,11 @@ MoveUndoAction* VerticalToolHandler::finalize()
 	double dY = this->endY - this->startY;
 
 	MoveUndoAction* undo = new MoveUndoAction(this->layer,
-	                                                this->page,
-	                                                this->elements,
-	                                                0, dY,
-	                                                this->layer,
-	                                                this->page);
+	                                          this->page,
+	                                          this->elements,
+	                                          0, dY,
+	                                          this->layer,
+	                                          this->page);
 
 	for (GList* l = this->elements; l != NULL; l = l->next)
 	{

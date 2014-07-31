@@ -372,18 +372,10 @@ void MainWindow::updateScrollbarSidebarPosition()
 		if (scrollbarOnLeft)
 		{
 			gtk_grid_attach(GTK_GRID(tableXournal), v, 0, 0, 1, 1);
-			/*
-			gtk_table_attach(GTK_TABLE(tableXournal), v, 0, 1, 0, 1, (GtkAttachOptions) 0,
-			                 GTK_FILL, 0, 0);
-			*/
 		}
 		else
 		{
 			gtk_grid_attach(GTK_GRID(tableXournal), v, 2, 0, 1, 1);
-			/*
-			gtk_table_attach(GTK_TABLE(tableXournal), v, 2, 3, 0, 1, (GtkAttachOptions) 0,
-			                 GTK_FILL, 0, 0);
-			*/
 		}
 	}
 

@@ -38,6 +38,7 @@ public:
 
 	void addPoint(Point p);
 	void setLastPoint(double x, double y);
+	void setLastPoint(Point p);
 	int getPointCount() const;
 	void freeUnusedPointItems();
 	ArrayIterator<Point> pointIterator() const;
@@ -49,8 +50,6 @@ public:
 
 	void setToolType(StrokeTool type);
 	StrokeTool getToolType() const;
-
-	const double* getWidths() const;
 
 	bool intersects(double x, double y, double halfSize, double* gap = NULL);
 

@@ -16,6 +16,8 @@
 #include <serializing/Serializeable.h>
 #include <XournalType.h>
 
+#include "../util/Rectangle.h"
+
 enum ElementType
 {
     ELEMENT_STROKE = 1, ELEMENT_IMAGE, ELEMENT_TEXIMAGE, ELEMENT_TEXT
@@ -51,6 +53,8 @@ public:
 
 	double getElementWidth();
 	double getElementHeight();
+
+	Rectangle boundingRect();
 
 	virtual bool intersectsArea(const GdkRectangle* src);
 	virtual bool intersectsArea(double x, double y, double width, double height);

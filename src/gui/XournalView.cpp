@@ -33,8 +33,6 @@ XournalView::XournalView(GtkWidget* parent, Control* control)
 	// we need to refer widget here, because wo unref it somwere twice!?
 	g_object_ref(this->widget);
 
-  //                                                           l, r, t, b
-	//gtk_table_attach_defaults(GTK_TABLE(parent), this->widget, 1, 2, 0, 1);
 	gtk_grid_attach(GTK_GRID(parent), this->widget, 1, 0, 1, 1);
 	gtk_widget_show(this->widget);
 
@@ -460,7 +458,12 @@ Rectangle* XournalView::getVisibleRect(int page)
 	}
 	PageView* p = this->viewPages[page];
 
-	return gtk_xournal_get_visible_area(this->widget, p);
+	return getVisibleRect(p);
+}
+
+Rectangle* XournalView::getVisibleRect(PageView* redrawable)
+{
+	return gtk_xournal_get_visible_area(this->widget, redrawable);
 }
 
 GtkWidget* XournalView::getWidget()
@@ -637,13 +640,6 @@ double XournalView::getZoom()
 	XOJ_CHECK_TYPE(XournalView);
 
 	return control->getZoomControl()->getZoom();
-}
-
-void XournalView::updateXEvents()
-{
-	XOJ_CHECK_TYPE(XournalView);
-
-	gtk_xournal_update_xevent(this->widget);
 }
 
 void XournalView::clearSelection()
