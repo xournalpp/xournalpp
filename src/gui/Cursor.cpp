@@ -81,7 +81,7 @@ void Cursor::setCursorBusy(bool busy)
 			gdk_window_set_cursor(gtk_widget_get_window(win->getWindow()), cursor);
 		}
 
-		gdk_cursor_unref(cursor);
+		g_object_unref(cursor);
 	}
 	else
 	{
@@ -310,7 +310,7 @@ void Cursor::updateCursor()
 
 	if (cursor)
 	{
-		gdk_cursor_unref(cursor);
+		g_object_unref(cursor);
 	}
 }
 

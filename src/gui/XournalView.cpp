@@ -30,9 +30,6 @@ XournalView::XournalView(GtkWidget* parent, Control* control)
 
 	this->widget = gtk_xournal_new(this);
 
-	// we need to refer widget here, because wo unref it somwere twice!?
-	g_object_ref(this->widget);
-
 	gtk_grid_attach(GTK_GRID(parent), this->widget, 1, 0, 1, 1);
 	gtk_widget_show(this->widget);
 
@@ -78,6 +75,7 @@ XournalView::~XournalView()
 	delete this->pagePosition;
 	this->pagePosition = NULL;
 
+	gtk_widget_destroy(this->widget);
 	this->widget = NULL;
 
 	XOJ_RELEASE_TYPE(XournalView);
