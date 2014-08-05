@@ -185,6 +185,8 @@ fi
 AM_CONDITIONAL([ENABLE_PYTHON],[test "x$enable_python" = "xyes"])
 AM_CONDITIONAL([ENABLE_OS],[test "x$enable_os" = "xyes"])
 
+AC_CHECK_PROG([DOXYGEN], [doxygen], [doxygen])
+AM_CONDITIONAL([HAVE_DOXYGEN],[test "x$doxygen" != "xno"])
 
 dnl Compile with mathtex
 if test "x$enable_mathtex" != "xno"; then
@@ -213,6 +215,8 @@ ALL_LINGUAS="`grep -v '^#' "$srcdir/po/LINGUAS" | tr '\n' ' '`"
 AM_GLIB_GNU_GETTEXT
 
 AC_CONFIG_FILES(Makefile
+		doc/Doxyfile
+		doc/Makefile
 		src/Makefile
 		src/mathtex/Makefile
 		src/util/Makefile
