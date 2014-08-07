@@ -226,7 +226,7 @@ endif
 poppler:
 	$(abs_top_builddir)/src/pdf/popplerdirect/workaround/workaround.sh build
 
-clean-local:
+distclean-local:
 	$(abs_top_builddir)/src/pdf/popplerdirect/workaround/workaround.sh clean
 
 xournalpp_DEPENDENCIES = poppler
