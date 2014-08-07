@@ -112,7 +112,6 @@ xournalpp_SOURCES = \
 	gui/toolbarMenubar/ToolSelectCombocontrol.cpp \
 	gui/toolbarMenubar/ToolZoomSlider.cpp \
 	gui/widgets/gtkmenutooltogglebutton.cpp \
-	gui/widgets/Scrollbar.cpp \
 	gui/widgets/SelectColor.cpp \
 	gui/widgets/SpinPageAdapter.cpp \
 	gui/widgets/XournalWidget.cpp \

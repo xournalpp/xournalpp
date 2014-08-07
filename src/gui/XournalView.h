@@ -97,6 +97,11 @@ public:
 	Rectangle* getVisibleRect(int page);
 	Rectangle* getVisibleRect(PageView* redrawable);
 
+	GtkContainer* getParent()
+	{
+		return this->parent;
+	}
+
 public:
 	//ZoomListener interface
 	void zoomChanged(double lastZoom);
@@ -132,6 +137,7 @@ private:
 	int viewPagesLen;
 
 	Control* control;
+	GtkContainer* parent;
 
 	int currentPage;
 	int lastSelectedPage;

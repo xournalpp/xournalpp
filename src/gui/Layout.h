@@ -14,53 +14,97 @@
 
 #include <gtk/gtk.h>
 #include <XournalType.h>
-#include "widgets/Scrollbar.h" // because of extends ScrollbarListener
+
+#include "../util/Rectangle.h"
 
 class PageView;
 class XournalView;
 
-class Layout : public ScrollbarListener
+/**
+ * @brief The Layout manager for the XournalWidget
+ * 
+ * This class manages the layout of the PageView%s contained
+ * in the XournalWidget
+ */
+class Layout
 {
 public:
-	Layout(XournalView* view);
+	Layout(XournalView* view,
+	       GtkAdjustment* adjHorizontal,
+	       GtkAdjustment* adjVertical);
 	virtual ~Layout();
 
 public:
+	/**
+	 * Adjusts the layout size to the given values
+	 */
 	void setSize(int widgetWidth, int widgetHeight);
-	void scrollRelativ(int x, int y);
-	bool scrollEvent(GdkEventScroll* event);
-	void ensureRectIsVisible(int x, int y, int width, int height);
-	double getVisiblePageTop(int page);
-	double getDisplayHeight();
 
+	/**
+	 * Increases the adjustments by the given amounts
+	 */
+	void scrollRelativ(int x, int y);
+
+	/**
+	 * Changes the adjustments in such a way as to make sure that
+	 * the given Rectangle is visible
+	 * 
+	 * @remark If the given Rectangle won't fit into the scrolled window
+	 *         then only its top left corner will be visible
+	 */
+	void ensureRectIsVisible(int x, int y, int width, int height);
+
+	/**
+	 * Returns the height of the entire Layout
+	 */
+	double getLayoutHeight()
+	{
+		return layoutHeight;
+	}
+
+	/**
+	 * Returns the width of the entire Layout
+	 */
+	double getLayoutWidth()
+	{
+		return layoutWidth;
+	}
+
+	/**
+	 * Returns the Rectangle which is currently visible
+	 */
+	Rectangle getVisibleRect();
+
+	/**
+	 * Performs a layout of the PageView%s managed in this Layout
+	 */
 	void layoutPages();
 
-	GtkWidget* getScrollbarVertical();
-	GtkWidget* getScrollbarHorizontal();
+	/**
+	 * Updates the current PageView. The PageView is selected based on
+	 * the percentage of the visible area of the PageView relative
+	 * to its total area.
+	 */
+	void updateCurrentPage();
 
-	void setLayoutSize(int width, int height);
-
-	void updateRepaintWidget();
-
-	virtual void scrolled(Scrollbar* scrollbar);
-
-	void checkSelectedPage();
+public:
+	/**
+	 * Callback for a changed value of one of the adjustments of
+	 * the scrolled window. It updates the current PageView
+	 * via Layout::updateCurrentPage()
+	 */
+	static void adjustmentValueChanged(GtkAdjustment* adjustment,
+	                                   Layout* layout);
 
 private:
+	void setLayoutSize(int width, int height);
+
 	XOJ_TYPE_ATTRIB;
 
 	XournalView* view;
 
-	Scrollbar* scrollVertical;
-	Scrollbar* scrollHorizontal;
-
-	/**
-	 * Outer border of the complete layout
-	 */
-	int marginTop;
-	int marginLeft;
-	int marginRight;
-	int marginBottom;
+	GtkAdjustment* adjHorizontal;
+	GtkAdjustment* adjVertical;
 
 	/**
 	 * The last width of the widget

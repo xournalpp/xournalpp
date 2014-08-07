@@ -107,25 +107,25 @@ public:
 	double getHeight() const;
 
 	/**
-	 * Returns the width of this PageView as displayed
-	 * on the display taking into account the current zoom
+	 * Returns the width of this PageView as assigned
+	 * by the Layout
 	 */
 	int getDisplayWidth() const;
 	/**
-	 * Returns the height of this PageView as displayed
-	 * on the display taking into account the current zoom
+	 * Returns the height of this PageView as assigned
+	 * by the Layout
 	 */
 	int getDisplayHeight() const;
 
 	/**
-	 * Returns the x coordinate of this PageView with
-	 * respect to the display
+	 * Returns the x coordinate of this PageView as
+	 * assigned by the Layout
 	 */
 	int getX() const;
 
 	/**
-	 * Returns the y coordinate of this PageView with
-	 * respect to the display
+	 * Returns the y coordinate of this PageView as
+	 * assigned by the Layout
 	 */
 	int getY() const;
 

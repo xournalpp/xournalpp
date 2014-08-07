@@ -24,13 +24,15 @@ XournalView::XournalView(GtkWidget* parent, Control* control)
 {
 	XOJ_INIT_TYPE(XournalView);
 
+	this->parent = GTK_CONTAINER(parent);
+
 	this->control = control;
 	this->cache = new PdfCache(control->getSettings()->getPdfPageCacheSize());
 	registerListener(control);
 
-	this->widget = gtk_xournal_new(this);
+	this->widget = gtk_xournal_new(this, GTK_SCROLLABLE(parent));
 
-	gtk_grid_attach(GTK_GRID(parent), this->widget, 1, 0, 1, 1);
+	gtk_container_add(GTK_CONTAINER(parent), this->widget);
 	gtk_widget_show(this->widget);
 
 	this->repaintHandler = new RepaintHandler(this);
@@ -190,7 +192,7 @@ bool XournalView::onKeyPressEvent(GdkEventKey* event)
 		if (event->keyval == GDK_KEY_Page_Down)
 		{
 			layout->scrollRelativ(0, windowHeight);
-			return true;
+			return false;
 		}
 		if (event->keyval == GDK_KEY_Page_Up)
 		{
@@ -392,9 +394,9 @@ void XournalView::scrollTo(int pageNo, double yDocument)
 	PageView* v = this->viewPages[pageNo];
 
 	Layout* layout = gtk_xournal_get_layout(this->widget);
-	layout->ensureRectIsVisible(v->layout.getLayoutAbsoluteX(),
-	                            v->layout.getLayoutAbsoluteY() + yDocument, 
-				    v->getDisplayWidth(),
+	layout->ensureRectIsVisible(v->getX(),
+	                            v->getY(), 
+	                            v->getDisplayWidth(),
 	                            v->getDisplayHeight());
 }
 
@@ -499,8 +501,12 @@ void XournalView::zoomChanged(double lastZoom)
 
 	Layout* layout = gtk_xournal_get_layout(this->widget);
 	int currentPage = this->getCurrentPage();
-	//double pageTop = layout->getVisiblePageTop(currentPage);
-	double pageTop = 0.0;
+	PageView* view = getViewFor(currentPage);
+
+	if(!view)
+		return;
+
+	double pageTop = view->getX();
 
 	layout->layoutPages();
 
@@ -630,7 +636,7 @@ void XournalView::pageInserted(int page)
 
 	Layout* layout = gtk_xournal_get_layout(this->widget);
 	layout->layoutPages();
-	layout->checkSelectedPage();
+	layout->updateCurrentPage();
 }
 
 double XournalView::getZoom()
