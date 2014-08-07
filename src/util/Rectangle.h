@@ -61,6 +61,8 @@ public:
 
 	Rectangle& operator*=(double factor);
 
+	double area() const;
+
 public:
 	XOJ_TYPE_ATTRIB;
 

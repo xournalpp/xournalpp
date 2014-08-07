@@ -28,7 +28,9 @@ void ScrollHandler::goToPreviousPage()
 			if (view)
 			{
 				double dHeight = view->getDisplayHeight();
-				double disHeight = this->control->getWindow()->getLayout()->getDisplayHeight();
+				double disHeight = 0;
+
+				//this->control->getWindow()->getLayout()->getDisplayHeight();
 				double top = (dHeight - disHeight)/2.0 + 7.5;
 					//the magic 7.5 is from XOURNAL_PADDING_BETWEEN/2
 				scrollToPage(this->control->getWindow()->getXournal()->getCurrentPage() - 1, top);
@@ -53,7 +55,7 @@ void ScrollHandler::goToNextPage()
 			if (view)
 			{
 				double dHeight = view->getDisplayHeight();
-				double disHeight = this->control->getWindow()->getLayout()->getDisplayHeight();
+				double disHeight = this->control->getWindow()->getLayout()->getLayoutHeight();
 				//this gets reversed when we are going down if the page is smaller than the display height
 				double top = (-dHeight + disHeight)/2.0 - 7.5;
 				//the magic 7.5 is from XOURNAL_PADDING_BETWEEN/2

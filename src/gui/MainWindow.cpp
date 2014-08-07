@@ -41,29 +41,28 @@ MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control) :
 	this->toolbarMenuData = NULL;
 	this->toolbarMenuitems = NULL;
 
-	GtkWidget* tableXournal = get("tableXournal");
+	//GtkWidget* winXournal = get("winXournal");
+	GtkWidget* vpXournal = get("vpXournal");
 
-	this->xournal = new XournalView(tableXournal, control);
+	this->xournal = new XournalView(vpXournal, control);
 
+	/*
 	ScrollbarHideType type = control->getSettings()->getScrollbarHideType();
 
 	if (type == SCROLLBAR_HIDE_NONE || type == SCROLLBAR_HIDE_VERTICAL)
 	{
 		Layout* layout = gtk_xournal_get_layout(this->xournal->getWidget());
-		/*
-		gtk_table_attach(GTK_TABLE(tableXournal), layout->getScrollbarHorizontal(), 1,
-		                 2, 1, 2, (GtkAttachOptions)(
-		                     GTK_EXPAND | GTK_FILL), GTK_FILL, 0, 0);
-		*/
+
 		gtk_grid_attach(GTK_GRID(tableXournal), layout->getScrollbarHorizontal(),
 		                1, 1 ,1, 1);
 	}
+	*/
 
 	setSidebarVisible(control->getSettings()->isSidebarVisible());
 
 	// Window handler
 	g_signal_connect(this->window, "delete-event",
-	                 (GCallback) & deleteEventCallback, this->control);
+	                 (GCallback) &deleteEventCallback, this->control);
 	g_signal_connect(this->window, "window_state_event",
 	                 G_CALLBACK(&windowStateEventCallback), this);
 
@@ -72,7 +71,7 @@ MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control) :
 
 	//"watch over" all events
 	g_signal_connect(this->window, "key-press-event",
-	                 (GCallback) & onKeyPressCallback, this);
+	                 (GCallback) &onKeyPressCallback, this);
 
 	this->toolbar = new ToolMenuHandler(this->control,
 	                                    this->control->getZoomControl(), this,
@@ -351,18 +350,18 @@ void MainWindow::updateScrollbarSidebarPosition()
 
 	GtkWidget* panelMainContents = get("panelMainContents");
 	GtkWidget* sidebarContents = get("sidebarContents");
-	GtkWidget* tableXournal = get("tableXournal");
+	GtkWidget* winXournal = get("winXournal");
 
 	bool scrollbarOnLeft = control->getSettings()->isScrollbarOnLeft();
 
-	Layout* layout = this->getLayout();
-
+	/*
 	GtkWidget* v = layout->getScrollbarVertical();
 
 	if (gtk_widget_get_parent(v) != NULL)
 	{
-		gtk_container_remove(GTK_CONTAINER(tableXournal), v);
+		gtk_container_remove(GTK_CONTAINER(winXournal), v);
 	}
+	*/
 
 	ScrollbarHideType type =
 	    this->getControl()->getSettings()->getScrollbarHideType();
@@ -371,11 +370,13 @@ void MainWindow::updateScrollbarSidebarPosition()
 	{
 		if (scrollbarOnLeft)
 		{
-			gtk_grid_attach(GTK_GRID(tableXournal), v, 0, 0, 1, 1);
+			gtk_scrolled_window_set_placement(GTK_SCROLLED_WINDOW(winXournal),
+			                                  GTK_CORNER_TOP_RIGHT);
 		}
 		else
 		{
-			gtk_grid_attach(GTK_GRID(tableXournal), v, 2, 0, 1, 1);
+			gtk_scrolled_window_set_placement(GTK_SCROLLED_WINDOW(winXournal),
+			                                  GTK_CORNER_TOP_LEFT);
 		}
 	}
 
@@ -395,24 +396,22 @@ void MainWindow::updateScrollbarSidebarPosition()
 	}
 
 	g_object_ref(sidebarContents);
-	g_object_ref(tableXournal);
 
 	gtk_container_remove(GTK_CONTAINER(panelMainContents), sidebarContents);
-	gtk_container_remove(GTK_CONTAINER(panelMainContents), tableXournal);
+	gtk_container_remove(GTK_CONTAINER(panelMainContents), winXournal);
 
 	if (sidebarRight)
 	{
-		gtk_paned_pack1(GTK_PANED(panelMainContents), tableXournal, true, true);
+		gtk_paned_pack1(GTK_PANED(panelMainContents), winXournal, true, true);
 		gtk_paned_pack2(GTK_PANED(panelMainContents), sidebarContents, false, true);
 	}
 	else
 	{
 		gtk_paned_pack1(GTK_PANED(panelMainContents), sidebarContents, false, true);
-		gtk_paned_pack2(GTK_PANED(panelMainContents), tableXournal, true, true);
+		gtk_paned_pack2(GTK_PANED(panelMainContents), winXournal, true, true);
 	}
 
 	g_object_unref(sidebarContents);
-	g_object_unref(tableXournal);
 }
 
 void MainWindow::buttonCloseSidebarClicked(GtkButton* button, MainWindow* win)
