@@ -74,7 +74,7 @@ struct _GtkXournalClass
 };
 
 GType gtk_xournal_get_type(void);
-GtkWidget* gtk_xournal_new(XournalView* view);
+GtkWidget* gtk_xournal_new(XournalView* view, GtkScrollable* parent);
 
 Layout* gtk_xournal_get_layout(GtkWidget* widget);
 

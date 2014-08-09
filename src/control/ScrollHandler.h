@@ -36,8 +36,6 @@ public:
 	void scrollToPage(PageRef page, double top = 0);
 	void scrollToPage(int page, double top = 0);
 
-	void scrollToSpinPange();
-
 	void scrollToAnnotatedPage(bool next);
 
 	bool isPageVisible(int page, int* visibleHeight = NULL);
@@ -46,6 +44,8 @@ public:
 	virtual void pageChanged(int page);
 
 private:
+	void scrollToSpinPange();
+
 	XOJ_TYPE_ATTRIB;
 
 	Control* control;

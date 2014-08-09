@@ -125,3 +125,8 @@ Rectangle& Rectangle::operator*=(double factor)
 
 	return *this;
 }
+
+double Rectangle::area() const
+{
+	return width * height;
+}

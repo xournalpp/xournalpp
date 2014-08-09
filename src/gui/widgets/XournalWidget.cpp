@@ -11,7 +11,6 @@
 #include "../Cursor.h"
 #include "../../control/tools/EditSelection.h"
 #include "../../control/settings/ButtonConfig.h"
-#include "Scrollbar.h"
 #include "../Layout.h"
 
 #include <gdk/gdkkeysyms.h>
@@ -40,7 +39,6 @@ static gboolean gtk_xournal_key_press_event(GtkWidget* widget,
                                             GdkEventKey* event);
 static gboolean gtk_xournal_key_release_event(GtkWidget* widget,
                                               GdkEventKey* event);
-gboolean gtk_xournal_scroll_event(GtkWidget* widget, GdkEventScroll* event);
 static void gtk_xournal_scroll_mouse_event(GtkXournal* xournal,
                                            GdkEventMotion* event);
 
@@ -87,7 +85,7 @@ GType gtk_xournal_get_type(void)
 	return gtk_xournal_type;
 }
 
-GtkWidget* gtk_xournal_new(XournalView* view)
+GtkWidget* gtk_xournal_new(XournalView* view, GtkScrollable* parent)
 {
 	GtkXournal* xoj = GTK_XOURNAL(g_object_new(gtk_xournal_get_type(), NULL));
 	xoj->view = view;
@@ -95,7 +93,9 @@ GtkWidget* gtk_xournal_new(XournalView* view)
 	xoj->scrollY = 0;
 	xoj->x = 0;
 	xoj->y = 0;
-	xoj->layout = new Layout(view);
+	xoj->layout = new Layout(view,
+	                         gtk_scrollable_get_hadjustment(parent),
+	                         gtk_scrollable_get_vadjustment(parent));
 	xoj->currentInputPage = NULL;
 	xoj->pagePositionCache = new PagePositionCache();
 
@@ -123,7 +123,6 @@ static void gtk_xournal_class_init(GtkXournalClass* klass)
 	widget_class->button_press_event = gtk_xournal_button_press_event;
 	widget_class->button_release_event = gtk_xournal_button_release_event;
 	widget_class->motion_notify_event = gtk_xournal_motion_notify_event;
-	widget_class->scroll_event = gtk_xournal_scroll_event;
 
 	widget_class->key_press_event = gtk_xournal_key_press_event;
 	widget_class->key_release_event = gtk_xournal_key_release_event;
@@ -194,15 +193,6 @@ static gboolean gtk_xournal_key_release_event(GtkWidget* widget,
 	GtkXournal* xournal = GTK_XOURNAL(widget);
 
 	return xournal->view->onKeyReleaseEvent(event);
-}
-
-gboolean gtk_xournal_scroll_event(GtkWidget* widget, GdkEventScroll* event)
-{
-	g_return_val_if_fail(GTK_XOURNAL(widget), FALSE);
-	g_return_val_if_fail(event != NULL, FALSE);
-
-	GtkXournal* xournal = GTK_XOURNAL(widget);
-	return xournal->layout->scrollEvent(event);
 }
 
 Rectangle* gtk_xournal_get_visible_area(GtkWidget* widget, PageView* p)
@@ -495,6 +485,7 @@ gboolean gtk_xournal_motion_notify_event(GtkWidget* widget,
 	GtkXournal* xournal = GTK_XOURNAL(widget);
 	ToolHandler* h = xournal->view->getControl()->getToolHandler();
 
+
 	if (h->getToolType() == TOOL_HAND)
 	{
 		if (xournal->inScrolling)
@@ -578,7 +569,9 @@ gtk_xournal_get_preferred_width(GtkWidget *widget,
                                 gint      *minimal_width,
                                 gint      *natural_width)
 {
-  *minimal_width = *natural_width = 200;
+	GtkXournal* xournal = GTK_XOURNAL(widget);
+
+	*minimal_width = *natural_width = xournal->layout->getLayoutWidth();
 }
 
 static void
@@ -586,7 +579,9 @@ gtk_xournal_get_preferred_height(GtkWidget *widget,
                                  gint      *minimal_height,
                                  gint      *natural_height)
 {
-  *minimal_height = *natural_height = 200;
+	GtkXournal* xournal = GTK_XOURNAL(widget);
+
+	*minimal_height = *natural_height = xournal->layout->getLayoutHeight();
 }
 
 static void gtk_xournal_size_allocate(GtkWidget* widget,
@@ -714,17 +709,20 @@ static gboolean gtk_xournal_draw(GtkWidget* widget, cairo_t* cr)
 	g_return_val_if_fail(widget != NULL, FALSE);
 	g_return_val_if_fail(GTK_IS_XOURNAL(widget), FALSE);
 
+	Layout* layout = gtk_xournal_get_layout(widget);
+
 	GtkXournal* xournal = GTK_XOURNAL(widget);
 
 	ArrayIterator<PageView*> it = xournal->view->pageViewIterator();
 
-	GtkAllocation alloc = { 0 };
-	gtk_widget_get_allocation(widget, &alloc);
-	int lastVisibleX = alloc.width + xournal->x + 10;
-	int lastVisibleY = alloc.height + xournal->y + 10; //+10 fix to draw the shadow
+	double x1, x2, y1, y2;
 
-	int firstVisibleX = xournal->x - 10;
-	int firstVisibleY = xournal->y - 10;
+	cairo_clip_extents(cr, &x1, &y1, &x2, &y2);
+
+	Rectangle clippingRect(x1 - 10,
+	                       y1 - 10,
+	                       x2 - x1 + 20,
+	                       y2 - y1 + 20);
 
 	while (it.hasNext())
 	{
@@ -735,82 +733,30 @@ static gboolean gtk_xournal_draw(GtkWidget* widget, cairo_t* cr)
 		int pw = pv->getDisplayWidth();
 		int ph = pv->getDisplayHeight();
 
-		// not visible, its on the right side of the visible area
-		if (px > lastVisibleX)
-		{
-			continue;
-		}
-		// not visible, its on the left side of the visible area
-		if (px + pw < firstVisibleX)
-		{
-			continue;
-		}
-		// not visible, its on the bottom side of the visible area
-		if (py > lastVisibleY)
-		{
-			continue;
-		}
-		// not visible, its on the top side of the visible area
-		if (py + ph < firstVisibleY)
+		if(!clippingRect.intersects(pv->getRect()))
 		{
 			continue;
 		}
 
-		int x = px - xournal->x;
-		int y = py - xournal->y;
+		gtk_xournal_draw_shadow(xournal, cr,
+		                        px, py, pw, ph,
+		                        pv->isSelected());
 
-		gtk_xournal_draw_shadow(xournal, cr, x, y, pw, ph, pv->isSelected());
 		cairo_save(cr);
-		cairo_translate(cr, x, y);
-
-		/*
-		 * TODO: fix the drawing code
-		GdkRectangle rect = event->area;
-		rect.x -= x;
-		rect.y -= y;
-		*/
+		cairo_translate(cr, px, py);
 
 		pv->paintPage(cr, NULL);
 		cairo_restore(cr);
 	}
 
-	if (xournal->selection)
+	if(xournal->selection)
 	{
 		double zoom = xournal->view->getZoom();
 
-		int px = xournal->selection->getXOnView() * zoom;
-		int py = xournal->selection->getYOnView() * zoom;
-		//		int pw = xournal->selection->getWidth() * zoom;
-		//		int ph = xournal->selection->getHeight() * zoom;
+		Redrawable* red = xournal->selection->getView();
+		cairo_translate(cr, red->getX(), red->getY());
 
-		// not visible, its on the right side of the visible area
-		if (px > lastVisibleX)
-		{
-			printf("Warning: object on right side of visible area.\n");
-		}
-		else
-			// not visible, its on the left side of the visible area
-
-			// TODO LOW PRIO this is not working correct if the zoom is small, xournal->x is never smaller than 0
-			//		if (px + pw < firstVisibleX) {
-			//			printf("test2\n");
-			//		} else
-			// not visible, its on the bottom side of the visible area
-			if (py > lastVisibleY)
-			{
-				printf("Warning: object below visible area.\n");
-				//		} else
-				//		// not visible, its on the top side of the visible area
-				//		if (py + ph < firstVisibleY) {
-				//			printf("test4 %i:: %i\n", py + ph, firstVisibleY);
-			}
-			else
-			{
-				Redrawable* red = xournal->selection->getView();
-				cairo_translate(cr, red->getX() - xournal->x, red->getY() - xournal->y);
-
-				xournal->selection->paint(cr, zoom);
-			}
+		xournal->selection->paint(cr, zoom);
 	}
 
 	return TRUE;

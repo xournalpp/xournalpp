@@ -112,7 +112,6 @@ xournalpp_SOURCES = \
 	gui/toolbarMenubar/ToolSelectCombocontrol.cpp \
 	gui/toolbarMenubar/ToolZoomSlider.cpp \
 	gui/widgets/gtkmenutooltogglebutton.cpp \
-	gui/widgets/Scrollbar.cpp \
 	gui/widgets/SelectColor.cpp \
 	gui/widgets/SpinPageAdapter.cpp \
 	gui/widgets/XournalWidget.cpp \
@@ -226,7 +225,7 @@ endif
 poppler:
 	$(abs_top_builddir)/src/pdf/popplerdirect/workaround/workaround.sh build
 
-clean-local:
+distclean-local:
 	$(abs_top_builddir)/src/pdf/popplerdirect/workaround/workaround.sh clean
 
 xournalpp_DEPENDENCIES = poppler
