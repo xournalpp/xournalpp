@@ -6,7 +6,7 @@
 #include "SidebarLayout.h"
 #include "SidebarToolbar.h"
 
-SidebarPreviews::SidebarPreviews(Control* control) :
+SidebarPreviews::SidebarPreviews(Control* control, SidebarToolbar* toolbar) :
 	AbstractSidebarPage(control)
 {
 	XOJ_INIT_TYPE(SidebarPreviews);
@@ -16,7 +16,7 @@ SidebarPreviews::SidebarPreviews(Control* control) :
 	this->backgroundInitialized = false;
 
 	this->layoutmanager = new SidebarLayout();
-	this->toolbar = new SidebarToolbar(control);
+	this->toolbar = toolbar;
 
 	this->zoom = 0.15;
 
@@ -51,8 +51,6 @@ SidebarPreviews::SidebarPreviews(Control* control) :
 	gtk_table_attach(this->table, this->scrollPreview, 0, 1, 0, 1,
 	                 (GtkAttachOptions) (GTK_FILL | GTK_EXPAND),
 	                 (GtkAttachOptions) (GTK_FILL | GTK_EXPAND), 0, 0);
-	gtk_table_attach(this->table, this->toolbar->getWidget(), 0, 1, 1, 2,
-	                 (GtkAttachOptions) (GTK_FILL | GTK_EXPAND), GTK_FILL, 0, 0);
 }
 
 SidebarPreviews::~SidebarPreviews()
@@ -67,9 +65,6 @@ SidebarPreviews::~SidebarPreviews()
 
 	delete this->layoutmanager;
 	this->layoutmanager = NULL;
-
-	delete this->toolbar;
-	this->toolbar = NULL;
 
 	g_object_unref(this->table);
 
@@ -113,8 +108,11 @@ void SidebarPreviews::setBackgroundWhite()
 	}
 	this->backgroundInitialized = true;
 
-	gdk_window_set_background(gtk_layout_get_bin_window(GTK_LAYOUT(this->iconViewPreview)),
-	                          &gtk_widget_get_style(iconViewPreview)->white);
+	GdkRGBA white = {1, 1, 1, 1};
+
+	gtk_widget_override_background_color(this->iconViewPreview,
+	                                     GTK_STATE_FLAG_NORMAL,
+	                                     &white);
 }
 
 double SidebarPreviews::getZoom()

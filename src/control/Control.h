@@ -194,6 +194,7 @@ public:
 	int getCurrentPageNo();
 	Cursor* getCursor();
 	Sidebar* getSidebar();
+	SearchBar* getSearchBar();
 
 	bool copy();
 	bool cut();
