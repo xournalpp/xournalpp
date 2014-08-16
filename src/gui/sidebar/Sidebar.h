@@ -18,6 +18,8 @@
 #include "../model/DocumentChangeType.h"
 #include "../model/DocumentListener.h"
 
+#include "previews/SidebarToolbar.h"
+
 class Control;
 class GladeGui;
 class AbstractSidebarPage;
@@ -63,11 +65,6 @@ public:
 	 * Temporary disable Sidebar (e.g. while saving)
 	 */
 	void setTmpDisabled(bool disabled);
-
-	/**
-	 * Saves the current size to the settings
-	 */
-	void saveSize();
 
 public:
 	// DocumentListener interface
@@ -115,6 +112,8 @@ private:
 	 * The sidebar widget
 	 */
 	GtkWidget* sidebar;
+
+	SidebarToolbar toolbar;
 };
 
 class SidebarPageButton

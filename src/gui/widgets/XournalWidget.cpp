@@ -709,8 +709,6 @@ static gboolean gtk_xournal_draw(GtkWidget* widget, cairo_t* cr)
 	g_return_val_if_fail(widget != NULL, FALSE);
 	g_return_val_if_fail(GTK_IS_XOURNAL(widget), FALSE);
 
-	Layout* layout = gtk_xournal_get_layout(widget);
-
 	GtkXournal* xournal = GTK_XOURNAL(widget);
 
 	ArrayIterator<PageView*> it = xournal->view->pageViewIterator();

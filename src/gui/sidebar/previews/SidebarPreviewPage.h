@@ -35,9 +35,13 @@ public:
 	void updateSize();
 
 private:
-	static gboolean drawCallback(GtkWidget* widget, cairo_t* cr, SidebarPreviewPage* preview);
+	static gboolean drawCallback(GtkWidget* widget,
+	                             cairo_t* cr,
+	                             SidebarPreviewPage* preview);
+
 	static gboolean mouseButtonPressCallback(GtkWidget* widget,
-	                                         GdkEventButton* event, SidebarPreviewPage* preview);
+	                                         GdkEventButton* event,
+	                                         SidebarPreviewPage* preview);
 
 	void paint(cairo_t* cr);
 

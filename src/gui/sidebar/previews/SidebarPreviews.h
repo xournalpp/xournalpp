@@ -25,7 +25,7 @@ class SidebarToolbar;
 class SidebarPreviews : public AbstractSidebarPage
 {
 public:
-	SidebarPreviews(Control* control);
+	SidebarPreviews(Control* control, SidebarToolbar* toolbar);
 	virtual ~SidebarPreviews();
 
 public:
