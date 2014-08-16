@@ -253,7 +253,7 @@ void Control::saveSettings()
 	}
 	this->settings->setMainWndMaximized(this->win->isMaximized());
 
-	this->sidebar->saveSize();
+	this->win->saveSidebarSize();
 }
 
 void Control::initWindow(MainWindow* win)
@@ -1941,7 +1941,7 @@ void Control::calcZoomFitSize()
 
 		GtkAllocation allocation = { 0 };
 
-		gtk_widget_get_allocation(win->getXournal()->getWidget(), &allocation);
+		gtk_widget_get_allocation(win->get("vpXournal"), &allocation);
 		double factor = ((double) allocation.width) / width;
 		zoom->setZoomFit(factor);
 	}
@@ -2011,6 +2011,8 @@ bool Control::invokeCallback(CallbackData* cb)
 		break;
 	case ACTION_ZOOM_OUT:
 		zoom->zoomOut();
+		break;
+	default:
 		break;
 	}
 
@@ -3506,3 +3508,9 @@ Sidebar* Control::getSidebar()
 	return this->sidebar;
 }
 
+SearchBar* Control::getSearchBar()
+{
+	XOJ_CHECK_TYPE(Control);
+
+	return this->searchBar;
+}

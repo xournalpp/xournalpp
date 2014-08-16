@@ -83,6 +83,6 @@ void AbstractSidebarPage::setTmpDisabled(bool disabled)
 
 	if (cursor)
 	{
-		gdk_cursor_unref(cursor);
+		g_object_unref(cursor);
 	}
 }

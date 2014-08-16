@@ -13,6 +13,7 @@
 #include <glib/gi18n-lib.h>
 
 Sidebar::Sidebar(GladeGui* gui, Control* control)
+	: toolbar(control, gui)
 {
 	XOJ_INIT_TYPE(Sidebar);
 
@@ -23,9 +24,6 @@ Sidebar::Sidebar(GladeGui* gui, Control* control)
 	this->visiblePage = NULL;
 
 	this->sidebar = gui->get("sidebarContents");
-
-	gtk_widget_set_size_request(sidebar, control->getSettings()->getSidebarWidth(),
-	                            100);
 
 	this->initPages(sidebar, gui);
 
@@ -40,7 +38,7 @@ void Sidebar::initPages(GtkWidget* sidebar, GladeGui* gui)
 	XOJ_CHECK_TYPE(Sidebar);
 
 	addPage(new SidebarIndexPage(this->control));
-	addPage(new SidebarPreviews(this->control));
+	addPage(new SidebarPreviews(this->control, &this->toolbar));
 
 	// Init toolbar with icons
 
@@ -189,16 +187,6 @@ void Sidebar::setTmpDisabled(bool disabled)
 	}
 
 	gdk_display_sync(gdk_display_get_default());
-}
-
-void Sidebar::saveSize()
-{
-	XOJ_CHECK_TYPE(Sidebar);
-
-	GtkAllocation alloc;
-	gtk_widget_get_allocation(this->sidebar, &alloc);
-
-	this->control->getSettings()->setSidebarWidth(alloc.width);
 }
 
 Control* Sidebar::getControl()

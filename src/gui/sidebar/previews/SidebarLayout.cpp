@@ -13,24 +13,6 @@ SidebarLayout::~SidebarLayout()
 	XOJ_RELEASE_TYPE(SidebarLayout);
 }
 
-// Simple layout
-//
-//void SidebarLayout::layout(SidebarPreviews * sidebar) {
-//	int x = 0;
-//	int y = 0;
-//	int width = 0;
-//
-//	for (int i = 0; i < sidebar->previewCount; i++) {
-//		SidebarPreviewPage * p = sidebar->previews[i];
-//		gtk_layout_move(GTK_LAYOUT(sidebar->iconViewPreview), p->getWidget(), x, y);
-//		y += p->getHeight();
-//		width = MAX(width, p->getWidth());
-//	}
-//
-//	gtk_layout_set_size(GTK_LAYOUT(sidebar->iconViewPreview), width, y);
-//
-//}
-
 class SidebarRow
 {
 public:
@@ -157,8 +139,6 @@ void SidebarLayout::layout(SidebarPreviews* sidebar)
 
 		row.clear();
 	}
-
-
 
 	gtk_layout_set_size(GTK_LAYOUT(sidebar->iconViewPreview), width, y);
 }
