@@ -36,9 +36,6 @@ SidebarPreviews::SidebarPreviews(Control* control, SidebarToolbar* toolbar) :
 	                                    GTK_SHADOW_IN);
 
 	gtk_container_add(GTK_CONTAINER(this->scrollPreview), this->iconViewPreview);
-	gtk_widget_show(this->scrollPreview);
-
-	gtk_widget_show(this->iconViewPreview);
 
 	registerListener(this->control);
 
@@ -51,6 +48,8 @@ SidebarPreviews::SidebarPreviews(Control* control, SidebarToolbar* toolbar) :
 	gtk_table_attach(this->table, this->scrollPreview, 0, 1, 0, 1,
 	                 (GtkAttachOptions) (GTK_FILL | GTK_EXPAND),
 	                 (GtkAttachOptions) (GTK_FILL | GTK_EXPAND), 0, 0);
+
+	gtk_widget_show_all(GTK_WIDGET(this->table));
 }
 
 SidebarPreviews::~SidebarPreviews()
@@ -170,6 +169,7 @@ void SidebarPreviews::updatePreviews()
 	}
 
 	layout();
+
 	doc->unlock();
 }
 
@@ -271,15 +271,7 @@ bool SidebarPreviews::scrollToPreview(SidebarPreviews* sidebar)
 
 		int x = allocation.x;
 		int y = allocation.y;
-		gdk_threads_leave();
 
-		if (x == -1)
-		{
-			g_idle_add((GSourceFunc) scrollToPreview, sidebar);
-			return false;
-		}
-
-		gdk_threads_enter();
 		gtk_adjustment_clamp_page(vadj, y, y + allocation.height);
 		gtk_adjustment_clamp_page(hadj, x, x + allocation.width);
 		gdk_threads_leave();
