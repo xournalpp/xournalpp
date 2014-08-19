@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Generated with glade 3.18.3 -->
 <interface>
-  <requires lib="gtk+" version="3.12"/>
+  <requires lib="gtk+" version="3.10"/>
   <object class="GtkWindow" id="mainWindow">
     <property name="can_focus">False</property>
     <property name="icon">pixmaps/xournalpp.svg</property>
@@ -1532,8 +1532,6 @@
                 <property name="can_focus">False</property>
                 <property name="margin_left">10</property>
                 <property name="margin_right">10</property>
-                <property name="margin_start">10</property>
-                <property name="margin_end">10</property>
                 <property name="margin_top">6</property>
                 <property name="margin_bottom">6</property>
                 <property name="orientation">vertical</property>
