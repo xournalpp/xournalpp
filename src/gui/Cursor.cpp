@@ -316,7 +316,7 @@ void Cursor::updateCursor()
 
 GdkCursor* Cursor::eraserCursor()
 {
-	g_message("Creating eraser cursor");
+	//g_message("Creating eraser cursor");
 
 	Tool& eraser = control->getToolHandler()->getTool(TOOL_ERASER);
 	GdkCursor* cursor = NULL;
@@ -329,7 +329,7 @@ GdkCursor* Cursor::eraserCursor()
 
 	const double cursorSize = 8;
 
-	g_message("Cursor size: %f", cursorSize);
+	//g_message("Cursor size: %f", cursorSize);
 
 	cairo_surface_t* surface = cairo_image_surface_create(CAIRO_FORMAT_ARGB32,
 	                                                      cursorSize,

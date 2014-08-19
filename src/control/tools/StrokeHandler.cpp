@@ -43,7 +43,7 @@ void StrokeHandler::draw(cairo_t* cr)
 
 	g_timer_stop(timer);
 
-	g_message("Drawing time for overlay: %f", g_timer_elapsed(timer, NULL));
+	//g_message("Drawing time for overlay: %f", g_timer_elapsed(timer, NULL));
 
 	g_timer_destroy(timer);
 }
