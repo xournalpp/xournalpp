@@ -2,7 +2,6 @@
 
 #include <stdlib.h>
 
-#include <config.h>
 #include <glib/gi18n-lib.h>
 
 FontButton::FontButton(ActionHandler* handler, GladeGui* gui, String id,

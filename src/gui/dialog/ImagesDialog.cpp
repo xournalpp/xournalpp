@@ -6,7 +6,6 @@
 #include "../../model/BackgroundImage.h"
 #include "../../control/settings/Settings.h"
 
-#include <config.h>
 #include <glib/gi18n-lib.h>
 
 class ImageView

@@ -4,7 +4,6 @@
 
 #include "../widgets/SpinPageAdapter.h"
 
-#include <config.h>
 #include <glib/gi18n-lib.h>
 
 ToolPageSpinner::ToolPageSpinner(GladeGui* gui, ActionHandler* handler,

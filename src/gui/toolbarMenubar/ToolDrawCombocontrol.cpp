@@ -3,7 +3,6 @@
 
 #include "ToolMenuHandler.h"
 
-#include <config.h>
 #include <glib/gi18n-lib.h>
 
 ToolDrawCombocontrol::ToolDrawCombocontrol(ToolMenuHandler* th,

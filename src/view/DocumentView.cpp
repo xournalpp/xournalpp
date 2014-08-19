@@ -8,7 +8,6 @@
 #include "../model/BackgroundImage.h"
 #include "../cfg.h"
 
-#include <config.h>
 #include <glib/gi18n-lib.h>
 
 #include <typeinfo>

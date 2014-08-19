@@ -1,7 +1,6 @@
 #include "ExportDialog.h"
 #include <PageRange.h>
 
-#include <config.h>
 #include <glib/gi18n-lib.h>
 
 ExportDialog::ExportDialog(GladeSearchpath* gladeSearchPath, Settings* settings,

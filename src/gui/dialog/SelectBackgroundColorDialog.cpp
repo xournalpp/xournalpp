@@ -13,7 +13,6 @@
 #include "../../control/Control.h"
 #include "../widgets/SelectColor.h"
 
-#include <config.h>
 #include <glib/gi18n-lib.h>
 
 class ColorEntry

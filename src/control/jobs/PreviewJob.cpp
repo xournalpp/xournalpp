@@ -51,14 +51,14 @@ void PreviewJob::run(bool noThreads)
 
 	double zoom = this->sidebarPreview->sidebar->getZoom();
 
-	cairo_t* cr2 = cairo_create(crBuffer);
-	cairo_matrix_t defaultMatrix = { 0 };
-	cairo_get_matrix(cr2, &defaultMatrix);
+	cairo_t* cr = cairo_create(crBuffer);
 
-	cairo_translate(cr2, Shadow::getShadowTopLeftSize() + 2,
+	cairo_save(cr);
+
+	cairo_translate(cr, Shadow::getShadowTopLeftSize() + 2,
 	                Shadow::getShadowTopLeftSize() + 2);
 
-	cairo_scale(cr2, zoom, zoom);
+	cairo_scale(cr, zoom, zoom);
 
 	Document* doc = this->sidebarPreview->sidebar->getControl()->getDocument();
 	if(!noThreads)
@@ -69,30 +69,30 @@ void PreviewJob::run(bool noThreads)
 		int pgNo = this->sidebarPreview->page->getPdfPageNr();
 		XojPopplerPage* popplerPage = doc->getPdfPage(pgNo);
 		PdfView::drawPage(this->sidebarPreview->sidebar->getCache(),
-		                  popplerPage, cr2, zoom,
+		                  popplerPage, cr, zoom,
 		                  this->sidebarPreview->page->getWidth(),
 		                  this->sidebarPreview->page->getHeight());
 	}
 
 	DocumentView view;
-	view.drawPage(this->sidebarPreview->page, cr2, true);
+	view.drawPage(this->sidebarPreview->page, cr, true);
 
-	cairo_set_matrix(cr2, &defaultMatrix);
+	cairo_restore(cr);
 
-	cairo_set_operator(cr2, CAIRO_OPERATOR_SOURCE);
+	cairo_set_operator(cr, CAIRO_OPERATOR_SOURCE);
 
-	cairo_set_source_rgb(cr2, 1, 1, 1);
-	cairo_rectangle(cr2, 0, 0, Shadow::getShadowTopLeftSize() + 2, alloc.height);
-	cairo_rectangle(cr2, 0, 0, alloc.height, Shadow::getShadowTopLeftSize() + 2);
+	cairo_set_source_rgb(cr, 1, 1, 1);
+	cairo_rectangle(cr, 0, 0, Shadow::getShadowTopLeftSize() + 2, alloc.height);
+	cairo_rectangle(cr, 0, 0, alloc.height, Shadow::getShadowTopLeftSize() + 2);
 
-	cairo_rectangle(cr2, alloc.width - Shadow::getShadowBottomRightSize() - 2, 0,
+	cairo_rectangle(cr, alloc.width - Shadow::getShadowBottomRightSize() - 2, 0,
 	                Shadow::getShadowBottomRightSize() + 2, alloc.height);
-	cairo_rectangle(cr2, 0, alloc.height - Shadow::getShadowBottomRightSize() - 2,
+	cairo_rectangle(cr, 0, alloc.height - Shadow::getShadowBottomRightSize() - 2,
 	                alloc.width, Shadow::getShadowBottomRightSize() + 2);
 
-	cairo_fill(cr2);
+	cairo_fill(cr);
 
-	cairo_destroy(cr2);
+	cairo_destroy(cr);
 
 
 	if(!noThreads)

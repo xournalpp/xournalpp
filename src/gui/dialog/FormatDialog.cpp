@@ -2,7 +2,6 @@
 
 #include "../../model/FormatDefinitions.h"
 
-#include <config.h>
 #include <glib/gi18n-lib.h>
 
 FormatDialog::FormatDialog(GladeSearchpath* gladeSearchPath, Settings* settings,

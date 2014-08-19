@@ -3,7 +3,6 @@
 #include "../../../model/XojPage.h"
 #include "../../../control/Control.h"
 
-#include <config.h>
 #include <glib/gi18n-lib.h>
 
 SidebarIndexPage::SidebarIndexPage(Control* control) : AbstractSidebarPage(

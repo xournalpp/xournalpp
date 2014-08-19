@@ -7,7 +7,6 @@
 #include "../poppler-0.24.1/poppler/ErrorCodes.h"
 #include "../poppler-0.24.1/poppler/Outline.h"
 
-#include <config.h>
 #include <glib/gi18n-lib.h>
 
 

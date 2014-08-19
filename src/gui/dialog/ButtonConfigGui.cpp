@@ -3,7 +3,6 @@
 #include "../../control/settings/ButtonConfig.h"
 #include "SettingsDialog.h"
 
-#include <config.h>
 #include <glib/gi18n-lib.h>
 
 #define	ADD_TYPE_CB(icon, name, action) \

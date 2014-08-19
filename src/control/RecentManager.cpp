@@ -2,7 +2,6 @@
 #include <string.h>
 #include "RecentManager.h"
 
-#include <config.h>
 #include <glib/gi18n-lib.h>
 
 #define MIME "application/x-xoj"

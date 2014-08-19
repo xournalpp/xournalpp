@@ -2,7 +2,6 @@
 
 #include "../GladeGui.h"
 
-#include <config.h>
 #include <glib/gi18n-lib.h>
 
 ToolPageLayer::ToolPageLayer(GladeGui* gui, ActionHandler* handler, String id,

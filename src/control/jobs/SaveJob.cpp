@@ -1,6 +1,5 @@
 #include "SaveJob.h"
 
-#include <config.h>
 #include <glib/gi18n-lib.h>
 
 #include "../SaveHandler.h"
