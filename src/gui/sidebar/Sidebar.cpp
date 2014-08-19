@@ -26,9 +26,6 @@ Sidebar::Sidebar(GladeGui* gui, Control* control)
 
 	this->initPages(sidebar, gui);
 
-	gtk_widget_set_visible(GTK_WIDGET(sidebar),
-	                       control->getSettings()->isSidebarVisible());
-
 	registerListener(control);
 }
 
