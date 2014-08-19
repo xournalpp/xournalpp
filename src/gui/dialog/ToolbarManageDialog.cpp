@@ -2,7 +2,6 @@
 #include "../toolbarMenubar/model/ToolbarData.h"
 #include "../toolbarMenubar/model/ToolbarModel.h"
 
-#include <config.h>
 #include <glib/gi18n-lib.h>
 
 enum

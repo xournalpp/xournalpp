@@ -3,7 +3,6 @@
 #include <math.h>
 #include <Util.h>
 
-#include <config.h>
 #include <glib/gi18n-lib.h>
 
 class PdfPage

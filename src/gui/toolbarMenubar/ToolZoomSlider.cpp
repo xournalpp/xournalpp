@@ -1,6 +1,5 @@
 #include "ToolZoomSlider.h"
 
-#include <config.h>
 #include <glib/gi18n-lib.h>
 
 ToolZoomSlider::ToolZoomSlider(ActionHandler* handler, String id,

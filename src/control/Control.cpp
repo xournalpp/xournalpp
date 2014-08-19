@@ -43,7 +43,6 @@
 #include "../gui/toolbarMenubar/model/ToolbarData.h"
 #include "../gui/toolbarMenubar/ToolMenuHandler.h"
 
-#include <config.h>
 #include <glib/gi18n-lib.h>
 
 #include <stdio.h>

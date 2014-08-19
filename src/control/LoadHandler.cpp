@@ -9,7 +9,6 @@
 #include <string.h>
 #include <stdlib.h>
 
-#include <config.h>
 #include <glib/gi18n-lib.h>
 
 typedef struct

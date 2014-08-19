@@ -11,7 +11,6 @@
 #include "widgets/SpinPageAdapter.h"
 #include "ToolitemDragDrop.h"
 
-#include <config.h>
 #include <glib/gi18n-lib.h>
 
 #include "ToolbarDefinitions.h"

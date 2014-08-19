@@ -1,5 +1,4 @@
 #include "AboutDialog.h"
-#include <config.h>
 #include <String.h>
 
 #define AUTOHOR(name) authors += name; authors += "\n";

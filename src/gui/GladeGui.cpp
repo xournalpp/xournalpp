@@ -1,8 +1,6 @@
 #include "GladeGui.h"
-#include <config.h>
 #include <stdlib.h>
 
-#include <config.h>
 #include <glib/gi18n-lib.h>
 
 #include "GladeSearchpath.h"

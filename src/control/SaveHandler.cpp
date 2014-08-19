@@ -25,10 +25,8 @@
 #include "xml/XmlTexNode.h"
 #include "xml/XmlPointNode.h"
 
-#include <config.h>
 #include <glib/gi18n-lib.h>
 
-#include <config.h>
 
 // TODO LOW PRIO: remove all elements which are complete outside the pages
 // TODO LOW PRIO: remove 0 width line parts

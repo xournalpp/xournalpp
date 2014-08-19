@@ -5,8 +5,6 @@ AC_INIT(Xournalpp, 1.0.1)
 
 AC_CONFIG_AUX_DIR([scripts])
 
-AM_CONFIG_HEADER(config.h)
-
 AC_CANONICAL_SYSTEM
 
 AM_INIT_AUTOMAKE([subdir-objects])

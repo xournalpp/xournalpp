@@ -39,8 +39,6 @@
  *
  */
 
-#include <config.h>
-
 #include <pixbuf-utils.h>
 
 #include <string.h>

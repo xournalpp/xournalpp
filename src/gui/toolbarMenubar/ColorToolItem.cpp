@@ -2,7 +2,6 @@
 #include "../widgets/SelectColor.h"
 #include <Util.h>
 
-#include <config.h>
 #include <glib/gi18n-lib.h>
 
 #include "model/ToolbarColorNames.h"

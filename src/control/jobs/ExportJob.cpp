@@ -9,7 +9,6 @@
 #include "ExportFormtType.h"
 #include "../../pdf/popplerdirect/PdfExport.h"
 
-#include <config.h>
 #include <glib/gi18n-lib.h>
 
 ExportJob::ExportJob(Control* control, GList* selected, ExportFormtType type,

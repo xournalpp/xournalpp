@@ -3,7 +3,6 @@
 #include "Settings.h"
 #include "ButtonConfig.h"
 
-#include <config.h>
 #include <glib/gi18n-lib.h>
 
 #define DEFAULT_FONT "Sans"

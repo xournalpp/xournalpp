@@ -12,7 +12,6 @@
 #ifndef __XOURNALMAIN_H__
 #define __XOURNALMAIN_H__
 
-#include <config.h>
 #include <XournalType.h>
 
 class GladeSearchpath;

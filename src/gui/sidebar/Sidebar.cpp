@@ -9,7 +9,6 @@
 
 #include <string.h>
 
-#include <config.h>
 #include <glib/gi18n-lib.h>
 
 Sidebar::Sidebar(GladeGui* gui, Control* control)
