@@ -90,7 +90,7 @@ void SidebarPreviews::sizeChanged(GtkWidget* widget, GtkAllocation* allocation,
 		lastWidth = allocation->width;
 	}
 
-	if (ABS(lastWidth - allocation->width) > 20)
+	if (lastWidth != allocation->width)
 	{
 		sidebar->layout();
 		lastWidth = allocation->width;
