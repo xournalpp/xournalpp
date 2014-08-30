@@ -166,6 +166,12 @@ void SettingsDialog::load()
 	loadCheckbox("cbBigCursor", settings->isShowBigCursor());
 	loadCheckbox("cbEventCompression", settings->isEventCompression());
 
+        loadCheckbox("cbHideHorizontalScrollbar",
+                     settings->getScrollbarHideType() & SCROLLBAR_HIDE_HORIZONTAL);
+
+        loadCheckbox("cbHideVerticalScrollbar",
+                     settings->getScrollbarHideType() & SCROLLBAR_HIDE_VERTICAL);
+
 	GtkWidget* txtDefaultSaveName = get("txtDefaultSaveName");
 	const char* txt = settings->getDefaultSaveName().c_str();
 	if (txt == NULL)
@@ -313,6 +319,19 @@ void SettingsDialog::save()
 	settings->setAddHorizontalSpace(getCheckbox("cbAddHorizontalSpace"));
 	settings->setShowBigCursor(getCheckbox("cbBigCursor"));
 	settings->setEventCompression(getCheckbox("cbEventCompression"));
+
+	ScrollbarHideType type = SCROLLBAR_HIDE_NONE;
+
+        if(getCheckbox("cbHideHorizontalScrollbar"))
+        {
+                type = (ScrollbarHideType) (type | SCROLLBAR_HIDE_HORIZONTAL);
+        }
+        if(getCheckbox("cbHideVerticalScrollbar"))
+        {
+                type = (ScrollbarHideType) (type | SCROLLBAR_HIDE_VERTICAL);
+        }
+
+        settings->setScrollbarHideType(type);
 
 	GtkWidget* colorBorder = get("colorBorder");
 	GdkColor color = { 0 };

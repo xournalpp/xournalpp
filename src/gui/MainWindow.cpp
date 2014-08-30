@@ -340,6 +340,9 @@ void MainWindow::updateScrollbarSidebarPosition()
 
 	bool scrollbarOnLeft = control->getSettings()->isScrollbarOnLeft();
 
+	ScrollbarHideType type =
+	    this->getControl()->getSettings()->getScrollbarHideType();
+
 	if (scrollbarOnLeft)
 	{
 		gtk_scrolled_window_set_placement(GTK_SCROLLED_WINDOW(winXournal),
@@ -351,6 +354,9 @@ void MainWindow::updateScrollbarSidebarPosition()
 		                                  GTK_CORNER_TOP_LEFT);
 	}
 
+	gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(winXournal),
+	                               (type & SCROLLBAR_HIDE_HORIZONTAL) ? GTK_POLICY_NEVER : GTK_POLICY_AUTOMATIC,
+	                               (type & SCROLLBAR_HIDE_VERTICAL)   ? GTK_POLICY_NEVER : GTK_POLICY_AUTOMATIC);
 
 	int divider = gtk_paned_get_position(GTK_PANED(panelMainContents));
 	bool sidebarRight = control->getSettings()->isSidebarOnRight();

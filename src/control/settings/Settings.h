@@ -30,6 +30,16 @@ enum AttributeType
     ATTRIBUTE_TYPE_BOOLEAN,
 };
 
+
+// use this as a bit flag
+enum ScrollbarHideType
+{
+    SCROLLBAR_HIDE_NONE = 0,
+    SCROLLBAR_HIDE_HORIZONTAL = 1 << 1,
+    SCROLLBAR_HIDE_VERTICAL = 1 << 2,
+    SCROLLBAR_HIDE_BOTH = SCROLLBAR_HIDE_HORIZONTAL | SCROLLBAR_HIDE_VERTICAL
+};
+
 class ButtonConfig;
 
 class SAttribute
@@ -222,6 +232,9 @@ public:
 	bool isShowBigCursor();
 	void setShowBigCursor(bool b);
 
+	ScrollbarHideType getScrollbarHideType();
+	void setScrollbarHideType(ScrollbarHideType type);
+
 	String getDefaultSaveName();
 	void setDefaultSaveName(String name);
 
@@ -314,6 +327,11 @@ private:
 	 * Show a better visible cursor for pen
 	 */
 	bool showBigCursor;
+
+	/**
+	 * Hide the scrollbar
+	 */
+	ScrollbarHideType scrollbarHideType;
 
 	/**
 	 * The selected Toolbar name
