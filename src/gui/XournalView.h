@@ -123,8 +123,6 @@ private:
 
 	void fireZoomChanged();
 
-	void addLoadPageToQue(PageRef page, int priority);
-
 	static gboolean clearMemoryTimer(XournalView* widget);
 
 private:
