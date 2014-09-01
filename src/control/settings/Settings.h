@@ -252,6 +252,9 @@ public:
 	void setPdfPageCacheSize(int size);
 
 	String getVisiblePageFormats();
+
+	bool isEventCompression();
+	void setEventCompression(bool enabled);
 public:
 	// Custom settings
 	SElement& getCustomElement(String name);
@@ -440,6 +443,11 @@ private:
 	 * The page format which are visible
 	 */
 	String visiblePageFormats;
+
+	/**
+	 * Whether event compression should be enabled
+	 */
+	bool eventCompression;
 };
 
 #endif /* __SETTINGS_H__ */

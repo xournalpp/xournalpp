@@ -35,6 +35,8 @@ XournalView::XournalView(GtkWidget* parent, Control* control)
 	gtk_container_add(GTK_CONTAINER(parent), this->widget);
 	gtk_widget_show(this->widget);
 
+	g_signal_connect(getWidget(), "realize", G_CALLBACK(onRealized), this);
+
 	this->repaintHandler = new RepaintHandler(this);
 	this->pagePosition = new PagePositionHandler();
 
@@ -292,6 +294,11 @@ bool XournalView::onKeyReleaseEvent(GdkEventKey* event)
 	}
 
 	return false;
+}
+
+void XournalView::onRealized(GtkWidget* widget, XournalView* view)
+{
+	view->setEventCompression(view->getControl()->getSettings()->isEventCompression());
 }
 
 // send the focus back to the appropriate widget
@@ -755,6 +762,13 @@ void XournalView::repaintSelection(bool evenWithoutSelection)
 
 	// TODO OPTIMIZE ?
 	gtk_widget_queue_draw(this->widget);
+}
+
+void XournalView::setEventCompression(gboolean enable)
+{
+	if(gtk_widget_get_realized(getWidget()))
+	gdk_window_set_event_compression(gtk_widget_get_window(getWidget()),
+	                                 enable);
 }
 
 void XournalView::layoutPages()

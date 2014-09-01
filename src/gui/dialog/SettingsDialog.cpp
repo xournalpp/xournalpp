@@ -164,6 +164,7 @@ void SettingsDialog::load()
 	loadCheckbox("cbAddVerticalSpace", settings->getAddVerticalSpace());
 	loadCheckbox("cbAddHorizontalSpace", settings->getAddHorizontalSpace());
 	loadCheckbox("cbBigCursor", settings->isShowBigCursor());
+	loadCheckbox("cbEventCompression", settings->isEventCompression());
 
 	GtkWidget* txtDefaultSaveName = get("txtDefaultSaveName");
 	const char* txt = settings->getDefaultSaveName().c_str();
@@ -311,6 +312,7 @@ void SettingsDialog::save()
 	settings->setAddVerticalSpace(getCheckbox("cbAddVerticalSpace"));
 	settings->setAddHorizontalSpace(getCheckbox("cbAddHorizontalSpace"));
 	settings->setShowBigCursor(getCheckbox("cbBigCursor"));
+	settings->setEventCompression(getCheckbox("cbEventCompression"));
 
 	GtkWidget* colorBorder = get("colorBorder");
 	GdkColor color = { 0 };

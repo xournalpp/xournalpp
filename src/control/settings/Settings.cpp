@@ -116,6 +116,8 @@ void Settings::loadDefault()
 	this->pdfPageCacheSize = 10;
 
 	this->selectionColor = 0xff0000;
+
+	this->eventCompression = true;
 }
 
 void Settings::parseData(xmlNodePtr cur, SElement& elem)
@@ -307,6 +309,10 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur)
 	else if (xmlStrcmp(name, (const xmlChar*) "widthMaximumMultiplier") == 0)
 	{
 		this->widthMaximumMultiplier = g_ascii_strtod((const char*) value, NULL);
+	}
+	else if (xmlStrcmp(name, (const xmlChar*) "eventCompression") == 0)
+	{
+		this->eventCompression = xmlStrcmp(value, (const xmlChar*) "true") ? false : true;
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "sidebarOnRight") == 0)
 	{
@@ -825,6 +831,8 @@ void Settings::save()
 	WRITE_DOUBLE_PROP(widthMaximumMultiplier);
 	WRITE_COMMENT("The multiplier for the pressure sensitivity of the pen");
 
+	WRITE_BOOL_PROP(eventCompression);
+
 	xmlNodePtr xmlFont;
 	xmlFont = xmlNewChild(root, NULL, (const xmlChar*) "property", NULL);
 	xmlSetProp(xmlFont, (const xmlChar*) "name", (const xmlChar*) "font");
@@ -1130,6 +1138,16 @@ String Settings::getVisiblePageFormats()
 	XOJ_CHECK_TYPE(Settings);
 
 	return this->visiblePageFormats;
+}
+
+bool Settings::isEventCompression()
+{
+	return this->eventCompression;
+}
+
+void Settings::setEventCompression(bool enabled)
+{
+	this->eventCompression = enabled;
 }
 
 void Settings::setShowTwoPages(bool showTwoPages)

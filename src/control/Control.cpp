@@ -2338,6 +2338,8 @@ void Control::showSettings()
 
 	enableAutosave(settings->isAutosaveEnabled());
 
+	getWindow()->getXournal()->setEventCompression(settings->isEventCompression());
+
 	this->zoom->setZoom100(settings->getDisplayDpi() / 72.0);
 	delete dlg;
 }
