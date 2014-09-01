@@ -83,6 +83,8 @@ public:
 	void deleteSelection(EditSelection* sel = NULL);
 	void repaintSelection(bool evenWithoutSelection = false);
 
+	void setEventCompression(gboolean enable);
+
 	TextEditor* getTextEditor();
 	ArrayIterator<PageView*> pageViewIterator();
 	Control* getControl();
@@ -118,6 +120,8 @@ public:
 public:
 	bool onKeyPressEvent(GdkEventKey* event);
 	bool onKeyReleaseEvent(GdkEventKey* event);
+
+	static void onRealized(GtkWidget* widget, XournalView* view);
 
 private:
 

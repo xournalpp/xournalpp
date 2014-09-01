@@ -485,7 +485,6 @@ gboolean gtk_xournal_motion_notify_event(GtkWidget* widget,
 	GtkXournal* xournal = GTK_XOURNAL(widget);
 	ToolHandler* h = xournal->view->getControl()->getToolHandler();
 
-
 	if (h->getToolType() == TOOL_HAND)
 	{
 		if (xournal->inScrolling)
