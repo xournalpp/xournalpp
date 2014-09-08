@@ -32,6 +32,12 @@ class InputHandler;
 
 class Text;
 
+/**
+ * @brief A widget displaying a single XojPage of a given Document
+ * 
+ * The PageView contains an internal buffer to speed up the rendering
+ * of its page
+ */
 class PageView: public Redrawable, public PageListener
 {
 public:
@@ -47,11 +53,23 @@ public:
 	virtual void repaintPage();
 	virtual void repaintArea(double x1, double y1, double x2, double y2);
 
+	/**
+	 * Marks the PageView as selected.
+	 * There should always be exactly one selected PageView
+	 */
 	void setSelected(bool selected);
+	bool isSelected();
 
+	/**
+	 * Marks the PageView to be visible.
+	 * Used by the Layout
+	 */
 	void setIsVisible(bool visible);
 
-	bool isSelected();
+	/**
+	 * Returns whether this PageView is visible
+	 */
+	bool isVisible();
 
 	void endText();
 
@@ -68,7 +86,49 @@ public:
 
 	void resetShapeRecognizer();
 
+	/**
+	 * Deletes the view buffer freeing its memory
+	 * Assumes that the calling thread holds the drawing mutex
+	 */
 	void deleteViewBuffer();
+
+	/**
+	 * Creates a new view buffer with the specified size
+	 * Assumes that the calling thread holds the drawing mutex
+	 */
+	void createViewBuffer(int width, int height);
+
+	/**
+	 * Replaces the current view buffer by the specified one
+	 * Assumes that the calling thread holds the drawing mutex
+	 */
+	void setViewBuffer(cairo_surface_t* buffer);
+
+	/**
+	 * Returns this PageView%s interal buffer
+	 * You should hold the drawing mutex in this case
+	 */
+	cairo_surface_t* getViewBuffer()
+	{
+		return this->crBuffer;
+	}
+
+	/**
+	 * The drawing mutex protects this PageView%s internal buffer
+	 */
+	GMutex* getDrawingMutex()
+	{
+		return &this->drawingMutex;
+	}
+
+	/**
+	 * The repaint mutex protectes this PageView%s collection
+	 * of repainting rectangles
+	 */
+	GMutex* getRepaintMutex()
+	{
+		return &this->repaintRectMutex;
+	}
 
 	/**
 	 * Returns whether this PageView contains the
@@ -78,14 +138,17 @@ public:
 	bool containsY(int y);
 
 	GdkRGBA getSelectionColor();
+
+	/**
+	 * Returns the number of pixels in this PageView%s internal buffer
+	 */
 	int getBufferPixels();
 
 	/**
-	 * 0 if currently visible
-	 * -1 if no image is saved (never visible or cleanup)
-	 * else the time in Seconds
+	 * Returns the size (in bytes) of this PageView%s interal buffer
 	 */
-	int getLastVisibleTime();
+	int getBufferSize() const;
+
 	TextEditor* getTextEditor();
 
 	/**
@@ -207,10 +270,7 @@ private:
 	 */
 	SearchControl* search;
 
-	/**
-	 * Unixtimestam when the page was last time in the visible area
-	 */
-	int lastVisibleTime;
+	bool visible;
 
 	GMutex repaintRectMutex;
 	GList * rerenderRects;

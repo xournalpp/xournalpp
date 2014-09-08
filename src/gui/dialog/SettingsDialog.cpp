@@ -6,6 +6,8 @@
 #include <Util.h>
 #include <string.h>
 
+#include <sys/sysinfo.h>
+
 SettingsDialog::SettingsDialog(GladeSearchpath* gladeSearchPath,
                                Settings* settings) :
 	GladeGui(gladeSearchPath, "settings.glade", "settingsDialog")
@@ -31,6 +33,9 @@ SettingsDialog::SettingsDialog(GladeSearchpath* gladeSearchPath,
 	                 G_CALLBACK(&toolboxToggledCallback), this);
 	g_signal_connect(get("cbAutosave"), "toggled",
 	                 G_CALLBACK(&toolboxToggledCallback), this);
+	g_signal_connect(get("cbLimitBufferSize"), "toggled",
+	                 G_CALLBACK(&limitToggledCallback), this);
+
 
 	gtk_box_pack_start(GTK_BOX(vbox), callib, false, true, 0);
 	gtk_widget_show(callib);
@@ -139,6 +144,15 @@ void SettingsDialog::toolboxToggledCallback(GtkToggleButton* togglebutton,
 	sd->toolboxToggled();
 }
 
+void SettingsDialog::limitToggledCallback(GtkToggleButton* togglebutton,
+                                          SettingsDialog* sd)
+{
+	XOJ_CHECK_TYPE_OBJ(sd, SettingsDialog);
+
+	gtk_widget_set_sensitive(GTK_WIDGET(sd->get("boxBufferSize")),
+	                         gtk_toggle_button_get_active(togglebutton));
+}
+
 void SettingsDialog::toolboxToggled()
 {
 	XOJ_CHECK_TYPE(SettingsDialog);
@@ -165,6 +179,10 @@ void SettingsDialog::load()
 	loadCheckbox("cbAddHorizontalSpace", settings->getAddHorizontalSpace());
 	loadCheckbox("cbBigCursor", settings->isShowBigCursor());
 	loadCheckbox("cbEventCompression", settings->isEventCompression());
+	loadCheckbox("cbLimitBufferSize", settings->isLimitBufferSize());
+
+	limitToggledCallback(GTK_TOGGLE_BUTTON(get("cbLimitBufferSize")),
+	                     this);
 
 	GtkWidget* txtDefaultSaveName = get("txtDefaultSaveName");
 	const char* txt = settings->getDefaultSaveName().c_str();
@@ -173,6 +191,28 @@ void SettingsDialog::load()
 		txt = "";
 	}
 	gtk_entry_set_text(GTK_ENTRY(txtDefaultSaveName), txt);
+
+	GtkWidget* scaleBufferSize = get("scaleBufferSize");
+
+	GtkAdjustment* adjustmentBufferSize =
+		gtk_range_get_adjustment(GTK_RANGE(scaleBufferSize));
+
+	gdouble cur = settings->getBufferSize();
+
+	gdouble max = cur;
+
+	struct sysinfo info;
+
+	if(!sysinfo(&info))
+	{
+		if(max < info.totalram)
+			max = info.totalram;
+	}
+
+	gtk_adjustment_set_upper(adjustmentBufferSize, max / 1024 / 1024);
+	gtk_adjustment_set_value(adjustmentBufferSize, cur / 1024 / 1024);
+
+	gtk_adjustment_set_step_increment(adjustmentBufferSize, 16);
 
 	GtkWidget* spAutosaveTimeout = get("spAutosaveTimeout");
 	gtk_spin_button_set_value(GTK_SPIN_BUTTON(spAutosaveTimeout),
@@ -313,12 +353,17 @@ void SettingsDialog::save()
 	settings->setAddHorizontalSpace(getCheckbox("cbAddHorizontalSpace"));
 	settings->setShowBigCursor(getCheckbox("cbBigCursor"));
 	settings->setEventCompression(getCheckbox("cbEventCompression"));
+	settings->setLimitBufferSize("cbLimitBufferSize");
 
 	GtkWidget* colorBorder = get("colorBorder");
 	GdkColor color = { 0 };
 	gtk_color_button_get_color(GTK_COLOR_BUTTON(colorBorder), &color);
 	int selectionColor = Util::gdkColorToInt(color);
 	settings->setSelectionColor(selectionColor);
+
+	GtkWidget* scaleBufferSize = get("scaleBufferSize");
+
+	settings->setBufferSize(gtk_range_get_value(GTK_RANGE(scaleBufferSize)) * 1024 * 1024);
 
 	bool hideFullscreenMenubar = getCheckbox("cbHideFullscreenMenubar");
 	bool hideFullscreenSidebar = getCheckbox("cbHideFullscreenSidebar");

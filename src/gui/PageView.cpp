@@ -48,7 +48,7 @@ PageView::PageView(XournalView* xournal, PageRef page)
 	this->xournal = xournal;
 	this->selected = false;
 	this->settings = xournal->getControl()->getSettings();
-	this->lastVisibleTime = -1;
+	this->visible = false;
 
 	g_mutex_init(&this->drawingMutex);
 
@@ -89,7 +89,10 @@ PageView::~PageView()
 	delete this->eraser;
 	this->eraser = NULL;
 	endText();
+
+	g_mutex_lock(&this->drawingMutex);
 	deleteViewBuffer();
+	g_mutex_unlock(&this->drawingMutex);
 
 	for (GList * l = this->rerenderRects; l != NULL; l = l->next) {
 		Rectangle * rect = (Rectangle *) l->data;
@@ -112,44 +115,63 @@ PageView::~PageView()
 	XOJ_RELEASE_TYPE(PageView);
 }
 
-void PageView::setIsVisible(bool visible)
+void PageView::setIsVisible(bool _visible)
 {
 	XOJ_CHECK_TYPE(PageView);
 
-	if (visible)
-	{
-		this->lastVisibleTime = 0;
-	}
-	else if (this->lastVisibleTime <= 0)
-	{
-		GTimeVal val;
-		g_get_current_time(&val);
-		this->lastVisibleTime = val.tv_sec;
-	}
+	if(_visible == this->visible)
+		return;
+
+	this->visible = _visible;
+
+	getXournal()->visibilityChanged(this);
 }
 
-int PageView::getLastVisibleTime()
+bool PageView::isVisible()
 {
-	XOJ_CHECK_TYPE(PageView);
-
-	if(this->crBuffer == NULL)
-	{
-		return -1;
-	}
-
-	return this->lastVisibleTime;
+	return this->visible;
 }
 
 void PageView::deleteViewBuffer()
 {
 	XOJ_CHECK_TYPE(PageView);
 
-	g_mutex_lock(&this->drawingMutex);
-	if (this->crBuffer) {
+	if (this->crBuffer)
+	{
+		getXournal()->bufferDeleted(this);
 		cairo_surface_destroy(this->crBuffer);
 		this->crBuffer = NULL;
 	}
-	g_mutex_unlock(&this->drawingMutex);
+}
+
+void PageView::createViewBuffer(int width, int height)
+{
+	XOJ_CHECK_TYPE(PageView);
+
+	if (this->crBuffer)
+	{
+		deleteViewBuffer();
+	}
+
+	this->crBuffer = cairo_image_surface_create(CAIRO_FORMAT_ARGB32,
+	                                            width,
+	                                            height);
+
+	getXournal()->bufferCreated(this);
+}
+
+void PageView::setViewBuffer(cairo_surface_t* buffer)
+{
+	XOJ_CHECK_TYPE(PageView);
+
+	if(this->crBuffer)
+	{
+		g_warning("Replacing an existing buffer may leak memory");
+	}
+
+	this->crBuffer = buffer;
+
+	getXournal()->bufferCreated(this);
 }
 
 bool PageView::containsPoint(int x, int y, bool local)
@@ -880,8 +902,8 @@ bool PageView::paintPage(cairo_t* cr, GdkRectangle* rect)
 
 	if (this->crBuffer == NULL)
 	{
-		this->crBuffer = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, dispWidth,
-		                                            dispHeight);
+		createViewBuffer(dispWidth, dispHeight);
+
 		cairo_t* cr2 = cairo_create(this->crBuffer);
 		cairo_set_source_rgb(cr2, 1, 1, 1);
 		cairo_rectangle(cr2, 0, 0, dispWidth, dispHeight);
@@ -1004,6 +1026,23 @@ int PageView::getBufferPixels()
 		           crBuffer);
 	}
 	return 0;
+}
+
+int PageView::getBufferSize() const
+{
+	XOJ_CHECK_TYPE(PageView);
+
+	if(!crBuffer)
+	{
+		return 0;
+	}
+
+	int s = cairo_format_stride_for_width(cairo_image_surface_get_format(crBuffer),
+	                                      cairo_image_surface_get_width(crBuffer));
+
+	s *= cairo_image_surface_get_height(crBuffer);
+
+	return s;
 }
 
 GdkRGBA PageView::getSelectionColor()

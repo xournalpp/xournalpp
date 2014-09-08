@@ -35,14 +35,16 @@ void RenderJob::rerenderRectangle(RenderJob* renderJob, Rectangle* rect, bool no
 	XOJ_CHECK_TYPE_OBJ(renderJob, RenderJob);
 
 	PageView* view = renderJob->view;
-	double zoom = view->xournal->getZoom();
-	Document* doc = view->xournal->getDocument();
+	double zoom = view->getXournal()->getZoom();
+	Document* doc = view->getXournal()->getDocument();
+	PageRef page = view->getPage();
+	GMutex* drawingMutex = view->getDrawingMutex();
 
 	if(!noThreads)
 		doc->lock();
 
-	double pageWidth = view->page->getWidth();
-	double pageHeight = view->page->getHeight();
+	double pageWidth = page->getWidth();
+	double pageHeight = page->getHeight();
 
 	if(!noThreads)
 		doc->unlock();
@@ -61,25 +63,26 @@ void RenderJob::rerenderRectangle(RenderJob* renderJob, Rectangle* rect, bool no
 	DocumentView v;
 	v.limitArea(rect->x, rect->y, rect->width, rect->height);
 
-	if (view->page->getBackgroundType() == BACKGROUND_TYPE_PDF)
+	if (page->getBackgroundType() == BACKGROUND_TYPE_PDF)
 	{
-		int pgNo = view->page->getPdfPageNr();
+		int pgNo = page->getPdfPageNr();
 		XojPopplerPage* popplerPage = doc->getPdfPage(pgNo);
-		PdfCache* cache = view->xournal->getCache();
+		PdfCache* cache = view->getXournal()->getCache();
 		PdfView::drawPage(cache, popplerPage, crRect, zoom, pageWidth, pageHeight);
 	}
 
 	if(!noThreads)
 		doc->lock();
-	v.drawPage(view->page, crRect, false);
+	v.drawPage(page, crRect, false);
 	if(!noThreads)
 		doc->unlock();
 
 	cairo_destroy(crRect);
 
 	if(!noThreads)
-		g_mutex_lock(&view->drawingMutex);
-	cairo_t * crPageBuffer = cairo_create(view->crBuffer);
+		g_mutex_lock(drawingMutex);
+
+	cairo_t * crPageBuffer = cairo_create(view->getViewBuffer());
 
 	cairo_set_operator(crPageBuffer, CAIRO_OPERATOR_SOURCE);
 	cairo_set_source_surface(crPageBuffer, rectBuffer, x, y);
@@ -91,7 +94,7 @@ void RenderJob::rerenderRectangle(RenderJob* renderJob, Rectangle* rect, bool no
 	cairo_surface_destroy(rectBuffer);
 
 	if(!noThreads)
-		g_mutex_unlock(&view->drawingMutex);
+		g_mutex_unlock(drawingMutex);
 }
 
 void RenderJob::rerenderRectangle(Rectangle* rect, bool noThreads)
@@ -213,9 +216,12 @@ void RenderJob::run(bool noThreads)
 		handler = new RepaintWidgetHandler(this->view->getXournal()->getWidget());
 	}
 
-	double zoom = this->view->xournal->getZoom();
+	double zoom = this->view->getXournal()->getZoom();
+	GMutex* drawingMutex = this->view->getDrawingMutex();
+	GMutex* repaintMutex = this->view->getRepaintMutex();
+	PageRef page = this->view->getPage();
 
-	g_mutex_lock(&this->view->repaintRectMutex);
+	g_mutex_lock(repaintMutex);
 
 	bool rerenderComplete = this->view->rerenderComplete;
 	GList* rerenderRects = this->view->rerenderRects;
@@ -223,18 +229,19 @@ void RenderJob::run(bool noThreads)
 
 	this->view->rerenderComplete = false;
 
-	g_mutex_unlock(&this->view->repaintRectMutex);
+	g_mutex_unlock(repaintMutex);
 
 
 	if (rerenderComplete)
 	{
-		Document* doc = this->view->xournal->getDocument();
+		Document* doc = this->view->getXournal()->getDocument();
 
 		int dispWidth = this->view->getDisplayWidth();
 		int dispHeight = this->view->getDisplayHeight();
 
 		cairo_surface_t* crBuffer = cairo_image_surface_create(CAIRO_FORMAT_ARGB32,
 		                                                       dispWidth, dispHeight);
+
 		cairo_t* cr = cairo_create(crBuffer);
 		cairo_scale(cr, zoom, zoom);
 
@@ -243,33 +250,30 @@ void RenderJob::run(bool noThreads)
 		if(!noThreads)
 			doc->lock();
 
-		if (this->view->page->getBackgroundType() == BACKGROUND_TYPE_PDF)
+		if (this->view->getPage()->getBackgroundType() == BACKGROUND_TYPE_PDF)
 		{
-			int pgNo = this->view->page->getPdfPageNr();
+			int pgNo = page->getPdfPageNr();
 			popplerPage = doc->getPdfPage(pgNo);
 		}
 
 		DocumentView view;
-		int width = this->view->page->getWidth();
-		int height = this->view->page->getHeight();
+		int width = page->getWidth();
+		int height = page->getHeight();
 
-		PdfView::drawPage(this->view->xournal->getCache(), popplerPage, cr, zoom,
+		PdfView::drawPage(this->view->getXournal()->getCache(), popplerPage, cr, zoom,
 		                  width, height);
-		view.drawPage(this->view->page, cr, false);
+		view.drawPage(page, cr, false);
 
 		cairo_destroy(cr);
 		if(!noThreads)
-			g_mutex_lock(&this->view->drawingMutex);
+			g_mutex_lock(drawingMutex);
 
-		if (this->view->crBuffer)
-		{
-			cairo_surface_destroy(this->view->crBuffer);
-		}
-		this->view->crBuffer = crBuffer;
+		this->view->deleteViewBuffer();
+		this->view->setViewBuffer(crBuffer);
 
 		if(!noThreads)
 		{
-			g_mutex_unlock(&this->view->drawingMutex);
+			g_mutex_unlock(drawingMutex);
 			doc->unlock();
 		}
 

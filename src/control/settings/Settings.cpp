@@ -118,6 +118,9 @@ void Settings::loadDefault()
 	this->selectionColor = 0xff0000;
 
 	this->eventCompression = true;
+
+	this->limitBufferSize = true;
+	this->bufferSize = 1024 * 1024 * 1024;
 }
 
 void Settings::parseData(xmlNodePtr cur, SElement& elem)
@@ -313,6 +316,14 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur)
 	else if (xmlStrcmp(name, (const xmlChar*) "eventCompression") == 0)
 	{
 		this->eventCompression = xmlStrcmp(value, (const xmlChar*) "true") ? false : true;
+	}
+	else if (xmlStrcmp(name, (const xmlChar*) "bufferSize") == 0)
+	{
+		this->bufferSize = g_ascii_strtoll((const char*) value, NULL, 10);
+	}
+	else if (xmlStrcmp(name, (const xmlChar*) "limitBufferSize") == 0)
+	{
+		this->limitBufferSize = xmlStrcmp(value, (const xmlChar*) "true") ? false : true;
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "sidebarOnRight") == 0)
 	{
@@ -833,6 +844,9 @@ void Settings::save()
 
 	WRITE_BOOL_PROP(eventCompression);
 
+	WRITE_INT_PROP(bufferSize);
+	WRITE_BOOL_PROP(limitBufferSize);
+
 	xmlNodePtr xmlFont;
 	xmlFont = xmlNewChild(root, NULL, (const xmlChar*) "property", NULL);
 	xmlSetProp(xmlFont, (const xmlChar*) "name", (const xmlChar*) "font");
@@ -1148,6 +1162,27 @@ bool Settings::isEventCompression()
 void Settings::setEventCompression(bool enabled)
 {
 	this->eventCompression = enabled;
+}
+
+int Settings::getBufferSize()
+{
+	return bufferSize;
+}
+
+void Settings::setBufferSize(int size)
+{
+	if(size >= 0)
+		bufferSize = size;
+}
+
+bool Settings::isLimitBufferSize()
+{
+	return this->limitBufferSize;
+}
+
+void Settings::setLimitBufferSize(bool limit)
+{
+	this->limitBufferSize = limit;
 }
 
 void Settings::setShowTwoPages(bool showTwoPages)

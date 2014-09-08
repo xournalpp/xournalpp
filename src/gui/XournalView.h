@@ -104,6 +104,25 @@ public:
 		return this->parent;
 	}
 
+	/**
+	 * Called by PageView%s once their visibility changes
+	 */
+	void visibilityChanged(PageView* view);
+
+	/**
+	 * Called by PageView%s once an internal buffer is created
+	 * The function frees buffers of invisible pages to free memory
+	 * 
+	 * In this case the PageView%s drawing lock is being held
+	 */
+	void bufferCreated(PageView* view);
+
+	/**
+	 * Called by PageView%s once an internal buffer is deleted
+	 * In this case the PageView%s drawing lock is being held
+	 */
+	void bufferDeleted(PageView* view);
+
 public:
 	//ZoomListener interface
 	void zoomChanged(double lastZoom);
@@ -125,9 +144,12 @@ public:
 
 private:
 
-	void fireZoomChanged();
+	/**
+	 * Frees old page buffers
+	 */
+	void freeOldBuffers(PageView* view = NULL);
 
-	static gboolean clearMemoryTimer(XournalView* widget);
+	void fireZoomChanged();
 
 private:
 	XOJ_TYPE_ATTRIB;
@@ -146,6 +168,9 @@ private:
 
 	PdfCache* cache;
 
+	GQueue invisiblePages;
+	int totalBufferSize;
+
 	/**
 	 * Handler for rerendering pages / repainting pages
 	 */
@@ -155,11 +180,6 @@ private:
 	 * The positions of all pages
 	 */
 	PagePositionHandler* pagePosition;
-
-	/**
-	 * Memory cleanup timeout
-	 */
-	int cleanupTimeout;
 
 	friend class Layout;
 };

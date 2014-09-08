@@ -53,15 +53,13 @@ XournalView::XournalView(GtkWidget* parent, Control* control)
 
 	gtk_widget_grab_focus(this->widget);
 
-	this->cleanupTimeout = g_timeout_add_seconds(5, (GSourceFunc) clearMemoryTimer,
-	                                             this);
+	this->totalBufferSize = 0;
+	g_queue_init(&invisiblePages);
 }
 
 XournalView::~XournalView()
 {
 	XOJ_CHECK_TYPE(XournalView);
-
-	g_source_remove(this->cleanupTimeout);
 
 	for (int i = 0; i < this->viewPagesLen; i++)
 	{
@@ -82,60 +80,9 @@ XournalView::~XournalView()
 	gtk_widget_destroy(this->widget);
 	this->widget = NULL;
 
+	g_queue_clear(&invisiblePages);
+
 	XOJ_RELEASE_TYPE(XournalView);
-}
-
-gint pageViewCmpSize(PageView* a, PageView* b)
-{
-	return a->getLastVisibleTime() - b->getLastVisibleTime();
-}
-
-gboolean XournalView::clearMemoryTimer(XournalView* widget)
-{
-	XOJ_CHECK_TYPE_OBJ(widget, XournalView);
-
-	GList* list = NULL;
-
-	for (int i = 0; i < widget->viewPagesLen; i++)
-	{
-		PageView* v = widget->viewPages[i];
-		if (v->getLastVisibleTime() > 0)
-		{
-			list = g_list_insert_sorted(list, v, (GCompareFunc) pageViewCmpSize);
-		}
-	}
-
-	int pixel = 2884560;
-	int firstPages = 4;
-
-	int i = 0;
-
-	for (GList* l = list; l != NULL; l = l->next)
-	{
-		if (firstPages)
-		{
-			firstPages--;
-		}
-		else
-		{
-			PageView* v = (PageView*) l->data;
-
-			if (pixel <= 0)
-			{
-				v->deleteViewBuffer();
-			}
-			else
-			{
-				pixel -= v->getBufferPixels();
-			}
-		}
-		i++;
-	}
-
-	g_list_free(list);
-
-	// call again
-	return true;
 }
 
 int XournalView::getCurrentPage()
@@ -473,6 +420,84 @@ Rectangle* XournalView::getVisibleRect(PageView* redrawable)
 	return gtk_xournal_get_visible_area(this->widget, redrawable);
 }
 
+void XournalView::visibilityChanged(PageView* view)
+{
+	Settings* settings = getControl()->getSettings();
+
+	if(view->isVisible())
+		return;
+
+	if(!settings->isLimitBufferSize())
+		return;
+
+	g_queue_push_tail(&invisiblePages, (gpointer) view);
+
+	freeOldBuffers();
+}
+
+void XournalView::bufferCreated(PageView* view)
+{
+	XOJ_CHECK_TYPE(XournalView);
+
+	totalBufferSize += view->getBufferSize();
+
+	/*
+	g_message("Increase in total buffer size: %5i MiB",
+	          totalBufferSize / 1024 / 1024);
+	*/
+
+	freeOldBuffers(view);
+}
+
+void XournalView::bufferDeleted(PageView* view)
+{
+	XOJ_CHECK_TYPE(XournalView);
+
+	totalBufferSize -= view->getBufferSize();
+
+	/*
+	g_message("Decrease in total buffer size: %5i MiB",
+	          totalBufferSize / 1024 / 1024);
+	*/
+}
+
+void XournalView::freeOldBuffers(PageView* view)
+{
+	Settings* settings = getControl()->getSettings();
+	bool sameView = false;
+
+	if(!settings->isLimitBufferSize())
+		return;
+
+	while(totalBufferSize > settings->getBufferSize())
+	{
+		if(g_queue_is_empty(&invisiblePages))
+			break;
+		
+		PageView* currentView = (PageView*) g_queue_pop_head(&invisiblePages);
+
+		if(!currentView || currentView->isVisible())
+			continue;
+
+		if(currentView == view)
+		{
+			sameView = true;
+			continue;
+		}
+
+		GMutex* mutex = currentView->getDrawingMutex();
+
+		g_mutex_lock(mutex);
+		currentView->deleteViewBuffer();
+		g_mutex_unlock(mutex);
+	}
+
+	if(sameView)
+	{
+		g_queue_push_tail(&invisiblePages, (gpointer) view);
+	}
+}
+
 GtkWidget* XournalView::getWidget()
 {
 	XOJ_CHECK_TYPE(XournalView);
@@ -551,7 +576,11 @@ void XournalView::pageDeleted(int page)
 
 	int currentPage = control->getCurrentPageNo();
 
-	delete this->viewPages[page];
+	PageView* currentView = this->viewPages[page];
+
+	g_queue_remove_all(&invisiblePages, currentView);
+
+	delete currentView;
 
 	for (int i = page; i < this->viewPagesLen - 1; i++)
 	{
@@ -822,6 +851,8 @@ void XournalView::documentChanged(DocumentChangeType type)
 		delete this->viewPages[i];
 	}
 	delete[] this->viewPages;
+
+	g_queue_clear(&invisiblePages);
 
 	Document* doc = control->getDocument();
 	doc->lock();

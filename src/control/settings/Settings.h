@@ -255,6 +255,13 @@ public:
 
 	bool isEventCompression();
 	void setEventCompression(bool enabled);
+
+	int getBufferSize();
+	void setBufferSize(int size);
+
+	bool isLimitBufferSize();
+	void setLimitBufferSize(bool limit);
+
 public:
 	// Custom settings
 	SElement& getCustomElement(String name);
@@ -448,6 +455,16 @@ private:
 	 * Whether event compression should be enabled
 	 */
 	bool eventCompression;
+
+	/**
+	 * The amount of memory (in bytes) used to store buffered pages
+	 */
+	int bufferSize;
+
+	/**
+	 * Whether or not to limit the buffer size
+	 */
+	bool limitBufferSize;
 };
 
 #endif /* __SETTINGS_H__ */

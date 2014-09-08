@@ -48,6 +48,9 @@ private:
 	static void toolboxToggledCallback(GtkToggleButton* togglebutton,
 	                                   SettingsDialog* sd);
 
+	static void limitToggledCallback(GtkToggleButton* togglebutton,
+	                                 SettingsDialog* sd);
+
 private:
 	XOJ_TYPE_ATTRIB;
 
