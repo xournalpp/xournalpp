@@ -23,7 +23,7 @@ public:
 		updateSize();
 		gtk_widget_set_events(widget, GDK_EXPOSURE_MASK | GDK_BUTTON_PRESS_MASK);
 
-		g_signal_connect(this->widget, "expose_event", G_CALLBACK(exposeEventCallback),
+		g_signal_connect(this->widget, "draw", G_CALLBACK(drawCallback),
 		                 this);
 		g_signal_connect(this->widget, "button-press-event",
 		                 G_CALLBACK(mouseButtonPressCallback), this);
@@ -101,13 +101,14 @@ public:
 		gtk_widget_set_size_request(this->widget, getWidth(), getHeight());
 	}
 private:
-	static gboolean exposeEventCallback(GtkWidget* widget, GdkEventExpose* event,
-	                                    PdfPage* page)
+	static gboolean drawCallback(GtkWidget* widget,
+	                             cairo_t* cr,
+	                             PdfPage* page)
 	{
 		XOJ_CHECK_TYPE_OBJ(page, PdfPage);
 
-		page->paint();
-		return true;
+		page->paint(cr);
+		return TRUE;
 	}
 
 	static gboolean mouseButtonPressCallback(GtkWidget* widget,
@@ -119,7 +120,7 @@ private:
 		return true;
 	}
 
-	void paint()
+	void paint(cairo_t* cr)
 	{
 		XOJ_CHECK_TYPE(PdfPage);
 
@@ -229,8 +230,6 @@ private:
 			cairo_destroy(cr2);
 		}
 
-		cairo_t* cr = gdk_cairo_create(gtk_widget_get_window(widget));
-
 		double width = cairo_image_surface_get_width(crBuffer);
 		if (width != alloc.width)
 		{
@@ -253,8 +252,6 @@ private:
 		}
 
 		cairo_paint(cr);
-
-		cairo_destroy(cr);
 	}
 private:
 	XOJ_TYPE_ATTRIB;
@@ -301,6 +298,9 @@ PdfPagesDialog::PdfPagesDialog(GladeSearchpath* gladeSearchPath, Document* doc,
 
 	// TODO LOW PRIO: may find a better solution... depending on screen size or so
 	gtk_widget_set_size_request(this->window, 800, 600);
+
+	gtk_widget_set_hexpand(this->widget, TRUE);
+	gtk_widget_set_vexpand(this->widget, TRUE);
 
 	gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scrollPreview),
 	                               GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
