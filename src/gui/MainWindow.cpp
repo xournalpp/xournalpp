@@ -337,6 +337,7 @@ void MainWindow::updateScrollbarSidebarPosition()
 	GtkWidget* panelMainContents = get("panelMainContents");
 	GtkWidget* sidebar = get("sidebar");
 	GtkWidget* winXournal = get("winXournal");
+	GtkScrolledWindow* scrolledWindow = GTK_SCROLLED_WINDOW(winXournal);
 
 	bool scrollbarOnLeft = control->getSettings()->isScrollbarOnLeft();
 
@@ -345,18 +346,20 @@ void MainWindow::updateScrollbarSidebarPosition()
 
 	if (scrollbarOnLeft)
 	{
-		gtk_scrolled_window_set_placement(GTK_SCROLLED_WINDOW(winXournal),
+		gtk_scrolled_window_set_placement(scrolledWindow,
 		                                  GTK_CORNER_TOP_RIGHT);
 	}
 	else
 	{
-		gtk_scrolled_window_set_placement(GTK_SCROLLED_WINDOW(winXournal),
+		gtk_scrolled_window_set_placement(scrolledWindow,
 		                                  GTK_CORNER_TOP_LEFT);
 	}
 
-	gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(winXournal),
-	                               (type & SCROLLBAR_HIDE_HORIZONTAL) ? GTK_POLICY_NEVER : GTK_POLICY_AUTOMATIC,
-	                               (type & SCROLLBAR_HIDE_VERTICAL)   ? GTK_POLICY_NEVER : GTK_POLICY_AUTOMATIC);
+	gtk_widget_set_visible(gtk_scrolled_window_get_hscrollbar(scrolledWindow),
+	                       !(type & SCROLLBAR_HIDE_HORIZONTAL));
+
+	gtk_widget_set_visible(gtk_scrolled_window_get_vscrollbar(scrolledWindow),
+	                       !(type & SCROLLBAR_HIDE_VERTICAL));
 
 	int divider = gtk_paned_get_position(GTK_PANED(panelMainContents));
 	bool sidebarRight = control->getSettings()->isSidebarOnRight();
