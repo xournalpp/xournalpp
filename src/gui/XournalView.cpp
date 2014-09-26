@@ -430,6 +430,8 @@ void XournalView::visibilityChanged(PageView* view)
 	if(!settings->isLimitBufferSize())
 		return;
 
+	//g_message("Visiblity changed, adding page to queue");
+
 	g_queue_push_tail(&invisiblePages, (gpointer) view);
 
 	freeOldBuffers();
@@ -465,9 +467,16 @@ void XournalView::freeOldBuffers(PageView* view)
 {
 	Settings* settings = getControl()->getSettings();
 	bool sameView = false;
+	int numDel = 0;
 
 	if(!settings->isLimitBufferSize())
 		return;
+
+	/*
+	g_message("Attempting to free old buffers.");
+
+	g_message("Queue length: %i", g_queue_get_length(&invisiblePages));
+	*/
 
 	while(totalBufferSize > settings->getBufferSize())
 	{
@@ -489,8 +498,13 @@ void XournalView::freeOldBuffers(PageView* view)
 
 		g_mutex_lock(mutex);
 		currentView->deleteViewBuffer();
+		++numDel;
 		g_mutex_unlock(mutex);
 	}
+
+	/*
+	g_message("Done, deleted %i buffers", numDel);
+	*/
 
 	if(sameView)
 	{
@@ -666,6 +680,9 @@ void XournalView::pageInserted(int page)
 	Document* doc = control->getDocument();
 	doc->lock();
 	PageView* pageView = new PageView(this, doc->getPage(page));
+
+	g_queue_push_tail(&invisiblePages, (gpointer) pageView);
+
 	doc->unlock();
 
 	this->viewPages[page] = pageView;
