@@ -89,6 +89,9 @@ void UndoRedoHandler::clearContents()
 
 	clearRedo();
 
+	this->savedUndo = NULL;
+	this->autosavedUndo = NULL;
+
 	PRINTCONTENTS();
 }
 
