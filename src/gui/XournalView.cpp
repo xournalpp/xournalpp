@@ -246,6 +246,11 @@ bool XournalView::onKeyReleaseEvent(GdkEventKey* event)
 void XournalView::onRealized(GtkWidget* widget, XournalView* view)
 {
 	view->setEventCompression(view->getControl()->getSettings()->isEventCompression());
+
+	g_signal_connect(gtk_widget_get_screen(widget),
+	                 "size-changed",
+	                 G_CALLBACK(&Layout::screenSizeChanged),
+	                 gtk_xournal_get_layout(widget));
 }
 
 // send the focus back to the appropriate widget

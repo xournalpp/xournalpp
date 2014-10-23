@@ -96,6 +96,8 @@ public:
 	static void adjustmentValueChanged(GtkAdjustment* adjustment,
 	                                   Layout* layout);
 
+	static void screenSizeChanged(GdkScreen* screen, Layout* layout);
+
 private:
 	void setLayoutSize(int width, int height);
 

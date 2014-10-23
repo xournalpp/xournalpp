@@ -122,6 +122,11 @@ void Layout::adjustmentValueChanged(GtkAdjustment* adjustment,
 	layout->updateCurrentPage();
 }
 
+void Layout::screenSizeChanged(GdkScreen* screen, Layout* layout)
+{
+	layout->layoutPages();
+}
+
 Rectangle Layout::getVisibleRect()
 {
 	return Rectangle(gtk_adjustment_get_value(adjHorizontal),
@@ -152,6 +157,8 @@ void Layout::layoutPages()
 	bool verticalSpace = settings->getAddVerticalSpace(),
 	     horizontalSpace = settings->getAddHorizontalSpace();
 	bool dualPage = settings->isShowTwoPages();
+
+	GdkScreen* screen = gtk_widget_get_screen(this->view->getWidget());
 
 	int size[2] = { 0, 0 };
 
@@ -200,14 +207,14 @@ void Layout::layoutPages()
 
 	if (horizontalSpace)
 	{
-		marginLeft = MAX(marginLeft, visRect.width * 0.75);
+		marginLeft = MAX(marginLeft, gdk_screen_get_width(screen) * 0.75);
 	}
 
 	int verticalSpaceBetweenSlides = 0;
 
 	if (len > 0 && verticalSpace)
 	{
-		marginTop = MAX(marginTop, visRect.height * 0.75);
+		marginTop = MAX(marginTop, gdk_screen_get_height(screen) * 0.75);
 	}
 
 	for (int i = 0; i < len; i++)
