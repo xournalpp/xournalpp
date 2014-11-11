@@ -25,6 +25,8 @@
 #include "xml/XmlTexNode.h"
 #include "xml/XmlPointNode.h"
 
+#include <clocale>
+
 #include <config.h>
 #include <glib/gi18n-lib.h>
 
@@ -371,6 +373,13 @@ void SaveHandler::saveTo(OutputStream* out,
 {
 	XOJ_CHECK_TYPE(SaveHandler);
 
+	char* old_locale, *saved_locale;
+
+	old_locale = setlocale(LC_NUMERIC, NULL);
+	saved_locale = g_strdup(old_locale);
+
+	setlocale(LC_NUMERIC, "C");
+
 	out->write("<?xml version=\"1.0\" standalone=\"no\"?>\n");
 	root->writeOut(out, listener);
 
@@ -395,6 +404,9 @@ void SaveHandler::saveTo(OutputStream* out,
 		}
 		g_free(tmpfn);
 	}
+
+	setlocale(LC_NUMERIC, saved_locale);
+	g_free(saved_locale);
 }
 
 String SaveHandler::getErrorMessage()
