@@ -766,9 +766,11 @@ void XournalView::repaintSelection(bool evenWithoutSelection)
 
 void XournalView::setEventCompression(gboolean enable)
 {
-	if(gtk_widget_get_realized(getWidget()))
-	gdk_window_set_event_compression(gtk_widget_get_window(getWidget()),
-	                                 enable);
+	//Enable this when gdk is new enough for the compression feature.
+
+	//if(gtk_widget_get_realized(getWidget()))
+	//gdk_window_set_event_compression(gtk_widget_get_window(getWidget()),
+	//                                 enable);
 }
 
 void XournalView::layoutPages()
