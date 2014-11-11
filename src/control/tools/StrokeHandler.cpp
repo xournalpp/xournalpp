@@ -22,6 +22,7 @@ StrokeHandler::~StrokeHandler()
 {
 	XOJ_CHECK_TYPE(StrokeHandler);
 
+	destroySurface();
 	delete reco;
 
 	XOJ_RELEASE_TYPE(StrokeHandler);
@@ -34,18 +35,9 @@ void StrokeHandler::draw(cairo_t* cr)
 	if(!stroke)
 		return;
 
-	GTimer *timer = g_timer_new();
-	g_timer_start(timer);
-
 	view.applyColor(cr, stroke);
 	cairo_set_operator(cr, CAIRO_OPERATOR_OVER);
 	cairo_mask_surface(cr, surfMask, visRect.x, visRect.y);
-
-	g_timer_stop(timer);
-
-	//g_message("Drawing time for overlay: %f", g_timer_elapsed(timer, NULL));
-
-	g_timer_destroy(timer);
 }
 
 bool StrokeHandler::onMotionNotifyEvent(GdkEventMotion* event)
