@@ -1134,7 +1134,7 @@ Here you can disable your touchscreen.&lt;/i&gt;</property>
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <child>
-                      <object class="GtkLabel" id="label36">
+                      <object class="GtkLabel" id="label41">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="xalign">0</property>
