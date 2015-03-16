@@ -13,7 +13,7 @@
 #define __ABSTRACTITEM_H__
 
 #include "../../control/Actions.h"
-#include <String.h>
+#include <StringUtils.h>
 #include <XournalType.h>
 
 #include <gtk/gtk.h>

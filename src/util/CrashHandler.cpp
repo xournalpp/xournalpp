@@ -150,7 +150,7 @@ static void emergencySave()
 
 	if (!out->getLastError().isEmpty())
 	{
-		fprintf(stderr, "error: %s\n", out->getLastError().c_str());
+		fprintf(stderr, "error: %s\n", CSTR(out->getLastError()));
 		delete out;
 		g_free(filename);
 		return;
@@ -161,7 +161,7 @@ static void emergencySave()
 
 	if (!out->getLastError().isEmpty())
 	{
-		fprintf(stderr, "error: %s\n", out->getLastError().c_str());
+		fprintf(stderr, "error: %s\n", CSTR(out->getLastError()));
 	}
 	else
 	{

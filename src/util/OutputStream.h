@@ -12,7 +12,7 @@
 #ifndef __OUTPUTSTREAM_H__
 #define __OUTPUTSTREAM_H__
 
-#include <String.h>
+#include <StringUtils.h>
 #include <XournalType.h>
 #include <zlib.h>
 

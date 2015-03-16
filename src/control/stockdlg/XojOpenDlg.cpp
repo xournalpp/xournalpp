@@ -43,7 +43,7 @@ String XojOpenDlg::showOpenDialog(GtkWindow* win, Settings* settings, bool pdf,
 	if (!settings->getLastSavePath().isEmpty())
 	{
 		gtk_file_chooser_set_current_folder_uri(GTK_FILE_CHOOSER(dialog),
-		                                        settings->getLastSavePath().c_str());
+		                                        CSTR(settings->getLastSavePath()));
 	}
 
 	GtkWidget* attachOpt = NULL;
@@ -64,7 +64,7 @@ String XojOpenDlg::showOpenDialog(GtkWindow* win, Settings* settings, bool pdf,
 	if (gtk_dialog_run(GTK_DIALOG(dialog)) != GTK_RESPONSE_OK)
 	{
 		gtk_widget_destroy(dialog);
-		return NULL;
+		return "";
 	}
 	char* name = gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(dialog));
 

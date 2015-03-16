@@ -111,7 +111,7 @@ bool LoadHandler::openFile(String filename)
 	XOJ_CHECK_TYPE(LoadHandler);
 
 	this->filename = filename;
-	this->fp = gzopen(filename.c_str(), "r");
+	this->fp = gzopen(CSTR(filename), "r");
 	if (!this->fp)
 	{
 		this->lastError = _("Could not open file: \"");
@@ -376,7 +376,7 @@ void LoadHandler::parseBgPixmap()
 
 		if (error)
 		{
-			error(_("could not read image: %s, Error message: %s"), fileToLoad.c_str(),
+			error(_("could not read image: %s, Error message: %s"), CSTR(fileToLoad),
 			      error->message);
 			g_error_free(error);
 		}
@@ -429,7 +429,7 @@ void LoadHandler::parseBgPdf()
 			{
 				if (!g_file_test(sFilename, G_FILE_TEST_EXISTS))
 				{
-					char* dirname = g_path_get_dirname(xournalFilename.c_str());
+					char* dirname = g_path_get_dirname(CSTR(xournalFilename));
 					char* file = g_path_get_basename(sFilename);
 
 					char* tmpFilename = g_build_path(G_DIR_SEPARATOR_S, dirname, file, NULL);
@@ -447,7 +447,7 @@ void LoadHandler::parseBgPdf()
 			else if (!strcmp("attach", domain))
 			{
 				attachToDocument = true;
-				char* tmpFilename = g_strdup_printf("%s.%s", xournalFilename.c_str(),
+				char* tmpFilename = g_strdup_printf("%s.%s", CSTR(xournalFilename),
 				                                    sFilename);
 
 				if (g_file_test(tmpFilename, G_FILE_TEST_EXISTS))
@@ -472,12 +472,12 @@ void LoadHandler::parseBgPdf()
 
 		this->pdfFilenameParsed = true;
 
-		if (g_file_test(pdfFilename.c_str(), G_FILE_TEST_EXISTS))
+		if (g_file_test(CSTR(pdfFilename), G_FILE_TEST_EXISTS))
 		{
 			doc.readPdf(pdfFilename, false, attachToDocument);
 			if (!doc.getLastErrorMsg().isEmpty())
 			{
-				error(_("Error reading PDF: %s"), doc.getLastErrorMsg().c_str());
+				error(_("Error reading PDF: %s"), CSTR(doc.getLastErrorMsg()));
 			}
 		}
 		else
@@ -488,7 +488,7 @@ void LoadHandler::parseBgPdf()
 			}
 			else
 			{
-				this->pdfMissing = pdfFilename.c_str();
+				this->pdfMissing = CSTR(pdfFilename);
 			}
 		}
 	}
@@ -888,7 +888,7 @@ void LoadHandler::parserText(GMarkupParseContext* context, const gchar* text,
 			}
 			else
 			{
-				g_warning(_("xoj-File: %s"), handler->filename.c_str());
+				g_warning(_("xoj-File: %s"), CSTR(handler->filename));
 				g_warning(_("Wrong count of points, get %i, expected %i"),
 				          handler->pressureBuffer.size(), handler->stroke->getPointCount() - 1);
 			}
@@ -998,12 +998,12 @@ bool LoadHandler::parseXml()
 		{
 			this->lastError = _("Unknown parser error");
 		}
-		g_warning("LoadHandler::parseXml: %s\n", this->lastError.c_str());
+		g_warning("LoadHandler::parseXml: %s\n", CSTR(this->lastError));
 	}
 
 	g_markup_parse_context_free(context);
 
-	if (this->pos != PASER_POS_FINISHED && this->lastError == NULL)
+	if (this->pos != PASER_POS_FINISHED && this->lastError.isEmpty())
 	{
 		lastError = _("Document is not complete (maybe the end is cut off?)");
 		return false;
@@ -1039,7 +1039,7 @@ Document* LoadHandler::loadDocument(String filename)
 		closeFile();
 		return NULL;
 	}
-	doc.setFilename(filename.c_str());
+	doc.setFilename(CSTR(filename));
 
 	closeFile();
 

@@ -174,7 +174,7 @@ void SaveHandler::visitLayer(XmlNode* page, Layer* l)
 				stroke->setAttrib("tool", "pen");
 			}
 
-			stroke->setAttrib("color", getColorStr(s->getColor(), alpha).c_str());
+			stroke->setAttrib("color", CSTR(getColorStr(s->getColor(), alpha)));
 
 			int pointCount = s->getPointCount();
 
@@ -204,16 +204,16 @@ void SaveHandler::visitLayer(XmlNode* page, Layer* l)
 		else if (e->getType() == ELEMENT_TEXT)
 		{
 			Text* t = (Text*) e;
-			XmlTextNode* text = new XmlTextNode("text", t->getText().c_str());
+			XmlTextNode* text = new XmlTextNode("text", CSTR(t->getText()));
 			layer->addChild(text);
 
 			XojFont& f = t->getFont();
 
-			text->setAttrib("font", f.getName().c_str());
+			text->setAttrib("font", CSTR(f.getName()));
 			text->setAttrib("size", f.getSize());
 			text->setAttrib("x", t->getX());
 			text->setAttrib("y", t->getY());
-			text->setAttrib("color", getColorStr(t->getColor()).c_str());
+			text->setAttrib("color", CSTR(getColorStr(t->getColor())));
 		}
 		else if (e->getType() == ELEMENT_IMAGE)
 		{
@@ -280,7 +280,7 @@ void SaveHandler::visitPage(XmlNode* root, PageRef p, Document* doc, int id)
 				String filename = doc->getFilename();
 				filename += ".";
 				filename += "bg.pdf";
-				background->setAttrib("filename", filename.c_str());
+				background->setAttrib("filename", CSTR(filename));
 
 				GError* error = NULL;
 				doc->getPdfDocument().save(filename, &error);
@@ -293,7 +293,7 @@ void SaveHandler::visitPage(XmlNode* root, PageRef p, Document* doc, int id)
 					}
 
 					char* msg = g_strdup_printf(_("Could not write background \"%s\", %s"),
-					                            filename.c_str(), error->message);
+					                            CSTR(filename), error->message);
 					this->errorMessage += msg;
 					g_free(msg);
 
@@ -304,7 +304,7 @@ void SaveHandler::visitPage(XmlNode* root, PageRef p, Document* doc, int id)
 			{
 				background->setAttrib("domain", "absolute");
 				String pdfName = doc->getPdfFilename();
-				background->setAttrib("filename", pdfName.c_str());
+				background->setAttrib("filename", CSTR(pdfName));
 			}
 		}
 		background->setAttrib("pageno", p->getPdfPageNr() + 1);
@@ -314,8 +314,8 @@ void SaveHandler::visitPage(XmlNode* root, PageRef p, Document* doc, int id)
 	case BACKGROUND_TYPE_RULED:
 	case BACKGROUND_TYPE_GRAPH:
 		background->setAttrib("type", "solid");
-		background->setAttrib("color", getColorStr(p->getBackgroundColor()).c_str());
-		background->setAttrib("style", getSolidBgStr(p->getBackgroundType()).c_str());
+		background->setAttrib("color", CSTR(getColorStr(p->getBackgroundColor())));
+		background->setAttrib("style", CSTR(getSolidBgStr(p->getBackgroundType())));
 		break;
 	case BACKGROUND_TYPE_IMAGE:
 		background->setAttrib("type", "pixmap");
@@ -346,7 +346,7 @@ void SaveHandler::visitPage(XmlNode* root, PageRef p, Document* doc, int id)
 		else
 		{
 			background->setAttrib("domain", "absolute");
-			background->setAttrib("filename", p->getBackgroundImage().getFilename().c_str());
+			background->setAttrib("filename", CSTR(p->getBackgroundImage().getFilename()));
 			p->getBackgroundImage().setCloneId(id);
 		}
 
@@ -387,8 +387,8 @@ void SaveHandler::saveTo(OutputStream* out,
 	{
 		BackgroundImage* img = (BackgroundImage*) l->data;
 
-		char* tmpfn = g_strdup_printf("%s.%s", filename.c_str(),
-		                              img->getFilename().c_str());
+		char* tmpfn = g_strdup_printf("%s.%s", CSTR(filename),
+		                              CSTR(img->getFilename()));
 		if (!gdk_pixbuf_save(img->getPixbuf(), tmpfn, "png", NULL, NULL))
 		{
 			char* msg = g_strdup_printf(

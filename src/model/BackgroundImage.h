@@ -13,7 +13,7 @@
 #define __BACKGROUNDIMAGE_H__
 
 #include <XournalType.h>
-#include <String.h>
+#include <StringUtils.h>
 #include <gtk/gtk.h>
 
 class BackgroundImageContents;

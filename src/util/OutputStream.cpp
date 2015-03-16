@@ -12,7 +12,7 @@ OutputStream::~OutputStream()
 
 void OutputStream::write(const String& str)
 {
-	write(str.c_str(), str.size());
+	write(CSTR(str), str.length());
 }
 
 void OutputStream::write(const char* str)
@@ -30,10 +30,10 @@ GzOutputStream::GzOutputStream(String filename)
 
 	this->fp = NULL;
 	this->filename = filename;
-	this->fp = gzopen(filename.c_str(), "w");
+	this->fp = gzopen(CSTR(filename), "w");
 	if (this->fp == NULL)
 	{
-		char* e = g_strdup_printf("error opening file: \"%s\"", filename.c_str());
+		char* e = g_strdup_printf("error opening file: \"%s\"", CSTR(filename));
 		this->error = e;
 		g_free(e);
 	}

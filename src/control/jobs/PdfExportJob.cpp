@@ -36,7 +36,7 @@ bool PdfExportJob::showFilechooser()
 	if (!settings->getLastSavePath().isEmpty())
 	{
 		gtk_file_chooser_set_current_folder_uri(GTK_FILE_CHOOSER(dialog),
-		                                        settings->getLastSavePath().c_str());
+		                                        CSTR(settings->getLastSavePath()));
 	}
 
 	String saveFilename = "";
@@ -55,14 +55,14 @@ bool PdfExportJob::showFilechooser()
 	{
 		time_t curtime = time(NULL);
 		char stime[128];
-		strftime(stime, sizeof(stime), settings->getDefaultSaveName().c_str(),
+		strftime(stime, sizeof(stime), CSTR(settings->getDefaultSaveName()),
 		         localtime(&curtime));
 
 		saveFilename = stime;
 
-		if (saveFilename.substring(-4) == ".xoj")
+		if (saveFilename.endsWith(".xoj"))
 		{
-			saveFilename = saveFilename.substring(0, -4);
+			saveFilename.retainBetween(0, saveFilename.length());
 		}
 	}
 	doc->unlock();
@@ -70,7 +70,7 @@ bool PdfExportJob::showFilechooser()
 	saveFilename += ".pdf";
 
 	gtk_file_chooser_set_current_name(GTK_FILE_CHOOSER(dialog),
-	                                  saveFilename.c_str());
+	                                  CSTR(saveFilename));
 	gtk_file_chooser_set_do_overwrite_confirmation(GTK_FILE_CHOOSER(dialog), true);
 
 	gtk_window_set_transient_for(GTK_WINDOW(dialog),
@@ -103,7 +103,7 @@ void PdfExportJob::afterRun()
 	{
 		GtkWindow* win = (GtkWindow*) *control->getWindow();
 		GtkWidget* dialog = gtk_message_dialog_new(win, GTK_DIALOG_DESTROY_WITH_PARENT,
-		                                           GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, "%s", this->errorMsg.c_str());
+		                                           GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, "%s", CSTR(this->errorMsg));
 		gtk_window_set_transient_for(GTK_WINDOW(dialog),
 		                             GTK_WINDOW(this->control->getWindow()->getWindow()));
 		gtk_dialog_run(GTK_DIALOG(dialog));
@@ -124,8 +124,8 @@ void PdfExportJob::run()
 
 	if (!pdf.createPdf(this->filename))
 	{
-		this->errorMsg = String::format(_("Create pdf failed: %s"),
-		                                pdf.getLastError().c_str());
+		this->errorMsg = StringUtils::format(_("Create pdf failed: %s"),
+		                                CSTR(pdf.getLastError()));
 
 		if (control->getWindow())
 		{
@@ -133,7 +133,7 @@ void PdfExportJob::run()
 		}
 		else
 		{
-			g_error("%s", this->errorMsg.c_str());
+			g_error("%s", CSTR(this->errorMsg));
 		}
 	}
 }

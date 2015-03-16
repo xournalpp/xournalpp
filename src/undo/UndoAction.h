@@ -12,7 +12,7 @@
 #ifndef __UNDOACTION_H__
 #define __UNDOACTION_H__
 
-#include <String.h>
+#include <StringUtils.h>
 #include "../model/PageRef.h"
 
 #include <config.h>

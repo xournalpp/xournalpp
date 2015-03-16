@@ -50,7 +50,7 @@ String InsertUndoAction::getText()
 	}
 	else
 	{
-		return NULL;
+		return "";
 	}
 }
 

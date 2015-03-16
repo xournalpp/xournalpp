@@ -92,8 +92,8 @@ void Document::clearDocument(bool destroy)
 
 	this->pages.clear();
 
-	this->filename = NULL;
-	this->pdfFilename = NULL;
+	this->filename = "";
+	this->pdfFilename = "";
 }
 
 /**
@@ -175,7 +175,7 @@ String Document::getEvMetadataFilename()
 		uri += this->pdfFilename;
 		return uri;
 	}
-	return NULL;
+	return "";
 }
 
 bool Document::isPdfDocumentLoaded()
@@ -233,7 +233,7 @@ void Document::buildTreeContentsModel(GtkTreeIter* parent,
 		link->dest->setExpand(iter->isOpen());
 
 		gtk_tree_store_append(GTK_TREE_STORE(contentsModel), &treeIter, parent);
-		char* titleMarkup = g_markup_escape_text(action->getTitle().c_str(), -1);
+		char* titleMarkup = g_markup_escape_text(CSTR(action->getTitle()), -1);
 
 		gtk_tree_store_set(GTK_TREE_STORE(contentsModel), &treeIter,
 		                   DOCUMENT_LINKS_COLUMN_NAME, titleMarkup, DOCUMENT_LINKS_COLUMN_LINK, link,
@@ -331,9 +331,9 @@ bool Document::readPdf(String filename, bool initPages, bool attachToDocument)
 
 	lock();
 
-	if (!pdfDocument.load(filename.c_str(), password.c_str(), &popplerError))
+	if (!pdfDocument.load(CSTR(filename), CSTR(password), &popplerError))
 	{
-		char* txt = g_strdup_printf("Document not loaded! (%s), %s", filename.c_str(),
+		char* txt = g_strdup_printf("Document not loaded! (%s), %s", CSTR(filename),
 		                            popplerError->message);
 		lastError = txt;
 		g_free(txt);
@@ -346,7 +346,7 @@ bool Document::readPdf(String filename, bool initPages, bool attachToDocument)
 	this->pdfFilename = filename;
 	this->attachPdf = attachToDocument;
 
-	lastError = NULL;
+	lastError = "";
 
 	if (initPages)
 	{

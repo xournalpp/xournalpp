@@ -169,7 +169,7 @@ void PdfBookmarks::writeOutlines(Document* doc, PdfWriter* writer,
 		writer->writeObj();
 
 		writer->write("<<\n/Title ");
-		writer->writeTxt(b->name.c_str());
+		writer->writeTxt(CSTR(b->name));
 		writer->write("\n");
 
 		writer->write("/Parent ");

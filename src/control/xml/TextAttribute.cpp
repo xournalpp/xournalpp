@@ -1,5 +1,5 @@
 #include "TextAttribute.h"
-#include <String.h>
+#include <StringUtils.h>
 
 TextAttribute::TextAttribute(const char* name, const char* value) :
 	Attribute(name)
@@ -24,6 +24,8 @@ void TextAttribute::writeOut(OutputStream* out)
 	XOJ_CHECK_TYPE(TextAttribute);
 
 	String v = this->value;
-	out->write(v.replace("&", "&amp;").replace("\"", "&quot;").replace("<",
-	                                                                   "&lt;").replace(">", "&gt;"));
+	out->write(v.findAndReplace("&", "&amp;")
+                    .findAndReplace("\"", "&quot;")
+                    .findAndReplace("<", "&lt;")
+                    .findAndReplace(">", "&gt;"));
 }

@@ -10,7 +10,7 @@
 #define DEFAULT_FONT_SIZE 12
 
 #define WRITE_BOOL_PROP(var) xmlNode = saveProperty((const char *)#var, var ? "true" : "false", root)
-#define WRITE_STRING_PROP(var) xmlNode = saveProperty((const char *)#var, var.isEmpty() ? "" : var.c_str(), root)
+#define WRITE_STRING_PROP(var) xmlNode = saveProperty((const char *)#var, var.isEmpty() ? "" : CSTR(var), root)
 #define WRITE_INT_PROP(var) xmlNode = saveProperty((const char *)#var, var, root)
 #define WRITE_DOUBLE_PROP(var) xmlNode = savePropertyDouble((const char *)#var, var, root)
 #define WRITE_COMMENT(var) com = xmlNewComment((const xmlChar *)var); \
@@ -147,17 +147,17 @@ void Settings::parseData(xmlNodePtr cur, SElement& elem)
 
 			String sType = (const char*) type;
 
-			if (sType.equals("int"))
+			if (sType == "int")
 			{
 				int i = atoi((const char*) value);
 				elem.setInt((const char*) name, i);
 			}
-			else if (sType.equals("double"))
+			else if (sType == "double")
 			{
 				double d = atof((const char*) value);
 				elem.setDouble((const char*) name, d);
 			}
-			else if (sType.equals("hex"))
+			else if (sType == "hex")
 			{
 				int i = 0;
 				if (sscanf((const char*) value, "%x", &i))
@@ -169,17 +169,17 @@ void Settings::parseData(xmlNodePtr cur, SElement& elem)
 					g_warning("Settings::Unknown hex value: %s:%s\n", name, value);
 				}
 			}
-			else if (sType.equals((const char*) "string"))
+			else if (sType == (const char*) "string")
 			{
 				elem.setString((const char*) name, (const char*) value);
 			}
-			else if (sType.equals("boolean"))
+			else if (sType == "boolean")
 			{
 				elem.setBool((const char*) name, strcmp((const char*) value, "true") == 0);
 			}
 			else
 			{
-				g_warning("Settings::Unknown datatype: %s\n", sType.c_str());
+				g_warning("Settings::Unknown datatype: %s\n", CSTR(sType));
 			}
 
 			xmlFree(name);
@@ -555,14 +555,15 @@ bool Settings::load()
 	XOJ_CHECK_TYPE(Settings);
 
 	xmlKeepBlanksDefault(0);
+        const char * file = CSTR(filename);
 
-	if (!g_file_test(filename.c_str(), G_FILE_TEST_EXISTS))
+	if (!g_file_test(file, G_FILE_TEST_EXISTS))
 	{
-		g_warning("configfile does not exist %s\n", filename.c_str());
+		g_warning("configfile does not exist %s\n", file);
 		return false;
 	}
 
-	xmlDocPtr doc = xmlParseFile(filename.c_str());
+	xmlDocPtr doc = xmlParseFile(CSTR(filename));
 
 	if (doc == NULL)
 	{
@@ -573,7 +574,7 @@ bool Settings::load()
 	xmlNodePtr cur = xmlDocGetRootElement(doc);
 	if (cur == NULL)
 	{
-		g_message("The settings file \"%s\" is empty", filename.c_str());
+		g_message("The settings file \"%s\" is empty", CSTR(filename));
 		xmlFreeDoc(doc);
 
 		return false;
@@ -581,7 +582,7 @@ bool Settings::load()
 
 	if (xmlStrcmp(cur->name, (const xmlChar*) "settings"))
 	{
-		g_message("File \"%s\" is of the wrong type", filename.c_str());
+		g_message("File \"%s\" is of the wrong type", CSTR(filename));
 		xmlFreeDoc(doc);
 
 		return false;
@@ -893,7 +894,7 @@ void Settings::save()
 	xmlFont = xmlNewChild(root, NULL, (const xmlChar*) "property", NULL);
 	xmlSetProp(xmlFont, (const xmlChar*) "name", (const xmlChar*) "font");
 	xmlSetProp(xmlFont, (const xmlChar*) "font",
-	           (const xmlChar*) this->font.getName().c_str());
+	           (const xmlChar*) CSTR(this->font.getName()));
 	gchar* sSize = g_strdup_printf("%0.1lf", this->font.getSize());
 	xmlSetProp(xmlFont, (const xmlChar*) "size", (const xmlChar*) sSize);
 	g_free(sSize);
@@ -904,7 +905,7 @@ void Settings::save()
 		saveData(root, (*it).first, (*it).second);
 	}
 
-	xmlSaveFormatFile(filename.c_str(), doc, 1);
+	xmlSaveFormatFile(CSTR(filename), doc, 1);
 	xmlFreeDoc(doc);
 }
 
@@ -914,7 +915,7 @@ void Settings::saveData(xmlNodePtr root, String name, SElement& elem)
 
 	xmlNodePtr xmlNode = xmlNewChild(root, NULL, (const xmlChar*) "data", NULL);
 
-	xmlSetProp(xmlNode, (const xmlChar*) "name", (const xmlChar*) name.c_str());
+	xmlSetProp(xmlNode, (const xmlChar*) "name", (const xmlChar*) CSTR(name));
 
 	std::map<String, SAttribute>::iterator it;
 	for (it = elem.attributes().begin(); it != elem.attributes().end(); it++)
@@ -978,13 +979,13 @@ void Settings::saveData(xmlNodePtr root, String name, SElement& elem)
 		xmlNodePtr at;
 		at = xmlNewChild(xmlNode, NULL, (const xmlChar*) "attribute", NULL);
 
-		xmlSetProp(at, (const xmlChar*) "name", (const xmlChar*) aname.c_str());
-		xmlSetProp(at, (const xmlChar*) "type", (const xmlChar*) type.c_str());
-		xmlSetProp(at, (const xmlChar*) "value", (const xmlChar*) value.c_str());
+		xmlSetProp(at, (const xmlChar*) "name", (const xmlChar*) CSTR(aname));
+		xmlSetProp(at, (const xmlChar*) "type", (const xmlChar*) CSTR(type));
+		xmlSetProp(at, (const xmlChar*) "value", (const xmlChar*) CSTR(value));
 
 		if (!attrib.comment.isEmpty())
 		{
-			xmlNodePtr com = xmlNewComment((const xmlChar*) attrib.comment.c_str());
+			xmlNodePtr com = xmlNewComment((const xmlChar*) CSTR(attrib.comment));
 			xmlAddPrevSibling(xmlNode, com);
 		}
 	}

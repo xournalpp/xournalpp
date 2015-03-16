@@ -57,7 +57,7 @@ public:
 public:
 	// Menu File
 	bool newFile();
-	bool openFile(String filename = NULL, int scrollToPage = -1);
+	bool openFile(String filename = "", int scrollToPage = -1);
 	bool annotatePdf(String filename, bool attachPdf, bool attachToDocument);
 	void print();
 	void exportAsPdf();

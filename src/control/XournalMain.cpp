@@ -129,7 +129,7 @@ int XournalMain::exportPdf(const char* input, const char* output)
 	if (doc == NULL)
 	{
 		String err = loader.getLastError();
-		printf("%s\n", err.c_str());
+		printf("%s\n", CSTR(err));
 		return -2;
 	}
 
@@ -139,7 +139,7 @@ int XournalMain::exportPdf(const char* input, const char* output)
 	if (!pdf.createPdf(g_file_get_uri(file)))
 	{
 		String err = pdf.getLastError();
-		printf("%s\n", err.c_str());
+		printf("%s\n", CSTR(err));
 
 		g_object_unref(file);
 		return -3;

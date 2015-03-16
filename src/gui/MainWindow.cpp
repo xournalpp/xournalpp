@@ -734,7 +734,7 @@ void MainWindow::createToolbarAndMenu(bool initial)
 		}
 
 		item = gtk_radio_menu_item_new_with_label(this->toolbarGroup,
-		                                          d->getName().c_str());
+		                                          CSTR(d->getName()));
 		this->toolbarGroup = gtk_radio_menu_item_get_group(GTK_RADIO_MENU_ITEM(item));
 
 		gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(item), false);
@@ -841,7 +841,7 @@ void MainWindow::updatePageNumbers(int page, int pagecount, int pdfpage)
 		pdfText = g_strdup_printf(_(", PDF Page %i"), pdfpage + 1);
 	}
 
-	String text = String::format(_("of %i%s"), pagecount, pdfText);
+	String text = StringUtils::format(_("of %i%s"), pagecount, pdfText);
 	toolbar->setPageText(text);
 	g_free(pdfText);
 

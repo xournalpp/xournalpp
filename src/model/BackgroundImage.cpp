@@ -43,7 +43,7 @@ String BackgroundImage::getFilename()
 	{
 		return this->img->getFilename();
 	}
-	return NULL;
+	return "";
 }
 
 void BackgroundImage::loadFile(String filename, GError** error)

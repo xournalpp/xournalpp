@@ -50,12 +50,12 @@ String Util::getAutosaveFilename()
 
 String Util::getSettingsSubfolder(String subfolder)
 {
-	String path = String::format("%s%c%s%c%s%c", g_get_home_dir(), G_DIR_SEPARATOR,
-	                             CONFIG_DIR, G_DIR_SEPARATOR, subfolder.c_str(), G_DIR_SEPARATOR);
+	const char* path = CSTR(StringUtils::format("%s%c%s%c%s%c", g_get_home_dir(), G_DIR_SEPARATOR,
+	                             CONFIG_DIR, G_DIR_SEPARATOR, CSTR(subfolder), G_DIR_SEPARATOR));
 
-	if (!g_file_test(path.c_str(), G_FILE_TEST_EXISTS))
+	if (!g_file_test(path, G_FILE_TEST_EXISTS))
 	{
-		mkdir(path.c_str(), 0700);
+		mkdir(path, 0700);
 	}
 
 	return path;
@@ -170,9 +170,9 @@ void Util::openFileWithDefaultApplicaion(const char* filename)
 #define OPEN_PATTERN "xdg-open \"%s\""
 #endif
 
-	String escaped = String(filename).replace("\\", "\\\\").replace("\"", "\\\"");
+	const char* escaped = CSTR(String(filename).findAndReplace("\\", "\\\\").findAndReplace("\"", "\\\""));
 
-	char* command = g_strdup_printf(OPEN_PATTERN, escaped.c_str());
+	char* command = g_strdup_printf(OPEN_PATTERN, escaped);
 	printf("XPP Execute command: «%s»\n", command);
 	if(system(command) != 0)
 	{
@@ -197,10 +197,10 @@ void Util::openFileWithFilebrowser(const char* filename)
 #define OPEN_PATTERN "nautilus \"file://%s\" || konqueror \"file://%s\""
 #endif
 
-	String escaped = String(filename).replace("\\", "\\\\").replace("\"", "\\\"");
+	const char* escaped = CSTR(String(filename).findAndReplace("\\", "\\\\").findAndReplace("\"", "\\\""));
 
-	char* command = g_strdup_printf(OPEN_PATTERN, escaped.c_str(),
-	                                escaped.c_str()); // twice for linux...
+	char* command = g_strdup_printf(OPEN_PATTERN, escaped,
+	                                escaped); // twice for linux...
 	printf("XPP show file in filebrowser command: «%s»\n", command);
 	if(system(command) != 0)
 	{

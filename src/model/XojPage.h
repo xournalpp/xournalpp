@@ -15,7 +15,7 @@
 #include "Layer.h"
 #include <ListIterator.h>
 #include <XournalType.h>
-#include <String.h>
+#include <StringUtils.h>
 
 #include "BackgroundType.h"
 #include "BackgroundImage.h"

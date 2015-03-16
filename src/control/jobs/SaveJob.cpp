@@ -38,7 +38,7 @@ void SaveJob::afterRun()
 	{
 		GtkWidget* dialog = gtk_message_dialog_new((GtkWindow*) *control->getWindow(),
 		                                           GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
-		                                           "%s", this->lastError.c_str());
+		                                           "%s", CSTR(this->lastError));
 		gtk_window_set_transient_for(GTK_WINDOW(dialog),
 		                             GTK_WINDOW(this->control->getWindow()->getWindow()));
 		gtk_dialog_run(GTK_DIALOG(dialog));
@@ -53,7 +53,7 @@ void SaveJob::afterRun()
 		doc->unlock();
 
 		control->getUndoRedoHandler()->documentSaved();
-		control->getRecentManager()->addRecentFileFilename(filename.c_str());
+		control->getRecentManager()->addRecentFileFilename(CSTR(filename));
 		control->updateWindowTitle();
 	}
 }
@@ -73,8 +73,8 @@ bool SaveJob::copyFile(String source, String target)
 
 	// we need to build the GFile from a path.
 	// But if future versions support URIs, this has to be changed
-	GFile* src = g_file_new_for_path(source.c_str());
-	GFile* trg = g_file_new_for_path(target.c_str());
+	GFile* src = g_file_new_for_path(CSTR(source));
+	GFile* trg = g_file_new_for_path(CSTR(target));
 	GError* err = NULL;
 
 	bool ok = g_file_copy(src, trg, G_FILE_COPY_OVERWRITE, NULL,
@@ -172,13 +172,13 @@ bool SaveJob::save()
 	if (doc->shouldCreateBackupOnSave())
 	{
 		int pos = doc->getFilename().lastIndexOf("/") + 1;
-		String backup = doc->getFilename().substring(0,pos) 
-			+ "." + doc->getFilename().substring(pos);
+		String backup = String(doc->getFilename()).retainBetween(0,pos) 
+			+ "." + String(doc->getFilename()).retainBetween(pos);
 		backup += ".bak";
 		if (!copyFile(doc->getFilename(), backup))
 		{
 			g_warning("Could not create backup! (The file was created from an older Xournal version)\n%s\n",
-			          this->copyError.c_str());
+			          CSTR(this->copyError));
 		}
 
 		doc->setCreateBackupOnSave(false);
@@ -190,12 +190,12 @@ bool SaveJob::save()
 	{
 		if (!control->getWindow())
 		{
-			g_error(_("Open file error: %s"), out->getLastError().c_str());
+			g_error(_("Open file error: %s"), CSTR(out->getLastError()));
 			return false;
 		}
 
-		this->lastError = String::format(_("Open file error: %s"),
-		                                 out->getLastError().c_str());
+		this->lastError = StringUtils::format(_("Open file error: %s"),
+		                                 CSTR(out->getLastError()));
 
 		delete out;
 		return false;
@@ -206,11 +206,11 @@ bool SaveJob::save()
 
 	if (!out->getLastError().isEmpty())
 	{
-		this->lastError = String::format(_("Open file error: %s"),
-		                                 out->getLastError().c_str());
+		this->lastError = StringUtils::format(_("Open file error: %s"),
+		                                 CSTR(out->getLastError()));
 		if (!control->getWindow())
 		{
-			g_error("%s", this->lastError.c_str());
+			g_error("%s", CSTR(this->lastError));
 			return false;
 		}
 

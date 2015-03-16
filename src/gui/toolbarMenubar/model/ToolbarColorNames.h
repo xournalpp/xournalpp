@@ -15,7 +15,7 @@
 
 #include <XournalType.h>
 #include <glib.h>
-#include <String.h>
+#include <StringUtils.h>
 
 class ToolbarColorNames
 {

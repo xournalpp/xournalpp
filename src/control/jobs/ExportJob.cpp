@@ -35,8 +35,8 @@ ExportJob::ExportJob(Control* control, GList* selected, ExportFormtType type,
 	}
 	else
 	{
-		front = filename.substring(0, index);
-		back = filename.substring(index + 1);
+		front = String(filename).retainBetween(0, index);
+		back = String(filename).retainBetween(index + 1);
 	}
 
 }
@@ -65,15 +65,15 @@ bool ExportJob::createSurface(int id, double width, double height)
 		char* path = NULL;
 		if (id == -1)
 		{
-			path = g_strdup_printf("%s%c%s.%s", this->folder.c_str(), G_DIR_SEPARATOR,
-			                       this->front.c_str(),
-			                       this->back.c_str());
+			path = g_strdup_printf("%s%c%s.%s", CSTR(this->folder), G_DIR_SEPARATOR,
+			                       CSTR(this->front),
+			                       CSTR(this->back));
 		}
 		else
 		{
-			path = g_strdup_printf("%s%c%s%i.%s", this->folder.c_str(), G_DIR_SEPARATOR,
-			                       this->filename.c_str(), id,
-			                       this->back.c_str());
+			path = g_strdup_printf("%s%c%s%i.%s", CSTR(this->folder), G_DIR_SEPARATOR,
+			                       CSTR(this->filename), id,
+			                       CSTR(this->back));
 		}
 
 		this->surface = cairo_ps_surface_create(path, width, height);
@@ -96,15 +96,15 @@ bool ExportJob::createSurface(int id, double width, double height)
 		char* path = NULL;
 		if (id == -1)
 		{
-			path = g_strdup_printf("%s%c%s.%s", this->folder.c_str(), G_DIR_SEPARATOR,
-			                       this->front.c_str(),
-			                       this->back.c_str());
+			path = g_strdup_printf("%s%c%s.%s", CSTR(this->folder), G_DIR_SEPARATOR,
+			                       CSTR(this->front),
+			                       CSTR(this->back));
 		}
 		else
 		{
-			path = g_strdup_printf("%s%c%s%i.%s", this->folder.c_str(), G_DIR_SEPARATOR,
-			                       this->front.c_str(), id,
-			                       this->back.c_str());
+			path = g_strdup_printf("%s%c%s%i.%s", CSTR(this->folder), G_DIR_SEPARATOR,
+			                       CSTR(this->front), id,
+			                       CSTR(this->back));
 		}
 
 		this->surface = cairo_svg_surface_create(path, width, height);
@@ -132,15 +132,15 @@ bool ExportJob::freeSurface(int id)
 		char* path = NULL;
 		if (id == -1)
 		{
-			path = g_strdup_printf("%s%c%s.%s", this->folder.c_str(), G_DIR_SEPARATOR,
-			                       this->front.c_str(),
-			                       this->back.c_str());
+			path = g_strdup_printf("%s%c%s.%s", CSTR(this->folder), G_DIR_SEPARATOR,
+			                       CSTR(this->front),
+			                       CSTR(this->back));
 		}
 		else
 		{
-			path = g_strdup_printf("%s%c%s%i.%s", this->folder.c_str(), G_DIR_SEPARATOR,
-			                       this->front.c_str(), id,
-			                       this->back.c_str());
+			path = g_strdup_printf("%s%c%s%i.%s", CSTR(this->folder), G_DIR_SEPARATOR,
+			                       CSTR(this->front), id,
+			                       CSTR(this->back));
 		}
 
 		cairo_status_t status = cairo_surface_write_to_png(surface, path);
@@ -187,12 +187,12 @@ void ExportJob::run()
 	if (this->type == EXPORT_FORMAT_PDF)
 	{
 		PdfExport pdfe(doc, &pglistener);
-		char* path = g_strdup_printf("file://%s%c%s", this->folder.c_str(),
-		                             G_DIR_SEPARATOR, this->filename.c_str());
+		char* path = g_strdup_printf("file://%s%c%s", CSTR(this->folder),
+		                             G_DIR_SEPARATOR, CSTR(this->filename));
 
 		if(!pdfe.createPdf(path))
 		{
-			g_warning("Error creating PDF: %s", pdfe.getLastError().c_str());
+			g_warning("Error creating PDF: %s", CSTR(pdfe.getLastError()));
 		}
 
 		g_free(path);

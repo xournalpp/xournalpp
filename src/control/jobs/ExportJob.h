@@ -14,7 +14,7 @@
 
 #include "BlockingJob.h"
 #include "ExportFormtType.h"
-#include <String.h>
+#include <StringUtils.h>
 #include <XournalType.h>
 
 class ExportJob : public BlockingJob

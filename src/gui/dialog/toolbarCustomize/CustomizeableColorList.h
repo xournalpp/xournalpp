@@ -14,7 +14,7 @@
 
 #include <XournalType.h>
 #include <glib.h>
-#include <String.h>
+#include <StringUtils.h>
 #include <ListIterator.h>
 
 #include "../../XojColor.h"

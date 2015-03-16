@@ -12,7 +12,7 @@
 #ifndef __TOOLBARITEM_H__
 #define __TOOLBARITEM_H__
 
-#include <String.h>
+#include <StringUtils.h>
 #include <XournalType.h>
 
 class ToolbarItem

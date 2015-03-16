@@ -15,7 +15,7 @@
 #include <glib.h>
 #include <ListIterator.h>
 #include <XournalType.h>
-#include <String.h>
+#include <StringUtils.h>
 
 class ToolbarData;
 

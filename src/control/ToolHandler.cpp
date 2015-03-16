@@ -385,7 +385,7 @@ double ToolHandler::getThickness()
 	}
 	else
 	{
-		g_warning("Request size of \"%s\"", this->current->getName().c_str());
+		g_warning("Request size of \"%s\"", CSTR(this->current->getName()));
 		return 0;
 	}
 }
@@ -587,29 +587,29 @@ void ToolHandler::loadSettings()
 
 		if (t->isEnableSize() && st.getString("size", value))
 		{
-			if (value.equals("VERY_THIN"))
+			if (value == "VERY_THIN")
 			{
 				t->setSize(TOOL_SIZE_VERY_FINE);
 			}
-			else if (value.equals("THIN"))
+			else if (value == "THIN")
 			{
 				t->setSize(TOOL_SIZE_FINE);
 			}
-			else if (value.equals("MEDIUM"))
+			else if (value == "MEDIUM")
 			{
 				t->setSize(TOOL_SIZE_MEDIUM);
 			}
-			else if (value.equals("BIG"))
+			else if (value == "BIG")
 			{
 				t->setSize(TOOL_SIZE_THICK);
 			}
-			else if (value.equals("VERY_BIG"))
+			else if (value == "VERY_BIG")
 			{
 				t->setSize(TOOL_SIZE_VERY_THICK);
 			}
 			else
 			{
-				g_warning("Settings::Unknown tool size: %s\n", value.c_str());
+				g_warning("Settings::Unknown tool size: %s\n", CSTR(value));
 			}
 		}
 

@@ -12,7 +12,7 @@
 #ifndef __TOOL_H__
 #define __TOOL_H__
 
-#include <String.h>
+#include <StringUtils.h>
 #include <XournalType.h>
 
 // Has to be in the same order as in Action.h: ActionType!

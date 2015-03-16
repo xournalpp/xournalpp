@@ -125,7 +125,7 @@ public:
 
 		if (selection->target == gdk_atom_intern_static_string("UTF8_STRING"))
 		{
-			gtk_selection_data_set_text(selection, contents->text.c_str(), -1);
+			gtk_selection_data_set_text(selection, CSTR(contents->text), -1);
 		}
 		else if (selection->target == gdk_atom_intern_static_string("image/png") ||
 		         selection->target == gdk_atom_intern_static_string("image/jpeg")
@@ -136,7 +136,7 @@ public:
 		else if (atomSvg1 == selection->target || atomSvg2 == selection->target)
 		{
 			gtk_selection_data_set(selection, selection->target, 8,
-			                       (guchar*) contents->svg.c_str(), contents->svg.size());
+			                       (guchar*) CSTR(contents->svg), contents->svg.length());
 		}
 		else if (atomXournal == selection->target)
 		{

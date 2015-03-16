@@ -226,12 +226,12 @@ private:
 		{
 			if (item != NULL)
 			{
-				printf("Removed tool item %s from Toolbar %s ID %i\n", item->getId().c_str(),
-				       toolbarName.c_str(), id);
+				printf("Removed tool item %s from Toolbar %s ID %i\n", CSTR(item->getId()),
+				       CSTR(toolbarName), id);
 			}
 			else
 			{
-				printf("Removed tool item from Toolbar %s ID %i\n", toolbarName.c_str(), id);
+				printf("Removed tool item from Toolbar %s ID %i\n", CSTR(toolbarName), id);
 			}
 		}
 		else
@@ -239,13 +239,13 @@ private:
 			if (item != NULL)
 			{
 				printf("Could not removed tool item %s from Toolbar %s Position %i\n",
-				       item->getId().c_str(),
-				       toolbarName.c_str(), id);
+				       CSTR(item->getId()),
+				       CSTR(toolbarName), id);
 			}
 			else
 			{
 				printf("Could not removed tool item from Toolbar %s Position %i\n",
-				       toolbarName.c_str(), id);
+				       CSTR(toolbarName), id);
 			}
 		}
 	}

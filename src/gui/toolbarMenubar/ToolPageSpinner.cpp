@@ -43,7 +43,7 @@ void ToolPageSpinner::setText(String text)
 
 	if (lbPageNo)
 	{
-		gtk_label_set_text(GTK_LABEL(lbPageNo), text.c_str());
+		gtk_label_set_text(GTK_LABEL(lbPageNo), CSTR(text));
 	}
 }
 

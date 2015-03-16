@@ -21,7 +21,7 @@ GFile* ImageOpenDlg::show(GtkWindow* win, Settings* settings, bool localOnly,
 	if (!settings->getLastImagePath().isEmpty())
 	{
 		gtk_file_chooser_set_current_folder_uri(GTK_FILE_CHOOSER(dialog),
-		                                        settings->getLastImagePath().c_str());
+		                                        CSTR(settings->getLastImagePath()));
 	}
 
 	GtkWidget* cbAttach = NULL;

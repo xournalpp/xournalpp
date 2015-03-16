@@ -209,11 +209,11 @@ bool PdfWriter::writeInfo(String title)
 	if (!title.isEmpty())
 	{
 		write("/Title ");
-		if (title.length() > 4 && title.substring(-4, 1) == ".")
+		if (title.length() > 4 && String(title).retainBetween(title.length()-4, title.length()-3) == ".")
 		{
-			title = title.substring(0, -4);
+			title.retainBetween(0, title.length()-4);
 		}
-		writeTxt(title.c_str());
+		writeTxt(CSTR(title));
 		write("\n");
 	}
 

@@ -73,7 +73,7 @@ Control::Control(GladeSearchpath* gladeSearchPath)
 	this->lastEnabled = false;
 	this->fullscreen = false;
 
-	String name = String::format("%s%c%s%c%s", g_get_home_dir(), G_DIR_SEPARATOR,
+	String name = StringUtils::format("%s%c%s%c%s", g_get_home_dir(), G_DIR_SEPARATOR,
 	                             CONFIG_DIR, G_DIR_SEPARATOR,
 	                             SETTINGS_XML_FILE);
 	this->settings = new Settings(name);
@@ -182,11 +182,12 @@ void Control::renameLastAutosaveFile()
 		String filename = this->lastAutosaveFilename;
 		int pos = filename.lastIndexOf("/") + 1;
 		//String folder = filename.substring(0, pos);
-		String file = filename.substring(pos);
-		String renamed = Util::getAutosaveFilename().substring(0,-4) + file;
+		String file = String(filename).retainBetween(pos);
+		String renamed = String(Util::getAutosaveFilename());
+                renamed.retainBetween(0,renamed.length()-4) + file;
 
-		GFile* file1 = g_file_new_for_path(filename.c_str());
-		GFile* file2 = g_file_new_for_path(renamed.c_str());
+		GFile* file1 = g_file_new_for_path(CSTR(filename));
+		GFile* file2 = g_file_new_for_path(CSTR(renamed));
 		g_file_move(file1, file2, G_FILE_COPY_OVERWRITE, NULL, NULL, NULL, NULL);
 	}
 }
@@ -203,7 +204,7 @@ void Control::deleteLastAutosaveFile(String newAutosaveFile)
 	if (!this->lastAutosaveFilename.isEmpty())
 	{
 		// delete old autosave file
-		GFile* file = g_file_new_for_path(this->lastAutosaveFilename.c_str());
+		GFile* file = g_file_new_for_path(CSTR(this->lastAutosaveFilename));
 		g_file_delete(file, NULL, NULL);
 	}
 	this->lastAutosaveFilename = newAutosaveFile;
@@ -386,7 +387,7 @@ void Control::actionPerformed(ActionType type, ActionGroup group,
 		break;
 	case ACTION_ANNOTATE_PDF:
 		clearSelectionEndText();
-		annotatePdf(NULL, false, false);
+		annotatePdf("", false, false);
 		break;
 	case ACTION_SAVE:
 		save();
@@ -996,7 +997,7 @@ void Control::customizeToolbars()
 		                                           GTK_DIALOG_DESTROY_WITH_PARENT,
 		                                           GTK_MESSAGE_QUESTION, GTK_BUTTONS_YES_NO, _(
 		                                               "The Toolbarconfiguration \"%s\" is predefined, would you create a copy to edit?"),
-		                                           this->win->getSelectedToolbar()->getName().c_str());
+		                                           CSTR(this->win->getSelectedToolbar()->getName()));
 
 		gtk_window_set_transient_for(GTK_WINDOW(dialog),
 		                             GTK_WINDOW(this->getWindow()->getWindow()));
@@ -1204,7 +1205,7 @@ void Control::enableFullscreen(bool enabled, bool presentation)
 		{
 			e = settings->getFullscreenHideElements();
 		}
-		char* str = g_strdup(e.c_str());
+		char* str = g_strdup(CSTR(e));
 
 		char* part = strtok(str, ",");
 
@@ -1353,14 +1354,14 @@ void Control::getDefaultPagesize(double& width, double& height)
 
 		GtkPaperSize* size = NULL;
 
-		if (paper != NULL)
+		if (paper != "")
 		{
 			GList* list = gtk_paper_size_get_paper_sizes(false);
 			for (GList* l = list; l != NULL; l = l->next)
 			{
 				GtkPaperSize* s = (GtkPaperSize*) l->data;
 
-				if (paper.equalsIgnorCase(gtk_paper_size_get_display_name(s)))
+				if (String(paper).toLower() == String(gtk_paper_size_get_display_name(s)).toLower())
 				{
 					size = s;
 				}
@@ -2399,7 +2400,7 @@ bool Control::openFile(String filename, int scrollToPage)
 		filename = XojOpenDlg::showOpenDialog((GtkWindow*) *win, this->settings, false,
 		                                      attachPdf);
 
-		printf("Filename: %s\n", filename.c_str());
+		printf("Filename: %s\n", CSTR(filename));
 
 		if (filename.isEmpty())
 		{
@@ -2409,8 +2410,7 @@ bool Control::openFile(String filename, int scrollToPage)
 
 	LoadHandler h;
 
-	String lower = filename.toLowerCase();
-	if (filename.toLowerCase().endsWith(".pdf"))
+	if (String(filename).toLower().endsWith(".pdf"))
 	{
 		if (settings->isAutloadPdfXoj())
 		{
@@ -2477,8 +2477,8 @@ bool Control::openFile(String filename, int scrollToPage)
 	{
 		GtkWidget* dialog = gtk_message_dialog_new((GtkWindow*) *win,
 		                                           GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR,
-		                                           GTK_BUTTONS_OK, _("Error opening file '%s'\n%s"), filename.c_str(),
-		                                           h.getLastError().c_str());
+		                                           GTK_BUTTONS_OK, _("Error opening file '%s'\n%s"), CSTR(filename),
+		                                           CSTR(h.getLastError()));
 		gtk_window_set_transient_for(GTK_WINDOW(dialog),
 		                             GTK_WINDOW(this->getWindow()->getWindow()));
 		gtk_dialog_run(GTK_DIALOG(dialog));
@@ -2527,7 +2527,7 @@ void Control::fileLoaded(int scrollToPage)
 		{
 			scrollHandler->scrollToPage(scrollPageMetadata);
 		}
-		recent->addRecentFileFilename(file.c_str());
+		recent->addRecentFileFilename(CSTR(file));
 	}
 	else
 	{
@@ -2569,7 +2569,7 @@ bool Control::annotatePdf(String filename, bool attachPdf,
 	{
 		int page = 0;
 
-		this->recent->addRecentFileFilename(filename.c_str());
+		this->recent->addRecentFileFilename(CSTR(filename));
 
 		this->doc->lock();
 		String file = this->doc->getEvMetadataFilename();
@@ -2586,8 +2586,8 @@ bool Control::annotatePdf(String filename, bool attachPdf,
 
 		GtkWidget* dialog = gtk_message_dialog_new((GtkWindow*) *win,
 		                                           GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR,
-		                                           GTK_BUTTONS_OK, _("Error annotate PDF file '%s'\n%s"), filename.c_str(),
-		                                           errMsg.c_str());
+		                                           GTK_BUTTONS_OK, _("Error annotate PDF file '%s'\n%s"), CSTR(filename),
+		                                           CSTR(errMsg));
 		gtk_window_set_transient_for(GTK_WINDOW(dialog),
 		                             GTK_WINDOW(this->getWindow()->getWindow()));
 		gtk_dialog_run(GTK_DIALOG(dialog));
@@ -2712,9 +2712,7 @@ String Control::getFilename(String uri)
 		return uri;
 	}
 
-	String s = uri.substring(pos + 1);
-
-	return s;
+	return String(uri).retainBetween(pos + 1);
 }
 
 bool Control::showSaveDialog()
@@ -2734,7 +2732,7 @@ bool Control::showSaveDialog()
 	if (!settings->getLastSavePath().isEmpty())
 	{
 		gtk_file_chooser_set_current_folder_uri(GTK_FILE_CHOOSER(dialog),
-		                                        settings->getLastSavePath().c_str());
+		                                        CSTR(settings->getLastSavePath()));
 	}
 
 	String saveFilename = "";
@@ -2753,7 +2751,7 @@ bool Control::showSaveDialog()
 	{
 		time_t curtime = time(NULL);
 		char stime[128];
-		strftime(stime, sizeof(stime), settings->getDefaultSaveName().c_str(),
+		strftime(stime, sizeof(stime), CSTR(settings->getDefaultSaveName()),
 		         localtime(&curtime));
 
 		saveFilename = stime;
@@ -2761,7 +2759,7 @@ bool Control::showSaveDialog()
 	this->doc->unlock();
 
 	gtk_file_chooser_set_current_name(GTK_FILE_CHOOSER(dialog),
-	                                  saveFilename.c_str());
+	                                  CSTR(saveFilename));
 	gtk_file_chooser_set_do_overwrite_confirmation(GTK_FILE_CHOOSER(dialog), true);
 
 	gtk_window_set_transient_for(GTK_WINDOW(dialog),
@@ -2827,7 +2825,7 @@ void Control::updateWindowTitle()
 
 	title += " - Xournal++";
 
-	gtk_window_set_title((GtkWindow*) *win, title.c_str());
+	gtk_window_set_title((GtkWindow*) *win, CSTR(title));
 }
 
 void Control::exportAsPdf()
@@ -3096,7 +3094,7 @@ void Control::clipboardPasteXournal(ObjectInputStream& in)
 		if (version != PACKAGE_STRING)
 		{
 			g_warning("Paste from Xournal Version %s to Xournal Version %s",
-			          version.c_str(), PACKAGE_STRING);
+			          CSTR(version), PACKAGE_STRING);
 		}
 
 		selection = new EditSelection(this->undoRedo, page, view);
@@ -3133,7 +3131,7 @@ void Control::clipboardPasteXournal(ObjectInputStream& in)
 			}
 			else
 			{
-				throw INPUT_STREAM_EXCEPTION("Get unknown object %s", name.c_str());
+				throw INPUT_STREAM_EXCEPTION("Get unknown object %s", CSTR(name));
 			}
 
 			in >> element;

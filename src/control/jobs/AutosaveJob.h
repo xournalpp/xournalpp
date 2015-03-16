@@ -13,7 +13,7 @@
 #define __AUTOSAVEJOB_H__
 
 #include "Job.h"
-#include <String.h>
+#include <StringUtils.h>
 #include <XournalType.h>
 
 class Control;

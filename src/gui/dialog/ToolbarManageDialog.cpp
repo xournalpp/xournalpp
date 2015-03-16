@@ -35,7 +35,7 @@ ToolbarManageDialog::ToolbarManageDialog(GladeSearchpath* gladeSearchPath,
 		if (data->isPredefined())
 		{
 			gtk_list_store_append(this->model, &iter);
-			gtk_list_store_set(this->model, &iter, COLUMN_STRING, data->getName().c_str(),
+			gtk_list_store_set(this->model, &iter, COLUMN_STRING, CSTR(data->getName()),
 			                   COLUMN_BOLD, PANGO_WEIGHT_NORMAL, COLUMN_POINTER, data,
 			                   COLUMN_EDITABLE, false, -1);
 		}
@@ -54,7 +54,7 @@ ToolbarManageDialog::ToolbarManageDialog(GladeSearchpath* gladeSearchPath,
 		if (!data->isPredefined())
 		{
 			gtk_list_store_append(this->model, &iter);
-			gtk_list_store_set(this->model, &iter, COLUMN_STRING, data->getName().c_str(),
+			gtk_list_store_set(this->model, &iter, COLUMN_STRING, CSTR(data->getName()),
 			                   COLUMN_BOLD, PANGO_WEIGHT_NORMAL, COLUMN_POINTER, data,
 			                   COLUMN_EDITABLE, true, -1);
 		}
@@ -157,7 +157,7 @@ void ToolbarManageDialog::addToolbarData(ToolbarData* data)
 	this->tbModel->add(data);
 	GtkTreeIter iter;
 	gtk_list_store_append(this->model, &iter);
-	gtk_list_store_set(this->model, &iter, COLUMN_STRING, data->getName().c_str(),
+	gtk_list_store_set(this->model, &iter, COLUMN_STRING, CSTR(data->getName()),
 	                   COLUMN_BOLD, PANGO_WEIGHT_NORMAL, COLUMN_POINTER, data, COLUMN_EDITABLE,
 	                   true, -1);
 

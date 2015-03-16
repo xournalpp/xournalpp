@@ -15,7 +15,7 @@
 #include <gtk/gtk.h>
 
 #include "../../control/Actions.h"
-#include <String.h>
+#include <StringUtils.h>
 #include <ListIterator.h>
 
 

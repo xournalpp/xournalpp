@@ -47,7 +47,7 @@ bool ObjectInputStream::read(const char* data,
 		if (version != XML_VERSION_STR)
 		{
 			g_warning("ObjectInputStream version mismatch... two different Xournal versions running? (%s / %s)",
-			          version.c_str(), XML_VERSION_STR);
+			          CSTR(version), XML_VERSION_STR);
 			return false;
 		}
 	}
@@ -68,7 +68,7 @@ void ObjectInputStream::readObject(const char* name) throw (
 	if (type != name)
 	{
 		throw INPUT_STREAM_EXCEPTION("Try to read object type %s but read object type %s",
-		                             name, type.c_str());
+		                             name, CSTR(type));
 	}
 }
 
@@ -281,20 +281,19 @@ void ObjectInputStream::checkType(char type) throw (InputStreamException)
 	if (this->pos + 2 > this->str->len)
 	{
 		throw INPUT_STREAM_EXCEPTION("End reached, but try to read %s, index %i of %ld",
-		                             getType(type).c_str(), this->pos, this->str->len);
+		                             CSTR(getType(type)), this->pos, this->str->len);
 	}
 	if (this->str->str[this->pos] != '_')
 	{
 		throw INPUT_STREAM_EXCEPTION("Expected type signature of %s, index %i of %ld, but read '%c'",
-		                             getType(type).c_str(), this->pos, this->str->len, this->str->str[this->pos]);
+		                             CSTR(getType(type)), this->pos, this->str->len, this->str->str[this->pos]);
 	}
 	this->pos++;
 
 	if (this->str->str[this->pos] != type)
 	{
-		throw INPUT_STREAM_EXCEPTION("Expected %s but read %s", getType(type).c_str(),
-		                             getType(
-		                                 this->str->str[this->pos]).c_str());
+		throw INPUT_STREAM_EXCEPTION("Expected %s but read %s", CSTR(getType(type)),
+		                             CSTR(getType(this->str->str[this->pos])));
 	}
 
 	this->pos++;

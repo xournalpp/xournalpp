@@ -12,7 +12,7 @@
 #ifndef __BUTTONCONFIG_H__
 #define __BUTTONCONFIG_H__
 
-#include <String.h>
+#include <StringUtils.h>
 #include <XournalType.h>
 #include "../Tool.h"
 

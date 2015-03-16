@@ -9,7 +9,7 @@ BackgroundImageContents::BackgroundImageContents(String filename,
 	this->ref = 1;
 	this->pageId = -1;
 	this->attach = false;
-	this->pixbuf = gdk_pixbuf_new_from_file(filename.c_str(), error);
+	this->pixbuf = gdk_pixbuf_new_from_file(CSTR(filename), error);
 }
 
 BackgroundImageContents::~BackgroundImageContents()

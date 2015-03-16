@@ -18,6 +18,6 @@ InputStreamException::~InputStreamException() throw ()
 
 const char* InputStreamException::what() const throw ()
 {
-	return this->message.c_str();
+	return CSTR(this->message);
 }
 

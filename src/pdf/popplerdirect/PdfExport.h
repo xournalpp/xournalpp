@@ -13,7 +13,7 @@
 #define __PDFEXPORT_H__
 
 #include "../../model/Document.h"
-#include <String.h>
+#include <StringUtils.h>
 #include "../../control/jobs/ProgressListener.h"
 #include "../cairo/CairoPdf.h"
 #include "PdfXRef.h"

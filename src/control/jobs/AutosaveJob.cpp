@@ -21,7 +21,7 @@ void AutosaveJob::afterRun()
 
 	GtkWidget* dialog = gtk_message_dialog_new((GtkWindow*) control->getWindow(),
 	                                           GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, _("Autosave: %s"),
-	                                           this->error.c_str());
+	                                           StringUtils::c_str(this->error));
 	gtk_window_set_transient_for(GTK_WINDOW(dialog),
 	                             GTK_WINDOW(this->control->getWindow()->getWindow()));
 	gtk_dialog_run(GTK_DIALOG(dialog));
@@ -51,12 +51,12 @@ void AutosaveJob::run()
 	else
 	{
 		int pos = filename.lastIndexOf("/") + 1;
-		String folder = filename.substring(0,pos);
-		String file = filename.substring(pos);
+		String folder = String(filename).retainBetween(0, pos);
+		String file = String(filename).retainBetween(pos);
 		filename = folder + ".";
-		if (file.length() > 5 && file.substring(-4) == ".xoj")
+		if (file.length() > 5 && String(file).retainBetween(file.length()-4) == ".xoj")
 		{
-			filename += file.substring(0,-4);
+			filename += String(file).retainBetween(0,file.length()-4);
 		}
 		filename += ".autosave.xoj";
 	}

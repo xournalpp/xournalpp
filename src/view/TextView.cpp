@@ -33,7 +33,7 @@ int TextView::getDPI()
 	static int myDPI;
 	if(myDPI != 0)
 		return myDPI;
-	String settingsname = String::format("%s%c%s%c%s", g_get_home_dir(), G_DIR_SEPARATOR,
+	String settingsname = StringUtils::format("%s%c%s%c%s", g_get_home_dir(), G_DIR_SEPARATOR,
 			CONFIG_DIR, G_DIR_SEPARATOR,
 			SETTINGS_XML_FILE);
 	Settings* mySettings = new Settings(settingsname);
@@ -46,7 +46,7 @@ int TextView::getDPI()
 void TextView::updatePangoFont(PangoLayout* layout, Text* t)
 {
 	PangoFontDescription* desc = pango_font_description_from_string(
-	                                 t->getFont().getName().c_str());
+	                                 CSTR(t->getFont().getName()));
 	//pango_font_description_set_absolute_size(desc,
 	//                                         t->getFont().getSize() * PANGO_SCALE);
 	pango_font_description_set_size(desc, t->getFont().getSize() * PANGO_SCALE);
@@ -63,7 +63,7 @@ void TextView::drawText(cairo_t* cr, Text* t)
 
 	PangoLayout* layout = initPango(cr, t);
 	String str = t->getText();
-	pango_layout_set_text(layout, str.c_str(), str.size());
+	pango_layout_set_text(layout, CSTR(str), str.length());
 
 	pango_cairo_show_layout(cr, layout);
 
@@ -82,17 +82,17 @@ GList* TextView::findText(Text* t, const char* search)
 
 	PangoLayout* layout = initPango(cr, t);
 	String str = t->getText();
-	pango_layout_set_text(layout, str.c_str(), str.size());
+	pango_layout_set_text(layout, CSTR(str), str.length());
 
 	int pos = -1;
 
 	String text = t->getText();
 
-	String srch = search;
+	String srch = String(search).toLower();
 
 	do
 	{
-		pos = text.indexOfCaseInsensitiv(srch, pos + 1);
+		pos = String(text).toLower().indexOf(srch, pos + 1);
 		if (pos != -1)
 		{
 			XojPopplerRectangle* mark = new XojPopplerRectangle();
@@ -127,7 +127,7 @@ void TextView::calcSize(Text* t, double& width, double& height)
 	// TODO OPTIMIZE: cache the pango layout, check the size of pango layout first
 	PangoLayout* layout = initPango(cr, t);
 	String str = t->getText();
-	pango_layout_set_text(layout, str.c_str(), str.size());
+	pango_layout_set_text(layout, CSTR(str), str.length());
 	int w = 0;
 	int h = 0;
 	pango_layout_get_size(layout, &w, &h);

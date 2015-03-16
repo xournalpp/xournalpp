@@ -13,7 +13,7 @@
 #define __TEXT_H__
 
 #include "Element.h"
-#include <String.h>
+#include <StringUtils.h>
 #include "Font.h"
 #include <gtk/gtk.h>
 

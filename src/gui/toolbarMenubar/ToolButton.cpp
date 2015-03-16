@@ -49,8 +49,8 @@ void ToolButton::updateDescription(String description)
 	this->description = description;
 	if (GTK_IS_TOOL_ITEM(item))
 	{
-		gtk_tool_item_set_tooltip_text(GTK_TOOL_ITEM(item), description.c_str());
-		gtk_tool_button_set_label(GTK_TOOL_BUTTON(item), description.c_str());
+		gtk_tool_item_set_tooltip_text(GTK_TOOL_ITEM(item), CSTR(description));
+		gtk_tool_button_set_label(GTK_TOOL_BUTTON(item), CSTR(description));
 	}
 }
 
@@ -64,20 +64,20 @@ GtkToolItem* ToolButton::newItem()
 	{
 		if (popupMenu)
 		{
-			it = gtk_menu_tool_button_new_from_stock(stock.c_str());
+			it = gtk_menu_tool_button_new_from_stock(CSTR(stock));
 			gtk_menu_tool_button_set_menu(GTK_MENU_TOOL_BUTTON(it), popupMenu);
 		}
 		else
 		{
-			it = gtk_tool_button_new_from_stock(stock.c_str());
+			it = gtk_tool_button_new_from_stock(CSTR(stock));
 		}
 	}
 	else if (group != GROUP_NOGROUP)
 	{
 		if (popupMenu)
 		{
-			it = gtk_menu_tool_toggle_button_new(this->gui->loadIcon(iconName.c_str()),
-			                                     description.c_str());
+			it = gtk_menu_tool_toggle_button_new(this->gui->loadIcon(CSTR(iconName)),
+			                                     CSTR(description));
 			gtk_menu_tool_toggle_button_set_menu(GTK_MENU_TOOL_TOGGLE_BUTTON(it),
 			                                     popupMenu);
 		}
@@ -85,25 +85,25 @@ GtkToolItem* ToolButton::newItem()
 		{
 			it = gtk_toggle_tool_button_new();
 			gtk_tool_button_set_icon_widget(GTK_TOOL_BUTTON(it),
-			                                this->gui->loadIcon(iconName.c_str()));
+			                                this->gui->loadIcon(CSTR(iconName)));
 		}
 	}
 	else
 	{
 		if (popupMenu)
 		{
-			it = gtk_menu_tool_button_new(this->gui->loadIcon(iconName.c_str()),
-			                              description.c_str());
+			it = gtk_menu_tool_button_new(this->gui->loadIcon(CSTR(iconName)),
+			                              CSTR(description));
 			gtk_menu_tool_button_set_menu(GTK_MENU_TOOL_BUTTON(it), popupMenu);
 		}
 		else
 		{
-			it = gtk_tool_button_new(this->gui->loadIcon(iconName.c_str()),
-			                         description.c_str());
+			it = gtk_tool_button_new(this->gui->loadIcon(CSTR(iconName)),
+			                         CSTR(description));
 		}
 	}
-	gtk_tool_item_set_tooltip_text(GTK_TOOL_ITEM(it), description.c_str());
-	gtk_tool_button_set_label(GTK_TOOL_BUTTON(it), description.c_str());
+	gtk_tool_item_set_tooltip_text(GTK_TOOL_ITEM(it), CSTR(description));
+	gtk_tool_button_set_label(GTK_TOOL_BUTTON(it), CSTR(description));
 
 	return it;
 }
@@ -121,11 +121,11 @@ GtkWidget* ToolButton::getNewToolIconImpl()
 
 	if (!stock.isEmpty())
 	{
-		return gtk_image_new_from_stock(stock.c_str(), GTK_ICON_SIZE_SMALL_TOOLBAR);
+		return gtk_image_new_from_stock(CSTR(stock), GTK_ICON_SIZE_SMALL_TOOLBAR);
 	}
 	else if (this->gui != NULL)
 	{
-		return this->gui->loadIcon(iconName.c_str());
+		return this->gui->loadIcon(CSTR(iconName));
 	}
 	return NULL;
 }

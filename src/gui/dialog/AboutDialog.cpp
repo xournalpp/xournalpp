@@ -1,6 +1,6 @@
 #include "AboutDialog.h"
 #include <config.h>
-#include <String.h>
+#include <StringUtils.h>
 
 #define AUTOHOR(name) authors += name; authors += "\n";
 
@@ -29,7 +29,7 @@ AboutDialog::AboutDialog(GladeSearchpath* gladeSearchPath) :
 	AUTOHOR("Wilson Brenna (tex support), 2012 - 2013");
 
 	w = get("lbAuthors");
-	gtk_label_set_text(GTK_LABEL(w), authors.c_str());
+	gtk_label_set_text(GTK_LABEL(w), CSTR(authors));
 }
 
 AboutDialog::~AboutDialog()

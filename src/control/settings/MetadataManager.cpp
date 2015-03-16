@@ -43,7 +43,7 @@ void MetadataManager::setInt(String uri, const char* name, int value)
 	}
 	loadConfigFile();
 
-	g_key_file_set_integer(this->config, uri.c_str(), name, value);
+	g_key_file_set_integer(this->config, CSTR(uri), name, value);
 
 	updateAccessTime(uri);
 }
@@ -58,7 +58,7 @@ void MetadataManager::setDouble(String uri, const char* name, double value)
 	}
 	loadConfigFile();
 
-	g_key_file_set_double(this->config, uri.c_str(), name, value);
+	g_key_file_set_double(this->config, CSTR(uri), name, value);
 
 	updateAccessTime(uri);
 }
@@ -74,7 +74,7 @@ void MetadataManager::setString(String uri, const char* name,
 	}
 	loadConfigFile();
 
-	g_key_file_set_value(this->config, uri.c_str(), name, value);
+	g_key_file_set_value(this->config, CSTR(uri), name, value);
 
 	updateAccessTime(uri);
 }
@@ -84,7 +84,7 @@ void MetadataManager::updateAccessTime(String uri)
 	XOJ_CHECK_TYPE(MetadataManager);
 
 	// TODO LOW PRIO: newer GTK Version use _int64 instead of integer
-	g_key_file_set_integer(this->config, uri.c_str(), "atime", time(NULL));
+	g_key_file_set_integer(this->config, CSTR(uri), "atime", time(NULL));
 
 	if (this->timeoutId)
 	{
@@ -173,12 +173,12 @@ void MetadataManager::move(String source, String target)
 	}
 
 	gsize length = 0;
-	gchar** keys = g_key_file_get_keys(this->config, source.c_str(), &length, NULL);
+	gchar** keys = g_key_file_get_keys(this->config, CSTR(source), &length, NULL);
 
 	for (gsize i = 0; i < length; i++)
 	{
-		char* str = g_key_file_get_string(this->config, source.c_str(), keys[i], NULL);
-		g_key_file_set_string(this->config, target.c_str(), keys[i], str);
+		char* str = g_key_file_get_string(this->config, CSTR(source), keys[i], NULL);
+		g_key_file_set_string(this->config, CSTR(target), keys[i], str);
 
 		g_free(str);
 	}
@@ -250,7 +250,7 @@ bool MetadataManager::getInt(String uri, const char* name, int& value)
 	loadConfigFile();
 
 	GError* error = NULL;
-	int v = g_key_file_get_integer(this->config, uri.c_str(), name, &error);
+	int v = g_key_file_get_integer(this->config, CSTR(uri), name, &error);
 	if (error)
 	{
 		g_error_free(error);
@@ -272,7 +272,7 @@ bool MetadataManager::getDouble(String uri, const char* name, double& value)
 	loadConfigFile();
 
 	GError* error = NULL;
-	double v = g_key_file_get_double(this->config, uri.c_str(), name, &error);
+	double v = g_key_file_get_double(this->config, CSTR(uri), name, &error);
 	if (error)
 	{
 		g_error_free(error);
@@ -295,7 +295,7 @@ bool MetadataManager::getString(String uri, const char* name, char*& value)
 
 	GError* error = NULL;
 
-	char* v = g_key_file_get_string(this->config, uri.c_str(), name, &error);
+	char* v = g_key_file_get_string(this->config, CSTR(uri), name, &error);
 	if (error)
 	{
 		g_error_free(error);

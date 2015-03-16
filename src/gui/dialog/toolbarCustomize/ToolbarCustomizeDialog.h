@@ -14,7 +14,7 @@
 
 #include "../../GladeGui.h"
 #include <XournalType.h>
-#include <String.h>
+#include <StringUtils.h>
 
 #include "CustomizeableColorList.h"
 

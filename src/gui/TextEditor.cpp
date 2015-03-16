@@ -41,7 +41,7 @@ TextEditor::TextEditor(PageView* gui, GtkWidget* widget, Text* text,
 	this->lastText = text->getText();
 
 	this->buffer = gtk_text_buffer_new(NULL);
-	const char* txt = this->text->getText().c_str();
+	const char* txt = CSTR(this->text->getText());
 	if (txt == NULL)
 	{
 		txt = "";
@@ -154,7 +154,7 @@ void TextEditor::setText(String text)
 {
 	XOJ_CHECK_TYPE(TextEditor);
 
-	gtk_text_buffer_set_text(this->buffer, text.c_str(), -1);
+	gtk_text_buffer_set_text(this->buffer, CSTR(text), -1);
 
 	GtkTextIter first = { 0 };
 	gtk_text_buffer_get_iter_at_offset(this->buffer, &first, 0);
@@ -1120,15 +1120,14 @@ void TextEditor::paint(cairo_t* cr, GdkRectangle* repaintRect, double zoom)
 	{
 		String text = this->text->getText();
 		int pos = gtk_text_iter_get_offset(&cursorIter);
-		String txt = text.substring(0, pos);
-		txt += preeditString;
-		txt += text.substring(pos);
+		String txt = String(text).retainBetween(0, pos) + preeditString +
+                        String(text).retainBetween(pos);
 
 		PangoAttribute* attrib = pango_attr_underline_new(PANGO_UNDERLINE_SINGLE);
 		PangoAttrList* list = pango_layout_get_attributes(this->layout);
 
 		attrib->start_index = pos;
-		attrib->end_index = pos + preeditString.size();
+		attrib->end_index = pos + preeditString.length();
 
 		if (list == NULL)
 		{
@@ -1137,12 +1136,12 @@ void TextEditor::paint(cairo_t* cr, GdkRectangle* repaintRect, double zoom)
 		}
 		pango_attr_list_insert(list, attrib);
 
-		pango_layout_set_text(this->layout, txt.c_str(), txt.size());
+		pango_layout_set_text(this->layout, CSTR(txt), txt.length());
 	}
 	else
 	{
 		String txt = this->text->getText();
-		pango_layout_set_text(this->layout, txt.c_str(), txt.size());
+		pango_layout_set_text(this->layout, CSTR(txt), txt.length());
 	}
 
 	GtkTextIter start;
@@ -1182,7 +1181,7 @@ void TextEditor::paint(cairo_t* cr, GdkRectangle* repaintRect, double zoom)
 
 	int offset = gtk_text_iter_get_offset(&cursorIter);
 	PangoRectangle rect = { 0 };
-	int pangoOffset = getByteOffset(offset) + preeditString.size();
+	int pangoOffset = getByteOffset(offset) + preeditString.length();
 	pango_layout_index_to_pos(this->layout, pangoOffset, &rect);
 	double cX = ((double) rect.x) / PANGO_SCALE;
 	double cY = ((double) rect.y) / PANGO_SCALE;

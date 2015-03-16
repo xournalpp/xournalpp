@@ -83,12 +83,12 @@ void ToolbarColorNames::adddColor(int color, String name, bool predefined)
 
 	if (predefined)
 	{
-		g_hash_table_insert(this->predefinedColorNames, key, g_strdup(name.c_str()));
+		g_hash_table_insert(this->predefinedColorNames, key, g_strdup(CSTR(name)));
 	}
 	else
 	{
-		String colorHex = String::format("%06x", color);
-		g_key_file_set_string(this->config, "custom", colorHex.c_str(), name.c_str());
+		String colorHex = StringUtils::format("%06x", color);
+		g_key_file_set_string(this->config, "custom", CSTR(colorHex), CSTR(name));
 	}
 }
 
@@ -98,9 +98,9 @@ String ToolbarColorNames::getColorName(int color)
 
 	String colorName;
 
-	String colorHex = String::format("%06x", color);
+	String colorHex = StringUtils::format("%06x", color);
 
-	char* name = g_key_file_get_string(this->config, "custom", colorHex.c_str(),
+	char* name = g_key_file_get_string(this->config, "custom", CSTR(colorHex),
 	                                   NULL);
 	if (name != NULL)
 	{

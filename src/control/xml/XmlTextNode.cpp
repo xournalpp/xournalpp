@@ -47,9 +47,9 @@ void XmlTextNode::writeOut(OutputStream* out)
 	out->write(">");
 
 	String tmp = this->text;
-	tmp = tmp.replace("&", "&amp;");
-	tmp = tmp.replace("<", "&lt;");
-	tmp = tmp.replace(">", "&gt;");
+	tmp = tmp.findAndReplace("&", "&amp;")
+                .findAndReplace("<", "&lt;")
+                .findAndReplace(">", "&gt;");
 	out->write(tmp);
 
 	out->write("</");

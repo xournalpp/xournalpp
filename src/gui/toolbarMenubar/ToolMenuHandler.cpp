@@ -131,7 +131,7 @@ void ToolMenuHandler::load(ToolbarData* d, GtkWidget* toolbar,
 	{
 		ToolbarEntry& e = *it;
 
-		if (e.getName().equals(toolbarName))
+		if (e.getName() == toolbarName)
 		{
 			ListIterator<ToolbarItem*> it = e.iterator();
 			while (it.hasNext())
@@ -139,7 +139,7 @@ void ToolMenuHandler::load(ToolbarData* d, GtkWidget* toolbar,
 				ToolbarItem* dataItem = it.next();
 				String name = *dataItem;
 
-				if (name.equals("SEPARATOR"))
+				if (name == "SEPARATOR")
 				{
 					GtkToolItem* it = gtk_separator_tool_item_new();
 					gtk_widget_show(GTK_WIDGET(it));
@@ -151,7 +151,7 @@ void ToolMenuHandler::load(ToolbarData* d, GtkWidget* toolbar,
 					continue;
 				}
 
-				if (name.equals("SPACER"))
+				if (name == "SPACER")
 				{
 					GtkToolItem* toolItem = gtk_separator_tool_item_new();
 					gtk_separator_tool_item_set_draw(GTK_SEPARATOR_TOOL_ITEM(toolItem), false);
@@ -164,19 +164,19 @@ void ToolMenuHandler::load(ToolbarData* d, GtkWidget* toolbar,
 
 					continue;
 				}
-				if (name.startsWith("COLOR(") && name.size() == 15)
+				if (name.startsWith("COLOR(") && name.length() == 15)
 				{
-					String color = name.substring(6, 8);
+					String color = String(name).retainBetween(6, 14);
 					if (!color.startsWith("0x"))
 					{
 						g_warning("Toolbar:COLOR(...) has to start with 0x, get color: %s",
-						          color.c_str());
+						          CSTR(color));
 						continue;
 					}
 					count++;
 
-					color = color.substring(2);
-					gint c = g_ascii_strtoll(color.c_str(), NULL, 16);
+					color.retainBetween(2);
+					gint c = g_ascii_strtoll(CSTR(color), NULL, 16);
 
 					ColorToolItem* item = new ColorToolItem(listener, toolHandler, this->parent, c);
 					this->toolbarColorItems = g_list_append(this->toolbarColorItems, item);
@@ -195,12 +195,12 @@ void ToolMenuHandler::load(ToolbarData* d, GtkWidget* toolbar,
 				for (GList* l = this->toolItems; l != NULL; l = l->next)
 				{
 					AbstractToolItem* item = (AbstractToolItem*) l->data;
-					if (name.equals(item->getId()))
+					if (name == item->getId())
 					{
 						if (item->isUsed())
 						{
 							g_warning("You can use the toolbar item \"%s\" only once!",
-							          item->getId().c_str());
+							          CSTR(item->getId()));
 							found = true;
 							continue;
 						}
@@ -219,7 +219,7 @@ void ToolMenuHandler::load(ToolbarData* d, GtkWidget* toolbar,
 				}
 				if (!found)
 				{
-					g_warning("Toolbar item \"%s\" not found!", name.c_str());
+					g_warning("Toolbar item \"%s\" not found!", CSTR(name));
 				}
 			}
 
@@ -707,7 +707,7 @@ void ToolMenuHandler::setUndoDescription(String description)
 
 	this->undoButton->updateDescription(description);
 	gtk_menu_item_set_label(GTK_MENU_ITEM(gui->get("menuEditUndo")),
-	                        description.c_str());
+	                        CSTR(description));
 }
 
 void ToolMenuHandler::setRedoDescription(String description)
@@ -716,7 +716,7 @@ void ToolMenuHandler::setRedoDescription(String description)
 
 	this->redoButton->updateDescription(description);
 	gtk_menu_item_set_label(GTK_MENU_ITEM(gui->get("menuEditRedo")),
-	                        description.c_str());
+	                        CSTR(description));
 }
 
 SpinPageAdapter* ToolMenuHandler::getPageSpinner()

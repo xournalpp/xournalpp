@@ -5,6 +5,8 @@
 #include <config.h>
 #include <glib/gi18n-lib.h>
 
+#include <unicode/decimfmt.h>
+
 FontButton::FontButton(ActionHandler* handler, GladeGui* gui, String id,
                        ActionType type, String description,
                        GtkWidget* menuitem) :
@@ -32,8 +34,8 @@ void FontButton::activated(GdkEvent* event, GtkMenuItem* menuitem,
 	String name = gtk_font_button_get_font_name(button);
 
 	int pos = name.lastIndexOf(" ");
-	this->font.setName(name.substring(0, pos));
-	this->font.setSize(atof(name.substring(pos + 1).c_str()));
+	this->font.setName(String(name).retainBetween(0, pos));
+	this->font.setSize(atof(CSTR(String(name).retainBetween(pos + 1))));
 
 	handler->actionPerformed(ACTION_FONT_BUTTON_CHANGED, GROUP_NOGROUP, event,
 	                         menuitem, NULL, true);
@@ -43,11 +45,13 @@ void FontButton::setFontFontButton(GtkWidget* fontButton, XojFont& font)
 {
 	GtkFontButton* button = GTK_FONT_BUTTON(fontButton);
 
-	String txt = font.getName();
-	txt += " ";
-	txt += font.getSize();
+        String txt;
+        UErrorCode error = U_ZERO_ERROR;
+        icu::DecimalFormat size = icu::DecimalFormat(error);
+        size.format(font.getSize(), txt);
+        txt = font.getName() + " " + txt;
 
-	gtk_font_button_set_font_name(button, txt.c_str());
+	gtk_font_button_set_font_name(button, CSTR(txt));
 }
 
 void FontButton::setFont(XojFont& font)
@@ -113,7 +117,7 @@ GtkToolItem* FontButton::createTmpItem(bool horizontal)
 	GtkToolItem* it = gtk_tool_item_new();
 
 	gtk_container_add(GTK_CONTAINER(it), fontButton);
-	gtk_tool_item_set_tooltip_text(it, this->description.c_str());
+	gtk_tool_item_set_tooltip_text(it, CSTR(this->description));
 	gtk_tool_item_set_homogeneous(GTK_TOOL_ITEM(it), false);
 
 	if (!this->font.getName().isEmpty())
@@ -160,7 +164,7 @@ GtkToolItem* FontButton::newItem()
 
 	this->fontButton = newFontButton();
 	gtk_container_add(GTK_CONTAINER(it), this->fontButton);
-	gtk_tool_item_set_tooltip_text(it, this->description.c_str());
+	gtk_tool_item_set_tooltip_text(it, CSTR(this->description));
 	gtk_tool_item_set_homogeneous(GTK_TOOL_ITEM(it), false);
 
 	g_signal_connect(this->fontButton, "font_set",

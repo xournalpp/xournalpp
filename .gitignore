@@ -1,4 +1,5 @@
 .deps
+.dirstamp
 .libs
 *.o
 *.lo
@@ -14,4 +15,5 @@ config.log
 config.status
 config.sub
 depcomp
-
+configure
+/src/xournalpp

@@ -107,7 +107,7 @@ void ToolbarData::saveToKeyFile(GKeyFile* config)
 {
 	XOJ_CHECK_TYPE(ToolbarData);
 
-	const char* group = getId().c_str();
+	const char* group = CSTR(getId());
 
 	std::vector<ToolbarEntry>::iterator it;
 	for (it = this->contents.begin(); it != this->contents.end(); it++)
@@ -125,19 +125,19 @@ void ToolbarData::saveToKeyFile(GKeyFile* config)
 
 		if (line.length() > 2)
 		{
-			g_key_file_set_string(config, group, e.getName().c_str(),
-			                      line.substring(1).c_str());
+			g_key_file_set_string(config, group, CSTR(e.getName()),
+			                      CSTR(String(line).retainBetween(1)));
 		}
 	}
 
-	g_key_file_set_string(config, group, "name", this->name.c_str());
+	g_key_file_set_string(config, group, "name", CSTR(this->name));
 }
 
 int ToolbarData::insertItem(String toolbar, String item, int position)
 {
 	XOJ_CHECK_TYPE(ToolbarData);
 
-	printf("ToolbarData::insertItem(%s, %s, %i);\n", toolbar.c_str(), item.c_str(),
+	printf("ToolbarData::insertItem(%s, %s, %i);\n", CSTR(toolbar), CSTR(item),
 	       position);
 
 	g_return_val_if_fail(isPredefined() == false, -1);
@@ -147,9 +147,9 @@ int ToolbarData::insertItem(String toolbar, String item, int position)
 	{
 		ToolbarEntry& e = *it;
 
-		if (e.getName().equals(toolbar))
+		if (e.getName() == toolbar)
 		{
-			printf("Toolbar found: %s\n", toolbar.c_str());
+			printf("Toolbar found: %s\n", CSTR(toolbar));
 
 			int id = e.insertItem(item, position);
 
@@ -177,7 +177,7 @@ bool ToolbarData::removeItemByID(String toolbar, int id)
 	{
 		ToolbarEntry& e = *it;
 
-		if (e.getName().equals(toolbar))
+		if (e.getName() == toolbar)
 		{
 			return e.removeItemById(id);
 		}

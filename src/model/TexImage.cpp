@@ -220,9 +220,9 @@ void TexImage::readSerialized(ObjectInputStream& in) throw (
 	this->height = in.readDouble();
 	String tmp = in.readString();
 	//cast this
-	this->textlen = tmp.size();
+	this->textlen = tmp.length();
 	char* tmpcstring = new char[this->textlen + 1];
-	strcpy(tmpcstring, tmp.c_str());
+	strcpy(tmpcstring, CSTR(tmp));
 	this->text = tmpcstring;
 
 	if (this->image)

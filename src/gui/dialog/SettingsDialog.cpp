@@ -191,7 +191,7 @@ void SettingsDialog::load()
 	loadCheckbox("cbBigCursor", settings->isShowBigCursor());
 
 	GtkWidget* txtDefaultSaveName = get("txtDefaultSaveName");
-	const char* txt = settings->getDefaultSaveName().c_str();
+	const char* txt = CSTR(settings->getDefaultSaveName());
 	if (txt == NULL)
 	{
 		txt = "";

@@ -13,7 +13,7 @@
 #define __PDFWRITER_H__
 
 #include <gtk/gtk.h>
-#include <String.h>
+#include <StringUtils.h>
 #include "PdfXRef.h"
 
 class PdfWriter

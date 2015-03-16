@@ -329,7 +329,7 @@ void ToolbarCustomizeDialog::rebuildIconview()
 		GtkWidget* box = gtk_vbox_new(false, 3);
 		gtk_widget_show(box);
 
-		GtkWidget* label = gtk_label_new(name.c_str());
+		GtkWidget* label = gtk_label_new(CSTR(name));
 		gtk_widget_show(label);
 		gtk_box_pack_end(GTK_BOX(box), label, false, false, 0);
 
@@ -417,7 +417,7 @@ void ToolbarCustomizeDialog::rebuildColorIcons()
 		GtkWidget* box = gtk_vbox_new(false, 3);
 		gtk_widget_show(box);
 
-		GtkWidget* label = gtk_label_new(color->getName().c_str());
+		GtkWidget* label = gtk_label_new(CSTR(color->getName()));
 		gtk_widget_show(label);
 		gtk_box_pack_end(GTK_BOX(box), label, false, false, 0);
 

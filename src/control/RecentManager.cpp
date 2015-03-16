@@ -156,11 +156,11 @@ void RecentManager::openRecent(String uri)
 
 	if (!uri.startsWith("file://"))
 	{
-		g_warning("could not handle URI: %s", uri.c_str());
+		g_warning("could not handle URI: %s", CSTR(uri));
 		return;
 	}
 
-	char* filename = g_filename_from_uri(uri.c_str(), NULL, NULL);
+	char* filename = g_filename_from_uri(CSTR(uri), NULL, NULL);
 	if (!filename)
 	{
 		return;

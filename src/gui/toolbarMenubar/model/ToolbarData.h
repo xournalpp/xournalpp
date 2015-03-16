@@ -13,7 +13,7 @@
 #define __TOOLBARDATA_H__
 
 #include <glib.h>
-#include <String.h>
+#include <StringUtils.h>
 #include <XournalType.h>
 #include <vector>
 

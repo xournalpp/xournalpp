@@ -626,7 +626,7 @@ bool PdfExport::createPdf(String uri, GList* range)
 		return false;
 	}
 
-	if (!this->writer->openFile(uri.c_str()))
+	if (!this->writer->openFile(CSTR(uri)))
 	{
 		return false;
 	}
@@ -699,7 +699,7 @@ bool PdfExport::createPdf(String uri)
 		return false;
 	}
 
-	if (!this->writer->openFile(uri.c_str()))
+	if (!this->writer->openFile(CSTR(uri)))
 	{
 		return false;
 	}

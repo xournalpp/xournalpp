@@ -75,9 +75,9 @@ void ObjectOutputStream::writeString(const String& s)
 	XOJ_CHECK_TYPE(ObjectOutputStream);
 
 	this->encoder->addStr("_s");
-	int len = s.size();
+	int len = s.length();
 	this->encoder->addData(&len, sizeof(int));
-	this->encoder->addData(s.c_str(), len);
+	this->encoder->addData(CSTR(s), len);
 }
 
 void ObjectOutputStream::writeData(const void* data, int len, int width)

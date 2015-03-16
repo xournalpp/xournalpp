@@ -122,7 +122,7 @@ String ColorToolItem::getId()
 		return "COLOR_SELECT";
 	}
 
-	String id = String::format("COLOR(0x%06x)", this->color);
+	String id = StringUtils::format("COLOR(0x%06x)", this->color);
 
 	return id;
 }
@@ -222,8 +222,8 @@ GtkToolItem* ColorToolItem::newItem()
 	selectcolor_set_circle(this->iconWidget, !isSelector());
 	GtkToolItem* it = gtk_toggle_tool_button_new();
 
-	gtk_tool_item_set_tooltip_text(GTK_TOOL_ITEM(it), this->name.c_str());
-	gtk_tool_button_set_label(GTK_TOOL_BUTTON(it), this->name.c_str());
+	gtk_tool_item_set_tooltip_text(GTK_TOOL_ITEM(it), CSTR(this->name));
+	gtk_tool_button_set_label(GTK_TOOL_BUTTON(it), CSTR(this->name));
 
 	gtk_tool_button_set_icon_widget(GTK_TOOL_BUTTON(it), this->iconWidget);
 

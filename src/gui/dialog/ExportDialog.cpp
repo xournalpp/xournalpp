@@ -34,7 +34,7 @@ ExportDialog::ExportDialog(GladeSearchpath* gladeSearchPath, Settings* settings,
 	                 (gpointer) this);
 
 	gtk_file_chooser_set_current_folder(GTK_FILE_CHOOSER(this->window),
-	                                    settings->getLastSavePath().c_str());
+	                                    CSTR(settings->getLastSavePath()));
 
 	g_signal_connect(this->window, "selection-changed",
 	                 G_CALLBACK(&selectionChanged),
@@ -96,10 +96,10 @@ void ExportDialog::addFileType(const char* typeDesc,
 
 	if(pattern)
 	{
-		fullName = String::format("%s (*.%s)",
+		fullName = StringUtils::format("%s (*.%s)",
 		                          filterName ? filterName : typeDesc,
 		                          pattern);
-		gtk_file_filter_set_name(filter, fullName.c_str());
+		gtk_file_filter_set_name(filter, CSTR(fullName));
 		gtk_file_filter_add_pattern(filter, pattern);
 	}
 	else
@@ -251,14 +251,14 @@ void ExportDialog::fileTypeSelected(GtkTreeView* treeview,
 
 				if(nameIndex == -1)
 				{
-					newName = String::format("%s.%s", baseName.c_str(), extension);
+					newName = StringUtils::format("%s.%s", CSTR(baseName), extension);
 				}
 				else
 				{
-					if(String(extension) != baseName.substring(nameIndex))
+					if(String(extension) != String(baseName).retainBetween(nameIndex))
 					{
-						newName = String::format("%s.%s",
-						                         baseName.substring(0, nameIndex).c_str(),
+						newName = StringUtils::format("%s.%s",
+						                         CSTR(String(baseName).retainBetween(0, nameIndex)),
 						                         extension);
 					}
 					else
@@ -270,7 +270,7 @@ void ExportDialog::fileTypeSelected(GtkTreeView* treeview,
 				if(changeName)
 				{
 					gtk_file_chooser_set_current_name(GTK_FILE_CHOOSER(dlg->window),
-					                                  newName.c_str());
+					                                  CSTR(newName));
 				}
 			}
 		}
@@ -297,7 +297,7 @@ String ExportDialog::getFolder()
 
 	if(index != -1)
 	{
-		s = s.substring(0, index);
+		s.retainBetween(0, index);
 	}
 
 	return s;
@@ -372,8 +372,7 @@ bool ExportDialog::validFilename()
 
 		if(secIndex != 0 && secIndex > firstIndex + 1)
 		{
-			dirName = dirName.substring(firstIndex + 1,
-			                            secIndex - firstIndex - 1);
+			dirName.retainBetween(firstIndex + 1, secIndex);
 		}
 
 		GtkWidget* dialog = gtk_message_dialog_new((GtkWindow*) *this,
@@ -385,7 +384,7 @@ bool ExportDialog::validFilename()
 
 		gtk_message_dialog_format_secondary_text(GTK_MESSAGE_DIALOG(dialog),
 		                                         _("The file already exists in \"%s\". Replacing it will overwrite its contents."),
-		                                         dirName.c_str());
+		                                         CSTR(dirName));
 
 		g_free(baseName);
 		g_free(_dirName);
@@ -467,7 +466,7 @@ bool ExportDialog::fileTypeByExtension()
 
 	if(index != -1)
 	{
-		String extension = baseName.substring(index + 1);
+		String extension = String(baseName).retainBetween(index + 1);
 		
 		gboolean validIterator =
 			gtk_tree_model_get_iter_first(GTK_TREE_MODEL(this->typesModel), &iter);

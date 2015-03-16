@@ -12,11 +12,11 @@
 #ifndef __INPUTSTREAMEXCEPTION_H__
 #define __INPUTSTREAMEXCEPTION_H__
 
-#include <String.h>
+#include <StringUtils.h>
 #include <exception>
 
 #define INPUT_STREAM_EXCEPTION(description, ...) \
-	InputStreamException(String::format(description, __VA_ARGS__), __FILE__, __LINE__); \
+	InputStreamException(StringUtils::format(description, __VA_ARGS__), __FILE__, __LINE__); \
 	 
 class InputStreamException: public std::exception
 {

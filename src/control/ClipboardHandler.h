@@ -13,7 +13,7 @@
 #define __CLIPBOARDHANDLER_H__
 
 #include <gtk/gtk.h>
-#include <String.h>
+#include <StringUtils.h>
 #include <XournalType.h>
 #include "tools/EditSelection.h"
 
