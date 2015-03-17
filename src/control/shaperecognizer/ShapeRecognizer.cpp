@@ -606,9 +606,9 @@ ShapeRecognizerResult* ShapeRecognizer::recognizePatterns(Stroke* stroke)
 			rs[i].calcSegmentGeometry(stroke->getPoints(), brk[i], brk[i + 1], ss + i);
 		}
 
+		/*
 		Stroke* tmp = NULL;
 
-		/*
 		if ((tmp = tryRectangle()) != NULL)
 		{
 			ShapeRecognizerResult* result = new ShapeRecognizerResult(tmp, this);

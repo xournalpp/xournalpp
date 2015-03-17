@@ -15,17 +15,16 @@
 #include <XournalType.h>
 
 #include <glib.h>
-#include <string.h>
-#include <string>
 
 #include <unicode/unistr.h>
 typedef icu::UnicodeString String;
+
 #define CSTR StringUtils::c_str
 
 class StringUtils {
     public:
         static String format(const char* format, ...);
-        static const char * c_str(const String& str);
+        static char* c_str(const String& str);
 };
 
 class StringTokenizer {

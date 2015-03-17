@@ -10,17 +10,6 @@
  */
 
 #include <StringUtils.h>
-#include <ctype.h>
-#include <memory>
-
-/**
- * This code is a modified version of what SQLite uses.
- */
-#define SKIP_MULTI_BYTE_SEQUENCE(input) {              \
-        if( (*(input++)) >= 0xc0 ) {                       \
-            while( (*input & 0xc0) == 0x80 ){ input++; }       \
-        }                                                    \
-    }
 
 /**
  * Creates a new String, syntax like sprintf
@@ -33,7 +22,7 @@ String StringUtils::format(const char* format, ...) {
     return String(data);
 }
 
-const char * StringUtils::c_str(const String& str) {
+char * StringUtils::c_str(const String& str) {
     UErrorCode status = U_ZERO_ERROR;
     int32_t sz = str.length() * 2;
     char* dest = new char[sizeof (*dest) * sz];

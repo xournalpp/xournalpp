@@ -2,7 +2,7 @@
 #include <config.h>
 #include <StringUtils.h>
 
-#define AUTOHOR(name) authors += name; authors += "\n";
+#define AUTHOR(name) authors += name; authors += "\n";
 
 AboutDialog::AboutDialog(GladeSearchpath* gladeSearchPath) :
 	GladeGui(gladeSearchPath, "about.glade", "aboutDialog")
@@ -24,9 +24,10 @@ AboutDialog::AboutDialog(GladeSearchpath* gladeSearchPath) :
 	String authors = "";
 
 	// Authors of the application
-	AUTOHOR("Denis Auroux, 2006 - 2010");
-	AUTOHOR("Andreas Butti, 2010 - 2012");
-	AUTOHOR("Wilson Brenna (tex support), 2012 - 2013");
+	AUTHOR("Denis Auroux, 2006-2010");
+	AUTHOR("Andreas Butti, 2010-2012");
+	AUTHOR("Wilson Brenna (tex support), 2012-2014");
+        AUTHOR("Marek Pikuła, 2015");
 
 	w = get("lbAuthors");
 	gtk_label_set_text(GTK_LABEL(w), CSTR(authors));
