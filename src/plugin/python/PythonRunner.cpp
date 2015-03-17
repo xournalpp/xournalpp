@@ -88,7 +88,7 @@ void PythonRunner::runScript(String name, String function, String parameter)
 	if(name.isEmpty() || function.isEmpty())
 	{
 		g_warning("runScript::name (%s) and function (%s) should not be empty!",
-		          name.c_str(), function.c_str());
+		          CSTR(name), CSTR(function));
 		return;
 	}
 
@@ -164,12 +164,12 @@ void PythonRunner::initPython()
 
 	String p = path;
 	p += "/../testing";
-	PyObject* ret = PyObject_CallMethod(pathObject, "append", "s", p.c_str());
+	PyObject* ret = PyObject_CallMethod(pathObject, "append", "s", CSTR(p));
 	Py_DecRef(ret);
 
 	p = path;
 	p += "/testing";
-	ret = PyObject_CallMethod(pathObject, "append", "s", p.c_str());
+	ret = PyObject_CallMethod(pathObject, "append", "s", CSTR(p));
 	Py_DecRef(ret);
 
 	Py_DecRef(pathObject);
@@ -188,7 +188,7 @@ void PythonRunner::runScriptInt(String path, String function, String parameter)
 
 	initPython();
 
-	PyObject* pName = PyString_FromString(path.c_str());
+	PyObject* pName = PyString_FromString(CSTR(path));
 	/* Error checking of pName left out */
 
 	PyObject* pModule = PyImport_Import(pName);
@@ -196,21 +196,21 @@ void PythonRunner::runScriptInt(String path, String function, String parameter)
 
 	if (pModule != NULL)
 	{
-		PyObject* pFunc = PyObject_GetAttrString(pModule, function.c_str());
+		PyObject* pFunc = PyObject_GetAttrString(pModule, CSTR(function));
 		/* pFunc is a new reference */
 
 		if (pFunc && PyCallable_Check(pFunc))
 		{
 			PyObject* pArgs = NULL;
 
-			if (parameter.c_str() == NULL)
+			if (parameter.isEmpty())
 			{
 				pArgs = PyTuple_New(0);
 			}
 			else
 			{
 				pArgs = PyTuple_New(1);
-				PyTuple_SetItem(pArgs, 0, PyString_FromString(parameter.c_str()));
+				PyTuple_SetItem(pArgs, 0, PyString_FromString(CSTR(parameter)));
 			}
 
 			PyObject* pValue = PyObject_CallObject(pFunc, pArgs);
@@ -234,7 +234,7 @@ void PythonRunner::runScriptInt(String path, String function, String parameter)
 			{
 				PyErr_Print();
 			}
-			fprintf(stderr, "Cannot find function \"%s\"\n", function.c_str());
+			fprintf(stderr, "Cannot find function \"%s\"\n", CSTR(function));
 		}
 		Py_XDECREF(pFunc);
 		Py_DECREF(pModule);
@@ -242,6 +242,6 @@ void PythonRunner::runScriptInt(String path, String function, String parameter)
 	else
 	{
 		PyErr_Print();
-		fprintf(stderr, "Failed to load \"%s\"\n", path.c_str());
+		fprintf(stderr, "Failed to load \"%s\"\n", CSTR(path));
 	}
 }
