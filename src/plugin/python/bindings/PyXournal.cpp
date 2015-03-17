@@ -488,7 +488,7 @@ PyXournal_getCurrentPageBackground(PyXournal* self)
 		return NULL;
 	}
 
-	return PyInt_FromLong(page.getBackgroundType());
+	return PyInt_FromLong(page->getBackgroundType());
 }
 
 static PyObject*
@@ -533,7 +533,7 @@ PyXournal_setCurrentPageBackground(PyXournal* self, PyObject* args)
 		return NULL;
 	}
 
-	page.setBackgroundType((BackgroundType)backgroundType);
+	page->setBackgroundType((BackgroundType)backgroundType);
 
 	Py_RETURN_NONE;
 }

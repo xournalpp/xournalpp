@@ -58,7 +58,6 @@ PKG_CHECK_MODULES(PACKAGE, [$pkg_modules])
 AC_SUBST(PACKAGE_CFLAGS)
 AC_SUBST(PACKAGE_LIBS)
 
-
 dnl FIXME not working!!
 dnl if test "x$have_python" != "xno"; then
 dnl  	AM_CHECK_PYTHON_HEADERS([],[have_python=no])
