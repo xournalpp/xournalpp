@@ -13,7 +13,7 @@
 #ifndef __PYTHONRUNNER_H__
 #define __PYTHONRUNNER_H__
 
-#include <String.h>
+#include <StringUtils.h>
 #include <XournalType.h>
 
 class Control;
@@ -28,7 +28,7 @@ public:
 	static void initPythonRunner(Control* control);
 	static void releasePythonRunner();
 
-	static void runScript(String name, String function, String parameter = NULL);
+	static void runScript(String name, String function, String parameter = "");
 
 private:
 	static bool scriptRunner(PythonRunner* runner);
