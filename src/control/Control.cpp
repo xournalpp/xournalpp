@@ -181,7 +181,7 @@ void Control::renameLastAutosaveFile()
 	{
 		String filename = this->lastAutosaveFilename;
 		int pos = filename.lastIndexOf("/") + 1;
-		//String folder = filename.substring(0, pos);
+		//String folder = String(filename).retainBetween(0, pos);
 		String file = String(filename).retainBetween(pos);
 		String renamed = String(Util::getAutosaveFilename());
                 renamed.retainBetween(0,renamed.length()-4) + file;
@@ -1196,16 +1196,10 @@ void Control::enableFullscreen(bool enabled, bool presentation)
 	{
 		gtk_window_fullscreen((GtkWindow*) *win);
 
-		String e;
-		if (presentation)
-		{
-			e = settings->getPresentationHideElements();
-		}
-		else
-		{
-			e = settings->getFullscreenHideElements();
-		}
-		char* str = g_strdup(CSTR(e));
+		char* str = CSTR(
+                    (presentation ?
+                        settings->getPresentationHideElements() :
+                        settings->getFullscreenHideElements()));
 
 		char* part = strtok(str, ",");
 

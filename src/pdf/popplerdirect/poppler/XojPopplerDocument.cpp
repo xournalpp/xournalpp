@@ -268,61 +268,27 @@ void XojPopplerDocument::load(char* data, int length)
 	this->data = new _IntPopplerDocument(newDoc);
 }
 
-bool XojPopplerDocument::load(const char* filename, const char* password,
+bool XojPopplerDocument::load(String filename, String password,
                               GError** error)
 {
 	XOJ_CHECK_TYPE(XojPopplerDocument);
 
 	PDFDoc* newDoc;
-	GooString* filename_g;
-	GooString* password_g;
 
 	if (!globalParams)
 	{
 		globalParams = new GlobalParams();
 	}
 
-	if (!filename)
+	if (filename.isEmpty())
 	{
 		return false;
 	}
 
-	password_g = NULL;
-	if (password != NULL)
-	{
-		if (g_utf8_validate(password, -1, NULL))
-		{
-			gchar* password_latin;
-
-			password_latin = g_convert(password, -1, "ISO-8859-1", "UTF-8", NULL, NULL,
-			                           NULL);
-			password_g = new GooString(password_latin);
-			g_free(password_latin);
-		}
-		else
-		{
-			password_g = new GooString(password);
-		}
-	}
-
-#ifdef G_OS_WIN32
-	wchar_t* filenameW;
-	int wlen;
-
-	wlen = MultiByteToWideChar(CP_UTF8, 0, filename, -1, NULL, 0);
-
-	filenameW = new WCHAR[wlen];
-	if (!filenameW)
-		return NULL;
-
-	wlen = MultiByteToWideChar(CP_UTF8, 0, filename, -1, filenameW, wlen);
-
-	newDoc = new PDFDoc(filenameW, wlen, password_g, password_g);
-	delete filenameW;
-#else
-	filename_g = new GooString(filename);
+        GooString* filename_g = new GooString(CSTR(filename));
+        GooString* password_g = new GooString(CSTR(password));
 	newDoc = new PDFDoc(filename_g, password_g, password_g);
-#endif
+        delete filename_g;
 	delete password_g;
 
 	if (!newDoc->isOk())

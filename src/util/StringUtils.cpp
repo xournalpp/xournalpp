@@ -11,6 +11,11 @@
 
 #include <StringUtils.h>
 
+ostream& operator<<(ostream& ost, const String& str) {
+    ost << CSTR(str);
+    return ost;
+}
+
 /**
  * Creates a new String, syntax like sprintf
  */
@@ -22,7 +27,22 @@ String StringUtils::format(const char* format, ...) {
     return String(data);
 }
 
-char * StringUtils::c_str(const String& str) {
+//void StringUtils::addToString(String& str) { }
+//
+//template<typename T, typename... Args>
+//void StringUtils::addToString(String& str, const T& a_value, Args... a_args) {
+//    str += String(a_value);
+//    addToString(str, a_args...);
+//}
+//
+//template<typename... Args>
+//String* StringUtils::concat(Args... a_args) {
+//    String* s = "";
+//    addToString(s, a_args...);
+//    return s;
+//}
+
+gchar * StringUtils::c_str(const String& str) {
     UErrorCode status = U_ZERO_ERROR;
     int32_t sz = str.length() * 2;
     char* dest = new char[sizeof (*dest) * sz];

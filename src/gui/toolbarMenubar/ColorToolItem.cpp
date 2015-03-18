@@ -222,8 +222,9 @@ GtkToolItem* ColorToolItem::newItem()
 	selectcolor_set_circle(this->iconWidget, !isSelector());
 	GtkToolItem* it = gtk_toggle_tool_button_new();
 
-	gtk_tool_item_set_tooltip_text(GTK_TOOL_ITEM(it), CSTR(this->name));
-	gtk_tool_button_set_label(GTK_TOOL_BUTTON(it), CSTR(this->name));
+        const gchar* name = CSTR(this->name);
+	gtk_tool_item_set_tooltip_text(GTK_TOOL_ITEM(it), name);
+	gtk_tool_button_set_label(GTK_TOOL_BUTTON(it), name);
 
 	gtk_tool_button_set_icon_widget(GTK_TOOL_BUTTON(it), this->iconWidget);
 

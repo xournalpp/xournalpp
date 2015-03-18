@@ -15,16 +15,41 @@
 #include <XournalType.h>
 
 #include <glib.h>
+#include <iostream>
 
 #include <unicode/unistr.h>
-typedef icu::UnicodeString String;
+#include <unicode/msgfmt.h>
+
+using namespace std;
+using namespace icu;
+
+typedef UnicodeString String;
 
 #define CSTR StringUtils::c_str
+#define CONCAT StringUtils::concat
+
+ostream& operator<<(ostream& ost, const String& str);
 
 class StringUtils {
     public:
         static String format(const char* format, ...);
-        static char* c_str(const String& str);
+        static gchar* c_str(const String& str);
+       
+    //Sorry, I don't know how to move implemendation to StringUtils.cpp
+    private:
+        static void addToString(String& str) {};
+        template<typename T, typename... Args>
+        static void addToString(String& str, const T& a_value, Args... a_args)  {
+            str += String(a_value);
+            addToString(str, a_args...);
+        } 
+    public:
+        template<typename... Args>
+        static String* concat(Args... a_args)  {
+            String* s = new String();
+            addToString(*s, a_args...);
+            return s;
+        }
 };
 
 class StringTokenizer {

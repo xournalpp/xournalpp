@@ -11,11 +11,10 @@
 
 #include <glib.h>
 #include <gtk/gtk.h>
-#include <stdio.h>
+#include <iostream>
+#include <fstream>
+#include <sstream>
 #include <execinfo.h>
-#include <signal.h>
-#include <stdlib.h>
-#include <cxxabi.h>
 
 #include "CrashHandler.h"
 #include "../control/SaveHandler.h"
@@ -23,6 +22,8 @@
 #include "Stacktrace.h"
 
 #include "../cfg.h"
+
+using namespace std;
 
 static bool alreadyCrashed = false;
 static Document* document = NULL;
@@ -66,69 +67,76 @@ void installCrashHandlers()
 
 static void emergencySave();
 
+class streamsplit : public stringstream {
+public:
+    streamsplit(ofstream* file) {
+        f = file;
+    }
+    
+    template<typename T>
+    ostream& operator<<(T const & rhs) {
+        *f << rhs;
+        cerr << rhs;
+        return *f;
+    }
+    
+private:
+    ofstream* f;
+};
+
 /**
  * Print crash log to config directory
  */
-static void crashHandler(int sig)
-{
-	if (alreadyCrashed)   // crasehd again on emergency save
-	{
-		exit(2);
-	}
-	alreadyCrashed = true;
+static void crashHandler(int sig) {
+    if (alreadyCrashed) { // crasehd again on emergency save
+        exit(2);
+    }
+    alreadyCrashed = true;
 
-	fprintf(stderr, "Crash Handler::Crashed with signal %i\n", sig);
+    cerr << "Crash Handler::Crashed with signal " << sig << "\n";
 
-	time_t lt;
-	void* array[100];
-	char** messages;
+    time_t lt;
+    void* array[100];
+    char** messages;
 
-	size_t size;
+    size_t size;
 
-	// get void*'s for all entries on the stack
-	size = backtrace(array, 100);
+    // get void*'s for all entries on the stack
+    size = backtrace(array, 100);
 
-	gchar* filename = g_strconcat(g_get_home_dir(), G_DIR_SEPARATOR_S, CONFIG_DIR,
-	                              G_DIR_SEPARATOR_S, "errorlog.log", NULL);
+    String* filename = CONCAT(g_get_home_dir(), G_DIR_SEPARATOR_S, CONFIG_DIR,
+            G_DIR_SEPARATOR_S, "errorlog.log");
 
-	FILE* fp = fopen(filename, "w");
-	if (fp)
-	{
-		fprintf(stderr, "Crash Handler::wrote crash log to: %s\n", filename);
-	}
+    ofstream fp(CSTR(*filename));
+    if (fp) cerr << "Crash Handler::wrote crash log to: " << *filename << endl;
+    
+    streamsplit out(&fp);
 
-	lt = time(NULL);
+    lt = time(NULL);
+    
+    out << "Date: " << ctime(&lt) << endl
+        << "Error: signal " << sig << endl;
 
-	fprintf(fp, "Date: %s\n", ctime(&lt));
-	fprintf(stderr, "Date: %s\n", ctime(&lt));
-	fprintf(fp, "Error: signal %d:\n", sig);
-	fprintf(stderr, "Error: signal %d:\n", sig);
+    messages = backtrace_symbols(array, size);
 
-	messages = backtrace_symbols(array, size);
+    for (int i = 0; i < size; i++) {
+        out << "[bt]: (" << i << ") " << messages[i] << endl;
+    }
 
-	for (int i = 0; i < size; i++)
-	{
-		fprintf(fp, "[bt]: (%d) %s\n", i, messages[i]);
-		fprintf(stderr, "[bt]: (%d) %s\n", i, messages[i]);
-	}
+    delete filename;
+    free(messages);
 
-	g_free(filename);
-	free(messages);
+    out << "\n\nTry to get a better stracktrace...\n";
 
-	fprintf(fp, "\n\nTry to get a better stracktrace...\n");
-	fprintf(stderr, "\n\nTry to get a better stracktrace...\n");
+    Stacktrace::printStracktrace(out);
+    
+    if (fp) {
+        fp.close();
+    }
 
-	Stacktrace::printStracktrace(fp);
-	Stacktrace::printStracktrace(stderr);
+    emergencySave();
 
-	if (fp)
-	{
-		fclose(fp);
-	}
-
-	emergencySave();
-
-	exit(1);
+    exit(1);
 }
 
 static void emergencySave()
@@ -138,37 +146,38 @@ static void emergencySave()
 		return;
 	}
 
-	fprintf(stderr, "\nTry to emergency save the current open document...\n");
+	cerr << "\nTry to emergency save the current open document...\n";
 
 	SaveHandler handler;
 	handler.prepareSave(document);
 
-	gchar* filename = g_strconcat(g_get_home_dir(), G_DIR_SEPARATOR_S, CONFIG_DIR,
-	                              G_DIR_SEPARATOR_S, "emergencysave.xoj", NULL);
+	String* filename = CONCAT(g_get_home_dir(), G_DIR_SEPARATOR_S,
+                                    CONFIG_DIR, G_DIR_SEPARATOR_S,
+                                    "emergencysave.xoj");
 
-	GzOutputStream* out = new GzOutputStream(filename);
+	GzOutputStream* out = new GzOutputStream(*filename);
 
 	if (!out->getLastError().isEmpty())
 	{
-		fprintf(stderr, "error: %s\n", CSTR(out->getLastError()));
+		cerr << "error: " << out->getLastError() << endl;
 		delete out;
-		g_free(filename);
+		delete filename;
 		return;
 	}
 
-	handler.saveTo(out, filename);
+	handler.saveTo(out, *filename);
 	out->close();
 
 	if (!out->getLastError().isEmpty())
 	{
-		fprintf(stderr, "error: %s\n", CSTR(out->getLastError()));
+		cerr << "error: " << out->getLastError() << endl;
 	}
 	else
 	{
-		fprintf(stderr, "Successfully saved document to \"%s\"\n", filename);
+		cerr << "Successfully saved document to \"" << *filename << "\"" << endl;
 	}
 
-	g_free(filename);
+	delete filename;
 	delete out;
 }
 

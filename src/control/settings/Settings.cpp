@@ -98,7 +98,7 @@ void Settings::loadDefault()
 	this->defaultSaveName = _("%F-Note-%H-%M.xoj");
 
 	this->visiblePageFormats = GTK_PAPER_NAME_A4 "," GTK_PAPER_NAME_A5 ","
-	                           GTK_PAPER_NAME_LETTER ","GTK_PAPER_NAME_LEGAL;
+	                           GTK_PAPER_NAME_LETTER "," GTK_PAPER_NAME_LEGAL;
 
 	// Eraser
 	this->buttonConfig[0] = new ButtonConfig(TOOL_ERASER, 0, TOOL_SIZE_NONE,

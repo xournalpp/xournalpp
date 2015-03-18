@@ -147,7 +147,6 @@ XOJ_DECLARE_TYPE(Text, 135);
 XOJ_DECLARE_TYPE(XojPopplerDocument, 136);
 XOJ_DECLARE_TYPE(_IntPopplerDocument, 137);
 XOJ_DECLARE_TYPE(StringTokenizer, 138);
-XOJ_DECLARE_TYPE(String, 139);
 XOJ_DECLARE_TYPE(_RefStrInternal, 140);
 XOJ_DECLARE_TYPE(PdfRefEntry, 141);
 XOJ_DECLARE_TYPE(RemoveLayerUndoAction, 142);
