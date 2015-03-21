@@ -62,7 +62,7 @@ public:
 
 	PageView* getViewFor(int pageNr);
 
-	bool searchTextOnPage(const char* text, int p, int* occures, double* top);
+	bool searchTextOnPage(string text, int p, int* occures, double* top);
 
 	bool cut();
 	bool copy();

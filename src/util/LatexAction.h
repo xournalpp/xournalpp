@@ -23,19 +23,18 @@ class Control;
 class LatexAction
 {
 public:
-	LatexAction(gchar* myTex, double tArea);
-	virtual ~LatexAction();
+	LatexAction(string myTex, double tArea);
 
 public:
 	void runCommand();
-	gchar* getFileName();
+	string getFileName();
 
 
 private:
 	//	Control * control;
-	gchar* theLatex;
-	gchar* texfile;
-	gchar* texfilefull;
+	string theLatex;
+	string texfile;
+	string texfilefull;
 	double myx, myy;
 	double texArea;
 };

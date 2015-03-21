@@ -38,13 +38,13 @@ public:
 	int getPageCount();
 
 	void load(char* data, int length);
-	bool load(String filename, String password, GError** error);
+	bool load(string filename, string password, GError** error);
 
 	PDFDoc* getDoc();
 
 	gsize getId();
 
-	bool save(String filename, GError** error);
+	bool save(string filename, GError** error);
 
 private:
 	XOJ_TYPE_ATTRIB;

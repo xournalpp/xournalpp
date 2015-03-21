@@ -91,11 +91,11 @@ bool AddUndoAction::undo(Control* control)
 	return true;
 }
 
-String AddUndoAction::getText()
+string AddUndoAction::getText()
 {
 	XOJ_CHECK_TYPE(AddUndoAction);
 
-	String text;
+	string text;
 
 	if (eraser)
 	{

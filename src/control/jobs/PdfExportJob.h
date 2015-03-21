@@ -35,9 +35,9 @@ public:
 private:
 	XOJ_TYPE_ATTRIB;
 
-	String filename;
+	string filename;
 
-	String errorMsg;
+	string errorMsg;
 };
 
 #endif /* __PDFEXPORTJOB_H__ */

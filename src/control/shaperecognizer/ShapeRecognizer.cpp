@@ -9,6 +9,8 @@
 #include <math.h>
 #include <string.h>
 
+#include <boost/format.hpp>
+
 ShapeRecognizer::ShapeRecognizer()
 {
 	XOJ_INIT_TYPE(ShapeRecognizer);
@@ -31,7 +33,7 @@ void ShapeRecognizer::resetRecognizer()
 {
 	XOJ_CHECK_TYPE(ShapeRecognizer);
 
-	RDEBUG("reset\n", 0);
+	RDEBUG("reset\n");
 
 	for (int i = 0; i < MAX_POLYGON_SIDES + 1; i++)
 	{
@@ -203,7 +205,7 @@ Stroke* ShapeRecognizer::tryArrow()
 			alpha[i] -= M_PI;
 			rs[i].reversed = !rs[i].reversed;
 		}
-		RDEBUG("arrow: alpha[%d] = %.1f degrees\n", i, alpha[i] * 180 / M_PI);
+		RDEBUG("arrow: alpha[%d%] = %.1f% degrees\n") % i % (alpha[i] * 180 / M_PI);
 		if (fabs(alpha[i]) < ARROW_ANGLE_MIN || fabs(alpha[i]) > ARROW_ANGLE_MAX)
 		{
 			return NULL;
@@ -233,7 +235,7 @@ Stroke* ShapeRecognizer::tryArrow()
 	{
 		double dist = hypot(pt.x - (rs[j].reversed ? rs[j].x1 : rs[j].x2),
 		                    pt.y - (rs[j].reversed ? rs[j].y1 : rs[j].y2));
-		RDEBUG("linear tolerance: tip[%d] = %.2f\n", j, dist / rs[j].radius);
+		RDEBUG("linear tolerance: tip[%d%] = %.2f%\n") % j % (dist / rs[j].radius);
 		if (dist > ARROW_TIP_LINEAR_TOLERANCE * rs[j].radius)
 		{
 			return NULL;
@@ -243,7 +245,7 @@ Stroke* ShapeRecognizer::tryArrow()
 	double dist = (pt.x - x2) * sin(angle) - (pt.y - y2) * cos(angle);
 	dist /= rs[1].radius + rs[2].radius;
 
-	RDEBUG("sideways gap tolerance = %.2f\n", dist);
+	RDEBUG("sideways gap tolerance = %.2f%\n") % dist;
 
 	if (fabs(dist) > ARROW_SIDEWAYS_GAP_TOLERANCE)
 	{
@@ -253,7 +255,7 @@ Stroke* ShapeRecognizer::tryArrow()
 	dist = (pt.x - x2) * cos(angle) + (pt.y - y2) * sin(angle);
 	dist /= rs[1].radius + rs[2].radius;
 
-	RDEBUG("main linear gap = %.2f\n", dist);
+	RDEBUG("main linear gap = %.2f%\n") % dist;
 
 	if (dist < ARROW_MAIN_LINEAR_GAP_MIN || dist > ARROW_MAIN_LINEAR_GAP_MAX)
 	{
@@ -574,14 +576,13 @@ ShapeRecognizerResult* ShapeRecognizer::recognizePatterns(Stroke* stroke)
 	{
 		optimizePolygonal(stroke->getPoints(), n, brk, ss);
 #ifdef RECOGNIZER_DEBUG
-		printf("\n");
-		printf("ShapeReco:: Polygon, %d edges:\n", n);
-		for (int i = 0; i < n; i++)
-		{
-			printf("ShapeReco::      %d-%d (M=%.0f, det=%.4f)\n", brk[i], brk[i + 1],
-			       ss[i].getMass(), ss[i].det());
+		cout << endl << boost::format("ShapeReco:: Polygon, %d% edges:") % n << endl;
+		for (int i = 0; i < n; i++) {
+			cout << boost::format("ShapeReco::      %d%-%d% (M=%.0f%, det=%.4f%)")
+                                % brk[i] % brk[i + 1] % ss[i].getMass() % ss[i].det()
+                             << endl;
 		}
-		printf("\n");
+		cout << endl;
 #endif
 		// update recognizer segment queue (most recent at end)
 		while (n + queueLength > MAX_POLYGON_SIDES)
@@ -594,7 +595,7 @@ ShapeRecognizerResult* ShapeRecognizer::recognizePatterns(Stroke* stroke)
 			g_memmove(queue, queue + i, queueLength * sizeof(RecoSegment));
 		}
 
-		RDEBUG("Queue now has %d + %d edges\n", this->queueLength, n);
+		RDEBUG("Queue now has %d% + %d% edges\n") % this->queueLength % n;
 
 		RecoSegment* rs = &this->queue[this->queueLength];
 		this->queueLength += n;
@@ -666,7 +667,7 @@ ShapeRecognizerResult* ShapeRecognizer::recognizePatterns(Stroke* stroke)
 			s->addPoint(Point(rs->x2, rs->y2));
 			rs->stroke = s;
 			ShapeRecognizerResult* result = new ShapeRecognizerResult(s);
-			RDEBUG("return line\n", 0);
+			RDEBUG("return line\n");
 			return result;
 		}
 	}

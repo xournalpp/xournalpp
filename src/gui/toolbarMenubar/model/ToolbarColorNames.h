@@ -20,29 +20,29 @@
 class ToolbarColorNames
 {
 private:
-	ToolbarColorNames();
-	virtual ~ToolbarColorNames();
+    ToolbarColorNames();
+    virtual ~ToolbarColorNames();
 
 public:
-	static ToolbarColorNames& getInstance();
-	static void freeInstance();
+    static ToolbarColorNames& getInstance();
+    static void freeInstance();
 
 public:
-	void loadFile(const char* file);
-	void saveFile(const char* file);
+    void loadFile(const char* file);
+    void saveFile(const char* file);
 
-	void adddColor(int color, String name, bool predefined);
+    void adddColor(int color, string name, bool predefined);
 
-	String getColorName(int color);
-
-private:
-	void initPredefinedColors();
+    string getColorName(int color);
 
 private:
-	XOJ_TYPE_ATTRIB;
+    void initPredefinedColors();
 
-	GKeyFile* config;
-	GHashTable* predefinedColorNames;
+private:
+    XOJ_TYPE_ATTRIB;
+
+    GKeyFile* config;
+    GHashTable* predefinedColorNames;
 };
 
 #endif /* __TOOLBARCOLORNAMES_H__ */

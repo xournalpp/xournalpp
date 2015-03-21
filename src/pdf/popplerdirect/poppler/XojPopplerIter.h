@@ -30,7 +30,7 @@ public:
 	XojPopplerAction* getAction();
 
 private:
-	static String unicodeToChar(Unicode* unicode, int len);
+	static string unicodeToChar(Unicode* unicode, int len);
 
 private:
 	XOJ_TYPE_ATTRIB;

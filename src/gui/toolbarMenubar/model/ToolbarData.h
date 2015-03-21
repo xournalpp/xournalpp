@@ -22,35 +22,35 @@
 class ToolbarData
 {
 public:
-	ToolbarData(bool predefined);
-	ToolbarData(const ToolbarData& data);
-	virtual ~ToolbarData();
+    ToolbarData(bool predefined);
+    ToolbarData(const ToolbarData& data);
+    virtual ~ToolbarData();
 
 public:
-	String getName();
-	void setName(String name);
-	String getId();
-	void setId(String id);
-	bool isPredefined();
+    string getName();
+    void setName(string name);
+    string getId();
+    void setId(string id);
+    bool isPredefined();
 
-	void load(GKeyFile* config, const char* group);
-	void saveToKeyFile(GKeyFile* config);
+    void load(GKeyFile* config, const char* group);
+    void saveToKeyFile(GKeyFile* config);
 
-	// Editing API
-	int insertItem(String toolbar, String item, int position);
-	bool removeItemByID(String toolbar, int id);
+    // Editing API
+    int insertItem(string toolbar, string item, int position);
+    bool removeItemByID(string toolbar, int id);
 
 private:
-	XOJ_TYPE_ATTRIB;
+    XOJ_TYPE_ATTRIB;
 
-	String id;
-	String name;
-	std::vector<ToolbarEntry> contents;
+    string id;
+    string name;
+    std::vector<ToolbarEntry> contents;
 
-	bool predefined;
+    bool predefined;
 
-	friend class ToolbarModel;
-	friend class ToolMenuHandler;
+    friend class ToolbarModel;
+    friend class ToolMenuHandler;
 };
 
 #endif /* __TOOLBARDATA_H__ */

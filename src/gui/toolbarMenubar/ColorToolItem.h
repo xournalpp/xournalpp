@@ -16,45 +16,45 @@
 #include "../../control/ToolHandler.h"
 #include <XournalType.h>
 
-class ColorToolItem: public AbstractToolItem
+class ColorToolItem : public AbstractToolItem
 {
 public:
-	ColorToolItem(ActionHandler* handler, ToolHandler* toolHandler,
-	              GtkWindow* parent, int color, bool selektor = false);
-	virtual ~ColorToolItem();
+    ColorToolItem(ActionHandler* handler, ToolHandler* toolHandler,
+                  GtkWindow* parent, int color, bool selektor = false);
+    virtual ~ColorToolItem();
 
 public:
-	virtual void actionSelected(ActionGroup group, ActionType action);
-	void enableColor(int color);
-	void selectColor();
-	bool colorEqualsMoreOreLess(int color);
-	virtual void activated(GdkEvent* event, GtkMenuItem* menuitem,
-	                       GtkToolButton* toolbutton);
+    virtual void actionSelected(ActionGroup group, ActionType action);
+    void enableColor(int color);
+    void selectColor();
+    bool colorEqualsMoreOreLess(int color);
+    virtual void activated(GdkEvent* event, GtkMenuItem* menuitem,
+                           GtkToolButton* toolbutton);
 
-	virtual String getToolDisplayName();
-	virtual GtkWidget* getNewToolIconImpl();
+    virtual string getToolDisplayName();
+    virtual GtkWidget* getNewToolIconImpl();
 
-	virtual String getId();
+    virtual string getId();
 
-	int getColor();
+    int getColor();
 
 protected:
-	virtual GtkToolItem* newItem();
-	void updateName();
-	bool isSelector();
+    virtual GtkToolItem* newItem();
+    void updateName();
+    bool isSelector();
 
 private:
-	XOJ_TYPE_ATTRIB;
+    XOJ_TYPE_ATTRIB;
 
-	int color;
-	String name;
-	GtkWidget* iconWidget;
-	GtkWidget* colorDlg;
-	GtkWindow* parent;
+    int color;
+    string name;
+    GtkWidget* iconWidget;
+    GtkWidget* colorDlg;
+    GtkWindow* parent;
 
-	ToolHandler* toolHandler;
+    ToolHandler* toolHandler;
 
-	static bool inUpdate;
+    static bool inUpdate;
 };
 
 #endif /* __COLORTOOLITEM_H__ */

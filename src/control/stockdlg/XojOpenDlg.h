@@ -24,7 +24,7 @@ private:
 	virtual ~XojOpenDlg();
 
 public:
-	static String showOpenDialog(GtkWindow* win, Settings* settings, bool pdf,
+	static string showOpenDialog(GtkWindow* win, Settings* settings, bool pdf,
 	                             bool& attachPdf);
 
 private:

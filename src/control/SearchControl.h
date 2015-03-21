@@ -18,21 +18,21 @@
 class SearchControl
 {
 public:
-	SearchControl(PageRef page, XojPopplerPage* pdf);
-	virtual ~SearchControl();
+    SearchControl(PageRef page, XojPopplerPage* pdf);
+    virtual ~SearchControl();
 
-	bool search(const char* text, int* occures, double* top);
-	void paint(cairo_t* cr, GdkRectangle* rect, double zoom, GdkColor color);
+    bool search(string text, int* occures, double* top);
+    void paint(cairo_t* cr, GdkRectangle* rect, double zoom, GdkColor color);
 private:
-	void freeSearchResults();
+    void freeSearchResults();
 
 private:
-	XOJ_TYPE_ATTRIB;
+    XOJ_TYPE_ATTRIB;
 
-	PageRef page;
-	XojPopplerPage* pdf;
+    PageRef page;
+    XojPopplerPage* pdf;
 
-	GList* results;
+    GList* results;
 };
 
 #endif /* __SEARCHCONTROL_H__ */

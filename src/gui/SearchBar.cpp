@@ -275,7 +275,7 @@ void SearchBar::showSearchBar(bool show)
 		gtk_widget_hide(searchBar);
 		for (int i = control->getDocument()->getPageCount() - 1; i >= 0; i--)
 		{
-			control->searchTextOnPage(NULL, i, NULL, NULL);
+			control->searchTextOnPage("", i, NULL, NULL);
 		}
 	}
 }

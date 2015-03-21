@@ -31,7 +31,7 @@ public:
 	virtual bool undo(Control* control);
 	virtual bool redo(Control* control);
 	XojPage** getPages();
-	virtual String getText();
+	virtual string getText();
 
 private:
 	void switchLayer(GList* entries, Layer* oldLayer, Layer* newLayer);
@@ -47,7 +47,7 @@ private:
 	Layer* sourceLayer;
 	Layer* targetLayer;
 
-	String text;
+	string text;
 
 	double dx, dy;
 };

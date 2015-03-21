@@ -28,14 +28,14 @@ public:
 public:
 	void prepareSave(Document* doc);
 	void saveTo(OutputStream* out,
-	            String filename,
-	            ProgressListener* listener = NULL);
-	String getErrorMessage();
+				string filename,
+				ProgressListener* listener = NULL);
+	string getErrorMessage();
 
 private:
 	void visitPage(XmlNode* root, PageRef p, Document* doc, int id);
-	static String getSolidBgStr(BackgroundType type);
-	static String getColorStr(int c, unsigned char alpha = 0xff);
+	static string getSolidBgStr(BackgroundType type);
+	static string getColorStr(int c, unsigned char alpha = 0xff);
 	void visitLayer(XmlNode* page, Layer* l);
 
 private:
@@ -45,7 +45,7 @@ private:
 	bool firstPdfPageVisited;
 	int attachBgId;
 
-	String errorMessage;
+	string errorMessage;
 
 	GList* backgroundImages;
 };

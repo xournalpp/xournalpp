@@ -22,24 +22,24 @@ class ToolbarData;
 class ToolbarModel
 {
 public:
-	ToolbarModel();
-	virtual ~ToolbarModel();
+    ToolbarModel();
+    virtual ~ToolbarModel();
 
 public:
-	ListIterator<ToolbarData*> iterator();
-	bool parse(const char* file, bool predefined);
-	void add(ToolbarData* data);
-	void remove(ToolbarData* data);
-	void save(const char* filename);
-	bool existsId(String id);
+    ListIterator<ToolbarData*> iterator();
+    bool parse(const char* file, bool predefined);
+    void add(ToolbarData* data);
+    void remove(ToolbarData* data);
+    void save(const char* filename);
+    bool existsId(string id);
 
 private:
-	void parseGroup(GKeyFile* config, const char* group, bool predefined);
+    void parseGroup(GKeyFile* config, const char* group, bool predefined);
 
 private:
-	XOJ_TYPE_ATTRIB;
+    XOJ_TYPE_ATTRIB;
 
-	GList* toolbars;
+    GList* toolbars;
 };
 
 #endif /* __TOOLBARMODEL_H__ */

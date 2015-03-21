@@ -29,23 +29,23 @@ public:
 	bool read(const char* data, int len) throw (InputStreamException);
 
 	void readObject(const char* name) throw (InputStreamException);
-	String readObject() throw (InputStreamException);
-	String getNextObjectName() throw (InputStreamException);
+	string readObject() throw (InputStreamException);
+	string getNextObjectName() throw (InputStreamException);
 	void endObject() throw (InputStreamException);
 
 	int readInt() throw (InputStreamException);
 	double readDouble() throw (InputStreamException);
-	String readString() throw (InputStreamException);
+	string readString() throw (InputStreamException);
 
 	void readData(void** data, int* len) throw (InputStreamException);
 	cairo_surface_t* readImage() throw (InputStreamException);
 
-	ObjectInputStream& operator >>(Serializeable* s) throw (InputStreamException);
+	ObjectInputStream& operator>>(Serializeable* s) throw (InputStreamException);
 
 private:
 	void checkType(char type) throw (InputStreamException);
 
-	String getType(char type);
+	string getType(char type);
 
 private:
 	XOJ_TYPE_ATTRIB;

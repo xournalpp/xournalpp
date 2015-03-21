@@ -37,7 +37,7 @@ private:
 
 
 	Control* control;
-	String error;
+	string error;
 };
 
 #endif /* __AUTOSAVEJOB_H__ */

@@ -55,7 +55,7 @@ public:
 
 	void endText();
 
-	bool searchTextOnPage(const char* text, int* occures, double* top);
+	bool searchTextOnPage(string& text, int* occures, double* top);
 
 	bool onKeyPressEvent(GdkEventKey* event);
 	bool onKeyReleaseEvent(GdkEventKey* event);

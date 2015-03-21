@@ -27,7 +27,7 @@ public:
 
 	static void cairo_set_source_rgbi(cairo_t* cr, int color);
 
-	static String getAutosaveFilename();
+	static string getAutosaveFilename();
 
 	static int getPid();
 
@@ -39,7 +39,7 @@ public:
 	static void openFileWithFilebrowser(const char* filename);
 
 private:
-	static String getSettingsSubfolder(String subfolder);
+	static string getSettingsSubfolder(string subfolder);
 };
 
 #endif /* __UTIL_H__ */

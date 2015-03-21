@@ -43,8 +43,8 @@ public:
 	void setChangeZoom(double zoom);
 	void setChangeTop(double top);
 
-	void setName(String name);
-	String getName();
+	void setName(string name);
+	string getName();
 private:
 	XOJ_TYPE_ATTRIB;
 
@@ -59,7 +59,7 @@ private:
 	bool changeZoom;
 	bool changeTop;
 
-	String name;
+	string name;
 };
 
 struct _LinkDest
@@ -70,10 +70,10 @@ struct _LinkDest
 
 enum
 {
-    DOCUMENT_LINKS_COLUMN_NAME,
-    DOCUMENT_LINKS_COLUMN_LINK,
-    DOCUMENT_LINKS_COLUMN_EXPAND,
-    DOCUMENT_LINKS_COLUMN_PAGE_NUMBER
+	DOCUMENT_LINKS_COLUMN_NAME,
+	DOCUMENT_LINKS_COLUMN_LINK,
+	DOCUMENT_LINKS_COLUMN_EXPAND,
+	DOCUMENT_LINKS_COLUMN_PAGE_NUMBER
 };
 
 #define TYPE_LINK_DEST              (link_dest_get_type())

@@ -17,7 +17,7 @@
 #include "Font.h"
 #include <gtk/gtk.h>
 
-class Text: public Element
+class Text : public Element
 {
 public:
 	Text();
@@ -27,8 +27,8 @@ public:
 	void setFont(XojFont& font);
 	XojFont& getFont();
 
-	String getText();
-	void setText(String text);
+	string getText();
+	void setText(string text);
 
 	void setWidth(double width);
 	void setHeight(double height);
@@ -58,7 +58,7 @@ private:
 
 	XojFont font;
 
-	String text;
+	string text;
 
 	bool inEditing;
 };

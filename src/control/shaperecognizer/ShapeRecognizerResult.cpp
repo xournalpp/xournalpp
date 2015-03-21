@@ -27,7 +27,7 @@ ShapeRecognizerResult::ShapeRecognizerResult(Stroke* result,
 		}
 	}
 
-	RDEBUG("source list length: %i\n", g_list_length(this->source));
+	RDEBUG("source list length: %i%\n") % g_list_length(this->source);
 }
 
 ShapeRecognizerResult::~ShapeRecognizerResult()

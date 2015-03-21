@@ -23,7 +23,7 @@ public:
 	 * This function is called whenever some file
 	 * from the recent menu is opened
 	 */
-	virtual void fileOpened(const char* uri) = 0;
+	virtual void fileOpened(const gchar* uri) = 0;
 };
 
 /**
@@ -41,25 +41,25 @@ public:
 	 * Convenience function, essentially calls
 	 * addRecentFileUri(const char* uri)
 	 */
-	void addRecentFileFilename(const char* filename);
+	void addRecentFileFilename(string filename);
 
 	/**
 	 * Adds a file to the underlying GtkRecentManager
 	 * without altering the menu
 	 */
-	void addRecentFileUri(const char* uri);
+	void addRecentFileUri(string uri);
 
 	/**
 	 * Convenience function, essentially calls
 	 * removeRecentFileUri(const char* uri)
 	 */
-	void removeRecentFileFilename(const char* filename);
+	void removeRecentFileFilename(string filename);
 
 	/**
 	 * Removes a file from the underlying GtkRecentManager
 	 * without altering the menu
 	 */
-	void removeRecentFileUri(const char* uri);
+	void removeRecentFileUri(string uri);
 
 	/**
 	 * Removes all of the menu items corresponding to recent files
@@ -85,7 +85,7 @@ public:
 	 * Notifies all RecentManagerListener%s that a new
 	 * file is opened
 	 */
-	void openRecent(String uri);
+	void openRecent(string uri);
 
 	/**
 	 * Returns the root menu containing all the items

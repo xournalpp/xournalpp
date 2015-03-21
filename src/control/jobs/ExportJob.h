@@ -21,7 +21,7 @@ class ExportJob : public BlockingJob
 {
 public:
 	ExportJob(Control* control, GList* selected, ExportFormtType type, int dpi,
-	          String folder, String filename);
+	          string folder, string filename);
 
 protected:
 	virtual ~ExportJob();
@@ -44,9 +44,9 @@ private:
 
 	int dpi;
 	ExportFormtType type;
-	String filename;
-	String folder;
-	String front, back;
+	string filename;
+	string folder;
+	string front, back;
 };
 
 #endif /* __EXPORTJOB_H__ */

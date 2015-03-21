@@ -31,7 +31,7 @@ RemoveLayerUndoAction::~RemoveLayerUndoAction()
 	XOJ_RELEASE_TYPE(RemoveLayerUndoAction);
 }
 
-String RemoveLayerUndoAction::getText()
+string RemoveLayerUndoAction::getText()
 {
 	XOJ_CHECK_TYPE(RemoveLayerUndoAction);
 

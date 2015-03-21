@@ -26,7 +26,7 @@ public:
 public:
 	virtual bool undo(Control* control);
 	virtual bool redo(Control* control);
-	virtual String getText();
+	virtual string getText();
 
 private:
 	void applyScale(double fx, double fy);

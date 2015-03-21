@@ -19,6 +19,9 @@
 
 #include "EditSelectionContents.h"
 
+#include <iostream>
+using namespace std;
+
 
 EditSelection::EditSelection(UndoRedoHandler* undo, PageRef page,
                              PageView* view)
@@ -503,11 +506,11 @@ void EditSelection::translateToView(PageView* v)
 
 	if (aX1 != aX2)
 	{
-		printf("aX1 != aX2!! %i / %i\n", aX1, aX2);
+		cout << "aX1 != aX2!! " << aX1 << " / " << aX2 << endl;
 	}
 	if (aY1 != aY2)
 	{
-		printf("aY1 != aY2!! %i / %i\n", aY1, aY2);
+		cout << "aY1 != aY2!! " << aY1 << " / " << aY2 << endl;
 	}
 }
 

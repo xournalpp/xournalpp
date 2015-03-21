@@ -45,11 +45,13 @@ void XmlTextNode::writeOut(OutputStream* out)
 	writeAttributes(out);
 
 	out->write(">");
-
-	String tmp = this->text;
-	tmp = tmp.findAndReplace("&", "&amp;")
-                .findAndReplace("<", "&lt;")
-                .findAndReplace(">", "&gt;");
+    
+	string tmp(this->text);
+    StringUtils::replace_all_chars(tmp, {
+        replace_pair('&', "&amp;"),
+        replace_pair('<', "&lt;"),
+        replace_pair('>', "&gt;")
+    });
 	out->write(tmp);
 
 	out->write("</");

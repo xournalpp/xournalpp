@@ -26,22 +26,22 @@ public:
 	 * Setter / Getter: if uri is NULL the request will be ignored
 	 */
 
-	void setInt(String uri, const char* name, int value);
-	void setDouble(String uri, const char* name, double value);
-	void setString(String uri, const char* name, const char* value);
+	void setInt(string uri, const char* name, int value);
+	void setDouble(string uri, const char* name, double value);
+	void setString(string uri, const char* name, const char* value);
 
-	bool getInt(String uri, const char* name, int& value);
-	bool getDouble(String uri, const char* name, double& value);
+	bool getInt(string uri, const char* name, int& value);
+	bool getDouble(string uri, const char* name, double& value);
 
 	/**
 	 * The returned String should be freed with g_free
 	 */
-	bool getString(String uri, const char* name, char*& value);
+	bool getString(string uri, const char* name, char*& value);
 
-	void move(String source, String target);
+	void move(string source, string target);
 
 private:
-	void updateAccessTime(String uri);
+	void updateAccessTime(string uri);
 	void loadConfigFile();
 
 	void cleanupMetadata();

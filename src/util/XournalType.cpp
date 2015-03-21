@@ -1,7 +1,10 @@
 #include <XournalType.h>
 #include <glib.h>
 #include <stdlib.h>
-#include <stdio.h>
+#include <iostream>
+#include <StringUtils.h>
+
+using namespace std;
 
 #ifdef XOJ_MEMORY_CHECK_ENABLED
 
@@ -23,7 +26,6 @@ GMutex* mutex = NULL;
 static void initXournalClassList()
 {
 	xojTypeList[0] = "Invalid_type";
-#include "XournalTypeList.h"
 }
 
 void xoj_type_initMutex()
@@ -91,11 +93,11 @@ void xoj_momoryleak_printRemainingObjects()
 		if (x != 0)
 		{
 			sum += x;
-			printf("MemoryLeak: %i objects of type: %s\n", x, xoj_type_getName(i));
+			cout << bl::format("MemoryLeak: {1} objects of type: {2}") % x % xoj_type_getName(i) << endl;
 		}
 	}
 
-	printf("MemoryLeak: sum %i objects.\n", sum);
+	cout << bl::format("MemoryLeak: sum {1} objects.") % sum << endl;
 }
 
 #endif

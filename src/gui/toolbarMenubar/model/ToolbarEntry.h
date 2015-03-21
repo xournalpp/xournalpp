@@ -19,36 +19,36 @@
 class ToolbarEntry
 {
 public:
-	ToolbarEntry();
-	ToolbarEntry(const ToolbarEntry& e);
-	~ToolbarEntry();
+    ToolbarEntry();
+    ToolbarEntry(const ToolbarEntry& e);
+    ~ToolbarEntry();
 
-	void operator = (const ToolbarEntry& e);
+    void operator=(const ToolbarEntry& e);
 
-	void clearList();
+    void clearList();
 
 public:
-	String getName();
-	void setName(String name);
+    string getName();
+    void setName(string name);
 
-	/**
-	 * Adds a new item and return the ID of the item
-	 */
-	int addItem(String item);
-	bool removeItemById(int id);
+    /**
+     * Adds a new item and return the ID of the item
+     */
+    int addItem(string item);
+    bool removeItemById(int id);
 
-	/**
-	 * Insert a new item and return the ID of the item
-	 */
-	int insertItem(String item, int position);
+    /**
+     * Insert a new item and return the ID of the item
+     */
+    int insertItem(string item, int position);
 
-	ListIterator<ToolbarItem*> iterator();
+    ListIterator<ToolbarItem*> iterator();
 
 private:
-	XOJ_TYPE_ATTRIB;
+    XOJ_TYPE_ATTRIB;
 
-	String name;
-	GList* entries;
+    string name;
+    GList* entries;
 };
 
 #endif /* __TOOLBARENTRY_H__ */

@@ -66,18 +66,18 @@ void ObjectOutputStream::writeString(const char* str)
 {
 	XOJ_CHECK_TYPE(ObjectOutputStream);
 
-	String s = str;
+	string s = str;
 	writeString(s);
 }
 
-void ObjectOutputStream::writeString(const String& s)
+void ObjectOutputStream::writeString(const string& s)
 {
 	XOJ_CHECK_TYPE(ObjectOutputStream);
 
 	this->encoder->addStr("_s");
 	int len = s.length();
 	this->encoder->addData(&len, sizeof(int));
-	this->encoder->addData(CSTR(s), len);
+	this->encoder->addData(s.c_str(), len);
 }
 
 void ObjectOutputStream::writeData(const void* data, int len, int width)

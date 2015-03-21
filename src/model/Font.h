@@ -17,19 +17,19 @@
 #include <gtk/gtk.h>
 #include <serializing/Serializeable.h>
 
-class XojFont: public Serializeable
+class XojFont : public Serializeable
 {
 public:
 	XojFont();
 	virtual ~XojFont();
 
-	String getName();
-	void setName(String name);
+	string getName();
+	void setName(string name);
 
 	double getSize();
 	void setSize(double size);
 
-	void operator =(const XojFont& font);
+	void operator=(const XojFont& font);
 
 public:
 	// Serialize interface
@@ -43,7 +43,7 @@ private:
 	XOJ_TYPE_ATTRIB;
 
 
-	String name;
+	string name;
 	double size;
 };
 

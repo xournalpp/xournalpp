@@ -31,7 +31,7 @@ public:
 	void writeInt(int i);
 	void writeDouble(double d);
 	void writeString(const char* str);
-	void writeString(const String& s);
+	void writeString(const string& s);
 
 	void writeData(const void* data, int len, int width);
 	void writeImage(cairo_surface_t* img);

@@ -5,6 +5,10 @@
 
 #include "../../util/LatexAction.h"
 
+#include <iostream>
+
+using namespace std;
+
 LatexGlade::LatexGlade(GladeSearchpath* gladeSearchPath) :
 	GladeGui(gladeSearchPath, "texdialog.glade", "texDialog")
 {
@@ -53,7 +57,7 @@ void LatexGlade::save()
 
 void LatexGlade::load()
 {
-	printf("Latex::load()\n");
+	cout << "Latex::load()" << endl;
 
 	if (theLatex == NULL)
 	{
@@ -72,7 +76,7 @@ void LatexGlade::show(GtkWindow* parent)
 	int res = gtk_dialog_run(GTK_DIALOG(this->window));
 	if (res == 1)
 	{
-		//printf("Checkbox OK-d.\n");
+		//cout << "Checkbox OK-d." << endl;
 		this->save();
 	}
 	else

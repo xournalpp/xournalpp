@@ -35,7 +35,7 @@ public:
 
 	void finalize();
 
-	virtual String getText();
+	virtual string getText();
 private:
 	XOJ_TYPE_ATTRIB;
 

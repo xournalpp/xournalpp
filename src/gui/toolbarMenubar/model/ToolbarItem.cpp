@@ -2,7 +2,7 @@
 
 int ToolbarItem::sid = 0;
 
-ToolbarItem::ToolbarItem(String name)
+ToolbarItem::ToolbarItem(string name)
 {
 	XOJ_INIT_TYPE(ToolbarItem);
 
@@ -37,7 +37,7 @@ ToolbarItem::~ToolbarItem()
 	XOJ_RELEASE_TYPE(ToolbarItem);
 }
 
-ToolbarItem::operator String()
+ToolbarItem::operator string()
 {
 	XOJ_CHECK_TYPE(ToolbarItem);
 

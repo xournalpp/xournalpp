@@ -7,13 +7,13 @@
  * another solution would be backtrace-symbols.c from cairo/util, but its really complicated
  */
 
-String exeName = "";
+string exeName = "";
 
 Stacktrace::Stacktrace() { }
 
 Stacktrace::~Stacktrace() { }
 
-void Stacktrace::setExename(String name) {
+void Stacktrace::setExename(string name) {
     exeName = name;
 }
 
@@ -33,7 +33,7 @@ void Stacktrace::printStracktrace(ostream& stream) {
 
         char syscom[1024];
 
-        sprintf(syscom, "addr2line %p -e %s", trace[i], CSTR(exeName));
+        sprintf(syscom, "addr2line %p -e %s", trace[i], exeName.c_str());
         FILE* fProc = popen(syscom, "r");
         while (fgets(buff, sizeof (buff), fProc) != NULL) {
             stream << buff;

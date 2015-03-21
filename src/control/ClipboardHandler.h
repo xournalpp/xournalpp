@@ -24,7 +24,7 @@ class ClipboardListener
 public:
 	virtual void clipboardCutCopyEnabled(bool enabled) = 0;
 	virtual void clipboardPasteEnabled(bool enabled) = 0;
-	virtual void clipboardPasteText(String text) = 0;
+	virtual void clipboardPasteText(string text) = 0;
 	virtual void clipboardPasteImage(GdkPixbuf* img) = 0;
 	virtual void clipboardPasteXournal(ObjectInputStream& in) = 0;
 	virtual void deleteSelection() = 0;

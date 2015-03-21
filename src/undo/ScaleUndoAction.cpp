@@ -73,7 +73,7 @@ void ScaleUndoAction::applyScale(double fx, double fy)
 	this->page->fireRangeChanged(r);
 }
 
-String ScaleUndoAction::getText()
+string ScaleUndoAction::getText()
 {
 	XOJ_CHECK_TYPE(ScaleUndoAction);
 

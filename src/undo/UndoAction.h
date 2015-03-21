@@ -31,7 +31,7 @@ public:
 	virtual bool undo(Control* control) = 0;
 	virtual bool redo(Control* control) = 0;
 
-	virtual String getText() = 0;
+	virtual string getText() = 0;
 
 	/**
 	 * Get the affected pages, the Array is terminated with NULL and should be freed with delete[]

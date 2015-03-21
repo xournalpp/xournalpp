@@ -309,7 +309,7 @@ void DocumentView::drawLayer(cairo_t* cr, Layer* l)
 	}
 
 #ifdef SHOW_REPAINT_BOUNDS
-	printf("DBG:DocumentView: draw %i / not draw %i\n", drawed, notDrawed);
+	cout << StringUtils::format("DBG:DocumentView: draw {0} / not draw {1}", {drawed, notDrawed}) << endl;
 #endif //SHOW_REPAINT_BOUNDS
 }
 
@@ -492,7 +492,7 @@ void DocumentView::drawPage(PageRef page, cairo_t* cr,
 #ifdef SHOW_REPAINT_BOUNDS
 	if (this->lX != -1)
 	{
-		printf("DBG:repaint area\n");
+		cout << "DBG:repaint area" << endl;
 		cairo_set_source_rgb(cr, 1, 0, 0);
 		cairo_set_line_width(cr, 1);
 		cairo_rectangle(cr, this->lX + 3, this->lY + 3, this->lWidth - 6,
@@ -501,7 +501,7 @@ void DocumentView::drawPage(PageRef page, cairo_t* cr,
 	}
 	else
 	{
-		printf("DBG:repaint complete\n");
+		cout << "DBG:repaint complete" << endl;
 	}
 #endif //SHOW_REPAINT_BOUNDS
 	this->lX = -1;

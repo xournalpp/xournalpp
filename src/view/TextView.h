@@ -12,6 +12,7 @@
 #ifndef __TEXTVIEW_H__
 #define __TEXTVIEW_H__
 
+#include <StringUtils.h>
 #include <gtk/gtk.h>
 
 class Text;
@@ -36,7 +37,7 @@ public:
 	/**
 	 * Searches text within a Text model, returns XojPopplerRectangle, have to been freed
 	 */
-	static GList* findText(Text* t, const char* text);
+	static GList* findText(Text* t, string& text);
 
 	/**
 	 * Initialize a Pango layout

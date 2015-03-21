@@ -22,12 +22,12 @@
 class XojPopplerAction
 {
 public:
-	XojPopplerAction(XojPopplerDocument doc, LinkAction* linkAction, String title);
+	XojPopplerAction(XojPopplerDocument doc, LinkAction* linkAction, string title);
 	virtual ~XojPopplerAction();
 
 public:
 	XojLinkDest* getDestination();
-	String getTitle();
+	string getTitle();
 
 private:
 	void linkFromDest(LinkDestination* link, LinkDest* dest);
@@ -37,7 +37,7 @@ private:
 
 	XojPopplerDocument doc;
 	LinkAction* linkAction;
-	String title;
+	string title;
 };
 
 #endif /* __XOJPOPPLERACTION_H__ */

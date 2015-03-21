@@ -5,122 +5,119 @@
 
 SearchControl::SearchControl(PageRef page, XojPopplerPage* pdf)
 {
-	XOJ_INIT_TYPE(SearchControl);
+    XOJ_INIT_TYPE(SearchControl);
 
-	this->page = page;
-	this->pdf = pdf;
-	this->results = NULL;
+    this->page = page;
+    this->pdf = pdf;
+    this->results = NULL;
 }
 
 SearchControl::~SearchControl()
 {
-	XOJ_CHECK_TYPE(SearchControl);
+    XOJ_CHECK_TYPE(SearchControl);
 
-	freeSearchResults();
+    freeSearchResults();
 
-	XOJ_RELEASE_TYPE(SearchControl);
+    XOJ_RELEASE_TYPE(SearchControl);
 }
 
 void SearchControl::freeSearchResults()
 {
-	XOJ_CHECK_TYPE(SearchControl);
+    XOJ_CHECK_TYPE(SearchControl);
 
-	if (this->results)
-	{
-		for (GList* l = this->results; l != NULL; l = l->next)
-		{
-			delete (XojPopplerRectangle*) l->data;
-		}
-		g_list_free(this->results);
-		this->results = NULL;
-	}
+    if (this->results)
+    {
+        for (GList* l = this->results; l != NULL; l = l->next)
+        {
+            delete (XojPopplerRectangle*) l->data;
+        }
+        g_list_free(this->results);
+        this->results = NULL;
+    }
 }
 
 void SearchControl::paint(cairo_t* cr, GdkRectangle* rect, double zoom,
                           GdkColor color)
 {
-	XOJ_CHECK_TYPE(SearchControl);
+    XOJ_CHECK_TYPE(SearchControl);
 
-	// set the line always the same size on display
-	cairo_set_line_width(cr, 1 / zoom);
+    // set the line always the same size on display
+    cairo_set_line_width(cr, 1 / zoom);
 
-	for (GList* l = this->results; l != NULL; l = l->next)
-	{
-		XojPopplerRectangle* rect = (XojPopplerRectangle*) l->data;
-		cairo_rectangle(cr, rect->x1, rect->y1, rect->x2 - rect->x1,
-		                rect->y2 - rect->y1);
-		cairo_set_source_rgb(cr, color.red / 65536.0, color.green / 65536.0,
-		                     color.blue / 65536.0);
-		cairo_stroke_preserve(cr);
-		cairo_set_source_rgba(cr, color.red / 65536.0, color.green / 65536.0,
-		                      color.blue / 65536.0, 0.3);
-		cairo_fill(cr);
-	}
+    for (GList* l = this->results; l != NULL; l = l->next)
+    {
+        XojPopplerRectangle* rect = (XojPopplerRectangle*) l->data;
+        cairo_rectangle(cr, rect->x1, rect->y1, rect->x2 - rect->x1,
+                        rect->y2 - rect->y1);
+        cairo_set_source_rgb(cr, color.red / 65536.0, color.green / 65536.0,
+                             color.blue / 65536.0);
+        cairo_stroke_preserve(cr);
+        cairo_set_source_rgba(cr, color.red / 65536.0, color.green / 65536.0,
+                              color.blue / 65536.0, 0.3);
+        cairo_fill(cr);
+    }
 }
 
-bool SearchControl::search(const char* text, int* occures, double* top)
+bool SearchControl::search(string text, int* occures, double* top)
 {
-	XOJ_CHECK_TYPE(SearchControl);
+    XOJ_CHECK_TYPE(SearchControl);
 
-	freeSearchResults();
+    freeSearchResults();
 
-	if (text == NULL)
-	{
-		return true;
-	}
+    if (text.empty()) return true;
 
-	if (this->pdf)
-	{
-		this->results = this->pdf->findText(text);
-	}
+    if (this->pdf)
+    {
+        this->results = this->pdf->findText(text);
+    }
 
-	int selected = this->page->getSelectedLayerId();
-	ListIterator<Layer*> it = this->page->layerIterator();
+    int selected = this->page->getSelectedLayerId();
+    ListIterator<Layer*> it = this->page->layerIterator();
 
-	while (it.hasNext() && selected)
-	{
-		Layer* l = it.next();
+    while (it.hasNext() && selected)
+    {
+        Layer* l = it.next();
 
-		ListIterator<Element*> eit = l->elementIterator();
-		while (eit.hasNext())
-		{
-			Element* e = eit.next();
+        ListIterator<Element*> eit = l->elementIterator();
+        while (eit.hasNext())
+        {
+            Element* e = eit.next();
 
-			if (e->getType() == ELEMENT_TEXT)
-			{
-				Text* t = (Text*) e;
+            if (e->getType() == ELEMENT_TEXT)
+            {
+                Text* t = (Text*) e;
 
-				GList* textResult = TextView::findText(t, text);
-				this->results = g_list_concat(this->results, textResult);
-			}
-		}
+                GList* textResult = TextView::findText(t, text);
+                this->results = g_list_concat(this->results, textResult);
+            }
+        }
 
-		selected--;
-	}
+        selected--;
+    }
 
-	if (occures)
-	{
-		*occures = g_list_length(this->results);
-	}
-	if (top)
-	{
-		if (this->results == NULL)
-		{
-			*top = 0;
-		}
-		else
-		{
+    if (occures)
+    {
+        *occures = g_list_length(this->results);
+    }
+    if (top)
+    {
+        if (this->results == NULL)
+        {
+            *top = 0;
+        }
+        else
+        {
 
-			double min = ((XojPopplerRectangle*) this->results->data)->y1;
-			for (GList* l = this->results->next; l != NULL; l = l->next)
-			{
-				XojPopplerRectangle* rect = (XojPopplerRectangle*) l->data;
-				min = MIN(min, rect->y1);
-			}
+            double min = ((XojPopplerRectangle*) this->results->data)->y1;
+            for (GList* l = this->results->next; l != NULL; l = l->next)
+            {
+                XojPopplerRectangle* rect = (XojPopplerRectangle*) l->data;
+                min = MIN(min, rect->y1);
+            }
 
-			*top = min;
-		}
-	}
+            *top = min;
+        }
+    }
 
-	return this->results != NULL;
+    return this->results != NULL;
 }

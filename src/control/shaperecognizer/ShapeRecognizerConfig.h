@@ -35,9 +35,17 @@
 
 
 #ifdef RECOGNIZER_DEBUG
-#define RDEBUG(msg, ...) printf("ShapeReco:: " msg, __VA_ARGS__)
+#include <boost/format.hpp>
+#include <string>
+#define RDEBUG(msg) cout << boost::format(std::string("ShapeReco:: ") + msg)
 #else
-#define RDEBUG(msg, ...) {}
+class no_debug_format {
+public:
+    template<class T>  
+    no_debug_format&   operator%(const T& x)
+        { return *this; }
+};
+#define RDEBUG(msg) no_debug_format()
 #endif
 
 #endif /* __SHAPERECOGNIZERCONFIG_H__ */

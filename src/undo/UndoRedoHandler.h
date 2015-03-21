@@ -40,8 +40,8 @@ public:
 	void addUndoActionBefore(UndoAction* action, UndoAction* before);
 	bool removeUndoAction(UndoAction* action);
 
-	String undoDescription();
-	String redoDescription();
+	string undoDescription();
+	string redoDescription();
 
 	void clearContents();
 

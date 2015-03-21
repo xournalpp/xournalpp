@@ -119,7 +119,7 @@ bool ColorUndoAction::redo(Control* control)
 	return true;
 }
 
-String ColorUndoAction::getText()
+string ColorUndoAction::getText()
 {
 	XOJ_CHECK_TYPE(ColorUndoAction);
 

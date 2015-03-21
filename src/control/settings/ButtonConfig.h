@@ -55,7 +55,7 @@ private:
 	bool disableDrawing;
 
 public:
-	String device;
+	string device;
 
 	friend class Settings;
 	friend class ButtonConfigGui;

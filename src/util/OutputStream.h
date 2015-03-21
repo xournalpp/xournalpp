@@ -25,7 +25,7 @@ public:
 public:
 	virtual void write(const char* data);
 	virtual void write(const char* data, int len) = 0;
-	virtual void write(const String& str);
+	virtual void write(const string& str);
 
 	virtual void close() = 0;
 };
@@ -33,7 +33,7 @@ public:
 class GzOutputStream : public OutputStream
 {
 public:
-	GzOutputStream(String filename);
+	GzOutputStream(string filename);
 	virtual ~GzOutputStream();
 
 public:
@@ -42,17 +42,17 @@ public:
 	virtual void close();
 
 
-	String& getLastError();
+	string& getLastError();
 
 private:
 	XOJ_TYPE_ATTRIB;
 
 	gzFile fp;
 
-	String error;
+	string error;
 
-	String target;
-	String filename;
+	string target;
+	string filename;
 };
 
 

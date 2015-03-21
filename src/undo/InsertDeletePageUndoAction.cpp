@@ -7,122 +7,122 @@
 InsertDeletePageUndoAction::InsertDeletePageUndoAction(PageRef page,
                                                        int pagePos, bool inserted) : UndoAction("InsertDeletePageUndoAction")
 {
-	XOJ_INIT_TYPE(InsertDeletePageUndoAction);
+    XOJ_INIT_TYPE(InsertDeletePageUndoAction);
 
-	this->inserted = inserted;
-	this->page = page;
-	this->pagePos = pagePos;
+    this->inserted = inserted;
+    this->page = page;
+    this->pagePos = pagePos;
 }
 
 InsertDeletePageUndoAction::~InsertDeletePageUndoAction()
 {
-	XOJ_CHECK_TYPE(InsertDeletePageUndoAction);
+    XOJ_CHECK_TYPE(InsertDeletePageUndoAction);
 
-	this->page = NULL;
+    this->page = NULL;
 
-	XOJ_RELEASE_TYPE(InsertDeletePageUndoAction);
+    XOJ_RELEASE_TYPE(InsertDeletePageUndoAction);
 }
 
 bool InsertDeletePageUndoAction::undo(Control* control)
 {
-	XOJ_CHECK_TYPE(InsertDeletePageUndoAction);
+    XOJ_CHECK_TYPE(InsertDeletePageUndoAction);
 
-	if (this->inserted)
-	{
-		return deletePage(control);
-	}
-	else
-	{
-		return insertPage(control);
-	}
+    if (this->inserted)
+    {
+        return deletePage(control);
+    }
+    else
+    {
+        return insertPage(control);
+    }
 }
 
 bool InsertDeletePageUndoAction::redo(Control* control)
 {
-	XOJ_CHECK_TYPE(InsertDeletePageUndoAction);
+    XOJ_CHECK_TYPE(InsertDeletePageUndoAction);
 
-	if (this->inserted)
-	{
-		return insertPage(control);
-	}
-	else
-	{
-		return deletePage(control);
-	}
+    if (this->inserted)
+    {
+        return insertPage(control);
+    }
+    else
+    {
+        return deletePage(control);
+    }
 }
 
 bool InsertDeletePageUndoAction::insertPage(Control* control)
 {
-	XOJ_CHECK_TYPE(InsertDeletePageUndoAction);
+    XOJ_CHECK_TYPE(InsertDeletePageUndoAction);
 
-	Document* doc = control->getDocument();
+    Document* doc = control->getDocument();
 
-	//just in case there would be a hang here,
-	//we'll clear the selection in redo as well
-	control->clearSelectionEndText();
+    //just in case there would be a hang here,
+    //we'll clear the selection in redo as well
+    control->clearSelectionEndText();
 
-	//see deletePage for why this is done
-	//doc->lock();
-	doc->insertPage(this->page, this->pagePos);
-	doc->unlock();
+    //see deletePage for why this is done
+    //doc->lock();
+    doc->insertPage(this->page, this->pagePos);
+    doc->unlock();
 
-	//these are all threadsafe (I think...)
-	control->firePageInserted(this->pagePos);
-	control->getCursor()->updateCursor();
-	control->getScrollHandler()->scrollToPage(this->pagePos);
-	control->updateDeletePageButton();
+    //these are all threadsafe (I think...)
+    control->firePageInserted(this->pagePos);
+    control->getCursor()->updateCursor();
+    control->getScrollHandler()->scrollToPage(this->pagePos);
+    control->updateDeletePageButton();
 
-	//this prevents the double unlock
-	doc->lock();
-	return true;
+    //this prevents the double unlock
+    doc->lock();
+    return true;
 }
 
 bool InsertDeletePageUndoAction::deletePage(Control* control)
 {
-	XOJ_CHECK_TYPE(InsertDeletePageUndoAction);
+    XOJ_CHECK_TYPE(InsertDeletePageUndoAction);
 
-	Document* doc = control->getDocument();
+    Document* doc = control->getDocument();
 
-	//in order to fix the hang, we need to get out
-	//of text mode
-	//***This might kill whatever we've got selected
-	control->clearSelectionEndText();
+    //in order to fix the hang, we need to get out
+    //of text mode
+    //***This might kill whatever we've got selected
+    control->clearSelectionEndText();
 
-	//this was a double lock problem. We can fix it by
-	//unlocking the UndoRedoHandler's lock inside here.
-	//It's not great practise but it works.
-	//doc->lock();
-	int pNr = doc->indexOf(page);
-	if (pNr == -1)
-	{
-		//	doc->unlock();
-		// this should not happen
-		return false;
-	}
+    //this was a double lock problem. We can fix it by
+    //unlocking the UndoRedoHandler's lock inside here.
+    //It's not great practise but it works.
+    //doc->lock();
+    int pNr = doc->indexOf(page);
+    if (pNr == -1)
+    {
+        //	doc->unlock();
+        // this should not happen
+        return false;
+    }
 
-	// first send event, then delete page...
-	// we need to unlock the document from UndoRedoHandler
-	// because firePageDeleted is threadsafe.
-	doc->unlock();
-	control->firePageDeleted(pNr);
-	doc->lock();
-	doc->deletePage(pNr);
+    // first send event, then delete page...
+    // we need to unlock the document from UndoRedoHandler
+    // because firePageDeleted is threadsafe.
+    doc->unlock();
+    control->firePageDeleted(pNr);
+    doc->lock();
+    doc->deletePage(pNr);
 
-	control->updateDeletePageButton();
+    control->updateDeletePageButton();
 
-	return true;
+    return true;
 }
 
-String InsertDeletePageUndoAction::getText()
+string InsertDeletePageUndoAction::getText()
 {
-	XOJ_CHECK_TYPE(InsertDeletePageUndoAction);
+    XOJ_CHECK_TYPE(InsertDeletePageUndoAction);
 
-	if (this->inserted)
-	{
-		return _("Page inserted");
-	}
-	else
-	{
-		return _("Page deleted");
-	}
+    if (this->inserted)
+    {
+        return _("Page inserted");
+    }
+    else
+    {
+        return _("Page deleted");
+    }
 }

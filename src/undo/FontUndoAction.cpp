@@ -134,7 +134,7 @@ bool FontUndoAction::redo(Control* control)
 	return true;
 }
 
-String FontUndoAction::getText()
+string FontUndoAction::getText()
 {
 	XOJ_CHECK_TYPE(FontUndoAction);
 

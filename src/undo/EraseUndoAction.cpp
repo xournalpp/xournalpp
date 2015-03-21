@@ -119,7 +119,7 @@ void EraseUndoAction::finalize()
 	this->page->firePageChanged();
 }
 
-String EraseUndoAction::getText()
+string EraseUndoAction::getText()
 {
 	XOJ_CHECK_TYPE(EraseUndoAction);
 

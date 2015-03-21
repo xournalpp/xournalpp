@@ -30,9 +30,9 @@ public:
 	virtual ~PdfExport();
 
 public:
-	bool createPdf(String uri);
-	bool createPdf(String uri, GList* range);
-	String getLastError();
+	bool createPdf(string uri);
+	bool createPdf(string uri, GList* range);
+	string getLastError();
 
 private:
 	void addPopplerDocument(XojPopplerDocument doc);
@@ -63,7 +63,7 @@ private:
 
 	ProgressListener* progressListener;
 
-	String lastError;
+	string lastError;
 
 	int dataXrefStart;
 

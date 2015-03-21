@@ -18,12 +18,12 @@
 class ToolbarItem
 {
 public:
-	ToolbarItem(String name);
+	ToolbarItem(string name);
 	ToolbarItem(const ToolbarItem& item);
 	ToolbarItem();
 	virtual ~ToolbarItem();
 
-	operator String();
+	operator string();
 
 	bool operator == (ToolbarItem& other);
 
@@ -32,7 +32,7 @@ public:
 private:
 	XOJ_TYPE_ATTRIB;
 
-	String name;
+	string name;
 	int id;
 
 	static int sid;

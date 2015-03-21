@@ -17,7 +17,7 @@
 
 class Layer;
 
-class InsertLayerUndoAction: public UndoAction
+class InsertLayerUndoAction : public UndoAction
 {
 public:
 	InsertLayerUndoAction(PageRef page, Layer* layer);
@@ -27,7 +27,7 @@ public:
 	virtual bool undo(Control* control);
 	virtual bool redo(Control* control);
 
-	virtual String getText();
+	virtual string getText();
 
 private:
 	XOJ_TYPE_ATTRIB;

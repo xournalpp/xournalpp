@@ -17,33 +17,33 @@
 
 class GladeGui;
 
-class ToolPageLayer: public AbstractToolItem
+class ToolPageLayer : public AbstractToolItem
 {
 public:
-	ToolPageLayer(GladeGui* gui, ActionHandler* handler, String id,
-	              ActionType type);
-	virtual ~ToolPageLayer();
+    ToolPageLayer(GladeGui* gui, ActionHandler* handler, string id,
+                  ActionType type);
+    virtual ~ToolPageLayer();
 
 public:
-	static void cbSelectCallback(GtkComboBox* widget, ToolPageLayer* tpl);
+    static void cbSelectCallback(GtkComboBox* widget, ToolPageLayer* tpl);
 
-	int getSelectedLayer();
-	void setSelectedLayer(int selected);
-	void setLayerCount(int layer, int selected);
-	virtual String getToolDisplayName();
+    int getSelectedLayer();
+    void setSelectedLayer(int selected);
+    void setLayerCount(int layer, int selected);
+    virtual string getToolDisplayName();
 
 protected:
-	virtual GtkToolItem* newItem();
-	virtual GtkWidget* getNewToolIconImpl();
+    virtual GtkToolItem* newItem();
+    virtual GtkWidget* getNewToolIconImpl();
 
 private:
-	XOJ_TYPE_ATTRIB;
+    XOJ_TYPE_ATTRIB;
 
-	GtkWidget* layerComboBox;
-	GladeGui* gui;
+    GtkWidget* layerComboBox;
+    GladeGui* gui;
 
-	int layerCount;
-	bool inCbUpdate;
+    int layerCount;
+    bool inCbUpdate;
 };
 
 #endif /* __TOOLPAGELAYER_H__ */

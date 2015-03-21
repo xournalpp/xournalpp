@@ -82,7 +82,7 @@ XojPage** SwapUndoAction::getPages()
 	return pages;
 }
 
-String SwapUndoAction::getText()
+string SwapUndoAction::getText()
 {
 	XOJ_CHECK_TYPE(SwapUndoAction);
 

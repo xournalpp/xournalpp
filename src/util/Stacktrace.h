@@ -21,7 +21,7 @@ private:
     virtual ~Stacktrace();
 
 public:
-    static void setExename(String name);
+    static void setExename(string name);
 
     static void printStracktrace();
     static void printStracktrace(std::ostream& stream);

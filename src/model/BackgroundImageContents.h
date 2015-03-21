@@ -20,40 +20,40 @@
 class BackgroundImageContents
 {
 public:
-	BackgroundImageContents(String filename, GError** error);
+    BackgroundImageContents(string filename, GError** error);
 
 private:
-	BackgroundImageContents();
-	BackgroundImageContents(const BackgroundImageContents& contents);
-	void operator =(const BackgroundImageContents& contents);
+    BackgroundImageContents();
+    BackgroundImageContents(const BackgroundImageContents& contents);
+    void operator=(const BackgroundImageContents& contents);
 
 private:
-	virtual ~BackgroundImageContents();
+    virtual ~BackgroundImageContents();
 
 public:
-	void unreference();
-	void reference();
+    void unreference();
+    void reference();
 
 public:
-	String getFilename();
-	void setFilename(String filename);
+    string getFilename();
+    void setFilename(string filename);
 
-	bool isAttach();
-	void setAttach(bool attach);
+    bool isAttach();
+    void setAttach(bool attach);
 
-	int getPageId();
-	void setPageId(int id);
+    int getPageId();
+    void setPageId(int id);
 
-	GdkPixbuf* getPixbuf();
+    GdkPixbuf* getPixbuf();
 
 private:
-	XOJ_TYPE_ATTRIB;
+    XOJ_TYPE_ATTRIB;
 
-	int ref;
-	String filename;
-	bool attach;
-	int pageId;
-	GdkPixbuf* pixbuf;
+    int ref;
+    string filename;
+    bool attach;
+    int pageId;
+    GdkPixbuf* pixbuf;
 };
 
 #endif /* __BACKGROUNDIMAGECONTENTS_H__ */

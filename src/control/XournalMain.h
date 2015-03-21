@@ -20,25 +20,25 @@ class GladeSearchpath;
 class XournalMain
 {
 public:
-	XournalMain();
-	virtual ~XournalMain();
+    XournalMain();
+    virtual ~XournalMain();
 
 public:
-	int run(int argc, char* argv[]);
+    int run(int argc, char* argv[]);
 
 private:
 #ifdef ENABLE_NLS
-	void initLocalisation();
+    void initLocalisation();
 #endif
 
-	void checkForErrorlog();
-	void checkForEmergencySave();
+    void checkForErrorlog();
+    void checkForEmergencySave();
 
-	int exportPdf(const char* input, const char* output);
-	GladeSearchpath* initPath(const char* argv0);
+    int exportPdf(const char* input, const char* output);
+    GladeSearchpath* initPath(const char* argv0);
 
 private:
-	XOJ_TYPE_ATTRIB;
+    XOJ_TYPE_ATTRIB;
 
 };
 

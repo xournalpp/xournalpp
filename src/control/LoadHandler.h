@@ -22,16 +22,16 @@
 
 enum ParserPosition
 {
-    PARSER_POS_NOT_STARTED = 1, // Waiting for opening <xounal> tag
-    PARSER_POS_STARTED, // Waiting for Metainfo or contents like <page>
-    PARSER_POS_IN_PAGE, // Starting page tag read
-    PARSER_POS_IN_LAYER, // Starting layer tag read
-    PARSER_POS_IN_STROKE, // Starting layer tag read
-    PARSER_POS_IN_TEXT, // Starting text tag read
-    PARSER_POS_IN_IMAGE, // Starting image tag read
-    PARSER_POS_IN_TEXIMAGE, // Starting latex tag read
+	PARSER_POS_NOT_STARTED = 1, // Waiting for opening <xounal> tag
+	PARSER_POS_STARTED, // Waiting for Metainfo or contents like <page>
+	PARSER_POS_IN_PAGE, // Starting page tag read
+	PARSER_POS_IN_LAYER, // Starting layer tag read
+	PARSER_POS_IN_STROKE, // Starting layer tag read
+	PARSER_POS_IN_TEXT, // Starting text tag read
+	PARSER_POS_IN_IMAGE, // Starting image tag read
+	PARSER_POS_IN_TEXIMAGE, // Starting latex tag read
 
-    PASER_POS_FINISHED // Document is parsed
+	PASER_POS_FINISHED // Document is parsed
 };
 
 class DoubleArrayBuffer
@@ -61,14 +61,14 @@ public:
 	virtual ~LoadHandler();
 
 public:
-	Document* loadDocument(String filename);
+	Document* loadDocument(string filename);
 
-	String getLastError();
+	string getLastError();
 	bool isAttachedPdfMissing();
-	String getMissingPdfFilename();
+	string getMissingPdfFilename();
 
 	void removePdfBackground();
-	void setPdfReplacement(String filename, bool attachToDocument);
+	void setPdfReplacement(string filename, bool attachToDocument);
 
 private:
 	void parseStart();
@@ -84,24 +84,24 @@ private:
 private:
 	void initAttributes();
 
-	String readLine();
+	string readLine();
 	int readFile(char* buffer, int len);
 	bool closeFile();
-	bool openFile(String filename);
+	bool openFile(string filename);
 	bool parseXml();
 
 	bool parseColor(const char* text, int& color);
 
 	static void parserText(GMarkupParseContext* context, const gchar* text,
-	                       gsize text_len, gpointer userdata,
-	                       GError** error);
+						gsize text_len, gpointer userdata,
+						GError** error);
 	static void parserEndElement(GMarkupParseContext* context,
-	                             const gchar* element_name, gpointer userdata,
-	                             GError** error);
+								const gchar* element_name, gpointer userdata,
+								GError** error);
 	static void parserStartElement(GMarkupParseContext* context,
-	                               const gchar* element_name,
-	                               const gchar** attribute_names, const gchar** attribute_values,
-	                               gpointer userdata, GError** error);
+								const gchar* element_name,
+								const gchar** attribute_names, const gchar** attribute_values,
+								gpointer userdata, GError** error);
 
 	const char* getAttrib(const char* name, bool optional = false);
 	double getAttribDouble(const char* name);
@@ -117,21 +117,21 @@ private:
 private:
 	XOJ_TYPE_ATTRIB;
 
-	String lastError;
-	String pdfMissing;
+	string lastError;
+	string pdfMissing;
 	bool attachedPdfMissing;
 
 	bool removePdfBackgroundFlag;
-	String pdfReplacementFilename;
+	string pdfReplacementFilename;
 	bool pdfReplacementAttach;
 
-	String filename;
+	string filename;
 
 	bool pdfFilenameParsed;
 
 	ParserPosition pos;
 
-	String creator;
+	string creator;
 	int fileversion;
 
 	gzFile fp;
@@ -145,7 +145,7 @@ private:
 	Image* image;
 	TexImage* teximage;
 
-	String xournalFilename;
+	string xournalFilename;
 
 	GError* error;
 	const gchar** attributeNames;

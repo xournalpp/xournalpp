@@ -75,14 +75,14 @@ Stroke* CircleRecognizer::recognize(Stroke* stroke)
 {
 	Inertia s;
 	s.calc(stroke->getPoints(), 0, stroke->getPointCount());
-	RDEBUG("Mass=%.0f, Center=(%.1f,%.1f), I=(%.0f,%.0f, %.0f), "
-	       "Rad=%.2f, Det=%.4f \n", s.getMass(), s.centerX(), s.centerY(), s.xx(), s.yy(),
-	       s.xy(), s.rad(), s.det());
+	RDEBUG("Mass=%.0f%, Center=(%.1f%,%.1f%), I=(%.0f%,%.0f%, %.0f%), "
+	       "Rad=%.2f%, Det=%.4f% \n") % s.getMass() % s.centerX() % s.centerY() % s.xx() % s.yy() %
+	       s.xy() % s.rad() % s.det();
 
 	if (s.det() > CIRCLE_MIN_DET)
 	{
 		double score = CircleRecognizer::scoreCircle(stroke, s);
-		RDEBUG("Circle score: %.2f\n", score);
+		RDEBUG("Circle score: %.2f%\n") % score;
 		if (score < CIRCLE_MAX_SCORE)
 		{
 			return CircleRecognizer::makeCircleShape(stroke, s);

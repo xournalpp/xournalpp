@@ -2,7 +2,7 @@
 /* config.h.in.  Generated from configure.ac by autoheader.  */
 
 /* Define to compile with mathtex support */
-/* #undef ENABLE_MATHTEX */
+#define ENABLE_MATHTEX 1
 
 /* always defined to indicate that i18n is enabled */
 #define ENABLE_NLS 1
@@ -15,6 +15,21 @@
 
 /* Define to 1 if you have the `bind_textdomain_codeset' function. */
 #define HAVE_BIND_TEXTDOMAIN_CODESET 1
+
+/* define if the Boost library is available */
+#define HAVE_BOOST /**/
+
+/* define if the Boost::Filesystem library is available */
+#define HAVE_BOOST_FILESYSTEM /**/
+
+/* define if the Boost::Locale library is available */
+#define HAVE_BOOST_LOCALE /**/
+
+/* define if the Boost::System library is available */
+#define HAVE_BOOST_SYSTEM /**/
+
+/* define if the compiler supports basic C++11 syntax */
+/* #undef HAVE_CXX11 */
 
 /* Define to 1 if you have the `dcgettext' function. */
 #define HAVE_DCGETTEXT 1

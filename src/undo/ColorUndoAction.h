@@ -29,7 +29,7 @@ public:
 public:
 	virtual bool undo(Control* control);
 	virtual bool redo(Control* control);
-	virtual String getText();
+	virtual string getText();
 
 	void addStroke(Element* e, int originalColor, double newColor);
 

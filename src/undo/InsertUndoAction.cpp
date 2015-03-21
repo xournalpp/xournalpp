@@ -28,7 +28,7 @@ InsertUndoAction::~InsertUndoAction()
 	XOJ_RELEASE_TYPE(InsertUndoAction);
 }
 
-String InsertUndoAction::getText()
+string InsertUndoAction::getText()
 {
 	XOJ_CHECK_TYPE(InsertUndoAction);
 
@@ -113,7 +113,7 @@ InsertsUndoAction::~InsertsUndoAction()
 	XOJ_RELEASE_TYPE(InsertsUndoAction);
 }
 
-String InsertsUndoAction::getText()
+string InsertsUndoAction::getText()
 {
 	XOJ_CHECK_TYPE(InsertsUndoAction);
 

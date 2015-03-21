@@ -18,19 +18,19 @@
 class CopyUndoAction : public UndoAction
 {
 public:
-	CopyUndoAction(PageRef pageref, int pageNr);
-	virtual ~CopyUndoAction();
+    CopyUndoAction(PageRef pageref, int pageNr);
+    virtual ~CopyUndoAction();
 
 public:
-	virtual bool undo(Control* control);
-	virtual bool redo(Control* control);
+    virtual bool undo(Control* control);
+    virtual bool redo(Control* control);
 
-	virtual String getText();
+    virtual string getText();
 
 private:
-	XOJ_TYPE_ATTRIB;
+    XOJ_TYPE_ATTRIB;
 
-	int pageNr;
+    int pageNr;
 };
 
 #endif

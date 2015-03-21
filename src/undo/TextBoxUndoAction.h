@@ -19,25 +19,25 @@ class Layer;
 class Element;
 class Redrawable;
 
-class TextBoxUndoAction: public UndoAction
+class TextBoxUndoAction : public UndoAction
 {
 public:
-	TextBoxUndoAction(PageRef page, Layer* layer, Element* element,
-	                  Element* oldelement);
-	virtual ~TextBoxUndoAction();
+    TextBoxUndoAction(PageRef page, Layer* layer, Element* element,
+                      Element* oldelement);
+    virtual ~TextBoxUndoAction();
 
 public:
-	virtual bool undo(Control* control);
-	virtual bool redo(Control* control);
+    virtual bool undo(Control* control);
+    virtual bool redo(Control* control);
 
-	virtual String getText();
+    virtual string getText();
 
 private:
-	XOJ_TYPE_ATTRIB;
+    XOJ_TYPE_ATTRIB;
 
-	Layer* layer;
-	Element* element;
-	Element* oldelement;
+    Layer* layer;
+    Element* element;
+    Element* oldelement;
 };
 
 #endif /* __TEXTBOXUNDOACTION_H__ */

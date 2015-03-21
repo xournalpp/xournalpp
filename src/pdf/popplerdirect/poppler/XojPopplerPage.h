@@ -22,6 +22,7 @@
 #include "../workaround/workaround.h"
 
 #include <XournalType.h>
+#include <StringUtils.h>
 
 class Page;
 class TextPage;
@@ -32,7 +33,7 @@ class XojPopplerPage
 {
 private:
 	XojPopplerPage(PDFDoc* doc, GMutex* docMutex, CairoOutputDev* outputDev,
-	               Page* page, int index);
+				Page* page, int index);
 	virtual ~XojPopplerPage();
 public:
 	double getWidth();
@@ -40,7 +41,7 @@ public:
 
 	void render(cairo_t* cr, bool forPrinting = false);
 
-	GList* findText(const char* text);
+	GList* findText(string& text);
 
 	Page* getPage();
 

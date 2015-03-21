@@ -31,7 +31,7 @@ public:
 
 	void addElement(Layer* layer, Element* e, int pos);
 
-	virtual String getText();
+	virtual string getText();
 
 private:
 	XOJ_TYPE_ATTRIB;

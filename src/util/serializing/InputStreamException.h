@@ -21,7 +21,7 @@
 class InputStreamException: public std::exception
 {
 public:
-	InputStreamException(String message, const char* filename, int line);
+	InputStreamException(string message, string filename, int line);
 	virtual ~InputStreamException() throw ();
 
 public:
@@ -30,7 +30,7 @@ public:
 private:
 	XOJ_TYPE_ATTRIB;
 
-	String message;
+	string message;
 };
 
 #endif /* __INPUTSTREAMEXCEPTION_H__ */

@@ -17,3 +17,5 @@ config.sub
 depcomp
 configure
 /src/xournalpp
+/src/xoj-preview-extractor/xournal-thumbnailer
+/config.*

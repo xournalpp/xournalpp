@@ -28,13 +28,13 @@ public:
 	static void initPythonRunner(Control* control);
 	static void releasePythonRunner();
 
-	static void runScript(String name, String function, String parameter = "");
+	static void runScript(string name, string function, string parameter = "");
 
 private:
 	static bool scriptRunner(PythonRunner* runner);
 
 private:
-	void runScriptInt(String path, String function, String parameter);
+	void runScriptInt(string path, string function, string parameter);
 
 	void initPython();
 

@@ -27,11 +27,11 @@ class PdfRefEntry;
 class RefReplacement
 {
 public:
-	RefReplacement(String name, int newId, const char* type, PdfRefEntry* refEntry);
+	RefReplacement(string name, int newId, const char* type, PdfRefEntry* refEntry);
 	virtual ~RefReplacement();
 
 public:
-	String name;
+	string name;
 	int newId;
 	char* type;
 
@@ -56,7 +56,7 @@ public:
 	 * Type char is ownd by PdfRefList and should not be freed
 	 */
 	PdfRefList(PdfXRef* xref, PdfObjectWriter* objectWriter, PdfWriter* writer,
-	           char* type);
+			char* type);
 	virtual ~PdfRefList();
 
 public:
@@ -64,9 +64,9 @@ public:
 	void writeRefList(const char* type);
 
 	int lookup(Ref ref, Object* object, XojPopplerDocument doc,
-	           PdfRefEntry*& refEntry);
+			PdfRefEntry*& refEntry);
 	void parse(Dict* dict, int index, XojPopplerDocument doc,
-	           GList*& replacementList);
+			GList*& replacementList);
 
 	static void deletePdfRefList(PdfRefList* ref);
 

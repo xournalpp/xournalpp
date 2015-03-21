@@ -57,8 +57,8 @@ public:
 public:
 	// Menu File
 	bool newFile();
-	bool openFile(String filename = "", int scrollToPage = -1);
-	bool annotatePdf(String filename, bool attachPdf, bool attachToDocument);
+	bool openFile(string filename = "", int scrollToPage = -1);
+	bool annotatePdf(string filename, bool attachPdf, bool attachToDocument);
 	void print();
 	void exportAsPdf();
 	void exportAs();
@@ -130,9 +130,9 @@ public:
 
 	bool isFullscreen();
 
-	static String getFilename(String uri);
+	static string getFilename(string uri);
 
-	bool searchTextOnPage(const char* text, int p, int* occures, double* top);
+	bool searchTextOnPage(string text, int p, int* occures, double* top);
 
 	/**
 	 * Fire page selected, but first check if the page Number is valid
@@ -177,8 +177,8 @@ public:
 	void unblock();
 
 	void renameLastAutosaveFile();
-	void setLastAutosaveFile(String newAutosaveFile);
-	void deleteLastAutosaveFile(String newAutosaveFile);
+	void setLastAutosaveFile(string newAutosaveFile);
+	void deleteLastAutosaveFile(string newAutosaveFile);
 	void setClipboardHandlerSelection(EditSelection* selection);
 
 	MetadataManager* getMetadataManager();
@@ -215,7 +215,7 @@ public:
 	// ClipboardListener interface
 	virtual void clipboardCutCopyEnabled(bool enabled);
 	virtual void clipboardPasteEnabled(bool enabled);
-	virtual void clipboardPasteText(String text);
+	virtual void clipboardPasteText(string text);
 	virtual void clipboardPasteImage(GdkPixbuf* img);
 	virtual void clipboardPasteTex(GdkPixbuf* img, const char* text,
 	                               int textLength);
@@ -296,7 +296,7 @@ private:
 	 * The autosave handler ID
 	 */
 	int autosaveTimeout;
-	String lastAutosaveFilename;
+	string lastAutosaveFilename;
 
 	/**
 	 * Default page size

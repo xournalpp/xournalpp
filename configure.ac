@@ -24,7 +24,7 @@ AC_SUBST(ACLOCAL_AMFLAGS, "$ACLOCAL_FLAGS -I m4")
 
 dnl librsvg-2.0 is not really needed by Xournal++, but if you dont have it crashes while loading the SVG icons (Problem with Gentoo)
 #We also are compiling with libpoppler so we require a number of extra packages
-pkg_modules="gtk+-2.0 >= 2.18.3 libglade-2.0 >= 2.6.4 glib-2.0 >= 2.32.0 gthread-2.0 >= 2.4.0 librsvg-2.0 >= 2.14.0 zlib fontconfig lcms icu-i18n"
+pkg_modules="gtk+-2.0 >= 2.18.3 libglade-2.0 >= 2.6.4 glib-2.0 >= 2.32.0 gthread-2.0 >= 2.4.0 librsvg-2.0 >= 2.14.0 zlib fontconfig lcms"
 
 AC_MSG_CHECKING([whether Python support is requested])
 AC_ARG_ENABLE([python],
@@ -124,6 +124,13 @@ dnl AM_CONDITIONAL(BUILD_LIBOPENJPEG, test x$enable_libopenjpeg = xyes)
 dnl AH_TEMPLATE([ENABLE_LIBOPENJPEG],
 dnl 	    [Use libopenjpeg instead of builtin jpeg2000 decoder.])
 
+dnl boost
+AX_BOOST_BASE([1.54])
+AX_BOOST_SYSTEM
+AX_BOOST_FILESYSTEM
+AX_BOOST_LOCALE
+AX_BOOST_ALGORITHM
+PACKAGE_LIBS="$PACKAGE_LIBS $BOOST_SYSTEM_LIB $BOOST_FILESYSTEM_LIB $BOOST_LOCALE_LIB $BOOST_ALGORITHM_LIB"
 
 dnl libjpeg
 AC_ARG_WITH(libjpeg,

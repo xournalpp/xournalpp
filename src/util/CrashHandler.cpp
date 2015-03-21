@@ -15,6 +15,7 @@
 #include <fstream>
 #include <sstream>
 #include <execinfo.h>
+#include <boost/locale/format.hpp>
 
 #include "CrashHandler.h"
 #include "../control/SaveHandler.h"
@@ -30,56 +31,65 @@ static Document* document = NULL;
 
 void setEmergencyDocument(Document* doc)
 {
-	document = doc;
+    document = doc;
 }
 
 static void crashHandler(int sig);
 
 void installCrashHandlers()
 {
-	sigset_t mask;
+    sigset_t mask;
 
-	sigemptyset(&mask);
+    sigemptyset(&mask);
 
 #ifdef SIGSEGV
-	signal(SIGSEGV, crashHandler);
-	sigaddset(&mask, SIGSEGV);
+    signal(SIGSEGV, crashHandler);
+    sigaddset(&mask, SIGSEGV);
 #endif
 
 #ifdef SIGFPE
-	signal(SIGFPE, crashHandler);
-	sigaddset(&mask, SIGFPE);
+    signal(SIGFPE, crashHandler);
+    sigaddset(&mask, SIGFPE);
 #endif
 
 #ifdef SIGILL
-	signal(SIGILL, crashHandler);
-	sigaddset(&mask, SIGILL);
+    signal(SIGILL, crashHandler);
+    sigaddset(&mask, SIGILL);
 #endif
 
 #ifdef SIGABRT
-	signal(SIGABRT, crashHandler);
-	sigaddset(&mask, SIGABRT);
+    signal(SIGABRT, crashHandler);
+    sigaddset(&mask, SIGABRT);
 #endif
 
-	sigprocmask(SIG_UNBLOCK, &mask, 0);
+    sigprocmask(SIG_UNBLOCK, &mask, 0);
 
 }
 
 static void emergencySave();
 
-class streamsplit : public stringstream {
+/* 
+ * Basicly it's really simple class and you have to know what you can and what
+ * you can't do with it. So please don't touch anythink down there without
+ * previous consultation.
+ */
+class streamsplit : public stringstream
+{
 public:
-    streamsplit(ofstream* file) {
+
+    streamsplit(ofstream* file)
+    {
         f = file;
     }
-    
+
     template<typename T>
-    ostream& operator<<(T const & rhs) {
+    ostream& operator<<(T const & rhs)
+    {
         *f << rhs;
         cerr << rhs;
         return *f;
     }
-    
+
 private:
     ofstream* f;
 };
@@ -87,13 +97,15 @@ private:
 /**
  * Print crash log to config directory
  */
-static void crashHandler(int sig) {
-    if (alreadyCrashed) { // crasehd again on emergency save
+static void crashHandler(int sig)
+{
+    if (alreadyCrashed)
+    { // crasehd again on emergency save
         exit(2);
     }
     alreadyCrashed = true;
 
-    cerr << "Crash Handler::Crashed with signal " << sig << "\n";
+    cerr << bl::format("Crash Handler::Crashed with signal {1}") % sig << endl;
 
     time_t lt;
     void* array[100];
@@ -104,35 +116,35 @@ static void crashHandler(int sig) {
     // get void*'s for all entries on the stack
     size = backtrace(array, 100);
 
-    String* filename = CONCAT(g_get_home_dir(), G_DIR_SEPARATOR_S, CONFIG_DIR,
+    string filename = CONCAT(g_get_home_dir(), G_DIR_SEPARATOR_S, CONFIG_DIR,
             G_DIR_SEPARATOR_S, "errorlog.log");
 
-    ofstream fp(CSTR(*filename));
-    if (fp) cerr << "Crash Handler::wrote crash log to: " << *filename << endl;
-    
+    ofstream fp(filename.c_str());
+    if (fp) cerr << bl::format("Crash Handler::wrote crash log to: {1}") % filename << endl;
+
     streamsplit out(&fp);
 
     lt = time(NULL);
-    
-    out << "Date: " << ctime(&lt) << endl
-        << "Error: signal " << sig << endl;
+
+    out << bl::format("Date: {1}") % ctime(&lt);
+    out << bl::format("Error: signal {1}") % sig;
+    out << "\n";
 
     messages = backtrace_symbols(array, size);
 
-    for (int i = 0; i < size; i++) {
-        out << "[bt]: (" << i << ") " << messages[i] << endl;
+    for (int i = 0; i < size; i++)
+    {
+        out << bl::format("[bt]: ({1}) {2}") % i % messages[i];
+        out << "\n";
     }
 
-    delete filename;
     free(messages);
 
     out << "\n\nTry to get a better stracktrace...\n";
 
     Stacktrace::printStracktrace(out);
-    
-    if (fp) {
-        fp.close();
-    }
+
+    if (fp) fp.close();
 
     emergencySave();
 
@@ -141,43 +153,40 @@ static void crashHandler(int sig) {
 
 static void emergencySave()
 {
-	if (document == NULL)
-	{
-		return;
-	}
+    if (document == NULL)
+    {
+        return;
+    }
 
-	cerr << "\nTry to emergency save the current open document...\n";
+    cerr << "\nTry to emergency save the current open document...\n";
 
-	SaveHandler handler;
-	handler.prepareSave(document);
+    SaveHandler handler;
+    handler.prepareSave(document);
 
-	String* filename = CONCAT(g_get_home_dir(), G_DIR_SEPARATOR_S,
-                                    CONFIG_DIR, G_DIR_SEPARATOR_S,
-                                    "emergencysave.xoj");
+    string filename = CONCAT(g_get_home_dir(), G_DIR_SEPARATOR_S,
+            CONFIG_DIR, G_DIR_SEPARATOR_S, "emergencysave.xoj");
 
-	GzOutputStream* out = new GzOutputStream(*filename);
+    GzOutputStream* out = new GzOutputStream(filename);
 
-	if (!out->getLastError().isEmpty())
-	{
-		cerr << "error: " << out->getLastError() << endl;
-		delete out;
-		delete filename;
-		return;
-	}
+    if (!out->getLastError().empty())
+    {
+        cerr << bl::format("error: {1}") % out->getLastError() << endl;
+        delete out;
+        return;
+    }
 
-	handler.saveTo(out, *filename);
-	out->close();
+    handler.saveTo(out, filename);
+    out->close();
 
-	if (!out->getLastError().isEmpty())
-	{
-		cerr << "error: " << out->getLastError() << endl;
-	}
-	else
-	{
-		cerr << "Successfully saved document to \"" << *filename << "\"" << endl;
-	}
+    if (!out->getLastError().empty())
+    {
+        cerr << bl::format("error: {1}") % out->getLastError() << endl;
+    }
+    else
+    {
+        cerr << bl::format("Successfully saved document to \"{1}\"") % filename << endl;
+    }
 
-	delete filename;
-	delete out;
+    delete out;
 }
 

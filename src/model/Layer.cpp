@@ -1,6 +1,8 @@
 #include "Layer.h"
 #include <Stacktrace.h>
 
+using namespace std;
+
 Layer::Layer()
 {
 	XOJ_INIT_TYPE(Layer);
@@ -51,7 +53,7 @@ void Layer::addElement(Element* e)
 	GList* elem2 = g_list_find(this->elements, e);
 	if (elem2)
 	{
-		printf("Layer::addElement: Element is already on this layer!\n");
+		cout << "Layer::addElement: Element is already on this layer!" << endl;
 		return;
 	}
 

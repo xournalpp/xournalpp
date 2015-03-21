@@ -33,7 +33,7 @@ private:
 	static void copyProgressCallback(goffset current_num_bytes,
 	                                 goffset total_num_bytes,
 	                                 gpointer user_data);
-	bool copyFile(String source, String target);
+	bool copyFile(string source, string target);
 
 	void updatePreview();
 	virtual void afterRun();
@@ -41,9 +41,9 @@ private:
 private:
 	XOJ_TYPE_ATTRIB;
 
-	String copyError;
+	string copyError;
 
-	String lastError;
+	string lastError;
 
 };
 

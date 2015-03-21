@@ -36,7 +36,7 @@ public:
 	virtual ~Document();
 
 public:
-	bool readPdf(String filename, bool initPages, bool attachToDocument);
+	bool readPdf(string filename, bool initPages, bool attachToDocument);
 
 	int getPageCount();
 	int getPdfPageCount();
@@ -52,18 +52,18 @@ public:
 
 	int indexOf(PageRef page);
 
-	String getLastErrorMsg();
+	string getLastErrorMsg();
 
 	bool isPdfDocumentLoaded();
 	int findPdfPage(int pdfPage);
 
 	void operator=(Document& doc);
 
-	void setFilename(String filename);
-	String getFilename();
-	String getPdfFilename();
+	void setFilename(string filename);
+	string getFilename();
+	string getPdfFilename();
 
-	String getEvMetadataFilename();
+	string getEvMetadataFilename();
 
 	GtkTreeModel* getContentsModel();
 
@@ -86,7 +86,7 @@ private:
 	void buildTreeContentsModel(GtkTreeIter* parent, XojPopplerIter* iter);
 	void updateIndexPageNumbers();
 	static bool fillPageLabels(GtkTreeModel* tree_model, GtkTreePath* path,
-	                           GtkTreeIter* iter, Document* doc);
+							GtkTreeIter* iter, Document* doc);
 
 private:
 	XOJ_TYPE_ATTRIB;
@@ -96,16 +96,16 @@ private:
 
 	XojPopplerDocument pdfDocument;
 
-	String filename;
-	String pdfFilename;
+	string filename;
+	string pdfFilename;
 	bool attachPdf;
 
 	/**
 	 * Password: not handled yet
 	 */
-	String password;
+	string password;
 
-	String lastError;
+	string lastError;
 
 	/**
 	 * The pages in the document

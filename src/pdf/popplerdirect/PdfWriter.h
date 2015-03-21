@@ -19,52 +19,52 @@
 class PdfWriter
 {
 public:
-	PdfWriter(PdfXRef* xref);
-	virtual ~PdfWriter();
+    PdfWriter(PdfXRef* xref);
+    virtual ~PdfWriter();
 
 public:
-	void close();
-	bool openFile(const char* uri);
+    void close();
+    bool openFile(string uri);
 
 public:
-	bool writeLen(const char* data, int len);
-	bool write(const char* data);
-	bool writef(const char* data, ...);
-	bool writeTxt(const char* data);
-	bool write(int data);
+    bool writeLen(string data, int len);
+    bool write(string data);
+    bool writef(const char* data, ...);
+    bool writeTxt(string data);
+    bool write(int data);
 
-	void startStream();
-	void endStream();
+    void startStream();
+    void endStream();
 
-	bool writeInfo(String title);
-	bool writeObj();
+    bool writeInfo(string title);
+    bool writeObj();
 
 
-	String getLastError();
+    string getLastError();
 
-	int getObjectId();
-	int getNextObjectId();
-	int getDataCount();
+    int getObjectId();
+    int getNextObjectId();
+    int getDataCount();
 
 public:
-	static void setCompressPdfOutput(bool compress);
+    static void setCompressPdfOutput(bool compress);
 
 private:
-	XOJ_TYPE_ATTRIB;
+    XOJ_TYPE_ATTRIB;
 
-	static bool compressPdfOutput;
+    static bool compressPdfOutput;
 
-	int dataCount;
-	bool inStream;
-	GString* stream;
+    int dataCount;
+    bool inStream;
+    GString* stream;
 
-	GFileOutputStream* out;
+    GFileOutputStream* out;
 
-	String lastError;
+    string lastError;
 
-	PdfXRef* xref;
+    PdfXRef* xref;
 
-	int objectId;
+    int objectId;
 
 };
 

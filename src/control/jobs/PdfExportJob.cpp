@@ -1,3 +1,5 @@
+#include <boost/algorithm/string/predicate.hpp>
+
 #include "PdfExportJob.h"
 #include "../../pdf/popplerdirect/PdfExport.h"
 #include "../Control.h"
@@ -33,20 +35,20 @@ bool PdfExportJob::showFilechooser()
 	gtk_file_filter_add_pattern(filterPdf, "*.pdf");
 	gtk_file_chooser_add_filter(GTK_FILE_CHOOSER(dialog), filterPdf);
 
-	if (!settings->getLastSavePath().isEmpty())
+	if (!settings->getLastSavePath().empty())
 	{
 		gtk_file_chooser_set_current_folder_uri(GTK_FILE_CHOOSER(dialog),
-		                                        CSTR(settings->getLastSavePath()));
+		                                        settings->getLastSavePath().c_str());
 	}
 
-	String saveFilename = "";
+	string saveFilename = "";
 
 	doc->lock();
-	if (!doc->getFilename().isEmpty())
+	if (!doc->getFilename().empty())
 	{
 		saveFilename = control->getFilename(doc->getFilename());
 	}
-	else if (!doc->getPdfFilename().isEmpty())
+	else if (!doc->getPdfFilename().empty())
 	{
 		saveFilename = control->getFilename(doc->getPdfFilename());
 		saveFilename += ".xoj";
@@ -55,14 +57,14 @@ bool PdfExportJob::showFilechooser()
 	{
 		time_t curtime = time(NULL);
 		char stime[128];
-		strftime(stime, sizeof(stime), CSTR(settings->getDefaultSaveName()),
+		strftime(stime, sizeof(stime), settings->getDefaultSaveName().c_str(),
 		         localtime(&curtime));
 
 		saveFilename = stime;
 
-		if (saveFilename.endsWith(".xoj"))
+		if (ba::ends_with(saveFilename, ".xoj"))
 		{
-			saveFilename.retainBetween(0, saveFilename.length());
+			saveFilename = saveFilename.substr(0, saveFilename.length());
 		}
 	}
 	doc->unlock();
@@ -70,7 +72,7 @@ bool PdfExportJob::showFilechooser()
 	saveFilename += ".pdf";
 
 	gtk_file_chooser_set_current_name(GTK_FILE_CHOOSER(dialog),
-	                                  CSTR(saveFilename));
+	                                  saveFilename.c_str());
 	gtk_file_chooser_set_do_overwrite_confirmation(GTK_FILE_CHOOSER(dialog), true);
 
 	gtk_window_set_transient_for(GTK_WINDOW(dialog),
@@ -99,11 +101,11 @@ void PdfExportJob::afterRun()
 {
 	XOJ_CHECK_TYPE(PdfExportJob);
 
-	if (!this->errorMsg.isEmpty())
+	if (!this->errorMsg.empty())
 	{
 		GtkWindow* win = (GtkWindow*) *control->getWindow();
 		GtkWidget* dialog = gtk_message_dialog_new(win, GTK_DIALOG_DESTROY_WITH_PARENT,
-		                                           GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, "%s", CSTR(this->errorMsg));
+		                                           GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, "%s", this->errorMsg.c_str());
 		gtk_window_set_transient_for(GTK_WINDOW(dialog),
 		                             GTK_WINDOW(this->control->getWindow()->getWindow()));
 		gtk_dialog_run(GTK_DIALOG(dialog));
@@ -122,18 +124,11 @@ void PdfExportJob::run()
 	PdfExport pdf(doc, &pglistener);
 	doc->unlock();
 
-	if (!pdf.createPdf(this->filename))
-	{
-		this->errorMsg = StringUtils::format(_("Create pdf failed: %s"),
-		                                CSTR(pdf.getLastError()));
-
-		if (control->getWindow())
-		{
+	if (!pdf.createPdf(this->filename)) {
+		if (control->getWindow()) {
 			callAfterRun();
-		}
-		else
-		{
-			g_error("%s", CSTR(this->errorMsg));
+		} else {
+			g_error("%s%s", "Create pdf failed: ", pdf.getLastError().c_str());
 		}
 	}
 }

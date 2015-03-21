@@ -26,13 +26,13 @@ public:
 	virtual ~BackgroundImage();
 
 public:
-	String getFilename();
-	void loadFile(String filename, GError** error);
+	string getFilename();
+	void loadFile(string filename, GError** error);
 
 	void setAttach(bool attach);
 
-	void operator =(BackgroundImage& img);
-	bool operator == (const BackgroundImage& img);
+	void operator=(BackgroundImage& img);
+	bool operator==(const BackgroundImage& img);
 
 	void free();
 
@@ -40,7 +40,7 @@ public:
 	int getCloneId();
 	void setCloneId(int id);
 
-	void setFilename(String filename);
+	void setFilename(string filename);
 
 	bool isAttached();
 	bool isEmpty();
