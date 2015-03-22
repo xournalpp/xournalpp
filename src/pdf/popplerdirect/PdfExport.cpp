@@ -259,7 +259,7 @@ bool PdfExport::writeFooter()
     this->bookmarks.writeOutlines(this->doc, this->writer, &this->outlineRoot,
                                   this->pageIds);
 
-    if (!writer->writeInfo(doc->getFilename()))
+    if (!writer->writeInfo(doc->getFilename().string()))
     {
         g_warning("failed to write info");
         return false;
@@ -616,7 +616,7 @@ string PdfExport::getLastError()
     return this->lastError;
 }
 
-bool PdfExport::createPdf(string uri, GList* range)
+bool PdfExport::createPdf(path file, GList* range)
 {
     XOJ_CHECK_TYPE(PdfExport);
 
@@ -626,7 +626,7 @@ bool PdfExport::createPdf(string uri, GList* range)
         return false;
     }
 
-    if (!this->writer->openFile(uri))
+    if (!this->writer->openFile(file))
     {
         return false;
     }
@@ -689,7 +689,7 @@ bool PdfExport::createPdf(string uri, GList* range)
     return true;
 }
 
-bool PdfExport::createPdf(string uri)
+bool PdfExport::createPdf(path file)
 {
     XOJ_CHECK_TYPE(PdfExport);
 
@@ -699,7 +699,7 @@ bool PdfExport::createPdf(string uri)
         return false;
     }
 
-    if (!this->writer->openFile(uri))
+    if (!this->writer->openFile(file))
     {
         return false;
     }

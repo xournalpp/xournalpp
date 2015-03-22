@@ -135,8 +135,7 @@ int XournalMain::exportPdf(const char* input, const char* output)
     Document* doc = loader.loadDocument(input);
     if (doc == NULL)
     {
-        string err = loader.getLastError();
-        cerr << err << endl;
+        cerr << loader.getLastError() << endl;
         return -2;
     }
 
@@ -145,8 +144,7 @@ int XournalMain::exportPdf(const char* input, const char* output)
     PdfExport pdf(doc, NULL);
     if (!pdf.createPdf(g_file_get_uri(file)))
     {
-        string err = pdf.getLastError();
-        cerr << err << endl;
+        cerr << pdf.getLastError() << endl;
 
         g_object_unref(file);
         return -3;
@@ -180,6 +178,7 @@ int XournalMain::run(int argc, char* argv[])
 #endif
     int openAtPageNumber = -1;
 
+    //TODO rewrite with boost::program_options
     GOptionEntry options[] =
     {
         { "no-warn-svn",     'w', 0, G_OPTION_ARG_NONE,           &optNoWarnSVN,     "Do not warn this is a development release", NULL },
@@ -200,10 +199,10 @@ int XournalMain::run(int argc, char* argv[])
     g_option_context_add_group(context, gtk_get_option_group(false));
     if (!g_option_context_parse(context, &argc, &argv, &error))
     {
-        g_printerr("%s\n", error->message);
+        cerr << error->message << endl;
         g_error_free(error);
         gchar* help = g_option_context_get_help(context, true, NULL);
-        g_print("%s", help);
+        cout << help;
         g_free(help);
         error = NULL;
     }
@@ -231,13 +230,13 @@ int XournalMain::run(int argc, char* argv[])
     if (!optNoWarnSVN)
     {
         GtkWidget* dialog = gtk_message_dialog_new(NULL, GTK_DIALOG_MODAL,
-                                                   GTK_MESSAGE_WARNING, GTK_BUTTONS_YES_NO,
-                                                   _("You are using a development release of Xournal\n"
-                                                     "You can find the current release in CVS!\n"
-                                                     "DO NOT USE THIS RELEASE FOR PRODUCTIVE ENVIRONMENT!\n"
-                                                     "Are you sure you wish to start this release?\n\n\n"
-                                                     "If you don't want to show this warning, you can run\n"
-                                                     "\"xournalpp --help\"\n"));
+                    GTK_MESSAGE_WARNING, GTK_BUTTONS_YES_NO,
+                    _("You are using a development release of Xournal\n"
+                      "You can find the current release in CVS!\n"
+                      "DO NOT USE THIS RELEASE FOR PRODUCTIVE ENVIRONMENT!\n"
+                      "Are you sure you wish to start this release?\n\n\n"
+                      "If you don't want to show this warning, you can run\n"
+                      "\"xournalpp --help\"\n"));
 
         int result = gtk_dialog_run(GTK_DIALOG(dialog));
         gtk_widget_destroy(dialog);
@@ -266,9 +265,9 @@ int XournalMain::run(int argc, char* argv[])
         if (g_strv_length(optFilename) != 1)
         {
             GtkWidget* dialog = gtk_message_dialog_new((GtkWindow*) * win,
-                                                       GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
-                                                       "Sorry, Xournal can only open one file from the command line.\n"
-                                                       "Others are ignored.");
+                GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
+                "Sorry, Xournal can only open one file from the command line.\n"
+                "Others are ignored.");
             gtk_window_set_transient_for(GTK_WINDOW(dialog), GTK_WINDOW(win->getWindow()));
             gtk_dialog_run(GTK_DIALOG(dialog));
             gtk_widget_destroy(dialog);

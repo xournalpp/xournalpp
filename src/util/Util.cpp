@@ -34,21 +34,24 @@ int Util::getPid() {
     return (int) pid;
 }
 
-string Util::getAutosaveFilename() {
-    return CONCAT(getSettingsSubfolder("autosave"), getPid(), ".xoj");
+path Util::getAutosaveFilename() {
+    path p(getSettingsSubfolder("autosave"));
+    p += CONCAT(getPid(), ".xoj");
+    return p;
 }
 
-string Util::getSettingsSubfolder(string subfolder) {
+path Util::getSettingsSubfolder(string subfolder) {
     using namespace boost::filesystem;
-    path p = path(CONCAT(g_get_home_dir(), G_DIR_SEPARATOR, CONFIG_DIR,
-            G_DIR_SEPARATOR, subfolder, G_DIR_SEPARATOR));
+    path p(g_get_home_dir());
+    p /= CONFIG_DIR;
+    p /= subfolder;
 
     if (!exists(p)) {
         create_directory(p);
         permissions(p, owner_all);
     }
 
-    return string(p.c_str());
+    return p;
 }
 
 GtkWidget* Util::newSepeartorImage() {
@@ -147,60 +150,57 @@ GdkPixbuf* Util::newPixbufFromWidget(GtkWidget* widget, int iconSize) {
     return pixbuf;
 }
 
-void Util::openFileWithDefaultApplicaion(const char* filename) {
+void Util::openFileWithDefaultApplicaion(path filename) {
 #ifdef __APPLE__
-#define OPEN_PATTERN "open \"%s\""
+#define OPEN_PATTERN "open \"{1}\""
 #elif _WIN32 // note the underscore: without it, it's not msdn official!
-#define OPEN_PATTERN "start \"%s\""
+#define OPEN_PATTERN "start \"{1}\""
 #else // linux, unix, ...
-#define OPEN_PATTERN "xdg-open \"%s\""
+#define OPEN_PATTERN "xdg-open \"{1}\""
 #endif
 
-    string escaped(filename);
+    string escaped = filename.string();
     StringUtils::replace_all_chars(escaped, {
         replace_pair('\\', "\\\\"),
         replace_pair('\"', "\\\"")
     });
 
-    char* command = g_strdup_printf(OPEN_PATTERN, escaped.c_str());
+    string command = (bl::format(OPEN_PATTERN) % escaped).str();
     cout << bl::format("XPP Execute command: «{1}»") % command << endl;
-    if (system(command) != 0) {
+    if (system(command.c_str()) != 0) {
         GtkWidget* dlgError = gtk_message_dialog_new(NULL, GTK_DIALOG_MODAL,
                 GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, "%s",
-                _("File could not be opened. You have to open it manual\n:URL: %s"), filename,
-                filename);
+                _("File could not be opened. You have to open it manual\n:URL: %s"), filename.c_str(),
+                filename.c_str());
         gtk_dialog_run(GTK_DIALOG(dlgError));
     }
-    g_free(command);
 }
 
-void Util::openFileWithFilebrowser(const char* filename) {
+void Util::openFileWithFilebrowser(path filename) {
 #undef OPEN_PATTERN
 
 #ifdef __APPLE__
-#define OPEN_PATTERN "open \"%s\""
+#define OPEN_PATTERN "open \"{1}\""
 #elif _WIN32 // note the underscore: without it, it's not msdn official!
-#define OPEN_PATTERN "explorer.exe /n,/e,\"%s\""
+#define OPEN_PATTERN "explorer.exe /n,/e,\"{1}\""
 #else // linux, unix, ...
-#define OPEN_PATTERN "nautilus \"file://%s\" || konqueror \"file://%s\""
+#define OPEN_PATTERN "nautilus \"file://{1}\" || dolphin \"file://{1} || konqueror \"file://{1}\""
 #endif
 
-    string escaped(filename);
+    string escaped = filename.string();
     StringUtils::replace_all_chars(escaped, {
         replace_pair('\\', "\\\\"),
         replace_pair('\"', "\\\"")
     });
 
-    char* command = g_strdup_printf(OPEN_PATTERN, escaped.c_str(),
-            escaped.c_str()); // twice for linux...
+    string command = (bl::format(OPEN_PATTERN) % escaped).str();
     cout << bl::format("XPP show file in filebrowser command: «10}»") % command << endl;
-    if (system(command) != 0) {
+    if (system(command.c_str()) != 0) {
         GtkWidget* dlgError = gtk_message_dialog_new(NULL, GTK_DIALOG_MODAL,
                 GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, "%s",
-                _("File could not be opened. You have to open it manual\n:URL: %s"), filename,
-                filename);
+                _("File could not be opened. You have to open it manual\n:URL: %s"), filename.c_str(),
+                filename.c_str());
         gtk_dialog_run(GTK_DIALOG(dlgError));
     }
-    g_free(command);
 }
 

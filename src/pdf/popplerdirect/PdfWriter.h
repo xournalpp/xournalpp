@@ -15,6 +15,8 @@
 #include <gtk/gtk.h>
 #include <StringUtils.h>
 #include "PdfXRef.h"
+#include <boost/filesystem/path.hpp>
+using boost::filesystem::path;
 
 class PdfWriter
 {
@@ -24,7 +26,7 @@ public:
 
 public:
     void close();
-    bool openFile(string uri);
+    bool openFile(path filename);
 
 public:
     bool writeLen(string data, int len);

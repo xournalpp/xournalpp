@@ -30,8 +30,8 @@ public:
 	virtual ~PdfExport();
 
 public:
-	bool createPdf(string uri);
-	bool createPdf(string uri, GList* range);
+	bool createPdf(path file);
+	bool createPdf(path file, GList* range);
 	string getLastError();
 
 private:

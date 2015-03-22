@@ -48,7 +48,6 @@
 #include <glib/gi18n-lib.h>
 
 #include <vector>
-#include <boost/filesystem.hpp>
 #include <boost/locale.hpp>
 
 using namespace std;
@@ -76,9 +75,9 @@ Control::Control(GladeSearchpath* gladeSearchPath)
     this->lastEnabled = false;
     this->fullscreen = false;
 
-    string name = CONCAT(g_get_home_dir(), G_DIR_SEPARATOR,
-                          CONFIG_DIR, G_DIR_SEPARATOR,
-                          SETTINGS_XML_FILE);
+    path name = path(g_get_home_dir());
+    name /= CONFIG_DIR;
+    name /= SETTINGS_XML_FILE;
     this->settings = new Settings(name);
     this->settings->load();
 
@@ -182,24 +181,22 @@ void Control::renameLastAutosaveFile()
 
     if (!this->lastAutosaveFilename.empty())
     {
-        string filename = this->lastAutosaveFilename;
-        int pos = filename.find_last_of("/") + 1;
-        //String folder = filename.substr(0, pos);
-        string file = filename.substr(pos);
-        string renamed(Util::getAutosaveFilename().substr(0, renamed.length() - 4) + file);
+        path filename = this->lastAutosaveFilename;
+        path renamed = Util::getAutosaveFilename().parent_path();
+        renamed += filename.filename();
 
         using namespace boost::filesystem;
-        remove(path(filename));
-        rename(path(filename), path(renamed));
+        remove(renamed);
+        rename(filename, renamed);
     }
 }
 
-void Control::setLastAutosaveFile(string newAutosaveFile)
+void Control::setLastAutosaveFile(path newAutosaveFile)
 {
     this->lastAutosaveFilename = newAutosaveFile;
 }
 
-void Control::deleteLastAutosaveFile(string newAutosaveFile)
+void Control::deleteLastAutosaveFile(path newAutosaveFile)
 {
     XOJ_CHECK_TYPE(Control);
 
@@ -353,8 +350,7 @@ void Control::updatePageNumbers(int page, int pdfPage)
     this->win->updatePageNumbers(page, this->doc->getPageCount(), pdfPage);
     this->sidebar->selectPageNr(page, pdfPage);
 
-    string file = this->doc->getEvMetadataFilename();
-    this->metadata->setInt(file, "page", page);
+    this->metadata->setInt(this->doc->getEvMetadataFilename(), "page", page);
 
     int current = this->win->getXournal()->getCurrentPage();
     int count = this->doc->getPageCount();
@@ -1103,10 +1099,7 @@ void Control::setRulerEnabled(bool enabled)
     fireActionSelected(GROUP_RULER, enabled ? ACTION_RULER : ACTION_NONE);
     if (enabled)
     {
-        setShapeRecognizerEnabled(false);
-        setCircleEnabled(false);
-        setArrowEnabled(false);
-        setRectangleEnabled(false);
+        this->toolHandler->setRuler(true, true);
     }
 }
 void Control::setRectangleEnabled(bool enabled)
@@ -1122,10 +1115,7 @@ void Control::setRectangleEnabled(bool enabled)
     fireActionSelected(GROUP_RULER, enabled ? ACTION_TOOL_DRAW_RECT : ACTION_NONE);
     if (enabled)
     {
-        setShapeRecognizerEnabled(false);
-        setCircleEnabled(false);
-        setArrowEnabled(false);
-        setRulerEnabled(false);
+        this->toolHandler->setRectangle(true, true);
     }
 }
 void Control::setArrowEnabled(bool enabled)
@@ -1141,10 +1131,7 @@ void Control::setArrowEnabled(bool enabled)
     fireActionSelected(GROUP_RULER, enabled ? ACTION_TOOL_DRAW_ARROW : ACTION_NONE);
     if (enabled)
     {
-        setShapeRecognizerEnabled(false);
-        setCircleEnabled(false);
-        setRectangleEnabled(false);
-        setRulerEnabled(false);
+        this->toolHandler->setArrow(true, true);
     }
 }
 void Control::setCircleEnabled(bool enabled)
@@ -1160,10 +1147,7 @@ void Control::setCircleEnabled(bool enabled)
     fireActionSelected(GROUP_RULER, enabled ? ACTION_TOOL_DRAW_CIRCLE : ACTION_NONE);
     if (enabled)
     {
-        setShapeRecognizerEnabled(false);
-        setArrowEnabled(false);
-        setRectangleEnabled(false);
-        setRulerEnabled(false);
+        this->toolHandler->setCircle(true, true);
     }
 }
 
@@ -1182,11 +1166,8 @@ void Control::setShapeRecognizerEnabled(bool enabled)
 
     if (enabled)
     {
+        this->toolHandler->setShapeRecognizer(true, true);
         this->resetShapeRecognizer();
-        setRulerEnabled(false);
-        setArrowEnabled(false);
-        setCircleEnabled(false);
-        setRectangleEnabled(false);
     }
 }
 
@@ -2381,7 +2362,7 @@ bool Control::newFile()
     return true;
 }
 
-bool Control::openFile(string filename, int scrollToPage)
+bool Control::openFile(path filename, int scrollToPage)
 {
     XOJ_CHECK_TYPE(Control);
 
@@ -2396,7 +2377,7 @@ bool Control::openFile(string filename, int scrollToPage)
         filename = XojOpenDlg::showOpenDialog((GtkWindow*) *win, this->settings, false,
                                               attachPdf);
 
-        cout << bl::format("Filename: {1}") % filename << endl;
+        cout << bl::format("Filename: {1}") % filename.string() << endl;
 
         if (filename.empty())
         {
@@ -2406,12 +2387,11 @@ bool Control::openFile(string filename, int scrollToPage)
 
     LoadHandler h;
 
-    if (ba::ends_with(bl::to_lower(filename), ".pdf"))
+    if (filename.extension() == ".pdf")
     {
         if (settings->isAutloadPdfXoj())
         {
-            string f = filename;
-            f += ".xoj";
+            path f = path(filename).replace_extension(".pdf.xoj");
             Document* tmp = h.loadDocument(f);
             if (tmp)
             {
@@ -2459,7 +2439,7 @@ bool Control::openFile(string filename, int scrollToPage)
         else if (res == 1) // select another PDF background
         {
             bool attachToDocument = false;
-            string pdfFilename = XojOpenDlg::showOpenDialog((GtkWindow*) * win,
+            path pdfFilename = XojOpenDlg::showOpenDialog((GtkWindow*) * win,
                                                             this->settings, true, attachToDocument);
             if (!pdfFilename.empty())
             {
@@ -2499,7 +2479,7 @@ void Control::fileLoaded(int scrollToPage)
     XOJ_CHECK_TYPE(Control);
 
     this->doc->lock();
-    string file = this->doc->getEvMetadataFilename();
+    path file = this->doc->getEvMetadataFilename();
     this->doc->unlock();
 
     if (!file.empty())
@@ -2523,7 +2503,7 @@ void Control::fileLoaded(int scrollToPage)
         {
             scrollHandler->scrollToPage(scrollPageMetadata);
         }
-        recent->addRecentFileFilename(file.c_str());
+        recent->addRecentFileFilename(file);
     }
     else
     {
@@ -2537,7 +2517,7 @@ void Control::fileLoaded(int scrollToPage)
     updateDeletePageButton();
 }
 
-bool Control::annotatePdf(string filename, bool attachPdf,
+bool Control::annotatePdf(path filename, bool attachPdf,
                           bool attachToDocument)
 {
     XOJ_CHECK_TYPE(Control);
@@ -2568,7 +2548,7 @@ bool Control::annotatePdf(string filename, bool attachPdf,
         this->recent->addRecentFileFilename(filename.c_str());
 
         this->doc->lock();
-        string file = this->doc->getEvMetadataFilename();
+        path file = this->doc->getEvMetadataFilename();
         this->doc->unlock();
 
         this->metadata->getInt(file, "page", page);
@@ -2607,7 +2587,7 @@ void Control::print()
     this->doc->unlock();
 }
 
-void Control::block(const char* name)
+void Control::block(string name)
 {
     XOJ_CHECK_TYPE(Control);
 
@@ -2625,7 +2605,7 @@ void Control::block(const char* name)
     this->lbState = GTK_LABEL(this->win->get("lbState"));
     this->pgState = GTK_PROGRESS_BAR(this->win->get("pgState"));
 
-    gtk_label_set_text(this->lbState, name);
+    gtk_label_set_text(this->lbState, name.c_str());
     gtk_widget_show(this->statusbar);
 
     this->maxState = 100;
@@ -2673,7 +2653,7 @@ bool Control::save(bool synchron)
     XOJ_CHECK_TYPE(Control);
 
     this->doc->lock();
-    string filename = this->doc->getFilename();
+    path filename = this->doc->getFilename();
     this->doc->unlock();
 
     if (filename.empty())
@@ -2698,17 +2678,6 @@ bool Control::save(bool synchron)
     job->unref();
 
     return true;
-}
-
-string Control::getFilename(string uri)
-{
-    int pos = uri.find_last_of(G_DIR_SEPARATOR_S);
-    if (pos == -1)
-    {
-        return uri;
-    }
-
-    return uri.substr(pos + 1);
 }
 
 bool Control::showSaveDialog()
@@ -2736,12 +2705,11 @@ bool Control::showSaveDialog()
     this->doc->lock();
     if (!doc->getFilename().empty())
     {
-        saveFilename = getFilename(doc->getFilename());
+        saveFilename = doc->getFilename().filename().string();
     }
     else if (!doc->getPdfFilename().empty())
     {
-        saveFilename = getFilename(doc->getPdfFilename());
-        saveFilename += ".xoj";
+        saveFilename = doc->getPdfFilename().filename().replace_extension(".pdf.xoj").string();
     }
     else
     {
@@ -2778,8 +2746,8 @@ bool Control::showSaveDialog()
 
     this->doc->lock();
 
-    this->metadata->move(this->doc->getFilename(), filename);
-    this->doc->setFilename(filename);
+    this->metadata->move(this->doc->getFilename().string(), filename);
+    this->doc->setFilename(path(filename));
     this->doc->unlock();
 
     return true;
@@ -2804,7 +2772,7 @@ void Control::updateWindowTitle()
             {
                 title += "*";
             }
-            title += doc->getPdfFilename();
+            title += doc->getPdfFilename().string();
         }
     }
     else
@@ -2814,7 +2782,7 @@ void Control::updateWindowTitle()
             title += "*";
         }
 
-        title += getFilename(doc->getFilename());
+        title += doc->getFilename().filename().string();
     }
     this->doc->unlock();
 
@@ -2859,7 +2827,7 @@ void Control::saveAs()
         return;
     }
     this->doc->lock();
-    string filename = doc->getFilename();
+    path filename = doc->getFilename();
     this->doc->unlock();
 
     if (filename.empty())

@@ -9,15 +9,20 @@
  * @license GPL
  */
 
-/**
- * Build this File with: gcc xournal-thumbnailer.c -lz -o xoj-preview-extractor
- */
-
-#include <stdlib.h>
-#include <stdio.h>
-#include <zlib.h>
+#include <string>
 #include <iostream>
+#include <fstream>
 
+#include <boost/locale.hpp>
+#include <boost/iostreams/filter/gzip.hpp>
+#include <boost/iostreams/filtering_streambuf.hpp>
+#include <boost/algorithm/string.hpp>
+
+#include "../../config.h"
+
+namespace bl = boost::locale;
+namespace bi = boost::iostreams;
+namespace ba = boost::algorithm;
 using namespace std;
 
 const char BASE64_TABLE[256] = {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
@@ -32,43 +37,126 @@ const char BASE64_TABLE[256] = {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 
     -1, -1, -1, -1, -1, -1, -1, -1, -1
 };
 
+#ifdef ENABLE_NLS
+void initLocalisation()
+{
+    //locale generator (for future i18n)
+    bl::generator gen;
+    gen.add_messages_path(PACKAGE_LOCALE_DIR);
+    gen.add_messages_domain(GETTEXT_PACKAGE);
+    
+    std::locale::global(gen("")); //"" - system default locale
+    std::cout.imbue(std::locale());
+}
+#endif
+
+const string TAG_PREVIEW_NAME = "preview";
+const string TAG_PAGE_NAME = "page";
+
 int main(int argc, char* argv[]) {
-    gzFile f;
-    FILE* fp;
-    int count;
-    unsigned char buffer[512];
+    
+#ifdef ENABLE_NLS
+    initLocalisation();
+#endif
 
-    int i;
-    int x;
-    int pa;
-    int pr;
-    const char* TAG_PAGE = "<page>";
-    const char* TAG_PREVIEW = "<preview>";
-
-    int state;
-    int bufPos;
-    char inBuffer[4];
-
-    fp = NULL;
-
+    //check args count
     if (argc != 3) {
-        cout << "xoj-preview-extractor: call with INPUT.xoj OUTPUT.png" << endl;
+        cerr << "xoj-preview-extractor: call with INPUT.xoj OUTPUT.png" << endl;
         return 1;
     }
 
-    f = gzopen(argv[1], "r");
-
-    if (f == NULL) {
-        cerr << "xoj-preview-extractor: open input failed \"" << argv[1] << "\"" << endl;
+    //check input file extension
+    if (!ba::ends_with(bl::to_lower(argv[1]), ".xoj")) {
+        cerr << bl::format("xoj-prevew-extractor: file \"{1}\" is not .xoj file") % argv[1] << endl;
         return 2;
     }
+    
+    ifstream ifile(argv[1], ios_base::in | ios_base::binary);
+    ofstream ofile;
+    ofstream dbgfile("dbg", ios_base::out | ios_base::binary);
 
-    pa = 0;
-    pr = 0;
-    i = 0;
-    state = 0;
-    bufPos = 0;
+    if (!ifile.is_open()) {
+        cerr << bl::format("xoj-preview-extractor: open input file \"{1}\" failed") % argv[1] << endl;
+        return 3;
+    }
+        
+    bi::filtering_istreambuf inbuf;
+    inbuf.push(bi::gzip_decompressor());
+    inbuf.push(ifile);
+    
+    istream in(&inbuf);
+    char c;
+    string tmpTag;
+    bool tmpTagAct = false;
+    
+    char buf[4];
+    int bufPos = 0;
+    
+    while(in.get(c)) {
+        //cout << c;
+        if (tmpTagAct) {
+            tmpTag += c;
+            
+            if (tmpTag == TAG_PREVIEW_NAME) {
+                tmpTagAct = false;
+                ofile.open(argv[2], ios_base::out | ios_base::binary);
+                if (!ofile.is_open()) {
+                    cerr << bl::format("xoj-preview-extractor: open output file \"{1}\" failed") % argv[2] << endl;
+                    ifile.close();
+                    return 4;
+                }
+            } else if (tmpTag == TAG_PAGE_NAME) {
+                tmpTagAct = false;
+                cerr << "xoj-preview-extractor: this file contains no preview" << endl;
+                ifile.close();
+                return 5;
+            } else if (c == '>') {
+                tmpTagAct = false;
+            }
+        } else if (c == '<') {
+            if (ofile.is_open()) {
+                cout << "xoj-preview-extractor: successfully extracted" << endl;
+                ifile.close();
+                ofile.close();
+                dbgfile.close();
+                return 0;
+            }
+            
+            tmpTag.clear();
+            tmpTagAct = true;
+        } else if (ofile.is_open()) {
+            dbgfile << BASE64_TABLE[c];
+            
+            if (BASE64_TABLE[c] != -1) {
+                buf[bufPos++] = BASE64_TABLE[c];
+            }
+            
+            if (bufPos == 4) {
+                ofile << char((buf[0] << 2) + ((buf[1] & 0x30) >> 4));
+                ofile << char(((buf[1] & 0xf) << 4) + ((buf[2] & 0x3c) >> 2));
+                ofile << char(((buf[2] & 0x3) << 6) + buf[3]);
+                bufPos = 0;
+            }
+        }
+    }
+    
+    cerr << "xoj-preview-extractor: no preview and page found, maybe an invalid file?" << endl;
+    ifile.close();
+    return 10;
+}
 
+/*
+    int count;
+    unsigned char buffer[512];
+
+    char inBuffer[4];
+    
+    int pa = 0;
+    int pr = 0;
+    int i = 0;
+    int state = 0;
+    int bufPos = 0;
+    
     do {
         count = gzread(f, buffer, sizeof (buffer));
 
@@ -84,7 +172,8 @@ int main(int argc, char* argv[]) {
                         i++;
                         fp = fopen(argv[2], "wb");
                         if (!fp) {
-                            cerr << "xoj-preview-extractor: open output file \"" << argv[2] << "\" failed!" << endl;
+                            cerr << bl::format("xoj-preview-extractor: open output file \"{1}\"") % argv[2] << endl;
+                            file.close();
                             return 3;
                         }
                         break;
@@ -97,6 +186,7 @@ int main(int argc, char* argv[]) {
                     pa++;
                     if (TAG_PAGE[pa] == 0) {
                         cerr << "xoj-preview-extractor: this file contains no preview" << endl;
+                        file.close();
                         return 5;
                     }
                 } else {
@@ -107,7 +197,7 @@ int main(int argc, char* argv[]) {
 
         for (; i < count; i++) {
             if (buffer[i] == '<') {
-                fclose(fp);
+                file.close();
                 cout << "xoj-preview-extractor: successfully extracted" << endl;
                 return 0;
             }
@@ -128,8 +218,8 @@ int main(int argc, char* argv[]) {
 
     } while (count);
 
-    gzclose(f);
+    file.close();
 
     cerr << "xoj-preview-extractor: no preview found, may an invalid file?" << endl;
     return 10;
-}
+}*/

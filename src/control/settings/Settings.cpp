@@ -20,7 +20,7 @@
 const char* BUTTON_NAMES[] = {"middle", "right", "eraser", "touch", "default"};
 const int BUTTON_COUNT = 5;
 
-Settings::Settings(string filename)
+Settings::Settings(path filename)
 {
     XOJ_INIT_TYPE(Settings);
 
@@ -1334,22 +1334,22 @@ void Settings::setPresureSensitivity(gboolean presureSensitivity)
     saveTimeout();
 }
 
-void Settings::setLastSavePath(string path)
+void Settings::setLastSavePath(path p)
 {
     XOJ_CHECK_TYPE(Settings);
 
-    this->lastSavePath = path;
+    this->lastSavePath = p;
     saveTimeout();
 }
 
-string Settings::getLastSavePath()
+path Settings::getLastSavePath()
 {
     XOJ_CHECK_TYPE(Settings);
 
     return this->lastSavePath;
 }
 
-void Settings::setLastImagePath(string path)
+void Settings::setLastImagePath(path path)
 {
     XOJ_CHECK_TYPE(Settings);
 
@@ -1361,7 +1361,7 @@ void Settings::setLastImagePath(string path)
     saveTimeout();
 }
 
-string Settings::getLastImagePath()
+path Settings::getLastImagePath()
 {
     XOJ_CHECK_TYPE(Settings);
 

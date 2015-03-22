@@ -28,7 +28,7 @@ public:
 public:
 	void prepareSave(Document* doc);
 	void saveTo(OutputStream* out,
-				string filename,
+				path filename,
 				ProgressListener* listener = NULL);
 	string getErrorMessage();
 

@@ -24,8 +24,8 @@ private:
 	virtual ~XojOpenDlg();
 
 public:
-	static string showOpenDialog(GtkWindow* win, Settings* settings, bool pdf,
-	                             bool& attachPdf);
+	static path showOpenDialog(GtkWindow* win, Settings* settings, bool pdf,
+	                           bool& attachPdf);
 
 private:
 	static void updatePreviewCallback(GtkFileChooser* fileChooser, void* userData);

@@ -15,6 +15,9 @@
 #include <glib.h>
 #include <StringUtils.h>
 
+#include <boost/filesystem/path.hpp>
+using boost::filesystem::path;
+
 class MetadataManager
 {
 public:
@@ -26,22 +29,22 @@ public:
 	 * Setter / Getter: if uri is NULL the request will be ignored
 	 */
 
-	void setInt(string uri, const char* name, int value);
-	void setDouble(string uri, const char* name, double value);
-	void setString(string uri, const char* name, const char* value);
+	void setInt(path p, const char* name, int value);
+	void setDouble(path p, const char* name, double value);
+	void setString(path p, const char* name, const char* value);
 
-	bool getInt(string uri, const char* name, int& value);
-	bool getDouble(string uri, const char* name, double& value);
+	bool getInt(path p, const char* name, int& value);
+	bool getDouble(path p, const char* name, double& value);
 
 	/**
 	 * The returned String should be freed with g_free
 	 */
-	bool getString(string uri, const char* name, char*& value);
+	bool getString(path p, const char* name, char*& value);
 
 	void move(string source, string target);
 
 private:
-	void updateAccessTime(string uri);
+	void updateAccessTime(path p);
 	void loadConfigFile();
 
 	void cleanupMetadata();

@@ -116,21 +116,21 @@ int Document::getPdfPageCount()
     return pdfDocument.getPageCount();
 }
 
-void Document::setFilename(string filename)
+void Document::setFilename(path filename)
 {
     XOJ_CHECK_TYPE(Document);
 
     this->filename = filename;
 }
 
-string Document::getFilename()
+path Document::getFilename()
 {
     XOJ_CHECK_TYPE(Document);
 
     return filename;
 }
 
-string Document::getPdfFilename()
+path Document::getPdfFilename()
 {
     XOJ_CHECK_TYPE(Document);
 
@@ -163,22 +163,19 @@ void Document::setPreview(cairo_surface_t* preview)
 
 }
 
-string Document::getEvMetadataFilename()
+path Document::getEvMetadataFilename()
 {
     XOJ_CHECK_TYPE(Document);
 
-    string uri = "file://";
     if (!this->filename.empty())
     {
-        uri += this->filename;
-        return uri;
+        return this->filename;
     }
     if (!this->pdfFilename.empty())
     {
-        uri += this->pdfFilename;
-        return uri;
+        return this->pdfFilename;
     }
-    return "";
+    return path("");
 }
 
 bool Document::isPdfDocumentLoaded()
@@ -326,7 +323,7 @@ void Document::updateIndexPageNumbers()
     }
 }
 
-bool Document::readPdf(string filename, bool initPages, bool attachToDocument)
+bool Document::readPdf(path filename, bool initPages, bool attachToDocument)
 {
     XOJ_CHECK_TYPE(Document);
 

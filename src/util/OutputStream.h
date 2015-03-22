@@ -12,6 +12,9 @@
 #ifndef __OUTPUTSTREAM_H__
 #define __OUTPUTSTREAM_H__
 
+#include <boost/filesystem/path.hpp>
+using boost::filesystem::path;
+
 #include <StringUtils.h>
 #include <XournalType.h>
 #include <zlib.h>
@@ -19,40 +22,40 @@
 class OutputStream
 {
 public:
-	OutputStream();
-	virtual ~OutputStream();
+    OutputStream();
+    virtual ~OutputStream();
 
 public:
-	virtual void write(const char* data);
-	virtual void write(const char* data, int len) = 0;
-	virtual void write(const string& str);
+    virtual void write(const char* data);
+    virtual void write(const char* data, int len) = 0;
+    virtual void write(const string& str);
 
-	virtual void close() = 0;
+    virtual void close() = 0;
 };
 
 class GzOutputStream : public OutputStream
 {
 public:
-	GzOutputStream(string filename);
-	virtual ~GzOutputStream();
+    GzOutputStream(path filename);
+    virtual ~GzOutputStream();
 
 public:
-	virtual void write(const char* data, int len);
+    virtual void write(const char* data, int len);
 
-	virtual void close();
+    virtual void close();
 
 
-	string& getLastError();
+    string& getLastError();
 
 private:
-	XOJ_TYPE_ATTRIB;
+    XOJ_TYPE_ATTRIB;
 
-	gzFile fp;
+    gzFile fp;
 
-	string error;
+    string error;
 
-	string target;
-	string filename;
+    string target;
+    path filename;
 };
 
 

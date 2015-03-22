@@ -98,7 +98,7 @@ void LoadHandler::removePdfBackground()
     this->removePdfBackgroundFlag = true;
 }
 
-void LoadHandler::setPdfReplacement(string filename, bool attachToDocument)
+void LoadHandler::setPdfReplacement(path filename, bool attachToDocument)
 {
     XOJ_CHECK_TYPE(LoadHandler);
 
@@ -106,7 +106,7 @@ void LoadHandler::setPdfReplacement(string filename, bool attachToDocument)
     this->pdfReplacementAttach = attachToDocument;
 }
 
-bool LoadHandler::openFile(string filename)
+bool LoadHandler::openFile(path filename)
 {
     XOJ_CHECK_TYPE(LoadHandler);
 
@@ -114,7 +114,7 @@ bool LoadHandler::openFile(string filename)
     this->fp = gzopen(filename.c_str(), "r");
     if (!this->fp)
     {
-        this->lastError = (bl::format("Could not open file: \"{1}\"") % filename).str();
+        this->lastError = (bl::format("Could not open file: \"{1}\"") % filename.string()).str();
         return false;
     }
     return true;
@@ -350,19 +350,18 @@ void LoadHandler::parseBgPixmap()
     const char* domain = getAttrib("domain");
     const char* filename = getAttrib("filename");
 
-    string fileToLoad;
+    path fileToLoad;
     bool loadFile = false;
 
     if (!strcmp(domain, "absolute"))
     {
-        fileToLoad = filename;
+        fileToLoad = path(filename);
         loadFile = true;
     }
     else if (!strcmp(domain, "attach"))
     {
         fileToLoad = this->filename;
-        fileToLoad += ".";
-        fileToLoad += filename;
+        fileToLoad /= CONCAT(".", filename);
         loadFile = true;
     }
 
@@ -403,7 +402,7 @@ void LoadHandler::parseBgPdf()
 
     int pageno = getAttribInt("pageno");
     bool attachToDocument = false;
-    string pdfFilename;
+    path pdfFilename;
 
     this->page->setBackgroundPdfPageNr(pageno - 1);
 
@@ -421,7 +420,7 @@ void LoadHandler::parseBgPdf()
                 return;
             }
 
-            pdfFilename = sFilename;
+            pdfFilename = path(sFilename);
 
             if (!strcmp("absolute", domain)) // Absolute OR relative path
             {
@@ -1017,7 +1016,7 @@ bool LoadHandler::parseXml()
 /**
  * Document should not be freed, it will be freed with LoadHandler!
  */
-Document* LoadHandler::loadDocument(string filename)
+Document* LoadHandler::loadDocument(path filename)
 {
     XOJ_CHECK_TYPE(LoadHandler);
 

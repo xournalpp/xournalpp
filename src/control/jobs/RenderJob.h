@@ -13,7 +13,6 @@
 #define __RENDERJOB_H__
 
 #include "Job.h"
-#include <gtk/gtk.h>
 
 #include <XournalType.h>
 

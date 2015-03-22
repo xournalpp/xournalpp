@@ -3,8 +3,8 @@
 #include <config.h>
 #include <glib/gi18n-lib.h>
 
-string XojOpenDlg::showOpenDialog(GtkWindow* win, Settings* settings, bool pdf,
-                                  bool& attachPdf)
+path XojOpenDlg::showOpenDialog(GtkWindow* win, Settings* settings, bool pdf,
+                                bool& attachPdf)
 {
 
     GtkWidget* dialog = gtk_file_chooser_dialog_new(_("Open file"), win,
@@ -64,21 +64,18 @@ string XojOpenDlg::showOpenDialog(GtkWindow* win, Settings* settings, bool pdf,
     if (gtk_dialog_run(GTK_DIALOG(dialog)) != GTK_RESPONSE_OK)
     {
         gtk_widget_destroy(dialog);
-        return "";
+        return path("");
     }
-    char* name = gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(dialog));
+    path filename = path(gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(dialog)));
 
     if (attachOpt)
     {
         attachPdf = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(attachOpt));
     }
 
-    string filename = name;
-    char* folder = gtk_file_chooser_get_current_folder_uri(GTK_FILE_CHOOSER(
-                                                                            dialog));
+    path folder = path(gtk_file_chooser_get_current_folder_uri(
+                                        GTK_FILE_CHOOSER(dialog)));
     settings->setLastSavePath(folder);
-    g_free(folder);
-    g_free(name);
 
     gtk_widget_destroy(dialog);
 

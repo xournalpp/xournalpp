@@ -348,7 +348,7 @@ void XournalView::pageSelected(int page)
 
     Document* doc = control->getDocument();
     doc->lock();
-    string file = doc->getEvMetadataFilename();
+    path file = doc->getEvMetadataFilename();
     doc->unlock();
 
     control->getMetadataManager()->setInt(file, "page", page);
@@ -505,7 +505,7 @@ void XournalView::zoomChanged(double lastZoom)
 
     Document* doc = control->getDocument();
     doc->lock();
-    string file = doc->getEvMetadataFilename();
+    path file = doc->getEvMetadataFilename();
     doc->unlock();
 
     control->getMetadataManager()->setDouble(file, "zoom", getZoom());

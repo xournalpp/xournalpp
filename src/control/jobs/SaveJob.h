@@ -19,31 +19,24 @@
 class SaveJob : public BlockingJob
 {
 public:
-	SaveJob(Control* control);
+    SaveJob(Control* control);
 
 protected:
-	virtual ~SaveJob();
+    virtual ~SaveJob();
 
 public:
-	virtual void run();
+    virtual void run();
 
-	bool save();
-
-private:
-	static void copyProgressCallback(goffset current_num_bytes,
-	                                 goffset total_num_bytes,
-	                                 gpointer user_data);
-	bool copyFile(string source, string target);
-
-	void updatePreview();
-	virtual void afterRun();
+    bool save();
 
 private:
-	XOJ_TYPE_ATTRIB;
+    void updatePreview();
+    virtual void afterRun();
 
-	string copyError;
+private:
+    XOJ_TYPE_ATTRIB;
 
-	string lastError;
+    string lastError;
 
 };
 

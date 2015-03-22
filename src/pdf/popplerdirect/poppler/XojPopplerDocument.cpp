@@ -268,7 +268,7 @@ void XojPopplerDocument::load(char* data, int length)
     this->data = new _IntPopplerDocument(newDoc);
 }
 
-bool XojPopplerDocument::load(string filename, string password,
+bool XojPopplerDocument::load(path filename, string password,
                               GError** error)
 {
     XOJ_CHECK_TYPE(XojPopplerDocument);
@@ -349,7 +349,7 @@ gsize XojPopplerDocument::getId()
     return (gsize) this->data;
 }
 
-bool XojPopplerDocument::save(string filename, GError** error)
+bool XojPopplerDocument::save(path filename, GError** error)
 {
     XOJ_CHECK_TYPE(XojPopplerDocument);
 

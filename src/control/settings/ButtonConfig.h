@@ -32,32 +32,32 @@ class ToolHandler;
 class ButtonConfig
 {
 public:
-	ButtonConfig(ToolType action, int color, ToolSize size, DrawingType drawingType,
-	             EraserType eraserMode);
-	virtual ~ButtonConfig();
+    ButtonConfig(ToolType action, int color, ToolSize size, DrawingType drawingType,
+                 EraserType eraserMode);
+    virtual ~ButtonConfig();
 
 public:
-	void acceptActions(ToolHandler* toolHandler);
-	ToolType getAction();
-	bool getDisableDrawing();
-	DrawingType getDrawingType();
+    void acceptActions(ToolHandler* toolHandler);
+    ToolType getAction();
+    bool getDisableDrawing();
+    DrawingType getDrawingType();
 
 private:
-	XOJ_TYPE_ATTRIB;
+    XOJ_TYPE_ATTRIB;
 
 
-	ToolType action;
-	int color;
-	ToolSize size;
-	EraserType eraserMode;
-	DrawingType drawingType;
+    ToolType action;
+    int color;
+    ToolSize size;
+    EraserType eraserMode;
+    DrawingType drawingType;
 
-	bool disableDrawing;
+    bool disableDrawing;
 
 public:
-	string device;
+    string device;
 
-	friend class Settings;
-	friend class ButtonConfigGui;
+    friend class Settings;
+    friend class ButtonConfigGui;
 };
 #endif /* __BUTTONCONFIG_H__ */

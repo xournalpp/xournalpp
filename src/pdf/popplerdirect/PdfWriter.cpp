@@ -47,13 +47,13 @@ void PdfWriter::close()
     g_output_stream_close(G_OUTPUT_STREAM(this->out), NULL, NULL);
 }
 
-bool PdfWriter::openFile(string uri)
+bool PdfWriter::openFile(path filename)
 {
     XOJ_CHECK_TYPE(PdfWriter);
 
     GError* error = NULL;
-
-    GFile* file = g_file_new_for_uri(uri.c_str());
+    
+    GFile* file = g_file_new_for_path(filename.c_str());
     this->out = g_file_replace(file, NULL, false, (GFileCreateFlags) 0, NULL,
                                &error);
 
@@ -62,7 +62,7 @@ bool PdfWriter::openFile(string uri)
     if (error)
     {
         lastError = (bl::format("Error opening file for writing: {1}, File: {2}")
-                % error->message % uri).str();
+                % error->message % filename.string()).str();
         g_warning("error opening file");
         return false;
     }

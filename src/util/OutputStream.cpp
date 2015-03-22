@@ -24,7 +24,7 @@ void OutputStream::write(const char* str)
 /// GzOutputStream /////////////////////////////////////
 ////////////////////////////////////////////////////////
 
-GzOutputStream::GzOutputStream(string filename)
+GzOutputStream::GzOutputStream(path filename)
 {
     XOJ_INIT_TYPE(GzOutputStream);
 
@@ -33,9 +33,7 @@ GzOutputStream::GzOutputStream(string filename)
     this->fp = gzopen(filename.c_str(), "w");
     if (this->fp == NULL)
     {
-        char* e = g_strdup_printf("error opening file: \"%s\"", filename.c_str());
-        this->error = e;
-        g_free(e);
+        this->error = (bl::format("error opening file: \"{1}\"") % filename.string()).str();
     }
 }
 

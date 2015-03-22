@@ -5,7 +5,8 @@
 #include "../gui/PageView.h"
 #include "../gui/XournalView.h"
 
-//some time - clean up these includes
+//TODO some time - clean up these includes
+//Yes, please. This file is rebuilding after pretty much every header edit
 #include <serializing/ObjectOutputStream.h>
 #include <serializing/HexObjectEncoding.h>
 
@@ -15,7 +16,6 @@
 #include <iostream>
 #include "../cfg.h"
 #include <glib.h>
-#include <boost/format.hpp>
 
 using namespace std;
 
@@ -82,7 +82,7 @@ void LatexAction::runCommand()
     {
         texres = "1000";
     }
-    string command = (boost::format("%s% -m 0 \"\\png\\usepackage{color}\\color{%s%}\\dpi{%s%}\\%s% %s%\" -o %s%")
+    string command = (bl::format("{1} -m 0 \"\\png\\usepackage{color}\\color'{'{2}'}'\\dpi'{'{3}'}'\\{4} {5}\" -o {6}")
                 % mtex % (!fontcolour.empty() ? fontcolour : "black") % texres
                 % g_strescape(this->theLatex.c_str(), NULL) % this->texfile).str();
 

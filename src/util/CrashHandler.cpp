@@ -158,13 +158,14 @@ static void emergencySave()
         return;
     }
 
-    cerr << "\nTry to emergency save the current open document...\n";
+    cerr << endl << "Try to emergency save the current open document..." << endl;
 
     SaveHandler handler;
     handler.prepareSave(document);
 
-    string filename = CONCAT(g_get_home_dir(), G_DIR_SEPARATOR_S,
-            CONFIG_DIR, G_DIR_SEPARATOR_S, "emergencysave.xoj");
+    path filename = path(g_get_home_dir());
+    filename /= CONFIG_DIR;
+    filename /= "emergencysave.xoj";
 
     GzOutputStream* out = new GzOutputStream(filename);
 
@@ -184,7 +185,7 @@ static void emergencySave()
     }
     else
     {
-        cerr << bl::format("Successfully saved document to \"{1}\"") % filename << endl;
+        cerr << bl::format("Successfully saved document to \"{1}\"") % filename.string() << endl;
     }
 
     delete out;

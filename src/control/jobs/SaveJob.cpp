@@ -3,6 +3,11 @@
 #include <config.h>
 #include <glib/gi18n-lib.h>
 
+//workaround for filesystem::copy_file (see http://polr.me/1db )
+//marked for removal after upgrade to boost 1.57
+#define BOOST_NO_CXX11_SCOPED_ENUMS
+#include <boost/filesystem/operations.hpp>
+
 #include "../SaveHandler.h"
 #include "../Control.h"
 #include "../../view/DocumentView.h"
@@ -49,48 +54,13 @@ void SaveJob::afterRun()
         Document* doc = this->control->getDocument();
 
         doc->lock();
-        string filename = doc->getFilename();
+        path filename = doc->getFilename();
         doc->unlock();
 
         control->getUndoRedoHandler()->documentSaved();
-        control->getRecentManager()->addRecentFileFilename(filename.c_str());
+        control->getRecentManager()->addRecentFileFilename(filename);
         control->updateWindowTitle();
     }
-}
-
-void SaveJob::copyProgressCallback(goffset current_num_bytes,
-                                   goffset total_num_bytes,
-                                   gpointer user_data)
-{
-    g_message("copyProgressCallback: %i, %i\n",
-              (int) current_num_bytes,
-              (int) total_num_bytes);
-}
-
-bool SaveJob::copyFile(string source, string target)
-{
-    XOJ_CHECK_TYPE(SaveJob);
-
-    // we need to build the GFile from a path.
-    // But if future versions support URIs, this has to be changed
-    GFile* src = g_file_new_for_path(source.c_str());
-    GFile* trg = g_file_new_for_path(target.c_str());
-    GError* err = NULL;
-
-    bool ok = g_file_copy(src, trg, G_FILE_COPY_OVERWRITE, NULL,
-                          (GFileProgressCallback) & copyProgressCallback, this, &err);
-
-    if (!err && !ok)
-    {
-        this->copyError = "Copy error: return false, but didn't set error message";
-    }
-    if (err)
-    {
-        ok = false;
-        this->copyError = err->message;
-        g_error_free(err);
-    }
-    return ok;
 }
 
 void SaveJob::updatePreview()
@@ -165,19 +135,24 @@ bool SaveJob::save()
 
     doc->lock();
     h.prepareSave(doc);
-    string filename = doc->getFilename();
+    path filename = doc->getFilename();
     doc->unlock();
 
     // TODO: better backup handler
     if (doc->shouldCreateBackupOnSave())
     {
-        int pos = doc->getFilename().find_last_of("/") + 1;
-        string backup = CONCAT(doc->getFilename().substr(0, pos),
-                                ".", doc->getFilename().substr(pos), ".bak");
-        if (!copyFile(doc->getFilename(), backup))
+        path backup = filename.parent_path();
+        backup /= CONCAT(".", path(filename).replace_extension(".bak").string());
+        
+        using namespace boost::filesystem;
+        try
+        {
+            copy_file(doc->getFilename(), backup, copy_option::overwrite_if_exists);
+        }
+        catch (const filesystem_error& e)
         {
             g_warning("Could not create backup! (The file was created from an older Xournal version)\n%s\n",
-                      this->copyError.c_str());
+                      e.what());
         }
 
         doc->setCreateBackupOnSave(false);

@@ -12,6 +12,9 @@
 #ifndef __RECENTMANAGER_H__
 #define __RECENTMANAGER_H__
 
+#include <boost/filesystem/path.hpp>
+using boost::filesystem::path;
+
 #include <gtk/gtk.h>
 #include <StringUtils.h>
 #include <XournalType.h>
@@ -38,28 +41,16 @@ public:
 public:
 
 	/**
-	 * Convenience function, essentially calls
-	 * addRecentFileUri(const char* uri)
-	 */
-	void addRecentFileFilename(string filename);
-
-	/**
 	 * Adds a file to the underlying GtkRecentManager
 	 * without altering the menu
 	 */
-	void addRecentFileUri(string uri);
-
-	/**
-	 * Convenience function, essentially calls
-	 * removeRecentFileUri(const char* uri)
-	 */
-	void removeRecentFileFilename(string filename);
+	void addRecentFileFilename(path filename);
 
 	/**
 	 * Removes a file from the underlying GtkRecentManager
 	 * without altering the menu
 	 */
-	void removeRecentFileUri(string uri);
+	void removeRecentFileFilename(path filename);
 
 	/**
 	 * Removes all of the menu items corresponding to recent files

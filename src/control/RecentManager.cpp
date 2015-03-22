@@ -1,12 +1,13 @@
 #include <gtk/gtk.h>
 #include <boost/filesystem.hpp>
+using boost::filesystem::path;
+
 #include <iostream>
+using namespace std;
 
 #include "RecentManager.h"
 
 #include <config.h>
-
-using namespace std;
 
 #define MIME "application/x-xoj"
 #define MIME_PDF "application/x-pdf"
@@ -57,28 +58,10 @@ void RecentManager::recentManagerChangedCallback(GtkRecentManager* manager,
     recentManager->updateMenu();
 }
 
-void RecentManager::addRecentFileFilename(string filename) {
+void RecentManager::addRecentFileFilename(path filename) {
     XOJ_CHECK_TYPE(RecentManager);
 
     cout << bl::format("addRecentFileFilename: {1}") % filename << endl;
-
-    const gchar* c_filename = filename.c_str();
-    if (filename.compare(0, 7, "file://") == 0) {
-        addRecentFileUri(c_filename);
-        return;
-    }
-
-    GFile* file = g_file_new_for_path(c_filename);
-
-    addRecentFileUri(g_file_get_uri(file));
-
-    g_object_unref(file);
-}
-
-void RecentManager::addRecentFileUri(string uri) {
-    XOJ_CHECK_TYPE(RecentManager);
-
-    cout << bl::format("addRecentFileUri: {1}") % uri << endl;
 
     GtkRecentManager* recentManager;
     GtkRecentData* recentData;
@@ -92,7 +75,7 @@ void RecentManager::addRecentFileUri(string uri) {
     recentData->display_name = NULL;
     recentData->description = NULL;
 
-    if (ba::ends_with(uri, ".pdf")) {
+    if (filename.extension() == ".pdf") {
         recentData->mime_type = (gchar*) g_strdup(MIME_PDF);
     } else {
         recentData->mime_type = (gchar*) g_strdup(MIME);
@@ -102,29 +85,27 @@ void RecentManager::addRecentFileUri(string uri) {
     recentData->app_exec = g_strjoin(" ", g_get_prgname(), "%u", NULL);
     recentData->groups = groups;
     recentData->is_private = FALSE;
-
-    gtk_recent_manager_add_full(recentManager, uri.c_str(), recentData);
+    
+    GFile* file = g_file_new_for_path(filename.c_str());
+    gchar* uri = g_file_get_uri(file);
+    gtk_recent_manager_add_full(recentManager, uri, recentData);
 
     g_free(recentData->app_exec);
 
     g_slice_free(GtkRecentData, recentData);
-}
-
-void RecentManager::removeRecentFileFilename(string filename) {
-    XOJ_CHECK_TYPE(RecentManager);
-
-    GFile* file = g_file_new_for_path(filename.c_str());
-
-    removeRecentFileUri(g_file_get_uri(file));
 
     g_object_unref(file);
 }
 
-void RecentManager::removeRecentFileUri(string uri) {
+void RecentManager::removeRecentFileFilename(path filename) {
     XOJ_CHECK_TYPE(RecentManager);
 
+    GFile* file = g_file_new_for_path(filename.c_str());
+
     GtkRecentManager* recentManager = gtk_recent_manager_get_default();
-    gtk_recent_manager_remove_item(recentManager, uri.c_str(), NULL);
+    gtk_recent_manager_remove_item(recentManager, g_file_get_uri(file), NULL);
+
+    g_object_unref(file);
 }
 
 int RecentManager::getMaxRecent() {

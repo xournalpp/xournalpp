@@ -247,28 +247,40 @@ bool ToolHandler::isEnableShapreRecognizer()
     return current->enableShapeRecognizer;
 }
 
-void ToolHandler::setRuler(bool ruler)
+void ToolHandler::setAll(bool set) {
+    this->setArrow(false);
+    this->setCircle(false);
+    this->setRectangle(false);
+    this->setRuler(false);
+    this->setShapeRecognizer(false);
+}
+
+void ToolHandler::setRuler(bool ruler, bool disableOthers)
 {
     XOJ_CHECK_TYPE(ToolHandler);
 
+    if (ruler && disableOthers) setAll(false);
     this->current->ruler = ruler;
 }
-void ToolHandler::setRectangle(bool rectangle)
+void ToolHandler::setRectangle(bool rectangle, bool disableOthers)
 {
     XOJ_CHECK_TYPE(ToolHandler);
 
+    if (rectangle && disableOthers) setAll(false);
     this->current->rectangle = rectangle;
 }
-void ToolHandler::setCircle(bool circle)
+void ToolHandler::setCircle(bool circle, bool disableOthers)
 {
     XOJ_CHECK_TYPE(ToolHandler);
 
+    if (circle && disableOthers) setAll(false);
     this->current->circle = circle;
 }
-void ToolHandler::setArrow(bool arrow)
+void ToolHandler::setArrow(bool arrow, bool disableOthers)
 {
     XOJ_CHECK_TYPE(ToolHandler);
 
+    if (arrow && disableOthers) setAll(false);
     this->current->arrow = arrow;
 }
 
@@ -297,10 +309,11 @@ bool ToolHandler::isArrow()
     return this->current->arrow;
 }
 
-void ToolHandler::setShapeRecognizer(bool reco)
+void ToolHandler::setShapeRecognizer(bool reco, bool disableOthers)
 {
     XOJ_CHECK_TYPE(ToolHandler);
 
+    if (reco && disableOthers) setAll(false);
     this->current->shapeRecognizer = reco;
 }
 

@@ -13,6 +13,11 @@
 
 #include <typeinfo>
 
+#ifdef SHOW_REPAINT_BOUNDS
+#include <iostream>
+using namespace std;
+#endif
+
 DocumentView::DocumentView()
 {
 	XOJ_INIT_TYPE(DocumentView);
@@ -309,7 +314,7 @@ void DocumentView::drawLayer(cairo_t* cr, Layer* l)
 	}
 
 #ifdef SHOW_REPAINT_BOUNDS
-	cout << StringUtils::format("DBG:DocumentView: draw {0} / not draw {1}", {drawed, notDrawed}) << endl;
+	cout << bl::format("DBG:DocumentView: draw {1} / not draw {2}") % drawed % notDrawed << endl;
 #endif //SHOW_REPAINT_BOUNDS
 }
 

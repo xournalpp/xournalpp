@@ -14,6 +14,9 @@
 #ifndef __DOCUMENT_H__
 #define __DOCUMENT_H__
 
+#include <boost/filesystem/path.hpp>
+using boost::filesystem::path;
+
 #include <StringUtils.h>
 #include <XournalType.h>
 
@@ -32,105 +35,105 @@
 class Document
 {
 public:
-	Document(DocumentHandler* handler);
-	virtual ~Document();
+    Document(DocumentHandler* handler);
+    virtual ~Document();
 
 public:
-	bool readPdf(string filename, bool initPages, bool attachToDocument);
+    bool readPdf(path filename, bool initPages, bool attachToDocument);
 
-	int getPageCount();
-	int getPdfPageCount();
-	XojPopplerPage* getPdfPage(int page);
-	XojPopplerDocument& getPdfDocument();
+    int getPageCount();
+    int getPdfPageCount();
+    XojPopplerPage* getPdfPage(int page);
+    XojPopplerDocument& getPdfDocument();
 
-	void insertPage(PageRef p, int position);
-	void addPage(PageRef p);
-	PageRef getPage(int page);
-	void deletePage(int pNr);
+    void insertPage(PageRef p, int position);
+    void addPage(PageRef p);
+    PageRef getPage(int page);
+    void deletePage(int pNr);
 
-	void setPageSize(PageRef p, double width, double height);
+    void setPageSize(PageRef p, double width, double height);
 
-	int indexOf(PageRef page);
+    int indexOf(PageRef page);
 
-	string getLastErrorMsg();
+    string getLastErrorMsg();
 
-	bool isPdfDocumentLoaded();
-	int findPdfPage(int pdfPage);
+    bool isPdfDocumentLoaded();
+    int findPdfPage(int pdfPage);
 
-	void operator=(Document& doc);
+    void operator=(Document& doc);
 
-	void setFilename(string filename);
-	string getFilename();
-	string getPdfFilename();
+    void setFilename(path filename);
+    path getFilename();
+    path getPdfFilename();
 
-	string getEvMetadataFilename();
+    path getEvMetadataFilename();
 
-	GtkTreeModel* getContentsModel();
+    GtkTreeModel* getContentsModel();
 
-	void setCreateBackupOnSave(bool backup);
-	bool shouldCreateBackupOnSave();
+    void setCreateBackupOnSave(bool backup);
+    bool shouldCreateBackupOnSave();
 
-	void clearDocument(bool destroy = false);
+    void clearDocument(bool destroy = false);
 
-	bool isAttachPdf();
+    bool isAttachPdf();
 
-	cairo_surface_t* getPreview();
-	void setPreview(cairo_surface_t* preview);
+    cairo_surface_t* getPreview();
+    void setPreview(cairo_surface_t* preview);
 
-	void lock();
-	void unlock();
-	bool tryLock();
-
-private:
-	void buildContentsModel();
-	void buildTreeContentsModel(GtkTreeIter* parent, XojPopplerIter* iter);
-	void updateIndexPageNumbers();
-	static bool fillPageLabels(GtkTreeModel* tree_model, GtkTreePath* path,
-							GtkTreeIter* iter, Document* doc);
+    void lock();
+    void unlock();
+    bool tryLock();
 
 private:
-	XOJ_TYPE_ATTRIB;
+    void buildContentsModel();
+    void buildTreeContentsModel(GtkTreeIter* parent, XojPopplerIter* iter);
+    void updateIndexPageNumbers();
+    static bool fillPageLabels(GtkTreeModel* tree_model, GtkTreePath* path,
+                               GtkTreeIter* iter, Document* doc);
+
+private:
+    XOJ_TYPE_ATTRIB;
 
 
-	DocumentHandler* handler;
+    DocumentHandler* handler;
 
-	XojPopplerDocument pdfDocument;
+    XojPopplerDocument pdfDocument;
 
-	string filename;
-	string pdfFilename;
-	bool attachPdf;
+    path filename;
+    path pdfFilename;
+    bool attachPdf;
 
-	/**
-	 * Password: not handled yet
-	 */
-	string password;
+    /**
+     * Password: not handled yet
+     */
+    string password;
 
-	string lastError;
+    string lastError;
 
-	/**
-	 * The pages in the document
-	 */
-	std::vector<PageRef> pages;
+    /**
+     * The pages in the document
+     */
+    std::vector<PageRef> pages;
 
-	/**
-	 * The bookmark contents model
-	 */
-	GtkTreeModel* contentsModel;
+    /**
+     * The bookmark contents model
+     */
+    GtkTreeModel* contentsModel;
 
-	/**
-	 * create a backup before save, because the original file was an older fileversion
-	 */
-	bool createBackupOnSave;
+    /**
+     * create a backup before save, because the original file was an older fileversion
+     */
+    bool createBackupOnSave;
 
-	/**
-	 * The preview for the file
-	 */
-	cairo_surface_t* preview;
+    /**
+     * The preview for the file
+     */
+    cairo_surface_t* preview;
 
-	/**
-	 * The lock of the document
-	 */
-	GMutex documentLock;
+    /**
+     * The lock of the document
+     */
+    GMutex documentLock;
 };
 
 #endif /* __DOCUMENT_H__ */

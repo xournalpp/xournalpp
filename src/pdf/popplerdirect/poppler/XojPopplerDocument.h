@@ -15,41 +15,44 @@
 #include "XojPopplerPage.h"
 #include <StringUtils.h>
 
+#include <boost/filesystem/path.hpp>
+using boost::filesystem::path;
+
 class _IntPopplerDocument;
 class XojPopplerIter;
 
 class XojPopplerDocument
 {
 public:
-	XojPopplerDocument();
-	XojPopplerDocument(const XojPopplerDocument& doc);
-	virtual ~XojPopplerDocument();
+    XojPopplerDocument();
+    XojPopplerDocument(const XojPopplerDocument& doc);
+    virtual ~XojPopplerDocument();
 
 public:
-	void operator=(XojPopplerDocument& doc);
-	bool operator==(XojPopplerDocument& doc);
+    void operator=(XojPopplerDocument& doc);
+    bool operator==(XojPopplerDocument& doc);
 
-	XojPopplerIter* getContentsIter();
+    XojPopplerIter* getContentsIter();
 
-	XojPopplerPage* getPage(int page);
+    XojPopplerPage* getPage(int page);
 
-	bool isLoaded();
+    bool isLoaded();
 
-	int getPageCount();
+    int getPageCount();
 
-	void load(char* data, int length);
-	bool load(string filename, string password, GError** error);
+    void load(char* data, int length);
+    bool load(path filename, string password, GError** error);
 
-	PDFDoc* getDoc();
+    PDFDoc* getDoc();
 
-	gsize getId();
+    gsize getId();
 
-	bool save(string filename, GError** error);
+    bool save(path filename, GError** error);
 
 private:
-	XOJ_TYPE_ATTRIB;
+    XOJ_TYPE_ATTRIB;
 
-	_IntPopplerDocument* data;
+    _IntPopplerDocument* data;
 };
 
 #endif /* __XOJ_POPPLERDOCUMENT_H__ */

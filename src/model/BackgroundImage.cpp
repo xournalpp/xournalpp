@@ -35,7 +35,7 @@ BackgroundImage::~BackgroundImage()
     XOJ_RELEASE_TYPE(BackgroundImage);
 }
 
-string BackgroundImage::getFilename()
+path BackgroundImage::getFilename()
 {
     XOJ_CHECK_TYPE(BackgroundImage);
 
@@ -43,10 +43,10 @@ string BackgroundImage::getFilename()
     {
         return this->img->getFilename();
     }
-    return "";
+    return path("");
 }
 
-void BackgroundImage::loadFile(string filename, GError** error)
+void BackgroundImage::loadFile(path filename, GError** error)
 {
     XOJ_CHECK_TYPE(BackgroundImage);
 
@@ -136,7 +136,7 @@ void BackgroundImage::setCloneId(int id)
     }
 }
 
-void BackgroundImage::setFilename(string filename)
+void BackgroundImage::setFilename(path filename)
 {
     XOJ_CHECK_TYPE(BackgroundImage);
 

@@ -14,6 +14,7 @@
 
 #include <glib.h>
 
+//TODO rewrite with boost::iostreams
 class GzHelper
 {
 private:

@@ -19,23 +19,25 @@
 #include "../../cfg.h"
 
 #include <map>
+#include <boost/filesystem/path.hpp>
+using boost::filesystem::path;
 
 enum AttributeType
 {
-	ATTRIBUTE_TYPE_NONE,
-	ATTRIBUTE_TYPE_STRING,
-	ATTRIBUTE_TYPE_INT,
-	ATTRIBUTE_TYPE_DOUBLE,
-	ATTRIBUTE_TYPE_INT_HEX,
-	ATTRIBUTE_TYPE_BOOLEAN,
+    ATTRIBUTE_TYPE_NONE,
+    ATTRIBUTE_TYPE_STRING,
+    ATTRIBUTE_TYPE_INT,
+    ATTRIBUTE_TYPE_DOUBLE,
+    ATTRIBUTE_TYPE_INT_HEX,
+    ATTRIBUTE_TYPE_BOOLEAN,
 };
 
 enum ScrollbarHideType
 {
-	SCROLLBAR_HIDE_NONE = 0,
-	SCROLLBAR_HIDE_HORIZONTAL = 1,
-	SCROLLBAR_HIDE_VERTICAL = 2,
-	SCROLLBAR_HIDE_BOTH = 3
+    SCROLLBAR_HIDE_NONE = 0,
+    SCROLLBAR_HIDE_HORIZONTAL = 1,
+    SCROLLBAR_HIDE_VERTICAL = 2,
+    SCROLLBAR_HIDE_BOTH = 3
 };
 
 class ButtonConfig;
@@ -43,20 +45,20 @@ class ButtonConfig;
 class SAttribute
 {
 public:
-	SAttribute();
-	SAttribute(const SAttribute& attrib);
-	virtual ~SAttribute();
+    SAttribute();
+    SAttribute(const SAttribute& attrib);
+    virtual ~SAttribute();
 
 public:
-	XOJ_TYPE_ATTRIB;
+    XOJ_TYPE_ATTRIB;
 
-	string sValue;
-	int iValue;
-	double dValue;
+    string sValue;
+    int iValue;
+    double dValue;
 
-	AttributeType type;
+    AttributeType type;
 
-	string comment;
+    string comment;
 };
 
 class SElement;
@@ -64,450 +66,386 @@ class SElement;
 class __RefSElement
 {
 public:
-	__RefSElement();
-	virtual ~__RefSElement();
+    __RefSElement();
+    virtual ~__RefSElement();
 
 public:
-	void ref();
-	void unref();
+    void ref();
+    void unref();
 
 private:
-	XOJ_TYPE_ATTRIB;
+    XOJ_TYPE_ATTRIB;
 
-	std::map<string, SAttribute> attributes;
-	std::map<string, SElement> children;
+    std::map<string, SAttribute> attributes;
+    std::map<string, SElement> children;
 
-	int refcount;
+    int refcount;
 
-	friend class SElement;
+    friend class SElement;
 };
 
 class SElement
 {
 public:
-	SElement();
-	SElement(const SElement& elem);
-	virtual ~SElement();
+    SElement();
+    SElement(const SElement& elem);
+    virtual ~SElement();
 
 public:
-	void operator=(const SElement& elem);
+    void operator=(const SElement& elem);
 
-	void clear();
+    void clear();
 
-	SElement& child(string name);
+    SElement& child(string name);
 
-	void setIntHex(const string name, const int value);
-	void setInt(const string name, const int value);
-	void setDouble(const string name, const double value);
-	void setBool(const string name, const bool value);
-	void setString(const string name, const string value);
+    void setIntHex(const string name, const int value);
+    void setInt(const string name, const int value);
+    void setDouble(const string name, const double value);
+    void setBool(const string name, const bool value);
+    void setString(const string name, const string value);
 
-	void setComment(const string name, const string comment);
+    void setComment(const string name, const string comment);
 
-	bool getInt(const string name, int& value);
-	bool getDouble(const string name, double& value);
-	bool getBool(const string name, bool& value);
-	bool getString(const string name, string& value);
+    bool getInt(const string name, int& value);
+    bool getDouble(const string name, double& value);
+    bool getBool(const string name, bool& value);
+    bool getString(const string name, string& value);
 
-	std::map<string, SAttribute>& attributes();
-	std::map<string, SElement>& children();
+    std::map<string, SAttribute>& attributes();
+    std::map<string, SElement>& children();
 
 private:
-	XOJ_TYPE_ATTRIB;
+    XOJ_TYPE_ATTRIB;
 
-	__RefSElement* element;
+    __RefSElement* element;
 };
 
 class Settings
 {
 public:
-	Settings(string filename);
-	virtual ~Settings();
+    Settings(path filename);
+    virtual ~Settings();
 
 public:
-	bool load();
-	void parseData(xmlNodePtr cur, SElement& elem);
+    bool load();
+    void parseData(xmlNodePtr cur, SElement& elem);
 
-	void save();
+    void save();
 
-	/**
-	 * Check if there is an XInput device
-	 */
-	void checkCanXInput();
+    /**
+     * Check if there is an XInput device
+     */
+    void checkCanXInput();
 
-	/**
-	 * Enables / disables extended events
-	 */
-	//	void updateXEvents();
+    /**
+     * Enables / disables extended events
+     */
+    //	void updateXEvents();
 private:
-	void loadDefault();
-	void saveTimeout();
-	static gboolean saveCallback(Settings* data);
+    void loadDefault();
+    void saveTimeout();
+    static gboolean saveCallback(Settings* data);
 
-	void parseItem(xmlDocPtr doc, xmlNodePtr cur);
+    void parseItem(xmlDocPtr doc, xmlNodePtr cur);
 
-	xmlNodePtr savePropertyDouble(const gchar* key, double value,
-								xmlNodePtr parent);
-	xmlNodePtr saveProperty(const gchar* key, int value, xmlNodePtr parent);
-	xmlNodePtr saveProperty(const gchar* key, const gchar* value,
-							xmlNodePtr parent);
+    xmlNodePtr savePropertyDouble(const gchar* key, double value,
+                                  xmlNodePtr parent);
+    xmlNodePtr saveProperty(const gchar* key, int value, xmlNodePtr parent);
+    xmlNodePtr saveProperty(const gchar* key, const gchar* value,
+                            xmlNodePtr parent);
 
-	void saveData(xmlNodePtr root, string name, SElement& elem);
+    void saveData(xmlNodePtr root, string name, SElement& elem);
 
-	void saveButtonConfig();
-	void loadButtonConfig();
+    void saveButtonConfig();
+    void loadButtonConfig();
 public:
-	// Getter- / Setter
-	bool isPresureSensitivity();
-	void setPresureSensitivity(gboolean presureSensitivity);
+    // Getter- / Setter
+    bool isPresureSensitivity();
+    void setPresureSensitivity(gboolean presureSensitivity);
 
-	/**
-	 * XInput is enabled by the user
-	 */
-	bool isXinputEnabled();
-	void setXinputEnabled(gboolean useXinput);
+    /**
+     * XInput is enabled by the user
+     */
+    bool isXinputEnabled();
+    void setXinputEnabled(gboolean useXinput);
 
-	/**
-	 * Disable Core events if XInput is enabled
-	 */
-	bool isIgnoreCoreEvents();
-	void setIgnoreCoreEvents(bool ignor);
+    /**
+     * Disable Core events if XInput is enabled
+     */
+    bool isIgnoreCoreEvents();
+    void setIgnoreCoreEvents(bool ignor);
 
-	/**
-	 * XInput is available
-	 */
-	bool isXInputAvailable();
+    /**
+     * XInput is available
+     */
+    bool isXInputAvailable();
 
-	/**
-	 * XInput should be used in the application
-	 */
-	bool isUseXInput();
+    /**
+     * XInput should be used in the application
+     */
+    bool isUseXInput();
 
-	/**
-	 * The last used font
-	 */
-	XojFont& getFont();
-	void setFont(const XojFont& font);
+    /**
+     * The last used font
+     */
+    XojFont& getFont();
+    void setFont(const XojFont& font);
 
-	/**
-	 * The selected Toolbar
-	 */
-	void setSelectedToolbar(string name);
-	string getSelectedToolbar();
+    /**
+     * The selected Toolbar
+     */
+    void setSelectedToolbar(string name);
+    string getSelectedToolbar();
 
-	/**
-	 * Sets the screen resolution in DPI
-	 */
-	void setDisplayDpi(int dpi);
-	int getDisplayDpi();
+    /**
+     * Sets the screen resolution in DPI
+     */
+    void setDisplayDpi(int dpi);
+    int getDisplayDpi();
 
-	/**
-	 * The last saved path
-	 */
-	void setLastSavePath(string path);
-	string getLastSavePath();
+    /**
+     * The last saved path
+     */
+    void setLastSavePath(path p);
+    path getLastSavePath();
 
-	void setLastImagePath(string path);
-	string getLastImagePath();
+    void setLastImagePath(path p);
+    path getLastImagePath();
 
-	void setMainWndSize(int width, int height);
-	void setMainWndMaximized(bool max);
-	int getMainWndWidth();
-	int getMainWndHeight();
-	bool isMainWndMaximized();
+    void setMainWndSize(int width, int height);
+    void setMainWndMaximized(bool max);
+    int getMainWndWidth();
+    int getMainWndHeight();
+    bool isMainWndMaximized();
 
-	bool isSidebarVisible();
-	void setSidebarVisible(bool visible);
+    bool isSidebarVisible();
+    void setSidebarVisible(bool visible);
 
-	int getSidebarWidth();
-	void setSidebarWidth(int width);
+    int getSidebarWidth();
+    void setSidebarWidth(int width);
 
-	bool isSidebarOnRight();
-	void setSidebarOnRight(bool right);
+    bool isSidebarOnRight();
+    void setSidebarOnRight(bool right);
 
-	bool isScrollbarOnLeft();
-	void setScrollbarOnLeft(bool right);
+    bool isScrollbarOnLeft();
+    void setScrollbarOnLeft(bool right);
 
-	double getWidthMinimumMultiplier();
-	double getWidthMaximumMultiplier();
+    double getWidthMinimumMultiplier();
+    double getWidthMaximumMultiplier();
 
-	void setShowTwoPages(bool showTwoPages);
-	bool isShowTwoPages();
+    void setShowTwoPages(bool showTwoPages);
+    bool isShowTwoPages();
 
-	void setPresentationMode(bool presentationMode);
-	bool isPresentationMode();
+    void setPresentationMode(bool presentationMode);
+    bool isPresentationMode();
 
-	bool isAutloadPdfXoj();
-	void setAutoloadPdfXoj(bool load);
+    bool isAutloadPdfXoj();
+    void setAutoloadPdfXoj(bool load);
 
-	int getAutosaveTimeout();
-	void setAutosaveTimeout(int autosave);
-	bool isAutosaveEnabled();
-	void setAutosaveEnabled(bool autosave);
+    int getAutosaveTimeout();
+    void setAutosaveTimeout(int autosave);
+    bool isAutosaveEnabled();
+    void setAutosaveEnabled(bool autosave);
 
-	bool getAddVerticalSpace();
-	void setAddVerticalSpace(bool space);
+    bool getAddVerticalSpace();
+    void setAddVerticalSpace(bool space);
 
-	bool getAddHorizontalSpace();
-	void setAddHorizontalSpace(bool space);
+    bool getAddHorizontalSpace();
+    void setAddHorizontalSpace(bool space);
 
-	bool getfixXinput();
-	void setfixXinput(bool fix);
+    bool getfixXinput();
+    void setfixXinput(bool fix);
 
-	bool isEnableLeafEnterWorkaround();
-	void setEnableLeafEnterWorkaround(bool enable);
+    bool isEnableLeafEnterWorkaround();
+    void setEnableLeafEnterWorkaround(bool enable);
 
-	bool isShowBigCursor();
-	void setShowBigCursor(bool b);
+    bool isShowBigCursor();
+    void setShowBigCursor(bool b);
 
-	ScrollbarHideType getScrollbarHideType();
-	void setScrollbarHideType(ScrollbarHideType type);
+    ScrollbarHideType getScrollbarHideType();
+    void setScrollbarHideType(ScrollbarHideType type);
 
-	string getDefaultSaveName();
-	void setDefaultSaveName(string name);
+    string getDefaultSaveName();
+    void setDefaultSaveName(string name);
 
-	ButtonConfig* getButtonConfig(int id);
+    ButtonConfig* getButtonConfig(int id);
 
-	ButtonConfig* getEraserButtonConfig();
-	ButtonConfig* getMiddleButtonConfig();
-	ButtonConfig* getRightButtonConfig();
-	ButtonConfig* getTouchButtonConfig();
-	ButtonConfig* getDefaultButtonConfig();
+    ButtonConfig* getEraserButtonConfig();
+    ButtonConfig* getMiddleButtonConfig();
+    ButtonConfig* getRightButtonConfig();
+    ButtonConfig* getTouchButtonConfig();
+    ButtonConfig* getDefaultButtonConfig();
 
-	string getFullscreenHideElements();
-	void setFullscreenHideElements(string elements);
+    string getFullscreenHideElements();
+    void setFullscreenHideElements(string elements);
 
-	string getPresentationHideElements();
-	void setPresentationHideElements(string elements);
+    string getPresentationHideElements();
+    void setPresentationHideElements(string elements);
 
-	PageInsertType getPageInsertType();
-	void setPageInsertType(PageInsertType type);
+    PageInsertType getPageInsertType();
+    void setPageInsertType(PageInsertType type);
 
-	int getPageBackgroundColor();
-	void setPageBackgroundColor(int color);
+    int getPageBackgroundColor();
+    void setPageBackgroundColor(int color);
 
-	int getSelectionColor();
-	void setSelectionColor(int color);
+    int getSelectionColor();
+    void setSelectionColor(int color);
 
-	int getPdfPageCacheSize();
-	void setPdfPageCacheSize(int size);
+    int getPdfPageCacheSize();
+    void setPdfPageCacheSize(int size);
 
-	string getVisiblePageFormats();
+    string getVisiblePageFormats();
 public:
-	// Custom settings
-	SElement& getCustomElement(string name);
+    // Custom settings
+    SElement& getCustomElement(string name);
 
-	/**
-	 * Call this after you have done all custom settings changes
-	 */
-	void customSettingsChanged();
-
-private:
-
-	Settings(const Settings& settings)
-	{
-	}
-
-	void operator=(const Settings& settings)
-	{
-	}
+    /**
+     * Call this after you have done all custom settings changes
+     */
+    void customSettingsChanged();
 
 private:
-	XOJ_TYPE_ATTRIB;
 
-	bool saved;
-	gint timeoutId;
+    Settings(const Settings& settings) { }
 
-	/**
-	 * The config filename
-	 */
-	string filename;
+    void operator=(const Settings& settings) { }
 
 private:
-	// Settings
-	/**
-	 * The settings tree
-	 */
-	std::map<string, SElement> data;
+    XOJ_TYPE_ATTRIB;
 
-	/**
-	 * Use XInput
-	 */
-	bool useXinput;
+    bool saved;
+    gint timeoutId;
 
-	/**
-	 * If there is an XInput device available
-	 */
-	bool canXIput;
+    /** The config filename */
+    path filename;
 
-	/**
-	 * Use pen pressure to control stroke width?
-	 */
-	bool presureSensitivity;
+private:
+    // Settings
+    /** The settings tree */
+    std::map<string, SElement> data;
 
-	/**
-	 * Ignore core events if XInput is enabled
-	 */
-	bool ignoreCoreEvents;
+    /** Use XInput */
+    bool useXinput;
 
-	/**
-	 * If the sidebar is visible
-	 */
-	bool showSidebar;
+    /** If there is an XInput device available */
+    bool canXIput;
 
-	/**
-	 * The Width of the Sidebar
-	 */
-	int sidebarWidth;
+    /** Use pen pressure to control stroke width? */
+    bool presureSensitivity;
 
-	/**
-	 * If the sidebar is on the right
-	 */
-	bool sidebarOnRight;
+    /** Ignore core events if XInput is enabled */
+    bool ignoreCoreEvents;
 
-	/**
-	 * Show a better visible cursor for pen
-	 */
-	bool showBigCursor;
+    /** If the sidebar is visible */
+    bool showSidebar;
 
-	/**
-	 * Hide the scrollbar
-	 */
-	ScrollbarHideType scrollbarHideType;
+    /** The Width of the Sidebar */
+    int sidebarWidth;
 
-	/**
-	 * The selected Toolbar name
-	 */
-	string selectedToolbar;
+    /** If the sidebar is on the right */
+    bool sidebarOnRight;
 
-	/**
-	 * The last saved folder
-	 */
-	string lastSavePath;
+    /** Show a better visible cursor for pen */
+    bool showBigCursor;
 
-	/**
-	 * The last "insert image" folder
-	 */
-	string lastImagePath;
+    /** Hide the scrollbar */
+    ScrollbarHideType scrollbarHideType;
 
-	/**
-	 * The last used font
-	 */
-	XojFont font;
+    /** The selected Toolbar name */
+    string selectedToolbar;
 
-	/**
-	 * The display resolution, in pixels per inch
-	 */
-	gint displayDpi;
+    /** The last saved folder */
+    path lastSavePath;
 
-	/**
-	 * If the window is maximized
-	 */
-	bool maximized;
+    /** The last "insert image" folder */
+    path lastImagePath;
 
-	/**
-	 * The Main window size
-	 */
-	int mainWndWidth;
-	int mainWndHeight;
+    /** The last used font */
+    XojFont font;
 
-	/**
-	 * Show Scrollbar on left
-	 */
-	bool scrollbarOnLeft;
+    /** The display resolution, in pixels per inch */
+    gint displayDpi;
 
-	/**
-	 * Displays two pages
-	 */
-	bool showTwoPages;
+    /** If the window is maximized */
+    bool maximized;
 
-	/**
-	 * Sets presentation mode
-	 */
-	bool presentationMode;
+    /** The Main window size */
+    int mainWndWidth;
+    int mainWndHeight;
 
-	/**
-	 * Automatically load filename.pdf.xoj instead of filename.pdf (true/false)
-	 */
-	bool autoloadPdfXoj;
+    /** Show Scrollbar on left */
+    bool scrollbarOnLeft;
 
-	/**
-	 * Minimum width multiplier
-	 */
-	double widthMinimumMultiplier;
+    /** Displays two pages */
+    bool showTwoPages;
 
-	/**
-	 * maximum width multiplier
-	 */
-	double widthMaximumMultiplier;
+    /** Sets presentation mode */
+    bool presentationMode;
 
-	/**
-	 * automatically save documents for crash recovery each x minutes
-	 */
-	int autosaveTimeout;
-	bool autosaveEnabled;
+    /** Automatically load filename.pdf.xoj instead of filename.pdf (true/false) */
+    bool autoloadPdfXoj;
 
-	/**
-	 * allow scroll outside the page
-	 */
-	bool addHorizontalSpace, addVerticalSpace;
+    /** Minimum width multiplier */
+    double widthMinimumMultiplier;
 
-	/**
-	 * apply the xinput fix
-	 */
-	bool fixXinput;
+    /** Maximum width multiplier */
+    double widthMaximumMultiplier;
 
-	/**
-	 * Enable Bugfix to prevent crash on GTK 2.18 etc
-	 */
-	bool enableLeafEnterWorkaround;
+    /** Automatically save documents for crash recovery each x minutes */
+    int autosaveTimeout;
+    /** Enable automatic save */
+    bool autosaveEnabled;
 
-	/**
-	 * Default name if you save a new document
-	 */
-	string defaultSaveName;
+    /*  Allow scroll outside the page */
+    bool addHorizontalSpace, addVerticalSpace;
 
-	/**
-	 * The button config
-	 *
-	 * 0: eraser
-	 * 1: middle button
-	 * 2: right button
-	 * 3: touch screen
-	 * 4: default
-	 */
-	ButtonConfig* buttonConfig[5];
+    /** Apply the xinput fix */
+    bool fixXinput;
 
-	/**
-	 * Which gui elements are hidden if you are in Fullscreen mode, separated by a colon (,)
-	 */
-	string fullscreenHideElements;
-	string presentationHideElements;
+    /** Enable Bugfix to prevent crash on GTK 2.18 etc */
+    bool enableLeafEnterWorkaround;
 
-	/**
-	 * If you insert a page, which type will be selected? Plain, Lined, Copy current page...
-	 */
-	PageInsertType pageInsertType;
+    /** Default name if you save a new document */
+    string defaultSaveName; //should be string - don't change to path
 
-	/**
-	 * The background color of a new inserted page
-	 */
-	int pageBackgroundColor;
+    /**
+     * The button config
+     *
+     * 0: eraser
+     * 1: middle button
+     * 2: right button
+     * 3: touch screen
+     * 4: default
+     */
+    ButtonConfig* buttonConfig[5];
 
-	/**
-	 * The count of pages which will be cached
-	 */
-	int pdfPageCacheSize;
+    /**
+     * Which gui elements are hidden if you are in Fullscreen mode,
+     * separated by a colon (,)
+     */
+    string fullscreenHideElements;
+    string presentationHideElements;
 
-	/**
-	 * The color to draw borders on selected elements (Page, insert image selection etc.)
-	 */
-	int selectionColor;
+    /**
+     * If you insert a page, which type will be selected?
+     * Plain, Lined, Copy current page...
+     */
+    PageInsertType pageInsertType;
 
-	/**
-	 * The page format which are visible
-	 */
-	string visiblePageFormats;
+    /** The background color of a new inserted page */
+    int pageBackgroundColor;
+
+    /** The count of pages which will be cached */
+    int pdfPageCacheSize;
+
+    /**
+     * The color to draw borders on selected elements
+     * (Page, insert image selection etc.)
+     */
+    int selectionColor;
+
+    /** The page format which are visible */
+    string visiblePageFormats;
 };
 
 #endif /* __SETTINGS_H__ */

@@ -35,14 +35,15 @@
 
 
 #ifdef RECOGNIZER_DEBUG
-#include <boost/format.hpp>
-#include <string>
-#define RDEBUG(msg) cout << boost::format(std::string("ShapeReco:: ") + msg)
+#include <StringUtils.h>
+#include <iostream>
+using namespace std;
+#define RDEBUG(msg) cout << bl::format(CONCAT("ShapeReco::", msg, "\n"))
 #else
 class no_debug_format {
 public:
     template<class T>  
-    no_debug_format&   operator%(const T& x)
+    no_debug_format& operator%(const T& x)
         { return *this; }
 };
 #define RDEBUG(msg) no_debug_format()

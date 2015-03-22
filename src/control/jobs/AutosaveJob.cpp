@@ -40,7 +40,7 @@ void AutosaveJob::run()
 
     doc->lock();
     handler.prepareSave(doc);
-    string filename = doc->getFilename();
+    path filename = doc->getFilename();
     doc->unlock();
 
     // TODO: incrementel autosave
@@ -50,15 +50,10 @@ void AutosaveJob::run()
     }
     else
     {
-        int pos = filename.find_last_of("/") + 1;
-        string folder = filename.substr(0, pos);
-        string file = filename.substr(pos);
-        filename = folder + ".";
-        if (file.length() > 5 && file.substr(file.length() - 4) == ".xoj")
-        {
-            filename += file.substr(0, file.length() - 4);
-        }
-        filename += ".autosave.xoj";
+        string file = filename.filename().string();
+        filename.remove_filename();
+        filename /= CONCAT(".", file);
+        filename.replace_extension(".autosave.xoj");
     }
 
     control->renameLastAutosaveFile();

@@ -15,42 +15,44 @@
 #include <XournalType.h>
 #include <StringUtils.h>
 #include <gtk/gtk.h>
+#include <boost/filesystem/path.hpp>
+using boost::filesystem::path;
 
 class BackgroundImageContents;
 
 class BackgroundImage
 {
 public:
-	BackgroundImage();
-	BackgroundImage(const BackgroundImage& img);
-	virtual ~BackgroundImage();
+    BackgroundImage();
+    BackgroundImage(const BackgroundImage& img);
+    virtual ~BackgroundImage();
 
 public:
-	string getFilename();
-	void loadFile(string filename, GError** error);
+    path getFilename();
+    void loadFile(path filename, GError** error);
 
-	void setAttach(bool attach);
+    void setAttach(bool attach);
 
-	void operator=(BackgroundImage& img);
-	bool operator==(const BackgroundImage& img);
+    void operator=(BackgroundImage& img);
+    bool operator==(const BackgroundImage& img);
 
-	void free();
+    void free();
 
-	void clearSaveState();
-	int getCloneId();
-	void setCloneId(int id);
+    void clearSaveState();
+    int getCloneId();
+    void setCloneId(int id);
 
-	void setFilename(string filename);
+    void setFilename(path filename);
 
-	bool isAttached();
-	bool isEmpty();
+    bool isAttached();
+    bool isEmpty();
 
-	GdkPixbuf* getPixbuf();
+    GdkPixbuf* getPixbuf();
 
 private:
-	XOJ_TYPE_ATTRIB;
+    XOJ_TYPE_ATTRIB;
 
-	BackgroundImageContents* img;
+    BackgroundImageContents* img;
 };
 
 #endif /* __BACKGROUNDIMAGE_H__ */

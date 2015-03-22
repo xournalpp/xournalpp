@@ -281,7 +281,7 @@ void SaveHandler::visitPage(XmlNode* root, PageRef p, Document* doc, int id)
             {
                 cout << "doc->isAttachPdf()" << endl;
                 background->setAttrib("domain", "attach");
-                string filename = doc->getFilename() + ".bg.pdf";
+                path filename = path(doc->getFilename().string() + ".bg.pdf");
                 background->setAttrib("filename", filename.c_str());
 
                 GError* error = NULL;
@@ -294,10 +294,8 @@ void SaveHandler::visitPage(XmlNode* root, PageRef p, Document* doc, int id)
                         this->errorMessage += "\n";
                     }
 
-                    char* msg = g_strdup_printf(_("Could not write background \"%s\", %s"),
-                                                filename.c_str(), error->message);
-                    this->errorMessage += msg;
-                    g_free(msg);
+                    this->errorMessage += (bl::format(_("Could not write background \"{1}\", {2}"))
+                            % filename.string() % error->message).str();
 
                     g_error_free(error);
                 }
@@ -305,8 +303,7 @@ void SaveHandler::visitPage(XmlNode* root, PageRef p, Document* doc, int id)
             else
             {
                 background->setAttrib("domain", "absolute");
-                string pdfName = doc->getPdfFilename();
-                background->setAttrib("filename", pdfName.c_str());
+                background->setAttrib("filename", doc->getPdfFilename().c_str());
             }
         }
         background->setAttrib("pageno", p->getPdfPageNr() + 1);
@@ -370,7 +367,7 @@ void SaveHandler::visitPage(XmlNode* root, PageRef p, Document* doc, int id)
 }
 
 void SaveHandler::saveTo(OutputStream* out,
-                         string filename,
+                         path filename,
                          ProgressListener* listener)
 {
     XOJ_CHECK_TYPE(SaveHandler);
@@ -389,22 +386,17 @@ void SaveHandler::saveTo(OutputStream* out,
     {
         BackgroundImage* img = (BackgroundImage*) l->data;
 
-        char* tmpfn = g_strdup_printf("%s.%s", filename.c_str(),
-                                      img->getFilename().c_str());
-        if (!gdk_pixbuf_save(img->getPixbuf(), tmpfn, "png", NULL, NULL))
+        string tmpfn = CONCAT(filename.string(), ".", img->getFilename().string());
+        if (!gdk_pixbuf_save(img->getPixbuf(), tmpfn.c_str(), "png", NULL, NULL))
         {
-            char* msg = g_strdup_printf(
-                                        _("Could not write background \"%s\". Continuing anyway."), tmpfn);
-
             if (!this->errorMessage.empty())
             {
                 this->errorMessage += "\n";
             }
 
-            this->errorMessage += msg;
-            g_free(msg);
+            this->errorMessage += (bl::format(_("Could not write background \"{1}\". Continuing anyway."))
+                    % tmpfn).str();
         }
-        g_free(tmpfn);
     }
 
     setlocale(LC_NUMERIC, saved_locale);

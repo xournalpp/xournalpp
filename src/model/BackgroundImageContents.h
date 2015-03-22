@@ -16,11 +16,13 @@
 #include <StringUtils.h>
 #include <XournalType.h>
 #include <gtk/gtk.h>
+#include <boost/filesystem/path.hpp>
+using boost::filesystem::path;
 
 class BackgroundImageContents
 {
 public:
-    BackgroundImageContents(string filename, GError** error);
+    BackgroundImageContents(path filename, GError** error);
 
 private:
     BackgroundImageContents();
@@ -35,8 +37,8 @@ public:
     void reference();
 
 public:
-    string getFilename();
-    void setFilename(string filename);
+    path getFilename();
+    void setFilename(path filename);
 
     bool isAttach();
     void setAttach(bool attach);
@@ -50,7 +52,7 @@ private:
     XOJ_TYPE_ATTRIB;
 
     int ref;
-    string filename;
+    path filename;
     bool attach;
     int pageId;
     GdkPixbuf* pixbuf;
