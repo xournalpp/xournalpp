@@ -21,23 +21,23 @@ class Control;
 class AutosaveJob : public Job
 {
 public:
-    AutosaveJob(Control* control);
+	AutosaveJob(Control* control);
 
 protected:
-    virtual ~AutosaveJob();
+	virtual ~AutosaveJob();
 
 public:
-    virtual void run();
-    void afterRun();
+	virtual void run();
+	void afterRun();
 
-    virtual JobType getType();
+	virtual JobType getType();
 
 private:
-    XOJ_TYPE_ATTRIB;
+	XOJ_TYPE_ATTRIB;
 
 
-    Control* control;
-    string error;
+	Control* control;
+	string error;
 };
 
 #endif /* __AUTOSAVEJOB_H__ */

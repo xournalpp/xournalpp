@@ -21,11 +21,11 @@
 
 typedef enum
 {
-    JOB_PRIORITY_URGENT, // Rendering current page range
-    JOB_PRIORITY_HIGH, // Rendering current thumbnail range
-    JOB_PRIORITY_LOW, // Rendering pages not in current range
-    JOB_PRIORITY_NONE, // Any other job: load, save, print, ...
-    JOB_N_PRIORITIES
+	JOB_PRIORITY_URGENT, // Rendering current page range
+	JOB_PRIORITY_HIGH, // Rendering current thumbnail range
+	JOB_PRIORITY_LOW, // Rendering pages not in current range
+	JOB_PRIORITY_NONE, // Any other job: load, save, print, ...
+	JOB_N_PRIORITIES
 } JobPriority;
 
 class Scheduler

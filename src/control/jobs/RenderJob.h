@@ -19,7 +19,7 @@
 class Rectangle;
 class PageView;
 
-class RenderJob: public Job
+class RenderJob : public Job
 {
 public:
 	RenderJob(PageView* view);

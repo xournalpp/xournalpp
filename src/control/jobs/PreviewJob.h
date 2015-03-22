@@ -20,22 +20,22 @@ class SidebarPreviewPage;
 class PreviewJob : public Job
 {
 public:
-    PreviewJob(SidebarPreviewPage* sidebar);
+	PreviewJob(SidebarPreviewPage* sidebar);
 
 protected:
-    virtual ~PreviewJob();
+	virtual ~PreviewJob();
 
 public:
-    virtual void* getSource();
+	virtual void* getSource();
 
-    virtual void run();
+	virtual void run();
 
-    virtual JobType getType();
+	virtual JobType getType();
 
 private:
-    XOJ_TYPE_ATTRIB;
+	XOJ_TYPE_ATTRIB;
 
-    SidebarPreviewPage* sidebarPreview;
+	SidebarPreviewPage* sidebarPreview;
 };
 
 #endif /* __PREVIEWJOB_H__ */

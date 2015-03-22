@@ -18,27 +18,27 @@
 class SynchronizedProgressListener : public ProgressListener
 {
 public:
-    SynchronizedProgressListener(ProgressListener* target);
-    virtual ~SynchronizedProgressListener();
+	SynchronizedProgressListener(ProgressListener* target);
+	virtual ~SynchronizedProgressListener();
 
 public:
-    virtual void setMaximumState(int max);
-    virtual void setCurrentState(int state);
+	virtual void setMaximumState(int max);
+	virtual void setCurrentState(int state);
 
 private:
-    static bool setMaxCallback(SynchronizedProgressListener* listener);
-    static bool setCurrentCallback(SynchronizedProgressListener* listener);
+	static bool setMaxCallback(SynchronizedProgressListener* listener);
+	static bool setCurrentCallback(SynchronizedProgressListener* listener);
 
 public:
-    XOJ_TYPE_ATTRIB;
+	XOJ_TYPE_ATTRIB;
 
-    ProgressListener* target;
+	ProgressListener* target;
 
-    int maxIdleId;
-    int currentIdleId;
+	int maxIdleId;
+	int currentIdleId;
 
-    int max;
-    int current;
+	int max;
+	int current;
 };
 
 #endif /* __SYNCHRONIZEDPROGRESSLISTENER_H__ */

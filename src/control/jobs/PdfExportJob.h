@@ -24,24 +24,24 @@ class Control;
 class PdfExportJob : public BlockingJob
 {
 public:
-    PdfExportJob(Control* control);
+	PdfExportJob(Control* control);
 
 protected:
-    virtual ~PdfExportJob();
+	virtual ~PdfExportJob();
 
 public:
-    void run();
-    virtual void afterRun();
+	void run();
+	virtual void afterRun();
 
 public:
-    bool showFilechooser();
+	bool showFilechooser();
 
 private:
-    XOJ_TYPE_ATTRIB;
+	XOJ_TYPE_ATTRIB;
 
-    path filename;
+	path filename;
 
-    string errorMsg;
+	string errorMsg;
 };
 
 #endif /* __PDFEXPORTJOB_H__ */

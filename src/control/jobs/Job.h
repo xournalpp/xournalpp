@@ -17,73 +17,73 @@
 
 enum JobType
 {
-    JOB_TYPE_BLOCKING, JOB_TYPE_PREVIEW, JOB_TYPE_RENDER, JOB_TYPE_AUTOSAVE
+	JOB_TYPE_BLOCKING, JOB_TYPE_PREVIEW, JOB_TYPE_RENDER, JOB_TYPE_AUTOSAVE
 };
 
 class Job
 {
 public:
-    Job();
+	Job();
 
 protected:
-    virtual ~Job();
+	virtual ~Job();
 
 public:
 
-    /**
-     * Unref the Job, the initial refcount is set to 1 on creation
-     */
-    void unref();
+	/**
+	 * Unref the Job, the initial refcount is set to 1 on creation
+	 */
+	void unref();
 
-    /**
-     * Increase the refcount
-     */
-    void ref();
+	/**
+	 * Increase the refcount
+	 */
+	void ref();
 
-    /**
-     * Delete Job because e.g. the source was removed
-     */
-    void deleteJob();
-
-public:
-    virtual JobType getType() = 0;
+	/**
+	 * Delete Job because e.g. the source was removed
+	 */
+	void deleteJob();
 
 public:
-    /**
-     * this method is called
-     */
-    virtual void execute();
+	virtual JobType getType() = 0;
 
-    virtual void* getSource();
+public:
+	/**
+	 * this method is called
+	 */
+	virtual void execute();
+
+	virtual void* getSource();
 
 protected:
-    /**
-     * override this method
-     */
-    virtual void run() = 0;
+	/**
+	 * override this method
+	 */
+	virtual void run() = 0;
 
-    /**
-     * This method should be called as _last_ operation in run
-     *
-     * If you call it in another position the object will be deleted before run is finished!
-     */
-    void callAfterRun();
+	/**
+	 * This method should be called as _last_ operation in run
+	 *
+	 * If you call it in another position the object will be deleted before run is finished!
+	 */
+	void callAfterRun();
 
-    /**
-     * override this method
-     */
-    virtual void afterRun();
-
-private:
-    static bool callAfterCallback(Job* job);
+	/**
+	 * override this method
+	 */
+	virtual void afterRun();
 
 private:
-    XOJ_TYPE_ATTRIB;
+	static bool callAfterCallback(Job* job);
 
-    int afterRunId;
+private:
+	XOJ_TYPE_ATTRIB;
 
-    int refCount;
-    GMutex refMutex;
+	int afterRunId;
+
+	int refCount;
+	GMutex refMutex;
 };
 
 #endif /* __JOB_H__ */

@@ -23,24 +23,24 @@ class Control;
 class BlockingJob : public Job
 {
 public:
-    BlockingJob(Control* control, string name);
+	BlockingJob(Control* control, string name);
 
 protected:
-    virtual ~BlockingJob();
+	virtual ~BlockingJob();
 
 public:
-    void execute();
+	void execute();
 
-    virtual JobType getType();
+	virtual JobType getType();
 
 protected:
-    static bool finished(Control* control);
+	static bool finished(Control* control);
 
 private:
-    XOJ_TYPE_ATTRIB;
+	XOJ_TYPE_ATTRIB;
 
 protected:
-    Control* control;
+	Control* control;
 };
 
 #endif /* __BLOCKINGJOB_H__ */
