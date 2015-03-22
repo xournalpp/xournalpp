@@ -16,7 +16,6 @@
 #include "../pdf/popplerdirect/poppler/XojPopplerPage.h"
 #include <XournalType.h>
 
-
 class PdfCache
 {
 public:
@@ -25,7 +24,7 @@ public:
 
 private:
 	PdfCache(const PdfCache& cache);
-	void operator = (const PdfCache& cache);
+	void operator=(const PdfCache& cache);
 
 public:
 	void render(cairo_t* cr, XojPopplerPage* popplerPage, double zoom);

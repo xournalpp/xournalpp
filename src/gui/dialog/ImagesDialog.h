@@ -19,11 +19,11 @@ class Document;
 class Settings;
 class BackgroundImage;
 
-class ImagesDialog: public GladeGui
+class ImagesDialog : public GladeGui
 {
 public:
 	ImagesDialog(GladeSearchpath* gladeSearchPath, Document* doc,
-	             Settings* settings);
+				Settings* settings);
 	virtual ~ImagesDialog();
 
 public:
@@ -42,7 +42,7 @@ private:
 	void updateOkButton();
 
 	static void sizeAllocate(GtkWidget* widget, GtkRequisition* requisition,
-	                         ImagesDialog* dlg);
+							ImagesDialog* dlg);
 	static void okButtonCallback(GtkButton* button, ImagesDialog* dlg);
 	static void filechooserButtonCallback(GtkButton* button, ImagesDialog* dlg);
 

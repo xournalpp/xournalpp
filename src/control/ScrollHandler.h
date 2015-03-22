@@ -20,7 +20,7 @@ class Control;
 #include "../model/PageRef.h"
 #include "../gui/widgets/SpinPageAdapter.h"
 
-class ScrollHandler: public SpinPageListener
+class ScrollHandler : public SpinPageListener
 {
 public:
 	ScrollHandler(Control* control);

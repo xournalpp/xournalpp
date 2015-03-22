@@ -16,11 +16,11 @@
 #include "../../control/settings/Settings.h"
 #include <XournalType.h>
 
-class PdfPagesDialog: public GladeGui
+class PdfPagesDialog : public GladeGui
 {
 public:
 	PdfPagesDialog(GladeSearchpath* gladeSearchPath, Document* doc,
-	               Settings* settings);
+				Settings* settings);
 	virtual ~PdfPagesDialog();
 
 public:
@@ -42,7 +42,7 @@ private:
 	void updateOkButton();
 
 	static void sizeAllocate(GtkWidget* widget, GtkRequisition* requisition,
-	                         PdfPagesDialog* dlg);
+							PdfPagesDialog* dlg);
 	static void onlyNotUsedCallback(GtkToggleButton* tb, PdfPagesDialog* dlg);
 	static void okButtonCallback(GtkButton* button, PdfPagesDialog* dlg);
 

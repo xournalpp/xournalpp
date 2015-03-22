@@ -14,7 +14,7 @@
 
 #include "XmlNode.h"
 
-class XmlImageNode: public XmlNode
+class XmlImageNode : public XmlNode
 {
 public:
 	XmlImageNode(const char* tag);
@@ -24,7 +24,7 @@ public:
 	void setImage(cairo_surface_t* img);
 
 	static cairo_status_t pngWriteFunction(XmlImageNode* image, unsigned char* data,
-	                                       unsigned int length);
+										unsigned int length);
 
 	virtual void writeOut(OutputStream* out);
 

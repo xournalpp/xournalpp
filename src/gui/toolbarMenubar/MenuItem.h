@@ -17,12 +17,12 @@
 /**
  * Menuitem handler
  */
-class MenuItem: public AbstractItem
+class MenuItem : public AbstractItem
 {
 public:
 	MenuItem(ActionHandler* handler, GtkWidget* widget, ActionType type);
 	MenuItem(ActionHandler* handler, GtkWidget* widget, ActionType type,
-	         ActionGroup group);
+			ActionGroup group);
 	virtual ~MenuItem();
 
 private:

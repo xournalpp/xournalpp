@@ -40,7 +40,7 @@ void PagePositionHandler::freeData()
 }
 
 void PagePositionHandler::update(PageView** viewPages, int viewPagesLen,
-                                 int maxY)
+								 int maxY)
 {
 	XOJ_CHECK_TYPE(PagePositionHandler);
 
@@ -72,7 +72,7 @@ void PagePositionHandler::update(PageView** viewPages, int viewPagesLen,
 }
 
 PageView* PagePositionHandler::getBestMatchingView(int x, int y, int width,
-                                                   int heigth)
+												   int heigth)
 {
 	XOJ_CHECK_TYPE(PagePositionHandler);
 
@@ -85,7 +85,7 @@ PageView* PagePositionHandler::getBestMatchingView(int x, int y, int width,
 	PagePosition* pp1 = binarySearch(this->data, 0, this->dataCount - 1, y, id);
 	id = -1;
 	PagePosition* pp2 = binarySearch(this->data, 0, this->dataCount - 1, y + heigth,
-	                                 id);
+									id);
 
 	PageViewIndex index(x, y, width, heigth);
 	if (pp1 != NULL)
@@ -102,7 +102,7 @@ PageView* PagePositionHandler::getBestMatchingView(int x, int y, int width,
 }
 
 PageView* PagePositionHandler::getViewAt(int x, int y,
-                                         PagePositionCache* cache)
+										 PagePositionCache* cache)
 {
 	XOJ_CHECK_TYPE(PagePositionHandler);
 
@@ -137,7 +137,7 @@ PageView* PagePositionHandler::getViewAt(int x, int y,
 }
 
 PagePosition* PagePositionHandler::binarySearch(PagePosition** sortedArray,
-                                                int first, int last, int y, int& index)
+												int first, int last, int y, int& index)
 {
 	XOJ_CHECK_TYPE(PagePositionHandler);
 
@@ -178,5 +178,5 @@ void PagePositionHandler::allocDataSize(int size)
 
 	this->dataAllocSize = size;
 	this->data = (PagePosition**) g_realloc(this->data,
-	                                        this->dataAllocSize * sizeof(PagePosition*));
+											this->dataAllocSize * sizeof (PagePosition*));
 }

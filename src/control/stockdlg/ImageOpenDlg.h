@@ -23,7 +23,7 @@ private:
 
 public:
 	static GFile* show(GtkWindow* win, Settings* settings, bool localOnly = false,
-	                   bool* attach = NULL);
+					bool* attach = NULL);
 
 private:
 	static void updatePreviewCallback(GtkFileChooser* fileChooser, void* userData);

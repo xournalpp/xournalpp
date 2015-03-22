@@ -30,7 +30,7 @@ class Cursor;
 class EditSelection;
 class Layout;
 
-class XournalView: public DocumentListener, public ZoomListener
+class XournalView : public DocumentListener, public ZoomListener
 {
 public:
 	XournalView(GtkWidget* parent, Control* control);

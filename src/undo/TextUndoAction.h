@@ -22,30 +22,30 @@ class TextEditor;
 class TextUndoAction : public UndoAction
 {
 public:
-    TextUndoAction(PageRef page, Layer* layer,
-                   Text* text, string lastText,
-                   TextEditor* textEditor);
-    virtual ~TextUndoAction();
+	TextUndoAction(PageRef page, Layer* layer,
+				   Text* text, string lastText,
+				   TextEditor* textEditor);
+	virtual ~TextUndoAction();
 
 public:
-    virtual bool undo(Control* control);
-    virtual bool redo(Control* control);
+	virtual bool undo(Control* control);
+	virtual bool redo(Control* control);
 
-    virtual string getText();
+	virtual string getText();
 
-    string getUndoText();
+	string getUndoText();
 
-    void textEditFinished();
+	void textEditFinished();
 
 private:
-    XOJ_TYPE_ATTRIB;
+	XOJ_TYPE_ATTRIB;
 
-    Layer* layer;
-    Text* text;
-    string lastText;
-    string newText;
+	Layer* layer;
+	Text* text;
+	string lastText;
+	string newText;
 
-    TextEditor* textEditor;
+	TextEditor* textEditor;
 };
 
 #endif /* __TEXTUNDOACTION_H__ */

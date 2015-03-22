@@ -28,7 +28,7 @@ public:
 
 public:
 	void runExportWithDialog(GladeSearchpath* gladeSearchPath, Settings* settings,
-	                         Document* doc, Control* control, int current);
+							Document* doc, Control* control, int current);
 
 private:
 	XOJ_TYPE_ATTRIB;

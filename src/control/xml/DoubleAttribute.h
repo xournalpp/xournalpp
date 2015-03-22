@@ -15,7 +15,7 @@
 #include "Attribute.h"
 #include <XournalType.h>
 
-class DoubleAttribute: public Attribute
+class DoubleAttribute : public Attribute
 {
 public:
 	DoubleAttribute(const char* name, double value);

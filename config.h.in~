@@ -21,6 +21,9 @@
 /* define if the Boost::Filesystem library is available */
 #undef HAVE_BOOST_FILESYSTEM
 
+/* define if the Boost::Locale library is available */
+#undef HAVE_BOOST_LOCALE
+
 /* define if the Boost::System library is available */
 #undef HAVE_BOOST_SYSTEM
 

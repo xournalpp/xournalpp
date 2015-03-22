@@ -19,7 +19,7 @@
 #include "../../undo/MoveUndoAction.h"
 #include <XournalType.h>
 
-class VerticalToolHandler: public ElementContainer
+class VerticalToolHandler : public ElementContainer
 {
 public:
 	VerticalToolHandler(Redrawable* view, PageRef page, double y, double zoom);

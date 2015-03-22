@@ -18,14 +18,14 @@
 
 enum Orientation
 {
-    ORIENTATION_NOT_DEFINED, ORIENTATION_LANDSCAPE, ORIENTATION_PORTRAIT
+	ORIENTATION_NOT_DEFINED, ORIENTATION_LANDSCAPE, ORIENTATION_PORTRAIT
 };
 
-class FormatDialog: public GladeGui
+class FormatDialog : public GladeGui
 {
 public:
 	FormatDialog(GladeSearchpath* gladeSearchPath, Settings* settings, double width,
-	             double heigth);
+				double heigth);
 	virtual ~FormatDialog();
 
 public:
@@ -38,9 +38,9 @@ private:
 	void setOrientation(Orientation portrait);
 
 	static void portraitSelectedCb(GtkToggleToolButton* toggle_tool_button,
-	                               FormatDialog* dlg);
+								FormatDialog* dlg);
 	static void landscapeSelectedCb(GtkToggleToolButton* toggle_tool_button,
-	                                FormatDialog* dlg);
+									FormatDialog* dlg);
 	static void cbFormatChangedCb(GtkComboBox* widget, FormatDialog* dlg);
 	static void cbUnitChanged(GtkComboBox* widget, FormatDialog* dlg);
 	static void spinValueChangedCb(GtkSpinButton* spinbutton, FormatDialog* dlg);

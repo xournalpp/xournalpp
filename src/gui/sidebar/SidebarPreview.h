@@ -37,9 +37,9 @@ public:
 
 private:
 	static gboolean exposeEventCallback(GtkWidget* widget, GdkEventExpose* event,
-	                                    SidebarPreview* preview);
+										SidebarPreview* preview);
 	static gboolean mouseButtonPressCallback(GtkWidget* widget,
-	                                         GdkEventButton* event, SidebarPreview* preview);
+											GdkEventButton* event, SidebarPreview* preview);
 
 	void paint();
 

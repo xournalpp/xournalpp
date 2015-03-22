@@ -17,7 +17,7 @@
 class Control;
 class ColorEntry;
 
-class SelectBackgroundColorDialog: public GladeGui
+class SelectBackgroundColorDialog : public GladeGui
 {
 public:
 	SelectBackgroundColorDialog(GladeSearchpath* gladeSearchPath, Control* control);
@@ -35,7 +35,7 @@ private:
 
 	static void buttonSelectedCallback(GtkButton* button, ColorEntry* e);
 	static void buttonCustomCallback(GtkButton* button,
-	                                 SelectBackgroundColorDialog* dlg);
+									SelectBackgroundColorDialog* dlg);
 
 private:
 	XOJ_TYPE_ATTRIB;

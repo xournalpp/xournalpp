@@ -27,7 +27,7 @@ public:
 
 private:
 	XmlNode(const XmlNode& node);
-	void operator =(const XmlNode& node);
+	void operator=(const XmlNode& node);
 
 public:
 	void setAttrib(const char* attrib, const char* value);
@@ -40,7 +40,7 @@ public:
 	void setAttrib(const char* attrib, double* value, int count);
 
 	void writeOut(OutputStream* out,
-	              ProgressListener* _listener);
+				ProgressListener* _listener);
 
 	virtual void writeOut(OutputStream* out)
 	{

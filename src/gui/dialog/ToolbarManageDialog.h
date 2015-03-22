@@ -18,7 +18,7 @@
 class ToolbarModel;
 class ToolbarData;
 
-class ToolbarManageDialog: public GladeGui
+class ToolbarManageDialog : public GladeGui
 {
 public:
 	ToolbarManageDialog(GladeSearchpath* gladeSearchPath, ToolbarModel* model);
@@ -29,9 +29,9 @@ public:
 
 private:
 	static void treeSelectionChangedCallback(GtkTreeSelection* selection,
-	                                         ToolbarManageDialog* dlg);
+											ToolbarManageDialog* dlg);
 	static void treeCellEditedCallback(GtkCellRendererText* renderer,
-	                                   gchar* pathString, gchar* newText, ToolbarManageDialog* dlg);
+									gchar* pathString, gchar* newText, ToolbarManageDialog* dlg);
 
 	static void buttonNewCallback(GtkButton* button, ToolbarManageDialog* dlg);
 	static void buttonDeleteCallback(GtkButton* button, ToolbarManageDialog* dlg);

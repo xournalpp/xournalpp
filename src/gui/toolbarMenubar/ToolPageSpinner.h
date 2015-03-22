@@ -21,26 +21,26 @@ class SpinPageAdapter;
 class ToolPageSpinner : public AbstractToolItem
 {
 public:
-    ToolPageSpinner(GladeGui* gui, ActionHandler* handler, string id,
-                    ActionType type);
-    virtual ~ToolPageSpinner();
+	ToolPageSpinner(GladeGui* gui, ActionHandler* handler, string id,
+					ActionType type);
+	virtual ~ToolPageSpinner();
 
 public:
-    SpinPageAdapter* getPageSpinner();
-    void setText(string text);
-    virtual string getToolDisplayName();
+	SpinPageAdapter* getPageSpinner();
+	void setText(string text);
+	virtual string getToolDisplayName();
 
 protected:
-    virtual GtkToolItem* newItem();
-    virtual GtkWidget* getNewToolIconImpl();
+	virtual GtkToolItem* newItem();
+	virtual GtkWidget* getNewToolIconImpl();
 
 private:
-    XOJ_TYPE_ATTRIB;
+	XOJ_TYPE_ATTRIB;
 
-    GladeGui* gui;
+	GladeGui* gui;
 
-    SpinPageAdapter* pageSpinner;
-    GtkWidget* lbPageNo;
+	SpinPageAdapter* pageSpinner;
+	GtkWidget* lbPageNo;
 };
 
 #endif /* __TOOLPAGESPINNER_H__ */

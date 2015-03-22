@@ -19,12 +19,12 @@ class XojPage;
 class Layer;
 class Redrawable;
 
-class MoveUndoAction: public UndoAction
+class MoveUndoAction : public UndoAction
 {
 public:
 	MoveUndoAction(Layer* sourceLayer, PageRef sourcePage,
-	                  GList* selected, double mx, double my,
-	                  Layer* targetLayer, PageRef targetPage);
+				GList* selected, double mx, double my,
+				Layer* targetLayer, PageRef targetPage);
 	virtual ~MoveUndoAction();
 
 public:

@@ -4,6 +4,12 @@ AC_PREREQ(2.59)
 AC_INIT(Xournalpp, 1.0.1)
 AM_CONFIG_HEADER(config.h)
 
+dnl backwards compatibility for autoconf <= 2.64
+dnl PACKAGE_URL should be the fifth argument of AC_INIT
+m4_define([AC_PACKAGE_URL], [https://github.com/xournalpp/xournalpp])
+AC_DEFINE(PACKAGE_URL, "AC_PACKAGE_URL", [Package URL])
+AC_SUBST(PACKAGE_URL, AC_PACKAGE_URL)
+
 AC_CANONICAL_SYSTEM
 AM_INIT_AUTOMAKE([subdir-objects])
 

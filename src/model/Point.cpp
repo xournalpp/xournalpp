@@ -13,6 +13,7 @@ Point::Point()
 	this->y = 0;
 	this->z = NO_PRESURE;
 }
+
 Point::Point(const Point& p)
 {
 	XOJ_INIT_TYPE(Point);

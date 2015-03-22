@@ -29,10 +29,10 @@ public:
 	void registerListener(PageHandler* handler);
 	void unregisterListener();
 
-	virtual void rectChanged(Rectangle& rect) {}
-	virtual void rangeChanged(Range &range) {}
-	virtual void elementChanged(Element* elem) {}
-	virtual void pageChanged() {}
+	virtual void rectChanged(Rectangle& rect) { }
+	virtual void rangeChanged(Range &range) { }
+	virtual void elementChanged(Element* elem) { }
+	virtual void pageChanged() { }
 
 private:
 	XOJ_TYPE_ATTRIB;

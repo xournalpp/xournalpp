@@ -41,7 +41,7 @@ public:
 		XOJ_INIT_TYPE(ListIterator);
 
 		*this = it;
-		if(this->copied)
+		if (this->copied)
 		{
 			this->list = g_list_copy(this->data);
 			this->data = this->list;

@@ -2,8 +2,7 @@
 
 // A '1' in this array means the character is white space.  A '1' or
 // '2' means the character ends a name or command.
-static const char specialChars[256] =
-{
+static const char specialChars[256] = {
 	1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 1, 0, 0, // 0x
 	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 1x
 	1, 0, 0, 0, 0, 2, 0, 0, 2, 2, 0, 0, 0, 0, 0, 2, // 2x
@@ -19,17 +18,12 @@ static const char specialChars[256] =
 	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // cx
 	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // dx
 	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // ex
-	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 // fx
+	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0  // fx
 };
 
-PdfUtil::PdfUtil()
-{
-}
+PdfUtil::PdfUtil() { }
 
-PdfUtil::~PdfUtil()
-{
-}
-
+PdfUtil::~PdfUtil() { }
 
 bool PdfUtil::isWhitespace(int c)
 {

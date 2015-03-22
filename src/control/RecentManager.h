@@ -111,14 +111,14 @@ private:
 	 * all of the menu items
 	 */
 	static void recentManagerChangedCallback(GtkRecentManager* manager,
-	                                         RecentManager* recentManager);
+											RecentManager* recentManager);
 
 	/**
 	 * This callback function is triggered whenever one of
 	 * the items corresponding to recent files is activated
 	 */
 	static void recentsMenuActivateCallback(GtkAction* action,
-	                                        RecentManager* recentManager);
+											RecentManager* recentManager);
 
 	/**
 	 * This function serves as a comparator to sort different

@@ -2,28 +2,28 @@
 
 XojColor::XojColor(int color, string name)
 {
-    XOJ_INIT_TYPE(XojColor);
+	XOJ_INIT_TYPE(XojColor);
 
-    this->color = color;
-    this->name = name;
+	this->color = color;
+	this->name = name;
 }
 
 XojColor::~XojColor()
 {
-    XOJ_RELEASE_TYPE(XojColor);
+	XOJ_RELEASE_TYPE(XojColor);
 }
 
 int XojColor::getColor()
 {
-    XOJ_CHECK_TYPE(XojColor);
+	XOJ_CHECK_TYPE(XojColor);
 
-    return this->color;
+	return this->color;
 }
 
 string XojColor::getName()
 {
-    XOJ_CHECK_TYPE(XojColor);
+	XOJ_CHECK_TYPE(XojColor);
 
-    return this->name;
+	return this->name;
 }
 

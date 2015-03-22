@@ -4,7 +4,7 @@
 #include "../../model/Layer.h"
 
 VerticalToolHandler::VerticalToolHandler(Redrawable* view, PageRef page,
-                                         double y, double zoom)
+										 double y, double zoom)
 {
 	XOJ_INIT_TYPE(VerticalToolHandler);
 

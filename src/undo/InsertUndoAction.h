@@ -18,7 +18,7 @@ class Layer;
 class Element;
 class Redrawable;
 
-class InsertUndoAction: public UndoAction
+class InsertUndoAction : public UndoAction
 {
 public:
 	InsertUndoAction(PageRef page, Layer* layer, Element* element);

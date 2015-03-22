@@ -19,7 +19,7 @@ class Redrawable;
 class Element;
 class Layer;
 
-class DeleteUndoAction: public UndoAction
+class DeleteUndoAction : public UndoAction
 {
 public:
 	DeleteUndoAction(PageRef page, bool eraser);

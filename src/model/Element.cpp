@@ -117,9 +117,9 @@ bool Element::intersectsArea(const GdkRectangle* src)
 	XOJ_CHECK_TYPE(Element);
 
 	GdkRectangle rect = { gint(getX()),
-	                      gint(getY()),
-	                      gint(getElementWidth()),
-	                      gint(getElementHeight()) };
+						gint(getY()),
+						gint(getElementWidth()),
+						gint(getElementHeight()) };
 
 	return gdk_rectangle_intersect(src, &rect, NULL);
 }
@@ -134,7 +134,7 @@ bool Element::intersectsArea(double x, double y, double width, double height)
 	dest_x = MAX(getX(), x);
 	dest_y = MAX(getY(), y);
 	dest_w = MIN(getX() + getElementWidth(), x + width) - dest_x;
-	dest_h = MIN (getY() + getElementHeight(), y + height) - dest_y;
+	dest_h = MIN(getY() + getElementHeight(), y + height) - dest_y;
 
 	return (dest_w > 0 && dest_h > 0);
 }
@@ -156,7 +156,7 @@ bool Element::isInSelection(ShapeContainer* container)
 		return false;
 	}
 	if (!container->contains(getX() + getElementWidth(),
-	                         getY() + getElementHeight()))
+							getY() + getElementHeight()))
 	{
 		return false;
 	}
@@ -185,7 +185,7 @@ void Element::serializeElement(ObjectOutputStream& out)
 }
 
 void Element::readSerializedElement(ObjectInputStream& in) throw (
-    InputStreamException)
+																  InputStreamException)
 {
 	XOJ_CHECK_TYPE(Element);
 

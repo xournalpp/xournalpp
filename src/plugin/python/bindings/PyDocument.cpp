@@ -8,7 +8,8 @@
 #include "structmember.h"
 
 #ifdef __cplusplus
-extern "C" {
+extern "C"
+{
 #endif
 
 typedef struct
@@ -25,18 +26,17 @@ PyDocument_getPageCount(PyDocument* self)
 	return PyLong_FromLong(doc->getPageCount());
 }
 
-static PyMethodDef PyDocument_methods[] =
-{
+static PyMethodDef PyDocument_methods[] = {
 	{ "getPageCount", (PyCFunction) PyDocument_getPageCount, METH_VARARGS, "Gets the page count" },
-	//	{ "xxxxxxxxxxxxx", (PyCFunction) xxxxxxxxxxxxxxxxx, METH_VARARGS, "Xxxxxxxxxxxxxxxx" },
-	//	{ "xxxxxxxxxxxxx", (PyCFunction) xxxxxxxxxxxxxxxxx, METH_VARARGS, "Xxxxxxxxxxxxxxxx" },
-	//	{ "xxxxxxxxxxxxx", (PyCFunction) xxxxxxxxxxxxxxxxx, METH_VARARGS, "Xxxxxxxxxxxxxxxx" },
-	//	{ "xxxxxxxxxxxxx", (PyCFunction) xxxxxxxxxxxxxxxxx, METH_VARARGS, "Xxxxxxxxxxxxxxxx" },
-	//	{ "xxxxxxxxxxxxx", (PyCFunction) xxxxxxxxxxxxxxxxx, METH_VARARGS, "Xxxxxxxxxxxxxxxx" },
-	//	{ "xxxxxxxxxxxxx", (PyCFunction) xxxxxxxxxxxxxxxxx, METH_VARARGS, "Xxxxxxxxxxxxxxxx" },
-	//	{ "xxxxxxxxxxxxx", (PyCFunction) xxxxxxxxxxxxxxxxx, METH_VARARGS, "Xxxxxxxxxxxxxxxx" },
-	//	{ "xxxxxxxxxxxxx", (PyCFunction) xxxxxxxxxxxxxxxxx, METH_VARARGS, "Xxxxxxxxxxxxxxxx" },
-	//	{ "xxxxxxxxxxxxx", (PyCFunction) xxxxxxxxxxxxxxxxx, METH_VARARGS, "Xxxxxxxxxxxxxxxx" },
+//	{ "xxxxxxxxxxxxx", (PyCFunction) xxxxxxxxxxxxxxxxx, METH_VARARGS, "Xxxxxxxxxxxxxxxx" },
+//	{ "xxxxxxxxxxxxx", (PyCFunction) xxxxxxxxxxxxxxxxx, METH_VARARGS, "Xxxxxxxxxxxxxxxx" },
+//	{ "xxxxxxxxxxxxx", (PyCFunction) xxxxxxxxxxxxxxxxx, METH_VARARGS, "Xxxxxxxxxxxxxxxx" },
+//	{ "xxxxxxxxxxxxx", (PyCFunction) xxxxxxxxxxxxxxxxx, METH_VARARGS, "Xxxxxxxxxxxxxxxx" },
+//	{ "xxxxxxxxxxxxx", (PyCFunction) xxxxxxxxxxxxxxxxx, METH_VARARGS, "Xxxxxxxxxxxxxxxx" },
+//	{ "xxxxxxxxxxxxx", (PyCFunction) xxxxxxxxxxxxxxxxx, METH_VARARGS, "Xxxxxxxxxxxxxxxx" },
+//	{ "xxxxxxxxxxxxx", (PyCFunction) xxxxxxxxxxxxxxxxx, METH_VARARGS, "Xxxxxxxxxxxxxxxx" },
+//	{ "xxxxxxxxxxxxx", (PyCFunction) xxxxxxxxxxxxxxxxx, METH_VARARGS, "Xxxxxxxxxxxxxxxx" },
+//	{ "xxxxxxxxxxxxx", (PyCFunction) xxxxxxxxxxxxxxxxx, METH_VARARGS, "Xxxxxxxxxxxxxxxx" },
 	{ NULL } /* Sentinel */
 };
 
@@ -85,16 +85,16 @@ static int PyDocument_init(PyDocument* self, PyObject* args, PyObject* kwds)
 	return 0;
 }
 
-static PyMemberDef PyDocument_members[] = { { NULL } /* Sentinel */
+static PyMemberDef PyDocument_members[] = {
+	{ NULL } /* Sentinel */
 };
 
-static PyTypeObject SelectionType =
-{
+static PyTypeObject SelectionType = {
 	PyObject_HEAD_INIT(NULL)0, /*ob_size*/
 	"xournal.Document", /*tp_name*/
-	sizeof(PyDocument), /*tp_basicsize*/
+	sizeof (PyDocument), /*tp_basicsize*/
 	0, /*tp_itemsize*/
-	(destructor)PyDocument_dealloc, /*tp_dealloc*/
+	(destructor) PyDocument_dealloc, /*tp_dealloc*/
 	0, /*tp_print*/
 	0, /*tp_getattr*/
 	0, /*tp_setattr*/
@@ -125,20 +125,19 @@ static PyTypeObject SelectionType =
 	0, /* tp_descr_get */
 	0, /* tp_descr_set */
 	0, /* tp_dictoffset */
-	(initproc)PyDocument_init, /* tp_init */
+	(initproc) PyDocument_init, /* tp_init */
 	0, /* tp_alloc */
 	PyDocument_new, /* tp_new */
 };
 
-static PyMethodDef module_methods[] =
-{
-	{NULL} /* Sentinel */
+static PyMethodDef module_methods[] = {
+	{NULL } /* Sentinel */
 };
 
 PyObject* newPyDocument(PyObject* xournal)
 {
 	PyObject* args = Py_BuildValue("(O)", xournal);
-	PyObject* obj = PyObject_CallObject((PyObject*)&SelectionType, args);
+	PyObject* obj = PyObject_CallObject((PyObject*) & SelectionType, args);
 	return obj;
 }
 
@@ -157,7 +156,7 @@ void initdocument()
 	}
 
 	Py_INCREF(&SelectionType);
-	PyModule_AddObject(m, "Document", (PyObject*) &SelectionType);
+	PyModule_AddObject(m, "Document", (PyObject*) & SelectionType);
 }
 
 #ifdef __cplusplus

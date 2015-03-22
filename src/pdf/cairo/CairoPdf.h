@@ -33,7 +33,7 @@ public:
 
 private:
 	static cairo_status_t writeOut(CairoPdf* pdf, unsigned char* data,
-	                               unsigned int length);
+								unsigned int length);
 
 private:
 	XOJ_TYPE_ATTRIB;

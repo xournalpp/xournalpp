@@ -26,7 +26,7 @@ public:
 
 private:
 	PartList(const PartList& list);
-	void operator = (const PartList& list);
+	void operator=(const PartList& list);
 
 public:
 	void add(EraseableStrokePart* part);

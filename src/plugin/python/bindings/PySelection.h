@@ -15,11 +15,12 @@
 class Control;
 #include <Python.h>
 
-extern "C" {
+extern "C"
+{
 
-	void initselection();
+void initselection();
 
-	PyObject* newPySelection(PyObject* xournal);
+PyObject* newPySelection(PyObject* xournal);
 
 }
 

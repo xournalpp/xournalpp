@@ -67,13 +67,13 @@ private:
 	 * Tree search function if you type chars within the tree. Source: Pidgin
 	 */
 	static gboolean treeSearchFunction(GtkTreeModel* model, gint column,
-	                                   const gchar* key, GtkTreeIter* iter, SidebarIndexPage* sidebar);
+									const gchar* key, GtkTreeIter* iter, SidebarIndexPage* sidebar);
 
 	/**
 	 * A bookmark was selected
 	 */
 	static bool treeBookmarkSelected(GtkWidget* treeview,
-	                                 SidebarIndexPage* sidebar);
+									SidebarIndexPage* sidebar);
 
 	/**
 	 * If you select a Bookmark wich is currently not in the Xournal document, only in the PDF (page deleted or so)

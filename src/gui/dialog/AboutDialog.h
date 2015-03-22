@@ -15,7 +15,7 @@
 #include "../GladeGui.h"
 #include <XournalType.h>
 
-class AboutDialog: public GladeGui
+class AboutDialog : public GladeGui
 {
 public:
 	AboutDialog(GladeSearchpath* gladeSearchPath);

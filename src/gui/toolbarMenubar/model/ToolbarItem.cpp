@@ -9,7 +9,7 @@ ToolbarItem::ToolbarItem(string name)
 	this->name = name;
 	this->id = ToolbarItem::sid++;
 
-	if(ToolbarItem::sid < 0)
+	if (ToolbarItem::sid < 0)
 	{
 		ToolbarItem::sid = 0;
 	}
@@ -44,7 +44,7 @@ ToolbarItem::operator string()
 	return this->name;
 }
 
-bool ToolbarItem::operator ==(ToolbarItem& other)
+bool ToolbarItem::operator==(ToolbarItem& other)
 {
 	XOJ_CHECK_TYPE(ToolbarItem);
 

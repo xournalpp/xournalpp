@@ -25,12 +25,12 @@ Sidebar::Sidebar(GladeGui* gui, Control* control)
 	this->sidebar = gui->get("sidebarContents");
 
 	gtk_widget_set_size_request(sidebar, control->getSettings()->getSidebarWidth(),
-	                            100);
+								100);
 
 	this->initPages(sidebar, gui);
 
 	gtk_widget_set_visible(GTK_WIDGET(sidebar),
-	                       control->getSettings()->isSidebarVisible());
+						control->getSettings()->isSidebarVisible());
 
 	registerListener(control);
 }
@@ -52,9 +52,9 @@ void Sidebar::initPages(GtkWidget* sidebar, GladeGui* gui)
 		p->tabButton = it;
 
 		gtk_tool_button_set_icon_widget(GTK_TOOL_BUTTON(it),
-		                                gui->loadIcon(p->getIconName()));
+										gui->loadIcon(p->getIconName()));
 		g_signal_connect(it, "clicked", G_CALLBACK(&buttonClicked),
-		                 new SidebarPageButton(this, i, p));
+						new SidebarPageButton(this, i, p));
 		gtk_tool_item_set_tooltip_text(it, p->getName());
 		gtk_tool_button_set_label(GTK_TOOL_BUTTON(it), p->getName());
 
@@ -72,7 +72,7 @@ void Sidebar::initPages(GtkWidget* sidebar, GladeGui* gui)
 }
 
 void Sidebar::buttonClicked(GtkToolButton* toolbutton,
-                            SidebarPageButton* buttonData)
+							SidebarPageButton* buttonData)
 {
 	XOJ_CHECK_TYPE_OBJ(buttonData->sidebar, Sidebar);
 
@@ -130,15 +130,15 @@ void Sidebar::setSelectedPage(int page)
 {
 	int i = 0;
 
-	AbstractSidebarPage* currentPage = (AbstractSidebarPage*)g_list_nth(this->pages,
-	                                                                    page)->data;
+	AbstractSidebarPage* currentPage = (AbstractSidebarPage*) g_list_nth(this->pages,
+																		page)->data;
 	this->visiblePage = currentPage->getWidget();
 
 	for (GList* l = this->pages; l != NULL; l = l->next)
 	{
 		AbstractSidebarPage* p = (AbstractSidebarPage*) l->data;
 
-		if(page == i)
+		if (page == i)
 		{
 			gtk_widget_show(p->getWidget());
 			gtk_toggle_tool_button_set_active(GTK_TOGGLE_TOOL_BUTTON(p->tabButton), true);
@@ -164,7 +164,7 @@ void Sidebar::updateEnableDisableButtons()
 
 		gtk_widget_set_sensitive(GTK_WIDGET(p->tabButton), p->hasData());
 
-		if(p->hasData() && selected == -1)
+		if (p->hasData() && selected == -1)
 		{
 			selected = i;
 		}
@@ -212,22 +212,25 @@ void Sidebar::documentChanged(DocumentChangeType type)
 {
 	XOJ_CHECK_TYPE(Sidebar);
 
-	if(type == DOCUMENT_CHANGE_CLEARED || type == DOCUMENT_CHANGE_COMPLETE ||
-	   type == DOCUMENT_CHANGE_PDF_BOOKMARKS)
+	if (type == DOCUMENT_CHANGE_CLEARED || type == DOCUMENT_CHANGE_COMPLETE ||
+		type == DOCUMENT_CHANGE_PDF_BOOKMARKS)
 	{
 		updateEnableDisableButtons();
 	}
 }
 
-void Sidebar::pageSizeChanged(int page) {}
-void Sidebar::pageChanged(int page) {}
-void Sidebar::pageInserted(int page) {}
-void Sidebar::pageDeleted(int page) {}
-void Sidebar::pageSelected(int page) {}
+void Sidebar::pageSizeChanged(int page) { }
 
+void Sidebar::pageChanged(int page) { }
+
+void Sidebar::pageInserted(int page) { }
+
+void Sidebar::pageDeleted(int page) { }
+
+void Sidebar::pageSelected(int page) { }
 
 SidebarPageButton::SidebarPageButton(Sidebar* sidebar, int index,
-                                     AbstractSidebarPage* page)
+									 AbstractSidebarPage* page)
 {
 	this->sidebar = sidebar;
 	this->index = index;

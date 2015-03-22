@@ -9,7 +9,8 @@
 #include "../../../gui/widgets/XournalWidget.h"
 
 #ifdef __cplusplus
-extern "C" {
+extern "C"
+{
 #endif
 
 
@@ -20,6 +21,7 @@ extern "C" {
 static Control* PyXournal_control = NULL;
 
 #include "structmember.h"
+
 typedef struct
 {
 	PyObject_HEAD
@@ -71,8 +73,7 @@ static int PyXournal_init(PyXournal* self, PyObject* args, PyObject* kwds)
 	return 0;
 }
 
-static PyMemberDef PyXournal_members[] =
-{
+static PyMemberDef PyXournal_members[] = {
 	{ NULL } /* Sentinel */
 };
 
@@ -161,7 +162,7 @@ PyXournal_setSelectedTool(PyXournal* self, PyObject* args)
 	if (tool < TOOL_PEN || tool > TOOL_HAND)
 	{
 		PyErr_SetString(PyExc_AttributeError,
-		                "Tool out of range, please use the constants TOOL_*");
+						"Tool out of range, please use the constants TOOL_*");
 		return NULL;
 	}
 
@@ -192,7 +193,7 @@ PyXournal_setToolSize(PyXournal* self, PyObject* args)
 	if (size < TOOL_SIZE_VERY_FINE || size > TOOL_SIZE_VERY_THICK)
 	{
 		PyErr_SetString(PyExc_AttributeError,
-		                "Toolsize out of range, please use the constants TOOL_SIZE_*");
+						"Toolsize out of range, please use the constants TOOL_SIZE_*");
 		return NULL;
 	}
 
@@ -223,7 +224,7 @@ PyXournal_mousePressed(PyXournal* self, PyObject* args)
 	}
 
 	MainWindow* win = self->control->getWindow();
-	if(!win)
+	if (!win)
 	{
 		PyErr_SetString(PyExc_AttributeError, "Window not yet initialized!");
 		return NULL;
@@ -235,9 +236,9 @@ PyXournal_mousePressed(PyXournal* self, PyObject* args)
 	PageView* v = xournal->getViewFor(pageNo);
 
 	GdkEventButton event;
-	memset(&event, 0, sizeof(GdkEventButton));
+	memset(&event, 0, sizeof (GdkEventButton));
 	event.type = GDK_BUTTON_PRESS;
-	event.window = (GdkWindow*)*win;
+	event.window = (GdkWindow*) * win;
 	event.send_event = true;
 	event.time = 0;
 	event.x = x * zoom + v->getX();
@@ -249,7 +250,7 @@ PyXournal_mousePressed(PyXournal* self, PyObject* args)
 	event.x_root = 0;
 	event.y_root = 0;
 
-	gtk_widget_event(xournal->getWidget(), (GdkEvent*)&event);
+	gtk_widget_event(xournal->getWidget(), (GdkEvent*) & event);
 
 	Py_RETURN_NONE;
 }
@@ -267,7 +268,7 @@ PyXournal_mouseMoved(PyXournal* self, PyObject* args)
 	}
 
 	MainWindow* win = self->control->getWindow();
-	if(!win)
+	if (!win)
 	{
 		PyErr_SetString(PyExc_AttributeError, "Window not yet initialized!");
 		return NULL;
@@ -279,9 +280,9 @@ PyXournal_mouseMoved(PyXournal* self, PyObject* args)
 	PageView* v = xournal->getViewFor(pageNo);
 
 	GdkEventMotion event;
-	memset(&event, 0, sizeof(GdkEventMotion));
+	memset(&event, 0, sizeof (GdkEventMotion));
 	event.type = GDK_MOTION_NOTIFY;
-	event.window = (GdkWindow*)*win;
+	event.window = (GdkWindow*) * win;
 	event.send_event = true;
 	event.time = 0;
 	event.x = x * zoom + v->getX();
@@ -293,7 +294,7 @@ PyXournal_mouseMoved(PyXournal* self, PyObject* args)
 	event.x_root = 0;
 	event.y_root = 0;
 
-	gtk_widget_event(xournal->getWidget(), (GdkEvent*)&event);
+	gtk_widget_event(xournal->getWidget(), (GdkEvent*) & event);
 
 	Py_RETURN_NONE;
 }
@@ -302,16 +303,16 @@ static PyObject*
 PyXournal_mouseReleased(PyXournal* self)
 {
 	MainWindow* win = self->control->getWindow();
-	if(!win)
+	if (!win)
 	{
 		PyErr_SetString(PyExc_AttributeError, "Window not yet initialized!");
 		return NULL;
 	}
 
 	GdkEventButton event;
-	memset(&event, 0, sizeof(GdkEventButton));
+	memset(&event, 0, sizeof (GdkEventButton));
 	event.type = GDK_BUTTON_RELEASE;
-	event.window = (GdkWindow*)*win;
+	event.window = (GdkWindow*) * win;
 	event.send_event = true;
 	event.time = 0;
 	event.x = 0;
@@ -323,7 +324,7 @@ PyXournal_mouseReleased(PyXournal* self)
 	event.x_root = 0;
 	event.y_root = 0;
 
-	gtk_widget_event(win->getXournal()->getWidget(), (GdkEvent*)&event);
+	gtk_widget_event(win->getXournal()->getWidget(), (GdkEvent*) & event);
 
 	Py_RETURN_NONE;
 }
@@ -342,7 +343,6 @@ PyXournal_mouseReleased(PyXournal* self)
 	} \
 	\
 	Py_RETURN_NONE
-
 
 static PyObject*
 PyXournal_getUndoRedoHandler(PyXournal* self)
@@ -481,10 +481,10 @@ PyXournal_getCurrentPageBackground(PyXournal* self)
 {
 	PageRef page = self->control->getCurrentPage();
 
-	if(!page.isValid())
+	if (!page.isValid())
 	{
 		PyErr_SetString(PyExc_RuntimeError,
-		                "getCurrentPageBackground::No current page!");
+						"getCurrentPageBackground::No current page!");
 		return NULL;
 	}
 
@@ -503,37 +503,37 @@ PyXournal_setCurrentPageBackground(PyXournal* self, PyObject* args)
 	}
 
 	if (backgroundType < BACKGROUND_TYPE_NONE ||
-	    backgroundType > BACKGROUND_TYPE_GRAPH)
+		backgroundType > BACKGROUND_TYPE_GRAPH)
 	{
 		PyErr_SetString(PyExc_AttributeError,
-		                "Backgroundtype out of range, please use the constants BACKGROUND_TYPE_*");
+						"Backgroundtype out of range, please use the constants BACKGROUND_TYPE_*");
 		return NULL;
 	}
 
 	if (backgroundType == BACKGROUND_TYPE_PDF)
 	{
 		PyErr_SetString(PyExc_AttributeError,
-		                "BACKGROUND_TYPE_PDF connot be set with setCurrentPageBackground");
+						"BACKGROUND_TYPE_PDF connot be set with setCurrentPageBackground");
 		return NULL;
 	}
 
 	if (backgroundType == BACKGROUND_TYPE_IMAGE)
 	{
 		PyErr_SetString(PyExc_AttributeError,
-		                "BACKGROUND_TYPE_PDF connot be set with setCurrentPageBackground");
+						"BACKGROUND_TYPE_PDF connot be set with setCurrentPageBackground");
 		return NULL;
 	}
 
 	PageRef page = self->control->getCurrentPage();
 
-	if(!page.isValid())
+	if (!page.isValid())
 	{
 		PyErr_SetString(PyExc_RuntimeError,
-		                "setCurrentPageBackground::No current page!");
+						"setCurrentPageBackground::No current page!");
 		return NULL;
 	}
 
-	page->setBackgroundType((BackgroundType)backgroundType);
+	page->setBackgroundType((BackgroundType) backgroundType);
 
 	Py_RETURN_NONE;
 }
@@ -559,11 +559,11 @@ PyXournal_setEraserType(PyXournal* self, PyObject* args)
 	if (eraserType < ERASER_TYPE_DEFAULT || eraserType > ERASER_TYPE_DELETE_STROKE)
 	{
 		PyErr_SetString(PyExc_AttributeError,
-		                "Erasertype out of range, please use the constants BACKGROUND_TYPE_*");
+						"Erasertype out of range, please use the constants BACKGROUND_TYPE_*");
 		return NULL;
 	}
 
-	self->control->getToolHandler()->setEraserType((EraserType)eraserType);
+	self->control->getToolHandler()->setEraserType((EraserType) eraserType);
 
 	Py_RETURN_NONE;
 }
@@ -571,7 +571,7 @@ PyXournal_setEraserType(PyXournal* self, PyObject* args)
 static PyObject*
 PyXournal_copy(PyXournal* self, PyObject* args)
 {
-	if(self->control->copy())
+	if (self->control->copy())
 	{
 		Py_RETURN_TRUE;
 	}
@@ -582,7 +582,7 @@ PyXournal_copy(PyXournal* self, PyObject* args)
 static PyObject*
 PyXournal_cut(PyXournal* self, PyObject* args)
 {
-	if(self->control->cut())
+	if (self->control->cut())
 	{
 		Py_RETURN_TRUE;
 	}
@@ -593,7 +593,7 @@ PyXournal_cut(PyXournal* self, PyObject* args)
 static PyObject*
 PyXournal_paste(PyXournal* self, PyObject* args)
 {
-	if(self->control->paste())
+	if (self->control->paste())
 	{
 		Py_RETURN_TRUE;
 	}
@@ -601,8 +601,7 @@ PyXournal_paste(PyXournal* self, PyObject* args)
 	Py_RETURN_FALSE;
 }
 
-static PyMethodDef PyXournal_methods[] =
-{
+static PyMethodDef PyXournal_methods[] = {
 	{ "setSelectedTool", (PyCFunction) PyXournal_setSelectedTool, METH_VARARGS, "Selects a tool (see constatns TOOL_*" },
 	{ "getSelectedTool", (PyCFunction) PyXournal_getSelectedTool, METH_NOARGS, "Return the selected tool" },
 	{ "newFile", (PyCFunction) PyXournal_newFile, METH_VARARGS, "Create a new document" },
@@ -631,33 +630,32 @@ static PyMethodDef PyXournal_methods[] =
 	{ "cut", (PyCFunction) PyXournal_cut, METH_NOARGS, "Copy to clipboard and delete after" },
 	{ "paste", (PyCFunction) PyXournal_paste, METH_NOARGS, "Paste from clipboard (if possible)" },
 	{ "getSelection", (PyCFunction) PyXournal_getSelection, METH_NOARGS, "Return the Selection or None" },
-	//	{ "xxxxxxxxxxxxx", (PyCFunction) xxxxxxxxxxxxxxxxx, METH_VARARGS, "Xxxxxxxxxxxxxxxx" },
-	//	{ "xxxxxxxxxxxxx", (PyCFunction) xxxxxxxxxxxxxxxxx, METH_VARARGS, "Xxxxxxxxxxxxxxxx" },
-	//	{ "xxxxxxxxxxxxx", (PyCFunction) xxxxxxxxxxxxxxxxx, METH_VARARGS, "Xxxxxxxxxxxxxxxx" },
-	//	{ "xxxxxxxxxxxxx", (PyCFunction) xxxxxxxxxxxxxxxxx, METH_VARARGS, "Xxxxxxxxxxxxxxxx" },
-	//	{ "xxxxxxxxxxxxx", (PyCFunction) xxxxxxxxxxxxxxxxx, METH_VARARGS, "Xxxxxxxxxxxxxxxx" },
-	//	{ "xxxxxxxxxxxxx", (PyCFunction) xxxxxxxxxxxxxxxxx, METH_VARARGS, "Xxxxxxxxxxxxxxxx" },
-	//	{ "xxxxxxxxxxxxx", (PyCFunction) xxxxxxxxxxxxxxxxx, METH_VARARGS, "Xxxxxxxxxxxxxxxx" },
-	//	{ "xxxxxxxxxxxxx", (PyCFunction) xxxxxxxxxxxxxxxxx, METH_VARARGS, "Xxxxxxxxxxxxxxxx" },
-	//	{ "xxxxxxxxxxxxx", (PyCFunction) xxxxxxxxxxxxxxxxx, METH_VARARGS, "Xxxxxxxxxxxxxxxx" },
-	//	{ "xxxxxxxxxxxxx", (PyCFunction) xxxxxxxxxxxxxxxxx, METH_VARARGS, "Xxxxxxxxxxxxxxxx" },
-	//	{ "xxxxxxxxxxxxx", (PyCFunction) xxxxxxxxxxxxxxxxx, METH_VARARGS, "Xxxxxxxxxxxxxxxx" },
-	//	{ "xxxxxxxxxxxxx", (PyCFunction) xxxxxxxxxxxxxxxxx, METH_VARARGS, "Xxxxxxxxxxxxxxxx" },
-	//	{ "xxxxxxxxxxxxx", (PyCFunction) xxxxxxxxxxxxxxxxx, METH_VARARGS, "Xxxxxxxxxxxxxxxx" },
-	//	{ "xxxxxxxxxxxxx", (PyCFunction) xxxxxxxxxxxxxxxxx, METH_VARARGS, "Xxxxxxxxxxxxxxxx" },
-	//	{ "xxxxxxxxxxxxx", (PyCFunction) xxxxxxxxxxxxxxxxx, METH_VARARGS, "Xxxxxxxxxxxxxxxx" },
-	//	{ "xxxxxxxxxxxxx", (PyCFunction) xxxxxxxxxxxxxxxxx, METH_VARARGS, "Xxxxxxxxxxxxxxxx" },
+//	{ "xxxxxxxxxxxxx", (PyCFunction) xxxxxxxxxxxxxxxxx, METH_VARARGS, "Xxxxxxxxxxxxxxxx" },
+//	{ "xxxxxxxxxxxxx", (PyCFunction) xxxxxxxxxxxxxxxxx, METH_VARARGS, "Xxxxxxxxxxxxxxxx" },
+//	{ "xxxxxxxxxxxxx", (PyCFunction) xxxxxxxxxxxxxxxxx, METH_VARARGS, "Xxxxxxxxxxxxxxxx" },
+//	{ "xxxxxxxxxxxxx", (PyCFunction) xxxxxxxxxxxxxxxxx, METH_VARARGS, "Xxxxxxxxxxxxxxxx" },
+//	{ "xxxxxxxxxxxxx", (PyCFunction) xxxxxxxxxxxxxxxxx, METH_VARARGS, "Xxxxxxxxxxxxxxxx" },
+//	{ "xxxxxxxxxxxxx", (PyCFunction) xxxxxxxxxxxxxxxxx, METH_VARARGS, "Xxxxxxxxxxxxxxxx" },
+//	{ "xxxxxxxxxxxxx", (PyCFunction) xxxxxxxxxxxxxxxxx, METH_VARARGS, "Xxxxxxxxxxxxxxxx" },
+//	{ "xxxxxxxxxxxxx", (PyCFunction) xxxxxxxxxxxxxxxxx, METH_VARARGS, "Xxxxxxxxxxxxxxxx" },
+//	{ "xxxxxxxxxxxxx", (PyCFunction) xxxxxxxxxxxxxxxxx, METH_VARARGS, "Xxxxxxxxxxxxxxxx" },
+//	{ "xxxxxxxxxxxxx", (PyCFunction) xxxxxxxxxxxxxxxxx, METH_VARARGS, "Xxxxxxxxxxxxxxxx" },
+//	{ "xxxxxxxxxxxxx", (PyCFunction) xxxxxxxxxxxxxxxxx, METH_VARARGS, "Xxxxxxxxxxxxxxxx" },
+//	{ "xxxxxxxxxxxxx", (PyCFunction) xxxxxxxxxxxxxxxxx, METH_VARARGS, "Xxxxxxxxxxxxxxxx" },
+//	{ "xxxxxxxxxxxxx", (PyCFunction) xxxxxxxxxxxxxxxxx, METH_VARARGS, "Xxxxxxxxxxxxxxxx" },
+//	{ "xxxxxxxxxxxxx", (PyCFunction) xxxxxxxxxxxxxxxxx, METH_VARARGS, "Xxxxxxxxxxxxxxxx" },
+//	{ "xxxxxxxxxxxxx", (PyCFunction) xxxxxxxxxxxxxxxxx, METH_VARARGS, "Xxxxxxxxxxxxxxxx" },
+//	{ "xxxxxxxxxxxxx", (PyCFunction) xxxxxxxxxxxxxxxxx, METH_VARARGS, "Xxxxxxxxxxxxxxxx" },
 	{ NULL } /* Sentinel */
 };
 
-static PyTypeObject XournalType =
-{
+static PyTypeObject XournalType = {
 	PyObject_HEAD_INIT(NULL)
 	0, /*ob_size*/
 	"xournal.Xournal", /*tp_name*/
-	sizeof(PyXournal), /*tp_basicsize*/
+	sizeof (PyXournal), /*tp_basicsize*/
 	0, /*tp_itemsize*/
-	(destructor)PyXournal_dealloc, /*tp_dealloc*/
+	(destructor) PyXournal_dealloc, /*tp_dealloc*/
 	0, /*tp_print*/
 	0, /*tp_getattr*/
 	0, /*tp_setattr*/
@@ -688,14 +686,14 @@ static PyTypeObject XournalType =
 	0, /* tp_descr_get */
 	0, /* tp_descr_set */
 	0, /* tp_dictoffset */
-	(initproc)PyXournal_init, /* tp_init */
+	(initproc) PyXournal_init, /* tp_init */
 	0, /* tp_alloc */
 	PyXournal_new, /* tp_new */
 };
 
-static PyMethodDef module_methods[] = { { NULL } /* Sentinel */
+static PyMethodDef module_methods[] = {
+	{ NULL } /* Sentinel */
 };
-
 
 bool PyXournal_Check(PyObject* obj)
 {
@@ -704,11 +702,11 @@ bool PyXournal_Check(PyObject* obj)
 
 Control* PyXournal_getControl(PyObject* obj)
 {
-	if(!PyXournal_Check(obj))
+	if (!PyXournal_Check(obj))
 	{
 		return NULL;
 	}
-	return ((PyXournal*)obj)->control;
+	return ((PyXournal*) obj)->control;
 }
 
 #define ADD_CONST(tool) PyDict_SetItemString(XournalType.tp_dict, #tool, PyLong_FromLong(tool));
@@ -756,7 +754,7 @@ void initxournal()
 	}
 
 	Py_INCREF(&XournalType);
-	PyModule_AddObject(m, "Xournal", (PyObject*) &XournalType);
+	PyModule_AddObject(m, "Xournal", (PyObject*) & XournalType);
 }
 
 #ifdef __cplusplus

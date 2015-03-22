@@ -13,161 +13,181 @@ using namespace std;
 #define MIME_PDF "application/x-pdf"
 #define GROUP "xournal++"
 
-RecentManager::RecentManager() {
-    XOJ_INIT_TYPE(RecentManager);
+RecentManager::RecentManager()
+{
+	XOJ_INIT_TYPE(RecentManager);
 
-    this->maxRecent = 10;
-    this->menu = gtk_menu_new();
-    this->menuItemList = NULL;
-    this->listener = NULL;
+	this->maxRecent = 10;
+	this->menu = gtk_menu_new();
+	this->menuItemList = NULL;
+	this->listener = NULL;
 
-    GtkRecentManager* recentManager = gtk_recent_manager_get_default();
-    this->recentHandlerId = g_signal_connect(recentManager, "changed",
-            G_CALLBACK(recentManagerChangedCallback), this);
+	GtkRecentManager* recentManager = gtk_recent_manager_get_default();
+	this->recentHandlerId = g_signal_connect(recentManager, "changed",
+											 G_CALLBACK(recentManagerChangedCallback), this);
 
-    gdk_threads_enter();
-    updateMenu();
-    gdk_threads_leave();
+	gdk_threads_enter();
+	updateMenu();
+	gdk_threads_leave();
 }
 
-RecentManager::~RecentManager() {
-    XOJ_CHECK_TYPE(RecentManager);
+RecentManager::~RecentManager()
+{
+	XOJ_CHECK_TYPE(RecentManager);
 
-    if (this->recentHandlerId) {
-        GtkRecentManager* recentManager = gtk_recent_manager_get_default();
-        g_signal_handler_disconnect(recentManager, this->recentHandlerId);
-        this->recentHandlerId = 0;
-    }
-    this->menu = NULL;
+	if (this->recentHandlerId)
+	{
+		GtkRecentManager* recentManager = gtk_recent_manager_get_default();
+		g_signal_handler_disconnect(recentManager, this->recentHandlerId);
+		this->recentHandlerId = 0;
+	}
+	this->menu = NULL;
 
-    g_list_free(this->listener);
-    this->listener = NULL;
+	g_list_free(this->listener);
+	this->listener = NULL;
 
-    XOJ_RELEASE_TYPE(RecentManager);
+	XOJ_RELEASE_TYPE(RecentManager);
 }
 
-void RecentManager::addListener(RecentManagerListener* listener) {
-    XOJ_CHECK_TYPE(RecentManager);
+void RecentManager::addListener(RecentManagerListener* listener)
+{
+	XOJ_CHECK_TYPE(RecentManager);
 
-    this->listener = g_list_append(this->listener, listener);
+	this->listener = g_list_append(this->listener, listener);
 }
 
 void RecentManager::recentManagerChangedCallback(GtkRecentManager* manager,
-        RecentManager* recentManager) {
-    // regenerate the menu when the model changes
-    recentManager->updateMenu();
+												 RecentManager* recentManager)
+{
+	// regenerate the menu when the model changes
+	recentManager->updateMenu();
 }
 
-void RecentManager::addRecentFileFilename(path filename) {
-    XOJ_CHECK_TYPE(RecentManager);
+void RecentManager::addRecentFileFilename(path filename)
+{
+	XOJ_CHECK_TYPE(RecentManager);
 
-    cout << bl::format("addRecentFileFilename: {1}") % filename << endl;
+	cout << bl::format("addRecentFileFilename: {1}") % filename << endl;
 
-    GtkRecentManager* recentManager;
-    GtkRecentData* recentData;
+	GtkRecentManager* recentManager;
+	GtkRecentData* recentData;
 
-    static gchar * groups[2] = {g_strdup(GROUP), NULL};
+	static gchar * groups[2] = {g_strdup(GROUP), NULL};
 
-    recentManager = gtk_recent_manager_get_default();
+	recentManager = gtk_recent_manager_get_default();
 
-    recentData = g_slice_new(GtkRecentData);
+	recentData = g_slice_new(GtkRecentData);
 
-    recentData->display_name = NULL;
-    recentData->description = NULL;
+	recentData->display_name = NULL;
+	recentData->description = NULL;
 
-    if (filename.extension() == ".pdf") {
-        recentData->mime_type = (gchar*) g_strdup(MIME_PDF);
-    } else {
-        recentData->mime_type = (gchar*) g_strdup(MIME);
-    }
+	if (filename.extension() == ".pdf")
+	{
+		recentData->mime_type = (gchar*) g_strdup(MIME_PDF);
+	}
+	else
+	{
+		recentData->mime_type = (gchar*) g_strdup(MIME);
+	}
 
-    recentData->app_name = (gchar*) g_get_application_name();
-    recentData->app_exec = g_strjoin(" ", g_get_prgname(), "%u", NULL);
-    recentData->groups = groups;
-    recentData->is_private = FALSE;
-    
-    GFile* file = g_file_new_for_path(filename.c_str());
-    gchar* uri = g_file_get_uri(file);
-    gtk_recent_manager_add_full(recentManager, uri, recentData);
+	recentData->app_name = (gchar*) g_get_application_name();
+	recentData->app_exec = g_strjoin(" ", g_get_prgname(), "%u", NULL);
+	recentData->groups = groups;
+	recentData->is_private = FALSE;
 
-    g_free(recentData->app_exec);
+	GFile* file = g_file_new_for_path(filename.c_str());
+	gchar* uri = g_file_get_uri(file);
+	gtk_recent_manager_add_full(recentManager, uri, recentData);
 
-    g_slice_free(GtkRecentData, recentData);
+	g_free(recentData->app_exec);
 
-    g_object_unref(file);
+	g_slice_free(GtkRecentData, recentData);
+
+	g_object_unref(file);
 }
 
-void RecentManager::removeRecentFileFilename(path filename) {
-    XOJ_CHECK_TYPE(RecentManager);
+void RecentManager::removeRecentFileFilename(path filename)
+{
+	XOJ_CHECK_TYPE(RecentManager);
 
-    GFile* file = g_file_new_for_path(filename.c_str());
+	GFile* file = g_file_new_for_path(filename.c_str());
 
-    GtkRecentManager* recentManager = gtk_recent_manager_get_default();
-    gtk_recent_manager_remove_item(recentManager, g_file_get_uri(file), NULL);
+	GtkRecentManager* recentManager = gtk_recent_manager_get_default();
+	gtk_recent_manager_remove_item(recentManager, g_file_get_uri(file), NULL);
 
-    g_object_unref(file);
+	g_object_unref(file);
 }
 
-int RecentManager::getMaxRecent() {
-    XOJ_CHECK_TYPE(RecentManager);
+int RecentManager::getMaxRecent()
+{
+	XOJ_CHECK_TYPE(RecentManager);
 
-    return this->maxRecent;
+	return this->maxRecent;
 }
 
-void RecentManager::setMaxRecent(int maxRecent) {
-    XOJ_CHECK_TYPE(RecentManager);
+void RecentManager::setMaxRecent(int maxRecent)
+{
+	XOJ_CHECK_TYPE(RecentManager);
 
-    this->maxRecent = maxRecent;
+	this->maxRecent = maxRecent;
 }
 
-void RecentManager::openRecent(string uri) {
-    XOJ_CHECK_TYPE(RecentManager);
+void RecentManager::openRecent(string uri)
+{
+	XOJ_CHECK_TYPE(RecentManager);
 
-    const gchar* c_uri = uri.c_str();
-    if (!ba::starts_with(uri, "file://")) {
-        g_warning("could not handle URI: %s", c_uri);
-        return;
-    }
+	const gchar* c_uri = uri.c_str();
+	if (!ba::starts_with(uri, "file://"))
+	{
+		g_warning("could not handle URI: %s", c_uri);
+		return;
+	}
 
-    string filename = uri.substr(uri.find_last_of('/'));
-    if (filename.empty()) {
-        return;
-    }
+	string filename = uri.substr(uri.find_last_of('/'));
+	if (filename.empty())
+	{
+		return;
+	}
 
-    for (GList* l = this->listener; l != NULL; l = l->next) {
-        RecentManagerListener* listener = (RecentManagerListener*) l->data;
-        listener->fileOpened(filename.c_str());
-    }
+	for (GList* l = this->listener; l != NULL; l = l->next)
+	{
+		RecentManagerListener* listener = (RecentManagerListener*) l->data;
+		listener->fileOpened(filename.c_str());
+	}
 }
 
-GtkWidget* RecentManager::getMenu() {
-    XOJ_CHECK_TYPE(RecentManager);
+GtkWidget* RecentManager::getMenu()
+{
+	XOJ_CHECK_TYPE(RecentManager);
 
-    return menu;
+	return menu;
 }
 
-void RecentManager::freeOldMenus() {
-    XOJ_CHECK_TYPE(RecentManager);
+void RecentManager::freeOldMenus()
+{
+	XOJ_CHECK_TYPE(RecentManager);
 
-    GtkWidget* w = NULL;
+	GtkWidget* w = NULL;
 
-    for (GList* l = menuItemList; l != NULL; l = l->next) {
-        w = (GtkWidget*) l->data;
+	for (GList* l = menuItemList; l != NULL; l = l->next)
+	{
+		w = (GtkWidget*) l->data;
 
-        gtk_widget_destroy(w);
-    }
+		gtk_widget_destroy(w);
+	}
 
-    g_list_free(this->menuItemList);
-    this->menuItemList = NULL;
+	g_list_free(this->menuItemList);
+	this->menuItemList = NULL;
 }
 
 /*
  * Doubles underscore to avoid spurious menu accels.
  */
-gchar* gedit_utils_escape_underscores(const gchar* text, gssize length) {
-    string r(text, length);
-    ba::replace_all(r, "_", "__");
-    return const_cast<gchar*>(r.c_str());
+gchar* gedit_utils_escape_underscores(const gchar* text, gssize length)
+{
+	string r(text, length);
+	ba::replace_all(r, "_", "__");
+	return const_cast<gchar*> (r.c_str());
 }
 
 /**
@@ -181,158 +201,178 @@ gchar* gedit_utils_escape_underscores(const gchar* text, gssize length) {
  *
  * Return value: a string which represents @uri and can be displayed.
  */
-gchar* gedit_utils_uri_for_display(const gchar* uri) {
-    GFile* gfile;
-    gchar* parse_name;
+gchar* gedit_utils_uri_for_display(const gchar* uri)
+{
+	GFile* gfile;
+	gchar* parse_name;
 
-    gfile = g_file_new_for_uri(uri);
-    parse_name = g_file_get_parse_name(gfile);
-    g_object_unref(gfile);
+	gfile = g_file_new_for_uri(uri);
+	parse_name = g_file_get_parse_name(gfile);
+	g_object_unref(gfile);
 
-    return parse_name;
+	return parse_name;
 }
 
-gchar* gedit_utils_replace_home_dir_with_tilde(const gchar* uri) {
-    string r(uri);
-    ba::replace_all(r, g_get_home_dir(), "~/");
-    return const_cast<gchar*>(r.c_str());
+gchar* gedit_utils_replace_home_dir_with_tilde(const gchar* uri)
+{
+	string r(uri);
+	ba::replace_all(r, g_get_home_dir(), "~/");
+	return const_cast<gchar*> (r.c_str());
 }
 
-int RecentManager::sortRecentsEntries(GtkRecentInfo* a, GtkRecentInfo* b) {
-    return (gtk_recent_info_get_modified(b) - gtk_recent_info_get_modified(a));
+int RecentManager::sortRecentsEntries(GtkRecentInfo* a, GtkRecentInfo* b)
+{
+	return (gtk_recent_info_get_modified(b) - gtk_recent_info_get_modified(a));
 }
 
-GList* RecentManager::filterRecent(GList* items, bool xoj) {
-    XOJ_CHECK_TYPE(RecentManager);
+GList* RecentManager::filterRecent(GList* items, bool xoj)
+{
+	XOJ_CHECK_TYPE(RecentManager);
 
-    GList* filteredItems = NULL;
+	GList* filteredItems = NULL;
 
-    // filter
-    for (GList* l = items; l != NULL; l = l->next) {
-        GtkRecentInfo* info = (GtkRecentInfo*) l->data;
-        string uri(gtk_recent_info_get_uri(info));
+	// filter
+	for (GList* l = items; l != NULL; l = l->next)
+	{
+		GtkRecentInfo* info = (GtkRecentInfo*) l->data;
+		string uri(gtk_recent_info_get_uri(info));
 
-        // Skip remote files anyway, PDF are supported as remote, XOJ not
-        if (!ba::starts_with(uri, "file://")) continue;
-        
-        using namespace boost::filesystem;
-        if (!exists(path(uri))) continue;
+		// Skip remote files anyway, PDF are supported as remote, XOJ not
+		if (!ba::starts_with(uri, "file://")) continue;
 
-        if (xoj) {
-            if (ba::ends_with(uri, ".xoj")) {
-                filteredItems = g_list_prepend(filteredItems, info);
-            }
-        } else {
-            if (ba::ends_with(uri, ".pdf")) {
-                filteredItems = g_list_prepend(filteredItems, info);
-            }
-        }
-    }
+		using namespace boost::filesystem;
+		if (!exists(path(uri))) continue;
 
-    // sort
-    filteredItems = g_list_sort(filteredItems, (GCompareFunc) sortRecentsEntries);
+		if (xoj)
+		{
+			if (ba::ends_with(uri, ".xoj"))
+			{
+				filteredItems = g_list_prepend(filteredItems, info);
+			}
+		}
+		else
+		{
+			if (ba::ends_with(uri, ".pdf"))
+			{
+				filteredItems = g_list_prepend(filteredItems, info);
+			}
+		}
+	}
 
-    return filteredItems;
+	// sort
+	filteredItems = g_list_sort(filteredItems, (GCompareFunc) sortRecentsEntries);
+
+	return filteredItems;
 }
 
 void RecentManager::recentsMenuActivateCallback(GtkAction* action,
-        RecentManager* recentManager) {
-    XOJ_CHECK_TYPE_OBJ(recentManager, RecentManager);
+												RecentManager* recentManager)
+{
+	XOJ_CHECK_TYPE_OBJ(recentManager, RecentManager);
 
-    GtkRecentInfo* info = (GtkRecentInfo*) g_object_get_data(G_OBJECT(action),
-            "gtk-recent-info");
-    g_return_if_fail(info != NULL);
+	GtkRecentInfo* info = (GtkRecentInfo*) g_object_get_data(G_OBJECT(action),
+															 "gtk-recent-info");
+	g_return_if_fail(info != NULL);
 
-    const gchar* uri = gtk_recent_info_get_uri(info);
-    recentManager->openRecent(uri);
+	const gchar* uri = gtk_recent_info_get_uri(info);
+	recentManager->openRecent(uri);
 }
 
-void RecentManager::addRecentMenu(GtkRecentInfo* info, int i) {
-    XOJ_CHECK_TYPE(RecentManager);
+void RecentManager::addRecentMenu(GtkRecentInfo* info, int i)
+{
+	XOJ_CHECK_TYPE(RecentManager);
 
-    gchar* label = NULL;
-    const gchar* display_name = gtk_recent_info_get_display_name(info);
-    gchar* escaped = gedit_utils_escape_underscores(display_name, -1);
-    if (i >= 10) {
-        label = g_strdup_printf("%d.  %s", i, escaped);
-    } else {
-        label = g_strdup_printf("_%d.  %s", i, escaped);
-    }
-    g_free(escaped);
+	gchar* label = NULL;
+	const gchar* display_name = gtk_recent_info_get_display_name(info);
+	gchar* escaped = gedit_utils_escape_underscores(display_name, -1);
+	if (i >= 10)
+	{
+		label = g_strdup_printf("%d.  %s", i, escaped);
+	}
+	else
+	{
+		label = g_strdup_printf("_%d.  %s", i, escaped);
+	}
+	g_free(escaped);
 
-    /* gtk_recent_info_get_uri_display (info) is buggy and
-     * works only for local files */
-    gchar* uri = gedit_utils_uri_for_display(gtk_recent_info_get_uri(info));
+	/* gtk_recent_info_get_uri_display (info) is buggy and
+	 * works only for local files */
+	gchar* uri = gedit_utils_uri_for_display(gtk_recent_info_get_uri(info));
 
-    gchar* ruri = gedit_utils_replace_home_dir_with_tilde(uri);
-    g_free(uri);
+	gchar* ruri = gedit_utils_replace_home_dir_with_tilde(uri);
+	g_free(uri);
 
-    // Translators: %s is a URI
-    gchar* tip = g_strdup_printf("Open '%s'", ruri);
-    g_free(ruri);
+	// Translators: %s is a URI
+	gchar* tip = g_strdup_printf("Open '%s'", ruri);
+	g_free(ruri);
 
-    GtkWidget* item = gtk_menu_item_new_with_mnemonic(label);
+	GtkWidget* item = gtk_menu_item_new_with_mnemonic(label);
 
-    gtk_widget_set_tooltip_text(item, tip);
+	gtk_widget_set_tooltip_text(item, tip);
 
-    g_object_set_data_full(G_OBJECT(item), "gtk-recent-info",
-            gtk_recent_info_ref(info), (GDestroyNotify) gtk_recent_info_unref);
+	g_object_set_data_full(G_OBJECT(item), "gtk-recent-info",
+						   gtk_recent_info_ref(info), (GDestroyNotify) gtk_recent_info_unref);
 
-    g_signal_connect(item, "activate", G_CALLBACK(recentsMenuActivateCallback), this);
+	g_signal_connect(item, "activate", G_CALLBACK(recentsMenuActivateCallback), this);
 
-    gtk_menu_shell_append(GTK_MENU_SHELL(menu), item);
-    gtk_widget_set_visible(GTK_WIDGET(item), true);
+	gtk_menu_shell_append(GTK_MENU_SHELL(menu), item);
+	gtk_widget_set_visible(GTK_WIDGET(item), true);
 
-    this->menuItemList = g_list_append(this->menuItemList, item);
+	this->menuItemList = g_list_append(this->menuItemList, item);
 
-    g_free(label);
-    g_free(tip);
+	g_free(label);
+	g_free(tip);
 }
 
-void RecentManager::updateMenu() {
-    XOJ_CHECK_TYPE(RecentManager);
+void RecentManager::updateMenu()
+{
+	XOJ_CHECK_TYPE(RecentManager);
 
-    GtkRecentManager* recentManager = gtk_recent_manager_get_default();
-    GList* items = gtk_recent_manager_get_items(recentManager);
-    GList* filteredItemsXoj = filterRecent(items, true);
-    GList* filteredItemsPdf = filterRecent(items, false);
+	GtkRecentManager* recentManager = gtk_recent_manager_get_default();
+	GList* items = gtk_recent_manager_get_items(recentManager);
+	GList* filteredItemsXoj = filterRecent(items, true);
+	GList* filteredItemsPdf = filterRecent(items, false);
 
-    freeOldMenus();
+	freeOldMenus();
 
-    int i = 0;
-    for (GList* l = filteredItemsXoj; l != NULL; l = l->next) {
-        GtkRecentInfo* info = (GtkRecentInfo*) l->data;
+	int i = 0;
+	for (GList* l = filteredItemsXoj; l != NULL; l = l->next)
+	{
+		GtkRecentInfo* info = (GtkRecentInfo*) l->data;
 
-        if (i >= maxRecent) {
-            break;
-        }
-        i++;
+		if (i >= maxRecent)
+		{
+			break;
+		}
+		i++;
 
-        addRecentMenu(info, i);
-    }
+		addRecentMenu(info, i);
+	}
 
-    GtkWidget* separator = gtk_separator_menu_item_new();
-    gtk_menu_shell_append(GTK_MENU_SHELL(menu), separator);
-    gtk_widget_set_visible(GTK_WIDGET(separator), true);
+	GtkWidget* separator = gtk_separator_menu_item_new();
+	gtk_menu_shell_append(GTK_MENU_SHELL(menu), separator);
+	gtk_widget_set_visible(GTK_WIDGET(separator), true);
 
-    this->menuItemList = g_list_append(this->menuItemList, separator);
+	this->menuItemList = g_list_append(this->menuItemList, separator);
 
-    i = 0;
-    for (GList* l = filteredItemsPdf; l != NULL; l = l->next) {
-        GtkRecentInfo* info = (GtkRecentInfo*) l->data;
+	i = 0;
+	for (GList* l = filteredItemsPdf; l != NULL; l = l->next)
+	{
+		GtkRecentInfo* info = (GtkRecentInfo*) l->data;
 
-        if (i >= maxRecent) {
-            break;
-        }
-        i++;
+		if (i >= maxRecent)
+		{
+			break;
+		}
+		i++;
 
-        addRecentMenu(info, i + maxRecent);
-    }
+		addRecentMenu(info, i + maxRecent);
+	}
 
-    g_list_free(filteredItemsXoj);
-    g_list_free(filteredItemsPdf);
+	g_list_free(filteredItemsXoj);
+	g_list_free(filteredItemsPdf);
 
-    g_list_foreach(items, (GFunc) gtk_recent_info_unref, NULL);
-    g_list_free(items);
+	g_list_foreach(items, (GFunc) gtk_recent_info_unref, NULL);
+	g_list_free(items);
 }
 

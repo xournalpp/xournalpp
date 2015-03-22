@@ -15,11 +15,12 @@
 class Control;
 #include <Python.h>
 
-extern "C" {
+extern "C"
+{
 
-	void initundoredohandler();
+void initundoredohandler();
 
-	PyObject* newPyUndoRedoHandler(PyObject* xournal);
+PyObject* newPyUndoRedoHandler(PyObject* xournal);
 
 }
 

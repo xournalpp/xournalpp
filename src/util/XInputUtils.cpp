@@ -6,13 +6,9 @@ int XInputUtils::screenWidth = 0;
 int XInputUtils::screenHeight = 0;
 int XInputUtils::enableLeafEnterWorkaround = true;
 
-XInputUtils::XInputUtils()
-{
-}
+XInputUtils::XInputUtils() { }
 
-XInputUtils::~XInputUtils()
-{
-}
+XInputUtils::~XInputUtils() { }
 
 void XInputUtils::initUtils(GtkWidget* win)
 {
@@ -23,7 +19,7 @@ void XInputUtils::initUtils(GtkWidget* win)
 
 void XInputUtils::setLeafEnterWorkaroundEnabled(bool enabled)
 {
-	if(XInputUtils::enableLeafEnterWorkaround == true && enabled == false)
+	if (XInputUtils::enableLeafEnterWorkaround == true && enabled == false)
 	{
 		XInputUtils::onMouseEnterNotifyEvent(NULL, NULL);
 	}
@@ -96,7 +92,7 @@ void XInputUtils::fixXInputCoords(GdkEvent* event, GtkWidget* widget)
 	{
 		/* with GTK+ 2.17, events come improperly translated, and the event's
 		 GdkWindow isn't even the same for ButtonDown as for MotionNotify... */
-		if (gtk_major_version == 2 && gtk_minor_version == 17)   // GTK+ 2.17 issues !!
+		if (gtk_major_version == 2 && gtk_minor_version == 17) // GTK+ 2.17 issues !!
 		{
 			gdk_window_get_position(GTK_WIDGET(widget)->window, &wx, &wy);
 			*px += wx;
@@ -144,9 +140,9 @@ void XInputUtils::handleScrollEvent(GdkEventButton* event, GtkWidget* widget)
 }
 
 gboolean XInputUtils::onMouseEnterNotifyEvent(GtkWidget* widget,
-                                              GdkEventCrossing* event)
+											  GdkEventCrossing* event)
 {
-	if(!XInputUtils::enableLeafEnterWorkaround)
+	if (!XInputUtils::enableLeafEnterWorkaround)
 	{
 		return FALSE;
 	}
@@ -160,7 +156,7 @@ gboolean XInputUtils::onMouseEnterNotifyEvent(GtkWidget* widget,
 		gdk_flush();
 		gdk_error_trap_push();
 		for (GList* dev_list = gdk_devices_list(); dev_list != NULL;
-		     dev_list = dev_list->next)
+			dev_list = dev_list->next)
 		{
 			GdkDevice* dev = GDK_DEVICE(dev_list->data);
 			gdk_device_set_mode(dev, GDK_MODE_SCREEN);
@@ -172,9 +168,9 @@ gboolean XInputUtils::onMouseEnterNotifyEvent(GtkWidget* widget,
 }
 
 gboolean XInputUtils::onMouseLeaveNotifyEvent(GtkWidget* widget,
-                                              GdkEventCrossing* event)
+											  GdkEventCrossing* event)
 {
-	if(!XInputUtils::enableLeafEnterWorkaround)
+	if (!XInputUtils::enableLeafEnterWorkaround)
 	{
 		return FALSE;
 	}
@@ -188,7 +184,7 @@ gboolean XInputUtils::onMouseLeaveNotifyEvent(GtkWidget* widget,
 		gdk_flush();
 		gdk_error_trap_push();
 		for (GList* dev_list = gdk_devices_list(); dev_list != NULL;
-		     dev_list = dev_list->next)
+			dev_list = dev_list->next)
 		{
 			GdkDevice* dev = GDK_DEVICE(dev_list->data);
 			gdk_device_set_mode(dev, GDK_MODE_DISABLED);

@@ -30,7 +30,7 @@ class UndoAction;
 class EditSelectionContents;
 class DeleteUndoAction;
 
-class EditSelection: public ElementContainer, public Serializeable
+class EditSelection : public ElementContainer, public Serializeable
 {
 public:
 	EditSelection(UndoRedoHandler* undo, PageRef page, PageView* view);
@@ -98,7 +98,7 @@ public:
 	 * (or NULL if nothing is done)
 	 */
 	UndoAction* setSize(ToolSize size, const double* thicknessPen,
-	                    const double* thicknessHilighter, const double* thicknessEraser);
+						const double* thicknessHilighter, const double* thicknessEraser);
 
 	/**
 	 * Set the color of all elements, return an undo action

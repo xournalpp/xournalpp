@@ -9,6 +9,7 @@
 class PdfPage
 {
 public:
+
 	PdfPage(XojPopplerPage* page, int index, PdfPagesDialog* dlg)
 	{
 		XOJ_INIT_TYPE(PdfPage);
@@ -25,9 +26,9 @@ public:
 		gtk_widget_set_events(widget, GDK_EXPOSURE_MASK | GDK_BUTTON_PRESS_MASK);
 
 		g_signal_connect(this->widget, "expose_event", G_CALLBACK(exposeEventCallback),
-		                 this);
+						this);
 		g_signal_connect(this->widget, "button-press-event",
-		                 G_CALLBACK(mouseButtonPressCallback), this);
+						G_CALLBACK(mouseButtonPressCallback), this);
 	}
 
 	virtual ~PdfPage()
@@ -57,8 +58,8 @@ public:
 		XOJ_CHECK_TYPE(PdfPage);
 
 		return page->getWidth() * dlg->getZoom() + Shadow::getShadowBottomRightSize() +
-		       Shadow::getShadowTopLeftSize()
-		       + 4;
+				Shadow::getShadowTopLeftSize()
+				+ 4;
 	}
 
 	int getHeight()
@@ -66,8 +67,8 @@ public:
 		XOJ_CHECK_TYPE(PdfPage);
 
 		return page->getHeight() * dlg->getZoom() + Shadow::getShadowBottomRightSize() +
-		       Shadow::getShadowTopLeftSize()
-		       + 4;
+				Shadow::getShadowTopLeftSize()
+				+ 4;
 	}
 
 	void setSelected(bool selected)
@@ -101,9 +102,10 @@ public:
 
 		gtk_widget_set_size_request(this->widget, getWidth(), getHeight());
 	}
+
 private:
 	static gboolean exposeEventCallback(GtkWidget* widget, GdkEventExpose* event,
-	                                    PdfPage* page)
+										PdfPage* page)
 	{
 		XOJ_CHECK_TYPE_OBJ(page, PdfPage);
 
@@ -112,7 +114,7 @@ private:
 	}
 
 	static gboolean mouseButtonPressCallback(GtkWidget* widget,
-	                                         GdkEventButton* event, PdfPage* page)
+											GdkEventButton* event, PdfPage* page)
 	{
 		XOJ_CHECK_TYPE_OBJ(page, PdfPage);
 
@@ -132,7 +134,7 @@ private:
 		if (crBuffer == NULL)
 		{
 			crBuffer = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, alloc.width,
-			                                      alloc.height);
+												alloc.height);
 
 			double zoom = dlg->getZoom();
 
@@ -141,7 +143,7 @@ private:
 			cairo_get_matrix(cr2, &defaultMatrix);
 
 			cairo_translate(cr2, Shadow::getShadowTopLeftSize() + 2,
-			                Shadow::getShadowTopLeftSize() + 2);
+							Shadow::getShadowTopLeftSize() + 2);
 
 			cairo_scale(cr2, zoom, zoom);
 
@@ -169,11 +171,11 @@ private:
 
 			//right
 			cairo_rectangle(cr2, alloc.width - Shadow::getShadowBottomRightSize() - 2, 0,
-			                Shadow::getShadowBottomRightSize() + 2, alloc.height);
+							Shadow::getShadowBottomRightSize() + 2, alloc.height);
 			//bottom
 			cairo_rectangle(cr2, 0, alloc.height - Shadow::getShadowBottomRightSize() - 2,
-			                alloc.width,
-			                Shadow::getShadowBottomRightSize() + 2);
+							alloc.width,
+							Shadow::getShadowBottomRightSize() + 2);
 			cairo_fill(cr2);
 
 			cairo_set_operator(cr2, CAIRO_OPERATOR_ATOP);
@@ -187,20 +189,20 @@ private:
 				cairo_set_line_join(cr2, CAIRO_LINE_JOIN_BEVEL);
 
 				cairo_rectangle(cr2, Shadow::getShadowTopLeftSize(),
-				                Shadow::getShadowTopLeftSize(), width + 3.5, height
-				                + 3.5);
+								Shadow::getShadowTopLeftSize(), width + 3.5, height
+								+ 3.5);
 
 				cairo_stroke(cr2);
 
 				Shadow::drawShadow(cr2, Shadow::getShadowTopLeftSize(),
-				                   Shadow::getShadowTopLeftSize(), width + 5, height
-				                   + 5);
+								Shadow::getShadowTopLeftSize(), width + 5, height
+								+ 5);
 			}
 			else
 			{
 				Shadow::drawShadow(cr2, Shadow::getShadowTopLeftSize() + 2,
-				                   Shadow::getShadowTopLeftSize() + 2, width,
-				                   height);
+								Shadow::getShadowTopLeftSize() + 2, width,
+								height);
 			}
 
 			int x = 35;
@@ -214,11 +216,10 @@ private:
 			cairo_set_source_rgb(cr2, 0xff / 255.0, 0x66 / 255.0, 0x00 / 255.0);
 			cairo_stroke(cr2);
 			cairo_select_font_face(cr2, "@cairo:", CAIRO_FONT_SLANT_NORMAL,
-			                       CAIRO_FONT_WEIGHT_BOLD);
+								CAIRO_FONT_WEIGHT_BOLD);
 			cairo_set_font_size(cr2, 16);
 
-			char* txt = g_strdup_printf("%i",
-			                            this->pageNr + 1);  // Do not start page number with 0
+			char* txt = g_strdup_printf("%i", this->pageNr + 1); // Do not start page number with 0
 
 			cairo_text_extents_t extents;
 			cairo_text_extents(cr2, txt, &extents);
@@ -276,10 +277,9 @@ private:
 //////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////
 
-
 PdfPagesDialog::PdfPagesDialog(GladeSearchpath* gladeSearchPath, Document* doc,
-                               Settings* settings) :
-	GladeGui(gladeSearchPath, "pdfpages.glade", "pdfPagesDialog")
+							   Settings* settings) :
+GladeGui(gladeSearchPath, "pdfpages.glade", "pdfPagesDialog")
 {
 
 	XOJ_INIT_TYPE(PdfPagesDialog);
@@ -304,10 +304,10 @@ PdfPagesDialog::PdfPagesDialog(GladeSearchpath* gladeSearchPath, Document* doc,
 	gtk_widget_set_size_request(this->window, 800, 600);
 
 	gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scrollPreview),
-	                               GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
+								GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
 	gtk_scrolled_window_set_shadow_type(GTK_SCROLLED_WINDOW(scrollPreview),
-	                                    GTK_SHADOW_IN);
-	gtk_container_add(GTK_CONTAINER (scrollPreview), widget);
+										GTK_SHADOW_IN);
+	gtk_container_add(GTK_CONTAINER(scrollPreview), widget);
 	gtk_box_pack_start(GTK_BOX(get("vbox")), scrollPreview, true, true, 0);
 
 	g_signal_connect(this->window, "size-allocate", G_CALLBACK(sizeAllocate), this);
@@ -331,9 +331,9 @@ PdfPagesDialog::PdfPagesDialog(GladeSearchpath* gladeSearchPath, Document* doc,
 	updateOkButton();
 
 	g_signal_connect(get("cbOnlyNotUsed"), "toggled",
-	                 G_CALLBACK (onlyNotUsedCallback), this);
-	g_signal_connect(get("buttonOk"), "clicked", G_CALLBACK (okButtonCallback),
-	                 this);
+					G_CALLBACK(onlyNotUsedCallback), this);
+	g_signal_connect(get("buttonOk"), "clicked", G_CALLBACK(okButtonCallback),
+					this);
 }
 
 PdfPagesDialog::~PdfPagesDialog()
@@ -366,7 +366,7 @@ void PdfPagesDialog::updateOkButton()
 
 	PdfPage* p = (PdfPage*) g_list_nth_data(this->pages, this->selected);
 	gtk_widget_set_sensitive(get("buttonOk"), p &&
-	                         gtk_widget_get_visible(p->getWidget()));
+							gtk_widget_get_visible(p->getWidget()));
 }
 
 void PdfPagesDialog::okButtonCallback(GtkButton* button, PdfPagesDialog* dlg)
@@ -377,7 +377,7 @@ void PdfPagesDialog::okButtonCallback(GtkButton* button, PdfPagesDialog* dlg)
 }
 
 void PdfPagesDialog::onlyNotUsedCallback(GtkToggleButton* tb,
-                                         PdfPagesDialog* dlg)
+										 PdfPagesDialog* dlg)
 {
 	XOJ_CHECK_TYPE_OBJ(dlg, PdfPagesDialog);
 
@@ -423,7 +423,7 @@ double PdfPagesDialog::getZoom()
 }
 
 void PdfPagesDialog::sizeAllocate(GtkWidget* widget,
-                                  GtkRequisition* requisition, PdfPagesDialog* dlg)
+								  GtkRequisition* requisition, PdfPagesDialog* dlg)
 {
 	XOJ_CHECK_TYPE_OBJ(dlg, PdfPagesDialog);
 
@@ -480,7 +480,7 @@ void PdfPagesDialog::setBackgroundWhite()
 	}
 	this->backgroundInitialized = true;
 	gdk_window_set_background(GTK_LAYOUT(this->widget)->bin_window,
-	                          &this->widget->style->white);
+							&this->widget->style->white);
 }
 
 void PdfPagesDialog::setSelected(int selected)

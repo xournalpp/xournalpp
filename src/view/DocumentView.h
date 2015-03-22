@@ -34,7 +34,7 @@ public:
 public:
 	void drawPage(PageRef page, cairo_t* cr, bool preview);
 	void drawStroke(cairo_t* cr, Stroke* s, int startPoint = 0,
-	                double scaleFactor = 1);
+					double scaleFactor = 1);
 	void drawEraseableStroke(cairo_t* cr, Stroke* s);
 	static void applyColor(cairo_t* cr, int c, int alpha = 255);
 	static void applyColor(cairo_t* cr, Element* e, int alpha = 255);

@@ -15,12 +15,12 @@
 #include "UndoAction.h"
 #include <glib.h>
 
-class ScaleUndoAction: public UndoAction
+class ScaleUndoAction : public UndoAction
 {
 public:
 	ScaleUndoAction(PageRef page, GList* elements,
-	                double x0, double y0,
-	                double fx, double fy);
+					double x0, double y0,
+					double fx, double fy);
 	virtual ~ScaleUndoAction();
 
 public:

@@ -14,7 +14,7 @@
 
 #include "ObjectEncoding.h"
 
-class HexObjectEncoding: public ObjectEncoding
+class HexObjectEncoding : public ObjectEncoding
 {
 public:
 	HexObjectEncoding();

@@ -18,11 +18,11 @@ class Redrawable;
 class Stroke;
 class Layer;
 
-class RecognizerUndoAction: public UndoAction
+class RecognizerUndoAction : public UndoAction
 {
 public:
 	RecognizerUndoAction(PageRef page, Layer* layer,
-	                     Stroke* original, Stroke* recognized);
+						Stroke* original, Stroke* recognized);
 	virtual ~RecognizerUndoAction();
 
 public:

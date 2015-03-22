@@ -21,7 +21,6 @@
 #include "BackgroundImage.h"
 #include "PageHandler.h"
 
-
 class XojPage : public PageHandler
 {
 public:

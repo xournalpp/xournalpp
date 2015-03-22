@@ -17,15 +17,15 @@
 
 enum PdfRefEntryType
 {
-    PDF_REF_ENTRY_TYPE_REF,
-    PDF_REF_ENTRY_TYPE_DICT
+	PDF_REF_ENTRY_TYPE_REF,
+	PDF_REF_ENTRY_TYPE_DICT
 };
 
 class PdfRefEntry
 {
 public:
 	PdfRefEntry(PdfRefEntryType type, int objectId, Object* object, int refSourceId,
-	            Ref ref, XojPopplerDocument doc);
+				Ref ref, XojPopplerDocument doc);
 	virtual ~PdfRefEntry();
 
 public:

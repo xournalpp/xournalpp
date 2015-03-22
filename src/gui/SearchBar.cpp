@@ -21,12 +21,12 @@ SearchBar::SearchBar(Control* control)
 
 	GtkWidget* previous = win->get("btSearchBack");
 	g_signal_connect(previous, "clicked", G_CALLBACK(buttonPreviousSearchClicked),
-	                 this);
+					this);
 
 	GtkWidget* searchTextField = win->get("searchTextField");
-	g_signal_connect (searchTextField, "changed",
-	                  G_CALLBACK (searchTextChangedCallback),
-	                  this);
+	g_signal_connect(searchTextField, "changed",
+					G_CALLBACK(searchTextChangedCallback),
+					this);
 
 	defaultColor = searchTextField->style->base[GTK_STATE_NORMAL];
 }
@@ -41,7 +41,7 @@ SearchBar::~SearchBar()
 }
 
 bool SearchBar::searchTextonCurrentPage(const char* text, int* occures,
-                                        double* top)
+										double* top)
 {
 	XOJ_CHECK_TYPE(SearchBar);
 
@@ -101,7 +101,7 @@ void SearchBar::search(const char* text)
 }
 
 void SearchBar::searchTextChangedCallback(GtkEntry* entry,
-                                          SearchBar* searchBar)
+										  SearchBar* searchBar)
 {
 	XOJ_CHECK_TYPE_OBJ(searchBar, SearchBar);
 
@@ -110,7 +110,7 @@ void SearchBar::searchTextChangedCallback(GtkEntry* entry,
 }
 
 void SearchBar::buttonCloseSearchClicked(GtkButton* button,
-                                         SearchBar* searchBar)
+										 SearchBar* searchBar)
 {
 	XOJ_CHECK_TYPE_OBJ(searchBar, SearchBar);
 
@@ -176,7 +176,7 @@ void SearchBar::searchNext()
 	}
 
 	gtk_label_set_text(GTK_LABEL(lbSearchState),
-	                   _("Text not found, searched on all pages"));
+					_("Text not found, searched on all pages"));
 }
 
 void SearchBar::searchPrevious()
@@ -238,11 +238,11 @@ void SearchBar::searchPrevious()
 	}
 
 	gtk_label_set_text(GTK_LABEL(lbSearchState),
-	                   _("Text not found, searched on all pages"));
+					_("Text not found, searched on all pages"));
 }
 
 void SearchBar::buttonNextSearchClicked(GtkButton* button,
-                                        SearchBar* searchBar)
+										SearchBar* searchBar)
 {
 	XOJ_CHECK_TYPE_OBJ(searchBar, SearchBar);
 
@@ -250,7 +250,7 @@ void SearchBar::buttonNextSearchClicked(GtkButton* button,
 }
 
 void SearchBar::buttonPreviousSearchClicked(GtkButton* button,
-                                            SearchBar* searchBar)
+											SearchBar* searchBar)
 {
 	XOJ_CHECK_TYPE_OBJ(searchBar, SearchBar);
 

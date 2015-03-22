@@ -36,9 +36,9 @@ public:
 	 * Avoid crash if e.g. a mouse is plugged out...
 	 */
 	static gboolean onMouseEnterNotifyEvent(GtkWidget* widget,
-	                                        GdkEventCrossing* event);
+											GdkEventCrossing* event);
 	static gboolean onMouseLeaveNotifyEvent(GtkWidget* widget,
-	                                        GdkEventCrossing* event);
+											GdkEventCrossing* event);
 
 	static void initUtils(GtkWidget* win);
 

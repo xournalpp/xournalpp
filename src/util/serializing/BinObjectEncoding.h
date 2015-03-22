@@ -14,7 +14,7 @@
 
 #include "ObjectEncoding.h"
 
-class BinObjectEncoding: public ObjectEncoding
+class BinObjectEncoding : public ObjectEncoding
 {
 public:
 	BinObjectEncoding();

@@ -5,9 +5,9 @@
 #include <Range.h>
 
 ScaleUndoAction::ScaleUndoAction(PageRef page,
-                                 GList* elements,
-                                 double x0, double y0,
-                                 double fx, double fy) : UndoAction("ScaleUndoAction")
+								 GList* elements,
+								 double x0, double y0,
+								 double fx, double fy) : UndoAction("ScaleUndoAction")
 {
 	XOJ_INIT_TYPE(ScaleUndoAction);
 

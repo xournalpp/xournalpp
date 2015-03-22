@@ -20,10 +20,10 @@
 class ToolListener
 {
 public:
-    virtual void toolColorChanged() = 0;
-    virtual void setCustomColorSelected() = 0;
-    virtual void toolSizeChanged() = 0;
-    virtual void toolChanged() = 0;
+	virtual void toolColorChanged() = 0;
+	virtual void setCustomColorSelected() = 0;
+	virtual void toolSizeChanged() = 0;
+	virtual void toolChanged() = 0;
 };
 
 class ActionHandler;
@@ -31,91 +31,91 @@ class ActionHandler;
 class ToolHandler
 {
 public:
-    ToolHandler(ToolListener* listener, ActionHandler* actionHandler,
-                Settings* settings);
-    virtual ~ToolHandler();
+	ToolHandler(ToolListener* listener, ActionHandler* actionHandler,
+				Settings* settings);
+	virtual ~ToolHandler();
 
-    void setColor(int color);
-    int getColor();
-    GdkColor getGdkColor();
+	void setColor(int color);
+	int getColor();
+	GdkColor getGdkColor();
 
-    void setAll(bool set);
-    void setRuler(bool ruler, bool disableOthers = false);
-    void setRectangle(bool rectangle, bool disableOthers = false);
-    void setCircle(bool circle, bool disableOthers = false);
-    void setArrow(bool arrow, bool disableOthers = false);
-    bool isRuler();
-    bool isRectangle();
-    bool isCircle();
-    bool isArrow();
+	void setAll(bool set);
+	void setRuler(bool ruler, bool disableOthers = false);
+	void setRectangle(bool rectangle, bool disableOthers = false);
+	void setCircle(bool circle, bool disableOthers = false);
+	void setArrow(bool arrow, bool disableOthers = false);
+	bool isRuler();
+	bool isRectangle();
+	bool isCircle();
+	bool isArrow();
 
-    void setShapeRecognizer(bool reco, bool disableOthers = false);
-    bool isShapeRecognizer();
+	void setShapeRecognizer(bool reco, bool disableOthers = false);
+	bool isShapeRecognizer();
 
-    void setColorFound();
+	void setColorFound();
 
-    ToolSize getSize();
-    void setSize(ToolSize size);
-    double getThickness();
+	ToolSize getSize();
+	void setSize(ToolSize size);
+	double getThickness();
 
-    ToolSize getPenSize();
-    ToolSize getEraserSize();
-    ToolSize getHilighterSize();
-    void setPenSize(ToolSize size);
-    void setEraserSize(ToolSize size);
-    void setHilighterSize(ToolSize size);
+	ToolSize getPenSize();
+	ToolSize getEraserSize();
+	ToolSize getHilighterSize();
+	void setPenSize(ToolSize size);
+	void setEraserSize(ToolSize size);
+	void setHilighterSize(ToolSize size);
 
 
-    void selectTool(ToolType type, bool fireToolChanged = true);
-    ToolType getToolType();
-    void fireToolChanged();
+	void selectTool(ToolType type, bool fireToolChanged = true);
+	ToolType getToolType();
+	void fireToolChanged();
 
-    void setEraserType(EraserType eraserType);
-    EraserType getEraserType();
-    void eraserTypeChanged();
+	void setEraserType(EraserType eraserType);
+	EraserType getEraserType();
+	void eraserTypeChanged();
 
-    bool isEnableColor();
-    bool isEnableSize();
-    bool isEnableRuler();
-    bool isEnableRectangle();
-    bool isEnableCircle();
-    bool isEnableArrow();
-    bool isEnableShapreRecognizer();
+	bool isEnableColor();
+	bool isEnableSize();
+	bool isEnableRuler();
+	bool isEnableRectangle();
+	bool isEnableCircle();
+	bool isEnableArrow();
+	bool isEnableShapreRecognizer();
 
-    void saveSettings();
-    void loadSettings();
+	void saveSettings();
+	void loadSettings();
 
-    void copyCurrentConfig();
-    void restoreLastConfig();
+	void copyCurrentConfig();
+	void restoreLastConfig();
 
-    ArrayIterator<Tool*> iterator();
+	ArrayIterator<Tool*> iterator();
 
-    void setSelectionEditTools(bool setColor, bool setSize);
+	void setSelectionEditTools(bool setColor, bool setSize);
 
-    const double* getToolThickness(ToolType type);
+	const double* getToolThickness(ToolType type);
 
 protected:
-    void initTools();
+	void initTools();
 
 private:
-    XOJ_TYPE_ATTRIB;
+	XOJ_TYPE_ATTRIB;
 
-    Tool* tools[TOOL_COUNT];
-    Tool* current;
-    Tool* lastSelectedTool;
+	Tool* tools[TOOL_COUNT];
+	Tool* current;
+	Tool* lastSelectedTool;
 
-    EraserType eraserType;
+	EraserType eraserType;
 
-    /**
-     * If a color is selected, it may be in the list,
-     * so its a "predefined" color for us, but may it is
-     * not in the list, so its a "custom" color for us
-     */
-    bool colorFound;
-    ToolListener* listener;
-    ActionHandler* actionHandler;
+	/**
+	 * If a color is selected, it may be in the list,
+	 * so its a "predefined" color for us, but may it is
+	 * not in the list, so its a "custom" color for us
+	 */
+	bool colorFound;
+	ToolListener* listener;
+	ActionHandler* actionHandler;
 
-    Settings* settings;
+	Settings* settings;
 };
 
 #endif /* __TOOLHANDLER_H__ */

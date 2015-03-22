@@ -6,11 +6,10 @@
 #include "../../util/LatexAction.h"
 
 #include <iostream>
-
 using namespace std;
 
 LatexGlade::LatexGlade(GladeSearchpath* gladeSearchPath) :
-	GladeGui(gladeSearchPath, "texdialog.glade", "texDialog")
+GladeGui(gladeSearchPath, "texdialog.glade", "texDialog")
 {
 	XOJ_INIT_TYPE(LatexGlade);
 
@@ -40,10 +39,12 @@ void LatexGlade::setTex(gchar* texString, int texLength)
 	this->theLatex = texString;
 	this->theLatexLength = texLength;
 }
+
 gchar* LatexGlade::getTex()
 {
 	return this->theLatex;
 }
+
 int LatexGlade::getTexLen()
 {
 	return this->theLatexLength;

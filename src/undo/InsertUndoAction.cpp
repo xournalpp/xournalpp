@@ -5,7 +5,7 @@
 #include "../gui/Redrawable.h"
 
 InsertUndoAction::InsertUndoAction(PageRef page, Layer* layer,
-                                   Element* element) : UndoAction("InsertUndoAction")
+								   Element* element) : UndoAction("InsertUndoAction")
 {
 	XOJ_INIT_TYPE(InsertUndoAction);
 
@@ -80,10 +80,9 @@ bool InsertUndoAction::redo(Control* control)
 	return true;
 }
 
-
 InsertsUndoAction::InsertsUndoAction(PageRef page,
-                                     Layer* layer,
-                                     GList* elements) : UndoAction("InsertsUndoAction")
+									 Layer* layer,
+									 GList* elements) : UndoAction("InsertsUndoAction")
 {
 	XOJ_INIT_TYPE(InsertsUndoAction);
 
@@ -99,8 +98,8 @@ InsertsUndoAction::~InsertsUndoAction()
 	if (this->undone)
 	{
 		// Insert was undone, so this is not needed anymore
-		for(GList* elem = this->elements;
-		    elem != NULL; elem = elem->next)
+		for (GList* elem = this->elements;
+			elem != NULL; elem = elem->next)
 		{
 			Element* e = (Element*) elem->data;
 			delete e;
@@ -124,8 +123,8 @@ bool InsertsUndoAction::undo(Control* control)
 {
 	XOJ_CHECK_TYPE(InsertsUndoAction);
 
-	for(GList* l = this->elements;
-	    l != NULL; l = l->next)
+	for (GList* l = this->elements;
+		l != NULL; l = l->next)
 	{
 		Element* elem = (Element*) l->data;
 
@@ -142,8 +141,8 @@ bool InsertsUndoAction::redo(Control* control)
 {
 	XOJ_CHECK_TYPE(InsertsUndoAction);
 
-	for(GList* l = this->elements;
-	    l != NULL; l = l->next)
+	for (GList* l = this->elements;
+		l != NULL; l = l->next)
 	{
 		Element* elem = (Element*) l->data;
 

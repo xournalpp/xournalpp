@@ -25,9 +25,7 @@ public:
 		this->count = count;
 	}
 
-	virtual ~ArrayIterator()
-	{
-	}
+	virtual ~ArrayIterator() { }
 
 	bool hasNext() const
 	{

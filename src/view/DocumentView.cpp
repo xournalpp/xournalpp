@@ -59,7 +59,7 @@ void DocumentView::drawEraseableStroke(cairo_t* cr, Stroke* s)
 }
 
 void DocumentView::drawStroke(cairo_t* cr, Stroke* s, int startPoint,
-                              double scaleFactor)
+							  double scaleFactor)
 {
 	XOJ_CHECK_TYPE(DocumentView);
 
@@ -104,7 +104,7 @@ void DocumentView::drawStroke(cairo_t* cr, Stroke* s, int startPoint,
 	if (!s->hasPressure())
 	{
 		gdk_threads_enter();
-		if(scaleFactor == 1)
+		if (scaleFactor == 1)
 		{
 			// Set width
 			cairo_set_line_width(cr, width);
@@ -153,7 +153,7 @@ void DocumentView::drawStroke(cairo_t* cr, Stroke* s, int startPoint,
 				width = lastPoint1.z;
 			}
 
-			if(scaleFactor == 1)
+			if (scaleFactor == 1)
 			{
 				// Set width
 				cairo_set_line_width(cr, width);
@@ -214,6 +214,7 @@ void DocumentView::drawImage(cairo_t* cr, Image* i)
 	cairo_set_matrix(cr, &defaultMatrix);
 	gdk_threads_leave();
 }
+
 void DocumentView::drawTexImage(cairo_t* cr, TexImage* i)
 {
 	XOJ_CHECK_TYPE(DocumentView);
@@ -281,7 +282,7 @@ void DocumentView::drawLayer(cairo_t* cr, Layer* l)
 		cairo_set_source_rgb(cr, 0, 1, 0);
 		cairo_set_line_width(cr, 1);
 		cairo_rectangle(cr, e->getX(), e->getY(), e->getElementWidth(),
-		                e->getElementHeight());
+						e->getElementHeight());
 		cairo_stroke(cr);
 		gdk_threads_leave();
 #endif // SHOW_ELEMENT_BOUNDS
@@ -444,7 +445,7 @@ void DocumentView::limitArea(double x, double y, double width, double heigth)
 }
 
 void DocumentView::drawPage(PageRef page, cairo_t* cr,
-                            bool dontRenderEditingStroke)
+							bool dontRenderEditingStroke)
 {
 	XOJ_CHECK_TYPE(DocumentView);
 
@@ -501,7 +502,7 @@ void DocumentView::drawPage(PageRef page, cairo_t* cr,
 		cairo_set_source_rgb(cr, 1, 0, 0);
 		cairo_set_line_width(cr, 1);
 		cairo_rectangle(cr, this->lX + 3, this->lY + 3, this->lWidth - 6,
-		                this->lHeight - 6);
+						this->lHeight - 6);
 		cairo_stroke(cr);
 	}
 	else

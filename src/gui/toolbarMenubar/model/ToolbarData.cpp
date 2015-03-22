@@ -7,182 +7,182 @@ using namespace std;
 
 ToolbarData::ToolbarData(bool predefined)
 {
-    XOJ_INIT_TYPE(ToolbarData);
+	XOJ_INIT_TYPE(ToolbarData);
 
-    this->predefined = predefined;
+	this->predefined = predefined;
 }
 
 ToolbarData::ToolbarData(const ToolbarData& data)
 {
-    XOJ_INIT_TYPE(ToolbarData);
+	XOJ_INIT_TYPE(ToolbarData);
 
-    *this = data;
-    this->predefined = false;
+	*this = data;
+	this->predefined = false;
 }
 
 ToolbarData::~ToolbarData()
 {
-    XOJ_RELEASE_TYPE(ToolbarData);
+	XOJ_RELEASE_TYPE(ToolbarData);
 }
 
 string ToolbarData::getName()
 {
-    XOJ_CHECK_TYPE(ToolbarData);
+	XOJ_CHECK_TYPE(ToolbarData);
 
-    return this->name;
+	return this->name;
 }
 
 void ToolbarData::setName(string name)
 {
-    XOJ_CHECK_TYPE(ToolbarData);
+	XOJ_CHECK_TYPE(ToolbarData);
 
-    this->name = name;
+	this->name = name;
 }
 
 string ToolbarData::getId()
 {
-    XOJ_CHECK_TYPE(ToolbarData);
+	XOJ_CHECK_TYPE(ToolbarData);
 
-    return this->id;
+	return this->id;
 }
 
 void ToolbarData::setId(string id)
 {
-    XOJ_CHECK_TYPE(ToolbarData);
+	XOJ_CHECK_TYPE(ToolbarData);
 
-    this->id = id;
+	this->id = id;
 }
 
 bool ToolbarData::isPredefined()
 {
-    XOJ_CHECK_TYPE(ToolbarData);
+	XOJ_CHECK_TYPE(ToolbarData);
 
-    return this->predefined;
+	return this->predefined;
 }
 
 void ToolbarData::load(GKeyFile* config, const char* group)
 {
-    XOJ_CHECK_TYPE(ToolbarData);
+	XOJ_CHECK_TYPE(ToolbarData);
 
-    gsize length = 0;
-    gchar** keys = g_key_file_get_keys(config, group, &length, NULL);
-    if (keys == NULL)
-    {
-        return;
-    }
+	gsize length = 0;
+	gchar** keys = g_key_file_get_keys(config, group, &length, NULL);
+	if (keys == NULL)
+	{
+		return;
+	}
 
-    gchar* name = g_key_file_get_locale_string(config, group, "name", NULL, NULL);
-    if (name != NULL)
-    {
-        this->name = name;
-        g_free(name);
-    }
+	gchar* name = g_key_file_get_locale_string(config, group, "name", NULL, NULL);
+	if (name != NULL)
+	{
+		this->name = name;
+		g_free(name);
+	}
 
-    for (gsize i = 0; i < length; i++)
-    {
-        if (strcmp(keys[i], "name") == 0 || strncmp(keys[i], "name[", 5) == 0)
-        {
-            continue;
-        }
+	for (gsize i = 0; i < length; i++)
+	{
+		if (strcmp(keys[i], "name") == 0 || strncmp(keys[i], "name[", 5) == 0)
+		{
+			continue;
+		}
 
-        ToolbarEntry e;
-        gsize keyLen = 0;
-        e.setName(keys[i]);
-        gchar** list = g_key_file_get_string_list(config, group, keys[i], &keyLen,
-                                                  NULL);
+		ToolbarEntry e;
+		gsize keyLen = 0;
+		e.setName(keys[i]);
+		gchar** list = g_key_file_get_string_list(config, group, keys[i], &keyLen,
+												  NULL);
 
-        for (gsize x = 0; x < keyLen; x++)
-        {
-            e.addItem(ba::trim_copy(string(list[x])));
-        }
+		for (gsize x = 0; x < keyLen; x++)
+		{
+			e.addItem(ba::trim_copy(string(list[x])));
+		}
 
-        this->contents.push_back(e);
+		this->contents.push_back(e);
 
-        g_strfreev(list);
-    }
+		g_strfreev(list);
+	}
 
-    g_strfreev(keys);
+	g_strfreev(keys);
 }
 
 void ToolbarData::saveToKeyFile(GKeyFile* config)
 {
-    XOJ_CHECK_TYPE(ToolbarData);
+	XOJ_CHECK_TYPE(ToolbarData);
 
-    const char* group = getId().c_str();
+	const char* group = getId().c_str();
 
-    std::vector<ToolbarEntry>::iterator it;
-    for (it = this->contents.begin(); it != this->contents.end(); it++)
-    {
-        ToolbarEntry& e = *it;
+	std::vector<ToolbarEntry>::iterator it;
+	for (it = this->contents.begin(); it != this->contents.end(); it++)
+	{
+		ToolbarEntry& e = *it;
 
-        string line = "";
+		string line = "";
 
-        ListIterator<ToolbarItem*> it = e.iterator();
-        while (it.hasNext())
-        {
-            line += ",";
-            line += *it.next();
-        }
+		ListIterator<ToolbarItem*> it = e.iterator();
+		while (it.hasNext())
+		{
+			line += ",";
+			line += *it.next();
+		}
 
-        if (line.length() > 2)
-        {
-            g_key_file_set_string(config, group, e.getName().c_str(),
-                                  line.substr(1).c_str());
-        }
-    }
+		if (line.length() > 2)
+		{
+			g_key_file_set_string(config, group, e.getName().c_str(),
+								  line.substr(1).c_str());
+		}
+	}
 
-    g_key_file_set_string(config, group, "name", this->name.c_str());
+	g_key_file_set_string(config, group, "name", this->name.c_str());
 }
 
 int ToolbarData::insertItem(string toolbar, string item, int position)
 {
-    XOJ_CHECK_TYPE(ToolbarData);
+	XOJ_CHECK_TYPE(ToolbarData);
 
-    cout << bl::format("ToolbarData::insertItem({1}, {2}, {3});") % toolbar % item % position << endl;
+	cout << bl::format("ToolbarData::insertItem({1}, {2}, {3});") % toolbar % item % position << endl;
 
-    g_return_val_if_fail(isPredefined() == false, -1);
+	g_return_val_if_fail(isPredefined() == false, -1);
 
-    std::vector<ToolbarEntry>::iterator it;
-    for (it = this->contents.begin(); it != this->contents.end(); it++)
-    {
-        ToolbarEntry& e = *it;
+	std::vector<ToolbarEntry>::iterator it;
+	for (it = this->contents.begin(); it != this->contents.end(); it++)
+	{
+		ToolbarEntry& e = *it;
 
-        if (e.getName() == toolbar)
-        {
-            cout << bl::format("Toolbar found: {1}") % toolbar << endl;
+		if (e.getName() == toolbar)
+		{
+			cout << bl::format("Toolbar found: {1}") % toolbar << endl;
 
-            int id = e.insertItem(item, position);
+			int id = e.insertItem(item, position);
 
-            cout << bl::format("return {1}") % id << endl;
-            return id;
-        }
-    }
+			cout << bl::format("return {1}") % id << endl;
+			return id;
+		}
+	}
 
-    ToolbarEntry newEntry;
-    newEntry.setName(toolbar);
-    int id = newEntry.addItem(item);
-    this->contents.push_back(newEntry);
+	ToolbarEntry newEntry;
+	newEntry.setName(toolbar);
+	int id = newEntry.addItem(item);
+	this->contents.push_back(newEntry);
 
-    return id;
+	return id;
 }
 
 bool ToolbarData::removeItemByID(string toolbar, int id)
 {
-    XOJ_CHECK_TYPE(ToolbarData);
+	XOJ_CHECK_TYPE(ToolbarData);
 
-    g_return_val_if_fail(isPredefined() == false, false);
+	g_return_val_if_fail(isPredefined() == false, false);
 
-    std::vector<ToolbarEntry>::iterator it;
-    for (it = this->contents.begin(); it != this->contents.end(); it++)
-    {
-        ToolbarEntry& e = *it;
+	std::vector<ToolbarEntry>::iterator it;
+	for (it = this->contents.begin(); it != this->contents.end(); it++)
+	{
+		ToolbarEntry& e = *it;
 
-        if (e.getName() == toolbar)
-        {
-            return e.removeItemById(id);
-        }
-    }
+		if (e.getName() == toolbar)
+		{
+			return e.removeItemById(id);
+		}
+	}
 
-    return false;
+	return false;
 }
 

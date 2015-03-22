@@ -15,7 +15,7 @@
 #include "XmlNode.h"
 #include "../../model/Point.h"
 
-class XmlPointNode: public XmlNode
+class XmlPointNode : public XmlNode
 {
 public:
 	XmlPointNode(const char* tag);
@@ -23,7 +23,7 @@ public:
 
 private:
 	XmlPointNode(const XmlPointNode& node);
-	void operator =(const XmlPointNode& node);
+	void operator=(const XmlPointNode& node);
 
 public:
 	void addPoint(const Point* point);

@@ -20,7 +20,7 @@ class Layer;
 class Redrawable;
 class Element;
 
-class ColorUndoAction: public UndoAction
+class ColorUndoAction : public UndoAction
 {
 public:
 	ColorUndoAction(PageRef page, Layer* layer);

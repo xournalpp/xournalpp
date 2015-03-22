@@ -85,10 +85,10 @@ void PythonRunner::releasePythonRunner()
 
 void PythonRunner::runScript(string name, string function, string parameter)
 {
-	if(name.empty() || function.empty())
+	if (name.empty() || function.empty())
 	{
 		g_warning("runScript::name (%s) and function (%s) should not be empty!",
-		          name.c_str(), function.c_str());
+				name.c_str(), function.c_str());
 		return;
 	}
 
@@ -106,7 +106,7 @@ void PythonRunner::runScript(string name, string function, string parameter)
 	}
 
 	instance->scripts = g_list_append(instance->scripts, new ScriptData(name,
-	                                                                    function, parameter));
+																		function, parameter));
 
 	g_mutex_unlock(instance->mutex);
 }
@@ -154,7 +154,7 @@ void PythonRunner::initPython()
 	PyXournal_initPython(this->control);
 
 	char buffer[512] = { 0 };
-	const char* path = getcwd(buffer, sizeof(buffer));
+	const char* path = getcwd(buffer, sizeof (buffer));
 	g_return_if_fail(path != NULL);
 
 	PyObject* sysModule = PyImport_ImportModule("sys");
@@ -180,7 +180,7 @@ void PythonRunner::runScriptInt(string path, string function, string parameter)
 {
 	XOJ_CHECK_TYPE(PythonRunner);
 
-	if(path.empty() || function.empty())
+	if (path.empty() || function.empty())
 	{
 		g_warning("runScriptInt::path and function should not be empty!");
 		return;

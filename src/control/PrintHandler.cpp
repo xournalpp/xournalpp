@@ -16,7 +16,7 @@ PrintHandler::~PrintHandler()
 }
 
 void PrintHandler::drawPage(GtkPrintOperation* operation,
-                            GtkPrintContext* context, int pageNr, PrintHandler* handler)
+							GtkPrintContext* context, int pageNr, PrintHandler* handler)
 {
 	XOJ_CHECK_TYPE_OBJ(handler, PrintHandler);
 
@@ -54,8 +54,8 @@ void PrintHandler::drawPage(GtkPrintOperation* operation,
 }
 
 void PrintHandler::requestPageSetup(GtkPrintOperation* operation,
-                                    GtkPrintContext* context, gint pageNr, GtkPageSetup* setup,
-                                    PrintHandler* handler)
+									GtkPrintContext* context, gint pageNr, GtkPageSetup* setup,
+									PrintHandler* handler)
 {
 	XOJ_CHECK_TYPE_OBJ(handler, PrintHandler);
 
@@ -78,18 +78,20 @@ void PrintHandler::requestPageSetup(GtkPrintOperation* operation,
 	}
 
 	GtkPaperSize* size = gtk_paper_size_new_custom("xoj-internal", "xoj-internal",
-	                                               width, height, GTK_UNIT_POINTS);
+												width, height, GTK_UNIT_POINTS);
 	gtk_page_setup_set_paper_size(setup, size);
 	gtk_paper_size_free(size);
 }
 
-// TODO Another feature that's available in xournal but still missing in xournalpp is the "print paper ruling" checkbox. My workaround: Set the background to blank before printing/exporting.
+// TODO Another feature that's available in xournal but still missing
+// in xournalpp is the "print paper ruling" checkbox.
+// My workaround: Set the background to blank before printing/exporting.
 void PrintHandler::print(Document* doc, int currentPage)
 {
 	XOJ_CHECK_TYPE(PrintHandler);
 
 	gchar* filename = g_build_filename(g_get_home_dir(), G_DIR_SEPARATOR_S,
-	                                   CONFIG_DIR, G_DIR_SEPARATOR_S, PRINT_CONFIG_FILE, NULL);
+									CONFIG_DIR, G_DIR_SEPARATOR_S, PRINT_CONFIG_FILE, NULL);
 
 	GtkPrintSettings* settings = gtk_print_settings_new_from_file(filename, NULL);
 
@@ -111,7 +113,7 @@ void PrintHandler::print(Document* doc, int currentPage)
 	g_signal_connect(op, "request-page-setup", G_CALLBACK(requestPageSetup), this);
 
 	GtkPrintOperationResult res = gtk_print_operation_run(op,
-	                                                      GTK_PRINT_OPERATION_ACTION_PRINT_DIALOG, NULL, NULL);
+														GTK_PRINT_OPERATION_ACTION_PRINT_DIALOG, NULL, NULL);
 	if (res == GTK_PRINT_OPERATION_RESULT_APPLY)
 	{
 		g_object_unref(settings);

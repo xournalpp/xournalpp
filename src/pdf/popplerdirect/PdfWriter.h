@@ -21,52 +21,52 @@ using boost::filesystem::path;
 class PdfWriter
 {
 public:
-    PdfWriter(PdfXRef* xref);
-    virtual ~PdfWriter();
+	PdfWriter(PdfXRef* xref);
+	virtual ~PdfWriter();
 
 public:
-    void close();
-    bool openFile(path filename);
+	void close();
+	bool openFile(path filename);
 
 public:
-    bool writeLen(string data, int len);
-    bool write(string data);
-    bool writef(const char* data, ...);
-    bool writeTxt(string data);
-    bool write(int data);
+	bool writeLen(string data, int len);
+	bool write(string data);
+	bool writef(const char* data, ...);
+	bool writeTxt(string data);
+	bool write(int data);
 
-    void startStream();
-    void endStream();
+	void startStream();
+	void endStream();
 
-    bool writeInfo(string title);
-    bool writeObj();
+	bool writeInfo(string title);
+	bool writeObj();
 
 
-    string getLastError();
+	string getLastError();
 
-    int getObjectId();
-    int getNextObjectId();
-    int getDataCount();
+	int getObjectId();
+	int getNextObjectId();
+	int getDataCount();
 
 public:
-    static void setCompressPdfOutput(bool compress);
+	static void setCompressPdfOutput(bool compress);
 
 private:
-    XOJ_TYPE_ATTRIB;
+	XOJ_TYPE_ATTRIB;
 
-    static bool compressPdfOutput;
+	static bool compressPdfOutput;
 
-    int dataCount;
-    bool inStream;
-    GString* stream;
+	int dataCount;
+	bool inStream;
+	GString* stream;
 
-    GFileOutputStream* out;
+	GFileOutputStream* out;
 
-    string lastError;
+	string lastError;
 
-    PdfXRef* xref;
+	PdfXRef* xref;
 
-    int objectId;
+	int objectId;
 
 };
 

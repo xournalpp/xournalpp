@@ -25,7 +25,7 @@ private:
 
 public:
 	static path showOpenDialog(GtkWindow* win, Settings* settings, bool pdf,
-	                           bool& attachPdf);
+							bool& attachPdf);
 
 private:
 	static void updatePreviewCallback(GtkFileChooser* fileChooser, void* userData);

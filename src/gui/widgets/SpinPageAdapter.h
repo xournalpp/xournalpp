@@ -36,7 +36,7 @@ public:
 private:
 	static bool pageNrSpinChangedTimerCallback(SpinPageAdapter* adapter);
 	static void pageNrSpinChangedCallback(GtkSpinButton* spinbutton,
-	                                      SpinPageAdapter* adapter);
+										SpinPageAdapter* adapter);
 
 	void firePageChanged();
 

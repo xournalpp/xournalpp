@@ -25,7 +25,7 @@ public:
 
 	operator string();
 
-	bool operator == (ToolbarItem& other);
+	bool operator==(ToolbarItem& other);
 
 	int getId();
 

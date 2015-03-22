@@ -30,7 +30,6 @@ public:
 	virtual void scrolled(Scrollbar* scrollbar) = 0;
 };
 
-
 class Scrollbar
 {
 public:

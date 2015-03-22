@@ -24,7 +24,7 @@ private:
 
 public:
 	static void drawPage(PdfCache* cache, XojPopplerPage* popplerPage, cairo_t* cr,
-	                     double zoom, double width, double height, bool forPrinting = false);
+						double zoom, double width, double height, bool forPrinting = false);
 };
 
 #endif /* __PDFVIEW_H__ */

@@ -18,12 +18,12 @@
 
 enum StrokeTool
 {
-    STROKE_TOOL_PEN, STROKE_TOOL_ERASER, STROKE_TOOL_HIGHLIGHTER
+	STROKE_TOOL_PEN, STROKE_TOOL_ERASER, STROKE_TOOL_HIGHLIGHTER
 };
 
 class EraseableStroke;
 
-class Stroke: public Element
+class Stroke : public Element
 {
 public:
 	Stroke();

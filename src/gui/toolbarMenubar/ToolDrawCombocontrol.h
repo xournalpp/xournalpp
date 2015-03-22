@@ -21,27 +21,27 @@ class ToolMenuHandler;
 class ToolDrawCombocontrol : public ToolButton
 {
 public:
-    ToolDrawCombocontrol(ToolMenuHandler* th, ActionHandler* handler,
-                         GladeGui* gui, string id);
-    virtual ~ToolDrawCombocontrol();
+	ToolDrawCombocontrol(ToolMenuHandler* th, ActionHandler* handler,
+						 GladeGui* gui, string id);
+	virtual ~ToolDrawCombocontrol();
 
 public:
-    virtual void selected(ActionGroup group, ActionType action);
+	virtual void selected(ActionGroup group, ActionType action);
 
 protected:
-    virtual GtkToolItem* newItem();
+	virtual GtkToolItem* newItem();
 
 private:
-    XOJ_TYPE_ATTRIB;
+	XOJ_TYPE_ATTRIB;
 
-    GtkWidget* iconWidget;
-    GtkWidget* labelWidget;
+	GtkWidget* iconWidget;
+	GtkWidget* labelWidget;
 
-    GdkPixbuf* iconDrawRect;
-    GdkPixbuf* iconDrawCirc;
-    GdkPixbuf* iconDrawArr;
-    GdkPixbuf* iconDrawLine;
-    GdkPixbuf* iconAutoDrawLine;
+	GdkPixbuf* iconDrawRect;
+	GdkPixbuf* iconDrawCirc;
+	GdkPixbuf* iconDrawArr;
+	GdkPixbuf* iconDrawLine;
+	GdkPixbuf* iconAutoDrawLine;
 };
 
 #endif /* __TOOLDRAWCOMBOCONTROL_H__ */

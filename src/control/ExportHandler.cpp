@@ -17,7 +17,7 @@ ExportHandler::~ExportHandler()
 }
 
 void ExportHandler::runExportWithDialog(GladeSearchpath* gladeSearchPath,
-                                        Settings* settings, Document* doc, Control* control, int current)
+										Settings* settings, Document* doc, Control* control, int current)
 {
 	XOJ_CHECK_TYPE(ExportHandler);
 
@@ -31,7 +31,7 @@ void ExportHandler::runExportWithDialog(GladeSearchpath* gladeSearchPath,
 	if (selected)
 	{
 		ExportJob* job = new ExportJob(control, selected, dlg->getFormatType(),
-		                               dlg->getPngDpi(), dlg->getFolder(), dlg->getFilename());
+									dlg->getPngDpi(), dlg->getFolder(), dlg->getFilename());
 		control->getScheduler()->addJob(job, JOB_PRIORITY_NONE);
 		job->unref();
 	}

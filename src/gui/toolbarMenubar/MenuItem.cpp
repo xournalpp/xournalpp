@@ -1,14 +1,13 @@
 #include "MenuItem.h"
 
 MenuItem::MenuItem(ActionHandler* handler, GtkWidget* widget, ActionType type) :
-	AbstractItem("", handler, type, widget)
+AbstractItem("", handler, type, widget)
 {
 	XOJ_INIT_TYPE(MenuItem);
 }
 
 MenuItem::MenuItem(ActionHandler* handler, GtkWidget* widget, ActionType type,
-                   ActionGroup group) :
-	AbstractItem("", handler, type, widget)
+				   ActionGroup group) : AbstractItem("", handler, type, widget)
 {
 	XOJ_INIT_TYPE(MenuItem);
 	this->group = group;

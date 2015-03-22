@@ -15,7 +15,7 @@
 #include "Element.h"
 #include <XournalType.h>
 
-class Image: public Element
+class Image : public Element
 {
 public:
 	Image();
@@ -46,7 +46,7 @@ private:
 	virtual void calcSize();
 
 	static cairo_status_t cairoReadFunction(Image* image, unsigned char* data,
-	                                        unsigned int length);
+											unsigned int length);
 private:
 	XOJ_TYPE_ATTRIB;
 

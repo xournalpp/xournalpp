@@ -19,19 +19,19 @@
 class XojColor
 {
 public:
-    XojColor(int color, string name);
-    virtual ~XojColor();
+	XojColor(int color, string name);
+	virtual ~XojColor();
 
 public:
-    int getColor();
-    string getName();
+	int getColor();
+	string getName();
 
 private:
-    XOJ_TYPE_ATTRIB;
+	XOJ_TYPE_ATTRIB;
 
-    int color;
-    // the localized name of the color
-    string name;
+	int color;
+	// the localized name of the color
+	string name;
 };
 
 #endif /* __XOJCOLOR_H__ */

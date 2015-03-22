@@ -46,7 +46,7 @@ private:
 	void freeData();
 
 	PagePosition* binarySearch(PagePosition** sortedArray, int first, int last,
-	                           int y, int& index);
+							int y, int& index);
 
 private:
 	XOJ_TYPE_ATTRIB;

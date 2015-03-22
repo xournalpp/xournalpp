@@ -14,7 +14,7 @@
 
 #include "Attribute.h"
 
-class TextAttribute: public Attribute
+class TextAttribute : public Attribute
 {
 public:
 	TextAttribute(const char* name, const char* value);

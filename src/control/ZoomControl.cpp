@@ -36,7 +36,7 @@ void ZoomControl::initZoomHandler(GtkWidget* widget)
 	XOJ_CHECK_TYPE(ZoomControl);
 
 	g_signal_connect(widget, "scroll_event",
-	                 G_CALLBACK(onScrolledwindowMainScrollEvent), this);
+					G_CALLBACK(onScrolledwindowMainScrollEvent), this);
 }
 
 void ZoomControl::fireZoomChanged(double lastZoom)
@@ -103,7 +103,7 @@ void ZoomControl::setZoomFit(double zoom)
 	this->zoomFitValue = zoom;
 	fireZoomRangeValueChanged();
 
-	if(this->zoomFitMode)
+	if (this->zoomFitMode)
 	{
 		double lastZoom = this->zoom;
 		this->zoom = this->zoomFitValue;
@@ -127,7 +127,7 @@ double ZoomControl::getZoom100()
 
 void ZoomControl::zoom100()
 {
-	XOJ_CHECK_TYPE( ZoomControl);
+	XOJ_CHECK_TYPE(ZoomControl);
 
 	double lastZoom = this->zoom;
 	this->zoom = this->zoom100Value;
@@ -166,7 +166,7 @@ void ZoomControl::zoomOut()
 }
 
 bool ZoomControl::onScrolledwindowMainScrollEvent(GtkWidget* widget,
-                                                  GdkEventScroll* event, ZoomControl* zoom)
+												  GdkEventScroll* event, ZoomControl* zoom)
 {
 	XOJ_CHECK_TYPE_OBJ(zoom, ZoomControl);
 
@@ -219,7 +219,5 @@ bool ZoomControl::onScrolledwindowMainScrollEvent(GtkWidget* widget,
 	return false;
 }
 
-void ZoomListener::zoomRangeValuesChanged()
-{
-}
+void ZoomListener::zoomRangeValuesChanged() { }
 

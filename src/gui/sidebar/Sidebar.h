@@ -84,7 +84,7 @@ private:
 	 * Page selected
 	 */
 	static void buttonClicked(GtkToolButton* toolbutton,
-	                          SidebarPageButton* buttonData);
+							SidebarPageButton* buttonData);
 
 private:
 	XOJ_TYPE_ATTRIB;

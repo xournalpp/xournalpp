@@ -12,7 +12,7 @@ ShapeRecognizerResult::ShapeRecognizerResult(Stroke* result)
 }
 
 ShapeRecognizerResult::ShapeRecognizerResult(Stroke* result,
-                                             ShapeRecognizer* recognizer)
+											 ShapeRecognizer* recognizer)
 {
 	XOJ_INIT_TYPE(ShapeRecognizerResult);
 
@@ -27,7 +27,7 @@ ShapeRecognizerResult::ShapeRecognizerResult(Stroke* result,
 		}
 	}
 
-	RDEBUG("source list length: %i%\n") % g_list_length(this->source);
+	RDEBUG("source list length: {1}") % g_list_length(this->source);
 }
 
 ShapeRecognizerResult::~ShapeRecognizerResult()

@@ -21,27 +21,27 @@ class Control;
 class SwapUndoAction : public UndoAction
 {
 public:
-    SwapUndoAction(int pageNr, bool moveUp,
-                   PageRef swapped_page,
-                   PageRef other_page);
+	SwapUndoAction(int pageNr, bool moveUp,
+				   PageRef swapped_page,
+				   PageRef other_page);
 
-    virtual ~SwapUndoAction();
+	virtual ~SwapUndoAction();
 
 public:
-    virtual bool undo(Control* control);
-    virtual bool redo(Control* control);
-    XojPage** getPages();
-    virtual string getText();
+	virtual bool undo(Control* control);
+	virtual bool redo(Control* control);
+	XojPage** getPages();
+	virtual string getText();
 
 private:
-    void swap(Control* control);
+	void swap(Control* control);
 
 private:
-    XOJ_TYPE_ATTRIB;
+	XOJ_TYPE_ATTRIB;
 
-    int pageNr;
-    PageRef swapped_page, other_page;
-    bool moveUp;
+	int pageNr;
+	PageRef swapped_page, other_page;
+	bool moveUp;
 };
 
 #endif

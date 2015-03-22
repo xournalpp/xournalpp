@@ -93,7 +93,7 @@ private:
 	 * The size of the sidebar has chnaged
 	 */
 	static void sizeChanged(GtkWidget* widget, GtkAllocation* allocation,
-	                        SidebarPreviews* sidebar);
+							SidebarPreviews* sidebar);
 private:
 	XOJ_TYPE_ATTRIB;
 

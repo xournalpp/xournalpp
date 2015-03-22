@@ -23,7 +23,7 @@ class ButtonConfigGui
 {
 public:
 	ButtonConfigGui(SettingsDialog* dlg, GtkWidget* w, Settings* settings,
-	                int button, bool withDevice);
+					int button, bool withDevice);
 	virtual ~ButtonConfigGui();
 
 public:

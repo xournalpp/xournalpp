@@ -48,12 +48,12 @@ void PageRef::operator=(const PageRef& ref)
 
 void PageRef::operator=(XojPage* page)
 {
-	if(this->page)
+	if (this->page)
 	{
 		this->page->unreference();
 	}
 	this->page = page;
-	if(this->page)
+	if (this->page)
 	{
 		this->page->reference();
 	}

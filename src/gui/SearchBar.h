@@ -32,7 +32,7 @@ private:
 
 	static void buttonNextSearchClicked(GtkButton* button, SearchBar* searchBar);
 	static void buttonPreviousSearchClicked(GtkButton* button,
-	                                        SearchBar* searchBar);
+											SearchBar* searchBar);
 
 	void searchNext();
 	void searchPrevious();

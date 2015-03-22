@@ -17,44 +17,44 @@
 class AbstractToolItem : public AbstractItem
 {
 public:
-    AbstractToolItem(string id, ActionHandler* handler, ActionType type,
-                     GtkWidget* menuitem = NULL);
-    virtual ~AbstractToolItem();
+	AbstractToolItem(string id, ActionHandler* handler, ActionType type,
+					 GtkWidget* menuitem = NULL);
+	virtual ~AbstractToolItem();
 
 public:
-    virtual void selected(ActionGroup group, ActionType action);
-    virtual GtkToolItem* createItem(bool horizontal);
-    virtual GtkToolItem* createTmpItem(bool horizontal);
-    void setPopupMenu(GtkWidget* popupMenu);
-    GtkWidget* getPopupMenu();
+	virtual void selected(ActionGroup group, ActionType action);
+	virtual GtkToolItem* createItem(bool horizontal);
+	virtual GtkToolItem* createTmpItem(bool horizontal);
+	void setPopupMenu(GtkWidget* popupMenu);
+	GtkWidget* getPopupMenu();
 
-    bool isUsed();
-    void setUsed(bool used);
+	bool isUsed();
+	void setUsed(bool used);
 
-    static void toolButtonCallback(GtkToolButton* toolbutton,
-                                   AbstractToolItem* item);
+	static void toolButtonCallback(GtkToolButton* toolbutton,
+								   AbstractToolItem* item);
 
-    virtual string getToolDisplayName() = 0;
-    virtual GtkWidget* getNewToolIcon();
+	virtual string getToolDisplayName() = 0;
+	virtual GtkWidget* getNewToolIcon();
 
 protected:
-    virtual GtkToolItem* newItem() = 0;
+	virtual GtkToolItem* newItem() = 0;
 
-    virtual void enable(bool enabled);
+	virtual void enable(bool enabled);
 
-    virtual GtkWidget* getNewToolIconImpl() = 0;
+	virtual GtkWidget* getNewToolIconImpl() = 0;
 
 public:
-    XOJ_TYPE_ATTRIB;
+	XOJ_TYPE_ATTRIB;
 
 protected:
-    GtkToolItem* item;
-    GtkWidget* popupMenu;
+	GtkToolItem* item;
+	GtkWidget* popupMenu;
 
-    bool toolToggleButtonActive;
-    bool toolToggleOnlyEnable;
+	bool toolToggleButtonActive;
+	bool toolToggleOnlyEnable;
 
-    bool used;
+	bool used;
 };
 
 #endif /* __ABSTRACTTOOLITEM_H__ */

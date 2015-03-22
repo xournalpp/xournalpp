@@ -22,19 +22,19 @@
 class CustomizeableColorList
 {
 public:
-    CustomizeableColorList();
-    virtual ~CustomizeableColorList();
+	CustomizeableColorList();
+	virtual ~CustomizeableColorList();
 
 public:
-    ListIterator<XojColor*> getPredefinedColors();
+	ListIterator<XojColor*> getPredefinedColors();
 
 private:
-    void addPredefinedColor(int color, string name);
+	void addPredefinedColor(int color, string name);
 
 private:
-    XOJ_TYPE_ATTRIB;
+	XOJ_TYPE_ATTRIB;
 
-    GList* colors;
+	GList* colors;
 
 };
 

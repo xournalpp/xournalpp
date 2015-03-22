@@ -14,7 +14,7 @@
 
 #include "XmlNode.h"
 
-class XmlTextNode: public XmlNode
+class XmlTextNode : public XmlNode
 {
 public:
 	XmlTextNode(const char* tag, const char* text);

@@ -1,7 +1,6 @@
 #include "XmlTexNode.h"
 
-XmlTexNode::XmlTexNode(const char* tag) :
-	XmlNode(tag)
+XmlTexNode::XmlTexNode(const char* tag) : XmlNode(tag)
 {
 	XOJ_INIT_TYPE(XmlTexNode);
 
@@ -34,7 +33,7 @@ void XmlTexNode::setImage(cairo_surface_t* img)
 }
 
 cairo_status_t XmlTexNode::pngWriteFunction(XmlTexNode* image,
-                                            unsigned char* data, unsigned int length)
+											unsigned char* data, unsigned int length)
 {
 	for (unsigned int i = 0; i < length; i++, image->pos++)
 	{
@@ -70,7 +69,7 @@ void XmlTexNode::writeOut(OutputStream* out)
 		this->out = out;
 		this->pos = 0;
 		cairo_surface_write_to_png_stream(this->img,
-		                                  (cairo_write_func_t) &pngWriteFunction, this);
+										  (cairo_write_func_t) & pngWriteFunction, this);
 		gchar* base64_str = g_base64_encode(this->buffer, this->pos);
 		out->write(base64_str);
 		g_free(base64_str);

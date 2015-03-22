@@ -19,7 +19,7 @@
 #include <Util.h>
 #include <XournalType.h>
 
-class Selection: public ShapeContainer
+class Selection : public ShapeContainer
 {
 public:
 	Selection(Redrawable* view);
@@ -30,7 +30,7 @@ public:
 	virtual void paint(cairo_t* cr, GdkRectangle* rect, double zoom) = 0;
 	virtual void currentPos(double x, double y) = 0;
 	virtual void getSelectedRect(double& x, double& y, double& width,
-	                             double& height);
+								double& height);
 
 private:
 	XOJ_TYPE_ATTRIB;
@@ -48,7 +48,7 @@ protected:
 	friend class EditSelection;
 };
 
-class RectSelection: public Selection
+class RectSelection : public Selection
 {
 public:
 	RectSelection(double x, double y, Redrawable* view);
@@ -77,7 +77,7 @@ private:
 	double y2;
 };
 
-class RegionSelect: public Selection
+class RegionSelect : public Selection
 {
 public:
 	RegionSelect(double x, double y, Redrawable* view);

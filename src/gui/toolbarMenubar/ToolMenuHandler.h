@@ -35,74 +35,74 @@ class SpinPageAdapter;
 class ToolMenuHandler
 {
 public:
-    ToolMenuHandler(ActionHandler* listener, ZoomControl* zoom, GladeGui* gui,
-                    ToolHandler* toolHandler, GtkWindow* parent);
-    virtual ~ToolMenuHandler();
+	ToolMenuHandler(ActionHandler* listener, ZoomControl* zoom, GladeGui* gui,
+					ToolHandler* toolHandler, GtkWindow* parent);
+	virtual ~ToolMenuHandler();
 
 public:
-    void freeDynamicToolbarItems();
-    void unloadToolbar(GtkWidget* tBunload);
+	void freeDynamicToolbarItems();
+	void unloadToolbar(GtkWidget* tBunload);
 
-    void load(ToolbarData* d, GtkWidget* toolbar, const char* toolbarName,
-              bool horizontal);
+	void load(ToolbarData* d, GtkWidget* toolbar, const char* toolbarName,
+			  bool horizontal);
 
-    void registerMenupoint(GtkWidget* widget, ActionType type);
-    void registerMenupoint(GtkWidget* widget, ActionType type, ActionGroup group);
+	void registerMenupoint(GtkWidget* widget, ActionType type);
+	void registerMenupoint(GtkWidget* widget, ActionType type, ActionGroup group);
 
-    void initToolItems();
+	void initToolItems();
 
-    void setUndoDescription(string description);
-    void setRedoDescription(string description);
+	void setUndoDescription(string description);
+	void setRedoDescription(string description);
 
-    SpinPageAdapter* getPageSpinner();
-    void setPageText(string text);
+	SpinPageAdapter* getPageSpinner();
+	void setPageText(string text);
 
-    int getSelectedLayer();
-    void setLayerCount(int count, int selected);
+	int getSelectedLayer();
+	void setLayerCount(int count, int selected);
 
-    void setFontButtonFont(XojFont& font);
-    XojFont getFontButtonFont();
+	void setFontButtonFont(XojFont& font);
+	XojFont getFontButtonFont();
 
-    void showFontSelectionDlg();
+	void showFontSelectionDlg();
 
-    void setTmpDisabled(bool disabled);
+	void setTmpDisabled(bool disabled);
 
-    void removeColorToolItem(AbstractToolItem* it);
-    void addColorToolItem(AbstractToolItem* it);
+	void removeColorToolItem(AbstractToolItem* it);
+	void addColorToolItem(AbstractToolItem* it);
 
-    ToolbarModel* getModel();
+	ToolbarModel* getModel();
 
-    ListIterator<AbstractToolItem*> getToolItems();
+	ListIterator<AbstractToolItem*> getToolItems();
 
-    bool isColorInUse(int color);
-
-private:
-    void addToolItem(AbstractToolItem* it);
-
-    void initEraserToolItem();
+	bool isColorInUse(int color);
 
 private:
-    XOJ_TYPE_ATTRIB;
+	void addToolItem(AbstractToolItem* it);
 
-    GList* toolbarColorItems;
-    GtkWindow* parent;
+	void initEraserToolItem();
 
-    GList* toolItems;
-    GList* menuItems;
+private:
+	XOJ_TYPE_ATTRIB;
 
-    ToolButton* undoButton;
-    ToolButton* redoButton;
+	GList* toolbarColorItems;
+	GtkWindow* parent;
 
-    ToolPageSpinner* toolPageSpinner;
-    ToolPageLayer* toolPageLayer;
-    FontButton* fontButton;
+	GList* toolItems;
+	GList* menuItems;
 
-    ActionHandler* listener;
-    ZoomControl* zoom;
-    GladeGui* gui;
-    ToolHandler* toolHandler;
+	ToolButton* undoButton;
+	ToolButton* redoButton;
 
-    ToolbarModel* tbModel;
+	ToolPageSpinner* toolPageSpinner;
+	ToolPageLayer* toolPageLayer;
+	FontButton* fontButton;
+
+	ActionHandler* listener;
+	ZoomControl* zoom;
+	GladeGui* gui;
+	ToolHandler* toolHandler;
+
+	ToolbarModel* tbModel;
 };
 
 #endif /* EDITABLETOOLBAR_H_ */

@@ -19,7 +19,7 @@ class Redrawable;
 class Layer;
 class Stroke;
 
-class EraseUndoAction: public UndoAction
+class EraseUndoAction : public UndoAction
 {
 public:
 	EraseUndoAction(PageRef page);

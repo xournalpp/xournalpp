@@ -32,7 +32,7 @@ class InputHandler;
 
 class Text;
 
-class PageView: public Redrawable, public PageListener
+class PageView : public Redrawable, public PageListener
 {
 public:
 	PageView(XournalView* xournal, PageRef page);
@@ -134,7 +134,7 @@ public:
 	 * coordinates
 	 */
 	virtual Rectangle* rectOnWidget(double x, double y, double width,
-	                                double height);
+									double height);
 
 	TexImage* getSelectedTex();
 

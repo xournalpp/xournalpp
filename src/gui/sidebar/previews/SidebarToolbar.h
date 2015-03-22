@@ -32,7 +32,7 @@ public:
 	 * Sets the button enabled / disabled
 	 */
 	void setButtonEnabled(bool enableUp, bool enableDown, bool enableCopy,
-	                      bool enableDelete, PageRef currentPage);
+						bool enableDelete, PageRef currentPage);
 
 private:
 	XOJ_TYPE_ATTRIB;

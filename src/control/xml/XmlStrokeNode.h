@@ -15,7 +15,7 @@
 #include "XmlNode.h"
 #include "../../model/Point.h"
 
-class XmlStrokeNode: public XmlNode
+class XmlStrokeNode : public XmlNode
 {
 public:
 	XmlStrokeNode(const char* tag);

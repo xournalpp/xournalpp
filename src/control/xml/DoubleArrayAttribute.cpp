@@ -1,8 +1,7 @@
 #include "DoubleArrayAttribute.h"
 
 DoubleArrayAttribute::DoubleArrayAttribute(const char* name, double* values,
-                                           int count) :
-	Attribute(name)
+										   int count) : Attribute(name)
 {
 
 	XOJ_INIT_TYPE(DoubleArrayAttribute);

@@ -13,7 +13,7 @@ GladeSearchpath::~GladeSearchpath()
 
 	for (GList* l = this->directories; l != NULL; l = l->next)
 	{
-		char* str = (char*)l->data;
+		char* str = (char*) l->data;
 		g_free(str);
 	}
 
@@ -41,7 +41,7 @@ char* GladeSearchpath::findFile(const char* subdir, const char* file)
 	for (GList* l = this->directories; l != NULL; l = l->next)
 	{
 		gchar* pathname = g_strdup_printf("%s%c%s", (char*) l->data, G_DIR_SEPARATOR,
-		                                  filename);
+										filename);
 
 		if (g_file_test(pathname, G_FILE_TEST_EXISTS))
 		{

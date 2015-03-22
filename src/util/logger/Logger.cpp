@@ -19,12 +19,12 @@ inline std::string NowTime()
 	const int MAX_LEN = 200;
 	char buffer[MAX_LEN];
 	if (GetTimeFormatA(LOCALE_USER_DEFAULT, 0, 0, "HH':'mm':'ss", buffer,
-	                   MAX_LEN) == 0)
+					MAX_LEN) == 0)
 		return "Error in NowTime()";
 
-	char result[100] = {0};
+	char result[100] = { 0 };
 	static DWORD first = GetTickCount();
-	sprintf_s(result, 100, "%s.%06ld", buffer, (long)(GetTickCount() - first));
+	sprintf_s(result, 100, "%s.%06ld", buffer, (long) (GetTickCount() - first));
 	return result;
 }
 
@@ -38,32 +38,28 @@ inline std::string NowTime()
 	gettimeofday(&tv, 0);
 	char buffer[100];
 	tm r;
-	strftime(buffer, sizeof(buffer), "%X", localtime_r(&tv.tv_sec, &r));
+	strftime(buffer, sizeof (buffer), "%X", localtime_r(&tv.tv_sec, &r));
 	char result[100];
-	sprintf(result, "%s.%06ld", buffer, (long)tv.tv_usec);
+	sprintf(result, "%s.%06ld", buffer, (long) tv.tv_usec);
 	return result;
 }
 
 #endif //WIN32
 
-Log::Log()
-{
-}
+Log::Log() { }
 
-Log::~Log()
-{
-}
+Log::~Log() { }
 
 std::ofstream logfile;
 
 void Log::trace(const char* callType, const char* clazz, const char* function,
-                long obj)
+				long obj)
 {
 	std::ostringstream os;
 
 	os << NowTime() << " - ";
 	os << callType << " " << clazz << ":" << function << " (" << obj << ")" <<
-	   std::endl;
+			std::endl;
 
 	logfile << os.str();
 }

@@ -28,8 +28,7 @@ typedef struct
 	bool horizontal;
 } ToolbarEntryDefintion;
 
-const static ToolbarEntryDefintion TOOLBAR_DEFINITIONS[] =
-{
+const static ToolbarEntryDefintion TOOLBAR_DEFINITIONS[] = {
 	{ "tbTop1",    "toolbarTop1",    true  },
 	{ "tbTop2",    "toolbarTop2",    true  },
 	{ "tbLeft1",   "toolbarLeft1",   false },

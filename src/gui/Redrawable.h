@@ -72,7 +72,7 @@ public:
 
 
 	virtual Rectangle* rectOnWidget(double x, double y, double width,
-	                                double height) = 0;
+									double height) = 0;
 
 };
 

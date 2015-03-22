@@ -5,8 +5,7 @@
 
 #include <string.h> // memcpy
 
-Image::Image() :
-	Element(ELEMENT_IMAGE)
+Image::Image() : Element(ELEMENT_IMAGE)
 {
 
 	XOJ_INIT_TYPE(Image);
@@ -43,7 +42,7 @@ Element* Image::clone()
 	img->width = this->width;
 	img->height = this->height;
 
-	img->data = (unsigned char*)g_malloc(this->dLen);
+	img->data = (unsigned char*) g_malloc(this->dLen);
 	img->dLen = this->dLen;
 	memcpy(img->data, this->data, this->dLen);
 
@@ -51,7 +50,6 @@ Element* Image::clone()
 
 	return img;
 }
-
 
 void Image::setWidth(double width)
 {
@@ -68,7 +66,7 @@ void Image::setHeight(double height)
 }
 
 cairo_status_t Image::cairoReadFunction(Image* image, unsigned char* data,
-                                        unsigned int length)
+										unsigned int length)
 {
 	XOJ_CHECK_TYPE_OBJ(image, Image);
 
@@ -132,8 +130,8 @@ cairo_surface_t* Image::getImage()
 	if (this->image == NULL && this->dLen != 0)
 	{
 		this->read = 0;
-		this->image = cairo_image_surface_create_from_png_stream((
-		                                                             cairo_read_func_t) &cairoReadFunction, this);
+		this->image = cairo_image_surface_create_from_png_stream(
+				(cairo_read_func_t) & cairoReadFunction, this);
 		g_free(this->data);
 		this->data = NULL;
 		this->dLen = 0;

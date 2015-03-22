@@ -14,7 +14,7 @@
 
 #include "Attribute.h"
 
-class IntAttribute: public Attribute
+class IntAttribute : public Attribute
 {
 public:
 	IntAttribute(const char* name, int value);

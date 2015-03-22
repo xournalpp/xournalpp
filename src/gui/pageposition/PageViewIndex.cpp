@@ -46,9 +46,9 @@ PageViewIndex::~PageViewIndex()
 {
 	XOJ_RELEASE_TYPE(PageViewIndex);
 
-	for(GList* l = this->data; l != NULL; l = l->next)
+	for (GList* l = this->data; l != NULL; l = l->next)
 	{
-		PageViewIndexEntry* e = (PageViewIndexEntry*)l->data;
+		PageViewIndexEntry* e = (PageViewIndexEntry*) l->data;
 		delete e;
 	}
 
@@ -86,11 +86,11 @@ void PageViewIndex::add(PagePosition* pp, int y)
 	PageView* v1 = pp->getViewAt(this->x, y);
 	PageView* v2 = pp->getViewAt(this->x + this->width, y);
 
-	if(v1 != NULL)
+	if (v1 != NULL)
 	{
 		addView(v1);
 	}
-	if(v2 != NULL && v1 != v2)
+	if (v2 != NULL && v1 != v2)
 	{
 		addView(v2);
 	}
@@ -102,17 +102,17 @@ PageView* PageViewIndex::getHighestIntersects()
 
 	PageViewIndexEntry* b = NULL;
 
-	for(GList* l = this->data; l != NULL; l = l->next)
+	for (GList* l = this->data; l != NULL; l = l->next)
 	{
-		PageViewIndexEntry* e = (PageViewIndexEntry*)l->data;
+		PageViewIndexEntry* e = (PageViewIndexEntry*) l->data;
 
-		if(b == NULL || b->area < e->area)
+		if (b == NULL || b->area < e->area)
 		{
 			b = e;
 		}
 	}
 
-	if(b != NULL)
+	if (b != NULL)
 	{
 		return b->view;
 	}

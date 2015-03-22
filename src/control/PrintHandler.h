@@ -31,10 +31,10 @@ public:
 
 private:
 	static void drawPage(GtkPrintOperation* operation, GtkPrintContext* context,
-	                     int pageNr, PrintHandler* handler);
+						int pageNr, PrintHandler* handler);
 	static void requestPageSetup(GtkPrintOperation* operation,
-	                             GtkPrintContext* context, gint pageNr,
-	                             GtkPageSetup* setup, PrintHandler* handler);
+								GtkPrintContext* context, gint pageNr,
+								GtkPageSetup* setup, PrintHandler* handler);
 
 private:
 	XOJ_TYPE_ATTRIB;

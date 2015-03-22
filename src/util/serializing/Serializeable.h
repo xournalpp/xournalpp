@@ -24,7 +24,7 @@ class Serializeable
 public:
 	virtual void serialize(ObjectOutputStream& out) = 0;
 	virtual void readSerialized(ObjectInputStream& in) throw (
-	    InputStreamException) = 0;
+			InputStreamException) = 0;
 };
 
 #endif /* __SERIALIZEABLE_H__ */

@@ -18,7 +18,7 @@
 
 enum ElementType
 {
-    ELEMENT_STROKE = 1, ELEMENT_IMAGE, ELEMENT_TEXIMAGE, ELEMENT_TEXT
+	ELEMENT_STROKE = 1, ELEMENT_IMAGE, ELEMENT_TEXIMAGE, ELEMENT_TEXT
 };
 
 class ShapeContainer
@@ -27,7 +27,7 @@ public:
 	virtual bool contains(double x, double y) = 0;
 };
 
-class Element: public Serializeable
+class Element : public Serializeable
 {
 protected:
 	Element(ElementType type);

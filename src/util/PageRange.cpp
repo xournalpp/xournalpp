@@ -9,6 +9,7 @@ PageRangeEntry::PageRangeEntry(int first, int last)
 	this->first = first;
 	this->last = last;
 }
+
 PageRangeEntry::~PageRangeEntry()
 {
 	XOJ_RELEASE_TYPE(PageRangeEntry);
@@ -20,6 +21,7 @@ int PageRangeEntry::getLast()
 
 	return this->last;
 }
+
 int PageRangeEntry::getFirst()
 {
 	XOJ_CHECK_TYPE(PageRangeEntry);
@@ -77,7 +79,7 @@ GList* PageRange::parse(const char* str)
 		{
 			p++;
 			end = (int) strtol(p, &next, 10);
-			if (next == p)   // a half-open range like 2-
+			if (next == p) // a half-open range like 2-
 			{
 				end = 0;
 			}

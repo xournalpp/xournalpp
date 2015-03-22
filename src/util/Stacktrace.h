@@ -15,16 +15,17 @@
 #include <iostream>
 #include <StringUtils.h>
 
-class Stacktrace {
+class Stacktrace
+{
 private:
-    Stacktrace();
-    virtual ~Stacktrace();
+	Stacktrace();
+	virtual ~Stacktrace();
 
 public:
-    static void setExename(string name);
+	static void setExename(string name);
 
-    static void printStracktrace();
-    static void printStracktrace(std::ostream& stream);
+	static void printStracktrace();
+	static void printStracktrace(std::ostream& stream);
 };
 
 #endif /* __STACKTRACE_H__ */

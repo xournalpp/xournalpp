@@ -49,12 +49,12 @@ public:
 public:
 	bool isSpaceFor(SidebarPreviewPage* p)
 	{
-		if(this->list == NULL)
+		if (this->list == NULL)
 		{
 			return true;
 		}
 
-		if(this->currentWidth + p->getWidth() < width)
+		if (this->currentWidth + p->getWidth() < width)
 		{
 			return true;
 		}
@@ -89,16 +89,16 @@ public:
 		int height = 0;
 		int x = 0;
 
-		for(GList* l = this->list; l != NULL; l = l->next)
+		for (GList* l = this->list; l != NULL; l = l->next)
 		{
-			SidebarPreviewPage* p = (SidebarPreviewPage*)l->data;
+			SidebarPreviewPage* p = (SidebarPreviewPage*) l->data;
 			height = MAX(height, p->getHeight());
 		}
 
 
-		for(GList* l = this->list; l != NULL; l = l->next)
+		for (GList* l = this->list; l != NULL; l = l->next)
 		{
-			SidebarPreviewPage* p = (SidebarPreviewPage*)l->data;
+			SidebarPreviewPage* p = (SidebarPreviewPage*) l->data;
 
 			int currentY = (height - p->getHeight()) / 2;
 
@@ -118,7 +118,6 @@ private:
 	GList* list;
 };
 
-
 void SidebarLayout::layout(SidebarPreviews* sidebar)
 {
 	int y = 0;
@@ -134,7 +133,7 @@ void SidebarLayout::layout(SidebarPreviews* sidebar)
 	{
 		SidebarPreviewPage* p = sidebar->previews[i];
 
-		if(row.isSpaceFor(p))
+		if (row.isSpaceFor(p))
 		{
 			row.add(p);
 		}
@@ -149,7 +148,7 @@ void SidebarLayout::layout(SidebarPreviews* sidebar)
 		}
 	}
 
-	if(row.getCount() != 0)
+	if (row.getCount() != 0)
 	{
 		y += row.placeAt(y, GTK_LAYOUT(sidebar->iconViewPreview));
 

@@ -7,440 +7,440 @@
 // TODO LOW PRIO: rouler every 90° latch
 
 Tool::Tool(string name, ToolType type, int color, bool enableColor,
-           bool enableSize, bool enableRuler, bool enableRectangle,
-           bool enableCircle, bool enableArrow, bool enableShapreRecognizer,
-           double* thickness)
+		   bool enableSize, bool enableRuler, bool enableRectangle,
+		   bool enableCircle, bool enableArrow, bool enableShapreRecognizer,
+		   double* thickness)
 {
-    XOJ_INIT_TYPE(Tool);
+	XOJ_INIT_TYPE(Tool);
 
-    this->name = name;
-    this->type = type;
-    this->thickness = thickness;
+	this->name = name;
+	this->type = type;
+	this->thickness = thickness;
 
-    this->enableColor = enableColor;
-    this->enableSize = enableSize;
-    this->enableShapeRecognizer = enableShapreRecognizer;
-    this->enableRuler = enableRuler;
-    this->enableRectangle = enableRectangle;
-    this->enableCircle = enableCircle;
-    this->enableArrow = enableArrow;
+	this->enableColor = enableColor;
+	this->enableSize = enableSize;
+	this->enableShapeRecognizer = enableShapreRecognizer;
+	this->enableRuler = enableRuler;
+	this->enableRectangle = enableRectangle;
+	this->enableCircle = enableCircle;
+	this->enableArrow = enableArrow;
 
-    this->ruler = false;
-    this->rectangle = false;
-    this->circle = false;
-    this->arrow = false;
-    this->shapeRecognizer = false;
+	this->ruler = false;
+	this->rectangle = false;
+	this->circle = false;
+	this->arrow = false;
+	this->shapeRecognizer = false;
 
-    this->color = color;
-    this->size = TOOL_SIZE_MEDIUM;
+	this->color = color;
+	this->size = TOOL_SIZE_MEDIUM;
 }
 
 Tool::~Tool()
 {
-    XOJ_CHECK_TYPE(Tool);
+	XOJ_CHECK_TYPE(Tool);
 
-    delete[] this->thickness;
-    this->thickness = NULL;
+	delete[] this->thickness;
+	this->thickness = NULL;
 
-    XOJ_RELEASE_TYPE(Tool);
+	XOJ_RELEASE_TYPE(Tool);
 }
 
 string Tool::getName()
 {
-    XOJ_CHECK_TYPE(Tool);
+	XOJ_CHECK_TYPE(Tool);
 
-    return this->name;
+	return this->name;
 }
 
 int Tool::getColor()
 {
-    XOJ_CHECK_TYPE(Tool);
+	XOJ_CHECK_TYPE(Tool);
 
-    return this->color;
+	return this->color;
 }
 
 void Tool::setColor(int color)
 {
-    XOJ_CHECK_TYPE(Tool);
+	XOJ_CHECK_TYPE(Tool);
 
-    this->color = color;
+	this->color = color;
 }
 
 ToolSize Tool::getSize()
 {
-    XOJ_CHECK_TYPE(Tool);
+	XOJ_CHECK_TYPE(Tool);
 
-    return this->size;
+	return this->size;
 }
 
 void Tool::setSize(ToolSize size)
 {
-    XOJ_CHECK_TYPE(Tool);
+	XOJ_CHECK_TYPE(Tool);
 
-    this->size = size;
+	this->size = size;
 }
 
 bool Tool::isEnableColor()
 {
-    XOJ_CHECK_TYPE(Tool);
+	XOJ_CHECK_TYPE(Tool);
 
-    return this->enableColor;
+	return this->enableColor;
 }
 
 bool Tool::isEnableSize()
 {
-    XOJ_CHECK_TYPE(Tool);
+	XOJ_CHECK_TYPE(Tool);
 
-    return this->enableSize;
+	return this->enableSize;
 }
 
 bool Tool::isEnableRuler()
 {
-    XOJ_CHECK_TYPE(Tool);
+	XOJ_CHECK_TYPE(Tool);
 
-    return this->enableRuler;
+	return this->enableRuler;
 }
 
 bool Tool::isEnableRectangle()
 {
-    XOJ_CHECK_TYPE(Tool);
+	XOJ_CHECK_TYPE(Tool);
 
-    return this->enableRectangle;
+	return this->enableRectangle;
 }
 
 bool Tool::isEnableCircle()
 {
-    XOJ_CHECK_TYPE(Tool);
+	XOJ_CHECK_TYPE(Tool);
 
-    return this->enableCircle;
+	return this->enableCircle;
 }
 
 bool Tool::isEnableArrow()
 {
-    XOJ_CHECK_TYPE(Tool);
+	XOJ_CHECK_TYPE(Tool);
 
-    return this->enableArrow;
+	return this->enableArrow;
 }
 
 bool Tool::isEnableShapeRecognizer()
 {
-    XOJ_CHECK_TYPE(Tool);
+	XOJ_CHECK_TYPE(Tool);
 
-    return this->enableShapeRecognizer;
+	return this->enableShapeRecognizer;
 }
 
 bool Tool::isShapeRecognizer()
 {
-    XOJ_CHECK_TYPE(Tool);
+	XOJ_CHECK_TYPE(Tool);
 
-    return this->shapeRecognizer;
+	return this->shapeRecognizer;
 }
 
 bool Tool::isRuler()
 {
-    XOJ_CHECK_TYPE(Tool);
+	XOJ_CHECK_TYPE(Tool);
 
-    return this->ruler;
+	return this->ruler;
 }
 
 bool Tool::isRectangle()
 {
-    XOJ_CHECK_TYPE(Tool);
+	XOJ_CHECK_TYPE(Tool);
 
-    return this->rectangle;
+	return this->rectangle;
 }
 
 bool Tool::isCircle()
 {
-    XOJ_CHECK_TYPE(Tool);
+	XOJ_CHECK_TYPE(Tool);
 
-    return this->circle;
+	return this->circle;
 }
 
 bool Tool::isArrow()
 {
-    XOJ_CHECK_TYPE(Tool);
+	XOJ_CHECK_TYPE(Tool);
 
-    return this->arrow;
+	return this->arrow;
 }
 
 void Tool::setShapeRecognizer(bool enabled)
 {
-    XOJ_CHECK_TYPE(Tool);
+	XOJ_CHECK_TYPE(Tool);
 
-    this->shapeRecognizer = enabled;
+	this->shapeRecognizer = enabled;
 }
 
 void Tool::setRuler(bool enabled)
 {
-    XOJ_CHECK_TYPE(Tool);
+	XOJ_CHECK_TYPE(Tool);
 
-    this->ruler = enabled;
+	this->ruler = enabled;
 }
 
 void Tool::setRectangle(bool enabled)
 {
-    XOJ_CHECK_TYPE(Tool);
+	XOJ_CHECK_TYPE(Tool);
 
-    this->rectangle = enabled;
+	this->rectangle = enabled;
 }
 
 void Tool::setCircle(bool enabled)
 {
-    XOJ_CHECK_TYPE(Tool);
+	XOJ_CHECK_TYPE(Tool);
 
-    this->circle = enabled;
+	this->circle = enabled;
 }
 
 void Tool::setArrow(bool enabled)
 {
-    XOJ_CHECK_TYPE(Tool);
+	XOJ_CHECK_TYPE(Tool);
 
-    this->arrow = enabled;
+	this->arrow = enabled;
 }
 
 string toolTypeToString(ToolType type)
 {
-    switch (type)
-    {
-    case TOOL_NONE:
-        return "none";
-    case TOOL_PEN:
-        return "pen";
-    case TOOL_ERASER:
-        return "eraser";
-    case TOOL_HILIGHTER:
-        return "hilighter";
-    case TOOL_TEXT:
-        return "text";
-    case TOOL_IMAGE:
-        return "image";
-    case TOOL_SELECT_RECT:
-        return "selectRect";
-    case TOOL_SELECT_REGION:
-        return "selectRegion";
-    case TOOL_SELECT_OBJECT:
-        return "selectObject";
-    case TOOL_VERTICAL_SPACE:
-        return "verticalSpace";
-    case TOOL_HAND:
-        return "hand";
-        /*
-        case TOOL_DRAW_RECT:
-                return "drawRect";
-        case TOOL_DRAW_CIRCLE:
-                return "drawCircle";
-        case TOOL_DRAW_ARROW:
-                return "drawArrow";
-         */
-    }
-    return "";
+	switch (type)
+	{
+	case TOOL_NONE:
+		return "none";
+	case TOOL_PEN:
+		return "pen";
+	case TOOL_ERASER:
+		return "eraser";
+	case TOOL_HILIGHTER:
+		return "hilighter";
+	case TOOL_TEXT:
+		return "text";
+	case TOOL_IMAGE:
+		return "image";
+	case TOOL_SELECT_RECT:
+		return "selectRect";
+	case TOOL_SELECT_REGION:
+		return "selectRegion";
+	case TOOL_SELECT_OBJECT:
+		return "selectObject";
+	case TOOL_VERTICAL_SPACE:
+		return "verticalSpace";
+	case TOOL_HAND:
+		return "hand";
+		/*
+		case TOOL_DRAW_RECT:
+				return "drawRect";
+		case TOOL_DRAW_CIRCLE:
+				return "drawCircle";
+		case TOOL_DRAW_ARROW:
+				return "drawArrow";
+		 */
+	}
+	return "";
 }
 
 ToolType toolTypeFromString(string type)
 {
-    if (type == "none")
-    {
-        return TOOL_NONE;
-    }
-    else if (type == "pen")
-    {
-        return TOOL_PEN;
-    }
-    else if (type == "eraser")
-    {
-        return TOOL_ERASER;
-    }
-    else if (type == "hilighter")
-    {
-        return TOOL_HILIGHTER;
-    }
-    else if (type == "image")
-    {
-        return TOOL_IMAGE;
-    }
-    else if (type == "selectRect")
-    {
-        return TOOL_SELECT_RECT;
-    }
-    else if (type == "selectRegion")
-    {
-        return TOOL_SELECT_REGION;
-    }
-    else if (type == "selectObject")
-    {
-        return TOOL_SELECT_OBJECT;
-    }
-    else if (type == "verticalSpace")
-    {
-        return TOOL_VERTICAL_SPACE;
-    }
-    else if (type == "hand")
-    {
-        return TOOL_HAND;
-    }
-    /*
-    else if (type == "drawRect")
-    {
-            return TOOL_DRAW_RECT;
-    }
-    else if (type == "drawCircle")
-    {
-            return TOOL_DRAW_CIRCLE;
-    }
-    else if (type == "drawArrow")
-    {
-            return TOOL_DRAW_ARROW;
-    }
-     */
+	if (type == "none")
+	{
+		return TOOL_NONE;
+	}
+	else if (type == "pen")
+	{
+		return TOOL_PEN;
+	}
+	else if (type == "eraser")
+	{
+		return TOOL_ERASER;
+	}
+	else if (type == "hilighter")
+	{
+		return TOOL_HILIGHTER;
+	}
+	else if (type == "image")
+	{
+		return TOOL_IMAGE;
+	}
+	else if (type == "selectRect")
+	{
+		return TOOL_SELECT_RECT;
+	}
+	else if (type == "selectRegion")
+	{
+		return TOOL_SELECT_REGION;
+	}
+	else if (type == "selectObject")
+	{
+		return TOOL_SELECT_OBJECT;
+	}
+	else if (type == "verticalSpace")
+	{
+		return TOOL_VERTICAL_SPACE;
+	}
+	else if (type == "hand")
+	{
+		return TOOL_HAND;
+	}
+	/*
+	else if (type == "drawRect")
+	{
+			return TOOL_DRAW_RECT;
+	}
+	else if (type == "drawCircle")
+	{
+			return TOOL_DRAW_CIRCLE;
+	}
+	else if (type == "drawArrow")
+	{
+			return TOOL_DRAW_ARROW;
+	}
+	 */
 
-    return TOOL_NONE;
+	return TOOL_NONE;
 }
 
 string toolSizeToString(ToolSize size)
 {
-    switch (size)
-    {
-    case TOOL_SIZE_NONE:
-        return "none";
-    case TOOL_SIZE_VERY_FINE:
-        return "veryThin";
-    case TOOL_SIZE_FINE:
-        return "thin";
-    case TOOL_SIZE_MEDIUM:
-        return "medium";
-    case TOOL_SIZE_THICK:
-        return "thick";
-    case TOOL_SIZE_VERY_THICK:
-        return "veryThick";
-    }
+	switch (size)
+	{
+	case TOOL_SIZE_NONE:
+		return "none";
+	case TOOL_SIZE_VERY_FINE:
+		return "veryThin";
+	case TOOL_SIZE_FINE:
+		return "thin";
+	case TOOL_SIZE_MEDIUM:
+		return "medium";
+	case TOOL_SIZE_THICK:
+		return "thick";
+	case TOOL_SIZE_VERY_THICK:
+		return "veryThick";
+	}
 
-    return "";
+	return "";
 }
 
 ToolSize toolSizeFromString(string size)
 {
-    if (size == "veryThin")
-    {
-        return TOOL_SIZE_VERY_FINE;
-    }
-    else if (size == "thin")
-    {
-        return TOOL_SIZE_FINE;
-    }
-    else if (size == "medium")
-    {
-        return TOOL_SIZE_MEDIUM;
-    }
-    else if (size == "thick")
-    {
-        return TOOL_SIZE_THICK;
-    }
-    else if (size == "veryThick")
-    {
-        return TOOL_SIZE_VERY_THICK;
-    }
-    else if (size == "none")
-    {
-        return TOOL_SIZE_NONE;
-    }
+	if (size == "veryThin")
+	{
+		return TOOL_SIZE_VERY_FINE;
+	}
+	else if (size == "thin")
+	{
+		return TOOL_SIZE_FINE;
+	}
+	else if (size == "medium")
+	{
+		return TOOL_SIZE_MEDIUM;
+	}
+	else if (size == "thick")
+	{
+		return TOOL_SIZE_THICK;
+	}
+	else if (size == "veryThick")
+	{
+		return TOOL_SIZE_VERY_THICK;
+	}
+	else if (size == "none")
+	{
+		return TOOL_SIZE_NONE;
+	}
 
-    return TOOL_SIZE_NONE;
+	return TOOL_SIZE_NONE;
 }
 
 string eraserTypeToString(EraserType type)
 {
-    switch (type)
-    {
-    case ERASER_TYPE_NONE:
-        return "none";
-    case ERASER_TYPE_DEFAULT:
-        return "default";
-    case ERASER_TYPE_WHITEOUT:
-        return "whiteout";
-    case ERASER_TYPE_DELETE_STROKE:
-        return "deleteStroke";
-    }
-    return "";
+	switch (type)
+	{
+	case ERASER_TYPE_NONE:
+		return "none";
+	case ERASER_TYPE_DEFAULT:
+		return "default";
+	case ERASER_TYPE_WHITEOUT:
+		return "whiteout";
+	case ERASER_TYPE_DELETE_STROKE:
+		return "deleteStroke";
+	}
+	return "";
 }
 
 EraserType eraserTypeFromString(string type)
 {
-    if (type == "none")
-    {
-        return ERASER_TYPE_NONE;
-    }
-    else if (type == "default")
-    {
-        return ERASER_TYPE_DEFAULT;
-    }
-    else if (type == "whiteout")
-    {
-        return ERASER_TYPE_WHITEOUT;
-    }
-    else if (type == "deleteStroke")
-    {
-        return ERASER_TYPE_DELETE_STROKE;
-    }
-    return ERASER_TYPE_NONE;
+	if (type == "none")
+	{
+		return ERASER_TYPE_NONE;
+	}
+	else if (type == "default")
+	{
+		return ERASER_TYPE_DEFAULT;
+	}
+	else if (type == "whiteout")
+	{
+		return ERASER_TYPE_WHITEOUT;
+	}
+	else if (type == "deleteStroke")
+	{
+		return ERASER_TYPE_DELETE_STROKE;
+	}
+	return ERASER_TYPE_NONE;
 }
 
 string pageInsertTypeToString(PageInsertType type)
 {
-    if (type == PAGE_INSERT_TYPE_PLAIN)
-    {
-        return "plain";
-    }
-    else if (type == PAGE_INSERT_TYPE_LINED)
-    {
-        return "lined";
-    }
-    else if (type == PAGE_INSERT_TYPE_RULED)
-    {
-        return "ruled";
-    }
-    else if (type == PAGE_INSERT_TYPE_GRAPH)
-    {
-        return "graph";
-    }
-    else if (type == PAGE_INSERT_TYPE_COPY)
-    {
-        return "copyPage";
-    }
-    else if (type == PAGE_INSERT_TYPE_PDF_BACKGROUND)
-    {
-        return "pdfBackground";
-    }
-    return "";
+	if (type == PAGE_INSERT_TYPE_PLAIN)
+	{
+		return "plain";
+	}
+	else if (type == PAGE_INSERT_TYPE_LINED)
+	{
+		return "lined";
+	}
+	else if (type == PAGE_INSERT_TYPE_RULED)
+	{
+		return "ruled";
+	}
+	else if (type == PAGE_INSERT_TYPE_GRAPH)
+	{
+		return "graph";
+	}
+	else if (type == PAGE_INSERT_TYPE_COPY)
+	{
+		return "copyPage";
+	}
+	else if (type == PAGE_INSERT_TYPE_PDF_BACKGROUND)
+	{
+		return "pdfBackground";
+	}
+	return "";
 }
 
 PageInsertType pageInsertTypeFromString(string type)
 {
-    if (type == "plain")
-    {
-        return PAGE_INSERT_TYPE_PLAIN;
-    }
-    else if (type == "lined")
-    {
-        return PAGE_INSERT_TYPE_LINED;
-    }
-    else if (type == "ruled")
-    {
-        return PAGE_INSERT_TYPE_RULED;
-    }
-    else if (type == "graph")
-    {
-        return PAGE_INSERT_TYPE_GRAPH;
-    }
-    else if (type == "copyPage")
-    {
-        return PAGE_INSERT_TYPE_COPY;
-    }
-    else if (type == "pdfBackground")
-    {
-        return PAGE_INSERT_TYPE_PDF_BACKGROUND;
-    }
+	if (type == "plain")
+	{
+		return PAGE_INSERT_TYPE_PLAIN;
+	}
+	else if (type == "lined")
+	{
+		return PAGE_INSERT_TYPE_LINED;
+	}
+	else if (type == "ruled")
+	{
+		return PAGE_INSERT_TYPE_RULED;
+	}
+	else if (type == "graph")
+	{
+		return PAGE_INSERT_TYPE_GRAPH;
+	}
+	else if (type == "copyPage")
+	{
+		return PAGE_INSERT_TYPE_COPY;
+	}
+	else if (type == "pdfBackground")
+	{
+		return PAGE_INSERT_TYPE_PDF_BACKGROUND;
+	}
 
-    return PAGE_INSERT_TYPE_COPY;
+	return PAGE_INSERT_TYPE_COPY;
 }
 

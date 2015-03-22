@@ -19,7 +19,6 @@
 #include <XournalType.h>
 #include "../../gui/GladeGui.h"
 
-
 class LatexGlade : public GladeGui
 {
 public:
