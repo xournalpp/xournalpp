@@ -6,7 +6,7 @@
 class ScriptData
 {
 public:
-	ScriptData(String name, String function, String parameter)
+	ScriptData(string name, string function, string parameter)
 	{
 		this->name = name;
 		this->function = function;
@@ -14,9 +14,9 @@ public:
 	}
 
 public:
-	String name;
-	String function;
-	String parameter;
+	string name;
+	string function;
+	string parameter;
 };
 
 PythonRunner* PythonRunner::instance = NULL;
@@ -83,12 +83,12 @@ void PythonRunner::releasePythonRunner()
 	}
 }
 
-void PythonRunner::runScript(String name, String function, String parameter)
+void PythonRunner::runScript(string name, string function, string parameter)
 {
-	if(name.isEmpty() || function.isEmpty())
+	if(name.empty() || function.empty())
 	{
 		g_warning("runScript::name (%s) and function (%s) should not be empty!",
-		          CSTR(name), CSTR(function));
+		          name.c_str(), function.c_str());
 		return;
 	}
 
@@ -162,25 +162,25 @@ void PythonRunner::initPython()
 	PyObject* pathObject = PyObject_GetAttrString(sysModule, "path");
 	g_return_if_fail(pathObject != NULL);
 
-	String p = path;
+	string p = path;
 	p += "/../testing";
-	PyObject* ret = PyObject_CallMethod(pathObject, "append", "s", CSTR(p));
+	PyObject* ret = PyObject_CallMethod(pathObject, "append", "s", p.c_str());
 	Py_DecRef(ret);
 
 	p = path;
 	p += "/testing";
-	ret = PyObject_CallMethod(pathObject, "append", "s", CSTR(p));
+	ret = PyObject_CallMethod(pathObject, "append", "s", p.c_str());
 	Py_DecRef(ret);
 
 	Py_DecRef(pathObject);
 	Py_DecRef(sysModule);
 }
 
-void PythonRunner::runScriptInt(String path, String function, String parameter)
+void PythonRunner::runScriptInt(string path, string function, string parameter)
 {
 	XOJ_CHECK_TYPE(PythonRunner);
 
-	if(path.isEmpty() || function.isEmpty())
+	if(path.empty() || function.empty())
 	{
 		g_warning("runScriptInt::path and function should not be empty!");
 		return;
@@ -188,7 +188,7 @@ void PythonRunner::runScriptInt(String path, String function, String parameter)
 
 	initPython();
 
-	PyObject* pName = PyString_FromString(CSTR(path));
+	PyObject* pName = PyString_FromString(path.c_str());
 	/* Error checking of pName left out */
 
 	PyObject* pModule = PyImport_Import(pName);
@@ -196,21 +196,21 @@ void PythonRunner::runScriptInt(String path, String function, String parameter)
 
 	if (pModule != NULL)
 	{
-		PyObject* pFunc = PyObject_GetAttrString(pModule, CSTR(function));
+		PyObject* pFunc = PyObject_GetAttrString(pModule, function.c_str());
 		/* pFunc is a new reference */
 
 		if (pFunc && PyCallable_Check(pFunc))
 		{
 			PyObject* pArgs = NULL;
 
-			if (parameter.isEmpty())
+			if (parameter.empty())
 			{
 				pArgs = PyTuple_New(0);
 			}
 			else
 			{
 				pArgs = PyTuple_New(1);
-				PyTuple_SetItem(pArgs, 0, PyString_FromString(CSTR(parameter)));
+				PyTuple_SetItem(pArgs, 0, PyString_FromString(parameter.c_str()));
 			}
 
 			PyObject* pValue = PyObject_CallObject(pFunc, pArgs);
@@ -234,7 +234,7 @@ void PythonRunner::runScriptInt(String path, String function, String parameter)
 			{
 				PyErr_Print();
 			}
-			fprintf(stderr, "Cannot find function \"%s\"\n", CSTR(function));
+			fprintf(stderr, "Cannot find function \"%s\"\n", function.c_str());
 		}
 		Py_XDECREF(pFunc);
 		Py_DECREF(pModule);
@@ -242,6 +242,6 @@ void PythonRunner::runScriptInt(String path, String function, String parameter)
 	else
 	{
 		PyErr_Print();
-		fprintf(stderr, "Failed to load \"%s\"\n", CSTR(path));
+		fprintf(stderr, "Failed to load \"%s\"\n", path.c_str());
 	}
 }
