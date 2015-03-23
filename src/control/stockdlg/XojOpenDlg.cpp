@@ -66,20 +66,18 @@ path XojOpenDlg::showOpenDialog(GtkWindow* win, Settings* settings, bool pdf,
 		gtk_widget_destroy(dialog);
 		return path("");
 	}
-	path filename = path(gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(dialog)));
+	path file(gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(dialog)));
 
 	if (attachOpt)
 	{
 		attachPdf = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(attachOpt));
 	}
-
-	path folder = path(gtk_file_chooser_get_current_folder_uri(
-															   GTK_FILE_CHOOSER(dialog)));
-	settings->setLastSavePath(folder);
+	
+	settings->setLastSavePath(file.parent_path());
 
 	gtk_widget_destroy(dialog);
 
-	return filename;
+	return file;
 }
 
 void XojOpenDlg::updatePreviewCallback(GtkFileChooser* fileChooser,

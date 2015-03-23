@@ -76,7 +76,7 @@ public:
 	 * Notifies all RecentManagerListener%s that a new
 	 * file is opened
 	 */
-	void openRecent(string uri);
+	void openRecent(path p);
 
 	/**
 	 * Returns the root menu containing all the items

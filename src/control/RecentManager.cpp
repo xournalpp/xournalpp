@@ -1,11 +1,11 @@
+#include "RecentManager.h"
+
 #include <gtk/gtk.h>
 #include <boost/filesystem.hpp>
 using boost::filesystem::path;
 
 #include <iostream>
 using namespace std;
-
-#include "RecentManager.h"
 
 #include <config.h>
 
@@ -132,27 +132,16 @@ void RecentManager::setMaxRecent(int maxRecent)
 	this->maxRecent = maxRecent;
 }
 
-void RecentManager::openRecent(string uri)
+void RecentManager::openRecent(path p)
 {
 	XOJ_CHECK_TYPE(RecentManager);
 
-	const gchar* c_uri = uri.c_str();
-	if (!ba::starts_with(uri, "file://"))
-	{
-		g_warning("could not handle URI: %s", c_uri);
-		return;
-	}
-
-	string filename = uri.substr(uri.find_last_of('/'));
-	if (filename.empty())
-	{
-		return;
-	}
+	if (p.filename().empty()) return;
 
 	for (GList* l = this->listener; l != NULL; l = l->next)
 	{
 		RecentManagerListener* listener = (RecentManagerListener*) l->data;
-		listener->fileOpened(filename.c_str());
+		listener->fileOpened(p.c_str());
 	}
 }
 
@@ -180,46 +169,6 @@ void RecentManager::freeOldMenus()
 	this->menuItemList = NULL;
 }
 
-/*
- * Doubles underscore to avoid spurious menu accels.
- */
-gchar* gedit_utils_escape_underscores(const gchar* text, gssize length)
-{
-	string r(text, length);
-	ba::replace_all(r, "_", "__");
-	return const_cast<gchar*> (r.c_str());
-}
-
-/**
- * gedit_utils_uri_for_display:
- * @uri: uri to be displayed.
- *
- * Filter, modify, unescape and change @uri to make it appropriate
- * for display to users.
- *
- * This function is a convenient wrapper for g_file_get_parse_name
- *
- * Return value: a string which represents @uri and can be displayed.
- */
-gchar* gedit_utils_uri_for_display(const gchar* uri)
-{
-	GFile* gfile;
-	gchar* parse_name;
-
-	gfile = g_file_new_for_uri(uri);
-	parse_name = g_file_get_parse_name(gfile);
-	g_object_unref(gfile);
-
-	return parse_name;
-}
-
-gchar* gedit_utils_replace_home_dir_with_tilde(const gchar* uri)
-{
-	string r(uri);
-	ba::replace_all(r, g_get_home_dir(), "~/");
-	return const_cast<gchar*> (r.c_str());
-}
-
 int RecentManager::sortRecentsEntries(GtkRecentInfo* a, GtkRecentInfo* b)
 {
 	return (gtk_recent_info_get_modified(b) - gtk_recent_info_get_modified(a));
@@ -237,25 +186,19 @@ GList* RecentManager::filterRecent(GList* items, bool xoj)
 		GtkRecentInfo* info = (GtkRecentInfo*) l->data;
 		string uri(gtk_recent_info_get_uri(info));
 
-		// Skip remote files anyway, PDF are supported as remote, XOJ not
+		// Skip remote files
 		if (!ba::starts_with(uri, "file://")) continue;
 
 		using namespace boost::filesystem;
-		if (!exists(path(uri))) continue;
+		if (!exists(path(uri.substr(7)))) continue;	//substr is for removing uri's file://
 
-		if (xoj)
+		if (xoj && ba::ends_with(uri, ".xoj"))
 		{
-			if (ba::ends_with(uri, ".xoj"))
-			{
-				filteredItems = g_list_prepend(filteredItems, info);
-			}
+			filteredItems = g_list_prepend(filteredItems, info);
 		}
-		else
+		if (!xoj && ba::ends_with(uri, ".pdf"))
 		{
-			if (ba::ends_with(uri, ".pdf"))
-			{
-				filteredItems = g_list_prepend(filteredItems, info);
-			}
+			filteredItems = g_list_prepend(filteredItems, info);
 		}
 	}
 
@@ -274,41 +217,36 @@ void RecentManager::recentsMenuActivateCallback(GtkAction* action,
 															 "gtk-recent-info");
 	g_return_if_fail(info != NULL);
 
-	const gchar* uri = gtk_recent_info_get_uri(info);
-	recentManager->openRecent(uri);
+	const gchar* uri = gtk_recent_info_get_uri(info);//topath
+	recentManager->openRecent(string(uri).substr(7));
 }
 
 void RecentManager::addRecentMenu(GtkRecentInfo* info, int i)
 {
 	XOJ_CHECK_TYPE(RecentManager);
 
-	gchar* label = NULL;
-	const gchar* display_name = gtk_recent_info_get_display_name(info);
-	gchar* escaped = gedit_utils_escape_underscores(display_name, -1);
-	if (i >= 10)
-	{
-		label = g_strdup_printf("%d.  %s", i, escaped);
-	}
-	else
-	{
-		label = g_strdup_printf("_%d.  %s", i, escaped);
-	}
-	g_free(escaped);
+	string display_name(gtk_recent_info_get_display_name(info));
+	ba::replace_all(display_name, "_", "__");	//escape underscore
+	
+	string label = (i >= 10 ?
+		(bl::format("{1}. {2}") % i % display_name).str()
+			:
+		(bl::format("_{1}. {2}") % i % display_name).str());
 
 	/* gtk_recent_info_get_uri_display (info) is buggy and
 	 * works only for local files */
-	gchar* uri = gedit_utils_uri_for_display(gtk_recent_info_get_uri(info));
-
-	gchar* ruri = gedit_utils_replace_home_dir_with_tilde(uri);
-	g_free(uri);
+	GFile* gfile = g_file_new_for_uri(gtk_recent_info_get_uri(info));
+	string ruri(g_file_get_parse_name(gfile));
+	g_object_unref(gfile);
+	ba::replace_first(ruri, g_get_home_dir(), "~/");	//replace home dir with tilde
 
 	// Translators: %s is a URI
-	gchar* tip = g_strdup_printf("Open '%s'", ruri);
-	g_free(ruri);
+	string tip = (bl::format("Open {1}'") % ruri).str();
 
-	GtkWidget* item = gtk_menu_item_new_with_mnemonic(label);
+	
+	GtkWidget* item = gtk_menu_item_new_with_mnemonic(label.c_str());
 
-	gtk_widget_set_tooltip_text(item, tip);
+	gtk_widget_set_tooltip_text(item, tip.c_str());
 
 	g_object_set_data_full(G_OBJECT(item), "gtk-recent-info",
 						   gtk_recent_info_ref(info), (GDestroyNotify) gtk_recent_info_unref);
@@ -319,9 +257,6 @@ void RecentManager::addRecentMenu(GtkRecentInfo* info, int i)
 	gtk_widget_set_visible(GTK_WIDGET(item), true);
 
 	this->menuItemList = g_list_append(this->menuItemList, item);
-
-	g_free(label);
-	g_free(tip);
 }
 
 void RecentManager::updateMenu()
