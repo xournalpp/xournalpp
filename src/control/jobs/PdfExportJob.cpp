@@ -35,22 +35,16 @@ bool PdfExportJob::showFilechooser()
 	gtk_file_filter_add_pattern(filterPdf, "*.pdf");
 	gtk_file_chooser_add_filter(GTK_FILE_CHOOSER(dialog), filterPdf);
 
-	if (!settings->getLastSavePath().empty())
-	{
-		gtk_file_chooser_set_current_folder_uri(GTK_FILE_CHOOSER(dialog),
-												settings->getLastSavePath().c_str());
-	}
-
-	path saveFilename;
+	path savePath;
 
 	doc->lock();
 	if (!doc->getFilename().empty())
 	{
-		saveFilename = doc->getFilename();
+		savePath = doc->getFilename();
 	}
 	else if (!doc->getPdfFilename().empty())
 	{
-		saveFilename = doc->getPdfFilename().filename().replace_extension(".xoj");
+		savePath = doc->getPdfFilename().filename().replace_extension("");
 	}
 	else
 	{
@@ -59,19 +53,24 @@ bool PdfExportJob::showFilechooser()
 		strftime(stime, sizeof (stime), settings->getDefaultSaveName().c_str(),
 				 localtime(&curtime));
 
-		saveFilename = stime;
+		savePath /= stime;
 
-		if (saveFilename.extension() == ".xoj")
+		if (savePath.extension() != ".xoj")
 		{
-			saveFilename.replace_extension("");
+			savePath += ".xoj";
 		}
 	}
 	doc->unlock();
 
-	saveFilename += ".pdf";
+	savePath += ".pdf";
+		
+	GFile* folder = g_file_new_for_path(savePath.parent_path().c_str());
+	gtk_file_chooser_set_current_folder_uri(GTK_FILE_CHOOSER(dialog),
+											g_file_get_uri(folder));
+	g_free(folder);
 
 	gtk_file_chooser_set_current_name(GTK_FILE_CHOOSER(dialog),
-									  saveFilename.c_str());
+									  savePath.filename().c_str());
 	gtk_file_chooser_set_do_overwrite_confirmation(GTK_FILE_CHOOSER(dialog), true);
 
 	gtk_window_set_transient_for(GTK_WINDOW(dialog),
@@ -82,7 +81,9 @@ bool PdfExportJob::showFilechooser()
 		return false;
 	}
 
-	this->filename = path(gtk_file_chooser_get_uri(GTK_FILE_CHOOSER(dialog)));
+	string uri(gtk_file_chooser_get_uri(GTK_FILE_CHOOSER(dialog)));
+	if (!ba::starts_with(uri, "file://")) return false;	//ensure local file
+	this->filename = path(gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(dialog)));
 	settings->setLastSavePath(this->filename.parent_path());
 
 	gtk_widget_destroy(dialog);

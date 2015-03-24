@@ -71,7 +71,7 @@
 #endif
 
 /* Define to 1 if you have the <dirent.h> header file, and it defines `DIR'.
- */
+   */
 #ifndef HAVE_DIRENT_H
 #define HAVE_DIRENT_H 1
 #endif
@@ -87,13 +87,13 @@
 #endif
 
 /* Define to 1 if you have the <sys/dir.h> header file, and it defines `DIR'.
- */
+   */
 #ifndef HAVE_SYS_DIR_H
 /* #undef HAVE_SYS_DIR_H */
 #endif
 
 /* Define to 1 if you have the <sys/ndir.h> header file, and it defines `DIR'.
- */
+   */
 #ifndef HAVE_SYS_NDIR_H
 /* #undef HAVE_SYS_NDIR_H */
 #endif
