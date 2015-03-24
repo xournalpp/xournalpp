@@ -203,15 +203,19 @@ endif
 AM_CPPFLAGS = \
 	-DPACKAGE_DATA_DIR=\""$(datadir)"\" \
 	-DPACKAGE_LOCALE_DIR=\""$(prefix)/$(DATADIRNAME)/locale"\" \
+	$(BOOST_CPPFLAGS) \
 	-I"$(abs_top_builddir)/src/pdf/popplerdirect" \
 	@PACKAGE_CFLAGS@
+	
+AM_LDFLAGS = $(BOOST_SYSTEM_LDFLAGS) $(BOOST_FILESYSTEM_LDFLAGS) $(BOOST_LOCALE_LDFLAGS)
+LIBS = $(BOOST_SYSTEM_LIBS) $(BOOST_FILESYSTEM_LIBS) $(BOOST_LOCALE_LIBS)
 
 xournalpp_CXXFLAGS = \
 	-I$(top_srcdir)/src/util \
 	-I$(top_srcdir)/src/pdf/popplerdirect/poppler-0.24.1 \
 	-I$(top_srcdir)/src/pdf/popplerdirect/poppler-0.24.1/poppler \
 	-g -rdynamic \
-	-Wreturn-type -Wuninitialized -Wunused-value -Wunused-variable   
+	-Wreturn-type -Wuninitialized -Wunused-value -Wunused-variable
 
 if ENABLE_OS
 xournalpp_CXXFLAGS += \

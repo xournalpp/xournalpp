@@ -16,17 +16,17 @@
 /* Define to 1 if you have the `bind_textdomain_codeset' function. */
 #define HAVE_BIND_TEXTDOMAIN_CODESET 1
 
-/* define if the Boost library is available */
-#define HAVE_BOOST /**/
+/* Defined if the requested minimum BOOST version is satisfied */
+#define HAVE_BOOST 1
 
-/* define if the Boost::Filesystem library is available */
-#define HAVE_BOOST_FILESYSTEM /**/
+/* Define to 1 if you have <boost/filesystem/path.hpp> */
+#define HAVE_BOOST_FILESYSTEM_PATH_HPP 1
 
-/* define if the Boost::Locale library is available */
-#define HAVE_BOOST_LOCALE /**/
+/* Define to 1 if you have <boost/locale.hpp> */
+#define HAVE_BOOST_LOCALE_HPP 1
 
-/* define if the Boost::System library is available */
-#define HAVE_BOOST_SYSTEM /**/
+/* Define to 1 if you have <boost/system/error_code.hpp> */
+#define HAVE_BOOST_SYSTEM_ERROR_CODE_HPP 1
 
 /* define if the compiler supports basic C++11 syntax */
 /* #undef HAVE_CXX11 */
