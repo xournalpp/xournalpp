@@ -10,6 +10,8 @@ Name[ca]=Xournal++
 Comment[ca]=Preneu notes a mà
 Name[de]=Xournal++
 Comment[de]=Handnotizen erstellen
+Name[pl]=Xournal++
+Comment[pl]=Notatki odręczne
 
 Exec=xournalpp %f
 Terminal=false
