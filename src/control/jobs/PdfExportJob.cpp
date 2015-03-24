@@ -67,7 +67,7 @@ bool PdfExportJob::showFilechooser()
 	GFile* folder = g_file_new_for_path(savePath.parent_path().c_str());
 	gtk_file_chooser_set_current_folder_uri(GTK_FILE_CHOOSER(dialog),
 											g_file_get_uri(folder));
-	g_free(folder);
+	g_object_unref(folder);
 
 	gtk_file_chooser_set_current_name(GTK_FILE_CHOOSER(dialog),
 									  savePath.filename().c_str());
