@@ -3,10 +3,10 @@
  *
  * Handler for actions, every menu action, tool button etc. is defined here
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv3
  */
 
 #ifndef __ACTIONDISPATCHER_H__

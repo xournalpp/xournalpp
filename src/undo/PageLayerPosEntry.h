@@ -3,10 +3,10 @@
  *
  * Position entry for undo / redo handling
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv3
  */
 
 #ifndef __PAGELAYERPOSENTRY_H__

@@ -3,10 +3,10 @@
  *
  * Handles the erase of stroke, in special split into different parts etc.
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv3
  */
 
 #ifndef ERASEHANDLER_H_

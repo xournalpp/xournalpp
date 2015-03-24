@@ -1,8 +1,12 @@
 /*
- * GladeSearchpath.h
+ * Xournal++
  *
- *  Created on: 04.03.2011
- *      Author: andreas
+ * Search directory for icons and Glade files
+ *
+ * @author andreas
+ * https://github.com/xournalpp/xournalpp
+ *
+ * @license GNU GPLv3
  */
 
 #ifndef __GLADESEARCHPATH_H__

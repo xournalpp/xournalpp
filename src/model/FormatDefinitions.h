@@ -3,10 +3,10 @@
  *
  * Abstract gui class, which loads the glade objcts
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv3
  */
 
 #ifndef __FORMATDEFINITIONS_H__

@@ -3,10 +3,10 @@
  *
  * Paints a pdf Page to a cairo context, handles special cases
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv3
  */
 
 #ifndef __PDFVIEW_H__

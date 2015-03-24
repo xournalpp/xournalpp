@@ -3,10 +3,10 @@
  *
  * Finds out on which page the most area of a rectangle is
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv3
  */
 
 #ifndef __PAGEVIEWINDEX_H__

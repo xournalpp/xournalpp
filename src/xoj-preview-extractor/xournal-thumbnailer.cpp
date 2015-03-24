@@ -2,15 +2,13 @@
  * Xournal++
  *
  * This small programm extracts a preview out of a xournal file.
+ *
+ * @author MarPiRK
+ * http://marpirk.net
  * 
- * For lowest size should be build with command:
- * g++ -Os -lboost_iostreams-mt -lboost_locale-mt -DPACKAGE_LOCALE_DIR=\"/usr/local/share/locale\" xournal-thumbnailer.cpp -o xoj-preview-extractor
- * strip -g xoj-preview-extractor
+ * https://github.com/xournalpp/xournalpp
  *
- * @author Xournal Team
- * http://xournal.sf.net
- *
- * @license GPL
+ * @license GNU GPLv3
  */
 
 #include <string>

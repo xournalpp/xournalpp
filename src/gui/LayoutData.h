@@ -1,8 +1,12 @@
 /*
- * LayoutData.h
+ * Xournal++
  *
- *  Created on: 13.09.2011
- *      Author: andreas
+ * 
+ *
+ * @author andreas
+ * https://github.com/xournalpp/xournalpp
+ *
+ * @license GNU GPLv3
  */
 
 #ifndef __LAYOUTDATA_H__

@@ -3,10 +3,10 @@
  *
  * Reference String which is automatically deleted
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author MarPiRK
+ * http://marpirk.net
  *
- * @license GPL
+ * @license GNU GPLv3
  */
 
 #ifndef __STRINGUTILS_H__

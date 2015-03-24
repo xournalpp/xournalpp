@@ -6,13 +6,11 @@
  * The attributes start with z__ because if they start with __ they appear
  * as first element in the autocomplete list...
  *
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @author Xournal Team
- * http://xournal.sf.net
- *
- * @license GPL
+ * @license GNU GPLv3
  */
-
 
 #ifndef __XOURNALTYPE_H__
 #define __XOURNALTYPE_H__

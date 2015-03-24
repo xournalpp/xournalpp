@@ -3,10 +3,10 @@
  *
  * Adapter to call progress interface from outside the GTK Main thread
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv3
  */
 
 #ifndef __SYNCHRONIZEDPROGRESSLISTENER_H__

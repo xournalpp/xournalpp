@@ -3,10 +3,10 @@
  *
  * Declaration of all class types
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv3
  */
 
 XOJ_DECLARE_TYPE(AutosaveJob, 1);

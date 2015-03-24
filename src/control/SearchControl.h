@@ -3,10 +3,10 @@
  *
  * Handles text search on a PDF page and in Xournal Texts
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv3
  */
 
 #ifndef __SEARCHCONTROL_H__

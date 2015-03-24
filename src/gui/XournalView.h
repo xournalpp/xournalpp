@@ -3,10 +3,10 @@
  *
  * The widget wich displays the PDF and the drawings
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv3
  */
 
 #ifndef __XOURNALVIEW_H__

@@ -4,10 +4,10 @@
  * A selection for editing, every selection (Rect, Lasso...) is
  * converted to this one if the selection is finished
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv3
  */
 
 #ifndef __EDITSELECTION_H__

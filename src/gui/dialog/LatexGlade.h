@@ -5,8 +5,10 @@
  *
  * @author W Brenna
  * http://wbrenna.ca
+ * 
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv3
  */
 
 #ifndef __LATEXGLADE_H__
