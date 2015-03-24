@@ -2,7 +2,7 @@
 # Configuration validation subroutine script.
 #   Copyright 1992-2015 Free Software Foundation, Inc.
 
-timestamp='2015-03-08'
+timestamp='2015-03-04'
 
 # This file is free software; you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published by
@@ -258,7 +258,7 @@ case $basic_machine in
 	| be32 | be64 \
 	| bfin \
 	| c4x | c8051 | clipper \
-	| d10v | d30v | dlx | dsp16xx \
+	| d10v | d30v | dlx | dsp16xx | dvp \
 	| e2k | epiphany \
 	| fido | fr30 | frv | ft32 \
 	| h8300 | h8500 | hppa | hppa1.[01] | hppa2.0 | hppa2.0[nw] | hppa64 \
@@ -517,9 +517,6 @@ case $basic_machine in
 	aros)
 		basic_machine=i386-pc
 		os=-aros
-		;;
-        asmjs)
-		basic_machine=asmjs-unknown
 		;;
 	aux)
 		basic_machine=m68k-apple
@@ -825,6 +822,24 @@ case $basic_machine in
 	*mint | -mint[0-9]* | *MiNT | *MiNT[0-9]*)
 		basic_machine=m68k-atari
 		os=-mint
+		;;
+	mipsEE* | ee | ps2)
+		basic_machine=mips64r5900el-scei
+		case $os in
+		    -linux*)
+			;;
+		    *)
+			os=-elf
+			;;
+		esac
+		;;
+	iop)
+		basic_machine=mipsel-scei
+		os=-irx
+		;;
+	dvp)
+		basic_machine=dvp-scei
+		os=-elf
 		;;
 	mips3*-*)
 		basic_machine=`echo $basic_machine | sed -e 's/mips3/mips64/'`
@@ -1376,7 +1391,7 @@ case $os in
 	      | -hpux* | -unos* | -osf* | -luna* | -dgux* | -auroraux* | -solaris* \
 	      | -sym* | -kopensolaris* | -plan9* \
 	      | -amigaos* | -amigados* | -msdos* | -newsos* | -unicos* | -aof* \
-	      | -aos* | -aros* | -cloudabi* \
+	      | -aos* | -aros* \
 	      | -nindy* | -vxsim* | -vxworks* | -ebmon* | -hms* | -mvs* \
 	      | -clix* | -riscos* | -uniplus* | -iris* | -rtu* | -xenix* \
 	      | -hiux* | -386bsd* | -knetbsd* | -mirbsd* | -netbsd* \
@@ -1392,7 +1407,7 @@ case $os in
 	      | -uxpv* | -beos* | -mpeix* | -udk* | -moxiebox* \
 	      | -interix* | -uwin* | -mks* | -rhapsody* | -darwin* | -opened* \
 	      | -openstep* | -oskit* | -conix* | -pw32* | -nonstopux* \
-	      | -storm-chaos* | -tops10* | -tenex* | -tops20* | -its* \
+	      | -storm-chaos* | -tops10* | -tenex* | -tops20* | -its* | -irx* \
 	      | -os2* | -vos* | -palmos* | -uclinux* | -nucleus* \
 	      | -morphos* | -superux* | -rtmk* | -rtmk-nova* | -windiss* \
 	      | -powermax* | -dnix* | -nx6 | -nx7 | -sei* | -dragonfly* \

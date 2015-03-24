@@ -1,1 +1,0 @@
-/home/marek/xournalpp/repo/src/pdf/popplerdirect/poppler-0.24.1_build/poppler/poppler-config.h

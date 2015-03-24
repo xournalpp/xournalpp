@@ -135,6 +135,7 @@ BOOST_REQUIRE([1.54])
 BOOST_SYSTEM([mt])
 BOOST_FILESYSTEM([mt])
 BOOST_LOCALE([mt])
+BOOST_IOSTREAMS([mt])
 
 dnl libjpeg
 AC_ARG_WITH(libjpeg,
