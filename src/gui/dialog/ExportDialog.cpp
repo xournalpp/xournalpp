@@ -11,7 +11,7 @@ GladeGui(gladeSearchPath, "export.glade", "exportDialog")
 
 	XOJ_INIT_TYPE(ExportDialog);
 
-	this->range = NULL;
+	this->range.clear();
 	this->pageCount = pageCount;
 	this->currentPage = currentPage;
 	this->resolution = 72;
@@ -131,7 +131,7 @@ ExportDialog::~ExportDialog()
 	g_object_unref(this->typesModel);
 }
 
-GList* ExportDialog::getRange()
+PageRangeVector ExportDialog::getRange()
 {
 	XOJ_CHECK_TYPE(ExportDialog);
 
@@ -164,19 +164,16 @@ void ExportDialog::handleData()
 	}
 	else if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(rdRangeCurrent)))
 	{
-		this->range = g_list_append(this->range,
-									new PageRangeEntry(this->currentPage,
-													this->currentPage));
+		this->range.push_back(new PageRangeEntry(this->currentPage, this->currentPage));
 	}
 	else
 	{
-		this->range = g_list_append(this->range,
-									new PageRangeEntry(0, this->pageCount - 1));
+		this->range.push_back(new PageRangeEntry(0, this->pageCount - 1));
 	}
 
 	this->resolution = gtk_spin_button_get_value(GTK_SPIN_BUTTON(get("spPngResolution")));
 
-	this->settings->setLastSavePath(this->getFolder());
+	this->settings->setLastSavePath(this->getFilePath().parent_path());
 }
 
 ExportFormtType ExportDialog::getFormatType()
@@ -270,49 +267,13 @@ void ExportDialog::fileTypeSelected(GtkTreeView* treeview,
 	}
 }
 
-string ExportDialog::getFolder()
+path ExportDialog::getFilePath()
 {
 	XOJ_CHECK_TYPE(ExportDialog);
 
-	string s;
 	GFile* file = gtk_file_chooser_get_file(GTK_FILE_CHOOSER(this->window));
-
-	if (file)
-	{
-		gchar* folderName = g_file_get_path(file);
-
-		s = folderName;
-
-		g_free(folderName);
-	}
-
-	int index = s.find_last_of(G_DIR_SEPARATOR_S);
-
-	if (index != -1)
-	{
-		s = s.substr(0, index);
-	}
-
-	return s;
-}
-
-string ExportDialog::getFilename()
-{
-	XOJ_CHECK_TYPE(ExportDialog);
-
-	string s;
-	GFile* file = gtk_file_chooser_get_file(GTK_FILE_CHOOSER(this->window));
-
-	if (file)
-	{
-		gchar* fileName = g_file_get_basename(file);
-
-		s = fileName;
-
-		g_free(fileName);
-	}
-
-	return s;
+	if (file) return path(g_file_get_path(file));
+	else return path("");
 }
 
 bool ExportDialog::validate()

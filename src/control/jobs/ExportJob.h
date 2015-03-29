@@ -14,14 +14,18 @@
 
 #include "BlockingJob.h"
 #include "ExportFormtType.h"
+#include <PageRange.h>
 #include <StringUtils.h>
 #include <XournalType.h>
+
+#include <boost/filesystem/path.hpp>
+using boost::filesystem::path;
 
 class ExportJob : public BlockingJob
 {
 public:
-	ExportJob(Control* control, GList* selected, ExportFormtType type, int dpi,
-			  string folder, string filename);	//TODO path
+	ExportJob(Control* control, PageRangeVector selected, ExportFormtType type,
+			  int dpi, path filepath);
 
 protected:
 	virtual ~ExportJob();
@@ -37,15 +41,14 @@ private:
 	XOJ_TYPE_ATTRIB;
 
 
-	GList* selected;
+	PageRangeVector selected;
 
 	cairo_surface_t* surface;
 	cairo_t* cr;
 
 	int dpi;
 	ExportFormtType type;
-	string filename;
-	string folder;
+	path filepath;
 	string front, back;
 };
 

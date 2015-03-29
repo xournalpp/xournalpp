@@ -13,7 +13,8 @@
 #define __PAGERANGE_H__
 
 #include <XournalType.h>
-#include <glib.h>
+#include <vector>
+using std::vector;
 
 class PageRangeEntry
 {
@@ -32,6 +33,8 @@ private:
 	int last;
 };
 
+typedef vector<PageRangeEntry*> PageRangeVector;
+
 class PageRange
 {
 private:
@@ -40,7 +43,7 @@ private:
 
 public:
 	static bool isSeparator(char c);
-	static GList* parse(const char* str);
+	static PageRangeVector parse(const char* str);
 };
 
 #endif /* __PAGERANGE_H__ */

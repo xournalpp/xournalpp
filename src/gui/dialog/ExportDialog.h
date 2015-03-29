@@ -16,6 +16,10 @@
 #include "../../control/settings/Settings.h"
 #include "../../control/jobs/ExportFormtType.h"
 #include <XournalType.h>
+#include <PageRange.h>
+
+#include <boost/filesystem/path.hpp>
+using boost::filesystem::path;
 
 class ExportDialog : public GladeGui
 {
@@ -27,12 +31,11 @@ public:
 public:
 	virtual void show(GtkWindow* parent);
 
-	GList* getRange();
+	PageRangeVector getRange();
 	int getPngDpi();
 	ExportFormtType getFormatType();
 
-	string getFolder();
-	string getFilename();
+	path getFilePath();
 
 private:
 	bool validate();
@@ -73,7 +76,7 @@ private:
 	int resolution;
 	ExportFormtType type;
 
-	GList* range;
+	PageRangeVector range;
 
 	Settings* settings;
 	GtkListStore* typesModel;

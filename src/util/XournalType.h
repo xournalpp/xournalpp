@@ -15,6 +15,7 @@
 #ifndef __XOURNALTYPE_H__
 #define __XOURNALTYPE_H__
 
+#include <glib.h>
 #include "logger/Logger.h"
 
 #define XOJ_MEMORY_CHECK_ENABLED

@@ -34,13 +34,13 @@ bool PageRange::isSeparator(char c)
 	return (c == ',' || c == ';' || c == ':');
 }
 
-GList* PageRange::parse(const char* str)
+PageRangeVector PageRange::parse(const char* str)
 {
-	GList* data = NULL;
+	PageRangeVector data;
 
 	if (*str == 0)
 	{
-		return NULL;
+		return data;
 	}
 
 	int start, end;
@@ -89,7 +89,7 @@ GList* PageRange::parse(const char* str)
 			}
 		}
 
-		data = g_list_append(data, new PageRangeEntry(start - 1, end - 1));
+		data.push_back(new PageRangeEntry(start - 1, end - 1));
 
 		// Skip until end or separator
 		while (*p && !isSeparator(*p))
