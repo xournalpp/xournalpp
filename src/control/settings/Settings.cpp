@@ -85,7 +85,8 @@ void Settings::loadDefault()
 	this->showBigCursor = false;
 	this->scrollbarHideType = SCROLLBAR_HIDE_NONE;
 
-	this->autosaveTimeout = 1;
+	//Set this for autosave frequency in minutes.
+	this->autosaveTimeout = 3;
 	this->autosaveEnabled = true;
 
 	this->addHorizontalSpace = false;
