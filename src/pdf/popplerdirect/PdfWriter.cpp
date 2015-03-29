@@ -13,9 +13,8 @@ PdfWriter::PdfWriter(PdfXRef* xref)
 	XOJ_INIT_TYPE(PdfWriter);
 
 	this->inStream = false;
-	this->stream = NULL;
+	this->stream.clear();
 	this->out = NULL;
-	this->dataCount = 0;
 	this->xref = xref;
 	this->objectId = 3;
 }
@@ -24,12 +23,7 @@ PdfWriter::~PdfWriter()
 {
 	XOJ_CHECK_TYPE(PdfWriter);
 
-	if (this->stream)
-	{
-		g_string_free(this->stream, true);
-	}
-	this->stream = NULL;
-
+	this->stream.clear();
 	this->xref = NULL;
 
 	XOJ_RELEASE_TYPE(PdfWriter);
@@ -73,27 +67,38 @@ bool PdfWriter::write(string data)
 {
 	XOJ_CHECK_TYPE(PdfWriter);
 
-	return writeLen(data.c_str(), data.length());
+	if (this->inStream)
+	{
+		this->stream += data;
+		return true;
+	}
+
+	GError* err = NULL;
+
+	g_output_stream_write(G_OUTPUT_STREAM(this->out), data.c_str(), data.length(), NULL, &err);
+
+	if (err)
+	{
+		this->lastError = (bl::format("Error writing stream: {1}") % err->message).str();
+
+		cout << bl::format("error writing file: {1}") % err->message << endl;
+		g_error_free(err);
+		return false;
+	}
+
+	return true;
 }
 
-bool PdfWriter::writef(const char* format, ...)
+bool PdfWriter::write(boost::format data)
 {
-	XOJ_CHECK_TYPE(PdfWriter);
-
-	va_list args;
-	va_start(args, format);
-	char* data = g_strdup_vprintf(format, args);
-	bool res = writeLen(data, strlen(data));
-	g_free(data);
-	return res;
+	return write(data.str());
 }
 
 bool PdfWriter::write(int data)
 {
 	XOJ_CHECK_TYPE(PdfWriter);
 
-	return writef("%i", data);
-	;
+	return write(std::to_string(data));
 }
 
 string PdfWriter::getLastError()
@@ -121,7 +126,7 @@ int PdfWriter::getDataCount()
 {
 	XOJ_CHECK_TYPE(PdfWriter);
 
-	return this->dataCount;
+	return this->stream.length();
 }
 
 bool PdfWriter::writeTxt(string data)
@@ -130,50 +135,22 @@ bool PdfWriter::writeTxt(string data)
 
 	string str(data);
 	StringUtils::replace_all_chars(str, {
-								   replace_pair('\\', "\\\\"),
-								   replace_pair('(', "\\("),
-								   replace_pair(')', "\\)"),
-								   replace_pair('\r', "\\\r")
+		replace_pair('\\', "\\\\"),
+		replace_pair('(', "\\("),
+		replace_pair(')', "\\)"),
+		replace_pair('\r', "\\\r")
 	});
 	str = "(" + str + ")";
 
-	return writeLen(str, str.length());
-}
-
-bool PdfWriter::writeLen(string data, int len)
-{
-	XOJ_CHECK_TYPE(PdfWriter);
-
-	if (this->inStream)
-	{
-		g_string_append_len(this->stream, data.c_str(), len);
-		return true;
-	}
-
-	GError* err = NULL;
-
-	g_output_stream_write(G_OUTPUT_STREAM(this->out), data.c_str(), len, NULL, &err);
-
-	this->dataCount += len;
-
-	if (err)
-	{
-		this->lastError = (bl::format("Error writing stream: {1}") % err->message).str();
-
-		cout << bl::format("error writing file: {1}") % err->message << endl;
-		g_error_free(err);
-		return false;
-	}
-
-	return true;
+	return write(str);
 }
 
 bool PdfWriter::writeObj()
 {
 	XOJ_CHECK_TYPE(PdfWriter);
 
-	this->xref->addXref(this->dataCount);
-	bool res = this->writef("%i 0 obj\n", this->objectId++);
+	this->xref->addXref(this->stream.length());
+	bool res = this->write(boost::format("%i 0 obj\n") % this->objectId++);
 	if (!res)
 	{
 		this->lastError = "Internal PDF error #8";
@@ -246,8 +223,7 @@ void PdfWriter::endStream()
 
 	this->inStream = false;
 
-	GString* data = NULL;
-	GString* compressed = NULL;
+	string data, compressed;
 
 	if (PdfWriter::compressPdfOutput)
 	{
@@ -255,7 +231,7 @@ void PdfWriter::endStream()
 	}
 
 	const char* filter = "";
-	if (compressed)
+	if (!compressed.empty())
 	{
 		filter = "/Filter /FlateDecode ";
 		data = compressed;
@@ -265,17 +241,10 @@ void PdfWriter::endStream()
 		data = this->stream;
 	}
 
-	writef("<<%s/Length %i>>\n", filter, data->len);
+	write(boost::format("<<%s/Length %i>>\n") % filter % data.length());
 	write("\nstream\n");
 
-	writeLen(data->str, data->len);
+	write(data);
 
 	write("\nendstream\n");
-
-	if (compressed)
-	{
-		g_string_free(compressed, true);
-	}
-
-	this->stream->len = 0;
 }

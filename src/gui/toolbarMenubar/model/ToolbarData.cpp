@@ -110,11 +110,8 @@ void ToolbarData::saveToKeyFile(GKeyFile* config)
 
 	const char* group = getId().c_str();
 
-	std::vector<ToolbarEntry>::iterator it;
-	for (it = this->contents.begin(); it != this->contents.end(); it++)
+	for (ToolbarEntry& e : this->contents)
 	{
-		ToolbarEntry& e = *it;
-
 		string line = "";
 
 		ListIterator<ToolbarItem*> it = e.iterator();
@@ -142,11 +139,8 @@ int ToolbarData::insertItem(string toolbar, string item, int position)
 
 	g_return_val_if_fail(isPredefined() == false, -1);
 
-	std::vector<ToolbarEntry>::iterator it;
-	for (it = this->contents.begin(); it != this->contents.end(); it++)
+	for (ToolbarEntry e : this->contents)
 	{
-		ToolbarEntry& e = *it;
-
 		if (e.getName() == toolbar)
 		{
 			cout << bl::format("Toolbar found: {1}") % toolbar << endl;
@@ -172,11 +166,8 @@ bool ToolbarData::removeItemByID(string toolbar, int id)
 
 	g_return_val_if_fail(isPredefined() == false, false);
 
-	std::vector<ToolbarEntry>::iterator it;
-	for (it = this->contents.begin(); it != this->contents.end(); it++)
+	for (ToolbarEntry& e : this->contents)
 	{
-		ToolbarEntry& e = *it;
-
 		if (e.getName() == toolbar)
 		{
 			return e.removeItemById(id);

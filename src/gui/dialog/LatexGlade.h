@@ -31,16 +31,14 @@ public:
 	virtual void show(GtkWindow* parent);
 	void save();
 	void load();
-	void setTex(gchar* texString, int texLength);
-	gchar* getTex();
-	int getTexLen();
+	void setTex(string texString);
+	string getTex();
 
 
 private:
 	XOJ_TYPE_ATTRIB;
 	GtkWidget* texBox;
-	gchar* theLatex;
-	int theLatexLength;
+	string theLatex;
 };
 
 #endif /* __LATEXGLADE_H__ */

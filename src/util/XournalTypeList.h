@@ -65,7 +65,7 @@ XOJ_DECLARE_TYPE(ScrollHandler, 53);
 XOJ_DECLARE_TYPE(PdfCacheEntry, 54);
 XOJ_DECLARE_TYPE(PdfCache, 55);
 XOJ_DECLARE_TYPE(LoadHandler, 56);
-XOJ_DECLARE_TYPE(DoubleArrayBuffer, 57);
+XOJ_DECLARE_TYPE(ParseException, 57);
 XOJ_DECLARE_TYPE(SearchControl, 58);
 XOJ_DECLARE_TYPE(SElement, 59);
 XOJ_DECLARE_TYPE(Settings, 60);

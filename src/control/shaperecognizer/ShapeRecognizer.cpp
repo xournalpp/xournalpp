@@ -576,10 +576,10 @@ ShapeRecognizerResult* ShapeRecognizer::recognizePatterns(Stroke* stroke)
 	{
 		optimizePolygonal(stroke->getPoints(), n, brk, ss);
 #ifdef RECOGNIZER_DEBUG
-		cout << endl << boost::format("ShapeReco:: Polygon, %d% edges:") % n << endl;
+		cout << endl << boost::format("ShapeReco:: Polygon, %d edges:") % n << endl;
 		for (int i = 0; i < n; i++)
 		{
-			cout << boost::format("ShapeReco::      %d%-%d% (M=%.0f%, det=%.4f%)")
+			cout << boost::format("ShapeReco::      %d-%d (M=%.0f, det=%.4f)")
 					% brk[i] % brk[i + 1] % ss[i].getMass() % ss[i].det()
 					<< endl;
 		}

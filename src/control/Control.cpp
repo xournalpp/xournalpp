@@ -2395,7 +2395,15 @@ bool Control::openFile(path filename, int scrollToPage)
 		if (settings->isAutloadPdfXoj())
 		{
 			path f = path(filename).replace_extension(".pdf.xoj");
-			Document* tmp = h.loadDocument(f);
+			Document* tmp;
+			try {
+				tmp = h.loadDocument(f);
+			} catch (ParseException& e)
+			{
+				cerr << e.what() << endl;
+				return false;
+			}
+			
 			if (tmp)
 			{
 
@@ -2414,42 +2422,51 @@ bool Control::openFile(path filename, int scrollToPage)
 		return an;
 	}
 
-	Document* tmp = h.loadDocument(filename);
-	if (!tmp && h.isAttachedPdfMissing() || !h.getMissingPdfFilename().empty())
+	Document* tmp;
+	
+	try
 	{
-		// give the user a second chance to select a new PDF file, or to discard the PDF
-
-
-		GtkWidget* dialog = gtk_message_dialog_new((GtkWindow*) * getWindow(),
-												   GTK_DIALOG_DESTROY_WITH_PARENT,
-												   GTK_MESSAGE_QUESTION, GTK_BUTTONS_NONE, h.isAttachedPdfMissing() ? _(
-																														"The attached background PDF could not be found.") :
-												   _("The background PDF could not be found."));
-
-		gtk_dialog_add_button(GTK_DIALOG(dialog), _("Select another PDF"), 1);
-		gtk_dialog_add_button(GTK_DIALOG(dialog), _("Remove PDF Background"), 2);
-		gtk_dialog_add_button(GTK_DIALOG(dialog), _("Cancel"), 3);
-		gtk_window_set_transient_for(GTK_WINDOW(dialog),
-									 GTK_WINDOW(this->getWindow()->getWindow()));
-		int res = gtk_dialog_run(GTK_DIALOG(dialog));
-		gtk_widget_destroy(dialog);
-
-		if (res == 2) // remove PDF background
+		tmp = h.loadDocument(filename);
+		if (!tmp && h.isAttachedPdfMissing() || !h.getMissingPdfFilename().empty())
 		{
-			h.removePdfBackground();
-			tmp = h.loadDocument(filename);
-		}
-		else if (res == 1) // select another PDF background
-		{
-			bool attachToDocument = false;
-			path pdfFilename = XojOpenDlg::showOpenDialog((GtkWindow*) * win,
-														  this->settings, true, attachToDocument);
-			if (!pdfFilename.empty())
+			// give the user a second chance to select a new PDF file, or to discard the PDF
+
+
+			GtkWidget* dialog = gtk_message_dialog_new((GtkWindow*) * getWindow(),
+													   GTK_DIALOG_DESTROY_WITH_PARENT,
+													   GTK_MESSAGE_QUESTION, GTK_BUTTONS_NONE, h.isAttachedPdfMissing() ? _(
+																															"The attached background PDF could not be found.") :
+													   _("The background PDF could not be found."));
+
+			gtk_dialog_add_button(GTK_DIALOG(dialog), _("Select another PDF"), 1);
+			gtk_dialog_add_button(GTK_DIALOG(dialog), _("Remove PDF Background"), 2);
+			gtk_dialog_add_button(GTK_DIALOG(dialog), _("Cancel"), 3);
+			gtk_window_set_transient_for(GTK_WINDOW(dialog),
+										 GTK_WINDOW(this->getWindow()->getWindow()));
+			int res = gtk_dialog_run(GTK_DIALOG(dialog));
+			gtk_widget_destroy(dialog);
+
+			if (res == 2) // remove PDF background
 			{
-				h.setPdfReplacement(pdfFilename, attachToDocument);
+				h.removePdfBackground();
 				tmp = h.loadDocument(filename);
 			}
+			else if (res == 1) // select another PDF background
+			{
+				bool attachToDocument = false;
+				path pdfFilename = XojOpenDlg::showOpenDialog((GtkWindow*) * win,
+															  this->settings, true, attachToDocument);
+				if (!pdfFilename.empty())
+				{
+					h.setPdfReplacement(pdfFilename, attachToDocument);
+					tmp = h.loadDocument(filename);
+				}
+			}
 		}
+	}
+	catch (ParseException& e)
+	{
+		cerr << e.what() << endl;
 	}
 
 	if (!tmp)
@@ -2986,7 +3003,7 @@ void Control::clipboardPasteTex(GdkPixbuf* img, const char* text, int textLength
 
 	image->setWidth(width);
 	image->setHeight(height);
-	image->setText(text, textLength);
+	image->setText(string(text, textLength));
 
 	clipboardPaste(image);
 }
@@ -3253,8 +3270,7 @@ void Control::runLatex()
 	double imgy = 10;
 	double imgheight = 0;
 	double imgwidth = 0;
-	gchar* imgTex = NULL;
-	int imgTexLen = 0;
+	string imgTex;
 	if (img)
 	{
 		//this will get the position of the Latex properly
@@ -3267,8 +3283,7 @@ void Control::runLatex()
 		imgheight = img->getElementHeight();
 		imgwidth = img->getElementWidth();
 		//fix this typecast:
-		imgTex = (gchar*) img->getText();
-		imgTexLen = img->getTextLen();
+		imgTex = img->getText();
 	}
 
 	//now call the image handlers
@@ -3279,14 +3294,13 @@ void Control::runLatex()
 
 	LatexGlade* mytex = new LatexGlade(this->gladeSearchPath);
 	//determine if we should set a specific string
-	mytex->setTex(imgTex, imgTexLen);
+	mytex->setTex(imgTex);
 	mytex->show(GTK_WINDOW(this->win->getWindow()));
-	gchar* tmp = mytex->getTex();
-	int tmplen = mytex->getTexLen();
+	string tmp = mytex->getTex();
 	delete mytex;
 	cout << tmp << endl;
 
-	if (tmp == "")
+	if (tmp.empty())
 	{
 		return;
 	}
@@ -3327,7 +3341,7 @@ void Control::runLatex()
 	img->setX(imgx);
 	img->setY(imgy);
 	img->setImage(pixbuf);
-	img->setText((const char*) tmp, tmplen);
+	img->setText(tmp);
 
 	if (imgheight)
 	{

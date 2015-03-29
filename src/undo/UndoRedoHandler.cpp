@@ -77,7 +77,7 @@ void UndoRedoHandler::clearContents()
 		UndoAction* action = (UndoAction*) l->data;
 
 #ifdef UNDO_TRACE
-		cout << boost::format("clearContents()::Delete UndoAction: %p% / %s%") % action % action->getClassName() << endl; //
+		cout << boost::format("clearContents()::Delete UndoAction: %p / %s") % action % action->getClassName() << endl; //
 #endif //UNDO_TRACE
 
 		delete action;

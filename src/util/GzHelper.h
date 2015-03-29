@@ -12,9 +12,9 @@
 #ifndef __GZHELPER_H__
 #define __GZHELPER_H__
 
-#include <glib.h>
+#include <StringUtils.h>
 
-//TODO rewrite with boost::iostreams
+//Rewriting with boost:iostreams would be pointless
 class GzHelper
 {
 private:
@@ -22,10 +22,8 @@ private:
 	virtual ~GzHelper();
 
 public:
-	static GString* gzcompress(GString* str, int level = -1);
-	static GString* gzuncompress(GString* str);
-	static GString* gzuncompress(const char* str, gsize len);
-
+	static string gzcompress(const string& str, int level = -1);
+	static string gzuncompress(const string& str);
 };
 
 #endif /* __GZHELPER_H__ */

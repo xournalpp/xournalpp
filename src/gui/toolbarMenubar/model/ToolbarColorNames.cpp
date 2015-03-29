@@ -88,7 +88,7 @@ void ToolbarColorNames::adddColor(int color, string name, bool predefined)
 	}
 	else
 	{
-		const gchar* colorHex = (boost::format("%06x%") % color).str().c_str();
+		const gchar* colorHex = (boost::format("%06x") % color).str().c_str();
 		g_key_file_set_string(this->config, "custom", colorHex, name.c_str());
 	}
 }

@@ -899,10 +899,9 @@ void Settings::save()
 	xmlSetProp(xmlFont, (const xmlChar*) "size", (const xmlChar*) sSize);
 	g_free(sSize);
 
-	std::map<string, SElement>::iterator it;
-	for (it = data.begin(); it != data.end(); it++)
+	for (std::map<string, SElement>::value_type p: data)
 	{
-		saveData(root, (*it).first, (*it).second);
+		saveData(root, p.first, p.second);
 	}
 
 	xmlSaveFormatFile(filename.c_str(), doc, 1);
@@ -917,11 +916,10 @@ void Settings::saveData(xmlNodePtr root, string name, SElement& elem)
 
 	xmlSetProp(xmlNode, (const xmlChar*) "name", (const xmlChar*) name.c_str());
 
-	std::map<string, SAttribute>::iterator it;
-	for (it = elem.attributes().begin(); it != elem.attributes().end(); it++)
+	for (std::map<string, SAttribute>::value_type p : elem.attributes())
 	{
-		string aname = (*it).first;
-		SAttribute& attrib = (*it).second;
+		string aname = p.first;
+		SAttribute& attrib = p.second;
 
 		XOJ_CHECK_TYPE_OBJ(&attrib, SAttribute);
 
@@ -990,10 +988,9 @@ void Settings::saveData(xmlNodePtr root, string name, SElement& elem)
 		}
 	}
 
-	std::map<string, SElement>::iterator i;
-	for (i = elem.children().begin(); i != elem.children().end(); i++)
+	for (std::map<string, SElement>::value_type p : elem.children())
 	{
-		saveData(xmlNode, (*i).first, (*i).second);
+		saveData(xmlNode, p.first, p.second);
 	}
 }
 

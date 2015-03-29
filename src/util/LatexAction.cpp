@@ -82,9 +82,9 @@ void LatexAction::runCommand()
 	{
 		texres = "1000";
 	}
-	string command = (bl::format("{1} -m 0 \"\\png\\usepackage{color}\\color'{'{2}'}'\\dpi'{'{3}'}'\\{4} {5}\" -o {6}")
-					  % mtex % (!fontcolour.empty() ? fontcolour : "black") % texres
-					  % g_strescape(this->theLatex.c_str(), NULL) % this->texfile).str();
+	string command = (bl::format("{1} -m 0 \"\\png\\usepackage{{color}}\\color{{{2}}}\\dpi{{{3}}}\\normalsize {4}\" -o {5}")
+	              % mtex % (fontcolour.length() ? fontcolour : "black") % texres
+	              % g_strescape(this->theLatex.c_str(), NULL) % this->texfile).str();
 
 	gint rt = 0;
 	void(*texhandler)(int) = signal(SIGCHLD, SIG_DFL);

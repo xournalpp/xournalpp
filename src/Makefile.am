@@ -21,6 +21,7 @@ xournalpp_SOURCES = \
 	control/jobs/Scheduler.cpp \
 	control/jobs/SynchronizedProgressListener.cpp \
 	control/jobs/XournalScheduler.cpp \
+	control/pugixml/pugixml.cpp \
 	control/settings/ButtonConfig.cpp \
 	control/settings/MetadataManager.cpp \
 	control/settings/Settings.cpp \
@@ -207,8 +208,11 @@ AM_CPPFLAGS = \
 	-I"$(abs_top_builddir)/src/pdf/popplerdirect" \
 	@PACKAGE_CFLAGS@
 	
-AM_LDFLAGS = $(BOOST_SYSTEM_LDFLAGS) $(BOOST_FILESYSTEM_LDFLAGS) $(BOOST_LOCALE_LDFLAGS) $(BOOST_IOSTREAMS_LDFLAGS)
-LIBS = $(BOOST_SYSTEM_LIBS) $(BOOST_FILESYSTEM_LIBS) $(BOOST_LOCALE_LIBS) $(BOOST_IOSTREAMS_LIBS)
+AM_LDFLAGS = $(BOOST_SYSTEM_LDFLAGS) $(BOOST_FILESYSTEM_LDFLAGS) \
+	$(BOOST_LOCALE_LDFLAGS) $(BOOST_IOSTREAMS_LDFLAGS)
+
+LIBS = $(BOOST_SYSTEM_LIBS) $(BOOST_FILESYSTEM_LIBS) $(BOOST_LOCALE_LIBS) \
+	$(BOOST_IOSTREAMS_LIBS)
 
 xournalpp_CXXFLAGS = \
 	-I$(top_srcdir)/src/util \

@@ -12,13 +12,7 @@ Element(ELEMENT_TEXIMAGE)
 
     this->sizeCalculated = true;
     this->image = NULL;
-    this->data = NULL;
-    this->dLen = 0;
     this->read = false;
-
-    //text tags
-    this->text = NULL;
-    this->textlen = 0;
 }
 
 TexImage::~TexImage()
@@ -30,11 +24,11 @@ TexImage::~TexImage()
         cairo_surface_destroy(this->image);
         this->image = NULL;
     }
-    if (this->text)
+    /*if (this->text)
     {
         delete[] this->text;
         this->text = NULL;
-    }
+    }*/
 
     XOJ_RELEASE_TYPE(TexImage);
 }
@@ -50,14 +44,8 @@ Element* TexImage::clone()
     img->setColor(this->getColor());
     img->width = this->width;
     img->height = this->height;
-    char* tmpcstring = new char[this->textlen + 1];
-    strcpy(tmpcstring, this->text);
-    img->text = tmpcstring;
-    img->textlen = this->textlen;
-
-    img->data = (unsigned char*) g_malloc(this->dLen);
-    img->dLen = this->dLen;
-    memcpy(img->data, this->data, this->dLen);
+    img->text = this->text;
+    img->data = this->data;
 
     img->image = cairo_surface_reference(this->image);
 
@@ -85,7 +73,7 @@ cairo_status_t TexImage::cairoReadFunction(TexImage* image, unsigned char* data,
 
     for (unsigned int i = 0; i < length; i++, image->read++)
     {
-        if (image->read >= image->dLen)
+        if (image->read >= image->data.length())
         {
             return CAIRO_STATUS_READ_ERROR;
         }
@@ -95,7 +83,7 @@ cairo_status_t TexImage::cairoReadFunction(TexImage* image, unsigned char* data,
     return CAIRO_STATUS_SUCCESS;
 }
 
-void TexImage::setImage(unsigned char* data, int len)
+void TexImage::setImage(string data)
 {
     XOJ_CHECK_TYPE(TexImage);
 
@@ -104,12 +92,7 @@ void TexImage::setImage(unsigned char* data, int len)
         cairo_surface_destroy(this->image);
         this->image = NULL;
     }
-    if (this->data)
-    {
-        g_free(this->data);
-    }
     this->data = data;
-    this->dLen = len;
 }
 
 void TexImage::setImage(GdkPixbuf* img)
@@ -126,49 +109,29 @@ void TexImage::setImage(cairo_surface_t* image)
         cairo_surface_destroy(this->image);
         this->image = NULL;
     }
-    if (this->data)
-    {
-        g_free(this->data);
-    }
-    this->data = NULL;
-    this->dLen = 0;
 
     this->image = image;
 }
 
-void TexImage::setText(const char* text, int textlength)
+void TexImage::setText(string text)
 {
-    if (this->text)
-    {
-        delete[] this->text;
-        this->text = NULL;
-    }
     this->text = text;
-    this->textlen = textlength;
 }
 
-const char* TexImage::getText()
+string TexImage::getText()
 {
     return this->text;
-}
-
-int TexImage::getTextLen()
-{
-    return this->textlen;
 }
 
 cairo_surface_t* TexImage::getImage()
 {
     XOJ_CHECK_TYPE(TexImage);
 
-    if (this->image == NULL && this->dLen != 0)
+    if (this->image == NULL && this->data.length() != 0)
     {
         this->read = 0;
-        this->image = cairo_image_surface_create_from_png_stream((
-                                                                  cairo_read_func_t) & cairoReadFunction, this);
-        g_free(this->data);
-        this->data = NULL;
-        this->dLen = 0;
+        this->image = cairo_image_surface_create_from_png_stream(
+				(cairo_read_func_t) & cairoReadFunction, this);
     }
 
     return this->image;
@@ -206,8 +169,7 @@ void TexImage::serialize(ObjectOutputStream& out)
     out.endObject();
 }
 
-void TexImage::readSerialized(ObjectInputStream& in) throw (
-                                                            InputStreamException)
+void TexImage::readSerialized(ObjectInputStream& in) throw (InputStreamException)
 {
     XOJ_CHECK_TYPE(TexImage);
 
@@ -217,12 +179,7 @@ void TexImage::readSerialized(ObjectInputStream& in) throw (
 
     this->width = in.readDouble();
     this->height = in.readDouble();
-    string tmp = in.readString();
-    //cast this
-    this->textlen = tmp.length();
-    char* tmpcstring = new char[this->textlen + 1];
-    strcpy(tmpcstring, tmp.c_str());
-    this->text = tmpcstring;
+    this->text = in.readString();
 
     if (this->image)
     {

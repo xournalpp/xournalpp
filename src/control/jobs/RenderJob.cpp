@@ -116,11 +116,9 @@ public:
 		g_mutex_lock(&this->mutex);
 		this->complete = true;
 
-		for (std::list<Rectangle*>::iterator i = this->rects.begin();
-			 i != this->rects.end();
-			 i++)
+		for (Rectangle* r : this->rects)
 		{
-			delete *i;
+			delete r;
 		}
 		this->rects.clear();
 
@@ -168,11 +166,9 @@ private:
 		}
 		else
 		{
-			for (std::list<Rectangle*>::iterator i = rects.begin();
-				 i != rects.end();
-				 i++)
+			for (Rectangle* r : rects)
 			{
-				delete *i;
+				delete r;
 			}
 			rects.clear();
 		}

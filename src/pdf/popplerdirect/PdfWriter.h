@@ -15,6 +15,7 @@
 #include <gtk/gtk.h>
 #include <StringUtils.h>
 #include "PdfXRef.h"
+#include <boost/format.hpp>
 #include <boost/filesystem/path.hpp>
 using boost::filesystem::path;
 
@@ -29,9 +30,8 @@ public:
 	bool openFile(path filename);
 
 public:
-	bool writeLen(string data, int len);
 	bool write(string data);
-	bool writef(const char* data, ...);
+	bool write(boost::format data);
 	bool writeTxt(string data);
 	bool write(int data);
 
@@ -56,9 +56,8 @@ private:
 
 	static bool compressPdfOutput;
 
-	int dataCount;
 	bool inStream;
-	GString* stream;
+	string stream;
 
 	GFileOutputStream* out;
 

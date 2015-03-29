@@ -121,14 +121,10 @@ void ToolMenuHandler::load(ToolbarData* d, GtkWidget* toolbar,
 {
 	XOJ_CHECK_TYPE(ToolMenuHandler);
 
-	std::vector<ToolbarEntry>::iterator it;
-
 	int count = 0;
 
-	for (it = d->contents.begin(); it != d->contents.end(); it++)
+	for (ToolbarEntry& e : d->contents)
 	{
-		ToolbarEntry& e = *it;
-
 		if (e.getName() == toolbarName)
 		{
 			ListIterator<ToolbarItem*> it = e.iterator();

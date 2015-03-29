@@ -131,8 +131,16 @@ int XournalMain::exportPdf(const char* input, const char* output)
 	XOJ_CHECK_TYPE(XournalMain);
 
 	LoadHandler loader;
-
-	Document* doc = loader.loadDocument(input);
+	Document* doc;
+	
+	try {
+		doc = loader.loadDocument(input);
+	}
+	catch (ParseException& e)
+	{
+		cerr << e.what() << endl;
+	}
+	
 	if (doc == NULL)
 	{
 		cerr << loader.getLastError() << endl;

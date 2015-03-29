@@ -5,6 +5,8 @@
  *
  * @author Xournal++ Team
  * https://github.com/xournalpp/xournalpp
+ * 
+ * @revision MarPiRK – significant changes
  *
  * @license GNU GPLv3
  */
@@ -12,15 +14,27 @@
 #ifndef __LOADHANDLER_H__
 #define __LOADHANDLER_H__
 
+#include <map>
+#include <fstream>
+#include <stdexcept>
+using namespace std;
+
+#include <boost/iostreams/filter/gzip.hpp>
+#include <boost/iostreams/filtering_streambuf.hpp>
+namespace bio = boost::iostreams;
+
+#include "pugixml/pugixml.hpp"
+using namespace pugi;
+
+#include <boost/filesystem/path.hpp>
+using boost::filesystem::path;
+
 #include "../model/Document.h"
 #include "../model/Stroke.h"
 #include "../model/Text.h"
 #include "../model/Image.h"
 #include "../model/TexImage.h"
 #include <XournalType.h>
-#include <zlib.h>
-#include <boost/filesystem/path.hpp>
-using boost::filesystem::path;
 
 enum ParserPosition
 {
@@ -36,24 +50,29 @@ enum ParserPosition
 	PASER_POS_FINISHED // Document is parsed
 };
 
-class DoubleArrayBuffer
+class ParseException : public std::runtime_error
 {
 public:
-	DoubleArrayBuffer();
-	virtual ~DoubleArrayBuffer();
-
-public:
-	void clear();
-	const double* getData();
-	int size();
-	void add(double d);
-
+	ParseException(const char* attribute, bool notFound, string* value = NULL, string convError = "");
+	ParseException(string msg);
+	virtual ~ParseException();
+	
+	const char* getAttribute() const;
+	string* getValue() const;
+	bool isNotFound() const;
+	string isConvError() const;
+	
+	virtual const char* what() const throw();
+	
 private:
 	XOJ_TYPE_ATTRIB;
-
-	double* data;
-	int len;
-	int allocCount;
+	
+	string msg;
+	
+	const char* attribute;
+	string* value;
+	string convError;
+	bool notFound;	
 };
 
 class LoadHandler
@@ -67,60 +86,39 @@ public:
 
 	string getLastError();
 	bool isAttachedPdfMissing();
-	string getMissingPdfFilename();
+	path getMissingPdfFilename();
 
 	void removePdfBackground();
 	void setPdfReplacement(path filename, bool attachToDocument);
 
 private:
-	void parseStart();
-	void parseContents();
-	void parsePage();
-	void parseLayer();
-
-	void parseStroke();
-	void parseText();
-	void parseImage();
-	void parseTexImage();
-
-private:
 	void initAttributes();
 
-	string readLine();
-	int readFile(char* buffer, int len);
-	bool closeFile();
 	bool openFile(path filename);
+	bool closeFile();
+	
 	bool parseXml();
+	
+	void parseXmlXournal(xml_node* xml_xournal);
+	
+	void parseXmlPage(xml_node* xml_page);
+	void parseXmlPageBgSolid(xml_node* xml_bg);
+	void parseXmlPageBgPixmap(xml_node* xml_bg);
+	void parseXmlPageBgPdf(xml_node* xml_bg);
+	
+	void parseXmlLayer(xml_node* xml_layer);
+	void parseXmlLayerStroke(xml_node* child);
+	void parseXmlLayerText(xml_node* child);
+	void parseXmlLayerImage(xml_node* child);
+	void parseXmlLayerTexImage(xml_node* child);
 
-	bool parseColor(const char* text, int& color);
-
-	static void parserText(GMarkupParseContext* context, const gchar* text,
-						   gsize text_len, gpointer userdata,
-						   GError** error);
-	static void parserEndElement(GMarkupParseContext* context,
-								 const gchar* element_name, gpointer userdata,
-								 GError** error);
-	static void parserStartElement(GMarkupParseContext* context,
-								   const gchar* element_name,
-								   const gchar** attribute_names, const gchar** attribute_values,
-								   gpointer userdata, GError** error);
-
-	const char* getAttrib(const char* name, bool optional = false);
-	double getAttribDouble(const char* name);
-	int getAttribInt(const char* name);
-
-	void parseBgSolid();
-	void parseBgPixmap();
-	void parseBgPdf();
-
-	void readImage(const gchar* base64_str, gsize base64_strlen);
-	void readTexImage(const gchar* base64_str, gsize base64_strlen);
+	int parseColor(const string name);
 
 private:
 	XOJ_TYPE_ATTRIB;
 
 	string lastError;
-	string pdfMissing;
+	path pdfMissing;
 	bool attachedPdfMissing;
 
 	bool removePdfBackgroundFlag;
@@ -136,23 +134,16 @@ private:
 	string creator;
 	int fileversion;
 
-	gzFile fp;
-
-	DoubleArrayBuffer pressureBuffer;
+	ifstream file;
+	bio::filtering_istreambuf inbuf;
+	xml_document xml;
 
 	PageRef page;
 	Layer* layer;
 	Stroke* stroke;
-	Text* text;
-	Image* image;
 	TexImage* teximage;
 
 	path xournalFilename;
-
-	GError* error;
-	const gchar** attributeNames;
-	const gchar** attributeValues;
-	const gchar* elementName;
 
 	DocumentHandler dHanlder;
 	Document doc;

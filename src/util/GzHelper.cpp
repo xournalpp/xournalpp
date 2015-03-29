@@ -1,82 +1,51 @@
 #include "GzHelper.h"
 #include "Stacktrace.h"
 
-#include <zlib.h>
+#include <iostream>
+#include <sstream>
+using namespace std;
+
+#include <boost/iostreams/filter/gzip.hpp>
+#include <boost/iostreams/filtering_streambuf.hpp>
+#include <boost/iostreams/copy.hpp>
+namespace bio = boost::iostreams;
 
 GzHelper::GzHelper() { }
 
 GzHelper::~GzHelper() { }
 
-GString* GzHelper::gzcompress(GString* str, int level)
+string GzHelper::gzcompress(const string& str, int level)
 {
 	if ((level < -1) || (level > 9))
 	{
-		g_warning("GzHelper::gzcompress compression level (%i) must be within -1..9",
-				  level);
+		cerr << bl::format("GzHelper::gzcompress compression level ({1}) must be within -1..9")
+							%level << endl;
 		Stacktrace::printStracktrace();
 		level = -1;
 	}
-
-	g_return_val_if_fail(str != NULL, NULL);
-
-	uLongf len = str->len + (str->len / 1000) + 15;
-	GString* dest = g_string_sized_new(len);
-
-	int result = compress2((Bytef*) dest->str, &len, (Bytef*) str->str, str->len,
-						   level);
-	if (result != Z_OK)
-	{
-		g_string_free(dest, true);
-		return NULL;
-	}
-	dest->len = len;
-
-	return dest;
+	
+    std::stringstream compressed;
+    std::stringstream decompressed;
+    decompressed << str;
+    boost::iostreams::filtering_istreambuf out;
+	
+	bio::zlib_params params = bio::zlib::default_compression;
+	if (level != -1) params.level = level;
+	
+	out.push(bio::zlib_compressor(params));
+    out.push(decompressed);
+    bio::copy(out, compressed);
+    return compressed.str();
 }
 
-GString* GzHelper::gzuncompress(GString* str)
+string GzHelper::gzuncompress(const string& str)
 {
-	return gzuncompress(str->str, str->len);
+    std::stringstream compressed;
+    std::stringstream decompressed;
+    compressed << str;
+    bio::filtering_istreambuf in;
+    in.push(bio::zlib_decompressor());
+    in.push(compressed);
+    bio::copy(in, decompressed);
+    return decompressed.str();
 }
-
-GString* GzHelper::gzuncompress(const char* data, gsize len)
-{
-	int status;
-	unsigned int factor = 1, maxfactor = 16;
-
-	gsize length = 0;
-	/*
-	 zlib::uncompress() wants to know the output data length
-	 if none was given as a parameter
-	 we try from input length * 2 up to input length * 2^15
-	 doubling it whenever it wasn't big enough
-	 that should be eneugh for all real life cases
-	 */
-
-	GString* str = NULL;
-	do
-	{
-		length = (unsigned long) len * (1 << factor++) + 1;
-		if (str)
-		{
-			g_string_free(str, true);
-		}
-		str = g_string_sized_new(length);
-		length--;
-		status = uncompress((Bytef*) str->str, (uLongf*) & length, (Bytef*) data,
-							(uLong) len);
-		str->len = length;
-		str->str[length] = 0;
-	}
-	while ((status == Z_BUF_ERROR) && (factor < maxfactor));
-
-	if (status == Z_OK)
-	{
-		return str;
-	}
-	else
-	{
-		return NULL;
-	}
-}
-
