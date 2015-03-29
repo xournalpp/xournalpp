@@ -197,23 +197,23 @@ void Util::openFileWithFilebrowser(path filename)
 #elif _WIN32 // note the underscore: without it, it's not msdn official!
 #define OPEN_PATTERN "explorer.exe /n,/e,\"{1}\""
 #else // linux, unix, ...
-#define OPEN_PATTERN "nautilus \"file://{1}\" || dolphin \"file://{1} || konqueror \"file://{1}\""
+#define OPEN_PATTERN "nautilus \"file://{1}\" || dolphin \"file://{1}\" || konqueror \"file://{1}\""
 #endif
 
 	string escaped = filename.string();
 	StringUtils::replace_all_chars(escaped, {
-								   replace_pair('\\', "\\\\"),
-								   replace_pair('\"', "\\\"")
+		replace_pair('\\', "\\\\"),
+		replace_pair('\"', "\\\"")
 	});
 
 	string command = (bl::format(OPEN_PATTERN) % escaped).str();
-	cout << bl::format("XPP show file in filebrowser command: «10}»") % command << endl;
+	cout << bl::format("XPP show file in filebrowser command: «{1}»") % command << endl;
 	if (system(command.c_str()) != 0)
 	{
 		GtkWidget* dlgError = gtk_message_dialog_new(NULL, GTK_DIALOG_MODAL,
-													 GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, "%s",
-													 _("File could not be opened. You have to open it manual\n:URL: %s"), filename.c_str(),
-													 filename.c_str());
+			GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, "%s",
+			_("File could not be opened. You have to open it manual\n:URL: %s"), filename.c_str(),
+			filename.c_str());
 		gtk_dialog_run(GTK_DIALOG(dlgError));
 	}
 }

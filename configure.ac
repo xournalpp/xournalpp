@@ -130,6 +130,24 @@ dnl AM_CONDITIONAL(BUILD_LIBOPENJPEG, test x$enable_libopenjpeg = xyes)
 dnl AH_TEMPLATE([ENABLE_LIBOPENJPEG],
 dnl 	    [Use libopenjpeg instead of builtin jpeg2000 decoder.])
 
+dnl libpodofo check
+dnl based on : http://svn.gna.org/svn/vfrnav/trunk/configure.ac
+dnl TODO ability to choose between system and built in version
+
+LIBS_SAVE="$LIBS"
+LIBS="-lpodofo"
+AC_CHECK_HEADER(podofo/podofo.h,[have_podofo=yes],[have_podofo=no])
+if test "x${have_podofo}" = "xyes"; then
+   AC_MSG_CHECKING([linking with libpodofo])
+   AC_LINK_IFELSE([AC_LANG_PROGRAM([#include <podofo/podofo.h>], [PoDoFo::PdfMemDocument d;])],
+                  [AC_DEFINE([HAVE_PODOFO],[1],[Defined if PoDoFo Library is available]) AC_MSG_RESULT([yes])],
+   		  [AC_MSG_WARN([could not find libpodofo]); AC_MSG_RESULT([no]); have_podofo=no])
+fi
+if test "x${have_podofo}" = "xyes"; then
+   PODOFO_LIBS="$LIBS"
+fi
+LIBS="$LIBS_SAVE"
+
 dnl boost
 BOOST_REQUIRE([1.54])
 BOOST_SYSTEM([mt])

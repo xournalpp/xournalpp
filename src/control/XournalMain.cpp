@@ -1,9 +1,12 @@
 #include "XournalMain.h"
-#include <boost/locale.hpp>
-#include <boost/algorithm/string/predicate.hpp>
 #include <iostream>
 #include <gtk/gtk.h>
 #include <string>
+
+#include <boost/locale.hpp>
+#include <boost/algorithm/string/predicate.hpp>
+#include <boost/filesystem.hpp>
+namespace bf = boost::filesystem;
 
 #include "../gui/MainWindow.h"
 #include "../gui/toolbarMenubar/model/ToolbarColorNames.h"
@@ -51,14 +54,15 @@ void XournalMain::checkForErrorlog()
 {
 	XOJ_CHECK_TYPE(XournalMain);
 
-	gchar* filename = g_strconcat(g_get_home_dir(), G_DIR_SEPARATOR_S, CONFIG_DIR,
-								G_DIR_SEPARATOR_S, "errorlog.log", NULL);
-	if (g_file_test(filename, G_FILE_TEST_EXISTS))
+	bf::path filename = g_get_home_dir();
+	filename /= CONFIG_DIR;
+	filename /= "errorlog.log";
+	if (bf::exists(filename))
 	{
 		GtkWidget* dialog = gtk_message_dialog_new(NULL, GTK_DIALOG_MODAL,
-												GTK_MESSAGE_QUESTION, GTK_BUTTONS_NONE, _(
-																						  "There is an errorlogfile from Xournal++. Please send a Bugreport, so the bug may been fixed.\nLogfile: %s"),
-												filename);
+			GTK_MESSAGE_QUESTION, GTK_BUTTONS_NONE,
+			 _("There is an errorlogfile from Xournal++. Please send a Bugreport, so the bug may been fixed.\nLogfile: %s"),
+			filename.c_str());
 		gtk_dialog_add_button(GTK_DIALOG(dialog), _("Send Bugreport"), 1);
 		gtk_dialog_add_button(GTK_DIALOG(dialog), _("Open Logfile"), 2);
 		gtk_dialog_add_button(GTK_DIALOG(dialog), _("Delete Logfile"), 3);
@@ -77,12 +81,12 @@ void XournalMain::checkForErrorlog()
 		}
 		else if (res == 3) // Delete Logfile
 		{
-			if (g_unlink(filename) != 0)
+			if (bf::remove(filename) != 1)
 			{
 				GtkWidget* dlgError = gtk_message_dialog_new(NULL, GTK_DIALOG_MODAL,
-															GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, "%s",
-															_("Errorlog could not be deleted. You have to delete it manually.\nLogfile: %s"),
-															filename);
+					GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, "%s",
+					_("Errorlog could not be deleted. You have to delete it manually.\nLogfile: %s"),
+					filename.c_str());
 				gtk_dialog_run(GTK_DIALOG(dlgError));
 			}
 		}
@@ -237,13 +241,13 @@ int XournalMain::run(int argc, char* argv[])
 	if (!optNoWarnSVN)
 	{
 		GtkWidget* dialog = gtk_message_dialog_new(NULL, GTK_DIALOG_MODAL,
-												GTK_MESSAGE_WARNING, GTK_BUTTONS_YES_NO,
-												_("You are using a development release of Xournal\n"
-												  "You can find the current release in CVS!\n"
-												  "DO NOT USE THIS RELEASE FOR PRODUCTIVE ENVIRONMENT!\n"
-												  "Are you sure you wish to start this release?\n\n\n"
-												  "If you don't want to show this warning, you can run\n"
-												  "\"xournalpp --help\"\n"));
+				GTK_MESSAGE_WARNING, GTK_BUTTONS_YES_NO,
+				_("You are using a development release of Xournal\n"
+				  "You can find the current release in CVS!\n"
+				  "DO NOT USE THIS RELEASE FOR PRODUCTIVE ENVIRONMENT!\n"
+				  "Are you sure you wish to start this release?\n\n\n"
+				  "If you don't want to show this warning, you can run\n"
+				  "\"xournalpp --help\"\n"));
 
 		int result = gtk_dialog_run(GTK_DIALOG(dialog));
 		gtk_widget_destroy(dialog);
