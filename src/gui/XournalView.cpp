@@ -196,7 +196,7 @@ bool XournalView::onKeyPressEvent(GdkEventKey* event)
 			layout->scrollRelativ(0, windowHeight);
 			return false;
 		}
-		if (event->keyval == GDK_KEY_Page_Up)
+		if (event->keyval == GDK_KEY_Page_Up || event->keyval == GDK_KEY_space)
 		{
 			layout->scrollRelativ(0, -windowHeight);
 			return true;
@@ -215,7 +215,14 @@ bool XournalView::onKeyPressEvent(GdkEventKey* event)
 			return true;
 		}
 	}
+        if (event->keyval == GDK_KEY_space) {
+            GtkAllocation alloc = { 0 };
+            gtk_widget_get_allocation(gtk_widget_get_parent(this->widget), &alloc);
+            int windowHeight = alloc.height - scrollKeySize;
 
+            layout->scrollRelativ(0, windowHeight);
+            return true;
+        }
 
 	if (event->keyval == GDK_KEY_Up)
 	{
