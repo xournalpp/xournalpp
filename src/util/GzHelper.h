@@ -13,6 +13,8 @@
 #define __GZHELPER_H__
 
 #include <StringUtils.h>
+#include <boost/iostreams/filter/gzip.hpp>
+namespace bio = boost::iostreams;
 
 //Rewriting with boost:iostreams would be pointless
 class GzHelper
@@ -22,7 +24,7 @@ private:
 	virtual ~GzHelper();
 
 public:
-	static string gzcompress(const string& str, int level = -1);
+	static string gzcompress(const string& str, bio::zlib_params params = bio::zlib::default_compression);
 	static string gzuncompress(const string& str);
 };
 

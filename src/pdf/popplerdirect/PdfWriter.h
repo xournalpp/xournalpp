@@ -15,6 +15,7 @@
 #include <gtk/gtk.h>
 #include <StringUtils.h>
 #include "PdfXRef.h"
+
 #include <boost/format.hpp>
 #include <boost/filesystem/path.hpp>
 using boost::filesystem::path;

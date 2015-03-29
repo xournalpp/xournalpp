@@ -227,7 +227,7 @@ void PdfWriter::endStream()
 
 	if (PdfWriter::compressPdfOutput)
 	{
-		compressed = GzHelper::gzcompress(this->stream);
+		compressed = GzHelper::gzcompress(this->stream, bio::zlib::best_compression);
 	}
 
 	const char* filter = "";
