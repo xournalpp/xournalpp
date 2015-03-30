@@ -24,7 +24,7 @@ private:
 	virtual ~GzHelper();
 
 public:
-	static string gzcompress(const string& str, bio::zlib_params params = bio::zlib::default_compression);
+	static string gzcompress(const string& str, const bio::zlib_params& = bio::zlib::default_compression);
 	static string gzuncompress(const string& str);
 };
 

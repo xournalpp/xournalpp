@@ -247,4 +247,6 @@ void PdfWriter::endStream()
 	write(data);
 
 	write("\nendstream\n");
+	
+	stream.clear();
 }

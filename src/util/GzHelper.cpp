@@ -12,7 +12,7 @@ GzHelper::GzHelper() { }
 
 GzHelper::~GzHelper() { }
 
-string GzHelper::gzcompress(const string& str, bio::zlib_params params)
+string GzHelper::gzcompress(const string& str, const bio::zlib_params& params)
 {	
     std::stringstream compressed;
     std::stringstream decompressed;
