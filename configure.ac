@@ -1,7 +1,7 @@
 dnl Process this file with autoconf to produce a configure script.
 
 AC_PREREQ(2.59)
-AC_INIT(Xournalpp, 1.0.1)
+AC_INIT(Xournalpp, 1.0.2)
 AM_CONFIG_HEADER(config.h)
 
 dnl backwards compatibility for autoconf <= 2.64
