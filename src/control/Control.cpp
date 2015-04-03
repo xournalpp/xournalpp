@@ -2664,7 +2664,7 @@ void Control::setCurrentState(int state)
 
 	gdk_threads_enter();
 	gtk_progress_bar_set_fraction(this->pgState,
-								  double(state) / this->maxState);
+								  gdouble(state) / this->maxState);
 	gdk_threads_leave();
 }
 
@@ -3142,13 +3142,7 @@ void Control::clipboardPasteXournal(ObjectInputStream& in)
 
 		if (selection)
 		{
-			ListIterator<Element*> it = selection->getElements();
-
-			while (it.hasNext())
-			{
-				delete it.next();
-			}
-
+			for (Element* e : *selection->getElements()) delete e;
 			delete selection;
 		}
 	}

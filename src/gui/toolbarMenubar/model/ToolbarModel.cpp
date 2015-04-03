@@ -6,29 +6,23 @@
 ToolbarModel::ToolbarModel()
 {
 	XOJ_INIT_TYPE(ToolbarModel);
-
-	this->toolbars = NULL;
 }
 
 ToolbarModel::~ToolbarModel()
 {
 	XOJ_CHECK_TYPE(ToolbarModel);
 
-	for (GList* l = this->toolbars; l != NULL; l = l->next)
-	{
-		delete (ToolbarData*) l->data;
-	}
-	g_list_free(this->toolbars);
-	this->toolbars = NULL;
+	for (ToolbarData* data : this->toolbars) delete data;
+	this->toolbars.clear();
 
 	XOJ_RELEASE_TYPE(ToolbarModel);
 }
 
-ListIterator<ToolbarData*> ToolbarModel::iterator()
+ToolbarDataVector* ToolbarModel::getToolbars()
 {
 	XOJ_CHECK_TYPE(ToolbarModel);
 
-	return ListIterator<ToolbarData*> (this->toolbars);
+	return &this->toolbars;
 }
 
 void ToolbarModel::parseGroup(GKeyFile* config, const char* group,
@@ -60,14 +54,21 @@ void ToolbarModel::remove(ToolbarData* data)
 {
 	XOJ_CHECK_TYPE(ToolbarModel);
 
-	this->toolbars = g_list_remove(this->toolbars, data);
+	for (unsigned int i = 0; i < this->toolbars.size(); i++)
+	{
+		if (this->toolbars[i] == data)
+		{
+			this->toolbars.erase(this->toolbars.begin() + i);
+			break;
+		}
+	}
 }
 
 void ToolbarModel::add(ToolbarData* data)
 {
 	XOJ_CHECK_TYPE(ToolbarModel);
 
-	this->toolbars = g_list_append(this->toolbars, data);
+	this->toolbars.push_back(data);
 }
 
 bool ToolbarModel::parse(const char* file, bool predefined)
@@ -99,16 +100,10 @@ bool ToolbarModel::existsId(string id)
 {
 	XOJ_CHECK_TYPE(ToolbarModel);
 
-	for (GList* l = this->toolbars; l != NULL; l = l->next)
+	for (ToolbarData* data : this->toolbars)
 	{
-		ToolbarData* data = (ToolbarData*) l->data;
-
-		if (data->getId() == id)
-		{
-			return true;
-		}
+		if (data->getId() == id) return true;
 	}
-
 	return false;
 }
 
@@ -148,9 +143,8 @@ void ToolbarModel::save(const char* filename)
 
 	g_key_file_set_comment(config, NULL, NULL, TOOLBAR_INI_HEADER, NULL);
 
-	for (GList* l = this->toolbars; l != NULL; l = l->next)
+	for (ToolbarData* data : this->toolbars)
 	{
-		ToolbarData* data = (ToolbarData*) l->data;
 		if (!data->isPredefined())
 		{
 			data->saveToKeyFile(config);

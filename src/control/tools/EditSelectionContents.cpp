@@ -29,7 +29,6 @@ EditSelectionContents::EditSelectionContents(double x, double y, double width,
 {
 	XOJ_INIT_TYPE(EditSelectionContents);
 
-	this->selected = NULL;
 	this->crBuffer = NULL;
 
 	this->rescaleId = 0;
@@ -57,8 +56,7 @@ EditSelectionContents::~EditSelectionContents()
 		this->rescaleId = 0;
 	}
 
-	g_list_free(this->selected);
-	this->selected = NULL;
+	this->selected.clear();
 
 	deleteViewBuffer();
 
@@ -72,17 +70,17 @@ void EditSelectionContents::addElement(Element* e)
 {
 	XOJ_CHECK_TYPE(EditSelectionContents);
 
-	this->selected = g_list_append(this->selected, e);
+	this->selected.push_back(e);
 }
 
 /**
  * Returns all containig elements of this selections
  */
-ListIterator<Element*> EditSelectionContents::getElements()
+ElementVector* EditSelectionContents::getElements()
 {
 	XOJ_CHECK_TYPE(EditSelectionContents);
 
-	return ListIterator<Element*> (this->selected);
+	return &this->selected;
 }
 
 /**
@@ -100,9 +98,8 @@ UndoAction* EditSelectionContents::setSize(ToolSize size,
 
 	bool found = false;
 
-	for (GList* l = this->selected; l != NULL; l = l->next)
+	for (Element* e : this->selected)
 	{
-		Element* e = (Element*) l->data;
 		if (e->getType() == ELEMENT_STROKE)
 		{
 			Stroke* s = (Stroke*) e;
@@ -169,9 +166,8 @@ UndoAction* EditSelectionContents::setFont(XojFont& font)
 	FontUndoAction* undo = new FontUndoAction(this->sourcePage,
 											this->sourceLayer);
 
-	for (GList* l = this->selected; l != NULL; l = l->next)
+	for (Element* e : this->selected)
 	{
-		Element* e = (Element*) l->data;
 		if (e->getType() == ELEMENT_TEXT)
 		{
 			Text* t = (Text*) e;
@@ -227,9 +223,8 @@ UndoAction* EditSelectionContents::setColor(int color)
 
 	bool found = false;
 
-	for (GList* l = this->selected; l != NULL; l = l->next)
+	for (Element* e : this->selected)
 	{
-		Element* e = (Element*) l->data;
 		if (e->getType() == ELEMENT_TEXT || e->getType() == ELEMENT_STROKE)
 		{
 			int lastColor = e->getColor();
@@ -263,14 +258,12 @@ UndoAction* EditSelectionContents::setColor(int color)
 void EditSelectionContents::fillUndoItem(DeleteUndoAction* undo)
 {
 	Layer* layer = this->sourceLayer;
-	for (GList* l = this->selected; l != NULL; l = l->next)
+	for (Element* e : this->selected)
 	{
-		Element* e = (Element*) l->data;
 		undo->addElement(layer, e, layer->indexOf(e));
 	}
 
-	g_list_free(this->selected);
-	this->selected = NULL;
+	this->selected.clear();
 }
 
 /**
@@ -347,9 +340,8 @@ void EditSelectionContents::finalizeSelection(double x, double y, double width,
 
 	bool move = mx != 0 || my != 0;
 
-	for (GList* l = this->selected; l != NULL; l = l->next)
+	for (Element* e : this->selected)
 	{
-		Element* e = (Element*) l->data;
 		if (move)
 		{
 			e->move(mx, my);
@@ -388,7 +380,7 @@ void EditSelectionContents::updateContent(double x, double y,
 	{
 		MoveUndoAction* moveUndo = new MoveUndoAction(this->sourceLayer,
 													  this->sourcePage,
-													  this->selected,
+													  &this->selected,
 													  mx, my, layer,
 													  targetPage);
 
@@ -426,7 +418,7 @@ void EditSelectionContents::updateContent(double x, double y,
 		}
 
 		ScaleUndoAction* scaleUndo = new ScaleUndoAction(this->sourcePage,
-														this->selected,
+														&this->selected,
 														px, py, fx, fy);
 		undo->addUndoAction(scaleUndo);
 
@@ -506,20 +498,18 @@ UndoAction* EditSelectionContents::copySelection(PageRef page,
 												 PageView *view,
 												 double x, double y)
 {
-	ListIterator<Element*> eit = getElements();
 	Layer* layer = page->getSelectedLayer();
 
-	GList* new_elems = NULL;
+	ElementVector new_elems;
 
-	while (eit.hasNext())
+	for (Element* e : *getElements())
 	{
-		Element* e = eit.next();
 		Element* ec = e->clone();
 
 		ec->move(x - this->originalX, y - this->originalY);
 
 		layer->addElement(ec);
-		new_elems = g_list_append(new_elems, ec);
+		new_elems.push_back(ec);
 	}
 
 	// TODO: implement this more efficiently: rerendering the entire

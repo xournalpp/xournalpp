@@ -62,11 +62,9 @@ void EraseHandler::erase(double x, double y)
 
 	Layer* l = page->getSelectedLayer();
 
-	ListIterator<Element*> eit = l->elementIterator();
-	eit.freeze();
-	while (eit.hasNext())
+	ElementVector tmp(*l->getElements());
+	for (Element* e : tmp)
 	{
-		Element* e = eit.next();
 		if (e->getType() == ELEMENT_STROKE && e->intersectsArea(&eraserRect))
 		{
 			Stroke* s = (Stroke*) e;

@@ -696,11 +696,8 @@ void XournalView::setSelection(EditSelection* selection)
 	bool canChangeSize = false;
 	bool canChangeColor = false;
 
-	ListIterator<Element*> it = selection->getElements();
-
-	while (it.hasNext())
+	for (Element* e : *selection->getElements())
 	{
-		Element* e = it.next();
 		if (e->getType() == ELEMENT_TEXT)
 		{
 			canChangeColor = true;

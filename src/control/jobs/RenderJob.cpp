@@ -1,6 +1,5 @@
 #include "RenderJob.h"
 
-#include <gtk/gtk.h>
 #include <list>
 
 #include "../../gui/XournalView.h"
@@ -217,8 +216,8 @@ void RenderJob::run()
 	g_mutex_lock(&this->view->repaintRectMutex);
 
 	bool rerenderComplete = this->view->rerenderComplete;
-	GList* rerenderRects = this->view->rerenderRects;
-	this->view->rerenderRects = NULL;
+	std::vector<Rectangle*> rerenderRects = this->view->rerenderRects;
+	this->view->rerenderRects.clear();
 
 	this->view->rerenderComplete = false;
 
@@ -271,9 +270,8 @@ void RenderJob::run()
 	}
 	else
 	{
-		for (GList* l = rerenderRects; l != NULL; l = l->next)
+		for (Rectangle* rect : rerenderRects)
 		{
-			Rectangle* rect = (Rectangle*) l->data;
 			rerenderRectangle(rect);
 
 			rect = this->view->rectOnWidget(rect->x, rect->y, rect->width, rect->height);
@@ -283,12 +281,8 @@ void RenderJob::run()
 
 
 	// delete all rectangles
-	for (GList* l = rerenderRects; l != NULL; l = l->next)
-	{
-		Rectangle* rect = (Rectangle*) l->data;
-		delete rect;
-	}
-	g_list_free(rerenderRects);
+	for (Rectangle* rect : rerenderRects) delete rect;
+	rerenderRects.clear();
 }
 
 JobType RenderJob::getType()

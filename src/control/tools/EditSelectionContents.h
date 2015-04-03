@@ -15,14 +15,13 @@
 
 #include "../../view/ElementContainer.h"
 #include <XournalType.h>
-#include <glib.h>
+#include <vector>
 
 #include "../Tool.h"
 #include "../../model/Font.h"
 #include "../../model/Element.h"
 #include "../../model/PageRef.h"
 #include "CursorSelectionType.h"
-#include <ListIterator.h>
 
 class UndoRedoHandler;
 class Layer;
@@ -75,7 +74,7 @@ public:
 	/**
 	 * Returns all containig elements of this selections
 	 */
-	ListIterator<Element*> getElements();
+	ElementVector* getElements();
 
 public:
 	/**
@@ -153,7 +152,7 @@ private:
 	/**
 	 * The selected element (the only one which are handled by this instance)
 	 */
-	GList* selected;
+	ElementVector selected;
 
 	/**
 	 * The rendered elements

@@ -15,11 +15,13 @@
 #include <gtk/gtk.h>
 
 #include "../../control/Actions.h"
+#include "ColorToolItem.h"
+#include "MenuItem.h"
 #include <StringUtils.h>
-#include <ListIterator.h>
-
+#include <vector>
 
 class AbstractToolItem;
+typedef std::vector<AbstractToolItem*> AbstractToolItemVector;
 class ToolButton;
 class ToolPageSpinner;
 class ToolPageLayer;
@@ -72,7 +74,7 @@ public:
 
 	ToolbarModel* getModel();
 
-	ListIterator<AbstractToolItem*> getToolItems();
+	AbstractToolItemVector* getToolItems();
 
 	bool isColorInUse(int color);
 
@@ -84,11 +86,11 @@ private:
 private:
 	XOJ_TYPE_ATTRIB;
 
-	GList* toolbarColorItems;
+	std::vector<ColorToolItem*> toolbarColorItems;
 	GtkWindow* parent;
 
-	GList* toolItems;
-	GList* menuItems;
+	AbstractToolItemVector toolItems;
+	std::vector<MenuItem*> menuItems;
 
 	ToolButton* undoButton;
 	ToolButton* redoButton;

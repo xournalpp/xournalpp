@@ -8,7 +8,7 @@
 #include "../control/tools/VerticalToolHandler.h"
 
 MoveUndoAction::MoveUndoAction(Layer* sourceLayer, PageRef sourcePage,
-							   GList* selected, double mx, double my,
+							   ElementVector* selected, double mx, double my,
 							   Layer* targetLayer,
 							   PageRef targetPage) : UndoAction("MoveUndoAction")
 {
@@ -24,7 +24,7 @@ MoveUndoAction::MoveUndoAction(Layer* sourceLayer, PageRef sourcePage,
 	this->dx = mx;
 	this->dy = my;
 
-	this->elements = g_list_copy(selected);
+	this->elements = *selected;
 
 	if (this->page != targetPage)
 	{
@@ -39,8 +39,7 @@ MoveUndoAction::~MoveUndoAction()
 {
 	XOJ_CHECK_TYPE(MoveUndoAction);
 
-	g_list_free(this->elements);
-	this->elements = NULL;
+	this->elements.clear();
 
 	XOJ_RELEASE_TYPE(MoveUndoAction);
 }
@@ -49,21 +48,11 @@ void MoveUndoAction::move()
 {
 	if (this->undone)
 	{
-		for (GList* l = this->elements; l != NULL; l = l->next)
-		{
-			Element* e = (Element*) l->data;
-
-			e->move(dx, dy);
-		}
+		for (Element* e : this->elements) e->move(dx, dy);
 	}
 	else
 	{
-		for (GList* l = this->elements; l != NULL; l = l->next)
-		{
-			Element* e = (Element*) l->data;
-
-			e->move(-dx, -dy);
-		}
+		for (Element* e : this->elements) e->move(-dx, -dy);
 	}
 }
 
@@ -73,7 +62,7 @@ bool MoveUndoAction::undo(Control* control)
 
 	if (this->sourceLayer != this->targetLayer && this->targetLayer != NULL)
 	{
-		switchLayer(this->elements, this->targetLayer, this->sourceLayer);
+		switchLayer(&this->elements, this->targetLayer, this->sourceLayer);
 	}
 
 	move();
@@ -89,7 +78,7 @@ bool MoveUndoAction::redo(Control* control)
 
 	if (this->sourceLayer != this->targetLayer && this->targetLayer != NULL)
 	{
-		switchLayer(this->elements, this->sourceLayer, this->targetLayer);
+		switchLayer(&this->elements, this->sourceLayer, this->targetLayer);
 	}
 
 	move();
@@ -99,15 +88,14 @@ bool MoveUndoAction::redo(Control* control)
 	return true;
 }
 
-void MoveUndoAction::switchLayer(GList* entries,
+void MoveUndoAction::switchLayer(ElementVector* entries,
 								 Layer* oldLayer,
 								 Layer* newLayer)
 {
 	XOJ_CHECK_TYPE(MoveUndoAction);
 
-	for (GList* l = this->elements; l != NULL; l = l->next)
+	for (Element* e : this->elements)
 	{
-		Element* e = (Element*) l->data;
 		oldLayer->removeElement(e, false);
 		newLayer->addElement(e);
 	}
@@ -117,10 +105,7 @@ void MoveUndoAction::repaint()
 {
 	XOJ_CHECK_TYPE(MoveUndoAction);
 
-	if (!this->elements)
-	{
-		return;
-	}
+	if (this->elements.empty()) return;
 
 	this->page->firePageChanged();
 

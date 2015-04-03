@@ -144,11 +144,8 @@ void SaveHandler::visitLayer(XmlNode* page, Layer* l)
 
 	XmlNode* layer = new XmlNode("layer");
 	page->addChild(layer);
-	ListIterator<Element*> it = l->elementIterator();
-	while (it.hasNext())
+	for(Element* e : *l->getElements())
 	{
-		Element* e = it.next();
-
 		if (e->getType() == ELEMENT_STROKE)
 		{
 			Stroke* s = (Stroke*) e;
@@ -350,17 +347,15 @@ void SaveHandler::visitPage(XmlNode* root, PageRef p, Document* doc, int id)
 		break;
 	}
 
-	ListIterator<Layer*> it = p->layerIterator();
-
-	if (!it.hasNext()) // no layer, but we need to write one layer, else the old Xournal cannot read the file
+	if (p->getLayers()->empty()) // no layer, but we need to write one layer, else the old Xournal cannot read the file
 	{
 		XmlNode* layer = new XmlNode("layer");
 		page->addChild(layer);
 	}
 
-	while (it.hasNext())
+	for (Layer* l : *p->getLayers())
 	{
-		visitLayer(page, it.next());
+		visitLayer(page, l);
 	}
 }
 

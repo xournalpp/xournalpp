@@ -3,14 +3,11 @@
 ToolbarEntry::ToolbarEntry()
 {
 	XOJ_INIT_TYPE(ToolbarEntry);
-	this->entries = NULL;
 }
 
 ToolbarEntry::ToolbarEntry(const ToolbarEntry& e)
 {
 	XOJ_INIT_TYPE(ToolbarEntry);
-
-	this->entries = NULL;
 
 	*this = e;
 }
@@ -22,10 +19,9 @@ void ToolbarEntry::operator=(const ToolbarEntry& e)
 	this->name = e.name;
 	clearList();
 
-	for (GList* l = e.entries; l != NULL; l = l->next)
+	for (ToolbarItem* item : e.entries)
 	{
-		ToolbarItem* item = (ToolbarItem*) l->data;
-		this->entries = g_list_append(this->entries, new ToolbarItem(*item));
+		this->entries.push_back(new ToolbarItem(*item));
 	}
 }
 
@@ -40,14 +36,8 @@ ToolbarEntry::~ToolbarEntry()
 
 void ToolbarEntry::clearList()
 {
-	for (GList* l = this->entries; l != NULL; l = l->next)
-	{
-		ToolbarItem* item = (ToolbarItem*) l->data;
-		delete item;
-	}
-
-	g_list_free(this->entries);
-	this->entries = NULL;
+	for (ToolbarItem* item : this->entries) delete item;
+	this->entries.clear();
 }
 
 string ToolbarEntry::getName()
@@ -69,7 +59,7 @@ int ToolbarEntry::addItem(string item)
 	XOJ_CHECK_TYPE(ToolbarEntry);
 
 	ToolbarItem* it = new ToolbarItem(item);
-	this->entries = g_list_append(this->entries, it);
+	this->entries.push_back(it);
 
 	return it->getId();
 }
@@ -78,13 +68,12 @@ bool ToolbarEntry::removeItemById(int id)
 {
 	XOJ_CHECK_TYPE(ToolbarEntry);
 
-	for (GList* l = this->entries; l != NULL; l = l->next)
+	for (unsigned int i = 0; i < this->entries.size(); i++)
 	{
-		ToolbarItem* item = (ToolbarItem*) l->data;
-		if (item->getId() == id)
+		if (this->entries[i]->getId() == id)
 		{
-			this->entries = g_list_delete_link(this->entries, l);
-			delete item;
+			delete this->entries[i];
+			this->entries.erase(this->entries.begin() + i);
 			return true;
 		}
 	}
@@ -96,14 +85,14 @@ int ToolbarEntry::insertItem(string item, int position)
 	XOJ_CHECK_TYPE(ToolbarEntry);
 
 	ToolbarItem* it = new ToolbarItem(item);
-	this->entries = g_list_insert(this->entries, it, position);
+	this->entries.insert(this->entries.begin() + position, it);
 
 	return it->getId();
 }
 
-ListIterator<ToolbarItem*> ToolbarEntry::iterator()
+ToolbarItemVector* ToolbarEntry::getItems()
 {
 	XOJ_CHECK_TYPE(ToolbarEntry);
 
-	return ListIterator<ToolbarItem*> (this->entries);
+	return &this->entries;
 }

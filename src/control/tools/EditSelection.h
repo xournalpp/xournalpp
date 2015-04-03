@@ -127,7 +127,7 @@ public:
 	/**
 	 * Returns all containig elements of this selections
 	 */
-	ListIterator<Element*> getElements();
+	ElementVector* getElements();
 
 	/**
 	 * Finish the current movement

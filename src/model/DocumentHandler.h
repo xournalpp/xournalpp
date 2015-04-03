@@ -16,7 +16,7 @@
 #include "PageRef.h"
 #include <XournalType.h>
 
-#include <glib.h>
+#include <list>
 
 class DocumentListener;
 
@@ -43,7 +43,7 @@ private:
 	XOJ_TYPE_ATTRIB;
 
 
-	GList* listener;
+	std::list<DocumentListener*> listener;
 
 	friend class DocumentListener;
 };

@@ -6,8 +6,6 @@ CustomizeableColorList::CustomizeableColorList()
 {
 	XOJ_INIT_TYPE(CustomizeableColorList);
 
-	this->colors = NULL;
-
 	this->addPredefinedColor(0x000000, _("Black"));
 	this->addPredefinedColor(0x008000, _("Green"));
 	this->addPredefinedColor(0x00c0ff, _("Light Blue"));
@@ -25,24 +23,20 @@ CustomizeableColorList::~CustomizeableColorList()
 {
 	XOJ_CHECK_TYPE(CustomizeableColorList);
 
-	for (GList* l = this->colors; l != NULL; l = l->next)
-	{
-		delete (XojColor*) l->data;
-	}
-	g_list_free(this->colors);
-	this->colors = NULL;
+	for (XojColor* c : this->colors) delete c;
+	this->colors.clear();
 
 	XOJ_RELEASE_TYPE(CustomizeableColorList);
 }
 
-ListIterator<XojColor*> CustomizeableColorList::getPredefinedColors()
+XojColorVector* CustomizeableColorList::getPredefinedColors()
 {
 	XOJ_CHECK_TYPE(CustomizeableColorList);
 
-	return ListIterator<XojColor*>(this->colors);
+	return &this->colors;
 }
 
 void CustomizeableColorList::addPredefinedColor(int color, string name)
 {
-	this->colors = g_list_append(this->colors, new XojColor(color, name));
+	this->colors.push_back(new XojColor(color, name));
 }

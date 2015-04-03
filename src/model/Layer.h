@@ -12,10 +12,7 @@
 #ifndef __LAYER_H__
 #define __LAYER_H__
 
-#include <gtk/gtk.h>
-
 #include "Element.h"
-#include <ListIterator.h>
 #include <XournalType.h>
 
 class Layer
@@ -57,7 +54,7 @@ public:
 	 * Returns an iterator over the Element%s contained
 	 * in this Layer
 	 */
-	ListIterator<Element*> elementIterator();
+	ElementVector* getElements();
 
 	/**
 	 * Returns whether or not the Layer is empty
@@ -73,7 +70,7 @@ public:
 private:
 	XOJ_TYPE_ATTRIB;
 
-	GList* elements;
+	ElementVector elements;
 
 };
 

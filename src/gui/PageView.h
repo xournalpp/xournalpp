@@ -12,13 +12,14 @@
 #ifndef __PAGEVIEW_H__
 #define __PAGEVIEW_H__
 
-#include <gtk/gtk.h>
 #include <Range.h>
 #include "Redrawable.h"
 #include "../model/PageRef.h"
 #include "LayoutData.h"
 #include "../model/TexImage.h"
 #include "../model/PageListener.h"
+
+#include <vector>
 
 class XournalView;
 class EditSelection;
@@ -207,7 +208,7 @@ private:
 	int lastVisibleTime;
 
 	GMutex repaintRectMutex;
-	GList * rerenderRects;
+	std::vector<Rectangle*> rerenderRects;
 	bool rerenderComplete;
 
 	GMutex drawingMutex;

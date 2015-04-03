@@ -13,11 +13,11 @@
 #define __CUSTOMIZEABLECOLORLIST_H__
 
 #include <XournalType.h>
-#include <glib.h>
 #include <StringUtils.h>
-#include <ListIterator.h>
 
 #include "../../XojColor.h"
+
+typedef std::vector<XojColor*> XojColorVector;
 
 class CustomizeableColorList
 {
@@ -26,7 +26,7 @@ public:
 	virtual ~CustomizeableColorList();
 
 public:
-	ListIterator<XojColor*> getPredefinedColors();
+	XojColorVector* getPredefinedColors();
 
 private:
 	void addPredefinedColor(int color, string name);
@@ -34,7 +34,7 @@ private:
 private:
 	XOJ_TYPE_ATTRIB;
 
-	GList* colors;
+	XojColorVector colors;
 
 };
 

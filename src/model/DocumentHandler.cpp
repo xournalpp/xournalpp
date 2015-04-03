@@ -1,11 +1,11 @@
 #include "DocumentHandler.h"
 #include "DocumentListener.h"
 
+#define FOR_ALL for (DocumentListener* dl : this->listener)
+
 DocumentHandler::DocumentHandler()
 {
 	XOJ_INIT_TYPE(DocumentHandler);
-
-	this->listener = NULL;
 }
 
 DocumentHandler::~DocumentHandler()
@@ -13,8 +13,7 @@ DocumentHandler::~DocumentHandler()
 	XOJ_CHECK_TYPE(DocumentHandler);
 
 	// Do not delete the listeners!
-	g_list_free(this->listener);
-	this->listener = NULL;
+	this->listener.clear();
 
 	XOJ_RELEASE_TYPE(DocumentHandler);
 }
@@ -23,74 +22,50 @@ void DocumentHandler::addListener(DocumentListener* l)
 {
 	XOJ_CHECK_TYPE(DocumentHandler);
 
-	this->listener = g_list_append(this->listener, l);
+	this->listener.push_back(l);
 }
 
 void DocumentHandler::removeListener(DocumentListener* l)
 {
 	XOJ_CHECK_TYPE(DocumentHandler);
 
-	this->listener = g_list_remove(this->listener, l);
+	this->listener.remove(l);
 }
 
 void DocumentHandler::fireDocumentChanged(DocumentChangeType type)
 {
 	XOJ_CHECK_TYPE(DocumentHandler);
 
-	for (GList* l = this->listener; l != NULL; l = l->next)
-	{
-		DocumentListener* dl = (DocumentListener*) l->data;
-		dl->documentChanged(type);
-	}
+	FOR_ALL dl->documentChanged(type);
 }
 
 void DocumentHandler::firePageSizeChanged(int page)
 {
 	XOJ_CHECK_TYPE(DocumentHandler);
 
-	for (GList* l = this->listener; l != NULL; l = l->next)
-	{
-		DocumentListener* dl = (DocumentListener*) l->data;
-		dl->pageSizeChanged(page);
-	}
+	FOR_ALL dl->pageSizeChanged(page);
 }
 
 void DocumentHandler::firePageChanged(int page)
 {
 	XOJ_CHECK_TYPE(DocumentHandler);
 
-	for (GList* l = this->listener; l != NULL; l = l->next)
-	{
-		DocumentListener* dl = (DocumentListener*) l->data;
-		dl->pageChanged(page);
-	}
+	FOR_ALL dl->pageChanged(page);
 }
 
 void DocumentHandler::firePageInserted(int page)
 {
 	XOJ_CHECK_TYPE(DocumentHandler);
 
-	for (GList* l = this->listener; l != NULL; l = l->next)
-	{
-		DocumentListener* dl = (DocumentListener*) l->data;
-		dl->pageInserted(page);
-	}
+	FOR_ALL dl->pageInserted(page);
 }
 
 void DocumentHandler::firePageDeleted(int page)
 {
-	for (GList* l = this->listener; l != NULL; l = l->next)
-	{
-		DocumentListener* dl = (DocumentListener*) l->data;
-		dl->pageDeleted(page);
-	}
+	FOR_ALL dl->pageDeleted(page);
 }
 
 void DocumentHandler::firePageSelected(int page)
 {
-	for (GList* l = this->listener; l != NULL; l = l->next)
-	{
-		DocumentListener* dl = (DocumentListener*) l->data;
-		dl->pageSelected(page);
-	}
+	FOR_ALL dl->pageSelected(page);
 }

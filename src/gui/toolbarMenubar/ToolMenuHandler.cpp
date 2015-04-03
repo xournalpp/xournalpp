@@ -8,7 +8,6 @@
 #include "../widgets/SelectColor.h"
 #include "ToolMenuHandler.h"
 
-#include "ColorToolItem.h"
 #include "MenuItem.h"
 #include "ToolButton.h"
 #include "ToolSelectCombocontrol.h"
@@ -30,9 +29,6 @@ ToolMenuHandler::ToolMenuHandler(ActionHandler* listener, ZoomControl* zoom,
 	XOJ_INIT_TYPE(ToolMenuHandler);
 
 	this->parent = parent;
-	this->toolItems = NULL;
-	this->toolbarColorItems = NULL;
-	this->menuItems = NULL;
 	this->listener = listener;
 	this->zoom = zoom;
 	this->gui = gui;
@@ -53,32 +49,13 @@ ToolMenuHandler::~ToolMenuHandler()
 	delete this->tbModel;
 	this->tbModel = NULL;
 
-	for (GList* l = this->menuItems; l != NULL; l = l->next)
-	{
-		MenuItem* it = (MenuItem*) l->data;
-		delete it;
-	}
-
-	g_list_free(this->menuItems);
-	this->menuItems = NULL;
+	for (MenuItem* it : this->menuItems) delete it;
+	this->menuItems.clear();
 
 	freeDynamicToolbarItems();
 
-	for (GList* l = this->toolItems; l != NULL; l = l->next)
-	{
-		AbstractToolItem* it = (AbstractToolItem*) l->data;
-		delete it;
-	}
-	g_list_free(this->toolItems);
-	this->toolItems = NULL;
-
-	for (GList* l = this->menuItems; l != NULL; l = l->next)
-	{
-		MenuItem* it = (MenuItem*) l->data;
-		delete it;
-	}
-	g_list_free(this->menuItems);
-	this->menuItems = NULL;
+	for (AbstractToolItem* it : this->toolItems) delete it;
+	this->toolItems.clear();
 
 	XOJ_RELEASE_TYPE(ToolMenuHandler);
 }
@@ -87,19 +64,13 @@ void ToolMenuHandler::freeDynamicToolbarItems()
 {
 	XOJ_CHECK_TYPE(ToolMenuHandler);
 
-	for (GList* l = this->toolItems; l != NULL; l = l->next)
+	for (AbstractToolItem* it : this->toolItems)
 	{
-		AbstractToolItem* it = (AbstractToolItem*) l->data;
 		it->setUsed(false);
 	}
 
-	for (GList* l = toolbarColorItems; l != NULL; l = l->next)
-	{
-		ColorToolItem* it = (ColorToolItem*) l->data;
-		delete it;
-	}
-	g_list_free(this->toolbarColorItems);
-	this->toolbarColorItems = NULL;
+	for (ColorToolItem* it : this->toolbarColorItems) delete it;
+	this->toolbarColorItems.clear();
 
 }
 
@@ -127,10 +98,8 @@ void ToolMenuHandler::load(ToolbarData* d, GtkWidget* toolbar,
 	{
 		if (e.getName() == toolbarName)
 		{
-			ListIterator<ToolbarItem*> it = e.iterator();
-			while (it.hasNext())
+			for (ToolbarItem* dataItem : *e.getItems())
 			{
-				ToolbarItem* dataItem = it.next();
 				string name = *dataItem;
 
 				if (name == "SEPARATOR")
@@ -173,7 +142,7 @@ void ToolMenuHandler::load(ToolbarData* d, GtkWidget* toolbar,
 					gint c = g_ascii_strtoll(color.c_str(), NULL, 16);
 
 					ColorToolItem* item = new ColorToolItem(listener, toolHandler, this->parent, c);
-					this->toolbarColorItems = g_list_append(this->toolbarColorItems, item);
+					this->toolbarColorItems.push_back(item);
 
 					GtkToolItem* it = item->createItem(horizontal);
 					gtk_widget_show_all(GTK_WIDGET(it));
@@ -186,9 +155,8 @@ void ToolMenuHandler::load(ToolbarData* d, GtkWidget* toolbar,
 				}
 
 				bool found = false;
-				for (GList* l = this->toolItems; l != NULL; l = l->next)
+				for (AbstractToolItem* item : this->toolItems)
 				{
-					AbstractToolItem* item = (AbstractToolItem*) l->data;
 					if (name == item->getId())
 					{
 						if (item->isUsed())
@@ -236,7 +204,14 @@ void ToolMenuHandler::removeColorToolItem(AbstractToolItem* it)
 	XOJ_CHECK_TYPE(ToolMenuHandler);
 
 	g_return_if_fail(it != NULL);
-	this->toolbarColorItems = g_list_remove(this->toolbarColorItems, it);
+	for (unsigned int i = 0; i < this->toolbarColorItems.size(); i++)
+	{
+		if (this->toolbarColorItems[i] == it)
+		{
+			this->toolbarColorItems.erase(this->toolbarColorItems.begin() + i);
+			break;
+		}
+	}
 	delete (ColorToolItem*) it;
 }
 
@@ -245,39 +220,26 @@ void ToolMenuHandler::addColorToolItem(AbstractToolItem* it)
 	XOJ_CHECK_TYPE(ToolMenuHandler);
 
 	g_return_if_fail(it != NULL);
-	this->toolbarColorItems = g_list_append(this->toolbarColorItems, it);
+	this->toolbarColorItems.push_back((ColorToolItem*) it);
 }
 
 void ToolMenuHandler::setTmpDisabled(bool disabled)
 {
 	XOJ_CHECK_TYPE(ToolMenuHandler);
 
-	for (GList* l = this->toolItems; l != NULL; l = l->next)
-	{
-		AbstractToolItem* it = (AbstractToolItem*) l->data;
-		it->setTmpDisabled(disabled);
-	}
-	for (GList* l = this->menuItems; l != NULL; l = l->next)
-	{
-		MenuItem* it = (MenuItem*) l->data;
-		it->setTmpDisabled(disabled);
-	}
-	for (GList* l = this->toolbarColorItems; l != NULL; l = l->next)
-	{
-		ColorToolItem* it = (ColorToolItem*) l->data;
-		it->setTmpDisabled(disabled);
-	}
+	for (AbstractToolItem* it : this->toolItems) it->setTmpDisabled(disabled);
+	for (MenuItem* it : this->menuItems) it->setTmpDisabled(disabled);
+	for (ColorToolItem* it : this->toolbarColorItems) it->setTmpDisabled(disabled);
 
 	GtkWidget* menuViewSidebarVisible = gui->get("menuViewSidebarVisible");
 	gtk_widget_set_sensitive(menuViewSidebarVisible, !disabled);
-
 }
 
 void ToolMenuHandler::addToolItem(AbstractToolItem* it)
 {
 	XOJ_CHECK_TYPE(ToolMenuHandler);
 
-	this->toolItems = g_list_append(this->toolItems, it);
+	this->toolItems.push_back(it);
 }
 
 void ToolMenuHandler::registerMenupoint(GtkWidget* widget, ActionType type)
@@ -285,7 +247,7 @@ void ToolMenuHandler::registerMenupoint(GtkWidget* widget, ActionType type)
 	XOJ_CHECK_TYPE(ToolMenuHandler);
 
 	MenuItem* it = new MenuItem(listener, widget, type);
-	this->menuItems = g_list_append(this->menuItems, it);
+	this->menuItems.push_back(it);
 }
 
 void ToolMenuHandler::registerMenupoint(GtkWidget* widget, ActionType type,
@@ -294,7 +256,7 @@ void ToolMenuHandler::registerMenupoint(GtkWidget* widget, ActionType type,
 	XOJ_CHECK_TYPE(ToolMenuHandler);
 
 	MenuItem* it = new MenuItem(listener, widget, type, group);
-	this->menuItems = g_list_append(this->menuItems, it);
+	this->menuItems.push_back(it);
 }
 
 void ToolMenuHandler::initEraserToolItem()
@@ -752,22 +714,18 @@ bool ToolMenuHandler::isColorInUse(int color)
 {
 	XOJ_CHECK_TYPE(ToolMenuHandler);
 
-	for (GList* l = this->toolbarColorItems; l != NULL; l = l->next)
+	for (ColorToolItem* it : this->toolbarColorItems)
 	{
-		ColorToolItem* it = (ColorToolItem*) l->data;
-		if (it->getColor() == color)
-		{
-			return true;
-		}
+		if (it->getColor() == color) return true;
 	}
 
 	return false;
 }
 
-ListIterator<AbstractToolItem*> ToolMenuHandler::getToolItems()
+AbstractToolItemVector* ToolMenuHandler::getToolItems()
 {
 	XOJ_CHECK_TYPE(ToolMenuHandler);
 
-	return ListIterator<AbstractToolItem*> (this->toolItems);
+	return &this->toolItems;
 }
 

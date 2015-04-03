@@ -18,7 +18,7 @@
 class ScaleUndoAction : public UndoAction
 {
 public:
-	ScaleUndoAction(PageRef page, GList* elements,
+	ScaleUndoAction(PageRef page, ElementVector* elements,
 					double x0, double y0,
 					double fx, double fy);
 	virtual ~ScaleUndoAction();
@@ -35,7 +35,7 @@ private:
 	XOJ_TYPE_ATTRIB;
 
 	PageRef page;
-	GList* elements;
+	ElementVector elements;
 
 	double x0;
 	double y0;

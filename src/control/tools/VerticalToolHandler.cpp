@@ -13,22 +13,18 @@ VerticalToolHandler::VerticalToolHandler(Redrawable* view, PageRef page,
 	this->view = view;
 	this->page = page;
 	this->layer = this->page->getSelectedLayer();
-	this->elements = NULL;
 	this->jumpY = 0;
 
-	ListIterator<Element*> it = this->layer->elementIterator();
-	while (it.hasNext())
+	for (Element* e : *this->layer->getElements())
 	{
-		Element* e = it.next();
 		if (e->getY() >= y)
 		{
-			this->elements = g_list_append(this->elements, e);
+			this->elements.push_back(e);
 		}
 	}
 
-	for (GList* l = this->elements; l != NULL; l = l->next)
+	for (Element* e : this->elements)
 	{
-		Element* e = (Element*) l->data;
 		this->layer->removeElement(e, false);
 
 		this->jumpY = MAX(this->jumpY, e->getY() + e->getElementHeight());
@@ -63,8 +59,7 @@ VerticalToolHandler::~VerticalToolHandler()
 		this->crBuffer = NULL;
 	}
 
-	g_list_free(this->elements);
-	this->elements = NULL;
+	this->elements.clear();
 
 	XOJ_RELEASE_TYPE(VerticalToolHandler);
 }
@@ -134,11 +129,11 @@ void VerticalToolHandler::currentPos(double x, double y)
 	//	}
 }
 
-ListIterator<Element*> VerticalToolHandler::getElements()
+ElementVector* VerticalToolHandler::getElements()
 {
 	XOJ_CHECK_TYPE(VerticalToolHandler);
 
-	return ListIterator<Element*>(this->elements);
+	return &this->elements;
 }
 
 MoveUndoAction* VerticalToolHandler::finalize()
@@ -149,14 +144,13 @@ MoveUndoAction* VerticalToolHandler::finalize()
 
 	MoveUndoAction* undo = new MoveUndoAction(this->layer,
 	                                                this->page,
-	                                                this->elements,
+	                                                &this->elements,
 	                                                0, dY,
 	                                                this->layer,
 	                                                this->page);
 
-	for (GList* l = this->elements; l != NULL; l = l->next)
+	for (Element* e : this->elements)
 	{
-		Element* e = (Element*) l->data;
 		e->move(0, dY);
 
 		this->layer->addElement(e);

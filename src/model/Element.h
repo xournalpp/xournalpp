@@ -15,6 +15,7 @@
 #include <gtk/gtk.h>
 #include <serializing/Serializeable.h>
 #include <XournalType.h>
+#include <vector>
 
 enum ElementType
 {
@@ -90,5 +91,7 @@ private:
 	// The color in RGB format
 	int color;
 };
+
+typedef std::vector<Element*> ElementVector;
 
 #endif /* __ELEMENT_H__ */

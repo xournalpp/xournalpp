@@ -51,7 +51,6 @@ PageView::PageView(XournalView* xournal, PageRef page)
 
 	g_mutex_init(&this->drawingMutex);
 
-	this->rerenderRects = NULL;
 	this->rerenderComplete = false;
 	g_mutex_init(&this->repaintRectMutex);
 
@@ -92,13 +91,8 @@ PageView::~PageView()
 	endText();
 	deleteViewBuffer();
 
-	for (GList * l = this->rerenderRects; l != NULL; l = l->next)
-	{
-		Rectangle * rect = (Rectangle *) l->data;
-		delete rect;
-	}
-	g_list_free(this->rerenderRects);
-	this->rerenderRects = NULL;
+	for (Rectangle* rect : this->rerenderRects) delete rect;
+	this->rerenderRects.clear();
 
 	if (this->search)
 	{
@@ -266,14 +260,10 @@ void PageView::startText(double x, double y)
 	if (this->textEditor == NULL)
 	{
 		// Is there already a textfield?
-		ListIterator<Element*> eit = this->page->getSelectedLayer()->elementIterator();
-
 		Text* text = NULL;
-
-		while (eit.hasNext())
+		
+		for (Element* e : *this->page->getSelectedLayer()->getElements())
 		{
-			Element* e = eit.next();
-
 			if (e->getType() == ELEMENT_TEXT)
 			{
 				GdkRectangle matchRect = { gint(x - 10), gint(y - 10), 20, 20 };
@@ -356,28 +346,20 @@ void PageView::selectObjectAt(double x, double y)
 	// clear old selection anyway
 	this->xournal->getControl()->clearSelection();
 
-	ListIterator<Layer*> it = this->page->layerIterator();
-	while (it.hasNext() && selected)
+	for (Layer* l : *this->page->getLayers())
 	{
-		Layer* l = it.next();
-
-		ListIterator<Element*> eit = l->elementIterator();
-		while (eit.hasNext())
+		for (Element* e : *l->getElements())
 		{
-			Element* e = eit.next();
 			if (e->intersectsArea(&matchRect))
 			{
 				if (e->getType() == ELEMENT_STROKE)
 				{
 					Stroke* s = (Stroke*) e;
 					double tmpGap = 0;
-					if (s->intersects(x, y, 5, &tmpGap))
+					if ((s->intersects(x, y, 5, &tmpGap)) && (gap > tmpGap))
 					{
-						if (gap > tmpGap)
-						{
-							gap = tmpGap;
-							strokeMatch = s;
-						}
+						gap = tmpGap;
+						strokeMatch = s;
 					}
 				}
 				else
@@ -770,10 +752,8 @@ void PageView::addRerenderRect(double x, double y, double width, double height)
 
 	g_mutex_lock(&this->repaintRectMutex);
 
-	for (GList* l = this->rerenderRects; l != NULL; l = l->next)
+	for (Rectangle* r : this->rerenderRects)
 	{
-		Rectangle* r = (Rectangle*) l->data;
-
 		// its faster to redraw only one rect than repaint twice the same area
 		// so loop through the rectangles to be redrawn, if new rectangle
 		// intersects any of them, replace it by the union with the new one
@@ -788,7 +768,7 @@ void PageView::addRerenderRect(double x, double y, double width, double height)
 		}
 	}
 
-	this->rerenderRects = g_list_append(this->rerenderRects, rect);
+	this->rerenderRects.push_back(rect);
 	g_mutex_unlock(&this->repaintRectMutex);
 
 	this->xournal->getControl()->getScheduler()->addRerenderPage(this);
@@ -1072,10 +1052,8 @@ TexImage* PageView::getSelectedTex()
 
 	TexImage* texMatch = NULL;
 
-	ListIterator<Element*> eit = theSelection->getElements();
-	while (eit.hasNext())
+	for (Element* e : *theSelection->getElements())
 	{
-		Element* e = eit.next();
 		if (e->getType() == ELEMENT_TEXIMAGE)
 		{
 			texMatch = (TexImage*) e;

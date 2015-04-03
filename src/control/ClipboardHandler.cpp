@@ -191,11 +191,8 @@ bool ClipboardHandler::copy()
 
 	GList* textElements = NULL;
 
-	ListIterator<Element*> it = this->selection->getElements();
-
-	while (it.hasNext())
+	for (Element* e : *this->selection->getElements())
 	{
-		Element* e = it.next();
 		if (e->getType() == ELEMENT_TEXT)
 		{
 			textElements = g_list_insert_sorted(textElements, e,

@@ -43,9 +43,8 @@ EditSelection::EditSelection(UndoRedoHandler* undo, Selection* selection,
 
 	contstruct(undo, view, view->getPage());
 
-	for (GList* l = selection->selectedElements; l != NULL; l = l->next)
+	for (Element* e : selection->selectedElements)
 	{
-		Element* e = (Element*) l->data;
 		this->sourceLayer->removeElement(e, false);
 		addElement(e);
 	}
@@ -301,7 +300,7 @@ void EditSelection::addElement(Element* e)
 /**
  * Returns all containig elements of this selections
  */
-ListIterator<Element*> EditSelection::getElements()
+ElementVector* EditSelection::getElements()
 {
 	XOJ_CHECK_TYPE(EditSelection);
 
@@ -729,15 +728,8 @@ void EditSelection::serialize(ObjectOutputStream& out)
 	out << this->contents;
 	out.endObject();
 
-	ListIterator<Element*> it = this->getElements();
-	int count = it.getLength();
-	out.writeInt(count);
-
-	while (it.hasNext())
-	{
-		Element* e = it.next();
-		out << e;
-	}
+	out.writeInt(this->getElements()->size());
+	for (Element* e : *this->getElements()) out << e;
 }
 
 void EditSelection::readSerialized(ObjectInputStream& in) throw (

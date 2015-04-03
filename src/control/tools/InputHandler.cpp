@@ -410,11 +410,8 @@ void InputHandler::onButtonReleaseEvent(GdkEventButton* event, PageRef page)
 			range.addPoint(this->tmpStroke->getX() + this->tmpStroke->getElementWidth(),
 						this->tmpStroke->getY() + this->tmpStroke->getElementHeight());
 
-			ListIterator<Stroke*> l = result->getSources();
-			while (l.hasNext())
+			for (Stroke* s : *result->getSources())
 			{
-				Stroke* s = l.next();
-
 				layer->removeElement(s, false);
 
 				recognizerUndo->addSourceElement(s);

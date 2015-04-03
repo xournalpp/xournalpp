@@ -13,13 +13,15 @@
 #define __XOJ_PAGE_H__
 
 #include "Layer.h"
-#include <ListIterator.h>
+#include <vector>
 #include <XournalType.h>
 #include <StringUtils.h>
 
 #include "BackgroundType.h"
 #include "BackgroundImage.h"
 #include "PageHandler.h"
+
+typedef std::vector<Layer*> LayerVector;
 
 class XojPage : public PageHandler
 {
@@ -59,7 +61,7 @@ public:
 	void setBackgroundColor(int color);
 	int getBackgroundColor();
 
-	ListIterator<Layer*> layerIterator();
+	LayerVector* getLayers();
 	int getLayerCount();
 	int getSelectedLayerId();
 	void setSelectedLayerId(int id);
@@ -96,7 +98,7 @@ private:
 	/**
 	 * The layer list
 	 */
-	GList* layer;
+	LayerVector layer;
 
 	/**
 	 * The current selected layer ID

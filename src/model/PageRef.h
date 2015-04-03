@@ -14,7 +14,6 @@
 
 #include "BackgroundType.h"
 #include "XojPage.h"
-#include <ListIterator.h>
 #include <XournalType.h>
 
 

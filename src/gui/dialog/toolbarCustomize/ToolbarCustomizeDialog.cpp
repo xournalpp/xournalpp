@@ -311,14 +311,10 @@ void ToolbarCustomizeDialog::rebuildIconview()
 
 	GtkTable* table = GTK_TABLE(get("tbDefaultTools"));
 
-	ListIterator<AbstractToolItem*> itt =
-			this->win->getToolMenuHandler()->getToolItems();
-
 	int i = 0;
-	while (itt.hasNext())
+	for (AbstractToolItem* item :
+			*this->win->getToolMenuHandler()->getToolItems())
 	{
-		AbstractToolItem* item = itt.next();
-
 		if (item->isUsed())
 		{
 			continue;
@@ -399,17 +395,13 @@ void ToolbarCustomizeDialog::rebuildColorIcons()
 	ToolMenuHandler* tmh = this->win->getToolMenuHandler();
 
 
-	ListIterator<XojColor*> itc = this->colorList->getPredefinedColors();
 	int i = 0;
-	while (itc.hasNext())
+	for (XojColor* color : *this->colorList->getPredefinedColors())
 	{
-		XojColor* color = itc.next();
-
 		if (tmh->isColorInUse(color->getColor()))
 		{
 			continue;
 		}
-
 
 		GtkWidget* icon = selectcolor_new(color->getColor());
 		selectcolor_set_size(icon, 16);

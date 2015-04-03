@@ -12,7 +12,7 @@
 #ifndef __SELECTION_H__
 #define __SELECTION_H__
 
-#include <glib.h>
+#include <vector>
 #include "../../model/PageRef.h"
 #include "../../model/Element.h"
 #include "../../gui/Redrawable.h"
@@ -36,7 +36,7 @@ private:
 	XOJ_TYPE_ATTRIB;
 
 protected:
-	GList* selectedElements;
+	ElementVector selectedElements;
 	PageRef page;
 	Redrawable* view;
 

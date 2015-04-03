@@ -72,17 +72,13 @@ bool SearchControl::search(string text, int* occures, double* top)
 	}
 
 	int selected = this->page->getSelectedLayerId();
-	ListIterator<Layer*> it = this->page->layerIterator();
-
-	while (it.hasNext() && selected)
+	
+	for (Layer* l : *this->page->getLayers())
 	{
-		Layer* l = it.next();
-
-		ListIterator<Element*> eit = l->elementIterator();
-		while (eit.hasNext())
+		if (!selected) break;
+		
+		for (Element* e : *l->getElements())
 		{
-			Element* e = eit.next();
-
 			if (e->getType() == ELEMENT_TEXT)
 			{
 				Text* t = (Text*) e;

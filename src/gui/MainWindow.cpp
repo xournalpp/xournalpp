@@ -716,7 +716,6 @@ void MainWindow::createToolbarAndMenu(bool initial)
 	GtkMenuShell* menubar = GTK_MENU_SHELL(get("menuViewToolbar"));
 	g_return_if_fail(menubar != NULL);
 
-	ListIterator<ToolbarData*> it = this->toolbar->getModel()->iterator();
 	GtkWidget* item = NULL;
 	GtkWidget* selectedItem = NULL;
 	ToolbarData* selectedData = NULL;
@@ -727,9 +726,8 @@ void MainWindow::createToolbarAndMenu(bool initial)
 	bool predefined = true;
 	int menuPos = 0;
 
-	while (it.hasNext())
+	for (ToolbarData* d : *this->toolbar->getModel()->getToolbars())
 	{
-		ToolbarData* d = it.next();
 		if (selectedData == NULL)
 		{
 			selectedData = d;

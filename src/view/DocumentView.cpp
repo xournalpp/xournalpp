@@ -267,16 +267,12 @@ void DocumentView::drawLayer(cairo_t* cr, Layer* l)
 {
 	XOJ_CHECK_TYPE(DocumentView);
 
-	ListIterator<Element*> it = l->elementIterator();
-
 #ifdef SHOW_REPAINT_BOUNDS
 	int drawed = 0;
 	int notDrawed = 0;
 #endif //SHOW_REPAINT_BOUNDS
-	while (it.hasNext())
+	for (Element* e : *l->getElements())
 	{
-		Element* e = it.next();
-
 #ifdef SHOW_ELEMENT_BOUNDS
 		gdk_threads_enter();
 		cairo_set_source_rgb(cr, 0, 1, 0);
@@ -426,12 +422,7 @@ void DocumentView::drawSelection(cairo_t* cr, ElementContainer* container)
 {
 	XOJ_CHECK_TYPE(DocumentView);
 
-	ListIterator<Element*> it = container->getElements();
-	while (it.hasNext())
-	{
-		Element* e = it.next();
-		drawElement(cr, e);
-	}
+	for (Element* e : *container->getElements()) drawElement(cr, e);
 }
 
 void DocumentView::limitArea(double x, double y, double width, double heigth)
@@ -487,10 +478,9 @@ void DocumentView::drawPage(PageRef page, cairo_t* cr,
 	cairo_set_operator(cr, CAIRO_OPERATOR_SOURCE);
 
 	int layer = 0;
-	ListIterator<Layer*> it = page->layerIterator();
-	while (it.hasNext() && layer < page->getSelectedLayerId())
+	for (Layer* l : *page->getLayers())
 	{
-		Layer* l = it.next();
+		if (layer >= page->getSelectedLayerId()) break;
 		drawLayer(cr, l);
 		layer++;
 	}

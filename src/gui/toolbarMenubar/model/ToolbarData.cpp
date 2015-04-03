@@ -114,11 +114,10 @@ void ToolbarData::saveToKeyFile(GKeyFile* config)
 	{
 		string line = "";
 
-		ListIterator<ToolbarItem*> it = e.iterator();
-		while (it.hasNext())
+		for (ToolbarItem* it : *e.getItems())
 		{
 			line += ",";
-			line += *it.next();
+			line += *it;
 		}
 
 		if (line.length() > 2)

@@ -30,7 +30,7 @@ public:
 
 	MoveUndoAction* finalize();
 
-	ListIterator<Element*> getElements();
+	ElementVector* getElements();
 
 private:
 	XOJ_TYPE_ATTRIB;
@@ -38,7 +38,7 @@ private:
 	Redrawable* view;
 	PageRef page;
 	Layer* layer;
-	GList* elements;
+	ElementVector elements;
 
 	cairo_surface_t* crBuffer;
 

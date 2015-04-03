@@ -12,9 +12,10 @@
 #ifndef __TOOLBARENTRY_H__
 #define __TOOLBARENTRY_H__
 
+#include <vector>
+
 #include "ToolbarItem.h"
-#include <gtk/gtk.h>
-#include "../../../util/ListIterator.h"
+typedef std::vector<ToolbarItem*> ToolbarItemVector;
 
 class ToolbarEntry
 {
@@ -42,13 +43,13 @@ public:
 	 */
 	int insertItem(string item, int position);
 
-	ListIterator<ToolbarItem*> iterator();
+	ToolbarItemVector* getItems();
 
 private:
 	XOJ_TYPE_ATTRIB;
 
 	string name;
-	GList* entries;
+	ToolbarItemVector entries;
 };
 
 #endif /* __TOOLBARENTRY_H__ */

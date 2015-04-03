@@ -27,11 +27,8 @@ GladeGui(gladeSearchPath, "toolbarManageDialog.glade", "DialogManageToolbar")
 					   COLUMN_BOLD, PANGO_WEIGHT_BOLD, COLUMN_POINTER, NULL, COLUMN_EDITABLE, false,
 					   -1);
 
-	ListIterator<ToolbarData*> it = model->iterator();
-
-	while (it.hasNext())
+	for (ToolbarData* data : *model->getToolbars())
 	{
-		ToolbarData* data = it.next();
 		if (data->isPredefined())
 		{
 			gtk_list_store_append(this->model, &iter);
@@ -46,11 +43,8 @@ GladeGui(gladeSearchPath, "toolbarManageDialog.glade", "DialogManageToolbar")
 					   COLUMN_BOLD, PANGO_WEIGHT_BOLD, COLUMN_POINTER, NULL, COLUMN_EDITABLE, false,
 					   -1);
 
-	ListIterator<ToolbarData*> it2 = model->iterator();
-
-	while (it2.hasNext())
+	for (ToolbarData* data : *model->getToolbars())
 	{
-		ToolbarData* data = it2.next();
 		if (!data->isPredefined())
 		{
 			gtk_list_store_append(this->model, &iter);

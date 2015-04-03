@@ -6,7 +6,6 @@ Selection::Selection(Redrawable* view)
 	XOJ_INIT_TYPE(Selection);
 
 	this->view = view;
-	this->selectedElements = NULL;
 	this->page = NULL;
 }
 
@@ -16,8 +15,7 @@ Selection::~Selection()
 
 	this->view = NULL;
 	this->page = NULL;
-	g_list_free(this->selectedElements);
-	this->selectedElements = NULL;
+	this->selectedElements.clear();
 
 	XOJ_RELEASE_TYPE(Selection);
 }
@@ -27,7 +25,7 @@ void Selection::getSelectedRect(double& x, double& y, double& width,
 {
 	XOJ_CHECK_TYPE(Selection);
 
-	if (this->selectedElements == NULL)
+	if (this->selectedElements.empty())
 	{
 		x = 0;
 		y = 0;
@@ -36,16 +34,14 @@ void Selection::getSelectedRect(double& x, double& y, double& width,
 		return;
 	}
 
-	Element* first = (Element*) this->selectedElements->data;
+	Element* first = this->selectedElements.front();
 	Range range(first->getX(), first->getY());
 
-	for (GList* l = this->selectedElements; l != NULL; l = l->next)
+	for (Element* e : this->selectedElements)
 	{
-		Element* e = (Element*) l->data;
-
 		range.addPoint(e->getX(), e->getY());
 		range.addPoint(e->getX() + e->getElementWidth(),
-					e->getY() + e->getElementHeight());
+					   e->getY() + e->getElementHeight());
 	}
 
 	x = range.getX() - 3;
@@ -89,20 +85,18 @@ bool RectSelection::finalize(PageRef page)
 	this->page = page;
 
 	Layer* l = page->getSelectedLayer();
-	ListIterator<Element*> eit = l->elementIterator();
-	while (eit.hasNext())
+	for (Element* e : *l->getElements())
 	{
-		Element* e = eit.next();
 		if (e->isInSelection(this))
 		{
-			this->selectedElements = g_list_append(this->selectedElements, e);
+			this->selectedElements.push_back(e);
 		}
 	}
 
 	view->repaintArea(this->x1 - 10, this->y1 - 10,
 					this->x2 + 10, this->y2 + 10);
 
-	return this->selectedElements != NULL;
+	return !this->selectedElements.empty();
 }
 
 bool RectSelection::contains(double x, double y)
@@ -416,19 +410,17 @@ bool RegionSelect::finalize(PageRef page)
 	}
 
 	Layer* l = page->getSelectedLayer();
-	ListIterator<Element*> eit = l->elementIterator();
-	while (eit.hasNext())
+	for (Element* e : *l->getElements())
 	{
-		Element* e = eit.next();
 		if (e->isInSelection(this))
 		{
-			this->selectedElements = g_list_append(this->selectedElements, e);
+			this->selectedElements.push_back(e);
 		}
 	}
 
 	view->repaintArea(this->x1Box - 10, this->y1Box - 10,
 					this->x2Box + 10, this->y2Box + 10);
 
-	return this->selectedElements != NULL;
+	return !this->selectedElements.empty();
 }
 

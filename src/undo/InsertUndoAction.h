@@ -40,7 +40,7 @@ private:
 class InsertsUndoAction : public UndoAction
 {
 public:
-	InsertsUndoAction(PageRef page, Layer* layer, GList* elements);
+	InsertsUndoAction(PageRef page, Layer* layer, ElementVector elements);
 	virtual ~InsertsUndoAction();
 
 public:
@@ -53,7 +53,7 @@ private:
 	XOJ_TYPE_ATTRIB;
 
 	Layer* layer;
-	GList* elements;
+	ElementVector elements;
 
 };
 

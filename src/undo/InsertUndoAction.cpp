@@ -82,7 +82,7 @@ bool InsertUndoAction::redo(Control* control)
 
 InsertsUndoAction::InsertsUndoAction(PageRef page,
 									 Layer* layer,
-									 GList* elements) : UndoAction("InsertsUndoAction")
+									 ElementVector elements) : UndoAction("InsertsUndoAction")
 {
 	XOJ_INIT_TYPE(InsertsUndoAction);
 
@@ -98,16 +98,9 @@ InsertsUndoAction::~InsertsUndoAction()
 	if (this->undone)
 	{
 		// Insert was undone, so this is not needed anymore
-		for (GList* elem = this->elements;
-			elem != NULL; elem = elem->next)
-		{
-			Element* e = (Element*) elem->data;
-			delete e;
-			elem->data = NULL;
-		}
+		for (Element* e : this->elements) delete e;
 	}
-	g_list_free(this->elements);
-	this->elements = NULL;
+	this->elements.clear();
 
 	XOJ_RELEASE_TYPE(InsertsUndoAction);
 }
@@ -123,11 +116,8 @@ bool InsertsUndoAction::undo(Control* control)
 {
 	XOJ_CHECK_TYPE(InsertsUndoAction);
 
-	for (GList* l = this->elements;
-		l != NULL; l = l->next)
+	for (Element* elem : this->elements)
 	{
-		Element* elem = (Element*) l->data;
-
 		this->layer->removeElement(elem, false);
 		this->page->fireElementChanged(elem);
 	}
@@ -141,11 +131,8 @@ bool InsertsUndoAction::redo(Control* control)
 {
 	XOJ_CHECK_TYPE(InsertsUndoAction);
 
-	for (GList* l = this->elements;
-		l != NULL; l = l->next)
+	for (Element* elem : this->elements)
 	{
-		Element* elem = (Element*) l->data;
-
 		this->layer->addElement(elem);
 		this->page->fireElementChanged(elem);
 	}
