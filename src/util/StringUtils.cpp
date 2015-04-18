@@ -10,6 +10,7 @@
  */
 
 #include <StringUtils.h>
+#include <sstream>
 
 /**
  * Creates a new String, syntax like sprintf
@@ -25,7 +26,7 @@ string StringUtils::format(const char* format, ...)
 
 void StringUtils::replace_all_chars(string& input, const std::vector<replace_pair> replaces)
 {
-	string out = "";
+	std::stringstream out;
 	bool found = false;
 	for (char c : input)
 	{
@@ -33,18 +34,18 @@ void StringUtils::replace_all_chars(string& input, const std::vector<replace_pai
 		{
 			if (c == p.first)
 			{
-				out += p.second;
+				out << p.second;
 				found = true;
 				break;
 			}
 		}
 		if (!found)
 		{
-			out += c;
+			out << c;
 		}
 		found = false;
 	}
-	input = out;
+	input = out.str();
 }
 
 /**
