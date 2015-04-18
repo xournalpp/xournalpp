@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __XOURNALWIDGET_H__
-#define __XOURNALWIDGET_H__
+#pragma once
 
 #include <gtk/gtk.h>
 
@@ -90,5 +89,3 @@ void gtk_xournal_repaint_area(GtkWidget* widget, int x1, int y1, int x2,
 Rectangle* gtk_xournal_get_visible_area(GtkWidget* widget, PageView* p);
 
 G_END_DECLS
-
-#endif /* __XOURNALWIDGET_H__ */

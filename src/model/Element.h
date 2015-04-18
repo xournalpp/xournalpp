@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __ELEMENT_H__
-#define __ELEMENT_H__
+#pragma once
 
 #include <gtk/gtk.h>
 #include <serializing/Serializeable.h>
@@ -93,5 +92,3 @@ private:
 };
 
 typedef std::vector<Element*> ElementVector;
-
-#endif /* __ELEMENT_H__ */

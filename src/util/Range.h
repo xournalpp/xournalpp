@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __RANGE_H__
-#define __RANGE_H__
+#pragma once
 
 #include <XournalType.h>
 
@@ -38,5 +37,3 @@ private:
 	double y2;
 	double x2;
 };
-
-#endif /* __RANGE_H__ */

@@ -9,8 +9,8 @@
  * @license GNU GPLv3
  */
 
-#ifndef __XFONT_H__
-#define __XFONT_H__
+#pragma once
+
 #include <StringUtils.h>
 #include <XournalType.h>
 
@@ -46,5 +46,3 @@ private:
 	string name;
 	double size;
 };
-
-#endif /* __XFONT_H__ */

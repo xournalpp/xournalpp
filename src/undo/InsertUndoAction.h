@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __INSERTUNDOACTION_H__
-#define __INSERTUNDOACTION_H__
+#pragma once
 
 #include "UndoAction.h"
 
@@ -56,5 +55,3 @@ private:
 	ElementVector elements;
 
 };
-
-#endif /* __INSERTUNDOACTION_H__ */

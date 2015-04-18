@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __DOCUMENTHANDLER_H__
-#define __DOCUMENTHANDLER_H__
+#pragma once
 
 #include "DocumentChangeType.h"
 #include "PageRef.h"
@@ -47,5 +46,3 @@ private:
 
 	friend class DocumentListener;
 };
-
-#endif /* __DOCUMENTHANDLER_H__ */

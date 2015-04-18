@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __STRINGUTILS_H__
-#define __STRINGUTILS_H__
+#pragma once
 
 #include <glib.h>
 #include <string>
@@ -78,5 +77,3 @@ private:
 	bool returnToken;
 	bool lastWasToken;
 };
-
-#endif /* __STRINGUTILS_H__ */

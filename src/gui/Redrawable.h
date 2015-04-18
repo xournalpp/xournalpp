@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __REDRAWABLE_H__
-#define __REDRAWABLE_H__
+#pragma once
 
 #include <Range.h>
 
@@ -75,5 +74,3 @@ public:
 									double height) = 0;
 
 };
-
-#endif /* __REDRAWABLE_H__ */

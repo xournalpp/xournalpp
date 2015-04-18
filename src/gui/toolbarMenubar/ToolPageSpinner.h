@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __TOOLPAGESPINNER_H__
-#define __TOOLPAGESPINNER_H__
+#pragma once
 
 #include "AbstractToolItem.h"
 #include <XournalType.h>
@@ -42,5 +41,3 @@ private:
 	SpinPageAdapter* pageSpinner;
 	GtkWidget* lbPageNo;
 };
-
-#endif /* __TOOLPAGESPINNER_H__ */

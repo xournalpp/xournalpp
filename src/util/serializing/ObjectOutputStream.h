@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __OBJECTOUTPUTSTREAM_H__
-#define __OBJECTOUTPUTSTREAM_H__
+#pragma once
 
 #include <StringUtils.h>
 #include <gtk/gtk.h>
@@ -45,5 +44,3 @@ private:
 
 	ObjectEncoding* encoder;
 };
-
-#endif /* __OBJECTOUTPUTSTREAM_H__ */

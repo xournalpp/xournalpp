@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __PAGEVIEW_H__
-#define __PAGEVIEW_H__
+#pragma once
 
 #include <Range.h>
 #include "Redrawable.h"
@@ -217,5 +216,3 @@ private:
 	friend class RenderJob;
 	friend class InputHandler;
 };
-
-#endif /* __PAGEVIEW_H__ */

@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __SIZEUNDOACTION_H__
-#define __SIZEUNDOACTION_H__
+#pragma once
 
 #include "UndoAction.h"
 
@@ -43,5 +42,3 @@ private:
 
 	Layer* layer;
 };
-
-#endif /* __SIZEUNDOACTION_H__ */

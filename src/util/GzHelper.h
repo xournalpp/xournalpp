@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __GZHELPER_H__
-#define __GZHELPER_H__
+#pragma once
 
 #include <StringUtils.h>
 #include <boost/iostreams/filter/gzip.hpp>
@@ -27,5 +26,3 @@ public:
 	static string gzcompress(const string& str, const bio::zlib_params& = bio::zlib::default_compression);
 	static string gzuncompress(const string& str);
 };
-
-#endif /* __GZHELPER_H__ */

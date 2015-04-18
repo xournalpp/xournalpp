@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __REMOVELAYERUNDOACTION_H__
-#define __REMOVELAYERUNDOACTION_H__
+#pragma once
 
 #include "UndoAction.h"
 
@@ -34,5 +33,3 @@ private:
 	Layer* layer;
 	int layerPos;
 };
-
-#endif /* __REMOVELAYERUNDOACTION_H__ */

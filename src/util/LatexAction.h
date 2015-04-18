@@ -11,8 +11,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __LATEXACTION_H__
-#define __LATEXACTION_H__
+#pragma once
 
 #include "../model/LayerListener.h"
 #include <gtk/gtk.h>
@@ -40,5 +39,3 @@ private:
 	double myx, myy;
 	double texArea;
 };
-
-#endif /* __LATEXACTION_H__ */

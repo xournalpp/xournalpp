@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __TEXT_H__
-#define __TEXT_H__
+#pragma once
 
 #include "Element.h"
 #include <StringUtils.h>
@@ -62,5 +61,3 @@ private:
 
 	bool inEditing;
 };
-
-#endif /* TEXT_H_ */

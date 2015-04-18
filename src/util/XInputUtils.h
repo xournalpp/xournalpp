@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __XINPUTUTILS_H__
-#define __XINPUTUTILS_H__
+#pragma once
 
 #include <gtk/gtk.h>
 
@@ -51,5 +50,3 @@ private:
 	static int enableLeafEnterWorkaround;
 
 };
-
-#endif /* __XINPUTUTILS_H__ */

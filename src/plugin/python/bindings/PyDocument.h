@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __PYDOCUMENT_H__
-#define __PYDOCUMENT_H__
+#pragma once
 
 class Control;
 #include <Python.h>
@@ -23,5 +22,3 @@ void initdocument();
 PyObject* newPyDocument(PyObject* xournal);
 
 }
-
-#endif /* __PYDOCUMENT_H__ */

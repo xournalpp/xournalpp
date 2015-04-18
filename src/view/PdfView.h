@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __PDFVIEW_H__
-#define __PDFVIEW_H__
+#pragma once
 
 #include "../pdf/popplerdirect/poppler/XojPopplerPage.h"
 #include <cairo/cairo.h>
@@ -26,5 +25,3 @@ public:
 	static void drawPage(PdfCache* cache, XojPopplerPage* popplerPage, cairo_t* cr,
 						double zoom, double width, double height, bool forPrinting = false);
 };
-
-#endif /* __PDFVIEW_H__ */

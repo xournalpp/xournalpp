@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __ERASEABLESTROKEPART_H__
-#define __ERASEABLESTROKEPART_H__
+#pragma once
 
 #include <glib.h>
 #include "../Point.h"
@@ -63,5 +62,3 @@ private:
 
 	friend class EraseableStroke;
 };
-
-#endif /* __ERASEABLESTROKEPART_H__ */

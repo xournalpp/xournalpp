@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __TEXTEDITOR_H__
-#define __TEXTEDITOR_H__
+#pragma once
 
 #include <gtk/gtk.h>
 #include "../gui/Redrawable.h"
@@ -120,5 +119,3 @@ private:
 
 	int blinkTimeout; // handler id
 };
-
-#endif /* __TEXTEDITOR_H__ */

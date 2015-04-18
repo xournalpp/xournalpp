@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __REPAINTHANDLER_H__
-#define __REPAINTHANDLER_H__
+#pragma once
 
 #include <XournalType.h>
 
@@ -44,5 +43,3 @@ private:
 
 	XournalView* xournal;
 };
-
-#endif /* __REPAINTHANDLER_H__ */

@@ -11,8 +11,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __DOCUMENT_H__
-#define __DOCUMENT_H__
+#pragma once
 
 #include <boost/filesystem/path.hpp>
 using boost::filesystem::path;
@@ -123,5 +122,3 @@ private:
 	/** The lock of the document */
 	GMutex documentLock;
 };
-
-#endif /* __DOCUMENT_H__ */

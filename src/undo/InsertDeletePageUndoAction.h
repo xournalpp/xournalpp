@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __INSERTDELETEPAGEUNDOACTION_H__
-#define __INSERTDELETEPAGEUNDOACTION_H__
+#pragma once
 
 #include "UndoAction.h"
 #include <XournalType.h>
@@ -36,5 +35,3 @@ private:
 	bool inserted;
 	int pagePos;
 };
-
-#endif /* __INSERTDELETEPAGEUNDOACTION_H__ */

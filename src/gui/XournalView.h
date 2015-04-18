@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __XOURNALVIEW_H__
-#define __XOURNALVIEW_H__
+#pragma once
 
 #include <gtk/gtk.h>
 #include <Arrayiterator.h>
@@ -156,5 +155,3 @@ private:
 
 	friend class Layout;
 };
-
-#endif /* __XOURNALVIEW_H__ */

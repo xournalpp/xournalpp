@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __TEXTBOXUNDOACTION_H__
-#define __TEXTBOXUNDOACTION_H__
+#pragma once
 
 #include "UndoAction.h"
 
@@ -39,5 +38,3 @@ private:
 	Element* element;
 	Element* oldelement;
 };
-
-#endif /* __TEXTBOXUNDOACTION_H__ */

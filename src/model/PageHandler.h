@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __PAGEHANDLER_H__
-#define __PAGEHANDLER_H__
+#pragma once
 
 #include <XournalType.h>
 
@@ -45,5 +44,3 @@ private:
 
 	friend class PageListener;
 };
-
-#endif

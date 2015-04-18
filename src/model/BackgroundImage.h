@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __BACKGROUNDIMAGE_H__
-#define __BACKGROUNDIMAGE_H__
+#pragma once
 
 #include <XournalType.h>
 #include <StringUtils.h>
@@ -54,5 +53,3 @@ private:
 
 	BackgroundImageContents* img;
 };
-
-#endif /* __BACKGROUNDIMAGE_H__ */

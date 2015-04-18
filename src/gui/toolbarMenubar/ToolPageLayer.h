@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __TOOLPAGELAYER_H__
-#define __TOOLPAGELAYER_H__
+#pragma once
 
 #include "AbstractToolItem.h"
 #include <XournalType.h>
@@ -45,5 +44,3 @@ private:
 	int layerCount;
 	bool inCbUpdate;
 };
-
-#endif /* __TOOLPAGELAYER_H__ */

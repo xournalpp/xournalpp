@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __FORMATDEFINITIONS_H__
-#define __FORMATDEFINITIONS_H__
+#pragma once
 
 typedef struct
 {
@@ -20,5 +19,3 @@ typedef struct
 
 extern const FormatUnits XOJ_UNITS[];
 extern const int XOJ_UNIT_COUNT;
-
-#endif //__FORMATDEFINITIONS_H__

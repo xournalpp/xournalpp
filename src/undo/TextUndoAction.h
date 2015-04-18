@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __TEXTUNDOACTION_H__
-#define __TEXTUNDOACTION_H__
+#pragma once
 
 #include "UndoAction.h"
 
@@ -47,5 +46,3 @@ private:
 
 	TextEditor* textEditor;
 };
-
-#endif /* __TEXTUNDOACTION_H__ */

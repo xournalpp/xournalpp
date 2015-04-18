@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __SHADOW_H__
-#define __SHADOW_H__
+#pragma once
 
 #include <gtk/gtk.h>
 
@@ -57,5 +56,3 @@ private:
 	cairo_surface_t* bottom;
 	cairo_surface_t* left;
 };
-
-#endif /* __SHADOW_H__ */

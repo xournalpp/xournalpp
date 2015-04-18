@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __RECOGNIZERUNDOACTION_H__
-#define __RECOGNIZERUNDOACTION_H__
+#pragma once
 
 #include "UndoAction.h"
 
@@ -40,5 +39,3 @@ private:
 	Stroke* recognized;
 	GList* original;
 };
-
-#endif /* __RECOGNIZERUNDOACTION_H__ */

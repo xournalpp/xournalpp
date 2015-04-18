@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __MAINWINDOW_H__
-#define __MAINWINDOW_H__
+#pragma once
 
 #include "GladeGui.h"
 #include "../model/Font.h"
@@ -139,5 +138,3 @@ private:
 	GtkWidget** toolbarWidgets;
 
 };
-
-#endif /* __MAINWINDOW_H__ */

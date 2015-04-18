@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __SPINPAGEADAPTER_H__
-#define __SPINPAGEADAPTER_H__
+#pragma once
 
 #include <XournalType.h>
 #include <gtk/gtk.h>
@@ -55,5 +54,3 @@ class SpinPageListener
 public:
 	virtual void pageChanged(int page) = 0;
 };
-
-#endif /* __SPINPAGEADAPTER_H__ */

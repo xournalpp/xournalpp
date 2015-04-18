@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __LINKDESTINATION_H__
-#define __LINKDESTINATION_H__
+#pragma once
 
 #include <gtk/gtk.h>
 #include <StringUtils.h>
@@ -85,5 +84,3 @@ enum
 
 GType link_dest_get_type(void) G_GNUC_CONST;
 XojLinkDest* link_dest_new();
-
-#endif /* __LINKDESTINATION_H__ */

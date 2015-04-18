@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __PYXOURNAL_H__
-#define __PYXOURNAL_H__
+#pragma once
 
 class Control;
 
@@ -25,5 +24,3 @@ Control* PyXournal_getControl(PyObject* obj);
 bool PyXournal_Check(PyObject* obj);
 
 }
-
-#endif /* __PYXOURNAL_H__ */

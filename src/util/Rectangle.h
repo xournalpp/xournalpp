@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __RECTANGLE_H__
-#define __RECTANGLE_H__
+#pragma once
 
 #include <glib.h>
 #include <XournalType.h>
@@ -58,5 +57,3 @@ public:
 	double width;
 	double height;
 };
-
-#endif /* RECTANGLE_H_ */

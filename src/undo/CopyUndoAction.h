@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __COPYUNDOACTION_H__
-#define __COPYUNDOACTION_H__
+#pragma once
 
 #include "UndoAction.h"
 #include <XournalType.h>
@@ -32,5 +31,3 @@ private:
 
 	int pageNr;
 };
-
-#endif

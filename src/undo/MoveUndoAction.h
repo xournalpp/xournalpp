@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __RELMOVEUNDOACTION_H__
-#define __RELMOVEUNDOACTION_H__
+#pragma once
 
 #include "UndoAction.h"
 
@@ -50,5 +49,3 @@ private:
 
 	double dx, dy;
 };
-
-#endif /* __RELMOVEUNDOACTION_H__ */

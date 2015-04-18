@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __ERASEUNDOACTION_H__
-#define __ERASEUNDOACTION_H__
+#pragma once
 
 #include "UndoAction.h"
 #include <XournalType.h>
@@ -42,5 +41,3 @@ private:
 	GList* edited;
 	GList* original;
 };
-
-#endif /* __ERASEUNDOACTION_H__ */

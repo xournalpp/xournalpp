@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __PAGEREF_H__
-#define __PAGEREF_H__
+#pragma once
 
 #include "BackgroundType.h"
 #include "XojPage.h"
@@ -50,5 +49,3 @@ private:
 
 	XojPage* page;
 };
-
-#endif /* __PAGEREF_H__ */

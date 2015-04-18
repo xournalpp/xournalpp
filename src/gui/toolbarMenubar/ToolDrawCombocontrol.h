@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __TOOLDRAWCOMBOCONTROL_H__
-#define __TOOLDRAWCOMBOCONTROL_H__
+#pragma once
 
 #include "ToolButton.h"
 #include "../GladeGui.h"
@@ -43,5 +42,3 @@ private:
 	GdkPixbuf* iconDrawLine;
 	GdkPixbuf* iconAutoDrawLine;
 };
-
-#endif /* __TOOLDRAWCOMBOCONTROL_H__ */

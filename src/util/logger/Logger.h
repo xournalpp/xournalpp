@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __LOGGER_H__
-#define __LOGGER_H__
+#pragma once
 
 class Log
 {
@@ -27,5 +26,3 @@ public:
 	static void trace(const char* callType, const char* clazz, const char* function,
 					long obj);
 };
-
-#endif /* __LOGGER_H__ */

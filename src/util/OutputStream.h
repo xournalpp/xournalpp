@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __OUTPUTSTREAM_H__
-#define __OUTPUTSTREAM_H__
+#pragma once
 
 #include <boost/filesystem/path.hpp>
 using boost::filesystem::path;
@@ -57,6 +56,3 @@ private:
 	string target;
 	path filename;
 };
-
-
-#endif /* __OUTPUTSTREAM_H__ */

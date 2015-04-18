@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __UNDOREDOHANDLER_H__
-#define __UNDOREDOHANDLER_H__
+#pragma once
 
 #include "UndoAction.h"
 #include <XournalType.h>
@@ -73,5 +72,3 @@ private:
 
 	Control* control;
 };
-
-#endif /* __UNDOREDOHANDLER_H__ */

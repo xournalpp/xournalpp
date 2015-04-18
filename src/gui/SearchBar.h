@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __SEARCHBAR_H__
-#define __SEARCHBAR_H__
+#pragma once
 
 #include <gtk/gtk.h>
 
@@ -46,5 +45,3 @@ private:
 	Control* control;
 	GdkColor defaultColor;
 };
-
-#endif /* __SEARCHBAR_H__ */

@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __COLORUNDOACTION_H__
-#define __COLORUNDOACTION_H__
+#pragma once
 
 #include "UndoAction.h"
 #include <XournalType.h>
@@ -41,5 +40,3 @@ private:
 
 	Layer* layer;
 };
-
-#endif /* __COLORUNDOACTION_H__ */

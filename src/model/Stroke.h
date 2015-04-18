@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __STROKE_H__
-#define __STROKE_H__
+#pragma once
 
 #include "Element.h"
 #include <Arrayiterator.h>
@@ -95,5 +94,3 @@ private:
 
 	EraseableStroke* eraseable;
 };
-
-#endif /* __STROKE_H__ */

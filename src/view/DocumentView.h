@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __DOCUMENTVIEW_H__
-#define __DOCUMENTVIEW_H__
+#pragma once
 
 #include <gtk/gtk.h>
 #include "../model/Element.h"
@@ -71,5 +70,3 @@ private:
 	double lWidth;
 	double lHeight;
 };
-
-#endif /* __DOCUMENTVIEW_H__ */

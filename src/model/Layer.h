@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __LAYER_H__
-#define __LAYER_H__
+#pragma once
 
 #include "Element.h"
 #include <XournalType.h>
@@ -73,5 +72,3 @@ private:
 	ElementVector elements;
 
 };
-
-#endif /* __LAYER_H__ */

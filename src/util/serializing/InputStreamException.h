@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __INPUTSTREAMEXCEPTION_H__
-#define __INPUTSTREAMEXCEPTION_H__
+#pragma once
 
 #include <StringUtils.h>
 #include <exception>
@@ -33,5 +32,3 @@ private:
 
 	string message;
 };
-
-#endif /* __INPUTSTREAMEXCEPTION_H__ */

@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __XOJ_PAGE_H__
-#define __XOJ_PAGE_H__
+#pragma once
 
 #include "Layer.h"
 #include <vector>
@@ -120,5 +119,3 @@ private:
 	 */
 	int backgroundColor;
 };
-
-#endif /* __XOJ_PAGE_H__ */

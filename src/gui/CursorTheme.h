@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __CURSORTHEME_H__
-#define __CURSORTHEME_H__
+#pragma once
 
 #include <XournalType.h>
 #include <String.h>
@@ -38,5 +37,3 @@ private:
 	String description;
 
 };
-
-#endif /* __CURSORTHEME_H__ */

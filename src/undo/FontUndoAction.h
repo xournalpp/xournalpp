@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __FONTUNDOACTION_H__
-#define __FONTUNDOACTION_H__
+#pragma once
 
 #include "UndoAction.h"
 #include <glib.h>
@@ -42,5 +41,3 @@ private:
 
 	Layer* layer;
 };
-
-#endif /* __FONTUNDOACTION_H__ */

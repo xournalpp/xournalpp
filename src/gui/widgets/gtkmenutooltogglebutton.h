@@ -23,8 +23,7 @@
  * Adapted MenuToolButton to a MenuToolTooggleButton
  */
 
-#ifndef __GTK_MENU_TOOL_TOGGLE_BUTTON_H__
-#define __GTK_MENU_TOOL_TOGGLE_BUTTON_H__
+#pragma once
 
 #include <gtk/gtk.h>
 
@@ -78,5 +77,3 @@ void gtk_menu_tool_toggle_button_set_arrow_tooltip_markup(
 														  GtkMenuToolToggleButton* button, const gchar* markup);
 
 G_END_DECLS
-
-#endif /* __GTK_MENU_TOOL_TOGGLE_BUTTON_H__ */

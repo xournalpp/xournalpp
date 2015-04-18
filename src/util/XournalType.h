@@ -12,8 +12,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __XOURNALTYPE_H__
-#define __XOURNALTYPE_H__
+#pragma once
 
 #include <glib.h>
 #include "logger/Logger.h"
@@ -135,6 +134,3 @@ const char* xoj_type_getName(int id);
 #define XOJ_CHECK_TYPE(name)
 
 #endif
-
-
-#endif /* __XOURNALTYPE_H__ */

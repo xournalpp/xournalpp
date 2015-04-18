@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __GLADEGUI_H__
-#define __GLADEGUI_H__
+#pragma once
 
 #include <gtk/gtk.h>
 #include <glade/glade-xml.h>
@@ -57,5 +56,3 @@ protected:
 	 */
 	GtkWidget* window;
 };
-
-#endif /* __GLADEGUI_H__ */

@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __OBJECTINPUTSTREAM_H__
-#define __OBJECTINPUTSTREAM_H__
+#pragma once
 
 #include "InputStreamException.h"
 
@@ -53,5 +52,3 @@ private:
 	GString* str;
 	int pos;
 };
-
-#endif /* __OBJECTINPUTSTREAM_H__ */

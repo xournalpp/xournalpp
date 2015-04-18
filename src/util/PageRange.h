@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __PAGERANGE_H__
-#define __PAGERANGE_H__
+#pragma once
 
 #include <XournalType.h>
 #include <vector>
@@ -45,5 +44,3 @@ public:
 	static bool isSeparator(char c);
 	static PageRangeVector parse(const char* str);
 };
-
-#endif /* __PAGERANGE_H__ */

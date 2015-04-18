@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __TEXIMAGE_H__
-#define __TEXIMAGE_H__
+#pragma once
 
 #include "Element.h"
 #include <XournalType.h>
@@ -62,5 +61,3 @@ private:
 	//text
 	string text;
 };
-
-#endif /* __TEXIMAGE_H__ */

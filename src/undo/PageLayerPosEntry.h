@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __PAGELAYERPOSENTRY_H__
-#define __PAGELAYERPOSENTRY_H__
+#pragma once
 
 template<class T>
 class PageLayerPosEntry
@@ -34,5 +33,3 @@ public:
 		return a->pos - b->pos;
 	}
 };
-
-#endif /* __PAGELAYERPOSENTRY_H__ */

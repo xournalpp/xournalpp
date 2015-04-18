@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __UTIL_H__
-#define __UTIL_H__
+#pragma once
 
 #include <boost/filesystem.hpp>
 using boost::filesystem::path;
@@ -44,5 +43,3 @@ public:
 private:
 	static path getSettingsSubfolder(string subfolder);
 };
-
-#endif /* __UTIL_H__ */

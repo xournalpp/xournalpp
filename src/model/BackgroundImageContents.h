@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __BACKGROUNDIMAGECONTENTS_H__
-#define __BACKGROUNDIMAGECONTENTS_H__
+#pragma once
 
 #include <glib.h>
 #include <StringUtils.h>
@@ -57,5 +56,3 @@ private:
     int pageId;
     GdkPixbuf* pixbuf;
 };
-
-#endif /* __BACKGROUNDIMAGECONTENTS_H__ */

@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __TEXTVIEW_H__
-#define __TEXTVIEW_H__
+#pragma once
 
 #include <StringUtils.h>
 #include <gtk/gtk.h>
@@ -52,5 +51,3 @@ public:
 	//Sets up DPI
 	static int getDPI();
 };
-
-#endif /* __TEXTVIEW_H__ */

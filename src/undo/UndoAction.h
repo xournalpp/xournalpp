@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __UNDOACTION_H__
-#define __UNDOACTION_H__
+#pragma once
 
 #include <StringUtils.h>
 #include "../model/PageRef.h"
@@ -49,5 +48,3 @@ protected:
 	PageRef page;
 	bool undone;
 };
-
-#endif /* __UNDOACTION_H__ */

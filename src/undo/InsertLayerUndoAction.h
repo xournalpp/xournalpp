@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __INSERTLAYERUNDOACTION_H__
-#define __INSERTLAYERUNDOACTION_H__
+#pragma once
 
 #include "UndoAction.h"
 #include <XournalType.h>
@@ -34,5 +33,3 @@ private:
 
 	Layer* layer;
 };
-
-#endif /* __INSERTLAYERUNDOACTION_H__ */

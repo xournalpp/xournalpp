@@ -9,13 +9,9 @@
  * @license GNU GPLv3
  */
 
-#ifndef __DOCUMENTCHANGETYPE_H__
-#define __DOCUMENTCHANGETYPE_H__
+#pragma once
 
 enum DocumentChangeType
 {
 	DOCUMENT_CHANGE_CLEARED, DOCUMENT_CHANGE_COMPLETE, DOCUMENT_CHANGE_PDF_BOOKMARKS
 };
-
-
-#endif /* __DOCUMENTCHANGETYPE_H__ */

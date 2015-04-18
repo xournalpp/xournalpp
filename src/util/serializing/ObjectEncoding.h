@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __OBJECTENCODING_H__
-#define __OBJECTENCODING_H__
+#pragma once
 
 #include <XournalType.h>
 
@@ -33,5 +32,3 @@ public:
 
 	GString* data;
 };
-
-#endif /* __OBJECTENCODING_H__ */

@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __LAYOUTDATA_H__
-#define __LAYOUTDATA_H__
+#pragma once
 
 #include <XournalType.h>
 
@@ -53,5 +52,3 @@ private:
 	// 0: left page, 1: right page, will may be extended later
 	int pageIndex;
 };
-
-#endif // __LAYOUTDATA_H__

@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __BACKGROUNDTYPE_H__
-#define __BACKGROUNDTYPE_H__
+#pragma once
 
 enum BackgroundType
 {
@@ -21,5 +20,3 @@ enum BackgroundType
 	BACKGROUND_TYPE_RULED,
 	BACKGROUND_TYPE_GRAPH
 };
-
-#endif /* __BACKGROUNDTYPE_H__ */

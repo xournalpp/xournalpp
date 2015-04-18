@@ -10,8 +10,7 @@
  */
 
 
-#ifndef __PYTHONRUNNER_H__
-#define __PYTHONRUNNER_H__
+#pragma once
 
 #include <StringUtils.h>
 #include <XournalType.h>
@@ -52,5 +51,3 @@ private:
 
 	int callbackId;
 };
-
-#endif /* __PYTHONRUNNER_H__ */

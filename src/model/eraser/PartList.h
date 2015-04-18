@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __PARTLIST_H__
-#define __PARTLIST_H__
+#pragma once
 
 #include <gtk/gtk.h>
 #include <XournalType.h>
@@ -38,5 +37,3 @@ private:
 
 	friend class EraseableStroke;
 };
-
-#endif /* __PARTLIST_H__ */

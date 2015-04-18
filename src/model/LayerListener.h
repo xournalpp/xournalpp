@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __LAYERLISTENER_H__
-#define __LAYERLISTENER_H__
+#pragma once
 
 class Element;
 class Layer;
@@ -35,5 +34,3 @@ public:
 private:
 	Layer* layer;
 };
-
-#endif /* __LAYERLISTENER_H__ */

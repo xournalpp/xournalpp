@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __BINOBJECTENCODING_H__
-#define __BINOBJECTENCODING_H__
+#pragma once
 
 #include "ObjectEncoding.h"
 
@@ -26,5 +25,3 @@ public:
 private:
 	XOJ_TYPE_ATTRIB;
 };
-
-#endif /* __BINOBJECTENCODING_H__ */

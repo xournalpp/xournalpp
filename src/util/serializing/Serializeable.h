@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __SERIALIZEABLE_H__
-#define __SERIALIZEABLE_H__
+#pragma once
 
 #include "InputStreamException.h"
 
@@ -26,5 +25,3 @@ public:
 	virtual void readSerialized(ObjectInputStream& in) throw (
 			InputStreamException) = 0;
 };
-
-#endif /* __SERIALIZEABLE_H__ */

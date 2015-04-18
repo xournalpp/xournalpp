@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __ELEMENTCONTAINER_H__
-#define __ELEMENTCONTAINER_H__
+#pragma once
 
 #include "../model/Element.h"
 
@@ -21,5 +20,3 @@ class ElementContainer
 public:
 	virtual ElementVector* getElements() = 0;
 };
-
-#endif /* __ELEMENTCONTAINER_H__ */

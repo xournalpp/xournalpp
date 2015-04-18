@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __PYSELECTION_H__
-#define __PYSELECTION_H__
+#pragma once
 
 class Control;
 #include <Python.h>
@@ -23,5 +22,3 @@ void initselection();
 PyObject* newPySelection(PyObject* xournal);
 
 }
-
-#endif /* __PYSELECTION_H__ */

@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __ZOOMCALLIB_H__
-#define __ZOOMCALLIB_H__
+#pragma once
 
 #include <gtk/gtk.h>
 #include <cairo.h>
@@ -41,6 +40,3 @@ void zoomcallib_set_val(ZoomCallib* cpu, gint val);
 GtkWidget* zoomcallib_new();
 
 G_END_DECLS
-
-
-#endif /* __ZOOMCALLIB_H__ */

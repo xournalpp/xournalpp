@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __XOJCOLOR_H__
-#define __XOJCOLOR_H__
+#pragma once
 
 #include <XournalType.h>
 #include <glib.h>
@@ -33,5 +32,3 @@ private:
 	// the localized name of the color
 	string name;
 };
-
-#endif /* __XOJCOLOR_H__ */

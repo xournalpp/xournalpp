@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __TOOLBARDRAGDROP_H__
-#define __TOOLBARDRAGDROP_H__
+#pragma once
 
 #include <gtk/gtk.h>
 #include <StringUtils.h>
@@ -60,5 +59,3 @@ public:
 public:
 	static void removeFromToolbarForMove(GtkWidget* widget);
 };
-
-#endif /* __TOOLBARDRAGDROP_H__ */

@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __ARRAYITERATOR_H__
-#define __ARRAYITERATOR_H__
+#pragma once
 
 #include <XournalType.h>
 
@@ -49,5 +48,3 @@ private:
 	int count;
 	const T* data;
 };
-
-#endif /* __ARRAYITERATOR_H__ */

@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __SWAPUNDOACTION_H__
-#define __SWAPUNDOACTION_H__
+#pragma once
 
 #include "UndoAction.h"
 
@@ -43,5 +42,3 @@ private:
 	PageRef swapped_page, other_page;
 	bool moveUp;
 };
-
-#endif

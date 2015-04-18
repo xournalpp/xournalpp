@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __TOOLZOOMSLIDER_H__
-#define __TOOLZOOMSLIDER_H__
+#pragma once
 
 #include "AbstractToolItem.h"
 #include "../../control/ZoomControl.h"
@@ -48,5 +47,3 @@ private:
 	ZoomControl* zoom;
 	bool horizontal;
 };
-
-#endif /* __TOOLZOOMSLIDER_H__ */

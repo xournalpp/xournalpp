@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __CURSOR_H__
-#define __CURSOR_H__
+#pragma once
 
 #include "../control/tools/CursorSelectionType.h"
 #include <XournalType.h>
@@ -49,5 +48,3 @@ private:
 	bool mouseDown;
 	bool invisible;
 };
-
-#endif /* __CURSOR_H__ */

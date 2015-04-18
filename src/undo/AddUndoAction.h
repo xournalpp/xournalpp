@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __ADDUNDOACTION_H__
-#define __ADDUNDOACTION_H__
+#pragma once
 
 #include "UndoAction.h"
 #include <XournalType.h>
@@ -39,5 +38,3 @@ private:
 	GList* elements;
 	bool eraser;
 };
-
-#endif /* __ADDUNDOACTION_H__ */

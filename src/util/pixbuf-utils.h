@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __PIXBUF_UTILS__
-#define __PIXBUF_UTILS__
+#pragma once
 
 #include <gtk/gtk.h>
 
@@ -22,5 +21,3 @@ xoj_pixbuf_get_from_surface(cairo_surface_t* surface,
 							gint src_y,
 							gint width,
 							gint height);
-
-#endif //__PIXBUF_UTILS__

@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __STACKTRACE_H__
-#define __STACKTRACE_H__
+#pragma once
 
 #include <iostream>
 #include <StringUtils.h>
@@ -27,5 +26,3 @@ public:
 	static void printStracktrace();
 	static void printStracktrace(std::ostream& stream);
 };
-
-#endif /* __STACKTRACE_H__ */

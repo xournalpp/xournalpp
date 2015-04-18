@@ -9,8 +9,8 @@
  * @license GNU GPLv3
  */
 
-#ifndef __TEXTEDITORWIDGET_H__
-#define __TEXTEDITORWIDGET_H__
+#pragma once
+
 #include <gtk/gtk.h>
 #include <gtk/gtkmarshal.h>
 
@@ -427,5 +427,3 @@ gtk_invisible_constructor(GType type, guint n_construct_properties,
 
 	return object;
 }
-
-#endif /* __TEXTEDITORWIDGET_H__ */

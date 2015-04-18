@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __PYUNDOREDOHANDLER_H_
-#define __PYUNDOREDOHANDLER_H_
+#pragma once
 
 class Control;
 #include <Python.h>
@@ -23,5 +22,3 @@ void initundoredohandler();
 PyObject* newPyUndoRedoHandler(PyObject* xournal);
 
 }
-
-#endif /* PYUNDOREDOHANDLER_H_ */

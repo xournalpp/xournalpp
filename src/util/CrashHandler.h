@@ -9,11 +9,8 @@
  * @license GNU GPLv3
  */
 
-#ifndef __CRASH_HANDLER_H__
-#define __CRASH_HANDLER_H__
+#pragma once
 
 class Document;
 void setEmergencyDocument(Document* doc);
 void installCrashHandlers(void);
-
-#endif // __CRASH_HANDLER_H__

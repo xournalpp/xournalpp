@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __IMAGE_H__
-#define __IMAGE_H__
+#pragma once
 
 #include "Element.h"
 #include <XournalType.h>
@@ -59,5 +58,3 @@ private:
 
 	int read;
 };
-
-#endif /* __IMAGE_H__ */

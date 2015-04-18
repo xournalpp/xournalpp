@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __SCROLLBAR_H__
-#define __SCROLLBAR_H__
+#pragma once
 
 #include <config.h>
 
@@ -71,6 +70,3 @@ private:
 
 	int value;
 };
-
-#endif //__SCROLLBAR_H__
-

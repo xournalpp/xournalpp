@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __POINT_H__
-#define __POINT_H__
+#pragma once
 
 #include <XournalType.h>
 
@@ -40,4 +39,3 @@ public:
 
 	static constexpr double NO_PRESURE = -1;
 };
-#endif /* __POINT_H__ */

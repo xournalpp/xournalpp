@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __DOCUMENTLISTENER_H__
-#define __DOCUMENTLISTENER_H__
+#pragma once
 
 #include "DocumentChangeType.h"
 #include <XournalType.h>
@@ -39,5 +38,3 @@ private:
 
 	DocumentHandler* handler;
 };
-
-#endif /* __DOCUMENTLISTENER_H__ */

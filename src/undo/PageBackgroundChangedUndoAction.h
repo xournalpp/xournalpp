@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __PAGEBACKGROUNDCHANGEDUNDOACTION_H__
-#define __PAGEBACKGROUNDCHANGEDUNDOACTION_H__
+#pragma once
 
 #include "UndoAction.h"
 #include "../model/PageRef.h"
@@ -45,5 +44,3 @@ private:
 	double newW;
 	double newH;
 };
-
-#endif /* __PAGEBACKGROUNDCHANGEDUNDOACTION_H__ */

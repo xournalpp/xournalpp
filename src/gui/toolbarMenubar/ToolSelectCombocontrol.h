@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __TOOLSELECTCOMBOCONTROL_H__
-#define __TOOLSELECTCOMBOCONTROL_H__
+#pragma once
 
 #include "ToolButton.h"
 #include "../GladeGui.h"
@@ -41,5 +40,3 @@ private:
 	GdkPixbuf* iconSelectRgion;
 	GdkPixbuf* iconSelectObject;
 };
-
-#endif /* __TOOLSELECTCOMBOCONTROL_H__ */

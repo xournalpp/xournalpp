@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __GLADESEARCHPATH_H__
-#define __GLADESEARCHPATH_H__
+#pragma once
 
 #include <glib.h>
 #include <XournalType.h>
@@ -37,5 +36,3 @@ private:
 	 */
 	GList* directories;
 };
-
-#endif /* __GLADESEARCHPATH_H__ */

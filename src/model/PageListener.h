@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __PAGELISTENER_H__
-#define __PAGELISTENER_H__
+#pragma once
 
 #include <XournalType.h>
 
@@ -39,5 +38,3 @@ private:
 
 	PageHandler* handler;
 };
-
-#endif /* __DOCUMENTLISTENER_H__ */

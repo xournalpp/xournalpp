@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __SCALEUNDOACTION_H__
-#define __SCALEUNDOACTION_H__
+#pragma once
 
 #include "UndoAction.h"
 #include <glib.h>
@@ -42,5 +41,3 @@ private:
 	double fx;
 	double fy;
 };
-
-#endif /* __SCALEUNDOACTION_H__ */
