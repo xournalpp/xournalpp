@@ -6,7 +6,7 @@
  * @author Xournal++ Team
  * https://github.com/xournalpp/xournalpp
  *
- * @license GNU GPLv3
+ * @license GNU GPLv2
  */
 
 typedef struct
