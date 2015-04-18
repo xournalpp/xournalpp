@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __TOOLBARITEM_H__
-#define __TOOLBARITEM_H__
+#pragma once
 
 #include <StringUtils.h>
 #include <XournalType.h>
@@ -37,5 +36,3 @@ private:
 
 	static int sid;
 };
-
-#endif /* __TOOLBARITEM_H__ */

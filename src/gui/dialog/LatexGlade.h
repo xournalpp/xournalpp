@@ -11,8 +11,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __LATEXGLADE_H__
-#define __LATEXGLADE_H__
+#pragma once
 
 #include "../../model/LayerListener.h"
 #include <gtk/gtk.h>
@@ -40,5 +39,3 @@ private:
 	GtkWidget* texBox;
 	string theLatex;
 };
-
-#endif /* __LATEXGLADE_H__ */

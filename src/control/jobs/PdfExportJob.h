@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __PDFEXPORTJOB_H__
-#define __PDFEXPORTJOB_H__
+#pragma once
 
 #include <boost/filesystem/path.hpp>
 using boost::filesystem::path;
@@ -43,5 +42,3 @@ private:
 
 	string errorMsg;
 };
-
-#endif /* __PDFEXPORTJOB_H__ */

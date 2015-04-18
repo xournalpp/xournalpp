@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __TEXTATTRIBUTE_H__
-#define __TEXTATTRIBUTE_H__
+#pragma once
 
 #include "Attribute.h"
 
@@ -28,6 +27,3 @@ private:
 
 	char* value;
 };
-
-
-#endif /* __TEXTATTRIBUTE_H__ */

@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __PAGEPOSITIONHANDLER_H__
-#define __PAGEPOSITIONHANDLER_H__
+#pragma once
 
 #include <glib.h>
 #include <XournalType.h>
@@ -57,5 +56,3 @@ private:
 
 	int maxY;
 };
-
-#endif /* __PAGEPOSITIONHANDLER_H__ */

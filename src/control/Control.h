@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __CONTROL_H__
-#define __CONTROL_H__
+#pragma once
 
 #include "RecentManager.h"
 #include "../gui/MainWindow.h"
@@ -331,5 +330,3 @@ public:
 	ActionType type;
 	Control* control;
 };
-
-#endif /* __CONTROL_H__ */

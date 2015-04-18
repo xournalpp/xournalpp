@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __PREVIEWJOB_H__
-#define __PREVIEWJOB_H__
+#pragma once
 
 #include "Job.h"
 #include <XournalType.h>
@@ -37,5 +36,3 @@ private:
 
 	SidebarPreviewPage* sidebarPreview;
 };
-
-#endif /* __PREVIEWJOB_H__ */

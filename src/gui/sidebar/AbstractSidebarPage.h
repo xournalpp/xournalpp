@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __ABSTRACTSIDEBARPAGE_H__
-#define __ABSTRACTSIDEBARPAGE_H__
+#pragma once
 
 #include <gtk/gtk.h>
 #include <XournalType.h>
@@ -89,5 +88,3 @@ public:
 	GtkToolItem* tabButton;
 
 };
-
-#endif /* __ABSTRACTSIDEBARPAGE_H__ */

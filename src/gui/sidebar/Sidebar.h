@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __SIDEBAR_H__
-#define __SIDEBAR_H__
+#pragma once
 
 #include <gtk/gtk.h>
 #include <XournalType.h>
@@ -128,6 +127,3 @@ public:
 	AbstractSidebarPage* page;
 
 };
-
-
-#endif /* __SIDEBAR_H__ */

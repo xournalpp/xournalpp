@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __XMLSTROKENODE_H__
-#define __XMLSTROKENODE_H__
+#pragma once
 
 #include "XmlNode.h"
 #include "../../model/Point.h"
@@ -38,5 +37,3 @@ private:
 	double* widths;
 	int widthsLength;
 };
-
-#endif /* __XMLSTROKENODE_H__ */

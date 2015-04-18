@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __METADATAMANAGER_H__
-#define __METADATAMANAGER_H__
+#pragma once
 
 #include <glib.h>
 #include <StringUtils.h>
@@ -58,5 +57,3 @@ private:
 	int timeoutId;
 	GKeyFile* config;
 };
-
-#endif /* __METADATAMANAGER_H__ */

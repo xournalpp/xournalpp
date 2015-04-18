@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __TOOLBARCUSTOMIZEDIALOG_H__
-#define __TOOLBARCUSTOMIZEDIALOG_H__
+#pragma once
 
 #include "../../GladeGui.h"
 #include <XournalType.h>
@@ -90,5 +89,3 @@ private:
 
 	ToolbarDragDropHandler* handler;
 };
-
-#endif /* __TOOLBARCUSTOMIZEDIALOG_H__ */

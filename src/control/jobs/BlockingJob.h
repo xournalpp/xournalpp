@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __BLOCKINGJOB_H__
-#define __BLOCKINGJOB_H__
+#pragma once
 
 #include "Job.h"
 #include <XournalType.h>
@@ -42,5 +41,3 @@ private:
 protected:
 	Control* control;
 };
-
-#endif /* __BLOCKINGJOB_H__ */

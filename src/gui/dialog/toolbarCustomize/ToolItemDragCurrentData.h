@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __TOOLITEMDRAGCURRENTDATA_H__
-#define __TOOLITEMDRAGCURRENTDATA_H__
+#pragma once
 
 #include "../../ToolitemDragDrop.h"
 #include <gtk/gtk.h>
@@ -32,5 +31,3 @@ public:
 private:
 	static ToolItemDragDropData* data;
 };
-
-#endif /* __TOOLITEMDRAGCURRENTDATA_H__ */

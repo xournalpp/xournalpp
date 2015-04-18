@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __SIDEBARTOOLBAR_H__
-#define __SIDEBARTOOLBAR_H__
+#pragma once
 
 #include <gtk/gtk.h>
 #include <XournalType.h>
@@ -80,5 +79,3 @@ private:
 	 */
 	GtkToolItem* btDelete;
 };
-
-#endif /* __SIDEBARTOOLBAR_H__ */

@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __EXPORTDIALOG_H__
-#define __EXPORTDIALOG_H__
+#pragma once
 
 #include "../GladeGui.h"
 #include "../../control/settings/Settings.h"
@@ -89,5 +88,3 @@ private:
 		COL_TYPE = 2
 	};
 };
-
-#endif /* __EXPORTDIALOG_H__ */

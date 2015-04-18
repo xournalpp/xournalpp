@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __DOUBLEARRAYATTRIBUTE_H__
-#define __DOUBLEARRAYATTRIBUTE_H__
+#pragma once
 
 #include "Attribute.h"
 #include <XournalType.h>
@@ -31,6 +30,3 @@ private:
 	double* values;
 	int count;
 };
-
-
-#endif /* __DOUBLEARRAYATTRIBUTE_H__ */

@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __XMLTEXTNODE_H__
-#define __XMLTEXTNODE_H__
+#pragma once
 
 #include "XmlNode.h"
 
@@ -31,5 +30,3 @@ private:
 
 	char* text;
 };
-
-#endif /* __XMLTEXTNODE_H__ */

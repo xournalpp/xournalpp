@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __PAGEPOSITION_H__
-#define __PAGEPOSITION_H__
+#pragma once
 
 #include <glib.h>
 #include <XournalType.h>
@@ -72,5 +71,3 @@ private:
 
 	friend class PagePositionHandler;
 };
-
-#endif /* __PAGEPOSITION_H__ */

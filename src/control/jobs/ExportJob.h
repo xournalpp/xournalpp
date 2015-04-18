@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __EXPORTJOB_H__
-#define __EXPORTJOB_H__
+#pragma once
 
 #include "BlockingJob.h"
 #include "ExportFormtType.h"
@@ -51,5 +50,3 @@ private:
 	path filepath;
 	string front, back;
 };
-
-#endif /* __EXPORTJOB_H__ */

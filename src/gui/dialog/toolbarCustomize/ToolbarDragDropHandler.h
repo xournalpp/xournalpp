@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __TOOLBARDRAGDROPHANDLER_H__
-#define __TOOLBARDRAGDROPHANDLER_H__
+#pragma once
 
 #include <XournalType.h>
 
@@ -44,5 +43,3 @@ private:
 	ToolbarAdapter** toolbars;
 	ToolbarCustomizeDialog* customizeDialog;
 };
-
-#endif /* __TOOLBARDRAGDROPHANDLER_H__ */

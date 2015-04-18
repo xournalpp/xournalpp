@@ -9,9 +9,7 @@
  * @license GNU GPLv3
  */
 
-
-#ifndef __EDITSELECTIONCONTENTS_H__
-#define __EDITSELECTIONCONTENTS_H__
+#pragma once
 
 #include "../../view/ElementContainer.h"
 #include <XournalType.h>
@@ -179,5 +177,3 @@ private:
 	 */
 	PageView* sourceView;
 };
-
-#endif /* __EDITSELECTIONCONTENTS_H__ */

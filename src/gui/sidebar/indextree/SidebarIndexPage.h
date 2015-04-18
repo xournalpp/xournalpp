@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __SIDEBARINDEXPAGE_H__
-#define __SIDEBARINDEXPAGE_H__
+#pragma once
 
 #include "../AbstractSidebarPage.h"
 
@@ -118,5 +117,3 @@ private:
 	bool hasContents;
 
 };
-
-#endif /* __SIDEBARINDEXPAGE_H__ */

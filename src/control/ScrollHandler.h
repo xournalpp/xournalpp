@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __SCROLLHANDLER_H__
-#define __SCROLLHANDLER_H__
+#pragma once
 
 class XojPage;
 class Control;
@@ -50,5 +49,3 @@ private:
 
 	Control* control;
 };
-
-#endif /* __SCROLLHANDLER_H__ */

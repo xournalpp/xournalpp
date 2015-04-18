@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __XOURNALMAIN_H__
-#define __XOURNALMAIN_H__
+#pragma once
 
 #include <config.h>
 #include <XournalType.h>
@@ -41,5 +40,3 @@ private:
 	XOJ_TYPE_ATTRIB;
 
 };
-
-#endif /* __XOURNALMAIN_H__ */

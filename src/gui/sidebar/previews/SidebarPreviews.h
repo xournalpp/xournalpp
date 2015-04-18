@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __SIDEBARPREVIEWS_H__
-#define __SIDEBARPREVIEWS_H__
+#pragma once
 
 #include "../AbstractSidebarPage.h"
 
@@ -150,5 +149,3 @@ private:
 
 	friend class SidebarLayout;
 };
-
-#endif /* __SIDEBARPREVIEWS_H__ */

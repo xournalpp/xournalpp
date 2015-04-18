@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __SAVEHANDLER_H__
-#define __SAVEHANDLER_H__
+#pragma once
 
 #include <OutputStream.h>
 #include <XournalType.h>
@@ -49,5 +48,3 @@ private:
 
 	GList* backgroundImages;
 };
-
-#endif /* __SAVEHANDLER_H__ */

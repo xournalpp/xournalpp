@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __FORMATDIALOG_H__
-#define __FORMATDIALOG_H__
+#pragma once
 
 #include "../GladeGui.h"
 #include "../../control/settings/Settings.h"
@@ -63,5 +62,3 @@ private:
 	double width;
 	double height;
 };
-
-#endif /* __FORMATDIALOG_H__ */

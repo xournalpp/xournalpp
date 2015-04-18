@@ -10,8 +10,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __TOOLBARCOLORNAMES_H__
-#define __TOOLBARCOLORNAMES_H__
+#pragma once
 
 #include <XournalType.h>
 #include <glib.h>
@@ -44,5 +43,3 @@ private:
 	GKeyFile* config;
 	GHashTable* predefinedColorNames;
 };
-
-#endif /* __TOOLBARCOLORNAMES_H__ */

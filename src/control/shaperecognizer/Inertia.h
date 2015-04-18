@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __INERTIA_H__
-#define __INERTIA_H__
+#pragma once
 
 #include <XournalType.h>
 
@@ -50,5 +49,3 @@ private:
 	double sxy;
 	double syy;
 };
-
-#endif /* __INERTIA_H__ */

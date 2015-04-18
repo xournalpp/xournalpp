@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __BUTTONCONFIGGUI__
-#define __BUTTONCONFIGGUI__
+#pragma once
 
 #include "../../control/Actions.h"
 #include <XournalType.h>
@@ -52,5 +51,3 @@ private:
 	GtkWidget* cbEraserType;
 	GtkWidget* cbDrawingType;
 };
-
-#endif /* __BUTTONCONFIGGUI__ */

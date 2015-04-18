@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __INTATTRIBUTE_H__
-#define __INTATTRIBUTE_H__
+#pragma once
 
 #include "Attribute.h"
 
@@ -28,5 +27,3 @@ private:
 
 	int value;
 };
-
-#endif /* __INTATTRIBUTE_H__ */

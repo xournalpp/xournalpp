@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __FONTBUTTON_H__
-#define __FONTBUTTON_H__
+#pragma once
 
 #include "AbstractToolItem.h"
 #include "../GladeGui.h"
@@ -52,5 +51,3 @@ private:
 
 	XojFont font;
 };
-
-#endif /* __FONTBUTTON_H__ */

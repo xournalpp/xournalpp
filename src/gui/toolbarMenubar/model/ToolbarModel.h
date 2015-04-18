@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __TOOLBARMODEL_H__
-#define __TOOLBARMODEL_H__
+#pragma once
 
 #include <XournalType.h>
 #include <StringUtils.h>
@@ -40,5 +39,3 @@ private:
 
 	ToolbarDataVector toolbars;
 };
-
-#endif /* __TOOLBARMODEL_H__ */

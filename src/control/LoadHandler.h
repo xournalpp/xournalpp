@@ -11,8 +11,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __LOADHANDLER_H__
-#define __LOADHANDLER_H__
+#pragma once
 
 #include <map>
 #include <fstream>
@@ -148,5 +147,3 @@ private:
 	DocumentHandler dHanlder;
 	Document doc;
 };
-
-#endif /* __LOADHANDLER_H__ */

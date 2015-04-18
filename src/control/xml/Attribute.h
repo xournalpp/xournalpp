@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __ATTRIBUTE_H__
-#define __ATTRIBUTE_H__
+#pragma once
 
 #include <OutputStream.h>
 #include <XournalType.h>
@@ -32,5 +31,3 @@ private:
 
 	char* name;
 };
-
-#endif /* __ATTRIBUTE_H__ */

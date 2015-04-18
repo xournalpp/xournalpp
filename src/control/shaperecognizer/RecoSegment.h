@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __RECOSEGMENT_H__
-#define __RECOSEGMENT_H__
+#pragma once
 
 class Stroke;
 class Inertia;
@@ -51,5 +50,3 @@ public:
 
 	bool reversed;
 };
-
-#endif /* __RECOSEGMENT_H__ */

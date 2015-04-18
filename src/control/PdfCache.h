@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __PDFCACHE_H__
-#define __PDFCACHE_H__
+#pragma once
 
 #include <cairo/cairo.h>
 #include "../pdf/popplerdirect/poppler/XojPopplerPage.h"
@@ -45,5 +44,3 @@ private:
 
 	double zoom;
 };
-
-#endif /* __PDFCACHE_H__ */

@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __MENUITEM_H__
-#define __MENUITEM_H__
+#pragma once
 
 #include "AbstractItem.h"
 
@@ -28,5 +27,3 @@ public:
 private:
 	XOJ_TYPE_ATTRIB;
 };
-
-#endif /* __MENUITEM_H__ */

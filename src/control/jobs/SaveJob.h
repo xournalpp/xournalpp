@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __SAVEJOB_H__
-#define __SAVEJOB_H__
+#pragma once
 
 #include "BlockingJob.h"
 #include <StringUtils.h>
@@ -39,5 +38,3 @@ private:
 	string lastError;
 
 };
-
-#endif /* __SAVEJOB_H__ */

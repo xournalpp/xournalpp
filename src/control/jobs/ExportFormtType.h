@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __XPORTFORMTTYPE_H__
-#define __XPORTFORMTTYPE_H__
+#pragma once
 
 enum ExportFormtType
 {
@@ -19,5 +18,3 @@ enum ExportFormtType
 	EXPORT_FORMAT_SVG = 3,
 	EXPORT_FORMAT_PNG = 4
 };
-
-#endif /* __XPORTFORMTTYPE_H__ */

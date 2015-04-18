@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __RENDERJOB_H__
-#define __RENDERJOB_H__
+#pragma once
 
 #include "Job.h"
 
@@ -45,5 +44,3 @@ private:
 
 	PageView* view;
 };
-
-#endif /* __RENDERJOB_H__ */

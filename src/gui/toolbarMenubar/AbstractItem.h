@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __ABSTRACTITEM_H__
-#define __ABSTRACTITEM_H__
+#pragma once
 
 #include "../../control/Actions.h"
 #include <StringUtils.h>
@@ -64,5 +63,3 @@ private:
 	gulong menuSignalHandler;
 	GtkWidget* menuitem;
 };
-
-#endif /* __ABSTRACTITEM_H__ */

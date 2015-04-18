@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __SHAPERECOGNIZERCONFIG_H__
-#define __SHAPERECOGNIZERCONFIG_H__
+#pragma once
 
 #include "../../cfg.h"
 
@@ -51,5 +50,3 @@ public:
 };
 #define RDEBUG(msg) no_debug_format()
 #endif
-
-#endif /* __SHAPERECOGNIZERCONFIG_H__ */

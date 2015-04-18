@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef ERASEHANDLER_H_
-#define ERASEHANDLER_H_
+#pragma once
 
 #include <XournalType.h>
 #include "../../model/PageRef.h"
@@ -54,5 +53,3 @@ private:
 
 	double halfEraserSize;
 };
-
-#endif /* ERASEHANDLER_H_ */

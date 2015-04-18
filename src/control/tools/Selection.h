@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __SELECTION_H__
-#define __SELECTION_H__
+#pragma once
 
 #include <vector>
 #include "../../model/PageRef.h"
@@ -94,5 +93,3 @@ private:
 
 	GList* points;
 };
-
-#endif /* __SELECTION_H__ */

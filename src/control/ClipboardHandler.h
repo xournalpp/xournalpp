@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __CLIPBOARDHANDLER_H__
-#define __CLIPBOARDHANDLER_H__
+#pragma once
 
 #include <gtk/gtk.h>
 #include <StringUtils.h>
@@ -70,5 +69,3 @@ private:
 	bool containsXournal;
 	bool containsImage;
 };
-
-#endif /* __CLIPBOARDHANDLER_H__ */

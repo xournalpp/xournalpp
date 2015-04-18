@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __RECENTMANAGER_H__
-#define __RECENTMANAGER_H__
+#pragma once
 
 #include <boost/filesystem/path.hpp>
 using boost::filesystem::path;
@@ -138,5 +137,3 @@ private:
 	GtkWidget* menu;
 	GList* menuItemList;
 };
-
-#endif /* __RECENTMANAGER_H__ */

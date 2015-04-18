@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __SHAPERECOGNIZERRESULT_H__
-#define __SHAPERECOGNIZERRESULT_H__
+#pragma once
 
 #include <XournalType.h>
 #include <vector>
@@ -37,5 +36,3 @@ private:
 	Stroke* recognized;
 	StrokeVector source;
 };
-
-#endif /* __SHAPERECOGNIZERRESULT_H__ */

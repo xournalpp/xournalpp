@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __TOOLHANDLER_H__
-#define __TOOLHANDLER_H__
+#pragma once
 
 #include "Tool.h"
 #include <Arrayiterator.h>
@@ -117,5 +116,3 @@ private:
 
 	Settings* settings;
 };
-
-#endif /* __TOOLHANDLER_H__ */

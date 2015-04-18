@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __IMAGEOPENDLG_H__
-#define __IMAGEOPENDLG_H__
+#pragma once
 
 #include <gtk/gtk.h>
 class Settings;
@@ -29,5 +28,3 @@ private:
 	static void updatePreviewCallback(GtkFileChooser* fileChooser, void* userData);
 	static GdkPixbuf* pixbufScaleDownIfNecessary(GdkPixbuf* pixbuf, gint maxSize);
 };
-
-#endif /* __IMAGEOPENDLG_H__ */

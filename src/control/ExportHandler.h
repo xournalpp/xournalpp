@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __EXPORTHANDLER_H__
-#define __EXPORTHANDLER_H__
+#pragma once
 
 class GladeSearchpath;
 class Settings;
@@ -34,5 +33,3 @@ private:
 	XOJ_TYPE_ATTRIB;
 
 };
-
-#endif /* __EXPORTHANDLER_H__ */

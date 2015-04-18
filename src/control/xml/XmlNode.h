@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __XMLNODE_H__
-#define __XMLNODE_H__
+#pragma once
 
 #include <Util.h>
 #include <OutputStream.h>
@@ -62,5 +61,3 @@ protected:
 
 	char* tag;
 };
-
-#endif /* __XMLNODE_H__ */

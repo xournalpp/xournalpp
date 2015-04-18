@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __TOOLBARDRAGDROPHELPER_H__
-#define __TOOLBARDRAGDROPHELPER_H__
+#pragma once
 
 #include <gtk/gtk.h>
 
@@ -31,5 +30,3 @@ public:
 	static GdkAtom atomToolItem;
 	static GtkTargetEntry dropTargetEntry;
 };
-
-#endif /* __TOOLBARDRAGDROPHELPER_H__ */

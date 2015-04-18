@@ -10,8 +10,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __EDITSELECTION_H__
-#define __EDITSELECTION_H__
+#pragma once
 
 #include "../../view/ElementContainer.h"
 #include "../Tool.h"
@@ -261,5 +260,3 @@ private: // HANDLER
 	UndoRedoHandler* undo;
 
 };
-
-#endif /* __EDITSELECTION_H__ */

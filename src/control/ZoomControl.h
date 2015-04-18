@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __ZOOMCONTROL_H__
-#define __ZOOMCONTROL_H__
+#pragma once
 
 #include <gtk/gtk.h>
 
@@ -69,5 +68,3 @@ private:
 	double zoom100Value;
 	double zoomFitValue;
 };
-
-#endif /* __ZOOMCONTROL_H__ */

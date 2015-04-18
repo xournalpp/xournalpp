@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __TOOLBARENTRY_H__
-#define __TOOLBARENTRY_H__
+#pragma once
 
 #include <vector>
 
@@ -51,5 +50,3 @@ private:
 	string name;
 	ToolbarItemVector entries;
 };
-
-#endif /* __TOOLBARENTRY_H__ */

@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __XOJOPENDLG_H__
-#define __XOJOPENDLG_H__
+#pragma once
 
 #include <StringUtils.h>
 #include <gtk/gtk.h>
@@ -30,5 +29,3 @@ public:
 private:
 	static void updatePreviewCallback(GtkFileChooser* fileChooser, void* userData);
 };
-
-#endif /* __XOJOPENDLG_H__ */

@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __ACTIONDISPATCHER_H__
-#define __ACTIONDISPATCHER_H__
+#pragma once
 
 #include <XournalType.h>
 
@@ -247,5 +246,3 @@ private:
 	GList* enabledListener;
 	GList* selectionListener;
 };
-
-#endif /* __ACTIONDISPATCHER_H__ */

@@ -11,8 +11,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __XOURNALSCHEDULER_H__
-#define __XOURNALSCHEDULER_H__
+#pragma once
 
 #include "Scheduler.h"
 #include "../../gui/sidebar/previews/SidebarPreviewPage.h"
@@ -48,5 +47,3 @@ private:
 private:
 	XOJ_TYPE_ATTRIB;
 };
-
-#endif /* __XOURNALSCHEDULER_H__ */

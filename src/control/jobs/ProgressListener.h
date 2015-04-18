@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __PROGRESSLISTENER_H__
-#define __PROGRESSLISTENER_H__
+#pragma once
 
 class ProgressListener
 {
@@ -18,5 +17,3 @@ public:
 	virtual void setMaximumState(int max) = 0;
 	virtual void setCurrentState(int state) = 0;
 };
-
-#endif /* __PROGRESSLISTENER_H__ */

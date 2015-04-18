@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __ABOUTDIALOG_H__
-#define __ABOUTDIALOG_H__
+#pragma once
 
 #include "../GladeGui.h"
 #include <XournalType.h>
@@ -27,5 +26,3 @@ public:
 private:
 	XOJ_TYPE_ATTRIB;
 };
-
-#endif /* __ABOUTDIALOG_H__ */

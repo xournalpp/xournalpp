@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __GOTODIALOG_H__
-#define __GOTODIALOG_H__
+#pragma once
 
 #include "../GladeGui.h"
 #include <XournalType.h>
@@ -33,5 +32,3 @@ private:
 	int selectedPage;
 
 };
-
-#endif /* __GOTODIALOG_H__ */

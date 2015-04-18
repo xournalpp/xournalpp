@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __SETTINGSDIALOG_H__
-#define __SETTINGSDIALOG_H__
+#pragma once
 
 #include "../GladeGui.h"
 #include "../../control/settings/Settings.h"
@@ -57,5 +56,3 @@ private:
 
 	GList* buttonConfigs;
 };
-
-#endif /* __SETTINGSDIALOG_H__ */

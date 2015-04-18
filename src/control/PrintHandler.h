@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __PRINTHANDLER_H__
-#define __PRINTHANDLER_H__
+#pragma once
 
 #include <gtk/gtk.h>
 
@@ -42,5 +41,3 @@ private:
 
 	Document* doc;
 };
-
-#endif /* __PRINTHANDLER_H__ */

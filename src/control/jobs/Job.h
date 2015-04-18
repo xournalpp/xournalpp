@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __JOB_H__
-#define __JOB_H__
+#pragma once
 
 #include <XournalType.h>
 #include <glib.h>
@@ -85,5 +84,3 @@ private:
 	int refCount;
 	GMutex refMutex;
 };
-
-#endif /* __JOB_H__ */

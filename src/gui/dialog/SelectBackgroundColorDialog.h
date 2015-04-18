@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __SELECTBACKGROUNDCOLORDIALOG_H__
-#define __SELECTBACKGROUNDCOLORDIALOG_H__
+#pragma once
 
 #include "../GladeGui.h"
 
@@ -48,5 +47,3 @@ private:
 
 	GtkWidget* colorDlg;
 };
-
-#endif /* __SELECTBACKGROUNDCOLORDIALOG_H__ */

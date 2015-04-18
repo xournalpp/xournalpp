@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __XMLPOINTNODE_H__
-#define __XMLPOINTNODE_H__
+#pragma once
 
 #include "XmlNode.h"
 #include "../../model/Point.h"
@@ -35,5 +34,3 @@ private:
 
 	GList* points;
 };
-
-#endif /* __XMLPOINTNODE_H__ */

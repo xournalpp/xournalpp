@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __SYNCHRONIZEDPROGRESSLISTENER_H__
-#define __SYNCHRONIZEDPROGRESSLISTENER_H__
+#pragma once
 
 #include "ProgressListener.h"
 #include <XournalType.h>
@@ -40,5 +39,3 @@ public:
 	int max;
 	int current;
 };
-
-#endif /* __SYNCHRONIZEDPROGRESSLISTENER_H__ */

@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __INPUTHANDLER_H__
-#define __INPUTHANDLER_H__
+#pragma once
 
 #include <gtk/gtk.h>
 #include "../../model/Stroke.h"
@@ -79,5 +78,3 @@ private:
 	 */
 	ShapeRecognizer* reco;
 };
-
-#endif /* __INPUTHANDLER_H__ */

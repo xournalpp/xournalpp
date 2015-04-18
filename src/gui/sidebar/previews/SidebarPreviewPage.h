@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __SIDEBARPREVIEWPAGE_H__
-#define __SIDEBARPREVIEWPAGE_H__
+#pragma once
 
 #include <gtk/gtk.h>
 #include <Util.h>
@@ -82,6 +81,4 @@ private:
 
 	friend class PreviewJob;
 };
-
-#endif /* __SIDEBARPREVIEWPAGE_H__ */
 

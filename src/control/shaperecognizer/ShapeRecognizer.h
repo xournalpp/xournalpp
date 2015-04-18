@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __SHAPERECOGNIZER_H__
-#define __SHAPERECOGNIZER_H__
+#pragma once
 
 #include "RecoSegment.h"
 #include "ShapeRecognizerConfig.h"
@@ -52,4 +51,4 @@ private:
 	friend class ShapeRecognizerResult;
 };
 
-#endif /* __SHAPERECOGNIZER_H__ */
+#pragma once

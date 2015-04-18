@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __AUTOSAVEJOB_H__
-#define __AUTOSAVEJOB_H__
+#pragma once
 
 #include "Job.h"
 #include <StringUtils.h>
@@ -39,5 +38,3 @@ private:
 	Control* control;
 	string error;
 };
-
-#endif /* __AUTOSAVEJOB_H__ */

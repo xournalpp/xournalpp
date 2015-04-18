@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __PDFPAGESDIALOG_H__
-#define __PDFPAGESDIALOG_H__
+#pragma once
 
 #include "../GladeGui.h"
 #include "../../model/Document.h"
@@ -66,5 +65,3 @@ private:
 	GtkWidget* scrollPreview;
 	GtkWidget* widget;
 };
-
-#endif /* __PDFPAGESDIALOG_H__ */

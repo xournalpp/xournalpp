@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __TOOL_H__
-#define __TOOL_H__
+#pragma once
 
 #include <StringUtils.h>
 #include <XournalType.h>
@@ -150,5 +149,3 @@ private:
 
 	friend class ToolHandler;
 };
-
-#endif /* __TOOL_H__ */

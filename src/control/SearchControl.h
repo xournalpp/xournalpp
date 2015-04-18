@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __SEARCHCONTROL_H__
-#define __SEARCHCONTROL_H__
+#pragma once
 
 #include "../model/PageRef.h"
 #include "../pdf/popplerdirect/poppler/XojPopplerPage.h"
@@ -34,5 +33,3 @@ private:
 
 	GList* results;
 };
-
-#endif /* __SEARCHCONTROL_H__ */

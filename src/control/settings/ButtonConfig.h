@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __BUTTONCONFIG_H__
-#define __BUTTONCONFIG_H__
+#pragma once
 
 #include <StringUtils.h>
 #include <XournalType.h>
@@ -60,4 +59,3 @@ public:
 	friend class Settings;
 	friend class ButtonConfigGui;
 };
-#endif /* __BUTTONCONFIG_H__ */

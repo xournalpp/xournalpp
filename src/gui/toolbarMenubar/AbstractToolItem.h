@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __ABSTRACTTOOLITEM_H__
-#define __ABSTRACTTOOLITEM_H__
+#pragma once
 
 #include "AbstractItem.h"
 
@@ -56,5 +55,3 @@ protected:
 
 	bool used;
 };
-
-#endif /* __ABSTRACTTOOLITEM_H__ */

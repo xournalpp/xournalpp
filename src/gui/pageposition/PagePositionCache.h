@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __PAGEPOSITIONCACHE_H__
-#define __PAGEPOSITIONCACHE_H__
+#pragma once
 
 #include <XournalType.h>
 
@@ -30,5 +29,3 @@ private:
 
 	friend class PagePositionHandler;
 };
-
-#endif /* __PAGEPOSITIONCACHE_H__ */

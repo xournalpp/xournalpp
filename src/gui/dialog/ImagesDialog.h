@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __IMAGESDIALOG_H__
-#define __IMAGESDIALOG_H__
+#pragma once
 
 #include "../GladeGui.h"
 #include <XournalType.h>
@@ -63,5 +62,3 @@ private:
 	GtkWidget* scrollPreview;
 	GtkWidget* widget;
 };
-
-#endif /* __IMAGESDIALOG_H__ */

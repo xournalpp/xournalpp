@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __COLORTOOLITEM_H__
-#define __COLORTOOLITEM_H__
+#pragma once
 
 #include "AbstractToolItem.h"
 #include "../../control/ToolHandler.h"
@@ -56,5 +55,3 @@ private:
 
     static bool inUpdate;
 };
-
-#endif /* __COLORTOOLITEM_H__ */

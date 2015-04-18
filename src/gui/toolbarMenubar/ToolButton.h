@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __TOOLBUTTON_H__
-#define __TOOLBUTTON_H__
+#pragma once
 
 #include "AbstractToolItem.h"
 #include "../GladeGui.h"
@@ -49,4 +48,3 @@ private:
 	string iconName;
 	string description;
 };
-#endif /* __TOOLBUTTON_H__ */

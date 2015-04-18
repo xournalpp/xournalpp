@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __PAGEVIEWINDEX_H__
-#define __PAGEVIEWINDEX_H__
+#pragma once
 
 #include <XournalType.h>
 #include <glib.h>
@@ -42,5 +41,3 @@ private:
 
 	GList* data;
 };
-
-#endif /* __PAGEVIEWINDEX_H__ */

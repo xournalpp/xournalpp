@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __XMLTEXNODE_H__
-#define __XMLTEXNODE_H__
+#pragma once
 
 #include "XmlNode.h"
 
@@ -37,5 +36,3 @@ private:
 	int pos;
 	unsigned char buffer[30];
 };
-
-#endif /* __XMLTEXNODE_H__ */

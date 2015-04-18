@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __VERTICALTOOLHANDLER_H__
-#define __VERTICALTOOLHANDLER_H__
+#pragma once
 
 #include <cairo.h>
 #include "../../gui/Redrawable.h"
@@ -50,5 +49,3 @@ private:
 	 */
 	double jumpY;
 };
-
-#endif /* __VERTICALTOOLHANDLER_H__ */

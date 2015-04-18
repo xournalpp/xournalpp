@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __CURSORSELECTIONTYPE_H__
-#define __CURSORSELECTIONTYPE_H__
+#pragma once
 
 enum CursorSelectionType
 {
@@ -28,5 +27,3 @@ enum CursorSelectionType
     CURSOR_SELECTION_TOP,
     CURSOR_SELECTION_BOTTOM,
 };
-
-#endif /* __CURSORSELECTIONTYPE_H__ */

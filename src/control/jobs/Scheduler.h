@@ -11,8 +11,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __SCHEDULER_H__
-#define __SCHEDULER_H__
+#pragma once
 
 #include "Job.h"
 #include <glib.h>
@@ -100,5 +99,3 @@ protected:
 
 	const char *name;
 };
-
-#endif /* __SCHEDULER_H__ */

@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __DOUBLEATTRIBUTE_H__
-#define __DOUBLEATTRIBUTE_H__
+#pragma once
 
 #include "Attribute.h"
 #include <XournalType.h>
@@ -29,6 +28,3 @@ private:
 
 	double value;
 };
-
-
-#endif /* __DOUBLEATTRIBUTE_H__ */

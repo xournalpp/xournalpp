@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __SETTINGS_H__
-#define __SETTINGS_H__
+#pragma once
 
 #include <libxml/xmlreader.h>
 #include <glib.h>
@@ -447,5 +446,3 @@ private:
 	/** The page format which are visible */
 	string visiblePageFormats;
 };
-
-#endif /* __SETTINGS_H__ */

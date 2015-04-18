@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __CIRCLE_RECOGNIZER_H__
-#define __CIRCLE_RECOGNIZER_H__
+#pragma once
 
 class Stroke;
 class Inertia;
@@ -29,5 +28,3 @@ private:
 	static double scoreCircle(Stroke* s, Inertia& inertia);
 
 };
-
-#endif /* __CIRCLE_RECOGNIZER_H__ */

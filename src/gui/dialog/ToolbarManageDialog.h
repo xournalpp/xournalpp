@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __TOOLBARMANAGEDIALOG_H__
-#define __TOOLBARMANAGEDIALOG_H__
+#pragma once
 
 #include "../GladeGui.h"
 #include <XournalType.h>
@@ -48,5 +47,3 @@ private:
 
 	ToolbarData* selected;
 };
-
-#endif /* __TOOLBARMANAGEDIALOG_H__ */

@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __TOOLBARDATA_H__
-#define __TOOLBARDATA_H__
+#pragma once
 
 #include <glib.h>
 #include <StringUtils.h>
@@ -52,5 +51,3 @@ private:
 	friend class ToolbarModel;
 	friend class ToolMenuHandler;
 };
-
-#endif /* __TOOLBARDATA_H__ */

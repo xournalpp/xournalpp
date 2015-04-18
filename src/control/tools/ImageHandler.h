@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __IMAGEHANDLER_H__
-#define __IMAGEHANDLER_H__
+#pragma once
 
 #include <gtk/gtk.h>
 #include <XournalType.h>
@@ -34,5 +33,3 @@ private:
 	Control* control;
 	PageView* view;
 };
-
-#endif /* __IMAGEHANDLER_H__ */

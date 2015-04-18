@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __TOOLBARADAPTER_H__
-#define __TOOLBARADAPTER_H__
+#pragma once
 
 #include "ToolbarDragDropHelper.h"
 #include "ToolItemDragCurrentData.h"
@@ -434,5 +433,3 @@ private:
 	GtkToolItem* spacerItem;
 	ToolMenuHandler* toolHandler;
 };
-
-#endif /* __TOOLBARADAPTER_H__ */
