@@ -24,9 +24,9 @@ AboutDialog::AboutDialog(GladeSearchpath* gladeSearchPath) :
 	String authors = "";
 
 	// Authors of the application
-	AUTOHOR("Denis Auroux, 2006 - 2010");
-	AUTOHOR("Andreas Butti, 2010 - 2012");
-	AUTOHOR("Wilson Brenna (tex support), 2012 - 2013");
+	AUTOHOR("Denis Auroux (Xournal), 2006 - 2010");
+	AUTOHOR("Andreas Butti (Xournal++), 2010 - 2015");
+	AUTOHOR("Wilson Brenna (tex support), 2012 - 2015");
 
 	w = get("lbAuthors");
 	gtk_label_set_text(GTK_LABEL(w), authors.c_str());
