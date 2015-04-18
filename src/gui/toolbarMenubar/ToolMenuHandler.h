@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef EDITABLETOOLBAR_H_
-#define EDITABLETOOLBAR_H_
+#pragma once
 
 #include <gtk/gtk.h>
 
@@ -106,5 +105,3 @@ private:
 
 	ToolbarModel* tbModel;
 };
-
-#endif /* EDITABLETOOLBAR_H_ */

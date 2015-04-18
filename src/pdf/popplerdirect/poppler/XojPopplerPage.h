@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __XOJ_POPPLERPAGE_H__
-#define __XOJ_POPPLERPAGE_H__
+#pragma once
 
 #include <gtk/gtk.h>
 #include "../poppler-0.24.1/poppler/PDFDoc.h"
@@ -76,6 +75,3 @@ public:
 	double x2;
 	double y2;
 };
-
-
-#endif /* __XOJ_POPPLERPAGE_H__ */

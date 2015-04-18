@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef ERASEABLESTROKE_H_
-#define ERASEABLESTROKE_H_
+#pragma once
 
 #include "../Point.h"
 #include <XournalType.h>
@@ -56,5 +55,3 @@ private:
 
 	Stroke* stroke;
 };
-
-#endif /* ERASEABLESTROKE_H_ */

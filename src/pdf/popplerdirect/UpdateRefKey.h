@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __UPDATEREFKEY_H__
-#define __UPDATEREFKEY_H__
+#pragma once
 
 #include "poppler/XojPopplerDocument.h"
 
@@ -34,5 +33,3 @@ public:
 	Ref ref;
 	XojPopplerDocument doc;
 };
-
-#endif /* __UPDATEREFKEY_H__ */

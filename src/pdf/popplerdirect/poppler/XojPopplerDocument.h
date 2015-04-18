@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __XOJ_POPPLERDOCUMENT_H__
-#define __XOJ_POPPLERDOCUMENT_H__
+#pragma once
 
 #include "XojPopplerPage.h"
 #include <StringUtils.h>
@@ -54,5 +53,3 @@ private:
 
     _IntPopplerDocument* data;
 };
-
-#endif /* __XOJ_POPPLERDOCUMENT_H__ */

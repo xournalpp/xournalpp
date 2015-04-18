@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __XOJPOPPLERACTION_H__
-#define __XOJPOPPLERACTION_H__
+#pragma once
 
 #include "XojPopplerDocument.h"
 
@@ -39,5 +38,3 @@ private:
 	LinkAction* linkAction;
 	string title;
 };
-
-#endif /* __XOJPOPPLERACTION_H__ */

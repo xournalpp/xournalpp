@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __PDFXREF_H__
-#define __PDFXREF_H__
+#pragma once
 
 #include <XournalType.h>
 
@@ -35,5 +34,3 @@ private:
 	int xrefNr;
 
 };
-
-#endif /* __PDFXREF_H__ */

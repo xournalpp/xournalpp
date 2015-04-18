@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __PDFOBJECTWRITER_H__
-#define __PDFOBJECTWRITER_H__
+#pragma once
 
 #include "poppler/XojPopplerDocument.h"
 #include "poppler-0.24.1/poppler/Object.h"
@@ -40,5 +39,3 @@ private:
 
 	GHashTable* updatedReferenced;
 };
-
-#endif /* __PDFOBJECTWRITER_H__ */

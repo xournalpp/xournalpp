@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __PDFWRITER_H__
-#define __PDFWRITER_H__
+#pragma once
 
 #include <gtk/gtk.h>
 #include <StringUtils.h>
@@ -69,5 +68,3 @@ private:
 	int objectId;
 
 };
-
-#endif /* __PDFWRITER_H__ */

@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __XOJPOPPLERITER_H__
-#define __XOJPOPPLERITER_H__
+#pragma once
 
 #include "XojPopplerDocument.h"
 #include "XojPopplerAction.h"
@@ -39,5 +38,3 @@ private:
 	GooList* items;
 	int index;
 };
-
-#endif /* __XOJPOPPLERITER_H__ */

@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __CAIROPDF_H__
-#define __CAIROPDF_H__
+#pragma once
 
 #include <cairo.h>
 #include "../popplerdirect/poppler/XojPopplerPage.h"
@@ -46,5 +45,3 @@ private:
 	cairo_surface_t* surface;
 	cairo_t* cr;
 };
-
-#endif /* __CAIROPDF_H__ */

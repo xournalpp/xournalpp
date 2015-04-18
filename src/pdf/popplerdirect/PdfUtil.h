@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __PDFUTIL_H__
-#define __PDFUTIL_H__
+#pragma once
 
 class PdfUtil
 {
@@ -21,5 +20,3 @@ private:
 public:
 	static bool isWhitespace(int c);
 };
-
-#endif /* __PDFUTIL_H__ */

@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __PDFEXPORT_H__
-#define __PDFEXPORT_H__
+#pragma once
 
 #include "../../model/Document.h"
 #include <StringUtils.h>
@@ -84,5 +83,3 @@ private:
 
 	CairoPdf cPdf;
 };
-
-#endif /* __PDFEXPORT_H__ */

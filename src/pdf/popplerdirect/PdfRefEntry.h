@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __PDFREFENTRY_H__
-#define __PDFREFENTRY_H__
+#pragma once
 
 #include "poppler-0.24.1/poppler/Object.h"
 #include "poppler/XojPopplerDocument.h"
@@ -51,5 +50,3 @@ public:
 private:
 	bool used;
 };
-
-#endif /* __PDFREFENTRY_H__ */

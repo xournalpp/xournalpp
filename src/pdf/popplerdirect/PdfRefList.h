@@ -9,8 +9,7 @@
  * @license GNU GPLv3
  */
 
-#ifndef __PDFREFLIST_H__
-#define __PDFREFLIST_H__
+#pragma once
 
 #include <glib.h>
 #include <StringUtils.h>
@@ -81,5 +80,3 @@ private:
 	PdfWriter* writer;
 	char* type;
 };
-
-#endif /* PDFREFLIST_H_ */
