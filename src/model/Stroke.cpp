@@ -43,7 +43,7 @@ Stroke* Stroke::cloneStroke() const
 	s->setWidth(this->getWidth());
 
 	s->allocPointSize(this->pointCount);
-	memcpy(s->points, this->points, this->pointCount * sizeof (Point));
+	memcpy(s->points, this->points, this->pointCount * (sizeof Point));
 	s->pointCount = this->pointCount;
 
 	return s;
@@ -68,7 +68,7 @@ void Stroke::serialize(ObjectOutputStream& out)
 
 	out.writeInt(this->toolType);
 
-	out.writeData(this->points, this->pointCount, sizeof (Point));
+	out.writeData(this->points, this->pointCount, (sizeof Point));
 
 	out.endObject();
 }
@@ -92,7 +92,7 @@ void Stroke::readSerialized(ObjectInputStream& in) throw (InputStreamException)
 	this->points = NULL;
 	this->pointCount = 0;
 
-	in.readData((void**) & this->points, &this->pointCount);
+	in.readData((void**) &this->points, &this->pointCount);
 
 	in.endObject();
 }
@@ -160,7 +160,7 @@ void Stroke::allocPointSize(int size)
 
 	this->pointAllocCount = size;
 	this->points = (Point*) g_realloc(this->points,
-									  this->pointAllocCount * sizeof (Point));
+									  this->pointAllocCount * (sizeof Point));
 }
 
 int Stroke::getPointCount() const
@@ -240,7 +240,7 @@ void Stroke::freeUnusedPointItems()
 	}
 	this->pointAllocCount = this->pointCount + 1;
 	this->points = (Point*) g_realloc(this->points,
-									  this->pointAllocCount * sizeof (Point));
+									  this->pointAllocCount * (sizeof Point));
 }
 
 void Stroke::setToolType(StrokeTool type)

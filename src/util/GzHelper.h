@@ -15,7 +15,6 @@
 #include <boost/iostreams/filter/gzip.hpp>
 namespace bio = boost::iostreams;
 
-//Rewriting with boost:iostreams would be pointless
 class GzHelper
 {
 private:

@@ -348,25 +348,25 @@ void SettingsDialog::save()
 	bool hideFullscreenMenubar = getCheckbox("cbHideFullscreenMenubar");
 	bool hideFullscreenSidebar = getCheckbox("cbHideFullscreenSidebar");
 	settings->setFullscreenHideElements(
-										updateHideString(settings->getFullscreenHideElements(),
-														 hideFullscreenMenubar,
-														 hideFullscreenSidebar)
-										);
+						updateHideString(settings->getFullscreenHideElements(),
+										 hideFullscreenMenubar,
+										 hideFullscreenSidebar)
+						);
 
 	bool hidePresentationMenubar = getCheckbox("cbHidePresentationMenubar");
 	bool hidePresentationSidebar = getCheckbox("cbHidePresentationSidebar");
 	settings->setPresentationHideElements(
-										  updateHideString(settings->getPresentationHideElements(), hidePresentationMenubar,
-														   hidePresentationSidebar)
-										  );
+						updateHideString(settings->getPresentationHideElements(),
+										 hidePresentationMenubar,
+										 hidePresentationSidebar)
+						);
 
 	GtkWidget* txtDefaultSaveName = get("txtDefaultSaveName");
 	const char* txt = gtk_entry_get_text(GTK_ENTRY(txtDefaultSaveName));
 	settings->setDefaultSaveName(txt);
 
 	GtkWidget* spAutosaveTimeout = get("spAutosaveTimeout");
-	int autosaveTimeout = gtk_spin_button_get_value(GTK_SPIN_BUTTON(
-																	spAutosaveTimeout));
+	int autosaveTimeout = gtk_spin_button_get_value(GTK_SPIN_BUTTON(spAutosaveTimeout));
 	settings->setAutosaveTimeout(autosaveTimeout);
 
 	settings->setDisplayDpi(dpi);

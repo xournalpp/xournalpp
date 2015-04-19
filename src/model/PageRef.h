@@ -15,7 +15,6 @@
 #include "XojPage.h"
 #include <XournalType.h>
 
-
 class Layer;
 class BackgroundImage;
 

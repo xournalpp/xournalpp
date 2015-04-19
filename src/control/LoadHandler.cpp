@@ -154,7 +154,6 @@ bool LoadHandler::parseXml()
 {
 	XOJ_CHECK_TYPE(LoadHandler);
 
-
 	char* old_locale, *saved_locale;
 
 	old_locale = setlocale(LC_NUMERIC, NULL);

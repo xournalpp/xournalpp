@@ -59,8 +59,6 @@ VerticalToolHandler::~VerticalToolHandler()
 		this->crBuffer = NULL;
 	}
 
-	this->elements.clear();
-
 	XOJ_RELEASE_TYPE(VerticalToolHandler);
 }
 

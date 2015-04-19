@@ -333,8 +333,7 @@ bool Document::readPdf(path filename, bool initPages, bool attachToDocument)
 
 	if (!pdfDocument.load(filename.c_str(), password.c_str(), &popplerError))
 	{
-		string txt = (bl::format("Document not loaded! ({1}), {2}") % filename % popplerError->message).str();
-		lastError = txt;
+		lastError = (bl::format("Document not loaded! ({1}), {2}") % filename % popplerError->message).str();
 		g_error_free(popplerError);
 		return false;
 	}

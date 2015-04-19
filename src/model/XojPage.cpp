@@ -22,7 +22,6 @@ XojPage::~XojPage()
 	XOJ_CHECK_TYPE(XojPage);
 
 	for (Layer* l : this->layer) delete l;
-	this->layer.clear();
 
 	XOJ_RELEASE_TYPE(XojPage);
 }

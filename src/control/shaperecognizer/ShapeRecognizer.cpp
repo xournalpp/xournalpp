@@ -571,7 +571,7 @@ ShapeRecognizerResult* ShapeRecognizer::recognizePatterns(Stroke* stroke)
 
 	// first see if it's a polygon
 	int n = findPolygonal(stroke->getPoints(), 0, stroke->getPointCount() - 1,
-						MAX_POLYGON_SIDES, brk, ss);
+						  MAX_POLYGON_SIDES, brk, ss);
 	if (n > 0)
 	{
 		optimizePolygonal(stroke->getPoints(), n, brk, ss);
@@ -593,7 +593,7 @@ ShapeRecognizerResult* ShapeRecognizer::recognizePatterns(Stroke* stroke)
 			while (i < queueLength && queue[i].startpt != 0)
 				i++;
 			queueLength -= i;
-			g_memmove(queue, queue + i, queueLength * sizeof (RecoSegment));
+			g_memmove(queue, queue + i, queueLength * (sizeof RecoSegment));
 		}
 
 		RDEBUG("Queue now has {1} + {2} edges") % this->queueLength % n;

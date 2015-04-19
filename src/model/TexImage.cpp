@@ -24,11 +24,6 @@ TexImage::~TexImage()
         cairo_surface_destroy(this->image);
         this->image = NULL;
     }
-    /*if (this->text)
-    {
-        delete[] this->text;
-        this->text = NULL;
-    }*/
 
     XOJ_RELEASE_TYPE(TexImage);
 }

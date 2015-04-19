@@ -11,7 +11,6 @@ GladeGui(gladeSearchPath, "export.glade", "exportDialog")
 
 	XOJ_INIT_TYPE(ExportDialog);
 
-	this->range.clear();
 	this->pageCount = pageCount;
 	this->currentPage = currentPage;
 	this->resolution = 72;
@@ -79,10 +78,10 @@ void ExportDialog::setupModel()
 							GTK_TREE_MODEL(this->typesModel));
 
 	addFileType(_("By extension"), NULL, 0, "All files", true);
-	addFileType("Portable Document Format", "pdf", EXPORT_FORMAT_PDF);
+	addFileType("Portable Document Format",  "pdf", EXPORT_FORMAT_PDF);
 	addFileType("Portable Network Graphics", "png", EXPORT_FORMAT_PNG);
-	addFileType("Scalable Vector Graphics", "svg", EXPORT_FORMAT_SVG);
-	addFileType("Encapsulated PostScript", "eps", EXPORT_FORMAT_EPS);
+	addFileType("Scalable Vector Graphics",  "svg", EXPORT_FORMAT_SVG);
+	addFileType("Encapsulated PostScript",   "eps", EXPORT_FORMAT_EPS);
 }
 
 void ExportDialog::addFileType(const char* typeDesc,
@@ -97,15 +96,15 @@ void ExportDialog::addFileType(const char* typeDesc,
 	if (pattern)
 	{
 		fullName = StringUtils::format("%s (*.%s)",
-									filterName ? filterName : typeDesc,
-									pattern);
+									   filterName ? filterName : typeDesc,
+									   pattern);
 		gtk_file_filter_set_name(filter, fullName.c_str());
 		gtk_file_filter_add_pattern(filter, pattern);
 	}
 	else
 	{
 		gtk_file_filter_set_name(filter,
-								filterName ? filterName : typeDesc);
+								 filterName ? filterName : typeDesc);
 		gtk_file_filter_add_pattern(filter, "*");
 	}
 
@@ -237,7 +236,6 @@ void ExportDialog::fileTypeSelected(GtkTreeView* treeview,
 
 				dlg->type = (ExportFormtType) _type;
 
-				string s(baseName);
 				int nameIndex = baseName.find_last_of(".");
 
 				if (nameIndex == -1)
@@ -249,7 +247,7 @@ void ExportDialog::fileTypeSelected(GtkTreeView* treeview,
 					if (extension != baseName.substr(nameIndex))
 					{
 						newName = CONCAT(baseName.substr(0, nameIndex), '.',
-										extension);
+										 extension);
 					}
 					else
 					{
@@ -260,7 +258,7 @@ void ExportDialog::fileTypeSelected(GtkTreeView* treeview,
 				if (changeName)
 				{
 					gtk_file_chooser_set_current_name(GTK_FILE_CHOOSER(dlg->window),
-													newName.c_str());
+													  newName.c_str());
 				}
 			}
 		}
@@ -299,9 +297,9 @@ bool ExportDialog::validFilename()
 
 	if (!file)
 	{
-		GtkWidget* dialog = gtk_message_dialog_new((GtkWindow*) * this,
-												GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
-												_("Invalid filename selected"));
+		GtkWidget* dialog = gtk_message_dialog_new((GtkWindow*) *this,
+												   GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
+												   _("Invalid filename selected"));
 
 		gtk_dialog_run(GTK_DIALOG(dialog));
 		gtk_widget_destroy(dialog);
@@ -329,7 +327,7 @@ bool ExportDialog::validFilename()
 			dirName = dirName.substr(firstIndex + 1, secIndex - (firstIndex + 1));
 		}
 
-		GtkWidget* dialog = gtk_message_dialog_new((GtkWindow*) * this,
+		GtkWidget* dialog = gtk_message_dialog_new((GtkWindow*) *this,
 												GTK_DIALOG_DESTROY_WITH_PARENT,
 												GTK_MESSAGE_WARNING,
 												GTK_BUTTONS_OK_CANCEL,

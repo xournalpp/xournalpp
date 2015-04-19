@@ -69,7 +69,7 @@ void XmlTexNode::writeOut(OutputStream* out)
 		this->out = out;
 		this->pos = 0;
 		cairo_surface_write_to_png_stream(this->img,
-										  (cairo_write_func_t) & pngWriteFunction, this);
+										  (cairo_write_func_t) &pngWriteFunction, this);
 		gchar* base64_str = g_base64_encode(this->buffer, this->pos);
 		out->write(base64_str);
 		g_free(base64_str);

@@ -56,8 +56,6 @@ EditSelectionContents::~EditSelectionContents()
 		this->rescaleId = 0;
 	}
 
-	this->selected.clear();
-
 	deleteViewBuffer();
 
 	XOJ_RELEASE_TYPE(EditSelectionContents);

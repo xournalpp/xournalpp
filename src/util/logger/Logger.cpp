@@ -22,7 +22,7 @@ inline std::string NowTime()
 					MAX_LEN) == 0)
 		return "Error in NowTime()";
 
-	char result[100] = { 0 };
+	char result[100] = {0};
 	static DWORD first = GetTickCount();
 	sprintf_s(result, 100, "%s.%06ld", buffer, (long) (GetTickCount() - first));
 	return result;
@@ -38,7 +38,7 @@ inline std::string NowTime()
 	gettimeofday(&tv, 0);
 	char buffer[100];
 	tm r;
-	strftime(buffer, sizeof (buffer), "%X", localtime_r(&tv.tv_sec, &r));
+	strftime(buffer, sizeof buffer, "%X", localtime_r(&tv.tv_sec, &r));
 	char result[100];
 	sprintf(result, "%s.%06ld", buffer, (long) tv.tv_usec);
 	return result;

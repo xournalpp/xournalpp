@@ -58,7 +58,7 @@ GladeGui(gladeSearchPath, "page-background-color.glade", "pageBgColorDialog")
 
 	GtkWidget* toolbar = get("tbPredefinedColors");
 
-	for (int i = 0; i < sizeof (predef_bgcolors_rgba) / sizeof (int); i++)
+	for (int i = 0; i < (sizeof predef_bgcolors_rgba) / (sizeof int); i++)
 	{
 		int color = predef_bgcolors_rgba[i];
 		ColorEntry* e = new ColorEntry(this, color, false);

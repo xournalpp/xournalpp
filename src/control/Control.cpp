@@ -286,16 +286,14 @@ void Control::initWindow(MainWindow* win)
 	hilighterSizeChanged();
 	updateDeletePageButton();
 
-	this->clipboardHandler = new ClipboardHandler(
-												  this, win->getXournal()->getWidget());
+	this->clipboardHandler = new ClipboardHandler(this, win->getXournal()->getWidget());
 
 	this->enableAutosave(settings->isAutosaveEnabled());
 
 	win->setFontButtonFont(settings->getFont());
 
 	XInputUtils::initUtils(win->getWindow());
-	XInputUtils::setLeafEnterWorkaroundEnabled(
-											   settings->isEnableLeafEnterWorkaround());
+	XInputUtils::setLeafEnterWorkaroundEnabled(settings->isEnableLeafEnterWorkaround());
 }
 
 bool Control::autosaveCallback(Control* control)
@@ -991,10 +989,10 @@ void Control::customizeToolbars()
 
 	if (this->win->getSelectedToolbar()->isPredefined())
 	{
-		GtkWidget* dialog = gtk_message_dialog_new((GtkWindow*) * this->win,
+		GtkWidget* dialog = gtk_message_dialog_new((GtkWindow*) *this->win,
 												   GTK_DIALOG_DESTROY_WITH_PARENT,
-												   GTK_MESSAGE_QUESTION, GTK_BUTTONS_YES_NO, _(
-																							   "The Toolbarconfiguration \"%s\" is predefined, would you create a copy to edit?"),
+												   GTK_MESSAGE_QUESTION, GTK_BUTTONS_YES_NO,
+												   _("The Toolbarconfiguration \"%s\" is predefined, would you create a copy to edit?"),
 												   this->win->getSelectedToolbar()->getName().c_str());
 
 		gtk_window_set_transient_for(GTK_WINDOW(dialog),
@@ -1180,7 +1178,7 @@ void Control::enableFullscreen(bool enabled, bool presentation)
 
 	if (enabled)
 	{
-		gtk_window_fullscreen((GtkWindow*) * win);
+		gtk_window_fullscreen((GtkWindow*) *win);
 
 		string str = presentation ?
 				settings->getPresentationHideElements() :
@@ -1203,9 +1201,9 @@ void Control::enableFullscreen(bool enabled, bool presentation)
 				if (w == NULL)
 				{
 					g_warning(
-							  "Fullscreen: Try to hide \"%s\", but coulden't find it. Wrong entry in ~/"
-							  CONFIG_DIR "/" SETTINGS_XML_FILE "?",
-							  s.c_str());
+						"Fullscreen: Try to hide \"%s\", but coulden't find it. Wrong entry in ~/"
+						CONFIG_DIR "/" SETTINGS_XML_FILE "?",
+						s.c_str());
 				}
 				else
 				{
@@ -1220,7 +1218,7 @@ void Control::enableFullscreen(bool enabled, bool presentation)
 	}
 	else
 	{
-		gtk_window_unfullscreen((GtkWindow*) * win);
+		gtk_window_unfullscreen((GtkWindow*) *win);
 
 		for (GList* l = this->hiddenFullscreenWidgets; l != NULL; l = l->next)
 		{
@@ -1294,7 +1292,8 @@ void Control::getDefaultPagesize(double& width, double& height)
 	{
 		SElement& format = settings->getCustomElement("format");
 		format.setComment("paperformat",
-						  "Available values are: system, A4, Letter, Custom: For custom you have to create the tags width and height.");
+						  "Available values are: system, A4, Letter, Custom: "
+						  "For custom you have to create the tags width and height.");
 		string settingsPaperFormat;
 
 		double w = 0;
@@ -1331,7 +1330,7 @@ void Control::getDefaultPagesize(double& width, double& height)
 
 		GtkPaperSize* size = NULL;
 
-		if (paper != "")
+		if (!paper.empty())
 		{
 			GList* list = gtk_paper_size_get_paper_sizes(false);
 			for (GList* l = list; l != NULL; l = l->next)
@@ -1342,7 +1341,7 @@ void Control::getDefaultPagesize(double& width, double& height)
 				using namespace bl;
 				using bl::collator;
 				if (use_facet<collator<char>>(std::locale()).compare(collator_base::secondary,
-																	 paper, gtk_paper_size_get_display_name(s)))
+						paper, gtk_paper_size_get_display_name(s)))
 				{
 					size = s;
 				}
@@ -1661,7 +1660,7 @@ void Control::setPageBackground(ActionType type)
 		{
 
 			bool attach = false;
-			GFile* file = ImageOpenDlg::show((GtkWindow*) * win, settings, true, &attach);
+			GFile* file = ImageOpenDlg::show((GtkWindow*) *win, settings, true, &attach);
 			if (file == NULL)
 			{
 				return;
@@ -1709,7 +1708,7 @@ void Control::setPageBackground(ActionType type)
 	{
 		if (doc->getPdfPageCount() == 0)
 		{
-			GtkWidget* dialog = gtk_message_dialog_new((GtkWindow*) * win,
+			GtkWidget* dialog = gtk_message_dialog_new((GtkWindow*) *win,
 													   GTK_DIALOG_DESTROY_WITH_PARENT,
 													   GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
 													   _("You don't have any PDF pages to select from. Cancel operation,\n"
@@ -1755,8 +1754,9 @@ void Control::setPageBackground(ActionType type)
 	firePageChanged(pageNr);
 	updateBackgroundSizeButton();
 
-	this->undoRedo->addUndoAction(new PageBackgroundChangedUndoAction(
-																	  page, origType, origPdfPage, origBackgroundImage, origW, origH));
+	this->undoRedo->addUndoAction(
+		new PageBackgroundChangedUndoAction(page, origType, origPdfPage,
+										    origBackgroundImage, origW, origH));
 }
 
 void Control::gotoPage()
@@ -2432,7 +2432,7 @@ bool Control::openFile(path filename, int scrollToPage)
 			// give the user a second chance to select a new PDF file, or to discard the PDF
 
 
-			GtkWidget* dialog = gtk_message_dialog_new((GtkWindow*) * getWindow(),
+			GtkWidget* dialog = gtk_message_dialog_new((GtkWindow*) *getWindow(),
 													   GTK_DIALOG_DESTROY_WITH_PARENT,
 													   GTK_MESSAGE_QUESTION, GTK_BUTTONS_NONE, h.isAttachedPdfMissing() ? _(
 																															"The attached background PDF could not be found.") :
@@ -2471,7 +2471,7 @@ bool Control::openFile(path filename, int scrollToPage)
 
 	if (!tmp)
 	{
-		GtkWidget* dialog = gtk_message_dialog_new((GtkWindow*) * win,
+		GtkWidget* dialog = gtk_message_dialog_new((GtkWindow*) *win,
 												   GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR,
 												   GTK_BUTTONS_OK, _("Error opening file '%s'\n%s"), filename.c_str(),
 												   h.getLastError().c_str());
@@ -2549,7 +2549,7 @@ bool Control::annotatePdf(path filename, bool attachPdf,
 
 	if (filename.empty())
 	{
-		filename = XojOpenDlg::showOpenDialog((GtkWindow*) * win, this->settings, true,
+		filename = XojOpenDlg::showOpenDialog((GtkWindow*) *win, this->settings, true,
 											  attachToDocument);
 		if (filename.empty())
 		{
@@ -2580,7 +2580,7 @@ bool Control::annotatePdf(path filename, bool attachPdf,
 		string errMsg = doc->getLastErrorMsg();
 		this->doc->unlock();
 
-		GtkWidget* dialog = gtk_message_dialog_new((GtkWindow*) * win,
+		GtkWidget* dialog = gtk_message_dialog_new((GtkWindow*) *win,
 												   GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR,
 												   GTK_BUTTONS_OK, _("Error annotate PDF file '%s'\n%s"), filename.c_str(),
 												   errMsg.c_str());
@@ -2705,7 +2705,7 @@ bool Control::showSaveDialog()
 	XOJ_CHECK_TYPE(Control);
 
 	GtkWidget* dialog = gtk_file_chooser_dialog_new(_("Save File"),
-													(GtkWindow*) * win, GTK_FILE_CHOOSER_ACTION_SAVE,
+													(GtkWindow*) *win, GTK_FILE_CHOOSER_ACTION_SAVE,
 													GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL, GTK_STOCK_SAVE, GTK_RESPONSE_OK, NULL);
 	gtk_file_chooser_set_local_only(GTK_FILE_CHOOSER(dialog), true);
 
@@ -2735,7 +2735,7 @@ bool Control::showSaveDialog()
 	{
 		time_t curtime = time(NULL);
 		char stime[128];
-		strftime(stime, sizeof (stime), settings->getDefaultSaveName().c_str(),
+		strftime(stime, sizeof stime, settings->getDefaultSaveName().c_str(),
 				 localtime(&curtime));
 
 		saveFilename = stime;
@@ -2808,7 +2808,7 @@ void Control::updateWindowTitle()
 
 	title += " - Xournal++";
 
-	gtk_window_set_title((GtkWindow*) * win, title.c_str());
+	gtk_window_set_title((GtkWindow*) *win, title.c_str());
 }
 
 void Control::exportAsPdf()
@@ -2886,7 +2886,7 @@ bool Control::close(bool destroy)
 
 	if (undoRedo->isChanged())
 	{
-		GtkWidget* dialog = gtk_message_dialog_new((GtkWindow*) * getWindow(),
+		GtkWidget* dialog = gtk_message_dialog_new((GtkWindow*) *getWindow(),
 												   GTK_DIALOG_DESTROY_WITH_PARENT,
 												   GTK_MESSAGE_WARNING, GTK_BUTTONS_NONE, _("This document is not saved yet."));
 

@@ -17,7 +17,6 @@
 #define INPUT_STREAM_EXCEPTION(description, ...) \
 	InputStreamException(StringUtils::format(description, __VA_ARGS__), __FILE__, __LINE__); \
 	
-
 class InputStreamException : public std::exception
 {
 public:

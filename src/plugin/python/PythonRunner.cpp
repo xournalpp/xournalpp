@@ -154,7 +154,7 @@ void PythonRunner::initPython()
 	PyXournal_initPython(this->control);
 
 	char buffer[512] = { 0 };
-	const char* path = getcwd(buffer, sizeof (buffer));
+	const char* path = getcwd(buffer, sizeof buffer);
 	g_return_if_fail(path != NULL);
 
 	PyObject* sysModule = PyImport_ImportModule("sys");

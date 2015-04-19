@@ -15,7 +15,6 @@
 #include <XournalType.h>
 
 // Has to be in the same order as in Action.h: ActionType!
-
 enum ToolType
 {
 	TOOL_NONE = 0,
@@ -88,8 +87,8 @@ class Tool
 {
 public:
 	Tool(string name, ToolType tool, int color, bool enableColor, bool enableSize,
-		bool enableRuler, bool enableRectangle, bool enableCircle, bool enableArrow,
-		bool enableShapreRecognizer, double* thickness);
+		 bool enableRuler, bool enableRectangle, bool enableCircle, bool enableArrow,
+		 bool enableShapreRecognizer, double* thickness);
 	virtual ~Tool();
 
 	string getName();

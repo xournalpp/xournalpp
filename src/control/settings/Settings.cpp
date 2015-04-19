@@ -100,7 +100,7 @@ void Settings::loadDefault()
 	this->defaultSaveName = _("%F-Note-%H-%M.xoj");
 
 	this->visiblePageFormats = GTK_PAPER_NAME_A4 "," GTK_PAPER_NAME_A5 ","
-			GTK_PAPER_NAME_LETTER "," GTK_PAPER_NAME_LEGAL;
+							   GTK_PAPER_NAME_LETTER "," GTK_PAPER_NAME_LEGAL;
 
 	// Eraser
 	this->buttonConfig[0] = new ButtonConfig(TOOL_ERASER, 0, TOOL_SIZE_NONE,
@@ -171,7 +171,7 @@ void Settings::parseData(xmlNodePtr cur, SElement& elem)
 					g_warning("Settings::Unknown hex value: %s:%s\n", name, value);
 				}
 			}
-			else if (sType == (const char*) "string")
+			else if (sType == "string")
 			{
 				elem.setString((const char*) name, (const char*) value);
 			}
@@ -623,7 +623,7 @@ void Settings::saveTimeout()
 		return;
 	}
 
-	this->timeoutId = g_timeout_add_seconds(2, (GSourceFunc) & saveCallback, this);
+	this->timeoutId = g_timeout_add_seconds(2, (GSourceFunc) &saveCallback, this);
 }
 
 xmlNodePtr Settings::savePropertyDouble(const gchar* key, double value,

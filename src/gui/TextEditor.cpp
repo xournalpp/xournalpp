@@ -1180,7 +1180,7 @@ void TextEditor::paint(cairo_t* cr, GdkRectangle* repaintRect, double zoom)
 	double height = ((double) h) / PANGO_SCALE;
 
 	int offset = gtk_text_iter_get_offset(&cursorIter);
-	PangoRectangle rect = { 0 };
+	PangoRectangle rect = {0};
 	int pangoOffset = getByteOffset(offset) + preeditString.length();
 	pango_layout_index_to_pos(this->layout, pangoOffset, &rect);
 	double cX = ((double) rect.x) / PANGO_SCALE;

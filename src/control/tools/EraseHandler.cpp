@@ -53,10 +53,12 @@ void EraseHandler::erase(double x, double y)
 	XOJ_CHECK_TYPE(EraseHandler);
 
 	this->halfEraserSize = this->handler->getThickness();
-	GdkRectangle eraserRect = {gint(x - halfEraserSize),
-							   gint(y - halfEraserSize),
-							   gint(halfEraserSize * 2),
-							   gint(halfEraserSize * 2)};
+	GdkRectangle eraserRect = {
+		gint(x - halfEraserSize),
+		gint(y - halfEraserSize),
+		gint(halfEraserSize * 2),
+		gint(halfEraserSize * 2)
+	};
 
 	Range* range = new Range(x, y);
 
@@ -67,9 +69,7 @@ void EraseHandler::erase(double x, double y)
 	{
 		if (e->getType() == ELEMENT_STROKE && e->intersectsArea(&eraserRect))
 		{
-			Stroke* s = (Stroke*) e;
-
-			eraseStroke(l, s, x, y, range);
+			eraseStroke(l, (Stroke*) e, x, y, range);
 		}
 	}
 

@@ -39,8 +39,6 @@ MoveUndoAction::~MoveUndoAction()
 {
 	XOJ_CHECK_TYPE(MoveUndoAction);
 
-	this->elements.clear();
-
 	XOJ_RELEASE_TYPE(MoveUndoAction);
 }
 

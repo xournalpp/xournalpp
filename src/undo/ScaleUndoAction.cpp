@@ -24,7 +24,6 @@ ScaleUndoAction::~ScaleUndoAction()
 	XOJ_CHECK_TYPE(ScaleUndoAction);
 
 	this->page = NULL;
-	this->elements.clear();
 
 	XOJ_RELEASE_TYPE(ScaleUndoAction);
 }
@@ -51,10 +50,7 @@ void ScaleUndoAction::applyScale(double fx, double fy)
 {
 	XOJ_CHECK_TYPE(ScaleUndoAction);
 
-	if (this->elements.empty())
-	{
-		return;
-	}
+	if (this->elements.empty()) return;
 
 	Range r(elements.front()->getX(), elements.front()->getY());
 

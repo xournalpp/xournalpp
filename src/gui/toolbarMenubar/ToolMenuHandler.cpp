@@ -50,12 +50,10 @@ ToolMenuHandler::~ToolMenuHandler()
 	this->tbModel = NULL;
 
 	for (MenuItem* it : this->menuItems) delete it;
-	this->menuItems.clear();
 
 	freeDynamicToolbarItems();
 
 	for (AbstractToolItem* it : this->toolItems) delete it;
-	this->toolItems.clear();
 
 	XOJ_RELEASE_TYPE(ToolMenuHandler);
 }

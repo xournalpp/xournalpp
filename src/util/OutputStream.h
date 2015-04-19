@@ -32,6 +32,7 @@ public:
 	virtual void close() = 0;
 };
 
+//TODO boost::iostreams
 class GzOutputStream : public OutputStream
 {
 public:

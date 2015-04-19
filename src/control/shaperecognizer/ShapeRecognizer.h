@@ -50,5 +50,3 @@ private:
 
 	friend class ShapeRecognizerResult;
 };
-
-#pragma once

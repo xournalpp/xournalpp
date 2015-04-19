@@ -219,8 +219,7 @@ gdk_cairo_surface_coerce_to_image(cairo_surface_t* surface,
 	cairo_t* cr;
 
 	copy = cairo_image_surface_create(gdk_cairo_format_for_content(content),
-									width,
-									height);
+									  width, height);
 
 	cr = cairo_create(copy);
 	cairo_set_operator(cr, CAIRO_OPERATOR_SOURCE);
@@ -262,8 +261,8 @@ convert_alpha(guchar* dest_data,
 			else
 			{
 				dest_data[x * 4 + 0] = (((src[x] & 0xff0000) >> 16) * 255 + alpha / 2) / alpha;
-				dest_data[x * 4 + 1] = (((src[x] & 0x00ff00) >> 8) * 255 + alpha / 2) / alpha;
-				dest_data[x * 4 + 2] = (((src[x] & 0x0000ff) >> 0) * 255 + alpha / 2) / alpha;
+				dest_data[x * 4 + 1] = (((src[x] & 0x00ff00) >>  8) * 255 + alpha / 2) / alpha;
+				dest_data[x * 4 + 2] = (((src[x] & 0x0000ff) >>  0) * 255 + alpha / 2) / alpha;
 			}
 			dest_data[x * 4 + 3] = alpha;
 		}
@@ -294,7 +293,7 @@ convert_no_alpha(guchar* dest_data,
 		for (x = 0; x < width; x++)
 		{
 			dest_data[x * 3 + 0] = src[x] >> 16;
-			dest_data[x * 3 + 1] = src[x] >> 8;
+			dest_data[x * 3 + 1] = src[x] >>  8;
 			dest_data[x * 3 + 2] = src[x];
 		}
 

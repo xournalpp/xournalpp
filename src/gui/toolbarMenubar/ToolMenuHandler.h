@@ -21,6 +21,7 @@
 
 class AbstractToolItem;
 typedef std::vector<AbstractToolItem*> AbstractToolItemVector;
+
 class ToolButton;
 class ToolPageSpinner;
 class ToolPageLayer;

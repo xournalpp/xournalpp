@@ -23,7 +23,7 @@
 using namespace std;
 
 MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control) :
-GladeGui(gladeSearchPath, "main.glade", "mainWindow")
+	GladeGui(gladeSearchPath, "main.glade", "mainWindow")
 {
 	XOJ_INIT_TYPE(MainWindow);
 
@@ -54,8 +54,7 @@ GladeGui(gladeSearchPath, "main.glade", "mainWindow")
 	{
 		Layout* layout = gtk_xournal_get_layout(this->xournal->getWidget());
 		gtk_table_attach(GTK_TABLE(tableXournal), layout->getScrollbarHorizontal(), 1,
-						 2, 1, 2, (GtkAttachOptions) (
-													  GTK_EXPAND | GTK_FILL), GTK_FILL, 0, 0);
+						 2, 1, 2, (GtkAttachOptions) (GTK_EXPAND | GTK_FILL), GTK_FILL, 0, 0);
 	}
 
 	setSidebarVisible(control->getSettings()->isSidebarVisible());

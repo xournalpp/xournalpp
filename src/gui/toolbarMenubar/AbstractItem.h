@@ -18,7 +18,7 @@
 #include <gtk/gtk.h>
 
 class AbstractItem : public ActionEnabledListener,
-public ActionSelectionListener
+	public ActionSelectionListener
 {
 public:
 	AbstractItem(string id, ActionHandler* handler, ActionType action,

@@ -54,8 +54,8 @@ GtkType gtk_xournal_get_type(void)
 	{
 		static const GtkTypeInfo gtk_xournal_info = {
 			g_strdup("GtkXournal"),
-			sizeof (GtkXournal),
-			sizeof (GtkXournalClass),
+			sizeof GtkXournal,
+			sizeof GtkXournalClass,
 			(GtkClassInitFunc) gtk_xournal_class_init,
 			(GtkObjectInitFunc) gtk_xournal_init,
 			NULL,
@@ -415,7 +415,7 @@ gboolean gtk_xournal_button_press_event(GtkWidget* widget,
 
 		PageView* view = selection->getView();
 		GdkEventButton ev = *event;
-		view->translateEvent((GdkEvent*) & ev, xournal->x, xournal->y);
+		view->translateEvent((GdkEvent*) &ev, xournal->x, xournal->y);
 		CursorSelectionType selType = selection->getSelectionTypeForPos(ev.x, ev.y,
 																		xournal->view->getZoom());
 		if (selType)
@@ -544,7 +544,7 @@ gboolean gtk_xournal_motion_notify_event(GtkWidget* widget,
 
 		PageView* view = selection->getView();
 		GdkEventMotion ev = *event;
-		view->translateEvent((GdkEvent*) & ev, xournal->x, xournal->y);
+		view->translateEvent((GdkEvent*) &ev, xournal->x, xournal->y);
 
 		if (xournal->selection->isMoving())
 		{
@@ -581,7 +581,6 @@ gboolean gtk_xournal_motion_notify_event(GtkWidget* widget,
 		{
 			pv->translateEvent((GdkEvent*) event, xournal->x, xournal->y);
 			return pv->onMotionNotifyEvent(widget, event);
-			;
 		}
 	}
 

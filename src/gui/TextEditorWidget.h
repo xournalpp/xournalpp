@@ -158,58 +158,74 @@ static void gtk_xoj_int_txt_class_init(GtkXojIntTxtClass* klass)
 	 * The default bindings for this signal are Ctrl-a and Ctrl-/
 	 * for selecting and Shift-Ctrl-a and Ctrl-\ for unselecting.
 	 */
-	signals[SELECT_ALL] = g_signal_new_class_handler("select-all",
-													G_OBJECT_CLASS_TYPE(object_class),
-													(GSignalFlags) (G_SIGNAL_RUN_LAST | G_SIGNAL_ACTION),
-													G_CALLBACK(gtk_xoj_int_txt_select_all), NULL, NULL, gtk_marshal_VOID__VOID,
-													G_TYPE_NONE, 0);
+	signals[SELECT_ALL] = g_signal_new_class_handler(
+			"select-all",
+			G_OBJECT_CLASS_TYPE(object_class),
+			(GSignalFlags) (G_SIGNAL_RUN_LAST | G_SIGNAL_ACTION),
+			G_CALLBACK(gtk_xoj_int_txt_select_all), NULL, NULL, gtk_marshal_VOID__VOID,
+			G_TYPE_NONE, 0
+	);
 
-	signals[MOVE_CURSOR] = g_signal_new_class_handler("move-cursor",
-													G_OBJECT_CLASS_TYPE(object_class),
-													(GSignalFlags) (G_SIGNAL_RUN_LAST | G_SIGNAL_ACTION),
-													G_CALLBACK(gtk_xoj_int_txt_move_cursor), NULL, NULL, gtk_marshal_VOID__INT_INT,
-													G_TYPE_NONE, 2, G_TYPE_INT, G_TYPE_INT);
+	signals[MOVE_CURSOR] = g_signal_new_class_handler(
+			"move-cursor",
+			G_OBJECT_CLASS_TYPE(object_class),
+			(GSignalFlags) (G_SIGNAL_RUN_LAST | G_SIGNAL_ACTION),
+			G_CALLBACK(gtk_xoj_int_txt_move_cursor), NULL, NULL, gtk_marshal_VOID__INT_INT,
+			G_TYPE_NONE, 2, G_TYPE_INT, G_TYPE_INT
+	);
 
-	signals[DELETE_FROM_CURSOR] = g_signal_new_class_handler("delete-from-cursor",
-															G_OBJECT_CLASS_TYPE(object_class),
-															(GSignalFlags) (G_SIGNAL_RUN_LAST | G_SIGNAL_ACTION),
-															G_CALLBACK(gtk_xoj_int_txt_delete_from_cursor), NULL, NULL,
-															gtk_marshal_VOID__INT_INT,
-															G_TYPE_NONE, 2, G_TYPE_INT, G_TYPE_INT);
+	signals[DELETE_FROM_CURSOR] = g_signal_new_class_handler(
+			"delete-from-cursor",
+			G_OBJECT_CLASS_TYPE(object_class),
+			(GSignalFlags) (G_SIGNAL_RUN_LAST | G_SIGNAL_ACTION),
+			G_CALLBACK(gtk_xoj_int_txt_delete_from_cursor), NULL, NULL,
+			gtk_marshal_VOID__INT_INT,
+			G_TYPE_NONE, 2, G_TYPE_INT, G_TYPE_INT
+	);
 
-	signals[BACKSPACE] = g_signal_new_class_handler("backspace",
-													G_OBJECT_CLASS_TYPE(object_class),
-													(GSignalFlags) (G_SIGNAL_RUN_LAST | G_SIGNAL_ACTION),
-													G_CALLBACK(gtk_xoj_int_txt_backspace), NULL, NULL, gtk_marshal_VOID__VOID,
-													G_TYPE_NONE, 0);
+	signals[BACKSPACE] = g_signal_new_class_handler(
+			"backspace",
+			G_OBJECT_CLASS_TYPE(object_class),
+			(GSignalFlags) (G_SIGNAL_RUN_LAST | G_SIGNAL_ACTION),
+			G_CALLBACK(gtk_xoj_int_txt_backspace), NULL, NULL, gtk_marshal_VOID__VOID,
+			G_TYPE_NONE, 0
+	);
 
-	signals[CUT_CLIPBOARD] = g_signal_new_class_handler("cut-clipboard",
-														G_OBJECT_CLASS_TYPE(object_class),
-														(GSignalFlags) (G_SIGNAL_RUN_LAST | G_SIGNAL_ACTION),
-														G_CALLBACK(gtk_xoj_int_txt_cut_clipboard), NULL, NULL, gtk_marshal_VOID__VOID,
-														G_TYPE_NONE,
-														0);
+	signals[CUT_CLIPBOARD] = g_signal_new_class_handler(
+			"cut-clipboard",
+			G_OBJECT_CLASS_TYPE(object_class),
+			(GSignalFlags) (G_SIGNAL_RUN_LAST | G_SIGNAL_ACTION),
+			G_CALLBACK(gtk_xoj_int_txt_cut_clipboard), NULL, NULL, gtk_marshal_VOID__VOID,
+			G_TYPE_NONE,
+			0
+	);
 
-	signals[COPY_CLIPBOARD] = g_signal_new_class_handler("copy-clipboard",
-														G_OBJECT_CLASS_TYPE(object_class),
-														(GSignalFlags) (G_SIGNAL_RUN_LAST | G_SIGNAL_ACTION),
-														G_CALLBACK(gtk_xoj_int_txt_copy_clipboard), NULL, NULL, gtk_marshal_VOID__VOID,
-														G_TYPE_NONE,
-														0);
+	signals[COPY_CLIPBOARD] = g_signal_new_class_handler(
+			"copy-clipboard",
+			G_OBJECT_CLASS_TYPE(object_class),
+			(GSignalFlags) (G_SIGNAL_RUN_LAST | G_SIGNAL_ACTION),
+			G_CALLBACK(gtk_xoj_int_txt_copy_clipboard), NULL, NULL, gtk_marshal_VOID__VOID,
+			G_TYPE_NONE,
+			0
+	);
 
-	signals[PASTE_CLIPBOARD] = g_signal_new_class_handler("paste-clipboard",
-														G_OBJECT_CLASS_TYPE(object_class),
-														(GSignalFlags) (G_SIGNAL_RUN_LAST | G_SIGNAL_ACTION),
-														G_CALLBACK(gtk_xoj_int_txt_paste_clipboard), NULL, NULL,
-														gtk_marshal_VOID__VOID,
-														G_TYPE_NONE, 0);
+	signals[PASTE_CLIPBOARD] = g_signal_new_class_handler(
+			"paste-clipboard",
+			G_OBJECT_CLASS_TYPE(object_class),
+			(GSignalFlags) (G_SIGNAL_RUN_LAST | G_SIGNAL_ACTION),
+			G_CALLBACK(gtk_xoj_int_txt_paste_clipboard), NULL, NULL,
+			gtk_marshal_VOID__VOID,
+			G_TYPE_NONE, 0
+	);
 
-	signals[TOGGLE_OVERWRITE] = g_signal_new_class_handler("toggle-overwrite",
-														G_OBJECT_CLASS_TYPE(object_class),
-														(GSignalFlags) (G_SIGNAL_RUN_LAST | G_SIGNAL_ACTION),
-														G_CALLBACK(gtk_xoj_int_txt_toggle_overwrite), NULL, NULL,
-														gtk_marshal_VOID__VOID,
-														G_TYPE_NONE, 0);
+	signals[TOGGLE_OVERWRITE] = g_signal_new_class_handler(
+			"toggle-overwrite",
+			G_OBJECT_CLASS_TYPE(object_class),
+			(GSignalFlags) (G_SIGNAL_RUN_LAST | G_SIGNAL_ACTION),
+			G_CALLBACK(gtk_xoj_int_txt_toggle_overwrite), NULL, NULL,
+			gtk_marshal_VOID__VOID,
+			G_TYPE_NONE, 0
+	);
 
 	////////////////////////////////////////////////////////
 	////////////////////////////////////////////////////////
@@ -222,22 +238,16 @@ static void gtk_xoj_int_txt_class_init(GtkXojIntTxtClass* klass)
 
 	/* Moving the insertion point */
 	add_move_binding(binding_set, GDK_Right, 0, GTK_MOVEMENT_VISUAL_POSITIONS, 1);
-	add_move_binding(binding_set, GDK_KP_Right, 0, GTK_MOVEMENT_VISUAL_POSITIONS,
-					1);
+	add_move_binding(binding_set, GDK_KP_Right, 0, GTK_MOVEMENT_VISUAL_POSITIONS, 1);
 
 	add_move_binding(binding_set, GDK_Left, 0, GTK_MOVEMENT_VISUAL_POSITIONS, -1);
-	add_move_binding(binding_set, GDK_KP_Left, 0, GTK_MOVEMENT_VISUAL_POSITIONS,
-					-1);
+	add_move_binding(binding_set, GDK_KP_Left, 0, GTK_MOVEMENT_VISUAL_POSITIONS, -1);
 
-	add_move_binding(binding_set, GDK_Right, GDK_CONTROL_MASK, GTK_MOVEMENT_WORDS,
-					1);
-	add_move_binding(binding_set, GDK_KP_Right, GDK_CONTROL_MASK,
-					GTK_MOVEMENT_WORDS, 1);
+	add_move_binding(binding_set, GDK_Right, GDK_CONTROL_MASK, GTK_MOVEMENT_WORDS, 1);
+	add_move_binding(binding_set, GDK_KP_Right, GDK_CONTROL_MASK, GTK_MOVEMENT_WORDS, 1);
 
-	add_move_binding(binding_set, GDK_Left, GDK_CONTROL_MASK, GTK_MOVEMENT_WORDS,
-					-1);
-	add_move_binding(binding_set, GDK_KP_Left, GDK_CONTROL_MASK, GTK_MOVEMENT_WORDS,
-					-1);
+	add_move_binding(binding_set, GDK_Left, GDK_CONTROL_MASK, GTK_MOVEMENT_WORDS, -1);
+	add_move_binding(binding_set, GDK_KP_Left, GDK_CONTROL_MASK, GTK_MOVEMENT_WORDS, -1);
 
 	add_move_binding(binding_set, GDK_Up, 0, GTK_MOVEMENT_DISPLAY_LINES, -1);
 	add_move_binding(binding_set, GDK_KP_Up, 0, GTK_MOVEMENT_DISPLAY_LINES, -1);
@@ -245,32 +255,23 @@ static void gtk_xoj_int_txt_class_init(GtkXojIntTxtClass* klass)
 	add_move_binding(binding_set, GDK_Down, 0, GTK_MOVEMENT_DISPLAY_LINES, 1);
 	add_move_binding(binding_set, GDK_KP_Down, 0, GTK_MOVEMENT_DISPLAY_LINES, 1);
 
-	add_move_binding(binding_set, GDK_Up, GDK_CONTROL_MASK, GTK_MOVEMENT_PARAGRAPHS,
-					-1);
-	add_move_binding(binding_set, GDK_KP_Up, GDK_CONTROL_MASK,
-					GTK_MOVEMENT_PARAGRAPHS, -1);
+	add_move_binding(binding_set, GDK_Up, GDK_CONTROL_MASK, GTK_MOVEMENT_PARAGRAPHS, -1);
+	add_move_binding(binding_set, GDK_KP_Up, GDK_CONTROL_MASK, GTK_MOVEMENT_PARAGRAPHS, -1);
 
-	add_move_binding(binding_set, GDK_Down, GDK_CONTROL_MASK,
-					GTK_MOVEMENT_PARAGRAPHS, 1);
-	add_move_binding(binding_set, GDK_KP_Down, GDK_CONTROL_MASK,
-					GTK_MOVEMENT_PARAGRAPHS, 1);
+	add_move_binding(binding_set, GDK_Down, GDK_CONTROL_MASK, GTK_MOVEMENT_PARAGRAPHS, 1);
+	add_move_binding(binding_set, GDK_KP_Down, GDK_CONTROL_MASK, GTK_MOVEMENT_PARAGRAPHS, 1);
 
 	add_move_binding(binding_set, GDK_Home, 0, GTK_MOVEMENT_DISPLAY_LINE_ENDS, -1);
-	add_move_binding(binding_set, GDK_KP_Home, 0, GTK_MOVEMENT_DISPLAY_LINE_ENDS,
-					-1);
+	add_move_binding(binding_set, GDK_KP_Home, 0, GTK_MOVEMENT_DISPLAY_LINE_ENDS, -1);
 
 	add_move_binding(binding_set, GDK_End, 0, GTK_MOVEMENT_DISPLAY_LINE_ENDS, 1);
 	add_move_binding(binding_set, GDK_KP_End, 0, GTK_MOVEMENT_DISPLAY_LINE_ENDS, 1);
 
-	add_move_binding(binding_set, GDK_Home, GDK_CONTROL_MASK,
-					GTK_MOVEMENT_BUFFER_ENDS, -1);
-	add_move_binding(binding_set, GDK_KP_Home, GDK_CONTROL_MASK,
-					GTK_MOVEMENT_BUFFER_ENDS, -1);
+	add_move_binding(binding_set, GDK_Home, GDK_CONTROL_MASK, GTK_MOVEMENT_BUFFER_ENDS, -1);
+	add_move_binding(binding_set, GDK_KP_Home, GDK_CONTROL_MASK, GTK_MOVEMENT_BUFFER_ENDS, -1);
 
-	add_move_binding(binding_set, GDK_End, GDK_CONTROL_MASK,
-					GTK_MOVEMENT_BUFFER_ENDS, 1);
-	add_move_binding(binding_set, GDK_KP_End, GDK_CONTROL_MASK,
-					GTK_MOVEMENT_BUFFER_ENDS, 1);
+	add_move_binding(binding_set, GDK_End, GDK_CONTROL_MASK, GTK_MOVEMENT_BUFFER_ENDS, 1);
+	add_move_binding(binding_set, GDK_KP_End, GDK_CONTROL_MASK, GTK_MOVEMENT_BUFFER_ENDS, 1);
 
 	add_move_binding(binding_set, GDK_Page_Up, 0, GTK_MOVEMENT_PAGES, -1);
 	add_move_binding(binding_set, GDK_KP_Page_Up, 0, GTK_MOVEMENT_PAGES, -1);
@@ -278,21 +279,15 @@ static void gtk_xoj_int_txt_class_init(GtkXojIntTxtClass* klass)
 	add_move_binding(binding_set, GDK_Page_Down, 0, GTK_MOVEMENT_PAGES, 1);
 	add_move_binding(binding_set, GDK_KP_Page_Down, 0, GTK_MOVEMENT_PAGES, 1);
 
-	add_move_binding(binding_set, GDK_Page_Up, GDK_CONTROL_MASK,
-					GTK_MOVEMENT_HORIZONTAL_PAGES, -1);
-	add_move_binding(binding_set, GDK_KP_Page_Up, GDK_CONTROL_MASK,
-					GTK_MOVEMENT_HORIZONTAL_PAGES, -1);
+	add_move_binding(binding_set, GDK_Page_Up, GDK_CONTROL_MASK, GTK_MOVEMENT_HORIZONTAL_PAGES, -1);
+	add_move_binding(binding_set, GDK_KP_Page_Up, GDK_CONTROL_MASK, GTK_MOVEMENT_HORIZONTAL_PAGES, -1);
 
-	add_move_binding(binding_set, GDK_Page_Down, GDK_CONTROL_MASK,
-					GTK_MOVEMENT_HORIZONTAL_PAGES, 1);
-	add_move_binding(binding_set, GDK_KP_Page_Down, GDK_CONTROL_MASK,
-					GTK_MOVEMENT_HORIZONTAL_PAGES, 1);
+	add_move_binding(binding_set, GDK_Page_Down, GDK_CONTROL_MASK, GTK_MOVEMENT_HORIZONTAL_PAGES, 1);
+	add_move_binding(binding_set, GDK_KP_Page_Down, GDK_CONTROL_MASK, GTK_MOVEMENT_HORIZONTAL_PAGES, 1);
 
 	/* Select all */
-	gtk_binding_entry_add_signal(binding_set, GDK_a, GDK_CONTROL_MASK, "select-all",
-								0);
-	gtk_binding_entry_add_signal(binding_set, GDK_slash, GDK_CONTROL_MASK,
-								"select-all", 0);
+	gtk_binding_entry_add_signal(binding_set, GDK_a, GDK_CONTROL_MASK, "select-all", 0);
+	gtk_binding_entry_add_signal(binding_set, GDK_slash, GDK_CONTROL_MASK, "select-all", 0);
 
 	/* Deleting text */
 	gtk_binding_entry_add_signal(binding_set, GDK_Delete, (GdkModifierType) 0,
@@ -398,8 +393,10 @@ static void gtk_invisible_realize(GtkWidget* widget)
 }
 
 static void gtk_invisible_style_set(GtkWidget* widget,
-									GtkStyle* previous_style) {
-	/* Don't chain up to parent implementation */ }
+									GtkStyle* previous_style)
+{
+	/* Don't chain up to parent implementation */
+}
 
 static void gtk_invisible_show(GtkWidget* widget)
 {
@@ -407,8 +404,7 @@ static void gtk_invisible_show(GtkWidget* widget)
 	gtk_widget_map(widget);
 }
 
-static void gtk_invisible_size_allocate(GtkWidget* widget,
-										GtkAllocation* allocation)
+static void gtk_invisible_size_allocate(GtkWidget* widget, GtkAllocation* allocation)
 {
 	widget->allocation = *allocation;
 }
@@ -420,7 +416,7 @@ gtk_invisible_constructor(GType type, guint n_construct_properties,
 	GObject* object;
 
 	object = G_OBJECT_CLASS(gtk_xoj_int_txt_parent_class)->constructor(type,
-																	n_construct_properties, construct_params);
+									n_construct_properties, construct_params);
 
 	GtkWidget* widget = GTK_WIDGET(object);
 	gtk_invisible_realize(widget);

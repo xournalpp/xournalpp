@@ -74,7 +74,7 @@ static int PyXournal_init(PyXournal* self, PyObject* args, PyObject* kwds)
 }
 
 static PyMemberDef PyXournal_members[] = {
-	{ NULL } /* Sentinel */
+	{NULL} /* Sentinel */
 };
 
 static PyObject*
@@ -236,9 +236,9 @@ PyXournal_mousePressed(PyXournal* self, PyObject* args)
 	PageView* v = xournal->getViewFor(pageNo);
 
 	GdkEventButton event;
-	memset(&event, 0, sizeof (GdkEventButton));
+	memset(&event, 0, sizeof GdkEventButton);
 	event.type = GDK_BUTTON_PRESS;
-	event.window = (GdkWindow*) * win;
+	event.window = (GdkWindow*) *win;
 	event.send_event = true;
 	event.time = 0;
 	event.x = x * zoom + v->getX();
@@ -250,7 +250,7 @@ PyXournal_mousePressed(PyXournal* self, PyObject* args)
 	event.x_root = 0;
 	event.y_root = 0;
 
-	gtk_widget_event(xournal->getWidget(), (GdkEvent*) & event);
+	gtk_widget_event(xournal->getWidget(), (GdkEvent*) &event);
 
 	Py_RETURN_NONE;
 }
@@ -280,9 +280,9 @@ PyXournal_mouseMoved(PyXournal* self, PyObject* args)
 	PageView* v = xournal->getViewFor(pageNo);
 
 	GdkEventMotion event;
-	memset(&event, 0, sizeof (GdkEventMotion));
+	memset(&event, 0, sizeof GdkEventMotion);
 	event.type = GDK_MOTION_NOTIFY;
-	event.window = (GdkWindow*) * win;
+	event.window = (GdkWindow*) *win;
 	event.send_event = true;
 	event.time = 0;
 	event.x = x * zoom + v->getX();
@@ -294,7 +294,7 @@ PyXournal_mouseMoved(PyXournal* self, PyObject* args)
 	event.x_root = 0;
 	event.y_root = 0;
 
-	gtk_widget_event(xournal->getWidget(), (GdkEvent*) & event);
+	gtk_widget_event(xournal->getWidget(), (GdkEvent*) &event);
 
 	Py_RETURN_NONE;
 }
@@ -310,9 +310,9 @@ PyXournal_mouseReleased(PyXournal* self)
 	}
 
 	GdkEventButton event;
-	memset(&event, 0, sizeof (GdkEventButton));
+	memset(&event, 0, sizeof GdkEventButton);
 	event.type = GDK_BUTTON_RELEASE;
-	event.window = (GdkWindow*) * win;
+	event.window = (GdkWindow*) *win;
 	event.send_event = true;
 	event.time = 0;
 	event.x = 0;
@@ -324,7 +324,7 @@ PyXournal_mouseReleased(PyXournal* self)
 	event.x_root = 0;
 	event.y_root = 0;
 
-	gtk_widget_event(win->getXournal()->getWidget(), (GdkEvent*) & event);
+	gtk_widget_event(win->getXournal()->getWidget(), (GdkEvent*) &event);
 
 	Py_RETURN_NONE;
 }
@@ -653,7 +653,7 @@ static PyTypeObject XournalType = {
 	PyObject_HEAD_INIT(NULL)
 	0, /*ob_size*/
 	"xournal.Xournal", /*tp_name*/
-	sizeof (PyXournal), /*tp_basicsize*/
+	sizeof PyXournal, /*tp_basicsize*/
 	0, /*tp_itemsize*/
 	(destructor) PyXournal_dealloc, /*tp_dealloc*/
 	0, /*tp_print*/
@@ -692,7 +692,7 @@ static PyTypeObject XournalType = {
 };
 
 static PyMethodDef module_methods[] = {
-	{ NULL } /* Sentinel */
+	{NULL} /* Sentinel */
 };
 
 bool PyXournal_Check(PyObject* obj)
@@ -754,7 +754,7 @@ void initxournal()
 	}
 
 	Py_INCREF(&XournalType);
-	PyModule_AddObject(m, "Xournal", (PyObject*) & XournalType);
+	PyModule_AddObject(m, "Xournal", (PyObject*) &XournalType);
 }
 
 #ifdef __cplusplus

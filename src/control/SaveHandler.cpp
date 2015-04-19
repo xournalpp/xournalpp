@@ -116,6 +116,7 @@ void SaveHandler::prepareSave(Document* doc)
 
 string SaveHandler::getColorStr(int c, unsigned char alpha)
 {
+	//TODO rewrite
 	char* str = g_strdup_printf("#%08x", c << 8 | alpha);
 	string color = str;
 	g_free(str);

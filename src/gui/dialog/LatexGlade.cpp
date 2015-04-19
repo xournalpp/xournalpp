@@ -9,11 +9,9 @@
 using namespace std;
 
 LatexGlade::LatexGlade(GladeSearchpath* gladeSearchPath) :
-GladeGui(gladeSearchPath, "texdialog.glade", "texDialog")
+	GladeGui(gladeSearchPath, "texdialog.glade", "texDialog")
 {
 	XOJ_INIT_TYPE(LatexGlade);
-
-	this->theLatex = "";
 
 	//GtkWidget * vbox = get("texVBox");
 	//g_return_if_fail(vbox != NULL);

@@ -217,7 +217,7 @@ void RecentManager::recentsMenuActivateCallback(GtkAction* action,
 															 "gtk-recent-info");
 	g_return_if_fail(info != NULL);
 
-	const gchar* uri = gtk_recent_info_get_uri(info);//topath
+	const gchar* uri = gtk_recent_info_get_uri(info); //topath
 	recentManager->openRecent(string(uri).substr(7));
 }
 
@@ -310,4 +310,3 @@ void RecentManager::updateMenu()
 	g_list_foreach(items, (GFunc) gtk_recent_info_unref, NULL);
 	g_list_free(items);
 }
-

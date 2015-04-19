@@ -19,7 +19,6 @@ namespace bf = boost::filesystem;
 
 using namespace std;
 
-
 #ifdef ENABLE_PYTHON
 #include "../plugin/python/PythonRunner.h"
 #endif
@@ -35,7 +34,6 @@ XournalMain::~XournalMain()
 }
 
 #ifdef ENABLE_NLS
-
 void XournalMain::initLocalisation()
 {
 	XOJ_CHECK_TYPE(XournalMain);
@@ -192,7 +190,7 @@ int XournalMain::run(int argc, char* argv[])
 
 	//TODO rewrite with boost::program_options
 	GOptionEntry options[] = {
-		{"no-warn-svn",	     'w', 0, G_OPTION_ARG_NONE,           &optNoWarnSVN,     "Do not warn this is a development release", NULL},
+		{ "no-warn-svn",	 'w', 0, G_OPTION_ARG_NONE,           &optNoWarnSVN,     "Do not warn this is a development release", NULL},
 		{ "pdf-no-compress",   0, 0, G_OPTION_ARG_NONE,           &optNoPdfCompress, "Don't compress PDF files (for debugging)", NULL },
 		{ "create-pdf",      'p', 0, G_OPTION_ARG_FILENAME,       &pdfFilename,      "PDF output filename", NULL },
 		{ "page",            'n', 0, G_OPTION_ARG_INT,            &openAtPageNumber, "Jump to Page (first Page: 1)", "N" },
@@ -275,7 +273,7 @@ int XournalMain::run(int argc, char* argv[])
 	{
 		if (g_strv_length(optFilename) != 1)
 		{
-			GtkWidget* dialog = gtk_message_dialog_new((GtkWindow*) * win,
+			GtkWidget* dialog = gtk_message_dialog_new((GtkWindow*) *win,
 													GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
 													"Sorry, Xournal can only open one file from the command line.\n"
 													"Others are ignored.");
@@ -298,10 +296,10 @@ int XournalMain::run(int argc, char* argv[])
 		}
 		else
 		{
-			GtkWidget* dialog = gtk_message_dialog_new((GtkWindow*) * win,
-													GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, _(
-																														 "Sorry, Xournal cannot open remote files at the moment.\n"
-																														 "You have to copy the file to a local directory."));
+			GtkWidget* dialog = gtk_message_dialog_new((GtkWindow*) *win,
+													   GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
+													   _("Sorry, Xournal cannot open remote files at the moment.\n"
+													   "You have to copy the file to a local directory."));
 			gtk_window_set_transient_for(GTK_WINDOW(dialog), GTK_WINDOW(win->getWindow()));
 			gtk_dialog_run(GTK_DIALOG(dialog));
 			gtk_widget_destroy(dialog);
@@ -400,7 +398,7 @@ GladeSearchpath* XournalMain::initPath(const char* argv0)
 	g_free(path);
 
 	char buffer[512] = {0};
-	path = getcwd(buffer, sizeof (buffer));
+	path = getcwd(buffer, sizeof buffer);
 	if (path == NULL)
 	{
 		return gladePath;

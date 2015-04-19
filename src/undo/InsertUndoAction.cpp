@@ -100,7 +100,6 @@ InsertsUndoAction::~InsertsUndoAction()
 		// Insert was undone, so this is not needed anymore
 		for (Element* e : this->elements) delete e;
 	}
-	this->elements.clear();
 
 	XOJ_RELEASE_TYPE(InsertsUndoAction);
 }

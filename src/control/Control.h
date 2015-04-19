@@ -40,12 +40,12 @@ class Cursor;
 class ToolbarDragDropHandler;
 
 class Control : public ActionHandler,
-public ToolListener,
-public DocumentHandler,
-public RecentManagerListener,
-public UndoRedoListener,
-public ClipboardListener,
-public ProgressListener
+	public ToolListener,
+	public DocumentHandler,
+	public RecentManagerListener,
+	public UndoRedoListener,
+	public ClipboardListener,
+	public ProgressListener
 {
 public:
 	Control(GladeSearchpath* gladeSearchPath);
@@ -320,7 +320,6 @@ private:
 class CallbackData
 {
 public:
-
 	CallbackData(Control* control, ActionType type)
 	{
 		this->control = control;

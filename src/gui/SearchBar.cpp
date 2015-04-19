@@ -21,12 +21,12 @@ SearchBar::SearchBar(Control* control)
 
 	GtkWidget* previous = win->get("btSearchBack");
 	g_signal_connect(previous, "clicked", G_CALLBACK(buttonPreviousSearchClicked),
-					this);
+					 this);
 
 	GtkWidget* searchTextField = win->get("searchTextField");
 	g_signal_connect(searchTextField, "changed",
-					G_CALLBACK(searchTextChangedCallback),
-					this);
+					 G_CALLBACK(searchTextChangedCallback),
+					 this);
 
 	defaultColor = searchTextField->style->base[GTK_STATE_NORMAL];
 }

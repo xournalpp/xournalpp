@@ -13,7 +13,6 @@ Layer::~Layer()
 	XOJ_CHECK_TYPE(Layer);
 
 	for (Element* e : this->elements) delete e;
-	this->elements.clear();
 
 	XOJ_RELEASE_TYPE(Layer);
 }

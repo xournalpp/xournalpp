@@ -87,7 +87,8 @@ path XojOpenDlg::showOpenDialog(GtkWindow* win, Settings* settings, bool pdf,
 }
 
 void XojOpenDlg::updatePreviewCallback(GtkFileChooser* fileChooser,
-									   void* userData) {
+									   void* userData)
+{
 	// TODO LOW PRIO create preview if the file contains one
 	//	gchar * filename = gtk_file_chooser_get_preview_filename(fileChooser);
 	//

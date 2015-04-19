@@ -45,7 +45,6 @@ ExportJob::~ExportJob()
 	XOJ_CHECK_TYPE(ExportJob);
 
 	for (PageRangeEntry* e : this->selected) delete e;
-	this->selected.clear();
 
 	XOJ_RELEASE_TYPE(ExportJob);
 }

@@ -76,8 +76,9 @@ Stroke* CircleRecognizer::recognize(Stroke* stroke)
 	Inertia s;
 	s.calc(stroke->getPoints(), 0, stroke->getPointCount());
 	RDEBUG("Mass={1,p=0}, Center=({2,p=1},{3,p=1}, I=({4,p=0},{5,p=0}, {6,p=0}), "
-		"Rad={7,p=2}, Det={8,p=4}") % s.getMass() % s.centerX() % s.centerY() % s.xx() % s.yy() %
-			s.xy() % s.rad() % s.det();
+		   "Rad={7,p=2}, Det={8,p=4}")
+		   % s.getMass() % s.centerX() % s.centerY() % s.xx() % s.yy() % s.xy()
+		   % s.rad() % s.det();
 
 	if (s.det() > CIRCLE_MIN_DET)
 	{
@@ -91,4 +92,3 @@ Stroke* CircleRecognizer::recognize(Stroke* stroke)
 
 	return NULL;
 }
-

@@ -106,14 +106,14 @@ int ObjectInputStream::readInt() throw (InputStreamException)
 
 	checkType('i');
 
-	if (this->pos + sizeof (int) >= this->str->len)
+	if (this->pos + (sizeof int) >= this->str->len)
 	{
 		throw InputStreamException("End reached, but try to read an integer", __FILE__,
 								   __LINE__);
 	}
 
 	int i = *((int*) (this->str->str + this->pos));
-	this->pos += sizeof (int);
+	this->pos += sizeof int;
 	return i;
 }
 
@@ -123,14 +123,14 @@ double ObjectInputStream::readDouble() throw (InputStreamException)
 
 	checkType('d');
 
-	if (this->pos + sizeof (double) >= this->str->len)
+	if (this->pos + (sizeof double) >= this->str->len)
 	{
 		throw InputStreamException("End reached, but try to read an double", __FILE__,
 								   __LINE__);
 	}
 
 	double d = *((double*) (this->str->str + this->pos));
-	this->pos += sizeof (double);
+	this->pos += sizeof double;
 	return d;
 }
 
@@ -140,14 +140,14 @@ string ObjectInputStream::readString() throw (InputStreamException)
 
 	checkType('s');
 
-	if (this->pos + sizeof (int) >= this->str->len)
+	if (this->pos + (sizeof int) >= this->str->len)
 	{
 		throw InputStreamException("End reached, but try to read an string", __FILE__,
 								   __LINE__);
 	}
 
 	int len = *((int*) (this->str->str + this->pos));
-	this->pos += sizeof (int);
+	this->pos += sizeof int;
 
 	if (this->pos + len >= this->str->len)
 	{
@@ -167,17 +167,17 @@ void ObjectInputStream::readData(void** data,
 
 	checkType('b');
 
-	if (this->pos + 2 * sizeof (int) >= this->str->len)
+	if (this->pos + 2 * (sizeof int) >= this->str->len)
 	{
 		throw InputStreamException("End reached, but try to read data", __FILE__,
 								   __LINE__);
 	}
 
 	int len = *((int*) (this->str->str + this->pos));
-	this->pos += sizeof (int);
+	this->pos += sizeof int;
 
 	int width = *((int*) (this->str->str + this->pos));
-	this->pos += sizeof (int);
+	this->pos += sizeof int;
 
 	if (this->pos + (len * width) >= this->str->len)
 	{
@@ -239,16 +239,16 @@ cairo_surface_t* ObjectInputStream::readImage() throw (InputStreamException)
 
 	checkType('m');
 
-	if (this->pos + sizeof (int) >= this->str->len)
+	if (this->pos + (sizeof int) >= this->str->len)
 	{
 		throw InputStreamException("End reached, but try to read an image", __FILE__,
 								   __LINE__);
 	}
 
 	int len = *((int*) (this->str->str + this->pos));
-	//this->pos += sizeof(int);
+	//this->pos += sizeof int;
 	//totally not equivalent!
-	this->pos += sizeof (gsize);
+	this->pos += sizeof gsize;
 
 	if (this->pos + len >= this->str->len)
 	{
@@ -258,16 +258,15 @@ cairo_surface_t* ObjectInputStream::readImage() throw (InputStreamException)
 
 	PngDatasource source(this->str->str + this->pos, len);
 	//cairo_surface_t * img = cairo_image_surface_create_from_png_stream((cairo_read_func_t) cairoReadFunction, &source);
-	cairo_surface_t* img = cairo_image_surface_create_from_png_stream((
-																	   cairo_read_func_t) & cairoReadFunction, &source);
+	cairo_surface_t* img = cairo_image_surface_create_from_png_stream((cairo_read_func_t) &cairoReadFunction, &source);
 
 	this->pos += len;
 
 	return img;
 }
 
-ObjectInputStream& ObjectInputStream::operator>>(Serializeable* s) throw (
-																		  InputStreamException)
+ObjectInputStream& ObjectInputStream::operator>>(Serializeable* s)
+	throw (InputStreamException)
 {
 	XOJ_CHECK_TYPE(ObjectInputStream);
 

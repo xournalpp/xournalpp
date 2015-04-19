@@ -16,6 +16,7 @@
 
 class Stroke;
 typedef std::vector<Stroke*> StrokeVector;
+
 class ShapeRecognizer;
 
 class ShapeRecognizerResult

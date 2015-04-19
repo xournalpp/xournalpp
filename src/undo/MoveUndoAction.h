@@ -21,8 +21,8 @@ class MoveUndoAction : public UndoAction
 {
 public:
 	MoveUndoAction(Layer* sourceLayer, PageRef sourcePage,
-				ElementVector* selected, double mx, double my,
-				Layer* targetLayer, PageRef targetPage);
+				   ElementVector* selected, double mx, double my,
+				   Layer* targetLayer, PageRef targetPage);
 	virtual ~MoveUndoAction();
 
 public:

@@ -541,7 +541,7 @@ bool PdfExport::writePage(int pageNr)
 		return false;
 	}
 
-	int* pageId = (int*) g_malloc(sizeof (int));
+	int* pageId = (int*) g_malloc(sizeof int);
 	*pageId = this->writer->getObjectId();
 	this->pageIds = g_list_append(this->pageIds, pageId);
 

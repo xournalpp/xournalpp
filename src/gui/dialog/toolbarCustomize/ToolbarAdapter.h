@@ -285,7 +285,7 @@ private:
 
 		gtk_selection_data_set(selection_data, ToolbarDragDropHelper::atomToolItem, 0,
 							   (const guchar*) data,
-							   sizeof (ToolItemDragDropData));
+							   sizeof ToolItemDragDropData);
 	}
 
 	/**

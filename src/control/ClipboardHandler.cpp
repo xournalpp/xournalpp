@@ -243,9 +243,9 @@ bool ClipboardHandler::copy()
 	GString* svgString = g_string_sized_new(1048576); // 1MB
 
 	cairo_surface_t* surfaceSVG = cairo_svg_surface_create_for_stream(
-																	  (cairo_write_func_t) svgWriteFunction, svgString,
-																	  selection->getWidth(), selection->getHeight()
-																	  );
+									(cairo_write_func_t) svgWriteFunction, svgString,
+									selection->getWidth(), selection->getHeight()
+									);
 	cairo_t* crSVG = cairo_create(surfaceSVG);
 
 	view.drawSelection(crSVG, this->selection);

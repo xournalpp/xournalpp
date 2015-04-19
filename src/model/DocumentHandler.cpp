@@ -13,7 +13,6 @@ DocumentHandler::~DocumentHandler()
 	XOJ_CHECK_TYPE(DocumentHandler);
 
 	// Do not delete the listeners!
-	this->listener.clear();
 
 	XOJ_RELEASE_TYPE(DocumentHandler);
 }

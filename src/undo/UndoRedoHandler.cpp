@@ -139,7 +139,7 @@ void UndoRedoHandler::undo()
 
 	if (!undoResult)
 	{
-		GtkWidget* dialog = gtk_message_dialog_new((GtkWindow*) * control->getWindow(),
+		GtkWidget* dialog = gtk_message_dialog_new((GtkWindow*) *control->getWindow(),
 												   GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
 												   _("Could not undo '%s'\nSomething went wrong... Please write a bug report..."),
 												   undo->getText().c_str());
@@ -181,7 +181,7 @@ void UndoRedoHandler::redo()
 
 	if (!redoResult)
 	{
-		GtkWidget* dialog = gtk_message_dialog_new((GtkWindow*) * control->getWindow(),
+		GtkWidget* dialog = gtk_message_dialog_new((GtkWindow*) *control->getWindow(),
 												   GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
 												   _("Could not redo '%s'\nSomething went wrong... Please write a bug report..."),
 												   redo->getText().c_str());
@@ -219,10 +219,7 @@ void UndoRedoHandler::addUndoAction(UndoAction* action)
 {
 	XOJ_CHECK_TYPE(UndoRedoHandler);
 
-	if (action == NULL)
-	{
-		return;
-	}
+	if (action == NULL) return;
 
 	this->undoList = g_list_append(this->undoList, action);
 	clearRedo();
@@ -332,8 +329,7 @@ bool UndoRedoHandler::isChanged()
 {
 	XOJ_CHECK_TYPE(UndoRedoHandler);
 
-	if (!this->undoList)
-		return this->savedUndo;
+	if (!this->undoList) return this->savedUndo;
 
 	return this->savedUndo != g_list_last(this->undoList)->data;
 }
@@ -342,8 +338,7 @@ bool UndoRedoHandler::isChangedAutosave()
 {
 	XOJ_CHECK_TYPE(UndoRedoHandler);
 
-	if (!this->undoList)
-		return this->autosavedUndo;
+	if (!this->undoList) return this->autosavedUndo;
 
 	return this->autosavedUndo != g_list_last(this->undoList)->data;
 }

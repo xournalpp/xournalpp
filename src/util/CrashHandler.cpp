@@ -99,8 +99,8 @@ private:
  */
 static void crashHandler(int sig)
 {
-	if (alreadyCrashed)
-	{ // crasehd again on emergency save
+	if (alreadyCrashed) // crasehd again on emergency save
+	{
 		exit(2);
 	}
 	alreadyCrashed = true;

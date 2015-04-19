@@ -137,7 +137,7 @@ void ToolbarCustomizeDialog::toolitemDragDataGetSeparator(GtkWidget* widget,
 
 	gtk_selection_data_set(selection_data, ToolbarDragDropHelper::atomToolItem, 0,
 						   (const guchar*) it,
-						   sizeof (ToolItemDragDropData));
+						   sizeof ToolItemDragDropData);
 
 	g_free(it);
 }
@@ -184,7 +184,7 @@ void ToolbarCustomizeDialog::toolitemDragDataGet(GtkWidget* widget,
 
 	gtk_selection_data_set(selection_data, ToolbarDragDropHelper::atomToolItem, 0,
 						   (const guchar*) it,
-						   sizeof (ToolItemDragDropData));
+						   sizeof ToolItemDragDropData);
 
 	g_free(it);
 }
@@ -233,7 +233,7 @@ void ToolbarCustomizeDialog::toolitemColorDragDataGet(GtkWidget* widget,
 
 	gtk_selection_data_set(selection_data, ToolbarDragDropHelper::atomToolItem, 0,
 						   (const guchar*) it,
-						   sizeof (ToolItemDragDropData));
+						   sizeof ToolItemDragDropData);
 
 	g_free(it);
 }
@@ -393,7 +393,6 @@ void ToolbarCustomizeDialog::rebuildColorIcons()
 	freeColorIconview();
 
 	ToolMenuHandler* tmh = this->win->getToolMenuHandler();
-
 
 	int i = 0;
 	for (XojColor* color : *this->colorList->getPredefinedColors())

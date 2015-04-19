@@ -105,7 +105,6 @@ public:
 		g_mutex_init(&this->mutex);
 		this->widget = width;
 		this->complete = false;
-		this->rects.clear();
 		this->rescaleId = 0;
 	}
 
@@ -115,10 +114,7 @@ public:
 		g_mutex_lock(&this->mutex);
 		this->complete = true;
 
-		for (Rectangle* r : this->rects)
-		{
-			delete r;
-		}
+		for (Rectangle* r : this->rects) delete r;
 		this->rects.clear();
 
 		addRepaintCallback();
@@ -161,14 +157,11 @@ private:
 
 		if (complete)
 		{
-			//			gtk_widget_queue_draw(data->widget);
+			//gtk_widget_queue_draw(data->widget);
 		}
 		else
 		{
-			for (Rectangle* r : rects)
-			{
-				delete r;
-			}
+			for (Rectangle* r : rects) delete r;
 			rects.clear();
 		}
 
@@ -282,7 +275,6 @@ void RenderJob::run()
 
 	// delete all rectangles
 	for (Rectangle* rect : rerenderRects) delete rect;
-	rerenderRects.clear();
 }
 
 JobType RenderJob::getType()

@@ -13,7 +13,6 @@ PdfWriter::PdfWriter(PdfXRef* xref)
 	XOJ_INIT_TYPE(PdfWriter);
 
 	this->inStream = false;
-	this->stream.clear();
 	this->out = NULL;
 	this->xref = xref;
 	this->objectId = 3;
@@ -23,7 +22,6 @@ PdfWriter::~PdfWriter()
 {
 	XOJ_CHECK_TYPE(PdfWriter);
 
-	this->stream.clear();
 	this->xref = NULL;
 
 	XOJ_RELEASE_TYPE(PdfWriter);
@@ -140,7 +138,7 @@ bool PdfWriter::writeTxt(string data)
 		replace_pair(')', "\\)"),
 		replace_pair('\r', "\\\r")
 	});
-	str = "(" + str + ")";
+	str = CONCAT("(", str, ")");
 
 	return write(str);
 }
@@ -199,7 +197,7 @@ bool PdfWriter::writeInfo(string title)
 
 	time_t curtime = time(NULL);
 	char stime[128] = "D:";
-	strftime(stime + 2, sizeof (stime) - 2, "%Y%m%d%H%M%S", localtime(&curtime));
+	strftime(stime + 2, (sizeof stime) - 2, "%Y%m%d%H%M%S", localtime(&curtime));
 
 	write("/CreationDate ");
 	writeTxt(stime);

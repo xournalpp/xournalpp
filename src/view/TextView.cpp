@@ -28,6 +28,7 @@ int TextView::getDPI()
 {
 	static int myDPI;
 	if (myDPI != 0) return myDPI;
+	//TODO path
 	string settingsname = CONCAT(g_get_home_dir(), G_DIR_SEPARATOR,
 								 CONFIG_DIR, G_DIR_SEPARATOR, SETTINGS_XML_FILE);
 	Settings* mySettings = new Settings(settingsname);
@@ -67,8 +68,7 @@ void TextView::drawText(cairo_t* cr, Text* t)
 
 GList* TextView::findText(Text* t, string& search)
 {
-	cairo_surface_t* surface = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, 1,
-														  1);
+	cairo_surface_t* surface = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, 1, 1);
 	cairo_t* cr = cairo_create(surface);
 
 	GList* list = NULL;

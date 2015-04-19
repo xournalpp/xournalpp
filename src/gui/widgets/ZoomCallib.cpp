@@ -19,8 +19,8 @@ GtkType zoomcallib_get_type(void)
 	{
 		static const GtkTypeInfo zoomcallib_info = {
 			"ZoomCallib",
-			sizeof (ZoomCallib),
-			sizeof (ZoomCallibClass),
+			sizeof ZoomCallib,
+			sizeof ZoomCallibClass,
 			(GtkClassInitFunc) zoomcallib_class_init,
 			(GtkObjectInitFunc) zoomcallib_init,
 			NULL,

@@ -92,12 +92,8 @@ PageView::~PageView()
 	deleteViewBuffer();
 
 	for (Rectangle* rect : this->rerenderRects) delete rect;
-	this->rerenderRects.clear();
 
-	if (this->search)
-	{
-		delete this->search;
-	}
+	if (this->search) delete this->search;
 	this->search = NULL;
 
 	XOJ_RELEASE_TYPE(PageView);
@@ -319,7 +315,7 @@ void PageView::startText(double x, double y)
 	else
 	{
 		Text* text = this->textEditor->getText();
-		GdkRectangle matchRect = { gint(x - 10), gint(y - 10), 20, 20 };
+		GdkRectangle matchRect = {gint(x - 10), gint(y - 10), 20, 20};
 		if (!text->intersectsArea(&matchRect))
 		{
 			endText();
@@ -408,11 +404,11 @@ bool PageView::onButtonPressEvent(GtkWidget* widget, GdkEventButton* event)
 	if ((x < 0 || y < 0) && !extendedWarningDisplayd &&
 		settings->isXinputEnabled())
 	{
-		GtkWidget* dialog = gtk_message_dialog_new((GtkWindow*)
-												   * xournal->getControl()->getWindow(), GTK_DIALOG_DESTROY_WITH_PARENT,
-												   GTK_MESSAGE_ERROR,
-												   GTK_BUTTONS_NONE,
-												   _("There was a wrong input event, input is not working.\nDo you want to disable \"Extended Input\"?"));
+		GtkWidget* dialog = gtk_message_dialog_new(
+				(GtkWindow*) *xournal->getControl()->getWindow(), GTK_DIALOG_DESTROY_WITH_PARENT,
+				GTK_MESSAGE_ERROR,
+				GTK_BUTTONS_NONE,
+				_("There was a wrong input event, input is not working.\nDo you want to disable \"Extended Input\"?"));
 
 		gtk_dialog_add_button(GTK_DIALOG(dialog), "Disable \"Extended Input\"", 1);
 		gtk_dialog_add_button(GTK_DIALOG(dialog), "Cancel", 2);

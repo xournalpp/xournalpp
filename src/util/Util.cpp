@@ -85,7 +85,7 @@ void Util::fakeExposeWidget(GtkWidget* widget, GdkPixmap* pixmap)
 
 	tmp_window = widget->window;
 	widget->window = pixmap;
-	gtk_widget_send_expose(widget, (GdkEvent*) & event);
+	gtk_widget_send_expose(widget, (GdkEvent*) &event);
 	widget->window = tmp_window;
 }
 

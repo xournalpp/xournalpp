@@ -81,4 +81,3 @@ private:
 
 	friend class PreviewJob;
 };
-

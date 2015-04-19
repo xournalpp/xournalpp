@@ -32,8 +32,8 @@ void GotoDialog::show(GtkWindow* parent)
 
 	if (returnCode == 2)
 	{
-		this->selectedPage = gtk_spin_button_get_value(GTK_SPIN_BUTTON(
-																	get("spinPage")));
+		this->selectedPage = gtk_spin_button_get_value(
+									GTK_SPIN_BUTTON(get("spinPage")));
 	}
 }
 

@@ -25,6 +25,7 @@ LatexAction::LatexAction(string myTex, double tArea)
 
 	this->theLatex = myTex;
 
+	//TODO paths
 	this->texfile = CONCAT(g_get_home_dir(), G_DIR_SEPARATOR_S, CONFIG_DIR,
 						   G_DIR_SEPARATOR_S, "tex");
 	this->texfilefull = CONCAT(g_get_home_dir(), G_DIR_SEPARATOR_S, CONFIG_DIR,

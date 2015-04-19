@@ -5,8 +5,7 @@ const char* XML_VERSION_STR = "XojStrm1:";
 InputStreamException::InputStreamException(string message, string filename,
 										   int line)
 {
-	this->message = message + ", " + filename + ": ";
-	this->message += line;
+	this->message = CONCAT(message, ", ", filename, ": ", line);
 }
 
 InputStreamException::~InputStreamException() throw () { }

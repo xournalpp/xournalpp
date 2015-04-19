@@ -35,8 +35,8 @@ Point RecoSegment::calcEdgeIsect(RecoSegment* r2)
 	XOJ_CHECK_TYPE(RecoSegment);
 
 	double t;
-	t = (r2->xcenter - this->xcenter) * sin(r2->angle) - (r2->ycenter -
-														this->ycenter) * cos(r2->angle);
+	t = (r2->xcenter - this->xcenter) * sin(r2->angle)
+		- (r2->ycenter - this->ycenter) * cos(r2->angle);
 	t /= sin(r2->angle - this->angle);
 	double x = this->xcenter + t * cos(this->angle);
 	double y = this->ycenter + t * sin(this->angle);

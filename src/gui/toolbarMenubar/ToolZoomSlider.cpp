@@ -62,7 +62,6 @@ GtkWidget* ToolZoomSlider::getNewToolIconImpl()
 }
 
 // Should be called when the window size changes
-
 void ToolZoomSlider::updateScaleMarks()
 {
 	XOJ_CHECK_TYPE(ToolZoomSlider);

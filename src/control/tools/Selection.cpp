@@ -15,7 +15,6 @@ Selection::~Selection()
 
 	this->view = NULL;
 	this->page = NULL;
-	this->selectedElements.clear();
 
 	XOJ_RELEASE_TYPE(Selection);
 }
@@ -173,7 +172,6 @@ void RectSelection::paint(cairo_t* cr, GdkRectangle* rect, double zoom)
 class RegionPoint
 {
 public:
-
 	RegionPoint(double x, double y)
 	{
 		this->x = x;

@@ -41,7 +41,6 @@ private:
 private:
 	XOJ_TYPE_ATTRIB;
 
-
 	std::list<DocumentListener*> listener;
 
 	friend class DocumentListener;

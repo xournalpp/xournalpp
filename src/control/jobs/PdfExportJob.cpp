@@ -25,7 +25,7 @@ bool PdfExportJob::showFilechooser()
 	Document* doc = control->getDocument();
 
 	GtkWidget* dialog = gtk_file_chooser_dialog_new(_("Export PDF"),
-													(GtkWindow*) * control->getWindow(), GTK_FILE_CHOOSER_ACTION_SAVE,
+													(GtkWindow*) *control->getWindow(), GTK_FILE_CHOOSER_ACTION_SAVE,
 													GTK_STOCK_CANCEL,
 													GTK_RESPONSE_CANCEL, GTK_STOCK_SAVE, GTK_RESPONSE_OK, NULL);
 	gtk_file_chooser_set_local_only(GTK_FILE_CHOOSER(dialog), false);
@@ -50,7 +50,7 @@ bool PdfExportJob::showFilechooser()
 	{
 		time_t curtime = time(NULL);
 		char stime[128];
-		strftime(stime, sizeof (stime), settings->getDefaultSaveName().c_str(),
+		strftime(stime, sizeof stime, settings->getDefaultSaveName().c_str(),
 				 localtime(&curtime));
 
 		savePath /= stime;
@@ -97,7 +97,7 @@ void PdfExportJob::afterRun()
 
 	if (!this->errorMsg.empty())
 	{
-		GtkWindow* win = (GtkWindow*) * control->getWindow();
+		GtkWindow* win = (GtkWindow*) *control->getWindow();
 		GtkWidget* dialog = gtk_message_dialog_new(win, GTK_DIALOG_DESTROY_WITH_PARENT,
 												   GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, "%s", this->errorMsg.c_str());
 		gtk_window_set_transient_for(GTK_WINDOW(dialog),

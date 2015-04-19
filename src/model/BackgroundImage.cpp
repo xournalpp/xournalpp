@@ -46,7 +46,7 @@ path BackgroundImage::getFilename()
 	return path("");
 }
 
-void BackgroundImage::loadFile(path filename, GError** error)	//TODO streams
+void BackgroundImage::loadFile(path filename, GError** error) //TODO streams
 {
 	XOJ_CHECK_TYPE(BackgroundImage);
 

@@ -33,7 +33,6 @@ ShapeRecognizerResult::~ShapeRecognizerResult()
 	XOJ_CHECK_TYPE(ShapeRecognizerResult);
 
 	this->recognized = NULL;
-	this->source.clear();
 
 	XOJ_RELEASE_TYPE(ShapeRecognizerResult);
 }
@@ -43,12 +42,14 @@ void ShapeRecognizerResult::addSourceStroke(Stroke* s)
 	XOJ_CHECK_TYPE(ShapeRecognizerResult);
 
 	for (Stroke* elem : this->source)
-	if (s == elem)
 	{
-		// TODO LOW PRIO: this is a bug in the ShapreRecognizer!!
-		//		g_warning("ShapeRecognizerResult::addSourceStroke() try to add a stroke twice!");
-		//		Stacktrace::printStracktrace();
-		return;
+		if (s == elem)
+		{
+			// TODO LOW PRIO: this is a bug in the ShapreRecognizer!!
+			//		g_warning("ShapeRecognizerResult::addSourceStroke() try to add a stroke twice!");
+			//		Stacktrace::printStracktrace();
+			return;
+		}
 	}
 
 

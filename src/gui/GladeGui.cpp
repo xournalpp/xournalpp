@@ -20,8 +20,8 @@ GladeGui::GladeGui(GladeSearchpath* gladeSearchPath, const char* glade,
 	if (!this->xml)
 	{
 		GtkWidget* dialog = gtk_message_dialog_new(NULL, GTK_DIALOG_DESTROY_WITH_PARENT,
-												GTK_MESSAGE_ERROR, GTK_BUTTONS_CLOSE,
-												_("Error loading glade file '%s' (try to load '%s')"), glade, filename);
+												   GTK_MESSAGE_ERROR, GTK_BUTTONS_CLOSE,
+												   _("Error loading glade file '%s' (try to load '%s')"), glade, filename);
 		gtk_dialog_run(GTK_DIALOG(dialog));
 		gtk_widget_destroy(GTK_WIDGET(dialog));
 		exit(-1);

@@ -38,7 +38,7 @@ void RepaintHandler::repaintPageArea(PageView* view, int x1, int y1, int x2,
 	int x = view->getX();
 	int y = view->getY();
 	gtk_xournal_repaint_area(this->xournal->getWidget(), x + x1, y + y1, x + x2,
-							y + y2);
+							 y + y2);
 }
 
 void RepaintHandler::repaintPageBorder(PageView* view)

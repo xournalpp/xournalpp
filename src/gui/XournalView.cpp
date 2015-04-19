@@ -295,7 +295,6 @@ bool XournalView::onKeyReleaseEvent(GdkEventKey* event)
 }
 
 // send the focus back to the appropriate widget
-
 void XournalView::requestFocus()
 {
 	XOJ_CHECK_TYPE(XournalView);

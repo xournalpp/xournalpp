@@ -160,13 +160,13 @@ static int PySelection_init(PySelection* self, PyObject* args, PyObject* kwds)
 }
 
 static PyMemberDef PySelection_members[] = {
-	{ NULL } /* Sentinel */
+	{NULL} /* Sentinel */
 };
 
 static PyTypeObject SelectionType = {
 	PyObject_HEAD_INIT(NULL)0, /*ob_size*/
 	"xournal.Selection", /*tp_name*/
-	sizeof (PySelection), /*tp_basicsize*/
+	sizeof PySelection, /*tp_basicsize*/
 	0, /*tp_itemsize*/
 	(destructor) PySelection_dealloc, /*tp_dealloc*/
 	0, /*tp_print*/
@@ -205,13 +205,13 @@ static PyTypeObject SelectionType = {
 };
 
 static PyMethodDef module_methods[] = {
-	{NULL } /* Sentinel */
+	{NULL} /* Sentinel */
 };
 
 PyObject* newPySelection(PyObject* xournal)
 {
 	PyObject* args = Py_BuildValue("(O)", xournal);
-	PyObject* obj = PyObject_CallObject((PyObject*) & SelectionType, args);
+	PyObject* obj = PyObject_CallObject((PyObject*) &SelectionType, args);
 	return obj;
 }
 
@@ -230,7 +230,7 @@ void initselection()
 	}
 
 	Py_INCREF(&SelectionType);
-	PyModule_AddObject(m, "Selection", (PyObject*) & SelectionType);
+	PyModule_AddObject(m, "Selection", (PyObject*) &SelectionType);
 }
 
 #ifdef __cplusplus
