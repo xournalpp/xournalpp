@@ -192,16 +192,16 @@ int XournalMain::run(int argc, char* argv[])
 
 	//TODO rewrite with boost::program_options
 	GOptionEntry options[] = {
-		{"no-warn-svn", 'w', 0, G_OPTION_ARG_NONE, &optNoWarnSVN, "Do not warn this is a development release", NULL},
-		{"pdf-no-compress", 0, 0, G_OPTION_ARG_NONE, &optNoPdfCompress, "Don't compress PDF files (for debugging)", NULL},
-		{"create-pdf", 'p', 0, G_OPTION_ARG_FILENAME, &pdfFilename, "PDF output filename", NULL},
-		{"page", 'n', 0, G_OPTION_ARG_INT, &openAtPageNumber, "Jump to Page (first Page: 1)", "N"},
+		{"no-warn-svn",	     'w', 0, G_OPTION_ARG_NONE,           &optNoWarnSVN,     "Do not warn this is a development release", NULL},
+		{ "pdf-no-compress",   0, 0, G_OPTION_ARG_NONE,           &optNoPdfCompress, "Don't compress PDF files (for debugging)", NULL },
+		{ "create-pdf",      'p', 0, G_OPTION_ARG_FILENAME,       &pdfFilename,      "PDF output filename", NULL },
+		{ "page",            'n', 0, G_OPTION_ARG_INT,            &openAtPageNumber, "Jump to Page (first Page: 1)", "N" },
 
 #ifdef ENABLE_PYTHON
 		{"script", 0, 0, G_OPTION_ARG_STRING, &scriptFilename, "Runs a Python script as plugin Package:Function (e.g. \"Test:xournalTest\" to run tests)", NULL},
 		{"script-arg", 0, 0, G_OPTION_ARG_STRING, &scriptArg, "Python script parameter", NULL},
 #endif
-		{G_OPTION_REMAINING, 0, 0, G_OPTION_ARG_FILENAME_ARRAY, &optFilename, "<input>", NULL},
+		{G_OPTION_REMAINING,   0, 0, G_OPTION_ARG_FILENAME_ARRAY, &optFilename,      "<input>", NULL},
 		{NULL}
 	};
 
