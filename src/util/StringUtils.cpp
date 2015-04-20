@@ -19,6 +19,7 @@ string StringUtils::format(const char* format, ...)
 	va_list args;
 	va_start(args, format);
 	char* data = g_strdup_vprintf(format, args);
+	va_end(args);
 
 	return string(data);
 }

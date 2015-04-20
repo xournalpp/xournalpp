@@ -1296,9 +1296,6 @@ void Control::getDefaultPagesize(double& width, double& height)
 						  "For custom you have to create the tags width and height.");
 		string settingsPaperFormat;
 
-		double w = 0;
-		double h = 0;
-
 		string paper;
 
 		if (format.getString("paperformat", settingsPaperFormat))
@@ -1309,6 +1306,8 @@ void Control::getDefaultPagesize(double& width, double& height)
 			}
 			else if (settingsPaperFormat == "Custom")
 			{
+				double w = 0;
+				double h = 0;
 				if (format.getDouble("width", w) && format.getDouble("height", h))
 				{
 					width = w;
@@ -2348,10 +2347,10 @@ bool Control::newFile()
 	*doc = newDoc;
 	this->doc->unlock();
 
+	//CPPCHECK what is type assigment for?
 	PageInsertType type = settings->getPageInsertType();
 	if (type != PAGE_INSERT_TYPE_PLAIN && type != PAGE_INSERT_TYPE_LINED &&
-		type != PAGE_INSERT_TYPE_RULED && type
-		!= PAGE_INSERT_TYPE_GRAPH)
+		type != PAGE_INSERT_TYPE_RULED && type != PAGE_INSERT_TYPE_GRAPH)
 	{
 		type = PAGE_INSERT_TYPE_LINED;
 	}
@@ -2688,7 +2687,7 @@ bool Control::save(bool synchron)
 	bool result = true;
 	if (synchron)
 	{
-		result = job->save();
+		resultot = job->save();
 		unblock();
 	}
 	else
@@ -2697,7 +2696,7 @@ bool Control::save(bool synchron)
 	}
 	job->unref();
 
-	return true;
+	return result;
 }
 
 bool Control::showSaveDialog()

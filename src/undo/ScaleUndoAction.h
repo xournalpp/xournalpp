@@ -33,7 +33,6 @@ private:
 private:
 	XOJ_TYPE_ATTRIB;
 
-	PageRef page;
 	ElementVector elements;
 
 	double x0;

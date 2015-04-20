@@ -8,6 +8,8 @@
 PrintHandler::PrintHandler()
 {
 	XOJ_INIT_TYPE(PrintHandler);
+	
+	this::doc = NULL;
 }
 
 PrintHandler::~PrintHandler()
@@ -37,12 +39,10 @@ void PrintHandler::drawPage(GtkPrintOperation* operation,
 		cairo_translate(cr, 0, -height);
 	}
 
-	XojPopplerPage* popplerPage = NULL;
-
 	if (page->getBackgroundType() == BACKGROUND_TYPE_PDF)
 	{
 		int pgNo = page->getPdfPageNr();
-		popplerPage = handler->doc->getPdfPage(pgNo);
+		XojPopplerPage* popplerPage = handler->doc->getPdfPage(pgNo);
 		if (popplerPage)
 		{
 			popplerPage->render(cr, true);

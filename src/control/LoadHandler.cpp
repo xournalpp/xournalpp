@@ -126,7 +126,7 @@ bool LoadHandler::closeFile()
 	return !this->file.is_open();
 }
 
-int LoadHandler::parseColor(const string name)
+int LoadHandler::parseColor(const string& name)
 {
 	XOJ_CHECK_TYPE(LoadHandler);
 	
@@ -178,7 +178,7 @@ bool LoadHandler::parseXml()
 
 	cout << bl::format("Parsed document of creator: {1}, version {2}")
 			% this->creator % this->fileversion << endl;
-	doc.setCreateBackupOnSave(!this->fileversion < 2);
+	doc.setCreateBackupOnSave(this->fileversion >= 2); //CPPCHECK is it ok?
 
 	return true;
 }

@@ -111,7 +111,7 @@ private:
 	void parseXmlLayerImage(xml_node* child);
 	void parseXmlLayerTexImage(xml_node* child);
 
-	int parseColor(const string name);
+	int parseColor(const string& name);
 
 private:
 	XOJ_TYPE_ATTRIB;

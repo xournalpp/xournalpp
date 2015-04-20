@@ -135,5 +135,5 @@ private:
 	GList* listener;
 
 	GtkWidget* menu;
-	GList* menuItemList;
+	std::vector<GtkWidget*> menuItemList;
 };

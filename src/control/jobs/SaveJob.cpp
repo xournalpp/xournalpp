@@ -98,12 +98,11 @@ void SaveJob::updatePreview()
 
 		cairo_t* cr = cairo_create(crBuffer);
 		cairo_scale(cr, zoom, zoom);
-		XojPopplerPage* popplerPage = NULL;
 
 		if (page->getBackgroundType() == BACKGROUND_TYPE_PDF)
 		{
 			int pgNo = page->getPdfPageNr();
-			popplerPage = doc->getPdfPage(pgNo);
+			XojPopplerPage* popplerPage = doc->getPdfPage(pgNo);
 			if (popplerPage)
 			{
 				popplerPage->render(cr, false);

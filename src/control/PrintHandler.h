@@ -38,6 +38,5 @@ private:
 private:
 	XOJ_TYPE_ATTRIB;
 
-
 	Document* doc;
 };

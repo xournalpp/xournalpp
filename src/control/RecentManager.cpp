@@ -19,7 +19,6 @@ RecentManager::RecentManager()
 
 	this->maxRecent = 10;
 	this->menu = gtk_menu_new();
-	this->menuItemList = NULL;
 	this->listener = NULL;
 
 	GtkRecentManager* recentManager = gtk_recent_manager_get_default();
@@ -156,17 +155,12 @@ void RecentManager::freeOldMenus()
 {
 	XOJ_CHECK_TYPE(RecentManager);
 
-	GtkWidget* w = NULL;
-
-	for (GList* l = menuItemList; l != NULL; l = l->next)
+	for (GtkWidget* w : menuItemList)
 	{
-		w = (GtkWidget*) l->data;
-
 		gtk_widget_destroy(w);
 	}
 
-	g_list_free(this->menuItemList);
-	this->menuItemList = NULL;
+	this->menuItemList.clear();
 }
 
 int RecentManager::sortRecentsEntries(GtkRecentInfo* a, GtkRecentInfo* b)
@@ -256,7 +250,7 @@ void RecentManager::addRecentMenu(GtkRecentInfo* info, int i)
 	gtk_menu_shell_append(GTK_MENU_SHELL(menu), item);
 	gtk_widget_set_visible(GTK_WIDGET(item), true);
 
-	this->menuItemList = g_list_append(this->menuItemList, item);
+	this->menuItemList.push_back(item);
 }
 
 void RecentManager::updateMenu()
@@ -288,7 +282,7 @@ void RecentManager::updateMenu()
 	gtk_menu_shell_append(GTK_MENU_SHELL(menu), separator);
 	gtk_widget_set_visible(GTK_WIDGET(separator), true);
 
-	this->menuItemList = g_list_append(this->menuItemList, separator);
+	this->menuItemList.push_back(separator);
 
 	i = 0;
 	for (GList* l = filteredItemsPdf; l != NULL; l = l->next)

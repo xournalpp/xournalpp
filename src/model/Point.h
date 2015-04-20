@@ -24,8 +24,8 @@ public:
 
 public:
 	double lineLengthTo(const Point p);
-	Point lineTo(const Point p, double length);
-	bool equalsPos(const Point p);
+	Point lineTo(const Point& p, double length);
+	bool equalsPos(const Point& p);
 
 public:
 	XOJ_TYPE_ATTRIB;

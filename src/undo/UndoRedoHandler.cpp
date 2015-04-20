@@ -103,7 +103,7 @@ void UndoRedoHandler::clearRedo()
 
 #ifdef UNDO_TRACE
 		cout << "clearRedo()::Delete UndoAction: " << action
-				<< " / " << action->getClassName()) << endl;
+				<< " / " << action->getClassName() << endl;
 #endif //UNDO_TRACE
 
 		delete action;

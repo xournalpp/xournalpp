@@ -1,12 +1,14 @@
 #include "Scheduler.h"
 #include "../../cfg.h"
 
+//TODO unified debugging
 #ifdef SHEDULER_DEBUG
 #include <StringUtils.h>
 #include <iostream>
 using namespace std;
 #define SDEBUG(msg) cout << bl::format(CONCAT("Scheduler::", msg, "\n"))
 #else
+//kind of workaround
 class no_debug_format
 {
 public:
@@ -289,7 +291,7 @@ gpointer Scheduler::jobThreadCallback(Scheduler* scheduler)
 
 		SDEBUG("get job: {1}") % (long) job;
 
-		if (!job)
+		if (job != NULL)
 		{
 			// unlock the whole scheduler
 			g_mutex_unlock(&scheduler->schedulerMutex);

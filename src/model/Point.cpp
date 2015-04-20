@@ -53,7 +53,7 @@ double Point::lineLengthTo(const Point p)
 	return hypot(this->x - p.x, this->y - p.y);
 }
 
-Point Point::lineTo(const Point p, double length)
+Point Point::lineTo(const Point& p, double length)
 {
 	XOJ_CHECK_TYPE(Point);
 
@@ -70,7 +70,7 @@ Point Point::lineTo(const Point p, double length)
 	return Point(x, y);
 }
 
-bool Point::equalsPos(const Point p)
+bool Point::equalsPos(const Point& p)
 {
 	XOJ_CHECK_TYPE(Point);
 

@@ -11,6 +11,7 @@
 
 #pragma once
 
+//TODO rewrite with pugixml
 #include <libxml/xmlreader.h>
 #include <glib.h>
 #include "../../model/Font.h"

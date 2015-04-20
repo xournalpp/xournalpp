@@ -150,7 +150,7 @@ void InputHandler::addPointToTmpStroke(GdkEventMotion* event)
 			}
 
 			//remove previous points
-			count = tmpStroke->getPointCount();
+			count = tmpStroke->getPointCount();	//CPPCHECK what is this assigment for?
 			tmpStroke->deletePointsFrom(1);
 			for (int i = 1; i < npts; i++)
 			{

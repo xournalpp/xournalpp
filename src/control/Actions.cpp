@@ -72,7 +72,6 @@ void ActionSelectionListener::unregisterListener()
 	if (this->handler != NULL)
 	{
 		handler->removeListener(this);
-		this->handler = handler;
 	}
 }
 
