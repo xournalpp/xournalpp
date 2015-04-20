@@ -815,7 +815,7 @@ void MainWindow::updatePageNumbers(int page, int pagecount, int pdfpage)
 
 	SpinPageAdapter* spinPageNo = getSpinPageNo();
 
-	int min = 1;
+	int min;
 	int max = pagecount;
 
 	if (pagecount == 0)
@@ -825,6 +825,7 @@ void MainWindow::updatePageNumbers(int page, int pagecount, int pdfpage)
 	}
 	else
 	{
+		min = 1;
 		page++;
 	}
 

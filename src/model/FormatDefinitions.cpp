@@ -9,4 +9,4 @@ const FormatUnits XOJ_UNITS[] = {
 	{ _("points"), 1.0    }
 };
 
-const int XOJ_UNIT_COUNT = (sizeof XOJ_UNITS) / (sizeof FormatUnits);
+const int XOJ_UNIT_COUNT = sizeof(XOJ_UNITS) / sizeof(FormatUnits);

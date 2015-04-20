@@ -92,7 +92,7 @@ static PyMemberDef PyDocument_members[] = {
 static PyTypeObject SelectionType = {
 	PyObject_HEAD_INIT(NULL)0, /*ob_size*/
 	"xournal.Document", /*tp_name*/
-	sizeof PyDocument, /*tp_basicsize*/
+	sizeof(PyDocument), /*tp_basicsize*/
 	0, /*tp_itemsize*/
 	(destructor) PyDocument_dealloc, /*tp_dealloc*/
 	0, /*tp_print*/

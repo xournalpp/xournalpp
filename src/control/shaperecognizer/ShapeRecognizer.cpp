@@ -593,7 +593,7 @@ ShapeRecognizerResult* ShapeRecognizer::recognizePatterns(Stroke* stroke)
 			while (i < queueLength && queue[i].startpt != 0)
 				i++;
 			queueLength -= i;
-			g_memmove(queue, queue + i, queueLength * (sizeof RecoSegment));
+			g_memmove(queue, queue + i, queueLength * sizeof(RecoSegment));
 		}
 
 		RDEBUG("Queue now has {1} + {2} edges") % this->queueLength % n;

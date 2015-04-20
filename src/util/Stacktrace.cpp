@@ -38,7 +38,7 @@ void Stacktrace::printStracktrace(ostream& stream)
 
 		sprintf(syscom, "addr2line %p -e %s", trace[i], exeName.c_str());
 		FILE* fProc = popen(syscom, "r");
-		while (fgets(buff, sizeof buff, fProc) != NULL)
+		while (fgets(buff, sizeof(buff), fProc) != NULL)
 		{
 			stream << buff;
 		}

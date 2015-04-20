@@ -178,5 +178,5 @@ void PagePositionHandler::allocDataSize(int size)
 
 	this->dataAllocSize = size;
 	this->data = (PagePosition**) g_realloc(this->data,
-											this->dataAllocSize * (sizeof PagePosition*));
+											this->dataAllocSize * sizeof(PagePosition*));
 }

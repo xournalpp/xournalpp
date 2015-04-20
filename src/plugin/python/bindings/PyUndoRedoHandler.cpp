@@ -157,7 +157,7 @@ static PyMemberDef PyUndoRedoHandler_members[] = {
 static PyTypeObject UndoRedoHandlerType = {
 	PyObject_HEAD_INIT(NULL)0, /*ob_size*/
 	"xournal.UndoRedo", /*tp_name*/
-	sizeof PyUndoRedoHandler, /*tp_basicsize*/
+	sizeof(PyUndoRedoHandler), /*tp_basicsize*/
 	0, /*tp_itemsize*/
 	(destructor) PyUndoRedoHandler_dealloc, /*tp_dealloc*/
 	0, /*tp_print*/

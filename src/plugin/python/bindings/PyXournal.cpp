@@ -236,7 +236,7 @@ PyXournal_mousePressed(PyXournal* self, PyObject* args)
 	PageView* v = xournal->getViewFor(pageNo);
 
 	GdkEventButton event;
-	memset(&event, 0, sizeof GdkEventButton);
+	memset(&event, 0, sizeof(GdkEventButton));
 	event.type = GDK_BUTTON_PRESS;
 	event.window = (GdkWindow*) *win;
 	event.send_event = true;
@@ -280,7 +280,7 @@ PyXournal_mouseMoved(PyXournal* self, PyObject* args)
 	PageView* v = xournal->getViewFor(pageNo);
 
 	GdkEventMotion event;
-	memset(&event, 0, sizeof GdkEventMotion);
+	memset(&event, 0, sizeof(GdkEventMotion));
 	event.type = GDK_MOTION_NOTIFY;
 	event.window = (GdkWindow*) *win;
 	event.send_event = true;
@@ -310,7 +310,7 @@ PyXournal_mouseReleased(PyXournal* self)
 	}
 
 	GdkEventButton event;
-	memset(&event, 0, sizeof GdkEventButton);
+	memset(&event, 0, sizeof(GdkEventButton));
 	event.type = GDK_BUTTON_RELEASE;
 	event.window = (GdkWindow*) *win;
 	event.send_event = true;
@@ -653,7 +653,7 @@ static PyTypeObject XournalType = {
 	PyObject_HEAD_INIT(NULL)
 	0, /*ob_size*/
 	"xournal.Xournal", /*tp_name*/
-	sizeof PyXournal, /*tp_basicsize*/
+	sizeof(PyXournal), /*tp_basicsize*/
 	0, /*tp_itemsize*/
 	(destructor) PyXournal_dealloc, /*tp_dealloc*/
 	0, /*tp_print*/

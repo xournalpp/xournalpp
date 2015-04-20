@@ -2687,7 +2687,7 @@ bool Control::save(bool synchron)
 	bool result = true;
 	if (synchron)
 	{
-		resultot = job->save();
+		result = job->save();
 		unblock();
 	}
 	else
@@ -2734,7 +2734,7 @@ bool Control::showSaveDialog()
 	{
 		time_t curtime = time(NULL);
 		char stime[128];
-		strftime(stime, sizeof stime, settings->getDefaultSaveName().c_str(),
+		strftime(stime, sizeof(stime), settings->getDefaultSaveName().c_str(),
 				 localtime(&curtime));
 
 		saveFilename = stime;

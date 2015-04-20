@@ -46,7 +46,7 @@ Point::~Point()
 	XOJ_RELEASE_TYPE(Point);
 }
 
-double Point::lineLengthTo(const Point p)
+double Point::lineLengthTo(const Point& p)
 {
 	XOJ_CHECK_TYPE(Point);
 

@@ -51,7 +51,7 @@ void ObjectOutputStream::writeInt(int i)
 	XOJ_CHECK_TYPE(ObjectOutputStream);
 
 	this->encoder->addStr("_i");
-	this->encoder->addData(&i, sizeof int);
+	this->encoder->addData(&i, sizeof(int));
 }
 
 void ObjectOutputStream::writeDouble(double d)
@@ -59,7 +59,7 @@ void ObjectOutputStream::writeDouble(double d)
 	XOJ_CHECK_TYPE(ObjectOutputStream);
 
 	this->encoder->addStr("_d");
-	this->encoder->addData(&d, sizeof double);
+	this->encoder->addData(&d, sizeof(double));
 }
 
 void ObjectOutputStream::writeString(const char* str)
@@ -75,7 +75,7 @@ void ObjectOutputStream::writeString(const string& s)
 
 	this->encoder->addStr("_s");
 	int len = s.length();
-	this->encoder->addData(&len, sizeof int);
+	this->encoder->addData(&len, sizeof(int));
 	this->encoder->addData(s.c_str(), len);
 }
 
@@ -84,10 +84,10 @@ void ObjectOutputStream::writeData(const void* data, int len, int width)
 	XOJ_CHECK_TYPE(ObjectOutputStream);
 
 	this->encoder->addStr("_b");
-	this->encoder->addData(&len, sizeof int);
+	this->encoder->addData(&len, sizeof(int));
 
 	// size of one element
-	this->encoder->addData(&width, sizeof int);
+	this->encoder->addData(&width, sizeof(int));
 	if (data != NULL)
 	{
 		this->encoder->addData(data, len * width);
@@ -111,7 +111,7 @@ void ObjectOutputStream::writeImage(cairo_surface_t* img)
 									  imgStr);
 
 	this->encoder->addStr("_m");
-	this->encoder->addData(&imgStr->len, sizeof gsize);
+	this->encoder->addData(&imgStr->len, sizeof(gsize));
 
 	this->encoder->addData(imgStr->str, imgStr->len);
 

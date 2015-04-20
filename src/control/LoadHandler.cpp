@@ -659,16 +659,16 @@ ParseException::ParseException(const char* attribute, bool notFound, string* val
 	this->convError = convError;
 }
 
-ParseException::~ParseException()
-{
-	XOJ_RELEASE_TYPE(ParseException);
-}
-
 ParseException::ParseException(string msg) : std::runtime_error(msg)
 {
 	XOJ_INIT_TYPE(ParseException);
 	
 	this->msg = msg;
+}
+
+ParseException::~ParseException()
+{
+	XOJ_RELEASE_TYPE(ParseException);
 }
 	
 const char* ParseException::getAttribute() const {

@@ -54,8 +54,8 @@ GtkType gtk_xournal_get_type(void)
 	{
 		static const GtkTypeInfo gtk_xournal_info = {
 			g_strdup("GtkXournal"),
-			sizeof GtkXournal,
-			sizeof GtkXournalClass,
+			sizeof(GtkXournal),
+			sizeof(GtkXournalClass),
 			(GtkClassInitFunc) gtk_xournal_class_init,
 			(GtkObjectInitFunc) gtk_xournal_init,
 			NULL,

@@ -71,7 +71,7 @@ string XojPopplerIter::unicodeToChar(Unicode* unicode, int len)
     gchar buf[8]; /* 8 is enough for mapping an unicode char to a string */
     for (int i = 0; i < len; ++i)
     {
-        int n = uMap->mapUnicode(unicode[i], buf, sizeof buf);
+        int n = uMap->mapUnicode(unicode[i], buf, sizeof(buf));
         gstr.append(buf, n);
     }
 

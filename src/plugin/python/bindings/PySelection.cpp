@@ -166,7 +166,7 @@ static PyMemberDef PySelection_members[] = {
 static PyTypeObject SelectionType = {
 	PyObject_HEAD_INIT(NULL)0, /*ob_size*/
 	"xournal.Selection", /*tp_name*/
-	sizeof PySelection, /*tp_basicsize*/
+	sizeof(PySelection), /*tp_basicsize*/
 	0, /*tp_itemsize*/
 	(destructor) PySelection_dealloc, /*tp_dealloc*/
 	0, /*tp_print*/

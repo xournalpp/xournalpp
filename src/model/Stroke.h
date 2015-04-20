@@ -82,8 +82,7 @@ protected:
 private:
 	XOJ_TYPE_ATTRIB;
 
-	// The stroke width
-	double width;
+	// The stroke width is inherited from Element
 
 	StrokeTool toolType;
 

@@ -657,7 +657,7 @@ void EditSelection::paint(cairo_t* cr, double zoom)
 	cairo_set_line_width(cr, 1);
 
 	const double dashes[] = {10.0, 10.0};
-	cairo_set_dash(cr, dashes, (sizeof dashes) / (sizeof dashes[0]), 0);
+	cairo_set_dash(cr, dashes, sizeof(dashes) / sizeof(dashes[0]), 0);
 	cairo_set_source_rgb(cr, selectionColor.red / 65536.0,
 						selectionColor.green / 65536.0, selectionColor.blue / 65536.0);
 

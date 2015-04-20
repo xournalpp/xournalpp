@@ -223,7 +223,7 @@ static void gtk_menu_tool_toggle_button_class_init(GtkMenuToolToggleButtonClass*
 											"The dropdown menu", GTK_TYPE_MENU, (GParamFlags) (GTK_PARAM_READWRITE));
 	g_object_class_install_property(object_class, PROP_MENU, pspec);
 
-	g_type_class_add_private(object_class, sizeof GtkMenuToolToggleButtonPrivate);
+	g_type_class_add_private(object_class, sizeof(GtkMenuToolToggleButtonPrivate));
 }
 
 static void menu_position_func(GtkMenu* menu, int* x, int* y, gboolean* push_in,

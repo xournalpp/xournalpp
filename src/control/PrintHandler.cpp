@@ -9,7 +9,7 @@ PrintHandler::PrintHandler()
 {
 	XOJ_INIT_TYPE(PrintHandler);
 	
-	this::doc = NULL;
+	doc = NULL;
 }
 
 PrintHandler::~PrintHandler()

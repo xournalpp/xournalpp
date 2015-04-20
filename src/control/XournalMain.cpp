@@ -133,7 +133,7 @@ int XournalMain::exportPdf(const char* input, const char* output)
 	XOJ_CHECK_TYPE(XournalMain);
 
 	LoadHandler loader;
-	Document* doc;
+	Document* doc = NULL;
 	
 	try {
 		doc = loader.loadDocument(input);
@@ -398,7 +398,7 @@ GladeSearchpath* XournalMain::initPath(const char* argv0)
 	g_free(path);
 
 	char buffer[512] = {0};
-	path = getcwd(buffer, sizeof buffer);
+	path = getcwd(buffer, sizeof(buffer));
 	if (path == NULL)
 	{
 		return gladePath;

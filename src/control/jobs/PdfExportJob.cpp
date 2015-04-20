@@ -50,7 +50,7 @@ bool PdfExportJob::showFilechooser()
 	{
 		time_t curtime = time(NULL);
 		char stime[128];
-		strftime(stime, sizeof stime, settings->getDefaultSaveName().c_str(),
+		strftime(stime, sizeof(stime), settings->getDefaultSaveName().c_str(),
 				 localtime(&curtime));
 
 		savePath /= stime;

@@ -23,7 +23,7 @@ public:
 	virtual ~Point();
 
 public:
-	double lineLengthTo(const Point p);
+	double lineLengthTo(const Point& p);
 	Point lineTo(const Point& p, double length);
 	bool equalsPos(const Point& p);
 

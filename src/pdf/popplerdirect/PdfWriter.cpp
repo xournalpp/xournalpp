@@ -197,7 +197,7 @@ bool PdfWriter::writeInfo(string title)
 
 	time_t curtime = time(NULL);
 	char stime[128] = "D:";
-	strftime(stime + 2, (sizeof stime) - 2, "%Y%m%d%H%M%S", localtime(&curtime));
+	strftime(stime + 2, sizeof(stime) - 2, "%Y%m%d%H%M%S", localtime(&curtime));
 
 	write("/CreationDate ");
 	writeTxt(stime);
