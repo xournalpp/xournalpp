@@ -36,9 +36,8 @@ Rectangle::~Rectangle()
 	XOJ_RELEASE_TYPE(Rectangle);
 }
 
-
 bool Rectangle::intersects(const Rectangle& other,
-                           Rectangle* dest) const
+						   Rectangle* dest) const
 {
 	XOJ_CHECK_TYPE(Rectangle);
 

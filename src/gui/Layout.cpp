@@ -61,7 +61,7 @@ void Layout::checkSelectedPage()
 	if (scrollY < 1)
 	{
 		if (twoPages && this->view->viewPagesLen > 1 &&
-		    this->view->viewPages[1]->isSelected())
+			this->view->viewPages[1]->isSelected())
 		{
 			// page 2 already selected
 		}
@@ -179,7 +179,7 @@ void Layout::layoutPages()
 
 	Settings* settings = this->view->getControl()->getSettings();
 	bool verticalSpace = settings->getAddVerticalSpace(),
-	     horizontalSpace = settings->getAddHorizontalSpace();
+			horizontalSpace = settings->getAddHorizontalSpace();
 	bool dualPage = settings->isShowTwoPages();
 
 	int size[2] = { 0, 0 };
@@ -446,7 +446,7 @@ double Layout::getVisiblePageTop(int page)
 	}
 
 	double y = this->view->viewPages[page]->getY() +
-	           this->scrollVertical->getValue();
+			this->scrollVertical->getValue();
 
 	return y / this->view->getZoom();
 }

@@ -9,7 +9,7 @@ void Redrawable::repaintRange(Range& r)
 void Redrawable::repaintElement(Element* e)
 {
 	repaintArea(e->getX(), e->getY(), e->getElementWidth() + e->getX(),
-	            e->getElementHeight() + e->getY());
+				e->getElementHeight() + e->getY());
 }
 
 void Redrawable::repaintRect(double x, double y, double width, double height)
@@ -30,5 +30,5 @@ void Redrawable::rerenderArea(double x1, double y1, double x2, double y2)
 void Redrawable::rerenderElement(Element* e)
 {
 	rerenderRect(e->getX() - 1, e->getY() - 1, e->getElementWidth() + 2,
-	             e->getElementHeight() + 2);
+				 e->getElementHeight() + 2);
 }

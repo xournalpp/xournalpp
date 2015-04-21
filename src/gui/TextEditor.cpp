@@ -16,7 +16,7 @@
 // TODO LOW PRIO: implement drag & drop
 
 TextEditor::TextEditor(PageView* gui, GtkWidget* widget, Text* text,
-                       bool ownText)
+					   bool ownText)
 {
 	XOJ_INIT_TYPE(TextEditor);
 
@@ -56,19 +56,19 @@ TextEditor::TextEditor(PageView* gui, GtkWidget* widget, Text* text,
 	GtkSettings* settings = gtk_widget_get_settings(this->widget);
 	g_object_get(settings, "gtk-cursor-blink-time", &this->cursorBlinkTime, NULL);
 	g_object_get(settings, "gtk-cursor-blink-timeout", &this->cursorBlinkTimeout,
-	             NULL);
+				 NULL);
 
 	this->imContext = gtk_im_context_simple_new();
 	gtk_im_context_focus_in(this->imContext);
 
-	g_signal_connect (this->imContext, "commit",
-	                  G_CALLBACK (iMCommitCallback), this);
-	g_signal_connect (this->imContext, "preedit-changed",
-	                  G_CALLBACK (iMPreeditChangedCallback), this);
-	g_signal_connect (this->imContext, "retrieve-surrounding",
-	                  G_CALLBACK (iMRetrieveSurroundingCallback), this);
-	g_signal_connect (this->imContext, "delete-surrounding",
-	                  G_CALLBACK (imDeleteSurroundingCallback), this);
+	g_signal_connect(this->imContext, "commit",
+					 G_CALLBACK(iMCommitCallback), this);
+	g_signal_connect(this->imContext, "preedit-changed",
+					 G_CALLBACK(iMPreeditChangedCallback), this);
+	g_signal_connect(this->imContext, "retrieve-surrounding",
+					 G_CALLBACK(iMRetrieveSurroundingCallback), this);
+	g_signal_connect(this->imContext, "delete-surrounding",
+					 G_CALLBACK(imDeleteSurroundingCallback), this);
 
 	blinkCallback(this);
 }
@@ -90,7 +90,7 @@ TextEditor::~TextEditor()
 		if (this->ownText)
 		{
 			UndoRedoHandler* handler =
-			    gui->getXournal()->getControl()->getUndoRedoHandler();
+					gui->getXournal()->getControl()->getUndoRedoHandler();
 			for (GList* l = this->undoActions; l != NULL; l = l->next)
 			{
 				TextUndoAction* undo = (TextUndoAction*) l->data;
@@ -150,7 +150,7 @@ Text* TextEditor::getText()
 	return this->text;
 }
 
-void TextEditor::setText(String text)
+void TextEditor::setText(string text)
 {
 	XOJ_CHECK_TYPE(TextEditor);
 
@@ -172,13 +172,13 @@ UndoAction* TextEditor::setColor(int color)
 	repaintEditor();
 
 	// This is a new text, so we don't need to create a undo action
-	if(this->ownText)
+	if (this->ownText)
 	{
 		return NULL;
 	}
 
 	ColorUndoAction* undo = new ColorUndoAction(gui->getPage(),
-	                                            gui->getPage()->getSelectedLayer());
+												gui->getPage()->getSelectedLayer());
 	undo->addStroke(this->text, origColor, color);
 
 	return undo;
@@ -201,13 +201,13 @@ void TextEditor::textCopyed()
 }
 
 void TextEditor::iMCommitCallback(GtkIMContext* context, const gchar* str,
-                                  TextEditor* te)
+								  TextEditor* te)
 {
 	XOJ_CHECK_TYPE_OBJ(te, TextEditor);
 
 	gtk_text_buffer_begin_user_action(te->buffer);
 	gboolean had_selection = gtk_text_buffer_get_selection_bounds(te->buffer, NULL,
-	                                                              NULL);
+																  NULL);
 
 	gtk_text_buffer_delete_selection(te->buffer, true, true);
 
@@ -229,7 +229,7 @@ void TextEditor::iMCommitCallback(GtkIMContext* context, const gchar* str,
 			GtkTextIter insert;
 
 			gtk_text_buffer_get_iter_at_mark(te->buffer, &insert,
-			                                 gtk_text_buffer_get_insert(te->buffer));
+											 gtk_text_buffer_get_insert(te->buffer));
 			if (!gtk_text_iter_ends_line(&insert))
 			{
 				te->deleteFromCursor(GTK_DELETE_CHARS, 1);
@@ -248,7 +248,7 @@ void TextEditor::iMCommitCallback(GtkIMContext* context, const gchar* str,
 }
 
 void TextEditor::iMPreeditChangedCallback(GtkIMContext* context,
-                                          TextEditor* te)
+										  TextEditor* te)
 {
 	XOJ_CHECK_TYPE_OBJ(te, TextEditor);
 
@@ -258,7 +258,7 @@ void TextEditor::iMPreeditChangedCallback(GtkIMContext* context,
 	GtkTextIter iter;
 
 	gtk_text_buffer_get_iter_at_mark(te->buffer, &iter,
-	                                 gtk_text_buffer_get_insert(te->buffer));
+									 gtk_text_buffer_get_insert(te->buffer));
 
 	/* Keypress events are passed to input method even if cursor position is
 	 * not editable; so beep here if it's multi-key input sequence, input
@@ -283,7 +283,7 @@ out:
 }
 
 bool TextEditor::iMRetrieveSurroundingCallback(GtkIMContext* context,
-                                               TextEditor* te)
+											   TextEditor* te)
 {
 	XOJ_CHECK_TYPE_OBJ(te, TextEditor);
 
@@ -291,7 +291,7 @@ bool TextEditor::iMRetrieveSurroundingCallback(GtkIMContext* context,
 	GtkTextIter end;
 
 	gtk_text_buffer_get_iter_at_mark(te->buffer, &start,
-	                                 gtk_text_buffer_get_insert(te->buffer));
+									 gtk_text_buffer_get_insert(te->buffer));
 	end = start;
 
 	gint pos = gtk_text_iter_get_line_index(&start);
@@ -308,7 +308,7 @@ bool TextEditor::iMRetrieveSurroundingCallback(GtkIMContext* context,
 }
 
 bool TextEditor::imDeleteSurroundingCallback(GtkIMContext* context, gint offset,
-                                             gint n_chars, TextEditor* te)
+											 gint n_chars, TextEditor* te)
 {
 	XOJ_CHECK_TYPE_OBJ(te, TextEditor);
 
@@ -316,7 +316,7 @@ bool TextEditor::imDeleteSurroundingCallback(GtkIMContext* context, gint offset,
 	GtkTextIter end;
 
 	gtk_text_buffer_get_iter_at_mark(te->buffer, &start,
-	                                 gtk_text_buffer_get_insert(te->buffer));
+									 gtk_text_buffer_get_insert(te->buffer));
 	end = start;
 
 	gtk_text_iter_forward_chars(&start, offset);
@@ -357,7 +357,7 @@ bool TextEditor::onKeyPressEvent(GdkEventKey* event)
 		retval = true;
 	}
 	else if (event->keyval == GDK_Return || event->keyval == GDK_ISO_Enter ||
-	         event->keyval == GDK_KP_Enter)
+			 event->keyval == GDK_KP_Enter)
 	{
 		this->resetImContext();
 		iMCommitCallback(NULL, "\n", this);
@@ -365,9 +365,9 @@ bool TextEditor::onKeyPressEvent(GdkEventKey* event)
 		obscure = true;
 		retval = true;
 	}
-	// Pass through Tab as literal tab, unless Control is held down
+		// Pass through Tab as literal tab, unless Control is held down
 	else if ((event->keyval == GDK_Tab || event->keyval == GDK_KP_Tab ||
-	          event->keyval == GDK_ISO_Left_Tab) && !(event->state & GDK_CONTROL_MASK))
+			  event->keyval == GDK_ISO_Left_Tab) && !(event->state & GDK_CONTROL_MASK))
 	{
 		resetImContext();
 		iMCommitCallback(NULL, "\t", this);
@@ -397,7 +397,7 @@ bool TextEditor::onKeyReleaseEvent(GdkEventKey* event)
 	GtkTextMark* insert = gtk_text_buffer_get_insert(this->buffer);
 	gtk_text_buffer_get_iter_at_mark(this->buffer, &iter, insert);
 	if (gtk_text_iter_can_insert(&iter, true) &&
-	    gtk_im_context_filter_keypress(this->imContext, event))
+		gtk_im_context_filter_keypress(this->imContext, event))
 	{
 		this->needImReset = true;
 		return true;
@@ -426,7 +426,7 @@ void TextEditor::selectAll()
 }
 
 void TextEditor::moveCursor(GtkMovementStep step, int count,
-                            bool extendSelection)
+							bool extendSelection)
 {
 	XOJ_CHECK_TYPE(TextEditor);
 
@@ -452,7 +452,7 @@ void TextEditor::moveCursor(GtkMovementStep step, int count,
 
 	GtkTextIter insert;
 	gtk_text_buffer_get_iter_at_mark(this->buffer, &insert,
-	                                 gtk_text_buffer_get_insert(this->buffer));
+									 gtk_text_buffer_get_insert(this->buffer));
 	GtkTextIter newplace = insert;
 
 	bool updateVirtualCursor = true;
@@ -572,7 +572,7 @@ void TextEditor::findPos(GtkTextIter* iter, double xPos, double yPos)
 
 	int index = 0;
 	if (!pango_layout_xy_to_index(this->layout, xPos * PANGO_SCALE,
-	                              yPos * PANGO_SCALE, &index, NULL))
+								  yPos * PANGO_SCALE, &index, NULL))
 	{
 		index++;
 	}
@@ -584,19 +584,19 @@ void TextEditor::contentsChanged(bool forceCreateUndoAction)
 {
 	XOJ_CHECK_TYPE(TextEditor);
 
-	String currentText = getText()->getText();
+	string currentText = getText()->getText();
 
 	if (forceCreateUndoAction ||
-	    ABS(lastText.length() - currentText.length()) > 100)
+		ABS(lastText.length() - currentText.length()) > 100)
 	{
-		if (!lastText.isEmpty() && this->undoActions &&
-		    !(((TextUndoAction*) this->undoActions->data)->getUndoText() == currentText))
+		if (!lastText.empty() && this->undoActions &&
+			!(((TextUndoAction*) this->undoActions->data)->getUndoText() == currentText))
 		{
 			TextUndoAction* undo = new TextUndoAction(gui->getPage(),
-			                                          gui->getPage()->getSelectedLayer(),
-			                                          this->text, lastText, this);
+													  gui->getPage()->getSelectedLayer(),
+													  this->text, lastText, this);
 			UndoRedoHandler* handler =
-			    gui->getXournal()->getControl()->getUndoRedoHandler();
+					gui->getXournal()->getControl()->getUndoRedoHandler();
 			handler->addUndoAction(undo);
 			this->undoActions = g_list_append(this->undoActions, undo);
 		}
@@ -688,7 +688,7 @@ void TextEditor::jumpALine(GtkTextIter* textIter, int count)
 
 	int index = 0;
 	pango_layout_line_x_to_index(line, this->virtualCursor * PANGO_SCALE, &index,
-	                             NULL);
+								 NULL);
 
 	index = getCharOffset(index);
 
@@ -712,7 +712,7 @@ void TextEditor::calcVirtualCursor()
 }
 
 void TextEditor::moveCursor(const GtkTextIter* newLocation,
-                            gboolean extendSelection)
+							gboolean extendSelection)
 {
 	XOJ_CHECK_TYPE(TextEditor);
 
@@ -743,7 +743,7 @@ static gboolean not_whitespace(gunichar ch, gpointer user_data)
 }
 
 static gboolean find_whitepace_region(const GtkTextIter* center,
-                                      GtkTextIter* start, GtkTextIter* end)
+									  GtkTextIter* start, GtkTextIter* end)
 {
 	*start = *center;
 	*end = *center;
@@ -777,7 +777,7 @@ void TextEditor::deleteFromCursor(GtkDeleteType type, int count)
 	}
 
 	gtk_text_buffer_get_iter_at_mark(this->buffer, &insert,
-	                                 gtk_text_buffer_get_insert(this->buffer));
+									 gtk_text_buffer_get_insert(this->buffer));
 
 	GtkTextIter start = insert;
 	GtkTextIter end = insert;
@@ -869,7 +869,7 @@ void TextEditor::deleteFromCursor(GtkDeleteType type, int count)
 	{
 		find_whitepace_region(&insert, &start, &end);
 	}
-	break;
+		break;
 
 	default:
 		break;
@@ -919,7 +919,7 @@ void TextEditor::backspace()
 	}
 
 	gtk_text_buffer_get_iter_at_mark(this->buffer, &insert,
-	                                 gtk_text_buffer_get_insert(this->buffer));
+									 gtk_text_buffer_get_insert(this->buffer));
 
 	if (gtk_text_buffer_backspace(this->buffer, &insert, true, true))
 	{
@@ -932,13 +932,13 @@ void TextEditor::backspace()
 	}
 }
 
-String TextEditor::getSelection()
+string TextEditor::getSelection()
 {
 	XOJ_CHECK_TYPE(TextEditor);
 
 	GtkTextIter start, end;
 	char* text;
-	String s;
+	string s;
 
 	if (gtk_text_buffer_get_selection_bounds(buffer, &start, &end))
 	{
@@ -954,7 +954,7 @@ void TextEditor::copyToCliboard()
 	XOJ_CHECK_TYPE(TextEditor);
 
 	GtkClipboard* clipboard = gtk_widget_get_clipboard(this->widget,
-	                                                   GDK_SELECTION_PRIMARY);
+													   GDK_SELECTION_PRIMARY);
 	gtk_text_buffer_copy_clipboard(this->buffer, clipboard);
 }
 
@@ -963,7 +963,7 @@ void TextEditor::cutToClipboard()
 	XOJ_CHECK_TYPE(TextEditor);
 
 	GtkClipboard* clipboard = gtk_widget_get_clipboard(this->widget,
-	                                                   GDK_SELECTION_PRIMARY);
+													   GDK_SELECTION_PRIMARY);
 	gtk_text_buffer_cut_clipboard(this->buffer, clipboard, true);
 
 	this->repaintEditor();
@@ -975,7 +975,7 @@ void TextEditor::pasteFromClipboard()
 	XOJ_CHECK_TYPE(TextEditor);
 
 	GtkClipboard* clipboard = gtk_widget_get_clipboard(this->widget,
-	                                                   GDK_SELECTION_PRIMARY);
+													   GDK_SELECTION_PRIMARY);
 	gtk_text_buffer_paste_clipboard(this->buffer, clipboard, NULL, true);
 
 	this->repaintEditor();
@@ -1015,12 +1015,12 @@ gint TextEditor::blinkCallback(TextEditor* te)
 	if (te->cursorVisible)
 	{
 		te->blinkTimeout = gdk_threads_add_timeout(te->cursorBlinkTime *
-		                                           CURSOR_OFF_MULTIPLIER / CURSOR_DIVIDER, (GSourceFunc) blinkCallback, te);
+												   CURSOR_OFF_MULTIPLIER / CURSOR_DIVIDER, (GSourceFunc) blinkCallback, te);
 	}
 	else
 	{
 		te->blinkTimeout = gdk_threads_add_timeout(te->cursorBlinkTime *
-		                                           CURSOR_ON_MULTIPLIER / CURSOR_DIVIDER, (GSourceFunc) blinkCallback, te);
+												   CURSOR_ON_MULTIPLIER / CURSOR_DIVIDER, (GSourceFunc) blinkCallback, te);
 	}
 
 	te->cursorVisible = !te->cursorVisible;
@@ -1067,7 +1067,7 @@ int TextEditor::getCharOffset(int byteOffset)
 }
 
 void TextEditor::drawCursor(cairo_t* cr, double x, double y, double height,
-                            double zoom)
+							double zoom)
 {
 	XOJ_CHECK_TYPE(TextEditor);
 
@@ -1116,19 +1116,18 @@ void TextEditor::paint(cairo_t* cr, GdkRectangle* repaintRect, double zoom)
 		this->layout = TextView::initPango(cr, this->text);
 	}
 
-	if (!this->preeditString.isEmpty())
+	if (!this->preeditString.empty())
 	{
-		String text = this->text->getText();
+		string text = this->text->getText();
 		int pos = gtk_text_iter_get_offset(&cursorIter);
-		String txt = text.substring(0, pos);
-		txt += preeditString;
-		txt += text.substring(pos);
+		string txt = CONCAT(text.substr(0, pos), preeditString,
+							text.substr(pos));
 
 		PangoAttribute* attrib = pango_attr_underline_new(PANGO_UNDERLINE_SINGLE);
 		PangoAttrList* list = pango_layout_get_attributes(this->layout);
 
 		attrib->start_index = pos;
-		attrib->end_index = pos + preeditString.size();
+		attrib->end_index = pos + preeditString.length();
 
 		if (list == NULL)
 		{
@@ -1137,23 +1136,23 @@ void TextEditor::paint(cairo_t* cr, GdkRectangle* repaintRect, double zoom)
 		}
 		pango_attr_list_insert(list, attrib);
 
-		pango_layout_set_text(this->layout, txt.c_str(), txt.size());
+		pango_layout_set_text(this->layout, txt.c_str(), txt.length());
 	}
 	else
 	{
-		String txt = this->text->getText();
-		pango_layout_set_text(this->layout, txt.c_str(), txt.size());
+		string txt = this->text->getText();
+		pango_layout_set_text(this->layout, txt.c_str(), txt.length());
 	}
 
 	GtkTextIter start;
 	GtkTextIter end;
 	bool hasSelection = gtk_text_buffer_get_selection_bounds(this->buffer, &start,
-	                                                         &end);
+															 &end);
 
 	if (hasSelection)
 	{
 		PangoAttribute* attrib = pango_attr_background_new(selectionColor.red,
-		                                                   selectionColor.green, selectionColor.blue);
+														   selectionColor.green, selectionColor.blue);
 		PangoAttrList* list = pango_layout_get_attributes(this->layout);
 
 		attrib->start_index = getByteOffset(gtk_text_iter_get_offset(&start));
@@ -1181,8 +1180,8 @@ void TextEditor::paint(cairo_t* cr, GdkRectangle* repaintRect, double zoom)
 	double height = ((double) h) / PANGO_SCALE;
 
 	int offset = gtk_text_iter_get_offset(&cursorIter);
-	PangoRectangle rect = { 0 };
-	int pangoOffset = getByteOffset(offset) + preeditString.size();
+	PangoRectangle rect = {0};
+	int pangoOffset = getByteOffset(offset) + preeditString.length();
 	pango_layout_index_to_pos(this->layout, pangoOffset, &rect);
 	double cX = ((double) rect.x) / PANGO_SCALE;
 	double cY = ((double) rect.y) / PANGO_SCALE;
@@ -1195,10 +1194,10 @@ void TextEditor::paint(cairo_t* cr, GdkRectangle* repaintRect, double zoom)
 	// set the line always the same size on display
 	cairo_set_line_width(cr, 1 / zoom);
 	cairo_set_source_rgb(cr, selectionColor.red / 65536.0,
-	                     selectionColor.green / 65536.0, selectionColor.blue / 65536.0);
+						 selectionColor.green / 65536.0, selectionColor.blue / 65536.0);
 
 	cairo_rectangle(cr, x0 - 5 / zoom, y0 - 5 / zoom, width + 10 / zoom,
-	                height + 10 / zoom);
+					height + 10 / zoom);
 	cairo_stroke(cr);
 
 	this->text->setWidth(width);

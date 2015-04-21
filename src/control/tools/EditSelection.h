@@ -4,14 +4,13 @@
  * A selection for editing, every selection (Rect, Lasso...) is
  * converted to this one if the selection is finished
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __EDITSELECTION_H__
-#define __EDITSELECTION_H__
+#pragma once
 
 #include "../../view/ElementContainer.h"
 #include "../Tool.h"
@@ -30,7 +29,7 @@ class UndoAction;
 class EditSelectionContents;
 class DeleteUndoAction;
 
-class EditSelection: public ElementContainer, public Serializeable
+class EditSelection : public ElementContainer, public Serializeable
 {
 public:
 	EditSelection(UndoRedoHandler* undo, PageRef page, PageView* view);
@@ -98,7 +97,7 @@ public:
 	 * (or NULL if nothing is done)
 	 */
 	UndoAction* setSize(ToolSize size, const double* thicknessPen,
-	                    const double* thicknessHilighter, const double* thicknessEraser);
+						const double* thicknessHilighter, const double* thicknessEraser);
 
 	/**
 	 * Set the color of all elements, return an undo action
@@ -127,7 +126,7 @@ public:
 	/**
 	 * Returns all containig elements of this selections
 	 */
-	ListIterator<Element*> getElements();
+	ElementVector* getElements();
 
 	/**
 	 * Finish the current movement
@@ -261,5 +260,3 @@ private: // HANDLER
 	UndoRedoHandler* undo;
 
 };
-
-#endif /* __EDITSELECTION_H__ */

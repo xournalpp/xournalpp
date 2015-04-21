@@ -3,21 +3,20 @@
  *
  * A job which is done
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __JOB_H__
-#define __JOB_H__
+#pragma once
 
 #include <XournalType.h>
 #include <glib.h>
 
 enum JobType
 {
-    JOB_TYPE_BLOCKING, JOB_TYPE_PREVIEW, JOB_TYPE_RENDER, JOB_TYPE_AUTOSAVE
+	JOB_TYPE_BLOCKING, JOB_TYPE_PREVIEW, JOB_TYPE_RENDER, JOB_TYPE_AUTOSAVE
 };
 
 class Job
@@ -85,5 +84,3 @@ private:
 	int refCount;
 	GMutex refMutex;
 };
-
-#endif /* __JOB_H__ */

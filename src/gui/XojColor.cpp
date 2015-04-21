@@ -1,6 +1,6 @@
 #include "XojColor.h"
 
-XojColor::XojColor(int color, String name)
+XojColor::XojColor(int color, string name)
 {
 	XOJ_INIT_TYPE(XojColor);
 
@@ -20,7 +20,7 @@ int XojColor::getColor()
 	return this->color;
 }
 
-String XojColor::getName()
+string XojColor::getName()
 {
 	XOJ_CHECK_TYPE(XojColor);
 

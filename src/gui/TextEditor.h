@@ -3,14 +3,13 @@
  *
  * Text editor gui (for Text Tool)
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __TEXTEDITOR_H__
-#define __TEXTEDITOR_H__
+#pragma once
 
 #include <gtk/gtk.h>
 #include "../gui/Redrawable.h"
@@ -38,7 +37,7 @@ public:
 	void copyToCliboard();
 	void cutToClipboard();
 	void pasteFromClipboard();
-	String getSelection();
+	string getSelection();
 
 	Text* getText();
 	void textCopyed();
@@ -49,7 +48,7 @@ public:
 
 	UndoAction* getFirstUndoAction();
 
-	void setText(String text);
+	void setText(string text);
 	void setFont(XojFont font);
 	UndoAction* setColor(int color);
 
@@ -63,12 +62,12 @@ private:
 	int getCharOffset(int byteOffset);
 
 	static void iMCommitCallback(GtkIMContext* context, const gchar* str,
-	                             TextEditor* te);
+								 TextEditor* te);
 	static void iMPreeditChangedCallback(GtkIMContext* context, TextEditor* te);
 	static bool iMRetrieveSurroundingCallback(GtkIMContext* context,
-	                                          TextEditor* te);
+											  TextEditor* te);
 	static bool imDeleteSurroundingCallback(GtkIMContext* context, gint offset,
-	                                        gint n_chars, TextEditor* te);
+											gint n_chars, TextEditor* te);
 
 	void moveCursor(const GtkTextIter* newLocation, gboolean extendSelection);
 
@@ -94,7 +93,7 @@ private:
 	GtkWidget* textWidget;
 
 	GtkIMContext* imContext;
-	String preeditString;
+	string preeditString;
 	bool needImReset;
 	GtkTextBuffer* buffer;
 	double virtualCursor;
@@ -110,7 +109,7 @@ private:
 
 	bool mouseDown;
 
-	String lastText;
+	string lastText;
 
 	PangoLayout* layout;
 
@@ -120,5 +119,3 @@ private:
 
 	int blinkTimeout; // handler id
 };
-
-#endif /* __TEXTEDITOR_H__ */

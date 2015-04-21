@@ -3,24 +3,24 @@
  *
  * Dialog to select a PDF page (to insert as background)
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
-#ifndef __PDFPAGESDIALOG_H__
-#define __PDFPAGESDIALOG_H__
+
+#pragma once
 
 #include "../GladeGui.h"
 #include "../../model/Document.h"
 #include "../../control/settings/Settings.h"
 #include <XournalType.h>
 
-class PdfPagesDialog: public GladeGui
+class PdfPagesDialog : public GladeGui
 {
 public:
 	PdfPagesDialog(GladeSearchpath* gladeSearchPath, Document* doc,
-	               Settings* settings);
+				Settings* settings);
 	virtual ~PdfPagesDialog();
 
 public:
@@ -42,7 +42,7 @@ private:
 	void updateOkButton();
 
 	static void sizeAllocate(GtkWidget* widget, GtkRequisition* requisition,
-	                         PdfPagesDialog* dlg);
+							PdfPagesDialog* dlg);
 	static void onlyNotUsedCallback(GtkToggleButton* tb, PdfPagesDialog* dlg);
 	static void okButtonCallback(GtkButton* button, PdfPagesDialog* dlg);
 
@@ -65,5 +65,3 @@ private:
 	GtkWidget* scrollPreview;
 	GtkWidget* widget;
 };
-
-#endif /* __PDFPAGESDIALOG_H__ */

@@ -6,39 +6,32 @@
 ToolbarModel::ToolbarModel()
 {
 	XOJ_INIT_TYPE(ToolbarModel);
-
-	this->toolbars = NULL;
 }
 
 ToolbarModel::~ToolbarModel()
 {
 	XOJ_CHECK_TYPE(ToolbarModel);
 
-	for (GList* l = this->toolbars; l != NULL; l = l->next)
-	{
-		delete (ToolbarData*) l->data;
-	}
-	g_list_free(this->toolbars);
-	this->toolbars = NULL;
+	for (ToolbarData* data : this->toolbars) delete data;
 
 	XOJ_RELEASE_TYPE(ToolbarModel);
 }
 
-ListIterator<ToolbarData*> ToolbarModel::iterator()
+ToolbarDataVector* ToolbarModel::getToolbars()
 {
 	XOJ_CHECK_TYPE(ToolbarModel);
 
-	return ListIterator<ToolbarData*> (this->toolbars);
+	return &this->toolbars;
 }
 
 void ToolbarModel::parseGroup(GKeyFile* config, const char* group,
-                              bool predefined)
+							  bool predefined)
 {
 	XOJ_CHECK_TYPE(ToolbarModel);
 
 	ToolbarData* data = new ToolbarData(predefined);
 
-	String name;
+	string name;
 	if (predefined)
 	{
 		name = "predef_";
@@ -60,14 +53,21 @@ void ToolbarModel::remove(ToolbarData* data)
 {
 	XOJ_CHECK_TYPE(ToolbarModel);
 
-	this->toolbars = g_list_remove(this->toolbars, data);
+	for (unsigned int i = 0; i < this->toolbars.size(); i++)
+	{
+		if (this->toolbars[i] == data)
+		{
+			this->toolbars.erase(this->toolbars.begin() + i);
+			break;
+		}
+	}
 }
 
 void ToolbarModel::add(ToolbarData* data)
 {
 	XOJ_CHECK_TYPE(ToolbarModel);
 
-	this->toolbars = g_list_append(this->toolbars, data);
+	this->toolbars.push_back(data);
 }
 
 bool ToolbarModel::parse(const char* file, bool predefined)
@@ -95,51 +95,45 @@ bool ToolbarModel::parse(const char* file, bool predefined)
 	return true;
 }
 
-bool ToolbarModel::existsId(String id)
+bool ToolbarModel::existsId(string id)
 {
 	XOJ_CHECK_TYPE(ToolbarModel);
 
-	for(GList* l = this->toolbars; l != NULL; l = l->next)
+	for (ToolbarData* data : this->toolbars)
 	{
-		ToolbarData* data = (ToolbarData*) l->data;
-
-		if(data->getId() == id)
-		{
-			return true;
-		}
+		if (data->getId() == id) return true;
 	}
-
 	return false;
 }
 
 
 const char* TOOLBAR_INI_HEADER =
-    "# Xournal++ Toolbar configuration\n"
-    "# Here you can customize the Toolbars\n"
-    " Delte this file to generate a new config file with default values\n"
-    "\n"
-    " Available buttons:\n"
-    " File: NEW,SAVE,OPEN\n"
-    "\n"
-    " Edit: CUT,COPY,PASTE,SEARCH,UNDO,REDO,INSERT_NEW_PAGE\n"
-    "\n"
-    " Navigation: GOTO_FIRST,GOTO_BACK,GOTO_NEXT,GOTO_LAST,GOTO_NEXT_ANNOTATED_PAGE\n"
-    "\n"
-    " Zoom: ZOOM_OUT,ZOOM_IN,ZOOM_FIT,ZOOM_100,FULLSCREEN,TWO_PAGES\n"
-    "\n"
-    " Color: COLOR(0xffffff),COLOR(0xffff00),COLOR(0xff8000),COLOR(0xff00ff),COLOR(0x00ff00),COLOR(0x00c0ff),COLOR(0x808080),COLOR(0x008000),COLOR(0xff0000),COLOR(0x3333cc),COLOR(0x000000),COLOR_SELECT\n"
-    "  Notice: This are the default Xournal colors, each other color in HEX can also be used, eg COLOR(0x12ABCF);\n"
-    "\n"
-    " Tools: ERASER,PEN,HILIGHTER,IMAGE,TEXT,IMAGE,SELECT,SELECT_REGION,SELECT_RECTANGLE,VERTICAL_SPACE,HAND\n"
-    "  Notice: ERASER also has a drop down menu to select the eraser type, SELECT are all selection tools, with drop down menu\n"
-    "\n"
-    " Tool settings: SHAPE_RECOGNIZER,RULER,FINE,MEDIUM,THICK,SELECT_FONT\n"
-    "\n"
-    " Components: PAGE_SPIN,ZOOM_SLIDER,LAYER\n"
-    "  PAGE_SPIN: The page spiner, incl. current page label\n"
-    "  ZOOM_SLIDER: The zoom slider\n"
-    "  LAYER: The layer dropdown menu\n"
-    "\n";
+		"# Xournal++ Toolbar configuration\n"
+		"# Here you can customize the Toolbars\n"
+		" Delte this file to generate a new config file with default values\n"
+		"\n"
+		" Available buttons:\n"
+		" File: NEW,SAVE,OPEN\n"
+		"\n"
+		" Edit: CUT,COPY,PASTE,SEARCH,UNDO,REDO,INSERT_NEW_PAGE\n"
+		"\n"
+		" Navigation: GOTO_FIRST,GOTO_BACK,GOTO_NEXT,GOTO_LAST,GOTO_NEXT_ANNOTATED_PAGE\n"
+		"\n"
+		" Zoom: ZOOM_OUT,ZOOM_IN,ZOOM_FIT,ZOOM_100,FULLSCREEN,TWO_PAGES\n"
+		"\n"
+		" Color: COLOR(0xffffff),COLOR(0xffff00),COLOR(0xff8000),COLOR(0xff00ff),COLOR(0x00ff00),COLOR(0x00c0ff),COLOR(0x808080),COLOR(0x008000),COLOR(0xff0000),COLOR(0x3333cc),COLOR(0x000000),COLOR_SELECT\n"
+		"  Notice: This are the default Xournal colors, each other color in HEX can also be used, eg COLOR(0x12ABCF);\n"
+		"\n"
+		" Tools: ERASER,PEN,HILIGHTER,IMAGE,TEXT,IMAGE,SELECT,SELECT_REGION,SELECT_RECTANGLE,VERTICAL_SPACE,HAND\n"
+		"  Notice: ERASER also has a drop down menu to select the eraser type, SELECT are all selection tools, with drop down menu\n"
+		"\n"
+		" Tool settings: SHAPE_RECOGNIZER,RULER,FINE,MEDIUM,THICK,SELECT_FONT\n"
+		"\n"
+		" Components: PAGE_SPIN,ZOOM_SLIDER,LAYER\n"
+		"  PAGE_SPIN: The page spiner, incl. current page label\n"
+		"  ZOOM_SLIDER: The zoom slider\n"
+		"  LAYER: The layer dropdown menu\n"
+		"\n";
 
 void ToolbarModel::save(const char* filename)
 {
@@ -148,9 +142,8 @@ void ToolbarModel::save(const char* filename)
 
 	g_key_file_set_comment(config, NULL, NULL, TOOLBAR_INI_HEADER, NULL);
 
-	for(GList* l = this->toolbars; l != NULL; l = l->next)
+	for (ToolbarData* data : this->toolbars)
 	{
-		ToolbarData* data = (ToolbarData*) l->data;
 		if (!data->isPredefined())
 		{
 			data->saveToKeyFile(config);

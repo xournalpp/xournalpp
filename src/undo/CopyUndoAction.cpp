@@ -4,7 +4,7 @@
 #include "../gui/Cursor.h"
 
 CopyUndoAction::CopyUndoAction(PageRef pageref, int pageNr)
-	: UndoAction("CopyUndoAction")
+: UndoAction("CopyUndoAction")
 {
 	XOJ_INIT_TYPE(CopyUndoAction);
 
@@ -71,7 +71,7 @@ bool CopyUndoAction::redo(Control* control)
 	return true;
 }
 
-String CopyUndoAction::getText()
+string CopyUndoAction::getText()
 {
 	XOJ_CHECK_TYPE(CopyUndoAction);
 

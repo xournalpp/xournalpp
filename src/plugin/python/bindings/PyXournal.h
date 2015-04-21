@@ -3,26 +3,24 @@
  *
  * Python bindings
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __PYXOURNAL_H__
-#define __PYXOURNAL_H__
+#pragma once
 
 class Control;
 
 #include <Python.h>
 
-extern "C" {
+extern "C"
+{
 
-	void PyXournal_initPython(Control* control);
-	Control* PyXournal_getControl(PyObject* obj);
+void PyXournal_initPython(Control* control);
+Control* PyXournal_getControl(PyObject* obj);
 
-	bool PyXournal_Check(PyObject* obj);
+bool PyXournal_Check(PyObject* obj);
 
 }
-
-#endif /* __PYXOURNAL_H__ */

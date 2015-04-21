@@ -3,14 +3,13 @@
  *
  * Undo action for color changes (Edit selection)
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __COLORUNDOACTION_H__
-#define __COLORUNDOACTION_H__
+#pragma once
 
 #include "UndoAction.h"
 #include <XournalType.h>
@@ -20,7 +19,7 @@ class Layer;
 class Redrawable;
 class Element;
 
-class ColorUndoAction: public UndoAction
+class ColorUndoAction : public UndoAction
 {
 public:
 	ColorUndoAction(PageRef page, Layer* layer);
@@ -29,7 +28,7 @@ public:
 public:
 	virtual bool undo(Control* control);
 	virtual bool redo(Control* control);
-	virtual String getText();
+	virtual string getText();
 
 	void addStroke(Element* e, int originalColor, double newColor);
 
@@ -41,5 +40,3 @@ private:
 
 	Layer* layer;
 };
-
-#endif /* __COLORUNDOACTION_H__ */

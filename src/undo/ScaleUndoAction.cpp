@@ -5,14 +5,14 @@
 #include <Range.h>
 
 ScaleUndoAction::ScaleUndoAction(PageRef page,
-                                 GList* elements,
-                                 double x0, double y0,
-                                 double fx, double fy) : UndoAction("ScaleUndoAction")
+								 ElementVector* elements,
+								 double x0, double y0,
+								 double fx, double fy) : UndoAction("ScaleUndoAction")
 {
 	XOJ_INIT_TYPE(ScaleUndoAction);
 
 	this->page = page;
-	this->elements = g_list_copy(elements);
+	this->elements = *elements;
 	this->x0 = x0;
 	this->y0 = y0;
 	this->fx = fx;
@@ -24,8 +24,6 @@ ScaleUndoAction::~ScaleUndoAction()
 	XOJ_CHECK_TYPE(ScaleUndoAction);
 
 	this->page = NULL;
-	g_list_free(this->elements);
-	this->elements = NULL;
 
 	XOJ_RELEASE_TYPE(ScaleUndoAction);
 }
@@ -52,17 +50,12 @@ void ScaleUndoAction::applyScale(double fx, double fy)
 {
 	XOJ_CHECK_TYPE(ScaleUndoAction);
 
-	if (this->elements == NULL)
-	{
-		return;
-	}
+	if (this->elements.empty()) return;
 
-	Element* first = (Element*) elements->data;
-	Range r(first->getX(), first->getY());
+	Range r(elements.front()->getX(), elements.front()->getY());
 
-	for (GList* l = this->elements; l != NULL; l = l->next)
+	for (Element* e : this->elements)
 	{
-		Element* e = (Element*) l->data;
 		r.addPoint(e->getX(), e->getY());
 		r.addPoint(e->getX() + e->getElementWidth(), e->getY() + e->getElementHeight());
 		e->scale(this->x0, this->y0, fx, fy);
@@ -73,7 +66,7 @@ void ScaleUndoAction::applyScale(double fx, double fy)
 	this->page->fireRangeChanged(r);
 }
 
-String ScaleUndoAction::getText()
+string ScaleUndoAction::getText()
 {
 	XOJ_CHECK_TYPE(ScaleUndoAction);
 

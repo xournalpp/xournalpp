@@ -3,17 +3,16 @@
  *
  * A link destination in a PDF Document
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __LINKDESTINATION_H__
-#define __LINKDESTINATION_H__
+#pragma once
 
 #include <gtk/gtk.h>
-#include <String.h>
+#include <StringUtils.h>
 
 typedef struct _LinkDest XojLinkDest;
 typedef struct _LinkDestClass XojLinkDestClass;
@@ -43,8 +42,8 @@ public:
 	void setChangeZoom(double zoom);
 	void setChangeTop(double top);
 
-	void setName(String name);
-	String getName();
+	void setName(string name);
+	string getName();
 private:
 	XOJ_TYPE_ATTRIB;
 
@@ -59,7 +58,7 @@ private:
 	bool changeZoom;
 	bool changeTop;
 
-	String name;
+	string name;
 };
 
 struct _LinkDest
@@ -70,10 +69,10 @@ struct _LinkDest
 
 enum
 {
-    DOCUMENT_LINKS_COLUMN_NAME,
-    DOCUMENT_LINKS_COLUMN_LINK,
-    DOCUMENT_LINKS_COLUMN_EXPAND,
-    DOCUMENT_LINKS_COLUMN_PAGE_NUMBER
+	DOCUMENT_LINKS_COLUMN_NAME,
+	DOCUMENT_LINKS_COLUMN_LINK,
+	DOCUMENT_LINKS_COLUMN_EXPAND,
+	DOCUMENT_LINKS_COLUMN_PAGE_NUMBER
 };
 
 #define TYPE_LINK_DEST              (link_dest_get_type())
@@ -85,5 +84,3 @@ enum
 
 GType link_dest_get_type(void) G_GNUC_CONST;
 XojLinkDest* link_dest_new();
-
-#endif /* __LINKDESTINATION_H__ */

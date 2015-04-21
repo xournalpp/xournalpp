@@ -2,14 +2,14 @@
 
 int ToolbarItem::sid = 0;
 
-ToolbarItem::ToolbarItem(String name)
+ToolbarItem::ToolbarItem(string name)
 {
 	XOJ_INIT_TYPE(ToolbarItem);
 
 	this->name = name;
 	this->id = ToolbarItem::sid++;
 
-	if(ToolbarItem::sid < 0)
+	if (ToolbarItem::sid < 0)
 	{
 		ToolbarItem::sid = 0;
 	}
@@ -37,14 +37,14 @@ ToolbarItem::~ToolbarItem()
 	XOJ_RELEASE_TYPE(ToolbarItem);
 }
 
-ToolbarItem::operator String()
+ToolbarItem::operator string()
 {
 	XOJ_CHECK_TYPE(ToolbarItem);
 
 	return this->name;
 }
 
-bool ToolbarItem::operator ==(ToolbarItem& other)
+bool ToolbarItem::operator==(ToolbarItem& other)
 {
 	XOJ_CHECK_TYPE(ToolbarItem);
 

@@ -11,11 +11,11 @@
 
 #include <glib.h>
 #include <gtk/gtk.h>
-#include <stdio.h>
+#include <iostream>
+#include <fstream>
+#include <sstream>
 #include <execinfo.h>
-#include <signal.h>
-#include <stdlib.h>
-#include <cxxabi.h>
+#include <boost/locale/format.hpp>
 
 #include "CrashHandler.h"
 #include "../control/SaveHandler.h"
@@ -23,6 +23,8 @@
 #include "Stacktrace.h"
 
 #include "../cfg.h"
+
+using namespace std;
 
 static bool alreadyCrashed = false;
 static Document* document = NULL;
@@ -66,18 +68,44 @@ void installCrashHandlers()
 
 static void emergencySave();
 
+/* 
+ * Basicly it's really simple class and you have to know what you can and what
+ * you can't do with it. So please don't touch anythink down there without
+ * previous consultation.
+ */
+class streamsplit : public stringstream
+{
+public:
+
+	streamsplit(ofstream* file)
+	{
+		f = file;
+	}
+
+	template<typename T>
+	ostream& operator<<(T const & rhs)
+	{
+		*f << rhs;
+		cerr << rhs;
+		return *f;
+	}
+
+private:
+	ofstream* f;
+};
+
 /**
  * Print crash log to config directory
  */
 static void crashHandler(int sig)
 {
-	if (alreadyCrashed)   // crasehd again on emergency save
+	if (alreadyCrashed) // crasehd again on emergency save
 	{
 		exit(2);
 	}
 	alreadyCrashed = true;
 
-	fprintf(stderr, "Crash Handler::Crashed with signal %i\n", sig);
+	cerr << bl::format("Crash Handler::Crashed with signal {1}") % sig << endl;
 
 	time_t lt;
 	void* array[100];
@@ -88,43 +116,35 @@ static void crashHandler(int sig)
 	// get void*'s for all entries on the stack
 	size = backtrace(array, 100);
 
-	gchar* filename = g_strconcat(g_get_home_dir(), G_DIR_SEPARATOR_S, CONFIG_DIR,
-	                              G_DIR_SEPARATOR_S, "errorlog.log", NULL);
+	string filename = CONCAT(g_get_home_dir(), G_DIR_SEPARATOR_S, CONFIG_DIR,
+							 G_DIR_SEPARATOR_S, "errorlog.log");
 
-	FILE* fp = fopen(filename, "w");
-	if (fp)
-	{
-		fprintf(stderr, "Crash Handler::wrote crash log to: %s\n", filename);
-	}
+	ofstream fp(filename.c_str());
+	if (fp) cerr << bl::format("Crash Handler::wrote crash log to: {1}") % filename << endl;
+
+	streamsplit out(&fp);
 
 	lt = time(NULL);
 
-	fprintf(fp, "Date: %s\n", ctime(&lt));
-	fprintf(stderr, "Date: %s\n", ctime(&lt));
-	fprintf(fp, "Error: signal %d:\n", sig);
-	fprintf(stderr, "Error: signal %d:\n", sig);
+	out << bl::format("Date: {1}") % ctime(&lt);
+	out << bl::format("Error: signal {1}") % sig;
+	out << "\n";
 
 	messages = backtrace_symbols(array, size);
 
 	for (int i = 0; i < size; i++)
 	{
-		fprintf(fp, "[bt]: (%d) %s\n", i, messages[i]);
-		fprintf(stderr, "[bt]: (%d) %s\n", i, messages[i]);
+		out << bl::format("[bt]: ({1}) {2}") % i % messages[i];
+		out << "\n";
 	}
 
-	g_free(filename);
 	free(messages);
 
-	fprintf(fp, "\n\nTry to get a better stracktrace...\n");
-	fprintf(stderr, "\n\nTry to get a better stracktrace...\n");
+	out << "\n\nTry to get a better stracktrace...\n";
 
-	Stacktrace::printStracktrace(fp);
-	Stacktrace::printStracktrace(stderr);
+	Stacktrace::printStracktrace(out);
 
-	if (fp)
-	{
-		fclose(fp);
-	}
+	if (fp) fp.close();
 
 	emergencySave();
 
@@ -138,37 +158,36 @@ static void emergencySave()
 		return;
 	}
 
-	fprintf(stderr, "\nTry to emergency save the current open document...\n");
+	cerr << endl << "Try to emergency save the current open document..." << endl;
 
 	SaveHandler handler;
 	handler.prepareSave(document);
 
-	gchar* filename = g_strconcat(g_get_home_dir(), G_DIR_SEPARATOR_S, CONFIG_DIR,
-	                              G_DIR_SEPARATOR_S, "emergencysave.xoj", NULL);
+	path filename = path(g_get_home_dir());
+	filename /= CONFIG_DIR;
+	filename /= "emergencysave.xoj";
 
 	GzOutputStream* out = new GzOutputStream(filename);
 
-	if (!out->getLastError().isEmpty())
+	if (!out->getLastError().empty())
 	{
-		fprintf(stderr, "error: %s\n", out->getLastError().c_str());
+		cerr << bl::format("error: {1}") % out->getLastError() << endl;
 		delete out;
-		g_free(filename);
 		return;
 	}
 
 	handler.saveTo(out, filename);
 	out->close();
 
-	if (!out->getLastError().isEmpty())
+	if (!out->getLastError().empty())
 	{
-		fprintf(stderr, "error: %s\n", out->getLastError().c_str());
+		cerr << bl::format("error: {1}") % out->getLastError() << endl;
 	}
 	else
 	{
-		fprintf(stderr, "Successfully saved document to \"%s\"\n", filename);
+		cerr << bl::format("Successfully saved document to \"{1}\"") % filename.string() << endl;
 	}
 
-	g_free(filename);
 	delete out;
 }
 

@@ -3,14 +3,13 @@
  *
  * Handles Undo and Redo
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __UNDOREDOHANDLER_H__
-#define __UNDOREDOHANDLER_H__
+#pragma once
 
 #include "UndoAction.h"
 #include <XournalType.h>
@@ -40,8 +39,8 @@ public:
 	void addUndoActionBefore(UndoAction* action, UndoAction* before);
 	bool removeUndoAction(UndoAction* action);
 
-	String undoDescription();
-	String redoDescription();
+	string undoDescription();
+	string redoDescription();
 
 	void clearContents();
 
@@ -73,5 +72,3 @@ private:
 
 	Control* control;
 };
-
-#endif /* __UNDOREDOHANDLER_H__ */

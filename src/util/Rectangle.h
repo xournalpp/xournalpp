@@ -3,14 +3,13 @@
  *
  * A rectangle with double precision
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __RECTANGLE_H__
-#define __RECTANGLE_H__
+#pragma once
 
 #include <glib.h>
 #include <XournalType.h>
@@ -37,7 +36,7 @@ public:
 	 * @return whether the rectangles intersect
 	 */
 	bool intersects(const Rectangle& other,
-	                Rectangle* dest = NULL) const;
+					Rectangle* dest = NULL) const;
 
 	/**
 	 * Computes the union of this rectangle with the one
@@ -58,5 +57,3 @@ public:
 	double width;
 	double height;
 };
-
-#endif /* RECTANGLE_H_ */

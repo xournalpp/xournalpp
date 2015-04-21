@@ -32,6 +32,10 @@
 
 #include <config.h>
 
+#include <iostream>
+
+using namespace std;
+
 // TODO LOW PRIO: remove all elements which are complete outside the pages
 // TODO LOW PRIO: remove 0 width line parts
 // TODO NEXT-RELEASE: Save Shapes as shapes instead of lines
@@ -88,7 +92,7 @@ void SaveHandler::prepareSave(Document* doc)
 	this->root->setAttrib("fileversion", "2");
 
 	this->root->addChild(new XmlTextNode("title",
-	                                     "Xournal document - see http://xournal.sourceforge.net/"));
+										 "Xournal document - see http://xournal.sourceforge.net/"));
 	cairo_surface_t* preview = doc->getPreview();
 	if (preview)
 	{
@@ -110,15 +114,16 @@ void SaveHandler::prepareSave(Document* doc)
 	}
 }
 
-String SaveHandler::getColorStr(int c, unsigned char alpha)
+string SaveHandler::getColorStr(int c, unsigned char alpha)
 {
+	//TODO rewrite
 	char* str = g_strdup_printf("#%08x", c << 8 | alpha);
-	String color = str;
+	string color = str;
 	g_free(str);
 	return color;
 }
 
-String SaveHandler::getSolidBgStr(BackgroundType type)
+string SaveHandler::getSolidBgStr(BackgroundType type)
 {
 	switch (type)
 	{
@@ -140,11 +145,8 @@ void SaveHandler::visitLayer(XmlNode* page, Layer* l)
 
 	XmlNode* layer = new XmlNode("layer");
 	page->addChild(layer);
-	ListIterator<Element*> it = l->elementIterator();
-	while (it.hasNext())
+	for(Element* e : *l->getElements())
 	{
-		Element* e = it.next();
-
 		if (e->getType() == ELEMENT_STROKE)
 		{
 			Stroke* s = (Stroke*) e;
@@ -236,9 +238,7 @@ void SaveHandler::visitLayer(XmlNode* page, Layer* l)
 
 			image->setImage(i->getImage());
 
-			image->setAttrib("text", i->getText());
-			image->setAttrib("texlength", i->getTextLen());
-
+            image->setAttrib("text", i->getText().c_str());
 			image->setAttrib("left", i->getX());
 			image->setAttrib("top", i->getY());
 			image->setAttrib("right", i->getX() + i->getElementWidth());
@@ -275,11 +275,9 @@ void SaveHandler::visitPage(XmlNode* root, PageRef p, Document* doc, int id)
 
 			if (doc->isAttachPdf())
 			{
-				printf("doc->isAttachPdf()\n");
+				cout << "doc->isAttachPdf()" << endl;
 				background->setAttrib("domain", "attach");
-				String filename = doc->getFilename();
-				filename += ".";
-				filename += "bg.pdf";
+				path filename = path(doc->getFilename().string() + ".bg.pdf");
 				background->setAttrib("filename", filename.c_str());
 
 				GError* error = NULL;
@@ -287,15 +285,13 @@ void SaveHandler::visitPage(XmlNode* root, PageRef p, Document* doc, int id)
 
 				if (error)
 				{
-					if (!this->errorMessage.isEmpty())
+					if (!this->errorMessage.empty())
 					{
 						this->errorMessage += "\n";
 					}
 
-					char* msg = g_strdup_printf(_("Could not write background \"%s\", %s"),
-					                            filename.c_str(), error->message);
-					this->errorMessage += msg;
-					g_free(msg);
+					this->errorMessage += (bl::format(_("Could not write background \"{1}\", {2}"))
+										   % filename.string() % error->message).str();
 
 					g_error_free(error);
 				}
@@ -303,8 +299,7 @@ void SaveHandler::visitPage(XmlNode* root, PageRef p, Document* doc, int id)
 			else
 			{
 				background->setAttrib("domain", "absolute");
-				String pdfName = doc->getPdfFilename();
-				background->setAttrib("filename", pdfName.c_str());
+				background->setAttrib("filename", doc->getPdfFilename().c_str());
 			}
 		}
 		background->setAttrib("pageno", p->getPdfPageNr() + 1);
@@ -329,7 +324,7 @@ void SaveHandler::visitPage(XmlNode* root, PageRef p, Document* doc, int id)
 			g_free(filename);
 		}
 		else if (p->getBackgroundImage().isAttached() &&
-		         p->getBackgroundImage().getPixbuf())
+				 p->getBackgroundImage().getPixbuf())
 		{
 			char* filename = g_strdup_printf("bg_%d.png", this->attachBgId++);
 			background->setAttrib("domain", "attach");
@@ -353,23 +348,21 @@ void SaveHandler::visitPage(XmlNode* root, PageRef p, Document* doc, int id)
 		break;
 	}
 
-	ListIterator<Layer*> it = p->layerIterator();
-
-	if (!it.hasNext())   // no layer, but we need to write one layer, else the old Xournal cannot read the file
+	if (p->getLayers()->empty()) // no layer, but we need to write one layer, else the old Xournal cannot read the file
 	{
 		XmlNode* layer = new XmlNode("layer");
 		page->addChild(layer);
 	}
 
-	while (it.hasNext())
+	for (Layer* l : *p->getLayers())
 	{
-		visitLayer(page, it.next());
+		visitLayer(page, l);
 	}
 }
 
 void SaveHandler::saveTo(OutputStream* out,
-                         String filename,
-                         ProgressListener* listener)
+						 path filename,
+						 ProgressListener* listener)
 {
 	XOJ_CHECK_TYPE(SaveHandler);
 
@@ -387,29 +380,24 @@ void SaveHandler::saveTo(OutputStream* out,
 	{
 		BackgroundImage* img = (BackgroundImage*) l->data;
 
-		char* tmpfn = g_strdup_printf("%s.%s", filename.c_str(),
-		                              img->getFilename().c_str());
-		if (!gdk_pixbuf_save(img->getPixbuf(), tmpfn, "png", NULL, NULL))
+		string tmpfn = CONCAT(filename.string(), ".", img->getFilename().string());
+		if (!gdk_pixbuf_save(img->getPixbuf(), tmpfn.c_str(), "png", NULL, NULL))
 		{
-			char* msg = g_strdup_printf(
-			                _("Could not write background \"%s\". Continuing anyway."), tmpfn);
-
-			if (!this->errorMessage.isEmpty())
+			if (!this->errorMessage.empty())
 			{
 				this->errorMessage += "\n";
 			}
 
-			this->errorMessage += msg;
-			g_free(msg);
+			this->errorMessage += (bl::format(_("Could not write background \"{1}\". Continuing anyway."))
+								   % tmpfn).str();
 		}
-		g_free(tmpfn);
 	}
 
 	setlocale(LC_NUMERIC, saved_locale);
 	g_free(saved_locale);
 }
 
-String SaveHandler::getErrorMessage()
+string SaveHandler::getErrorMessage()
 {
 	XOJ_CHECK_TYPE(SaveHandler);
 

@@ -3,18 +3,21 @@
  *
  * Part of the PDF export
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __PDFWRITER_H__
-#define __PDFWRITER_H__
+#pragma once
 
 #include <gtk/gtk.h>
-#include <String.h>
+#include <StringUtils.h>
 #include "PdfXRef.h"
+
+#include <boost/format.hpp>
+#include <boost/filesystem/path.hpp>
+using boost::filesystem::path;
 
 class PdfWriter
 {
@@ -24,23 +27,22 @@ public:
 
 public:
 	void close();
-	bool openFile(const char* uri);
+	bool openFile(path filename);
 
 public:
-	bool writeLen(const char* data, int len);
-	bool write(const char* data);
-	bool writef(const char* data, ...);
-	bool writeTxt(const char* data);
+	bool write(string data);
+	bool write(boost::format data);
+	bool writeTxt(string data);
 	bool write(int data);
 
 	void startStream();
 	void endStream();
 
-	bool writeInfo(String title);
+	bool writeInfo(string title);
 	bool writeObj();
 
 
-	String getLastError();
+	string getLastError();
 
 	int getObjectId();
 	int getNextObjectId();
@@ -54,18 +56,15 @@ private:
 
 	static bool compressPdfOutput;
 
-	int dataCount;
 	bool inStream;
-	GString* stream;
+	string stream;
 
 	GFileOutputStream* out;
 
-	String lastError;
+	string lastError;
 
 	PdfXRef* xref;
 
 	int objectId;
 
 };
-
-#endif /* __PDFWRITER_H__ */

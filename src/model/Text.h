@@ -3,21 +3,20 @@
  *
  * A text element
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __TEXT_H__
-#define __TEXT_H__
+#pragma once
 
 #include "Element.h"
-#include <String.h>
+#include <StringUtils.h>
 #include "Font.h"
 #include <gtk/gtk.h>
 
-class Text: public Element
+class Text : public Element
 {
 public:
 	Text();
@@ -27,8 +26,8 @@ public:
 	void setFont(XojFont& font);
 	XojFont& getFont();
 
-	String getText();
-	void setText(String text);
+	string getText();
+	void setText(string text);
 
 	void setWidth(double width);
 	void setHeight(double height);
@@ -58,9 +57,7 @@ private:
 
 	XojFont font;
 
-	String text;
+	string text;
 
 	bool inEditing;
 };
-
-#endif /* TEXT_H_ */

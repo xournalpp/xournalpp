@@ -33,58 +33,58 @@ MetadataManager::~MetadataManager()
 	XOJ_RELEASE_TYPE(MetadataManager);
 }
 
-void MetadataManager::setInt(String uri, const char* name, int value)
+void MetadataManager::setInt(path p, const char* name, int value)
 {
 	XOJ_CHECK_TYPE(MetadataManager);
 
-	if (uri.isEmpty())
+	if (p.empty())
 	{
 		return;
 	}
 	loadConfigFile();
 
-	g_key_file_set_integer(this->config, uri.c_str(), name, value);
+	g_key_file_set_integer(this->config, p.c_str(), name, value);
 
-	updateAccessTime(uri);
+	updateAccessTime(p);
 }
 
-void MetadataManager::setDouble(String uri, const char* name, double value)
+void MetadataManager::setDouble(path p, const char* name, double value)
 {
 	XOJ_CHECK_TYPE(MetadataManager);
 
-	if (uri.isEmpty())
+	if (p.empty())
 	{
 		return;
 	}
 	loadConfigFile();
 
-	g_key_file_set_double(this->config, uri.c_str(), name, value);
+	g_key_file_set_double(this->config, p.c_str(), name, value);
 
-	updateAccessTime(uri);
+	updateAccessTime(p);
 }
 
-void MetadataManager::setString(String uri, const char* name,
-                                const char* value)
+void MetadataManager::setString(path p, const char* name,
+								const char* value)
 {
 	XOJ_CHECK_TYPE(MetadataManager);
 
-	if (uri.isEmpty())
+	if (p.empty())
 	{
 		return;
 	}
 	loadConfigFile();
 
-	g_key_file_set_value(this->config, uri.c_str(), name, value);
+	g_key_file_set_value(this->config, p.c_str(), name, value);
 
-	updateAccessTime(uri);
+	updateAccessTime(p);
 }
 
-void MetadataManager::updateAccessTime(String uri)
+void MetadataManager::updateAccessTime(path p)
 {
 	XOJ_CHECK_TYPE(MetadataManager);
 
 	// TODO LOW PRIO: newer GTK Version use _int64 instead of integer
-	g_key_file_set_integer(this->config, uri.c_str(), "atime", time(NULL));
+	g_key_file_set_integer(this->config, p.c_str(), "atime", time(NULL));
 
 	if (this->timeoutId)
 	{
@@ -92,7 +92,7 @@ void MetadataManager::updateAccessTime(String uri)
 	}
 
 	this->timeoutId = g_timeout_add_seconds_full(G_PRIORITY_DEFAULT_IDLE, 2,
-	                                             (GSourceFunc) save, this, NULL);
+												 (GSourceFunc) save, this, NULL);
 }
 
 struct GroupTimeEntry
@@ -163,11 +163,11 @@ void MetadataManager::cleanupMetadata()
 	g_strfreev(groups);
 }
 
-void MetadataManager::move(String source, String target)
+void MetadataManager::move(string source, string target)
 {
 	XOJ_CHECK_TYPE(MetadataManager);
 
-	if (source.isEmpty() || target.isEmpty())
+	if (source.empty() || target.empty())
 	{
 		return;
 	}
@@ -200,7 +200,7 @@ bool MetadataManager::save(MetadataManager* manager)
 	GFile* file = g_file_new_for_path(fileName);
 
 	if (!g_file_replace_contents(file, data, length, NULL, false,
-	                             G_FILE_CREATE_PRIVATE, NULL, NULL, NULL))
+								 G_FILE_CREATE_PRIVATE, NULL, NULL, NULL))
 	{
 		g_warning("could not write metadata file: %s", fileName);
 	}
@@ -239,18 +239,18 @@ void MetadataManager::loadConfigFile()
 	g_free(file);
 }
 
-bool MetadataManager::getInt(String uri, const char* name, int& value)
+bool MetadataManager::getInt(path p, const char* name, int& value)
 {
 	XOJ_CHECK_TYPE(MetadataManager);
 
-	if (uri.isEmpty())
+	if (p.empty())
 	{
 		return false;
 	}
 	loadConfigFile();
 
 	GError* error = NULL;
-	int v = g_key_file_get_integer(this->config, uri.c_str(), name, &error);
+	int v = g_key_file_get_integer(this->config, p.c_str(), name, &error);
 	if (error)
 	{
 		g_error_free(error);
@@ -261,18 +261,18 @@ bool MetadataManager::getInt(String uri, const char* name, int& value)
 	return true;
 }
 
-bool MetadataManager::getDouble(String uri, const char* name, double& value)
+bool MetadataManager::getDouble(path p, const char* name, double& value)
 {
 	XOJ_CHECK_TYPE(MetadataManager);
 
-	if (uri.isEmpty())
+	if (p.empty())
 	{
 		return false;
 	}
 	loadConfigFile();
 
 	GError* error = NULL;
-	double v = g_key_file_get_double(this->config, uri.c_str(), name, &error);
+	double v = g_key_file_get_double(this->config, p.c_str(), name, &error);
 	if (error)
 	{
 		g_error_free(error);
@@ -283,11 +283,11 @@ bool MetadataManager::getDouble(String uri, const char* name, double& value)
 	return true;
 }
 
-bool MetadataManager::getString(String uri, const char* name, char*& value)
+bool MetadataManager::getString(path p, const char* name, char*& value)
 {
 	XOJ_CHECK_TYPE(MetadataManager);
 
-	if (uri.isEmpty())
+	if (p.empty())
 	{
 		return false;
 	}
@@ -295,7 +295,7 @@ bool MetadataManager::getString(String uri, const char* name, char*& value)
 
 	GError* error = NULL;
 
-	char* v = g_key_file_get_string(this->config, uri.c_str(), name, &error);
+	char* v = g_key_file_get_string(this->config, p.c_str(), name, &error);
 	if (error)
 	{
 		g_error_free(error);

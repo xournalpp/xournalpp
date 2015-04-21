@@ -5,7 +5,7 @@ struct _LinkDestClass
 	GObjectClass base_class;
 };
 
-G_DEFINE_TYPE (XojLinkDest, link_dest, G_TYPE_OBJECT)
+G_DEFINE_TYPE(XojLinkDest, link_dest, G_TYPE_OBJECT)
 
 static void link_dest_init(XojLinkDest* linkAction)
 {
@@ -19,12 +19,12 @@ static void link_dest_finalize(GObject* object)
 	delete LINK_DEST(object)->dest;
 	LINK_DEST(object)->dest = NULL;
 
-	G_OBJECT_CLASS (parent_class)->finalize(object);
+	G_OBJECT_CLASS(parent_class)->finalize(object);
 }
 
 static void link_dest_dispose(GObject* object)
 {
-	G_OBJECT_CLASS (parent_class)->dispose(object);
+	G_OBJECT_CLASS(parent_class)->dispose(object);
 }
 
 static void link_dest_class_init(XojLinkDestClass* linkClass)
@@ -33,7 +33,7 @@ static void link_dest_class_init(XojLinkDestClass* linkClass)
 
 	parent_class = g_type_class_peek_parent(linkClass);
 
-	g_object_class = G_OBJECT_CLASS (linkClass);
+	g_object_class = G_OBJECT_CLASS(linkClass);
 
 	g_object_class->dispose = link_dest_dispose;
 	g_object_class->finalize = link_dest_finalize;
@@ -41,9 +41,8 @@ static void link_dest_class_init(XojLinkDestClass* linkClass)
 
 XojLinkDest* link_dest_new()
 {
-	return LINK_DEST(g_object_new (TYPE_LINK_DEST, NULL));
+	return LINK_DEST(g_object_new(TYPE_LINK_DEST, NULL));
 }
-
 
 LinkDestination::LinkDestination()
 {
@@ -157,14 +156,14 @@ void LinkDestination::setChangeTop(double top)
 	this->changeTop = true;
 }
 
-void LinkDestination::setName(String name)
+void LinkDestination::setName(string name)
 {
 	XOJ_CHECK_TYPE(LinkDestination);
 
 	this->name = name;
 }
 
-String LinkDestination::getName()
+string LinkDestination::getName()
 {
 	XOJ_CHECK_TYPE(LinkDestination);
 

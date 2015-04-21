@@ -6,10 +6,10 @@
 // TODO LOW PRIO select object: best match instead of first match
 // TODO LOW PRIO: rouler every 90° latch
 
-Tool::Tool(String name, ToolType type, int color, bool enableColor,
-           bool enableSize, bool enableRuler, bool enableRectangle,
-	   bool enableCircle, bool enableArrow, bool enableShapreRecognizer,
-           double* thickness)
+Tool::Tool(string name, ToolType type, int color, bool enableColor,
+		   bool enableSize, bool enableRuler, bool enableRectangle,
+		   bool enableCircle, bool enableArrow, bool enableShapreRecognizer,
+		   double* thickness)
 {
 	XOJ_INIT_TYPE(Tool);
 
@@ -45,7 +45,7 @@ Tool::~Tool()
 	XOJ_RELEASE_TYPE(Tool);
 }
 
-String Tool::getName()
+string Tool::getName()
 {
 	XOJ_CHECK_TYPE(Tool);
 
@@ -100,18 +100,21 @@ bool Tool::isEnableRuler()
 
 	return this->enableRuler;
 }
+
 bool Tool::isEnableRectangle()
 {
 	XOJ_CHECK_TYPE(Tool);
 
 	return this->enableRectangle;
 }
+
 bool Tool::isEnableCircle()
 {
 	XOJ_CHECK_TYPE(Tool);
 
 	return this->enableCircle;
 }
+
 bool Tool::isEnableArrow()
 {
 	XOJ_CHECK_TYPE(Tool);
@@ -139,18 +142,21 @@ bool Tool::isRuler()
 
 	return this->ruler;
 }
+
 bool Tool::isRectangle()
 {
 	XOJ_CHECK_TYPE(Tool);
 
 	return this->rectangle;
 }
+
 bool Tool::isCircle()
 {
 	XOJ_CHECK_TYPE(Tool);
 
 	return this->circle;
 }
+
 bool Tool::isArrow()
 {
 	XOJ_CHECK_TYPE(Tool);
@@ -178,12 +184,14 @@ void Tool::setRectangle(bool enabled)
 
 	this->rectangle = enabled;
 }
+
 void Tool::setCircle(bool enabled)
 {
 	XOJ_CHECK_TYPE(Tool);
 
 	this->circle = enabled;
 }
+
 void Tool::setArrow(bool enabled)
 {
 	XOJ_CHECK_TYPE(Tool);
@@ -191,7 +199,7 @@ void Tool::setArrow(bool enabled)
 	this->arrow = enabled;
 }
 
-String toolTypeToString(ToolType type)
+string toolTypeToString(ToolType type)
 {
 	switch (type)
 	{
@@ -217,19 +225,19 @@ String toolTypeToString(ToolType type)
 		return "verticalSpace";
 	case TOOL_HAND:
 		return "hand";
-	/*
-	case TOOL_DRAW_RECT:
-		return "drawRect";
-	case TOOL_DRAW_CIRCLE:
-		return "drawCircle";
-	case TOOL_DRAW_ARROW:
-		return "drawArrow";
-	*/
+		/*
+		case TOOL_DRAW_RECT:
+				return "drawRect";
+		case TOOL_DRAW_CIRCLE:
+				return "drawCircle";
+		case TOOL_DRAW_ARROW:
+				return "drawArrow";
+		 */
 	}
 	return "";
 }
 
-ToolType toolTypeFromString(String type)
+ToolType toolTypeFromString(string type)
 {
 	if (type == "none")
 	{
@@ -274,22 +282,22 @@ ToolType toolTypeFromString(String type)
 	/*
 	else if (type == "drawRect")
 	{
-		return TOOL_DRAW_RECT;
+			return TOOL_DRAW_RECT;
 	}
 	else if (type == "drawCircle")
 	{
-		return TOOL_DRAW_CIRCLE;
+			return TOOL_DRAW_CIRCLE;
 	}
 	else if (type == "drawArrow")
 	{
-		return TOOL_DRAW_ARROW;
+			return TOOL_DRAW_ARROW;
 	}
-	*/
+	 */
 
 	return TOOL_NONE;
 }
 
-String toolSizeToString(ToolSize size)
+string toolSizeToString(ToolSize size)
 {
 	switch (size)
 	{
@@ -310,7 +318,7 @@ String toolSizeToString(ToolSize size)
 	return "";
 }
 
-ToolSize toolSizeFromString(String size)
+ToolSize toolSizeFromString(string size)
 {
 	if (size == "veryThin")
 	{
@@ -340,7 +348,7 @@ ToolSize toolSizeFromString(String size)
 	return TOOL_SIZE_NONE;
 }
 
-String eraserTypeToString(EraserType type)
+string eraserTypeToString(EraserType type)
 {
 	switch (type)
 	{
@@ -356,7 +364,7 @@ String eraserTypeToString(EraserType type)
 	return "";
 }
 
-EraserType eraserTypeFromString(String type)
+EraserType eraserTypeFromString(string type)
 {
 	if (type == "none")
 	{
@@ -377,7 +385,7 @@ EraserType eraserTypeFromString(String type)
 	return ERASER_TYPE_NONE;
 }
 
-String pageInsertTypeToString(PageInsertType type)
+string pageInsertTypeToString(PageInsertType type)
 {
 	if (type == PAGE_INSERT_TYPE_PLAIN)
 	{
@@ -406,7 +414,7 @@ String pageInsertTypeToString(PageInsertType type)
 	return "";
 }
 
-PageInsertType pageInsertTypeFromString(String type)
+PageInsertType pageInsertTypeFromString(string type)
 {
 	if (type == "plain")
 	{

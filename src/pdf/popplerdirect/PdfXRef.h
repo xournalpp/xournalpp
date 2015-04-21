@@ -3,14 +3,13 @@
  *
  * Part of the PDF export
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __PDFXREF_H__
-#define __PDFXREF_H__
+#pragma once
 
 #include <XournalType.h>
 
@@ -35,5 +34,3 @@ private:
 	int xrefNr;
 
 };
-
-#endif /* __PDFXREF_H__ */

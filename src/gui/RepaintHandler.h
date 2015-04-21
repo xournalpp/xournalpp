@@ -3,14 +3,13 @@
  *
  * Class for render and repaint pages
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __REPAINTHANDLER_H__
-#define __REPAINTHANDLER_H__
+#pragma once
 
 #include <XournalType.h>
 
@@ -44,5 +43,3 @@ private:
 
 	XournalView* xournal;
 };
-
-#endif /* __REPAINTHANDLER_H__ */

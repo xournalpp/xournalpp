@@ -7,8 +7,8 @@
 #include <Rectangle.h>
 
 TextBoxUndoAction::TextBoxUndoAction(PageRef page, Layer* layer,
-                                     Element* element,
-                                     Element* oldelement) : UndoAction("TextBoxUndoAction")
+									 Element* element,
+									 Element* oldelement) : UndoAction("TextBoxUndoAction")
 {
 	XOJ_INIT_TYPE(TextBoxUndoAction);
 
@@ -25,14 +25,14 @@ TextBoxUndoAction::~TextBoxUndoAction()
 	if (this->undone)
 	{
 		// Insert was undone, so this is not needed anymore
-		if(this->layer->indexOf(element) == -1)
+		if (this->layer->indexOf(element) == -1)
 		{
 			delete this->element;
 		}
 		//	we won't be able to delete the old element, as it will
 		//	get cleaned up in the next TextBoxUndoAction cleanup.
 	}
-	else if(this->layer->indexOf(oldelement) == -1)
+	else if (this->layer->indexOf(oldelement) == -1)
 	{
 		delete this->oldelement;
 		//if it hasn't been undone we clear out the old element,
@@ -44,7 +44,7 @@ TextBoxUndoAction::~TextBoxUndoAction()
 	XOJ_RELEASE_TYPE(TextBoxUndoAction);
 }
 
-String TextBoxUndoAction::getText()
+string TextBoxUndoAction::getText()
 {
 	XOJ_CHECK_TYPE(TextBoxUndoAction);
 

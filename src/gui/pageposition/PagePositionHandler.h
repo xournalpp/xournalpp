@@ -3,14 +3,13 @@
  *
  * Knows the positions of pages in the view
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __PAGEPOSITIONHANDLER_H__
-#define __PAGEPOSITIONHANDLER_H__
+#pragma once
 
 #include <glib.h>
 #include <XournalType.h>
@@ -46,7 +45,7 @@ private:
 	void freeData();
 
 	PagePosition* binarySearch(PagePosition** sortedArray, int first, int last,
-	                           int y, int& index);
+							int y, int& index);
 
 private:
 	XOJ_TYPE_ATTRIB;
@@ -57,5 +56,3 @@ private:
 
 	int maxY;
 };
-
-#endif /* __PAGEPOSITIONHANDLER_H__ */

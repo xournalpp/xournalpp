@@ -9,7 +9,7 @@ SpinPageAdapter::SpinPageAdapter()
 	g_object_ref(this->widget);
 
 	g_signal_connect(this->widget, "value-changed",
-	                 G_CALLBACK(pageNrSpinChangedCallback), this);
+					G_CALLBACK(pageNrSpinChangedCallback), this);
 
 	this->page = -1;
 
@@ -34,7 +34,7 @@ bool SpinPageAdapter::pageNrSpinChangedTimerCallback(SpinPageAdapter* adapter)
 	XOJ_CHECK_TYPE_OBJ(adapter, SpinPageAdapter);
 	adapter->lastTimeoutId = 0;
 	adapter->page = gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(
-	                                                     adapter->widget));
+																	adapter->widget));
 
 	gdk_threads_enter();
 	adapter->firePageChanged();
@@ -43,13 +43,12 @@ bool SpinPageAdapter::pageNrSpinChangedTimerCallback(SpinPageAdapter* adapter)
 }
 
 void SpinPageAdapter::pageNrSpinChangedCallback(GtkSpinButton* spinbutton,
-                                                SpinPageAdapter* adapter)
+												SpinPageAdapter* adapter)
 {
 	XOJ_CHECK_TYPE_OBJ(adapter, SpinPageAdapter);
 
 	// Nothing changed.
-	if(gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(spinbutton)) ==
-	   adapter->page)
+	if (gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(spinbutton)) == adapter->page)
 	{
 		return;
 	}
@@ -60,8 +59,9 @@ void SpinPageAdapter::pageNrSpinChangedCallback(GtkSpinButton* spinbutton,
 	}
 
 	// Give the spin button some time to realease, if we don't do he will send new events...
-	adapter->lastTimeoutId = g_timeout_add(100,
-	                                       (GSourceFunc) pageNrSpinChangedTimerCallback, adapter);
+	adapter->lastTimeoutId = g_timeout_add(
+				100, (GSourceFunc) pageNrSpinChangedTimerCallback, adapter
+			);
 }
 
 GtkWidget* SpinPageAdapter::getWidget()
@@ -112,9 +112,9 @@ void SpinPageAdapter::firePageChanged()
 	XOJ_CHECK_TYPE(SpinPageAdapter);
 
 
-	for(GList* l = this->listener; l != NULL; l = l->next)
+	for (GList* l = this->listener; l != NULL; l = l->next)
 	{
-		SpinPageListener* listener = (SpinPageListener*)l->data;
+		SpinPageListener* listener = (SpinPageListener*) l->data;
 		listener->pageChanged(this->page);
 	}
 }

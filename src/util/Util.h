@@ -3,17 +3,19 @@
  *
  * Xournal util functions
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __UTIL_H__
-#define __UTIL_H__
+#pragma once
+
+#include <boost/filesystem.hpp>
+using boost::filesystem::path;
 
 #include <gtk/gtk.h>
-#include <String.h>
+#include <StringUtils.h>
 
 class Util
 {
@@ -27,7 +29,7 @@ public:
 
 	static void cairo_set_source_rgbi(cairo_t* cr, int color);
 
-	static String getAutosaveFilename();
+	static path getAutosaveFilename();
 
 	static int getPid();
 
@@ -35,11 +37,9 @@ public:
 	static GdkPixbuf* newPixbufFromWidget(GtkWidget* widget, int iconSize = 24);
 	static GtkWidget* newSepeartorImage();
 
-	static void openFileWithDefaultApplicaion(const char* filename);
-	static void openFileWithFilebrowser(const char* filename);
+	static void openFileWithDefaultApplicaion(path filename);
+	static void openFileWithFilebrowser(path filename);
 
 private:
-	static String getSettingsSubfolder(String subfolder);
+	static path getSettingsSubfolder(string subfolder);
 };
-
-#endif /* __UTIL_H__ */

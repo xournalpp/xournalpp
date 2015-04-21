@@ -3,14 +3,13 @@
  *
  * Interface for GUI handling
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __REDRAWABLE_H__
-#define __REDRAWABLE_H__
+#pragma once
 
 #include <Range.h>
 
@@ -72,8 +71,6 @@ public:
 
 
 	virtual Rectangle* rectOnWidget(double x, double y, double width,
-	                                double height) = 0;
+									double height) = 0;
 
 };
-
-#endif /* __REDRAWABLE_H__ */

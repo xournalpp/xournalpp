@@ -3,14 +3,13 @@
  *
  * Dialog to select a Image (to insert as background)
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __IMAGESDIALOG_H__
-#define __IMAGESDIALOG_H__
+#pragma once
 
 #include "../GladeGui.h"
 #include <XournalType.h>
@@ -19,11 +18,11 @@ class Document;
 class Settings;
 class BackgroundImage;
 
-class ImagesDialog: public GladeGui
+class ImagesDialog : public GladeGui
 {
 public:
 	ImagesDialog(GladeSearchpath* gladeSearchPath, Document* doc,
-	             Settings* settings);
+				Settings* settings);
 	virtual ~ImagesDialog();
 
 public:
@@ -42,7 +41,7 @@ private:
 	void updateOkButton();
 
 	static void sizeAllocate(GtkWidget* widget, GtkRequisition* requisition,
-	                         ImagesDialog* dlg);
+							ImagesDialog* dlg);
 	static void okButtonCallback(GtkButton* button, ImagesDialog* dlg);
 	static void filechooserButtonCallback(GtkButton* button, ImagesDialog* dlg);
 
@@ -63,5 +62,3 @@ private:
 	GtkWidget* scrollPreview;
 	GtkWidget* widget;
 };
-
-#endif /* __IMAGESDIALOG_H__ */

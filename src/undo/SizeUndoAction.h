@@ -3,14 +3,13 @@
  *
  * Undo action resize
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __SIZEUNDOACTION_H__
-#define __SIZEUNDOACTION_H__
+#pragma once
 
 #include "UndoAction.h"
 
@@ -18,7 +17,7 @@ class Layer;
 class Redrawable;
 class Stroke;
 
-class SizeUndoAction: public UndoAction
+class SizeUndoAction : public UndoAction
 {
 public:
 	SizeUndoAction(PageRef page, Layer* layer);
@@ -27,11 +26,11 @@ public:
 public:
 	virtual bool undo(Control* control);
 	virtual bool redo(Control* control);
-	virtual String getText();
+	virtual string getText();
 
 	void addStroke(Stroke* s, double originalWidth, double newWidt,
-	               double* originalPressure, double* newPressure,
-	               int pressureCount);
+				double* originalPressure, double* newPressure,
+				int pressureCount);
 
 public:
 	static double* getPressure(Stroke* s);
@@ -43,5 +42,3 @@ private:
 
 	Layer* layer;
 };
-
-#endif /* __SIZEUNDOACTION_H__ */

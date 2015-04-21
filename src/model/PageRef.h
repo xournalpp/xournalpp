@@ -3,20 +3,17 @@
  *
  * A page reference, should only allocated on the stack
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __PAGEREF_H__
-#define __PAGEREF_H__
+#pragma once
 
 #include "BackgroundType.h"
 #include "XojPage.h"
-#include <ListIterator.h>
 #include <XournalType.h>
-
 
 class Layer;
 class BackgroundImage;
@@ -51,5 +48,3 @@ private:
 
 	XojPage* page;
 };
-
-#endif /* __PAGEREF_H__ */

@@ -3,14 +3,13 @@
  *
  * The widget wich displays the PDF and the drawings
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __XOURNALVIEW_H__
-#define __XOURNALVIEW_H__
+#pragma once
 
 #include <gtk/gtk.h>
 #include <Arrayiterator.h>
@@ -30,7 +29,7 @@ class Cursor;
 class EditSelection;
 class Layout;
 
-class XournalView: public DocumentListener, public ZoomListener
+class XournalView : public DocumentListener, public ZoomListener
 {
 public:
 	XournalView(GtkWidget* parent, Control* control);
@@ -62,7 +61,7 @@ public:
 
 	PageView* getViewFor(int pageNr);
 
-	bool searchTextOnPage(const char* text, int p, int* occures, double* top);
+	bool searchTextOnPage(string text, int p, int* occures, double* top);
 
 	bool cut();
 	bool copy();
@@ -156,5 +155,3 @@ private:
 
 	friend class Layout;
 };
-
-#endif /* __XOURNALVIEW_H__ */

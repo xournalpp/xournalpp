@@ -3,16 +3,18 @@
  *
  * Output streams for writing
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __OUTPUTSTREAM_H__
-#define __OUTPUTSTREAM_H__
+#pragma once
 
-#include <String.h>
+#include <boost/filesystem/path.hpp>
+using boost::filesystem::path;
+
+#include <StringUtils.h>
 #include <XournalType.h>
 #include <zlib.h>
 
@@ -25,15 +27,16 @@ public:
 public:
 	virtual void write(const char* data);
 	virtual void write(const char* data, int len) = 0;
-	virtual void write(const String& str);
+	virtual void write(const string& str);
 
 	virtual void close() = 0;
 };
 
+//TODO boost::iostreams
 class GzOutputStream : public OutputStream
 {
 public:
-	GzOutputStream(String filename);
+	GzOutputStream(path filename);
 	virtual ~GzOutputStream();
 
 public:
@@ -42,18 +45,15 @@ public:
 	virtual void close();
 
 
-	String& getLastError();
+	string& getLastError();
 
 private:
 	XOJ_TYPE_ATTRIB;
 
 	gzFile fp;
 
-	String error;
+	string error;
 
-	String target;
-	String filename;
+	string target;
+	path filename;
 };
-
-
-#endif /* __OUTPUTSTREAM_H__ */

@@ -3,14 +3,13 @@
  *
  * Handles input and optimizes the stroke
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __INPUTHANDLER_H__
-#define __INPUTHANDLER_H__
+#pragma once
 
 #include <gtk/gtk.h>
 #include "../../model/Stroke.h"
@@ -79,5 +78,3 @@ private:
 	 */
 	ShapeRecognizer* reco;
 };
-
-#endif /* __INPUTHANDLER_H__ */

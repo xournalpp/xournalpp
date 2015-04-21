@@ -3,14 +3,13 @@
  *
  * Sidebar preview layout
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __SIDEBARTOOLBAR_H__
-#define __SIDEBARTOOLBAR_H__
+#pragma once
 
 #include <gtk/gtk.h>
 #include <XournalType.h>
@@ -32,7 +31,7 @@ public:
 	 * Sets the button enabled / disabled
 	 */
 	void setButtonEnabled(bool enableUp, bool enableDown, bool enableCopy,
-	                      bool enableDelete, PageRef currentPage);
+						bool enableDelete, PageRef currentPage);
 
 private:
 	XOJ_TYPE_ATTRIB;
@@ -80,5 +79,3 @@ private:
 	 */
 	GtkToolItem* btDelete;
 };
-
-#endif /* __SIDEBARTOOLBAR_H__ */

@@ -3,21 +3,18 @@
  *
  * Export type for export job
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __XPORTFORMTTYPE_H__
-#define __XPORTFORMTTYPE_H__
+#pragma once
 
 enum ExportFormtType
 {
-  EXPORT_FORMAT_PDF=1,
-  EXPORT_FORMAT_EPS=2,
-  EXPORT_FORMAT_SVG=3,
-  EXPORT_FORMAT_PNG=4
+	EXPORT_FORMAT_PDF = 1,
+	EXPORT_FORMAT_EPS = 2,
+	EXPORT_FORMAT_SVG = 3,
+	EXPORT_FORMAT_PNG = 4
 };
-
-#endif /* __XPORTFORMTTYPE_H__ */

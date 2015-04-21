@@ -3,14 +3,13 @@
  *
  * Cache for Query the page position handler
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __PAGEPOSITIONCACHE_H__
-#define __PAGEPOSITIONCACHE_H__
+#pragma once
 
 #include <XournalType.h>
 
@@ -30,5 +29,3 @@ private:
 
 	friend class PagePositionHandler;
 };
-
-#endif /* __PAGEPOSITIONCACHE_H__ */

@@ -3,14 +3,13 @@
  *
  * Abstract GUI class, which loads the glade objects
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __GLADEGUI_H__
-#define __GLADEGUI_H__
+#pragma once
 
 #include <gtk/gtk.h>
 #include <glade/glade-xml.h>
@@ -23,7 +22,7 @@ class GladeGui
 {
 public:
 	GladeGui(GladeSearchpath* gladeSearchPath, const char* glade,
-	         const char* mainWnd);
+			const char* mainWnd);
 	virtual ~GladeGui();
 
 	virtual void show(GtkWindow* parent) = 0;
@@ -57,5 +56,3 @@ protected:
 	 */
 	GtkWidget* window;
 };
-
-#endif /* __GLADEGUI_H__ */

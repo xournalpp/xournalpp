@@ -72,10 +72,8 @@ void ActionSelectionListener::unregisterListener()
 	if (this->handler != NULL)
 	{
 		handler->removeListener(this);
-		this->handler = handler;
 	}
 }
-
 
 ActionHandler::ActionHandler()
 {
@@ -99,9 +97,9 @@ void ActionHandler::fireEnableAction(ActionType action, bool enabled)
 {
 	XOJ_CHECK_TYPE(ActionHandler);
 
-	for(GList* l = this->enabledListener; l != NULL; l = l->next)
+	for (GList* l = this->enabledListener; l != NULL; l = l->next)
 	{
-		ActionEnabledListener* listener = (ActionEnabledListener*)l->data;
+		ActionEnabledListener* listener = (ActionEnabledListener*) l->data;
 		listener->actionEnabledAction(action, enabled);
 	}
 }
@@ -124,9 +122,9 @@ void ActionHandler::fireActionSelected(ActionGroup group, ActionType action)
 {
 	XOJ_CHECK_TYPE(ActionHandler);
 
-	for(GList* l = this->selectionListener; l != NULL; l = l->next)
+	for (GList* l = this->selectionListener; l != NULL; l = l->next)
 	{
-		ActionSelectionListener* listener = (ActionSelectionListener*)l->data;
+		ActionSelectionListener* listener = (ActionSelectionListener*) l->data;
 		listener->actionSelected(group, action);
 	}
 }

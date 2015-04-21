@@ -3,14 +3,13 @@
  *
  * Scrollbar adapter
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __SCROLLBAR_H__
-#define __SCROLLBAR_H__
+#pragma once
 
 #include <config.h>
 
@@ -29,7 +28,6 @@ class ScrollbarListener
 public:
 	virtual void scrolled(Scrollbar* scrollbar) = 0;
 };
-
 
 class Scrollbar
 {
@@ -72,6 +70,3 @@ private:
 
 	int value;
 };
-
-#endif //__SCROLLBAR_H__
-

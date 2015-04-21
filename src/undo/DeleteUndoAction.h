@@ -3,14 +3,13 @@
  *
  * Undo action for delete (eraser, delete)
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __DELETEUNDOACTION_H__
-#define __DELETEUNDOACTION_H__
+#pragma once
 
 #include "UndoAction.h"
 #include <XournalType.h>
@@ -19,7 +18,7 @@ class Redrawable;
 class Element;
 class Layer;
 
-class DeleteUndoAction: public UndoAction
+class DeleteUndoAction : public UndoAction
 {
 public:
 	DeleteUndoAction(PageRef page, bool eraser);
@@ -31,7 +30,7 @@ public:
 
 	void addElement(Layer* layer, Element* e, int pos);
 
-	virtual String getText();
+	virtual string getText();
 
 private:
 	XOJ_TYPE_ATTRIB;
@@ -39,5 +38,3 @@ private:
 	GList* elements;
 	bool eraser;
 };
-
-#endif /* __DELETEUNDOACTION_H__ */

@@ -3,14 +3,13 @@
  *
  * Part of the customizable toolbars
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __TOOLSELECTCOMBOCONTROL_H__
-#define __TOOLSELECTCOMBOCONTROL_H__
+#pragma once
 
 #include "ToolButton.h"
 #include "../GladeGui.h"
@@ -18,11 +17,11 @@
 
 class ToolMenuHandler;
 
-class ToolSelectCombocontrol: public ToolButton
+class ToolSelectCombocontrol : public ToolButton
 {
 public:
 	ToolSelectCombocontrol(ToolMenuHandler* th, ActionHandler* handler,
-	                       GladeGui* gui, String id);
+						   GladeGui* gui, string id);
 	virtual ~ToolSelectCombocontrol();
 
 public:
@@ -41,5 +40,3 @@ private:
 	GdkPixbuf* iconSelectRgion;
 	GdkPixbuf* iconSelectObject;
 };
-
-#endif /* __TOOLSELECTCOMBOCONTROL_H__ */

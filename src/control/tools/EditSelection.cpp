@@ -19,9 +19,10 @@
 
 #include "EditSelectionContents.h"
 
+#include <iostream>
+using namespace std;
 
-EditSelection::EditSelection(UndoRedoHandler* undo, PageRef page,
-                             PageView* view)
+EditSelection::EditSelection(UndoRedoHandler* undo, PageRef page, PageView* view)
 {
 	XOJ_INIT_TYPE(EditSelection);
 
@@ -34,7 +35,7 @@ EditSelection::EditSelection(UndoRedoHandler* undo, PageRef page,
 }
 
 EditSelection::EditSelection(UndoRedoHandler* undo, Selection* selection,
-                             PageView* view)
+							 PageView* view)
 {
 	XOJ_INIT_TYPE(EditSelection);
 
@@ -42,9 +43,8 @@ EditSelection::EditSelection(UndoRedoHandler* undo, Selection* selection,
 
 	contstruct(undo, view, view->getPage());
 
-	for (GList* l = selection->selectedElements; l != NULL; l = l->next)
+	for (Element* e : selection->selectedElements)
 	{
-		Element* e = (Element*) l->data;
 		this->sourceLayer->removeElement(e, false);
 		addElement(e);
 	}
@@ -53,7 +53,7 @@ EditSelection::EditSelection(UndoRedoHandler* undo, Selection* selection,
 }
 
 EditSelection::EditSelection(UndoRedoHandler* undo, Element* e, PageView* view,
-                             PageRef page)
+							 PageRef page)
 {
 	XOJ_INIT_TYPE(EditSelection);
 
@@ -74,7 +74,7 @@ EditSelection::EditSelection(UndoRedoHandler* undo, Element* e, PageView* view,
  * Our internal constructor
  */
 void EditSelection::contstruct(UndoRedoHandler* undo, PageView* view,
-                               PageRef sourcePage)
+							   PageRef sourcePage)
 {
 	XOJ_CHECK_TYPE(EditSelection);
 
@@ -90,7 +90,7 @@ void EditSelection::contstruct(UndoRedoHandler* undo, PageView* view,
 	this->mouseDownType = CURSOR_SELECTION_NONE;
 
 	this->contents = new EditSelectionContents(this->x, this->y, this->width,
-	                                           this->height, this->sourcePage, this->sourceLayer, this->view);
+											this->height, this->sourcePage, this->sourceLayer, this->view);
 }
 
 EditSelection::~EditSelection()
@@ -131,7 +131,7 @@ void EditSelection::finalizeSelection()
 		PageRef page = this->view->getPage();
 		Layer* layer = page->getSelectedLayer();
 		this->contents->finalizeSelection(this->x, this->y, this->width, this->height,
-		                                  this->aspectRatio, layer, page, this->view, this->undo);
+										this->aspectRatio, layer, page, this->view, this->undo);
 
 		this->view->rerenderRect(this->x, this->y, this->width, this->height);
 
@@ -241,14 +241,14 @@ int EditSelection::getViewHeight()
  * (or NULL if nothing is done)
  */
 UndoAction* EditSelection::setSize(ToolSize size,
-                                   const double* thicknessPen,
-                                   const double* thicknessHilighter,
-                                   const double* thicknessEraser)
+								   const double* thicknessPen,
+								   const double* thicknessHilighter,
+								   const double* thicknessEraser)
 {
 	XOJ_CHECK_TYPE(EditSelection);
 
 	return this->contents->setSize(size, thicknessPen, thicknessHilighter,
-	                               thicknessEraser);
+								thicknessEraser);
 }
 
 /**
@@ -300,7 +300,7 @@ void EditSelection::addElement(Element* e)
 /**
  * Returns all containig elements of this selections
  */
-ListIterator<Element*> EditSelection::getElements()
+ElementVector* EditSelection::getElements()
 {
 	XOJ_CHECK_TYPE(EditSelection);
 
@@ -319,10 +319,10 @@ void EditSelection::mouseUp()
 	Layer* layer = page->getSelectedLayer();
 
 	this->contents->updateContent(this->x, this->y,
-	                              this->width, this->height,
-	                              this->aspectRatio, layer, page,
-	                              this->view, this->undo,
-	                              this->mouseDownType);
+								this->width, this->height,
+								this->aspectRatio, layer, page,
+								this->view, this->undo,
+								this->mouseDownType);
 
 	this->mouseDownType = CURSOR_SELECTION_NONE;
 }
@@ -478,7 +478,7 @@ PageView* EditSelection::getBestMatchingPageView()
 	int rx = this->getXOnViewAbsolute();
 	int ry = this->getYOnViewAbsolute();
 	PageView* v = pp->getBestMatchingView(rx, ry, this->getViewWidth(),
-	                                      this->getViewHeight());
+										this->getViewHeight());
 	return v;
 }
 
@@ -503,19 +503,19 @@ void EditSelection::translateToView(PageView* v)
 
 	if (aX1 != aX2)
 	{
-		printf("aX1 != aX2!! %i / %i\n", aX1, aX2);
+		cout << "aX1 != aX2!! " << aX1 << " / " << aX2 << endl;
 	}
 	if (aY1 != aY2)
 	{
-		printf("aY1 != aY2!! %i / %i\n", aY1, aY2);
+		cout << "aY1 != aY2!! " << aY1 << " / " << aY2 << endl;
 	}
 }
 
 void EditSelection::copySelection()
 {
 	undo->addUndoAction(contents->copySelection(this->view->getPage(),
-	                                            this->view,
-	                                            this->x, this->y));
+												this->view,
+												this->x, this->y));
 }
 
 /**
@@ -553,16 +553,17 @@ void EditSelection::ensureWithinVisibleArea()
 	double zoom = this->view->getXournal()->getZoom();
 	//need to modify this to take into account the position
 	//of the object, plus typecast because PageView takes ints
-	this->view->getXournal()->ensureRectIsVisible((int)(viewx + this->x * zoom),
-	                                              (int)(viewy + this->y * zoom), (int)(this->width * zoom),
-	                                              (int)(this->height * zoom));
+	this->view->getXournal()->ensureRectIsVisible((int) (viewx + this->x * zoom),
+												  (int) (viewy + this->y * zoom),
+												  (int) (this->width * zoom),
+												  (int) (this->height * zoom));
 }
 
 /**
  * Get the cursor type for the current position (if 0 then the default cursor should be used)
  */
 CursorSelectionType EditSelection::getSelectionTypeForPos(double x, double y,
-                                                          double zoom)
+														  double zoom)
 {
 	XOJ_CHECK_TYPE(EditSelection);
 
@@ -575,25 +576,25 @@ CursorSelectionType EditSelection::getSelectionTypeForPos(double x, double y,
 	const int BORDER_PADDING = 3;
 
 	if (x1 - EDGE_PADDING <= x && x <= x1 + EDGE_PADDING &&
-	    y1 - EDGE_PADDING <= y && y <= y1 + EDGE_PADDING)
+		y1 - EDGE_PADDING <= y && y <= y1 + EDGE_PADDING)
 	{
 		return CURSOR_SELECTION_TOP_LEFT;
 	}
 
 	if (x2 - EDGE_PADDING <= x && x <= x2 + EDGE_PADDING &&
-	    y1 - EDGE_PADDING <= y && y <= y1 + EDGE_PADDING)
+		y1 - EDGE_PADDING <= y && y <= y1 + EDGE_PADDING)
 	{
 		return CURSOR_SELECTION_TOP_RIGHT;
 	}
 
 	if (x1 - EDGE_PADDING <= x && x <= x1 + EDGE_PADDING &&
-	    y2 - EDGE_PADDING <= y && y <= y2 + EDGE_PADDING)
+		y2 - EDGE_PADDING <= y && y <= y2 + EDGE_PADDING)
 	{
 		return CURSOR_SELECTION_BOTTOM_LEFT;
 	}
 
 	if (x2 - EDGE_PADDING <= x && x <= x2 + EDGE_PADDING &&
-	    y2 - EDGE_PADDING <= y && y <= y2 + EDGE_PADDING)
+		y2 - EDGE_PADDING <= y && y <= y2 + EDGE_PADDING)
 	{
 		return CURSOR_SELECTION_BOTTOM_RIGHT;
 	}
@@ -655,16 +656,16 @@ void EditSelection::paint(cairo_t* cr, double zoom)
 	// set the line always the same size on display
 	cairo_set_line_width(cr, 1);
 
-	const double dashes[] = { 10.0, 10.0 };
+	const double dashes[] = {10.0, 10.0};
 	cairo_set_dash(cr, dashes, sizeof(dashes) / sizeof(dashes[0]), 0);
 	cairo_set_source_rgb(cr, selectionColor.red / 65536.0,
-	                     selectionColor.green / 65536.0, selectionColor.blue / 65536.0);
+						selectionColor.green / 65536.0, selectionColor.blue / 65536.0);
 
 	cairo_rectangle(cr, x * zoom, y * zoom, width * zoom, height * zoom);
 
 	cairo_stroke_preserve(cr);
 	cairo_set_source_rgba(cr, selectionColor.red / 65536.0,
-	                      selectionColor.green / 65536.0, selectionColor.blue / 65536.0, 0.3);
+						selectionColor.green / 65536.0, selectionColor.blue / 65536.0, 0.3);
 	cairo_fill(cr);
 
 	cairo_set_dash(cr, NULL, 0, 0);
@@ -695,13 +696,13 @@ void EditSelection::paint(cairo_t* cr, double zoom)
  * draws an idicator where you can scale the selection
  */
 void EditSelection::drawAnchorRect(cairo_t* cr, double x, double y,
-                                   double zoom)
+								   double zoom)
 {
 	XOJ_CHECK_TYPE(EditSelection);
 
 	GdkColor selectionColor = view->getSelectionColor();
 	cairo_set_source_rgb(cr, selectionColor.red / 65536.0,
-	                     selectionColor.green / 65536.0, selectionColor.blue / 65536.0);
+						selectionColor.green / 65536.0, selectionColor.blue / 65536.0);
 	cairo_rectangle(cr, x * zoom - 4, y * zoom - 4, 8, 8);
 	cairo_stroke_preserve(cr);
 	cairo_set_source_rgb(cr, 1, 1, 1);
@@ -727,19 +728,12 @@ void EditSelection::serialize(ObjectOutputStream& out)
 	out << this->contents;
 	out.endObject();
 
-	ListIterator<Element*> it = this->getElements();
-	int count = it.getLength();
-	out.writeInt(count);
-
-	while (it.hasNext())
-	{
-		Element* e = it.next();
-		out << e;
-	}
+	out.writeInt(this->getElements()->size());
+	for (Element* e : *this->getElements()) out << e;
 }
 
 void EditSelection::readSerialized(ObjectInputStream& in) throw (
-    InputStreamException)
+																 InputStreamException)
 {
 	in.readObject("EditSelection");
 	this->x = in.readDouble();

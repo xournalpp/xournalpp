@@ -24,12 +24,11 @@
 #include <math.h>
 
 EditSelectionContents::EditSelectionContents(double x, double y, double width,
-                                             double height, PageRef sourcePage,
-                                             Layer* sourceLayer, PageView* sourceView)
+											 double height, PageRef sourcePage,
+											 Layer* sourceLayer, PageView* sourceView)
 {
 	XOJ_INIT_TYPE(EditSelectionContents);
 
-	this->selected = NULL;
 	this->crBuffer = NULL;
 
 	this->rescaleId = 0;
@@ -57,9 +56,6 @@ EditSelectionContents::~EditSelectionContents()
 		this->rescaleId = 0;
 	}
 
-	g_list_free(this->selected);
-	this->selected = NULL;
-
 	deleteViewBuffer();
 
 	XOJ_RELEASE_TYPE(EditSelectionContents);
@@ -72,17 +68,17 @@ void EditSelectionContents::addElement(Element* e)
 {
 	XOJ_CHECK_TYPE(EditSelectionContents);
 
-	this->selected = g_list_append(this->selected, e);
+	this->selected.push_back(e);
 }
 
 /**
  * Returns all containig elements of this selections
  */
-ListIterator<Element*> EditSelectionContents::getElements()
+ElementVector* EditSelectionContents::getElements()
 {
 	XOJ_CHECK_TYPE(EditSelectionContents);
 
-	return ListIterator<Element*> (this->selected);
+	return &this->selected;
 }
 
 /**
@@ -90,9 +86,9 @@ ListIterator<Element*> EditSelectionContents::getElements()
  * (or NULL if nothing is done)
  */
 UndoAction* EditSelectionContents::setSize(ToolSize size,
-                                           const double* thicknessPen,
-                                           const double* thicknessHilighter,
-                                           const double* thicknessEraser)
+										   const double* thicknessPen,
+										   const double* thicknessHilighter,
+										   const double* thicknessEraser)
 {
 	XOJ_CHECK_TYPE(EditSelectionContents);
 
@@ -100,9 +96,8 @@ UndoAction* EditSelectionContents::setSize(ToolSize size,
 
 	bool found = false;
 
-	for (GList* l = this->selected; l != NULL; l = l->next)
+	for (Element* e : this->selected)
 	{
-		Element* e = (Element*) l->data;
 		if (e->getType() == ELEMENT_STROKE)
 		{
 			Stroke* s = (Stroke*) e;
@@ -134,7 +129,7 @@ UndoAction* EditSelectionContents::setSize(ToolSize size,
 			double* newPressure = SizeUndoAction::getPressure(s);
 
 			undo->addStroke(s, originalWidth, s->getWidth(), originalPressure, newPressure,
-			                pointCount);
+							pointCount);
 			found = true;
 		}
 	}
@@ -167,11 +162,10 @@ UndoAction* EditSelectionContents::setFont(XojFont& font)
 	double y2 = 0.0 / 0.0;
 
 	FontUndoAction* undo = new FontUndoAction(this->sourcePage,
-	                                          this->sourceLayer);
+											this->sourceLayer);
 
-	for (GList* l = this->selected; l != NULL; l = l->next)
+	for (Element* e : this->selected)
 	{
-		Element* e = (Element*) l->data;
 		if (e->getType() == ELEMENT_TEXT)
 		{
 			Text* t = (Text*) e;
@@ -227,9 +221,8 @@ UndoAction* EditSelectionContents::setColor(int color)
 
 	bool found = false;
 
-	for (GList* l = this->selected; l != NULL; l = l->next)
+	for (Element* e : this->selected)
 	{
-		Element* e = (Element*) l->data;
 		if (e->getType() == ELEMENT_TEXT || e->getType() == ELEMENT_STROKE)
 		{
 			int lastColor = e->getColor();
@@ -263,14 +256,12 @@ UndoAction* EditSelectionContents::setColor(int color)
 void EditSelectionContents::fillUndoItem(DeleteUndoAction* undo)
 {
 	Layer* layer = this->sourceLayer;
-	for (GList* l = this->selected; l != NULL; l = l->next)
+	for (Element* e : this->selected)
 	{
-		Element* e = (Element*) l->data;
 		undo->addElement(layer, e, layer->indexOf(e));
 	}
 
-	g_list_free(this->selected);
-	this->selected = NULL;
+	this->selected.clear();
 }
 
 /**
@@ -326,9 +317,9 @@ double EditSelectionContents::getOriginalHeight()
  * The contents of the selection
  */
 void EditSelectionContents::finalizeSelection(double x, double y, double width,
-                                              double height, bool aspectRatio, Layer* layer,
-                                              PageRef targetPage,
-                                              PageView* targetView, UndoRedoHandler* undo)
+											  double height, bool aspectRatio, Layer* layer,
+											  PageRef targetPage,
+											  PageView* targetView, UndoRedoHandler* undo)
 {
 	double fx = width / this->originalWidth;
 	double fy = height / this->originalHeight;
@@ -340,17 +331,16 @@ void EditSelectionContents::finalizeSelection(double x, double y, double width,
 		fy = f;
 	}
 	bool scale =
-	  (width != this->originalWidth || height != this->originalHeight);
+			(width != this->originalWidth || height != this->originalHeight);
 
 	double mx = x - this->originalX;
 	double my = y - this->originalY;
 
 	bool move = mx != 0 || my != 0;
 
-	for (GList* l = this->selected; l != NULL; l = l->next)
+	for (Element* e : this->selected)
 	{
-		Element* e = (Element*) l->data;
-		if(move)
+		if (move)
 		{
 			e->move(mx, my);
 		}
@@ -363,11 +353,11 @@ void EditSelectionContents::finalizeSelection(double x, double y, double width,
 }
 
 void EditSelectionContents::updateContent(double x, double y,
-                                          double width, double height,
-                                          bool aspectRatio, Layer* layer,
-                                          PageRef targetPage, PageView* targetView,
-                                          UndoRedoHandler* undo,
-                                          CursorSelectionType type)
+										  double width, double height,
+										  bool aspectRatio, Layer* layer,
+										  PageRef targetPage, PageView* targetView,
+										  UndoRedoHandler* undo,
+										  CursorSelectionType type)
 {
 	double mx = x - this->lastX;
 	double my = y - this->lastY;
@@ -382,59 +372,59 @@ void EditSelectionContents::updateContent(double x, double y,
 		fy = f;
 	}
 	bool scale =
-	  (width != this->lastWidth || height != this->lastHeight);
+			(width != this->lastWidth || height != this->lastHeight);
 
-	if(type == CURSOR_SELECTION_MOVE)
+	if (type == CURSOR_SELECTION_MOVE)
 	{
 		MoveUndoAction* moveUndo = new MoveUndoAction(this->sourceLayer,
-		                                                    this->sourcePage,
-		                                                    this->selected,
-		                                                    mx, my, layer,
-		                                                    targetPage);
+													  this->sourcePage,
+													  &this->selected,
+													  mx, my, layer,
+													  targetPage);
 
 		undo->addUndoAction(moveUndo);
 
 	}
-	else if(scale)
+	else if (scale)
 	{
 		// The coordinates which are the center of the scaling
 		// operation. Their coordinates depend on the scaling
 		// operation performed
 		double px = this->lastX;
 		double py = this->lastY;
-		
-		switch(type)
+
+		switch (type)
 		{
-			case CURSOR_SELECTION_TOP_LEFT:
-			case CURSOR_SELECTION_BOTTOM_LEFT:
-			case CURSOR_SELECTION_LEFT:
-				px = (this->lastWidth + this->lastX);
-				break;
-			default:
-				break;
+		case CURSOR_SELECTION_TOP_LEFT:
+		case CURSOR_SELECTION_BOTTOM_LEFT:
+		case CURSOR_SELECTION_LEFT:
+			px = (this->lastWidth + this->lastX);
+			break;
+		default:
+			break;
 		}
-		
-		switch(type)
+
+		switch (type)
 		{
-			case CURSOR_SELECTION_TOP_LEFT:
-			case CURSOR_SELECTION_TOP_RIGHT:
-			case CURSOR_SELECTION_TOP:
-				py = (this->lastHeight + this->lastY);
-				break;
-			default:
-				break;
+		case CURSOR_SELECTION_TOP_LEFT:
+		case CURSOR_SELECTION_TOP_RIGHT:
+		case CURSOR_SELECTION_TOP:
+			py = (this->lastHeight + this->lastY);
+			break;
+		default:
+			break;
 		}
-		
+
 		ScaleUndoAction* scaleUndo = new ScaleUndoAction(this->sourcePage,
-		                                                 this->selected,
-		                                                 px, py, fx, fy);
+														&this->selected,
+														px, py, fx, fy);
 		undo->addUndoAction(scaleUndo);
 
 	}
-	
+
 	this->lastX = x;
 	this->lastY = y;
-	
+
 	this->lastWidth = width;
 	this->lastHeight = height;
 }
@@ -443,12 +433,12 @@ void EditSelectionContents::updateContent(double x, double y,
  * paints the selection
  */
 void EditSelectionContents::paint(cairo_t* cr, double x, double y, double width,
-                                  double height, double zoom)
+								  double height, double zoom)
 {
 	double fx = width / this->originalWidth;
 	double fy = height / this->originalHeight;
 
-	if(this->relativeX == -9999999999)
+	if (this->relativeX == -9999999999)
 	{
 		this->relativeX = x;
 		this->relativeY = y;
@@ -457,15 +447,15 @@ void EditSelectionContents::paint(cairo_t* cr, double x, double y, double width,
 	if (this->crBuffer == NULL)
 	{
 		this->crBuffer = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, width * zoom,
-		                                            height * zoom);
+													height * zoom);
 		cairo_t* cr2 = cairo_create(this->crBuffer);
 
 		int dx = (int) (this->relativeX * zoom);
 		int dy = (int) (this->relativeY * zoom);
 
-		cairo_scale(cr2,  fx, fy);
+		cairo_scale(cr2, fx, fy);
 		cairo_translate(cr2, -dx, -dy);
-		cairo_scale(cr2, zoom , zoom);
+		cairo_scale(cr2, zoom, zoom);
 		DocumentView view;
 		view.drawSelection(cr2, this);
 
@@ -503,23 +493,21 @@ void EditSelectionContents::paint(cairo_t* cr, double x, double y, double width,
 }
 
 UndoAction* EditSelectionContents::copySelection(PageRef page,
-                                                 PageView *view,
-                                                 double x, double y)
+												 PageView *view,
+												 double x, double y)
 {
-	ListIterator<Element*> eit = getElements();
 	Layer* layer = page->getSelectedLayer();
 
-	GList* new_elems = NULL;
+	ElementVector new_elems;
 
-	while(eit.hasNext())
+	for (Element* e : *getElements())
 	{
-		Element* e = eit.next();
 		Element* ec = e->clone();
 
 		ec->move(x - this->originalX, y - this->originalY);
 
 		layer->addElement(ec);
-		new_elems = g_list_append(new_elems, ec);
+		new_elems.push_back(ec);
 	}
 
 	// TODO: implement this more efficiently: rerendering the entire
@@ -546,7 +534,7 @@ void EditSelectionContents::serialize(ObjectOutputStream& out)
 }
 
 void EditSelectionContents::readSerialized(ObjectInputStream& in) throw (
-    InputStreamException)
+																		 InputStreamException)
 {
 	in.readObject("EditSelectionContents");
 

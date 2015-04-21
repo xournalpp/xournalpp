@@ -3,13 +3,13 @@
  *
  * A Sidebar preview widget
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
-#ifndef __SIDEBARPREVIEW_H__
-#define __SIDEBARPREVIEW_H__
+
+#pragma once
 
 #include <gtk/gtk.h>
 #include <Util.h>
@@ -37,9 +37,9 @@ public:
 
 private:
 	static gboolean exposeEventCallback(GtkWidget* widget, GdkEventExpose* event,
-	                                    SidebarPreview* preview);
+										SidebarPreview* preview);
 	static gboolean mouseButtonPressCallback(GtkWidget* widget,
-	                                         GdkEventButton* event, SidebarPreview* preview);
+											GdkEventButton* event, SidebarPreview* preview);
 
 	void paint();
 
@@ -61,5 +61,3 @@ private:
 
 	friend class PreviewJob;
 };
-
-#endif /* __SIDEBARPREVIEW_H__ */

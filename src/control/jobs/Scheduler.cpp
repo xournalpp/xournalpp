@@ -1,11 +1,24 @@
 #include "Scheduler.h"
-#include <stdio.h>
 #include "../../cfg.h"
 
+//TODO unified debugging
 #ifdef SHEDULER_DEBUG
-#define SDEBUG(msg, ...) printf("Scheduler:: " msg, __VA_ARGS__)
+#include <StringUtils.h>
+#include <iostream>
+using namespace std;
+#define SDEBUG(msg) cout << bl::format(CONCAT("Scheduler::", msg, "\n"))
 #else
-#define SDEBUG(msg, ...) {}
+//kind of workaround
+class no_debug_format
+{
+public:
+	template<class T>
+	no_debug_format& operator%(const T& x)
+	{
+		return *this;
+	}
+};
+#define SDEBUG(msg) no_debug_format()
 #endif
 
 Scheduler::Scheduler()
@@ -45,9 +58,9 @@ Scheduler::~Scheduler()
 {
 	XOJ_CHECK_TYPE(Scheduler);
 
-	SDEBUG("Destroy scheduler\n", 0);
+	SDEBUG("Destroy scheduler");
 
-	if(this->jobRenderThreadTimerId)
+	if (this->jobRenderThreadTimerId)
 	{
 		g_source_remove(this->jobRenderThreadTimerId);
 		this->jobRenderThreadTimerId = 0;
@@ -56,7 +69,8 @@ Scheduler::~Scheduler()
 	stop();
 
 	Job * job = NULL;
-	while (job = getNextJobUnlocked()) {
+	while (job = getNextJobUnlocked())
+	{
 		job->unref();
 	}
 
@@ -71,8 +85,8 @@ Scheduler::~Scheduler()
 void Scheduler::start()
 {
 	g_return_if_fail(this->thread == NULL);
-	
-	this->thread = g_thread_new(name, (GThreadFunc)jobThreadCallback, this);
+
+	this->thread = g_thread_new(name, (GThreadFunc) jobThreadCallback, this);
 }
 
 void Scheduler::stop()
@@ -96,7 +110,7 @@ void Scheduler::addJob(Job* job, JobPriority priority)
 	g_queue_push_tail(this->jobQueue[priority], job);
 	g_cond_broadcast(&this->jobQueueCond);
 
-	SDEBUG("add job: %ld\n", (long)job);
+	SDEBUG("add job: {1}") % (long) job;
 
 	g_mutex_unlock(&this->jobQueueMutex);
 }
@@ -109,18 +123,18 @@ Job* Scheduler::getNextJobUnlocked(bool onlyNotRender, bool* hasRenderJobs)
 
 	for (int i = JOB_PRIORITY_URGENT; i < JOB_N_PRIORITIES; i++)
 	{
-		if(onlyNotRender)
+		if (onlyNotRender)
 		{
-			for(GList* l = this->jobQueue[i]->head; l != NULL; l = l->next)
+			for (GList* l = this->jobQueue[i]->head; l != NULL; l = l->next)
 			{
 				job = (Job*) l->data;
 
-				if(job->getType() != JOB_TYPE_RENDER)
+				if (job->getType() != JOB_TYPE_RENDER)
 				{
 					g_queue_delete_link(this->jobQueue[i], l);
 					return job;
 				}
-				else if(hasRenderJobs)
+				else if (hasRenderJobs)
 				{
 					*hasRenderJobs = true;
 				}
@@ -186,7 +200,7 @@ void Scheduler::unblockRerenderZoom()
 
 	g_free(this->blockRenderZoomTime);
 	this->blockRenderZoomTime = NULL;
-	if(this->jobRenderThreadTimerId)
+	if (this->jobRenderThreadTimerId)
 	{
 		g_source_remove(this->jobRenderThreadTimerId);
 		this->jobRenderThreadTimerId = 0;
@@ -213,7 +227,7 @@ glong g_time_val_diff(GTimeVal* t1, GTimeVal* t2)
 	g_assert(t1);
 	g_assert(t2);
 	return ((t1->tv_sec - t2->tv_sec) * G_USEC_PER_SEC + (t1->tv_usec -
-	                                                      t2->tv_usec)) / 1000;
+														  t2->tv_usec)) / 1000;
 }
 
 /**
@@ -254,7 +268,7 @@ gpointer Scheduler::jobThreadCallback(Scheduler* scheduler)
 			g_get_current_time(&time);
 
 			diff = g_time_val_diff(scheduler->blockRenderZoomTime, &time);
-			if(diff <= 0)
+			if (diff <= 0)
 			{
 				g_free(scheduler->blockRenderZoomTime);
 				scheduler->blockRenderZoomTime = NULL;
@@ -269,27 +283,27 @@ gpointer Scheduler::jobThreadCallback(Scheduler* scheduler)
 		g_mutex_lock(&scheduler->jobQueueMutex);
 		bool hasOnlyRenderJobs = false;
 		Job* job = scheduler->getNextJobUnlocked(onlyNoneRenderJobs,
-		                                         &hasOnlyRenderJobs);
-		if(job != NULL)
+												 &hasOnlyRenderJobs);
+		if (job != NULL)
 		{
 			hasOnlyRenderJobs = false;
 		}
 
-		SDEBUG("get job: %ld\n", (long)job);
+		SDEBUG("get job: {1}") % (long) job;
 
-		if (!job)
+		if (job == NULL)
 		{
 			// unlock the whole scheduler
 			g_mutex_unlock(&scheduler->schedulerMutex);
 
-			if(hasOnlyRenderJobs)
+			if (hasOnlyRenderJobs)
 			{
-				if(scheduler->jobRenderThreadTimerId)
+				if (scheduler->jobRenderThreadTimerId)
 				{
 					g_source_remove(scheduler->jobRenderThreadTimerId);
 				}
 				scheduler->jobRenderThreadTimerId = g_timeout_add(diff,
-				                                                  (GSourceFunc)jobRenderThreadTimer, scheduler);
+								(GSourceFunc) jobRenderThreadTimer, scheduler);
 			}
 
 			g_cond_wait(&scheduler->jobQueueCond, &scheduler->jobQueueMutex);
@@ -298,7 +312,7 @@ gpointer Scheduler::jobThreadCallback(Scheduler* scheduler)
 			continue;
 		}
 
-		SDEBUG("do job: %ld\n", (long)job);
+		SDEBUG("do job: {1}") % (long) job;
 
 		g_mutex_unlock(&scheduler->jobQueueMutex);
 
@@ -312,10 +326,10 @@ gpointer Scheduler::jobThreadCallback(Scheduler* scheduler)
 		// unlock the whole scheduler
 		g_mutex_unlock(&scheduler->schedulerMutex);
 
-		SDEBUG("next\n", NULL);
+		SDEBUG("next");
 	}
 
-	SDEBUG("finished\n", NULL);
+	SDEBUG("finished");
 
 	return NULL;
 }

@@ -6,7 +6,7 @@
 class ScriptData
 {
 public:
-	ScriptData(String name, String function, String parameter)
+	ScriptData(string name, string function, string parameter)
 	{
 		this->name = name;
 		this->function = function;
@@ -14,9 +14,9 @@ public:
 	}
 
 public:
-	String name;
-	String function;
-	String parameter;
+	string name;
+	string function;
+	string parameter;
 };
 
 PythonRunner* PythonRunner::instance = NULL;
@@ -83,12 +83,12 @@ void PythonRunner::releasePythonRunner()
 	}
 }
 
-void PythonRunner::runScript(String name, String function, String parameter)
+void PythonRunner::runScript(string name, string function, string parameter)
 {
-	if(name.isEmpty() || function.isEmpty())
+	if (name.empty() || function.empty())
 	{
 		g_warning("runScript::name (%s) and function (%s) should not be empty!",
-		          name.c_str(), function.c_str());
+				name.c_str(), function.c_str());
 		return;
 	}
 
@@ -106,7 +106,7 @@ void PythonRunner::runScript(String name, String function, String parameter)
 	}
 
 	instance->scripts = g_list_append(instance->scripts, new ScriptData(name,
-	                                                                    function, parameter));
+																		function, parameter));
 
 	g_mutex_unlock(instance->mutex);
 }
@@ -162,7 +162,7 @@ void PythonRunner::initPython()
 	PyObject* pathObject = PyObject_GetAttrString(sysModule, "path");
 	g_return_if_fail(pathObject != NULL);
 
-	String p = path;
+	string p = path;
 	p += "/../testing";
 	PyObject* ret = PyObject_CallMethod(pathObject, "append", "s", p.c_str());
 	Py_DecRef(ret);
@@ -176,11 +176,11 @@ void PythonRunner::initPython()
 	Py_DecRef(sysModule);
 }
 
-void PythonRunner::runScriptInt(String path, String function, String parameter)
+void PythonRunner::runScriptInt(string path, string function, string parameter)
 {
 	XOJ_CHECK_TYPE(PythonRunner);
 
-	if(path.isEmpty() || function.isEmpty())
+	if (path.empty() || function.empty())
 	{
 		g_warning("runScriptInt::path and function should not be empty!");
 		return;
@@ -203,7 +203,7 @@ void PythonRunner::runScriptInt(String path, String function, String parameter)
 		{
 			PyObject* pArgs = NULL;
 
-			if (parameter.c_str() == NULL)
+			if (parameter.empty())
 			{
 				pArgs = PyTuple_New(0);
 			}

@@ -40,8 +40,8 @@ public:
 };
 
 SelectBackgroundColorDialog::SelectBackgroundColorDialog(
-    GladeSearchpath* gladeSearchPath, Control* control) :
-	GladeGui(gladeSearchPath, "page-background-color.glade", "pageBgColorDialog")
+														 GladeSearchpath* gladeSearchPath, Control* control) :
+GladeGui(gladeSearchPath, "page-background-color.glade", "pageBgColorDialog")
 {
 
 	XOJ_INIT_TYPE(SelectBackgroundColorDialog);
@@ -114,7 +114,7 @@ SelectBackgroundColorDialog::SelectBackgroundColorDialog(
 	}
 
 	g_signal_connect(get("cbSelect"), "clicked", G_CALLBACK(&buttonCustomCallback),
-	                 this);
+					this);
 }
 
 SelectBackgroundColorDialog::~SelectBackgroundColorDialog()
@@ -136,9 +136,9 @@ void SelectBackgroundColorDialog::showColorchooser()
 
 	this->colorDlg = gtk_color_selection_dialog_new(_("Select color"));
 	g_signal_connect(G_OBJECT
-	                 (GTK_COLOR_SELECTION_DIALOG(this->colorDlg)->ok_button),
-	                 "clicked", G_CALLBACK(&buttonSelectedCallback),
-	                 this->colors->data); // first entry
+					(GTK_COLOR_SELECTION_DIALOG(this->colorDlg)->ok_button),
+					"clicked", G_CALLBACK(&buttonSelectedCallback),
+					this->colors->data); // first entry
 
 	gtk_dialog_run(GTK_DIALOG(this->colorDlg));
 
@@ -226,7 +226,7 @@ void SelectBackgroundColorDialog::updateLastUsedColors()
 }
 
 void SelectBackgroundColorDialog::buttonCustomCallback(GtkButton* button,
-                                                       SelectBackgroundColorDialog* dlg)
+													   SelectBackgroundColorDialog* dlg)
 {
 	XOJ_CHECK_TYPE_OBJ(dlg, SelectBackgroundColorDialog);
 
@@ -235,7 +235,7 @@ void SelectBackgroundColorDialog::buttonCustomCallback(GtkButton* button,
 }
 
 void SelectBackgroundColorDialog::buttonSelectedCallback(GtkButton* button,
-                                                         ColorEntry* e)
+														 ColorEntry* e)
 {
 	XOJ_CHECK_TYPE_OBJ(e, ColorEntry);
 
@@ -247,11 +247,11 @@ void SelectBackgroundColorDialog::buttonSelectedCallback(GtkButton* button,
 			GdkColor color = { 0 };
 
 			GtkWidget* cw = gtk_color_selection_dialog_get_color_selection(
-			                    GTK_COLOR_SELECTION_DIALOG(e->dlg->colorDlg));
+																		GTK_COLOR_SELECTION_DIALOG(e->dlg->colorDlg));
 			gtk_color_selection_get_current_color(GTK_COLOR_SELECTION(cw), &color);
 
 			e->dlg->selected = (color.red / 256) << 16 | (color.green / 256) << 8 |
-			                   (color.blue / 256);
+					(color.blue / 256);
 		}
 
 		e->dlg->updateLastUsedColors();

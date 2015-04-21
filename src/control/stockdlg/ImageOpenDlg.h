@@ -3,14 +3,13 @@
  *
  * GTK Open dialog to select image with preview
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __IMAGEOPENDLG_H__
-#define __IMAGEOPENDLG_H__
+#pragma once
 
 #include <gtk/gtk.h>
 class Settings;
@@ -23,11 +22,9 @@ private:
 
 public:
 	static GFile* show(GtkWindow* win, Settings* settings, bool localOnly = false,
-	                   bool* attach = NULL);
+					bool* attach = NULL);
 
 private:
 	static void updatePreviewCallback(GtkFileChooser* fileChooser, void* userData);
 	static GdkPixbuf* pixbufScaleDownIfNecessary(GdkPixbuf* pixbuf, gint maxSize);
 };
-
-#endif /* __IMAGEOPENDLG_H__ */

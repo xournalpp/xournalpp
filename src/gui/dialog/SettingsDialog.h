@@ -3,20 +3,19 @@
  *
  * Settings Dialog
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __SETTINGSDIALOG_H__
-#define __SETTINGSDIALOG_H__
+#pragma once
 
 #include "../GladeGui.h"
 #include "../../control/settings/Settings.h"
 #include <XournalType.h>
 
-class SettingsDialog: public GladeGui
+class SettingsDialog : public GladeGui
 {
 public:
 	SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* settings);
@@ -36,17 +35,17 @@ private:
 	void loadCheckbox(const char* name, gboolean value);
 	bool getCheckbox(const char* name);
 
-	String updateHideString(String hidden, bool hideMenubar, bool hideSidebar);
+	string updateHideString(string hidden, bool hideMenubar, bool hideSidebar);
 
 	void initMouseButtonEvents();
 	void initMouseButtonEvents(const char* hbox, int button,
-	                           bool withDevice = false);
+							bool withDevice = false);
 
 	static gboolean zoomcallibSliderChanged(GtkRange* range, GtkScrollType scroll,
-	                                        gdouble value, SettingsDialog* dlg);
+											gdouble value, SettingsDialog* dlg);
 
 	static void toolboxToggledCallback(GtkToggleButton* togglebutton,
-	                                   SettingsDialog* sd);
+									SettingsDialog* sd);
 
 private:
 	XOJ_TYPE_ATTRIB;
@@ -57,5 +56,3 @@ private:
 
 	GList* buttonConfigs;
 };
-
-#endif /* __SETTINGSDIALOG_H__ */

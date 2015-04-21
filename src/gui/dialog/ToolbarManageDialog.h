@@ -3,14 +3,13 @@
  *
  * Toolbar edit dialog
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __TOOLBARMANAGEDIALOG_H__
-#define __TOOLBARMANAGEDIALOG_H__
+#pragma once
 
 #include "../GladeGui.h"
 #include <XournalType.h>
@@ -18,7 +17,7 @@
 class ToolbarModel;
 class ToolbarData;
 
-class ToolbarManageDialog: public GladeGui
+class ToolbarManageDialog : public GladeGui
 {
 public:
 	ToolbarManageDialog(GladeSearchpath* gladeSearchPath, ToolbarModel* model);
@@ -29,9 +28,9 @@ public:
 
 private:
 	static void treeSelectionChangedCallback(GtkTreeSelection* selection,
-	                                         ToolbarManageDialog* dlg);
+											ToolbarManageDialog* dlg);
 	static void treeCellEditedCallback(GtkCellRendererText* renderer,
-	                                   gchar* pathString, gchar* newText, ToolbarManageDialog* dlg);
+									gchar* pathString, gchar* newText, ToolbarManageDialog* dlg);
 
 	static void buttonNewCallback(GtkButton* button, ToolbarManageDialog* dlg);
 	static void buttonDeleteCallback(GtkButton* button, ToolbarManageDialog* dlg);
@@ -48,5 +47,3 @@ private:
 
 	ToolbarData* selected;
 };
-
-#endif /* __TOOLBARMANAGEDIALOG_H__ */

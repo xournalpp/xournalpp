@@ -3,14 +3,13 @@
  *
  * The previes within the sidebar, with a Toolbar
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __SIDEBARPREVIEWS_H__
-#define __SIDEBARPREVIEWS_H__
+#pragma once
 
 #include "../AbstractSidebarPage.h"
 
@@ -93,7 +92,7 @@ private:
 	 * The size of the sidebar has chnaged
 	 */
 	static void sizeChanged(GtkWidget* widget, GtkAllocation* allocation,
-	                        SidebarPreviews* sidebar);
+							SidebarPreviews* sidebar);
 private:
 	XOJ_TYPE_ATTRIB;
 
@@ -150,5 +149,3 @@ private:
 
 	friend class SidebarLayout;
 };
-
-#endif /* __SIDEBARPREVIEWS_H__ */

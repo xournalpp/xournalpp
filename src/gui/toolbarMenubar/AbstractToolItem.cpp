@@ -1,9 +1,9 @@
 #include "AbstractToolItem.h"
 #include <Util.h>
 
-AbstractToolItem::AbstractToolItem(String id, ActionHandler* handler,
-                                   ActionType type, GtkWidget* menuitem) :
-	AbstractItem(id, handler, type, menuitem)
+AbstractToolItem::AbstractToolItem(string id, ActionHandler* handler,
+								   ActionType type, GtkWidget* menuitem) :
+AbstractItem(id, handler, type, menuitem)
 {
 	XOJ_INIT_TYPE(AbstractToolItem);
 
@@ -44,24 +44,24 @@ void AbstractToolItem::selected(ActionGroup group, ActionType action)
 		}
 
 		if (gtk_toggle_tool_button_get_active(GTK_TOGGLE_TOOL_BUTTON(this->item)) !=
-		    (this->action == action))
+			(this->action == action))
 		{
 			this->toolToggleButtonActive = (this->action == action);
 			gtk_toggle_tool_button_set_active(GTK_TOGGLE_TOOL_BUTTON(this->item),
-			                                  this->toolToggleButtonActive);
+											  this->toolToggleButtonActive);
 		}
 	}
 }
 
 void AbstractToolItem::toolButtonCallback(GtkToolButton* toolbutton,
-                                          AbstractToolItem* item)
+										  AbstractToolItem* item)
 {
 	XOJ_CHECK_TYPE_OBJ(item, AbstractToolItem);
 
 	if (toolbutton && GTK_IS_TOGGLE_TOOL_BUTTON(toolbutton))
 	{
 		bool selected = gtk_toggle_tool_button_get_active(GTK_TOGGLE_TOOL_BUTTON(
-		                                                      toolbutton));
+																				 toolbutton));
 
 		// ignor this event... GTK Broadcast to much eventes, e.g. if you call set_active
 		if (item->toolToggleButtonActive == selected)

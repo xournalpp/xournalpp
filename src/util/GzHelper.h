@@ -3,16 +3,17 @@
  *
  * Helper functions for ZLib GZip Compression
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __GZHELPER_H__
-#define __GZHELPER_H__
+#pragma once
 
-#include <glib.h>
+#include <StringUtils.h>
+#include <boost/iostreams/filter/gzip.hpp>
+namespace bio = boost::iostreams;
 
 class GzHelper
 {
@@ -21,10 +22,6 @@ private:
 	virtual ~GzHelper();
 
 public:
-	static GString* gzcompress(GString* str, int level = -1);
-	static GString* gzuncompress(GString* str);
-	static GString* gzuncompress(const char* str, gsize len);
-
+	static string gzcompress(const string& str, const bio::zlib_params& = bio::zlib::default_compression);
+	static string gzuncompress(const string& str);
 };
-
-#endif /* __GZHELPER_H__ */

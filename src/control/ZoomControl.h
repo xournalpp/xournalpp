@@ -3,14 +3,13 @@
  *
  * Controls the zoom level
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __ZOOMCONTROL_H__
-#define __ZOOMCONTROL_H__
+#pragma once
 
 #include <gtk/gtk.h>
 
@@ -53,7 +52,7 @@ protected:
 	void fireZoomRangeValueChanged();
 
 	static bool onScrolledwindowMainScrollEvent(GtkWidget* widget,
-	                                            GdkEventScroll* event, ZoomControl* zoom);
+												GdkEventScroll* event, ZoomControl* zoom);
 
 private:
 	XOJ_TYPE_ATTRIB;
@@ -69,5 +68,3 @@ private:
 	double zoom100Value;
 	double zoomFitValue;
 };
-
-#endif /* __ZOOMCONTROL_H__ */

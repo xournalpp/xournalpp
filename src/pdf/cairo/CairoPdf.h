@@ -3,14 +3,13 @@
  *
  * Used to output cairo contents to PDF
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __CAIROPDF_H__
-#define __CAIROPDF_H__
+#pragma once
 
 #include <cairo.h>
 #include "../popplerdirect/poppler/XojPopplerPage.h"
@@ -33,7 +32,7 @@ public:
 
 private:
 	static cairo_status_t writeOut(CairoPdf* pdf, unsigned char* data,
-	                               unsigned int length);
+								unsigned int length);
 
 private:
 	XOJ_TYPE_ATTRIB;
@@ -46,5 +45,3 @@ private:
 	cairo_surface_t* surface;
 	cairo_t* cr;
 };
-
-#endif /* __CAIROPDF_H__ */

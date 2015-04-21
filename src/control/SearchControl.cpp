@@ -37,7 +37,7 @@ void SearchControl::freeSearchResults()
 }
 
 void SearchControl::paint(cairo_t* cr, GdkRectangle* rect, double zoom,
-                          GdkColor color)
+						  GdkColor color)
 {
 	XOJ_CHECK_TYPE(SearchControl);
 
@@ -48,26 +48,23 @@ void SearchControl::paint(cairo_t* cr, GdkRectangle* rect, double zoom,
 	{
 		XojPopplerRectangle* rect = (XojPopplerRectangle*) l->data;
 		cairo_rectangle(cr, rect->x1, rect->y1, rect->x2 - rect->x1,
-		                rect->y2 - rect->y1);
+						rect->y2 - rect->y1);
 		cairo_set_source_rgb(cr, color.red / 65536.0, color.green / 65536.0,
-		                     color.blue / 65536.0);
+							 color.blue / 65536.0);
 		cairo_stroke_preserve(cr);
 		cairo_set_source_rgba(cr, color.red / 65536.0, color.green / 65536.0,
-		                      color.blue / 65536.0, 0.3);
+							  color.blue / 65536.0, 0.3);
 		cairo_fill(cr);
 	}
 }
 
-bool SearchControl::search(const char* text, int* occures, double* top)
+bool SearchControl::search(string text, int* occures, double* top)
 {
 	XOJ_CHECK_TYPE(SearchControl);
 
 	freeSearchResults();
 
-	if (text == NULL)
-	{
-		return true;
-	}
+	if (text.empty()) return true;
 
 	if (this->pdf)
 	{
@@ -75,17 +72,13 @@ bool SearchControl::search(const char* text, int* occures, double* top)
 	}
 
 	int selected = this->page->getSelectedLayerId();
-	ListIterator<Layer*> it = this->page->layerIterator();
-
-	while (it.hasNext() && selected)
+	
+	for (Layer* l : *this->page->getLayers())
 	{
-		Layer* l = it.next();
-
-		ListIterator<Element*> eit = l->elementIterator();
-		while (eit.hasNext())
+		if (!selected) break;
+		
+		for (Element* e : *l->getElements())
 		{
-			Element* e = eit.next();
-
 			if (e->getType() == ELEMENT_TEXT)
 			{
 				Text* t = (Text*) e;

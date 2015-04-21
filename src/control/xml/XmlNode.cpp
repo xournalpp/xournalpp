@@ -94,7 +94,7 @@ void XmlNode::writeOut(OutputStream* out, ProgressListener* listener)
 	{
 		out->write(">\n");
 
-		if(listener)
+		if (listener)
 		{
 			listener->setMaximumState(g_list_length(this->children));
 		}
@@ -105,7 +105,7 @@ void XmlNode::writeOut(OutputStream* out, ProgressListener* listener)
 		{
 			XmlNode* node = (XmlNode*) l->data;
 			node->writeOut(out);
-			if(listener)
+			if (listener)
 			{
 				listener->setCurrentState(i);
 			}

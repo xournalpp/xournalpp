@@ -1,7 +1,6 @@
 #include "ExportJob.h"
 #include "../../view/DocumentView.h"
 #include "../../view/PdfView.h"
-#include <PageRange.h>
 #include "SynchronizedProgressListener.h"
 #include <cairo-ps.h>
 #include <cairo-svg.h>
@@ -12,8 +11,8 @@
 #include <config.h>
 #include <glib/gi18n-lib.h>
 
-ExportJob::ExportJob(Control* control, GList* selected, ExportFormtType type,
-                     int dpi, String folder, String filename) :
+ExportJob::ExportJob(Control* control, PageRangeVector selected,
+					 ExportFormtType type, int dpi, path filepath) :
 	BlockingJob(control, _("Export"))
 {
 	XOJ_INIT_TYPE(ExportJob);
@@ -25,18 +24,18 @@ ExportJob::ExportJob(Control* control, GList* selected, ExportFormtType type,
 	this->type = type;
 	this->dpi = dpi;
 
-	this->folder = folder;
-	this->filename = filename;
+	this->filepath = filepath;
 
-	int index = filename.lastIndexOf(".");
-	if(index <= 0)
+	string filename = filepath.filename().string();
+	int index = filename.find_last_of(".");
+	if (index == 0 || index == string::npos)
 	{
 		front = filename;
 	}
 	else
 	{
-		front = filename.substring(0, index);
-		back = filename.substring(index + 1);
+		front = filename.substr(0, index);
+		back = filename.substr(index + 1);
 	}
 
 }
@@ -45,13 +44,7 @@ ExportJob::~ExportJob()
 {
 	XOJ_CHECK_TYPE(ExportJob);
 
-	for (GList* l = this->selected; l != NULL; l = l->next)
-	{
-		PageRangeEntry* e = (PageRangeEntry*) l->data;
-		delete e;
-	}
-	g_list_free(this->selected);
-	this->selected = NULL;
+	for (PageRangeEntry* e : this->selected) delete e;
 
 	XOJ_RELEASE_TYPE(ExportJob);
 }
@@ -62,22 +55,20 @@ bool ExportJob::createSurface(int id, double width, double height)
 
 	if (this->type == EXPORT_FORMAT_EPS)
 	{
-		char* path = NULL;
+		path filepath;
 		if (id == -1)
 		{
-			path = g_strdup_printf("%s%c%s.%s", this->folder.c_str(), G_DIR_SEPARATOR,
-			                       this->front.c_str(),
-			                       this->back.c_str());
+			filepath = this->filepath.parent_path();
+			filepath /= this->front;
 		}
 		else
 		{
-			path = g_strdup_printf("%s%c%s%i.%s", this->folder.c_str(), G_DIR_SEPARATOR,
-			                       this->filename.c_str(), id,
-			                       this->back.c_str());
+			filepath = this->filepath;
+			filepath += std::to_string(id);
 		}
+		filepath += '.' + this->back;
 
-		this->surface = cairo_ps_surface_create(path, width, height);
-		g_free(path);
+		this->surface = cairo_ps_surface_create(filepath.c_str(), width, height);
 
 		cairo_ps_surface_set_eps(this->surface, true);
 
@@ -86,29 +77,20 @@ bool ExportJob::createSurface(int id, double width, double height)
 	else if (this->type == EXPORT_FORMAT_PNG)
 	{
 		this->surface = cairo_image_surface_create(CAIRO_FORMAT_ARGB32,
-		                                           width * this->dpi / 72.0, height * this->dpi / 72.0);
+												   width * this->dpi / 72.0,
+												   height * this->dpi / 72.0);
 		this->cr = cairo_create(this->surface);
 		double factor = this->dpi / 72.0;
 		cairo_scale(this->cr, factor, factor);
 	}
 	else if (this->type == EXPORT_FORMAT_SVG)
 	{
-		char* path = NULL;
-		if (id == -1)
-		{
-			path = g_strdup_printf("%s%c%s.%s", this->folder.c_str(), G_DIR_SEPARATOR,
-			                       this->front.c_str(),
-			                       this->back.c_str());
-		}
-		else
-		{
-			path = g_strdup_printf("%s%c%s%i.%s", this->folder.c_str(), G_DIR_SEPARATOR,
-			                       this->front.c_str(), id,
-			                       this->back.c_str());
-		}
+		path filepath = this->filepath.parent_path();
+		filepath /= this->front;
+		if (id != -1) filepath += std::to_string(id);
+		filepath += CONCAT('.', this->back);
 
-		this->surface = cairo_svg_surface_create(path, width, height);
-		g_free(path);
+		this->surface = cairo_svg_surface_create(filepath.c_str(), width, height);
 
 		this->cr = cairo_create(this->surface);
 	}
@@ -129,21 +111,12 @@ bool ExportJob::freeSurface(int id)
 
 	if (this->type == EXPORT_FORMAT_PNG)
 	{
-		char* path = NULL;
-		if (id == -1)
-		{
-			path = g_strdup_printf("%s%c%s.%s", this->folder.c_str(), G_DIR_SEPARATOR,
-			                       this->front.c_str(),
-			                       this->back.c_str());
-		}
-		else
-		{
-			path = g_strdup_printf("%s%c%s%i.%s", this->folder.c_str(), G_DIR_SEPARATOR,
-			                       this->front.c_str(), id,
-			                       this->back.c_str());
-		}
+		path filepath = this->filepath;
+		filepath /= this->front;
+		if (id != -1) filepath += std::to_string(id);
+		filepath += CONCAT('.', this->back);
 
-		cairo_status_t status = cairo_surface_write_to_png(surface, path);
+		cairo_status_t status = cairo_surface_write_to_png(surface, filepath.c_str());
 		cairo_surface_destroy(surface);
 
 		// we ignore this problem
@@ -151,8 +124,6 @@ bool ExportJob::freeSurface(int id)
 		{
 			return false;
 		}
-
-		g_free(path);
 	}
 	else
 	{
@@ -173,31 +144,20 @@ void ExportJob::run()
 
 	int count = doc->getPageCount();
 
-	bool onePage = false;
-	if (this->selected->next == NULL)
-	{
-		PageRangeEntry* e = (PageRangeEntry*) selected->data;
-		if (e->getFirst() == e->getLast())
-		{
-			onePage = true;
-		}
-	}
+	bool onePage = ((this->selected.size() == 1)
+					&& (this->selected[0]->getFirst() == this->selected[0]->getLast()));
 
 	// pdf, supports multiple Pages per document, all other formats don't
 	if (this->type == EXPORT_FORMAT_PDF)
 	{
 		PdfExport pdfe(doc, &pglistener);
-		char* path = g_strdup_printf("file://%s%c%s", this->folder.c_str(),
-		                             G_DIR_SEPARATOR, this->filename.c_str());
 
-		if(!pdfe.createPdf(path))
+		if (!pdfe.createPdf(this->filepath))
 		{
 			g_warning("Error creating PDF: %s", pdfe.getLastError().c_str());
 		}
-
-		g_free(path);
 	}
-	else     // all other formats need one file per page
+	else // all other formats need one file per page
 	{
 		char selectedPages[count];
 		int selectedCount = 0;
@@ -205,9 +165,8 @@ void ExportJob::run()
 		{
 			selectedPages[i] = 0;
 		}
-		for (GList* l = this->selected; l != NULL; l = l->next)
+		for (PageRangeEntry* e : this->selected)
 		{
-			PageRangeEntry* e = (PageRangeEntry*) l->data;
 			for (int x = e->getFirst(); x <= e->getLast(); x++)
 			{
 				selectedPages[x] = 1;
@@ -256,8 +215,8 @@ void ExportJob::run()
 
 					// TODO LOW PRIO pdf is written as image to the SVN surface!!
 					PdfView::drawPage(NULL, popplerPage, cr, zoom,
-					                  page->getWidth(),
-					                  page->getHeight());
+									  page->getWidth(),
+									  page->getHeight());
 				}
 
 				view.drawPage(page, this->cr, true);

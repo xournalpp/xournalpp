@@ -3,24 +3,22 @@
  *
  * Python bindings
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __PYSELECTION_H__
-#define __PYSELECTION_H__
+#pragma once
 
 class Control;
 #include <Python.h>
 
-extern "C" {
+extern "C"
+{
 
-	void initselection();
+void initselection();
 
-	PyObject* newPySelection(PyObject* xournal);
+PyObject* newPySelection(PyObject* xournal);
 
 }
-
-#endif /* __PYSELECTION_H__ */

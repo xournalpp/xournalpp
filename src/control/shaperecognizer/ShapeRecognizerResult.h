@@ -3,20 +3,20 @@
  *
  * Xournal Shape recognizer result
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __SHAPERECOGNIZERRESULT_H__
-#define __SHAPERECOGNIZERRESULT_H__
+#pragma once
 
-#include <glib.h>
-#include <ListIterator.h>
 #include <XournalType.h>
+#include <vector>
 
 class Stroke;
+typedef std::vector<Stroke*> StrokeVector;
+
 class ShapeRecognizer;
 
 class ShapeRecognizerResult
@@ -29,13 +29,11 @@ public:
 public:
 	void addSourceStroke(Stroke* s);
 	Stroke* getRecognized();
-	ListIterator<Stroke*> getSources();
+	StrokeVector* getSources();
 
 private:
 	XOJ_TYPE_ATTRIB;
 
 	Stroke* recognized;
-	GList* source;
+	StrokeVector source;
 };
-
-#endif /* __SHAPERECOGNIZERRESULT_H__ */

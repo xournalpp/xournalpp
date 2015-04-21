@@ -3,14 +3,13 @@
  *
  * Loads Cursor Themes
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __CURSORTHEME_H__
-#define __CURSORTHEME_H__
+#pragma once
 
 #include <XournalType.h>
 #include <String.h>
@@ -38,5 +37,3 @@ private:
 	String description;
 
 };
-
-#endif /* __CURSORTHEME_H__ */

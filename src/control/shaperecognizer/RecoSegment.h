@@ -3,14 +3,13 @@
  *
  * Part of the Xournal shape recognizer
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __RECOSEGMENT_H__
-#define __RECOSEGMENT_H__
+#pragma once
 
 class Stroke;
 class Inertia;
@@ -51,5 +50,3 @@ public:
 
 	bool reversed;
 };
-
-#endif /* __RECOSEGMENT_H__ */

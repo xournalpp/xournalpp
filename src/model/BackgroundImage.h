@@ -3,18 +3,19 @@
  *
  * A background image of a page
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __BACKGROUNDIMAGE_H__
-#define __BACKGROUNDIMAGE_H__
+#pragma once
 
 #include <XournalType.h>
-#include <String.h>
+#include <StringUtils.h>
 #include <gtk/gtk.h>
+#include <boost/filesystem/path.hpp>
+using boost::filesystem::path;
 
 class BackgroundImageContents;
 
@@ -26,13 +27,13 @@ public:
 	virtual ~BackgroundImage();
 
 public:
-	String getFilename();
-	void loadFile(String filename, GError** error);
+	path getFilename();
+	void loadFile(path filename, GError** error);
 
 	void setAttach(bool attach);
 
-	void operator =(BackgroundImage& img);
-	bool operator == (const BackgroundImage& img);
+	void operator=(BackgroundImage& img);
+	bool operator==(const BackgroundImage& img);
 
 	void free();
 
@@ -40,7 +41,7 @@ public:
 	int getCloneId();
 	void setCloneId(int id);
 
-	void setFilename(String filename);
+	void setFilename(path filename);
 
 	bool isAttached();
 	bool isEmpty();
@@ -52,5 +53,3 @@ private:
 
 	BackgroundImageContents* img;
 };
-
-#endif /* __BACKGROUNDIMAGE_H__ */

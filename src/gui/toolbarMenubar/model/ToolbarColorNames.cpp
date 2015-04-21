@@ -4,15 +4,16 @@
 #include <glib/gi18n-lib.h>
 
 #include <stdio.h>
+#include <boost/format.hpp>
 
 ToolbarColorNames::ToolbarColorNames()
 {
 	XOJ_INIT_TYPE(ToolbarColorNames);
 	this->predefinedColorNames = g_hash_table_new_full(g_int_hash, g_int_equal,
-	                                                   g_free, g_free);
+													   g_free, g_free);
 	this->config = g_key_file_new();
 	g_key_file_set_string(this->config, "info", "about",
-	                      "Xournalpp custom color names");
+						  "Xournalpp custom color names");
 	initPredefinedColors();
 }
 
@@ -58,7 +59,7 @@ void ToolbarColorNames::loadFile(const char* file)
 	}
 
 	g_key_file_set_string(this->config, "info", "about",
-	                      "Xournalpp custom color names");
+						  "Xournalpp custom color names");
 }
 
 void ToolbarColorNames::saveFile(const char* file)
@@ -74,7 +75,7 @@ void ToolbarColorNames::saveFile(const char* file)
 	g_free(data);
 }
 
-void ToolbarColorNames::adddColor(int color, String name, bool predefined)
+void ToolbarColorNames::adddColor(int color, string name, bool predefined)
 {
 	XOJ_CHECK_TYPE(ToolbarColorNames);
 
@@ -87,28 +88,28 @@ void ToolbarColorNames::adddColor(int color, String name, bool predefined)
 	}
 	else
 	{
-		String colorHex = String::format("%06x", color);
-		g_key_file_set_string(this->config, "custom", colorHex.c_str(), name.c_str());
+		const gchar* colorHex = (boost::format("%06x") % color).str().c_str();
+		g_key_file_set_string(this->config, "custom", colorHex, name.c_str());
 	}
 }
 
-String ToolbarColorNames::getColorName(int color)
+string ToolbarColorNames::getColorName(int color)
 {
 	XOJ_CHECK_TYPE(ToolbarColorNames);
 
-	String colorName;
+	string colorName;
 
-	String colorHex = String::format("%06x", color);
+	string colorHex = StringUtils::format("%06x", color);
 
 	char* name = g_key_file_get_string(this->config, "custom", colorHex.c_str(),
-	                                   NULL);
+									   NULL);
 	if (name != NULL)
 	{
 		colorName = name;
 	}
 	g_free(name);
 
-	if (!colorName.isEmpty())
+	if (!colorName.empty())
 	{
 		return colorName;
 	}

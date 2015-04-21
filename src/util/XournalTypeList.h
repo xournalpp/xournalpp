@@ -3,10 +3,10 @@
  *
  * Declaration of all class types
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
 XOJ_DECLARE_TYPE(AutosaveJob, 1);
@@ -65,7 +65,7 @@ XOJ_DECLARE_TYPE(ScrollHandler, 53);
 XOJ_DECLARE_TYPE(PdfCacheEntry, 54);
 XOJ_DECLARE_TYPE(PdfCache, 55);
 XOJ_DECLARE_TYPE(LoadHandler, 56);
-XOJ_DECLARE_TYPE(DoubleArrayBuffer, 57);
+XOJ_DECLARE_TYPE(ParseException, 57);
 XOJ_DECLARE_TYPE(SearchControl, 58);
 XOJ_DECLARE_TYPE(SElement, 59);
 XOJ_DECLARE_TYPE(Settings, 60);
@@ -114,7 +114,6 @@ XOJ_DECLARE_TYPE(ToolMenuHandler, 102);
 XOJ_DECLARE_TYPE(ToolButton, 103);
 XOJ_DECLARE_TYPE(MenuItem, 104);
 XOJ_DECLARE_TYPE(XournalView, 105);
-XOJ_DECLARE_TYPE(ListIterator, 106);
 XOJ_DECLARE_TYPE(XojFont, 107);
 XOJ_DECLARE_TYPE(InsertLayerUndoAction, 108);
 XOJ_DECLARE_TYPE(PreviewJob, 109);
@@ -147,7 +146,6 @@ XOJ_DECLARE_TYPE(Text, 135);
 XOJ_DECLARE_TYPE(XojPopplerDocument, 136);
 XOJ_DECLARE_TYPE(_IntPopplerDocument, 137);
 XOJ_DECLARE_TYPE(StringTokenizer, 138);
-XOJ_DECLARE_TYPE(String, 139);
 XOJ_DECLARE_TYPE(_RefStrInternal, 140);
 XOJ_DECLARE_TYPE(PdfRefEntry, 141);
 XOJ_DECLARE_TYPE(RemoveLayerUndoAction, 142);

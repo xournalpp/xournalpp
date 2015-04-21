@@ -2,7 +2,7 @@
 #include "../Control.h"
 #include "../SaveHandler.h"
 
-BlockingJob::BlockingJob(Control* control, const char* name)
+BlockingJob::BlockingJob(Control* control, string name)
 {
 	XOJ_INIT_TYPE(BlockingJob);
 

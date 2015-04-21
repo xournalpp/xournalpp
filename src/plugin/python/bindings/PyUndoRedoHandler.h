@@ -3,24 +3,22 @@
  *
  * Python bindings for Undo- / Redohandler
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __PYUNDOREDOHANDLER_H_
-#define __PYUNDOREDOHANDLER_H_
+#pragma once
 
 class Control;
 #include <Python.h>
 
-extern "C" {
+extern "C"
+{
 
-	void initundoredohandler();
+void initundoredohandler();
 
-	PyObject* newPyUndoRedoHandler(PyObject* xournal);
+PyObject* newPyUndoRedoHandler(PyObject* xournal);
 
 }
-
-#endif /* PYUNDOREDOHANDLER_H_ */

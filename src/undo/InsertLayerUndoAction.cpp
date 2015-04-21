@@ -5,8 +5,7 @@
 #include "../control/Control.h"
 #include "../gui/XournalView.h"
 
-InsertLayerUndoAction::InsertLayerUndoAction(PageRef page,
-                                             Layer* layer) : UndoAction("InsertLayerUndoAction")
+InsertLayerUndoAction::InsertLayerUndoAction(PageRef page, Layer* layer) : UndoAction("InsertLayerUndoAction")
 {
 	XOJ_INIT_TYPE(InsertLayerUndoAction);
 
@@ -27,7 +26,7 @@ InsertLayerUndoAction::~InsertLayerUndoAction()
 	XOJ_RELEASE_TYPE(InsertLayerUndoAction);
 }
 
-String InsertLayerUndoAction::getText()
+string InsertLayerUndoAction::getText()
 {
 	XOJ_CHECK_TYPE(InsertLayerUndoAction);
 

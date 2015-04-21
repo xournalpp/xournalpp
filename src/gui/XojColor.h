@@ -3,35 +3,32 @@
  *
  * A color to select in the toolbar
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __XOJCOLOR_H__
-#define __XOJCOLOR_H__
+#pragma once
 
 #include <XournalType.h>
 #include <glib.h>
-#include <String.h>
+#include <StringUtils.h>
 
 class XojColor
 {
 public:
-	XojColor(int color, String name);
+	XojColor(int color, string name);
 	virtual ~XojColor();
 
 public:
 	int getColor();
-	String getName();
+	string getName();
 
 private:
 	XOJ_TYPE_ATTRIB;
 
 	int color;
 	// the localized name of the color
-	String name;
+	string name;
 };
-
-#endif /* __XOJCOLOR_H__ */

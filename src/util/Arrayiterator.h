@@ -3,14 +3,13 @@
  *
  * An iterator over an array
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __ARRAYITERATOR_H__
-#define __ARRAYITERATOR_H__
+#pragma once
 
 #include <XournalType.h>
 
@@ -25,9 +24,7 @@ public:
 		this->count = count;
 	}
 
-	virtual ~ArrayIterator()
-	{
-	}
+	virtual ~ArrayIterator() { }
 
 	bool hasNext() const
 	{
@@ -51,5 +48,3 @@ private:
 	int count;
 	const T* data;
 };
-
-#endif /* __ARRAYITERATOR_H__ */

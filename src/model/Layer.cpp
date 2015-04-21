@@ -1,23 +1,18 @@
 #include "Layer.h"
 #include <Stacktrace.h>
 
+using namespace std;
+
 Layer::Layer()
 {
 	XOJ_INIT_TYPE(Layer);
-
-	this->elements = NULL;
 }
 
 Layer::~Layer()
 {
 	XOJ_CHECK_TYPE(Layer);
 
-	for (GList* l = elements; l != NULL; l = l->next)
-	{
-		delete (Element*) l->data;
-	}
-	g_list_free(this->elements);
-	this->elements = NULL;
+	for (Element* e : this->elements) delete e;
 
 	XOJ_RELEASE_TYPE(Layer);
 }
@@ -28,9 +23,8 @@ Layer* Layer::clone()
 
 	Layer* layer = new Layer();
 
-	for (GList* l = elements; l != NULL; l = l->next)
+	for (Element* e : this->elements)
 	{
-		Element* e = (Element*) l->data;
 		layer->addElement(e->clone());
 	}
 
@@ -48,14 +42,16 @@ void Layer::addElement(Element* e)
 		return;
 	}
 
-	GList* elem2 = g_list_find(this->elements, e);
-	if (elem2)
+	for (Element* elem2 : this->elements)
 	{
-		printf("Layer::addElement: Element is already on this layer!\n");
-		return;
+		if (e == elem2)
+		{
+			cout << "Layer::addElement: Element is already on this layer!" << endl;
+			return;
+		}
 	}
 
-	this->elements = g_list_append(this->elements, e);
+	this->elements.push_back(e);
 }
 
 void Layer::insertElement(Element* e, int pos)
@@ -69,65 +65,62 @@ void Layer::insertElement(Element* e, int pos)
 		return;
 	}
 
-	GList* elem2 = g_list_find(this->elements, e);
-	if (elem2)
+	for (Element* elem2 : this->elements)
 	{
-		g_warning("Layer::insertElement() try to add an element twice!");
-		Stacktrace::printStracktrace();
-		return;
+		if (e == elem2)
+		{
+			g_warning("Layer::insertElement() try to add an element twice!");
+			Stacktrace::printStracktrace();
+			return;
+		}
 	}
 
-	this->elements = g_list_insert(this->elements, e, pos);
+	this->elements.insert(this->elements.begin() + pos, e);
 }
 
 int Layer::indexOf(Element* e)
 {
 	XOJ_CHECK_TYPE(Layer);
-
-	GList* elem = g_list_find(this->elements, e);
-
-	if (elem == NULL)
+	
+	for (unsigned int i = 0; i < this->elements.size(); i++)
 	{
-		return -1;
+		if (this->elements[i] == e) return i;
 	}
-
-	return g_list_position(this->elements, elem);
+	
+	return -1;
 }
 
 int Layer::removeElement(Element* e, bool free)
 {
 	XOJ_CHECK_TYPE(Layer);
 
-	GList* elem = g_list_find(this->elements, e);
-
-	if (elem == NULL)
+	for (unsigned int i = 0; i < this->elements.size(); i++)
 	{
-		g_warning("Could not remove element from layer, it's not on the layer!");
-		Stacktrace::printStracktrace();
-		return -1;
+		if (e == this->elements[i])
+		{
+			this->elements.erase(this->elements.begin() + i);
+			
+			if (free) delete e;
+			return i;
+		}
 	}
-
-	int pos = g_list_position(this->elements, elem);
-	this->elements = g_list_delete_link(this->elements, elem);
-
-	if (free)
-	{
-		delete e;
-	}
-	return pos;
+	
+	g_warning("Could not remove element from layer, it's not on the layer!");
+	Stacktrace::printStracktrace();
+	return -1;
 }
 
 bool Layer::isAnnotated()
 {
 	XOJ_CHECK_TYPE(Layer);
 
-	return this->elements != NULL;
+	return !this->elements.empty();
 }
 
-ListIterator<Element*> Layer::elementIterator()
+ElementVector* Layer::getElements()
 {
 	XOJ_CHECK_TYPE(Layer);
 
-	return ListIterator<Element*> (this->elements);
+	return &this->elements;
 }
 

@@ -5,12 +5,13 @@
  *
  * @author W Brenna
  * http://wbrenna.ca
+ * 
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __LATEXACTION_H__
-#define __LATEXACTION_H__
+#pragma once
 
 #include "../model/LayerListener.h"
 #include <gtk/gtk.h>
@@ -23,21 +24,18 @@ class Control;
 class LatexAction
 {
 public:
-	LatexAction(gchar* myTex, double tArea);
-	virtual ~LatexAction();
+	LatexAction(string myTex, double tArea);
 
 public:
 	void runCommand();
-	gchar* getFileName();
+	string getFileName();
 
 
 private:
 	//	Control * control;
-	gchar* theLatex;
-	gchar* texfile;
-	gchar* texfilefull;
+	string theLatex;
+	string texfile;
+	string texfilefull;
 	double myx, myy;
 	double texArea;
 };
-
-#endif /* __LATEXACTION_H__ */

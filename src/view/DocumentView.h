@@ -3,14 +3,13 @@
  *
  * Paints a page to a cairo context
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __DOCUMENTVIEW_H__
-#define __DOCUMENTVIEW_H__
+#pragma once
 
 #include <gtk/gtk.h>
 #include "../model/Element.h"
@@ -34,7 +33,7 @@ public:
 public:
 	void drawPage(PageRef page, cairo_t* cr, bool preview);
 	void drawStroke(cairo_t* cr, Stroke* s, int startPoint = 0,
-	                double scaleFactor = 1);
+					double scaleFactor = 1);
 	void drawEraseableStroke(cairo_t* cr, Stroke* s);
 	static void applyColor(cairo_t* cr, int c, int alpha = 255);
 	static void applyColor(cairo_t* cr, Element* e, int alpha = 255);
@@ -71,5 +70,3 @@ private:
 	double lWidth;
 	double lHeight;
 };
-
-#endif /* __DOCUMENTVIEW_H__ */

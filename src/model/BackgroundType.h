@@ -3,23 +3,20 @@
  *
  * The background-type of a Xournal page
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __BACKGROUNDTYPE_H__
-#define __BACKGROUNDTYPE_H__
+#pragma once
 
 enum BackgroundType
 {
-    BACKGROUND_TYPE_NONE = 1,
-    BACKGROUND_TYPE_PDF,
-    BACKGROUND_TYPE_IMAGE,
-    BACKGROUND_TYPE_LINED,
-    BACKGROUND_TYPE_RULED,
-    BACKGROUND_TYPE_GRAPH
+	BACKGROUND_TYPE_NONE = 1,
+	BACKGROUND_TYPE_PDF,
+	BACKGROUND_TYPE_IMAGE,
+	BACKGROUND_TYPE_LINED,
+	BACKGROUND_TYPE_RULED,
+	BACKGROUND_TYPE_GRAPH
 };
-
-#endif /* __BACKGROUNDTYPE_H__ */

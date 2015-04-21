@@ -1,5 +1,4 @@
 #include "Job.h"
-#include <stdio.h>
 #include <gtk/gtk.h>
 
 Job::Job()
@@ -26,10 +25,13 @@ void Job::unref()
 	g_mutex_lock(&this->refMutex);
 	this->refCount--;
 
-	if (this->refCount == 0) {
+	if (this->refCount == 0)
+	{
 		g_mutex_unlock(&this->refMutex);
 		delete this;
-	} else {
+	}
+	else
+	{
 		g_mutex_unlock(&this->refMutex);
 	}
 }
@@ -45,7 +47,7 @@ void Job::ref()
 
 void Job::deleteJob()
 {
-	if(this->afterRunId)
+	if (this->afterRunId)
 	{
 		g_source_remove(this->afterRunId);
 		this->unref();
@@ -84,7 +86,7 @@ void Job::callAfterRun()
 {
 	XOJ_CHECK_TYPE(Job);
 
-	if(this->afterRunId)
+	if (this->afterRunId)
 	{
 		return;
 	}
@@ -94,6 +96,4 @@ void Job::callAfterRun()
 	this->afterRunId = g_idle_add((GSourceFunc) Job::callAfterCallback, this);
 }
 
-void Job::afterRun()
-{
-}
+void Job::afterRun() { }

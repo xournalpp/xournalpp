@@ -14,14 +14,14 @@ XojFont::~XojFont()
 	XOJ_RELEASE_TYPE(XojFont);
 }
 
-String XojFont::getName()
+string XojFont::getName()
 {
 	XOJ_CHECK_TYPE(XojFont);
 
 	return this->name;
 }
 
-void XojFont::setName(String name)
+void XojFont::setName(string name)
 {
 	XOJ_CHECK_TYPE(XojFont);
 
@@ -42,7 +42,7 @@ void XojFont::setSize(double size)
 	this->size = size;
 }
 
-void XojFont::operator =(const XojFont& font)
+void XojFont::operator=(const XojFont& font)
 {
 	XOJ_CHECK_TYPE(XojFont);
 
@@ -63,7 +63,7 @@ void XojFont::serialize(ObjectOutputStream& out)
 }
 
 void XojFont::readSerialized(ObjectInputStream& in) throw (
-    InputStreamException)
+														   InputStreamException)
 {
 	XOJ_CHECK_TYPE(XojFont);
 

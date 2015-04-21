@@ -3,14 +3,30 @@
  *
  * Loads a document
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
+ * 
+ * @revision MarPiRK – significant changes
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __LOADHANDLER_H__
-#define __LOADHANDLER_H__
+#pragma once
+
+#include <map>
+#include <fstream>
+#include <stdexcept>
+using namespace std;
+
+#include <boost/iostreams/filter/gzip.hpp>
+#include <boost/iostreams/filtering_streambuf.hpp>
+namespace bio = boost::iostreams;
+
+#include "pugixml/pugixml.hpp"
+using namespace pugi;
+
+#include <boost/filesystem/path.hpp>
+using boost::filesystem::path;
 
 #include "../model/Document.h"
 #include "../model/Stroke.h"
@@ -18,40 +34,44 @@
 #include "../model/Image.h"
 #include "../model/TexImage.h"
 #include <XournalType.h>
-#include <zlib.h>
 
 enum ParserPosition
 {
-    PARSER_POS_NOT_STARTED = 1, // Waiting for opening <xounal> tag
-    PARSER_POS_STARTED, // Waiting for Metainfo or contents like <page>
-    PARSER_POS_IN_PAGE, // Starting page tag read
-    PARSER_POS_IN_LAYER, // Starting layer tag read
-    PARSER_POS_IN_STROKE, // Starting layer tag read
-    PARSER_POS_IN_TEXT, // Starting text tag read
-    PARSER_POS_IN_IMAGE, // Starting image tag read
-    PARSER_POS_IN_TEXIMAGE, // Starting latex tag read
+	PARSER_POS_NOT_STARTED = 1, // Waiting for opening <xounal> tag
+	PARSER_POS_STARTED, // Waiting for Metainfo or contents like <page>
+	PARSER_POS_IN_PAGE, // Starting page tag read
+	PARSER_POS_IN_LAYER, // Starting layer tag read
+	PARSER_POS_IN_STROKE, // Starting layer tag read
+	PARSER_POS_IN_TEXT, // Starting text tag read
+	PARSER_POS_IN_IMAGE, // Starting image tag read
+	PARSER_POS_IN_TEXIMAGE, // Starting latex tag read
 
-    PASER_POS_FINISHED // Document is parsed
+	PASER_POS_FINISHED // Document is parsed
 };
 
-class DoubleArrayBuffer
+class ParseException : public std::runtime_error
 {
 public:
-	DoubleArrayBuffer();
-	virtual ~DoubleArrayBuffer();
-
-public:
-	void clear();
-	const double* getData();
-	int size();
-	void add(double d);
-
+	ParseException(const char* attribute, bool notFound, string* value = NULL, string convError = "");
+	ParseException(string msg);
+	virtual ~ParseException();
+	
+	const char* getAttribute() const;
+	string* getValue() const;
+	bool isNotFound() const;
+	string isConvError() const;
+	
+	virtual const char* what() const throw();
+	
 private:
 	XOJ_TYPE_ATTRIB;
-
-	double* data;
-	int len;
-	int allocCount;
+	
+	string msg;
+	
+	const char* attribute;
+	string* value;
+	string convError;
+	bool notFound;	
 };
 
 class LoadHandler
@@ -61,99 +81,69 @@ public:
 	virtual ~LoadHandler();
 
 public:
-	Document* loadDocument(String filename);
+	Document* loadDocument(path filename);
 
-	String getLastError();
+	string getLastError();
 	bool isAttachedPdfMissing();
-	String getMissingPdfFilename();
+	path getMissingPdfFilename();
 
 	void removePdfBackground();
-	void setPdfReplacement(String filename, bool attachToDocument);
-
-private:
-	void parseStart();
-	void parseContents();
-	void parsePage();
-	void parseLayer();
-
-	void parseStroke();
-	void parseText();
-	void parseImage();
-	void parseTexImage();
+	void setPdfReplacement(path filename, bool attachToDocument);
 
 private:
 	void initAttributes();
 
-	String readLine();
-	int readFile(char* buffer, int len);
+	bool openFile(path filename);
 	bool closeFile();
-	bool openFile(String filename);
+	
 	bool parseXml();
+	
+	void parseXmlXournal(xml_node* xml_xournal);
+	
+	void parseXmlPage(xml_node* xml_page);
+	void parseXmlPageBgSolid(xml_node* xml_bg);
+	void parseXmlPageBgPixmap(xml_node* xml_bg);
+	void parseXmlPageBgPdf(xml_node* xml_bg);
+	
+	void parseXmlLayer(xml_node* xml_layer);
+	void parseXmlLayerStroke(xml_node* child);
+	void parseXmlLayerText(xml_node* child);
+	void parseXmlLayerImage(xml_node* child);
+	void parseXmlLayerTexImage(xml_node* child);
 
-	bool parseColor(const char* text, int& color);
-
-	static void parserText(GMarkupParseContext* context, const gchar* text,
-	                       gsize text_len, gpointer userdata,
-	                       GError** error);
-	static void parserEndElement(GMarkupParseContext* context,
-	                             const gchar* element_name, gpointer userdata,
-	                             GError** error);
-	static void parserStartElement(GMarkupParseContext* context,
-	                               const gchar* element_name,
-	                               const gchar** attribute_names, const gchar** attribute_values,
-	                               gpointer userdata, GError** error);
-
-	const char* getAttrib(const char* name, bool optional = false);
-	double getAttribDouble(const char* name);
-	int getAttribInt(const char* name);
-
-	void parseBgSolid();
-	void parseBgPixmap();
-	void parseBgPdf();
-
-	void readImage(const gchar* base64_str, gsize base64_strlen);
-	void readTexImage(const gchar* base64_str, gsize base64_strlen);
+	int parseColor(const string& name);
 
 private:
 	XOJ_TYPE_ATTRIB;
 
-	String lastError;
-	String pdfMissing;
+	string lastError;
+	path pdfMissing;
 	bool attachedPdfMissing;
 
 	bool removePdfBackgroundFlag;
-	String pdfReplacementFilename;
+	path pdfReplacementFilename;
 	bool pdfReplacementAttach;
 
-	String filename;
+	path filename;
 
 	bool pdfFilenameParsed;
 
 	ParserPosition pos;
 
-	String creator;
+	string creator;
 	int fileversion;
 
-	gzFile fp;
-
-	DoubleArrayBuffer pressureBuffer;
+	ifstream file;
+	bio::filtering_istreambuf inbuf;
+	xml_document xml;
 
 	PageRef page;
 	Layer* layer;
 	Stroke* stroke;
-	Text* text;
-	Image* image;
 	TexImage* teximage;
 
-	String xournalFilename;
-
-	GError* error;
-	const gchar** attributeNames;
-	const gchar** attributeValues;
-	const gchar* elementName;
+	path xournalFilename;
 
 	DocumentHandler dHanlder;
 	Document doc;
 };
-
-#endif /* __LOADHANDLER_H__ */

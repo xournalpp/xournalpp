@@ -3,19 +3,18 @@
  *
  * XML Writer helper class
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __DOUBLEARRAYATTRIBUTE_H__
-#define __DOUBLEARRAYATTRIBUTE_H__
+#pragma once
 
 #include "Attribute.h"
 #include <XournalType.h>
 
-class DoubleArrayAttribute: public Attribute
+class DoubleArrayAttribute : public Attribute
 {
 public:
 	DoubleArrayAttribute(const char* name, double* values, int count);
@@ -31,6 +30,3 @@ private:
 	double* values;
 	int count;
 };
-
-
-#endif /* __DOUBLEARRAYATTRIBUTE_H__ */

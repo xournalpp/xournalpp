@@ -3,14 +3,13 @@
  *
  * A page position (a vertical rect)
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __PAGEPOSITION_H__
-#define __PAGEPOSITION_H__
+#pragma once
 
 #include <glib.h>
 #include <XournalType.h>
@@ -72,5 +71,3 @@ private:
 
 	friend class PagePositionHandler;
 };
-
-#endif /* __PAGEPOSITION_H__ */

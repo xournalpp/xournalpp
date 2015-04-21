@@ -8,10 +8,9 @@
 #include <glib/gi18n-lib.h>
 
 ToolPageSpinner::ToolPageSpinner(GladeGui* gui, ActionHandler* handler,
-                                 String id, ActionType type) :
-	AbstractToolItem(id, handler, type, NULL)
+								 string id, ActionType type) :
+AbstractToolItem(id, handler, type, NULL)
 {
-
 	XOJ_INIT_TYPE(ToolPageSpinner);
 
 	this->gui = gui;
@@ -37,7 +36,7 @@ SpinPageAdapter* ToolPageSpinner::getPageSpinner()
 	return pageSpinner;
 }
 
-void ToolPageSpinner::setText(String text)
+void ToolPageSpinner::setText(string text)
 {
 	XOJ_CHECK_TYPE(ToolPageSpinner);
 
@@ -47,7 +46,7 @@ void ToolPageSpinner::setText(String text)
 	}
 }
 
-String ToolPageSpinner::getToolDisplayName()
+string ToolPageSpinner::getToolDisplayName()
 {
 	XOJ_CHECK_TYPE(ToolPageSpinner);
 
@@ -71,7 +70,7 @@ GtkToolItem* ToolPageSpinner::newItem()
 	gtk_box_pack_start(GTK_BOX(hbox), gtk_label_new(_("Page")), false, false, 7);
 
 	gtk_box_pack_start(GTK_BOX(hbox), this->pageSpinner->getWidget(), false, false,
-	                   0);
+					0);
 
 	this->lbPageNo = gtk_label_new("");
 	gtk_box_pack_start(GTK_BOX(hbox), this->lbPageNo, false, false, 0);

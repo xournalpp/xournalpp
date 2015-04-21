@@ -3,14 +3,13 @@
  *
  * Page listener
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __PAGELISTENER_H__
-#define __PAGELISTENER_H__
+#pragma once
 
 #include <XournalType.h>
 
@@ -29,15 +28,13 @@ public:
 	void registerListener(PageHandler* handler);
 	void unregisterListener();
 
-	virtual void rectChanged(Rectangle& rect) {}
-	virtual void rangeChanged(Range &range) {}
-	virtual void elementChanged(Element* elem) {}
-	virtual void pageChanged() {}
+	virtual void rectChanged(Rectangle& rect) { }
+	virtual void rangeChanged(Range &range) { }
+	virtual void elementChanged(Element* elem) { }
+	virtual void pageChanged() { }
 
 private:
 	XOJ_TYPE_ATTRIB;
 
 	PageHandler* handler;
 };
-
-#endif /* __DOCUMENTLISTENER_H__ */

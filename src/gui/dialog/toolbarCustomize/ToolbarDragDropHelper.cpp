@@ -3,17 +3,12 @@
 #include <Util.h>
 
 GdkAtom ToolbarDragDropHelper::atomToolItem =
-    gdk_atom_intern_static_string("application/xournal-ToolbarItem");
+		gdk_atom_intern_static_string("application/xournal-ToolbarItem");
 GtkTargetEntry ToolbarDragDropHelper::dropTargetEntry = { "move-buffer", GTK_TARGET_SAME_APP, 1 };
 
+ToolbarDragDropHelper::ToolbarDragDropHelper() { }
 
-ToolbarDragDropHelper::ToolbarDragDropHelper()
-{
-}
-
-ToolbarDragDropHelper::~ToolbarDragDropHelper()
-{
-}
+ToolbarDragDropHelper::~ToolbarDragDropHelper() { }
 
 /**
  * Get a GDK Pixbuf from GTK widget image
@@ -32,7 +27,7 @@ GdkPixbuf* ToolbarDragDropHelper::getImagePixbuf(GtkImage* image)
 		return gtk_widget_render_icon(GTK_WIDGET(image), stock_id, size, NULL);
 	default:
 		g_warning("Image storage type %d not handled",
-		          gtk_image_get_storage_type(image));
+				gtk_image_get_storage_type(image));
 		return NULL;
 	}
 }
@@ -76,7 +71,7 @@ void ToolbarDragDropHelper::dragSourceAddToolbar(GtkWidget* widget)
 	if (targetList)
 	{
 		// List contains already this type
-		if(gtk_target_list_find(targetList, atomToolItem, NULL))
+		if (gtk_target_list_find(targetList, atomToolItem, NULL))
 		{
 			return;
 		}

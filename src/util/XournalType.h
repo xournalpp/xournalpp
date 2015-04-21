@@ -6,17 +6,15 @@
  * The attributes start with z__ because if they start with __ they appear
  * as first element in the autocomplete list...
  *
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @author Xournal Team
- * http://xournal.sf.net
- *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
+#pragma once
 
-#ifndef __XOURNALTYPE_H__
-#define __XOURNALTYPE_H__
-
+#include <glib.h>
 #include "logger/Logger.h"
 
 #define XOJ_MEMORY_CHECK_ENABLED
@@ -136,6 +134,3 @@ const char* xoj_type_getName(int id);
 #define XOJ_CHECK_TYPE(name)
 
 #endif
-
-
-#endif /* __XOURNALTYPE_H__ */

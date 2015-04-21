@@ -5,21 +5,20 @@
  *
  * Some code from Evince project
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __XOURNALSCHEDULER_H__
-#define __XOURNALSCHEDULER_H__
+#pragma once
 
 #include "Scheduler.h"
 #include "../../gui/sidebar/previews/SidebarPreviewPage.h"
 #include "../../gui/PageView.h"
 #include <XournalType.h>
 
-class XournalScheduler: public Scheduler
+class XournalScheduler : public Scheduler
 {
 public:
 	XournalScheduler();
@@ -48,5 +47,3 @@ private:
 private:
 	XOJ_TYPE_ATTRIB;
 };
-
-#endif /* __XOURNALSCHEDULER_H__ */

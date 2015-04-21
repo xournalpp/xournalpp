@@ -3,24 +3,24 @@
  *
  * A page (PDF or drawings or both)
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __XOJ_PAGE_H__
-#define __XOJ_PAGE_H__
+#pragma once
 
 #include "Layer.h"
-#include <ListIterator.h>
+#include <vector>
 #include <XournalType.h>
-#include <String.h>
+#include <StringUtils.h>
 
 #include "BackgroundType.h"
 #include "BackgroundImage.h"
 #include "PageHandler.h"
 
+typedef std::vector<Layer*> LayerVector;
 
 class XojPage : public PageHandler
 {
@@ -60,7 +60,7 @@ public:
 	void setBackgroundColor(int color);
 	int getBackgroundColor();
 
-	ListIterator<Layer*> layerIterator();
+	LayerVector* getLayers();
 	int getLayerCount();
 	int getSelectedLayerId();
 	void setSelectedLayerId(int id);
@@ -97,7 +97,7 @@ private:
 	/**
 	 * The layer list
 	 */
-	GList* layer;
+	LayerVector layer;
 
 	/**
 	 * The current selected layer ID
@@ -119,5 +119,3 @@ private:
 	 */
 	int backgroundColor;
 };
-
-#endif /* __XOJ_PAGE_H__ */

@@ -5,13 +5,13 @@
 
 #include "../../util/LatexAction.h"
 
+#include <iostream>
+using namespace std;
+
 LatexGlade::LatexGlade(GladeSearchpath* gladeSearchPath) :
 	GladeGui(gladeSearchPath, "texdialog.glade", "texDialog")
 {
 	XOJ_INIT_TYPE(LatexGlade);
-
-	this->theLatex = NULL;
-	this->theLatexLength = 0;
 
 	//GtkWidget * vbox = get("texVBox");
 	//g_return_if_fail(vbox != NULL);
@@ -31,35 +31,30 @@ LatexGlade::~LatexGlade()
 
 }
 
-void LatexGlade::setTex(gchar* texString, int texLength)
+void LatexGlade::setTex(string texString)
 {
 	this->theLatex = texString;
-	this->theLatexLength = texLength;
 }
-gchar* LatexGlade::getTex()
+
+string LatexGlade::getTex()
 {
 	return this->theLatex;
-}
-int LatexGlade::getTexLen()
-{
-	return this->theLatexLength;
 }
 
 void LatexGlade::save()
 {
-	this->theLatex = g_strdup(gtk_entry_get_text(GTK_ENTRY(this->texBox)));
-	this->theLatexLength = gtk_entry_get_text_length(GTK_ENTRY(this->texBox));
+	this->theLatex = gtk_entry_get_text(GTK_ENTRY(this->texBox));
 }
 
 void LatexGlade::load()
 {
-	printf("Latex::load()\n");
+	cout << "Latex::load()" << endl;
 
-	if (theLatex == NULL)
+	if (theLatex.empty())
 	{
 		theLatex = "x^2";
 	}
-	gtk_entry_set_text(GTK_ENTRY(this->texBox), this->theLatex);
+	gtk_entry_set_text(GTK_ENTRY(this->texBox), this->theLatex.c_str());
 
 
 }
@@ -72,7 +67,7 @@ void LatexGlade::show(GtkWindow* parent)
 	int res = gtk_dialog_run(GTK_DIALOG(this->window));
 	if (res == 1)
 	{
-		//printf("Checkbox OK-d.\n");
+		//cout << "Checkbox OK-d." << endl;
 		this->save();
 	}
 	else

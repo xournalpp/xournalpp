@@ -3,19 +3,18 @@
  *
  * XML Writer helper class
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __DOUBLEATTRIBUTE_H__
-#define __DOUBLEATTRIBUTE_H__
+#pragma once
 
 #include "Attribute.h"
 #include <XournalType.h>
 
-class DoubleAttribute: public Attribute
+class DoubleAttribute : public Attribute
 {
 public:
 	DoubleAttribute(const char* name, double value);
@@ -29,6 +28,3 @@ private:
 
 	double value;
 };
-
-
-#endif /* __DOUBLEATTRIBUTE_H__ */

@@ -45,16 +45,16 @@ void PreviewJob::run()
 	gtk_widget_get_allocation(this->sidebarPreview->widget, &alloc);
 
 	cairo_surface_t* crBuffer = cairo_image_surface_create(CAIRO_FORMAT_ARGB32,
-	                                                       alloc.width, alloc.height);
+														   alloc.width, alloc.height);
 
 	double zoom = this->sidebarPreview->sidebar->getZoom();
 
 	cairo_t* cr2 = cairo_create(crBuffer);
-	cairo_matrix_t defaultMatrix = { 0 };
+	cairo_matrix_t defaultMatrix = {0};
 	cairo_get_matrix(cr2, &defaultMatrix);
 
 	cairo_translate(cr2, Shadow::getShadowTopLeftSize() + 2,
-	                Shadow::getShadowTopLeftSize() + 2);
+					Shadow::getShadowTopLeftSize() + 2);
 
 	cairo_scale(cr2, zoom, zoom);
 
@@ -66,9 +66,9 @@ void PreviewJob::run()
 		int pgNo = this->sidebarPreview->page->getPdfPageNr();
 		XojPopplerPage* popplerPage = doc->getPdfPage(pgNo);
 		PdfView::drawPage(this->sidebarPreview->sidebar->getCache(),
-		                  popplerPage, cr2, zoom,
-		                  this->sidebarPreview->page->getWidth(),
-		                  this->sidebarPreview->page->getHeight());
+						  popplerPage, cr2, zoom,
+						  this->sidebarPreview->page->getWidth(),
+						  this->sidebarPreview->page->getHeight());
 	}
 
 	DocumentView view;
@@ -83,9 +83,9 @@ void PreviewJob::run()
 	cairo_rectangle(cr2, 0, 0, alloc.height, Shadow::getShadowTopLeftSize() + 2);
 
 	cairo_rectangle(cr2, alloc.width - Shadow::getShadowBottomRightSize() - 2, 0,
-	                Shadow::getShadowBottomRightSize() + 2, alloc.height);
+					Shadow::getShadowBottomRightSize() + 2, alloc.height);
 	cairo_rectangle(cr2, 0, alloc.height - Shadow::getShadowBottomRightSize() - 2,
-	                alloc.width, Shadow::getShadowBottomRightSize() + 2);
+					alloc.width, Shadow::getShadowBottomRightSize() + 2);
 
 	cairo_fill(cr2);
 

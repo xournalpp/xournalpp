@@ -3,9 +3,9 @@
 #include <config.h>
 #include <glib/gi18n-lib.h>
 
-ToolZoomSlider::ToolZoomSlider(ActionHandler* handler, String id,
-                               ActionType type, ZoomControl* zoom) :
-	AbstractToolItem(id, handler, type, NULL)
+ToolZoomSlider::ToolZoomSlider(ActionHandler* handler, string id,
+							   ActionType type, ZoomControl* zoom) :
+AbstractToolItem(id, handler, type, NULL)
 {
 	XOJ_INIT_TYPE(ToolZoomSlider);
 
@@ -47,7 +47,7 @@ void ToolZoomSlider::zoomRangeValuesChanged()
 	updateScaleMarks();
 }
 
-String ToolZoomSlider::getToolDisplayName()
+string ToolZoomSlider::getToolDisplayName()
 {
 	XOJ_CHECK_TYPE(ToolZoomSlider);
 
@@ -72,11 +72,11 @@ void ToolZoomSlider::updateScaleMarks()
 	}
 
 	gdk_threads_enter();
-	gtk_scale_clear_marks( GTK_SCALE(this->slider));
+	gtk_scale_clear_marks(GTK_SCALE(this->slider));
 	gtk_scale_add_mark(GTK_SCALE(this->slider), zoom->getZoom100(),
-	                   horizontal ? GTK_POS_BOTTOM : GTK_POS_RIGHT, NULL);
+					   horizontal ? GTK_POS_BOTTOM : GTK_POS_RIGHT, NULL);
 	gtk_scale_add_mark(GTK_SCALE(this->slider), zoom->getZoomFit(),
-	                   horizontal ? GTK_POS_BOTTOM : GTK_POS_RIGHT, NULL);
+					   horizontal ? GTK_POS_BOTTOM : GTK_POS_RIGHT, NULL);
 	gdk_threads_leave();
 }
 
@@ -156,8 +156,8 @@ GtkToolItem* ToolZoomSlider::newItem()
 
 	if (this->slider)
 	{
-		g_signal_handlers_disconnect_by_func(this->slider, (void*)(sliderChanged),
-		                                     this->zoom);
+		g_signal_handlers_disconnect_by_func(this->slider, (void*) (sliderChanged),
+											 this->zoom);
 	}
 
 	if (this->horizontal)
@@ -170,7 +170,7 @@ GtkToolItem* ToolZoomSlider::newItem()
 		gtk_range_set_inverted(GTK_RANGE(this->slider), true);
 	}
 	g_signal_connect(this->slider, "value-changed", G_CALLBACK(sliderChanged),
-	                 this->zoom);
+					 this->zoom);
 	gtk_scale_set_draw_value(GTK_SCALE(this->slider), false);
 
 	this->fixed = gtk_fixed_new();

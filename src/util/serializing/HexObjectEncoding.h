@@ -3,18 +3,17 @@
  *
  * Hex encoded serialized stream
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __HEXOBJECTENCODING_H__
-#define __HEXOBJECTENCODING_H__
+#pragma once
 
 #include "ObjectEncoding.h"
 
-class HexObjectEncoding: public ObjectEncoding
+class HexObjectEncoding : public ObjectEncoding
 {
 public:
 	HexObjectEncoding();
@@ -26,5 +25,3 @@ public:
 private:
 	XOJ_TYPE_ATTRIB;
 };
-
-#endif /* __HEXOBJECTENCODING_H__ */

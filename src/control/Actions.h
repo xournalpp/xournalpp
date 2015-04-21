@@ -3,14 +3,13 @@
  *
  * Handler for actions, every menu action, tool button etc. is defined here
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __ACTIONDISPATCHER_H__
-#define __ACTIONDISPATCHER_H__
+#pragma once
 
 #include <XournalType.h>
 
@@ -247,5 +246,3 @@ private:
 	GList* enabledListener;
 	GList* selectionListener;
 };
-
-#endif /* __ACTIONDISPATCHER_H__ */

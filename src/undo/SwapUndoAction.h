@@ -3,14 +3,13 @@
  *
  * Undo page swap action
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __SWAPUNDOACTION_H__
-#define __SWAPUNDOACTION_H__
+#pragma once
 
 #include "UndoAction.h"
 
@@ -18,12 +17,12 @@
 
 class Control;
 
-class SwapUndoAction: public UndoAction
+class SwapUndoAction : public UndoAction
 {
 public:
 	SwapUndoAction(int pageNr, bool moveUp,
-	               PageRef swapped_page,
-	               PageRef other_page);
+				   PageRef swapped_page,
+				   PageRef other_page);
 
 	virtual ~SwapUndoAction();
 
@@ -31,7 +30,7 @@ public:
 	virtual bool undo(Control* control);
 	virtual bool redo(Control* control);
 	XojPage** getPages();
-	virtual String getText();
+	virtual string getText();
 
 private:
 	void swap(Control* control);
@@ -43,5 +42,3 @@ private:
 	PageRef swapped_page, other_page;
 	bool moveUp;
 };
-
-#endif

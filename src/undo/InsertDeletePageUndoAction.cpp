@@ -5,7 +5,7 @@
 #include "../gui/Cursor.h"
 
 InsertDeletePageUndoAction::InsertDeletePageUndoAction(PageRef page,
-                                                       int pagePos, bool inserted) : UndoAction("InsertDeletePageUndoAction")
+													   int pagePos, bool inserted) : UndoAction("InsertDeletePageUndoAction")
 {
 	XOJ_INIT_TYPE(InsertDeletePageUndoAction);
 
@@ -113,7 +113,7 @@ bool InsertDeletePageUndoAction::deletePage(Control* control)
 	return true;
 }
 
-String InsertDeletePageUndoAction::getText()
+string InsertDeletePageUndoAction::getText()
 {
 	XOJ_CHECK_TYPE(InsertDeletePageUndoAction);
 

@@ -3,14 +3,13 @@
  *
  * Handle the Page Spin Widget
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __SPINPAGEADAPTER_H__
-#define __SPINPAGEADAPTER_H__
+#pragma once
 
 #include <XournalType.h>
 #include <gtk/gtk.h>
@@ -36,7 +35,7 @@ public:
 private:
 	static bool pageNrSpinChangedTimerCallback(SpinPageAdapter* adapter);
 	static void pageNrSpinChangedCallback(GtkSpinButton* spinbutton,
-	                                      SpinPageAdapter* adapter);
+										SpinPageAdapter* adapter);
 
 	void firePageChanged();
 
@@ -55,5 +54,3 @@ class SpinPageListener
 public:
 	virtual void pageChanged(int page) = 0;
 };
-
-#endif /* __SPINPAGEADAPTER_H__ */

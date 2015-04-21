@@ -3,14 +3,13 @@
  *
  * Scroll handler
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __SCROLLHANDLER_H__
-#define __SCROLLHANDLER_H__
+#pragma once
 
 class XojPage;
 class Control;
@@ -20,7 +19,7 @@ class Control;
 #include "../model/PageRef.h"
 #include "../gui/widgets/SpinPageAdapter.h"
 
-class ScrollHandler: public SpinPageListener
+class ScrollHandler : public SpinPageListener
 {
 public:
 	ScrollHandler(Control* control);
@@ -50,5 +49,3 @@ private:
 
 	Control* control;
 };
-
-#endif /* __SCROLLHANDLER_H__ */

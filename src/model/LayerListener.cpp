@@ -19,7 +19,7 @@ void LayerListener::registerListener(Layer* layer)
 
 void LayerListener::unregisterListener()
 {
-	if(this->layer)
+	if (this->layer)
 	{
 		this->layer->removeListener(this);
 		this->layer = NULL;

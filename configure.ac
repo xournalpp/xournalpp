@@ -1,8 +1,14 @@
 dnl Process this file with autoconf to produce a configure script.
 
 AC_PREREQ(2.59)
-AC_INIT(Xournalpp, 1.0.1)
+AC_INIT(Xournalpp, 1.0.2)
 AM_CONFIG_HEADER(config.h)
+
+dnl backwards compatibility for autoconf <= 2.64
+dnl PACKAGE_URL should be the fifth argument of AC_INIT
+m4_define([AC_PACKAGE_URL], [https://github.com/xournalpp/xournalpp])
+AC_DEFINE(PACKAGE_URL, "AC_PACKAGE_URL", [Package URL])
+AC_SUBST(PACKAGE_URL, AC_PACKAGE_URL)
 
 AC_CANONICAL_SYSTEM
 AM_INIT_AUTOMAKE([subdir-objects])
@@ -14,6 +20,7 @@ AC_HEADER_STDC
 AC_PROG_LIBTOOL
 
 AC_LANG(C++)
+AX_CXX_COMPILE_STDCXX_11
 
 AM_SILENT_RULES([yes])
 
@@ -23,7 +30,7 @@ AC_SUBST(ACLOCAL_AMFLAGS, "$ACLOCAL_FLAGS -I m4")
 
 dnl librsvg-2.0 is not really needed by Xournal++, but if you dont have it crashes while loading the SVG icons (Problem with Gentoo)
 #We also are compiling with libpoppler so we require a number of extra packages
-pkg_modules="gtk+-2.0 >= 2.18.3 libglade-2.0 >= 2.6.4 glib-2.0 >= 2.32.0 gthread-2.0 >= 2.4.0 librsvg-2.0 >= 2.14.0 zlib fontconfig lcms"
+pkg_modules="gtk+-2.0 >= 2.18.3 libglade-2.0 >= 2.6.4 glib-2.0 >= 2.32.0 gtkmm-2.4 >= 2.24.0 gthread-2.0 >= 2.4.0 librsvg-2.0 >= 2.14.0 zlib fontconfig lcms"
 
 AC_MSG_CHECKING([whether Python support is requested])
 AC_ARG_ENABLE([python],
@@ -58,13 +65,14 @@ PKG_CHECK_MODULES(PACKAGE, [$pkg_modules])
 AC_SUBST(PACKAGE_CFLAGS)
 AC_SUBST(PACKAGE_LIBS)
 
-
 dnl FIXME not working!!
 dnl if test "x$have_python" != "xno"; then
 dnl  	AM_CHECK_PYTHON_HEADERS([],[have_python=no])
 dnl fi
 
 if test "x$have_python" != "xno"; then
+    AM_PATH_PYTHON([2.4])
+
 	PY_EXEC_PREFIX=`$PYTHON -c 'import sys ; print sys.exec_prefix'`
 	PYTHON_LIBS="-lpython$PYTHON_VERSION"
 
@@ -75,9 +83,10 @@ if test "x$have_python" != "xno"; then
 		PYTHON_EXTRA_LIBS=
 	else
 		PY_PREFIX=`$PYTHON -c 'import sys ; print sys.prefix'`
-		PYTHON_LIB_LOC="-L$PY_EXEC_PREFIX/lib/python$PYTHON_VERSION/config"
+		PYTHON_CONFIGDIR=`$PYTHON-config --configdir`
+		PYTHON_LIB_LOC="-L$PYTHON_CONFIGDIR"
 		PYTHON_CFLAGS="-I$PY_PREFIX/include/python$PYTHON_VERSION"
-		PYTHON_MAKEFILE="$PY_EXEC_PREFIX/lib/python$PYTHON_VERSION/config/Makefile"
+		PYTHON_MAKEFILE="$PYTHON_CONFIGDIR/Makefile"
 		PYTHON_BASEMODLIBS=`sed -n -e 's/^BASEMODLIBS=\(.*\)/\1/p' $PYTHON_MAKEFILE`
 		PYTHON_OTHER_LIBS=`sed -n -e 's/^LIBS=\(.*\)/\1/p' $PYTHON_MAKEFILE`
 		PYTHON_EXTRA_LIBS="$PYTHON_BASEMODLIBS $PYTHON_OTHER_LIBS"
@@ -121,6 +130,13 @@ dnl AM_CONDITIONAL(BUILD_LIBOPENJPEG, test x$enable_libopenjpeg = xyes)
 dnl AH_TEMPLATE([ENABLE_LIBOPENJPEG],
 dnl 	    [Use libopenjpeg instead of builtin jpeg2000 decoder.])
 
+dnl boost
+BOOST_REQUIRE([1.54])
+BOOST_SYSTEM([mt])
+BOOST_FILESYSTEM([mt])
+BOOST_LOCALE([mt])
+BOOST_IOSTREAMS([mt])
+BOOST_FORMAT([mt])
 
 dnl libjpeg
 AC_ARG_WITH(libjpeg,

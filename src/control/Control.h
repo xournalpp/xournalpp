@@ -3,14 +3,13 @@
  *
  * The main Control
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __CONTROL_H__
-#define __CONTROL_H__
+#pragma once
 
 #include "RecentManager.h"
 #include "../gui/MainWindow.h"
@@ -40,8 +39,7 @@ class MetadataManager;
 class Cursor;
 class ToolbarDragDropHandler;
 
-
-class Control: public ActionHandler,
+class Control : public ActionHandler,
 	public ToolListener,
 	public DocumentHandler,
 	public RecentManagerListener,
@@ -57,8 +55,8 @@ public:
 public:
 	// Menu File
 	bool newFile();
-	bool openFile(String filename = NULL, int scrollToPage = -1);
-	bool annotatePdf(String filename, bool attachPdf, bool attachToDocument);
+	bool openFile(path filename = "", int scrollToPage = -1);
+	bool annotatePdf(path filename, bool attachPdf, bool attachToDocument);
 	void print();
 	void exportAsPdf();
 	void exportAs();
@@ -79,8 +77,8 @@ public:
 	void showAbout();
 
 	virtual void actionPerformed(ActionType type, ActionGroup group,
-	                             GdkEvent* event, GtkMenuItem* menuitem, GtkToolButton* toolbutton,
-	                             bool enabled);
+								 GdkEvent* event, GtkMenuItem* menuitem, GtkToolButton* toolbutton,
+								 bool enabled);
 
 	virtual void toolColorChanged();
 	virtual void setCustomColorSelected();
@@ -130,9 +128,7 @@ public:
 
 	bool isFullscreen();
 
-	static String getFilename(String uri);
-
-	bool searchTextOnPage(const char* text, int p, int* occures, double* top);
+	bool searchTextOnPage(string text, int p, int* occures, double* top);
 
 	/**
 	 * Fire page selected, but first check if the page Number is valid
@@ -173,12 +169,12 @@ public:
 
 	XournalScheduler* getScheduler();
 
-	void block(const char* name);
+	void block(string name);
 	void unblock();
 
 	void renameLastAutosaveFile();
-	void setLastAutosaveFile(String newAutosaveFile);
-	void deleteLastAutosaveFile(String newAutosaveFile);
+	void setLastAutosaveFile(path newAutosaveFile);
+	void deleteLastAutosaveFile(path newAutosaveFile);
 	void setClipboardHandlerSelection(EditSelection* selection);
 
 	MetadataManager* getMetadataManager();
@@ -215,10 +211,10 @@ public:
 	// ClipboardListener interface
 	virtual void clipboardCutCopyEnabled(bool enabled);
 	virtual void clipboardPasteEnabled(bool enabled);
-	virtual void clipboardPasteText(String text);
+	virtual void clipboardPasteText(string text);
 	virtual void clipboardPasteImage(GdkPixbuf* img);
-	virtual void clipboardPasteTex(GdkPixbuf* img, const char* text,
-	                               int textLength);
+    virtual void clipboardPasteTex(GdkPixbuf* img, const char* text,
+                                   int textLength);
 	virtual void clipboardPasteXournal(ObjectInputStream& in);
 	virtual void deleteSelection();
 
@@ -296,7 +292,7 @@ private:
 	 * The autosave handler ID
 	 */
 	int autosaveTimeout;
-	String lastAutosaveFilename;
+	path lastAutosaveFilename;
 
 	/**
 	 * Default page size
@@ -333,5 +329,3 @@ public:
 	ActionType type;
 	Control* control;
 };
-
-#endif /* __CONTROL_H__ */

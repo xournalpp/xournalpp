@@ -3,26 +3,23 @@
  *
  * The "Model" of a EditSelection
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-
-#ifndef __EDITSELECTIONCONTENTS_H__
-#define __EDITSELECTIONCONTENTS_H__
+#pragma once
 
 #include "../../view/ElementContainer.h"
 #include <XournalType.h>
-#include <glib.h>
+#include <vector>
 
 #include "../Tool.h"
 #include "../../model/Font.h"
 #include "../../model/Element.h"
 #include "../../model/PageRef.h"
 #include "CursorSelectionType.h"
-#include <ListIterator.h>
 
 class UndoRedoHandler;
 class Layer;
@@ -33,11 +30,11 @@ class UndoAction;
 class EditSelectionContents;
 class DeleteUndoAction;
 
-class EditSelectionContents: public ElementContainer, public Serializeable
+class EditSelectionContents : public ElementContainer, public Serializeable
 {
 public:
 	EditSelectionContents(double x, double y, double width, double height,
-	                      PageRef sourcePage, Layer* sourceLayer, PageView* sourceView);
+						PageRef sourcePage, Layer* sourceLayer, PageView* sourceView);
 	virtual ~EditSelectionContents();
 
 public:
@@ -46,7 +43,7 @@ public:
 	 * (or NULL if nothing is done)
 	 */
 	UndoAction* setSize(ToolSize size, const double* thicknessPen,
-	                    const double* thicknessHilighter, const double* thicknessEraser);
+						const double* thicknessHilighter, const double* thicknessEraser);
 
 	/**
 	 * Set the color of all elements, return an undo action
@@ -75,28 +72,28 @@ public:
 	/**
 	 * Returns all containig elements of this selections
 	 */
-	ListIterator<Element*> getElements();
+	ElementVector* getElements();
 
 public:
 	/**
 	 * paints the selection
 	 */
 	void paint(cairo_t* cr, double x, double y, double width, double height,
-	           double zoom);
+			double zoom);
 
 	/**
 	 * Finish the editing
 	 */
 	void finalizeSelection(double x, double y, double width, double height,
-	                       bool aspectRatio, Layer* layer, PageRef targetPage,
-	                       PageView* targetView,
-	                       UndoRedoHandler* undo);
+						bool aspectRatio, Layer* layer, PageRef targetPage,
+						PageView* targetView,
+						UndoRedoHandler* undo);
 
 	void updateContent(double x, double y, double width, double height,
-	                   bool aspectRatio, Layer* layer, PageRef targetPage,
-	                   PageView* targetView,
-	                   UndoRedoHandler* undo,
-	                   CursorSelectionType type);
+					bool aspectRatio, Layer* layer, PageRef targetPage,
+					PageView* targetView,
+					UndoRedoHandler* undo,
+					CursorSelectionType type);
 
 private:
 	/**
@@ -122,7 +119,7 @@ public:
 	double getOriginalHeight();
 
 	UndoAction* copySelection(PageRef page, PageView *view,
-	                          double x, double y);
+							double x, double y);
 
 public:
 	// Serialize interface
@@ -153,7 +150,7 @@ private:
 	/**
 	 * The selected element (the only one which are handled by this instance)
 	 */
-	GList* selected;
+	ElementVector selected;
 
 	/**
 	 * The rendered elements
@@ -180,5 +177,3 @@ private:
 	 */
 	PageView* sourceView;
 };
-
-#endif /* __EDITSELECTIONCONTENTS_H__ */

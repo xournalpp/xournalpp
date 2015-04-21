@@ -1,12 +1,15 @@
 /*
- * LayoutData.h
+ * Xournal++
  *
- *  Created on: 13.09.2011
- *      Author: andreas
+ * 
+ *
+ * @author andreas
+ * https://github.com/xournalpp/xournalpp
+ *
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __LAYOUTDATA_H__
-#define __LAYOUTDATA_H__
+#pragma once
 
 #include <XournalType.h>
 
@@ -49,5 +52,3 @@ private:
 	// 0: left page, 1: right page, will may be extended later
 	int pageIndex;
 };
-
-#endif // __LAYOUTDATA_H__

@@ -5,12 +5,13 @@
  *
  * @author W Brenna
  * http://wbrenna.ca
+ * 
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __LATEXGLADE_H__
-#define __LATEXGLADE_H__
+#pragma once
 
 #include "../../model/LayerListener.h"
 #include <gtk/gtk.h>
@@ -18,7 +19,6 @@
 #include "../../model/TexImage.h"
 #include <XournalType.h>
 #include "../../gui/GladeGui.h"
-
 
 class LatexGlade : public GladeGui
 {
@@ -30,16 +30,12 @@ public:
 	virtual void show(GtkWindow* parent);
 	void save();
 	void load();
-	void setTex(gchar* texString, int texLength);
-	gchar* getTex();
-	int getTexLen();
+	void setTex(string texString);
+	string getTex();
 
 
 private:
 	XOJ_TYPE_ATTRIB;
 	GtkWidget* texBox;
-	gchar* theLatex;
-	int theLatexLength;
+	string theLatex;
 };
-
-#endif /* __LATEXGLADE_H__ */

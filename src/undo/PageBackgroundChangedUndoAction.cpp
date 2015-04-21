@@ -3,9 +3,9 @@
 #include "../model/Document.h"
 
 PageBackgroundChangedUndoAction::PageBackgroundChangedUndoAction(PageRef page,
-                                                                 BackgroundType origType,
-                                                                 int origPdfPage, BackgroundImage origBackgroundImage, double origW,
-                                                                 double origH)
+			BackgroundType origType,
+			int origPdfPage, BackgroundImage origBackgroundImage, double origW,
+			double origH)
 	: UndoAction("PageBackgroundChangedUndoAction")
 {
 	XOJ_INIT_TYPE(PageBackgroundChangedUndoAction);
@@ -17,6 +17,7 @@ PageBackgroundChangedUndoAction::PageBackgroundChangedUndoAction(PageRef page,
 	this->origW = origW;
 	this->origH = origH;
 }
+
 PageBackgroundChangedUndoAction::~PageBackgroundChangedUndoAction()
 {
 	XOJ_RELEASE_TYPE(PageBackgroundChangedUndoAction);
@@ -95,7 +96,7 @@ bool PageBackgroundChangedUndoAction::redo(Control* control)
 
 }
 
-String PageBackgroundChangedUndoAction::getText()
+string PageBackgroundChangedUndoAction::getText()
 {
 	XOJ_CHECK_TYPE(PageBackgroundChangedUndoAction);
 

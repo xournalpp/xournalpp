@@ -1,7 +1,7 @@
 #include "AbstractItem.h"
 
-AbstractItem::AbstractItem(String id, ActionHandler* handler, ActionType action,
-                           GtkWidget* menuitem)
+AbstractItem::AbstractItem(string id, ActionHandler* handler, ActionType action,
+						   GtkWidget* menuitem)
 {
 	XOJ_INIT_TYPE(AbstractItem);
 	this->id = id;
@@ -18,7 +18,7 @@ AbstractItem::AbstractItem(String id, ActionHandler* handler, ActionType action,
 	if (menuitem)
 	{
 		menuSignalHandler = g_signal_connect(menuitem, "activate",
-		                                     G_CALLBACK(&menuCallback), this);
+											 G_CALLBACK(&menuCallback), this);
 		gtk_object_ref(GTK_OBJECT(menuitem));
 		this->menuitem = menuitem;
 	}
@@ -54,10 +54,10 @@ void AbstractItem::actionSelected(ActionGroup group, ActionType action)
 		if (this->menuitem && GTK_IS_CHECK_MENU_ITEM(this->menuitem))
 		{
 			if (gtk_check_menu_item_get_active(GTK_CHECK_MENU_ITEM(this->menuitem)) !=
-			    (this->action == action))
+				(this->action == action))
 			{
 				gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(this->menuitem),
-				                               this->action == action);
+											   this->action == action);
 			}
 		}
 		selected(group, action);
@@ -89,7 +89,7 @@ void AbstractItem::actionEnabledAction(ActionType action, bool enabled)
 }
 
 void AbstractItem::activated(GdkEvent* event, GtkMenuItem* menuitem,
-                             GtkToolButton* toolbutton)
+							 GtkToolButton* toolbutton)
 {
 	XOJ_CHECK_TYPE(AbstractItem);
 
@@ -102,14 +102,14 @@ void AbstractItem::activated(GdkEvent* event, GtkMenuItem* menuitem,
 	else if (toolbutton && GTK_IS_TOGGLE_TOOL_BUTTON(toolbutton))
 	{
 		selected = gtk_toggle_tool_button_get_active(GTK_TOGGLE_TOOL_BUTTON(
-		                                                 toolbutton));
+																			toolbutton));
 	}
 
 
 	handler->actionPerformed(action, group, event, menuitem, toolbutton, selected);
 }
 
-String AbstractItem::getId()
+string AbstractItem::getId()
 {
 	XOJ_CHECK_TYPE(AbstractItem);
 

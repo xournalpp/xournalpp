@@ -3,17 +3,16 @@
  *
  * Handles PDF Export
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __PDFEXPORT_H__
-#define __PDFEXPORT_H__
+#pragma once
 
 #include "../../model/Document.h"
-#include <String.h>
+#include <StringUtils.h>
 #include "../../control/jobs/ProgressListener.h"
 #include "../cairo/CairoPdf.h"
 #include "PdfXRef.h"
@@ -30,9 +29,9 @@ public:
 	virtual ~PdfExport();
 
 public:
-	bool createPdf(String uri);
-	bool createPdf(String uri, GList* range);
-	String getLastError();
+	bool createPdf(path file);
+	bool createPdf(path file, GList* range);
+	string getLastError();
 
 private:
 	void addPopplerDocument(XojPopplerDocument doc);
@@ -63,7 +62,7 @@ private:
 
 	ProgressListener* progressListener;
 
-	String lastError;
+	string lastError;
 
 	int dataXrefStart;
 
@@ -84,5 +83,3 @@ private:
 
 	CairoPdf cPdf;
 };
-
-#endif /* __PDFEXPORT_H__ */

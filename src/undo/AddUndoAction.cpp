@@ -6,7 +6,7 @@
 #include "PageLayerPosEntry.h"
 
 AddUndoAction::AddUndoAction(PageRef page,
-                             bool eraser) : UndoAction("AddUndoAction")
+							 bool eraser) : UndoAction("AddUndoAction")
 {
 	XOJ_INIT_TYPE(AddUndoAction);
 
@@ -32,7 +32,7 @@ AddUndoAction::~AddUndoAction()
 	g_list_free(this->elements);
 
 	XOJ_RELEASE_TYPE(AddUndoAction)
-	;
+			;
 }
 
 void AddUndoAction::addElement(Layer* layer, Element* e, int pos)
@@ -40,8 +40,8 @@ void AddUndoAction::addElement(Layer* layer, Element* e, int pos)
 	XOJ_CHECK_TYPE(AddUndoAction);
 
 	this->elements = g_list_insert_sorted(this->elements,
-	                                      new PageLayerPosEntry<Element> (layer, e, pos),
-	                                      (GCompareFunc) PageLayerPosEntry<Element>::cmp);
+										new PageLayerPosEntry<Element> (layer, e, pos),
+										(GCompareFunc) PageLayerPosEntry<Element>::cmp);
 }
 
 bool AddUndoAction::redo(Control* control)
@@ -91,11 +91,11 @@ bool AddUndoAction::undo(Control* control)
 	return true;
 }
 
-String AddUndoAction::getText()
+string AddUndoAction::getText()
 {
 	XOJ_CHECK_TYPE(AddUndoAction);
 
-	String text;
+	string text;
 
 	if (eraser)
 	{
@@ -108,7 +108,7 @@ String AddUndoAction::getText()
 		if (this->elements != NULL)
 		{
 			ElementType type = ((PageLayerPosEntry<Element>*)
-			                    this->elements->data)->element->getType();
+								this->elements->data)->element->getType();
 
 			for (GList* l = this->elements->next; l != NULL; l = l->next)
 			{

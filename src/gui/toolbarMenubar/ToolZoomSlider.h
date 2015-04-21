@@ -3,31 +3,30 @@
  *
  * Part of the customizable toolbars
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __TOOLZOOMSLIDER_H__
-#define __TOOLZOOMSLIDER_H__
+#pragma once
 
 #include "AbstractToolItem.h"
 #include "../../control/ZoomControl.h"
 #include <XournalType.h>
 
-class ToolZoomSlider: public AbstractToolItem, public ZoomListener
+class ToolZoomSlider : public AbstractToolItem, public ZoomListener
 {
 public:
-	ToolZoomSlider(ActionHandler* handler, String id, ActionType type,
-	               ZoomControl* zoom);
+	ToolZoomSlider(ActionHandler* handler, string id, ActionType type,
+				   ZoomControl* zoom);
 	virtual ~ToolZoomSlider();
 
 public:
 	static void sliderChanged(GtkRange* range, ZoomControl* zoom);
 	virtual void zoomChanged(double lastZoom);
 	virtual void zoomRangeValuesChanged();
-	virtual String getToolDisplayName();
+	virtual string getToolDisplayName();
 
 	// Should be called when the window size changes
 	void updateScaleMarks();
@@ -48,5 +47,3 @@ private:
 	ZoomControl* zoom;
 	bool horizontal;
 };
-
-#endif /* __TOOLZOOMSLIDER_H__ */

@@ -3,14 +3,13 @@
  *
  * Logging class for debugging
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __LOGGER_H__
-#define __LOGGER_H__
+#pragma once
 
 class Log
 {
@@ -18,14 +17,12 @@ private:
 	Log();
 	virtual ~Log();
 	Log(const Log&);
-	Log& operator =(const Log&);
+	Log& operator=(const Log&);
 
 public:
 	static void initlog();
 	static void closelog();
 
 	static void trace(const char* callType, const char* clazz, const char* function,
-	                  long obj);
+					long obj);
 };
-
-#endif /* __LOGGER_H__ */

@@ -6,7 +6,7 @@ Scrollbar::Scrollbar(bool horizontal)
 	XOJ_INIT_TYPE(Scrollbar);
 
 #ifdef ENABLE_OS
-	if(horizontal)
+	if (horizontal)
 	{
 		this->scrollbar = os_scrollbar_new(GTK_ORIENTATION_HORIZONTAL, NULL);
 	}

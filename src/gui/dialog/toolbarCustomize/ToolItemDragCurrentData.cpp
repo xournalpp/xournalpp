@@ -14,7 +14,7 @@ void ToolItemDragCurrentData::setData(GtkWidget* widget)
 	data = g_new(ToolItemDragDropData, 1);
 
 	ToolItemDragDropData* d = ToolitemDragDrop::metadataGetMetadata(widget);
-	if(d == NULL)
+	if (d == NULL)
 	{
 		g_warning("ToolItemDragCurrentData::setData(GtkWidget * widget) could not get data!");
 		Stacktrace::printStracktrace();
@@ -25,7 +25,7 @@ void ToolItemDragCurrentData::setData(GtkWidget* widget)
 }
 
 void ToolItemDragCurrentData::setData(ToolItemType type, int id,
-                                      AbstractToolItem* item)
+									  AbstractToolItem* item)
 {
 	g_return_if_fail(item != NULL || type != TOOL_ITEM_ITEM);
 

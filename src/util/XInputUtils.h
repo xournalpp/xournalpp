@@ -3,14 +3,13 @@
  *
  * XInput util functions
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __XINPUTUTILS_H__
-#define __XINPUTUTILS_H__
+#pragma once
 
 #include <gtk/gtk.h>
 
@@ -36,9 +35,9 @@ public:
 	 * Avoid crash if e.g. a mouse is plugged out...
 	 */
 	static gboolean onMouseEnterNotifyEvent(GtkWidget* widget,
-	                                        GdkEventCrossing* event);
+											GdkEventCrossing* event);
 	static gboolean onMouseLeaveNotifyEvent(GtkWidget* widget,
-	                                        GdkEventCrossing* event);
+											GdkEventCrossing* event);
 
 	static void initUtils(GtkWidget* win);
 
@@ -51,5 +50,3 @@ private:
 	static int enableLeafEnterWorkaround;
 
 };
-
-#endif /* __XINPUTUTILS_H__ */

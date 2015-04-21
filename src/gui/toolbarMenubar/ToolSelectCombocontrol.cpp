@@ -7,9 +7,9 @@
 #include <glib/gi18n-lib.h>
 
 ToolSelectCombocontrol::ToolSelectCombocontrol(ToolMenuHandler* th,
-                                               ActionHandler* handler, GladeGui* gui, String id) :
-	ToolButton(handler, gui, id, ACTION_TOOL_SELECT_RECT, GROUP_TOOL, true,
-	           "rect-select.png", _("Select Rectangle"))
+											   ActionHandler* handler, GladeGui* gui, string id) :
+ToolButton(handler, gui, id, ACTION_TOOL_SELECT_RECT, GROUP_TOOL, true,
+		   "rect-select.png", _("Select Rectangle"))
 {
 
 	XOJ_INIT_TYPE(ToolSelectCombocontrol);
@@ -32,7 +32,7 @@ ToolSelectCombocontrol::ToolSelectCombocontrol(ToolMenuHandler* th,
 	th->registerMenupoint(menuItem, ACTION_TOOL_SELECT_RECT, GROUP_TOOL);
 	gtk_image_menu_item_set_always_show_image(GTK_IMAGE_MENU_ITEM(menuItem), true);
 	gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuItem),
-	                              gui->loadIcon("rect-select.png"));
+								  gui->loadIcon("rect-select.png"));
 	gtk_widget_show_all(menuItem);
 
 	menuItem = gtk_image_menu_item_new_with_label(_("Select Region"));
@@ -40,7 +40,7 @@ ToolSelectCombocontrol::ToolSelectCombocontrol(ToolMenuHandler* th,
 	th->registerMenupoint(menuItem, ACTION_TOOL_SELECT_REGION, GROUP_TOOL);
 	gtk_image_menu_item_set_always_show_image(GTK_IMAGE_MENU_ITEM(menuItem), true);
 	gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuItem),
-	                              gui->loadIcon("lasso.png"));
+								  gui->loadIcon("lasso.png"));
 	gtk_widget_show_all(menuItem);
 
 	menuItem = gtk_image_menu_item_new_with_label(_("Select Object"));
@@ -48,7 +48,7 @@ ToolSelectCombocontrol::ToolSelectCombocontrol(ToolMenuHandler* th,
 	th->registerMenupoint(menuItem, ACTION_TOOL_SELECT_OBJECT, GROUP_TOOL);
 	gtk_image_menu_item_set_always_show_image(GTK_IMAGE_MENU_ITEM(menuItem), true);
 	gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuItem),
-	                              gui->loadIcon("object-select.png"));
+								  gui->loadIcon("object-select.png"));
 	gtk_widget_show_all(menuItem);
 
 	setPopupMenu(popup);
@@ -80,7 +80,7 @@ void ToolSelectCombocontrol::selected(ActionGroup group, ActionType action)
 		const char* description = NULL;
 
 		if (action == ACTION_TOOL_SELECT_RECT &&
-		    this->action != ACTION_TOOL_SELECT_RECT)
+			this->action != ACTION_TOOL_SELECT_RECT)
 		{
 			this->action = ACTION_TOOL_SELECT_RECT;
 			gtk_image_set_from_pixbuf(GTK_IMAGE(iconWidget), this->iconSelectRect);
@@ -88,7 +88,7 @@ void ToolSelectCombocontrol::selected(ActionGroup group, ActionType action)
 			description = _("Select Rectangle");
 		}
 		else if (action == ACTION_TOOL_SELECT_REGION &&
-		         this->action != ACTION_TOOL_SELECT_REGION)
+				 this->action != ACTION_TOOL_SELECT_REGION)
 		{
 			this->action = ACTION_TOOL_SELECT_REGION;
 			gtk_image_set_from_pixbuf(GTK_IMAGE(iconWidget), this->iconSelectRgion);
@@ -96,7 +96,7 @@ void ToolSelectCombocontrol::selected(ActionGroup group, ActionType action)
 			description = _("Select Region");
 		}
 		else if (action == ACTION_TOOL_SELECT_OBJECT &&
-		         this->action != ACTION_TOOL_SELECT_OBJECT)
+				 this->action != ACTION_TOOL_SELECT_OBJECT)
 		{
 			this->action = ACTION_TOOL_SELECT_OBJECT;
 			gtk_image_set_from_pixbuf(GTK_IMAGE(iconWidget), this->iconSelectObject);
@@ -107,11 +107,11 @@ void ToolSelectCombocontrol::selected(ActionGroup group, ActionType action)
 
 
 		if (gtk_toggle_tool_button_get_active(GTK_TOGGLE_TOOL_BUTTON(this->item)) !=
-		    (this->action == action))
+			(this->action == action))
 		{
 			this->toolToggleButtonActive = (this->action == action);
 			gtk_toggle_tool_button_set_active(GTK_TOGGLE_TOOL_BUTTON(this->item),
-			                                  this->toolToggleButtonActive);
+											  this->toolToggleButtonActive);
 		}
 	}
 }
@@ -128,6 +128,6 @@ GtkToolItem* ToolSelectCombocontrol::newItem()
 	it = gtk_menu_tool_toggle_button_new(iconWidget, "test0");
 	gtk_tool_button_set_label_widget(GTK_TOOL_BUTTON(it), labelWidget);
 	gtk_menu_tool_toggle_button_set_menu(GTK_MENU_TOOL_TOGGLE_BUTTON(it),
-	                                     popupMenu);
+										 popupMenu);
 	return it;
 }

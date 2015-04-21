@@ -9,8 +9,8 @@
 #include <Rectangle.h>
 
 TextUndoAction::TextUndoAction(PageRef page, Layer* layer,
-                               Text* text, String lastText,
-                               TextEditor* textEditor) : UndoAction("TextUndoAction")
+							   Text* text, string lastText,
+							   TextEditor* textEditor) : UndoAction("TextUndoAction")
 {
 	XOJ_INIT_TYPE(TextUndoAction);
 
@@ -26,7 +26,7 @@ TextUndoAction::~TextUndoAction()
 	XOJ_RELEASE_TYPE(TextUndoAction);
 }
 
-String TextUndoAction::getUndoText()
+string TextUndoAction::getUndoText()
 {
 	XOJ_CHECK_TYPE(TextUndoAction);
 
@@ -40,7 +40,7 @@ void TextUndoAction::textEditFinished()
 	this->textEditor = NULL;
 }
 
-String TextUndoAction::getText()
+string TextUndoAction::getText()
 {
 	XOJ_CHECK_TYPE(TextUndoAction);
 

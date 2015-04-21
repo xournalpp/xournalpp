@@ -3,22 +3,20 @@
  *
  * List of unused colors for toolbar customisation
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __CUSTOMIZEABLECOLORLIST_H__
-#define __CUSTOMIZEABLECOLORLIST_H__
+#pragma once
 
 #include <XournalType.h>
-#include <glib.h>
-#include <String.h>
-#include <ListIterator.h>
+#include <StringUtils.h>
 
 #include "../../XojColor.h"
 
+typedef std::vector<XojColor*> XojColorVector;
 
 class CustomizeableColorList
 {
@@ -27,16 +25,14 @@ public:
 	virtual ~CustomizeableColorList();
 
 public:
-	ListIterator<XojColor*> getPredefinedColors();
+	XojColorVector* getPredefinedColors();
 
 private:
-	void addPredefinedColor(int color, String name);
+	void addPredefinedColor(int color, string name);
 
 private:
 	XOJ_TYPE_ATTRIB;
 
-	GList* colors;
+	XojColorVector colors;
 
 };
-
-#endif /* __CUSTOMIZEABLECOLORLIST_H__ */

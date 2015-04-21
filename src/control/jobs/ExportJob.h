@@ -3,25 +3,28 @@
  *
  * An export job for the export dialog
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __EXPORTJOB_H__
-#define __EXPORTJOB_H__
+#pragma once
 
 #include "BlockingJob.h"
 #include "ExportFormtType.h"
-#include <String.h>
+#include <PageRange.h>
+#include <StringUtils.h>
 #include <XournalType.h>
+
+#include <boost/filesystem/path.hpp>
+using boost::filesystem::path;
 
 class ExportJob : public BlockingJob
 {
 public:
-	ExportJob(Control* control, GList* selected, ExportFormtType type, int dpi,
-	          String folder, String filename);
+	ExportJob(Control* control, PageRangeVector selected, ExportFormtType type,
+			  int dpi, path filepath);
 
 protected:
 	virtual ~ExportJob();
@@ -37,16 +40,13 @@ private:
 	XOJ_TYPE_ATTRIB;
 
 
-	GList* selected;
+	PageRangeVector selected;
 
 	cairo_surface_t* surface;
 	cairo_t* cr;
 
 	int dpi;
 	ExportFormtType type;
-	String filename;
-	String folder;
-	String front, back;
+	path filepath;
+	string front, back;
 };
-
-#endif /* __EXPORTJOB_H__ */

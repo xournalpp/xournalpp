@@ -3,14 +3,13 @@
  *
  * The Sidebar
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __SIDEBAR_H__
-#define __SIDEBAR_H__
+#pragma once
 
 #include <gtk/gtk.h>
 #include <XournalType.h>
@@ -84,7 +83,7 @@ private:
 	 * Page selected
 	 */
 	static void buttonClicked(GtkToolButton* toolbutton,
-	                          SidebarPageButton* buttonData);
+							SidebarPageButton* buttonData);
 
 private:
 	XOJ_TYPE_ATTRIB;
@@ -128,6 +127,3 @@ public:
 	AbstractSidebarPage* page;
 
 };
-
-
-#endif /* __SIDEBAR_H__ */

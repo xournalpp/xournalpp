@@ -8,10 +8,9 @@
 #include <string.h>
 
 SettingsDialog::SettingsDialog(GladeSearchpath* gladeSearchPath,
-                               Settings* settings) :
-	GladeGui(gladeSearchPath, "settings.glade", "settingsDialog")
+							   Settings* settings) :
+GladeGui(gladeSearchPath, "settings.glade", "settingsDialog")
 {
-
 	XOJ_INIT_TYPE(SettingsDialog);
 
 	this->settings = settings;
@@ -25,14 +24,14 @@ SettingsDialog::SettingsDialog(GladeSearchpath* gladeSearchPath,
 	GtkWidget* slider = get("zoomCallibSlider");
 	g_return_if_fail(slider != NULL);
 	g_signal_connect(slider, "change-value", G_CALLBACK(&zoomcallibSliderChanged),
-	                 this);
+					 this);
 
 	g_signal_connect(get("cbSettingXinput"), "toggled",
-	                 G_CALLBACK(&toolboxToggledCallback), this);
+					 G_CALLBACK(&toolboxToggledCallback), this);
 	g_signal_connect(get("cbSettingPresureSensitivity"), "toggled",
-	                 G_CALLBACK(&toolboxToggledCallback), this);
+					 G_CALLBACK(&toolboxToggledCallback), this);
 	g_signal_connect(get("cbAutosave"), "toggled",
-	                 G_CALLBACK(&toolboxToggledCallback), this);
+					 G_CALLBACK(&toolboxToggledCallback), this);
 
 	gtk_box_pack_start(GTK_BOX(vbox), callib, false, true, 0);
 	gtk_widget_show(callib);
@@ -57,7 +56,7 @@ SettingsDialog::~SettingsDialog()
 }
 
 gboolean SettingsDialog::zoomcallibSliderChanged(GtkRange* range,
-                                                 GtkScrollType scroll, gdouble value, SettingsDialog* dlg)
+												 GtkScrollType scroll, gdouble value, SettingsDialog* dlg)
 {
 	XOJ_CHECK_TYPE_OBJ(dlg, SettingsDialog);
 
@@ -67,12 +66,12 @@ gboolean SettingsDialog::zoomcallibSliderChanged(GtkRange* range,
 }
 
 void SettingsDialog::initMouseButtonEvents(const char* hbox, int button,
-                                           bool withDevice)
+										   bool withDevice)
 {
 	XOJ_CHECK_TYPE(SettingsDialog);
 
 	this->buttonConfigs = g_list_append(this->buttonConfigs,
-	                                    new ButtonConfigGui(this, get(hbox), settings, button, withDevice));
+										new ButtonConfigGui(this, get(hbox), settings, button, withDevice));
 }
 
 void SettingsDialog::initMouseButtonEvents()
@@ -134,7 +133,7 @@ bool SettingsDialog::getCheckbox(const char* name)
 }
 
 void SettingsDialog::toolboxToggledCallback(GtkToggleButton* togglebutton,
-                                            SettingsDialog* sd)
+											SettingsDialog* sd)
 {
 	XOJ_CHECK_TYPE_OBJ(sd, SettingsDialog);
 
@@ -164,7 +163,7 @@ void SettingsDialog::toolboxToggled()
 
 	GtkWidget* cbAutosave = get("cbAutosave");
 	bool autosaveEnabled = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(
-	                                                        cbAutosave));
+																		  cbAutosave));
 	gtk_widget_set_sensitive(get("lbAutosaveTimeout"), autosaveEnabled);
 	gtk_widget_set_sensitive(get("spAutosaveTimeout"), autosaveEnabled);
 
@@ -200,7 +199,7 @@ void SettingsDialog::load()
 
 	GtkWidget* spAutosaveTimeout = get("spAutosaveTimeout");
 	gtk_spin_button_set_value(GTK_SPIN_BUTTON(spAutosaveTimeout),
-	                          settings->getAutosaveTimeout());
+							  settings->getAutosaveTimeout());
 
 	GtkWidget* slider = get("zoomCallibSlider");
 
@@ -216,7 +215,7 @@ void SettingsDialog::load()
 	bool hidePresentationMenubar = false;
 	bool hidePresentationSidebar = false;
 
-	String hidden = settings->getFullscreenHideElements();
+	string hidden = settings->getFullscreenHideElements().c_str();
 	const char* element;
 	StringTokenizer tokenF(hidden, ',');
 	element = tokenF.next();
@@ -257,12 +256,12 @@ void SettingsDialog::load()
 	toolboxToggled();
 }
 
-String SettingsDialog::updateHideString(String hidden, bool hideMenubar,
-                                        bool hideSidebar)
+string SettingsDialog::updateHideString(string hidden, bool hideMenubar,
+										bool hideSidebar)
 {
 	XOJ_CHECK_TYPE(SettingsDialog);
 
-	String newHidden = "";
+	string newHidden = "";
 
 	const char* element;
 	StringTokenizer token(hidden, ',');
@@ -294,7 +293,7 @@ String SettingsDialog::updateHideString(String hidden, bool hideMenubar,
 			}
 		}
 
-		if (!newHidden.isEmpty())
+		if (!newHidden.empty())
 		{
 			newHidden += ",";
 		}
@@ -305,7 +304,7 @@ String SettingsDialog::updateHideString(String hidden, bool hideMenubar,
 
 	if (hideMenubar)
 	{
-		if (!newHidden.isEmpty())
+		if (!newHidden.empty())
 		{
 			newHidden += ",";
 		}
@@ -314,7 +313,7 @@ String SettingsDialog::updateHideString(String hidden, bool hideMenubar,
 
 	if (hideSidebar)
 	{
-		if (!newHidden.isEmpty())
+		if (!newHidden.empty())
 		{
 			newHidden += ",";
 		}
@@ -348,23 +347,26 @@ void SettingsDialog::save()
 
 	bool hideFullscreenMenubar = getCheckbox("cbHideFullscreenMenubar");
 	bool hideFullscreenSidebar = getCheckbox("cbHideFullscreenSidebar");
-	settings->setFullscreenHideElements(updateHideString(
-	                                        settings->getFullscreenHideElements(), hideFullscreenMenubar,
-	                                        hideFullscreenSidebar));
+	settings->setFullscreenHideElements(
+						updateHideString(settings->getFullscreenHideElements(),
+										 hideFullscreenMenubar,
+										 hideFullscreenSidebar)
+						);
 
 	bool hidePresentationMenubar = getCheckbox("cbHidePresentationMenubar");
 	bool hidePresentationSidebar = getCheckbox("cbHidePresentationSidebar");
-	settings->setPresentationHideElements(updateHideString(
-	                                          settings->getPresentationHideElements(), hidePresentationMenubar,
-	                                          hidePresentationSidebar));
+	settings->setPresentationHideElements(
+						updateHideString(settings->getPresentationHideElements(),
+										 hidePresentationMenubar,
+										 hidePresentationSidebar)
+						);
 
 	GtkWidget* txtDefaultSaveName = get("txtDefaultSaveName");
 	const char* txt = gtk_entry_get_text(GTK_ENTRY(txtDefaultSaveName));
 	settings->setDefaultSaveName(txt);
 
 	GtkWidget* spAutosaveTimeout = get("spAutosaveTimeout");
-	int autosaveTimeout = gtk_spin_button_get_value(GTK_SPIN_BUTTON(
-	                                                    spAutosaveTimeout));
+	int autosaveTimeout = gtk_spin_button_get_value(GTK_SPIN_BUTTON(spAutosaveTimeout));
 	settings->setAutosaveTimeout(autosaveTimeout);
 
 	settings->setDisplayDpi(dpi);

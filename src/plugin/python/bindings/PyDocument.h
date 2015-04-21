@@ -3,24 +3,22 @@
  *
  * Python bindings
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __PYDOCUMENT_H__
-#define __PYDOCUMENT_H__
+#pragma once
 
 class Control;
 #include <Python.h>
 
-extern "C" {
+extern "C"
+{
 
-	void initdocument();
+void initdocument();
 
-	PyObject* newPyDocument(PyObject* xournal);
+PyObject* newPyDocument(PyObject* xournal);
 
 }
-
-#endif /* __PYDOCUMENT_H__ */

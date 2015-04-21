@@ -3,17 +3,16 @@
  *
  * The main Control
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __CLIPBOARDHANDLER_H__
-#define __CLIPBOARDHANDLER_H__
+#pragma once
 
 #include <gtk/gtk.h>
-#include <String.h>
+#include <StringUtils.h>
 #include <XournalType.h>
 #include "tools/EditSelection.h"
 
@@ -24,7 +23,7 @@ class ClipboardListener
 public:
 	virtual void clipboardCutCopyEnabled(bool enabled) = 0;
 	virtual void clipboardPasteEnabled(bool enabled) = 0;
-	virtual void clipboardPasteText(String text) = 0;
+	virtual void clipboardPasteText(string text) = 0;
 	virtual void clipboardPasteImage(GdkPixbuf* img) = 0;
 	virtual void clipboardPasteXournal(ObjectInputStream& in) = 0;
 	virtual void deleteSelection() = 0;
@@ -47,15 +46,15 @@ public:
 
 private:
 	static void ownerChangedCallback(GtkClipboard* clip, GdkEvent* event,
-	                                 ClipboardHandler* handler);
+									ClipboardHandler* handler);
 	void clipboardUpdated(GdkAtom atom);
 	static void receivedClipboardContents(GtkClipboard* clipboard,
-	                                      GtkSelectionData* selectionData, ClipboardHandler* handler);
+										GtkSelectionData* selectionData, ClipboardHandler* handler);
 
 	static void pasteClipboardContents(GtkClipboard* clipboard,
-	                                   GtkSelectionData* selectionData, ClipboardHandler* handler);
+									GtkSelectionData* selectionData, ClipboardHandler* handler);
 	static void pasteClipboardImage(GtkClipboard* clipboard, GdkPixbuf* pixbuf,
-	                                ClipboardHandler* handler);
+									ClipboardHandler* handler);
 
 private:
 	XOJ_TYPE_ATTRIB;
@@ -70,5 +69,3 @@ private:
 	bool containsXournal;
 	bool containsImage;
 };
-
-#endif /* __CLIPBOARDHANDLER_H__ */

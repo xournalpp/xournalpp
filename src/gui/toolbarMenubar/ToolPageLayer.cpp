@@ -5,11 +5,10 @@
 #include <config.h>
 #include <glib/gi18n-lib.h>
 
-ToolPageLayer::ToolPageLayer(GladeGui* gui, ActionHandler* handler, String id,
-                             ActionType type) :
-	AbstractToolItem(id, handler, type, NULL)
+ToolPageLayer::ToolPageLayer(GladeGui* gui, ActionHandler* handler, string id,
+							 ActionType type) :
+AbstractToolItem(id, handler, type, NULL)
 {
-
 	XOJ_INIT_TYPE(ToolPageLayer);
 
 	this->layerComboBox = gtk_combo_box_new_text();
@@ -18,7 +17,7 @@ ToolPageLayer::ToolPageLayer(GladeGui* gui, ActionHandler* handler, String id,
 	this->gui = gui;
 
 	g_signal_connect(this->layerComboBox, "changed", G_CALLBACK(&cbSelectCallback),
-	                 this);
+					 this);
 }
 
 ToolPageLayer::~ToolPageLayer()
@@ -36,7 +35,7 @@ void ToolPageLayer::cbSelectCallback(GtkComboBox* widget, ToolPageLayer* tpl)
 	}
 
 	tpl->handler->actionPerformed(ACTION_FOOTER_LAYER, GROUP_NOGROUP, NULL, NULL,
-	                              NULL, true);
+								  NULL, true);
 }
 
 int ToolPageLayer::getSelectedLayer()
@@ -66,7 +65,7 @@ void ToolPageLayer::setLayerCount(int layer, int selected)
 	this->inCbUpdate = true;
 
 	int count = gtk_tree_model_iter_n_children(gtk_combo_box_get_model(
-	                                               GTK_COMBO_BOX(this->layerComboBox)), NULL);
+																	   GTK_COMBO_BOX(this->layerComboBox)), NULL);
 
 	for (int i = count - 1; i >= 0; i--)
 	{
@@ -87,7 +86,7 @@ void ToolPageLayer::setLayerCount(int layer, int selected)
 	this->inCbUpdate = false;
 }
 
-String ToolPageLayer::getToolDisplayName()
+string ToolPageLayer::getToolDisplayName()
 {
 	XOJ_CHECK_TYPE(ToolPageLayer);
 

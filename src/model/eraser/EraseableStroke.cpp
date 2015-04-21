@@ -18,7 +18,7 @@ EraseableStroke::EraseableStroke(Stroke* stroke)
 	for (int i = 1; i < stroke->getPointCount(); i++)
 	{
 		this->parts->add(new EraseableStrokePart(stroke->getPoint(i - 1),
-		                                         stroke->getPoint(i)));
+												stroke->getPoint(i)));
 	}
 }
 
@@ -32,12 +32,12 @@ EraseableStroke::~EraseableStroke()
 	XOJ_RELEASE_TYPE(EraseableStroke);
 }
 
-////////////////////////////////////////////////////////////////////////////////////////////////
-// This is done in a Thread, every thing else in the main loop /////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+// This is done in a Thread, every thing else in the main loop /////////////////
+////////////////////////////////////////////////////////////////////////////////
 
 void EraseableStroke::draw(cairo_t* cr, double x, double y, double width,
-                           double height)
+						   double height)
 {
 	XOJ_CHECK_TYPE(EraseableStroke);
 
@@ -85,7 +85,7 @@ void EraseableStroke::draw(cairo_t* cr, double x, double y, double width,
  * The only public method
  */
 Range* EraseableStroke::erase(double x, double y, double halfEraserSize,
-                              Range* range)
+							  Range* range)
 {
 	XOJ_CHECK_TYPE(EraseableStroke);
 
@@ -113,7 +113,7 @@ Range* EraseableStroke::erase(double x, double y, double halfEraserSize,
 }
 
 void EraseableStroke::addRepaintRect(double x, double y, double width,
-                                     double height)
+									 double height)
 {
 	XOJ_CHECK_TYPE(EraseableStroke);
 
@@ -130,7 +130,7 @@ void EraseableStroke::addRepaintRect(double x, double y, double width,
 }
 
 void EraseableStroke::erase(double x, double y, double halfEraserSize,
-                            EraseableStrokePart* part, PartList* list)
+							EraseableStrokePart* part, PartList* list)
 {
 	XOJ_CHECK_TYPE(EraseableStroke);
 
@@ -145,11 +145,11 @@ void EraseableStroke::erase(double x, double y, double halfEraserSize,
 	Point* b = (Point*) g_list_last(part->points)->data;
 
 	if (eraser.lineLengthTo(*a) < halfEraserSize * 1.2 &&
-	    eraser.lineLengthTo(*b) < halfEraserSize * 1.2)
+		eraser.lineLengthTo(*b) < halfEraserSize * 1.2)
 	{
 		list->data = g_list_remove(list->data, part);
 		addRepaintRect(part->getX(), part->getY(), part->getElementWidth(),
-		               part->getElementHeight());
+					part->getElementHeight());
 
 		delete part;
 		return;
@@ -173,11 +173,11 @@ void EraseableStroke::erase(double x, double y, double halfEraserSize,
 		if (erasePart(x, y, halfEraserSize, part, list, &deleteAfter))
 		{
 			addRepaintRect(part->getX(), part->getY(), part->getElementWidth(),
-			               part->getElementHeight());
+						part->getElementHeight());
 			part->calcSize();
 		}
 
-		if(deleteAfter)
+		if (deleteAfter)
 		{
 			delete part;
 		}
@@ -193,11 +193,11 @@ void EraseableStroke::erase(double x, double y, double halfEraserSize,
 		if (erasePart(x, y, halfEraserSize, part, list, &deleteAfter))
 		{
 			addRepaintRect(part->getX(), part->getY(), part->getElementWidth(),
-			               part->getElementHeight());
+						part->getElementHeight());
 			part->calcSize();
 		}
 
-		if(deleteAfter)
+		if (deleteAfter)
 		{
 			delete part;
 		}
@@ -210,7 +210,7 @@ void EraseableStroke::erase(double x, double y, double halfEraserSize,
 	 * The normale to a vector, the padding to a point
 	 */
 	double p = ABS((x - aX) * (aY - bY) + (y - aY) * (bX - aX)) / hypot(aX - x,
-	                                                                    aY - y);
+																		aY - y);
 
 	// The space to the line is in the range, but it can also be parallel
 	// and not enough close, so calculate a "circle" with the center on the
@@ -234,11 +234,11 @@ void EraseableStroke::erase(double x, double y, double halfEraserSize,
 			if (erasePart(x, y, halfEraserSize, part, list, &deleteAfter))
 			{
 				addRepaintRect(part->getX(), part->getY(), part->getElementWidth(),
-				               part->getElementHeight());
+							part->getElementHeight());
 				part->calcSize();
 			}
 
-			if(deleteAfter)
+			if (deleteAfter)
 			{
 				delete part;
 			}
@@ -249,7 +249,7 @@ void EraseableStroke::erase(double x, double y, double halfEraserSize,
 }
 
 bool EraseableStroke::erasePart(double x, double y, double halfEraserSize,
-                                EraseableStrokePart* part, PartList* list, bool* deleteStrokeAfter)
+								EraseableStrokePart* part, PartList* list, bool* deleteStrokeAfter)
 {
 	XOJ_CHECK_TYPE(EraseableStroke);
 

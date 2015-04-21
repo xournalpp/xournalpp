@@ -3,17 +3,19 @@
  *
  * The recent opened files
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __RECENTMANAGER_H__
-#define __RECENTMANAGER_H__
+#pragma once
+
+#include <boost/filesystem/path.hpp>
+using boost::filesystem::path;
 
 #include <gtk/gtk.h>
-#include <String.h>
+#include <StringUtils.h>
 #include <XournalType.h>
 
 class RecentManagerListener
@@ -23,7 +25,7 @@ public:
 	 * This function is called whenever some file
 	 * from the recent menu is opened
 	 */
-	virtual void fileOpened(const char* uri) = 0;
+	virtual void fileOpened(const gchar* uri) = 0;
 };
 
 /**
@@ -38,28 +40,16 @@ public:
 public:
 
 	/**
-	 * Convenience function, essentially calls
-	 * addRecentFileUri(const char* uri)
-	 */
-	void addRecentFileFilename(const char* filename);
-
-	/**
 	 * Adds a file to the underlying GtkRecentManager
 	 * without altering the menu
 	 */
-	void addRecentFileUri(const char* uri);
-
-	/**
-	 * Convenience function, essentially calls
-	 * removeRecentFileUri(const char* uri)
-	 */
-	void removeRecentFileFilename(const char* filename);
+	void addRecentFileFilename(path filename);
 
 	/**
 	 * Removes a file from the underlying GtkRecentManager
 	 * without altering the menu
 	 */
-	void removeRecentFileUri(const char* uri);
+	void removeRecentFileFilename(path filename);
 
 	/**
 	 * Removes all of the menu items corresponding to recent files
@@ -85,7 +75,7 @@ public:
 	 * Notifies all RecentManagerListener%s that a new
 	 * file is opened
 	 */
-	void openRecent(String uri);
+	void openRecent(path p);
 
 	/**
 	 * Returns the root menu containing all the items
@@ -120,14 +110,14 @@ private:
 	 * all of the menu items
 	 */
 	static void recentManagerChangedCallback(GtkRecentManager* manager,
-	                                         RecentManager* recentManager);
+											RecentManager* recentManager);
 
 	/**
 	 * This callback function is triggered whenever one of
 	 * the items corresponding to recent files is activated
 	 */
 	static void recentsMenuActivateCallback(GtkAction* action,
-	                                        RecentManager* recentManager);
+											RecentManager* recentManager);
 
 	/**
 	 * This function serves as a comparator to sort different
@@ -145,7 +135,5 @@ private:
 	GList* listener;
 
 	GtkWidget* menu;
-	GList* menuItemList;
+	std::vector<GtkWidget*> menuItemList;
 };
-
-#endif /* __RECENTMANAGER_H__ */

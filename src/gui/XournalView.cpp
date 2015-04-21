@@ -53,7 +53,7 @@ XournalView::XournalView(GtkWidget* parent, Control* control)
 	gtk_widget_grab_focus(this->widget);
 
 	this->cleanupTimeout = g_timeout_add_seconds(5, (GSourceFunc) clearMemoryTimer,
-	                                             this);
+												 this);
 }
 
 XournalView::~XournalView()
@@ -255,13 +255,13 @@ bool XournalView::onKeyPressEvent(GdkEventKey* event)
 		return true;
 	}
 
-	if(event->keyval == GDK_End)
+	if (event->keyval == GDK_End)
 	{
 		control->getScrollHandler()->goToLastPage();
 		return true;
 	}
 
-	if(event->keyval == GDK_Home)
+	if (event->keyval == GDK_Home)
 	{
 		control->getScrollHandler()->goToFirstPage();
 		return true;
@@ -302,8 +302,8 @@ void XournalView::requestFocus()
 	gtk_widget_grab_focus(this->widget);
 }
 
-bool XournalView::searchTextOnPage(const char* text, int p, int* occures,
-                                   double* top)
+bool XournalView::searchTextOnPage(string text, int p, int* occures,
+								   double* top)
 {
 	XOJ_CHECK_TYPE(XournalView);
 
@@ -348,7 +348,7 @@ void XournalView::pageSelected(int page)
 
 	Document* doc = control->getDocument();
 	doc->lock();
-	String file = doc->getEvMetadataFilename();
+	path file = doc->getEvMetadataFilename();
 	doc->unlock();
 
 	control->getMetadataManager()->setInt(file, "page", page);
@@ -395,9 +395,9 @@ void XournalView::scrollTo(int pageNo, double yDocument)
 
 	Layout* layout = gtk_xournal_get_layout(this->widget);
 	layout->ensureRectIsVisible(v->layout.getLayoutAbsoluteX(),
-	                            v->layout.getLayoutAbsoluteY() + yDocument, 
-				    v->getDisplayWidth(),
-	                            v->getDisplayHeight());
+								v->layout.getLayoutAbsoluteY() + yDocument,
+								v->getDisplayWidth(),
+								v->getDisplayHeight());
 }
 
 void XournalView::endTextAllPages(PageView* except)
@@ -443,6 +443,7 @@ void XournalView::getPasteTarget(double& x, double& y)
 		delete rect;
 	}
 }
+
 /**
  * Return the rectangle which is visible on screen, in document cooordinates
  *
@@ -505,7 +506,7 @@ void XournalView::zoomChanged(double lastZoom)
 
 	Document* doc = control->getDocument();
 	doc->lock();
-	String file = doc->getEvMetadataFilename();
+	path file = doc->getEvMetadataFilename();
 	doc->unlock();
 
 	control->getMetadataManager()->setDouble(file, "zoom", getZoom());
@@ -671,7 +672,7 @@ void XournalView::deleteSelection(EditSelection* sel)
 	{
 		PageView* view = sel->getView();
 		DeleteUndoAction* undo = new DeleteUndoAction(sel->getSourcePage(),
-		                                              false);
+													  false);
 		sel->fillUndoItem(undo);
 		control->getUndoRedoHandler()->addUndoAction(undo);
 
@@ -694,11 +695,8 @@ void XournalView::setSelection(EditSelection* selection)
 	bool canChangeSize = false;
 	bool canChangeColor = false;
 
-	ListIterator<Element*> it = selection->getElements();
-
-	while (it.hasNext())
+	for (Element* e : *selection->getElements())
 	{
-		Element* e = it.next();
 		if (e->getType() == ELEMENT_TEXT)
 		{
 			canChangeColor = true;

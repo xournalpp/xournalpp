@@ -26,7 +26,7 @@ bool CursorTheme::loadTheme(String name)
 	}
 
 	gchar* author = g_key_file_get_string(config, "general", "author", NULL);
-	if(author != NULL)
+	if (author != NULL)
 	{
 		this->author = author;
 		g_free(author);
@@ -37,7 +37,7 @@ bool CursorTheme::loadTheme(String name)
 	}
 
 	gchar* themeName = g_key_file_get_locale_string(config, "general", "name", NULL,
-	                                                NULL);
+													NULL);
 	if (themeName != NULL)
 	{
 		this->name = themeName;
@@ -49,7 +49,7 @@ bool CursorTheme::loadTheme(String name)
 	}
 
 	gchar* description = g_key_file_get_locale_string(config, "general",
-	                                                  "description", NULL, NULL);
+													"description", NULL, NULL);
 	if (description != NULL)
 	{
 		this->description = description;

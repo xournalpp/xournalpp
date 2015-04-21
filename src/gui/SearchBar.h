@@ -3,14 +3,13 @@
  *
  * Handles the searchbar and search events
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __SEARCHBAR_H__
-#define __SEARCHBAR_H__
+#pragma once
 
 #include <gtk/gtk.h>
 
@@ -32,7 +31,7 @@ private:
 
 	static void buttonNextSearchClicked(GtkButton* button, SearchBar* searchBar);
 	static void buttonPreviousSearchClicked(GtkButton* button,
-	                                        SearchBar* searchBar);
+											SearchBar* searchBar);
 
 	void searchNext();
 	void searchPrevious();
@@ -46,5 +45,3 @@ private:
 	Control* control;
 	GdkColor defaultColor;
 };
-
-#endif /* __SEARCHBAR_H__ */

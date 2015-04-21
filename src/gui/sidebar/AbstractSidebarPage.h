@@ -3,14 +3,13 @@
  *
  * Abstract Sidebar Page
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __ABSTRACTSIDEBARPAGE_H__
-#define __ABSTRACTSIDEBARPAGE_H__
+#pragma once
 
 #include <gtk/gtk.h>
 #include <XournalType.h>
@@ -89,5 +88,3 @@ public:
 	GtkToolItem* tabButton;
 
 };
-
-#endif /* __ABSTRACTSIDEBARPAGE_H__ */

@@ -5,10 +5,8 @@
 #include "../gui/Redrawable.h"
 #include <Stacktrace.h>
 
-RecognizerUndoAction::RecognizerUndoAction(PageRef page,
-                                           Layer* layer,
-                                           Stroke* original,
-                                           Stroke* recognized) : UndoAction("RecognizerUndoAction")
+RecognizerUndoAction::RecognizerUndoAction(PageRef page, Layer* layer,
+	Stroke* original, Stroke* recognized) : UndoAction("RecognizerUndoAction")
 {
 	XOJ_INIT_TYPE(RecognizerUndoAction);
 
@@ -96,7 +94,7 @@ bool RecognizerUndoAction::redo(Control* control)
 	return true;
 }
 
-String RecognizerUndoAction::getText()
+string RecognizerUndoAction::getText()
 {
 	XOJ_CHECK_TYPE(RecognizerUndoAction);
 

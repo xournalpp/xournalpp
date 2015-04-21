@@ -3,14 +3,13 @@
  *
  * Handles Tools
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __TOOLHANDLER_H__
-#define __TOOLHANDLER_H__
+#pragma once
 
 #include "Tool.h"
 #include <Arrayiterator.h>
@@ -32,23 +31,24 @@ class ToolHandler
 {
 public:
 	ToolHandler(ToolListener* listener, ActionHandler* actionHandler,
-	            Settings* settings);
+				Settings* settings);
 	virtual ~ToolHandler();
 
 	void setColor(int color);
 	int getColor();
 	GdkColor getGdkColor();
 
-	void setRuler(bool ruler);
-	void setRectangle(bool rectangle);
-	void setCircle(bool circle);
-	void setArrow(bool arrow);
+	void setAll(bool set);
+	void setRuler(bool ruler, bool disableOthers = false);
+	void setRectangle(bool rectangle, bool disableOthers = false);
+	void setCircle(bool circle, bool disableOthers = false);
+	void setArrow(bool arrow, bool disableOthers = false);
 	bool isRuler();
 	bool isRectangle();
 	bool isCircle();
 	bool isArrow();
 
-	void setShapeRecognizer(bool reco);
+	void setShapeRecognizer(bool reco, bool disableOthers = false);
 	bool isShapeRecognizer();
 
 	void setColorFound();
@@ -116,5 +116,3 @@ private:
 
 	Settings* settings;
 };
-
-#endif /* __TOOLHANDLER_H__ */

@@ -3,14 +3,13 @@
  *
  * A job which handles preview repaint
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __PREVIEWJOB_H__
-#define __PREVIEWJOB_H__
+#pragma once
 
 #include "Job.h"
 #include <XournalType.h>
@@ -37,5 +36,3 @@ private:
 
 	SidebarPreviewPage* sidebarPreview;
 };
-
-#endif /* __PREVIEWJOB_H__ */

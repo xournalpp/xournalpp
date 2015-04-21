@@ -3,14 +3,13 @@
  *
  * A stroke on the document
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __STROKE_H__
-#define __STROKE_H__
+#pragma once
 
 #include "Element.h"
 #include <Arrayiterator.h>
@@ -18,12 +17,12 @@
 
 enum StrokeTool
 {
-    STROKE_TOOL_PEN, STROKE_TOOL_ERASER, STROKE_TOOL_HIGHLIGHTER
+	STROKE_TOOL_PEN, STROKE_TOOL_ERASER, STROKE_TOOL_HIGHLIGHTER
 };
 
 class EraseableStroke;
 
-class Stroke: public Element
+class Stroke : public Element
 {
 public:
 	Stroke();
@@ -83,8 +82,7 @@ protected:
 private:
 	XOJ_TYPE_ATTRIB;
 
-	// The stroke width
-	double width;
+	// The stroke width is inherited from Element
 
 	StrokeTool toolType;
 
@@ -95,5 +93,3 @@ private:
 
 	EraseableStroke* eraseable;
 };
-
-#endif /* __STROKE_H__ */

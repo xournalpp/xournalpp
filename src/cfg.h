@@ -9,8 +9,7 @@
  * @license GPL
  */
 
-#ifndef __CONFIG_H__
-#define __CONFIG_H__
+#pragma once
 
 #define CONFIG_DIR          ".xournalpp"
 #define TOOLBAR_CONFIG      "toolbar.ini"
@@ -39,6 +38,3 @@
 
 // draw a border around all painted rects
 // #define SHOW_PAINT_BOUNDS
-
-
-#endif /* __CONFIG_H__ */

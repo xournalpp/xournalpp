@@ -3,14 +3,13 @@
  *
  * Handles PDF Export
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __PDFOBJECTWRITER_H__
-#define __PDFOBJECTWRITER_H__
+#pragma once
 
 #include "poppler/XojPopplerDocument.h"
 #include "poppler-0.24.1/poppler/Object.h"
@@ -40,5 +39,3 @@ private:
 
 	GHashTable* updatedReferenced;
 };
-
-#endif /* __PDFOBJECTWRITER_H__ */

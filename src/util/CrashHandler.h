@@ -3,17 +3,14 @@
  *
  * Error handler, prints a stacktrace if Xournal++ crashes
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __CRASH_HANDLER_H__
-#define __CRASH_HANDLER_H__
+#pragma once
 
 class Document;
 void setEmergencyDocument(Document* doc);
 void installCrashHandlers(void);
-
-#endif // __CRASH_HANDLER_H__

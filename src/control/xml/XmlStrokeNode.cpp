@@ -1,7 +1,7 @@
 #include "XmlStrokeNode.h"
 
 XmlStrokeNode::XmlStrokeNode(const char* tag) :
-	XmlNode(tag)
+XmlNode(tag)
 {
 	XOJ_INIT_TYPE(XmlStrokeNode);
 
@@ -10,6 +10,7 @@ XmlStrokeNode::XmlStrokeNode(const char* tag) :
 	this->widths = NULL;
 	this->widthsLength = 0;
 }
+
 XmlStrokeNode::~XmlStrokeNode()
 {
 	XOJ_CHECK_TYPE(XmlStrokeNode);

@@ -1,152 +1,169 @@
 /*
  * Xournal++
  *
- * This small programm extracts a preview out of a xournal file
+ * This small programm extracts a preview out of a xournal file.
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author MarPiRK
+ * http://marpirk.net
+ * 
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2
  */
 
-/**
- * Build this File with: gcc xournal-thumbnailer.c -lz -o xoj-preview-extractor
- */
+#include <string>
+#include <iostream>
+#include <fstream>
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <zlib.h>
+#include <boost/locale.hpp>
+#include <boost/iostreams/filter/gzip.hpp>
+#include <boost/iostreams/filtering_streambuf.hpp>
+#include <boost/algorithm/string.hpp>
 
-const char BASE64_TABLE[256] = { -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-                                 -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 62, -1, -1, -1, 63, 52,
-                                 53, 54, 55, 56, 57, 58, 59, 60, 61, -1, -1, -1, -1, -1, -1, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13,
-                                 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, -1, -1, -1, -1, -1, -1, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35,
-                                 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-                                 -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-                                 -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-                                 -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-                                 -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-                                 -1, -1, -1, -1, -1, -1, -1, -1, -1
-                               };
+#include "../../config.h"
+
+namespace bl = boost::locale;
+namespace bi = boost::iostreams;
+namespace ba = boost::algorithm;
+using namespace std;
+
+const char BASE64_TABLE[256] = {
+	-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+	-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+	-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 62, -1, -1, -1, 63,
+	52, 53, 54, 55, 56, 57, 58, 59, 60, 61, -1, -1, -1, -1, -1, -1,
+	-1,  0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 13, 14,
+	15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, -1, -1, -1, -1, -1,
+	-1, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40,
+	41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, -1, -1, -1, -1, -1,
+	-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+	-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+	-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+	-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+	-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+	-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+	-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+	-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1
+};
+
+#ifdef ENABLE_NLS
+void initLocalisation()
+{
+	//locale generator (for future i18n)
+	bl::generator gen;
+	gen.add_messages_path(PACKAGE_LOCALE_DIR);
+	gen.add_messages_domain(GETTEXT_PACKAGE);
+
+	std::locale::global(gen("")); //"" - system default locale
+	std::cout.imbue(std::locale());
+}
+#endif //ENABLE_NLS
+
+const string TAG_PREVIEW_NAME = "preview";
+const string TAG_PAGE_NAME = "page";
 
 int main(int argc, char* argv[])
 {
-	gzFile f;
-	FILE* fp;
-	int count;
-	unsigned char buffer[512];
 
-	int i;
-	int x;
-	int pa;
-	int pr;
-	const char* TAG_PAGE = "<page>";
-	const char* TAG_PREVIEW = "<preview>";
+#ifdef ENABLE_NLS
+	initLocalisation();
+#endif
 
-	int state;
-	int bufPos;
-	char inBuffer[4];
-
-	fp = NULL;
-
+	//check args count
 	if (argc != 3)
 	{
-		printf("xoj-preview-extractor: call with INPUT.xoj OUTPUT.png\n");
+		cerr << "xoj-preview-extractor: call with INPUT.xoj OUTPUT.png" << endl;
 		return 1;
 	}
 
-	f = gzopen(argv[1], "r");
-
-	if (f == NULL)
+	//check input file extension
+	if (!ba::ends_with(bl::to_lower(argv[1]), ".xoj"))
 	{
-		printf("xoj-preview-extractor: open input failed \"%s\"\n", argv[1]);
+		cerr << bl::format("xoj-prevew-extractor: file \"{1}\" is not .xoj file") % argv[1] << endl;
 		return 2;
 	}
 
-	pa = 0;
-	pr = 0;
-	i = 0;
-	state = 0;
-	bufPos = 0;
+	ifstream ifile(argv[1], ios_base::in | ios_base::binary);
+	ofstream ofile;
 
-	do
+	if (!ifile.is_open())
 	{
-		count = gzread(f, buffer, sizeof(buffer));
+		cerr << bl::format("xoj-preview-extractor: open input file \"{1}\" failed") % argv[1] << endl;
+		return 3;
+	}
 
-		i = 0;
+	bi::filtering_istreambuf inbuf;
+	inbuf.push(bi::gzip_decompressor());
+	inbuf.push(ifile);
 
-		if (state == 0)
+	istream in(&inbuf);
+	char c;
+	string tmpTag;
+	bool tmpTagAct = false;
+
+	char buf[4];
+	int bufPos = 0;
+
+	while (in.get(c))
+	{
+		if (tmpTagAct)
 		{
-			for (; i < count; i++)
-			{
-				if (TAG_PREVIEW[pr] == buffer[i])
-				{
-					pr++;
-					if (TAG_PREVIEW[pr] == 0)
-					{
-						// now we are in preview data
-						state = 1;
-						i++;
-						fp = fopen(argv[2], "wb");
-						if (!fp)
-						{
-							printf("xoj-preview-extractor: open output file \"%s\" failed!\n", argv[2]);
-							return 3;
-						}
-						break;
-					}
-				}
-				else
-				{
-					pr = 0;
-				}
+			tmpTag += c;
 
-				if (TAG_PAGE[pa] == buffer[i])
+			if (tmpTag == TAG_PREVIEW_NAME)
+			{
+				tmpTagAct = false;
+				ofile.open(argv[2], ios_base::out | ios_base::binary);
+				if (!ofile.is_open())
 				{
-					pa++;
-					if (TAG_PAGE[pa] == 0)
-					{
-						printf("xoj-preview-extractor: this file contains no preview\n", argv[2]);
-						return 5;
-					}
-				}
-				else
-				{
-					pa = 0;
+					cerr << bl::format("xoj-preview-extractor: open output file \"{1}\" failed") % argv[2] << endl;
+					ifile.close();
+					return 4;
 				}
 			}
-		}
-
-		for (; i < count; i++)
-		{
-			if (buffer[i] == '<')
+			else if (tmpTag == TAG_PAGE_NAME)
 			{
-				fclose(fp);
-				printf("xoj-preview-extractor: successfully extracted\n");
+				tmpTagAct = false;
+				cerr << "xoj-preview-extractor: this file contains no preview" << endl;
+				ifile.close();
+				return 5;
+			}
+			else if (c == '>')
+			{
+				tmpTagAct = false;
+			}
+		}
+		else if (c == '<')
+		{
+			if (ofile.is_open())
+			{
+				cout << "xoj-preview-extractor: successfully extracted" << endl;
+				ifile.close();
+				ofile.close();
 				return 0;
 			}
 
-			inBuffer[bufPos++] = buffer[i];
+			tmpTag.clear();
+			tmpTagAct = true;
+		}
+		else if (ofile.is_open())
+		{
+			if (BASE64_TABLE[c] != -1)
+			{
+				buf[bufPos++] = BASE64_TABLE[c];
+			}
+
 			if (bufPos == 4)
 			{
-				for (x = 0; x < 4; x++)
-				{
-					inBuffer[x] = BASE64_TABLE[inBuffer[x]];
-				}
-
-				fputc((char) ((inBuffer[0] << 2) + ((inBuffer[1] & 0x30) >> 4)), fp);
-				fputc((char) (((inBuffer[1] & 0xf) << 4) + ((inBuffer[2] & 0x3c) >> 2)), fp);
-				fputc((char) (((inBuffer[2] & 0x3) << 6) + inBuffer[3]), fp);
-
+				ofile << char((buf[0] << 2) + ((buf[1] & 0x30) >> 4));
+				ofile << char(((buf[1] & 0xf) << 4) + ((buf[2] & 0x3c) >> 2));
+				ofile << char(((buf[2] & 0x3) << 6) + buf[3]);
 				bufPos = 0;
 			}
 		}
-
 	}
-	while (count);
 
-	gzclose(f);
-
-	printf("xoj-preview-extractor: no preview found, may an invalid file?\n");
+	cerr << "xoj-preview-extractor: no preview and page found, maybe an invalid file?" << endl;
+	ifile.close();
 	return 10;
 }

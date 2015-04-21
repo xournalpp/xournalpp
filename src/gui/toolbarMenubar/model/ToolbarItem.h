@@ -3,39 +3,36 @@
  *
  * Part of the customizable toolbars
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __TOOLBARITEM_H__
-#define __TOOLBARITEM_H__
+#pragma once
 
-#include <String.h>
+#include <StringUtils.h>
 #include <XournalType.h>
 
 class ToolbarItem
 {
 public:
-	ToolbarItem(String name);
+	ToolbarItem(string name);
 	ToolbarItem(const ToolbarItem& item);
 	ToolbarItem();
 	virtual ~ToolbarItem();
 
-	operator String();
+	operator string();
 
-	bool operator == (ToolbarItem& other);
+	bool operator==(ToolbarItem& other);
 
 	int getId();
 
 private:
 	XOJ_TYPE_ATTRIB;
 
-	String name;
+	string name;
 	int id;
 
 	static int sid;
 };
-
-#endif /* __TOOLBARITEM_H__ */

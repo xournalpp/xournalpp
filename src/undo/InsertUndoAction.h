@@ -3,14 +3,13 @@
  *
  * Undo action for insert (write text, draw stroke...)
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __INSERTUNDOACTION_H__
-#define __INSERTUNDOACTION_H__
+#pragma once
 
 #include "UndoAction.h"
 
@@ -18,7 +17,7 @@ class Layer;
 class Element;
 class Redrawable;
 
-class InsertUndoAction: public UndoAction
+class InsertUndoAction : public UndoAction
 {
 public:
 	InsertUndoAction(PageRef page, Layer* layer, Element* element);
@@ -28,7 +27,7 @@ public:
 	virtual bool undo(Control* control);
 	virtual bool redo(Control* control);
 
-	virtual String getText();
+	virtual string getText();
 
 private:
 	XOJ_TYPE_ATTRIB;
@@ -40,21 +39,19 @@ private:
 class InsertsUndoAction : public UndoAction
 {
 public:
-	InsertsUndoAction(PageRef page, Layer* layer, GList* elements);
+	InsertsUndoAction(PageRef page, Layer* layer, ElementVector elements);
 	virtual ~InsertsUndoAction();
 
 public:
 	virtual bool undo(Control* control);
 	virtual bool redo(Control* control);
 
-	virtual String getText();
+	virtual string getText();
 
 private:
 	XOJ_TYPE_ATTRIB;
 
 	Layer* layer;
-	GList* elements;
+	ElementVector elements;
 
 };
-
-#endif /* __INSERTUNDOACTION_H__ */

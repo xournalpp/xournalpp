@@ -1,7 +1,7 @@
 #include "BackgroundImageContents.h"
 
-BackgroundImageContents::BackgroundImageContents(String filename,
-                                                 GError** error)
+BackgroundImageContents::BackgroundImageContents(path filename,
+												 GError** error)
 {
 	XOJ_INIT_TYPE(BackgroundImageContents);
 
@@ -39,14 +39,14 @@ void BackgroundImageContents::reference()
 	this->ref++;
 }
 
-String BackgroundImageContents::getFilename()
+path BackgroundImageContents::getFilename()
 {
 	XOJ_CHECK_TYPE(BackgroundImageContents);
 
 	return this->filename;
 }
 
-void BackgroundImageContents::setFilename(String filename)
+void BackgroundImageContents::setFilename(path filename)
 {
 	XOJ_CHECK_TYPE(BackgroundImageContents);
 

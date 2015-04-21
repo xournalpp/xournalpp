@@ -3,14 +3,13 @@
  *
  * Document listener
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __DOCUMENTLISTENER_H__
-#define __DOCUMENTLISTENER_H__
+#pragma once
 
 #include "DocumentChangeType.h"
 #include <XournalType.h>
@@ -39,5 +38,3 @@ private:
 
 	DocumentHandler* handler;
 };
-
-#endif /* __DOCUMENTLISTENER_H__ */

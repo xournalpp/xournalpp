@@ -3,57 +3,56 @@
  *
  * The contents of a background image
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __BACKGROUNDIMAGECONTENTS_H__
-#define __BACKGROUNDIMAGECONTENTS_H__
+#pragma once
 
 #include <glib.h>
-#include <String.h>
+#include <StringUtils.h>
 #include <XournalType.h>
 #include <gtk/gtk.h>
+#include <boost/filesystem/path.hpp>
+using boost::filesystem::path;
 
 class BackgroundImageContents
 {
 public:
-	BackgroundImageContents(String filename, GError** error);
+    BackgroundImageContents(path filename, GError** error);
 
 private:
-	BackgroundImageContents();
-	BackgroundImageContents(const BackgroundImageContents& contents);
-	void operator =(const BackgroundImageContents& contents);
+    BackgroundImageContents();
+    BackgroundImageContents(const BackgroundImageContents& contents);
+    void operator=(const BackgroundImageContents& contents);
 
 private:
-	virtual ~BackgroundImageContents();
+    virtual ~BackgroundImageContents();
 
 public:
-	void unreference();
-	void reference();
+    void unreference();
+    void reference();
 
 public:
-	String getFilename();
-	void setFilename(String filename);
+    path getFilename();
+    void setFilename(path filename);
 
-	bool isAttach();
-	void setAttach(bool attach);
+    bool isAttach();
+    void setAttach(bool attach);
 
-	int getPageId();
-	void setPageId(int id);
+    int getPageId();
+    void setPageId(int id);
 
-	GdkPixbuf* getPixbuf();
+    GdkPixbuf* getPixbuf();
 
 private:
-	XOJ_TYPE_ATTRIB;
+    XOJ_TYPE_ATTRIB;
 
-	int ref;
-	String filename;
-	bool attach;
-	int pageId;
-	GdkPixbuf* pixbuf;
+    int ref;
+    path filename;
+    bool attach;
+    int pageId;
+    GdkPixbuf* pixbuf;
 };
-
-#endif /* __BACKGROUNDIMAGECONTENTS_H__ */

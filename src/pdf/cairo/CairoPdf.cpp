@@ -9,7 +9,7 @@ CairoPdf::CairoPdf()
 	this->data = g_string_new("");
 
 	this->surface = cairo_pdf_surface_create_for_stream((cairo_write_func_t)
-	                                                    writeOut, this, 0, 0);
+														writeOut, this, 0, 0);
 	this->cr = cairo_create(surface);
 }
 
@@ -27,7 +27,7 @@ CairoPdf::~CairoPdf()
 }
 
 cairo_status_t CairoPdf::writeOut(CairoPdf* pdf, unsigned char* data,
-                                  unsigned int length)
+								  unsigned int length)
 {
 	g_string_append_len(pdf->data, (char*) data, length);
 	return CAIRO_STATUS_SUCCESS;

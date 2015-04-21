@@ -3,19 +3,18 @@
  *
  * Adapter to call progress interface from outside the GTK Main thread
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __SYNCHRONIZEDPROGRESSLISTENER_H__
-#define __SYNCHRONIZEDPROGRESSLISTENER_H__
+#pragma once
 
 #include "ProgressListener.h"
 #include <XournalType.h>
 
-class SynchronizedProgressListener: public ProgressListener
+class SynchronizedProgressListener : public ProgressListener
 {
 public:
 	SynchronizedProgressListener(ProgressListener* target);
@@ -40,5 +39,3 @@ public:
 	int max;
 	int current;
 };
-
-#endif /* __SYNCHRONIZEDPROGRESSLISTENER_H__ */

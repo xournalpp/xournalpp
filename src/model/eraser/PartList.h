@@ -3,15 +3,13 @@
  *
  * A list with parts
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-
-#ifndef __PARTLIST_H__
-#define __PARTLIST_H__
+#pragma once
 
 #include <gtk/gtk.h>
 #include <XournalType.h>
@@ -26,7 +24,7 @@ public:
 
 private:
 	PartList(const PartList& list);
-	void operator = (const PartList& list);
+	void operator=(const PartList& list);
 
 public:
 	void add(EraseableStrokePart* part);
@@ -39,5 +37,3 @@ private:
 
 	friend class EraseableStroke;
 };
-
-#endif /* __PARTLIST_H__ */

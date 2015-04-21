@@ -34,8 +34,8 @@ void XournalScheduler::removeAllJobs()
 
 	g_mutex_lock(&this->jobQueueMutex);
 
-	for(int priority = JOB_PRIORITY_URGENT; priority < JOB_N_PRIORITIES;
-	    priority++)
+	for (int priority = JOB_PRIORITY_URGENT; priority < JOB_N_PRIORITIES;
+		 priority++)
 	{
 		int length = g_queue_get_length(this->jobQueue[priority]);
 		for (int i = 0; i < length; i++)
@@ -65,7 +65,7 @@ void XournalScheduler::finishTask()
 }
 
 void XournalScheduler::removeSource(void* source, JobType type,
-                                    JobPriority priority)
+									JobPriority priority)
 {
 	XOJ_CHECK_TYPE(XournalScheduler);
 
@@ -96,7 +96,7 @@ void XournalScheduler::removeSource(void* source, JobType type,
 }
 
 bool XournalScheduler::existsSource(void* source, JobType type,
-                                    JobPriority priority)
+									JobPriority priority)
 {
 	XOJ_CHECK_TYPE(XournalScheduler);
 

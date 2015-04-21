@@ -3,17 +3,18 @@
  *
  * A TexImage on the document
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __TEXIMAGE_H__
-#define __TEXIMAGE_H__
+#pragma once
 
 #include "Element.h"
 #include <XournalType.h>
+#include <string>
+using std::string;
 
 class TexImage: public Element
 {
@@ -25,7 +26,7 @@ public:
 	void setWidth(double width);
 	void setHeight(double height);
 
-	void setImage(unsigned char* data, int len);
+	void setImage(string data);
 	void setImage(cairo_surface_t* image);
 	void setImage(GdkPixbuf* img);
 	cairo_surface_t* getImage();
@@ -33,9 +34,8 @@ public:
 	virtual void scale(double x0, double y0, double fx, double fy);
 
 	//text tag to alow latex
-	void setText(const char* text, int textlength);
-	const char* getText();
-	int getTextLen();
+	void setText(string text);
+	string getText();
 
 	virtual Element* clone();
 
@@ -55,13 +55,9 @@ private:
 
 	cairo_surface_t* image;
 
-	unsigned char* data;
-	int dLen;
+	string data;
 
 	int read;
 	//text
-	const char* text;
-	int textlen;
+	string text;
 };
-
-#endif /* __TEXIMAGE_H__ */

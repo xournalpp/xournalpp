@@ -3,14 +3,13 @@
  *
  * The Main window
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __MAINWINDOW_H__
-#define __MAINWINDOW_H__
+#pragma once
 
 #include "GladeGui.h"
 #include "../model/Font.h"
@@ -25,7 +24,7 @@ class XournalView;
 class Layout;
 class SpinPageAdapter;
 
-class MainWindow: public GladeGui
+class MainWindow : public GladeGui
 {
 public:
 	MainWindow(GladeSearchpath* gladeSearchPath, Control* control);
@@ -63,8 +62,8 @@ public:
 
 	void updateScrollbarSidebarPosition();
 
-	void setUndoDescription(String description);
-	void setRedoDescription(String description);
+	void setUndoDescription(string description);
+	void setRedoDescription(string description);
 
 	void updateLayerCombobox();
 
@@ -91,32 +90,32 @@ private:
 	 * Sidebar show / hidden
 	 */
 	static void viewShowSidebar(GtkCheckMenuItem* checkmenuitem,
-	                            MainWindow* control);
+								MainWindow* control);
 
 	/**
 	 * Window close Button is pressed
 	 */
 	static bool deleteEventCallback(GtkWidget* widget, GdkEvent* event,
-	                                Control* control);
+									Control* control);
 
 	/**
 	 * Key is pressed
 	 */
 	static bool onKeyPressCallback(GtkWidget* widget, GdkEventKey* event,
-	                                MainWindow* win);
+								MainWindow* win);
 
 	/**
 	 * Callback fro window states, we ned to know if the window is fullscreen
 	 */
 	static bool windowStateEventCallback(GtkWidget* window,
-	                                     GdkEventWindowState* event, MainWindow* win);
+										GdkEventWindowState* event, MainWindow* win);
 
 	/**
 	 * Callback for drag & drop files
 	 */
 	static void dragDataRecived(GtkWidget* widget, GdkDragContext* dragContext,
-	                            gint x, gint y, GtkSelectionData* data, guint info, guint time,
-	                            MainWindow* win);
+								gint x, gint y, GtkSelectionData* data, guint info, guint time,
+								MainWindow* win);
 
 private:
 	XOJ_TYPE_ATTRIB;
@@ -139,5 +138,3 @@ private:
 	GtkWidget** toolbarWidgets;
 
 };
-
-#endif /* __MAINWINDOW_H__ */

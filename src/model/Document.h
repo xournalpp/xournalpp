@@ -5,16 +5,18 @@
  *
  * All methods are unlocked, you need to lock the document before you change something and unlock after.
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __DOCUMENT_H__
-#define __DOCUMENT_H__
+#pragma once
 
-#include <String.h>
+#include <boost/filesystem/path.hpp>
+using boost::filesystem::path;
+
+#include <StringUtils.h>
 #include <XournalType.h>
 
 #include "PageRef.h"
@@ -36,7 +38,7 @@ public:
 	virtual ~Document();
 
 public:
-	bool readPdf(String filename, bool initPages, bool attachToDocument);
+	bool readPdf(path filename, bool initPages, bool attachToDocument);
 
 	int getPageCount();
 	int getPdfPageCount();
@@ -52,18 +54,18 @@ public:
 
 	int indexOf(PageRef page);
 
-	String getLastErrorMsg();
+	string getLastErrorMsg();
 
 	bool isPdfDocumentLoaded();
 	int findPdfPage(int pdfPage);
 
 	void operator=(Document& doc);
 
-	void setFilename(String filename);
-	String getFilename();
-	String getPdfFilename();
+	void setFilename(path filename);
+	path getFilename();
+	path getPdfFilename();
 
-	String getEvMetadataFilename();
+	path getEvMetadataFilename();
 
 	GtkTreeModel* getContentsModel();
 
@@ -86,7 +88,7 @@ private:
 	void buildTreeContentsModel(GtkTreeIter* parent, XojPopplerIter* iter);
 	void updateIndexPageNumbers();
 	static bool fillPageLabels(GtkTreeModel* tree_model, GtkTreePath* path,
-	                           GtkTreeIter* iter, Document* doc);
+							   GtkTreeIter* iter, Document* doc);
 
 private:
 	XOJ_TYPE_ATTRIB;
@@ -96,41 +98,27 @@ private:
 
 	XojPopplerDocument pdfDocument;
 
-	String filename;
-	String pdfFilename;
+	path filename;
+	path pdfFilename;
 	bool attachPdf;
 
-	/**
-	 * Password: not handled yet
-	 */
-	String password;
+	/** Password: not handled yet */
+	string password;
 
-	String lastError;
+	string lastError;
 
-	/**
-	 * The pages in the document
-	 */
+	/** The pages in the document */
 	std::vector<PageRef> pages;
 
-	/**
-	 * The bookmark contents model
-	 */
+	/** The bookmark contents model */
 	GtkTreeModel* contentsModel;
 
-	/**
-	 * create a backup before save, because the original file was an older fileversion
-	 */
+	/** create a backup before save, because the original file was an older fileversion */
 	bool createBackupOnSave;
 
-	/**
-	 * The preview for the file
-	 */
+	/** The preview for the file */
 	cairo_surface_t* preview;
 
-	/**
-	 * The lock of the document
-	 */
+	/** The lock of the document */
 	GMutex documentLock;
 };
-
-#endif /* __DOCUMENT_H__ */

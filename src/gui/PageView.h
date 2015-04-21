@@ -3,22 +3,22 @@
  *
  * Displays a single page
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __PAGEVIEW_H__
-#define __PAGEVIEW_H__
+#pragma once
 
-#include <gtk/gtk.h>
 #include <Range.h>
 #include "Redrawable.h"
 #include "../model/PageRef.h"
 #include "LayoutData.h"
 #include "../model/TexImage.h"
 #include "../model/PageListener.h"
+
+#include <vector>
 
 class XournalView;
 class EditSelection;
@@ -32,7 +32,7 @@ class InputHandler;
 
 class Text;
 
-class PageView: public Redrawable, public PageListener
+class PageView : public Redrawable, public PageListener
 {
 public:
 	PageView(XournalView* xournal, PageRef page);
@@ -55,7 +55,7 @@ public:
 
 	void endText();
 
-	bool searchTextOnPage(const char* text, int* occures, double* top);
+	bool searchTextOnPage(string& text, int* occures, double* top);
 
 	bool onKeyPressEvent(GdkEventKey* event);
 	bool onKeyReleaseEvent(GdkEventKey* event);
@@ -134,7 +134,7 @@ public:
 	 * coordinates
 	 */
 	virtual Rectangle* rectOnWidget(double x, double y, double width,
-	                                double height);
+									double height);
 
 	TexImage* getSelectedTex();
 
@@ -207,7 +207,7 @@ private:
 	int lastVisibleTime;
 
 	GMutex repaintRectMutex;
-	GList * rerenderRects;
+	std::vector<Rectangle*> rerenderRects;
 	bool rerenderComplete;
 
 	GMutex drawingMutex;
@@ -216,5 +216,3 @@ private:
 	friend class RenderJob;
 	friend class InputHandler;
 };
-
-#endif /* __PAGEVIEW_H__ */

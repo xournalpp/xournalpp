@@ -3,29 +3,28 @@
  *
  * Handles PDF Export
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __PDFREFENTRY_H__
-#define __PDFREFENTRY_H__
+#pragma once
 
 #include "poppler-0.24.1/poppler/Object.h"
 #include "poppler/XojPopplerDocument.h"
 
 enum PdfRefEntryType
 {
-    PDF_REF_ENTRY_TYPE_REF,
-    PDF_REF_ENTRY_TYPE_DICT
+	PDF_REF_ENTRY_TYPE_REF,
+	PDF_REF_ENTRY_TYPE_DICT
 };
 
 class PdfRefEntry
 {
 public:
 	PdfRefEntry(PdfRefEntryType type, int objectId, Object* object, int refSourceId,
-	            Ref ref, XojPopplerDocument doc);
+				Ref ref, XojPopplerDocument doc);
 	virtual ~PdfRefEntry();
 
 public:
@@ -51,5 +50,3 @@ public:
 private:
 	bool used;
 };
-
-#endif /* __PDFREFENTRY_H__ */

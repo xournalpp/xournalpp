@@ -5,29 +5,33 @@
 #include "../gui/PageView.h"
 #include "../gui/XournalView.h"
 
-//some time - clean up these includes
+//TODO some time - clean up these includes
+//Yes, please. This file is rebuilding after pretty much every header edit
 #include <serializing/ObjectOutputStream.h>
 #include <serializing/HexObjectEncoding.h>
 
-
 #include "../control/tools/ImageHandler.h"
 #include "../model/TexImage.h"
-#include <glib/gstdio.h>
 
+#include <iostream>
 #include "../cfg.h"
 #include <glib.h>
 
-LatexAction::LatexAction(gchar* myTex, double tArea)
+using namespace std;
+
+LatexAction::LatexAction(string myTex, double tArea)
 {
 	//this->control = control;
 
 	this->theLatex = myTex;
 
-	this->texfile = g_strconcat(g_get_home_dir(), G_DIR_SEPARATOR_S, CONFIG_DIR,
-	                            G_DIR_SEPARATOR_S, "tex", NULL);
-	this->texfilefull = g_strconcat(g_get_home_dir(), G_DIR_SEPARATOR_S, CONFIG_DIR,
-	                                G_DIR_SEPARATOR_S, "tex.png", NULL);
-	printf("%s \n", this->texfile);
+	//TODO paths
+	this->texfile = CONCAT(g_get_home_dir(), G_DIR_SEPARATOR_S, CONFIG_DIR,
+						   G_DIR_SEPARATOR_S, "tex");
+	this->texfilefull = CONCAT(g_get_home_dir(), G_DIR_SEPARATOR_S, CONFIG_DIR,
+							   G_DIR_SEPARATOR_S, "tex.png");
+
+	cout << this->texfile << endl;
 
 	//set up the default positions.
 	this->myx = 0;
@@ -36,32 +40,25 @@ LatexAction::LatexAction(gchar* myTex, double tArea)
 	this->texArea = tArea;
 }
 
-LatexAction::~LatexAction()
-{
-	g_free(this->texfile);
-	g_free(this->texfilefull);
-}
-
 void LatexAction::runCommand()
 {
 	/*
 	 * at some point, I may need to sanitize theLatex
 	 */
-	printf("Command is being run.\n");
+	cout << "Command is being run." << endl;
 	const gchar* mtex = "mathtex-xournalpp.cgi";
 	gchar* mathtex = g_find_program_in_path(mtex);
 	if (!mathtex)
 	{
-		printf("Error: problem finding mathtex. Doing nothing...\n");
+		cerr << "Error: problem finding mathtex. Doing nothing..." << endl;
 		return;
 	}
-	printf("Found mathtex in your path! Area is %f\n",this->texArea);
+	cout << "Found mathtex in your path! Area is " << this->texArea << endl;
 	g_free(mathtex);
-	gchar* command = NULL;
 	//can change font colour later with more features
-	const gchar* fontcolour = "black";
+	string fontcolour = "black";
 	//dpi 300 is a good balance
-	gchar* texres = "";
+	string texres;
 	if (this->texArea < 1000)
 	{
 		texres = "300";
@@ -85,32 +82,26 @@ void LatexAction::runCommand()
 	else
 	{
 		texres = "1000";
-		
 	}
-	command = g_strdup_printf(
-	              "%s -m 0 \"\\png\\usepackage{color}\\color{%s}\\dpi{%s}\\%s %s\" -o %s",
-	              mtex, strlen(fontcolour) ? fontcolour : "black",
-		      texres,
-	              "normalsize",
-	              g_strescape(this->theLatex, NULL), this->texfile);
+	string command = (bl::format("{1} -m 0 \"\\png\\usepackage{{color}}\\color{{{2}}}\\dpi{{{3}}}\\normalsize {4}\" -o {5}")
+	              % mtex % (fontcolour.length() ? fontcolour : "black") % texres
+	              % g_strescape(this->theLatex.c_str(), NULL) % this->texfile).str();
 
 	gint rt = 0;
 	void(*texhandler)(int) = signal(SIGCHLD, SIG_DFL);
-	gboolean success = g_spawn_command_line_sync(command, NULL, NULL, &rt, NULL);
+	gboolean success = g_spawn_command_line_sync(command.c_str(), NULL, NULL, &rt, NULL);
 	signal(SIGCHLD, texhandler);
 	if (!success)
 	{
-		printf("Latex Command execution failed.\n");
+		cout << "Latex Command execution failed." << endl;
 		return;
 	}
-	g_free(command);
-	printf("Tex command: \"%s\" was successful; in file %s.\n", this->theLatex,
-	       this->texfilefull);
+	cout << bl::format("Tex command: \"{1}\" was successful; in file {2}.")
+			% this->theLatex % this->texfilefull << endl;
 
 }
 
-
-gchar* LatexAction::getFileName()
+string LatexAction::getFileName()
 {
 	//gets the filename for our image
 	return this->texfilefull;

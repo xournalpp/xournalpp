@@ -3,14 +3,13 @@
  *
  * Xournal widget which is the "View" widget
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __XOURNALWIDGET_H__
-#define __XOURNALWIDGET_H__
+#pragma once
 
 #include <gtk/gtk.h>
 
@@ -85,10 +84,8 @@ Layout* gtk_xournal_get_layout(GtkWidget* widget);
 void gtk_xournal_scroll_relative(GtkWidget* widget, double x, double y);
 
 void gtk_xournal_repaint_area(GtkWidget* widget, int x1, int y1, int x2,
-                              int y2);
+							  int y2);
 
 Rectangle* gtk_xournal_get_visible_area(GtkWidget* widget, PageView* p);
 
 G_END_DECLS
-
-#endif /* __XOURNALWIDGET_H__ */

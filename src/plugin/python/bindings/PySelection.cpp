@@ -8,7 +8,8 @@
 #include "structmember.h"
 
 #ifdef __cplusplus
-extern "C" {
+extern "C"
+{
 #endif
 
 typedef struct
@@ -94,23 +95,22 @@ PySelection_getPageId(PySelection* self)
 	return PyFloat_FromDouble(selection->getYOnView());
 }
 
-static PyMethodDef PySelection_methods[] =
-{
+static PyMethodDef PySelection_methods[] = {
 	{ "existsSelection", (PyCFunction) PySelection_existsSelection, METH_NOARGS, "Return true if a selection exists, if return false then all other methods will fail" },
 	{ "getX", (PyCFunction) PySelection_getY, METH_NOARGS, "Return the X coordinate relative to the page" },
 	{ "getY", (PyCFunction) PySelection_getY, METH_NOARGS, "Return the Y coordinate relative to the page" },
 	{ "setX", (PyCFunction) PySelection_setX, METH_VARARGS, "Sets the X coordinate for the selection (move the selection) relative to the page" },
 	{ "setY", (PyCFunction) PySelection_setY, METH_VARARGS, "Sets the Y coordinate for the selection (move the selection) relative to the page" },
 	{ "getPageId", (PyCFunction) PySelection_getPageId, METH_VARARGS, "Returns the page which the selection refer to" },
-	//	{ "xxxxxxxxxxxxx", (PyCFunction) xxxxxxxxxxxxxxxxx, METH_VARARGS, "Xxxxxxxxxxxxxxxx" },
-	//	{ "xxxxxxxxxxxxx", (PyCFunction) xxxxxxxxxxxxxxxxx, METH_VARARGS, "Xxxxxxxxxxxxxxxx" },
-	//	{ "xxxxxxxxxxxxx", (PyCFunction) xxxxxxxxxxxxxxxxx, METH_VARARGS, "Xxxxxxxxxxxxxxxx" },
-	//	{ "xxxxxxxxxxxxx", (PyCFunction) xxxxxxxxxxxxxxxxx, METH_VARARGS, "Xxxxxxxxxxxxxxxx" },
-	//	{ "xxxxxxxxxxxxx", (PyCFunction) xxxxxxxxxxxxxxxxx, METH_VARARGS, "Xxxxxxxxxxxxxxxx" },
-	//	{ "xxxxxxxxxxxxx", (PyCFunction) xxxxxxxxxxxxxxxxx, METH_VARARGS, "Xxxxxxxxxxxxxxxx" },
-	//	{ "xxxxxxxxxxxxx", (PyCFunction) xxxxxxxxxxxxxxxxx, METH_VARARGS, "Xxxxxxxxxxxxxxxx" },
-	//	{ "xxxxxxxxxxxxx", (PyCFunction) xxxxxxxxxxxxxxxxx, METH_VARARGS, "Xxxxxxxxxxxxxxxx" },
-	//	{ "xxxxxxxxxxxxx", (PyCFunction) xxxxxxxxxxxxxxxxx, METH_VARARGS, "Xxxxxxxxxxxxxxxx" },
+//	{ "xxxxxxxxxxxxx", (PyCFunction) xxxxxxxxxxxxxxxxx, METH_VARARGS, "Xxxxxxxxxxxxxxxx" },
+//	{ "xxxxxxxxxxxxx", (PyCFunction) xxxxxxxxxxxxxxxxx, METH_VARARGS, "Xxxxxxxxxxxxxxxx" },
+//	{ "xxxxxxxxxxxxx", (PyCFunction) xxxxxxxxxxxxxxxxx, METH_VARARGS, "Xxxxxxxxxxxxxxxx" },
+//	{ "xxxxxxxxxxxxx", (PyCFunction) xxxxxxxxxxxxxxxxx, METH_VARARGS, "Xxxxxxxxxxxxxxxx" },
+//	{ "xxxxxxxxxxxxx", (PyCFunction) xxxxxxxxxxxxxxxxx, METH_VARARGS, "Xxxxxxxxxxxxxxxx" },
+//	{ "xxxxxxxxxxxxx", (PyCFunction) xxxxxxxxxxxxxxxxx, METH_VARARGS, "Xxxxxxxxxxxxxxxx" },
+//	{ "xxxxxxxxxxxxx", (PyCFunction) xxxxxxxxxxxxxxxxx, METH_VARARGS, "Xxxxxxxxxxxxxxxx" },
+//	{ "xxxxxxxxxxxxx", (PyCFunction) xxxxxxxxxxxxxxxxx, METH_VARARGS, "Xxxxxxxxxxxxxxxx" },
+//	{ "xxxxxxxxxxxxx", (PyCFunction) xxxxxxxxxxxxxxxxx, METH_VARARGS, "Xxxxxxxxxxxxxxxx" },
 	{ NULL } /* Sentinel */
 };
 
@@ -159,16 +159,16 @@ static int PySelection_init(PySelection* self, PyObject* args, PyObject* kwds)
 	return 0;
 }
 
-static PyMemberDef PySelection_members[] = { { NULL } /* Sentinel */
+static PyMemberDef PySelection_members[] = {
+	{NULL} /* Sentinel */
 };
 
-static PyTypeObject SelectionType =
-{
+static PyTypeObject SelectionType = {
 	PyObject_HEAD_INIT(NULL)0, /*ob_size*/
 	"xournal.Selection", /*tp_name*/
 	sizeof(PySelection), /*tp_basicsize*/
 	0, /*tp_itemsize*/
-	(destructor)PySelection_dealloc, /*tp_dealloc*/
+	(destructor) PySelection_dealloc, /*tp_dealloc*/
 	0, /*tp_print*/
 	0, /*tp_getattr*/
 	0, /*tp_setattr*/
@@ -199,20 +199,19 @@ static PyTypeObject SelectionType =
 	0, /* tp_descr_get */
 	0, /* tp_descr_set */
 	0, /* tp_dictoffset */
-	(initproc)PySelection_init, /* tp_init */
+	(initproc) PySelection_init, /* tp_init */
 	0, /* tp_alloc */
 	PySelection_new, /* tp_new */
 };
 
-static PyMethodDef module_methods[] =
-{
+static PyMethodDef module_methods[] = {
 	{NULL} /* Sentinel */
 };
 
 PyObject* newPySelection(PyObject* xournal)
 {
 	PyObject* args = Py_BuildValue("(O)", xournal);
-	PyObject* obj = PyObject_CallObject((PyObject*)&SelectionType, args);
+	PyObject* obj = PyObject_CallObject((PyObject*) &SelectionType, args);
 	return obj;
 }
 

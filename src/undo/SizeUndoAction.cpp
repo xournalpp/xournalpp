@@ -8,8 +8,8 @@ class SizeUndoActionEntry
 {
 public:
 	SizeUndoActionEntry(Stroke* s, double orignalWidth, double newWidth,
-	                    double* originalPressure,
-	                    double* newPressure, int pressureCount)
+						double* originalPressure,
+						double* newPressure, int pressureCount)
 	{
 		XOJ_INIT_TYPE(SizeUndoActionEntry);
 
@@ -82,14 +82,14 @@ double* SizeUndoAction::getPressure(Stroke* s)
 }
 
 void SizeUndoAction::addStroke(Stroke* s, double originalWidth, double newWidt,
-                               double* originalPressure,
-                               double* newPressure, int pressureCount)
+							   double* originalPressure,
+							   double* newPressure, int pressureCount)
 {
 	XOJ_CHECK_TYPE(SizeUndoAction);
 
 	this->data = g_list_append(this->data, new SizeUndoActionEntry(s, originalWidth,
-	                                                               newWidt, originalPressure,
-	                                                               newPressure, pressureCount));
+																   newWidt, originalPressure,
+																   newPressure, pressureCount));
 }
 
 bool SizeUndoAction::undo(Control* control)
@@ -112,7 +112,7 @@ bool SizeUndoAction::undo(Control* control)
 
 		range.addPoint(e->s->getX(), e->s->getY());
 		range.addPoint(e->s->getX() + e->s->getElementWidth(),
-		               e->s->getY() + e->s->getElementHeight());
+					   e->s->getY() + e->s->getElementHeight());
 	}
 
 	this->page->fireRangeChanged(range);
@@ -140,7 +140,7 @@ bool SizeUndoAction::redo(Control* control)
 
 		range.addPoint(e->s->getX(), e->s->getY());
 		range.addPoint(e->s->getX() + e->s->getElementWidth(),
-		               e->s->getY() + e->s->getElementHeight());
+					   e->s->getY() + e->s->getElementHeight());
 	}
 
 	this->page->fireRangeChanged(range);
@@ -148,7 +148,7 @@ bool SizeUndoAction::redo(Control* control)
 	return true;
 }
 
-String SizeUndoAction::getText()
+string SizeUndoAction::getText()
 {
 	XOJ_CHECK_TYPE(SizeUndoAction);
 

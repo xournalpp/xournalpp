@@ -2,17 +2,12 @@
 #include <config.h>
 #include <glib/gi18n-lib.h>
 
-PdfView::PdfView()
-{
+PdfView::PdfView() { }
 
-}
-
-PdfView::~PdfView()
-{
-}
+PdfView::~PdfView() { }
 
 void PdfView::drawPage(PdfCache* cache, XojPopplerPage* popplerPage,
-                       cairo_t* cr, double zoom, double width, double height, bool forPrinting)
+					   cairo_t* cr, double zoom, double width, double height, bool forPrinting)
 {
 	if (popplerPage)
 	{
@@ -35,7 +30,7 @@ void PdfView::drawPage(PdfCache* cache, XojPopplerPage* popplerPage,
 	else
 	{
 		cairo_select_font_face(cr, "Sans", CAIRO_FONT_SLANT_NORMAL,
-		                       CAIRO_FONT_WEIGHT_BOLD);
+							CAIRO_FONT_WEIGHT_BOLD);
 		cairo_set_font_size(cr, 26);
 
 		cairo_set_source_rgb(cr, 0.8, 0.8, 0.8);
@@ -45,7 +40,7 @@ void PdfView::drawPage(PdfCache* cache, XojPopplerPage* popplerPage,
 
 		cairo_text_extents(cr, strMissing, &extents);
 		cairo_move_to(cr, width / 2 - extents.width / 2,
-		              height / 2 - extents.height / 2);
+					height / 2 - extents.height / 2);
 		cairo_show_text(cr, strMissing);
 	}
 }

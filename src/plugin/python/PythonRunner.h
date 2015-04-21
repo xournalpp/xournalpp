@@ -3,17 +3,16 @@
  *
  * Runs Python scripts for testing or plugins
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
 
-#ifndef __PYTHONRUNNER_H__
-#define __PYTHONRUNNER_H__
+#pragma once
 
-#include <String.h>
+#include <StringUtils.h>
 #include <XournalType.h>
 
 class Control;
@@ -28,13 +27,13 @@ public:
 	static void initPythonRunner(Control* control);
 	static void releasePythonRunner();
 
-	static void runScript(String name, String function, String parameter = NULL);
+	static void runScript(string name, string function, string parameter = "");
 
 private:
 	static bool scriptRunner(PythonRunner* runner);
 
 private:
-	void runScriptInt(String path, String function, String parameter);
+	void runScriptInt(string path, string function, string parameter);
 
 	void initPython();
 
@@ -52,5 +51,3 @@ private:
 
 	int callbackId;
 };
-
-#endif /* __PYTHONRUNNER_H__ */

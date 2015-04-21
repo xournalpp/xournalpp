@@ -40,7 +40,7 @@ bool PagePosition::add(PageView* pv)
 	int y2 = y1 + pv->getDisplayHeight();
 
 	if (containsY(y1) || containsY(y2) || pv->containsY(this->y1) ||
-	    pv->containsY(this->y2))
+		pv->containsY(this->y2))
 	{
 		this->views = g_list_append(this->views, pv);
 

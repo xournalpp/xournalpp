@@ -29,8 +29,8 @@ void ScrollHandler::goToPreviousPage()
 			{
 				double dHeight = view->getDisplayHeight();
 				double disHeight = this->control->getWindow()->getLayout()->getDisplayHeight();
-				double top = (dHeight - disHeight)/2.0 + 7.5;
-					//the magic 7.5 is from XOURNAL_PADDING_BETWEEN/2
+				double top = (dHeight - disHeight) / 2.0 + 7.5;
+				//the magic 7.5 is from XOURNAL_PADDING_BETWEEN/2
 				scrollToPage(this->control->getWindow()->getXournal()->getCurrentPage() - 1, top);
 			}
 		}
@@ -55,7 +55,7 @@ void ScrollHandler::goToNextPage()
 				double dHeight = view->getDisplayHeight();
 				double disHeight = this->control->getWindow()->getLayout()->getDisplayHeight();
 				//this gets reversed when we are going down if the page is smaller than the display height
-				double top = (-dHeight + disHeight)/2.0 - 7.5;
+				double top = (-dHeight + disHeight) / 2.0 - 7.5;
 				//the magic 7.5 is from XOURNAL_PADDING_BETWEEN/2
 				scrollToPage(this->control->getWindow()->getXournal()->getCurrentPage() + 1, top);
 			}
@@ -152,7 +152,7 @@ void ScrollHandler::scrollToAnnotatedPage(bool next)
 	Document* doc = this->control->getDocument();
 
 	for (int i = this->control->getCurrentPageNo() + step; i >= 0 &&
-	     i < doc->getPageCount(); i += step)
+		i < doc->getPageCount(); i += step)
 	{
 		if (doc->getPage(i)->isAnnotated())
 		{
@@ -168,7 +168,7 @@ bool ScrollHandler::isPageVisible(int page, int* visibleHeight)
 
 	if (!this->control->getWindow())
 	{
-		if(visibleHeight)
+		if (visibleHeight)
 		{
 			*visibleHeight = 0;
 		}
@@ -176,7 +176,7 @@ bool ScrollHandler::isPageVisible(int page, int* visibleHeight)
 	}
 
 	return this->control->getWindow()->getXournal()->isPageVisible(page,
-	                                                               visibleHeight);
+																visibleHeight);
 }
 
 void ScrollHandler::pageChanged(int page)

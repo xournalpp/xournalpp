@@ -3,14 +3,13 @@
  *
  * Undo action for eraser
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __ERASEUNDOACTION_H__
-#define __ERASEUNDOACTION_H__
+#pragma once
 
 #include "UndoAction.h"
 #include <XournalType.h>
@@ -19,7 +18,7 @@ class Redrawable;
 class Layer;
 class Stroke;
 
-class EraseUndoAction: public UndoAction
+class EraseUndoAction : public UndoAction
 {
 public:
 	EraseUndoAction(PageRef page);
@@ -35,12 +34,10 @@ public:
 
 	void finalize();
 
-	virtual String getText();
+	virtual string getText();
 private:
 	XOJ_TYPE_ATTRIB;
 
 	GList* edited;
 	GList* original;
 };
-
-#endif /* __ERASEUNDOACTION_H__ */

@@ -3,19 +3,18 @@
  *
  * XML Writer helper class
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __XMLPOINTNODE_H__
-#define __XMLPOINTNODE_H__
+#pragma once
 
 #include "XmlNode.h"
 #include "../../model/Point.h"
 
-class XmlPointNode: public XmlNode
+class XmlPointNode : public XmlNode
 {
 public:
 	XmlPointNode(const char* tag);
@@ -23,7 +22,7 @@ public:
 
 private:
 	XmlPointNode(const XmlPointNode& node);
-	void operator =(const XmlPointNode& node);
+	void operator=(const XmlPointNode& node);
 
 public:
 	void addPoint(const Point* point);
@@ -35,5 +34,3 @@ private:
 
 	GList* points;
 };
-
-#endif /* __XMLPOINTNODE_H__ */

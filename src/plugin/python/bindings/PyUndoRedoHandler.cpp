@@ -8,7 +8,8 @@
 #include "structmember.h"
 
 #ifdef __cplusplus
-extern "C" {
+extern "C"
+{
 #endif
 
 typedef struct
@@ -66,7 +67,7 @@ PyUndoRedoHandler_getUndoItemTypeOnStack(PyUndoRedoHandler* self)
 
 	const char* name = undo->getUndoStackTopTypeName();
 
-	if(name)
+	if (name)
 	{
 		return PyString_FromString(name);
 	}
@@ -81,7 +82,7 @@ PyUndoRedoHandler_getRedoItemTypeOnStack(PyUndoRedoHandler* self)
 
 	const char* name = undo->getRedoStackTopTypeName();
 
-	if(name)
+	if (name)
 	{
 		return PyString_FromString(name);
 	}
@@ -89,17 +90,16 @@ PyUndoRedoHandler_getRedoItemTypeOnStack(PyUndoRedoHandler* self)
 	Py_RETURN_NONE;
 }
 
-static PyMethodDef PyUndoRedoHandler_methods[] =
-{
+static PyMethodDef PyUndoRedoHandler_methods[] = {
 	{ "canUndo", (PyCFunction) PyUndoRedoHandler_canUndo, METH_NOARGS, "If there is something to undo" },
 	{ "canRedo", (PyCFunction) PyUndoRedoHandler_canRedo, METH_NOARGS, "If there is something to redo" },
 	{ "undo", (PyCFunction) PyUndoRedoHandler_undo, METH_NOARGS, "Undo the last operation" },
 	{ "redo", (PyCFunction) PyUndoRedoHandler_redo, METH_NOARGS, "Redo the last operation" },
 	{ "getUndoItemTypeOnStack", (PyCFunction) PyUndoRedoHandler_getUndoItemTypeOnStack, METH_NOARGS, "Return the name of the item on top of the undo stack" },
 	{ "getRedoItemTypeOnStack", (PyCFunction) PyUndoRedoHandler_getRedoItemTypeOnStack, METH_NOARGS, "Return the name of the item on top of the redo stack" },
-	//	{ "xxxxxxxxxxxxx", (PyCFunction) xxxxxxxxxxxxxxxxx, METH_VARARGS, "Xxxxxxxxxxxxxxxx" },
-	//	{ "xxxxxxxxxxxxx", (PyCFunction) xxxxxxxxxxxxxxxxx, METH_VARARGS, "Xxxxxxxxxxxxxxxx" },
-	//	{ "xxxxxxxxxxxxx", (PyCFunction) xxxxxxxxxxxxxxxxx, METH_VARARGS, "Xxxxxxxxxxxxxxxx" },
+//	{ "xxxxxxxxxxxxx", (PyCFunction) xxxxxxxxxxxxxxxxx, METH_VARARGS, "Xxxxxxxxxxxxxxxx" },
+//	{ "xxxxxxxxxxxxx", (PyCFunction) xxxxxxxxxxxxxxxxx, METH_VARARGS, "Xxxxxxxxxxxxxxxx" },
+//	{ "xxxxxxxxxxxxx", (PyCFunction) xxxxxxxxxxxxxxxxx, METH_VARARGS, "Xxxxxxxxxxxxxxxx" },
 	{ NULL } /* Sentinel */
 };
 
@@ -123,13 +123,13 @@ PyUndoRedoHandler_new(PyTypeObject* type, PyObject* args, PyObject* kwds)
 }
 
 static int Selection_init(PyUndoRedoHandler* self, PyObject* args,
-                          PyObject* kwds)
+						  PyObject* kwds)
 {
 	return 0;
 }
 
 static int PyUndoRedoHandler_init(PyUndoRedoHandler* self, PyObject* args,
-                                  PyObject* kwds)
+								  PyObject* kwds)
 {
 	PyObject* xournal = NULL;
 
@@ -150,16 +150,16 @@ static int PyUndoRedoHandler_init(PyUndoRedoHandler* self, PyObject* args,
 	return 0;
 }
 
-static PyMemberDef PyUndoRedoHandler_members[] = { { NULL } /* Sentinel */
+static PyMemberDef PyUndoRedoHandler_members[] = {
+	{ NULL } /* Sentinel */
 };
 
-static PyTypeObject UndoRedoHandlerType =
-{
+static PyTypeObject UndoRedoHandlerType = {
 	PyObject_HEAD_INIT(NULL)0, /*ob_size*/
 	"xournal.UndoRedo", /*tp_name*/
 	sizeof(PyUndoRedoHandler), /*tp_basicsize*/
 	0, /*tp_itemsize*/
-	(destructor)PyUndoRedoHandler_dealloc, /*tp_dealloc*/
+	(destructor) PyUndoRedoHandler_dealloc, /*tp_dealloc*/
 	0, /*tp_print*/
 	0, /*tp_getattr*/
 	0, /*tp_setattr*/
@@ -190,20 +190,19 @@ static PyTypeObject UndoRedoHandlerType =
 	0, /* tp_descr_get */
 	0, /* tp_descr_set */
 	0, /* tp_dictoffset */
-	(initproc)PyUndoRedoHandler_init, /* tp_init */
+	(initproc) PyUndoRedoHandler_init, /* tp_init */
 	0, /* tp_alloc */
 	PyUndoRedoHandler_new, /* tp_new */
 };
 
-static PyMethodDef module_methods[] =
-{
+static PyMethodDef module_methods[] = {
 	{NULL} /* Sentinel */
 };
 
 PyObject* newPyUndoRedoHandler(PyObject* xournal)
 {
 	PyObject* args = Py_BuildValue("(O)", xournal);
-	PyObject* obj = PyObject_CallObject((PyObject*)&UndoRedoHandlerType, args);
+	PyObject* obj = PyObject_CallObject((PyObject*) &UndoRedoHandlerType, args);
 	return obj;
 }
 

@@ -6,7 +6,7 @@
 #include <gtk/gtk.h>
 
 ToolHandler::ToolHandler(ToolListener* listener, ActionHandler* actionHandler,
-                         Settings* settings)
+						 Settings* settings)
 {
 	XOJ_INIT_TYPE(ToolHandler);
 
@@ -50,7 +50,7 @@ void ToolHandler::initTools()
 	thickness[TOOL_SIZE_THICK] = 19.84;
 	thickness[TOOL_SIZE_VERY_THICK] = 19.84;
 	t = new Tool("eraser", TOOL_ERASER, 0x000000, false, true, false, false, false, false, false,
-	             thickness);
+				thickness);
 	tools[TOOL_ERASER - TOOL_PEN] = t;
 
 	// highlighter thicknesses = 1, 3, 7 mm
@@ -61,7 +61,7 @@ void ToolHandler::initTools()
 	thickness[TOOL_SIZE_THICK] = 19.84;
 	thickness[TOOL_SIZE_VERY_THICK] = 19.84;
 	t = new Tool("hilighter", TOOL_HILIGHTER, 0xFFFF00, true, true, true, true, true, true, true,
-	             thickness);
+				thickness);
 	tools[TOOL_HILIGHTER - TOOL_PEN] = t;
 
 	t = new Tool("text", TOOL_TEXT, 0x000000, true, false, false, false, false, false, false, NULL);
@@ -71,19 +71,19 @@ void ToolHandler::initTools()
 	tools[TOOL_IMAGE - TOOL_PEN] = t;
 
 	t = new Tool("selectRect", TOOL_SELECT_RECT, 0x000000, false, false, false, false, false, false,
-	             false, NULL);
+				false, NULL);
 	tools[TOOL_SELECT_RECT - TOOL_PEN] = t;
 
 	t = new Tool("selectRegion", TOOL_SELECT_REGION, 0x000000, false, false, false, false, false, false,
-	             false, NULL);
+				false, NULL);
 	tools[TOOL_SELECT_REGION - TOOL_PEN] = t;
 
 	t = new Tool("selectObject", TOOL_SELECT_OBJECT, 0x000000, false, false, false, false, false, false,
-	             false, NULL);
+				false, NULL);
 	tools[TOOL_SELECT_OBJECT - TOOL_PEN] = t;
 
 	t = new Tool("verticalSpace", TOOL_VERTICAL_SPACE, 0x000000, false, false, false, false, false,
-	             false, false, NULL);
+				false, false, NULL);
 	tools[TOOL_VERTICAL_SPACE - TOOL_PEN] = t;
 
 	t = new Tool("hand", TOOL_HAND, 0x000000, false, false, false, false, false, false, false, NULL);
@@ -91,17 +91,17 @@ void ToolHandler::initTools()
 
 	/*
 	t = new Tool("drawRect", TOOL_DRAW_RECT, 0x000000, false, false, false, false, false, false,
-	             false, NULL);
+				 false, NULL);
 	tools[TOOL_DRAW_RECT - TOOL_PEN] = t;
 
 	t = new Tool("drawCircle", TOOL_DRAW_CIRCLE, 0x000000, false, false, false, false, false, false,
-	             false, NULL);
+				 false, NULL);
 	tools[TOOL_DRAW_CIRCLE - TOOL_PEN] = t;
 
 	t = new Tool("drawArrow", TOOL_DRAW_ARROW, 0x000000, false, false, false, false, false, false,
-	             false, NULL);
+				 false, NULL);
 	tools[TOOL_DRAW_ARROW - TOOL_PEN] = t;
-	*/
+	 */
 
 
 	selectTool(TOOL_PEN);
@@ -144,18 +144,18 @@ void ToolHandler::eraserTypeChanged()
 	{
 	case ERASER_TYPE_DELETE_STROKE:
 		this->actionHandler->fireActionSelected(GROUP_ERASER_MODE,
-		                                        ACTION_TOOL_ERASER_DELETE_STROKE);
+												ACTION_TOOL_ERASER_DELETE_STROKE);
 		break;
 
 	case ERASER_TYPE_WHITEOUT:
 		this->actionHandler->fireActionSelected(GROUP_ERASER_MODE,
-		                                        ACTION_TOOL_ERASER_WHITEOUT);
+												ACTION_TOOL_ERASER_WHITEOUT);
 		break;
 
 	case ERASER_TYPE_DEFAULT:
 	default:
 		this->actionHandler->fireActionSelected(GROUP_ERASER_MODE,
-		                                        ACTION_TOOL_ERASER_STANDARD);
+												ACTION_TOOL_ERASER_STANDARD);
 		break;
 	}
 }
@@ -221,18 +221,21 @@ bool ToolHandler::isEnableRuler()
 
 	return current->enableRuler;
 }
+
 bool ToolHandler::isEnableRectangle()
 {
 	XOJ_CHECK_TYPE(ToolHandler);
 
 	return current->enableRectangle;
 }
+
 bool ToolHandler::isEnableCircle()
 {
 	XOJ_CHECK_TYPE(ToolHandler);
 
 	return current->enableCircle;
 }
+
 bool ToolHandler::isEnableArrow()
 {
 	XOJ_CHECK_TYPE(ToolHandler);
@@ -247,28 +250,44 @@ bool ToolHandler::isEnableShapreRecognizer()
 	return current->enableShapeRecognizer;
 }
 
-void ToolHandler::setRuler(bool ruler)
+void ToolHandler::setAll(bool set)
+{
+	this->setArrow(false);
+	this->setCircle(false);
+	this->setRectangle(false);
+	this->setRuler(false);
+	this->setShapeRecognizer(false);
+}
+
+void ToolHandler::setRuler(bool ruler, bool disableOthers)
 {
 	XOJ_CHECK_TYPE(ToolHandler);
 
+	if (ruler && disableOthers) setAll(false);
 	this->current->ruler = ruler;
 }
-void ToolHandler::setRectangle(bool rectangle)
+
+void ToolHandler::setRectangle(bool rectangle, bool disableOthers)
 {
 	XOJ_CHECK_TYPE(ToolHandler);
 
+	if (rectangle && disableOthers) setAll(false);
 	this->current->rectangle = rectangle;
 }
-void ToolHandler::setCircle(bool circle)
+
+void ToolHandler::setCircle(bool circle, bool disableOthers)
 {
 	XOJ_CHECK_TYPE(ToolHandler);
 
+	if (circle && disableOthers) setAll(false);
 	this->current->circle = circle;
 }
-void ToolHandler::setArrow(bool arrow)
+
+void ToolHandler::setArrow(bool arrow, bool disableOthers)
 {
 	XOJ_CHECK_TYPE(ToolHandler);
 
+	if (arrow && disableOthers) setAll(false);
 	this->current->arrow = arrow;
 }
 
@@ -278,18 +297,21 @@ bool ToolHandler::isRuler()
 
 	return this->current->ruler;
 }
+
 bool ToolHandler::isRectangle()
 {
 	XOJ_CHECK_TYPE(ToolHandler);
 
 	return this->current->rectangle;
 }
+
 bool ToolHandler::isCircle()
 {
 	XOJ_CHECK_TYPE(ToolHandler);
 
 	return this->current->circle;
 }
+
 bool ToolHandler::isArrow()
 {
 	XOJ_CHECK_TYPE(ToolHandler);
@@ -297,10 +319,11 @@ bool ToolHandler::isArrow()
 	return this->current->arrow;
 }
 
-void ToolHandler::setShapeRecognizer(bool reco)
+void ToolHandler::setShapeRecognizer(bool reco, bool disableOthers)
 {
 	XOJ_CHECK_TYPE(ToolHandler);
 
+	if (reco && disableOthers) setAll(false);
 	this->current->shapeRecognizer = reco;
 }
 
@@ -489,7 +512,7 @@ void ToolHandler::saveSettings()
 
 		if (t->isEnableSize())
 		{
-			String value;
+			string value;
 			switch (t->getSize())
 			{
 			case TOOL_SIZE_VERY_FINE:
@@ -524,7 +547,7 @@ void ToolHandler::saveSettings()
 			{
 				st.setString("type", "whiteout");
 			}
-			else    //ERASER_TYPE_DEFAULT
+			else //ERASER_TYPE_DEFAULT
 			{
 				st.setString("type", "default");
 			}
@@ -540,7 +563,7 @@ void ToolHandler::loadSettings()
 
 	SElement& s = settings->getCustomElement("tools");
 
-	String selectedTool;
+	string selectedTool;
 	s.getString("current", selectedTool);
 
 	ArrayIterator<Tool*> it = iterator();
@@ -583,27 +606,27 @@ void ToolHandler::loadSettings()
 			t->setShapeRecognizer(enabled);
 		}
 
-		String value;
+		string value;
 
 		if (t->isEnableSize() && st.getString("size", value))
 		{
-			if (value.equals("VERY_THIN"))
+			if (value == "VERY_THIN")
 			{
 				t->setSize(TOOL_SIZE_VERY_FINE);
 			}
-			else if (value.equals("THIN"))
+			else if (value == "THIN")
 			{
 				t->setSize(TOOL_SIZE_FINE);
 			}
-			else if (value.equals("MEDIUM"))
+			else if (value == "MEDIUM")
 			{
 				t->setSize(TOOL_SIZE_MEDIUM);
 			}
-			else if (value.equals("BIG"))
+			else if (value == "BIG")
 			{
 				t->setSize(TOOL_SIZE_THICK);
 			}
-			else if (value.equals("VERY_BIG"))
+			else if (value == "VERY_BIG")
 			{
 				t->setSize(TOOL_SIZE_VERY_THICK);
 			}
@@ -615,7 +638,7 @@ void ToolHandler::loadSettings()
 
 		if (t->type == TOOL_ERASER)
 		{
-			String type;
+			string type;
 
 			if (st.getString("type", type))
 			{
@@ -673,7 +696,7 @@ void ToolHandler::setSelectionEditTools(bool setColor, bool setSize)
 	XOJ_CHECK_TYPE(ToolHandler);
 
 	for (int i = TOOL_SELECT_RECT - TOOL_PEN; i <= TOOL_SELECT_OBJECT - TOOL_PEN;
-	     i++)
+		i++)
 	{
 		Tool* t = tools[i];
 		t->enableColor = setColor;
@@ -683,8 +706,8 @@ void ToolHandler::setSelectionEditTools(bool setColor, bool setSize)
 	}
 
 	if (this->current->type == TOOL_SELECT_RECT ||
-	    this->current->type == TOOL_SELECT_REGION ||
-	    this->current->type == TOOL_SELECT_OBJECT)
+		this->current->type == TOOL_SELECT_REGION ||
+		this->current->type == TOOL_SELECT_OBJECT)
 	{
 		this->listener->toolColorChanged();
 		this->listener->toolSizeChanged();

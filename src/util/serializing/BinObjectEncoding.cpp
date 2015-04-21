@@ -14,5 +14,5 @@ void BinObjectEncoding::addData(const void* data, int len)
 {
 	XOJ_CHECK_TYPE(ObjectEncoding);
 
-	g_string_append_len(this->data, (const char*)data, len);
+	g_string_append_len(this->data, (const char*) data, len);
 }

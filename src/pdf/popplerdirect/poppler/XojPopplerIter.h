@@ -3,14 +3,13 @@
  *
  * Custom Poppler access library
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __XOJPOPPLERITER_H__
-#define __XOJPOPPLERITER_H__
+#pragma once
 
 #include "XojPopplerDocument.h"
 #include "XojPopplerAction.h"
@@ -30,7 +29,7 @@ public:
 	XojPopplerAction* getAction();
 
 private:
-	static String unicodeToChar(Unicode* unicode, int len);
+	static string unicodeToChar(Unicode* unicode, int len);
 
 private:
 	XOJ_TYPE_ATTRIB;
@@ -39,5 +38,3 @@ private:
 	GooList* items;
 	int index;
 };
-
-#endif /* __XOJPOPPLERITER_H__ */

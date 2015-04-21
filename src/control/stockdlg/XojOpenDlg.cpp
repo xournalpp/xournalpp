@@ -3,13 +3,13 @@
 #include <config.h>
 #include <glib/gi18n-lib.h>
 
-String XojOpenDlg::showOpenDialog(GtkWindow* win, Settings* settings, bool pdf,
-                                  bool& attachPdf)
+path XojOpenDlg::showOpenDialog(GtkWindow* win, Settings* settings, bool pdf,
+								bool& attachPdf)
 {
 
 	GtkWidget* dialog = gtk_file_chooser_dialog_new(_("Open file"), win,
-	                                                GTK_FILE_CHOOSER_ACTION_OPEN, GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-	                                                GTK_STOCK_OPEN, GTK_RESPONSE_OK, NULL);
+													GTK_FILE_CHOOSER_ACTION_OPEN, GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+													GTK_STOCK_OPEN, GTK_RESPONSE_OK, NULL);
 
 	gtk_file_chooser_set_local_only(GTK_FILE_CHOOSER(dialog), true);
 
@@ -40,10 +40,16 @@ String XojOpenDlg::showOpenDialog(GtkWindow* win, Settings* settings, bool pdf,
 	gtk_file_chooser_add_filter(GTK_FILE_CHOOSER(dialog), filterPdf);
 	gtk_file_chooser_add_filter(GTK_FILE_CHOOSER(dialog), filterAll);
 
-	if (!settings->getLastSavePath().isEmpty())
+	if (!settings->getLastSavePath().empty())
 	{
 		gtk_file_chooser_set_current_folder_uri(GTK_FILE_CHOOSER(dialog),
-		                                        settings->getLastSavePath().c_str());
+												settings->getLastSavePath().c_str());
+	}
+	else
+	{
+		g_warning("lastSavePath is not set!", 0);
+		gtk_file_chooser_set_current_folder_uri(GTK_FILE_CHOOSER(dialog),
+												g_get_home_dir());
 	}
 
 	GtkWidget* attachOpt = NULL;
@@ -57,36 +63,31 @@ String XojOpenDlg::showOpenDialog(GtkWindow* win, Settings* settings, bool pdf,
 	GtkWidget* image = gtk_image_new();
 	gtk_file_chooser_set_preview_widget(GTK_FILE_CHOOSER(dialog), image);
 	g_signal_connect(dialog, "update-preview", G_CALLBACK(updatePreviewCallback),
-	                 NULL);
+					 NULL);
 
 
 	gtk_window_set_transient_for(GTK_WINDOW(dialog), win);
 	if (gtk_dialog_run(GTK_DIALOG(dialog)) != GTK_RESPONSE_OK)
 	{
 		gtk_widget_destroy(dialog);
-		return NULL;
+		return path("");
 	}
-	char* name = gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(dialog));
+	path file(gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(dialog)));
 
 	if (attachOpt)
 	{
 		attachPdf = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(attachOpt));
 	}
-
-	String filename = name;
-	char* folder = gtk_file_chooser_get_current_folder_uri(GTK_FILE_CHOOSER(
-	                                                           dialog));
-	settings->setLastSavePath(folder);
-	g_free(folder);
-	g_free(name);
+	
+	settings->setLastSavePath(file.parent_path());
 
 	gtk_widget_destroy(dialog);
 
-	return filename;
+	return file;
 }
 
 void XojOpenDlg::updatePreviewCallback(GtkFileChooser* fileChooser,
-                                       void* userData)
+									   void* userData)
 {
 	// TODO LOW PRIO create preview if the file contains one
 	//	gchar * filename = gtk_file_chooser_get_preview_filename(fileChooser);

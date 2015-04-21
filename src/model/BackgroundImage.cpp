@@ -35,7 +35,7 @@ BackgroundImage::~BackgroundImage()
 	XOJ_RELEASE_TYPE(BackgroundImage);
 }
 
-String BackgroundImage::getFilename()
+path BackgroundImage::getFilename()
 {
 	XOJ_CHECK_TYPE(BackgroundImage);
 
@@ -43,10 +43,10 @@ String BackgroundImage::getFilename()
 	{
 		return this->img->getFilename();
 	}
-	return NULL;
+	return path("");
 }
 
-void BackgroundImage::loadFile(String filename, GError** error)
+void BackgroundImage::loadFile(path filename, GError** error) //TODO streams
 {
 	XOJ_CHECK_TYPE(BackgroundImage);
 
@@ -72,7 +72,7 @@ void BackgroundImage::setAttach(bool attach)
 	}
 }
 
-void BackgroundImage::operator =(BackgroundImage& img)
+void BackgroundImage::operator=(BackgroundImage& img)
 {
 	XOJ_CHECK_TYPE(BackgroundImage);
 
@@ -87,7 +87,7 @@ void BackgroundImage::operator =(BackgroundImage& img)
 	}
 }
 
-bool BackgroundImage::operator ==(const BackgroundImage& img)
+bool BackgroundImage::operator==(const BackgroundImage& img)
 {
 	XOJ_CHECK_TYPE(BackgroundImage);
 
@@ -136,7 +136,7 @@ void BackgroundImage::setCloneId(int id)
 	}
 }
 
-void BackgroundImage::setFilename(String filename)
+void BackgroundImage::setFilename(path filename)
 {
 	XOJ_CHECK_TYPE(BackgroundImage);
 

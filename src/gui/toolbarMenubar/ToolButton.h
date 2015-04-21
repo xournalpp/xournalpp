@@ -3,35 +3,34 @@
  *
  * Part of the customizable toolbars
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __TOOLBUTTON_H__
-#define __TOOLBUTTON_H__
+#pragma once
 
 #include "AbstractToolItem.h"
 #include "../GladeGui.h"
 
-class ToolButton: public AbstractToolItem
+class ToolButton : public AbstractToolItem
 {
 public:
-	ToolButton(ActionHandler* handler, String id, ActionType type, String stock,
-	           String description, GtkWidget* menuitem = NULL);
-	ToolButton(ActionHandler* handler, GladeGui* gui, String id, ActionType type,
-	           String iconName, String description, GtkWidget* menuitem = NULL);
-	ToolButton(ActionHandler* handler, GladeGui* gui, String id, ActionType type,
-	           ActionGroup group, bool toolToggleOnlyEnable, String iconName,
-	           String description,
-	           GtkWidget* menuitem = NULL);
+	ToolButton(ActionHandler* handler, string id, ActionType type, string stock,
+			   string description, GtkWidget* menuitem = NULL);
+	ToolButton(ActionHandler* handler, GladeGui* gui, string id, ActionType type,
+			   string iconName, string description, GtkWidget* menuitem = NULL);
+	ToolButton(ActionHandler* handler, GladeGui* gui, string id, ActionType type,
+			   ActionGroup group, bool toolToggleOnlyEnable, string iconName,
+			   string description,
+			   GtkWidget* menuitem = NULL);
 
 	virtual ~ToolButton();
 
 public:
-	void updateDescription(String description);
-	virtual String getToolDisplayName();
+	void updateDescription(string description);
+	virtual string getToolDisplayName();
 
 protected:
 	virtual GtkToolItem* newItem();
@@ -44,9 +43,8 @@ protected:
 private:
 	XOJ_TYPE_ATTRIB;
 
-	String stock;
+	string stock;
 
-	String iconName;
-	String description;
+	string iconName;
+	string description;
 };
-#endif /* __TOOLBUTTON_H__ */

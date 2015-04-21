@@ -3,23 +3,25 @@
  *
  * Part of the customizable toolbars
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef EDITABLETOOLBAR_H_
-#define EDITABLETOOLBAR_H_
+#pragma once
 
 #include <gtk/gtk.h>
 
 #include "../../control/Actions.h"
-#include <String.h>
-#include <ListIterator.h>
-
+#include "ColorToolItem.h"
+#include "MenuItem.h"
+#include <StringUtils.h>
+#include <vector>
 
 class AbstractToolItem;
+typedef std::vector<AbstractToolItem*> AbstractToolItemVector;
+
 class ToolButton;
 class ToolPageSpinner;
 class ToolPageLayer;
@@ -36,7 +38,7 @@ class ToolMenuHandler
 {
 public:
 	ToolMenuHandler(ActionHandler* listener, ZoomControl* zoom, GladeGui* gui,
-	                ToolHandler* toolHandler, GtkWindow* parent);
+					ToolHandler* toolHandler, GtkWindow* parent);
 	virtual ~ToolMenuHandler();
 
 public:
@@ -44,18 +46,18 @@ public:
 	void unloadToolbar(GtkWidget* tBunload);
 
 	void load(ToolbarData* d, GtkWidget* toolbar, const char* toolbarName,
-	          bool horizontal);
+			  bool horizontal);
 
 	void registerMenupoint(GtkWidget* widget, ActionType type);
 	void registerMenupoint(GtkWidget* widget, ActionType type, ActionGroup group);
 
 	void initToolItems();
 
-	void setUndoDescription(String description);
-	void setRedoDescription(String description);
+	void setUndoDescription(string description);
+	void setRedoDescription(string description);
 
 	SpinPageAdapter* getPageSpinner();
-	void setPageText(String text);
+	void setPageText(string text);
 
 	int getSelectedLayer();
 	void setLayerCount(int count, int selected);
@@ -72,7 +74,7 @@ public:
 
 	ToolbarModel* getModel();
 
-	ListIterator<AbstractToolItem*> getToolItems();
+	AbstractToolItemVector* getToolItems();
 
 	bool isColorInUse(int color);
 
@@ -84,11 +86,11 @@ private:
 private:
 	XOJ_TYPE_ATTRIB;
 
-	GList* toolbarColorItems;
+	std::vector<ColorToolItem*> toolbarColorItems;
 	GtkWindow* parent;
 
-	GList* toolItems;
-	GList* menuItems;
+	AbstractToolItemVector toolItems;
+	std::vector<MenuItem*> menuItems;
 
 	ToolButton* undoButton;
 	ToolButton* redoButton;
@@ -104,5 +106,3 @@ private:
 
 	ToolbarModel* tbModel;
 };
-
-#endif /* EDITABLETOOLBAR_H_ */

@@ -13,6 +13,11 @@
 
 #include <typeinfo>
 
+#ifdef SHOW_REPAINT_BOUNDS
+#include <iostream>
+using namespace std;
+#endif
+
 DocumentView::DocumentView()
 {
 	XOJ_INIT_TYPE(DocumentView);
@@ -54,7 +59,7 @@ void DocumentView::drawEraseableStroke(cairo_t* cr, Stroke* s)
 }
 
 void DocumentView::drawStroke(cairo_t* cr, Stroke* s, int startPoint,
-                              double scaleFactor)
+							  double scaleFactor)
 {
 	XOJ_CHECK_TYPE(DocumentView);
 
@@ -99,7 +104,7 @@ void DocumentView::drawStroke(cairo_t* cr, Stroke* s, int startPoint,
 	if (!s->hasPressure())
 	{
 		gdk_threads_enter();
-		if(scaleFactor == 1)
+		if (scaleFactor == 1)
 		{
 			// Set width
 			cairo_set_line_width(cr, width);
@@ -148,7 +153,7 @@ void DocumentView::drawStroke(cairo_t* cr, Stroke* s, int startPoint,
 				width = lastPoint1.z;
 			}
 
-			if(scaleFactor == 1)
+			if (scaleFactor == 1)
 			{
 				// Set width
 				cairo_set_line_width(cr, width);
@@ -209,6 +214,7 @@ void DocumentView::drawImage(cairo_t* cr, Image* i)
 	cairo_set_matrix(cr, &defaultMatrix);
 	gdk_threads_leave();
 }
+
 void DocumentView::drawTexImage(cairo_t* cr, TexImage* i)
 {
 	XOJ_CHECK_TYPE(DocumentView);
@@ -261,22 +267,18 @@ void DocumentView::drawLayer(cairo_t* cr, Layer* l)
 {
 	XOJ_CHECK_TYPE(DocumentView);
 
-	ListIterator<Element*> it = l->elementIterator();
-
 #ifdef SHOW_REPAINT_BOUNDS
 	int drawed = 0;
 	int notDrawed = 0;
 #endif //SHOW_REPAINT_BOUNDS
-	while (it.hasNext())
+	for (Element* e : *l->getElements())
 	{
-		Element* e = it.next();
-
 #ifdef SHOW_ELEMENT_BOUNDS
 		gdk_threads_enter();
 		cairo_set_source_rgb(cr, 0, 1, 0);
 		cairo_set_line_width(cr, 1);
 		cairo_rectangle(cr, e->getX(), e->getY(), e->getElementWidth(),
-		                e->getElementHeight());
+						e->getElementHeight());
 		cairo_stroke(cr);
 		gdk_threads_leave();
 #endif // SHOW_ELEMENT_BOUNDS
@@ -309,7 +311,7 @@ void DocumentView::drawLayer(cairo_t* cr, Layer* l)
 	}
 
 #ifdef SHOW_REPAINT_BOUNDS
-	printf("DBG:DocumentView: draw %i / not draw %i\n", drawed, notDrawed);
+	cout << bl::format("DBG:DocumentView: draw {1} / not draw {2}") % drawed % notDrawed << endl;
 #endif //SHOW_REPAINT_BOUNDS
 }
 
@@ -420,12 +422,7 @@ void DocumentView::drawSelection(cairo_t* cr, ElementContainer* container)
 {
 	XOJ_CHECK_TYPE(DocumentView);
 
-	ListIterator<Element*> it = container->getElements();
-	while (it.hasNext())
-	{
-		Element* e = it.next();
-		drawElement(cr, e);
-	}
+	for (Element* e : *container->getElements()) drawElement(cr, e);
 }
 
 void DocumentView::limitArea(double x, double y, double width, double heigth)
@@ -439,7 +436,7 @@ void DocumentView::limitArea(double x, double y, double width, double heigth)
 }
 
 void DocumentView::drawPage(PageRef page, cairo_t* cr,
-                            bool dontRenderEditingStroke)
+							bool dontRenderEditingStroke)
 {
 	XOJ_CHECK_TYPE(DocumentView);
 
@@ -481,10 +478,9 @@ void DocumentView::drawPage(PageRef page, cairo_t* cr,
 	cairo_set_operator(cr, CAIRO_OPERATOR_SOURCE);
 
 	int layer = 0;
-	ListIterator<Layer*> it = page->layerIterator();
-	while (it.hasNext() && layer < page->getSelectedLayerId())
+	for (Layer* l : *page->getLayers())
 	{
-		Layer* l = it.next();
+		if (layer >= page->getSelectedLayerId()) break;
 		drawLayer(cr, l);
 		layer++;
 	}
@@ -492,16 +488,16 @@ void DocumentView::drawPage(PageRef page, cairo_t* cr,
 #ifdef SHOW_REPAINT_BOUNDS
 	if (this->lX != -1)
 	{
-		printf("DBG:repaint area\n");
+		cout << "DBG:repaint area" << endl;
 		cairo_set_source_rgb(cr, 1, 0, 0);
 		cairo_set_line_width(cr, 1);
 		cairo_rectangle(cr, this->lX + 3, this->lY + 3, this->lWidth - 6,
-		                this->lHeight - 6);
+						this->lHeight - 6);
 		cairo_stroke(cr);
 	}
 	else
 	{
-		printf("DBG:repaint complete\n");
+		cout << "DBG:repaint complete" << endl;
 	}
 #endif //SHOW_REPAINT_BOUNDS
 	this->lX = -1;

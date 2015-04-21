@@ -3,20 +3,19 @@
  *
  * Document handler
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __DOCUMENTHANDLER_H__
-#define __DOCUMENTHANDLER_H__
+#pragma once
 
 #include "DocumentChangeType.h"
 #include "PageRef.h"
 #include <XournalType.h>
 
-#include <glib.h>
+#include <list>
 
 class DocumentListener;
 
@@ -42,10 +41,7 @@ private:
 private:
 	XOJ_TYPE_ATTRIB;
 
-
-	GList* listener;
+	std::list<DocumentListener*> listener;
 
 	friend class DocumentListener;
 };
-
-#endif /* __DOCUMENTHANDLER_H__ */

@@ -3,11 +3,17 @@
 #include "../model/XojPage.h"
 #include "../model/BackgroundImage.h"
 
-#include <gtk/gtk.h>
-#include <glib.h>
-#include <glib/gstdio.h>
-#include <string.h>
-#include <stdlib.h>
+#include <clocale>
+#include <vector>
+#include <iostream>
+using namespace std;
+
+#include <boost/filesystem.hpp>
+namespace bf = boost::filesystem;
+
+#include <glibmm.h>
+
+#include <glib.h>	//only because of GError for BackgroundImage
 
 #include <config.h>
 #include <glib/gi18n-lib.h>
@@ -18,25 +24,21 @@ typedef struct
 	const int rgb;
 } PredefinedColor;
 
-PredefinedColor PREDEFINED_COLORS[] =
-{
-	{ "black", 0x000000 },
-	{ "blue", 0x3333cc },
-	{ "red", 0xff0000 },
-	{ "green", 0x008000 },
-	{ "gray", 0x808080 },
-	{ "lightblue", 0x00c0ff },
+PredefinedColor PREDEFINED_COLORS[] = {
+	{ "black",      0x000000 },
+	{ "blue",       0x3333cc },
+	{ "red",        0xff0000 },
+	{ "green",      0x008000 },
+	{ "gray",       0x808080 },
+	{ "lightblue",  0x00c0ff },
 	{ "lightgreen", 0x00ff00 },
-	{ "magenta", 0xff00ff },
-	{ "orange", 0xff8000 },
-	{ "yellow", 0xffff00 },
-	{ "white", 0xffffff }
+	{ "magenta",    0xff00ff },
+	{ "orange",     0xff8000 },
+	{ "yellow",     0xffff00 },
+	{ "white",      0xffffff }
 };
 
-const int COLOR_COUNT = sizeof(PREDEFINED_COLORS) / sizeof(PredefinedColor);
-
-LoadHandler::LoadHandler() :
-	doc(&dHanlder)
+LoadHandler::LoadHandler() : doc(&dHanlder)
 {
 	XOJ_INIT_TYPE(LoadHandler);
 
@@ -54,23 +56,15 @@ void LoadHandler::initAttributes()
 {
 	XOJ_CHECK_TYPE(LoadHandler);
 
-	this->fp = NULL;
-	this->error = NULL;
-	this->attributeNames = NULL;
-	this->attributeValues = NULL;
-	this->elementName = NULL;
+	if (this->file.is_open()) this->file.close();
 	this->pdfFilenameParsed = false;
 	this->attachedPdfMissing = false;
 
 	this->page = NULL;
 	this->layer = NULL;
-	this->stroke = NULL;
-	this->image = NULL;
-	this->teximage = NULL;
-	this->text = NULL;
 }
 
-String LoadHandler::getLastError()
+string LoadHandler::getLastError()
 {
 	XOJ_CHECK_TYPE(LoadHandler);
 
@@ -84,7 +78,7 @@ bool LoadHandler::isAttachedPdfMissing()
 	return this->attachedPdfMissing;
 }
 
-String LoadHandler::getMissingPdfFilename()
+path LoadHandler::getMissingPdfFilename()
 {
 	XOJ_CHECK_TYPE(LoadHandler);
 
@@ -98,7 +92,7 @@ void LoadHandler::removePdfBackground()
 	this->removePdfBackgroundFlag = true;
 }
 
-void LoadHandler::setPdfReplacement(String filename, bool attachToDocument)
+void LoadHandler::setPdfReplacement(path filename, bool attachToDocument)
 {
 	XOJ_CHECK_TYPE(LoadHandler);
 
@@ -106,19 +100,21 @@ void LoadHandler::setPdfReplacement(String filename, bool attachToDocument)
 	this->pdfReplacementAttach = attachToDocument;
 }
 
-bool LoadHandler::openFile(String filename)
+bool LoadHandler::openFile(path filename)
 {
 	XOJ_CHECK_TYPE(LoadHandler);
 
 	this->filename = filename;
-	this->fp = gzopen(filename.c_str(), "r");
-	if (!this->fp)
+	this->file.open(filename.string(), ios_base::in | ios_base::binary);
+	if (!this->file.is_open())
 	{
-		this->lastError = _("Could not open file: \"");
-		this->lastError += filename;
-		this->lastError += "\"";
+		this->lastError = (bl::format("Could not open file: \"{1}\"") % filename.string()).str();
 		return false;
 	}
+	
+	this->inbuf.push(bio::gzip_decompressor());
+	this->inbuf.push(file);
+	
 	return true;
 }
 
@@ -126,245 +122,200 @@ bool LoadHandler::closeFile()
 {
 	XOJ_CHECK_TYPE(LoadHandler);
 
-	return gzclose(this->fp);
+	this->file.close();
+	return !this->file.is_open();
 }
 
-int LoadHandler::readFile(char* buffer, int len)
+int LoadHandler::parseColor(const string& name)
 {
 	XOJ_CHECK_TYPE(LoadHandler);
-
-	if (gzeof(this->fp))
+	
+	if (name[0] == '#')
 	{
-		return -1;
-	}
-	return gzread(this->fp, buffer, len);
-}
+		string::size_type ptr;
+		int c = stoull(name.substr(1), &ptr, 16);
+		
+		if (ptr != name.length() - 1)
+			throw ParseException((bl::format("Unknown color value \"{1}\"") % name).str());
 
-#define error2(var, ...) if(var == NULL) var = g_error_new(G_MARKUP_ERROR, G_MARKUP_ERROR_INVALID_CONTENT, __VA_ARGS__);
-#define error(...) if(error == NULL) error = g_error_new(G_MARKUP_ERROR, G_MARKUP_ERROR_INVALID_CONTENT, __VA_ARGS__);
-
-const char* LoadHandler::getAttrib(const char* name, bool optional)
-{
-	XOJ_CHECK_TYPE(LoadHandler);
-
-	const char** aName = this->attributeNames;
-	const char** aValue = this->attributeValues;
-
-	while (*aName != NULL)
-	{
-		if (!strcmp(*aName, name))
-		{
-			return *aValue;
-		}
-		aName++;
-		aValue++;
-	}
-
-	if (!optional)
-	{
-		g_warning("Parser: attribute %s not found!", name);
-	}
-	return NULL;
-}
-
-double LoadHandler::getAttribDouble(const char* name)
-{
-	XOJ_CHECK_TYPE(LoadHandler);
-
-	const char* attrib = getAttrib(name);
-
-	if (attrib == NULL)
-	{
-		error(_("Attribute \"%s\" could not be parsed as double, the value is NULL"),
-		      name);
-		return 0;
-	}
-
-	char* ptr = NULL;
-	double val = g_ascii_strtod(attrib, &ptr);
-	if (ptr == attrib)
-	{
-		error(_("Attribute \"%s\" could not be parsed as double, the value is \"%s\""),
-		      name, attrib);
-	}
-
-	return val;
-}
-
-int LoadHandler::getAttribInt(const char* name)
-{
-	XOJ_CHECK_TYPE(LoadHandler);
-
-	const char* attrib = getAttrib(name);
-
-	if (attrib == NULL)
-	{
-		error(_("Attribute \"%s\" could not be parsed as int, the value is NULL"),
-		      name);
-		return 0;
-	}
-
-	char* ptr = NULL;
-	int val = strtol(attrib, &ptr, 10);
-	if (ptr == attrib)
-	{
-		error(_("Attribute \"%s\" could not be parsed as int, the value is \"%s\""),
-		      name, attrib);
-	}
-
-	return val;
-}
-
-void LoadHandler::parseStart()
-{
-	XOJ_CHECK_TYPE(LoadHandler);
-
-	if (strcmp(elementName, "xournal") == 0)
-	{
-		// Read the document version
-
-		const char* version = getAttrib("version", true);
-		if (version)
-		{
-			this->creator = "Xournal ";
-			this->creator += version;
-		}
-
-		const char* fileversion = getAttrib("fileversion", true);
-		if (fileversion)
-		{
-			this->fileversion = atoi(fileversion);
-		}
-		const char* creator = getAttrib("creator", true);
-		if (creator)
-		{
-			this->creator = creator;
-		}
-
-		this->pos = PARSER_POS_STARTED;
+		return (c >> 8);
 	}
 	else
 	{
-		error(_("Unexpected root tag: %s"), elementName);
+		for (PredefinedColor c : PREDEFINED_COLORS)
+		{
+			if (name == c.name) return c.rgb;
+		}
+		throw ParseException((bl::format("Color \"{1}\" unknown (not defined in default color list)!") % name).str());
 	}
 }
 
-void LoadHandler::parseContents()
+bool LoadHandler::parseXml()
 {
 	XOJ_CHECK_TYPE(LoadHandler);
 
-	if (strcmp(elementName, "page") == 0)
-	{
-		this->pos = PARSER_POS_IN_PAGE;
+	char* old_locale, *saved_locale;
 
-		double width = getAttribDouble("width");
-		double height = getAttribDouble("height");
+	old_locale = setlocale(LC_NUMERIC, NULL);
+	saved_locale = g_strdup(old_locale);
 
-		this->page = new XojPage(width, height);
+	setlocale(LC_NUMERIC, "C");
+	
+	istream in(&inbuf);
+	xml_parse_result parse_result = this->xml.load(in);
+	if (parse_result.status != status_ok)
+	{
+		cerr << bl::format("Cannot parse xoj file \"{1}\": {2}") % filename % parse_result.description() << endl; //TODO localize every message
+		return false;
+	}
+	
+	xml_node xml_xournal = xml.child("xournal");
+	if (!xml_xournal.empty()) parseXmlXournal(&xml_xournal);
+	else throw ParseException("xournal", true); 
+	
+	setlocale(LC_NUMERIC, saved_locale);
+	g_free(saved_locale);
 
-		this->doc.addPage(this->page);
-	}
-	else if (strcmp(elementName, "title") == 0)
-	{
-		// Ignore this tag, it says nothing...
-	}
-	else if (strcmp(elementName, "preview") == 0)
-	{
-		// Ignore this tag, we don't need a preview
-	}
+	cout << bl::format("Parsed document of creator: {1}, version {2}")
+			% this->creator % this->fileversion << endl;
+	doc.setCreateBackupOnSave(this->fileversion >= 2); //CPPCHECK is it ok?
+
+	return true;
+}
+
+void LoadHandler::parseXmlXournal(xml_node* xml_xournal)
+{
+	XOJ_CHECK_TYPE(LoadHandler);
+	
+	this->fileversion = xml_xournal->attribute("fileversion").as_int(1);
+	
+	xml_attribute creator = xml_xournal->attribute("creator");
+	if (!creator.empty()) this->creator = creator.value();
 	else
 	{
-		//error(_("Unexpected tag in document: \"%s\""), elementName);
+		xml_attribute version = xml_xournal->attribute("version");
+		if (!version.empty()) this->creator = CONCAT("Xournal ", version.value());
+		else this->creator = "Unknown";
+	}
+	
+	//pages
+	for (xml_node xml_page : xml_xournal->children("page"))
+	{
+		if (xml_page.empty()) throw ParseException("xournal.page", true);
+		parseXmlPage(&xml_page);
+	}		
+}
+
+void LoadHandler::parseXmlPage(xml_node* xml_page)
+{
+	XOJ_CHECK_TYPE(LoadHandler);
+	
+	//page dimensions
+	double width = xml_page->attribute("width").as_double();
+	if (width == 0) throw ParseException("xournal.page(width)", true);
+	double height = xml_page->attribute("height").as_double();
+	if (height == 0) throw ParseException("xournal.page(height)", true);
+
+	this->page = new XojPage(width, height);
+	this->doc.addPage(this->page);
+
+	//background
+	xml_node xml_background = xml_page->child("background");
+	if (xml_background.empty()) throw ParseException("xournal.page.background", true);
+	
+	xml_attribute bg_type = xml_background.attribute("type");
+	if (bg_type.empty()) throw ParseException("xournal.page.background(type)", true);
+	
+	const string bg_type_v(bg_type.value());
+	if		(bg_type_v == "solid")	parseXmlPageBgSolid(&xml_background);
+	else if (bg_type_v == "pixmap")	parseXmlPageBgPixmap(&xml_background);
+	else if (bg_type_v == "pdf")
+	{
+		if (this->removePdfBackgroundFlag)
+		{
+			this->page->setBackgroundType(BACKGROUND_TYPE_NONE);
+			this->page->setBackgroundColor(0xffffff);
+		}
+		else parseXmlPageBgPdf(&xml_background);
+	}
+	else throw ParseException((bl::format("Unknown background type: \"{1}\"")
+								% bg_type.value()).str());
+
+	//layers
+	for (xml_node xml_layer : xml_page->children("layer"))
+	{
+		if (xml_layer.empty()) throw ParseException("xournal.page.layer", true);
+		parseXmlLayer(&xml_layer);
 	}
 }
+
 const char* RULINGSTR_NONE = "plain";
 const char* RULINGSTR_LINED = "lined";
 const char* RULINGSTR_RULED = "ruled";
 const char* RULINGSTR_GRAPH = "graph";
 
-void LoadHandler::parseBgSolid()
+void LoadHandler::parseXmlPageBgSolid(xml_node* xml_bg)
 {
 	XOJ_CHECK_TYPE(LoadHandler);
 
-	const char* style = getAttrib("style");
+	xml_attribute bg_style = xml_bg->attribute("style");
+	if (bg_style.empty()) throw ParseException("xournal.page.background(style)", true);
 
-	if (strcmp("plain", style) == 0)
-	{
+	const string bg_style_v(bg_style.value());
+	if (bg_style_v == RULINGSTR_NONE)
 		this->page->setBackgroundType(BACKGROUND_TYPE_NONE);
-	}
-	else if (strcmp("lined", style) == 0)
-	{
+	else if (bg_style_v == RULINGSTR_LINED)
 		this->page->setBackgroundType(BACKGROUND_TYPE_LINED);
-	}
-	else if (strcmp("ruled", style) == 0)
-	{
+	else if (bg_style_v == RULINGSTR_RULED)
 		this->page->setBackgroundType(BACKGROUND_TYPE_RULED);
-	}
-	else if (strcmp("graph", style) == 0)
-	{
+	else if (bg_style_v == RULINGSTR_GRAPH)
 		this->page->setBackgroundType(BACKGROUND_TYPE_GRAPH);
-	}
 	else
 	{
 		this->page->setBackgroundType(BACKGROUND_TYPE_NONE);
-		error(_("Unknown background type parsed: \"%s\""), style);
+		cerr << bl::format("Unknown background type: \"{1}\"")
+				% bg_style.value() << endl;
 	}
+	
+	xml_attribute bg_color = xml_bg->attribute("color");
+	if (bg_color.empty()) throw ParseException("xournal.page.background(color)", true);
 
-	const char* sColor = getAttrib("color");
-	int color = 0;
-
-	if (strcmp("blue", sColor) == 0)
-	{
-		color = 0xa0e8ff;
-	}
-	else if (strcmp("pink", sColor) == 0)
-	{
-		color = 0xffc0d4;
-	}
-	else if (strcmp("green", sColor) == 0)
-	{
-		color = 0x80FFC0;
-	}
-	else if (strcmp("orange", sColor) == 0)
-	{
-		color = 0xFFC080;
-	}
-	else if (strcmp("yellow", sColor) == 0)
-	{
-		color = 0xFFFF80;
-	}
-	else if (strcmp("white", sColor) == 0)
-	{
-		color = 0xffffff;
-	}
-	else
-	{
-		parseColor(sColor, color);
-	}
+	const string bg_color_val = bg_color.value();
+	int color;
+	if		(bg_color_val == "blue")	color = 0xa0e8ff;
+	else if (bg_color_val == "pink")	color = 0xffc0d4;
+	else if (bg_color_val == "green")	color = 0x80FFC0;
+	else if (bg_color_val == "orange")	color = 0xFFC080;
+	else if (bg_color_val == "yellow")	color = 0xFFFF80;
+	else if (bg_color_val == "white")	color = 0xffffff;
+	else								color = parseColor(bg_color_val);
 
 	this->page->setBackgroundColor(color);
 }
 
-void LoadHandler::parseBgPixmap()
+void LoadHandler::parseXmlPageBgPixmap(xml_node* xml_bg)
 {
 	XOJ_CHECK_TYPE(LoadHandler);
 
-	const char* domain = getAttrib("domain");
-	const char* filename = getAttrib("filename");
-
-	String fileToLoad;
+	const string bg_domain = xml_bg->attribute("domain").value();
+	if (bg_domain.empty()) throw ParseException("xournal.page.background(domain)", true);
+	
+	path fileToLoad;
 	bool loadFile = false;
-
-	if (!strcmp(domain, "absolute"))
+	
+	const string bg_filename = xml_bg->attribute("filename").value();
+	
+	if (bg_domain == "absolute")
 	{
-		fileToLoad = filename;
+		if (bg_filename.empty()) throw ParseException("xournal.page.background(filename)", true);
+		fileToLoad = path(bg_filename);
 		loadFile = true;
 	}
-	else if (!strcmp(domain, "attach"))
+	else if (bg_domain == "attach")
 	{
+		if (bg_filename.empty()) throw ParseException("xournal.page.background(filename)", true);
 		fileToLoad = this->filename;
-		fileToLoad += ".";
-		fileToLoad += filename;
+		fileToLoad /= CONCAT(".", bg_filename);
 		loadFile = true;
 	}
 
@@ -376,93 +327,70 @@ void LoadHandler::parseBgPixmap()
 
 		if (error)
 		{
-			error(_("could not read image: %s, Error message: %s"), fileToLoad.c_str(),
-			      error->message);
+			cerr << bl::format("Could not read image: {1}, Error message: {2}")
+								% fileToLoad % error->message << endl;
 			g_error_free(error);
 		}
 
 		this->page->setBackgroundImage(img);
 	}
-	else if (!strcmp(domain, "clone"))
+	else if (bg_domain == "clone")
 	{
-		PageRef p = doc.getPage(atoi(filename));
+		PageRef p = doc.getPage(stoi(filename.string()));//TOTEST!!!
 
 		if (p.isValid())
-		{
 			this->page->setBackgroundImage(p->getBackgroundImage());
-		}
 	}
-	else
-	{
-		error(_("Unknown pixmap::domain type: %s"), domain);
-	}
+	else throw ParseException((bl::format("Unknown pixmap domain type: {1}") % bg_domain).str());
+
 	this->page->setBackgroundType(BACKGROUND_TYPE_IMAGE);
 }
 
-void LoadHandler::parseBgPdf()
+void LoadHandler::parseXmlPageBgPdf(xml_node* xml_bg)
 {
 	XOJ_CHECK_TYPE(LoadHandler);
 
-	int pageno = getAttribInt("pageno");
-	bool attachToDocument = false;
-	String pdfFilename;
-
+	xml_attribute bg_pageno = xml_bg->attribute("pageno");
+	if (bg_pageno.empty()) throw ParseException("xournal.page.background(pageno)", true);
+	
+	int pageno = bg_pageno.as_int();
 	this->page->setBackgroundPdfPageNr(pageno - 1);
-
+	
 	if (!this->pdfFilenameParsed)
 	{
-
-		if (this->pdfReplacementFilename.isEmpty())
+		bool attachToDocument = false;
+		path pdfFilename;
+		
+		if (this->pdfReplacementFilename.empty())
 		{
-			const char* domain = getAttrib("domain");
-			const char* sFilename = getAttrib("filename");
+			xml_attribute bg_domain = xml_bg->attribute("domain");
+			xml_attribute bg_filename = xml_bg->attribute("filename");
 
-			if (sFilename == NULL)
+			if (bg_domain.empty())		throw ParseException("xournal.page.background(domain)", true);
+			if (bg_filename.empty())	throw ParseException("xournal.page.background(filename)", true);
+			
+			const string bg_domain_val = bg_domain.value();
+			const string bg_filename_val = bg_filename.value();
+			pdfFilename = path(bg_filename_val);
+
+			if (bg_domain_val == "absolute")
 			{
-				error("PDF Filename missing!");
-				return;
-			}
-
-			pdfFilename = sFilename;
-
-			if (!strcmp("absolute", domain))   // Absolute OR relative path
-			{
-				if (!g_file_test(sFilename, G_FILE_TEST_EXISTS))
+				if (!bf::exists(pdfFilename)) // Absolute OR relative path
 				{
-					char* dirname = g_path_get_dirname(xournalFilename.c_str());
-					char* file = g_path_get_basename(sFilename);
+					path tmpFilename = xournalFilename.parent_path();
+					tmpFilename /= pdfFilename.filename();
 
-					char* tmpFilename = g_build_path(G_DIR_SEPARATOR_S, dirname, file, NULL);
-
-					if (g_file_test(tmpFilename, G_FILE_TEST_EXISTS))
-					{
-						pdfFilename = tmpFilename;
-					}
-
-					g_free(tmpFilename);
-					g_free(dirname);
-					g_free(file);
+					if (bf::exists(tmpFilename)) pdfFilename = tmpFilename;
 				}
 			}
-			else if (!strcmp("attach", domain))
+			else if (bg_domain_val == "attach")
 			{
 				attachToDocument = true;
-				char* tmpFilename = g_strdup_printf("%s.%s", xournalFilename.c_str(),
-				                                    sFilename);
+				path tmpFilename = CONCAT(xournalFilename.string(), '.', pdfFilename.string());
 
-				if (g_file_test(tmpFilename, G_FILE_TEST_EXISTS))
-				{
-					pdfFilename = tmpFilename;
-				}
-
-				g_free(tmpFilename);
+				if (bf::exists(tmpFilename)) pdfFilename = tmpFilename;
 			}
-			else
-			{
-				error(_("Unknown domain type: %s"), domain);
-				return;
-			}
-
+			else throw ParseException((bl::format("Unknown PDF domain type: {1}") % bg_domain_val).str());
 		}
 		else
 		{
@@ -472,563 +400,239 @@ void LoadHandler::parseBgPdf()
 
 		this->pdfFilenameParsed = true;
 
-		if (g_file_test(pdfFilename.c_str(), G_FILE_TEST_EXISTS))
+		if (bf::exists(pdfFilename))
 		{
 			doc.readPdf(pdfFilename, false, attachToDocument);
-			if (!doc.getLastErrorMsg().isEmpty())
-			{
-				error(_("Error reading PDF: %s"), doc.getLastErrorMsg().c_str());
-			}
+			if (!doc.getLastErrorMsg().empty())
+				cerr << bl::format("Error reading PDF: {1}") % doc.getLastErrorMsg() << endl;
 		}
+		else if (attachToDocument)
+			this->attachedPdfMissing = true;
 		else
-		{
-			if (attachToDocument)
-			{
-				this->attachedPdfMissing = true;
-			}
-			else
-			{
-				this->pdfMissing = pdfFilename.c_str();
-			}
-		}
+			this->pdfMissing = pdfFilename;
 	}
 }
 
-void LoadHandler::parsePage()
+void LoadHandler::parseXmlLayer(xml_node* xml_layer)
 {
 	XOJ_CHECK_TYPE(LoadHandler);
-
-	if (!strcmp(elementName, "background"))
+	
+	this->layer = new Layer();
+	this->page->addLayer(this->layer);
+	
+	for (xml_node child : xml_layer->children())
 	{
-		const char* type = getAttrib("type");
-
-		if (strcmp("solid", type) == 0)
-		{
-			parseBgSolid();
-		}
-		else if (strcmp("pixmap", type) == 0)
-		{
-			parseBgPixmap();
-		}
-		else if (strcmp("pdf", type) == 0)
-		{
-			if (this->removePdfBackgroundFlag)
-			{
-				this->page->setBackgroundType(BACKGROUND_TYPE_NONE);
-				this->page->setBackgroundColor(0xffffff);
-			}
-			else
-			{
-				parseBgPdf();
-			}
-		}
-		else
-		{
-			error(_("Unknown background type: %s"), type);
-		}
-	}
-	else if (!strcmp(elementName, "layer"))
-	{
-		this->pos = PARSER_POS_IN_LAYER;
-		this->layer = new Layer();
-		this->page->addLayer(this->layer);
+		if (child.empty()) throw ParseException("xournal.page.layer.(child)", true);
+		
+		string child_n = child.name();
+		if		(child_n == "stroke")	parseXmlLayerStroke(&child);
+		else if (child_n == "text")		parseXmlLayerText(&child);
+		else if (child_n == "image")	parseXmlLayerImage(&child);
+		else if (child_n == "teximage")	parseXmlLayerTexImage(&child);
+		else throw ParseException((bl::format("Unknown layer element: {1}") % child_n).str());
 	}
 }
 
-bool LoadHandler::parseColor(const char* text, int& color)
+void LoadHandler::parseXmlLayerStroke(xml_node* child)
 {
 	XOJ_CHECK_TYPE(LoadHandler);
 
-	if (text == NULL)
-	{
-		error(_("Attribute color not set!"));
-		return false;
-	}
+	Stroke* stroke = new Stroke();
+	this->layer->addElement(stroke);
 
-	if (text[0] == '#')
-	{
-		gchar* ptr = NULL;
-		int c = g_ascii_strtoull(&text[1], &ptr, 16);
-		if (ptr != text + strlen(text))
-		{
-			error(_("Unknown color value \"%s\""), text);
-			return false;
-		}
+	//color
+	string xml_color = child->attribute("color").value();
+	if (xml_color.empty()) throw ParseException("xournal.page.layer.stroke(color)", true);
+	stroke->setColor(parseColor(xml_color));
 
-		color = c >> 8;
+	//tool
+	string xml_tool = child->attribute("tool").value();
+	if (xml_tool.empty()) throw ParseException("xournal.page.layer.stroke(tool)", true);
 
-		return true;
-	}
+	if (xml_tool == "eraser")			stroke->setToolType(STROKE_TOOL_ERASER);
+	else if (xml_tool == "pen")			stroke->setToolType(STROKE_TOOL_PEN);
+	else if (xml_tool == "highlighter")	stroke->setToolType(STROKE_TOOL_HIGHLIGHTER);
 	else
 	{
-		for (int i = 0; i < COLOR_COUNT; i++)
-		{
-			if (!strcmp(text, PREDEFINED_COLORS[i].name))
-			{
-				color = PREDEFINED_COLORS[i].rgb;
-				return true;
-			}
-		}
-		error(_("Color \"%s\" unknown (not defined in default color list)!"), text);
-		return false;
-	}
-}
-
-void LoadHandler::parseStroke()
-{
-	XOJ_CHECK_TYPE(LoadHandler);
-
-	this->stroke = new Stroke();
-	this->layer->addElement(this->stroke);
-
-	const char* width = getAttrib("width");
-	char* ptr = NULL;
-	char* tmpptr = NULL;
-	double val = 0;
-
-	stroke->setWidth(g_ascii_strtod(width, &ptr));
-	if (ptr == width)
-	{
-		error(_("Error reading width of a stroke: %s"), width);
-		return;
-	}
-
-	while (*ptr != 0)
-	{
-		val = g_ascii_strtod(ptr, &tmpptr);
-		if (tmpptr == ptr)
-		{
-			break;
-		}
-		ptr = tmpptr;
-		this->pressureBuffer.add(val);
-	}
-
-	int color = 0;
-	const char* sColor = getAttrib("color");
-	if (!parseColor(sColor, color))
-	{
-		return;
-	}
-	stroke->setColor(color);
-
-	const char* tool = getAttrib("tool");
-
-	if (strcmp("eraser", tool) == 0)
-	{
-		stroke->setToolType(STROKE_TOOL_ERASER);
-	}
-	else if (strcmp("pen", tool) == 0)
-	{
+		cout << bl::format("Unknown stroke type: \"{1}\", assume pen") % xml_tool << endl;
 		stroke->setToolType(STROKE_TOOL_PEN);
 	}
-	else if (strcmp("highlighter", tool) == 0)
+	
+	//width
+	string xml_width = child->attribute("width").value();
+	if (xml_width.empty()) throw ParseException("xournal.page.layer.stroke(width)", true);
+
+	//used for both widths and points parsing
+	string::size_type ptr;
+	double tmp;
+	
+	std::vector<string> swidths;
+	boost::split(swidths, xml_width, boost::is_any_of(" "));
+
+	std::vector<double> widths;
+	for (string w : swidths)
 	{
-		stroke->setToolType(STROKE_TOOL_HIGHLIGHTER);
+		tmp = std::stod(w, &ptr);
+		if (ptr != w.length()) throw ParseException((bl::format("Error reading width of a stroke: {1}") % xml_width).str());
+		widths.push_back(tmp);
 	}
-	else
+	
+	bool oneWidth = (widths.size() == 1);
+
+	stroke->setWidth(widths[0]);
+	
+	//points
+	std::vector<string> points;
+	string text = child->text().get();
+	boost::split(points, text, boost::is_any_of(" "));
+	
+	if (points.size() % 2 != 0)
+		throw ParseException((bl::format("Wrong number of point dimensions: {1}")
+				% points.size()).str());
+	if (!oneWidth && widths.size() != (points.size() / 2))
 	{
-		g_warning(_("Unknown stroke type: \"%s\", assume pen"), tool);
+		throw ParseException((bl::format("Wrong count of points. Given {1} widths and {2} points")
+				% widths.size() % points.size()).str());
 	}
-}
-
-void LoadHandler::parseText()
-{
-	XOJ_CHECK_TYPE(LoadHandler);
-
-	this->text = new Text();
-	this->layer->addElement(this->text);
-
-	const char* sFont = getAttrib("font");
-	double fontSize = getAttribDouble("size");
-	double x = getAttribDouble("x");
-	double y = getAttribDouble("y");
-
-	this->text->setX(x);
-	this->text->setY(y);
-
-	XojFont& f = text->getFont();
-	f.setName(sFont);
-	f.setSize(fontSize);
-	const char* sColor = getAttrib("color");
-	int color = 0;
-	parseColor(sColor, color);
-	text->setColor(color);
-}
-
-void LoadHandler::parseImage()
-{
-	XOJ_CHECK_TYPE(LoadHandler);
-
-	double left = getAttribDouble("left");
-	double top = getAttribDouble("top");
-	double right = getAttribDouble("right");
-	double bottom = getAttribDouble("bottom");
-
-	this->image = new Image();
-	this->layer->addElement(this->image);
-	this->image->setX(left);
-	this->image->setY(top);
-	this->image->setWidth(right - left);
-	this->image->setHeight(bottom - top);
-}
-
-void LoadHandler::parseTexImage()
-{
-	XOJ_CHECK_TYPE(LoadHandler);
-
-	double left = getAttribDouble("left");
-	double top = getAttribDouble("top");
-	double right = getAttribDouble("right");
-	double bottom = getAttribDouble("bottom");
-
-	const char* imText = getAttrib("text");
-	const char* compatibilityTest = getAttrib("texlength");
-	int imTextLen = 500;
-	if(compatibilityTest != NULL)
+	
+	
+	bool dim = false; //dimension: false - x; true - y
+	double x;
+	for (int i = 0; i < points.size(); i++)
 	{
-		imTextLen = getAttribInt("texlength");
-	}
-
-
-	this->teximage = new TexImage();
-	this->layer->addElement(this->teximage);
-	this->teximage->setX(left);
-	this->teximage->setY(top);
-	this->teximage->setWidth(right - left);
-	this->teximage->setHeight(bottom - top);
-	//need to allocate memory for the image
-	char* tmp = new char[imTextLen + 1];
-	strcpy(tmp, imText);
-	this->teximage->setText(tmp, imTextLen);
-}
-
-void LoadHandler::parseLayer()
-{
-	XOJ_CHECK_TYPE(LoadHandler);
-
-	if (!strcmp(elementName, "stroke"))   // start of a stroke
-	{
-		this->pos = PARSER_POS_IN_STROKE;
-		parseStroke();
-	}
-	else if (!strcmp(elementName, "text"))     // start of a text item
-	{
-		this->pos = PARSER_POS_IN_TEXT;
-		parseText();
-	}
-	else if (!strcmp(elementName, "image"))     // start of a image item
-	{
-		this->pos = PARSER_POS_IN_IMAGE;
-		parseImage();
-	}
-	else if (!strcmp(elementName, "teximage"))     // start of a image item
-	{
-		this->pos = PARSER_POS_IN_TEXIMAGE;
-		parseTexImage();
-	}
-}
-
-void LoadHandler::parserStartElement(GMarkupParseContext* context,
-                                     const gchar* elementName, const gchar** attributeNames,
-                                     const gchar** attributeValues,
-                                     gpointer userdata, GError** error)
-{
-	LoadHandler* handler = (LoadHandler*) userdata;
-	// Return on error
-	if (*error)
-	{
-		return;
-	}
-
-	XOJ_CHECK_TYPE_OBJ(handler, LoadHandler);
-
-
-	handler->attributeNames = attributeNames;
-	handler->attributeValues = attributeValues;
-	handler->elementName = elementName;
-
-	if (handler->pos == PARSER_POS_NOT_STARTED)
-	{
-		handler->parseStart();
-	}
-	else if (handler->pos == PARSER_POS_STARTED)
-	{
-		handler->parseContents();
-	}
-	else if (handler->pos == PARSER_POS_IN_PAGE)
-	{
-		handler->parsePage();
-	}
-	else if (handler->pos == PARSER_POS_IN_LAYER)
-	{
-		handler->parseLayer();
-	}
-
-	handler->attributeNames = NULL;
-	handler->attributeValues = NULL;
-	handler->elementName = NULL;
-}
-
-void LoadHandler::parserEndElement(GMarkupParseContext* context,
-                                   const gchar* element_name, gpointer userdata, GError** error)
-{
-	// Return on error
-	if (*error)
-	{
-		return;
-	}
-
-	LoadHandler* handler = (LoadHandler*) userdata;
-
-	XOJ_CHECK_TYPE_OBJ(handler, LoadHandler);
-
-
-	if (handler->pos == PARSER_POS_STARTED && strcmp(element_name, "xournal") == 0)
-	{
-		handler->pos = PASER_POS_FINISHED;
-	}
-	else if (handler->pos == PARSER_POS_IN_PAGE &&
-	         strcmp(element_name, "page") == 0)
-	{
-		handler->pos = PARSER_POS_STARTED;
-		handler->page = NULL;
-	}
-	else if (handler->pos == PARSER_POS_IN_LAYER &&
-	         strcmp(element_name, "layer") == 0)
-	{
-		handler->pos = PARSER_POS_IN_PAGE;
-		handler->layer = NULL;
-	}
-	else if (handler->pos == PARSER_POS_IN_STROKE &&
-	         strcmp(element_name, "stroke") == 0)
-	{
-		handler->pos = PARSER_POS_IN_LAYER;
-		handler->stroke = NULL;
-	}
-	else if (handler->pos == PARSER_POS_IN_TEXT &&
-	         strcmp(element_name, "text") == 0)
-	{
-		handler->pos = PARSER_POS_IN_LAYER;
-		handler->text = NULL;
-	}
-	else if (handler->pos == PARSER_POS_IN_IMAGE &&
-	         strcmp(element_name, "image") == 0)
-	{
-		handler->pos = PARSER_POS_IN_LAYER;
-		handler->image = NULL;
-	}
-	else if (handler->pos == PARSER_POS_IN_TEXIMAGE &&
-	         strcmp(element_name, "teximage") == 0)
-	{
-		handler->pos = PARSER_POS_IN_LAYER;
-		handler->teximage = NULL;
-	}
-}
-
-void LoadHandler::parserText(GMarkupParseContext* context, const gchar* text,
-                             gsize textLen, gpointer userdata, GError** error)
-{
-	// Return on error
-	if (*error)
-	{
-		return;
-	}
-
-	LoadHandler* handler = (LoadHandler*) userdata;
-
-	XOJ_CHECK_TYPE_OBJ(handler, LoadHandler);
-
-
-	if (handler->pos == PARSER_POS_IN_STROKE)
-	{
-		const char* ptr = text;
-		int n = 0;
-
-		bool xRead = false;
-		double x = 0;
-
-		while (textLen > 0)
+		tmp = std::stod(points[i], &ptr);
+		if (ptr != points[i].length())
+			throw ParseException((bl::format("Stroke point in wrong format: {1}") % points[i]).str());
+		
+		if (dim == false)
 		{
-			double tmp = g_ascii_strtod(text, (char**) (&ptr));
-			if (ptr == text)
-			{
-				break;
-			}
-			textLen -= (ptr - text);
-			text = ptr;
-			n++;
-
-			if (!xRead)
-			{
-				xRead = true;
-				x = tmp;
-			}
-			else
-			{
-				xRead = false;
-				handler->stroke->addPoint(Point(x, tmp));
-			}
-		}
-		handler->stroke->freeUnusedPointItems();
-
-		if (n < 4 || n & 1)
-		{
-			error2(*error, _("Wrong count of points (%i)"), n);
-			return;
-		}
-
-		if (handler->pressureBuffer.size() != 0)
-		{
-			if (handler->pressureBuffer.size() == handler->stroke->getPointCount() - 1)
-			{
-				const double* data = handler->pressureBuffer.getData();
-				handler->stroke->setPressure(data);
-				handler->pressureBuffer.clear();
-			}
-			else
-			{
-				g_warning(_("xoj-File: %s"), handler->filename.c_str());
-				g_warning(_("Wrong count of points, get %i, expected %i"),
-				          handler->pressureBuffer.size(), handler->stroke->getPointCount() - 1);
-			}
-		}
-		handler->pressureBuffer.clear();
-	}
-	else if (handler->pos == PARSER_POS_IN_TEXT)
-	{
-		gchar* txt = g_strndup(text, textLen);
-		handler->text->setText(txt);
-		g_free(txt);
-	}
-	else if (handler->pos == PARSER_POS_IN_IMAGE)
-	{
-		handler->readImage(text, textLen);
-	}
-	else if (handler->pos == PARSER_POS_IN_TEXIMAGE)
-	{
-		handler->readTexImage(text, textLen);
-	}
-}
-
-void LoadHandler::readImage(const gchar* base64_str, gsize base64_strlen)
-{
-	XOJ_CHECK_TYPE(LoadHandler);
-
-	gsize png_buflen;
-
-	// We have to copy the string in order to null terminate it, sigh.
-	gchar* base64_str2 = (gchar*) g_memdup(base64_str, base64_strlen + 1);
-	base64_str2[base64_strlen] = '\0';
-
-	guchar* png_buf = g_base64_decode(base64_str2, &png_buflen);
-	g_free(base64_str2);
-
-	this->image->setImage(png_buf, png_buflen);
-}
-
-void LoadHandler::readTexImage(const gchar* base64_str, gsize base64_strlen)
-{
-	XOJ_CHECK_TYPE(LoadHandler);
-
-	gsize png_buflen;
-
-	// We have to copy the string in order to null terminate it, sigh.
-	gchar* base64_str2 = (gchar*) g_memdup(base64_str, base64_strlen + 1);
-	base64_str2[base64_strlen] = '\0';
-
-	guchar* png_buf = g_base64_decode(base64_str2, &png_buflen);
-	g_free(base64_str2);
-
-	this->teximage->setImage(png_buf, png_buflen);
-}
-
-
-bool LoadHandler::parseXml()
-{
-	XOJ_CHECK_TYPE(LoadHandler);
-
-	const GMarkupParser parser = { LoadHandler::parserStartElement, LoadHandler::parserEndElement, LoadHandler::parserText, NULL, NULL };
-	GMarkupParseContext* context;
-	this->error = NULL;
-	gboolean valid = true;
-
-	this->pos = PARSER_POS_NOT_STARTED;
-	this->creator = "Unknown";
-	this->fileversion = 1;
-
-	char buffer[1024];
-	int len;
-
-	context = g_markup_parse_context_new(&parser, (GMarkupParseFlags) 0, this,
-	                                     NULL);
-
-	do
-	{
-		len = readFile(buffer, sizeof(buffer));
-		if (len > 0)
-		{
-			valid = g_markup_parse_context_parse(context, buffer, len, &error);
-		}
-
-		if (error)
-		{
-			g_warning("LoadHandler::parseXml: %s\n", error->message);
-			valid = false;
-			break;
-		}
-	}
-	while (len >= 0 && valid && !error);
-
-	if (valid)
-	{
-		valid = g_markup_parse_context_end_parse(context, &error);
-	}
-	else
-	{
-		if (error != NULL && error->message != NULL)
-		{
-			char* err = g_strdup_printf(_("XML Parser error: %s"), error->message);
-			this->lastError = err;
-			g_free(err);
-
-			g_error_free(error);
+			x = tmp;
+			dim = true;
 		}
 		else
 		{
-			this->lastError = _("Unknown parser error");
+			if (oneWidth)
+				stroke->addPoint(Point(x, tmp));
+			else
+				stroke->addPoint(Point(x, tmp, widths[(i-1)/2+1]));
+			dim = false;
 		}
-		g_warning("LoadHandler::parseXml: %s\n", this->lastError.c_str());
 	}
+	
+	stroke->freeUnusedPointItems();
+}
 
-	g_markup_parse_context_free(context);
+void LoadHandler::parseXmlLayerText(xml_node* child)
+{
+	XOJ_CHECK_TYPE(LoadHandler);
+	
+	double x = child->attribute("x").as_double(-1234);
+	if (x == -1234) throw ParseException("xournal.page.layer.text(x)", true);
+	
+	double y = child->attribute("y").as_double(-1234);
+	if (y == -1234) throw ParseException("xournal.page.layer.text(y)", true);
 
-	if (this->pos != PASER_POS_FINISHED && this->lastError == NULL)
-	{
-		lastError = _("Document is not complete (maybe the end is cut off?)");
-		return false;
-	}
+	string font = child->attribute("font").value();
+	if (font.empty()) throw ParseException("xournal.page.layer.text(font)", true);
 
-	//	printf("parsed creator: %s::version: %i\n", this->creator.c_str(), this->fileversion);
-	doc.setCreateBackupOnSave(!this->fileversion < 2);
+	double size = child->attribute("size").as_double(-1234);
+	if (size == -1234) throw ParseException("xournal.page.layer.text(size)", true);
 
-	return valid;
+	string color = child->attribute("color").value();
+	if (color.empty()) throw ParseException("xournal.page.layer.text(color)", true);
+
+	string value = child->text().get();
+	if (value.empty()) throw ParseException("xournal.page.layer.text", true);
+	
+	Text* text = new Text();
+	text->setX(x);
+	text->setY(y);
+	text->getFont().setName(font);
+	text->getFont().setSize(size);
+	text->setColor(parseColor(color));
+	text->setText(value);
+	
+	this->layer->addElement(text);
+}
+
+void LoadHandler::parseXmlLayerImage(xml_node* child)
+{
+	XOJ_CHECK_TYPE(LoadHandler);
+	
+	double left = child->attribute("left").as_double(-1234);
+	if (left == -1234) throw ParseException("xournal.page.layer.image(left)", true);
+	
+	double top = child->attribute("top").as_double(-1234);
+	if (top == -1234) throw ParseException("xournal.page.layer.image(top)", true);
+	
+	double right = child->attribute("right").as_double(-1234);
+	if (right == -1234) throw ParseException("xournal.page.layer.image(right)", true);
+	
+	double bottom = child->attribute("bottom").as_double(-1234);
+	if (bottom == -1234) throw ParseException("xournal.page.layer.image(bottom)", true);
+	
+	string imgenc = child->text().get();
+	if (imgenc.empty()) throw ParseException("xournal.page.layer.image", true);
+	
+	string imgdec = Glib::Base64::decode(imgenc);
+
+	Image* image = new Image();
+	image->setX(left);
+	image->setY(top);
+	image->setWidth(right - left);	
+	image->setHeight(bottom - top);
+	image->setImage(imgdec);
+	
+	this->layer->addElement(image);
+}
+
+void LoadHandler::parseXmlLayerTexImage(xml_node* child)
+{
+	XOJ_CHECK_TYPE(LoadHandler);
+
+	double left = child->attribute("left").as_double(-1234);
+	if (left == -1234) throw ParseException("xournal.page.layer.image(left)", true);
+	
+	double top = child->attribute("top").as_double(-1234);
+	if (top == -1234) throw ParseException("xournal.page.layer.image(top)", true);
+	
+	double right = child->attribute("right").as_double(-1234);
+	if (right == -1234) throw ParseException("xournal.page.layer.image(right)", true);
+	
+	double bottom = child->attribute("bottom").as_double(-1234);
+	if (bottom == -1234) throw ParseException("xournal.page.layer.image(bottom)", true);
+
+	string imText = child->attribute("text").value();
+	if (imText.empty()) throw ParseException("xournal.page.layer.image(text)", true);
+	
+	string imgenc = child->text().get();
+	if (imgenc.empty()) throw ParseException("xournal.page.layer.teximage", true);
+	
+	string imgdec = Glib::Base64::decode(imgenc);
+
+	TexImage* teximage = new TexImage();
+	
+	teximage->setX(left);
+	teximage->setY(top);
+	teximage->setWidth(right - left);
+	teximage->setHeight(bottom - top);
+	teximage->setText(imText);
+	teximage->setImage(imgdec);
+	
+	this->layer->addElement(teximage);
 }
 
 /**
  * Document should not be freed, it will be freed with LoadHandler!
  */
-Document* LoadHandler::loadDocument(String filename)
+Document* LoadHandler::loadDocument(path filename)
 {
 	XOJ_CHECK_TYPE(LoadHandler);
 
 	initAttributes();
 	doc.clearDocument();
 
-	if (!openFile(filename))
-	{
-		return NULL;
-	}
+	if (!openFile(filename)) return NULL;
 
 	xournalFilename = filename;
 
@@ -1039,65 +643,79 @@ Document* LoadHandler::loadDocument(String filename)
 		closeFile();
 		return NULL;
 	}
-	doc.setFilename(filename.c_str());
+	doc.setFilename(filename);
 
 	closeFile();
 
 	return &this->doc;
 }
 
-DoubleArrayBuffer::DoubleArrayBuffer()
-{
-	XOJ_INIT_TYPE(DoubleArrayBuffer);
-
-	this->data = NULL;
-	this->len = 0;
-	this->allocCount = 0;
+ParseException::ParseException(const char* attribute, bool notFound, string* value, string convError) : std::runtime_error("Parsing Exception") {
+	XOJ_INIT_TYPE(ParseException);
+	
+	this->attribute = attribute;
+	this->notFound = notFound;
+	this->value = value;
+	this->convError = convError;
 }
 
-DoubleArrayBuffer::~DoubleArrayBuffer()
+ParseException::ParseException(string msg) : std::runtime_error(msg)
 {
-	XOJ_CHECK_TYPE(DoubleArrayBuffer);
-
-	g_free(this->data);
-	this->data = NULL;
-	this->len = 0;
-	this->allocCount = 0;
-
-	XOJ_RELEASE_TYPE(DoubleArrayBuffer);
+	XOJ_INIT_TYPE(ParseException);
+	
+	this->msg = msg;
 }
 
-void DoubleArrayBuffer::clear()
+ParseException::~ParseException()
 {
-	XOJ_CHECK_TYPE(DoubleArrayBuffer);
-
-	this->len = 0;
+	XOJ_RELEASE_TYPE(ParseException);
+}
+	
+const char* ParseException::getAttribute() const {
+	XOJ_CHECK_TYPE(ParseException);
+	
+	return this->attribute;
 }
 
-const double* DoubleArrayBuffer::getData()
-{
-	XOJ_CHECK_TYPE(DoubleArrayBuffer);
-
-	return this->data;
+string* ParseException::getValue() const {
+	XOJ_CHECK_TYPE(ParseException);
+	
+	return this->value;
 }
 
-int DoubleArrayBuffer::size()
-{
-	XOJ_CHECK_TYPE(DoubleArrayBuffer);
-
-	return this->len;
+bool ParseException::isNotFound() const {
+	XOJ_CHECK_TYPE(ParseException);
+	
+	return this->notFound;
 }
 
-void DoubleArrayBuffer::add(double d)
-{
-	XOJ_CHECK_TYPE(DoubleArrayBuffer);
+string ParseException::isConvError() const {
+	XOJ_CHECK_TYPE(ParseException);
+	
+	return this->convError;
+}
 
-	if (this->len >= this->allocCount)
+const char* ParseException::what() const throw () {
+	XOJ_CHECK_TYPE(ParseException);
+	
+	if (!this->msg.empty())
 	{
-		this->allocCount += 1024;
-		this->data = (double*) g_realloc(this->data, this->allocCount * sizeof(double));
+		return this->msg.c_str();
 	}
-
-	this->data[this->len++] = d;
+	else if (this->notFound)
+	{
+		return (bl::format("Attribute \"{1}\" not found") % this->attribute).str().c_str();
+	}
+	else
+	{
+		if (this->convError.empty()) {
+			return (bl::format("Unknown parse error for attribute \"{1}\" of value \"{2}\"")
+					% this->attribute % this->value).str().c_str();
+		}
+		else
+		{
+			return (bl::format("Attribute \"{1}\" of value \"{2}\" cannot be parsed as {3}")
+					% this->attribute % this->value % this->convError).str().c_str();
+		}
+	}
 }
-

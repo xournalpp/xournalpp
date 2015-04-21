@@ -3,14 +3,13 @@
  *
  * Serializeable interface
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __SERIALIZEABLE_H__
-#define __SERIALIZEABLE_H__
+#pragma once
 
 #include "InputStreamException.h"
 
@@ -24,7 +23,5 @@ class Serializeable
 public:
 	virtual void serialize(ObjectOutputStream& out) = 0;
 	virtual void readSerialized(ObjectInputStream& in) throw (
-	    InputStreamException) = 0;
+			InputStreamException) = 0;
 };
-
-#endif /* __SERIALIZEABLE_H__ */

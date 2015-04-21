@@ -3,14 +3,13 @@
  *
  * Export handler for export as PDF, PNG, EPS... etc.
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __EXPORTHANDLER_H__
-#define __EXPORTHANDLER_H__
+#pragma once
 
 class GladeSearchpath;
 class Settings;
@@ -28,11 +27,9 @@ public:
 
 public:
 	void runExportWithDialog(GladeSearchpath* gladeSearchPath, Settings* settings,
-	                         Document* doc, Control* control, int current);
+							Document* doc, Control* control, int current);
 
 private:
 	XOJ_TYPE_ATTRIB;
 
 };
-
-#endif /* __EXPORTHANDLER_H__ */

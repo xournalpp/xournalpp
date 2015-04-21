@@ -3,14 +3,13 @@
  *
  * Sidebar preview layout
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __SIDEBARLAYOUT_H__
-#define __SIDEBARLAYOUT_H__
+#pragma once
 
 #include <gtk/gtk.h>
 #include <XournalType.h>
@@ -33,5 +32,3 @@ private:
 	XOJ_TYPE_ATTRIB;
 
 };
-
-#endif /* __SIDEBARLAYOUT_H__ */

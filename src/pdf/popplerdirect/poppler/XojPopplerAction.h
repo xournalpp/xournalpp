@@ -3,31 +3,30 @@
  *
  * Custom Poppler access library
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __XOJPOPPLERACTION_H__
-#define __XOJPOPPLERACTION_H__
+#pragma once
 
 #include "XojPopplerDocument.h"
 
 #include "../../../model/LinkDestination.h"
-#include <String.h>
+#include <StringUtils.h>
 
 #include "../poppler-0.24.1/poppler/Link.h"
 
 class XojPopplerAction
 {
 public:
-	XojPopplerAction(XojPopplerDocument doc, LinkAction* linkAction, String title);
+	XojPopplerAction(XojPopplerDocument doc, LinkAction* linkAction, string title);
 	virtual ~XojPopplerAction();
 
 public:
 	XojLinkDest* getDestination();
-	String getTitle();
+	string getTitle();
 
 private:
 	void linkFromDest(LinkDestination* link, LinkDest* dest);
@@ -37,7 +36,5 @@ private:
 
 	XojPopplerDocument doc;
 	LinkAction* linkAction;
-	String title;
+	string title;
 };
-
-#endif /* __XOJPOPPLERACTION_H__ */

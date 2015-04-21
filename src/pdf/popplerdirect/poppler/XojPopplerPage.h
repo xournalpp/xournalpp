@@ -3,14 +3,13 @@
  *
  * Custom Poppler access library
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __XOJ_POPPLERPAGE_H__
-#define __XOJ_POPPLERPAGE_H__
+#pragma once
 
 #include <gtk/gtk.h>
 #include "../poppler-0.24.1/poppler/PDFDoc.h"
@@ -22,6 +21,7 @@
 #include "../workaround/workaround.h"
 
 #include <XournalType.h>
+#include <StringUtils.h>
 
 class Page;
 class TextPage;
@@ -32,7 +32,7 @@ class XojPopplerPage
 {
 private:
 	XojPopplerPage(PDFDoc* doc, GMutex* docMutex, CairoOutputDev* outputDev,
-	               Page* page, int index);
+				Page* page, int index);
 	virtual ~XojPopplerPage();
 public:
 	double getWidth();
@@ -40,7 +40,7 @@ public:
 
 	void render(cairo_t* cr, bool forPrinting = false);
 
-	GList* findText(const char* text);
+	GList* findText(string& text);
 
 	Page* getPage();
 
@@ -75,6 +75,3 @@ public:
 	double x2;
 	double y2;
 };
-
-
-#endif /* __XOJ_POPPLERPAGE_H__ */

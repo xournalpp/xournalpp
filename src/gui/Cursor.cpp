@@ -6,13 +6,15 @@
 
 /************** drawing nice cursors *********/
 
-static unsigned char CURSOR_HIGLIGHTER_BITS[] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf8, 0x0f, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08,
-                                                 0x08, 0x08, 0x08, 0xf8, 0x0f, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-                                                };
+static unsigned char CURSOR_HIGLIGHTER_BITS[] = {
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf8, 0x0f, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08,
+	0x08, 0x08, 0x08, 0xf8, 0x0f, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+};
 
-static unsigned char CURSOR_HILIGHTER_MASK[] = { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf8, 0x0f, 0xf8, 0x0f, 0xf8, 0x0f, 0xf8, 0x0f, 0xf8, 0x0f, 0xf8, 0x0f, 0xf8, 0x0f,
-                                                0xf8, 0x0f, 0xf8, 0x0f, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-                                               };
+static unsigned char CURSOR_HILIGHTER_MASK[] = {
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf8, 0x0f, 0xf8, 0x0f, 0xf8, 0x0f, 0xf8, 0x0f, 0xf8, 0x0f, 0xf8, 0x0f, 0xf8, 0x0f,
+	0xf8, 0x0f, 0xf8, 0x0f, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+};
 
 Cursor::Cursor(Control* control)
 {
@@ -106,7 +108,7 @@ void Cursor::setInsidePage(bool insidePage)
 {
 	XOJ_CHECK_TYPE(Cursor);
 
-	if(this->insidePage == insidePage)
+	if (this->insidePage == insidePage)
 	{
 		return;
 	}
@@ -149,7 +151,7 @@ GdkCursor* Cursor::getPenCursor()
 	}
 
 	cairo_surface_t* crCursor = cairo_image_surface_create(CAIRO_FORMAT_ARGB32,
-	                                                       width, height);
+														width, height);
 	cairo_t* cr = cairo_create(crCursor);
 
 	Util::cairo_set_source_rgbi(cr, handler->getColor());
@@ -190,8 +192,8 @@ GdkCursor* Cursor::getPenCursor()
 
 	cairo_surface_destroy(crCursor);
 
-	GdkCursor* cursor = gdk_cursor_new_from_pixbuf(gtk_widget_get_display(
-	                                                   control->getWindow()->getXournal()->getWidget()), pixbuf, 1, 1);
+	GdkCursor* cursor = gdk_cursor_new_from_pixbuf(
+			gtk_widget_get_display(control->getWindow()->getXournal()->getWidget()), pixbuf, 1, 1);
 
 	g_object_unref(pixbuf);
 
@@ -236,7 +238,7 @@ void Cursor::updateCursor()
 				cursor = gdk_cursor_new(GDK_HAND1);
 			}
 		}
-		else if(!this->insidePage)
+		else if (!this->insidePage)
 		{
 			// not inside page: so use default cursor
 		}
@@ -279,9 +281,9 @@ void Cursor::updateCursor()
 			GdkColor bg = { 0, 65535, 65535, 65535 };
 			GdkColor fg = { 0, 0, 0, 0 };
 			GdkPixmap* source = gdk_bitmap_create_from_data(NULL, (gchar*) CURSOR_HIGLIGHTER_BITS,
-			                                                16, 16);
+															16, 16);
 			GdkPixmap* mask = gdk_bitmap_create_from_data(NULL, (gchar*) CURSOR_HILIGHTER_MASK,
-			                                              16, 16);
+														16, 16);
 			cursor = gdk_cursor_new_from_pixmap(source, mask, &fg, &bg, 7, 7);
 			gdk_bitmap_unref(source);
 			gdk_bitmap_unref(mask);
@@ -291,9 +293,9 @@ void Cursor::updateCursor()
 			GdkColor fg = { 0, 0, 0, 0 };
 			GdkColor bg = handler->getGdkColor();
 			GdkPixmap* source = gdk_bitmap_create_from_data(NULL, (gchar*) CURSOR_HIGLIGHTER_BITS,
-			                                                16, 16);
+															16, 16);
 			GdkPixmap* mask = gdk_bitmap_create_from_data(NULL, (gchar*) CURSOR_HILIGHTER_MASK,
-			                                              16, 16);
+														16, 16);
 			cursor = gdk_cursor_new_from_pixmap(source, mask, &fg, &bg, 7, 7);
 			gdk_bitmap_unref(source);
 			gdk_bitmap_unref(mask);
@@ -320,8 +322,7 @@ void Cursor::updateCursor()
 				cursor = gdk_cursor_new(GDK_SB_V_DOUBLE_ARROW);
 			}
 		}
-		else if (type !=
-		         TOOL_SELECT_OBJECT)     // other selections are handled before anyway, because you can move a selection with every tool
+		else if (type != TOOL_SELECT_OBJECT) // other selections are handled before anyway, because you can move a selection with every tool
 		{
 			cursor = gdk_cursor_new(GDK_TCROSS);
 		}
