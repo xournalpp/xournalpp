@@ -6,7 +6,7 @@
  * @author MarPiRK
  * http://marpirk.net
  *
- * @license GNU GPLv2
+ * @license GNU GPLv2 or later
  */
 
 #pragma once

@@ -8,7 +8,7 @@
  * 
  * @revision MarPiRK – significant changes
  *
- * @license GNU GPLv2
+ * @license GNU GPLv2 or later
  */
 
 #pragma once
