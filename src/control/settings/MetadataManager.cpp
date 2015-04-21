@@ -37,13 +37,10 @@ void MetadataManager::setInt(path p, const char* name, int value)
 {
 	XOJ_CHECK_TYPE(MetadataManager);
 
-	if (p.empty())
-	{
-		return;
-	}
+	if (p.empty()) return;
 	loadConfigFile();
 
-	g_key_file_set_integer(this->config, p.c_str(), name, value);
+	g_key_file_set_integer(this->config, getURI(p), name, value);
 
 	updateAccessTime(p);
 }
@@ -58,7 +55,7 @@ void MetadataManager::setDouble(path p, const char* name, double value)
 	}
 	loadConfigFile();
 
-	g_key_file_set_double(this->config, p.c_str(), name, value);
+	g_key_file_set_double(this->config, getURI(p), name, value);
 
 	updateAccessTime(p);
 }
@@ -74,7 +71,7 @@ void MetadataManager::setString(path p, const char* name,
 	}
 	loadConfigFile();
 
-	g_key_file_set_value(this->config, p.c_str(), name, value);
+	g_key_file_set_value(this->config, getURI(p), name, value);
 
 	updateAccessTime(p);
 }
@@ -84,12 +81,9 @@ void MetadataManager::updateAccessTime(path p)
 	XOJ_CHECK_TYPE(MetadataManager);
 
 	// TODO LOW PRIO: newer GTK Version use _int64 instead of integer
-	g_key_file_set_integer(this->config, p.c_str(), "atime", time(NULL));
+	g_key_file_set_integer(this->config, getURI(p), "atime", time(NULL));
 
-	if (this->timeoutId)
-	{
-		return;
-	}
+	if (this->timeoutId) return;
 
 	this->timeoutId = g_timeout_add_seconds_full(G_PRIORITY_DEFAULT_IDLE, 2,
 												 (GSourceFunc) save, this, NULL);
@@ -250,7 +244,7 @@ bool MetadataManager::getInt(path p, const char* name, int& value)
 	loadConfigFile();
 
 	GError* error = NULL;
-	int v = g_key_file_get_integer(this->config, p.c_str(), name, &error);
+	int v = g_key_file_get_integer(this->config, getURI(p), name, &error);
 	if (error)
 	{
 		g_error_free(error);
@@ -272,7 +266,7 @@ bool MetadataManager::getDouble(path p, const char* name, double& value)
 	loadConfigFile();
 
 	GError* error = NULL;
-	double v = g_key_file_get_double(this->config, p.c_str(), name, &error);
+	double v = g_key_file_get_double(this->config, getURI(p), name, &error);
 	if (error)
 	{
 		g_error_free(error);
@@ -295,7 +289,7 @@ bool MetadataManager::getString(path p, const char* name, char*& value)
 
 	GError* error = NULL;
 
-	char* v = g_key_file_get_string(this->config, p.c_str(), name, &error);
+	char* v = g_key_file_get_string(this->config, getURI(p), name, &error);
 	if (error)
 	{
 		g_error_free(error);
@@ -304,4 +298,9 @@ bool MetadataManager::getString(path p, const char* name, char*& value)
 
 	value = v;
 	return true;
+}
+
+const char* MetadataManager::getURI(path &p)
+{
+	return CONCAT("file://", p.string()).c_str();
 }
