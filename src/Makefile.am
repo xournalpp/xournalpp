@@ -239,5 +239,7 @@ xournalpp_DEPENDENCIES = poppler
 xournalpp_LDADD = \
 	$(abs_top_builddir)/src/pdf/popplerdirect/libpoppler.a \
 	$(abs_top_builddir)/src/pdf/popplerdirect/libpoppler-glib.a \
-	@PACKAGE_LIBS@ $(INTLLIBS) \
-	$(top_builddir)/src/util/libutil.la
+	$(INTLLIBS) \
+	$(top_builddir)/src/util/libutil.la \
+	@PACKAGE_LIBS@
+
