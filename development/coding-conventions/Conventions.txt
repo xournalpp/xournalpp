@@ -1,0 +1,12 @@
+Coding Conventions for Xournal++
+
+This file describes the Coding Conventions of Xournal++, if you use an IDE,
+you may find a formatter configuration for your IDE. If not, you may create
+one and push it.
+
+Indention:
+ - Tabs, size: 4 Spaces
+
+TODO describe formatting
+
+
