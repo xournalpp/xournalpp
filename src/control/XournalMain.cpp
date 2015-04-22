@@ -59,7 +59,10 @@ void XournalMain::checkForErrorlog()
 	{
 		GtkWidget* dialog = gtk_message_dialog_new(NULL, GTK_DIALOG_MODAL,
 			GTK_MESSAGE_QUESTION, GTK_BUTTONS_NONE,
-			 _("There is an errorlogfile from Xournal++. Please send a Bugreport, so the bug may been fixed.\nLogfile: %s"),
+			 _("There is an errorlogfile from Xournal++. Please send a Bugreport, "
+			   "so the bug may been fixed.\n"
+			   "If you're using MarPiRK/string_new branch please report it in his repo."
+			   "Logfile: %s"),
 			filename.c_str());
 		gtk_dialog_add_button(GTK_DIALOG(dialog), _("Send Bugreport"), 1);
 		gtk_dialog_add_button(GTK_DIALOG(dialog), _("Open Logfile"), 2);

@@ -50,6 +50,7 @@ private:
 
 	static bool save(MetadataManager* manager);
 
+	const char* getURI(path &p);
 
 private:
 	XOJ_TYPE_ATTRIB;
