@@ -1,9 +1,14 @@
 #include "MetadataManager.h"
 #include "../../cfg.h"
+#include "../../util/Util.h"
 
 #include <gtk/gtk.h>
 
-#define FILENAME() g_build_filename(g_get_home_dir(), CONFIG_DIR, METADATA_FILE, NULL)
+#include <boost/filesystem.hpp>
+namespace bf = boost::filesystem;
+
+#include <iostream>
+using namespace std;
 
 MetadataManager::MetadataManager()
 {
@@ -24,160 +29,142 @@ MetadataManager::~MetadataManager()
 		save(this);
 	}
 
-	if (this->config)
-	{
-		g_key_file_free(this->config);
-		this->config = NULL;
-	}
+	if (this->config) delete this->config;
 
 	XOJ_RELEASE_TYPE(MetadataManager);
 }
 
-void MetadataManager::setInt(path p, const char* name, int value)
+void MetadataManager::setInt(path p, string name, int value)
+{
+	XOJ_CHECK_TYPE(MetadataManager);
+	
+	if (p.empty()) return;
+	loadConfigFile();
+	
+	try {
+		config->get_child(getURI(p)).put(name, value);
+	} catch (exception& e) {
+		cout << bl::format("INI exception: {1}") % e.what() << endl;
+	}
+
+	updateAccessTime(p);
+}
+
+void MetadataManager::setDouble(path p, string name, double value)
 {
 	XOJ_CHECK_TYPE(MetadataManager);
 
 	if (p.empty()) return;
 	loadConfigFile();
 
-	g_key_file_set_integer(this->config, getURI(p), name, value);
+	try {
+		config->get_child(getURI(p)).put(name, value);
+	} catch (exception& e) {
+		cout << bl::format("INI exception: {1}") % e.what() << endl;
+	}
 
 	updateAccessTime(p);
 }
 
-void MetadataManager::setDouble(path p, const char* name, double value)
+void MetadataManager::setString(path p, string name, string value)
 {
 	XOJ_CHECK_TYPE(MetadataManager);
 
-	if (p.empty())
-	{
-		return;
-	}
+	if (p.empty()) return;
 	loadConfigFile();
 
-	g_key_file_set_double(this->config, getURI(p), name, value);
+	try {
+		config->get_child(getURI(p)).put(name, value);
+	} catch (exception& e) {
+		cout << bl::format("INI exception: {1}") % e.what() << endl;
+	}
 
 	updateAccessTime(p);
 }
 
-void MetadataManager::setString(path p, const char* name,
-								const char* value)
+void MetadataManager::openFile()
 {
 	XOJ_CHECK_TYPE(MetadataManager);
-
-	if (p.empty())
+	
+	if (!file.is_open())
 	{
-		return;
+		//file.open();
 	}
-	loadConfigFile();
-
-	g_key_file_set_value(this->config, getURI(p), name, value);
-
-	updateAccessTime(p);
 }
 
 void MetadataManager::updateAccessTime(path p)
 {
 	XOJ_CHECK_TYPE(MetadataManager);
+	
+	if (p.empty()) return;
+	loadConfigFile();
 
-	// TODO LOW PRIO: newer GTK Version use _int64 instead of integer
-	g_key_file_set_integer(this->config, getURI(p), "atime", time(NULL));
-
+	try {
+		config->get_child(getURI(p)).put("atime", time(NULL));
+	} catch (exception& e) {
+		cout << bl::format("INI exception: {1}") % e.what() << endl;
+	}
+	
 	if (this->timeoutId) return;
 
 	this->timeoutId = g_timeout_add_seconds_full(G_PRIORITY_DEFAULT_IDLE, 2,
 												 (GSourceFunc) save, this, NULL);
 }
 
-struct GroupTimeEntry
-{
-	char* group;
-	int time;
-};
-
-int timeCompareFunc(GroupTimeEntry* a, GroupTimeEntry* b)
-{
-	return a->time - b->time;
-}
-
 void MetadataManager::cleanupMetadata()
 {
 	XOJ_CHECK_TYPE(MetadataManager);
-
-	GList* data = NULL;
-
-	gsize lenght = 0;
-	gchar** groups = g_key_file_get_groups(this->config, &lenght);
-
-	for (gsize i = 0; i < lenght; i++)
+	
+	loadConfigFile();
+	
+	vector<pair<string, int>> elements;
+	
+	for (bp::ptree::value_type p : config->get_child(""))
 	{
-		char* group = groups[i];
-
-		GFile* file = g_file_new_for_uri(group);
-		bool exists = g_file_query_exists(file, NULL);
-		g_object_unref(file);
-
-		if (!exists)
+		if (bf::exists(path(p.first.substr(7))))
 		{
-			g_key_file_remove_group(this->config, group, NULL);
-			continue;
-		}
-
-		GError* error = NULL;
-		// TODO LOW PRIO: newer GTK Version use _int64 instead of integer
-		int time = g_key_file_get_integer(this->config, group, "atime", &error);
-		if (error)
-		{
-			g_error_free(error);
-			continue;
-		}
-
-		GroupTimeEntry* e = g_new(GroupTimeEntry, 1);
-		e->group = group;
-		e->time = time;
-
-		data = g_list_insert_sorted(data, e, (GCompareFunc) timeCompareFunc);
-	}
-
-	int count = g_list_length(data);
-	GList* d = data;
-	if (count > METADATA_MAX_ITEMS)
-	{
-		for (int i = count - METADATA_MAX_ITEMS; i > 0 && d; i--)
-		{
-			GroupTimeEntry* e = (GroupTimeEntry*) d->data;
-			g_key_file_remove_group(this->config, e->group, NULL);
-			d = d->next;
+			elements.push_back(pair<string, int>(p.first,
+					config->get_child(p.first).get<int>(".atime")));
 		}
 	}
+	
+	std::sort(elements.begin(), elements.end(),
+		[](const pair<string, int> &left, const pair<string, int> &right) {
+			return left.second < right.second;
+		});
+	
+	while (elements.size() > METADATA_MAX_ITEMS)
+	{
+		elements.pop_back();
+	}
 
-	g_list_foreach(data, (GFunc) g_free, NULL);
-	g_list_free(data);
-
-	g_strfreev(groups);
+	bp::ptree* tmpTree = new bp::ptree();
+	for (pair<string, int> p : elements)
+	{
+		tmpTree->add_child(p.first, config->get_child(p.first));
+	}
+	
+	delete config;
+	config = tmpTree;
+	tmpTree = NULL;
 }
 
-void MetadataManager::move(string source, string target)
+void MetadataManager::move(path source, path target)
 {
 	XOJ_CHECK_TYPE(MetadataManager);
 
-	if (source.empty() || target.empty())
+	if (source.empty() || target.empty()) return;
+	
+	for (bp::ptree::value_type p : config->get_child(source.string()))
 	{
-		return;
+		try {
+			config->get_child(getURI(target)).put(p.first, p.second);
+			config->erase(getURI(source));
+		} catch (exception& e) {
+			cout << bl::format("Cannot move metadata \"{1}\" to \"{2}\": {3}")
+					% source.string() % target.string() % e.what() << endl;
+		}
 	}
-
-	gsize length = 0;
-	gchar** keys = g_key_file_get_keys(this->config, source.c_str(), &length, NULL);
-
-	for (gsize i = 0; i < length; i++)
-	{
-		char* str = g_key_file_get_string(this->config, source.c_str(), keys[i], NULL);
-		g_key_file_set_string(this->config, target.c_str(), keys[i], str);
-
-		g_free(str);
-	}
-
-	g_strfreev(keys);
 }
 
 bool MetadataManager::save(MetadataManager* manager)
@@ -187,120 +174,90 @@ bool MetadataManager::save(MetadataManager* manager)
 	manager->timeoutId = 0;
 
 	manager->cleanupMetadata();
-
-	gsize length = 0;
-	char* data = g_key_file_to_data(manager->config, &length, NULL);
-	char* fileName = FILENAME();
-	GFile* file = g_file_new_for_path(fileName);
-
-	if (!g_file_replace_contents(file, data, length, NULL, false,
-								 G_FILE_CREATE_PRIVATE, NULL, NULL, NULL))
-	{
-		g_warning("could not write metadata file: %s", fileName);
+	
+	try {
+		bp::ini_parser::write_ini(getFilePath().string(), *manager->config);
+		return true;
+	} catch (bp::ini_parser_error const& e) {
+		cout << bl::format("Could not write metadata file: {1} ({2})")
+				% getFilePath().string() % e.what() << endl;
+		return false;
 	}
-
-	g_free(data);
-	g_free(fileName);
-	g_object_unref(file);
-
-	return false;
 }
 
 void MetadataManager::loadConfigFile()
 {
 	XOJ_CHECK_TYPE(MetadataManager);
-
-	if (this->config)
+	
+	if (this->config) return;
+	
+	config = new bp::ptree();
+	
+	path filepath = getFilePath();
+	if (bf::exists(filepath))
 	{
-		return;
-	}
-
-	this->config = g_key_file_new();
-	g_key_file_set_list_separator(this->config, ',');
-
-	char* file = FILENAME();
-
-	if (g_file_test(file, G_FILE_TEST_EXISTS))
-	{
-		GError* error = NULL;
-		if (!g_key_file_load_from_file(config, file, G_KEY_FILE_NONE, &error))
-		{
-			g_warning("Metadata file \"%s\" is invalid: %s", file, error->message);
-			g_error_free(error);
+		try {
+			bp::ini_parser::read_ini(filepath.string(), *config);
+		} catch (bp::ini_parser_error const& e) {
+			cout << bl::format("Metadata file \"{1}\" is invalid: {2}")
+					% filepath.string() % e.what() << endl;
 		}
 	}
-
-	g_free(file);
 }
 
-bool MetadataManager::getInt(path p, const char* name, int& value)
+bool MetadataManager::getInt(path p, string name, int& value)
 {
 	XOJ_CHECK_TYPE(MetadataManager);
 
-	if (p.empty())
-	{
-		return false;
-	}
+	if (p.empty()) return false;
 	loadConfigFile();
 
-	GError* error = NULL;
-	int v = g_key_file_get_integer(this->config, getURI(p), name, &error);
-	if (error)
-	{
-		g_error_free(error);
+	try {
+		int v = config->get_child(getURI(p)).get<int>(name);
+		value = v;
+		return true;
+	} catch (std::exception const& e) {
 		return false;
 	}
-
-	value = v;
-	return true;
 }
 
-bool MetadataManager::getDouble(path p, const char* name, double& value)
+bool MetadataManager::getDouble(path p, string name, double& value)
 {
 	XOJ_CHECK_TYPE(MetadataManager);
 
-	if (p.empty())
-	{
-		return false;
-	}
+	if (p.empty()) return false;
 	loadConfigFile();
 
-	GError* error = NULL;
-	double v = g_key_file_get_double(this->config, getURI(p), name, &error);
-	if (error)
-	{
-		g_error_free(error);
+	try {
+		double v = config->get_child(getURI(p)).get<int>(name);
+		value = v;
+		return true;
+	} catch (std::exception const& e) {
 		return false;
 	}
-
-	value = v;
-	return true;
 }
 
-bool MetadataManager::getString(path p, const char* name, char*& value)
+bool MetadataManager::getString(path p, string name, string& value)
 {
 	XOJ_CHECK_TYPE(MetadataManager);
 
-	if (p.empty())
-	{
-		return false;
-	}
+	if (p.empty()) return false;
 	loadConfigFile();
 
-	GError* error = NULL;
-
-	char* v = g_key_file_get_string(this->config, getURI(p), name, &error);
-	if (error)
-	{
-		g_error_free(error);
+	try {
+		string v = config->get_child(getURI(p)).get<string>(name);
+		value = v;
+		return true;
+	} catch (std::exception const& e) {
 		return false;
 	}
-
-	value = v;
-	return true;
 }
 
-const char* MetadataManager::getURI(path &p)
+path MetadataManager::getFilePath() {
+	return Util::getSettingsFile(METADATA_FILE);
+}
+
+string MetadataManager::getURI(path &p)
 {
-	return CONCAT("file://", p.string()).c_str();
+	return CONCAT("file://", p.string());
 }

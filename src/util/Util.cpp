@@ -45,7 +45,7 @@ path Util::getAutosaveFilename()
 	return p;
 }
 
-path Util::getSettingsSubfolder(string subfolder)
+path Util::getSettingsSubfolder(path subfolder)
 {
 	using namespace boost::filesystem;
 	path p(g_get_home_dir());
@@ -58,6 +58,13 @@ path Util::getSettingsSubfolder(string subfolder)
 		permissions(p, owner_all);
 	}
 
+	return p;
+}
+
+path Util::getSettingsFile(path relativeFileName)
+{
+	path p = getSettingsSubfolder(relativeFileName.parent_path());
+	p /= relativeFileName.filename();
 	return p;
 }
 

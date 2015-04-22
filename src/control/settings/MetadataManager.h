@@ -14,8 +14,14 @@
 #include <glib.h>
 #include <StringUtils.h>
 
+#include <fstream>
+
 #include <boost/filesystem/path.hpp>
 using boost::filesystem::path;
+
+#include <boost/property_tree/ptree.hpp>
+#include <boost/property_tree/ini_parser.hpp>
+namespace bp = boost::property_tree;
 
 class MetadataManager
 {
@@ -25,24 +31,23 @@ public:
 
 public:
 	/**
-	 * Setter / Getter: if uri is NULL the request will be ignored
+	 * Setter / Getter: if path is empty the request will be ignored
 	 */
 
-	void setInt(path p, const char* name, int value);
-	void setDouble(path p, const char* name, double value);
-	void setString(path p, const char* name, const char* value);
+	void setInt(path p, string name, int value);
+	void setDouble(path p, string name, double value);
+	void setString(path p, string name, string value);
 
-	bool getInt(path p, const char* name, int& value);
-	bool getDouble(path p, const char* name, double& value);
+	bool getInt(path p, string name, int& value);
+	bool getDouble(path p, string name, double& value);
 
-	/**
-	 * The returned String should be freed with g_free
-	 */
-	bool getString(path p, const char* name, char*& value);
+	bool getString(path p, string name, string& value);
 
-	void move(string source, string target);
+	void move(path source, path target);
 
 private:
+	void openFile();
+	
 	void updateAccessTime(path p);
 	void loadConfigFile();
 
@@ -50,11 +55,14 @@ private:
 
 	static bool save(MetadataManager* manager);
 
-	const char* getURI(path &p);
+	static path getFilePath();
+	static string getURI(path &p);
 
 private:
 	XOJ_TYPE_ATTRIB;
 
 	int timeoutId;
-	GKeyFile* config;
+	
+	std::ofstream file;
+	bp::ptree* config;
 };
