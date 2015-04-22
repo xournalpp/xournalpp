@@ -184,10 +184,20 @@ void Control::renameLastAutosaveFile()
 		path filename = this->lastAutosaveFilename;
 		path renamed = Util::getAutosaveFilename().parent_path();
 		renamed += filename.filename();
-
-		using namespace boost::filesystem;
-		remove(renamed);
-		rename(filename, renamed);
+		
+		namespace bf = boost::filesystem;
+		if (bf::exists(filename))
+		{
+			bf::remove(renamed);
+			bf::rename(filename, renamed);
+		}
+		else
+		{
+			bf::remove(renamed);
+			this->save(false);
+			bf::rename(filename, renamed);
+			bf::remove(filename);
+		}
 	}
 }
 
