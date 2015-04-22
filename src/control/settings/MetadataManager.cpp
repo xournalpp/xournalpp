@@ -158,7 +158,7 @@ void MetadataManager::move(path source, path target)
 	for (bp::ptree::value_type p : config->get_child(source.string()))
 	{
 		try {
-			config->get_child(getURI(target)).put(p.first, p.second);
+			config->get_child(getURI(target)).put_child(p.first, p.second);
 			config->erase(getURI(source));
 		} catch (exception& e) {
 			cout << bl::format("Cannot move metadata \"{1}\" to \"{2}\": {3}")
