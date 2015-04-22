@@ -32,6 +32,31 @@ dnl librsvg-2.0 is not really needed by Xournal++, but if you dont have it crash
 #We also are compiling with libpoppler so we require a number of extra packages
 pkg_modules="gtk+-2.0 >= 2.18.3 libglade-2.0 >= 2.6.4 glib-2.0 >= 2.32.0 gtkmm-2.4 >= 2.24.0 gthread-2.0 >= 2.4.0 librsvg-2.0 >= 2.14.0 zlib fontconfig lcms"
 
+
+dnl Enable memory checking
+AC_ARG_ENABLE([memory-check],
+    AS_HELP_STRING([--disable-memory-check], [Disable memory checking]))
+
+AS_IF([test "x$enable_memory_leak_check" != "xno"], [
+	AC_DEFINE([XOJ_MEMORY_CHECK_ENABLED],[1],[Define to compile with memory checking support])
+])
+
+dnl Enable memory leak checking
+AC_ARG_ENABLE([memory-leak-check],
+    AS_HELP_STRING([--disable-memory-leak-check], [Disable memory leak checking]))
+
+AS_IF([test "x$enable_memory_leak_check" != "xno"], [
+    AC_DEFINE([XOJ_MEMORY_LEAK_CHECK_ENABLED],[1],[Define to compile with memory leak checking support])
+])
+
+dnl Enable call log
+AC_ARG_ENABLE([call-log],
+    AS_HELP_STRING([--enable-call-log], [Enable call log]))
+
+AS_IF([test "x$enable_call_log" == "xyes"], [
+    AC_DEFINE([XOJ_CALL_LOG_ENABLED],[1],[Define to compile with call log])
+])
+
 AC_MSG_CHECKING([whether Python support is requested])
 AC_ARG_ENABLE([python],
 	AS_HELP_STRING([--enable-python],[Enable python support]),
@@ -203,6 +228,9 @@ if test "x$enable_mathtex" != "xno"; then
 	AC_DEFINE([ENABLE_MATHTEX],[1],[Define to compile with mathtex support])
 fi
 AM_CONDITIONAL([ENABLE_MATHTEX],[test "x$enable_mathtex" = "xyes"])
+
+
+
 
 dnl Set PACKAGE DATA & DOC DIR
 packagedatadir=share/${PACKAGE}

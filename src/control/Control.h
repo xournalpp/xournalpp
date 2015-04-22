@@ -61,7 +61,7 @@ public:
 	void exportAsPdf();
 	void exportAs();
 	bool save(bool synchron = false);
-	void saveAs();
+	bool saveAs();
 	void quit();
 	bool close(bool destroy = false);
 

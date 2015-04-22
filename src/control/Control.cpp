@@ -2847,13 +2847,13 @@ void Control::exportAs()
 								this, getCurrentPageNo());
 }
 
-void Control::saveAs()
+bool Control::saveAs()
 {
 	XOJ_CHECK_TYPE(Control);
 
 	if (!showSaveDialog())
 	{
-		return;
+		return false;
 	}
 	this->doc->lock();
 	path filename = doc->getFilename();
@@ -2861,12 +2861,12 @@ void Control::saveAs()
 
 	if (filename.empty())
 	{
-		return;
+		return false;
 	}
 
 	// no lock needed, this is an uncritical operation
 	this->doc->setCreateBackupOnSave(false);
-	save();
+	return save();
 }
 
 void Control::quit()
@@ -2904,11 +2904,11 @@ bool Control::close(bool destroy)
 		gtk_dialog_add_button(GTK_DIALOG(dialog), _("Cancel"), 3);
 		gtk_window_set_transient_for(GTK_WINDOW(dialog),
 									 GTK_WINDOW(this->getWindow()->getWindow()));
-		int res = gtk_dialog_run(GTK_DIALOG(dialog));
+		int resNotSaved = gtk_dialog_run(GTK_DIALOG(dialog));
 		gtk_widget_destroy(dialog);
 
 		// save
-		if (res == 1)
+		if (resNotSaved == 1)
 		{
 			if (this->save(true))
 			{
@@ -2922,9 +2922,45 @@ bool Control::close(bool destroy)
 		}
 
 		// cancel or closed
-		if (res != 2) // 2 = discard
+		if (resNotSaved != 2) // 2 = discard
 		{
 			return false;
+		}
+		
+		namespace bf = boost::filesystem;
+		if (!bf::exists(this->doc->getFilename()))
+		{
+			GtkWidget* dialog = gtk_message_dialog_new((GtkWindow*) *getWindow(),
+													   GTK_DIALOG_DESTROY_WITH_PARENT,
+													   GTK_MESSAGE_WARNING, GTK_BUTTONS_NONE,
+													   _("Document file was removed."));
+
+			gtk_dialog_add_button(GTK_DIALOG(dialog), _("Save As"), 1);
+			gtk_dialog_add_button(GTK_DIALOG(dialog), _("Discard"), 2);
+			gtk_dialog_add_button(GTK_DIALOG(dialog), _("Cancel"), 3);
+			gtk_window_set_transient_for(GTK_WINDOW(dialog),
+										 GTK_WINDOW(this->getWindow()->getWindow()));
+			int resDocRemoved = gtk_dialog_run(GTK_DIALOG(dialog));
+			gtk_widget_destroy(dialog);
+			
+			if (resDocRemoved == 1)
+			{
+				if (this->saveAs())
+				{
+					return true;
+				}
+				else
+				{
+					// if not saved cancel, else close
+					return false;
+				}
+			}
+
+			// cancel or closed
+			if (resDocRemoved != 2) // 2 = discard
+			{
+				return false;
+			}
 		}
 	}
 
