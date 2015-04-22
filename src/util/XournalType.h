@@ -16,6 +16,7 @@
 
 #include <glib.h>
 #include "logger/Logger.h"
+#include "../../config.h"
 
 #ifdef XOJ_MEMORY_CHECK_ENABLED
 
