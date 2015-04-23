@@ -14,14 +14,18 @@
 #include <glib.h>
 #include <StringUtils.h>
 
-#include <fstream>
-
 #include <boost/filesystem/path.hpp>
 using boost::filesystem::path;
 
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/ini_parser.hpp>
 namespace bp = boost::property_tree;
+
+#include <boost/asio.hpp>
+#include <boost/date_time/posix_time/posix_time.hpp>
+namespace basio = boost::asio;
+
+#include <boost/thread.hpp>
 
 class MetadataManager
 {
@@ -43,26 +47,29 @@ public:
 
 	bool getString(path p, string name, string& value);
 
-	void move(path source, path target);
+	void copy(path source, path target);
+
+	bool save();
+	static bool save(MetadataManager* man, basio::deadline_timer* t = NULL);
 
 private:
-	void openFile();
+	bool checkPath(path p);
 	
 	void updateAccessTime(path p);
 	void loadConfigFile();
 
 	void cleanupMetadata();
 
-	static bool save(MetadataManager* manager);
-
 	static path getFilePath();
-	static string getURI(path &p);
+	static bp::ptree::path_type getINIpathURI(path p);
+	static bp::ptree::path_type getINIpath(string s);
 
 private:
 	XOJ_TYPE_ATTRIB;
 
-	int timeoutId;
+	boost::thread* thread;
+	basio::io_service io;
+	basio::deadline_timer* timer;
 	
-	std::ofstream file;
 	bp::ptree* config;
 };

@@ -2,33 +2,30 @@
 #include "../../cfg.h"
 #include "../../util/Util.h"
 
-#include <gtk/gtk.h>
-
 #include <boost/filesystem.hpp>
 namespace bf = boost::filesystem;
 
 #include <iostream>
 using namespace std;
 
+#define REFRESH_SEC 20
+
 MetadataManager::MetadataManager()
 {
 	XOJ_INIT_TYPE(MetadataManager);
 
 	this->config = NULL;
-	this->timeoutId = 0;
+	this->timer = NULL;
+	this->thread = NULL;
 }
 
 MetadataManager::~MetadataManager()
 {
 	XOJ_CHECK_TYPE(MetadataManager);
 
-	if (this->timeoutId)
-	{
-		g_source_remove(this->timeoutId);
-		this->timeoutId = 0;
-		save(this);
-	}
-
+	io.stop();
+	if (this->timer)  delete this->timer;
+	if (this->thread) delete this->thread;
 	if (this->config) delete this->config;
 
 	XOJ_RELEASE_TYPE(MetadataManager);
@@ -40,9 +37,10 @@ void MetadataManager::setInt(path p, string name, int value)
 	
 	if (p.empty()) return;
 	loadConfigFile();
+	checkPath(p);
 	
 	try {
-		config->get_child(getURI(p)).put(name, value);
+		config->get_child(getINIpathURI(p)).put(name, value);
 	} catch (exception& e) {
 		cout << bl::format("INI exception: {1}") % e.what() << endl;
 	}
@@ -56,9 +54,10 @@ void MetadataManager::setDouble(path p, string name, double value)
 
 	if (p.empty()) return;
 	loadConfigFile();
+	checkPath(p);
 
 	try {
-		config->get_child(getURI(p)).put(name, value);
+		config->get_child(getINIpathURI(p)).put(name, value);
 	} catch (exception& e) {
 		cout << bl::format("INI exception: {1}") % e.what() << endl;
 	}
@@ -72,9 +71,10 @@ void MetadataManager::setString(path p, string name, string value)
 
 	if (p.empty()) return;
 	loadConfigFile();
+	checkPath(p);
 
 	try {
-		config->get_child(getURI(p)).put(name, value);
+		config->get_child(getINIpathURI(p)).put(name, value);
 	} catch (exception& e) {
 		cout << bl::format("INI exception: {1}") % e.what() << endl;
 	}
@@ -82,13 +82,19 @@ void MetadataManager::setString(path p, string name, string value)
 	updateAccessTime(p);
 }
 
-void MetadataManager::openFile()
+bool MetadataManager::checkPath(path p)
 {
 	XOJ_CHECK_TYPE(MetadataManager);
 	
-	if (!file.is_open())
-	{
-		//file.open();
+	if (p.empty()) return false;
+	loadConfigFile();
+	
+	try {
+		config->get_child(getINIpathURI(p));
+		return true;
+	} catch (exception& e) {
+		config->add_child(getINIpathURI(p), bp::ptree());
+		return false;
 	}
 }
 
@@ -98,17 +104,19 @@ void MetadataManager::updateAccessTime(path p)
 	
 	if (p.empty()) return;
 	loadConfigFile();
+	checkPath(p);
 
 	try {
-		config->get_child(getURI(p)).put("atime", time(NULL));
+		config->get_child(getINIpathURI(p)).put("atime", time(NULL));
 	} catch (exception& e) {
 		cout << bl::format("INI exception: {1}") % e.what() << endl;
 	}
 	
-	if (this->timeoutId) return;
-
-	this->timeoutId = g_timeout_add_seconds_full(G_PRIORITY_DEFAULT_IDLE, 2,
-												 (GSourceFunc) save, this, NULL);
+	if (this->timer) return;
+	
+	this->timer = new basio::deadline_timer(io, boost::posix_time::seconds(REFRESH_SEC));
+	this->timer->async_wait(boost::bind(save, this, timer));
+	this->thread = new boost::thread(boost::bind(&basio::io_service::run, &this->io));
 }
 
 void MetadataManager::cleanupMetadata()
@@ -119,18 +127,22 @@ void MetadataManager::cleanupMetadata()
 	
 	vector<pair<string, int>> elements;
 	
-	for (bp::ptree::value_type p : config->get_child(""))
+	for (bp::ptree::value_type p : *config)
 	{
 		if (bf::exists(path(p.first.substr(7))))
 		{
-			elements.push_back(pair<string, int>(p.first,
-					config->get_child(p.first).get<int>(".atime")));
+			try {
+				elements.push_back(pair<string, int>(p.first,
+						config->get_child(getINIpath(p.first)).get<int>("atime")));
+			} catch (exception& e) {
+				cout << bl::format("INI exception: {1}") % e.what() << endl;
+			}
 		}
 	}
 	
 	std::sort(elements.begin(), elements.end(),
 		[](const pair<string, int> &left, const pair<string, int> &right) {
-			return left.second < right.second;
+			return left.second >= right.second;
 		});
 	
 	while (elements.size() > METADATA_MAX_ITEMS)
@@ -141,7 +153,7 @@ void MetadataManager::cleanupMetadata()
 	bp::ptree* tmpTree = new bp::ptree();
 	for (pair<string, int> p : elements)
 	{
-		tmpTree->add_child(p.first, config->get_child(p.first));
+		tmpTree->add_child(getINIpath(p.first), config->get_child(getINIpath(p.first)));
 	}
 	
 	delete config;
@@ -149,40 +161,47 @@ void MetadataManager::cleanupMetadata()
 	tmpTree = NULL;
 }
 
-void MetadataManager::move(path source, path target)
+void MetadataManager::copy(path source, path target)
 {
 	XOJ_CHECK_TYPE(MetadataManager);
-
+	
 	if (source.empty() || target.empty()) return;
 	
-	for (bp::ptree::value_type p : config->get_child(source.string()))
-	{
-		try {
-			config->get_child(getURI(target)).put_child(p.first, p.second);
-			config->erase(getURI(source));
-		} catch (exception& e) {
-			cout << bl::format("Cannot move metadata \"{1}\" to \"{2}\": {3}")
-					% source.string() % target.string() % e.what() << endl;
-		}
+	try {
+		config->put_child(getINIpathURI(target), config->get_child(getINIpathURI(source)));
+	} catch (exception& e) {
+		cout << bl::format("Cannot copy metadata \"{1}\" to \"{2}\": {3}")
+				% source.string() % target.string() % e.what() << endl;
 	}
 }
 
-bool MetadataManager::save(MetadataManager* manager)
+bool MetadataManager::save()
 {
-	XOJ_CHECK_TYPE_OBJ(manager, MetadataManager);
+	XOJ_CHECK_TYPE(MetadataManager);
 
-	manager->timeoutId = 0;
-
-	manager->cleanupMetadata();
+	this->cleanupMetadata();
 	
 	try {
-		bp::ini_parser::write_ini(getFilePath().string(), *manager->config);
+		bp::ini_parser::write_ini(getFilePath().string(), *this->config);
 		return true;
 	} catch (bp::ini_parser_error const& e) {
 		cout << bl::format("Could not write metadata file: {1} ({2})")
 				% getFilePath().string() % e.what() << endl;
 		return false;
 	}
+}
+
+bool MetadataManager::save(MetadataManager* man, basio::deadline_timer* t)
+{
+	XOJ_CHECK_TYPE_OBJ(man, MetadataManager);
+	
+	if (t)
+	{
+		t->expires_at(t->expires_at() + boost::posix_time::seconds(REFRESH_SEC));
+		t->async_wait(boost::bind(save, man, t));
+	}
+	
+	return man->save();
 }
 
 void MetadataManager::loadConfigFile()
@@ -213,7 +232,7 @@ bool MetadataManager::getInt(path p, string name, int& value)
 	loadConfigFile();
 
 	try {
-		int v = config->get_child(getURI(p)).get<int>(name);
+		int v = config->get_child(getINIpathURI(p)).get<int>(name);
 		value = v;
 		return true;
 	} catch (std::exception const& e) {
@@ -229,7 +248,7 @@ bool MetadataManager::getDouble(path p, string name, double& value)
 	loadConfigFile();
 
 	try {
-		double v = config->get_child(getURI(p)).get<int>(name);
+		double v = config->get_child(getINIpathURI(p)).get<int>(name);
 		value = v;
 		return true;
 	} catch (std::exception const& e) {
@@ -245,7 +264,7 @@ bool MetadataManager::getString(path p, string name, string& value)
 	loadConfigFile();
 
 	try {
-		string v = config->get_child(getURI(p)).get<string>(name);
+		string v = config->get_child(getINIpathURI(p)).get<string>(name);
 		value = v;
 		return true;
 	} catch (std::exception const& e) {
@@ -257,7 +276,13 @@ path MetadataManager::getFilePath() {
 	return Util::getSettingsFile(METADATA_FILE);
 }
 
-string MetadataManager::getURI(path &p)
+bp::ptree::path_type MetadataManager::getINIpathURI(path p)
 {
-	return CONCAT("file://", p.string());
+	return getINIpath(CONCAT("file://", p.string()));
+}
+
+
+bp::ptree::path_type MetadataManager::getINIpath(string s)
+{
+	return bp::ptree::path_type(s, '\n');
 }

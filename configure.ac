@@ -162,6 +162,8 @@ BOOST_FILESYSTEM([mt])
 BOOST_LOCALE([mt])
 BOOST_IOSTREAMS([mt])
 BOOST_FORMAT([mt])
+BOOST_ASIO([mt])
+BOOST_THREAD([mt])
 
 dnl libjpeg
 AC_ARG_WITH(libjpeg,
