@@ -9,7 +9,7 @@
  * @license GPL
  */
 
-#include <StringUtils.h>
+#include "StringUtils.h"
 
 /**
  * Creates a new String, syntax like sprintf

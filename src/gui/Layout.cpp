@@ -1,7 +1,7 @@
 #include "Layout.h"
 #include "widgets/Scrollbar.h"
 #include "XournalView.h"
-#include "../control/Control.h"
+#include "control/Control.h"
 #include "pageposition/PagePositionHandler.h"
 #include "widgets/XournalWidget.h"
 

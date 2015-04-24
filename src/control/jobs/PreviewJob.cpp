@@ -1,11 +1,11 @@
 #include "PreviewJob.h"
-#include "../../gui/sidebar/previews/SidebarPreviews.h"
-#include "../../gui/sidebar/previews/SidebarPreviewPage.h"
-#include "../../gui/Shadow.h"
-#include "../../view/PdfView.h"
-#include "../../view/DocumentView.h"
-#include "../../model/Document.h"
-#include "../../control/Control.h"
+#include "gui/sidebar/previews/SidebarPreviews.h"
+#include "gui/sidebar/previews/SidebarPreviewPage.h"
+#include "gui/Shadow.h"
+#include "view/PdfView.h"
+#include "view/DocumentView.h"
+#include "model/Document.h"
+#include "control/Control.h"
 
 PreviewJob::PreviewJob(SidebarPreviewPage* sidebar)
 {

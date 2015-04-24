@@ -1,7 +1,7 @@
 #include "VerticalToolHandler.h"
-#include "../../view/DocumentView.h"
-#include "../../undo/UndoRedoHandler.h"
-#include "../../model/Layer.h"
+#include "view/DocumentView.h"
+#include "undo/UndoRedoHandler.h"
+#include "model/Layer.h"
 
 VerticalToolHandler::VerticalToolHandler(Redrawable* view, PageRef page,
 										 double y, double zoom)

@@ -3,7 +3,7 @@
 #include "Inertia.h"
 #include "CircleRecognizer.h"
 
-#include "../../model/Stroke.h"
+#include "model/Stroke.h"
 #include "Inertia.h"
 
 #include <math.h>

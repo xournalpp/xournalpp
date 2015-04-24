@@ -1,8 +1,8 @@
 #include "SizeUndoAction.h"
 
-#include "../model/Stroke.h"
+#include "model/Stroke.h"
 #include <Range.h>
-#include "../gui/Redrawable.h"
+#include "gui/Redrawable.h"
 
 class SizeUndoActionEntry
 {

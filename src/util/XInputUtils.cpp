@@ -1,6 +1,6 @@
-#include <XInputUtils.h>
+#include "XInputUtils.h"
 #include <math.h>
-#include "../cfg.h"
+#include "cfg.h"
 
 int XInputUtils::screenWidth = 0;
 int XInputUtils::screenHeight = 0;

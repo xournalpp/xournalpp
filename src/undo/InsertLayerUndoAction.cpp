@@ -1,9 +1,9 @@
 #include "InsertLayerUndoAction.h"
-#include "../model/Layer.h"
-#include "../model/PageRef.h"
-#include "../model/Document.h"
-#include "../control/Control.h"
-#include "../gui/XournalView.h"
+#include "model/Layer.h"
+#include "model/PageRef.h"
+#include "model/Document.h"
+#include "control/Control.h"
+#include "gui/XournalView.h"
 
 InsertLayerUndoAction::InsertLayerUndoAction(PageRef page, Layer* layer) : UndoAction("InsertLayerUndoAction")
 {

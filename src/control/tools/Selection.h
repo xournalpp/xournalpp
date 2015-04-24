@@ -12,9 +12,9 @@
 #pragma once
 
 #include <vector>
-#include "../../model/PageRef.h"
-#include "../../model/Element.h"
-#include "../../gui/Redrawable.h"
+#include "model/PageRef.h"
+#include "model/Element.h"
+#include "gui/Redrawable.h"
 #include <Util.h>
 #include <XournalType.h>
 

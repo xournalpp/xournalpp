@@ -1,6 +1,6 @@
 #include "PageBackgroundChangedUndoAction.h"
-#include "../control/Control.h"
-#include "../model/Document.h"
+#include "control/Control.h"
+#include "model/Document.h"
 
 PageBackgroundChangedUndoAction::PageBackgroundChangedUndoAction(PageRef page,
 			BackgroundType origType,

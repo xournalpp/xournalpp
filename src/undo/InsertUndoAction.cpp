@@ -1,8 +1,8 @@
 #include "InsertUndoAction.h"
-#include "../model/PageRef.h"
-#include "../model/Layer.h"
-#include "../model/Element.h"
-#include "../gui/Redrawable.h"
+#include "model/PageRef.h"
+#include "model/Layer.h"
+#include "model/Element.h"
+#include "gui/Redrawable.h"
 
 InsertUndoAction::InsertUndoAction(PageRef page, Layer* layer,
 								   Element* element) : UndoAction("InsertUndoAction")

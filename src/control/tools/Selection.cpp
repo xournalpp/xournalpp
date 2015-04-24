@@ -1,5 +1,5 @@
 #include "Selection.h"
-#include "../../model/Layer.h"
+#include "model/Layer.h"
 
 Selection::Selection(Redrawable* view)
 {

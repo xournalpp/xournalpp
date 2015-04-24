@@ -18,11 +18,11 @@
 #include <boost/locale/format.hpp>
 
 #include "CrashHandler.h"
-#include "../control/SaveHandler.h"
-#include "../model/Document.h"
+#include "control/SaveHandler.h"
+#include "model/Document.h"
 #include "Stacktrace.h"
 
-#include "../cfg.h"
+#include "cfg.h"
 
 using namespace std;
 

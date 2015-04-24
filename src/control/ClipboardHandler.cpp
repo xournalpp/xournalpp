@@ -3,7 +3,7 @@
 #include <pixbuf-utils.h>
 #include <cairo-svg.h>
 #include <config.h>
-#include "../view/DocumentView.h"
+#include "view/DocumentView.h"
 #include <serializing/ObjectOutputStream.h>
 #include <serializing/ObjectInputStream.h>
 #include <serializing/BinObjectEncoding.h>

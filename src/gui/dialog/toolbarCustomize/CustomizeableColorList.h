@@ -14,7 +14,7 @@
 #include <XournalType.h>
 #include <StringUtils.h>
 
-#include "../../XojColor.h"
+#include "gui/XojColor.h"
 
 typedef std::vector<XojColor*> XojColorVector;
 

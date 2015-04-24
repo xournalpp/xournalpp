@@ -1,5 +1,5 @@
 #include "MetadataManager.h"
-#include "../../cfg.h"
+#include "cfg.h"
 
 #include <gtk/gtk.h>
 

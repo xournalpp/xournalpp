@@ -11,7 +11,7 @@
 
 #pragma once
 
-#include "../../GladeGui.h"
+#include "gui/GladeGui.h"
 #include <XournalType.h>
 #include <StringUtils.h>
 

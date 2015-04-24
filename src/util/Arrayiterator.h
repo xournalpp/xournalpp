@@ -11,7 +11,7 @@
 
 #pragma once
 
-#include <XournalType.h>
+#include "XournalType.h"
 
 template<class T>
 class ArrayIterator

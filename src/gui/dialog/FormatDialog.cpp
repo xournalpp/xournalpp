@@ -1,6 +1,6 @@
 #include "FormatDialog.h"
 
-#include "../../model/FormatDefinitions.h"
+#include "model/FormatDefinitions.h"
 
 #include <config.h>
 #include <glib/gi18n-lib.h>

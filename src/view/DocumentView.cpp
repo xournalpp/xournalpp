@@ -1,12 +1,12 @@
 #include "DocumentView.h"
 #include "TextView.h"
 #include <gdk/gdk.h>
-#include "../control/tools/Selection.h"
-#include "../control/tools/EditSelection.h"
-#include "../model/eraser/EraseableStroke.h"
-#include "../model/Layer.h"
-#include "../model/BackgroundImage.h"
-#include "../cfg.h"
+#include "control/tools/Selection.h"
+#include "control/tools/EditSelection.h"
+#include "model/eraser/EraseableStroke.h"
+#include "model/Layer.h"
+#include "model/BackgroundImage.h"
+#include "cfg.h"
 
 #include <config.h>
 #include <glib/gi18n-lib.h>

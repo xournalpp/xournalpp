@@ -15,7 +15,7 @@
 using boost::filesystem::path;
 
 #include <gtk/gtk.h>
-#include <StringUtils.h>
+#include "StringUtils.h"
 
 class Util
 {

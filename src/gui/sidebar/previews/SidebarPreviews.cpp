@@ -1,8 +1,8 @@
 #include "SidebarPreviews.h"
 #include "SidebarPreviewPage.h"
 
-#include "../../../control/Control.h"
-#include "../../../control/PdfCache.h"
+#include "control/Control.h"
+#include "control/PdfCache.h"
 #include "SidebarLayout.h"
 #include "SidebarToolbar.h"
 

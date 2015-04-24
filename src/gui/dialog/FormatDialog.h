@@ -12,7 +12,7 @@
 #pragma once
 
 #include "../GladeGui.h"
-#include "../../control/settings/Settings.h"
+#include "control/settings/Settings.h"
 #include <XournalType.h>
 
 enum Orientation

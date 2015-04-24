@@ -1,8 +1,8 @@
 #include "PyUndoRedoHandler.h"
 #include "PyXournal.h"
 
-#include "../../../control/Control.h"
-#include "../../../gui/XournalView.h"
+#include "control/Control.h"
+#include "gui/XournalView.h"
 
 #include <Python.h>
 #include "structmember.h"

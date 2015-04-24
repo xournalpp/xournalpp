@@ -13,10 +13,10 @@
 
 #pragma once
 
-#include "../model/LayerListener.h"
+#include "model/LayerListener.h"
 #include <gtk/gtk.h>
 #include <glib/gstdio.h>
-#include "../model/TexImage.h"
+#include "model/TexImage.h"
 
 
 class Control;

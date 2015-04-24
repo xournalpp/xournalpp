@@ -1,12 +1,12 @@
 #include "ExportJob.h"
-#include "../../view/DocumentView.h"
-#include "../../view/PdfView.h"
+#include "view/DocumentView.h"
+#include "view/PdfView.h"
 #include "SynchronizedProgressListener.h"
 #include <cairo-ps.h>
 #include <cairo-svg.h>
 #include "../Control.h"
 #include "ExportFormtType.h"
-#include "../../pdf/popplerdirect/PdfExport.h"
+#include "pdf/popplerdirect/PdfExport.h"
 
 #include <config.h>
 #include <glib/gi18n-lib.h>

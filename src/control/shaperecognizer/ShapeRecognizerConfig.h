@@ -11,7 +11,7 @@
 
 #pragma once
 
-#include "../../cfg.h"
+#include "cfg.h"
 
 #define MAX_POLYGON_SIDES 4
 

@@ -12,10 +12,10 @@
 
 #pragma once
 
-#include "../../view/ElementContainer.h"
+#include "view/ElementContainer.h"
 #include "../Tool.h"
-#include "../../model/Font.h"
-#include "../../model/PageRef.h"
+#include "model/Font.h"
+#include "model/PageRef.h"
 #include "CursorSelectionType.h"
 
 #include <XournalType.h>

@@ -12,7 +12,7 @@
 #pragma once
 
 #include "XmlNode.h"
-#include "../../model/Point.h"
+#include "model/Point.h"
 
 class XmlPointNode : public XmlNode
 {

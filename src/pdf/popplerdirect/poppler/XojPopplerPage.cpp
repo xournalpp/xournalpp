@@ -4,7 +4,7 @@
 #include "../poppler-0.24.1/poppler/Gfx.h"
 #include "../poppler-0.24.1/poppler/OutputDev.h"
 #include "../workaround/workaround.h"
-#include "../../../control/settings/Settings.h"
+#include "control/settings/Settings.h"
 
 XojPopplerPage::XojPopplerPage(PDFDoc * doc, GMutex * docMutex,
                                CairoOutputDev * outputDev, Page * page, int index)

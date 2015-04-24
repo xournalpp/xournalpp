@@ -1,9 +1,9 @@
 #include "ImageHandler.h"
 #include "../Control.h"
-#include "../../gui/PageView.h"
-#include "../../model/Image.h"
-#include "../../model/Layer.h"
-#include "../../undo/InsertUndoAction.h"
+#include "gui/PageView.h"
+#include "model/Image.h"
+#include "model/Layer.h"
+#include "undo/InsertUndoAction.h"
 #include "../stockdlg/ImageOpenDlg.h"
 
 ImageHandler::ImageHandler(Control* control, PageView* view)

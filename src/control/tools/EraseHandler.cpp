@@ -1,18 +1,18 @@
 #include "EraseHandler.h"
-#include "../../model/eraser/EraseableStroke.h"
-#include "../../model/Layer.h"
-#include "../../model/Stroke.h"
-#include "../../model/Document.h"
+#include "model/eraser/EraseableStroke.h"
+#include "model/Layer.h"
+#include "model/Stroke.h"
+#include "model/Document.h"
 #include <Range.h>
 #include <Rectangle.h>
-#include "../../undo/UndoRedoHandler.h"
-#include "../../undo/EraseUndoAction.h"
-#include "../../undo/DeleteUndoAction.h"
-#include "../../gui/PageView.h"
+#include "undo/UndoRedoHandler.h"
+#include "undo/EraseUndoAction.h"
+#include "undo/DeleteUndoAction.h"
+#include "gui/PageView.h"
 #include "../ToolHandler.h"
-#include "../../control/jobs/RenderJob.h"
+#include "control/jobs/RenderJob.h"
 
-#include "../../gui/XournalView.h"
+#include "gui/XournalView.h"
 
 #include <math.h>
 

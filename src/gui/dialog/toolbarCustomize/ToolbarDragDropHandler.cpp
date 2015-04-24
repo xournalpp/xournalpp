@@ -3,13 +3,13 @@
 
 #include <glib.h>
 
-#include "../../../control/Control.h"
+#include "control/Control.h"
 #include "ToolbarDragDropHelper.h"
-#include "../../toolbarMenubar/AbstractToolItem.h"
+#include "gui/toolbarMenubar/AbstractToolItem.h"
 #include "ToolbarCustomizeDialog.h"
 
-#include "../../MainWindow.h"
-#include "../../toolbarMenubar/model/ToolbarModel.h"
+#include "gui/MainWindow.h"
+#include "gui/toolbarMenubar/model/ToolbarModel.h"
 
 ToolbarDragDropHandler::ToolbarDragDropHandler(Control* control)
 {

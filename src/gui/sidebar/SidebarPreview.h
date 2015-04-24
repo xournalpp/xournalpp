@@ -13,10 +13,10 @@
 
 #include <gtk/gtk.h>
 #include <Util.h>
-#include "../../model/PageRef.h"
+#include "model/PageRef.h"
 #include <XournalType.h>
 
-#include "../../control/PdfCache.h"
+#include "control/PdfCache.h"
 
 class Sidebar;
 

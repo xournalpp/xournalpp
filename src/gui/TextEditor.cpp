@@ -2,15 +2,15 @@
 #include <gtk/gtkimcontextsimple.h>
 #include "XournalView.h"
 #include "PageView.h"
-#include "../view/TextView.h"
+#include "view/TextView.h"
 #include <gdk/gdkkeysyms.h>
-#include "../control/Control.h"
+#include "control/Control.h"
 #include <string.h>
 
 #include "TextEditorWidget.h"
-#include "../undo/TextUndoAction.h"
-#include "../undo/ColorUndoAction.h"
-#include "../view/DocumentView.h"
+#include "undo/TextUndoAction.h"
+#include "undo/ColorUndoAction.h"
+#include "view/DocumentView.h"
 #include "Cursor.h"
 
 // TODO LOW PRIO: implement drag & drop

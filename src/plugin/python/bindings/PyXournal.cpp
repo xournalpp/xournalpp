@@ -4,9 +4,9 @@
 #include "PyUndoRedoHandler.h"
 #include "PyDocument.h"
 
-#include "../../../control/Control.h"
-#include "../../../gui/XournalView.h"
-#include "../../../gui/widgets/XournalWidget.h"
+#include "control/Control.h"
+#include "gui/XournalView.h"
+#include "gui/widgets/XournalWidget.h"
 
 #ifdef __cplusplus
 extern "C"

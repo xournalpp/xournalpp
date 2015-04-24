@@ -13,10 +13,10 @@
 
 #include <Range.h>
 #include "Redrawable.h"
-#include "../model/PageRef.h"
+#include "model/PageRef.h"
 #include "LayoutData.h"
-#include "../model/TexImage.h"
-#include "../model/PageListener.h"
+#include "model/TexImage.h"
+#include "model/PageListener.h"
 
 #include <vector>
 
