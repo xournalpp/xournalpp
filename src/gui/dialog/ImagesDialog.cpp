@@ -2,9 +2,9 @@
 #include "../Shadow.h"
 #include <math.h>
 #include <Util.h>
-#include "../../model/Document.h"
-#include "../../model/BackgroundImage.h"
-#include "../../control/settings/Settings.h"
+#include "model/Document.h"
+#include "model/BackgroundImage.h"
+#include "control/settings/Settings.h"
 
 #include <config.h>
 #include <glib/gi18n-lib.h>

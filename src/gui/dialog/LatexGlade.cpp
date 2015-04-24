@@ -1,9 +1,9 @@
 #include "LatexGlade.h"
 
-#include "../../control/tools/ImageHandler.h"
-#include "../../model/TexImage.h"
+#include "control/tools/ImageHandler.h"
+#include "model/TexImage.h"
 
-#include "../../util/LatexAction.h"
+#include "LatexAction.h"
 
 #include <iostream>
 using namespace std;

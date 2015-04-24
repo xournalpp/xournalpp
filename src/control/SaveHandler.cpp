@@ -9,13 +9,13 @@
  * @license GPL
  */
 
-#include "../model/Stroke.h"
-#include "../model/Text.h"
-#include "../model/Image.h"
-#include "../model/TexImage.h"
-#include "../model/Document.h"
-#include "../model/Layer.h"
-#include "../model/BackgroundImage.h"
+#include "model/Stroke.h"
+#include "model/Text.h"
+#include "model/Image.h"
+#include "model/TexImage.h"
+#include "model/Document.h"
+#include "model/Layer.h"
+#include "model/BackgroundImage.h"
 #include "SaveHandler.h"
 #include "jobs/ProgressListener.h"
 

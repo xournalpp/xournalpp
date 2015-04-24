@@ -14,7 +14,7 @@
 #include <gtk/gtk.h>
 #include <XournalType.h>
 
-#include "../../../model/PageRef.h"
+#include "model/PageRef.h"
 
 class Control;
 

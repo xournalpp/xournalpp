@@ -2,7 +2,7 @@
 #include "ShapeRecognizerConfig.h"
 #include "Inertia.h"
 
-#include "../../model/Stroke.h"
+#include "model/Stroke.h"
 
 #include <math.h>
 

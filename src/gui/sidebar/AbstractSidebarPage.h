@@ -14,8 +14,8 @@
 #include <gtk/gtk.h>
 #include <XournalType.h>
 
-#include "../../model/DocumentChangeType.h"
-#include "../../model/DocumentListener.h"
+#include "model/DocumentChangeType.h"
+#include "model/DocumentListener.h"
 
 class Control;
 

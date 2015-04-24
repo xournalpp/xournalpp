@@ -216,6 +216,7 @@ LIBS = $(BOOST_SYSTEM_LIBS) $(BOOST_FILESYSTEM_LIBS) $(BOOST_LOCALE_LIBS) \
 	$(BOOST_IOSTREAMS_LIBS) $(BOOST_ASIO_LIBS) $(BOOST_THREAD_LIBS)
 
 xournalpp_CXXFLAGS = \
+	-I$(top_srcdir)/src \
 	-I$(top_srcdir)/src/util \
 	-I$(top_srcdir)/src/pdf/popplerdirect/poppler-0.24.1 \
 	-I$(top_srcdir)/src/pdf/popplerdirect/poppler-0.24.1/poppler \

@@ -1,8 +1,8 @@
 #include "FontUndoAction.h"
 
-#include "../model/Font.h"
-#include "../model/Text.h"
-#include "../gui/Redrawable.h"
+#include "model/Font.h"
+#include "model/Text.h"
+#include "gui/Redrawable.h"
 
 #include <Rectangle.h>
 

@@ -1,7 +1,7 @@
 #include "Text.h"
 
 // Hack: Needed to calculate the view size
-#include "../view/TextView.h"
+#include "view/TextView.h"
 
 #include <serializing/ObjectOutputStream.h>
 #include <serializing/ObjectInputStream.h>

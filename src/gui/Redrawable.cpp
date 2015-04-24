@@ -1,5 +1,5 @@
 #include "Redrawable.h"
-#include "../model/Element.h"
+#include "model/Element.h"
 
 void Redrawable::repaintRange(Range& r)
 {

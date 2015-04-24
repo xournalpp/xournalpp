@@ -11,7 +11,7 @@
 
 #pragma once
 
-#include "../../ToolitemDragDrop.h"
+#include "gui/ToolitemDragDrop.h"
 #include <gtk/gtk.h>
 
 class ToolItemDragCurrentData

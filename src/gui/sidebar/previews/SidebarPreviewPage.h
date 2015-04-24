@@ -13,7 +13,7 @@
 
 #include <gtk/gtk.h>
 #include <Util.h>
-#include "../../../model/PageRef.h"
+#include "model/PageRef.h"
 #include <XournalType.h>
 
 class SidebarPreviews;

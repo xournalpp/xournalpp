@@ -2,11 +2,11 @@
 
 #include <list>
 
-#include "../../gui/XournalView.h"
-#include "../../view/PdfView.h"
-#include "../../view/DocumentView.h"
-#include "../../gui/PageView.h"
-#include "../../model/Document.h"
+#include "gui/XournalView.h"
+#include "view/PdfView.h"
+#include "view/DocumentView.h"
+#include "gui/PageView.h"
+#include "model/Document.h"
 #include <Rectangle.h>
 
 RenderJob::RenderJob(PageView* view)

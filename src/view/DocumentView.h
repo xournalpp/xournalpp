@@ -12,12 +12,12 @@
 #pragma once
 
 #include <gtk/gtk.h>
-#include "../model/Element.h"
-#include "../model/Stroke.h"
-#include "../model/Text.h"
-#include "../model/PageRef.h"
-#include "../model/Image.h"
-#include "../model/TexImage.h"
+#include "model/Element.h"
+#include "model/Stroke.h"
+#include "model/Text.h"
+#include "model/PageRef.h"
+#include "model/Image.h"
+#include "model/TexImage.h"
 #include <XournalType.h>
 
 #include "ElementContainer.h"

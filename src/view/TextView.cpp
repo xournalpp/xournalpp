@@ -1,8 +1,8 @@
 #include "TextView.h"
-#include "../model/Text.h"
+#include "model/Text.h"
 #include <boost/locale.hpp>
-#include "../pdf/popplerdirect/poppler/XojPopplerPage.h"
-#include "../control/settings/Settings.h"
+#include "pdf/popplerdirect/poppler/XojPopplerPage.h"
+#include "control/settings/Settings.h"
 
 TextView::TextView() { }
 

@@ -12,8 +12,8 @@
 #pragma once
 
 #include "../GladeGui.h"
-#include "../../control/settings/Settings.h"
-#include "../../control/jobs/ExportFormtType.h"
+#include "control/settings/Settings.h"
+#include "control/jobs/ExportFormtType.h"
 #include <XournalType.h>
 #include <PageRange.h>
 

@@ -1,6 +1,6 @@
 #include "ButtonConfigGui.h"
-#include "../../control/settings/Settings.h"
-#include "../../control/settings/ButtonConfig.h"
+#include "control/settings/Settings.h"
+#include "control/settings/ButtonConfig.h"
 #include "SettingsDialog.h"
 
 #include <config.h>

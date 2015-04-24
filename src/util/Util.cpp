@@ -1,5 +1,5 @@
-#include <Util.h>
-#include "../cfg.h"
+#include "Util.h"
+#include "cfg.h"
 
 #include <config.h>
 #include <glib/gi18n-lib.h>

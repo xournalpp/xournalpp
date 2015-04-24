@@ -1,8 +1,8 @@
 #include "ScrollHandler.h"
 #include "Control.h"
-#include "../gui/XournalView.h"
-#include "../gui/widgets/SpinPageAdapter.h"
-#include "../gui/Layout.h"
+#include "gui/XournalView.h"
+#include "gui/widgets/SpinPageAdapter.h"
+#include "gui/Layout.h"
 
 ScrollHandler::ScrollHandler(Control* control)
 {

@@ -1,11 +1,11 @@
 #include "ToolbarCustomizeDialog.h"
-#include "../../toolbarMenubar/model/ToolbarData.h"
-#include "../../toolbarMenubar/model/ToolbarModel.h"
+#include "gui/toolbarMenubar/model/ToolbarData.h"
+#include "gui/toolbarMenubar/model/ToolbarModel.h"
 
-#include "../../../gui/MainWindow.h"
-#include "../../../gui/toolbarMenubar/ToolMenuHandler.h"
-#include "../../../gui/toolbarMenubar/AbstractToolItem.h"
-#include "../../widgets/SelectColor.h"
+#include "gui/MainWindow.h"
+#include "gui/toolbarMenubar/ToolMenuHandler.h"
+#include "gui/toolbarMenubar/AbstractToolItem.h"
+#include "gui/widgets/SelectColor.h"
 
 #include "ToolbarDragDropHandler.h"
 #include "ToolbarDragDropHelper.h"

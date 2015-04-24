@@ -8,19 +8,19 @@
 #include <boost/filesystem.hpp>
 namespace bf = boost::filesystem;
 
-#include "../gui/MainWindow.h"
-#include "../gui/toolbarMenubar/model/ToolbarColorNames.h"
+#include "gui/MainWindow.h"
+#include "gui/toolbarMenubar/model/ToolbarColorNames.h"
 #include "Control.h"
 #include "LoadHandler.h"
-#include "../gui/GladeSearchpath.h"
-#include "../gui/XournalView.h"
-#include "../pdf/popplerdirect/PdfExport.h"
-#include "../cfg.h"
+#include "gui/GladeSearchpath.h"
+#include "gui/XournalView.h"
+#include "pdf/popplerdirect/PdfExport.h"
+#include "cfg.h"
 
 using namespace std;
 
 #ifdef ENABLE_PYTHON
-#include "../plugin/python/PythonRunner.h"
+#include "plugin/python/PythonRunner.h"
 #endif
 
 XournalMain::XournalMain()

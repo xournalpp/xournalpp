@@ -12,8 +12,8 @@
 #pragma once
 
 #include <gtk/gtk.h>
-#include "../../model/Stroke.h"
-#include "../../model/PageRef.h"
+#include "model/Stroke.h"
+#include "model/PageRef.h"
 #include <XournalType.h>
 #include "../shaperecognizer/ShapeRecognizer.h"
 

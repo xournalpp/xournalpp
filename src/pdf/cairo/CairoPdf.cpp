@@ -1,5 +1,5 @@
 #include "CairoPdf.h"
-#include "../../view/DocumentView.h"
+#include "view/DocumentView.h"
 #include <cairo/cairo-pdf.h>
 
 CairoPdf::CairoPdf()

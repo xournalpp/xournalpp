@@ -1,8 +1,8 @@
-#include <XournalType.h>
+#include "XournalType.h"
 #include <glib.h>
 #include <stdlib.h>
 #include <iostream>
-#include <StringUtils.h>
+#include "StringUtils.h"
 
 using namespace std;
 

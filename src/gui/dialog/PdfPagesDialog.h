@@ -12,8 +12,8 @@
 #pragma once
 
 #include "../GladeGui.h"
-#include "../../model/Document.h"
-#include "../../control/settings/Settings.h"
+#include "model/Document.h"
+#include "control/settings/Settings.h"
 #include <XournalType.h>
 
 class PdfPagesDialog : public GladeGui

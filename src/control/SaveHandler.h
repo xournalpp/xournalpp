@@ -13,8 +13,8 @@
 
 #include <OutputStream.h>
 #include <XournalType.h>
-#include "../model/PageRef.h"
-#include "../model/Document.h"
+#include "model/PageRef.h"
+#include "model/Document.h"
 class XmlNode;
 class ProgressListener;
 

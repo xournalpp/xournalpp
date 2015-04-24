@@ -12,7 +12,7 @@
 #pragma once
 
 #include <XournalType.h>
-#include "../../model/PageRef.h"
+#include "model/PageRef.h"
 
 class DeleteUndoAction;
 class EraseUndoAction;

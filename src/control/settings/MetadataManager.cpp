@@ -1,6 +1,6 @@
 #include "MetadataManager.h"
-#include "../../cfg.h"
-#include "../../util/Util.h"
+#include "cfg.h"
+#include "util/Util.h"
 
 #include <boost/filesystem.hpp>
 namespace bf = boost::filesystem;

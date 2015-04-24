@@ -14,7 +14,7 @@
 #include <cairo.h>
 #include "../popplerdirect/poppler/XojPopplerPage.h"
 #include "../popplerdirect/poppler/XojPopplerDocument.h"
-#include "../../model/PageRef.h"
+#include "model/PageRef.h"
 #include <XournalType.h>
 
 class CairoPdf

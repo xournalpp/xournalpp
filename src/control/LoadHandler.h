@@ -28,11 +28,11 @@ using namespace pugi;
 #include <boost/filesystem/path.hpp>
 using boost::filesystem::path;
 
-#include "../model/Document.h"
-#include "../model/Stroke.h"
-#include "../model/Text.h"
-#include "../model/Image.h"
-#include "../model/TexImage.h"
+#include "model/Document.h"
+#include "model/Stroke.h"
+#include "model/Text.h"
+#include "model/Image.h"
+#include "model/TexImage.h"
 #include <XournalType.h>
 
 enum ParserPosition

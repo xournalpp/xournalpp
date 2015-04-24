@@ -4,7 +4,7 @@
 #include <config.h>
 #include <glib/gi18n-lib.h>
 
-#include "../../control/Actions.h"
+#include "control/Actions.h"
 #include "../widgets/SelectColor.h"
 #include "ToolMenuHandler.h"
 

@@ -12,7 +12,7 @@
 #pragma once
 
 #include <cairo/cairo.h>
-#include "../pdf/popplerdirect/poppler/XojPopplerPage.h"
+#include "pdf/popplerdirect/poppler/XojPopplerPage.h"
 #include <XournalType.h>
 
 class PdfCache

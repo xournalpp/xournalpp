@@ -1,11 +1,11 @@
 #include "MoveUndoAction.h"
 
-#include "../model/Element.h"
-#include "../model/PageRef.h"
-#include "../model/Layer.h"
-#include "../gui/Redrawable.h"
-#include "../control/tools/EditSelection.h"
-#include "../control/tools/VerticalToolHandler.h"
+#include "model/Element.h"
+#include "model/PageRef.h"
+#include "model/Layer.h"
+#include "gui/Redrawable.h"
+#include "control/tools/EditSelection.h"
+#include "control/tools/VerticalToolHandler.h"
 
 MoveUndoAction::MoveUndoAction(Layer* sourceLayer, PageRef sourcePage,
 							   ElementVector* selected, double mx, double my,

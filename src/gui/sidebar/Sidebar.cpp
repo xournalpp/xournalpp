@@ -1,10 +1,10 @@
 #include "Sidebar.h"
 #include "indextree/SidebarIndexPage.h"
 #include "previews/SidebarPreviews.h"
-#include "../../model/XojPage.h"
-#include "../../model/Document.h"
-#include "../../control/Control.h"
-#include "../../control/PdfCache.h"
+#include "model/XojPage.h"
+#include "model/Document.h"
+#include "control/Control.h"
+#include "control/PdfCache.h"
 #include "../GladeGui.h"
 
 #include <string.h>

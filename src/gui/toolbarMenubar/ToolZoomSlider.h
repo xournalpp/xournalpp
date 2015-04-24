@@ -12,7 +12,7 @@
 #pragma once
 
 #include "AbstractToolItem.h"
-#include "../../control/ZoomControl.h"
+#include "control/ZoomControl.h"
 #include <XournalType.h>
 
 class ToolZoomSlider : public AbstractToolItem, public ZoomListener

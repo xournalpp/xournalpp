@@ -12,7 +12,7 @@
 #pragma once
 
 #include "AbstractToolItem.h"
-#include "../../control/ToolHandler.h"
+#include "control/ToolHandler.h"
 #include <XournalType.h>
 
 class ColorToolItem : public AbstractToolItem

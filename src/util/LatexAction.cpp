@@ -1,20 +1,20 @@
 #include "LatexAction.h"
-#include "../control/Control.h"
-#include "../model/Stroke.h"
-#include "../model/Layer.h"
-#include "../gui/PageView.h"
-#include "../gui/XournalView.h"
+#include "control/Control.h"
+#include "model/Stroke.h"
+#include "model/Layer.h"
+#include "gui/PageView.h"
+#include "gui/XournalView.h"
 
 //TODO some time - clean up these includes
 //Yes, please. This file is rebuilding after pretty much every header edit
-#include <serializing/ObjectOutputStream.h>
-#include <serializing/HexObjectEncoding.h>
+#include "serializing/ObjectOutputStream.h"
+#include "serializing/HexObjectEncoding.h"
 
-#include "../control/tools/ImageHandler.h"
-#include "../model/TexImage.h"
+#include "control/tools/ImageHandler.h"
+#include "model/TexImage.h"
 
 #include <iostream>
-#include "../cfg.h"
+#include "cfg.h"
 #include <glib.h>
 
 using namespace std;

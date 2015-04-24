@@ -13,7 +13,7 @@
 
 #include <gtk/gtk.h>
 
-#include "../../control/Actions.h"
+#include "control/Actions.h"
 #include "ColorToolItem.h"
 #include "MenuItem.h"
 #include <StringUtils.h>

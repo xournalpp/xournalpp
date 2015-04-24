@@ -13,7 +13,7 @@
 
 #include "AbstractToolItem.h"
 #include "../GladeGui.h"
-#include "../../model/Font.h"
+#include "model/Font.h"
 #include <XournalType.h>
 
 class FontButton : public AbstractToolItem

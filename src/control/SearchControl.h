@@ -11,8 +11,8 @@
 
 #pragma once
 
-#include "../model/PageRef.h"
-#include "../pdf/popplerdirect/poppler/XojPopplerPage.h"
+#include "model/PageRef.h"
+#include "pdf/popplerdirect/poppler/XojPopplerPage.h"
 
 class SearchControl
 {

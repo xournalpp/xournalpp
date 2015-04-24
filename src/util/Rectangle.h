@@ -12,7 +12,7 @@
 #pragma once
 
 #include <glib.h>
-#include <XournalType.h>
+#include "XournalType.h"
 
 class Range;
 
