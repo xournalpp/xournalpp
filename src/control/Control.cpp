@@ -2775,7 +2775,8 @@ bool Control::showSaveDialog()
 
 	this->doc->lock();
 
-	this->metadata->move(this->doc->getFilename().string(), filename);
+	this->metadata->copy(this->doc->getFilename().string(), filename);
+	this->metadata->save();
 	this->doc->setFilename(path(filename));
 	this->doc->unlock();
 

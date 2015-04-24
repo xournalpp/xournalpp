@@ -1,14 +1,14 @@
 /*
  * Xournal++
  *
- * This small programm extracts a preview out of a xournal file.
+ * This small program extracts a preview out of a xoj file.
  *
  * @author MarPiRK
  * http://marpirk.net
  * 
  * https://github.com/xournalpp/xournalpp
  *
- * @license GNU GPLv2
+ * @license GNU GPLv2 or later
  */
 
 #include <string>
