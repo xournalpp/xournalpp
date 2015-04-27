@@ -16,6 +16,7 @@ namespace bf = boost::filesystem;
 #include "gui/XournalView.h"
 #include "pdf/popplerdirect/PdfExport.h"
 #include "cfg.h"
+#include "config.h"
 
 using namespace std;
 
@@ -52,18 +53,36 @@ void XournalMain::checkForErrorlog()
 {
 	XOJ_CHECK_TYPE(XournalMain);
 
-	bf::path filename = g_get_home_dir();
-	filename /= CONFIG_DIR;
-	filename /= "errorlog.log";
+	bf::path filename = Util::getSettingsFile("errorlog.log");
 	if (bf::exists(filename))
 	{
+		string msg = _("There is an errorlogfile from Xournal++. Please send a Bugreport, "
+					   "so the bug may been fixed.\n");
+		string issue_url = "https://github.com/xournalpp/xournalpp/issues/new";
+#ifdef GIT_ORIGIN_URL
+		{
+			string origin_url = GIT_ORIGIN_URL;
+			string branch = GIT_BRANCH;
+			string repo_path = origin_url.substr(origin_url.find(":") + 1); //git@github.com:asdf URLs
+			vector<string> split_url;
+			ba::split(split_url, repo_path, ba::is_any_of("/"));
+			if (split_url.size() >= 2)
+			{
+				string owner = split_url[split_url.size() - 2];
+				string repo = split_url.back().substr(0, split_url.back().size() - 4); //remove .git suffix
+				msg += (bl::format("You're using {1}/{2} branch. "
+						"Send Bugreport will direct you to this repo's issue tracker.\n")
+						% owner % branch).str();
+				issue_url = CONCAT("https://github.com/", owner, '/', repo, "/issues/new");
+			}
+		}
+#endif //GIT_ORIGIN_URL
+		msg += _("Logfile: %s");
 		GtkWidget* dialog = gtk_message_dialog_new(NULL, GTK_DIALOG_MODAL,
-			GTK_MESSAGE_QUESTION, GTK_BUTTONS_NONE,
-			 _("There is an errorlogfile from Xournal++. Please send a Bugreport, "
-			   "so the bug may been fixed.\n"
-			   "If you're using MarPiRK/string_new branch please report it in his repo."
-			   "Logfile: %s"),
+			GTK_MESSAGE_QUESTION, GTK_BUTTONS_NONE, msg.c_str(),
 			filename.c_str());
+		//I know it's formatting/i18n hell, but for now it have to wait some time
+		
 		gtk_dialog_add_button(GTK_DIALOG(dialog), _("Send Bugreport"), 1);
 		gtk_dialog_add_button(GTK_DIALOG(dialog), _("Open Logfile"), 2);
 		gtk_dialog_add_button(GTK_DIALOG(dialog), _("Delete Logfile"), 3);
@@ -73,7 +92,7 @@ void XournalMain::checkForErrorlog()
 
 		if (res == 1) // Send Bugreport
 		{
-			Util::openFileWithDefaultApplicaion("https://github.com/xournalpp/xournalpp/issues/new");
+			Util::openFileWithDefaultApplicaion(issue_url);
 			Util::openFileWithFilebrowser(filename);
 		}
 		else if (res == 2) // Open Logfile

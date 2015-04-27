@@ -32,6 +32,14 @@ dnl librsvg-2.0 is not really needed by Xournal++, but if you dont have it crash
 #We also are compiling with libpoppler so we require a number of extra packages
 pkg_modules="gtk+-2.0 >= 2.18.3 libglade-2.0 >= 2.6.4 glib-2.0 >= 2.32.0 gtkmm-2.4 >= 2.24.0 gthread-2.0 >= 2.4.0 librsvg-2.0 >= 2.14.0 zlib fontconfig lcms"
 
+dnl Check for current git repo for error reporting dialog
+AC_CHECK_PROG([GIT_IN_PATH], [git], [yes], [no])
+if test "x$GIT_IN_PATH" == "xyes"; then
+	AC_CHECK_FILE([.git], [
+		AC_DEFINE([GIT_BRANCH], ["m4_esyscmd_s([git rev-parse --abbrev-ref HEAD])"], [Git branch])
+		AC_DEFINE([GIT_ORIGIN_URL], ["m4_esyscmd_s([git config --get remote.origin.url])"], [Git repo URL])
+	])
+fi
 
 dnl Enable memory checking
 AC_ARG_ENABLE([memory-check],
