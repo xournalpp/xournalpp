@@ -24,9 +24,15 @@ MetadataManager::~MetadataManager()
 	XOJ_CHECK_TYPE(MetadataManager);
 
 	io.stop();
-	if (this->timer)  delete this->timer;
-	if (this->thread) delete this->thread;
-	if (this->config) delete this->config;
+	
+	delete this->timer;
+	this->timer = NULL;
+	
+	delete this->thread;
+	this->thread = NULL;
+	
+	delete this->config;
+	this->config = NULL;
 
 	XOJ_RELEASE_TYPE(MetadataManager);
 }
@@ -276,9 +282,16 @@ path MetadataManager::getFilePath() {
 	return Util::getSettingsFile(METADATA_FILE);
 }
 
+//kinda workaround for now – it probably wouldn't work on Windows
 bp::ptree::path_type MetadataManager::getINIpathURI(path p)
 {
+#ifdef _WIN32
+	string spath = p.string();
+	StringUtils::replace_all_chars(spath, {replace_pair('\\', "/")});
+	return getINIpath(CONCAT("file://", spath));
+#else
 	return getINIpath(CONCAT("file://", p.string()));
+#endif
 }
 
 
