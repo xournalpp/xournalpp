@@ -10,8 +10,7 @@ ShapeRecognizerResult::ShapeRecognizerResult(Stroke* result)
 	this->recognized = result;
 }
 
-ShapeRecognizerResult::ShapeRecognizerResult(Stroke* result,
-											 ShapeRecognizer* recognizer)
+ShapeRecognizerResult::ShapeRecognizerResult(Stroke* result, ShapeRecognizer* recognizer)
 {
 	XOJ_INIT_TYPE(ShapeRecognizerResult);
 

@@ -43,8 +43,8 @@ void ShapeRecognizer::resetRecognizer()
 	this->queueLength = 0;
 }
 
-/*
- *  test if segments form standard shapes
+/**
+ *  Test if segments form standard shapes
  */
 Stroke* ShapeRecognizer::tryRectangle()
 {
@@ -552,8 +552,8 @@ Stroke* ShapeRecognizer::tryClosedPolygon(int nsides)
 	return s;
 }
 
-/*
- * the main pattern recognition function
+/**
+ * The main pattern recognition function
  */
 ShapeRecognizerResult* ShapeRecognizer::recognizePatterns(Stroke* stroke)
 {

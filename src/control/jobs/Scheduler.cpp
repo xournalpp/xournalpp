@@ -69,7 +69,7 @@ Scheduler::~Scheduler()
 	stop();
 
 	Job * job = NULL;
-	while (job = getNextJobUnlocked())
+	while ((job = getNextJobUnlocked()) != NULL)
 	{
 		job->unref();
 	}

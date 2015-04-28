@@ -96,4 +96,6 @@ void Job::callAfterRun()
 	this->afterRunId = g_idle_add((GSourceFunc) Job::callAfterCallback, this);
 }
 
-void Job::afterRun() { }
+void Job::afterRun()
+{
+}

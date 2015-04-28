@@ -274,7 +274,10 @@ void RenderJob::run()
 
 
 	// delete all rectangles
-	for (Rectangle* rect : rerenderRects) delete rect;
+	for (Rectangle* rect : rerenderRects)
+	{
+		delete rect;
+	}
 }
 
 JobType RenderJob::getType()

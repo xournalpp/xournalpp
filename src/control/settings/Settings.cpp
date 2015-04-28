@@ -364,8 +364,7 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur)
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "autosaveEnabled") == 0)
 	{
-		this->autosaveEnabled = xmlStrcmp(value,
-										  (const xmlChar*) "true") ? false : true;
+		this->autosaveEnabled = xmlStrcmp(value, (const xmlChar*) "true") ? false : true;
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "autosaveTimeout") == 0)
 	{
@@ -397,13 +396,11 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur)
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "addVerticalSpace") == 0)
 	{
-		this->addVerticalSpace = xmlStrcmp(value,
-										   (const xmlChar*) "true") ? false : true;
+		this->addVerticalSpace = xmlStrcmp(value, (const xmlChar*) "true") ? false : true;
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "addHorizontalSpace") == 0)
 	{
-		this->addHorizontalSpace = xmlStrcmp(value,
-											 (const xmlChar*) "true") ? false : true;
+		this->addHorizontalSpace = xmlStrcmp(value, (const xmlChar*) "true") ? false : true;
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "fixXinput") == 0)
 	{
@@ -411,8 +408,7 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur)
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "enableLeafEnterWorkaround") == 0)
 	{
-		this->enableLeafEnterWorkaround = xmlStrcmp(value,
-													(const xmlChar*) "true") ? false : true;
+		this->enableLeafEnterWorkaround = xmlStrcmp(value, (const xmlChar*) "true") ? false : true;
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "scrollbarHideType") == 0)
 	{
@@ -1719,6 +1715,7 @@ SAttribute::SAttribute()
 {
 	XOJ_INIT_TYPE(SAttribute);
 
+	this->dValue = 0;
 	this->iValue = 0;
 	this->type = ATTRIBUTE_TYPE_NONE;
 }

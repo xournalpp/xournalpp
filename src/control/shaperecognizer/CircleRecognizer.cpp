@@ -6,8 +6,8 @@
 
 #include <math.h>
 
-/*
- * create circle stroke for inertia
+/**
+ * Create circle stroke for inertia
  */
 Stroke* CircleRecognizer::makeCircleShape(Stroke* originalStroke,
 										  Inertia& inertia)
@@ -33,8 +33,8 @@ Stroke* CircleRecognizer::makeCircleShape(Stroke* originalStroke,
 	return s;
 }
 
-/*
- *  test if we have a circle; inertia has been precomputed by caller
+/**
+ *  Test if we have a circle; inertia has been precomputed by caller
  */
 double CircleRecognizer::scoreCircle(Stroke* s, Inertia& inertia)
 {

@@ -1,8 +1,7 @@
 #include "SynchronizedProgressListener.h"
 #include <gtk/gtk.h>
 
-SynchronizedProgressListener::SynchronizedProgressListener(
-														   ProgressListener* target)
+SynchronizedProgressListener::SynchronizedProgressListener(ProgressListener* target)
 {
 	XOJ_INIT_TYPE(SynchronizedProgressListener);
 
@@ -26,16 +25,17 @@ SynchronizedProgressListener::~SynchronizedProgressListener()
 		g_source_remove(this->maxIdleId);
 		this->maxIdleId = 0;
 	}
+
 	if (this->currentIdleId)
 	{
 		g_source_remove(this->currentIdleId);
 		this->currentIdleId = 0;
 	}
+
 	XOJ_RELEASE_TYPE(SynchronizedProgressListener);
 }
 
-bool SynchronizedProgressListener::setMaxCallback(SynchronizedProgressListener*
-												  listener)
+bool SynchronizedProgressListener::setMaxCallback(SynchronizedProgressListener* listener)
 {
 	XOJ_CHECK_TYPE_OBJ(listener, SynchronizedProgressListener);
 
@@ -47,8 +47,7 @@ bool SynchronizedProgressListener::setMaxCallback(SynchronizedProgressListener*
 	return false; // do not call again
 }
 
-bool SynchronizedProgressListener::setCurrentCallback(
-													  SynchronizedProgressListener* listener)
+bool SynchronizedProgressListener::setCurrentCallback(SynchronizedProgressListener* listener)
 {
 	XOJ_CHECK_TYPE_OBJ(listener, SynchronizedProgressListener);
 

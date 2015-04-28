@@ -44,7 +44,10 @@ ExportJob::~ExportJob()
 {
 	XOJ_CHECK_TYPE(ExportJob);
 
-	for (PageRangeEntry* e : this->selected) delete e;
+	for (PageRangeEntry* e : this->selected)
+	{
+		delete e;
+	}
 
 	XOJ_RELEASE_TYPE(ExportJob);
 }
@@ -87,7 +90,10 @@ bool ExportJob::createSurface(int id, double width, double height)
 	{
 		path filepath = this->filepath.parent_path();
 		filepath /= this->front;
-		if (id != -1) filepath += std::to_string(id);
+		if (id != -1)
+		{
+			filepath += std::to_string(id);
+		}
 		filepath += CONCAT('.', this->back);
 
 		this->surface = cairo_svg_surface_create(filepath.c_str(), width, height);
@@ -213,7 +219,6 @@ void ExportJob::run()
 					XojPopplerPage* popplerPage = doc->getPdfPage(pgNo);
 
 
-					// TODO LOW PRIO pdf is written as image to the SVN surface!!
 					PdfView::drawPage(NULL, popplerPage, cr, zoom,
 									  page->getWidth(),
 									  page->getHeight());
