@@ -10,7 +10,7 @@
  */
 
 #include "SelectBackgroundColorDialog.h"
-#include "../../control/Control.h"
+#include "control/Control.h"
 #include "../widgets/SelectColor.h"
 
 #include <config.h>

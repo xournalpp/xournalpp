@@ -1,7 +1,7 @@
 #include "LoadHandler.h"
 
-#include "../model/XojPage.h"
-#include "../model/BackgroundImage.h"
+#include "model/XojPage.h"
+#include "model/BackgroundImage.h"
 
 #include <clocale>
 #include <vector>

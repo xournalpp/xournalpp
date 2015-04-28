@@ -1,16 +1,16 @@
 #include "Control.h"
 #include <gtk/gtk.h>
-#include "../gui/XournalView.h"
-#include "../gui/dialog/AboutDialog.h"
-#include "../gui/dialog/SettingsDialog.h"
-#include "../gui/dialog/PdfPagesDialog.h"
-#include "../gui/dialog/ImagesDialog.h"
-#include "../gui/dialog/FormatDialog.h"
-#include "../gui/dialog/GotoDialog.h"
-#include "../gui/dialog/SelectBackgroundColorDialog.h"
-#include "../gui/dialog/toolbarCustomize/ToolbarDragDropHandler.h"
-#include "../gui/dialog/ToolbarManageDialog.h"
-#include "../cfg.h"
+#include "gui/XournalView.h"
+#include "gui/dialog/AboutDialog.h"
+#include "gui/dialog/SettingsDialog.h"
+#include "gui/dialog/PdfPagesDialog.h"
+#include "gui/dialog/ImagesDialog.h"
+#include "gui/dialog/FormatDialog.h"
+#include "gui/dialog/GotoDialog.h"
+#include "gui/dialog/SelectBackgroundColorDialog.h"
+#include "gui/dialog/toolbarCustomize/ToolbarDragDropHandler.h"
+#include "gui/dialog/ToolbarManageDialog.h"
+#include "cfg.h"
 #include "LoadHandler.h"
 #include "PrintHandler.h"
 #include "ExportHandler.h"
@@ -19,30 +19,30 @@
 #include <serializing/ObjectInputStream.h>
 #include <Stacktrace.h>
 #include <XInputUtils.h>
-#include "../model/FormatDefinitions.h"
-#include "../model/XojPage.h"
-#include "../model/BackgroundImage.h"
-#include "../undo/InsertDeletePageUndoAction.h"
-#include "../undo/InsertLayerUndoAction.h"
-#include "../undo/PageBackgroundChangedUndoAction.h"
-#include "../undo/PageBackgroundChangedUndoAction.h"
-#include "../undo/InsertUndoAction.h"
-#include "../undo/RemoveLayerUndoAction.h"
+#include "model/FormatDefinitions.h"
+#include "model/XojPage.h"
+#include "model/BackgroundImage.h"
+#include "undo/InsertDeletePageUndoAction.h"
+#include "undo/InsertLayerUndoAction.h"
+#include "undo/PageBackgroundChangedUndoAction.h"
+#include "undo/PageBackgroundChangedUndoAction.h"
+#include "undo/InsertUndoAction.h"
+#include "undo/RemoveLayerUndoAction.h"
 #include "jobs/BlockingJob.h"
 #include "jobs/PdfExportJob.h"
 #include "jobs/SaveJob.h"
 #include "jobs/AutosaveJob.h"
-#include "../view/DocumentView.h"
+#include "view/DocumentView.h"
 #include "stockdlg/ImageOpenDlg.h"
 #include "stockdlg/XojOpenDlg.h"
-#include "../gui/TextEditor.h"
-#include "../undo/DeleteUndoAction.h"
-#include "../undo/AddUndoAction.h"
+#include "gui/TextEditor.h"
+#include "undo/DeleteUndoAction.h"
+#include "undo/AddUndoAction.h"
 #include "settings/ButtonConfig.h"
-#include "../gui/Cursor.h"
-#include "../gui/toolbarMenubar/model/ToolbarModel.h"
-#include "../gui/toolbarMenubar/model/ToolbarData.h"
-#include "../gui/toolbarMenubar/ToolMenuHandler.h"
+#include "gui/Cursor.h"
+#include "gui/toolbarMenubar/model/ToolbarModel.h"
+#include "gui/toolbarMenubar/model/ToolbarData.h"
+#include "gui/toolbarMenubar/ToolMenuHandler.h"
 
 #include <config.h>
 #include <glib/gi18n-lib.h>
@@ -184,10 +184,20 @@ void Control::renameLastAutosaveFile()
 		path filename = this->lastAutosaveFilename;
 		path renamed = Util::getAutosaveFilename().parent_path();
 		renamed += filename.filename();
-
-		using namespace boost::filesystem;
-		remove(renamed);
-		rename(filename, renamed);
+		
+		namespace bf = boost::filesystem;
+		if (bf::exists(filename))
+		{
+			bf::remove(renamed);
+			bf::rename(filename, renamed);
+		}
+		else
+		{
+			bf::remove(renamed);
+			this->save(false);
+			bf::rename(filename, renamed);
+			bf::remove(filename);
+		}
 	}
 }
 
@@ -2765,7 +2775,8 @@ bool Control::showSaveDialog()
 
 	this->doc->lock();
 
-	this->metadata->move(this->doc->getFilename().string(), filename);
+	this->metadata->copy(this->doc->getFilename().string(), filename);
+	this->metadata->save();
 	this->doc->setFilename(path(filename));
 	this->doc->unlock();
 
@@ -2837,13 +2848,13 @@ void Control::exportAs()
 								this, getCurrentPageNo());
 }
 
-void Control::saveAs()
+bool Control::saveAs()
 {
 	XOJ_CHECK_TYPE(Control);
 
 	if (!showSaveDialog())
 	{
-		return;
+		return false;
 	}
 	this->doc->lock();
 	path filename = doc->getFilename();
@@ -2851,12 +2862,12 @@ void Control::saveAs()
 
 	if (filename.empty())
 	{
-		return;
+		return false;
 	}
 
 	// no lock needed, this is an uncritical operation
 	this->doc->setCreateBackupOnSave(false);
-	save();
+	return save();
 }
 
 void Control::quit()
@@ -2894,11 +2905,11 @@ bool Control::close(bool destroy)
 		gtk_dialog_add_button(GTK_DIALOG(dialog), _("Cancel"), 3);
 		gtk_window_set_transient_for(GTK_WINDOW(dialog),
 									 GTK_WINDOW(this->getWindow()->getWindow()));
-		int res = gtk_dialog_run(GTK_DIALOG(dialog));
+		int resNotSaved = gtk_dialog_run(GTK_DIALOG(dialog));
 		gtk_widget_destroy(dialog);
 
 		// save
-		if (res == 1)
+		if (resNotSaved == 1)
 		{
 			if (this->save(true))
 			{
@@ -2912,9 +2923,45 @@ bool Control::close(bool destroy)
 		}
 
 		// cancel or closed
-		if (res != 2) // 2 = discard
+		if (resNotSaved != 2) // 2 = discard
 		{
 			return false;
+		}
+		
+		namespace bf = boost::filesystem;
+		if (!bf::exists(this->doc->getFilename()))
+		{
+			GtkWidget* dialog = gtk_message_dialog_new((GtkWindow*) *getWindow(),
+													   GTK_DIALOG_DESTROY_WITH_PARENT,
+													   GTK_MESSAGE_WARNING, GTK_BUTTONS_NONE,
+													   _("Document file was removed."));
+
+			gtk_dialog_add_button(GTK_DIALOG(dialog), _("Save As"), 1);
+			gtk_dialog_add_button(GTK_DIALOG(dialog), _("Discard"), 2);
+			gtk_dialog_add_button(GTK_DIALOG(dialog), _("Cancel"), 3);
+			gtk_window_set_transient_for(GTK_WINDOW(dialog),
+										 GTK_WINDOW(this->getWindow()->getWindow()));
+			int resDocRemoved = gtk_dialog_run(GTK_DIALOG(dialog));
+			gtk_widget_destroy(dialog);
+			
+			if (resDocRemoved == 1)
+			{
+				if (this->saveAs())
+				{
+					return true;
+				}
+				else
+				{
+					// if not saved cancel, else close
+					return false;
+				}
+			}
+
+			// cancel or closed
+			if (resDocRemoved != 2) // 2 = discard
+			{
+				return false;
+			}
 		}
 	}
 

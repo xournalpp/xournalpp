@@ -12,7 +12,7 @@
 #pragma once
 
 #include "GladeGui.h"
-#include "../model/Font.h"
+#include "model/Font.h"
 #include <XournalType.h>
 
 class Control;

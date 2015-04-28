@@ -1,5 +1,5 @@
 #include "Scheduler.h"
-#include "../../cfg.h"
+#include "cfg.h"
 
 //TODO unified debugging
 #ifdef SHEDULER_DEBUG

@@ -17,6 +17,16 @@
 #include <boost/filesystem/path.hpp>
 using boost::filesystem::path;
 
+#include <boost/property_tree/ptree.hpp>
+#include <boost/property_tree/ini_parser.hpp>
+namespace bp = boost::property_tree;
+
+#include <boost/asio.hpp>
+#include <boost/date_time/posix_time/posix_time.hpp>
+namespace basio = boost::asio;
+
+#include <boost/thread.hpp>
+
 class MetadataManager
 {
 public:
@@ -25,35 +35,41 @@ public:
 
 public:
 	/**
-	 * Setter / Getter: if uri is NULL the request will be ignored
+	 * Setter / Getter: if path is empty the request will be ignored
 	 */
 
-	void setInt(path p, const char* name, int value);
-	void setDouble(path p, const char* name, double value);
-	void setString(path p, const char* name, const char* value);
+	void setInt(path p, string name, int value);
+	void setDouble(path p, string name, double value);
+	void setString(path p, string name, string value);
 
-	bool getInt(path p, const char* name, int& value);
-	bool getDouble(path p, const char* name, double& value);
+	bool getInt(path p, string name, int& value);
+	bool getDouble(path p, string name, double& value);
 
-	/**
-	 * The returned String should be freed with g_free
-	 */
-	bool getString(path p, const char* name, char*& value);
+	bool getString(path p, string name, string& value);
 
-	void move(string source, string target);
+	void copy(path source, path target);
+
+	bool save();
+	static bool save(MetadataManager* man, basio::deadline_timer* t = NULL);
 
 private:
+	bool checkPath(path p);
+	
 	void updateAccessTime(path p);
 	void loadConfigFile();
 
 	void cleanupMetadata();
 
-	static bool save(MetadataManager* manager);
-
+	static path getFilePath();
+	static bp::ptree::path_type getINIpathURI(path p);
+	static bp::ptree::path_type getINIpath(string s);
 
 private:
 	XOJ_TYPE_ATTRIB;
 
-	int timeoutId;
-	GKeyFile* config;
+	boost::thread* thread;
+	basio::io_service io;
+	basio::deadline_timer* timer;
+	
+	bp::ptree* config;
 };

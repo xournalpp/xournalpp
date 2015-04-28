@@ -6,11 +6,15 @@ Description
 
 Xournal++ is not Xournal! 
 It is a ground-up rewrite of Xournal in a different language (C++ instead of C).
-The purpose was to create a more flexible application that significantly extends the functionality of Xournal.
+The purpose was to create a more flexible application that significantly extends
+the functionality of Xournal.
+
 At the moment, Xournal is very stable software while Xournal++ is not.
-If you want stability, you might be more interested in the original Xournal project, which you can find at
-<a href="http://sourceforge.net/projects/xournal/">sourceforge</a> or, for some in-development features of Xournal, at
-<a href="https://github.com/dmgerman/xournal">github.com/dmgerman/xournal</a>.
+If you want stability, you might be more interested in the original Xournal
+project, which you can find at
+[sourceforge](http://sourceforge.net/projects/xournal/)
+or, for some in-development features of Xournal, at
+[github.com/dmgerman/xournal](https://github.com/dmgerman/xournal).
 
 New features in Xournal++ include:
 
@@ -21,14 +25,18 @@ New features in Xournal++ include:
 * advanced page sorting (a sidebar, page up/down, etc.)
 * bug reporting, autosave, and auto backup tools
 
-Hopefully you enjoy it! 
+Hopefully you'll enjoy it!
 
+Building
+---------------------
 
 At the moment compiling Xournal++ from source is tricky business.
-You should therefore first visit the wiki in order to see if there is a known working guide for your system:
-<a href="https://github.com/xournalpp/xournalpp/wiki/">Xournal++ Wiki</a>.
-There will be some binaries appearing in the near future, so ideally you can make use of those as well.
-They'll be at <a href="https://github.com/xournalpp/xournalpp/releases">Xournal++ releases</a>.
+You should therefore first visit the wiki in order to see if there is a known
+working guide for your system:
+[Xournal++ Wiki](https://github.com/xournalpp/xournalpp/wiki/).
+There will be some binaries appearing in the near future, so ideally you can
+make use of those as well.
+They'll be at [Xournal++ releases](https://github.com/xournalpp/xournalpp/releases).
 
 If at a loss, you can try to build with
 ```bash
@@ -68,8 +76,13 @@ worked for me.
 By far the most hacked together part of development is the use of an internal
 libpoppler package to compile static libpoppler.a files, and build them into the
 final xournalpp executable. We had to do this because the libpoppler-dev install
-on many systems just didn't include the headers we were used to access the PDF api.
-Fortunately even though compile time is greatly increased, and source code size is large,
-the final executable is still very reasonably sized, and it is much more portable in this way.
+on many systems just didn't include the headers we were used to access the PDF
+api. Fortunately even though compile time is greatly increased, and source code
+size is large, the final executable is still very reasonably sized, and it is
+much more portable in this way.
 
-See <a href="http://github.com/xournalpp/xournalpp">Github:xournalpp</a> for current development.
+See [Github:xournalpp](http://github.com/xournalpp/xournalpp) for current
+development.
+
+See our [Trello page](https://trello.com/xournal) for current roadmap and future
+developement ideas.

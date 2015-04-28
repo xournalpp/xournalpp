@@ -1,7 +1,7 @@
 #include "ScaleUndoAction.h"
 
-#include "../model/PageRef.h"
-#include "../model/Element.h"
+#include "model/PageRef.h"
+#include "model/Element.h"
 #include <Range.h>
 
 ScaleUndoAction::ScaleUndoAction(PageRef page,

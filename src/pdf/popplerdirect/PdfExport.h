@@ -11,9 +11,9 @@
 
 #pragma once
 
-#include "../../model/Document.h"
+#include "model/Document.h"
 #include <StringUtils.h>
-#include "../../control/jobs/ProgressListener.h"
+#include "control/jobs/ProgressListener.h"
 #include "../cairo/CairoPdf.h"
 #include "PdfXRef.h"
 #include "PdfBookmark.h"

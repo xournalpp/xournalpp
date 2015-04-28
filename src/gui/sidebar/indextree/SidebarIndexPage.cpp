@@ -1,7 +1,7 @@
 #include "SidebarIndexPage.h"
-#include "../../../model/LinkDestination.h"
-#include "../../../model/XojPage.h"
-#include "../../../control/Control.h"
+#include "model/LinkDestination.h"
+#include "model/XojPage.h"
+#include "control/Control.h"
 
 #include <config.h>
 #include <glib/gi18n-lib.h>

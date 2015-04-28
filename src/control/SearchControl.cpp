@@ -1,7 +1,7 @@
 #include "SearchControl.h"
-#include "../model/Text.h"
-#include "../model/Layer.h"
-#include "../view/TextView.h"
+#include "model/Text.h"
+#include "model/Layer.h"
+#include "view/TextView.h"
 
 SearchControl::SearchControl(PageRef page, XojPopplerPage* pdf)
 {

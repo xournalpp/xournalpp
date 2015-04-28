@@ -1,5 +1,5 @@
 #include "ToolbarDragDropHelper.h"
-#include "../../widgets/SelectColor.h"
+#include "gui/widgets/SelectColor.h"
 #include <Util.h>
 
 GdkAtom ToolbarDragDropHelper::atomToolItem =

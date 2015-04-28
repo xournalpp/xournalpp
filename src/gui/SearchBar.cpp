@@ -1,5 +1,5 @@
 #include "SearchBar.h"
-#include "../control/Control.h"
+#include "control/Control.h"
 #include <string.h>
 
 #include <config.h>

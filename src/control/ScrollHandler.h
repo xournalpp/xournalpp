@@ -16,8 +16,8 @@ class Control;
 
 #include <gtk/gtk.h>
 #include <XournalType.h>
-#include "../model/PageRef.h"
-#include "../gui/widgets/SpinPageAdapter.h"
+#include "model/PageRef.h"
+#include "gui/widgets/SpinPageAdapter.h"
 
 class ScrollHandler : public SpinPageListener
 {

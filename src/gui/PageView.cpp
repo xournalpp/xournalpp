@@ -4,28 +4,28 @@
 #include <math.h>
 #include <gdk/gdkkeysyms.h>
 #include <glib.h>
-#include "../control/Control.h"
-#include "../view/TextView.h"
-#include "../control/tools/Selection.h"
-#include "../control/tools/ImageHandler.h"
+#include "control/Control.h"
+#include "view/TextView.h"
+#include "control/tools/Selection.h"
+#include "control/tools/ImageHandler.h"
 #include <pixbuf-utils.h>
 #include <Range.h>
-#include "../cfg.h"
-#include "../undo/InsertUndoAction.h"
-#include "../control/jobs/BlockingJob.h"
-#include "../model/Image.h"
-#include "../model/PageRef.h"
-#include "../model/Stroke.h"
-#include "../model/Text.h"
-#include "../model/Layer.h"
-#include "../control/settings/Settings.h"
-#include "../control/settings/ButtonConfig.h"
-#include "../control/SearchControl.h"
-#include "../control/tools/VerticalToolHandler.h"
-#include "../control/tools/EraseHandler.h"
-#include "../control/tools/InputHandler.h"
+#include "cfg.h"
+#include "undo/InsertUndoAction.h"
+#include "control/jobs/BlockingJob.h"
+#include "model/Image.h"
+#include "model/PageRef.h"
+#include "model/Stroke.h"
+#include "model/Text.h"
+#include "model/Layer.h"
+#include "control/settings/Settings.h"
+#include "control/settings/ButtonConfig.h"
+#include "control/SearchControl.h"
+#include "control/tools/VerticalToolHandler.h"
+#include "control/tools/EraseHandler.h"
+#include "control/tools/InputHandler.h"
 #include <Rectangle.h>
-#include "../undo/DeleteUndoAction.h"
+#include "undo/DeleteUndoAction.h"
 #include "Cursor.h"
 #include "TextEditor.h"
 #include "widgets/XournalWidget.h"
@@ -36,7 +36,7 @@
 
 //for the save file undo
 //#include "../undo/TextUndoAction.h"
-#include "../undo/TextBoxUndoAction.h"
+#include "undo/TextBoxUndoAction.h"
 
 PageView::PageView(XournalView* xournal, PageRef page)
 {

@@ -1,8 +1,8 @@
 #include "RecognizerUndoAction.h"
 
-#include "../model/Layer.h"
-#include "../model/Stroke.h"
-#include "../gui/Redrawable.h"
+#include "model/Layer.h"
+#include "model/Stroke.h"
+#include "gui/Redrawable.h"
 #include <Stacktrace.h>
 
 RecognizerUndoAction::RecognizerUndoAction(PageRef page, Layer* layer,

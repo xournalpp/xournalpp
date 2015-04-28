@@ -1,6 +1,6 @@
 #include "Inertia.h"
 
-#include "../../model/Point.h"
+#include "model/Point.h"
 
 #include <math.h>
 #include <glib.h>

@@ -12,8 +12,8 @@
 #pragma once
 
 #include "UndoAction.h"
-#include "../model/PageRef.h"
-#include "../model/BackgroundImage.h"
+#include "model/PageRef.h"
+#include "model/BackgroundImage.h"
 
 class PageBackgroundChangedUndoAction : public UndoAction
 {

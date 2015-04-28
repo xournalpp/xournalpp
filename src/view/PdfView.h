@@ -11,9 +11,9 @@
 
 #pragma once
 
-#include "../pdf/popplerdirect/poppler/XojPopplerPage.h"
+#include "pdf/popplerdirect/poppler/XojPopplerPage.h"
 #include <cairo/cairo.h>
-#include "../control/PdfCache.h"
+#include "control/PdfCache.h"
 
 class PdfView
 {

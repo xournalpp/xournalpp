@@ -11,14 +11,14 @@
 
 #pragma once
 
-#include "../../view/ElementContainer.h"
+#include "view/ElementContainer.h"
 #include <XournalType.h>
 #include <vector>
 
 #include "../Tool.h"
-#include "../../model/Font.h"
-#include "../../model/Element.h"
-#include "../../model/PageRef.h"
+#include "model/Font.h"
+#include "model/Element.h"
+#include "model/PageRef.h"
 #include "CursorSelectionType.h"
 
 class UndoRedoHandler;

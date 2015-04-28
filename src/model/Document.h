@@ -22,10 +22,10 @@ using boost::filesystem::path;
 #include "PageRef.h"
 #include "LinkDestination.h"
 
-#include "../pdf/popplerdirect/poppler/XojPopplerDocument.h"
-#include "../pdf/popplerdirect/poppler/XojPopplerPage.h"
-#include "../pdf/popplerdirect/poppler/XojPopplerIter.h"
-#include "../pdf/popplerdirect/poppler/XojPopplerAction.h"
+#include "pdf/popplerdirect/poppler/XojPopplerDocument.h"
+#include "pdf/popplerdirect/poppler/XojPopplerPage.h"
+#include "pdf/popplerdirect/poppler/XojPopplerIter.h"
+#include "pdf/popplerdirect/poppler/XojPopplerAction.h"
 
 #include "DocumentHandler.h"
 

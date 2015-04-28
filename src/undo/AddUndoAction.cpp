@@ -1,8 +1,8 @@
 #include "AddUndoAction.h"
-#include "../model/Layer.h"
-#include "../model/Element.h"
-#include "../model/PageRef.h"
-#include "../gui/Redrawable.h"
+#include "model/Layer.h"
+#include "model/Element.h"
+#include "model/PageRef.h"
+#include "gui/Redrawable.h"
 #include "PageLayerPosEntry.h"
 
 AddUndoAction::AddUndoAction(PageRef page,

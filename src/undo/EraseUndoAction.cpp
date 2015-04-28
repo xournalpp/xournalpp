@@ -1,8 +1,8 @@
 #include "EraseUndoAction.h"
-#include "../gui/Redrawable.h"
-#include "../model/Stroke.h"
-#include "../model/Layer.h"
-#include "../model/eraser/EraseableStroke.h"
+#include "gui/Redrawable.h"
+#include "model/Stroke.h"
+#include "model/Layer.h"
+#include "model/eraser/EraseableStroke.h"
 
 #include "PageLayerPosEntry.h"
 

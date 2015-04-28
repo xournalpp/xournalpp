@@ -14,9 +14,9 @@
 //TODO rewrite with pugixml
 #include <libxml/xmlreader.h>
 #include <glib.h>
-#include "../../model/Font.h"
+#include "model/Font.h"
 #include "../Tool.h"
-#include "../../cfg.h"
+#include "cfg.h"
 
 #include <map>
 #include <boost/filesystem/path.hpp>

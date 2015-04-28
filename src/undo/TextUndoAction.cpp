@@ -1,10 +1,10 @@
 #include "TextUndoAction.h"
 
-#include "../model/PageRef.h"
-#include "../model/Layer.h"
-#include "../model/Text.h"
-#include "../gui/Redrawable.h"
-#include "../gui/TextEditor.h"
+#include "model/PageRef.h"
+#include "model/Layer.h"
+#include "model/Text.h"
+#include "gui/Redrawable.h"
+#include "gui/TextEditor.h"
 
 #include <Rectangle.h>
 

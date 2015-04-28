@@ -1,10 +1,10 @@
 #include "RemoveLayerUndoAction.h"
 
-#include "../model/PageRef.h"
-#include "../model/Layer.h"
-#include "../control/Control.h"
-#include "../model/Document.h"
-#include "../gui/XournalView.h"
+#include "model/PageRef.h"
+#include "model/Layer.h"
+#include "control/Control.h"
+#include "model/Document.h"
+#include "gui/XournalView.h"
 
 RemoveLayerUndoAction::RemoveLayerUndoAction(PageRef page, Layer* layer,
 											 int layerPos)

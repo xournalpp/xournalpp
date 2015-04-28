@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include "UndoRedoHandler.h"
-#include "../control/Control.h"
+#include "control/Control.h"
 
 #include <config.h>
 #include <glib/gi18n-lib.h>

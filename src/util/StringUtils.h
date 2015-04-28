@@ -18,7 +18,7 @@
 #include <boost/locale/format.hpp>
 #include <boost/algorithm/string.hpp>
 
-#include <XournalType.h>
+#include "XournalType.h"
 
 namespace bl = boost::locale;
 namespace ba = boost::algorithm;

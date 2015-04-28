@@ -1,7 +1,7 @@
 #include "CopyUndoAction.h"
-#include "../model/PageRef.h"
-#include "../control/Control.h"
-#include "../gui/Cursor.h"
+#include "model/PageRef.h"
+#include "control/Control.h"
+#include "gui/Cursor.h"
 
 CopyUndoAction::CopyUndoAction(PageRef pageref, int pageNr)
 : UndoAction("CopyUndoAction")

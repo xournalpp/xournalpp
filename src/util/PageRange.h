@@ -11,7 +11,7 @@
 
 #pragma once
 
-#include <XournalType.h>
+#include "XournalType.h"
 #include <vector>
 using std::vector;
 

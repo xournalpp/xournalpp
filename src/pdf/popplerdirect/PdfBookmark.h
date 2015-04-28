@@ -12,7 +12,7 @@
 #pragma once
 
 #include <gtk/gtk.h>
-#include "../../model/Document.h"
+#include "model/Document.h"
 #include "PdfWriter.h"
 
 class PdfBookmarks

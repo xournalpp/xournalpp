@@ -1,8 +1,8 @@
 #include "ColorUndoAction.h"
 
-#include "../model/Element.h"
-#include "../model/PageRef.h"
-#include "../gui/Redrawable.h"
+#include "model/Element.h"
+#include "model/PageRef.h"
+#include "gui/Redrawable.h"
 
 #include <Rectangle.h>
 

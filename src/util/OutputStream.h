@@ -14,8 +14,8 @@
 #include <boost/filesystem/path.hpp>
 using boost::filesystem::path;
 
-#include <StringUtils.h>
-#include <XournalType.h>
+#include "StringUtils.h"
+#include "XournalType.h"
 #include <zlib.h>
 
 class OutputStream

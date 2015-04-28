@@ -1,5 +1,5 @@
 #include "SidebarToolbar.h"
-#include "../../../control/Control.h"
+#include "control/Control.h"
 
 #include "undo/CopyUndoAction.h"
 #include "undo/SwapUndoAction.h"

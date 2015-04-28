@@ -13,16 +13,16 @@
 
 #include "ToolbarDragDropHelper.h"
 #include "ToolItemDragCurrentData.h"
-#include "../../toolbarMenubar/AbstractToolItem.h"
-#include "../../toolbarMenubar/ToolMenuHandler.h"
-#include "../../MainWindow.h"
-#include "../../toolbarMenubar/model/ToolbarData.h"
+#include "gui/toolbarMenubar/AbstractToolItem.h"
+#include "gui/toolbarMenubar/ToolMenuHandler.h"
+#include "gui/MainWindow.h"
+#include "gui/toolbarMenubar/model/ToolbarData.h"
 
-#include "../../../util/Util.h"
-#include "../../ToolitemDragDrop.h"
-#include "../../widgets/SelectColor.h"
-#include "../../toolbarMenubar/ColorToolItem.h"
-#include "../../../control/Control.h"
+#include "Util.h"
+#include "gui/ToolitemDragDrop.h"
+#include "gui/widgets/SelectColor.h"
+#include "gui/toolbarMenubar/ColorToolItem.h"
+#include "control/Control.h"
 
 #include <iostream>
 

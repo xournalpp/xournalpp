@@ -10,7 +10,7 @@
 
 #include "../SaveHandler.h"
 #include "../Control.h"
-#include "../../view/DocumentView.h"
+#include "view/DocumentView.h"
 
 SaveJob::SaveJob(Control* control) :
 BlockingJob(control, _("Save"))

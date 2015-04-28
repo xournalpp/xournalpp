@@ -11,7 +11,7 @@
 
 #pragma once
 
-#include "../../control/Actions.h"
+#include "control/Actions.h"
 #include <XournalType.h>
 #include <gdk/gdk.h>
 

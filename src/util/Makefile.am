@@ -30,6 +30,7 @@ AM_CPPFLAGS = \
 	@PACKAGE_CFLAGS@
 
 libutil_la_CXXFLAGS = \
+	-I$(top_srcdir)/src \
 	-I$(top_srcdir)/src/util \
 	-I$(top_srcdir)/src/pdf/popplerdirect/poppler-0.24.1 \
 	-I$(top_srcdir)/src/pdf/popplerdirect/poppler-0.24.1/poppler \

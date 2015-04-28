@@ -1,8 +1,8 @@
 #include "DeleteUndoAction.h"
-#include "../model/Layer.h"
-#include "../model/Element.h"
-#include "../model/PageRef.h"
-#include "../gui/Redrawable.h"
+#include "model/Layer.h"
+#include "model/Element.h"
+#include "model/PageRef.h"
+#include "gui/Redrawable.h"
 #include "PageLayerPosEntry.h"
 
 DeleteUndoAction::DeleteUndoAction(PageRef page, bool eraser) : UndoAction("DeleteUndoAction")

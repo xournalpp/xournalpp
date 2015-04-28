@@ -15,7 +15,7 @@
 using boost::filesystem::path;
 
 #include <gtk/gtk.h>
-#include <StringUtils.h>
+#include "StringUtils.h"
 
 class Util
 {
@@ -39,7 +39,8 @@ public:
 
 	static void openFileWithDefaultApplicaion(path filename);
 	static void openFileWithFilebrowser(path filename);
+	
+	static path getSettingsSubfolder(path subfolder);
+	static path getSettingsFile(path relativeFileName);
 
-private:
-	static path getSettingsSubfolder(string subfolder);
 };

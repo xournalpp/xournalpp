@@ -13,9 +13,9 @@
 
 #include <gtk/gtk.h>
 #include <Arrayiterator.h>
-#include "../control/ZoomControl.h"
-#include "../model/DocumentListener.h"
-#include "../model/PageRef.h"
+#include "control/ZoomControl.h"
+#include "model/DocumentListener.h"
+#include "model/PageRef.h"
 
 class Control;
 class PageView;

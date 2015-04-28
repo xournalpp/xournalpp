@@ -12,9 +12,9 @@
 #pragma once
 
 #include <gtk/gtk.h>
-#include "../gui/Redrawable.h"
-#include "../model/Text.h"
-#include "../undo/UndoAction.h"
+#include "gui/Redrawable.h"
+#include "model/Text.h"
+#include "undo/UndoAction.h"
 
 class PageView;
 

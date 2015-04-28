@@ -1,5 +1,5 @@
-#include <Util.h>
-#include "../cfg.h"
+#include "Util.h"
+#include "cfg.h"
 
 #include <config.h>
 #include <glib/gi18n-lib.h>
@@ -45,7 +45,7 @@ path Util::getAutosaveFilename()
 	return p;
 }
 
-path Util::getSettingsSubfolder(string subfolder)
+path Util::getSettingsSubfolder(path subfolder)
 {
 	using namespace boost::filesystem;
 	path p(g_get_home_dir());
@@ -58,6 +58,13 @@ path Util::getSettingsSubfolder(string subfolder)
 		permissions(p, owner_all);
 	}
 
+	return p;
+}
+
+path Util::getSettingsFile(path relativeFileName)
+{
+	path p = getSettingsSubfolder(relativeFileName.parent_path());
+	p /= relativeFileName.filename();
 	return p;
 }
 
@@ -172,8 +179,8 @@ void Util::openFileWithDefaultApplicaion(path filename)
 
 	string escaped = filename.string();
 	StringUtils::replace_all_chars(escaped, {
-								   replace_pair('\\', "\\\\"),
-								   replace_pair('\"', "\\\"")
+		replace_pair('\\', "\\\\"),
+		replace_pair('\"', "\\\"")
 	});
 
 	string command = (bl::format(OPEN_PATTERN) % escaped).str();
@@ -197,7 +204,7 @@ void Util::openFileWithFilebrowser(path filename)
 #elif _WIN32 // note the underscore: without it, it's not msdn official!
 #define OPEN_PATTERN "explorer.exe /n,/e,\"{1}\""
 #else // linux, unix, ...
-#define OPEN_PATTERN "nautilus \"file://{1}\" || dolphin \"file://{1}\" || konqueror \"file://{1}\""
+#define OPEN_PATTERN "nautilus \"file://{1}\" || dolphin \"file://{1}\" || konqueror \"file://{1}\" &"
 #endif
 
 	string escaped = filename.string();

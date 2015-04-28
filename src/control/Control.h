@@ -12,21 +12,21 @@
 #pragma once
 
 #include "RecentManager.h"
-#include "../gui/MainWindow.h"
+#include "gui/MainWindow.h"
 #include "Actions.h"
-#include "../undo/UndoRedoHandler.h"
+#include "undo/UndoRedoHandler.h"
 #include "ClipboardHandler.h"
 #include "settings/Settings.h"
-#include "../util/LatexAction.h"
-#include "../gui/dialog/LatexGlade.h"
+#include "LatexAction.h"
+#include "gui/dialog/LatexGlade.h"
 #include "ToolHandler.h"
-#include "../model/Document.h"
+#include "model/Document.h"
 #include "ZoomControl.h"
 #include "jobs/XournalScheduler.h"
 #include <XournalType.h>
 
-#include "../gui/sidebar/Sidebar.h"
-#include "../gui/SearchBar.h"
+#include "gui/sidebar/Sidebar.h"
+#include "gui/SearchBar.h"
 #include "jobs/ProgressListener.h"
 #include "ScrollHandler.h"
 
@@ -61,7 +61,7 @@ public:
 	void exportAsPdf();
 	void exportAs();
 	bool save(bool synchron = false);
-	void saveAs();
+	bool saveAs();
 	void quit();
 	bool close(bool destroy = false);
 

@@ -12,7 +12,7 @@
 #pragma once
 
 #include <StringUtils.h>
-#include "../model/PageRef.h"
+#include "model/PageRef.h"
 
 #include <config.h>
 #include <glib/gi18n-lib.h>

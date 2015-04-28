@@ -1,7 +1,7 @@
 #include <boost/algorithm/string/predicate.hpp>
 
 #include "PdfExportJob.h"
-#include "../../pdf/popplerdirect/PdfExport.h"
+#include "pdf/popplerdirect/PdfExport.h"
 #include "../Control.h"
 #include "SynchronizedProgressListener.h"
 
