@@ -184,8 +184,8 @@ void Control::renameLastAutosaveFile()
 	if (!this->lastAutosaveFilename.empty())
 	{
 		path filename = this->lastAutosaveFilename;
-		path renamed = Util::getAutosaveFilename().parent_path();
-		renamed += filename.filename();
+		path renamed = Util::getAutosaveFilename();
+		renamed.replace_extension(filename.filename());
 		
 		if (bf::exists(filename))
 		{
@@ -373,8 +373,7 @@ void Control::updatePageNumbers(int page, int pdfPage)
 	fireEnableAction(ACTION_GOTO_NEXT_ANNOTATED_PAGE, current < count - 1);
 }
 
-void Control::actionPerformed(ActionType type, ActionGroup group,
-							  GdkEvent* event, GtkMenuItem* menuitem,
+void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* event, GtkMenuItem* menuitem,
 							  GtkToolButton* toolbutton, bool enabled)
 {
 	XOJ_CHECK_TYPE(Control);
@@ -883,9 +882,7 @@ void Control::help()
 {
 	GError* error = NULL;
 
-	gtk_show_uri(gtk_window_get_screen(GTK_WINDOW(this->win->getWindow())),
-				 XOJ_HELP, gtk_get_current_event_time(),
-				 &error);
+	gtk_show_uri(gtk_window_get_screen(GTK_WINDOW(this->win->getWindow())), XOJ_HELP, gtk_get_current_event_time(), &error);
 	if (error)
 	{
 		GtkWidget* dialog = gtk_message_dialog_new((GtkWindow*) getWindow(), GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR,
@@ -941,7 +938,7 @@ void Control::invokeLater(ActionType type)
 {
 	XOJ_CHECK_TYPE(Control);
 
-	g_idle_add((GSourceFunc) & invokeCallback, new CallbackData(this, type));
+	g_idle_add((GSourceFunc) &invokeCallback, new CallbackData(this, type));
 }
 
 /**
@@ -1199,10 +1196,8 @@ void Control::enableFullscreen(bool enabled, bool presentation)
 				GtkWidget* w = win->get(s.c_str());
 				if (w == NULL)
 				{
-					g_warning(
-						"Fullscreen: Try to hide \"%s\", but coulden't find it. Wrong entry in ~/"
-						CONFIG_DIR "/" SETTINGS_XML_FILE "?",
-						s.c_str());
+					g_warning("Fullscreen: Try to hide \"%s\", but coulden't find it. Wrong entry in ~/"
+							  CONFIG_DIR "/" SETTINGS_XML_FILE "?", s.c_str());
 				}
 				else
 				{
@@ -2854,8 +2849,7 @@ bool Control::close(bool destroy)
 
 	if (undoRedo->isChanged())
 	{
-		GtkWidget* dialog = gtk_message_dialog_new((GtkWindow*) *getWindow(),
-												   GTK_DIALOG_DESTROY_WITH_PARENT,
+		GtkWidget* dialog = gtk_message_dialog_new((GtkWindow*) *getWindow(), GTK_DIALOG_DESTROY_WITH_PARENT,
 												   GTK_MESSAGE_WARNING, GTK_BUTTONS_NONE,
 												   _("This document is not saved yet."));
 
@@ -2885,12 +2879,14 @@ bool Control::close(bool destroy)
 		{
 			return false;
 		}
-		
+	}
+	
+	if (!doc->getFilename().empty())
+	{
 		namespace bf = boost::filesystem;
 		if (!bf::exists(this->doc->getFilename()))
 		{
-			GtkWidget* dialog = gtk_message_dialog_new((GtkWindow*) *getWindow(),
-													   GTK_DIALOG_DESTROY_WITH_PARENT,
+			GtkWidget* dialog = gtk_message_dialog_new((GtkWindow*) *getWindow(), GTK_DIALOG_DESTROY_WITH_PARENT,
 													   GTK_MESSAGE_WARNING, GTK_BUTTONS_NONE,
 													   _("Document file was removed."));
 
@@ -2900,7 +2896,7 @@ bool Control::close(bool destroy)
 			gtk_window_set_transient_for(GTK_WINDOW(dialog), GTK_WINDOW(this->getWindow()->getWindow()));
 			int resDocRemoved = gtk_dialog_run(GTK_DIALOG(dialog));
 			gtk_widget_destroy(dialog);
-			
+
 			if (resDocRemoved == 1)
 			{
 				if (this->saveAs())

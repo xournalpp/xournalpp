@@ -6,8 +6,10 @@
 #include <glib/gi18n-lib.h>
 #include <boost/filesystem.hpp>
 #include <iostream>
-
 using namespace std;
+
+#include <sys/types.h>
+#include <unistd.h>
 
 GdkColor Util::intToGdkColor(int c)
 {
@@ -34,14 +36,14 @@ void Util::cairo_set_source_rgbi(cairo_t* cr, int c)
 
 int Util::getPid()
 {
-	pid_t pid = getpid();
+	pid_t pid = ::getpid();
 	return (int) pid;
 }
 
 path Util::getAutosaveFilename()
 {
 	path p(getConfigSubfolder("autosave"));
-	p += CONCAT(getPid(), ".xoj");
+	p /= CONCAT(std::to_string(getPid()), ".xoj");
 	return p;
 }
 
@@ -147,8 +149,7 @@ GdkPixbuf* Util::newPixbufFromWidget(GtkWidget* widget, int iconSize)
 	/* Create a pixmap */
 	visual = gtk_widget_get_visual(window);
 	pixmap = gdk_pixmap_new(NULL, icon_width, icon_height, visual->depth);
-	gdk_drawable_set_colormap(GDK_DRAWABLE(pixmap),
-							  gtk_widget_get_colormap(window));
+	gdk_drawable_set_colormap(GDK_DRAWABLE(pixmap), gtk_widget_get_colormap(window));
 
 	/* Draw the window */
 	gtk_widget_ensure_style(window);
@@ -216,8 +217,8 @@ void Util::openFileWithFilebrowser(path filename)
 	if (system(command.c_str()) != 0)
 	{
 		GtkWidget* dlgError = gtk_message_dialog_new(NULL, GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, "%s",
-													 _("File could not be opened. You have to open it manual\n:URL: %s"), filename.c_str(),
-													 filename.c_str());
+													 _("File could not be opened. You have to open it manual\n:URL: %s"),
+													 filename.c_str(), filename.c_str());
 		gtk_dialog_run(GTK_DIALOG(dlgError));
 	}
 }

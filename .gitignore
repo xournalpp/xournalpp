@@ -17,7 +17,7 @@ configure
 po/POTFILES
 stamp-h1
 
-#binaries
+# Binaries
 src/xournalpp
 src/xoj-preview-extractor/xournal-thumbnailer
 src/mathtex/mathtex-xournalpp.cgi
@@ -25,3 +25,6 @@ src/pdf/popplerdirect/libpoppler-glib.a
 src/pdf/popplerdirect/libpoppler.a
 src/pdf/popplerdirect/poppler-0.24.1_build/
 src/pdf/popplerdirect/poppler-config.h
+
+# NetBeans
+nbproject
