@@ -4,6 +4,7 @@
 *.o
 *.lo
 *.la
+*~
 Makefile
 Makefile.in
 libtool
