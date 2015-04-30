@@ -27,4 +27,3 @@ GString* ObjectEncoding::getData()
 	this->data = NULL;
 	return str;
 }
-

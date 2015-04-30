@@ -1,13 +1,14 @@
 #include "XojPopplerDocument.h"
+
+#include "pdf/popplerdirect/poppler-0.24.1/poppler/PDFDoc.h"
+#include "pdf/popplerdirect/poppler-0.24.1/poppler/GlobalParams.h"
+#include "pdf/popplerdirect/poppler-0.24.1/poppler/ErrorCodes.h"
+#include "pdf/popplerdirect/poppler-0.24.1/poppler/Outline.h"
 #include "XojPopplerIter.h"
 
-#include <glib.h>
-#include "../poppler-0.24.1/poppler/PDFDoc.h"
-#include "../poppler-0.24.1/poppler/GlobalParams.h"
-#include "../poppler-0.24.1/poppler/ErrorCodes.h"
-#include "../poppler-0.24.1/poppler/Outline.h"
-
 #include <config.h>
+
+#include <glib.h>
 #include <glib/gi18n-lib.h>
 
 class _IntPopplerDocument
@@ -87,36 +88,36 @@ private:
 	{
 		XOJ_CHECK_TYPE(_IntPopplerDocument);
 
-		//		if (!this->layers) {
-		//			return;
-		//		}
-		//
-		////		g_list_foreach(this->layers, (GFunc) layer_free, NULL);
-		////		g_list_free(this->layers);
-		//
-		//		g_list_foreach(this->layers_rbgroups, (GFunc) g_list_free, NULL);
-		//		g_list_free(this->layers_rbgroups);
-		//
-		////		this->layers = NULL;
-		//		this->layers_rbgroups = NULL;
+//		if (!this->layers) {
+//			return;
+//		}
+//
+////		g_list_foreach(this->layers, (GFunc) layer_free, NULL);
+////		g_list_free(this->layers);
+//
+//		g_list_foreach(this->layers_rbgroups, (GFunc) g_list_free, NULL);
+//		g_list_free(this->layers_rbgroups);
+//
+////		this->layers = NULL;
+//		this->layers_rbgroups = NULL;
 	}
 
-	//	static void layer_free(Layer *layer) {
-	//		if (!layer) {
-	//			return;
-	//		}
-	//
-	//		if (layer->kids) {
-	//			g_list_foreach(layer->kids, (GFunc) layer_free, NULL);
-	//			g_list_free(layer->kids);
-	//		}
-	//
-	//		if (layer->label) {
-	//			g_free(layer->label);
-	//		}
-	//
-	//		g_slice_free (Layer, layer);
-	//	}
+//	static void layer_free(Layer *layer) {
+//		if (!layer) {
+//			return;
+//		}
+//
+//		if (layer->kids) {
+//			g_list_foreach(layer->kids, (GFunc) layer_free, NULL);
+//			g_list_free(layer->kids);
+//		}
+//
+//		if (layer->label) {
+//			g_free(layer->label);
+//		}
+//
+//		g_slice_free (Layer, layer);
+//	}
 
 public:
 	XOJ_TYPE_ATTRIB;
@@ -222,8 +223,7 @@ XojPopplerPage* XojPopplerDocument::getPage(int page)
 
 	if (page >= this->getPageCount() || page < 0)
 	{
-		g_critical("Document::getPdfPage(%i) out of range! (count=%i)", page,
-				this->getPageCount());
+		g_critical("Document::getPdfPage(%i) out of range! (count=%i)", page, this->getPageCount());
 		return NULL;
 	}
 
@@ -271,8 +271,7 @@ void XojPopplerDocument::load(char* data, int length)
 	this->data = new _IntPopplerDocument(newDoc);
 }
 
-bool XojPopplerDocument::load(path filename, string password,
-							  GError** error)
+bool XojPopplerDocument::load(path filename, string password, GError** error)
 {
 	XOJ_CHECK_TYPE(XojPopplerDocument);
 
@@ -304,8 +303,7 @@ bool XojPopplerDocument::load(path filename, string password,
 			// only way to get an errOpenFile error is if newDoc was created using
 			// a filename and thus fopen was called, which right now is true.
 			fopen_errno = newDoc->getFopenErrno();
-			g_set_error(error, G_FILE_ERROR, g_file_error_from_errno(fopen_errno), "%s",
-						g_strerror(fopen_errno));
+			g_set_error(error, G_FILE_ERROR, g_file_error_from_errno(fopen_errno), "%s", g_strerror(fopen_errno));
 			break;
 		case errBadCatalog:
 			g_set_error(error, 0, 0, "Failed to read the document catalog");
@@ -360,7 +358,6 @@ bool XojPopplerDocument::save(path filename, GError** error)
 		return false;
 	}
 
-
 	// TODO !!!!!!
 	return false;
 
@@ -383,4 +380,3 @@ bool XojPopplerDocument::save(path filename, GError** error)
 	//
 	//	return err_code == errNone;
 }
-

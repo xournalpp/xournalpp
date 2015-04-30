@@ -12,6 +12,7 @@
 #pragma once
 
 #include "BlockingJob.h"
+
 #include <StringUtils.h>
 #include <XournalType.h>
 
@@ -36,5 +37,4 @@ private:
 	XOJ_TYPE_ATTRIB;
 
 	string lastError;
-
 };

@@ -14,16 +14,14 @@
 #include "UndoAction.h"
 
 class Layer;
-class Text;
 class Redrawable;
+class Text;
 class TextEditor;
 
 class TextUndoAction : public UndoAction
 {
 public:
-	TextUndoAction(PageRef page, Layer* layer,
-				   Text* text, string lastText,
-				   TextEditor* textEditor);
+	TextUndoAction(PageRef page, Layer* layer, Text* text, string lastText, TextEditor* textEditor);
 	virtual ~TextUndoAction();
 
 public:

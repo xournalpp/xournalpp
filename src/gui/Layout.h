@@ -11,9 +11,11 @@
 
 #pragma once
 
-#include <gtk/gtk.h>
-#include <XournalType.h>
 #include "widgets/Scrollbar.h" // because of extends ScrollbarListener
+
+#include <XournalType.h>
+
+#include <gtk/gtk.h>
 
 class PageView;
 class XournalView;

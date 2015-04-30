@@ -1,23 +1,23 @@
 #include "EraseHandler.h"
+
+#include "control/jobs/RenderJob.h"
+#include "control/ToolHandler.h"
+#include "gui/PageView.h"
+#include "gui/XournalView.h"
+#include "model/Document.h"
 #include "model/eraser/EraseableStroke.h"
 #include "model/Layer.h"
 #include "model/Stroke.h"
-#include "model/Document.h"
-#include <Range.h>
-#include <Rectangle.h>
-#include "undo/UndoRedoHandler.h"
 #include "undo/EraseUndoAction.h"
 #include "undo/DeleteUndoAction.h"
-#include "gui/PageView.h"
-#include "../ToolHandler.h"
-#include "control/jobs/RenderJob.h"
+#include "undo/UndoRedoHandler.h"
 
-#include "gui/XournalView.h"
+#include <Range.h>
+#include <Rectangle.h>
 
 #include <math.h>
 
-EraseHandler::EraseHandler(UndoRedoHandler* undo, Document* doc, PageRef page,
-						   ToolHandler* handler, Redrawable* view)
+EraseHandler::EraseHandler(UndoRedoHandler* undo, Document* doc, PageRef page, ToolHandler* handler, Redrawable* view)
 {
 	XOJ_INIT_TYPE(EraseHandler);
 
@@ -77,8 +77,7 @@ void EraseHandler::erase(double x, double y)
 	delete range;
 }
 
-void EraseHandler::eraseStroke(Layer* l, Stroke* s, double x, double y,
-							   Range* range)
+void EraseHandler::eraseStroke(Layer* l, Stroke* s, double x, double y, Range* range)
 {
 	XOJ_CHECK_TYPE(EraseHandler);
 
@@ -99,15 +98,13 @@ void EraseHandler::eraseStroke(Layer* l, Stroke* s, double x, double y,
 			return;
 		}
 		range->addPoint(s->getX(), s->getY());
-		range->addPoint(s->getX() + s->getElementWidth(),
-						s->getY() + s->getElementHeight());
+		range->addPoint(s->getX() + s->getElementWidth(), s->getY() + s->getElementHeight());
 
 		//removed the if statement - this prevents us from putting multiple elements into a
 		//stroke erase operation, but it also prevents the crashing and layer issues!
 		if (!this->eraseDeleteUndoAction)
 		{
-			this->eraseDeleteUndoAction = new DeleteUndoAction(this->page,
-															true);
+			this->eraseDeleteUndoAction = new DeleteUndoAction(this->page, true);
 
 			this->undo->addUndoAction(this->eraseDeleteUndoAction);
 		}

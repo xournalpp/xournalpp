@@ -12,6 +12,7 @@
 #pragma once
 
 #include "StringUtils.h"
+
 #include <boost/iostreams/filter/gzip.hpp>
 namespace bio = boost::iostreams;
 

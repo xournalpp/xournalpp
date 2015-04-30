@@ -12,6 +12,7 @@
 #pragma once
 
 #include "Job.h"
+
 #include <StringUtils.h>
 #include <XournalType.h>
 

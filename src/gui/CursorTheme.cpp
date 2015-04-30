@@ -5,7 +5,6 @@
 CursorTheme::CursorTheme()
 {
 	XOJ_INIT_TYPE(CursorTheme);
-
 }
 
 CursorTheme::~CursorTheme()
@@ -36,8 +35,7 @@ bool CursorTheme::loadTheme(String name)
 		this->author = "Unknown";
 	}
 
-	gchar* themeName = g_key_file_get_locale_string(config, "general", "name", NULL,
-													NULL);
+	gchar* themeName = g_key_file_get_locale_string(config, "general", "name", NULL, NULL);
 	if (themeName != NULL)
 	{
 		this->name = themeName;
@@ -48,8 +46,7 @@ bool CursorTheme::loadTheme(String name)
 		this->name = name;
 	}
 
-	gchar* description = g_key_file_get_locale_string(config, "general",
-													"description", NULL, NULL);
+	gchar* description = g_key_file_get_locale_string(config, "general", "description", NULL, NULL);
 	if (description != NULL)
 	{
 		this->description = description;
@@ -59,7 +56,6 @@ bool CursorTheme::loadTheme(String name)
 	{
 		this->description = "Keine";
 	}
-
 
 	g_key_file_free(config);
 	return true;

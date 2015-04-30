@@ -1,9 +1,10 @@
 #include "Layout.h"
-#include "widgets/Scrollbar.h"
-#include "XournalView.h"
+
 #include "control/Control.h"
 #include "pageposition/PagePositionHandler.h"
+#include "widgets/Scrollbar.h"
 #include "widgets/XournalWidget.h"
+#include "XournalView.h"
 
 Layout::Layout(XournalView* view)
 {
@@ -178,8 +179,8 @@ void Layout::layoutPages()
 	int len = this->view->viewPagesLen;
 
 	Settings* settings = this->view->getControl()->getSettings();
-	bool verticalSpace = settings->getAddVerticalSpace(),
-			horizontalSpace = settings->getAddHorizontalSpace();
+	bool verticalSpace = settings->getAddVerticalSpace();
+	bool horizontalSpace = settings->getAddHorizontalSpace();
 	bool dualPage = settings->isShowTwoPages();
 
 	int size[2] = { 0, 0 };
@@ -445,8 +446,7 @@ double Layout::getVisiblePageTop(int page)
 		return 0;
 	}
 
-	double y = this->view->viewPages[page]->getY() +
-			this->scrollVertical->getValue();
+	double y = this->view->viewPages[page]->getY() + this->scrollVertical->getValue();
 
 	return y / this->view->getZoom();
 }
@@ -482,5 +482,3 @@ bool Layout::scrollEvent(GdkEventScroll* event)
 
 	return false;
 }
-
-

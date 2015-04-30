@@ -1,24 +1,25 @@
 #include "XournalView.h"
-#include "control/Control.h"
-#include <math.h>
-#include "Shadow.h"
-#include <Util.h>
 
-#include "model/Document.h"
-#include "model/Stroke.h"
-#include "PageView.h"
+#include "control/Control.h"
 #include "control/PdfCache.h"
 #include "control/settings/MetadataManager.h"
-#include <Rectangle.h>
-#include "widgets/XournalWidget.h"
-#include "pageposition/PagePositionHandler.h"
 #include "Cursor.h"
-#include "undo/DeleteUndoAction.h"
 #include "Layout.h"
-
+#include "model/Document.h"
+#include "model/Stroke.h"
+#include "pageposition/PagePositionHandler.h"
+#include "PageView.h"
 #include "RepaintHandler.h"
+#include "Shadow.h"
+#include "undo/DeleteUndoAction.h"
+#include "widgets/XournalWidget.h"
+
+#include <Rectangle.h>
+#include <Util.h>
 
 #include <gdk/gdkkeysyms.h>
+
+#include <math.h>
 
 XournalView::XournalView(GtkWidget* parent, Control* control)
 {
@@ -52,8 +53,7 @@ XournalView::XournalView(GtkWidget* parent, Control* control)
 
 	gtk_widget_grab_focus(this->widget);
 
-	this->cleanupTimeout = g_timeout_add_seconds(5, (GSourceFunc) clearMemoryTimer,
-												 this);
+	this->cleanupTimeout = g_timeout_add_seconds(5, (GSourceFunc) clearMemoryTimer, this);
 }
 
 XournalView::~XournalView()
@@ -302,8 +302,7 @@ void XournalView::requestFocus()
 	gtk_widget_grab_focus(this->widget);
 }
 
-bool XournalView::searchTextOnPage(string text, int p, int* occures,
-								   double* top)
+bool XournalView::searchTextOnPage(string text, int p, int* occures, double* top)
 {
 	XOJ_CHECK_TYPE(XournalView);
 
@@ -394,10 +393,8 @@ void XournalView::scrollTo(int pageNo, double yDocument)
 	PageView* v = this->viewPages[pageNo];
 
 	Layout* layout = gtk_xournal_get_layout(this->widget);
-	layout->ensureRectIsVisible(v->layout.getLayoutAbsoluteX(),
-								v->layout.getLayoutAbsoluteY() + yDocument,
-								v->getDisplayWidth(),
-								v->getDisplayHeight());
+	layout->ensureRectIsVisible(v->layout.getLayoutAbsoluteX(), v->layout.getLayoutAbsoluteY() + yDocument,
+								v->getDisplayWidth(), v->getDisplayHeight());
 }
 
 void XournalView::endTextAllPages(PageView* except)
@@ -671,8 +668,7 @@ void XournalView::deleteSelection(EditSelection* sel)
 	if (sel)
 	{
 		PageView* view = sel->getView();
-		DeleteUndoAction* undo = new DeleteUndoAction(sel->getSourcePage(),
-													  false);
+		DeleteUndoAction* undo = new DeleteUndoAction(sel->getSourcePage(), false);
 		sel->fillUndoItem(undo);
 		control->getUndoRedoHandler()->addUndoAction(undo);
 
@@ -918,4 +914,3 @@ EditSelection* XournalView::getSelection()
 
 	return GTK_XOURNAL(this->widget)->selection;
 }
-

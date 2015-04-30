@@ -11,12 +11,14 @@
 
 #pragma once
 
+#include "ColorToolItem.h"
+#include "control/Actions.h"
+#include "MenuItem.h"
+
+#include <StringUtils.h>
+
 #include <gtk/gtk.h>
 
-#include "control/Actions.h"
-#include "ColorToolItem.h"
-#include "MenuItem.h"
-#include <StringUtils.h>
 #include <vector>
 
 class AbstractToolItem;
@@ -37,16 +39,14 @@ class SpinPageAdapter;
 class ToolMenuHandler
 {
 public:
-	ToolMenuHandler(ActionHandler* listener, ZoomControl* zoom, GladeGui* gui,
-					ToolHandler* toolHandler, GtkWindow* parent);
+	ToolMenuHandler(ActionHandler* listener, ZoomControl* zoom, GladeGui* gui, ToolHandler* toolHandler, GtkWindow* parent);
 	virtual ~ToolMenuHandler();
 
 public:
 	void freeDynamicToolbarItems();
 	void unloadToolbar(GtkWidget* tBunload);
 
-	void load(ToolbarData* d, GtkWidget* toolbar, const char* toolbarName,
-			  bool horizontal);
+	void load(ToolbarData* d, GtkWidget* toolbar, const char* toolbarName, bool horizontal);
 
 	void registerMenupoint(GtkWidget* widget, ActionType type);
 	void registerMenupoint(GtkWidget* widget, ActionType type, ActionGroup group);

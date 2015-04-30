@@ -12,11 +12,12 @@
 #pragma once
 
 #include "UndoAction.h"
+
 #include <XournalType.h>
 
-class Redrawable;
 class Element;
 class Layer;
+class Redrawable;
 
 class AddUndoAction : public UndoAction
 {

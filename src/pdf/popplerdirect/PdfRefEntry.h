@@ -23,8 +23,7 @@ enum PdfRefEntryType
 class PdfRefEntry
 {
 public:
-	PdfRefEntry(PdfRefEntryType type, int objectId, Object* object, int refSourceId,
-				Ref ref, XojPopplerDocument doc);
+	PdfRefEntry(PdfRefEntryType type, int objectId, Object* object, int refSourceId, Ref ref, XojPopplerDocument doc);
 	virtual ~PdfRefEntry();
 
 public:

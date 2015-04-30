@@ -11,11 +11,12 @@
 
 #pragma once
 
-#include <gtk/gtk.h>
-#include <XournalType.h>
-
 #include "model/DocumentChangeType.h"
 #include "model/DocumentListener.h"
+
+#include <XournalType.h>
+
+#include <gtk/gtk.h>
 
 class Control;
 
@@ -33,7 +34,6 @@ public:
 	virtual void pageInserted(int page);
 	virtual void pageDeleted(int page);
 	virtual void pageSelected(int page);
-
 
 public:
 

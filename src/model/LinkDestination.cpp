@@ -169,4 +169,3 @@ string LinkDestination::getName()
 
 	return this->name;
 }
-

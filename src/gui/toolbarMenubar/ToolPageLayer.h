@@ -12,6 +12,7 @@
 #pragma once
 
 #include "AbstractToolItem.h"
+
 #include <XournalType.h>
 
 class GladeGui;
@@ -19,8 +20,7 @@ class GladeGui;
 class ToolPageLayer : public AbstractToolItem
 {
 public:
-	ToolPageLayer(GladeGui* gui, ActionHandler* handler, string id,
-				  ActionType type);
+	ToolPageLayer(GladeGui* gui, ActionHandler* handler, string id, ActionType type);
 	virtual ~ToolPageLayer();
 
 public:

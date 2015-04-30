@@ -11,8 +11,8 @@
 
 #pragma once
 
-#include <gtk/gtk.h>
 #include <glade/glade-xml.h>
+#include <gtk/gtk.h>
 
 #include <XournalType.h>
 
@@ -21,8 +21,7 @@ class GladeSearchpath;
 class GladeGui
 {
 public:
-	GladeGui(GladeSearchpath* gladeSearchPath, const char* glade,
-			const char* mainWnd);
+	GladeGui(GladeSearchpath* gladeSearchPath, const char* glade, const char* mainWnd);
 	virtual ~GladeGui();
 
 	virtual void show(GtkWindow* parent) = 0;

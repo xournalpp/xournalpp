@@ -57,4 +57,3 @@ int ToolbarItem::getId()
 
 	return this->id;
 }
-

@@ -1,15 +1,14 @@
 #include "ToolDrawCombocontrol.h"
-#include "../widgets/gtkmenutooltogglebutton.h"
 
+#include "gui/widgets/gtkmenutooltogglebutton.h"
 #include "ToolMenuHandler.h"
 
 #include <config.h>
+
 #include <glib/gi18n-lib.h>
 
-ToolDrawCombocontrol::ToolDrawCombocontrol(ToolMenuHandler* th,
-										   ActionHandler* handler, GladeGui* gui, string id) :
-ToolButton(handler, gui, id, ACTION_TOOL_DRAW_RECT, GROUP_RULER, false,
-		   "rect-draw.png", _("Draw Rectangle"))
+ToolDrawCombocontrol::ToolDrawCombocontrol(ToolMenuHandler* th, ActionHandler* handler, GladeGui* gui, string id) :
+	ToolButton(handler, gui, id, ACTION_TOOL_DRAW_RECT, GROUP_RULER, false, "rect-draw.png", _("Draw Rectangle"))
 {
 
 	XOJ_INIT_TYPE(ToolDrawCombocontrol);
@@ -35,40 +34,35 @@ ToolButton(handler, gui, id, ACTION_TOOL_DRAW_RECT, GROUP_RULER, false,
 	gtk_container_add(GTK_CONTAINER(popup), menuItem);
 	th->registerMenupoint(menuItem, ACTION_TOOL_DRAW_RECT, GROUP_RULER);
 	gtk_image_menu_item_set_always_show_image(GTK_IMAGE_MENU_ITEM(menuItem), true);
-	gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuItem),
-								  gui->loadIcon("rect-draw.png"));
+	gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuItem), gui->loadIcon("rect-draw.png"));
 	gtk_widget_show_all(menuItem);
 
 	menuItem = gtk_image_menu_item_new_with_label(_("Draw Circle"));
 	gtk_container_add(GTK_CONTAINER(popup), menuItem);
 	th->registerMenupoint(menuItem, ACTION_TOOL_DRAW_CIRCLE, GROUP_RULER);
 	gtk_image_menu_item_set_always_show_image(GTK_IMAGE_MENU_ITEM(menuItem), true);
-	gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuItem),
-								  gui->loadIcon("circle-draw.png"));
+	gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuItem), gui->loadIcon("circle-draw.png"));
 	gtk_widget_show_all(menuItem);
 
 	menuItem = gtk_image_menu_item_new_with_label(_("Draw Arrow"));
 	gtk_container_add(GTK_CONTAINER(popup), menuItem);
 	th->registerMenupoint(menuItem, ACTION_TOOL_DRAW_ARROW, GROUP_RULER);
 	gtk_image_menu_item_set_always_show_image(GTK_IMAGE_MENU_ITEM(menuItem), true);
-	gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuItem),
-								  gui->loadIcon("arrow-draw.png"));
+	gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuItem), gui->loadIcon("arrow-draw.png"));
 	gtk_widget_show_all(menuItem);
 
 	menuItem = gtk_image_menu_item_new_with_label(_("Draw Line"));
 	gtk_container_add(GTK_CONTAINER(popup), menuItem);
 	th->registerMenupoint(menuItem, ACTION_RULER, GROUP_RULER);
 	gtk_image_menu_item_set_always_show_image(GTK_IMAGE_MENU_ITEM(menuItem), true);
-	gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuItem),
-								  gui->loadIcon("ruler.png"));
+	gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuItem), gui->loadIcon("ruler.png"));
 	gtk_widget_show_all(menuItem);
 
 	menuItem = gtk_image_menu_item_new_with_label(_("Recognize Lines"));
 	gtk_container_add(GTK_CONTAINER(popup), menuItem);
 	th->registerMenupoint(menuItem, ACTION_SHAPE_RECOGNIZER, GROUP_SHAPE_RECOGNIZER);
 	gtk_image_menu_item_set_always_show_image(GTK_IMAGE_MENU_ITEM(menuItem), true);
-	gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuItem),
-								  gui->loadIcon("shape_recognizer.png"));
+	gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuItem), gui->loadIcon("shape_recognizer.png"));
 	gtk_widget_show_all(menuItem);
 
 
@@ -102,40 +96,35 @@ void ToolDrawCombocontrol::selected(ActionGroup group, ActionType action)
 
 		const char* description = NULL;
 
-		if (action == ACTION_TOOL_DRAW_RECT &&
-			this->action != ACTION_TOOL_DRAW_RECT)
+		if (action == ACTION_TOOL_DRAW_RECT && this->action != ACTION_TOOL_DRAW_RECT)
 		{
 			this->action = ACTION_TOOL_DRAW_RECT;
 			gtk_image_set_from_pixbuf(GTK_IMAGE(iconWidget), this->iconDrawRect);
 
 			description = _("Draw Rectangle");
 		}
-		else if (action == ACTION_TOOL_DRAW_CIRCLE &&
-				 this->action != ACTION_TOOL_DRAW_CIRCLE)
+		else if (action == ACTION_TOOL_DRAW_CIRCLE && this->action != ACTION_TOOL_DRAW_CIRCLE)
 		{
 			this->action = ACTION_TOOL_DRAW_CIRCLE;
 			gtk_image_set_from_pixbuf(GTK_IMAGE(iconWidget), this->iconDrawCirc);
 
 			description = _("Draw Circle");
 		}
-		else if (action == ACTION_TOOL_DRAW_ARROW &&
-				 this->action != ACTION_TOOL_DRAW_ARROW)
+		else if (action == ACTION_TOOL_DRAW_ARROW && this->action != ACTION_TOOL_DRAW_ARROW)
 		{
 			this->action = ACTION_TOOL_DRAW_ARROW;
 			gtk_image_set_from_pixbuf(GTK_IMAGE(iconWidget), this->iconDrawArr);
 
 			description = _("Draw Arrow");
 		}
-		else if (action == ACTION_RULER &&
-				 this->action != ACTION_RULER)
+		else if (action == ACTION_RULER && this->action != ACTION_RULER)
 		{
 			this->action = ACTION_RULER;
 			gtk_image_set_from_pixbuf(GTK_IMAGE(iconWidget), this->iconDrawLine);
 
 			description = _("Draw Line");
 		}
-		else if (action == ACTION_SHAPE_RECOGNIZER &&
-				 this->action != ACTION_SHAPE_RECOGNIZER)
+		else if (action == ACTION_SHAPE_RECOGNIZER && this->action != ACTION_SHAPE_RECOGNIZER)
 		{
 			this->action = ACTION_SHAPE_RECOGNIZER;
 			gtk_image_set_from_pixbuf(GTK_IMAGE(iconWidget), this->iconAutoDrawLine);
@@ -145,12 +134,10 @@ void ToolDrawCombocontrol::selected(ActionGroup group, ActionType action)
 		gtk_tool_item_set_tooltip_text(GTK_TOOL_ITEM(item), description);
 
 
-		if (gtk_toggle_tool_button_get_active(GTK_TOGGLE_TOOL_BUTTON(this->item)) !=
-			(this->action == action))
+		if (gtk_toggle_tool_button_get_active(GTK_TOGGLE_TOOL_BUTTON(this->item)) != (this->action == action))
 		{
 			this->toolToggleButtonActive = (this->action == action);
-			gtk_toggle_tool_button_set_active(GTK_TOGGLE_TOOL_BUTTON(this->item),
-											  this->toolToggleButtonActive);
+			gtk_toggle_tool_button_set_active(GTK_TOGGLE_TOOL_BUTTON(this->item), this->toolToggleButtonActive);
 		}
 	}
 }
@@ -166,7 +153,6 @@ GtkToolItem* ToolDrawCombocontrol::newItem()
 
 	it = gtk_menu_tool_toggle_button_new(iconWidget, "test0");
 	gtk_tool_button_set_label_widget(GTK_TOOL_BUTTON(it), labelWidget);
-	gtk_menu_tool_toggle_button_set_menu(GTK_MENU_TOOL_TOGGLE_BUTTON(it),
-										 popupMenu);
+	gtk_menu_tool_toggle_button_set_menu(GTK_MENU_TOOL_TOGGLE_BUTTON(it), popupMenu);
 	return it;
 }

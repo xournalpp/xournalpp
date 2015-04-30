@@ -12,8 +12,10 @@
 #pragma once
 
 #include "UndoAction.h"
-#include <glib.h>
+
 #include <XournalType.h>
+
+#include <glib.h>
 
 class Layer;
 class Redrawable;

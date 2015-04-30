@@ -12,10 +12,11 @@
 #pragma once
 
 #include "UndoAction.h"
+
 #include <XournalType.h>
 
-class Redrawable;
 class Layer;
+class Redrawable;
 class Stroke;
 
 class EraseUndoAction : public UndoAction

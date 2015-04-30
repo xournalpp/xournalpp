@@ -51,8 +51,7 @@ protected:
 	void fireZoomChanged(double lastZoom);
 	void fireZoomRangeValueChanged();
 
-	static bool onScrolledwindowMainScrollEvent(GtkWidget* widget,
-												GdkEventScroll* event, ZoomControl* zoom);
+	static bool onScrolledwindowMainScrollEvent(GtkWidget* widget, GdkEventScroll* event, ZoomControl* zoom);
 
 private:
 	XOJ_TYPE_ATTRIB;

@@ -11,15 +11,16 @@
 
 #pragma once
 
-#include "view/ElementContainer.h"
-#include <XournalType.h>
-#include <vector>
-
-#include "../Tool.h"
-#include "model/Font.h"
-#include "model/Element.h"
-#include "model/PageRef.h"
+#include "control/Tool.h"
 #include "CursorSelectionType.h"
+#include "model/Element.h"
+#include "model/Font.h"
+#include "model/PageRef.h"
+#include "view/ElementContainer.h"
+
+#include <XournalType.h>
+
+#include <vector>
 
 class UndoRedoHandler;
 class Layer;
@@ -34,7 +35,7 @@ class EditSelectionContents : public ElementContainer, public Serializeable
 {
 public:
 	EditSelectionContents(double x, double y, double width, double height,
-						PageRef sourcePage, Layer* sourceLayer, PageView* sourceView);
+						  PageRef sourcePage, Layer* sourceLayer, PageView* sourceView);
 	virtual ~EditSelectionContents();
 
 public:
@@ -42,8 +43,8 @@ public:
 	 * Sets the tool size for pen or eraser, returs an undo action
 	 * (or NULL if nothing is done)
 	 */
-	UndoAction* setSize(ToolSize size, const double* thicknessPen,
-						const double* thicknessHilighter, const double* thicknessEraser);
+	UndoAction* setSize(ToolSize size,
+					    const double* thicknessPen, const double* thicknessHilighter, const double* thicknessEraser);
 
 	/**
 	 * Set the color of all elements, return an undo action
@@ -78,22 +79,17 @@ public:
 	/**
 	 * paints the selection
 	 */
-	void paint(cairo_t* cr, double x, double y, double width, double height,
-			double zoom);
+	void paint(cairo_t* cr, double x, double y, double width, double height, double zoom);
 
 	/**
 	 * Finish the editing
 	 */
-	void finalizeSelection(double x, double y, double width, double height,
-						bool aspectRatio, Layer* layer, PageRef targetPage,
-						PageView* targetView,
-						UndoRedoHandler* undo);
+	void finalizeSelection(double x, double y, double width, double height, bool aspectRatio,
+						   Layer* layer, PageRef targetPage, PageView* targetView, UndoRedoHandler* undo);
 
-	void updateContent(double x, double y, double width, double height,
-					bool aspectRatio, Layer* layer, PageRef targetPage,
-					PageView* targetView,
-					UndoRedoHandler* undo,
-					CursorSelectionType type);
+	void updateContent(double x, double y, double width, double height, bool aspectRatio,
+					   Layer* layer, PageRef targetPage, PageView* targetView, UndoRedoHandler* undo,
+					   CursorSelectionType type);
 
 private:
 	/**
@@ -118,8 +114,7 @@ public:
 	 */
 	double getOriginalHeight();
 
-	UndoAction* copySelection(PageRef page, PageView *view,
-							double x, double y);
+	UndoAction* copySelection(PageRef page, PageView *view, double x, double y);
 
 public:
 	// Serialize interface

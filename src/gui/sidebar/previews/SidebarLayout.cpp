@@ -1,6 +1,7 @@
 #include "SidebarLayout.h"
-#include "SidebarPreviews.h"
+
 #include "SidebarPreviewPage.h"
+#include "SidebarPreviews.h"
 
 SidebarLayout::SidebarLayout()
 {
@@ -156,8 +157,6 @@ void SidebarLayout::layout(SidebarPreviews* sidebar)
 
 		row.clear();
 	}
-
-
 
 	gtk_layout_set_size(GTK_LAYOUT(sidebar->iconViewPreview), width, y);
 }

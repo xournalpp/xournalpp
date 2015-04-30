@@ -1,12 +1,13 @@
 #include "GzHelper.h"
+
 #include "Stacktrace.h"
+
+#include <boost/iostreams/copy.hpp>
+#include <boost/iostreams/filtering_streambuf.hpp>
 
 #include <iostream>
 #include <sstream>
 using namespace std;
-
-#include <boost/iostreams/filtering_streambuf.hpp>
-#include <boost/iostreams/copy.hpp>
 
 GzHelper::GzHelper() { }
 

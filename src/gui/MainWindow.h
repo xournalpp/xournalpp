@@ -13,16 +13,17 @@
 
 #include "GladeGui.h"
 #include "model/Font.h"
+
 #include <XournalType.h>
 
 class Control;
+class Layout;
 class MainWindow;
+class SpinPageAdapter;
 class ToolMenuHandler;
 class ToolbarData;
 class ToolbarModel;
 class XournalView;
-class Layout;
-class SpinPageAdapter;
 
 class MainWindow : public GladeGui
 {
@@ -89,33 +90,28 @@ private:
 	/**
 	 * Sidebar show / hidden
 	 */
-	static void viewShowSidebar(GtkCheckMenuItem* checkmenuitem,
-								MainWindow* control);
+	static void viewShowSidebar(GtkCheckMenuItem* checkmenuitem, MainWindow* control);
 
 	/**
 	 * Window close Button is pressed
 	 */
-	static bool deleteEventCallback(GtkWidget* widget, GdkEvent* event,
-									Control* control);
+	static bool deleteEventCallback(GtkWidget* widget, GdkEvent* event, Control* control);
 
 	/**
 	 * Key is pressed
 	 */
-	static bool onKeyPressCallback(GtkWidget* widget, GdkEventKey* event,
-								MainWindow* win);
+	static bool onKeyPressCallback(GtkWidget* widget, GdkEventKey* event, MainWindow* win);
 
 	/**
 	 * Callback fro window states, we ned to know if the window is fullscreen
 	 */
-	static bool windowStateEventCallback(GtkWidget* window,
-										GdkEventWindowState* event, MainWindow* win);
+	static bool windowStateEventCallback(GtkWidget* window, GdkEventWindowState* event, MainWindow* win);
 
 	/**
 	 * Callback for drag & drop files
 	 */
-	static void dragDataRecived(GtkWidget* widget, GdkDragContext* dragContext,
-								gint x, gint y, GtkSelectionData* data, guint info, guint time,
-								MainWindow* win);
+	static void dragDataRecived(GtkWidget* widget, GdkDragContext* dragContext, gint x, gint y,
+								GtkSelectionData* data, guint info, guint time, MainWindow* win);
 
 private:
 	XOJ_TYPE_ATTRIB;
@@ -136,5 +132,4 @@ private:
 	bool maximized;
 
 	GtkWidget** toolbarWidgets;
-
 };

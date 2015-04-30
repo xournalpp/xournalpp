@@ -1,14 +1,3 @@
-/*
- * Xournal++
- *
- * A String utilities
- *
- * @author Xournal Team
- * http://xournal.sf.net
- *
- * @license GPL
- */
-
 #include "StringUtils.h"
 
 /**
@@ -109,4 +98,3 @@ const char* StringTokenizer::next()
 
 	return tmp;
 }
-

@@ -12,6 +12,7 @@
 #pragma once
 
 #include <config.h>
+#include <XournalType.h>
 
 #ifdef ENABLE_OS
 // Overlay scrollbar
@@ -19,7 +20,6 @@
 #endif
 
 #include <gtk/gtk.h>
-#include <XournalType.h>
 
 class Scrollbar;
 

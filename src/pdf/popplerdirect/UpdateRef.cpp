@@ -17,4 +17,5 @@ UpdateRef::~UpdateRef()
 void UpdateRef::destroyDelete(UpdateRef* data)
 {
 	delete data;
+	data = NULL;
 }

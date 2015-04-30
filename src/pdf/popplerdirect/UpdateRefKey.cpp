@@ -13,5 +13,6 @@ bool UpdateRefKey::equalFunction(UpdateRefKey* a, UpdateRefKey* b)
 void UpdateRefKey::destroyDelete(UpdateRefKey* data)
 {
 	delete data;
+	data = NULL;
 }
 

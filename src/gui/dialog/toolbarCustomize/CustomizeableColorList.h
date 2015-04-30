@@ -11,8 +11,8 @@
 
 #pragma once
 
-#include <XournalType.h>
 #include <StringUtils.h>
+#include <XournalType.h>
 
 #include "gui/XojColor.h"
 

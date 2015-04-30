@@ -1,9 +1,11 @@
 #include "SidebarIndexPage.h"
+
+#include "control/Control.h"
 #include "model/LinkDestination.h"
 #include "model/XojPage.h"
-#include "control/Control.h"
 
 #include <config.h>
+
 #include <glib/gi18n-lib.h>
 
 SidebarIndexPage::SidebarIndexPage(Control* control) : AbstractSidebarPage(control)
@@ -17,21 +19,17 @@ SidebarIndexPage::SidebarIndexPage(Control* control) : AbstractSidebarPage(contr
 	g_object_ref(this->treeViewBookmarks);
 
 	gtk_tree_view_set_enable_search(GTK_TREE_VIEW(treeViewBookmarks), true);
-	gtk_tree_view_set_search_column(GTK_TREE_VIEW(treeViewBookmarks),
-									DOCUMENT_LINKS_COLUMN_NAME);
+	gtk_tree_view_set_search_column(GTK_TREE_VIEW(treeViewBookmarks), DOCUMENT_LINKS_COLUMN_NAME);
 	gtk_tree_view_set_search_equal_func(GTK_TREE_VIEW(treeViewBookmarks),
 										(GtkTreeViewSearchEqualFunc) treeSearchFunction, this, NULL);
 
 	this->scrollBookmarks = gtk_scrolled_window_new(NULL, NULL);
 	g_object_ref(this->scrollBookmarks);
 
-	gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scrollBookmarks),
-								GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
-	gtk_scrolled_window_set_shadow_type(GTK_SCROLLED_WINDOW(scrollBookmarks),
-										GTK_SHADOW_IN);
+	gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scrollBookmarks), GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
+	gtk_scrolled_window_set_shadow_type(GTK_SCROLLED_WINDOW(scrollBookmarks), GTK_SHADOW_IN);
 
-	GtkTreeSelection* selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(
-																			treeViewBookmarks));
+	GtkTreeSelection* selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(treeViewBookmarks));
 	gtk_tree_selection_set_mode(selection, GTK_SELECTION_SINGLE);
 	gtk_tree_view_set_headers_visible(GTK_TREE_VIEW(treeViewBookmarks), FALSE);
 	gtk_container_add(GTK_CONTAINER(scrollBookmarks), treeViewBookmarks);
@@ -41,11 +39,10 @@ SidebarIndexPage::SidebarIndexPage(Control* control) : AbstractSidebarPage(contr
 	gtk_tree_view_column_set_expand(GTK_TREE_VIEW_COLUMN(column), TRUE);
 	gtk_tree_view_append_column(GTK_TREE_VIEW(treeViewBookmarks), column);
 
-	GtkCellRenderer* renderer = (GtkCellRenderer*) g_object_new(
-																GTK_TYPE_CELL_RENDERER_TEXT, "ellipsize", PANGO_ELLIPSIZE_END, NULL);
+	GtkCellRenderer* renderer = (GtkCellRenderer*) g_object_new(GTK_TYPE_CELL_RENDERER_TEXT, "ellipsize",
+																PANGO_ELLIPSIZE_END, NULL);
 	gtk_tree_view_column_pack_start(GTK_TREE_VIEW_COLUMN(column), renderer, TRUE);
-	gtk_tree_view_column_set_attributes(GTK_TREE_VIEW_COLUMN(column), renderer,
-										"markup", DOCUMENT_LINKS_COLUMN_NAME, NULL);
+	gtk_tree_view_column_set_attributes(GTK_TREE_VIEW_COLUMN(column), renderer, "markup", DOCUMENT_LINKS_COLUMN_NAME, NULL);
 
 	renderer = gtk_cell_renderer_text_new();
 	gtk_tree_view_column_pack_end(GTK_TREE_VIEW_COLUMN(column), renderer, FALSE);
@@ -53,8 +50,7 @@ SidebarIndexPage::SidebarIndexPage(Control* control) : AbstractSidebarPage(contr
 										"text", DOCUMENT_LINKS_COLUMN_PAGE_NUMBER, NULL);
 	g_object_set(G_OBJECT(renderer), "style", PANGO_STYLE_ITALIC, NULL);
 
-	g_signal_connect(treeViewBookmarks, "cursor-changed",
-					G_CALLBACK(treeBookmarkSelected), this);
+	g_signal_connect(treeViewBookmarks, "cursor-changed", G_CALLBACK(treeBookmarkSelected), this);
 
 	gtk_widget_show(this->treeViewBookmarks);
 
@@ -79,18 +75,19 @@ void SidebarIndexPage::askInsertPdfPage(int pdfPage)
 {
 	XOJ_CHECK_TYPE(SidebarIndexPage);
 
-	GtkWidget* dialog = gtk_message_dialog_new((GtkWindow*) *control->getWindow(),
-											GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_QUESTION, GTK_BUTTONS_NONE,
-											_("Your current document does not contain PDF Page %i\n"
-											  "Would you insert this page?\n\nTipp: You can select Journal / Paper Background / PDF Background to insert a PDF page."),
-											pdfPage + 1);
+	GtkWidget* dialog = gtk_message_dialog_new((GtkWindow*) *control->getWindow(), GTK_DIALOG_DESTROY_WITH_PARENT,
+											   GTK_MESSAGE_QUESTION, GTK_BUTTONS_NONE,
+											   _("Your current document does not contain PDF Page %i\n"
+											     "Would you insert this page?\n\n"
+												 "Tipp: You can select Journal / Paper Background / PDF Background "
+												 "to insert a PDF page."),
+											   pdfPage + 1);
 
 	gtk_dialog_add_button(GTK_DIALOG(dialog), "Cancel", 1);
 	gtk_dialog_add_button(GTK_DIALOG(dialog), "Insert after", 2);
 	gtk_dialog_add_button(GTK_DIALOG(dialog), "Insert at end", 3);
 
-	gtk_window_set_transient_for(GTK_WINDOW(dialog),
-								GTK_WINDOW(this->control->getWindow()->getWindow()));
+	gtk_window_set_transient_for(GTK_WINDOW(dialog), GTK_WINDOW(this->control->getWindow()->getWindow()));
 	int res = gtk_dialog_run(GTK_DIALOG(dialog));
 	gtk_widget_destroy(dialog);
 	if (res == 1)
@@ -123,8 +120,7 @@ void SidebarIndexPage::askInsertPdfPage(int pdfPage)
 	}
 }
 
-bool SidebarIndexPage::treeBookmarkSelected(GtkWidget* treeview,
-											SidebarIndexPage* sidebar)
+bool SidebarIndexPage::treeBookmarkSelected(GtkWidget* treeview, SidebarIndexPage* sidebar)
 {
 	XOJ_CHECK_TYPE_OBJ(sidebar, SidebarIndexPage);
 
@@ -135,8 +131,7 @@ bool SidebarIndexPage::treeBookmarkSelected(GtkWidget* treeview,
 
 	gtk_widget_grab_focus(GTK_WIDGET(treeview));
 
-	GtkTreeSelection* selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(
-																			treeview));
+	GtkTreeSelection* selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(treeview));
 
 	if (selection)
 	{
@@ -198,12 +193,11 @@ bool SidebarIndexPage::searchTimeoutFunc(SidebarIndexPage* sidebar)
 
 	treeBookmarkSelected(sidebar->treeViewBookmarks, sidebar);
 
-
 	return false;
 }
 
-gboolean SidebarIndexPage::treeSearchFunction(GtkTreeModel* model, gint column,
-											  const gchar* key, GtkTreeIter* iter, SidebarIndexPage* sidebar)
+gboolean SidebarIndexPage::treeSearchFunction(GtkTreeModel* model, gint column, const gchar* key,
+											  GtkTreeIter* iter, SidebarIndexPage* sidebar)
 {
 	XOJ_CHECK_TYPE_OBJ(sidebar, SidebarIndexPage);
 
@@ -230,7 +224,9 @@ gboolean SidebarIndexPage::treeSearchFunction(GtkTreeModel* model, gint column,
 
 	gtk_tree_model_get(model, iter, DOCUMENT_LINKS_COLUMN_NAME, &text, -1);
 	if (text == NULL)
+	{
 		return TRUE;
+	}
 
 	tmp = g_utf8_normalize(key, -1, G_NORMALIZE_DEFAULT);
 	enteredstring = g_utf8_casefold(tmp, -1);
@@ -251,8 +247,7 @@ gboolean SidebarIndexPage::treeSearchFunction(GtkTreeModel* model, gint column,
 	len = g_utf8_strlen(normalized, -1);
 	log_attrs = g_new(PangoLogAttr, len + 1);
 
-	pango_get_log_attrs(normalized, strlen(normalized), -1, NULL, log_attrs,
-						len + 1);
+	pango_get_log_attrs(normalized, strlen(normalized), -1, NULL, log_attrs, len + 1);
 
 	word = normalized;
 	result = TRUE;
@@ -367,8 +362,7 @@ bool SidebarIndexPage::selectPageNr(int page, int pdfPage, GtkTreeIter* parent)
 	{
 
 		// check if there is already the current page selected
-		GtkTreeSelection* selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(
-																				treeViewBookmarks));
+		GtkTreeSelection* selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(treeViewBookmarks));
 
 		if (gtk_tree_selection_get_selected(selection, &model, &iter))
 		{
@@ -405,8 +399,7 @@ bool SidebarIndexPage::selectPageNr(int page, int pdfPage, GtkTreeIter* parent)
 
 		if (link->dest->getPdfPage() == pdfPage)
 		{
-			GtkTreeSelection* selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(
-																					treeViewBookmarks));
+			GtkTreeSelection* selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(treeViewBookmarks));
 			gtk_tree_selection_select_iter(selection, &iter);
 
 			g_object_unref(link);
@@ -441,8 +434,7 @@ void SidebarIndexPage::documentChanged(DocumentChangeType type)
 	{
 		gtk_tree_view_set_model(GTK_TREE_VIEW(this->treeViewBookmarks), NULL);
 	}
-	else if (type == DOCUMENT_CHANGE_PDF_BOOKMARKS ||
-			 type == DOCUMENT_CHANGE_COMPLETE)
+	else if (type == DOCUMENT_CHANGE_PDF_BOOKMARKS || type == DOCUMENT_CHANGE_COMPLETE)
 	{
 
 		Document* doc = this->control->getDocument();
@@ -456,7 +448,3 @@ void SidebarIndexPage::documentChanged(DocumentChangeType type)
 		hasContents = (count != 0);
 	}
 }
-
-
-
-

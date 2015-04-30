@@ -11,17 +11,18 @@
 
 #pragma once
 
-#include <glib.h>
-#include <StringUtils.h>
-#include "poppler-0.24.1/poppler/Object.h"
-
 #include "PdfObjectWriter.h"
 #include "poppler/XojPopplerDocument.h"
+#include "poppler-0.24.1/poppler/Object.h"
 
-class PdfXRef;
+#include <StringUtils.h>
+
+#include <glib.h>
+
 class PdfExport;
-class PdfWriter;
 class PdfRefEntry;
+class PdfWriter;
+class PdfXRef;
 
 class RefReplacement
 {
@@ -54,18 +55,15 @@ public:
 	/**
 	 * Type char is ownd by PdfRefList and should not be freed
 	 */
-	PdfRefList(PdfXRef* xref, PdfObjectWriter* objectWriter, PdfWriter* writer,
-			char* type);
+	PdfRefList(PdfXRef* xref, PdfObjectWriter* objectWriter, PdfWriter* writer, char* type);
 	virtual ~PdfRefList();
 
 public:
 	void writeObjects();
 	void writeRefList(const char* type);
 
-	int lookup(Ref ref, Object* object, XojPopplerDocument doc,
-			PdfRefEntry*& refEntry);
-	void parse(Dict* dict, int index, XojPopplerDocument doc,
-			GList*& replacementList);
+	int lookup(Ref ref, Object* object, XojPopplerDocument doc, PdfRefEntry*& refEntry);
+	void parse(Dict* dict, int index, XojPopplerDocument doc, GList*& replacementList);
 
 	static void deletePdfRefList(PdfRefList* ref);
 

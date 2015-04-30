@@ -11,9 +11,11 @@
 
 #pragma once
 
-#include <gtk/gtk.h>
-#include <StringUtils.h>
 #include "PdfXRef.h"
+
+#include <StringUtils.h>
+
+#include <gtk/gtk.h>
 
 #include <boost/format.hpp>
 #include <boost/filesystem/path.hpp>

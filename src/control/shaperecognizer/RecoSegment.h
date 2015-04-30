@@ -11,11 +11,12 @@
 
 #pragma once
 
+#include "model/Point.h"
+
+#include <XournalType.h>
+
 class Stroke;
 class Inertia;
-
-#include "model/Point.h"
-#include <XournalType.h>
 
 class RecoSegment
 {

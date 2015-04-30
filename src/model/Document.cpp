@@ -1,13 +1,16 @@
 #include "Document.h"
+
 #include "LinkDestination.h"
 #include "XojPage.h"
 
 #include <config.h>
+#include <Stacktrace.h>
+
 #include <glib/gi18n-lib.h>
 
-#include <string.h>
-#include <Stacktrace.h>
 #include <boost/locale/format.hpp>
+
+#include <string.h>
 
 using namespace std;
 
@@ -211,8 +214,7 @@ int Document::findPdfPage(int pdfPage)
 	return -1;
 }
 
-void Document::buildTreeContentsModel(GtkTreeIter* parent,
-									  XojPopplerIter* iter)
+void Document::buildTreeContentsModel(GtkTreeIter* parent, XojPopplerIter* iter)
 {
 	XOJ_CHECK_TYPE(Document);
 
@@ -235,9 +237,8 @@ void Document::buildTreeContentsModel(GtkTreeIter* parent,
 		gtk_tree_store_append(GTK_TREE_STORE(contentsModel), &treeIter, parent);
 		char* titleMarkup = g_markup_escape_text(action->getTitle().c_str(), -1);
 
-		gtk_tree_store_set(GTK_TREE_STORE(contentsModel), &treeIter,
-						   DOCUMENT_LINKS_COLUMN_NAME, titleMarkup, DOCUMENT_LINKS_COLUMN_LINK, link,
-						   DOCUMENT_LINKS_COLUMN_PAGE_NUMBER, "", -1);
+		gtk_tree_store_set(GTK_TREE_STORE(contentsModel), &treeIter, DOCUMENT_LINKS_COLUMN_NAME, titleMarkup,
+						   DOCUMENT_LINKS_COLUMN_LINK, link, DOCUMENT_LINKS_COLUMN_PAGE_NUMBER, "", -1);
 
 		g_free(titleMarkup);
 		g_object_unref(link);
@@ -272,8 +273,7 @@ void Document::buildContentsModel()
 		return;
 	}
 
-	this->contentsModel = (GtkTreeModel*) gtk_tree_store_new(4, G_TYPE_STRING,
-															 G_TYPE_OBJECT, G_TYPE_BOOLEAN, G_TYPE_STRING);
+	this->contentsModel = (GtkTreeModel*) gtk_tree_store_new(4, G_TYPE_STRING, G_TYPE_OBJECT, G_TYPE_BOOLEAN, G_TYPE_STRING);
 	buildTreeContentsModel(NULL, iter);
 	delete iter;
 }
@@ -285,8 +285,7 @@ GtkTreeModel* Document::getContentsModel()
 	return this->contentsModel;
 }
 
-bool Document::fillPageLabels(GtkTreeModel* treeModel, GtkTreePath* path,
-							  GtkTreeIter* iter, Document* doc)
+bool Document::fillPageLabels(GtkTreeModel* treeModel, GtkTreePath* path, GtkTreeIter* iter, Document* doc)
 {
 	XojLinkDest* link = NULL;
 
@@ -304,8 +303,7 @@ bool Document::fillPageLabels(GtkTreeModel* treeModel, GtkTreePath* path,
 	{
 		pageLabel = g_strdup_printf("%i", page + 1);
 	}
-	gtk_tree_store_set(GTK_TREE_STORE(treeModel), iter,
-					   DOCUMENT_LINKS_COLUMN_PAGE_NUMBER, pageLabel, -1);
+	gtk_tree_store_set(GTK_TREE_STORE(treeModel), iter, DOCUMENT_LINKS_COLUMN_PAGE_NUMBER, pageLabel, -1);
 	g_free(pageLabel);
 
 	g_object_unref(link);
@@ -318,8 +316,7 @@ void Document::updateIndexPageNumbers()
 
 	if (this->contentsModel != NULL)
 	{
-		gtk_tree_model_foreach(this->contentsModel,
-							   (GtkTreeModelForeachFunc) fillPageLabels, this);
+		gtk_tree_model_foreach(this->contentsModel, (GtkTreeModelForeachFunc) fillPageLabels, this);
 	}
 }
 
@@ -511,4 +508,3 @@ bool Document::shouldCreateBackupOnSave()
 
 	return this->createBackupOnSave;
 }
-

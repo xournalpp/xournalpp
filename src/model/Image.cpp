@@ -1,7 +1,8 @@
 #include "Image.h"
-#include <serializing/ObjectOutputStream.h>
-#include <serializing/ObjectInputStream.h>
+
 #include <pixbuf-utils.h>
+#include <serializing/ObjectInputStream.h>
+#include <serializing/ObjectOutputStream.h>
 
 Image::Image() : Element(ELEMENT_IMAGE)
 {
@@ -57,8 +58,7 @@ void Image::setHeight(double height)
 	this->height = height;
 }
 
-cairo_status_t Image::cairoReadFunction(Image* image, unsigned char* data,
-										unsigned int length)
+cairo_status_t Image::cairoReadFunction(Image* image, unsigned char* data, unsigned int length)
 {
 	XOJ_CHECK_TYPE_OBJ(image, Image);
 
@@ -111,8 +111,7 @@ cairo_surface_t* Image::getImage()
 	if (this->image == NULL && this->data.length())
 	{
 		this->read = 0;
-		this->image = cairo_image_surface_create_from_png_stream(
-				(cairo_read_func_t) & cairoReadFunction, this);
+		this->image = cairo_image_surface_create_from_png_stream((cairo_read_func_t) & cairoReadFunction, this);
 	}
 
 	return this->image;
@@ -175,4 +174,3 @@ void Image::calcSize()
 {
 	XOJ_CHECK_TYPE(Image);
 }
-

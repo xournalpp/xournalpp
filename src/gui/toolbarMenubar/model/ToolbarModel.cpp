@@ -1,4 +1,5 @@
 #include "ToolbarModel.h"
+
 #include "ToolbarData.h"
 
 #include <string.h>
@@ -24,8 +25,7 @@ ToolbarDataVector* ToolbarModel::getToolbars()
 	return &this->toolbars;
 }
 
-void ToolbarModel::parseGroup(GKeyFile* config, const char* group,
-							  bool predefined)
+void ToolbarModel::parseGroup(GKeyFile* config, const char* group, bool predefined)
 {
 	XOJ_CHECK_TYPE(ToolbarModel);
 
@@ -158,4 +158,3 @@ void ToolbarModel::save(const char* filename)
 	fclose(fp);
 	g_free(data);
 }
-

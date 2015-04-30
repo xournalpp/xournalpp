@@ -11,8 +11,9 @@
 
 #pragma once
 
-#include <gtk/gtk.h>
 #include <StringUtils.h>
+
+#include <gtk/gtk.h>
 
 class AbstractToolItem;
 
@@ -44,8 +45,7 @@ private:
 public:
 	static void attachMetadata(GtkWidget* w, int id, AbstractToolItem* ait);
 	static void attachMetadata(GtkWidget* w, int id, ToolItemType type);
-	static void attachMetadataColor(GtkWidget* w, int id, int color,
-									AbstractToolItem* item);
+	static void attachMetadataColor(GtkWidget* w, int id, int color, AbstractToolItem* item);
 
 public:
 	static ToolItemDragDropData* ToolItemDragDropData_new(AbstractToolItem* item);

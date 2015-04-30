@@ -1,12 +1,13 @@
-#include "ToolHandler.h"
-#include <stdio.h>
-#include <Util.h>
 #include "Actions.h"
+#include "ToolHandler.h"
+
+#include <Util.h>
 
 #include <gtk/gtk.h>
 
-ToolHandler::ToolHandler(ToolListener* listener, ActionHandler* actionHandler,
-						 Settings* settings)
+#include <stdio.h>
+
+ToolHandler::ToolHandler(ToolListener* listener, ActionHandler* actionHandler, Settings* settings)
 {
 	XOJ_INIT_TYPE(ToolHandler);
 
@@ -49,8 +50,7 @@ void ToolHandler::initTools()
 	thickness[TOOL_SIZE_MEDIUM] = 8.50;
 	thickness[TOOL_SIZE_THICK] = 19.84;
 	thickness[TOOL_SIZE_VERY_THICK] = 19.84;
-	t = new Tool("eraser", TOOL_ERASER, 0x000000, false, true, false, false, false, false, false,
-				thickness);
+	t = new Tool("eraser", TOOL_ERASER, 0x000000, false, true, false, false, false, false, false, thickness);
 	tools[TOOL_ERASER - TOOL_PEN] = t;
 
 	// highlighter thicknesses = 1, 3, 7 mm
@@ -60,8 +60,7 @@ void ToolHandler::initTools()
 	thickness[TOOL_SIZE_MEDIUM] = 8.50;
 	thickness[TOOL_SIZE_THICK] = 19.84;
 	thickness[TOOL_SIZE_VERY_THICK] = 19.84;
-	t = new Tool("hilighter", TOOL_HILIGHTER, 0xFFFF00, true, true, true, true, true, true, true,
-				thickness);
+	t = new Tool("hilighter", TOOL_HILIGHTER, 0xFFFF00, true, true, true, true, true, true, true, thickness);
 	tools[TOOL_HILIGHTER - TOOL_PEN] = t;
 
 	t = new Tool("text", TOOL_TEXT, 0x000000, true, false, false, false, false, false, false, NULL);
@@ -70,36 +69,29 @@ void ToolHandler::initTools()
 	t = new Tool("image", TOOL_IMAGE, 0x000000, false, false, false, false, false, false, false, NULL);
 	tools[TOOL_IMAGE - TOOL_PEN] = t;
 
-	t = new Tool("selectRect", TOOL_SELECT_RECT, 0x000000, false, false, false, false, false, false,
-				false, NULL);
+	t = new Tool("selectRect", TOOL_SELECT_RECT, 0x000000, false, false, false, false, false, false, false, NULL);
 	tools[TOOL_SELECT_RECT - TOOL_PEN] = t;
 
-	t = new Tool("selectRegion", TOOL_SELECT_REGION, 0x000000, false, false, false, false, false, false,
-				false, NULL);
+	t = new Tool("selectRegion", TOOL_SELECT_REGION, 0x000000, false, false, false, false, false, false, false, NULL);
 	tools[TOOL_SELECT_REGION - TOOL_PEN] = t;
 
-	t = new Tool("selectObject", TOOL_SELECT_OBJECT, 0x000000, false, false, false, false, false, false,
-				false, NULL);
+	t = new Tool("selectObject", TOOL_SELECT_OBJECT, 0x000000, false, false, false, false, false, false, false, NULL);
 	tools[TOOL_SELECT_OBJECT - TOOL_PEN] = t;
 
-	t = new Tool("verticalSpace", TOOL_VERTICAL_SPACE, 0x000000, false, false, false, false, false,
-				false, false, NULL);
+	t = new Tool("verticalSpace", TOOL_VERTICAL_SPACE, 0x000000, false, false, false, false, false, false, false, NULL);
 	tools[TOOL_VERTICAL_SPACE - TOOL_PEN] = t;
 
 	t = new Tool("hand", TOOL_HAND, 0x000000, false, false, false, false, false, false, false, NULL);
 	tools[TOOL_HAND - TOOL_PEN] = t;
 
 	/*
-	t = new Tool("drawRect", TOOL_DRAW_RECT, 0x000000, false, false, false, false, false, false,
-				 false, NULL);
+	t = new Tool("drawRect", TOOL_DRAW_RECT, 0x000000, false, false, false, false, false, false, false, NULL);
 	tools[TOOL_DRAW_RECT - TOOL_PEN] = t;
 
-	t = new Tool("drawCircle", TOOL_DRAW_CIRCLE, 0x000000, false, false, false, false, false, false,
-				 false, NULL);
+	t = new Tool("drawCircle", TOOL_DRAW_CIRCLE, 0x000000, false, false, false, false, false, false, false, NULL);
 	tools[TOOL_DRAW_CIRCLE - TOOL_PEN] = t;
 
-	t = new Tool("drawArrow", TOOL_DRAW_ARROW, 0x000000, false, false, false, false, false, false,
-				 false, NULL);
+	t = new Tool("drawArrow", TOOL_DRAW_ARROW, 0x000000, false, false, false, false, false, false, false, NULL);
 	tools[TOOL_DRAW_ARROW - TOOL_PEN] = t;
 	 */
 
@@ -143,19 +135,16 @@ void ToolHandler::eraserTypeChanged()
 	switch (this->eraserType)
 	{
 	case ERASER_TYPE_DELETE_STROKE:
-		this->actionHandler->fireActionSelected(GROUP_ERASER_MODE,
-												ACTION_TOOL_ERASER_DELETE_STROKE);
+		this->actionHandler->fireActionSelected(GROUP_ERASER_MODE, ACTION_TOOL_ERASER_DELETE_STROKE);
 		break;
 
 	case ERASER_TYPE_WHITEOUT:
-		this->actionHandler->fireActionSelected(GROUP_ERASER_MODE,
-												ACTION_TOOL_ERASER_WHITEOUT);
+		this->actionHandler->fireActionSelected(GROUP_ERASER_MODE, ACTION_TOOL_ERASER_WHITEOUT);
 		break;
 
 	case ERASER_TYPE_DEFAULT:
 	default:
-		this->actionHandler->fireActionSelected(GROUP_ERASER_MODE,
-												ACTION_TOOL_ERASER_STANDARD);
+		this->actionHandler->fireActionSelected(GROUP_ERASER_MODE, ACTION_TOOL_ERASER_STANDARD);
 		break;
 	}
 }
@@ -610,30 +599,12 @@ void ToolHandler::loadSettings()
 
 		if (t->isEnableSize() && st.getString("size", value))
 		{
-			if (value == "VERY_THIN")
-			{
-				t->setSize(TOOL_SIZE_VERY_FINE);
-			}
-			else if (value == "THIN")
-			{
-				t->setSize(TOOL_SIZE_FINE);
-			}
-			else if (value == "MEDIUM")
-			{
-				t->setSize(TOOL_SIZE_MEDIUM);
-			}
-			else if (value == "BIG")
-			{
-				t->setSize(TOOL_SIZE_THICK);
-			}
-			else if (value == "VERY_BIG")
-			{
-				t->setSize(TOOL_SIZE_VERY_THICK);
-			}
-			else
-			{
-				g_warning("Settings::Unknown tool size: %s\n", value.c_str());
-			}
+			if (value == "VERY_THIN")	  t->setSize(TOOL_SIZE_VERY_FINE);
+			else if (value == "THIN")	  t->setSize(TOOL_SIZE_FINE);
+			else if (value == "MEDIUM")	  t->setSize(TOOL_SIZE_MEDIUM);
+			else if (value == "BIG")	  t->setSize(TOOL_SIZE_THICK);
+			else if (value == "VERY_BIG") t->setSize(TOOL_SIZE_VERY_THICK);
+			else g_warning("Settings::Unknown tool size: %s\n", value.c_str());
 		}
 
 		if (t->type == TOOL_ERASER)
@@ -642,18 +613,9 @@ void ToolHandler::loadSettings()
 
 			if (st.getString("type", type))
 			{
-				if (type == "deleteStroke")
-				{
-					setEraserType(ERASER_TYPE_DELETE_STROKE);
-				}
-				else if (type == "whiteout")
-				{
-					setEraserType(ERASER_TYPE_WHITEOUT);
-				}
-				else
-				{
-					setEraserType(ERASER_TYPE_DEFAULT);
-				}
+				if (type == "deleteStroke")	 setEraserType(ERASER_TYPE_DELETE_STROKE);
+				else if (type == "whiteout") setEraserType(ERASER_TYPE_WHITEOUT);
+				else						 setEraserType(ERASER_TYPE_DEFAULT);
 				eraserTypeChanged();
 			}
 		}
@@ -695,8 +657,7 @@ void ToolHandler::setSelectionEditTools(bool setColor, bool setSize)
 {
 	XOJ_CHECK_TYPE(ToolHandler);
 
-	for (int i = TOOL_SELECT_RECT - TOOL_PEN; i <= TOOL_SELECT_OBJECT - TOOL_PEN;
-		i++)
+	for (int i = TOOL_SELECT_RECT - TOOL_PEN; i <= TOOL_SELECT_OBJECT - TOOL_PEN; i++)
 	{
 		Tool* t = tools[i];
 		t->enableColor = setColor;

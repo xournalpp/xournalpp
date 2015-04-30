@@ -1,12 +1,13 @@
 #include "MetadataManager.h"
+
 #include "cfg.h"
 #include "util/Util.h"
 
-#include <boost/filesystem.hpp>
-namespace bf = boost::filesystem;
-
 #include <iostream>
 using namespace std;
+
+#include <boost/filesystem.hpp>
+namespace bf = boost::filesystem;
 
 #define REFRESH_SEC 20
 
@@ -279,7 +280,7 @@ bool MetadataManager::getString(path p, string name, string& value)
 }
 
 path MetadataManager::getFilePath() {
-	return Util::getSettingsFile(METADATA_FILE);
+	return Util::getConfigFile(METADATA_FILE);
 }
 
 //kinda workaround for now – it probably wouldn't work on Windows

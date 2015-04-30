@@ -1,6 +1,7 @@
 #include "PageViewIndex.h"
+
+#include "gui/PageView.h"
 #include "PagePosition.h"
-#include "../PageView.h"
 
 class PageViewIndexEntry
 {
@@ -119,4 +120,3 @@ PageView* PageViewIndex::getHighestIntersects()
 
 	return NULL;
 }
-

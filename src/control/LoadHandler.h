@@ -13,40 +13,40 @@
 
 #pragma once
 
+#include "model/Document.h"
+#include "model/Image.h"
+#include "model/Stroke.h"
+#include "model/TexImage.h"
+#include "model/Text.h"
+
+#include <XournalType.h>
+
+#include <boost/iostreams/filter/gzip.hpp>
+#include <boost/iostreams/filtering_streambuf.hpp>
+namespace bio = boost::iostreams;
+#include <boost/filesystem/path.hpp>
+using boost::filesystem::path;
+
+#include "pugixml/pugixml.hpp"
+using namespace pugi;
+
 #include <map>
 #include <fstream>
 #include <stdexcept>
 using namespace std;
 
-#include <boost/iostreams/filter/gzip.hpp>
-#include <boost/iostreams/filtering_streambuf.hpp>
-namespace bio = boost::iostreams;
-
-#include "pugixml/pugixml.hpp"
-using namespace pugi;
-
-#include <boost/filesystem/path.hpp>
-using boost::filesystem::path;
-
-#include "model/Document.h"
-#include "model/Stroke.h"
-#include "model/Text.h"
-#include "model/Image.h"
-#include "model/TexImage.h"
-#include <XournalType.h>
-
 enum ParserPosition
 {
 	PARSER_POS_NOT_STARTED = 1, // Waiting for opening <xounal> tag
-	PARSER_POS_STARTED, // Waiting for Metainfo or contents like <page>
-	PARSER_POS_IN_PAGE, // Starting page tag read
-	PARSER_POS_IN_LAYER, // Starting layer tag read
-	PARSER_POS_IN_STROKE, // Starting layer tag read
-	PARSER_POS_IN_TEXT, // Starting text tag read
-	PARSER_POS_IN_IMAGE, // Starting image tag read
-	PARSER_POS_IN_TEXIMAGE, // Starting latex tag read
+	PARSER_POS_STARTED,         // Waiting for Metainfo or contents like <page>
+	PARSER_POS_IN_PAGE,         // Starting page tag read
+	PARSER_POS_IN_LAYER,        // Starting layer tag read
+	PARSER_POS_IN_STROKE,       // Starting layer tag read
+	PARSER_POS_IN_TEXT,         // Starting text tag read
+	PARSER_POS_IN_IMAGE,        // Starting image tag read
+	PARSER_POS_IN_TEXIMAGE,     // Starting latex tag read
 
-	PASER_POS_FINISHED // Document is parsed
+	PASER_POS_FINISHED          // Document is parsed
 };
 
 class ParseException : public std::runtime_error

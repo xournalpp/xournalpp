@@ -11,11 +11,11 @@
 
 #pragma once
 
+#include <serializing/Serializeable.h>
 #include <StringUtils.h>
 #include <XournalType.h>
 
 #include <gtk/gtk.h>
-#include <serializing/Serializeable.h>
 
 class XojFont : public Serializeable
 {

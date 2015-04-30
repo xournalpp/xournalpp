@@ -8,8 +8,7 @@
 #include <iostream>
 using namespace std;
 
-LatexGlade::LatexGlade(GladeSearchpath* gladeSearchPath) :
-	GladeGui(gladeSearchPath, "texdialog.glade", "texDialog")
+LatexGlade::LatexGlade(GladeSearchpath* gladeSearchPath) : GladeGui(gladeSearchPath, "texdialog.glade", "texDialog")
 {
 	XOJ_INIT_TYPE(LatexGlade);
 

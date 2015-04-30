@@ -36,7 +36,11 @@ ToolbarEntry::~ToolbarEntry()
 
 void ToolbarEntry::clearList()
 {
-	for (ToolbarItem* item : this->entries) delete item;
+	for (ToolbarItem* item : this->entries)
+	{
+		delete item;
+		item = NULL;
+	}
 	this->entries.clear();
 }
 
@@ -73,6 +77,7 @@ bool ToolbarEntry::removeItemById(int id)
 		if (this->entries[i]->getId() == id)
 		{
 			delete this->entries[i];
+			this->entries[i] = NULL;
 			this->entries.erase(this->entries.begin() + i);
 			return true;
 		}

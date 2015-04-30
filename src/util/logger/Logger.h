@@ -23,6 +23,5 @@ public:
 	static void initlog();
 	static void closelog();
 
-	static void trace(const char* callType, const char* clazz, const char* function,
-					long obj);
+	static void trace(const char* callType, const char* clazz, const char* function, long obj);
 };

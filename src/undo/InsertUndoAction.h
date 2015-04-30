@@ -13,8 +13,8 @@
 
 #include "UndoAction.h"
 
-class Layer;
 class Element;
+class Layer;
 class Redrawable;
 
 class InsertUndoAction : public UndoAction

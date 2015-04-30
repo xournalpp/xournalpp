@@ -1,4 +1,5 @@
 #include "Scrollbar.h"
+
 #include <math.h>
 
 Scrollbar::Scrollbar(bool horizontal)
@@ -197,4 +198,3 @@ void Scrollbar::removeScrollbarListener(ScrollbarListener* listener)
 
 	this->listener = g_list_remove(this->listener, listener);
 }
-

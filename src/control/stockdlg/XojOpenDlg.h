@@ -11,10 +11,11 @@
 
 #pragma once
 
-#include <StringUtils.h>
-#include <gtk/gtk.h>
+#include "control/settings/Settings.h"
 
-#include "../settings/Settings.h"
+#include <StringUtils.h>
+
+#include <gtk/gtk.h>
 
 class XojOpenDlg
 {
@@ -23,8 +24,7 @@ private:
 	virtual ~XojOpenDlg();
 
 public:
-	static path showOpenDialog(GtkWindow* win, Settings* settings, bool pdf,
-							   bool& attachPdf);
+	static path showOpenDialog(GtkWindow* win, Settings* settings, bool pdf, bool& attachPdf);
 
 private:
 	static void updatePreviewCallback(GtkFileChooser* fileChooser, void* userData);

@@ -1,15 +1,14 @@
 #include "ShapeRecognizer.h"
-#include "ShapeRecognizerResult.h"
-#include "Inertia.h"
-#include "CircleRecognizer.h"
 
-#include "model/Stroke.h"
+#include "CircleRecognizer.h"
 #include "Inertia.h"
+#include "model/Stroke.h"
+#include "ShapeRecognizerResult.h"
+
+#include <boost/format.hpp>
 
 #include <math.h>
 #include <string.h>
-
-#include <boost/format.hpp>
 
 ShapeRecognizer::ShapeRecognizer()
 {
@@ -69,7 +68,9 @@ Stroke* ShapeRecognizer::tryRectangle()
 		RecoSegment* r1 = &rs[i];
 		RecoSegment* r2 = &rs[(i + 1) % 4];
 		if (fabs(fabs(r1->angle - r2->angle) - M_PI / 2) > RECTANGLE_ANGLE_TOLERANCE)
+		{
 			return FALSE;
+		}
 		avgAngle += r1->angle;
 		if (r2->angle > r1->angle)
 		{
@@ -81,16 +82,14 @@ Stroke* ShapeRecognizer::tryRectangle()
 		}
 
 		// test if r1 points away from r2 rather than towards it
-		r1->reversed = ((r1->x2 - r1->x1) * (r2->xcenter - r1->xcenter) +
-						(r1->y2 - r1->y1) * (r2->ycenter - r1->ycenter)) < 0;
+		r1->reversed = ((r1->x2 - r1->x1) * (r2->xcenter - r1->xcenter) + (r1->y2 - r1->y1) * (r2->ycenter - r1->ycenter)) < 0;
 	}
 	for (int i = 0; i <= 3; i++)
 	{
 		RecoSegment* r1 = &rs[i];
 		RecoSegment* r2 = &rs[(i + 1) % 4];
-		double dist = hypot((r1->reversed ? r1->x1 : r1->x2) - (r2->reversed ? r2->x2 :
-																r2->x1), (r1->reversed ? r1->y1 : r1->y2) - (r2->reversed ? r2->y2
-																											: r2->y1));
+		double dist = hypot((r1->reversed ? r1->x1 : r1->x2) - (r2->reversed ? r2->x2 : r2->x1),
+							(r1->reversed ? r1->y1 : r1->y2) - (r2->reversed ? r2->y2 : r2->y1));
 		if (dist > RECTANGLE_LINEAR_TOLERANCE * (r1->radius + r2->radius))
 		{
 			return NULL;
@@ -156,9 +155,7 @@ Stroke* ShapeRecognizer::tryArrow()
 			return NULL;
 		}
 
-		rev[i] = (hypot(rs[i].xcenter - rs->x1,
-						rs[i].ycenter - rs->y1) < hypot(rs[i].xcenter - rs->x2,
-														rs[i].ycenter - rs->y2));
+		rev[i] = hypot(rs[i].xcenter - rs->x1, rs[i].ycenter - rs->y1) < hypot(rs[i].xcenter - rs->x2, rs[i].ycenter - rs->y2);
 	}
 
 	if (rev[1] != rev[2])
@@ -282,8 +279,7 @@ Stroke* ShapeRecognizer::tryArrow()
 	}
 
 	double delta = fabs(alpha[1] - alpha[2]) / 2;
-	dist = (hypot(rs[1].x1 - rs[1].x2,
-				rs[1].y1 - rs[1].y2) + hypot(rs[2].x1 - rs[2].x2, rs[2].y1 - rs[2].y2)) / 2;
+	dist = (hypot(rs[1].x1 - rs[1].x2, rs[1].y1 - rs[1].y2) + hypot(rs[2].x1 - rs[2].x2, rs[2].y1 - rs[2].y2)) / 2;
 
 	Stroke* s = new Stroke();
 	s->setWidth(this->stroke->getWidth());
@@ -293,12 +289,10 @@ Stroke* ShapeRecognizer::tryArrow()
 	s->addPoint(Point(x1, y1));
 	s->addPoint(Point(x2, y2));
 
-	s->addPoint(Point(x2 - dist * cos(angle + delta),
-					y2 - dist * sin(angle + delta)));
+	s->addPoint(Point(x2 - dist * cos(angle + delta), y2 - dist * sin(angle + delta)));
 	s->addPoint(Point(x2, y2));
 
-	s->addPoint(Point(x2 - dist * cos(angle - delta),
-					y2 - dist * sin(angle - delta)));
+	s->addPoint(Point(x2 - dist * cos(angle - delta), y2 - dist * sin(angle - delta)));
 
 	return s;
 }
@@ -306,8 +300,7 @@ Stroke* ShapeRecognizer::tryArrow()
 /*
  * check if something is a polygonal line with at most nsides sides
  */
-int ShapeRecognizer::findPolygonal(const Point* pt, int start, int end,
-								   int nsides, int* breaks, Inertia* ss)
+int ShapeRecognizer::findPolygonal(const Point* pt, int start, int end, int nsides, int* breaks, Inertia* ss)
 {
 	XOJ_CHECK_TYPE(ShapeRecognizer);
 
@@ -394,8 +387,7 @@ int ShapeRecognizer::findPolygonal(const Point* pt, int start, int end,
 
 	if (i1 > start)
 	{
-		n1 = findPolygonal(pt, start, i1, (i2 == end) ? (nsides - 1) : (nsides - 2),
-						breaks, ss);
+		n1 = findPolygonal(pt, start, i1, (i2 == end) ? (nsides - 1) : (nsides - 2), breaks, ss);
 		if (n1 == 0)
 		{
 			return 0; // it doesn't work
@@ -429,8 +421,7 @@ int ShapeRecognizer::findPolygonal(const Point* pt, int start, int end,
 /**
  * Improve on the polygon found by find_polygonal()
  */
-void ShapeRecognizer::optimizePolygonal(const Point* pt, int nsides,
-										int* breaks, Inertia* ss)
+void ShapeRecognizer::optimizePolygonal(const Point* pt, int nsides, int* breaks, Inertia* ss)
 {
 	XOJ_CHECK_TYPE(ShapeRecognizer);
 
@@ -494,7 +485,6 @@ Stroke* ShapeRecognizer::tryClosedPolygon(int nsides)
 	//to eliminate bug #52, remove this until it's perfected
 	return NULL;
 
-
 	RecoSegment* r1 = NULL;
 	RecoSegment* r2 = NULL;
 
@@ -517,8 +507,7 @@ Stroke* ShapeRecognizer::tryClosedPolygon(int nsides)
 		r2 = rs + (i + 1) % nsides;
 		// test if r1 points away from r2 rather than towards it
 		Point pt = r1->calcEdgeIsect(r2);
-		r1->reversed = (hypot(pt.x - r1->x1, pt.y - r1->y1) < hypot(pt.x - r1->x2,
-																	pt.y - r1->y2));
+		r1->reversed = (hypot(pt.x - r1->x1, pt.y - r1->y1) < hypot(pt.x - r1->x2, pt.y - r1->y2));
 	}
 
 	for (int i = 0; i < nsides; i++)
@@ -527,9 +516,9 @@ Stroke* ShapeRecognizer::tryClosedPolygon(int nsides)
 		r2 = rs + (i + 1) % nsides;
 		Point pt = r1->calcEdgeIsect(r2);
 		double dist = hypot((r1->reversed ? r1->x1 : r1->x2) - pt.x,
-							(r1->reversed ? r1->y1 : r1->y2) - pt.y) + hypot((r2->reversed ? r2->x2 :
-																			r2->x1) - pt.x,
-																			(r2->reversed ? r2->y2 : r2->y1) - pt.y);
+							(r1->reversed ? r1->y1 : r1->y2) - pt.y)
+								+ hypot((r2->reversed ? r2->x2 : r2->x1) - pt.x,
+							(r2->reversed ? r2->y2 : r2->y1) - pt.y);
 		if (dist > POLYGON_LINEAR_TOLERANCE * (r1->radius + r2->radius))
 		{
 			return NULL;
@@ -570,8 +559,7 @@ ShapeRecognizerResult* ShapeRecognizer::recognizePatterns(Stroke* stroke)
 	int brk[5] = {0};
 
 	// first see if it's a polygon
-	int n = findPolygonal(stroke->getPoints(), 0, stroke->getPointCount() - 1,
-						  MAX_POLYGON_SIDES, brk, ss);
+	int n = findPolygonal(stroke->getPoints(), 0, stroke->getPointCount() - 1, MAX_POLYGON_SIDES, brk, ss);
 	if (n > 0)
 	{
 		optimizePolygonal(stroke->getPoints(), n, brk, ss);
@@ -591,7 +579,9 @@ ShapeRecognizerResult* ShapeRecognizer::recognizePatterns(Stroke* stroke)
 			// remove oldest polygonal stroke
 			int i = 1;
 			while (i < queueLength && queue[i].startpt != 0)
+			{
 				i++;
+			}
 			queueLength -= i;
 			g_memmove(queue, queue + i, queueLength * sizeof(RecoSegment));
 		}
@@ -687,5 +677,3 @@ ShapeRecognizerResult* ShapeRecognizer::recognizePatterns(Stroke* stroke)
 	 */
 	return NULL;
 }
-
-

@@ -1,23 +1,24 @@
 #include "XournalMain.h"
-#include <iostream>
+
+#include "cfg.h"
+#include "config.h"
+#include "Control.h"
+#include "gui/GladeSearchpath.h"
+#include "gui/MainWindow.h"
+#include "gui/toolbarMenubar/model/ToolbarColorNames.h"
+#include "gui/XournalView.h"
+#include "LoadHandler.h"
+#include "pdf/popplerdirect/PdfExport.h"
+
 #include <gtk/gtk.h>
-#include <string>
 
 #include <boost/locale.hpp>
 #include <boost/algorithm/string/predicate.hpp>
 #include <boost/filesystem.hpp>
 namespace bf = boost::filesystem;
 
-#include "gui/MainWindow.h"
-#include "gui/toolbarMenubar/model/ToolbarColorNames.h"
-#include "Control.h"
-#include "LoadHandler.h"
-#include "gui/GladeSearchpath.h"
-#include "gui/XournalView.h"
-#include "pdf/popplerdirect/PdfExport.h"
-#include "cfg.h"
-#include "config.h"
-
+#include <string>
+#include <iostream>
 using namespace std;
 
 #ifdef ENABLE_PYTHON
@@ -53,7 +54,7 @@ void XournalMain::checkForErrorlog()
 {
 	XOJ_CHECK_TYPE(XournalMain);
 
-	bf::path filename = Util::getSettingsFile("errorlog.log");
+	bf::path filename = Util::getConfigFile("errorlog.log");
 	if (bf::exists(filename))
 	{
 		string msg = _("There is an errorlogfile from Xournal++. Please send a Bugreport, "
@@ -257,8 +258,7 @@ int XournalMain::run(int argc, char* argv[])
 	GladeSearchpath* gladePath = initPath(argv[0]);
 
 	// init singleton
-	gchar* colorNameFile = g_build_filename(g_get_home_dir(), G_DIR_SEPARATOR_S,
-											CONFIG_DIR, "colornames.ini", NULL);
+	string colorNameFile = Util::getConfigFile("colornames.ini").string();
 	ToolbarColorNames::getInstance().loadFile(colorNameFile);
 
 	Control* control = new Control(gladePath);
@@ -323,8 +323,7 @@ int XournalMain::run(int argc, char* argv[])
 
 		if (name == NULL || methodeName == NULL)
 		{
-			g_warning("--script attribute should be: Package:Function! (argument was: \"%s\")",
-					scriptFilename);
+			g_warning("--script attribute should be: Package:Function! (argument was: \"%s\")", scriptFilename);
 		}
 		else
 		{
@@ -355,7 +354,6 @@ int XournalMain::run(int argc, char* argv[])
 	delete gladePath;
 
 	ToolbarColorNames::getInstance().saveFile(colorNameFile);
-	g_free(colorNameFile);
 	ToolbarColorNames::freeInstance();
 
 	return 0;
@@ -371,24 +369,21 @@ GladeSearchpath* XournalMain::initPath(const char* argv0)
 	GladeSearchpath* gladePath = new GladeSearchpath();
 
 	// Create config directory if not exists
-	gchar* file = g_build_filename(g_get_home_dir(), G_DIR_SEPARATOR_S, CONFIG_DIR,
-								NULL);
-	mkdir(file, 0700);
-	g_free(file);
+	path file = Util::getConfigSubfolder("");
+	bf::create_directories(file);
+	bf::permissions(file, bf::perms::owner_all);
 
 	// Add first home dir to search path, to add custom glade XMLs
-	gchar* searchPath = g_build_filename(g_get_home_dir(), G_DIR_SEPARATOR_S,
-										CONFIG_DIR, "ui", NULL);
-
-	if (g_file_test(searchPath, G_FILE_TEST_EXISTS) &&
-		g_file_test(searchPath, G_FILE_TEST_IS_DIR))
 	{
-		gladePath->addSearchDirectory(searchPath);
+		path searchPath = Util::getConfigSubfolder("ui");
+		if (bf::exists(searchPath) && bf::is_directory(searchPath))
+		{
+			gladePath->addSearchDirectory(searchPath.c_str());
+		}
 	}
-	g_free(searchPath);
 
 	gchar* path = g_path_get_dirname(argv0);
-	searchPath = g_build_filename(path, "ui", NULL);
+	gchar* searchPath = g_build_filename(path, "ui", NULL);
 	gladePath->addSearchDirectory(searchPath);
 	g_free(searchPath);
 
@@ -397,7 +392,7 @@ GladeSearchpath* XournalMain::initPath(const char* argv0)
 	g_free(searchPath);
 	g_free(path);
 
-	char buffer[512] = {0};
+	char buffer[512] = { 0 };
 	path = getcwd(buffer, sizeof(buffer));
 	if (path == NULL)
 	{

@@ -13,15 +13,14 @@
 
 #include "UndoAction.h"
 
-class XojPage;
 class Layer;
 class Redrawable;
+class XojPage;
 
 class MoveUndoAction : public UndoAction
 {
 public:
-	MoveUndoAction(Layer* sourceLayer, PageRef sourcePage,
-				   ElementVector* selected, double mx, double my,
+	MoveUndoAction(Layer* sourceLayer, PageRef sourcePage, ElementVector* selected, double mx, double my,
 				   Layer* targetLayer, PageRef targetPage);
 	virtual ~MoveUndoAction();
 

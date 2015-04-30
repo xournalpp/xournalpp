@@ -87,8 +87,7 @@ void PythonRunner::runScript(string name, string function, string parameter)
 {
 	if (name.empty() || function.empty())
 	{
-		g_warning("runScript::name (%s) and function (%s) should not be empty!",
-				name.c_str(), function.c_str());
+		g_warning("runScript::name (%s) and function (%s) should not be empty!", name.c_str(), function.c_str());
 		return;
 	}
 
@@ -105,8 +104,7 @@ void PythonRunner::runScript(string name, string function, string parameter)
 		instance->callbackId = g_idle_add((GSourceFunc) scriptRunner, instance);
 	}
 
-	instance->scripts = g_list_append(instance->scripts, new ScriptData(name,
-																		function, parameter));
+	instance->scripts = g_list_append(instance->scripts, new ScriptData(name, function, parameter));
 
 	g_mutex_unlock(instance->mutex);
 }
@@ -122,6 +120,7 @@ bool PythonRunner::scriptRunner(PythonRunner* runner)
 	runner->runScriptInt(data->name, data->function, data->parameter);
 
 	delete data;
+	data = NULL;
 
 	bool callAgain = false;
 	g_mutex_lock(runner->mutex);

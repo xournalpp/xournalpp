@@ -11,11 +11,12 @@
 
 #pragma once
 
+#include "CircleRecognizer.h"
 #include "RecoSegment.h"
 #include "ShapeRecognizerConfig.h"
-#include "CircleRecognizer.h"
 
 #include <XournalType.h>
+
 #include <glib.h>
 
 class Stroke;
@@ -37,8 +38,7 @@ private:
 	Stroke* tryClosedPolygon(int nsides);
 	void optimizePolygonal(const Point* pt, int nsides, int* breaks, Inertia* ss);
 
-	int findPolygonal(const Point* pt, int start, int end, int nsides, int* breaks,
-					Inertia* ss);
+	int findPolygonal(const Point* pt, int start, int end, int nsides, int* breaks, Inertia* ss);
 
 private:
 	XOJ_TYPE_ATTRIB;

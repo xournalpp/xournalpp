@@ -11,7 +11,8 @@
 
 #pragma once
 
-#include "../GladeGui.h"
+#include "gui/GladeGui.h"
+
 #include <XournalType.h>
 
 class GotoDialog : public GladeGui

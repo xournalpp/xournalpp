@@ -1,15 +1,16 @@
 #include "InputHandler.h"
-#include "gui/XournalView.h"
+
+#include "control/Control.h"
+#include "control/shaperecognizer/ShapeRecognizerResult.h"
 #include "gui/PageView.h"
 #include "gui/widgets/XournalWidget.h"
-#include "../Control.h"
-#include "../shaperecognizer/ShapeRecognizerResult.h"
+#include "gui/XournalView.h"
+#include "model/Layer.h"
+#include "Rectangle.h"
 #include "undo/InsertUndoAction.h"
 #include "undo/RecognizerUndoAction.h"
 #include "view/DocumentView.h"
-#include "model/Layer.h"
 #include "XInputUtils.h"
-#include "Rectangle.h"
 
 #include <math.h>
 
@@ -37,12 +38,8 @@ InputHandler::~InputHandler()
 	this->redrawable = NULL;
 	delete this->view;
 	this->view = NULL;
-
-	if (this->reco)
-	{
-		delete this->reco;
-		this->reco = NULL;
-	}
+	delete this->reco;
+	this->reco = NULL;
 
 	XOJ_RELEASE_TYPE(InputHandler);
 }
@@ -54,8 +51,7 @@ void InputHandler::addPointToTmpStroke(GdkEventMotion* event)
 	double zoom = xournal->getZoom();
 	double x = event->x / zoom;
 	double y = event->y / zoom;
-	bool presureSensitivity =
-			xournal->getControl()->getSettings()->isPresureSensitivity();
+	bool presureSensitivity = xournal->getControl()->getSettings()->isPresureSensitivity();
 
 	if (tmpStroke->getPointCount() > 0)
 	{
@@ -74,8 +70,7 @@ void InputHandler::addPointToTmpStroke(GdkEventMotion* event)
 		int count = tmpStroke->getPointCount();
 
 		this->redrawable->repaintRect(tmpStroke->getX(), tmpStroke->getY(),
-									tmpStroke->getElementWidth(),
-									tmpStroke->getElementHeight());
+									  tmpStroke->getElementWidth(), tmpStroke->getElementHeight());
 
 		if (count < 2)
 		{
@@ -95,8 +90,7 @@ void InputHandler::addPointToTmpStroke(GdkEventMotion* event)
 		//printf("Drawing rectangle\n");
 		int count = tmpStroke->getPointCount();
 		this->redrawable->repaintRect(tmpStroke->getX(), tmpStroke->getY(),
-									tmpStroke->getElementWidth(),
-									tmpStroke->getElementHeight());
+									  tmpStroke->getElementWidth(), tmpStroke->getElementHeight());
 
 		if (count < 1)
 		{
@@ -125,8 +119,7 @@ void InputHandler::addPointToTmpStroke(GdkEventMotion* event)
 	{
 		int count = tmpStroke->getPointCount();
 		this->redrawable->repaintRect(tmpStroke->getX(), tmpStroke->getY(),
-									tmpStroke->getElementWidth(),
-									tmpStroke->getElementHeight());
+									  tmpStroke->getElementWidth(), tmpStroke->getElementHeight());
 
 		//g_mutex_lock(this->redrawable->drawingMutex);
 		if (count < 2)
@@ -169,8 +162,7 @@ void InputHandler::addPointToTmpStroke(GdkEventMotion* event)
 	{
 		int count = tmpStroke->getPointCount();
 		this->redrawable->repaintRect(tmpStroke->getX(), tmpStroke->getY(),
-									tmpStroke->getElementWidth(),
-									tmpStroke->getElementHeight());
+									  tmpStroke->getElementWidth(), tmpStroke->getElementHeight());
 
 		if (count < 1)
 		{
@@ -201,14 +193,9 @@ void InputHandler::addPointToTmpStroke(GdkEventMotion* event)
 
 
 			tmpStroke->addPoint(Point(x, y));
-
-			tmpStroke->addPoint(Point(x - dist * cos(angle + delta),
-									y - dist * sin(angle + delta)));
-
+			tmpStroke->addPoint(Point(x - dist * cos(angle + delta), y - dist * sin(angle + delta)));
 			tmpStroke->addPoint(Point(x, y));
-
-			tmpStroke->addPoint(Point(x - dist * cos(angle - delta),
-									y - dist * sin(angle - delta)));
+			tmpStroke->addPoint(Point(x - dist * cos(angle - delta), y - dist * sin(angle - delta)));
 		}
 		drawTmpStroke(true);
 		return;
@@ -269,8 +256,7 @@ bool InputHandler::getPressureMultiplier(GdkEvent* event, double& presure)
 
 	Settings* settings = xournal->getControl()->getSettings();
 
-	presure = ((1 - rawpressure) * settings->getWidthMinimumMultiplier() +
-			rawpressure * settings->getWidthMaximumMultiplier());
+	presure = ((1 - rawpressure) * settings->getWidthMinimumMultiplier() + rawpressure * settings->getWidthMaximumMultiplier());
 	return true;
 }
 
@@ -280,8 +266,7 @@ void InputHandler::drawTmpStroke(bool do_redraw)
 
 	if (this->tmpStroke)
 	{
-		cairo_t* cr = gtk_xournal_create_cairo_for(this->xournal->getWidget(),
-												this->redrawable);
+		cairo_t* cr = gtk_xournal_create_cairo_for(this->xournal->getWidget(), this->redrawable);
 
 		double zoom = xournal->getControl()->getZoomControl()->getZoom();
 
@@ -296,10 +281,7 @@ void InputHandler::drawTmpStroke(bool do_redraw)
 
 		g_mutex_lock(&this->redrawable->drawingMutex);
 
-		this->view->drawStroke(cr,
-							this->tmpStroke,
-							do_redraw ? 0 : this->tmpStrokeDrawElem,
-							getZoomFactor(zoom));
+		this->view->drawStroke(cr, this->tmpStroke, do_redraw ? 0 : this->tmpStrokeDrawElem, getZoomFactor(zoom));
 
 		this->tmpStrokeDrawElem = this->tmpStroke->getPointCount() - 1;
 		cairo_destroy(cr);
@@ -375,9 +357,7 @@ void InputHandler::onButtonReleaseEvent(GdkEventButton* event, PageRef page)
 
 	UndoRedoHandler* undo = xournal->getControl()->getUndoRedoHandler();
 
-	undo->addUndoAction(new InsertUndoAction(page,
-											layer,
-											this->tmpStroke));
+	undo->addUndoAction(new InsertUndoAction(page, layer, this->tmpStroke));
 
 	ToolHandler* h = xournal->getControl()->getToolHandler();
 	if (h->isShapeRecognizer())
@@ -394,10 +374,7 @@ void InputHandler::onButtonReleaseEvent(GdkEventButton* event, PageRef page)
 
 			Stroke* recognized = result->getRecognized();
 
-			RecognizerUndoAction* recognizerUndo = new RecognizerUndoAction(page,
-																			layer,
-																			this->tmpStroke,
-																			recognized);
+			RecognizerUndoAction* recognizerUndo = new RecognizerUndoAction(page, layer, this->tmpStroke, recognized);
 
 			undo->addUndoAction(recognizerUndo);
 			layer->addElement(result->getRecognized());
@@ -408,7 +385,7 @@ void InputHandler::onButtonReleaseEvent(GdkEventButton* event, PageRef page)
 
 			range.addPoint(this->tmpStroke->getX(), this->tmpStroke->getY());
 			range.addPoint(this->tmpStroke->getX() + this->tmpStroke->getElementWidth(),
-						this->tmpStroke->getY() + this->tmpStroke->getElementHeight());
+						   this->tmpStroke->getY() + this->tmpStroke->getElementHeight());
 
 			for (Stroke* s : *result->getSources())
 			{
@@ -417,8 +394,7 @@ void InputHandler::onButtonReleaseEvent(GdkEventButton* event, PageRef page)
 				recognizerUndo->addSourceElement(s);
 
 				range.addPoint(s->getX(), s->getY());
-				range.addPoint(s->getX() + s->getElementWidth(),
-							s->getY() + s->getElementHeight());
+				range.addPoint(s->getX() + s->getElementWidth(), s->getY() + s->getElementHeight());
 			}
 
 			page->fireRangeChanged(range);
@@ -482,8 +458,7 @@ bool InputHandler::onMotionNotifyEvent(GdkEventMotion* event)
 	return false;
 }
 
-void InputHandler::startStroke(GdkEventButton* event, StrokeTool tool, double x,
-							   double y)
+void InputHandler::startStroke(GdkEventButton* event, StrokeTool tool, double x, double y)
 {
 	XOJ_CHECK_TYPE(InputHandler);
 

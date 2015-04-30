@@ -1,7 +1,7 @@
 #include "AutosaveJob.h"
-#include "../SaveHandler.h"
 
-#include "../Control.h"
+#include "control/Control.h"
+#include "control/SaveHandler.h"
 
 AutosaveJob::AutosaveJob(Control* control)
 {
@@ -22,8 +22,7 @@ void AutosaveJob::afterRun()
 	GtkWidget* dialog = gtk_message_dialog_new((GtkWindow*) control->getWindow(),
 											   GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, _("Autosave: %s"),
 											   this->error.c_str());
-	gtk_window_set_transient_for(GTK_WINDOW(dialog),
-								 GTK_WINDOW(this->control->getWindow()->getWindow()));
+	gtk_window_set_transient_for(GTK_WINDOW(dialog), GTK_WINDOW(this->control->getWindow()->getWindow()));
 	gtk_dialog_run(GTK_DIALOG(dialog));
 	gtk_widget_destroy(dialog);
 }
@@ -61,6 +60,7 @@ void AutosaveJob::run()
 	GzOutputStream* out = new GzOutputStream(filename);
 	handler.saveTo(out, filename);
 	delete out;
+	out = NULL;
 
 	this->error = handler.getErrorMessage();
 	if (!this->error.empty())

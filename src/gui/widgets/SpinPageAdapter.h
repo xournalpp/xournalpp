@@ -12,6 +12,7 @@
 #pragma once
 
 #include <XournalType.h>
+
 #include <gtk/gtk.h>
 
 class SpinPageListener;
@@ -34,8 +35,7 @@ public:
 
 private:
 	static bool pageNrSpinChangedTimerCallback(SpinPageAdapter* adapter);
-	static void pageNrSpinChangedCallback(GtkSpinButton* spinbutton,
-										SpinPageAdapter* adapter);
+	static void pageNrSpinChangedCallback(GtkSpinButton* spinbutton, SpinPageAdapter* adapter);
 
 	void firePageChanged();
 

@@ -11,11 +11,12 @@
 
 #pragma once
 
-#include <boost/filesystem.hpp>
+#include "StringUtils.h"
+
+#include <boost/filesystem/path.hpp>
 using boost::filesystem::path;
 
 #include <gtk/gtk.h>
-#include "StringUtils.h"
 
 class Util
 {
@@ -40,7 +41,7 @@ public:
 	static void openFileWithDefaultApplicaion(path filename);
 	static void openFileWithFilebrowser(path filename);
 	
-	static path getSettingsSubfolder(path subfolder);
-	static path getSettingsFile(path relativeFileName);
+	static path getConfigSubfolder(path subfolder);
+	static path getConfigFile(path relativeFileName);
 
 };

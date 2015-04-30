@@ -1,9 +1,9 @@
 #include "SidebarPreviews.h"
-#include "SidebarPreviewPage.h"
 
 #include "control/Control.h"
 #include "control/PdfCache.h"
 #include "SidebarLayout.h"
+#include "SidebarPreviewPage.h"
 #include "SidebarToolbar.h"
 
 SidebarPreviews::SidebarPreviews(Control* control) : AbstractSidebarPage(control)
@@ -29,10 +29,8 @@ SidebarPreviews::SidebarPreviews(Control* control) : AbstractSidebarPage(control
 	this->scrollPreview = gtk_scrolled_window_new(NULL, NULL);
 	g_object_ref(this->scrollPreview);
 
-	gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(this->scrollPreview),
-								GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
-	gtk_scrolled_window_set_shadow_type(GTK_SCROLLED_WINDOW(this->scrollPreview),
-										GTK_SHADOW_IN);
+	gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(this->scrollPreview), GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
+	gtk_scrolled_window_set_shadow_type(GTK_SCROLLED_WINDOW(this->scrollPreview), GTK_SHADOW_IN);
 
 	gtk_container_add(GTK_CONTAINER(this->scrollPreview), this->iconViewPreview);
 	gtk_widget_show(this->scrollPreview);
@@ -41,17 +39,15 @@ SidebarPreviews::SidebarPreviews(Control* control) : AbstractSidebarPage(control
 
 	registerListener(this->control);
 
-	g_signal_connect(this->scrollPreview, "size-allocate", G_CALLBACK(sizeChanged),
-					this);
+	g_signal_connect(this->scrollPreview, "size-allocate", G_CALLBACK(sizeChanged), this);
 
 	this->table = GTK_TABLE(gtk_table_new(2, 1, false));
 	g_object_ref(this->table);
 
 	gtk_table_attach(this->table, this->scrollPreview, 0, 1, 0, 1,
-					(GtkAttachOptions) (GTK_FILL | GTK_EXPAND),
-					(GtkAttachOptions) (GTK_FILL | GTK_EXPAND), 0, 0);
+					 (GtkAttachOptions) (GTK_FILL | GTK_EXPAND), (GtkAttachOptions) (GTK_FILL | GTK_EXPAND), 0, 0);
 	gtk_table_attach(this->table, this->toolbar->getWidget(), 0, 1, 1, 2,
-					(GtkAttachOptions) (GTK_FILL | GTK_EXPAND), GTK_FILL, 0, 0);
+					 (GtkAttachOptions) (GTK_FILL | GTK_EXPAND), GTK_FILL, 0, 0);
 }
 
 SidebarPreviews::~SidebarPreviews()
@@ -83,8 +79,7 @@ SidebarPreviews::~SidebarPreviews()
 	XOJ_RELEASE_TYPE(SidebarPreviews);
 }
 
-void SidebarPreviews::sizeChanged(GtkWidget* widget, GtkAllocation* allocation,
-								  SidebarPreviews* sidebar)
+void SidebarPreviews::sizeChanged(GtkWidget* widget, GtkAllocation* allocation, SidebarPreviews* sidebar)
 {
 	XOJ_CHECK_TYPE_OBJ(sidebar, SidebarPreviews);
 
@@ -112,8 +107,7 @@ void SidebarPreviews::setBackgroundWhite()
 	}
 	this->backgroundInitialized = true;
 
-	gdk_window_set_background(GTK_LAYOUT(this->iconViewPreview)->bin_window,
-							&this->iconViewPreview->style->white);
+	gdk_window_set_background(GTK_LAYOUT(this->iconViewPreview)->bin_window, &this->iconViewPreview->style->white);
 }
 
 double SidebarPreviews::getZoom()
@@ -261,10 +255,8 @@ bool SidebarPreviews::scrollToPreview(SidebarPreviews* sidebar)
 		SidebarPreviewPage* p = sidebar->previews[sidebar->selectedPage];
 
 		// scroll to preview
-		GtkAdjustment* hadj = gtk_scrolled_window_get_hadjustment(GTK_SCROLLED_WINDOW(
-																					sidebar->scrollPreview));
-		GtkAdjustment* vadj = gtk_scrolled_window_get_vadjustment(GTK_SCROLLED_WINDOW(
-																					sidebar->scrollPreview));
+		GtkAdjustment* hadj = gtk_scrolled_window_get_hadjustment(GTK_SCROLLED_WINDOW(sidebar->scrollPreview));
+		GtkAdjustment* vadj = gtk_scrolled_window_get_vadjustment(GTK_SCROLLED_WINDOW(sidebar->scrollPreview));
 		GtkWidget* widget = p->getWidget();
 
 		int x = widget->allocation.x;
@@ -359,13 +351,9 @@ void SidebarPreviews::pageSelected(int page)
 		p->setSelected(true);
 		scrollToPreview(this);
 
-		this->toolbar->setButtonEnabled(
-										page != 0 && this->previewCount != 0,
+		this->toolbar->setButtonEnabled(page != 0 && this->previewCount != 0,
 										page != this->previewCount - 1 && this->previewCount != 0,
-										true,
-										this->previewCount > 1,
-										this->control->getDocument()->getPage(page)
-										);
+										true, this->previewCount > 1, this->control->getDocument()->getPage(page));
 	}
 }
 

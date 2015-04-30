@@ -11,12 +11,13 @@
 
 #pragma once
 
+#include <StringUtils.h>
+#include <XournalType.h>
+
 #include <boost/filesystem/path.hpp>
 using boost::filesystem::path;
 
 #include <gtk/gtk.h>
-#include <StringUtils.h>
-#include <XournalType.h>
 
 class RecentManagerListener
 {
@@ -97,8 +98,7 @@ private:
 	 * @param items A pointer to a GList containing GtkRecentInfo%s
 	 * @param xoj   Returns xoj files if xoj is set, pdf files otherwise
 	 *
-	 * @return      A pointer to a GList containing the relevant
-	 *              GtkRecentInfo%s sorted according to their
+	 * @return      A pointer to a GList containing the relevant GtkRecentInfo%s sorted according to their
 	 *              modification dates
 	 */
 	GList* filterRecent(GList* items, bool xoj);
@@ -109,15 +109,13 @@ private:
 	 * file is added to the recent manager to recreate
 	 * all of the menu items
 	 */
-	static void recentManagerChangedCallback(GtkRecentManager* manager,
-											RecentManager* recentManager);
+	static void recentManagerChangedCallback(GtkRecentManager* manager, RecentManager* recentManager);
 
 	/**
 	 * This callback function is triggered whenever one of
 	 * the items corresponding to recent files is activated
 	 */
-	static void recentsMenuActivateCallback(GtkAction* action,
-											RecentManager* recentManager);
+	static void recentsMenuActivateCallback(GtkAction* action, RecentManager* recentManager);
 
 	/**
 	 * This function serves as a comparator to sort different

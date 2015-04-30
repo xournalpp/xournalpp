@@ -1,5 +1,6 @@
 #include "ImageOpenDlg.h"
-#include "../settings/Settings.h"
+
+#include "control/settings/Settings.h"
 
 #include <config.h>
 #include <glib/gi18n-lib.h>
@@ -9,8 +10,7 @@ GFile* ImageOpenDlg::show(GtkWindow* win, Settings* settings, bool localOnly,
 {
 	GtkWidget* dialog = gtk_file_chooser_dialog_new(_("Open Image"), win,
 													GTK_FILE_CHOOSER_ACTION_OPEN, GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-													GTK_STOCK_OPEN,
-													GTK_RESPONSE_OK, NULL);
+													GTK_STOCK_OPEN, GTK_RESPONSE_OK, NULL);
 	gtk_file_chooser_set_local_only(GTK_FILE_CHOOSER(dialog), localOnly);
 
 	GtkFileFilter* filterSupported = gtk_file_filter_new();
@@ -20,8 +20,7 @@ GFile* ImageOpenDlg::show(GtkWindow* win, Settings* settings, bool localOnly,
 
 	if (!settings->getLastImagePath().empty())
 	{
-		gtk_file_chooser_set_current_folder_uri(GTK_FILE_CHOOSER(dialog),
-												settings->getLastImagePath().c_str());
+		gtk_file_chooser_set_current_folder_uri(GTK_FILE_CHOOSER(dialog), settings->getLastImagePath().c_str());
 	}
 
 	GtkWidget* cbAttach = NULL;
@@ -34,8 +33,7 @@ GFile* ImageOpenDlg::show(GtkWindow* win, Settings* settings, bool localOnly,
 
 	GtkWidget* image = gtk_image_new();
 	gtk_file_chooser_set_preview_widget(GTK_FILE_CHOOSER(dialog), image);
-	g_signal_connect(dialog, "update-preview", G_CALLBACK(updatePreviewCallback),
-					 NULL);
+	g_signal_connect(dialog, "update-preview", G_CALLBACK(updatePreviewCallback), NULL);
 
 	gtk_window_set_transient_for(GTK_WINDOW(dialog), win);
 	if (gtk_dialog_run(GTK_DIALOG(dialog)) != GTK_RESPONSE_OK)
@@ -49,8 +47,7 @@ GFile* ImageOpenDlg::show(GtkWindow* win, Settings* settings, bool localOnly,
 		*attach = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(cbAttach));
 	}
 
-	char* folder = gtk_file_chooser_get_current_folder_uri(GTK_FILE_CHOOSER(
-																			dialog));
+	char* folder = gtk_file_chooser_get_current_folder_uri(GTK_FILE_CHOOSER(dialog));
 	settings->setLastImagePath(folder);
 	g_free(folder);
 
@@ -61,8 +58,7 @@ GFile* ImageOpenDlg::show(GtkWindow* win, Settings* settings, bool localOnly,
 
 // Source: Empathy
 
-GdkPixbuf* ImageOpenDlg::pixbufScaleDownIfNecessary(GdkPixbuf* pixbuf,
-													gint maxSize)
+GdkPixbuf* ImageOpenDlg::pixbufScaleDownIfNecessary(GdkPixbuf* pixbuf, gint maxSize)
 {
 	int width = gdk_pixbuf_get_width(pixbuf);
 	int height = gdk_pixbuf_get_height(pixbuf);
@@ -80,8 +76,7 @@ GdkPixbuf* ImageOpenDlg::pixbufScaleDownIfNecessary(GdkPixbuf* pixbuf,
 	return (GdkPixbuf*) g_object_ref(pixbuf);
 }
 
-void ImageOpenDlg::updatePreviewCallback(GtkFileChooser* fileChooser,
-										 void* userData)
+void ImageOpenDlg::updatePreviewCallback(GtkFileChooser* fileChooser, void* userData)
 {
 	gchar* filename = gtk_file_chooser_get_preview_filename(fileChooser);
 
@@ -99,8 +94,7 @@ void ImageOpenDlg::updatePreviewCallback(GtkFileChooser* fileChooser,
 		}
 		else
 		{
-			gtk_image_set_from_stock(GTK_IMAGE(image), "gtk-dialog-question",
-									 GTK_ICON_SIZE_DIALOG);
+			gtk_image_set_from_stock(GTK_IMAGE(image), "gtk-dialog-question", GTK_ICON_SIZE_DIALOG);
 		}
 
 		g_free(filename);
@@ -108,4 +102,3 @@ void ImageOpenDlg::updatePreviewCallback(GtkFileChooser* fileChooser,
 
 	gtk_file_chooser_set_preview_widget_active(fileChooser, true);
 }
-

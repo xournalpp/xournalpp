@@ -12,11 +12,11 @@
 
 #pragma once
 
-#include "view/ElementContainer.h"
-#include "../Tool.h"
+#include "control/Tool.h"
+#include "CursorSelectionType.h"
 #include "model/Font.h"
 #include "model/PageRef.h"
-#include "CursorSelectionType.h"
+#include "view/ElementContainer.h"
 
 #include <XournalType.h>
 
@@ -96,8 +96,8 @@ public:
 	 * Sets the tool size for pen or eraser, returs an undo action
 	 * (or NULL if nothing is done)
 	 */
-	UndoAction* setSize(ToolSize size, const double* thicknessPen,
-						const double* thicknessHilighter, const double* thicknessEraser);
+	UndoAction* setSize(ToolSize size,
+					    const double* thicknessPen, const double* thicknessHilighter, const double* thicknessEraser);
 
 	/**
 	 * Set the color of all elements, return an undo action

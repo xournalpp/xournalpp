@@ -1,4 +1,5 @@
 #include "ToolItemDragCurrentData.h"
+
 #include <Stacktrace.h>
 
 ToolItemDragDropData* ToolItemDragCurrentData::data = NULL;
@@ -24,8 +25,7 @@ void ToolItemDragCurrentData::setData(GtkWidget* widget)
 	*data = *d;
 }
 
-void ToolItemDragCurrentData::setData(ToolItemType type, int id,
-									  AbstractToolItem* item)
+void ToolItemDragCurrentData::setData(ToolItemType type, int id, AbstractToolItem* item)
 {
 	g_return_if_fail(item != NULL || type != TOOL_ITEM_ITEM);
 

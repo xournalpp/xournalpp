@@ -11,9 +11,11 @@
 
 #pragma once
 
-#include <XournalType.h>
 #include <StringUtils.h>
+#include <XournalType.h>
+
 #include <gtk/gtk.h>
+
 #include <boost/filesystem/path.hpp>
 using boost::filesystem::path;
 

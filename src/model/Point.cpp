@@ -1,9 +1,9 @@
 #include "Point.h"
 
+#include <glib.h>
+
 #include <math.h>
 #include <stdio.h>
-
-#include <glib.h>
 
 Point::Point()
 {
@@ -76,4 +76,3 @@ bool Point::equalsPos(const Point& p)
 
 	return this->x == p.x && this->y == p.y;
 }
-

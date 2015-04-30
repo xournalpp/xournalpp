@@ -1,9 +1,9 @@
 #include "EraseUndoAction.h"
-#include "gui/Redrawable.h"
-#include "model/Stroke.h"
-#include "model/Layer.h"
-#include "model/eraser/EraseableStroke.h"
 
+#include "gui/Redrawable.h"
+#include "model/eraser/EraseableStroke.h"
+#include "model/Layer.h"
+#include "model/Stroke.h"
 #include "PageLayerPosEntry.h"
 
 EraseUndoAction::EraseUndoAction(PageRef page) : UndoAction("EraseUndoAction")
@@ -50,17 +50,15 @@ void EraseUndoAction::addOriginal(Layer* layer, Stroke* element, int pos)
 {
 	XOJ_CHECK_TYPE(EraseUndoAction);
 
-	this->original = g_list_insert_sorted(this->original,
-										new PageLayerPosEntry<Stroke> (layer, element, pos),
-										(GCompareFunc) PageLayerPosEntry<Stroke>::cmp);
+	this->original = g_list_insert_sorted(this->original, new PageLayerPosEntry<Stroke> (layer, element, pos),
+										  (GCompareFunc) PageLayerPosEntry<Stroke>::cmp);
 }
 
 void EraseUndoAction::addEdited(Layer* layer, Stroke* element, int pos)
 {
 	XOJ_CHECK_TYPE(EraseUndoAction);
 
-	this->edited = g_list_insert_sorted(this->edited,
-										new PageLayerPosEntry<Stroke> (layer, element, pos),
+	this->edited = g_list_insert_sorted(this->edited, new PageLayerPosEntry<Stroke> (layer, element, pos),
 										(GCompareFunc) PageLayerPosEntry<Stroke>::cmp);
 }
 
@@ -75,6 +73,7 @@ void EraseUndoAction::removeEdited(Stroke* element)
 		{
 			this->edited = g_list_delete_link(this->edited, l);
 			delete p;
+			p = NULL;
 			return;
 		}
 	}
@@ -94,6 +93,7 @@ void EraseUndoAction::finalize()
 		{
 			this->edited = g_list_delete_link(this->edited, del);
 			delete p;
+			p = NULL;
 		}
 		else
 		{
@@ -112,6 +112,7 @@ void EraseUndoAction::finalize()
 			}
 
 			delete e;
+			e = NULL;
 			p->element->setEraseable(NULL);
 		}
 	}

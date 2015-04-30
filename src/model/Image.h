@@ -12,7 +12,9 @@
 #pragma once
 
 #include "Element.h"
+
 #include <XournalType.h>
+
 #include <string>
 using std::string;
 
@@ -46,8 +48,7 @@ public:
 private:
 	virtual void calcSize();
 
-	static cairo_status_t cairoReadFunction(Image* image, unsigned char* data,
-											unsigned int length);
+	static cairo_status_t cairoReadFunction(Image* image, unsigned char* data, unsigned int length);
 private:
 	XOJ_TYPE_ATTRIB;
 

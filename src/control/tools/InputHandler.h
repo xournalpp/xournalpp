@@ -11,11 +11,13 @@
 
 #pragma once
 
-#include <gtk/gtk.h>
-#include "model/Stroke.h"
+#include "control/shaperecognizer/ShapeRecognizer.h"
 #include "model/PageRef.h"
+#include "model/Stroke.h"
+
 #include <XournalType.h>
-#include "../shaperecognizer/ShapeRecognizer.h"
+
+#include <gtk/gtk.h>
 
 class DocumentView;
 class XournalView;

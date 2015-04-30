@@ -13,8 +13,8 @@
 
 #include "InputStreamException.h"
 
-class ObjectOutputStream;
 class ObjectInputStream;
+class ObjectOutputStream;
 
 extern const char* XML_VERSION_STR;
 
@@ -22,6 +22,5 @@ class Serializeable
 {
 public:
 	virtual void serialize(ObjectOutputStream& out) = 0;
-	virtual void readSerialized(ObjectInputStream& in) throw (
-			InputStreamException) = 0;
+	virtual void readSerialized(ObjectInputStream& in) throw (InputStreamException) = 0;
 };

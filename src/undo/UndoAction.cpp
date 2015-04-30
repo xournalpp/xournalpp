@@ -30,4 +30,3 @@ const char* UndoAction::getClassName() const
 {
 	return this->className;
 }
-

@@ -11,13 +11,15 @@
 
 #pragma once
 
-class XojPage;
-class Control;
+#include "gui/widgets/SpinPageAdapter.h"
+#include "model/PageRef.h"
+
+#include <XournalType.h>
 
 #include <gtk/gtk.h>
-#include <XournalType.h>
-#include "model/PageRef.h"
-#include "gui/widgets/SpinPageAdapter.h"
+
+class XojPage;
+class Control;
 
 class ScrollHandler : public SpinPageListener
 {

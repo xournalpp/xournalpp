@@ -11,9 +11,11 @@
 
 #pragma once
 
-#include <gtk/gtk.h>
 #include <serializing/Serializeable.h>
 #include <XournalType.h>
+
+#include <gtk/gtk.h>
+
 #include <vector>
 
 enum ElementType

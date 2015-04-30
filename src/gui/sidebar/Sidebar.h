@@ -11,15 +11,15 @@
 
 #pragma once
 
-#include <gtk/gtk.h>
+#include "model/DocumentChangeType.h"
+#include "model/DocumentListener.h"
+
 #include <XournalType.h>
 
-#include "../model/DocumentChangeType.h"
-#include "../model/DocumentListener.h"
+#include <gtk/gtk.h>
 
-class Control;
-class GladeGui;
 class AbstractSidebarPage;
+class Control;
 class GladeGui;
 class SidebarPageButton;
 
@@ -82,8 +82,7 @@ private:
 	/**
 	 * Page selected
 	 */
-	static void buttonClicked(GtkToolButton* toolbutton,
-							SidebarPageButton* buttonData);
+	static void buttonClicked(GtkToolButton* toolbutton, SidebarPageButton* buttonData);
 
 private:
 	XOJ_TYPE_ATTRIB;

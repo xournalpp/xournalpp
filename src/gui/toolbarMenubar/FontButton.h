@@ -12,8 +12,9 @@
 #pragma once
 
 #include "AbstractToolItem.h"
-#include "../GladeGui.h"
+#include "gui/GladeGui.h"
 #include "model/Font.h"
+
 #include <XournalType.h>
 
 class FontButton : public AbstractToolItem
@@ -24,8 +25,7 @@ public:
 	virtual ~FontButton();
 
 public:
-	virtual void activated(GdkEvent* event, GtkMenuItem* menuitem,
-						   GtkToolButton* toolbutton);
+	virtual void activated(GdkEvent* event, GtkMenuItem* menuitem, GtkToolButton* toolbutton);
 	void setFont(XojFont& font);
 	XojFont getFont();
 	virtual string getToolDisplayName();

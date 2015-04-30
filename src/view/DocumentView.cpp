@@ -1,14 +1,16 @@
 #include "DocumentView.h"
-#include "TextView.h"
-#include <gdk/gdk.h>
-#include "control/tools/Selection.h"
+
+#include "cfg.h"
 #include "control/tools/EditSelection.h"
+#include "control/tools/Selection.h"
+#include "model/BackgroundImage.h"
 #include "model/eraser/EraseableStroke.h"
 #include "model/Layer.h"
-#include "model/BackgroundImage.h"
-#include "cfg.h"
+#include "TextView.h"
 
 #include <config.h>
+
+#include <gdk/gdk.h>
 #include <glib/gi18n-lib.h>
 
 #include <typeinfo>
@@ -58,8 +60,7 @@ void DocumentView::drawEraseableStroke(cairo_t* cr, Stroke* s)
 	e->draw(cr, this->lX, this->lY, this->width, this->height);
 }
 
-void DocumentView::drawStroke(cairo_t* cr, Stroke* s, int startPoint,
-							  double scaleFactor)
+void DocumentView::drawStroke(cairo_t* cr, Stroke* s, int startPoint, double scaleFactor)
 {
 	XOJ_CHECK_TYPE(DocumentView);
 
@@ -422,7 +423,10 @@ void DocumentView::drawSelection(cairo_t* cr, ElementContainer* container)
 {
 	XOJ_CHECK_TYPE(DocumentView);
 
-	for (Element* e : *container->getElements()) drawElement(cr, e);
+	for (Element* e : *container->getElements())
+	{
+		drawElement(cr, e);
+	}
 }
 
 void DocumentView::limitArea(double x, double y, double width, double heigth)
@@ -435,8 +439,7 @@ void DocumentView::limitArea(double x, double y, double width, double heigth)
 	this->lHeight = heigth;
 }
 
-void DocumentView::drawPage(PageRef page, cairo_t* cr,
-							bool dontRenderEditingStroke)
+void DocumentView::drawPage(PageRef page, cairo_t* cr, bool dontRenderEditingStroke)
 {
 	XOJ_CHECK_TYPE(DocumentView);
 
@@ -480,6 +483,7 @@ void DocumentView::drawPage(PageRef page, cairo_t* cr,
 	int layer = 0;
 	for (Layer* l : *page->getLayers())
 	{
+		if (l == NULL) break;
 		if (layer >= page->getSelectedLayerId()) break;
 		drawLayer(cr, l);
 		layer++;
@@ -491,8 +495,7 @@ void DocumentView::drawPage(PageRef page, cairo_t* cr,
 		cout << "DBG:repaint area" << endl;
 		cairo_set_source_rgb(cr, 1, 0, 0);
 		cairo_set_line_width(cr, 1);
-		cairo_rectangle(cr, this->lX + 3, this->lY + 3, this->lWidth - 6,
-						this->lHeight - 6);
+		cairo_rectangle(cr, this->lX + 3, this->lY + 3, this->lWidth - 6, this->lHeight - 6);
 		cairo_stroke(cr);
 	}
 	else
