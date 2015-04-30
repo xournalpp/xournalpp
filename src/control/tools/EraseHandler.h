@@ -11,24 +11,24 @@
 
 #pragma once
 
-#include <XournalType.h>
 #include "model/PageRef.h"
 
+#include <XournalType.h>
+
 class DeleteUndoAction;
+class Document;
 class EraseUndoAction;
 class Layer;
+class Range;
+class Redrawable;
 class Stroke;
 class ToolHandler;
-class Redrawable;
-class Document;
 class UndoRedoHandler;
-class Range;
 
 class EraseHandler
 {
 public:
-	EraseHandler(UndoRedoHandler* undo, Document* doc, PageRef page,
-				ToolHandler* handler, Redrawable* view);
+	EraseHandler(UndoRedoHandler* undo, Document* doc, PageRef page, ToolHandler* handler, Redrawable* view);
 	virtual ~EraseHandler();
 
 public:

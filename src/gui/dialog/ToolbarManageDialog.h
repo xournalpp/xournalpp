@@ -11,11 +11,12 @@
 
 #pragma once
 
-#include "../GladeGui.h"
+#include "gui/GladeGui.h"
+
 #include <XournalType.h>
 
-class ToolbarModel;
 class ToolbarData;
+class ToolbarModel;
 
 class ToolbarManageDialog : public GladeGui
 {
@@ -27,10 +28,9 @@ public:
 	virtual void show(GtkWindow* parent);
 
 private:
-	static void treeSelectionChangedCallback(GtkTreeSelection* selection,
-											ToolbarManageDialog* dlg);
-	static void treeCellEditedCallback(GtkCellRendererText* renderer,
-									gchar* pathString, gchar* newText, ToolbarManageDialog* dlg);
+	static void treeSelectionChangedCallback(GtkTreeSelection* selection, ToolbarManageDialog* dlg);
+	static void treeCellEditedCallback(GtkCellRendererText* renderer, gchar* pathString,
+									   gchar* newText, ToolbarManageDialog* dlg);
 
 	static void buttonNewCallback(GtkButton* button, ToolbarManageDialog* dlg);
 	static void buttonDeleteCallback(GtkButton* button, ToolbarManageDialog* dlg);

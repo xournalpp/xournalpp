@@ -1,4 +1,5 @@
 #include "Selection.h"
+
 #include "model/Layer.h"
 
 Selection::Selection(Redrawable* view)
@@ -19,8 +20,7 @@ Selection::~Selection()
 	XOJ_RELEASE_TYPE(Selection);
 }
 
-void Selection::getSelectedRect(double& x, double& y, double& width,
-								double& height)
+void Selection::getSelectedRect(double& x, double& y, double& width, double& height)
 {
 	XOJ_CHECK_TYPE(Selection);
 
@@ -39,8 +39,7 @@ void Selection::getSelectedRect(double& x, double& y, double& width,
 	for (Element* e : this->selectedElements)
 	{
 		range.addPoint(e->getX(), e->getY());
-		range.addPoint(e->getX() + e->getElementWidth(),
-					   e->getY() + e->getElementHeight());
+		range.addPoint(e->getX() + e->getElementWidth(), e->getY() + e->getElementHeight());
 	}
 
 	x = range.getX() - 3;
@@ -51,8 +50,7 @@ void Selection::getSelectedRect(double& x, double& y, double& width,
 
 //////////////////////////////////////////////////////////
 
-RectSelection::RectSelection(double x, double y, Redrawable* view) :
-Selection(view)
+RectSelection::RectSelection(double x, double y, Redrawable* view) : Selection(view)
 {
 	XOJ_INIT_TYPE(RectSelection);
 
@@ -92,8 +90,7 @@ bool RectSelection::finalize(PageRef page)
 		}
 	}
 
-	view->repaintArea(this->x1 - 10, this->y1 - 10,
-					this->x2 + 10, this->y2 + 10);
+	view->repaintArea(this->x1 - 10, this->y1 - 10, this->x2 + 10, this->y2 + 10);
 
 	return !this->selectedElements.empty();
 }
@@ -163,7 +160,7 @@ void RectSelection::paint(cairo_t* cr, GdkRectangle* rect, double zoom)
 
 	cairo_stroke_preserve(cr);
 	cairo_set_source_rgba(cr, selectionColor.red / 65536.0,
-						selectionColor.green / 65536.0, selectionColor.blue / 65536.0, 0.3);
+						  selectionColor.green / 65536.0, selectionColor.blue / 65536.0, 0.3);
 	cairo_fill(cr);
 }
 
@@ -182,8 +179,7 @@ public:
 	double y;
 };
 
-RegionSelect::RegionSelect(double x, double y, Redrawable* view) :
-Selection(view)
+RegionSelect::RegionSelect(double x, double y, Redrawable* view) : Selection(view)
 {
 	XOJ_INIT_TYPE(RegionSelect);
 
@@ -232,7 +228,7 @@ void RegionSelect::paint(cairo_t* cr, GdkRectangle* rect, double zoom)
 
 		cairo_stroke_preserve(cr);
 		cairo_set_source_rgba(cr, selectionColor.red / 65536.0,
-							selectionColor.green / 65536.0, selectionColor.blue / 65536.0, 0.3);
+							  selectionColor.green / 65536.0, selectionColor.blue / 65536.0, 0.3);
 		cairo_fill(cr);
 	}
 }
@@ -304,8 +300,7 @@ bool RegionSelect::contains(double x, double y)
 	double curx, cury;
 
 	// Walk the edges of the polygon
-	for (GList* l = this->points; l != NULL;
-		lastx = curx, lasty = cury, l = l->next)
+	for (GList* l = this->points; l != NULL; lastx = curx, lasty = cury, l = l->next)
 	{
 		RegionPoint* last = (RegionPoint*) l->data;
 		curx = last->x;
@@ -416,9 +411,7 @@ bool RegionSelect::finalize(PageRef page)
 		}
 	}
 
-	view->repaintArea(this->x1Box - 10, this->y1Box - 10,
-					this->x2Box + 10, this->y2Box + 10);
+	view->repaintArea(this->x1Box - 10, this->y1Box - 10, this->x2Box + 10, this->y2Box + 10);
 
 	return !this->selectedElements.empty();
 }
-

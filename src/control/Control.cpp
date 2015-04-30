@@ -1,55 +1,58 @@
 #include "Control.h"
-#include <gtk/gtk.h>
-#include "gui/XournalView.h"
+
+#include "cfg.h"
+#include "ExportHandler.h"
+#include "gui/Cursor.h"
 #include "gui/dialog/AboutDialog.h"
+#include "gui/dialog/GotoDialog.h"
+#include "gui/dialog/FormatDialog.h"
+#include "gui/dialog/ImagesDialog.h"
 #include "gui/dialog/SettingsDialog.h"
 #include "gui/dialog/PdfPagesDialog.h"
-#include "gui/dialog/ImagesDialog.h"
-#include "gui/dialog/FormatDialog.h"
-#include "gui/dialog/GotoDialog.h"
 #include "gui/dialog/SelectBackgroundColorDialog.h"
 #include "gui/dialog/toolbarCustomize/ToolbarDragDropHandler.h"
 #include "gui/dialog/ToolbarManageDialog.h"
-#include "cfg.h"
+#include "gui/TextEditor.h"
+#include "gui/toolbarMenubar/model/ToolbarData.h"
+#include "gui/toolbarMenubar/model/ToolbarModel.h"
+#include "gui/toolbarMenubar/ToolMenuHandler.h"
+#include "gui/XournalView.h"
+#include "jobs/AutosaveJob.h"
+#include "jobs/BlockingJob.h"
+#include "jobs/PdfExportJob.h"
+#include "jobs/SaveJob.h"
 #include "LoadHandler.h"
+#include "model/BackgroundImage.h"
+#include "model/FormatDefinitions.h"
+#include "model/XojPage.h"
 #include "PrintHandler.h"
-#include "ExportHandler.h"
+#include "settings/ButtonConfig.h"
 #include "settings/MetadataManager.h"
+#include "stockdlg/ImageOpenDlg.h"
+#include "stockdlg/XojOpenDlg.h"
+#include "undo/AddUndoAction.h"
+#include "undo/DeleteUndoAction.h"
+#include "undo/InsertDeletePageUndoAction.h"
+#include "undo/InsertLayerUndoAction.h"
+#include "undo/InsertUndoAction.h"
+#include "undo/PageBackgroundChangedUndoAction.h"
+#include "undo/RemoveLayerUndoAction.h"
+#include "view/DocumentView.h"
+
+#include <config.h>
 #include <CrashHandler.h>
 #include <serializing/ObjectInputStream.h>
 #include <Stacktrace.h>
 #include <XInputUtils.h>
-#include "model/FormatDefinitions.h"
-#include "model/XojPage.h"
-#include "model/BackgroundImage.h"
-#include "undo/InsertDeletePageUndoAction.h"
-#include "undo/InsertLayerUndoAction.h"
-#include "undo/PageBackgroundChangedUndoAction.h"
-#include "undo/PageBackgroundChangedUndoAction.h"
-#include "undo/InsertUndoAction.h"
-#include "undo/RemoveLayerUndoAction.h"
-#include "jobs/BlockingJob.h"
-#include "jobs/PdfExportJob.h"
-#include "jobs/SaveJob.h"
-#include "jobs/AutosaveJob.h"
-#include "view/DocumentView.h"
-#include "stockdlg/ImageOpenDlg.h"
-#include "stockdlg/XojOpenDlg.h"
-#include "gui/TextEditor.h"
-#include "undo/DeleteUndoAction.h"
-#include "undo/AddUndoAction.h"
-#include "settings/ButtonConfig.h"
-#include "gui/Cursor.h"
-#include "gui/toolbarMenubar/model/ToolbarModel.h"
-#include "gui/toolbarMenubar/model/ToolbarData.h"
-#include "gui/toolbarMenubar/ToolMenuHandler.h"
 
-#include <config.h>
 #include <glib/gi18n-lib.h>
+#include <gtk/gtk.h>
+
+#include <boost/locale.hpp>
+#include <boost/filesystem.hpp>
+namespace bf = boost::filesystem;
 
 #include <vector>
-#include <boost/locale.hpp>
-
 using namespace std;
 
 // TODO Check for error log on startup, also check for emergency save document!
@@ -114,8 +117,7 @@ Control::Control(GladeSearchpath* gladeSearchPath)
 	/**
 	 * This is needed to update the previews
 	 */
-	this->changeTimout = g_timeout_add_seconds(10,
-											   (GSourceFunc) checkChangedDocument, this);
+	this->changeTimout = g_timeout_add_seconds(10, (GSourceFunc) checkChangedDocument, this);
 	this->changedPages = NULL;
 
 	this->clipboardHandler = NULL;
@@ -185,7 +187,6 @@ void Control::renameLastAutosaveFile()
 		path renamed = Util::getAutosaveFilename().parent_path();
 		renamed += filename.filename();
 		
-		namespace bf = boost::filesystem;
 		if (bf::exists(filename))
 		{
 			bf::remove(renamed);
@@ -213,8 +214,7 @@ void Control::deleteLastAutosaveFile(path newAutosaveFile)
 	if (!this->lastAutosaveFilename.empty())
 	{
 		// delete old autosave file
-		using namespace boost::filesystem;
-		remove(path(this->lastAutosaveFilename));
+		bf::remove(path(this->lastAutosaveFilename));
 	}
 	this->lastAutosaveFilename = newAutosaveFile;
 }
@@ -341,8 +341,7 @@ void Control::enableAutosave(bool enable)
 	if (enable)
 	{
 		int timeout = settings->getAutosaveTimeout() * 60;
-		this->autosaveTimeout = g_timeout_add_seconds(timeout,
-													  (GSourceFunc) autosaveCallback, this);
+		this->autosaveTimeout = g_timeout_add_seconds(timeout, (GSourceFunc) autosaveCallback, this);
 	}
 }
 
@@ -865,8 +864,7 @@ void Control::actionPerformed(ActionType type, ActionGroup group,
 
 	if (type >= ACTION_TOOL_PEN && type <= ACTION_TOOL_HAND)
 	{
-		ActionType at = (ActionType) (toolHandler->getToolType() - TOOL_PEN +
-									  ACTION_TOOL_PEN);
+		ActionType at = (ActionType) (toolHandler->getToolType() - TOOL_PEN + ACTION_TOOL_PEN);
 		if (type == at && !enabled)
 		{
 			fireActionSelected(GROUP_TOOL, at);
@@ -890,11 +888,10 @@ void Control::help()
 				 &error);
 	if (error)
 	{
-		GtkWidget* dialog = gtk_message_dialog_new((GtkWindow*) getWindow(),
-												   GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR,
-												   GTK_BUTTONS_OK, _("There was an error displaying help: %s"), error->message);
-		gtk_window_set_transient_for(GTK_WINDOW(dialog),
-									 GTK_WINDOW(this->getWindow()->getWindow()));
+		GtkWidget* dialog = gtk_message_dialog_new((GtkWindow*) getWindow(), GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR,
+												   GTK_BUTTONS_OK, _("There was an error displaying help: %s"),
+												   error->message);
+		gtk_window_set_transient_for(GTK_WINDOW(dialog), GTK_WINDOW(this->getWindow()->getWindow()));
 		gtk_dialog_run(GTK_DIALOG(dialog));
 		gtk_widget_destroy(dialog);
 
@@ -984,11 +981,8 @@ void Control::manageToolbars()
 
 	this->win->updateToolbarMenu();
 
-	char* file = g_build_filename(g_get_home_dir(), G_DIR_SEPARATOR_S, CONFIG_DIR,
-								  G_DIR_SEPARATOR_S, TOOLBAR_CONFIG,
-								  NULL);
+	const char* file = Util::getConfigFile(TOOLBAR_CONFIG).c_str();
 	this->win->getToolbarModel()->save(file);
-	g_free(file);
 }
 
 void Control::customizeToolbars()
@@ -999,14 +993,13 @@ void Control::customizeToolbars()
 
 	if (this->win->getSelectedToolbar()->isPredefined())
 	{
-		GtkWidget* dialog = gtk_message_dialog_new((GtkWindow*) *this->win,
-												   GTK_DIALOG_DESTROY_WITH_PARENT,
+		GtkWidget* dialog = gtk_message_dialog_new((GtkWindow*) *this->win, GTK_DIALOG_DESTROY_WITH_PARENT,
 												   GTK_MESSAGE_QUESTION, GTK_BUTTONS_YES_NO,
-												   _("The Toolbarconfiguration \"%s\" is predefined, would you create a copy to edit?"),
+												   _("The Toolbarconfiguration \"%s\" is predefined, "
+												   "would you create a copy to edit?"),
 												   this->win->getSelectedToolbar()->getName().c_str());
 
-		gtk_window_set_transient_for(GTK_WINDOW(dialog),
-									 GTK_WINDOW(this->getWindow()->getWindow()));
+		gtk_window_set_transient_for(GTK_WINDOW(dialog), GTK_WINDOW(this->getWindow()->getWindow()));
 		int res = gtk_dialog_run(GTK_DIALOG(dialog));
 		gtk_widget_destroy(dialog);
 
@@ -1022,8 +1015,7 @@ void Control::customizeToolbars()
 
 				if (i != 0)
 				{
-					id += " ";
-					id += i;
+					id += CONCAT(" ", i);
 				}
 
 				if (!model->existsId(id))
@@ -1172,8 +1164,7 @@ void Control::setShapeRecognizerEnabled(bool enabled)
 	}
 
 	this->toolHandler->setShapeRecognizer(enabled);
-	fireActionSelected(GROUP_SHAPE_RECOGNIZER,
-					   enabled ? ACTION_SHAPE_RECOGNIZER : ACTION_NONE);
+	fireActionSelected(GROUP_SHAPE_RECOGNIZER, enabled ? ACTION_SHAPE_RECOGNIZER : ACTION_NONE);
 
 	if (enabled)
 	{
@@ -1190,9 +1181,7 @@ void Control::enableFullscreen(bool enabled, bool presentation)
 	{
 		gtk_window_fullscreen((GtkWindow*) *win);
 
-		string str = presentation ?
-				settings->getPresentationHideElements() :
-				settings->getFullscreenHideElements();
+		string str = presentation ? settings->getPresentationHideElements() : settings->getFullscreenHideElements();
 
 		using std::vector;
 		vector<string> part;
@@ -1516,12 +1505,10 @@ void Control::insertNewPage(int position)
 		if (this->doc->getPdfPageCount() == 0)
 		{
 			GtkWidget* dialog = gtk_message_dialog_new((GtkWindow*) *win,
-													   GTK_DIALOG_DESTROY_WITH_PARENT,
-													   GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
+													   GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
 													   _("You don't have any PDF pages to select from. Cancel operation,\n"
 														 "Please select another background type: Menu \"Journal\" / \"Insert Page Type\"."));
-			gtk_window_set_transient_for(GTK_WINDOW(dialog),
-										 GTK_WINDOW(this->getWindow()->getWindow()));
+			gtk_window_set_transient_for(GTK_WINDOW(dialog), GTK_WINDOW(this->getWindow()->getWindow()));
 			gtk_dialog_run(GTK_DIALOG(dialog));
 			gtk_widget_destroy(dialog);
 
@@ -1530,8 +1517,7 @@ void Control::insertNewPage(int position)
 		else
 		{
 			this->doc->lock();
-			PdfPagesDialog* dlg = new PdfPagesDialog(this->gladeSearchPath, this->doc,
-													 this->settings);
+			PdfPagesDialog* dlg = new PdfPagesDialog(this->gladeSearchPath, this->doc, this->settings);
 			for (int i = 0; i < doc->getPageCount(); i++)
 			{
 				PageRef p = doc->getPage(i);
@@ -1654,8 +1640,7 @@ void Control::setPageBackground(ActionType type)
 	else if (ACTION_SET_PAPER_BACKGROUND_IMAGE == type)
 	{
 		this->doc->lock();
-		ImagesDialog* dlg = new ImagesDialog(this->gladeSearchPath, this->doc,
-											 this->settings);
+		ImagesDialog* dlg = new ImagesDialog(this->gladeSearchPath, this->doc, this->settings);
 		this->doc->unlock();
 
 		dlg->show(GTK_WINDOW(this->win->getWindow()));
@@ -1685,13 +1670,12 @@ void Control::setPageBackground(ActionType type)
 			newImg.setAttach(attach);
 			if (err)
 			{
-				GtkWidget* dialog = gtk_message_dialog_new((GtkWindow*) * win,
+				GtkWidget* dialog = gtk_message_dialog_new((GtkWindow*) *win,
 														   GTK_DIALOG_DESTROY_WITH_PARENT,
 														   GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
 														   _("This image could not be loaded. Error message: %s"),
 														   err->message);
-				gtk_window_set_transient_for(GTK_WINDOW(dialog),
-											 GTK_WINDOW(this->getWindow()->getWindow()));
+				gtk_window_set_transient_for(GTK_WINDOW(dialog), GTK_WINDOW(this->getWindow()->getWindow()));
 				gtk_dialog_run(GTK_DIALOG(dialog));
 				gtk_widget_destroy(dialog);
 				g_error_free(err);
@@ -1722,8 +1706,7 @@ void Control::setPageBackground(ActionType type)
 													   GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
 													   _("You don't have any PDF pages to select from. Cancel operation,\n"
 														 "Please select another background type: Menu \"Journal\" / \"Insert Page Type\"."));
-			gtk_window_set_transient_for(GTK_WINDOW(dialog),
-										 GTK_WINDOW(this->getWindow()->getWindow()));
+			gtk_window_set_transient_for(GTK_WINDOW(dialog), GTK_WINDOW(this->getWindow()->getWindow()));
 			gtk_dialog_run(GTK_DIALOG(dialog));
 			gtk_widget_destroy(dialog);
 			return;
@@ -1732,8 +1715,7 @@ void Control::setPageBackground(ActionType type)
 		{
 			this->doc->lock();
 
-			PdfPagesDialog* dlg = new PdfPagesDialog(this->gladeSearchPath, this->doc,
-													 this->settings);
+			PdfPagesDialog* dlg = new PdfPagesDialog(this->gladeSearchPath, this->doc, this->settings);
 			for (int i = 0; i < doc->getPageCount(); i++)
 			{
 				PageRef p = doc->getPage(i);
@@ -1764,14 +1746,12 @@ void Control::setPageBackground(ActionType type)
 	updateBackgroundSizeButton();
 
 	this->undoRedo->addUndoAction(
-		new PageBackgroundChangedUndoAction(page, origType, origPdfPage,
-										    origBackgroundImage, origW, origH));
+		new PageBackgroundChangedUndoAction(page, origType, origPdfPage, origBackgroundImage, origW, origH));
 }
 
 void Control::gotoPage()
 {
-	GotoDialog* dlg = new GotoDialog(this->gladeSearchPath,
-									 this->doc->getPageCount());
+	GotoDialog* dlg = new GotoDialog(this->gladeSearchPath, this->doc->getPageCount());
 
 	dlg->show(GTK_WINDOW(this->win->getWindow()));
 	int page = dlg->getSelectedPage();
@@ -1804,8 +1784,7 @@ void Control::updateBackgroundSizeButton()
 	GtkWidget* pageSize = win->get("menuJournalPaperFormat");
 
 	if (BACKGROUND_TYPE_NONE != bg && BACKGROUND_TYPE_LINED != bg &&
-		BACKGROUND_TYPE_RULED != bg
-		&& BACKGROUND_TYPE_GRAPH != bg)
+		BACKGROUND_TYPE_RULED != bg && BACKGROUND_TYPE_GRAPH != bg)
 	{
 		gtk_widget_set_sensitive(paperColor, false);
 	}
@@ -1829,8 +1808,7 @@ void Control::paperFormat()
 	}
 	clearSelectionEndText();
 
-	FormatDialog* dlg = new FormatDialog(this->gladeSearchPath, settings,
-										 page->getWidth(), page->getHeight());
+	FormatDialog* dlg = new FormatDialog(this->gladeSearchPath, settings, page->getWidth(), page->getHeight());
 	dlg->show(GTK_WINDOW(this->win->getWindow()));
 
 	double width = dlg->getWidth();
@@ -1864,14 +1842,12 @@ void Control::changePageBackgroundColor()
 
 	BackgroundType bg = p->getBackgroundType();
 	if (BACKGROUND_TYPE_NONE != bg && BACKGROUND_TYPE_LINED != bg &&
-		BACKGROUND_TYPE_RULED != bg
-		&& BACKGROUND_TYPE_GRAPH != bg)
+		BACKGROUND_TYPE_RULED != bg && BACKGROUND_TYPE_GRAPH != bg)
 	{
 		return;
 	}
 
-	SelectBackgroundColorDialog* dlg = new SelectBackgroundColorDialog(
-																	   this->gladeSearchPath, this);
+	SelectBackgroundColorDialog* dlg = new SelectBackgroundColorDialog(this->gladeSearchPath, this);
 	dlg->show(GTK_WINDOW(this->win->getWindow()));
 	int color = dlg->getSelectedColor();
 
@@ -1955,8 +1931,7 @@ void Control::setViewTwoPages(bool twoPages)
 	XOJ_CHECK_TYPE(Control);
 
 	settings->setShowTwoPages(twoPages);
-	fireActionSelected(GROUP_TWOPAGES,
-					   twoPages ? ACTION_VIEW_TWO_PAGES : ACTION_NOT_SELECTED);
+	fireActionSelected(GROUP_TWOPAGES, twoPages ? ACTION_VIEW_TWO_PAGES : ACTION_NOT_SELECTED);
 
 	int currentPage = getCurrentPageNo();
 	win->getXournal()->layoutPages();
@@ -1968,8 +1943,7 @@ void Control::setViewPresentationMode(bool presentationMode)
 	XOJ_CHECK_TYPE(Control);
 
 	settings->setPresentationMode(presentationMode);
-	fireActionSelected(GROUP_PRESENTATION_MODE,
-					   presentationMode ? ACTION_VIEW_PRESENTATION_MODE : ACTION_NOT_SELECTED);
+	fireActionSelected(GROUP_PRESENTATION_MODE, presentationMode ? ACTION_VIEW_PRESENTATION_MODE : ACTION_NOT_SELECTED);
 
 	int currentPage = getCurrentPageNo();
 	win->getXournal()->layoutPages();
@@ -1981,8 +1955,7 @@ void Control::setPageInsertType(PageInsertType type)
 	XOJ_CHECK_TYPE(Control);
 
 	settings->setPageInsertType(type);
-	fireActionSelected(GROUP_PAGE_INSERT_TYPE,
-					   (ActionType) (type - PAGE_INSERT_TYPE_PLAIN + ACTION_NEW_PAGE_PLAIN));
+	fireActionSelected(GROUP_PAGE_INSERT_TYPE, (ActionType) (type - PAGE_INSERT_TYPE_PLAIN + ACTION_NEW_PAGE_PLAIN));
 }
 
 bool Control::invokeCallback(CallbackData* cb)
@@ -2119,8 +2092,7 @@ void Control::toolChanged()
 	fireEnableAction(ACTION_TOOL_DRAW_RECT, toolHandler->isEnableRectangle());
 	fireEnableAction(ACTION_TOOL_DRAW_CIRCLE, toolHandler->isEnableCircle());
 	fireEnableAction(ACTION_TOOL_DRAW_ARROW, toolHandler->isEnableArrow());
-	fireEnableAction(ACTION_SHAPE_RECOGNIZER,
-					 toolHandler->isEnableShapreRecognizer());
+	fireEnableAction(ACTION_SHAPE_RECOGNIZER, toolHandler->isEnableShapreRecognizer());
 
 	bool enableSize = toolHandler->isEnableSize();
 
@@ -2142,8 +2114,7 @@ void Control::toolChanged()
 	}
 
 	fireActionSelected(GROUP_SHAPE_RECOGNIZER,
-					   toolHandler->isShapeRecognizer() ? ACTION_SHAPE_RECOGNIZER
-					   : ACTION_NOT_SELECTED);
+					   toolHandler->isShapeRecognizer() ? ACTION_SHAPE_RECOGNIZER : ACTION_NOT_SELECTED);
 	fireActionSelected(GROUP_RULER,
 					   toolHandler->isRuler() ? ACTION_RULER : ACTION_NOT_SELECTED);
 	fireActionSelected(GROUP_RULER,
@@ -2304,8 +2275,8 @@ void Control::showSettings()
 
 	bool xeventEnabled = settings->isUseXInput();
 	int selectionColor = settings->getSelectionColor();
-	bool verticalSpace = settings->getAddVerticalSpace(),
-			horizontalSpace = settings->getAddHorizontalSpace();
+	bool verticalSpace = settings->getAddVerticalSpace();
+	bool horizontalSpace = settings->getAddHorizontalSpace();
 	bool bigCursor = settings->isShowBigCursor();
 
 	SettingsDialog* dlg = new SettingsDialog(this->gladeSearchPath, settings);
@@ -2321,8 +2292,7 @@ void Control::showSettings()
 		win->getXournal()->forceUpdatePagenumbers();
 	}
 
-	if (verticalSpace != settings->getAddVerticalSpace() ||
-		horizontalSpace != settings->getAddHorizontalSpace())
+	if (verticalSpace != settings->getAddVerticalSpace() || horizontalSpace != settings->getAddHorizontalSpace())
 	{
 		int currentPage = getCurrentPageNo();
 		win->getXournal()->layoutPages();
@@ -2386,8 +2356,7 @@ bool Control::openFile(path filename, int scrollToPage)
 	if (filename.empty())
 	{
 		bool attachPdf = false;
-		filename = XojOpenDlg::showOpenDialog((GtkWindow*) *win, this->settings, false,
-											  attachPdf);
+		filename = XojOpenDlg::showOpenDialog((GtkWindow*) *win, this->settings, false, attachPdf);
 
 		cout << bl::format("Filename: {1}") % filename.string() << endl;
 
@@ -2435,15 +2404,15 @@ bool Control::openFile(path filename, int scrollToPage)
 
 		GtkWidget* dialog = gtk_message_dialog_new((GtkWindow*) *getWindow(),
 												   GTK_DIALOG_DESTROY_WITH_PARENT,
-												   GTK_MESSAGE_QUESTION, GTK_BUTTONS_NONE, h.isAttachedPdfMissing() ? _(
-																														"The attached background PDF could not be found.") :
-												   _("The background PDF could not be found."));
+													   GTK_MESSAGE_QUESTION, GTK_BUTTONS_NONE,
+													   h.isAttachedPdfMissing()
+															? _("The attached background PDF could not be found.")
+															: _("The background PDF could not be found."));
 
 		gtk_dialog_add_button(GTK_DIALOG(dialog), _("Select another PDF"), 1);
 		gtk_dialog_add_button(GTK_DIALOG(dialog), _("Remove PDF Background"), 2);
 		gtk_dialog_add_button(GTK_DIALOG(dialog), _("Cancel"), 3);
-		gtk_window_set_transient_for(GTK_WINDOW(dialog),
-									 GTK_WINDOW(this->getWindow()->getWindow()));
+			gtk_window_set_transient_for(GTK_WINDOW(dialog), GTK_WINDOW(this->getWindow()->getWindow()));
 		int res = gtk_dialog_run(GTK_DIALOG(dialog));
 		gtk_widget_destroy(dialog);
 
@@ -2455,8 +2424,7 @@ bool Control::openFile(path filename, int scrollToPage)
 		else if (res == 1) // select another PDF background
 		{
 			bool attachToDocument = false;
-			path pdfFilename = XojOpenDlg::showOpenDialog((GtkWindow*) * win,
-														  this->settings, true, attachToDocument);
+				path pdfFilename = XojOpenDlg::showOpenDialog((GtkWindow*) *win, this->settings, true, attachToDocument);
 			if (!pdfFilename.empty())
 			{
 				h.setPdfReplacement(pdfFilename.string(), attachToDocument);
@@ -2471,8 +2439,7 @@ bool Control::openFile(path filename, int scrollToPage)
 												   GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR,
 												   GTK_BUTTONS_OK, _("Error opening file '%s'\n%s"), filename.c_str(),
 												   h.getLastError().c_str());
-		gtk_window_set_transient_for(GTK_WINDOW(dialog),
-									 GTK_WINDOW(this->getWindow()->getWindow()));
+		gtk_window_set_transient_for(GTK_WINDOW(dialog), GTK_WINDOW(this->getWindow()->getWindow()));
 		gtk_dialog_run(GTK_DIALOG(dialog));
 		gtk_widget_destroy(dialog);
 		fileLoaded(scrollToPage);
@@ -2533,8 +2500,7 @@ void Control::fileLoaded(int scrollToPage)
 	updateDeletePageButton();
 }
 
-bool Control::annotatePdf(path filename, bool attachPdf,
-						  bool attachToDocument)
+bool Control::annotatePdf(path filename, bool attachPdf, bool attachToDocument)
 {
 	XOJ_CHECK_TYPE(Control);
 
@@ -2545,8 +2511,7 @@ bool Control::annotatePdf(path filename, bool attachPdf,
 
 	if (filename.empty())
 	{
-		filename = XojOpenDlg::showOpenDialog((GtkWindow*) *win, this->settings, true,
-											  attachToDocument);
+		filename = XojOpenDlg::showOpenDialog((GtkWindow*) *win, this->settings, true, attachToDocument);
 		if (filename.empty())
 		{
 			return false;
@@ -2578,10 +2543,9 @@ bool Control::annotatePdf(path filename, bool attachPdf,
 
 		GtkWidget* dialog = gtk_message_dialog_new((GtkWindow*) *win,
 												   GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR,
-												   GTK_BUTTONS_OK, _("Error annotate PDF file '%s'\n%s"), filename.c_str(),
-												   errMsg.c_str());
-		gtk_window_set_transient_for(GTK_WINDOW(dialog),
-									 GTK_WINDOW(this->getWindow()->getWindow()));
+												   GTK_BUTTONS_OK, _("Error annotate PDF file '%s'\n%s"),
+												   filename.c_str(), errMsg.c_str());
+		gtk_window_set_transient_for(GTK_WINDOW(dialog), GTK_WINDOW(this->getWindow()->getWindow()));
 		gtk_dialog_run(GTK_DIALOG(dialog));
 		gtk_widget_destroy(dialog);
 	}
@@ -2626,7 +2590,6 @@ void Control::block(string name)
 
 	this->maxState = 100;
 	this->isBlocking = true;
-
 }
 
 void Control::unblock()
@@ -2659,8 +2622,7 @@ void Control::setCurrentState(int state)
 	XOJ_CHECK_TYPE(Control);
 
 	gdk_threads_enter();
-	gtk_progress_bar_set_fraction(this->pgState,
-								  gdouble(state) / this->maxState);
+	gtk_progress_bar_set_fraction(this->pgState, gdouble(state) / this->maxState);
 	gdk_threads_leave();
 }
 
@@ -2702,7 +2664,8 @@ bool Control::showSaveDialog()
 
 	GtkWidget* dialog = gtk_file_chooser_dialog_new(_("Save File"),
 													(GtkWindow*) *win, GTK_FILE_CHOOSER_ACTION_SAVE,
-													GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL, GTK_STOCK_SAVE, GTK_RESPONSE_OK, NULL);
+													GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL, GTK_STOCK_SAVE,
+													GTK_RESPONSE_OK, NULL);
 	gtk_file_chooser_set_local_only(GTK_FILE_CHOOSER(dialog), true);
 
 	GtkFileFilter* filterXoj = gtk_file_filter_new();
@@ -2712,8 +2675,7 @@ bool Control::showSaveDialog()
 
 	if (!settings->getLastSavePath().empty())
 	{
-		gtk_file_chooser_set_current_folder_uri(GTK_FILE_CHOOSER(dialog),
-												settings->getLastSavePath().c_str());
+		gtk_file_chooser_set_current_folder_uri(GTK_FILE_CHOOSER(dialog), settings->getLastSavePath().c_str());
 	}
 
 	string saveFilename = "";
@@ -2731,19 +2693,16 @@ bool Control::showSaveDialog()
 	{
 		time_t curtime = time(NULL);
 		char stime[128];
-		strftime(stime, sizeof(stime), settings->getDefaultSaveName().c_str(),
-				 localtime(&curtime));
+		strftime(stime, sizeof(stime), settings->getDefaultSaveName().c_str(), localtime(&curtime));
 
 		saveFilename = stime;
 	}
 	this->doc->unlock();
 
-	gtk_file_chooser_set_current_name(GTK_FILE_CHOOSER(dialog),
-									  saveFilename.c_str());
+	gtk_file_chooser_set_current_name(GTK_FILE_CHOOSER(dialog), saveFilename.c_str());
 	gtk_file_chooser_set_do_overwrite_confirmation(GTK_FILE_CHOOSER(dialog), true);
 
-	gtk_window_set_transient_for(GTK_WINDOW(dialog),
-								 GTK_WINDOW(this->getWindow()->getWindow()));
+	gtk_window_set_transient_for(GTK_WINDOW(dialog), GTK_WINDOW(this->getWindow()->getWindow()));
 	if (gtk_dialog_run(GTK_DIALOG(dialog)) != GTK_RESPONSE_OK)
 	{
 		gtk_widget_destroy(dialog);
@@ -2831,8 +2790,7 @@ void Control::exportAs()
 
 	ExportHandler handler;
 
-	handler.runExportWithDialog(this->gladeSearchPath, this->settings, this->doc,
-								this, getCurrentPageNo());
+	handler.runExportWithDialog(this->gladeSearchPath, this->settings, this->doc, this, getCurrentPageNo());
 }
 
 bool Control::saveAs()
@@ -2885,13 +2843,13 @@ bool Control::close(bool destroy)
 	{
 		GtkWidget* dialog = gtk_message_dialog_new((GtkWindow*) *getWindow(),
 												   GTK_DIALOG_DESTROY_WITH_PARENT,
-												   GTK_MESSAGE_WARNING, GTK_BUTTONS_NONE, _("This document is not saved yet."));
+												   GTK_MESSAGE_WARNING, GTK_BUTTONS_NONE,
+												   _("This document is not saved yet."));
 
 		gtk_dialog_add_button(GTK_DIALOG(dialog), _("Save"), 1);
 		gtk_dialog_add_button(GTK_DIALOG(dialog), _("Discard"), 2);
 		gtk_dialog_add_button(GTK_DIALOG(dialog), _("Cancel"), 3);
-		gtk_window_set_transient_for(GTK_WINDOW(dialog),
-									 GTK_WINDOW(this->getWindow()->getWindow()));
+		gtk_window_set_transient_for(GTK_WINDOW(dialog), GTK_WINDOW(this->getWindow()->getWindow()));
 		int resNotSaved = gtk_dialog_run(GTK_DIALOG(dialog));
 		gtk_widget_destroy(dialog);
 
@@ -2926,8 +2884,7 @@ bool Control::close(bool destroy)
 			gtk_dialog_add_button(GTK_DIALOG(dialog), _("Save As"), 1);
 			gtk_dialog_add_button(GTK_DIALOG(dialog), _("Discard"), 2);
 			gtk_dialog_add_button(GTK_DIALOG(dialog), _("Cancel"), 3);
-			gtk_window_set_transient_for(GTK_WINDOW(dialog),
-										 GTK_WINDOW(this->getWindow()->getWindow()));
+			gtk_window_set_transient_for(GTK_WINDOW(dialog), GTK_WINDOW(this->getWindow()->getWindow()));
 			int resDocRemoved = gtk_dialog_run(GTK_DIALOG(dialog));
 			gtk_widget_destroy(dialog);
 			
@@ -3074,8 +3031,7 @@ void Control::clipboardPaste(Element* e)
 
 	undoRedo->addUndoAction(new InsertUndoAction(page, layer, e));
 
-	EditSelection* selection = new EditSelection(this->undoRedo, e,
-												 view, page);
+	EditSelection* selection = new EditSelection(this->undoRedo, e, view, page);
 
 	win->getXournal()->setSelection(selection);
 }
@@ -3109,8 +3065,7 @@ void Control::clipboardPasteXournal(ObjectInputStream& in)
 		string version = in.readString();
 		if (version != PACKAGE_STRING)
 		{
-			g_warning("Paste from Xournal Version %s to Xournal Version %s",
-					  version.c_str(), PACKAGE_STRING);
+			g_warning("Paste from Xournal Version %s to Xournal Version %s", version.c_str(), PACKAGE_STRING);
 		}
 
 		selection = new EditSelection(this->undoRedo, page, view);
@@ -3231,8 +3186,8 @@ void Control::setToolSize(ToolSize size)
 	if (sel)
 	{
 		UndoAction* undo = sel->setSize(size, toolHandler->getToolThickness(TOOL_PEN),
-										toolHandler->getToolThickness(
-																	  TOOL_HILIGHTER), toolHandler->getToolThickness(TOOL_ERASER));
+										toolHandler->getToolThickness(TOOL_HILIGHTER),
+										toolHandler->getToolThickness(TOOL_ERASER));
 		if (undo)
 		{
 			undoRedo->addUndoAction(undo);
@@ -3524,4 +3479,3 @@ Sidebar* Control::getSidebar()
 
 	return this->sidebar;
 }
-

@@ -1,6 +1,8 @@
 #include "PdfObjectWriter.h"
+
 #include "UpdateRef.h"
 #include "UpdateRefKey.h"
+
 #include <iostream>
 
 using namespace std;
@@ -12,11 +14,10 @@ PdfObjectWriter::PdfObjectWriter(PdfWriter* writer, PdfXRef* xref)
 	this->writer = writer;
 	this->xref = xref;
 
-	this->updatedReferenced = g_hash_table_new_full((GHashFunc)
-													UpdateRefKey::hashFunction, (GEqualFunc) UpdateRefKey::equalFunction,
+	this->updatedReferenced = g_hash_table_new_full((GHashFunc) UpdateRefKey::hashFunction,
+												    (GEqualFunc) UpdateRefKey::equalFunction,
 													(GDestroyNotify) UpdateRefKey::destroyDelete,
 													(GDestroyNotify) UpdateRef::destroyDelete);
-
 }
 
 PdfObjectWriter::~PdfObjectWriter()
@@ -40,8 +41,7 @@ void PdfObjectWriter::writeCopiedObjects()
 	while (!allWritten)
 	{
 		allWritten = true;
-		for (GList* l = g_hash_table_get_values(this->updatedReferenced); l != NULL;
-			 l = l->next)
+		for (GList* l = g_hash_table_get_values(this->updatedReferenced); l != NULL; l = l->next)
 		{
 			UpdateRef* uref = (UpdateRef*) l->data;
 			if (!uref->wroteOut)
@@ -55,8 +55,7 @@ void PdfObjectWriter::writeCopiedObjects()
 				break;
 			}
 		}
-		for (GList* l = g_hash_table_get_values(this->updatedReferenced); l != NULL;
-			 l = l->next)
+		for (GList* l = g_hash_table_get_values(this->updatedReferenced); l != NULL; l = l->next)
 		{
 			UpdateRef* uref = (UpdateRef*) l->data;
 			if (!uref->wroteOut)
@@ -149,8 +148,7 @@ void PdfObjectWriter::writeObject(Object* obj, XojPopplerDocument doc)
 	case objRef:
 	{
 		UpdateRefKey key(obj->getRef(), doc);
-		UpdateRef* uref = (UpdateRef*) g_hash_table_lookup(this->updatedReferenced,
-														   &key);
+		UpdateRef* uref = (UpdateRef*) g_hash_table_lookup(this->updatedReferenced, &key);
 		if (uref)
 		{
 			this->writer->write(boost::format("%i %i R ") % uref->objectId % 0);
@@ -163,8 +161,7 @@ void PdfObjectWriter::writeObject(Object* obj, XojPopplerDocument doc)
 
 			obj->fetch(doc.getDoc()->getXRef(), &uref->object);
 
-			g_hash_table_insert(this->updatedReferenced, new UpdateRefKey(obj->getRef(),
-																		  doc), uref);
+			g_hash_table_insert(this->updatedReferenced, new UpdateRefKey(obj->getRef(), doc), uref);
 		}
 	}
 		break;
@@ -181,8 +178,7 @@ void PdfObjectWriter::writeObject(Object* obj, XojPopplerDocument doc)
 		this->writer->write("none\r\n");
 		break;
 	default:
-		g_error("Unhandled objType : %i, please report a bug with a testcase\r\n",
-				obj->getType());
+		g_error("Unhandled objType : %i, please report a bug with a testcase\r\n", obj->getType());
 		break;
 	}
 }

@@ -12,6 +12,7 @@
 #pragma once
 
 #include <XournalType.h>
+
 #include <glib.h>
 
 enum JobType

@@ -14,9 +14,10 @@
 #pragma once
 
 #include "Job.h"
-#include <glib.h>
 
 #include <XournalType.h>
+
+#include <glib.h>
 
 typedef enum
 {

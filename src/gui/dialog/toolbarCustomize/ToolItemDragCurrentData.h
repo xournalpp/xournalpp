@@ -12,6 +12,7 @@
 #pragma once
 
 #include "gui/ToolitemDragDrop.h"
+
 #include <gtk/gtk.h>
 
 class ToolItemDragCurrentData

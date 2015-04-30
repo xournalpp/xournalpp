@@ -1,14 +1,16 @@
 #include "PdfExport.h"
-#include <string.h>
-#include <config.h>
-#include <stdlib.h>
-#include <GzHelper.h>
-#include <PageRange.h>
 
 #include "PdfRefEntry.h"
 #include "PdfUtil.h"
 #include "UpdateRef.h"
 #include "UpdateRefKey.h"
+
+#include <config.h>
+#include <GzHelper.h>
+#include <PageRange.h>
+
+#include <stdlib.h>
+#include <string.h>
 
 /**
  * This class uses some inspiration from FPDF (PHP Class)
@@ -27,8 +29,7 @@ PdfExport::PdfExport(Document* doc, ProgressListener* progressListener)
 
 	this->pageIds = NULL;
 
-	this->refListsOther = g_hash_table_new_full((GHashFunc) g_str_hash,
-												(GEqualFunc) g_str_equal, g_free,
+	this->refListsOther = g_hash_table_new_full((GHashFunc) g_str_hash, (GEqualFunc) g_str_equal, g_free,
 												(GDestroyNotify) PdfRefList::deletePdfRefList);
 
 	this->documents = NULL;
@@ -89,25 +90,25 @@ bool PdfExport::writeCatalog()
 	writer->write("/Pages 1 0 R\n");
 
 	writer->write("/OpenAction [3 0 R /FitH null]\n");
-	//write("/OpenAction [3 0 R /Fit]\n");
+//	write("/OpenAction [3 0 R /Fit]\n");
 
-	//	if($this->ZoomMode=='fullpage')
-	//		$this->_out('/OpenAction [3 0 R /Fit]');
-	//	elseif($this->ZoomMode=='fullwidth')
-	//		$this->_out('/OpenAction [3 0 R /FitH null]');
-	//	elseif($this->ZoomMode=='real')
-	//		$this->_out('/OpenAction [3 0 R /XYZ null null 1]');
-	//	elseif(!is_string($this->ZoomMode))
-	//		$this->_out('/OpenAction [3 0 R /XYZ null null '.($this->ZoomMode/100).']');
+//	if($this->ZoomMode=='fullpage')
+//		$this->_out('/OpenAction [3 0 R /Fit]');
+//	elseif($this->ZoomMode=='fullwidth')
+//		$this->_out('/OpenAction [3 0 R /FitH null]');
+//	elseif($this->ZoomMode=='real')
+//		$this->_out('/OpenAction [3 0 R /XYZ null null 1]');
+//	elseif(!is_string($this->ZoomMode))
+//		$this->_out('/OpenAction [3 0 R /XYZ null null '.($this->ZoomMode/100).']');
 
 	writer->write("/PageLayout /OneColumn\n");
 
-	//	if($this->LayoutMode=='single')
-	//		$this->_out('/PageLayout /SinglePage');
-	//	elseif($this->LayoutMode=='continuous')
-	//		$this->_out('/PageLayout /OneColumn');
-	//	elseif($this->LayoutMode=='two')
-	//		$this->_out('/PageLayout /TwoColumnLeft');
+//	if($this->LayoutMode=='single')
+//		$this->_out('/PageLayout /SinglePage');
+//	elseif($this->LayoutMode=='continuous')
+//		$this->_out('/PageLayout /OneColumn');
+//	elseif($this->LayoutMode=='two')
+//		$this->_out('/PageLayout /TwoColumnLeft');
 
 	if (this->outlineRoot)
 	{
@@ -255,8 +256,7 @@ bool PdfExport::writeFooter()
 		return false;
 	}
 
-	this->bookmarks.writeOutlines(this->doc, this->writer, &this->outlineRoot,
-								  this->pageIds);
+	this->bookmarks.writeOutlines(this->doc, this->writer, &this->outlineRoot, this->pageIds);
 
 	if (!writer->writeInfo(doc->getFilename().string()))
 	{
@@ -445,8 +445,7 @@ bool PdfExport::addPopplerPage(XojPopplerPage* pdf, XojPopplerDocument doc)
 	for (int i = 0; i < dict->getLength(); i++)
 	{
 		const char* cDictName = dict->getKey(i);
-		PdfRefList* refList = (PdfRefList*) g_hash_table_lookup(this->refListsOther,
-																cDictName);
+		PdfRefList* refList = (PdfRefList*) g_hash_table_lookup(this->refListsOther, cDictName);
 		if (!refList)
 		{
 			char* indexName = NULL;
@@ -471,8 +470,7 @@ bool PdfExport::addPopplerPage(XojPopplerPage* pdf, XojPopplerDocument doc)
 				indexName = g_strdup_printf("o%i-", otherObjectId++);
 			}
 
-			refList = new PdfRefList(this->xref, this->objectWriter, this->writer,
-									 indexName);
+			refList = new PdfRefList(this->xref, this->objectWriter, this->writer, indexName);
 			char* dictName = g_strdup(dict->getKey(i));
 
 			// insert the new RefList into the hash table
@@ -492,11 +490,11 @@ bool PdfExport::addPopplerPage(XojPopplerPage* pdf, XojPopplerDocument doc)
 
 		Object filter;
 		dict->lookup("Filter", &filter);
-		//			// this may would be better, but not working...:-/
-		//			Object oDict;
-		//			oDict.initDict(dict);
-		//			Stream * txtStream = stream->addFilters(oDict);
-		//			writePlainStream(txtStream);
+//		// this may would be better, but not working...:-/
+//		Object oDict;
+//		oDict.initDict(dict);
+//		Stream * txtStream = stream->addFilters(oDict);
+//		writePlainStream(txtStream);
 
 		if (filter.isNull())
 		{
@@ -748,4 +746,3 @@ bool PdfExport::createPdf(path file)
 
 	return true;
 }
-

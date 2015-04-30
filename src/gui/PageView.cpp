@@ -1,42 +1,43 @@
 #include "PageView.h"
-#include "XournalView.h"
-#include <stdlib.h>
-#include <math.h>
-#include <gdk/gdkkeysyms.h>
-#include <glib.h>
-#include "control/Control.h"
-#include "view/TextView.h"
-#include "control/tools/Selection.h"
-#include "control/tools/ImageHandler.h"
-#include <pixbuf-utils.h>
-#include <Range.h>
+
 #include "cfg.h"
-#include "undo/InsertUndoAction.h"
+#include "control/Control.h"
+#include "control/SearchControl.h"
+#include "control/settings/ButtonConfig.h"
+#include "control/settings/Settings.h"
 #include "control/jobs/BlockingJob.h"
+#include "control/tools/EraseHandler.h"
+#include "control/tools/ImageHandler.h"
+#include "control/tools/InputHandler.h"
+#include "control/tools/Selection.h"
+#include "control/tools/VerticalToolHandler.h"
+#include "Cursor.h"
 #include "model/Image.h"
+#include "model/Layer.h"
 #include "model/PageRef.h"
 #include "model/Stroke.h"
 #include "model/Text.h"
-#include "model/Layer.h"
-#include "control/settings/Settings.h"
-#include "control/settings/ButtonConfig.h"
-#include "control/SearchControl.h"
-#include "control/tools/VerticalToolHandler.h"
-#include "control/tools/EraseHandler.h"
-#include "control/tools/InputHandler.h"
-#include <Rectangle.h>
-#include "undo/DeleteUndoAction.h"
-#include "Cursor.h"
-#include "TextEditor.h"
-#include "widgets/XournalWidget.h"
 #include "RepaintHandler.h"
+#include "TextEditor.h"
+#include "undo/DeleteUndoAction.h"
+#include "undo/InsertUndoAction.h"
+#include "undo/TextBoxUndoAction.h"
+//#include "undo/TextUndoAction.h"	//for the save file undo
+#include "view/TextView.h"
+#include "widgets/XournalWidget.h"
+#include "XournalView.h"
 
 #include <config.h>
-#include <glib/gi18n-lib.h>
+#include <pixbuf-utils.h>
+#include <Range.h>
+#include <Rectangle.h>
 
-//for the save file undo
-//#include "../undo/TextUndoAction.h"
-#include "undo/TextBoxUndoAction.h"
+#include <glib.h>
+#include <glib/gi18n-lib.h>
+#include <gdk/gdkkeysyms.h>
+
+#include <stdlib.h>
+#include <math.h>
 
 PageView::PageView(XournalView* xournal, PageRef page)
 {
@@ -72,9 +73,8 @@ PageView::PageView(XournalView* xournal, PageRef page)
 
 	this->search = NULL;
 
-	this->eraser = new EraseHandler(xournal->getControl()->getUndoRedoHandler(),
-									xournal->getControl()->getDocument(), this->page,
-									xournal->getControl()->getToolHandler(), this);
+	this->eraser = new EraseHandler(xournal->getControl()->getUndoRedoHandler(), xournal->getControl()->getDocument(),
+									this->page, xournal->getControl()->getToolHandler(), this);
 
 	this->inputHandler = new InputHandler(this->xournal, this);
 }
@@ -149,17 +149,13 @@ bool PageView::containsPoint(int x, int y, bool local)
 		bool leftOk = this->layout.getLayoutAbsoluteX() <= x;
 		bool rightOk = x <= this->layout.getLayoutAbsoluteX() + this->getDisplayWidth();
 		bool topOk = this->layout.getLayoutAbsoluteY() <= y;
-		bool bottomOk = y <= this->layout.getLayoutAbsoluteY() +
-				this->getDisplayHeight();
+		bool bottomOk = y <= this->layout.getLayoutAbsoluteY() + this->getDisplayHeight();
 
 		return leftOk && rightOk && topOk && bottomOk;
 	}
 	else
 	{
-		return x >= 0 &&
-				y >= 0 &&
-				x <= this->getWidth() &&
-				y <= this->getHeight();
+		return x >= 0 && y >= 0 && x <= this->getWidth() && y <= this->getHeight();
 	}
 }
 
@@ -210,8 +206,7 @@ void PageView::endText()
 		int pos = layer->indexOf(txt);
 		if (pos != -1)
 		{
-			DeleteUndoAction* eraseDeleteUndoAction = new DeleteUndoAction(page,
-																		   true);
+			DeleteUndoAction* eraseDeleteUndoAction = new DeleteUndoAction(page, true);
 			layer->removeElement(txt, false);
 			eraseDeleteUndoAction->addElement(layer, txt, pos);
 			undo->addUndoAction(eraseDeleteUndoAction);
@@ -222,8 +217,7 @@ void PageView::endText()
 		// new element
 		if (layer->indexOf(txt) == -1)
 		{
-			undo->addUndoActionBefore(new InsertUndoAction(page, layer, txt),
-									  this->textEditor->getFirstUndoAction());
+			undo->addUndoActionBefore(new InsertUndoAction(page, layer, txt), this->textEditor->getFirstUndoAction());
 			layer->addElement(txt);
 			this->textEditor->textCopyed();
 		}
@@ -234,12 +228,8 @@ void PageView::endText()
 			//TextUndoAction does not work because the textEdit object is destroyed
 			//after endText() so we need to instead copy the information between an
 			//old and new element that we can push and pop to recover.
-			undo->addUndoAction(new TextBoxUndoAction(page, layer,
-													  txt, this->oldtext));
-
+			undo->addUndoAction(new TextBoxUndoAction(page, layer, txt, this->oldtext));
 		}
-
-
 	}
 
 	delete this->textEditor;
@@ -375,8 +365,7 @@ void PageView::selectObjectAt(double x, double y)
 
 	if (elementMatch)
 	{
-		xournal->setSelection(new EditSelection(
-												xournal->getControl()->getUndoRedoHandler(), elementMatch, this, page));
+		xournal->setSelection(new EditSelection(xournal->getControl()->getUndoRedoHandler(), elementMatch, this, page));
 
 		repaintPage();
 	}
@@ -404,19 +393,17 @@ bool PageView::onButtonPressEvent(GtkWidget* widget, GdkEventButton* event)
 	if ((x < 0 || y < 0) && !extendedWarningDisplayd &&
 		settings->isXinputEnabled())
 	{
-		GtkWidget* dialog = gtk_message_dialog_new(
-				(GtkWindow*) *xournal->getControl()->getWindow(), GTK_DIALOG_DESTROY_WITH_PARENT,
-				GTK_MESSAGE_ERROR,
-				GTK_BUTTONS_NONE,
-				_("There was a wrong input event, input is not working.\nDo you want to disable \"Extended Input\"?"));
+		GtkWidget* dialog = gtk_message_dialog_new((GtkWindow*) *xournal->getControl()->getWindow(),
+												   GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR, GTK_BUTTONS_NONE,
+												   _("There was a wrong input event, input is not working.\n"
+													 "Do you want to disable \"Extended Input\"?"));
 
 		gtk_dialog_add_button(GTK_DIALOG(dialog), "Disable \"Extended Input\"", 1);
 		gtk_dialog_add_button(GTK_DIALOG(dialog), "Cancel", 2);
 
 		this->extendedWarningDisplayd = true;
 
-		gtk_window_set_transient_for(GTK_WINDOW(dialog),
-									 GTK_WINDOW(this->xournal->getControl()->getWindow()->getWindow()));
+		gtk_window_set_transient_for(GTK_WINDOW(dialog), GTK_WINDOW(this->xournal->getControl()->getWindow()->getWindow()));
 		if (gtk_dialog_run(GTK_DIALOG(dialog)) == 1)
 		{
 			settings->setXinputEnabled(false);
@@ -458,22 +445,20 @@ bool PageView::onButtonPressEvent(GtkWidget* widget, GdkEventButton* event)
 	{
 		this->verticalSpace = new VerticalToolHandler(this, this->page, y, zoom);
 	}
-		/*
-		else if (h->getToolType() == TOOL_DRAW_RECT ||
-				 h->getToolType() == TOOL_DRAW_CIRCLE ||
-				 h->getToolType() == TOOL_DRAW_ARROW)
+	/*
+	else if (h->getToolType() == TOOL_DRAW_RECT || h->getToolType() == TOOL_DRAW_CIRCLE || h->getToolType() == TOOL_DRAW_ARROW)
+	{
+		if (h->getToolType() == TOOL_DRAW_RECT)
 		{
-				if (h->getToolType() == TOOL_DRAW_RECT)
-				{
-				}
-				else if (h->getToolType() == TOOL_DRAW_CIRCLE)
-				{
-				}
-				else if (h->getToolType() == TOOL_DRAW_ARROW)
-				{
-				}
 		}
-		 */
+		else if (h->getToolType() == TOOL_DRAW_CIRCLE)
+		{
+		}
+		else if (h->getToolType() == TOOL_DRAW_ARROW)
+		{
+		}
+	}
+	 */
 	else if (h->getToolType() == TOOL_SELECT_RECT ||
 			 h->getToolType() == TOOL_SELECT_REGION ||
 			 h->getToolType() == TOOL_SELECT_OBJECT)
@@ -554,8 +539,7 @@ bool PageView::onMotionNotifyEvent(GtkWidget* widget, GdkEventMotion* event)
 		Text* text = this->textEditor->getText();
 		this->textEditor->mouseMoved(x - text->getX(), y - text->getY());
 	}
-	else if (h->getToolType() == TOOL_ERASER &&
-			 h->getEraserType() != ERASER_TYPE_WHITEOUT && this->inEraser)
+	else if (h->getToolType() == TOOL_ERASER && h->getEraserType() != ERASER_TYPE_WHITEOUT && this->inEraser)
 	{
 		this->eraser->erase(x, y);
 	}
@@ -621,8 +605,7 @@ bool PageView::onButtonReleaseEvent(GtkWidget* widget, GdkEventButton* event)
 	{
 		if (this->selection->finalize(this->page))
 		{
-			xournal->setSelection(new EditSelection(control->getUndoRedoHandler(),
-													this->selection, this));
+			xournal->setSelection(new EditSelection(control->getUndoRedoHandler(), this->selection, this));
 			delete this->selection;
 			this->selection = NULL;
 		}
@@ -706,19 +689,16 @@ void PageView::repaintArea(double x1, double y1, double x2, double y2)
 	XOJ_CHECK_TYPE(PageView);
 
 	double zoom = xournal->getZoom();
-	xournal->getRepaintHandler()->repaintPageArea(this, x1 * zoom - 10,
-												  y1 * zoom - 10, x2 * zoom + 20, y2 * zoom + 20);
+	xournal->getRepaintHandler()->repaintPageArea(this, x1 * zoom - 10, y1 * zoom - 10, x2 * zoom + 20, y2 * zoom + 20);
 }
 
-Rectangle* PageView::rectOnWidget(double x, double y, double width,
-								  double height)
+Rectangle* PageView::rectOnWidget(double x, double y, double width, double height)
 {
 	XOJ_CHECK_TYPE(PageView);
 
 	double zoom = xournal->getZoom();
 
-	return new Rectangle(x * zoom - 10, y * zoom - 10, width * zoom + 20,
-						 height * zoom + 20);
+	return new Rectangle(x * zoom - 10, y * zoom - 10, width * zoom + 20, height * zoom + 20);
 }
 
 void PageView::rerenderRect(double x, double y, double width, double heigth)
@@ -846,8 +826,7 @@ bool PageView::paintPage(cairo_t* cr, GdkRectangle* rect)
 
 	if (this->crBuffer == NULL)
 	{
-		this->crBuffer = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, dispWidth,
-													dispHeight);
+		this->crBuffer = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, dispWidth, dispHeight);
 		cairo_t* cr2 = cairo_create(this->crBuffer);
 		cairo_set_source_rgb(cr2, 1, 1, 1);
 		cairo_rectangle(cr2, 0, 0, dispWidth, dispHeight);
@@ -857,8 +836,7 @@ bool PageView::paintPage(cairo_t* cr, GdkRectangle* rect)
 
 		cairo_text_extents_t ex;
 		cairo_set_source_rgb(cr2, 0.5, 0.5, 0.5);
-		cairo_select_font_face(cr2, "Sans", CAIRO_FONT_SLANT_NORMAL,
-							   CAIRO_FONT_WEIGHT_BOLD);
+		cairo_select_font_face(cr2, "Sans", CAIRO_FONT_SLANT_NORMAL, CAIRO_FONT_WEIGHT_BOLD);
 		cairo_set_font_size(cr2, 32.0);
 		cairo_text_extents(cr2, txtLoading, &ex);
 		cairo_move_to(cr2, (page->getWidth() - ex.width) / 2 - ex.x_bearing,
@@ -960,8 +938,7 @@ int PageView::getBufferPixels()
 
 	if (crBuffer)
 	{
-		return cairo_image_surface_get_width(crBuffer) * cairo_image_surface_get_height(
-																						crBuffer);
+		return cairo_image_surface_get_width(crBuffer) * cairo_image_surface_get_height(crBuffer);
 	}
 	return 0;
 }
@@ -1078,4 +1055,3 @@ void PageView::elementChanged(Element* elem)
 {
 	rerenderElement(elem);
 }
-

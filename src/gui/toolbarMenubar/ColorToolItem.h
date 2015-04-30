@@ -13,13 +13,13 @@
 
 #include "AbstractToolItem.h"
 #include "control/ToolHandler.h"
+
 #include <XournalType.h>
 
 class ColorToolItem : public AbstractToolItem
 {
 public:
-    ColorToolItem(ActionHandler* handler, ToolHandler* toolHandler,
-                  GtkWindow* parent, int color, bool selektor = false);
+    ColorToolItem(ActionHandler* handler, ToolHandler* toolHandler, GtkWindow* parent, int color, bool selektor = false);
     virtual ~ColorToolItem();
 
 public:
@@ -27,8 +27,7 @@ public:
     void enableColor(int color);
     void selectColor();
     bool colorEqualsMoreOreLess(int color);
-    virtual void activated(GdkEvent* event, GtkMenuItem* menuitem,
-                           GtkToolButton* toolbutton);
+    virtual void activated(GdkEvent* event, GtkMenuItem* menuitem, GtkToolButton* toolbutton);
 
     virtual string getToolDisplayName();
     virtual GtkWidget* getNewToolIconImpl();

@@ -11,24 +11,24 @@
 
 #pragma once
 
-#include "RecentManager.h"
-#include "gui/MainWindow.h"
 #include "Actions.h"
-#include "undo/UndoRedoHandler.h"
 #include "ClipboardHandler.h"
-#include "settings/Settings.h"
-#include "LatexAction.h"
 #include "gui/dialog/LatexGlade.h"
-#include "ToolHandler.h"
-#include "model/Document.h"
-#include "ZoomControl.h"
-#include "jobs/XournalScheduler.h"
-#include <XournalType.h>
-
-#include "gui/sidebar/Sidebar.h"
+#include "gui/MainWindow.h"
 #include "gui/SearchBar.h"
+#include "gui/sidebar/Sidebar.h"
 #include "jobs/ProgressListener.h"
+#include "jobs/XournalScheduler.h"
+#include "LatexAction.h"
+#include "model/Document.h"
+#include "RecentManager.h"
 #include "ScrollHandler.h"
+#include "settings/Settings.h"
+#include "undo/UndoRedoHandler.h"
+#include "ToolHandler.h"
+#include "ZoomControl.h"
+
+#include <XournalType.h>
 
 class Sidebar;
 class CallbackData;
@@ -76,9 +76,8 @@ public:
 	// Menu Help
 	void showAbout();
 
-	virtual void actionPerformed(ActionType type, ActionGroup group,
-								 GdkEvent* event, GtkMenuItem* menuitem, GtkToolButton* toolbutton,
-								 bool enabled);
+	virtual void actionPerformed(ActionType type, ActionGroup group, GdkEvent* event, GtkMenuItem* menuitem,
+								 GtkToolButton* toolbutton, bool enabled);
 
 	virtual void toolColorChanged();
 	virtual void setCustomColorSelected();
@@ -213,8 +212,7 @@ public:
 	virtual void clipboardPasteEnabled(bool enabled);
 	virtual void clipboardPasteText(string text);
 	virtual void clipboardPasteImage(GdkPixbuf* img);
-    virtual void clipboardPasteTex(GdkPixbuf* img, const char* text,
-                                   int textLength);
+    virtual void clipboardPasteTex(GdkPixbuf* img, const char* text, int textLength);
 	virtual void clipboardPasteXournal(ObjectInputStream& in);
 	virtual void deleteSelection();
 

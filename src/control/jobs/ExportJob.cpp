@@ -1,18 +1,20 @@
 #include "ExportJob.h"
-#include "view/DocumentView.h"
-#include "view/PdfView.h"
-#include "SynchronizedProgressListener.h"
-#include <cairo-ps.h>
-#include <cairo-svg.h>
-#include "../Control.h"
+
+#include "control/Control.h"
 #include "ExportFormtType.h"
 #include "pdf/popplerdirect/PdfExport.h"
+#include "SynchronizedProgressListener.h"
+#include "view/DocumentView.h"
+#include "view/PdfView.h"
 
 #include <config.h>
+
+#include <cairo-ps.h>
+#include <cairo-svg.h>
+
 #include <glib/gi18n-lib.h>
 
-ExportJob::ExportJob(Control* control, PageRangeVector selected,
-					 ExportFormtType type, int dpi, path filepath) :
+ExportJob::ExportJob(Control* control, PageRangeVector selected, ExportFormtType type, int dpi, path filepath) :
 	BlockingJob(control, _("Export"))
 {
 	XOJ_INIT_TYPE(ExportJob);
@@ -47,6 +49,7 @@ ExportJob::~ExportJob()
 	for (PageRangeEntry* e : this->selected)
 	{
 		delete e;
+		e = NULL;
 	}
 
 	XOJ_RELEASE_TYPE(ExportJob);
@@ -150,8 +153,7 @@ void ExportJob::run()
 
 	int count = doc->getPageCount();
 
-	bool onePage = ((this->selected.size() == 1)
-					&& (this->selected[0]->getFirst() == this->selected[0]->getLast()));
+	bool onePage = ((this->selected.size() == 1) && (this->selected[0]->getFirst() == this->selected[0]->getLast()));
 
 	// pdf, supports multiple Pages per document, all other formats don't
 	if (this->type == EXPORT_FORMAT_PDF)
@@ -219,9 +221,8 @@ void ExportJob::run()
 					XojPopplerPage* popplerPage = doc->getPdfPage(pgNo);
 
 
-					PdfView::drawPage(NULL, popplerPage, cr, zoom,
-									  page->getWidth(),
-									  page->getHeight());
+					// TODO LOW PRIO pdf is written as image to the SVN surface!!
+					PdfView::drawPage(NULL, popplerPage, cr, zoom, page->getWidth(), page->getHeight());
 				}
 
 				view.drawPage(page, this->cr, true);

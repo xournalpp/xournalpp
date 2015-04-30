@@ -1,4 +1,5 @@
 #include "Scheduler.h"
+
 #include "cfg.h"
 
 //TODO unified debugging
@@ -226,8 +227,7 @@ glong g_time_val_diff(GTimeVal* t1, GTimeVal* t2)
 {
 	g_assert(t1);
 	g_assert(t2);
-	return ((t1->tv_sec - t2->tv_sec) * G_USEC_PER_SEC + (t1->tv_usec -
-														  t2->tv_usec)) / 1000;
+	return ((t1->tv_sec - t2->tv_sec) * G_USEC_PER_SEC + (t1->tv_usec - t2->tv_usec)) / 1000;
 }
 
 /**
@@ -282,8 +282,7 @@ gpointer Scheduler::jobThreadCallback(Scheduler* scheduler)
 
 		g_mutex_lock(&scheduler->jobQueueMutex);
 		bool hasOnlyRenderJobs = false;
-		Job* job = scheduler->getNextJobUnlocked(onlyNoneRenderJobs,
-												 &hasOnlyRenderJobs);
+		Job* job = scheduler->getNextJobUnlocked(onlyNoneRenderJobs, &hasOnlyRenderJobs);
 		if (job != NULL)
 		{
 			hasOnlyRenderJobs = false;
@@ -302,8 +301,7 @@ gpointer Scheduler::jobThreadCallback(Scheduler* scheduler)
 				{
 					g_source_remove(scheduler->jobRenderThreadTimerId);
 				}
-				scheduler->jobRenderThreadTimerId = g_timeout_add(diff,
-								(GSourceFunc) jobRenderThreadTimer, scheduler);
+				scheduler->jobRenderThreadTimerId = g_timeout_add(diff, (GSourceFunc) jobRenderThreadTimer, scheduler);
 			}
 
 			g_cond_wait(&scheduler->jobQueueCond, &scheduler->jobQueueMutex);

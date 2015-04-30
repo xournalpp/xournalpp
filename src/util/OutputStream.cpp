@@ -1,4 +1,5 @@
 #include "OutputStream.h"
+
 #include <stdlib.h>
 #include <string.h>
 
@@ -69,4 +70,3 @@ void GzOutputStream::close()
 		this->fp = NULL;
 	}
 }
-

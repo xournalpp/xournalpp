@@ -12,8 +12,10 @@
 #pragma once
 
 #include "Element.h"
-#include <StringUtils.h>
 #include "Font.h"
+
+#include <StringUtils.h>
+
 #include <gtk/gtk.h>
 
 class Text : public Element

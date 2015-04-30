@@ -11,10 +11,12 @@
 
 #pragma once
 
-#include <gtk/gtk.h>
-#include <Util.h>
 #include "model/PageRef.h"
+
+#include <Util.h>
 #include <XournalType.h>
+
+#include <gtk/gtk.h>
 
 class SidebarPreviews;
 
@@ -34,10 +36,8 @@ public:
 	void updateSize();
 
 private:
-	static gboolean exposeEventCallback(GtkWidget* widget, GdkEventExpose* event,
-										SidebarPreviewPage* preview);
-	static gboolean mouseButtonPressCallback(GtkWidget* widget,
-											GdkEventButton* event, SidebarPreviewPage* preview);
+	static gboolean exposeEventCallback(GtkWidget* widget, GdkEventExpose* event, SidebarPreviewPage* preview);
+	static gboolean mouseButtonPressCallback(GtkWidget* widget, GdkEventButton* event, SidebarPreviewPage* preview);
 
 	void paint();
 

@@ -1,4 +1,5 @@
 #include "DocumentListener.h"
+
 #include "DocumentHandler.h"
 
 DocumentListener::DocumentListener()
@@ -34,4 +35,3 @@ void DocumentListener::unregisterListener()
 		this->handler->removeListener(this);
 	}
 }
-

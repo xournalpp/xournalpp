@@ -1,6 +1,6 @@
 #include "PagePosition.h"
 
-#include "../PageView.h"
+#include "gui/PageView.h"
 
 PagePosition::PagePosition(PageView* pv)
 {
@@ -39,8 +39,7 @@ bool PagePosition::add(PageView* pv)
 	int y1 = pv->getY();
 	int y2 = y1 + pv->getDisplayHeight();
 
-	if (containsY(y1) || containsY(y2) || pv->containsY(this->y1) ||
-		pv->containsY(this->y2))
+	if (containsY(y1) || containsY(y2) || pv->containsY(this->y1) || pv->containsY(this->y2))
 	{
 		this->views = g_list_append(this->views, pv);
 
@@ -88,4 +87,3 @@ bool PagePosition::isYGraterThan(int y) const
 
 	return y < this->y1;
 }
-

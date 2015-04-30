@@ -1,4 +1,5 @@
 #include "Range.h"
+
 #include <glib.h>
 
 Range::Range(double x, double y)
@@ -69,4 +70,3 @@ double Range::getY2()
 
 	return this->y2;
 }
-

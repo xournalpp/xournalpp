@@ -13,16 +13,15 @@
 
 #include "UndoAction.h"
 
-class XojPage;
-class Layer;
 class Element;
+class Layer;
 class Redrawable;
+class XojPage;
 
 class TextBoxUndoAction : public UndoAction
 {
 public:
-	TextBoxUndoAction(PageRef page, Layer* layer, Element* element,
-					  Element* oldelement);
+	TextBoxUndoAction(PageRef page, Layer* layer, Element* element, Element* oldelement);
 	virtual ~TextBoxUndoAction();
 
 public:

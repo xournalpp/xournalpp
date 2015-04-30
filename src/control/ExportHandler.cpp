@@ -1,9 +1,10 @@
+#include "Control.h"
 #include "ExportHandler.h"
 #include "gui/dialog/ExportDialog.h"
-#include <PageRange.h>
-#include "model/Document.h"
 #include "jobs/ExportJob.h"
-#include "Control.h"
+#include "model/Document.h"
+
+#include <PageRange.h>
 
 ExportHandler::ExportHandler()
 {
@@ -30,8 +31,7 @@ void ExportHandler::runExportWithDialog(GladeSearchpath* gladeSearchPath,
 
 	if (!selected.empty())
 	{
-		ExportJob* job = new ExportJob(control, selected, dlg->getFormatType(),
-									   dlg->getPngDpi(), dlg->getFilePath());
+		ExportJob* job = new ExportJob(control, selected, dlg->getFormatType(), dlg->getPngDpi(), dlg->getFilePath());
 		control->getScheduler()->addJob(job, JOB_PRIORITY_NONE);
 		job->unref();
 	}

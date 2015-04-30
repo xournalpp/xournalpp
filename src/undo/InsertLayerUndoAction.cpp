@@ -1,9 +1,10 @@
 #include "InsertLayerUndoAction.h"
-#include "model/Layer.h"
-#include "model/PageRef.h"
-#include "model/Document.h"
+
 #include "control/Control.h"
 #include "gui/XournalView.h"
+#include "model/Document.h"
+#include "model/Layer.h"
+#include "model/PageRef.h"
 
 InsertLayerUndoAction::InsertLayerUndoAction(PageRef page, Layer* layer) : UndoAction("InsertLayerUndoAction")
 {
@@ -81,4 +82,3 @@ bool InsertLayerUndoAction::redo(Control* control)
 
 	return true;
 }
-

@@ -1,4 +1,5 @@
 #include "LayerListener.h"
+
 #include "Layer.h"
 
 LayerListener::LayerListener()
@@ -31,4 +32,3 @@ void LayerListener::layerDeleted()
 	this->layerDeletedCb(this->layer);
 	this->layer = NULL;
 }
-

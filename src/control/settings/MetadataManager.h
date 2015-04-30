@@ -11,8 +11,9 @@
 
 #pragma once
 
-#include <glib.h>
 #include <StringUtils.h>
+
+#include <glib.h>
 
 #include <boost/filesystem/path.hpp>
 using boost::filesystem::path;

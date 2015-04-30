@@ -1,4 +1,5 @@
 #include "ShapeRecognizerResult.h"
+
 #include "ShapeRecognizer.h"
 
 #include <Stacktrace.h>
@@ -68,4 +69,3 @@ StrokeVector* ShapeRecognizerResult::getSources()
 
 	return &this->source;
 }
-

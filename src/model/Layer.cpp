@@ -1,4 +1,5 @@
 #include "Layer.h"
+
 #include <Stacktrace.h>
 
 using namespace std;
@@ -12,7 +13,11 @@ Layer::~Layer()
 {
 	XOJ_CHECK_TYPE(Layer);
 
-	for (Element* e : this->elements) delete e;
+	for (Element* e : this->elements)
+	{
+		delete e;
+		e = NULL;
+	}
 
 	XOJ_RELEASE_TYPE(Layer);
 }
@@ -123,4 +128,3 @@ ElementVector* Layer::getElements()
 
 	return &this->elements;
 }
-

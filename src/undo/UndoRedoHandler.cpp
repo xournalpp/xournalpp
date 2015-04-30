@@ -1,10 +1,13 @@
-#include <stdio.h>
 #include "UndoRedoHandler.h"
+
 #include "control/Control.h"
 
 #include <config.h>
+
 #include <glib/gi18n-lib.h>
 #include <boost/format.hpp>
+#include <stdio.h>
+
 // TODO LOW PRIO: add memory limit
 
 #ifdef UNDO_TRACE
@@ -141,10 +144,10 @@ void UndoRedoHandler::undo()
 	{
 		GtkWidget* dialog = gtk_message_dialog_new((GtkWindow*) *control->getWindow(),
 												   GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
-												   _("Could not undo '%s'\nSomething went wrong... Please write a bug report..."),
+												   _("Could not undo '%s'\nSomething went wrong... "
+													 "Please write a bug report..."),
 												   undo->getText().c_str());
-		gtk_window_set_transient_for(GTK_WINDOW(dialog),
-									 GTK_WINDOW(this->control->getWindow()->getWindow()));
+		gtk_window_set_transient_for(GTK_WINDOW(dialog), GTK_WINDOW(this->control->getWindow()->getWindow()));
 		gtk_dialog_run(GTK_DIALOG(dialog));
 		gtk_widget_destroy(dialog);
 	}
@@ -183,7 +186,8 @@ void UndoRedoHandler::redo()
 	{
 		GtkWidget* dialog = gtk_message_dialog_new((GtkWindow*) *control->getWindow(),
 												   GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
-												   _("Could not redo '%s'\nSomething went wrong... Please write a bug report..."),
+												   _("Could not redo '%s'\nSomething went wrong... "
+													 "Please write a bug report..."),
 												   redo->getText().c_str());
 		gtk_window_set_transient_for(GTK_WINDOW(dialog),
 									 GTK_WINDOW(this->control->getWindow()->getWindow()));
@@ -228,8 +232,7 @@ void UndoRedoHandler::addUndoAction(UndoAction* action)
 	PRINTCONTENTS();
 }
 
-void UndoRedoHandler::addUndoActionBefore(UndoAction* action,
-										  UndoAction* before)
+void UndoRedoHandler::addUndoActionBefore(UndoAction* action, UndoAction* before)
 {
 	XOJ_CHECK_TYPE(UndoRedoHandler);
 
@@ -392,4 +395,3 @@ const char* UndoRedoHandler::getRedoStackTopTypeName()
 
 	return ((UndoAction*) e->data)->getClassName();
 }
-

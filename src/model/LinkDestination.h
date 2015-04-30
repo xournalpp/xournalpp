@@ -11,8 +11,9 @@
 
 #pragma once
 
-#include <gtk/gtk.h>
 #include <StringUtils.h>
+
+#include <gtk/gtk.h>
 
 typedef struct _LinkDest XojLinkDest;
 typedef struct _LinkDestClass XojLinkDestClass;

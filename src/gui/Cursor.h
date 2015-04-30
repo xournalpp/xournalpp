@@ -12,6 +12,7 @@
 #pragma once
 
 #include "control/tools/CursorSelectionType.h"
+
 #include <XournalType.h>
 
 #include <gtk/gtk.h>

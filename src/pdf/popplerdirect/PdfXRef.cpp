@@ -1,4 +1,5 @@
 #include "PdfXRef.h"
+
 #include <glib.h>
 
 PdfXRef::PdfXRef()
@@ -40,14 +41,12 @@ void PdfXRef::setXref(int id, int ref)
 
 	if (id < 1)
 	{
-		g_warning("PdfXRef::setXref try to set XREF-ID: %i it needs to be at least 1",
-				id, this->xrefNr);
+		g_warning("PdfXRef::setXref try to set XREF-ID: %i it needs to be at least 1", id, this->xrefNr);
 		return;
 	}
 	if (id - 1 >= this->xrefNr)
 	{
-		g_warning("PdfXRef::setXref try to set XREF-ID: %i but there are only %i", id,
-				this->xrefNr);
+		g_warning("PdfXRef::setXref try to set XREF-ID: %i but there are only %i", id, this->xrefNr);
 		return;
 	}
 	this->xref[id - 1] = ref;
@@ -66,4 +65,3 @@ int PdfXRef::getXref(int id)
 
 	return this->xref[id];
 }
-

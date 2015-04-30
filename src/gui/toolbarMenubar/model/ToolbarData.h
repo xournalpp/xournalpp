@@ -11,12 +11,14 @@
 
 #pragma once
 
-#include <glib.h>
+#include "ToolbarEntry.h"
+
 #include <StringUtils.h>
 #include <XournalType.h>
-#include <vector>
 
-#include "ToolbarEntry.h"
+#include <glib.h>
+
+#include <vector>
 
 class ToolbarData
 {

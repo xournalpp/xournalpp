@@ -1,7 +1,7 @@
 #include "XojPage.h"
 
-#include "Document.h"
 #include "BackgroundImage.h"
+#include "Document.h"
 
 XojPage::XojPage(double width, double heigth)
 {
@@ -49,7 +49,10 @@ XojPage* XojPage::clone()
 	XojPage* page = new XojPage(this->width, this->height);
 
 	page->backgroundImage = this->backgroundImage;
-	for (Layer* l : this->layer) page->addLayer(l->clone());
+	for (Layer* l : this->layer)
+	{
+		page->addLayer(l->clone());
+	}
 
 	page->currentLayer = this->currentLayer;
 	page->bgType = this->bgType;
@@ -240,5 +243,3 @@ Layer* XojPage::getSelectedLayer()
 
 	return this->layer[layer];
 }
-
-

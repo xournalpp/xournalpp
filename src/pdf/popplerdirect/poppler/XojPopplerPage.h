@@ -11,17 +11,18 @@
 
 #pragma once
 
-#include <gtk/gtk.h>
-#include "../poppler-0.24.1/poppler/PDFDoc.h"
-#include "../poppler-0.24.1/poppler/Gfx.h"
-#include "../poppler-0.24.1/poppler/FontInfo.h"
-#include "../poppler-0.24.1/poppler/TextOutputDev.h"
-#include "../poppler-0.24.1/poppler/Catalog.h"
-#include "../poppler-0.24.1/poppler/OptionalContent.h"
-#include "../workaround/workaround.h"
+#include "pdf/popplerdirect/poppler-0.24.1/poppler/Catalog.h"
+#include "pdf/popplerdirect/poppler-0.24.1/poppler/FontInfo.h"
+#include "pdf/popplerdirect/poppler-0.24.1/poppler/Gfx.h"
+#include "pdf/popplerdirect/poppler-0.24.1/poppler/OptionalContent.h"
+#include "pdf/popplerdirect/poppler-0.24.1/poppler/PDFDoc.h"
+#include "pdf/popplerdirect/poppler-0.24.1/poppler/TextOutputDev.h"
+#include "pdf/popplerdirect/workaround/workaround.h"
 
-#include <XournalType.h>
 #include <StringUtils.h>
+#include <XournalType.h>
+
+#include <gtk/gtk.h>
 
 class Page;
 class TextPage;
@@ -31,8 +32,7 @@ class XojPopplerImage;
 class XojPopplerPage
 {
 private:
-	XojPopplerPage(PDFDoc* doc, GMutex* docMutex, CairoOutputDev* outputDev,
-				Page* page, int index);
+	XojPopplerPage(PDFDoc* doc, GMutex* docMutex, CairoOutputDev* outputDev, Page* page, int index);
 	virtual ~XojPopplerPage();
 public:
 	double getWidth();

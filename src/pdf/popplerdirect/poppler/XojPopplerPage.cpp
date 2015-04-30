@@ -1,13 +1,13 @@
 #include "XojPopplerPage.h"
-#include "../poppler-0.24.1/poppler/TextOutputDev.h"
-#include "../poppler-0.24.1/poppler/PDFDoc.h"
-#include "../poppler-0.24.1/poppler/Gfx.h"
-#include "../poppler-0.24.1/poppler/OutputDev.h"
-#include "../workaround/workaround.h"
-#include "control/settings/Settings.h"
 
-XojPopplerPage::XojPopplerPage(PDFDoc * doc, GMutex * docMutex,
-                               CairoOutputDev * outputDev, Page * page, int index)
+#include "control/settings/Settings.h"
+#include "pdf/popplerdirect/poppler-0.24.1/poppler/TextOutputDev.h"
+#include "pdf/popplerdirect/poppler-0.24.1/poppler/PDFDoc.h"
+#include "pdf/popplerdirect/poppler-0.24.1/poppler/Gfx.h"
+#include "pdf/popplerdirect/poppler-0.24.1/poppler/OutputDev.h"
+#include "pdf/popplerdirect/workaround/workaround.h"
+
+XojPopplerPage::XojPopplerPage(PDFDoc *doc, GMutex *docMutex, CairoOutputDev *outputDev, Page *page, int index)
 {
     XOJ_INIT_TYPE(XojPopplerPage);
 
@@ -23,9 +23,8 @@ XojPopplerPage::XojPopplerPage(PDFDoc * doc, GMutex * docMutex,
 
     /*
     //Set up DPI
-    String settingsname = String::format("%s%c%s%c%s", g_get_home_dir(), G_DIR_SEPARATOR,
-                                    CONFIG_DIR, G_DIR_SEPARATOR,
-                                    SETTINGS_XML_FILE);
+    String settingsname = String::format("%s%c%s%c%s", g_get_home_dir(), G_DIR_SEPARATOR, CONFIG_DIR, G_DIR_SEPARATOR,
+										 SETTINGS_XML_FILE);
     Settings* mysettings =  new Settings(settingsname);
     mysettings->load();
     this->pdfDpi = (double) mysettings->getDisplayDpi();
@@ -111,10 +110,8 @@ void XojPopplerPage::render(cairo_t* cr, bool forPrinting)
 
     g_mutex_lock(this->docMutex);
 
-    this->page->displaySlice(this->outputDev, 72.0 /* hDPI */, 72.0 /* vDPI */,
-                             0 /* rotate */, false, /* useMediaBox */
-                             true, /* Crop */
-                             -1 /* sliceX */, -1 /* sliceY */, -1 /* sliceW */, -1 /* sliceH */,
+    this->page->displaySlice(this->outputDev, 72.0 /* hDPI */, 72.0 /* vDPI */, 0 /* rotate */, false, /* useMediaBox */
+                             true, /* Crop */ -1 /* sliceX */, -1 /* sliceY */, -1 /* sliceW */, -1 /* sliceH */,
                              forPrinting /* printing */);
 
     // TODO POPPLER ,this->doc->getCatalog(), NULL, NULL, forPrinting ? poppler_print_annot_cb : NULL, NULL);
@@ -138,14 +135,10 @@ void XojPopplerPage::initTextPage()
     if (this->text == NULL)
     {
         g_mutex_lock(this->docMutex);
-        TextOutputDev *textDev = new TextOutputDev(NULL, true, /* TODO POPPLER : Check value */
-                                                   0, false, false);
+        TextOutputDev *textDev = new TextOutputDev(NULL, true, /* TODO POPPLER : Check value */ 0, false, false);
 
-        Gfx *gfx = this->page->createGfx(textDev, 72.0, 72.0, 0, false, /* useMediaBox */
-                                         true, /* Crop */
-                                         -1, -1, -1, -1, false, /* printing */
-                                         NULL, NULL);
-
+        Gfx *gfx = this->page->createGfx(textDev, 72.0, 72.0, 0, false, /* useMediaBox */ true, /* Crop */
+                                         -1, -1, -1, -1, false, /* printing */ NULL, NULL);
 
         this->page->display(gfx);
         textDev->endPage();
@@ -184,26 +177,25 @@ GList* XojPopplerPage::findText(string& text)
     xMin = 0;
     yMin = 0;
 
-    //	  // Find a string.  If <startAtTop> is true, starts looking at the
-    //	  // top of the page; else if <startAtLast> is true, starts looking
-    //	  // immediately after the last find result; else starts looking at
-    //	  // <xMin>,<yMin>.  If <stopAtBottom> is true, stops looking at the
-    //	  // bottom of the page; else if <stopAtLast> is true, stops looking
-    //	  // just before the last find result; else stops looking at
-    //	  // <xMax>,<yMax>.
-    //	  GBool findText(Unicode *s, int len,
-    //			 GBool startAtTop, GBool stopAtBottom,
-    //			 GBool startAtLast, GBool stopAtLast,
-    //			 GBool caseSensitive, GBool backward,
-    //			 double *xMin, double *yMin,
-    //			 double *xMax, double *yMax);
+//	  // Find a string.  If <startAtTop> is true, starts looking at the
+//	  // top of the page; else if <startAtLast> is true, starts looking
+//	  // immediately after the last find result; else starts looking at
+//	  // <xMin>,<yMin>.  If <stopAtBottom> is true, stops looking at the
+//	  // bottom of the page; else if <stopAtLast> is true, stops looking
+//	  // just before the last find result; else stops looking at
+//	  // <xMax>,<yMax>.
+//	  GBool findText(Unicode *s, int len,
+//			 GBool startAtTop, GBool stopAtBottom,
+//			 GBool startAtLast, GBool stopAtLast,
+//			 GBool caseSensitive, GBool backward,
+//			 double *xMin, double *yMin,
+//			 double *xMax, double *yMax);
 
     bool atTop = true;
 
-    while (this->text->findText(ucs4, ucs4_len, atTop, true, // startAtTop, stopAtBottom
-                                !atTop, false, // startAtLast, stopAtLast
-                                false, false, // caseSensitive, backwards
-                                false, // GBool wholeWord,
+    while (this->text->findText(ucs4, ucs4_len,
+								atTop, true,  !atTop, false, // startAtTop, stopAtBottom, startAtLast, stopAtLast
+                                false, false, false,		 // caseSensitive, backwards, GBool wholeWord
                                 &xMin, &yMin, &xMax, &yMax))
     {
 
@@ -228,4 +220,3 @@ XojPopplerRectangle::XojPopplerRectangle()
     this->y1 = -1;
     this->y2 = -1;
 }
-

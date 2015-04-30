@@ -15,10 +15,10 @@
 
 #include <glib.h>
 
-class PageListener;
-class Rectangle;
 class Element;
+class PageListener;
 class Range;
+class Rectangle;
 
 class PageHandler
 {

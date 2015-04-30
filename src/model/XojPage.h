@@ -11,14 +11,15 @@
 
 #pragma once
 
-#include "Layer.h"
-#include <vector>
-#include <XournalType.h>
-#include <StringUtils.h>
-
-#include "BackgroundType.h"
 #include "BackgroundImage.h"
+#include "BackgroundType.h"
+#include "Layer.h"
 #include "PageHandler.h"
+
+#include <StringUtils.h>
+#include <XournalType.h>
+
+#include <vector>
 
 typedef std::vector<Layer*> LayerVector;
 

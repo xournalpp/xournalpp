@@ -12,9 +12,10 @@
 
 #pragma once
 
-#include <XournalType.h>
-#include <glib.h>
 #include <StringUtils.h>
+#include <XournalType.h>
+
+#include <glib.h>
 
 class ToolbarColorNames
 {
@@ -27,10 +28,10 @@ public:
 	static void freeInstance();
 
 public:
-	void loadFile(const char* file);
-	void saveFile(const char* file);
+	void loadFile(const string file);
+	void saveFile(const string file);
 
-	void adddColor(int color, string name, bool predefined);
+	void addColor(int color, string name, bool predefined);
 
 	string getColorName(int color);
 

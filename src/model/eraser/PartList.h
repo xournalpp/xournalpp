@@ -11,8 +11,9 @@
 
 #pragma once
 
-#include <gtk/gtk.h>
 #include <XournalType.h>
+
+#include <gtk/gtk.h>
 
 class EraseableStrokePart;
 

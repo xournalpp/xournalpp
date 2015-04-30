@@ -3,8 +3,7 @@
 #include <config.h>
 #include <glib/gi18n-lib.h>
 
-path XojOpenDlg::showOpenDialog(GtkWindow* win, Settings* settings, bool pdf,
-								bool& attachPdf)
+path XojOpenDlg::showOpenDialog(GtkWindow* win, Settings* settings, bool pdf, bool& attachPdf)
 {
 
 	GtkWidget* dialog = gtk_file_chooser_dialog_new(_("Open file"), win,
@@ -42,14 +41,12 @@ path XojOpenDlg::showOpenDialog(GtkWindow* win, Settings* settings, bool pdf,
 
 	if (!settings->getLastSavePath().empty())
 	{
-		gtk_file_chooser_set_current_folder_uri(GTK_FILE_CHOOSER(dialog),
-												settings->getLastSavePath().c_str());
+		gtk_file_chooser_set_current_folder_uri(GTK_FILE_CHOOSER(dialog), settings->getLastSavePath().c_str());
 	}
 	else
 	{
 		g_warning("lastSavePath is not set!", 0);
-		gtk_file_chooser_set_current_folder_uri(GTK_FILE_CHOOSER(dialog),
-												g_get_home_dir());
+		gtk_file_chooser_set_current_folder_uri(GTK_FILE_CHOOSER(dialog), g_get_home_dir());
 	}
 
 	GtkWidget* attachOpt = NULL;
@@ -62,8 +59,7 @@ path XojOpenDlg::showOpenDialog(GtkWindow* win, Settings* settings, bool pdf,
 
 	GtkWidget* image = gtk_image_new();
 	gtk_file_chooser_set_preview_widget(GTK_FILE_CHOOSER(dialog), image);
-	g_signal_connect(dialog, "update-preview", G_CALLBACK(updatePreviewCallback),
-					 NULL);
+	g_signal_connect(dialog, "update-preview", G_CALLBACK(updatePreviewCallback), NULL);
 
 
 	gtk_window_set_transient_for(GTK_WINDOW(dialog), win);
@@ -110,4 +106,3 @@ void XojOpenDlg::updatePreviewCallback(GtkFileChooser* fileChooser,
 	//
 	//	gtk_file_chooser_set_preview_widget_active(fileChooser, true);
 }
-

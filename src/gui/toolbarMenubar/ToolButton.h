@@ -12,7 +12,7 @@
 #pragma once
 
 #include "AbstractToolItem.h"
-#include "../GladeGui.h"
+#include "gui/GladeGui.h"
 
 class ToolButton : public AbstractToolItem
 {
@@ -21,10 +21,8 @@ public:
 			   string description, GtkWidget* menuitem = NULL);
 	ToolButton(ActionHandler* handler, GladeGui* gui, string id, ActionType type,
 			   string iconName, string description, GtkWidget* menuitem = NULL);
-	ToolButton(ActionHandler* handler, GladeGui* gui, string id, ActionType type,
-			   ActionGroup group, bool toolToggleOnlyEnable, string iconName,
-			   string description,
-			   GtkWidget* menuitem = NULL);
+	ToolButton(ActionHandler* handler, GladeGui* gui, string id, ActionType type, ActionGroup group,
+			 bool toolToggleOnlyEnable, string iconName, string description, GtkWidget* menuitem = NULL);
 
 	virtual ~ToolButton();
 

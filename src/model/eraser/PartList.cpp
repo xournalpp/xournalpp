@@ -1,4 +1,5 @@
 #include "PartList.h"
+
 #include "EraseableStrokePart.h"
 
 PartList::PartList()

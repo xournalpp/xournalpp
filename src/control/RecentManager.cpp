@@ -1,13 +1,14 @@
 #include "RecentManager.h"
 
+#include <config.h>
+
 #include <gtk/gtk.h>
+
 #include <boost/filesystem.hpp>
 using boost::filesystem::path;
 
 #include <iostream>
 using namespace std;
-
-#include <config.h>
 
 #define MIME "application/x-xoj"
 #define MIME_PDF "application/x-pdf"
@@ -22,8 +23,7 @@ RecentManager::RecentManager()
 	this->listener = NULL;
 
 	GtkRecentManager* recentManager = gtk_recent_manager_get_default();
-	this->recentHandlerId = g_signal_connect(recentManager, "changed",
-											 G_CALLBACK(recentManagerChangedCallback), this);
+	this->recentHandlerId = g_signal_connect(recentManager, "changed", G_CALLBACK(recentManagerChangedCallback), this);
 
 	gdk_threads_enter();
 	updateMenu();
@@ -55,8 +55,7 @@ void RecentManager::addListener(RecentManagerListener* listener)
 	this->listener = g_list_append(this->listener, listener);
 }
 
-void RecentManager::recentManagerChangedCallback(GtkRecentManager* manager,
-												 RecentManager* recentManager)
+void RecentManager::recentManagerChangedCallback(GtkRecentManager* manager, RecentManager* recentManager)
 {
 	// regenerate the menu when the model changes
 	recentManager->updateMenu();
@@ -202,13 +201,11 @@ GList* RecentManager::filterRecent(GList* items, bool xoj)
 	return filteredItems;
 }
 
-void RecentManager::recentsMenuActivateCallback(GtkAction* action,
-												RecentManager* recentManager)
+void RecentManager::recentsMenuActivateCallback(GtkAction* action, RecentManager* recentManager)
 {
 	XOJ_CHECK_TYPE_OBJ(recentManager, RecentManager);
 
-	GtkRecentInfo* info = (GtkRecentInfo*) g_object_get_data(G_OBJECT(action),
-															 "gtk-recent-info");
+	GtkRecentInfo* info = (GtkRecentInfo*) g_object_get_data(G_OBJECT(action), "gtk-recent-info");
 	g_return_if_fail(info != NULL);
 
 	const gchar* uri = gtk_recent_info_get_uri(info); //topath
@@ -232,7 +229,7 @@ void RecentManager::addRecentMenu(GtkRecentInfo* info, int i)
 	GFile* gfile = g_file_new_for_uri(gtk_recent_info_get_uri(info));
 	string ruri(g_file_get_parse_name(gfile));
 	g_object_unref(gfile);
-	ba::replace_first(ruri, g_get_home_dir(), "~/");	//replace home dir with tilde
+	ba::replace_first(ruri, g_get_home_dir(), "~/"); //replace home dir with tilde
 
 	// Translators: %s is a URI
 	string tip = (bl::format("Open {1}'") % ruri).str();
@@ -242,8 +239,8 @@ void RecentManager::addRecentMenu(GtkRecentInfo* info, int i)
 
 	gtk_widget_set_tooltip_text(item, tip.c_str());
 
-	g_object_set_data_full(G_OBJECT(item), "gtk-recent-info",
-						   gtk_recent_info_ref(info), (GDestroyNotify) gtk_recent_info_unref);
+	g_object_set_data_full(G_OBJECT(item), "gtk-recent-info", gtk_recent_info_ref(info),
+						   (GDestroyNotify) gtk_recent_info_unref);
 
 	g_signal_connect(item, "activate", G_CALLBACK(recentsMenuActivateCallback), this);
 

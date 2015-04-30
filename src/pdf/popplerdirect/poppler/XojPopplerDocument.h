@@ -12,6 +12,7 @@
 #pragma once
 
 #include "XojPopplerPage.h"
+
 #include <StringUtils.h>
 
 #include <boost/filesystem/path.hpp>

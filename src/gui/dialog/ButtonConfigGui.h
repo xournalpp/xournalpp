@@ -12,17 +12,18 @@
 #pragma once
 
 #include "control/Actions.h"
+
 #include <XournalType.h>
+
 #include <gdk/gdk.h>
 
-class SettingsDialog;
 class Settings;
+class SettingsDialog;
 
 class ButtonConfigGui
 {
 public:
-	ButtonConfigGui(SettingsDialog* dlg, GtkWidget* w, Settings* settings,
-					int button, bool withDevice);
+	ButtonConfigGui(SettingsDialog* dlg, GtkWidget* w, Settings* settings, int button, bool withDevice);
 	virtual ~ButtonConfigGui();
 
 public:

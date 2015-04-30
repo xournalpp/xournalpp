@@ -16,8 +16,7 @@
 class AbstractToolItem : public AbstractItem
 {
 public:
-	AbstractToolItem(string id, ActionHandler* handler, ActionType type,
-					 GtkWidget* menuitem = NULL);
+	AbstractToolItem(string id, ActionHandler* handler, ActionType type, GtkWidget* menuitem = NULL);
 	virtual ~AbstractToolItem();
 
 public:
@@ -30,8 +29,7 @@ public:
 	bool isUsed();
 	void setUsed(bool used);
 
-	static void toolButtonCallback(GtkToolButton* toolbutton,
-								   AbstractToolItem* item);
+	static void toolButtonCallback(GtkToolButton* toolbutton, AbstractToolItem* item);
 
 	virtual string getToolDisplayName() = 0;
 	virtual GtkWidget* getNewToolIcon();

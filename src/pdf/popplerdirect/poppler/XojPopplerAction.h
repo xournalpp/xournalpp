@@ -11,12 +11,11 @@
 
 #pragma once
 
+#include "model/LinkDestination.h"
+#include "pdf/popplerdirect/poppler-0.24.1/poppler/Link.h"
 #include "XojPopplerDocument.h"
 
-#include "model/LinkDestination.h"
 #include <StringUtils.h>
-
-#include "../poppler-0.24.1/poppler/Link.h"
 
 class XojPopplerAction
 {

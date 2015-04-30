@@ -1,8 +1,11 @@
 #include "TextView.h"
-#include "model/Text.h"
-#include <boost/locale.hpp>
-#include "pdf/popplerdirect/poppler/XojPopplerPage.h"
+
 #include "control/settings/Settings.h"
+#include "model/Text.h"
+#include "pdf/popplerdirect/poppler/XojPopplerPage.h"
+#include "Util.h"
+
+#include <boost/locale.hpp>
 
 TextView::TextView() { }
 
@@ -28,9 +31,7 @@ int TextView::getDPI()
 {
 	static int myDPI;
 	if (myDPI != 0) return myDPI;
-	//TODO path
-	string settingsname = CONCAT(g_get_home_dir(), G_DIR_SEPARATOR,
-								 CONFIG_DIR, G_DIR_SEPARATOR, SETTINGS_XML_FILE);
+	string settingsname = Util::getConfigFile(SETTINGS_XML_FILE).string();
 	Settings* mySettings = new Settings(settingsname);
 	mySettings->load();
 	myDPI = mySettings->getDisplayDpi();
@@ -41,8 +42,7 @@ int TextView::getDPI()
 void TextView::updatePangoFont(PangoLayout* layout, Text* t)
 {
 	PangoFontDescription* desc = pango_font_description_from_string(t->getFont().getName().c_str());
-	//pango_font_description_set_absolute_size(desc,
-	//                                         t->getFont().getSize() * PANGO_SCALE);
+	//pango_font_description_set_absolute_size(desc, t->getFont().getSize() * PANGO_SCALE);
 	pango_font_description_set_size(desc, t->getFont().getSize() * PANGO_SCALE);
 
 	pango_layout_set_font_description(layout, desc);
@@ -112,8 +112,7 @@ GList* TextView::findText(Text* t, string& search)
 
 void TextView::calcSize(Text* t, double& width, double& height)
 {
-	cairo_surface_t* surface = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, 1,
-														  1);
+	cairo_surface_t* surface = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, 1, 1);
 	cairo_t* cr = cairo_create(surface);
 
 

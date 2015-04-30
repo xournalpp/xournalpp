@@ -11,9 +11,10 @@
 
 #pragma once
 
+#include "control/Tool.h"
+
 #include <StringUtils.h>
 #include <XournalType.h>
-#include "../Tool.h"
 
 enum DrawingType
 {
@@ -31,8 +32,7 @@ class ToolHandler;
 class ButtonConfig
 {
 public:
-	ButtonConfig(ToolType action, int color, ToolSize size, DrawingType drawingType,
-				 EraserType eraserMode);
+	ButtonConfig(ToolType action, int color, ToolSize size, DrawingType drawingType, EraserType eraserMode);
 	virtual ~ButtonConfig();
 
 public:

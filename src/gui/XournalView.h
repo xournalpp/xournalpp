@@ -11,23 +11,25 @@
 
 #pragma once
 
-#include <gtk/gtk.h>
-#include <Arrayiterator.h>
 #include "control/ZoomControl.h"
 #include "model/DocumentListener.h"
 #include "model/PageRef.h"
 
+#include <Arrayiterator.h>
+
+#include <gtk/gtk.h>
+
 class Control;
-class PageView;
+class Cursor;
 class Document;
-class TextEditor;
+class EditSelection;
+class Layout;
+class PagePositionHandler;
+class PageView;
 class PdfCache;
 class Rectangle;
 class RepaintHandler;
-class PagePositionHandler;
-class Cursor;
-class EditSelection;
-class Layout;
+class TextEditor;
 
 class XournalView : public DocumentListener, public ZoomListener
 {

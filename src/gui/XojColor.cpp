@@ -26,4 +26,3 @@ string XojColor::getName()
 
 	return this->name;
 }
-

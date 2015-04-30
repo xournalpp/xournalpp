@@ -12,10 +12,11 @@
 #pragma once
 
 #include <StringUtils.h>
+
 #include <gtk/gtk.h>
 
-class Serializeable;
 class ObjectEncoding;
+class Serializeable;
 
 class ObjectOutputStream
 {

@@ -11,10 +11,11 @@
 
 #pragma once
 
-#include <gtk/gtk.h>
 #include "gui/Redrawable.h"
 #include "model/Text.h"
 #include "undo/UndoAction.h"
+
+#include <gtk/gtk.h>
 
 class PageView;
 
@@ -64,10 +65,8 @@ private:
 	static void iMCommitCallback(GtkIMContext* context, const gchar* str,
 								 TextEditor* te);
 	static void iMPreeditChangedCallback(GtkIMContext* context, TextEditor* te);
-	static bool iMRetrieveSurroundingCallback(GtkIMContext* context,
-											  TextEditor* te);
-	static bool imDeleteSurroundingCallback(GtkIMContext* context, gint offset,
-											gint n_chars, TextEditor* te);
+	static bool iMRetrieveSurroundingCallback(GtkIMContext* context, TextEditor* te);
+	static bool imDeleteSurroundingCallback(GtkIMContext* context, gint offset, gint n_chars, TextEditor* te);
 
 	void moveCursor(const GtkTextIter* newLocation, gboolean extendSelection);
 

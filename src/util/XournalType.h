@@ -14,9 +14,10 @@
 
 #pragma once
 
-#include <glib.h>
+#include "config.h"
 #include "logger/Logger.h"
-#include "../../config.h"
+
+#include <glib.h>
 
 #ifdef XOJ_MEMORY_CHECK_ENABLED
 

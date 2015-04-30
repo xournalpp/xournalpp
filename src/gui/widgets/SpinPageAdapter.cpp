@@ -8,8 +8,7 @@ SpinPageAdapter::SpinPageAdapter()
 	this->widget = gtk_spin_button_new_with_range(0, 0, 1);
 	g_object_ref(this->widget);
 
-	g_signal_connect(this->widget, "value-changed",
-					G_CALLBACK(pageNrSpinChangedCallback), this);
+	g_signal_connect(this->widget, "value-changed", G_CALLBACK(pageNrSpinChangedCallback), this);
 
 	this->page = -1;
 
@@ -33,8 +32,7 @@ bool SpinPageAdapter::pageNrSpinChangedTimerCallback(SpinPageAdapter* adapter)
 {
 	XOJ_CHECK_TYPE_OBJ(adapter, SpinPageAdapter);
 	adapter->lastTimeoutId = 0;
-	adapter->page = gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(
-																	adapter->widget));
+	adapter->page = gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(adapter->widget));
 
 	gdk_threads_enter();
 	adapter->firePageChanged();
@@ -42,8 +40,7 @@ bool SpinPageAdapter::pageNrSpinChangedTimerCallback(SpinPageAdapter* adapter)
 	return false;
 }
 
-void SpinPageAdapter::pageNrSpinChangedCallback(GtkSpinButton* spinbutton,
-												SpinPageAdapter* adapter)
+void SpinPageAdapter::pageNrSpinChangedCallback(GtkSpinButton* spinbutton, SpinPageAdapter* adapter)
 {
 	XOJ_CHECK_TYPE_OBJ(adapter, SpinPageAdapter);
 
@@ -59,9 +56,7 @@ void SpinPageAdapter::pageNrSpinChangedCallback(GtkSpinButton* spinbutton,
 	}
 
 	// Give the spin button some time to realease, if we don't do he will send new events...
-	adapter->lastTimeoutId = g_timeout_add(
-				100, (GSourceFunc) pageNrSpinChangedTimerCallback, adapter
-			);
+	adapter->lastTimeoutId = g_timeout_add(100, (GSourceFunc) pageNrSpinChangedTimerCallback, adapter);
 }
 
 GtkWidget* SpinPageAdapter::getWidget()
@@ -118,4 +113,3 @@ void SpinPageAdapter::firePageChanged()
 		listener->pageChanged(this->page);
 	}
 }
-

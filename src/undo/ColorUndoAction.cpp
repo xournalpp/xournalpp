@@ -1,8 +1,8 @@
 #include "ColorUndoAction.h"
 
+#include "gui/Redrawable.h"
 #include "model/Element.h"
 #include "model/PageRef.h"
-#include "gui/Redrawable.h"
 
 #include <Rectangle.h>
 
@@ -21,8 +21,7 @@ public:
 	int newColor;
 };
 
-ColorUndoAction::ColorUndoAction(PageRef page,
-								 Layer* layer) : UndoAction("ColorUndoAction")
+ColorUndoAction::ColorUndoAction(PageRef page, Layer* layer) : UndoAction("ColorUndoAction")
 {
 	XOJ_INIT_TYPE(ColorUndoAction);
 
@@ -51,8 +50,7 @@ void ColorUndoAction::addStroke(Element* e, int originalColor, double newColor)
 {
 	XOJ_CHECK_TYPE(ColorUndoAction);
 
-	this->data = g_list_append(this->data, new ColorUndoActionEntry(e,
-																	originalColor, newColor));
+	this->data = g_list_append(this->data, new ColorUndoActionEntry(e, originalColor, newColor));
 }
 
 bool ColorUndoAction::undo(Control* control)

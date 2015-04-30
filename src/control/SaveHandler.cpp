@@ -9,6 +9,7 @@
  * @license GPL
  */
 
+#include "jobs/ProgressListener.h"
 #include "model/Stroke.h"
 #include "model/Text.h"
 #include "model/Image.h"
@@ -17,23 +18,18 @@
 #include "model/Layer.h"
 #include "model/BackgroundImage.h"
 #include "SaveHandler.h"
-#include "jobs/ProgressListener.h"
-
 #include "xml/XmlNode.h"
 #include "xml/XmlTextNode.h"
 #include "xml/XmlImageNode.h"
 #include "xml/XmlTexNode.h"
 #include "xml/XmlPointNode.h"
 
-#include <clocale>
-
 #include <config.h>
+
 #include <glib/gi18n-lib.h>
 
-#include <config.h>
-
+#include <clocale>
 #include <iostream>
-
 using namespace std;
 
 // TODO LOW PRIO: remove all elements which are complete outside the pages
@@ -91,8 +87,7 @@ void SaveHandler::prepareSave(Document* doc)
 	this->root->setAttrib("creator", "Xournal++ " VERSION);
 	this->root->setAttrib("fileversion", "2");
 
-	this->root->addChild(new XmlTextNode("title",
-										 "Xournal document - see http://xournal.sourceforge.net/"));
+	this->root->addChild(new XmlTextNode("title", "Xournal document - see http://xournal.sourceforge.net/"));
 	cairo_surface_t* preview = doc->getPreview();
 	if (preview)
 	{
@@ -127,16 +122,12 @@ string SaveHandler::getSolidBgStr(BackgroundType type)
 {
 	switch (type)
 	{
-	case BACKGROUND_TYPE_NONE:
-		return "plain";
-	case BACKGROUND_TYPE_LINED:
-		return "lined";
-	case BACKGROUND_TYPE_RULED:
-		return "ruled";
-	case BACKGROUND_TYPE_GRAPH:
-		return "graph";
+	case BACKGROUND_TYPE_NONE:  return "plain";
+	case BACKGROUND_TYPE_LINED: return "lined";
+	case BACKGROUND_TYPE_RULED: return "ruled";
+	case BACKGROUND_TYPE_GRAPH: return "graph";
+	default:					return "plain";
 	}
-	return "plain";
 }
 
 void SaveHandler::visitLayer(XmlNode* page, Layer* l)
@@ -323,8 +314,7 @@ void SaveHandler::visitPage(XmlNode* root, PageRef p, Document* doc, int id)
 			background->setAttrib("filename", filename);
 			g_free(filename);
 		}
-		else if (p->getBackgroundImage().isAttached() &&
-				 p->getBackgroundImage().getPixbuf())
+		else if (p->getBackgroundImage().isAttached() && p->getBackgroundImage().getPixbuf())
 		{
 			char* filename = g_strdup_printf("bg_%d.png", this->attachBgId++);
 			background->setAttrib("domain", "attach");
@@ -360,9 +350,7 @@ void SaveHandler::visitPage(XmlNode* root, PageRef p, Document* doc, int id)
 	}
 }
 
-void SaveHandler::saveTo(OutputStream* out,
-						 path filename,
-						 ProgressListener* listener)
+void SaveHandler::saveTo(OutputStream* out, path filename, ProgressListener* listener)
 {
 	XOJ_CHECK_TYPE(SaveHandler);
 
@@ -403,4 +391,3 @@ string SaveHandler::getErrorMessage()
 
 	return this->errorMessage;
 }
-

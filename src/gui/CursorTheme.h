@@ -11,8 +11,8 @@
 
 #pragma once
 
-#include <XournalType.h>
 #include <String.h>
+#include <XournalType.h>
 
 #include <glib.h>
 

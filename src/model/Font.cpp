@@ -1,6 +1,7 @@
 #include "Font.h"
-#include <serializing/ObjectOutputStream.h>
+
 #include <serializing/ObjectInputStream.h>
+#include <serializing/ObjectOutputStream.h>
 
 XojFont::XojFont()
 {
@@ -62,8 +63,7 @@ void XojFont::serialize(ObjectOutputStream& out)
 	out.endObject();
 }
 
-void XojFont::readSerialized(ObjectInputStream& in) throw (
-														   InputStreamException)
+void XojFont::readSerialized(ObjectInputStream& in) throw (InputStreamException)
 {
 	XOJ_CHECK_TYPE(XojFont);
 
@@ -74,4 +74,3 @@ void XojFont::readSerialized(ObjectInputStream& in) throw (
 
 	in.endObject();
 }
-

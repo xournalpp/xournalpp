@@ -1,4 +1,5 @@
 #include "DocumentHandler.h"
+
 #include "DocumentListener.h"
 
 #define FOR_ALL for (DocumentListener* dl : this->listener)

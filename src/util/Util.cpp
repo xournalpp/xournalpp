@@ -1,11 +1,11 @@
 #include "Util.h"
+
 #include "cfg.h"
-
 #include <config.h>
-#include <glib/gi18n-lib.h>
 
-#include <iostream>
+#include <glib/gi18n-lib.h>
 #include <boost/filesystem.hpp>
+#include <iostream>
 
 using namespace std;
 
@@ -40,12 +40,12 @@ int Util::getPid()
 
 path Util::getAutosaveFilename()
 {
-	path p(getSettingsSubfolder("autosave"));
+	path p(getConfigSubfolder("autosave"));
 	p += CONCAT(getPid(), ".xoj");
 	return p;
 }
 
-path Util::getSettingsSubfolder(path subfolder)
+path Util::getConfigSubfolder(path subfolder)
 {
 	using namespace boost::filesystem;
 	path p(g_get_home_dir());
@@ -61,9 +61,9 @@ path Util::getSettingsSubfolder(path subfolder)
 	return p;
 }
 
-path Util::getSettingsFile(path relativeFileName)
+path Util::getConfigFile(path relativeFileName)
 {
-	path p = getSettingsSubfolder(relativeFileName.parent_path());
+	path p = getConfigSubfolder(relativeFileName.parent_path());
 	p /= relativeFileName.filename();
 	return p;
 }
@@ -159,8 +159,7 @@ GdkPixbuf* Util::newPixbufFromWidget(GtkWidget* widget, int iconSize)
 	fakeExposeWidget(widget, pixmap);
 
 	pixbuf = gdk_pixbuf_new(GDK_COLORSPACE_RGB, TRUE, 8, icon_width, icon_height);
-	gdk_pixbuf_get_from_drawable(pixbuf, pixmap, NULL, 0, 0, 0, 0, icon_width,
-								 icon_height);
+	gdk_pixbuf_get_from_drawable(pixbuf, pixmap, NULL, 0, 0, 0, 0, icon_width, icon_height);
 
 	gtk_widget_destroy(window);
 
@@ -187,10 +186,9 @@ void Util::openFileWithDefaultApplicaion(path filename)
 	cout << bl::format("XPP Execute command: «{1}»") % command << endl;
 	if (system(command.c_str()) != 0)
 	{
-		GtkWidget* dlgError = gtk_message_dialog_new(NULL, GTK_DIALOG_MODAL,
-													 GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, "%s",
-													 _("File could not be opened. You have to open it manual\n:URL: %s"), filename.c_str(),
-													 filename.c_str());
+		GtkWidget* dlgError = gtk_message_dialog_new(NULL, GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, "%s",
+													 _("File could not be opened. You have to open it manual\n:URL: %s"),
+													 filename.c_str(), filename.c_str());
 		gtk_dialog_run(GTK_DIALOG(dlgError));
 	}
 }
@@ -217,11 +215,9 @@ void Util::openFileWithFilebrowser(path filename)
 	cout << bl::format("XPP show file in filebrowser command: «{1}»") % command << endl;
 	if (system(command.c_str()) != 0)
 	{
-		GtkWidget* dlgError = gtk_message_dialog_new(NULL, GTK_DIALOG_MODAL,
-			GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, "%s",
-			_("File could not be opened. You have to open it manual\n:URL: %s"), filename.c_str(),
-			filename.c_str());
+		GtkWidget* dlgError = gtk_message_dialog_new(NULL, GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, "%s",
+													 _("File could not be opened. You have to open it manual\n:URL: %s"), filename.c_str(),
+													 filename.c_str());
 		gtk_dialog_run(GTK_DIALOG(dlgError));
 	}
 }
-

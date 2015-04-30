@@ -12,6 +12,7 @@
 #pragma once
 
 #include <StringUtils.h>
+
 #include <exception>
 
 #define INPUT_STREAM_EXCEPTION(description, ...) \

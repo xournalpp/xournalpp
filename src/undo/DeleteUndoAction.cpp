@@ -1,8 +1,9 @@
 #include "DeleteUndoAction.h"
-#include "model/Layer.h"
-#include "model/Element.h"
-#include "model/PageRef.h"
+
 #include "gui/Redrawable.h"
+#include "model/Element.h"
+#include "model/Layer.h"
+#include "model/PageRef.h"
 #include "PageLayerPosEntry.h"
 
 DeleteUndoAction::DeleteUndoAction(PageRef page, bool eraser) : UndoAction("DeleteUndoAction")
@@ -37,8 +38,7 @@ void DeleteUndoAction::addElement(Layer* layer, Element* e, int pos)
 {
 	XOJ_CHECK_TYPE(DeleteUndoAction);
 
-	this->elements = g_list_insert_sorted(this->elements,
-										  new PageLayerPosEntry<Element> (layer, e, pos),
+	this->elements = g_list_insert_sorted(this->elements, new PageLayerPosEntry<Element> (layer, e, pos),
 										  (GCompareFunc) PageLayerPosEntry<Element>::cmp);
 }
 
@@ -105,8 +105,7 @@ string DeleteUndoAction::getText()
 
 		if (this->elements != NULL)
 		{
-			ElementType type = ((PageLayerPosEntry<Element>*)
-								this->elements->data)->element->getType();
+			ElementType type = ((PageLayerPosEntry<Element>*) this->elements->data)->element->getType();
 
 			for (GList* l = this->elements->next; l != NULL; l = l->next)
 			{

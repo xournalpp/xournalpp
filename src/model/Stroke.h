@@ -12,8 +12,9 @@
 #pragma once
 
 #include "Element.h"
-#include <Arrayiterator.h>
 #include "Point.h"
+
+#include <Arrayiterator.h>
 
 enum StrokeTool
 {

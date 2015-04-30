@@ -12,6 +12,7 @@
 #pragma once
 
 #include "UndoAction.h"
+
 #include <XournalType.h>
 
 class Control;
@@ -66,7 +67,6 @@ private:
 
 	UndoAction* savedUndo;
 	UndoAction* autosavedUndo;
-
 
 	GList* listener;
 

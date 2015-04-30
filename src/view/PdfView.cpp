@@ -1,13 +1,15 @@
 #include "PdfView.h"
+
 #include <config.h>
+
 #include <glib/gi18n-lib.h>
 
 PdfView::PdfView() { }
 
 PdfView::~PdfView() { }
 
-void PdfView::drawPage(PdfCache* cache, XojPopplerPage* popplerPage,
-					   cairo_t* cr, double zoom, double width, double height, bool forPrinting)
+void PdfView::drawPage(PdfCache* cache, XojPopplerPage* popplerPage, cairo_t* cr,
+					   double zoom, double width, double height, bool forPrinting)
 {
 	if (popplerPage)
 	{
@@ -39,8 +41,7 @@ void PdfView::drawPage(PdfCache* cache, XojPopplerPage* popplerPage,
 		const char* strMissing = _("PDF background missing");
 
 		cairo_text_extents(cr, strMissing, &extents);
-		cairo_move_to(cr, width / 2 - extents.width / 2,
-					height / 2 - extents.height / 2);
+		cairo_move_to(cr, width / 2 - extents.width / 2, height / 2 - extents.height / 2);
 		cairo_show_text(cr, strMissing);
 	}
 }

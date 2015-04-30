@@ -18,10 +18,7 @@ PdfRefEntry::~PdfRefEntry()
 {
 	XOJ_CHECK_TYPE(PdfRefEntry);
 
-	if (this->object)
-	{
-		delete this->object;
-	}
+	delete this->object;
 	this->object = NULL;
 
 	XOJ_RELEASE_TYPE(PdfRefEntry);
@@ -47,4 +44,3 @@ bool PdfRefEntry::isUsed()
 
 	return this->used;
 }
-

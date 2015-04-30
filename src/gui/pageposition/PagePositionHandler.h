@@ -11,12 +11,13 @@
 
 #pragma once
 
-#include <glib.h>
 #include <XournalType.h>
 
-class PageView;
+#include <glib.h>
+
 class PagePosition;
 class PagePositionCache;
+class PageView;
 
 /**
  * @brief Look up PageView%s from display coordinates
@@ -44,8 +45,7 @@ private:
 	void allocDataSize(int size);
 	void freeData();
 
-	PagePosition* binarySearch(PagePosition** sortedArray, int first, int last,
-							int y, int& index);
+	PagePosition* binarySearch(PagePosition** sortedArray, int first, int last, int y, int& index);
 
 private:
 	XOJ_TYPE_ATTRIB;

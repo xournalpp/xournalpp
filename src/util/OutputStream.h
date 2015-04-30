@@ -11,11 +11,12 @@
 
 #pragma once
 
+#include "StringUtils.h"
+#include "XournalType.h"
+
 #include <boost/filesystem/path.hpp>
 using boost::filesystem::path;
 
-#include "StringUtils.h"
-#include "XournalType.h"
 #include <zlib.h>
 
 class OutputStream
@@ -43,7 +44,6 @@ public:
 	virtual void write(const char* data, int len);
 
 	virtual void close();
-
 
 	string& getLastError();
 

@@ -13,6 +13,7 @@
 
 #include "BlockingJob.h"
 #include "ExportFormtType.h"
+
 #include <PageRange.h>
 #include <StringUtils.h>
 #include <XournalType.h>
@@ -23,8 +24,7 @@ using boost::filesystem::path;
 class ExportJob : public BlockingJob
 {
 public:
-	ExportJob(Control* control, PageRangeVector selected, ExportFormtType type,
-			  int dpi, path filepath);
+	ExportJob(Control* control, PageRangeVector selected, ExportFormtType type, int dpi, path filepath);
 
 protected:
 	virtual ~ExportJob();
@@ -38,7 +38,6 @@ private:
 
 private:
 	XOJ_TYPE_ATTRIB;
-
 
 	PageRangeVector selected;
 

@@ -1,4 +1,5 @@
 #include "Job.h"
+
 #include <gtk/gtk.h>
 
 Job::Job()

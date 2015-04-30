@@ -1,22 +1,20 @@
 #include "LatexAction.h"
+
+#include "cfg.h"
 #include "control/Control.h"
-#include "model/Stroke.h"
-#include "model/Layer.h"
+#include "control/tools/ImageHandler.h"
 #include "gui/PageView.h"
 #include "gui/XournalView.h"
-
-//TODO some time - clean up these includes
-//Yes, please. This file is rebuilding after pretty much every header edit
-#include "serializing/ObjectOutputStream.h"
-#include "serializing/HexObjectEncoding.h"
-
-#include "control/tools/ImageHandler.h"
+#include "model/Stroke.h"
+#include "model/Layer.h"
 #include "model/TexImage.h"
+//TODO some time - clean up these includes
+#include "serializing/HexObjectEncoding.h"
+#include "serializing/ObjectOutputStream.h"
 
-#include <iostream>
-#include "cfg.h"
 #include <glib.h>
 
+#include <iostream>
 using namespace std;
 
 LatexAction::LatexAction(string myTex, double tArea)
@@ -25,11 +23,8 @@ LatexAction::LatexAction(string myTex, double tArea)
 
 	this->theLatex = myTex;
 
-	//TODO paths
-	this->texfile = CONCAT(g_get_home_dir(), G_DIR_SEPARATOR_S, CONFIG_DIR,
-						   G_DIR_SEPARATOR_S, "tex");
-	this->texfilefull = CONCAT(g_get_home_dir(), G_DIR_SEPARATOR_S, CONFIG_DIR,
-							   G_DIR_SEPARATOR_S, "tex.png");
+	this->texfile = Util::getConfigFile("tex").string();
+	this->texfilefull = Util::getConfigFile("tex.png").string();
 
 	cout << this->texfile << endl;
 
@@ -84,8 +79,8 @@ void LatexAction::runCommand()
 		texres = "1000";
 	}
 	string command = (bl::format("{1} -m 0 \"\\png\\usepackage{{color}}\\color{{{2}}}\\dpi{{{3}}}\\normalsize {4}\" -o {5}")
-	              % mtex % (fontcolour.length() ? fontcolour : "black") % texres
-	              % g_strescape(this->theLatex.c_str(), NULL) % this->texfile).str();
+						% mtex % (fontcolour.length() ? fontcolour : "black") % texres
+						% g_strescape(this->theLatex.c_str(), NULL) % this->texfile).str();
 
 	gint rt = 0;
 	void(*texhandler)(int) = signal(SIGCHLD, SIG_DFL);
@@ -96,8 +91,7 @@ void LatexAction::runCommand()
 		cout << "Latex Command execution failed." << endl;
 		return;
 	}
-	cout << bl::format("Tex command: \"{1}\" was successful; in file {2}.")
-			% this->theLatex % this->texfilefull << endl;
+	cout << bl::format("Tex command: \"{1}\" was successful; in file {2}.") % this->theLatex % this->texfilefull << endl;
 
 }
 

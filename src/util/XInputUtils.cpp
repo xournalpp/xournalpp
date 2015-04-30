@@ -1,6 +1,8 @@
 #include "XInputUtils.h"
-#include <math.h>
+
 #include "cfg.h"
+
+#include <math.h>
 
 int XInputUtils::screenWidth = 0;
 int XInputUtils::screenHeight = 0;
@@ -139,8 +141,7 @@ void XInputUtils::handleScrollEvent(GdkEventButton* event, GtkWidget* widget)
 	gtk_widget_event(widget, &scrollEvent);
 }
 
-gboolean XInputUtils::onMouseEnterNotifyEvent(GtkWidget* widget,
-											  GdkEventCrossing* event)
+gboolean XInputUtils::onMouseEnterNotifyEvent(GtkWidget* widget, GdkEventCrossing* event)
 {
 	if (!XInputUtils::enableLeafEnterWorkaround)
 	{
@@ -167,8 +168,7 @@ gboolean XInputUtils::onMouseEnterNotifyEvent(GtkWidget* widget,
 	return FALSE;
 }
 
-gboolean XInputUtils::onMouseLeaveNotifyEvent(GtkWidget* widget,
-											  GdkEventCrossing* event)
+gboolean XInputUtils::onMouseLeaveNotifyEvent(GtkWidget* widget, GdkEventCrossing* event)
 {
 	if (!XInputUtils::enableLeafEnterWorkaround)
 	{

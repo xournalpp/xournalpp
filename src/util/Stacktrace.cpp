@@ -1,10 +1,11 @@
 #include "Stacktrace.h"
+
 #include <execinfo.h>
 
 /**
  * This code uses addr2line
  *
- * another solution would be backtrace-symbols.c from cairo/util, but its really complicated
+ * Another solution would be backtrace-symbols.c from cairo/util, but its really complicated
  */
 
 string exeName = "";

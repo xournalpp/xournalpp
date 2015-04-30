@@ -1,9 +1,9 @@
 #include "PdfWriter.h"
-#include <config.h>
-#include <iostream>
 
+#include <config.h>
 #include <GzHelper.h>
 
+#include <iostream>
 using namespace std;
 
 bool PdfWriter::compressPdfOutput = true;
@@ -46,15 +46,13 @@ bool PdfWriter::openFile(path filename)
 	GError* error = NULL;
 
 	GFile* file = g_file_new_for_path(filename.c_str());
-	this->out = g_file_replace(file, NULL, false, (GFileCreateFlags) 0, NULL,
-							   &error);
+	this->out = g_file_replace(file, NULL, false, (GFileCreateFlags) 0, NULL, &error);
 
 	g_object_unref(file);
 
 	if (error)
 	{
-		lastError = (bl::format("Error opening file for writing: {1}, File: {2}")
-					 % error->message % filename.string()).str();
+		lastError = (bl::format("Error opening file for writing: {1}, File: {2}") % error->message % filename.string()).str();
 		g_warning("error opening file");
 		return false;
 	}

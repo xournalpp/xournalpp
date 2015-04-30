@@ -11,16 +11,17 @@
 
 #pragma once
 
-#include <gtk/gtk.h>
-#include "model/Element.h"
-#include "model/Stroke.h"
-#include "model/Text.h"
-#include "model/PageRef.h"
-#include "model/Image.h"
-#include "model/TexImage.h"
 #include <XournalType.h>
+#include "model/Element.h"
+#include "model/Image.h"
+#include "model/PageRef.h"
+#include "model/Stroke.h"
+#include "model/TexImage.h"
+#include "model/Text.h"
 
 #include "ElementContainer.h"
+
+#include <gtk/gtk.h>
 
 class EditSelection;
 
@@ -32,8 +33,7 @@ public:
 
 public:
 	void drawPage(PageRef page, cairo_t* cr, bool preview);
-	void drawStroke(cairo_t* cr, Stroke* s, int startPoint = 0,
-					double scaleFactor = 1);
+	void drawStroke(cairo_t* cr, Stroke* s, int startPoint = 0, double scaleFactor = 1);
 	void drawEraseableStroke(cairo_t* cr, Stroke* s);
 	static void applyColor(cairo_t* cr, int c, int alpha = 255);
 	static void applyColor(cairo_t* cr, Element* e, int alpha = 255);

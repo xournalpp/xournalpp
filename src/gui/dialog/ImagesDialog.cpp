@@ -1,13 +1,16 @@
 #include "ImagesDialog.h"
-#include "../Shadow.h"
-#include <math.h>
-#include <Util.h>
-#include "model/Document.h"
-#include "model/BackgroundImage.h"
+
 #include "control/settings/Settings.h"
+#include "gui/Shadow.h"
+#include "model/BackgroundImage.h"
+#include "model/Document.h"
 
 #include <config.h>
+#include <Util.h>
+
 #include <glib/gi18n-lib.h>
+
+#include <math.h>
 
 class ImageView
 {
@@ -28,10 +31,8 @@ public:
 
 		gtk_widget_set_events(widget, GDK_EXPOSURE_MASK | GDK_BUTTON_PRESS_MASK);
 
-		g_signal_connect(this->widget, "expose_event", G_CALLBACK(exposeEventCallback),
-						this);
-		g_signal_connect(this->widget, "button-press-event",
-						G_CALLBACK(mouseButtonPressCallback), this);
+		g_signal_connect(this->widget, "expose_event", G_CALLBACK(exposeEventCallback), this);
+		g_signal_connect(this->widget, "button-press-event", G_CALLBACK(mouseButtonPressCallback), this);
 	}
 
 	virtual ~ImageView()
@@ -85,8 +86,7 @@ public:
 		XOJ_CHECK_TYPE(ImageView);
 
 		calcSize();
-		return width + Shadow::getShadowBottomRightSize() +
-				Shadow::getShadowTopLeftSize() + 4;
+		return width + Shadow::getShadowBottomRightSize() + Shadow::getShadowTopLeftSize() + 4;
 	}
 
 	int getHeight()
@@ -94,8 +94,7 @@ public:
 		XOJ_CHECK_TYPE(ImageView);
 
 		calcSize();
-		return height + Shadow::getShadowBottomRightSize() +
-				Shadow::getShadowTopLeftSize() + 4;
+		return height + Shadow::getShadowBottomRightSize() + Shadow::getShadowTopLeftSize() + 4;
 	}
 
 	void setSelected(bool selected)
@@ -131,8 +130,7 @@ public:
 	}
 	
 private:
-	static gboolean exposeEventCallback(GtkWidget* widget, GdkEventExpose* event,
-										ImageView* page)
+	static gboolean exposeEventCallback(GtkWidget* widget, GdkEventExpose* event, ImageView* page)
 	{
 		XOJ_CHECK_TYPE_OBJ(page, ImageView);
 
@@ -140,8 +138,7 @@ private:
 		return true;
 	}
 
-	static gboolean mouseButtonPressCallback(GtkWidget* widget,
-											GdkEventButton* event, ImageView* page)
+	static gboolean mouseButtonPressCallback(GtkWidget* widget, GdkEventButton* event, ImageView* page)
 	{
 		XOJ_CHECK_TYPE_OBJ(page, ImageView);
 
@@ -161,21 +158,18 @@ private:
 		gdk_threads_enter();
 		if (this->crBuffer == NULL)
 		{
-			this->crBuffer = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, alloc.width,
-														alloc.height);
+			this->crBuffer = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, alloc.width, alloc.height);
 
 			cairo_t* cr2 = cairo_create(this->crBuffer);
 			cairo_matrix_t defaultMatrix = {0};
 			cairo_get_matrix(cr2, &defaultMatrix);
 
-			cairo_translate(cr2, Shadow::getShadowTopLeftSize() + 2,
-							Shadow::getShadowTopLeftSize() + 2);
+			cairo_translate(cr2, Shadow::getShadowTopLeftSize() + 2, Shadow::getShadowTopLeftSize() + 2);
 
 			cairo_scale(cr2, this->zoom, this->zoom);
 
 			GdkPixbuf* p = this->backgroundImage.getPixbuf();
-			gdk_cairo_set_source_pixbuf(cr2, p, Shadow::getShadowTopLeftSize() + 2,
-										Shadow::getShadowTopLeftSize() + 2);
+			gdk_cairo_set_source_pixbuf(cr2, p, Shadow::getShadowTopLeftSize() + 2, Shadow::getShadowTopLeftSize() + 2);
 			cairo_paint(cr2);
 
 			cairo_set_operator(cr2, CAIRO_OPERATOR_SOURCE);
@@ -214,12 +208,12 @@ private:
 				cairo_stroke(cr2);
 
 				Shadow::drawShadow(cr2, Shadow::getShadowTopLeftSize(),
-								Shadow::getShadowTopLeftSize(), width + 4, height + 4);
+								   Shadow::getShadowTopLeftSize(), width + 4, height + 4);
 			}
 			else
 			{
 				Shadow::drawShadow(cr2, Shadow::getShadowTopLeftSize() + 2,
-								Shadow::getShadowTopLeftSize() + 2, width, height);
+								   Shadow::getShadowTopLeftSize() + 2, width, height);
 			}
 
 			cairo_destroy(cr2);
@@ -256,9 +250,8 @@ private:
 //////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////
 
-ImagesDialog::ImagesDialog(GladeSearchpath* gladeSearchPath, Document* doc,
-						   Settings* settings) :
-GladeGui(gladeSearchPath, "images.glade", "ImagesDialog")
+ImagesDialog::ImagesDialog(GladeSearchpath* gladeSearchPath, Document* doc, Settings* settings) :
+	GladeGui(gladeSearchPath, "images.glade", "ImagesDialog")
 {
 	XOJ_INIT_TYPE(ImagesDialog);
 
@@ -274,10 +267,8 @@ GladeGui(gladeSearchPath, "images.glade", "ImagesDialog")
 	// TODO LOW PRIO: may find a better solution... depending on screen size or so
 	gtk_widget_set_size_request(this->window, 800, 600);
 
-	gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scrollPreview),
-								GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
-	gtk_scrolled_window_set_shadow_type(GTK_SCROLLED_WINDOW(scrollPreview),
-										GTK_SHADOW_IN);
+	gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scrollPreview), GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
+	gtk_scrolled_window_set_shadow_type(GTK_SCROLLED_WINDOW(scrollPreview), GTK_SHADOW_IN);
 	gtk_container_add(GTK_CONTAINER(scrollPreview), widget);
 	gtk_box_pack_start(GTK_BOX(get("vbox")), scrollPreview, true, true, 0);
 
@@ -329,10 +320,8 @@ GladeGui(gladeSearchPath, "images.glade", "ImagesDialog")
 	layout();
 	updateOkButton();
 
-	g_signal_connect(get("buttonOk"), "clicked", G_CALLBACK(okButtonCallback),
-					this);
-	g_signal_connect(get("btFilechooser"), "clicked",
-					G_CALLBACK(filechooserButtonCallback), this);
+	g_signal_connect(get("buttonOk"), "clicked", G_CALLBACK(okButtonCallback), this);
+	g_signal_connect(get("btFilechooser"), "clicked", G_CALLBACK(filechooserButtonCallback), this);
 }
 
 ImagesDialog::~ImagesDialog()
@@ -359,8 +348,7 @@ void ImagesDialog::updateOkButton()
 	XOJ_CHECK_TYPE(ImagesDialog);
 
 	ImageView* p = (ImageView*) g_list_nth_data(this->images, this->selected);
-	gtk_widget_set_sensitive(get("buttonOk"), p &&
-							gtk_widget_get_visible(p->getWidget()));
+	gtk_widget_set_sensitive(get("buttonOk"), p && gtk_widget_get_visible(p->getWidget()));
 }
 
 void ImagesDialog::okButtonCallback(GtkButton* button, ImagesDialog* dlg)
@@ -370,8 +358,7 @@ void ImagesDialog::okButtonCallback(GtkButton* button, ImagesDialog* dlg)
 	dlg->selectedPage = dlg->selected;
 }
 
-void ImagesDialog::filechooserButtonCallback(GtkButton* button,
-											 ImagesDialog* dlg)
+void ImagesDialog::filechooserButtonCallback(GtkButton* button, ImagesDialog* dlg)
 {
 	XOJ_CHECK_TYPE_OBJ(dlg, ImagesDialog);
 
@@ -398,8 +385,7 @@ BackgroundImage ImagesDialog::getSelectedImage()
 	return p->backgroundImage;
 }
 
-void ImagesDialog::sizeAllocate(GtkWidget* widget, GtkRequisition* requisition,
-								ImagesDialog* dlg)
+void ImagesDialog::sizeAllocate(GtkWidget* widget, GtkRequisition* requisition, ImagesDialog* dlg)
 {
 	XOJ_CHECK_TYPE_OBJ(dlg, ImagesDialog);
 
@@ -438,8 +424,7 @@ void ImagesDialog::setBackgroundWhite()
 		return;
 	}
 	this->backgroundInitialized = true;
-	gdk_window_set_background(GTK_LAYOUT(this->widget)->bin_window,
-							&this->widget->style->white);
+	gdk_window_set_background(GTK_LAYOUT(this->widget)->bin_window, &this->widget->style->white);
 }
 
 void ImagesDialog::setSelected(int selected)
