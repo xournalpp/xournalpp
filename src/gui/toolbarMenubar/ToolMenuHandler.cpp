@@ -512,7 +512,9 @@ void ToolMenuHandler::initToolItems()
 
 	registerMenupoint(gui->get("menuToolsTextFont"), ACTION_SELECT_FONT);
 
+#ifdef ENABLE_MATHTEX
 	registerMenupoint(gui->get("menuEditTex"), ACTION_TEX);
+#endif
 
 	registerMenupoint(gui->get("menuViewToolbarManage"), ACTION_MANAGE_TOOLBAR);
 	registerMenupoint(gui->get("menuViewToolbarCustomize"), ACTION_CUSTOMIZE_TOOLBAR);
