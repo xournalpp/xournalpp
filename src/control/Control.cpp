@@ -3363,7 +3363,7 @@ void Control::runLatex()
 #else
 	cout << "Mathtex is disabled. Recompile with ./configure --enable-mathtex, "
 			"ensuring you have the mathtex command on your system." << endl;
-#endif
+#endif // ENABLE_MATHTEX
 
 }
 

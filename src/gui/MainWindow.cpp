@@ -21,6 +21,7 @@
 #include <iostream>
 using namespace std;
 
+
 MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control) :
 	GladeGui(gladeSearchPath, "main.glade", "mainWindow")
 {
@@ -42,6 +43,11 @@ MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control) :
 	this->maximized = false;
 	this->toolbarMenuData = NULL;
 	this->toolbarMenuitems = NULL;
+
+#ifndef ENABLE_MATHTEX
+	// if mathetex is disable disabled hide the menu entry
+	gtk_widget_destroy(get("menuEditTex"));
+#endif
 
 	GtkWidget* tableXournal = get("tableXournal");
 
