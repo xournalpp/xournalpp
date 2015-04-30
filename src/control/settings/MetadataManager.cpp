@@ -348,7 +348,7 @@ bool MetadataManager::getString(path p, string name, string& value)
 
 path MetadataManager::getFilePath()
 {
-	return Util::getSettingsFile(METADATA_FILE);
+	return Util::getConfigFile(METADATA_FILE);
 }
 
 //kinda workaround for now – it probably wouldn't work on Windows
