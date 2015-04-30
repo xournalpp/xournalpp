@@ -2404,15 +2404,7 @@ bool Control::openFile(path filename, int scrollToPage)
 		if (settings->isAutloadPdfXoj())
 		{
 			path f = path(filename).replace_extension(".pdf.xoj");
-			Document* tmp;
-			try {
-				tmp = h.loadDocument(f);
-			} catch (ParseException& e)
-			{
-				cerr << e.what() << endl;
-				return false;
-			}
-			
+			Document* tmp = h.loadDocument(f.string());
 			if (tmp)
 			{
 
@@ -2424,6 +2416,10 @@ bool Control::openFile(path filename, int scrollToPage)
 				fileLoaded(scrollToPage);
 				return true;
 			}
+			else
+			{
+				return false;
+			}
 		}
 
 		bool an = annotatePdf(filename, false, false);
@@ -2431,51 +2427,42 @@ bool Control::openFile(path filename, int scrollToPage)
 		return an;
 	}
 
-	Document* tmp;
-	
-	try
+	Document* tmp = h.loadDocument(filename.string());
+	if ((tmp != NULL && h.isAttachedPdfMissing()) || !h.getMissingPdfFilename().empty())
 	{
-		tmp = h.loadDocument(filename);
-		if (!tmp && h.isAttachedPdfMissing() || !h.getMissingPdfFilename().empty())
+		// give the user a second chance to select a new PDF file, or to discard the PDF
+
+
+		GtkWidget* dialog = gtk_message_dialog_new((GtkWindow*) *getWindow(),
+												   GTK_DIALOG_DESTROY_WITH_PARENT,
+												   GTK_MESSAGE_QUESTION, GTK_BUTTONS_NONE, h.isAttachedPdfMissing() ? _(
+																														"The attached background PDF could not be found.") :
+												   _("The background PDF could not be found."));
+
+		gtk_dialog_add_button(GTK_DIALOG(dialog), _("Select another PDF"), 1);
+		gtk_dialog_add_button(GTK_DIALOG(dialog), _("Remove PDF Background"), 2);
+		gtk_dialog_add_button(GTK_DIALOG(dialog), _("Cancel"), 3);
+		gtk_window_set_transient_for(GTK_WINDOW(dialog),
+									 GTK_WINDOW(this->getWindow()->getWindow()));
+		int res = gtk_dialog_run(GTK_DIALOG(dialog));
+		gtk_widget_destroy(dialog);
+
+		if (res == 2) // remove PDF background
 		{
-			// give the user a second chance to select a new PDF file, or to discard the PDF
-
-
-			GtkWidget* dialog = gtk_message_dialog_new((GtkWindow*) *getWindow(),
-													   GTK_DIALOG_DESTROY_WITH_PARENT,
-													   GTK_MESSAGE_QUESTION, GTK_BUTTONS_NONE, h.isAttachedPdfMissing() ? _(
-																															"The attached background PDF could not be found.") :
-													   _("The background PDF could not be found."));
-
-			gtk_dialog_add_button(GTK_DIALOG(dialog), _("Select another PDF"), 1);
-			gtk_dialog_add_button(GTK_DIALOG(dialog), _("Remove PDF Background"), 2);
-			gtk_dialog_add_button(GTK_DIALOG(dialog), _("Cancel"), 3);
-			gtk_window_set_transient_for(GTK_WINDOW(dialog),
-										 GTK_WINDOW(this->getWindow()->getWindow()));
-			int res = gtk_dialog_run(GTK_DIALOG(dialog));
-			gtk_widget_destroy(dialog);
-
-			if (res == 2) // remove PDF background
+			h.removePdfBackground();
+			tmp = h.loadDocument(filename.string());
+		}
+		else if (res == 1) // select another PDF background
+		{
+			bool attachToDocument = false;
+			path pdfFilename = XojOpenDlg::showOpenDialog((GtkWindow*) * win,
+														  this->settings, true, attachToDocument);
+			if (!pdfFilename.empty())
 			{
-				h.removePdfBackground();
-				tmp = h.loadDocument(filename);
-			}
-			else if (res == 1) // select another PDF background
-			{
-				bool attachToDocument = false;
-				path pdfFilename = XojOpenDlg::showOpenDialog((GtkWindow*) * win,
-															  this->settings, true, attachToDocument);
-				if (!pdfFilename.empty())
-				{
-					h.setPdfReplacement(pdfFilename, attachToDocument);
-					tmp = h.loadDocument(filename);
-				}
+				h.setPdfReplacement(pdfFilename.string(), attachToDocument);
+				tmp = h.loadDocument(filename.string());
 			}
 		}
-	}
-	catch (ParseException& e)
-	{
-		cerr << e.what() << endl;
 	}
 
 	if (!tmp)
