@@ -1,14 +1,14 @@
 #include "SizeUndoAction.h"
 
-#include "model/Stroke.h"
-#include <Range.h>
 #include "gui/Redrawable.h"
+#include "model/Stroke.h"
+
+#include <Range.h>
 
 class SizeUndoActionEntry
 {
 public:
-	SizeUndoActionEntry(Stroke* s, double orignalWidth, double newWidth,
-						double* originalPressure,
+	SizeUndoActionEntry(Stroke* s, double orignalWidth, double newWidth, double* originalPressure,
 						double* newPressure, int pressureCount)
 	{
 		XOJ_INIT_TYPE(SizeUndoActionEntry);
@@ -81,14 +81,12 @@ double* SizeUndoAction::getPressure(Stroke* s)
 	return data;
 }
 
-void SizeUndoAction::addStroke(Stroke* s, double originalWidth, double newWidt,
-							   double* originalPressure,
+void SizeUndoAction::addStroke(Stroke* s, double originalWidth, double newWidt, double* originalPressure,
 							   double* newPressure, int pressureCount)
 {
 	XOJ_CHECK_TYPE(SizeUndoAction);
 
-	this->data = g_list_append(this->data, new SizeUndoActionEntry(s, originalWidth,
-																   newWidt, originalPressure,
+	this->data = g_list_append(this->data, new SizeUndoActionEntry(s, originalWidth, newWidt, originalPressure,
 																   newPressure, pressureCount));
 }
 
@@ -139,8 +137,7 @@ bool SizeUndoAction::redo(Control* control)
 		e->s->setPressure(e->newPressure);
 
 		range.addPoint(e->s->getX(), e->s->getY());
-		range.addPoint(e->s->getX() + e->s->getElementWidth(),
-					   e->s->getY() + e->s->getElementHeight());
+		range.addPoint(e->s->getX() + e->s->getElementWidth(), e->s->getY() + e->s->getElementHeight());
 	}
 
 	this->page->fireRangeChanged(range);

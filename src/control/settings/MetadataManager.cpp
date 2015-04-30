@@ -1,12 +1,13 @@
 #include "MetadataManager.h"
+
 #include "cfg.h"
 #include "util/Util.h"
 
-#include <boost/filesystem.hpp>
-namespace bf = boost::filesystem;
-
 #include <iostream>
 using namespace std;
+
+#include <boost/filesystem.hpp>
+namespace bf = boost::filesystem;
 
 #define REFRESH_SEC 20
 

@@ -1,11 +1,11 @@
 #include "InsertUndoAction.h"
-#include "model/PageRef.h"
-#include "model/Layer.h"
-#include "model/Element.h"
-#include "gui/Redrawable.h"
 
-InsertUndoAction::InsertUndoAction(PageRef page, Layer* layer,
-								   Element* element) : UndoAction("InsertUndoAction")
+#include "gui/Redrawable.h"
+#include "model/Element.h"
+#include "model/Layer.h"
+#include "model/PageRef.h"
+
+InsertUndoAction::InsertUndoAction(PageRef page, Layer* layer, Element* element) : UndoAction("InsertUndoAction")
 {
 	XOJ_INIT_TYPE(InsertUndoAction);
 
@@ -80,9 +80,7 @@ bool InsertUndoAction::redo(Control* control)
 	return true;
 }
 
-InsertsUndoAction::InsertsUndoAction(PageRef page,
-									 Layer* layer,
-									 ElementVector elements) : UndoAction("InsertsUndoAction")
+InsertsUndoAction::InsertsUndoAction(PageRef page, Layer* layer, ElementVector elements) : UndoAction("InsertsUndoAction")
 {
 	XOJ_INIT_TYPE(InsertsUndoAction);
 
@@ -98,7 +96,11 @@ InsertsUndoAction::~InsertsUndoAction()
 	if (this->undone)
 	{
 		// Insert was undone, so this is not needed anymore
-		for (Element* e : this->elements) delete e;
+		for (Element* e : this->elements)
+		{
+			delete e;
+			e = NULL;
+		}
 	}
 
 	XOJ_RELEASE_TYPE(InsertsUndoAction);

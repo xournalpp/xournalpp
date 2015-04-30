@@ -1,7 +1,8 @@
-#include "PrintHandler.h"
-#include "model/Document.h"
 #include "control/settings/Settings.h"
+#include "model/Document.h"
+#include "PrintHandler.h"
 #include "view/DocumentView.h"
+#include "Util.h"
 
 #include <math.h>
 
@@ -17,8 +18,7 @@ PrintHandler::~PrintHandler()
 	XOJ_RELEASE_TYPE(PrintHandler);
 }
 
-void PrintHandler::drawPage(GtkPrintOperation* operation,
-							GtkPrintContext* context, int pageNr, PrintHandler* handler)
+void PrintHandler::drawPage(GtkPrintOperation* operation, GtkPrintContext* context, int pageNr, PrintHandler* handler)
 {
 	XOJ_CHECK_TYPE_OBJ(handler, PrintHandler);
 
@@ -77,8 +77,7 @@ void PrintHandler::requestPageSetup(GtkPrintOperation* operation,
 		gtk_page_setup_set_orientation(setup, GTK_PAGE_ORIENTATION_PORTRAIT);
 	}
 
-	GtkPaperSize* size = gtk_paper_size_new_custom("xoj-internal", "xoj-internal",
-												width, height, GTK_UNIT_POINTS);
+	GtkPaperSize* size = gtk_paper_size_new_custom("xoj-internal", "xoj-internal", width, height, GTK_UNIT_POINTS);
 	gtk_page_setup_set_paper_size(setup, size);
 	gtk_paper_size_free(size);
 }
@@ -90,8 +89,7 @@ void PrintHandler::print(Document* doc, int currentPage)
 {
 	XOJ_CHECK_TYPE(PrintHandler);
 
-	gchar* filename = g_build_filename(g_get_home_dir(), G_DIR_SEPARATOR_S,
-									CONFIG_DIR, G_DIR_SEPARATOR_S, PRINT_CONFIG_FILE, NULL);
+	const gchar* filename = Util::getConfigFile(PRINT_CONFIG_FILE).c_str();
 
 	GtkPrintSettings* settings = gtk_print_settings_new_from_file(filename, NULL);
 
@@ -112,8 +110,7 @@ void PrintHandler::print(Document* doc, int currentPage)
 	g_signal_connect(op, "draw_page", G_CALLBACK(drawPage), this);
 	g_signal_connect(op, "request-page-setup", G_CALLBACK(requestPageSetup), this);
 
-	GtkPrintOperationResult res = gtk_print_operation_run(op,
-														GTK_PRINT_OPERATION_ACTION_PRINT_DIALOG, NULL, NULL);
+	GtkPrintOperationResult res = gtk_print_operation_run(op, GTK_PRINT_OPERATION_ACTION_PRINT_DIALOG, NULL, NULL);
 	if (res == GTK_PRINT_OPERATION_RESULT_APPLY)
 	{
 		g_object_unref(settings);
@@ -123,9 +120,7 @@ void PrintHandler::print(Document* doc, int currentPage)
 		settings = NULL;
 	}
 
-	g_free(filename);
 	g_object_unref(op);
 
 	this->doc = NULL;
 }
-

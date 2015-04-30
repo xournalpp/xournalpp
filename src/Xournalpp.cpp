@@ -10,6 +10,7 @@
  */
 
 #include "control/XournalMain.h"
+
 #include <CrashHandler.h>
 #include <Stacktrace.h>
 

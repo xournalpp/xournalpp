@@ -9,11 +9,12 @@
  * @license GPL
  */
 
-#include "SelectBackgroundColorDialog.h"
 #include "control/Control.h"
-#include "../widgets/SelectColor.h"
+#include "gui/widgets/SelectColor.h"
+#include "SelectBackgroundColorDialog.h"
 
 #include <config.h>
+
 #include <glib/gi18n-lib.h>
 
 class ColorEntry
@@ -39,9 +40,8 @@ public:
 	bool custom;
 };
 
-SelectBackgroundColorDialog::SelectBackgroundColorDialog(
-														 GladeSearchpath* gladeSearchPath, Control* control) :
-GladeGui(gladeSearchPath, "page-background-color.glade", "pageBgColorDialog")
+SelectBackgroundColorDialog::SelectBackgroundColorDialog(GladeSearchpath* gladeSearchPath, Control* control) :
+	GladeGui(gladeSearchPath, "page-background-color.glade", "pageBgColorDialog")
 {
 
 	XOJ_INIT_TYPE(SelectBackgroundColorDialog);
@@ -113,8 +113,7 @@ GladeGui(gladeSearchPath, "page-background-color.glade", "pageBgColorDialog")
 		gtk_widget_hide(w);
 	}
 
-	g_signal_connect(get("cbSelect"), "clicked", G_CALLBACK(&buttonCustomCallback),
-					this);
+	g_signal_connect(get("cbSelect"), "clicked", G_CALLBACK(&buttonCustomCallback), this);
 }
 
 SelectBackgroundColorDialog::~SelectBackgroundColorDialog()
@@ -125,6 +124,7 @@ SelectBackgroundColorDialog::~SelectBackgroundColorDialog()
 	{
 		ColorEntry* e = (ColorEntry*) l->data;
 		delete e;
+		e = NULL;
 	}
 
 	XOJ_RELEASE_TYPE(SelectBackgroundColorDialog);
@@ -135,10 +135,8 @@ void SelectBackgroundColorDialog::showColorchooser()
 	XOJ_CHECK_TYPE(SelectBackgroundColorDialog);
 
 	this->colorDlg = gtk_color_selection_dialog_new(_("Select color"));
-	g_signal_connect(G_OBJECT
-					(GTK_COLOR_SELECTION_DIALOG(this->colorDlg)->ok_button),
-					"clicked", G_CALLBACK(&buttonSelectedCallback),
-					this->colors->data); // first entry
+	g_signal_connect(G_OBJECT (GTK_COLOR_SELECTION_DIALOG(this->colorDlg)->ok_button), "clicked",
+					 G_CALLBACK(&buttonSelectedCallback), this->colors->data); // first entry
 
 	gtk_dialog_run(GTK_DIALOG(this->colorDlg));
 
@@ -225,8 +223,7 @@ void SelectBackgroundColorDialog::updateLastUsedColors()
 	settings->customSettingsChanged();
 }
 
-void SelectBackgroundColorDialog::buttonCustomCallback(GtkButton* button,
-													   SelectBackgroundColorDialog* dlg)
+void SelectBackgroundColorDialog::buttonCustomCallback(GtkButton* button, SelectBackgroundColorDialog* dlg)
 {
 	XOJ_CHECK_TYPE_OBJ(dlg, SelectBackgroundColorDialog);
 
@@ -234,8 +231,7 @@ void SelectBackgroundColorDialog::buttonCustomCallback(GtkButton* button,
 	gtk_widget_hide(dlg->window);
 }
 
-void SelectBackgroundColorDialog::buttonSelectedCallback(GtkButton* button,
-														 ColorEntry* e)
+void SelectBackgroundColorDialog::buttonSelectedCallback(GtkButton* button, ColorEntry* e)
 {
 	XOJ_CHECK_TYPE_OBJ(e, ColorEntry);
 
@@ -246,12 +242,10 @@ void SelectBackgroundColorDialog::buttonSelectedCallback(GtkButton* button,
 		{
 			GdkColor color = { 0 };
 
-			GtkWidget* cw = gtk_color_selection_dialog_get_color_selection(
-																		GTK_COLOR_SELECTION_DIALOG(e->dlg->colorDlg));
+			GtkWidget* cw = gtk_color_selection_dialog_get_color_selection(GTK_COLOR_SELECTION_DIALOG(e->dlg->colorDlg));
 			gtk_color_selection_get_current_color(GTK_COLOR_SELECTION(cw), &color);
 
-			e->dlg->selected = (color.red / 256) << 16 | (color.green / 256) << 8 |
-					(color.blue / 256);
+			e->dlg->selected = (color.red / 256) << 16 | (color.green / 256) << 8 | (color.blue / 256);
 		}
 
 		e->dlg->updateLastUsedColors();
@@ -275,4 +269,3 @@ void SelectBackgroundColorDialog::show(GtkWindow* parent)
 	gtk_dialog_run(GTK_DIALOG(this->window));
 	gtk_widget_hide(this->window);
 }
-

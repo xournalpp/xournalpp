@@ -11,12 +11,14 @@
 
 #pragma once
 
-#include <cairo.h>
 #include "gui/Redrawable.h"
 #include "model/PageRef.h"
-#include "view/ElementContainer.h"
 #include "undo/MoveUndoAction.h"
+#include "view/ElementContainer.h"
+
 #include <XournalType.h>
+
+#include <cairo.h>
 
 class VerticalToolHandler : public ElementContainer
 {

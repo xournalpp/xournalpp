@@ -11,11 +11,12 @@
 
 #pragma once
 
-#include "../GladeGui.h"
-#include "control/settings/Settings.h"
 #include "control/jobs/ExportFormtType.h"
-#include <XournalType.h>
+#include "control/settings/Settings.h"
+#include "gui/GladeGui.h"
+
 #include <PageRange.h>
+#include <XournalType.h>
 
 #include <boost/filesystem/path.hpp>
 using boost::filesystem::path;
@@ -23,8 +24,7 @@ using boost::filesystem::path;
 class ExportDialog : public GladeGui
 {
 public:
-	ExportDialog(GladeSearchpath* gladeSearchPath, Settings* settings,
-				int pageCount, int currentPage);
+	ExportDialog(GladeSearchpath* gladeSearchPath, Settings* settings, int pageCount, int currentPage);
 	virtual ~ExportDialog();
 
 public:
@@ -43,21 +43,14 @@ private:
 	/**
 	 * Callback for a changed selection of an output file
 	 */
-	static void selectionChanged(GtkFileChooser* chooser,
-								gpointer user_data);
+	static void selectionChanged(GtkFileChooser* chooser, gpointer user_data);
 
-	static gboolean rangeFocused(GtkWidget* widget,
-								GdkEvent* event,
-								gpointer user_data);
+	static gboolean rangeFocused(GtkWidget* widget, GdkEvent* event, gpointer user_data);
 
-	static void fileTypeSelected(GtkTreeView* treeview,
-								gpointer user_data);
+	static void fileTypeSelected(GtkTreeView* treeview, gpointer user_data);
 
-	void addFileType(const char* typeDesc,
-					const char* pattern,
-					gint type = 0,
-					const char* filterName = NULL,
-					bool select = false);
+	void addFileType(const char* typeDesc, const char* pattern, gint type = 0,
+					 const char* filterName = NULL, bool select = false);
 
 	void setupModel();
 

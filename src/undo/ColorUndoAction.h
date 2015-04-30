@@ -12,7 +12,9 @@
 #pragma once
 
 #include "UndoAction.h"
+
 #include <XournalType.h>
+
 #include <glib.h>
 
 class Layer;

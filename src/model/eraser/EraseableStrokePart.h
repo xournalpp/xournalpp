@@ -11,9 +11,11 @@
 
 #pragma once
 
-#include <glib.h>
-#include "../Point.h"
+#include "model/Point.h"
+
 #include <XournalType.h>
+
+#include <glib.h>
 
 class EraseableStrokePart
 {
@@ -43,7 +45,6 @@ public:
 	double getY();
 	double getElementWidth();
 	double getElementHeight();
-
 
 	static void printDebugStrokeParts();
 

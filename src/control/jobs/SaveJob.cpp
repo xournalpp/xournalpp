@@ -1,19 +1,20 @@
 #include "SaveJob.h"
 
-#include <config.h>
-#include <glib/gi18n-lib.h>
-
 //workaround for filesystem::copy_file (see http://polr.me/1db )
 //marked for removal after upgrade to boost 1.57
 #define BOOST_NO_CXX11_SCOPED_ENUMS
-#include <boost/filesystem/operations.hpp>
 
-#include "../SaveHandler.h"
-#include "../Control.h"
+#include "control/Control.h"
+#include "control/SaveHandler.h"
 #include "view/DocumentView.h"
 
-SaveJob::SaveJob(Control* control) :
-BlockingJob(control, _("Save"))
+#include <config.h>
+
+#include <glib/gi18n-lib.h>
+
+#include <boost/filesystem/operations.hpp>
+
+SaveJob::SaveJob(Control* control) : BlockingJob(control, _("Save"))
 {
 	XOJ_INIT_TYPE(SaveJob);
 }
@@ -44,8 +45,7 @@ void SaveJob::afterRun()
 		GtkWidget* dialog = gtk_message_dialog_new((GtkWindow*) *control->getWindow(),
 												   GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
 												   "%s", this->lastError.c_str());
-		gtk_window_set_transient_for(GTK_WINDOW(dialog),
-									 GTK_WINDOW(this->control->getWindow()->getWindow()));
+		gtk_window_set_transient_for(GTK_WINDOW(dialog), GTK_WINDOW(this->control->getWindow()->getWindow()));
 		gtk_dialog_run(GTK_DIALOG(dialog));
 		gtk_widget_destroy(dialog);
 	}
@@ -93,8 +93,7 @@ void SaveJob::updatePreview()
 		width *= zoom;
 		height *= zoom;
 
-		cairo_surface_t* crBuffer = cairo_image_surface_create(CAIRO_FORMAT_ARGB32,
-															   width, height);
+		cairo_surface_t* crBuffer = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, width, height);
 
 		cairo_t* cr = cairo_create(crBuffer);
 		cairo_scale(cr, zoom, zoom);
@@ -150,8 +149,7 @@ bool SaveJob::save()
 		}
 		catch (const filesystem_error& e)
 		{
-			g_warning("Could not create backup! (The file was created from an older Xournal version)\n%s\n",
-					  e.what());
+			g_warning("Could not create backup! (The file was created from an older Xournal version)\n%s\n", e.what());
 		}
 
 		doc->setCreateBackupOnSave(false);
@@ -170,6 +168,7 @@ bool SaveJob::save()
 		this->lastError = (bl::format("Open file error: {1}") % out->getLastError()).str();
 
 		delete out;
+		out = NULL;
 		return false;
 	}
 
@@ -186,11 +185,11 @@ bool SaveJob::save()
 		}
 
 		delete out;
+		out = NULL;
 		return false;
 	}
 
 	delete out;
-
+	out = NULL;
 	return true;
 }
-

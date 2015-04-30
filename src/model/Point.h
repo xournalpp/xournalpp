@@ -36,6 +36,5 @@ public:
 	// pressure
 	double z;
 
-
 	static constexpr double NO_PRESURE = -1;
 };

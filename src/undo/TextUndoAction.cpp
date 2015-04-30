@@ -1,16 +1,15 @@
 #include "TextUndoAction.h"
 
-#include "model/PageRef.h"
-#include "model/Layer.h"
-#include "model/Text.h"
 #include "gui/Redrawable.h"
 #include "gui/TextEditor.h"
+#include "model/Layer.h"
+#include "model/PageRef.h"
+#include "model/Text.h"
 
 #include <Rectangle.h>
 
-TextUndoAction::TextUndoAction(PageRef page, Layer* layer,
-							   Text* text, string lastText,
-							   TextEditor* textEditor) : UndoAction("TextUndoAction")
+TextUndoAction::TextUndoAction(PageRef page, Layer* layer, Text* text, string lastText, TextEditor* textEditor) :
+		UndoAction("TextUndoAction")
 {
 	XOJ_INIT_TYPE(TextUndoAction);
 

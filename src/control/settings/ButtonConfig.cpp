@@ -1,8 +1,8 @@
 #include "ButtonConfig.h"
-#include "../ToolHandler.h"
 
-ButtonConfig::ButtonConfig(ToolType action, int color, ToolSize size,
-						   DrawingType drawingType, EraserType eraserMode)
+#include "control/ToolHandler.h"
+
+ButtonConfig::ButtonConfig(ToolType action, int color, ToolSize size, DrawingType drawingType, EraserType eraserMode)
 {
 	XOJ_INIT_TYPE(ButtonConfig);
 
@@ -86,8 +86,7 @@ void ButtonConfig::acceptActions(ToolHandler* toolHandler)
 			}
 		}
 
-		if (this->action == TOOL_PEN || this->action == TOOL_HILIGHTER ||
-			this->action == TOOL_TEXT)
+		if (this->action == TOOL_PEN || this->action == TOOL_HILIGHTER || this->action == TOOL_TEXT)
 		{
 			toolHandler->setColor(this->color);
 		}

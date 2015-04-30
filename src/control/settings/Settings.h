@@ -11,14 +11,16 @@
 
 #pragma once
 
+#include "cfg.h"
+#include "control/Tool.h"
+#include "model/Font.h"
+
+#include <map>
+
 //TODO rewrite with pugixml
 #include <libxml/xmlreader.h>
 #include <glib.h>
-#include "model/Font.h"
-#include "../Tool.h"
-#include "cfg.h"
 
-#include <map>
 #include <boost/filesystem/path.hpp>
 using boost::filesystem::path;
 

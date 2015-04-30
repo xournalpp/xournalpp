@@ -1,31 +1,32 @@
 #include "EditSelectionContents.h"
-#include "undo/UndoRedoHandler.h"
+
+#include "control/Control.h"
+#include "gui/pageposition/PagePositionHandler.h"
+#include "gui/PageView.h"
+#include "gui/XournalView.h"
+#include "model/Document.h"
 #include "model/Element.h"
+#include "model/Layer.h"
 #include "model/Stroke.h"
 #include "model/Text.h"
 #include "Selection.h"
-#include "gui/PageView.h"
-#include "view/DocumentView.h"
-#include "undo/SizeUndoAction.h"
 #include "undo/ColorUndoAction.h"
+#include "undo/DeleteUndoAction.h"
 #include "undo/FontUndoAction.h"
-#include "undo/ScaleUndoAction.h"
 #include "undo/InsertUndoAction.h"
 #include "undo/MoveUndoAction.h"
-#include "undo/DeleteUndoAction.h"
-#include "gui/XournalView.h"
-#include "gui/pageposition/PagePositionHandler.h"
-#include "control/Control.h"
-#include "model/Document.h"
-#include "model/Layer.h"
+#include "undo/UndoRedoHandler.h"
+#include "undo/SizeUndoAction.h"
+#include "undo/ScaleUndoAction.h"
+#include "view/DocumentView.h"
+
 #include <serializing/ObjectOutputStream.h>
 #include <serializing/ObjectInputStream.h>
 
 #include <math.h>
 
-EditSelectionContents::EditSelectionContents(double x, double y, double width,
-											 double height, PageRef sourcePage,
-											 Layer* sourceLayer, PageView* sourceView)
+EditSelectionContents::EditSelectionContents(double x, double y, double width, double height,
+											 PageRef sourcePage, Layer* sourceLayer, PageView* sourceView)
 {
 	XOJ_INIT_TYPE(EditSelectionContents);
 
@@ -128,8 +129,7 @@ UndoAction* EditSelectionContents::setSize(ToolSize size,
 			// save the new pressure
 			double* newPressure = SizeUndoAction::getPressure(s);
 
-			undo->addStroke(s, originalWidth, s->getWidth(), originalPressure, newPressure,
-							pointCount);
+			undo->addStroke(s, originalWidth, s->getWidth(), originalPressure, newPressure, pointCount);
 			found = true;
 		}
 	}
@@ -161,8 +161,7 @@ UndoAction* EditSelectionContents::setFont(XojFont& font)
 	double y1 = 0.0 / 0.0;
 	double y2 = 0.0 / 0.0;
 
-	FontUndoAction* undo = new FontUndoAction(this->sourcePage,
-											this->sourceLayer);
+	FontUndoAction* undo = new FontUndoAction(this->sourcePage, this->sourceLayer);
 
 	for (Element* e : this->selected)
 	{
@@ -316,10 +315,8 @@ double EditSelectionContents::getOriginalHeight()
 /**
  * The contents of the selection
  */
-void EditSelectionContents::finalizeSelection(double x, double y, double width,
-											  double height, bool aspectRatio, Layer* layer,
-											  PageRef targetPage,
-											  PageView* targetView, UndoRedoHandler* undo)
+void EditSelectionContents::finalizeSelection(double x, double y, double width, double height, bool aspectRatio,
+											  Layer* layer, PageRef targetPage, PageView* targetView, UndoRedoHandler* undo)
 {
 	double fx = width / this->originalWidth;
 	double fy = height / this->originalHeight;
@@ -352,12 +349,9 @@ void EditSelectionContents::finalizeSelection(double x, double y, double width,
 	}
 }
 
-void EditSelectionContents::updateContent(double x, double y,
-										  double width, double height,
-										  bool aspectRatio, Layer* layer,
-										  PageRef targetPage, PageView* targetView,
-										  UndoRedoHandler* undo,
-										  CursorSelectionType type)
+void EditSelectionContents::updateContent(double x, double y, double width, double height, bool aspectRatio,
+										  Layer* layer, PageRef targetPage, PageView* targetView,
+										  UndoRedoHandler* undo, CursorSelectionType type)
 {
 	double mx = x - this->lastX;
 	double my = y - this->lastY;
@@ -376,11 +370,8 @@ void EditSelectionContents::updateContent(double x, double y,
 
 	if (type == CURSOR_SELECTION_MOVE)
 	{
-		MoveUndoAction* moveUndo = new MoveUndoAction(this->sourceLayer,
-													  this->sourcePage,
-													  &this->selected,
-													  mx, my, layer,
-													  targetPage);
+		MoveUndoAction* moveUndo = new MoveUndoAction(this->sourceLayer, this->sourcePage, &this->selected,
+													  mx, my, layer, targetPage);
 
 		undo->addUndoAction(moveUndo);
 
@@ -415,9 +406,7 @@ void EditSelectionContents::updateContent(double x, double y,
 			break;
 		}
 
-		ScaleUndoAction* scaleUndo = new ScaleUndoAction(this->sourcePage,
-														&this->selected,
-														px, py, fx, fy);
+		ScaleUndoAction* scaleUndo = new ScaleUndoAction(this->sourcePage, &this->selected, px, py, fx, fy);
 		undo->addUndoAction(scaleUndo);
 
 	}
@@ -432,8 +421,7 @@ void EditSelectionContents::updateContent(double x, double y,
 /**
  * paints the selection
  */
-void EditSelectionContents::paint(cairo_t* cr, double x, double y, double width,
-								  double height, double zoom)
+void EditSelectionContents::paint(cairo_t* cr, double x, double y, double width, double height, double zoom)
 {
 	double fx = width / this->originalWidth;
 	double fy = height / this->originalHeight;
@@ -446,8 +434,7 @@ void EditSelectionContents::paint(cairo_t* cr, double x, double y, double width,
 
 	if (this->crBuffer == NULL)
 	{
-		this->crBuffer = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, width * zoom,
-													height * zoom);
+		this->crBuffer = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, width * zoom, height * zoom);
 		cairo_t* cr2 = cairo_create(this->crBuffer);
 
 		int dx = (int) (this->relativeX * zoom);
@@ -492,9 +479,7 @@ void EditSelectionContents::paint(cairo_t* cr, double x, double y, double width,
 	cairo_restore(cr);
 }
 
-UndoAction* EditSelectionContents::copySelection(PageRef page,
-												 PageView *view,
-												 double x, double y)
+UndoAction* EditSelectionContents::copySelection(PageRef page, PageView *view, double x, double y)
 {
 	Layer* layer = page->getSelectedLayer();
 
@@ -533,8 +518,7 @@ void EditSelectionContents::serialize(ObjectOutputStream& out)
 	out.endObject();
 }
 
-void EditSelectionContents::readSerialized(ObjectInputStream& in) throw (
-																		 InputStreamException)
+void EditSelectionContents::readSerialized(ObjectInputStream& in) throw ( InputStreamException)
 {
 	in.readObject("EditSelectionContents");
 

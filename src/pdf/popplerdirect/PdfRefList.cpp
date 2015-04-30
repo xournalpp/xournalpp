@@ -1,9 +1,9 @@
 #include "PdfRefList.h"
+
 #include "PdfRefEntry.h"
 #include "PdfXRef.h"
 
-PdfRefList::PdfRefList(PdfXRef* xref, PdfObjectWriter* objectWriter,
-					   PdfWriter* writer, char* type)
+PdfRefList::PdfRefList(PdfXRef* xref, PdfObjectWriter* objectWriter, PdfWriter* writer, char* type)
 {
 	XOJ_INIT_TYPE(PdfRefList);
 
@@ -58,8 +58,7 @@ void PdfRefList::writeObjects()
 		}
 		else
 		{
-			g_warning("PdfRefList::writeObjects: object type unknown: %i",
-					  ref->object->getType());
+			g_warning("PdfRefList::writeObjects: object type unknown: %i", ref->object->getType());
 		}
 	}
 }
@@ -67,10 +66,10 @@ void PdfRefList::writeObjects()
 void PdfRefList::deletePdfRefList(PdfRefList* ref)
 {
 	delete ref;
+	ref = NULL;
 }
 
-int PdfRefList::lookup(Ref ref, Object* object, XojPopplerDocument doc,
-					   PdfRefEntry*& refEntryRet)
+int PdfRefList::lookup(Ref ref, Object* object, XojPopplerDocument doc, PdfRefEntry*& refEntryRet)
 {
 	XOJ_CHECK_TYPE(PdfRefList);
 
@@ -90,8 +89,7 @@ int PdfRefList::lookup(Ref ref, Object* object, XojPopplerDocument doc,
 
 	int id = this->id++;
 
-	PdfRefEntry* refEntry = new PdfRefEntry(PDF_REF_ENTRY_TYPE_REF,
-											this->writer->getNextObjectId(), object, id, ref, doc);
+	PdfRefEntry* refEntry = new PdfRefEntry(PDF_REF_ENTRY_TYPE_REF, this->writer->getNextObjectId(), object, id, ref, doc);
 	refEntryRet = refEntry;
 	this->xref->addXref(0);
 	this->data = g_list_append(this->data, refEntry);
@@ -99,8 +97,7 @@ int PdfRefList::lookup(Ref ref, Object* object, XojPopplerDocument doc,
 	return id;
 }
 
-void PdfRefList::parse(Dict* dict, int index, XojPopplerDocument doc,
-					   GList*& replacementList)
+void PdfRefList::parse(Dict* dict, int index, XojPopplerDocument doc, GList*& replacementList)
 {
 	XOJ_CHECK_TYPE(PdfRefList);
 
@@ -114,8 +111,7 @@ void PdfRefList::parse(Dict* dict, int index, XojPopplerDocument doc,
 
 	if (!o.isDict())
 	{
-		g_warning("PdfRefList::parse \"%s\" has type: %i\n", dict->getKey(index),
-				  o.getType());
+		g_warning("PdfRefList::parse \"%s\" has type: %i\n", dict->getKey(index), o.getType());
 		return;
 	}
 
@@ -133,26 +129,22 @@ void PdfRefList::parse(Dict* dict, int index, XojPopplerDocument doc,
 			PdfRefEntry* refEntry = NULL;
 			int id = lookup(contentsObjectRef.getRef(), contentsObject, doc, refEntry);
 
-			RefReplacement* replacement = new RefReplacement(dataDict->getKey(u), id,
-															 this->type, refEntry);
+			RefReplacement* replacement = new RefReplacement(dataDict->getKey(u), id, this->type, refEntry);
 			replacementList = g_list_append(replacementList, replacement);
 		}
 		else if (contentsObjectRef.isDict())
 		{
 			Ref ref = { -1, -1 };
 			int id = this->id++;
-			PdfRefEntry* refEntry = new PdfRefEntry(PDF_REF_ENTRY_TYPE_DICT, 0,
-													contentsObject, id, ref, doc);
+			PdfRefEntry* refEntry = new PdfRefEntry(PDF_REF_ENTRY_TYPE_DICT, 0, contentsObject, id, ref, doc);
 			this->data = g_list_append(this->data, refEntry);
 
-			RefReplacement* replacement = new RefReplacement(dataDict->getKey(u), id,
-															 this->type, refEntry);
+			RefReplacement* replacement = new RefReplacement(dataDict->getKey(u), id, this->type, refEntry);
 			replacementList = g_list_append(replacementList, replacement);
 		}
 		else
 		{
-			g_warning("PdfRefList::parse type not handled, type ID = %i\n",
-					  contentsObjectRef.getType());
+			g_warning("PdfRefList::parse type not handled, type ID = %i\n", contentsObjectRef.getType());
 
 			contentsObject->free();
 			delete contentsObject;
@@ -186,8 +178,7 @@ void PdfRefList::writeRefList(const char* type)
 
 		if (ref->type == PDF_REF_ENTRY_TYPE_REF)
 		{
-			this->writer->write(boost::format("/%s%i %i 0 R\n") % this->type % ref->refSourceId
-								 % ref->objectId);
+			this->writer->write(boost::format("/%s%i %i 0 R\n") % this->type % ref->refSourceId % ref->objectId);
 		}
 		else if (ref->type == PDF_REF_ENTRY_TYPE_DICT)
 		{
@@ -196,16 +187,14 @@ void PdfRefList::writeRefList(const char* type)
 		}
 		else
 		{
-			g_warning("PdfRefList::writeObjects: object type unknown: %i",
-					  ref->object->getType());
+			g_warning("PdfRefList::writeObjects: object type unknown: %i", ref->object->getType());
 		}
 	}
 
 	this->writer->write(">>\n");
 }
 
-RefReplacement::RefReplacement(string name, int newId, const char* type,
-							   PdfRefEntry* refEntry)
+RefReplacement::RefReplacement(string name, int newId, const char* type, PdfRefEntry* refEntry)
 {
 	XOJ_INIT_TYPE(RefReplacement);
 
@@ -241,4 +230,3 @@ void RefReplacement::markAsUsed()
 
 	this->used = true;
 }
-

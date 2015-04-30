@@ -1,12 +1,13 @@
 #include "RecognizerUndoAction.h"
 
+#include "gui/Redrawable.h"
 #include "model/Layer.h"
 #include "model/Stroke.h"
-#include "gui/Redrawable.h"
+
 #include <Stacktrace.h>
 
-RecognizerUndoAction::RecognizerUndoAction(PageRef page, Layer* layer,
-	Stroke* original, Stroke* recognized) : UndoAction("RecognizerUndoAction")
+RecognizerUndoAction::RecognizerUndoAction(PageRef page, Layer* layer, Stroke* original, Stroke* recognized) :
+		UndoAction("RecognizerUndoAction")
 {
 	XOJ_INIT_TYPE(RecognizerUndoAction);
 

@@ -11,8 +11,9 @@
 
 #pragma once
 
+#include "gui/GladeGui.h"
 #include "ToolButton.h"
-#include "../GladeGui.h"
+
 #include <XournalType.h>
 
 class ToolMenuHandler;
@@ -20,8 +21,7 @@ class ToolMenuHandler;
 class ToolSelectCombocontrol : public ToolButton
 {
 public:
-	ToolSelectCombocontrol(ToolMenuHandler* th, ActionHandler* handler,
-						   GladeGui* gui, string id);
+	ToolSelectCombocontrol(ToolMenuHandler* th, ActionHandler* handler, GladeGui* gui, string id);
 	virtual ~ToolSelectCombocontrol();
 
 public:

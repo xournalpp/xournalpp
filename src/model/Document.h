@@ -13,21 +13,19 @@
 
 #pragma once
 
-#include <boost/filesystem/path.hpp>
-using boost::filesystem::path;
-
-#include <StringUtils.h>
-#include <XournalType.h>
-
-#include "PageRef.h"
+#include "DocumentHandler.h"
 #include "LinkDestination.h"
-
+#include "PageRef.h"
 #include "pdf/popplerdirect/poppler/XojPopplerDocument.h"
 #include "pdf/popplerdirect/poppler/XojPopplerPage.h"
 #include "pdf/popplerdirect/poppler/XojPopplerIter.h"
 #include "pdf/popplerdirect/poppler/XojPopplerAction.h"
 
-#include "DocumentHandler.h"
+#include <StringUtils.h>
+#include <XournalType.h>
+
+#include <boost/filesystem/path.hpp>
+using boost::filesystem::path;
 
 #include <vector>
 
@@ -87,8 +85,7 @@ private:
 	void buildContentsModel();
 	void buildTreeContentsModel(GtkTreeIter* parent, XojPopplerIter* iter);
 	void updateIndexPageNumbers();
-	static bool fillPageLabels(GtkTreeModel* tree_model, GtkTreePath* path,
-							   GtkTreeIter* iter, Document* doc);
+	static bool fillPageLabels(GtkTreeModel* tree_model, GtkTreePath* path, GtkTreeIter* iter, Document* doc);
 
 private:
 	XOJ_TYPE_ATTRIB;

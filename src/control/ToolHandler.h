@@ -11,10 +11,11 @@
 
 #pragma once
 
+#include "settings/Settings.h"
 #include "Tool.h"
+
 #include <Arrayiterator.h>
 #include <XournalType.h>
-#include "settings/Settings.h"
 
 class ToolListener
 {
@@ -30,8 +31,7 @@ class ActionHandler;
 class ToolHandler
 {
 public:
-	ToolHandler(ToolListener* listener, ActionHandler* actionHandler,
-				Settings* settings);
+	ToolHandler(ToolListener* listener, ActionHandler* actionHandler, Settings* settings);
 	virtual ~ToolHandler();
 
 	void setColor(int color);

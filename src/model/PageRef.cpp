@@ -1,6 +1,7 @@
 #include "PageRef.h"
-#include "XojPage.h"
+
 #include "BackgroundImage.h"
+#include "XojPage.h"
 
 PageRef::PageRef()
 {

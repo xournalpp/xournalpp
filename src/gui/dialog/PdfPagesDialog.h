@@ -11,16 +11,16 @@
 
 #pragma once
 
-#include "../GladeGui.h"
-#include "model/Document.h"
 #include "control/settings/Settings.h"
+#include "gui/GladeGui.h"
+#include "model/Document.h"
+
 #include <XournalType.h>
 
 class PdfPagesDialog : public GladeGui
 {
 public:
-	PdfPagesDialog(GladeSearchpath* gladeSearchPath, Document* doc,
-				Settings* settings);
+	PdfPagesDialog(GladeSearchpath* gladeSearchPath, Document* doc, Settings* settings);
 	virtual ~PdfPagesDialog();
 
 public:
@@ -41,8 +41,7 @@ private:
 	void layout();
 	void updateOkButton();
 
-	static void sizeAllocate(GtkWidget* widget, GtkRequisition* requisition,
-							PdfPagesDialog* dlg);
+	static void sizeAllocate(GtkWidget* widget, GtkRequisition* requisition, PdfPagesDialog* dlg);
 	static void onlyNotUsedCallback(GtkToggleButton* tb, PdfPagesDialog* dlg);
 	static void okButtonCallback(GtkButton* button, PdfPagesDialog* dlg);
 

@@ -1,9 +1,12 @@
 #include "Stroke.h"
+
+#include <serializing/ObjectInputStream.h>
+#include <serializing/ObjectOutputStream.h>
+
 #include <glib.h>
+
 #include <math.h>
 #include <string.h>
-#include <serializing/ObjectOutputStream.h>
-#include <serializing/ObjectInputStream.h>
 #include <iostream>
 using namespace std;
 
@@ -159,8 +162,7 @@ void Stroke::allocPointSize(int size)
 	XOJ_CHECK_TYPE(Stroke);
 
 	this->pointAllocCount = size;
-	this->points = (Point*) g_realloc(this->points,
-									  this->pointAllocCount * sizeof(Point));
+	this->points = (Point*) g_realloc(this->points, this->pointAllocCount * sizeof(Point));
 }
 
 int Stroke::getPointCount() const
@@ -239,8 +241,7 @@ void Stroke::freeUnusedPointItems()
 		return;
 	}
 	this->pointAllocCount = this->pointCount + 1;
-	this->points = (Point*) g_realloc(this->points,
-									  this->pointAllocCount * sizeof(Point));
+	this->points = (Point*) g_realloc(this->points, this->pointAllocCount * sizeof(Point));
 }
 
 void Stroke::setToolType(StrokeTool type)
@@ -396,8 +397,7 @@ bool Stroke::intersects(double x, double y, double halfEraserSize, double* gap)
 			/**
 			 * The normale to a vector, the padding to a point
 			 */
-			double p = ABS((x - lastX) * (lastY - py) + (y - lastY) * (px - lastX)) / hypot(
-																							lastX - x, lastY - y);
+			double p = ABS((x - lastX) * (lastY - py) + (y - lastY) * (px - lastX)) / hypot(lastX - x, lastY - y);
 
 			// The space to the line is in the range, but it can also be parallel
 			// and not enough close, so calculate a "circle" with the center on the
@@ -500,8 +500,7 @@ void Stroke::debugPrint()
 {
 	XOJ_CHECK_TYPE(Stroke);
 
-	cout << bl::format("Stroke {1} / hasPressure() = {2}")
-			% (long) this % this->hasPressure() << endl;
+	cout << bl::format("Stroke {1} / hasPressure() = {2}") % (long) this % this->hasPressure() << endl;
 
 	for (int i = 0; i < this->pointCount; i++)
 	{

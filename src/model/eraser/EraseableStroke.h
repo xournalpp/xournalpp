@@ -11,14 +11,16 @@
 
 #pragma once
 
-#include "../Point.h"
+#include "model/Point.h"
+
 #include <XournalType.h>
+
 #include <gtk/gtk.h>
 
-class Stroke;
 class EraseableStrokePart;
 class PartList;
 class Range;
+class Stroke;
 
 class EraseableStroke
 {
@@ -37,10 +39,9 @@ public:
 	void draw(cairo_t* cr, double x, double y, double width, double height);
 
 private:
-	void erase(double x, double y, double halfEraserSize, EraseableStrokePart* part,
-			PartList* list);
-	bool erasePart(double x, double y, double halfEraserSize,
-				EraseableStrokePart* part, PartList* list, bool* deleteStrokeAfter);
+	void erase(double x, double y, double halfEraserSize, EraseableStrokePart* part, PartList* list);
+	bool erasePart(double x, double y, double halfEraserSize, EraseableStrokePart* part,
+				   PartList* list, bool* deleteStrokeAfter);
 
 	void addRepaintRect(double x, double y, double width, double height);
 

@@ -1,5 +1,7 @@
 #include "CustomizeableColorList.h"
+
 #include <config.h>
+
 #include <glib/gi18n-lib.h>
 
 CustomizeableColorList::CustomizeableColorList()
@@ -23,7 +25,11 @@ CustomizeableColorList::~CustomizeableColorList()
 {
 	XOJ_CHECK_TYPE(CustomizeableColorList);
 
-	for (XojColor* c : this->colors) delete c;
+	for (XojColor* c : this->colors)
+	{
+		delete c;
+		c = NULL;
+	}
 
 	XOJ_RELEASE_TYPE(CustomizeableColorList);
 }

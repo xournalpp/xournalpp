@@ -11,10 +11,12 @@
 
 #pragma once
 
+#include "model/Document.h"
+#include "model/PageRef.h"
+
 #include <OutputStream.h>
 #include <XournalType.h>
-#include "model/PageRef.h"
-#include "model/Document.h"
+
 class XmlNode;
 class ProgressListener;
 
@@ -26,9 +28,7 @@ public:
 
 public:
 	void prepareSave(Document* doc);
-	void saveTo(OutputStream* out,
-				path filename,
-				ProgressListener* listener = NULL);
+	void saveTo(OutputStream* out, path filename, ProgressListener* listener = NULL);
 	string getErrorMessage();
 
 private:

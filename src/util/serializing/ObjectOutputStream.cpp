@@ -1,6 +1,7 @@
 #include "ObjectOutputStream.h"
-#include "Serializeable.h"
+
 #include "ObjectEncoding.h"
+#include "Serializeable.h"
 
 ObjectOutputStream::ObjectOutputStream(ObjectEncoding* encoder)
 {
@@ -94,8 +95,7 @@ void ObjectOutputStream::writeData(const void* data, int len, int width)
 	}
 }
 
-static cairo_status_t cairoWriteFunction(GString* string,
-										 const unsigned char* data, unsigned int length)
+static cairo_status_t cairoWriteFunction(GString* string, const unsigned char* data, unsigned int length)
 {
 	g_string_append_len(string, (const gchar*) data, length);
 	return CAIRO_STATUS_SUCCESS;
@@ -107,8 +107,7 @@ void ObjectOutputStream::writeImage(cairo_surface_t* img)
 
 	GString* imgStr = g_string_sized_new(102400);
 
-	cairo_surface_write_to_png_stream(img, (cairo_write_func_t) &cairoWriteFunction,
-									  imgStr);
+	cairo_surface_write_to_png_stream(img, (cairo_write_func_t) &cairoWriteFunction, imgStr);
 
 	this->encoder->addStr("_m");
 	this->encoder->addData(&imgStr->len, sizeof(gsize));

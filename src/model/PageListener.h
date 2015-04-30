@@ -13,10 +13,10 @@
 
 #include <XournalType.h>
 
-class PageHandler;
-class Rectangle;
 class Element;
+class PageHandler;
 class Range;
+class Rectangle;
 
 class PageListener
 {

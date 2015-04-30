@@ -1,29 +1,29 @@
 /*
  * Xournal++
  *
- * Reference String which is automatically deleted
+ * String utilities
  *
- * @author MarPiRK
- * http://marpirk.net
+ * @author Xournal Team
+ * http://xournal.sf.net
  *
- * @license GNU GPLv2 or later
+ * @license GPL
  */
 
 #pragma once
 
-#include <glib.h>
-#include <string>
-#include <vector>
-#include <utility>
-#include <boost/locale/format.hpp>
-#include <boost/algorithm/string.hpp>
-
 #include "XournalType.h"
 
+#include <glib.h>
+
+#include <boost/locale/format.hpp>
 namespace bl = boost::locale;
+#include <boost/algorithm/string.hpp>
 namespace ba = boost::algorithm;
 
+#include <string>
 using std::string;
+#include <vector>
+#include <utility>
 
 #define CONCAT StringUtils::concat
 

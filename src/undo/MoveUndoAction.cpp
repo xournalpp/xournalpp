@@ -1,16 +1,14 @@
 #include "MoveUndoAction.h"
 
-#include "model/Element.h"
-#include "model/PageRef.h"
-#include "model/Layer.h"
-#include "gui/Redrawable.h"
 #include "control/tools/EditSelection.h"
 #include "control/tools/VerticalToolHandler.h"
+#include "gui/Redrawable.h"
+#include "model/Element.h"
+#include "model/Layer.h"
+#include "model/PageRef.h"
 
-MoveUndoAction::MoveUndoAction(Layer* sourceLayer, PageRef sourcePage,
-							   ElementVector* selected, double mx, double my,
-							   Layer* targetLayer,
-							   PageRef targetPage) : UndoAction("MoveUndoAction")
+MoveUndoAction::MoveUndoAction(Layer* sourceLayer, PageRef sourcePage, ElementVector* selected, double mx, double my,
+							   Layer* targetLayer, PageRef targetPage) : UndoAction("MoveUndoAction")
 {
 	XOJ_INIT_TYPE(MoveUndoAction);
 
@@ -46,11 +44,17 @@ void MoveUndoAction::move()
 {
 	if (this->undone)
 	{
-		for (Element* e : this->elements) e->move(dx, dy);
+		for (Element* e : this->elements)
+		{
+			e->move(dx, dy);
+		}
 	}
 	else
 	{
-		for (Element* e : this->elements) e->move(-dx, -dy);
+		for (Element* e : this->elements)
+		{
+			e->move(-dx, -dy);
+		}
 	}
 }
 
@@ -86,9 +90,7 @@ bool MoveUndoAction::redo(Control* control)
 	return true;
 }
 
-void MoveUndoAction::switchLayer(ElementVector* entries,
-								 Layer* oldLayer,
-								 Layer* newLayer)
+void MoveUndoAction::switchLayer(ElementVector* entries, Layer* oldLayer, Layer* newLayer)
 {
 	XOJ_CHECK_TYPE(MoveUndoAction);
 
@@ -130,4 +132,3 @@ string MoveUndoAction::getText()
 
 	return text;
 }
-

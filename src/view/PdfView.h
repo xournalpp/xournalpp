@@ -11,9 +11,10 @@
 
 #pragma once
 
-#include "pdf/popplerdirect/poppler/XojPopplerPage.h"
-#include <cairo/cairo.h>
 #include "control/PdfCache.h"
+#include "pdf/popplerdirect/poppler/XojPopplerPage.h"
+
+#include <cairo/cairo.h>
 
 class PdfView
 {
@@ -23,5 +24,5 @@ private:
 
 public:
 	static void drawPage(PdfCache* cache, XojPopplerPage* popplerPage, cairo_t* cr,
-						double zoom, double width, double height, bool forPrinting = false);
+						 double zoom, double width, double height, bool forPrinting = false);
 };

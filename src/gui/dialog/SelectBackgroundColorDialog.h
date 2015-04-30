@@ -11,10 +11,10 @@
 
 #pragma once
 
-#include "../GladeGui.h"
+#include "gui/GladeGui.h"
 
-class Control;
 class ColorEntry;
+class Control;
 
 class SelectBackgroundColorDialog : public GladeGui
 {
@@ -33,8 +33,7 @@ private:
 	void updateLastUsedColors();
 
 	static void buttonSelectedCallback(GtkButton* button, ColorEntry* e);
-	static void buttonCustomCallback(GtkButton* button,
-									SelectBackgroundColorDialog* dlg);
+	static void buttonCustomCallback(GtkButton* button, SelectBackgroundColorDialog* dlg);
 
 private:
 	XOJ_TYPE_ATTRIB;

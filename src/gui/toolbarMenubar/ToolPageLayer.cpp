@@ -1,13 +1,13 @@
 #include "ToolPageLayer.h"
 
-#include "../GladeGui.h"
+#include "gui/GladeGui.h"
 
 #include <config.h>
+
 #include <glib/gi18n-lib.h>
 
 ToolPageLayer::ToolPageLayer(GladeGui* gui, ActionHandler* handler, string id,
-							 ActionType type) :
-AbstractToolItem(id, handler, type, NULL)
+							 ActionType type) : AbstractToolItem(id, handler, type, NULL)
 {
 	XOJ_INIT_TYPE(ToolPageLayer);
 
@@ -16,8 +16,7 @@ AbstractToolItem(id, handler, type, NULL)
 	this->inCbUpdate = false;
 	this->gui = gui;
 
-	g_signal_connect(this->layerComboBox, "changed", G_CALLBACK(&cbSelectCallback),
-					 this);
+	g_signal_connect(this->layerComboBox, "changed", G_CALLBACK(&cbSelectCallback), this);
 }
 
 ToolPageLayer::~ToolPageLayer()
@@ -34,8 +33,7 @@ void ToolPageLayer::cbSelectCallback(GtkComboBox* widget, ToolPageLayer* tpl)
 		return;
 	}
 
-	tpl->handler->actionPerformed(ACTION_FOOTER_LAYER, GROUP_NOGROUP, NULL, NULL,
-								  NULL, true);
+	tpl->handler->actionPerformed(ACTION_FOOTER_LAYER, GROUP_NOGROUP, NULL, NULL, NULL, true);
 }
 
 int ToolPageLayer::getSelectedLayer()
@@ -64,8 +62,7 @@ void ToolPageLayer::setLayerCount(int layer, int selected)
 
 	this->inCbUpdate = true;
 
-	int count = gtk_tree_model_iter_n_children(gtk_combo_box_get_model(
-																	   GTK_COMBO_BOX(this->layerComboBox)), NULL);
+	int count = gtk_tree_model_iter_n_children(gtk_combo_box_get_model(GTK_COMBO_BOX(this->layerComboBox)), NULL);
 
 	for (int i = count - 1; i >= 0; i--)
 	{
@@ -115,4 +112,3 @@ GtkToolItem* ToolPageLayer::newItem()
 
 	return it;
 }
-

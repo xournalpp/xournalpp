@@ -1,21 +1,20 @@
 #include "AboutDialog.h"
+
 #include <config.h>
 #include <StringUtils.h>
 
-AboutDialog::AboutDialog(GladeSearchpath* gladeSearchPath) :
-GladeGui(gladeSearchPath, "about.glade", "aboutDialog")
+AboutDialog::AboutDialog(GladeSearchpath* gladeSearchPath) : GladeGui(gladeSearchPath, "about.glade", "aboutDialog")
 {
 	XOJ_INIT_TYPE(AboutDialog);
 
 	GtkLabel* labelTitle = GTK_LABEL(get("labelTitle"));
 	gtk_label_set_markup(labelTitle,
-						 "<span size=\"xx-large\" weight=\"bold\">Xournal++ " VERSION
-						 "</span>\n<i>The next generation</i>\n"
+						 "<span size=\"xx-large\" weight=\"bold\">Xournal++ " VERSION "</span>\n"
+						 "<i>The next generation</i>\n"
 						 "Build: " __DATE__);
 
 	GtkWidget* w = get("vbox1");
-	GtkWidget* linkButton =
-			gtk_link_button_new("http://github.com/xournalpp/xournalpp");
+	GtkWidget* linkButton = gtk_link_button_new("http://github.com/xournalpp/xournalpp");
 	gtk_widget_show(linkButton);
 	gtk_box_pack_start_defaults(GTK_BOX(w), linkButton);
 
@@ -42,4 +41,3 @@ void AboutDialog::show(GtkWindow* parent)
 	gtk_dialog_run(GTK_DIALOG(this->window));
 	gtk_widget_hide(this->window);
 }
-

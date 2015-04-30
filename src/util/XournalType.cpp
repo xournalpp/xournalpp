@@ -1,9 +1,11 @@
 #include "XournalType.h"
-#include <glib.h>
-#include <stdlib.h>
-#include <iostream>
+
 #include "StringUtils.h"
 
+#include <glib.h>
+
+#include <stdlib.h>
+#include <iostream>
 using namespace std;
 
 #ifdef XOJ_MEMORY_CHECK_ENABLED

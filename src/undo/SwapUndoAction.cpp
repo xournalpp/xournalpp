@@ -1,12 +1,10 @@
 #include "SwapUndoAction.h"
-#include "model/Document.h"
-#include "control/Control.h"
 
-SwapUndoAction::SwapUndoAction(int pageNr,
-							   bool moveUp,
-							   PageRef swapped_page,
-							   PageRef other_page)
-: UndoAction("SwapUndoAction")
+#include "control/Control.h"
+#include "model/Document.h"
+
+SwapUndoAction::SwapUndoAction(int pageNr, bool moveUp, PageRef swapped_page, PageRef other_page) :
+		UndoAction("SwapUndoAction")
 {
 	XOJ_INIT_TYPE(SwapUndoAction);
 

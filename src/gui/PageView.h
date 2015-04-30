@@ -11,26 +11,26 @@
 
 #pragma once
 
-#include <Range.h>
-#include "Redrawable.h"
-#include "model/PageRef.h"
 #include "LayoutData.h"
-#include "model/TexImage.h"
 #include "model/PageListener.h"
+#include "model/PageRef.h"
+#include "model/TexImage.h"
+#include "Redrawable.h"
+
+#include <Range.h>
 
 #include <vector>
 
-class XournalView;
 class EditSelection;
-class Selection;
-class TextEditor;
 class EraseHandler;
-class VerticalToolHandler;
-class SearchControl;
-class Settings;
 class InputHandler;
-
+class SearchControl;
+class Selection;
+class Settings;
 class Text;
+class TextEditor;
+class VerticalToolHandler;
+class XournalView;
 
 class PageView : public Redrawable, public PageListener
 {
@@ -133,8 +133,7 @@ public:
 	 * Maps a Rectangle from display coordinates to local
 	 * coordinates
 	 */
-	virtual Rectangle* rectOnWidget(double x, double y, double width,
-									double height);
+	virtual Rectangle* rectOnWidget(double x, double y, double width, double height);
 
 	TexImage* getSelectedTex();
 

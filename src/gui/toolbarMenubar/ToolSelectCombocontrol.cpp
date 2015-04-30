@@ -1,15 +1,14 @@
 #include "ToolSelectCombocontrol.h"
-#include "../widgets/gtkmenutooltogglebutton.h"
 
+#include "gui/widgets/gtkmenutooltogglebutton.h"
 #include "ToolMenuHandler.h"
 
 #include <config.h>
+
 #include <glib/gi18n-lib.h>
 
-ToolSelectCombocontrol::ToolSelectCombocontrol(ToolMenuHandler* th,
-											   ActionHandler* handler, GladeGui* gui, string id) :
-ToolButton(handler, gui, id, ACTION_TOOL_SELECT_RECT, GROUP_TOOL, true,
-		   "rect-select.png", _("Select Rectangle"))
+ToolSelectCombocontrol::ToolSelectCombocontrol(ToolMenuHandler* th, ActionHandler* handler, GladeGui* gui, string id) :
+		ToolButton(handler, gui, id, ACTION_TOOL_SELECT_RECT, GROUP_TOOL, true, "rect-select.png", _("Select Rectangle"))
 {
 
 	XOJ_INIT_TYPE(ToolSelectCombocontrol);
@@ -31,24 +30,21 @@ ToolButton(handler, gui, id, ACTION_TOOL_SELECT_RECT, GROUP_TOOL, true,
 	gtk_container_add(GTK_CONTAINER(popup), menuItem);
 	th->registerMenupoint(menuItem, ACTION_TOOL_SELECT_RECT, GROUP_TOOL);
 	gtk_image_menu_item_set_always_show_image(GTK_IMAGE_MENU_ITEM(menuItem), true);
-	gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuItem),
-								  gui->loadIcon("rect-select.png"));
+	gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuItem), gui->loadIcon("rect-select.png"));
 	gtk_widget_show_all(menuItem);
 
 	menuItem = gtk_image_menu_item_new_with_label(_("Select Region"));
 	gtk_container_add(GTK_CONTAINER(popup), menuItem);
 	th->registerMenupoint(menuItem, ACTION_TOOL_SELECT_REGION, GROUP_TOOL);
 	gtk_image_menu_item_set_always_show_image(GTK_IMAGE_MENU_ITEM(menuItem), true);
-	gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuItem),
-								  gui->loadIcon("lasso.png"));
+	gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuItem), gui->loadIcon("lasso.png"));
 	gtk_widget_show_all(menuItem);
 
 	menuItem = gtk_image_menu_item_new_with_label(_("Select Object"));
 	gtk_container_add(GTK_CONTAINER(popup), menuItem);
 	th->registerMenupoint(menuItem, ACTION_TOOL_SELECT_OBJECT, GROUP_TOOL);
 	gtk_image_menu_item_set_always_show_image(GTK_IMAGE_MENU_ITEM(menuItem), true);
-	gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuItem),
-								  gui->loadIcon("object-select.png"));
+	gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuItem), gui->loadIcon("object-select.png"));
 	gtk_widget_show_all(menuItem);
 
 	setPopupMenu(popup);
@@ -79,24 +75,21 @@ void ToolSelectCombocontrol::selected(ActionGroup group, ActionType action)
 
 		const char* description = NULL;
 
-		if (action == ACTION_TOOL_SELECT_RECT &&
-			this->action != ACTION_TOOL_SELECT_RECT)
+		if (action == ACTION_TOOL_SELECT_RECT && this->action != ACTION_TOOL_SELECT_RECT)
 		{
 			this->action = ACTION_TOOL_SELECT_RECT;
 			gtk_image_set_from_pixbuf(GTK_IMAGE(iconWidget), this->iconSelectRect);
 
 			description = _("Select Rectangle");
 		}
-		else if (action == ACTION_TOOL_SELECT_REGION &&
-				 this->action != ACTION_TOOL_SELECT_REGION)
+		else if (action == ACTION_TOOL_SELECT_REGION && this->action != ACTION_TOOL_SELECT_REGION)
 		{
 			this->action = ACTION_TOOL_SELECT_REGION;
 			gtk_image_set_from_pixbuf(GTK_IMAGE(iconWidget), this->iconSelectRgion);
 
 			description = _("Select Region");
 		}
-		else if (action == ACTION_TOOL_SELECT_OBJECT &&
-				 this->action != ACTION_TOOL_SELECT_OBJECT)
+		else if (action == ACTION_TOOL_SELECT_OBJECT && this->action != ACTION_TOOL_SELECT_OBJECT)
 		{
 			this->action = ACTION_TOOL_SELECT_OBJECT;
 			gtk_image_set_from_pixbuf(GTK_IMAGE(iconWidget), this->iconSelectObject);
@@ -106,12 +99,10 @@ void ToolSelectCombocontrol::selected(ActionGroup group, ActionType action)
 		gtk_tool_item_set_tooltip_text(GTK_TOOL_ITEM(item), description);
 
 
-		if (gtk_toggle_tool_button_get_active(GTK_TOGGLE_TOOL_BUTTON(this->item)) !=
-			(this->action == action))
+		if (gtk_toggle_tool_button_get_active(GTK_TOGGLE_TOOL_BUTTON(this->item)) != (this->action == action))
 		{
 			this->toolToggleButtonActive = (this->action == action);
-			gtk_toggle_tool_button_set_active(GTK_TOGGLE_TOOL_BUTTON(this->item),
-											  this->toolToggleButtonActive);
+			gtk_toggle_tool_button_set_active(GTK_TOGGLE_TOOL_BUTTON(this->item), this->toolToggleButtonActive);
 		}
 	}
 }
@@ -127,7 +118,6 @@ GtkToolItem* ToolSelectCombocontrol::newItem()
 
 	it = gtk_menu_tool_toggle_button_new(iconWidget, "test0");
 	gtk_tool_button_set_label_widget(GTK_TOOL_BUTTON(it), labelWidget);
-	gtk_menu_tool_toggle_button_set_menu(GTK_MENU_TOOL_TOGGLE_BUTTON(it),
-										 popupMenu);
+	gtk_menu_tool_toggle_button_set_menu(GTK_MENU_TOOL_TOGGLE_BUTTON(it), popupMenu);
 	return it;
 }

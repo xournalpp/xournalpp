@@ -1,15 +1,17 @@
 #include "ClipboardHandler.h"
+
 #include "Control.h"
-#include <pixbuf-utils.h>
-#include <cairo-svg.h>
-#include <config.h>
 #include "view/DocumentView.h"
+
+#include <config.h>
 #include <serializing/ObjectOutputStream.h>
 #include <serializing/ObjectInputStream.h>
 #include <serializing/BinObjectEncoding.h>
 
-ClipboardHandler::ClipboardHandler(ClipboardListener* listener,
-								   GtkWidget* widget)
+#include <cairo-svg.h>
+#include <pixbuf-utils.h>
+
+ClipboardHandler::ClipboardHandler(ClipboardListener* listener, GtkWidget* widget)
 {
 	XOJ_INIT_TYPE(ClipboardHandler);
 
@@ -20,8 +22,7 @@ ClipboardHandler::ClipboardHandler(ClipboardListener* listener,
 	this->containsXournal = false;
 	this->selection = NULL;
 
-	this->hanlderId = g_signal_connect(this->clipboard, "owner-change",
-									   G_CALLBACK(&ownerChangedCallback), this);
+	this->hanlderId = g_signal_connect(this->clipboard, "owner-change", G_CALLBACK(&ownerChangedCallback), this);
 
 	this->listener->clipboardCutCopyEnabled(false);
 
@@ -129,21 +130,20 @@ public:
 		{
 			gtk_selection_data_set_text(selection, contents->text.c_str(), -1);
 		}
-		else if (selection->target == gdk_atom_intern_static_string("image/png") ||
-				 selection->target == gdk_atom_intern_static_string("image/jpeg")
+		else if (selection->target == gdk_atom_intern_static_string("image/png")
+				 || selection->target == gdk_atom_intern_static_string("image/jpeg")
 				 || selection->target == gdk_atom_intern_static_string("image/gif"))
 		{
 			gtk_selection_data_set_pixbuf(selection, contents->image);
 		}
 		else if (atomSvg1 == selection->target || atomSvg2 == selection->target)
 		{
-			gtk_selection_data_set(selection, selection->target, 8,
-								   (guchar*) contents->svg.c_str(), contents->svg.length());
+			gtk_selection_data_set(selection, selection->target, 8, (guchar*) contents->svg.c_str(),
+								   contents->svg.length());
 		}
 		else if (atomXournal == selection->target)
 		{
-			gtk_selection_data_set(selection, selection->target, 8,
-								   (guchar*) contents->str->str, contents->str->len);
+			gtk_selection_data_set(selection, selection->target, 8, (guchar*) contents->str->str, contents->str->len);
 		}
 	}
 
@@ -159,8 +159,7 @@ private:
 	GString* str;
 };
 
-static cairo_status_t svgWriteFunction(GString* string,
-									   const unsigned char* data, unsigned int length)
+static cairo_status_t svgWriteFunction(GString* string, const unsigned char* data, unsigned int length)
 {
 	g_string_append_len(string, (const gchar*) data, length);
 	return CAIRO_STATUS_SUCCESS;
@@ -195,8 +194,7 @@ bool ClipboardHandler::copy()
 	{
 		if (e->getType() == ELEMENT_TEXT)
 		{
-			textElements = g_list_insert_sorted(textElements, e,
-												(GCompareFunc) ElementCompareFunc);
+			textElements = g_list_insert_sorted(textElements, e, (GCompareFunc) ElementCompareFunc);
 		}
 	}
 
@@ -222,8 +220,7 @@ bool ClipboardHandler::copy()
 
 	int width = selection->getWidth() * dpiFactor;
 	int heigth = selection->getHeight() * dpiFactor;
-	cairo_surface_t* surfacePng = cairo_image_surface_create(CAIRO_FORMAT_ARGB32,
-															 width, heigth);
+	cairo_surface_t* surfacePng = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, width, heigth);
 	cairo_t* crPng = cairo_create(surfacePng);
 	cairo_scale(crPng, dpiFactor, dpiFactor);
 
@@ -274,8 +271,7 @@ bool ClipboardHandler::copy()
 
 	targets = gtk_target_table_new_from_list(list, &n_targets);
 
-	ClipboardContents* contents = new ClipboardContents(text, image, svgString->str,
-														out.getStr());
+	ClipboardContents* contents = new ClipboardContents(text, image, svgString->str, out.getStr());
 
 	gtk_clipboard_set_with_data(this->clipboard, targets, n_targets,
 								(GtkClipboardGetFunc) ClipboardContents::getFunction,
@@ -313,8 +309,7 @@ void ClipboardHandler::setCopyPasteEnabled(bool enabled)
 	}
 }
 
-void ClipboardHandler::ownerChangedCallback(GtkClipboard* clip, GdkEvent* event,
-											ClipboardHandler* handler)
+void ClipboardHandler::ownerChangedCallback(GtkClipboard* clip, GdkEvent* event, ClipboardHandler* handler)
 {
 	XOJ_CHECK_TYPE_OBJ(handler, ClipboardHandler);
 
@@ -333,16 +328,15 @@ void ClipboardHandler::clipboardUpdated(GdkAtom atom)
 								   (GtkClipboardReceivedFunc) receivedClipboardContents, this);
 }
 
-void ClipboardHandler::pasteClipboardImage(GtkClipboard* clipboard,
-										   GdkPixbuf* pixbuf, ClipboardHandler* handler)
+void ClipboardHandler::pasteClipboardImage(GtkClipboard* clipboard, GdkPixbuf* pixbuf, ClipboardHandler* handler)
 {
 	XOJ_CHECK_TYPE_OBJ(handler, ClipboardHandler);
 
 	handler->listener->clipboardPasteImage(pixbuf);
 }
 
-void ClipboardHandler::pasteClipboardContents(GtkClipboard* clipboard,
-											  GtkSelectionData* selectionData, ClipboardHandler* handler)
+void ClipboardHandler::pasteClipboardContents(GtkClipboard* clipboard, GtkSelectionData* selectionData,
+											  ClipboardHandler* handler)
 {
 	XOJ_CHECK_TYPE_OBJ(handler, ClipboardHandler);
 
@@ -366,8 +360,7 @@ void ClipboardHandler::pasteClipboardContents(GtkClipboard* clipboard,
 	}
 }
 
-gboolean gtk_selection_data_targets_include_xournal(GtkSelectionData*
-													selection_data)
+gboolean gtk_selection_data_targets_include_xournal(GtkSelectionData* selection_data)
 {
 	GdkAtom* targets;
 	gint n_targets;
@@ -389,17 +382,14 @@ gboolean gtk_selection_data_targets_include_xournal(GtkSelectionData*
 	return result;
 }
 
-void ClipboardHandler::receivedClipboardContents(GtkClipboard* clipboard,
-												 GtkSelectionData* selectionData, ClipboardHandler* handler)
+void ClipboardHandler::receivedClipboardContents(GtkClipboard* clipboard, GtkSelectionData* selectionData,
+												 ClipboardHandler* handler)
 {
 	XOJ_CHECK_TYPE_OBJ(handler, ClipboardHandler);
 
 	handler->containsText = gtk_selection_data_targets_include_text(selectionData);
-	handler->containsXournal = gtk_selection_data_targets_include_xournal(
-																		  selectionData);
-	handler->containsImage = gtk_selection_data_targets_include_image(selectionData,
-																	  false);
+	handler->containsXournal = gtk_selection_data_targets_include_xournal(selectionData);
+	handler->containsImage = gtk_selection_data_targets_include_image(selectionData, false);
 
-	handler->listener->clipboardPasteEnabled(handler->containsText ||
-											 handler->containsXournal || handler->containsImage);
+	handler->listener->clipboardPasteEnabled(handler->containsText || handler->containsXournal || handler->containsImage);
 }

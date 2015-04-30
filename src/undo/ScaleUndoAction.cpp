@@ -1,13 +1,12 @@
 #include "ScaleUndoAction.h"
 
-#include "model/PageRef.h"
 #include "model/Element.h"
+#include "model/PageRef.h"
+
 #include <Range.h>
 
-ScaleUndoAction::ScaleUndoAction(PageRef page,
-								 ElementVector* elements,
-								 double x0, double y0,
-								 double fx, double fy) : UndoAction("ScaleUndoAction")
+ScaleUndoAction::ScaleUndoAction(PageRef page, ElementVector* elements, double x0, double y0, double fx, double fy) :
+		UndoAction("ScaleUndoAction")
 {
 	XOJ_INIT_TYPE(ScaleUndoAction);
 

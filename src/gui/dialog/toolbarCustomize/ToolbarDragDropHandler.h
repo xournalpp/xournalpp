@@ -14,9 +14,9 @@
 #include <XournalType.h>
 
 class Control;
+class MainWindow;
 class ToolbarAdapter;
 class ToolbarCustomizeDialog;
-class MainWindow;
 
 class ToolbarDragDropHandler
 {

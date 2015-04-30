@@ -1,14 +1,12 @@
 #include "Text.h"
 
-// Hack: Needed to calculate the view size
-#include "view/TextView.h"
+#include "view/TextView.h" // Hack: Needed to calculate the view size
 
-#include <serializing/ObjectOutputStream.h>
 #include <serializing/ObjectInputStream.h>
+#include <serializing/ObjectOutputStream.h>
 #include <Stacktrace.h>
 
-Text::Text() :
-Element(ELEMENT_TEXT)
+Text::Text() : Element(ELEMENT_TEXT)
 {
     XOJ_INIT_TYPE(Text);
 
@@ -35,7 +33,6 @@ Element* Text::clone()
 
     return text;
 }
-
 
 XojFont& Text::getFont()
 {

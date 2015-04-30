@@ -1,13 +1,13 @@
 #include "TexImage.h"
-#include <serializing/ObjectOutputStream.h>
-#include <serializing/ObjectInputStream.h>
+
 #include <pixbuf-utils.h>
+#include <serializing/ObjectInputStream.h>
+#include <serializing/ObjectOutputStream.h>
+
 #include <string.h>
 
-TexImage::TexImage() :
-Element(ELEMENT_TEXIMAGE)
+TexImage::TexImage() : Element(ELEMENT_TEXIMAGE)
 {
-
     XOJ_INIT_TYPE(TexImage);
 
     this->sizeCalculated = true;
@@ -61,8 +61,7 @@ void TexImage::setHeight(double height)
     this->height = height;
 }
 
-cairo_status_t TexImage::cairoReadFunction(TexImage* image, unsigned char* data,
-                                           unsigned int length)
+cairo_status_t TexImage::cairoReadFunction(TexImage* image, unsigned char* data, unsigned int length)
 {
     XOJ_CHECK_TYPE_OBJ(image, TexImage);
 
@@ -125,8 +124,7 @@ cairo_surface_t* TexImage::getImage()
     if (this->image == NULL && this->data.length() != 0)
     {
         this->read = 0;
-        this->image = cairo_image_surface_create_from_png_stream(
-				(cairo_read_func_t) & cairoReadFunction, this);
+        this->image = cairo_image_surface_create_from_png_stream((cairo_read_func_t) &cairoReadFunction, this);
     }
 
     return this->image;
@@ -191,4 +189,3 @@ void TexImage::calcSize()
 {
     XOJ_CHECK_TYPE(TexImage);
 }
-

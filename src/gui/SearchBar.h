@@ -11,9 +11,9 @@
 
 #pragma once
 
-#include <gtk/gtk.h>
-
 #include <XournalType.h>
+
+#include <gtk/gtk.h>
 
 class Control;
 
@@ -30,8 +30,7 @@ private:
 	static void searchTextChangedCallback(GtkEntry* entry, SearchBar* searchBar);
 
 	static void buttonNextSearchClicked(GtkButton* button, SearchBar* searchBar);
-	static void buttonPreviousSearchClicked(GtkButton* button,
-											SearchBar* searchBar);
+	static void buttonPreviousSearchClicked(GtkButton* button, SearchBar* searchBar);
 
 	void searchNext();
 	void searchPrevious();

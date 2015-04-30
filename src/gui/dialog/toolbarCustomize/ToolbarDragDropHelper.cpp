@@ -1,9 +1,10 @@
 #include "ToolbarDragDropHelper.h"
+
 #include "gui/widgets/SelectColor.h"
+
 #include <Util.h>
 
-GdkAtom ToolbarDragDropHelper::atomToolItem =
-		gdk_atom_intern_static_string("application/xournal-ToolbarItem");
+GdkAtom ToolbarDragDropHelper::atomToolItem = gdk_atom_intern_static_string("application/xournal-ToolbarItem");
 GtkTargetEntry ToolbarDragDropHelper::dropTargetEntry = { "move-buffer", GTK_TARGET_SAME_APP, 1 };
 
 ToolbarDragDropHelper::ToolbarDragDropHelper() { }
@@ -26,8 +27,7 @@ GdkPixbuf* ToolbarDragDropHelper::getImagePixbuf(GtkImage* image)
 		gtk_image_get_stock(image, &stock_id, &size);
 		return gtk_widget_render_icon(GTK_WIDGET(image), stock_id, size, NULL);
 	default:
-		g_warning("Image storage type %d not handled",
-				gtk_image_get_storage_type(image));
+		g_warning("Image storage type %d not handled", gtk_image_get_storage_type(image));
 		return NULL;
 	}
 }

@@ -12,6 +12,7 @@
 #pragma once
 
 #include "UndoAction.h"
+
 #include <XournalType.h>
 
 class CopyUndoAction : public UndoAction

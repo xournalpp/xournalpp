@@ -1,15 +1,14 @@
 #include "ToolbarDragDropHandler.h"
-#include "ToolbarAdapter.h"
-
-#include <glib.h>
 
 #include "control/Control.h"
-#include "ToolbarDragDropHelper.h"
-#include "gui/toolbarMenubar/AbstractToolItem.h"
-#include "ToolbarCustomizeDialog.h"
-
 #include "gui/MainWindow.h"
+#include "gui/toolbarMenubar/AbstractToolItem.h"
 #include "gui/toolbarMenubar/model/ToolbarModel.h"
+#include "ToolbarAdapter.h"
+#include "ToolbarCustomizeDialog.h"
+#include "ToolbarDragDropHelper.h"
+
+#include <glib.h>
 
 ToolbarDragDropHandler::ToolbarDragDropHandler(Control* control)
 {
@@ -44,7 +43,7 @@ void ToolbarDragDropHandler::prepareToolbarsForDragAndDrop()
 	{
 		GtkWidget* w = widgets[i];
 		this->toolbars[i] = new ToolbarAdapter(w, win->getToolbarName(GTK_TOOLBAR(w)),
-											control->getWindow()->getToolMenuHandler(), control->getWindow());
+											   control->getWindow()->getToolMenuHandler(), control->getWindow());
 	}
 }
 
@@ -79,11 +78,8 @@ void ToolbarDragDropHandler::toolbarConfigDialogClosed()
 
 	this->clearToolbarsFromDragAndDrop();
 
-	char* file = g_build_filename(g_get_home_dir(), G_DIR_SEPARATOR_S, CONFIG_DIR,
-								G_DIR_SEPARATOR_S, TOOLBAR_CONFIG,
-								NULL);
+	const char* file = Util::getConfigFile(TOOLBAR_CONFIG).c_str();
 	win->getToolbarModel()->save(file);
-	g_free(file);
 }
 
 void ToolbarDragDropHandler::configure()
@@ -94,8 +90,7 @@ void ToolbarDragDropHandler::configure()
 
 	this->prepareToolbarsForDragAndDrop();
 
-	this->customizeDialog = new ToolbarCustomizeDialog(
-													control->getGladeSearchPath(), win, this);
+	this->customizeDialog = new ToolbarCustomizeDialog(control->getGladeSearchPath(), win, this);
 
 	this->customizeDialog->show(GTK_WINDOW(win->getWindow()));
 }
@@ -109,4 +104,3 @@ bool ToolbarDragDropHandler::isInDragAndDrop()
 
 	return true;
 }
-

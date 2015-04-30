@@ -11,12 +11,13 @@
 
 #pragma once
 
-#include <boost/filesystem/path.hpp>
-using boost::filesystem::path;
-
 #include "BlockingJob.h"
+
 #include <StringUtils.h>
 #include <XournalType.h>
+
+#include <boost/filesystem/path.hpp>
+using boost::filesystem::path;
 
 class Control;
 

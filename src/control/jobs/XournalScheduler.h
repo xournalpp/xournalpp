@@ -13,9 +13,10 @@
 
 #pragma once
 
-#include "Scheduler.h"
 #include "gui/sidebar/previews/SidebarPreviewPage.h"
 #include "gui/PageView.h"
+#include "Scheduler.h"
+
 #include <XournalType.h>
 
 class XournalScheduler : public Scheduler

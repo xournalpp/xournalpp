@@ -12,6 +12,7 @@
 #pragma once
 
 #include "AbstractToolItem.h"
+
 #include <XournalType.h>
 
 class GladeGui;
@@ -20,8 +21,7 @@ class SpinPageAdapter;
 class ToolPageSpinner : public AbstractToolItem
 {
 public:
-	ToolPageSpinner(GladeGui* gui, ActionHandler* handler, string id,
-					ActionType type);
+	ToolPageSpinner(GladeGui* gui, ActionHandler* handler, string id, ActionType type);
 	virtual ~ToolPageSpinner();
 
 public:

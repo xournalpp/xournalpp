@@ -1,4 +1,5 @@
 #include "Rectangle.h"
+
 #include "Range.h"
 
 Rectangle::Rectangle()
@@ -36,8 +37,7 @@ Rectangle::~Rectangle()
 	XOJ_RELEASE_TYPE(Rectangle);
 }
 
-bool Rectangle::intersects(const Rectangle& other,
-						   Rectangle* dest) const
+bool Rectangle::intersects(const Rectangle& other, Rectangle* dest) const
 {
 	XOJ_CHECK_TYPE(Rectangle);
 
@@ -96,4 +96,3 @@ void Rectangle::add(const Rectangle &other)
 {
 	add(other.x, other.y, other.width, other.height);
 }
-

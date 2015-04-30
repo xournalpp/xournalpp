@@ -1,8 +1,8 @@
 #include "FontUndoAction.h"
 
+#include "gui/Redrawable.h"
 #include "model/Font.h"
 #include "model/Text.h"
-#include "gui/Redrawable.h"
 
 #include <Rectangle.h>
 
@@ -50,8 +50,7 @@ void FontUndoAction::addStroke(Text* e, XojFont& oldFont, XojFont& newFont)
 {
 	XOJ_CHECK_TYPE(FontUndoAction);
 
-	this->data = g_list_append(this->data, new FontUndoActionEntry(e, oldFont,
-																newFont));
+	this->data = g_list_append(this->data, new FontUndoActionEntry(e, oldFont, newFont));
 }
 
 bool FontUndoAction::undo(Control* control)

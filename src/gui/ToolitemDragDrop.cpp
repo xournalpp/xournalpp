@@ -1,13 +1,13 @@
 #include "ToolitemDragDrop.h"
-#include "dialog/toolbarCustomize/ToolbarDragDropHelper.h"
+
 #include "dialog/toolbarCustomize/ToolbarAdapter.h"
+#include "dialog/toolbarCustomize/ToolbarDragDropHelper.h"
 
 #include <string.h>
 
 const char* ATTACH_DRAG_DROP_DATA = "XOJ_DRAG_DROP_DATA";
 
-void ToolitemDragDrop::attachMetadata(GtkWidget* w, int id,
-									  AbstractToolItem* ait)
+void ToolitemDragDrop::attachMetadata(GtkWidget* w, int id, AbstractToolItem* ait)
 {
 	ToolItemDragDropData* d = g_new(ToolItemDragDropData, 1);
 	d->identify = ToolItemDragDropData_Identify;
@@ -16,12 +16,10 @@ void ToolitemDragDrop::attachMetadata(GtkWidget* w, int id,
 	d->type = TOOL_ITEM_ITEM;
 	d->color = 0;
 
-	g_object_set_data_full(G_OBJECT(w), ATTACH_DRAG_DROP_DATA, d,
-						(GDestroyNotify) g_free);
+	g_object_set_data_full(G_OBJECT(w), ATTACH_DRAG_DROP_DATA, d, (GDestroyNotify) g_free);
 }
 
-ToolItemDragDropData* ToolitemDragDrop::ToolItemDragDropData_new(
-																 AbstractToolItem* item)
+ToolItemDragDropData* ToolitemDragDrop::ToolItemDragDropData_new( AbstractToolItem* item)
 {
 	ToolItemDragDropData* d = g_new(ToolItemDragDropData, 1);
 	d->identify = ToolItemDragDropData_Identify;
@@ -42,12 +40,10 @@ void ToolitemDragDrop::attachMetadata(GtkWidget* w, int id, ToolItemType type)
 	d->type = type;
 	d->color = 0;
 
-	g_object_set_data_full(G_OBJECT(w), ATTACH_DRAG_DROP_DATA, d,
-						(GDestroyNotify) g_free);
+	g_object_set_data_full(G_OBJECT(w), ATTACH_DRAG_DROP_DATA, d, (GDestroyNotify) g_free);
 }
 
-void ToolitemDragDrop::attachMetadataColor(GtkWidget* w, int id, int color,
-										   AbstractToolItem* item)
+void ToolitemDragDrop::attachMetadataColor(GtkWidget* w, int id, int color, AbstractToolItem* item)
 {
 	ToolItemDragDropData* d = g_new(ToolItemDragDropData, 1);
 	d->identify = ToolItemDragDropData_Identify;
@@ -56,14 +52,12 @@ void ToolitemDragDrop::attachMetadataColor(GtkWidget* w, int id, int color,
 	d->type = TOOL_ITEM_COLOR;
 	d->color = color;
 
-	g_object_set_data_full(G_OBJECT(w), ATTACH_DRAG_DROP_DATA, d,
-						(GDestroyNotify) g_free);
+	g_object_set_data_full(G_OBJECT(w), ATTACH_DRAG_DROP_DATA, d, (GDestroyNotify) g_free);
 }
 
 GtkWidget* ToolitemDragDrop::getIcon(ToolItemDragDropData* data)
 {
-	if (data->type == TOOL_ITEM_ITEM || (data->type == TOOL_ITEM_COLOR &&
-										data->item != NULL))
+	if (data->type == TOOL_ITEM_ITEM || (data->type == TOOL_ITEM_COLOR && data->item != NULL))
 	{
 		return data->item->getNewToolIcon();
 	}
@@ -113,14 +107,12 @@ bool ToolitemDragDrop::isToolItemEnabled(ToolItemDragDropData* d)
 
 ToolItemDragDropData* ToolitemDragDrop::metadataGetMetadata(GtkWidget* w)
 {
-	const int* ptr = (const int*) g_object_get_data(G_OBJECT(w),
-													ATTACH_DRAG_DROP_DATA);
+	const int* ptr = (const int*) g_object_get_data(G_OBJECT(w), ATTACH_DRAG_DROP_DATA);
 
 	if (ptr == NULL)
 	{
-		g_warning("ToolitemDragDrop::metadataGetMetadata Could not get Metadata %s from %s\n",
-				ATTACH_DRAG_DROP_DATA,
-				g_type_name(G_TYPE_FROM_INSTANCE(w)));
+		g_warning("ToolitemDragDrop::metadataGetMetadata Could not get Metadata %s from %s\n", ATTACH_DRAG_DROP_DATA,
+				  g_type_name(G_TYPE_FROM_INSTANCE(w)));
 		return NULL;
 	}
 
@@ -133,4 +125,3 @@ ToolItemDragDropData* ToolitemDragDrop::metadataGetMetadata(GtkWidget* w)
 
 	return (ToolItemDragDropData*) ptr;
 }
-

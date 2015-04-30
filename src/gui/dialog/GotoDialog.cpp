@@ -1,7 +1,7 @@
 #include "GotoDialog.h"
 
 GotoDialog::GotoDialog(GladeSearchpath* gladeSearchPath, int maxPage) :
-GladeGui(gladeSearchPath, "goto.glade", "gotoDialog")
+	GladeGui(gladeSearchPath, "goto.glade", "gotoDialog")
 {
 	XOJ_INIT_TYPE(GotoDialog);
 
@@ -32,8 +32,6 @@ void GotoDialog::show(GtkWindow* parent)
 
 	if (returnCode == 2)
 	{
-		this->selectedPage = gtk_spin_button_get_value(
-									GTK_SPIN_BUTTON(get("spinPage")));
+		this->selectedPage = gtk_spin_button_get_value(GTK_SPIN_BUTTON(get("spinPage")));
 	}
 }
-

@@ -1,14 +1,14 @@
 #include "Logger.h"
+
 #include <XournalType.h>
 
 #ifdef XOJ_CALL_LOG_ENABLED
 
+#include <fstream>
 #include <sstream>
 #include <string>
 #include <iostream>
-
 #include <stdio.h>
-#include <fstream>
 
 #if defined(WIN32) || defined(_WIN32) || defined(__WIN32__)
 
@@ -18,8 +18,7 @@ inline std::string NowTime()
 {
 	const int MAX_LEN = 200;
 	char buffer[MAX_LEN];
-	if (GetTimeFormatA(LOCALE_USER_DEFAULT, 0, 0, "HH':'mm':'ss", buffer,
-					MAX_LEN) == 0)
+	if (GetTimeFormatA(LOCALE_USER_DEFAULT, 0, 0, "HH':'mm':'ss", buffer, MAX_LEN) == 0)
 		return "Error in NowTime()";
 
 	char result[100] = {0};
@@ -52,14 +51,12 @@ Log::~Log() { }
 
 std::ofstream logfile;
 
-void Log::trace(const char* callType, const char* clazz, const char* function,
-				long obj)
+void Log::trace(const char* callType, const char* clazz, const char* function, long obj)
 {
 	std::ostringstream os;
 
 	os << NowTime() << " - ";
-	os << callType << " " << clazz << ":" << function << " (" << obj << ")" <<
-			std::endl;
+	os << callType << " " << clazz << ":" << function << " (" << obj << ")" << std::endl;
 
 	logfile << os.str();
 }
@@ -75,4 +72,3 @@ void Log::closelog()
 }
 
 #endif // XOJ_CALL_LOG_ENABLED
-

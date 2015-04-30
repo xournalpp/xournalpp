@@ -11,8 +11,8 @@
 
 #pragma once
 
-#include "XojPopplerDocument.h"
 #include "XojPopplerAction.h"
+#include "XojPopplerDocument.h"
 
 class GooList;
 

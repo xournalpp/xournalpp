@@ -12,14 +12,13 @@
 #pragma once
 
 #include "UndoAction.h"
+
 #include <glib.h>
 
 class ScaleUndoAction : public UndoAction
 {
 public:
-	ScaleUndoAction(PageRef page, ElementVector* elements,
-					double x0, double y0,
-					double fx, double fy);
+	ScaleUndoAction(PageRef page, ElementVector* elements, double x0, double y0, double fx, double fy);
 	virtual ~ScaleUndoAction();
 
 public:

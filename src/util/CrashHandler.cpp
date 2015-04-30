@@ -1,29 +1,20 @@
-/*
- * Xournal++
- *
- * Error handler, prints a stacktrace if Xournal crashes
- *
- * @author Xournal Team
- * http://xournal.sf.net
- *
- * @license GPL
- */
+#include "CrashHandler.h"
+
+#include "cfg.h"
+#include "control/SaveHandler.h"
+#include "model/Document.h"
+#include "Stacktrace.h"
+#include "Util.h"
 
 #include <glib.h>
 #include <gtk/gtk.h>
+
+#include <boost/locale/format.hpp>
+
 #include <iostream>
 #include <fstream>
 #include <sstream>
 #include <execinfo.h>
-#include <boost/locale/format.hpp>
-
-#include "CrashHandler.h"
-#include "control/SaveHandler.h"
-#include "model/Document.h"
-#include "Stacktrace.h"
-
-#include "cfg.h"
-
 using namespace std;
 
 static bool alreadyCrashed = false;
@@ -116,8 +107,7 @@ static void crashHandler(int sig)
 	// get void*'s for all entries on the stack
 	size = backtrace(array, 100);
 
-	string filename = CONCAT(g_get_home_dir(), G_DIR_SEPARATOR_S, CONFIG_DIR,
-							 G_DIR_SEPARATOR_S, "errorlog.log");
+	string filename = Util::getConfigFile("errorlog.log").string();
 
 	ofstream fp(filename.c_str());
 	if (fp) cerr << bl::format("Crash Handler::wrote crash log to: {1}") % filename << endl;
@@ -163,9 +153,7 @@ static void emergencySave()
 	SaveHandler handler;
 	handler.prepareSave(document);
 
-	path filename = path(g_get_home_dir());
-	filename /= CONFIG_DIR;
-	filename /= "emergencysave.xoj";
+	path filename = Util::getConfigFile("emergencysave.xoj");
 
 	GzOutputStream* out = new GzOutputStream(filename);
 
@@ -190,4 +178,3 @@ static void emergencySave()
 
 	delete out;
 }
-

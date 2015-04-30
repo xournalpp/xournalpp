@@ -11,8 +11,9 @@
 
 #pragma once
 
-#include <glib.h>
 #include <XournalType.h>
+
+#include <glib.h>
 
 class GladeSearchpath
 {

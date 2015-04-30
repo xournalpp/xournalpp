@@ -1,9 +1,9 @@
 #include "XojPopplerIter.h"
-#include "XojPopplerDocument.h"
 
-#include "../poppler-0.24.1/poppler/Outline.h"
-#include "../poppler-0.24.1/poppler/GlobalParams.h"
-#include "../poppler-0.24.1/poppler/UnicodeMap.h"
+#include "pdf/popplerdirect/poppler-0.24.1/poppler/Outline.h"
+#include "pdf/popplerdirect/poppler-0.24.1/poppler/GlobalParams.h"
+#include "pdf/popplerdirect/poppler-0.24.1/poppler/UnicodeMap.h"
+#include "XojPopplerDocument.h"
 
 XojPopplerIter::XojPopplerIter(XojPopplerDocument doc, GooList* items)
 {
@@ -93,4 +93,3 @@ XojPopplerAction* XojPopplerIter::getAction()
 
     return new XojPopplerAction(this->doc, linkAction, title);
 }
-

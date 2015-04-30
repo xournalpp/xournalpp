@@ -1,8 +1,8 @@
-#include "ScrollHandler.h"
 #include "Control.h"
-#include "gui/XournalView.h"
-#include "gui/widgets/SpinPageAdapter.h"
 #include "gui/Layout.h"
+#include "gui/widgets/SpinPageAdapter.h"
+#include "gui/XournalView.h"
+#include "ScrollHandler.h"
 
 ScrollHandler::ScrollHandler(Control* control)
 {
@@ -24,7 +24,8 @@ void ScrollHandler::goToPreviousPage()
 	{
 		if (this->control->getSettings()->isPresentationMode())
 		{
-			PageView* view = this->control->getWindow()->getXournal()->getViewFor(this->control->getWindow()->getXournal()->getCurrentPage() - 1);
+			PageView* view = this->control->getWindow()->getXournal()->getViewFor(
+					this->control->getWindow()->getXournal()->getCurrentPage() - 1);
 			if (view)
 			{
 				double dHeight = view->getDisplayHeight();
@@ -49,7 +50,8 @@ void ScrollHandler::goToNextPage()
 	{
 		if (this->control->getSettings()->isPresentationMode())
 		{
-			PageView* view = this->control->getWindow()->getXournal()->getViewFor(this->control->getWindow()->getXournal()->getCurrentPage() + 1);
+			PageView* view = this->control->getWindow()->getXournal()->getViewFor(
+					this->control->getWindow()->getXournal()->getCurrentPage() + 1);
 			if (view)
 			{
 				double dHeight = view->getDisplayHeight();
@@ -139,20 +141,11 @@ void ScrollHandler::scrollToAnnotatedPage(bool next)
 		return;
 	}
 
-	int step;
-	if (next)
-	{
-		step = 1;
-	}
-	else
-	{
-		step = -1;
-	}
+	int step = next ? 1 : -1;
 
 	Document* doc = this->control->getDocument();
 
-	for (int i = this->control->getCurrentPageNo() + step; i >= 0 &&
-		i < doc->getPageCount(); i += step)
+	for (int i = this->control->getCurrentPageNo() + step; i >= 0 && i < doc->getPageCount(); i += step)
 	{
 		if (doc->getPage(i)->isAnnotated())
 		{
@@ -175,8 +168,7 @@ bool ScrollHandler::isPageVisible(int page, int* visibleHeight)
 		return false;
 	}
 
-	return this->control->getWindow()->getXournal()->isPageVisible(page,
-																visibleHeight);
+	return this->control->getWindow()->getXournal()->isPageVisible(page, visibleHeight);
 }
 
 void ScrollHandler::pageChanged(int page)
@@ -185,5 +177,3 @@ void ScrollHandler::pageChanged(int page)
 
 	scrollToSpinPange();
 }
-
-

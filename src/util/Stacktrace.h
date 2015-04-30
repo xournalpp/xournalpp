@@ -11,8 +11,9 @@
 
 #pragma once
 
-#include <iostream>
 #include "StringUtils.h"
+
+#include <iostream>
 
 class Stacktrace
 {

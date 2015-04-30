@@ -1,14 +1,14 @@
 #include "GladeGui.h"
-#include <config.h>
-#include <stdlib.h>
-
-#include <config.h>
-#include <glib/gi18n-lib.h>
 
 #include "GladeSearchpath.h"
 
-GladeGui::GladeGui(GladeSearchpath* gladeSearchPath, const char* glade,
-				   const char* mainWnd)
+#include <config.h>
+
+#include <glib/gi18n-lib.h>
+
+#include <stdlib.h>
+
+GladeGui::GladeGui(GladeSearchpath* gladeSearchPath, const char* glade, const char* mainWnd)
 {
 	XOJ_INIT_TYPE(GladeGui);
 
@@ -126,4 +126,3 @@ GladeGui::operator GtkWindow* ()
 
 	return GTK_WINDOW(getWindow());
 }
-

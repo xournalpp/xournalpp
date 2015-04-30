@@ -1,4 +1,5 @@
 #include "SynchronizedProgressListener.h"
+
 #include <gtk/gtk.h>
 
 SynchronizedProgressListener::SynchronizedProgressListener(ProgressListener* target)

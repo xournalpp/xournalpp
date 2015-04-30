@@ -11,10 +11,11 @@
 
 #pragma once
 
-#include <StringUtils.h>
 #include "model/PageRef.h"
 
 #include <config.h>
+#include <StringUtils.h>
+
 #include <glib/gi18n-lib.h>
 
 class Control;

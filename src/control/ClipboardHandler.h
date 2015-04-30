@@ -11,10 +11,12 @@
 
 #pragma once
 
-#include <gtk/gtk.h>
+#include "tools/EditSelection.h"
+
 #include <StringUtils.h>
 #include <XournalType.h>
-#include "tools/EditSelection.h"
+
+#include <gtk/gtk.h>
 
 class ObjectInputStream;
 
@@ -45,16 +47,14 @@ public:
 	void setCopyPasteEnabled(bool enabled);
 
 private:
-	static void ownerChangedCallback(GtkClipboard* clip, GdkEvent* event,
-									ClipboardHandler* handler);
+	static void ownerChangedCallback(GtkClipboard* clip, GdkEvent* event, ClipboardHandler* handler);
 	void clipboardUpdated(GdkAtom atom);
-	static void receivedClipboardContents(GtkClipboard* clipboard,
-										GtkSelectionData* selectionData, ClipboardHandler* handler);
+	static void receivedClipboardContents(GtkClipboard* clipboard, GtkSelectionData* selectionData,
+										  ClipboardHandler* handler);
 
-	static void pasteClipboardContents(GtkClipboard* clipboard,
-									GtkSelectionData* selectionData, ClipboardHandler* handler);
-	static void pasteClipboardImage(GtkClipboard* clipboard, GdkPixbuf* pixbuf,
-									ClipboardHandler* handler);
+	static void pasteClipboardContents(GtkClipboard* clipboard, GtkSelectionData* selectionData,
+									   ClipboardHandler* handler);
+	static void pasteClipboardImage(GtkClipboard* clipboard, GdkPixbuf* pixbuf, ClipboardHandler* handler);
 
 private:
 	XOJ_TYPE_ATTRIB;

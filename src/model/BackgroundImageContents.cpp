@@ -1,7 +1,6 @@
 #include "BackgroundImageContents.h"
 
-BackgroundImageContents::BackgroundImageContents(path filename,
-												 GError** error)
+BackgroundImageContents::BackgroundImageContents(path filename, GError** error)
 {
 	XOJ_INIT_TYPE(BackgroundImageContents);
 
@@ -87,5 +86,3 @@ GdkPixbuf* BackgroundImageContents::getPixbuf()
 
 	return this->pixbuf;
 }
-
-

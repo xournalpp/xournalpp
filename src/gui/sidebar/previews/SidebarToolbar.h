@@ -11,10 +11,11 @@
 
 #pragma once
 
-#include <gtk/gtk.h>
+#include "model/PageRef.h"
+
 #include <XournalType.h>
 
-#include "model/PageRef.h"
+#include <gtk/gtk.h>
 
 class Control;
 
@@ -30,8 +31,7 @@ public:
 	/**
 	 * Sets the button enabled / disabled
 	 */
-	void setButtonEnabled(bool enableUp, bool enableDown, bool enableCopy,
-						bool enableDelete, PageRef currentPage);
+	void setButtonEnabled(bool enableUp, bool enableDown, bool enableCopy, bool enableDelete, PageRef currentPage);
 
 private:
 	XOJ_TYPE_ATTRIB;

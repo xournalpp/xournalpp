@@ -11,9 +11,11 @@
 
 #pragma once
 
-#include "../GladeGui.h"
+#include "gui/GladeGui.h"
+
 #include <XournalType.h>
 
+class BackgroundImage;
 class Document;
 class Settings;
 class BackgroundImage;
@@ -21,8 +23,7 @@ class BackgroundImage;
 class ImagesDialog : public GladeGui
 {
 public:
-	ImagesDialog(GladeSearchpath* gladeSearchPath, Document* doc,
-				Settings* settings);
+	ImagesDialog(GladeSearchpath* gladeSearchPath, Document* doc, Settings* settings);
 	virtual ~ImagesDialog();
 
 public:
@@ -40,8 +41,7 @@ private:
 	void layout();
 	void updateOkButton();
 
-	static void sizeAllocate(GtkWidget* widget, GtkRequisition* requisition,
-							ImagesDialog* dlg);
+	static void sizeAllocate(GtkWidget* widget, GtkRequisition* requisition, ImagesDialog* dlg);
 	static void okButtonCallback(GtkButton* button, ImagesDialog* dlg);
 	static void filechooserButtonCallback(GtkButton* button, ImagesDialog* dlg);
 

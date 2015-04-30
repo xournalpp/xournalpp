@@ -11,10 +11,11 @@
 
 #pragma once
 
-#include <cairo.h>
-#include "../popplerdirect/poppler/XojPopplerPage.h"
-#include "../popplerdirect/poppler/XojPopplerDocument.h"
 #include "model/PageRef.h"
+#include "pdf/popplerdirect/poppler/XojPopplerDocument.h"
+#include "pdf/popplerdirect/poppler/XojPopplerPage.h"
+
+#include <cairo.h>
 #include <XournalType.h>
 
 class CairoPdf
@@ -31,8 +32,7 @@ public:
 	void finalize();
 
 private:
-	static cairo_status_t writeOut(CairoPdf* pdf, unsigned char* data,
-								unsigned int length);
+	static cairo_status_t writeOut(CairoPdf* pdf, unsigned char* data, unsigned int length);
 
 private:
 	XOJ_TYPE_ATTRIB;

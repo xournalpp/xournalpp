@@ -11,14 +11,15 @@
 
 #pragma once
 
-#include "../AbstractSidebarPage.h"
+#include "gui/sidebar/AbstractSidebarPage.h"
 
-#include <gtk/gtk.h>
 #include <XournalType.h>
 
-class SidebarPreviewPage;
+#include <gtk/gtk.h>
+
 class PdfCache;
 class SidebarLayout;
+class SidebarPreviewPage;
 class SidebarToolbar;
 
 class SidebarPreviews : public AbstractSidebarPage
@@ -91,8 +92,7 @@ private:
 	/**
 	 * The size of the sidebar has chnaged
 	 */
-	static void sizeChanged(GtkWidget* widget, GtkAllocation* allocation,
-							SidebarPreviews* sidebar);
+	static void sizeChanged(GtkWidget* widget, GtkAllocation* allocation, SidebarPreviews* sidebar);
 private:
 	XOJ_TYPE_ATTRIB;
 

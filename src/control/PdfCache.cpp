@@ -1,4 +1,5 @@
 #include "PdfCache.h"
+
 #include <stdio.h>
 
 class PdfCacheEntry
@@ -129,7 +130,7 @@ void PdfCache::render(cairo_t* cr, XojPopplerPage* popplerPage, double zoom)
 	if (img == NULL)
 	{
 		img = cairo_image_surface_create(CAIRO_FORMAT_ARGB32,
-										popplerPage->getWidth() * this->zoom, popplerPage->getHeight() * this->zoom);
+										 popplerPage->getWidth() * this->zoom, popplerPage->getHeight() * this->zoom);
 		cairo_t* cr2 = cairo_create(img);
 
 		cairo_scale(cr2, this->zoom, this->zoom);

@@ -11,8 +11,9 @@
 
 #pragma once
 
-#include <glib.h>
 #include "XournalType.h"
+
+#include <glib.h>
 
 class Range;
 
@@ -30,17 +31,14 @@ public:
 	 * Returns whether this rectangle intersects another
 	 *
 	 * @param other the other rectangle
-	 * @param dest  if this is not NULL, the rectangle will
-	 *              be modified to contain the intersection
+	 * @param dest  if this is not NULL, the rectangle will be modified to contain the intersection
 	 *
 	 * @return whether the rectangles intersect
 	 */
-	bool intersects(const Rectangle& other,
-					Rectangle* dest = NULL) const;
+	bool intersects(const Rectangle& other, Rectangle* dest = NULL) const;
 
 	/**
-	 * Computes the union of this rectangle with the one
-	 * given by the parameters
+	 * Computes the union of this rectangle with the one given by the parameters
 	 */
 	void add(double x, double y, double width, double height);
 

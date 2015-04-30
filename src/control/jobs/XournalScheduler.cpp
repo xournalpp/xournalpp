@@ -147,4 +147,3 @@ void XournalScheduler::addRerenderPage(PageView* view)
 	addJob(job, JOB_PRIORITY_URGENT);
 	job->unref();
 }
-

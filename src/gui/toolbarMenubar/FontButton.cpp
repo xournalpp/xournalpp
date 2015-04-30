@@ -1,12 +1,11 @@
 #include "FontButton.h"
 
 #include <config.h>
+
 #include <glib/gi18n-lib.h>
 
-FontButton::FontButton(ActionHandler* handler, GladeGui* gui, string id,
-					   ActionType type, string description,
-					   GtkWidget* menuitem) :
-AbstractToolItem(id, handler, type, menuitem)
+FontButton::FontButton(ActionHandler* handler, GladeGui* gui, string id, ActionType type, string description,
+					   GtkWidget* menuitem) : AbstractToolItem(id, handler, type, menuitem)
 {
 	XOJ_INIT_TYPE(FontButton);
 
@@ -20,8 +19,7 @@ FontButton::~FontButton()
 	XOJ_RELEASE_TYPE(FontButton);
 }
 
-void FontButton::activated(GdkEvent* event, GtkMenuItem* menuitem,
-						   GtkToolButton* toolbutton)
+void FontButton::activated(GdkEvent* event, GtkMenuItem* menuitem, GtkToolButton* toolbutton)
 {
 	XOJ_CHECK_TYPE(FontButton);
 
@@ -33,8 +31,7 @@ void FontButton::activated(GdkEvent* event, GtkMenuItem* menuitem,
 	this->font.setName(name.substr(0, pos));
 	this->font.setSize(std::stod(name.substr(pos + 1)));
 
-	handler->actionPerformed(ACTION_FONT_BUTTON_CHANGED, GROUP_NOGROUP, event,
-							 menuitem, NULL, true);
+	handler->actionPerformed(ACTION_FONT_BUTTON_CHANGED, GROUP_NOGROUP, event, menuitem, NULL, true);
 }
 
 void FontButton::setFontFontButton(GtkWidget* fontButton, XojFont& font)
@@ -82,8 +79,7 @@ GtkWidget* FontButton::getNewToolIconImpl()
 {
 	XOJ_CHECK_TYPE(FontButton);
 
-	return gtk_image_new_from_stock(GTK_STOCK_SELECT_FONT,
-									GTK_ICON_SIZE_SMALL_TOOLBAR);
+	return gtk_image_new_from_stock(GTK_STOCK_SELECT_FONT, GTK_ICON_SIZE_SMALL_TOOLBAR);
 }
 
 GtkToolItem* FontButton::createItem(bool horizontal)
@@ -159,8 +155,7 @@ GtkToolItem* FontButton::newItem()
 	gtk_tool_item_set_tooltip_text(it, this->description.c_str());
 	gtk_tool_item_set_homogeneous(GTK_TOOL_ITEM(it), false);
 
-	g_signal_connect(this->fontButton, "font_set",
-					 G_CALLBACK(&toolButtonCallback), this);
+	g_signal_connect(this->fontButton, "font_set", G_CALLBACK(&toolButtonCallback), this);
 
 	if (!this->font.getName().empty())
 	{
@@ -169,4 +164,3 @@ GtkToolItem* FontButton::newItem()
 
 	return it;
 }
-

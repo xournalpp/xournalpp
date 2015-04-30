@@ -11,9 +11,10 @@
 
 #pragma once
 
+#include "ToolbarItem.h"
+
 #include <vector>
 
-#include "ToolbarItem.h"
 typedef std::vector<ToolbarItem*> ToolbarItemVector;
 
 class ToolbarEntry

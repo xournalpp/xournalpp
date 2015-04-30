@@ -1,4 +1,5 @@
 #include "HexObjectEncoding.h"
+
 #include <stdio.h>
 
 HexObjectEncoding::HexObjectEncoding()

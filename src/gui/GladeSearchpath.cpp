@@ -40,8 +40,7 @@ char* GladeSearchpath::findFile(const char* subdir, const char* file)
 	// We step through each directory to find it.
 	for (GList* l = this->directories; l != NULL; l = l->next)
 	{
-		gchar* pathname = g_strdup_printf("%s%c%s", (char*) l->data, G_DIR_SEPARATOR,
-										filename);
+		gchar* pathname = g_strdup_printf("%s%c%s", (char*) l->data, G_DIR_SEPARATOR, filename);
 
 		if (g_file_test(pathname, G_FILE_TEST_EXISTS))
 		{

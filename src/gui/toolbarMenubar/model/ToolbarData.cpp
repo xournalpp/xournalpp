@@ -1,8 +1,9 @@
 #include "ToolbarData.h"
+
 #include <glib.h>
 #include <gtk/gtk.h>
-#include <iostream>
 
+#include <iostream>
 using namespace std;
 
 ToolbarData::ToolbarData(bool predefined)
@@ -88,8 +89,7 @@ void ToolbarData::load(GKeyFile* config, const char* group)
 		ToolbarEntry e;
 		gsize keyLen = 0;
 		e.setName(keys[i]);
-		gchar** list = g_key_file_get_string_list(config, group, keys[i], &keyLen,
-												  NULL);
+		gchar** list = g_key_file_get_string_list(config, group, keys[i], &keyLen, NULL);
 
 		for (gsize x = 0; x < keyLen; x++)
 		{
@@ -122,8 +122,7 @@ void ToolbarData::saveToKeyFile(GKeyFile* config)
 
 		if (line.length() > 2)
 		{
-			g_key_file_set_string(config, group, e.getName().c_str(),
-								  line.substr(1).c_str());
+			g_key_file_set_string(config, group, e.getName().c_str(), line.substr(1).c_str());
 		}
 	}
 
@@ -175,4 +174,3 @@ bool ToolbarData::removeItemByID(string toolbar, int id)
 
 	return false;
 }
-

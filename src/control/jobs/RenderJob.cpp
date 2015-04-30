@@ -1,13 +1,14 @@
 #include "RenderJob.h"
 
-#include <list>
-
-#include "gui/XournalView.h"
-#include "view/PdfView.h"
-#include "view/DocumentView.h"
 #include "gui/PageView.h"
+#include "gui/XournalView.h"
 #include "model/Document.h"
+#include "view/DocumentView.h"
+#include "view/PdfView.h"
+
 #include <Rectangle.h>
+
+#include <list>
 
 RenderJob::RenderJob(PageView* view)
 {
@@ -52,8 +53,7 @@ void RenderJob::rerenderRectangle(RenderJob* renderJob, Rectangle* rect)
 	int width = rect->width * zoom;
 	int height = rect->height * zoom;
 
-	cairo_surface_t* rectBuffer = cairo_image_surface_create(CAIRO_FORMAT_ARGB32,
-															 width, height);
+	cairo_surface_t* rectBuffer = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, width, height);
 	cairo_t* crRect = cairo_create(rectBuffer);
 	cairo_translate(crRect, -x, -y);
 	cairo_scale(crRect, zoom, zoom);
@@ -114,7 +114,11 @@ public:
 		g_mutex_lock(&this->mutex);
 		this->complete = true;
 
-		for (Rectangle* r : this->rects) delete r;
+		for (Rectangle* r : this->rects)
+		{
+			delete r;
+			r = NULL;
+		}
 		this->rects.clear();
 
 		addRepaintCallback();
@@ -122,12 +126,13 @@ public:
 		g_mutex_unlock(&this->mutex);
 	}
 
-	void repaintRects(Rectangle * rect)
+	void repaintRects(Rectangle* rect)
 	{
 		g_mutex_lock(&this->mutex);
 		if (this->complete)
 		{
 			delete rect;
+			rect = NULL;
 		}
 		else
 		{
@@ -161,7 +166,11 @@ private:
 		}
 		else
 		{
-			for (Rectangle* r : rects) delete r;
+			for (Rectangle* r : rects)
+			{
+				delete r;
+				r = NULL;
+			}
 			rects.clear();
 		}
 
@@ -224,8 +233,7 @@ void RenderJob::run()
 		int dispWidth = this->view->getDisplayWidth();
 		int dispHeight = this->view->getDisplayHeight();
 
-		cairo_surface_t* crBuffer = cairo_image_surface_create(CAIRO_FORMAT_ARGB32,
-															   dispWidth, dispHeight);
+		cairo_surface_t* crBuffer = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, dispWidth, dispHeight);
 		cairo_t* cr2 = cairo_create(crBuffer);
 		cairo_scale(cr2, zoom, zoom);
 
@@ -243,8 +251,7 @@ void RenderJob::run()
 		int width = this->view->page->getWidth();
 		int height = this->view->page->getHeight();
 
-		PdfView::drawPage(this->view->xournal->getCache(), popplerPage, cr2, zoom,
-						  width, height);
+		PdfView::drawPage(this->view->xournal->getCache(), popplerPage, cr2, zoom, width, height);
 		view.drawPage(this->view->page, cr2, false);
 
 		cairo_destroy(cr2);
@@ -277,6 +284,7 @@ void RenderJob::run()
 	for (Rectangle* rect : rerenderRects)
 	{
 		delete rect;
+		rect = NULL;
 	}
 }
 

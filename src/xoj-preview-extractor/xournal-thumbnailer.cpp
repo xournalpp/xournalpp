@@ -11,22 +11,23 @@
  * @license GNU GPLv2 or later
  */
 
+#include "config.h"
+
+#include <boost/algorithm/string.hpp>
+#include <boost/iostreams/filter/gzip.hpp>
+#include <boost/iostreams/filtering_streambuf.hpp>
+#include <boost/locale.hpp>
+
 #include <string>
 #include <iostream>
 #include <fstream>
-
-#include <boost/locale.hpp>
-#include <boost/iostreams/filter/gzip.hpp>
-#include <boost/iostreams/filtering_streambuf.hpp>
-#include <boost/algorithm/string.hpp>
-
-#include "../../config.h"
 
 namespace bl = boost::locale;
 namespace bi = boost::iostreams;
 namespace ba = boost::algorithm;
 using namespace std;
 
+//TODO with Glib::Base64
 const char BASE64_TABLE[256] = {
 	-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
 	-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,

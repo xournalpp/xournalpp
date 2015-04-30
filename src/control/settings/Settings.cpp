@@ -1,10 +1,14 @@
-#include <stdlib.h>
-#include <string.h>
 #include "Settings.h"
+
 #include "ButtonConfig.h"
 
 #include <config.h>
+
+#include <stdlib.h>
+#include <string.h>
+
 #include <glib/gi18n-lib.h>
+
 #include <boost/filesystem.hpp>
 
 #define DEFAULT_FONT "Sans"
@@ -14,8 +18,7 @@
 #define WRITE_STRING_PROP(var) xmlNode = saveProperty((const char *)#var, var.empty() ? "" : var.c_str(), root)
 #define WRITE_INT_PROP(var) xmlNode = saveProperty((const char *)#var, var, root)
 #define WRITE_DOUBLE_PROP(var) xmlNode = savePropertyDouble((const char *)#var, var, root)
-#define WRITE_COMMENT(var) com = xmlNewComment((const xmlChar *)var); \
-	xmlAddPrevSibling(xmlNode, com);
+#define WRITE_COMMENT(var) com = xmlNewComment((const xmlChar *)var); xmlAddPrevSibling(xmlNode, com);
 
 const char* BUTTON_NAMES[] = {"middle", "right", "eraser", "touch", "default"};
 const int BUTTON_COUNT = 5;
@@ -45,6 +48,7 @@ Settings::~Settings()
 	for (int i = 0; i < 5; i++)
 	{
 		delete this->buttonConfig[i];
+		this->buttonConfig[i] = NULL;
 	}
 
 	XOJ_RELEASE_TYPE(Settings);
@@ -103,20 +107,15 @@ void Settings::loadDefault()
 							   GTK_PAPER_NAME_LETTER "," GTK_PAPER_NAME_LEGAL;
 
 	// Eraser
-	this->buttonConfig[0] = new ButtonConfig(TOOL_ERASER, 0, TOOL_SIZE_NONE,
-											 DRAWING_TYPE_NONE, ERASER_TYPE_NONE);
+	this->buttonConfig[0] = new ButtonConfig(TOOL_ERASER, 0, TOOL_SIZE_NONE, DRAWING_TYPE_NONE, ERASER_TYPE_NONE);
 	// Middle button
-	this->buttonConfig[1] = new ButtonConfig(TOOL_NONE, 0, TOOL_SIZE_NONE,
-											 DRAWING_TYPE_NONE, ERASER_TYPE_NONE);
+	this->buttonConfig[1] = new ButtonConfig(TOOL_NONE, 0, TOOL_SIZE_NONE, DRAWING_TYPE_NONE, ERASER_TYPE_NONE);
 	// Right button
-	this->buttonConfig[2] = new ButtonConfig(TOOL_NONE, 0, TOOL_SIZE_NONE,
-											 DRAWING_TYPE_NONE, ERASER_TYPE_NONE);
+	this->buttonConfig[2] = new ButtonConfig(TOOL_NONE, 0, TOOL_SIZE_NONE, DRAWING_TYPE_NONE, ERASER_TYPE_NONE);
 	// Touch
-	this->buttonConfig[3] = new ButtonConfig(TOOL_NONE, 0, TOOL_SIZE_NONE,
-											 DRAWING_TYPE_NONE, ERASER_TYPE_NONE);
+	this->buttonConfig[3] = new ButtonConfig(TOOL_NONE, 0, TOOL_SIZE_NONE, DRAWING_TYPE_NONE, ERASER_TYPE_NONE);
 	// Default config
-	this->buttonConfig[4] = new ButtonConfig(TOOL_PEN, 0, TOOL_SIZE_FINE,
-											 DRAWING_TYPE_NONE, ERASER_TYPE_NONE);
+	this->buttonConfig[4] = new ButtonConfig(TOOL_PEN, 0, TOOL_SIZE_FINE, DRAWING_TYPE_NONE, ERASER_TYPE_NONE);
 
 	this->fullscreenHideElements = "mainMenubar";
 	this->presentationHideElements = "mainMenubar,sidebarContents";
@@ -282,8 +281,7 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur)
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "ignoreCoreEvents") == 0)
 	{
-		this->ignoreCoreEvents = xmlStrcmp(value,
-										   (const xmlChar*) "true") ? false : true;
+		this->ignoreCoreEvents = xmlStrcmp(value, (const xmlChar*) "true") ? false : true;
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "selectedToolbar") == 0)
 	{
@@ -335,8 +333,7 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur)
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "scrollbarOnLeft") == 0)
 	{
-		this->scrollbarOnLeft = xmlStrcmp(value,
-										  (const xmlChar*) "true") ? false : true;
+		this->scrollbarOnLeft = xmlStrcmp(value, (const xmlChar*) "true") ? false : true;
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "showTwoPages") == 0)
 	{
@@ -539,7 +536,6 @@ void Settings::loadButtonConfig()
 
 				e.getBool("disableDrawing", cfg->disableDrawing);
 			}
-
 		}
 		else
 		{
@@ -622,8 +618,7 @@ void Settings::saveTimeout()
 	this->timeoutId = g_timeout_add_seconds(2, (GSourceFunc) &saveCallback, this);
 }
 
-xmlNodePtr Settings::savePropertyDouble(const gchar* key, double value,
-										xmlNodePtr parent)
+xmlNodePtr Settings::savePropertyDouble(const gchar* key, double value, xmlNodePtr parent)
 {
 	XOJ_CHECK_TYPE(Settings);
 
@@ -633,8 +628,7 @@ xmlNodePtr Settings::savePropertyDouble(const gchar* key, double value,
 	return xmlNode;
 }
 
-xmlNodePtr Settings::saveProperty(const gchar* key, int value,
-								  xmlNodePtr parent)
+xmlNodePtr Settings::saveProperty(const gchar* key, int value, xmlNodePtr parent)
 {
 	XOJ_CHECK_TYPE(Settings);
 
@@ -644,13 +638,11 @@ xmlNodePtr Settings::saveProperty(const gchar* key, int value,
 	return xmlNode;
 }
 
-xmlNodePtr Settings::saveProperty(const gchar* key, const gchar* value,
-								  xmlNodePtr parent)
+xmlNodePtr Settings::saveProperty(const gchar* key, const gchar* value, xmlNodePtr parent)
 {
 	XOJ_CHECK_TYPE(Settings);
 
-	xmlNodePtr xmlNode = xmlNewChild(parent, NULL, (const xmlChar*) "property",
-									 NULL);
+	xmlNodePtr xmlNode = xmlNewChild(parent, NULL, (const xmlChar*) "property", NULL);
 
 	xmlSetProp(xmlNode, (const xmlChar*) "name", (const xmlChar*) key);
 
@@ -871,7 +863,8 @@ void Settings::save()
 	WRITE_BOOL_PROP(fixXinput);
 
 	WRITE_BOOL_PROP(enableLeafEnterWorkaround);
-	WRITE_COMMENT("If Xournal crashes if you e.g. unplug your mouse set this to true. If you have input problems, you can turn it of with false.");
+	WRITE_COMMENT("If Xournal crashes if you e.g. unplug your mouse set this to true. "
+				  "If you have input problems, you can turn it of with false.");
 
 	string pageInsertType = pageInsertTypeToString(this->pageInsertType);
 	WRITE_STRING_PROP(pageInsertType);
@@ -890,8 +883,7 @@ void Settings::save()
 	xmlNodePtr xmlFont;
 	xmlFont = xmlNewChild(root, NULL, (const xmlChar*) "property", NULL);
 	xmlSetProp(xmlFont, (const xmlChar*) "name", (const xmlChar*) "font");
-	xmlSetProp(xmlFont, (const xmlChar*) "font",
-			   (const xmlChar*) this->font.getName().c_str());
+	xmlSetProp(xmlFont, (const xmlChar*) "font", (const xmlChar*) this->font.getName().c_str());
 	gchar* sSize = g_strdup_printf("%0.1lf", this->font.getSize());
 	xmlSetProp(xmlFont, (const xmlChar*) "size", (const xmlChar*) sSize);
 	g_free(sSize);

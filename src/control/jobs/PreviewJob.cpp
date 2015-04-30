@@ -1,11 +1,12 @@
 #include "PreviewJob.h"
-#include "gui/sidebar/previews/SidebarPreviews.h"
-#include "gui/sidebar/previews/SidebarPreviewPage.h"
+
+#include "control/Control.h"
 #include "gui/Shadow.h"
+#include "gui/sidebar/previews/SidebarPreviewPage.h"
+#include "gui/sidebar/previews/SidebarPreviews.h"
+#include "model/Document.h"
 #include "view/PdfView.h"
 #include "view/DocumentView.h"
-#include "model/Document.h"
-#include "control/Control.h"
 
 PreviewJob::PreviewJob(SidebarPreviewPage* sidebar)
 {
@@ -44,8 +45,7 @@ void PreviewJob::run()
 	GtkAllocation alloc;
 	gtk_widget_get_allocation(this->sidebarPreview->widget, &alloc);
 
-	cairo_surface_t* crBuffer = cairo_image_surface_create(CAIRO_FORMAT_ARGB32,
-														   alloc.width, alloc.height);
+	cairo_surface_t* crBuffer = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, alloc.width, alloc.height);
 
 	double zoom = this->sidebarPreview->sidebar->getZoom();
 
@@ -53,8 +53,7 @@ void PreviewJob::run()
 	cairo_matrix_t defaultMatrix = {0};
 	cairo_get_matrix(cr2, &defaultMatrix);
 
-	cairo_translate(cr2, Shadow::getShadowTopLeftSize() + 2,
-					Shadow::getShadowTopLeftSize() + 2);
+	cairo_translate(cr2, Shadow::getShadowTopLeftSize() + 2, Shadow::getShadowTopLeftSize() + 2);
 
 	cairo_scale(cr2, zoom, zoom);
 
@@ -65,10 +64,8 @@ void PreviewJob::run()
 	{
 		int pgNo = this->sidebarPreview->page->getPdfPageNr();
 		XojPopplerPage* popplerPage = doc->getPdfPage(pgNo);
-		PdfView::drawPage(this->sidebarPreview->sidebar->getCache(),
-						  popplerPage, cr2, zoom,
-						  this->sidebarPreview->page->getWidth(),
-						  this->sidebarPreview->page->getHeight());
+		PdfView::drawPage(this->sidebarPreview->sidebar->getCache(), popplerPage, cr2, zoom,
+						  this->sidebarPreview->page->getWidth(), this->sidebarPreview->page->getHeight());
 	}
 
 	DocumentView view;

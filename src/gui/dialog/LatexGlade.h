@@ -13,12 +13,14 @@
 
 #pragma once
 
+#include "gui/GladeGui.h"
 #include "model/LayerListener.h"
+#include "model/TexImage.h"
+
+#include <XournalType.h>
+
 #include <gtk/gtk.h>
 #include <glib/gstdio.h>
-#include "model/TexImage.h"
-#include <XournalType.h>
-#include "gui/GladeGui.h"
 
 class LatexGlade : public GladeGui
 {

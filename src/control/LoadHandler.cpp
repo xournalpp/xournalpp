@@ -1,22 +1,21 @@
 #include "LoadHandler.h"
 
-#include "model/XojPage.h"
 #include "model/BackgroundImage.h"
+#include "model/XojPage.h"
 
-#include <clocale>
-#include <vector>
-#include <iostream>
-using namespace std;
+#include <config.h>
 
 #include <boost/filesystem.hpp>
 namespace bf = boost::filesystem;
 
 #include <glibmm.h>
-
-#include <glib.h>	//only because of GError for BackgroundImage
-
-#include <config.h>
+#include <glib.h> //only because of GError for BackgroundImage
 #include <glib/gi18n-lib.h>
+
+#include <clocale>
+#include <vector>
+#include <iostream>
+using namespace std;
 
 typedef struct
 {
@@ -135,8 +134,7 @@ int LoadHandler::parseColor(const string& name)
 		string::size_type ptr;
 		int c = stoull(name.substr(1), &ptr, 16);
 		
-		if (ptr != name.length() - 1)
-			throw ParseException((bl::format("Unknown color value \"{1}\"") % name).str());
+		if (ptr != name.length() - 1) throw ParseException((bl::format("Unknown color value \"{1}\"") % name).str());
 
 		return (c >> 8);
 	}
@@ -176,8 +174,7 @@ bool LoadHandler::parseXml()
 	setlocale(LC_NUMERIC, saved_locale);
 	g_free(saved_locale);
 
-	cout << bl::format("Parsed document of creator: {1}, version {2}")
-			% this->creator % this->fileversion << endl;
+	cout << bl::format("Parsed document of creator: {1}, version {2}") % this->creator % this->fileversion << endl;
 	doc.setCreateBackupOnSave(this->fileversion >= 2); //CPPCHECK is it ok?
 
 	return true;
@@ -238,8 +235,7 @@ void LoadHandler::parseXmlPage(xml_node* xml_page)
 		}
 		else parseXmlPageBgPdf(&xml_background);
 	}
-	else throw ParseException((bl::format("Unknown background type: \"{1}\"")
-								% bg_type.value()).str());
+	else throw ParseException((bl::format("Unknown background type: \"{1}\"") % bg_type.value()).str());
 
 	//layers
 	for (xml_node xml_layer : xml_page->children("layer"))
@@ -273,8 +269,7 @@ void LoadHandler::parseXmlPageBgSolid(xml_node* xml_bg)
 	else
 	{
 		this->page->setBackgroundType(BACKGROUND_TYPE_NONE);
-		cerr << bl::format("Unknown background type: \"{1}\"")
-				% bg_style.value() << endl;
+		cerr << bl::format("Unknown background type: \"{1}\"") % bg_style.value() << endl;
 	}
 	
 	xml_attribute bg_color = xml_bg->attribute("color");
@@ -282,13 +277,13 @@ void LoadHandler::parseXmlPageBgSolid(xml_node* xml_bg)
 
 	const string bg_color_val = bg_color.value();
 	int color;
-	if		(bg_color_val == "blue")	color = 0xa0e8ff;
-	else if (bg_color_val == "pink")	color = 0xffc0d4;
-	else if (bg_color_val == "green")	color = 0x80FFC0;
-	else if (bg_color_val == "orange")	color = 0xFFC080;
-	else if (bg_color_val == "yellow")	color = 0xFFFF80;
-	else if (bg_color_val == "white")	color = 0xffffff;
-	else								color = parseColor(bg_color_val);
+	if		(bg_color_val == "blue")   color = 0xa0e8ff;
+	else if (bg_color_val == "pink")   color = 0xffc0d4;
+	else if (bg_color_val == "green")  color = 0x80FFC0;
+	else if (bg_color_val == "orange") color = 0xFFC080;
+	else if (bg_color_val == "yellow") color = 0xFFFF80;
+	else if (bg_color_val == "white")  color = 0xffffff;
+	else							   color = parseColor(bg_color_val);
 
 	this->page->setBackgroundColor(color);
 }
@@ -327,8 +322,7 @@ void LoadHandler::parseXmlPageBgPixmap(xml_node* xml_bg)
 
 		if (error)
 		{
-			cerr << bl::format("Could not read image: {1}, Error message: {2}")
-								% fileToLoad % error->message << endl;
+			cerr << bl::format("Could not read image: {1}, Error message: {2}") % fileToLoad % error->message << endl;
 			g_error_free(error);
 		}
 
@@ -336,7 +330,7 @@ void LoadHandler::parseXmlPageBgPixmap(xml_node* xml_bg)
 	}
 	else if (bg_domain == "clone")
 	{
-		PageRef p = doc.getPage(stoi(filename.string()));//TOTEST!!!
+		PageRef p = doc.getPage(stoi(filename.string())); //TOTEST!!!
 
 		if (p.isValid())
 			this->page->setBackgroundImage(p->getBackgroundImage());
@@ -366,8 +360,8 @@ void LoadHandler::parseXmlPageBgPdf(xml_node* xml_bg)
 			xml_attribute bg_domain = xml_bg->attribute("domain");
 			xml_attribute bg_filename = xml_bg->attribute("filename");
 
-			if (bg_domain.empty())		throw ParseException("xournal.page.background(domain)", true);
-			if (bg_filename.empty())	throw ParseException("xournal.page.background(filename)", true);
+			if (bg_domain.empty())   throw ParseException("xournal.page.background(domain)", true);
+			if (bg_filename.empty()) throw ParseException("xournal.page.background(filename)", true);
 			
 			const string bg_domain_val = bg_domain.value();
 			const string bg_filename_val = bg_filename.value();
@@ -404,12 +398,18 @@ void LoadHandler::parseXmlPageBgPdf(xml_node* xml_bg)
 		{
 			doc.readPdf(pdfFilename, false, attachToDocument);
 			if (!doc.getLastErrorMsg().empty())
+			{
 				cerr << bl::format("Error reading PDF: {1}") % doc.getLastErrorMsg() << endl;
+			}
 		}
 		else if (attachToDocument)
+		{
 			this->attachedPdfMissing = true;
+		}
 		else
+		{
 			this->pdfMissing = pdfFilename;
+		}
 	}
 }
 
@@ -502,7 +502,9 @@ void LoadHandler::parseXmlLayerStroke(xml_node* child)
 	{
 		tmp = std::stod(points[i], &ptr);
 		if (ptr != points[i].length())
+		{
 			throw ParseException((bl::format("Stroke point in wrong format: {1}") % points[i]).str());
+		}
 		
 		if (dim == false)
 		{
@@ -512,9 +514,13 @@ void LoadHandler::parseXmlLayerStroke(xml_node* child)
 		else
 		{
 			if (oneWidth)
+			{
 				stroke->addPoint(Point(x, tmp));
+			}
 			else
+			{
 				stroke->addPoint(Point(x, tmp, widths[(i-1)/2+1]));
+			}
 			dim = false;
 		}
 	}
