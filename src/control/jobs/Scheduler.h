@@ -21,10 +21,26 @@
 
 typedef enum
 {
-	JOB_PRIORITY_URGENT, // Rendering current page range
-	JOB_PRIORITY_HIGH,   // Rendering current thumbnail range
-	JOB_PRIORITY_LOW,    // Rendering pages not in current range
-	JOB_PRIORITY_NONE,   // Any other job: load, save, print, ...
+	/**
+	 * Rendering current page range
+	 */
+	JOB_PRIORITY_URGENT,
+
+	/**
+	 * Rendering current thumbnail range
+	 */
+	JOB_PRIORITY_HIGH,
+
+	/**
+	 * Rendering pages not in current range
+	 */
+	JOB_PRIORITY_LOW,
+
+	/**
+	 * Any other job: load, save, print, ...
+	 */
+	JOB_PRIORITY_NONE,
+
 	JOB_N_PRIORITIES
 } JobPriority;
 
@@ -85,7 +101,9 @@ protected:
 
 	GMutex schedulerMutex;
 
-	// this is need to be sure there is no job running if we delete a page, else we may access delete memory...
+	/**
+	 * This is need to be sure there is no job running if we delete a page, else we may access delete memory...
+	 */
 	GMutex jobRunningMutex;
 
 	GQueue queueUrgent;

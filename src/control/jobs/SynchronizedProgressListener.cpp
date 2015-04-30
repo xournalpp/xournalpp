@@ -26,11 +26,13 @@ SynchronizedProgressListener::~SynchronizedProgressListener()
 		g_source_remove(this->maxIdleId);
 		this->maxIdleId = 0;
 	}
+
 	if (this->currentIdleId)
 	{
 		g_source_remove(this->currentIdleId);
 		this->currentIdleId = 0;
 	}
+
 	XOJ_RELEASE_TYPE(SynchronizedProgressListener);
 }
 

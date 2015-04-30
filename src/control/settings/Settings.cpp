@@ -1707,6 +1707,7 @@ SAttribute::SAttribute()
 {
 	XOJ_INIT_TYPE(SAttribute);
 
+	this->dValue = 0;
 	this->iValue = 0;
 	this->type = ATTRIBUTE_TYPE_NONE;
 }

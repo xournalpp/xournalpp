@@ -65,6 +65,14 @@ AS_IF([test "x$enable_call_log" == "xyes"], [
     AC_DEFINE([XOJ_CALL_LOG_ENABLED],[1],[Define to compile with call log])
 ])
 
+dnl Build CppUnit tests instead of xournal application
+AC_ARG_ENABLE([cppunit],
+    AS_HELP_STRING([--enable-cppunit], [Build CppUnit Tests]))
+
+AS_IF([test "x$enable_cppunit" == "xyes"], [
+    AC_DEFINE([XOJ_CPPUNIT],[1],[Build CppUnit test instead of xournalpp application])
+])
+
 AC_MSG_CHECKING([whether Python support is requested])
 AC_ARG_ENABLE([python],
 	AS_HELP_STRING([--enable-python],[Enable python support]),
@@ -92,6 +100,10 @@ AC_MSG_RESULT([$enable_mathtex])
 
 if test "x$enable_os" != "xno"; then
 	pkg_modules="$pkg_modules overlay-scrollbar-0.1 >= 0.1.12"
+fi
+
+if test "x$enable_cppunit" == "xyes"; then
+	pkg_modules="$pkg_modules cppunit >= 1.13-0"
 fi
 
 PKG_CHECK_MODULES(PACKAGE, [$pkg_modules])
@@ -231,6 +243,7 @@ fi
 
 AM_CONDITIONAL([ENABLE_PYTHON],[test "x$enable_python" = "xyes"])
 AM_CONDITIONAL([ENABLE_OS],[test "x$enable_os" = "xyes"])
+AM_CONDITIONAL([XOJ_CPPUNIT],[test "x$enable_cppunit" == "xyes"])
 
 
 dnl Compile with mathtex
@@ -283,7 +296,7 @@ Configuration:
 	Compiler:                  ${CC}
 	Python Plugins Support:    $enable_python
 	Overlay Scrollbar enabled: $enable_os
-	Mathtex enabled:	   $enable_mathtex
+	Mathtex enabled:           $enable_mathtex
 "
 
 

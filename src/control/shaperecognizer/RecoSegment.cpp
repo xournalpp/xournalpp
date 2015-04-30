@@ -44,8 +44,8 @@ Point RecoSegment::calcEdgeIsect(RecoSegment* r2)
 	return Point(x, y);
 }
 
-/*
- * find the geometry of a recognized segment
+/**
+ * Find the geometry of a recognized segment
  */
 void RecoSegment::calcSegmentGeometry(const Point* pt, int start, int end, Inertia* s)
 {

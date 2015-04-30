@@ -27,8 +27,8 @@ public:
 public:
 	Point calcEdgeIsect(RecoSegment* r2);
 
-	/*
-	 * find the geometry of a recognized segment
+	/**
+	 * Find the geometry of a recognized segment
 	 */
 	void calcSegmentGeometry(const Point* pt, int start, int end, Inertia* s);
 

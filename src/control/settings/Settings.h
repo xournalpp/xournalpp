@@ -308,9 +308,17 @@ public:
 
 private:
 
-	Settings(const Settings& settings) { }
+	/**
+	 * Not implemented, do not use
+	 * @param settings
+	 */
+	Settings(const Settings& settings);
 
-	void operator=(const Settings& settings) { }
+	/**
+	 * Not implemented, do not use
+	 * @param settings
+	 */
+	void operator=(const Settings& settings);
 
 private:
 	XOJ_TYPE_ATTRIB;
@@ -318,96 +326,160 @@ private:
 	bool saved;
 	gint timeoutId;
 
-	/** The config filename */
+	/**
+	 *  The config filename
+	 */
 	path filename;
 
 private:
-	// Settings
-	/** The settings tree */
+	/**
+	 * The settings tree
+	 */
 	std::map<string, SElement> data;
 
-	/** Use XInput */
+	/**
+	 *  Use XInput
+	 */
 	bool useXinput;
 
-	/** If there is an XInput device available */
+	/**
+	 *  If there is an XInput device available
+	 */
 	bool canXIput;
 
-	/** Use pen pressure to control stroke width? */
+	/**
+	 *  Use pen pressure to control stroke width?
+	 */
 	bool presureSensitivity;
 
-	/** Ignore core events if XInput is enabled */
+	/**
+	 *  Ignore core events if XInput is enabled
+	 */
 	bool ignoreCoreEvents;
 
-	/** If the sidebar is visible */
+	/**
+	 *  If the sidebar is visible
+	 */
 	bool showSidebar;
 
-	/** The Width of the Sidebar */
+	/**
+	 *  The Width of the Sidebar
+	 */
 	int sidebarWidth;
 
-	/** If the sidebar is on the right */
+	/**
+	 *  If the sidebar is on the right
+	 */
 	bool sidebarOnRight;
 
-	/** Show a better visible cursor for pen */
+	/**
+	 *  Show a better visible cursor for pen
+	 */
 	bool showBigCursor;
 
-	/** Hide the scrollbar */
+	/**
+	 *  Hide the scrollbar
+	 */
 	ScrollbarHideType scrollbarHideType;
 
-	/** The selected Toolbar name */
+	/**
+	 *  The selected Toolbar name
+	 */
 	string selectedToolbar;
 
-	/** The last saved folder */
+	/**
+	 *  The last saved folder
+	 */
 	path lastSavePath;
 
-	/** The last "insert image" folder */
+	/**
+	 *  The last "insert image" folder
+	 */
 	path lastImagePath;
 
-	/** The last used font */
+	/**
+	 * The last used font
+	 */
 	XojFont font;
 
-	/** The display resolution, in pixels per inch */
+	/**
+	 * The display resolution, in pixels per inch
+	 */
 	gint displayDpi;
 
-	/** If the window is maximized */
+	/**
+	 *  If the window is maximized
+	 */
 	bool maximized;
 
-	/** The Main window size */
+	/**
+	 * Width of the main window
+	 */
 	int mainWndWidth;
+
+	/**
+	 * Height of the main window
+	 */
 	int mainWndHeight;
 
-	/** Show Scrollbar on left */
+	/**
+	 * Show the scrollbar on the left side
+	 */
 	bool scrollbarOnLeft;
 
-	/** Displays two pages */
+	/**
+	 *  Displays two pages
+	 */
 	bool showTwoPages;
 
-	/** Sets presentation mode */
+	/**
+	 *  Sets presentation mode
+	 */
 	bool presentationMode;
 
-	/** Automatically load filename.pdf.xoj instead of filename.pdf (true/false) */
+	/**
+	 * Automatically load filename.pdf.xoj instead of filename.pdf (true/false)
+	 */
 	bool autoloadPdfXoj;
 
-	/** Minimum width multiplier */
+	/**
+	 *  Minimum width multiplier
+	 */
 	double widthMinimumMultiplier;
 
-	/** Maximum width multiplier */
+	/**
+	 *  Maximum width multiplier
+	 */
 	double widthMaximumMultiplier;
 
-	/** Automatically save documents for crash recovery each x minutes */
+	/**
+	 * Automatically save documents for crash recovery each x minutes
+	 */
 	int autosaveTimeout;
-	/** Enable automatic save */
+
+	/**
+	 *  Enable automatic save
+	 */
 	bool autosaveEnabled;
 
-	/*  Allow scroll outside the page */
+	/**
+	 * Allow scroll outside the page
+	 */
 	bool addHorizontalSpace, addVerticalSpace;
 
-	/** Apply the xinput fix */
+	/**
+	 * Apply the xinput fix
+	 */
 	bool fixXinput;
 
-	/** Enable Bugfix to prevent crash on GTK 2.18 etc */
+	/**
+	 * Enable Bugfix to prevent crash on GTK 2.18 etc
+	 */
 	bool enableLeafEnterWorkaround;
 
-	/** Default name if you save a new document */
+	/**
+	 * Default name if you save a new document
+	 */
 	string defaultSaveName; //should be string - don't change to path
 
 	/**
@@ -434,10 +506,14 @@ private:
 	 */
 	PageInsertType pageInsertType;
 
-	/** The background color of a new inserted page */
+	/**
+	 * The background color of a new inserted page
+	 */
 	int pageBackgroundColor;
 
-	/** The count of pages which will be cached */
+	/**
+	 *  The count of pages which will be cached
+	 */
 	int pdfPageCacheSize;
 
 	/**
@@ -446,6 +522,8 @@ private:
 	 */
 	int selectionColor;
 
-	/** The page format which are visible */
+	/**
+	 * The page format which are visible
+	 */
 	string visiblePageFormats;
 };

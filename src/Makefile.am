@@ -189,8 +189,17 @@ xournalpp_SOURCES = \
 	undo/UndoRedoHandler.cpp \
 	view/DocumentView.cpp \
 	view/PdfView.cpp \
-	view/TextView.cpp \
+	view/TextView.cpp
+
+
+if XOJ_CPPUNIT
+xournalpp_SOURCES += \
+	test/TestMain.cpp \
+	test/control/LoadHandlerTest.cpp
+else
+xournalpp_SOURCES += \
 	Xournalpp.cpp
+endif
 
 if ENABLE_PYTHON
 xournalpp_SOURCES += \

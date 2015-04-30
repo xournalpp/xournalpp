@@ -93,7 +93,10 @@ bool ExportJob::createSurface(int id, double width, double height)
 	{
 		path filepath = this->filepath.parent_path();
 		filepath /= this->front;
-		if (id != -1) filepath += std::to_string(id);
+		if (id != -1)
+		{
+			filepath += std::to_string(id);
+		}
 		filepath += CONCAT('.', this->back);
 
 		this->surface = cairo_svg_surface_create(filepath.c_str(), width, height);
