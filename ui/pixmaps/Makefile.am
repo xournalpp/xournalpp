@@ -21,7 +21,8 @@ pixmap_DATA = \
 	showtwopages.png \
 	sidebar_bookmarks.svg \
 	sidebar_index.png \
-	sidebar_previews.png \
+	sidebar-layer-preview.svg \
+	sidebar-page-preview.svg \
 	stretch.png \
 	thickness_medium.png \
 	thickness_thick.png \
