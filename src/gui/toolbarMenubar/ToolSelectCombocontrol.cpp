@@ -8,18 +8,19 @@
 #include <glib/gi18n-lib.h>
 
 ToolSelectCombocontrol::ToolSelectCombocontrol(ToolMenuHandler* th, ActionHandler* handler, GladeGui* gui, string id) :
-		ToolButton(handler, gui, id, ACTION_TOOL_SELECT_RECT, GROUP_TOOL, true, "rect-select.png", _("Select Rectangle"))
+		ToolButton(handler, gui, id, ACTION_TOOL_SELECT_RECT, GROUP_TOOL, true, "rect-select.svg", _("Select Rectangle"))
 {
 
 	XOJ_INIT_TYPE(ToolSelectCombocontrol);
 
 	this->labelWidget = NULL;
+	this->iconWidget = NULL;
 
 	GtkWidget* popup = gtk_menu_new();
 
 	GtkWidget* menuItem;
 
-	this->iconSelectRect = gui->loadIconPixbuf("rect-select.png");
+	this->iconSelectRect = gui->loadIconPixbuf("rect-select.svg");
 	this->iconSelectRgion = gui->loadIconPixbuf("lasso.png");
 	this->iconSelectObject = gui->loadIconPixbuf("object-select.png");
 	g_object_ref(this->iconSelectRect);
@@ -30,7 +31,7 @@ ToolSelectCombocontrol::ToolSelectCombocontrol(ToolMenuHandler* th, ActionHandle
 	gtk_container_add(GTK_CONTAINER(popup), menuItem);
 	th->registerMenupoint(menuItem, ACTION_TOOL_SELECT_RECT, GROUP_TOOL);
 	gtk_image_menu_item_set_always_show_image(GTK_IMAGE_MENU_ITEM(menuItem), true);
-	gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuItem), gui->loadIcon("rect-select.png"));
+	gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuItem), gui->loadIcon("rect-select.svg"));
 	gtk_widget_show_all(menuItem);
 
 	menuItem = gtk_image_menu_item_new_with_label(_("Select Region"));

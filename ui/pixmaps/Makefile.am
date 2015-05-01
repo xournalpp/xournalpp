@@ -1,39 +1,47 @@
 
 pixmapdir = $(datadir)/xournalpp/ui/pixmaps
+
+## UPDATE_FILE_LIST_START
+
 pixmap_DATA = \
-	addPage.svg \
-	centerPage.svg \
-	default.png \
-	delPage.svg \
-	documentNew.png \
-	empty.png \
-	fullscreen.png \
-	goto.svg \
-	hand.png \
-	lasso.png \
-	layers.png \
+	circle-draw.svg \
+	ruler.svg \
 	nextAnnotatedPage.png \
-	object-select.png \
-	rect-select.png \
 	pageSpinner.png \
-	ruler.png \
-	shape_recognizer.png \
-	showtwopages.png \
-	sidebar_bookmarks.svg \
-	sidebar_index.png \
-	sidebar-layer-preview.svg \
+	rect-select.svg \
+	stretch.svg \
 	sidebar-page-preview.svg \
-	stretch.png \
-	thickness_medium.png \
-	thickness_thick.png \
-	thickness_thin.png \
-	tool_eraser.png \
-	tool_highlighter.png \
-	tool_image.png \
-	tool_pencil.png \
-	tool_text.png \
+	layer.svg \
+	delPage.svg \
+	object-select.png \
+	showtwopages.svg \
+	sidebar_index.png \
+	thickness_thin.svg \
+	shape_recognizer.svg \
 	xoj.svg \
-	xournalpp.svg
+	tool_text.svg \
+	goto.svg \
+	tool_eraser.png \
+	centerPage.svg \
+	thickness_thick.svg \
+	default.png \
+	xournalpp.svg \
+	rect-draw.svg \
+	hand.png \
+	fullscreen.svg \
+	tool_image.png \
+	addPage.svg \
+	lasso.png \
+	tool_highlighter.png \
+	thickness_medium.svg \
+	xournalpp.png \
+	empty.png \
+	sidebar_bookmarks.svg \
+	documentNew.svg \
+	tool_pencil.png \
+	arrow-draw.svg
+
+## UPDATE_FILE_LIST_END
 
 EXTRA_DIST = ${pixmap_DATA}
 	

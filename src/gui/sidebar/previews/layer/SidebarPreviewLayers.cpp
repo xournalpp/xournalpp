@@ -27,7 +27,7 @@ const char* SidebarPreviewLayers::getIconName()
 {
 	XOJ_CHECK_TYPE(SidebarPreviewLayers);
 
-	return "sidebar-layer-preview.svg";
+	return "layer.svg";
 }
 
 void SidebarPreviewLayers::updatePreviews()
