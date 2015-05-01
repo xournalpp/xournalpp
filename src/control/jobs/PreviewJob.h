@@ -15,12 +15,12 @@
 
 #include <XournalType.h>
 
-class SidebarPreviewPage;
+class SidebarPreviewBaseEntry;
 
 class PreviewJob : public Job
 {
 public:
-	PreviewJob(SidebarPreviewPage* sidebar);
+	PreviewJob(SidebarPreviewBaseEntry* sidebar);
 
 protected:
 	virtual ~PreviewJob();
@@ -35,5 +35,5 @@ public:
 private:
 	XOJ_TYPE_ATTRIB;
 
-	SidebarPreviewPage* sidebarPreview;
+	SidebarPreviewBaseEntry* sidebarPreview;
 };

@@ -1,7 +1,7 @@
 /*
  * Xournal++
  *
- * A Sidebar preview widget
+ * A preview entry in a sidebar
  *
  * @author Xournal++ Team
  * https://github.com/xournalpp/xournalpp
@@ -20,11 +20,11 @@
 
 class SidebarPreviewBase;
 
-class SidebarPreviewPage
+class SidebarPreviewBaseEntry
 {
 public:
-	SidebarPreviewPage(SidebarPreviewBase* sidebar, PageRef page);
-	virtual ~SidebarPreviewPage();
+	SidebarPreviewBaseEntry(SidebarPreviewBase* sidebar, PageRef page);
+	virtual ~SidebarPreviewBaseEntry();
 
 	GtkWidget* getWidget();
 	int getWidth();
@@ -36,8 +36,8 @@ public:
 	void updateSize();
 
 private:
-	static gboolean exposeEventCallback(GtkWidget* widget, GdkEventExpose* event, SidebarPreviewPage* preview);
-	static gboolean mouseButtonPressCallback(GtkWidget* widget, GdkEventButton* event, SidebarPreviewPage* preview);
+	static gboolean exposeEventCallback(GtkWidget* widget, GdkEventExpose* event, SidebarPreviewBaseEntry* preview);
+	static gboolean mouseButtonPressCallback(GtkWidget* widget, GdkEventButton* event, SidebarPreviewBaseEntry* preview);
 
 	void paint();
 

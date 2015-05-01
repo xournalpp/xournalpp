@@ -3,6 +3,7 @@
 #include "control/Control.h"
 #include "control/PdfCache.h"
 #include "../base/SidebarToolbar.h"
+#include "SidebarPreviewPageEntry.h"
 
 SidebarPreviewPages::SidebarPreviewPages(Control* control) : SidebarPreviewBase(control)
 {
@@ -44,7 +45,7 @@ void SidebarPreviewPages::updatePreviews()
 		return;
 	}
 
-	for (SidebarPreviewPage* p : this->previews)
+	for (SidebarPreviewBaseEntry* p : this->previews)
 	{
 		delete p;
 	}
@@ -52,7 +53,7 @@ void SidebarPreviewPages::updatePreviews()
 
 	for (int i = 0; i < len; i++)
 	{
-		SidebarPreviewPage* p = new SidebarPreviewPage(this, doc->getPage(i));
+		SidebarPreviewBaseEntry* p = new SidebarPreviewPageEntry(this, doc->getPage(i));
 		this->previews.push_back(p);
 		gtk_layout_put(GTK_LAYOUT(this->iconViewPreview), p->getWidget(), 0, 0);
 	}
@@ -70,7 +71,7 @@ void SidebarPreviewPages::pageSizeChanged(int page)
 	{
 		return;
 	}
-	SidebarPreviewPage* p = this->previews[page];
+	SidebarPreviewBaseEntry* p = this->previews[page];
 	p->updateSize();
 	p->repaint();
 
@@ -86,7 +87,7 @@ void SidebarPreviewPages::pageChanged(int page)
 		return;
 	}
 
-	SidebarPreviewPage* p = this->previews[page];
+	SidebarPreviewBaseEntry* p = this->previews[page];
 	p->repaint();
 }
 
@@ -108,7 +109,7 @@ void SidebarPreviewPages::pageInserted(int page)
 	Document* doc = control->getDocument();
 	doc->lock();
 
-	SidebarPreviewPage* p = new SidebarPreviewPage(this, doc->getPage(page));
+	SidebarPreviewBaseEntry* p = new SidebarPreviewPageEntry(this, doc->getPage(page));
 
 	doc->unlock();
 
@@ -131,7 +132,7 @@ void SidebarPreviewPages::pageSelected(int page)
 
 	if (this->selectedEntry >= 0 && this->selectedEntry < this->previews.size())
 	{
-		SidebarPreviewPage* p = this->previews[this->selectedEntry];
+		SidebarPreviewBaseEntry* p = this->previews[this->selectedEntry];
 		p->setSelected(true);
 		scrollToPreview(this);
 

@@ -13,7 +13,7 @@
 
 #pragma once
 
-#include "gui/sidebar/previews/base/SidebarPreviewPage.h"
+#include "gui/sidebar/previews/page/SidebarPreviewPageEntry.h"
 #include "gui/PageView.h"
 #include "Scheduler.h"
 
@@ -28,11 +28,11 @@ public:
 	/**
 	 * Remove source, e.g. if a page is removed they don't need to repaint
 	 */
-	void removeSidebar(SidebarPreviewPage* preview);
+	void removeSidebar(SidebarPreviewBaseEntry* preview);
 	void removePage(PageView* view);
 	void removeAllJobs();
 
-	void addRepaintSidebar(SidebarPreviewPage* preview);
+	void addRepaintSidebar(SidebarPreviewBaseEntry* preview);
 	void addRerenderPage(PageView* view);
 
 	void finishTask();

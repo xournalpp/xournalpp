@@ -2,10 +2,12 @@
 
 #include "control/Control.h"
 #include "control/PdfCache.h"
+#include "SidebarPreviewLayerEntry.h"
 
 SidebarPreviewLayers::SidebarPreviewLayers(Control* control) : SidebarPreviewBase(control)
 {
 	XOJ_INIT_TYPE(SidebarPreviewLayers);
+	displayedPage = -1;
 }
 
 SidebarPreviewLayers::~SidebarPreviewLayers()
@@ -32,25 +34,63 @@ void SidebarPreviewLayers::updatePreviews()
 {
 	XOJ_CHECK_TYPE(SidebarPreviewLayers);
 
-	// TODO Update previews
+	// clear old previews
+	for (SidebarPreviewBaseEntry* p : this->previews)
+	{
+		delete p;
+	}
+	this->previews.clear();
+
+	Document* doc = this->getControl()->getDocument();
+	doc->lock();
+
+	int len = doc->getPageCount();
+	if (displayedPage < 0 || displayedPage >= len)
+	{
+		doc->unlock();
+		return;
+	}
+
+	PageRef page = doc->getPage(displayedPage);
+
+	for (int i = 0; i < page->getLayerCount(); i++)
+	{
+		// TODO !!!!!
+		SidebarPreviewBaseEntry* p = new SidebarPreviewLayerEntry(this, page);
+		this->previews.push_back(p);
+		gtk_layout_put(GTK_LAYOUT(this->iconViewPreview), p->getWidget(), 0, 0);
+	}
+
+	layout();
+	doc->unlock();
 }
 
 void SidebarPreviewLayers::pageSelected(int page)
 {
 	XOJ_CHECK_TYPE(SidebarPreviewLayers);
 
-	// TODO Update previews
+	displayedPage = page;
+	updatePreviews();
 }
 
 void SidebarPreviewLayers::pageSizeChanged(int page)
 {
 	XOJ_CHECK_TYPE(SidebarPreviewLayers);
-	// TODO Update previews
+
+	if (displayedPage == page)
+	{
+		updatePreviews();
+	}
 }
 
 void SidebarPreviewLayers::pageChanged(int page)
 {
 	XOJ_CHECK_TYPE(SidebarPreviewLayers);
-	// TODO Update previews
 
+
+	if (displayedPage == page)
+	{
+		// TODO DO IN JOB
+		//updatePreviews();
+	}
 }

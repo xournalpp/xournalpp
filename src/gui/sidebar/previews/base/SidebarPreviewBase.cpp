@@ -3,7 +3,7 @@
 #include "control/Control.h"
 #include "control/PdfCache.h"
 #include "SidebarLayout.h"
-#include "SidebarPreviewPage.h"
+#include "SidebarPreviewBaseEntry.h"
 #include "SidebarToolbar.h"
 
 SidebarPreviewBase::SidebarPreviewBase(Control* control) : AbstractSidebarPage(control)
@@ -66,7 +66,7 @@ SidebarPreviewBase::~SidebarPreviewBase()
 
 	g_object_unref(this->table);
 
-	for (SidebarPreviewPage* p : this->previews)
+	for (SidebarPreviewBaseEntry* p : this->previews)
 	{
 		delete p;
 	}
@@ -169,7 +169,7 @@ bool SidebarPreviewBase::scrollToPreview(SidebarPreviewBase* sidebar)
 		sidebar->selectedEntry < sidebar->previews.size())
 	{
 		gdk_threads_enter();
-		SidebarPreviewPage* p = sidebar->previews[sidebar->selectedEntry];
+		SidebarPreviewBaseEntry* p = sidebar->previews[sidebar->selectedEntry];
 
 		// scroll to preview
 		GtkAdjustment* hadj = gtk_scrolled_window_get_hadjustment(GTK_SCROLLED_WINDOW(sidebar->scrollPreview));

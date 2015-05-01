@@ -1,7 +1,9 @@
 #include "SidebarLayout.h"
 
-#include "SidebarPreviewPage.h"
+#include "SidebarPreviewBaseEntry.h"
 #include "SidebarPreviewBase.h"
+
+#include <list>
 
 SidebarLayout::SidebarLayout()
 {
@@ -20,7 +22,6 @@ public:
 	SidebarRow(int width)
 	{
 		this->width = width;
-		this->list = NULL;
 		this->currentWidth = 0;
 	}
 
@@ -30,9 +31,9 @@ public:
 	}
 
 public:
-	bool isSpaceFor(SidebarPreviewPage* p)
+	bool isSpaceFor(SidebarPreviewBaseEntry* p)
 	{
-		if (this->list == NULL)
+		if (this->list.size() == 0)
 		{
 			return true;
 		}
@@ -44,22 +45,21 @@ public:
 		return false;
 	}
 
-	void add(SidebarPreviewPage* p)
+	void add(SidebarPreviewBaseEntry* p)
 	{
-		this->list = g_list_append(this->list, p);
+		this->list.push_back(p);
 		this->currentWidth += p->getWidth();
 	}
 
 	void clear()
 	{
-		g_list_free(this->list);
-		this->list = NULL;
+		this->list.clear();
 		this->currentWidth = 0;
 	}
 
 	int getCount()
 	{
-		return g_list_length(this->list);
+		return this->list.size();
 	}
 
 	int getWidth()
@@ -72,17 +72,14 @@ public:
 		int height = 0;
 		int x = 0;
 
-		for (GList* l = this->list; l != NULL; l = l->next)
+		for (SidebarPreviewBaseEntry* p : this->list)
 		{
-			SidebarPreviewPage* p = (SidebarPreviewPage*) l->data;
 			height = MAX(height, p->getHeight());
 		}
 
 
-		for (GList* l = this->list; l != NULL; l = l->next)
+		for (SidebarPreviewBaseEntry* p : this->list)
 		{
-			SidebarPreviewPage* p = (SidebarPreviewPage*) l->data;
-
 			int currentY = (height - p->getHeight()) / 2;
 
 			gtk_layout_move(layout, p->getWidget(), x, y + currentY);
@@ -98,7 +95,7 @@ private:
 	int width;
 	int currentWidth;
 
-	GList* list;
+	std::list<SidebarPreviewBaseEntry*> list;
 };
 
 void SidebarLayout::layout(SidebarPreviewBase* sidebar)
@@ -112,7 +109,7 @@ void SidebarLayout::layout(SidebarPreviewBase* sidebar)
 
 	SidebarRow row(alloc.width);
 
-	for (SidebarPreviewPage* p : sidebar->previews)
+	for (SidebarPreviewBaseEntry* p : sidebar->previews)
 	{
 		if (row.isSpaceFor(p))
 		{

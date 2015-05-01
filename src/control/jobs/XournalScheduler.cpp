@@ -14,7 +14,7 @@ XournalScheduler::~XournalScheduler()
 	XOJ_RELEASE_TYPE(XournalScheduler);
 }
 
-void XournalScheduler::removeSidebar(SidebarPreviewPage* preview)
+void XournalScheduler::removeSidebar(SidebarPreviewBaseEntry* preview)
 {
 	XOJ_CHECK_TYPE(XournalScheduler);
 
@@ -120,7 +120,7 @@ bool XournalScheduler::existsSource(void* source, JobType type, JobPriority prio
 	return exists;
 }
 
-void XournalScheduler::addRepaintSidebar(SidebarPreviewPage* preview)
+void XournalScheduler::addRepaintSidebar(SidebarPreviewBaseEntry* preview)
 {
 	XOJ_CHECK_TYPE(XournalScheduler);
 

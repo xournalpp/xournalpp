@@ -102,7 +102,7 @@ XOJ_DECLARE_TYPE(SettingsDialog, 90);
 XOJ_DECLARE_TYPE(PagePositionHandler, 91);
 XOJ_DECLARE_TYPE(PagePositionCache, 92);
 XOJ_DECLARE_TYPE(PagePosition, 93);
-XOJ_DECLARE_TYPE(SidebarPreviewPage, 94);
+XOJ_DECLARE_TYPE(SidebarPreviewBaseEntry, 94);
 XOJ_DECLARE_TYPE(Sidebar, 95);
 XOJ_DECLARE_TYPE(ToolbarModel, 96);
 XOJ_DECLARE_TYPE(ToolbarData, 97);
@@ -209,5 +209,8 @@ XOJ_DECLARE_TYPE(ToolDrawCombocontrol, 200);
 XOJ_DECLARE_TYPE(DoubleArrayBuffer, 201);
 XOJ_DECLARE_TYPE(SidebarPreviewPages, 202);
 XOJ_DECLARE_TYPE(SidebarPreviewLayers, 203);
+XOJ_DECLARE_TYPE(SidebarPreviewPageEntry, 204);
+XOJ_DECLARE_TYPE(SidebarPreviewLayerEntry, 205);
 
-//XOJ_DECLARE_TYPE(XXXXXXXXXXXXXXXX, 203);
+
+//XOJ_DECLARE_TYPE(XXXXXXXXXXXXXXXX, 206);

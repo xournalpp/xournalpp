@@ -21,7 +21,7 @@
 
 class PdfCache;
 class SidebarLayout;
-class SidebarPreviewPage;
+class SidebarPreviewBaseEntry;
 class SidebarToolbar;
 
 class SidebarPreviewBase : public AbstractSidebarPage
@@ -139,7 +139,7 @@ protected:
 	/**
 	 * The previews
 	 */
-	std::vector<SidebarPreviewPage*> previews;
+	std::vector<SidebarPreviewBaseEntry*> previews;
 
 	friend class SidebarLayout;
 };

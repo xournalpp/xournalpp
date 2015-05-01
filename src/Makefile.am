@@ -90,9 +90,11 @@ xournalpp_SOURCES = \
 	gui/sidebar/indextree/SidebarIndexPage.cpp \
 	gui/sidebar/previews/base/SidebarLayout.cpp \
 	gui/sidebar/previews/base/SidebarPreviewBase.cpp \
-	gui/sidebar/previews/base/SidebarPreviewPage.cpp \
+	gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp \
 	gui/sidebar/previews/base/SidebarToolbar.cpp \
+	gui/sidebar/previews/layer/SidebarPreviewLayerEntry.cpp \
 	gui/sidebar/previews/layer/SidebarPreviewLayers.cpp \
+	gui/sidebar/previews/page/SidebarPreviewPageEntry.cpp \
 	gui/sidebar/previews/page/SidebarPreviewPages.cpp \
 	gui/toolbarMenubar/model/ToolbarColorNames.cpp \
 	gui/toolbarMenubar/model/ToolbarData.cpp \

@@ -47,4 +47,9 @@ public:
 
 private:
 	XOJ_TYPE_ATTRIB;
+
+	/**
+	 * The layers of this page are displayed
+	 */
+	int displayedPage;
 };

@@ -2,13 +2,13 @@
 
 #include "control/Control.h"
 #include "gui/Shadow.h"
-#include "gui/sidebar/previews/base/SidebarPreviewPage.h"
+#include "gui/sidebar/previews/base/SidebarPreviewBaseEntry.h"
 #include "gui/sidebar/previews/base/SidebarPreviewBase.h"
 #include "model/Document.h"
 #include "view/PdfView.h"
 #include "view/DocumentView.h"
 
-PreviewJob::PreviewJob(SidebarPreviewPage* sidebar)
+PreviewJob::PreviewJob(SidebarPreviewBaseEntry* sidebar)
 {
 	XOJ_INIT_TYPE(PreviewJob);
 
