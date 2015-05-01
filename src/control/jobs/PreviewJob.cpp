@@ -2,8 +2,8 @@
 
 #include "control/Control.h"
 #include "gui/Shadow.h"
-#include "gui/sidebar/previews/SidebarPreviewPage.h"
-#include "gui/sidebar/previews/SidebarPreviews.h"
+#include "gui/sidebar/previews/base/SidebarPreviewPage.h"
+#include "gui/sidebar/previews/base/SidebarPreviewBase.h"
 #include "model/Document.h"
 #include "view/PdfView.h"
 #include "view/DocumentView.h"

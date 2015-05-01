@@ -1,7 +1,7 @@
 /*
  * Xournal++
  *
- * The previes within the sidebar, with a Toolbar
+ * Base class for prviews in the sidebar
  *
  * @author Xournal++ Team
  * https://github.com/xournalpp/xournalpp
@@ -22,11 +22,11 @@ class SidebarLayout;
 class SidebarPreviewPage;
 class SidebarToolbar;
 
-class SidebarPreviews : public AbstractSidebarPage
+class SidebarPreviewBase : public AbstractSidebarPage
 {
 public:
-	SidebarPreviews(Control* control);
-	virtual ~SidebarPreviews();
+	SidebarPreviewBase(Control* control);
+	virtual ~SidebarPreviewBase();
 
 public:
 	/**
@@ -38,16 +38,6 @@ public:
 	 * Update the preview images
 	 */
 	void updatePreviews();
-
-	/**
-	 * @overwrite
-	 */
-	virtual const char* getName();
-
-	/**
-	 * @overwrite
-	 */
-	virtual const char* getIconName();
 
 	/**
 	 * @overwrite
@@ -87,12 +77,12 @@ private:
 	/**
 	 * Timeout callback to scroll to a page
 	 */
-	static bool scrollToPreview(SidebarPreviews* sidebar);
+	static bool scrollToPreview(SidebarPreviewBase* sidebar);
 
 	/**
 	 * The size of the sidebar has chnaged
 	 */
-	static void sizeChanged(GtkWidget* widget, GtkAllocation* allocation, SidebarPreviews* sidebar);
+	static void sizeChanged(GtkWidget* widget, GtkAllocation* allocation, SidebarPreviewBase* sidebar);
 private:
 	XOJ_TYPE_ATTRIB;
 

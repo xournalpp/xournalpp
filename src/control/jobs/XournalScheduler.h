@@ -13,7 +13,7 @@
 
 #pragma once
 
-#include "gui/sidebar/previews/SidebarPreviewPage.h"
+#include "gui/sidebar/previews/base/SidebarPreviewPage.h"
 #include "gui/PageView.h"
 #include "Scheduler.h"
 

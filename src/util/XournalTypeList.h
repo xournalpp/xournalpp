@@ -193,7 +193,7 @@ XOJ_DECLARE_TYPE(GotoDialog, 183);
 XOJ_DECLARE_TYPE(ToolbarColorNames, 184);
 XOJ_DECLARE_TYPE(SidebarLayout, 185);
 XOJ_DECLARE_TYPE(SidebarToolbar, 186);
-XOJ_DECLARE_TYPE(SidebarPreviews, 187);
+XOJ_DECLARE_TYPE(SidebarPreviewBase, 187);
 XOJ_DECLARE_TYPE(AbstractSidebarPage, 188);
 XOJ_DECLARE_TYPE(TextBoxUndoAction, 189);
 XOJ_DECLARE_TYPE(LatexGlade, 190);
@@ -207,5 +207,7 @@ XOJ_DECLARE_TYPE(PageHandler, 198);
 XOJ_DECLARE_TYPE(PageListener, 199);
 XOJ_DECLARE_TYPE(ToolDrawCombocontrol, 200);
 XOJ_DECLARE_TYPE(DoubleArrayBuffer, 201);
+XOJ_DECLARE_TYPE(SidebarPreviewPages, 202);
+XOJ_DECLARE_TYPE(SidebarPreviewLayers, 203);
 
 //XOJ_DECLARE_TYPE(XXXXXXXXXXXXXXXX, 203);

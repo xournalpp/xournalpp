@@ -18,12 +18,12 @@
 
 #include <gtk/gtk.h>
 
-class SidebarPreviews;
+class SidebarPreviewBase;
 
 class SidebarPreviewPage
 {
 public:
-	SidebarPreviewPage(SidebarPreviews* sidebar, PageRef page);
+	SidebarPreviewPage(SidebarPreviewBase* sidebar, PageRef page);
 	virtual ~SidebarPreviewPage();
 
 	GtkWidget* getWidget();
@@ -57,7 +57,7 @@ private:
 	/**
 	 * The sidebar which displays the previews
 	 */
-	SidebarPreviews* sidebar;
+	SidebarPreviewBase* sidebar;
 
 	/**
 	 * The page which is representated

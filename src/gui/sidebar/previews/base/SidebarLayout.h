@@ -15,7 +15,7 @@
 
 #include <gtk/gtk.h>
 
-class SidebarPreviews;
+class SidebarPreviewBase;
 
 class SidebarLayout
 {
@@ -27,7 +27,7 @@ public:
 	/**
 	 * Layouts the sidebar
 	 */
-	void layout(SidebarPreviews* sidebar);
+	void layout(SidebarPreviewBase* sidebar);
 
 private:
 	XOJ_TYPE_ATTRIB;

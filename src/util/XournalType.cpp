@@ -28,6 +28,10 @@ GMutex* mutex = NULL;
 static void initXournalClassList()
 {
 	xojTypeList[0] = "Invalid_type";
+
+	// DO NOT REMOVE OR MOVE THIS INCLUDE!
+	// It has to be included exactly here, else the macros are not working
+	#include "XournalTypeList.h"
 }
 
 void xoj_type_initMutex()
@@ -53,7 +57,14 @@ const char* xoj_type_getName(int id)
 		id = -id;
 	}
 
-	return xojTypeList[id];
+	const char* typeName = xojTypeList[id];
+
+	if (typeName == NULL)
+	{
+		g_warning("Type check: name of id %i is NULL!", id);
+	}
+
+	return typeName;
 }
 
 #ifdef XOJ_MEMORY_LEAK_CHECK_ENABLED
@@ -102,6 +113,6 @@ void xoj_momoryleak_printRemainingObjects()
 	cout << bl::format("MemoryLeak: sum {1} objects.") % sum << endl;
 }
 
-#endif
+#endif //XOJ_MEMORY_LEAK_CHECK_ENABLED
 
-#endif
+#endif // XOJ_MEMORY_CHECK_ENABLED

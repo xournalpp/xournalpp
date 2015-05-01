@@ -1,4 +1,4 @@
-#include "SidebarPreviews.h"
+#include "SidebarPreviewBase.h"
 
 #include "control/Control.h"
 #include "control/PdfCache.h"
@@ -6,9 +6,9 @@
 #include "SidebarPreviewPage.h"
 #include "SidebarToolbar.h"
 
-SidebarPreviews::SidebarPreviews(Control* control) : AbstractSidebarPage(control)
+SidebarPreviewBase::SidebarPreviewBase(Control* control) : AbstractSidebarPage(control)
 {
-	XOJ_INIT_TYPE(SidebarPreviews);
+	XOJ_INIT_TYPE(SidebarPreviewBase);
 
 	this->previews = NULL;
 	this->previewCount = 0;
@@ -50,9 +50,9 @@ SidebarPreviews::SidebarPreviews(Control* control) : AbstractSidebarPage(control
 					 (GtkAttachOptions) (GTK_FILL | GTK_EXPAND), GTK_FILL, 0, 0);
 }
 
-SidebarPreviews::~SidebarPreviews()
+SidebarPreviewBase::~SidebarPreviewBase()
 {
-	XOJ_CHECK_TYPE(SidebarPreviews);
+	XOJ_CHECK_TYPE(SidebarPreviewBase);
 
 	gtk_widget_destroy(this->iconViewPreview);
 	this->iconViewPreview = NULL;
@@ -76,12 +76,12 @@ SidebarPreviews::~SidebarPreviews()
 	this->previewCount = 0;
 	this->previews = NULL;
 
-	XOJ_RELEASE_TYPE(SidebarPreviews);
+	XOJ_RELEASE_TYPE(SidebarPreviewBase);
 }
 
-void SidebarPreviews::sizeChanged(GtkWidget* widget, GtkAllocation* allocation, SidebarPreviews* sidebar)
+void SidebarPreviewBase::sizeChanged(GtkWidget* widget, GtkAllocation* allocation, SidebarPreviewBase* sidebar)
 {
-	XOJ_CHECK_TYPE_OBJ(sidebar, SidebarPreviews);
+	XOJ_CHECK_TYPE_OBJ(sidebar, SidebarPreviewBase);
 
 	static int lastWidth = -1;
 
@@ -97,9 +97,9 @@ void SidebarPreviews::sizeChanged(GtkWidget* widget, GtkAllocation* allocation, 
 	}
 }
 
-void SidebarPreviews::setBackgroundWhite()
+void SidebarPreviewBase::setBackgroundWhite()
 {
-	XOJ_CHECK_TYPE(SidebarPreviews);
+	XOJ_CHECK_TYPE(SidebarPreviewBase);
 
 	if (this->backgroundInitialized)
 	{
@@ -110,30 +110,30 @@ void SidebarPreviews::setBackgroundWhite()
 	gdk_window_set_background(GTK_LAYOUT(this->iconViewPreview)->bin_window, &this->iconViewPreview->style->white);
 }
 
-double SidebarPreviews::getZoom()
+double SidebarPreviewBase::getZoom()
 {
-	XOJ_CHECK_TYPE(SidebarPreviews);
+	XOJ_CHECK_TYPE(SidebarPreviewBase);
 
 	return this->zoom;
 }
 
-PdfCache* SidebarPreviews::getCache()
+PdfCache* SidebarPreviewBase::getCache()
 {
-	XOJ_CHECK_TYPE(SidebarPreviews);
+	XOJ_CHECK_TYPE(SidebarPreviewBase);
 
 	return this->cache;
 }
 
-void SidebarPreviews::layout()
+void SidebarPreviewBase::layout()
 {
-	XOJ_CHECK_TYPE(SidebarPreviews);
+	XOJ_CHECK_TYPE(SidebarPreviewBase);
 
 	this->layoutmanager->layout(this);
 }
 
-void SidebarPreviews::updatePreviews()
+void SidebarPreviewBase::updatePreviews()
 {
-	XOJ_CHECK_TYPE(SidebarPreviews);
+	XOJ_CHECK_TYPE(SidebarPreviewBase);
 
 	Document* doc = this->getControl()->getDocument();
 	doc->lock();
@@ -168,37 +168,23 @@ void SidebarPreviews::updatePreviews()
 	doc->unlock();
 }
 
-const char* SidebarPreviews::getName()
+bool SidebarPreviewBase::hasData()
 {
-	XOJ_CHECK_TYPE(SidebarPreviews);
-
-	return _("Preview");
-}
-
-const char* SidebarPreviews::getIconName()
-{
-	XOJ_CHECK_TYPE(SidebarPreviews);
-
-	return "sidebar_previews.png";
-}
-
-bool SidebarPreviews::hasData()
-{
-	XOJ_CHECK_TYPE(SidebarPreviews);
+	XOJ_CHECK_TYPE(SidebarPreviewBase);
 
 	return true;
 }
 
-GtkWidget* SidebarPreviews::getWidget()
+GtkWidget* SidebarPreviewBase::getWidget()
 {
-	XOJ_CHECK_TYPE(SidebarPreviews);
+	XOJ_CHECK_TYPE(SidebarPreviewBase);
 
 	return GTK_WIDGET(this->table);
 }
 
-void SidebarPreviews::documentChanged(DocumentChangeType type)
+void SidebarPreviewBase::documentChanged(DocumentChangeType type)
 {
-	XOJ_CHECK_TYPE(SidebarPreviews);
+	XOJ_CHECK_TYPE(SidebarPreviewBase);
 
 	if (type == DOCUMENT_CHANGE_COMPLETE || type == DOCUMENT_CHANGE_CLEARED)
 	{
@@ -206,9 +192,9 @@ void SidebarPreviews::documentChanged(DocumentChangeType type)
 	}
 }
 
-void SidebarPreviews::pageSizeChanged(int page)
+void SidebarPreviewBase::pageSizeChanged(int page)
 {
-	XOJ_CHECK_TYPE(SidebarPreviews);
+	XOJ_CHECK_TYPE(SidebarPreviewBase);
 
 	if (page < 0 || page >= this->previewCount)
 	{
@@ -221,9 +207,9 @@ void SidebarPreviews::pageSizeChanged(int page)
 	layout();
 }
 
-void SidebarPreviews::pageChanged(int page)
+void SidebarPreviewBase::pageChanged(int page)
 {
-	XOJ_CHECK_TYPE(SidebarPreviews);
+	XOJ_CHECK_TYPE(SidebarPreviewBase);
 
 	if (page < 0 || page >= this->previewCount)
 	{
@@ -234,9 +220,9 @@ void SidebarPreviews::pageChanged(int page)
 	p->repaint();
 }
 
-bool SidebarPreviews::scrollToPreview(SidebarPreviews* sidebar)
+bool SidebarPreviewBase::scrollToPreview(SidebarPreviewBase* sidebar)
 {
-	XOJ_CHECK_TYPE_OBJ(sidebar, SidebarPreviews);
+	XOJ_CHECK_TYPE_OBJ(sidebar, SidebarPreviewBase);
 
 	MainWindow* win = sidebar->control->getWindow();
 	if (win)
@@ -277,9 +263,9 @@ bool SidebarPreviews::scrollToPreview(SidebarPreviews* sidebar)
 	return false;
 }
 
-void SidebarPreviews::pageDeleted(int page)
+void SidebarPreviewBase::pageDeleted(int page)
 {
-	XOJ_CHECK_TYPE(SidebarPreviews);
+	XOJ_CHECK_TYPE(SidebarPreviewBase);
 
 	delete this->previews[page];
 	for (int i = page; i < this->previewCount - 1; i++)
@@ -292,9 +278,9 @@ void SidebarPreviews::pageDeleted(int page)
 	layout();
 }
 
-void SidebarPreviews::pageInserted(int page)
+void SidebarPreviewBase::pageInserted(int page)
 {
-	XOJ_CHECK_TYPE(SidebarPreviews);
+	XOJ_CHECK_TYPE(SidebarPreviewBase);
 
 	SidebarPreviewPage** lastPreviews = this->previews;
 
@@ -335,9 +321,9 @@ void SidebarPreviews::pageInserted(int page)
 	layout();
 }
 
-void SidebarPreviews::pageSelected(int page)
+void SidebarPreviewBase::pageSelected(int page)
 {
-	XOJ_CHECK_TYPE(SidebarPreviews);
+	XOJ_CHECK_TYPE(SidebarPreviewBase);
 
 	if (this->selectedPage >= 0 && this->selectedPage < this->previewCount)
 	{

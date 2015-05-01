@@ -18,6 +18,8 @@
 
 #include <gtk/gtk.h>
 
+#include <list>
+
 class AbstractSidebarPage;
 class Control;
 class GladeGui;
@@ -92,7 +94,7 @@ private:
 	/**
 	 * The sidebar pages
 	 */
-	GList* pages;
+	std::list<AbstractSidebarPage*> pages;
 
 	/**
 	 * The Toolbar with the pages

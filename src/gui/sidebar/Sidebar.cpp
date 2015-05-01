@@ -6,7 +6,8 @@
 #include "indextree/SidebarIndexPage.h"
 #include "model/Document.h"
 #include "model/XojPage.h"
-#include "previews/SidebarPreviews.h"
+#include "previews/page/SidebarPreviewPages.h"
+#include "previews/layer/SidebarPreviewLayers.h"
 
 #include <config.h>
 
@@ -19,7 +20,6 @@ Sidebar::Sidebar(GladeGui* gui, Control* control)
 	XOJ_INIT_TYPE(Sidebar);
 
 	this->control = control;
-	this->pages = NULL;
 	this->tbSelectPage = GTK_TOOLBAR(gui->get("tbSelectSidebarPage"));
 	this->buttonCloseSidebar = gui->get("buttonCloseSidebar");
 	this->visiblePage = NULL;
@@ -40,14 +40,14 @@ void Sidebar::initPages(GtkWidget* sidebar, GladeGui* gui)
 	XOJ_CHECK_TYPE(Sidebar);
 
 	addPage(new SidebarIndexPage(this->control));
-	addPage(new SidebarPreviews(this->control));
+	addPage(new SidebarPreviewPages(this->control));
+	addPage(new SidebarPreviewLayers(this->control));
 
 	// Init toolbar with icons
 
 	int i = 0;
-	for (GList* l = this->pages; l != NULL; l = l->next)
+	for (AbstractSidebarPage* p : this->pages)
 	{
-		AbstractSidebarPage* p = (AbstractSidebarPage*) l->data;
 		GtkToolItem* it = gtk_toggle_tool_button_new();
 		p->tabButton = it;
 
@@ -90,7 +90,7 @@ void Sidebar::addPage(AbstractSidebarPage* page)
 {
 	XOJ_CHECK_TYPE(Sidebar);
 
-	this->pages = g_list_append(this->pages, page);
+	this->pages.push_back(page);
 }
 
 Sidebar::~Sidebar()
@@ -99,13 +99,11 @@ Sidebar::~Sidebar()
 
 	this->control = NULL;
 
-	for (GList* l = this->pages; l != NULL; l = l->next)
+	for (AbstractSidebarPage* p : this->pages)
 	{
-		AbstractSidebarPage* p = (AbstractSidebarPage*) l->data;
 		delete p;
 	}
-	g_list_free(this->pages);
-	this->pages = NULL;
+	this->pages.clear();
 
 	this->sidebar = NULL;
 
@@ -116,28 +114,26 @@ void Sidebar::selectPageNr(int page, int pdfPage)
 {
 	XOJ_CHECK_TYPE(Sidebar);
 
-	for (GList* l = this->pages; l != NULL; l = l->next)
+	for (AbstractSidebarPage* p : this->pages)
 	{
-		AbstractSidebarPage* p = (AbstractSidebarPage*) l->data;
 		p->selectPageNr(page, pdfPage);
 	}
 }
 
 void Sidebar::setSelectedPage(int page)
 {
+	XOJ_CHECK_TYPE(Sidebar);
+
+	this->visiblePage = NULL;
+
 	int i = 0;
-
-	AbstractSidebarPage* currentPage = (AbstractSidebarPage*) g_list_nth(this->pages, page)->data;
-	this->visiblePage = currentPage->getWidget();
-
-	for (GList* l = this->pages; l != NULL; l = l->next)
+	for (AbstractSidebarPage* p : this->pages)
 	{
-		AbstractSidebarPage* p = (AbstractSidebarPage*) l->data;
-
 		if (page == i)
 		{
 			gtk_widget_show(p->getWidget());
 			gtk_toggle_tool_button_set_active(GTK_TOGGLE_TOOL_BUTTON(p->tabButton), true);
+			this->visiblePage = p->getWidget();
 		}
 		else
 		{
@@ -151,13 +147,13 @@ void Sidebar::setSelectedPage(int page)
 
 void Sidebar::updateEnableDisableButtons()
 {
+	XOJ_CHECK_TYPE(Sidebar);
+
 	int i = 0;
 	int selected = -1;
 
-	for (GList* l = this->pages; l != NULL; l = l->next)
+	for (AbstractSidebarPage* p : this->pages)
 	{
-		AbstractSidebarPage* p = (AbstractSidebarPage*) l->data;
-
 		gtk_widget_set_sensitive(GTK_WIDGET(p->tabButton), p->hasData());
 
 		if (p->hasData() && selected == -1)
@@ -178,9 +174,8 @@ void Sidebar::setTmpDisabled(bool disabled)
 	gtk_widget_set_sensitive(this->buttonCloseSidebar, !disabled);
 	gtk_widget_set_sensitive(GTK_WIDGET(this->tbSelectPage), !disabled);
 
-	for (GList* l = this->pages; l != NULL; l = l->next)
+	for (AbstractSidebarPage* p : this->pages)
 	{
-		AbstractSidebarPage* p = (AbstractSidebarPage*) l->data;
 		p->setTmpDisabled(disabled);
 	}
 
@@ -214,15 +209,25 @@ void Sidebar::documentChanged(DocumentChangeType type)
 	}
 }
 
-void Sidebar::pageSizeChanged(int page) { }
+void Sidebar::pageSizeChanged(int page)
+{
+}
 
-void Sidebar::pageChanged(int page) { }
+void Sidebar::pageChanged(int page)
+{
+}
 
-void Sidebar::pageInserted(int page) { }
+void Sidebar::pageInserted(int page)
+{
+}
 
-void Sidebar::pageDeleted(int page) { }
+void Sidebar::pageDeleted(int page)
+{
+}
 
-void Sidebar::pageSelected(int page) { }
+void Sidebar::pageSelected(int page)
+{
+}
 
 SidebarPageButton::SidebarPageButton(Sidebar* sidebar, int index, AbstractSidebarPage* page)
 {
