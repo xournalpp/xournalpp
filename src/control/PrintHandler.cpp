@@ -1,8 +1,10 @@
+#include "PrintHandler.h"
+
+#include "Util.h"
+
 #include "control/settings/Settings.h"
 #include "model/Document.h"
-#include "PrintHandler.h"
 #include "view/DocumentView.h"
-#include "Util.h"
 
 #include <math.h>
 

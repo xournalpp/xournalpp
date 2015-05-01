@@ -12,7 +12,6 @@
 #pragma once
 
 #include "PdfXRef.h"
-
 #include <StringUtils.h>
 
 #include <gtk/gtk.h>

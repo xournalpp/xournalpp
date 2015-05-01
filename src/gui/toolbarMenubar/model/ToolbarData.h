@@ -17,7 +17,6 @@
 #include <XournalType.h>
 
 #include <glib.h>
-
 #include <vector>
 
 class ToolbarData

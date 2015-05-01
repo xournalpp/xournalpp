@@ -5,11 +5,12 @@
 
 #include <glib/gi18n-lib.h>
 #include <boost/filesystem.hpp>
-#include <iostream>
-using namespace std;
 
 #include <sys/types.h>
 #include <unistd.h>
+
+#include <iostream>
+using namespace std;
 
 GdkColor Util::intToGdkColor(int c)
 {

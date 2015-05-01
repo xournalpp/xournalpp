@@ -1,11 +1,9 @@
 #include "GladeGui.h"
 
 #include "GladeSearchpath.h"
-
 #include <config.h>
 
 #include <glib/gi18n-lib.h>
-
 #include <stdlib.h>
 
 GladeGui::GladeGui(GladeSearchpath* gladeSearchPath, const char* glade, const char* mainWnd)

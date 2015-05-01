@@ -1,10 +1,11 @@
 #include "AddUndoAction.h"
 
+#include "PageLayerPosEntry.h"
+
 #include "gui/Redrawable.h"
 #include "model/Layer.h"
 #include "model/Element.h"
 #include "model/PageRef.h"
-#include "PageLayerPosEntry.h"
 
 AddUndoAction::AddUndoAction(PageRef page, bool eraser) : UndoAction("AddUndoAction")
 {

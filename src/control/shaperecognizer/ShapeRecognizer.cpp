@@ -2,11 +2,11 @@
 
 #include "CircleRecognizer.h"
 #include "Inertia.h"
-#include "model/Stroke.h"
 #include "ShapeRecognizerResult.h"
 
-#include <boost/format.hpp>
+#include "model/Stroke.h"
 
+#include <boost/format.hpp>
 #include <math.h>
 #include <string.h>
 

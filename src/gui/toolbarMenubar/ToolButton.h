@@ -17,12 +17,12 @@
 class ToolButton : public AbstractToolItem
 {
 public:
-	ToolButton(ActionHandler* handler, string id, ActionType type, string stock,
-			   string description, GtkWidget* menuitem = NULL);
-	ToolButton(ActionHandler* handler, GladeGui* gui, string id, ActionType type,
-			   string iconName, string description, GtkWidget* menuitem = NULL);
+	ToolButton(ActionHandler* handler, string id, ActionType type, string stock, string description,
+			   GtkWidget* menuitem = NULL);
+	ToolButton(ActionHandler* handler, GladeGui* gui, string id, ActionType type, string iconName, string description,
+			   GtkWidget* menuitem = NULL);
 	ToolButton(ActionHandler* handler, GladeGui* gui, string id, ActionType type, ActionGroup group,
-			 bool toolToggleOnlyEnable, string iconName, string description, GtkWidget* menuitem = NULL);
+			   bool toolToggleOnlyEnable, string iconName, string description, GtkWidget* menuitem = NULL);
 
 	virtual ~ToolButton();
 

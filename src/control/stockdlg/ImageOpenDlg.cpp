@@ -1,8 +1,8 @@
 #include "ImageOpenDlg.h"
 
 #include "control/settings/Settings.h"
-
 #include <config.h>
+
 #include <glib/gi18n-lib.h>
 
 GFile* ImageOpenDlg::show(GtkWindow* win, Settings* settings, bool localOnly,

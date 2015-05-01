@@ -1,18 +1,7 @@
-/*
- * Xournal++
- *
- * Dialog to select the background color of a Xournal page
- *
- * @author Xournal Team
- * http://xournal.sf.net
- *
- * @license GPL
- */
+#include "SelectBackgroundColorDialog.h"
 
 #include "control/Control.h"
 #include "gui/widgets/SelectColor.h"
-#include "SelectBackgroundColorDialog.h"
-
 #include <config.h>
 
 #include <glib/gi18n-lib.h>

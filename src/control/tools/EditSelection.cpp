@@ -1,5 +1,8 @@
 #include "EditSelection.h"
 
+#include "EditSelectionContents.h"
+#include "Selection.h"
+
 #include "control/Control.h"
 #include "gui/pageposition/PagePositionHandler.h"
 #include "gui/PageView.h"
@@ -9,7 +12,6 @@
 #include "model/Element.h"
 #include "model/Stroke.h"
 #include "model/Text.h"
-#include "Selection.h"
 #include "undo/ColorUndoAction.h"
 #include "undo/FontUndoAction.h"
 #include "undo/SizeUndoAction.h"
@@ -18,8 +20,6 @@
 
 #include <serializing/ObjectOutputStream.h>
 #include <serializing/ObjectInputStream.h>
-
-#include "EditSelectionContents.h"
 
 #include <iostream>
 using namespace std;

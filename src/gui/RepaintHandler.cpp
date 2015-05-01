@@ -1,7 +1,9 @@
 #include "RepaintHandler.h"
-#include "XournalView.h"
-#include "widgets/XournalWidget.h"
+
 #include "PageView.h"
+#include "XournalView.h"
+
+#include "widgets/XournalWidget.h"
 
 RepaintHandler::RepaintHandler(XournalView* xournal)
 {

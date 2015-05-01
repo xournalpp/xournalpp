@@ -11,9 +11,10 @@
 
 #pragma once
 
-#include <XournalType.h>
-#include <glib.h>
 #include <StringUtils.h>
+#include <XournalType.h>
+
+#include <glib.h>
 
 class XojColor
 {

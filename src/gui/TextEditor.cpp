@@ -1,14 +1,16 @@
 #include "TextEditor.h"
 
-#include "control/Control.h"
 #include "Cursor.h"
 #include "PageView.h"
 #include "TextEditorWidget.h"
+#include "XournalView.h"
+#include "XournalView.h"
+
+#include "control/Control.h"
 #include "undo/ColorUndoAction.h"
 #include "undo/TextUndoAction.h"
 #include "view/DocumentView.h"
 #include "view/TextView.h"
-#include "XournalView.h"
 
 #include <gtk/gtkimcontextsimple.h>
 

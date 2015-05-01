@@ -12,7 +12,6 @@
 #pragma once
 
 #include "pdf/popplerdirect/poppler/XojPopplerPage.h"
-
 #include <XournalType.h>
 
 #include <cairo/cairo.h>

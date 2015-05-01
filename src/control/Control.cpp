@@ -1,7 +1,10 @@
 #include "Control.h"
 
-#include "cfg.h"
 #include "ExportHandler.h"
+#include "LoadHandler.h"
+#include "PrintHandler.h"
+
+#include "cfg.h"
 #include "gui/Cursor.h"
 #include "gui/dialog/AboutDialog.h"
 #include "gui/dialog/GotoDialog.h"
@@ -21,11 +24,9 @@
 #include "jobs/BlockingJob.h"
 #include "jobs/PdfExportJob.h"
 #include "jobs/SaveJob.h"
-#include "LoadHandler.h"
 #include "model/BackgroundImage.h"
 #include "model/FormatDefinitions.h"
 #include "model/XojPage.h"
-#include "PrintHandler.h"
 #include "settings/ButtonConfig.h"
 #include "settings/MetadataManager.h"
 #include "stockdlg/ImageOpenDlg.h"
@@ -45,12 +46,12 @@
 #include <Stacktrace.h>
 #include <XInputUtils.h>
 
-#include <glib/gi18n-lib.h>
-#include <gtk/gtk.h>
-
 #include <boost/locale.hpp>
 #include <boost/filesystem.hpp>
 namespace bf = boost::filesystem;
+
+#include <glib/gi18n-lib.h>
+#include <gtk/gtk.h>
 
 #include <vector>
 using namespace std;

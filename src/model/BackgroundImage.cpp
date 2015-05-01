@@ -1,7 +1,6 @@
 #include "BackgroundImage.h"
 
 #include "BackgroundImageContents.h"
-
 #include <Stacktrace.h>
 
 BackgroundImage::BackgroundImage()

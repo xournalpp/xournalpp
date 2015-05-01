@@ -1,10 +1,11 @@
 #include "XmlNode.h"
-#include "TextAttribute.h"
+
+#include "DoubleArrayAttribute.h"
 #include "DoubleAttribute.h"
 #include "IntAttribute.h"
-#include "DoubleArrayAttribute.h"
+#include "TextAttribute.h"
 
-#include "../jobs/ProgressListener.h"
+#include "control/jobs/ProgressListener.h"
 
 #include <string.h>
 

@@ -15,14 +15,12 @@
 #include "control/Tool.h"
 #include "model/Font.h"
 
-#include <map>
-
-//TODO rewrite with pugixml
+#include <boost/filesystem/path.hpp>
+using boost::filesystem::path;
 #include <libxml/xmlreader.h>
 #include <glib.h>
 
-#include <boost/filesystem/path.hpp>
-using boost::filesystem::path;
+#include <map>
 
 enum AttributeType
 {

@@ -2,12 +2,11 @@
 
 #include <config.h>
 
-#include <glib/gi18n-lib.h>
 #include <boost/format.hpp>
+#include <glib/gi18n-lib.h>
 
 #include <stdio.h>
 #include <fstream>
-
 #include <iostream>
 using namespace std;
 

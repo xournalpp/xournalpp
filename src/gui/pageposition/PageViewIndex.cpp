@@ -1,7 +1,7 @@
 #include "PageViewIndex.h"
 
-#include "gui/PageView.h"
 #include "PagePosition.h"
+#include "gui/PageView.h"
 
 class PageViewIndexEntry
 {

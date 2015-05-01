@@ -6,7 +6,7 @@
 #include <glib/gi18n-lib.h>
 
 FormatDialog::FormatDialog(GladeSearchpath* gladeSearchPath, Settings* settings, double width, double heigth) :
-GladeGui(gladeSearchPath, "pagesize.glade", "pagesizeDialog")
+		GladeGui(gladeSearchPath, "pagesize.glade", "pagesizeDialog")
 {
 
 	XOJ_INIT_TYPE(FormatDialog);

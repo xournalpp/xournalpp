@@ -1,5 +1,7 @@
 #include "XournalWidget.h"
 
+#include "Scrollbar.h"
+
 #include "cfg.h"
 #include "control/Control.h"
 #include "control/tools/EditSelection.h"
@@ -11,7 +13,6 @@
 #include "gui/pageposition/PagePositionHandler.h"
 #include "gui/Shadow.h"
 #include "gui/XournalView.h"
-#include "Scrollbar.h"
 
 #include <Rectangle.h>
 #include <Util.h>

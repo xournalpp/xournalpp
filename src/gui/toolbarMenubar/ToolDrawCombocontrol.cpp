@@ -1,14 +1,14 @@
 #include "ToolDrawCombocontrol.h"
 
-#include "gui/widgets/gtkmenutooltogglebutton.h"
 #include "ToolMenuHandler.h"
+#include "gui/widgets/gtkmenutooltogglebutton.h"
 
 #include <config.h>
 
 #include <glib/gi18n-lib.h>
 
 ToolDrawCombocontrol::ToolDrawCombocontrol(ToolMenuHandler* th, ActionHandler* handler, GladeGui* gui, string id) :
-	ToolButton(handler, gui, id, ACTION_TOOL_DRAW_RECT, GROUP_RULER, false, "rect-draw.png", _("Draw Rectangle"))
+		ToolButton(handler, gui, id, ACTION_TOOL_DRAW_RECT, GROUP_RULER, false, "rect-draw.png", _("Draw Rectangle"))
 {
 
 	XOJ_INIT_TYPE(ToolDrawCombocontrol);

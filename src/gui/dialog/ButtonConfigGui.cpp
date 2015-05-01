@@ -1,8 +1,8 @@
 #include "ButtonConfigGui.h"
 
+#include "SettingsDialog.h"
 #include "control/settings/Settings.h"
 #include "control/settings/ButtonConfig.h"
-#include "SettingsDialog.h"
 
 #include <config.h>
 #include <glib/gi18n-lib.h>

@@ -1,8 +1,9 @@
 #include "SidebarPreview.h"
 
+#include "Sidebar.h"
+
 #include "control/Control.h"
 #include "gui/Shadow.h"
-#include "Sidebar.h"
 #include "view/PdfView.h"
 
 SidebarPreview::SidebarPreview(Sidebar* sidebar, PageRef page)

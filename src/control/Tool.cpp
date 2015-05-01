@@ -6,9 +6,8 @@
 // TODO LOW PRIO select object: best match instead of first match
 // TODO LOW PRIO: rouler every 90° latch
 
-Tool::Tool(string name, ToolType type, int color, bool enableColor,
-		   bool enableSize, bool enableRuler, bool enableRectangle,
-		   bool enableCircle, bool enableArrow, bool enableShapreRecognizer,
+Tool::Tool(string name, ToolType type, int color, bool enableColor, bool enableSize, bool enableRuler,
+		   bool enableRectangle, bool enableCircle, bool enableArrow, bool enableShapreRecognizer,
 		   double* thickness)
 {
 	XOJ_INIT_TYPE(Tool);

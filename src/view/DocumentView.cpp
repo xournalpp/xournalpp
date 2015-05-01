@@ -1,12 +1,13 @@
 #include "DocumentView.h"
 
+#include "TextView.h"
+
 #include "cfg.h"
 #include "control/tools/EditSelection.h"
 #include "control/tools/Selection.h"
 #include "model/BackgroundImage.h"
 #include "model/eraser/EraseableStroke.h"
 #include "model/Layer.h"
-#include "TextView.h"
 
 #include <config.h>
 

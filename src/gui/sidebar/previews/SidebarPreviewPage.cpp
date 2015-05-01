@@ -1,8 +1,9 @@
 #include "SidebarPreviewPage.h"
 
+#include "SidebarPreviews.h"
+
 #include "control/Control.h"
 #include "gui/Shadow.h"
-#include "SidebarPreviews.h"
 #include "view/PdfView.h"
 
 // TODO: allow drag & drop reordering of pages

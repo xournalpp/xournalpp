@@ -1,10 +1,11 @@
 #include "CrashHandler.h"
 
+#include "Stacktrace.h"
+#include "Util.h"
+
 #include "cfg.h"
 #include "control/SaveHandler.h"
 #include "model/Document.h"
-#include "Stacktrace.h"
-#include "Util.h"
 
 #include <glib.h>
 #include <gtk/gtk.h>

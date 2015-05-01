@@ -11,7 +11,7 @@
 bool ColorToolItem::inUpdate = false;
 
 ColorToolItem::ColorToolItem(ActionHandler* handler, ToolHandler* toolHandler, GtkWindow* parent, int color, bool selektor) :
-	AbstractToolItem("", handler, selektor ? ACTION_SELECT_COLOR_CUSTOM : ACTION_SELECT_COLOR)
+		AbstractToolItem("", handler, selektor ? ACTION_SELECT_COLOR_CUSTOM : ACTION_SELECT_COLOR)
 {
 	XOJ_INIT_TYPE(ColorToolItem);
 

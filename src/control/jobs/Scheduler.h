@@ -14,7 +14,6 @@
 #pragma once
 
 #include "Job.h"
-
 #include <XournalType.h>
 
 #include <glib.h>

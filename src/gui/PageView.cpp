@@ -1,5 +1,10 @@
 #include "PageView.h"
 
+#include "Cursor.h"
+#include "RepaintHandler.h"
+#include "TextEditor.h"
+#include "XournalView.h"
+
 #include "cfg.h"
 #include "control/Control.h"
 #include "control/SearchControl.h"
@@ -11,21 +16,17 @@
 #include "control/tools/InputHandler.h"
 #include "control/tools/Selection.h"
 #include "control/tools/VerticalToolHandler.h"
-#include "Cursor.h"
 #include "model/Image.h"
 #include "model/Layer.h"
 #include "model/PageRef.h"
 #include "model/Stroke.h"
 #include "model/Text.h"
-#include "RepaintHandler.h"
-#include "TextEditor.h"
 #include "undo/DeleteUndoAction.h"
 #include "undo/InsertUndoAction.h"
 #include "undo/TextBoxUndoAction.h"
 //#include "undo/TextUndoAction.h"	//for the save file undo
 #include "view/TextView.h"
 #include "widgets/XournalWidget.h"
-#include "XournalView.h"
 
 #include <config.h>
 #include <pixbuf-utils.h>

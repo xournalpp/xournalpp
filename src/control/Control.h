@@ -13,20 +13,21 @@
 
 #include "Actions.h"
 #include "ClipboardHandler.h"
+#include "LatexAction.h"
+#include "RecentManager.h"
+#include "ScrollHandler.h"
+#include "ToolHandler.h"
+#include "ZoomControl.h"
+
 #include "gui/dialog/LatexGlade.h"
 #include "gui/MainWindow.h"
 #include "gui/SearchBar.h"
 #include "gui/sidebar/Sidebar.h"
 #include "jobs/ProgressListener.h"
 #include "jobs/XournalScheduler.h"
-#include "LatexAction.h"
 #include "model/Document.h"
-#include "RecentManager.h"
-#include "ScrollHandler.h"
 #include "settings/Settings.h"
 #include "undo/UndoRedoHandler.h"
-#include "ToolHandler.h"
-#include "ZoomControl.h"
 
 #include <XournalType.h>
 

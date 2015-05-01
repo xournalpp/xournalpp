@@ -6,7 +6,7 @@
 #include <glib/gi18n-lib.h>
 
 ExportDialog::ExportDialog(GladeSearchpath* gladeSearchPath, Settings* settings, int pageCount, int currentPage) :
-	GladeGui(gladeSearchPath, "export.glade", "exportDialog")
+		GladeGui(gladeSearchPath, "export.glade", "exportDialog")
 {
 
 	XOJ_INIT_TYPE(ExportDialog);

@@ -17,14 +17,13 @@
 #include <boost/iostreams/filter/gzip.hpp>
 #include <boost/iostreams/filtering_streambuf.hpp>
 #include <boost/locale.hpp>
+namespace bl = boost::locale;
+namespace bi = boost::iostreams;
+namespace ba = boost::algorithm;
 
 #include <string>
 #include <iostream>
 #include <fstream>
-
-namespace bl = boost::locale;
-namespace bi = boost::iostreams;
-namespace ba = boost::algorithm;
 using namespace std;
 
 //TODO with Glib::Base64

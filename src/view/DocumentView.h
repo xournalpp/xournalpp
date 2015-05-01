@@ -11,7 +11,8 @@
 
 #pragma once
 
-#include <XournalType.h>
+#include "ElementContainer.h"
+
 #include "model/Element.h"
 #include "model/Image.h"
 #include "model/PageRef.h"
@@ -19,7 +20,7 @@
 #include "model/TexImage.h"
 #include "model/Text.h"
 
-#include "ElementContainer.h"
+#include <XournalType.h>
 
 #include <gtk/gtk.h>
 

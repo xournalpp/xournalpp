@@ -1,10 +1,11 @@
 #include "SidebarPreviews.h"
 
-#include "control/Control.h"
-#include "control/PdfCache.h"
 #include "SidebarLayout.h"
 #include "SidebarPreviewPage.h"
 #include "SidebarToolbar.h"
+
+#include "control/Control.h"
+#include "control/PdfCache.h"
 
 SidebarPreviews::SidebarPreviews(Control* control) : AbstractSidebarPage(control)
 {

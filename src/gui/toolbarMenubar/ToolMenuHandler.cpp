@@ -1,18 +1,7 @@
 #include "ToolMenuHandler.h"
 
-#include <glib.h>
-#include <glade/glade-xml.h>
-
-#include <config.h>
-#include <glib/gi18n-lib.h>
-
-#include "control/Actions.h"
 #include "FontButton.h"
-#include "gui/ToolitemDragDrop.h"
-#include "gui/widgets/SelectColor.h"
 #include "MenuItem.h"
-#include "model/ToolbarData.h"
-#include "model/ToolbarModel.h"
 #include "ToolButton.h"
 #include "ToolDrawCombocontrol.h"
 #include "ToolPageLayer.h"
@@ -20,8 +9,20 @@
 #include "ToolSelectCombocontrol.h"
 #include "ToolZoomSlider.h"
 
-ToolMenuHandler::ToolMenuHandler(ActionHandler* listener, ZoomControl* zoom, GladeGui* gui,
-								 ToolHandler* toolHandler, GtkWindow* parent)
+#include "control/Actions.h"
+#include "gui/ToolitemDragDrop.h"
+#include "gui/widgets/SelectColor.h"
+#include "model/ToolbarData.h"
+#include "model/ToolbarModel.h"
+
+#include <config.h>
+
+#include <glade/glade-xml.h>
+#include <glib.h>
+#include <glib/gi18n-lib.h>
+
+ToolMenuHandler::ToolMenuHandler(ActionHandler* listener, ZoomControl* zoom, GladeGui* gui, ToolHandler* toolHandler,
+								 GtkWindow* parent)
 {
 	XOJ_INIT_TYPE(ToolMenuHandler);
 
@@ -72,7 +73,10 @@ void ToolMenuHandler::freeDynamicToolbarItems()
 		it->setUsed(false);
 	}
 
-	for (ColorToolItem* it : this->toolbarColorItems) delete it;
+	for (ColorToolItem* it : this->toolbarColorItems)
+	{
+		delete it;
+	}
 	this->toolbarColorItems.clear();
 }
 

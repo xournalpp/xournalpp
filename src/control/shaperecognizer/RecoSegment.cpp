@@ -3,9 +3,8 @@
 #include "Inertia.h"
 
 #include <glib.h>
-
-#include <stdlib.h>
 #include <math.h>
+#include <stdlib.h>
 
 RecoSegment::RecoSegment()
 {

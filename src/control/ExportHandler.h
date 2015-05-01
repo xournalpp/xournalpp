@@ -11,13 +11,13 @@
 
 #pragma once
 
+#include <XournalType.h>
+
 class GladeSearchpath;
 class Settings;
 class Control;
 class Document;
 class ExportDialog;
-
-#include <XournalType.h>
 
 class ExportHandler
 {

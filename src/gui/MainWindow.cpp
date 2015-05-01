@@ -1,17 +1,18 @@
 #include "MainWindow.h"
 
+#include "Layout.h"
+#include "ToolitemDragDrop.h"
+#include "XournalView.h"
+
 #include "cfg.h"
 #include "control/Control.h"
 #include "gui/GladeSearchpath.h"
-#include "Layout.h"
 #include "ToolbarDefinitions.h"
 #include "toolbarMenubar/model/ToolbarData.h"
 #include "toolbarMenubar/model/ToolbarModel.h"
 #include "toolbarMenubar/ToolMenuHandler.h"
-#include "ToolitemDragDrop.h"
 #include "widgets/SpinPageAdapter.h"
 #include "widgets/XournalWidget.h"
-#include "XournalView.h"
 
 #include <config.h>
 

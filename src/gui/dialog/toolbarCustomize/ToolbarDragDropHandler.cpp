@@ -1,12 +1,13 @@
 #include "ToolbarDragDropHandler.h"
 
+#include "ToolbarAdapter.h"
+#include "ToolbarCustomizeDialog.h"
+#include "ToolbarDragDropHelper.h"
+
 #include "control/Control.h"
 #include "gui/MainWindow.h"
 #include "gui/toolbarMenubar/AbstractToolItem.h"
 #include "gui/toolbarMenubar/model/ToolbarModel.h"
-#include "ToolbarAdapter.h"
-#include "ToolbarCustomizeDialog.h"
-#include "ToolbarDragDropHelper.h"
 
 #include <glib.h>
 

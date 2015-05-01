@@ -12,7 +12,6 @@
 #pragma once
 
 #include "widgets/Scrollbar.h" // because of extends ScrollbarListener
-
 #include <XournalType.h>
 
 #include <gtk/gtk.h>

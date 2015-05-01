@@ -12,29 +12,28 @@
 #pragma once
 
 #include "ColorToolItem.h"
-#include "control/Actions.h"
 #include "MenuItem.h"
+#include "control/Actions.h"
 
 #include <StringUtils.h>
 
 #include <gtk/gtk.h>
-
 #include <vector>
 
 class AbstractToolItem;
 typedef std::vector<AbstractToolItem*> AbstractToolItemVector;
 
-class ToolButton;
-class ToolPageSpinner;
-class ToolPageLayer;
 class FontButton;
-class ToolbarData;
-class ZoomControl;
-class ToolHandler;
-class XojFont;
 class GladeGui;
+class ToolbarData;
 class ToolbarModel;
+class ToolButton;
+class ToolHandler;
+class ToolPageLayer;
+class ToolPageSpinner;
 class SpinPageAdapter;
+class XojFont;
+class ZoomControl;
 
 class ToolMenuHandler
 {

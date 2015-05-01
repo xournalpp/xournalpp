@@ -1,7 +1,6 @@
 #include "XmlStrokeNode.h"
 
-XmlStrokeNode::XmlStrokeNode(const char* tag) :
-XmlNode(tag)
+XmlStrokeNode::XmlStrokeNode(const char* tag) : XmlNode(tag)
 {
 	XOJ_INIT_TYPE(XmlStrokeNode);
 

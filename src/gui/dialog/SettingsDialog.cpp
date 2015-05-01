@@ -11,7 +11,7 @@
 #include <string.h>
 
 SettingsDialog::SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* settings) :
-	GladeGui(gladeSearchPath, "settings.glade", "settingsDialog")
+		GladeGui(gladeSearchPath, "settings.glade", "settingsDialog")
 {
 	XOJ_INIT_TYPE(SettingsDialog);
 

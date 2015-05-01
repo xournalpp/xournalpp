@@ -11,9 +11,11 @@
 
 #pragma once
 
-#include <Util.h>
-#include <OutputStream.h>
 #include "Attribute.h"
+
+#include <OutputStream.h>
+#include <Util.h>
+
 #include <glib.h>
 
 class ProgressListener;
@@ -38,8 +40,7 @@ public:
 	 */
 	void setAttrib(const char* attrib, double* value, int count);
 
-	void writeOut(OutputStream* out,
-				ProgressListener* _listener);
+	void writeOut(OutputStream* out, ProgressListener* _listener);
 
 	virtual void writeOut(OutputStream* out)
 	{

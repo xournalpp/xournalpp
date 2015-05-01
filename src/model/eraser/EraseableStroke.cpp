@@ -1,8 +1,8 @@
 #include "EraseableStroke.h"
 
 #include "EraseableStrokePart.h"
-#include "model/Stroke.h"
 #include "PartList.h"
+#include "model/Stroke.h"
 
 #include <Range.h>
 

@@ -9,6 +9,8 @@
  * @license GPL
  */
 
+#include "SaveHandler.h"
+
 #include "jobs/ProgressListener.h"
 #include "model/Stroke.h"
 #include "model/Text.h"
@@ -17,7 +19,6 @@
 #include "model/Document.h"
 #include "model/Layer.h"
 #include "model/BackgroundImage.h"
-#include "SaveHandler.h"
 #include "xml/XmlNode.h"
 #include "xml/XmlTextNode.h"
 #include "xml/XmlImageNode.h"

@@ -9,32 +9,32 @@
  * @license GPL
  */
 
-#ifndef __LOADHANDLER_H__
-#define __LOADHANDLER_H__
+#pragma once
 
-#include "../model/Document.h"
-#include "../model/Stroke.h"
-#include "../model/Text.h"
-#include "../model/Image.h"
-#include "../model/TexImage.h"
+#include "model/Document.h"
+#include "model/Image.h"
+#include "model/Stroke.h"
+#include "model/TexImage.h"
+#include "model/Text.h"
+
 #include <XournalType.h>
+
 #include <zlib.h>
 #include <string>
-
 using namespace std;
 
 enum ParserPosition
 {
-    PARSER_POS_NOT_STARTED = 1, // Waiting for opening <xounal> tag
-    PARSER_POS_STARTED, // Waiting for Metainfo or contents like <page>
-    PARSER_POS_IN_PAGE, // Starting page tag read
-    PARSER_POS_IN_LAYER, // Starting layer tag read
-    PARSER_POS_IN_STROKE, // Starting layer tag read
-    PARSER_POS_IN_TEXT, // Starting text tag read
-    PARSER_POS_IN_IMAGE, // Starting image tag read
-    PARSER_POS_IN_TEXIMAGE, // Starting latex tag read
+    PARSER_POS_NOT_STARTED = 1,	// Waiting for opening <xounal> tag
+    PARSER_POS_STARTED,			// Waiting for Metainfo or contents like <page>
+    PARSER_POS_IN_PAGE,			// Starting page tag read
+    PARSER_POS_IN_LAYER,		// Starting layer tag read
+    PARSER_POS_IN_STROKE,		// Starting layer tag read
+    PARSER_POS_IN_TEXT,			// Starting text tag read
+    PARSER_POS_IN_IMAGE,		// Starting image tag read
+    PARSER_POS_IN_TEXIMAGE,		// Starting latex tag read
 
-    PASER_POS_FINISHED // Document is parsed
+    PASER_POS_FINISHED			// Document is parsed
 };
 
 class DoubleArrayBuffer
@@ -95,14 +95,11 @@ private:
 
 	bool parseColor(const char* text, int& color);
 
-	static void parserText(GMarkupParseContext* context, const gchar* text,
-	                       gsize text_len, gpointer userdata,
+	static void parserText(GMarkupParseContext* context, const gchar* text, gsize text_len, gpointer userdata,
 	                       GError** error);
-	static void parserEndElement(GMarkupParseContext* context,
-	                             const gchar* element_name, gpointer userdata,
+	static void parserEndElement(GMarkupParseContext* context, const gchar* element_name, gpointer userdata,
 	                             GError** error);
-	static void parserStartElement(GMarkupParseContext* context,
-	                               const gchar* element_name,
+	static void parserStartElement(GMarkupParseContext* context, const gchar* element_name,
 	                               const gchar** attribute_names, const gchar** attribute_values,
 	                               gpointer userdata, GError** error);
 
@@ -158,5 +155,3 @@ private:
 	DocumentHandler dHanlder;
 	Document doc;
 };
-
-#endif /* __LOADHANDLER_H__ */

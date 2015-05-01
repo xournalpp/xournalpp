@@ -15,18 +15,16 @@
 
 #include <glib.h>
 
-#include <boost/filesystem/path.hpp>
-using boost::filesystem::path;
-
-#include <boost/property_tree/ptree.hpp>
-#include <boost/property_tree/ini_parser.hpp>
-namespace bp = boost::property_tree;
-
 #include <boost/asio.hpp>
 #include <boost/date_time/posix_time/posix_time.hpp>
-namespace basio = boost::asio;
-
+#include <boost/filesystem/path.hpp>
+#include <boost/property_tree/ini_parser.hpp>
+#include <boost/property_tree/ptree.hpp>
 #include <boost/thread.hpp>
+
+using boost::filesystem::path;
+namespace bp = boost::property_tree;
+namespace basio = boost::asio;
 
 class MetadataManager
 {

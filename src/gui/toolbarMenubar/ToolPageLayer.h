@@ -12,7 +12,6 @@
 #pragma once
 
 #include "AbstractToolItem.h"
-
 #include <XournalType.h>
 
 class GladeGui;

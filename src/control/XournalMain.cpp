@@ -1,14 +1,16 @@
 #include "XournalMain.h"
 
-#include "cfg.h"
-#include "config.h"
 #include "Control.h"
+#include "LoadHandler.h"
+
+#include "cfg.h"
 #include "gui/GladeSearchpath.h"
 #include "gui/MainWindow.h"
 #include "gui/toolbarMenubar/model/ToolbarColorNames.h"
 #include "gui/XournalView.h"
-#include "LoadHandler.h"
 #include "pdf/popplerdirect/PdfExport.h"
+
+#include <config.h>
 
 #include <gtk/gtk.h>
 

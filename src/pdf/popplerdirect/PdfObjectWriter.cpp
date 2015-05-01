@@ -4,7 +4,6 @@
 #include "UpdateRefKey.h"
 
 #include <iostream>
-
 using namespace std;
 
 PdfObjectWriter::PdfObjectWriter(PdfWriter* writer, PdfXRef* xref)

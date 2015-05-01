@@ -6,9 +6,8 @@
 #include <config.h>
 #include <Stacktrace.h>
 
-#include <glib/gi18n-lib.h>
-
 #include <boost/locale/format.hpp>
+#include <glib/gi18n-lib.h>
 
 #include <string.h>
 

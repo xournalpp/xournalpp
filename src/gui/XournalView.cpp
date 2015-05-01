@@ -1,16 +1,17 @@
 #include "XournalView.h"
 
-#include "control/Control.h"
-#include "control/PdfCache.h"
-#include "control/settings/MetadataManager.h"
 #include "Cursor.h"
 #include "Layout.h"
-#include "model/Document.h"
-#include "model/Stroke.h"
-#include "pageposition/PagePositionHandler.h"
 #include "PageView.h"
 #include "RepaintHandler.h"
 #include "Shadow.h"
+
+#include "control/Control.h"
+#include "control/PdfCache.h"
+#include "control/settings/MetadataManager.h"
+#include "model/Document.h"
+#include "model/Stroke.h"
+#include "pageposition/PagePositionHandler.h"
 #include "undo/DeleteUndoAction.h"
 #include "widgets/XournalWidget.h"
 

@@ -11,13 +11,14 @@
 
 #pragma once
 
-#include "control/jobs/ProgressListener.h"
-#include "model/Document.h"
 #include "PdfBookmark.h"
 #include "PdfObjectWriter.h"
 #include "PdfRefList.h"
 #include "PdfWriter.h"
 #include "PdfXRef.h"
+
+#include "control/jobs/ProgressListener.h"
+#include "model/Document.h"
 #include "pdf/cairo/CairoPdf.h"
 
 #include <StringUtils.h>

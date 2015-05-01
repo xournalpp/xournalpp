@@ -1,8 +1,9 @@
 #include "AbstractToolItem.h"
+
 #include <Util.h>
 
 AbstractToolItem::AbstractToolItem(string id, ActionHandler* handler, ActionType type, GtkWidget* menuitem) :
-	AbstractItem(id, handler, type, menuitem)
+		AbstractItem(id, handler, type, menuitem)
 {
 	XOJ_INIT_TYPE(AbstractToolItem);
 

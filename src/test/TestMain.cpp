@@ -13,9 +13,10 @@
 #include <cppunit/extensions/TestFactoryRegistry.h>
 #include <cppunit/ui/text/TestRunner.h>
 
-#include <gtk/gtk.h>
 #include <CrashHandler.h>
 #include <Stacktrace.h>
+
+#include <gtk/gtk.h>
 
 /**
  * Main Entry point for CppUnit Tests

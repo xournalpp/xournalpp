@@ -11,8 +11,8 @@
 
 #pragma once
 
-#include "model/Document.h"
 #include "PdfWriter.h"
+#include "model/Document.h"
 
 #include <gtk/gtk.h>
 

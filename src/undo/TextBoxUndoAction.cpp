@@ -1,14 +1,14 @@
 #include "TextBoxUndoAction.h"
-#include "model/PageRef.h"
-#include "model/Layer.h"
-#include "model/Element.h"
+
 #include "gui/Redrawable.h"
+#include "model/Element.h"
+#include "model/Layer.h"
+#include "model/PageRef.h"
 
 #include <Rectangle.h>
 
-TextBoxUndoAction::TextBoxUndoAction(PageRef page, Layer* layer,
-									 Element* element,
-									 Element* oldelement) : UndoAction("TextBoxUndoAction")
+TextBoxUndoAction::TextBoxUndoAction(PageRef page, Layer* layer, Element* element, Element* oldelement) :
+		UndoAction("TextBoxUndoAction")
 {
 	XOJ_INIT_TYPE(TextBoxUndoAction);
 
