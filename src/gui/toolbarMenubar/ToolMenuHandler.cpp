@@ -259,7 +259,7 @@ void ToolMenuHandler::initEraserToolItem()
 	XOJ_CHECK_TYPE(ToolMenuHandler);
 
 	ToolButton* tbEraser = new ToolButton(listener, gui, "ERASER", ACTION_TOOL_ERASER, GROUP_TOOL, true,
-										  "tool_eraser.png", _("Eraser"), gui->get("menuToolsEraser"));
+										  "tool_eraser.svg", _("Eraser"), gui->get("menuToolsEraser"));
 	GtkWidget* eraserPopup = gtk_menu_new();
 
 	GtkWidget* eraserPopupStandard = gtk_check_menu_item_new_with_label(_("standard"));
@@ -325,7 +325,7 @@ void ToolMenuHandler::initToolItems()
 							   gui->get("menuNavigationLastPage")));
 
 	addToolItem(new ToolButton(listener, gui, "GOTO_NEXT_ANNOTATED_PAGE", ACTION_GOTO_NEXT_ANNOTATED_PAGE,
-							   "nextAnnotatedPage.png", _("Next annotated page"),
+							   "nextAnnotatedPage.svg", _("Next annotated page"),
 							   gui->get("menuNavigationNextAnnotatedPage")));
 
 	addToolItem(new ToolButton(listener, "ZOOM_OUT", ACTION_ZOOM_OUT, GTK_STOCK_ZOOM_OUT, _("Zoom out"),
@@ -342,7 +342,7 @@ void ToolMenuHandler::initToolItems()
 
 	addToolItem(new ColorToolItem(listener, toolHandler, this->parent, 0xff0000, true));
 
-	addToolItem(new ToolButton(listener, gui, "PEN", ACTION_TOOL_PEN, GROUP_TOOL, true, "tool_pencil.png", _("Pen"),
+	addToolItem(new ToolButton(listener, gui, "PEN", ACTION_TOOL_PEN, GROUP_TOOL, true, "tool_pencil.svg", _("Pen"),
 							   gui->get("menuToolsPen")));
 
 	initEraserToolItem();
@@ -412,22 +412,22 @@ void ToolMenuHandler::initToolItems()
 							   "tool_image.png", _("Image"), gui->get("menuToolsImage")));
 
 	addToolItem(new ToolButton(listener, gui, "SELECT_REGION", ACTION_TOOL_SELECT_REGION, GROUP_TOOL, true,
-							   "lasso.png", _("Select Region"), gui->get("menuToolsSelectRegion")));
+							   "lasso.svg", _("Select Region"), gui->get("menuToolsSelectRegion")));
 	addToolItem(new ToolButton(listener, gui, "SELECT_RECTANGLE", ACTION_TOOL_SELECT_RECT, GROUP_TOOL, true,
 							   "rect-select.svg", _("Select Rectangle"), gui->get("menuToolsSelectRectangle")));
 	addToolItem(new ToolButton(listener, gui, "SELECT_OBJECT", ACTION_TOOL_SELECT_OBJECT, GROUP_TOOL, true,
-							   "object-select.png", _("Select Object"), gui->get("menuToolsSelectObject")));
+							   "object-select.svg", _("Select Object"), gui->get("menuToolsSelectObject")));
 
 	addToolItem(new ToolButton(listener, gui, "DRAW_CIRCLE", ACTION_TOOL_DRAW_CIRCLE, GROUP_RULER, false,
 							   "circle-draw.svg", _("Draw Circle"), gui->get("menuToolsDrawCircle")));
 	addToolItem(new ToolButton(listener, gui, "DRAW_RECTANGLE", ACTION_TOOL_DRAW_RECT, GROUP_RULER, false,
 							   "rect-draw.svg", _("Draw Rectangle"), gui->get("menuToolsDrawRect")));
 	addToolItem(new ToolButton(listener, gui, "DRAW_ARROW", ACTION_TOOL_DRAW_ARROW, GROUP_RULER, false,
-							   "arrow-draw.png", _("Draw Arrow"), gui->get("menuToolsDrawArrow")));
+							   "arrow-draw.svg", _("Draw Arrow"), gui->get("menuToolsDrawArrow")));
 
 	addToolItem(new ToolButton(listener, gui, "VERTICAL_SPACE", ACTION_TOOL_VERTICAL_SPACE, GROUP_TOOL, true,
 							   "stretch.svg", _("Vertical Space"), gui->get("menuToolsVerticalSpace")));
-	addToolItem(new ToolButton(listener, gui, "HAND", ACTION_TOOL_HAND, GROUP_TOOL, true, "hand.png", _("Hand"),
+	addToolItem(new ToolButton(listener, gui, "HAND", ACTION_TOOL_HAND, GROUP_TOOL, true, "hand.svg", _("Hand"),
 							   gui->get("menuToolsHand")));
 
 	addToolItem(new ToolButton(listener, gui, "SHAPE_RECOGNIZER", ACTION_SHAPE_RECOGNIZER, GROUP_SHAPE_RECOGNIZER, false,
@@ -443,7 +443,7 @@ void ToolMenuHandler::initToolItems()
 							   "thickness_thick.svg", _("Thick")));
 
 	addToolItem(new ToolButton(listener, gui, "DEFAULT_TOOL", ACTION_TOOL_DEFAULT, GROUP_NOGROUP, false,
-							   "default.png", _("Default Tool"), gui->get("menuToolsDefault")));
+							   "default.svg", _("Default Tool"), gui->get("menuToolsDefault")));
 
 	fontButton = new FontButton(listener, gui, "SELECT_FONT", ACTION_FONT_BUTTON_CHANGED, _("Select Font"));
 	addToolItem(fontButton);

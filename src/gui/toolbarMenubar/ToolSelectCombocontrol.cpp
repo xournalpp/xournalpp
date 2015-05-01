@@ -21,8 +21,8 @@ ToolSelectCombocontrol::ToolSelectCombocontrol(ToolMenuHandler* th, ActionHandle
 	GtkWidget* menuItem;
 
 	this->iconSelectRect = gui->loadIconPixbuf("rect-select.svg");
-	this->iconSelectRgion = gui->loadIconPixbuf("lasso.png");
-	this->iconSelectObject = gui->loadIconPixbuf("object-select.png");
+	this->iconSelectRgion = gui->loadIconPixbuf("lasso.svg");
+	this->iconSelectObject = gui->loadIconPixbuf("object-select.svg");
 	g_object_ref(this->iconSelectRect);
 	g_object_ref(this->iconSelectRgion);
 	g_object_ref(this->iconSelectObject);
@@ -38,14 +38,14 @@ ToolSelectCombocontrol::ToolSelectCombocontrol(ToolMenuHandler* th, ActionHandle
 	gtk_container_add(GTK_CONTAINER(popup), menuItem);
 	th->registerMenupoint(menuItem, ACTION_TOOL_SELECT_REGION, GROUP_TOOL);
 	gtk_image_menu_item_set_always_show_image(GTK_IMAGE_MENU_ITEM(menuItem), true);
-	gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuItem), gui->loadIcon("lasso.png"));
+	gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuItem), gui->loadIcon("lasso.svg"));
 	gtk_widget_show_all(menuItem);
 
 	menuItem = gtk_image_menu_item_new_with_label(_("Select Object"));
 	gtk_container_add(GTK_CONTAINER(popup), menuItem);
 	th->registerMenupoint(menuItem, ACTION_TOOL_SELECT_OBJECT, GROUP_TOOL);
 	gtk_image_menu_item_set_always_show_image(GTK_IMAGE_MENU_ITEM(menuItem), true);
-	gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuItem), gui->loadIcon("object-select.png"));
+	gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuItem), gui->loadIcon("object-select.svg"));
 	gtk_widget_show_all(menuItem);
 
 	setPopupMenu(popup);

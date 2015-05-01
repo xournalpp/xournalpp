@@ -279,7 +279,7 @@ const char* SidebarIndexPage::getIconName()
 {
 	XOJ_CHECK_TYPE(SidebarIndexPage);
 
-	return "sidebar_index.png";
+	return "sidebar_index.svg";
 }
 
 bool SidebarIndexPage::hasData()
