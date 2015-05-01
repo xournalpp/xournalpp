@@ -29,6 +29,10 @@ DocumentView::DocumentView()
 	this->lY = -1;
 	this->lWidth = -1;
 	this->lHeight = -1;
+
+	this->width = 0;
+	this->height = 0;
+
 	this->dontRenderEditingStroke = 0;
 }
 

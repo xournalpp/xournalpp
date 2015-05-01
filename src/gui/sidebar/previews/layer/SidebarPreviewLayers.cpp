@@ -7,7 +7,7 @@
 SidebarPreviewLayers::SidebarPreviewLayers(Control* control) : SidebarPreviewBase(control)
 {
 	XOJ_INIT_TYPE(SidebarPreviewLayers);
-	displayedPage = -1;
+	displayedPage = 0;
 }
 
 SidebarPreviewLayers::~SidebarPreviewLayers()
@@ -42,31 +42,33 @@ void SidebarPreviewLayers::updatePreviews()
 	this->previews.clear();
 
 	Document* doc = this->getControl()->getDocument();
-	doc->lock();
+	// doc->lock();
 
 	int len = doc->getPageCount();
 	if (displayedPage < 0 || displayedPage >= len)
 	{
-		doc->unlock();
+		// doc->unlock();
 		return;
 	}
 
 	PageRef page = doc->getPage(displayedPage);
 
-	// background
-	SidebarPreviewBaseEntry* p = new SidebarPreviewLayerEntry(this, page, -1);
-	this->previews.push_back(p);
-	gtk_layout_put(GTK_LAYOUT(this->iconViewPreview), p->getWidget(), 0, 0);
+	int layerCount = page->getLayerCount();
 
-	for (int i = page->getLayerCount() - 1; i >= 0; i--)
+	for (int i = layerCount - 1; i >= 0; i--)
 	{
 		SidebarPreviewBaseEntry* p = new SidebarPreviewLayerEntry(this, page, i);
 		this->previews.push_back(p);
 		gtk_layout_put(GTK_LAYOUT(this->iconViewPreview), p->getWidget(), 0, 0);
 	}
 
+	// background
+	SidebarPreviewBaseEntry* p = new SidebarPreviewLayerEntry(this, page, -1);
+	this->previews.push_back(p);
+	gtk_layout_put(GTK_LAYOUT(this->iconViewPreview), p->getWidget(), 0, 0);
+
 	layout();
-	doc->unlock();
+	// doc->unlock();
 }
 
 void SidebarPreviewLayers::pageSelected(int page)
@@ -91,10 +93,23 @@ void SidebarPreviewLayers::pageChanged(int page)
 {
 	XOJ_CHECK_TYPE(SidebarPreviewLayers);
 
+	printf("->SidebarPreviewLayers::pageChanged(%i)\n", page);
 
 	if (displayedPage == page)
 	{
-		// TODO DO IN JOB
-		//updatePreviews();
+		printf("->current page\n");
+
+//		Document* doc = this->getControl()->getDocument();
+//		PageRef page = doc->getPage(displayedPage);
+//		int layerCount = page->getLayerCount();
+//		if (layerCount + 1 == this->previews.size())
+//		{
+//			updatePreviews();
+//		}
+
+//		for (SidebarPreviewBaseEntry* p : this->previews)
+//		{
+//			p->repaint();
+//		}
 	}
 }
