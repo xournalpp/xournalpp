@@ -53,10 +53,14 @@ void SidebarPreviewLayers::updatePreviews()
 
 	PageRef page = doc->getPage(displayedPage);
 
-	for (int i = 0; i < page->getLayerCount(); i++)
+	// background
+	SidebarPreviewBaseEntry* p = new SidebarPreviewLayerEntry(this, page, -1);
+	this->previews.push_back(p);
+	gtk_layout_put(GTK_LAYOUT(this->iconViewPreview), p->getWidget(), 0, 0);
+
+	for (int i = page->getLayerCount() - 1; i >= 0; i--)
 	{
-		// TODO !!!!!
-		SidebarPreviewBaseEntry* p = new SidebarPreviewLayerEntry(this, page);
+		SidebarPreviewBaseEntry* p = new SidebarPreviewLayerEntry(this, page, i);
 		this->previews.push_back(p);
 		gtk_layout_put(GTK_LAYOUT(this->iconViewPreview), p->getWidget(), 0, 0);
 	}

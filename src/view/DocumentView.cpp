@@ -264,9 +264,16 @@ void DocumentView::drawElement(cairo_t* cr, Element* e)
 	}
 }
 
+/**
+ * Draw a single layer
+ * @param cr Draw to thgis context
+ * @param l The layer to draw
+ */
 void DocumentView::drawLayer(cairo_t* cr, Layer* l)
 {
 	XOJ_CHECK_TYPE(DocumentView);
+
+	cairo_set_operator(cr, CAIRO_OPERATOR_SOURCE);
 
 #ifdef SHOW_REPAINT_BOUNDS
 	int drawed = 0;
@@ -439,7 +446,13 @@ void DocumentView::limitArea(double x, double y, double width, double heigth)
 	this->lHeight = heigth;
 }
 
-void DocumentView::drawPage(PageRef page, cairo_t* cr, bool dontRenderEditingStroke)
+/**
+ * Drawing first step
+ * @param page The page to draw
+ * @param cr Draw to thgis context
+ * @param dontRenderEditingStroke false to draw currently drawing stroke
+ */
+void DocumentView::initDrawing(PageRef page, cairo_t* cr, bool dontRenderEditingStroke)
 {
 	XOJ_CHECK_TYPE(DocumentView);
 
@@ -448,7 +461,44 @@ void DocumentView::drawPage(PageRef page, cairo_t* cr, bool dontRenderEditingStr
 	this->width = page->getWidth();
 	this->height = page->getHeight();
 	this->dontRenderEditingStroke = dontRenderEditingStroke;
+}
 
+/**
+ * Last step in drawing
+ */
+void DocumentView::finializeDrawing()
+{
+	XOJ_CHECK_TYPE(DocumentView);
+
+#ifdef SHOW_REPAINT_BOUNDS
+	if (this->lX != -1)
+	{
+		cout << "DBG:repaint area" << endl;
+		cairo_set_source_rgb(cr, 1, 0, 0);
+		cairo_set_line_width(cr, 1);
+		cairo_rectangle(cr, this->lX + 3, this->lY + 3, this->lWidth - 6, this->lHeight - 6);
+		cairo_stroke(cr);
+	}
+	else
+	{
+		cout << "DBG:repaint complete" << endl;
+	}
+#endif //SHOW_REPAINT_BOUNDS
+
+	this->lX = -1;
+	this->lY = -1;
+	this->lWidth = -1;
+	this->lHeight = -1;
+
+	this->page = NULL;
+	this->cr = NULL;
+}
+
+/**
+ * Draw the background
+ */
+void DocumentView::drawBackground()
+{
 	if (page->getBackgroundType() == BACKGROUND_TYPE_PDF)
 	{
 		// Handled in PdfView
@@ -477,37 +527,37 @@ void DocumentView::drawPage(PageRef page, cairo_t* cr, bool dontRenderEditingStr
 	{
 		paintBackgroundColor();
 	}
+}
 
-	cairo_set_operator(cr, CAIRO_OPERATOR_SOURCE);
+/**
+ * Draw the full page, usually you would like to call this method
+ * @param page The page to draw
+ * @param cr Draw to thgis context
+ * @param dontRenderEditingStroke false to draw currently drawing stroke
+ */
+void DocumentView::drawPage(PageRef page, cairo_t* cr, bool dontRenderEditingStroke)
+{
+	XOJ_CHECK_TYPE(DocumentView);
+
+	initDrawing(page, cr, dontRenderEditingStroke);
+	drawBackground();
 
 	int layer = 0;
 	for (Layer* l : *page->getLayers())
 	{
-		if (l == NULL) break;
-		if (layer >= page->getSelectedLayerId()) break;
+		if (l == NULL)
+		{
+			break;
+		}
+
+		if (layer >= page->getSelectedLayerId())
+		{
+			break;
+		}
+
 		drawLayer(cr, l);
 		layer++;
 	}
 
-#ifdef SHOW_REPAINT_BOUNDS
-	if (this->lX != -1)
-	{
-		cout << "DBG:repaint area" << endl;
-		cairo_set_source_rgb(cr, 1, 0, 0);
-		cairo_set_line_width(cr, 1);
-		cairo_rectangle(cr, this->lX + 3, this->lY + 3, this->lWidth - 6, this->lHeight - 6);
-		cairo_stroke(cr);
-	}
-	else
-	{
-		cout << "DBG:repaint complete" << endl;
-	}
-#endif //SHOW_REPAINT_BOUNDS
-	this->lX = -1;
-	this->lY = -1;
-	this->lWidth = -1;
-	this->lHeight = -1;
-
-	this->page = NULL;
-	this->cr = NULL;
+	finializeDrawing();
 }

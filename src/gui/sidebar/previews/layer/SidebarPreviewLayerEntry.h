@@ -13,17 +13,35 @@
 
 #include "../base/SidebarPreviewBaseEntry.h"
 #include "model/PageRef.h"
+#include "../base/SidebarPreviewBaseEntry.h"
 
 class SidebarPreviewBase;
 
 class SidebarPreviewLayerEntry : public SidebarPreviewBaseEntry
 {
 public:
-	SidebarPreviewLayerEntry(SidebarPreviewBase* sidebar, PageRef page);
+	SidebarPreviewLayerEntry(SidebarPreviewBase* sidebar, PageRef page, int layer);
 	virtual ~SidebarPreviewLayerEntry();
+
+public:
+	/**
+	 * @return What should be renderered
+	 * @override
+	 */
+	virtual PreviewRenderType getRenderType();
+
+	/**
+	 * @return The layer to be rendererd
+	 */
+	int getLayer();
 
 private:
 	XOJ_TYPE_ATTRIB;
+
+	/**
+	 * Layer to render
+	 */
+	int layer;
 
 	friend class PreviewJob;
 };

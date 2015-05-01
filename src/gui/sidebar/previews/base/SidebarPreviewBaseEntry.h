@@ -20,6 +20,19 @@
 
 class SidebarPreviewBase;
 
+typedef enum {
+	/**
+	 * Render the whole page
+	 */
+	RENDER_TYPE_PAGE_PREVIEW = 1,
+
+	/**
+	 * Render only a layer
+	 */
+	RENDER_TYPE_PAGE_LAYER
+} PreviewRenderType;
+
+
 class SidebarPreviewBaseEntry
 {
 public:
@@ -34,6 +47,11 @@ public:
 
 	void repaint();
 	void updateSize();
+
+	/**
+	 * @return What should be renderered
+	 */
+	virtual PreviewRenderType getRenderType() = 0;
 
 private:
 	static gboolean exposeEventCallback(GtkWidget* widget, GdkEventExpose* event, SidebarPreviewBaseEntry* preview);

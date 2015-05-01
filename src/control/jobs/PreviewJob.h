@@ -15,7 +15,10 @@
 
 #include <XournalType.h>
 
+#include <gtk/gtk.h>
+
 class SidebarPreviewBaseEntry;
+class Document;
 
 class PreviewJob : public Job
 {
@@ -33,7 +36,29 @@ public:
 	virtual JobType getType();
 
 private:
+	void initGraphics();
+	void drawBorder();
+	void finishPaint();
+	void drawBackgroundPdf(Document* doc);
+	void drawPage(int layer);
+
+private:
 	XOJ_TYPE_ATTRIB;
+
+	/**
+	 * Graphics buffer
+	 */
+	cairo_surface_t* crBuffer;
+
+	/**
+	 * Graphics drawing
+	 */
+	cairo_t* cr2;
+
+	/**
+	 * Zoom factor
+	 */
+	double zoom;
 
 	SidebarPreviewBaseEntry* sidebarPreview;
 };

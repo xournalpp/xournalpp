@@ -22,6 +22,13 @@ public:
 	SidebarPreviewPageEntry(SidebarPreviewBase* sidebar, PageRef page);
 	virtual ~SidebarPreviewPageEntry();
 
+public:
+	/**
+	 * @return What should be renderered
+	 * @override
+	 */
+	virtual PreviewRenderType getRenderType();
+
 private:
 	XOJ_TYPE_ATTRIB;
 

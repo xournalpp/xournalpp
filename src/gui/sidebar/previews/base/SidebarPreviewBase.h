@@ -31,6 +31,7 @@ public:
 	virtual ~SidebarPreviewBase();
 
 public:
+
 	/**
 	 * Layout the pages to the current size of the sidebar
 	 */
