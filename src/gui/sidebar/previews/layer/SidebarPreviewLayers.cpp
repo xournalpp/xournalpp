@@ -28,4 +28,29 @@ const char* SidebarPreviewLayers::getIconName()
 	return "sidebar-layer-preview.svg";
 }
 
+void SidebarPreviewLayers::updatePreviews()
+{
+	XOJ_CHECK_TYPE(SidebarPreviewLayers);
 
+	// TODO Update previews
+}
+
+void SidebarPreviewLayers::pageSelected(int page)
+{
+	XOJ_CHECK_TYPE(SidebarPreviewLayers);
+
+	// TODO Update previews
+}
+
+void SidebarPreviewLayers::pageSizeChanged(int page)
+{
+	XOJ_CHECK_TYPE(SidebarPreviewLayers);
+	// TODO Update previews
+}
+
+void SidebarPreviewLayers::pageChanged(int page)
+{
+	XOJ_CHECK_TYPE(SidebarPreviewLayers);
+	// TODO Update previews
+
+}

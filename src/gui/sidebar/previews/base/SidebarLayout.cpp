@@ -112,10 +112,8 @@ void SidebarLayout::layout(SidebarPreviewBase* sidebar)
 
 	SidebarRow row(alloc.width);
 
-	for (int i = 0; i < sidebar->previewCount; i++)
+	for (SidebarPreviewPage* p : sidebar->previews)
 	{
-		SidebarPreviewPage* p = sidebar->previews[i];
-
 		if (row.isSpaceFor(p))
 		{
 			row.add(p);

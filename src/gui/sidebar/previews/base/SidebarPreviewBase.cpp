@@ -10,8 +10,6 @@ SidebarPreviewBase::SidebarPreviewBase(Control* control) : AbstractSidebarPage(c
 {
 	XOJ_INIT_TYPE(SidebarPreviewBase);
 
-	this->previews = NULL;
-	this->previewCount = 0;
 	this->backgroundInitialized = false;
 
 	this->layoutmanager = new SidebarLayout();
@@ -19,7 +17,7 @@ SidebarPreviewBase::SidebarPreviewBase(Control* control) : AbstractSidebarPage(c
 
 	this->zoom = 0.15;
 
-	this->selectedPage = -1;
+	this->selectedEntry = -1;
 
 	this->cache = new PdfCache(control->getSettings()->getPdfPageCacheSize());
 
@@ -68,13 +66,11 @@ SidebarPreviewBase::~SidebarPreviewBase()
 
 	g_object_unref(this->table);
 
-	for (int i = 0; i < this->previewCount; i++)
+	for (SidebarPreviewPage* p : this->previews)
 	{
-		delete this->previews[i];
+		delete p;
 	}
-	delete[] this->previews;
-	this->previewCount = 0;
-	this->previews = NULL;
+	this->previews.clear();
 
 	XOJ_RELEASE_TYPE(SidebarPreviewBase);
 }
@@ -131,43 +127,6 @@ void SidebarPreviewBase::layout()
 	this->layoutmanager->layout(this);
 }
 
-void SidebarPreviewBase::updatePreviews()
-{
-	XOJ_CHECK_TYPE(SidebarPreviewBase);
-
-	Document* doc = this->getControl()->getDocument();
-	doc->lock();
-	int len = doc->getPageCount();
-
-	if (this->previewCount == len)
-	{
-		doc->unlock();
-		return;
-	}
-
-	if (this->previews)
-	{
-		for (int i = 0; i < this->previewCount; i++)
-		{
-			delete this->previews[i];
-		}
-		delete[] this->previews;
-	}
-
-	this->previews = new SidebarPreviewPage *[len];
-	this->previewCount = len;
-
-	for (int i = 0; i < len; i++)
-	{
-		SidebarPreviewPage* p = new SidebarPreviewPage(this, doc->getPage(i));
-		this->previews[i] = p;
-		gtk_layout_put(GTK_LAYOUT(this->iconViewPreview), p->getWidget(), 0, 0);
-	}
-
-	layout();
-	doc->unlock();
-}
-
 bool SidebarPreviewBase::hasData()
 {
 	XOJ_CHECK_TYPE(SidebarPreviewBase);
@@ -192,34 +151,6 @@ void SidebarPreviewBase::documentChanged(DocumentChangeType type)
 	}
 }
 
-void SidebarPreviewBase::pageSizeChanged(int page)
-{
-	XOJ_CHECK_TYPE(SidebarPreviewBase);
-
-	if (page < 0 || page >= this->previewCount)
-	{
-		return;
-	}
-	SidebarPreviewPage* p = this->previews[page];
-	p->updateSize();
-	p->repaint();
-
-	layout();
-}
-
-void SidebarPreviewBase::pageChanged(int page)
-{
-	XOJ_CHECK_TYPE(SidebarPreviewBase);
-
-	if (page < 0 || page >= this->previewCount)
-	{
-		return;
-	}
-
-	SidebarPreviewPage* p = this->previews[page];
-	p->repaint();
-}
-
 bool SidebarPreviewBase::scrollToPreview(SidebarPreviewBase* sidebar)
 {
 	XOJ_CHECK_TYPE_OBJ(sidebar, SidebarPreviewBase);
@@ -234,11 +165,11 @@ bool SidebarPreviewBase::scrollToPreview(SidebarPreviewBase* sidebar)
 		}
 	}
 
-	if (sidebar->selectedPage >= 0 &&
-		sidebar->selectedPage < sidebar->previewCount)
+	if (sidebar->selectedEntry >= 0 &&
+		sidebar->selectedEntry < sidebar->previews.size())
 	{
 		gdk_threads_enter();
-		SidebarPreviewPage* p = sidebar->previews[sidebar->selectedPage];
+		SidebarPreviewPage* p = sidebar->previews[sidebar->selectedEntry];
 
 		// scroll to preview
 		GtkAdjustment* hadj = gtk_scrolled_window_get_hadjustment(GTK_SCROLLED_WINDOW(sidebar->scrollPreview));
@@ -266,80 +197,10 @@ bool SidebarPreviewBase::scrollToPreview(SidebarPreviewBase* sidebar)
 void SidebarPreviewBase::pageDeleted(int page)
 {
 	XOJ_CHECK_TYPE(SidebarPreviewBase);
-
-	delete this->previews[page];
-	for (int i = page; i < this->previewCount - 1; i++)
-	{
-		this->previews[i] = this->previews[i + 1];
-	}
-	this->previewCount--;
-	this->previews[this->previewCount] = NULL;
-
-	layout();
 }
 
 void SidebarPreviewBase::pageInserted(int page)
 {
 	XOJ_CHECK_TYPE(SidebarPreviewBase);
-
-	SidebarPreviewPage** lastPreviews = this->previews;
-
-	this->previews = new SidebarPreviewPage *[this->previewCount + 1];
-
-	for (int i = 0; i < page; i++)
-	{
-		this->previews[i] = lastPreviews[i];
-
-		// unselect to prevent problems...
-		this->previews[i]->setSelected(false);
-	}
-
-	for (int i = page; i < this->previewCount; i++)
-	{
-		this->previews[i + 1] = lastPreviews[i];
-
-		// unselect to prevent problems...
-		this->previews[i + 1]->setSelected(false);
-	}
-
-	this->selectedPage = -1;
-
-	this->previewCount++;
-
-	delete[] lastPreviews;
-
-	Document* doc = control->getDocument();
-	doc->lock();
-
-	SidebarPreviewPage* p = new SidebarPreviewPage(this, doc->getPage(page));
-
-	doc->unlock();
-
-	this->previews[page] = p;
-	gtk_layout_put(GTK_LAYOUT(this->iconViewPreview), p->getWidget(), 0, 0);
-
-	layout();
-}
-
-void SidebarPreviewBase::pageSelected(int page)
-{
-	XOJ_CHECK_TYPE(SidebarPreviewBase);
-
-	if (this->selectedPage >= 0 && this->selectedPage < this->previewCount)
-	{
-		this->previews[this->selectedPage]->setSelected(false);
-	}
-	this->selectedPage = page;
-
-	if (this->selectedPage >= 0 && this->selectedPage < this->previewCount)
-	{
-		SidebarPreviewPage* p = this->previews[this->selectedPage];
-		p->setSelected(true);
-		scrollToPreview(this);
-
-		this->toolbar->setButtonEnabled(page != 0 && this->previewCount != 0,
-										page != this->previewCount - 1 && this->previewCount != 0,
-										true, this->previewCount > 1, this->control->getDocument()->getPage(page));
-	}
 }
 

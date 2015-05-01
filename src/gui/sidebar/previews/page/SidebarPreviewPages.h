@@ -33,6 +33,21 @@ public:
 	 */
 	virtual const char* getIconName();
 
+	/**
+	 * Update the preview images
+	 * @overwrite
+	 */
+	virtual void updatePreviews();
+
+public:
+	// DocumentListener interface (only the part which is not handled by SidebarPreviewBase)
+	virtual void pageSizeChanged(int page);
+	virtual void pageChanged(int page);
+	virtual void pageSelected(int page);
+	virtual void pageInserted(int page);
+	virtual void pageDeleted(int page);
+
 private:
 	XOJ_TYPE_ATTRIB;
+
 };

@@ -17,6 +17,8 @@
 
 #include <gtk/gtk.h>
 
+#include <vector>
+
 class PdfCache;
 class SidebarLayout;
 class SidebarPreviewPage;
@@ -37,7 +39,7 @@ public:
 	/**
 	 * Update the preview images
 	 */
-	void updatePreviews();
+	virtual void updatePreviews() = 0;
 
 	/**
 	 * @overwrite
@@ -65,15 +67,12 @@ public:
 	PdfCache* getCache();
 
 public:
-	// DocumentListener interface
+	// DocumentListener interface (only the part handled by SidebarPreviewBase)
 	virtual void documentChanged(DocumentChangeType type);
-	virtual void pageSizeChanged(int page);
-	virtual void pageChanged(int page);
 	virtual void pageInserted(int page);
 	virtual void pageDeleted(int page);
-	virtual void pageSelected(int page);
 
-private:
+protected:
 	/**
 	 * Timeout callback to scroll to a page
 	 */
@@ -83,13 +82,9 @@ private:
 	 * The size of the sidebar has chnaged
 	 */
 	static void sizeChanged(GtkWidget* widget, GtkAllocation* allocation, SidebarPreviewBase* sidebar);
+
 private:
 	XOJ_TYPE_ATTRIB;
-
-	/**
-	 * The widget within the scrollarea with the page icons
-	 */
-	GtkWidget* iconViewPreview;
 
 	/**
 	 * The scrollbar with the icons
@@ -100,17 +95,6 @@ private:
 	 * The Table with the Toolbar and the Scrollbar
 	 */
 	GtkTable* table;
-
-	/**
-	 * The previews
-	 */
-	SidebarPreviewPage** previews;
-	int previewCount;
-
-	/**
-	 * The currently selected page
-	 */
-	int selectedPage;
 
 	/**
 	 * The Zoom of the previews
@@ -132,10 +116,30 @@ private:
 	 */
 	SidebarLayout* layoutmanager;
 
+
+	// Members also used by subclasses
+protected:
+
 	/**
 	 * The Toolbar to move, copy & delete pages
 	 */
 	SidebarToolbar* toolbar;
+
+	/**
+	 * The currently selected entry in the sidebar, starting from 0
+	 * -1 means no valid selection
+	 */
+	int selectedEntry;
+
+	/**
+	 * The widget within the scrollarea with the page icons
+	 */
+	GtkWidget* iconViewPreview;
+
+	/**
+	 * The previews
+	 */
+	std::vector<SidebarPreviewPage*> previews;
 
 	friend class SidebarLayout;
 };
