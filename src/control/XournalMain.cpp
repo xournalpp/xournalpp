@@ -37,20 +37,21 @@ XournalMain::~XournalMain()
 	XOJ_RELEASE_TYPE(XournalMain);
 }
 
-#ifdef ENABLE_NLS
+//it HAS to be done – otherwise such things like boost::algorithm::to_lower wont work, throwing casting exceptions
 void XournalMain::initLocalisation()
 {
 	XOJ_CHECK_TYPE(XournalMain);
 
 	//locale generator
 	boost::locale::generator gen;
+#ifdef ENABLE_NLS
 	gen.add_messages_path(PACKAGE_LOCALE_DIR);
 	gen.add_messages_domain(GETTEXT_PACKAGE);
+#endif //ENABLE_NLS
 
 	std::locale::global(gen("")); //"" - system default locale
 	std::cout.imbue(std::locale());
 }
-#endif //ENABLE_NLS
 
 void XournalMain::checkForErrorlog()
 {
@@ -188,9 +189,7 @@ int XournalMain::run(int argc, char* argv[])
 {
 	XOJ_CHECK_TYPE(XournalMain);
 
-#ifdef ENABLE_NLS
 	this->initLocalisation();
-#endif
 
 	GError* error = NULL;
 	GOptionContext* context = context = g_option_context_new("FILE");
