@@ -21,7 +21,7 @@
 
 #include <zlib.h>
 #include <string>
-using namespace std;
+using std::string;
 
 enum ParserPosition
 {

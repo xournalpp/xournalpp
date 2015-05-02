@@ -31,7 +31,8 @@
 
 #include <clocale>
 #include <iostream>
-using namespace std;
+using std::cout;
+using std::endl;
 
 // TODO LOW PRIO: remove all elements which are complete outside the pages
 // TODO LOW PRIO: remove 0 width line parts

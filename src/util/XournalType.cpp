@@ -6,7 +6,8 @@
 
 #include <stdlib.h>
 #include <iostream>
-using namespace std;
+using std::cout;
+using std::endl;
 
 #ifdef XOJ_MEMORY_CHECK_ENABLED
 

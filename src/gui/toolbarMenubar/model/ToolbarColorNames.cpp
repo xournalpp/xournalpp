@@ -8,7 +8,8 @@
 #include <stdio.h>
 #include <fstream>
 #include <iostream>
-using namespace std;
+using std::cout;
+using std::endl;
 
 ToolbarColorNames::ToolbarColorNames()
 {

@@ -20,11 +20,12 @@
 #include <gdk/gdkkeysyms.h>
 
 #include <iostream>
-using namespace std;
+using std::cout;
+using std::endl;
 
 
 MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control) :
-	GladeGui(gladeSearchPath, "main.glade", "mainWindow")
+		GladeGui(gladeSearchPath, "main.glade", "mainWindow")
 {
 	XOJ_INIT_TYPE(MainWindow);
 

@@ -53,8 +53,12 @@ namespace bf = boost::filesystem;
 #include <glib/gi18n-lib.h>
 #include <gtk/gtk.h>
 
+#include <iostream>
+using std::cout;
+using std::cerr;
+using std::endl;
 #include <vector>
-using namespace std;
+using std::vector;
 
 // TODO Check for error log on startup, also check for emergency save document!
 
@@ -1332,9 +1336,7 @@ void Control::getDefaultPagesize(double& width, double& height)
 				GtkPaperSize* s = (GtkPaperSize*) l->data;
 
 				//it would be nice to make StringUtils method, but now I'm not in the mood - down there is basically compareIgnoreCase
-				using namespace bl;
-				using bl::collator;
-				if (use_facet<collator<char>>(std::locale()).compare(collator_base::secondary,
+				if (std::use_facet<bl::collator<char>>(std::locale()).compare(bl::collator_base::secondary,
 						paper, gtk_paper_size_get_display_name(s)))
 				{
 					size = s;

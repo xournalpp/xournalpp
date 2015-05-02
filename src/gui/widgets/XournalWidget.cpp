@@ -22,7 +22,8 @@
 
 #include <math.h>
 #include <iostream>
-using namespace std;
+using std::cout;
+using std::endl;
 
 static void gtk_xournal_class_init(GtkXournalClass* klass);
 static void gtk_xournal_init(GtkXournal* xournal);

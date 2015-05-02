@@ -36,8 +36,7 @@
 #ifdef RECOGNIZER_DEBUG
 #include <StringUtils.h>
 #include <iostream>
-using namespace std;
-#define RDEBUG(msg) cout << bl::format(CONCAT("ShapeReco::", msg, "\n"))
+#define RDEBUG(msg) std::cout << bl::format(CONCAT("ShapeReco::", msg, "\n"))
 #else
 class no_debug_format
 {

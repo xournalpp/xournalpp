@@ -4,7 +4,8 @@
 #include <gtk/gtk.h>
 
 #include <iostream>
-using namespace std;
+using std::cout;
+using std::endl;
 
 ToolbarData::ToolbarData(bool predefined)
 {

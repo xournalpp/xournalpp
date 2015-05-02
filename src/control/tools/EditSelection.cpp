@@ -22,7 +22,8 @@
 #include <serializing/ObjectInputStream.h>
 
 #include <iostream>
-using namespace std;
+using std::cout;
+using std::endl;
 
 EditSelection::EditSelection(UndoRedoHandler* undo, PageRef page, PageView* view)
 {

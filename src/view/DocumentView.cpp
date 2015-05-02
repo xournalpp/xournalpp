@@ -18,7 +18,8 @@
 
 #ifdef SHOW_REPAINT_BOUNDS
 #include <iostream>
-using namespace std;
+using std::cout;
+using std::endl;
 #endif
 
 DocumentView::DocumentView()
@@ -279,8 +280,7 @@ void DocumentView::drawLayer(cairo_t* cr, Layer* l)
 		gdk_threads_enter();
 		cairo_set_source_rgb(cr, 0, 1, 0);
 		cairo_set_line_width(cr, 1);
-		cairo_rectangle(cr, e->getX(), e->getY(), e->getElementWidth(),
-						e->getElementHeight());
+		cairo_rectangle(cr, e->getX(), e->getY(), e->getElementWidth(), e->getElementHeight());
 		cairo_stroke(cr);
 		gdk_threads_leave();
 #endif // SHOW_ELEMENT_BOUNDS
@@ -295,12 +295,12 @@ void DocumentView::drawLayer(cairo_t* cr, Layer* l)
 				drawed++;
 #endif //SHOW_REPAINT_BOUNDS
 			}
+#ifdef SHOW_REPAINT_BOUNDS
 			else
 			{
-#ifdef SHOW_REPAINT_BOUNDS
 				notDrawed++;
-#endif //SHOW_REPAINT_BOUNDS
 			}
+#endif //SHOW_REPAINT_BOUNDS
 
 		}
 		else

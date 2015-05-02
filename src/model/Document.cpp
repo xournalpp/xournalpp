@@ -10,8 +10,9 @@
 #include <glib/gi18n-lib.h>
 
 #include <string.h>
-
-using namespace std;
+#include <iostream>
+using std::cout;
+using std::endl;
 
 Document::Document(DocumentHandler* handler)
 {

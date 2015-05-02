@@ -10,7 +10,8 @@
 #include <unistd.h>
 
 #include <iostream>
-using namespace std;
+using std::cout;
+using std::endl;
 
 GdkColor Util::intToGdkColor(int c)
 {

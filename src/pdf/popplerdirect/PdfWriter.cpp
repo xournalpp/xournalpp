@@ -4,7 +4,8 @@
 #include <GzHelper.h>
 
 #include <iostream>
-using namespace std;
+using std::cout;
+using std::endl;
 
 bool PdfWriter::compressPdfOutput = true;
 

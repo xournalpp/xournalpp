@@ -3,8 +3,12 @@
 #include "cfg.h"
 #include "util/Util.h"
 
+#include <exception>
+using std::exception;
 #include <iostream>
-using namespace std;
+using std::cout;
+using std::endl;
+using std::pair;
 
 #include <boost/filesystem.hpp>
 namespace bf = boost::filesystem;
@@ -164,7 +168,7 @@ void MetadataManager::cleanupMetadata()
 	
 	loadConfigFile();
 	
-	vector<pair<string, int>> elements;
+	std::vector<std::pair<string, int>> elements;
 	
 	for (bp::ptree::value_type p : *config)
 	{
@@ -172,8 +176,8 @@ void MetadataManager::cleanupMetadata()
 		{
 			try
 			{
-				elements.push_back(pair<string, int>(p.first,
-						config->get_child(getINIpath(p.first)).get<int>("atime")));
+				elements.push_back(std::pair<string, int>(p.first,
+								   config->get_child(getINIpath(p.first)).get<int>("atime")));
 			}
 			catch (exception& e)
 			{
@@ -183,7 +187,7 @@ void MetadataManager::cleanupMetadata()
 	}
 	
 	std::sort(elements.begin(), elements.end(),
-		[](const pair<string, int> &left, const pair<string, int> &right) {
+		[](const std::pair<string, int> &left, const std::pair<string, int> &right) {
 			return left.second >= right.second;
 		});
 	
@@ -193,7 +197,7 @@ void MetadataManager::cleanupMetadata()
 	}
 
 	bp::ptree* tmpTree = new bp::ptree();
-	for (pair<string, int> p : elements)
+	for (std::pair<string, int> p : elements)
 	{
 		tmpTree->add_child(getINIpath(p.first), config->get_child(getINIpath(p.first)));
 	}

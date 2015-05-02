@@ -6,7 +6,8 @@
 #include "model/TexImage.h"
 
 #include <iostream>
-using namespace std;
+using std::cout;
+using std::endl;
 
 LatexGlade::LatexGlade(GladeSearchpath* gladeSearchPath) : GladeGui(gladeSearchPath, "texdialog.glade", "texDialog")
 {

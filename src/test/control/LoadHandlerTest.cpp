@@ -9,14 +9,13 @@
  * @license GNU GPLv2 or later
  */
 
+#include "control/LoadHandler.h"
+
 #include <cppunit/extensions/HelperMacros.h>
 
-#include "../../control/LoadHandler.h"
-
 #include <ctime>
-#include "stdlib.h"
-
-using namespace std;
+using std::clock;
+#include <stdlib.h>
 
 class LoadHandlerTest: public CppUnit::TestFixture {
 	CPPUNIT_TEST_SUITE(LoadHandlerTest);

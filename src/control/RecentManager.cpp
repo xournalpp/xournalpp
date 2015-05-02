@@ -8,7 +8,8 @@
 using boost::filesystem::path;
 
 #include <iostream>
-using namespace std;
+using std::cout;
+using std::endl;
 
 #define MIME "application/x-xoj"
 #define MIME_PDF "application/x-pdf"

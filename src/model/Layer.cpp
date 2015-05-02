@@ -2,7 +2,9 @@
 
 #include <Stacktrace.h>
 
-using namespace std;
+#include <iostream>
+using std::cout;
+using std::endl;
 
 Layer::Layer()
 {

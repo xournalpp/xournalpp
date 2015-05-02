@@ -15,7 +15,9 @@
 #include <glib.h>
 
 #include <iostream>
-using namespace std;
+using std::cout;
+using std::cerr;
+using std::endl;
 
 LatexAction::LatexAction(string myTex, double tArea)
 {

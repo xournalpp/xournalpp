@@ -4,10 +4,10 @@
 
 #include <boost/iostreams/copy.hpp>
 #include <boost/iostreams/filtering_streambuf.hpp>
+namespace bio = boost::iostreams;
 
-#include <iostream>
 #include <sstream>
-using namespace std;
+using std::stringstream;
 
 GzHelper::GzHelper() { }
 
@@ -15,25 +15,28 @@ GzHelper::~GzHelper() { }
 
 string GzHelper::gzcompress(const string& str, const bio::zlib_params& params)
 {	
-    std::stringstream compressed;
-    std::stringstream decompressed;
+    stringstream decompressed;
     decompressed << str;
-    boost::iostreams::filtering_istreambuf out;
 	
+    bio::filtering_istreambuf out;
 	out.push(bio::zlib_compressor(params));
     out.push(decompressed);
+	
+    stringstream compressed;
     bio::copy(out, compressed);
     return compressed.str();
 }
 
 string GzHelper::gzuncompress(const string& str)
 {
-    std::stringstream compressed;
-    std::stringstream decompressed;
+    stringstream compressed;
     compressed << str;
-    bio::filtering_istreambuf in;
+    
+	bio::filtering_istreambuf in;
     in.push(bio::zlib_decompressor());
     in.push(compressed);
+	
+    stringstream decompressed;
     bio::copy(in, decompressed);
     return decompressed.str();
 }

@@ -20,8 +20,13 @@
 namespace bf = boost::filesystem;
 
 #include <string>
+using std::string;
 #include <iostream>
-using namespace std;
+using std::cout;
+using std::cerr;
+using std::endl;
+#include <vector>
+using std::vector;
 
 #ifdef ENABLE_PYTHON
 #include "plugin/python/PythonRunner.h"
