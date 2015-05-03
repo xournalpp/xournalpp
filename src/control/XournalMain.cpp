@@ -1,7 +1,6 @@
 #include "XournalMain.h"
 
 #include "Control.h"
-#include "LoadHandler.h"
 
 #include "cfg.h"
 #include "gui/GladeSearchpath.h"

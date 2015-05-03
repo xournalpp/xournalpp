@@ -73,6 +73,14 @@ AS_IF([test "x$enable_cppunit" == "xyes"], [
     AC_DEFINE([XOJ_CPPUNIT],[1],[Build CppUnit test instead of xournalpp application])
 ])
 
+dnl Enable Layers sidebar
+AC_ARG_ENABLE([layers-sidebar],
+    AS_HELP_STRING([--enable-layers-sidebar], [Enable Layers sidebar]))
+
+AS_IF([test "x$enable_layers_sidebar" == "xyes"], [
+    AC_DEFINE([XOJ_LAYERS_SIDEBAR],[1],[Enable Layers sidebar])
+])
+
 AC_MSG_CHECKING([whether Overlay Scrollbar is enabled])
 
 AC_ARG_ENABLE([os],

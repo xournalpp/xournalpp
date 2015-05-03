@@ -1,7 +1,7 @@
 /*
  * Xournal++
  *
- * This small programm extracts a preview out of a xournal file
+ * This small program extracts a preview out of a xoj file
  *
  * @author MarPiRK
  * https://github.com/xournalpp/xournalpp

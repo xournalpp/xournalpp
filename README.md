@@ -84,5 +84,8 @@ much more portable in this way.
 See [Github:xournalpp](http://github.com/xournalpp/xournalpp) for current
 development.
 
-See our [Trello page](https://trello.com/xournal) for current roadmap and future
+See our [Trello page](https://trello.com/xournalpp) for current roadmap and future
 developement ideas.
+
+If you feel like joining development please contact @MarPiRK, so you'll be added
+to our Slack group.

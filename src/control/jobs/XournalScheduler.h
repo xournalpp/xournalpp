@@ -13,6 +13,7 @@
 
 #pragma once
 
+#include "control/jobs/Scheduler.h"
 #include "gui/sidebar/previews/page/SidebarPreviewPageEntry.h"
 #include "gui/PageView.h"
 

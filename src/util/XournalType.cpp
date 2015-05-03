@@ -42,6 +42,11 @@ void xoj_type_initMutex()
 
 const char* xoj_type_getName(int id)
 {
+	if (mutex)
+	{
+		g_mutex_lock(mutex);
+	}
+	
 	if (!listInited)
 	{
 		initXournalClassList();

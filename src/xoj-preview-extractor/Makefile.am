@@ -2,8 +2,7 @@
 bin_PROGRAMS = xournal-thumbnailer
 
 xournal_thumbnailer_SOURCES = \
-	xournal-thumbnailer.cpp \
-	../util/XojPreviewExtractor.cpp
+	xournal-thumbnailer.cpp
 
 AM_CPPFLAGS = \
 	-DPACKAGE_LOCALE_DIR=\""$(prefix)/$(DATADIRNAME)/locale"\" \

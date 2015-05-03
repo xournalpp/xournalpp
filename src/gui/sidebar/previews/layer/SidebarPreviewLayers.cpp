@@ -1,8 +1,9 @@
 #include "SidebarPreviewLayers.h"
 
+#include "SidebarPreviewLayerEntry.h"
+
 #include "control/Control.h"
 #include "control/PdfCache.h"
-#include "SidebarPreviewLayerEntry.h"
 
 SidebarPreviewLayers::SidebarPreviewLayers(Control* control) : SidebarPreviewBase(control)
 {

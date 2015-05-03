@@ -13,7 +13,6 @@
 
 #include "../base/SidebarPreviewBaseEntry.h"
 #include "model/PageRef.h"
-#include "../base/SidebarPreviewBaseEntry.h"
 
 class SidebarPreviewBase;
 

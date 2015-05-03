@@ -1,7 +1,6 @@
 #include "SidebarPreviewBaseEntry.h"
 
 #include "SidebarPreviewBase.h"
-#include "SidebarPreviews.h"
 
 #include "control/Control.h"
 #include "gui/Shadow.h"
