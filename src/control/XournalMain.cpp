@@ -7,7 +7,7 @@
 #include "gui/MainWindow.h"
 #include "gui/toolbarMenubar/model/ToolbarColorNames.h"
 #include "gui/XournalView.h"
-#include "LoadHandler.h"
+#include "xojfile/LoadHandler.h"
 #include "pdf/popplerdirect/PdfExport.h"
 
 #include <gtk/gtk.h>

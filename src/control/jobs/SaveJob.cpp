@@ -5,7 +5,7 @@
 #define BOOST_NO_CXX11_SCOPED_ENUMS
 
 #include "control/Control.h"
-#include "control/SaveHandler.h"
+#include "control/xojfile/SaveHandler.h"
 #include "view/DocumentView.h"
 
 #include <config.h>

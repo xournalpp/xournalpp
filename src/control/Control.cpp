@@ -21,7 +21,7 @@
 #include "jobs/BlockingJob.h"
 #include "jobs/PdfExportJob.h"
 #include "jobs/SaveJob.h"
-#include "LoadHandler.h"
+#include "xojfile/LoadHandler.h"
 #include "model/BackgroundImage.h"
 #include "model/FormatDefinitions.h"
 #include "model/XojPage.h"

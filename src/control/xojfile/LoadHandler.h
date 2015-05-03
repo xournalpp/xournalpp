@@ -1,7 +1,7 @@
 /*
  * Xournal++
  *
- * Loads a document
+ * Loads an .xoj document
  *
  * @author Xournal Team
  * http://xournal.sf.net
@@ -9,14 +9,14 @@
  * @license GPL
  */
 
-#ifndef __LOADHANDLER_H__
-#define __LOADHANDLER_H__
+#pragma once
 
 #include "../model/Document.h"
 #include "../model/Stroke.h"
 #include "../model/Text.h"
 #include "../model/Image.h"
 #include "../model/TexImage.h"
+
 #include <XournalType.h>
 #include <zlib.h>
 #include <string>
@@ -93,8 +93,6 @@ private:
 	bool openFile(string filename);
 	bool parseXml();
 
-	bool parseColor(const char* text, int& color);
-
 	static void parserText(GMarkupParseContext* context, const gchar* text,
 	                       gsize text_len, gpointer userdata,
 	                       GError** error);
@@ -157,6 +155,7 @@ private:
 
 	DocumentHandler dHanlder;
 	Document doc;
+
+	friend class LoadHandlerHelper;
 };
 
-#endif /* __LOADHANDLER_H__ */

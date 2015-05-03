@@ -9,7 +9,9 @@
  * @license GPL
  */
 
-#include "jobs/ProgressListener.h"
+#include "SaveHandler.h"
+
+#include "control/jobs/ProgressListener.h"
 #include "model/Stroke.h"
 #include "model/Text.h"
 #include "model/Image.h"
@@ -17,12 +19,11 @@
 #include "model/Document.h"
 #include "model/Layer.h"
 #include "model/BackgroundImage.h"
-#include "SaveHandler.h"
-#include "xml/XmlNode.h"
-#include "xml/XmlTextNode.h"
-#include "xml/XmlImageNode.h"
-#include "xml/XmlTexNode.h"
-#include "xml/XmlPointNode.h"
+#include "control/xml/XmlNode.h"
+#include "control/xml/XmlTextNode.h"
+#include "control/xml/XmlImageNode.h"
+#include "control/xml/XmlTexNode.h"
+#include "control/xml/XmlPointNode.h"
 
 #include <config.h>
 
@@ -333,7 +334,8 @@ void SaveHandler::visitPage(XmlNode* root, PageRef p, Document* doc, int id)
 		break;
 	}
 
-	if (p->getLayers()->empty()) // no layer, but we need to write one layer, else the old Xournal cannot read the file
+	// no layer, but we need to write one layer, else the old Xournal cannot read the file
+	if (p->getLayers()->empty())
 	{
 		XmlNode* layer = new XmlNode("layer");
 		page->addChild(layer);

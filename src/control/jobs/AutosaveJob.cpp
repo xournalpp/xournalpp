@@ -1,7 +1,7 @@
 #include "AutosaveJob.h"
 
 #include "control/Control.h"
-#include "control/SaveHandler.h"
+#include "control/xojfile/SaveHandler.h"
 
 AutosaveJob::AutosaveJob(Control* control)
 {

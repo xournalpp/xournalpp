@@ -9,13 +9,14 @@
  * @license GNU GPLv2 or later
  */
 
+#include <CrashHandler.h>
+#include <Stacktrace.h>
+
 #include <cppunit/CompilerOutputter.h>
 #include <cppunit/extensions/TestFactoryRegistry.h>
 #include <cppunit/ui/text/TestRunner.h>
 
 #include <gtk/gtk.h>
-#include <CrashHandler.h>
-#include <Stacktrace.h>
 
 /**
  * Main Entry point for CppUnit Tests

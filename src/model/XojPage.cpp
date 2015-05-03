@@ -8,6 +8,7 @@ XojPage::XojPage(double width, double heigth)
 	XOJ_INIT_TYPE(XojPage);
 
 	this->pdfBackgroundPage = -1;
+	this->backgroundColor = 0xffffff;
 	this->bgType = BACKGROUND_TYPE_LINED;
 
 	this->width = width;
@@ -21,7 +22,10 @@ XojPage::~XojPage()
 {
 	XOJ_CHECK_TYPE(XojPage);
 
-	for (Layer* l : this->layer) delete l;
+	for (Layer* l : this->layer)
+	{
+		delete l;
+	}
 
 	XOJ_RELEASE_TYPE(XojPage);
 }

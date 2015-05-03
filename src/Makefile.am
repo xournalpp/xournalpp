@@ -50,15 +50,16 @@ xournalpp_SOURCES = \
 	control/xml/XmlPointNode.cpp \
 	control/xml/XmlStrokeNode.cpp \
 	control/xml/XmlTextNode.cpp \
+	control/xojfile/LoadHandler.cpp \
+	control/xojfile/LoadHandlerHelper.cpp \
+	control/xojfile/SaveHandler.cpp \
 	control/Actions.cpp \
 	control/ClipboardHandler.cpp \
 	control/ExportHandler.cpp \
 	control/Control.cpp \
-	control/LoadHandler.cpp \
 	control/PdfCache.cpp \
 	control/PrintHandler.cpp \
 	control/RecentManager.cpp \
-	control/SaveHandler.cpp \
 	control/ScrollHandler.cpp \
 	control/SearchControl.cpp \
 	control/Tool.cpp \
