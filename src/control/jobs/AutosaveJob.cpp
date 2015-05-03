@@ -42,7 +42,6 @@ void AutosaveJob::run()
 	path filename = doc->getFilename();
 	doc->unlock();
 
-	// TODO: incrementel autosave
 	if (filename.empty())
 	{
 		filename = Util::getAutosaveFilename();

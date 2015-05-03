@@ -1,11 +1,5 @@
 #include "Tool.h"
 
-// TODO: NEXT-RELEASE add fill tool
-// TODO: NEXT-RELEASE allow grouping
-// TODO: NEXT-RELEASE allow drag & drop of images and text
-// TODO LOW PRIO select object: best match instead of first match
-// TODO LOW PRIO: rouler every 90° latch
-
 Tool::Tool(string name, ToolType type, int color, bool enableColor,
 		   bool enableSize, bool enableRuler, bool enableRectangle,
 		   bool enableCircle, bool enableArrow, bool enableShapreRecognizer,

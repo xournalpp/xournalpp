@@ -21,7 +21,8 @@ using namespace std;
 class LoadHandlerTest: public CppUnit::TestFixture {
 	CPPUNIT_TEST_SUITE(LoadHandlerTest);
 
-	CPPUNIT_TEST(testSpeed);
+	// Manual interpreted tests
+	// CPPUNIT_TEST(testSpeed);
 
 	CPPUNIT_TEST(testLoad1);
 	CPPUNIT_TEST(testLoad1Unzipped);
@@ -47,21 +48,22 @@ public:
 		system(buffer);
 	}
 
-	void testSpeed()
-	{
-		printf("== Speed ==\n");
-		clock_t begin = clock();
-
-		LoadHandler handler;
-		Document* doc = handler.loadDocument("testfiles/big-test2.xoj");
-
-		clock_t end = clock();
-
-		printMemory();
-
-		double elapsed_secs = double(end - begin) / CLOCKS_PER_SEC;
-		printf("Time to load document NEW: %lf\n", elapsed_secs);
-	}
+	// Manual interpreted tests
+//	void testSpeed()
+//	{
+//		printf("== Speed ==\n");
+//		clock_t begin = clock();
+//
+//		LoadHandler handler;
+//		Document* doc = handler.loadDocument("testfiles/big-test2.xoj");
+//
+//		clock_t end = clock();
+//
+//		printMemory();
+//
+//		double elapsed_secs = double(end - begin) / CLOCKS_PER_SEC;
+//		printf("Time to load document NEW: %lf\n", elapsed_secs);
+//	}
 
 	void testLoad1()
 	{
@@ -84,7 +86,6 @@ public:
 
 	void testLoad1Unzipped()
 	{
-		/*
 		LoadHandler handler;
 		Document* doc = handler.loadDocument("testfiles/test1.unzipped.xoj");
 
@@ -100,7 +101,6 @@ public:
 		Text* text = (Text*) element;
 
 		CPPUNIT_ASSERT_EQUAL(string("12345"), text->getText());
-		*/
 	}
 };
 

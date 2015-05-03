@@ -32,10 +32,6 @@
 #include <iostream>
 using namespace std;
 
-// TODO LOW PRIO: remove all elements which are complete outside the pages
-// TODO LOW PRIO: remove 0 width line parts
-// TODO NEXT-RELEASE: Save Shapes as shapes instead of lines
-
 SaveHandler::SaveHandler()
 {
 	XOJ_INIT_TYPE(SaveHandler);
@@ -111,7 +107,6 @@ void SaveHandler::prepareSave(Document* doc)
 
 string SaveHandler::getColorStr(int c, unsigned char alpha)
 {
-	//TODO rewrite
 	char* str = g_strdup_printf("#%08x", c << 8 | alpha);
 	string color = str;
 	g_free(str);

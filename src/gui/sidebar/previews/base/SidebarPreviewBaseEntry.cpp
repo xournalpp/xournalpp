@@ -5,8 +5,6 @@
 #include "SidebarPreviewBase.h"
 #include "view/PdfView.h"
 
-// TODO: allow drag & drop reordering of pages
-
 SidebarPreviewBaseEntry::SidebarPreviewBaseEntry(SidebarPreviewBase* sidebar, PageRef page)
 {
 	XOJ_INIT_TYPE(SidebarPreviewBaseEntry);

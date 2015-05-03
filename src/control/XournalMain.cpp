@@ -202,7 +202,6 @@ int XournalMain::run(int argc, char* argv[])
 #endif
 	int openAtPageNumber = -1;
 
-	//TODO rewrite with boost::program_options
 	GOptionEntry options[] = {
 		{ "pdf-no-compress",   0, 0, G_OPTION_ARG_NONE,           &optNoPdfCompress, "Don't compress PDF files (for debugging)", NULL },
 		{ "create-pdf",      'p', 0, G_OPTION_ARG_FILENAME,       &pdfFilename,      "PDF output filename", NULL },

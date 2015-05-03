@@ -27,7 +27,6 @@ namespace bi = boost::iostreams;
 namespace ba = boost::algorithm;
 using namespace std;
 
-//TODO with Glib::Base64
 const char BASE64_TABLE[256] = {
 	-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
 	-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,

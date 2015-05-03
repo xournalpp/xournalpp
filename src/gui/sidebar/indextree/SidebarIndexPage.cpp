@@ -175,7 +175,6 @@ bool SidebarIndexPage::treeBookmarkSelected(GtkWidget* treeview, SidebarIndexPag
 						}
 					}
 
-					// TODO LOW PRIO / OPTIONAL?: Manage scroll to left coordinate and change zoom if dest->shouldChangeZoom()
 				}
 			}
 			g_object_unref(link);

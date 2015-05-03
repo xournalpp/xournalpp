@@ -17,7 +17,6 @@
 
 #include <map>
 
-//TODO rewrite with pugixml
 #include <libxml/xmlreader.h>
 #include <glib.h>
 

@@ -495,8 +495,6 @@ UndoAction* EditSelectionContents::copySelection(PageRef page, PageView *view, d
 		new_elems.push_back(ec);
 	}
 
-	// TODO: implement this more efficiently: rerendering the entire
-	//       page is not necessary...
 	view->rerenderPage();
 
 	return new InsertsUndoAction(page, layer, new_elems);

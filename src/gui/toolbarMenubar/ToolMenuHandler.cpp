@@ -402,8 +402,6 @@ void ToolMenuHandler::initToolItems()
 
 	tbInsertNewPage->setPopupMenu(newPagePopup);
 
-	// TODO LOW PRIO: check for Stock icons (Mail from 04.01.2010 to Xournal mailinglist) gtk_icon_theme_load_icon
-
 	addToolItem(new ToolButton(listener, gui, "HILIGHTER", ACTION_TOOL_HILIGHTER, GROUP_TOOL, true,
 							   "tool_highlighter.png", _("Hilighter"), gui->get("menuToolsHighlighter")));
 	addToolItem(new ToolButton(listener, gui, "TEXT", ACTION_TOOL_TEXT, GROUP_TOOL, true,

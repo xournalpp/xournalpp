@@ -136,7 +136,6 @@ bool SaveJob::save()
 	path filename = doc->getFilename();
 	doc->unlock();
 
-	// TODO: better backup handler
 	if (doc->shouldCreateBackupOnSave())
 	{
 		path backup = filename.parent_path();

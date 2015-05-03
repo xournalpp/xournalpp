@@ -2419,7 +2419,7 @@ bool Control::openFile(path filename, int scrollToPage)
 		else if (res == 1) // select another PDF background
 		{
 			bool attachToDocument = false;
-				path pdfFilename = XojOpenDlg::showOpenDialog((GtkWindow*) *win, this->settings, true, attachToDocument);
+			path pdfFilename = XojOpenDlg::showOpenDialog((GtkWindow*) *win, this->settings, true, attachToDocument);
 			if (!pdfFilename.empty())
 			{
 				h.setPdfReplacement(pdfFilename.string(), attachToDocument);

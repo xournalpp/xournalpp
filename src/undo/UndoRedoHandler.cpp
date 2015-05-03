@@ -8,8 +8,6 @@
 #include <boost/format.hpp>
 #include <stdio.h>
 
-// TODO LOW PRIO: add memory limit
-
 #ifdef UNDO_TRACE
 
 void printAction(UndoAction* action)
