@@ -20,6 +20,7 @@ libutil_la_SOURCES = \
 	Range.cpp \
 	Rectangle.cpp \
 	Util.cpp \
+	XojPreviewExtractor.cpp \
 	XInputUtils.cpp \
 	XournalType.cpp
 

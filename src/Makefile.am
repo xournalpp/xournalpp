@@ -199,7 +199,8 @@ xournalpp_SOURCES = \
 if XOJ_CPPUNIT
 xournalpp_SOURCES += \
 	test/TestMain.cpp \
-	test/control/LoadHandlerTest.cpp
+	test/control/LoadHandlerTest.cpp \
+	test/util/XojPreviewExtractorTest.cpp
 else
 xournalpp_SOURCES += \
 	Xournalpp.cpp
