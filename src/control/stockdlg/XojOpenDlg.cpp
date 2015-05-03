@@ -115,7 +115,7 @@ void XojOpenDlg::updatePreviewCallback(GtkFileChooser* fileChooser, void* userDa
 	}
 
 	GError* error = NULL;
-	GInputStream* in = g_memory_input_stream_new_from_data(extractor.getData(), extractor.getDataLength(), NULL);
+	GInputStream* in = g_memory_input_stream_new_from_data(extractor.getData().c_str(), extractor.getData().length(), NULL);
 	GdkPixbuf* pixbuf = gdk_pixbuf_new_from_stream(in, NULL, &error);
 	g_input_stream_close(in, NULL, &error);
 

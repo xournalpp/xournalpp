@@ -1,42 +1,36 @@
 #include "XojPreviewExtractor.h"
 
-#include <zlib.h>
+#include <boost/iostreams/filter/gzip.hpp>
+#include <boost/iostreams/filtering_streambuf.hpp>
+namespace bio = boost::iostreams;
 
-/**
- * Constructor
- */
-XojPreviewExtractor::XojPreviewExtractor()
-{
-	this->data = NULL;
-	this->dataLength = 0;
-}
+#include <glibmm/base64.h>
 
-/**
- * Destructor
- */
-XojPreviewExtractor::~XojPreviewExtractor()
-{
-	g_free(this->data);
-	this->data = NULL;
-}
+#include <cstring>
+#include <iostream>
+using std::istream;
+#include <fstream>
+using std::ifstream;
 
+#define TAG_PREVIEW_NAME "preview"
+#define TAG_PAGE_NAME "page"
+#define BUF_SIZE 8192
 
 /**
  * @return The preview data, should be a binary PNG
  */
-const unsigned char* XojPreviewExtractor::getData() const
+string XojPreviewExtractor::getData() const
 {
 	return this->data;
 }
 
-/**
- * @return Length of the data array
- */
-gsize XojPreviewExtractor::getDataLength() const
-{
-	return this->dataLength;
-}
-
+#define CLOSE		\
+	if (gzip)		\
+	{				\
+		delete in;	\
+	}				\
+	ifile.close();	\
+	return 
 
 /**
  * Try to read the preview from file
@@ -45,65 +39,90 @@ gsize XojPreviewExtractor::getDataLength() const
  */
 PreviewExtractResult XojPreviewExtractor::readFile(std::string file)
 {
-	gzFile inputFile = gzopen(file.c_str(), "r");
-	char buffer[2048]; // 2k
+	//check file extensions
+	string ext = file.substr(file.length() - 4, file.length());
+	for (int i = 0; i < ext.length(); i++)
+	{
+		if (tolower(ext[i]) != ".xoj"[i])
+		{
+			return PREVIEW_RESULT_BAD_FILE_EXTENSION;
+		}
+	}
 
-	if (inputFile == NULL)
+	//open input file
+	ifstream ifile(file, ifstream::in | ifstream::binary);
+	if (!ifile.is_open())
 	{
 		return PREVIEW_RESULT_COULD_NOT_OPEN_FILE;
 	}
 
-	std::string data;
-	std::string preview;
-
-	PreviewExtractResult result = PREVIEW_RESULT_ERROR_READING_PREVIEW;
-
-	do {
-		int count = gzread(inputFile, buffer, sizeof(buffer));
-		if (count == 0)
-		{
-			result = PREVIEW_RESULT_ERROR_READING_PREVIEW;
-			break;
-		}
-		data.append(buffer, count);
-
-		// End of preview found, we don't need more of the file
-		size_t posPreviewEnd = data.find("</preview>");
-		if (posPreviewEnd != std::string::npos)
-		{
-			size_t posPreviewStart = data.find("<preview>");
-			if (posPreviewStart == std::string::npos)
-			{
-				result = PREVIEW_RESULT_ERROR_READING_PREVIEW;
-				break;
-			}
-
-			preview = data.substr(posPreviewStart + 9, posPreviewEnd - posPreviewStart - 9);
-			result = PREVIEW_RESULT_IMAGE_READ;
-
-			break;
-		}
-
-		// The content has started, but there is no preview
-		if (data.find("<page") != std::string::npos)
-		{
-			result = PREVIEW_RESULT_NO_PREVIEW;
-			break;
-		}
-
-	} while(data.size() < 20480); // max, 20k
-
-	data.clear();
-	gzclose(inputFile);
-
-	if (preview.size() > 0)
+	istream* in;
+	bio::filtering_istreambuf inbuf;
+	bool gzip;
+	
+	//check for gzip magic header
+	if (ifile.get() == 0x1F && ifile.get() == 0x8B)
 	{
-		// free old buffer (if any)
-		g_free(this->data);
-		this->data = g_base64_decode (preview.c_str(), &this->dataLength);
+		gzip = true;
+		ifile.seekg(0); //seek back to beginning
+		
+		inbuf.push(bio::gzip_decompressor());
+		inbuf.push(ifile);
+
+		in = new istream(&inbuf);
+	}
+	else
+	{
+		gzip = false;
+		in = &ifile;
+	}
+	
+	char buf[BUF_SIZE];
+	bool inPreview = false;
+	bool inTag = false;
+	string preview;
+	while (!in->eof())
+	{
+		if (in->peek() == '<')
+		{
+			in->ignore();
+			inTag = true;
+			continue;
+		}
+		
+		in->get(buf, BUF_SIZE, '<');
+		if (!inPreview)
+		{
+			if (inTag)
+			{
+				if (strncmp(TAG_PREVIEW_NAME, buf, sizeof(TAG_PREVIEW_NAME) - 1) == 0)
+				{
+					inPreview = true;
+					preview += (buf + sizeof(TAG_PREVIEW_NAME));
+				}
+				else if (strncmp(TAG_PAGE_NAME, buf, sizeof(TAG_PAGE_NAME) - 1) == 0)
+				{
+					CLOSE PREVIEW_RESULT_NO_PREVIEW;
+				}
+				inTag = false;
+			}
+		}
+		else
+		{
+			if (inTag)
+			{
+				this->data = Glib::Base64::decode(preview);
+				
+				CLOSE PREVIEW_RESULT_IMAGE_READ;
+			}
+			else
+			{
+				preview += buf;
+			}
+		}
 	}
 
-	return result;
+	CLOSE PREVIEW_RESULT_ERROR_READING_PREVIEW;
 }
 
 

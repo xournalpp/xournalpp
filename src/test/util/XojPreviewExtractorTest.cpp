@@ -21,6 +21,7 @@ class XojPreviewExtractorTest: public CppUnit::TestFixture {
 	CPPUNIT_TEST_SUITE(XojPreviewExtractorTest);
 
 	CPPUNIT_TEST(testNonExistingFile);
+	CPPUNIT_TEST(testExtensionCheck);
 	CPPUNIT_TEST(testLoadGzipped);
 	CPPUNIT_TEST(testLoadGzipped2);
 	CPPUNIT_TEST(testLoad1Unzipped);
@@ -46,15 +47,26 @@ public:
 		CPPUNIT_ASSERT_EQUAL(PREVIEW_RESULT_COULD_NOT_OPEN_FILE, result);
 	}
 
+	void testExtensionCheck()
+	{
+		XojPreviewExtractor extractor;
+		PreviewExtractResult result = extractor.readFile("testfiles/THIS FILE DOES NOT EXIST.xoi");
+
+		CPPUNIT_ASSERT_EQUAL(PREVIEW_RESULT_BAD_FILE_EXTENSION, result);
+		
+		result = extractor.readFile("testfiles/THIS FILE DOES NOT EXIST.xOj");
+
+		CPPUNIT_ASSERT_EQUAL(PREVIEW_RESULT_COULD_NOT_OPEN_FILE, result);
+	}
+
 	void testLoadGzipped()
 	{
 		XojPreviewExtractor extractor;
 		PreviewExtractResult result = extractor.readFile("testfiles/preview-test.xoj");
 
 		CPPUNIT_ASSERT_EQUAL(PREVIEW_RESULT_IMAGE_READ, result);
-
-		CPPUNIT_ASSERT_EQUAL((gsize)17, extractor.getDataLength());
-		CPPUNIT_ASSERT_EQUAL(string("CppUnitTestString"), string((const char*)extractor.getData()));
+		
+		CPPUNIT_ASSERT_EQUAL(string("CppUnitTestString"), string(extractor.getData()));
 	}
 
 	void testLoadGzipped2()
@@ -64,7 +76,7 @@ public:
 
 		CPPUNIT_ASSERT_EQUAL(PREVIEW_RESULT_IMAGE_READ, result);
 
-		CPPUNIT_ASSERT_EQUAL((gsize)2856, extractor.getDataLength());
+		CPPUNIT_ASSERT_EQUAL((std::string::size_type) 2856, extractor.getData().length());
 	}
 
 	void testLoad1Unzipped()
@@ -74,8 +86,7 @@ public:
 
 		CPPUNIT_ASSERT_EQUAL(PREVIEW_RESULT_IMAGE_READ, result);
 
-		CPPUNIT_ASSERT_EQUAL((gsize)17, extractor.getDataLength());
-		CPPUNIT_ASSERT_EQUAL(string("CppUnitTestString"), string((const char*)extractor.getData()));
+		CPPUNIT_ASSERT_EQUAL(string("CppUnitTestString"), string(extractor.getData()));
 	}
 
 	void testNoPreview()

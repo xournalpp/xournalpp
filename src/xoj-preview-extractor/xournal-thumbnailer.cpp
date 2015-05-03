@@ -9,26 +9,22 @@
  * @license GPL
  */
 
-#include <boost/iostreams/filter/gzip.hpp>
-#include <boost/iostreams/filtering_streambuf.hpp>
+#include "../util/XojPreviewExtractor.h"
+
 #include <boost/locale/format.hpp>
-namespace bi = boost::iostreams;
 namespace bl = boost::locale;
 
-#include <glibmm/base64.h>
-
-#include <cstring>
-#include <string>
-#include <iostream>
 #include <fstream>
-using namespace std;
+using std::ofstream;
+#include <iostream>
+using std::cerr;
+using std::cout;
+using std::endl;
+#include <string>
+using std::string;
 
 #define ENABLE_NLS 0								//it's not yet implemendet, so including it is pointless
 #define LOG_MSG_PREFIX "xoj-preview-extractor: "
-
-#define TAG_PREVIEW_NAME "preview"
-#define TAG_PAGE_NAME "page"
-#define BUF_SIZE 8192
 
 #if ENABLE_NLS
 void initLocalisation()
@@ -43,13 +39,6 @@ void initLocalisation()
 }
 #endif //ENABLE_NLS
 
-#define CLOSE		\
-	if (gzip)		\
-	{				\
-		delete in;	\
-	}				\
-	ifile.close()
-
 int main(int argc, char* argv[])
 {
 
@@ -63,19 +52,9 @@ int main(int argc, char* argv[])
 		cerr << LOG_MSG_PREFIX "call with INPUT.xoj OUTPUT.png" << endl;
 		return 1;
 	}
-
-	//check file extensions
-	string ext = argv[1] + strlen(argv[1]) - 4;
-	for (int i = 0; i < ext.length(); i++)
-	{
-		if (tolower(ext[i]) != ".xoj"[i])
-		{
-			cerr << LOG_MSG_PREFIX << bl::format("file \"{1}\" is not .xoj file") % argv[1] << endl;
-			return 2;
-		}
-	}
-
-	ext = argv[2] + strlen(argv[2]) - 4; //last 4 chars
+	
+	//check output file extension
+	string ext = argv[2] + strlen(argv[2]) - 4; //last 4 chars
 	for (int i = 0; i < ext.length(); i++)
 	{
 		if (tolower(ext[i]) != ".png"[i])
@@ -84,95 +63,43 @@ int main(int argc, char* argv[])
 			return 2;
 		}
 	}
+	
+	XojPreviewExtractor extractor;
+	PreviewExtractResult result = extractor.readFile(argv[1]);
 
-	//open input file
-	ifstream ifile(argv[1], ifstream::in | ifstream::binary);
-	if (!ifile.is_open())
+	switch (result)
 	{
+	case PREVIEW_RESULT_IMAGE_READ:
+		// continue to write preview
+		break;
+		
+	case PREVIEW_RESULT_BAD_FILE_EXTENSION:
+		cerr << LOG_MSG_PREFIX << bl::format("file \"{1}\" is not .xoj file") % argv[2] << endl;
+		return 2;
+
+	case PREVIEW_RESULT_COULD_NOT_OPEN_FILE:
 		cerr << LOG_MSG_PREFIX << bl::format("open input file \"{1}\" failed") % argv[1] << endl;
 		return 3;
-	}
 
-	istream* in;
-	bi::filtering_istreambuf inbuf;
-	bool gzip;
-	
-	//check for gzip magic header
-	if (ifile.get() == 0x1F && ifile.get() == 0x8B)
-	{
-		gzip = true;
-		ifile.seekg(0); //seek back to beginning
-		
-		inbuf.push(bi::gzip_decompressor());
-		inbuf.push(ifile);
+	case PREVIEW_RESULT_NO_PREVIEW:
+		cerr << LOG_MSG_PREFIX << bl::format("file \"{1}\" contains no preview") % argv[1] << endl;
+		return 4;
 
-		in = new istream(&inbuf);
-	}
-	else
-	{
-		gzip = false;
-		in = &ifile;
+	case PREVIEW_RESULT_ERROR_READING_PREVIEW:
+	default:
+		cerr << LOG_MSG_PREFIX "no preview and page found, maybe an invalid file?" << endl;
+		return 5;
 	}
 	
-	char buf[BUF_SIZE];
-	bool inPreview = false;
-	bool inTag = false;
-	string preview;
-	while (!in->eof())
+	ofstream ofile(argv[2], ofstream::out | ofstream::binary);
+	if (!ofile.is_open())
 	{
-		if (in->peek() == '<')
-		{
-			in->ignore();
-			inTag = true;
-			continue;
-		}
-		
-		in->get(buf, BUF_SIZE, '<');
-		if (!inPreview)
-		{
-			if (inTag)
-			{
-				if (strncmp(TAG_PREVIEW_NAME, buf, sizeof(TAG_PREVIEW_NAME) - 1) == 0)
-				{
-					inPreview = true;
-					preview += (buf + sizeof(TAG_PREVIEW_NAME));
-				}
-				else if (strncmp(TAG_PAGE_NAME, buf, sizeof(TAG_PAGE_NAME) - 1) == 0)
-				{
-					cerr << LOG_MSG_PREFIX "this file contains no preview" << endl;
-					CLOSE;
-					return 5;
-				}
-				inTag = false;
-			}
-		}
-		else
-		{
-			if (inTag)
-			{
-				ofstream ofile(argv[2], ofstream::out | ofstream::binary);
-				if (!ofile.is_open())
-				{
-					cerr << LOG_MSG_PREFIX << bl::format("open output file \"{1}\" failed") % argv[2] << endl;
-					CLOSE;
-					return 4;
-				}
-				ofile << Glib::Base64::decode(preview);
-				ofile.close();
-
-				cout << LOG_MSG_PREFIX "successfully extracted" << endl;
-
-				CLOSE;
-				return 0;
-			}
-			else
-			{
-				preview += buf;
-			}
-		}
+		cerr << LOG_MSG_PREFIX << bl::format("open output file \"{1}\" failed") % argv[2] << endl;
+		return 6;
 	}
+	ofile << extractor.getData();
+	ofile.close();
 
-	cerr << LOG_MSG_PREFIX "no preview and page found, maybe an invalid file?" << endl;
-	CLOSE;
-	return 10;
+	cout << LOG_MSG_PREFIX "successfully extracted" << endl;
+	return 0;
 }
