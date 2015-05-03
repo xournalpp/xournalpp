@@ -16,9 +16,11 @@
 
 #include <gtk/gtk.h>
 
-#include <boost/format.hpp>
 #include <boost/filesystem/path.hpp>
 using boost::filesystem::path;
+
+#define FORMAT(f, ...) \
+	StringUtils::format(f, __VA_ARGS__)
 
 class PdfWriter
 {
@@ -32,7 +34,6 @@ public:
 
 public:
 	bool write(string data);
-	bool write(boost::format data);
 	bool writeTxt(string data);
 	bool write(int data);
 

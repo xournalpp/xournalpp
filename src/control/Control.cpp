@@ -3101,7 +3101,7 @@ void Control::clipboardPasteXournal(ObjectInputStream& in)
 			}
 			else
 			{
-				throw INPUT_STREAM_EXCEPTION("Get unknown object %s", name.c_str());
+				throw INPUT_STREAM_EXCEPTION("Get unknown object {1}", name);
 			}
 
 			in >> element;

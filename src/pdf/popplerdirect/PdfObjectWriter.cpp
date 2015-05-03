@@ -47,7 +47,7 @@ void PdfObjectWriter::writeCopiedObjects()
 			if (!uref->wroteOut)
 			{
 				this->xref->setXref(uref->objectId, this->writer->getDataCount());
-				this->writer->write(boost::format("%i 0 obj\n") % uref->objectId);
+				this->writer->write(FORMAT("%i 0 obj\n", uref->objectId));
 
 				writeObject(&uref->object, uref->doc);
 				this->writer->write("endobj\n");
@@ -76,13 +76,13 @@ void PdfObjectWriter::writeObject(Object* obj, XojPopplerDocument doc)
 	switch (obj->getType())
 	{
 	case objBool:
-		this->writer->write(boost::format("%s ") % (obj->getBool() ? "true" : "false"));
+		this->writer->write(FORMAT("%s ", (obj->getBool() ? "true" : "false")));
 		break;
 	case objInt:
-		this->writer->write(boost::format("%i ") % obj->getInt());
+		this->writer->write(FORMAT("%i ", obj->getInt()));
 		break;
 	case objReal:
-		this->writer->write(boost::format("%g ") % obj->getReal());
+		this->writer->write(FORMAT("%g ", obj->getReal()));
 		break;
 	case objString:
 		this->writeString(obj->getString());
@@ -91,7 +91,7 @@ void PdfObjectWriter::writeObject(Object* obj, XojPopplerDocument doc)
 	{
 		GooString name(obj->getName());
 		GooString* nameToPrint = name.sanitizedName(gFalse /* non ps mode */);
-		this->writer->write(boost::format("/%s ") % nameToPrint->getCString());
+		this->writer->write(FORMAT("/%s ", nameToPrint->getCString()));
 		delete nameToPrint;
 		break;
 	}
@@ -151,13 +151,13 @@ void PdfObjectWriter::writeObject(Object* obj, XojPopplerDocument doc)
 		UpdateRef* uref = (UpdateRef*) g_hash_table_lookup(this->updatedReferenced, &key);
 		if (uref)
 		{
-			this->writer->write(boost::format("%i %i R ") % uref->objectId % 0);
+			this->writer->write(FORMAT("%i %i R ", uref->objectId, 0));
 		}
 		else
 		{
 			UpdateRef* uref = new UpdateRef(this->writer->getNextObjectId(), doc);
 			this->xref->addXref(0);
-			this->writer->write(boost::format("%i %i R ") % uref->objectId % 0);
+			this->writer->write(FORMAT("%i %i R ", uref->objectId, 0));
 
 			obj->fetch(doc.getDoc()->getXRef(), &uref->object);
 
@@ -221,7 +221,7 @@ void PdfObjectWriter::writeStream(Stream* str)
 	str->reset();
 	for (int c = str->getChar(); c != EOF; c = str->getChar())
 	{
-		this->writer->write(boost::format("%c") % c);
+		this->writer->write(FORMAT("%c", c));
 	}
 	this->writer->write("\r\nendstream\r\n");
 }
@@ -236,7 +236,7 @@ void PdfObjectWriter::writeDictionnary(Dict* dict, XojPopplerDocument doc)
 	{
 		GooString keyName(dict->getKey(i));
 		GooString* keyNameToPrint = keyName.sanitizedName(gFalse /* non ps mode */);
-		this->writer->write(boost::format("/%s ") % keyNameToPrint->getCString());
+		this->writer->write(FORMAT("/%s ", keyNameToPrint->getCString()));
 		delete keyNameToPrint;
 		writeObject(dict->getValNF(i, &obj1), doc);
 		obj1.free();
@@ -261,7 +261,7 @@ void PdfObjectWriter::writeString(GooString* s)
 			{
 				this->writer->write("\\");
 			}
-			this->writer->write(boost::format("%c") % unescaped);
+			this->writer->write(FORMAT("%c", unescaped));
 		}
 		this->writer->write(") ");
 	}
@@ -277,7 +277,7 @@ void PdfObjectWriter::writeString(GooString* s)
 			{
 				this->writer->write("\\");
 			}
-			this->writer->write(boost::format("%c") % unescaped);
+			this->writer->write(FORMAT("%c", unescaped));
 			c++;
 		}
 		this->writer->write(") ");

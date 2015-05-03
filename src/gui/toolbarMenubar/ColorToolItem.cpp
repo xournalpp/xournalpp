@@ -4,6 +4,7 @@
 #include "gui/widgets/SelectColor.h"
 
 #include <config.h>
+#include <StringUtils.h>
 #include <Util.h>
 
 #include <glib/gi18n-lib.h>

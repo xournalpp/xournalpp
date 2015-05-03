@@ -66,7 +66,7 @@ void ObjectInputStream::readObject(const char* name) throw (InputStreamException
 	string type = readObject();
 	if (type != name)
 	{
-		throw INPUT_STREAM_EXCEPTION("Try to read object type %s but read object type %s", name, type.c_str());
+		throw INPUT_STREAM_EXCEPTION("Try to read object type {1} but read object type {2}", name, type);
 	}
 }
 
@@ -268,20 +268,19 @@ void ObjectInputStream::checkType(char type) throw (InputStreamException)
 
 	if (this->pos + 2 > this->str->len)
 	{
-		throw INPUT_STREAM_EXCEPTION("End reached, but try to read %s, index %i of %ld",
-									 getType(type).c_str(), this->pos, this->str->len);
+		throw INPUT_STREAM_EXCEPTION("End reached, but try to read {1}, index {2} of {3}",
+									 getType(type), this->pos, this->str->len);
 	}
 	if (this->str->str[this->pos] != '_')
 	{
-		throw INPUT_STREAM_EXCEPTION("Expected type signature of %s, index %i of %ld, but read '%c'",
-									 getType(type).c_str(), this->pos, this->str->len, this->str->str[this->pos]);
+		throw INPUT_STREAM_EXCEPTION("Expected type signature of {1}, index {2} of {3}, but read '{4}'",
+									 getType(type), this->pos, this->str->len, this->str->str[this->pos]);
 	}
 	this->pos++;
 
 	if (this->str->str[this->pos] != type)
 	{
-		throw INPUT_STREAM_EXCEPTION("Expected %s but read %s", getType(type).c_str(),
-									 getType(this->str->str[this->pos]).c_str());
+		throw INPUT_STREAM_EXCEPTION("Expected {1} but read {2}", getType(type), getType(this->str->str[this->pos]));
 	}
 
 	this->pos++;

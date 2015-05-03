@@ -1,18 +1,5 @@
 #include "StringUtils.h"
 
-/**
- * Creates a new String, syntax like sprintf
- */
-string StringUtils::format(const char* format, ...)
-{
-	va_list args;
-	va_start(args, format);
-	char* data = g_strdup_vprintf(format, args);
-	va_end(args);
-
-	return string(data);
-}
-
 void StringUtils::replace_all_chars(string& input, const std::vector<replace_pair> replaces)
 {
 	string out;

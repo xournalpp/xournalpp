@@ -162,15 +162,15 @@ bool PdfExport::writePagesindex()
 	for (GList* l = this->pageIds; l != NULL; l = l->next)
 	{
 		int id = *((int*) l->data);
-		this->writer->write(boost::format("%i 0 R ") % id);
+		this->writer->write(FORMAT("%i 0 R ", id));
 		pageCount++;
 	}
 	this->writer->write("]\n");
-	this->writer->write(boost::format("/Count %i\n") % pageCount);
+	this->writer->write(FORMAT("/Count %i\n", pageCount));
 
 	PageRef page = doc->getPage(0);
 
-	this->writer->write(boost::format("/MediaBox [0 0 %.2f %.2f]\n") % page->getWidth() % page->getHeight());
+	this->writer->write(FORMAT("/MediaBox [0 0 %.2f %.2f]\n", page->getWidth(), page->getHeight()));
 	this->writer->write(">>\n");
 	this->writer->write("endobj\n");
 
@@ -184,13 +184,13 @@ bool PdfExport::writeTrailer()
 	this->writer->write("trailer\n");
 	this->writer->write("<<\n");
 
-	this->writer->write(boost::format("/Size %i\n") % this->writer->getObjectId());
-	this->writer->write(boost::format("/Root %i 0 R\n") % (this->writer->getObjectId() - 1));
-	this->writer->write(boost::format("/Info %i 0 R\n") % (this->writer->getObjectId() - 2));
+	this->writer->write(FORMAT("/Size %i\n", this->writer->getObjectId()));
+	this->writer->write(FORMAT("/Root %i 0 R\n", (this->writer->getObjectId() - 1)));
+	this->writer->write(FORMAT("/Info %i 0 R\n", (this->writer->getObjectId() - 2)));
 	this->writer->write(">>\n");
 	this->writer->write("startxref\n");
 
-	this->writer->write(boost::format("%i\n") % this->dataXrefStart);
+	this->writer->write(FORMAT("%i\n", this->dataXrefStart));
 	this->writer->write("%%EOF\n");
 
 	return this->writer->getLastError().empty();
@@ -394,7 +394,7 @@ void PdfExport::writeStream(const char* str, int len, GList* replacementList)
 				RefReplacement* f = (RefReplacement*) l->data;
 				if (f->name == buffer)
 				{
-					this->writer->write(boost::format("/%s%i") % f->type% f->newId);
+					this->writer->write(FORMAT("/%s%i", f->type, f->newId));
 					f->markAsUsed();
 					lastWritten = u;
 
@@ -547,8 +547,7 @@ bool PdfExport::writePage(int pageNr)
 	this->writer->write("<</Type /Page\n");
 	this->writer->write("/Parent 1 0 R\n");
 
-	this->writer->write(boost::format("/MediaBox [0 0 %.2f %.2f]\n") % page->getWidth()
-						 % page->getHeight());
+	this->writer->write(FORMAT("/MediaBox [0 0 %.2f %.2f]\n", page->getWidth(), page->getHeight()));
 	this->writer->write("/Resources 2 0 R\n");
 	//	if (isset($this->PageLinks[$n])) {
 	//		//Links
@@ -568,7 +567,7 @@ bool PdfExport::writePage(int pageNr)
 	//	}
 	//	$this->_out($annots.']');
 	//}
-	this->writer->write(boost::format("/Contents %i 0 R>>\n") % this->writer->getObjectId());
+	this->writer->write(FORMAT("/Contents %i 0 R>>\n", this->writer->getObjectId()));
 	this->writer->write("endobj\n");
 	//Page content
 	this->writer->writeObj();
