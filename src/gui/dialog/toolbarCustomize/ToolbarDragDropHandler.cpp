@@ -72,8 +72,6 @@ void ToolbarDragDropHandler::toolbarConfigDialogClosed()
 	delete this->customizeDialog;
 	this->customizeDialog = NULL;
 
-	cout << "ToolbarDragDropHandler::toolbarConfigDialogClosed()" << endl;
-
 	MainWindow* win = control->getWindow();
 
 	this->clearToolbarsFromDragAndDrop();

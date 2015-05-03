@@ -23,6 +23,14 @@ ToolbarData::ToolbarData(const ToolbarData& data)
 
 ToolbarData::~ToolbarData()
 {
+	XOJ_CHECK_TYPE(ToolbarData);
+
+	for (ToolbarEntry* e : this->contents)
+	{
+		delete e;
+	}
+	this->contents.clear();
+
 	XOJ_RELEASE_TYPE(ToolbarData);
 }
 
@@ -86,14 +94,14 @@ void ToolbarData::load(GKeyFile* config, const char* group)
 			continue;
 		}
 
-		ToolbarEntry e;
+		ToolbarEntry* e = new ToolbarEntry();
 		gsize keyLen = 0;
-		e.setName(keys[i]);
+		e->setName(keys[i]);
 		gchar** list = g_key_file_get_string_list(config, group, keys[i], &keyLen, NULL);
 
 		for (gsize x = 0; x < keyLen; x++)
 		{
-			e.addItem(ba::trim_copy(string(list[x])));
+			e->addItem(ba::trim_copy(string(list[x])));
 		}
 
 		this->contents.push_back(e);
@@ -110,19 +118,19 @@ void ToolbarData::saveToKeyFile(GKeyFile* config)
 
 	const char* group = getId().c_str();
 
-	for (ToolbarEntry& e : this->contents)
+	for (ToolbarEntry* e : this->contents)
 	{
 		string line = "";
 
-		for (ToolbarItem* it : *e.getItems())
+		for (ToolbarItem* it : *e->getItems())
 		{
 			line += ",";
-			line += *it;
+			line += it->getName();
 		}
 
 		if (line.length() > 2)
 		{
-			g_key_file_set_string(config, group, e.getName().c_str(), line.substr(1).c_str());
+			g_key_file_set_string(config, group, e->getName().c_str(), line.substr(1).c_str());
 		}
 	}
 
@@ -137,22 +145,22 @@ int ToolbarData::insertItem(string toolbar, string item, int position)
 
 	g_return_val_if_fail(isPredefined() == false, -1);
 
-	for (ToolbarEntry e : this->contents)
+	for (ToolbarEntry* e : this->contents)
 	{
-		if (e.getName() == toolbar)
+		if (e->getName() == toolbar)
 		{
 			cout << bl::format("Toolbar found: {1}") % toolbar << endl;
 
-			int id = e.insertItem(item, position);
+			int id = e->insertItem(item, position);
 
 			cout << bl::format("return {1}") % id << endl;
 			return id;
 		}
 	}
 
-	ToolbarEntry newEntry;
-	newEntry.setName(toolbar);
-	int id = newEntry.addItem(item);
+	ToolbarEntry* newEntry = new ToolbarEntry();
+	newEntry->setName(toolbar);
+	int id = newEntry->addItem(item);
 	this->contents.push_back(newEntry);
 
 	return id;
@@ -164,11 +172,11 @@ bool ToolbarData::removeItemByID(string toolbar, int id)
 
 	g_return_val_if_fail(isPredefined() == false, false);
 
-	for (ToolbarEntry& e : this->contents)
+	for (ToolbarEntry* e : this->contents)
 	{
-		if (e.getName() == toolbar)
+		if (e->getName() == toolbar)
 		{
-			return e.removeItemById(id);
+			return e->removeItemById(id);
 		}
 	}
 

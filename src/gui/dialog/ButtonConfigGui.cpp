@@ -79,7 +79,7 @@ ButtonConfigGui::ButtonConfigGui(SettingsDialog* dlg, GtkWidget* w,  Settings* s
 	ADD_TYPE_CB("tool_eraser.svg",		_("Eraser"),			TOOL_ERASER);
 	ADD_TYPE_CB("tool_highlighter.png",	_("Hilighter"),			TOOL_HILIGHTER);
 	ADD_TYPE_CB("tool_text.svg",		_("Text"),				TOOL_TEXT);
-	ADD_TYPE_CB("tool_image.png",		_("Insert image"),		TOOL_IMAGE);
+	ADD_TYPE_CB("tool_image.svg",		_("Insert image"),		TOOL_IMAGE);
 	ADD_TYPE_CB("stretch.svg",			_("Vertical space"),	TOOL_VERTICAL_SPACE);
 	ADD_TYPE_CB("lasso.svg",			_("Select region"),		TOOL_SELECT_REGION);
 	ADD_TYPE_CB("rect-select.svg",		_("Select rectangle"),	TOOL_SELECT_RECT);

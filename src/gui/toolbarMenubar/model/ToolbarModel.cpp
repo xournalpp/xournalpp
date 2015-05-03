@@ -13,7 +13,11 @@ ToolbarModel::~ToolbarModel()
 {
 	XOJ_CHECK_TYPE(ToolbarModel);
 
-	for (ToolbarData* data : this->toolbars) delete data;
+	for (ToolbarData* data : this->toolbars)
+	{
+		delete data;
+	}
+	this->toolbars.clear();
 
 	XOJ_RELEASE_TYPE(ToolbarModel);
 }

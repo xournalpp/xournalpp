@@ -27,10 +27,10 @@ pixmap_DATA = \
 	xournalpp.svg \
 	rect-draw.svg \
 	nextAnnotatedPage.svg \
+	tool_image.svg \
 	tool_eraser.svg \
 	lasso.svg \
 	fullscreen.svg \
-	tool_image.png \
 	addPage.svg \
 	tool_pencil.svg \
 	empty.svg \

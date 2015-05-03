@@ -24,29 +24,30 @@ LatexGlade::LatexGlade(GladeSearchpath* gladeSearchPath) : GladeGui(gladeSearchP
 
 LatexGlade::~LatexGlade()
 {
-	XOJ_CHECK_TYPE(LatexGlade);
-
 	XOJ_RELEASE_TYPE(LatexGlade);
-
 }
 
 void LatexGlade::setTex(string texString)
 {
+	XOJ_CHECK_TYPE(LatexGlade);
 	this->theLatex = texString;
 }
 
 string LatexGlade::getTex()
 {
+	XOJ_CHECK_TYPE(LatexGlade);
 	return this->theLatex;
 }
 
 void LatexGlade::save()
 {
+	XOJ_CHECK_TYPE(LatexGlade);
 	this->theLatex = gtk_entry_get_text(GTK_ENTRY(this->texBox));
 }
 
 void LatexGlade::load()
 {
+	XOJ_CHECK_TYPE(LatexGlade);
 	cout << "Latex::load()" << endl;
 
 	if (theLatex.empty())
@@ -61,6 +62,7 @@ void LatexGlade::load()
 void LatexGlade::show(GtkWindow* parent)
 {
 	XOJ_CHECK_TYPE(LatexGlade);
+
 	this->load();
 	gtk_window_set_transient_for(GTK_WINDOW(this->window), parent);
 	int res = gtk_dialog_run(GTK_DIALOG(this->window));

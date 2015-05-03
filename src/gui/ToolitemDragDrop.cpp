@@ -95,6 +95,11 @@ bool ToolitemDragDrop::isToolItemEnabled(ToolItemDragDropData* d)
 		return true;
 	}
 
+	if (d->type == TOOL_ITEM_SPACER)
+	{
+		return true;
+	}
+
 	if (d->type == TOOL_ITEM_COLOR && d->item == NULL)
 	{
 		return true;

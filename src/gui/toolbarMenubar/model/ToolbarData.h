@@ -46,7 +46,7 @@ private:
 
 	string id;
 	string name;
-	std::vector<ToolbarEntry> contents;
+	std::vector<ToolbarEntry*> contents;
 
 	bool predefined;
 

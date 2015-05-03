@@ -95,13 +95,13 @@ void ToolMenuHandler::load(ToolbarData* d, GtkWidget* toolbar, const char* toolb
 
 	int count = 0;
 
-	for (ToolbarEntry& e : d->contents)
+	for (ToolbarEntry* e : d->contents)
 	{
-		if (e.getName() == toolbarName)
+		if (e->getName() == toolbarName)
 		{
-			for (ToolbarItem* dataItem : *e.getItems())
+			for (ToolbarItem* dataItem : *e->getItems())
 			{
-				string name = *dataItem;
+				string name = dataItem->getName();
 
 				if (name == "SEPARATOR")
 				{
@@ -122,7 +122,7 @@ void ToolMenuHandler::load(ToolbarData* d, GtkWidget* toolbar, const char* toolb
 					gtk_widget_show(GTK_WIDGET(toolItem));
 					gtk_toolbar_insert(GTK_TOOLBAR(toolbar), toolItem, -1);
 
-					ToolitemDragDrop::attachMetadata(GTK_WIDGET(toolItem), dataItem->getId(), TOO_ITEM_SPACER);
+					ToolitemDragDrop::attachMetadata(GTK_WIDGET(toolItem), dataItem->getId(), TOOL_ITEM_SPACER);
 
 					continue;
 				}
@@ -407,7 +407,7 @@ void ToolMenuHandler::initToolItems()
 	addToolItem(new ToolButton(listener, gui, "TEXT", ACTION_TOOL_TEXT, GROUP_TOOL, true,
 							   "tool_text.svg", _("Text"), gui->get("menuToolsText")));
 	addToolItem(new ToolButton(listener, gui, "IMAGE", ACTION_TOOL_IMAGE, GROUP_TOOL, true,
-							   "tool_image.png", _("Image"), gui->get("menuToolsImage")));
+							   "tool_image.svg", _("Image"), gui->get("menuToolsImage")));
 
 	addToolItem(new ToolButton(listener, gui, "SELECT_REGION", ACTION_TOOL_SELECT_REGION, GROUP_TOOL, true,
 							   "lasso.svg", _("Select Region"), gui->get("menuToolsSelectRegion")));
