@@ -252,7 +252,12 @@ void ToolHandler::setRuler(bool ruler, bool disableOthers)
 {
 	XOJ_CHECK_TYPE(ToolHandler);
 
-	if (ruler && disableOthers) setAll(false);
+	if (ruler && disableOthers)
+	{
+		setAll(false);
+	}
+
+
 	this->current->ruler = ruler;
 }
 
@@ -260,7 +265,11 @@ void ToolHandler::setRectangle(bool rectangle, bool disableOthers)
 {
 	XOJ_CHECK_TYPE(ToolHandler);
 
-	if (rectangle && disableOthers) setAll(false);
+	if (rectangle && disableOthers)
+	{
+		setAll(false);
+	}
+
 	this->current->rectangle = rectangle;
 }
 
@@ -268,7 +277,11 @@ void ToolHandler::setCircle(bool circle, bool disableOthers)
 {
 	XOJ_CHECK_TYPE(ToolHandler);
 
-	if (circle && disableOthers) setAll(false);
+	if (circle && disableOthers)
+	{
+		setAll(false);
+	}
+
 	this->current->circle = circle;
 }
 
@@ -276,7 +289,11 @@ void ToolHandler::setArrow(bool arrow, bool disableOthers)
 {
 	XOJ_CHECK_TYPE(ToolHandler);
 
-	if (arrow && disableOthers) setAll(false);
+	if (arrow && disableOthers)
+	{
+		setAll(false);
+	}
+
 	this->current->arrow = arrow;
 }
 

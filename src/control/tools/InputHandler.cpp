@@ -131,15 +131,14 @@ void InputHandler::addPointToTmpStroke(GdkEventMotion* event)
 			Point p = tmpStroke->getPoint(0);
 			//set resolution proportional to radius
 			double diameter = sqrt(pow(x - p.x, 2.0) + pow(y - p.y, 2.0));
-			int npts = (int) (diameter / 2.0);
+			int npts = (int) (diameter * 2.0);
 			double center_x = (x + p.x) / 2.0;
 			double center_y = (y + p.y) / 2.0;
 			double angle = atan2((y - p.y), (x - p.x));
 
-
-			if (npts < 12)
+			if (npts < 24)
 			{
-				npts = 12; // min. number of points
+				npts = 24; // min. number of points
 			}
 
 			//remove previous points
