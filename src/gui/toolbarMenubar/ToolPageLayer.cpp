@@ -93,7 +93,7 @@ GtkWidget* ToolPageLayer::getNewToolIconImpl()
 {
 	XOJ_CHECK_TYPE(ToolPageLayer);
 
-	return gui->loadIcon("layers.png");
+	return gui->loadIcon("layers.svg");
 }
 
 GtkToolItem* ToolPageLayer::newItem()

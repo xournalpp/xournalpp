@@ -1,7 +1,7 @@
 #include "AutosaveJob.h"
 
 #include "control/Control.h"
-#include "control/SaveHandler.h"
+#include "control/xojfile/SaveHandler.h"
 
 AutosaveJob::AutosaveJob(Control* control)
 {
@@ -42,7 +42,6 @@ void AutosaveJob::run()
 	path filename = doc->getFilename();
 	doc->unlock();
 
-	// TODO: incrementel autosave
 	if (filename.empty())
 	{
 		filename = Util::getAutosaveFilename();

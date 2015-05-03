@@ -288,7 +288,6 @@ PdfPagesDialog::PdfPagesDialog(GladeSearchpath* gladeSearchPath, Document* doc, 
 		this->usedPages[i] = false;
 	}
 
-	// TODO LOW PRIO: may find a better solution... depending on screen size or so
 	gtk_widget_set_size_request(this->window, 800, 600);
 
 	gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scrollPreview), GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);

@@ -74,18 +74,18 @@ ButtonConfigGui::ButtonConfigGui(SettingsDialog* dlg, GtkWidget* w,  Settings* s
 	GtkListStore* typeModel = gtk_list_store_new(3, GDK_TYPE_PIXBUF, G_TYPE_STRING, G_TYPE_INT);
 	GtkTreeIter iter;
 
-	ADD_TYPE_CB("empty.png",			_("Don't change"),		TOOL_NONE);
-	ADD_TYPE_CB("tool_pencil.png",		_("Pen"),				TOOL_PEN);
-	ADD_TYPE_CB("tool_eraser.png",		_("Eraser"),			TOOL_ERASER);
+	ADD_TYPE_CB("empty.svg",			_("Don't change"),		TOOL_NONE);
+	ADD_TYPE_CB("tool_pencil.svg",		_("Pen"),				TOOL_PEN);
+	ADD_TYPE_CB("tool_eraser.svg",		_("Eraser"),			TOOL_ERASER);
 	ADD_TYPE_CB("tool_highlighter.png",	_("Hilighter"),			TOOL_HILIGHTER);
-	ADD_TYPE_CB("tool_text.png",		_("Text"),				TOOL_TEXT);
-	ADD_TYPE_CB("tool_image.png",		_("Insert image"),		TOOL_IMAGE);
-	ADD_TYPE_CB("stretch.png",			_("Vertical space"),	TOOL_VERTICAL_SPACE);
-	ADD_TYPE_CB("lasso.png",			_("Select region"),		TOOL_SELECT_REGION);
-	ADD_TYPE_CB("rect-select.png",		_("Select rectangle"),	TOOL_SELECT_RECT);
-	//ADD_TYPE_CB("rect-draw.png",		_("Draw rectangle"),		TOOL_DRAW_RECT);
-	//ADD_TYPE_CB("circle-draw.png",		_("Draw circle"),		TOOL_DRAW_CIRCLE);
-	ADD_TYPE_CB("hand.png",				_("Hand"),				TOOL_HAND);
+	ADD_TYPE_CB("tool_text.svg",		_("Text"),				TOOL_TEXT);
+	ADD_TYPE_CB("tool_image.svg",		_("Insert image"),		TOOL_IMAGE);
+	ADD_TYPE_CB("stretch.svg",			_("Vertical space"),	TOOL_VERTICAL_SPACE);
+	ADD_TYPE_CB("lasso.svg",			_("Select region"),		TOOL_SELECT_REGION);
+	ADD_TYPE_CB("rect-select.svg",		_("Select rectangle"),	TOOL_SELECT_RECT);
+	//ADD_TYPE_CB("rect-draw.svg",		_("Draw rectangle"),		TOOL_DRAW_RECT);
+	//ADD_TYPE_CB("circle-draw.svg",	_("Draw circle"),		TOOL_DRAW_CIRCLE);
+	ADD_TYPE_CB("hand.svg",				_("Hand"),				TOOL_HAND);
 
 	GtkCellRenderer* renderer = NULL;
 

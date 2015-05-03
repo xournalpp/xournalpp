@@ -9,12 +9,12 @@
  * @license GNU GPLv2 or later
  */
 
+#include <CrashHandler.h>
+#include <Stacktrace.h>
+
 #include <cppunit/CompilerOutputter.h>
 #include <cppunit/extensions/TestFactoryRegistry.h>
 #include <cppunit/ui/text/TestRunner.h>
-
-#include <CrashHandler.h>
-#include <Stacktrace.h>
 
 #include <gtk/gtk.h>
 

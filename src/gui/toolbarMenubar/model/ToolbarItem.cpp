@@ -37,7 +37,7 @@ ToolbarItem::~ToolbarItem()
 	XOJ_RELEASE_TYPE(ToolbarItem);
 }
 
-ToolbarItem::operator string()
+string ToolbarItem::getName()
 {
 	XOJ_CHECK_TYPE(ToolbarItem);
 

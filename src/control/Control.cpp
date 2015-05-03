@@ -24,6 +24,7 @@
 #include "jobs/BlockingJob.h"
 #include "jobs/PdfExportJob.h"
 #include "jobs/SaveJob.h"
+#include "xojfile/LoadHandler.h"
 #include "model/BackgroundImage.h"
 #include "model/FormatDefinitions.h"
 #include "model/XojPage.h"
@@ -2422,7 +2423,7 @@ bool Control::openFile(path filename, int scrollToPage)
 		else if (res == 1) // select another PDF background
 		{
 			bool attachToDocument = false;
-				path pdfFilename = XojOpenDlg::showOpenDialog((GtkWindow*) *win, this->settings, true, attachToDocument);
+			path pdfFilename = XojOpenDlg::showOpenDialog((GtkWindow*) *win, this->settings, true, attachToDocument);
 			if (!pdfFilename.empty())
 			{
 				h.setPdfReplacement(pdfFilename.string(), attachToDocument);

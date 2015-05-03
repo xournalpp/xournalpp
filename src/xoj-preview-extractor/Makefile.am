@@ -2,13 +2,15 @@
 bin_PROGRAMS = xournal-thumbnailer
 
 xournal_thumbnailer_SOURCES = \
-	xournal-thumbnailer.cpp
+	xournal-thumbnailer.cpp \
+	../util/XojPreviewExtractor.cpp
 
 AM_CPPFLAGS = \
 	-DPACKAGE_LOCALE_DIR=\""$(prefix)/$(DATADIRNAME)/locale"\" \
 	$(BOOST_CPPFLAGS) $(GLIBMM_CFLAGS)
 
-AM_CXXFLAGS = -Os -std=gnu++11
+xournal_thumbnailer_LDFLAGS = \
+	`pkg-config --libs glib-2.0`
 
 AM_LDFLAGS = $(BOOST_SYSTEM_LDFLAGS) $(BOOST_LOCALE_LDFLAGS) $(BOOST_IOSTREAMS_LDFLAGS)
 

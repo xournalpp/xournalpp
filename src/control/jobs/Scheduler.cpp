@@ -2,12 +2,12 @@
 
 #include "cfg.h"
 
-//TODO unified debugging
 #ifdef SHEDULER_DEBUG
 #include <StringUtils.h>
 #include <iostream>
 #define SDEBUG(msg) std::cout << bl::format(CONCAT("Scheduler::", msg, "\n"))
 #else
+
 //kind of workaround
 class no_debug_format
 {

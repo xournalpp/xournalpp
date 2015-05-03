@@ -22,7 +22,7 @@ public:
 	ToolbarItem();
 	virtual ~ToolbarItem();
 
-	operator string();
+	string getName();
 
 	bool operator==(ToolbarItem& other);
 

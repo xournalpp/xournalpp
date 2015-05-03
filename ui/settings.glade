@@ -1928,7 +1928,7 @@ Here you can disable your touchscreen.&lt;/i&gt;</property>
                       <widget class="GtkImage" id="image2">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="pixbuf">pixmaps/default.png</property>
+                        <property name="pixbuf">pixmaps/default.svg</property>
                       </widget>
                       <packing>
                         <property name="expand">False</property>

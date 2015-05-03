@@ -8,7 +8,6 @@
 #include "model/Stroke.h"
 #include "model/Layer.h"
 #include "model/TexImage.h"
-//TODO some time - clean up these includes
 #include "serializing/HexObjectEncoding.h"
 #include "serializing/ObjectOutputStream.h"
 

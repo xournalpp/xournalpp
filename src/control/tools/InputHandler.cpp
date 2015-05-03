@@ -132,15 +132,14 @@ void InputHandler::addPointToTmpStroke(GdkEventMotion* event)
 			Point p = tmpStroke->getPoint(0);
 			//set resolution proportional to radius
 			double diameter = sqrt(pow(x - p.x, 2.0) + pow(y - p.y, 2.0));
-			int npts = (int) (diameter / 2.0);
+			int npts = (int) (diameter * 2.0);
 			double center_x = (x + p.x) / 2.0;
 			double center_y = (y + p.y) / 2.0;
 			double angle = atan2((y - p.y), (x - p.x));
 
-
-			if (npts < 12)
+			if (npts < 24)
 			{
-				npts = 12; // min. number of points
+				npts = 24; // min. number of points
 			}
 
 			//remove previous points
@@ -431,31 +430,12 @@ bool InputHandler::onMotionNotifyEvent(GdkEventMotion* event)
 {
 	XOJ_CHECK_TYPE(InputHandler);
 
-	// TODO: LOW PRIO: this->currentInputDevice should not be NULL!
-	//	if(this->currentInputDevice) {
-	//		INPUTDBG("this->currentInputDevice == null\n", 0);
-	//		return false;
-	//	}
-
-	//	if (this->currentInputDevice == event->device || this->currentInputDevice == NULL) {
 	if (this->tmpStroke != NULL)
 	{
 		this->addPointToTmpStroke(event);
 		return true;
 	}
-	//	} else {
-	//		const char * n1 = "null";
-	//		const char * n2 = "null";
-	//
-	//		if(this->currentInputDevice) {
-	//			n1 = this->currentInputDevice->name;
-	//		}
-	//		if(event->device) {
-	//			n2 = event->device->name;
-	//		}
-	//
-	//		INPUTDBG("Motion ignored, not the same device as the starting device. 1: %s, 2: %s\n", n1, n2);
-	//	}
+
 	return false;
 }
 

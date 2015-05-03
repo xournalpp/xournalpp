@@ -50,15 +50,16 @@ xournalpp_SOURCES = \
 	control/xml/XmlPointNode.cpp \
 	control/xml/XmlStrokeNode.cpp \
 	control/xml/XmlTextNode.cpp \
+	control/xojfile/LoadHandler.cpp \
+	control/xojfile/LoadHandlerHelper.cpp \
+	control/xojfile/SaveHandler.cpp \
 	control/Actions.cpp \
 	control/ClipboardHandler.cpp \
 	control/ExportHandler.cpp \
 	control/Control.cpp \
-	control/LoadHandler.cpp \
 	control/PdfCache.cpp \
 	control/PrintHandler.cpp \
 	control/RecentManager.cpp \
-	control/SaveHandler.cpp \
 	control/ScrollHandler.cpp \
 	control/SearchControl.cpp \
 	control/Tool.cpp \
@@ -88,10 +89,14 @@ xournalpp_SOURCES = \
 	gui/sidebar/AbstractSidebarPage.cpp \
 	gui/sidebar/Sidebar.cpp \
 	gui/sidebar/indextree/SidebarIndexPage.cpp \
-	gui/sidebar/previews/SidebarLayout.cpp \
-	gui/sidebar/previews/SidebarPreviewPage.cpp \
-	gui/sidebar/previews/SidebarPreviews.cpp \
-	gui/sidebar/previews/SidebarToolbar.cpp \
+	gui/sidebar/previews/base/SidebarLayout.cpp \
+	gui/sidebar/previews/base/SidebarPreviewBase.cpp \
+	gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp \
+	gui/sidebar/previews/base/SidebarToolbar.cpp \
+	gui/sidebar/previews/layer/SidebarPreviewLayerEntry.cpp \
+	gui/sidebar/previews/layer/SidebarPreviewLayers.cpp \
+	gui/sidebar/previews/page/SidebarPreviewPageEntry.cpp \
+	gui/sidebar/previews/page/SidebarPreviewPages.cpp \
 	gui/toolbarMenubar/model/ToolbarColorNames.cpp \
 	gui/toolbarMenubar/model/ToolbarData.cpp \
 	gui/toolbarMenubar/model/ToolbarEntry.cpp \
@@ -195,19 +200,11 @@ xournalpp_SOURCES = \
 if XOJ_CPPUNIT
 xournalpp_SOURCES += \
 	test/TestMain.cpp \
-	test/control/LoadHandlerTest.cpp
+	test/control/LoadHandlerTest.cpp \
+	test/util/XojPreviewExtractorTest.cpp
 else
 xournalpp_SOURCES += \
 	Xournalpp.cpp
-endif
-
-if ENABLE_PYTHON
-xournalpp_SOURCES += \
-	plugin/python/bindings/PyDocument.cpp \
-	plugin/python/bindings/PySelection.cpp \
-	plugin/python/bindings/PyUndoRedoHandler.cpp \
-	plugin/python/bindings/PyXournal.cpp \
-	plugin/python/PythonRunner.cpp
 endif
 
 AM_CPPFLAGS = \

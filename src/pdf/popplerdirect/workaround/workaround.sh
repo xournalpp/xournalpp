@@ -9,8 +9,8 @@
 poppler_version="0.24.1"
 scriptname=`basename $0`
 
-abs_top_srcdir="/home/marek/xournalpp/xournalpp"
-abs_top_builddir="/home/marek/xournalpp/xournalpp"
+abs_top_srcdir="/home/andreas/dev/xournalpp"
+abs_top_builddir="/home/andreas/dev/xournalpp"
 enable_libopenjpeg="@enable_libopenjpeg@"
 
 poppler_srcdir="${abs_top_srcdir}/src/pdf/popplerdirect/poppler-${poppler_version}"

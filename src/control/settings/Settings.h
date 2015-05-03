@@ -15,8 +15,6 @@
 #include "control/Tool.h"
 #include "model/Font.h"
 
-#include <boost/filesystem/path.hpp>
-using boost::filesystem::path;
 #include <libxml/xmlreader.h>
 #include <glib.h>
 

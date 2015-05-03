@@ -1,15 +1,13 @@
 /*
  * Xournal++
  *
- * This small program extracts a preview out of a xoj file.
+ * This small programm extracts a preview out of a xournal file
  *
  * @author MarPiRK
  * https://github.com/xournalpp/xournalpp
  *
- * @license GNU GPLv2 or later
+ * @license GPL
  */
-
-#include "config.h"
 
 #include <boost/iostreams/filter/gzip.hpp>
 #include <boost/iostreams/filtering_streambuf.hpp>

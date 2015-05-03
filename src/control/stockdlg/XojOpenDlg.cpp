@@ -1,6 +1,9 @@
 #include "XojOpenDlg.h"
 
 #include <config.h>
+#include "util/XojPreviewExtractor.h"
+
+#include <gio/gio.h>
 #include <glib/gi18n-lib.h>
 
 path XojOpenDlg::showOpenDialog(GtkWindow* win, Settings* settings, bool pdf, bool& attachPdf)
@@ -82,27 +85,45 @@ path XojOpenDlg::showOpenDialog(GtkWindow* win, Settings* settings, bool pdf, bo
 	return file;
 }
 
-void XojOpenDlg::updatePreviewCallback(GtkFileChooser* fileChooser,
-									   void* userData)
+void XojOpenDlg::updatePreviewCallback(GtkFileChooser* fileChooser, void* userData)
 {
-	// TODO LOW PRIO create preview if the file contains one
-	//	gchar * filename = gtk_file_chooser_get_preview_filename(fileChooser);
-	//
-	//	if (filename) {
-	//		GdkPixbuf * pixbuf = gdk_pixbuf_new_from_file(filename, NULL);
-	//		GtkWidget * image = gtk_file_chooser_get_preview_widget(fileChooser);
-	//
-	//		if (pixbuf) {
-	//			GdkPixbuf * scaled_pixbuf = pixbufScaleDownIfNecessary(pixbuf, 256);
-	//			gtk_image_set_from_pixbuf(GTK_IMAGE(image), scaled_pixbuf);
-	//			g_object_unref(scaled_pixbuf);
-	//			g_object_unref(pixbuf);
-	//		} else {
-	//			gtk_image_set_from_stock(GTK_IMAGE(image), "gtk-dialog-question", GTK_ICON_SIZE_DIALOG);
-	//		}
-	//
-	//		g_free(filename);
-	//	}
-	//
-	//	gtk_file_chooser_set_preview_widget_active(fileChooser, true);
+	gchar* filename = gtk_file_chooser_get_preview_filename(fileChooser);
+
+	if (!filename)
+	{
+		gtk_file_chooser_set_preview_widget_active(fileChooser, false);
+		return;
+	}
+
+	string filepath = filename;
+	g_free(filename);
+	filename = NULL;
+
+	if (filepath.size() <= 4 || filepath.substr(filepath.size() - 4) != ".xoj")
+	{
+		gtk_file_chooser_set_preview_widget_active(fileChooser, false);
+		return;
+	}
+
+	XojPreviewExtractor extractor;
+	PreviewExtractResult result = extractor.readFile(filepath);
+
+	if (result != PREVIEW_RESULT_IMAGE_READ)
+	{
+		gtk_file_chooser_set_preview_widget_active(fileChooser, false);
+		return;
+	}
+
+	GError* error = NULL;
+	GInputStream* in = g_memory_input_stream_new_from_data(extractor.getData(), extractor.getDataLength(), NULL);
+	GdkPixbuf* pixbuf = gdk_pixbuf_new_from_stream(in, NULL, &error);
+	g_input_stream_close(in, NULL, &error);
+
+	if (pixbuf)
+	{
+		GtkWidget * image = gtk_file_chooser_get_preview_widget(fileChooser);
+		gtk_image_set_from_pixbuf(GTK_IMAGE(image), pixbuf);
+		g_object_unref(pixbuf);
+		gtk_file_chooser_set_preview_widget_active(fileChooser, true);
+	}
 }

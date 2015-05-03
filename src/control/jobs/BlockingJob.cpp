@@ -1,7 +1,7 @@
 #include "BlockingJob.h"
 
 #include "control/Control.h"
-#include "control/SaveHandler.h"
+#include "control/xojfile/SaveHandler.h"
 
 BlockingJob::BlockingJob(Control* control, string name)
 {

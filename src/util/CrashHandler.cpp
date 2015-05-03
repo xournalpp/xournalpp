@@ -4,7 +4,7 @@
 #include "Util.h"
 
 #include "cfg.h"
-#include "control/SaveHandler.h"
+#include "control/xojfile/SaveHandler.h"
 #include "model/Document.h"
 
 #include <glib.h>
