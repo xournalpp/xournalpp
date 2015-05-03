@@ -21,10 +21,6 @@ namespace bf = boost::filesystem;
 #include <iostream>
 using namespace std;
 
-#ifdef ENABLE_PYTHON
-#include "plugin/python/PythonRunner.h"
-#endif
-
 XournalMain::XournalMain()
 {
 	XOJ_INIT_TYPE(XournalMain);
@@ -196,21 +192,12 @@ int XournalMain::run(int argc, char* argv[])
 	bool optNoPdfCompress = false;
 	gchar** optFilename = NULL;
 	gchar* pdfFilename = NULL;
-#ifdef ENABLE_PYTHON
-	gchar* scriptFilename = NULL;
-	gchar* scriptArg = NULL;
-#endif
 	int openAtPageNumber = -1;
 
 	GOptionEntry options[] = {
 		{ "pdf-no-compress",   0, 0, G_OPTION_ARG_NONE,           &optNoPdfCompress, "Don't compress PDF files (for debugging)", NULL },
 		{ "create-pdf",      'p', 0, G_OPTION_ARG_FILENAME,       &pdfFilename,      "PDF output filename", NULL },
 		{ "page",            'n', 0, G_OPTION_ARG_INT,            &openAtPageNumber, "Jump to Page (first Page: 1)", "N" },
-
-#ifdef ENABLE_PYTHON
-		{"script", 0, 0, G_OPTION_ARG_STRING, &scriptFilename, "Runs a Python script as plugin Package:Function (e.g. \"Test:xournalTest\" to run tests)", NULL},
-		{"script-arg", 0, 0, G_OPTION_ARG_STRING, &scriptArg, "Python script parameter", NULL},
-#endif
 		{G_OPTION_REMAINING,   0, 0, G_OPTION_ARG_FILENAME_ARRAY, &optFilename,      "<input>", NULL},
 		{NULL}
 	};
@@ -304,25 +291,6 @@ int XournalMain::run(int argc, char* argv[])
 		control->newFile();
 	}
 
-#ifdef ENABLE_PYTHON
-	PythonRunner::initPythonRunner(control);
-
-	if (scriptFilename)
-	{
-		char* name = strtok(scriptFilename, ":");
-		char* methodeName = strtok(NULL, ":");
-
-		if (name == NULL || methodeName == NULL)
-		{
-			g_warning("--script attribute should be: Package:Function! (argument was: \"%s\")", scriptFilename);
-		}
-		else
-		{
-			PythonRunner::runScript(name, methodeName, scriptArg);
-		}
-	}
-#endif
-
 	checkForErrorlog();
 	checkForEmergencySave();
 
@@ -333,10 +301,6 @@ int XournalMain::run(int argc, char* argv[])
 	control->saveSettings();
 
 	win->getXournal()->clearSelection();
-
-#ifdef ENABLE_PYTHON
-	PythonRunner::releasePythonRunner();
-#endif
 
 	control->getScheduler()->stop();
 

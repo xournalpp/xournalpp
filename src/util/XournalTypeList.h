@@ -169,7 +169,6 @@ XOJ_DECLARE_TYPE(PageRangeEntry, 159);
 XOJ_DECLARE_TYPE(PageViewIndex, 160);
 XOJ_DECLARE_TYPE(PageViewIndexEntry, 161);
 XOJ_DECLARE_TYPE(EditSelectionContents, 162);
-XOJ_DECLARE_TYPE(PythonRunner, 163);
 XOJ_DECLARE_TYPE(BackgroundImageContents, 164);
 XOJ_DECLARE_TYPE(PageRef, 165);
 XOJ_DECLARE_TYPE(ToolbarCustomizeDialog, 166);
