@@ -22,6 +22,7 @@ class XojPreviewExtractorTest: public CppUnit::TestFixture {
 
 	CPPUNIT_TEST(testNonExistingFile);
 	CPPUNIT_TEST(testLoadGzipped);
+	CPPUNIT_TEST(testLoadGzipped2);
 	CPPUNIT_TEST(testLoad1Unzipped);
 	CPPUNIT_TEST(testNoPreview);
 	CPPUNIT_TEST(testInvalidFile);
@@ -48,12 +49,22 @@ public:
 	void testLoadGzipped()
 	{
 		XojPreviewExtractor extractor;
-		PreviewExtractResult result = extractor.readFile("testfiles/preview-test.xoj.gz");
+		PreviewExtractResult result = extractor.readFile("testfiles/preview-test.xoj");
 
 		CPPUNIT_ASSERT_EQUAL(PREVIEW_RESULT_IMAGE_READ, result);
 
 		CPPUNIT_ASSERT_EQUAL((gsize)17, extractor.getDataLength());
 		CPPUNIT_ASSERT_EQUAL(string("CppUnitTestString"), string((const char*)extractor.getData()));
+	}
+
+	void testLoadGzipped2()
+	{
+		XojPreviewExtractor extractor;
+		PreviewExtractResult result = extractor.readFile("testfiles/preview-test2.xoj");
+
+		CPPUNIT_ASSERT_EQUAL(PREVIEW_RESULT_IMAGE_READ, result);
+
+		CPPUNIT_ASSERT_EQUAL((gsize)2856, extractor.getDataLength());
 	}
 
 	void testLoad1Unzipped()

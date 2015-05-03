@@ -56,7 +56,7 @@ PreviewExtractResult XojPreviewExtractor::readFile(std::string file)
 	std::string data;
 	std::string preview;
 
-	PreviewExtractResult result = PREVIEW_RESULT_IMAGE_READ;
+	PreviewExtractResult result = PREVIEW_RESULT_ERROR_READING_PREVIEW;
 
 	do {
 		int count = gzread(inputFile, buffer, sizeof(buffer));
@@ -79,6 +79,7 @@ PreviewExtractResult XojPreviewExtractor::readFile(std::string file)
 			}
 
 			preview = data.substr(posPreviewStart + 9, posPreviewEnd - posPreviewStart - 9);
+			result = PREVIEW_RESULT_IMAGE_READ;
 
 			break;
 		}
@@ -87,9 +88,10 @@ PreviewExtractResult XojPreviewExtractor::readFile(std::string file)
 		if (data.find("<page") != std::string::npos)
 		{
 			result = PREVIEW_RESULT_NO_PREVIEW;
+			break;
 		}
 
-	} while(data.size() < 20480 && result == PREVIEW_RESULT_IMAGE_READ); // max, 20k, no error occured
+	} while(data.size() < 20480); // max, 20k
 
 	data.clear();
 	gzclose(inputFile);
