@@ -2,8 +2,6 @@
 
 #include "DocumentListener.h"
 
-#define FOR_ALL for (DocumentListener* dl : this->listener)
-
 DocumentHandler::DocumentHandler()
 {
 	XOJ_INIT_TYPE(DocumentHandler);
@@ -36,36 +34,54 @@ void DocumentHandler::fireDocumentChanged(DocumentChangeType type)
 {
 	XOJ_CHECK_TYPE(DocumentHandler);
 
-	FOR_ALL dl->documentChanged(type);
+	for (DocumentListener* dl : this->listener)
+	{
+		dl->documentChanged(type);
+	}
 }
 
 void DocumentHandler::firePageSizeChanged(int page)
 {
 	XOJ_CHECK_TYPE(DocumentHandler);
 
-	FOR_ALL dl->pageSizeChanged(page);
+	for (DocumentListener* dl : this->listener)
+	{
+		dl->pageSizeChanged(page);
+	}
 }
 
 void DocumentHandler::firePageChanged(int page)
 {
 	XOJ_CHECK_TYPE(DocumentHandler);
 
-	FOR_ALL dl->pageChanged(page);
+	for (DocumentListener* dl : this->listener)
+	{
+		dl->pageChanged(page);
+	}
 }
 
 void DocumentHandler::firePageInserted(int page)
 {
 	XOJ_CHECK_TYPE(DocumentHandler);
 
-	FOR_ALL dl->pageInserted(page);
+	for (DocumentListener* dl : this->listener)
+	{
+		dl->pageInserted(page);
+	}
 }
 
 void DocumentHandler::firePageDeleted(int page)
 {
-	FOR_ALL dl->pageDeleted(page);
+	for (DocumentListener* dl : this->listener)
+	{
+		dl->pageDeleted(page);
+	}
 }
 
 void DocumentHandler::firePageSelected(int page)
 {
-	FOR_ALL dl->pageSelected(page);
+	for (DocumentListener* dl : this->listener)
+	{
+		dl->pageSelected(page);
+	}
 }

@@ -86,7 +86,7 @@ void Document::clearDocument(bool destroy)
 
 	if (!destroy)
 	{
-		// look aufheben
+		// release lock
 		bool lastLock = tryLock();
 		unlock();
 		this->handler->fireDocumentChanged(DOCUMENT_CHANGE_CLEARED);

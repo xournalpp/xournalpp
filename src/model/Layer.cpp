@@ -16,8 +16,8 @@ Layer::~Layer()
 	for (Element* e : this->elements)
 	{
 		delete e;
-		e = NULL;
 	}
+	this->elements.clear();
 
 	XOJ_RELEASE_TYPE(Layer);
 }
@@ -89,7 +89,10 @@ int Layer::indexOf(Element* e)
 	
 	for (unsigned int i = 0; i < this->elements.size(); i++)
 	{
-		if (this->elements[i] == e) return i;
+		if (this->elements[i] == e)
+		{
+			return i;
+		}
 	}
 	
 	return -1;
@@ -105,7 +108,10 @@ int Layer::removeElement(Element* e, bool free)
 		{
 			this->elements.erase(this->elements.begin() + i);
 			
-			if (free) delete e;
+			if (free)
+			{
+				delete e;
+			}
 			return i;
 		}
 	}

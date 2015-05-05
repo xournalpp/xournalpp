@@ -8,9 +8,13 @@ int XInputUtils::screenWidth = 0;
 int XInputUtils::screenHeight = 0;
 int XInputUtils::enableLeafEnterWorkaround = true;
 
-XInputUtils::XInputUtils() { }
+XInputUtils::XInputUtils()
+{
+}
 
-XInputUtils::~XInputUtils() { }
+XInputUtils::~XInputUtils()
+{
+}
 
 void XInputUtils::initUtils(GtkWidget* win)
 {
@@ -156,8 +160,7 @@ gboolean XInputUtils::onMouseEnterNotifyEvent(GtkWidget* widget, GdkEventCrossin
 	{
 		gdk_flush();
 		gdk_error_trap_push();
-		for (GList* dev_list = gdk_devices_list(); dev_list != NULL;
-			dev_list = dev_list->next)
+		for (GList* dev_list = gdk_devices_list(); dev_list != NULL; dev_list = dev_list->next)
 		{
 			GdkDevice* dev = GDK_DEVICE(dev_list->data);
 			gdk_device_set_mode(dev, GDK_MODE_SCREEN);

@@ -10,7 +10,10 @@ string StringUtils::format(const char* format, ...)
 	char* data = g_strdup_vprintf(format, args);
 	va_end(args);
 
-	return string(data);
+
+	string str(data);
+	g_free(data);
+	return str;
 }
 
 void StringUtils::replace_all_chars(string& input, const std::vector<replace_pair> replaces)

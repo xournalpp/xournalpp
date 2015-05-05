@@ -12,10 +12,14 @@ PageBackgroundChangedUndoAction::PageBackgroundChangedUndoAction(PageRef page, B
 
 	this->page = page;
 	this->origType = origType;
-	this->origPdfPage = this->origPdfPage;
+	this->origPdfPage = origPdfPage;
 	this->origBackgroundImage = origBackgroundImage;
 	this->origW = origW;
 	this->origH = origH;
+	this->newW = 0;
+	this->newH = 0;
+	this->newPdfPage = -1;
+	this->newType = BACKGROUND_TYPE_NONE;
 }
 
 PageBackgroundChangedUndoAction::~PageBackgroundChangedUndoAction()

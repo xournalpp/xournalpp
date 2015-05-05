@@ -22,8 +22,10 @@ public:
 		this->layer = layer;
 	}
 
+private:
 	XOJ_TYPE_ATTRIB;
 
+public:
 	Layer* layer;
 	T* element;
 	int pos;
