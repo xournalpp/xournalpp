@@ -4,7 +4,6 @@
 #include "ToolitemDragDrop.h"
 #include "XournalView.h"
 
-#include "cfg.h"
 #include "control/Control.h"
 #include "gui/GladeSearchpath.h"
 #include "ToolbarDefinitions.h"
@@ -15,6 +14,7 @@
 #include "widgets/XournalWidget.h"
 
 #include <config.h>
+#include <config-dev.h>
 
 #include <glib/gi18n-lib.h>
 #include <gdk/gdkkeysyms.h>
@@ -46,7 +46,7 @@ MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control) :
 	this->toolbarMenuData = NULL;
 	this->toolbarMenuitems = NULL;
 
-#ifndef ENABLE_MATHTEX
+#ifdef ENABLE_MATHTEX
 	// if mathetex is disable disabled hide the menu entry
 	gtk_widget_destroy(get("menuEditTex"));
 #endif

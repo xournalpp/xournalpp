@@ -1,0 +1,24 @@
+/*
+ * Xournal++
+ *
+ * Test module constants
+ *
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
+ *
+ * @license GNU GPLv2 or later
+ */
+
+#pragma once
+
+/**
+ * Project source directory (needed for loading testfiles)
+ */
+#cmakedefine PROJECT_SOURCE_DIR "@PROJECT_SOURCE_DIR@"
+
+#define GET_TESTFILE(relative) PROJECT_SOURCE_DIR "/test/files/" relative
+
+/**
+ * Show speed benchmarks of tests
+ */
+#cmakedefine TEST_CHECK_SPEED

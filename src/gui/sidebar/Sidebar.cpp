@@ -9,7 +9,7 @@
 #include "previews/page/SidebarPreviewPages.h"
 #include "previews/layer/SidebarPreviewLayers.h"
 
-#include <config.h>
+#include <config-features.h>
 
 #include <glib/gi18n-lib.h>
 
@@ -41,9 +41,9 @@ void Sidebar::initPages(GtkWidget* sidebar, GladeGui* gui)
 
 	addPage(new SidebarIndexPage(this->control));
 	addPage(new SidebarPreviewPages(this->control));
-#ifdef XOJ_LAYERS_SIDEBAR
+#ifdef UNSTABLE_LAYERS_SIDEBAR
 	addPage(new SidebarPreviewLayers(this->control));
-#endif //XOJ_LAYERS_SIDEBAR
+#endif //UNSTABLE_LAYERS_SIDEBAR
 
 	// Init toolbar with icons
 

@@ -1,7 +1,7 @@
 #include "Util.h"
 
-#include "cfg.h"
 #include <config.h>
+#include <config-dev.h>
 
 #include <glib/gi18n-lib.h>
 #include <boost/filesystem.hpp>

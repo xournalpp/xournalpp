@@ -1,0 +1,42 @@
+/*
+ * Xournal++
+ *
+ * Static debugging definitions for Xournal++
+ *
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
+ *
+ * @license GNU GPLv2 or later
+ */
+
+#pragma once
+
+/**
+ * Input debugging, e.g. eraser events etc.
+ */
+#cmakedefine DEBUG_INPUT
+
+/**
+ * Shape recognizer debug: output score etc.
+ */
+#cmakedefine DEBUG_RECOGNIZER
+
+/**
+ * Scheduler debug: show jobs etc.
+ */
+#cmakedefine DEBUG_SHEDULER
+
+/**
+ * Draw a surrounding border to all elements
+ */
+#cmakedefine DEBUG_SHOW_ELEMENT_BOUNDS
+
+/**
+ * Draw a border around all repaint rects
+ */
+#cmakedefine DEBUG_SHOW_REPAINT_BOUNDS
+
+/**
+ * Draw a border around all painted rects
+ */
+#cmakedefine DEBUG_SHOW_PAINT_BOUNDS

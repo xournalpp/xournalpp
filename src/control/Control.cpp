@@ -3,7 +3,6 @@
 #include "ExportHandler.h"
 #include "PrintHandler.h"
 
-#include "cfg.h"
 #include "gui/Cursor.h"
 #include "gui/dialog/AboutDialog.h"
 #include "gui/dialog/GotoDialog.h"
@@ -41,6 +40,7 @@
 #include "view/DocumentView.h"
 
 #include <config.h>
+#include <config-dev.h>
 #include <CrashHandler.h>
 #include <serializing/ObjectInputStream.h>
 #include <Stacktrace.h>
@@ -3062,9 +3062,9 @@ void Control::clipboardPasteXournal(ObjectInputStream& in)
 	try
 	{
 		string version = in.readString();
-		if (version != PACKAGE_STRING)
+		if (version != PROJECT_STRING)
 		{
-			g_warning("Paste from Xournal Version %s to Xournal Version %s", version.c_str(), PACKAGE_STRING);
+			g_warning("Paste from Xournal Version %s to Xournal Version %s", version.c_str(), PROJECT_STRING);
 		}
 
 		selection = new EditSelection(this->undoRedo, page, view);

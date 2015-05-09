@@ -1,11 +1,13 @@
 #include "Scheduler.h"
 
-#include "cfg.h"
+#include <config-debug.h>
 
-#ifdef SHEDULER_DEBUG
+#ifdef DEBUG_SHEDULER
+
 #include <StringUtils.h>
 #include <iostream>
 #define SDEBUG(msg) std::cout << bl::format(CONCAT("Scheduler::", msg, "\n"))
+
 #else
 
 //kind of workaround
@@ -19,6 +21,7 @@ public:
 	}
 };
 #define SDEBUG(msg) no_debug_format()
+
 #endif
 
 Scheduler::Scheduler()

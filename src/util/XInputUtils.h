@@ -11,9 +11,11 @@
 
 #pragma once
 
+#include <config-debug.h>
+
 #include <gtk/gtk.h>
 
-#ifdef INPUT_DEBUG
+#ifdef DEBUG_INPUT
 #define INPUTDBG(msg, ...) printf("INPUT:: " msg, __VA_ARGS__); printf(" on %s:%i\n",  __FILE__, __LINE__)
 #define INPUTDBG2(msg)     printf("INPUT:: " msg " on %s:%i\n",  __FILE__, __LINE__)
 #else

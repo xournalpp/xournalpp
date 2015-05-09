@@ -30,7 +30,6 @@ public:
 	void runCommand();
 	string getFileName();
 
-
 private:
 	//	Control * control;
 	string theLatex;

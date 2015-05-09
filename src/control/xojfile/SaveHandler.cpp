@@ -82,10 +82,10 @@ void SaveHandler::prepareSave(Document* doc)
 	this->attachBgId = 1;
 
 	this->root = new XmlNode("xournal");
-	this->root->setAttrib("creator", "Xournal++ " VERSION);
+	this->root->setAttrib("creator", PROJECT_STRING);
 	this->root->setAttrib("fileversion", "2");
 
-	this->root->addChild(new XmlTextNode("title", "Xournal document - see http://xournal.sourceforge.net/"));
+	this->root->addChild(new XmlTextNode("title", "Xournal document - see " PROJECT_URL));
 	cairo_surface_t* preview = doc->getPreview();
 	if (preview)
 	{

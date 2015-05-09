@@ -1,3 +1,4 @@
+# Autotools (needed for poppler)
 .deps
 .dirstamp
 .libs
@@ -17,14 +18,16 @@ configure
 po/POTFILES
 stamp-h1
 
-# Binaries
-src/xournalpp
-src/xoj-preview-extractor/xournal-thumbnailer
-src/mathtex/mathtex-xournalpp.cgi
+# CMake
+build/
+desktop/desktop_install.sh
+
+# Poppler binaries
 src/pdf/popplerdirect/libpoppler-glib.a
 src/pdf/popplerdirect/libpoppler.a
 src/pdf/popplerdirect/poppler-0.24.1_build/
 src/pdf/popplerdirect/poppler-config.h
+src/pdf/popplerdirect/workaround/workaround.sh
 
 # NetBeans
-nbproject
+nbproject/

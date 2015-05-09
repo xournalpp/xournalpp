@@ -2,7 +2,6 @@
 
 #include "Scrollbar.h"
 
-#include "cfg.h"
 #include "control/Control.h"
 #include "control/tools/EditSelection.h"
 #include "control/settings/ButtonConfig.h"
@@ -14,6 +13,7 @@
 #include "gui/Shadow.h"
 #include "gui/XournalView.h"
 
+#include <config-debug.h>
 #include <Rectangle.h>
 #include <Util.h>
 #include <XInputUtils.h>
@@ -176,7 +176,7 @@ static gboolean gtk_xournal_key_release_event(GtkWidget* widget, GdkEventKey* ev
 
 gboolean gtk_xournal_scroll_event(GtkWidget* widget, GdkEventScroll* event)
 {
-#ifdef INPUT_DEBUG
+#ifdef DEBUG_INPUT
 	// true: Core event, false: XInput event
 	gboolean isCore = (event->device == gdk_device_get_core_pointer());
 
@@ -448,7 +448,7 @@ gboolean gtk_xournal_button_press_event(GtkWidget* widget, GdkEventButton* event
 
 gboolean gtk_xournal_button_release_event(GtkWidget* widget, GdkEventButton* event)
 {
-#ifdef INPUT_DEBUG
+#ifdef DEBUG_INPUT
 	gboolean isCore = (event->device == gdk_device_get_core_pointer());
 	INPUTDBG("ButtonRelease (%s) (x,y)=(%.2f,%.2f), button %d, modifier %x, isCore %i",
 			 gdk_device_get_name(event->device), event->x, event->y,
@@ -501,7 +501,7 @@ gboolean gtk_xournal_button_release_event(GtkWidget* widget, GdkEventButton* eve
 
 gboolean gtk_xournal_motion_notify_event(GtkWidget* widget, GdkEventMotion* event)
 {
-#ifdef INPUT_DEBUG
+#ifdef DEBUG_INPUT
 	bool is_core = (event->device == gdk_device_get_core_pointer());
 	INPUTDBG("MotionNotify (%s) (x,y)=(%.2f,%.2f), modifier %x",
 			 is_core ? "core" : "xinput",

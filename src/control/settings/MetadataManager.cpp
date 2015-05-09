@@ -1,7 +1,7 @@
 #include "MetadataManager.h"
 
-#include "cfg.h"
-#include "util/Util.h"
+#include <config-dev.h>
+#include <Util.h>
 
 #include <exception>
 using std::exception;

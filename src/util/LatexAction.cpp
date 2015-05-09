@@ -1,6 +1,5 @@
 #include "LatexAction.h"
 
-#include "cfg.h"
 #include "control/Control.h"
 #include "control/tools/ImageHandler.h"
 #include "gui/PageView.h"
@@ -8,15 +7,14 @@
 #include "model/Stroke.h"
 #include "model/Layer.h"
 #include "model/TexImage.h"
+//TODO some time - clean up these includes
 #include "serializing/HexObjectEncoding.h"
 #include "serializing/ObjectOutputStream.h"
 
 #include <glib.h>
 
 #include <iostream>
-using std::cout;
-using std::cerr;
-using std::endl;
+using namespace std;
 
 LatexAction::LatexAction(string myTex, double tArea)
 {

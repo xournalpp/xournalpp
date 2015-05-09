@@ -3,10 +3,10 @@
  *
  * String utilities
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author MarPiRK
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
 #pragma once

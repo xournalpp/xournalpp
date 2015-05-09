@@ -2,7 +2,6 @@
 
 #include "TextView.h"
 
-#include "cfg.h"
 #include "control/tools/EditSelection.h"
 #include "control/tools/Selection.h"
 #include "model/BackgroundImage.h"
@@ -10,13 +9,14 @@
 #include "model/Layer.h"
 
 #include <config.h>
+#include <config-debug.h>
 
 #include <gdk/gdk.h>
 #include <glib/gi18n-lib.h>
 
 #include <typeinfo>
 
-#ifdef SHOW_REPAINT_BOUNDS
+#ifdef DEBUG_SHOW_REPAINT_BOUNDS
 #include <iostream>
 using std::cout;
 using std::endl;
@@ -281,20 +281,20 @@ void DocumentView::drawLayer(cairo_t* cr, Layer* l)
 
 	cairo_set_operator(cr, CAIRO_OPERATOR_SOURCE);
 
-#ifdef SHOW_REPAINT_BOUNDS
+#ifdef DEBUG_SHOW_REPAINT_BOUNDS
 	int drawed = 0;
 	int notDrawed = 0;
-#endif //SHOW_REPAINT_BOUNDS
+#endif // DEBUG_SHOW_REPAINT_BOUNDS
 	for (Element* e : *l->getElements())
 	{
-#ifdef SHOW_ELEMENT_BOUNDS
+#ifdef DEBUG_SHOW_ELEMENT_BOUNDS
 		gdk_threads_enter();
 		cairo_set_source_rgb(cr, 0, 1, 0);
 		cairo_set_line_width(cr, 1);
 		cairo_rectangle(cr, e->getX(), e->getY(), e->getElementWidth(), e->getElementHeight());
 		cairo_stroke(cr);
 		gdk_threads_leave();
-#endif // SHOW_ELEMENT_BOUNDS
+#endif // DEBUG_SHOW_REPAINT_BOUNDS
 		//cairo_new_path(cr);
 
 		if (this->lX != -1)
@@ -302,30 +302,30 @@ void DocumentView::drawLayer(cairo_t* cr, Layer* l)
 			if (e->intersectsArea(this->lX, this->lY, this->width, this->height))
 			{
 				drawElement(cr, e);
-#ifdef SHOW_REPAINT_BOUNDS
+#ifdef DEBUG_SHOW_REPAINT_BOUNDS
 				drawed++;
-#endif //SHOW_REPAINT_BOUNDS
+#endif // DEBUG_SHOW_REPAINT_BOUNDS
 			}
-#ifdef SHOW_REPAINT_BOUNDS
+#ifdef DEBUG_SHOW_REPAINT_BOUNDS
 			else
 			{
 				notDrawed++;
 			}
-#endif //SHOW_REPAINT_BOUNDS
+#endif // DEBUG_SHOW_REPAINT_BOUNDS
 
 		}
 		else
 		{
-#ifdef SHOW_REPAINT_BOUNDS
+#ifdef DEBUG_SHOW_REPAINT_BOUNDS
 			drawed++;
-#endif //SHOW_REPAINT_BOUNDS
+#endif // DEBUG_SHOW_REPAINT_BOUNDS
 			drawElement(cr, e);
 		}
 	}
 
-#ifdef SHOW_REPAINT_BOUNDS
+#ifdef DEBUG_SHOW_REPAINT_BOUNDS
 	cout << bl::format("DBG:DocumentView: draw {1} / not draw {2}") % drawed % notDrawed << endl;
-#endif //SHOW_REPAINT_BOUNDS
+#endif // DEBUG_SHOW_REPAINT_BOUNDS
 }
 
 void DocumentView::paintBackgroundImage()
@@ -475,7 +475,7 @@ void DocumentView::finializeDrawing()
 {
 	XOJ_CHECK_TYPE(DocumentView);
 
-#ifdef SHOW_REPAINT_BOUNDS
+#ifdef DEBUG_SHOW_REPAINT_BOUNDS
 	if (this->lX != -1)
 	{
 		cout << "DBG:repaint area" << endl;
@@ -488,7 +488,7 @@ void DocumentView::finializeDrawing()
 	{
 		cout << "DBG:repaint complete" << endl;
 	}
-#endif //SHOW_REPAINT_BOUNDS
+#endif // DEBUG_SHOW_REPAINT_BOUNDS
 
 	this->lX = -1;
 	this->lY = -1;

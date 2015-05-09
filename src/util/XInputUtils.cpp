@@ -1,6 +1,6 @@
 #include "XInputUtils.h"
 
-#include "cfg.h"
+#include <config-dev.h>
 
 #include <math.h>
 
@@ -148,7 +148,7 @@ gboolean XInputUtils::onMouseEnterNotifyEvent(GtkWidget* widget, GdkEventCrossin
 		return FALSE;
 	}
 
-	INPUTDBG("enter notify\n");
+	INPUTDBG("enter notify\n", NULL);
 
 	/* re-enable input devices after they've been emergency-disabled
 	 by leave_notify */

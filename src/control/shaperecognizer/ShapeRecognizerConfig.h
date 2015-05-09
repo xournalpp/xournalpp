@@ -11,7 +11,7 @@
 
 #pragma once
 
-#include "cfg.h"
+#include <config-debug.h>
 
 #define MAX_POLYGON_SIDES 4
 
@@ -33,10 +33,15 @@
 #define ARROW_MAIN_LINEAR_GAP_MAX +0.7			// gap tolerance on main segment
 
 
-#ifdef RECOGNIZER_DEBUG
+#ifdef DEBUG_RECOGNIZER
+
 #include <StringUtils.h>
 #include <iostream>
-#define RDEBUG(msg) std::cout << bl::format(CONCAT("ShapeReco::", msg, "\n"))
+using std::cout;
+using std::endl;
+
+#define RDEBUG(msg) cout << bl::format(CONCAT("ShapeReco::", msg, "\n"))
+		
 #else
 class no_debug_format
 {

@@ -11,9 +11,10 @@
 
 #pragma once
 
-#include "cfg.h"
 #include "control/Tool.h"
 #include "model/Font.h"
+
+#include <config-dev.h>
 
 #include <boost/filesystem/path.hpp>
 using boost::filesystem::path;

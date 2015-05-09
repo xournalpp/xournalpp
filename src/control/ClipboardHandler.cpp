@@ -179,7 +179,7 @@ bool ClipboardHandler::copy()
 
 	ObjectOutputStream out(new BinObjectEncoding());
 
-	out.writeString(PACKAGE_STRING);
+	out.writeString(PROJECT_STRING);
 
 	out << this->selection;
 

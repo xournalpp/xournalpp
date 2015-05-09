@@ -1,0 +1,80 @@
+/*
+ * Xournal++
+ *
+ * Static project constants
+ *
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
+ *
+ * @license GNU GPLv2 or later
+ */
+
+#pragma once
+
+/* --- Project info --- */
+
+/**
+ * Full name of this project
+ */
+#cmakedefine PROJECT_NAME "@PROJECT_NAME@"
+
+/**
+ * Name of package
+ */
+#cmakedefine PROJECT_PACKAGE "@PROJECT_PACKAGE@"
+
+/**
+ * Project version number
+ */
+#cmakedefine PROJECT_VERSION "@PROJECT_VERSION@"
+
+/**
+ * Address where bug reports for this project should be sent
+ */
+#cmakedefine PROJECT_BUGREPORT "@PROJECT_BUGREPORT@"
+
+/**
+ * Full name and version of this project
+ */
+#cmakedefine PROJECT_STRING "@PROJECT_STRING@"
+
+/**
+ * Project URL
+ */
+#cmakedefine PROJECT_URL "@PROJECT_URL@"
+
+
+/* --- Current git repo info --- */
+
+/**
+ * Origin URL of current repository
+ */
+#cmakedefine GIT_ORIGIN_URL "@GIT_ORIGIN_URL@"
+
+/**
+ * Git origin repo owner
+ */
+#cmakedefine GIT_ORIGIN_OWNER "@GIT_ORIGIN_OWNER@"
+
+/**
+ * Git origin repo name
+ */
+#cmakedefine GIT_ORIGIN_REPO "@GIT_ORIGIN_REPO@"
+
+/**
+ * Current branch of git repo
+ */
+#cmakedefine GIT_BRANCH "@GIT_BRANCH@"
+
+
+/* --- I18N --- */
+
+/**
+ * Enable i18n
+ */
+#cmakedefine ENABLE_NLS
+
+/**
+ * Gettext package
+ */
+#cmakedefine GETTEXT_PACKAGE "@GETTEXT_PACKAGE@"

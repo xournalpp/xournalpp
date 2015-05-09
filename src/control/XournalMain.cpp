@@ -2,21 +2,21 @@
 
 #include "Control.h"
 
-#include "cfg.h"
 #include "gui/GladeSearchpath.h"
 #include "gui/MainWindow.h"
 #include "gui/toolbarMenubar/model/ToolbarColorNames.h"
 #include "gui/XournalView.h"
-#include "xojfile/LoadHandler.h"
 #include "pdf/popplerdirect/PdfExport.h"
+#include "xojfile/LoadHandler.h"
 
 #include <config.h>
+#include <config-dev.h>
 
 #include <gtk/gtk.h>
 
-#include <boost/locale.hpp>
 #include <boost/algorithm/string/predicate.hpp>
 #include <boost/filesystem.hpp>
+#include <boost/locale.hpp>
 namespace bf = boost::filesystem;
 
 #include <string>
@@ -48,6 +48,9 @@ void XournalMain::initLocalisation()
 #ifdef ENABLE_NLS
 	gen.add_messages_path(PACKAGE_LOCALE_DIR);
 	gen.add_messages_domain(GETTEXT_PACKAGE);
+	
+	bindtextdomain(GETTEXT_PACKAGE, PACKAGE_LOCALE_DIR);
+	textdomain(GETTEXT_PACKAGE);
 #endif //ENABLE_NLS
 
 	std::locale::global(gen("")); //"" - system default locale
@@ -63,26 +66,12 @@ void XournalMain::checkForErrorlog()
 	{
 		string msg = _("There is an errorlogfile from Xournal++. Please send a Bugreport, "
 					   "so the bug may been fixed.\n");
-		string issue_url = "https://github.com/xournalpp/xournalpp/issues/new";
-#ifdef GIT_ORIGIN_URL
-		{
-			string origin_url = GIT_ORIGIN_URL;
-			string branch = GIT_BRANCH;
-			string repo_path = origin_url.substr(origin_url.find(":") + 1); //git@github.com:asdf URLs
-			vector<string> split_url;
-			ba::split(split_url, repo_path, ba::is_any_of("/"));
-			if (split_url.size() >= 2)
-			{
-				string owner = split_url[split_url.size() - 2];
-				string repo = split_url.back().substr(0, split_url.back().size() - 4); //remove .git suffix
-				msg += (bl::format("You're using {1}/{2} branch. "
-						"Send Bugreport will direct you to this repo's issue tracker.\n")
-						% owner % branch).str();
-				issue_url = CONCAT("https://github.com/", owner, '/', repo, "/issues/new");
-			}
-		}
-#endif //GIT_ORIGIN_URL
+#if defined(GIT_BRANCH) && defined(GIT_REPO_OWNER)
+		msg += (bl::format("You're using {1}/{2} branch. Send Bugreport will direct you to this repo's issue tracker.\n")
+						% GIT_REPO_OWNER % GIT_BRANCH).str();
+#endif
 		msg += _("Logfile: %s");
+		
 		GtkWidget* dialog = gtk_message_dialog_new(NULL, GTK_DIALOG_MODAL,
 			GTK_MESSAGE_QUESTION, GTK_BUTTONS_NONE, msg.c_str(),
 			filename.c_str());
@@ -97,7 +86,7 @@ void XournalMain::checkForErrorlog()
 
 		if (res == 1) // Send Bugreport
 		{
-			Util::openFileWithDefaultApplicaion(issue_url);
+			Util::openFileWithDefaultApplicaion(PROJECT_BUGREPORT);
 			Util::openFileWithFilebrowser(filename);
 		}
 		else if (res == 2) // Open Logfile
@@ -222,7 +211,7 @@ int XournalMain::run(int argc, char* argv[])
 	}
 	g_option_context_free(context);
 
-#ifdef XOJ_MEMORY_LEAK_CHECK_ENABLED
+#ifdef DEV_MEMORY_LEAK_CHECKING
 	xoj_type_initMutex();
 #endif
 
@@ -368,7 +357,7 @@ GladeSearchpath* XournalMain::initPath(const char* argv0)
 	gladePath->addSearchDirectory(searchPath);
 	g_free(searchPath);
 
-	searchPath = g_build_filename(PACKAGE_DATA_DIR, PACKAGE, "ui", NULL);
+	searchPath = g_build_filename(PACKAGE_DATA_DIR, PROJECT_PACKAGE, "ui", NULL);
 	gladePath->addSearchDirectory(searchPath);
 	g_free(searchPath);
 

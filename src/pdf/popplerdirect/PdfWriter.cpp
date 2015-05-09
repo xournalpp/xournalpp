@@ -186,7 +186,7 @@ bool PdfWriter::writeInfo(string title)
 	}
 
 	write("/Creator ");
-	writeTxt("Cairo / Poppler / Xournal++ v." VERSION);
+	writeTxt("Cairo / Poppler / " PROJECT_NAME " v." PROJECT_VERSION);
 	write("\n");
 
 	time_t curtime = time(NULL);

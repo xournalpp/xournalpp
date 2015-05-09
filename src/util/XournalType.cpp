@@ -1,6 +1,7 @@
 #include "XournalType.h"
 
 #include "StringUtils.h"
+#include <config-dev.h>
 
 #include <glib.h>
 
@@ -9,7 +10,7 @@
 using std::cout;
 using std::endl;
 
-#ifdef XOJ_MEMORY_CHECK_ENABLED
+#ifdef DEV_MEMORY_CHECKING
 
 #define XOURNAL_TYPE_LIST_LENGTH 256
 
@@ -73,7 +74,7 @@ const char* xoj_type_getName(int id)
 	return typeName;
 }
 
-#ifdef XOJ_MEMORY_LEAK_CHECK_ENABLED
+#ifdef DEV_MEMORY_LEAK_CHECKING
 
 static int xojInstanceList[XOURNAL_TYPE_LIST_LENGTH] = { 0 };
 
@@ -119,6 +120,6 @@ void xoj_momoryleak_printRemainingObjects()
 	cout << bl::format("MemoryLeak: sum {1} objects.") % sum << endl;
 }
 
-#endif //XOJ_MEMORY_LEAK_CHECK_ENABLED
+#endif // DEV_MEMORY_LEAK_CHECKING
 
-#endif // XOJ_MEMORY_CHECK_ENABLED
+#endif // DEV_MEMORY_CHECKING

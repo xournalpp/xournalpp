@@ -11,6 +11,7 @@
 
 #include "control/XournalMain.h"
 
+#include <config-dev.h>
 #include <CrashHandler.h>
 #include <Stacktrace.h>
 
@@ -24,7 +25,7 @@ int main(int argc, char* argv[])
 		Stacktrace::setExename(argv[0]);
 	}
 
-#ifdef XOJ_CALL_LOG_ENABLED
+#ifdef DEV_CALL_LOG
 	Log::initlog();
 #endif
 
@@ -32,11 +33,11 @@ int main(int argc, char* argv[])
 	int result = main->run(argc, argv);
 	delete main;
 
-#ifdef XOJ_MEMORY_LEAK_CHECK_ENABLED
+#ifdef DEV_MEMORY_LEAK_CHECKING
 	xoj_momoryleak_printRemainingObjects();
 #endif
 
-#ifdef XOJ_CALL_LOG_ENABLED
+#ifdef DEV_CALL_LOG
 	Log::closelog();
 #endif
 

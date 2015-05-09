@@ -4,6 +4,8 @@
 #include "model/BackgroundImage.h"
 #include "LoadHandlerHelper.h"
 
+#include <config.h>
+
 #include <glib.h>
 #include <glib/gi18n-lib.h>
 #include <glib/gstdio.h>

@@ -5,7 +5,6 @@
 #include "TextEditor.h"
 #include "XournalView.h"
 
-#include "cfg.h"
 #include "control/Control.h"
 #include "control/SearchControl.h"
 #include "control/settings/ButtonConfig.h"
@@ -29,6 +28,7 @@
 #include "widgets/XournalWidget.h"
 
 #include <config.h>
+#include <config-debug.h>
 #include <pixbuf-utils.h>
 #include <Range.h>
 #include <Rectangle.h>
@@ -875,7 +875,7 @@ bool PageView::paintPage(cairo_t* cr, GdkRectangle* rect)
 		cairo_rectangle(cr, rect->x, rect->y, rect->width, rect->height);
 		cairo_fill(cr);
 
-#ifdef SHOW_PAINT_BOUNDS
+#ifdef DEBUG_SHOW_PAINT_BOUNDS
 		cairo_set_source_rgb(cr, 1.0, 0.5, 1.0);
 		cairo_set_line_width(cr, 1. / zoom);
 		cairo_rectangle(cr, rect->x, rect->y, rect->width, rect->height);

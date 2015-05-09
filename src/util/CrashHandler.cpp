@@ -3,9 +3,10 @@
 #include "Stacktrace.h"
 #include "Util.h"
 
-#include "cfg.h"
 #include "control/xojfile/SaveHandler.h"
 #include "model/Document.h"
+
+#include <config-dev.h>
 
 #include <glib.h>
 #include <gtk/gtk.h>
