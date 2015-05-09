@@ -49,8 +49,8 @@ void SwapUndoAction::swap(Control* control)
 
 	doc->unlock();
 
-	gint insertPos = this->pageNr,
-			deletePos = this->pageNr + 1;
+	gint insertPos = this->pageNr;
+	gint deletePos = this->pageNr + 1;
 
 	if (moveUp != this->undone)
 	{

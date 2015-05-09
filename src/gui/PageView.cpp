@@ -222,13 +222,13 @@ void PageView::endText()
 			layer->addElement(txt);
 			this->textEditor->textCopyed();
 		}
-			//or if the file was saved and reopened
-			//and/or if we click away from the text window
+			// or if the file was saved and reopened
+			// and/or if we click away from the text window
 		else
 		{
-			//TextUndoAction does not work because the textEdit object is destroyed
-			//after endText() so we need to instead copy the information between an
-			//old and new element that we can push and pop to recover.
+			// TextUndoAction does not work because the textEdit object is destroyed
+			// after endText() so we need to instead copy the information between an
+			// old and new element that we can push and pop to recover.
 			undo->addUndoAction(new TextBoxUndoAction(page, layer, txt, this->oldtext));
 		}
 	}
@@ -276,12 +276,12 @@ void PageView::startText(double x, double y)
 		else
 		{
 
-			//We can try to add an undo action here. The initial text shows up in this
-			//textEditor element.
+			// We can try to add an undo action here. The initial text shows up in this
+			// textEditor element.
 			this->oldtext = text;
-			//text = new Text(*oldtext);
-			//need to clone the old text so that references still work properly.
-			//cloning breaks things a little. do it manually
+			// text = new Text(*oldtext);
+			// need to clone the old text so that references still work properly.
+			// cloning breaks things a little. do it manually
 			text = new Text();
 			text->setX(oldtext->getX());
 			text->setY(oldtext->getY());
@@ -292,7 +292,7 @@ void PageView::startText(double x, double y)
 			Layer* layer = this->page->getSelectedLayer();
 			layer->removeElement(this->oldtext, false);
 			layer->addElement(text);
-			//perform the old swap onto the new text drawn.
+			// perform the old swap onto the new text drawn.
 		}
 
 		this->textEditor = new TextEditor(this, xournal->getWidget(), text, ownText);

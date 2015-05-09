@@ -100,23 +100,35 @@ private:
 	path pdfFilename;
 	bool attachPdf;
 
-	/** Password: not handled yet */
+	/**
+	 *  Password: not handled yet
+	 */
 	string password;
 
 	string lastError;
 
-	/** The pages in the document */
+	/**
+	 * The pages in the document
+	 */
 	std::vector<PageRef> pages;
 
-	/** The bookmark contents model */
+	/**
+	 * The bookmark contents model
+	 */
 	GtkTreeModel* contentsModel;
 
-	/** create a backup before save, because the original file was an older fileversion */
+	/**
+	 *  create a backup before save, because the original file was an older fileversion
+	 */
 	bool createBackupOnSave;
 
-	/** The preview for the file */
+	/**
+	 * The preview for the file
+	 */
 	cairo_surface_t* preview;
 
-	/** The lock of the document */
+	/**
+	 * The lock of the document
+	 */
 	GMutex documentLock;
 };

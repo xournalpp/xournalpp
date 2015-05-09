@@ -878,9 +878,9 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
 
 // TODO: create help for Xournal++
 #if OFFLINE_HELP_ENABLED
-#define XOJ_HELP "ghelp:evince"
+#define XOJ_HELP "ghelp:xournalpp"
 #else
-#define XOJ_HELP "http://library.gnome.org/users/evince/stable/"
+#define XOJ_HELP "https://github.com/xournalpp/xournalpp/wiki/User-Manual"
 #endif
 
 void Control::help()

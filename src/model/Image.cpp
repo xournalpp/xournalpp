@@ -68,6 +68,7 @@ cairo_status_t Image::cairoReadFunction(Image* image, unsigned char* data, unsig
 		{
 			return CAIRO_STATUS_READ_ERROR;
 		}
+
 		data[i] = image->data[image->read];
 	}
 
@@ -111,7 +112,7 @@ cairo_surface_t* Image::getImage()
 	if (this->image == NULL && this->data.length())
 	{
 		this->read = 0;
-		this->image = cairo_image_surface_create_from_png_stream((cairo_read_func_t) & cairoReadFunction, this);
+		this->image = cairo_image_surface_create_from_png_stream((cairo_read_func_t) &cairoReadFunction, this);
 	}
 
 	return this->image;
