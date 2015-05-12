@@ -16,6 +16,7 @@
 #include "model/ToolbarModel.h"
 
 #include <config.h>
+#include <config-features.h>
 
 #include <glade/glade-xml.h>
 #include <glib.h>

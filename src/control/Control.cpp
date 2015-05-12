@@ -41,6 +41,7 @@
 
 #include <config.h>
 #include <config-dev.h>
+#include <config-features.h>
 #include <CrashHandler.h>
 #include <serializing/ObjectInputStream.h>
 #include <Stacktrace.h>

@@ -15,6 +15,7 @@
 
 #include <config.h>
 #include <config-dev.h>
+#include <config-features.h>
 
 #include <glib/gi18n-lib.h>
 #include <gdk/gdkkeysyms.h>
@@ -46,7 +47,7 @@ MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control) :
 	this->toolbarMenuData = NULL;
 	this->toolbarMenuitems = NULL;
 
-#ifdef ENABLE_MATHTEX
+#ifndef ENABLE_MATHTEX
 	// if mathetex is disable disabled hide the menu entry
 	gtk_widget_destroy(get("menuEditTex"));
 #endif
