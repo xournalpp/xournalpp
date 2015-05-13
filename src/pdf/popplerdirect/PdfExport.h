@@ -24,6 +24,7 @@
 #include <StringUtils.h>
 
 #include <glib.h>
+#include <vector>
 
 class PdfExport
 {
@@ -75,7 +76,7 @@ private:
 
 	Dict* resources;
 
-	GList* documents;
+	std::vector<XojPopplerDocument*> documents;
 
 	GHashTable* refListsOther;
 

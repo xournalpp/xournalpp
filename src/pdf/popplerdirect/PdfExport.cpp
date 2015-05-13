@@ -32,8 +32,6 @@ PdfExport::PdfExport(Document* doc, ProgressListener* progressListener)
 	this->refListsOther = g_hash_table_new_full((GHashFunc) g_str_hash, (GEqualFunc) g_str_equal, g_free,
 												(GDestroyNotify) PdfRefList::deletePdfRefList);
 
-	this->documents = NULL;
-
 	this->resources = NULL;
 
 	this->xref->addXref(0);
@@ -46,13 +44,10 @@ PdfExport::~PdfExport()
 {
 	XOJ_CHECK_TYPE(PdfExport);
 
-	for (GList* l = this->documents; l != NULL; l = l->next)
+	for (XojPopplerDocument* doc : this->documents)
 	{
-		XojPopplerDocument* doc = (XojPopplerDocument*) l->data;
 		delete doc;
 	}
-	g_list_free(this->documents);
-	this->documents = NULL;
 
 	g_list_foreach(this->pageIds, (GFunc) g_free, NULL);
 	g_list_free(this->pageIds);
@@ -415,9 +410,8 @@ void PdfExport::addPopplerDocument(XojPopplerDocument doc)
 {
 	XOJ_CHECK_TYPE(PdfExport);
 
-	for (GList* l = this->documents; l != NULL; l = l->next)
+	for (XojPopplerDocument* d : this->documents)
 	{
-		XojPopplerDocument* d = (XojPopplerDocument*) l->data;
 		if (*d == doc)
 		{
 			return;
@@ -427,7 +421,7 @@ void PdfExport::addPopplerDocument(XojPopplerDocument doc)
 	XojPopplerDocument* d = new XojPopplerDocument();
 	*d = doc;
 
-	this->documents = g_list_append(this->documents, d);
+	this->documents.push_back(d);
 }
 
 bool PdfExport::addPopplerPage(XojPopplerPage* pdf, XojPopplerDocument doc)

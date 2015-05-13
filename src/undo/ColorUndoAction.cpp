@@ -27,21 +27,16 @@ ColorUndoAction::ColorUndoAction(PageRef page, Layer* layer) : UndoAction("Color
 
 	this->page = page;
 	this->layer = layer;
-	this->data = NULL;
 }
 
 ColorUndoAction::~ColorUndoAction()
 {
 	XOJ_CHECK_TYPE(ColorUndoAction);
 
-	for (GList* l = this->data; l != NULL; l = l->next)
+	for (ColorUndoActionEntry* e : this->data)
 	{
-		ColorUndoActionEntry* e = (ColorUndoActionEntry*) l->data;
 		delete e;
 	}
-
-	g_list_free(this->data);
-	this->data = NULL;
 
 	XOJ_RELEASE_TYPE(ColorUndoAction);
 }
@@ -50,27 +45,26 @@ void ColorUndoAction::addStroke(Element* e, int originalColor, double newColor)
 {
 	XOJ_CHECK_TYPE(ColorUndoAction);
 
-	this->data = g_list_append(this->data, new ColorUndoActionEntry(e, originalColor, newColor));
+	this->data.push_back(new ColorUndoActionEntry(e, originalColor, newColor));
 }
 
 bool ColorUndoAction::undo(Control* control)
 {
 	XOJ_CHECK_TYPE(ColorUndoAction);
 
-	if (this->data == NULL)
+	if (this->data.empty())
 	{
 		return true;
 	}
 
-	ColorUndoActionEntry* e = (ColorUndoActionEntry*) this->data->data;
+	ColorUndoActionEntry* e = this->data.front();
 	double x1 = e->e->getX();
 	double x2 = e->e->getX() + e->e->getElementWidth();
 	double y1 = e->e->getY();
 	double y2 = e->e->getY() + e->e->getElementHeight();
 
-	for (GList* l = this->data; l != NULL; l = l->next)
+	for (ColorUndoActionEntry* e : this->data)
 	{
-		ColorUndoActionEntry* e = (ColorUndoActionEntry*) l->data;
 		e->e->setColor(e->oldColor);
 
 		x1 = MIN(x1, e->e->getX());
@@ -89,20 +83,19 @@ bool ColorUndoAction::redo(Control* control)
 {
 	XOJ_CHECK_TYPE(ColorUndoAction);
 
-	if (this->data == NULL)
+	if (this->data.empty())
 	{
 		return true;
 	}
 
-	ColorUndoActionEntry* e = (ColorUndoActionEntry*) this->data->data;
+	ColorUndoActionEntry* e = this->data.front();
 	double x1 = e->e->getX();
 	double x2 = e->e->getX() + e->e->getElementWidth();
 	double y1 = e->e->getY();
 	double y2 = e->e->getY() + e->e->getElementHeight();
 
-	for (GList* l = this->data; l != NULL; l = l->next)
+	for (ColorUndoActionEntry* e : this->data)
 	{
-		ColorUndoActionEntry* e = (ColorUndoActionEntry*) l->data;
 		e->e->setColor(e->newColor);
 
 		x1 = MIN(x1, e->e->getX());

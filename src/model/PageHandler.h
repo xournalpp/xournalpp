@@ -13,7 +13,7 @@
 
 #include <XournalType.h>
 
-#include <glib.h>
+#include <list>
 
 class Element;
 class PageListener;
@@ -39,8 +39,7 @@ private:
 private:
 	XOJ_TYPE_ATTRIB;
 
-
-	GList* listener;
+	std::list<PageListener*> listener;
 
 	friend class PageListener;
 };

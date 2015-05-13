@@ -21,7 +21,6 @@ RecentManager::RecentManager()
 
 	this->maxRecent = 10;
 	this->menu = gtk_menu_new();
-	this->listener = NULL;
 
 	GtkRecentManager* recentManager = gtk_recent_manager_get_default();
 	this->recentHandlerId = g_signal_connect(recentManager, "changed", G_CALLBACK(recentManagerChangedCallback), this);
@@ -43,9 +42,6 @@ RecentManager::~RecentManager()
 	}
 	this->menu = NULL;
 
-	g_list_free(this->listener);
-	this->listener = NULL;
-
 	XOJ_RELEASE_TYPE(RecentManager);
 }
 
@@ -53,7 +49,7 @@ void RecentManager::addListener(RecentManagerListener* listener)
 {
 	XOJ_CHECK_TYPE(RecentManager);
 
-	this->listener = g_list_append(this->listener, listener);
+	this->listener.push_back(listener);
 }
 
 void RecentManager::recentManagerChangedCallback(GtkRecentManager* manager, RecentManager* recentManager)
@@ -137,10 +133,9 @@ void RecentManager::openRecent(path p)
 
 	if (p.filename().empty()) return;
 
-	for (GList* l = this->listener; l != NULL; l = l->next)
+	for (RecentManagerListener* l : this->listener)
 	{
-		RecentManagerListener* listener = (RecentManagerListener*) l->data;
-		listener->fileOpened(p.c_str());
+		l->fileOpened(p.c_str());
 	}
 }
 
@@ -262,19 +257,20 @@ void RecentManager::updateMenu()
 
 	freeOldMenus();
 
-	int i = 0;
+	int xojCount = 0;
 	for (GList* l = filteredItemsXoj; l != NULL; l = l->next)
 	{
 		GtkRecentInfo* info = (GtkRecentInfo*) l->data;
 
-		if (i >= maxRecent)
+		if (xojCount >= maxRecent)
 		{
 			break;
 		}
-		i++;
+		xojCount++;
 
-		addRecentMenu(info, i);
+		addRecentMenu(info, xojCount);
 	}
+	g_list_free(filteredItemsXoj);
 
 	GtkWidget* separator = gtk_separator_menu_item_new();
 	gtk_menu_shell_append(GTK_MENU_SHELL(menu), separator);
@@ -282,21 +278,19 @@ void RecentManager::updateMenu()
 
 	this->menuItemList.push_back(separator);
 
-	i = 0;
+	int pdfCount = 0;
 	for (GList* l = filteredItemsPdf; l != NULL; l = l->next)
 	{
 		GtkRecentInfo* info = (GtkRecentInfo*) l->data;
 
-		if (i >= maxRecent)
+		if (pdfCount >= maxRecent)
 		{
 			break;
 		}
-		i++;
+		pdfCount++;
 
-		addRecentMenu(info, i + maxRecent);
+		addRecentMenu(info, pdfCount + xojCount);
 	}
-
-	g_list_free(filteredItemsXoj);
 	g_list_free(filteredItemsPdf);
 
 	g_list_foreach(items, (GFunc) gtk_recent_info_unref, NULL);

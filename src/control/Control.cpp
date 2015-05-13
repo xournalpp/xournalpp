@@ -124,8 +124,7 @@ Control::Control(GladeSearchpath* gladeSearchPath)
 	 * This is needed to update the previews
 	 */
 	this->changeTimout = g_timeout_add_seconds(10, (GSourceFunc) checkChangedDocument, this);
-	this->changedPages = NULL;
-
+	
 	this->clipboardHandler = NULL;
 
 	this->dragDropHandler = NULL;
@@ -143,42 +142,25 @@ Control::~Control()
 
 	this->scheduler->stop();
 
-	for (GList* l = this->changedPages; l != NULL; l = l->next)
+	for (XojPage* page : this->changedPages)
 	{
-		XojPage* page = (XojPage*) l->data;
 		page->unreference();
 	}
-	g_list_free(this->changedPages);
-	this->changedPages = NULL;
 
 	delete this->clipboardHandler;
-	this->clipboardHandler = NULL;
 	delete this->recent;
-	this->recent = NULL;
 	delete this->undoRedo;
-	this->undoRedo = NULL;
 	delete this->settings;
-	this->settings = NULL;
 	delete this->toolHandler;
-	this->toolHandler = NULL;
 	delete this->sidebar;
-	this->sidebar = NULL;
 	delete this->doc;
-	this->doc = NULL;
 	delete this->searchBar;
-	this->searchBar = NULL;
 	delete this->scrollHandler;
-	this->scrollHandler = NULL;
 	delete this->metadata;
-	this->metadata = NULL;
 	delete this->cursor;
-	this->cursor = NULL;
 	delete this->zoom;
-	this->zoom = NULL;
 	delete this->scheduler;
-	this->scheduler = NULL;
 	delete this->dragDropHandler;
-	this->dragDropHandler = NULL;
 
 	XOJ_RELEASE_TYPE(Control);
 }
@@ -234,9 +216,8 @@ bool Control::checkChangedDocument(Control* control)
 		// call again later
 		return true;
 	}
-	for (GList* l = control->changedPages; l != NULL; l = l->next)
+	for (XojPage* page : control->changedPages)
 	{
-		XojPage* page = (XojPage*) l->data;
 		int p = control->doc->indexOf(page);
 		if (p != -1)
 		{
@@ -245,8 +226,7 @@ bool Control::checkChangedDocument(Control* control)
 
 		page->unreference();
 	}
-	g_list_free(control->changedPages);
-	control->changedPages = NULL;
+	control->changedPages.clear();
 
 	control->doc->unlock();
 
@@ -2045,16 +2025,16 @@ void Control::undoRedoPageChanged(PageRef page)
 {
 	XOJ_CHECK_TYPE(Control);
 
-	for (GList* l = this->changedPages; l != NULL; l = l->next)
+	for (XojPage* p : this->changedPages)
 	{
-		if (l->data == (XojPage*) page)
+		if (p == (XojPage*) page)
 		{
 			return;
 		}
 	}
 
 	XojPage* p = (XojPage*) page;
-	this->changedPages = g_list_append(this->changedPages, p);
+	this->changedPages.push_back(p);
 	p->reference();
 }
 

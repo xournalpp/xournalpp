@@ -13,10 +13,11 @@
 
 #include <XournalType.h>
 
-#include <glib.h>
+#include <vector>
 
 class PagePosition;
 class PageView;
+class PageViewIndexEntry;
 
 class PageViewIndex
 {
@@ -40,5 +41,5 @@ private:
 	int width;
 	int height;
 
-	GList* data;
+	std::vector<PageViewIndexEntry*> data;
 };

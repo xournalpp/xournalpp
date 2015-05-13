@@ -17,6 +17,10 @@
 
 #include <XournalType.h>
 
+#include <vector>
+
+class PdfPage;
+
 class PdfPagesDialog : public GladeGui
 {
 public:
@@ -57,7 +61,7 @@ private:
 
 	int selectedPage;
 
-	GList* pages;
+	std::vector<PdfPage*> pages;
 	bool* usedPages;
 	int count;
 

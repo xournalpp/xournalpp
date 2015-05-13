@@ -14,6 +14,7 @@
 #include <XournalType.h>
 
 #include <gtk/gtk.h>
+#include <vector>
 
 class ZoomListener
 {
@@ -56,7 +57,7 @@ protected:
 private:
 	XOJ_TYPE_ATTRIB;
 
-	GList* listener;
+	std::vector<ZoomListener*> listener;
 
 	double zoom;
 

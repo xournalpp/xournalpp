@@ -14,6 +14,7 @@
 #include <XournalType.h>
 
 #include <gtk/gtk.h>
+#include <list>
 
 class SpinPageListener;
 
@@ -46,7 +47,7 @@ private:
 	int page;
 
 	int lastTimeoutId;
-	GList* listener;
+	std::list<SpinPageListener*> listener;
 };
 
 class SpinPageListener

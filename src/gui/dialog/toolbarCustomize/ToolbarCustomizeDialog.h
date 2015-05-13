@@ -17,6 +17,8 @@
 #include <StringUtils.h>
 #include <XournalType.h>
 
+#include <list>
+
 class AbstractToolItem;
 class MainWindow;
 class ToolbarDragDropHandler;
@@ -70,7 +72,7 @@ private:
 
 	CustomizeableColorList* colorList;
 
-	GList* itemDatalist;
+	std::list<ToolItemDragData*> itemDatalist;
 
 	MainWindow* win;
 

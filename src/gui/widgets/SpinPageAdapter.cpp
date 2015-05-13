@@ -11,8 +11,6 @@ SpinPageAdapter::SpinPageAdapter()
 	g_signal_connect(this->widget, "value-changed", G_CALLBACK(pageNrSpinChangedCallback), this);
 
 	this->page = -1;
-
-	this->listener = NULL;
 }
 
 SpinPageAdapter::~SpinPageAdapter()
@@ -21,9 +19,6 @@ SpinPageAdapter::~SpinPageAdapter()
 
 	g_object_unref(this->widget);
 	this->widget = NULL;
-
-	g_list_free(this->listener);
-	this->listener = NULL;
 
 	XOJ_RELEASE_TYPE(SpinPageAdapter);
 }
@@ -92,24 +87,22 @@ void SpinPageAdapter::addListener(SpinPageListener* listener)
 {
 	XOJ_CHECK_TYPE(SpinPageAdapter);
 
-	this->listener = g_list_append(this->listener, listener);
+	this->listener.push_back(listener);
 }
 
 void SpinPageAdapter::removeListener(SpinPageListener* listener)
 {
 	XOJ_CHECK_TYPE(SpinPageAdapter);
 
-	this->listener = g_list_remove(this->listener, listener);
+	this->listener.remove(listener);
 }
 
 void SpinPageAdapter::firePageChanged()
 {
 	XOJ_CHECK_TYPE(SpinPageAdapter);
 
-
-	for (GList* l = this->listener; l != NULL; l = l->next)
+	for (SpinPageListener* listener : this->listener)
 	{
-		SpinPageListener* listener = (SpinPageListener*) l->data;
 		listener->pageChanged(this->page);
 	}
 }

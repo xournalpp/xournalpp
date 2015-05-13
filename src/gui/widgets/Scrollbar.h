@@ -20,6 +20,7 @@
 #endif
 
 #include <gtk/gtk.h>
+#include <list>
 
 class Scrollbar;
 
@@ -66,7 +67,7 @@ private:
 
 	GtkWidget* scrollbar;
 	GtkAdjustment* adj;
-	GList* listener;
+	std::list<ScrollbarListener*> listener;
 
 	int value;
 };

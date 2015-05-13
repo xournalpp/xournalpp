@@ -92,7 +92,7 @@ Range* EraseableStroke::erase(double x, double y, double halfEraserSize, Range* 
 	this->repaintRect = range;
 
 	g_mutex_lock(&this->partLock);
-	PartList * tmpCopy = this->parts->clone();
+	PartList* tmpCopy = this->parts->clone();
 	g_mutex_unlock(&this->partLock);
 
 	for (GList* l = tmpCopy->data; l != NULL;)
@@ -103,7 +103,7 @@ Range* EraseableStroke::erase(double x, double y, double halfEraserSize, Range* 
 	}
 
 	g_mutex_lock(&this->partLock);
-	PartList * old = this->parts;
+	PartList* old = this->parts;
 	this->parts = tmpCopy;
 	g_mutex_unlock(&this->partLock);
 
@@ -142,8 +142,7 @@ void EraseableStroke::erase(double x, double y, double halfEraserSize, Eraseable
 	Point* a = (Point*) g_list_first(part->points)->data;
 	Point* b = (Point*) g_list_last(part->points)->data;
 
-	if (eraser.lineLengthTo(*a) < halfEraserSize * 1.2 &&
-		eraser.lineLengthTo(*b) < halfEraserSize * 1.2)
+	if (eraser.lineLengthTo(*a) < halfEraserSize * 1.2 && eraser.lineLengthTo(*b) < halfEraserSize * 1.2)
 	{
 		list->data = g_list_remove(list->data, part);
 		addRepaintRect(part->getX(), part->getY(), part->getElementWidth(), part->getElementHeight());
@@ -337,7 +336,7 @@ bool EraseableStroke::erasePart(double x, double y, double halfEraserSize, Erase
 		lists = g_list_delete_link(lists, lists);
 
 		int pos = g_list_index(list->data, part) + 1;
-
+		
 		// create data structure for all new (splitted) parts
 		for (GList* l = lists; l != NULL; l = l->next)
 		{

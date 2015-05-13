@@ -30,18 +30,17 @@ public:
 };
 
 SelectBackgroundColorDialog::SelectBackgroundColorDialog(GladeSearchpath* gladeSearchPath, Control* control) :
-	GladeGui(gladeSearchPath, "page-background-color.glade", "pageBgColorDialog")
+		GladeGui(gladeSearchPath, "page-background-color.glade", "pageBgColorDialog")
 {
 
 	XOJ_INIT_TYPE(SelectBackgroundColorDialog);
 
 	this->control = control;
-	this->colors = NULL;
 	this->selected = -1;
 	this->colorDlg = NULL;
 
 	ColorEntry* e = new ColorEntry(this, -1, true);
-	this->colors = g_list_append(this->colors, e);
+	this->colors.push_back(e);
 
 	int predef_bgcolors_rgba[] = { 0xffffff, 0xa0e8ff, 0x80ffc0, 0xffc0d4, 0xffc080, 0xffff80 };
 
@@ -51,7 +50,7 @@ SelectBackgroundColorDialog::SelectBackgroundColorDialog(GladeSearchpath* gladeS
 	{
 		int color = predef_bgcolors_rgba[i];
 		ColorEntry* e = new ColorEntry(this, color, false);
-		this->colors = g_list_append(this->colors, e);
+		this->colors.push_back(e);
 
 		GtkWidget* iconWidget = selectcolor_new(color);
 		selectcolor_set_size(iconWidget, 32);
@@ -84,7 +83,7 @@ SelectBackgroundColorDialog::SelectBackgroundColorDialog(GladeSearchpath* gladeS
 		}
 
 		ColorEntry* e = new ColorEntry(this, color, true);
-		this->colors = g_list_append(this->colors, e);
+		this->colors.push_back(e);
 
 		GtkWidget* iconWidget = selectcolor_new(color);
 		selectcolor_set_size(iconWidget, 32);
@@ -109,11 +108,9 @@ SelectBackgroundColorDialog::~SelectBackgroundColorDialog()
 {
 	XOJ_CHECK_TYPE(SelectBackgroundColorDialog);
 
-	for (GList* l = this->colors; l != NULL; l = l->next)
+	for (ColorEntry* e : this->colors)
 	{
-		ColorEntry* e = (ColorEntry*) l->data;
 		delete e;
-		e = NULL;
 	}
 
 	XOJ_RELEASE_TYPE(SelectBackgroundColorDialog);
@@ -125,7 +122,7 @@ void SelectBackgroundColorDialog::showColorchooser()
 
 	this->colorDlg = gtk_color_selection_dialog_new(_("Select color"));
 	g_signal_connect(G_OBJECT (GTK_COLOR_SELECTION_DIALOG(this->colorDlg)->ok_button), "clicked",
-					 G_CALLBACK(&buttonSelectedCallback), this->colors->data); // first entry
+					 G_CALLBACK(&buttonSelectedCallback), this->colors.front()); // first entry
 
 	gtk_dialog_run(GTK_DIALOG(this->colorDlg));
 

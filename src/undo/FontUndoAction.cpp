@@ -27,21 +27,16 @@ FontUndoAction::FontUndoAction(PageRef page, Layer* layer) : UndoAction("FontUnd
 
 	this->page = page;
 	this->layer = layer;
-	this->data = NULL;
 }
 
 FontUndoAction::~FontUndoAction()
 {
 	XOJ_CHECK_TYPE(FontUndoAction);
 
-	for (GList* l = this->data; l != NULL; l = l->next)
+	for (FontUndoActionEntry* e : this->data)
 	{
-		FontUndoActionEntry* e = (FontUndoActionEntry*) l->data;
 		delete e;
 	}
-
-	g_list_free(this->data);
-	this->data = NULL;
 
 	XOJ_RELEASE_TYPE(FontUndoAction);
 }
@@ -50,28 +45,26 @@ void FontUndoAction::addStroke(Text* e, XojFont& oldFont, XojFont& newFont)
 {
 	XOJ_CHECK_TYPE(FontUndoAction);
 
-	this->data = g_list_append(this->data, new FontUndoActionEntry(e, oldFont, newFont));
+	this->data.push_back(new FontUndoActionEntry(e, oldFont, newFont));
 }
 
 bool FontUndoAction::undo(Control* control)
 {
 	XOJ_CHECK_TYPE(FontUndoAction);
 
-	if (this->data == NULL)
+	if (this->data.empty())
 	{
 		return true;
 	}
 
-	FontUndoActionEntry* e = (FontUndoActionEntry*) this->data->data;
+	FontUndoActionEntry* e = this->data.front();
 	double x1 = e->e->getX();
 	double x2 = e->e->getX() + e->e->getElementWidth();
 	double y1 = e->e->getY();
 	double y2 = e->e->getY() + e->e->getElementHeight();
 
-	for (GList* l = this->data; l != NULL; l = l->next)
+	for (FontUndoActionEntry* e : this->data)
 	{
-		FontUndoActionEntry* e = (FontUndoActionEntry*) l->data;
-
 		// size with old font
 		x1 = MIN(x1, e->e->getX());
 		x2 = MAX(x2, e->e->getX() + e->e->getElementWidth());
@@ -97,21 +90,19 @@ bool FontUndoAction::redo(Control* control)
 {
 	XOJ_CHECK_TYPE(FontUndoAction);
 
-	if (this->data == NULL)
+	if (this->data.empty())
 	{
 		return true;
 	}
 
-	FontUndoActionEntry* e = (FontUndoActionEntry*) this->data->data;
+	FontUndoActionEntry* e = this->data.front();
 	double x1 = e->e->getX();
 	double x2 = e->e->getX() + e->e->getElementWidth();
 	double y1 = e->e->getY();
 	double y2 = e->e->getY() + e->e->getElementHeight();
 
-	for (GList* l = this->data; l != NULL; l = l->next)
+	for (FontUndoActionEntry* e : this->data)
 	{
-		FontUndoActionEntry* e = (FontUndoActionEntry*) l->data;
-
 		// size with old font
 		x1 = MIN(x1, e->e->getX());
 		x2 = MAX(x2, e->e->getX() + e->e->getElementWidth());

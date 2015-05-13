@@ -8,7 +8,6 @@
 
 #include "control/Control.h"
 #include "undo/ColorUndoAction.h"
-#include "undo/TextUndoAction.h"
 #include "view/DocumentView.h"
 #include "view/TextView.h"
 
@@ -39,7 +38,6 @@ TextEditor::TextEditor(PageView* gui, GtkWidget* widget, Text* text, bool ownTex
 	this->markPosExtendSelection = false;
 	this->markPosQueue = false;
 	this->mouseDown = 0;
-	this->undoActions = NULL;
 	this->lastText = text->getText();
 
 	this->buffer = gtk_text_buffer_new(NULL);
@@ -82,27 +80,25 @@ TextEditor::~TextEditor()
 
 	this->contentsChanged(true);
 
-	if (this->undoActions)
+	if (!this->undoActions.empty())
 	{
 		if (this->ownText)
 		{
 			UndoRedoHandler* handler = gui->getXournal()->getControl()->getUndoRedoHandler();
-			for (GList* l = this->undoActions; l != NULL; l = l->next)
+			for (TextUndoAction* undo : this->undoActions)
 			{
-				TextUndoAction* undo = (TextUndoAction*) l->data;
 				handler->removeUndoAction(undo);
 				delete undo;
 			}
 		}
 		else
 		{
-			for (GList* l = this->undoActions; l != NULL; l = l->next)
+			for (TextUndoAction* undo : this->undoActions)
 			{
-				TextUndoAction* undo = (TextUndoAction*) l->data;
 				undo->textEditFinished();
 			}
 		}
-		g_list_free(this->undoActions);
+		this->undoActions.clear();
 	}
 
 	if (this->ownText)
@@ -573,14 +569,13 @@ void TextEditor::contentsChanged(bool forceCreateUndoAction)
 
 	if (forceCreateUndoAction || ABS(lastText.length() - currentText.length()) > 100)
 	{
-		if (!lastText.empty() && this->undoActions &&
-			!(((TextUndoAction*) this->undoActions->data)->getUndoText() == currentText))
+		if (!lastText.empty() && !this->undoActions.empty() && this->undoActions.front()->getUndoText() != currentText)
 		{
 			TextUndoAction* undo = new TextUndoAction(gui->getPage(), gui->getPage()->getSelectedLayer(),
 													  this->text, lastText, this);
 			UndoRedoHandler* handler = gui->getXournal()->getControl()->getUndoRedoHandler();
 			handler->addUndoAction(undo);
-			this->undoActions = g_list_append(this->undoActions, undo);
+			this->undoActions.push_back(undo);
 		}
 		lastText = currentText;
 	}
@@ -590,9 +585,9 @@ UndoAction* TextEditor::getFirstUndoAction()
 {
 	XOJ_CHECK_TYPE(TextEditor);
 
-	if (this->undoActions)
+	if (!this->undoActions.empty())
 	{
-		return (UndoAction*) this->undoActions->data;
+		return this->undoActions.front();
 	}
 	return NULL;
 }

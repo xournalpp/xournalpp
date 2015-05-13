@@ -13,7 +13,6 @@ RecognizerUndoAction::RecognizerUndoAction(PageRef page, Layer* layer, Stroke* o
 
 	this->page = page;
 	this->layer = layer;
-	this->original = NULL;
 	this->recognized = recognized;
 
 	addSourceElement(original);
@@ -29,13 +28,11 @@ RecognizerUndoAction::~RecognizerUndoAction()
 	}
 	else
 	{
-		for (GList* l = this->original; l != NULL; l = l->next)
+		for (Stroke* s : this->original)
 		{
-			Stroke* s = (Stroke*) l->data;
 			delete s;
 		}
 	}
-	this->original = NULL;
 	this->recognized = NULL;
 
 	XOJ_RELEASE_TYPE(RecognizerUndoAction);
@@ -44,16 +41,18 @@ RecognizerUndoAction::~RecognizerUndoAction()
 void RecognizerUndoAction::addSourceElement(Stroke* s)
 {
 	XOJ_CHECK_TYPE(RecognizerUndoAction);
-
-	GList* elem2 = g_list_find(this->original, s);
-	if (elem2)
+	
+	for (Stroke* s2 : this->original)
 	{
-		g_warning("RecognizerUndoAction::addSourceElement() twice the same\n");
-		Stacktrace::printStracktrace();
-		return;
+		if (s2 == s)
+		{
+			g_warning("RecognizerUndoAction::addSourceElement() twice the same\n");
+			Stacktrace::printStracktrace();
+			return;
+		}
 	}
 
-	this->original = g_list_append(this->original, s);
+	this->original.push_back(s);
 }
 
 bool RecognizerUndoAction::undo(Control* control)
@@ -64,9 +63,8 @@ bool RecognizerUndoAction::undo(Control* control)
 	this->page->fireElementChanged(this->recognized);
 
 	int i = 0;
-	for (GList* l = this->original; l != NULL; l = l->next)
+	for (Stroke* s : this->original)
 	{
-		Stroke* s = (Stroke*) l->data;
 		this->layer->insertElement(s, pos);
 		this->page->fireElementChanged(s);
 		i++;
@@ -81,9 +79,8 @@ bool RecognizerUndoAction::redo(Control* control)
 	XOJ_CHECK_TYPE(RecognizerUndoAction);
 
 	int pos = 0;
-	for (GList* l = this->original; l != NULL; l = l->next)
+	for (Stroke* s : this->original)
 	{
-		Stroke* s = (Stroke*) l->data;
 		pos = this->layer->removeElement(s, false);
 		this->page->fireElementChanged(s);
 	}

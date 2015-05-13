@@ -50,21 +50,16 @@ SizeUndoAction::SizeUndoAction(PageRef page, Layer* layer) : UndoAction("SizeUnd
 
 	this->page = page;
 	this->layer = layer;
-	this->data = NULL;
 }
 
 SizeUndoAction::~SizeUndoAction()
 {
 	XOJ_CHECK_TYPE(SizeUndoAction);
 
-	for (GList* l = this->data; l != NULL; l = l->next)
+	for (SizeUndoActionEntry* e : this->data)
 	{
-		SizeUndoActionEntry* e = (SizeUndoActionEntry*) l->data;
 		delete e;
 	}
-
-	g_list_free(this->data);
-	this->data = NULL;
 
 	XOJ_RELEASE_TYPE(SizeUndoAction);
 }
@@ -86,31 +81,28 @@ void SizeUndoAction::addStroke(Stroke* s, double originalWidth, double newWidt, 
 {
 	XOJ_CHECK_TYPE(SizeUndoAction);
 
-	this->data = g_list_append(this->data, new SizeUndoActionEntry(s, originalWidth, newWidt, originalPressure,
-																   newPressure, pressureCount));
+	this->data.push_back(new SizeUndoActionEntry(s, originalWidth, newWidt, originalPressure, newPressure, pressureCount));
 }
 
 bool SizeUndoAction::undo(Control* control)
 {
 	XOJ_CHECK_TYPE(SizeUndoAction);
 
-	if (this->data == NULL)
+	if (this->data.empty())
 	{
 		return true;
 	}
 
-	SizeUndoActionEntry* e = (SizeUndoActionEntry*) this->data->data;
+	SizeUndoActionEntry* e = this->data.front();
 	Range range(e->s->getX(), e->s->getY());
 
-	for (GList* l = this->data; l != NULL; l = l->next)
+	for (SizeUndoActionEntry* e : this->data)
 	{
-		SizeUndoActionEntry* e = (SizeUndoActionEntry*) l->data;
 		e->s->setWidth(e->orignalWidth);
 		e->s->setPressure(e->originalPressure);
 
 		range.addPoint(e->s->getX(), e->s->getY());
-		range.addPoint(e->s->getX() + e->s->getElementWidth(),
-					   e->s->getY() + e->s->getElementHeight());
+		range.addPoint(e->s->getX() + e->s->getElementWidth(), e->s->getY() + e->s->getElementHeight());
 	}
 
 	this->page->fireRangeChanged(range);
@@ -122,17 +114,16 @@ bool SizeUndoAction::redo(Control* control)
 {
 	XOJ_CHECK_TYPE(SizeUndoAction);
 
-	if (this->data == NULL)
+	if (this->data.empty())
 	{
 		return true;
 	}
 
-	SizeUndoActionEntry* e = (SizeUndoActionEntry*) this->data->data;
+	SizeUndoActionEntry* e = this->data.front();
 	Range range(e->s->getX(), e->s->getY());
 
-	for (GList* l = this->data; l != NULL; l = l->next)
+	for (SizeUndoActionEntry* e : this->data)
 	{
-		SizeUndoActionEntry* e = (SizeUndoActionEntry*) l->data;
 		e->s->setWidth(e->newWidth);
 		e->s->setPressure(e->newPressure);
 

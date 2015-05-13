@@ -13,9 +13,11 @@
 
 #include "gui/Redrawable.h"
 #include "model/Text.h"
+#include "undo/TextUndoAction.h"
 #include "undo/UndoAction.h"
 
 #include <gtk/gtk.h>
+#include <vector>
 
 class PageView;
 
@@ -97,7 +99,7 @@ private:
 	GtkTextBuffer* buffer;
 	double virtualCursor;
 
-	GList* undoActions;
+	std::vector<TextUndoAction*> undoActions;
 
 	double markPosX;
 	double markPosY;

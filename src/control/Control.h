@@ -31,6 +31,8 @@
 
 #include <XournalType.h>
 
+#include <vector>
+
 class Sidebar;
 class CallbackData;
 class PageView;
@@ -280,7 +282,7 @@ private:
 	/**
 	 * The pages wihch has changed since the last update (for preview update)
 	 */
-	GList* changedPages;
+	std::vector<XojPage*> changedPages;
 
 	/**
 	 * Our clipboard abstraction

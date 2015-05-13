@@ -267,12 +267,11 @@ private:
 //////////////////////////////////////////////////////////////////
 
 PdfPagesDialog::PdfPagesDialog(GladeSearchpath* gladeSearchPath, Document* doc, Settings* settings) :
-	GladeGui(gladeSearchPath, "pdfpages.glade", "pdfPagesDialog")
+		GladeGui(gladeSearchPath, "pdfpages.glade", "pdfPagesDialog")
 {
 
 	XOJ_INIT_TYPE(PdfPagesDialog);
 
-	this->pages = NULL;
 	this->settings = settings;
 	this->widget = gtk_layout_new(NULL, NULL);
 	this->scrollPreview = gtk_scrolled_window_new(NULL, NULL);
@@ -303,7 +302,7 @@ PdfPagesDialog::PdfPagesDialog(GladeSearchpath* gladeSearchPath, Document* doc, 
 		PdfPage* page = new PdfPage(p, i, this);
 		gtk_layout_put(GTK_LAYOUT(this->widget), page->getWidget(), 0, 0);
 
-		this->pages = g_list_append(this->pages, page);
+		this->pages.push_back(page);
 	}
 	if (doc->getPdfPageCount() > 0)
 	{
@@ -323,12 +322,10 @@ PdfPagesDialog::~PdfPagesDialog()
 {
 	XOJ_CHECK_TYPE(PdfPagesDialog);
 
-	for (GList* l = this->pages; l != NULL; l = l->next)
+	for (PdfPage* p : this->pages)
 	{
-		delete (PdfPage*) l->data;
+		delete p;
 	}
-	g_list_free(this->pages);
-	this->pages = NULL;
 
 	delete[] this->usedPages;
 	this->usedPages = NULL;
@@ -347,7 +344,7 @@ void PdfPagesDialog::updateOkButton()
 {
 	XOJ_CHECK_TYPE(PdfPagesDialog);
 
-	PdfPage* p = (PdfPage*) g_list_nth_data(this->pages, this->selected);
+	PdfPage* p = this->pages[this->selected];
 	gtk_widget_set_sensitive(get("buttonOk"), p && gtk_widget_get_visible(p->getWidget()));
 }
 
@@ -365,9 +362,8 @@ void PdfPagesDialog::onlyNotUsedCallback(GtkToggleButton* tb, PdfPagesDialog* dl
 	if (gtk_toggle_button_get_active(tb))
 	{
 		int i = 0;
-		for (GList* l = dlg->pages; l != NULL; l = l->next)
+		for (PdfPage* p : dlg->pages)
 		{
-			PdfPage* p = (PdfPage*) l->data;
 			gtk_widget_set_visible(p->getWidget(), !dlg->usedPages[i]);
 			i++;
 		}
@@ -472,13 +468,13 @@ void PdfPagesDialog::setSelected(int selected)
 	}
 
 	int lastSelected = this->selected;
-	PdfPage* p = (PdfPage*) g_list_nth_data(this->pages, selected);
+	PdfPage* p = this->pages[selected];
 	if (p)
 	{
 		p->setSelected(true);
 		this->selected = selected;
 	}
-	p = (PdfPage*) g_list_nth_data(this->pages, lastSelected);
+	p = this->pages[lastSelected];
 	if (p)
 	{
 		p->setSelected(false);
@@ -499,10 +495,8 @@ void PdfPagesDialog::layout()
 	GtkAllocation alloc = { 0 };
 	gtk_widget_get_allocation(this->scrollPreview, &alloc);
 
-	for (GList* l = this->pages; l != NULL; l = l->next)
+	for (PdfPage* p : this->pages)
 	{
-		PdfPage* p = (PdfPage*) l->data;
-
 		if (!gtk_widget_get_visible(p->getWidget()))
 		{
 			continue;
