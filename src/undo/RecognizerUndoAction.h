@@ -13,6 +13,8 @@
 
 #include "UndoAction.h"
 
+#include <vector>
+
 class Layer;
 class Redrawable;
 class Stroke;
@@ -36,5 +38,5 @@ private:
 
 	Layer* layer;
 	Stroke* recognized;
-	GList* original;
+	std::vector<Stroke*> original;
 };

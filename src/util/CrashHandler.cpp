@@ -1,10 +1,12 @@
 #include "CrashHandler.h"
 
-#include "cfg.h"
-#include "control/xojfile/SaveHandler.h"
-#include "model/Document.h"
 #include "Stacktrace.h"
 #include "Util.h"
+
+#include "control/xojfile/SaveHandler.h"
+#include "model/Document.h"
+
+#include <config-dev.h>
 
 #include <glib.h>
 #include <gtk/gtk.h>
@@ -12,10 +14,12 @@
 #include <boost/locale/format.hpp>
 
 #include <iostream>
+using std::cerr;
+using std::endl;
 #include <fstream>
+using std::ofstream;
 #include <sstream>
 #include <execinfo.h>
-using namespace std;
 
 static bool alreadyCrashed = false;
 static Document* document = NULL;
@@ -64,17 +68,17 @@ static void emergencySave();
  * you can't do with it. So please don't touch anythink down there without
  * previous consultation.
  */
-class streamsplit : public stringstream
+class streamsplit : public std::stringstream
 {
 public:
 
-	streamsplit(ofstream* file)
+	streamsplit(std::ofstream* file)
 	{
 		f = file;
 	}
 
 	template<typename T>
-	ostream& operator<<(T const & rhs)
+	std::ostream& operator<<(T const & rhs)
 	{
 		*f << rhs;
 		cerr << rhs;
@@ -82,7 +86,7 @@ public:
 	}
 
 private:
-	ofstream* f;
+	std::ofstream* f;
 };
 
 /**

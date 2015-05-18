@@ -1,23 +1,23 @@
 #include "LoadHandler.h"
 
-#include "../model/XojPage.h"
-#include "../model/BackgroundImage.h"
+#include "model/XojPage.h"
+#include "model/BackgroundImage.h"
 #include "LoadHandlerHelper.h"
 
-#include <gtk/gtk.h>
-#include <glib.h>
-#include <glib/gstdio.h>
-#include <string.h>
-#include <stdlib.h>
-
 #include <config.h>
+
+#include <glib.h>
 #include <glib/gi18n-lib.h>
+#include <glib/gstdio.h>
+#include <gtk/gtk.h>
+
+#include <stdlib.h>
+#include <string.h>
 
 #define error2(var, ...) if (var == NULL) { var = g_error_new(G_MARKUP_ERROR, G_MARKUP_ERROR_INVALID_CONTENT, __VA_ARGS__); }
 #define error(...) if (error == NULL) { error = g_error_new(G_MARKUP_ERROR, G_MARKUP_ERROR_INVALID_CONTENT, __VA_ARGS__); }
 
-LoadHandler::LoadHandler() :
-	doc(&dHanlder)
+LoadHandler::LoadHandler() : doc(&dHanlder)
 {
 	XOJ_INIT_TYPE(LoadHandler);
 
@@ -318,8 +318,7 @@ void LoadHandler::parseBgPixmap()
 
 		if (error)
 		{
-			error(_("could not read image: %s, Error message: %s"), fileToLoad.c_str(),
-			      error->message);
+			error(_("could not read image: %s, Error message: %s"), fileToLoad.c_str(), error->message);
 			g_error_free(error);
 		}
 
@@ -389,8 +388,7 @@ void LoadHandler::parseBgPdf()
 			else if (!strcmp("attach", domain))
 			{
 				attachToDocument = true;
-				char* tmpFilename = g_strdup_printf("%s.%s", xournalFilename.c_str(),
-				                                    sFilename);
+				char* tmpFilename = g_strdup_printf("%s.%s", xournalFilename.c_str(), sFilename);
 
 				if (g_file_test(tmpFilename, G_FILE_TEST_EXISTS))
 				{
@@ -593,7 +591,6 @@ void LoadHandler::parseTexImage()
 		imTextLen = LoadHandlerHelper::getAttribInt("texlength", this);
 	}
 
-
 	this->teximage = new TexImage();
 	this->layer->addElement(this->teximage);
 	this->teximage->setX(left);
@@ -630,10 +627,8 @@ void LoadHandler::parseLayer()
 	}
 }
 
-void LoadHandler::parserStartElement(GMarkupParseContext* context,
-                                     const gchar* elementName, const gchar** attributeNames,
-                                     const gchar** attributeValues,
-                                     gpointer userdata, GError** error)
+void LoadHandler::parserStartElement(GMarkupParseContext* context, const gchar* elementName, const gchar** attributeNames,
+                                     const gchar** attributeValues, gpointer userdata, GError** error)
 {
 	LoadHandler* handler = (LoadHandler*) userdata;
 	// Return on error
@@ -643,7 +638,6 @@ void LoadHandler::parserStartElement(GMarkupParseContext* context,
 	}
 
 	XOJ_CHECK_TYPE_OBJ(handler, LoadHandler);
-
 
 	handler->attributeNames = attributeNames;
 	handler->attributeValues = attributeValues;
@@ -671,8 +665,8 @@ void LoadHandler::parserStartElement(GMarkupParseContext* context,
 	handler->elementName = NULL;
 }
 
-void LoadHandler::parserEndElement(GMarkupParseContext* context,
-                                   const gchar* element_name, gpointer userdata, GError** error)
+void LoadHandler::parserEndElement(GMarkupParseContext* context, const gchar* element_name,
+								   gpointer userdata, GError** error)
 {
 	// Return on error
 	if (*error)
@@ -689,38 +683,32 @@ void LoadHandler::parserEndElement(GMarkupParseContext* context,
 	{
 		handler->pos = PASER_POS_FINISHED;
 	}
-	else if (handler->pos == PARSER_POS_IN_PAGE &&
-	         strcmp(element_name, "page") == 0)
+	else if (handler->pos == PARSER_POS_IN_PAGE && strcmp(element_name, "page") == 0)
 	{
 		handler->pos = PARSER_POS_STARTED;
 		handler->page = NULL;
 	}
-	else if (handler->pos == PARSER_POS_IN_LAYER &&
-	         strcmp(element_name, "layer") == 0)
+	else if (handler->pos == PARSER_POS_IN_LAYER && strcmp(element_name, "layer") == 0)
 	{
 		handler->pos = PARSER_POS_IN_PAGE;
 		handler->layer = NULL;
 	}
-	else if (handler->pos == PARSER_POS_IN_STROKE &&
-	         strcmp(element_name, "stroke") == 0)
+	else if (handler->pos == PARSER_POS_IN_STROKE && strcmp(element_name, "stroke") == 0)
 	{
 		handler->pos = PARSER_POS_IN_LAYER;
 		handler->stroke = NULL;
 	}
-	else if (handler->pos == PARSER_POS_IN_TEXT &&
-	         strcmp(element_name, "text") == 0)
+	else if (handler->pos == PARSER_POS_IN_TEXT && strcmp(element_name, "text") == 0)
 	{
 		handler->pos = PARSER_POS_IN_LAYER;
 		handler->text = NULL;
 	}
-	else if (handler->pos == PARSER_POS_IN_IMAGE &&
-	         strcmp(element_name, "image") == 0)
+	else if (handler->pos == PARSER_POS_IN_IMAGE && strcmp(element_name, "image") == 0)
 	{
 		handler->pos = PARSER_POS_IN_LAYER;
 		handler->image = NULL;
 	}
-	else if (handler->pos == PARSER_POS_IN_TEXIMAGE &&
-	         strcmp(element_name, "teximage") == 0)
+	else if (handler->pos == PARSER_POS_IN_TEXIMAGE && strcmp(element_name, "teximage") == 0)
 	{
 		handler->pos = PARSER_POS_IN_LAYER;
 		handler->teximage = NULL;
@@ -790,8 +778,8 @@ void LoadHandler::parserText(GMarkupParseContext* context, const gchar* text,
 			else
 			{
 				g_warning(_("xoj-File: %s"), handler->filename.c_str());
-				g_warning(_("Wrong count of points, get %i, expected %i"),
-				          handler->pressureBuffer.size(), handler->stroke->getPointCount() - 1);
+				g_warning(_("Wrong count of points, get %i, expected %i"), handler->pressureBuffer.size(),
+						  handler->stroke->getPointCount() - 1);
 			}
 		}
 		handler->pressureBuffer.clear();
@@ -845,7 +833,6 @@ void LoadHandler::readTexImage(const gchar* base64_str, gsize base64_strlen)
 	this->teximage->setImage(string((char*)png_buf, png_buflen));
 	g_free(png_buf);
 }
-
 
 /**
  * Document should not be freed, it will be freed with LoadHandler!
@@ -932,4 +919,3 @@ void DoubleArrayBuffer::add(double d)
 
 	this->data[this->len++] = d;
 }
-

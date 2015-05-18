@@ -13,8 +13,11 @@
 
 #include "UndoAction.h"
 
+#include <vector>
+
 class Layer;
 class Redrawable;
+class SizeUndoActionEntry;
 class Stroke;
 
 class SizeUndoAction : public UndoAction
@@ -37,7 +40,7 @@ public:
 private:
 	XOJ_TYPE_ATTRIB;
 
-	GList* data;
+	std::vector<SizeUndoActionEntry*> data;
 
 	Layer* layer;
 };

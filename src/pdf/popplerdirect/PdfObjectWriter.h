@@ -11,11 +11,11 @@
 
 #pragma once
 
-#include "poppler/XojPopplerDocument.h"
-#include "poppler-0.24.1/poppler/Object.h"
-
 #include "PdfWriter.h"
 #include "PdfXRef.h"
+
+#include "poppler/XojPopplerDocument.h"
+#include "poppler-0.24.1/poppler/Object.h"
 
 class PdfObjectWriter
 {

@@ -13,7 +13,7 @@ enum
 };
 
 ToolbarManageDialog::ToolbarManageDialog(GladeSearchpath* gladeSearchPath, ToolbarModel* model) :
-	GladeGui(gladeSearchPath, "toolbarManageDialog.glade", "DialogManageToolbar")
+		GladeGui(gladeSearchPath, "toolbarManageDialog.glade", "DialogManageToolbar")
 {
 	XOJ_INIT_TYPE(ToolbarManageDialog);
 

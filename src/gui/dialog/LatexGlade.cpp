@@ -1,12 +1,13 @@
 #include "LatexGlade.h"
 
+#include "LatexAction.h"
+
 #include "control/tools/ImageHandler.h"
 #include "model/TexImage.h"
 
-#include "LatexAction.h"
-
 #include <iostream>
-using namespace std;
+using std::cout;
+using std::endl;
 
 LatexGlade::LatexGlade(GladeSearchpath* gladeSearchPath) : GladeGui(gladeSearchPath, "texdialog.glade", "texDialog")
 {

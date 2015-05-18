@@ -1,8 +1,8 @@
 #include "CircleRecognizer.h"
 
 #include "Inertia.h"
-#include "model/Stroke.h"
 #include "ShapeRecognizerConfig.h"
+#include "model/Stroke.h"
 
 #include <math.h>
 

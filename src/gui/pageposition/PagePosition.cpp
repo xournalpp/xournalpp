@@ -9,7 +9,7 @@ PagePosition::PagePosition(PageView* pv)
 	this->y1 = pv->getY();
 	this->y2 = this->y1 + pv->getDisplayHeight();
 
-	this->views = g_list_append(NULL, pv);
+	this->views.push_back(pv);
 }
 
 PagePosition::PagePosition()
@@ -18,16 +18,11 @@ PagePosition::PagePosition()
 
 	this->y1 = 0;
 	this->y2 = 0;
-
-	this->views = NULL;
 }
 
 PagePosition::~PagePosition()
 {
 	XOJ_CHECK_TYPE(PagePosition);
-
-	g_list_free(this->views);
-	this->views = NULL;
 
 	XOJ_RELEASE_TYPE(PagePosition);
 }
@@ -41,7 +36,7 @@ bool PagePosition::add(PageView* pv)
 
 	if (containsY(y1) || containsY(y2) || pv->containsY(this->y1) || pv->containsY(this->y2))
 	{
-		this->views = g_list_append(this->views, pv);
+		this->views.push_back(pv);
 
 		this->y1 = MIN(this->y1, y1);
 		this->y2 = MAX(this->y2, y2);
@@ -56,9 +51,8 @@ PageView* PagePosition::getViewAt(int x, int y)
 {
 	XOJ_CHECK_TYPE(PagePosition);
 
-	for (GList* l = this->views; l != NULL; l = l->next)
+	for (PageView* v : this->views)
 	{
-		PageView* v = (PageView*) l->data;
 		if (v->containsPoint(x, y))
 		{
 			return v;

@@ -2,8 +2,7 @@
 
 #include <glib.h>
 
-#include <math.h>
-#include <stdio.h>
+#include <cmath>
 
 Point::Point()
 {
@@ -50,7 +49,7 @@ double Point::lineLengthTo(const Point& p)
 {
 	XOJ_CHECK_TYPE(Point);
 
-	return hypot(this->x - p.x, this->y - p.y);
+	return std::hypot(this->x - p.x, this->y - p.y);
 }
 
 Point Point::lineTo(const Point& p, double length)

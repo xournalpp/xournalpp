@@ -1,6 +1,8 @@
 #include "Cursor.h"
+
 #include "XournalView.h"
 #include "control/Control.h"
+
 #include <Util.h>
 #include <pixbuf-utils.h>
 

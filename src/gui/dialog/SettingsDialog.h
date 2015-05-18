@@ -16,6 +16,10 @@
 
 #include <XournalType.h>
 
+#include <vector>
+
+class ButtonConfigGui;
+
 class SettingsDialog : public GladeGui
 {
 public:
@@ -52,5 +56,5 @@ private:
 	GtkWidget* callib;
 	int dpi;
 
-	GList* buttonConfigs;
+	std::vector<ButtonConfigGui*> buttonConfigs;
 };

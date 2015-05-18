@@ -1,8 +1,7 @@
 #include "Tool.h"
 
-Tool::Tool(string name, ToolType type, int color, bool enableColor,
-		   bool enableSize, bool enableRuler, bool enableRectangle,
-		   bool enableCircle, bool enableArrow, bool enableShapreRecognizer,
+Tool::Tool(string name, ToolType type, int color, bool enableColor, bool enableSize, bool enableRuler,
+		   bool enableRectangle, bool enableCircle, bool enableArrow, bool enableShapreRecognizer,
 		   double* thickness)
 {
 	XOJ_INIT_TYPE(Tool);

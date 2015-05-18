@@ -13,7 +13,7 @@
 
 #include <XournalType.h>
 
-#include <glib.h>
+#include <vector>
 
 class GladeSearchpath
 {
@@ -35,5 +35,5 @@ private:
 	/**
 	 * Search directory for icons and Glade files
 	 */
-	GList* directories;
+	std::vector<char*> directories;
 };

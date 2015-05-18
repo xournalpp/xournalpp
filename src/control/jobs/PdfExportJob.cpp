@@ -1,8 +1,8 @@
 #include "PdfExportJob.h"
 
+#include "SynchronizedProgressListener.h"
 #include "control/Control.h"
 #include "pdf/popplerdirect/PdfExport.h"
-#include "SynchronizedProgressListener.h"
 
 #include <boost/algorithm/string/predicate.hpp>
 

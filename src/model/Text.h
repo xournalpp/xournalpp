@@ -13,7 +13,6 @@
 
 #include "Element.h"
 #include "Font.h"
-
 #include <StringUtils.h>
 
 #include <gtk/gtk.h>

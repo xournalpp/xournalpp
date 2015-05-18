@@ -9,9 +9,9 @@ AboutDialog::AboutDialog(GladeSearchpath* gladeSearchPath) : GladeGui(gladeSearc
 
 	GtkLabel* labelTitle = GTK_LABEL(get("labelTitle"));
 	gtk_label_set_markup(labelTitle,
-						 "<span size=\"xx-large\" weight=\"bold\">Xournal++ " VERSION "</span>\n"
+						 "<span size=\"xx-large\" weight=\"bold\">Xournal++ " PROJECT_VERSION "</span>\n"
 						 "<i>The next generation</i>\n"
-						 "Build: " __DATE__);
+						 "Built on: " __DATE__ " at " __TIME__);
 
 	GtkWidget* w = get("vbox1");
 	GtkWidget* linkButton = gtk_link_button_new("http://github.com/xournalpp/xournalpp");

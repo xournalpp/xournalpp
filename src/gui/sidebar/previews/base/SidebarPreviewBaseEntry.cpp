@@ -1,8 +1,9 @@
 #include "SidebarPreviewBaseEntry.h"
 
+#include "SidebarPreviewBase.h"
+
 #include "control/Control.h"
 #include "gui/Shadow.h"
-#include "SidebarPreviewBase.h"
 #include "view/PdfView.h"
 
 SidebarPreviewBaseEntry::SidebarPreviewBaseEntry(SidebarPreviewBase* sidebar, PageRef page)

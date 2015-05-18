@@ -12,14 +12,14 @@
 #pragma once
 
 #include "UndoAction.h"
-
 #include <XournalType.h>
 
-#include <glib.h>
+#include <vector>
 
+class ColorUndoActionEntry;
+class Element;
 class Layer;
 class Redrawable;
-class Element;
 
 class ColorUndoAction : public UndoAction
 {
@@ -37,8 +37,6 @@ public:
 private:
 	XOJ_TYPE_ATTRIB;
 
-
-	GList* data;
-
+	std::vector<ColorUndoActionEntry*> data;
 	Layer* layer;
 };

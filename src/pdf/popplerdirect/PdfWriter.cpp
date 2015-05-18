@@ -4,7 +4,8 @@
 #include <GzHelper.h>
 
 #include <iostream>
-using namespace std;
+using std::cout;
+using std::endl;
 
 bool PdfWriter::compressPdfOutput = true;
 
@@ -85,11 +86,6 @@ bool PdfWriter::write(string data)
 	return true;
 }
 
-bool PdfWriter::write(boost::format data)
-{
-	return write(data.str());
-}
-
 bool PdfWriter::write(int data)
 {
 	XOJ_CHECK_TYPE(PdfWriter);
@@ -146,7 +142,7 @@ bool PdfWriter::writeObj()
 	XOJ_CHECK_TYPE(PdfWriter);
 
 	this->xref->addXref(this->stream.length());
-	bool res = this->write(boost::format("%i 0 obj\n") % this->objectId++);
+	bool res = this->write(FORMAT("%i 0 obj\n", this->objectId++));
 	if (!res)
 	{
 		this->lastError = "Internal PDF error #8";
@@ -190,7 +186,7 @@ bool PdfWriter::writeInfo(string title)
 	}
 
 	write("/Creator ");
-	writeTxt("Cairo / Poppler / Xournal++ v." VERSION);
+	writeTxt("Cairo / Poppler / " PROJECT_NAME " v." PROJECT_VERSION);
 	write("\n");
 
 	time_t curtime = time(NULL);
@@ -237,7 +233,7 @@ void PdfWriter::endStream()
 		data = this->stream;
 	}
 
-	write(boost::format("<<%s/Length %i>>\n") % filter % data.length());
+	write(FORMAT("<<%s/Length %i>>\n", filter, data.length()));
 	write("\nstream\n");
 
 	write(data);

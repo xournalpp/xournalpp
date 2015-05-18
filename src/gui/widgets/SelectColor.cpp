@@ -1,4 +1,5 @@
 #include "SelectColor.h"
+
 #include "math.h"
 
 static void selectcolor_class_init(SelectColorClass* klass);

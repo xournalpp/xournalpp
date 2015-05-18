@@ -48,7 +48,7 @@ void PdfRefList::writeObjects()
 		if (ref->type == PDF_REF_ENTRY_TYPE_REF)
 		{
 			this->xref->setXref(ref->objectId, this->writer->getDataCount());
-			this->writer->write(boost::format("%i 0 obj\n") % ref->objectId);
+			this->writer->write(FORMAT("%i 0 obj\n", ref->objectId));
 			this->objectWriter->writeObject(ref->object, ref->doc);
 			this->writer->write("\nendobj\n");
 		}
@@ -165,7 +165,7 @@ void PdfRefList::writeRefList(const char* type)
 		return;
 	}
 
-	this->writer->write(boost::format("/%s <<\n") % type);
+	this->writer->write(FORMAT("/%s <<\n", type));
 
 	for (GList* l = this->data; l != NULL; l = l->next)
 	{
@@ -178,11 +178,11 @@ void PdfRefList::writeRefList(const char* type)
 
 		if (ref->type == PDF_REF_ENTRY_TYPE_REF)
 		{
-			this->writer->write(boost::format("/%s%i %i 0 R\n") % this->type % ref->refSourceId % ref->objectId);
+			this->writer->write(FORMAT("/%s%i %i 0 R\n", this->type, ref->refSourceId, ref->objectId));
 		}
 		else if (ref->type == PDF_REF_ENTRY_TYPE_DICT)
 		{
-			this->writer->write(boost::format("/%s%i ") % this->type % ref->refSourceId);
+			this->writer->write(FORMAT("/%s%i ", this->type, ref->refSourceId));
 			this->objectWriter->writeDictionnary(ref->object->getDict(), ref->doc);
 		}
 		else

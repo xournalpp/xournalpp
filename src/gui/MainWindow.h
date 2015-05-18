@@ -16,9 +16,12 @@
 
 #include <XournalType.h>
 
+#include <vector>
+
 class Control;
 class Layout;
 class MainWindow;
+class MenuSelectToolbarData;
 class SpinPageAdapter;
 class ToolMenuHandler;
 class ToolbarData;
@@ -123,11 +126,11 @@ private:
 	// Toolbars
 	ToolMenuHandler* toolbar;
 	GSList* toolbarGroup;
-	GList* toolbarMenuData;
+	std::vector<MenuSelectToolbarData*> toolbarMenuData;
 	ToolbarData* selectedToolbar;
 	bool toolbarIntialized;
 
-	GList* toolbarMenuitems;
+	std::vector<GtkWidget*> toolbarMenuitems;
 
 	bool maximized;
 

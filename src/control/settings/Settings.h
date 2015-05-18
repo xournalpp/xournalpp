@@ -11,17 +11,17 @@
 
 #pragma once
 
-#include "cfg.h"
 #include "control/Tool.h"
 #include "model/Font.h"
 
-#include <map>
-
-#include <libxml/xmlreader.h>
-#include <glib.h>
+#include <config-dev.h>
 
 #include <boost/filesystem/path.hpp>
 using boost::filesystem::path;
+#include <libxml/xmlreader.h>
+#include <glib.h>
+
+#include <map>
 
 enum AttributeType
 {

@@ -11,6 +11,8 @@
 
 #pragma once
 
+#include "Util.h"
+
 #include "control/Control.h"
 #include "gui/MainWindow.h"
 #include "gui/toolbarMenubar/AbstractToolItem.h"
@@ -21,11 +23,10 @@
 #include "gui/widgets/SelectColor.h"
 #include "ToolbarDragDropHelper.h"
 #include "ToolItemDragCurrentData.h"
-#include "Util.h"
 
 #include <iostream>
-
-using namespace std;
+using std::cout;
+using std::endl;
 
 class ToolbarAdapter
 {

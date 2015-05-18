@@ -1,5 +1,7 @@
 #include "EditSelectionContents.h"
 
+#include "Selection.h"
+
 #include "control/Control.h"
 #include "gui/pageposition/PagePositionHandler.h"
 #include "gui/PageView.h"
@@ -9,7 +11,6 @@
 #include "model/Layer.h"
 #include "model/Stroke.h"
 #include "model/Text.h"
-#include "Selection.h"
 #include "undo/ColorUndoAction.h"
 #include "undo/DeleteUndoAction.h"
 #include "undo/FontUndoAction.h"

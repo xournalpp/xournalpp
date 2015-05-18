@@ -26,9 +26,7 @@ public:
 	int run(int argc, char* argv[]);
 
 private:
-#ifdef ENABLE_NLS
 	void initLocalisation();
-#endif
 
 	void checkForErrorlog();
 	void checkForEmergencySave();

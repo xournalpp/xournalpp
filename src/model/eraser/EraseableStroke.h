@@ -12,7 +12,6 @@
 #pragma once
 
 #include "model/Point.h"
-
 #include <XournalType.h>
 
 #include <gtk/gtk.h>

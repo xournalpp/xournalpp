@@ -16,6 +16,7 @@
 #include "DocumentHandler.h"
 #include "LinkDestination.h"
 #include "PageRef.h"
+
 #include "pdf/popplerdirect/poppler/XojPopplerDocument.h"
 #include "pdf/popplerdirect/poppler/XojPopplerPage.h"
 #include "pdf/popplerdirect/poppler/XojPopplerIter.h"

@@ -1,10 +1,10 @@
 
  --------------------------------------------------------------------------
- March 6, 2009                                                 Version 1.02
+ December 6, 2014                                              Version 1.05
 
                   m a t h T e X   R e a d m e   F i l e
 
- Copyright(c) 2007-2009, John Forkosh Associates, Inc. All rights reserved.
+ Copyright(c) 2007-2014, John Forkosh Associates, Inc. All rights reserved.
  --------------------------------------------------------------------------
 
                             by: John Forkosh
@@ -76,11 +76,12 @@ II.  INSTALLATION
        * Then, download  http://www.forkosh.dreamhost.com/mathtex.zip
          and  unzip mathtex.zip  in any convenient working
          directory.  Your working directory should now contain
-              mathtex.zip    your downloaded gnu zipped mathTeX distribution
-              README         this file (see mathtex.html for demo/tutorial)
-              COPYING        GPL license, under which you may use mathTeX
-              mathtex.c      mathTeX source program and all functions
-              mathtex.html   mathTeX users manual
+            mathtex.zip  your downloaded gnu zipped mathTeX distribution
+            README       this file (see mathtex.html for demo/tutorial)
+            COPYING      GPL license, under which you may use mathTeX
+            mathtex.c    mathTeX source program and all functions
+            mathtex.html mathTeX users manual, identical to the online
+                         copy at http://www.forkosh.com/mathtex.html
        +---
        | Compile and Install mathTeX
        +----------------------------
@@ -103,10 +104,10 @@ II.  INSTALLATION
        * To quickly test your installed mathtex.cgi, type
          a url into your browser's locator window something like
               http://www.yourdomain.com/cgi-bin/mathtex.cgi?x^2+y^2
-        which should display the same image that you see at
+         which should display the same image that you see at
               http://www.forkosh.com/cgi-bin/mathtex.cgi?x^2+y^2
-        If you see the same image from your own domain link,
-        then you've completed a successful mathTeX installation.
+         If you see the same image from your own domain link,
+         then you've completed a successful mathTeX installation.
        * Optionally, to install a copy of the mathTeX manual
          on your server,
               mv mathtex.html  to your server's htdocs/ directory.
@@ -162,6 +163,8 @@ III. REVISION HISTORY
       o 05 Mar 2009 -- \environment directive added to display
         all http environment variables.
       o 06 Mar 2009 -- mathTeX version 1.02 released.
+      o 15 Nov 2011 -- mathTeX version 1.05 released.
+      o 26 Oct 2014 -- most recent change
 
 
 IV.  CONCLUDING REMARKS

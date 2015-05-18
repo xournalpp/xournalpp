@@ -14,7 +14,6 @@
 #pragma once
 
 #include "Job.h"
-
 #include <XournalType.h>
 
 #include <glib.h>
@@ -35,7 +34,7 @@ typedef enum
 	 * Rendering pages not in current range
 	 */
 	JOB_PRIORITY_LOW,
-
+			
 	/**
 	 * Any other job: load, save, print, ...
 	 */

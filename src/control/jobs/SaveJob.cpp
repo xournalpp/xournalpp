@@ -10,9 +10,8 @@
 
 #include <config.h>
 
-#include <glib/gi18n-lib.h>
-
 #include <boost/filesystem/operations.hpp>
+#include <glib/gi18n-lib.h>
 
 SaveJob::SaveJob(Control* control) : BlockingJob(control, _("Save"))
 {

@@ -13,6 +13,8 @@
 
 #include "gui/GladeGui.h"
 
+#include <vector>
+
 class ColorEntry;
 class Control;
 
@@ -42,7 +44,7 @@ private:
 
 	int selected;
 
-	GList* colors;
+	std::vector<ColorEntry*> colors;
 
 	GtkWidget* colorDlg;
 };

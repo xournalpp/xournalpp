@@ -16,9 +16,8 @@
 #include "model/LayerListener.h"
 #include "model/TexImage.h"
 
-#include <gtk/gtk.h>
-
 #include <glib/gstdio.h>
+#include <gtk/gtk.h>
 
 class Control;
 
@@ -30,7 +29,6 @@ public:
 public:
 	void runCommand();
 	string getFileName();
-
 
 private:
 	//	Control * control;

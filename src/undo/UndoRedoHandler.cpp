@@ -1,11 +1,11 @@
 #include "UndoRedoHandler.h"
 
 #include "control/Control.h"
-
 #include <config.h>
 
 #include <glib/gi18n-lib.h>
 #include <boost/format.hpp>
+
 #include <stdio.h>
 
 #ifdef UNDO_TRACE

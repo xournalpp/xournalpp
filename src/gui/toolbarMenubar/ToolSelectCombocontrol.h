@@ -11,8 +11,8 @@
 
 #pragma once
 
-#include "gui/GladeGui.h"
 #include "ToolButton.h"
+#include "gui/GladeGui.h"
 
 #include <XournalType.h>
 

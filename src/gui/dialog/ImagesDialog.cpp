@@ -255,7 +255,6 @@ ImagesDialog::ImagesDialog(GladeSearchpath* gladeSearchPath, Document* doc, Sett
 {
 	XOJ_INIT_TYPE(ImagesDialog);
 
-	this->images = NULL;
 	this->settings = settings;
 	this->widget = gtk_layout_new(NULL, NULL);
 	this->scrollPreview = gtk_scrolled_window_new(NULL, NULL);
@@ -287,9 +286,8 @@ ImagesDialog::ImagesDialog(GladeSearchpath* gladeSearchPath, Document* doc, Sett
 
 			bool found = false;
 
-			for (GList* l = this->images; l != NULL; l = l->next)
+			for (ImageView* v : this->images)
 			{
-				ImageView* v = (ImageView*) l->data;
 				if (v->backgroundImage == p->getBackgroundImage())
 				{
 					found = true;
@@ -303,13 +301,13 @@ ImagesDialog::ImagesDialog(GladeSearchpath* gladeSearchPath, Document* doc, Sett
 				page->updateSize();
 				gtk_layout_put(GTK_LAYOUT(this->widget), page->getWidget(), 0, 0);
 
-				this->images = g_list_append(this->images, page);
+				this->images.push_back(page);
 				x++;
 			}
 		}
 	}
 
-	if (this->images != NULL)
+	if (!this->images.empty())
 	{
 		setSelected(0);
 	}
@@ -327,9 +325,9 @@ ImagesDialog::~ImagesDialog()
 {
 	XOJ_CHECK_TYPE(ImagesDialog);
 
-	for (GList* l = this->images; l != NULL; l = l->next)
+	for (ImageView* view : this->images)
 	{
-		delete (ImageView*) l->data;
+		delete view;
 	}
 
 	XOJ_RELEASE_TYPE(ImagesDialog);
@@ -346,7 +344,7 @@ void ImagesDialog::updateOkButton()
 {
 	XOJ_CHECK_TYPE(ImagesDialog);
 
-	ImageView* p = (ImageView*) g_list_nth_data(this->images, this->selected);
+	ImageView* p = this->images[this->selected];
 	gtk_widget_set_sensitive(get("buttonOk"), p && gtk_widget_get_visible(p->getWidget()));
 }
 
@@ -376,7 +374,7 @@ BackgroundImage ImagesDialog::getSelectedImage()
 {
 	XOJ_CHECK_TYPE(ImagesDialog);
 
-	ImageView* p = (ImageView*) g_list_nth_data(this->images, this->selectedPage);
+	ImageView* p = this->images[this->selectedPage];
 	if (p == NULL)
 	{
 		return BackgroundImage();
@@ -402,7 +400,7 @@ void ImagesDialog::show(GtkWindow* parent)
 {
 	XOJ_CHECK_TYPE(ImagesDialog);
 
-	if (this->images == NULL)
+	if (this->images.empty())
 	{
 		this->selectedPage = -2;
 	}
@@ -436,13 +434,13 @@ void ImagesDialog::setSelected(int selected)
 	}
 
 	int lastSelected = this->selected;
-	ImageView* p = (ImageView*) g_list_nth_data(this->images, selected);
+	ImageView* p = this->images[selected];
 	if (p)
 	{
 		p->setSelected(true);
 		this->selected = selected;
 	}
-	p = (ImageView*) g_list_nth_data(this->images, lastSelected);
+	p = this->images[lastSelected];
 	if (p)
 	{
 		p->setSelected(false);
@@ -463,10 +461,8 @@ void ImagesDialog::layout()
 	GtkAllocation alloc = {0};
 	gtk_widget_get_allocation(this->scrollPreview, &alloc);
 
-	for (GList* l = this->images; l != NULL; l = l->next)
+	for (ImageView* p : this->images)
 	{
-		ImageView* p = (ImageView*) l->data;
-
 		if (!gtk_widget_get_visible(p->getWidget()))
 		{
 			continue;

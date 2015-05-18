@@ -12,7 +12,6 @@
 #pragma once
 
 #include "gui/sidebar/AbstractSidebarPage.h"
-
 #include <XournalType.h>
 
 #include <gtk/gtk.h>

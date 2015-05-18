@@ -6,13 +6,13 @@
 #include <config.h>
 #include <Stacktrace.h>
 
+#include <boost/locale/format.hpp>
 #include <glib/gi18n-lib.h>
 
-#include <boost/locale/format.hpp>
-
 #include <string.h>
-
-using namespace std;
+#include <iostream>
+using std::cout;
+using std::endl;
 
 Document::Document(DocumentHandler* handler)
 {

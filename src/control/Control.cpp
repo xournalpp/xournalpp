@@ -1,7 +1,8 @@
 #include "Control.h"
 
-#include "cfg.h"
 #include "ExportHandler.h"
+#include "PrintHandler.h"
+
 #include "gui/Cursor.h"
 #include "gui/dialog/AboutDialog.h"
 #include "gui/dialog/GotoDialog.h"
@@ -25,7 +26,6 @@
 #include "model/BackgroundImage.h"
 #include "model/FormatDefinitions.h"
 #include "model/XojPage.h"
-#include "PrintHandler.h"
 #include "settings/ButtonConfig.h"
 #include "settings/MetadataManager.h"
 #include "stockdlg/ImageOpenDlg.h"
@@ -40,20 +40,26 @@
 #include "view/DocumentView.h"
 
 #include <config.h>
+#include <config-dev.h>
+#include <config-features.h>
 #include <CrashHandler.h>
 #include <serializing/ObjectInputStream.h>
 #include <Stacktrace.h>
 #include <XInputUtils.h>
 
-#include <glib/gi18n-lib.h>
-#include <gtk/gtk.h>
-
 #include <boost/locale.hpp>
 #include <boost/filesystem.hpp>
 namespace bf = boost::filesystem;
 
+#include <glib/gi18n-lib.h>
+#include <gtk/gtk.h>
+
+#include <iostream>
+using std::cout;
+using std::cerr;
+using std::endl;
 #include <vector>
-using namespace std;
+using std::vector;
 
 // TODO Check for error log on startup, also check for emergency save document!
 
@@ -118,8 +124,7 @@ Control::Control(GladeSearchpath* gladeSearchPath)
 	 * This is needed to update the previews
 	 */
 	this->changeTimout = g_timeout_add_seconds(10, (GSourceFunc) checkChangedDocument, this);
-	this->changedPages = NULL;
-
+	
 	this->clipboardHandler = NULL;
 
 	this->dragDropHandler = NULL;
@@ -137,42 +142,25 @@ Control::~Control()
 
 	this->scheduler->stop();
 
-	for (GList* l = this->changedPages; l != NULL; l = l->next)
+	for (XojPage* page : this->changedPages)
 	{
-		XojPage* page = (XojPage*) l->data;
 		page->unreference();
 	}
-	g_list_free(this->changedPages);
-	this->changedPages = NULL;
 
 	delete this->clipboardHandler;
-	this->clipboardHandler = NULL;
 	delete this->recent;
-	this->recent = NULL;
 	delete this->undoRedo;
-	this->undoRedo = NULL;
 	delete this->settings;
-	this->settings = NULL;
 	delete this->toolHandler;
-	this->toolHandler = NULL;
 	delete this->sidebar;
-	this->sidebar = NULL;
 	delete this->doc;
-	this->doc = NULL;
 	delete this->searchBar;
-	this->searchBar = NULL;
 	delete this->scrollHandler;
-	this->scrollHandler = NULL;
 	delete this->metadata;
-	this->metadata = NULL;
 	delete this->cursor;
-	this->cursor = NULL;
 	delete this->zoom;
-	this->zoom = NULL;
 	delete this->scheduler;
-	this->scheduler = NULL;
 	delete this->dragDropHandler;
-	this->dragDropHandler = NULL;
 
 	XOJ_RELEASE_TYPE(Control);
 }
@@ -228,9 +216,8 @@ bool Control::checkChangedDocument(Control* control)
 		// call again later
 		return true;
 	}
-	for (GList* l = control->changedPages; l != NULL; l = l->next)
+	for (XojPage* page : control->changedPages)
 	{
-		XojPage* page = (XojPage*) l->data;
 		int p = control->doc->indexOf(page);
 		if (p != -1)
 		{
@@ -239,8 +226,7 @@ bool Control::checkChangedDocument(Control* control)
 
 		page->unreference();
 	}
-	g_list_free(control->changedPages);
-	control->changedPages = NULL;
+	control->changedPages.clear();
 
 	control->doc->unlock();
 
@@ -1331,9 +1317,7 @@ void Control::getDefaultPagesize(double& width, double& height)
 				GtkPaperSize* s = (GtkPaperSize*) l->data;
 
 				//it would be nice to make StringUtils method, but now I'm not in the mood - down there is basically compareIgnoreCase
-				using namespace bl;
-				using bl::collator;
-				if (use_facet<collator<char>>(std::locale()).compare(collator_base::secondary,
+				if (std::use_facet<bl::collator<char>>(std::locale()).compare(bl::collator_base::secondary,
 						paper, gtk_paper_size_get_display_name(s)))
 				{
 					size = s;
@@ -2041,16 +2025,16 @@ void Control::undoRedoPageChanged(PageRef page)
 {
 	XOJ_CHECK_TYPE(Control);
 
-	for (GList* l = this->changedPages; l != NULL; l = l->next)
+	for (XojPage* p : this->changedPages)
 	{
-		if (l->data == (XojPage*) page)
+		if (p == (XojPage*) page)
 		{
 			return;
 		}
 	}
 
 	XojPage* p = (XojPage*) page;
-	this->changedPages = g_list_append(this->changedPages, p);
+	this->changedPages.push_back(p);
 	p->reference();
 }
 
@@ -3059,9 +3043,9 @@ void Control::clipboardPasteXournal(ObjectInputStream& in)
 	try
 	{
 		string version = in.readString();
-		if (version != PACKAGE_STRING)
+		if (version != PROJECT_STRING)
 		{
-			g_warning("Paste from Xournal Version %s to Xournal Version %s", version.c_str(), PACKAGE_STRING);
+			g_warning("Paste from Xournal Version %s to Xournal Version %s", version.c_str(), PROJECT_STRING);
 		}
 
 		selection = new EditSelection(this->undoRedo, page, view);
@@ -3098,7 +3082,7 @@ void Control::clipboardPasteXournal(ObjectInputStream& in)
 			}
 			else
 			{
-				throw INPUT_STREAM_EXCEPTION("Get unknown object %s", name.c_str());
+				throw INPUT_STREAM_EXCEPTION("Get unknown object {1}", name);
 			}
 
 			in >> element;

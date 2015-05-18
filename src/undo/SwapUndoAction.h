@@ -12,7 +12,6 @@
 #pragma once
 
 #include "UndoAction.h"
-
 #include "model/PageRef.h"
 
 class Control;

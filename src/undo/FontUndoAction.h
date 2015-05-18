@@ -12,11 +12,11 @@
 #pragma once
 
 #include "UndoAction.h"
-
 #include <XournalType.h>
 
-#include <glib.h>
+#include <vector>
 
+class FontUndoActionEntry;
 class Layer;
 class Redrawable;
 class Text;
@@ -38,8 +38,7 @@ public:
 private:
 	XOJ_TYPE_ATTRIB;
 
-
-	GList* data;
+	std::vector<FontUndoActionEntry*> data;
 
 	Layer* layer;
 };

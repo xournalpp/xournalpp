@@ -1,29 +1,32 @@
 #include "MainWindow.h"
 
-#include "cfg.h"
+#include "Layout.h"
+#include "ToolitemDragDrop.h"
+#include "XournalView.h"
+
 #include "control/Control.h"
 #include "gui/GladeSearchpath.h"
-#include "Layout.h"
 #include "ToolbarDefinitions.h"
 #include "toolbarMenubar/model/ToolbarData.h"
 #include "toolbarMenubar/model/ToolbarModel.h"
 #include "toolbarMenubar/ToolMenuHandler.h"
-#include "ToolitemDragDrop.h"
 #include "widgets/SpinPageAdapter.h"
 #include "widgets/XournalWidget.h"
-#include "XournalView.h"
 
 #include <config.h>
+#include <config-dev.h>
+#include <config-features.h>
 
 #include <glib/gi18n-lib.h>
 #include <gdk/gdkkeysyms.h>
 
 #include <iostream>
-using namespace std;
+using std::cout;
+using std::endl;
 
 
 MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control) :
-	GladeGui(gladeSearchPath, "main.glade", "mainWindow")
+		GladeGui(gladeSearchPath, "main.glade", "mainWindow")
 {
 	XOJ_INIT_TYPE(MainWindow);
 
@@ -41,8 +44,6 @@ MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control) :
 	}
 
 	this->maximized = false;
-	this->toolbarMenuData = NULL;
-	this->toolbarMenuitems = NULL;
 
 #ifndef ENABLE_MATHTEX
 	// if mathetex is disable disabled hide the menu entry
@@ -164,9 +165,8 @@ MainWindow::~MainWindow()
 {
 	XOJ_CHECK_TYPE(MainWindow);
 
-	for (GList* l = this->toolbarMenuData; l != NULL; l = l->next)
+	for (MenuSelectToolbarData* data : this->toolbarMenuData)
 	{
-		MenuSelectToolbarData* data = (MenuSelectToolbarData*) l->data;
 		delete data;
 	}
 
@@ -177,11 +177,6 @@ MainWindow::~MainWindow()
 
 	delete[] this->toolbarWidgets;
 	this->toolbarWidgets = NULL;
-
-	g_list_free(this->toolbarMenuData);
-	this->toolbarMenuData = NULL;
-	g_list_free(this->toolbarMenuitems);
-	this->toolbarMenuitems = NULL;
 
 	delete this->xournal;
 	this->xournal = NULL;
@@ -627,9 +622,8 @@ void MainWindow::setControlTmpDisabled(bool disabled)
 
 	toolbar->setTmpDisabled(disabled);
 
-	for (GList* l = this->toolbarMenuData; l != NULL; l = l->next)
+	for (MenuSelectToolbarData* data : this->toolbarMenuData)
 	{
-		MenuSelectToolbarData* data = (MenuSelectToolbarData*) l->data;
 		gtk_widget_set_sensitive(data->item, !disabled);
 	}
 
@@ -644,13 +638,11 @@ void MainWindow::updateToolbarMenu()
 	GtkContainer* menubar = GTK_CONTAINER(get("menuViewToolbar"));
 	g_return_if_fail(menubar != NULL);
 
-	for (GList* l = this->toolbarMenuitems; l != NULL; l = l->next)
+	for (GtkWidget* w : this->toolbarMenuitems)
 	{
-		GtkWidget* w = GTK_WIDGET(l->data);
 		gtk_container_remove(menubar, w);
 	}
-	g_list_free(this->toolbarMenuitems);
-	this->toolbarMenuitems = NULL;
+	this->toolbarMenuitems.clear();
 
 	this->freeToolMenu();
 
@@ -669,13 +661,11 @@ void MainWindow::freeToolMenu()
 {
 	XOJ_CHECK_TYPE(MainWindow);
 
-	for (GList* l = this->toolbarMenuData; l != NULL; l = l->next)
+	for (MenuSelectToolbarData* data : this->toolbarMenuData)
 	{
-		MenuSelectToolbarData* data = (MenuSelectToolbarData*) l->data;
 		delete data;
 	}
-	g_list_free(this->toolbarMenuData);
-	this->toolbarMenuData = NULL;
+	this->toolbarMenuData.clear();
 
 	GtkMenuShell* menubar = GTK_MENU_SHELL(get("menuViewToolbar"));
 	g_return_if_fail(menubar != NULL);
@@ -721,7 +711,7 @@ void MainWindow::createToolbarAndMenu(bool initial)
 
 		MenuSelectToolbarData* data = new MenuSelectToolbarData(this, item, d);
 
-		this->toolbarMenuData = g_list_append(this->toolbarMenuData, data);
+		this->toolbarMenuData.push_back(data);
 
 		if (selectedId == d->getId())
 		{
@@ -740,12 +730,12 @@ void MainWindow::createToolbarAndMenu(bool initial)
 			gtk_menu_shell_insert(menubar, separator, menuPos++);
 
 			predefined = false;
-			this->toolbarMenuitems = g_list_append(this->toolbarMenuitems, separator);
+			this->toolbarMenuitems.push_back(separator);
 		}
 
 		gtk_menu_shell_insert(menubar, item, menuPos++);
 
-		this->toolbarMenuitems = g_list_append(this->toolbarMenuitems, item);
+		this->toolbarMenuitems.push_back(item);
 	}
 
 	if (selectedData)

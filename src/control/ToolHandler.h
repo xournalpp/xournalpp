@@ -11,8 +11,8 @@
 
 #pragma once
 
-#include "settings/Settings.h"
 #include "Tool.h"
+#include "settings/Settings.h"
 
 #include <Arrayiterator.h>
 #include <XournalType.h>

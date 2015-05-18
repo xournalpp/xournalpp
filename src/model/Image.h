@@ -12,7 +12,6 @@
 #pragma once
 
 #include "Element.h"
-
 #include <XournalType.h>
 
 #include <string>

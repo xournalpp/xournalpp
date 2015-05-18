@@ -1,6 +1,5 @@
 #include "LatexAction.h"
 
-#include "cfg.h"
 #include "control/Control.h"
 #include "control/tools/ImageHandler.h"
 #include "gui/PageView.h"
@@ -8,6 +7,7 @@
 #include "model/Stroke.h"
 #include "model/Layer.h"
 #include "model/TexImage.h"
+//TODO some time - clean up these includes
 #include "serializing/HexObjectEncoding.h"
 #include "serializing/ObjectOutputStream.h"
 

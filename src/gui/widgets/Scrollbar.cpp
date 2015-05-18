@@ -28,7 +28,6 @@ Scrollbar::Scrollbar(bool horizontal)
 
 	g_object_ref(this->scrollbar);
 
-	this->listener = NULL;
 	this->adj = gtk_range_get_adjustment(GTK_RANGE(this->scrollbar));
 
 	gtk_adjustment_set_step_increment(this->adj, 20);
@@ -46,8 +45,6 @@ Scrollbar::~Scrollbar()
 
 	gtk_widget_unref(this->scrollbar);
 	this->scrollbar = NULL;
-	g_list_free(this->listener);
-	this->listener = NULL;
 }
 
 void Scrollbar::scrolled(GtkAdjustment* adjustment, Scrollbar* scrollbar)
@@ -61,10 +58,8 @@ void Scrollbar::scrolled(GtkAdjustment* adjustment, Scrollbar* scrollbar)
 
 	scrollbar->value = scrollbar->getValue();
 
-	GList* l = scrollbar->listener;
-	for (; l != NULL; l = l->next)
+	for (ScrollbarListener* listener : scrollbar->listener)
 	{
-		ScrollbarListener* listener = (ScrollbarListener*) l->data;
 		listener->scrolled(scrollbar);
 	}
 }
@@ -189,12 +184,12 @@ void Scrollbar::addListener(ScrollbarListener* listener)
 {
 	XOJ_CHECK_TYPE(Scrollbar);
 
-	this->listener = g_list_prepend(this->listener, listener);
+	this->listener.push_front(listener);
 }
 
 void Scrollbar::removeScrollbarListener(ScrollbarListener* listener)
 {
 	XOJ_CHECK_TYPE(Scrollbar);
 
-	this->listener = g_list_remove(this->listener, listener);
+	this->listener.remove(listener);
 }

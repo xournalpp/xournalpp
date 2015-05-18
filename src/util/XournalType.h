@@ -14,15 +14,14 @@
 
 #pragma once
 
-#include "config.h"
 #include "logger/Logger.h"
+#include <config-dev.h>
 
 #include <glib.h>
 
-#ifdef XOJ_MEMORY_CHECK_ENABLED
+#ifdef DEV_MEMORY_CHECKING
 
-
-#ifdef XOJ_MEMORY_LEAK_CHECK_ENABLED
+#ifdef DEV_MEMORY_LEAK_CHECKING
 
 void xoj_memoryleak_initType(int id);
 void xoj_memoryleak_releaseType(int id);
@@ -30,7 +29,7 @@ void xoj_momoryleak_printRemainingObjects();
 
 #endif
 
-#ifdef XOJ_CALL_LOG_ENABLED
+#ifdef DEV_CALL_LOG
 #define CALL_LOG(type, clazz, obj) { \
 		Log::trace(type, clazz, __FUNCTION__, (long)obj); \
 	}
@@ -53,7 +52,7 @@ void xoj_type_initMutex();
 /**
  * Initalize the Xournal type info, this should be called in the constructor
  */
-#ifdef XOJ_MEMORY_LEAK_CHECK_ENABLED
+#ifdef DEV_MEMORY_LEAK_CHECKING
 
 const char* xoj_type_getName(int id);
 
@@ -73,7 +72,7 @@ const char* xoj_type_getName(int id);
 /**
  * Release the Xournal type info, this should be called in the destructor
  */
-#ifdef XOJ_MEMORY_LEAK_CHECK_ENABLED
+#ifdef DEV_MEMORY_LEAK_CHECKING
 #define XOJ_RELEASE_TYPE(type) do { \
 		XOJ_CHECK_TYPE(type) \
 		this->z__xoj_type = -(__XOJ_TYPE_ ## type); \
@@ -122,7 +121,7 @@ const char* xoj_type_getName(int id);
 
 #include "XournalTypeList.h"
 
-#else
+#else //DEV_MEMORY_CHECKING
 
 #define XOJ_DECLARE_TYPE(name, id)
 #define XOJ_TYPE_ATTRIB
@@ -131,4 +130,4 @@ const char* xoj_type_getName(int id);
 #define XOJ_CHECK_TYPE_OBJ(obj, name)
 #define XOJ_CHECK_TYPE(name)
 
-#endif
+#endif //DEV_MEMORY_CHECKING

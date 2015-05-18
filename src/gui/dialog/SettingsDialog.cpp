@@ -11,14 +11,13 @@
 #include <string.h>
 
 SettingsDialog::SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* settings) :
-	GladeGui(gladeSearchPath, "settings.glade", "settingsDialog")
+		GladeGui(gladeSearchPath, "settings.glade", "settingsDialog")
 {
 	XOJ_INIT_TYPE(SettingsDialog);
 
 	this->settings = settings;
 	this->dpi = 72;
 	callib = zoomcallib_new();
-	this->buttonConfigs = NULL;
 
 	GtkWidget* vbox = get("zoomVBox");
 	g_return_if_fail(vbox != NULL);
@@ -41,11 +40,10 @@ SettingsDialog::~SettingsDialog()
 {
 	XOJ_CHECK_TYPE(SettingsDialog);
 
-	for (GList* l = this->buttonConfigs; l != NULL; l = l->next)
+	for (ButtonConfigGui* bcg : this->buttonConfigs)
 	{
-		delete (ButtonConfigGui*) l->data;
+		delete bcg;
 	}
-	g_list_free(this->buttonConfigs);
 
 	// DO NOT delete settings!
 	this->settings = NULL;
@@ -67,8 +65,7 @@ void SettingsDialog::initMouseButtonEvents(const char* hbox, int button, bool wi
 {
 	XOJ_CHECK_TYPE(SettingsDialog);
 
-	this->buttonConfigs = g_list_append(this->buttonConfigs, new ButtonConfigGui(this, get(hbox),settings,
-																				 button, withDevice));
+	this->buttonConfigs.push_back(new ButtonConfigGui(this, get(hbox),settings, button, withDevice));
 }
 
 void SettingsDialog::initMouseButtonEvents()
@@ -364,8 +361,8 @@ void SettingsDialog::save()
 
 	settings->setDisplayDpi(dpi);
 
-	for (GList* l = this->buttonConfigs; l != NULL; l = l->next)
+	for (ButtonConfigGui* bcg : this->buttonConfigs)
 	{
-		((ButtonConfigGui*) l->data)->saveSettings();
+		bcg->saveSettings();
 	}
 }

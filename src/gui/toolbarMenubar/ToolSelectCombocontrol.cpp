@@ -1,7 +1,7 @@
 #include "ToolSelectCombocontrol.h"
 
-#include "gui/widgets/gtkmenutooltogglebutton.h"
 #include "ToolMenuHandler.h"
+#include "gui/widgets/gtkmenutooltogglebutton.h"
 
 #include <config.h>
 

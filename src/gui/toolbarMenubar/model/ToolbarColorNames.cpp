@@ -1,15 +1,15 @@
 #include "ToolbarColorNames.h"
 
+#include <StringUtils.h>
 #include <config.h>
 
 #include <glib/gi18n-lib.h>
-#include <boost/format.hpp>
 
 #include <stdio.h>
 #include <fstream>
-
 #include <iostream>
-using namespace std;
+using std::cout;
+using std::endl;
 
 ToolbarColorNames::ToolbarColorNames()
 {
@@ -91,7 +91,7 @@ void ToolbarColorNames::addColor(int color, string name, bool predefined)
 	}
 	else
 	{
-		const gchar* colorHex = (boost::format("%06x") % color).str().c_str();
+		const gchar* colorHex = StringUtils::format("%06x", color).c_str();
 		g_key_file_set_string(this->config, "custom", colorHex, name.c_str());
 	}
 }

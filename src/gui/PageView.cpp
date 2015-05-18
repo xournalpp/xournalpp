@@ -1,6 +1,10 @@
 #include "PageView.h"
 
-#include "cfg.h"
+#include "Cursor.h"
+#include "RepaintHandler.h"
+#include "TextEditor.h"
+#include "XournalView.h"
+
 #include "control/Control.h"
 #include "control/SearchControl.h"
 #include "control/settings/ButtonConfig.h"
@@ -11,23 +15,20 @@
 #include "control/tools/InputHandler.h"
 #include "control/tools/Selection.h"
 #include "control/tools/VerticalToolHandler.h"
-#include "Cursor.h"
 #include "model/Image.h"
 #include "model/Layer.h"
 #include "model/PageRef.h"
 #include "model/Stroke.h"
 #include "model/Text.h"
-#include "RepaintHandler.h"
-#include "TextEditor.h"
 #include "undo/DeleteUndoAction.h"
 #include "undo/InsertUndoAction.h"
 #include "undo/TextBoxUndoAction.h"
 //#include "undo/TextUndoAction.h"	//for the save file undo
 #include "view/TextView.h"
 #include "widgets/XournalWidget.h"
-#include "XournalView.h"
 
 #include <config.h>
+#include <config-debug.h>
 #include <pixbuf-utils.h>
 #include <Range.h>
 #include <Rectangle.h>
@@ -874,7 +875,7 @@ bool PageView::paintPage(cairo_t* cr, GdkRectangle* rect)
 		cairo_rectangle(cr, rect->x, rect->y, rect->width, rect->height);
 		cairo_fill(cr);
 
-#ifdef SHOW_PAINT_BOUNDS
+#ifdef DEBUG_SHOW_PAINT_BOUNDS
 		cairo_set_source_rgb(cr, 1.0, 0.5, 1.0);
 		cairo_set_line_width(cr, 1. / zoom);
 		cairo_rectangle(cr, rect->x, rect->y, rect->width, rect->height);

@@ -12,11 +12,13 @@
 #pragma once
 
 #include "gui/GladeGui.h"
-
 #include <XournalType.h>
+
+#include <vector>
 
 class BackgroundImage;
 class Document;
+class ImageView;
 class Settings;
 class BackgroundImage;
 
@@ -57,7 +59,7 @@ private:
 
 	int selectedPage;
 
-	GList* images;
+	std::vector<ImageView*> images;
 
 	GtkWidget* scrollPreview;
 	GtkWidget* widget;

@@ -14,6 +14,7 @@
 #include <XournalType.h>
 
 #include <gtk/gtk.h>
+#include <list>
 
 enum ActionType
 {
@@ -242,7 +243,6 @@ public:
 private:
 	XOJ_TYPE_ATTRIB;
 
-
-	GList* enabledListener;
-	GList* selectionListener;
+	std::list<ActionEnabledListener*> enabledListener;
+	std::list<ActionSelectionListener*> selectionListener;
 };

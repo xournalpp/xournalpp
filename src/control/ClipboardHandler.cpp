@@ -30,8 +30,7 @@ ClipboardHandler::ClipboardHandler(ClipboardListener* listener, GtkWidget* widge
 
 	if (gdk_display_supports_selection_notification(display))
 	{
-		gtk_clipboard_request_contents(clipboard,
-									   gdk_atom_intern_static_string("TARGETS"),
+		gtk_clipboard_request_contents(clipboard, gdk_atom_intern_static_string("TARGETS"),
 									   (GtkClipboardReceivedFunc) receivedClipboardContents, this);
 	}
 	else
@@ -180,7 +179,7 @@ bool ClipboardHandler::copy()
 
 	ObjectOutputStream out(new BinObjectEncoding());
 
-	out.writeString(PACKAGE_STRING);
+	out.writeString(PROJECT_STRING);
 
 	out << this->selection;
 

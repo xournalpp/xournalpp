@@ -9,9 +9,9 @@
 poppler_version="0.24.1"
 scriptname=`basename $0`
 
-abs_top_srcdir="@abs_top_srcdir@"
-abs_top_builddir="@abs_top_builddir@"
-enable_libopenjpeg="@enable_libopenjpeg@"
+abs_top_srcdir="@PROJECT_SOURCE_DIR@"
+abs_top_builddir="@PROJECT_SOURCE_DIR@"
+enable_libopenjpeg="@ENABLE_LIBOPENJPEG_AC@"
 
 poppler_srcdir="${abs_top_srcdir}/src/pdf/popplerdirect/poppler-${poppler_version}"
 poppler_dir="${abs_top_builddir}/src/pdf/popplerdirect"
@@ -56,7 +56,8 @@ build()
 
   cd "${poppler_builddir}"
 
-  "${poppler_srcdir}/configure" --enable-cms --enable-libopenjpeg="${enable_libopenjpeg}" --enable-libjpeg
+  "${poppler_srcdir}/configure" --enable-cms --enable-libopenjpeg="${enable_libopenjpeg}" --enable-libjpeg \
+                                --disable-poppler-qt4 --disable-poppler-qt5
 
   make
 

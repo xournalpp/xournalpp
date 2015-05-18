@@ -3,22 +3,21 @@
  *
  * String utilities
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author MarPiRK
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
 #pragma once
 
 #include "XournalType.h"
 
-#include <glib.h>
-
-#include <boost/locale/format.hpp>
-namespace bl = boost::locale;
 #include <boost/algorithm/string.hpp>
 namespace ba = boost::algorithm;
+#include <boost/format.hpp>
+#include <boost/locale/format.hpp>
+namespace bl = boost::locale;
 
 #include <string>
 using std::string;
@@ -31,11 +30,61 @@ typedef std::pair<char, string> replace_pair;
 
 class StringUtils
 {
-public:
-	static string format(const char* format, ...);
-
 private:
-
+	static bl::format* slformat(bl::format* format)
+	{
+		return format;
+	};
+	
+	template<typename Formattible, typename... Args>
+	static bl::format* slformat(bl::format* format, const Formattible& object, Args... objects)
+	{
+		return slformat(&(*format % object), objects...);
+	}
+	
+public:
+	/**
+	 * The same as bl::format(format) % obj1 % obj2 % ...
+	 * 
+     * @param format Format string
+     * @param objects list of objects, which format format format string
+     * @return string representation of bl::format
+     */
+	template<typename... Args>
+	static string lformat(string format, Args... objects)
+	{
+		bl::format f(format);
+		return slformat(&f, objects...)->str();
+	}
+	
+private:
+	static boost::format* sformat(boost::format* format)
+	{
+		return format;
+	};
+	
+	template<typename Formattible, typename... Args>
+	static boost::format* sformat(boost::format* format, const Formattible& object, Args... objects)
+	{
+		return sformat(&(*format % object), objects...);
+	}
+	
+public:
+	/**
+	 * The same as boost::format(format) % obj1 % obj2 % ...
+	 * 
+     * @param format Format string
+     * @param objects list of objects, which format format format string
+     * @return string representation of boost::format
+     */
+	template<typename... Args>
+	static string format(string format, Args... objects)
+	{
+		boost::format f(format);
+		return sformat(&f, objects...)->str();
+	}
+	
+private:
 	static void addToString(string& str) { };
 
 	template<typename T, typename... Args>
@@ -44,8 +93,8 @@ private:
 		str += a_value;
 		addToString(str, a_args...);
 	}
+	
 public:
-
 	template<typename... Args>
 	static string concat(Args... a_args)
 	{

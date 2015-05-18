@@ -1,15 +1,16 @@
 #include "ToolbarCustomizeDialog.h"
 
 #include "CustomizeableColorList.h"
+#include "ToolbarDragDropHandler.h"
+#include "ToolbarDragDropHelper.h"
+#include "ToolItemDragCurrentData.h"
+
 #include "gui/MainWindow.h"
 #include "gui/toolbarMenubar/AbstractToolItem.h"
 #include "gui/toolbarMenubar/model/ToolbarData.h"
 #include "gui/toolbarMenubar/model/ToolbarModel.h"
 #include "gui/toolbarMenubar/ToolMenuHandler.h"
 #include "gui/widgets/SelectColor.h"
-#include "ToolbarDragDropHandler.h"
-#include "ToolbarDragDropHelper.h"
-#include "ToolItemDragCurrentData.h"
 
 #include <config.h>
 #include <Util.h>
@@ -28,13 +29,12 @@ struct _ToolItemDragData
 
 ToolbarCustomizeDialog::ToolbarCustomizeDialog(GladeSearchpath* gladeSearchPath, MainWindow* win,
 											   ToolbarDragDropHandler* handler) :
-GladeGui(gladeSearchPath, "toolbarCustomizeDialog.glade", "DialogCustomizeToolbar")
+		GladeGui(gladeSearchPath, "toolbarCustomizeDialog.glade", "DialogCustomizeToolbar")
 {
 	XOJ_INIT_TYPE(ToolbarCustomizeDialog);
 
 	this->win = win;
 	this->handler = handler;
-	this->itemDatalist = NULL;
 	this->colorList = new CustomizeableColorList();
 
 	rebuildIconview();
@@ -88,15 +88,12 @@ ToolbarCustomizeDialog::~ToolbarCustomizeDialog()
 
 	// We can only delete this list at the end, it would be better to delete this list
 	// after a refresh and after drag_end is called...
-	for (GList * l = this->itemDatalist; l != NULL; l = l->next)
+	for (ToolItemDragData* data : this->itemDatalist)
 	{
-		ToolItemDragData * data = (ToolItemDragData *) l->data;
 		g_object_unref(data->icon);
 		g_free(data);
 	}
 
-	g_list_free(this->itemDatalist);
-	this->itemDatalist = NULL;
 	delete this->colorList;
 	this->colorList = NULL;
 
@@ -325,7 +322,7 @@ void ToolbarCustomizeDialog::rebuildIconview()
 		data->item = item;
 		data->ebox = ebox;
 
-		this->itemDatalist = g_list_prepend(this->itemDatalist, data);
+		this->itemDatalist.push_front(data);
 
 		g_signal_connect(ebox, "drag-begin", G_CALLBACK(toolitemDragBegin), data);
 		g_signal_connect(ebox, "drag-end", G_CALLBACK(toolitemDragEnd), data);

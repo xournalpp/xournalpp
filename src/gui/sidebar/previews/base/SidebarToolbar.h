@@ -12,7 +12,6 @@
 #pragma once
 
 #include "model/PageRef.h"
-
 #include <XournalType.h>
 
 #include <gtk/gtk.h>

@@ -12,10 +12,11 @@
 #pragma once
 
 #include "LayoutData.h"
+#include "Redrawable.h"
+
 #include "model/PageListener.h"
 #include "model/PageRef.h"
 #include "model/TexImage.h"
-#include "Redrawable.h"
 
 #include <Range.h>
 

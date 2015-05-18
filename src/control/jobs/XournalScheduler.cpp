@@ -1,4 +1,5 @@
 #include "XournalScheduler.h"
+
 #include "PreviewJob.h"
 #include "RenderJob.h"
 

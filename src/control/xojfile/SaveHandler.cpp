@@ -12,6 +12,11 @@
 #include "SaveHandler.h"
 
 #include "control/jobs/ProgressListener.h"
+#include "control/xml/XmlNode.h"
+#include "control/xml/XmlTextNode.h"
+#include "control/xml/XmlImageNode.h"
+#include "control/xml/XmlTexNode.h"
+#include "control/xml/XmlPointNode.h"
 #include "model/Stroke.h"
 #include "model/Text.h"
 #include "model/Image.h"
@@ -19,11 +24,6 @@
 #include "model/Document.h"
 #include "model/Layer.h"
 #include "model/BackgroundImage.h"
-#include "control/xml/XmlNode.h"
-#include "control/xml/XmlTextNode.h"
-#include "control/xml/XmlImageNode.h"
-#include "control/xml/XmlTexNode.h"
-#include "control/xml/XmlPointNode.h"
 
 #include <config.h>
 
@@ -31,7 +31,8 @@
 
 #include <clocale>
 #include <iostream>
-using namespace std;
+using std::cout;
+using std::endl;
 
 SaveHandler::SaveHandler()
 {
@@ -81,10 +82,10 @@ void SaveHandler::prepareSave(Document* doc)
 	this->attachBgId = 1;
 
 	this->root = new XmlNode("xournal");
-	this->root->setAttrib("creator", "Xournal++ " VERSION);
+	this->root->setAttrib("creator", PROJECT_STRING);
 	this->root->setAttrib("fileversion", "2");
 
-	this->root->addChild(new XmlTextNode("title", "Xournal document - see http://xournal.sourceforge.net/"));
+	this->root->addChild(new XmlTextNode("title", "Xournal document - see " PROJECT_URL));
 	cairo_surface_t* preview = doc->getPreview();
 	if (preview)
 	{

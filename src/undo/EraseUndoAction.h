@@ -12,7 +12,6 @@
 #pragma once
 
 #include "UndoAction.h"
-
 #include <XournalType.h>
 
 class Layer;
@@ -36,6 +35,7 @@ public:
 	void finalize();
 
 	virtual string getText();
+	
 private:
 	XOJ_TYPE_ATTRIB;
 

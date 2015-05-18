@@ -12,8 +12,9 @@
 
 #pragma once
 
-#include "control/Tool.h"
 #include "CursorSelectionType.h"
+
+#include "control/Tool.h"
 #include "model/Font.h"
 #include "model/PageRef.h"
 #include "view/ElementContainer.h"

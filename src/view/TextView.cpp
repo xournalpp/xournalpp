@@ -3,7 +3,8 @@
 #include "control/settings/Settings.h"
 #include "model/Text.h"
 #include "pdf/popplerdirect/poppler/XojPopplerPage.h"
-#include "Util.h"
+
+#include <Util.h>
 
 #include <boost/locale.hpp>
 

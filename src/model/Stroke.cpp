@@ -8,7 +8,8 @@
 #include <math.h>
 #include <string.h>
 #include <iostream>
-using namespace std;
+using std::cout;
+using std::endl;
 
 Stroke::Stroke() : Element(ELEMENT_STROKE)
 {

@@ -16,8 +16,9 @@
 
 #include <boost/filesystem/path.hpp>
 using boost::filesystem::path;
-
 #include <gtk/gtk.h>
+
+#include <vector>
 
 class RecentManagerListener
 {
@@ -130,7 +131,7 @@ private:
 	int maxRecent;
 	int recentHandlerId;
 
-	GList* listener;
+	std::vector<RecentManagerListener*> listener;
 
 	GtkWidget* menu;
 	std::vector<GtkWidget*> menuItemList;

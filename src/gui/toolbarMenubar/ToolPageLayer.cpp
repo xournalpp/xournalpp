@@ -1,13 +1,12 @@
 #include "ToolPageLayer.h"
 
 #include "gui/GladeGui.h"
-
 #include <config.h>
 
 #include <glib/gi18n-lib.h>
 
-ToolPageLayer::ToolPageLayer(GladeGui* gui, ActionHandler* handler, string id,
-							 ActionType type) : AbstractToolItem(id, handler, type, NULL)
+ToolPageLayer::ToolPageLayer(GladeGui* gui, ActionHandler* handler, string id, ActionType type) :
+		AbstractToolItem(id, handler, type, NULL)
 {
 	XOJ_INIT_TYPE(ToolPageLayer);
 

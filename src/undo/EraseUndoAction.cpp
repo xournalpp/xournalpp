@@ -1,10 +1,11 @@
 #include "EraseUndoAction.h"
 
+#include "PageLayerPosEntry.h"
+
 #include "gui/Redrawable.h"
 #include "model/eraser/EraseableStroke.h"
 #include "model/Layer.h"
 #include "model/Stroke.h"
-#include "PageLayerPosEntry.h"
 
 EraseUndoAction::EraseUndoAction(PageRef page) : UndoAction("EraseUndoAction")
 {

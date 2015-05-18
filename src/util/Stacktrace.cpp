@@ -1,6 +1,8 @@
 #include "Stacktrace.h"
 
 #include <execinfo.h>
+#include <iostream>
+using std::endl;
 
 /**
  * This code uses addr2line
@@ -19,9 +21,7 @@ void Stacktrace::setExename(string name)
 	exeName = name;
 }
 
-using namespace std;
-
-void Stacktrace::printStracktrace(ostream& stream)
+void Stacktrace::printStracktrace(std::ostream& stream)
 {
 	void* trace[32];
 	char** messages = (char**) NULL;

@@ -6,7 +6,6 @@ ZoomControl::ZoomControl()
 {
 	XOJ_INIT_TYPE(ZoomControl);
 
-	this->listener = NULL;
 	this->zoom = 1.0;
 	this->lastZoomValue = 1.0;
 	this->zoom100Value = 1.0;
@@ -18,9 +17,6 @@ ZoomControl::~ZoomControl()
 {
 	XOJ_CHECK_TYPE(ZoomControl);
 
-	g_list_free(this->listener);
-	this->listener = NULL;
-
 	XOJ_RELEASE_TYPE(ZoomControl);
 }
 
@@ -28,7 +24,7 @@ void ZoomControl::addZoomListener(ZoomListener* listener)
 {
 	XOJ_CHECK_TYPE(ZoomControl);
 
-	this->listener = g_list_append(this->listener, listener);
+	this->listener.push_back(listener);
 }
 
 void ZoomControl::initZoomHandler(GtkWidget* widget)
@@ -52,9 +48,8 @@ void ZoomControl::fireZoomChanged(double lastZoom)
 		this->zoom = 5;
 	}
 
-	for (GList* l = this->listener; l != NULL; l = l->next)
+	for (ZoomListener* z : this->listener)
 	{
-		ZoomListener* z = (ZoomListener*) l->data;
 		z->zoomChanged(lastZoom);
 	}
 }
@@ -63,9 +58,8 @@ void ZoomControl::fireZoomRangeValueChanged()
 {
 	XOJ_CHECK_TYPE(ZoomControl);
 
-	for (GList* l = this->listener; l != NULL; l = l->next)
+	for (ZoomListener* z : this->listener)
 	{
-		ZoomListener* z = (ZoomListener*) l->data;
 		z->zoomRangeValuesChanged();
 	}
 }

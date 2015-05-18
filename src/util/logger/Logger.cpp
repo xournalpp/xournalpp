@@ -1,8 +1,9 @@
 #include "Logger.h"
 
+#include <config-dev.h>
 #include <XournalType.h>
 
-#ifdef XOJ_CALL_LOG_ENABLED
+#ifdef DEV_CALL_LOG
 
 #include <fstream>
 #include <sstream>
@@ -71,4 +72,4 @@ void Log::closelog()
 	logfile.close();
 }
 
-#endif // XOJ_CALL_LOG_ENABLED
+#endif // DEV_CALL_LOG

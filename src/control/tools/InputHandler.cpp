@@ -1,16 +1,17 @@
 #include "InputHandler.h"
 
+#include "Rectangle.h"
+#include "XInputUtils.h"
+
 #include "control/Control.h"
 #include "control/shaperecognizer/ShapeRecognizerResult.h"
 #include "gui/PageView.h"
 #include "gui/widgets/XournalWidget.h"
 #include "gui/XournalView.h"
 #include "model/Layer.h"
-#include "Rectangle.h"
 #include "undo/InsertUndoAction.h"
 #include "undo/RecognizerUndoAction.h"
 #include "view/DocumentView.h"
-#include "XInputUtils.h"
 
 #include <math.h>
 

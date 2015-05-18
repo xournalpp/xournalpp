@@ -1,15 +1,17 @@
 #include "Util.h"
 
-#include "cfg.h"
 #include <config.h>
+#include <config-dev.h>
 
 #include <glib/gi18n-lib.h>
 #include <boost/filesystem.hpp>
-#include <iostream>
-using namespace std;
 
 #include <sys/types.h>
 #include <unistd.h>
+
+#include <iostream>
+using std::cout;
+using std::endl;
 
 GdkColor Util::intToGdkColor(int c)
 {

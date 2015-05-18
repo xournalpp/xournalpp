@@ -2,11 +2,13 @@
 
 #include "CircleRecognizer.h"
 #include "Inertia.h"
-#include "model/Stroke.h"
 #include "ShapeRecognizerResult.h"
 
-#include <boost/format.hpp>
+#include "model/Stroke.h"
 
+#include <config-debug.h>
+
+#include <boost/format.hpp>
 #include <math.h>
 #include <string.h>
 
@@ -563,13 +565,13 @@ ShapeRecognizerResult* ShapeRecognizer::recognizePatterns(Stroke* stroke)
 	if (n > 0)
 	{
 		optimizePolygonal(stroke->getPoints(), n, brk, ss);
-#ifdef RECOGNIZER_DEBUG
+#ifdef DEBUG_RECOGNIZER
 		cout << endl << boost::format("ShapeReco:: Polygon, %d edges:") % n << endl;
 		for (int i = 0; i < n; i++)
 		{
 			cout << boost::format("ShapeReco::      %d-%d (M=%.0f, det=%.4f)")
 					% brk[i] % brk[i + 1] % ss[i].getMass() % ss[i].det()
-					<< endl;
+				 << endl;
 		}
 		cout << endl;
 #endif

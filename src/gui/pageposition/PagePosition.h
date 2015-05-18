@@ -13,7 +13,7 @@
 
 #include <XournalType.h>
 
-#include <glib.h>
+#include <vector>
 
 class PageView;
 
@@ -68,7 +68,7 @@ private:
 	int y2;
 
 	// a list of PageViews 
-	GList* views;
+	std::vector<PageView*> views;
 
 	friend class PagePositionHandler;
 };

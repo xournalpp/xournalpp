@@ -1,9 +1,10 @@
 #include "ExportJob.h"
 
-#include "control/Control.h"
 #include "ExportFormtType.h"
-#include "pdf/popplerdirect/PdfExport.h"
 #include "SynchronizedProgressListener.h"
+
+#include "control/Control.h"
+#include "pdf/popplerdirect/PdfExport.h"
 #include "view/DocumentView.h"
 #include "view/PdfView.h"
 
@@ -11,11 +12,10 @@
 
 #include <cairo-ps.h>
 #include <cairo-svg.h>
-
 #include <glib/gi18n-lib.h>
 
 ExportJob::ExportJob(Control* control, PageRangeVector selected, ExportFormtType type, int dpi, path filepath) :
-	BlockingJob(control, _("Export"))
+		BlockingJob(control, _("Export"))
 {
 	XOJ_INIT_TYPE(ExportJob);
 

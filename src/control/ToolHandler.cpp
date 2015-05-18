@@ -1,10 +1,8 @@
 #include "Actions.h"
 #include "ToolHandler.h"
-
 #include <Util.h>
 
 #include <gtk/gtk.h>
-
 #include <stdio.h>
 
 ToolHandler::ToolHandler(ToolListener* listener, ActionHandler* actionHandler, Settings* settings)

@@ -1,9 +1,10 @@
 #include "SearchBar.h"
-#include "control/Control.h"
-#include <string.h>
 
+#include "control/Control.h"
 #include <config.h>
+
 #include <glib/gi18n-lib.h>
+#include <string.h>
 
 SearchBar::SearchBar(Control* control)
 {

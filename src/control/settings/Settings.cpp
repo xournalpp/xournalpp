@@ -4,12 +4,11 @@
 
 #include <config.h>
 
-#include <stdlib.h>
-#include <string.h>
-
+#include <boost/filesystem.hpp>
 #include <glib/gi18n-lib.h>
 
-#include <boost/filesystem.hpp>
+#include <stdlib.h>
+#include <string.h>
 
 #define DEFAULT_FONT "Sans"
 #define DEFAULT_FONT_SIZE 12

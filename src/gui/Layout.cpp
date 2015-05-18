@@ -1,10 +1,11 @@
 #include "Layout.h"
 
+#include "XournalView.h"
+
 #include "control/Control.h"
 #include "pageposition/PagePositionHandler.h"
 #include "widgets/Scrollbar.h"
 #include "widgets/XournalWidget.h"
-#include "XournalView.h"
 
 Layout::Layout(XournalView* view)
 {

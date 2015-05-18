@@ -12,7 +12,6 @@
 #pragma once
 
 #include "ProgressListener.h"
-
 #include <XournalType.h>
 
 class SynchronizedProgressListener : public ProgressListener

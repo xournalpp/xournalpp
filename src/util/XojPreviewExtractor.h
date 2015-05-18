@@ -13,13 +13,18 @@
 #pragma once
 
 #include <string>
-#include <glib.h>
+using std::string;
 
 enum PreviewExtractResult {
 	/**
 	 * Successfully read an image from file
 	 */
 	PREVIEW_RESULT_IMAGE_READ = 0,
+	
+	/**
+	 * File extension is wrong
+	 */
+	PREVIEW_RESULT_BAD_FILE_EXTENSION,
 
 	/**
 	 * The file could not be openend / found
@@ -40,34 +45,18 @@ enum PreviewExtractResult {
 class XojPreviewExtractor
 {
 public:
-	/**
-	 * Constructor
-	 */
-	XojPreviewExtractor();
-
-	/**
-	 * Destructor, frees allocated image buffer, if any
-	 */
-	virtual ~XojPreviewExtractor();
-
-public:
 
 	/**
 	 * Try to read the preview from file
 	 * @param file .xoj File
 	 * @return If an image was read, or the error
 	 */
-	PreviewExtractResult readFile(std::string file);
+	PreviewExtractResult readFile(string file);
 
 	/**
 	 * @return The preview data, should be a binary PNG
 	 */
-	const unsigned char* getData() const;
-
-	/**
-	 * @return Length of the data array
-	 */
-	gsize getDataLength() const;
+	string getData() const;
 
 	// Member
 private:
@@ -75,10 +64,5 @@ private:
 	/**
 	 * Preview data
 	 */
-	unsigned char* data;
-
-	/**
-	 * Size of the data array
-	 */
-	gsize dataLength;
+	string data;
 };
