@@ -1,6 +1,10 @@
 XOURNAL++
 =====================
 
+If you would like to contribute in Xournal++ developement you can join our Slack group:
+
+[![Join us](https://xournalpp.herokuapp.com/badge.svg)](https://xournalpp.herokuapp.com/)
+
 Description
 ---------------------
 
@@ -82,10 +86,8 @@ size is large, the final executable is still very reasonably sized, and it is
 much more portable in this way.
 
 See [Github:xournalpp](http://github.com/xournalpp/xournalpp) for current
-development.
+development (you can invite yourself to this group following link on top of this
+page).
 
 See our [Trello page](https://trello.com/xournalpp) for current roadmap and future
 developement ideas.
-
-If you feel like joining development please contact @MarPiRK, so you'll be added
-to our Slack group.
