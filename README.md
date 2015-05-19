@@ -5,6 +5,15 @@ If you would like to contribute in Xournal++ developement you can join our Slack
 
 [![Join us](https://xournalpp.herokuapp.com/badge.svg)](https://xournalpp.herokuapp.com/)
 
+If you prefer not to register on Slack, you can always use our public IRC channel (which btw
+is integrated with Slack):
+
+**Server:** irc.geekshed.net:6667
+
+**Channel:** #xournalpp
+
+Online IRC client: http://www.geekshed.net/chat/
+
 Description
 ---------------------
 
