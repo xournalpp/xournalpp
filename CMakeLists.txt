@@ -1,4 +1,4 @@
-cmake_minimum_required (VERSION 2.6)
+cmake_minimum_required (VERSION 3.1)
 
 project ("Xournal++" LANGUAGES CXX C)
 set (PROJECT_VERSION "1.0.1")
