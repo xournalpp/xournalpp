@@ -11,7 +11,7 @@
 
 #pragma once
 
-#include <config.h>
+#include <config-features.h>
 #include <XournalType.h>
 
 #ifdef ENABLE_OS

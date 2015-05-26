@@ -120,14 +120,14 @@ set (PACKAGE_DATA_DIR "${CMAKE_INSTALL_PREFIX}/share")
 # CppUnit
 option (ENABLE_CPPUNIT "Build CppUnit test instead of xournalpp application" OFF)
 if (ENABLE_CPPUNIT)
-  pkg_check_modules (CppUnit REQUIRED "cppunit >= 1.13-0")
+  pkg_check_modules (CppUnit REQUIRED "cppunit >= 1.12-0")
 endif (ENABLE_CPPUNIT)
 
 # Overlay scrollbar
 option (ENABLE_OS "Overlay Scrollbar support" OFF)
 if (ENABLE_OS)
-  pkg_check_modules (os REQUIRED "overlay-scrollbar-0.1 >= 0.1.12")
-  add_includes_ldflags ("${os_LDFLAGS}" "${${_INCLUDE_DIRS}")
+  pkg_check_modules (OS REQUIRED "overlay-scrollbar-0.2")
+  add_includes_ldflags ("${OS_LDFLAGS}" "${OS_INCLUDE_DIRS}")
 endif (ENABLE_OS)
 
 # Mathtex
