@@ -344,7 +344,7 @@ void ImagesDialog::updateOkButton()
 {
 	XOJ_CHECK_TYPE(ImagesDialog);
 
-	ImageView* p = this->images[this->selected];
+	ImageView* p = (this->images.size() > this->selected ? this->images[this->selected] : NULL);
 	gtk_widget_set_sensitive(get("buttonOk"), p && gtk_widget_get_visible(p->getWidget()));
 }
 
@@ -374,12 +374,14 @@ BackgroundImage ImagesDialog::getSelectedImage()
 {
 	XOJ_CHECK_TYPE(ImagesDialog);
 
-	ImageView* p = this->images[this->selectedPage];
-	if (p == NULL)
+	if (this->images.size() > this->selected)
+	{
+		return this->images[this->selected]->backgroundImage;
+	}
+	else
 	{
 		return BackgroundImage();
 	}
-	return p->backgroundImage;
 }
 
 void ImagesDialog::sizeAllocate(GtkWidget* widget, GtkRequisition* requisition, ImagesDialog* dlg)
