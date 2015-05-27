@@ -121,6 +121,7 @@ set (PACKAGE_DATA_DIR "${CMAKE_INSTALL_PREFIX}/share")
 option (ENABLE_CPPUNIT "Build CppUnit test instead of xournalpp application" OFF)
 if (ENABLE_CPPUNIT)
   pkg_check_modules (CppUnit REQUIRED "cppunit >= 1.12-0")
+  enable_testing ()
 endif (ENABLE_CPPUNIT)
 
 # Overlay scrollbar

@@ -40,3 +40,6 @@ target_link_libraries (xournalpp-test
   ${xournalpp_LDFLAGS}
   ${CppUnit_LDFLAGS}
 )
+
+## CTest ##
+add_test (cpp-unit xournalpp-test)
