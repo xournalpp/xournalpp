@@ -1,12 +1,10 @@
-XOURNAL++
-=====================
+# Xournal++
 
 If you would like to contribute in Xournal++ developement you can join our Slack group:
 
 [![Join us](https://xournalpp.herokuapp.com/badge.svg)](https://xournalpp.herokuapp.com/)
 
-If you prefer not to register on Slack, you can always use our public IRC channel (which btw
-is integrated with Slack):
+If you prefer not to register on Slack, you can always use our public IRC channel (which btw is integrated with Slack):
 
 **Server:** irc.geekshed.net:6667
 
@@ -14,89 +12,67 @@ is integrated with Slack):
 
 Online IRC client: http://www.geekshed.net/chat/
 
-Description
----------------------
 
-Xournal++ is not Xournal! 
-It is a ground-up rewrite of Xournal in a different language (C++ instead of C).
-The purpose was to create a more flexible application that significantly extends
-the functionality of Xournal.
+## Description
 
-At the moment, Xournal is very stable software while Xournal++ is not.
-If you want stability, you might be more interested in the original Xournal
-project, which you can find at
-[sourceforge](http://sourceforge.net/projects/xournal/)
-or, for some in-development features of Xournal, at
-[github.com/dmgerman/xournal](https://github.com/dmgerman/xournal).
+Xournal++ is not Xournal! It is a ground-up rewrite of Xournal in a different language (C++ instead of C). The purpose
+was to create a more flexible application that significantly extends the functionality of Xournal.
+
+At the moment, Xournal is very stable software while Xournal++ is not. If you want stability, you might be more
+interested in the original Xournal project, which you can find at [sourceforge](http://sourceforge.net/projects/xournal/)
+or, for some in-development features of Xournal, at [github.com/dmgerman/xournal](https://github.com/dmgerman/xournal).
 
 New features in Xournal++ include:
 
 * enhanced support for image insertion
-* a better eraser
+* better eraser
 * significantly reduced memory usage and code to detect memory leaks
-* LaTeX support (requires a working LaTeX install and ```--enable-mathtex``` flag when configuring)
+* LaTeX support (requires a working LaTeX install and ```-DENABLE_MATHTEX=ON``` flag when configuring)
 * advanced page sorting (a sidebar, page up/down, etc.)
 * bug reporting, autosave, and auto backup tools
 
 Hopefully you'll enjoy it!
 
-Building
----------------------
 
-At the moment compiling Xournal++ from source is tricky business.
-You should therefore first visit the wiki in order to see if there is a known
-working guide for your system:
-[Xournal++ Wiki](https://github.com/xournalpp/xournalpp/wiki/).
-There will be some binaries appearing in the near future, so ideally you can
-make use of those as well.
+## Building
+
+Currently it's pretty much the only way to install Xournal++. For complete building documentation refer to wiki page:
+[Instalation](https://github.com/xournalpp/xournalpp/wiki/Installing).
+
+There will be some binaries appearing in the future, so ideally you can make use of those as well.
 They'll be at [Xournal++ releases](https://github.com/xournalpp/xournalpp/releases).
 
-If at a loss, you can try to build with
-```bash
-libtoolize
-autoreconf
-./configure --enable-mathtex
+Basic steps are:
+````bash
+git clone http://github.com/xournalpp/xournalpp.git
+cd xournalpp
+mkdir build
+cd build
+cmake ..
 make
-```
-from the root directory (xournalpp/).
-If you have libpoppler > 0.16, you will want to statically compile
-against our own included libpoppler, which involves first checking
-out the addpoppler branch with Git: ```git checkout addpoppler```,
-followed by the above compilation.
+````
 
-The binary executable will be in the src/ subdirectory.
+If you'd like to enable mathtex support you should add `-DENABLE_MATHTEX=ON` to cmake command or use `cmake-gui ..`
+to see graphically all available options.
 
+The binary executable will be in `build/src/` subdirectory.
+
+To install all needed files execute:
 ```bash
 make install
 ```
-will then install it in your system path (along with, provided everything works,
-the mathtex-xournalpp executable for latex support).
 
-Often problems with this method arise, especially due to autotools.
-Some general strategies are to reconfigure autotools by running ```autoreconf```
-in the xournalpp/ directory, before a ```./configure && make```.
+If you want to install desktop file and thumbnailer execute:
+```bash
+make desktop-install
+```
 
 
-Development
----------------------
+## Development
 
-The buildsystem directory contains php and xml files that are used to 
-format the Makefiles used to build and compile this software. These needed to be
-updated accordingly. 
-I could not get the php buildsystem to work so the instructions above were what
-worked for me.
+For now branches aren't organized too well, but (currently) the most of development happens in `string_new`.
 
-By far the most hacked together part of development is the use of an internal
-libpoppler package to compile static libpoppler.a files, and build them into the
-final xournalpp executable. We had to do this because the libpoppler-dev install
-on many systems just didn't include the headers we were used to access the PDF
-api. Fortunately even though compile time is greatly increased, and source code
-size is large, the final executable is still very reasonably sized, and it is
-much more portable in this way.
+See [Github:xournalpp](http://github.com/xournalpp/xournalpp) for current development (you can invite yourself
+to this group following link on top of this page).
 
-See [Github:xournalpp](http://github.com/xournalpp/xournalpp) for current
-development (you can invite yourself to this group following link on top of this
-page).
-
-See our [Trello page](https://trello.com/xournalpp) for current roadmap and future
-developement ideas.
+See our [Trello page](https://trello.com/xournalpp) for current roadmap and future developement ideas.

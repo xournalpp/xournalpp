@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: xournalpp 1.0.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-05-06 02:18+0200\n"
-"PO-Revision-Date: 2015-05-29 13:29+0100\n"
+"PO-Revision-Date: 2015-06-01 12:34+0100\n"
 "Last-Translator: Marek Pikuła <marpirk@gmail.com>\n"
 "Language-Team: Xournal++ team\n"
 "Language: pl\n"
@@ -319,26 +319,26 @@ msgstr "Dołącz plik do dziennika"
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:141
 #, c-format
 msgid "Attribute \"%s\" could not be parsed as double, the value is \"%s\""
-msgstr ""
+msgstr "Atrybut \"%s\" nie jest typu double (wartość: \"%s\")"
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:133
 #, c-format
 msgid "Attribute \"%s\" could not be parsed as double, the value is NULL"
-msgstr ""
+msgstr "Atrybut \"%s\" nie jest typu double (wartość: NULL)"
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:161
 #, c-format
 msgid "Attribute \"%s\" could not be parsed as int, the value is \"%s\""
-msgstr ""
+msgstr "Atrybut \"%s\" nie jest typu int (wartość: \"%s\")"
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:153
 #, c-format
 msgid "Attribute \"%s\" could not be parsed as int, the value is NULL"
-msgstr ""
+msgstr "Atrybut \"%s\" nie jest typu double (wartość: NULL)"
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:71
 msgid "Attribute color not set!"
-msgstr ""
+msgstr "Atrybut koloru nie został ustawiony!"
 
 #: ../ui/settings.glade:503
 msgid "Autosave every ... minute:"
@@ -461,11 +461,11 @@ msgstr ""
 
 #: ../src/control/xojfile/SaveHandler.cpp:281
 msgid "Could not write background \"{1}\", {2}"
-msgstr ""
+msgstr "Nie można zapisać tła \"{1}\", {2}"
 
 #: ../src/control/xojfile/SaveHandler.cpp:377
 msgid "Could not write background \"{1}\". Continuing anyway."
-msgstr ""
+msgstr "Nie można zapisać tła \"{1}\". Kontynuuję mimo to."
 
 #: ../ui/export.glade:90
 msgid "Current page"
@@ -525,7 +525,7 @@ msgstr "Wyłącz linijkę i rozpoznawanie kształtów"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:62
 msgid "Disable drawing for this device"
-msgstr ""
+msgstr "Wyłącz rysowanie przy użyciu tego urządzenia"
 
 #: ../src/control/Control.cpp:2847 ../src/control/Control.cpp:2884
 msgid "Discard"
@@ -725,7 +725,7 @@ msgstr ""
 #: ../src/gui/dialog/ButtonConfigGui.cpp:88
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:432
 msgid "Hand"
-msgstr ""
+msgstr "Przesuń"
 
 #: ../ui/pagesize.glade:118
 msgid "Height:"
@@ -1183,6 +1183,8 @@ msgstr "Wybierz obszar"
 #: ../ui/settings.glade:1968
 msgid "Select the tool and Settings if you press the Default Button"
 msgstr ""
+"Po naciśnięciu przycisku Domyślne wybierane jest domyślne narzędzie i "
+"ustawienia."
 
 #: ../ui/settings.glade:1782
 msgid "Select toolbar:"
@@ -1405,41 +1407,41 @@ msgstr "Cofnij:"
 #: ../src/control/xojfile/LoadHandler.cpp:221
 #, c-format
 msgid "Unexpected root tag: %s"
-msgstr ""
+msgstr "Niespodziewany tag w korzeniu: %s"
 
 #: ../src/control/xojfile/LoadHandler.cpp:250
 #, c-format
 msgid "Unexpected tag in document: \"%s\""
-msgstr ""
+msgstr "Niespodziewany tag w dokumencie: \"%s\""
 
 #: ../src/control/xojfile/LoadHandler.cpp:279
 #, c-format
 msgid "Unknown background type parsed: \"%s\""
-msgstr ""
+msgstr "Nieznany rodzaj tła: \"%s\""
 
 #: ../src/control/xojfile/LoadHandler.cpp:465
 #, c-format
 msgid "Unknown background type: %s"
-msgstr ""
+msgstr "Nieznany rodzaj tła: %s"
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:81
 #, c-format
 msgid "Unknown color value \"%s\""
-msgstr ""
+msgstr "Nieznany kolor \"%s\""
 
 #: ../src/control/xojfile/LoadHandler.cpp:400
 #, c-format
 msgid "Unknown domain type: %s"
-msgstr ""
+msgstr "Nieznany rodzaj domeny: %s"
 
 #: ../src/control/xojfile/LoadHandler.cpp:173
 msgid "Unknown parser error"
-msgstr ""
+msgstr "Nieznany błąd parsera"
 
 #: ../src/control/xojfile/LoadHandler.cpp:336
 #, c-format
 msgid "Unknown pixmap::domain type: %s"
-msgstr ""
+msgstr "Nieznany typ pixmap::domain: %s"
 
 #: ../src/control/xojfile/LoadHandler.cpp:530
 #, c-format
@@ -1485,17 +1487,17 @@ msgstr "Z pomocą społeczności\n"
 
 #: ../src/undo/InsertUndoAction.cpp:41
 msgid "Write text"
-msgstr ""
+msgstr "Wpisz tekst"
 
 #: ../src/control/xojfile/LoadHandler.cpp:764
 #, c-format
 msgid "Wrong count of points (%i)"
-msgstr ""
+msgstr "Nieprawidłowa liczba punktów (%i)"
 
 #: ../src/control/xojfile/LoadHandler.cpp:779
 #, c-format
 msgid "Wrong count of points, get %i, expected %i"
-msgstr ""
+msgstr "Nieprawidłowa liczba punktów, jest ich %i, spodziewane %i"
 
 #: ../src/control/xojfile/LoadHandler.cpp:165
 #, c-format
@@ -1535,6 +1537,11 @@ msgid ""
 "Tipp: You can select Journal / Paper Background / PDF Background to insert a "
 "PDF page."
 msgstr ""
+"Aktualny dokument nie ma %i strony z pliku PDF\n"
+"Chciałby ją wstawić?\n"
+"\n"
+"Wskazówka: Możesz wybrać Dziennik/Tło papieru/Tło z pliku PDF, żeby wstawić "
+"stronę PDF."
 
 #: ../ui/settings.glade:1074
 msgid "Zoom"
