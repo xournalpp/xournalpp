@@ -17,5 +17,5 @@ Exec=xournalpp %f
 Terminal=false
 StartupNotify=true
 MimeType=application/x-xoj;application/pdf;
-Icon=xournal
+Icon=xournalpp
 Categories=GNOME;GTK;Utility;TextEditor;
