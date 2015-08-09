@@ -99,22 +99,6 @@ add_includes_ldflags ("${ZLIB_LIBRARIES}" "${ZLIB_INCLUDE_DIRS}")
 find_package (Threads REQUIRED) # pthreads
 set (xournalpp_LDFLAGS ${xournalpp_LDFLAGS} ${CMAKE_THREAD_LIBS_INIT})
 
-# JPEG
-
-option (ENABLE_LIBOPENJPEG "Use libopenjpeg instead of builtin jpeg2000 decoder" ON)
-if (ENABLE_LIBOPENJPEG)
-  find_package (OpenJPEG REQUIRED)
-  add_includes_ldflags ("${OPENJPEG_LIBRARIES};-lopenjpeg" "${OPENJPEG_INCLUDE_DIRS}") # -lopenjpeg added as fallback
-endif (ENABLE_LIBOPENJPEG)
-
-find_package (JPEG)
-add_includes_ldflags ("${JPEG_LIBRARIES}" "${JPEG_INCLUDE_DIRS}")
-if (NOT JPEG_FOUND)
-  message (WARNING "JPEG loader will not be built (JPEG header file not found)")
-endif (NOT JPEG_FOUND)
-
-set (PACKAGE_DATA_DIR "${CMAKE_INSTALL_PREFIX}/share")
-
 ## Additional features ##
 
 # CppUnit
