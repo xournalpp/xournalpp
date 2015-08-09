@@ -1,11 +1,24 @@
-if (ENABLE_LIBOPENJPEG)
-  set (ENABLE_LIBOPENJPEG_AC "yes")
-else (ENABLE_LIBOPENJPEG)
-  set (ENABLE_LIBOPENJPEG_AC "no")
-endif (ENABLE_LIBOPENJPEG)
+set (WORKAROUND_DIR "${CMAKE_SOURCE_DIR}/src/pdf/popplerdirect/workaround")
+
+if (NOT EXISTS "${WORKAROUND_DIR}/poppler-${POPPLER_VERSION}")
+  message ("Downloading and unpacking poppler sources...")
+  file (DOWNLOAD "http://poppler.freedesktop.org/poppler-${POPPLER_VERSION}.tar.xz"
+                 "${WORKAROUND_DIR}/poppler.tar.xz")
+
+  find_program (PATH_TAR tar)
+  if (NOT PATH_TAR)
+    message (FATAL_ERROR "tar not found (needed to unpack poppler sources)")
+  endif (NOT PATH_TAR)
+
+  execute_process (COMMAND ${PATH_TAR} -xf "poppler.tar.xz" WORKING_DIRECTORY "${WORKAROUND_DIR}")
+  file (REMOVE "${WORKAROUND_DIR}/poppler.tar.xz")
+
+  message ("Done")
+else (NOT EXISTS "${WORKAROUND_DIR}/poppler-${POPPLER_VERSION}")
+  message ("Poppler sources exist")
+endif (NOT EXISTS "${WORKAROUND_DIR}/poppler-${POPPLER_VERSION}")
 
 configure_file (
-  "${PROJECT_SOURCE_DIR}/src/pdf/popplerdirect/workaround/workaround.sh.in"
-  "${PROJECT_SOURCE_DIR}/src/pdf/popplerdirect/workaround/workaround.sh"
-  @ONLY
+  "${WORKAROUND_DIR}/workaround.h.in"
+  "${WORKAROUND_DIR}/workaround.h"
 )

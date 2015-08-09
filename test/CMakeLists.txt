@@ -32,7 +32,6 @@ add_executable (xournalpp-test
 
 add_dependencies (xournalpp-test
   xournalpp-core
-  poppler
   util
 )
 

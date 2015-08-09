@@ -11,12 +11,12 @@
 
 #pragma once
 
-#include "pdf/popplerdirect/poppler-0.24.1/poppler/Catalog.h"
-#include "pdf/popplerdirect/poppler-0.24.1/poppler/FontInfo.h"
-#include "pdf/popplerdirect/poppler-0.24.1/poppler/Gfx.h"
-#include "pdf/popplerdirect/poppler-0.24.1/poppler/OptionalContent.h"
-#include "pdf/popplerdirect/poppler-0.24.1/poppler/PDFDoc.h"
-#include "pdf/popplerdirect/poppler-0.24.1/poppler/TextOutputDev.h"
+#include <poppler/Catalog.h>
+#include <poppler/FontInfo.h>
+#include <poppler/Gfx.h>
+#include <poppler/OptionalContent.h>
+#include <poppler/PDFDoc.h>
+#include <poppler/TextOutputDev.h>
 #include "pdf/popplerdirect/workaround/workaround.h"
 
 #include <StringUtils.h>

@@ -1,9 +1,9 @@
 #include "XojPopplerDocument.h"
 
-#include "pdf/popplerdirect/poppler-0.24.1/poppler/PDFDoc.h"
-#include "pdf/popplerdirect/poppler-0.24.1/poppler/GlobalParams.h"
-#include "pdf/popplerdirect/poppler-0.24.1/poppler/ErrorCodes.h"
-#include "pdf/popplerdirect/poppler-0.24.1/poppler/Outline.h"
+#include <poppler/PDFDoc.h>
+#include <poppler/GlobalParams.h>
+#include <poppler/ErrorCodes.h>
+#include <poppler/Outline.h>
 #include "XojPopplerIter.h"
 
 #include <config.h>

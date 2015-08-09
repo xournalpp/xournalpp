@@ -1,10 +1,10 @@
 #include "XojPopplerPage.h"
 
 #include "control/settings/Settings.h"
-#include "pdf/popplerdirect/poppler-0.24.1/poppler/TextOutputDev.h"
-#include "pdf/popplerdirect/poppler-0.24.1/poppler/PDFDoc.h"
-#include "pdf/popplerdirect/poppler-0.24.1/poppler/Gfx.h"
-#include "pdf/popplerdirect/poppler-0.24.1/poppler/OutputDev.h"
+#include <poppler/TextOutputDev.h>
+#include <poppler/PDFDoc.h>
+#include <poppler/Gfx.h>
+#include <poppler/OutputDev.h>
 #include "pdf/popplerdirect/workaround/workaround.h"
 
 XojPopplerPage::XojPopplerPage(PDFDoc *doc, GMutex *docMutex, CairoOutputDev *outputDev, Page *page, int index)

@@ -1,7 +1,6 @@
 ## Build poppler ##
 
-add_subdirectory ("pdf/popplerdirect")
-link_directories ("${PROJECT_SOURCE_DIR}/src/pdf/popplerdirect")
+add_subdirectory ("pdf/popplerdirect/workaround")
 
 ## Basic variables ##
 
@@ -9,8 +8,6 @@ include_directories (
   "${PROJECT_BINARY_DIR}/src"
   "${PROJECT_SOURCE_DIR}/src"
   "${PROJECT_SOURCE_DIR}/src/util"
-  "${PROJECT_SOURCE_DIR}/src/pdf/popplerdirect/poppler-0.24.1_build/poppler"
-  "${PROJECT_SOURCE_DIR}/src/pdf/popplerdirect/poppler-0.24.1"
 
   ${xournalpp_INCLUDE_DIRS}
 )
@@ -42,9 +39,6 @@ set (CMAKE_CXX_FLAGS
 # Used to compile xournalpp and xournalpp-test
 set (xournalpp_LDFLAGS
   util
-  libpoppler.a
-  libpoppler-glib.a
-
   ${xournalpp_LDFLAGS}
 )
 
@@ -79,11 +73,7 @@ list (REMOVE_ITEM xournalpp_SOURCES ${PROJECT_SOURCE_DIR}/src/model/LayerListene
 
 # Used for xournalpp and xournalpp-test
 add_library (xournalpp-core OBJECT ${xournalpp_SOURCES})
-
-add_dependencies (xournalpp-core
-  poppler
-  util
-)
+add_dependencies (xournalpp-core util)
 
 if (BUILD_BOOST)
   add_dependencies (xournalpp-core boost)
@@ -97,7 +87,6 @@ add_executable (xournalpp
 
 add_dependencies (xournalpp
   xournalpp-core
-  poppler
   util
 )
 

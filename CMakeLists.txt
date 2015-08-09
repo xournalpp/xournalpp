@@ -84,12 +84,12 @@ else (EXT_GLIBMM)
 endif (EXT_GLIBMM)
 add_includes_ldflags ("${Glibmm_LDFLAGS}" "${Glibmm_INCLUDE_DIRS}")
 
-# Other packages
-
-# librsvg-2.0 is not really needed by Xournal++, but if you don't have it, it crashes while loading the SVG icons
-# We also are compiling with libpoppler so we require a number of extra packages
-pkg_check_modules (OtherLibs REQUIRED "librsvg-2.0 >= 2.14.0" fontconfig lcms)
-add_includes_ldflags ("${OtherLibs_LDFLAGS}" "${OtherLibs_INCLUDE_DIRS}")
+# Poppler
+find_package (Poppler)
+if (NOT POPPLER_FOUND)
+  message (FATAL_ERROR "Poppler not found")
+endif (NOT POPPLER_FOUND)
+add_includes_ldflags ("${POPPLER_LIBRARIES}" "${POPPLER_INCLUDE_DIRS}")
 
 # zlib
 find_package (ZLIB REQUIRED)    # zlib
@@ -274,7 +274,6 @@ Unstable features:
 	Layers sidebar:             ${UNSTABLE_LAYERS_SIDEBAR}
 
 Static libraries:
-	Poppler:                    ON (it cannot be changed)
 	Boost:                      ${BUILD_BOOST}
 	Glibmm:                     ${EXT_GLIBMM}
 ")
