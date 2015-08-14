@@ -5,6 +5,8 @@
 #include "../base/SidebarToolbar.h"
 #include "SidebarPreviewPageEntry.h"
 
+#include <i18n.h>
+
 SidebarPreviewPages::SidebarPreviewPages(Control* control) : SidebarPreviewBase(control)
 {
 	XOJ_INIT_TYPE(SidebarPreviewPages);
@@ -16,14 +18,14 @@ SidebarPreviewPages::~SidebarPreviewPages()
 	XOJ_RELEASE_TYPE(SidebarPreviewPages);
 }
 
-const char* SidebarPreviewPages::getName()
+string SidebarPreviewPages::getName()
 {
 	XOJ_CHECK_TYPE(SidebarPreviewPages);
 
 	return _("Page Preview");
 }
 
-const char* SidebarPreviewPages::getIconName()
+string SidebarPreviewPages::getIconName()
 {
 	XOJ_CHECK_TYPE(SidebarPreviewPages);
 

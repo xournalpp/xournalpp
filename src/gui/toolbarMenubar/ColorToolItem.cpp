@@ -4,10 +4,9 @@
 #include "gui/widgets/SelectColor.h"
 
 #include <config.h>
+#include <i18n.h>
 #include <StringUtils.h>
 #include <Util.h>
-
-#include <glib/gi18n-lib.h>
 
 bool ColorToolItem::inUpdate = false;
 
@@ -175,7 +174,7 @@ void ColorToolItem::activated(GdkEvent* event, GtkMenuItem* menuitem, GtkToolBut
 
 	if (isSelector())
 	{
-		this->colorDlg = gtk_color_selection_dialog_new(_("Select color"));
+		this->colorDlg = gtk_color_selection_dialog_new(_C("Select color"));
 		//	g_signal_connect(G_OBJECT(GTK_COLOR_SELECTION_DIALOG(this->colorDlg)->ok_button), "clicked", G_CALLBACK(&customColorSelected), this);
 
 		GdkColor color = Util::intToGdkColor(this->color);

@@ -6,6 +6,8 @@
 #include "model/Layer.h"
 #include "model/PageRef.h"
 
+#include <i18n.h>
+
 InsertLayerUndoAction::InsertLayerUndoAction(PageRef page, Layer* layer) : UndoAction("InsertLayerUndoAction")
 {
 	XOJ_INIT_TYPE(InsertLayerUndoAction);

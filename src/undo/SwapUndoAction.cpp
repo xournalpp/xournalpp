@@ -3,6 +3,8 @@
 #include "control/Control.h"
 #include "model/Document.h"
 
+#include <i18n.h>
+
 SwapUndoAction::SwapUndoAction(int pageNr, bool moveUp, PageRef swapped_page, PageRef other_page) :
 		UndoAction("SwapUndoAction")
 {

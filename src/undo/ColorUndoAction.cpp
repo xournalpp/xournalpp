@@ -4,6 +4,7 @@
 #include "model/Element.h"
 #include "model/PageRef.h"
 
+#include <i18n.h>
 #include <Rectangle.h>
 
 class ColorUndoActionEntry

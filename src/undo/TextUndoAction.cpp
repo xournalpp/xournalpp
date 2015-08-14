@@ -6,6 +6,7 @@
 #include "model/PageRef.h"
 #include "model/Text.h"
 
+#include <i18n.h>
 #include <Rectangle.h>
 
 TextUndoAction::TextUndoAction(PageRef page, Layer* layer, Text* text, string lastText, TextEditor* textEditor) :

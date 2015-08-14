@@ -9,7 +9,7 @@ if (XGETTEXT_FOUND)
   gettext_create_pot ("${potfile}"
     PACKAGE ${PROJECT_PACKAGE}
     VERSION ${PROJECT_VERSION}
-    OPTIONS --language=C++ --keyword=_ --keyword=N_ --keyword=C_:1c,2 --keyword=NC_:1c,2 -s
+    OPTIONS --language=C++ --keyword=_ --keyword=_C --keyword=N_ --keyword=C_:1c,2 --keyword=C_C:1c,2 --keyword=NC_:1c,2 -s
 
     SRCFILES
       "${PROJECT_SOURCE_DIR}/src/*.cpp"

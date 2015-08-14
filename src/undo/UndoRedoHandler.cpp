@@ -1,9 +1,10 @@
 #include "UndoRedoHandler.h"
 
 #include "control/Control.h"
-#include <config.h>
 
-#include <glib/gi18n-lib.h>
+#include <config.h>
+#include <i18n.h>
+
 #include <boost/format.hpp>
 
 #include <stdio.h>
@@ -142,7 +143,7 @@ void UndoRedoHandler::undo()
 	{
 		GtkWidget* dialog = gtk_message_dialog_new((GtkWindow*) *control->getWindow(),
 												   GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
-												   _("Could not undo '%s'\nSomething went wrong... "
+												   _C("Could not undo '%s'\nSomething went wrong... "
 													 "Please write a bug report..."),
 												   undo->getText().c_str());
 		gtk_window_set_transient_for(GTK_WINDOW(dialog), GTK_WINDOW(this->control->getWindow()->getWindow()));
@@ -184,7 +185,7 @@ void UndoRedoHandler::redo()
 	{
 		GtkWidget* dialog = gtk_message_dialog_new((GtkWindow*) *control->getWindow(),
 												   GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
-												   _("Could not redo '%s'\nSomething went wrong... "
+												   _C("Could not redo '%s'\nSomething went wrong... "
 													 "Please write a bug report..."),
 												   redo->getText().c_str());
 		gtk_window_set_transient_for(GTK_WINDOW(dialog),

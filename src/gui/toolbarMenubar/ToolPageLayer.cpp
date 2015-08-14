@@ -1,9 +1,9 @@
 #include "ToolPageLayer.h"
 
 #include "gui/GladeGui.h"
-#include <config.h>
 
-#include <glib/gi18n-lib.h>
+#include <config.h>
+#include <i18n.h>
 
 ToolPageLayer::ToolPageLayer(GladeGui* gui, ActionHandler* handler, string id, ActionType type) :
 		AbstractToolItem(id, handler, type, NULL)
@@ -68,10 +68,10 @@ void ToolPageLayer::setLayerCount(int layer, int selected)
 		gtk_combo_box_remove_text(GTK_COMBO_BOX(this->layerComboBox), i);
 	}
 
-	gtk_combo_box_append_text(GTK_COMBO_BOX(this->layerComboBox), "Background");
+	gtk_combo_box_append_text(GTK_COMBO_BOX(this->layerComboBox), _C("Background"));
 	for (int i = 1; i <= layer; i++)
 	{
-		char* text = g_strdup_printf(_("Layer %i"), i);
+		char* text = g_strdup_printf(_C("Layer %i"), i);
 		gtk_combo_box_prepend_text(GTK_COMBO_BOX(this->layerComboBox), text);
 		g_free(text);
 	}
@@ -103,7 +103,7 @@ GtkToolItem* ToolPageLayer::newItem()
 	GtkToolItem* it = gtk_tool_item_new();
 
 	GtkWidget* hbox = gtk_hbox_new(false, 1);
-	gtk_box_pack_start(GTK_BOX(hbox), gtk_label_new(_("Layer")), false, false, 7);
+	gtk_box_pack_start(GTK_BOX(hbox), gtk_label_new(_C("Layer")), false, false, 7);
 
 	gtk_box_pack_start(GTK_BOX(hbox), this->layerComboBox, false, false, 0);
 

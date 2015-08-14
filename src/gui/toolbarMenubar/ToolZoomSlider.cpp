@@ -1,8 +1,8 @@
 #include "ToolZoomSlider.h"
 
 #include <config.h>
-
-#include <glib/gi18n-lib.h>
+#include <i18n.h>
+#include <StringUtils.h>
 
 ToolZoomSlider::ToolZoomSlider(ActionHandler* handler, string id, ActionType type, ZoomControl* zoom) :
 		AbstractToolItem(id, handler, type, NULL)

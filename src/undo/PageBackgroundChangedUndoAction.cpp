@@ -3,6 +3,8 @@
 #include "control/Control.h"
 #include "model/Document.h"
 
+#include <i18n.h>
+
 PageBackgroundChangedUndoAction::PageBackgroundChangedUndoAction(PageRef page, BackgroundType origType, int origPdfPage,
 																 BackgroundImage origBackgroundImage,
 																 double origW, double origH)

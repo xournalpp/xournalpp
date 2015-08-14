@@ -2,9 +2,9 @@
 
 #include "control/Control.h"
 #include "gui/widgets/SelectColor.h"
-#include <config.h>
 
-#include <glib/gi18n-lib.h>
+#include <config.h>
+#include <i18n.h>
 
 class ColorEntry
 {
@@ -120,7 +120,7 @@ void SelectBackgroundColorDialog::showColorchooser()
 {
 	XOJ_CHECK_TYPE(SelectBackgroundColorDialog);
 
-	this->colorDlg = gtk_color_selection_dialog_new(_("Select color"));
+	this->colorDlg = gtk_color_selection_dialog_new(_C("Select color"));
 	g_signal_connect(G_OBJECT (GTK_COLOR_SELECTION_DIALOG(this->colorDlg)->ok_button), "clicked",
 					 G_CALLBACK(&buttonSelectedCallback), this->colors.front()); // first entry
 

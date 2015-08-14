@@ -5,6 +5,7 @@
 #include "model/Layer.h"
 #include "model/PageRef.h"
 
+#include <i18n.h>
 #include <Rectangle.h>
 
 TextBoxUndoAction::TextBoxUndoAction(PageRef page, Layer* layer, Element* element, Element* oldelement) :

@@ -1,9 +1,10 @@
 #include "GladeGui.h"
 
 #include "GladeSearchpath.h"
-#include <config.h>
 
-#include <glib/gi18n-lib.h>
+#include <config.h>
+#include <i18n.h>
+
 #include <stdlib.h>
 
 GladeGui::GladeGui(GladeSearchpath* gladeSearchPath, const char* glade, const char* mainWnd)
@@ -19,7 +20,7 @@ GladeGui::GladeGui(GladeSearchpath* gladeSearchPath, const char* glade, const ch
 	{
 		GtkWidget* dialog = gtk_message_dialog_new(NULL, GTK_DIALOG_DESTROY_WITH_PARENT,
 												   GTK_MESSAGE_ERROR, GTK_BUTTONS_CLOSE,
-												   _("Error loading glade file '%s' (try to load '%s')"), glade, filename);
+												   _C("Error loading glade file '%s' (try to load '%s')"), glade, filename);
 		gtk_dialog_run(GTK_DIALOG(dialog));
 		gtk_widget_destroy(GTK_WIDGET(dialog));
 		exit(-1);

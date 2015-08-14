@@ -2,8 +2,8 @@
 
 #include <config.h>
 #include <config-dev.h>
+#include <i18n.h>
 
-#include <glib/gi18n-lib.h>
 #include <boost/filesystem.hpp>
 
 #include <sys/types.h>
@@ -190,7 +190,7 @@ void Util::openFileWithDefaultApplicaion(path filename)
 	if (system(command.c_str()) != 0)
 	{
 		GtkWidget* dlgError = gtk_message_dialog_new(NULL, GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, "%s",
-													 _("File could not be opened. You have to open it manual\n:URL: %s"),
+													 _C("File could not be opened. You have to open it manual\n:URL: %s"),
 													 filename.c_str(), filename.c_str());
 		gtk_dialog_run(GTK_DIALOG(dlgError));
 	}
@@ -219,7 +219,7 @@ void Util::openFileWithFilebrowser(path filename)
 	if (system(command.c_str()) != 0)
 	{
 		GtkWidget* dlgError = gtk_message_dialog_new(NULL, GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, "%s",
-													 _("File could not be opened. You have to open it manual\n:URL: %s"),
+													 _C("File could not be opened. You have to open it manual\n:URL: %s"),
 													 filename.c_str(), filename.c_str());
 		gtk_dialog_run(GTK_DIALOG(dlgError));
 	}

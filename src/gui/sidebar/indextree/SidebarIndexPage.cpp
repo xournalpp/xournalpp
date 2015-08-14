@@ -5,8 +5,7 @@
 #include "model/XojPage.h"
 
 #include <config.h>
-
-#include <glib/gi18n-lib.h>
+#include <i18n.h>
 
 SidebarIndexPage::SidebarIndexPage(Control* control) : AbstractSidebarPage(control)
 {
@@ -77,7 +76,7 @@ void SidebarIndexPage::askInsertPdfPage(int pdfPage)
 
 	GtkWidget* dialog = gtk_message_dialog_new((GtkWindow*) *control->getWindow(), GTK_DIALOG_DESTROY_WITH_PARENT,
 											   GTK_MESSAGE_QUESTION, GTK_BUTTONS_NONE,
-											   _("Your current document does not contain PDF Page %i\n"
+											   _C("Your current document does not contain PDF Page %i\n"
 											     "Would you insert this page?\n\n"
 												 "Tipp: You can select Journal / Paper Background / PDF Background "
 												 "to insert a PDF page."),
@@ -267,14 +266,14 @@ gboolean SidebarIndexPage::treeSearchFunction(GtkTreeModel* model, gint column, 
 	return result;
 }
 
-const char* SidebarIndexPage::getName()
+string SidebarIndexPage::getName()
 {
 	XOJ_CHECK_TYPE(SidebarIndexPage);
 
 	return _("Contents");
 }
 
-const char* SidebarIndexPage::getIconName()
+string SidebarIndexPage::getIconName()
 {
 	XOJ_CHECK_TYPE(SidebarIndexPage);
 

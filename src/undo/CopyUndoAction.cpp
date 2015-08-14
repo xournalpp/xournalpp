@@ -4,6 +4,8 @@
 #include "gui/Cursor.h"
 #include "model/PageRef.h"
 
+#include <i18n.h>
+
 CopyUndoAction::CopyUndoAction(PageRef pageref, int pageNr) : UndoAction("CopyUndoAction")
 {
 	XOJ_INIT_TYPE(CopyUndoAction);

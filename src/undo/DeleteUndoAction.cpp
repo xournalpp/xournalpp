@@ -6,6 +6,8 @@
 #include "model/PageRef.h"
 #include "PageLayerPosEntry.h"
 
+#include <i18n.h>
+
 DeleteUndoAction::DeleteUndoAction(PageRef page, bool eraser) : UndoAction("DeleteUndoAction")
 {
 	XOJ_INIT_TYPE(DeleteUndoAction);

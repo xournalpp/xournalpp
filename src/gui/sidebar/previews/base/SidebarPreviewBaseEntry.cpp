@@ -6,6 +6,8 @@
 #include "gui/Shadow.h"
 #include "view/PdfView.h"
 
+#include <i18n.h>
+
 SidebarPreviewBaseEntry::SidebarPreviewBaseEntry(SidebarPreviewBase* sidebar, PageRef page)
 {
 	XOJ_INIT_TYPE(SidebarPreviewBaseEntry);
@@ -124,7 +126,7 @@ void SidebarPreviewBaseEntry::paint()
 
 		cairo_scale(cr2, zoom, zoom);
 
-		const char* txtLoading = _("Loading...");
+		const char* txtLoading = _C("Loading...");
 
 		cairo_text_extents_t ex;
 		cairo_set_source_rgb(cr2, 0.5, 0.5, 0.5);

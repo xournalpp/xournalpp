@@ -6,6 +6,8 @@
 #include "model/Layer.h"
 #include "model/PageRef.h"
 
+#include <i18n.h>
+
 RemoveLayerUndoAction::RemoveLayerUndoAction(PageRef page, Layer* layer, int layerPos) : UndoAction("RemoveLayerUndoAction")
 {
 	XOJ_INIT_TYPE(RemoveLayerUndoAction);

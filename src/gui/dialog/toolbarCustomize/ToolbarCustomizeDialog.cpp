@@ -13,9 +13,8 @@
 #include "gui/widgets/SelectColor.h"
 
 #include <config.h>
+#include <i18n.h>
 #include <Util.h>
-
-#include <glib/gi18n-lib.h>
 
 typedef struct _ToolItemDragData ToolItemDragData;
 
@@ -55,7 +54,7 @@ ToolbarCustomizeDialog::ToolbarCustomizeDialog(GladeSearchpath* gladeSearchPath,
 	GtkWidget* box = gtk_vbox_new(false, 3);
 	gtk_widget_show(box);
 
-	GtkWidget* label = gtk_label_new(_("Separator"));
+	GtkWidget* label = gtk_label_new(_C("Separator"));
 	gtk_widget_show(label);
 	gtk_box_pack_end(GTK_BOX(box), label, false, false, 0);
 

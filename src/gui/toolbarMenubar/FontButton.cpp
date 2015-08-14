@@ -1,8 +1,7 @@
 #include "FontButton.h"
 
 #include <config.h>
-
-#include <glib/gi18n-lib.h>
+#include <i18n.h>
 
 FontButton::FontButton(ActionHandler* handler, GladeGui* gui, string id, ActionType type, string description,
 					   GtkWidget* menuitem) : AbstractToolItem(id, handler, type, menuitem)
