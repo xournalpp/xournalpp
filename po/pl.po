@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: xournalpp 1.0.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-08-10 10:55+0200\n"
-"PO-Revision-Date: 2015-08-14 18:40+0100\n"
+"PO-Revision-Date: 2015-08-14 19:14+0100\n"
 "Last-Translator: Marek Pikuła <marek@pikula.co>\n"
 "Language-Team: Xournal++ team\n"
 "Language: pl\n"
@@ -1675,7 +1675,7 @@ msgstr "_Kratka"
 
 #: ../ui/main.glade:1177
 msgid "_Help"
-msgstr "_Pomoc"
+msgstr "P_omoc"
 
 #: ../ui/main.glade:805
 msgid "_Highlighter"

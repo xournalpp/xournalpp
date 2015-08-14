@@ -11,6 +11,7 @@
 
 #include <config.h>
 #include <config-dev.h>
+#include <config-paths.h>
 
 #include <gtk/gtk.h>
 
@@ -354,6 +355,10 @@ GladeSearchpath* XournalMain::initPath(const char* argv0)
 	g_free(searchPath);
 
 	searchPath = g_build_filename(path, "..", "ui", NULL);
+	gladePath->addSearchDirectory(searchPath);
+	g_free(searchPath);
+	
+	searchPath = g_build_filename(PROJECT_SOURCE_DIR, "ui", NULL);
 	gladePath->addSearchDirectory(searchPath);
 	g_free(searchPath);
 

@@ -31,12 +31,6 @@ if (DEV_ENABLE_GCOV)
   set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} --coverage")
 endif (DEV_ENABLE_GCOV)
 
-# Some package constants
-
-set (CMAKE_CXX_FLAGS
-  "${CMAKE_CXX_FLAGS} -DPACKAGE_DATA_DIR=\\\"${PACKAGE_DATA_DIR}\\\" -DPACKAGE_LOCALE_DIR=\\\"${PACKAGE_LOCALE_DIR}\\\""
-)
-
 # Used to compile xournalpp and xournalpp-test
 set (xournalpp_LDFLAGS
   util

@@ -187,6 +187,12 @@ configure_file (
   ESCAPE_QUOTES @ONLY
 )
 
+configure_file (
+  src/config-paths.h.in
+  src/config-paths.h
+  ESCAPE_QUOTES @ONLY
+)
+
 ## C++11 ##
 
 include(CheckCXXCompilerFlag)
