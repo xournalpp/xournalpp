@@ -44,7 +44,7 @@ add_custom_target (desktop-install-thumbnailer
 )
 
 add_custom_target (desktop-uninstall-thumbnailer
-  COMMAND "${PROJECT_BINARY_DIR}/src/xoj-preview-extractor/desktop-install.sh" uninstall
+  COMMAND "${PROJECT_SOURCE_DIR}/src/xoj-preview-extractor/desktop-install.sh" uninstall
 
   COMMENT "Uninstall xournal-thumbnailer as xoj file thumbnail generator"
   SOURCES xournal-thumbnailer xournal-thumbnailer-xoj.schemas desktop-install.sh

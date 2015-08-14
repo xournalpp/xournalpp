@@ -10,6 +10,8 @@ set (PROJECT_URL "https://github.com/xournalpp/xournalpp")
 include (FindPkgConfig)
 set (CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake")
 
+set (PACKAGE_DATA_DIR "${CMAKE_INSTALL_PREFIX}/share")
+
 # Git repo info
 include (GitRepo)
 
@@ -205,7 +207,7 @@ add_subdirectory (src)
 
 # Install resources
 install (DIRECTORY ui
-  DESTINATION share/xournalpp
+  DESTINATION "share/xournalpp"
   COMPONENT xournalpp
 )
 
