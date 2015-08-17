@@ -1,11 +1,11 @@
 find_program (PATH_LATEX "latex")
 if (NOT PATH_LATEX)
-  message (ERROR "\"latex\" command not found! You must install latex before installing mathtex.")
+  message (FATAL_ERROR "\"latex\" command not found! You must install latex before installing mathtex.")
 endif (NOT PATH_LATEX)
 
 find_program (PATH_DVIPNG "dvipng")
 if (NOT PATH_DVIPNG)
-  message (ERROR "\"dvipng\" command not found! You must install dvipng before installing mathtex.")
+  message (FATAL_ERROR "\"dvipng\" command not found! You must install dvipng before installing mathtex.")
 endif (NOT PATH_DVIPNG)
 
 include (CheckIncludeFiles)

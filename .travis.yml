@@ -1,0 +1,25 @@
+language: cpp
+
+# clang is not supported for poppler
+compiler: gcc
+
+os: linux
+
+before_install:
+  - "sudo apt-get update -qq"
+  - "sudo apt-get install -y glade-gtk2 libopenjpeg-dev libcppunit-dev liboverlay-scrollbar-0.2-dev dvipng texlive"
+  - "wget https://launchpad.net/ubuntu/+source/cmake/2.8.8-2ubuntu1/+build/3441442/+files/cmake_2.8.8-2ubuntu1_amd64.deb"
+  - "wget https://launchpad.net/ubuntu/+archive/primary/+files/cmake-data_2.8.8-2ubuntu1_all.deb"
+  - "sudo apt-get remove cmake-data cmake"
+
+install:
+  - "sudo dpkg --install cmake-data_2.8.8-2ubuntu1_all.deb cmake_2.8.8-2ubuntu1_amd64.deb" 
+
+before_script:
+  - "mkdir build"
+  - "cd build"
+
+script:
+  - "cmake .. -DBUILD_BOOST=ON -DEXT_GLIBMM=ON -DCMAKE_DEBUG_INCLUDES_LDFLAGS=ON -DENABLE_MATHTEX=ON -DENABLE_OS=ON -DENABLE_CPPUNIT=ON -DUNSTABLE_LAYERS_SIDEBAR=ON"
+  - "make"
+  - "make test"
