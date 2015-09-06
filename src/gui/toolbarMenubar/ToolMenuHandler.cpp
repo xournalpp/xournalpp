@@ -298,7 +298,7 @@ void ToolMenuHandler::initToolItems()
 	XOJ_CHECK_TYPE(ToolMenuHandler);
 
 	addToolItem(new ToolButton(listener, "SAVE", ACTION_SAVE, GTK_STOCK_SAVE, _C("Save"), gui->get("menuFileSave")));
-	addToolItem(new ToolButton(listener, gui, "NEW", ACTION_NEW, "documentNew.svg", _C("New Xournal"), gui->get("menuFileNew")));
+	addToolItem(new ToolButton(listener, "NEW", ACTION_NEW, GTK_STOCK_NEW, _C("New Xournal"), gui->get("menuFileNew")));
 
 	addToolItem(new ToolButton(listener, "OPEN", ACTION_OPEN, GTK_STOCK_OPEN, _C("Open file"), gui->get("menuFileOpen")));
 
