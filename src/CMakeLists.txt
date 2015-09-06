@@ -17,8 +17,12 @@ add_subdirectory (xoj-preview-extractor)
 
 # Used for both util and xournalpp targets
 set (CMAKE_CXX_FLAGS
-  "${CMAKE_CXX_FLAGS} -g -rdynamic -Wreturn-type -Wuninitialized -Wunused-value -Wunused-variable"
+  "${CMAKE_CXX_FLAGS} -g -Wreturn-type -Wuninitialized -Wunused-value -Wunused-variable"
 )
+
+if (NOT WIN32)
+  set (CMAKE_CXX_FLAGS -rdynamic)
+endif ()
 
 option (DEBUG_COMPILE "Pass -Wall to CXX_FLAGS" OFF)
 mark_as_advanced (FORCE DEBUG_COMPILE)
