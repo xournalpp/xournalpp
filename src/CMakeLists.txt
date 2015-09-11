@@ -21,7 +21,7 @@ set (CMAKE_CXX_FLAGS
 )
 
 if (NOT WIN32)
-  set (CMAKE_CXX_FLAGS -rdynamic)
+  set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -rdynamic")
 endif ()
 
 option (DEBUG_COMPILE "Pass -Wall to CXX_FLAGS" OFF)
