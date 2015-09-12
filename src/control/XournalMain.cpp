@@ -213,10 +213,6 @@ int XournalMain::run(int argc, char* argv[])
 	}
 	g_option_context_free(context);
 
-#ifdef DEV_MEMORY_LEAK_CHECKING
-	xoj_type_initMutex();
-#endif
-
 	if (optNoPdfCompress)
 	{
 		PdfWriter::setCompressPdfOutput(false);

@@ -37,8 +37,6 @@ void xoj_momoryleak_printRemainingObjects();
 #define CALL_LOG(type, clazz, obj)
 #endif
 
-void xoj_type_initMutex();
-
 #define XOJ_DECLARE_TYPE(type, id) \
 	const int __XOJ_TYPE_ ## type = id
 
