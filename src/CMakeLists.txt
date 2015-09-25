@@ -16,23 +16,21 @@ include_directories (
 add_subdirectory (xoj-preview-extractor)
 
 # Used for both util and xournalpp targets
-set (CMAKE_CXX_FLAGS
-  "${CMAKE_CXX_FLAGS} -g -Wreturn-type -Wuninitialized -Wunused-value -Wunused-variable"
-)
+add_definitions (-g -Wreturn-type -Wuninitialized -Wunused-value -Wunused-variable)
 
 if (NOT WIN32)
-  set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -rdynamic")
+  add_definitions (-rdynamic)
 endif ()
 
 option (DEBUG_COMPILE "Pass -Wall to CXX_FLAGS" OFF)
 mark_as_advanced (FORCE DEBUG_COMPILE)
 
 if (DEBUG_COMPILE)
-  set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall")
+  add_definitions (-Wall)
 endif (DEBUG_COMPILE)
 
 if (DEV_ENABLE_GCOV)
-  set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} --coverage")
+  add_definitions (--coverage)
 endif (DEV_ENABLE_GCOV)
 
 # Used to compile xournalpp and xournalpp-test

@@ -1,3 +1,4 @@
+#
 # Install local dependency from external deb package
 #
 # Functions:
@@ -26,14 +27,16 @@
 #        wget   for downloading deb from URL
 #        ar     to unpack deb archive
 #        tar    to unpack internal data archive
-
-# Copyright (c) 2015, Marek Pikuła <marpirk@gmail.com>
+#
+#
+# Copyright (c) 2015, Marek Pikuła <marek@pikula.co>
 # All rights reserved.
 #
 # Distributed under the OSI-approved BSD License (the "License") see accompanying file Copyright.txt for details.
 #
 # This software is distributed WITHOUT ANY WARRANTY without even the implied warranty of MERCHANTABILITY
 # or FITNESS FOR A PARTICULAR PURPOSE. See the License for more information.
+#
 
 function (target_architecture_deb output_var)
     include (TargetArch)

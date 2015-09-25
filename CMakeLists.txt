@@ -8,7 +8,10 @@ set (PROJECT_STRING "${PROJECT_NAME} ${PROJECT_VERSION}")
 set (PROJECT_URL "https://github.com/xournalpp/xournalpp")
 
 include (FindPkgConfig)
-set (CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake")
+set (CMAKE_MODULE_PATH
+    "${PROJECT_SOURCE_DIR}/cmake/find"
+    "${PROJECT_SOURCE_DIR}/cmake/include"
+)
 
 set (PACKAGE_DATA_DIR "${CMAKE_INSTALL_PREFIX}/share")
 
@@ -194,17 +197,8 @@ configure_file (
 )
 
 ## C++11 ##
-
-include(CheckCXXCompilerFlag)
-CHECK_CXX_COMPILER_FLAG("-std=c++11" COMPILER_SUPPORTS_CXX11)
-CHECK_CXX_COMPILER_FLAG("-std=c++0x" COMPILER_SUPPORTS_CXX0X)
-if(COMPILER_SUPPORTS_CXX11)
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
-elseif(COMPILER_SUPPORTS_CXX0X)
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x")
-else(COMPILER_SUPPORTS_CXX11)
-    message(STATUS "The compiler ${CMAKE_CXX_COMPILER} has no C++11 support. Please use a different C++ compiler.")
-endif(COMPILER_SUPPORTS_CXX11)
+include (C++11)
+CheckCXX11 (FATAL_ERROR)
 
 ## Source building ##
 add_subdirectory (src)

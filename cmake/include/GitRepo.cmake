@@ -1,3 +1,4 @@
+#
 # Get basic informations about current git repo (if any)
 #
 # Variables:
@@ -7,14 +8,16 @@
 #   GIT_BRANCH        current git branch
 #
 #   PROJECT_BUGREPORT URL to git issue tracker basing on origin remote (if git not found set default tracker)
-
-# Copyright (c) 2015, Marek Pikuła <marpirk@gmail.com>
+#
+#
+# Copyright (c) 2015, Marek Pikuła <marek@pikula.co>
 # All rights reserved.
 #
 # Distributed under the OSI-approved BSD License (the "License") see accompanying file Copyright.txt for details.
 #
 # This software is distributed WITHOUT ANY WARRANTY without even the implied warranty of MERCHANTABILITY
 # or FITNESS FOR A PARTICULAR PURPOSE. See the License for more information.
+#
 
 find_program (PATH_GIT git)
 if (EXISTS "${PROJECT_SOURCE_DIR}/.git" AND PATH_GIT)
