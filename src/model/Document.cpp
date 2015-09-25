@@ -7,7 +7,6 @@
 #include <Stacktrace.h>
 
 #include <boost/locale/format.hpp>
-#include <glib/gi18n-lib.h>
 
 #include <string.h>
 #include <iostream>

@@ -7,6 +7,8 @@
 #include "model/Element.h"
 #include "model/PageRef.h"
 
+#include <i18n.h>
+
 AddUndoAction::AddUndoAction(PageRef page, bool eraser) : UndoAction("AddUndoAction")
 {
 	XOJ_INIT_TYPE(AddUndoAction);

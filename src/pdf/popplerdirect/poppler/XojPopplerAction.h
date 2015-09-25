@@ -12,7 +12,7 @@
 #pragma once
 
 #include "model/LinkDestination.h"
-#include "pdf/popplerdirect/poppler-0.24.1/poppler/Link.h"
+#include <poppler/Link.h>
 #include "XojPopplerDocument.h"
 
 #include <StringUtils.h>

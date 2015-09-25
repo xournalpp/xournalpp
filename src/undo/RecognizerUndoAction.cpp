@@ -4,6 +4,7 @@
 #include "model/Layer.h"
 #include "model/Stroke.h"
 
+#include <i18n.h>
 #include <Stacktrace.h>
 
 RecognizerUndoAction::RecognizerUndoAction(PageRef page, Layer* layer, Stroke* original, Stroke* recognized) :

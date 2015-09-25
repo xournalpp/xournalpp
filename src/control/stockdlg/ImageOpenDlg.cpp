@@ -1,20 +1,19 @@
 #include "ImageOpenDlg.h"
 
 #include "control/settings/Settings.h"
+
 #include <config.h>
+#include <i18n.h>
 
-#include <glib/gi18n-lib.h>
-
-GFile* ImageOpenDlg::show(GtkWindow* win, Settings* settings, bool localOnly,
-						  bool* attach)
+GFile* ImageOpenDlg::show(GtkWindow* win, Settings* settings, bool localOnly, bool* attach)
 {
-	GtkWidget* dialog = gtk_file_chooser_dialog_new(_("Open Image"), win,
+	GtkWidget* dialog = gtk_file_chooser_dialog_new(_C("Open Image"), win,
 													GTK_FILE_CHOOSER_ACTION_OPEN, GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
 													GTK_STOCK_OPEN, GTK_RESPONSE_OK, NULL);
 	gtk_file_chooser_set_local_only(GTK_FILE_CHOOSER(dialog), localOnly);
 
 	GtkFileFilter* filterSupported = gtk_file_filter_new();
-	gtk_file_filter_set_name(filterSupported, _("Images"));
+	gtk_file_filter_set_name(filterSupported, _C("Images"));
 	gtk_file_filter_add_pixbuf_formats(filterSupported);
 	gtk_file_chooser_add_filter(GTK_FILE_CHOOSER(dialog), filterSupported);
 
@@ -26,7 +25,7 @@ GFile* ImageOpenDlg::show(GtkWindow* win, Settings* settings, bool localOnly,
 	GtkWidget* cbAttach = NULL;
 	if (attach)
 	{
-		cbAttach = gtk_check_button_new_with_label(_("Attach file to the journal"));
+		cbAttach = gtk_check_button_new_with_label(_C("Attach file to the journal"));
 		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(cbAttach), false);
 		gtk_file_chooser_set_extra_widget(GTK_FILE_CHOOSER(dialog), cbAttach);
 	}

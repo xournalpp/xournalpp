@@ -26,8 +26,7 @@
 #include "model/BackgroundImage.h"
 
 #include <config.h>
-
-#include <glib/gi18n-lib.h>
+#include <i18n.h>
 
 #include <clocale>
 #include <iostream>

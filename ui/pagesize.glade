@@ -182,7 +182,7 @@
                         <child>
                           <widget class="GtkToggleToolButton" id="btPortrait">
                             <property name="visible">True</property>
-                            <property name="label" translatable="yes">toolbutton1</property>
+                            <property name="label">toolbutton1</property>
                             <property name="use_underline">True</property>
                             <property name="stock_id">gtk-orientation-portrait</property>
                           </widget>
@@ -194,7 +194,7 @@
                         <child>
                           <widget class="GtkToggleToolButton" id="btLandscape">
                             <property name="visible">True</property>
-                            <property name="label" translatable="yes">toolbutton2</property>
+                            <property name="label">toolbutton2</property>
                             <property name="use_underline">True</property>
                             <property name="stock_id">gtk-orientation-landscape</property>
                           </widget>

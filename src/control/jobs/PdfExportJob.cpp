@@ -4,6 +4,8 @@
 #include "control/Control.h"
 #include "pdf/popplerdirect/PdfExport.h"
 
+#include <i18n.h>
+
 #include <boost/algorithm/string/predicate.hpp>
 
 PdfExportJob::PdfExportJob(Control* control) : BlockingJob(control, _("PDF Export"))
@@ -23,14 +25,14 @@ bool PdfExportJob::showFilechooser()
 	Settings* settings = control->getSettings();
 	Document* doc = control->getDocument();
 
-	GtkWidget* dialog = gtk_file_chooser_dialog_new(_("Export PDF"),
+	GtkWidget* dialog = gtk_file_chooser_dialog_new(_C("Export PDF"),
 													(GtkWindow*) *control->getWindow(), GTK_FILE_CHOOSER_ACTION_SAVE,
 													GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL, GTK_STOCK_SAVE,
 												    GTK_RESPONSE_OK, NULL);
 	gtk_file_chooser_set_local_only(GTK_FILE_CHOOSER(dialog), false);
 
 	GtkFileFilter* filterPdf = gtk_file_filter_new();
-	gtk_file_filter_set_name(filterPdf, _("PDF files"));
+	gtk_file_filter_set_name(filterPdf, _C("PDF files"));
 	gtk_file_filter_add_pattern(filterPdf, "*.pdf");
 	gtk_file_chooser_add_filter(GTK_FILE_CHOOSER(dialog), filterPdf);
 

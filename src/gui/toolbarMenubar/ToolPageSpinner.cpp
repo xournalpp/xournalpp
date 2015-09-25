@@ -4,8 +4,7 @@
 #include "gui/widgets/SpinPageAdapter.h"
 
 #include <config.h>
-
-#include <glib/gi18n-lib.h>
+#include <i18n.h>
 
 ToolPageSpinner::ToolPageSpinner(GladeGui* gui, ActionHandler* handler, string id, ActionType type) :
 		AbstractToolItem(id, handler, type, NULL)
@@ -66,7 +65,7 @@ GtkToolItem* ToolPageSpinner::newItem()
 	GtkToolItem* it = gtk_tool_item_new();
 
 	GtkWidget* hbox = gtk_hbox_new(false, 1);
-	gtk_box_pack_start(GTK_BOX(hbox), gtk_label_new(_("Page")), false, false, 7);
+	gtk_box_pack_start(GTK_BOX(hbox), gtk_label_new(_C("Page")), false, false, 7);
 
 	gtk_box_pack_start(GTK_BOX(hbox), this->pageSpinner->getWidget(), false, false, 0);
 

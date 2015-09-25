@@ -29,12 +29,12 @@
 
 #include <config.h>
 #include <config-debug.h>
+#include <i18n.h>
 #include <pixbuf-utils.h>
 #include <Range.h>
 #include <Rectangle.h>
 
 #include <glib.h>
-#include <glib/gi18n-lib.h>
 #include <gdk/gdkkeysyms.h>
 
 #include <stdlib.h>
@@ -396,7 +396,7 @@ bool PageView::onButtonPressEvent(GtkWidget* widget, GdkEventButton* event)
 	{
 		GtkWidget* dialog = gtk_message_dialog_new((GtkWindow*) *xournal->getControl()->getWindow(),
 												   GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR, GTK_BUTTONS_NONE,
-												   _("There was a wrong input event, input is not working.\n"
+												   _C("There was a wrong input event, input is not working.\n"
 													 "Do you want to disable \"Extended Input\"?"));
 
 		gtk_dialog_add_button(GTK_DIALOG(dialog), "Disable \"Extended Input\"", 1);
@@ -816,7 +816,7 @@ bool PageView::paintPage(cairo_t* cr, GdkRectangle* rect)
 {
 	XOJ_CHECK_TYPE(PageView);
 
-	static const char* txtLoading = _("Loading...");
+	static const char* txtLoading = _C("Loading...");
 
 	double zoom = xournal->getZoom();
 

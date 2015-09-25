@@ -27,7 +27,11 @@ GzOutputStream::GzOutputStream(path filename)
 
 	this->fp = NULL;
 	this->filename = filename;
+#ifdef _WIN32
+	this->fp = gzopen_w(filename.c_str(), "w");
+#else
 	this->fp = gzopen(filename.c_str(), "w");
+#endif
 	if (this->fp == NULL)
 	{
 		this->error = (bl::format("error opening file: \"{1}\"") % filename.string()).str();

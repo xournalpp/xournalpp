@@ -26,12 +26,12 @@ public:
 	/**
 	 * @overwrite
 	 */
-	virtual const char* getName();
+	virtual string getName();
 
 	/**
 	 * @overwrite
 	 */
-	virtual const char* getIconName();
+	virtual string getIconName();
 
 	/**
 	 * Update the preview images

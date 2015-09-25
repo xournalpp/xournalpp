@@ -1,35 +1,35 @@
 #include "XojOpenDlg.h"
 
 #include <config.h>
-#include "util/XojPreviewExtractor.h"
+#include <i18n.h>
+#include <XojPreviewExtractor.h>
 
 #include <gio/gio.h>
-#include <glib/gi18n-lib.h>
 
 path XojOpenDlg::showOpenDialog(GtkWindow* win, Settings* settings, bool pdf, bool& attachPdf)
 {
 
-	GtkWidget* dialog = gtk_file_chooser_dialog_new(_("Open file"), win,
+	GtkWidget* dialog = gtk_file_chooser_dialog_new(_C("Open file"), win,
 													GTK_FILE_CHOOSER_ACTION_OPEN, GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
 													GTK_STOCK_OPEN, GTK_RESPONSE_OK, NULL);
 
 	gtk_file_chooser_set_local_only(GTK_FILE_CHOOSER(dialog), true);
 
 	GtkFileFilter* filterAll = gtk_file_filter_new();
-	gtk_file_filter_set_name(filterAll, _("All files"));
+	gtk_file_filter_set_name(filterAll, _C("All files"));
 	gtk_file_filter_add_pattern(filterAll, "*");
 
 	GtkFileFilter* filterXoj = gtk_file_filter_new();
-	gtk_file_filter_set_name(filterXoj, _("Xournal files"));
+	gtk_file_filter_set_name(filterXoj, _C("Xournal files"));
 	gtk_file_filter_add_pattern(filterXoj, "*.xoj");
 
 	GtkFileFilter* filterPdf = gtk_file_filter_new();
-	gtk_file_filter_set_name(filterPdf, _("PDF files"));
+	gtk_file_filter_set_name(filterPdf, _C("PDF files"));
 	gtk_file_filter_add_pattern(filterPdf, "*.pdf");
 	gtk_file_filter_add_pattern(filterPdf, "*.PDF");
 
 	GtkFileFilter* filterSupported = gtk_file_filter_new();
-	gtk_file_filter_set_name(filterSupported, _("Supported files"));
+	gtk_file_filter_set_name(filterSupported, _C("Supported files"));
 	gtk_file_filter_add_pattern(filterSupported, "*.xoj");
 	gtk_file_filter_add_pattern(filterSupported, "*.pdf");
 	gtk_file_filter_add_pattern(filterSupported, "*.PDF");
@@ -55,7 +55,7 @@ path XojOpenDlg::showOpenDialog(GtkWindow* win, Settings* settings, bool pdf, bo
 	GtkWidget* attachOpt = NULL;
 	if (pdf)
 	{
-		attachOpt = gtk_check_button_new_with_label(_("Attach file to the journal"));
+		attachOpt = gtk_check_button_new_with_label(_C("Attach file to the journal"));
 		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(attachOpt), FALSE);
 		gtk_file_chooser_set_extra_widget(GTK_FILE_CHOOSER(dialog), attachOpt);
 	}

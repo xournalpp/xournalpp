@@ -5,9 +5,9 @@
 #include "LoadHandlerHelper.h"
 
 #include <config.h>
+#include <i18n.h>
 
 #include <glib.h>
-#include <glib/gi18n-lib.h>
 #include <glib/gstdio.h>
 #include <gtk/gtk.h>
 
@@ -164,7 +164,7 @@ bool LoadHandler::parseXml()
 	{
 		if (error != NULL && error->message != NULL)
 		{
-			char* err = g_strdup_printf(_("XML Parser error: %s"), error->message);
+			char* err = g_strdup_printf(_C("XML Parser error: %s"), error->message);
 			this->lastError = err;
 			g_free(err);
 
@@ -220,7 +220,7 @@ void LoadHandler::parseStart()
 	}
 	else
 	{
-		error(_("Unexpected root tag: %s"), elementName);
+		error(_C("Unexpected root tag: %s"), elementName);
 	}
 }
 
@@ -249,7 +249,7 @@ void LoadHandler::parseContents()
 	}
 	else
 	{
-		g_warning(_("Unexpected tag in document: \"%s\""), elementName);
+		g_warning(_C("Unexpected tag in document: \"%s\""), elementName);
 	}
 }
 
@@ -278,7 +278,7 @@ void LoadHandler::parseBgSolid()
 	else
 	{
 		this->page->setBackgroundType(BACKGROUND_TYPE_NONE);
-		error(_("Unknown background type parsed: \"%s\""), style);
+		error(_C("Unknown background type parsed: \"%s\""), style);
 	}
 
 
@@ -318,7 +318,7 @@ void LoadHandler::parseBgPixmap()
 
 		if (error)
 		{
-			error(_("could not read image: %s, Error message: %s"), fileToLoad.c_str(), error->message);
+			error(_C("could not read image: %s, Error message: %s"), fileToLoad.c_str(), error->message);
 			g_error_free(error);
 		}
 
@@ -335,7 +335,7 @@ void LoadHandler::parseBgPixmap()
 	}
 	else
 	{
-		error(_("Unknown pixmap::domain type: %s"), domain);
+		error(_C("Unknown pixmap::domain type: %s"), domain);
 	}
 	this->page->setBackgroundType(BACKGROUND_TYPE_IMAGE);
 }
@@ -399,7 +399,7 @@ void LoadHandler::parseBgPdf()
 			}
 			else
 			{
-				error(_("Unknown domain type: %s"), domain);
+				error(_C("Unknown domain type: %s"), domain);
 				return;
 			}
 
@@ -417,7 +417,7 @@ void LoadHandler::parseBgPdf()
 			doc.readPdf(pdfFilename, false, attachToDocument);
 			if (doc.getLastErrorMsg() != "")
 			{
-				error(_("Error reading PDF: %s"), doc.getLastErrorMsg().c_str());
+				error(_C("Error reading PDF: %s"), doc.getLastErrorMsg().c_str());
 			}
 		}
 		else
@@ -464,7 +464,7 @@ void LoadHandler::parsePage()
 		}
 		else
 		{
-			error(_("Unknown background type: %s"), type);
+			error(_C("Unknown background type: %s"), type);
 		}
 	}
 	else if (!strcmp(elementName, "layer"))
@@ -490,7 +490,7 @@ void LoadHandler::parseStroke()
 	stroke->setWidth(g_ascii_strtod(width, &ptr));
 	if (ptr == width)
 	{
-		error(_("Error reading width of a stroke: %s"), width);
+		error(_C("Error reading width of a stroke: %s"), width);
 		return;
 	}
 
@@ -529,7 +529,7 @@ void LoadHandler::parseStroke()
 	}
 	else
 	{
-		g_warning(_("Unknown stroke type: \"%s\", assume pen"), tool);
+		g_warning(_C("Unknown stroke type: \"%s\", assume pen"), tool);
 	}
 }
 
@@ -763,7 +763,7 @@ void LoadHandler::parserText(GMarkupParseContext* context, const gchar* text,
 
 		if (n < 4 || (n & 1))
 		{
-			error2(*error, _("Wrong count of points (%i)"), n);
+			error2(*error, _C("Wrong count of points (%i)"), n);
 			return;
 		}
 
@@ -777,8 +777,8 @@ void LoadHandler::parserText(GMarkupParseContext* context, const gchar* text,
 			}
 			else
 			{
-				g_warning(_("xoj-File: %s"), handler->filename.c_str());
-				g_warning(_("Wrong count of points, get %i, expected %i"), handler->pressureBuffer.size(),
+				g_warning(_C("xoj-File: %s"), handler->filename.c_str());
+				g_warning(_C("Wrong count of points, get %i, expected %i"), handler->pressureBuffer.size(),
 						  handler->stroke->getPointCount() - 1);
 			}
 		}

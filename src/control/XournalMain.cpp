@@ -11,6 +11,8 @@
 
 #include <config.h>
 #include <config-dev.h>
+#include <config-paths.h>
+#include <i18n.h>
 
 #include <gtk/gtk.h>
 
@@ -77,10 +79,10 @@ void XournalMain::checkForErrorlog()
 			filename.c_str());
 		//I know it's formatting/i18n hell, but for now it have to wait some time
 		
-		gtk_dialog_add_button(GTK_DIALOG(dialog), _("Send Bugreport"), 1);
-		gtk_dialog_add_button(GTK_DIALOG(dialog), _("Open Logfile"), 2);
-		gtk_dialog_add_button(GTK_DIALOG(dialog), _("Delete Logfile"), 3);
-		gtk_dialog_add_button(GTK_DIALOG(dialog), _("Cancel"), 4);
+		gtk_dialog_add_button(GTK_DIALOG(dialog), _C("Send Bugreport"), 1);
+		gtk_dialog_add_button(GTK_DIALOG(dialog), _C("Open Logfile"), 2);
+		gtk_dialog_add_button(GTK_DIALOG(dialog), _C("Delete Logfile"), 3);
+		gtk_dialog_add_button(GTK_DIALOG(dialog), _C("Cancel"), 4);
 
 		int res = gtk_dialog_run(GTK_DIALOG(dialog));
 
@@ -99,7 +101,7 @@ void XournalMain::checkForErrorlog()
 			{
 				GtkWidget* dlgError = gtk_message_dialog_new(NULL, GTK_DIALOG_MODAL,
 					GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, "%s",
-					_("Errorlog could not be deleted. You have to delete it manually.\nLogfile: %s"),
+					_C("Errorlog could not be deleted. You have to delete it manually.\nLogfile: %s"),
 					filename.c_str());
 				gtk_dialog_run(GTK_DIALOG(dlgError));
 			}
@@ -117,12 +119,12 @@ void XournalMain::checkForEmergencySave() {
 	// TODO Check for emergency save document!
 	//	gchar * filename = g_strconcat(g_get_home_dir(), G_DIR_SEPARATOR_S, CONFIG_DIR, G_DIR_SEPARATOR_S, "errorlog.log", NULL);
 	//	if (g_file_test(filename, G_FILE_TEST_EXISTS)) {
-	//		GtkWidget * dialog = gtk_message_dialog_new(NULL, GTK_DIALOG_MODAL, GTK_MESSAGE_QUESTION, GTK_BUTTONS_NONE, _(
+	//		GtkWidget * dialog = gtk_message_dialog_new(NULL, GTK_DIALOG_MODAL, GTK_MESSAGE_QUESTION, GTK_BUTTONS_NONE, _C(
 	//				"There is an errorlogfile from Xournal++. Please send a Bugreport, so the bug may been fixed.\nLogfile: %s"), filename);
-	//		gtk_dialog_add_button(GTK_DIALOG(dialog), _("Send Bugreport"), 1);
-	//		gtk_dialog_add_button(GTK_DIALOG(dialog), _("Open Logfile"), 2);
-	//		gtk_dialog_add_button(GTK_DIALOG(dialog), _("Delete Logfile"), 3);
-	//		gtk_dialog_add_button(GTK_DIALOG(dialog), _("Cancel"), 4);
+	//		gtk_dialog_add_button(GTK_DIALOG(dialog), _C("Send Bugreport"), 1);
+	//		gtk_dialog_add_button(GTK_DIALOG(dialog), _C("Open Logfile"), 2);
+	//		gtk_dialog_add_button(GTK_DIALOG(dialog), _C("Delete Logfile"), 3);
+	//		gtk_dialog_add_button(GTK_DIALOG(dialog), _C("Cancel"), 4);
 	//
 	//		int res = gtk_dialog_run(GTK_DIALOG(dialog));
 	//
@@ -132,7 +134,7 @@ void XournalMain::checkForEmergencySave() {
 	//			Util::openFileWithFilebrowser(filename);
 	//		} else if (res == 3) { // Delete Logfile
 	//			if (g_unlink(filename) != 0) {
-	//				GtkWidget * dlgError = gtk_message_dialog_new(NULL, GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, "%s", _(
+	//				GtkWidget * dlgError = gtk_message_dialog_new(NULL, GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, "%s", _C(
 	//						"Errorlog could not be deleted. You have to delete it manually.\nLogfile: %s"), filename);
 	//				gtk_dialog_run(GTK_DIALOG(dlgError));
 	//			}
@@ -271,7 +273,7 @@ int XournalMain::run(int argc, char* argv[])
 		{
 			GtkWidget* dialog = gtk_message_dialog_new((GtkWindow*) *win,
 													   GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
-													   _("Sorry, Xournal cannot open remote files at the moment.\n"
+													   _C("Sorry, Xournal cannot open remote files at the moment.\n"
 													   "You have to copy the file to a local directory."));
 			gtk_window_set_transient_for(GTK_WINDOW(dialog), GTK_WINDOW(win->getWindow()));
 			gtk_dialog_run(GTK_DIALOG(dialog));
@@ -354,6 +356,10 @@ GladeSearchpath* XournalMain::initPath(const char* argv0)
 	g_free(searchPath);
 
 	searchPath = g_build_filename(path, "..", "ui", NULL);
+	gladePath->addSearchDirectory(searchPath);
+	g_free(searchPath);
+	
+	searchPath = g_build_filename(PROJECT_SOURCE_DIR, "ui", NULL);
 	gladePath->addSearchDirectory(searchPath);
 	g_free(searchPath);
 

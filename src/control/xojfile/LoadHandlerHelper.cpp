@@ -3,8 +3,7 @@
 #include "LoadHandler.h"
 
 #include <config.h>
-
-#include <glib/gi18n-lib.h>
+#include <i18n.h>
 
 #define error(...) if (loadHandler->error == NULL) { loadHandler->error = g_error_new(G_MARKUP_ERROR, G_MARKUP_ERROR_INVALID_CONTENT, __VA_ARGS__); }
 
@@ -16,17 +15,17 @@ typedef struct
 
 static PredefinedColor PREDEFINED_COLORS[] =
 {
-	{ "black", 0x000000 },
-	{ "blue", 0x3333cc },
-	{ "red", 0xff0000 },
-	{ "green", 0x008000 },
-	{ "gray", 0x808080 },
-	{ "lightblue", 0x00c0ff },
+	{ "black",      0x000000 },
+	{ "blue",       0x3333cc },
+	{ "red",        0xff0000 },
+	{ "green",      0x008000 },
+	{ "gray",       0x808080 },
+	{ "lightblue",  0x00c0ff },
 	{ "lightgreen", 0x00ff00 },
-	{ "magenta", 0xff00ff },
-	{ "orange", 0xff8000 },
-	{ "yellow", 0xffff00 },
-	{ "white", 0xffffff }
+	{ "magenta",    0xff00ff },
+	{ "orange",     0xff8000 },
+	{ "yellow",     0xffff00 },
+	{ "white",      0xffffff }
 };
 
 const int COLOR_COUNT = sizeof(PREDEFINED_COLORS) / sizeof(PredefinedColor);
@@ -68,7 +67,7 @@ bool LoadHandlerHelper::parseColor(const char* text, int& color, LoadHandler* lo
 {
 	if (text == NULL)
 	{
-		error(_("Attribute color not set!"));
+		error(_C("Attribute color not set!"));
 		return false;
 	}
 
@@ -78,7 +77,7 @@ bool LoadHandlerHelper::parseColor(const char* text, int& color, LoadHandler* lo
 		int c = g_ascii_strtoull(&text[1], &ptr, 16);
 		if (ptr != text + strlen(text))
 		{
-			error(_("Unknown color value \"%s\""), text);
+			error(_C("Unknown color value \"%s\""), text);
 			return false;
 		}
 
@@ -96,7 +95,7 @@ bool LoadHandlerHelper::parseColor(const char* text, int& color, LoadHandler* lo
 				return true;
 			}
 		}
-		error(_("Color \"%s\" unknown (not defined in default color list)!"), text);
+		error(_C("Color \"%s\" unknown (not defined in default color list)!"), text);
 		return false;
 	}
 }
@@ -130,7 +129,7 @@ double LoadHandlerHelper::getAttribDouble(const char* name, LoadHandler* loadHan
 
 	if (attrib == NULL)
 	{
-		error(_("Attribute \"%s\" could not be parsed as double, the value is NULL"), name);
+		error(_C("Attribute \"%s\" could not be parsed as double, the value is NULL"), name);
 		return 0;
 	}
 
@@ -138,7 +137,7 @@ double LoadHandlerHelper::getAttribDouble(const char* name, LoadHandler* loadHan
 	double val = g_ascii_strtod(attrib, &ptr);
 	if (ptr == attrib)
 	{
-		error(_("Attribute \"%s\" could not be parsed as double, the value is \"%s\""), name, attrib);
+		error(_C("Attribute \"%s\" could not be parsed as double, the value is \"%s\""), name, attrib);
 	}
 
 	return val;
@@ -150,7 +149,7 @@ int LoadHandlerHelper::getAttribInt(const char* name, LoadHandler* loadHandler)
 
 	if (attrib == NULL)
 	{
-		error(_("Attribute \"%s\" could not be parsed as int, the value is NULL"), name);
+		error(_C("Attribute \"%s\" could not be parsed as int, the value is NULL"), name);
 		return 0;
 	}
 
@@ -158,7 +157,7 @@ int LoadHandlerHelper::getAttribInt(const char* name, LoadHandler* loadHandler)
 	int val = strtol(attrib, &ptr, 10);
 	if (ptr == attrib)
 	{
-		error(_("Attribute \"%s\" could not be parsed as int, the value is \"%s\""), name, attrib);
+		error(_C("Attribute \"%s\" could not be parsed as int, the value is \"%s\""), name, attrib);
 	}
 
 	return val;

@@ -1,9 +1,10 @@
 #include "SearchBar.h"
 
 #include "control/Control.h"
-#include <config.h>
 
-#include <glib/gi18n-lib.h>
+#include <config.h>
+#include <i18n.h>
+
 #include <string.h>
 
 SearchBar::SearchBar(Control* control)
@@ -67,18 +68,18 @@ void SearchBar::search(const char* text)
 		{
 			if (occures == 1)
 			{
-				gtk_label_set_text(GTK_LABEL(lbSearchState), _("Text found on this page"));
+				gtk_label_set_text(GTK_LABEL(lbSearchState), _C("Text found on this page"));
 			}
 			else
 			{
-				char* msg = g_strdup_printf(_("Text %i times found on this page"), occures);
+				char* msg = g_strdup_printf(_C("Text %i times found on this page"), occures);
 				gtk_label_set_text(GTK_LABEL(lbSearchState), msg);
 				g_free(msg);
 			}
 		}
 		else
 		{
-			gtk_label_set_text(GTK_LABEL(lbSearchState), _("Text not found"));
+			gtk_label_set_text(GTK_LABEL(lbSearchState), _C("Text not found"));
 		}
 	}
 	else
@@ -152,11 +153,11 @@ void SearchBar::searchNext()
 			char* msg;
 			if (occures == 1)
 			{
-				msg = g_strdup_printf(_("Text once found on page %i"), x + 1);
+				msg = g_strdup_printf(_C("Text once found on page %i"), x + 1);
 			}
 			else
 			{
-				msg = g_strdup_printf(_("Text %i times found on page %i"), occures, x + 1);
+				msg = g_strdup_printf(_C("Text %i times found on page %i"), occures, x + 1);
 			}
 			gtk_label_set_text(GTK_LABEL(lbSearchState), msg);
 			g_free(msg);
@@ -170,7 +171,7 @@ void SearchBar::searchNext()
 		}
 	}
 
-	gtk_label_set_text(GTK_LABEL(lbSearchState), _("Text not found, searched on all pages"));
+	gtk_label_set_text(GTK_LABEL(lbSearchState), _C("Text not found, searched on all pages"));
 }
 
 void SearchBar::searchPrevious()
@@ -213,11 +214,11 @@ void SearchBar::searchPrevious()
 			char* msg;
 			if (occures == 1)
 			{
-				msg = g_strdup_printf(_("Text once found on page %i"), x + 1);
+				msg = g_strdup_printf(_C("Text once found on page %i"), x + 1);
 			}
 			else
 			{
-				msg = g_strdup_printf(_("Text %i times found on page %i"), occures, x + 1);
+				msg = g_strdup_printf(_C("Text %i times found on page %i"), occures, x + 1);
 			}
 			gtk_label_set_text(GTK_LABEL(lbSearchState), msg);
 			g_free(msg);
@@ -231,8 +232,7 @@ void SearchBar::searchPrevious()
 		}
 	}
 
-	gtk_label_set_text(GTK_LABEL(lbSearchState),
-					_("Text not found, searched on all pages"));
+	gtk_label_set_text(GTK_LABEL(lbSearchState), _C("Text not found, searched on all pages"));
 }
 
 void SearchBar::buttonNextSearchClicked(GtkButton* button, SearchBar* searchBar)

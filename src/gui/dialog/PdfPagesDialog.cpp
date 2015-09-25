@@ -3,9 +3,9 @@
 #include "gui/Shadow.h"
 
 #include <config.h>
+#include <i18n.h>
 #include <Util.h>
 
-#include <glib/gi18n-lib.h>
 #include <math.h>
 
 class PdfPage
@@ -431,11 +431,11 @@ void PdfPagesDialog::show(GtkWindow* parent)
 	char* txt;
 	if (unused == 1)
 	{
-		txt = g_strdup(_("Show only not used pages (one unused page)"));
+		txt = g_strdup(_C("Show only not used pages (one unused page)"));
 	}
 	else
 	{
-		txt = g_strdup_printf(_("Show only not used pages (%i unused pages)"), unused);
+		txt = g_strdup_printf(_C("Show only not used pages (%i unused pages)"), unused);
 	}
 
 	gtk_button_set_label(GTK_BUTTON(w), txt);

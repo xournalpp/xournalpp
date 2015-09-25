@@ -1,7 +1,6 @@
 ## Build poppler ##
 
-add_subdirectory ("pdf/popplerdirect")
-link_directories ("${PROJECT_SOURCE_DIR}/src/pdf/popplerdirect")
+add_subdirectory ("pdf/popplerdirect/workaround")
 
 ## Basic variables ##
 
@@ -9,8 +8,6 @@ include_directories (
   "${PROJECT_BINARY_DIR}/src"
   "${PROJECT_SOURCE_DIR}/src"
   "${PROJECT_SOURCE_DIR}/src/util"
-  "${PROJECT_SOURCE_DIR}/src/pdf/popplerdirect/poppler-0.24.1_build/poppler"
-  "${PROJECT_SOURCE_DIR}/src/pdf/popplerdirect/poppler-0.24.1"
 
   ${xournalpp_INCLUDE_DIRS}
 )
@@ -19,32 +16,26 @@ include_directories (
 add_subdirectory (xoj-preview-extractor)
 
 # Used for both util and xournalpp targets
-set (CMAKE_CXX_FLAGS
-  "${CMAKE_CXX_FLAGS} -g -rdynamic -Wreturn-type -Wuninitialized -Wunused-value -Wunused-variable"
-)
+add_definitions (-g -Wreturn-type -Wuninitialized -Wunused-value -Wunused-variable)
+
+if (NOT WIN32)
+  add_definitions (-rdynamic)
+endif ()
 
 option (DEBUG_COMPILE "Pass -Wall to CXX_FLAGS" OFF)
 mark_as_advanced (FORCE DEBUG_COMPILE)
 
 if (DEBUG_COMPILE)
-  set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall")
+  add_definitions (-Wall)
 endif (DEBUG_COMPILE)
 
 if (DEV_ENABLE_GCOV)
-  set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} --coverage")
+  add_definitions (--coverage)
 endif (DEV_ENABLE_GCOV)
-
-# Some package constants
-set (CMAKE_CXX_FLAGS
-  "${CMAKE_CXX_FLAGS} -DPACKAGE_DATA_DIR=\\\"${PACKAGE_DATA_DIR}\\\" -DPACKAGE_LOCALE_DIR=\\\"${PACKAGE_LOCALE_DIR}\\\""
-)
 
 # Used to compile xournalpp and xournalpp-test
 set (xournalpp_LDFLAGS
   util
-  libpoppler.a
-  libpoppler-glib.a
-
   ${xournalpp_LDFLAGS}
 )
 
@@ -79,11 +70,7 @@ list (REMOVE_ITEM xournalpp_SOURCES ${PROJECT_SOURCE_DIR}/src/model/LayerListene
 
 # Used for xournalpp and xournalpp-test
 add_library (xournalpp-core OBJECT ${xournalpp_SOURCES})
-
-add_dependencies (xournalpp-core
-  poppler
-  util
-)
+add_dependencies (xournalpp-core util)
 
 if (BUILD_BOOST)
   add_dependencies (xournalpp-core boost)
@@ -97,7 +84,6 @@ add_executable (xournalpp
 
 add_dependencies (xournalpp
   xournalpp-core
-  poppler
   util
 )
 

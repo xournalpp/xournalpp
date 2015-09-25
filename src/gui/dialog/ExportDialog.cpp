@@ -1,9 +1,8 @@
 #include "ExportDialog.h"
 
 #include <config.h>
+#include <i18n.h>
 #include <PageRange.h>
-
-#include <glib/gi18n-lib.h>
 
 ExportDialog::ExportDialog(GladeSearchpath* gladeSearchPath, Settings* settings, int pageCount, int currentPage) :
 		GladeGui(gladeSearchPath, "export.glade", "exportDialog")
@@ -37,8 +36,8 @@ void ExportDialog::setupModel()
 {
 	GtkCellRenderer* renderer = gtk_cell_renderer_text_new();
 
-	gtk_tree_view_insert_column_with_attributes(this->typesView, -1, _("File Type"), renderer, "text", 0, NULL);
-	gtk_tree_view_insert_column_with_attributes(this->typesView, -1, _("Extension"), renderer, "text", 1, NULL);
+	gtk_tree_view_insert_column_with_attributes(this->typesView, -1, _C("File Type"), renderer, "text", 0, NULL);
+	gtk_tree_view_insert_column_with_attributes(this->typesView, -1, _C("Extension"), renderer, "text", 1, NULL);
 
 	GtkTreeViewColumn* col = gtk_tree_view_get_column(this->typesView, COL_FILEDESC);
 
@@ -53,7 +52,7 @@ void ExportDialog::setupModel()
 
 	gtk_tree_view_set_model(this->typesView, GTK_TREE_MODEL(this->typesModel));
 
-	addFileType(_("By extension"), NULL, 0, "All files", true);
+	addFileType(_C("By extension"), NULL, 0, "All files", true);
 	addFileType("Portable Document Format",  "pdf", EXPORT_FORMAT_PDF);
 	addFileType("Portable Network Graphics", "png", EXPORT_FORMAT_PNG);
 	addFileType("Scalable Vector Graphics",  "svg", EXPORT_FORMAT_SVG);
@@ -263,7 +262,7 @@ bool ExportDialog::validFilename()
 	{
 		GtkWidget* dialog = gtk_message_dialog_new((GtkWindow*) *this, GTK_DIALOG_DESTROY_WITH_PARENT,
 												   GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
-												   _("Invalid filename selected"));
+												   _C("Invalid filename selected"));
 
 		gtk_dialog_run(GTK_DIALOG(dialog));
 		gtk_widget_destroy(dialog);
@@ -293,11 +292,11 @@ bool ExportDialog::validFilename()
 
 		GtkWidget* dialog = gtk_message_dialog_new((GtkWindow*) *this, GTK_DIALOG_DESTROY_WITH_PARENT,
 												   GTK_MESSAGE_WARNING, GTK_BUTTONS_OK_CANCEL,
-												   _("A file named \"%s\" already exists. Do you want to replace it?"),
+												   _C("A file named \"%s\" already exists. Do you want to replace it?"),
 												   baseName);
 
 		gtk_message_dialog_format_secondary_text(GTK_MESSAGE_DIALOG(dialog),
-												 _("The file already exists in \"%s\". "
+												 _C("The file already exists in \"%s\". "
 												 "Replacing it will overwrite its contents."),
 												 dirName.c_str());
 
@@ -346,7 +345,7 @@ bool ExportDialog::validExtension()
 	{
 		GtkWidget* dialog = gtk_message_dialog_new((GtkWindow*) *this, GTK_DIALOG_DESTROY_WITH_PARENT,
 												   GTK_MESSAGE_WARNING, GTK_BUTTONS_OK,
-												   _("The given filename does not have any known "
+												   _C("The given filename does not have any known "
 												     "file extension. Please enter a known file "
 												     "extension or select a file format "
 												     "from the file format list."));

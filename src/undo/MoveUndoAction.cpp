@@ -7,6 +7,8 @@
 #include "model/Layer.h"
 #include "model/PageRef.h"
 
+#include <i18n.h>
+
 MoveUndoAction::MoveUndoAction(Layer* sourceLayer, PageRef sourcePage, ElementVector* selected, double mx, double my,
 							   Layer* targetLayer, PageRef targetPage) : UndoAction("MoveUndoAction")
 {

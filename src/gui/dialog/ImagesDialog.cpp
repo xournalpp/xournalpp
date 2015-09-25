@@ -8,8 +8,6 @@
 #include <config.h>
 #include <Util.h>
 
-#include <glib/gi18n-lib.h>
-
 #include <math.h>
 
 class ImageView

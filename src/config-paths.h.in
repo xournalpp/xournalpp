@@ -1,0 +1,27 @@
+/*
+ * Xournal++
+ *
+ * Paths to resources
+ *
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
+ *
+ * @license GNU GPLv2 or later
+ */
+
+#pragma once
+
+/**
+ * Path to installed resources (by make install)
+ */
+#define PACKAGE_DATA_DIR "@PACKAGE_DATA_DIR@"
+
+/**
+ * Path to installed gettext resources (by make install)
+ */
+#define PACKAGE_LOCALE_DIR "@PACKAGE_LOCALE_DIR@"
+
+/**
+ * Path to current source directory
+ */
+#define PROJECT_SOURCE_DIR "@PROJECT_SOURCE_DIR@"

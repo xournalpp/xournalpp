@@ -18,6 +18,9 @@
 
 #include <gtk/gtk.h>
 
+#include <string>
+using std::string;
+
 class Control;
 
 class AbstractSidebarPage : public DocumentListener
@@ -40,12 +43,12 @@ public:
 	/**
 	 * The name of this sidebar page
 	 */
-	virtual const char* getName() = 0;
+	virtual string getName() = 0;
 
 	/**
 	 * The name of this sidebar page
 	 */
-	virtual const char* getIconName() = 0;
+	virtual string getIconName() = 0;
 
 	/**
 	 * If this sidebar page has data for the current document, e.g. if there are bookmarks or not

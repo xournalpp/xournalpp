@@ -9,9 +9,9 @@
 #include "view/DocumentView.h"
 
 #include <config.h>
+#include <i18n.h>
 
 #include <boost/filesystem/operations.hpp>
-#include <glib/gi18n-lib.h>
 
 SaveJob::SaveJob(Control* control) : BlockingJob(control, _("Save"))
 {
@@ -159,7 +159,7 @@ bool SaveJob::save()
 	{
 		if (!control->getWindow())
 		{
-			g_error(_("Open file error: %s"), out->getLastError().c_str());
+			g_error(_C("Open file error: %s"), out->getLastError().c_str());
 			return false;
 		}
 

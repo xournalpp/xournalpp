@@ -3,9 +3,9 @@
 #include "ButtonConfig.h"
 
 #include <config.h>
+#include <i18n.h>
 
 #include <boost/filesystem.hpp>
-#include <glib/gi18n-lib.h>
 
 #include <stdlib.h>
 #include <string.h>

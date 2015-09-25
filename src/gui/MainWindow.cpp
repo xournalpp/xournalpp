@@ -16,8 +16,8 @@
 #include <config.h>
 #include <config-dev.h>
 #include <config-features.h>
+#include <i18n.h>
 
-#include <glib/gi18n-lib.h>
 #include <gdk/gdkkeysyms.h>
 
 #include <iostream>
@@ -85,7 +85,7 @@ MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control) :
 	{
 		GtkWidget* dlg = gtk_message_dialog_new(GTK_WINDOW(this->window),
 												GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
-												_("Could not parse general toolbar.ini file: %s\n"
+												_C("Could not parse general toolbar.ini file: %s\n"
 												  "No Toolbars will be available"),
 												file);
 
@@ -104,7 +104,7 @@ MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control) :
 		{
 			GtkWidget* dlg = gtk_message_dialog_new(GTK_WINDOW(this->window),
 													GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
-													_("Could not parse custom toolbar.ini file: %s\n"
+													_C("Could not parse custom toolbar.ini file: %s\n"
 													  "Toolbars will not be available"),
 													file);
 

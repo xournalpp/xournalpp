@@ -3,6 +3,8 @@
 #include "control/Control.h"
 #include "control/xojfile/SaveHandler.h"
 
+#include <i18n.h>
+
 AutosaveJob::AutosaveJob(Control* control)
 {
 	XOJ_INIT_TYPE(AutosaveJob);
@@ -20,7 +22,7 @@ void AutosaveJob::afterRun()
 	XOJ_CHECK_TYPE(AutosaveJob);
 
 	GtkWidget* dialog = gtk_message_dialog_new((GtkWindow*) control->getWindow(),
-											   GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, _("Autosave: %s"),
+											   GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, _C("Autosave: %s"),
 											   this->error.c_str());
 	gtk_window_set_transient_for(GTK_WINDOW(dialog), GTK_WINDOW(this->control->getWindow()->getWindow()));
 	gtk_dialog_run(GTK_DIALOG(dialog));

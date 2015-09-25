@@ -1,9 +1,8 @@
 #include "ToolbarColorNames.h"
 
-#include <StringUtils.h>
 #include <config.h>
-
-#include <glib/gi18n-lib.h>
+#include <i18n.h>
+#include <StringUtils.h>
 
 #include <stdio.h>
 #include <fstream>

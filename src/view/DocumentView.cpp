@@ -12,7 +12,6 @@
 #include <config-debug.h>
 
 #include <gdk/gdk.h>
-#include <glib/gi18n-lib.h>
 
 #include <typeinfo>
 

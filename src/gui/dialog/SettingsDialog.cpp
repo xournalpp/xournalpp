@@ -6,8 +6,6 @@
 #include <config.h>
 #include <Util.h>
 
-#include <glib/gi18n-lib.h>
-
 #include <string.h>
 
 SettingsDialog::SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* settings) :

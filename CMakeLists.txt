@@ -8,7 +8,12 @@ set (PROJECT_STRING "${PROJECT_NAME} ${PROJECT_VERSION}")
 set (PROJECT_URL "https://github.com/xournalpp/xournalpp")
 
 include (FindPkgConfig)
-set (CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake")
+set (CMAKE_MODULE_PATH
+    "${PROJECT_SOURCE_DIR}/cmake/find"
+    "${PROJECT_SOURCE_DIR}/cmake/include"
+)
+
+set (PACKAGE_DATA_DIR "${CMAKE_INSTALL_PREFIX}/share")
 
 # Git repo info
 include (GitRepo)
@@ -84,12 +89,12 @@ else (EXT_GLIBMM)
 endif (EXT_GLIBMM)
 add_includes_ldflags ("${Glibmm_LDFLAGS}" "${Glibmm_INCLUDE_DIRS}")
 
-# Other packages
-
-# librsvg-2.0 is not really needed by Xournal++, but if you don't have it, it crashes while loading the SVG icons
-# We also are compiling with libpoppler so we require a number of extra packages
-pkg_check_modules (OtherLibs REQUIRED "librsvg-2.0 >= 2.14.0" fontconfig lcms)
-add_includes_ldflags ("${OtherLibs_LDFLAGS}" "${OtherLibs_INCLUDE_DIRS}")
+# Poppler
+find_package (Poppler)
+if (NOT POPPLER_FOUND)
+  message (FATAL_ERROR "Poppler not found")
+endif (NOT POPPLER_FOUND)
+add_includes_ldflags ("${POPPLER_LIBRARIES}" "${POPPLER_INCLUDE_DIRS}")
 
 # zlib
 find_package (ZLIB REQUIRED)    # zlib
@@ -98,22 +103,6 @@ add_includes_ldflags ("${ZLIB_LIBRARIES}" "${ZLIB_INCLUDE_DIRS}")
 # pthreads
 find_package (Threads REQUIRED) # pthreads
 set (xournalpp_LDFLAGS ${xournalpp_LDFLAGS} ${CMAKE_THREAD_LIBS_INIT})
-
-# JPEG
-
-option (ENABLE_LIBOPENJPEG "Use libopenjpeg instead of builtin jpeg2000 decoder" ON)
-if (ENABLE_LIBOPENJPEG)
-  find_package (OpenJPEG REQUIRED)
-  add_includes_ldflags ("${OPENJPEG_LIBRARIES};-lopenjpeg" "${OPENJPEG_INCLUDE_DIRS}") # -lopenjpeg added as fallback
-endif (ENABLE_LIBOPENJPEG)
-
-find_package (JPEG)
-add_includes_ldflags ("${JPEG_LIBRARIES}" "${JPEG_INCLUDE_DIRS}")
-if (NOT JPEG_FOUND)
-  message (WARNING "JPEG loader will not be built (JPEG header file not found)")
-endif (NOT JPEG_FOUND)
-
-set (PACKAGE_DATA_DIR "${CMAKE_INSTALL_PREFIX}/share")
 
 ## Additional features ##
 
@@ -201,18 +190,15 @@ configure_file (
   ESCAPE_QUOTES @ONLY
 )
 
-## C++11 ##
+configure_file (
+  src/config-paths.h.in
+  src/config-paths.h
+  ESCAPE_QUOTES @ONLY
+)
 
-include(CheckCXXCompilerFlag)
-CHECK_CXX_COMPILER_FLAG("-std=c++11" COMPILER_SUPPORTS_CXX11)
-CHECK_CXX_COMPILER_FLAG("-std=c++0x" COMPILER_SUPPORTS_CXX0X)
-if(COMPILER_SUPPORTS_CXX11)
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
-elseif(COMPILER_SUPPORTS_CXX0X)
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x")
-else(COMPILER_SUPPORTS_CXX11)
-    message(STATUS "The compiler ${CMAKE_CXX_COMPILER} has no C++11 support. Please use a different C++ compiler.")
-endif(COMPILER_SUPPORTS_CXX11)
+## C++11 ##
+include (C++11)
+CheckCXX11 (FATAL_ERROR)
 
 ## Source building ##
 add_subdirectory (src)
@@ -221,7 +207,7 @@ add_subdirectory (src)
 
 # Install resources
 install (DIRECTORY ui
-  DESTINATION share/xournalpp
+  DESTINATION "share/xournalpp"
   COMPONENT xournalpp
 )
 
@@ -274,7 +260,6 @@ Unstable features:
 	Layers sidebar:             ${UNSTABLE_LAYERS_SIDEBAR}
 
 Static libraries:
-	Poppler:                    ON (it cannot be changed)
 	Boost:                      ${BUILD_BOOST}
 	Glibmm:                     ${EXT_GLIBMM}
 ")

@@ -3,6 +3,7 @@
 #include "gui/Redrawable.h"
 #include "model/Stroke.h"
 
+#include <i18n.h>
 #include <Range.h>
 
 class SizeUndoActionEntry
