@@ -13,7 +13,7 @@
 
 #include "Attribute.h"
 
-class TextAttribute : public Attribute
+class TextAttribute : public XMLAttribute
 {
 public:
 	TextAttribute(const char* name, const char* value);

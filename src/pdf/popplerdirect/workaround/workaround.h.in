@@ -1,3 +1,3 @@
 #pragma once
 
-#include "poppler-${POPPLER_VERSION}/poppler/CairoOutputDev.h"
+#include "${POPPLER_SOURCES_PREFIX}/poppler/CairoOutputDev.h"

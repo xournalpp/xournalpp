@@ -1,6 +1,6 @@
 #include "IntAttribute.h"
 
-IntAttribute::IntAttribute(const char* name, int value) : Attribute(name)
+IntAttribute::IntAttribute(const char* name, int value) : XMLAttribute(name)
 {
 	XOJ_INIT_TYPE(IntAttribute);
 

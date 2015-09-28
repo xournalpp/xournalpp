@@ -5,6 +5,7 @@ Variable name               Default     Description
 
 # BUILD – build dependency libraries and link them statically
 BUILD_BOOST                 OFF         Build needed boost libraries
+BUILD_POPPLER               OFF         Build poppler statically
 
 # CMAKE – some additional CMake related config
 CMAKE_DEBUG_INCLUDES_LDFLAGS [A] OFF    At the end of config process list all include dirs

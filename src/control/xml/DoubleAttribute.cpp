@@ -1,6 +1,6 @@
 #include "DoubleAttribute.h"
 
-DoubleAttribute::DoubleAttribute(const char* name, double value) : Attribute(name)
+DoubleAttribute::DoubleAttribute(const char* name, double value) : XMLAttribute(name)
 {
 	XOJ_INIT_TYPE(DoubleAttribute);
 

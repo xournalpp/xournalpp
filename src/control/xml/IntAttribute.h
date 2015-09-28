@@ -13,7 +13,7 @@
 
 #include "Attribute.h"
 
-class IntAttribute : public Attribute
+class IntAttribute : public XMLAttribute
 {
 public:
 	IntAttribute(const char* name, int value);

@@ -14,11 +14,11 @@
 #include <OutputStream.h>
 #include <XournalType.h>
 
-class Attribute
+class XMLAttribute
 {
 public:
-	Attribute(const char* name);
-	virtual ~Attribute();
+	XMLAttribute(const char* name);
+	virtual ~XMLAttribute();
 
 public:
 	virtual void writeOut(OutputStream* out) = 0;
