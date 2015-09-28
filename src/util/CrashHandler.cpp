@@ -13,6 +13,8 @@
 
 #include <boost/locale/format.hpp>
 
+using std::to_string;
+#include <ctime>
 #include <iostream>
 using std::cerr;
 using std::endl;
@@ -111,9 +113,11 @@ static void crashHandler(int sig)
 	// get void*'s for all entries on the stack
 	size = backtrace(array, 100);
 
-	string filename = Util::getConfigFile("errorlog.log").string();
-
-	ofstream fp(filename.c_str());
+	time_t curtime = time(0);
+	char stime[128];
+	strftime(stime, sizeof(stime), "%Y%m%d-%H%M%S", localtime(&curtime));
+	string filename = Util::getConfigFile(CONCAT("errorlog.", stime, ".log")).string();
+	ofstream fp(filename);
 	if (fp) cerr << bl::format("Crash Handler::wrote crash log to: {1}") % filename << endl;
 
 	streamsplit out(&fp);

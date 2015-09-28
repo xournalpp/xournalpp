@@ -41,6 +41,11 @@
  */
 #define METADATA_MAX_ITEMS @DEV_METADATA_MAX_ITEMS@
 
+/**
+ * Directory where errorlogfiles will be placed
+ */
+#define ERRORLOG_DIR "@DEV_ERRORLOG_DIR@"
+
 
 /* --- Memory checks and logging --- */
 

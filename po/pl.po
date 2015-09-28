@@ -6,15 +6,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp 1.0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-08-14 22:39+0200\n"
-"PO-Revision-Date: 2015-08-14 22:39+0100\n"
+"POT-Creation-Date: 2015-09-28 20:37+0200\n"
+"PO-Revision-Date: 2015-09-28 20:39+0200\n"
 "Last-Translator: Marek Pikuła <marek@pikula.co>\n"
 "Language-Team: Xournal++ team\n"
 "Language: pl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.1\n"
+"X-Generator: Poedit 1.8.4\n"
 
 #: ../src/undo/DeleteUndoAction.cpp:117 ../src/undo/AddUndoAction.cpp:119
 msgid " elements"
@@ -416,7 +416,7 @@ msgstr "Kolor krawędzi aktualnej strony i innych zaznaczeń"
 msgid "By extension"
 msgstr "Rozszerzeniem"
 
-#: ../src/control/XournalMain.cpp:85 ../src/control/Control.cpp:2393
+#: ../src/control/XournalMain.cpp:102 ../src/control/Control.cpp:2393
 #: ../src/control/Control.cpp:2829 ../src/control/Control.cpp:2866
 msgid "Cancel"
 msgstr "Anuluj"
@@ -543,7 +543,7 @@ msgstr "Usuń"
 msgid "Delete Layer"
 msgstr "Usuń warstwę"
 
-#: ../src/control/XournalMain.cpp:84
+#: ../src/control/XournalMain.cpp:101
 msgid "Delete Logfile"
 msgstr "Usuń plik loggera"
 
@@ -686,14 +686,13 @@ msgstr "Błąd przy odczytywaniu pliku PDF: %s"
 msgid "Error reading width of a stroke: %s"
 msgstr "Błędna grubość kreski: %s"
 
-#: ../src/control/XournalMain.cpp:104
-#, c-format
+#: ../src/control/XournalMain.cpp:127
 msgid ""
-"Errorlog could not be deleted. You have to delete it manually.\n"
-"Logfile: %s"
+"Errorlog cannot be deleted. You have to do it manually.\n"
+"Logfile: {1}"
 msgstr ""
-"Nie mogę usunąć pliku z raportem błędu. Trzeba to zrobić ręcznie.\n"
-"Plik loggera: %s"
+"Nie można usunąć pliku z raportem błędu. Trzeba to zrobić ręcznie.\n"
+"Plik loggera: {1}"
 
 #: ../src/control/jobs/ExportJob.cpp:18
 msgid "Export"
@@ -885,11 +884,6 @@ msgstr "Wczytaj plik"
 msgid "Loading..."
 msgstr "Ładowanie..."
 
-#: ../src/control/XournalMain.cpp:75
-#, c-format
-msgid "Logfile: %s"
-msgstr "Plik loggera: %s"
-
 #: ../ui/toolbarManageDialog.glade:7 ../ui/toolbarCustomizeDialog.glade:9
 msgid "Manage Toolbar"
 msgstr "Zarządzaj paskiem narzędzi"
@@ -972,9 +966,13 @@ msgstr ""
 msgid "Open Image"
 msgstr "Otwórz obraz"
 
-#: ../src/control/XournalMain.cpp:83
+#: ../src/control/XournalMain.cpp:99
 msgid "Open Logfile"
 msgstr "Otwórz plik loggera"
+
+#: ../src/control/XournalMain.cpp:100
+msgid "Open Logfile directory"
+msgstr "Otwórz folder z plikami loggera"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:303
 #: ../src/control/stockdlg/XojOpenDlg.cpp:12
@@ -1234,7 +1232,7 @@ msgstr ""
 msgid "Select toolbar:"
 msgstr "Wybierz pasek narzędzi:"
 
-#: ../src/control/XournalMain.cpp:82
+#: ../src/control/XournalMain.cpp:98
 msgid "Send Bugreport"
 msgstr "Wyślij raport błędu"
 
@@ -1275,7 +1273,7 @@ msgstr "Pasek narzędzi po prawej stronie"
 msgid "Show vertical scrollbar on the left side"
 msgstr "Pokaż pionowy pasek przewijania po lewej stronie"
 
-#: ../src/control/XournalMain.cpp:276
+#: ../src/control/XournalMain.cpp:296
 msgid ""
 "Sorry, Xournal cannot open remote files at the moment.\n"
 "You have to copy the file to a local directory."
@@ -1379,17 +1377,29 @@ msgstr ""
 "Dana nazwa pliku nie ma znanego rozszerzenia. Proszę podać znane "
 "rozszerzenie pliku lub wybrać format z listy."
 
+#: ../src/control/XournalMain.cpp:93
+msgid "The most recent log file name: {1}"
+msgstr "Najnowszy plik loggera: {1}"
+
 #: ../ui/settings.glade:1056
 msgid "The unit of the ruler is cm"
 msgstr "Linijka jest skalowana w cm"
 
-#: ../src/control/XournalMain.cpp:69
+#: ../src/control/XournalMain.cpp:86
+msgid ""
+"There are errorlogfiles from Xournal++. Please send a Bugreport, so the bug "
+"may be fixed."
+msgstr ""
+"Znaleziono raporty błędów programu Xournal++. Prosimy o ich wysłanie, w celu "
+"umożliwienia naprawy."
+
+#: ../src/control/XournalMain.cpp:85
 msgid ""
 "There is an errorlogfile from Xournal++. Please send a Bugreport, so the bug "
-"may been fixed.\n"
+"may be fixed."
 msgstr ""
-"Znaleziono plik błędu programu Xournal++. Prosimy o jego wysłanie, w celu "
-"umożliwienia naprawy.\n"
+"Znaleziono raport błędu programu Xournal++. Prosimy o jego wysłanie, w celu "
+"umożliwienia naprawy."
 
 #: ../src/gui/PageView.cpp:399
 msgid ""
@@ -1581,6 +1591,14 @@ msgid ""
 msgstr ""
 "Nie ma stron PDF do wyboru. Anuluj tą operację.\n"
 "Proszę wybrać inny rodzaj tła: Menu Dziennik/Tło papieru."
+
+#: ../src/control/XournalMain.cpp:89
+msgid ""
+"You're using {1}/{2} branch. Send Bugreport will direct you to this repo's "
+"issue tracker."
+msgstr ""
+"Używasz gałęzi {1}/{2}. Raport błędu zostanie wysłany do repozytorium "
+"źródłowego."
 
 #: ../src/gui/sidebar/indextree/SidebarIndexPage.cpp:79
 #, c-format
@@ -1842,3 +1860,12 @@ msgstr "wybielanie"
 #, c-format
 msgid "xoj-File: %s"
 msgstr "Plik xoj: %s"
+
+#~ msgid "Logfile: %s"
+#~ msgstr "Plik loggera: %s"
+
+#~ msgid "There are errorlogfiles from Xournal++."
+#~ msgstr "Znaleziono pliki błędu programu Xournal++."
+
+#~ msgid "There is an errorlogfile from Xournal++."
+#~ msgstr "Znaleziono plik błędu programu Xournal++."

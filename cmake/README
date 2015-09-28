@@ -30,6 +30,7 @@ DEV_METADATA_MAX_ITEMS [A]  50                Maximal amount of metadata element
 DEV_PRINT_CONFIG_FILE [A]   print-config.ini  Print config file name
 DEV_SETTINGS_XML_FILE [A]   settings.xml      Settings file name
 DEV_TOOLBAR_CONFIG [A]      toolbar.ini       Toolbar config file name
+DEV_ERRORLOG_DIR [A]        ""                Directory where errorlogfiles will be placed
 
 # EXT – add dependency basing on precompiled deb packages (UNIX only)
 EXT_GLIBMM                  OFF         Glibmm and Gtkmm binaries

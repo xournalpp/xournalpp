@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xournalpp 0.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-08-14 22:39+0200\n"
+"POT-Creation-Date: 2015-09-28 20:37+0200\n"
 "PO-Revision-Date: 2015-08-14 22:41+0100\n"
 "Last-Translator: Marek Pikuła <marek@pikula.co>\n"
 "Language-Team: DE\n"
@@ -423,7 +423,7 @@ msgstr "Rahmenfarbe der selektierten Seite und anderen Selektionen"
 msgid "By extension"
 msgstr "Nach Endung"
 
-#: ../src/control/XournalMain.cpp:85 ../src/control/Control.cpp:2393
+#: ../src/control/XournalMain.cpp:102 ../src/control/Control.cpp:2393
 #: ../src/control/Control.cpp:2829 ../src/control/Control.cpp:2866
 msgid "Cancel"
 msgstr "Abbrechen"
@@ -553,7 +553,7 @@ msgstr "Löschen"
 msgid "Delete Layer"
 msgstr "Layer löschen"
 
-#: ../src/control/XournalMain.cpp:84
+#: ../src/control/XournalMain.cpp:101
 msgid "Delete Logfile"
 msgstr "Logfile löschen"
 
@@ -699,11 +699,11 @@ msgstr "Fehler beim lesen des PDFs: %s"
 msgid "Error reading width of a stroke: %s"
 msgstr "Fehler beim lesen der Dicke einer Linie: %s"
 
-#: ../src/control/XournalMain.cpp:104
-#, c-format
+#: ../src/control/XournalMain.cpp:127
+#, fuzzy
 msgid ""
-"Errorlog could not be deleted. You have to delete it manually.\n"
-"Logfile: %s"
+"Errorlog cannot be deleted. You have to do it manually.\n"
+"Logfile: {1}"
 msgstr ""
 "Errorlog konnte nicht gelöscht werden. Sie müssen ihn Manuell löschen.\n"
 "Logfile: %s"
@@ -900,11 +900,6 @@ msgstr "Datei laden"
 msgid "Loading..."
 msgstr "Laden..."
 
-#: ../src/control/XournalMain.cpp:75
-#, fuzzy, c-format
-msgid "Logfile: %s"
-msgstr "xoj-Datei: %s"
-
 #: ../ui/toolbarManageDialog.glade:7 ../ui/toolbarCustomizeDialog.glade:9
 msgid "Manage Toolbar"
 msgstr "Toolbars verwalten"
@@ -987,8 +982,13 @@ msgstr ""
 msgid "Open Image"
 msgstr "Öffne Bild"
 
-#: ../src/control/XournalMain.cpp:83
+#: ../src/control/XournalMain.cpp:99
 msgid "Open Logfile"
+msgstr "Öffne Logfile"
+
+#: ../src/control/XournalMain.cpp:100
+#, fuzzy
+msgid "Open Logfile directory"
 msgstr "Öffne Logfile"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:303
@@ -1251,7 +1251,7 @@ msgstr ""
 msgid "Select toolbar:"
 msgstr "Wähle Toolbar:"
 
-#: ../src/control/XournalMain.cpp:82
+#: ../src/control/XournalMain.cpp:98
 msgid "Send Bugreport"
 msgstr "Bugreport senden"
 
@@ -1292,7 +1292,7 @@ msgstr "Seitenleiste auf der rechten Seite anzeigen"
 msgid "Show vertical scrollbar on the left side"
 msgstr "Vertikale Scrollbar auf der linken Seite anzeigen"
 
-#: ../src/control/XournalMain.cpp:276
+#: ../src/control/XournalMain.cpp:296
 msgid ""
 "Sorry, Xournal cannot open remote files at the moment.\n"
 "You have to copy the file to a local directory."
@@ -1396,15 +1396,29 @@ msgstr ""
 "Der Dateiname ethält keine bekannte Endung, bitte geben Sie eine bekannte "
 "Endung an, oder wählen Sie eine aus der Liste."
 
+#: ../src/control/XournalMain.cpp:93
+msgid "The most recent log file name: {1}"
+msgstr ""
+
 #: ../ui/settings.glade:1056
 msgid "The unit of the ruler is cm"
 msgstr "Die Einheit des Massstabes ist cm"
 
-#: ../src/control/XournalMain.cpp:69
+#: ../src/control/XournalMain.cpp:86
+#, fuzzy
+msgid ""
+"There are errorlogfiles from Xournal++. Please send a Bugreport, so the bug "
+"may be fixed."
+msgstr ""
+"Es ist ein Xournal++ Errorlog vorhanden. Bitte senden Sie einen Bugreport "
+"(auf Englisch wenn möglich) damit der Fehler korrigiert werden kann.\n"
+"Logfile: %s"
+
+#: ../src/control/XournalMain.cpp:85
 #, fuzzy
 msgid ""
 "There is an errorlogfile from Xournal++. Please send a Bugreport, so the bug "
-"may been fixed.\n"
+"may be fixed."
 msgstr ""
 "Es ist ein Xournal++ Errorlog vorhanden. Bitte senden Sie einen Bugreport "
 "(auf Englisch wenn möglich) damit der Fehler korrigiert werden kann.\n"
@@ -1601,6 +1615,12 @@ msgstr ""
 "Es gibt keine PDF Seiten zum auswählen. Abbruch.\n"
 "Bitte wählen Sie einen anderen Hintergrundtyp: Menü \"Journal\" / "
 "\"Hintergrund neuer Seiten\"."
+
+#: ../src/control/XournalMain.cpp:89
+msgid ""
+"You're using {1}/{2} branch. Send Bugreport will direct you to this repo's "
+"issue tracker."
+msgstr ""
 
 #: ../src/gui/sidebar/indextree/SidebarIndexPage.cpp:79
 #, c-format
@@ -1921,6 +1941,10 @@ msgstr "xoj-Datei: %s"
 
 #~ msgid "Info: autosave not necessary, nothing changed...\n"
 #~ msgstr "Info: Autospeichern nicht nötig, nichts geändert...\n"
+
+#, fuzzy
+#~ msgid "Logfile: %s"
+#~ msgstr "xoj-Datei: %s"
 
 #~ msgid "Open '%s'"
 #~ msgstr "Öffne '%s'"

@@ -63,50 +63,74 @@ void XournalMain::checkForErrorlog()
 {
 	XOJ_CHECK_TYPE(XournalMain);
 
-	bf::path filename = Util::getConfigFile("errorlog.log");
-	if (bf::exists(filename))
+	bf::path errorDir = Util::getConfigSubfolder(ERRORLOG_DIR);
+	bf::directory_iterator end_iter;
+	vector<string> errorList;
+	for (bf::directory_iterator dir_iter(errorDir); dir_iter != end_iter; ++dir_iter)
 	{
-		string msg = _("There is an errorlogfile from Xournal++. Please send a Bugreport, "
-					   "so the bug may been fixed.\n");
+		if (bf::is_regular_file(dir_iter->status()))
+		{
+			string name = dir_iter->path().filename().string();
+			if (boost::starts_with(name, "errorlog."))
+			{
+				errorList.push_back(name);
+			}
+		}
+	}
+	
+	if (!errorList.empty())
+	{
+		std::sort(errorList.begin(), errorList.end());
+		string msg = errorList.size() == 1
+				? _("There is an errorlogfile from Xournal++. Please send a Bugreport, so the bug may be fixed.")
+				: _("There are errorlogfiles from Xournal++. Please send a Bugreport, so the bug may be fixed.");
+		msg += "\n";
 #if defined(GIT_BRANCH) && defined(GIT_REPO_OWNER)
-		msg += (bl::format("You're using {1}/{2} branch. Send Bugreport will direct you to this repo's issue tracker.\n")
+		msg += (bl::format(_("You're using {1}/{2} branch. Send Bugreport will direct you to this repo's issue tracker."))
 						% GIT_REPO_OWNER % GIT_BRANCH).str();
+		msg += "\n";
 #endif
-		msg += _("Logfile: %s");
+		msg += (bl::format(_("The most recent log file name: {1}")) % errorList[0]).str();
 		
 		GtkWidget* dialog = gtk_message_dialog_new(NULL, GTK_DIALOG_MODAL,
-			GTK_MESSAGE_QUESTION, GTK_BUTTONS_NONE, msg.c_str(),
-			filename.c_str());
-		//I know it's formatting/i18n hell, but for now it have to wait some time
+			GTK_MESSAGE_QUESTION, GTK_BUTTONS_NONE, msg.c_str());
 		
 		gtk_dialog_add_button(GTK_DIALOG(dialog), _C("Send Bugreport"), 1);
 		gtk_dialog_add_button(GTK_DIALOG(dialog), _C("Open Logfile"), 2);
-		gtk_dialog_add_button(GTK_DIALOG(dialog), _C("Delete Logfile"), 3);
-		gtk_dialog_add_button(GTK_DIALOG(dialog), _C("Cancel"), 4);
+		gtk_dialog_add_button(GTK_DIALOG(dialog), _C("Open Logfile directory"), 3);
+		gtk_dialog_add_button(GTK_DIALOG(dialog), _C("Delete Logfile"), 4);
+		gtk_dialog_add_button(GTK_DIALOG(dialog), _C("Cancel"), 5);
 
 		int res = gtk_dialog_run(GTK_DIALOG(dialog));
 
+		path errorlogPath = Util::getConfigSubfolder(ERRORLOG_DIR);
+		errorlogPath /= errorList[0];
 		if (res == 1) // Send Bugreport
 		{
 			Util::openFileWithDefaultApplicaion(PROJECT_BUGREPORT);
-			Util::openFileWithFilebrowser(filename);
+			Util::openFileWithDefaultApplicaion(errorlogPath);
 		}
 		else if (res == 2) // Open Logfile
 		{
-			Util::openFileWithFilebrowser(filename);
+			Util::openFileWithDefaultApplicaion(errorlogPath);
 		}
-		else if (res == 3) // Delete Logfile
+		else if (res == 3) // Open Logfile directory
 		{
-			if (bf::remove(filename) != 1)
+			Util::openFileWithFilebrowser(errorlogPath.parent_path());
+		}
+		else if (res == 4) // Delete Logfile
+		{
+			if (!bf::remove(errorlogPath))
 			{
 				GtkWidget* dlgError = gtk_message_dialog_new(NULL, GTK_DIALOG_MODAL,
-					GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, "%s",
-					_C("Errorlog could not be deleted. You have to delete it manually.\nLogfile: %s"),
-					filename.c_str());
+					GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
+					(bl::format(_("Errorlog cannot be deleted. You have to do it manually.\nLogfile: {1}"))
+						% errorlogPath.string()).str().c_str());
 				gtk_dialog_run(GTK_DIALOG(dlgError));
+				gtk_widget_destroy(dlgError);
 			}
 		}
-		else if (res == 4) // Cancel
+		else if (res == 5) // Cancel
 		{
 			// Nothing to do
 		}

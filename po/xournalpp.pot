@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp 1.0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-08-14 22:39+0200\n"
+"POT-Creation-Date: 2015-09-28 20:37+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -107,7 +107,7 @@ msgstr ""
 msgid "By extension"
 msgstr ""
 
-#: ../src/control/XournalMain.cpp:85 ../src/control/Control.cpp:2393
+#: ../src/control/XournalMain.cpp:102 ../src/control/Control.cpp:2393
 #: ../src/control/Control.cpp:2829 ../src/control/Control.cpp:2866
 msgid "Cancel"
 msgstr ""
@@ -210,7 +210,7 @@ msgstr ""
 msgid "Delete"
 msgstr ""
 
-#: ../src/control/XournalMain.cpp:84
+#: ../src/control/XournalMain.cpp:101
 msgid "Delete Logfile"
 msgstr ""
 
@@ -341,11 +341,10 @@ msgstr ""
 msgid "Error reading width of a stroke: %s"
 msgstr ""
 
-#: ../src/control/XournalMain.cpp:104
-#, c-format
+#: ../src/control/XournalMain.cpp:127
 msgid ""
-"Errorlog could not be deleted. You have to delete it manually.\n"
-"Logfile: %s"
+"Errorlog cannot be deleted. You have to do it manually.\n"
+"Logfile: {1}"
 msgstr ""
 
 #: ../src/control/jobs/ExportJob.cpp:18
@@ -480,11 +479,6 @@ msgstr ""
 msgid "Loading..."
 msgstr ""
 
-#: ../src/control/XournalMain.cpp:75
-#, c-format
-msgid "Logfile: %s"
-msgstr ""
-
 #: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:140
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:17
 msgid "Mangenta"
@@ -531,8 +525,12 @@ msgstr ""
 msgid "Open Image"
 msgstr ""
 
-#: ../src/control/XournalMain.cpp:83
+#: ../src/control/XournalMain.cpp:99
 msgid "Open Logfile"
+msgstr ""
+
+#: ../src/control/XournalMain.cpp:100
+msgid "Open Logfile directory"
 msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:303
@@ -707,7 +705,7 @@ msgstr ""
 msgid "Select region"
 msgstr ""
 
-#: ../src/control/XournalMain.cpp:82
+#: ../src/control/XournalMain.cpp:98
 msgid "Send Bugreport"
 msgstr ""
 
@@ -728,7 +726,7 @@ msgstr ""
 msgid "Show only not used pages (one unused page)"
 msgstr ""
 
-#: ../src/control/XournalMain.cpp:276
+#: ../src/control/XournalMain.cpp:296
 msgid ""
 "Sorry, Xournal cannot open remote files at the moment.\n"
 "You have to copy the file to a local directory."
@@ -809,10 +807,20 @@ msgid ""
 "known file extension or select a file format from the file format list."
 msgstr ""
 
-#: ../src/control/XournalMain.cpp:69
+#: ../src/control/XournalMain.cpp:93
+msgid "The most recent log file name: {1}"
+msgstr ""
+
+#: ../src/control/XournalMain.cpp:86
+msgid ""
+"There are errorlogfiles from Xournal++. Please send a Bugreport, so the bug "
+"may be fixed."
+msgstr ""
+
+#: ../src/control/XournalMain.cpp:85
 msgid ""
 "There is an errorlogfile from Xournal++. Please send a Bugreport, so the bug "
-"may been fixed.\n"
+"may be fixed."
 msgstr ""
 
 #: ../src/gui/PageView.cpp:399
@@ -976,6 +984,12 @@ msgid ""
 "You don't have any PDF pages to select from. Cancel operation,\n"
 "Please select another background type: Menu \"Journal\" / \"Insert Page Type"
 "\"."
+msgstr ""
+
+#: ../src/control/XournalMain.cpp:89
+msgid ""
+"You're using {1}/{2} branch. Send Bugreport will direct you to this repo's "
+"issue tracker."
 msgstr ""
 
 #: ../src/gui/sidebar/indextree/SidebarIndexPage.cpp:79
