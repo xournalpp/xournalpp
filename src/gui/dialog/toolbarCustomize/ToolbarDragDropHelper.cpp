@@ -5,7 +5,7 @@
 #include <Util.h>
 
 GdkAtom ToolbarDragDropHelper::atomToolItem = gdk_atom_intern_static_string("application/xournal-ToolbarItem");
-GtkTargetEntry ToolbarDragDropHelper::dropTargetEntry = { "move-buffer", GTK_TARGET_SAME_APP, 1 };
+GtkTargetEntry ToolbarDragDropHelper::dropTargetEntry = { (gchar *)"move-buffer", GTK_TARGET_SAME_APP, 1 };
 
 ToolbarDragDropHelper::ToolbarDragDropHelper() { }
 
@@ -58,7 +58,7 @@ void ToolbarDragDropHelper::dragDestAddToolbar(GtkWidget* target)
 	// If not exist add, else do nothing
 	if (!gtk_target_list_find(targetList, atomToolItem, NULL))
 	{
-		gtk_target_list_add(targetList, atomToolItem, 0, NULL);
+		gtk_target_list_add(targetList, atomToolItem, 0, 0);
 	}
 
 	gtk_drag_dest_set_target_list(target, targetList);
@@ -82,7 +82,7 @@ void ToolbarDragDropHelper::dragSourceAddToolbar(GtkWidget* widget)
 	{
 		targetList = gtk_target_list_new(NULL, 0);
 	}
-	gtk_target_list_add(targetList, atomToolItem, 0, NULL);
+	gtk_target_list_add(targetList, atomToolItem, 0, 0);
 	gtk_drag_source_set_target_list(widget, targetList);
 	gtk_target_list_unref(targetList);
 }
