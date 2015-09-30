@@ -73,30 +73,30 @@ void ToolSelectCombocontrol::selected(ActionGroup group, ActionType action)
 			return;
 		}
 
-		const char* description = NULL;
+		string description;
 
 		if (action == ACTION_TOOL_SELECT_RECT && this->action != ACTION_TOOL_SELECT_RECT)
 		{
 			this->action = ACTION_TOOL_SELECT_RECT;
 			gtk_image_set_from_pixbuf(GTK_IMAGE(iconWidget), this->iconSelectRect);
 
-			description = _C("Select Rectangle");
+			description = _("Select Rectangle");
 		}
 		else if (action == ACTION_TOOL_SELECT_REGION && this->action != ACTION_TOOL_SELECT_REGION)
 		{
 			this->action = ACTION_TOOL_SELECT_REGION;
 			gtk_image_set_from_pixbuf(GTK_IMAGE(iconWidget), this->iconSelectRgion);
 
-			description = _C("Select Region");
+			description = _("Select Region");
 		}
 		else if (action == ACTION_TOOL_SELECT_OBJECT && this->action != ACTION_TOOL_SELECT_OBJECT)
 		{
 			this->action = ACTION_TOOL_SELECT_OBJECT;
 			gtk_image_set_from_pixbuf(GTK_IMAGE(iconWidget), this->iconSelectObject);
 
-			description = _C("Select Object");
+			description = _("Select Object");
 		}
-		gtk_tool_item_set_tooltip_text(GTK_TOOL_ITEM(item), description);
+		gtk_tool_item_set_tooltip_text(GTK_TOOL_ITEM(item), description.c_str());
 
 
 		if (gtk_toggle_tool_button_get_active(GTK_TOGGLE_TOOL_BUTTON(this->item)) != (this->action == action))

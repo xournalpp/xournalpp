@@ -185,13 +185,13 @@ void Util::openFileWithDefaultApplicaion(path filename)
 		replace_pair('\"', "\\\"")
 	});
 
-	string command = (bl::format(OPEN_PATTERN) % escaped).str();
+	string command = FS(bl::format(OPEN_PATTERN) % escaped);
 	cout << bl::format("XPP Execute command: «{1}»") % command << endl;
 	if (system(command.c_str()) != 0)
 	{
 		GtkWidget* dlgError = gtk_message_dialog_new(NULL, GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, "%s",
-													 _C("File could not be opened. You have to open it manual\n:URL: %s"),
-													 filename.c_str(), filename.c_str());
+													 FC(_F("File couldn't be opened. You have to do it manually:\n"
+														   "URL: {1}") % filename));
 		gtk_dialog_run(GTK_DIALOG(dlgError));
 	}
 }
@@ -214,13 +214,13 @@ void Util::openFileWithFilebrowser(path filename)
 		replace_pair('\"', "\\\"")
 	});
 
-	string command = (bl::format(OPEN_PATTERN) % escaped).str();
+	string command = FS(bl::format(OPEN_PATTERN) % escaped);
 	cout << bl::format("XPP show file in filebrowser command: «{1}»") % command << endl;
 	if (system(command.c_str()) != 0)
 	{
 		GtkWidget* dlgError = gtk_message_dialog_new(NULL, GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, "%s",
-													 _C("File could not be opened. You have to open it manual\n:URL: %s"),
-													 filename.c_str(), filename.c_str());
+													 FC(_F("File couldn't be opened. You have to do it manually:\n"
+														   "URL: {1}") % filename));
 		gtk_dialog_run(GTK_DIALOG(dlgError));
 	}
 }

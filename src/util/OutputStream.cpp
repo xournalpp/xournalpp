@@ -1,5 +1,7 @@
 #include "OutputStream.h"
 
+#include <i18n.h>
+
 #include <stdlib.h>
 #include <string.h>
 
@@ -34,7 +36,7 @@ GzOutputStream::GzOutputStream(path filename)
 #endif
 	if (this->fp == NULL)
 	{
-		this->error = (bl::format("error opening file: \"{1}\"") % filename.string()).str();
+		this->error = FS(_F("Error opening file: \"{1}\"") % filename.string());
 	}
 }
 

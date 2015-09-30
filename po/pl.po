@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp 1.0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-09-28 20:37+0200\n"
-"PO-Revision-Date: 2015-09-28 20:39+0200\n"
+"POT-Creation-Date: 2015-09-30 23:59+0200\n"
+"PO-Revision-Date: 2015-10-01 00:00+0200\n"
 "Last-Translator: Marek Pikuła <marek@pikula.co>\n"
 "Language-Team: Xournal++ team\n"
 "Language: pl\n"
@@ -27,6 +27,11 @@ msgstr "obraz"
 #: ../src/undo/DeleteUndoAction.cpp:136 ../src/undo/AddUndoAction.cpp:138
 msgid " latex"
 msgstr "latex"
+
+#: ../src/gui/MainWindow.cpp:808
+msgctxt "Page {pagenumber} \"of {pagecount}\""
+msgid " of {1}{2}"
+msgstr "z {1}{2}"
 
 #: ../src/undo/DeleteUndoAction.cpp:124 ../src/undo/AddUndoAction.cpp:126
 msgid " stroke"
@@ -322,10 +327,9 @@ msgstr ""
 "<span size=\"xx-large\" weight=\"bold\">Xournal++</span>\n"
 "<i>Następna generacja</i>"
 
-#: ../src/gui/dialog/ExportDialog.cpp:295
-#, c-format
-msgid "A file named \"%s\" already exists. Do you want to replace it?"
-msgstr "Plik o nazwie \"%s\" już istnieje. Czy chcesz go zastąpić?"
+#: ../src/gui/dialog/ExportDialog.cpp:294
+msgid "A file named \"{1}\" already exists. Do you want to replace it?"
+msgstr "Plik o nazwie \"{1}\" już istnieje. Czy chcesz go zastąpić?"
 
 #: ../ui/about.glade:8
 msgid "About Xournal"
@@ -349,24 +353,20 @@ msgid "Attach file to the journal"
 msgstr "Dołącz plik do dziennika"
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:140
-#, c-format
-msgid "Attribute \"%s\" could not be parsed as double, the value is \"%s\""
-msgstr "Atrybut \"%s\" nie jest typu double (wartość: \"%s\")"
+msgid "Attribute \"{1}\" could not be parsed as double, the value is \"{2}\""
+msgstr "Atrybut \"{1}\" nie jest typu zmiennoprzecinkowego (wartość: \"{2}\")"
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:132
-#, c-format
-msgid "Attribute \"%s\" could not be parsed as double, the value is NULL"
-msgstr "Atrybut \"%s\" nie jest typu double (wartość: NULL)"
+msgid "Attribute \"{1}\" could not be parsed as double, the value is NULL"
+msgstr "Atrybut \"{1}\" nie jest typu double (wartość: NULL)"
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:160
-#, c-format
-msgid "Attribute \"%s\" could not be parsed as int, the value is \"%s\""
-msgstr "Atrybut \"%s\" nie jest typu int (wartość: \"%s\")"
+msgid "Attribute \"{1}\" could not be parsed as int, the value is \"{2}\""
+msgstr "Atrybut \"{1}\" nie jest typu całkowitego (wartość: \"{2}\")"
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:152
-#, c-format
-msgid "Attribute \"%s\" could not be parsed as int, the value is NULL"
-msgstr "Atrybut \"%s\" nie jest typu int (wartość: NULL)"
+msgid "Attribute \"{1}\" could not be parsed as int, the value is NULL"
+msgstr "Atrybut \"{1}\" nie jest typu int (wartość: NULL)"
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:70
 msgid "Attribute color not set!"
@@ -376,10 +376,9 @@ msgstr "Atrybut koloru nie został ustawiony!"
 msgid "Autosave every ... minute:"
 msgstr "Autozapis co ... minut"
 
-#: ../src/control/jobs/AutosaveJob.cpp:25
-#, c-format
-msgid "Autosave: %s"
-msgstr "Autozapis: %s"
+#: ../src/control/jobs/AutosaveJob.cpp:26
+msgid "Autosave: {1}"
+msgstr "Autozapis: {1}"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:318
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:321
@@ -416,10 +415,14 @@ msgstr "Kolor krawędzi aktualnej strony i innych zaznaczeń"
 msgid "By extension"
 msgstr "Rozszerzeniem"
 
-#: ../src/control/XournalMain.cpp:102 ../src/control/Control.cpp:2393
-#: ../src/control/Control.cpp:2829 ../src/control/Control.cpp:2866
+#: ../src/control/XournalMain.cpp:102 ../src/control/Control.cpp:2394
+#: ../src/control/Control.cpp:2831 ../src/control/Control.cpp:2868
 msgid "Cancel"
 msgstr "Anuluj"
+
+#: ../src/control/settings/MetadataManager.cpp:226
+msgid "Cannot copy metadata \"{1}\" to \"{2}\": {3}"
+msgstr "Nie można skopiować metadanych \"{1}\" do \"{2}\": {3}"
 
 #: ../src/undo/ColorUndoAction.cpp:118
 msgid "Change color"
@@ -442,11 +445,15 @@ msgid "Color"
 msgstr "Kolor"
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:98
-#, c-format
-msgid "Color \"%s\" unknown (not defined in default color list)!"
-msgstr "Nie rozpoznano koloru \"%s\" (nie zdefiniowany w domyślnych)!"
+msgid "Color \"{1}\" unknown (not defined in default color list)!"
+msgstr "Nie rozpoznano koloru \"{1}\" (nie zdefiniowany w domyślnych)!"
 
-#: ../src/gui/sidebar/indextree/SidebarIndexPage.cpp:273
+#: ../src/util/LatexAction.cpp:44
+msgctxt "LaTeX comand"
+msgid "Command is being run."
+msgstr "Wykonywanie polecenia."
+
+#: ../src/gui/sidebar/indextree/SidebarIndexPage.cpp:272
 msgid "Contents"
 msgstr "Zawartość"
 
@@ -463,53 +470,68 @@ msgstr "Kopiuj aktywną"
 msgid "Copy page"
 msgstr "Kopiuj stronę"
 
-#: ../src/control/xojfile/LoadHandler.cpp:98
-msgid "Could not open file: \""
-msgstr "Nie można otworzyć pliku: \""
-
-#: ../src/gui/MainWindow.cpp:107
-#, c-format
+#: ../src/control/jobs/SaveJob.cpp:150
 msgid ""
-"Could not parse custom toolbar.ini file: %s\n"
+"Could not create backup! (The file was created from an older Xournal version)"
+msgstr ""
+"Nie można stworzyć kopii zapasowej! (Plik został stworzony w starszej wersji "
+"Xournala)"
+
+#: ../src/control/xojfile/LoadHandler.cpp:107
+msgid "Could not open file: \"{1}\""
+msgstr "Nie można otworzyć pliku: \"{1}\""
+
+#: ../src/gui/MainWindow.cpp:106
+msgid ""
+"Could not parse custom toolbar.ini file: {1}\n"
 "Toolbars will not be available"
 msgstr ""
-"Nie można sparsować niestandardowego pliku toolbar.ini: %s\n"
+"Nie można sparsować niestandardowego pliku toolbar.ini: {1}\n"
 "Paski narzędzi nie będą dostępne."
 
 #: ../src/gui/MainWindow.cpp:88
-#, c-format
 msgid ""
-"Could not parse general toolbar.ini file: %s\n"
+"Could not parse general toolbar.ini file: {1}\n"
 "No Toolbars will be available"
 msgstr ""
-"Nie można sparsować głównego pliku toolbar.ini: %s\n"
+"Nie można sparsować głównego pliku toolbar.ini: {1}\n"
 "Żadne paski narzędzi nie będą dostępne."
 
+#: ../src/control/xojfile/LoadHandler.cpp:325
+msgid "Could not read image: {1}. Error message: {2}"
+msgstr "Nie można odczytać obrazu: {1}. Treść błędu: {2}"
+
 #: ../src/undo/UndoRedoHandler.cpp:188
-#, c-format
 msgid ""
-"Could not redo '%s'\n"
-"Something went wrong... Please write a bug report..."
+"Could not redo \"{1}\"\n"
+"Something went wrong… Please write a bug report…"
 msgstr ""
-"Nie można powtórzyć '%s'\n"
-"Coś poszło źle... Proszę zgłosić błąd..."
+"Nie można powtórzyć \"{1}\"\n"
+"Coś poszło źle… Proszę zgłosić błąd…"
+
+#: ../src/control/Control.cpp:3294
+msgid "Could not retrieve LaTeX image file: {1}"
+msgstr "Nie można wczytać obrazu LaTeXa: {1}"
 
 #: ../src/undo/UndoRedoHandler.cpp:146
-#, c-format
 msgid ""
-"Could not undo '%s'\n"
-"Something went wrong... Please write a bug report..."
+"Could not undo \"{1}\"\n"
+"Something went wrong… Please write a bug report…"
 msgstr ""
-"Nie można cofnąć '%s'\n"
-"Coś poszło źle... Proszę zgłosić błąd..."
+"Nie można cofnąć \"{1}\n"
+"Coś poszło źle… Proszę zgłosić błąd…"
 
-#: ../src/control/xojfile/SaveHandler.cpp:280
+#: ../src/control/xojfile/SaveHandler.cpp:279
 msgid "Could not write background \"{1}\", {2}"
 msgstr "Nie można zapisać tła \"{1}\", {2}"
 
-#: ../src/control/xojfile/SaveHandler.cpp:376
+#: ../src/control/xojfile/SaveHandler.cpp:374
 msgid "Could not write background \"{1}\". Continuing anyway."
 msgstr "Nie można zapisać tła \"{1}\". Kontynuuję mimo to."
+
+#: ../src/control/settings/MetadataManager.cpp:243
+msgid "Could not write metadata file: {1} ({2})"
+msgstr "Nie można zapisać pliku matadanych: {1} ({2})"
 
 #: ../ui/export.glade:90
 msgid "Current page"
@@ -571,17 +593,21 @@ msgstr "Wyłącz linijkę i rozpoznawanie kształtów"
 msgid "Disable drawing for this device"
 msgstr "Wyłącz rysowanie przy użyciu tego urządzenia"
 
-#: ../src/control/Control.cpp:2828 ../src/control/Control.cpp:2865
+#: ../src/control/Control.cpp:2830 ../src/control/Control.cpp:2867
 msgid "Discard"
 msgstr "Odrzuć"
 
-#: ../src/control/Control.cpp:2862
+#: ../src/control/Control.cpp:2864
 msgid "Document file was removed."
 msgstr "Dokument został usunięty."
 
-#: ../src/control/xojfile/LoadHandler.cpp:184
+#: ../src/control/xojfile/LoadHandler.cpp:188
 msgid "Document is not complete (maybe the end is cut off?)"
 msgstr "Dokument jest uszkodzony (możliwe, że jest obcięty)"
+
+#: ../src/model/Document.cpp:333
+msgid "Document not loaded! ({1}), {2}"
+msgstr "Dokument nie został załadowany! ({1}), {2}"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:77
 #: ../src/gui/dialog/ButtonConfigGui.cpp:108
@@ -589,6 +615,10 @@ msgstr "Dokument jest uszkodzony (możliwe, że jest obcięty)"
 #: ../src/gui/dialog/ButtonConfigGui.cpp:135
 msgid "Don't change"
 msgstr "Nie zmieniaj"
+
+#: ../src/control/XournalMain.cpp:219
+msgid "Don't compress PDF files (for debugging)"
+msgstr "Nie kompresuj plików PDF (do debugowania)"
 
 #: ../ui/toolbarCustomizeDialog.glade:25
 msgid "Drag and drop Components fom here to the toolbars and back."
@@ -653,38 +683,49 @@ msgstr "Op_cje gumki"
 msgid "Eraser type"
 msgstr "Rodzaj gumki"
 
-#: ../src/control/Control.cpp:2525
-#, c-format
+#: ../src/control/Control.cpp:2528
 msgid ""
-"Error annotate PDF file '%s'\n"
-"%s"
+"Error annotate PDF file \"{1}\"\n"
+"{2}"
 msgstr ""
-"Błąd przy adnotowaniu pliku PDF \"%s\"\n"
-"%s"
+"Błąd przy adnotowaniu pliku PDF \"{1}\"\n"
+"{2}"
 
 #: ../src/gui/GladeGui.cpp:23
-#, c-format
-msgid "Error loading glade file '%s' (try to load '%s')"
-msgstr "Błąd przy otwieraniu pliku glade \"%s\" (spróbuj załadować \"%s\")"
+msgid "Error loading glade file \"{1}\" (try to load \"{2}\")"
+msgstr "Błąd przy otwieraniu pliku glade \"{1}\" (spróbuj załadować \"{2}\")"
 
-#: ../src/control/Control.cpp:2419
-#, c-format
-msgid ""
-"Error opening file '%s'\n"
-"%s"
-msgstr ""
-"Błąd przy otwieraniu pliku \"%s\"\n"
-"%s"
+#: ../src/control/Control.cpp:2421
+msgid "Error opening file \"{1}\""
+msgstr "Błąd przy otwieraniu pliku \"{1}\""
 
-#: ../src/control/xojfile/LoadHandler.cpp:420
-#, c-format
-msgid "Error reading PDF: %s"
-msgstr "Błąd przy odczytywaniu pliku PDF: %s"
+#: ../src/pdf/popplerdirect/PdfWriter.cpp:57
+msgid "Error opening file {1} for writing: {2}"
+msgstr "Błąd podczas otwierania pliku {1} do zapisu: {2}"
 
-#: ../src/control/xojfile/LoadHandler.cpp:493
-#, c-format
-msgid "Error reading width of a stroke: %s"
-msgstr "Błędna grubość kreski: %s"
+#: ../src/util/OutputStream.cpp:39
+msgid "Error opening file: \"{1}\""
+msgstr "Błąd przy otwieraniu pliku \"{1}\""
+
+#: ../src/control/xojfile/LoadHandler.cpp:424
+msgid "Error reading PDF: {1}"
+msgstr "Błąd przy odczytywaniu pliku PDF: {1}"
+
+#: ../src/control/xojfile/LoadHandler.cpp:497
+msgid "Error reading width of a stroke: {1}"
+msgstr "Błędna grubość kreski: {1}"
+
+#: ../src/pdf/popplerdirect/PdfWriter.cpp:80
+msgid "Error writing stream: {1}"
+msgstr "Błąd podczas zapisywania danych: {1}"
+
+#: ../src/util/LatexAction.cpp:49
+msgid "Error: problem finding mathtex. Doing nothing…"
+msgstr "Błąd: nie można znaleźć mathtexa. Nie robię nic…"
+
+#: ../src/util/CrashHandler.cpp:174 ../src/util/CrashHandler.cpp:184
+msgid "Error: {1}"
+msgstr "Błąd: {1}"
 
 #: ../src/control/XournalMain.cpp:127
 msgid ""
@@ -719,17 +760,24 @@ msgid "File Type"
 msgstr "Typ pliku"
 
 #: ../src/util/Util.cpp:193 ../src/util/Util.cpp:222
-#, c-format
 msgid ""
-"File could not be opened. You have to open it manual\n"
-":URL: %s"
+"File couldn't be opened. You have to do it manually:\n"
+"URL: {1}"
 msgstr ""
-"Nie da się otworzyć dokumentu. Musisz to zrobić ręcznie\n"
-":URL: %s"
+"Nie da się otworzyć dokumentu. Musisz to zrobić ręcznie:\n"
+"URL: {1}"
 
-#: ../src/gui/toolbarMenubar/FontButton.cpp:74
+#: ../src/control/Control.cpp:2341
+msgid "Filename: {1}"
+msgstr "Nazwa pliku: {1}"
+
+#: ../src/gui/toolbarMenubar/FontButton.cpp:71
 msgid "Font"
 msgstr "Czcionka"
+
+#: ../src/util/LatexAction.cpp:52
+msgid "Found mathtex in your path! TeX area is {1}"
+msgstr "Znaleziono mathtexa na komputerze! Przestrzeń TeXa to {1}"
 
 #: ../ui/main.glade:315
 msgid "Fullscreen"
@@ -791,6 +839,14 @@ msgstr "Opc_je zakreślacza"
 msgid "Hilighter"
 msgstr "Zakreślacz"
 
+#: ../src/control/settings/MetadataManager.cpp:64
+#: ../src/control/settings/MetadataManager.cpp:87
+#: ../src/control/settings/MetadataManager.cpp:110
+#: ../src/control/settings/MetadataManager.cpp:156
+#: ../src/control/settings/MetadataManager.cpp:185
+msgid "INI exception: {1}"
+msgstr "Błąd INI: {1}"
+
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:415
 msgid "Image"
 msgstr "Obraz"
@@ -840,22 +896,34 @@ msgstr "Wstaw stronę"
 msgid "Invalid filename selected"
 msgstr "Wybrano błędną nazwę pliku"
 
-#: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:106
+#: ../src/control/XournalMain.cpp:221
+msgid "Jump to Page (first Page: 1)"
+msgstr "Skocz do strony (pierwsza strona: 1)"
+
+#: ../src/util/LatexAction.cpp:92
+msgid "LaTeX command execution failed."
+msgstr "Błąd wykonywania procesu LaTeXa."
+
+#: ../src/util/LatexAction.cpp:95
+msgid "LaTeX command: \"{1}\" executed successfully. Result saved to file {2}."
+msgstr ""
+"Pomyślnie wykonano komendę LaTeXa: \"{1}\". Wynik zapisany do pliku {2}."
+
+#: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:105
 msgid "Layer"
 msgstr "Warstwa"
-
-#: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:74
-#, c-format
-msgid "Layer %i"
-msgstr "Warstwa %i"
 
 #: ../src/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:26
 msgid "Layer Preview"
 msgstr "Podgląd warstwy"
 
-#: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:89
+#: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:88
 msgid "Layer selection"
 msgstr "Wybór warstw"
+
+#: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:74
+msgid "Layer {1}"
+msgstr "Warstwa {1}"
 
 #: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:135
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:12
@@ -897,6 +965,10 @@ msgstr "Magenta"
 #: ../src/gui/dialog/ButtonConfigGui.cpp:110
 msgid "Medium"
 msgstr "Średnia"
+
+#: ../src/control/settings/MetadataManager.cpp:281
+msgid "Metadata file \"{1}\" is invalid: {2}"
+msgstr "Plik metadanych \"{1}\" jest nieprawidłowy: {2}"
 
 #: ../ui/settings.glade:1216
 msgid "Mouse Button"
@@ -974,15 +1046,23 @@ msgstr "Otwórz plik loggera"
 msgid "Open Logfile directory"
 msgstr "Otwórz folder z plikami loggera"
 
+#: ../src/gui/MainWindow.cpp:300
+msgid "Open URI: {1}"
+msgstr "Otwórz URI: {1}"
+
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:303
 #: ../src/control/stockdlg/XojOpenDlg.cpp:12
 msgid "Open file"
 msgstr "Otwórz plik"
 
-#: ../src/control/jobs/SaveJob.cpp:162
-#, c-format
-msgid "Open file error: %s"
-msgstr "Błąd otwarcia pliku: %s"
+#: ../src/control/jobs/SaveJob.cpp:160 ../src/control/jobs/SaveJob.cpp:179
+msgid "Open file error: {1}"
+msgstr "Błąd otwierania pliku: {1}"
+
+#: ../src/control/RecentManager.cpp:230
+msgctxt "{1} is a URI"
+msgid "Open {1}"
+msgstr "Otwórz {1}"
 
 #: ../ui/export.glade:261
 msgid "Options"
@@ -997,14 +1077,26 @@ msgstr "Pomarańczowy"
 msgid "PDF Export"
 msgstr "Eksport do PDF"
 
+#: ../src/gui/MainWindow.cpp:806
+msgid "PDF Page {1}"
+msgstr "strona PDF {1}"
+
 #: ../src/view/PdfView.cpp:40
 msgid "PDF background missing"
 msgstr "Nie znaleziono pliku PDF w tle"
+
+#: ../src/control/XournalMain.cpp:199
+msgid "PDF file successfully created"
+msgstr "Utworzono dokument PDF"
 
 #: ../src/control/stockdlg/XojOpenDlg.cpp:27
 #: ../src/control/jobs/PdfExportJob.cpp:35
 msgid "PDF files"
 msgstr "Pliki PDF"
+
+#: ../src/control/XournalMain.cpp:220
+msgid "PDF output filename"
+msgstr "Nazwa pliku PDF"
 
 #: ../ui/main.glade:755
 msgid "P_DF Background"
@@ -1115,7 +1207,7 @@ msgstr "Powtórz"
 msgid "Redo: "
 msgstr "Powtórz: "
 
-#: ../src/control/Control.cpp:2392
+#: ../src/control/Control.cpp:2393
 msgid "Remove PDF Background"
 msgstr "Usuń PDF w tle"
 
@@ -1140,15 +1232,15 @@ msgid "Ruler & Stroke Reco."
 msgstr "Linijka i rozpozn. kształtów"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:300
-#: ../src/control/Control.cpp:2827 ../src/control/jobs/SaveJob.cpp:16
+#: ../src/control/Control.cpp:2829 ../src/control/jobs/SaveJob.cpp:16
 msgid "Save"
 msgstr "Zapisz"
 
-#: ../src/control/Control.cpp:2864
+#: ../src/control/Control.cpp:2866
 msgid "Save As"
 msgstr "Zapisz jako"
 
-#: ../src/control/Control.cpp:2644
+#: ../src/control/Control.cpp:2646
 msgid "Save File"
 msgstr "Zapisz plik"
 
@@ -1204,7 +1296,7 @@ msgstr "Wybierz obszar"
 msgid "Select _Rectangle"
 msgstr "Wybierz _prostokąt"
 
-#: ../src/control/Control.cpp:2391
+#: ../src/control/Control.cpp:2392
 msgid "Select another PDF"
 msgstr "Wybierz inny PDF"
 
@@ -1252,14 +1344,13 @@ msgstr ""
 "Pokaż tylko nieużywane strony\n"
 "TEN TEKST JEST SYMBOLEM ZASTĘPCZYM"
 
-#: ../src/gui/dialog/PdfPagesDialog.cpp:438
-#, c-format
-msgid "Show only not used pages (%i unused pages)"
-msgstr "Pokaż tylko nieużywane strony (%i nieużywanych stron)"
-
-#: ../src/gui/dialog/PdfPagesDialog.cpp:434
+#: ../src/gui/dialog/PdfPagesDialog.cpp:433
 msgid "Show only not used pages (one unused page)"
 msgstr "Pokaż tylko nieużywane strony (jedna nieużywana strona)"
+
+#: ../src/gui/dialog/PdfPagesDialog.cpp:434
+msgid "Show only not used pages ({1} unused pages)"
+msgstr "Pokaż tylko nieużywane strony ({1} nieużywanych stron)"
 
 #: ../ui/main.glade:324
 msgid "Show sidebar"
@@ -1272,6 +1363,14 @@ msgstr "Pasek narzędzi po prawej stronie"
 #: ../ui/settings.glade:1447
 msgid "Show vertical scrollbar on the left side"
 msgstr "Pokaż pionowy pasek przewijania po lewej stronie"
+
+#: ../src/control/XournalMain.cpp:273
+msgid ""
+"Sorry, Xournal can only open one file from the command line.\n"
+"Others are ignored."
+msgstr ""
+"Przepraszamy, Xournal może otworzyć tylko jeden plik z poziomu konsoli.\n"
+"Inne są ignorowane."
 
 #: ../src/control/XournalMain.cpp:296
 msgid ""
@@ -1294,6 +1393,10 @@ msgstr "Status SYMBOL ZASTĘPCZY"
 msgid "Stroke recognizer"
 msgstr "Rozpoznawanie kształtów"
 
+#: ../src/util/CrashHandler.cpp:188
+msgid "Successfully saved document to \"{1}\""
+msgstr "Zapisano dokument do \"{1}\""
+
 #: ../src/control/stockdlg/XojOpenDlg.cpp:32
 msgid "Supported files"
 msgstr "Wspierane pliki"
@@ -1310,11 +1413,6 @@ msgstr "Szablon:"
 #: ../src/gui/dialog/ButtonConfigGui.cpp:81
 msgid "Text"
 msgstr "Tekst"
-
-#: ../src/gui/SearchBar.cpp:160 ../src/gui/SearchBar.cpp:221
-#, c-format
-msgid "Text %i times found on page %i"
-msgstr "Tekst został znaleziony %i razy na %i stronie"
 
 #: ../src/gui/SearchBar.cpp:75
 #, c-format
@@ -1333,43 +1431,44 @@ msgstr "Zmiany tekstu"
 msgid "Text found on this page"
 msgstr "Tekst został znaleziony na tej stronie"
 
+#: ../src/gui/SearchBar.cpp:155 ../src/gui/SearchBar.cpp:211
+msgid "Text found once on page {1}"
+msgstr "Tekst został znaleziony na stronie nr {1}"
+
+#: ../src/gui/SearchBar.cpp:156 ../src/gui/SearchBar.cpp:212
+msgid "Text found {1} times on page {2}"
+msgstr "Tekst został znaleziony {1} razy na stronie nr {2}"
+
 #: ../src/gui/SearchBar.cpp:82
 msgid "Text not found"
 msgstr "Tekst nie został znaleziony"
 
-#: ../src/gui/SearchBar.cpp:174 ../src/gui/SearchBar.cpp:235
+#: ../src/gui/SearchBar.cpp:169 ../src/gui/SearchBar.cpp:225
 msgid "Text not found, searched on all pages"
 msgstr "Tekst nie został znaleziony, szukano na wszystkich stronach"
 
-#: ../src/gui/SearchBar.cpp:156 ../src/gui/SearchBar.cpp:217
-#, c-format
-msgid "Text once found on page %i"
-msgstr "Tekst został raz znaleziony na stronie %i"
-
 #: ../src/control/Control.cpp:981
-#, c-format
 msgid ""
-"The Toolbarconfiguration \"%s\" is predefined, would you create a copy to "
+"The Toolbarconfiguration \"{1}\" is predefined, would you create a copy to "
 "edit?"
 msgstr ""
-"Konfiguracja paska narzędzi \"%s\" jest predefiniowana. Stworzyć edytowalną "
-"kopię?"
+"Konfiguracja paska narzędzi \"{1}\" jest predefiniowana. Czy stworzyć "
+"możliwą do edycji kopię?"
 
-#: ../src/control/Control.cpp:2388
+#: ../src/control/Control.cpp:2389
 msgid "The attached background PDF could not be found."
 msgstr "Załączony PDF w tle nie został znaleziony."
 
-#: ../src/control/Control.cpp:2389
+#: ../src/control/Control.cpp:2390
 msgid "The background PDF could not be found."
 msgstr "PDF w tle nie został znaleziony."
 
-#: ../src/gui/dialog/ExportDialog.cpp:299
-#, c-format
+#: ../src/gui/dialog/ExportDialog.cpp:298
 msgid ""
-"The file already exists in \"%s\". Replacing it will overwrite its contents."
-msgstr "Plik już istnieje w \"%s\". Zostanie nadpisany."
+"The file already exists in \"{1}\". Replacing it will overwrite its contents."
+msgstr "Plik już istnieje w \"{1}\". Zostanie nadpisany."
 
-#: ../src/gui/dialog/ExportDialog.cpp:348
+#: ../src/gui/dialog/ExportDialog.cpp:346
 msgid ""
 "The given filename does not have any known file extension. Please enter a "
 "known file extension or select a file format from the file format list."
@@ -1409,10 +1508,9 @@ msgstr ""
 "Błąd urządzenia wejściowego – wejście nie działa.\n"
 "Czy chcesz wyłączyć \"Rozszerzone wejście\"?"
 
-#: ../src/control/Control.cpp:875
-#, c-format
-msgid "There was an error displaying help: %s"
-msgstr "Błąd podczas wyświetlania pomocy: %s"
+#: ../src/control/Control.cpp:876
+msgid "There was an error displaying help: {1}"
+msgstr "Błąd podczas wyświetlania pomocy: {1}"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:446
 #: ../src/gui/dialog/ButtonConfigGui.cpp:111
@@ -1428,14 +1526,13 @@ msgstr "Grubość"
 msgid "Thin"
 msgstr "Cienki"
 
-#: ../src/control/Control.cpp:2825
+#: ../src/control/Control.cpp:2827
 msgid "This document is not saved yet."
 msgstr "Dokument nie został jeszcze zapisany."
 
-#: ../src/control/tools/ImageHandler.cpp:57 ../src/control/Control.cpp:1655
-#, c-format
-msgid "This image could not be loaded. Error message: %s"
-msgstr "Nie można otworzyć obrazu. Wiadomość błędu: %s"
+#: ../src/control/tools/ImageHandler.cpp:57 ../src/control/Control.cpp:1656
+msgid "This image could not be loaded. Error message: {1}"
+msgstr "Nie można otworzyć obrazu. Wiadomość błędu: {1}"
 
 #: ../ui/export.glade:228
 msgid "This option only affects PNG output"
@@ -1449,9 +1546,17 @@ msgstr "Zmień pełny ekran"
 msgid "Tool"
 msgstr "Narzędzie"
 
+#: ../src/gui/toolbarMenubar/model/ToolbarData.cpp:155
+msgid "Toolbar found: {1}"
+msgstr "Znaleziono pasek narzędzi: {1}"
+
 #: ../src/gui/dialog/ToolbarManageDialog.cpp:57
 msgid "Toolbars"
 msgstr "Paski narzędzi"
+
+#: ../src/util/CrashHandler.cpp:163
+msgid "Trying to emergency save the current open document…"
+msgstr "Próba awaryjnego zapisu aktualnie otwartego dokumentu…"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:462
 msgid "Two pages"
@@ -1466,51 +1571,43 @@ msgstr "Cofnij"
 msgid "Undo: "
 msgstr "Cofnij: "
 
-#: ../src/control/xojfile/LoadHandler.cpp:223
-#, c-format
-msgid "Unexpected root tag: %s"
-msgstr "Niespodziewany tag w korzeniu: %s"
+#: ../src/control/xojfile/LoadHandler.cpp:227
+msgid "Unexpected root tag: {1}"
+msgstr "Niespodziewany tag w korzeniu: {1}"
 
-#: ../src/control/xojfile/LoadHandler.cpp:252
-#, c-format
-msgid "Unexpected tag in document: \"%s\""
-msgstr "Niespodziewany tag w dokumencie: \"%s\""
+#: ../src/control/xojfile/LoadHandler.cpp:256
+msgid "Unexpected tag in document: \"{1}\""
+msgstr "Niespodziewany tag w dokumencie: \"{1}\""
 
-#: ../src/control/xojfile/LoadHandler.cpp:281
-#, c-format
-msgid "Unknown background type parsed: \"%s\""
-msgstr "Nieznany rodzaj tła: \"%s\""
+#: ../src/control/xojfile/LoadHandler.cpp:285
+msgid "Unknown background type parsed: \"{1}\""
+msgstr "Nieznany rodzaj tła: \"{1}\""
 
-#: ../src/control/xojfile/LoadHandler.cpp:467
-#, c-format
-msgid "Unknown background type: %s"
-msgstr "Nieznany rodzaj tła: %s"
+#: ../src/control/xojfile/LoadHandler.cpp:471
+msgid "Unknown background type: {1}"
+msgstr "Nieznany rodzaj tła: {1}"
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:80
-#, c-format
-msgid "Unknown color value \"%s\""
-msgstr "Nieznany kolor \"%s\""
+msgid "Unknown color value \"{1}\""
+msgstr "Nieznany kolor \"{1}\""
 
-#: ../src/control/xojfile/LoadHandler.cpp:402
-#, c-format
-msgid "Unknown domain type: %s"
-msgstr "Nieznany rodzaj domeny: %s"
+#: ../src/control/xojfile/LoadHandler.cpp:406
+msgid "Unknown domain type: {1}"
+msgstr "Nieznany rodzaj domeny: {1}"
 
-#: ../src/control/xojfile/LoadHandler.cpp:175
+#: ../src/control/xojfile/LoadHandler.cpp:179
 msgid "Unknown parser error"
 msgstr "Nieznany błąd parsera"
 
-#: ../src/control/xojfile/LoadHandler.cpp:338
-#, c-format
-msgid "Unknown pixmap::domain type: %s"
-msgstr "Nieznany typ pixmap::domain: %s"
+#: ../src/control/xojfile/LoadHandler.cpp:342
+msgid "Unknown pixmap::domain type: {1}"
+msgstr "Nieznany typ pixmap::domain: {1}"
 
-#: ../src/control/xojfile/LoadHandler.cpp:532
-#, c-format
-msgid "Unknown stroke type: \"%s\", assume pen"
-msgstr "Nieznany rodzaj kreski: \"%s\", zakładam, że to pióro"
+#: ../src/control/xojfile/LoadHandler.cpp:536
+msgid "Unknown stroke type: \"{1}\", assuming pen"
+msgstr "Nieznany rodzaj kreski: \"{1}\", zakładam, że to pióro"
 
-#: ../src/control/Control.cpp:2722
+#: ../src/control/Control.cpp:2724
 msgid "Unsaved Document"
 msgstr "Niezapisany dokument"
 
@@ -1551,22 +1648,19 @@ msgstr "Z pomocą społeczności\n"
 msgid "Write text"
 msgstr "Wpisz tekst"
 
-#: ../src/control/xojfile/LoadHandler.cpp:766
-#, c-format
-msgid "Wrong count of points (%i)"
-msgstr "Nieprawidłowa liczba punktów (%i)"
+#: ../src/control/xojfile/LoadHandler.cpp:770
+msgid "Wrong count of points ({1})"
+msgstr "Nieprawidłowa liczba punktów ({1})"
 
-#: ../src/control/xojfile/LoadHandler.cpp:781
-#, c-format
-msgid "Wrong count of points, get %i, expected %i"
-msgstr "Nieprawidłowa liczba punktów: %i, spodziewane %i"
+#: ../src/control/xojfile/LoadHandler.cpp:785
+msgid "Wrong number of points, got {1}, expected {2}"
+msgstr "Nieprawidłowa liczba punktów: {1}, spodziewane {2}"
 
-#: ../src/control/xojfile/LoadHandler.cpp:167
-#, c-format
-msgid "XML Parser error: %s"
-msgstr "Błąd parsera XML: %s"
+#: ../src/control/xojfile/LoadHandler.cpp:174
+msgid "XML Parser error: {1}"
+msgstr "Błąd parsera XML: {1}"
 
-#: ../src/control/stockdlg/XojOpenDlg.cpp:23 ../src/control/Control.cpp:2651
+#: ../src/control/stockdlg/XojOpenDlg.cpp:23 ../src/control/Control.cpp:2653
 msgid "Xournal files"
 msgstr "Pliki Xournala"
 
@@ -1583,14 +1677,23 @@ msgstr "Ustawienia Xournal++"
 msgid "Yellow"
 msgstr "Żółty"
 
-#: ../src/control/Control.cpp:1488 ../src/control/Control.cpp:1686
+#: ../src/control/Control.cpp:1488
 msgid ""
-"You don't have any PDF pages to select from. Cancel operation,\n"
+"You don't have any PDF pages to select from. Cancel operation.\n"
 "Please select another background type: Menu \"Journal\" / \"Insert Page Type"
 "\"."
 msgstr ""
 "Nie ma stron PDF do wyboru. Anuluj tą operację.\n"
-"Proszę wybrać inny rodzaj tła: Menu Dziennik/Tło papieru."
+"Proszę wybrać inny rodzaj tła: Menu Dziennik → Tło papieru."
+
+#: ../src/control/Control.cpp:1687
+msgid ""
+"You don't have any PDF pages to select from. Cancel operation.\n"
+"Please select another background type: Menu \"Journal\" → \"Insert Page Type"
+"\"."
+msgstr ""
+"Nie ma stron PDF do wyboru. Anuluj tą operację.\n"
+"Proszę wybrać inny rodzaj tła: Menu Dziennik → Tło papieru."
 
 #: ../src/control/XournalMain.cpp:89
 msgid ""
@@ -1601,19 +1704,18 @@ msgstr ""
 "źródłowego."
 
 #: ../src/gui/sidebar/indextree/SidebarIndexPage.cpp:79
-#, c-format
 msgid ""
-"Your current document does not contain PDF Page %i\n"
-"Would you insert this page?\n"
+"Your current document does not contain PDF Page no {1}\n"
+"Would you like to insert this page?\n"
 "\n"
-"Tipp: You can select Journal / Paper Background / PDF Background to insert a "
+"Tip: You can select Journal → Paper Background → PDF Background to insert a "
 "PDF page."
 msgstr ""
-"Aktualny dokument nie ma %i strony z pliku PDF\n"
-"Chciałby ją wstawić?\n"
+"Aktualny dokument nie ma strony nr {1} z pliku PDF\n"
+"Chciałbyś ją wstawić?\n"
 "\n"
-"Wskazówka: Możesz wybrać Dziennik/Tło papieru/Tło z pliku PDF, żeby wstawić "
-"stronę PDF."
+"Wskazówka: Możesz wybrać Dziennik → Tło papieru → Tło z pliku PDF, żeby "
+"wstawić stronę PDF."
 
 #: ../ui/settings.glade:1074
 msgid "Zoom"
@@ -1807,11 +1909,6 @@ msgstr "_wybielanie"
 msgid "cm"
 msgstr "cm"
 
-#: ../src/control/xojfile/LoadHandler.cpp:321
-#, c-format
-msgid "could not read image: %s, Error message: %s"
-msgstr "nie można odczytać obrazu: %s, Treść błędu: %s"
-
 #: ../src/gui/dialog/ButtonConfigGui.cpp:50
 msgid "cursor"
 msgstr "kursor"
@@ -1856,13 +1953,65 @@ msgstr "bar_dzo grube"
 msgid "whiteout"
 msgstr "wybielanie"
 
-#: ../src/control/xojfile/LoadHandler.cpp:780
-#, c-format
-msgid "xoj-File: %s"
-msgstr "Plik xoj: %s"
+#: ../src/control/xojfile/LoadHandler.cpp:784
+msgid "xoj-File: {1}"
+msgstr "Plik xoj: {1}"
+
+#: ../src/xoj-preview-extractor/xournal-thumbnailer.cpp:53
+msgid "xoj-preview-extractor: call with INPUT.xoj OUTPUT.png"
+msgstr "xoj-preview-extractor: wywołaj z argumentami WEJŚCIE.xoj WYJŚCIE.png"
+
+#: ../src/xoj-preview-extractor/xournal-thumbnailer.cpp:86
+msgid "xoj-preview-extractor: file \"{1}\" contains no preview"
+msgstr "xoj-preview-extractor: plik \"{1}\" nie zawiera podglądu"
+
+#: ../src/xoj-preview-extractor/xournal-thumbnailer.cpp:63
+msgid "xoj-preview-extractor: file \"{1}\" is not .png file"
+msgstr "xoj-preview-extractor: plik \"{1}\" nie jest plikiem .png"
+
+#: ../src/xoj-preview-extractor/xournal-thumbnailer.cpp:78
+msgid "xoj-preview-extractor: file \"{1}\" is not .xoj file"
+msgstr "xoj-preview-extractor: plik \"{1}\" nie jest plikiem .xoj"
+
+#: ../src/xoj-preview-extractor/xournal-thumbnailer.cpp:91
+msgid ""
+"xoj-preview-extractor: no preview and page found, maybe an invalid file?"
+msgstr ""
+"xoj-preview-extractor: nie znaleziono podglądu ani strony, możliwe że plik "
+"jest uszkodzony"
+
+#: ../src/xoj-preview-extractor/xournal-thumbnailer.cpp:82
+msgid "xoj-preview-extractor: opening input file \"{1}\" failed"
+msgstr ""
+"xoj-preview-extractor: otwieranie pliku wejściowego \"{1}\" nie powiodło się"
+
+#: ../src/xoj-preview-extractor/xournal-thumbnailer.cpp:98
+msgid "xoj-preview-extractor: opening output file \"{1}\" failed"
+msgstr ""
+"xoj-preview-extractor: otwieranie pliku wyjściowego \"{1}\" nie powiodło się"
+
+#: ../src/xoj-preview-extractor/xournal-thumbnailer.cpp:104
+msgid "xoj-preview-extractor: successfully extracted"
+msgstr "xoj-preview-extractor: stworzono miniaturkę"
+
+#~ msgid ""
+#~ "Error opening file \"{1}\"\n"
+#~ "{2}"
+#~ msgstr ""
+#~ "Błąd przy otwieraniu pliku \"{1}\"\n"
+#~ "{2}"
+
+#~ msgid "Layer %i"
+#~ msgstr "Warstwa %i"
 
 #~ msgid "Logfile: %s"
 #~ msgstr "Plik loggera: %s"
+
+#~ msgid "Text %i times found on page %i"
+#~ msgstr "Tekst został znaleziony %i razy na %i stronie"
+
+#~ msgid "Text once found on page %i"
+#~ msgstr "Tekst został raz znaleziony na stronie %i"
 
 #~ msgid "There are errorlogfiles from Xournal++."
 #~ msgstr "Znaleziono pliki błędu programu Xournal++."

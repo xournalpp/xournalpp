@@ -150,17 +150,12 @@ void SearchBar::searchNext()
 		if (found)
 		{
 			control->getScrollHandler()->scrollToPage(x, top);
-			char* msg;
-			if (occures == 1)
-			{
-				msg = g_strdup_printf(_C("Text once found on page %i"), x + 1);
-			}
-			else
-			{
-				msg = g_strdup_printf(_C("Text %i times found on page %i"), occures, x + 1);
-			}
-			gtk_label_set_text(GTK_LABEL(lbSearchState), msg);
-			g_free(msg);
+			gtk_label_set_text(GTK_LABEL(lbSearchState),
+				(occures == 1
+					? FC(_F("Text found once on page {1}") % (x + 1))
+					: FC(_F("Text found {1} times on page {2}") % occures % (x + 1))
+				)
+			);
 			return;
 		}
 
@@ -211,17 +206,12 @@ void SearchBar::searchPrevious()
 		if (found)
 		{
 			control->getScrollHandler()->scrollToPage(x, top);
-			char* msg;
-			if (occures == 1)
-			{
-				msg = g_strdup_printf(_C("Text once found on page %i"), x + 1);
-			}
-			else
-			{
-				msg = g_strdup_printf(_C("Text %i times found on page %i"), occures, x + 1);
-			}
-			gtk_label_set_text(GTK_LABEL(lbSearchState), msg);
-			g_free(msg);
+			gtk_label_set_text(GTK_LABEL(lbSearchState),
+				(occures == 1
+					? FC(_F("Text found once on page {1}") % (x + 1))
+					: FC(_F("Text found {1} times on page {2}") % occures % (x + 1))
+				)
+			);
 			return;
 		}
 

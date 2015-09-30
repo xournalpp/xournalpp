@@ -1,6 +1,7 @@
 #include "RecentManager.h"
 
 #include <config.h>
+#include <i18n.h>
 
 #include <gtk/gtk.h>
 
@@ -215,10 +216,9 @@ void RecentManager::addRecentMenu(GtkRecentInfo* info, int i)
 	string display_name(gtk_recent_info_get_display_name(info));
 	ba::replace_all(display_name, "_", "__");	//escape underscore
 	
-	string label = (i >= 10 ?
-		(bl::format("{1}. {2}") % i % display_name).str()
-			:
-		(bl::format("_{1}. {2}") % i % display_name).str());
+	string label = (i >= 10
+			? FS(bl::format("{1}. {2}") % i % display_name)
+			: FS(bl::format("_{1}. {2}") % i % display_name));
 
 	/* gtk_recent_info_get_uri_display (info) is buggy and
 	 * works only for local files */
@@ -227,8 +227,7 @@ void RecentManager::addRecentMenu(GtkRecentInfo* info, int i)
 	g_object_unref(gfile);
 	ba::replace_first(ruri, g_get_home_dir(), "~/"); //replace home dir with tilde
 
-	// Translators: %s is a URI
-	string tip = (bl::format("Open {1}'") % ruri).str();
+	string tip = FS(C_F("{1} is a URI", "Open {1}") % ruri);
 
 	
 	GtkWidget* item = gtk_menu_item_new_with_mnemonic(label.c_str());

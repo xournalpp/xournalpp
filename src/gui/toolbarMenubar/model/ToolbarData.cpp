@@ -1,5 +1,7 @@
 #include "ToolbarData.h"
 
+#include <i18n.h>
+
 #include <glib.h>
 #include <gtk/gtk.h>
 
@@ -150,7 +152,7 @@ int ToolbarData::insertItem(string toolbar, string item, int position)
 	{
 		if (e->getName() == toolbar)
 		{
-			cout << bl::format("Toolbar found: {1}") % toolbar << endl;
+			cout << _F("Toolbar found: {1}") % toolbar << endl;
 
 			int id = e->insertItem(item, position);
 

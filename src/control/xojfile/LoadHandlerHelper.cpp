@@ -67,7 +67,7 @@ bool LoadHandlerHelper::parseColor(const char* text, int& color, LoadHandler* lo
 {
 	if (text == NULL)
 	{
-		error(_C("Attribute color not set!"));
+		error("%s", _C("Attribute color not set!"));
 		return false;
 	}
 
@@ -77,7 +77,7 @@ bool LoadHandlerHelper::parseColor(const char* text, int& color, LoadHandler* lo
 		int c = g_ascii_strtoull(&text[1], &ptr, 16);
 		if (ptr != text + strlen(text))
 		{
-			error(_C("Unknown color value \"%s\""), text);
+			error("%s", FC(_F("Unknown color value \"{1}\"") % text));
 			return false;
 		}
 
@@ -95,7 +95,7 @@ bool LoadHandlerHelper::parseColor(const char* text, int& color, LoadHandler* lo
 				return true;
 			}
 		}
-		error(_C("Color \"%s\" unknown (not defined in default color list)!"), text);
+		error("%s", FC(_F("Color \"{1}\" unknown (not defined in default color list)!") % text));
 		return false;
 	}
 }
@@ -129,7 +129,7 @@ double LoadHandlerHelper::getAttribDouble(const char* name, LoadHandler* loadHan
 
 	if (attrib == NULL)
 	{
-		error(_C("Attribute \"%s\" could not be parsed as double, the value is NULL"), name);
+		error("%s", FC(_F("Attribute \"{1}\" could not be parsed as double, the value is NULL") % name));
 		return 0;
 	}
 
@@ -137,7 +137,7 @@ double LoadHandlerHelper::getAttribDouble(const char* name, LoadHandler* loadHan
 	double val = g_ascii_strtod(attrib, &ptr);
 	if (ptr == attrib)
 	{
-		error(_C("Attribute \"%s\" could not be parsed as double, the value is \"%s\""), name, attrib);
+		error("%s", FC(_F("Attribute \"{1}\" could not be parsed as double, the value is \"{2}\"") % name % attrib));
 	}
 
 	return val;
@@ -149,7 +149,7 @@ int LoadHandlerHelper::getAttribInt(const char* name, LoadHandler* loadHandler)
 
 	if (attrib == NULL)
 	{
-		error(_C("Attribute \"%s\" could not be parsed as int, the value is NULL"), name);
+		error("%s", FC(_F("Attribute \"{1}\" could not be parsed as int, the value is NULL") % name));
 		return 0;
 	}
 
@@ -157,7 +157,7 @@ int LoadHandlerHelper::getAttribInt(const char* name, LoadHandler* loadHandler)
 	int val = strtol(attrib, &ptr, 10);
 	if (ptr == attrib)
 	{
-		error(_C("Attribute \"%s\" could not be parsed as int, the value is \"%s\""), name, attrib);
+		error("%s", FC(_F("Attribute \"{1}\" could not be parsed as int, the value is \"{2}\"") % name % attrib));
 	}
 
 	return val;

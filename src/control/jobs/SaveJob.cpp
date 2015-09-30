@@ -147,7 +147,7 @@ bool SaveJob::save()
 		}
 		catch (const filesystem_error& e)
 		{
-			g_warning("Could not create backup! (The file was created from an older Xournal version)\n%s\n", e.what());
+			g_warning("%s\n%s", _C("Could not create backup! (The file was created from an older Xournal version)"), e.what());
 		}
 
 		doc->setCreateBackupOnSave(false);
@@ -157,13 +157,14 @@ bool SaveJob::save()
 
 	if (!out->getLastError().empty())
 	{
+		string e = FS(_F("Open file error: {1}") % out->getLastError());
 		if (!control->getWindow())
 		{
-			g_error(_C("Open file error: %s"), out->getLastError().c_str());
+			g_error("%s", e.c_str());
 			return false;
 		}
 
-		this->lastError = (bl::format("Open file error: {1}") % out->getLastError()).str();
+		this->lastError = e;
 
 		delete out;
 		out = NULL;
@@ -175,7 +176,7 @@ bool SaveJob::save()
 
 	if (!out->getLastError().empty())
 	{
-		this->lastError = (bl::format("Open file error: {1}") % out->getLastError()).str();
+		this->lastError = FS(_F("Open file error: {1}") % out->getLastError());
 		if (!control->getWindow())
 		{
 			g_error("%s", this->lastError.c_str());

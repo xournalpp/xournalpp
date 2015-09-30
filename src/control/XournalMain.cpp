@@ -86,11 +86,11 @@ void XournalMain::checkForErrorlog()
 				: _("There are errorlogfiles from Xournal++. Please send a Bugreport, so the bug may be fixed.");
 		msg += "\n";
 #if defined(GIT_BRANCH) && defined(GIT_REPO_OWNER)
-		msg += (bl::format(_("You're using {1}/{2} branch. Send Bugreport will direct you to this repo's issue tracker."))
-						% GIT_REPO_OWNER % GIT_BRANCH).str();
+		msg += FS(_F("You're using {1}/{2} branch. Send Bugreport will direct you to this repo's issue tracker.")
+						% GIT_REPO_OWNER % GIT_BRANCH);
 		msg += "\n";
 #endif
-		msg += (bl::format(_("The most recent log file name: {1}")) % errorList[0]).str();
+		msg += FS(_F("The most recent log file name: {1}") % errorList[0]);
 		
 		GtkWidget* dialog = gtk_message_dialog_new(NULL, GTK_DIALOG_MODAL,
 			GTK_MESSAGE_QUESTION, GTK_BUTTONS_NONE, msg.c_str());
@@ -123,9 +123,9 @@ void XournalMain::checkForErrorlog()
 			if (!bf::remove(errorlogPath))
 			{
 				GtkWidget* dlgError = gtk_message_dialog_new(NULL, GTK_DIALOG_MODAL,
-					GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
-					(bl::format(_("Errorlog cannot be deleted. You have to do it manually.\nLogfile: {1}"))
-						% errorlogPath.string()).str().c_str());
+					GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, "%s",
+					FC(_F("Errorlog cannot be deleted. You have to do it manually.\nLogfile: {1}")
+						% errorlogPath.string()));
 				gtk_dialog_run(GTK_DIALOG(dlgError));
 				gtk_widget_destroy(dlgError);
 			}
@@ -196,7 +196,7 @@ int XournalMain::exportPdf(const char* input, const char* output)
 
 	g_object_unref(file);
 
-	cout << "PDF File successfully created" << endl;
+	cout << _("PDF file successfully created") << endl;
 
 	return 0; // no error
 }
@@ -216,9 +216,9 @@ int XournalMain::run(int argc, char* argv[])
 	int openAtPageNumber = -1;
 
 	GOptionEntry options[] = {
-		{ "pdf-no-compress",   0, 0, G_OPTION_ARG_NONE,           &optNoPdfCompress, "Don't compress PDF files (for debugging)", NULL },
-		{ "create-pdf",      'p', 0, G_OPTION_ARG_FILENAME,       &pdfFilename,      "PDF output filename", NULL },
-		{ "page",            'n', 0, G_OPTION_ARG_INT,            &openAtPageNumber, "Jump to Page (first Page: 1)", "N" },
+		{ "pdf-no-compress",   0, 0, G_OPTION_ARG_NONE,           &optNoPdfCompress, _C("Don't compress PDF files (for debugging)"), NULL },
+		{ "create-pdf",      'p', 0, G_OPTION_ARG_FILENAME,       &pdfFilename,      _C("PDF output filename"), NULL },
+		{ "page",            'n', 0, G_OPTION_ARG_INT,            &openAtPageNumber, _C("Jump to Page (first Page: 1)"), "N" },
 		{G_OPTION_REMAINING,   0, 0, G_OPTION_ARG_FILENAME_ARRAY, &optFilename,      "<input>", NULL},
 		{NULL}
 	};
@@ -270,8 +270,8 @@ int XournalMain::run(int argc, char* argv[])
 		{
 			GtkWidget* dialog = gtk_message_dialog_new((GtkWindow*) *win,
 													GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
-													"Sorry, Xournal can only open one file from the command line.\n"
-													"Others are ignored.");
+													"%s", _C("Sorry, Xournal can only open one file from the command line.\n"
+															 "Others are ignored."));
 			gtk_window_set_transient_for(GTK_WINDOW(dialog), GTK_WINDOW(win->getWindow()));
 			gtk_dialog_run(GTK_DIALOG(dialog));
 			gtk_widget_destroy(dialog);
@@ -293,8 +293,8 @@ int XournalMain::run(int argc, char* argv[])
 		{
 			GtkWidget* dialog = gtk_message_dialog_new((GtkWindow*) *win,
 													   GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
-													   _C("Sorry, Xournal cannot open remote files at the moment.\n"
-													   "You have to copy the file to a local directory."));
+													   "%s", _C("Sorry, Xournal cannot open remote files at the moment.\n"
+																"You have to copy the file to a local directory."));
 			gtk_window_set_transient_for(GTK_WINDOW(dialog), GTK_WINDOW(win->getWindow()));
 			gtk_dialog_run(GTK_DIALOG(dialog));
 			gtk_widget_destroy(dialog);
