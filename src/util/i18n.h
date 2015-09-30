@@ -21,7 +21,7 @@
 #define C_F(context, msg) boost::locale::format(C_(context, msg))
 
 
-/* Some helpler defines */
+/* Some helpler macros */
 
 // boost::locale::format → std::string
 #define FS(format) (format).str()

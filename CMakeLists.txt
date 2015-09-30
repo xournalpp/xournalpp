@@ -226,7 +226,7 @@ set (DEV_SETTINGS_XML_FILE "settings.xml" CACHE STRING "Settings file name")
 set (DEV_PRINT_CONFIG_FILE "print-config.ini" CACHE STRING "Print config file name")
 set (DEV_METADATA_FILE "metadata.ini" CACHE STRING "Metadata file name")
 set (DEV_METADATA_MAX_ITEMS 50 CACHE STRING "Maximal amount of metadata elements")
-set (DEV_ERRORLOG_DIR "" CACHE STRING "Directory where errorlogfiles will be placed")
+set (DEV_ERRORLOG_DIR "errorlogs" CACHE STRING "Directory where errorlogfiles will be placed")
 
 option (DEV_ENABLE_GCOV "Build with gcov support" OFF) # Enabel gcov support – expanded in src/
 

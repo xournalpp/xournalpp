@@ -93,7 +93,7 @@ void XournalMain::checkForErrorlog()
 		msg += FS(_F("The most recent log file name: {1}") % errorList[0]);
 		
 		GtkWidget* dialog = gtk_message_dialog_new(NULL, GTK_DIALOG_MODAL,
-			GTK_MESSAGE_QUESTION, GTK_BUTTONS_NONE, msg.c_str());
+			GTK_MESSAGE_QUESTION, GTK_BUTTONS_NONE, "%s", msg.c_str());
 		
 		gtk_dialog_add_button(GTK_DIALOG(dialog), _C("Send Bugreport"), 1);
 		gtk_dialog_add_button(GTK_DIALOG(dialog), _C("Open Logfile"), 2);

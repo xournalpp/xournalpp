@@ -2823,7 +2823,7 @@ bool Control::close(bool destroy)
 	if (undoRedo->isChanged())
 	{
 		GtkWidget* dialog = gtk_message_dialog_new((GtkWindow*) *getWindow(), GTK_DIALOG_DESTROY_WITH_PARENT,
-												   GTK_MESSAGE_WARNING, GTK_BUTTONS_NONE,
+												   GTK_MESSAGE_WARNING, GTK_BUTTONS_NONE, "%s",
 												   _C("This document is not saved yet."));
 
 		gtk_dialog_add_button(GTK_DIALOG(dialog), _C("Save"), 1);
@@ -2860,7 +2860,7 @@ bool Control::close(bool destroy)
 		if (!bf::exists(this->doc->getFilename()))
 		{
 			GtkWidget* dialog = gtk_message_dialog_new((GtkWindow*) *getWindow(), GTK_DIALOG_DESTROY_WITH_PARENT,
-													   GTK_MESSAGE_WARNING, GTK_BUTTONS_NONE,
+													   GTK_MESSAGE_WARNING, GTK_BUTTONS_NONE, "%s",
 													   _C("Document file was removed."));
 
 			gtk_dialog_add_button(GTK_DIALOG(dialog), _C("Save As"), 1);
