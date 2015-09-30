@@ -29,12 +29,6 @@ addons:
 
 before_install:
   - "sudo apt-get install -y libglade2-dev"
-#  - "wget https://launchpad.net/ubuntu/+source/cmake/2.8.8-2ubuntu1/+build/3441442/+files/cmake_2.8.8-2ubuntu1_amd64.deb"
-#  - "wget https://launchpad.net/ubuntu/+archive/primary/+files/cmake-data_2.8.8-2ubuntu1_all.deb"
-#  - "sudo apt-get remove cmake-data cmake"
-
-#install:
-#  - "sudo dpkg --install cmake-data_2.8.8-2ubuntu1_all.deb cmake_2.8.8-2ubuntu1_amd64.deb" 
 
 before_script:
   - "mkdir build"
@@ -43,4 +37,4 @@ before_script:
 script:
   - "cmake .. -DBUILD_POPPLER=ON -DEXT_GLIBMM=ON -DCMAKE_DEBUG_INCLUDES_LDFLAGS=ON -DENABLE_MATHTEX=ON -DENABLE_OS=ON -DENABLE_CPPUNIT=ON -DUNSTABLE_LAYERS_SIDEBAR=ON -DDEBUG_COMPILE=ON"
   - "make"
-  - "make test"
+  - "ctest"
