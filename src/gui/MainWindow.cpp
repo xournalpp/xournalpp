@@ -84,10 +84,9 @@ MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control) :
 	if (!tbModel->parse(file, true))
 	{
 		GtkWidget* dlg = gtk_message_dialog_new(GTK_WINDOW(this->window),
-												GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
-												_C("Could not parse general toolbar.ini file: %s\n"
-												  "No Toolbars will be available"),
-												file);
+												GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, "%s",
+												FC(_F("Could not parse general toolbar.ini file: {1}\n"
+													  "No Toolbars will be available") % file));
 
 		gtk_window_set_transient_for(GTK_WINDOW(dlg), GTK_WINDOW(getWindow()));
 		gtk_dialog_run(GTK_DIALOG(dlg));
@@ -103,10 +102,9 @@ MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control) :
 		if (!tbModel->parse(file, false))
 		{
 			GtkWidget* dlg = gtk_message_dialog_new(GTK_WINDOW(this->window),
-													GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
-													_C("Could not parse custom toolbar.ini file: %s\n"
-													  "Toolbars will not be available"),
-													file);
+													GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, "%s",
+													FC(_F("Could not parse custom toolbar.ini file: {1}\n"
+														  "Toolbars will not be available") % file));
 
 			gtk_window_set_transient_for(GTK_WINDOW(dlg), GTK_WINDOW(this->control->getWindow()->getWindow()));
 			gtk_dialog_run(GTK_DIALOG(dlg));
@@ -299,7 +297,7 @@ void MainWindow::dragDataRecived(GtkWidget* widget, GdkDragContext* dragContext,
 			g_object_unref(cancel);
 
 			//TODO LOW PRIO: handle .xoj, .pdf and Images
-			cout << bl::format("open uri: {1}") % uris[i] << endl;
+			cout << _F("Open URI: {1}") % uris[i] << endl;
 		}
 
 		gtk_drag_finish(dragContext, true, false, time);
@@ -802,14 +800,12 @@ void MainWindow::updatePageNumbers(int page, int pagecount, int pdfpage)
 	spinPageNo->setMinMaxPage(min, max);
 	spinPageNo->setPage(page);
 
-	string pdfText("");
+	string pdfText;
 	if (pdfpage >= 0)
 	{
-		pdfText = (bl::format(", PDF Page {1}") % (pdfpage + 1)).str();
+		pdfText = CONCAT(", ", FS(_F("PDF Page {1}") % (pdfpage + 1)));
 	}
-
-	string text = (bl::format(" of {1}{2}") % pagecount % pdfText).str();
-	toolbar->setPageText(text);
+	toolbar->setPageText(FS(C_F("Page {pagenumber} \"of {pagecount}\"", " of {1}{2}") % pagecount % pdfText));
 
 	updateLayerCombobox();
 }

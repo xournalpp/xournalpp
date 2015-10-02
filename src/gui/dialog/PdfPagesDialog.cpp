@@ -428,18 +428,10 @@ void PdfPagesDialog::show(GtkWindow* parent)
 		}
 	}
 
-	char* txt;
-	if (unused == 1)
-	{
-		txt = g_strdup(_C("Show only not used pages (one unused page)"));
-	}
-	else
-	{
-		txt = g_strdup_printf(_C("Show only not used pages (%i unused pages)"), unused);
-	}
-
-	gtk_button_set_label(GTK_BUTTON(w), txt);
-	g_free(txt);
+	gtk_button_set_label(GTK_BUTTON(w),
+		(unused == 1
+			? _C("Show only not used pages (one unused page)")
+			: FC(_F("Show only not used pages ({1} unused pages)") % unused)));
 
 	gtk_window_set_transient_for(GTK_WINDOW(this->window), parent);
 	gtk_dialog_run(GTK_DIALOG(this->window));

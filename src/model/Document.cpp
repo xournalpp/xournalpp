@@ -4,6 +4,7 @@
 #include "XojPage.h"
 
 #include <config.h>
+#include <i18n.h>
 #include <Stacktrace.h>
 
 #include <boost/locale/format.hpp>
@@ -329,7 +330,7 @@ bool Document::readPdf(path filename, bool initPages, bool attachToDocument)
 
 	if (!pdfDocument.load(filename.c_str(), password.c_str(), &popplerError))
 	{
-		lastError = (bl::format("Document not loaded! ({1}), {2}") % filename % popplerError->message).str();
+		lastError = FS(_F("Document not loaded! ({1}), {2}") % filename % popplerError->message);
 		g_error_free(popplerError);
 		return false;
 	}

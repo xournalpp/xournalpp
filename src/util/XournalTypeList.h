@@ -18,7 +18,7 @@ XOJ_DECLARE_TYPE(EditSelection, 6);
 XOJ_DECLARE_TYPE(EraseHandler, 7);
 XOJ_DECLARE_TYPE(ImageHandler, 8);
 XOJ_DECLARE_TYPE(InputHandler, 9);
-XOJ_DECLARE_TYPE(Attribute, 10);
+XOJ_DECLARE_TYPE(XMLAttribute, 10);
 XOJ_DECLARE_TYPE(DoubleArrayAttribute, 11);
 XOJ_DECLARE_TYPE(DoubleAttribute, 12);
 XOJ_DECLARE_TYPE(ActionEnabledListener, 13);

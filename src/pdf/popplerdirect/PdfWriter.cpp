@@ -2,6 +2,7 @@
 
 #include <config.h>
 #include <GzHelper.h>
+#include <i18n.h>
 
 #include <iostream>
 using std::cout;
@@ -53,8 +54,8 @@ bool PdfWriter::openFile(path filename)
 
 	if (error)
 	{
-		lastError = (bl::format("Error opening file for writing: {1}, File: {2}") % error->message % filename.string()).str();
-		g_warning("error opening file");
+		lastError = FS(_F("Error opening file {1} for writing: {2}") % filename.string() % error->message);
+		g_warning("Error opening file");
 		return false;
 	}
 	return true;
@@ -76,9 +77,9 @@ bool PdfWriter::write(string data)
 
 	if (err)
 	{
-		this->lastError = (bl::format("Error writing stream: {1}") % err->message).str();
+		this->lastError = FS(_F("Error writing stream: {1}") % err->message);
 
-		cout << bl::format("error writing file: {1}") % err->message << endl;
+		cout << this->lastError << endl;
 		g_error_free(err);
 		return false;
 	}

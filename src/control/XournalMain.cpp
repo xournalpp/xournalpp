@@ -63,50 +63,74 @@ void XournalMain::checkForErrorlog()
 {
 	XOJ_CHECK_TYPE(XournalMain);
 
-	bf::path filename = Util::getConfigFile("errorlog.log");
-	if (bf::exists(filename))
+	bf::path errorDir = Util::getConfigSubfolder(ERRORLOG_DIR);
+	bf::directory_iterator end_iter;
+	vector<string> errorList;
+	for (bf::directory_iterator dir_iter(errorDir); dir_iter != end_iter; ++dir_iter)
 	{
-		string msg = _("There is an errorlogfile from Xournal++. Please send a Bugreport, "
-					   "so the bug may been fixed.\n");
+		if (bf::is_regular_file(dir_iter->status()))
+		{
+			string name = dir_iter->path().filename().string();
+			if (boost::starts_with(name, "errorlog."))
+			{
+				errorList.push_back(name);
+			}
+		}
+	}
+	
+	if (!errorList.empty())
+	{
+		std::sort(errorList.begin(), errorList.end());
+		string msg = errorList.size() == 1
+				? _("There is an errorlogfile from Xournal++. Please send a Bugreport, so the bug may be fixed.")
+				: _("There are errorlogfiles from Xournal++. Please send a Bugreport, so the bug may be fixed.");
+		msg += "\n";
 #if defined(GIT_BRANCH) && defined(GIT_REPO_OWNER)
-		msg += (bl::format("You're using {1}/{2} branch. Send Bugreport will direct you to this repo's issue tracker.\n")
-						% GIT_REPO_OWNER % GIT_BRANCH).str();
+		msg += FS(_F("You're using {1}/{2} branch. Send Bugreport will direct you to this repo's issue tracker.")
+						% GIT_REPO_OWNER % GIT_BRANCH);
+		msg += "\n";
 #endif
-		msg += _("Logfile: %s");
+		msg += FS(_F("The most recent log file name: {1}") % errorList[0]);
 		
 		GtkWidget* dialog = gtk_message_dialog_new(NULL, GTK_DIALOG_MODAL,
-			GTK_MESSAGE_QUESTION, GTK_BUTTONS_NONE, msg.c_str(),
-			filename.c_str());
-		//I know it's formatting/i18n hell, but for now it have to wait some time
+			GTK_MESSAGE_QUESTION, GTK_BUTTONS_NONE, "%s", msg.c_str());
 		
 		gtk_dialog_add_button(GTK_DIALOG(dialog), _C("Send Bugreport"), 1);
 		gtk_dialog_add_button(GTK_DIALOG(dialog), _C("Open Logfile"), 2);
-		gtk_dialog_add_button(GTK_DIALOG(dialog), _C("Delete Logfile"), 3);
-		gtk_dialog_add_button(GTK_DIALOG(dialog), _C("Cancel"), 4);
+		gtk_dialog_add_button(GTK_DIALOG(dialog), _C("Open Logfile directory"), 3);
+		gtk_dialog_add_button(GTK_DIALOG(dialog), _C("Delete Logfile"), 4);
+		gtk_dialog_add_button(GTK_DIALOG(dialog), _C("Cancel"), 5);
 
 		int res = gtk_dialog_run(GTK_DIALOG(dialog));
 
+		path errorlogPath = Util::getConfigSubfolder(ERRORLOG_DIR);
+		errorlogPath /= errorList[0];
 		if (res == 1) // Send Bugreport
 		{
 			Util::openFileWithDefaultApplicaion(PROJECT_BUGREPORT);
-			Util::openFileWithFilebrowser(filename);
+			Util::openFileWithDefaultApplicaion(errorlogPath);
 		}
 		else if (res == 2) // Open Logfile
 		{
-			Util::openFileWithFilebrowser(filename);
+			Util::openFileWithDefaultApplicaion(errorlogPath);
 		}
-		else if (res == 3) // Delete Logfile
+		else if (res == 3) // Open Logfile directory
 		{
-			if (bf::remove(filename) != 1)
+			Util::openFileWithFilebrowser(errorlogPath.parent_path());
+		}
+		else if (res == 4) // Delete Logfile
+		{
+			if (!bf::remove(errorlogPath))
 			{
 				GtkWidget* dlgError = gtk_message_dialog_new(NULL, GTK_DIALOG_MODAL,
 					GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, "%s",
-					_C("Errorlog could not be deleted. You have to delete it manually.\nLogfile: %s"),
-					filename.c_str());
+					FC(_F("Errorlog cannot be deleted. You have to do it manually.\nLogfile: {1}")
+						% errorlogPath.string()));
 				gtk_dialog_run(GTK_DIALOG(dlgError));
+				gtk_widget_destroy(dlgError);
 			}
 		}
-		else if (res == 4) // Cancel
+		else if (res == 5) // Cancel
 		{
 			// Nothing to do
 		}
@@ -172,7 +196,7 @@ int XournalMain::exportPdf(const char* input, const char* output)
 
 	g_object_unref(file);
 
-	cout << "PDF File successfully created" << endl;
+	cout << _("PDF file successfully created") << endl;
 
 	return 0; // no error
 }
@@ -192,9 +216,9 @@ int XournalMain::run(int argc, char* argv[])
 	int openAtPageNumber = -1;
 
 	GOptionEntry options[] = {
-		{ "pdf-no-compress",   0, 0, G_OPTION_ARG_NONE,           &optNoPdfCompress, "Don't compress PDF files (for debugging)", NULL },
-		{ "create-pdf",      'p', 0, G_OPTION_ARG_FILENAME,       &pdfFilename,      "PDF output filename", NULL },
-		{ "page",            'n', 0, G_OPTION_ARG_INT,            &openAtPageNumber, "Jump to Page (first Page: 1)", "N" },
+		{ "pdf-no-compress",   0, 0, G_OPTION_ARG_NONE,           &optNoPdfCompress, _C("Don't compress PDF files (for debugging)"), NULL },
+		{ "create-pdf",      'p', 0, G_OPTION_ARG_FILENAME,       &pdfFilename,      _C("PDF output filename"), NULL },
+		{ "page",            'n', 0, G_OPTION_ARG_INT,            &openAtPageNumber, _C("Jump to Page (first Page: 1)"), "N" },
 		{G_OPTION_REMAINING,   0, 0, G_OPTION_ARG_FILENAME_ARRAY, &optFilename,      "<input>", NULL},
 		{NULL}
 	};
@@ -212,10 +236,6 @@ int XournalMain::run(int argc, char* argv[])
 		error = NULL;
 	}
 	g_option_context_free(context);
-
-#ifdef DEV_MEMORY_LEAK_CHECKING
-	xoj_type_initMutex();
-#endif
 
 	if (optNoPdfCompress)
 	{
@@ -250,8 +270,8 @@ int XournalMain::run(int argc, char* argv[])
 		{
 			GtkWidget* dialog = gtk_message_dialog_new((GtkWindow*) *win,
 													GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
-													"Sorry, Xournal can only open one file from the command line.\n"
-													"Others are ignored.");
+													"%s", _C("Sorry, Xournal can only open one file from the command line.\n"
+															 "Others are ignored."));
 			gtk_window_set_transient_for(GTK_WINDOW(dialog), GTK_WINDOW(win->getWindow()));
 			gtk_dialog_run(GTK_DIALOG(dialog));
 			gtk_widget_destroy(dialog);
@@ -273,8 +293,8 @@ int XournalMain::run(int argc, char* argv[])
 		{
 			GtkWidget* dialog = gtk_message_dialog_new((GtkWindow*) *win,
 													   GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
-													   _C("Sorry, Xournal cannot open remote files at the moment.\n"
-													   "You have to copy the file to a local directory."));
+													   "%s", _C("Sorry, Xournal cannot open remote files at the moment.\n"
+																"You have to copy the file to a local directory."));
 			gtk_window_set_transient_for(GTK_WINDOW(dialog), GTK_WINDOW(win->getWindow()));
 			gtk_dialog_run(GTK_DIALOG(dialog));
 			gtk_widget_destroy(dialog);

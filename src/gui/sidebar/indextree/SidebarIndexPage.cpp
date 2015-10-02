@@ -75,12 +75,11 @@ void SidebarIndexPage::askInsertPdfPage(int pdfPage)
 	XOJ_CHECK_TYPE(SidebarIndexPage);
 
 	GtkWidget* dialog = gtk_message_dialog_new((GtkWindow*) *control->getWindow(), GTK_DIALOG_DESTROY_WITH_PARENT,
-											   GTK_MESSAGE_QUESTION, GTK_BUTTONS_NONE,
-											   _C("Your current document does not contain PDF Page %i\n"
-											     "Would you insert this page?\n\n"
-												 "Tipp: You can select Journal / Paper Background / PDF Background "
-												 "to insert a PDF page."),
-											   pdfPage + 1);
+											   GTK_MESSAGE_QUESTION, GTK_BUTTONS_NONE, "%s",
+											   FC(_F("Your current document does not contain PDF Page no {1}\n"
+													 "Would you like to insert this page?\n\n"
+													 "Tip: You can select Journal → Paper Background → PDF Background "
+													 "to insert a PDF page.") % (pdfPage + 1)));
 
 	gtk_dialog_add_button(GTK_DIALOG(dialog), "Cancel", 1);
 	gtk_dialog_add_button(GTK_DIALOG(dialog), "Insert after", 2);

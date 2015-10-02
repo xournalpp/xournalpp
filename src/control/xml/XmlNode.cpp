@@ -32,7 +32,7 @@ XmlNode::~XmlNode()
 
 	for (GList* l = this->attributes; l != NULL; l = l->next)
 	{
-		Attribute* attrib = (Attribute*) l->data;
+		XMLAttribute* attrib = (XMLAttribute*) l->data;
 		delete attrib;
 	}
 	g_list_free(this->attributes);
@@ -125,13 +125,13 @@ void XmlNode::addChild(XmlNode* node)
 	this->children = g_list_append(this->children, node);
 }
 
-void XmlNode::putAttrib(Attribute* a)
+void XmlNode::putAttrib(XMLAttribute* a)
 {
 	XOJ_CHECK_TYPE(XmlNode);
 
 	for (GList* l = this->attributes; l != NULL; l = l->next)
 	{
-		Attribute* attrib = (Attribute*) l->data;
+		XMLAttribute* attrib = (XMLAttribute*) l->data;
 
 		if (strcmp(attrib->getName(), a->getName()) == 0)
 		{
@@ -150,7 +150,7 @@ void XmlNode::writeAttributes(OutputStream* out)
 
 	for (GList* l = this->attributes; l != NULL; l = l->next)
 	{
-		Attribute* attrib = (Attribute*) l->data;
+		XMLAttribute* attrib = (XMLAttribute*) l->data;
 		out->write(" ");
 		out->write(attrib->getName());
 		out->write("=\"");

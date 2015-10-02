@@ -9,9 +9,13 @@
  * @license GPL
  */
 
-#include "../util/XojPreviewExtractor.h"
+#include <config.h>
+#include <config-paths.h>
+#include <i18n.h>
+#include <XojPreviewExtractor.h>
 
 #include <boost/locale/format.hpp>
+#include <boost/locale/generator.hpp>
 namespace bl = boost::locale;
 
 #include <fstream>
@@ -23,33 +27,30 @@ using std::endl;
 #include <string>
 using std::string;
 
-#define ENABLE_NLS 0								//it's not yet implemendet, so including it is pointless
-#define LOG_MSG_PREFIX "xoj-preview-extractor: "
-
-#if ENABLE_NLS
 void initLocalisation()
 {
-	//locale generator (for future i18n)
+	//locale generator
 	bl::generator gen;
+#ifdef ENABLE_NLS
 	gen.add_messages_path(PACKAGE_LOCALE_DIR);
 	gen.add_messages_domain(GETTEXT_PACKAGE);
+	
+	bindtextdomain(GETTEXT_PACKAGE, PACKAGE_LOCALE_DIR);
+	textdomain(GETTEXT_PACKAGE);
+#endif //ENABLE_NLS
 
 	std::locale::global(gen("")); //"" - system default locale
 	std::cout.imbue(std::locale());
 }
-#endif //ENABLE_NLS
 
 int main(int argc, char* argv[])
 {
-
-#if ENABLE_NLS
 	initLocalisation();
-#endif
 
 	//check args count
 	if (argc != 3)
 	{
-		cerr << LOG_MSG_PREFIX "call with INPUT.xoj OUTPUT.png" << endl;
+		cerr << _("xoj-preview-extractor: call with INPUT.xoj OUTPUT.png") << endl;
 		return 1;
 	}
 	
@@ -59,7 +60,7 @@ int main(int argc, char* argv[])
 	{
 		if (tolower(ext[i]) != ".png"[i])
 		{
-			cerr << LOG_MSG_PREFIX << bl::format("file \"{1}\" is not .png file") % argv[2] << endl;
+			cerr << _F("xoj-preview-extractor: file \"{1}\" is not .png file") % argv[2] << endl;
 			return 2;
 		}
 	}
@@ -74,32 +75,32 @@ int main(int argc, char* argv[])
 		break;
 		
 	case PREVIEW_RESULT_BAD_FILE_EXTENSION:
-		cerr << LOG_MSG_PREFIX << bl::format("file \"{1}\" is not .xoj file") % argv[2] << endl;
+		cerr << _F("xoj-preview-extractor: file \"{1}\" is not .xoj file") % argv[2] << endl;
 		return 2;
 
 	case PREVIEW_RESULT_COULD_NOT_OPEN_FILE:
-		cerr << LOG_MSG_PREFIX << bl::format("open input file \"{1}\" failed") % argv[1] << endl;
+		cerr << _F("xoj-preview-extractor: opening input file \"{1}\" failed") % argv[1] << endl;
 		return 3;
 
 	case PREVIEW_RESULT_NO_PREVIEW:
-		cerr << LOG_MSG_PREFIX << bl::format("file \"{1}\" contains no preview") % argv[1] << endl;
+		cerr << _F("xoj-preview-extractor: file \"{1}\" contains no preview") % argv[1] << endl;
 		return 4;
 
 	case PREVIEW_RESULT_ERROR_READING_PREVIEW:
 	default:
-		cerr << LOG_MSG_PREFIX "no preview and page found, maybe an invalid file?" << endl;
+		cerr << _("xoj-preview-extractor: no preview and page found, maybe an invalid file?") << endl;
 		return 5;
 	}
 	
 	ofstream ofile(argv[2], ofstream::out | ofstream::binary);
 	if (!ofile.is_open())
 	{
-		cerr << LOG_MSG_PREFIX << bl::format("open output file \"{1}\" failed") % argv[2] << endl;
+		cerr << _F("xoj-preview-extractor: opening output file \"{1}\" failed") % argv[2] << endl;
 		return 6;
 	}
 	ofile << extractor.getData();
 	ofile.close();
 
-	cout << LOG_MSG_PREFIX "successfully extracted" << endl;
+	cout << _("xoj-preview-extractor: successfully extracted") << endl;
 	return 0;
 }

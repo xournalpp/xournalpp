@@ -24,8 +24,7 @@ using std::endl;
 
 static bool listInited = false;
 static const char* xojTypeList[XOURNAL_TYPE_LIST_LENGTH] = { 0 };
-
-GMutex* mutex = NULL;
+static GMutex mutex = { 0 };
 
 static void initXournalClassList()
 {
@@ -36,27 +35,16 @@ static void initXournalClassList()
 	#include "XournalTypeList.h"
 }
 
-void xoj_type_initMutex()
-{
-	mutex = g_mutex_new();
-}
-
 const char* xoj_type_getName(int id)
 {
-	if (mutex)
-	{
-		g_mutex_lock(mutex);
-	}
+	g_mutex_lock(&mutex);
 	
 	if (!listInited)
 	{
 		initXournalClassList();
 	}
 
-	if (mutex)
-	{
-		g_mutex_unlock(mutex);
-	}
+	g_mutex_unlock(&mutex);
 
 	if (id < 0)
 	{
@@ -80,28 +68,16 @@ static int xojInstanceList[XOURNAL_TYPE_LIST_LENGTH] = { 0 };
 
 void xoj_memoryleak_initType(int id)
 {
-	if (mutex)
-	{
-		g_mutex_lock(mutex);
-	}
+	g_mutex_lock(&mutex);
 	xojInstanceList[id]++;
-	if (mutex)
-	{
-		g_mutex_unlock(mutex);
-	}
+	g_mutex_unlock(&mutex);
 }
 
 void xoj_memoryleak_releaseType(int id)
 {
-	if (mutex)
-	{
-		g_mutex_lock(mutex);
-	}
+	g_mutex_lock(&mutex);
 	xojInstanceList[id]--;
-	if (mutex)
-	{
-		g_mutex_unlock(mutex);
-	}
+	g_mutex_unlock(&mutex);
 }
 
 void xoj_momoryleak_printRemainingObjects()

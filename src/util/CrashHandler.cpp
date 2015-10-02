@@ -7,12 +7,15 @@
 #include "model/Document.h"
 
 #include <config-dev.h>
+#include <i18n.h>
 
 #include <glib.h>
 #include <gtk/gtk.h>
 
 #include <boost/locale/format.hpp>
 
+using std::to_string;
+#include <ctime>
 #include <iostream>
 using std::cerr;
 using std::endl;
@@ -100,7 +103,7 @@ static void crashHandler(int sig)
 	}
 	alreadyCrashed = true;
 
-	cerr << bl::format("Crash Handler::Crashed with signal {1}") % sig << endl;
+	cerr << bl::format("[Crash Handler] Crashed with signal {1}") % sig << endl;
 
 	time_t lt;
 	void* array[100];
@@ -111,10 +114,15 @@ static void crashHandler(int sig)
 	// get void*'s for all entries on the stack
 	size = backtrace(array, 100);
 
-	string filename = Util::getConfigFile("errorlog.log").string();
-
-	ofstream fp(filename.c_str());
-	if (fp) cerr << bl::format("Crash Handler::wrote crash log to: {1}") % filename << endl;
+	time_t curtime = time(0);
+	char stime[128];
+	strftime(stime, sizeof(stime), "%Y%m%d-%H%M%S", localtime(&curtime));
+	string filename = Util::getConfigFile(CONCAT("errorlog.", stime, ".log")).string();
+	ofstream fp(filename);
+	if (fp)
+	{
+		cerr << bl::format("[Crash Handler] Wrote crash log to: {1}") % filename << endl;
+	}
 
 	streamsplit out(&fp);
 
@@ -152,7 +160,7 @@ static void emergencySave()
 		return;
 	}
 
-	cerr << endl << "Try to emergency save the current open document..." << endl;
+	cerr << endl << _("Trying to emergency save the current open document…") << endl;
 
 	SaveHandler handler;
 	handler.prepareSave(document);
@@ -163,7 +171,7 @@ static void emergencySave()
 
 	if (!out->getLastError().empty())
 	{
-		cerr << bl::format("error: {1}") % out->getLastError() << endl;
+		cerr << _F("Error: {1}") % out->getLastError() << endl;
 		delete out;
 		return;
 	}
@@ -173,11 +181,11 @@ static void emergencySave()
 
 	if (!out->getLastError().empty())
 	{
-		cerr << bl::format("error: {1}") % out->getLastError() << endl;
+		cerr << _F("Error: {1}") % out->getLastError() << endl;
 	}
 	else
 	{
-		cerr << bl::format("Successfully saved document to \"{1}\"") % filename.string() << endl;
+		cerr << _F("Successfully saved document to \"{1}\"") % filename.string() << endl;
 	}
 
 	delete out;

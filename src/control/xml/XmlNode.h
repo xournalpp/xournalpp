@@ -50,7 +50,7 @@ public:
 	void addChild(XmlNode* node);
 
 protected:
-	void putAttrib(Attribute* a);
+	void putAttrib(XMLAttribute* a);
 	void writeAttributes(OutputStream* out);
 
 public:

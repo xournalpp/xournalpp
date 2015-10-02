@@ -261,7 +261,7 @@ bool ExportDialog::validFilename()
 	if (!file)
 	{
 		GtkWidget* dialog = gtk_message_dialog_new((GtkWindow*) *this, GTK_DIALOG_DESTROY_WITH_PARENT,
-												   GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
+												   GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, "%s",
 												   _C("Invalid filename selected"));
 
 		gtk_dialog_run(GTK_DIALOG(dialog));
@@ -278,8 +278,7 @@ bool ExportDialog::validFilename()
 
 		int firstIndex = 0, secIndex = 0, tmp, len = dirName.length();
 
-		while (secIndex < len &&
-			-1 != (tmp = dirName.find(G_DIR_SEPARATOR_S, secIndex + 1)))
+		while (secIndex < len && -1 != (tmp = dirName.find(G_DIR_SEPARATOR_S, secIndex + 1)))
 		{
 			firstIndex = secIndex;
 			secIndex = tmp;
@@ -291,14 +290,13 @@ bool ExportDialog::validFilename()
 		}
 
 		GtkWidget* dialog = gtk_message_dialog_new((GtkWindow*) *this, GTK_DIALOG_DESTROY_WITH_PARENT,
-												   GTK_MESSAGE_WARNING, GTK_BUTTONS_OK_CANCEL,
-												   _C("A file named \"%s\" already exists. Do you want to replace it?"),
-												   baseName);
+												   GTK_MESSAGE_WARNING, GTK_BUTTONS_OK_CANCEL, "%s",
+												   FC(_F("A file named \"{1}\" already exists. Do you want to replace it?")
+															% baseName));
 
-		gtk_message_dialog_format_secondary_text(GTK_MESSAGE_DIALOG(dialog),
-												 _C("The file already exists in \"%s\". "
-												 "Replacing it will overwrite its contents."),
-												 dirName.c_str());
+		gtk_message_dialog_format_secondary_text(GTK_MESSAGE_DIALOG(dialog), "%s",
+												 FC(_F("The file already exists in \"{1}\". "
+													   "Replacing it will overwrite its contents.") % dirName));
 
 		g_free(baseName);
 		g_free(_dirName);
@@ -344,11 +342,10 @@ bool ExportDialog::validExtension()
 	if (!validExtension)
 	{
 		GtkWidget* dialog = gtk_message_dialog_new((GtkWindow*) *this, GTK_DIALOG_DESTROY_WITH_PARENT,
-												   GTK_MESSAGE_WARNING, GTK_BUTTONS_OK,
-												   _C("The given filename does not have any known "
-												     "file extension. Please enter a known file "
-												     "extension or select a file format "
-												     "from the file format list."));
+												   GTK_MESSAGE_WARNING, GTK_BUTTONS_OK, "%s",
+												   _C("The given filename does not have any known file extension. "
+													  "Please enter a known file extension or select a file format "
+												      "from the file format list."));
 
 		gtk_dialog_run(GTK_DIALOG(dialog));
 		gtk_widget_destroy(dialog);

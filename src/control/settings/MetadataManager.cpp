@@ -1,6 +1,7 @@
 #include "MetadataManager.h"
 
 #include <config-dev.h>
+#include <i18n.h>
 #include <Util.h>
 
 #include <exception>
@@ -60,7 +61,7 @@ void MetadataManager::setInt(path p, string name, int value)
 	}
 	catch (exception& e)
 	{
-		cout << bl::format("INI exception: {1}") % e.what() << endl;
+		cout << _F("INI exception: {1}") % e.what() << endl;
 	}
 
 	updateAccessTime(p);
@@ -83,7 +84,7 @@ void MetadataManager::setDouble(path p, string name, double value)
 	}
 	catch (exception& e)
 	{
-		cout << bl::format("INI exception: {1}") % e.what() << endl;
+		cout << _F("INI exception: {1}") % e.what() << endl;
 	}
 
 	updateAccessTime(p);
@@ -106,7 +107,7 @@ void MetadataManager::setString(path p, string name, string value)
 	}
 	catch (exception& e)
 	{
-		cout << bl::format("INI exception: {1}") % e.what() << endl;
+		cout << _F("INI exception: {1}") % e.what() << endl;
 	}
 
 	updateAccessTime(p);
@@ -152,7 +153,7 @@ void MetadataManager::updateAccessTime(path p)
 	}
 	catch (exception& e)
 	{
-		cout << bl::format("INI exception: {1}") % e.what() << endl;
+		cout << _F("INI exception: {1}") % e.what() << endl;
 	}
 	
 	if (this->timer) return;
@@ -181,7 +182,7 @@ void MetadataManager::cleanupMetadata()
 			}
 			catch (exception& e)
 			{
-				cout << bl::format("INI exception: {1}") % e.what() << endl;
+				cout << _F("INI exception: {1}") % e.what() << endl;
 			}
 		}
 	}
@@ -222,8 +223,7 @@ void MetadataManager::copy(path source, path target)
 	}
 	catch (exception& e)
 	{
-		cout << bl::format("Cannot copy metadata \"{1}\" to \"{2}\": {3}")
-				% source.string() % target.string() % e.what() << endl;
+		cout << _F("Cannot copy metadata \"{1}\" to \"{2}\": {3}") % source.string() % target.string() % e.what() << endl;
 	}
 }
 
@@ -240,8 +240,7 @@ bool MetadataManager::save()
 	}
 	catch (bp::ini_parser_error const& e)
 	{
-		cout << bl::format("Could not write metadata file: {1} ({2})")
-				% getFilePath().string() % e.what() << endl;
+		cout << _F("Could not write metadata file: {1} ({2})") % getFilePath().string() % e.what() << endl;
 		return false;
 	}
 }
@@ -279,8 +278,7 @@ void MetadataManager::loadConfigFile()
 		}
 		catch (bp::ini_parser_error const& e)
 		{
-			cout << bl::format("Metadata file \"{1}\" is invalid: {2}")
-					% filepath.string() % e.what() << endl;
+			cout << _F("Metadata file \"{1}\" is invalid: {2}") % filepath.string() % e.what() << endl;
 		}
 	}
 }

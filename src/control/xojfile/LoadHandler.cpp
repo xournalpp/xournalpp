@@ -14,8 +14,17 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define error2(var, ...) if (var == NULL) { var = g_error_new(G_MARKUP_ERROR, G_MARKUP_ERROR_INVALID_CONTENT, __VA_ARGS__); }
-#define error(...) if (error == NULL) { error = g_error_new(G_MARKUP_ERROR, G_MARKUP_ERROR_INVALID_CONTENT, __VA_ARGS__); }
+#define error2(var, ...)																	\
+	if (var == NULL)																		\
+	{																						\
+		var = g_error_new(G_MARKUP_ERROR, G_MARKUP_ERROR_INVALID_CONTENT, __VA_ARGS__);		\
+	}
+
+#define error(...)																			\
+	if (error == NULL)																		\
+	{																						\
+		error = g_error_new(G_MARKUP_ERROR, G_MARKUP_ERROR_INVALID_CONTENT, __VA_ARGS__);	\
+	}
 
 LoadHandler::LoadHandler() : doc(&dHanlder)
 {
@@ -95,9 +104,7 @@ bool LoadHandler::openFile(string filename)
 	this->fp = gzopen(filename.c_str(), "r");
 	if (!this->fp)
 	{
-		this->lastError = _("Could not open file: \"");
-		this->lastError += filename;
-		this->lastError += "\"";
+		this->lastError = FS(_F("Could not open file: \"{1}\"") % filename);
 		return false;
 	}
 	return true;
@@ -164,10 +171,7 @@ bool LoadHandler::parseXml()
 	{
 		if (error != NULL && error->message != NULL)
 		{
-			char* err = g_strdup_printf(_C("XML Parser error: %s"), error->message);
-			this->lastError = err;
-			g_free(err);
-
+			this->lastError = FS(_F("XML Parser error: {1}") % error->message);
 			g_error_free(error);
 		}
 		else
@@ -185,7 +189,7 @@ bool LoadHandler::parseXml()
 		return false;
 	}
 
-	doc.setCreateBackupOnSave(!this->fileversion < 2);
+	doc.setCreateBackupOnSave(this->fileversion >= 2);
 
 	return valid;
 }
@@ -220,7 +224,7 @@ void LoadHandler::parseStart()
 	}
 	else
 	{
-		error(_C("Unexpected root tag: %s"), elementName);
+		error("%s", FC(_F("Unexpected root tag: {1}") % elementName));
 	}
 }
 
@@ -249,7 +253,7 @@ void LoadHandler::parseContents()
 	}
 	else
 	{
-		g_warning(_C("Unexpected tag in document: \"%s\""), elementName);
+		g_warning("%s", FC(_F("Unexpected tag in document: \"{1}\"") % elementName));
 	}
 }
 
@@ -278,7 +282,7 @@ void LoadHandler::parseBgSolid()
 	else
 	{
 		this->page->setBackgroundType(BACKGROUND_TYPE_NONE);
-		error(_C("Unknown background type parsed: \"%s\""), style);
+		error("%s", FC(_F("Unknown background type parsed: \"{1}\"") % style));
 	}
 
 
@@ -318,7 +322,7 @@ void LoadHandler::parseBgPixmap()
 
 		if (error)
 		{
-			error(_C("could not read image: %s, Error message: %s"), fileToLoad.c_str(), error->message);
+			error("%s", FC(_F("Could not read image: {1}. Error message: {2}") % fileToLoad % error->message));
 			g_error_free(error);
 		}
 
@@ -335,7 +339,7 @@ void LoadHandler::parseBgPixmap()
 	}
 	else
 	{
-		error(_C("Unknown pixmap::domain type: %s"), domain);
+		error("%s", FC(_F("Unknown pixmap::domain type: {1}") % domain));
 	}
 	this->page->setBackgroundType(BACKGROUND_TYPE_IMAGE);
 }
@@ -399,7 +403,7 @@ void LoadHandler::parseBgPdf()
 			}
 			else
 			{
-				error(_C("Unknown domain type: %s"), domain);
+				error("%s", FC(_F("Unknown domain type: {1}") % domain));
 				return;
 			}
 
@@ -417,7 +421,7 @@ void LoadHandler::parseBgPdf()
 			doc.readPdf(pdfFilename, false, attachToDocument);
 			if (doc.getLastErrorMsg() != "")
 			{
-				error(_C("Error reading PDF: %s"), doc.getLastErrorMsg().c_str());
+				error("%s", FC(_F("Error reading PDF: {1}") % doc.getLastErrorMsg()));
 			}
 		}
 		else
@@ -464,7 +468,7 @@ void LoadHandler::parsePage()
 		}
 		else
 		{
-			error(_C("Unknown background type: %s"), type);
+			error("%s", FC(_F("Unknown background type: {1}") % type));
 		}
 	}
 	else if (!strcmp(elementName, "layer"))
@@ -490,7 +494,7 @@ void LoadHandler::parseStroke()
 	stroke->setWidth(g_ascii_strtod(width, &ptr));
 	if (ptr == width)
 	{
-		error(_C("Error reading width of a stroke: %s"), width);
+		error("%s", FC(_F("Error reading width of a stroke: {1}") % width));
 		return;
 	}
 
@@ -529,7 +533,7 @@ void LoadHandler::parseStroke()
 	}
 	else
 	{
-		g_warning(_C("Unknown stroke type: \"%s\", assume pen"), tool);
+		g_warning("%s", FC(_F("Unknown stroke type: \"{1}\", assuming pen") % tool));
 	}
 }
 
@@ -763,7 +767,7 @@ void LoadHandler::parserText(GMarkupParseContext* context, const gchar* text,
 
 		if (n < 4 || (n & 1))
 		{
-			error2(*error, _C("Wrong count of points (%i)"), n);
+			error2(*error, "%s", FC(_F("Wrong count of points ({1})") % n));
 			return;
 		}
 
@@ -777,9 +781,9 @@ void LoadHandler::parserText(GMarkupParseContext* context, const gchar* text,
 			}
 			else
 			{
-				g_warning(_C("xoj-File: %s"), handler->filename.c_str());
-				g_warning(_C("Wrong count of points, get %i, expected %i"), handler->pressureBuffer.size(),
-						  handler->stroke->getPointCount() - 1);
+				g_warning("%s", FC(_F("xoj-File: {1}") % handler->filename));
+				g_warning("%s", FC(_F("Wrong number of points, got {1}, expected {2}")
+										% handler->pressureBuffer.size() % (handler->stroke->getPointCount() - 1)));
 			}
 		}
 		handler->pressureBuffer.clear();

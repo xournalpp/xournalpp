@@ -10,6 +10,7 @@
 #
 # Output variables:
 #   COMPILER_SUPPORTS_CXX11     ON when compiler supports C++11
+#   COMPILER_CXX11_FLAG         compiler flag that adds support for C++11
 #
 #
 # Copyright (c) 2015, Marek Pikuła <marek@pikula.co>
@@ -27,6 +28,7 @@ macro (CheckCXX11)
     if (MSVC)
         # MSVC has C++11 turned on by default
         set (COMPILER_SUPPORTS_CXX11 ON)
+        set (COMPILER_CXX11_FLAG "")
     else ()
         include (CheckCXXCompilerFlag)
         if (CMAKE_COMPILER_IS_GNUCXX)
@@ -40,12 +42,15 @@ macro (CheckCXX11)
         if (GNUXX11)
             set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=gnu++11")
             set (COMPILER_SUPPORTS_CXX11 ON)
+            set (COMPILER_CXX11_FLAG -std=gnu++11)
         elseif (CXX11)
             set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
             set (COMPILER_SUPPORTS_CXX11 ON)
+            set (COMPILER_CXX11_FLAG -std=c++11)
         elseif (CXX0X)
             set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x")
             set (COMPILER_SUPPORTS_CXX11 ON)
+            set (COMPILER_CXX11_FLAG -std=c++0x)
         endif ()
     endif ()
     

@@ -41,7 +41,7 @@ public:
 	static void openFileWithDefaultApplicaion(path filename);
 	static void openFileWithFilebrowser(path filename);
 	
-	static path getConfigSubfolder(path subfolder);
-	static path getConfigFile(path relativeFileName);
+	static path getConfigSubfolder(path subfolder = "");
+	static path getConfigFile(path relativeFileName = "");
 
 };

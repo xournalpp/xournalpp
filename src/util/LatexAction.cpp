@@ -11,6 +11,8 @@
 #include "serializing/HexObjectEncoding.h"
 #include "serializing/ObjectOutputStream.h"
 
+#include <i18n.h>
+
 #include <glib.h>
 
 #include <iostream>
@@ -39,15 +41,15 @@ void LatexAction::runCommand()
 	/*
 	 * at some point, I may need to sanitize theLatex
 	 */
-	cout << "Command is being run." << endl;
+	cout << C_("LaTeX comand", "Command is being run.") << endl;
 	const gchar* mtex = "mathtex-xournalpp.cgi";
 	gchar* mathtex = g_find_program_in_path(mtex);
 	if (!mathtex)
 	{
-		cerr << "Error: problem finding mathtex. Doing nothing..." << endl;
+		cerr << _("Error: problem finding mathtex. Doing nothing…") << endl;
 		return;
 	}
-	cout << "Found mathtex in your path! Area is " << this->texArea << endl;
+	cout << _F("Found mathtex in your path! TeX area is {1}") % this->texArea << endl;
 	g_free(mathtex);
 	//can change font colour later with more features
 	string fontcolour = "black";
@@ -77,9 +79,9 @@ void LatexAction::runCommand()
 	{
 		texres = "1000";
 	}
-	string command = (bl::format("{1} -m 0 \"\\png\\usepackage{{color}}\\color{{{2}}}\\dpi{{{3}}}\\normalsize {4}\" -o {5}")
+	string command = FS(bl::format("{1} -m 0 \"\\png\\usepackage{{color}}\\color{{{2}}}\\dpi{{{3}}}\\normalsize {4}\" -o {5}")
 						% mtex % (fontcolour.length() ? fontcolour : "black") % texres
-						% g_strescape(this->theLatex.c_str(), NULL) % this->texfile).str();
+						% g_strescape(this->theLatex.c_str(), NULL) % this->texfile);
 
 	gint rt = 0;
 	void(*texhandler)(int) = signal(SIGCHLD, SIG_DFL);
@@ -87,10 +89,10 @@ void LatexAction::runCommand()
 	signal(SIGCHLD, texhandler);
 	if (!success)
 	{
-		cout << "Latex Command execution failed." << endl;
+		cout << _("LaTeX command execution failed.") << endl;
 		return;
 	}
-	cout << bl::format("Tex command: \"{1}\" was successful; in file {2}.") % this->theLatex % this->texfilefull << endl;
+	cout << _F("LaTeX command: \"{1}\" executed successfully. Result saved to file {2}.") % this->theLatex % this->texfilefull << endl;
 
 }
 

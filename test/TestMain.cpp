@@ -44,10 +44,6 @@ int main(int argc, char* argv[])
 	Log::initlog();
 #endif
 
-#ifdef DEV_MEMORY_LEAK_CHECKING
-	xoj_type_initMutex();
-#endif
-
 	// Init GTK Display
 	//gdk_display_open_default_libgtk_only();
 

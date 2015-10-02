@@ -396,8 +396,8 @@ bool PageView::onButtonPressEvent(GtkWidget* widget, GdkEventButton* event)
 	{
 		GtkWidget* dialog = gtk_message_dialog_new((GtkWindow*) *xournal->getControl()->getWindow(),
 												   GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR, GTK_BUTTONS_NONE,
-												   _C("There was a wrong input event, input is not working.\n"
-													 "Do you want to disable \"Extended Input\"?"));
+												   "%s", _C("There was a wrong input event, input is not working.\n"
+															"Do you want to disable \"Extended Input\"?"));
 
 		gtk_dialog_add_button(GTK_DIALOG(dialog), "Disable \"Extended Input\"", 1);
 		gtk_dialog_add_button(GTK_DIALOG(dialog), "Cancel", 2);
@@ -841,7 +841,7 @@ bool PageView::paintPage(cairo_t* cr, GdkRectangle* rect)
 		cairo_set_font_size(cr2, 32.0);
 		cairo_text_extents(cr2, txtLoading, &ex);
 		cairo_move_to(cr2, (page->getWidth() - ex.width) / 2 - ex.x_bearing,
-					  (page->getHeight() - ex.height) / 2 - ex.y_bearing);
+						   (page->getHeight() - ex.height) / 2 - ex.y_bearing);
 		cairo_show_text(cr2, txtLoading);
 
 		cairo_destroy(cr2);

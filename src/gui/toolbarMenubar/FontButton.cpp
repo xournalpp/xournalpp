@@ -36,10 +36,7 @@ void FontButton::activated(GdkEvent* event, GtkMenuItem* menuitem, GtkToolButton
 void FontButton::setFontFontButton(GtkWidget* fontButton, XojFont& font)
 {
 	GtkFontButton* button = GTK_FONT_BUTTON(fontButton);
-
-	string txt = (bl::format("{1} {2}") % font.getName() % font.getSize()).str();
-
-	gtk_font_button_set_font_name(button, txt.c_str());
+	gtk_font_button_set_font_name(button, FC(bl::format("{1} {2}") % font.getName() % font.getSize()));
 }
 
 void FontButton::setFont(XojFont& font)

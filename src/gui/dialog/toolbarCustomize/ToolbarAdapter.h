@@ -24,6 +24,8 @@
 #include "ToolbarDragDropHelper.h"
 #include "ToolItemDragCurrentData.h"
 
+#include <i18n.h>
+
 #include <iostream>
 using std::cout;
 using std::endl;
@@ -215,26 +217,24 @@ private:
 		{
 			if (item != NULL)
 			{
-				cout << bl::format("Removed tool item {1} from Toolbar {2} ID {3}")
-						% item->getId() % toolbarName % id << endl;
+				cout << _F("Removed tool item {1} from Toolbar {2} ID {3}") % item->getId() % toolbarName % id << endl;
 			}
 			else
 			{
-				cout << bl::format("Removed tool item from Toolbar {1} ID {2}")
-						% toolbarName % id << endl;
+				cout << _F("Removed tool item from Toolbar {1} ID {2}") % toolbarName % id << endl;
 			}
 		}
 		else
 		{
 			if (item != NULL)
 			{
-				cout << bl::format("Could not removed tool item {1}  from Toolbar {2}  Position {3}")
-						% item->getId() % toolbarName % id << endl;
+				cout << _F("Could not remove tool item {1} from Toolbar {2} on position {3}")
+							% item->getId() % toolbarName % id << endl;
 			}
 			else
 			{
-				cout << bl::format("Could not removed tool item from Toolbar {1} Position {2}")
-						% toolbarName % id << endl;
+				cout << _F("Could not remove tool item from Toolbar {1} on position {2}")
+							% toolbarName % id << endl;
 			}
 		}
 	}

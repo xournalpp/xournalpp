@@ -18,6 +18,10 @@ set (PACKAGE_DATA_DIR "${CMAKE_INSTALL_PREFIX}/share")
 # Git repo info
 include (GitRepo)
 
+## C++11 ##
+include (C++11)
+CheckCXX11 (FATAL_ERROR)
+
 ## Libraries ##
 
 macro (add_includes_ldflags LDFLAGS INCLUDES)
@@ -30,16 +34,20 @@ option (BUILD_BOOST "Build boost libraries into Xournal++" OFF)
 if (BUILD_BOOST)
 
   set (BOOST_PREFIX "${CMAKE_BINARY_DIR}/boost-prefix")
+  if (COMPILER_CXX11_FLAG) # add flags only when needed
+    set (BOOST_CXXFLAGS cxxflags=${COMPILER_CXX11_FLAG})
+  endif ()
 
   include (ExternalProject)
   ExternalProject_Add (boost
     SVN_REPOSITORY http://svn.boost.org/svn/boost/branches/release
     LOG_DOWNLOAD 1
+    PREFIX "${BOOST_PREFIX}"
 
-    CONFIGURE_COMMAND cd "${BOOST_PREFIX}/src/boost" && ./bootstrap.sh
-      --prefix="${CMAKE_BINARY_DIR}/boost-prefix"
+    CONFIGURE_COMMAND cd "${BOOST_PREFIX}/src/boost" && ./bootstrap.sh --prefix="${BOOST_PREFIX}"
 
     BUILD_COMMAND cd "${BOOST_PREFIX}/src/boost" && ./b2
+      ${BOOST_CXXFLAGS}
       --with-filesystem --with-iostreams --with-locale --with-thread --with-system
       "--prefix=${BOOST_PREFIX}"
       "--build-dir=${BOOST_PREFIX}/src/boost-build"
@@ -68,7 +76,7 @@ else (BUILD_BOOST)
   set (Boost_USE_MULTITHREADED ON)
   find_package (Boost 1.54 COMPONENTS system filesystem locale iostreams thread)
   if (Boost_VERSION VERSION_LESS 1.54)
-    message (FATAL_ERROR "Boost 1.54 or newer not found – you should enable BUILD_BOOST cmake variable")
+    message (FATAL_ERROR "Boost 1.54 or newer not found – you should enable BUILD_BOOST CMake flag")
   endif (Boost_VERSION VERSION_LESS 1.54)
 
 endif (BUILD_BOOST)
@@ -90,10 +98,64 @@ endif (EXT_GLIBMM)
 add_includes_ldflags ("${Glibmm_LDFLAGS}" "${Glibmm_INCLUDE_DIRS}")
 
 # Poppler
-find_package (Poppler)
-if (NOT POPPLER_FOUND)
-  message (FATAL_ERROR "Poppler not found")
-endif (NOT POPPLER_FOUND)
+option (BUILD_POPPLER "Build the most recent version of Poppler" OFF)
+if (BUILD_POPPLER)
+
+  set (POPPLER_PREFIX "${CMAKE_BINARY_DIR}/poppler-prefix")
+
+  include (ExternalProject)
+  ExternalProject_Add (poppler
+    GIT_REPOSITORY "git://git.freedesktop.org/git/poppler/poppler"
+    PREFIX "${POPPLER_PREFIX}"
+    
+    CONFIGURE_COMMAND cd "${POPPLER_PREFIX}/src/poppler" && ./autogen.sh --enable-poppler-glib --enable-poppler-cpp --enable-static --disable-poppler-qt4 --disable-poppler-qt5
+    BUILD_COMMAND cd "${POPPLER_PREFIX}/src/poppler" && make
+    INSTALL_COMMAND ""
+  )
+  
+  # Additional packages required by Poppler
+  find_package (OpenJPEG REQUIRED)
+  find_package (JPEG REQUIRED)
+  pkg_check_modules (PopplerLibs REQUIRED "librsvg-2.0 >= 2.14.0" fontconfig lcms)
+  
+  link_directories (
+    "${POPPLER_PREFIX}/src/poppler/poppler/.libs"
+    "${POPPLER_PREFIX}/src/poppler/glib/.libs"
+    "${POPPLER_PREFIX}/src/poppler/cpp/.libs"
+    "${POPPLER_PREFIX}/src/poppler/utils/.libs"
+  )
+  set (POPPLER_LIBRARIES
+    libpoppler.a
+    libpoppler-cairo.a
+    libpoppler-cpp.a
+    libpoppler-glib.a
+    
+    ${OPENJPEG_LIBRARIES}
+    -lopenjpeg
+    ${JPEG_LIBRARIES}
+    ${PopplerLibs_LDFLAGS}
+  )
+  # -lopenjpeg added as fallback
+  
+  set (POPPLER_INCLUDE_DIRS
+    "${POPPLER_PREFIX}/src/poppler"
+    "${POPPLER_PREFIX}/src/poppler/poppler"
+    "${POPPLER_PREFIX}/src/poppler/glib"
+    "${POPPLER_PREFIX}/src/poppler/cpp"
+    
+    ${OPENJPEG_INCLUDE_DIRS}
+    ${JPEG_INCLUDE_DIRS}
+    ${PopplerLibs_INCLUDE_DIRS}
+  )
+
+else ()
+
+  find_package (Poppler)
+  if (NOT POPPLER_FOUND)
+    message (FATAL_ERROR "Poppler not found – you should enable BUILD_POPPLER CMake flag")
+  endif (NOT POPPLER_FOUND)
+
+endif ()
 add_includes_ldflags ("${POPPLER_LIBRARIES}" "${POPPLER_INCLUDE_DIRS}")
 
 # zlib
@@ -164,6 +226,7 @@ set (DEV_SETTINGS_XML_FILE "settings.xml" CACHE STRING "Settings file name")
 set (DEV_PRINT_CONFIG_FILE "print-config.ini" CACHE STRING "Print config file name")
 set (DEV_METADATA_FILE "metadata.ini" CACHE STRING "Metadata file name")
 set (DEV_METADATA_MAX_ITEMS 50 CACHE STRING "Maximal amount of metadata elements")
+set (DEV_ERRORLOG_DIR "errorlogs" CACHE STRING "Directory where errorlogfiles will be placed")
 
 option (DEV_ENABLE_GCOV "Build with gcov support" OFF) # Enabel gcov support – expanded in src/
 
@@ -195,10 +258,6 @@ configure_file (
   src/config-paths.h
   ESCAPE_QUOTES @ONLY
 )
-
-## C++11 ##
-include (C++11)
-CheckCXX11 (FATAL_ERROR)
 
 ## Source building ##
 add_subdirectory (src)
@@ -260,6 +319,7 @@ Unstable features:
 	Layers sidebar:             ${UNSTABLE_LAYERS_SIDEBAR}
 
 Static libraries:
+	Poppler:                    ${BUILD_POPPLER}
 	Boost:                      ${BUILD_BOOST}
 	Glibmm:                     ${EXT_GLIBMM}
 ")

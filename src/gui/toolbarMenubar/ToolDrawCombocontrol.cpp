@@ -94,44 +94,44 @@ void ToolDrawCombocontrol::selected(ActionGroup group, ActionType action)
 			return;
 		}
 
-		const char* description = NULL;
+		string description;
 
 		if (action == ACTION_TOOL_DRAW_RECT && this->action != ACTION_TOOL_DRAW_RECT)
 		{
 			this->action = ACTION_TOOL_DRAW_RECT;
 			gtk_image_set_from_pixbuf(GTK_IMAGE(iconWidget), this->iconDrawRect);
 
-			description = _C("Draw Rectangle");
+			description = _("Draw Rectangle");
 		}
 		else if (action == ACTION_TOOL_DRAW_CIRCLE && this->action != ACTION_TOOL_DRAW_CIRCLE)
 		{
 			this->action = ACTION_TOOL_DRAW_CIRCLE;
 			gtk_image_set_from_pixbuf(GTK_IMAGE(iconWidget), this->iconDrawCirc);
 
-			description = _C("Draw Circle");
+			description = _("Draw Circle");
 		}
 		else if (action == ACTION_TOOL_DRAW_ARROW && this->action != ACTION_TOOL_DRAW_ARROW)
 		{
 			this->action = ACTION_TOOL_DRAW_ARROW;
 			gtk_image_set_from_pixbuf(GTK_IMAGE(iconWidget), this->iconDrawArr);
 
-			description = _C("Draw Arrow");
+			description = _("Draw Arrow");
 		}
 		else if (action == ACTION_RULER && this->action != ACTION_RULER)
 		{
 			this->action = ACTION_RULER;
 			gtk_image_set_from_pixbuf(GTK_IMAGE(iconWidget), this->iconDrawLine);
 
-			description = _C("Draw Line");
+			description = _("Draw Line");
 		}
 		else if (action == ACTION_SHAPE_RECOGNIZER && this->action != ACTION_SHAPE_RECOGNIZER)
 		{
 			this->action = ACTION_SHAPE_RECOGNIZER;
 			gtk_image_set_from_pixbuf(GTK_IMAGE(iconWidget), this->iconAutoDrawLine);
 
-			description = _C("Recognize Lines");
+			description = _("Recognize Lines");
 		}
-		gtk_tool_item_set_tooltip_text(GTK_TOOL_ITEM(item), description);
+		gtk_tool_item_set_tooltip_text(GTK_TOOL_ITEM(item), description.c_str());
 
 
 		if (gtk_toggle_tool_button_get_active(GTK_TOGGLE_TOOL_BUTTON(this->item)) != (this->action == action))

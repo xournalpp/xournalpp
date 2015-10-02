@@ -14,7 +14,7 @@
 #include "Attribute.h"
 #include <XournalType.h>
 
-class DoubleArrayAttribute : public Attribute
+class DoubleArrayAttribute : public XMLAttribute
 {
 public:
 	DoubleArrayAttribute(const char* name, double* values, int count);
