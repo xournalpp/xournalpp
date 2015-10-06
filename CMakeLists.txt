@@ -116,7 +116,7 @@ if (BUILD_POPPLER)
   # Additional packages required by Poppler
   find_package (OpenJPEG REQUIRED)
   find_package (JPEG REQUIRED)
-  pkg_check_modules (PopplerLibs REQUIRED "librsvg-2.0 >= 2.14.0" fontconfig lcms)
+  pkg_check_modules (PopplerLibs REQUIRED "librsvg-2.0 >= 2.14.0" fontconfig lcms2)
   
   link_directories (
     "${POPPLER_PREFIX}/src/poppler/poppler/.libs"
