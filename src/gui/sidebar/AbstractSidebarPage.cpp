@@ -15,7 +15,7 @@ AbstractSidebarPage::~AbstractSidebarPage()
 	this->control = NULL;
 }
 
-bool AbstractSidebarPage::selectPageNr(int page, int pdfPage)
+bool AbstractSidebarPage::selectPageNr(size_t page, size_t pdfPage)
 {
 	XOJ_CHECK_TYPE(AbstractSidebarPage);
 
@@ -29,28 +29,28 @@ void AbstractSidebarPage::documentChanged(DocumentChangeType type)
 	XOJ_CHECK_TYPE(AbstractSidebarPage);
 }
 
-void AbstractSidebarPage::pageSizeChanged(int page)
+void AbstractSidebarPage::pageSizeChanged(size_t page)
 {
 	XOJ_CHECK_TYPE(AbstractSidebarPage);
 }
 
-void AbstractSidebarPage::pageChanged(int page)
+void AbstractSidebarPage::pageChanged(size_t page)
 {
 	XOJ_CHECK_TYPE(AbstractSidebarPage);
 }
 
-void AbstractSidebarPage::pageInserted(int page)
+void AbstractSidebarPage::pageInserted(size_t page)
 {
 	XOJ_CHECK_TYPE(AbstractSidebarPage);
 }
 
-void AbstractSidebarPage::pageDeleted(int page)
+void AbstractSidebarPage::pageDeleted(size_t page)
 {
 	XOJ_CHECK_TYPE(AbstractSidebarPage);
 
 }
 
-void AbstractSidebarPage::pageSelected(int page)
+void AbstractSidebarPage::pageSelected(size_t page)
 {
 	XOJ_CHECK_TYPE(AbstractSidebarPage);
 }

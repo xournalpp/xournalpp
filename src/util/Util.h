@@ -45,3 +45,6 @@ public:
 	static path getConfigFile(path relativeFileName = "");
 
 };
+
+static const size_t size_t_npos = static_cast<size_t>(-1);
+// for 64b systems it's 18446744073709551615 and for 32b – 4294967295

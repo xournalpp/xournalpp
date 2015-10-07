@@ -3,11 +3,13 @@
 #include "BackgroundImage.h"
 #include "Document.h"
 
+#include <Util.h>
+
 XojPage::XojPage(double width, double heigth)
 {
 	XOJ_INIT_TYPE(XojPage);
 
-	this->pdfBackgroundPage = -1;
+	this->pdfBackgroundPage = size_t_npos;
 	this->backgroundColor = 0xffffff;
 	this->bgType = BACKGROUND_TYPE_LINED;
 
@@ -15,7 +17,7 @@ XojPage::XojPage(double width, double heigth)
 	this->height = heigth;
 
 	this->ref = 0;
-	this->currentLayer = -1;
+	this->currentLayer = size_t_npos;
 }
 
 XojPage::~XojPage()
@@ -71,7 +73,7 @@ void XojPage::addLayer(Layer* layer)
 	XOJ_CHECK_TYPE(XojPage);
 
 	this->layer.push_back(layer);
-	this->currentLayer = -1;
+	this->currentLayer = size_t_npos;
 }
 
 void XojPage::insertLayer(Layer* layer, int index)
@@ -94,7 +96,7 @@ void XojPage::removeLayer(Layer* layer)
 			break;
 		}
 	}
-	this->currentLayer = -1;
+	this->currentLayer = size_t_npos;
 }
 
 void XojPage::setSelectedLayerId(int id)
@@ -109,7 +111,7 @@ LayerVector* XojPage::getLayers()
 	return &this->layer;
 }
 
-int XojPage::getLayerCount()
+size_t XojPage::getLayerCount()
 {
 	XOJ_CHECK_TYPE(XojPage);
 
@@ -123,7 +125,7 @@ int XojPage::getSelectedLayerId()
 {
 	XOJ_CHECK_TYPE(XojPage);
 
-	if (this->currentLayer == -1)
+	if (this->currentLayer == size_t_npos)
 	{
 		this->currentLayer = this->layer.size();
 	}
@@ -131,7 +133,7 @@ int XojPage::getSelectedLayerId()
 	return this->currentLayer;
 }
 
-void XojPage::setBackgroundPdfPageNr(int page)
+void XojPage::setBackgroundPdfPageNr(size_t page)
 {
 	XOJ_CHECK_TYPE(XojPage);
 
@@ -175,7 +177,7 @@ double XojPage::getHeight()
 	return this->height;
 }
 
-int XojPage::getPdfPageNr()
+size_t XojPage::getPdfPageNr()
 {
 	XOJ_CHECK_TYPE(XojPage);
 
@@ -188,7 +190,10 @@ bool XojPage::isAnnotated()
 
 	for (Layer* l : this->layer)
 	{
-		if (l->isAnnotated()) return true;
+		if (l->isAnnotated())
+		{
+			return true;
+		}
 	}
 	return false;
 }
@@ -201,7 +206,7 @@ void XojPage::setBackgroundType(BackgroundType bgType)
 
 	if (bgType != BACKGROUND_TYPE_PDF)
 	{
-		this->pdfBackgroundPage = -1;
+		this->pdfBackgroundPage = size_t_npos;
 	}
 	if (bgType != BACKGROUND_TYPE_IMAGE)
 	{
@@ -238,11 +243,11 @@ Layer* XojPage::getSelectedLayer()
 	{
 		addLayer(new Layer());
 	}
-	int layer = getSelectedLayerId() - 1;
+	size_t layer = getSelectedLayerId();
 
-	if (layer < 0)
+	if (layer > 0)
 	{
-		layer = 0;
+		layer--;
 	}
 
 	return this->layer[layer];

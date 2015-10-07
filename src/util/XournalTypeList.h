@@ -114,6 +114,7 @@ XOJ_DECLARE_TYPE(ToolMenuHandler, 102);
 XOJ_DECLARE_TYPE(ToolButton, 103);
 XOJ_DECLARE_TYPE(MenuItem, 104);
 XOJ_DECLARE_TYPE(XournalView, 105);
+XOJ_DECLARE_TYPE(SizeTAttribute, 106);
 XOJ_DECLARE_TYPE(XojFont, 107);
 XOJ_DECLARE_TYPE(InsertLayerUndoAction, 108);
 XOJ_DECLARE_TYPE(PreviewJob, 109);
@@ -146,6 +147,7 @@ XOJ_DECLARE_TYPE(Text, 135);
 XOJ_DECLARE_TYPE(XojPopplerDocument, 136);
 XOJ_DECLARE_TYPE(_IntPopplerDocument, 137);
 XOJ_DECLARE_TYPE(StringTokenizer, 138);
+
 XOJ_DECLARE_TYPE(_RefStrInternal, 140);
 XOJ_DECLARE_TYPE(PdfRefEntry, 141);
 XOJ_DECLARE_TYPE(RemoveLayerUndoAction, 142);
@@ -169,6 +171,7 @@ XOJ_DECLARE_TYPE(PageRangeEntry, 159);
 XOJ_DECLARE_TYPE(PageViewIndex, 160);
 XOJ_DECLARE_TYPE(PageViewIndexEntry, 161);
 XOJ_DECLARE_TYPE(EditSelectionContents, 162);
+
 XOJ_DECLARE_TYPE(BackgroundImageContents, 164);
 XOJ_DECLARE_TYPE(PageRef, 165);
 XOJ_DECLARE_TYPE(ToolbarCustomizeDialog, 166);
@@ -202,6 +205,7 @@ XOJ_DECLARE_TYPE(AddUndoAction, 193);
 XOJ_DECLARE_TYPE(CopyUndoAction, 194);
 XOJ_DECLARE_TYPE(InsertsUndoAction, 195);
 XOJ_DECLARE_TYPE(SwapUndoAction, 196);
+
 XOJ_DECLARE_TYPE(PageHandler, 198);
 XOJ_DECLARE_TYPE(PageListener, 199);
 XOJ_DECLARE_TYPE(ToolDrawCombocontrol, 200);
@@ -210,6 +214,5 @@ XOJ_DECLARE_TYPE(SidebarPreviewPages, 202);
 XOJ_DECLARE_TYPE(SidebarPreviewLayers, 203);
 XOJ_DECLARE_TYPE(SidebarPreviewPageEntry, 204);
 XOJ_DECLARE_TYPE(SidebarPreviewLayerEntry, 205);
-
 
 //XOJ_DECLARE_TYPE(XXXXXXXXXXXXXXXX, 206);

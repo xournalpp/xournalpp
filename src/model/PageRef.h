@@ -16,6 +16,8 @@
 
 #include <XournalType.h>
 
+#include <vector>
+
 class Layer;
 class BackgroundImage;
 
@@ -49,3 +51,5 @@ private:
 
 	XojPage* page;
 };
+
+typedef std::vector<PageRef> PageRefVector;

@@ -46,14 +46,14 @@ public:
 	/**
 	 * A page was selected, so also select this page in the sidebar
 	 */
-	void selectPageNr(int page, int pdfPage);
+	void selectPageNr(size_t page, size_t pdfPage);
 
 	Control* getControl();
 
 	/**
 	 * Sets the current selected page
 	 */
-	void setSelectedPage(int page);
+	void setSelectedPage(size_t page);
 
 	/**
 	 * Enable active and siable inactive buttons, select first active page
@@ -73,11 +73,11 @@ public:
 public:
 	// DocumentListener interface
 	virtual void documentChanged(DocumentChangeType type);
-	virtual void pageSizeChanged(int page);
-	virtual void pageChanged(int page);
-	virtual void pageInserted(int page);
-	virtual void pageDeleted(int page);
-	virtual void pageSelected(int page);
+	virtual void pageSizeChanged(size_t page);
+	virtual void pageChanged(size_t page);
+	virtual void pageInserted(size_t page);
+	virtual void pageDeleted(size_t page);
+	virtual void pageSelected(size_t page);
 
 private:
 

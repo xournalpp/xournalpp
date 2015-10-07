@@ -41,11 +41,11 @@ public:
 
 public:
 	// DocumentListener interface (only the part which is not handled by SidebarPreviewBase)
-	virtual void pageSizeChanged(int page);
-	virtual void pageChanged(int page);
-	virtual void pageSelected(int page);
-	virtual void pageInserted(int page);
-	virtual void pageDeleted(int page);
+	virtual void pageSizeChanged(size_t page);
+	virtual void pageChanged(size_t page);
+	virtual void pageSelected(size_t page);
+	virtual void pageInserted(size_t page);
+	virtual void pageDeleted(size_t page);
 
 private:
 	XOJ_TYPE_ATTRIB;

@@ -3,6 +3,7 @@
 #include "DoubleArrayAttribute.h"
 #include "DoubleAttribute.h"
 #include "IntAttribute.h"
+#include "SizeTAttribute.h"
 #include "TextAttribute.h"
 
 #include "control/jobs/ProgressListener.h"
@@ -67,6 +68,13 @@ void XmlNode::setAttrib(const char* attrib, int value)
 	XOJ_CHECK_TYPE(XmlNode);
 
 	putAttrib(new IntAttribute(attrib, value));
+}
+
+void XmlNode::setAttrib(const char* attrib, size_t  value)
+{
+	XOJ_CHECK_TYPE(XmlNode);
+
+	putAttrib(new SizeTAttribute(attrib, value));
 }
 
 /**

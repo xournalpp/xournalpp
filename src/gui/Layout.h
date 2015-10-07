@@ -30,7 +30,7 @@ public:
 	void scrollRelativ(int x, int y);
 	bool scrollEvent(GdkEventScroll* event);
 	void ensureRectIsVisible(int x, int y, int width, int height);
-	double getVisiblePageTop(int page);
+	double getVisiblePageTop(size_t page);
 	double getDisplayHeight();
 
 	void layoutPages();

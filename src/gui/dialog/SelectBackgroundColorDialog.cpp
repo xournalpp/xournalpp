@@ -46,9 +46,8 @@ SelectBackgroundColorDialog::SelectBackgroundColorDialog(GladeSearchpath* gladeS
 
 	GtkWidget* toolbar = get("tbPredefinedColors");
 
-	for (int i = 0; i < sizeof(predef_bgcolors_rgba) / sizeof(int); i++)
+	for (int color : predef_bgcolors_rgba)
 	{
-		int color = predef_bgcolors_rgba[i];
 		ColorEntry* e = new ColorEntry(this, color, false);
 		this->colors.push_back(e);
 

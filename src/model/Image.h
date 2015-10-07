@@ -56,5 +56,5 @@ private:
 
 	string data;
 
-	int read;
+	string::size_type read;
 };

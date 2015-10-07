@@ -48,7 +48,7 @@ path XojOpenDlg::showOpenDialog(GtkWindow* win, Settings* settings, bool pdf, bo
 	}
 	else
 	{
-		g_warning("lastSavePath is not set!", 0);
+		g_warning("lastSavePath is not set!");
 		gtk_file_chooser_set_current_folder_uri(GTK_FILE_CHOOSER(dialog), g_get_home_dir());
 	}
 

@@ -165,8 +165,7 @@ bool SidebarPreviewBase::scrollToPreview(SidebarPreviewBase* sidebar)
 		}
 	}
 
-	if (sidebar->selectedEntry >= 0 &&
-		sidebar->selectedEntry < sidebar->previews.size())
+	if (sidebar->selectedEntry != size_t_npos && sidebar->selectedEntry < sidebar->previews.size())
 	{
 		gdk_threads_enter();
 		SidebarPreviewBaseEntry* p = sidebar->previews[sidebar->selectedEntry];

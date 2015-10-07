@@ -32,11 +32,11 @@ public:
 public:
 	// DocumentListener interface
 	virtual void documentChanged(DocumentChangeType type);
-	virtual void pageSizeChanged(int page);
-	virtual void pageChanged(int page);
-	virtual void pageInserted(int page);
-	virtual void pageDeleted(int page);
-	virtual void pageSelected(int page);
+	virtual void pageSizeChanged(size_t page);
+	virtual void pageChanged(size_t page);
+	virtual void pageInserted(size_t page);
+	virtual void pageDeleted(size_t page);
+	virtual void pageSelected(size_t page);
 
 public:
 
@@ -68,7 +68,7 @@ public:
 	/**
 	 * Page selected
 	 */
-	virtual bool selectPageNr(int page, int pdfPage);
+	virtual bool selectPageNr(size_t page, size_t pdfPage);
 
 	/**
 	 * Returns the Application controller

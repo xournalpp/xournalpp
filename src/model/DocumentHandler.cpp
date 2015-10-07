@@ -40,7 +40,7 @@ void DocumentHandler::fireDocumentChanged(DocumentChangeType type)
 	}
 }
 
-void DocumentHandler::firePageSizeChanged(int page)
+void DocumentHandler::firePageSizeChanged(size_t page)
 {
 	XOJ_CHECK_TYPE(DocumentHandler);
 
@@ -50,7 +50,7 @@ void DocumentHandler::firePageSizeChanged(int page)
 	}
 }
 
-void DocumentHandler::firePageChanged(int page)
+void DocumentHandler::firePageChanged(size_t page)
 {
 	XOJ_CHECK_TYPE(DocumentHandler);
 
@@ -60,7 +60,7 @@ void DocumentHandler::firePageChanged(int page)
 	}
 }
 
-void DocumentHandler::firePageInserted(int page)
+void DocumentHandler::firePageInserted(size_t page)
 {
 	XOJ_CHECK_TYPE(DocumentHandler);
 
@@ -70,7 +70,7 @@ void DocumentHandler::firePageInserted(int page)
 	}
 }
 
-void DocumentHandler::firePageDeleted(int page)
+void DocumentHandler::firePageDeleted(size_t page)
 {
 	for (DocumentListener* dl : this->listener)
 	{
@@ -78,7 +78,7 @@ void DocumentHandler::firePageDeleted(int page)
 	}
 }
 
-void DocumentHandler::firePageSelected(int page)
+void DocumentHandler::firePageSelected(size_t page)
 {
 	for (DocumentListener* dl : this->listener)
 	{

@@ -39,24 +39,24 @@ public:
 public:
 	bool readPdf(path filename, bool initPages, bool attachToDocument);
 
-	int getPageCount();
-	int getPdfPageCount();
-	XojPopplerPage* getPdfPage(int page);
+	size_t getPageCount();
+	size_t getPdfPageCount();
+	XojPopplerPage* getPdfPage(size_t page);
 	XojPopplerDocument& getPdfDocument();
 
-	void insertPage(PageRef p, int position);
+	void insertPage(PageRef p, size_t position);
 	void addPage(PageRef p);
-	PageRef getPage(int page);
-	void deletePage(int pNr);
+	PageRef getPage(size_t page);
+	void deletePage(size_t pNr);
 
 	void setPageSize(PageRef p, double width, double height);
 
-	int indexOf(PageRef page);
+	size_t indexOf(PageRef page);
 
 	string getLastErrorMsg();
 
 	bool isPdfDocumentLoaded();
-	int findPdfPage(int pdfPage);
+	size_t findPdfPage(size_t pdfPage);
 
 	void operator=(Document& doc);
 

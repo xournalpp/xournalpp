@@ -106,7 +106,7 @@ void ScrollHandler::scrollToPage(PageRef page, double top)
 	}
 }
 
-void ScrollHandler::scrollToPage(int page, double top)
+void ScrollHandler::scrollToPage(size_t page, double top)
 {
 	XOJ_CHECK_TYPE(ScrollHandler);
 
@@ -146,7 +146,7 @@ void ScrollHandler::scrollToAnnotatedPage(bool next)
 
 	Document* doc = this->control->getDocument();
 
-	for (int i = this->control->getCurrentPageNo() + step; i >= 0 && i < doc->getPageCount(); i += step)
+	for (size_t i = this->control->getCurrentPageNo() + step; i >= 0 && i < doc->getPageCount(); i += step)
 	{
 		if (doc->getPage(i)->isAnnotated())
 		{
@@ -156,7 +156,7 @@ void ScrollHandler::scrollToAnnotatedPage(bool next)
 	}
 }
 
-bool ScrollHandler::isPageVisible(int page, int* visibleHeight)
+bool ScrollHandler::isPageVisible(size_t page, int* visibleHeight)
 {
 	XOJ_CHECK_TYPE(ScrollHandler);
 
@@ -172,7 +172,7 @@ bool ScrollHandler::isPageVisible(int page, int* visibleHeight)
 	return this->control->getWindow()->getXournal()->isPageVisible(page, visibleHeight);
 }
 
-void ScrollHandler::pageChanged(int page)
+void ScrollHandler::pageChanged(size_t page)
 {
 	XOJ_CHECK_TYPE(ScrollHandler);
 

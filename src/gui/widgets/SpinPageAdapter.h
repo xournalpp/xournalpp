@@ -53,5 +53,5 @@ private:
 class SpinPageListener
 {
 public:
-	virtual void pageChanged(int page) = 0;
+	virtual void pageChanged(size_t page) = 0;
 };

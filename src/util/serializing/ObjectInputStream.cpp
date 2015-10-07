@@ -211,7 +211,7 @@ public:
 
 cairo_status_t cairoReadFunction(PngDatasource* obj, unsigned char* data, unsigned int length)
 {
-	for (int i = 0; i < length; i++, obj->pos++)
+	for (unsigned int i = 0; i < length; i++, obj->pos++)
 	{
 		if (obj->pos >= obj->len)
 		{

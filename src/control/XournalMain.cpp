@@ -208,7 +208,7 @@ int XournalMain::run(int argc, char* argv[])
 	this->initLocalisation();
 
 	GError* error = NULL;
-	GOptionContext* context = context = g_option_context_new("FILE");
+	GOptionContext* context = g_option_context_new("FILE");
 
 	bool optNoPdfCompress = false;
 	gchar** optFilename = NULL;

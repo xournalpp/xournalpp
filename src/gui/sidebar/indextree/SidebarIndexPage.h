@@ -54,7 +54,7 @@ public:
 	/**
 	 * Select page in the tree
 	 */
-	bool selectPageNr(int page, int pdfPage, GtkTreeIter* parent);
+	bool selectPageNr(size_t page, size_t pdfPage, GtkTreeIter* parent);
 
 	/**
 	 * @overwrite
@@ -76,7 +76,7 @@ private:
 	/**
 	 * If you select a Bookmark wich is currently not in the Xournal document, only in the PDF (page deleted or so)
 	 */
-	void askInsertPdfPage(int pdfPage);
+	void askInsertPdfPage(size_t pdfPage);
 
 	/**
 	 * The function which is called after a search timeout

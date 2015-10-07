@@ -12,8 +12,9 @@
 #pragma once
 
 #include "Element.h"
-
 #include <XournalType.h>
+
+#include <vector>
 
 class Layer
 {
@@ -67,3 +68,5 @@ private:
 	ElementVector elements;
 
 };
+
+typedef std::vector<Layer*> LayerVector;

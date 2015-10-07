@@ -22,6 +22,8 @@ class ImageView;
 class Settings;
 class BackgroundImage;
 
+typedef std::vector<ImageView*> ImageViewVector;
+
 class ImagesDialog : public GladeGui
 {
 public:
@@ -33,7 +35,7 @@ public:
 
 	void setBackgroundWhite();
 
-	void setSelected(int selected);
+	void setSelected(size_t selected);
 
 	BackgroundImage getSelectedImage();
 	bool shouldShowFilechooser();
@@ -54,12 +56,12 @@ private:
 
 	Settings* settings;
 
-	int selected;
+	size_t selected;
 	int lastWidth;
 
 	int selectedPage;
 
-	std::vector<ImageView*> images;
+	ImageViewVector images;
 
 	GtkWidget* scrollPreview;
 	GtkWidget* widget;

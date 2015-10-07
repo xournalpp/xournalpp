@@ -47,23 +47,23 @@ public:
 
 	void layoutPages();
 
-	void scrollTo(int pageNo, double y);
+	void scrollTo(size_t pageNo, double y);
 
-	int getCurrentPage();
+	size_t getCurrentPage();
 
 	void updateXEvents();
 
 	void clearSelection();
 
-	void layerChanged(int page);
+	void layerChanged(size_t page);
 
 	void requestFocus();
 
 	void forceUpdatePagenumbers();
 
-	PageView* getViewFor(int pageNr);
+	PageView* getViewFor(size_t pageNr);
 
-	bool searchTextOnPage(string text, int p, int* occures, double* top);
+	bool searchTextOnPage(string text, size_t p, int* occures, double* top);
 
 	bool cut();
 	bool copy();
@@ -103,11 +103,11 @@ public:
 
 public:
 	//DocumentListener interface
-	void pageSelected(int page);
-	void pageSizeChanged(int page);
-	void pageChanged(int page);
-	void pageInserted(int page);
-	void pageDeleted(int page);
+	void pageSelected(size_t page);
+	void pageSizeChanged(size_t page);
+	void pageChanged(size_t page);
+	void pageInserted(size_t page);
+	void pageDeleted(size_t page);
 	void documentChanged(DocumentChangeType type);
 
 public:
@@ -120,7 +120,7 @@ private:
 
 	void addLoadPageToQue(PageRef page, int priority);
 
-	Rectangle* getVisibleRect(int page);
+	Rectangle* getVisibleRect(size_t page);
 
 	static gboolean clearMemoryTimer(XournalView* widget);
 
@@ -131,12 +131,12 @@ private:
 	double margin;
 
 	PageView** viewPages;
-	int viewPagesLen;
+	size_t viewPagesLen;
 
 	Control* control;
 
-	int currentPage;
-	int lastSelectedPage;
+	size_t currentPage;
+	size_t lastSelectedPage;
 
 	PdfCache* cache;
 

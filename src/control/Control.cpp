@@ -930,25 +930,25 @@ void Control::invokeLater(ActionType type)
 /**
  * Fire page selected, but first check if the page Number is valid
  *
- * @return the page ID or -1 if the page is not found
+ * @return the page ID or size_t_npos if the page is not found
  */
-int Control::firePageSelected(PageRef page)
+size_t Control::firePageSelected(PageRef page)
 {
 	XOJ_CHECK_TYPE(Control);
 
 	this->doc->lock();
-	int pageId = this->doc->indexOf(page);
+	size_t pageId = this->doc->indexOf(page);
 	this->doc->unlock();
-	if (pageId == -1)
+	if (pageId == size_t_npos)
 	{
-		return -1;
+		return size_t_npos;
 	}
 
 	DocumentHandler::firePageSelected(pageId);
 	return pageId;
 }
 
-void Control::firePageSelected(int page)
+void Control::firePageSelected(size_t page)
 {
 	XOJ_CHECK_TYPE(Control);
 
@@ -1369,8 +1369,8 @@ void Control::deletePage()
 		return;
 	}
 
-	int pNr = getCurrentPageNo();
-	if (pNr < 0 || pNr > this->doc->getPageCount())
+	size_t pNr = getCurrentPageNo();
+	if (pNr == size_t_npos || pNr > this->doc->getPageCount())
 	{
 		// something went wrong...
 		return;
@@ -1398,7 +1398,7 @@ void Control::deletePage()
 	scrollHandler->scrollToPage(pNr, 0);
 }
 
-void Control::insertNewPage(int position)
+void Control::insertNewPage(size_t position)
 {
 	XOJ_CHECK_TYPE(Control);
 
@@ -1498,10 +1498,10 @@ void Control::insertNewPage(int position)
 		{
 			this->doc->lock();
 			PdfPagesDialog* dlg = new PdfPagesDialog(this->gladeSearchPath, this->doc, this->settings);
-			for (int i = 0; i < doc->getPageCount(); i++)
+			for (size_t i = 0; i < doc->getPageCount(); i++)
 			{
 				PageRef p = doc->getPage(i);
-				if (p->getBackgroundType() == BACKGROUND_TYPE_PDF && p->getPdfPageNr() >= 0)
+				if (p->getBackgroundType() == BACKGROUND_TYPE_PDF && p->getPdfPageNr() != size_t_npos)
 				{
 					dlg->setPageUsed(i);
 				}
@@ -1509,10 +1509,10 @@ void Control::insertNewPage(int position)
 
 			dlg->show(GTK_WINDOW(this->win->getWindow()));
 
-			int selected = dlg->getSelectedPage();
+			size_t selected = dlg->getSelectedPage();
 			delete dlg;
 
-			if (selected < 0 || selected >= doc->getPdfPageCount())
+			if (selected == size_t_npos || selected >= doc->getPdfPageCount())
 			{
 				// page is automatically deleted
 				return;
@@ -1530,7 +1530,7 @@ void Control::insertNewPage(int position)
 	insertPage(page, position);
 }
 
-void Control::insertPage(PageRef page, int position)
+void Control::insertPage(PageRef page, size_t position)
 {
 	XOJ_CHECK_TYPE(Control);
 
@@ -1588,9 +1588,9 @@ void Control::setPageBackground(ActionType type)
 	}
 
 	this->doc->lock();
-	int pageNr = this->doc->indexOf(page);
+	size_t pageNr = this->doc->indexOf(page);
 	this->doc->unlock();
-	if (pageNr == -1)
+	if (pageNr == size_t_npos)
 	{
 		return; // should not happen...
 	}
@@ -1696,7 +1696,7 @@ void Control::setPageBackground(ActionType type)
 			this->doc->lock();
 
 			PdfPagesDialog* dlg = new PdfPagesDialog(this->gladeSearchPath, this->doc, this->settings);
-			for (int i = 0; i < doc->getPageCount(); i++)
+			for (size_t i = 0; i < doc->getPageCount(); i++)
 			{
 				PageRef p = doc->getPage(i);
 				if (p->getBackgroundType() == BACKGROUND_TYPE_PDF && p->getPdfPageNr() >= 0)
@@ -1709,10 +1709,10 @@ void Control::setPageBackground(ActionType type)
 
 			dlg->show(GTK_WINDOW(this->win->getWindow()));
 
-			int selected = dlg->getSelectedPage();
+			size_t selected = dlg->getSelectedPage();
 			delete dlg;
 
-			if (selected < 0 || selected >= doc->getPdfPageCount())
+			if (selected == size_t_npos || selected >= doc->getPdfPageCount())
 			{
 				return;
 			}
@@ -1969,7 +1969,7 @@ bool Control::invokeCallback(CallbackData* cb)
 	return false;
 }
 
-int Control::getCurrentPageNo()
+size_t Control::getCurrentPageNo()
 {
 	XOJ_CHECK_TYPE(Control);
 

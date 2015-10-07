@@ -33,11 +33,11 @@ public:
 	void setBackgroundWhite();
 	double getZoom();
 
-	void setSelected(int selected);
+	void setSelected(size_t selected);
 
-	void setPageUsed(int page);
+	void setPageUsed(size_t page);
 
-	int getSelectedPage();
+	size_t getSelectedPage();
 
 	Settings* getSettings();
 
@@ -54,12 +54,12 @@ private:
 
 	bool backgroundInitialized;
 
-	int selected;
+	size_t selected;
 	int lastWidth;
 
 	Settings* settings;
 
-	int selectedPage;
+	size_t selectedPage;
 
 	std::vector<PdfPage*> pages;
 	bool* usedPages;
