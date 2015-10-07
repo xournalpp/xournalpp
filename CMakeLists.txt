@@ -116,7 +116,23 @@ if (BUILD_POPPLER)
   # Additional packages required by Poppler
   find_package (OpenJPEG REQUIRED)
   find_package (JPEG REQUIRED)
-  pkg_check_modules (PopplerLibs REQUIRED "librsvg-2.0 >= 2.14.0" fontconfig lcms2)
+  pkg_check_modules (PopplerLibs REQUIRED "librsvg-2.0 >= 2.14.0" fontconfig)
+
+  pkg_check_modules (lcms2 lcms2)
+  if (lcms2_FOUND)
+    set (lcms_VERSION 2)
+  else ()
+    pkg_check_modules (lcms1 lcms)
+    if (lcms1_FOUND)
+      set (lcms_VERSION 1)
+    else ()
+      message (FATAL_ERROR "Neither first nor second version of lcms (needed to link with poppler) was found!")
+    endif ()
+  endif ()
+  
+  set (lcms_FOUND ON)
+  set (lcms_LDFLAGS "${lcms${lcms_VERSION}_LDFLAGS}")
+  set (lcms_INCLUDE_DIRS "${lcms${lcms_VERSION}_INCLUDE_DIRS}")
   
   link_directories (
     "${POPPLER_PREFIX}/src/poppler/poppler/.libs"
@@ -134,6 +150,7 @@ if (BUILD_POPPLER)
     -lopenjpeg
     ${JPEG_LIBRARIES}
     ${PopplerLibs_LDFLAGS}
+    ${lcms_LDFLAGS}
   )
   # -lopenjpeg added as fallback
   
@@ -146,6 +163,7 @@ if (BUILD_POPPLER)
     ${OPENJPEG_INCLUDE_DIRS}
     ${JPEG_INCLUDE_DIRS}
     ${PopplerLibs_INCLUDE_DIRS}
+    ${lcms_INCLUDE_DIRS}
   )
 
 else ()
