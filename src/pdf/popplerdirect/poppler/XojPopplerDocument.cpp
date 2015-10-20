@@ -223,7 +223,7 @@ XojPopplerPage* XojPopplerDocument::getPage(size_t page)
 
 	if (page == size_t_npos || page >= this->getPageCount())
 	{
-		g_critical("Document::getPdfPage(%i) out of range! (count=%i)", page, this->getPageCount());
+		g_critical("Document::getPdfPage(%lu) out of range! (count=%lu)", page, this->getPageCount());
 		return NULL;
 	}
 

@@ -1,9 +1,16 @@
-language: cpp
+language:
+- c
+- cpp
 
 # clang is not supported for poppler
 compiler: gcc
 
 os: linux
+
+sudo: false
+
+cache:
+- ccache
 
 addons:
   apt:
@@ -20,15 +27,13 @@ addons:
     - fontconfig
     - librsvg2-dev
     - glade-gtk2
+    - libglade2-dev
 #    - libpoppler-dev
 #    - libpoppler-cpp-dev
 #    - libpoppler-glib-dev
     sources:
     - boost-latest
     - kalakris-cmake
-
-before_install:
-  - "sudo apt-get install -y libglade2-dev"
 
 before_script:
   - "mkdir build"
