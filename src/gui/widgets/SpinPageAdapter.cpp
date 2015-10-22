@@ -40,7 +40,7 @@ void SpinPageAdapter::pageNrSpinChangedCallback(GtkSpinButton* spinbutton, SpinP
 	XOJ_CHECK_TYPE_OBJ(adapter, SpinPageAdapter);
 
 	// Nothing changed.
-	if (gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(spinbutton)) == adapter->page)
+	if (gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(spinbutton)) == (long) adapter->page)
 	{
 		return;
 	}
@@ -68,7 +68,7 @@ int SpinPageAdapter::getPage()
 	return this->page;
 }
 
-void SpinPageAdapter::setPage(int page)
+void SpinPageAdapter::setPage(size_t page)
 {
 	XOJ_CHECK_TYPE(SpinPageAdapter);
 
@@ -76,7 +76,7 @@ void SpinPageAdapter::setPage(int page)
 	gtk_spin_button_set_value(GTK_SPIN_BUTTON(this->widget), page);
 }
 
-void SpinPageAdapter::setMinMaxPage(int min, int max)
+void SpinPageAdapter::setMinMaxPage(size_t min, size_t max)
 {
 	XOJ_CHECK_TYPE(SpinPageAdapter);
 

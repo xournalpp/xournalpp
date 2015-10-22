@@ -21,6 +21,11 @@ Layout::Layout(XournalView* view)
 
 	this->layoutHeight = 0;
 	this->layoutWidth = 0;
+	
+	this->marginLeft = 0;
+	this->marginRight = 0;
+	this->marginTop = 0;
+	this->marginBottom = 0;
 
 	this->view = view;
 }

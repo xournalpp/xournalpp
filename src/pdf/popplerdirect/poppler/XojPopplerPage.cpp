@@ -29,6 +29,8 @@ XojPopplerPage::XojPopplerPage(PDFDoc *doc, GMutex *docMutex, CairoOutputDev *ou
     mysettings->load();
     this->pdfDpi = (double) mysettings->getDisplayDpi();
      */
+	
+	this->annots = NULL;
 
 }
 

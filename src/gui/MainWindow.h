@@ -49,7 +49,7 @@ public:
 	void loadToolbar(ToolbarData* d);
 
 
-	void updatePageNumbers(int page, int pagecount, int pdfpage);
+	void updatePageNumbers(size_t page, size_t pagecount, size_t pdfpage);
 	int getCurrentLayer();
 
 	void setFontButtonFont(XojFont& font);

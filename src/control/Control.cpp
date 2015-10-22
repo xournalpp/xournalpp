@@ -263,7 +263,7 @@ void Control::initWindow(MainWindow* win)
 	this->zoom->initZoomHandler(win->getXournal()->getWidget());
 	this->sidebar = new Sidebar(win, this);
 
-	updatePageNumbers(0, -1);
+	updatePageNumbers(0, size_t_npos);
 
 	toolHandler->eraserTypeChanged();
 
@@ -331,7 +331,7 @@ void Control::enableAutosave(bool enable)
 	}
 }
 
-void Control::updatePageNumbers(int page, int pdfPage)
+void Control::updatePageNumbers(size_t page, size_t pdfPage)
 {
 	XOJ_CHECK_TYPE(Control);
 
@@ -1699,7 +1699,7 @@ void Control::setPageBackground(ActionType type)
 			for (size_t i = 0; i < doc->getPageCount(); i++)
 			{
 				PageRef p = doc->getPage(i);
-				if (p->getBackgroundType() == BACKGROUND_TYPE_PDF && p->getPdfPageNr() >= 0)
+				if (p->getBackgroundType() == BACKGROUND_TYPE_PDF && p->getPdfPageNr() != size_t_npos)
 				{
 					dlg->setPageUsed(i);
 				}
@@ -3309,7 +3309,7 @@ void Control::runLatex()
 
 	if (imgheight)
 	{
-		double ratio = gdk_pixbuf_get_width(pixbuf) / gdk_pixbuf_get_height(pixbuf);
+		double ratio = (gdouble) gdk_pixbuf_get_width(pixbuf) / gdk_pixbuf_get_height(pixbuf);
 		if (ratio == 0)
 		{
 			if (imgwidth == 0)

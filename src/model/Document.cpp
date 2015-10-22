@@ -442,7 +442,7 @@ PageRef Document::getPage(size_t page)
 	{
 		return NULL;
 	}
-	if (page < 0)
+	if (page == size_t_npos)
 	{
 		return NULL;
 	}

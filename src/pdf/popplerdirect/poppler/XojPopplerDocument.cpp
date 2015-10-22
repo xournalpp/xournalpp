@@ -36,6 +36,8 @@ public:
 
 			pages[i] = new XojPopplerPage(doc, &this->docMutex, output_dev, page, i);
 		}
+		
+		this->layers_rbgroups = NULL;
 	}
 
 private:

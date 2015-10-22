@@ -147,7 +147,7 @@ XOJ_DECLARE_TYPE(Text, 135);
 XOJ_DECLARE_TYPE(XojPopplerDocument, 136);
 XOJ_DECLARE_TYPE(_IntPopplerDocument, 137);
 XOJ_DECLARE_TYPE(StringTokenizer, 138);
-
+XOJ_DECLARE_TYPE(InputStreamException, 139);
 XOJ_DECLARE_TYPE(_RefStrInternal, 140);
 XOJ_DECLARE_TYPE(PdfRefEntry, 141);
 XOJ_DECLARE_TYPE(RemoveLayerUndoAction, 142);
@@ -171,7 +171,7 @@ XOJ_DECLARE_TYPE(PageRangeEntry, 159);
 XOJ_DECLARE_TYPE(PageViewIndex, 160);
 XOJ_DECLARE_TYPE(PageViewIndexEntry, 161);
 XOJ_DECLARE_TYPE(EditSelectionContents, 162);
-
+XOJ_DECLARE_TYPE(PageLayerPosEntry, 163);
 XOJ_DECLARE_TYPE(BackgroundImageContents, 164);
 XOJ_DECLARE_TYPE(PageRef, 165);
 XOJ_DECLARE_TYPE(ToolbarCustomizeDialog, 166);

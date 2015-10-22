@@ -777,14 +777,14 @@ XojFont MainWindow::getFontButtonFont()
 	return toolbar->getFontButtonFont();
 }
 
-void MainWindow::updatePageNumbers(int page, int pagecount, int pdfpage)
+void MainWindow::updatePageNumbers(size_t page, size_t pagecount, size_t pdfpage)
 {
 	XOJ_CHECK_TYPE(MainWindow);
 
 	SpinPageAdapter* spinPageNo = getSpinPageNo();
 
-	int min;
-	int max = pagecount;
+	size_t min;
+	size_t max = pagecount;
 
 	if (pagecount == 0)
 	{
@@ -801,7 +801,7 @@ void MainWindow::updatePageNumbers(int page, int pagecount, int pdfpage)
 	spinPageNo->setPage(page);
 
 	string pdfText;
-	if (pdfpage >= 0)
+	if (pdfpage != size_t_npos)
 	{
 		pdfText = CONCAT(", ", FS(_F("PDF Page {1}") % (pdfpage + 1)));
 	}

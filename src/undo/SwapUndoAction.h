@@ -19,7 +19,7 @@ class Control;
 class SwapUndoAction : public UndoAction
 {
 public:
-	SwapUndoAction(int pageNr, bool moveUp, PageRef swapped_page, PageRef other_page);
+	SwapUndoAction(size_t pageNr, bool moveUp, PageRef swapped_page, PageRef other_page);
 
 	virtual ~SwapUndoAction();
 
@@ -35,7 +35,7 @@ private:
 private:
 	XOJ_TYPE_ATTRIB;
 
-	int pageNr;
+	size_t pageNr;
 	PageRef swapped_page, other_page;
 	bool moveUp;
 };

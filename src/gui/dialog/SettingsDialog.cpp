@@ -180,12 +180,8 @@ void SettingsDialog::load()
 	loadCheckbox("cbBigCursor", settings->isShowBigCursor());
 
 	GtkWidget* txtDefaultSaveName = get("txtDefaultSaveName");
-	const char* txt = settings->getDefaultSaveName().c_str();
-	if (txt == NULL)
-	{
-		txt = "";
-	}
-	gtk_entry_set_text(GTK_ENTRY(txtDefaultSaveName), txt);
+	string txt = settings->getDefaultSaveName();
+	gtk_entry_set_text(GTK_ENTRY(txtDefaultSaveName), txt.c_str());
 
 	GtkWidget* spAutosaveTimeout = get("spAutosaveTimeout");
 	gtk_spin_button_set_value(GTK_SPIN_BUTTON(spAutosaveTimeout), settings->getAutosaveTimeout());
@@ -204,7 +200,7 @@ void SettingsDialog::load()
 	bool hidePresentationMenubar = false;
 	bool hidePresentationSidebar = false;
 
-	string hidden = settings->getFullscreenHideElements().c_str();
+	string hidden = settings->getFullscreenHideElements();
 	const char* element;
 	StringTokenizer tokenF(hidden, ',');
 	element = tokenF.next();

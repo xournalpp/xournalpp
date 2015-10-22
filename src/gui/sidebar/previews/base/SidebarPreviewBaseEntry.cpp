@@ -126,16 +126,16 @@ void SidebarPreviewBaseEntry::paint()
 
 		cairo_scale(cr2, zoom, zoom);
 
-		const char* txtLoading = _C("Loading...");
+		string txtLoading = _("Loading...");
 
 		cairo_text_extents_t ex;
 		cairo_set_source_rgb(cr2, 0.5, 0.5, 0.5);
 		cairo_select_font_face(cr2, "Sans", CAIRO_FONT_SLANT_NORMAL, CAIRO_FONT_WEIGHT_BOLD);
 		cairo_set_font_size(cr2, 70.0);
-		cairo_text_extents(cr2, txtLoading, &ex);
+		cairo_text_extents(cr2, txtLoading.c_str(), &ex);
 		cairo_move_to(cr2, (page->getWidth() - ex.width) / 2 - ex.x_bearing,
 					  (page->getHeight() - ex.height) / 2 - ex.y_bearing);
-		cairo_show_text(cr2, txtLoading);
+		cairo_show_text(cr2, txtLoading.c_str());
 
 		cairo_destroy(cr2);
 

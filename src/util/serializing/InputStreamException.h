@@ -12,6 +12,7 @@
 #pragma once
 
 #include <StringUtils.h>
+#include <XournalType.h>
 
 #include <exception>
 

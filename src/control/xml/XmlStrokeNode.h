@@ -21,7 +21,7 @@ public:
 	virtual ~XmlStrokeNode();
 
 public:
-	void setPoints(Point* points, int pointLength);
+	void setPoints(Point* points, int pointsLength);
 	void setWidth(double width, double* widths, int widthsLength);
 
 	virtual void writeOut(OutputStream* out);
@@ -30,7 +30,7 @@ private:
 	XOJ_TYPE_ATTRIB;
 
 	Point* points;
-	int pointLength;
+	int pointsLength;
 
 	double width;
 

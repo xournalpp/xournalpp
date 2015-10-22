@@ -90,7 +90,7 @@ public:
 	void selectTool(ToolType type);
 	void selectDefaultTool();
 
-	void updatePageNumbers(int page, int pdfPage);
+	void updatePageNumbers(size_t page, size_t pdfPage);
 
 	virtual void fileOpened(const char* uri);
 
