@@ -4,7 +4,7 @@
 
 If you would like to contribute in Xournal++ development you can join our Slack group at [xournalpp.slack.com](https://xournalpp.slack.com).
 
-If you prefer not to register on Slack, you can always use our public IRC channel (which btw is integrated with Slack):
+If you prefer not to register on Slack, you can always use our public IRC channel (which is integrated with Slack):
 
 **Server:** irc.geekshed.net:6667
 
@@ -37,7 +37,7 @@ Hopefully you'll enjoy it!
 ## Building
 
 Aside from legacy releases, this is currently the way to install Xournal++. For complete building documentation refer to wiki page:
-[Instalation](https://github.com/xournalpp/xournalpp/wiki/Installing).
+[Installation](https://github.com/xournalpp/xournalpp/wiki/Installing).
 
 There will be some binaries appearing in the future, so ideally you can make use of those as well.
 They'll be at [Xournal++ releases](https://github.com/xournalpp/xournalpp/releases).
