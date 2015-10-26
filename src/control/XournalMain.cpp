@@ -163,7 +163,6 @@ int XournalMain::run(int argc, char* argv[])
 	GError* error = NULL;
 	GOptionContext* context = context = g_option_context_new("FILE");
 
-	bool optNoWarnSVN = false;
 	bool optNoPdfCompress = false;
 	gchar** optFilename = NULL;
 	gchar* pdfFilename = NULL;
@@ -175,7 +174,6 @@ int XournalMain::run(int argc, char* argv[])
 
 	GOptionEntry options[] =
 	{
-		{ "no-warn-svn",     'w', 0, G_OPTION_ARG_NONE,           &optNoWarnSVN,     "Do not warn this is a development release", NULL },
 		{ "pdf-no-compress",   0, 0, G_OPTION_ARG_NONE,           &optNoPdfCompress, "Don't compress PDF files (for debugging)", NULL },
 		{ "create-pdf",      'p', 0, G_OPTION_ARG_FILENAME,       &pdfFilename,      "PDF output filename", NULL },
 		{ "page",            'n', 0, G_OPTION_ARG_INT,            &openAtPageNumber, "Jump to Page (first Page: 1)", "N" },
@@ -220,26 +218,6 @@ int XournalMain::run(int argc, char* argv[])
 	gdk_display_open_default_libgtk_only();
 
 	GladeSearchpath* gladePath = initPath(argv[0]);
-
-	if (!optNoWarnSVN)
-	{
-		GtkWidget* dialog = gtk_message_dialog_new(NULL, GTK_DIALOG_MODAL,
-		                                           GTK_MESSAGE_WARNING, GTK_BUTTONS_YES_NO, _(
-		                                               "You are using a development release of Xournal\n"
-		                                               "You can find the current release in CVS!\n"
-		                                               "DO NOT USE THIS RELEASE FOR PRODUCTIVE ENVIRONMENT!\n"
-		                                               "Are you sure you wish to start this release?\n\n\n"
-		                                               "If you don't want to show this warning, you can run\n"
-		                                               "\"xournalpp --help\"\n"));
-
-		int result = gtk_dialog_run(GTK_DIALOG(dialog));
-		gtk_widget_destroy(dialog);
-
-		if (result == -9)
-		{
-			exit(-1);
-		}
-	}
 
 	// init singleton
 	gchar* colorNameFile = g_build_filename(g_get_home_dir(), G_DIR_SEPARATOR_S,
