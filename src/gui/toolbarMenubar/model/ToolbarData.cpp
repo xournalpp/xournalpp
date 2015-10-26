@@ -119,7 +119,7 @@ void ToolbarData::saveToKeyFile(GKeyFile* config)
 {
 	XOJ_CHECK_TYPE(ToolbarData);
 
-	const char* group = getId().c_str();
+	string group = getId();
 
 	for (ToolbarEntry* e : this->contents)
 	{
@@ -133,11 +133,11 @@ void ToolbarData::saveToKeyFile(GKeyFile* config)
 
 		if (line.length() > 2)
 		{
-			g_key_file_set_string(config, group, e->getName().c_str(), line.substr(1).c_str());
+			g_key_file_set_string(config, group.c_str(), e->getName().c_str(), line.substr(1).c_str());
 		}
 	}
 
-	g_key_file_set_string(config, group, "name", this->name.c_str());
+	g_key_file_set_string(config, group.c_str(), "name", this->name.c_str());
 }
 
 int ToolbarData::insertItem(string toolbar, string item, int position)

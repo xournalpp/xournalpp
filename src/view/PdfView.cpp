@@ -37,11 +37,11 @@ void PdfView::drawPage(PdfCache* cache, XojPopplerPage* popplerPage, cairo_t* cr
 		cairo_set_source_rgb(cr, 0.8, 0.8, 0.8);
 
 		cairo_text_extents_t extents = { 0 };
-		const char* strMissing = _C("PDF background missing");
+		string strMissing = _("PDF background missing");
 
-		cairo_text_extents(cr, strMissing, &extents);
+		cairo_text_extents(cr, strMissing.c_str(), &extents);
 		cairo_move_to(cr, width / 2 - extents.width / 2, height / 2 - extents.height / 2);
-		cairo_show_text(cr, strMissing);
+		cairo_show_text(cr, strMissing.c_str());
 	}
 }
 

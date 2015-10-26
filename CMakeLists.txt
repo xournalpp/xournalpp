@@ -108,7 +108,7 @@ if (BUILD_POPPLER)
     GIT_REPOSITORY "git://git.freedesktop.org/git/poppler/poppler"
     PREFIX "${POPPLER_PREFIX}"
     
-    CONFIGURE_COMMAND cd "${POPPLER_PREFIX}/src/poppler" && ./autogen.sh --enable-poppler-glib --enable-poppler-cpp --enable-static --disable-poppler-qt4 --disable-poppler-qt5
+    CONFIGURE_COMMAND cd "${POPPLER_PREFIX}/src/poppler" && ./autogen.sh --enable-poppler-glib --enable-poppler-cpp --enable-static --disable-poppler-qt4 --disable-poppler-qt5 --disable-utils --enable-zlib
     BUILD_COMMAND cd "${POPPLER_PREFIX}/src/poppler" && make
     INSTALL_COMMAND ""
   )
@@ -116,7 +116,23 @@ if (BUILD_POPPLER)
   # Additional packages required by Poppler
   find_package (OpenJPEG REQUIRED)
   find_package (JPEG REQUIRED)
-  pkg_check_modules (PopplerLibs REQUIRED "librsvg-2.0 >= 2.14.0" fontconfig lcms)
+  pkg_check_modules (PopplerLibs REQUIRED "librsvg-2.0 >= 2.14.0" fontconfig)
+
+  pkg_check_modules (lcms2 lcms2)
+  if (lcms2_FOUND)
+    set (lcms_VERSION 2)
+  else ()
+    pkg_check_modules (lcms1 lcms)
+    if (lcms1_FOUND)
+      set (lcms_VERSION 1)
+    else ()
+      message (FATAL_ERROR "Neither first nor second version of lcms (needed to link with poppler) was found!")
+    endif ()
+  endif ()
+  
+  set (lcms_FOUND ON)
+  set (lcms_LDFLAGS "${lcms${lcms_VERSION}_LDFLAGS}")
+  set (lcms_INCLUDE_DIRS "${lcms${lcms_VERSION}_INCLUDE_DIRS}")
   
   link_directories (
     "${POPPLER_PREFIX}/src/poppler/poppler/.libs"
@@ -134,6 +150,7 @@ if (BUILD_POPPLER)
     -lopenjpeg
     ${JPEG_LIBRARIES}
     ${PopplerLibs_LDFLAGS}
+    ${lcms_LDFLAGS}
   )
   # -lopenjpeg added as fallback
   
@@ -146,6 +163,7 @@ if (BUILD_POPPLER)
     ${OPENJPEG_INCLUDE_DIRS}
     ${JPEG_INCLUDE_DIRS}
     ${PopplerLibs_INCLUDE_DIRS}
+    ${lcms_INCLUDE_DIRS}
   )
 
 else ()
@@ -201,7 +219,7 @@ configure_file (
 ## I18n ##
 add_subdirectory (po)
 
-## Configuration headers ##
+## Configuration headers and developement options ##
 
 # Development options
 option (DEV_MEMORY_CHECKING "Memory checking" ON)
@@ -229,10 +247,14 @@ set (DEV_METADATA_MAX_ITEMS 50 CACHE STRING "Maximal amount of metadata elements
 set (DEV_ERRORLOG_DIR "errorlogs" CACHE STRING "Directory where errorlogfiles will be placed")
 
 option (DEV_ENABLE_GCOV "Build with gcov support" OFF) # Enabel gcov support – expanded in src/
+option (DEV_CHECK_GTK3_COMPAT "Adds a few compiler flags to check basic GTK3 upgradeability support (still compiles for GTK2!)")
+if (DEV_CHECK_GTK3_COMPAT)
+    add_definitions (-DGTK_DISABLE_SINGLE_INCLUDES -DGDK_DISABLE_DEPRECATED -DGTK_DISABLE_DEPRECATED -DGSEAL_ENABLE)
+endif ()
 
 mark_as_advanced (FORCE
   DEV_CONFIG_DIR DEV_TOOLBAR_CONFIG DEV_SETTINGS_XML_FILE DEV_PRINT_CONFIG_FILE DEV_METADATA_FILE DEV_METADATA_MAX_ITEMS
-  DEV_ENABLE_GCOV
+  DEV_ENABLE_GCOV DEV_CHECK_GTK3_COMPAT
 )
 
 configure_file (

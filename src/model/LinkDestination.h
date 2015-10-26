@@ -25,8 +25,8 @@ public:
 	virtual ~LinkDestination();
 
 public:
-	int getPdfPage();
-	void setPdfPage(int page);
+	size_t getPdfPage();
+	void setPdfPage(size_t page);
 
 	void setExpand(bool expand);
 	bool getExpand();
@@ -48,7 +48,7 @@ public:
 private:
 	XOJ_TYPE_ATTRIB;
 
-	int page;
+	size_t page;
 	bool expand;
 
 	double left;

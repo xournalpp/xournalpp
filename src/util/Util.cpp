@@ -118,11 +118,8 @@ GdkPixbuf* Util::newPixbufFromWidget(GtkWidget* widget, int iconSize)
 	GdkVisual* visual;
 	gint icon_width;
 	gint icon_height;
-	GdkScreen* screen;
 
 	icon_height = icon_width = iconSize;
-
-	screen = gtk_widget_get_screen(widget);
 
 	window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
 

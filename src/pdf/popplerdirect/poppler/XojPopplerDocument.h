@@ -34,11 +34,11 @@ public:
 
     XojPopplerIter* getContentsIter();
 
-    XojPopplerPage* getPage(int page);
+    XojPopplerPage* getPage(size_t page);
 
     bool isLoaded();
 
-    int getPageCount();
+    size_t getPageCount();
 
     void load(char* data, int length);
     bool load(path filename, string password, GError** error);

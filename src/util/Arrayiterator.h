@@ -19,25 +19,36 @@ class ArrayIterator
 public:
 	ArrayIterator(const T* data, const int count)
 	{
+		XOJ_INIT_TYPE(ArrayIterator);
+		
 		this->data = data;
 		this->i = 0;
 		this->count = count;
 	}
 
-	virtual ~ArrayIterator() { }
+	virtual ~ArrayIterator()
+	{
+		XOJ_RELEASE_TYPE(ArrayIterator);
+	}
 
 	bool hasNext() const
 	{
+		XOJ_CHECK_TYPE(ArrayIterator);
+		
 		return i < count;
 	}
 
 	T next()
 	{
+		XOJ_CHECK_TYPE(ArrayIterator);
+		
 		return data[i++];
 	}
 
 	T get() const
 	{
+		XOJ_CHECK_TYPE(ArrayIterator);
+		
 		return data[i];
 	}
 

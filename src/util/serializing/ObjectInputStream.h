@@ -49,5 +49,5 @@ private:
 	XOJ_TYPE_ATTRIB;
 
 	GString* str;
-	int pos;
+	gsize pos;
 };

@@ -110,7 +110,7 @@ Sidebar::~Sidebar()
 	XOJ_RELEASE_TYPE(Sidebar);
 }
 
-void Sidebar::selectPageNr(int page, int pdfPage)
+void Sidebar::selectPageNr(size_t page, size_t pdfPage)
 {
 	XOJ_CHECK_TYPE(Sidebar);
 
@@ -120,13 +120,13 @@ void Sidebar::selectPageNr(int page, int pdfPage)
 	}
 }
 
-void Sidebar::setSelectedPage(int page)
+void Sidebar::setSelectedPage(size_t page)
 {
 	XOJ_CHECK_TYPE(Sidebar);
 
 	this->visiblePage = NULL;
 
-	int i = 0;
+	size_t i = 0;
 	for (AbstractSidebarPage* p : this->pages)
 	{
 		if (page == i)
@@ -149,14 +149,14 @@ void Sidebar::updateEnableDisableButtons()
 {
 	XOJ_CHECK_TYPE(Sidebar);
 
-	int i = 0;
-	int selected = -1;
+	size_t i = 0;
+	size_t selected = size_t_npos;
 
 	for (AbstractSidebarPage* p : this->pages)
 	{
 		gtk_widget_set_sensitive(GTK_WIDGET(p->tabButton), p->hasData());
 
-		if (p->hasData() && selected == -1)
+		if (p->hasData() && selected == size_t_npos)
 		{
 			selected = i;
 		}
@@ -209,23 +209,23 @@ void Sidebar::documentChanged(DocumentChangeType type)
 	}
 }
 
-void Sidebar::pageSizeChanged(int page)
+void Sidebar::pageSizeChanged(size_t page)
 {
 }
 
-void Sidebar::pageChanged(int page)
+void Sidebar::pageChanged(size_t page)
 {
 }
 
-void Sidebar::pageInserted(int page)
+void Sidebar::pageInserted(size_t page)
 {
 }
 
-void Sidebar::pageDeleted(int page)
+void Sidebar::pageDeleted(size_t page)
 {
 }
 
-void Sidebar::pageSelected(int page)
+void Sidebar::pageSelected(size_t page)
 {
 }
 

@@ -28,8 +28,8 @@ public:
 	GtkWidget* getWidget();
 
 	int getPage();
-	void setPage(int page);
-	void setMinMaxPage(int min, int max);
+	void setPage(size_t page);
+	void setMinMaxPage(size_t min, size_t max);
 
 	void addListener(SpinPageListener* listener);
 	void removeListener(SpinPageListener* listener);
@@ -44,7 +44,7 @@ private:
 	XOJ_TYPE_ATTRIB;
 
 	GtkWidget* widget;
-	int page;
+	size_t page;
 
 	int lastTimeoutId;
 	std::list<SpinPageListener*> listener;
@@ -53,5 +53,5 @@ private:
 class SpinPageListener
 {
 public:
-	virtual void pageChanged(int page) = 0;
+	virtual void pageChanged(size_t page) = 0;
 };

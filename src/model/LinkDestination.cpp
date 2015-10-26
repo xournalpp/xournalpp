@@ -1,5 +1,7 @@
 #include "LinkDestination.h"
 
+#include "Util.h"
+
 struct _LinkDestClass
 {
 	GObjectClass base_class;
@@ -48,7 +50,7 @@ LinkDestination::LinkDestination()
 {
 	XOJ_INIT_TYPE(LinkDestination);
 
-	this->page = -1;
+	this->page = size_t_npos;
 	this->changeLeft = false;
 	this->changeZoom = false;
 	this->changeTop = false;
@@ -62,14 +64,14 @@ LinkDestination::~LinkDestination()
 	XOJ_RELEASE_TYPE(LinkDestination);
 }
 
-int LinkDestination::getPdfPage()
+size_t LinkDestination::getPdfPage()
 {
 	XOJ_CHECK_TYPE(LinkDestination);
 
 	return this->page;
 }
 
-void LinkDestination::setPdfPage(int page)
+void LinkDestination::setPdfPage(size_t page)
 {
 	XOJ_CHECK_TYPE(LinkDestination);
 

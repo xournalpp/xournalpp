@@ -8,6 +8,11 @@ Selection::Selection(Redrawable* view)
 
 	this->view = view;
 	this->page = NULL;
+	
+	this->x1Box = 0;
+	this->x2Box = 0;
+	this->y1Box = 0;
+	this->y2Box = 0;
 }
 
 Selection::~Selection()

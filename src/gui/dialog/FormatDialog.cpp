@@ -94,7 +94,7 @@ FormatDialog::FormatDialog(GladeSearchpath* gladeSearchPath, Settings* settings,
 			visible = true;
 		}
 
-		if (formatlist.find(gtk_paper_size_get_name(s)) != -1)
+		if (formatlist.find(gtk_paper_size_get_name(s)) != string::npos)
 		{
 			visible = true;
 		}

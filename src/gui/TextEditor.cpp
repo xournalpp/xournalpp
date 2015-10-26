@@ -41,13 +41,8 @@ TextEditor::TextEditor(PageView* gui, GtkWidget* widget, Text* text, bool ownTex
 	this->lastText = text->getText();
 
 	this->buffer = gtk_text_buffer_new(NULL);
-	const char* txt = this->text->getText().c_str();
-	if (txt == NULL)
-	{
-		txt = "";
-	}
-
-	gtk_text_buffer_set_text(this->buffer, txt, -1);
+	string txt = this->text->getText();
+	gtk_text_buffer_set_text(this->buffer, txt.c_str(), -1);
 
 	GtkTextIter first = { 0 };
 	gtk_text_buffer_get_iter_at_offset(this->buffer, &first, 0);
@@ -567,7 +562,10 @@ void TextEditor::contentsChanged(bool forceCreateUndoAction)
 
 	string currentText = getText()->getText();
 
-	if (forceCreateUndoAction || ABS(lastText.length() - currentText.length()) > 100)
+	// I know it's a little bit bulky, but ABS on substracted size_t is a little bit unsafe
+	if (forceCreateUndoAction || ((lastText.length() >= currentText.length())
+										? (lastText.length() - currentText.length())
+										: (currentText.length() - lastText.length())) > 100)
 	{
 		if (!lastText.empty() && !this->undoActions.empty() && this->undoActions.front()->getUndoText() != currentText)
 		{
@@ -735,7 +733,7 @@ void TextEditor::deleteFromCursor(GtkDeleteType type, int count)
 	XOJ_CHECK_TYPE(TextEditor);
 
 	GtkTextIter insert;
-	gboolean leave_one = false;
+	bool leave_one = false;
 
 	this->resetImContext();
 

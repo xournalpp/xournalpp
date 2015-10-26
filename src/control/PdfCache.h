@@ -18,6 +18,7 @@
 #include <list>
 
 class PdfCacheEntry;
+typedef std::list<PdfCacheEntry*> PdfCacheEntryList;
 
 class PdfCache
 {
@@ -43,8 +44,8 @@ private:
 
 	GMutex renderMutex;
 
-	std::list<PdfCacheEntry*> data;
-	int size;
+	PdfCacheEntryList data;
+	PdfCacheEntryList::size_type size;
 
 	double zoom;
 };

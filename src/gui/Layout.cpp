@@ -21,6 +21,11 @@ Layout::Layout(XournalView* view)
 
 	this->layoutHeight = 0;
 	this->layoutWidth = 0;
+	
+	this->marginLeft = 0;
+	this->marginRight = 0;
+	this->marginTop = 0;
+	this->marginBottom = 0;
 
 	this->view = view;
 }
@@ -74,13 +79,13 @@ void Layout::checkSelectedPage()
 		return;
 	}
 
-	int mostPageNr = 0;
+	size_t mostPageNr = 0;
 	double mostPagePercent = 0;
 
 	// next four pages are not marked as invisible,
 	// because usually you scroll forward
 
-	for (int page = 0; page < this->view->viewPagesLen; page++)
+	for (size_t page = 0; page < this->view->viewPagesLen; page++)
 	{
 		PageView* p = this->view->viewPages[page];
 		int y = p->getY();
@@ -429,20 +434,11 @@ void Layout::scrollRelativ(int x, int y)
 	this->scrollVertical->scroll(y);
 }
 
-double Layout::getVisiblePageTop(int page)
+double Layout::getVisiblePageTop(size_t page)
 {
 	XOJ_CHECK_TYPE(Layout);
 
-	if (page < 0)
-	{
-		return 0;
-	}
-	if (page > this->view->viewPagesLen)
-	{
-		return 0;
-	}
-
-	if (this->view->viewPagesLen == 0)
+	if (page == size_t_npos || page > this->view->viewPagesLen || this->view->viewPagesLen == 0)
 	{
 		return 0;
 	}

@@ -93,13 +93,13 @@ void SaveHandler::prepareSave(Document* doc)
 		this->root->addChild(image);
 	}
 
-	for (int i = 0; i < doc->getPageCount(); i++)
+	for (size_t i = 0; i < doc->getPageCount(); i++)
 	{
 		PageRef p = doc->getPage(i);
 		p->getBackgroundImage().clearSaveState();
 	}
 
-	for (int i = 0; i < doc->getPageCount(); i++)
+	for (size_t i = 0; i < doc->getPageCount(); i++)
 	{
 		PageRef p = doc->getPage(i);
 		visitPage(this->root, p, doc, i);

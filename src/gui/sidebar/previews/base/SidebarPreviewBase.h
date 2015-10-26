@@ -23,6 +23,8 @@ class SidebarLayout;
 class SidebarPreviewBaseEntry;
 class SidebarToolbar;
 
+typedef std::vector<SidebarPreviewBaseEntry*> SidebarPreviewBaseEntryVector;
+
 class SidebarPreviewBase : public AbstractSidebarPage
 {
 public:
@@ -129,7 +131,7 @@ protected:
 	 * The currently selected entry in the sidebar, starting from 0
 	 * -1 means no valid selection
 	 */
-	int selectedEntry;
+	size_t selectedEntry;
 
 	/**
 	 * The widget within the scrollarea with the page icons
@@ -139,7 +141,7 @@ protected:
 	/**
 	 * The previews
 	 */
-	std::vector<SidebarPreviewBaseEntry*> previews;
+	SidebarPreviewBaseEntryVector previews;
 
 	friend class SidebarLayout;
 };

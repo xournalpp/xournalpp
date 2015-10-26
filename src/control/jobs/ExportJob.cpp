@@ -29,7 +29,7 @@ ExportJob::ExportJob(Control* control, PageRangeVector selected, ExportFormtType
 	this->filepath = filepath;
 
 	string filename = filepath.filename().string();
-	int index = filename.find_last_of(".");
+	string::size_type index = filename.find_last_of(".");
 	if (index == 0 || index == string::npos)
 	{
 		front = filename;

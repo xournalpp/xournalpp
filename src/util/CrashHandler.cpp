@@ -134,7 +134,7 @@ static void crashHandler(int sig)
 
 	messages = backtrace_symbols(array, size);
 
-	for (int i = 0; i < size; i++)
+	for (size_t i = 0; i < size; i++)
 	{
 		out << bl::format("[bt]: ({1}) {2}") % i % messages[i];
 		out << "\n";

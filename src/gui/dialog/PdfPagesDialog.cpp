@@ -12,7 +12,7 @@ class PdfPage
 {
 public:
 
-	PdfPage(XojPopplerPage* page, int index, PdfPagesDialog* dlg)
+	PdfPage(XojPopplerPage* page, size_t index, PdfPagesDialog* dlg)
 	{
 		XOJ_INIT_TYPE(PdfPage);
 
@@ -208,7 +208,7 @@ private:
 			cairo_select_font_face(cr2, "@cairo:", CAIRO_FONT_SLANT_NORMAL, CAIRO_FONT_WEIGHT_BOLD);
 			cairo_set_font_size(cr2, 16);
 
-			char* txt = g_strdup_printf("%i", this->pageNr + 1); // Do not start page number with 0
+			char* txt = g_strdup_printf("%lu", this->pageNr + 1); // Do not start page number with 0
 
 			cairo_text_extents_t extents;
 			cairo_text_extents(cr2, txt, &extents);
@@ -251,7 +251,7 @@ private:
 	XOJ_TYPE_ATTRIB;
 
 	bool selected;
-	int pageNr;
+	size_t pageNr;
 
 	XojPopplerPage* page;
 
@@ -276,9 +276,9 @@ PdfPagesDialog::PdfPagesDialog(GladeSearchpath* gladeSearchPath, Document* doc, 
 	this->widget = gtk_layout_new(NULL, NULL);
 	this->scrollPreview = gtk_scrolled_window_new(NULL, NULL);
 	this->backgroundInitialized = false;
-	this->selected = -1;
+	this->selected = size_t_npos;
 	this->lastWidth = -1;
-	this->selectedPage = -1;
+	this->selectedPage = size_t_npos;
 
 	this->count = doc->getPdfPageCount();
 	this->usedPages = new bool[count];
@@ -296,7 +296,7 @@ PdfPagesDialog::PdfPagesDialog(GladeSearchpath* gladeSearchPath, Document* doc, 
 
 	g_signal_connect(this->window, "size-allocate", G_CALLBACK(sizeAllocate), this);
 
-	for (int i = 0; i < doc->getPdfPageCount(); i++)
+	for (size_t i = 0; i < doc->getPdfPageCount(); i++)
 	{
 		XojPopplerPage* p = doc->getPdfPage(i);
 		PdfPage* page = new PdfPage(p, i, this);
@@ -378,14 +378,14 @@ void PdfPagesDialog::onlyNotUsedCallback(GtkToggleButton* tb, PdfPagesDialog* dl
 	dlg->updateOkButton();
 }
 
-void PdfPagesDialog::setPageUsed(int page)
+void PdfPagesDialog::setPageUsed(size_t page)
 {
 	XOJ_CHECK_TYPE(PdfPagesDialog);
 
 	this->usedPages[page] = true;
 }
 
-int PdfPagesDialog::getSelectedPage()
+size_t PdfPagesDialog::getSelectedPage()
 {
 	XOJ_CHECK_TYPE(PdfPagesDialog);
 
@@ -450,7 +450,7 @@ void PdfPagesDialog::setBackgroundWhite()
 	gdk_window_set_background(GTK_LAYOUT(this->widget)->bin_window, &this->widget->style->white);
 }
 
-void PdfPagesDialog::setSelected(int selected)
+void PdfPagesDialog::setSelected(size_t selected)
 {
 	XOJ_CHECK_TYPE(PdfPagesDialog);
 
@@ -459,7 +459,7 @@ void PdfPagesDialog::setSelected(int selected)
 		return;
 	}
 
-	int lastSelected = this->selected;
+	size_t lastSelected = this->selected;
 	PdfPage* p = this->pages[selected];
 	if (p)
 	{

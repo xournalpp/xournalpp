@@ -19,10 +19,6 @@
 #include <StringUtils.h>
 #include <XournalType.h>
 
-#include <vector>
-
-typedef std::vector<Layer*> LayerVector;
-
 class XojPage : public PageHandler
 {
 public:
@@ -37,7 +33,7 @@ private:
 
 public:
 	// Also set the size over doc->setPageSize!
-	void setBackgroundPdfPageNr(int page);
+	void setBackgroundPdfPageNr(size_t page);
 
 	void setBackgroundType(BackgroundType bgType);
 	BackgroundType getBackgroundType();
@@ -54,7 +50,7 @@ public:
 	void insertLayer(Layer* layer, int index);
 	void removeLayer(Layer* layer);
 
-	int getPdfPageNr();
+	size_t getPdfPageNr();
 
 	bool isAnnotated();
 
@@ -62,7 +58,7 @@ public:
 	int getBackgroundColor();
 
 	LayerVector* getLayers();
-	int getLayerCount();
+	size_t getLayerCount();
 	int getSelectedLayerId();
 	void setSelectedLayerId(int id);
 
@@ -103,7 +99,7 @@ private:
 	/**
 	 * The current selected layer ID
 	 */
-	int currentLayer;
+	size_t currentLayer;
 
 	/**
 	 * The Background Type of the page
@@ -113,7 +109,7 @@ private:
 	/**
 	 * If the page has a PDF background, the page number of the PDF Page
 	 */
-	int pdfBackgroundPage;
+	size_t pdfBackgroundPage;
 
 	/**
 	 * The background color if the background type is palain

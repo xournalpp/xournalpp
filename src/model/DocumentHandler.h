@@ -28,12 +28,12 @@ public:
 
 public:
 	void fireDocumentChanged(DocumentChangeType type);
-	void firePageSizeChanged(int page);
-	void firePageChanged(int page);
-	void firePageInserted(int page);
-	void firePageDeleted(int page);
+	void firePageSizeChanged(size_t page);
+	void firePageChanged(size_t page);
+	void firePageInserted(size_t page);
+	void firePageDeleted(size_t page);
 	void firePageLoaded(PageRef page);
-	void firePageSelected(int page);
+	void firePageSelected(size_t page);
 
 private:
 	void addListener(DocumentListener* l);

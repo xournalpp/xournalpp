@@ -7,6 +7,7 @@
 #include "XojPopplerIter.h"
 
 #include <config.h>
+#include <Util.h>
 
 #include <glib.h>
 
@@ -35,6 +36,8 @@ public:
 
 			pages[i] = new XojPopplerPage(doc, &this->docMutex, output_dev, page, i);
 		}
+		
+		this->layers_rbgroups = NULL;
 	}
 
 private:
@@ -216,13 +219,13 @@ XojPopplerIter* XojPopplerDocument::getContentsIter()
 	return new XojPopplerIter(*this, items);
 }
 
-XojPopplerPage* XojPopplerDocument::getPage(int page)
+XojPopplerPage* XojPopplerDocument::getPage(size_t page)
 {
 	XOJ_CHECK_TYPE(XojPopplerDocument);
 
-	if (page >= this->getPageCount() || page < 0)
+	if (page == size_t_npos || page >= this->getPageCount())
 	{
-		g_critical("Document::getPdfPage(%i) out of range! (count=%i)", page, this->getPageCount());
+		g_critical("Document::getPdfPage(%lu) out of range! (count=%lu)", page, this->getPageCount());
 		return NULL;
 	}
 
@@ -236,7 +239,7 @@ bool XojPopplerDocument::isLoaded()
 	return this->data != NULL;
 }
 
-int XojPopplerDocument::getPageCount()
+size_t XojPopplerDocument::getPageCount()
 {
 	XOJ_CHECK_TYPE(XojPopplerDocument);
 
@@ -244,7 +247,7 @@ int XojPopplerDocument::getPageCount()
 	{
 		return 0;
 	}
-	return this->data->doc->getNumPages();
+	return static_cast<size_t>(this->data->doc->getNumPages()); // It shouldn't be lower than 0, but I don't trust poppler ;)
 }
 
 void XojPopplerDocument::load(char* data, int length)

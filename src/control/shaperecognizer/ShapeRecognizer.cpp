@@ -487,6 +487,7 @@ Stroke* ShapeRecognizer::tryClosedPolygon(int nsides)
 	//to eliminate bug #52, remove this until it's perfected
 	return NULL;
 
+/*
 	RecoSegment* r1 = NULL;
 	RecoSegment* r2 = NULL;
 
@@ -541,6 +542,7 @@ Stroke* ShapeRecognizer::tryClosedPolygon(int nsides)
 	s->addPoint(s->getPoint(0));
 
 	return s;
+*/
 }
 
 /**

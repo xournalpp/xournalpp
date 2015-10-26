@@ -29,7 +29,7 @@ enum ToolItemType
 
 struct ToolItemDragDropData
 {
-	int identify;
+	unsigned int identify;
 	ToolItemType type;
 	int id;
 	AbstractToolItem* item;

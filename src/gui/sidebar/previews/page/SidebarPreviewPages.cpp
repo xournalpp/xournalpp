@@ -39,7 +39,7 @@ void SidebarPreviewPages::updatePreviews()
 
 	Document* doc = this->getControl()->getDocument();
 	doc->lock();
-	int len = doc->getPageCount();
+	size_t len = doc->getPageCount();
 
 	if (this->previews.size() == len)
 	{
@@ -53,7 +53,7 @@ void SidebarPreviewPages::updatePreviews()
 	}
 	this->previews.clear();
 
-	for (int i = 0; i < len; i++)
+	for (size_t i = 0; i < len; i++)
 	{
 		SidebarPreviewBaseEntry* p = new SidebarPreviewPageEntry(this, doc->getPage(i));
 		this->previews.push_back(p);
@@ -65,11 +65,11 @@ void SidebarPreviewPages::updatePreviews()
 }
 
 
-void SidebarPreviewPages::pageSizeChanged(int page)
+void SidebarPreviewPages::pageSizeChanged(size_t page)
 {
 	XOJ_CHECK_TYPE(SidebarPreviewPages);
 
-	if (page < 0 || page >= this->previews.size())
+	if (page == size_t_npos || page >= this->previews.size())
 	{
 		return;
 	}
@@ -80,11 +80,11 @@ void SidebarPreviewPages::pageSizeChanged(int page)
 	layout();
 }
 
-void SidebarPreviewPages::pageChanged(int page)
+void SidebarPreviewPages::pageChanged(size_t page)
 {
 	XOJ_CHECK_TYPE(SidebarPreviewPages);
 
-	if (page < 0 || page >= this->previews.size())
+	if (page == size_t_npos || page >= this->previews.size())
 	{
 		return;
 	}
@@ -94,7 +94,7 @@ void SidebarPreviewPages::pageChanged(int page)
 }
 
 
-void SidebarPreviewPages::pageDeleted(int page)
+void SidebarPreviewPages::pageDeleted(size_t page)
 {
 	XOJ_CHECK_TYPE(SidebarPreviewPages);
 
@@ -104,7 +104,7 @@ void SidebarPreviewPages::pageDeleted(int page)
 	layout();
 }
 
-void SidebarPreviewPages::pageInserted(int page)
+void SidebarPreviewPages::pageInserted(size_t page)
 {
 	XOJ_CHECK_TYPE(SidebarPreviewPages);
 
@@ -122,17 +122,17 @@ void SidebarPreviewPages::pageInserted(int page)
 	layout();
 }
 
-void SidebarPreviewPages::pageSelected(int page)
+void SidebarPreviewPages::pageSelected(size_t page)
 {
 	XOJ_CHECK_TYPE(SidebarPreviewPages);
 
-	if (this->selectedEntry >= 0 && this->selectedEntry < this->previews.size())
+	if (this->selectedEntry != size_t_npos && this->selectedEntry < this->previews.size())
 	{
 		this->previews[this->selectedEntry]->setSelected(false);
 	}
 	this->selectedEntry = page;
 
-	if (this->selectedEntry >= 0 && this->selectedEntry < this->previews.size())
+	if (this->selectedEntry != size_t_npos && this->selectedEntry < this->previews.size())
 	{
 		SidebarPreviewBaseEntry* p = this->previews[this->selectedEntry];
 		p->setSelected(true);

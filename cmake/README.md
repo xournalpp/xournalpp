@@ -38,6 +38,7 @@ Here you can find complete list of Xournal++ CMake flags (sorted by categories).
 | Variable name                  | Default          | Description
 | ------------------------------ | ---------------- | -----------
 | `DEV_CALL_LOG`                 | OFF              | Call log (can take loooot of disk space and IO!)
+| `DEV_CHECK_GTK3_COMPAT` *[A]*  | OFF              | Adds a few compiler flags to check basic GTK3 upgradeability support (still compiles for GTK2!)
 | `DEV_CONFIG_DIR` *[A]*         | .xournalpp       | Xournal++ config dir, relative to user's home dir
 | `DEV_ENABLE_GCOV` *[A]*        | OFF              | Build with gcov support
 | `DEV_MEMORY_CHECKING`          | ON               | Memory checking

@@ -5,7 +5,7 @@
 
 #include <i18n.h>
 
-SwapUndoAction::SwapUndoAction(int pageNr, bool moveUp, PageRef swapped_page, PageRef other_page) :
+SwapUndoAction::SwapUndoAction(size_t pageNr, bool moveUp, PageRef swapped_page, PageRef other_page) :
 		UndoAction("SwapUndoAction")
 {
 	XOJ_INIT_TYPE(SwapUndoAction);

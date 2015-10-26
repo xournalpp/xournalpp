@@ -6,6 +6,7 @@
 
 #include <config.h>
 #include <i18n.h>
+#include <Util.h>
 
 SidebarIndexPage::SidebarIndexPage(Control* control) : AbstractSidebarPage(control)
 {
@@ -70,7 +71,7 @@ SidebarIndexPage::~SidebarIndexPage()
 	gtk_widget_unref(this->scrollBookmarks);
 }
 
-void SidebarIndexPage::askInsertPdfPage(int pdfPage)
+void SidebarIndexPage::askInsertPdfPage(size_t pdfPage)
 {
 	XOJ_CHECK_TYPE(SidebarIndexPage);
 
@@ -145,16 +146,16 @@ bool SidebarIndexPage::treeBookmarkSelected(GtkWidget* treeview, SidebarIndexPag
 			{
 				LinkDestination* dest = link->dest;
 
-				int pdfPage = dest->getPdfPage();
+				size_t pdfPage = dest->getPdfPage();
 
-				if (pdfPage >= 0)
+				if (pdfPage != size_t_npos)
 				{
 					Document* doc = sidebar->control->getDocument();
 					doc->lock();
-					int page = doc->findPdfPage(pdfPage);
+					size_t page = doc->findPdfPage(pdfPage);
 					doc->unlock();
 
-					if (page == -1)
+					if (page == size_t_npos)
 					{
 						sidebar->askInsertPdfPage(pdfPage);
 					}
@@ -338,7 +339,7 @@ bool SidebarIndexPage::selectPageNr(int page, int pdfPage)
 	return selectPageNr(page, pdfPage, NULL);
 }
 
-bool SidebarIndexPage::selectPageNr(int page, int pdfPage, GtkTreeIter* parent)
+bool SidebarIndexPage::selectPageNr(size_t page, size_t pdfPage, GtkTreeIter* parent)
 {
 	XOJ_CHECK_TYPE(SidebarIndexPage);
 

@@ -51,7 +51,7 @@ private:
 	XOJ_TYPE_ATTRIB;
 
 	GMutex renderMutex;
-	GMutex * docMutex;
+	GMutex* docMutex;
 
 	CairoOutputDev* outputDev;
 	PDFDoc* doc;

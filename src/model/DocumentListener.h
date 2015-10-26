@@ -27,11 +27,11 @@ public:
 	void unregisterListener();
 
 	virtual void documentChanged(DocumentChangeType type) = 0;
-	virtual void pageSizeChanged(int page) = 0;
-	virtual void pageChanged(int page) = 0;
-	virtual void pageInserted(int page) = 0;
-	virtual void pageDeleted(int page) = 0;
-	virtual void pageSelected(int page) = 0;
+	virtual void pageSizeChanged(size_t page) = 0;
+	virtual void pageChanged(size_t page) = 0;
+	virtual void pageInserted(size_t page) = 0;
+	virtual void pageDeleted(size_t page) = 0;
+	virtual void pageSelected(size_t page) = 0;
 
 private:
 	XOJ_TYPE_ATTRIB;

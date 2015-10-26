@@ -6,6 +6,7 @@
 #include <config.h>
 #include <i18n.h>
 #include <Stacktrace.h>
+#include <Util.h>
 
 #include <boost/locale/format.hpp>
 
@@ -105,14 +106,14 @@ void Document::clearDocument(bool destroy)
 /**
  * Returns the pageCount, this call don't need to be synchronized (if it's not critical, you may get wrong data)
  */
-int Document::getPageCount()
+size_t Document::getPageCount()
 {
 	XOJ_CHECK_TYPE(Document);
 
 	return this->pages.size();
 }
 
-int Document::getPdfPageCount()
+size_t Document::getPdfPageCount()
 {
 	XOJ_CHECK_TYPE(Document);
 
@@ -195,12 +196,11 @@ bool Document::isAttachPdf()
 	return this->attachPdf;
 }
 
-int Document::findPdfPage(int pdfPage)
+size_t Document::findPdfPage(size_t pdfPage)
 {
 	XOJ_CHECK_TYPE(Document);
 
-	int count = getPageCount();
-	for (int i = 0; i < count; i++)
+	for (size_t i = 0; i < getPageCount(); i++)
 	{
 		PageRef p = this->pages[i];
 		if (p->getBackgroundType() == BACKGROUND_TYPE_PDF)
@@ -349,7 +349,7 @@ bool Document::readPdf(path filename, bool initPages, bool attachToDocument)
 
 	if (initPages)
 	{
-		for (int i = 0; i < pdfDocument.getPageCount(); i++)
+		for (size_t i = 0; i < pdfDocument.getPageCount(); i++)
 		{
 			XojPopplerPage* page = pdfDocument.getPage(i);
 			PageRef p = new XojPage(page->getWidth(), page->getHeight());
@@ -374,8 +374,8 @@ void Document::setPageSize(PageRef p, double width, double height)
 
 	p->setSize(width, height);
 
-	int id = indexOf(p);
-	if (id >= 0 && id < getPageCount())
+	size_t id = indexOf(p);
+	if (id != size_t_npos && id < getPageCount())
 	{
 		this->handler->firePageSizeChanged(id);
 	}
@@ -388,7 +388,7 @@ string Document::getLastErrorMsg()
 	return lastError;
 }
 
-void Document::deletePage(int pNr)
+void Document::deletePage(size_t pNr)
 {
 	XOJ_CHECK_TYPE(Document);
 
@@ -400,7 +400,7 @@ void Document::deletePage(int pNr)
 	updateIndexPageNumbers();
 }
 
-void Document::insertPage(PageRef p, int position)
+void Document::insertPage(PageRef p, size_t position)
 {
 	XOJ_CHECK_TYPE(Document);
 
@@ -418,11 +418,11 @@ void Document::addPage(PageRef p)
 	updateIndexPageNumbers();
 }
 
-int Document::indexOf(PageRef page)
+size_t Document::indexOf(PageRef page)
 {
 	XOJ_CHECK_TYPE(Document);
 
-	for (unsigned int i = 0; i < this->pages.size(); i++)
+	for (size_t i = 0; i < this->pages.size(); i++)
 	{
 		PageRef pg = this->pages[i];
 		if (pg == page)
@@ -431,10 +431,10 @@ int Document::indexOf(PageRef page)
 		}
 	}
 
-	return -1;
+	return size_t_npos;
 }
 
-PageRef Document::getPage(int page)
+PageRef Document::getPage(size_t page)
 {
 	XOJ_CHECK_TYPE(Document);
 
@@ -442,7 +442,7 @@ PageRef Document::getPage(int page)
 	{
 		return NULL;
 	}
-	if (page < 0)
+	if (page == size_t_npos)
 	{
 		return NULL;
 	}
@@ -450,7 +450,7 @@ PageRef Document::getPage(int page)
 	return this->pages[page];
 }
 
-XojPopplerPage* Document::getPdfPage(int page)
+XojPopplerPage* Document::getPdfPage(size_t page)
 {
 	XOJ_CHECK_TYPE(Document);
 

@@ -90,7 +90,7 @@ public:
 	void selectTool(ToolType type);
 	void selectDefaultTool();
 
-	void updatePageNumbers(int page, int pdfPage);
+	void updatePageNumbers(size_t page, size_t pdfPage);
 
 	virtual void fileOpened(const char* uri);
 
@@ -135,14 +135,14 @@ public:
 	/**
 	 * Fire page selected, but first check if the page Number is valid
 	 *
-	 * @return the page ID or -1 if the page is not found
+	 * @return the page ID or size_t_npos if the page is not found
 	 */
-	int firePageSelected(PageRef page);
-	void firePageSelected(int page);
+	size_t firePageSelected(PageRef page);
+	void firePageSelected(size_t page);
 
 	void addDefaultPage();
-	void insertNewPage(int position);
-	void insertPage(PageRef page, int position);
+	void insertNewPage(size_t position);
+	void insertPage(PageRef page, size_t position);
 	void deletePage();
 
 	/**
@@ -189,7 +189,7 @@ public:
 	RecentManager* getRecentManager();
 	ScrollHandler* getScrollHandler();
 	PageRef getCurrentPage();
-	int getCurrentPageNo();
+	size_t getCurrentPageNo();
 	Cursor* getCursor();
 	Sidebar* getSidebar();
 

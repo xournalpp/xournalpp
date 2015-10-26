@@ -271,7 +271,7 @@ ImagesDialog::ImagesDialog(GladeSearchpath* gladeSearchPath, Document* doc, Sett
 	g_signal_connect(this->window, "size-allocate", G_CALLBACK(sizeAllocate), this);
 
 	int x = 0;
-	for (int i = 0; i < doc->getPageCount(); i++)
+	for (size_t i = 0; i < doc->getPageCount(); i++)
 	{
 		PageRef p = doc->getPage(i);
 
@@ -424,7 +424,7 @@ void ImagesDialog::setBackgroundWhite()
 	gdk_window_set_background(GTK_LAYOUT(this->widget)->bin_window, &this->widget->style->white);
 }
 
-void ImagesDialog::setSelected(int selected)
+void ImagesDialog::setSelected(size_t selected)
 {
 	XOJ_CHECK_TYPE(ImagesDialog);
 

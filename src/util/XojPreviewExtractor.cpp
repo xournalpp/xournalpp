@@ -6,7 +6,8 @@ namespace bio = boost::iostreams;
 
 #include <glibmm/base64.h>
 
-#include <cstring>
+#include <string>
+using std::string;
 #include <iostream>
 using std::istream;
 #include <fstream>
@@ -41,7 +42,7 @@ PreviewExtractResult XojPreviewExtractor::readFile(std::string file)
 {
 	//check file extensions
 	string ext = file.substr(file.length() - 4, file.length());
-	for (int i = 0; i < ext.length(); i++)
+	for (string::size_type i = 0; i < ext.length(); i++)
 	{
 		if (tolower(ext[i]) != ".xoj"[i])
 		{

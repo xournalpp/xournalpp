@@ -52,10 +52,10 @@ void SidebarToolbar::btUpClicked(GtkToolButton* toolbutton, SidebarToolbar* tool
 	PageRef swapped_page, other_page;
 	doc->lock();
 
-	int page = doc->indexOf(toolbar->currentPage);
+	size_t page = doc->indexOf(toolbar->currentPage);
 	swapped_page = toolbar->currentPage;
 	other_page = doc->getPage(page - 1);
-	if (page != -1)
+	if (page != size_t_npos)
 	{
 		doc->deletePage(page);
 		doc->insertPage(toolbar->currentPage, page - 1);
@@ -80,10 +80,10 @@ void SidebarToolbar::btDownClicked(GtkToolButton* toolbutton, SidebarToolbar* to
 	PageRef swapped_page, other_page;
 	doc->lock();
 
-	int page = doc->indexOf(toolbar->currentPage);
+	size_t page = doc->indexOf(toolbar->currentPage);
 	swapped_page = toolbar->currentPage;
 	other_page = doc->getPage(page + 1);
-	if (page != -1)
+	if (page != size_t_npos)
 	{
 		doc->deletePage(page);
 		doc->insertPage(toolbar->currentPage, page + 1);
