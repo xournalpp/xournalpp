@@ -186,7 +186,7 @@ int XournalMain::exportPdf(const char* input, const char* output)
 	GFile* file = g_file_new_for_commandline_arg(output);
 
 	PdfExport pdf(doc, NULL);
-	if (!pdf.createPdf(g_file_get_uri(file)))
+	if (!pdf.createPdf(g_file_get_path(file)))
 	{
 		cerr << pdf.getLastError() << endl;
 
