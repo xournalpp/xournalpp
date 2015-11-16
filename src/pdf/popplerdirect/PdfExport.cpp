@@ -503,6 +503,42 @@ bool PdfExport::addPopplerPage(XojPopplerPage* pdf, XojPopplerDocument doc)
 			g_warning("Unhandled stream filter: %s\n", filter.getName());
 		}
 	}
+	else if (o->getType() == objArray)
+	{
+		int arrLength = o->arrayGetLength();
+		//g_warning("Array length is %i\n",arrLength); 
+		for (int i = 0; i < arrLength; i++)
+		{
+			Object* subObject = new Object;
+			o->arrayGet(i, subObject);
+			if (subObject->getType() == objStream)
+			{
+				Dict* dict = subObject->getStream()->getDict();
+
+				Object filter;
+				dict->lookup("Filter", &filter);
+
+				if (filter.isNull())
+				{
+					writePlainStream(subObject->getStream(), replacementList);
+				}
+				else if (filter.isName("FlateDecode"))
+				{
+					writeGzStream(subObject->getStream(), replacementList);
+				}
+				else if (filter.isName())
+				{
+					g_warning("Unhandled stream filter: %s\n", filter.getName());
+				}
+			}
+			else
+			{
+				g_warning("other poppler type: %i\n", subObject->getType());
+			}
+			subObject->free();
+			delete subObject;
+		}
+	}
 	else
 	{
 		g_warning("other poppler type: %i\n", o->getType());
