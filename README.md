@@ -1,16 +1,7 @@
 # Xournal++
 
 [![Build Status](https://travis-ci.org/xournalpp/xournalpp.svg?branch=string_new)](https://travis-ci.org/xournalpp/xournalpp)
-
-If you would like to contribute in Xournal++ development you can join our Slack group at [xournalpp.slack.com](https://xournalpp.slack.com).
-
-If you prefer not to register on Slack, you can always use our public IRC channel (which is integrated with Slack):
-
-**Server:** irc.geekshed.net:6667
-
-**Channel:** #xournalpp
-
-Online IRC client: http://www.geekshed.net/chat/
+[![Join the chat at https://gitter.im/xournalpp/xournalpp](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/xournalpp/xournalpp?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 
 ## Description
@@ -70,9 +61,7 @@ make desktop-install
 
 ## Development
 
-For now branches aren't organized too well, but (currently) the most of development happens in `string_new`.
+For now branches aren't organized too well, but (currently) the most of development happens in `development`.
 
-See [Github:xournalpp](http://github.com/xournalpp/xournalpp) for current development (you can invite yourself
-to this group following link on top of this page).
-
-See our [Trello page](https://trello.com/xournalpp) for current roadmap and future development ideas.
+See [GitHub:xournalpp](http://github.com/xournalpp/xournalpp) for current development. You can also join
+our Gitter channel via badge on top.
