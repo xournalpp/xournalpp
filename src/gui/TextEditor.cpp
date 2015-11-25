@@ -733,7 +733,7 @@ void TextEditor::deleteFromCursor(GtkDeleteType type, int count)
 	XOJ_CHECK_TYPE(TextEditor);
 
 	GtkTextIter insert;
-	bool leave_one = false;
+	//gboolean leave_one = false; // not needed
 
 	this->resetImContext();
 
@@ -854,10 +854,10 @@ void TextEditor::deleteFromCursor(GtkDeleteType type, int count)
 
 		if (gtk_text_buffer_delete_interactive(this->buffer, &start, &end, true))
 		{
-			if (leave_one)
+			/*if (leave_one) // leave_one is statically false
 			{
 				gtk_text_buffer_insert_interactive_at_cursor(this->buffer, " ", 1, true);
-			}
+			}*/
 		}
 		else
 		{

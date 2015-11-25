@@ -57,6 +57,7 @@ LinkDestination::LinkDestination()
 	this->zoom = 0;
 	this->left = 0;
 	this->top = 0;
+	this->expand = false;
 }
 
 LinkDestination::~LinkDestination()

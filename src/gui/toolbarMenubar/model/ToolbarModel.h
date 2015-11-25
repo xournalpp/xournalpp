@@ -25,10 +25,10 @@ public:
 
 public:
 	ToolbarDataVector* getToolbars();
-	bool parse(const char* file, bool predefined);
+	bool parse(string filename, bool predefined);
 	void add(ToolbarData* data);
 	void remove(ToolbarData* data);
-	void save(const char* filename);
+	void save(string filename);
 	bool existsId(string id);
 
 private:
