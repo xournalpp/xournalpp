@@ -306,7 +306,7 @@ void PdfExport::writeGzStream(Stream* str, GList* replacementList)
 	string text = GzHelper::gzuncompress(string(buffer, length));
 	writeStream(text.c_str(), text.length(), replacementList);
 
-	delete buffer;
+	delete[] buffer;
 
 	str->reset();
 }
