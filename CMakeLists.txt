@@ -201,7 +201,7 @@ if (ENABLE_OS)
 endif (ENABLE_OS)
 
 # Mathtex
-option (ENABLE_MATHTEX "Mathtex support" OFF)
+option (ENABLE_MATHTEX "Mathtex support" ON)
 if (ENABLE_MATHTEX AND WIN32)
     message (FATAL_ERROR "Mathtex is not supported on Windows for now")
 endif (ENABLE_MATHTEX AND WIN32)
