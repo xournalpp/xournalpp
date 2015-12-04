@@ -2,7 +2,7 @@
 
 #include "ToolbarData.h"
 
-#include <string.h>
+#include <fstream>
 
 ToolbarModel::ToolbarModel()
 {
@@ -35,17 +35,7 @@ void ToolbarModel::parseGroup(GKeyFile* config, const char* group, bool predefin
 
 	ToolbarData* data = new ToolbarData(predefined);
 
-	string name;
-	if (predefined)
-	{
-		name = "predef_";
-	}
-	else
-	{
-		name = "custom_";
-	}
-
-	data->name = name;
+	data->name = (predefined ? "predef_" : "custom_");
 	data->id = group;
 
 	data->load(config, group);
@@ -57,7 +47,7 @@ void ToolbarModel::remove(ToolbarData* data)
 {
 	XOJ_CHECK_TYPE(ToolbarModel);
 
-	for (unsigned int i = 0; i < this->toolbars.size(); i++)
+	for (size_t i = 0; i < this->toolbars.size(); i++)
 	{
 		if (this->toolbars[i] == data)
 		{
@@ -74,13 +64,13 @@ void ToolbarModel::add(ToolbarData* data)
 	this->toolbars.push_back(data);
 }
 
-bool ToolbarModel::parse(const char* file, bool predefined)
+bool ToolbarModel::parse(string filename, bool predefined)
 {
 	XOJ_CHECK_TYPE(ToolbarModel);
 
 	GKeyFile* config = g_key_file_new();
 	g_key_file_set_list_separator(config, ',');
-	if (!g_key_file_load_from_file(config, file, G_KEY_FILE_NONE, NULL))
+	if (!g_key_file_load_from_file(config, filename.c_str(), G_KEY_FILE_NONE, NULL))
 	{
 		g_key_file_free(config);
 		return false;
@@ -139,7 +129,7 @@ const char* TOOLBAR_INI_HEADER =
 		"  LAYER: The layer dropdown menu\n"
 		"\n";
 
-void ToolbarModel::save(const char* filename)
+void ToolbarModel::save(string filename)
 {
 	GKeyFile* config = g_key_file_new();
 	g_key_file_set_list_separator(config, ',');
@@ -157,8 +147,9 @@ void ToolbarModel::save(const char* filename)
 	gsize len = 0;
 	char* data = g_key_file_to_data(config, &len, NULL);
 
-	FILE* fp = fopen(filename, "w");
-	fwrite(data, 1, len, fp);
-	fclose(fp);
+	std::ofstream f(filename);
+	f.write(data, len);
+	f.close();
+	
 	g_free(data);
 }

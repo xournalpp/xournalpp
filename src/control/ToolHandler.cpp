@@ -568,74 +568,74 @@ void ToolHandler::loadSettings()
 	SElement& s = settings->getCustomElement("tools");
 
 	string selectedTool;
-	s.getString("current", selectedTool);
-
-	ArrayIterator<Tool*> it = iterator();
-
-	for (; it.hasNext();)
+	if (s.getString("current", selectedTool))
 	{
-		Tool* t = it.next();
-		SElement& st = s.child(t->getName());
+		ArrayIterator<Tool*> it = iterator();
 
-		if (selectedTool == t->getName())
+		for (; it.hasNext();)
 		{
-			this->current = t;
-		}
+			Tool* t = it.next();
+			SElement& st = s.child(t->getName());
 
-		int color = 0;
-		if (t->isEnableColor() && st.getInt("color", color))
-		{
-			t->setColor(color);
-		}
-
-		bool enabled = false;
-		if (t->isEnableRuler() && st.getBool("ruler", enabled))
-		{
-			t->setRuler(enabled);
-		}
-		if (t->isEnableRectangle() && st.getBool("rectangle", enabled))
-		{
-			t->setRectangle(enabled);
-		}
-		if (t->isEnableCircle() && st.getBool("circle", enabled))
-		{
-			t->setCircle(enabled);
-		}
-		if (t->isEnableArrow() && st.getBool("arrow", enabled))
-		{
-			t->setArrow(enabled);
-		}
-		if (t->isEnableShapeRecognizer() && st.getBool("shapeRecognizer", enabled))
-		{
-			t->setShapeRecognizer(enabled);
-		}
-
-		string value;
-
-		if (t->isEnableSize() && st.getString("size", value))
-		{
-			if (value == "VERY_THIN")	  t->setSize(TOOL_SIZE_VERY_FINE);
-			else if (value == "THIN")	  t->setSize(TOOL_SIZE_FINE);
-			else if (value == "MEDIUM")	  t->setSize(TOOL_SIZE_MEDIUM);
-			else if (value == "BIG")	  t->setSize(TOOL_SIZE_THICK);
-			else if (value == "VERY_BIG") t->setSize(TOOL_SIZE_VERY_THICK);
-			else g_warning("Settings::Unknown tool size: %s\n", value.c_str());
-		}
-
-		if (t->type == TOOL_ERASER)
-		{
-			string type;
-
-			if (st.getString("type", type))
+			if (selectedTool == t->getName())
 			{
-				if (type == "deleteStroke")	 setEraserType(ERASER_TYPE_DELETE_STROKE);
-				else if (type == "whiteout") setEraserType(ERASER_TYPE_WHITEOUT);
-				else						 setEraserType(ERASER_TYPE_DEFAULT);
-				eraserTypeChanged();
+				this->current = t;
+			}
+
+			int color = 0;
+			if (t->isEnableColor() && st.getInt("color", color))
+			{
+				t->setColor(color);
+			}
+
+			bool enabled = false;
+			if (t->isEnableRuler() && st.getBool("ruler", enabled))
+			{
+				t->setRuler(enabled);
+			}
+			if (t->isEnableRectangle() && st.getBool("rectangle", enabled))
+			{
+				t->setRectangle(enabled);
+			}
+			if (t->isEnableCircle() && st.getBool("circle", enabled))
+			{
+				t->setCircle(enabled);
+			}
+			if (t->isEnableArrow() && st.getBool("arrow", enabled))
+			{
+				t->setArrow(enabled);
+			}
+			if (t->isEnableShapeRecognizer() && st.getBool("shapeRecognizer", enabled))
+			{
+				t->setShapeRecognizer(enabled);
+			}
+
+			string value;
+
+			if (t->isEnableSize() && st.getString("size", value))
+			{
+				if (value == "VERY_THIN")	  t->setSize(TOOL_SIZE_VERY_FINE);
+				else if (value == "THIN")	  t->setSize(TOOL_SIZE_FINE);
+				else if (value == "MEDIUM")	  t->setSize(TOOL_SIZE_MEDIUM);
+				else if (value == "BIG")	  t->setSize(TOOL_SIZE_THICK);
+				else if (value == "VERY_BIG") t->setSize(TOOL_SIZE_VERY_THICK);
+				else g_warning("Settings::Unknown tool size: %s\n", value.c_str());
+			}
+
+			if (t->type == TOOL_ERASER)
+			{
+				string type;
+
+				if (st.getString("type", type))
+				{
+					if (type == "deleteStroke")	 setEraserType(ERASER_TYPE_DELETE_STROKE);
+					else if (type == "whiteout") setEraserType(ERASER_TYPE_WHITEOUT);
+					else						 setEraserType(ERASER_TYPE_DEFAULT);
+					eraserTypeChanged();
+				}
 			}
 		}
 	}
-
 }
 
 void ToolHandler::copyCurrentConfig()
