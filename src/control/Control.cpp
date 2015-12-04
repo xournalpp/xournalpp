@@ -2365,10 +2365,10 @@ bool Control::openFile(path filename, int scrollToPage)
 				fileLoaded(scrollToPage);
 				return true;
 			}
-			else
-			{
-				return false;
-			}
+			//else
+			//{
+			//	return false;
+			//}
 		}
 
 		bool an = annotatePdf(filename, false, false);
