@@ -79,8 +79,54 @@ void InputHandler::addPointToTmpStroke(GdkEventMotion* event)
 		}
 		else
 		{
-			tmpStroke->setLastPoint(x, y);
+			//snap to a grid - get the angle of the points
+			//if it's near 0, pi/4, 3pi/4, pi, or the negatives
+			//within epsilon, fix it to that value.
+			Point firstPoint = tmpStroke->getPoint(0);
+			
+			double dist = sqrt(pow(x - firstPoint.x, 2.0) + pow(y - firstPoint.y, 2.0));
+			double angle = atan2((y-firstPoint.y), (x-firstPoint.x));
+			double epsilon = 0.1;
+			if (std::abs(angle) < epsilon)
+			{
+				tmpStroke->setLastPoint(dist + firstPoint.x, firstPoint.y);
+			}
+			else if (std::abs(angle-M_PI/4.0) < epsilon)
+			{
+				tmpStroke->setLastPoint(dist/sqrt(2.0) + firstPoint.x, dist/sqrt(2.0) + firstPoint.y);
+			}
+			else if (std::abs(angle-3.0*M_PI/4.0) < epsilon)
+			{
+				tmpStroke->setLastPoint(-dist/sqrt(2.0) + firstPoint.x, dist/sqrt(2.0) + firstPoint.y);
+			}
+			else if (std::abs(angle+M_PI/4.0) < epsilon)
+			{
+				tmpStroke->setLastPoint(dist/sqrt(2.0) + firstPoint.x, -dist/sqrt(2.0) + firstPoint.y);
+			}
+			else if (std::abs(angle+3.0*M_PI/4.0) < epsilon)
+			{
+				tmpStroke->setLastPoint(-dist/sqrt(2.0) + firstPoint.x, -dist/sqrt(2.0) + firstPoint.y);
+			}
+			else if (std::abs(std::abs(angle)-M_PI) < epsilon)
+			{
+				tmpStroke->setLastPoint(-dist + firstPoint.x, firstPoint.y);
+			}
+			else if (std::abs(angle-M_PI/2.0) < epsilon)
+			{
+				tmpStroke->setLastPoint(firstPoint.x, dist + firstPoint.y);
+			}
+			else if (std::abs(angle+M_PI/2.0) < epsilon)
+			{
+				tmpStroke->setLastPoint(firstPoint.x, -dist + firstPoint.y);
+			}
+			else
+			{
+				tmpStroke->setLastPoint(x,y);
+			}
+
 		}
+
+		//not sure why this line is here...maybe can be removed:
 		Point p = tmpStroke->getPoint(0);
 
 		drawTmpStroke(true);

@@ -24,6 +24,7 @@ public:
 
 public:
 	double lineLengthTo(const Point& p);
+	double slopeTo(const Point& p);
 	Point lineTo(const Point& p, double length);
 	bool equalsPos(const Point& p);
 

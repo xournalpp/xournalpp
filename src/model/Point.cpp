@@ -52,6 +52,13 @@ double Point::lineLengthTo(const Point& p)
 	return std::hypot(this->x - p.x, this->y - p.y);
 }
 
+double Point::slopeTo(const Point& p)
+{
+	XOJ_CHECK_TYPE(Point);
+
+	return std::atan2(this->x - p.x, this->y - p.y);
+}
+
 Point Point::lineTo(const Point& p, double length)
 {
 	XOJ_CHECK_TYPE(Point);
