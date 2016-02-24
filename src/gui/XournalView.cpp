@@ -20,6 +20,7 @@
 
 #include <gdk/gdkkeysyms.h>
 
+
 XournalView::XournalView(GtkWidget* parent, Control* control)
 {
 	XOJ_INIT_TYPE(XournalView);
@@ -55,6 +56,21 @@ XournalView::XournalView(GtkWidget* parent, Control* control)
 
 	this->cleanupTimeout = g_timeout_add_seconds(5, (GSourceFunc) clearMemoryTimer,
 	                                             this);
+
+	//pinch-to-zoom
+	this->zoom_gesture_active=false;
+	this->zoom_gesture = gtk_gesture_zoom_new (GTK_WIDGET(this->widget));
+	gtk_event_controller_set_propagation_phase (GTK_EVENT_CONTROLLER (this->zoom_gesture),
+																							GTK_PHASE_CAPTURE);
+
+	g_signal_connect (this->zoom_gesture, "begin",
+										G_CALLBACK (zoom_gesture_begin_cb), this);
+
+	g_signal_connect (this->zoom_gesture, "scale-changed",
+										G_CALLBACK (zoom_gesture_scale_changed_cb), this);
+
+	g_signal_connect (this->zoom_gesture, "end",
+										G_CALLBACK (zoom_gesture_end_cb), this);
 }
 
 XournalView::~XournalView()
@@ -308,6 +324,34 @@ void XournalView::onRealized(GtkWidget* widget, XournalView* view)
 	view->setEventCompression(view->getControl()->getSettings()->isEventCompression());
 }
 
+
+void XournalView::zoom_gesture_begin_cb (GtkGesture* gesture,
+                                         GdkEventSequence* sequence,
+                                         XournalView* view)
+{
+	view->prev_zoom_gesture_scale = 1;
+  view->zoom_gesture_begin = view->getZoom();
+  view->zoom_gesture_active=true;
+}
+
+void XournalView::zoom_gesture_end_cb (GtkGesture* gesture,
+																			 GdkEventSequence* sequence,
+																			 XournalView* view)
+{
+	view->prev_zoom_gesture_scale = 1;
+  view->zoom_gesture_begin = view->getZoom();
+  view->zoom_gesture_active=false;
+}
+
+void XournalView::zoom_gesture_scale_changed_cb (GtkGestureZoom* gesture,
+																								 gdouble         scale,
+																								 XournalView*  view)
+{
+	view->prev_zoom_gesture_scale = scale;
+  view->setZoom(scale*view->zoom_gesture_begin);
+}
+
+
 // send the focus back to the appropriate widget
 void XournalView::requestFocus()
 {
@@ -501,6 +545,13 @@ void XournalView::zoomOut()
 	control->getZoomControl()->zoomOut();
 }
 
+
+void XournalView::setZoom(gdouble scale)
+{
+	XOJ_CHECK_TYPE(XournalView);
+	control->getZoomControl()->setZoom(scale);
+}
+
 void XournalView::ensureRectIsVisible(int x, int y, int width, int heigth)
 {
 	XOJ_CHECK_TYPE(XournalView);
@@ -524,7 +575,8 @@ void XournalView::zoomChanged(double lastZoom)
 
 	layout->layoutPages();
 
-	this->scrollTo(currentPage, pageTop);
+	//disable scroll to pageTop for changed zoom
+	//this->scrollTo(currentPage, pageTop);
 
 	Document* doc = control->getDocument();
 	doc->lock();

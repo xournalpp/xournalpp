@@ -39,6 +39,15 @@ public:
 public:
 	void zoomIn();
 	void zoomOut();
+  void setZoom(gdouble scale);
+
+  //Gestures
+  GtkGesture* zoom_gesture;
+  gdouble prev_zoom_gesture_scale;
+  gdouble zoom_gesture_begin;
+  //Problems with pinch to zoom:
+  //-keep view centred between pinching fingers
+  //-gtk_gesture_is_recognized not working (always false in XournalWidget.cpp code)
 
 	bool paint(GtkWidget* widget, GdkEventExpose* event);
 
@@ -120,8 +129,14 @@ public:
 public:
 	bool onKeyPressEvent(GdkEventKey* event);
 	bool onKeyReleaseEvent(GdkEventKey* event);
-
+  bool zoom_gesture_active;
 	static void onRealized(GtkWidget* widget, XournalView* view);
+  static void zoom_gesture_begin_cb(GtkGesture* gesture,GdkEventSequence* sequence,XournalView* view);
+  static void zoom_gesture_end_cb(GtkGesture* gesture,GdkEventSequence* sequence,XournalView* view);
+  static void zoom_gesture_scale_changed_cb(GtkGestureZoom* gesture,gdouble sclae,XournalView* view);
+
+
+
 
 private:
 
