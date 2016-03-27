@@ -59,7 +59,10 @@ XournalView::XournalView(GtkWidget* parent, Control* control)
 
 	//pinch-to-zoom
 	this->zoom_gesture_active=false;
-	this->zoom_gesture = gtk_gesture_zoom_new (GTK_WIDGET(this->widget));
+	//use parent as the gestures widget and not this->widget as gesture gets
+	//buggy otherwise (scrolling interferes with gestures scale value)
+	this->zoom_gesture = gtk_gesture_zoom_new (parent);
+
 	gtk_event_controller_set_propagation_phase (GTK_EVENT_CONTROLLER (this->zoom_gesture),
 																							GTK_PHASE_CAPTURE);
 
@@ -329,17 +332,25 @@ void XournalView::zoom_gesture_begin_cb (GtkGesture* gesture,
                                          GdkEventSequence* sequence,
                                          XournalView* view)
 {
-	view->prev_zoom_gesture_scale = 1;
+	Layout* layout = gtk_xournal_get_layout(view->widget);
+	//Save visible rectangle at beginning of gesture
+	view->visRect_gesture_begin = layout->getVisibleRect();
+
   view->zoom_gesture_begin = view->getZoom();
   view->zoom_gesture_active=true;
+
+	//get center of bounding box
+	ZoomControl* zoom=view->control->getZoomControl();
+	gtk_gesture_get_bounding_box_center (GTK_GESTURE (gesture), &zoom->zoom_center_x, &zoom->zoom_center_y);
 }
 
 void XournalView::zoom_gesture_end_cb (GtkGesture* gesture,
 																			 GdkEventSequence* sequence,
 																			 XournalView* view)
 {
-	view->prev_zoom_gesture_scale = 1;
-  view->zoom_gesture_begin = view->getZoom();
+	ZoomControl* zoom=view->control->getZoomControl();
+	zoom->zoom_center_x=-1;
+	zoom->zoom_center_y=-1;
   view->zoom_gesture_active=false;
 }
 
@@ -347,8 +358,15 @@ void XournalView::zoom_gesture_scale_changed_cb (GtkGestureZoom* gesture,
 																								 gdouble         scale,
 																								 XournalView*  view)
 {
-	view->prev_zoom_gesture_scale = scale;
+	ZoomControl* zoom=view->control->getZoomControl();
   view->setZoom(scale*view->zoom_gesture_begin);
+
+	//Alternative implementation: update bounding box center each time scale changes
+	//Not used at the moment as a single center set at the beginning of the gesture seems
+	//more robust
+	/*
+	gtk_gesture_get_bounding_box_center (GTK_GESTURE (gesture), &zoom->zoom_center_x, &zoom->zoom_center_y);
+	*/
 }
 
 
@@ -567,16 +585,51 @@ void XournalView::zoomChanged(double lastZoom)
 	Layout* layout = gtk_xournal_get_layout(this->widget);
 	int currentPage = this->getCurrentPage();
 	PageView* view = getViewFor(currentPage);
+	ZoomControl* zoom= control->getZoomControl();
+
 
 	if(!view)
 		return;
 
 	double pageTop = view->getX();
 
+	//move this somewhere else maybe
 	layout->layoutPages();
 
-	//disable scroll to pageTop for changed zoom
-	//this->scrollTo(currentPage, pageTop);
+	// Keep zoom center at static position in current view
+	// by scrolling relative to counter motion induced by zoom
+	// in orignal version top left corner of first page static
+	// Pack into extra function later
+	double zoom_now=getZoom();
+	//relative scrolling
+	double zoom_eff=zoom_now/lastZoom;
+	int scroll_x;
+	int scroll_y;
+	//x,y position of visible rectangle for gesture scrolling
+	int vis_x;
+	int vis_y;
+	//get margins for relative scroll calculation
+	double marginLeft=(double)view->layout.getMarginLeft();
+	double marginTop=(double)view->layout.getMarginTop();
+
+	//Absolute centred scrolling used for gesture
+	if(this->zoom_gesture_active)
+		{
+			vis_x=(int)((zoom->zoom_center_x-marginLeft)*(zoom_now/this->zoom_gesture_begin-1));
+			vis_y=(int)((zoom->zoom_center_y-marginTop)*(zoom_now/this->zoom_gesture_begin-1));
+			layout->scrollAbs(this->visRect_gesture_begin.x+vis_x,
+												this->visRect_gesture_begin.y+vis_y);
+		}
+
+	//Relative centered scrolling used for SHIFT-mousewheel
+	if (zoom_eff!=1 && zoom->zoom_center_x!=-1 && this->zoom_gesture_active==false)
+		{
+			scroll_x=(int)((zoom->zoom_center_x-marginLeft)*(zoom_eff-1));
+			scroll_y=(int)((zoom->zoom_center_y-marginTop)*(zoom_eff-1));
+
+			// adjust view by scrolling
+			layout->scrollRelativ(scroll_x,scroll_y);
+		}
 
 	Document* doc = control->getDocument();
 	doc->lock();
@@ -827,9 +880,9 @@ void XournalView::setEventCompression(gboolean enable)
 {
 	//Enable this when gdk is new enough for the compression feature.
 
-	//if(gtk_widget_get_realized(getWidget()))
-	//gdk_window_set_event_compression(gtk_widget_get_window(getWidget()),
-	//                                 enable);
+	if(gtk_widget_get_realized(getWidget()))
+	gdk_window_set_event_compression(gtk_widget_get_window(getWidget()),
+	                                 enable);
 }
 
 void XournalView::layoutPages()

@@ -43,8 +43,8 @@ public:
 
   //Gestures
   GtkGesture* zoom_gesture;
-  gdouble prev_zoom_gesture_scale;
   gdouble zoom_gesture_begin;
+	Rectangle visRect_gesture_begin;
   //Problems with pinch to zoom:
   //-keep view centred between pinching fingers
   //-gtk_gesture_is_recognized not working (always false in XournalWidget.cpp code)
@@ -133,7 +133,7 @@ public:
 	static void onRealized(GtkWidget* widget, XournalView* view);
   static void zoom_gesture_begin_cb(GtkGesture* gesture,GdkEventSequence* sequence,XournalView* view);
   static void zoom_gesture_end_cb(GtkGesture* gesture,GdkEventSequence* sequence,XournalView* view);
-  static void zoom_gesture_scale_changed_cb(GtkGestureZoom* gesture,gdouble sclae,XournalView* view);
+  static void zoom_gesture_scale_changed_cb(GtkGestureZoom* gesture,gdouble scale,XournalView* view);
 
 
 
