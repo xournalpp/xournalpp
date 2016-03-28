@@ -1,4 +1,5 @@
 #include "ZoomControl.h"
+#include <math.h>
 
 const double zoomStep = 0.04;
 
@@ -12,6 +13,9 @@ ZoomControl::ZoomControl()
 	this->zoom100Value = 1.0;
 	this->zoomFitValue = 1.0;
 	this->zoomFitMode = true;
+	this->zoom_center_x = -1;
+	this->zoom_center_y = -1;
+
 }
 
 ZoomControl::~ZoomControl()
@@ -43,14 +47,14 @@ void ZoomControl::fireZoomChanged(double lastZoom)
 {
 	XOJ_CHECK_TYPE(ZoomControl);
 
-	if (this->zoom < 0.3)
+	if (this->zoom < MIN_ZOOM)
 	{
-		this->zoom = 0.3;
+		this->zoom = MIN_ZOOM;
 	}
 
-	if (this->zoom > 5)
+	if (this->zoom > MAX_ZOOM)
 	{
-		this->zoom = 5;
+		this->zoom = MAX_ZOOM;
 	}
 
 	for (GList* l = this->listener; l != NULL; l = l->next)
@@ -81,8 +85,7 @@ double ZoomControl::getZoom()
 void ZoomControl::setZoom(double zoom)
 {
 	XOJ_CHECK_TYPE(ZoomControl);
-
-	double lastZoom = zoom;
+	double lastZoom = this->zoom;
 	this->zoom = zoom;
 	this->zoomFitMode = false;
 	fireZoomChanged(lastZoom);
@@ -180,6 +183,9 @@ bool ZoomControl::onScrolledwindowMainScrollEvent(GtkWidget* widget,
 
 	if (state & GDK_CONTROL_MASK)
 	{
+		//set zoom center (for shift centered scroll)
+		zoom->zoom_center_x = event->x;
+		zoom->zoom_center_y = event->y;
 		if (event->direction == GDK_SCROLL_UP || event->direction == GDK_SCROLL_LEFT)
 		{
 			zoom->zoomIn();

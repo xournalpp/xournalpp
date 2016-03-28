@@ -12,6 +12,11 @@
 #ifndef __ZOOMCONTROL_H__
 #define __ZOOMCONTROL_H__
 
+//Hardcode max and min zoom
+//this should probably be user-adjustable in future
+#define MAX_ZOOM 5
+#define MIN_ZOOM .3
+
 #include <gtk/gtk.h>
 
 #include <XournalType.h>
@@ -47,6 +52,10 @@ public:
 	void addZoomListener(ZoomListener* listener);
 
 	void initZoomHandler(GtkWidget* widget);
+
+	// Current zoom center
+	gdouble zoom_center_x;
+	gdouble zoom_center_y;
 
 protected:
 	void fireZoomChanged(double lastZoom);

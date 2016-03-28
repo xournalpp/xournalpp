@@ -200,6 +200,7 @@ void Layout::layoutPages()
 
 	if (horizontalSpace)
 	{
+		//A quarter of the document is always visible in window
 		marginLeft = MAX(marginLeft, visRect.width * 0.75);
 	}
 
@@ -342,6 +343,15 @@ void Layout::scrollRelativ(int x, int y)
 	gtk_adjustment_set_value(adjVertical,
 	                         gtk_adjustment_get_value(adjVertical) + y);
 }
+
+void Layout::scrollAbs(int x, int y)
+{
+	XOJ_CHECK_TYPE(Layout);
+
+	gtk_adjustment_set_value(adjHorizontal,x);
+	gtk_adjustment_set_value(adjVertical,y);
+}
+
 
 void Layout::ensureRectIsVisible(int x, int y, int width, int height)
 {
