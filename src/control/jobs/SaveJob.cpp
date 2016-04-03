@@ -153,6 +153,7 @@ bool SaveJob::save()
 		doc->setCreateBackupOnSave(false);
 	}
 
+	doc->lock();
 	GzOutputStream* out = new GzOutputStream(filename);
 
 	if (!out->getLastError().empty())
@@ -173,6 +174,7 @@ bool SaveJob::save()
 
 	h.saveTo(out, filename, this->control);
 	out->close();
+	doc->unlock();
 
 	if (!out->getLastError().empty())
 	{
