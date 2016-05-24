@@ -1295,7 +1295,7 @@
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
                             <property name="has_tooltip">True</property>
-                            <property name="tooltip" translatable="yes">Zoom out</property>
+                            <property name="tooltip" translatable="yes">Close Sidebar</property>
                             <property name="use_action_appearance">False</property>
                             <property name="stock_id">gtk-close</property>
                           </widget>
