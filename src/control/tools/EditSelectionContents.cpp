@@ -24,7 +24,7 @@
 #include <serializing/ObjectOutputStream.h>
 #include <serializing/ObjectInputStream.h>
 
-#include <math.h>
+#include <cmath>
 
 EditSelectionContents::EditSelectionContents(double x, double y, double width, double height,
 											 PageRef sourcePage, Layer* sourceLayer, PageView* sourceView)
@@ -171,7 +171,7 @@ UndoAction* EditSelectionContents::setFont(XojFont& font)
 			Text* t = (Text*) e;
 			undo->addStroke(t, t->getFont(), font);
 
-			if (isnan(x1))
+			if (std::isnan(x1))
 			{
 				x1 = t->getX();
 				y1 = t->getY();
@@ -199,7 +199,7 @@ UndoAction* EditSelectionContents::setFont(XojFont& font)
 		}
 	}
 
-	if (!isnan(x1))
+	if (!std::isnan(x1))
 	{
 		this->deleteViewBuffer();
 		this->sourceView->getXournal()->repaintSelection();
