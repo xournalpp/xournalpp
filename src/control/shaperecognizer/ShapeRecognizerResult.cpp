@@ -1,6 +1,6 @@
 #include "ShapeRecognizerResult.h"
-#include "ShapeRecognizer.h"
 
+#include "ShapeRecognizer.h"
 #include <Stacktrace.h>
 
 ShapeRecognizerResult::ShapeRecognizerResult(Stroke* result)
@@ -8,16 +8,13 @@ ShapeRecognizerResult::ShapeRecognizerResult(Stroke* result)
 	XOJ_INIT_TYPE(ShapeRecognizerResult);
 
 	this->recognized = result;
-	this->source = NULL;
 }
 
-ShapeRecognizerResult::ShapeRecognizerResult(Stroke* result,
-                                             ShapeRecognizer* recognizer)
+ShapeRecognizerResult::ShapeRecognizerResult(Stroke* result, ShapeRecognizer* recognizer)
 {
 	XOJ_INIT_TYPE(ShapeRecognizerResult);
 
 	this->recognized = result;
-	this->source = NULL;
 
 	for (int i = 0; i < recognizer->queueLength; i++)
 	{
@@ -27,7 +24,7 @@ ShapeRecognizerResult::ShapeRecognizerResult(Stroke* result,
 		}
 	}
 
-	RDEBUG("source list length: %i\n", g_list_length(this->source));
+	RDEBUG("source list length: {1}") % this->source.size();
 }
 
 ShapeRecognizerResult::~ShapeRecognizerResult()
@@ -35,8 +32,6 @@ ShapeRecognizerResult::~ShapeRecognizerResult()
 	XOJ_CHECK_TYPE(ShapeRecognizerResult);
 
 	this->recognized = NULL;
-	g_list_free(this->source);
-	this->source = NULL;
 
 	XOJ_RELEASE_TYPE(ShapeRecognizerResult);
 }
@@ -45,17 +40,19 @@ void ShapeRecognizerResult::addSourceStroke(Stroke* s)
 {
 	XOJ_CHECK_TYPE(ShapeRecognizerResult);
 
-	GList* elem = g_list_find(this->source, s);
-	if (elem)
+	for (Stroke* elem : this->source)
 	{
-		// TODO LOW PRIO: this is a bug in the ShapreRecognizer!!
-		//		g_warning("ShapeRecognizerResult::addSourceStroke() try to add a stroke twice!");
-		//		Stacktrace::printStracktrace();
-		return;
+		if (s == elem)
+		{
+			// TODO LOW PRIO: this is a bug in the ShapreRecognizer!!
+			//		g_warning("ShapeRecognizerResult::addSourceStroke() try to add a stroke twice!");
+			//		Stacktrace::printStracktrace();
+			return;
+		}
 	}
 
 
-	this->source = g_list_append(this->source, s);
+	this->source.push_back(s);
 }
 
 Stroke* ShapeRecognizerResult::getRecognized()
@@ -65,10 +62,9 @@ Stroke* ShapeRecognizerResult::getRecognized()
 	return this->recognized;
 }
 
-ListIterator<Stroke*> ShapeRecognizerResult::getSources()
+StrokeVector* ShapeRecognizerResult::getSources()
 {
 	XOJ_CHECK_TYPE(ShapeRecognizerResult);
 
-	return ListIterator<Stroke*> (this->source);
+	return &this->source;
 }
-

@@ -1,15 +1,17 @@
 #include "InputHandler.h"
-#include "../../gui/XournalView.h"
-#include "../../gui/PageView.h"
-#include "../../gui/widgets/XournalWidget.h"
-#include "../Control.h"
-#include "../shaperecognizer/ShapeRecognizerResult.h"
-#include "../../undo/InsertUndoAction.h"
-#include "../../undo/RecognizerUndoAction.h"
-#include "../../view/DocumentView.h"
-#include "../../model/Layer.h"
-#include "../../util/XInputUtils.h"
-#include "../../util/Rectangle.h"
+
+#include "Rectangle.h"
+#include "XInputUtils.h"
+
+#include "control/Control.h"
+#include "control/shaperecognizer/ShapeRecognizerResult.h"
+#include "gui/PageView.h"
+#include "gui/widgets/XournalWidget.h"
+#include "gui/XournalView.h"
+#include "model/Layer.h"
+#include "undo/InsertUndoAction.h"
+#include "undo/RecognizerUndoAction.h"
+#include "view/DocumentView.h"
 
 #include <math.h>
 
@@ -37,12 +39,8 @@ InputHandler::~InputHandler()
 	this->redrawable = NULL;
 	delete this->view;
 	this->view = NULL;
-
-	if (this->reco)
-	{
-		delete this->reco;
-		this->reco = NULL;
-	}
+	delete this->reco;
+	this->reco = NULL;
 
 	XOJ_RELEASE_TYPE(InputHandler);
 }
@@ -54,8 +52,7 @@ void InputHandler::addPointToTmpStroke(GdkEventMotion* event)
 	double zoom = xournal->getZoom();
 	double x = event->x / zoom;
 	double y = event->y / zoom;
-	bool presureSensitivity =
-	    xournal->getControl()->getSettings()->isPresureSensitivity();
+	bool presureSensitivity = xournal->getControl()->getSettings()->isPresureSensitivity();
 
 	if (tmpStroke->getPointCount() > 0)
 	{
@@ -74,8 +71,7 @@ void InputHandler::addPointToTmpStroke(GdkEventMotion* event)
 		int count = tmpStroke->getPointCount();
 
 		this->redrawable->repaintRect(tmpStroke->getX(), tmpStroke->getY(),
-		                              tmpStroke->getElementWidth(),
-		                              tmpStroke->getElementHeight());
+									  tmpStroke->getElementWidth(), tmpStroke->getElementHeight());
 
 		if (count < 2)
 		{
@@ -83,8 +79,54 @@ void InputHandler::addPointToTmpStroke(GdkEventMotion* event)
 		}
 		else
 		{
-			tmpStroke->setLastPoint(x, y);
+			//snap to a grid - get the angle of the points
+			//if it's near 0, pi/4, 3pi/4, pi, or the negatives
+			//within epsilon, fix it to that value.
+			Point firstPoint = tmpStroke->getPoint(0);
+			
+			double dist = sqrt(pow(x - firstPoint.x, 2.0) + pow(y - firstPoint.y, 2.0));
+			double angle = atan2((y-firstPoint.y), (x-firstPoint.x));
+			double epsilon = 0.1;
+			if (std::abs(angle) < epsilon)
+			{
+				tmpStroke->setLastPoint(dist + firstPoint.x, firstPoint.y);
+			}
+			else if (std::abs(angle-M_PI/4.0) < epsilon)
+			{
+				tmpStroke->setLastPoint(dist/sqrt(2.0) + firstPoint.x, dist/sqrt(2.0) + firstPoint.y);
+			}
+			else if (std::abs(angle-3.0*M_PI/4.0) < epsilon)
+			{
+				tmpStroke->setLastPoint(-dist/sqrt(2.0) + firstPoint.x, dist/sqrt(2.0) + firstPoint.y);
+			}
+			else if (std::abs(angle+M_PI/4.0) < epsilon)
+			{
+				tmpStroke->setLastPoint(dist/sqrt(2.0) + firstPoint.x, -dist/sqrt(2.0) + firstPoint.y);
+			}
+			else if (std::abs(angle+3.0*M_PI/4.0) < epsilon)
+			{
+				tmpStroke->setLastPoint(-dist/sqrt(2.0) + firstPoint.x, -dist/sqrt(2.0) + firstPoint.y);
+			}
+			else if (std::abs(std::abs(angle)-M_PI) < epsilon)
+			{
+				tmpStroke->setLastPoint(-dist + firstPoint.x, firstPoint.y);
+			}
+			else if (std::abs(angle-M_PI/2.0) < epsilon)
+			{
+				tmpStroke->setLastPoint(firstPoint.x, dist + firstPoint.y);
+			}
+			else if (std::abs(angle+M_PI/2.0) < epsilon)
+			{
+				tmpStroke->setLastPoint(firstPoint.x, -dist + firstPoint.y);
+			}
+			else
+			{
+				tmpStroke->setLastPoint(x,y);
+			}
+
 		}
+
+		//not sure why this line is here...maybe can be removed:
 		Point p = tmpStroke->getPoint(0);
 
 		drawTmpStroke(true);
@@ -95,12 +137,11 @@ void InputHandler::addPointToTmpStroke(GdkEventMotion* event)
 		//printf("Drawing rectangle\n");
 		int count = tmpStroke->getPointCount();
 		this->redrawable->repaintRect(tmpStroke->getX(), tmpStroke->getY(),
-					      tmpStroke->getElementWidth(),
-					      tmpStroke->getElementHeight());
+									  tmpStroke->getElementWidth(), tmpStroke->getElementHeight());
 
 		if (count < 1)
 		{
-			tmpStroke->addPoint(Point(x,y));
+			tmpStroke->addPoint(Point(x, y));
 		}
 		else
 		{
@@ -112,9 +153,9 @@ void InputHandler::addPointToTmpStroke(GdkEventMotion* event)
 				tmpStroke->deletePoint(2);
 				tmpStroke->deletePoint(1);
 			}
-			tmpStroke->addPoint(Point(x,p.y));
-			tmpStroke->addPoint(Point(x,y));
-			tmpStroke->addPoint(Point(p.x,y));
+			tmpStroke->addPoint(Point(x,   p.y));
+			tmpStroke->addPoint(Point(x,   y));
+			tmpStroke->addPoint(Point(p.x, y));
 			tmpStroke->addPoint(p);
 		}
 		drawTmpStroke(true);
@@ -125,40 +166,38 @@ void InputHandler::addPointToTmpStroke(GdkEventMotion* event)
 	{
 		int count = tmpStroke->getPointCount();
 		this->redrawable->repaintRect(tmpStroke->getX(), tmpStroke->getY(),
-					      tmpStroke->getElementWidth(),
-					      tmpStroke->getElementHeight());
+									  tmpStroke->getElementWidth(), tmpStroke->getElementHeight());
 
 		//g_mutex_lock(this->redrawable->drawingMutex);
 		if (count < 2)
 		{
-			tmpStroke->addPoint(Point(x,y));
+			tmpStroke->addPoint(Point(x, y));
 		}
 		else
 		{
 			Point p = tmpStroke->getPoint(0);
 			//set resolution proportional to radius
-			double diameter = sqrt(pow(x-p.x,2.0) + pow(y-p.y,2.0));
-			int npts = (int) ( diameter/2.0 );
-			double center_x = (x + p.x)/2.0;
-			double center_y = (y + p.y)/2.0;
-			double angle = atan2( (y-p.y) , (x-p.x) );
+			double diameter = sqrt(pow(x - p.x, 2.0) + pow(y - p.y, 2.0));
+			int npts = (int) (diameter * 2.0);
+			double center_x = (x + p.x) / 2.0;
+			double center_y = (y + p.y) / 2.0;
+			double angle = atan2((y - p.y), (x - p.x));
 
-
-			if (npts < 12)
+			if (npts < 24)
 			{
-				npts = 12; // min. number of points
+				npts = 24; // min. number of points
 			}
 
 			//remove previous points
-			count = tmpStroke->getPointCount();
+			count = tmpStroke->getPointCount();	//CPPCHECK what is this assigment for?
 			tmpStroke->deletePointsFrom(1);
 			for (int i = 1; i < npts; i++)
 			{
-				double xp = center_x + diameter/2.0 * cos((2 * M_PI * i ) / npts + angle + M_PI);
-				double yp = center_y + diameter/2.0 * sin((2 * M_PI * i ) / npts + angle + M_PI);
+				double xp = center_x + diameter / 2.0 * cos((2 * M_PI * i) / npts + angle + M_PI);
+				double yp = center_y + diameter / 2.0 * sin((2 * M_PI * i) / npts + angle + M_PI);
 				tmpStroke->addPoint(Point(xp, yp));
 			}
-			tmpStroke->addPoint(Point(p.x,p.y));
+			tmpStroke->addPoint(Point(p.x, p.y));
 		}
 		//g_mutex_unlock(this->redrawable->drawingMutex);
 
@@ -169,12 +208,11 @@ void InputHandler::addPointToTmpStroke(GdkEventMotion* event)
 	{
 		int count = tmpStroke->getPointCount();
 		this->redrawable->repaintRect(tmpStroke->getX(), tmpStroke->getY(),
-					      tmpStroke->getElementWidth(),
-					      tmpStroke->getElementHeight());
+									  tmpStroke->getElementWidth(), tmpStroke->getElementHeight());
 
 		if (count < 1)
 		{
-			tmpStroke->addPoint(Point(x,y));
+			tmpStroke->addPoint(Point(x, y));
 		}
 		else
 		{
@@ -191,24 +229,19 @@ void InputHandler::addPointToTmpStroke(GdkEventMotion* event)
 
 			//We've now computed the line points for the arrow
 			//so we just have to build the head
-			
+
 			//set up the size of the arrowhead to be 1/8 the length of arrow
-			double dist = sqrt( pow(x-p.x,2.0) + pow(y-p.y,2.0) )/8.0;
-			
-			double angle = atan2( (y-p.y) , (x-p.x) );
+			double dist = sqrt(pow(x - p.x, 2.0) + pow(y - p.y, 2.0)) / 8.0;
+
+			double angle = atan2((y - p.y), (x - p.x));
 			//an appropriate delta is Pi/3 radians for an arrow shape
 			double delta = M_PI / 6.0;
 
 
 			tmpStroke->addPoint(Point(x, y));
-
-			tmpStroke->addPoint(Point(x - dist * cos(angle + delta),
-					  y - dist * sin(angle + delta)));
-
+			tmpStroke->addPoint(Point(x - dist * cos(angle + delta), y - dist * sin(angle + delta)));
 			tmpStroke->addPoint(Point(x, y));
-
-			tmpStroke->addPoint(Point(x - dist * cos(angle - delta),
-					  y - dist * sin(angle - delta)));
+			tmpStroke->addPoint(Point(x - dist * cos(angle - delta), y - dist * sin(angle - delta)));
 		}
 		drawTmpStroke(true);
 		return;
@@ -269,8 +302,7 @@ bool InputHandler::getPressureMultiplier(GdkEvent* event, double& presure)
 
 	Settings* settings = xournal->getControl()->getSettings();
 
-	presure = ((1 - rawpressure) * settings->getWidthMinimumMultiplier() +
-	           rawpressure * settings->getWidthMaximumMultiplier());
+	presure = ((1 - rawpressure) * settings->getWidthMinimumMultiplier() + rawpressure * settings->getWidthMaximumMultiplier());
 	return true;
 }
 
@@ -280,8 +312,7 @@ void InputHandler::drawTmpStroke(bool do_redraw)
 
 	if (this->tmpStroke)
 	{
-		cairo_t* cr = gtk_xournal_create_cairo_for(this->xournal->getWidget(),
-		                                           this->redrawable);
+		cairo_t* cr = gtk_xournal_create_cairo_for(this->xournal->getWidget(), this->redrawable);
 
 		double zoom = xournal->getControl()->getZoomControl()->getZoom();
 
@@ -296,10 +327,7 @@ void InputHandler::drawTmpStroke(bool do_redraw)
 
 		g_mutex_lock(&this->redrawable->drawingMutex);
 
-		this->view->drawStroke(cr,
-		                       this->tmpStroke,
-		                       do_redraw ? 0 : this->tmpStrokeDrawElem,
-		                       getZoomFactor(zoom));
+		this->view->drawStroke(cr, this->tmpStroke, do_redraw ? 0 : this->tmpStrokeDrawElem, getZoomFactor(zoom));
 
 		this->tmpStrokeDrawElem = this->tmpStroke->getPointCount() - 1;
 		cairo_destroy(cr);
@@ -375,9 +403,7 @@ void InputHandler::onButtonReleaseEvent(GdkEventButton* event, PageRef page)
 
 	UndoRedoHandler* undo = xournal->getControl()->getUndoRedoHandler();
 
-	undo->addUndoAction(new InsertUndoAction(page,
-	                                         layer,
-	                                         this->tmpStroke));
+	undo->addUndoAction(new InsertUndoAction(page, layer, this->tmpStroke));
 
 	ToolHandler* h = xournal->getControl()->getToolHandler();
 	if (h->isShapeRecognizer())
@@ -394,34 +420,27 @@ void InputHandler::onButtonReleaseEvent(GdkEventButton* event, PageRef page)
 
 			Stroke* recognized = result->getRecognized();
 
-			RecognizerUndoAction* recognizerUndo = new RecognizerUndoAction(page,
-			                                                                layer,
-			                                                                this->tmpStroke,
-			                                                                recognized);
+			RecognizerUndoAction* recognizerUndo = new RecognizerUndoAction(page, layer, this->tmpStroke, recognized);
 
 			undo->addUndoAction(recognizerUndo);
 			layer->addElement(result->getRecognized());
 
 			Range range(recognized->getX(), recognized->getY());
 			range.addPoint(recognized->getX() + recognized->getElementWidth(),
-			               recognized->getY() + recognized->getElementHeight());
+						recognized->getY() + recognized->getElementHeight());
 
 			range.addPoint(this->tmpStroke->getX(), this->tmpStroke->getY());
 			range.addPoint(this->tmpStroke->getX() + this->tmpStroke->getElementWidth(),
-			               this->tmpStroke->getY() + this->tmpStroke->getElementHeight());
+						   this->tmpStroke->getY() + this->tmpStroke->getElementHeight());
 
-			ListIterator<Stroke*> l = result->getSources();
-			while (l.hasNext())
+			for (Stroke* s : *result->getSources())
 			{
-				Stroke* s = l.next();
-
 				layer->removeElement(s, false);
 
 				recognizerUndo->addSourceElement(s);
 
 				range.addPoint(s->getX(), s->getY());
-				range.addPoint(s->getX() + s->getElementWidth(),
-				               s->getY() + s->getElementHeight());
+				range.addPoint(s->getX() + s->getElementWidth(), s->getY() + s->getElementHeight());
 			}
 
 			page->fireRangeChanged(range);
@@ -457,42 +476,22 @@ bool InputHandler::onMotionNotifyEvent(GdkEventMotion* event)
 {
 	XOJ_CHECK_TYPE(InputHandler);
 
-	// TODO: LOW PRIO: this->currentInputDevice should not be NULL!
-	//	if(this->currentInputDevice) {
-	//		INPUTDBG("this->currentInputDevice == null\n", 0);
-	//		return false;
-	//	}
-
-	//	if (this->currentInputDevice == event->device || this->currentInputDevice == NULL) {
 	if (this->tmpStroke != NULL)
 	{
 		this->addPointToTmpStroke(event);
 		return true;
 	}
-	//	} else {
-	//		const char * n1 = "null";
-	//		const char * n2 = "null";
-	//
-	//		if(this->currentInputDevice) {
-	//			n1 = this->currentInputDevice->name;
-	//		}
-	//		if(event->device) {
-	//			n2 = event->device->name;
-	//		}
-	//
-	//		INPUTDBG("Motion ignored, not the same device as the starting device. 1: %s, 2: %s\n", n1, n2);
-	//	}
+
 	return false;
 }
 
-void InputHandler::startStroke(GdkEventButton* event, StrokeTool tool, double x,
-                               double y)
+void InputHandler::startStroke(GdkEventButton* event, StrokeTool tool, double x, double y)
 {
 	XOJ_CHECK_TYPE(InputHandler);
 
 	ToolHandler* h = xournal->getControl()->getToolHandler();
 
-	if(event->device == NULL)
+	if (event->device == NULL)
 	{
 		g_warning("startStroke: event->device == null");
 	}

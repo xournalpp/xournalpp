@@ -3,27 +3,26 @@
  *
  * The configuration for a button in the Settings Dialog
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __BUTTONCONFIGGUI__
-#define __BUTTONCONFIGGUI__
+#pragma once
 
-#include "../../control/Actions.h"
+#include "control/Actions.h"
 #include <XournalType.h>
+
 #include <gdk/gdk.h>
 
-class SettingsDialog;
 class Settings;
+class SettingsDialog;
 
 class ButtonConfigGui
 {
 public:
-	ButtonConfigGui(SettingsDialog* dlg, GtkWidget* w, Settings* settings,
-	                int button, bool withDevice);
+	ButtonConfigGui(SettingsDialog* dlg, GtkWidget* w, Settings* settings, int button, bool withDevice);
 	virtual ~ButtonConfigGui();
 
 public:
@@ -52,5 +51,3 @@ private:
 	GtkWidget* cbEraserType;
 	GtkWidget* cbDrawingType;
 };
-
-#endif /* __BUTTONCONFIGGUI__ */

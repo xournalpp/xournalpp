@@ -3,23 +3,23 @@
  *
  * A stroke which is temporary used if you erase a part
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef ERASEABLESTROKE_H_
-#define ERASEABLESTROKE_H_
+#pragma once
 
-#include "../Point.h"
+#include "model/Point.h"
 #include <XournalType.h>
+
 #include <gtk/gtk.h>
 
-class Stroke;
 class EraseableStrokePart;
 class PartList;
 class Range;
+class Stroke;
 
 class EraseableStroke
 {
@@ -38,10 +38,9 @@ public:
 	void draw(cairo_t* cr, double x, double y, double width, double height);
 
 private:
-	void erase(double x, double y, double halfEraserSize, EraseableStrokePart* part,
-	           PartList* list);
-	bool erasePart(double x, double y, double halfEraserSize,
-	               EraseableStrokePart* part, PartList* list, bool* deleteStrokeAfter);
+	void erase(double x, double y, double halfEraserSize, EraseableStrokePart* part, PartList* list);
+	bool erasePart(double x, double y, double halfEraserSize, EraseableStrokePart* part,
+				   PartList* list, bool* deleteStrokeAfter);
 
 	void addRepaintRect(double x, double y, double width, double height);
 
@@ -56,5 +55,3 @@ private:
 
 	Stroke* stroke;
 };
-
-#endif /* ERASEABLESTROKE_H_ */

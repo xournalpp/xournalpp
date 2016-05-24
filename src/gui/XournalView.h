@@ -3,34 +3,35 @@
  *
  * The widget wich displays the PDF and the drawings
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __XOURNALVIEW_H__
-#define __XOURNALVIEW_H__
+#pragma once
+
+#include "control/ZoomControl.h"
+#include "model/DocumentListener.h"
+#include "model/PageRef.h"
+
+#include <Arrayiterator.h>
 
 #include <gtk/gtk.h>
-#include <Arrayiterator.h>
-#include "../control/ZoomControl.h"
-#include "../model/DocumentListener.h"
-#include "../model/PageRef.h"
 
 class Control;
-class PageView;
+class Cursor;
 class Document;
-class TextEditor;
+class EditSelection;
+class Layout;
+class PagePositionHandler;
+class PageView;
 class PdfCache;
 class Rectangle;
 class RepaintHandler;
-class PagePositionHandler;
-class Cursor;
-class EditSelection;
-class Layout;
+class TextEditor;
 
-class XournalView: public DocumentListener, public ZoomListener
+class XournalView : public DocumentListener, public ZoomListener
 {
 public:
 	XournalView(GtkWidget* parent, Control* control);
@@ -46,23 +47,23 @@ public:
 
 	void layoutPages();
 
-	void scrollTo(int pageNo, double y);
+	void scrollTo(size_t pageNo, double y);
 
-	int getCurrentPage();
+	size_t getCurrentPage();
 
 	void updateXEvents();
 
 	void clearSelection();
 
-	void layerChanged(int page);
+	void layerChanged(size_t page);
 
 	void requestFocus();
 
 	void forceUpdatePagenumbers();
 
-	PageView* getViewFor(int pageNr);
+	PageView* getViewFor(size_t pageNr);
 
-	bool searchTextOnPage(const char* text, int p, int* occures, double* top);
+	bool searchTextOnPage(string text, size_t p, int* occures, double* top);
 
 	bool cut();
 	bool copy();
@@ -102,11 +103,11 @@ public:
 
 public:
 	//DocumentListener interface
-	void pageSelected(int page);
-	void pageSizeChanged(int page);
-	void pageChanged(int page);
-	void pageInserted(int page);
-	void pageDeleted(int page);
+	void pageSelected(size_t page);
+	void pageSizeChanged(size_t page);
+	void pageChanged(size_t page);
+	void pageInserted(size_t page);
+	void pageDeleted(size_t page);
 	void documentChanged(DocumentChangeType type);
 
 public:
@@ -119,7 +120,7 @@ private:
 
 	void addLoadPageToQue(PageRef page, int priority);
 
-	Rectangle* getVisibleRect(int page);
+	Rectangle* getVisibleRect(size_t page);
 
 	static gboolean clearMemoryTimer(XournalView* widget);
 
@@ -130,12 +131,12 @@ private:
 	double margin;
 
 	PageView** viewPages;
-	int viewPagesLen;
+	size_t viewPagesLen;
 
 	Control* control;
 
-	int currentPage;
-	int lastSelectedPage;
+	size_t currentPage;
+	size_t lastSelectedPage;
 
 	PdfCache* cache;
 
@@ -156,5 +157,3 @@ private:
 
 	friend class Layout;
 };
-
-#endif /* __XOURNALVIEW_H__ */

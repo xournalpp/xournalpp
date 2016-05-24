@@ -1,0 +1,32 @@
+/*
+ * Xournal++
+ *
+ * Additional features of Xournal++
+ *
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
+ *
+ * @license GNU GPLv2 or later
+ */
+
+#pragma once
+
+/* --- Stable features --- */
+
+/**
+ * Enable Overlay scrollbar
+ */
+#cmakedefine ENABLE_OS
+
+/**
+ * Enable Mathtex support
+ */
+#cmakedefine ENABLE_MATHTEX
+
+
+/* --- Testing features --- */
+
+/**
+ * Enable Layers sidebar
+ */
+#cmakedefine UNSTABLE_LAYERS_SIDEBAR

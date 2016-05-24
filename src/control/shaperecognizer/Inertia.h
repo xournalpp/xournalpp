@@ -3,14 +3,13 @@
  *
  * Part of the Xournal shape recognizer
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __INERTIA_H__
-#define __INERTIA_H__
+#pragma once
 
 #include <XournalType.h>
 
@@ -50,5 +49,3 @@ private:
 	double sxy;
 	double syy;
 };
-
-#endif /* __INERTIA_H__ */

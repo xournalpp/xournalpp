@@ -3,21 +3,25 @@
  *
  * A job to export PDF
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __PDFEXPORTJOB_H__
-#define __PDFEXPORTJOB_H__
+#pragma once
 
 #include "BlockingJob.h"
-#include <String.h>
+
+#include <StringUtils.h>
 #include <XournalType.h>
 
+#include <boost/filesystem/path.hpp>
+using boost::filesystem::path;
+
 class Control;
-class PdfExportJob: public BlockingJob
+
+class PdfExportJob : public BlockingJob
 {
 public:
 	PdfExportJob(Control* control);
@@ -35,9 +39,7 @@ public:
 private:
 	XOJ_TYPE_ATTRIB;
 
-	String filename;
+	path filename;
 
-	String errorMsg;
+	string errorMsg;
 };
-
-#endif /* __PDFEXPORTJOB_H__ */

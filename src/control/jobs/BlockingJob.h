@@ -3,26 +3,27 @@
  *
  * A job which is done in the GTK main thread, but the application is blocked
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __BLOCKINGJOB_H__
-#define __BLOCKINGJOB_H__
+#pragma once
 
 #include "Job.h"
+
 #include <XournalType.h>
+#include <StringUtils.h>
 
 #include <gtk/gtk.h>
 
 class Control;
 
-class BlockingJob: public Job
+class BlockingJob : public Job
 {
 public:
-	BlockingJob(Control* control, const char* name);
+	BlockingJob(Control* control, string name);
 
 protected:
 	virtual ~BlockingJob();
@@ -41,5 +42,3 @@ private:
 protected:
 	Control* control;
 };
-
-#endif /* __BLOCKINGJOB_H__ */

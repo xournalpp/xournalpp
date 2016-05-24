@@ -1,11 +1,14 @@
 #include "RenderJob.h"
-#include <gtk/gtk.h>
-#include "../../gui/XournalView.h"
-#include "../../view/PdfView.h"
-#include "../../view/DocumentView.h"
-#include "../../gui/PageView.h"
-#include "../../model/Document.h"
+
+#include "gui/PageView.h"
+#include "gui/XournalView.h"
+#include "model/Document.h"
+#include "view/DocumentView.h"
+#include "view/PdfView.h"
+
 #include <Rectangle.h>
+
+#include <list>
 
 RenderJob::RenderJob(PageView* view)
 {
@@ -50,8 +53,7 @@ void RenderJob::rerenderRectangle(RenderJob* renderJob, Rectangle* rect)
 	int width = rect->width * zoom;
 	int height = rect->height * zoom;
 
-	cairo_surface_t* rectBuffer = cairo_image_surface_create(CAIRO_FORMAT_ARGB32,
-	                                                         width, height);
+	cairo_surface_t* rectBuffer = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, width, height);
 	cairo_t* crRect = cairo_create(rectBuffer);
 	cairo_translate(crRect, -x, -y);
 	cairo_scale(crRect, zoom, zoom);
@@ -98,38 +100,43 @@ void RenderJob::rerenderRectangle(Rectangle* rect)
 class RepaintWidgetHandler
 {
 public:
-	RepaintWidgetHandler(GtkWidget * width) {
+	RepaintWidgetHandler(GtkWidget * width)
+	{
 		g_mutex_init(&this->mutex);
 		this->widget = width;
 		this->complete = false;
-		this->rects = NULL;
 		this->rescaleId = 0;
 	}
 
 public:
-	void repaintComplete() {
+	void repaintComplete()
+	{
 		g_mutex_lock(&this->mutex);
 		this->complete = true;
-		for(GList* l = this->rects; l != NULL; l = l->next)
+
+		for (Rectangle* r : this->rects)
 		{
-			delete (Rectangle*)l->data;
+			delete r;
+			r = NULL;
 		}
-		g_list_free(this->rects);
-		this->rects = NULL;
+		this->rects.clear();
 
 		addRepaintCallback();
 
 		g_mutex_unlock(&this->mutex);
 	}
 
-	void repaintRects(Rectangle * rect) {
+	void repaintRects(Rectangle* rect)
+	{
 		g_mutex_lock(&this->mutex);
-		if(this->complete) {
+		if (this->complete)
+		{
 			delete rect;
+			rect = NULL;
 		}
 		else
 		{
-			this->rects = g_list_prepend(this->rects, rect);
+			this->rects.push_front(rect);
 		}
 		addRepaintCallback();
 
@@ -137,12 +144,13 @@ public:
 	}
 
 private:
-	static bool idleRepaint(RepaintWidgetHandler * data) {
+	static bool idleRepaint(RepaintWidgetHandler * data)
+	{
 		g_mutex_lock(&data->mutex);
 		bool complete = data->complete;
-		GList* rects = data->rects;
+		std::list<Rectangle*> rects = data->rects;
 
-		data->rects = NULL;
+		data->rects.clear();
 		data->complete = false;
 		data->rescaleId = 0;
 
@@ -152,19 +160,18 @@ private:
 
 		gtk_widget_queue_draw(data->widget);
 
-		if(complete)
+		if (complete)
 		{
-			//			gtk_widget_queue_draw(data->widget);
+			//gtk_widget_queue_draw(data->widget);
 		}
 		else
 		{
-			for (GList* l = rects; l != NULL; l = l->next)
+			for (Rectangle* r : rects)
 			{
-				Rectangle* rect = (Rectangle*) l->data;
-				//				gtk_widget_queue_draw_area(widget, rect->x, rect->y, rect->width, rect->height);
-				delete rect;
+				delete r;
+				r = NULL;
 			}
-			g_list_free(rects);
+			rects.clear();
 		}
 
 		gdk_flush();
@@ -177,12 +184,12 @@ private:
 
 	void addRepaintCallback()
 	{
-		if(this->rescaleId)
+		if (this->rescaleId)
 		{
 			return;
 		}
 
-		this->rescaleId = g_idle_add((GSourceFunc)idleRepaint, this);
+		this->rescaleId = g_idle_add((GSourceFunc) idleRepaint, this);
 	}
 
 private:
@@ -191,7 +198,7 @@ private:
 	int rescaleId;
 
 	bool complete;
-	GList* rects;
+	std::list<Rectangle*> rects;
 	GtkWidget* widget;
 };
 
@@ -201,7 +208,7 @@ void RenderJob::run()
 {
 	XOJ_CHECK_TYPE(RenderJob);
 
-	if(handler == NULL)
+	if (handler == NULL)
 	{
 		handler = new RepaintWidgetHandler(this->view->getXournal()->getWidget());
 	}
@@ -211,8 +218,8 @@ void RenderJob::run()
 	g_mutex_lock(&this->view->repaintRectMutex);
 
 	bool rerenderComplete = this->view->rerenderComplete;
-	GList* rerenderRects = this->view->rerenderRects;
-	this->view->rerenderRects = NULL;
+	std::vector<Rectangle*> rerenderRects = this->view->rerenderRects;
+	this->view->rerenderRects.clear();
 
 	this->view->rerenderComplete = false;
 
@@ -226,8 +233,7 @@ void RenderJob::run()
 		int dispWidth = this->view->getDisplayWidth();
 		int dispHeight = this->view->getDisplayHeight();
 
-		cairo_surface_t* crBuffer = cairo_image_surface_create(CAIRO_FORMAT_ARGB32,
-		                                                       dispWidth, dispHeight);
+		cairo_surface_t* crBuffer = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, dispWidth, dispHeight);
 		cairo_t* cr2 = cairo_create(crBuffer);
 		cairo_scale(cr2, zoom, zoom);
 
@@ -245,8 +251,7 @@ void RenderJob::run()
 		int width = this->view->page->getWidth();
 		int height = this->view->page->getHeight();
 
-		PdfView::drawPage(this->view->xournal->getCache(), popplerPage, cr2, zoom,
-		                  width, height);
+		PdfView::drawPage(this->view->xournal->getCache(), popplerPage, cr2, zoom, width, height);
 		view.drawPage(this->view->page, cr2, false);
 
 		cairo_destroy(cr2);
@@ -265,9 +270,8 @@ void RenderJob::run()
 	}
 	else
 	{
-		for (GList* l = rerenderRects; l != NULL; l = l->next)
+		for (Rectangle* rect : rerenderRects)
 		{
-			Rectangle* rect = (Rectangle*) l->data;
 			rerenderRectangle(rect);
 
 			rect = this->view->rectOnWidget(rect->x, rect->y, rect->width, rect->height);
@@ -277,12 +281,11 @@ void RenderJob::run()
 
 
 	// delete all rectangles
-	for (GList* l = rerenderRects; l != NULL; l = l->next)
+	for (Rectangle* rect : rerenderRects)
 	{
-		Rectangle* rect = (Rectangle*) l->data;
 		delete rect;
+		rect = NULL;
 	}
-	g_list_free(rerenderRects);
 }
 
 JobType RenderJob::getType()

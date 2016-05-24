@@ -1,15 +1,15 @@
 #include "ToolbarDragDropHandler.h"
+
 #include "ToolbarAdapter.h"
+#include "ToolbarCustomizeDialog.h"
+#include "ToolbarDragDropHelper.h"
+
+#include "control/Control.h"
+#include "gui/MainWindow.h"
+#include "gui/toolbarMenubar/AbstractToolItem.h"
+#include "gui/toolbarMenubar/model/ToolbarModel.h"
 
 #include <glib.h>
-
-#include "../../../control/Control.h"
-#include "ToolbarDragDropHelper.h"
-#include "../../toolbarMenubar/AbstractToolItem.h"
-#include "ToolbarCustomizeDialog.h"
-
-#include "../../MainWindow.h"
-#include "../../toolbarMenubar/model/ToolbarModel.h"
 
 ToolbarDragDropHandler::ToolbarDragDropHandler(Control* control)
 {
@@ -44,7 +44,7 @@ void ToolbarDragDropHandler::prepareToolbarsForDragAndDrop()
 	{
 		GtkWidget* w = widgets[i];
 		this->toolbars[i] = new ToolbarAdapter(w, win->getToolbarName(GTK_TOOLBAR(w)),
-		                                       control->getWindow()->getToolMenuHandler(), control->getWindow());
+											   control->getWindow()->getToolMenuHandler(), control->getWindow());
 	}
 }
 
@@ -73,17 +73,12 @@ void ToolbarDragDropHandler::toolbarConfigDialogClosed()
 	delete this->customizeDialog;
 	this->customizeDialog = NULL;
 
-	printf("ToolbarDragDropHandler::toolbarConfigDialogClosed()\n");
-
 	MainWindow* win = control->getWindow();
 
 	this->clearToolbarsFromDragAndDrop();
 
-	char* file = g_build_filename(g_get_home_dir(), G_DIR_SEPARATOR_S, CONFIG_DIR,
-	                              G_DIR_SEPARATOR_S, TOOLBAR_CONFIG,
-	                              NULL);
+	const char* file = Util::getConfigFile(TOOLBAR_CONFIG).c_str();
 	win->getToolbarModel()->save(file);
-	g_free(file);
 }
 
 void ToolbarDragDropHandler::configure()
@@ -94,8 +89,7 @@ void ToolbarDragDropHandler::configure()
 
 	this->prepareToolbarsForDragAndDrop();
 
-	this->customizeDialog = new ToolbarCustomizeDialog(
-	    control->getGladeSearchPath(), win, this);
+	this->customizeDialog = new ToolbarCustomizeDialog(control->getGladeSearchPath(), win, this);
 
 	this->customizeDialog->show(GTK_WINDOW(win->getWindow()));
 }
@@ -109,4 +103,3 @@ bool ToolbarDragDropHandler::isInDragAndDrop()
 
 	return true;
 }
-

@@ -3,17 +3,18 @@
  *
  * A page range for PDF export etc. (e.g. 1-2,5,7)
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __PAGERANGE_H__
-#define __PAGERANGE_H__
+#pragma once
 
-#include <XournalType.h>
-#include <glib.h>
+#include "XournalType.h"
+
+#include <vector>
+using std::vector;
 
 class PageRangeEntry
 {
@@ -32,6 +33,8 @@ private:
 	int last;
 };
 
+typedef vector<PageRangeEntry*> PageRangeVector;
+
 class PageRange
 {
 private:
@@ -40,7 +43,5 @@ private:
 
 public:
 	static bool isSeparator(char c);
-	static GList* parse(const char* str);
+	static PageRangeVector parse(const char* str);
 };
-
-#endif /* __PAGERANGE_H__ */

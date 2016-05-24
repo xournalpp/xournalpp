@@ -1,6 +1,11 @@
 #include "PdfObjectWriter.h"
+
 #include "UpdateRef.h"
 #include "UpdateRefKey.h"
+
+#include <iostream>
+using std::cout;
+using std::endl;
 
 PdfObjectWriter::PdfObjectWriter(PdfWriter* writer, PdfXRef* xref)
 {
@@ -9,11 +14,10 @@ PdfObjectWriter::PdfObjectWriter(PdfWriter* writer, PdfXRef* xref)
 	this->writer = writer;
 	this->xref = xref;
 
-	this->updatedReferenced = g_hash_table_new_full((GHashFunc)
-	                                                UpdateRefKey::hashFunction, (GEqualFunc) UpdateRefKey::equalFunction,
-	                                                (GDestroyNotify) UpdateRefKey::destroyDelete,
-	                                                (GDestroyNotify) UpdateRef::destroyDelete);
-
+	this->updatedReferenced = g_hash_table_new_full((GHashFunc) UpdateRefKey::hashFunction,
+												    (GEqualFunc) UpdateRefKey::equalFunction,
+													(GDestroyNotify) UpdateRefKey::destroyDelete,
+													(GDestroyNotify) UpdateRef::destroyDelete);
 }
 
 PdfObjectWriter::~PdfObjectWriter()
@@ -37,14 +41,13 @@ void PdfObjectWriter::writeCopiedObjects()
 	while (!allWritten)
 	{
 		allWritten = true;
-		for (GList* l = g_hash_table_get_values(this->updatedReferenced); l != NULL;
-		     l = l->next)
+		for (GList* l = g_hash_table_get_values(this->updatedReferenced); l != NULL; l = l->next)
 		{
 			UpdateRef* uref = (UpdateRef*) l->data;
 			if (!uref->wroteOut)
 			{
 				this->xref->setXref(uref->objectId, this->writer->getDataCount());
-				this->writer->writef("%i 0 obj\n", uref->objectId);
+				this->writer->write(FORMAT("%i 0 obj\n", uref->objectId));
 
 				writeObject(&uref->object, uref->doc);
 				this->writer->write("endobj\n");
@@ -52,8 +55,7 @@ void PdfObjectWriter::writeCopiedObjects()
 				break;
 			}
 		}
-		for (GList* l = g_hash_table_get_values(this->updatedReferenced); l != NULL;
-		     l = l->next)
+		for (GList* l = g_hash_table_get_values(this->updatedReferenced); l != NULL; l = l->next)
 		{
 			UpdateRef* uref = (UpdateRef*) l->data;
 			if (!uref->wroteOut)
@@ -74,13 +76,13 @@ void PdfObjectWriter::writeObject(Object* obj, XojPopplerDocument doc)
 	switch (obj->getType())
 	{
 	case objBool:
-		this->writer->writef("%s ", obj->getBool() ? "true" : "false");
+		this->writer->write(FORMAT("%s ", (obj->getBool() ? "true" : "false")));
 		break;
 	case objInt:
-		this->writer->writef("%i ", obj->getInt());
+		this->writer->write(FORMAT("%i ", obj->getInt()));
 		break;
 	case objReal:
-		this->writer->writef("%g ", obj->getReal());
+		this->writer->write(FORMAT("%g ", obj->getReal()));
 		break;
 	case objString:
 		this->writeString(obj->getString());
@@ -89,7 +91,7 @@ void PdfObjectWriter::writeObject(Object* obj, XojPopplerDocument doc)
 	{
 		GooString name(obj->getName());
 		GooString* nameToPrint = name.sanitizedName(gFalse /* non ps mode */);
-		this->writer->writef("/%s ", nameToPrint->getCString());
+		this->writer->write(FORMAT("/%s ", nameToPrint->getCString()));
 		delete nameToPrint;
 		break;
 	}
@@ -146,25 +148,23 @@ void PdfObjectWriter::writeObject(Object* obj, XojPopplerDocument doc)
 	case objRef:
 	{
 		UpdateRefKey key(obj->getRef(), doc);
-		UpdateRef* uref = (UpdateRef*) g_hash_table_lookup(this->updatedReferenced,
-		                                                   &key);
+		UpdateRef* uref = (UpdateRef*) g_hash_table_lookup(this->updatedReferenced, &key);
 		if (uref)
 		{
-			this->writer->writef("%i %i R ", uref->objectId, 0);
+			this->writer->write(FORMAT("%i %i R ", uref->objectId, 0));
 		}
 		else
 		{
 			UpdateRef* uref = new UpdateRef(this->writer->getNextObjectId(), doc);
 			this->xref->addXref(0);
-			this->writer->writef("%i %i R ", uref->objectId, 0);
+			this->writer->write(FORMAT("%i %i R ", uref->objectId, 0));
 
 			obj->fetch(doc.getDoc()->getXRef(), &uref->object);
 
-			g_hash_table_insert(this->updatedReferenced, new UpdateRefKey(obj->getRef(),
-			                                                              doc), uref);
+			g_hash_table_insert(this->updatedReferenced, new UpdateRefKey(obj->getRef(), doc), uref);
 		}
 	}
-	break;
+		break;
 	case objCmd:
 		this->writer->write("cmd\r\n");
 		break;
@@ -178,8 +178,7 @@ void PdfObjectWriter::writeObject(Object* obj, XojPopplerDocument doc)
 		this->writer->write("none\r\n");
 		break;
 	default:
-		g_error("Unhandled objType : %i, please report a bug with a testcase\r\n",
-		        obj->getType());
+		g_error("Unhandled objType : %i, please report a bug with a testcase\r\n", obj->getType());
 		break;
 	}
 }
@@ -190,8 +189,9 @@ void PdfObjectWriter::writeRawStream(Stream* str, XojPopplerDocument doc)
 
 	Object obj1;
 	str->getDict()->lookup("Length", &obj1);
-	if (!obj1.isInt()) {
-		printf("PDFDoc::writeRawStream, no Length in stream dict");
+	if (!obj1.isInt())
+	{
+		cout << "PDFDoc::writeRawStream, no Length in stream dict";
 		return;
 	}
 
@@ -207,7 +207,7 @@ void PdfObjectWriter::writeRawStream(Stream* str, XojPopplerDocument doc)
 	{
 		int c = str->getUnfilteredChar();
 		buffer[0] = c;
-		this->writer->writeLen(buffer, 1);
+		this->writer->write(string(buffer, 1));
 	}
 	str->reset();
 	this->writer->write("\nendstream\n");
@@ -221,7 +221,7 @@ void PdfObjectWriter::writeStream(Stream* str)
 	str->reset();
 	for (int c = str->getChar(); c != EOF; c = str->getChar())
 	{
-		this->writer->writef("%c", c);
+		this->writer->write(FORMAT("%c", c));
 	}
 	this->writer->write("\r\nendstream\r\n");
 }
@@ -236,7 +236,7 @@ void PdfObjectWriter::writeDictionnary(Dict* dict, XojPopplerDocument doc)
 	{
 		GooString keyName(dict->getKey(i));
 		GooString* keyNameToPrint = keyName.sanitizedName(gFalse /* non ps mode */);
-		this->writer->writef("/%s ", keyNameToPrint->getCString());
+		this->writer->write(FORMAT("/%s ", keyNameToPrint->getCString()));
 		delete keyNameToPrint;
 		writeObject(dict->getValNF(i, &obj1), doc);
 		obj1.free();
@@ -259,9 +259,9 @@ void PdfObjectWriter::writeString(GooString* s)
 			//escape if needed
 			if (unescaped == '(' || unescaped == ')' || unescaped == '\\')
 			{
-				this->writer->writef("%c", '\\');
+				this->writer->write("\\");
 			}
-			this->writer->writef("%c", unescaped);
+			this->writer->write(FORMAT("%c", unescaped));
 		}
 		this->writer->write(") ");
 	}
@@ -275,9 +275,9 @@ void PdfObjectWriter::writeString(GooString* s)
 			//escape if needed
 			if (unescaped == '(' || unescaped == ')' || unescaped == '\\')
 			{
-				this->writer->writef("%c", '\\');
+				this->writer->write("\\");
 			}
-			this->writer->writef("%c", unescaped);
+			this->writer->write(FORMAT("%c", unescaped));
 			c++;
 		}
 		this->writer->write(") ");

@@ -3,22 +3,20 @@
  *
  * Part of the customizable toolbars
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __ABSTRACTTOOLITEM_H__
-#define __ABSTRACTTOOLITEM_H__
+#pragma once
 
 #include "AbstractItem.h"
 
-class AbstractToolItem: public AbstractItem
+class AbstractToolItem : public AbstractItem
 {
 public:
-	AbstractToolItem(String id, ActionHandler* handler, ActionType type,
-	                 GtkWidget* menuitem = NULL);
+	AbstractToolItem(string id, ActionHandler* handler, ActionType type, GtkWidget* menuitem = NULL);
 	virtual ~AbstractToolItem();
 
 public:
@@ -31,10 +29,9 @@ public:
 	bool isUsed();
 	void setUsed(bool used);
 
-	static void toolButtonCallback(GtkToolButton* toolbutton,
-	                               AbstractToolItem* item);
+	static void toolButtonCallback(GtkToolButton* toolbutton, AbstractToolItem* item);
 
-	virtual String getToolDisplayName() = 0;
+	virtual string getToolDisplayName() = 0;
 	virtual GtkWidget* getNewToolIcon();
 
 protected:
@@ -56,5 +53,3 @@ protected:
 
 	bool used;
 };
-
-#endif /* __ABSTRACTTOOLITEM_H__ */

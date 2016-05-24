@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="22"
+   height="22"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.48.4 r9939"
+   sodipodi:docname="tool_text.svg">
+  <defs
+     id="defs4" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="20.48"
+     inkscape:cx="10.296448"
+     inkscape:cy="16.306083"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="1280"
+     inkscape:window-height="1000"
+     inkscape:window-x="0"
+     inkscape:window-y="24"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Ebene 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,-1030.3622)">
+    <g
+       style="font-size:28px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#5b5b5b;fill-opacity:1;stroke:#313131;font-family:URW Bookman L;-inkscape-font-specification:URW Bookman L;stroke-width:1;stroke-miterlimit:1;stroke-dasharray:none;stroke-opacity:1;stroke-linejoin:round;stroke-linecap:round"
+       id="text2985">
+      <path
+         d="m 19.480701,1032.2986 -16.2399995,0 -1.596,4.928 0.924,0.336 c 1.6519983,-2.912 3.5840026,-4.2 6.16,-4.2 0.9239991,0 1.232,0.28 1.232,1.12 l 0,12.852 c 0,2.268 -0.4200014,2.968 -1.82,3.08 l -1.092,0.084 0,0.868 8.6239995,0 0,-0.868 -1.092,-0.084 c -1.399998,-0.112 -1.82,-0.812 -1.82,-3.08 l 0,-12.74 c 0,-0.98 0.224001,-1.232 1.148,-1.232 2.463998,0 4.592002,1.456 6.16,4.2 l 0.98,-0.336 -1.568,-4.928"
+         style="line-height:125%;font-family:URW Bookman L;-inkscape-font-specification:URW Bookman L;fill:#5b5b5b;fill-opacity:1;stroke-width:1;stroke-miterlimit:1;stroke-dasharray:none;stroke:#313131;stroke-opacity:1;stroke-linejoin:round;stroke-linecap:round"
+         id="path3006" />
+    </g>
+    <flowRoot
+       xml:space="preserve"
+       id="flowRoot2989"
+       style="fill:black;stroke:none;stroke-opacity:1;stroke-width:1px;stroke-linejoin:miter;stroke-linecap:butt;fill-opacity:1;font-family:Bitstream Vera Sans;font-style:normal;font-weight:normal;font-size:40px;line-height:125%;letter-spacing:0px;word-spacing:0px"><flowRegion
+         id="flowRegion2991"><rect
+           id="rect2993"
+           width="387.5"
+           height="400"
+           x="-3.125"
+           y="-921.75" /></flowRegion><flowPara
+         id="flowPara2995"></flowPara></flowRoot>    <flowRoot
+       xml:space="preserve"
+       id="flowRoot2997"
+       style="fill:black;stroke:none;stroke-opacity:1;stroke-width:1px;stroke-linejoin:miter;stroke-linecap:butt;fill-opacity:1;font-family:Bitstream Vera Sans;font-style:normal;font-weight:normal;font-size:40px;line-height:125%;letter-spacing:0px;word-spacing:0px"><flowRegion
+         id="flowRegion2999"><rect
+           id="rect3001"
+           width="50.195312"
+           height="41.015625"
+           x="-11.71875"
+           y="-5.1484375" /></flowRegion><flowPara
+         id="flowPara3003"></flowPara></flowRoot>  </g>
+</svg>

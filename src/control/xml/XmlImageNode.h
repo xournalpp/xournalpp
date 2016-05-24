@@ -3,18 +3,17 @@
  *
  * XML Writer helper class
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __XMLIMAGENODE_H__
-#define __XMLIMAGENODE_H__
+#pragma once
 
 #include "XmlNode.h"
 
-class XmlImageNode: public XmlNode
+class XmlImageNode : public XmlNode
 {
 public:
 	XmlImageNode(const char* tag);
@@ -23,8 +22,7 @@ public:
 public:
 	void setImage(cairo_surface_t* img);
 
-	static cairo_status_t pngWriteFunction(XmlImageNode* image, unsigned char* data,
-	                                       unsigned int length);
+	static cairo_status_t pngWriteFunction(XmlImageNode* image, unsigned char* data, unsigned int length);
 
 	virtual void writeOut(OutputStream* out);
 
@@ -37,5 +35,3 @@ private:
 	int pos;
 	unsigned char buffer[30];
 };
-
-#endif /* __XMLIMAGENODE_H__ */

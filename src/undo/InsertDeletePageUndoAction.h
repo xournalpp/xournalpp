@@ -3,19 +3,18 @@
  *
  * Undo action for insert page / delete page
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __INSERTDELETEPAGEUNDOACTION_H__
-#define __INSERTDELETEPAGEUNDOACTION_H__
+#pragma once
 
 #include "UndoAction.h"
 #include <XournalType.h>
 
-class InsertDeletePageUndoAction: public UndoAction
+class InsertDeletePageUndoAction : public UndoAction
 {
 public:
 	InsertDeletePageUndoAction(PageRef page, int pagePos, bool inserted);
@@ -25,7 +24,7 @@ public:
 	virtual bool undo(Control* control);
 	virtual bool redo(Control* control);
 
-	virtual String getText();
+	virtual string getText();
 private:
 	bool insertPage(Control* control);
 	bool deletePage(Control* control);
@@ -36,5 +35,3 @@ private:
 	bool inserted;
 	int pagePos;
 };
-
-#endif /* __INSERTDELETEPAGEUNDOACTION_H__ */

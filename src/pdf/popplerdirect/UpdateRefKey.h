@@ -3,14 +3,13 @@
  *
  * Part of the PDF export
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __UPDATEREFKEY_H__
-#define __UPDATEREFKEY_H__
+#pragma once
 
 #include "poppler/XojPopplerDocument.h"
 
@@ -34,5 +33,3 @@ public:
 	Ref ref;
 	XojPopplerDocument doc;
 };
-
-#endif /* __UPDATEREFKEY_H__ */

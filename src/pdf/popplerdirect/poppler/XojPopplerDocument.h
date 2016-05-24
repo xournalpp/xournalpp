@@ -3,17 +3,20 @@
  *
  * Custom Poppler access library
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __XOJ_POPPLERDOCUMENT_H__
-#define __XOJ_POPPLERDOCUMENT_H__
+#pragma once
 
 #include "XojPopplerPage.h"
-#include <String.h>
+
+#include <StringUtils.h>
+
+#include <boost/filesystem/path.hpp>
+using boost::filesystem::path;
 
 class _IntPopplerDocument;
 class XojPopplerIter;
@@ -21,35 +24,33 @@ class XojPopplerIter;
 class XojPopplerDocument
 {
 public:
-	XojPopplerDocument();
-	XojPopplerDocument(const XojPopplerDocument& doc);
-	virtual ~XojPopplerDocument();
+    XojPopplerDocument();
+    XojPopplerDocument(const XojPopplerDocument& doc);
+    virtual ~XojPopplerDocument();
 
 public:
-	void operator=(XojPopplerDocument& doc);
-	bool operator==(XojPopplerDocument& doc);
+    void operator=(XojPopplerDocument& doc);
+    bool operator==(XojPopplerDocument& doc);
 
-	XojPopplerIter* getContentsIter();
+    XojPopplerIter* getContentsIter();
 
-	XojPopplerPage* getPage(int page);
+    XojPopplerPage* getPage(size_t page);
 
-	bool isLoaded();
+    bool isLoaded();
 
-	int getPageCount();
+    size_t getPageCount();
 
-	void load(char* data, int length);
-	bool load(const char* filename, const char* password, GError** error);
+    void load(char* data, int length);
+    bool load(path filename, string password, GError** error);
 
-	PDFDoc* getDoc();
+    PDFDoc* getDoc();
 
-	gsize getId();
+    gsize getId();
 
-	bool save(String filename, GError** error);
+    bool save(path filename, GError** error);
 
 private:
-	XOJ_TYPE_ATTRIB;
+    XOJ_TYPE_ATTRIB;
 
-	_IntPopplerDocument* data;
+    _IntPopplerDocument* data;
 };
-
-#endif /* __XOJ_POPPLERDOCUMENT_H__ */

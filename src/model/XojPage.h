@@ -3,24 +3,21 @@
  *
  * A page (PDF or drawings or both)
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __XOJ_PAGE_H__
-#define __XOJ_PAGE_H__
+#pragma once
 
-#include "Layer.h"
-#include <ListIterator.h>
-#include <XournalType.h>
-#include <String.h>
-
-#include "BackgroundType.h"
 #include "BackgroundImage.h"
+#include "BackgroundType.h"
+#include "Layer.h"
 #include "PageHandler.h"
 
+#include <StringUtils.h>
+#include <XournalType.h>
 
 class XojPage : public PageHandler
 {
@@ -36,7 +33,7 @@ private:
 
 public:
 	// Also set the size over doc->setPageSize!
-	void setBackgroundPdfPageNr(int page);
+	void setBackgroundPdfPageNr(size_t page);
 
 	void setBackgroundType(BackgroundType bgType);
 	BackgroundType getBackgroundType();
@@ -53,15 +50,15 @@ public:
 	void insertLayer(Layer* layer, int index);
 	void removeLayer(Layer* layer);
 
-	int getPdfPageNr();
+	size_t getPdfPageNr();
 
 	bool isAnnotated();
 
 	void setBackgroundColor(int color);
 	int getBackgroundColor();
 
-	ListIterator<Layer*> layerIterator();
-	int getLayerCount();
+	LayerVector* getLayers();
+	size_t getLayerCount();
 	int getSelectedLayerId();
 	void setSelectedLayerId(int id);
 
@@ -97,12 +94,12 @@ private:
 	/**
 	 * The layer list
 	 */
-	GList* layer;
+	LayerVector layer;
 
 	/**
 	 * The current selected layer ID
 	 */
-	int currentLayer;
+	size_t currentLayer;
 
 	/**
 	 * The Background Type of the page
@@ -112,12 +109,10 @@ private:
 	/**
 	 * If the page has a PDF background, the page number of the PDF Page
 	 */
-	int pdfBackgroundPage;
+	size_t pdfBackgroundPage;
 
 	/**
 	 * The background color if the background type is palain
 	 */
 	int backgroundColor;
 };
-
-#endif /* __XOJ_PAGE_H__ */

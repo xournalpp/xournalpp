@@ -72,25 +72,17 @@ void ActionSelectionListener::unregisterListener()
 	if (this->handler != NULL)
 	{
 		handler->removeListener(this);
-		this->handler = handler;
 	}
 }
-
 
 ActionHandler::ActionHandler()
 {
 	XOJ_INIT_TYPE(ActionHandler);
-
-	this->enabledListener = NULL;
-	this->selectionListener = NULL;
 }
 
 ActionHandler::~ActionHandler()
 {
 	XOJ_CHECK_TYPE(ActionHandler);
-
-	g_list_free(this->enabledListener);
-	g_list_free(this->selectionListener);
 
 	XOJ_RELEASE_TYPE(ActionHandler);
 }
@@ -99,9 +91,8 @@ void ActionHandler::fireEnableAction(ActionType action, bool enabled)
 {
 	XOJ_CHECK_TYPE(ActionHandler);
 
-	for(GList* l = this->enabledListener; l != NULL; l = l->next)
+	for (ActionEnabledListener* listener : this->enabledListener)
 	{
-		ActionEnabledListener* listener = (ActionEnabledListener*)l->data;
 		listener->actionEnabledAction(action, enabled);
 	}
 }
@@ -110,23 +101,22 @@ void ActionHandler::addListener(ActionEnabledListener* listener)
 {
 	XOJ_CHECK_TYPE(ActionHandler);
 
-	this->enabledListener = g_list_append(this->enabledListener, listener);
+	this->enabledListener.push_back(listener);
 }
 
 void ActionHandler::removeListener(ActionEnabledListener* listener)
 {
 	XOJ_CHECK_TYPE(ActionHandler);
 
-	this->enabledListener = g_list_remove(this->enabledListener, listener);
+	this->enabledListener.remove(listener);
 }
 
 void ActionHandler::fireActionSelected(ActionGroup group, ActionType action)
 {
 	XOJ_CHECK_TYPE(ActionHandler);
 
-	for(GList* l = this->selectionListener; l != NULL; l = l->next)
+	for (ActionSelectionListener* listener : this->selectionListener)
 	{
-		ActionSelectionListener* listener = (ActionSelectionListener*)l->data;
 		listener->actionSelected(group, action);
 	}
 }
@@ -135,12 +125,12 @@ void ActionHandler::addListener(ActionSelectionListener* listener)
 {
 	XOJ_CHECK_TYPE(ActionHandler);
 
-	this->selectionListener = g_list_append(this->selectionListener, listener);
+	this->selectionListener.push_back(listener);
 }
 
 void ActionHandler::removeListener(ActionSelectionListener* listener)
 {
 	XOJ_CHECK_TYPE(ActionHandler);
 
-	this->selectionListener = g_list_remove(this->selectionListener, listener);
+	this->selectionListener.remove(listener);
 }

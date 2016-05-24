@@ -3,20 +3,23 @@
  *
  * Abstract Sidebar Page
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __ABSTRACTSIDEBARPAGE_H__
-#define __ABSTRACTSIDEBARPAGE_H__
+#pragma once
 
-#include <gtk/gtk.h>
+#include "model/DocumentChangeType.h"
+#include "model/DocumentListener.h"
+
 #include <XournalType.h>
 
-#include "../../model/DocumentChangeType.h"
-#include "../../model/DocumentListener.h"
+#include <gtk/gtk.h>
+
+#include <string>
+using std::string;
 
 class Control;
 
@@ -29,24 +32,23 @@ public:
 public:
 	// DocumentListener interface
 	virtual void documentChanged(DocumentChangeType type);
-	virtual void pageSizeChanged(int page);
-	virtual void pageChanged(int page);
-	virtual void pageInserted(int page);
-	virtual void pageDeleted(int page);
-	virtual void pageSelected(int page);
-
+	virtual void pageSizeChanged(size_t page);
+	virtual void pageChanged(size_t page);
+	virtual void pageInserted(size_t page);
+	virtual void pageDeleted(size_t page);
+	virtual void pageSelected(size_t page);
 
 public:
 
 	/**
 	 * The name of this sidebar page
 	 */
-	virtual const char* getName() = 0;
+	virtual string getName() = 0;
 
 	/**
 	 * The name of this sidebar page
 	 */
-	virtual const char* getIconName() = 0;
+	virtual string getIconName() = 0;
 
 	/**
 	 * If this sidebar page has data for the current document, e.g. if there are bookmarks or not
@@ -66,7 +68,7 @@ public:
 	/**
 	 * Page selected
 	 */
-	virtual bool selectPageNr(int page, int pdfPage);
+	virtual bool selectPageNr(size_t page, size_t pdfPage);
 
 	/**
 	 * Returns the Application controller
@@ -89,5 +91,3 @@ public:
 	GtkToolItem* tabButton;
 
 };
-
-#endif /* __ABSTRACTSIDEBARPAGE_H__ */

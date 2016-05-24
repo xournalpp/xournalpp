@@ -3,21 +3,21 @@
  *
  * Toolbar definitions model
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __TOOLBARDATA_H__
-#define __TOOLBARDATA_H__
-
-#include <glib.h>
-#include <String.h>
-#include <XournalType.h>
-#include <vector>
+#pragma once
 
 #include "ToolbarEntry.h"
+
+#include <StringUtils.h>
+#include <XournalType.h>
+
+#include <glib.h>
+#include <vector>
 
 class ToolbarData
 {
@@ -27,30 +27,28 @@ public:
 	virtual ~ToolbarData();
 
 public:
-	String getName();
-	void setName(String name);
-	String getId();
-	void setId(String id);
+	string getName();
+	void setName(string name);
+	string getId();
+	void setId(string id);
 	bool isPredefined();
 
 	void load(GKeyFile* config, const char* group);
 	void saveToKeyFile(GKeyFile* config);
 
 	// Editing API
-	int insertItem(String toolbar, String item, int position);
-	bool removeItemByID(String toolbar, int id);
+	int insertItem(string toolbar, string item, int position);
+	bool removeItemByID(string toolbar, int id);
 
 private:
 	XOJ_TYPE_ATTRIB;
 
-	String id;
-	String name;
-	std::vector<ToolbarEntry> contents;
+	string id;
+	string name;
+	std::vector<ToolbarEntry*> contents;
 
 	bool predefined;
 
 	friend class ToolbarModel;
 	friend class ToolMenuHandler;
 };
-
-#endif /* __TOOLBARDATA_H__ */

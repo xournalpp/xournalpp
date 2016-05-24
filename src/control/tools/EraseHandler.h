@@ -3,33 +3,32 @@
  *
  * Handles the erase of stroke, in special split into different parts etc.
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef ERASEHANDLER_H_
-#define ERASEHANDLER_H_
+#pragma once
+
+#include "model/PageRef.h"
 
 #include <XournalType.h>
-#include "../../model/PageRef.h"
 
 class DeleteUndoAction;
+class Document;
 class EraseUndoAction;
 class Layer;
+class Range;
+class Redrawable;
 class Stroke;
 class ToolHandler;
-class Redrawable;
-class Document;
 class UndoRedoHandler;
-class Range;
 
 class EraseHandler
 {
 public:
-	EraseHandler(UndoRedoHandler* undo, Document* doc, PageRef page,
-	             ToolHandler* handler, Redrawable* view);
+	EraseHandler(UndoRedoHandler* undo, Document* doc, PageRef page, ToolHandler* handler, Redrawable* view);
 	virtual ~EraseHandler();
 
 public:
@@ -54,5 +53,3 @@ private:
 
 	double halfEraserSize;
 };
-
-#endif /* ERASEHANDLER_H_ */

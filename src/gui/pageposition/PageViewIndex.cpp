@@ -1,6 +1,7 @@
 #include "PageViewIndex.h"
+
 #include "PagePosition.h"
-#include "../PageView.h"
+#include "gui/PageView.h"
 
 class PageViewIndexEntry
 {
@@ -38,22 +39,16 @@ PageViewIndex::PageViewIndex(int x, int y, int width, int height)
 	this->y = y;
 	this->width = width;
 	this->height = height;
-
-	this->data = NULL;
 }
 
 PageViewIndex::~PageViewIndex()
 {
 	XOJ_RELEASE_TYPE(PageViewIndex);
 
-	for(GList* l = this->data; l != NULL; l = l->next)
+	for (PageViewIndexEntry* e : this->data)
 	{
-		PageViewIndexEntry* e = (PageViewIndexEntry*)l->data;
 		delete e;
 	}
-
-	g_list_free(this->data);
-	this->data = NULL;
 }
 
 void PageViewIndex::addView(PageView* v)
@@ -76,7 +71,7 @@ void PageViewIndex::addView(PageView* v)
 
 	int area = r3.width * r3.height;
 
-	this->data = g_list_append(this->data, new PageViewIndexEntry(v, area));
+	this->data.push_back(new PageViewIndexEntry(v, area));
 }
 
 void PageViewIndex::add(PagePosition* pp, int y)
@@ -86,11 +81,11 @@ void PageViewIndex::add(PagePosition* pp, int y)
 	PageView* v1 = pp->getViewAt(this->x, y);
 	PageView* v2 = pp->getViewAt(this->x + this->width, y);
 
-	if(v1 != NULL)
+	if (v1 != NULL)
 	{
 		addView(v1);
 	}
-	if(v2 != NULL && v1 != v2)
+	if (v2 != NULL && v1 != v2)
 	{
 		addView(v2);
 	}
@@ -102,21 +97,18 @@ PageView* PageViewIndex::getHighestIntersects()
 
 	PageViewIndexEntry* b = NULL;
 
-	for(GList* l = this->data; l != NULL; l = l->next)
+	for (PageViewIndexEntry* e : this->data)
 	{
-		PageViewIndexEntry* e = (PageViewIndexEntry*)l->data;
-
-		if(b == NULL || b->area < e->area)
+		if (b == NULL || b->area < e->area)
 		{
 			b = e;
 		}
 	}
 
-	if(b != NULL)
+	if (b != NULL)
 	{
 		return b->view;
 	}
 
 	return NULL;
 }
-

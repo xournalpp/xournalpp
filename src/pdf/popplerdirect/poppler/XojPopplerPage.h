@@ -3,25 +3,26 @@
  *
  * Custom Poppler access library
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __XOJ_POPPLERPAGE_H__
-#define __XOJ_POPPLERPAGE_H__
+#pragma once
+
+#include <poppler/Catalog.h>
+#include <poppler/FontInfo.h>
+#include <poppler/Gfx.h>
+#include <poppler/OptionalContent.h>
+#include <poppler/PDFDoc.h>
+#include <poppler/TextOutputDev.h>
+#include "pdf/popplerdirect/workaround/workaround.h"
+
+#include <StringUtils.h>
+#include <XournalType.h>
 
 #include <gtk/gtk.h>
-#include "../poppler-0.24.1/poppler/PDFDoc.h"
-#include "../poppler-0.24.1/poppler/Gfx.h"
-#include "../poppler-0.24.1/poppler/FontInfo.h"
-#include "../poppler-0.24.1/poppler/TextOutputDev.h"
-#include "../poppler-0.24.1/poppler/Catalog.h"
-#include "../poppler-0.24.1/poppler/OptionalContent.h"
-#include "../workaround/workaround.h"
-
-#include <XournalType.h>
 
 class Page;
 class TextPage;
@@ -31,8 +32,7 @@ class XojPopplerImage;
 class XojPopplerPage
 {
 private:
-	XojPopplerPage(PDFDoc* doc, GMutex* docMutex, CairoOutputDev* outputDev,
-	               Page* page, int index);
+	XojPopplerPage(PDFDoc* doc, GMutex* docMutex, CairoOutputDev* outputDev, Page* page, int index);
 	virtual ~XojPopplerPage();
 public:
 	double getWidth();
@@ -40,7 +40,7 @@ public:
 
 	void render(cairo_t* cr, bool forPrinting = false);
 
-	GList* findText(const char* text);
+	GList* findText(string& text);
 
 	Page* getPage();
 
@@ -51,7 +51,7 @@ private:
 	XOJ_TYPE_ATTRIB;
 
 	GMutex renderMutex;
-	GMutex * docMutex;
+	GMutex* docMutex;
 
 	CairoOutputDev* outputDev;
 	PDFDoc* doc;
@@ -75,6 +75,3 @@ public:
 	double x2;
 	double y2;
 };
-
-
-#endif /* __XOJ_POPPLERPAGE_H__ */

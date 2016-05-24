@@ -3,14 +3,15 @@
  *
  * Displays a text Element
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __TEXTVIEW_H__
-#define __TEXTVIEW_H__
+#pragma once
+
+#include <StringUtils.h>
 
 #include <gtk/gtk.h>
 
@@ -36,7 +37,7 @@ public:
 	/**
 	 * Searches text within a Text model, returns XojPopplerRectangle, have to been freed
 	 */
-	static GList* findText(Text* t, const char* text);
+	static GList* findText(Text* t, string& text);
 
 	/**
 	 * Initialize a Pango layout
@@ -51,5 +52,3 @@ public:
 	//Sets up DPI
 	static int getDPI();
 };
-
-#endif /* __TEXTVIEW_H__ */

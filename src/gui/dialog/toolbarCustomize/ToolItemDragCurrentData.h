@@ -3,16 +3,16 @@
  *
  * Toolbar drag & drop helper class
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __TOOLITEMDRAGCURRENTDATA_H__
-#define __TOOLITEMDRAGCURRENTDATA_H__
+#pragma once
 
-#include "../../ToolitemDragDrop.h"
+#include "gui/ToolitemDragDrop.h"
+
 #include <gtk/gtk.h>
 
 class ToolItemDragCurrentData
@@ -32,5 +32,3 @@ public:
 private:
 	static ToolItemDragDropData* data;
 };
-
-#endif /* __TOOLITEMDRAGCURRENTDATA_H__ */

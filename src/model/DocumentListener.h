@@ -3,14 +3,13 @@
  *
  * Document listener
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __DOCUMENTLISTENER_H__
-#define __DOCUMENTLISTENER_H__
+#pragma once
 
 #include "DocumentChangeType.h"
 #include <XournalType.h>
@@ -28,16 +27,14 @@ public:
 	void unregisterListener();
 
 	virtual void documentChanged(DocumentChangeType type) = 0;
-	virtual void pageSizeChanged(int page) = 0;
-	virtual void pageChanged(int page) = 0;
-	virtual void pageInserted(int page) = 0;
-	virtual void pageDeleted(int page) = 0;
-	virtual void pageSelected(int page) = 0;
+	virtual void pageSizeChanged(size_t page) = 0;
+	virtual void pageChanged(size_t page) = 0;
+	virtual void pageInserted(size_t page) = 0;
+	virtual void pageDeleted(size_t page) = 0;
+	virtual void pageSelected(size_t page) = 0;
 
 private:
 	XOJ_TYPE_ATTRIB;
 
 	DocumentHandler* handler;
 };
-
-#endif /* __DOCUMENTLISTENER_H__ */

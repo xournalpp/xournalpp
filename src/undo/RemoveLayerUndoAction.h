@@ -3,20 +3,19 @@
  *
  * Undo action for remove layer
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __REMOVELAYERUNDOACTION_H__
-#define __REMOVELAYERUNDOACTION_H__
+#pragma once
 
 #include "UndoAction.h"
 
 class Layer;
 
-class RemoveLayerUndoAction: public UndoAction
+class RemoveLayerUndoAction : public UndoAction
 {
 public:
 	RemoveLayerUndoAction(PageRef page, Layer* layer, int layerPos);
@@ -26,7 +25,7 @@ public:
 	virtual bool undo(Control* control);
 	virtual bool redo(Control* control);
 
-	virtual String getText();
+	virtual string getText();
 
 private:
 	XOJ_TYPE_ATTRIB;
@@ -34,5 +33,3 @@ private:
 	Layer* layer;
 	int layerPos;
 };
-
-#endif /* __REMOVELAYERUNDOACTION_H__ */

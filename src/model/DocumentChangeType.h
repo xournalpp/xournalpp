@@ -3,19 +3,17 @@
  *
  * Enum which type of change is occurred
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __DOCUMENTCHANGETYPE_H__
-#define __DOCUMENTCHANGETYPE_H__
+#pragma once
 
 enum DocumentChangeType
 {
-    DOCUMENT_CHANGE_CLEARED, DOCUMENT_CHANGE_COMPLETE, DOCUMENT_CHANGE_PDF_BOOKMARKS
+	DOCUMENT_CHANGE_CLEARED,
+	DOCUMENT_CHANGE_COMPLETE,
+	DOCUMENT_CHANGE_PDF_BOOKMARKS
 };
-
-
-#endif /* __DOCUMENTCHANGETYPE_H__ */

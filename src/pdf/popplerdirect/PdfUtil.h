@@ -3,14 +3,13 @@
  *
  * Part of the PDF export
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __PDFUTIL_H__
-#define __PDFUTIL_H__
+#pragma once
 
 class PdfUtil
 {
@@ -21,5 +20,3 @@ private:
 public:
 	static bool isWhitespace(int c);
 };
-
-#endif /* __PDFUTIL_H__ */

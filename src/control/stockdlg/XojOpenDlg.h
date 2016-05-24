@@ -3,19 +3,18 @@
  *
  * GTK Open dialog to select XOJ (or PDF) file with preview
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __XOJOPENDLG_H__
-#define __XOJOPENDLG_H__
+#pragma once
 
-#include <String.h>
+#include "control/settings/Settings.h"
+#include <StringUtils.h>
+
 #include <gtk/gtk.h>
-
-#include "../settings/Settings.h"
 
 class XojOpenDlg
 {
@@ -24,11 +23,8 @@ private:
 	virtual ~XojOpenDlg();
 
 public:
-	static String showOpenDialog(GtkWindow* win, Settings* settings, bool pdf,
-	                             bool& attachPdf);
+	static path showOpenDialog(GtkWindow* win, Settings* settings, bool pdf, bool& attachPdf);
 
 private:
 	static void updatePreviewCallback(GtkFileChooser* fileChooser, void* userData);
 };
-
-#endif /* __XOJOPENDLG_H__ */

@@ -1,18 +1,17 @@
 #include "ColorToolItem.h"
-#include "../widgets/SelectColor.h"
-#include <Util.h>
-
-#include <config.h>
-#include <glib/gi18n-lib.h>
 
 #include "model/ToolbarColorNames.h"
+#include "gui/widgets/SelectColor.h"
+
+#include <config.h>
+#include <i18n.h>
+#include <StringUtils.h>
+#include <Util.h>
 
 bool ColorToolItem::inUpdate = false;
 
-ColorToolItem::ColorToolItem(ActionHandler* handler, ToolHandler* toolHandler,
-                             GtkWindow* parent, int color, bool selektor) :
-	AbstractToolItem("", handler,
-	                 selektor ? ACTION_SELECT_COLOR_CUSTOM : ACTION_SELECT_COLOR)
+ColorToolItem::ColorToolItem(ActionHandler* handler, ToolHandler* toolHandler, GtkWindow* parent, int color, bool selektor) :
+		AbstractToolItem("", handler, selektor ? ACTION_SELECT_COLOR_CUSTOM : ACTION_SELECT_COLOR)
 {
 	XOJ_INIT_TYPE(ColorToolItem);
 
@@ -62,8 +61,7 @@ void ColorToolItem::actionSelected(ActionGroup group, ActionType action)
 	{
 		if (isSelector())
 		{
-			gtk_toggle_tool_button_set_active(GTK_TOGGLE_TOOL_BUTTON(this->item),
-			                                  isSelector());
+			gtk_toggle_tool_button_set_active(GTK_TOGGLE_TOOL_BUTTON(this->item), isSelector());
 		}
 		enableColor(toolHandler->getColor());
 	}
@@ -113,7 +111,7 @@ int ColorToolItem::getColor()
 	return this->color;
 }
 
-String ColorToolItem::getId()
+string ColorToolItem::getId()
 {
 	XOJ_CHECK_TYPE(ColorToolItem);
 
@@ -122,7 +120,7 @@ String ColorToolItem::getId()
 		return "COLOR_SELECT";
 	}
 
-	String id = String::format("COLOR(0x%06x)", this->color);
+	string id = StringUtils::format("COLOR(0x%06x)", this->color);
 
 	return id;
 }
@@ -133,8 +131,7 @@ void ColorToolItem::selectColor()
 
 	GdkColor color = { 0 };
 
-	GtkWidget* cw = gtk_color_selection_dialog_get_color_selection(
-	                    GTK_COLOR_SELECTION_DIALOG(this->colorDlg));
+	GtkWidget* cw = gtk_color_selection_dialog_get_color_selection(GTK_COLOR_SELECTION_DIALOG(this->colorDlg));
 	gtk_color_selection_get_current_color(GTK_COLOR_SELECTION(cw), &color);
 
 	this->color = Util::gdkColorToInt(color);
@@ -164,9 +161,8 @@ bool ColorToolItem::colorEqualsMoreOreLess(int color)
 	return false;
 }
 
-// TODO LOW PRIO should display history in palette, but is not working now..
-void ColorToolItem::activated(GdkEvent* event, GtkMenuItem* menuitem,
-                              GtkToolButton* toolbutton)
+// TODO LOW PRIO should display history in palette, but is not working now...
+void ColorToolItem::activated(GdkEvent* event, GtkMenuItem* menuitem, GtkToolButton* toolbutton)
 {
 	XOJ_CHECK_TYPE(ColorToolItem);
 
@@ -178,20 +174,17 @@ void ColorToolItem::activated(GdkEvent* event, GtkMenuItem* menuitem,
 
 	if (isSelector())
 	{
-		this->colorDlg = gtk_color_selection_dialog_new(_("Select color"));
-		//		g_signal_connect(G_OBJECT(GTK_COLOR_SELECTION_DIALOG(this->colorDlg)->ok_button), "clicked", G_CALLBACK(&customColorSelected), this);
+		this->colorDlg = gtk_color_selection_dialog_new(_C("Select color"));
+		//	g_signal_connect(G_OBJECT(GTK_COLOR_SELECTION_DIALOG(this->colorDlg)->ok_button), "clicked", G_CALLBACK(&customColorSelected), this);
 
 		GdkColor color = Util::intToGdkColor(this->color);
 
-		GtkWidget* cw = gtk_color_selection_dialog_get_color_selection(
-		                    GTK_COLOR_SELECTION_DIALOG(this->colorDlg));
+		GtkWidget* cw = gtk_color_selection_dialog_get_color_selection(GTK_COLOR_SELECTION_DIALOG(this->colorDlg));
 		gtk_color_selection_set_current_color(GTK_COLOR_SELECTION(cw), &color);
 
-		gtk_window_set_transient_for(GTK_WINDOW(this->colorDlg),
-		                             GTK_WINDOW(this->parent));
+		gtk_window_set_transient_for(GTK_WINDOW(this->colorDlg), GTK_WINDOW(this->parent));
 
-		GtkColorSelection* colorsel = GTK_COLOR_SELECTION(GTK_COLOR_SELECTION_DIALOG(
-		                                                      this->colorDlg)->colorsel);
+		GtkColorSelection* colorsel = GTK_COLOR_SELECTION(GTK_COLOR_SELECTION_DIALOG(this->colorDlg)->colorsel);
 
 		gtk_color_selection_set_previous_color(colorsel, &color);
 		gtk_color_selection_set_current_color(colorsel, &color);
@@ -222,15 +215,16 @@ GtkToolItem* ColorToolItem::newItem()
 	selectcolor_set_circle(this->iconWidget, !isSelector());
 	GtkToolItem* it = gtk_toggle_tool_button_new();
 
-	gtk_tool_item_set_tooltip_text(GTK_TOOL_ITEM(it), this->name.c_str());
-	gtk_tool_button_set_label(GTK_TOOL_BUTTON(it), this->name.c_str());
+	const gchar* name = this->name.c_str();
+	gtk_tool_item_set_tooltip_text(GTK_TOOL_ITEM(it), name);
+	gtk_tool_button_set_label(GTK_TOOL_BUTTON(it), name);
 
 	gtk_tool_button_set_icon_widget(GTK_TOOL_BUTTON(it), this->iconWidget);
 
 	return it;
 }
 
-String ColorToolItem::getToolDisplayName()
+string ColorToolItem::getToolDisplayName()
 {
 	XOJ_CHECK_TYPE(ColorToolItem);
 
@@ -246,4 +240,3 @@ GtkWidget* ColorToolItem::getNewToolIconImpl()
 
 	return iconWidget;
 }
-

@@ -3,29 +3,28 @@
  *
  * The page format dialog
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __FORMATDIALOG_H__
-#define __FORMATDIALOG_H__
+#pragma once
 
-#include "../GladeGui.h"
-#include "../../control/settings/Settings.h"
+#include "control/settings/Settings.h"
+#include "gui/GladeGui.h"
+
 #include <XournalType.h>
 
 enum Orientation
 {
-    ORIENTATION_NOT_DEFINED, ORIENTATION_LANDSCAPE, ORIENTATION_PORTRAIT
+	ORIENTATION_NOT_DEFINED, ORIENTATION_LANDSCAPE, ORIENTATION_PORTRAIT
 };
 
-class FormatDialog: public GladeGui
+class FormatDialog : public GladeGui
 {
 public:
-	FormatDialog(GladeSearchpath* gladeSearchPath, Settings* settings, double width,
-	             double heigth);
+	FormatDialog(GladeSearchpath* gladeSearchPath, Settings* settings, double width, double heigth);
 	virtual ~FormatDialog();
 
 public:
@@ -37,10 +36,8 @@ public:
 private:
 	void setOrientation(Orientation portrait);
 
-	static void portraitSelectedCb(GtkToggleToolButton* toggle_tool_button,
-	                               FormatDialog* dlg);
-	static void landscapeSelectedCb(GtkToggleToolButton* toggle_tool_button,
-	                                FormatDialog* dlg);
+	static void portraitSelectedCb(GtkToggleToolButton* toggle_tool_button, FormatDialog* dlg);
+	static void landscapeSelectedCb(GtkToggleToolButton* toggle_tool_button, FormatDialog* dlg);
 	static void cbFormatChangedCb(GtkComboBox* widget, FormatDialog* dlg);
 	static void cbUnitChanged(GtkComboBox* widget, FormatDialog* dlg);
 	static void spinValueChangedCb(GtkSpinButton* spinbutton, FormatDialog* dlg);
@@ -63,5 +60,3 @@ private:
 	double width;
 	double height;
 };
-
-#endif /* __FORMATDIALOG_H__ */

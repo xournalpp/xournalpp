@@ -1,18 +1,17 @@
 #include "SelectColor.h"
+
 #include "math.h"
 
 static void selectcolor_class_init(SelectColorClass* klass);
 static void selectcolor_init(SelectColor* cpu);
-static void selectcolor_size_request(GtkWidget* widget,
-                                     GtkRequisition* requisition);
-static void selectcolor_size_allocate(GtkWidget* widget,
-                                      GtkAllocation* allocation);
+static void selectcolor_size_request(GtkWidget* widget, GtkRequisition* requisition);
+static void selectcolor_size_allocate(GtkWidget* widget, GtkAllocation* allocation);
 static void selectcolor_realize(GtkWidget* widget);
 static gboolean selectcolor_expose(GtkWidget* widget, GdkEventExpose* event);
 static void selectcolor_paint(GtkWidget* widget);
 static void selectcolor_destroy(GtkObject* object);
 
-G_DEFINE_TYPE (SelectColor, selectcolor, GTK_TYPE_MISC)
+G_DEFINE_TYPE(SelectColor, selectcolor, GTK_TYPE_MISC)
 
 GtkWidget* selectcolor_new(gint color)
 {
@@ -73,8 +72,7 @@ static void selectcolor_class_init(SelectColorClass* klass)
 	object_class->destroy = selectcolor_destroy;
 }
 
-gboolean exposeEvent(GtkWidget* widget, GdkEventExpose* event,
-                     gpointer user_data)
+gboolean exposeEvent(GtkWidget* widget, GdkEventExpose* event, gpointer user_data)
 {
 	g_return_val_if_fail(widget != NULL, FALSE);
 	g_return_val_if_fail(IS_SELECT_COLOR(widget), FALSE);
@@ -88,15 +86,14 @@ gboolean exposeEvent(GtkWidget* widget, GdkEventExpose* event,
 static void selectcolor_init(SelectColor* sc)
 {
 	sc->color = 0xffffffff;
-	GTK_WIDGET_SET_FLAGS (sc, GTK_NO_WINDOW);
+	GTK_WIDGET_SET_FLAGS(sc, GTK_NO_WINDOW);
 
 	gtk_widget_add_events(GTK_WIDGET(sc), GDK_ALL_EVENTS_MASK);
 
 	g_signal_connect(sc, "expose-event", G_CALLBACK(exposeEvent), sc);
 }
 
-static void selectcolor_size_request(GtkWidget* widget,
-                                     GtkRequisition* requisition)
+static void selectcolor_size_request(GtkWidget* widget,  GtkRequisition* requisition)
 {
 	g_return_if_fail(widget != NULL);
 	g_return_if_fail(IS_SELECT_COLOR(widget));
@@ -106,8 +103,7 @@ static void selectcolor_size_request(GtkWidget* widget,
 	requisition->height = SELECT_COLOR(widget)->size;
 }
 
-static void selectcolor_size_allocate(GtkWidget* widget,
-                                      GtkAllocation* allocation)
+static void selectcolor_size_allocate(GtkWidget* widget, GtkAllocation* allocation)
 {
 	g_return_if_fail(widget != NULL);
 	g_return_if_fail(IS_SELECT_COLOR(widget));
@@ -117,8 +113,7 @@ static void selectcolor_size_allocate(GtkWidget* widget,
 
 	if (GTK_WIDGET_REALIZED(widget))
 	{
-		gdk_window_move_resize(widget->window, allocation->x, allocation->y,
-		                       allocation->width, allocation->height);
+		gdk_window_move_resize(widget->window, allocation->x, allocation->y, allocation->width, allocation->height);
 	}
 }
 
@@ -143,8 +138,7 @@ static void selectcolor_realize(GtkWidget* widget)
 
 	attributes_mask = GDK_WA_X | GDK_WA_Y;
 
-	widget->window = gdk_window_new(gtk_widget_get_parent_window(widget),
-	                                &attributes, attributes_mask);
+	widget->window = gdk_window_new(gtk_widget_get_parent_window(widget), &attributes, attributes_mask);
 
 	gdk_window_set_user_data(widget->window, widget);
 

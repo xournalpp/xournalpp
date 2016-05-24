@@ -1,38 +1,32 @@
-#include <config.h>
-#include <glib/gi18n-lib.h>
-
 #include "SettingsDialog.h"
-#include "../widgets/ZoomCallib.h"
+
 #include "ButtonConfigGui.h"
+#include "gui/widgets/ZoomCallib.h"
+
+#include <config.h>
 #include <Util.h>
+
 #include <string.h>
 
-SettingsDialog::SettingsDialog(GladeSearchpath* gladeSearchPath,
-                               Settings* settings) :
-	GladeGui(gladeSearchPath, "settings.glade", "settingsDialog")
+SettingsDialog::SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* settings) :
+		GladeGui(gladeSearchPath, "settings.glade", "settingsDialog")
 {
-
 	XOJ_INIT_TYPE(SettingsDialog);
 
 	this->settings = settings;
 	this->dpi = 72;
 	callib = zoomcallib_new();
-	this->buttonConfigs = NULL;
 
 	GtkWidget* vbox = get("zoomVBox");
 	g_return_if_fail(vbox != NULL);
 
 	GtkWidget* slider = get("zoomCallibSlider");
 	g_return_if_fail(slider != NULL);
-	g_signal_connect(slider, "change-value", G_CALLBACK(&zoomcallibSliderChanged),
-	                 this);
+	g_signal_connect(slider, "change-value", G_CALLBACK(&zoomcallibSliderChanged), this);
 
-	g_signal_connect(get("cbSettingXinput"), "toggled",
-	                 G_CALLBACK(&toolboxToggledCallback), this);
-	g_signal_connect(get("cbSettingPresureSensitivity"), "toggled",
-	                 G_CALLBACK(&toolboxToggledCallback), this);
-	g_signal_connect(get("cbAutosave"), "toggled",
-	                 G_CALLBACK(&toolboxToggledCallback), this);
+	g_signal_connect(get("cbSettingXinput"), "toggled", G_CALLBACK(&toolboxToggledCallback), this);
+	g_signal_connect(get("cbSettingPresureSensitivity"), "toggled", G_CALLBACK(&toolboxToggledCallback), this);
+	g_signal_connect(get("cbAutosave"), "toggled", G_CALLBACK(&toolboxToggledCallback), this);
 
 	gtk_box_pack_start(GTK_BOX(vbox), callib, false, true, 0);
 	gtk_widget_show(callib);
@@ -44,11 +38,10 @@ SettingsDialog::~SettingsDialog()
 {
 	XOJ_CHECK_TYPE(SettingsDialog);
 
-	for (GList* l = this->buttonConfigs; l != NULL; l = l->next)
+	for (ButtonConfigGui* bcg : this->buttonConfigs)
 	{
-		delete (ButtonConfigGui*) l->data;
+		delete bcg;
 	}
-	g_list_free(this->buttonConfigs);
 
 	// DO NOT delete settings!
 	this->settings = NULL;
@@ -56,8 +49,8 @@ SettingsDialog::~SettingsDialog()
 	XOJ_RELEASE_TYPE(SettingsDialog);
 }
 
-gboolean SettingsDialog::zoomcallibSliderChanged(GtkRange* range,
-                                                 GtkScrollType scroll, gdouble value, SettingsDialog* dlg)
+gboolean SettingsDialog::zoomcallibSliderChanged(GtkRange* range, GtkScrollType scroll,
+												 gdouble value, SettingsDialog* dlg)
 {
 	XOJ_CHECK_TYPE_OBJ(dlg, SettingsDialog);
 
@@ -66,13 +59,11 @@ gboolean SettingsDialog::zoomcallibSliderChanged(GtkRange* range,
 	return false;
 }
 
-void SettingsDialog::initMouseButtonEvents(const char* hbox, int button,
-                                           bool withDevice)
+void SettingsDialog::initMouseButtonEvents(const char* hbox, int button, bool withDevice)
 {
 	XOJ_CHECK_TYPE(SettingsDialog);
 
-	this->buttonConfigs = g_list_append(this->buttonConfigs,
-	                                    new ButtonConfigGui(this, get(hbox), settings, button, withDevice));
+	this->buttonConfigs.push_back(new ButtonConfigGui(this, get(hbox),settings, button, withDevice));
 }
 
 void SettingsDialog::initMouseButtonEvents()
@@ -133,8 +124,7 @@ bool SettingsDialog::getCheckbox(const char* name)
 	return gtk_toggle_button_get_active(b);
 }
 
-void SettingsDialog::toolboxToggledCallback(GtkToggleButton* togglebutton,
-                                            SettingsDialog* sd)
+void SettingsDialog::toolboxToggledCallback(GtkToggleButton* togglebutton, SettingsDialog* sd)
 {
 	XOJ_CHECK_TYPE_OBJ(sd, SettingsDialog);
 
@@ -163,8 +153,7 @@ void SettingsDialog::toolboxToggled()
 	}
 
 	GtkWidget* cbAutosave = get("cbAutosave");
-	bool autosaveEnabled = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(
-	                                                        cbAutosave));
+	bool autosaveEnabled = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(cbAutosave));
 	gtk_widget_set_sensitive(get("lbAutosaveTimeout"), autosaveEnabled);
 	gtk_widget_set_sensitive(get("spAutosaveTimeout"), autosaveEnabled);
 
@@ -191,16 +180,11 @@ void SettingsDialog::load()
 	loadCheckbox("cbBigCursor", settings->isShowBigCursor());
 
 	GtkWidget* txtDefaultSaveName = get("txtDefaultSaveName");
-	const char* txt = settings->getDefaultSaveName().c_str();
-	if (txt == NULL)
-	{
-		txt = "";
-	}
-	gtk_entry_set_text(GTK_ENTRY(txtDefaultSaveName), txt);
+	string txt = settings->getDefaultSaveName();
+	gtk_entry_set_text(GTK_ENTRY(txtDefaultSaveName), txt.c_str());
 
 	GtkWidget* spAutosaveTimeout = get("spAutosaveTimeout");
-	gtk_spin_button_set_value(GTK_SPIN_BUTTON(spAutosaveTimeout),
-	                          settings->getAutosaveTimeout());
+	gtk_spin_button_set_value(GTK_SPIN_BUTTON(spAutosaveTimeout), settings->getAutosaveTimeout());
 
 	GtkWidget* slider = get("zoomCallibSlider");
 
@@ -216,7 +200,7 @@ void SettingsDialog::load()
 	bool hidePresentationMenubar = false;
 	bool hidePresentationSidebar = false;
 
-	String hidden = settings->getFullscreenHideElements();
+	string hidden = settings->getFullscreenHideElements();
 	const char* element;
 	StringTokenizer tokenF(hidden, ',');
 	element = tokenF.next();
@@ -257,12 +241,11 @@ void SettingsDialog::load()
 	toolboxToggled();
 }
 
-String SettingsDialog::updateHideString(String hidden, bool hideMenubar,
-                                        bool hideSidebar)
+string SettingsDialog::updateHideString(string hidden, bool hideMenubar, bool hideSidebar)
 {
 	XOJ_CHECK_TYPE(SettingsDialog);
 
-	String newHidden = "";
+	string newHidden = "";
 
 	const char* element;
 	StringTokenizer token(hidden, ',');
@@ -294,7 +277,7 @@ String SettingsDialog::updateHideString(String hidden, bool hideMenubar,
 			}
 		}
 
-		if (!newHidden.isEmpty())
+		if (!newHidden.empty())
 		{
 			newHidden += ",";
 		}
@@ -305,7 +288,7 @@ String SettingsDialog::updateHideString(String hidden, bool hideMenubar,
 
 	if (hideMenubar)
 	{
-		if (!newHidden.isEmpty())
+		if (!newHidden.empty())
 		{
 			newHidden += ",";
 		}
@@ -314,7 +297,7 @@ String SettingsDialog::updateHideString(String hidden, bool hideMenubar,
 
 	if (hideSidebar)
 	{
-		if (!newHidden.isEmpty())
+		if (!newHidden.empty())
 		{
 			newHidden += ",";
 		}
@@ -348,29 +331,32 @@ void SettingsDialog::save()
 
 	bool hideFullscreenMenubar = getCheckbox("cbHideFullscreenMenubar");
 	bool hideFullscreenSidebar = getCheckbox("cbHideFullscreenSidebar");
-	settings->setFullscreenHideElements(updateHideString(
-	                                        settings->getFullscreenHideElements(), hideFullscreenMenubar,
-	                                        hideFullscreenSidebar));
+	settings->setFullscreenHideElements(
+						updateHideString(settings->getFullscreenHideElements(),
+										 hideFullscreenMenubar,
+										 hideFullscreenSidebar)
+						);
 
 	bool hidePresentationMenubar = getCheckbox("cbHidePresentationMenubar");
 	bool hidePresentationSidebar = getCheckbox("cbHidePresentationSidebar");
-	settings->setPresentationHideElements(updateHideString(
-	                                          settings->getPresentationHideElements(), hidePresentationMenubar,
-	                                          hidePresentationSidebar));
+	settings->setPresentationHideElements(
+						updateHideString(settings->getPresentationHideElements(),
+										 hidePresentationMenubar,
+										 hidePresentationSidebar)
+						);
 
 	GtkWidget* txtDefaultSaveName = get("txtDefaultSaveName");
 	const char* txt = gtk_entry_get_text(GTK_ENTRY(txtDefaultSaveName));
 	settings->setDefaultSaveName(txt);
 
 	GtkWidget* spAutosaveTimeout = get("spAutosaveTimeout");
-	int autosaveTimeout = gtk_spin_button_get_value(GTK_SPIN_BUTTON(
-	                                                    spAutosaveTimeout));
+	int autosaveTimeout = gtk_spin_button_get_value(GTK_SPIN_BUTTON(spAutosaveTimeout));
 	settings->setAutosaveTimeout(autosaveTimeout);
 
 	settings->setDisplayDpi(dpi);
 
-	for (GList* l = this->buttonConfigs; l != NULL; l = l->next)
+	for (ButtonConfigGui* bcg : this->buttonConfigs)
 	{
-		((ButtonConfigGui*) l->data)->saveSettings();
+		bcg->saveSettings();
 	}
 }

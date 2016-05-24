@@ -1,12 +1,19 @@
 #include "Document.h"
+
 #include "LinkDestination.h"
 #include "XojPage.h"
 
 #include <config.h>
-#include <glib/gi18n-lib.h>
+#include <i18n.h>
+#include <Stacktrace.h>
+#include <Util.h>
+
+#include <boost/locale/format.hpp>
 
 #include <string.h>
-#include <Stacktrace.h>
+#include <iostream>
+using std::cout;
+using std::endl;
 
 Document::Document(DocumentHandler* handler)
 {
@@ -80,11 +87,11 @@ void Document::clearDocument(bool destroy)
 
 	if (!destroy)
 	{
-		// look aufheben
+		// release lock
 		bool lastLock = tryLock();
 		unlock();
 		this->handler->fireDocumentChanged(DOCUMENT_CHANGE_CLEARED);
-		if (!lastLock)   // document was locked before
+		if (!lastLock) // document was locked before
 		{
 			lock();
 		}
@@ -92,42 +99,42 @@ void Document::clearDocument(bool destroy)
 
 	this->pages.clear();
 
-	this->filename = NULL;
-	this->pdfFilename = NULL;
+	this->filename = "";
+	this->pdfFilename = "";
 }
 
 /**
  * Returns the pageCount, this call don't need to be synchronized (if it's not critical, you may get wrong data)
  */
-int Document::getPageCount()
+size_t Document::getPageCount()
 {
 	XOJ_CHECK_TYPE(Document);
 
 	return this->pages.size();
 }
 
-int Document::getPdfPageCount()
+size_t Document::getPdfPageCount()
 {
 	XOJ_CHECK_TYPE(Document);
 
 	return pdfDocument.getPageCount();
 }
 
-void Document::setFilename(String filename)
+void Document::setFilename(path filename)
 {
 	XOJ_CHECK_TYPE(Document);
 
 	this->filename = filename;
 }
 
-String Document::getFilename()
+path Document::getFilename()
 {
 	XOJ_CHECK_TYPE(Document);
 
 	return filename;
 }
 
-String Document::getPdfFilename()
+path Document::getPdfFilename()
 {
 	XOJ_CHECK_TYPE(Document);
 
@@ -160,22 +167,19 @@ void Document::setPreview(cairo_surface_t* preview)
 
 }
 
-String Document::getEvMetadataFilename()
+path Document::getEvMetadataFilename()
 {
 	XOJ_CHECK_TYPE(Document);
 
-	String uri = "file://";
-	if (!this->filename.isEmpty())
+	if (!this->filename.empty())
 	{
-		uri += this->filename;
-		return uri;
+		return this->filename;
 	}
-	if (!this->pdfFilename.isEmpty())
+	if (!this->pdfFilename.empty())
 	{
-		uri += this->pdfFilename;
-		return uri;
+		return this->pdfFilename;
 	}
-	return NULL;
+	return path("");
 }
 
 bool Document::isPdfDocumentLoaded()
@@ -192,12 +196,11 @@ bool Document::isAttachPdf()
 	return this->attachPdf;
 }
 
-int Document::findPdfPage(int pdfPage)
+size_t Document::findPdfPage(size_t pdfPage)
 {
 	XOJ_CHECK_TYPE(Document);
 
-	int count = getPageCount();
-	for (int i = 0; i < count; i++)
+	for (size_t i = 0; i < getPageCount(); i++)
 	{
 		PageRef p = this->pages[i];
 		if (p->getBackgroundType() == BACKGROUND_TYPE_PDF)
@@ -211,8 +214,7 @@ int Document::findPdfPage(int pdfPage)
 	return -1;
 }
 
-void Document::buildTreeContentsModel(GtkTreeIter* parent,
-                                      XojPopplerIter* iter)
+void Document::buildTreeContentsModel(GtkTreeIter* parent, XojPopplerIter* iter)
 {
 	XOJ_CHECK_TYPE(Document);
 
@@ -223,7 +225,7 @@ void Document::buildTreeContentsModel(GtkTreeIter* parent,
 		XojPopplerAction* action = iter->getAction();
 		XojLinkDest* link = action->getDestination();
 
-		if (action->getTitle().isEmpty())
+		if (action->getTitle().empty())
 		{
 			g_object_unref(link);
 			delete action;
@@ -235,9 +237,8 @@ void Document::buildTreeContentsModel(GtkTreeIter* parent,
 		gtk_tree_store_append(GTK_TREE_STORE(contentsModel), &treeIter, parent);
 		char* titleMarkup = g_markup_escape_text(action->getTitle().c_str(), -1);
 
-		gtk_tree_store_set(GTK_TREE_STORE(contentsModel), &treeIter,
-		                   DOCUMENT_LINKS_COLUMN_NAME, titleMarkup, DOCUMENT_LINKS_COLUMN_LINK, link,
-		                   DOCUMENT_LINKS_COLUMN_PAGE_NUMBER, "", -1);
+		gtk_tree_store_set(GTK_TREE_STORE(contentsModel), &treeIter, DOCUMENT_LINKS_COLUMN_NAME, titleMarkup,
+						   DOCUMENT_LINKS_COLUMN_LINK, link, DOCUMENT_LINKS_COLUMN_PAGE_NUMBER, "", -1);
 
 		g_free(titleMarkup);
 		g_object_unref(link);
@@ -272,8 +273,7 @@ void Document::buildContentsModel()
 		return;
 	}
 
-	this->contentsModel = (GtkTreeModel*) gtk_tree_store_new(4, G_TYPE_STRING,
-	                                                         G_TYPE_OBJECT, G_TYPE_BOOLEAN, G_TYPE_STRING);
+	this->contentsModel = (GtkTreeModel*) gtk_tree_store_new(4, G_TYPE_STRING, G_TYPE_OBJECT, G_TYPE_BOOLEAN, G_TYPE_STRING);
 	buildTreeContentsModel(NULL, iter);
 	delete iter;
 }
@@ -285,8 +285,7 @@ GtkTreeModel* Document::getContentsModel()
 	return this->contentsModel;
 }
 
-bool Document::fillPageLabels(GtkTreeModel* treeModel, GtkTreePath* path,
-                              GtkTreeIter* iter, Document* doc)
+bool Document::fillPageLabels(GtkTreeModel* treeModel, GtkTreePath* path, GtkTreeIter* iter, Document* doc)
 {
 	XojLinkDest* link = NULL;
 
@@ -304,8 +303,7 @@ bool Document::fillPageLabels(GtkTreeModel* treeModel, GtkTreePath* path,
 	{
 		pageLabel = g_strdup_printf("%i", page + 1);
 	}
-	gtk_tree_store_set(GTK_TREE_STORE(treeModel), iter,
-	                   DOCUMENT_LINKS_COLUMN_PAGE_NUMBER, pageLabel, -1);
+	gtk_tree_store_set(GTK_TREE_STORE(treeModel), iter, DOCUMENT_LINKS_COLUMN_PAGE_NUMBER, pageLabel, -1);
 	g_free(pageLabel);
 
 	g_object_unref(link);
@@ -318,12 +316,11 @@ void Document::updateIndexPageNumbers()
 
 	if (this->contentsModel != NULL)
 	{
-		gtk_tree_model_foreach(this->contentsModel,
-		                       (GtkTreeModelForeachFunc) fillPageLabels, this);
+		gtk_tree_model_foreach(this->contentsModel, (GtkTreeModelForeachFunc) fillPageLabels, this);
 	}
 }
 
-bool Document::readPdf(String filename, bool initPages, bool attachToDocument)
+bool Document::readPdf(path filename, bool initPages, bool attachToDocument)
 {
 	XOJ_CHECK_TYPE(Document);
 
@@ -333,20 +330,17 @@ bool Document::readPdf(String filename, bool initPages, bool attachToDocument)
 
 	if (!pdfDocument.load(filename.c_str(), password.c_str(), &popplerError))
 	{
-		char* txt = g_strdup_printf("Document not loaded! (%s), %s", filename.c_str(),
-		                            popplerError->message);
-		lastError = txt;
-		g_free(txt);
+		lastError = FS(_F("Document not loaded! ({1}), {2}") % filename % popplerError->message);
 		g_error_free(popplerError);
 		return false;
 	}
 
-	printf("attachToDocument: %i\n", attachToDocument);
+	cout << bl::format("attachToDocument: {1}") % attachToDocument << endl;
 
 	this->pdfFilename = filename;
 	this->attachPdf = attachToDocument;
 
-	lastError = NULL;
+	lastError = "";
 
 	if (initPages)
 	{
@@ -355,7 +349,7 @@ bool Document::readPdf(String filename, bool initPages, bool attachToDocument)
 
 	if (initPages)
 	{
-		for (int i = 0; i < pdfDocument.getPageCount(); i++)
+		for (size_t i = 0; i < pdfDocument.getPageCount(); i++)
 		{
 			XojPopplerPage* page = pdfDocument.getPage(i);
 			PageRef p = new XojPage(page->getWidth(), page->getHeight());
@@ -380,21 +374,21 @@ void Document::setPageSize(PageRef p, double width, double height)
 
 	p->setSize(width, height);
 
-	int id = indexOf(p);
-	if (id >= 0 && id < getPageCount())
+	size_t id = indexOf(p);
+	if (id != size_t_npos && id < getPageCount())
 	{
 		this->handler->firePageSizeChanged(id);
 	}
 }
 
-String Document::getLastErrorMsg()
+string Document::getLastErrorMsg()
 {
 	XOJ_CHECK_TYPE(Document);
 
 	return lastError;
 }
 
-void Document::deletePage(int pNr)
+void Document::deletePage(size_t pNr)
 {
 	XOJ_CHECK_TYPE(Document);
 
@@ -406,7 +400,7 @@ void Document::deletePage(int pNr)
 	updateIndexPageNumbers();
 }
 
-void Document::insertPage(PageRef p, int position)
+void Document::insertPage(PageRef p, size_t position)
 {
 	XOJ_CHECK_TYPE(Document);
 
@@ -424,11 +418,11 @@ void Document::addPage(PageRef p)
 	updateIndexPageNumbers();
 }
 
-int Document::indexOf(PageRef page)
+size_t Document::indexOf(PageRef page)
 {
 	XOJ_CHECK_TYPE(Document);
 
-	for (unsigned int i = 0; i < this->pages.size(); i++)
+	for (size_t i = 0; i < this->pages.size(); i++)
 	{
 		PageRef pg = this->pages[i];
 		if (pg == page)
@@ -437,10 +431,10 @@ int Document::indexOf(PageRef page)
 		}
 	}
 
-	return -1;
+	return size_t_npos;
 }
 
-PageRef Document::getPage(int page)
+PageRef Document::getPage(size_t page)
 {
 	XOJ_CHECK_TYPE(Document);
 
@@ -448,7 +442,7 @@ PageRef Document::getPage(int page)
 	{
 		return NULL;
 	}
-	if (page < 0)
+	if (page == size_t_npos)
 	{
 		return NULL;
 	}
@@ -456,7 +450,7 @@ PageRef Document::getPage(int page)
 	return this->pages[page];
 }
 
-XojPopplerPage* Document::getPdfPage(int page)
+XojPopplerPage* Document::getPdfPage(size_t page)
 {
 	XOJ_CHECK_TYPE(Document);
 
@@ -495,7 +489,7 @@ void Document::operator=(Document& doc)
 	bool lastLock = tryLock();
 	unlock();
 	this->handler->fireDocumentChanged(DOCUMENT_CHANGE_COMPLETE);
-	if (!lastLock)   // document was locked before
+	if (!lastLock) // document was locked before
 	{
 		lock();
 	}
@@ -514,4 +508,3 @@ bool Document::shouldCreateBackupOnSave()
 
 	return this->createBackupOnSave;
 }
-

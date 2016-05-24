@@ -3,18 +3,17 @@
  *
  * Prints a document
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __PRINTHANDLER_H__
-#define __PRINTHANDLER_H__
-
-#include <gtk/gtk.h>
+#pragma once
 
 #include <XournalType.h>
+
+#include <gtk/gtk.h>
 
 class Document;
 class Settings;
@@ -30,17 +29,13 @@ public:
 	void print(Document* doc, int currentPage);
 
 private:
-	static void drawPage(GtkPrintOperation* operation, GtkPrintContext* context,
-	                     int pageNr, PrintHandler* handler);
+	static void drawPage(GtkPrintOperation* operation, GtkPrintContext* context, int pageNr, PrintHandler* handler);
 	static void requestPageSetup(GtkPrintOperation* operation,
-	                             GtkPrintContext* context, gint pageNr,
-	                             GtkPageSetup* setup, PrintHandler* handler);
+								 GtkPrintContext* context, gint pageNr,
+								 GtkPageSetup* setup, PrintHandler* handler);
 
 private:
 	XOJ_TYPE_ATTRIB;
 
-
 	Document* doc;
 };
-
-#endif /* __PRINTHANDLER_H__ */

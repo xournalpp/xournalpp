@@ -3,25 +3,23 @@
  *
  * Part of the customizable toolbars
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __TOOLPAGELAYER_H__
-#define __TOOLPAGELAYER_H__
+#pragma once
 
 #include "AbstractToolItem.h"
 #include <XournalType.h>
 
 class GladeGui;
 
-class ToolPageLayer: public AbstractToolItem
+class ToolPageLayer : public AbstractToolItem
 {
 public:
-	ToolPageLayer(GladeGui* gui, ActionHandler* handler, String id,
-	              ActionType type);
+	ToolPageLayer(GladeGui* gui, ActionHandler* handler, string id, ActionType type);
 	virtual ~ToolPageLayer();
 
 public:
@@ -30,7 +28,7 @@ public:
 	int getSelectedLayer();
 	void setSelectedLayer(int selected);
 	void setLayerCount(int layer, int selected);
-	virtual String getToolDisplayName();
+	virtual string getToolDisplayName();
 
 protected:
 	virtual GtkToolItem* newItem();
@@ -45,5 +43,3 @@ private:
 	int layerCount;
 	bool inCbUpdate;
 };
-
-#endif /* __TOOLPAGELAYER_H__ */

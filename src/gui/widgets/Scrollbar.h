@@ -3,16 +3,16 @@
  *
  * Scrollbar adapter
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __SCROLLBAR_H__
-#define __SCROLLBAR_H__
+#pragma once
 
-#include <config.h>
+#include <config-features.h>
+#include <XournalType.h>
 
 #ifdef ENABLE_OS
 // Overlay scrollbar
@@ -20,7 +20,7 @@
 #endif
 
 #include <gtk/gtk.h>
-#include <XournalType.h>
+#include <list>
 
 class Scrollbar;
 
@@ -29,7 +29,6 @@ class ScrollbarListener
 public:
 	virtual void scrolled(Scrollbar* scrollbar) = 0;
 };
-
 
 class Scrollbar
 {
@@ -68,10 +67,7 @@ private:
 
 	GtkWidget* scrollbar;
 	GtkAdjustment* adj;
-	GList* listener;
+	std::list<ScrollbarListener*> listener;
 
 	int value;
 };
-
-#endif //__SCROLLBAR_H__
-

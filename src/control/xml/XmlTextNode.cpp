@@ -1,15 +1,13 @@
 #include "XmlTextNode.h"
 
-XmlTextNode::XmlTextNode(const char* tag, const char* text) :
-	XmlNode(tag)
+XmlTextNode::XmlTextNode(const char* tag, const char* text) : XmlNode(tag)
 {
 	XOJ_INIT_TYPE(XmlTextNode);
 
 	this->text = g_strdup(text);
 }
 
-XmlTextNode::XmlTextNode(const char* tag) :
-	XmlNode(tag)
+XmlTextNode::XmlTextNode(const char* tag) : XmlNode(tag)
 {
 	XOJ_INIT_TYPE(XmlTextNode);
 
@@ -46,10 +44,12 @@ void XmlTextNode::writeOut(OutputStream* out)
 
 	out->write(">");
 
-	String tmp = this->text;
-	tmp = tmp.replace("&", "&amp;");
-	tmp = tmp.replace("<", "&lt;");
-	tmp = tmp.replace(">", "&gt;");
+	string tmp(this->text);
+	StringUtils::replace_all_chars(tmp,{
+		replace_pair('&', "&amp;"),
+		replace_pair('<', "&lt;"),
+		replace_pair('>', "&gt;")
+	});
 	out->write(tmp);
 
 	out->write("</");

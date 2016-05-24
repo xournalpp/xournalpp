@@ -1,13 +1,17 @@
-#include <Util.h>
-#include <sys/types.h>
-#include <unistd.h>
-#include <sys/stat.h>
-#include "../cfg.h"
-#include <stdlib.h>
+#include "Util.h"
 
 #include <config.h>
-#include <glib/gi18n-lib.h>
+#include <config-dev.h>
+#include <i18n.h>
 
+#include <boost/filesystem.hpp>
+
+#include <sys/types.h>
+#include <unistd.h>
+
+#include <iostream>
+using std::cout;
+using std::endl;
 
 GdkColor Util::intToGdkColor(int c)
 {
@@ -34,31 +38,38 @@ void Util::cairo_set_source_rgbi(cairo_t* cr, int c)
 
 int Util::getPid()
 {
-	pid_t pid = getpid();
+	pid_t pid = ::getpid();
 	return (int) pid;
 }
 
-String Util::getAutosaveFilename()
+path Util::getAutosaveFilename()
 {
-	String path = getSettingsSubfolder("autosave");
-
-	path += getPid();
-	path += ".xoj";
-
-	return path;
+	path p(getConfigSubfolder("autosave"));
+	p /= CONCAT(std::to_string(getPid()), ".xoj");
+	return p;
 }
 
-String Util::getSettingsSubfolder(String subfolder)
+path Util::getConfigSubfolder(path subfolder)
 {
-	String path = String::format("%s%c%s%c%s%c", g_get_home_dir(), G_DIR_SEPARATOR,
-	                             CONFIG_DIR, G_DIR_SEPARATOR, subfolder.c_str(), G_DIR_SEPARATOR);
+	using namespace boost::filesystem;
+	path p(g_get_home_dir());
+	p /= CONFIG_DIR;
+	p /= subfolder;
 
-	if (!g_file_test(path.c_str(), G_FILE_TEST_EXISTS))
+	if (!exists(p))
 	{
-		mkdir(path.c_str(), 0700);
+		create_directory(p);
+		permissions(p, owner_all);
 	}
 
-	return path;
+	return p;
+}
+
+path Util::getConfigFile(path relativeFileName)
+{
+	path p = getConfigSubfolder(relativeFileName.parent_path());
+	p /= relativeFileName.filename();
+	return p;
 }
 
 GtkWidget* Util::newSepeartorImage()
@@ -107,15 +118,12 @@ GdkPixbuf* Util::newPixbufFromWidget(GtkWidget* widget, int iconSize)
 	GdkVisual* visual;
 	gint icon_width;
 	gint icon_height;
-	GdkScreen* screen;
 
 	icon_height = icon_width = iconSize;
 
-	screen = gtk_widget_get_screen(widget);
-
 	window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
 
-	gtk_container_add(GTK_CONTAINER (window), widget);
+	gtk_container_add(GTK_CONTAINER(window), widget);
 	gtk_widget_realize(window);
 	gtk_widget_show(widget);
 	gtk_widget_realize(widget);
@@ -126,8 +134,8 @@ GdkPixbuf* Util::newPixbufFromWidget(GtkWidget* widget, int iconSize)
 	 * the icon correctly, without any additional window background noise.
 	 * This is needed mostly for pixmap based themes.
 	 */
-	gtk_window_set_default_size(GTK_WINDOW (window), icon_width, icon_height);
-	gtk_window_get_size(GTK_WINDOW (window), &icon_width, &icon_height);
+	gtk_window_set_default_size(GTK_WINDOW(window), icon_width, icon_height);
+	gtk_window_get_size(GTK_WINDOW(window), &icon_width, &icon_height);
 
 	gtk_widget_size_request(window, &requisition);
 	allocation.x = 0;
@@ -140,8 +148,7 @@ GdkPixbuf* Util::newPixbufFromWidget(GtkWidget* widget, int iconSize)
 	/* Create a pixmap */
 	visual = gtk_widget_get_visual(window);
 	pixmap = gdk_pixmap_new(NULL, icon_width, icon_height, visual->depth);
-	gdk_drawable_set_colormap(GDK_DRAWABLE (pixmap),
-	                          gtk_widget_get_colormap(window));
+	gdk_drawable_set_colormap(GDK_DRAWABLE(pixmap), gtk_widget_get_colormap(window));
 
 	/* Draw the window */
 	gtk_widget_ensure_style(window);
@@ -152,64 +159,65 @@ GdkPixbuf* Util::newPixbufFromWidget(GtkWidget* widget, int iconSize)
 	fakeExposeWidget(widget, pixmap);
 
 	pixbuf = gdk_pixbuf_new(GDK_COLORSPACE_RGB, TRUE, 8, icon_width, icon_height);
-	gdk_pixbuf_get_from_drawable(pixbuf, pixmap, NULL, 0, 0, 0, 0, icon_width,
-	                             icon_height);
+	gdk_pixbuf_get_from_drawable(pixbuf, pixmap, NULL, 0, 0, 0, 0, icon_width, icon_height);
 
 	gtk_widget_destroy(window);
 
 	return pixbuf;
 }
 
-void Util::openFileWithDefaultApplicaion(const char* filename)
+void Util::openFileWithDefaultApplicaion(path filename)
 {
 #ifdef __APPLE__
-#define OPEN_PATTERN "open \"%s\""
+#define OPEN_PATTERN "open \"{1}\""
 #elif _WIN32 // note the underscore: without it, it's not msdn official!
-#define OPEN_PATTERN "start \"%s\""
+#define OPEN_PATTERN "start \"{1}\""
 #else // linux, unix, ...
-#define OPEN_PATTERN "xdg-open \"%s\""
+#define OPEN_PATTERN "xdg-open \"{1}\""
 #endif
 
-	String escaped = String(filename).replace("\\", "\\\\").replace("\"", "\\\"");
+	string escaped = filename.string();
+	StringUtils::replace_all_chars(escaped, {
+		replace_pair('\\', "\\\\"),
+		replace_pair('\"', "\\\"")
+	});
 
-	char* command = g_strdup_printf(OPEN_PATTERN, escaped.c_str());
-	printf("XPP Execute command: «%s»\n", command);
-	if(system(command) != 0)
+	string command = FS(bl::format(OPEN_PATTERN) % escaped);
+	cout << bl::format("XPP Execute command: «{1}»") % command << endl;
+	if (system(command.c_str()) != 0)
 	{
-		GtkWidget* dlgError = gtk_message_dialog_new(NULL, GTK_DIALOG_MODAL,
-		                                             GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, "%s",
-		                                             _("File could not be opened. You have to open it manual\n:URL: %s"), filename,
-		                                             filename);
+		GtkWidget* dlgError = gtk_message_dialog_new(NULL, GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, "%s",
+													 FC(_F("File couldn't be opened. You have to do it manually:\n"
+														   "URL: {1}") % filename));
 		gtk_dialog_run(GTK_DIALOG(dlgError));
 	}
-	g_free(command);
 }
 
-void Util::openFileWithFilebrowser(const char* filename)
+void Util::openFileWithFilebrowser(path filename)
 {
 #undef OPEN_PATTERN
 
 #ifdef __APPLE__
-#define OPEN_PATTERN "open \"%s\""
+#define OPEN_PATTERN "open \"{1}\""
 #elif _WIN32 // note the underscore: without it, it's not msdn official!
-#define OPEN_PATTERN "explorer.exe /n,/e,\"%s\""
+#define OPEN_PATTERN "explorer.exe /n,/e,\"{1}\""
 #else // linux, unix, ...
-#define OPEN_PATTERN "nautilus \"file://%s\" || konqueror \"file://%s\""
+#define OPEN_PATTERN "nautilus \"file://{1}\" || dolphin \"file://{1}\" || konqueror \"file://{1}\" &"
 #endif
 
-	String escaped = String(filename).replace("\\", "\\\\").replace("\"", "\\\"");
+	string escaped = filename.string();
+	StringUtils::replace_all_chars(escaped, {
+		replace_pair('\\', "\\\\"),
+		replace_pair('\"', "\\\"")
+	});
 
-	char* command = g_strdup_printf(OPEN_PATTERN, escaped.c_str(),
-	                                escaped.c_str()); // twice for linux...
-	printf("XPP show file in filebrowser command: «%s»\n", command);
-	if(system(command) != 0)
+	string command = FS(bl::format(OPEN_PATTERN) % escaped);
+	cout << bl::format("XPP show file in filebrowser command: «{1}»") % command << endl;
+	if (system(command.c_str()) != 0)
 	{
-		GtkWidget* dlgError = gtk_message_dialog_new(NULL, GTK_DIALOG_MODAL,
-		                                             GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, "%s",
-		                                             _("File could not be opened. You have to open it manual\n:URL: %s"), filename,
-		                                             filename);
+		GtkWidget* dlgError = gtk_message_dialog_new(NULL, GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, "%s",
+													 FC(_F("File couldn't be opened. You have to do it manually:\n"
+														   "URL: {1}") % filename));
 		gtk_dialog_run(GTK_DIALOG(dlgError));
 	}
-	g_free(command);
 }
-

@@ -5,27 +5,42 @@
  *
  * Some code from Evince project
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __SCHEDULER_H__
-#define __SCHEDULER_H__
+#pragma once
 
 #include "Job.h"
-#include <glib.h>
-
 #include <XournalType.h>
+
+#include <glib.h>
 
 typedef enum
 {
-    JOB_PRIORITY_URGENT, // Rendering current page range
-    JOB_PRIORITY_HIGH, // Rendering current thumbnail range
-    JOB_PRIORITY_LOW, // Rendering pages not in current range
-    JOB_PRIORITY_NONE, // Any other job: load, save, print, ...
-    JOB_N_PRIORITIES
+	/**
+	 * Rendering current page range
+	 */
+	JOB_PRIORITY_URGENT,
+
+	/**
+	 * Rendering current thumbnail range
+	 */
+	JOB_PRIORITY_HIGH,
+
+	/**
+	 * Rendering pages not in current range
+	 */
+	JOB_PRIORITY_LOW,
+			
+	/**
+	 * Any other job: load, save, print, ...
+	 */
+	JOB_PRIORITY_NONE,
+
+	JOB_N_PRIORITIES
 } JobPriority;
 
 class Scheduler
@@ -85,7 +100,9 @@ protected:
 
 	GMutex schedulerMutex;
 
-	// this is need to be sure there is no job running if we delete a page, else we may access delete memory...
+	/**
+	 * This is need to be sure there is no job running if we delete a page, else we may access delete memory...
+	 */
 	GMutex jobRunningMutex;
 
 	GQueue queueUrgent;
@@ -100,5 +117,3 @@ protected:
 
 	const char *name;
 };
-
-#endif /* __SCHEDULER_H__ */

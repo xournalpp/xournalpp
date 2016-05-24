@@ -3,18 +3,18 @@
  *
  * Handler for actions, every menu action, tool button etc. is defined here
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __ACTIONDISPATCHER_H__
-#define __ACTIONDISPATCHER_H__
+#pragma once
 
 #include <XournalType.h>
 
 #include <gtk/gtk.h>
+#include <list>
 
 enum ActionType
 {
@@ -243,9 +243,6 @@ public:
 private:
 	XOJ_TYPE_ATTRIB;
 
-
-	GList* enabledListener;
-	GList* selectionListener;
+	std::list<ActionEnabledListener*> enabledListener;
+	std::list<ActionSelectionListener*> selectionListener;
 };
-
-#endif /* __ACTIONDISPATCHER_H__ */

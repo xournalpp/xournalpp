@@ -3,14 +3,13 @@
  *
  * Toolbar drag and drop helpers
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __TOOLBARDRAGDROPHELPER_H__
-#define __TOOLBARDRAGDROPHELPER_H__
+#pragma once
 
 #include <gtk/gtk.h>
 
@@ -31,5 +30,3 @@ public:
 	static GdkAtom atomToolItem;
 	static GtkTargetEntry dropTargetEntry;
 };
-
-#endif /* __TOOLBARDRAGDROPHELPER_H__ */

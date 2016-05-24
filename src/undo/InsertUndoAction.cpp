@@ -1,11 +1,13 @@
 #include "InsertUndoAction.h"
-#include "../model/PageRef.h"
-#include "../model/Layer.h"
-#include "../model/Element.h"
-#include "../gui/Redrawable.h"
 
-InsertUndoAction::InsertUndoAction(PageRef page, Layer* layer,
-                                   Element* element) : UndoAction("InsertUndoAction")
+#include "gui/Redrawable.h"
+#include "model/Element.h"
+#include "model/Layer.h"
+#include "model/PageRef.h"
+
+#include <i18n.h>
+
+InsertUndoAction::InsertUndoAction(PageRef page, Layer* layer, Element* element) : UndoAction("InsertUndoAction")
 {
 	XOJ_INIT_TYPE(InsertUndoAction);
 
@@ -28,7 +30,7 @@ InsertUndoAction::~InsertUndoAction()
 	XOJ_RELEASE_TYPE(InsertUndoAction);
 }
 
-String InsertUndoAction::getText()
+string InsertUndoAction::getText()
 {
 	XOJ_CHECK_TYPE(InsertUndoAction);
 
@@ -50,7 +52,7 @@ String InsertUndoAction::getText()
 	}
 	else
 	{
-		return NULL;
+		return "";
 	}
 }
 
@@ -80,10 +82,7 @@ bool InsertUndoAction::redo(Control* control)
 	return true;
 }
 
-
-InsertsUndoAction::InsertsUndoAction(PageRef page,
-                                     Layer* layer,
-                                     GList* elements) : UndoAction("InsertsUndoAction")
+InsertsUndoAction::InsertsUndoAction(PageRef page, Layer* layer, ElementVector elements) : UndoAction("InsertsUndoAction")
 {
 	XOJ_INIT_TYPE(InsertsUndoAction);
 
@@ -99,21 +98,17 @@ InsertsUndoAction::~InsertsUndoAction()
 	if (this->undone)
 	{
 		// Insert was undone, so this is not needed anymore
-		for(GList* elem = this->elements;
-		    elem != NULL; elem = elem->next)
+		for (Element* e : this->elements)
 		{
-			Element* e = (Element*) elem->data;
 			delete e;
-			elem->data = NULL;
+			e = NULL;
 		}
 	}
-	g_list_free(this->elements);
-	this->elements = NULL;
 
 	XOJ_RELEASE_TYPE(InsertsUndoAction);
 }
 
-String InsertsUndoAction::getText()
+string InsertsUndoAction::getText()
 {
 	XOJ_CHECK_TYPE(InsertsUndoAction);
 
@@ -124,11 +119,8 @@ bool InsertsUndoAction::undo(Control* control)
 {
 	XOJ_CHECK_TYPE(InsertsUndoAction);
 
-	for(GList* l = this->elements;
-	    l != NULL; l = l->next)
+	for (Element* elem : this->elements)
 	{
-		Element* elem = (Element*) l->data;
-
 		this->layer->removeElement(elem, false);
 		this->page->fireElementChanged(elem);
 	}
@@ -142,11 +134,8 @@ bool InsertsUndoAction::redo(Control* control)
 {
 	XOJ_CHECK_TYPE(InsertsUndoAction);
 
-	for(GList* l = this->elements;
-	    l != NULL; l = l->next)
+	for (Element* elem : this->elements)
 	{
-		Element* elem = (Element*) l->data;
-
 		this->layer->addElement(elem);
 		this->page->fireElementChanged(elem);
 	}

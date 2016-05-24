@@ -3,26 +3,25 @@
  *
  * Part of the customizable toolbars
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __TOOLDRAWCOMBOCONTROL_H__
-#define __TOOLDRAWCOMBOCONTROL_H__
+#pragma once
 
 #include "ToolButton.h"
-#include "../GladeGui.h"
+#include "gui/GladeGui.h"
+
 #include <XournalType.h>
 
 class ToolMenuHandler;
 
-class ToolDrawCombocontrol: public ToolButton
+class ToolDrawCombocontrol : public ToolButton
 {
 public:
-	ToolDrawCombocontrol(ToolMenuHandler* th, ActionHandler* handler,
-	                       GladeGui* gui, String id);
+	ToolDrawCombocontrol(ToolMenuHandler* th, ActionHandler* handler, GladeGui* gui, string id);
 	virtual ~ToolDrawCombocontrol();
 
 public:
@@ -43,5 +42,3 @@ private:
 	GdkPixbuf* iconDrawLine;
 	GdkPixbuf* iconAutoDrawLine;
 };
-
-#endif /* __TOOLDRAWCOMBOCONTROL_H__ */

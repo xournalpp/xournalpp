@@ -3,18 +3,17 @@
  *
  * XML Writer helper class
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __INTATTRIBUTE_H__
-#define __INTATTRIBUTE_H__
+#pragma once
 
 #include "Attribute.h"
 
-class IntAttribute: public Attribute
+class IntAttribute : public XMLAttribute
 {
 public:
 	IntAttribute(const char* name, int value);
@@ -28,5 +27,3 @@ private:
 
 	int value;
 };
-
-#endif /* __INTATTRIBUTE_H__ */

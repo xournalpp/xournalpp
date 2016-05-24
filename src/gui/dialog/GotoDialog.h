@@ -3,16 +3,15 @@
  *
  * Goto-Page dialog
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __GOTODIALOG_H__
-#define __GOTODIALOG_H__
+#pragma once
 
-#include "../GladeGui.h"
+#include "gui/GladeGui.h"
 #include <XournalType.h>
 
 class GotoDialog : public GladeGui
@@ -33,5 +32,3 @@ private:
 	int selectedPage;
 
 };
-
-#endif /* __GOTODIALOG_H__ */

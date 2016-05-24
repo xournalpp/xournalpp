@@ -3,25 +3,26 @@
  *
  * Paints a page to a cairo context
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __DOCUMENTVIEW_H__
-#define __DOCUMENTVIEW_H__
-
-#include <gtk/gtk.h>
-#include "../model/Element.h"
-#include "../model/Stroke.h"
-#include "../model/Text.h"
-#include "../model/PageRef.h"
-#include "../model/Image.h"
-#include "../model/TexImage.h"
-#include <XournalType.h>
+#pragma once
 
 #include "ElementContainer.h"
+
+#include "model/Element.h"
+#include "model/Image.h"
+#include "model/PageRef.h"
+#include "model/Stroke.h"
+#include "model/TexImage.h"
+#include "model/Text.h"
+
+#include <XournalType.h>
+
+#include <gtk/gtk.h>
 
 class EditSelection;
 
@@ -32,9 +33,18 @@ public:
 	virtual ~DocumentView();
 
 public:
-	void drawPage(PageRef page, cairo_t* cr, bool preview);
-	void drawStroke(cairo_t* cr, Stroke* s, int startPoint = 0,
-	                double scaleFactor = 1);
+
+	/**
+	 * Draw the full page, usually you would like to call this method
+	 * @param page The page to draw
+	 * @param cr Draw to thgis context
+	 * @param dontRenderEditingStroke false to draw currently drawing stroke
+	 */
+	void drawPage(PageRef page, cairo_t* cr, bool dontRenderEditingStroke);
+
+
+
+	void drawStroke(cairo_t* cr, Stroke* s, int startPoint = 0, double scaleFactor = 1);
 	void drawEraseableStroke(cairo_t* cr, Stroke* s);
 	static void applyColor(cairo_t* cr, int c, int alpha = 255);
 	static void applyColor(cairo_t* cr, Element* e, int alpha = 255);
@@ -43,13 +53,39 @@ public:
 
 	void drawSelection(cairo_t* cr, ElementContainer* container);
 
+	// API for special drawing, usually you won't call this methods
+public:
+	/**
+	 * Drawing first step
+	 * @param page The page to draw
+	 * @param cr Draw to thgis context
+	 * @param dontRenderEditingStroke false to draw currently drawing stroke
+	 */
+	void initDrawing(PageRef page, cairo_t* cr, bool dontRenderEditingStroke);
+
+	/**
+	 * Draw the background
+	 */
+	void drawBackground();
+
+	/**
+	 * Draw a single layer
+	 * @param cr Draw to thgis context
+	 * @param l The layer to draw
+	 */
+	void drawLayer(cairo_t* cr, Layer* l);
+
+	/**
+	 * Last step in drawing
+	 */
+	void finializeDrawing();
+
 private:
 	void drawText(cairo_t* cr, Text* t);
 	void drawImage(cairo_t* cr, Image* i);
 	void drawTexImage(cairo_t* cr, TexImage* i);
 
 	void drawElement(cairo_t* cr, Element* e);
-	void drawLayer(cairo_t* cr, Layer* l);
 
 	void paintBackgroundImage();
 	void paintBackgroundColor();
@@ -71,5 +107,3 @@ private:
 	double lWidth;
 	double lHeight;
 };
-
-#endif /* __DOCUMENTVIEW_H__ */

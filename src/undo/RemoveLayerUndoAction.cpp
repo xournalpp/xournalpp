@@ -1,14 +1,14 @@
 #include "RemoveLayerUndoAction.h"
 
-#include "../model/PageRef.h"
-#include "../model/Layer.h"
-#include "../control/Control.h"
-#include "../model/Document.h"
-#include "../gui/XournalView.h"
+#include "control/Control.h"
+#include "gui/XournalView.h"
+#include "model/Document.h"
+#include "model/Layer.h"
+#include "model/PageRef.h"
 
-RemoveLayerUndoAction::RemoveLayerUndoAction(PageRef page, Layer* layer,
-                                             int layerPos)
-	: UndoAction("RemoveLayerUndoAction")
+#include <i18n.h>
+
+RemoveLayerUndoAction::RemoveLayerUndoAction(PageRef page, Layer* layer, int layerPos) : UndoAction("RemoveLayerUndoAction")
 {
 	XOJ_INIT_TYPE(RemoveLayerUndoAction);
 
@@ -31,7 +31,7 @@ RemoveLayerUndoAction::~RemoveLayerUndoAction()
 	XOJ_RELEASE_TYPE(RemoveLayerUndoAction);
 }
 
-String RemoveLayerUndoAction::getText()
+string RemoveLayerUndoAction::getText()
 {
 	XOJ_CHECK_TYPE(RemoveLayerUndoAction);
 
@@ -75,4 +75,3 @@ bool RemoveLayerUndoAction::redo(Control* control)
 
 	return true;
 }
-

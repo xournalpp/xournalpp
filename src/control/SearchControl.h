@@ -3,17 +3,16 @@
  *
  * Handles text search on a PDF page and in Xournal Texts
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __SEARCHCONTROL_H__
-#define __SEARCHCONTROL_H__
+#pragma once
 
-#include "../model/PageRef.h"
-#include "../pdf/popplerdirect/poppler/XojPopplerPage.h"
+#include "model/PageRef.h"
+#include "pdf/popplerdirect/poppler/XojPopplerPage.h"
 
 class SearchControl
 {
@@ -21,7 +20,7 @@ public:
 	SearchControl(PageRef page, XojPopplerPage* pdf);
 	virtual ~SearchControl();
 
-	bool search(const char* text, int* occures, double* top);
+	bool search(string text, int* occures, double* top);
 	void paint(cairo_t* cr, GdkRectangle* rect, double zoom, GdkColor color);
 private:
 	void freeSearchResults();
@@ -34,5 +33,3 @@ private:
 
 	GList* results;
 };
-
-#endif /* __SEARCHCONTROL_H__ */

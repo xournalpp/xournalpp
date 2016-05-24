@@ -3,12 +3,11 @@
  *
  * The definitions for the possibel toolbars
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
-
 
 typedef struct
 {
@@ -28,8 +27,7 @@ typedef struct
 	bool horizontal;
 } ToolbarEntryDefintion;
 
-const static ToolbarEntryDefintion TOOLBAR_DEFINITIONS[] =
-{
+const static ToolbarEntryDefintion TOOLBAR_DEFINITIONS[] = {
 	{ "tbTop1",    "toolbarTop1",    true  },
 	{ "tbTop2",    "toolbarTop2",    true  },
 	{ "tbLeft1",   "toolbarLeft1",   false },

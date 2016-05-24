@@ -1,8 +1,9 @@
 #include "BlockingJob.h"
-#include "../Control.h"
-#include "../SaveHandler.h"
 
-BlockingJob::BlockingJob(Control* control, const char* name)
+#include "control/Control.h"
+#include "control/xojfile/SaveHandler.h"
+
+BlockingJob::BlockingJob(Control* control, string name)
 {
 	XOJ_INIT_TYPE(BlockingJob);
 

@@ -1,4 +1,5 @@
 #include "ObjectInputStream.h"
+
 #include "Serializeable.h"
 
 #include <string.h>
@@ -23,8 +24,7 @@ ObjectInputStream::~ObjectInputStream()
 	XOJ_RELEASE_TYPE(ObjectInputStream);
 }
 
-bool ObjectInputStream::read(const char* data,
-                             int len) throw (InputStreamException)
+bool ObjectInputStream::read(const char* data, int len) throw (InputStreamException)
 {
 	XOJ_CHECK_TYPE(ObjectInputStream);
 
@@ -43,11 +43,11 @@ bool ObjectInputStream::read(const char* data,
 
 	try
 	{
-		String version = readString();
+		string version = readString();
 		if (version != XML_VERSION_STR)
 		{
 			g_warning("ObjectInputStream version mismatch... two different Xournal versions running? (%s / %s)",
-			          version.c_str(), XML_VERSION_STR);
+					  version.c_str(), XML_VERSION_STR);
 			return false;
 		}
 	}
@@ -59,20 +59,18 @@ bool ObjectInputStream::read(const char* data,
 	return true;
 }
 
-void ObjectInputStream::readObject(const char* name) throw (
-    InputStreamException)
+void ObjectInputStream::readObject(const char* name) throw (InputStreamException)
 {
 	XOJ_CHECK_TYPE(ObjectInputStream);
 
-	String type = readObject();
+	string type = readObject();
 	if (type != name)
 	{
-		throw INPUT_STREAM_EXCEPTION("Try to read object type %s but read object type %s",
-		                             name, type.c_str());
+		throw INPUT_STREAM_EXCEPTION("Try to read object type {1} but read object type {2}", name, type);
 	}
 }
 
-String ObjectInputStream::readObject() throw (InputStreamException)
+string ObjectInputStream::readObject() throw (InputStreamException)
 {
 	XOJ_CHECK_TYPE(ObjectInputStream);
 
@@ -80,13 +78,13 @@ String ObjectInputStream::readObject() throw (InputStreamException)
 	return readString();
 }
 
-String ObjectInputStream::getNextObjectName() throw (InputStreamException)
+string ObjectInputStream::getNextObjectName() throw (InputStreamException)
 {
 	XOJ_CHECK_TYPE(ObjectInputStream);
 
 	int pos = this->pos;
 	checkType('{');
-	String name = readString();
+	string name = readString();
 
 	this->pos = pos;
 
@@ -108,8 +106,7 @@ int ObjectInputStream::readInt() throw (InputStreamException)
 
 	if (this->pos + sizeof(int) >= this->str->len)
 	{
-		throw InputStreamException("End reached, but try to read an integer", __FILE__,
-		                           __LINE__);
+		throw InputStreamException("End reached, but try to read an integer", __FILE__, __LINE__);
 	}
 
 	int i = *((int*) (this->str->str + this->pos));
@@ -125,8 +122,7 @@ double ObjectInputStream::readDouble() throw (InputStreamException)
 
 	if (this->pos + sizeof(double) >= this->str->len)
 	{
-		throw InputStreamException("End reached, but try to read an double", __FILE__,
-		                           __LINE__);
+		throw InputStreamException("End reached, but try to read an double", __FILE__, __LINE__);
 	}
 
 	double d = *((double*) (this->str->str + this->pos));
@@ -134,7 +130,7 @@ double ObjectInputStream::readDouble() throw (InputStreamException)
 	return d;
 }
 
-String ObjectInputStream::readString() throw (InputStreamException)
+string ObjectInputStream::readString() throw (InputStreamException)
 {
 	XOJ_CHECK_TYPE(ObjectInputStream);
 
@@ -142,8 +138,7 @@ String ObjectInputStream::readString() throw (InputStreamException)
 
 	if (this->pos + sizeof(int) >= this->str->len)
 	{
-		throw InputStreamException("End reached, but try to read an string", __FILE__,
-		                           __LINE__);
+		throw InputStreamException("End reached, but try to read an string", __FILE__, __LINE__);
 	}
 
 	int len = *((int*) (this->str->str + this->pos));
@@ -151,17 +146,15 @@ String ObjectInputStream::readString() throw (InputStreamException)
 
 	if (this->pos + len >= this->str->len)
 	{
-		throw InputStreamException("End reached, but try to read an string", __FILE__,
-		                           __LINE__);
+		throw InputStreamException("End reached, but try to read an string", __FILE__, __LINE__);
 	}
 
-	String s((const char*)(this->str->str + this->pos), len);
+	string s((const char*) (this->str->str + this->pos), len);
 	this->pos += len;
 	return s;
 }
 
-void ObjectInputStream::readData(void** data,
-                                 int* length) throw (InputStreamException)
+void ObjectInputStream::readData(void** data, int* length) throw (InputStreamException)
 {
 	XOJ_CHECK_TYPE(ObjectInputStream);
 
@@ -169,8 +162,7 @@ void ObjectInputStream::readData(void** data,
 
 	if (this->pos + 2 * sizeof(int) >= this->str->len)
 	{
-		throw InputStreamException("End reached, but try to read data", __FILE__,
-		                           __LINE__);
+		throw InputStreamException("End reached, but try to read data", __FILE__, __LINE__);
 	}
 
 	int len = *((int*) (this->str->str + this->pos));
@@ -181,8 +173,7 @@ void ObjectInputStream::readData(void** data,
 
 	if (this->pos + (len * width) >= this->str->len)
 	{
-		throw InputStreamException("End reached, but try to read data", __FILE__,
-		                           __LINE__);
+		throw InputStreamException("End reached, but try to read data", __FILE__, __LINE__);
 	}
 
 	if (len == 0)
@@ -205,6 +196,7 @@ void ObjectInputStream::readData(void** data,
 class PngDatasource
 {
 public:
+
 	PngDatasource(char* start, int len)
 	{
 		this->data = start;
@@ -217,10 +209,9 @@ public:
 	int pos;
 };
 
-cairo_status_t cairoReadFunction(PngDatasource* obj, unsigned char* data,
-                                 unsigned int length)
+cairo_status_t cairoReadFunction(PngDatasource* obj, unsigned char* data, unsigned int length)
 {
-	for (int i = 0; i < length; i++, obj->pos++)
+	for (unsigned int i = 0; i < length; i++, obj->pos++)
 	{
 		if (obj->pos >= obj->len)
 		{
@@ -240,8 +231,7 @@ cairo_surface_t* ObjectInputStream::readImage() throw (InputStreamException)
 
 	if (this->pos + sizeof(int) >= this->str->len)
 	{
-		throw InputStreamException("End reached, but try to read an image", __FILE__,
-		                           __LINE__);
+		throw InputStreamException("End reached, but try to read an image", __FILE__, __LINE__);
 	}
 
 	int len = *((int*) (this->str->str + this->pos));
@@ -251,22 +241,20 @@ cairo_surface_t* ObjectInputStream::readImage() throw (InputStreamException)
 
 	if (this->pos + len >= this->str->len)
 	{
-		throw InputStreamException("End reached, but try to read an image", __FILE__,
-		                           __LINE__);
+		throw InputStreamException("End reached, but try to read an image", __FILE__, __LINE__);
 	}
 
 	PngDatasource source(this->str->str + this->pos, len);
 	//cairo_surface_t * img = cairo_image_surface_create_from_png_stream((cairo_read_func_t) cairoReadFunction, &source);
-	cairo_surface_t* img = cairo_image_surface_create_from_png_stream((
-	                                                                      cairo_read_func_t) &cairoReadFunction, &source);
+	cairo_surface_t* img = cairo_image_surface_create_from_png_stream((cairo_read_func_t) &cairoReadFunction, &source);
 
 	this->pos += len;
 
 	return img;
 }
 
-ObjectInputStream& ObjectInputStream::operator >>(Serializeable* s) throw (
-    InputStreamException)
+ObjectInputStream& ObjectInputStream::operator>>(Serializeable* s)
+	throw (InputStreamException)
 {
 	XOJ_CHECK_TYPE(ObjectInputStream);
 
@@ -280,31 +268,29 @@ void ObjectInputStream::checkType(char type) throw (InputStreamException)
 
 	if (this->pos + 2 > this->str->len)
 	{
-		throw INPUT_STREAM_EXCEPTION("End reached, but try to read %s, index %i of %ld",
-		                             getType(type).c_str(), this->pos, this->str->len);
+		throw INPUT_STREAM_EXCEPTION("End reached, but try to read {1}, index {2} of {3}",
+									 getType(type), this->pos, this->str->len);
 	}
 	if (this->str->str[this->pos] != '_')
 	{
-		throw INPUT_STREAM_EXCEPTION("Expected type signature of %s, index %i of %ld, but read '%c'",
-		                             getType(type).c_str(), this->pos, this->str->len, this->str->str[this->pos]);
+		throw INPUT_STREAM_EXCEPTION("Expected type signature of {1}, index {2} of {3}, but read '{4}'",
+									 getType(type), this->pos, this->str->len, this->str->str[this->pos]);
 	}
 	this->pos++;
 
 	if (this->str->str[this->pos] != type)
 	{
-		throw INPUT_STREAM_EXCEPTION("Expected %s but read %s", getType(type).c_str(),
-		                             getType(
-		                                 this->str->str[this->pos]).c_str());
+		throw INPUT_STREAM_EXCEPTION("Expected {1} but read {2}", getType(type), getType(this->str->str[this->pos]));
 	}
 
 	this->pos++;
 }
 
-String ObjectInputStream::getType(char type)
+string ObjectInputStream::getType(char type)
 {
 	XOJ_CHECK_TYPE(ObjectInputStream);
 
-	String ret;
+	string ret;
 	if (type == '{')
 	{
 		ret = "Object begin";

@@ -3,37 +3,34 @@
  *
  * Undo action for text editing
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __TEXTUNDOACTION_H__
-#define __TEXTUNDOACTION_H__
+#pragma once
 
 #include "UndoAction.h"
 
 class Layer;
-class Text;
 class Redrawable;
+class Text;
 class TextEditor;
 
-class TextUndoAction: public UndoAction
+class TextUndoAction : public UndoAction
 {
 public:
-	TextUndoAction(PageRef page, Layer* layer,
-	               Text* text, String lastText,
-	               TextEditor* textEditor);
+	TextUndoAction(PageRef page, Layer* layer, Text* text, string lastText, TextEditor* textEditor);
 	virtual ~TextUndoAction();
 
 public:
 	virtual bool undo(Control* control);
 	virtual bool redo(Control* control);
 
-	virtual String getText();
+	virtual string getText();
 
-	String getUndoText();
+	string getUndoText();
 
 	void textEditFinished();
 
@@ -42,10 +39,8 @@ private:
 
 	Layer* layer;
 	Text* text;
-	String lastText;
-	String newText;
+	string lastText;
+	string newText;
 
 	TextEditor* textEditor;
 };
-
-#endif /* __TEXTUNDOACTION_H__ */

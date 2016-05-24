@@ -1,4 +1,5 @@
 #include "PdfCache.h"
+
 #include <stdio.h>
 
 class PdfCacheEntry
@@ -11,6 +12,7 @@ public:
 		this->popplerPage = popplerPage;
 		this->rendered = img;
 	}
+
 	~PdfCacheEntry()
 	{
 		XOJ_CHECK_TYPE(PdfCacheEntry);
@@ -32,7 +34,6 @@ PdfCache::PdfCache(int size)
 {
 	XOJ_INIT_TYPE(PdfCache);
 
-	this->data = NULL;
 	this->size = size;
 	this->zoom = -1;
 
@@ -66,22 +67,19 @@ void PdfCache::clearCache()
 {
 	XOJ_CHECK_TYPE(PdfCache);
 
-	for (GList* l = this->data; l != NULL; l = l->next)
+	for (PdfCacheEntry* e : this->data)
 	{
-		PdfCacheEntry* e = (PdfCacheEntry*) l->data;
 		delete e;
 	}
-	g_list_free(this->data);
-	this->data = NULL;
+	this->data.clear();
 }
 
 cairo_surface_t* PdfCache::lookup(XojPopplerPage* popplerPage)
 {
 	XOJ_CHECK_TYPE(PdfCache);
 
-	for (GList* l = this->data; l != NULL; l = l->next)
+	for (PdfCacheEntry* e : this->data)
 	{
-		PdfCacheEntry* e = (PdfCacheEntry*) l->data;
 		XOJ_CHECK_TYPE_OBJ(e, PdfCacheEntry);
 		if (e->popplerPage == popplerPage)
 		{
@@ -97,22 +95,12 @@ void PdfCache::cache(XojPopplerPage* popplerPage, cairo_surface_t* img)
 	XOJ_CHECK_TYPE(PdfCache);
 
 	PdfCacheEntry* ne = new PdfCacheEntry(popplerPage, img);
-	this->data = g_list_insert(this->data, ne, 0);
-	int i = 0;
-	for (GList* l = this->data; l != NULL; i++)
+	this->data.push_front(ne);
+	
+	while (this->data.size() > this->size)
 	{
-		PdfCacheEntry* e = (PdfCacheEntry*) l->data;
-		XOJ_CHECK_TYPE_OBJ(e, PdfCacheEntry);
-
-		GList* le = l;
-
-		l = l->next;
-
-		if (i >= this->size)
-		{
-			delete e;
-			this->data = g_list_delete_link(this->data, le);
-		}
+		delete this->data.back();
+		this->data.pop_back();
 	}
 }
 
@@ -128,7 +116,7 @@ void PdfCache::render(cairo_t* cr, XojPopplerPage* popplerPage, double zoom)
 	if (img == NULL)
 	{
 		img = cairo_image_surface_create(CAIRO_FORMAT_ARGB32,
-		                                 popplerPage->getWidth() * this->zoom, popplerPage->getHeight() * this->zoom);
+										 popplerPage->getWidth() * this->zoom, popplerPage->getHeight() * this->zoom);
 		cairo_t* cr2 = cairo_create(img);
 
 		cairo_scale(cr2, this->zoom, this->zoom);

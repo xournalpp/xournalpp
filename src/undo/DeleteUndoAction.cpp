@@ -1,12 +1,14 @@
 #include "DeleteUndoAction.h"
-#include "../model/Layer.h"
-#include "../model/Element.h"
-#include "../model/PageRef.h"
-#include "../gui/Redrawable.h"
+
+#include "gui/Redrawable.h"
+#include "model/Element.h"
+#include "model/Layer.h"
+#include "model/PageRef.h"
 #include "PageLayerPosEntry.h"
 
-DeleteUndoAction::DeleteUndoAction(PageRef page,
-                                   bool eraser) : UndoAction("DeleteUndoAction")
+#include <i18n.h>
+
+DeleteUndoAction::DeleteUndoAction(PageRef page, bool eraser) : UndoAction("DeleteUndoAction")
 {
 	XOJ_INIT_TYPE(DeleteUndoAction);
 
@@ -31,16 +33,15 @@ DeleteUndoAction::~DeleteUndoAction()
 	g_list_free(this->elements);
 
 	XOJ_RELEASE_TYPE(DeleteUndoAction)
-	;
+			;
 }
 
 void DeleteUndoAction::addElement(Layer* layer, Element* e, int pos)
 {
 	XOJ_CHECK_TYPE(DeleteUndoAction);
 
-	this->elements = g_list_insert_sorted(this->elements,
-	                                      new PageLayerPosEntry<Element> (layer, e, pos),
-	                                      (GCompareFunc) PageLayerPosEntry<Element>::cmp);
+	this->elements = g_list_insert_sorted(this->elements, new PageLayerPosEntry<Element> (layer, e, pos),
+										  (GCompareFunc) PageLayerPosEntry<Element>::cmp);
 }
 
 bool DeleteUndoAction::undo(Control* control)
@@ -90,11 +91,11 @@ bool DeleteUndoAction::redo(Control* control)
 	return true;
 }
 
-String DeleteUndoAction::getText()
+string DeleteUndoAction::getText()
 {
 	XOJ_CHECK_TYPE(DeleteUndoAction);
 
-	String text;
+	string text;
 
 	if (eraser)
 	{
@@ -106,8 +107,7 @@ String DeleteUndoAction::getText()
 
 		if (this->elements != NULL)
 		{
-			ElementType type = ((PageLayerPosEntry<Element>*)
-			                    this->elements->data)->element->getType();
+			ElementType type = ((PageLayerPosEntry<Element>*) this->elements->data)->element->getType();
 
 			for (GList* l = this->elements->next; l != NULL; l = l->next)
 			{

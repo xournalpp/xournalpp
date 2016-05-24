@@ -1,0 +1,65 @@
+/*
+ * Xournal++
+ *
+ * Static definitions for Xournal++
+ *
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
+ *
+ * @license GNU GPLv2 or later
+ */
+
+#pragma once
+
+/**
+ * Xournal++ config dir, relative to user's home dir
+ */
+#define CONFIG_DIR "@DEV_CONFIG_DIR@"
+
+/**
+ * Toolbar config file name
+ */
+#define TOOLBAR_CONFIG "@DEV_TOOLBAR_CONFIG@"
+
+/**
+ * Settings file name
+ */
+#define SETTINGS_XML_FILE "@DEV_SETTINGS_XML_FILE@"
+
+/**
+ * Print config file name
+ */
+#define PRINT_CONFIG_FILE "@DEV_PRINT_CONFIG_FILE@"
+
+/**
+ * Metadata file name
+ */
+#define METADATA_FILE "@DEV_METADATA_FILE@"
+
+/**
+ * Maximal amount of metadata elements
+ */
+#define METADATA_MAX_ITEMS @DEV_METADATA_MAX_ITEMS@
+
+/**
+ * Directory where errorlogfiles will be placed
+ */
+#define ERRORLOG_DIR "@DEV_ERRORLOG_DIR@"
+
+
+/* --- Memory checks and logging --- */
+
+/**
+ * Compile with memory checking support
+ */
+#cmakedefine DEV_MEMORY_CHECKING
+
+/**
+ * Compile with memory leak checking support
+ */
+#cmakedefine DEV_MEMORY_LEAK_CHECKING
+
+/**
+ * Compile with call log
+ */
+#cmakedefine DEV_CALL_LOG

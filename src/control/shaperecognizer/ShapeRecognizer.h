@@ -3,20 +3,20 @@
  *
  * Xournal Shape recognizer
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __SHAPERECOGNIZER_H__
-#define __SHAPERECOGNIZER_H__
+#pragma once
 
+#include "CircleRecognizer.h"
 #include "RecoSegment.h"
 #include "ShapeRecognizerConfig.h"
-#include "CircleRecognizer.h"
 
 #include <XournalType.h>
+
 #include <glib.h>
 
 class Stroke;
@@ -38,8 +38,7 @@ private:
 	Stroke* tryClosedPolygon(int nsides);
 	void optimizePolygonal(const Point* pt, int nsides, int* breaks, Inertia* ss);
 
-	int findPolygonal(const Point* pt, int start, int end, int nsides, int* breaks,
-	                  Inertia* ss);
+	int findPolygonal(const Point* pt, int start, int end, int nsides, int* breaks, Inertia* ss);
 
 private:
 	XOJ_TYPE_ATTRIB;
@@ -51,5 +50,3 @@ private:
 
 	friend class ShapeRecognizerResult;
 };
-
-#endif /* __SHAPERECOGNIZER_H__ */

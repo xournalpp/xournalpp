@@ -3,14 +3,13 @@
  *
  * Position entry for undo / redo handling
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __PAGELAYERPOSENTRY_H__
-#define __PAGELAYERPOSENTRY_H__
+#pragma once
 
 template<class T>
 class PageLayerPosEntry
@@ -18,13 +17,22 @@ class PageLayerPosEntry
 public:
 	PageLayerPosEntry(Layer* layer, T* element, int pos)
 	{
+		XOJ_INIT_TYPE(PageLayerPosEntry);
+		
 		this->element = element;
 		this->pos = pos;
 		this->layer = layer;
 	}
+	
+	~PageLayerPosEntry()
+	{
+		XOJ_RELEASE_TYPE(PageLayerPosEntry);
+	}
 
+private:
 	XOJ_TYPE_ATTRIB;
 
+public:
 	Layer* layer;
 	T* element;
 	int pos;
@@ -34,5 +42,3 @@ public:
 		return a->pos - b->pos;
 	}
 };
-
-#endif /* __PAGELAYERPOSENTRY_H__ */

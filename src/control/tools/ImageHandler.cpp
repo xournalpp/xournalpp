@@ -1,10 +1,13 @@
 #include "ImageHandler.h"
-#include "../Control.h"
-#include "../../gui/PageView.h"
-#include "../../model/Image.h"
-#include "../../model/Layer.h"
-#include "../../undo/InsertUndoAction.h"
-#include "../stockdlg/ImageOpenDlg.h"
+
+#include "control/Control.h"
+#include "control/stockdlg/ImageOpenDlg.h"
+#include "gui/PageView.h"
+#include "model/Image.h"
+#include "model/Layer.h"
+#include "undo/InsertUndoAction.h"
+
+#include <i18n.h>
 
 ImageHandler::ImageHandler(Control* control, PageView* view)
 {
@@ -23,9 +26,8 @@ bool ImageHandler::insertImage(double x, double y)
 {
 	XOJ_CHECK_TYPE(ImageHandler);
 
-	GFile* file = ImageOpenDlg::show((GtkWindow*) *control->getWindow(),
-	                                 control->getSettings());
-	if(file == NULL)
+	GFile* file = ImageOpenDlg::show((GtkWindow*) *control->getWindow(), control->getSettings());
+	if (file == NULL)
 	{
 		return false;
 	}
@@ -51,10 +53,9 @@ bool ImageHandler::insertImage(GFile* file, double x, double y)
 	else
 	{
 		GtkWidget* dialog = gtk_message_dialog_new((GtkWindow*) *control->getWindow(),
-		                                           GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
-		                                           _("This image could not be loaded. Error message: %s"), err->message);
-		gtk_window_set_transient_for(GTK_WINDOW(dialog),
-		                             GTK_WINDOW(this->control->getWindow()->getWindow()));
+												   GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, "%s",
+												   FC(_F("This image could not be loaded. Error message: {1}") % err->message));
+		gtk_window_set_transient_for(GTK_WINDOW(dialog), GTK_WINDOW(this->control->getWindow()->getWindow()));
 		gtk_dialog_run(GTK_DIALOG(dialog));
 		gtk_widget_destroy(dialog);
 		g_error_free(err);
@@ -94,9 +95,7 @@ bool ImageHandler::insertImage(GFile* file, double x, double y)
 
 	page->getSelectedLayer()->addElement(img);
 
-	InsertUndoAction* insertUndo = new InsertUndoAction(page,
-	                                                    page->getSelectedLayer(),
-	                                                    img);
+	InsertUndoAction* insertUndo = new InsertUndoAction(page, page->getSelectedLayer(), img);
 	control->getUndoRedoHandler()->addUndoAction(insertUndo);
 
 	view->rerenderElement(img);

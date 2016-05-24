@@ -3,25 +3,28 @@
  *
  * Handles PDF Export
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __PDFEXPORT_H__
-#define __PDFEXPORT_H__
+#pragma once
 
-#include "../../model/Document.h"
-#include <String.h>
-#include "../../control/jobs/ProgressListener.h"
-#include "../cairo/CairoPdf.h"
-#include "PdfXRef.h"
 #include "PdfBookmark.h"
-#include "PdfWriter.h"
-#include "PdfRefList.h"
 #include "PdfObjectWriter.h"
+#include "PdfRefList.h"
+#include "PdfWriter.h"
+#include "PdfXRef.h"
+
+#include "control/jobs/ProgressListener.h"
+#include "model/Document.h"
+#include "pdf/cairo/CairoPdf.h"
+
+#include <StringUtils.h>
+
 #include <glib.h>
+#include <vector>
 
 class PdfExport
 {
@@ -30,9 +33,9 @@ public:
 	virtual ~PdfExport();
 
 public:
-	bool createPdf(String uri);
-	bool createPdf(String uri, GList* range);
-	String getLastError();
+	bool createPdf(path file);
+	bool createPdf(path file, GList* range);
+	string getLastError();
 
 private:
 	void addPopplerDocument(XojPopplerDocument doc);
@@ -63,7 +66,7 @@ private:
 
 	ProgressListener* progressListener;
 
-	String lastError;
+	string lastError;
 
 	int dataXrefStart;
 
@@ -73,7 +76,7 @@ private:
 
 	Dict* resources;
 
-	GList* documents;
+	std::vector<XojPopplerDocument*> documents;
 
 	GHashTable* refListsOther;
 
@@ -84,5 +87,3 @@ private:
 
 	CairoPdf cPdf;
 };
-
-#endif /* __PDFEXPORT_H__ */

@@ -5,27 +5,28 @@
  *
  * All methods are unlocked, you need to lock the document before you change something and unlock after.
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __DOCUMENT_H__
-#define __DOCUMENT_H__
-
-#include <String.h>
-#include <XournalType.h>
-
-#include "PageRef.h"
-#include "LinkDestination.h"
-
-#include "../pdf/popplerdirect/poppler/XojPopplerDocument.h"
-#include "../pdf/popplerdirect/poppler/XojPopplerPage.h"
-#include "../pdf/popplerdirect/poppler/XojPopplerIter.h"
-#include "../pdf/popplerdirect/poppler/XojPopplerAction.h"
+#pragma once
 
 #include "DocumentHandler.h"
+#include "LinkDestination.h"
+#include "PageRef.h"
+
+#include "pdf/popplerdirect/poppler/XojPopplerDocument.h"
+#include "pdf/popplerdirect/poppler/XojPopplerPage.h"
+#include "pdf/popplerdirect/poppler/XojPopplerIter.h"
+#include "pdf/popplerdirect/poppler/XojPopplerAction.h"
+
+#include <StringUtils.h>
+#include <XournalType.h>
+
+#include <boost/filesystem/path.hpp>
+using boost::filesystem::path;
 
 #include <vector>
 
@@ -36,34 +37,34 @@ public:
 	virtual ~Document();
 
 public:
-	bool readPdf(String filename, bool initPages, bool attachToDocument);
+	bool readPdf(path filename, bool initPages, bool attachToDocument);
 
-	int getPageCount();
-	int getPdfPageCount();
-	XojPopplerPage* getPdfPage(int page);
+	size_t getPageCount();
+	size_t getPdfPageCount();
+	XojPopplerPage* getPdfPage(size_t page);
 	XojPopplerDocument& getPdfDocument();
 
-	void insertPage(PageRef p, int position);
+	void insertPage(PageRef p, size_t position);
 	void addPage(PageRef p);
-	PageRef getPage(int page);
-	void deletePage(int pNr);
+	PageRef getPage(size_t page);
+	void deletePage(size_t pNr);
 
 	void setPageSize(PageRef p, double width, double height);
 
-	int indexOf(PageRef page);
+	size_t indexOf(PageRef page);
 
-	String getLastErrorMsg();
+	string getLastErrorMsg();
 
 	bool isPdfDocumentLoaded();
-	int findPdfPage(int pdfPage);
+	size_t findPdfPage(size_t pdfPage);
 
 	void operator=(Document& doc);
 
-	void setFilename(String filename);
-	String getFilename();
-	String getPdfFilename();
+	void setFilename(path filename);
+	path getFilename();
+	path getPdfFilename();
 
-	String getEvMetadataFilename();
+	path getEvMetadataFilename();
 
 	GtkTreeModel* getContentsModel();
 
@@ -85,8 +86,7 @@ private:
 	void buildContentsModel();
 	void buildTreeContentsModel(GtkTreeIter* parent, XojPopplerIter* iter);
 	void updateIndexPageNumbers();
-	static bool fillPageLabels(GtkTreeModel* tree_model, GtkTreePath* path,
-	                           GtkTreeIter* iter, Document* doc);
+	static bool fillPageLabels(GtkTreeModel* tree_model, GtkTreePath* path, GtkTreeIter* iter, Document* doc);
 
 private:
 	XOJ_TYPE_ATTRIB;
@@ -96,16 +96,16 @@ private:
 
 	XojPopplerDocument pdfDocument;
 
-	String filename;
-	String pdfFilename;
+	path filename;
+	path pdfFilename;
 	bool attachPdf;
 
 	/**
-	 * Password: not handled yet
+	 *  Password: not handled yet
 	 */
-	String password;
+	string password;
 
-	String lastError;
+	string lastError;
 
 	/**
 	 * The pages in the document
@@ -118,7 +118,7 @@ private:
 	GtkTreeModel* contentsModel;
 
 	/**
-	 * create a backup before save, because the original file was an older fileversion
+	 *  create a backup before save, because the original file was an older fileversion
 	 */
 	bool createBackupOnSave;
 
@@ -132,5 +132,3 @@ private:
 	 */
 	GMutex documentLock;
 };
-
-#endif /* __DOCUMENT_H__ */

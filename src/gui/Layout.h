@@ -3,18 +3,18 @@
  *
  * Handles the layout of the pages within a Xournal document
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __LAYOUT_H__
-#define __LAYOUT_H__
+#pragma once
+
+#include "widgets/Scrollbar.h" // because of extends ScrollbarListener
+#include <XournalType.h>
 
 #include <gtk/gtk.h>
-#include <XournalType.h>
-#include "widgets/Scrollbar.h" // because of extends ScrollbarListener
 
 class PageView;
 class XournalView;
@@ -30,7 +30,7 @@ public:
 	void scrollRelativ(int x, int y);
 	bool scrollEvent(GdkEventScroll* event);
 	void ensureRectIsVisible(int x, int y, int width, int height);
-	double getVisiblePageTop(int page);
+	double getVisiblePageTop(size_t page);
 	double getDisplayHeight();
 
 	void layoutPages();
@@ -73,5 +73,3 @@ private:
 	int layoutWidth;
 	int layoutHeight;
 };
-
-#endif /* __LAYOUT_H__ */

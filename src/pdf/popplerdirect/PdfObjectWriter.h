@@ -3,20 +3,19 @@
  *
  * Handles PDF Export
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __PDFOBJECTWRITER_H__
-#define __PDFOBJECTWRITER_H__
-
-#include "poppler/XojPopplerDocument.h"
-#include "poppler-0.24.1/poppler/Object.h"
+#pragma once
 
 #include "PdfWriter.h"
 #include "PdfXRef.h"
+
+#include "poppler/XojPopplerDocument.h"
+#include <poppler/Object.h>
 
 class PdfObjectWriter
 {
@@ -40,5 +39,3 @@ private:
 
 	GHashTable* updatedReferenced;
 };
-
-#endif /* __PDFOBJECTWRITER_H__ */

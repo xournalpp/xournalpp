@@ -3,25 +3,26 @@
  *
  * Undo action for font changes
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __FONTUNDOACTION_H__
-#define __FONTUNDOACTION_H__
+#pragma once
 
 #include "UndoAction.h"
-#include <glib.h>
 #include <XournalType.h>
 
+#include <vector>
+
+class FontUndoActionEntry;
 class Layer;
 class Redrawable;
 class Text;
 class XojFont;
 
-class FontUndoAction: public UndoAction
+class FontUndoAction : public UndoAction
 {
 public:
 	FontUndoAction(PageRef page, Layer* layer);
@@ -30,17 +31,14 @@ public:
 public:
 	virtual bool undo(Control* control);
 	virtual bool redo(Control* control);
-	virtual String getText();
+	virtual string getText();
 
 	void addStroke(Text* e, XojFont& oldFont, XojFont& newFont);
 
 private:
 	XOJ_TYPE_ATTRIB;
 
-
-	GList* data;
+	std::vector<FontUndoActionEntry*> data;
 
 	Layer* layer;
 };
-
-#endif /* __FONTUNDOACTION_H__ */

@@ -1,10 +1,12 @@
 #include "CopyUndoAction.h"
-#include "../model/PageRef.h"
-#include "../control/Control.h"
-#include "../gui/Cursor.h"
 
-CopyUndoAction::CopyUndoAction(PageRef pageref, int pageNr)
-	: UndoAction("CopyUndoAction")
+#include "control/Control.h"
+#include "gui/Cursor.h"
+#include "model/PageRef.h"
+
+#include <i18n.h>
+
+CopyUndoAction::CopyUndoAction(PageRef pageref, int pageNr) : UndoAction("CopyUndoAction")
 {
 	XOJ_INIT_TYPE(CopyUndoAction);
 
@@ -27,9 +29,9 @@ bool CopyUndoAction::undo(Control* control)
 
 	Document* doc = control->getDocument();
 
-	//in order to fix the hang, we need to get out
-	//of text mode
-	//***This might kill whatever we've got selected
+	// in order to fix the hang, we need to get out
+	// of text mode
+	// ***This might kill whatever we've got selected
 	control->clearSelectionEndText();
 
 	// first send event, then delete page...
@@ -51,27 +53,27 @@ bool CopyUndoAction::redo(Control* control)
 
 	Document* doc = control->getDocument();
 
-	//just in case there would be a hang here,
-	//we'll clear the selection in redo as well
+	// just in case there would be a hang here,
+	// we'll clear the selection in redo as well
 	control->clearSelectionEndText();
 
-	//see deletePage for why this is done
-	//doc->lock();
+	// see deletePage for why this is done
+	// doc->lock();
 	doc->insertPage(this->page, this->pageNr);
 	doc->unlock();
 
-	//these are all threadsafe (I think...)
+	// these are all threadsafe (I think...)
 	control->firePageInserted(this->pageNr);
 	control->getCursor()->updateCursor();
 	control->getScrollHandler()->scrollToPage(this->pageNr);
 	control->updateDeletePageButton();
 
-	//this prevents the double unlock
+	// this prevents the double unlock
 	doc->lock();
 	return true;
 }
 
-String CopyUndoAction::getText()
+string CopyUndoAction::getText()
 {
 	XOJ_CHECK_TYPE(CopyUndoAction);
 

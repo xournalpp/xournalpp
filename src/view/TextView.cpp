@@ -1,16 +1,16 @@
 #include "TextView.h"
-#include "../model/Text.h"
-#include <string.h>
-#include "../pdf/popplerdirect/poppler/XojPopplerPage.h"
-#include "../control/settings/Settings.h"
 
-TextView::TextView()
-{
-}
+#include "control/settings/Settings.h"
+#include "model/Text.h"
+#include "pdf/popplerdirect/poppler/XojPopplerPage.h"
 
-TextView::~TextView()
-{
-}
+#include <Util.h>
+
+#include <boost/locale.hpp>
+
+TextView::TextView() { }
+
+TextView::~TextView() { }
 
 PangoLayout* TextView::initPango(cairo_t* cr, Text* t)
 {
@@ -31,11 +31,8 @@ PangoLayout* TextView::initPango(cairo_t* cr, Text* t)
 int TextView::getDPI()
 {
 	static int myDPI;
-	if(myDPI != 0)
-		return myDPI;
-	String settingsname = String::format("%s%c%s%c%s", g_get_home_dir(), G_DIR_SEPARATOR,
-			CONFIG_DIR, G_DIR_SEPARATOR,
-			SETTINGS_XML_FILE);
+	if (myDPI != 0) return myDPI;
+	string settingsname = Util::getConfigFile(SETTINGS_XML_FILE).string();
 	Settings* mySettings = new Settings(settingsname);
 	mySettings->load();
 	myDPI = mySettings->getDisplayDpi();
@@ -45,10 +42,8 @@ int TextView::getDPI()
 
 void TextView::updatePangoFont(PangoLayout* layout, Text* t)
 {
-	PangoFontDescription* desc = pango_font_description_from_string(
-	                                 t->getFont().getName().c_str());
-	//pango_font_description_set_absolute_size(desc,
-	//                                         t->getFont().getSize() * PANGO_SCALE);
+	PangoFontDescription* desc = pango_font_description_from_string(t->getFont().getName().c_str());
+	//pango_font_description_set_absolute_size(desc, t->getFont().getSize() * PANGO_SCALE);
 	pango_font_description_set_size(desc, t->getFont().getSize() * PANGO_SCALE);
 
 	pango_layout_set_font_description(layout, desc);
@@ -62,8 +57,8 @@ void TextView::drawText(cairo_t* cr, Text* t)
 	cairo_translate(cr, t->getX(), t->getY());
 
 	PangoLayout* layout = initPango(cr, t);
-	String str = t->getText();
-	pango_layout_set_text(layout, str.c_str(), str.size());
+	string str = t->getText();
+	pango_layout_set_text(layout, str.c_str(), str.length());
 
 	pango_cairo_show_layout(cr, layout);
 
@@ -72,27 +67,26 @@ void TextView::drawText(cairo_t* cr, Text* t)
 	cairo_restore(cr);
 }
 
-GList* TextView::findText(Text* t, const char* search)
+GList* TextView::findText(Text* t, string& search)
 {
-	cairo_surface_t* surface = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, 1,
-	                                                      1);
+	cairo_surface_t* surface = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, 1, 1);
 	cairo_t* cr = cairo_create(surface);
 
 	GList* list = NULL;
 
 	PangoLayout* layout = initPango(cr, t);
-	String str = t->getText();
-	pango_layout_set_text(layout, str.c_str(), str.size());
+	string str = t->getText();
+	pango_layout_set_text(layout, str.c_str(), str.length());
 
 	int pos = -1;
 
-	String text = t->getText();
+	string text = t->getText();
 
-	String srch = search;
+	string srch = bl::to_lower(search);
 
 	do
 	{
-		pos = text.indexOfCaseInsensitiv(srch, pos + 1);
+		pos = bl::to_lower(text).find(srch, pos + 1);
 		if (pos != -1)
 		{
 			XojPopplerRectangle* mark = new XojPopplerRectangle();
@@ -119,15 +113,14 @@ GList* TextView::findText(Text* t, const char* search)
 
 void TextView::calcSize(Text* t, double& width, double& height)
 {
-	cairo_surface_t* surface = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, 1,
-	                                                      1);
+	cairo_surface_t* surface = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, 1, 1);
 	cairo_t* cr = cairo_create(surface);
 
 
 	// TODO OPTIMIZE: cache the pango layout, check the size of pango layout first
 	PangoLayout* layout = initPango(cr, t);
-	String str = t->getText();
-	pango_layout_set_text(layout, str.c_str(), str.size());
+	string str = t->getText();
+	pango_layout_set_text(layout, str.c_str(), str.length());
 	int w = 0;
 	int h = 0;
 	pango_layout_get_size(layout, &w, &h);

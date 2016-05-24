@@ -3,25 +3,26 @@
  *
  * Input stream exception
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __INPUTSTREAMEXCEPTION_H__
-#define __INPUTSTREAMEXCEPTION_H__
+#pragma once
 
-#include <String.h>
+#include <StringUtils.h>
+#include <XournalType.h>
+
 #include <exception>
 
 #define INPUT_STREAM_EXCEPTION(description, ...) \
-	InputStreamException(String::format(description, __VA_ARGS__), __FILE__, __LINE__); \
-	 
-class InputStreamException: public std::exception
+	InputStreamException(StringUtils::lformat(description, __VA_ARGS__), __FILE__, __LINE__); \
+
+class InputStreamException : public std::exception
 {
 public:
-	InputStreamException(String message, const char* filename, int line);
+	InputStreamException(string message, string filename, int line);
 	virtual ~InputStreamException() throw ();
 
 public:
@@ -30,7 +31,5 @@ public:
 private:
 	XOJ_TYPE_ATTRIB;
 
-	String message;
+	string message;
 };
-
-#endif /* __INPUTSTREAMEXCEPTION_H__ */

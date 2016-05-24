@@ -1,0 +1,35 @@
+#!/bin/bash
+
+srcdir=@PROJECT_SOURCE_DIR@
+desktopdir=@PACKAGE_DATA_DIR@
+
+if test "$1" = "install"; then
+  mkdir -p ${desktopdir}/icons/hicolor/scalable/apps
+  mkdir -p ${desktopdir}/icons/hicolor/scalable/mimetypes
+  mkdir -p ${desktopdir}/mime/packages
+  mkdir -p ${desktopdir}/applications
+  mkdir -p /usr/share/mimelnk/application
+
+  cp -f ${srcdir}/ui/pixmaps/xournalpp.svg ${desktopdir}/icons/hicolor/scalable/apps
+  cp -f ${srcdir}/ui/pixmaps/xoj.svg ${desktopdir}/icons/hicolor/scalable/mimetypes
+  if test ! -e ${desktopdir}/icons/hicolor/scalable/mimetypes/gnome-mime-application-x-xoj.svg; then
+    ln -s ${desktopdir}/icons/hicolor/scalable/mimetypes/xoj.svg ${desktopdir}/icons/hicolor/scalable/mimetypes/gnome-mime-application-x-xoj.svg
+  fi
+
+  cp -f ${srcdir}/desktop/xournal.xml ${desktopdir}/mime/packages
+  cp -f ${srcdir}/desktop/xournalpp.desktop ${desktopdir}/applications
+  cp -f ${srcdir}/desktop/x-xoj.desktop /usr/share/mimelnk/application
+else
+  rm -f ${desktopdir}/icons/hicolor/scalable/apps/xournalpp.svg
+  rm -f ${desktopdir}/icons/hicolor/scalable/mimetypes/xoj.svg
+  rm -f ${desktopdir}/icons/hicolor/scalable/mimetypes/gnome-mime-application-x-xoj.svg
+  
+  rm -f ${desktopdir}/mime/packages/xournal.xml
+  rm -f ${desktopdir}/applications/xournalpp.desktop
+  rm -f /usr/share/mimelnk/application/x-xoj.desktop
+fi
+
+echo "Updating desktop, mime, and icon databases.";
+update-desktop-database;
+update-mime-database ${desktopdir}/mime;
+gtk-update-icon-cache -f -t ${desktopdir}/icons/hicolor;

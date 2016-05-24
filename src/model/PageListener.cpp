@@ -1,4 +1,5 @@
 #include "PageListener.h"
+
 #include "PageHandler.h"
 
 PageListener::PageListener()
@@ -34,4 +35,3 @@ void PageListener::unregisterListener()
 		this->handler->removeListener(this);
 	}
 }
-

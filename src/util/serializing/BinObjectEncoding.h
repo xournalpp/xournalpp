@@ -3,18 +3,17 @@
  *
  * Binary encoded serialized stream
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __BINOBJECTENCODING_H__
-#define __BINOBJECTENCODING_H__
+#pragma once
 
 #include "ObjectEncoding.h"
 
-class BinObjectEncoding: public ObjectEncoding
+class BinObjectEncoding : public ObjectEncoding
 {
 public:
 	BinObjectEncoding();
@@ -26,5 +25,3 @@ public:
 private:
 	XOJ_TYPE_ATTRIB;
 };
-
-#endif /* __BINOBJECTENCODING_H__ */

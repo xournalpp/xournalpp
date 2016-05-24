@@ -3,26 +3,25 @@
  *
  * XML Writer helper class
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __XMLSTROKENODE_H__
-#define __XMLSTROKENODE_H__
+#pragma once
 
 #include "XmlNode.h"
-#include "../../model/Point.h"
+#include "model/Point.h"
 
-class XmlStrokeNode: public XmlNode
+class XmlStrokeNode : public XmlNode
 {
 public:
 	XmlStrokeNode(const char* tag);
 	virtual ~XmlStrokeNode();
 
 public:
-	void setPoints(Point* points, int pointLength);
+	void setPoints(Point* points, int pointsLength);
 	void setWidth(double width, double* widths, int widthsLength);
 
 	virtual void writeOut(OutputStream* out);
@@ -31,12 +30,10 @@ private:
 	XOJ_TYPE_ATTRIB;
 
 	Point* points;
-	int pointLength;
+	int pointsLength;
 
 	double width;
 
 	double* widths;
 	int widthsLength;
 };
-
-#endif /* __XMLSTROKENODE_H__ */

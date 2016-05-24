@@ -3,18 +3,17 @@
  *
  * XML Writer helper class
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __XMLTEXTNODE_H__
-#define __XMLTEXTNODE_H__
+#pragma once
 
 #include "XmlNode.h"
 
-class XmlTextNode: public XmlNode
+class XmlTextNode : public XmlNode
 {
 public:
 	XmlTextNode(const char* tag, const char* text);
@@ -31,5 +30,3 @@ private:
 
 	char* text;
 };
-
-#endif /* __XMLTEXTNODE_H__ */

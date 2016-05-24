@@ -1,12 +1,12 @@
 #include "SwapUndoAction.h"
-#include "model/Document.h"
-#include "control/Control.h"
 
-SwapUndoAction::SwapUndoAction(int pageNr,
-                               bool moveUp,
-                               PageRef swapped_page,
-                               PageRef other_page)
-	: UndoAction("SwapUndoAction")
+#include "control/Control.h"
+#include "model/Document.h"
+
+#include <i18n.h>
+
+SwapUndoAction::SwapUndoAction(size_t pageNr, bool moveUp, PageRef swapped_page, PageRef other_page) :
+		UndoAction("SwapUndoAction")
 {
 	XOJ_INIT_TYPE(SwapUndoAction);
 
@@ -51,10 +51,10 @@ void SwapUndoAction::swap(Control* control)
 
 	doc->unlock();
 
-	gint insertPos = this->pageNr,
-	     deletePos = this->pageNr + 1;
+	gint insertPos = this->pageNr;
+	gint deletePos = this->pageNr + 1;
 
-	if(moveUp != this->undone)
+	if (moveUp != this->undone)
 	{
 		std::swap(insertPos, deletePos);
 	}
@@ -82,7 +82,7 @@ XojPage** SwapUndoAction::getPages()
 	return pages;
 }
 
-String SwapUndoAction::getText()
+string SwapUndoAction::getText()
 {
 	XOJ_CHECK_TYPE(SwapUndoAction);
 

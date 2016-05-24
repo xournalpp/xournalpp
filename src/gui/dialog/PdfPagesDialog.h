@@ -3,24 +3,28 @@
  *
  * Dialog to select a PDF page (to insert as background)
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
-#ifndef __PDFPAGESDIALOG_H__
-#define __PDFPAGESDIALOG_H__
 
-#include "../GladeGui.h"
-#include "../../model/Document.h"
-#include "../../control/settings/Settings.h"
+#pragma once
+
+#include "control/settings/Settings.h"
+#include "gui/GladeGui.h"
+#include "model/Document.h"
+
 #include <XournalType.h>
 
-class PdfPagesDialog: public GladeGui
+#include <vector>
+
+class PdfPage;
+
+class PdfPagesDialog : public GladeGui
 {
 public:
-	PdfPagesDialog(GladeSearchpath* gladeSearchPath, Document* doc,
-	               Settings* settings);
+	PdfPagesDialog(GladeSearchpath* gladeSearchPath, Document* doc, Settings* settings);
 	virtual ~PdfPagesDialog();
 
 public:
@@ -29,11 +33,11 @@ public:
 	void setBackgroundWhite();
 	double getZoom();
 
-	void setSelected(int selected);
+	void setSelected(size_t selected);
 
-	void setPageUsed(int page);
+	void setPageUsed(size_t page);
 
-	int getSelectedPage();
+	size_t getSelectedPage();
 
 	Settings* getSettings();
 
@@ -41,8 +45,7 @@ private:
 	void layout();
 	void updateOkButton();
 
-	static void sizeAllocate(GtkWidget* widget, GtkRequisition* requisition,
-	                         PdfPagesDialog* dlg);
+	static void sizeAllocate(GtkWidget* widget, GtkRequisition* requisition, PdfPagesDialog* dlg);
 	static void onlyNotUsedCallback(GtkToggleButton* tb, PdfPagesDialog* dlg);
 	static void okButtonCallback(GtkButton* button, PdfPagesDialog* dlg);
 
@@ -51,19 +54,17 @@ private:
 
 	bool backgroundInitialized;
 
-	int selected;
+	size_t selected;
 	int lastWidth;
 
 	Settings* settings;
 
-	int selectedPage;
+	size_t selectedPage;
 
-	GList* pages;
+	std::vector<PdfPage*> pages;
 	bool* usedPages;
 	int count;
 
 	GtkWidget* scrollPreview;
 	GtkWidget* widget;
 };
-
-#endif /* __PDFPAGESDIALOG_H__ */

@@ -3,20 +3,21 @@
  *
  * Finds out on which page the most area of a rectangle is
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __PAGEVIEWINDEX_H__
-#define __PAGEVIEWINDEX_H__
+#pragma once
 
 #include <XournalType.h>
-#include <glib.h>
+
+#include <vector>
 
 class PagePosition;
 class PageView;
+class PageViewIndexEntry;
 
 class PageViewIndex
 {
@@ -40,7 +41,5 @@ private:
 	int width;
 	int height;
 
-	GList* data;
+	std::vector<PageViewIndexEntry*> data;
 };
-
-#endif /* __PAGEVIEWINDEX_H__ */

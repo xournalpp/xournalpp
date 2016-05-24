@@ -1,14 +1,13 @@
 #include "GladeGui.h"
-#include <config.h>
-#include <stdlib.h>
-
-#include <config.h>
-#include <glib/gi18n-lib.h>
 
 #include "GladeSearchpath.h"
 
-GladeGui::GladeGui(GladeSearchpath* gladeSearchPath, const char* glade,
-                   const char* mainWnd)
+#include <config.h>
+#include <i18n.h>
+
+#include <stdlib.h>
+
+GladeGui::GladeGui(GladeSearchpath* gladeSearchPath, const char* glade, const char* mainWnd)
 {
 	XOJ_INIT_TYPE(GladeGui);
 
@@ -20,8 +19,9 @@ GladeGui::GladeGui(GladeSearchpath* gladeSearchPath, const char* glade,
 	if (!this->xml)
 	{
 		GtkWidget* dialog = gtk_message_dialog_new(NULL, GTK_DIALOG_DESTROY_WITH_PARENT,
-		                                           GTK_MESSAGE_ERROR, GTK_BUTTONS_CLOSE,
-		                                           _("Error loading glade file '%s' (try to load '%s')"), glade, filename);
+												   GTK_MESSAGE_ERROR, GTK_BUTTONS_CLOSE, "%s",
+												   FC(_F("Error loading glade file \"{1}\" (try to load \"{2}\")")
+															% glade % filename));
 		gtk_dialog_run(GTK_DIALOG(dialog));
 		gtk_widget_destroy(GTK_WIDGET(dialog));
 		exit(-1);
@@ -126,4 +126,3 @@ GladeGui::operator GtkWindow* ()
 
 	return GTK_WINDOW(getWindow());
 }
-

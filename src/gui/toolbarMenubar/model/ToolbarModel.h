@@ -3,21 +3,19 @@
  *
  * Toolbar definitions model
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __TOOLBARMODEL_H__
-#define __TOOLBARMODEL_H__
+#pragma once
 
-#include <glib.h>
-#include <ListIterator.h>
 #include <XournalType.h>
-#include <String.h>
+#include <StringUtils.h>
 
 class ToolbarData;
+typedef std::vector<ToolbarData*> ToolbarDataVector;
 
 class ToolbarModel
 {
@@ -26,12 +24,12 @@ public:
 	virtual ~ToolbarModel();
 
 public:
-	ListIterator<ToolbarData*> iterator();
-	bool parse(const char* file, bool predefined);
+	ToolbarDataVector* getToolbars();
+	bool parse(string filename, bool predefined);
 	void add(ToolbarData* data);
 	void remove(ToolbarData* data);
-	void save(const char* filename);
-	bool existsId(String id);
+	void save(string filename);
+	bool existsId(string id);
 
 private:
 	void parseGroup(GKeyFile* config, const char* group, bool predefined);
@@ -39,7 +37,5 @@ private:
 private:
 	XOJ_TYPE_ATTRIB;
 
-	GList* toolbars;
+	ToolbarDataVector toolbars;
 };
-
-#endif /* __TOOLBARMODEL_H__ */

@@ -3,14 +3,13 @@
  *
  * Interface for progress state
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __PROGRESSLISTENER_H__
-#define __PROGRESSLISTENER_H__
+#pragma once
 
 class ProgressListener
 {
@@ -18,5 +17,3 @@ public:
 	virtual void setMaximumState(int max) = 0;
 	virtual void setCurrentState(int state) = 0;
 };
-
-#endif /* __PROGRESSLISTENER_H__ */

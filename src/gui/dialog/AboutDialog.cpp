@@ -1,32 +1,28 @@
 #include "AboutDialog.h"
+
 #include <config.h>
-#include <String.h>
+#include <StringUtils.h>
 
-#define AUTOHOR(name) authors += name; authors += "\n";
-
-AboutDialog::AboutDialog(GladeSearchpath* gladeSearchPath) :
-	GladeGui(gladeSearchPath, "about.glade", "aboutDialog")
+AboutDialog::AboutDialog(GladeSearchpath* gladeSearchPath) : GladeGui(gladeSearchPath, "about.glade", "aboutDialog")
 {
 	XOJ_INIT_TYPE(AboutDialog);
 
 	GtkLabel* labelTitle = GTK_LABEL(get("labelTitle"));
 	gtk_label_set_markup(labelTitle,
-	                     "<span size=\"xx-large\" weight=\"bold\">Xournal++ " VERSION
-	                     "</span>\n<i>The next generation</i>\n"
-	                     "Build: " __DATE__);
+						 "<span size=\"xx-large\" weight=\"bold\">Xournal++ " PROJECT_VERSION "</span>\n"
+						 "<i>The next generation</i>\n"
+						 "Built on: " __DATE__ " at " __TIME__);
 
 	GtkWidget* w = get("vbox1");
-	GtkWidget* linkButton =
-	    gtk_link_button_new("http://github.com/xournalpp/xournalpp");
+	GtkWidget* linkButton = gtk_link_button_new("http://github.com/xournalpp/xournalpp");
 	gtk_widget_show(linkButton);
 	gtk_box_pack_start_defaults(GTK_BOX(w), linkButton);
 
-	String authors = "";
-
 	// Authors of the application
-	AUTOHOR("Denis Auroux (Xournal), 2006 - 2010");
-	AUTOHOR("Andreas Butti (Xournal++), 2010 - 2015");
-	AUTOHOR("Wilson Brenna (tex support), 2012 - 2015");
+	string authors("Denis Auroux, 2006-2010\n"
+				   "Andreas Butti, 2010-2015\n"
+				   "Wilson Brenna (tex support), 2012-2015\n"
+				   "Marek Pikuła, 2015\n");
 
 	w = get("lbAuthors");
 	gtk_label_set_text(GTK_LABEL(w), authors.c_str());
@@ -45,4 +41,3 @@ void AboutDialog::show(GtkWindow* parent)
 	gtk_dialog_run(GTK_DIALOG(this->window));
 	gtk_widget_hide(this->window);
 }
-

@@ -3,18 +3,18 @@
  *
  * A stroke which is temporary used if you erase a part
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __ERASEABLESTROKEPART_H__
-#define __ERASEABLESTROKEPART_H__
+#pragma once
+
+#include "model/Point.h"
+#include <XournalType.h>
 
 #include <glib.h>
-#include "../Point.h"
-#include <XournalType.h>
 
 class EraseableStrokePart
 {
@@ -45,7 +45,6 @@ public:
 	double getElementWidth();
 	double getElementHeight();
 
-
 	static void printDebugStrokeParts();
 
 private:
@@ -63,5 +62,3 @@ private:
 
 	friend class EraseableStroke;
 };
-
-#endif /* __ERASEABLESTROKEPART_H__ */

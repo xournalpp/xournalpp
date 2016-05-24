@@ -3,18 +3,19 @@
  *
  * XInput util functions
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __XINPUTUTILS_H__
-#define __XINPUTUTILS_H__
+#pragma once
+
+#include <config-debug.h>
 
 #include <gtk/gtk.h>
 
-#ifdef INPUT_DEBUG
+#ifdef DEBUG_INPUT
 #define INPUTDBG(msg, ...) printf("INPUT:: " msg, __VA_ARGS__); printf(" on %s:%i\n",  __FILE__, __LINE__)
 #define INPUTDBG2(msg)     printf("INPUT:: " msg " on %s:%i\n",  __FILE__, __LINE__)
 #else
@@ -35,10 +36,8 @@ public:
 	/**
 	 * Avoid crash if e.g. a mouse is plugged out...
 	 */
-	static gboolean onMouseEnterNotifyEvent(GtkWidget* widget,
-	                                        GdkEventCrossing* event);
-	static gboolean onMouseLeaveNotifyEvent(GtkWidget* widget,
-	                                        GdkEventCrossing* event);
+	static gboolean onMouseEnterNotifyEvent(GtkWidget* widget, GdkEventCrossing* event);
+	static gboolean onMouseLeaveNotifyEvent(GtkWidget* widget, GdkEventCrossing* event);
 
 	static void initUtils(GtkWidget* win);
 
@@ -51,5 +50,3 @@ private:
 	static int enableLeafEnterWorkaround;
 
 };
-
-#endif /* __XINPUTUTILS_H__ */

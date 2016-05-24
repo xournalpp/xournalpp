@@ -3,19 +3,22 @@
  *
  * Caches PDF backgrounds for faster repaint
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __PDFCACHE_H__
-#define __PDFCACHE_H__
+#pragma once
 
-#include <cairo/cairo.h>
-#include "../pdf/popplerdirect/poppler/XojPopplerPage.h"
+#include "pdf/popplerdirect/poppler/XojPopplerPage.h"
 #include <XournalType.h>
 
+#include <cairo/cairo.h>
+#include <list>
+
+class PdfCacheEntry;
+typedef std::list<PdfCacheEntry*> PdfCacheEntryList;
 
 class PdfCache
 {
@@ -25,7 +28,7 @@ public:
 
 private:
 	PdfCache(const PdfCache& cache);
-	void operator = (const PdfCache& cache);
+	void operator=(const PdfCache& cache);
 
 public:
 	void render(cairo_t* cr, XojPopplerPage* popplerPage, double zoom);
@@ -41,10 +44,8 @@ private:
 
 	GMutex renderMutex;
 
-	GList* data;
-	int size;
+	PdfCacheEntryList data;
+	PdfCacheEntryList::size_type size;
 
 	double zoom;
 };
-
-#endif /* __PDFCACHE_H__ */

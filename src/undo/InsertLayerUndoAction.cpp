@@ -1,12 +1,14 @@
 #include "InsertLayerUndoAction.h"
-#include "../model/Layer.h"
-#include "../model/PageRef.h"
-#include "../model/Document.h"
-#include "../control/Control.h"
-#include "../gui/XournalView.h"
 
-InsertLayerUndoAction::InsertLayerUndoAction(PageRef page,
-                                             Layer* layer) : UndoAction("InsertLayerUndoAction")
+#include "control/Control.h"
+#include "gui/XournalView.h"
+#include "model/Document.h"
+#include "model/Layer.h"
+#include "model/PageRef.h"
+
+#include <i18n.h>
+
+InsertLayerUndoAction::InsertLayerUndoAction(PageRef page, Layer* layer) : UndoAction("InsertLayerUndoAction")
 {
 	XOJ_INIT_TYPE(InsertLayerUndoAction);
 
@@ -27,7 +29,7 @@ InsertLayerUndoAction::~InsertLayerUndoAction()
 	XOJ_RELEASE_TYPE(InsertLayerUndoAction);
 }
 
-String InsertLayerUndoAction::getText()
+string InsertLayerUndoAction::getText()
 {
 	XOJ_CHECK_TYPE(InsertLayerUndoAction);
 
@@ -82,4 +84,3 @@ bool InsertLayerUndoAction::redo(Control* control)
 
 	return true;
 }
-

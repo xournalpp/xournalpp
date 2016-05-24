@@ -3,36 +3,38 @@
  *
  * Dialog with export settings
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __EXPORTDIALOG_H__
-#define __EXPORTDIALOG_H__
+#pragma once
 
-#include "../GladeGui.h"
-#include "../../control/settings/Settings.h"
-#include "../../control/jobs/ExportFormtType.h"
+#include "control/jobs/ExportFormtType.h"
+#include "control/settings/Settings.h"
+#include "gui/GladeGui.h"
+
+#include <PageRange.h>
 #include <XournalType.h>
 
-class ExportDialog: public GladeGui
+#include <boost/filesystem/path.hpp>
+using boost::filesystem::path;
+
+class ExportDialog : public GladeGui
 {
 public:
-	ExportDialog(GladeSearchpath* gladeSearchPath, Settings* settings,
-	             int pageCount, int currentPage);
+	ExportDialog(GladeSearchpath* gladeSearchPath, Settings* settings, int pageCount, int currentPage);
 	virtual ~ExportDialog();
 
 public:
 	virtual void show(GtkWindow* parent);
 
-	GList* getRange();
+	PageRangeVector getRange();
 	int getPngDpi();
 	ExportFormtType getFormatType();
 
-	String getFolder();
-	String getFilename();
+	path getFilePath();
 
 private:
 	bool validate();
@@ -41,21 +43,14 @@ private:
 	/**
 	 * Callback for a changed selection of an output file
 	 */
-	static void selectionChanged(GtkFileChooser* chooser,
-	                             gpointer user_data);
+	static void selectionChanged(GtkFileChooser* chooser, gpointer user_data);
 
-	static gboolean rangeFocused(GtkWidget* widget,
-	                             GdkEvent* event,
-	                             gpointer user_data);
+	static gboolean rangeFocused(GtkWidget* widget, GdkEvent* event, gpointer user_data);
 
-	static void fileTypeSelected(GtkTreeView* treeview,
-	                             gpointer user_data);
+	static void fileTypeSelected(GtkTreeView* treeview, gpointer user_data);
 
-	void addFileType(const char* typeDesc,
-	                 const char* pattern,
-	                 gint type = 0,
-	                 const char* filterName = NULL,
-	                 bool select = false);
+	void addFileType(const char* typeDesc, const char* pattern, gint type = 0,
+					 const char* filterName = NULL, bool select = false);
 
 	void setupModel();
 
@@ -73,7 +68,7 @@ private:
 	int resolution;
 	ExportFormtType type;
 
-	GList* range;
+	PageRangeVector range;
 
 	Settings* settings;
 	GtkListStore* typesModel;
@@ -81,10 +76,8 @@ private:
 
 	enum ColIndex
 	{
-		COL_FILEDESC=0,
-		COL_EXTENSION=1,
-		COL_TYPE=2
+		COL_FILEDESC = 0,
+		COL_EXTENSION = 1,
+		COL_TYPE = 2
 	};
 };
-
-#endif /* __EXPORTDIALOG_H__ */

@@ -3,14 +3,13 @@
  *
  * Part of the customizable toolbars
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __TOOLPAGESPINNER_H__
-#define __TOOLPAGESPINNER_H__
+#pragma once
 
 #include "AbstractToolItem.h"
 #include <XournalType.h>
@@ -18,17 +17,16 @@
 class GladeGui;
 class SpinPageAdapter;
 
-class ToolPageSpinner: public AbstractToolItem
+class ToolPageSpinner : public AbstractToolItem
 {
 public:
-	ToolPageSpinner(GladeGui* gui, ActionHandler* handler, String id,
-	                ActionType type);
+	ToolPageSpinner(GladeGui* gui, ActionHandler* handler, string id, ActionType type);
 	virtual ~ToolPageSpinner();
 
 public:
 	SpinPageAdapter* getPageSpinner();
-	void setText(String text);
-	virtual String getToolDisplayName();
+	void setText(string text);
+	virtual string getToolDisplayName();
 
 protected:
 	virtual GtkToolItem* newItem();
@@ -42,5 +40,3 @@ private:
 	SpinPageAdapter* pageSpinner;
 	GtkWidget* lbPageNo;
 };
-
-#endif /* __TOOLPAGESPINNER_H__ */

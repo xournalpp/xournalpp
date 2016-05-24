@@ -3,14 +3,13 @@
  *
  * Settings Dialog
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __SHADOW_H__
-#define __SHADOW_H__
+#pragma once
 
 #include <gtk/gtk.h>
 
@@ -20,21 +19,16 @@ private:
 	Shadow();
 	virtual ~Shadow();
 
-	void drawShadowEdge(cairo_t* cr, int x, int y, int width, int height,
-	                    const unsigned char* edge, double r, double g, double b);
+	void drawShadowEdge(cairo_t* cr, int x, int y, int width, int height, const unsigned char* edge,
+						double r, double g, double b);
 	void drawShadowImpl(cairo_t* cr, int x, int y, int width, int height);
 
-	void paintEdge(cairo_t* cr, cairo_surface_t* image, int x, int y, int width,
-	               int height);
+	void paintEdge(cairo_t* cr, cairo_surface_t* image, int x, int y, int width, int height);
 
-	void drawShadowTop(cairo_t* cr, int x, int y, int width, double r, double g,
-	                   double b);
-	void drawShadowLeft(cairo_t* cr, int x, int y, int height, double r, double g,
-	                    double b);
-	void drawShadowRight(cairo_t* cr, int x, int y, int height, double r, double g,
-	                     double b);
-	void drawShadowBottom(cairo_t* cr, int x, int y, int width, double r, double g,
-	                      double b);
+	void drawShadowTop(cairo_t* cr, int x, int y, int width, double r, double g, double b);
+	void drawShadowLeft(cairo_t* cr, int x, int y, int height, double r, double g, double b);
+	void drawShadowRight(cairo_t* cr, int x, int y, int height, double r, double g, double b);
+	void drawShadowBottom(cairo_t* cr, int x, int y, int width, double r, double g, double b);
 
 public:
 	/**
@@ -57,5 +51,3 @@ private:
 	cairo_surface_t* bottom;
 	cairo_surface_t* left;
 };
-
-#endif /* __SHADOW_H__ */

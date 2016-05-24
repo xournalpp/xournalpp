@@ -3,23 +3,24 @@
  *
  * Vertical Space tool
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __VERTICALTOOLHANDLER_H__
-#define __VERTICALTOOLHANDLER_H__
+#pragma once
 
-#include <cairo.h>
-#include "../../gui/Redrawable.h"
-#include "../../model/PageRef.h"
-#include "../../view/ElementContainer.h"
-#include "../../undo/MoveUndoAction.h"
+#include "gui/Redrawable.h"
+#include "model/PageRef.h"
+#include "undo/MoveUndoAction.h"
+#include "view/ElementContainer.h"
+
 #include <XournalType.h>
 
-class VerticalToolHandler: public ElementContainer
+#include <cairo.h>
+
+class VerticalToolHandler : public ElementContainer
 {
 public:
 	VerticalToolHandler(Redrawable* view, PageRef page, double y, double zoom);
@@ -30,7 +31,7 @@ public:
 
 	MoveUndoAction* finalize();
 
-	ListIterator<Element*> getElements();
+	ElementVector* getElements();
 
 private:
 	XOJ_TYPE_ATTRIB;
@@ -38,7 +39,7 @@ private:
 	Redrawable* view;
 	PageRef page;
 	Layer* layer;
-	GList* elements;
+	ElementVector elements;
 
 	cairo_surface_t* crBuffer;
 
@@ -50,5 +51,3 @@ private:
 	 */
 	double jumpY;
 };
-
-#endif /* __VERTICALTOOLHANDLER_H__ */

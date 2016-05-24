@@ -1,10 +1,11 @@
 #include "PdfBookmark.h"
-#include "../../model/LinkDestination.h"
+
+#include "model/LinkDestination.h"
 
 class Bookmark
 {
 public:
-	Bookmark(String name, int level, int page, int top)
+	Bookmark(string name, int level, int page, int top)
 	{
 		this->name = name;
 		this->level = level;
@@ -17,7 +18,7 @@ public:
 		this->top = top;
 	}
 
-	String name;
+	string name;
 	int level;
 
 	int parent;
@@ -39,8 +40,7 @@ PdfBookmarks::~PdfBookmarks()
 	XOJ_RELEASE_TYPE(PdfBookmarks);
 }
 
-void PdfBookmarks::createBookmarks(GtkTreeModel* model, GList*& data,
-                                   GtkTreeIter* iter, int level, Document* doc)
+void PdfBookmarks::createBookmarks(GtkTreeModel* model, GList*& data, GtkTreeIter* iter, int level, Document* doc)
 {
 	XOJ_CHECK_TYPE(PdfBookmarks);
 
@@ -60,8 +60,7 @@ void PdfBookmarks::createBookmarks(GtkTreeModel* model, GList*& data,
 			continue;
 		}
 
-		data = g_list_append(data, new Bookmark(dest->getName(), level, page,
-		                                        dest->getTop()));
+		data = g_list_append(data, new Bookmark(dest->getName(), level, page, dest->getTop()));
 
 		GtkTreeIter children = { 0 };
 
@@ -73,15 +72,15 @@ void PdfBookmarks::createBookmarks(GtkTreeModel* model, GList*& data,
 	while (gtk_tree_model_iter_next(model, iter));
 }
 
-GList* PdfBookmarks::exportBookmarksFromTreeModel(GtkTreeModel* model,
-                                                  Document* doc)
+GList* PdfBookmarks::exportBookmarksFromTreeModel(GtkTreeModel* model, Document* doc)
 {
 	XOJ_CHECK_TYPE(PdfBookmarks);
 
 	GList* data = NULL;
 	GtkTreeIter iter = { 0 };
 
-	if (!gtk_tree_model_get_iter_first(model, &iter)) {
+	if (!gtk_tree_model_get_iter_first(model, &iter))
+	{
 		return NULL;
 	}
 
@@ -90,8 +89,7 @@ GList* PdfBookmarks::exportBookmarksFromTreeModel(GtkTreeModel* model,
 	return data;
 }
 
-void PdfBookmarks::writeOutlines(Document* doc, PdfWriter* writer,
-                                 int* outlineRoot, GList* pageIds)
+void PdfBookmarks::writeOutlines(Document* doc, PdfWriter* writer, int* outlineRoot, GList* pageIds)
 {
 	XOJ_CHECK_TYPE(PdfBookmarks);
 
@@ -169,7 +167,7 @@ void PdfBookmarks::writeOutlines(Document* doc, PdfWriter* writer,
 		writer->writeObj();
 
 		writer->write("<<\n/Title ");
-		writer->writeTxt(b->name.c_str());
+		writer->writeTxt(b->name);
 		writer->write("\n");
 
 		writer->write("/Parent ");
@@ -215,14 +213,13 @@ void PdfBookmarks::writeOutlines(Document* doc, PdfWriter* writer,
 		char buffer[256];
 
 		int pObjId = 0;
-		int* pObjIdPtr = (int*)g_list_nth_data(pageIds, b->page);
+		int* pObjIdPtr = (int*) g_list_nth_data(pageIds, b->page);
 		if (pObjIdPtr)
 		{
 			pObjId = *pObjIdPtr;
 		}
 
-		sprintf(buffer, "/Dest [%d 0 R /XYZ 0 %.2f null]\n", pObjId,
-		        top /*($this->h-$o['y'])*$this->k*/);
+		sprintf(buffer, "/Dest [%d 0 R /XYZ 0 %.2f null]\n", pObjId, top /*($this->h-$o['y'])*$this->k*/);
 
 		writer->write(buffer);
 		writer->write("/Count 0\n>>\n");

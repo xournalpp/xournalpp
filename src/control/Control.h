@@ -3,33 +3,35 @@
  *
  * The main Control
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __CONTROL_H__
-#define __CONTROL_H__
+#pragma once
 
-#include "RecentManager.h"
-#include "../gui/MainWindow.h"
 #include "Actions.h"
-#include "../undo/UndoRedoHandler.h"
 #include "ClipboardHandler.h"
-#include "settings/Settings.h"
-#include "../util/LatexAction.h"
-#include "../gui/dialog/LatexGlade.h"
+#include "LatexAction.h"
+#include "RecentManager.h"
+#include "ScrollHandler.h"
 #include "ToolHandler.h"
-#include "../model/Document.h"
 #include "ZoomControl.h"
+
+#include "gui/dialog/LatexGlade.h"
+#include "gui/MainWindow.h"
+#include "gui/SearchBar.h"
+#include "gui/sidebar/Sidebar.h"
+#include "jobs/ProgressListener.h"
 #include "jobs/XournalScheduler.h"
+#include "model/Document.h"
+#include "settings/Settings.h"
+#include "undo/UndoRedoHandler.h"
+
 #include <XournalType.h>
 
-#include "../gui/sidebar/Sidebar.h"
-#include "../gui/SearchBar.h"
-#include "jobs/ProgressListener.h"
-#include "ScrollHandler.h"
+#include <vector>
 
 class Sidebar;
 class CallbackData;
@@ -40,8 +42,7 @@ class MetadataManager;
 class Cursor;
 class ToolbarDragDropHandler;
 
-
-class Control: public ActionHandler,
+class Control : public ActionHandler,
 	public ToolListener,
 	public DocumentHandler,
 	public RecentManagerListener,
@@ -57,13 +58,13 @@ public:
 public:
 	// Menu File
 	bool newFile();
-	bool openFile(String filename = NULL, int scrollToPage = -1);
-	bool annotatePdf(String filename, bool attachPdf, bool attachToDocument);
+	bool openFile(path filename = "", int scrollToPage = -1);
+	bool annotatePdf(path filename, bool attachPdf, bool attachToDocument);
 	void print();
 	void exportAsPdf();
 	void exportAs();
 	bool save(bool synchron = false);
-	void saveAs();
+	bool saveAs();
 	void quit();
 	bool close(bool destroy = false);
 
@@ -78,9 +79,8 @@ public:
 	// Menu Help
 	void showAbout();
 
-	virtual void actionPerformed(ActionType type, ActionGroup group,
-	                             GdkEvent* event, GtkMenuItem* menuitem, GtkToolButton* toolbutton,
-	                             bool enabled);
+	virtual void actionPerformed(ActionType type, ActionGroup group, GdkEvent* event, GtkMenuItem* menuitem,
+								 GtkToolButton* toolbutton, bool enabled);
 
 	virtual void toolColorChanged();
 	virtual void setCustomColorSelected();
@@ -90,7 +90,7 @@ public:
 	void selectTool(ToolType type);
 	void selectDefaultTool();
 
-	void updatePageNumbers(int page, int pdfPage);
+	void updatePageNumbers(size_t page, size_t pdfPage);
 
 	virtual void fileOpened(const char* uri);
 
@@ -130,21 +130,19 @@ public:
 
 	bool isFullscreen();
 
-	static String getFilename(String uri);
-
-	bool searchTextOnPage(const char* text, int p, int* occures, double* top);
+	bool searchTextOnPage(string text, int p, int* occures, double* top);
 
 	/**
 	 * Fire page selected, but first check if the page Number is valid
 	 *
-	 * @return the page ID or -1 if the page is not found
+	 * @return the page ID or size_t_npos if the page is not found
 	 */
-	int firePageSelected(PageRef page);
-	void firePageSelected(int page);
+	size_t firePageSelected(PageRef page);
+	void firePageSelected(size_t page);
 
 	void addDefaultPage();
-	void insertNewPage(int position);
-	void insertPage(PageRef page, int position);
+	void insertNewPage(size_t position);
+	void insertPage(PageRef page, size_t position);
 	void deletePage();
 
 	/**
@@ -173,12 +171,12 @@ public:
 
 	XournalScheduler* getScheduler();
 
-	void block(const char* name);
+	void block(string name);
 	void unblock();
 
 	void renameLastAutosaveFile();
-	void setLastAutosaveFile(String newAutosaveFile);
-	void deleteLastAutosaveFile(String newAutosaveFile);
+	void setLastAutosaveFile(path newAutosaveFile);
+	void deleteLastAutosaveFile(path newAutosaveFile);
 	void setClipboardHandlerSelection(EditSelection* selection);
 
 	MetadataManager* getMetadataManager();
@@ -191,7 +189,7 @@ public:
 	RecentManager* getRecentManager();
 	ScrollHandler* getScrollHandler();
 	PageRef getCurrentPage();
-	int getCurrentPageNo();
+	size_t getCurrentPageNo();
 	Cursor* getCursor();
 	Sidebar* getSidebar();
 
@@ -215,10 +213,9 @@ public:
 	// ClipboardListener interface
 	virtual void clipboardCutCopyEnabled(bool enabled);
 	virtual void clipboardPasteEnabled(bool enabled);
-	virtual void clipboardPasteText(String text);
+	virtual void clipboardPasteText(string text);
 	virtual void clipboardPasteImage(GdkPixbuf* img);
-	virtual void clipboardPasteTex(GdkPixbuf* img, const char* text,
-	                               int textLength);
+    virtual void clipboardPasteTex(GdkPixbuf* img, const char* text, int textLength);
 	virtual void clipboardPasteXournal(ObjectInputStream& in);
 	virtual void deleteSelection();
 
@@ -285,7 +282,7 @@ private:
 	/**
 	 * The pages wihch has changed since the last update (for preview update)
 	 */
-	GList* changedPages;
+	std::vector<XojPage*> changedPages;
 
 	/**
 	 * Our clipboard abstraction
@@ -296,7 +293,7 @@ private:
 	 * The autosave handler ID
 	 */
 	int autosaveTimeout;
-	String lastAutosaveFilename;
+	path lastAutosaveFilename;
 
 	/**
 	 * Default page size
@@ -333,5 +330,3 @@ public:
 	ActionType type;
 	Control* control;
 };
-
-#endif /* __CONTROL_H__ */

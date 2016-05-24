@@ -3,14 +3,13 @@
  *
  * Control to display a single color button
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __SELECTCOLOR_H__
-#define __SELECTCOLOR_H__
+#pragma once
 
 #include <gtk/gtk.h>
 #include <cairo.h>
@@ -47,5 +46,3 @@ void selectcolor_set_circle(GtkWidget* sc, gboolean circle);
 void selectcolor_set_size(GtkWidget* sc, gint size);
 
 G_END_DECLS
-
-#endif /* __SELECTCOLOR_H__ */

@@ -3,21 +3,20 @@
  *
  * Toolbar drag & drop controller
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __TOOLBARDRAGDROPHANDLER_H__
-#define __TOOLBARDRAGDROPHANDLER_H__
+#pragma once
 
 #include <XournalType.h>
 
 class Control;
+class MainWindow;
 class ToolbarAdapter;
 class ToolbarCustomizeDialog;
-class MainWindow;
 
 class ToolbarDragDropHandler
 {
@@ -44,5 +43,3 @@ private:
 	ToolbarAdapter** toolbars;
 	ToolbarCustomizeDialog* customizeDialog;
 };
-
-#endif /* __TOOLBARDRAGDROPHANDLER_H__ */

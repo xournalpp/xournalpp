@@ -22,12 +22,9 @@ XojPage** UndoAction::getPages()
 	pages[0] = this->page;
 	pages[1] = NULL;
 	return pages;
-
-	XOJ_RELEASE_TYPE(UndoAction);
 }
 
 const char* UndoAction::getClassName() const
 {
 	return this->className;
 }
-

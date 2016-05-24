@@ -3,14 +3,13 @@
  *
  * A point of a stroke
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __POINT_H__
-#define __POINT_H__
+#pragma once
 
 #include <XournalType.h>
 
@@ -24,9 +23,10 @@ public:
 	virtual ~Point();
 
 public:
-	double lineLengthTo(const Point p);
-	Point lineTo(const Point p, double length);
-	bool equalsPos(const Point p);
+	double lineLengthTo(const Point& p);
+	double slopeTo(const Point& p);
+	Point lineTo(const Point& p, double length);
+	bool equalsPos(const Point& p);
 
 public:
 	XOJ_TYPE_ATTRIB;
@@ -37,7 +37,5 @@ public:
 	// pressure
 	double z;
 
-
-	static const double NO_PRESURE = -1;
+	static constexpr double NO_PRESURE = -1;
 };
-#endif /* __POINT_H__ */

@@ -3,16 +3,15 @@
  *
  * Handles the Cursor
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __CURSOR_H__
-#define __CURSOR_H__
+#pragma once
 
-#include "../control/tools/CursorSelectionType.h"
+#include "control/tools/CursorSelectionType.h"
 #include <XournalType.h>
 
 #include <gtk/gtk.h>
@@ -49,5 +48,3 @@ private:
 	bool mouseDown;
 	bool invisible;
 };
-
-#endif /* __CURSOR_H__ */

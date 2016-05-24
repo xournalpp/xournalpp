@@ -3,16 +3,15 @@
  *
  * Index Sidebar Page
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __SIDEBARINDEXPAGE_H__
-#define __SIDEBARINDEXPAGE_H__
+#pragma once
 
-#include "../AbstractSidebarPage.h"
+#include "gui/sidebar/AbstractSidebarPage.h"
 
 #include <gtk/gtk.h>
 #include <XournalType.h>
@@ -30,12 +29,12 @@ public:
 	/**
 	 * @overwrite
 	 */
-	virtual const char* getName();
+	virtual string getName();
 
 	/**
 	 * @overwrite
 	 */
-	virtual const char* getIconName();
+	virtual string getIconName();
 
 	/**
 	 * @overwrite
@@ -55,7 +54,7 @@ public:
 	/**
 	 * Select page in the tree
 	 */
-	bool selectPageNr(int page, int pdfPage, GtkTreeIter* parent);
+	bool selectPageNr(size_t page, size_t pdfPage, GtkTreeIter* parent);
 
 	/**
 	 * @overwrite
@@ -66,19 +65,18 @@ private:
 	/**
 	 * Tree search function if you type chars within the tree. Source: Pidgin
 	 */
-	static gboolean treeSearchFunction(GtkTreeModel* model, gint column,
-	                                   const gchar* key, GtkTreeIter* iter, SidebarIndexPage* sidebar);
+	static gboolean treeSearchFunction(GtkTreeModel* model, gint column, const gchar* key,
+									   GtkTreeIter* iter, SidebarIndexPage* sidebar);
 
 	/**
 	 * A bookmark was selected
 	 */
-	static bool treeBookmarkSelected(GtkWidget* treeview,
-	                                 SidebarIndexPage* sidebar);
+	static bool treeBookmarkSelected(GtkWidget* treeview, SidebarIndexPage* sidebar);
 
 	/**
 	 * If you select a Bookmark wich is currently not in the Xournal document, only in the PDF (page deleted or so)
 	 */
-	void askInsertPdfPage(int pdfPage);
+	void askInsertPdfPage(size_t pdfPage);
 
 	/**
 	 * The function which is called after a search timeout
@@ -118,5 +116,3 @@ private:
 	bool hasContents;
 
 };
-
-#endif /* __SIDEBARINDEXPAGE_H__ */

@@ -3,20 +3,20 @@
  *
  * Part of the Xournal shape recognizer
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __RECOSEGMENT_H__
-#define __RECOSEGMENT_H__
+#pragma once
+
+#include "model/Point.h"
+
+#include <XournalType.h>
 
 class Stroke;
 class Inertia;
-
-#include "../../model/Point.h"
-#include <XournalType.h>
 
 class RecoSegment
 {
@@ -27,8 +27,8 @@ public:
 public:
 	Point calcEdgeIsect(RecoSegment* r2);
 
-	/*
-	 * find the geometry of a recognized segment
+	/**
+	 * Find the geometry of a recognized segment
 	 */
 	void calcSegmentGeometry(const Point* pt, int start, int end, Inertia* s);
 
@@ -51,5 +51,3 @@ public:
 
 	bool reversed;
 };
-
-#endif /* __RECOSEGMENT_H__ */

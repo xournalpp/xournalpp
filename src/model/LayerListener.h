@@ -3,14 +3,13 @@
  *
  * A listener for changes on a single layer
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __LAYERLISTENER_H__
-#define __LAYERLISTENER_H__
+#pragma once
 
 class Element;
 class Layer;
@@ -35,5 +34,3 @@ public:
 private:
 	Layer* layer;
 };
-
-#endif /* __LAYERLISTENER_H__ */

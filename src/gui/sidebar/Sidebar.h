@@ -3,24 +3,25 @@
  *
  * The Sidebar
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __SIDEBAR_H__
-#define __SIDEBAR_H__
+#pragma once
 
-#include <gtk/gtk.h>
+#include "model/DocumentChangeType.h"
+#include "model/DocumentListener.h"
+
 #include <XournalType.h>
 
-#include "../model/DocumentChangeType.h"
-#include "../model/DocumentListener.h"
+#include <gtk/gtk.h>
 
-class Control;
-class GladeGui;
+#include <list>
+
 class AbstractSidebarPage;
+class Control;
 class GladeGui;
 class SidebarPageButton;
 
@@ -45,14 +46,14 @@ public:
 	/**
 	 * A page was selected, so also select this page in the sidebar
 	 */
-	void selectPageNr(int page, int pdfPage);
+	void selectPageNr(size_t page, size_t pdfPage);
 
 	Control* getControl();
 
 	/**
 	 * Sets the current selected page
 	 */
-	void setSelectedPage(int page);
+	void setSelectedPage(size_t page);
 
 	/**
 	 * Enable active and siable inactive buttons, select first active page
@@ -72,19 +73,18 @@ public:
 public:
 	// DocumentListener interface
 	virtual void documentChanged(DocumentChangeType type);
-	virtual void pageSizeChanged(int page);
-	virtual void pageChanged(int page);
-	virtual void pageInserted(int page);
-	virtual void pageDeleted(int page);
-	virtual void pageSelected(int page);
+	virtual void pageSizeChanged(size_t page);
+	virtual void pageChanged(size_t page);
+	virtual void pageInserted(size_t page);
+	virtual void pageDeleted(size_t page);
+	virtual void pageSelected(size_t page);
 
 private:
 
 	/**
 	 * Page selected
 	 */
-	static void buttonClicked(GtkToolButton* toolbutton,
-	                          SidebarPageButton* buttonData);
+	static void buttonClicked(GtkToolButton* toolbutton, SidebarPageButton* buttonData);
 
 private:
 	XOJ_TYPE_ATTRIB;
@@ -94,7 +94,7 @@ private:
 	/**
 	 * The sidebar pages
 	 */
-	GList* pages;
+	std::list<AbstractSidebarPage*> pages;
 
 	/**
 	 * The Toolbar with the pages
@@ -128,6 +128,3 @@ public:
 	AbstractSidebarPage* page;
 
 };
-
-
-#endif /* __SIDEBAR_H__ */

@@ -5,21 +5,21 @@
  *
  * Some code from Evince project
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __XOURNALSCHEDULER_H__
-#define __XOURNALSCHEDULER_H__
+#pragma once
 
-#include "Scheduler.h"
-#include "../../gui/sidebar/previews/SidebarPreviewPage.h"
-#include "../../gui/PageView.h"
+#include "control/jobs/Scheduler.h"
+#include "gui/sidebar/previews/page/SidebarPreviewPageEntry.h"
+#include "gui/PageView.h"
+
 #include <XournalType.h>
 
-class XournalScheduler: public Scheduler
+class XournalScheduler : public Scheduler
 {
 public:
 	XournalScheduler();
@@ -28,11 +28,11 @@ public:
 	/**
 	 * Remove source, e.g. if a page is removed they don't need to repaint
 	 */
-	void removeSidebar(SidebarPreviewPage* preview);
+	void removeSidebar(SidebarPreviewBaseEntry* preview);
 	void removePage(PageView* view);
 	void removeAllJobs();
 
-	void addRepaintSidebar(SidebarPreviewPage* preview);
+	void addRepaintSidebar(SidebarPreviewBaseEntry* preview);
 	void addRerenderPage(PageView* view);
 
 	void finishTask();
@@ -48,5 +48,3 @@ private:
 private:
 	XOJ_TYPE_ATTRIB;
 };
-
-#endif /* __XOURNALSCHEDULER_H__ */

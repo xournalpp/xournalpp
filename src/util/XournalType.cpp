@@ -1,9 +1,16 @@
-#include <XournalType.h>
-#include <glib.h>
-#include <stdlib.h>
-#include <stdio.h>
+#include "XournalType.h"
 
-#ifdef XOJ_MEMORY_CHECK_ENABLED
+#include "StringUtils.h"
+#include <config-dev.h>
+
+#include <glib.h>
+
+#include <stdlib.h>
+#include <iostream>
+using std::cout;
+using std::endl;
+
+#ifdef DEV_MEMORY_CHECKING
 
 #define XOURNAL_TYPE_LIST_LENGTH 256
 
@@ -17,31 +24,27 @@
 
 static bool listInited = false;
 static const char* xojTypeList[XOURNAL_TYPE_LIST_LENGTH] = { 0 };
-
-GMutex* mutex = NULL;
+static GMutex mutex = { 0 };
 
 static void initXournalClassList()
 {
 	xojTypeList[0] = "Invalid_type";
-#include "XournalTypeList.h"
-}
 
-void xoj_type_initMutex()
-{
-	mutex = g_mutex_new();
+	// DO NOT REMOVE OR MOVE THIS INCLUDE!
+	// It has to be included exactly here, else the macros are not working
+	#include "XournalTypeList.h"
 }
 
 const char* xoj_type_getName(int id)
 {
+	g_mutex_lock(&mutex);
+	
 	if (!listInited)
 	{
 		initXournalClassList();
 	}
 
-	if (mutex)
-	{
-		g_mutex_unlock(mutex);
-	}
+	g_mutex_unlock(&mutex);
 
 	if (id < 0)
 	{
@@ -49,37 +52,32 @@ const char* xoj_type_getName(int id)
 		id = -id;
 	}
 
-	return xojTypeList[id];
+	const char* typeName = xojTypeList[id];
+
+	if (typeName == NULL)
+	{
+		g_warning("Type check: name of id %i is NULL!", id);
+	}
+
+	return typeName;
 }
 
-#ifdef XOJ_MEMORY_LEAK_CHECK_ENABLED
+#ifdef DEV_MEMORY_LEAK_CHECKING
 
 static int xojInstanceList[XOURNAL_TYPE_LIST_LENGTH] = { 0 };
 
 void xoj_memoryleak_initType(int id)
 {
-	if (mutex)
-	{
-		g_mutex_lock(mutex);
-	}
+	g_mutex_lock(&mutex);
 	xojInstanceList[id]++;
-	if (mutex)
-	{
-		g_mutex_unlock(mutex);
-	}
+	g_mutex_unlock(&mutex);
 }
 
 void xoj_memoryleak_releaseType(int id)
 {
-	if (mutex)
-	{
-		g_mutex_lock(mutex);
-	}
+	g_mutex_lock(&mutex);
 	xojInstanceList[id]--;
-	if (mutex)
-	{
-		g_mutex_unlock(mutex);
-	}
+	g_mutex_unlock(&mutex);
 }
 
 void xoj_momoryleak_printRemainingObjects()
@@ -91,13 +89,13 @@ void xoj_momoryleak_printRemainingObjects()
 		if (x != 0)
 		{
 			sum += x;
-			printf("MemoryLeak: %i objects of type: %s\n", x, xoj_type_getName(i));
+			cout << bl::format("MemoryLeak: {1} objects of type: {2}") % x % xoj_type_getName(i) << endl;
 		}
 	}
 
-	printf("MemoryLeak: sum %i objects.\n", sum);
+	cout << bl::format("MemoryLeak: sum {1} objects.") % sum << endl;
 }
 
-#endif
+#endif // DEV_MEMORY_LEAK_CHECKING
 
-#endif
+#endif // DEV_MEMORY_CHECKING

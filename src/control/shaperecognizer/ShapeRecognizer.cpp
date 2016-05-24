@@ -1,11 +1,14 @@
 #include "ShapeRecognizer.h"
-#include "ShapeRecognizerResult.h"
-#include "Inertia.h"
+
 #include "CircleRecognizer.h"
-
-#include "../../model/Stroke.h"
 #include "Inertia.h"
+#include "ShapeRecognizerResult.h"
 
+#include "model/Stroke.h"
+
+#include <config-debug.h>
+
+#include <boost/format.hpp>
 #include <math.h>
 #include <string.h>
 
@@ -31,7 +34,7 @@ void ShapeRecognizer::resetRecognizer()
 {
 	XOJ_CHECK_TYPE(ShapeRecognizer);
 
-	RDEBUG("reset\n", 0);
+	RDEBUG("reset");
 
 	for (int i = 0; i < MAX_POLYGON_SIDES + 1; i++)
 	{
@@ -41,8 +44,8 @@ void ShapeRecognizer::resetRecognizer()
 	this->queueLength = 0;
 }
 
-/*
- *  test if segments form standard shapes
+/**
+ *  Test if segments form standard shapes
  */
 Stroke* ShapeRecognizer::tryRectangle()
 {
@@ -67,7 +70,9 @@ Stroke* ShapeRecognizer::tryRectangle()
 		RecoSegment* r1 = &rs[i];
 		RecoSegment* r2 = &rs[(i + 1) % 4];
 		if (fabs(fabs(r1->angle - r2->angle) - M_PI / 2) > RECTANGLE_ANGLE_TOLERANCE)
+		{
 			return FALSE;
+		}
 		avgAngle += r1->angle;
 		if (r2->angle > r1->angle)
 		{
@@ -79,16 +84,14 @@ Stroke* ShapeRecognizer::tryRectangle()
 		}
 
 		// test if r1 points away from r2 rather than towards it
-		r1->reversed = ((r1->x2 - r1->x1) * (r2->xcenter - r1->xcenter) +
-		                (r1->y2 - r1->y1) * (r2->ycenter - r1->ycenter)) < 0;
+		r1->reversed = ((r1->x2 - r1->x1) * (r2->xcenter - r1->xcenter) + (r1->y2 - r1->y1) * (r2->ycenter - r1->ycenter)) < 0;
 	}
 	for (int i = 0; i <= 3; i++)
 	{
 		RecoSegment* r1 = &rs[i];
 		RecoSegment* r2 = &rs[(i + 1) % 4];
-		double dist = hypot((r1->reversed ? r1->x1 : r1->x2) - (r2->reversed ? r2->x2 :
-		                                                        r2->x1), (r1->reversed ? r1->y1 : r1->y2) - (r2->reversed ? r2->y2
-		                                                                                                     : r2->y1));
+		double dist = hypot((r1->reversed ? r1->x1 : r1->x2) - (r2->reversed ? r2->x2 : r2->x1),
+							(r1->reversed ? r1->y1 : r1->y2) - (r2->reversed ? r2->y2 : r2->y1));
 		if (dist > RECTANGLE_LINEAR_TOLERANCE * (r1->radius + r2->radius))
 		{
 			return NULL;
@@ -154,9 +157,7 @@ Stroke* ShapeRecognizer::tryArrow()
 			return NULL;
 		}
 
-		rev[i] = (hypot(rs[i].xcenter - rs->x1,
-		                rs[i].ycenter - rs->y1) < hypot(rs[i].xcenter - rs->x2,
-		                                                rs[i].ycenter - rs->y2));
+		rev[i] = hypot(rs[i].xcenter - rs->x1, rs[i].ycenter - rs->y1) < hypot(rs[i].xcenter - rs->x2, rs[i].ycenter - rs->y2);
 	}
 
 	if (rev[1] != rev[2])
@@ -203,7 +204,7 @@ Stroke* ShapeRecognizer::tryArrow()
 			alpha[i] -= M_PI;
 			rs[i].reversed = !rs[i].reversed;
 		}
-		RDEBUG("arrow: alpha[%d] = %.1f degrees\n", i, alpha[i] * 180 / M_PI);
+		RDEBUG("arrow: alpha[{1}] = {2,p=1} degrees") % i % (alpha[i] * 180 / M_PI);
 		if (fabs(alpha[i]) < ARROW_ANGLE_MIN || fabs(alpha[i]) > ARROW_ANGLE_MAX)
 		{
 			return NULL;
@@ -212,7 +213,7 @@ Stroke* ShapeRecognizer::tryArrow()
 
 	// check arrow head segments are roughly symmetric
 	if (alpha[1] * alpha[2] > 0 ||
-	    fabs(alpha[1] + alpha[2]) > ARROW_ASYMMETRY_MAX_ANGLE)
+		fabs(alpha[1] + alpha[2]) > ARROW_ASYMMETRY_MAX_ANGLE)
 	{
 		return NULL;
 	}
@@ -232,8 +233,8 @@ Stroke* ShapeRecognizer::tryArrow()
 	for (int j = 1; j <= 2; j++)
 	{
 		double dist = hypot(pt.x - (rs[j].reversed ? rs[j].x1 : rs[j].x2),
-		                    pt.y - (rs[j].reversed ? rs[j].y1 : rs[j].y2));
-		RDEBUG("linear tolerance: tip[%d] = %.2f\n", j, dist / rs[j].radius);
+							pt.y - (rs[j].reversed ? rs[j].y1 : rs[j].y2));
+		RDEBUG("linear tolerance: tip[{1}] = {2,p=2}") % j % (dist / rs[j].radius);
 		if (dist > ARROW_TIP_LINEAR_TOLERANCE * rs[j].radius)
 		{
 			return NULL;
@@ -243,7 +244,7 @@ Stroke* ShapeRecognizer::tryArrow()
 	double dist = (pt.x - x2) * sin(angle) - (pt.y - y2) * cos(angle);
 	dist /= rs[1].radius + rs[2].radius;
 
-	RDEBUG("sideways gap tolerance = %.2f\n", dist);
+	RDEBUG("sideways gap tolerance = {1,p=2}") % dist;
 
 	if (fabs(dist) > ARROW_SIDEWAYS_GAP_TOLERANCE)
 	{
@@ -253,7 +254,7 @@ Stroke* ShapeRecognizer::tryArrow()
 	dist = (pt.x - x2) * cos(angle) + (pt.y - y2) * sin(angle);
 	dist /= rs[1].radius + rs[2].radius;
 
-	RDEBUG("main linear gap = %.2f\n", dist);
+	RDEBUG("main linear gap = {1,p=2}") % dist;
 
 	if (dist < ARROW_MAIN_LINEAR_GAP_MIN || dist > ARROW_MAIN_LINEAR_GAP_MAX)
 	{
@@ -261,27 +262,26 @@ Stroke* ShapeRecognizer::tryArrow()
 	}
 
 	// make an arrow of the correct size and slope
-	if (fabs(rs->angle) < SLANT_TOLERANCE)   // nearly horizontal
+	if (fabs(rs->angle) < SLANT_TOLERANCE) // nearly horizontal
 	{
 		angle = angle - rs->angle;
 		y1 = y2 = rs->ycenter;
 	}
 
-	if (rs->angle > M_PI / 2 - SLANT_TOLERANCE)   // nearly vertical
+	if (rs->angle > M_PI / 2 - SLANT_TOLERANCE) // nearly vertical
 	{
 		angle = angle - (rs->angle - M_PI / 2);
 		x1 = x2 = rs->xcenter;
 	}
 
-	if (rs->angle < -M_PI / 2 + SLANT_TOLERANCE)   // nearly vertical
+	if (rs->angle < -M_PI / 2 + SLANT_TOLERANCE) // nearly vertical
 	{
 		angle = angle - (rs->angle + M_PI / 2);
 		x1 = x2 = rs->xcenter;
 	}
 
 	double delta = fabs(alpha[1] - alpha[2]) / 2;
-	dist = (hypot(rs[1].x1 - rs[1].x2,
-	              rs[1].y1 - rs[1].y2) + hypot(rs[2].x1 - rs[2].x2, rs[2].y1 - rs[2].y2)) / 2;
+	dist = (hypot(rs[1].x1 - rs[1].x2, rs[1].y1 - rs[1].y2) + hypot(rs[2].x1 - rs[2].x2, rs[2].y1 - rs[2].y2)) / 2;
 
 	Stroke* s = new Stroke();
 	s->setWidth(this->stroke->getWidth());
@@ -291,12 +291,10 @@ Stroke* ShapeRecognizer::tryArrow()
 	s->addPoint(Point(x1, y1));
 	s->addPoint(Point(x2, y2));
 
-	s->addPoint(Point(x2 - dist * cos(angle + delta),
-	                  y2 - dist * sin(angle + delta)));
+	s->addPoint(Point(x2 - dist * cos(angle + delta), y2 - dist * sin(angle + delta)));
 	s->addPoint(Point(x2, y2));
 
-	s->addPoint(Point(x2 - dist * cos(angle - delta),
-	                  y2 - dist * sin(angle - delta)));
+	s->addPoint(Point(x2 - dist * cos(angle - delta), y2 - dist * sin(angle - delta)));
 
 	return s;
 }
@@ -304,8 +302,7 @@ Stroke* ShapeRecognizer::tryArrow()
 /*
  * check if something is a polygonal line with at most nsides sides
  */
-int ShapeRecognizer::findPolygonal(const Point* pt, int start, int end,
-                                   int nsides, int* breaks, Inertia* ss)
+int ShapeRecognizer::findPolygonal(const Point* pt, int start, int end, int nsides, int* breaks, Inertia* ss)
 {
 	XOJ_CHECK_TYPE(ShapeRecognizer);
 
@@ -392,8 +389,7 @@ int ShapeRecognizer::findPolygonal(const Point* pt, int start, int end,
 
 	if (i1 > start)
 	{
-		n1 = findPolygonal(pt, start, i1, (i2 == end) ? (nsides - 1) : (nsides - 2),
-		                   breaks, ss);
+		n1 = findPolygonal(pt, start, i1, (i2 == end) ? (nsides - 1) : (nsides - 2), breaks, ss);
 		if (n1 == 0)
 		{
 			return 0; // it doesn't work
@@ -427,8 +423,7 @@ int ShapeRecognizer::findPolygonal(const Point* pt, int start, int end,
 /**
  * Improve on the polygon found by find_polygonal()
  */
-void ShapeRecognizer::optimizePolygonal(const Point* pt, int nsides,
-                                        int* breaks, Inertia* ss)
+void ShapeRecognizer::optimizePolygonal(const Point* pt, int nsides, int* breaks, Inertia* ss)
 {
 	XOJ_CHECK_TYPE(ShapeRecognizer);
 
@@ -492,7 +487,7 @@ Stroke* ShapeRecognizer::tryClosedPolygon(int nsides)
 	//to eliminate bug #52, remove this until it's perfected
 	return NULL;
 
-
+/*
 	RecoSegment* r1 = NULL;
 	RecoSegment* r2 = NULL;
 
@@ -515,8 +510,7 @@ Stroke* ShapeRecognizer::tryClosedPolygon(int nsides)
 		r2 = rs + (i + 1) % nsides;
 		// test if r1 points away from r2 rather than towards it
 		Point pt = r1->calcEdgeIsect(r2);
-		r1->reversed = (hypot(pt.x - r1->x1, pt.y - r1->y1) < hypot(pt.x - r1->x2,
-		                                                            pt.y - r1->y2));
+		r1->reversed = (hypot(pt.x - r1->x1, pt.y - r1->y1) < hypot(pt.x - r1->x2, pt.y - r1->y2));
 	}
 
 	for (int i = 0; i < nsides; i++)
@@ -525,9 +519,9 @@ Stroke* ShapeRecognizer::tryClosedPolygon(int nsides)
 		r2 = rs + (i + 1) % nsides;
 		Point pt = r1->calcEdgeIsect(r2);
 		double dist = hypot((r1->reversed ? r1->x1 : r1->x2) - pt.x,
-		                    (r1->reversed ? r1->y1 : r1->y2) - pt.y) + hypot((r2->reversed ? r2->x2 :
-		                                                                      r2->x1) - pt.x,
-		                                                                     (r2->reversed ? r2->y2 : r2->y1) - pt.y);
+							(r1->reversed ? r1->y1 : r1->y2) - pt.y)
+								+ hypot((r2->reversed ? r2->x2 : r2->x1) - pt.x,
+							(r2->reversed ? r2->y2 : r2->y1) - pt.y);
 		if (dist > POLYGON_LINEAR_TOLERANCE * (r1->radius + r2->radius))
 		{
 			return NULL;
@@ -548,10 +542,11 @@ Stroke* ShapeRecognizer::tryClosedPolygon(int nsides)
 	s->addPoint(s->getPoint(0));
 
 	return s;
+*/
 }
 
-/*
- * the main pattern recognition function
+/**
+ * The main pattern recognition function
  */
 ShapeRecognizerResult* ShapeRecognizer::recognizePatterns(Stroke* stroke)
 {
@@ -565,23 +560,22 @@ ShapeRecognizerResult* ShapeRecognizer::recognizePatterns(Stroke* stroke)
 	}
 
 	Inertia ss[4];
-	int brk[5] = { 0 };
+	int brk[5] = {0};
 
 	// first see if it's a polygon
-	int n = findPolygonal(stroke->getPoints(), 0, stroke->getPointCount() - 1,
-	                      MAX_POLYGON_SIDES, brk, ss);
+	int n = findPolygonal(stroke->getPoints(), 0, stroke->getPointCount() - 1, MAX_POLYGON_SIDES, brk, ss);
 	if (n > 0)
 	{
 		optimizePolygonal(stroke->getPoints(), n, brk, ss);
-#ifdef RECOGNIZER_DEBUG
-		printf("\n");
-		printf("ShapeReco:: Polygon, %d edges:\n", n);
+#ifdef DEBUG_RECOGNIZER
+		cout << endl << boost::format("ShapeReco:: Polygon, %d edges:") % n << endl;
 		for (int i = 0; i < n; i++)
 		{
-			printf("ShapeReco::      %d-%d (M=%.0f, det=%.4f)\n", brk[i], brk[i + 1],
-			       ss[i].getMass(), ss[i].det());
+			cout << boost::format("ShapeReco::      %d-%d (M=%.0f, det=%.4f)")
+					% brk[i] % brk[i + 1] % ss[i].getMass() % ss[i].det()
+				 << endl;
 		}
-		printf("\n");
+		cout << endl;
 #endif
 		// update recognizer segment queue (most recent at end)
 		while (n + queueLength > MAX_POLYGON_SIDES)
@@ -589,12 +583,14 @@ ShapeRecognizerResult* ShapeRecognizer::recognizePatterns(Stroke* stroke)
 			// remove oldest polygonal stroke
 			int i = 1;
 			while (i < queueLength && queue[i].startpt != 0)
+			{
 				i++;
+			}
 			queueLength -= i;
 			g_memmove(queue, queue + i, queueLength * sizeof(RecoSegment));
 		}
 
-		RDEBUG("Queue now has %d + %d edges\n", this->queueLength, n);
+		RDEBUG("Queue now has {1} + {2} edges") % this->queueLength % n;
 
 		RecoSegment* rs = &this->queue[this->queueLength];
 		this->queueLength += n;
@@ -606,14 +602,14 @@ ShapeRecognizerResult* ShapeRecognizer::recognizePatterns(Stroke* stroke)
 			rs[i].calcSegmentGeometry(stroke->getPoints(), brk[i], brk[i + 1], ss + i);
 		}
 
+		/*
 		Stroke* tmp = NULL;
 
-		/*
 		if ((tmp = tryRectangle()) != NULL)
 		{
 			ShapeRecognizerResult* result = new ShapeRecognizerResult(tmp, this);
 			resetRecognizer();
-			RDEBUG("return tryRectangle()\n", 0);
+			RDEBUG("return tryRectangle()");
 			return result;
 		}
 
@@ -621,14 +617,14 @@ ShapeRecognizerResult* ShapeRecognizer::recognizePatterns(Stroke* stroke)
 		{
 			ShapeRecognizerResult* result = new ShapeRecognizerResult(tmp, this);
 			resetRecognizer();
-			RDEBUG("return tryArrow()\n", 0);
+			RDEBUG("return tryArrow()");
 			return result;
 		}
 
 		if ((tmp = tryClosedPolygon(3)) != NULL)
 		{
 			ShapeRecognizerResult* result = new ShapeRecognizerResult(tmp, this);
-			RDEBUG("return tryClosedPolygon(3)\n", 0);
+			RDEBUG("return tryClosedPolygon(3)");
 			resetRecognizer();
 			return result;
 		}
@@ -636,22 +632,22 @@ ShapeRecognizerResult* ShapeRecognizer::recognizePatterns(Stroke* stroke)
 		if ((tmp = tryClosedPolygon(4)) != NULL)
 		{
 			ShapeRecognizerResult* result = new ShapeRecognizerResult(tmp, this);
-			RDEBUG("return tryClosedPolygon(4)\n", 0);
+			RDEBUG("return tryClosedPolygon(4)");
 			resetRecognizer();
 			return result;
 		}
-		*/
+		 */
 
 		//Removed complicated recognition
 
-		if (n == 1)   // current stroke is a line
+		if (n == 1) // current stroke is a line
 		{
-			if (fabs(rs->angle) < SLANT_TOLERANCE)   // nearly horizontal
+			if (fabs(rs->angle) < SLANT_TOLERANCE) // nearly horizontal
 			{
 				rs->angle = 0.0;
 				rs->y1 = rs->y2 = rs->ycenter;
 			}
-			if (fabs(rs->angle) > M_PI / 2 - SLANT_TOLERANCE)   // nearly vertical
+			if (fabs(rs->angle) > M_PI / 2 - SLANT_TOLERANCE) // nearly vertical
 			{
 				rs->angle = (rs->angle > 0) ? (M_PI / 2) : (-M_PI / 2);
 				rs->x1 = rs->x2 = rs->xcenter;
@@ -666,7 +662,7 @@ ShapeRecognizerResult* ShapeRecognizer::recognizePatterns(Stroke* stroke)
 			s->addPoint(Point(rs->x2, rs->y2));
 			rs->stroke = s;
 			ShapeRecognizerResult* result = new ShapeRecognizerResult(s);
-			RDEBUG("return line\n", 0);
+			RDEBUG("return line");
 			return result;
 		}
 	}
@@ -678,12 +674,10 @@ ShapeRecognizerResult* ShapeRecognizer::recognizePatterns(Stroke* stroke)
 	Stroke* s = CircleRecognizer::recognize(stroke);
 	if (s)
 	{
-		RDEBUG("return circle\n", 0);
+		RDEBUG("return circle");
 		return new ShapeRecognizerResult(s);
 	}
 
-	*/
+	 */
 	return NULL;
 }
-
-

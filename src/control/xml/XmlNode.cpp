@@ -1,10 +1,12 @@
 #include "XmlNode.h"
-#include "TextAttribute.h"
+
+#include "DoubleArrayAttribute.h"
 #include "DoubleAttribute.h"
 #include "IntAttribute.h"
-#include "DoubleArrayAttribute.h"
+#include "SizeTAttribute.h"
+#include "TextAttribute.h"
 
-#include "../jobs/ProgressListener.h"
+#include "control/jobs/ProgressListener.h"
 
 #include <string.h>
 
@@ -31,7 +33,7 @@ XmlNode::~XmlNode()
 
 	for (GList* l = this->attributes; l != NULL; l = l->next)
 	{
-		Attribute* attrib = (Attribute*) l->data;
+		XMLAttribute* attrib = (XMLAttribute*) l->data;
 		delete attrib;
 	}
 	g_list_free(this->attributes);
@@ -68,6 +70,13 @@ void XmlNode::setAttrib(const char* attrib, int value)
 	putAttrib(new IntAttribute(attrib, value));
 }
 
+void XmlNode::setAttrib(const char* attrib, size_t  value)
+{
+	XOJ_CHECK_TYPE(XmlNode);
+
+	putAttrib(new SizeTAttribute(attrib, value));
+}
+
 /**
  * The double array is now owned by XmlNode and automatically deleted!
  */
@@ -94,7 +103,7 @@ void XmlNode::writeOut(OutputStream* out, ProgressListener* listener)
 	{
 		out->write(">\n");
 
-		if(listener)
+		if (listener)
 		{
 			listener->setMaximumState(g_list_length(this->children));
 		}
@@ -105,7 +114,7 @@ void XmlNode::writeOut(OutputStream* out, ProgressListener* listener)
 		{
 			XmlNode* node = (XmlNode*) l->data;
 			node->writeOut(out);
-			if(listener)
+			if (listener)
 			{
 				listener->setCurrentState(i);
 			}
@@ -124,13 +133,13 @@ void XmlNode::addChild(XmlNode* node)
 	this->children = g_list_append(this->children, node);
 }
 
-void XmlNode::putAttrib(Attribute* a)
+void XmlNode::putAttrib(XMLAttribute* a)
 {
 	XOJ_CHECK_TYPE(XmlNode);
 
 	for (GList* l = this->attributes; l != NULL; l = l->next)
 	{
-		Attribute* attrib = (Attribute*) l->data;
+		XMLAttribute* attrib = (XMLAttribute*) l->data;
 
 		if (strcmp(attrib->getName(), a->getName()) == 0)
 		{
@@ -149,7 +158,7 @@ void XmlNode::writeAttributes(OutputStream* out)
 
 	for (GList* l = this->attributes; l != NULL; l = l->next)
 	{
-		Attribute* attrib = (Attribute*) l->data;
+		XMLAttribute* attrib = (XMLAttribute*) l->data;
 		out->write(" ");
 		out->write(attrib->getName());
 		out->write("=\"");

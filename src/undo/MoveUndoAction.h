@@ -3,53 +3,48 @@
  *
  * Undo move action (EditSelection)
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __RELMOVEUNDOACTION_H__
-#define __RELMOVEUNDOACTION_H__
+#pragma once
 
 #include "UndoAction.h"
-#include <glib.h>
 
-class XojPage;
 class Layer;
 class Redrawable;
+class XojPage;
 
-class MoveUndoAction: public UndoAction
+class MoveUndoAction : public UndoAction
 {
 public:
-	MoveUndoAction(Layer* sourceLayer, PageRef sourcePage,
-	                  GList* selected, double mx, double my,
-	                  Layer* targetLayer, PageRef targetPage);
+	MoveUndoAction(Layer* sourceLayer, PageRef sourcePage, ElementVector* selected, double mx, double my,
+				   Layer* targetLayer, PageRef targetPage);
 	virtual ~MoveUndoAction();
 
 public:
 	virtual bool undo(Control* control);
 	virtual bool redo(Control* control);
 	XojPage** getPages();
-	virtual String getText();
+	virtual string getText();
 
 private:
-	void switchLayer(GList* entries, Layer* oldLayer, Layer* newLayer);
+	void switchLayer(ElementVector* entries, Layer* oldLayer, Layer* newLayer);
 	void repaint();
 	void move();
 
 private:
 	XOJ_TYPE_ATTRIB;
 
-	GList* elements;
+	ElementVector elements;
 	PageRef targetPage;
 
 	Layer* sourceLayer;
 	Layer* targetLayer;
 
-	String text;
+	string text;
 
 	double dx, dy;
 };
-
-#endif /* __RELMOVEUNDOACTION_H__ */

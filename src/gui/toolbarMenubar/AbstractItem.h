@@ -3,27 +3,25 @@
  *
  * Abstract Toolbar / Menubar entry
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __ABSTRACTITEM_H__
-#define __ABSTRACTITEM_H__
+#pragma once
 
-#include "../../control/Actions.h"
-#include <String.h>
+#include "control/Actions.h"
+
+#include <StringUtils.h>
 #include <XournalType.h>
 
 #include <gtk/gtk.h>
 
-class AbstractItem: public ActionEnabledListener,
-	public ActionSelectionListener
+class AbstractItem : public ActionEnabledListener, public ActionSelectionListener
 {
 public:
-	AbstractItem(String id, ActionHandler* handler, ActionType action,
-	             GtkWidget* menuitem = NULL);
+	AbstractItem(string id, ActionHandler* handler, ActionType action, GtkWidget* menuitem = NULL);
 	virtual ~AbstractItem();
 
 public:
@@ -36,10 +34,9 @@ public:
 	virtual void selected(ActionGroup group, ActionType action);
 
 	virtual void actionEnabledAction(ActionType action, bool enabled);
-	virtual void activated(GdkEvent* event, GtkMenuItem* menuitem,
-	                       GtkToolButton* toolbutton);
+	virtual void activated(GdkEvent* event, GtkMenuItem* menuitem, GtkToolButton* toolbutton);
 
-	virtual String getId();
+	virtual string getId();
 
 	void setTmpDisabled(bool disabled);
 	bool isEnabled();
@@ -54,7 +51,7 @@ protected:
 	ActionGroup group;
 	ActionType action;
 
-	String id;
+	string id;
 
 	ActionHandler* handler;
 
@@ -64,5 +61,3 @@ private:
 	gulong menuSignalHandler;
 	GtkWidget* menuitem;
 };
-
-#endif /* __ABSTRACTITEM_H__ */

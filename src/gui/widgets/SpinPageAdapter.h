@@ -3,17 +3,18 @@
  *
  * Handle the Page Spin Widget
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __SPINPAGEADAPTER_H__
-#define __SPINPAGEADAPTER_H__
+#pragma once
 
 #include <XournalType.h>
+
 #include <gtk/gtk.h>
+#include <list>
 
 class SpinPageListener;
 
@@ -27,16 +28,15 @@ public:
 	GtkWidget* getWidget();
 
 	int getPage();
-	void setPage(int page);
-	void setMinMaxPage(int min, int max);
+	void setPage(size_t page);
+	void setMinMaxPage(size_t min, size_t max);
 
 	void addListener(SpinPageListener* listener);
 	void removeListener(SpinPageListener* listener);
 
 private:
 	static bool pageNrSpinChangedTimerCallback(SpinPageAdapter* adapter);
-	static void pageNrSpinChangedCallback(GtkSpinButton* spinbutton,
-	                                      SpinPageAdapter* adapter);
+	static void pageNrSpinChangedCallback(GtkSpinButton* spinbutton, SpinPageAdapter* adapter);
 
 	void firePageChanged();
 
@@ -44,16 +44,14 @@ private:
 	XOJ_TYPE_ATTRIB;
 
 	GtkWidget* widget;
-	int page;
+	size_t page;
 
 	int lastTimeoutId;
-	GList* listener;
+	std::list<SpinPageListener*> listener;
 };
 
 class SpinPageListener
 {
 public:
-	virtual void pageChanged(int page) = 0;
+	virtual void pageChanged(size_t page) = 0;
 };
-
-#endif /* __SPINPAGEADAPTER_H__ */

@@ -3,22 +3,24 @@
  *
  * An element on the Document
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __ELEMENT_H__
-#define __ELEMENT_H__
+#pragma once
 
-#include <gtk/gtk.h>
 #include <serializing/Serializeable.h>
 #include <XournalType.h>
 
+#include <gtk/gtk.h>
+
+#include <vector>
+
 enum ElementType
 {
-    ELEMENT_STROKE = 1, ELEMENT_IMAGE, ELEMENT_TEXIMAGE, ELEMENT_TEXT
+	ELEMENT_STROKE = 1, ELEMENT_IMAGE, ELEMENT_TEXIMAGE, ELEMENT_TEXT
 };
 
 class ShapeContainer
@@ -27,7 +29,7 @@ public:
 	virtual bool contains(double x, double y) = 0;
 };
 
-class Element: public Serializeable
+class Element : public Serializeable
 {
 protected:
 	Element(ElementType type);
@@ -91,4 +93,4 @@ private:
 	int color;
 };
 
-#endif /* __ELEMENT_H__ */
+typedef std::vector<Element*> ElementVector;

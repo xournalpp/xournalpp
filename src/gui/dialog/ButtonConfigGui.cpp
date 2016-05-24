@@ -1,17 +1,17 @@
 #include "ButtonConfigGui.h"
-#include "../../control/settings/Settings.h"
-#include "../../control/settings/ButtonConfig.h"
+
 #include "SettingsDialog.h"
+#include "control/settings/Settings.h"
+#include "control/settings/ButtonConfig.h"
 
 #include <config.h>
-#include <glib/gi18n-lib.h>
+#include <i18n.h>
 
 #define	ADD_TYPE_CB(icon, name, action) \
 	gtk_list_store_append(typeModel, &iter); \
 	gtk_list_store_set(typeModel, &iter, 0, dlg->loadIconPixbuf(icon), 1, name, 2, action, -1);
 
-ButtonConfigGui::ButtonConfigGui(SettingsDialog* dlg, GtkWidget* w,
-                                 Settings* settings, int button, bool withDevice)
+ButtonConfigGui::ButtonConfigGui(SettingsDialog* dlg, GtkWidget* w,  Settings* settings, int button, bool withDevice)
 {
 	XOJ_INIT_TYPE(ButtonConfigGui);
 
@@ -25,14 +25,14 @@ ButtonConfigGui::ButtonConfigGui(SettingsDialog* dlg, GtkWidget* w,
 	{
 		this->cbDevice = gtk_combo_box_new_text();
 
-		gtk_combo_box_append_text(GTK_COMBO_BOX(this->cbDevice), _("No device"));
+		gtk_combo_box_append_text(GTK_COMBO_BOX(this->cbDevice), _C("No device"));
 
 		GList* devices = gdk_devices_list();
 		for (GList* l = devices; l != NULL; l = l->next)
 		{
 			GdkDevice* dev = (GdkDevice*) l->data;
 
-			const char* devType = "";
+			string devType = "";
 			if (dev->source == GDK_SOURCE_MOUSE)
 			{
 				devType = _("mouse");
@@ -50,23 +50,19 @@ ButtonConfigGui::ButtonConfigGui(SettingsDialog* dlg, GtkWidget* w,
 				devType = _("cursor");
 			}
 
-			char* txt = g_strdup_printf("%s (%s)", dev->name, devType);
+			char* txt = g_strdup_printf("%s (%s)", dev->name, devType.c_str());
 			gtk_combo_box_append_text(GTK_COMBO_BOX(this->cbDevice), txt);
 			g_free(txt);
 		}
 
-		gtk_table_attach(GTK_TABLE(table), newLabel(_("Device")), 0, 1, 0, 1, GTK_FILL,
-		                 GTK_FILL, 20, 0);
+		gtk_table_attach(GTK_TABLE(table), newLabel(_C("Device")), 0, 1, 0, 1, GTK_FILL, GTK_FILL, 20, 0);
 		gtk_table_attach(GTK_TABLE(table), this->cbDevice, 1, 2, 0, 1,
-		                 (GtkAttachOptions) (GTK_EXPAND | GTK_FILL), (GtkAttachOptions) (GTK_FILL), 0,
-		                 0);
+						 (GtkAttachOptions) (GTK_EXPAND | GTK_FILL), (GtkAttachOptions) (GTK_FILL), 0, 0);
 
-		cbDisableDrawing = gtk_check_button_new_with_label(
-		                       _("Disable drawing for this device"));
+		cbDisableDrawing = gtk_check_button_new_with_label(_C("Disable drawing for this device"));
 
 		gtk_table_attach(GTK_TABLE(table), cbDisableDrawing, 1, 2, 1, 2,
-		                 (GtkAttachOptions) (GTK_EXPAND | GTK_FILL), (GtkAttachOptions) (GTK_FILL), 0,
-		                 0);
+						 (GtkAttachOptions) (GTK_EXPAND | GTK_FILL), (GtkAttachOptions) (GTK_FILL), 0, 0);
 
 	}
 	else
@@ -75,22 +71,21 @@ ButtonConfigGui::ButtonConfigGui(SettingsDialog* dlg, GtkWidget* w,
 		this->cbDisableDrawing = NULL;
 	}
 
-	GtkListStore* typeModel = gtk_list_store_new(3, GDK_TYPE_PIXBUF, G_TYPE_STRING,
-	                                             G_TYPE_INT);
+	GtkListStore* typeModel = gtk_list_store_new(3, GDK_TYPE_PIXBUF, G_TYPE_STRING, G_TYPE_INT);
 	GtkTreeIter iter;
 
-	ADD_TYPE_CB("empty.png", _("Don't change"), TOOL_NONE);
-	ADD_TYPE_CB("tool_pencil.png", _("Pen"), TOOL_PEN);
-	ADD_TYPE_CB("tool_eraser.png", _("Eraser"), TOOL_ERASER);
-	ADD_TYPE_CB("tool_highlighter.png", _("Hilighter"), TOOL_HILIGHTER);
-	ADD_TYPE_CB("tool_text.png", _("Text"), TOOL_TEXT);
-	ADD_TYPE_CB("tool_image.png", _("Insert image"), TOOL_IMAGE);
-	ADD_TYPE_CB("stretch.png", _("Vertical space"), TOOL_VERTICAL_SPACE);
-	ADD_TYPE_CB("lasso.png", _("Select region"), TOOL_SELECT_REGION);
-	ADD_TYPE_CB("rect-select.png", _("Select rectangle"), TOOL_SELECT_RECT);
-	//ADD_TYPE_CB("rect-draw.png", _("Draw rectangle"), TOOL_DRAW_RECT);
-	//ADD_TYPE_CB("circle-draw.png", _("Draw circle"), TOOL_DRAW_CIRCLE);
-	ADD_TYPE_CB("hand.png", _("Hand"), TOOL_HAND);
+	ADD_TYPE_CB("empty.svg",			_C("Don't change"),		TOOL_NONE);
+	ADD_TYPE_CB("tool_pencil.svg",		_C("Pen"),				TOOL_PEN);
+	ADD_TYPE_CB("tool_eraser.svg",		_C("Eraser"),			TOOL_ERASER);
+	ADD_TYPE_CB("tool_highlighter.png",	_C("Hilighter"),			TOOL_HILIGHTER);
+	ADD_TYPE_CB("tool_text.svg",		_C("Text"),				TOOL_TEXT);
+	ADD_TYPE_CB("tool_image.svg",		_C("Insert image"),		TOOL_IMAGE);
+	ADD_TYPE_CB("stretch.svg",			_C("Vertical space"),	TOOL_VERTICAL_SPACE);
+	ADD_TYPE_CB("lasso.svg",			_C("Select region"),		TOOL_SELECT_REGION);
+	ADD_TYPE_CB("rect-select.svg",		_C("Select rectangle"),	TOOL_SELECT_RECT);
+	//ADD_TYPE_CB("rect-draw.svg",		_C("Draw rectangle"),		TOOL_DRAW_RECT);
+	//ADD_TYPE_CB("circle-draw.svg",	_C("Draw circle"),		TOOL_DRAW_CIRCLE);
+	ADD_TYPE_CB("hand.svg",				_C("Hand"),				TOOL_HAND);
 
 	GtkCellRenderer* renderer = NULL;
 
@@ -99,68 +94,52 @@ ButtonConfigGui::ButtonConfigGui(SettingsDialog* dlg, GtkWidget* w,
 
 	renderer = gtk_cell_renderer_pixbuf_new();
 	gtk_cell_layout_pack_start(GTK_CELL_LAYOUT(this->cbTool), renderer, false);
-	gtk_cell_layout_set_attributes(GTK_CELL_LAYOUT(this->cbTool), renderer,
-	                               "pixbuf", 0, NULL);
+	gtk_cell_layout_set_attributes(GTK_CELL_LAYOUT(this->cbTool), renderer, "pixbuf", 0, NULL);
 
 	renderer = gtk_cell_renderer_text_new();
 	gtk_cell_layout_pack_start(GTK_CELL_LAYOUT(this->cbTool), renderer, true);
-	gtk_cell_layout_set_attributes(GTK_CELL_LAYOUT(this->cbTool), renderer, "text",
-	                               1, NULL);
+	gtk_cell_layout_set_attributes(GTK_CELL_LAYOUT(this->cbTool), renderer, "text", 1, NULL);
 
-	gtk_table_attach(GTK_TABLE(table), newLabel(_("Tool")), 0, 1, 2, 3, GTK_FILL,
-	                 GTK_FILL, 20, 0);
+	gtk_table_attach(GTK_TABLE(table), newLabel(_C("Tool")), 0, 1, 2, 3, GTK_FILL, GTK_FILL, 20, 0);
 	gtk_table_attach(GTK_TABLE(table), cbTool, 1, 2, 2, 3,
-	                 (GtkAttachOptions) (GTK_EXPAND | GTK_FILL), (GtkAttachOptions) (GTK_FILL), 0,
-	                 0);
+					 (GtkAttachOptions) (GTK_EXPAND | GTK_FILL), (GtkAttachOptions) (GTK_FILL), 0, 0);
 
 	this->cbThickness = gtk_combo_box_new_text();
-	gtk_combo_box_append_text(GTK_COMBO_BOX(cbThickness), _("Don't change"));
-	gtk_combo_box_append_text(GTK_COMBO_BOX(cbThickness), _("Thin"));
-	gtk_combo_box_append_text(GTK_COMBO_BOX(cbThickness), _("Medium"));
-	gtk_combo_box_append_text(GTK_COMBO_BOX(cbThickness), _("Thick"));
+	gtk_combo_box_append_text(GTK_COMBO_BOX(cbThickness), _C("Don't change"));
+	gtk_combo_box_append_text(GTK_COMBO_BOX(cbThickness), _C("Thin"));
+	gtk_combo_box_append_text(GTK_COMBO_BOX(cbThickness), _C("Medium"));
+	gtk_combo_box_append_text(GTK_COMBO_BOX(cbThickness), _C("Thick"));
 	gtk_combo_box_set_active(GTK_COMBO_BOX(cbThickness), 0);
 
-	gtk_table_attach(GTK_TABLE(table), newLabel(_("Thickness")), 0, 1, 3, 4,
-	                 GTK_FILL, GTK_FILL, 20, 0);
+	gtk_table_attach(GTK_TABLE(table), newLabel(_C("Thickness")), 0, 1, 3, 4,
+					GTK_FILL, GTK_FILL, 20, 0);
 	gtk_table_attach(GTK_TABLE(table), this->cbThickness, 1, 2, 3, 4,
-	                 (GtkAttachOptions) (GTK_EXPAND | GTK_FILL), (GtkAttachOptions) (GTK_FILL), 0,
-	                 0);
+					 (GtkAttachOptions) (GTK_EXPAND | GTK_FILL), (GtkAttachOptions) (GTK_FILL), 0, 0);
 
 	this->colorButton = gtk_color_button_new();
-	gtk_table_attach(GTK_TABLE(table), newLabel(_("Color")), 0, 1, 4, 5, GTK_FILL,
-	                 GTK_FILL, 20, 0);
+	gtk_table_attach(GTK_TABLE(table), newLabel(_C("Color")), 0, 1, 4, 5, GTK_FILL, GTK_FILL, 20, 0);
 	gtk_table_attach(GTK_TABLE(table), colorButton, 1, 2, 4, 5,
-	                 (GtkAttachOptions) (GTK_EXPAND | GTK_FILL), (GtkAttachOptions) (GTK_FILL), 0,
-	                 0);
+					 (GtkAttachOptions) (GTK_EXPAND | GTK_FILL), (GtkAttachOptions) (GTK_FILL), 0, 0);
 
 	this->cbDrawingType = gtk_combo_box_new_text();
-	gtk_combo_box_append_text(GTK_COMBO_BOX(this->cbDrawingType),
-	                          _("Don't change"));
-	gtk_combo_box_append_text(GTK_COMBO_BOX(this->cbDrawingType),
-	                          _("Enable Ruler"));
-	gtk_combo_box_append_text(GTK_COMBO_BOX(this->cbDrawingType),
-	                          _("Enable Stroke Recognizer"));
-	gtk_combo_box_append_text(GTK_COMBO_BOX(this->cbDrawingType),
-	                          _("Disable Ruler & Stroke Recognizer"));
+	gtk_combo_box_append_text(GTK_COMBO_BOX(this->cbDrawingType), _C("Don't change"));
+	gtk_combo_box_append_text(GTK_COMBO_BOX(this->cbDrawingType), _C("Enable Ruler"));
+	gtk_combo_box_append_text(GTK_COMBO_BOX(this->cbDrawingType), _C("Enable Stroke Recognizer"));
+	gtk_combo_box_append_text(GTK_COMBO_BOX(this->cbDrawingType), _C("Disable Ruler & Stroke Recognizer"));
 
-	gtk_table_attach(GTK_TABLE(table), newLabel(_("Ruler & Stroke Reco.")), 0, 1, 5,
-	                 6, GTK_FILL, GTK_FILL, 20, 0);
+	gtk_table_attach(GTK_TABLE(table), newLabel(_C("Ruler & Stroke Reco.")), 0, 1, 5, 6, GTK_FILL, GTK_FILL, 20, 0);
 	gtk_table_attach(GTK_TABLE(table), this->cbDrawingType, 1, 2, 5, 6,
-	                 (GtkAttachOptions) (GTK_EXPAND | GTK_FILL), (GtkAttachOptions) (GTK_FILL), 0,
-	                 0);
+					 (GtkAttachOptions) (GTK_EXPAND | GTK_FILL), (GtkAttachOptions) (GTK_FILL), 0, 0);
 
 	this->cbEraserType = gtk_combo_box_new_text();
-	gtk_combo_box_append_text(GTK_COMBO_BOX(this->cbEraserType), _("Don't change"));
-	gtk_combo_box_append_text(GTK_COMBO_BOX(this->cbEraserType), _("Standard"));
-	gtk_combo_box_append_text(GTK_COMBO_BOX(this->cbEraserType), _("Whiteout"));
-	gtk_combo_box_append_text(GTK_COMBO_BOX(this->cbEraserType),
-	                          _("Delete stroke"));
+	gtk_combo_box_append_text(GTK_COMBO_BOX(this->cbEraserType), _C("Don't change"));
+	gtk_combo_box_append_text(GTK_COMBO_BOX(this->cbEraserType), _C("Standard"));
+	gtk_combo_box_append_text(GTK_COMBO_BOX(this->cbEraserType), _C("Whiteout"));
+	gtk_combo_box_append_text(GTK_COMBO_BOX(this->cbEraserType), _C("Delete stroke"));
 
-	gtk_table_attach(GTK_TABLE(table), newLabel(_("Eraser type")), 0, 1, 8, 9,
-	                 GTK_FILL, GTK_FILL, 20, 0);
+	gtk_table_attach(GTK_TABLE(table), newLabel(_C("Eraser type")), 0, 1, 8, 9, GTK_FILL, GTK_FILL, 20, 0);
 	gtk_table_attach(GTK_TABLE(table), this->cbEraserType, 1, 2, 8, 9,
-	                 (GtkAttachOptions) (GTK_EXPAND | GTK_FILL), (GtkAttachOptions) (GTK_FILL), 0,
-	                 0);
+					 (GtkAttachOptions) (GTK_EXPAND | GTK_FILL), (GtkAttachOptions) (GTK_FILL), 0, 0);
 
 	gtk_container_add(GTK_CONTAINER(w), table);
 	gtk_widget_show_all(table);
@@ -187,7 +166,7 @@ void ButtonConfigGui::loadSettings()
 		return;
 	}
 
-	GValue value = { 0 };
+	GValue value = {0};
 	int i = 0;
 
 	gtk_combo_box_set_active(GTK_COMBO_BOX(cbTool), 0);
@@ -226,7 +205,7 @@ void ButtonConfigGui::loadSettings()
 		gtk_combo_box_set_active(GTK_COMBO_BOX(cbThickness), 0);
 	}
 
-	GdkColor color = { 0, 0, 0, 0 };
+	GdkColor color = {0, 0, 0, 0};
 	color.red = (cfg->color >> 8) & 0xff00;
 	color.green = (cfg->color >> 0) & 0xff00;
 	color.blue = (cfg->color << 8) & 0xff00;
@@ -268,8 +247,7 @@ void ButtonConfigGui::loadSettings()
 			}
 		}
 
-		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(cbDisableDrawing),
-		                             cfg->disableDrawing);
+		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(cbDisableDrawing), cfg->disableDrawing);
 	}
 }
 
@@ -283,7 +261,7 @@ void ButtonConfigGui::saveSettings()
 
 	gtk_combo_box_get_active_iter(GTK_COMBO_BOX(cbTool), &iter);
 
-	GValue value = { 0 };
+	GValue value = {0};
 	GtkTreeModel* model = gtk_combo_box_get_model(GTK_COMBO_BOX(cbTool));
 
 	gtk_tree_model_get_value(model, &iter, 2, &value);
@@ -310,14 +288,12 @@ void ButtonConfigGui::saveSettings()
 		cfg->size = TOOL_SIZE_NONE;
 	}
 
-	GdkColor color = { 0, 0, 0, 0 };
+	GdkColor color = {0, 0, 0, 0};
 	gtk_color_button_get_color(GTK_COLOR_BUTTON(colorButton), &color);
 
-	cfg->color = (color.red / 256) << 16 | (color.green / 256) << 8 |
-	             (color.blue / 256);
+	cfg->color = (color.red / 256) << 16 | (color.green / 256) << 8 | (color.blue / 256);
 
-	cfg->drawingType = (DrawingType)gtk_combo_box_get_active(GTK_COMBO_BOX(
-	                                                             this->cbDrawingType));
+	cfg->drawingType = (DrawingType) gtk_combo_box_get_active(GTK_COMBO_BOX(this->cbDrawingType));
 
 	int eraserMode = gtk_combo_box_get_active(GTK_COMBO_BOX(this->cbEraserType));
 
@@ -352,8 +328,7 @@ void ButtonConfigGui::saveSettings()
 			cfg->device = ((GdkDevice*) selected->data)->name;
 		}
 
-		cfg->disableDrawing = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(
-		                                                       cbDisableDrawing));
+		cfg->disableDrawing = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(cbDisableDrawing));
 	}
 
 	settings->customSettingsChanged();
@@ -366,8 +341,7 @@ GtkWidget* ButtonConfigGui::newLabel(const char* text)
 	return label;
 }
 
-void ButtonConfigGui::cbSelectCallback(GtkComboBox* widget,
-                                       ButtonConfigGui* gui)
+void ButtonConfigGui::cbSelectCallback(GtkComboBox* widget, ButtonConfigGui* gui)
 {
 	XOJ_CHECK_TYPE_OBJ(gui, ButtonConfigGui);
 	gui->enableDisableTools();
@@ -382,7 +356,7 @@ void ButtonConfigGui::enableDisableTools()
 
 	gtk_combo_box_get_active_iter(GTK_COMBO_BOX(cbTool), &iter);
 
-	GValue value = { 0 };
+	GValue value = {0};
 	GtkTreeModel* model = gtk_combo_box_get_model(GTK_COMBO_BOX(cbTool));
 
 	gtk_tree_model_get_value(model, &iter, 2, &value);
@@ -396,26 +370,26 @@ void ButtonConfigGui::enableDisableTools()
 		gtk_widget_set_sensitive(colorButton, true);
 		gtk_widget_set_sensitive(cbDrawingType, true);
 		gtk_widget_set_sensitive(cbEraserType, false);
-
 		break;
+		
 	case TOOL_ERASER:
 		gtk_widget_set_sensitive(cbThickness, true);
 		gtk_widget_set_sensitive(colorButton, false);
 		gtk_widget_set_sensitive(cbDrawingType, false);
 		gtk_widget_set_sensitive(cbEraserType, true);
-
 		break;
+		
 	case TOOL_TEXT:
 		gtk_widget_set_sensitive(cbThickness, false);
 		gtk_widget_set_sensitive(colorButton, true);
 		gtk_widget_set_sensitive(cbDrawingType, false);
 		gtk_widget_set_sensitive(cbEraserType, false);
-
 		break;
+		
 	case TOOL_NONE:
 	case TOOL_IMAGE:
-	//case TOOL_DRAW_RECT:
-	//case TOOL_DRAW_CIRCLE:
+		//case TOOL_DRAW_RECT:
+		//case TOOL_DRAW_CIRCLE:
 	case TOOL_SELECT_RECT:
 	case TOOL_SELECT_REGION:
 	case TOOL_VERTICAL_SPACE:
@@ -427,4 +401,3 @@ void ButtonConfigGui::enableDisableTools()
 		break;
 	}
 }
-

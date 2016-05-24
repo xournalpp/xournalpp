@@ -3,27 +3,31 @@
  *
  * Dialog to select a Image (to insert as background)
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __IMAGESDIALOG_H__
-#define __IMAGESDIALOG_H__
+#pragma once
 
-#include "../GladeGui.h"
+#include "gui/GladeGui.h"
 #include <XournalType.h>
 
+#include <vector>
+
+class BackgroundImage;
 class Document;
+class ImageView;
 class Settings;
 class BackgroundImage;
 
-class ImagesDialog: public GladeGui
+typedef std::vector<ImageView*> ImageViewVector;
+
+class ImagesDialog : public GladeGui
 {
 public:
-	ImagesDialog(GladeSearchpath* gladeSearchPath, Document* doc,
-	             Settings* settings);
+	ImagesDialog(GladeSearchpath* gladeSearchPath, Document* doc, Settings* settings);
 	virtual ~ImagesDialog();
 
 public:
@@ -31,7 +35,7 @@ public:
 
 	void setBackgroundWhite();
 
-	void setSelected(int selected);
+	void setSelected(size_t selected);
 
 	BackgroundImage getSelectedImage();
 	bool shouldShowFilechooser();
@@ -41,8 +45,7 @@ private:
 	void layout();
 	void updateOkButton();
 
-	static void sizeAllocate(GtkWidget* widget, GtkRequisition* requisition,
-	                         ImagesDialog* dlg);
+	static void sizeAllocate(GtkWidget* widget, GtkRequisition* requisition, ImagesDialog* dlg);
 	static void okButtonCallback(GtkButton* button, ImagesDialog* dlg);
 	static void filechooserButtonCallback(GtkButton* button, ImagesDialog* dlg);
 
@@ -53,15 +56,13 @@ private:
 
 	Settings* settings;
 
-	int selected;
+	size_t selected;
 	int lastWidth;
 
 	int selectedPage;
 
-	GList* images;
+	ImageViewVector images;
 
 	GtkWidget* scrollPreview;
 	GtkWidget* widget;
 };
-
-#endif /* __IMAGESDIALOG_H__ */

@@ -1,18 +1,17 @@
 #include "OutputStream.h"
+
+#include <i18n.h>
+
 #include <stdlib.h>
 #include <string.h>
 
-OutputStream::OutputStream()
-{
-}
+OutputStream::OutputStream() { }
 
-OutputStream::~OutputStream()
-{
-}
+OutputStream::~OutputStream() { }
 
-void OutputStream::write(const String& str)
+void OutputStream::write(const string& str)
 {
-	write(str.c_str(), str.size());
+	write(str.c_str(), str.length());
 }
 
 void OutputStream::write(const char* str)
@@ -24,18 +23,20 @@ void OutputStream::write(const char* str)
 /// GzOutputStream /////////////////////////////////////
 ////////////////////////////////////////////////////////
 
-GzOutputStream::GzOutputStream(String filename)
+GzOutputStream::GzOutputStream(path filename)
 {
 	XOJ_INIT_TYPE(GzOutputStream);
 
 	this->fp = NULL;
 	this->filename = filename;
+#ifdef _WIN32
+	this->fp = gzopen_w(filename.c_str(), "w");
+#else
 	this->fp = gzopen(filename.c_str(), "w");
+#endif
 	if (this->fp == NULL)
 	{
-		char* e = g_strdup_printf("error opening file: \"%s\"", filename.c_str());
-		this->error = e;
-		g_free(e);
+		this->error = FS(_F("Error opening file: \"{1}\"") % filename.string());
 	}
 }
 
@@ -51,7 +52,7 @@ GzOutputStream::~GzOutputStream()
 	XOJ_RELEASE_TYPE(GzOutputStream);
 }
 
-String& GzOutputStream::getLastError()
+string& GzOutputStream::getLastError()
 {
 	XOJ_CHECK_TYPE(GzOutputStream);
 
@@ -75,4 +76,3 @@ void GzOutputStream::close()
 		this->fp = NULL;
 	}
 }
-

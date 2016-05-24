@@ -1,15 +1,18 @@
 #include "PdfPagesDialog.h"
-#include "../Shadow.h"
-#include <math.h>
-#include <Util.h>
+
+#include "gui/Shadow.h"
 
 #include <config.h>
-#include <glib/gi18n-lib.h>
+#include <i18n.h>
+#include <Util.h>
+
+#include <math.h>
 
 class PdfPage
 {
 public:
-	PdfPage(XojPopplerPage* page, int index, PdfPagesDialog* dlg)
+
+	PdfPage(XojPopplerPage* page, size_t index, PdfPagesDialog* dlg)
 	{
 		XOJ_INIT_TYPE(PdfPage);
 
@@ -24,10 +27,8 @@ public:
 		updateSize();
 		gtk_widget_set_events(widget, GDK_EXPOSURE_MASK | GDK_BUTTON_PRESS_MASK);
 
-		g_signal_connect(this->widget, "expose_event", G_CALLBACK(exposeEventCallback),
-		                 this);
-		g_signal_connect(this->widget, "button-press-event",
-		                 G_CALLBACK(mouseButtonPressCallback), this);
+		g_signal_connect(this->widget, "expose_event", G_CALLBACK(exposeEventCallback), this);
+		g_signal_connect(this->widget, "button-press-event", G_CALLBACK(mouseButtonPressCallback), this);
 	}
 
 	virtual ~PdfPage()
@@ -56,18 +57,16 @@ public:
 	{
 		XOJ_CHECK_TYPE(PdfPage);
 
-		return page->getWidth() * dlg->getZoom() + Shadow::getShadowBottomRightSize() +
-		       Shadow::getShadowTopLeftSize()
-		       + 4;
+		return page->getWidth() * dlg->getZoom()
+				+ Shadow::getShadowBottomRightSize() + Shadow::getShadowTopLeftSize() + 4;
 	}
 
 	int getHeight()
 	{
 		XOJ_CHECK_TYPE(PdfPage);
 
-		return page->getHeight() * dlg->getZoom() + Shadow::getShadowBottomRightSize() +
-		       Shadow::getShadowTopLeftSize()
-		       + 4;
+		return page->getHeight() * dlg->getZoom()
+				+ Shadow::getShadowBottomRightSize() + Shadow::getShadowTopLeftSize() + 4;
 	}
 
 	void setSelected(bool selected)
@@ -101,9 +100,9 @@ public:
 
 		gtk_widget_set_size_request(this->widget, getWidth(), getHeight());
 	}
+
 private:
-	static gboolean exposeEventCallback(GtkWidget* widget, GdkEventExpose* event,
-	                                    PdfPage* page)
+	static gboolean exposeEventCallback(GtkWidget* widget, GdkEventExpose* event, PdfPage* page)
 	{
 		XOJ_CHECK_TYPE_OBJ(page, PdfPage);
 
@@ -111,8 +110,7 @@ private:
 		return true;
 	}
 
-	static gboolean mouseButtonPressCallback(GtkWidget* widget,
-	                                         GdkEventButton* event, PdfPage* page)
+	static gboolean mouseButtonPressCallback(GtkWidget* widget, GdkEventButton* event, PdfPage* page)
 	{
 		XOJ_CHECK_TYPE_OBJ(page, PdfPage);
 
@@ -131,8 +129,7 @@ private:
 
 		if (crBuffer == NULL)
 		{
-			crBuffer = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, alloc.width,
-			                                      alloc.height);
+			crBuffer = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, alloc.width, alloc.height);
 
 			double zoom = dlg->getZoom();
 
@@ -140,8 +137,7 @@ private:
 			cairo_matrix_t defaultMatrix = { 0 };
 			cairo_get_matrix(cr2, &defaultMatrix);
 
-			cairo_translate(cr2, Shadow::getShadowTopLeftSize() + 2,
-			                Shadow::getShadowTopLeftSize() + 2);
+			cairo_translate(cr2, Shadow::getShadowTopLeftSize() + 2, Shadow::getShadowTopLeftSize() + 2);
 
 			cairo_scale(cr2, zoom, zoom);
 
@@ -169,11 +165,10 @@ private:
 
 			//right
 			cairo_rectangle(cr2, alloc.width - Shadow::getShadowBottomRightSize() - 2, 0,
-			                Shadow::getShadowBottomRightSize() + 2, alloc.height);
+							Shadow::getShadowBottomRightSize() + 2, alloc.height);
 			//bottom
-			cairo_rectangle(cr2, 0, alloc.height - Shadow::getShadowBottomRightSize() - 2,
-			                alloc.width,
-			                Shadow::getShadowBottomRightSize() + 2);
+			cairo_rectangle(cr2, 0, alloc.height - Shadow::getShadowBottomRightSize() - 2, alloc.width,
+							Shadow::getShadowBottomRightSize() + 2);
 			cairo_fill(cr2);
 
 			cairo_set_operator(cr2, CAIRO_OPERATOR_ATOP);
@@ -186,21 +181,18 @@ private:
 				cairo_set_line_cap(cr2, CAIRO_LINE_CAP_BUTT);
 				cairo_set_line_join(cr2, CAIRO_LINE_JOIN_BEVEL);
 
-				cairo_rectangle(cr2, Shadow::getShadowTopLeftSize(),
-				                Shadow::getShadowTopLeftSize(), width + 3.5, height
-				                + 3.5);
+				cairo_rectangle(cr2, Shadow::getShadowTopLeftSize(), Shadow::getShadowTopLeftSize(),
+								width + 3.5, height + 3.5);
 
 				cairo_stroke(cr2);
 
-				Shadow::drawShadow(cr2, Shadow::getShadowTopLeftSize(),
-				                   Shadow::getShadowTopLeftSize(), width + 5, height
-				                   + 5);
+				Shadow::drawShadow(cr2, Shadow::getShadowTopLeftSize(), Shadow::getShadowTopLeftSize(),
+								   width + 5, height + 5);
 			}
 			else
 			{
-				Shadow::drawShadow(cr2, Shadow::getShadowTopLeftSize() + 2,
-				                   Shadow::getShadowTopLeftSize() + 2, width,
-				                   height);
+				Shadow::drawShadow(cr2, Shadow::getShadowTopLeftSize() + 2, Shadow::getShadowTopLeftSize() + 2,
+								   width, height);
 			}
 
 			int x = 35;
@@ -213,12 +205,10 @@ private:
 
 			cairo_set_source_rgb(cr2, 0xff / 255.0, 0x66 / 255.0, 0x00 / 255.0);
 			cairo_stroke(cr2);
-			cairo_select_font_face(cr2, "@cairo:", CAIRO_FONT_SLANT_NORMAL,
-			                       CAIRO_FONT_WEIGHT_BOLD);
+			cairo_select_font_face(cr2, "@cairo:", CAIRO_FONT_SLANT_NORMAL, CAIRO_FONT_WEIGHT_BOLD);
 			cairo_set_font_size(cr2, 16);
 
-			char* txt = g_strdup_printf("%i",
-			                            this->pageNr + 1);  // Do not start page number with 0
+			char* txt = g_strdup_printf("%lu", this->pageNr + 1); // Do not start page number with 0
 
 			cairo_text_extents_t extents;
 			cairo_text_extents(cr2, txt, &extents);
@@ -261,7 +251,7 @@ private:
 	XOJ_TYPE_ATTRIB;
 
 	bool selected;
-	int pageNr;
+	size_t pageNr;
 
 	XojPopplerPage* page;
 
@@ -276,22 +266,19 @@ private:
 //////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////
 
-
-PdfPagesDialog::PdfPagesDialog(GladeSearchpath* gladeSearchPath, Document* doc,
-                               Settings* settings) :
-	GladeGui(gladeSearchPath, "pdfpages.glade", "pdfPagesDialog")
+PdfPagesDialog::PdfPagesDialog(GladeSearchpath* gladeSearchPath, Document* doc, Settings* settings) :
+		GladeGui(gladeSearchPath, "pdfpages.glade", "pdfPagesDialog")
 {
 
 	XOJ_INIT_TYPE(PdfPagesDialog);
 
-	this->pages = NULL;
 	this->settings = settings;
 	this->widget = gtk_layout_new(NULL, NULL);
 	this->scrollPreview = gtk_scrolled_window_new(NULL, NULL);
 	this->backgroundInitialized = false;
-	this->selected = -1;
+	this->selected = size_t_npos;
 	this->lastWidth = -1;
-	this->selectedPage = -1;
+	this->selectedPage = size_t_npos;
 
 	this->count = doc->getPdfPageCount();
 	this->usedPages = new bool[count];
@@ -300,25 +287,22 @@ PdfPagesDialog::PdfPagesDialog(GladeSearchpath* gladeSearchPath, Document* doc,
 		this->usedPages[i] = false;
 	}
 
-	// TODO LOW PRIO: may find a better solution... depending on screen size or so
 	gtk_widget_set_size_request(this->window, 800, 600);
 
-	gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scrollPreview),
-	                               GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
-	gtk_scrolled_window_set_shadow_type(GTK_SCROLLED_WINDOW(scrollPreview),
-	                                    GTK_SHADOW_IN);
-	gtk_container_add(GTK_CONTAINER (scrollPreview), widget);
+	gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scrollPreview), GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
+	gtk_scrolled_window_set_shadow_type(GTK_SCROLLED_WINDOW(scrollPreview), GTK_SHADOW_IN);
+	gtk_container_add(GTK_CONTAINER(scrollPreview), widget);
 	gtk_box_pack_start(GTK_BOX(get("vbox")), scrollPreview, true, true, 0);
 
 	g_signal_connect(this->window, "size-allocate", G_CALLBACK(sizeAllocate), this);
 
-	for (int i = 0; i < doc->getPdfPageCount(); i++)
+	for (size_t i = 0; i < doc->getPdfPageCount(); i++)
 	{
 		XojPopplerPage* p = doc->getPdfPage(i);
 		PdfPage* page = new PdfPage(p, i, this);
 		gtk_layout_put(GTK_LAYOUT(this->widget), page->getWidget(), 0, 0);
 
-		this->pages = g_list_append(this->pages, page);
+		this->pages.push_back(page);
 	}
 	if (doc->getPdfPageCount() > 0)
 	{
@@ -330,22 +314,18 @@ PdfPagesDialog::PdfPagesDialog(GladeSearchpath* gladeSearchPath, Document* doc,
 	layout();
 	updateOkButton();
 
-	g_signal_connect(get("cbOnlyNotUsed"), "toggled",
-	                 G_CALLBACK (onlyNotUsedCallback), this);
-	g_signal_connect(get("buttonOk"), "clicked", G_CALLBACK (okButtonCallback),
-	                 this);
+	g_signal_connect(get("cbOnlyNotUsed"), "toggled", G_CALLBACK(onlyNotUsedCallback), this);
+	g_signal_connect(get("buttonOk"), "clicked", G_CALLBACK(okButtonCallback), this);
 }
 
 PdfPagesDialog::~PdfPagesDialog()
 {
 	XOJ_CHECK_TYPE(PdfPagesDialog);
 
-	for (GList* l = this->pages; l != NULL; l = l->next)
+	for (PdfPage* p : this->pages)
 	{
-		delete (PdfPage*) l->data;
+		delete p;
 	}
-	g_list_free(this->pages);
-	this->pages = NULL;
 
 	delete[] this->usedPages;
 	this->usedPages = NULL;
@@ -364,9 +344,8 @@ void PdfPagesDialog::updateOkButton()
 {
 	XOJ_CHECK_TYPE(PdfPagesDialog);
 
-	PdfPage* p = (PdfPage*) g_list_nth_data(this->pages, this->selected);
-	gtk_widget_set_sensitive(get("buttonOk"), p &&
-	                         gtk_widget_get_visible(p->getWidget()));
+	PdfPage* p = this->pages[this->selected];
+	gtk_widget_set_sensitive(get("buttonOk"), p && gtk_widget_get_visible(p->getWidget()));
 }
 
 void PdfPagesDialog::okButtonCallback(GtkButton* button, PdfPagesDialog* dlg)
@@ -376,17 +355,15 @@ void PdfPagesDialog::okButtonCallback(GtkButton* button, PdfPagesDialog* dlg)
 	dlg->selectedPage = dlg->selected;
 }
 
-void PdfPagesDialog::onlyNotUsedCallback(GtkToggleButton* tb,
-                                         PdfPagesDialog* dlg)
+void PdfPagesDialog::onlyNotUsedCallback(GtkToggleButton* tb, PdfPagesDialog* dlg)
 {
 	XOJ_CHECK_TYPE_OBJ(dlg, PdfPagesDialog);
 
 	if (gtk_toggle_button_get_active(tb))
 	{
 		int i = 0;
-		for (GList* l = dlg->pages; l != NULL; l = l->next)
+		for (PdfPage* p : dlg->pages)
 		{
-			PdfPage* p = (PdfPage*) l->data;
 			gtk_widget_set_visible(p->getWidget(), !dlg->usedPages[i]);
 			i++;
 		}
@@ -401,14 +378,14 @@ void PdfPagesDialog::onlyNotUsedCallback(GtkToggleButton* tb,
 	dlg->updateOkButton();
 }
 
-void PdfPagesDialog::setPageUsed(int page)
+void PdfPagesDialog::setPageUsed(size_t page)
 {
 	XOJ_CHECK_TYPE(PdfPagesDialog);
 
 	this->usedPages[page] = true;
 }
 
-int PdfPagesDialog::getSelectedPage()
+size_t PdfPagesDialog::getSelectedPage()
 {
 	XOJ_CHECK_TYPE(PdfPagesDialog);
 
@@ -422,8 +399,7 @@ double PdfPagesDialog::getZoom()
 	return 0.25;
 }
 
-void PdfPagesDialog::sizeAllocate(GtkWidget* widget,
-                                  GtkRequisition* requisition, PdfPagesDialog* dlg)
+void PdfPagesDialog::sizeAllocate(GtkWidget* widget, GtkRequisition* requisition, PdfPagesDialog* dlg)
 {
 	XOJ_CHECK_TYPE_OBJ(dlg, PdfPagesDialog);
 
@@ -452,18 +428,10 @@ void PdfPagesDialog::show(GtkWindow* parent)
 		}
 	}
 
-	char* txt;
-	if (unused == 1)
-	{
-		txt = g_strdup(_("Show only not used pages (one unused page)"));
-	}
-	else
-	{
-		txt = g_strdup_printf(_("Show only not used pages (%i unused pages)"), unused);
-	}
-
-	gtk_button_set_label(GTK_BUTTON(w), txt);
-	g_free(txt);
+	gtk_button_set_label(GTK_BUTTON(w),
+		(unused == 1
+			? _C("Show only not used pages (one unused page)")
+			: FC(_F("Show only not used pages ({1} unused pages)") % unused)));
 
 	gtk_window_set_transient_for(GTK_WINDOW(this->window), parent);
 	gtk_dialog_run(GTK_DIALOG(this->window));
@@ -479,11 +447,10 @@ void PdfPagesDialog::setBackgroundWhite()
 		return;
 	}
 	this->backgroundInitialized = true;
-	gdk_window_set_background(GTK_LAYOUT(this->widget)->bin_window,
-	                          &this->widget->style->white);
+	gdk_window_set_background(GTK_LAYOUT(this->widget)->bin_window, &this->widget->style->white);
 }
 
-void PdfPagesDialog::setSelected(int selected)
+void PdfPagesDialog::setSelected(size_t selected)
 {
 	XOJ_CHECK_TYPE(PdfPagesDialog);
 
@@ -492,14 +459,14 @@ void PdfPagesDialog::setSelected(int selected)
 		return;
 	}
 
-	int lastSelected = this->selected;
-	PdfPage* p = (PdfPage*) g_list_nth_data(this->pages, selected);
+	size_t lastSelected = this->selected;
+	PdfPage* p = this->pages[selected];
 	if (p)
 	{
 		p->setSelected(true);
 		this->selected = selected;
 	}
-	p = (PdfPage*) g_list_nth_data(this->pages, lastSelected);
+	p = this->pages[lastSelected];
 	if (p)
 	{
 		p->setSelected(false);
@@ -520,10 +487,8 @@ void PdfPagesDialog::layout()
 	GtkAllocation alloc = { 0 };
 	gtk_widget_get_allocation(this->scrollPreview, &alloc);
 
-	for (GList* l = this->pages; l != NULL; l = l->next)
+	for (PdfPage* p : this->pages)
 	{
-		PdfPage* p = (PdfPage*) l->data;
-
 		if (!gtk_widget_get_visible(p->getWidget()))
 		{
 			continue;

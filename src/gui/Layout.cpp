@@ -1,8 +1,10 @@
 #include "Layout.h"
-#include "widgets/Scrollbar.h"
+
 #include "XournalView.h"
-#include "../control/Control.h"
+
+#include "control/Control.h"
 #include "pageposition/PagePositionHandler.h"
+#include "widgets/Scrollbar.h"
 #include "widgets/XournalWidget.h"
 
 Layout::Layout(XournalView* view)
@@ -19,6 +21,11 @@ Layout::Layout(XournalView* view)
 
 	this->layoutHeight = 0;
 	this->layoutWidth = 0;
+	
+	this->marginLeft = 0;
+	this->marginRight = 0;
+	this->marginTop = 0;
+	this->marginBottom = 0;
 
 	this->view = view;
 }
@@ -61,7 +68,7 @@ void Layout::checkSelectedPage()
 	if (scrollY < 1)
 	{
 		if (twoPages && this->view->viewPagesLen > 1 &&
-		    this->view->viewPages[1]->isSelected())
+			this->view->viewPages[1]->isSelected())
 		{
 			// page 2 already selected
 		}
@@ -72,13 +79,13 @@ void Layout::checkSelectedPage()
 		return;
 	}
 
-	int mostPageNr = 0;
+	size_t mostPageNr = 0;
 	double mostPagePercent = 0;
 
 	// next four pages are not marked as invisible,
 	// because usually you scroll forward
 
-	for (int page = 0; page < this->view->viewPagesLen; page++)
+	for (size_t page = 0; page < this->view->viewPagesLen; page++)
 	{
 		PageView* p = this->view->viewPages[page];
 		int y = p->getY();
@@ -178,8 +185,8 @@ void Layout::layoutPages()
 	int len = this->view->viewPagesLen;
 
 	Settings* settings = this->view->getControl()->getSettings();
-	bool verticalSpace = settings->getAddVerticalSpace(),
-	     horizontalSpace = settings->getAddHorizontalSpace();
+	bool verticalSpace = settings->getAddVerticalSpace();
+	bool horizontalSpace = settings->getAddHorizontalSpace();
 	bool dualPage = settings->isShowTwoPages();
 
 	int size[2] = { 0, 0 };
@@ -427,26 +434,16 @@ void Layout::scrollRelativ(int x, int y)
 	this->scrollVertical->scroll(y);
 }
 
-double Layout::getVisiblePageTop(int page)
+double Layout::getVisiblePageTop(size_t page)
 {
 	XOJ_CHECK_TYPE(Layout);
 
-	if (page < 0)
-	{
-		return 0;
-	}
-	if (page > this->view->viewPagesLen)
+	if (page == size_t_npos || page > this->view->viewPagesLen || this->view->viewPagesLen == 0)
 	{
 		return 0;
 	}
 
-	if (this->view->viewPagesLen == 0)
-	{
-		return 0;
-	}
-
-	double y = this->view->viewPages[page]->getY() +
-	           this->scrollVertical->getValue();
+	double y = this->view->viewPages[page]->getY() + this->scrollVertical->getValue();
 
 	return y / this->view->getZoom();
 }
@@ -482,5 +479,3 @@ bool Layout::scrollEvent(GdkEventScroll* event)
 
 	return false;
 }
-
-

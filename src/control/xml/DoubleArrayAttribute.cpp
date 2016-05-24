@@ -1,10 +1,7 @@
 #include "DoubleArrayAttribute.h"
 
-DoubleArrayAttribute::DoubleArrayAttribute(const char* name, double* values,
-                                           int count) :
-	Attribute(name)
+DoubleArrayAttribute::DoubleArrayAttribute(const char* name, double* values, int count) : XMLAttribute(name)
 {
-
 	XOJ_INIT_TYPE(DoubleArrayAttribute);
 
 	this->values = values;

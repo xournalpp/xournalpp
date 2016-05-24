@@ -3,17 +3,28 @@
  *
  * Last opened files with all settings
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __METADATAMANAGER_H__
-#define __METADATAMANAGER_H__
+#pragma once
+
+#include <StringUtils.h>
 
 #include <glib.h>
-#include <String.h>
+
+#include <boost/asio.hpp>
+#include <boost/date_time/posix_time/posix_time.hpp>
+#include <boost/filesystem/path.hpp>
+#include <boost/property_tree/ini_parser.hpp>
+#include <boost/property_tree/ptree.hpp>
+#include <boost/thread.hpp>
+
+using boost::filesystem::path;
+namespace bp = boost::property_tree;
+namespace basio = boost::asio;
 
 class MetadataManager
 {
@@ -23,37 +34,46 @@ public:
 
 public:
 	/**
-	 * Setter / Getter: if uri is NULL the request will be ignored
+	 * Setter / Getter: if path is empty the request will be ignored
 	 */
 
-	void setInt(String uri, const char* name, int value);
-	void setDouble(String uri, const char* name, double value);
-	void setString(String uri, const char* name, const char* value);
+	void setInt(path p, string name, int value);
+	void setDouble(path p, string name, double value);
+	void setString(path p, string name, string value);
 
-	bool getInt(String uri, const char* name, int& value);
-	bool getDouble(String uri, const char* name, double& value);
+	bool getInt(path p, string name, int& value);
+	bool getDouble(path p, string name, double& value);
 
-	/**
-	 * The returned String should be freed with g_free
-	 */
-	bool getString(String uri, const char* name, char*& value);
+	bool getString(path p, string name, string& value);
 
-	void move(String source, String target);
+	void copy(path source, path target);
+
+	void pause();
+	void resume();
+
+	bool save();
+	static bool save(MetadataManager* man, basio::deadline_timer* t = NULL);
 
 private:
-	void updateAccessTime(String uri);
+	bool checkPath(path p);
+	
+	void updateAccessTime(path p);
 	void loadConfigFile();
 
 	void cleanupMetadata();
 
-	static bool save(MetadataManager* manager);
-
+	static path getFilePath();
+	static bp::ptree::path_type getINIpathURI(path p);
+	static bp::ptree::path_type getINIpath(string s);
 
 private:
 	XOJ_TYPE_ATTRIB;
 
-	int timeoutId;
-	GKeyFile* config;
-};
+	bool paused;
 
-#endif /* __METADATAMANAGER_H__ */
+	boost::thread* thread;
+	basio::io_service io;
+	basio::deadline_timer* timer;
+	
+	bp::ptree* config;
+};

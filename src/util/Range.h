@@ -3,16 +3,15 @@
  *
  * Range
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __RANGE_H__
-#define __RANGE_H__
+#pragma once
 
-#include <XournalType.h>
+#include "XournalType.h"
 
 class Range
 {
@@ -38,5 +37,3 @@ private:
 	double y2;
 	double x2;
 };
-
-#endif /* __RANGE_H__ */

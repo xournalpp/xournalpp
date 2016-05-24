@@ -1,17 +1,33 @@
+# Autotools (needed for poppler)
 .deps
+.dirstamp
 .libs
 *.o
 *.lo
 *.la
+*~
 Makefile
 Makefile.in
-missing
 libtool
 aclocal.m4
 autom4te.cache
-config.guess
 config.log
 config.status
-config.sub
-depcomp
+config.h*
+configure
+po/POTFILES
+stamp-h1
 
+# CMake
+build/
+desktop/desktop_install.sh
+
+# Poppler binaries
+src/pdf/popplerdirect/libpoppler-glib.a
+src/pdf/popplerdirect/libpoppler.a
+src/pdf/popplerdirect/poppler-0.24.1_build/
+src/pdf/popplerdirect/poppler-config.h
+src/pdf/popplerdirect/workaround/workaround.sh
+
+# NetBeans
+nbproject/

@@ -3,33 +3,33 @@
  *
  * A font with a name and a size
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __XFONT_H__
-#define __XFONT_H__
-#include <String.h>
+#pragma once
+
+#include <serializing/Serializeable.h>
+#include <StringUtils.h>
 #include <XournalType.h>
 
 #include <gtk/gtk.h>
-#include <serializing/Serializeable.h>
 
-class XojFont: public Serializeable
+class XojFont : public Serializeable
 {
 public:
 	XojFont();
 	virtual ~XojFont();
 
-	String getName();
-	void setName(String name);
+	string getName();
+	void setName(string name);
 
 	double getSize();
 	void setSize(double size);
 
-	void operator =(const XojFont& font);
+	void operator=(const XojFont& font);
 
 public:
 	// Serialize interface
@@ -42,9 +42,6 @@ private:
 private:
 	XOJ_TYPE_ATTRIB;
 
-
-	String name;
+	string name;
 	double size;
 };
-
-#endif /* __XFONT_H__ */

@@ -1,19 +1,20 @@
 #include "XojPopplerDocument.h"
+
+#include <poppler/PDFDoc.h>
+#include <poppler/GlobalParams.h>
+#include <poppler/ErrorCodes.h>
+#include <poppler/Outline.h>
 #include "XojPopplerIter.h"
 
-#include <glib.h>
-#include "../poppler-0.24.1/poppler/PDFDoc.h"
-#include "../poppler-0.24.1/poppler/GlobalParams.h"
-#include "../poppler-0.24.1/poppler/ErrorCodes.h"
-#include "../poppler-0.24.1/poppler/Outline.h"
-
 #include <config.h>
-#include <glib/gi18n-lib.h>
+#include <Util.h>
 
+#include <glib.h>
 
 class _IntPopplerDocument
 {
 public:
+
 	_IntPopplerDocument(PDFDoc* doc)
 	{
 		XOJ_INIT_TYPE(_IntPopplerDocument);
@@ -35,9 +36,12 @@ public:
 
 			pages[i] = new XojPopplerPage(doc, &this->docMutex, output_dev, page, i);
 		}
+		
+		this->layers_rbgroups = NULL;
 	}
 
 private:
+
 	~_IntPopplerDocument()
 	{
 		XOJ_CHECK_TYPE(_IntPopplerDocument);
@@ -60,6 +64,7 @@ private:
 	}
 
 public:
+
 	void unreference()
 	{
 		XOJ_CHECK_TYPE(_IntPopplerDocument);
@@ -80,40 +85,41 @@ public:
 	}
 
 private:
+
 	void layersFree()
 	{
 		XOJ_CHECK_TYPE(_IntPopplerDocument);
 
-		//		if (!this->layers) {
-		//			return;
-		//		}
-		//
-		////		g_list_foreach(this->layers, (GFunc) layer_free, NULL);
-		////		g_list_free(this->layers);
-		//
-		//		g_list_foreach(this->layers_rbgroups, (GFunc) g_list_free, NULL);
-		//		g_list_free(this->layers_rbgroups);
-		//
-		////		this->layers = NULL;
-		//		this->layers_rbgroups = NULL;
+//		if (!this->layers) {
+//			return;
+//		}
+//
+////		g_list_foreach(this->layers, (GFunc) layer_free, NULL);
+////		g_list_free(this->layers);
+//
+//		g_list_foreach(this->layers_rbgroups, (GFunc) g_list_free, NULL);
+//		g_list_free(this->layers_rbgroups);
+//
+////		this->layers = NULL;
+//		this->layers_rbgroups = NULL;
 	}
 
-	//	static void layer_free(Layer *layer) {
-	//		if (!layer) {
-	//			return;
-	//		}
-	//
-	//		if (layer->kids) {
-	//			g_list_foreach(layer->kids, (GFunc) layer_free, NULL);
-	//			g_list_free(layer->kids);
-	//		}
-	//
-	//		if (layer->label) {
-	//			g_free(layer->label);
-	//		}
-	//
-	//		g_slice_free (Layer, layer);
-	//	}
+//	static void layer_free(Layer *layer) {
+//		if (!layer) {
+//			return;
+//		}
+//
+//		if (layer->kids) {
+//			g_list_foreach(layer->kids, (GFunc) layer_free, NULL);
+//			g_list_free(layer->kids);
+//		}
+//
+//		if (layer->label) {
+//			g_free(layer->label);
+//		}
+//
+//		g_slice_free (Layer, layer);
+//	}
 
 public:
 	XOJ_TYPE_ATTRIB;
@@ -213,14 +219,13 @@ XojPopplerIter* XojPopplerDocument::getContentsIter()
 	return new XojPopplerIter(*this, items);
 }
 
-XojPopplerPage* XojPopplerDocument::getPage(int page)
+XojPopplerPage* XojPopplerDocument::getPage(size_t page)
 {
 	XOJ_CHECK_TYPE(XojPopplerDocument);
 
-	if (page >= this->getPageCount() || page < 0)
+	if (page == size_t_npos || page >= this->getPageCount())
 	{
-		g_critical("Document::getPdfPage(%i) out of range! (count=%i)", page,
-		           this->getPageCount());
+		g_critical("Document::getPdfPage(%lu) out of range! (count=%lu)", page, this->getPageCount());
 		return NULL;
 	}
 
@@ -234,7 +239,7 @@ bool XojPopplerDocument::isLoaded()
 	return this->data != NULL;
 }
 
-int XojPopplerDocument::getPageCount()
+size_t XojPopplerDocument::getPageCount()
 {
 	XOJ_CHECK_TYPE(XojPopplerDocument);
 
@@ -242,7 +247,7 @@ int XojPopplerDocument::getPageCount()
 	{
 		return 0;
 	}
-	return this->data->doc->getNumPages();
+	return static_cast<size_t>(this->data->doc->getNumPages()); // It shouldn't be lower than 0, but I don't trust poppler ;)
 }
 
 void XojPopplerDocument::load(char* data, int length)
@@ -268,61 +273,25 @@ void XojPopplerDocument::load(char* data, int length)
 	this->data = new _IntPopplerDocument(newDoc);
 }
 
-bool XojPopplerDocument::load(const char* filename, const char* password,
-                              GError** error)
+bool XojPopplerDocument::load(path filename, string password, GError** error)
 {
 	XOJ_CHECK_TYPE(XojPopplerDocument);
 
 	PDFDoc* newDoc;
-	GooString* filename_g;
-	GooString* password_g;
 
 	if (!globalParams)
 	{
 		globalParams = new GlobalParams();
 	}
 
-	if (!filename)
+	if (filename.empty())
 	{
 		return false;
 	}
 
-	password_g = NULL;
-	if (password != NULL)
-	{
-		if (g_utf8_validate(password, -1, NULL))
-		{
-			gchar* password_latin;
-
-			password_latin = g_convert(password, -1, "ISO-8859-1", "UTF-8", NULL, NULL,
-			                           NULL);
-			password_g = new GooString(password_latin);
-			g_free(password_latin);
-		}
-		else
-		{
-			password_g = new GooString(password);
-		}
-	}
-
-#ifdef G_OS_WIN32
-	wchar_t* filenameW;
-	int wlen;
-
-	wlen = MultiByteToWideChar(CP_UTF8, 0, filename, -1, NULL, 0);
-
-	filenameW = new WCHAR[wlen];
-	if (!filenameW)
-		return NULL;
-
-	wlen = MultiByteToWideChar(CP_UTF8, 0, filename, -1, filenameW, wlen);
-
-	newDoc = new PDFDoc(filenameW, wlen, password_g, password_g);
-	delete filenameW;
-#else
-	filename_g = new GooString(filename);
+	GooString* filename_g = new GooString(filename.c_str());
+	GooString* password_g = new GooString(password.c_str());
 	newDoc = new PDFDoc(filename_g, password_g, password_g);
-#endif
 	delete password_g;
 
 	if (!newDoc->isOk())
@@ -336,8 +305,7 @@ bool XojPopplerDocument::load(const char* filename, const char* password,
 			// only way to get an errOpenFile error is if newDoc was created using
 			// a filename and thus fopen was called, which right now is true.
 			fopen_errno = newDoc->getFopenErrno();
-			g_set_error(error, G_FILE_ERROR, g_file_error_from_errno(fopen_errno), "%s",
-			            g_strerror(fopen_errno));
+			g_set_error(error, G_FILE_ERROR, g_file_error_from_errno(fopen_errno), "%s", g_strerror(fopen_errno));
 			break;
 		case errBadCatalog:
 			g_set_error(error, 0, 0, "Failed to read the document catalog");
@@ -383,7 +351,7 @@ gsize XojPopplerDocument::getId()
 	return (gsize) this->data;
 }
 
-bool XojPopplerDocument::save(String filename, GError** error)
+bool XojPopplerDocument::save(path filename, GError** error)
 {
 	XOJ_CHECK_TYPE(XojPopplerDocument);
 
@@ -392,27 +360,25 @@ bool XojPopplerDocument::save(String filename, GError** error)
 		return false;
 	}
 
-
 	// TODO !!!!!!
 	return false;
 
-//	GooString * fname = new GooString(filename.c_str());
-//	int err_code = this->data->doc->saveAs(fname);
-//	delete fname;
-//
-//	switch (err_code) {
-//	case errNone:
-//		break;
-//	case errOpenFile:
-//		g_set_error(error, 0, 0, _("Failed to open file for writing"));
-//		break;
-//	case errEncrypted:
-//		g_set_error(error, 0, 0, _("Document is encrypted"));
-//		break;
-//	default:
-//		g_set_error(error, 0, 0, _("Failed to save document"));
-//	}
-//
-//	return err_code == errNone;
+	//	GooString * fname = new GooString(filename.c_str());
+	//	int err_code = this->data->doc->saveAs(fname);
+	//	delete fname;
+	//
+	//	switch (err_code) {
+	//	case errNone:
+	//		break;
+	//	case errOpenFile:
+	//		g_set_error(error, 0, 0, _("Failed to open file for writing"));
+	//		break;
+	//	case errEncrypted:
+	//		g_set_error(error, 0, 0, _("Document is encrypted"));
+	//		break;
+	//	default:
+	//		g_set_error(error, 0, 0, _("Failed to save document"));
+	//	}
+	//
+	//	return err_code == errNone;
 }
-

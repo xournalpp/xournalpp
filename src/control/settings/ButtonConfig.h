@@ -3,28 +3,28 @@
  *
  * Configuration for Mouse Buttons, Eraser and default configuration
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __BUTTONCONFIG_H__
-#define __BUTTONCONFIG_H__
+#pragma once
 
-#include <String.h>
+#include "control/Tool.h"
+
+#include <StringUtils.h>
 #include <XournalType.h>
-#include "../Tool.h"
 
 enum DrawingType
 {
-    DRAWING_TYPE_DONT_CHANGE = 0,
-    DRAWING_TYPE_RULER,
-    DRAWING_TYPE_RECTANGLE,
-    DRAWING_TYPE_CIRCLE,
-    DRAWING_TYPE_ARROW,
-    DRAWING_TYPE_STROKE_RECOGNIZER,
-    DRAWING_TYPE_NONE
+	DRAWING_TYPE_DONT_CHANGE = 0,
+	DRAWING_TYPE_RULER,
+	DRAWING_TYPE_RECTANGLE,
+	DRAWING_TYPE_CIRCLE,
+	DRAWING_TYPE_ARROW,
+	DRAWING_TYPE_STROKE_RECOGNIZER,
+	DRAWING_TYPE_NONE
 };
 
 class ToolHandler;
@@ -32,8 +32,7 @@ class ToolHandler;
 class ButtonConfig
 {
 public:
-	ButtonConfig(ToolType action, int color, ToolSize size, DrawingType drawingType,
-	             EraserType eraserMode);
+	ButtonConfig(ToolType action, int color, ToolSize size, DrawingType drawingType, EraserType eraserMode);
 	virtual ~ButtonConfig();
 
 public:
@@ -55,9 +54,8 @@ private:
 	bool disableDrawing;
 
 public:
-	String device;
+	string device;
 
 	friend class Settings;
 	friend class ButtonConfigGui;
 };
-#endif /* __BUTTONCONFIG_H__ */

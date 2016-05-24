@@ -3,21 +3,22 @@
  *
  * The about dialog
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __SELECTBACKGROUNDCOLORDIALOG_H__
-#define __SELECTBACKGROUNDCOLORDIALOG_H__
+#pragma once
 
-#include "../GladeGui.h"
+#include "gui/GladeGui.h"
 
-class Control;
+#include <vector>
+
 class ColorEntry;
+class Control;
 
-class SelectBackgroundColorDialog: public GladeGui
+class SelectBackgroundColorDialog : public GladeGui
 {
 public:
 	SelectBackgroundColorDialog(GladeSearchpath* gladeSearchPath, Control* control);
@@ -34,8 +35,7 @@ private:
 	void updateLastUsedColors();
 
 	static void buttonSelectedCallback(GtkButton* button, ColorEntry* e);
-	static void buttonCustomCallback(GtkButton* button,
-	                                 SelectBackgroundColorDialog* dlg);
+	static void buttonCustomCallback(GtkButton* button, SelectBackgroundColorDialog* dlg);
 
 private:
 	XOJ_TYPE_ATTRIB;
@@ -44,9 +44,7 @@ private:
 
 	int selected;
 
-	GList* colors;
+	std::vector<ColorEntry*> colors;
 
 	GtkWidget* colorDlg;
 };
-
-#endif /* __SELECTBACKGROUNDCOLORDIALOG_H__ */

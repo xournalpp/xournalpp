@@ -3,23 +3,22 @@
  *
  * XML Writer helper class
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __ATTRIBUTE_H__
-#define __ATTRIBUTE_H__
+#pragma once
 
 #include <OutputStream.h>
 #include <XournalType.h>
 
-class Attribute
+class XMLAttribute
 {
 public:
-	Attribute(const char* name);
-	virtual ~Attribute();
+	XMLAttribute(const char* name);
+	virtual ~XMLAttribute();
 
 public:
 	virtual void writeOut(OutputStream* out) = 0;
@@ -32,5 +31,3 @@ private:
 
 	char* name;
 };
-
-#endif /* __ATTRIBUTE_H__ */

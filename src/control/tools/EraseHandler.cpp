@@ -1,23 +1,23 @@
 #include "EraseHandler.h"
-#include "../../model/eraser/EraseableStroke.h"
-#include "../../model/Layer.h"
-#include "../../model/Stroke.h"
-#include "../../model/Document.h"
+
+#include "control/jobs/RenderJob.h"
+#include "control/ToolHandler.h"
+#include "gui/PageView.h"
+#include "gui/XournalView.h"
+#include "model/Document.h"
+#include "model/eraser/EraseableStroke.h"
+#include "model/Layer.h"
+#include "model/Stroke.h"
+#include "undo/EraseUndoAction.h"
+#include "undo/DeleteUndoAction.h"
+#include "undo/UndoRedoHandler.h"
+
 #include <Range.h>
 #include <Rectangle.h>
-#include "../../undo/UndoRedoHandler.h"
-#include "../../undo/EraseUndoAction.h"
-#include "../../undo/DeleteUndoAction.h"
-#include "../../gui/PageView.h"
-#include "../ToolHandler.h"
-#include "../../control/jobs/RenderJob.h"
-
-#include "../../gui/XournalView.h"
 
 #include <math.h>
 
-EraseHandler::EraseHandler(UndoRedoHandler* undo, Document* doc, PageRef page,
-                           ToolHandler* handler, Redrawable* view)
+EraseHandler::EraseHandler(UndoRedoHandler* undo, Document* doc, PageRef page, ToolHandler* handler, Redrawable* view)
 {
 	XOJ_INIT_TYPE(EraseHandler);
 
@@ -53,25 +53,23 @@ void EraseHandler::erase(double x, double y)
 	XOJ_CHECK_TYPE(EraseHandler);
 
 	this->halfEraserSize = this->handler->getThickness();
-	GdkRectangle eraserRect = { gint(x - halfEraserSize),
-	                            gint(y - halfEraserSize),
-	                            gint(halfEraserSize * 2),
-	                            gint(halfEraserSize * 2) };
+	GdkRectangle eraserRect = {
+		gint(x - halfEraserSize),
+		gint(y - halfEraserSize),
+		gint(halfEraserSize * 2),
+		gint(halfEraserSize * 2)
+	};
 
 	Range* range = new Range(x, y);
 
 	Layer* l = page->getSelectedLayer();
 
-	ListIterator<Element*> eit = l->elementIterator();
-	eit.freeze();
-	while (eit.hasNext())
+	ElementVector tmp(*l->getElements());
+	for (Element* e : tmp)
 	{
-		Element* e = eit.next();
 		if (e->getType() == ELEMENT_STROKE && e->intersectsArea(&eraserRect))
 		{
-			Stroke* s = (Stroke*) e;
-
-			eraseStroke(l, s, x, y, range);
+			eraseStroke(l, (Stroke*) e, x, y, range);
 		}
 	}
 
@@ -79,8 +77,7 @@ void EraseHandler::erase(double x, double y)
 	delete range;
 }
 
-void EraseHandler::eraseStroke(Layer* l, Stroke* s, double x, double y,
-                               Range* range)
+void EraseHandler::eraseStroke(Layer* l, Stroke* s, double x, double y, Range* range)
 {
 	XOJ_CHECK_TYPE(EraseHandler);
 
@@ -101,22 +98,20 @@ void EraseHandler::eraseStroke(Layer* l, Stroke* s, double x, double y,
 			return;
 		}
 		range->addPoint(s->getX(), s->getY());
-		range->addPoint(s->getX() + s->getElementWidth(),
-		                s->getY() + s->getElementHeight());
+		range->addPoint(s->getX() + s->getElementWidth(), s->getY() + s->getElementHeight());
 
 		//removed the if statement - this prevents us from putting multiple elements into a
 		//stroke erase operation, but it also prevents the crashing and layer issues!
-		if(!this->eraseDeleteUndoAction)
+		if (!this->eraseDeleteUndoAction)
 		{
-			this->eraseDeleteUndoAction = new DeleteUndoAction(this->page,
-			                                                   true);
+			this->eraseDeleteUndoAction = new DeleteUndoAction(this->page, true);
 
 			this->undo->addUndoAction(this->eraseDeleteUndoAction);
 		}
-		
+
 		this->eraseDeleteUndoAction->addElement(l, s, pos);
 	}
-	else     // Default eraser
+	else // Default eraser
 	{
 		int pos = l->indexOf(s);
 		if (pos == -1)
@@ -152,12 +147,12 @@ void EraseHandler::finalize()
 {
 	XOJ_CHECK_TYPE(EraseHandler);
 
-	if(this->eraseUndoAction)
+	if (this->eraseUndoAction)
 	{
 		this->eraseUndoAction->finalize();
 		this->eraseUndoAction = NULL;
 	}
-	else if(this->eraseDeleteUndoAction)
+	else if (this->eraseDeleteUndoAction)
 	{
 		this->eraseDeleteUndoAction = NULL;
 	}

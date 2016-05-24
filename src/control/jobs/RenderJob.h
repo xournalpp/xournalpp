@@ -3,24 +3,22 @@
  *
  * A job which redraws a page or a page region
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __RENDERJOB_H__
-#define __RENDERJOB_H__
+#pragma once
 
 #include "Job.h"
-#include <gtk/gtk.h>
 
 #include <XournalType.h>
 
 class Rectangle;
 class PageView;
 
-class RenderJob: public Job
+class RenderJob : public Job
 {
 public:
 	RenderJob(PageView* view);
@@ -46,5 +44,3 @@ private:
 
 	PageView* view;
 };
-
-#endif /* __RENDERJOB_H__ */

@@ -1,12 +1,17 @@
 #include "Stroke.h"
+
+#include <serializing/ObjectInputStream.h>
+#include <serializing/ObjectOutputStream.h>
+
 #include <glib.h>
+
 #include <math.h>
 #include <string.h>
-#include <serializing/ObjectOutputStream.h>
-#include <serializing/ObjectInputStream.h>
+#include <iostream>
+using std::cout;
+using std::endl;
 
-Stroke::Stroke() :
-	Element(ELEMENT_STROKE)
+Stroke::Stroke() : Element(ELEMENT_STROKE)
 {
 	XOJ_INIT_TYPE(Stroke);
 
@@ -54,7 +59,6 @@ Element* Stroke::clone()
 
 	return this->cloneStroke();
 }
-
 
 void Stroke::serialize(ObjectOutputStream& out)
 {
@@ -159,8 +163,7 @@ void Stroke::allocPointSize(int size)
 	XOJ_CHECK_TYPE(Stroke);
 
 	this->pointAllocCount = size;
-	this->points = (Point*) g_realloc(this->points,
-	                                  this->pointAllocCount * sizeof(Point));
+	this->points = (Point*) g_realloc(this->points, this->pointAllocCount * sizeof(Point));
 }
 
 int Stroke::getPointCount() const
@@ -201,7 +204,7 @@ void Stroke::deletePoint(int index)
 	{
 		if (i < index)
 		{
-			this->points[i] = this->points[i];
+			this->points[i] = this->points[i];	//CPPCHECK what is it for?
 		}
 		else
 		{
@@ -239,8 +242,7 @@ void Stroke::freeUnusedPointItems()
 		return;
 	}
 	this->pointAllocCount = this->pointCount + 1;
-	this->points = (Point*) g_realloc(this->points,
-	                                  this->pointAllocCount * sizeof(Point));
+	this->points = (Point*) g_realloc(this->points, this->pointAllocCount * sizeof(Point));
 }
 
 void Stroke::setToolType(StrokeTool type)
@@ -274,7 +276,7 @@ void Stroke::scale(double x0, double y0, double fx, double fy)
 {
 	XOJ_CHECK_TYPE(Stroke);
 
-	double fz = sqrt(fx*fy);
+	double fz = sqrt(fx * fy);
 
 	for (int i = 0; i < this->pointCount; i++)
 	{
@@ -396,8 +398,7 @@ bool Stroke::intersects(double x, double y, double halfEraserSize, double* gap)
 			/**
 			 * The normale to a vector, the padding to a point
 			 */
-			double p = ABS((x - lastX) * (lastY - py) + (y - lastY) * (px - lastX)) / hypot(
-			               lastX - x, lastY - y);
+			double p = ABS((x - lastX) * (lastY - py) + (y - lastY) * (px - lastX)) / hypot(lastX - x, lastY - y);
 
 			// The space to the line is in the range, but it can also be parallel
 			// and not enough close, so calculate a "circle" with the center on the
@@ -500,13 +501,13 @@ void Stroke::debugPrint()
 {
 	XOJ_CHECK_TYPE(Stroke);
 
-	printf("Stroke %ld / hasPressure() = %i\n", (long)this, this->hasPressure());
+	cout << bl::format("Stroke {1} / hasPressure() = {2}") % (long) this % this->hasPressure() << endl;
 
-	for(int i = 0; i < this->pointCount; i++)
+	for (int i = 0; i < this->pointCount; i++)
 	{
 		Point p = this->points[i];
-		printf("%lf/%lf ", p.x, p.y);
+		cout << p.x << '/' << p.y;
 	}
 
-	printf("\n");
+	cout << endl;
 }

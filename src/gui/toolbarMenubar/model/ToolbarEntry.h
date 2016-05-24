@@ -3,18 +3,19 @@
  *
  * Part of the customizable toolbars
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __TOOLBARENTRY_H__
-#define __TOOLBARENTRY_H__
+#pragma once
 
 #include "ToolbarItem.h"
-#include <gtk/gtk.h>
-#include "../../../util/ListIterator.h"
+
+#include <vector>
+
+typedef std::vector<ToolbarItem*> ToolbarItemVector;
 
 class ToolbarEntry
 {
@@ -23,32 +24,30 @@ public:
 	ToolbarEntry(const ToolbarEntry& e);
 	~ToolbarEntry();
 
-	void operator = (const ToolbarEntry& e);
+	void operator=(const ToolbarEntry& e);
 
 	void clearList();
 
 public:
-	String getName();
-	void setName(String name);
+	string getName();
+	void setName(string name);
 
 	/**
 	 * Adds a new item and return the ID of the item
 	 */
-	int addItem(String item);
+	int addItem(string item);
 	bool removeItemById(int id);
 
 	/**
 	 * Insert a new item and return the ID of the item
 	 */
-	int insertItem(String item, int position);
+	int insertItem(string item, int position);
 
-	ListIterator<ToolbarItem*> iterator();
+	ToolbarItemVector* getItems();
 
 private:
 	XOJ_TYPE_ATTRIB;
 
-	String name;
-	GList* entries;
+	string name;
+	ToolbarItemVector entries;
 };
-
-#endif /* __TOOLBARENTRY_H__ */

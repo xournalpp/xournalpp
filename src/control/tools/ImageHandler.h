@@ -3,17 +3,17 @@
  *
  * Image Tool handler
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __IMAGEHANDLER_H__
-#define __IMAGEHANDLER_H__
+#pragma once
+
+#include <XournalType.h>
 
 #include <gtk/gtk.h>
-#include <XournalType.h>
 
 class Control;
 class PageView;
@@ -34,5 +34,3 @@ private:
 	Control* control;
 	PageView* view;
 };
-
-#endif /* __IMAGEHANDLER_H__ */

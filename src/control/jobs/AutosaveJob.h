@@ -3,22 +3,22 @@
  *
  * Autosave job
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __AUTOSAVEJOB_H__
-#define __AUTOSAVEJOB_H__
+#pragma once
 
 #include "Job.h"
-#include <String.h>
+
+#include <StringUtils.h>
 #include <XournalType.h>
 
 class Control;
 
-class AutosaveJob: public Job
+class AutosaveJob : public Job
 {
 public:
 	AutosaveJob(Control* control);
@@ -37,7 +37,5 @@ private:
 
 
 	Control* control;
-	String error;
+	string error;
 };
-
-#endif /* __AUTOSAVEJOB_H__ */

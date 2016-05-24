@@ -50,6 +50,7 @@
  *		isdexists(dirname)      check whether or not directory exists
  *		whichpath(program,nlocate)         determines path to command
  *		locatepath(program,nlocate) tries locate if whichpath() fails
+ *		presentwd(nsub)                  determines pwd, nsub dirs up
  *		rrmdir(path)                                       rm -r path
  *		rewritecache(cachefile,maxage) write cachefile with imageinfo
  *		emitcache(cachefile,maxage,isbuffer) dump cachefile to stdout
@@ -72,6 +73,7 @@
  *		isnumeric(s)                     determine if s is an integer
  *		evalterm(store,term)     evaluate numeric value of expression
  *		getstore(store,identifier)return value corresponding to ident
+ *		timewaitfor(whundredths)delay execution for hundredths of sec
  *		timestamp(tzdelta,ifmt)       returns current date:time stamp
  *		tzadjust(tzdelta,year,month,day,hour)   adjust time for tzone
  *		daynumber(year,month,day)     #calendar days from Jan 1, 1973
@@ -141,7 +143,7 @@
  * 08/14/09	J.Forkosh	Version 1.03
  * 04/06/11	J.Forkosh	Version 1.04
  * 11/15/11	J.Forkosh	Version 1.05
- * 12/13/11	J.Forkosh	Most recent change (see REVISIONDATE below)
+ * 10/26/14	J.Forkosh	Most recent change (see REVISIONDATE below)
  *
  ****************************************************************************/
 
@@ -149,8 +151,8 @@
 Program ID
 -------------------------------------------------------------------------- */
 #define	VERSION "1.05"			/* mathTeX version number */
-#define	REVISIONDATE "13 December 2011"	/* date of most recent revision */
-#define	COPYRIGHTDATE "2007-2012"	/* copyright date */
+#define	REVISIONDATE "26 Oct 2014"	/* date of most recent revision */
+#define	COPYRIGHTDATE "2007-2014"	/* copyright date */
 
 /* -------------------------------------------------------------------------
 Standard header files
@@ -216,6 +218,12 @@ Information adjustable by -D switches on compile line
   #define ISTIMELIMITSWITCH 0		/* no -DTIMELIMIT switch */
   #define TIMELIMIT "/usr/local/bin/timelimit" /* default path to timelimit*/
 #endif
+#if !defined(WAIT)			/* -DWAIT=\"50\" for half-second */
+  #define WAIT "\000"			/* default to no wait */
+#endif
+#if !defined(NOWAIT)			/* comma-separated list of referer's*/
+  #define NOWAIT "\000"			/* default to everyone waits */
+#endif
 /* --- paths, as specified by -D switches, else from whichpath() --- */
 static	char latexpath[256] = LATEX,    pdflatexpath[256] = PDFLATEX,
 	dvipngpath[256] = DVIPNG,       dvipspath[256] = DVIPS,
@@ -226,6 +234,12 @@ static	int  islatexpath=ISLATEXSWITCH, ispdflatexpath=ISPDFLATEXSWITCH,
 	isdvipngpath=ISDVIPNGSWITCH,    isdvipspath=ISDVIPSSWITCH,
 	isps2epsipath=ISPS2EPSISWITCH,  isconvertpath=ISCONVERTSWITCH,
 	istimelimitpath=ISTIMELIMITSWITCH;
+/* ---
+ * home path pwd of running executable image,
+ * and http_referer,etc information
+ * ------------------------------------------- */
+static	char homepath[256] = "\000";	/* path to executable image */
+static	char this_referer[256];
 /* ---
  * cache path -DCACHE=\"path/\" specifies directory
  * ------------------------------------------------ */
@@ -238,6 +252,13 @@ static	int  islatexpath=ISLATEXSWITCH, ispdflatexpath=ISPDFLATEXSWITCH,
 #define	MAXAGE 7200			/* maxage in cache is 7200 secs */
 static	int  iscaching = 1;		/* true if caching images */
 static	char cachepath[256] = CACHE;	/* path to cached image files */
+/* ---
+ * working directory for temp files -DWORK=\"path/\"
+ * ------------------------------------------------- */
+#if !defined(WORK)
+  #define WORK "\000"			/* relative to mathtex.cgi */
+#endif
+static	char workpath[256] = WORK;	/* path to temp file working dir */
 /* ---
  * latex method info specifying latex,pdflatex
  * ------------------------------------------- */
@@ -538,6 +559,7 @@ static	char tempdir[256] = "\000";	/* temporary work directory */
  * latex wrapper document template (default, isdepth=0, without depth)
  * ------------------------------------------------------------------- */
 static	char latexdefaultwrapper[MAXEXPRSZ+16384] =
+	"%%% url: %%referer%%\n"	/* http_referer submitting request */
 	"\\documentclass[10pt]{article}\n" /*[fleqn] omitted*/
 	"\\usepackage[latin1]{inputenc}\n"
 	"\\usepackage{amsmath}\n"
@@ -582,6 +604,7 @@ static	char latexdefaultwrapper[MAXEXPRSZ+16384] =
  * for discussion of this procedure
  * ------------------------------------------------------------------- */
 static	char latexdepthwrapper[MAXEXPRSZ+16384] =
+	"%%% url: %%referer%%\n"	/* http_referer submitting request */
 	"\\documentclass[10pt]{article}\n" /*[fleqn] omitted*/
 	"\\usepackage[latin1]{inputenc}\n"
 	"\\usepackage{amsmath}\n"
@@ -706,7 +729,8 @@ application macros
 /* --- check if a string is empty --- */
 #define	isempty(s)  ((s)==NULL?1:(*(s)=='\000'?1:0))
 /* --- last char of a string --- */
-#define	lastchar(s) (isempty(s)?'\000':*((s)+(strlen(s)-1)))
+#define	plastchar(s) (isempty(s)?NULL:((s)+(strlen(s)-1)))
+#define	lastchar(s) (isempty(s)?'\000':*(plastchar(s)))
 /* --- check for thischar in accept --- */
 #define	isthischar(thischar,accept) \
 	( (thischar)!='\000' && !isempty(accept) \
@@ -847,6 +871,7 @@ char	*http_referer = getenv("HTTP_REFERER"), /* referer using mathTeX */
 	*http_host = (!isempty(mathtex_host)?mathtex_host: /*match host*/
 	  (!isempty(server_name)?server_name:(NULL))); /* or server_name */
 int	isvalidreferer = 1;		/* can this referer use mathTeX? */
+int	whundredths = 0;		/* #hundredths-secs to delay image */
 struct	{ char *deny;			/* http_referer can't contain this */
 	int msgnumber; }		/* emit invalid_referer_msg[msg#] */
 	htaccess[] = {			/* ".htaccess" table for deny */
@@ -865,6 +890,7 @@ char	*timestamp(),			/*for \time (in addition to \today)*/
 	*calendar();			/* for \calendar{yyyy,mm,dd} string*/
 int	emitembedded();			/* in case latex can't run */
 int	timelimit();			/* just to check stub or built-in */
+int	timewaitfor();			/* impose a delay on query replies */
 int	iscolorpackage = 0,		/* true if \usepackage{color} found*/
 	iseepicpackage = 0,		/* true if \usepackage{eepic} found*/
 	ispict2epackage = 0,		/* true if \usepackage{pict2e}found*/
@@ -877,6 +903,7 @@ int	emitcache();			/* emit cached image if it exists */
 int	maxage = MAXAGE;		/* max-age is typically two hours */
 char	*makepath();			/* construct full path/filename.ext*/
 char	*md5str(), *md5hash=NULL;	/* md5 has of expression */
+char	*presentwd(), *pwdpath=NULL;	/* home pwd for relative file paths */
 int	mathlog();			/* log requests */
 /* --- messages --- */
 char	*copyright1 =			/* copyright, gnu/gpl notice */
@@ -924,7 +951,8 @@ char	*invalid_referer_msg[] = {	/* invalid referer messages */
  "{\\textbf{please provide your HTTP\\_REFERER}}$}",
  /* --- message#2 ("production use" message) --- */
  "\\parstyle\\usepackage{color}\\small\\color{red}\\noindent "
- "\\fbox{$\\twolines{\\textbf{For production use, please install mathtex.cgi on}}"
+ "\\fbox{$\\twolines{\\textbf{For production use,"
+ " please install mathtex.cgi on}}"
  "{\\textbf{your own server.  See www.forkosh.com/mathtex.html}}$}",
  /* --- end-of-table trailer --- */
  NULL } ; /* --- end-of-invalid_referer_msg[] --- */
@@ -936,6 +964,12 @@ msgfp = NULL;				/* for query mode output */
 msgnumber = 0;				/* no errors to report yet */
 if ( imagetype < 1 || imagetype > 2 ) imagetype = 1;   /* keep in bounds */
 if ( imagemethod<1 || imagemethod>2 ) imagemethod = 1; /* keep in bounds */
+if ( (pwdpath = presentwd(0))		/* pwd where exectuable resides */
+!=   NULL )				/* got it */
+  strcpy(homepath,pwdpath);		/* save it for mathtex() later */
+strninit(this_referer,((!isempty(http_referer))?http_referer:">>none<<"),255);
+strreplace(this_referer,"\n"," ",0,0);	/* get rid of newlines */
+strreplace(this_referer,"\r"," ",0,0);	/* ditto cr's, just in case */
 /* ---
  * check QUERY_STRING query for expression
  * --------------------------------------- */
@@ -1036,7 +1070,7 @@ if ( isquery )				/* not relevant if in command mode */
     for ( iaccess=0; msgnumber<0; iaccess++ ) { /*run thru htaccess[] table*/
       char *deny = htaccess[iaccess].deny; /* referer to be denied */
       if ( deny == NULL ) break;	/* null signals end-of-table */
-      if ( isempty(deny) )		/* signal to check for no referer */
+      if ( isempty(deny) )		/* signal for http://>>none<< */
 	{ if ( isempty(http_referer) )	/* http_referer not supplied */
 	   msgnumber = htaccess[iaccess].msgnumber; } /* so set message# */
       else				/* have referer to check for */
@@ -1047,23 +1081,40 @@ if ( isquery )				/* not relevant if in command mode */
     if ( msgnumber >= 0 )		/* deny access to this referer */
       isvalidreferer = 0; }		/* signal invalid referer */
 /* --- render short expressions even for invalid referers --- */
-if ( !isvalidreferer )			/* have an invalied referer */
+if ( !isvalidreferer )			/* have an invalid referer */
   if ( MAXINVALID > 0 )			/* but short expressions allowed */
-    if ( strlen(expression) <= MAXINVALID ) /* and this one is short enough*/
+    if ( strlen(expression) <= MAXINVALID ) /* and this one is short enough */
       isvalidreferer = 1;		/* so let it through */
 /* --- check for invalidreferer directive (user wants to see message)  --- */
 if ( getdirective(expression,"\\invalidreferer",1,0,1,argstring)
 !=   NULL ) {				/* found \invalidreferer directive */
   isvalidreferer = 0;			/* signal invalid referer */
   msgnumber = atoi(argstring); }	/* requested message number */
-/* --- substitute invalid referer message if referer is indeed invalid --- */
+/* --- wait or substitute invalid referer message if referer is invalid --- */
+whundredths = 0;			/* no wait specified yet */
 if ( !isvalidreferer ) {		/* invalid referer detected */
-  if ( msgnumber<0 || msgnumber>maxinvalidmsg ) /* check message range */
-    msgnumber = 0;			/* default if out-of-bounds */
-  strcpy(expression,invalid_referer_msg[msgnumber]); /* choose message */
-  strreplace(expression,"%%referer%%",	/* replace actual referer */
-    (isempty(http_referer)?"your domain":nomath(http_referer)),0,0); }
-msgnumber = 0;				/* reset global message number */
+  if ( msgnumber > 100 ) {		/* wait msgnumber-100 tenths sec */
+    whundredths = 10*(msgnumber-100);	/* hundredths = 10*tenths */
+    isvalidreferer = 1; }		/* reset valid referer, but wait */
+  else {				/* or don't process request at all */
+    if ( msgnumber<0 || msgnumber>maxinvalidmsg ) /* check message range */
+      msgnumber = 0;			/* default if out-of-bounds */
+    strcpy(expression,invalid_referer_msg[msgnumber]); /* choose message */
+    strreplace(expression,"%%referer%%", /* replace actual referer */
+      (isempty(http_referer)?"your domain":nomath(http_referer)),0,0); } }
+  msgnumber = 0;			/* reset global message number */
+/* ---
+ * query delay
+ * -------------- */
+if ( isquery )				/* have a query */
+  if ( !isempty(WAIT) || whundredths>0 ) { /* wait imposed on queries */
+    if ( whundredths < 1 ) whundredths = atoi(WAIT); /*#hundredths of a sec*/
+    if ( !isempty(NOWAIT) )		/* have -DNOWAIT=\",,,\" referers */
+      if ( isstrstr(http_referer,NOWAIT,0) ) /* no wait for this refererer */
+        whundredths = 0;		/* so reset wait time */
+    if ( whundredths > 0 )		/* if we have a wait */
+      timewaitfor(whundredths);		/* return after waiting */
+    } /* --- end-of-if(!isempty(WAIT)) --- */
 /* ---
  * check for embedded image \message directive (which supercedes everything)
  * ----------------------------------------------------------------------- */
@@ -1081,6 +1132,7 @@ if ( strreplace(expression,"\\switches","",0,0) /* remove \switches */
 >=   1 ) {				/* found \switches */
   char	*pathsource[] = { "default", "switch", "which", "locate" };
   /*iscaching = 0;*/			/* don't cache \switches image */
+  isquiet = 999;			/* don't quit on latex errors */
   *expression = '\000';			/* reset expression */
   /*setpaths(imagemethod);*/		/* set paths */
   setpaths(0);				/* show _all_ set paths */
@@ -1237,8 +1289,8 @@ if ( strreplace(expression,"\\depth","",0,0) /* \depth requested */
    * note: curl_init() stops at the first whitespace char in $url argument,
    * so php functions using \depth replace blanks with tildes
    * ---------------------------------------------------------------------- */
-    int ntilde = 0;			/* # ~ chars replaced */
-    ntilde = strreplace(expression,"~"," ",0,0); }
+    /*int ntilde = 0;*/			/* # ~ chars replaced */
+    /*ntilde =*/ strreplace(expression,"~"," ",0,0); }
   isdepth = 1;				/* so reset flag */
   latexwrapper = latexdepthwrapper; }	/* and wrapper */
 if ( strreplace(expression,"\\nodepth","",0,0) /* \nodepth requested */
@@ -1397,6 +1449,7 @@ if ( getdirective(expression,"\\msglevel",1,0,1,argstring)/*look for \msglvl*/
 if ( msgfp!=NULL && msglevel>=1 ) {	/*copyright notice and path to image*/
   fprintf(msgfp,"%s%s\n",copyright1,copyright2); /* always show copyright */
   showmsg(3,"running image",argv[0]);	/* and executable image if verbose */
+  showmsg(4,"home directory",homepath);	/* and pwd of executable image */
   showmsg(2,"input expression",hashexpr); /* and input expression */
   if ( msglevel >= 8 ) {		/* and if very verbose */
     fprintf(msgfp,			/* timelimit info */
@@ -1519,6 +1572,8 @@ int	dir_stat = 0;			/* 1=mkdir okay, 2=chdir okay */
 int	sys_stat = 0;			/* system() return status */
 int	isdexists(), isfexists(),	/* check if dir, .dvi file created */
 	isnotfound();			/* check .err file for "not found" */
+char	*presentwd(), *pwdpath=NULL;	/* pwd for file paths */
+int	isworkpath = 0;			/* true if cd'ed to working dir */
 int	strreplace();			/* replace template directives */
 int	ipackage = 0;			/* packages[] index 0...npackages-1*/
 int	rrmdir();			/* rm -r */
@@ -1526,9 +1581,13 @@ int	gifpathlen = 0;			/* ../ or ../../ prefix of giffile */
 int	status = 0;			/* imagetype or 0=error */
 int	timelimit();			/* and using built-in timelimit() */
 /* -------------------------------------------------------------------------
-Make temporary work directory and change to it
+Make temporary work directory and cd to ~workpath/tempdir/
 -------------------------------------------------------------------------- */
 msgnumber = 0;				/* no error to report yet */
+if ( !isempty(workpath) )		/*have a working dir for temp files*/
+ if ( isdexists(workpath) )		/* if working directory exists */
+  if ( chdir(workpath)			/* cd to working directory */
+  == 0 ) isworkpath=1;			/* signal cd to workpath succeeded */
 if ( !isdexists(tempdir/*filename*/) )	/* if temp directory doesn't exist */
   if ( mkdir(tempdir/*filename*/,perm_all) /* make temp dirextory */
   !=   0 ) {				/* mkdir failed */
@@ -1557,6 +1616,8 @@ if ( !iserror )				/* don't \usepackage for error */
 /* -------------------------------------------------------------------------
 Replace "keywords" in latex template with expression and other directives
 -------------------------------------------------------------------------- */
+/* --- embed http_referer submitting request --- */
+strreplace(latexwrapper,"%%referer%%",this_referer,1,0);
 /* --- usually replace %%pagestyle%% with \pagestyle{empty} --- */
   if ( !ispicture			/* not \begin{picture} environment */
   ||   latexmethod == 1 )		/* or using latex/dvips/ps2epsi */
@@ -1696,9 +1757,25 @@ Construct the output path/filename.[gif,png] for the image file
 -------------------------------------------------------------------------- */
 if ( isempty(outfile)			/* using default cache directory */
 ||   !isthischar(*outfile,"/\\") ) {	/* or just given a relative path */
-  strcpy(giffile,"../");		/* output file will be in cache */
-  if ( iserror ) strcat(giffile,"../");	/* we're in error subdirectory */
-  gifpathlen = strlen(giffile); }	/* #chars in ../ or ../../ prefix */
+  *giffile = '\000';			/* start with empty string */
+  if ( isworkpath ) {			/* we've cd'ed to a working dir */
+    if ( !isempty(homepath) )		/* have a homepath */
+      strcpy(giffile,homepath);		/* so just use it */
+    else {				/* home path not available */
+      int nsub = (isworkpath?2:1);	/* up two dirs for workdir, else 1 */
+      if ( iserror ) nsub++;		/* and another if in error subdir */
+      if ( (pwdpath=presentwd(nsub))	/* get path nsub dirs up from pwd */
+      != NULL )				/* got it */
+        strcpy(giffile,pwdpath); }	/* use it as giffile prefix */
+    } /* --- end-of-if(isworkpath) --- */
+  if ( isempty(giffile) ) {		/* haven't constructed giffile */
+     if ( iserror ) strcat(giffile,"../"); /*up to temp if in error subdir*/
+     strcat(giffile,"../");		/* up to home or working dir */
+     if ( isworkpath )			/* temp under working dir */
+       strcat(giffile,"../");		/* up from working to home dir */
+    } /* --- end-of-if(isempty(giffile)) --- */
+  gifpathlen = strlen(giffile);		/* #chars in ../ or ../../ prefix */
+  } /* --- end-of-if(isempty(outfile)||etc) --- */
 if ( isempty(outfile) )			/* using default output filename */
   strcat(giffile,makepath(NULL,filename,extensions[imagetype]));
 else					/* have an explicit output file */
@@ -1822,8 +1899,10 @@ status = imagetype;			/* signal success */
 Back to caller
 -------------------------------------------------------------------------- */
 end_of_job:
-  if ( dir_stat >= 2 ) chdir("..");	/* return up to original dir */
-  if ( dir_stat >= 1 ) rrmdir(tempdir/*filename*/); /*rm -r temp working dir*/
+  if ( dir_stat >= 2 ) chdir("..");	/* return up to working dir or home*/
+  if ( dir_stat >= 1 ) rrmdir(tempdir/*filename*/);/*rm -r temp working dir*/
+  if ( isworkpath )			/* return from working dir to home */
+    chdir((!isempty(homepath)?homepath:"..")); /* best guess at home */
   iserror = 0;				/* always reset error flag */
   return ( status );
 } /* --- end-of-function mathtex() --- */
@@ -2139,7 +2218,8 @@ for ( ivalid=0; !isempty(invalid[ivalid].command); ivalid++ ) { /*run list*/
   int	myargformat   = invalid[ivalid].argformat; /* 0={arg},1=arg*/
   char	*displaystring= invalid[ivalid].displaystring; /*display template*/
   /* --- arg format info --- */
-  int	nfmt=0,isnegfmt=0,argfmt[9]={0,0,0,0,0,0,0,0,0}; /*argformat digits*/
+  int	nfmt=0,/*isnegfmt=0,*/		/* {arg} format */
+	argfmt[9]={0,0,0,0,0,0,0,0,0};	/* argformat digits */
   /* --- args returned as (char *) if nargs=1 or (char **) if nargs>1 --- */
   void	*argptr = (nargs<2?(void *)args[0]:(void *)pargs); /*(char * or **)*/
   /* --- find and remove/replace all invalid command occurrences --- */
@@ -2149,7 +2229,7 @@ for ( ivalid=0; !isempty(invalid[ivalid].command); ivalid++ ) { /*run list*/
   /* --- interpret argformat digits --- */
   if ( argformat != 0 ) {		/* have argformat */
     int	myfmt = argformat;		/* local copy */
-    if ( myfmt < 0 ) { isnegfmt=1; myfmt=(-myfmt); } /* check sign */
+    if ( myfmt < 0 ) { /*isnegfmt=1;*/ myfmt=(-myfmt); } /* check sign */
     while ( myfmt>0 && nfmt<9 ) {	/* have more format digits */
       argfmt[nfmt] = myfmt%10;		/* store low-order decimal digit */
       myfmt /= 10;			/* and shift it out */
@@ -2310,7 +2390,7 @@ if ( !isempty(CACHELOG) ) {		/* if a logfile is given */
 	refp += loglen; }		/* bump ptr to next part */
       } /* --- end-of-if(!isempty(http_referer)) --- */
     if ( !isreflogged )			/* http_referer not logged */
-      fprintf(filefp,"http://none\n");	/* so log dummy referer line */
+      fprintf(filefp,"http://>>none<<\n"); /* so log dummy referer line */
     fprintf(filefp,"%s\n",dashes);	/* separator line */
     fclose(filefp);			/* close logfile immediately */
     } /* --- end-of-if(filefp!=NULL) --- */
@@ -2546,6 +2626,70 @@ if ( nlocate != NULL ) *nlocate = nlines; /* and number of locate|grep hits*/
 end_of_job:
   return ( path );			/* give caller path to command */
 } /* --- end-of-function locatepath() --- */
+
+
+/* ==========================================================================
+ * Function:	presentwd ( int nsub )
+ * Purpose:	determines pwd, nsub directories "up"
+ * --------------------------------------------------------------------------
+ * Arguments:	nsub (I)	int containing #subdirectories "up" to
+ *				which path is wanted. 0 for pwd
+ * --------------------------------------------------------------------------
+ * Returns:	( char * )	path to pwd, or NULL for any error
+ * --------------------------------------------------------------------------
+ * Notes:     o	A forward / is always the last character
+ * ======================================================================= */
+/* --- entry point --- */
+char	*presentwd ( int nsub )
+{
+/* -------------------------------------------------------------------------
+Allocations and Declarations
+-------------------------------------------------------------------------- */
+static	char pathbuff[256];		/* buffer for returned path */
+FILE    *pwd = NULL;			/* pwd's stdout */
+char	*path = NULL;			/* either pathbuff or NULL=error */
+int	wdmethod = 1;			/* 1=getcwd(), 2=popen("pwd","r") */
+/* -------------------------------------------------------------------------
+issue getcwd() call
+-------------------------------------------------------------------------- */
+if ( wdmethod == 1 ) {			/* --- getcwd(pathbuff,255) --- */
+  if ( (path = getcwd(pathbuff,255))	/* get cwd */
+  ==   NULL ) goto end_of_job;		/* failed */
+  trimwhite(pathbuff); }		/*remove leading/trailing whitesapce*/
+/* -------------------------------------------------------------------------
+issue pwd command and read its output
+-------------------------------------------------------------------------- */
+if ( wdmethod == 2 ) {			/* --- popen("pwd","r") --- */
+  /* --- use popen() to invoke pwd --- */
+  if ( (pwd = popen( "pwd", "r" ))	/* issue pwd and capture stdout */
+  ==   NULL ) goto end_of_job;		/* failed */
+  *pathbuff = '\000';			/* empty string in case fgets fails */
+  /* --- read the pipe one line at a time --- */
+  while ( fgets(pathbuff,255,pwd)	/* get next line */
+  != NULL ) {				/* not at eof yet */
+    trimwhite(pathbuff);		/*remove leading/trailing whitespace*/
+    if ( strlen(pathbuff) > 0 ) break; } /* try again if empty line */
+  /* --- pclose() waits for command to terminate --- */
+  pclose( pwd ); }			/* finish */
+/* -------------------------------------------------------------------------
+strip leading directories
+-------------------------------------------------------------------------- */
+if ( nsub > 0 ) {			/* caller wants path above pwd */
+  if ( lastchar(pathbuff) == '/' )	/* have terminating / */
+    *plastchar(pathbuff) = '\000';	/* strip it */
+  while ( nsub > 0 ) {			/* still higher path wanted */
+    char *slash = strrchr(pathbuff,'/'); /* last / on path */
+    if ( slash == NULL ) break;		/* can't go up any higher */
+    *slash = '\000';			/* truncate "/highestdir" from path */
+    nsub--; }				/* we're now one path up */
+  } /* --- end-of-if(nsub>0) --- */
+if ( lastchar(pathbuff) != '/' )	/* need terminating / */
+  strcat(pathbuff,"/");			/* add it */
+/* --- back to caller --- */
+path = pathbuff;			/* successful path */
+end_of_job:
+  return ( path );			/* give caller path */
+} /* --- end-of-function presentwd() --- */
 
 
 /* ==========================================================================
@@ -3309,7 +3453,8 @@ char	*pfirst = NULL,			/* ptr to 1st char of directive */
 	*plbrace=NULL, *prbrace=NULL;	/* ptr to left,right brace of arg */
 int	fldlen = 0;			/* #chars between { and } delims */
 char	argfld[512];			/* {arg} characters */
-int	nfmt=0,isnegfmt=0,argfmt[9]={0,0,0,0,0,0,0,0,0}; /*argformat digits*/
+int	nfmt=0, /*isnegfmt=0,*/		/* {arg} format */
+	argfmt[9]={0,0,0,0,0,0,0,0,0};	/* argformat digits */
 int	gotargs = (args==NULL?0:1);	/* true if args array supplied */
 int	isdalpha = 1;			/* true if directive ends with alpha*/
 char	*strpspn(char *s,char *reject,char *segment); /*non-() not in rej*/
@@ -3321,7 +3466,7 @@ for ( iarg=0; iarg<8; iarg++ )		/* for each one... */
   *optionalargs[iarg] = '\000';		/* re-init optional [arg] buffer */
 if ( argformat != 0 ) {			/* have argformat */
   int	myfmt = argformat;		/* local copy */
-  if ( myfmt < 0 ) { isnegfmt=1; myfmt=(-myfmt); } /* check sign */
+  if ( myfmt < 0 ) { /*isnegfmt=1;*/ myfmt=(-myfmt); } /* check sign */
   while ( myfmt>0 && nfmt<9 ) {		/* have more format digits */
     argfmt[nfmt] = myfmt%10;		/* store low-order decimal digit */
     myfmt /= 10;			/* and shift it out */
@@ -4547,6 +4692,38 @@ if ( store[istore].value != NULL ) /* address of int supplied */
 end_of_job:
   return ( value );			/* store->values[istore] or NULL */
 } /* --- end-of-function getstore() --- */
+
+
+/* ==========================================================================
+ * Function:	timewaitfor ( whundredths )
+ * Purpose:	wait for whundredths hundredths of a second
+ * --------------------------------------------------------------------------
+ * Arguments:	tzdelta (I)	integer, positive or negative, containing
+ *				containing number of hours to be added or
+ *				subtracted from system time (to accommodate
+ *				your desired time zone).
+ *		ifmt (I)	integer containing 0 for default format
+ * --------------------------------------------------------------------------
+ * Returns:	( char * )	ptr to null-terminated buffer
+ *				containing current date:time stamp
+ * --------------------------------------------------------------------------
+ * Notes:     o
+ * ======================================================================= */
+/* --- entry point --- */
+int	timewaitfor( int whundredths )
+{
+/* -------------------------------------------------------------------------
+Allocations and Declarations
+-------------------------------------------------------------------------- */
+int	secs = whundredths/100,	/* whole seconds */
+	hundredths = whundredths - (100*secs); /* remainder is hundredths */
+long	nanos = ((long)hundredths)*((long)10000000); /* times ten million */
+struct	timespec waitfor = { 0, 0 }; /* nanosleep arg */
+if ( whundredths>=1 && secs<=999 ) { /* sanity check */
+  waitfor.tv_sec = secs;  waitfor.tv_nsec = nanos; /* init nanosleep arg */
+  nanosleep(&waitfor,NULL); }	/* impose delay */
+return ( 1 );			/* back to caller after delay */
+} /* --- end-of-function timewaitfor() --- */
 
 
 /* ==========================================================================

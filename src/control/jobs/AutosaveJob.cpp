@@ -1,7 +1,9 @@
 #include "AutosaveJob.h"
-#include "../SaveHandler.h"
 
-#include "../Control.h"
+#include "control/Control.h"
+#include "control/xojfile/SaveHandler.h"
+
+#include <i18n.h>
 
 AutosaveJob::AutosaveJob(Control* control)
 {
@@ -20,10 +22,9 @@ void AutosaveJob::afterRun()
 	XOJ_CHECK_TYPE(AutosaveJob);
 
 	GtkWidget* dialog = gtk_message_dialog_new((GtkWindow*) control->getWindow(),
-	                                           GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, _("Autosave: %s"),
-	                                           this->error.c_str());
-	gtk_window_set_transient_for(GTK_WINDOW(dialog),
-	                             GTK_WINDOW(this->control->getWindow()->getWindow()));
+											   GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, "%s",
+											   FC(_F("Autosave: {1}") % this->error));
+	gtk_window_set_transient_for(GTK_WINDOW(dialog), GTK_WINDOW(this->control->getWindow()->getWindow()));
 	gtk_dialog_run(GTK_DIALOG(dialog));
 	gtk_widget_destroy(dialog);
 }
@@ -40,25 +41,19 @@ void AutosaveJob::run()
 
 	doc->lock();
 	handler.prepareSave(doc);
-	String filename = doc->getFilename();
+	path filename = doc->getFilename();
 	doc->unlock();
 
-	// TODO: incrementel autosave
-	if (filename.isEmpty())
+	if (filename.empty())
 	{
 		filename = Util::getAutosaveFilename();
 	}
 	else
 	{
-		int pos = filename.lastIndexOf("/") + 1;
-		String folder = filename.substring(0,pos);
-		String file = filename.substring(pos);
-		filename = folder + ".";
-		if (file.length() > 5 && file.substring(-4) == ".xoj")
-		{
-			filename += file.substring(0,-4);
-		}
-		filename += ".autosave.xoj";
+		string file = filename.filename().string();
+		filename.remove_filename();
+		filename /= CONCAT(".", file);
+		filename.replace_extension(".autosave.xoj");
 	}
 
 	control->renameLastAutosaveFile();
@@ -66,9 +61,10 @@ void AutosaveJob::run()
 	GzOutputStream* out = new GzOutputStream(filename);
 	handler.saveTo(out, filename);
 	delete out;
+	out = NULL;
 
 	this->error = handler.getErrorMessage();
-	if (!this->error.isEmpty())
+	if (!this->error.empty())
 	{
 		callAfterRun();
 	}

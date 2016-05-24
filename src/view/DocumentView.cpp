@@ -1,17 +1,25 @@
 #include "DocumentView.h"
+
 #include "TextView.h"
-#include <gdk/gdk.h>
-#include "../control/tools/Selection.h"
-#include "../control/tools/EditSelection.h"
-#include "../model/eraser/EraseableStroke.h"
-#include "../model/Layer.h"
-#include "../model/BackgroundImage.h"
-#include "../cfg.h"
+
+#include "control/tools/EditSelection.h"
+#include "control/tools/Selection.h"
+#include "model/BackgroundImage.h"
+#include "model/eraser/EraseableStroke.h"
+#include "model/Layer.h"
 
 #include <config.h>
-#include <glib/gi18n-lib.h>
+#include <config-debug.h>
+
+#include <gdk/gdk.h>
 
 #include <typeinfo>
+
+#ifdef DEBUG_SHOW_REPAINT_BOUNDS
+#include <iostream>
+using std::cout;
+using std::endl;
+#endif
 
 DocumentView::DocumentView()
 {
@@ -22,6 +30,10 @@ DocumentView::DocumentView()
 	this->lY = -1;
 	this->lWidth = -1;
 	this->lHeight = -1;
+
+	this->width = 0;
+	this->height = 0;
+
 	this->dontRenderEditingStroke = 0;
 }
 
@@ -53,8 +65,7 @@ void DocumentView::drawEraseableStroke(cairo_t* cr, Stroke* s)
 	e->draw(cr, this->lX, this->lY, this->width, this->height);
 }
 
-void DocumentView::drawStroke(cairo_t* cr, Stroke* s, int startPoint,
-                              double scaleFactor)
+void DocumentView::drawStroke(cairo_t* cr, Stroke* s, int startPoint, double scaleFactor)
 {
 	XOJ_CHECK_TYPE(DocumentView);
 
@@ -99,7 +110,7 @@ void DocumentView::drawStroke(cairo_t* cr, Stroke* s, int startPoint,
 	if (!s->hasPressure())
 	{
 		gdk_threads_enter();
-		if(scaleFactor == 1)
+		if (scaleFactor == 1)
 		{
 			// Set width
 			cairo_set_line_width(cr, width);
@@ -148,7 +159,7 @@ void DocumentView::drawStroke(cairo_t* cr, Stroke* s, int startPoint,
 				width = lastPoint1.z;
 			}
 
-			if(scaleFactor == 1)
+			if (scaleFactor == 1)
 			{
 				// Set width
 				cairo_set_line_width(cr, width);
@@ -209,6 +220,7 @@ void DocumentView::drawImage(cairo_t* cr, Image* i)
 	cairo_set_matrix(cr, &defaultMatrix);
 	gdk_threads_leave();
 }
+
 void DocumentView::drawTexImage(cairo_t* cr, TexImage* i)
 {
 	XOJ_CHECK_TYPE(DocumentView);
@@ -257,29 +269,31 @@ void DocumentView::drawElement(cairo_t* cr, Element* e)
 	}
 }
 
+/**
+ * Draw a single layer
+ * @param cr Draw to thgis context
+ * @param l The layer to draw
+ */
 void DocumentView::drawLayer(cairo_t* cr, Layer* l)
 {
 	XOJ_CHECK_TYPE(DocumentView);
 
-	ListIterator<Element*> it = l->elementIterator();
+	cairo_set_operator(cr, CAIRO_OPERATOR_SOURCE);
 
-#ifdef SHOW_REPAINT_BOUNDS
+#ifdef DEBUG_SHOW_REPAINT_BOUNDS
 	int drawed = 0;
 	int notDrawed = 0;
-#endif //SHOW_REPAINT_BOUNDS
-	while (it.hasNext())
+#endif // DEBUG_SHOW_REPAINT_BOUNDS
+	for (Element* e : *l->getElements())
 	{
-		Element* e = it.next();
-
-#ifdef SHOW_ELEMENT_BOUNDS
+#ifdef DEBUG_SHOW_ELEMENT_BOUNDS
 		gdk_threads_enter();
 		cairo_set_source_rgb(cr, 0, 1, 0);
 		cairo_set_line_width(cr, 1);
-		cairo_rectangle(cr, e->getX(), e->getY(), e->getElementWidth(),
-		                e->getElementHeight());
+		cairo_rectangle(cr, e->getX(), e->getY(), e->getElementWidth(), e->getElementHeight());
 		cairo_stroke(cr);
 		gdk_threads_leave();
-#endif // SHOW_ELEMENT_BOUNDS
+#endif // DEBUG_SHOW_REPAINT_BOUNDS
 		//cairo_new_path(cr);
 
 		if (this->lX != -1)
@@ -287,30 +301,30 @@ void DocumentView::drawLayer(cairo_t* cr, Layer* l)
 			if (e->intersectsArea(this->lX, this->lY, this->width, this->height))
 			{
 				drawElement(cr, e);
-#ifdef SHOW_REPAINT_BOUNDS
+#ifdef DEBUG_SHOW_REPAINT_BOUNDS
 				drawed++;
-#endif //SHOW_REPAINT_BOUNDS
+#endif // DEBUG_SHOW_REPAINT_BOUNDS
 			}
+#ifdef DEBUG_SHOW_REPAINT_BOUNDS
 			else
 			{
-#ifdef SHOW_REPAINT_BOUNDS
 				notDrawed++;
-#endif //SHOW_REPAINT_BOUNDS
 			}
+#endif // DEBUG_SHOW_REPAINT_BOUNDS
 
 		}
 		else
 		{
-#ifdef SHOW_REPAINT_BOUNDS
+#ifdef DEBUG_SHOW_REPAINT_BOUNDS
 			drawed++;
-#endif //SHOW_REPAINT_BOUNDS
+#endif // DEBUG_SHOW_REPAINT_BOUNDS
 			drawElement(cr, e);
 		}
 	}
 
-#ifdef SHOW_REPAINT_BOUNDS
-	printf("DBG:DocumentView: draw %i / not draw %i\n", drawed, notDrawed);
-#endif //SHOW_REPAINT_BOUNDS
+#ifdef DEBUG_SHOW_REPAINT_BOUNDS
+	cout << bl::format("DBG:DocumentView: draw {1} / not draw {2}") % drawed % notDrawed << endl;
+#endif // DEBUG_SHOW_REPAINT_BOUNDS
 }
 
 void DocumentView::paintBackgroundImage()
@@ -420,10 +434,8 @@ void DocumentView::drawSelection(cairo_t* cr, ElementContainer* container)
 {
 	XOJ_CHECK_TYPE(DocumentView);
 
-	ListIterator<Element*> it = container->getElements();
-	while (it.hasNext())
+	for (Element* e : *container->getElements())
 	{
-		Element* e = it.next();
 		drawElement(cr, e);
 	}
 }
@@ -438,8 +450,13 @@ void DocumentView::limitArea(double x, double y, double width, double heigth)
 	this->lHeight = heigth;
 }
 
-void DocumentView::drawPage(PageRef page, cairo_t* cr,
-                            bool dontRenderEditingStroke)
+/**
+ * Drawing first step
+ * @param page The page to draw
+ * @param cr Draw to thgis context
+ * @param dontRenderEditingStroke false to draw currently drawing stroke
+ */
+void DocumentView::initDrawing(PageRef page, cairo_t* cr, bool dontRenderEditingStroke)
 {
 	XOJ_CHECK_TYPE(DocumentView);
 
@@ -448,7 +465,44 @@ void DocumentView::drawPage(PageRef page, cairo_t* cr,
 	this->width = page->getWidth();
 	this->height = page->getHeight();
 	this->dontRenderEditingStroke = dontRenderEditingStroke;
+}
 
+/**
+ * Last step in drawing
+ */
+void DocumentView::finializeDrawing()
+{
+	XOJ_CHECK_TYPE(DocumentView);
+
+#ifdef DEBUG_SHOW_REPAINT_BOUNDS
+	if (this->lX != -1)
+	{
+		cout << "DBG:repaint area" << endl;
+		cairo_set_source_rgb(cr, 1, 0, 0);
+		cairo_set_line_width(cr, 1);
+		cairo_rectangle(cr, this->lX + 3, this->lY + 3, this->lWidth - 6, this->lHeight - 6);
+		cairo_stroke(cr);
+	}
+	else
+	{
+		cout << "DBG:repaint complete" << endl;
+	}
+#endif // DEBUG_SHOW_REPAINT_BOUNDS
+
+	this->lX = -1;
+	this->lY = -1;
+	this->lWidth = -1;
+	this->lHeight = -1;
+
+	this->page = NULL;
+	this->cr = NULL;
+}
+
+/**
+ * Draw the background
+ */
+void DocumentView::drawBackground()
+{
 	if (page->getBackgroundType() == BACKGROUND_TYPE_PDF)
 	{
 		// Handled in PdfView
@@ -477,38 +531,37 @@ void DocumentView::drawPage(PageRef page, cairo_t* cr,
 	{
 		paintBackgroundColor();
 	}
+}
 
-	cairo_set_operator(cr, CAIRO_OPERATOR_SOURCE);
+/**
+ * Draw the full page, usually you would like to call this method
+ * @param page The page to draw
+ * @param cr Draw to thgis context
+ * @param dontRenderEditingStroke false to draw currently drawing stroke
+ */
+void DocumentView::drawPage(PageRef page, cairo_t* cr, bool dontRenderEditingStroke)
+{
+	XOJ_CHECK_TYPE(DocumentView);
+
+	initDrawing(page, cr, dontRenderEditingStroke);
+	drawBackground();
 
 	int layer = 0;
-	ListIterator<Layer*> it = page->layerIterator();
-	while (it.hasNext() && layer < page->getSelectedLayerId())
+	for (Layer* l : *page->getLayers())
 	{
-		Layer* l = it.next();
+		if (l == NULL)
+		{
+			break;
+		}
+
+		if (layer >= page->getSelectedLayerId())
+		{
+			break;
+		}
+
 		drawLayer(cr, l);
 		layer++;
 	}
 
-#ifdef SHOW_REPAINT_BOUNDS
-	if (this->lX != -1)
-	{
-		printf("DBG:repaint area\n");
-		cairo_set_source_rgb(cr, 1, 0, 0);
-		cairo_set_line_width(cr, 1);
-		cairo_rectangle(cr, this->lX + 3, this->lY + 3, this->lWidth - 6,
-		                this->lHeight - 6);
-		cairo_stroke(cr);
-	}
-	else
-	{
-		printf("DBG:repaint complete\n");
-	}
-#endif //SHOW_REPAINT_BOUNDS
-	this->lX = -1;
-	this->lY = -1;
-	this->lWidth = -1;
-	this->lHeight = -1;
-
-	this->page = NULL;
-	this->cr = NULL;
+	finializeDrawing();
 }

@@ -1,8 +1,8 @@
 #include "ButtonConfig.h"
-#include "../ToolHandler.h"
 
-ButtonConfig::ButtonConfig(ToolType action, int color, ToolSize size,
-                           DrawingType drawingType, EraserType eraserMode)
+#include "control/ToolHandler.h"
+
+ButtonConfig::ButtonConfig(ToolType action, int color, ToolSize size, DrawingType drawingType, EraserType eraserMode)
 {
 	XOJ_INIT_TYPE(ButtonConfig);
 
@@ -18,7 +18,6 @@ ButtonConfig::~ButtonConfig()
 {
 	XOJ_RELEASE_TYPE(ButtonConfig);
 }
-
 
 bool ButtonConfig::getDisableDrawing()
 {
@@ -58,51 +57,27 @@ void ButtonConfig::acceptActions(ToolHandler* toolHandler)
 			}
 			else if (this->drawingType == DRAWING_TYPE_STROKE_RECOGNIZER)
 			{
-				toolHandler->setRuler(false);
-				toolHandler->setRectangle(false);
-				toolHandler->setCircle(false);
-				toolHandler->setArrow(false);
-				toolHandler->setShapeRecognizer(true);
+				toolHandler->setShapeRecognizer(true, true);
 			}
 			else if (this->drawingType == DRAWING_TYPE_RULER)
 			{
-				toolHandler->setRuler(true);
-				toolHandler->setRectangle(false);
-				toolHandler->setCircle(false);
-				toolHandler->setArrow(false);
-				toolHandler->setShapeRecognizer(false);
+				toolHandler->setRuler(true, true);
 			}
 			else if (this->drawingType == DRAWING_TYPE_RECTANGLE)
 			{
-				toolHandler->setRuler(false);
-				toolHandler->setRectangle(true);
-				toolHandler->setCircle(false);
-				toolHandler->setArrow(false);
-				toolHandler->setShapeRecognizer(false);
+				toolHandler->setRectangle(true, true);
 			}
 			else if (this->drawingType == DRAWING_TYPE_CIRCLE)
 			{
-				toolHandler->setRuler(false);
-				toolHandler->setRectangle(false);
-				toolHandler->setCircle(true);
-				toolHandler->setArrow(false);
-				toolHandler->setShapeRecognizer(false);
+				toolHandler->setCircle(true, true);
 			}
 			else if (this->drawingType == DRAWING_TYPE_ARROW)
 			{
-				toolHandler->setRuler(false);
-				toolHandler->setRectangle(false);
-				toolHandler->setCircle(false);
-				toolHandler->setArrow(true);
-				toolHandler->setShapeRecognizer(false);
+				toolHandler->setArrow(true, true);
 			}
 			else if (this->drawingType == DRAWING_TYPE_NONE)
 			{
-				toolHandler->setRuler(false);
-				toolHandler->setRectangle(false);
-				toolHandler->setCircle(false);
-				toolHandler->setArrow(false);
-				toolHandler->setShapeRecognizer(false);
+				toolHandler->setAll(false);
 			}
 
 			if (this->size != TOOL_SIZE_NONE)
@@ -111,8 +86,7 @@ void ButtonConfig::acceptActions(ToolHandler* toolHandler)
 			}
 		}
 
-		if (this->action == TOOL_PEN || this->action == TOOL_HILIGHTER ||
-		    this->action == TOOL_TEXT)
+		if (this->action == TOOL_PEN || this->action == TOOL_HILIGHTER || this->action == TOOL_TEXT)
 		{
 			toolHandler->setColor(this->color);
 		}

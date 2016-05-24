@@ -1,9 +1,11 @@
 #include "SearchBar.h"
-#include "../control/Control.h"
-#include <string.h>
+
+#include "control/Control.h"
 
 #include <config.h>
-#include <glib/gi18n-lib.h>
+#include <i18n.h>
+
+#include <string.h>
 
 SearchBar::SearchBar(Control* control)
 {
@@ -20,13 +22,10 @@ SearchBar::SearchBar(Control* control)
 	g_signal_connect(next, "clicked", G_CALLBACK(buttonNextSearchClicked), this);
 
 	GtkWidget* previous = win->get("btSearchBack");
-	g_signal_connect(previous, "clicked", G_CALLBACK(buttonPreviousSearchClicked),
-	                 this);
+	g_signal_connect(previous, "clicked", G_CALLBACK(buttonPreviousSearchClicked), this);
 
 	GtkWidget* searchTextField = win->get("searchTextField");
-	g_signal_connect (searchTextField, "changed",
-	                  G_CALLBACK (searchTextChangedCallback),
-	                  this);
+	g_signal_connect(searchTextField, "changed", G_CALLBACK(searchTextChangedCallback), this);
 
 	defaultColor = searchTextField->style->base[GTK_STATE_NORMAL];
 }
@@ -40,8 +39,7 @@ SearchBar::~SearchBar()
 	XOJ_RELEASE_TYPE(SearchBar);
 }
 
-bool SearchBar::searchTextonCurrentPage(const char* text, int* occures,
-                                        double* top)
+bool SearchBar::searchTextonCurrentPage(const char* text, int* occures, double* top)
 {
 	XOJ_CHECK_TYPE(SearchBar);
 
@@ -70,18 +68,18 @@ void SearchBar::search(const char* text)
 		{
 			if (occures == 1)
 			{
-				gtk_label_set_text(GTK_LABEL(lbSearchState), _("Text found on this page"));
+				gtk_label_set_text(GTK_LABEL(lbSearchState), _C("Text found on this page"));
 			}
 			else
 			{
-				char* msg = g_strdup_printf(_("Text %i times found on this page"), occures);
+				char* msg = g_strdup_printf(_C("Text %i times found on this page"), occures);
 				gtk_label_set_text(GTK_LABEL(lbSearchState), msg);
 				g_free(msg);
 			}
 		}
 		else
 		{
-			gtk_label_set_text(GTK_LABEL(lbSearchState), _("Text not found"));
+			gtk_label_set_text(GTK_LABEL(lbSearchState), _C("Text not found"));
 		}
 	}
 	else
@@ -100,8 +98,7 @@ void SearchBar::search(const char* text)
 	}
 }
 
-void SearchBar::searchTextChangedCallback(GtkEntry* entry,
-                                          SearchBar* searchBar)
+void SearchBar::searchTextChangedCallback(GtkEntry* entry, SearchBar* searchBar)
 {
 	XOJ_CHECK_TYPE_OBJ(searchBar, SearchBar);
 
@@ -109,8 +106,7 @@ void SearchBar::searchTextChangedCallback(GtkEntry* entry,
 	searchBar->search(text);
 }
 
-void SearchBar::buttonCloseSearchClicked(GtkButton* button,
-                                         SearchBar* searchBar)
+void SearchBar::buttonCloseSearchClicked(GtkButton* button, SearchBar* searchBar)
 {
 	XOJ_CHECK_TYPE_OBJ(searchBar, SearchBar);
 
@@ -154,17 +150,12 @@ void SearchBar::searchNext()
 		if (found)
 		{
 			control->getScrollHandler()->scrollToPage(x, top);
-			char* msg;
-			if (occures == 1)
-			{
-				msg = g_strdup_printf(_("Text once found on page %i"), x + 1);
-			}
-			else
-			{
-				msg = g_strdup_printf(_("Text %i times found on page %i"), occures, x + 1);
-			}
-			gtk_label_set_text(GTK_LABEL(lbSearchState), msg);
-			g_free(msg);
+			gtk_label_set_text(GTK_LABEL(lbSearchState),
+				(occures == 1
+					? FC(_F("Text found once on page {1}") % (x + 1))
+					: FC(_F("Text found {1} times on page {2}") % occures % (x + 1))
+				)
+			);
 			return;
 		}
 
@@ -175,8 +166,7 @@ void SearchBar::searchNext()
 		}
 	}
 
-	gtk_label_set_text(GTK_LABEL(lbSearchState),
-	                   _("Text not found, searched on all pages"));
+	gtk_label_set_text(GTK_LABEL(lbSearchState), _C("Text not found, searched on all pages"));
 }
 
 void SearchBar::searchPrevious()
@@ -216,17 +206,12 @@ void SearchBar::searchPrevious()
 		if (found)
 		{
 			control->getScrollHandler()->scrollToPage(x, top);
-			char* msg;
-			if (occures == 1)
-			{
-				msg = g_strdup_printf(_("Text once found on page %i"), x + 1);
-			}
-			else
-			{
-				msg = g_strdup_printf(_("Text %i times found on page %i"), occures, x + 1);
-			}
-			gtk_label_set_text(GTK_LABEL(lbSearchState), msg);
-			g_free(msg);
+			gtk_label_set_text(GTK_LABEL(lbSearchState),
+				(occures == 1
+					? FC(_F("Text found once on page {1}") % (x + 1))
+					: FC(_F("Text found {1} times on page {2}") % occures % (x + 1))
+				)
+			);
 			return;
 		}
 
@@ -237,20 +222,17 @@ void SearchBar::searchPrevious()
 		}
 	}
 
-	gtk_label_set_text(GTK_LABEL(lbSearchState),
-	                   _("Text not found, searched on all pages"));
+	gtk_label_set_text(GTK_LABEL(lbSearchState), _C("Text not found, searched on all pages"));
 }
 
-void SearchBar::buttonNextSearchClicked(GtkButton* button,
-                                        SearchBar* searchBar)
+void SearchBar::buttonNextSearchClicked(GtkButton* button, SearchBar* searchBar)
 {
 	XOJ_CHECK_TYPE_OBJ(searchBar, SearchBar);
 
 	searchBar->searchNext();
 }
 
-void SearchBar::buttonPreviousSearchClicked(GtkButton* button,
-                                            SearchBar* searchBar)
+void SearchBar::buttonPreviousSearchClicked(GtkButton* button, SearchBar* searchBar)
 {
 	XOJ_CHECK_TYPE_OBJ(searchBar, SearchBar);
 
@@ -275,7 +257,7 @@ void SearchBar::showSearchBar(bool show)
 		gtk_widget_hide(searchBar);
 		for (int i = control->getDocument()->getPageCount() - 1; i >= 0; i--)
 		{
-			control->searchTextOnPage(NULL, i, NULL, NULL);
+			control->searchTextOnPage("", i, NULL, NULL);
 		}
 	}
 }

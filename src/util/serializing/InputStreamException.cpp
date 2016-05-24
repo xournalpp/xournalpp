@@ -2,22 +2,19 @@
 
 const char* XML_VERSION_STR = "XojStrm1:";
 
-InputStreamException::InputStreamException(String message, const char* filename,
-                                           int line)
+InputStreamException::InputStreamException(string message, string filename, int line)
 {
-	this->message = message;
-	this->message += ", ";
-	this->message += filename;
-	this->message += ": ";
-	this->message += line;
+	XOJ_INIT_TYPE(InputStreamException);
+	
+	this->message = CONCAT(message, ", ", filename, ": ", line);
 }
 
 InputStreamException::~InputStreamException() throw ()
 {
+	XOJ_RELEASE_TYPE(InputStreamException);
 }
 
 const char* InputStreamException::what() const throw ()
 {
 	return this->message.c_str();
 }
-

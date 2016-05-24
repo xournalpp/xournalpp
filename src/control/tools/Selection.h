@@ -3,23 +3,24 @@
  *
  * A selection while you are selection, not for editing, only for selection
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __SELECTION_H__
-#define __SELECTION_H__
+#pragma once
 
-#include <glib.h>
-#include "../../model/PageRef.h"
-#include "../../model/Element.h"
-#include "../../gui/Redrawable.h"
+#include "gui/Redrawable.h"
+#include "model/Element.h"
+#include "model/PageRef.h"
+
 #include <Util.h>
 #include <XournalType.h>
 
-class Selection: public ShapeContainer
+#include <vector>
+
+class Selection : public ShapeContainer
 {
 public:
 	Selection(Redrawable* view);
@@ -29,14 +30,13 @@ public:
 	virtual bool finalize(PageRef page) = 0;
 	virtual void paint(cairo_t* cr, GdkRectangle* rect, double zoom) = 0;
 	virtual void currentPos(double x, double y) = 0;
-	virtual void getSelectedRect(double& x, double& y, double& width,
-	                             double& height);
+	virtual void getSelectedRect(double& x, double& y, double& width, double& height);
 
 private:
 	XOJ_TYPE_ATTRIB;
 
 protected:
-	GList* selectedElements;
+	ElementVector selectedElements;
 	PageRef page;
 	Redrawable* view;
 
@@ -48,7 +48,7 @@ protected:
 	friend class EditSelection;
 };
 
-class RectSelection: public Selection
+class RectSelection : public Selection
 {
 public:
 	RectSelection(double x, double y, Redrawable* view);
@@ -77,7 +77,7 @@ private:
 	double y2;
 };
 
-class RegionSelect: public Selection
+class RegionSelect : public Selection
 {
 public:
 	RegionSelect(double x, double y, Redrawable* view);
@@ -94,5 +94,3 @@ private:
 
 	GList* points;
 };
-
-#endif /* __SELECTION_H__ */

@@ -1,10 +1,10 @@
 #include "VerticalToolHandler.h"
-#include "../../view/DocumentView.h"
-#include "../../undo/UndoRedoHandler.h"
-#include "../../model/Layer.h"
 
-VerticalToolHandler::VerticalToolHandler(Redrawable* view, PageRef page,
-                                         double y, double zoom)
+#include "model/Layer.h"
+#include "undo/UndoRedoHandler.h"
+#include "view/DocumentView.h"
+
+VerticalToolHandler::VerticalToolHandler(Redrawable* view, PageRef page, double y, double zoom)
 {
 	XOJ_INIT_TYPE(VerticalToolHandler);
 
@@ -13,22 +13,18 @@ VerticalToolHandler::VerticalToolHandler(Redrawable* view, PageRef page,
 	this->view = view;
 	this->page = page;
 	this->layer = this->page->getSelectedLayer();
-	this->elements = NULL;
 	this->jumpY = 0;
 
-	ListIterator<Element*> it = this->layer->elementIterator();
-	while (it.hasNext())
+	for (Element* e : *this->layer->getElements())
 	{
-		Element* e = it.next();
 		if (e->getY() >= y)
 		{
-			this->elements = g_list_append(this->elements, e);
+			this->elements.push_back(e);
 		}
 	}
 
-	for (GList* l = this->elements; l != NULL; l = l->next)
+	for (Element* e : this->elements)
 	{
-		Element* e = (Element*) l->data;
 		this->layer->removeElement(e, false);
 
 		this->jumpY = MAX(this->jumpY, e->getY() + e->getElementHeight());
@@ -37,8 +33,7 @@ VerticalToolHandler::VerticalToolHandler(Redrawable* view, PageRef page,
 	this->jumpY = this->page->getHeight() - this->jumpY;
 
 	this->crBuffer = cairo_image_surface_create(CAIRO_FORMAT_ARGB32,
-	                                            this->page->getWidth() * zoom,
-	                                            (this->page->getHeight() - y) * zoom);
+	                                            this->page->getWidth() * zoom, (this->page->getHeight() - y) * zoom);
 
 	cairo_t* cr = cairo_create(this->crBuffer);
 	cairo_scale(cr, zoom, zoom);
@@ -62,9 +57,6 @@ VerticalToolHandler::~VerticalToolHandler()
 		cairo_surface_destroy(this->crBuffer);
 		this->crBuffer = NULL;
 	}
-
-	g_list_free(this->elements);
-	this->elements = NULL;
 
 	XOJ_RELEASE_TYPE(VerticalToolHandler);
 }
@@ -97,7 +89,7 @@ void VerticalToolHandler::paint(cairo_t* cr, GdkRectangle* rect, double zoom)
 	cairo_rectangle(cr, 0, y * zoom, this->page->getWidth() * zoom, height * zoom);
 
 	cairo_stroke_preserve(cr);
-	cairo_set_source_rgba(cr, selectionColor.red / 65536.0,
+	cairo_set_source_rgba(cr,selectionColor.red / 65536.0,
 	                      selectionColor.green / 65536.0, selectionColor.blue / 65536.0, 0.3);
 	cairo_fill(cr);
 
@@ -134,11 +126,11 @@ void VerticalToolHandler::currentPos(double x, double y)
 	//	}
 }
 
-ListIterator<Element*> VerticalToolHandler::getElements()
+ElementVector* VerticalToolHandler::getElements()
 {
 	XOJ_CHECK_TYPE(VerticalToolHandler);
 
-	return ListIterator<Element*>(this->elements);
+	return &this->elements;
 }
 
 MoveUndoAction* VerticalToolHandler::finalize()
@@ -147,16 +139,10 @@ MoveUndoAction* VerticalToolHandler::finalize()
 
 	double dY = this->endY - this->startY;
 
-	MoveUndoAction* undo = new MoveUndoAction(this->layer,
-	                                                this->page,
-	                                                this->elements,
-	                                                0, dY,
-	                                                this->layer,
-	                                                this->page);
+	MoveUndoAction* undo = new MoveUndoAction(this->layer, this->page, &this->elements, 0, dY, this->layer, this->page);
 
-	for (GList* l = this->elements; l != NULL; l = l->next)
+	for (Element* e : this->elements)
 	{
-		Element* e = (Element*) l->data;
 		e->move(0, dY);
 
 		this->layer->addElement(e);
@@ -166,4 +152,3 @@ MoveUndoAction* VerticalToolHandler::finalize()
 
 	return undo;
 }
-

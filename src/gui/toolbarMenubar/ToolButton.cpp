@@ -1,9 +1,9 @@
 #include "ToolButton.h"
-#include "../widgets/gtkmenutooltogglebutton.h"
 
-ToolButton::ToolButton(ActionHandler* handler, String id, ActionType type,
-                       String stock, String description, GtkWidget* menuitem) :
-	AbstractToolItem(id, handler, type, menuitem)
+#include "gui/widgets/gtkmenutooltogglebutton.h"
+
+ToolButton::ToolButton(ActionHandler* handler, string id, ActionType type, string stock, string description,
+					   GtkWidget* menuitem) : AbstractToolItem(id, handler, type, menuitem)
 {
 	XOJ_INIT_TYPE(ToolButton);
 
@@ -12,9 +12,8 @@ ToolButton::ToolButton(ActionHandler* handler, String id, ActionType type,
 	this->description = description;
 }
 
-ToolButton::ToolButton(ActionHandler* handler, GladeGui* gui, String id,
-                       ActionType type, String iconName, String description, GtkWidget* menuitem) :
-	AbstractToolItem(id, handler, type, menuitem)
+ToolButton::ToolButton(ActionHandler* handler, GladeGui* gui, string id, ActionType type, string iconName,
+					   string description, GtkWidget* menuitem) : AbstractToolItem(id, handler, type, menuitem)
 {
 	XOJ_INIT_TYPE(ToolButton);
 
@@ -23,10 +22,9 @@ ToolButton::ToolButton(ActionHandler* handler, GladeGui* gui, String id,
 	this->description = description;
 }
 
-ToolButton::ToolButton(ActionHandler* handler, GladeGui* gui, String id,
-                       ActionType type, ActionGroup group, bool toolToggleOnlyEnable, String iconName,
-                       String description, GtkWidget* menuitem) :
-	AbstractToolItem(id, handler, type, menuitem)
+ToolButton::ToolButton(ActionHandler* handler, GladeGui* gui, string id, ActionType type, ActionGroup group,
+					   bool toolToggleOnlyEnable, string iconName, string description,
+					   GtkWidget* menuitem) : AbstractToolItem(id, handler, type, menuitem)
 {
 	XOJ_INIT_TYPE(ToolButton);
 
@@ -42,7 +40,7 @@ ToolButton::~ToolButton()
 	XOJ_RELEASE_TYPE(ToolButton);
 }
 
-void ToolButton::updateDescription(String description)
+void ToolButton::updateDescription(string description)
 {
 	XOJ_CHECK_TYPE(ToolButton);
 
@@ -60,7 +58,7 @@ GtkToolItem* ToolButton::newItem()
 
 	GtkToolItem* it;
 
-	if (!stock.isEmpty())
+	if (!stock.empty())
 	{
 		if (popupMenu)
 		{
@@ -76,30 +74,25 @@ GtkToolItem* ToolButton::newItem()
 	{
 		if (popupMenu)
 		{
-			it = gtk_menu_tool_toggle_button_new(this->gui->loadIcon(iconName.c_str()),
-			                                     description.c_str());
-			gtk_menu_tool_toggle_button_set_menu(GTK_MENU_TOOL_TOGGLE_BUTTON(it),
-			                                     popupMenu);
+			it = gtk_menu_tool_toggle_button_new(this->gui->loadIcon(iconName.c_str()), description.c_str());
+			gtk_menu_tool_toggle_button_set_menu(GTK_MENU_TOOL_TOGGLE_BUTTON(it), popupMenu);
 		}
 		else
 		{
 			it = gtk_toggle_tool_button_new();
-			gtk_tool_button_set_icon_widget(GTK_TOOL_BUTTON(it),
-			                                this->gui->loadIcon(iconName.c_str()));
+			gtk_tool_button_set_icon_widget(GTK_TOOL_BUTTON(it), this->gui->loadIcon(iconName.c_str()));
 		}
 	}
 	else
 	{
 		if (popupMenu)
 		{
-			it = gtk_menu_tool_button_new(this->gui->loadIcon(iconName.c_str()),
-			                              description.c_str());
+			it = gtk_menu_tool_button_new(this->gui->loadIcon(iconName.c_str()), description.c_str());
 			gtk_menu_tool_button_set_menu(GTK_MENU_TOOL_BUTTON(it), popupMenu);
 		}
 		else
 		{
-			it = gtk_tool_button_new(this->gui->loadIcon(iconName.c_str()),
-			                         description.c_str());
+			it = gtk_tool_button_new(this->gui->loadIcon(iconName.c_str()), description.c_str());
 		}
 	}
 	gtk_tool_item_set_tooltip_text(GTK_TOOL_ITEM(it), description.c_str());
@@ -108,7 +101,7 @@ GtkToolItem* ToolButton::newItem()
 	return it;
 }
 
-String ToolButton::getToolDisplayName()
+string ToolButton::getToolDisplayName()
 {
 	XOJ_CHECK_TYPE(ToolButton);
 
@@ -119,7 +112,7 @@ GtkWidget* ToolButton::getNewToolIconImpl()
 {
 	XOJ_CHECK_TYPE(ToolButton);
 
-	if (!stock.isEmpty())
+	if (!stock.empty())
 	{
 		return gtk_image_new_from_stock(stock.c_str(), GTK_ICON_SIZE_SMALL_TOOLBAR);
 	}

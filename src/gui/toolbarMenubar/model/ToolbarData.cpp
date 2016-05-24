@@ -1,7 +1,13 @@
 #include "ToolbarData.h"
-#include <string.h>
+
+#include <i18n.h>
+
 #include <glib.h>
 #include <gtk/gtk.h>
+
+#include <iostream>
+using std::cout;
+using std::endl;
 
 ToolbarData::ToolbarData(bool predefined)
 {
@@ -20,31 +26,39 @@ ToolbarData::ToolbarData(const ToolbarData& data)
 
 ToolbarData::~ToolbarData()
 {
+	XOJ_CHECK_TYPE(ToolbarData);
+
+	for (ToolbarEntry* e : this->contents)
+	{
+		delete e;
+	}
+	this->contents.clear();
+
 	XOJ_RELEASE_TYPE(ToolbarData);
 }
 
-String ToolbarData::getName()
+string ToolbarData::getName()
 {
 	XOJ_CHECK_TYPE(ToolbarData);
 
 	return this->name;
 }
 
-void ToolbarData::setName(String name)
+void ToolbarData::setName(string name)
 {
 	XOJ_CHECK_TYPE(ToolbarData);
 
 	this->name = name;
 }
 
-String ToolbarData::getId()
+string ToolbarData::getId()
 {
 	XOJ_CHECK_TYPE(ToolbarData);
 
 	return this->id;
 }
 
-void ToolbarData::setId(String id)
+void ToolbarData::setId(string id)
 {
 	XOJ_CHECK_TYPE(ToolbarData);
 
@@ -83,16 +97,14 @@ void ToolbarData::load(GKeyFile* config, const char* group)
 			continue;
 		}
 
-		ToolbarEntry e;
+		ToolbarEntry* e = new ToolbarEntry();
 		gsize keyLen = 0;
-		e.setName(keys[i]);
-		gchar** list = g_key_file_get_string_list(config, group, keys[i], &keyLen,
-		                                          NULL);
+		e->setName(keys[i]);
+		gchar** list = g_key_file_get_string_list(config, group, keys[i], &keyLen, NULL);
 
 		for (gsize x = 0; x < keyLen; x++)
 		{
-			String s = list[x];
-			e.addItem(s.trim());
+			e->addItem(ba::trim_copy(string(list[x])));
 		}
 
 		this->contents.push_back(e);
@@ -107,82 +119,69 @@ void ToolbarData::saveToKeyFile(GKeyFile* config)
 {
 	XOJ_CHECK_TYPE(ToolbarData);
 
-	const char* group = getId().c_str();
+	string group = getId();
 
-	std::vector<ToolbarEntry>::iterator it;
-	for (it = this->contents.begin(); it != this->contents.end(); it++)
+	for (ToolbarEntry* e : this->contents)
 	{
-		ToolbarEntry& e = *it;
+		string line = "";
 
-		String line = "";
-
-		ListIterator<ToolbarItem*> it = e.iterator();
-		while (it.hasNext())
+		for (ToolbarItem* it : *e->getItems())
 		{
 			line += ",";
-			line += *it.next();
+			line += it->getName();
 		}
 
 		if (line.length() > 2)
 		{
-			g_key_file_set_string(config, group, e.getName().c_str(),
-			                      line.substring(1).c_str());
+			g_key_file_set_string(config, group.c_str(), e->getName().c_str(), line.substr(1).c_str());
 		}
 	}
 
-	g_key_file_set_string(config, group, "name", this->name.c_str());
+	g_key_file_set_string(config, group.c_str(), "name", this->name.c_str());
 }
 
-int ToolbarData::insertItem(String toolbar, String item, int position)
+int ToolbarData::insertItem(string toolbar, string item, int position)
 {
 	XOJ_CHECK_TYPE(ToolbarData);
 
-	printf("ToolbarData::insertItem(%s, %s, %i);\n", toolbar.c_str(), item.c_str(),
-	       position);
+	cout << bl::format("ToolbarData::insertItem({1}, {2}, {3});") % toolbar % item % position << endl;
 
 	g_return_val_if_fail(isPredefined() == false, -1);
 
-	std::vector<ToolbarEntry>::iterator it;
-	for (it = this->contents.begin(); it != this->contents.end(); it++)
+	for (ToolbarEntry* e : this->contents)
 	{
-		ToolbarEntry& e = *it;
-
-		if (e.getName().equals(toolbar))
+		if (e->getName() == toolbar)
 		{
-			printf("Toolbar found: %s\n", toolbar.c_str());
+			cout << _F("Toolbar found: {1}") % toolbar << endl;
 
-			int id = e.insertItem(item, position);
+			int id = e->insertItem(item, position);
 
-			printf("return %i\n", id);
+			cout << bl::format("return {1}") % id << endl;
 			return id;
 		}
 	}
 
-	ToolbarEntry newEntry;
-	newEntry.setName(toolbar);
-	int id = newEntry.addItem(item);
+	ToolbarEntry* newEntry = new ToolbarEntry();
+	newEntry->setName(toolbar);
+	int id = newEntry->addItem(item);
 	this->contents.push_back(newEntry);
 
 	return id;
 }
 
-bool ToolbarData::removeItemByID(String toolbar, int id)
+bool ToolbarData::removeItemByID(string toolbar, int id)
 {
 	XOJ_CHECK_TYPE(ToolbarData);
 
 	g_return_val_if_fail(isPredefined() == false, false);
 
-	std::vector<ToolbarEntry>::iterator it;
-	for (it = this->contents.begin(); it != this->contents.end(); it++)
+	for (ToolbarEntry* e : this->contents)
 	{
-		ToolbarEntry& e = *it;
-
-		if (e.getName().equals(toolbar))
+		if (e->getName() == toolbar)
 		{
-			return e.removeItemById(id);
+			return e->removeItemById(id);
 		}
 	}
 
 	return false;
 }
-

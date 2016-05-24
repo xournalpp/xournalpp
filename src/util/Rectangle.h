@@ -3,17 +3,17 @@
  *
  * A rectangle with double precision
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __RECTANGLE_H__
-#define __RECTANGLE_H__
+#pragma once
+
+#include "XournalType.h"
 
 #include <glib.h>
-#include <XournalType.h>
 
 class Range;
 
@@ -31,17 +31,14 @@ public:
 	 * Returns whether this rectangle intersects another
 	 *
 	 * @param other the other rectangle
-	 * @param dest  if this is not NULL, the rectangle will
-	 *              be modified to contain the intersection
+	 * @param dest  if this is not NULL, the rectangle will be modified to contain the intersection
 	 *
 	 * @return whether the rectangles intersect
 	 */
-	bool intersects(const Rectangle& other,
-	                Rectangle* dest = NULL) const;
+	bool intersects(const Rectangle& other, Rectangle* dest = NULL) const;
 
 	/**
-	 * Computes the union of this rectangle with the one
-	 * given by the parameters
+	 * Computes the union of this rectangle with the one given by the parameters
 	 */
 	void add(double x, double y, double width, double height);
 
@@ -58,5 +55,3 @@ public:
 	double width;
 	double height;
 };
-
-#endif /* RECTANGLE_H_ */

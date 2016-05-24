@@ -1,16 +1,15 @@
 #include "CircleRecognizer.h"
-#include "ShapeRecognizerConfig.h"
-#include "Inertia.h"
 
-#include "../../model/Stroke.h"
+#include "Inertia.h"
+#include "ShapeRecognizerConfig.h"
+#include "model/Stroke.h"
 
 #include <math.h>
 
-/*
- * create circle stroke for inertia
+/**
+ * Create circle stroke for inertia
  */
-Stroke* CircleRecognizer::makeCircleShape(Stroke* originalStroke,
-                                          Inertia& inertia)
+Stroke* CircleRecognizer::makeCircleShape(Stroke* originalStroke, Inertia& inertia)
 {
 	int npts = (int) (2 * inertia.rad());
 	if (npts < 12)
@@ -33,8 +32,8 @@ Stroke* CircleRecognizer::makeCircleShape(Stroke* originalStroke,
 	return s;
 }
 
-/*
- *  test if we have a circle; inertia has been precomputed by caller
+/**
+ *  Test if we have a circle; inertia has been precomputed by caller
  */
 double CircleRecognizer::scoreCircle(Stroke* s, Inertia& inertia)
 {
@@ -75,14 +74,13 @@ Stroke* CircleRecognizer::recognize(Stroke* stroke)
 {
 	Inertia s;
 	s.calc(stroke->getPoints(), 0, stroke->getPointCount());
-	RDEBUG("Mass=%.0f, Center=(%.1f,%.1f), I=(%.0f,%.0f, %.0f), "
-	       "Rad=%.2f, Det=%.4f \n", s.getMass(), s.centerX(), s.centerY(), s.xx(), s.yy(),
-	       s.xy(), s.rad(), s.det());
+	RDEBUG("Mass={1,p=0}, Center=({2,p=1},{3,p=1}, I=({4,p=0},{5,p=0}, {6,p=0}), Rad={7,p=2}, Det={8,p=4}")
+		   % s.getMass() % s.centerX() % s.centerY() % s.xx() % s.yy() % s.xy() % s.rad() % s.det();
 
 	if (s.det() > CIRCLE_MIN_DET)
 	{
 		double score = CircleRecognizer::scoreCircle(stroke, s);
-		RDEBUG("Circle score: %.2f\n", score);
+		RDEBUG("Circle score: {1,p=2}") % score;
 		if (score < CIRCLE_MAX_SCORE)
 		{
 			return CircleRecognizer::makeCircleShape(stroke, s);
@@ -91,4 +89,3 @@ Stroke* CircleRecognizer::recognize(Stroke* stroke)
 
 	return NULL;
 }
-

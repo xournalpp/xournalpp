@@ -1,4 +1,5 @@
 #include "PageRange.h"
+
 #include <ctype.h>
 #include <stdlib.h>
 
@@ -9,6 +10,7 @@ PageRangeEntry::PageRangeEntry(int first, int last)
 	this->first = first;
 	this->last = last;
 }
+
 PageRangeEntry::~PageRangeEntry()
 {
 	XOJ_RELEASE_TYPE(PageRangeEntry);
@@ -20,6 +22,7 @@ int PageRangeEntry::getLast()
 
 	return this->last;
 }
+
 int PageRangeEntry::getFirst()
 {
 	XOJ_CHECK_TYPE(PageRangeEntry);
@@ -32,13 +35,13 @@ bool PageRange::isSeparator(char c)
 	return (c == ',' || c == ';' || c == ':');
 }
 
-GList* PageRange::parse(const char* str)
+PageRangeVector PageRange::parse(const char* str)
 {
-	GList* data = NULL;
+	PageRangeVector data;
 
 	if (*str == 0)
 	{
-		return NULL;
+		return data;
 	}
 
 	int start, end;
@@ -77,7 +80,7 @@ GList* PageRange::parse(const char* str)
 		{
 			p++;
 			end = (int) strtol(p, &next, 10);
-			if (next == p)   // a half-open range like 2-
+			if (next == p) // a half-open range like 2-
 			{
 				end = 0;
 			}
@@ -87,7 +90,7 @@ GList* PageRange::parse(const char* str)
 			}
 		}
 
-		data = g_list_append(data, new PageRangeEntry(start - 1, end - 1));
+		data.push_back(new PageRangeEntry(start - 1, end - 1));
 
 		// Skip until end or separator
 		while (*p && !isSeparator(*p))

@@ -1,7 +1,9 @@
 #include "RepaintHandler.h"
-#include "XournalView.h"
-#include "widgets/XournalWidget.h"
+
 #include "PageView.h"
+#include "XournalView.h"
+
+#include "widgets/XournalWidget.h"
 
 RepaintHandler::RepaintHandler(XournalView* xournal)
 {
@@ -30,15 +32,13 @@ void RepaintHandler::repaintPage(PageView* view)
 	gtk_xournal_repaint_area(this->xournal->getWidget(), x1, y1, x2, y2);
 }
 
-void RepaintHandler::repaintPageArea(PageView* view, int x1, int y1, int x2,
-                                     int y2)
+void RepaintHandler::repaintPageArea(PageView* view, int x1, int y1, int x2, int y2)
 {
 	XOJ_CHECK_TYPE(RepaintHandler);
 
 	int x = view->getX();
 	int y = view->getY();
-	gtk_xournal_repaint_area(this->xournal->getWidget(), x + x1, y + y1, x + x2,
-	                         y + y2);
+	gtk_xournal_repaint_area(this->xournal->getWidget(), x + x1, y + y1, x + x2, y + y2);
 }
 
 void RepaintHandler::repaintPageBorder(PageView* view)

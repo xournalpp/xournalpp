@@ -1,22 +1,25 @@
-#include <stdio.h>
 #include "UndoRedoHandler.h"
-#include "../control/Control.h"
+
+#include "control/Control.h"
 
 #include <config.h>
-#include <glib/gi18n-lib.h>
-// TODO LOW PRIO: add memory limit
+#include <i18n.h>
+
+#include <boost/format.hpp>
+
+#include <stdio.h>
 
 #ifdef UNDO_TRACE
 
 void printAction(UndoAction* action)
 {
-	if(action)
+	if (action)
 	{
-		printf("%p / %s\n", action, action->getClassName());
+		cout << action << " / " << action->getClassName() << endl;
 	}
 	else
 	{
-		printf("(null)\n");
+		cout << "(null)" << endl;
 	}
 }
 
@@ -32,21 +35,19 @@ void printUndoList(GList* list)
 #endif //UNDO_TRACE
 
 #ifdef UNDO_TRACE
-#define PRINTCONTENTS()                                    \
-	printf("redoList\n");                                    \
-	printUndoList(this->redoList);                           \
-	printf("undoList\n");                                    \
-	printUndoList(this->undoList);                           \
-	printf("\nsavedUndo\n");                                 \
-	if(this->savedUndo)                                      \
-	{                                                        \
-		printAction(this->savedUndo);                          \
+#define PRINTCONTENTS()						\
+	cout << "redoList" << endl;				\
+	printUndoList(this->redoList);			\
+	cout << "undoList" << endl;				\
+	printUndoList(this->undoList);			\
+	cout << endl << "savedUndo" << endl;	\
+	if(this->savedUndo)						\
+	{										\
+		printAction(this->savedUndo);		\
 	}                                                        
 #else
 #define PRINTCONTENTS()
 #endif //UNDO_TRACE
-
-
 
 UndoRedoHandler::UndoRedoHandler(Control* control)
 {
@@ -78,8 +79,7 @@ void UndoRedoHandler::clearContents()
 		UndoAction* action = (UndoAction*) l->data;
 
 #ifdef UNDO_TRACE
-		printf("clearContents()::Delete UndoAction: %p / %s\n", action,
-		       action->getClassName());
+		cout << boost::format("clearContents()::Delete UndoAction: %p / %s") % action % action->getClassName() << endl; //
 #endif //UNDO_TRACE
 
 		delete action;
@@ -104,8 +104,8 @@ void UndoRedoHandler::clearRedo()
 		UndoAction* action = (UndoAction*) l->data;
 
 #ifdef UNDO_TRACE
-		printf("clearRedo()::Delete UndoAction: %p / %s\n", action,
-		       action->getClassName());
+		cout << "clearRedo()::Delete UndoAction: " << action
+				<< " / " << action->getClassName() << endl;
 #endif //UNDO_TRACE
 
 		delete action;
@@ -142,11 +142,11 @@ void UndoRedoHandler::undo()
 	if (!undoResult)
 	{
 		GtkWidget* dialog = gtk_message_dialog_new((GtkWindow*) *control->getWindow(),
-		                                           GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
-		                                           _("Could not undo '%s'\nSomething went wrong... Please write a bug report..."),
-		                                           undo->getText().c_str());
-		gtk_window_set_transient_for(GTK_WINDOW(dialog),
-		                             GTK_WINDOW(this->control->getWindow()->getWindow()));
+												   GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, "%s",
+												   FC(_F("Could not undo \"{1}\"\n"
+														 "Something went wrong… Please write a bug report…")
+															% undo->getText()));
+		gtk_window_set_transient_for(GTK_WINDOW(dialog), GTK_WINDOW(this->control->getWindow()->getWindow()));
 		gtk_dialog_run(GTK_DIALOG(dialog));
 		gtk_widget_destroy(dialog);
 	}
@@ -184,11 +184,12 @@ void UndoRedoHandler::redo()
 	if (!redoResult)
 	{
 		GtkWidget* dialog = gtk_message_dialog_new((GtkWindow*) *control->getWindow(),
-		                                           GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
-		                                           _("Could not redo '%s'\nSomething went wrong... Please write a bug report..."),
-		                                           redo->getText().c_str());
+												   GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, "%s",
+												   FC(_F("Could not redo \"{1}\"\n"
+														 "Something went wrong… Please write a bug report…")
+															% redo->getText()));
 		gtk_window_set_transient_for(GTK_WINDOW(dialog),
-		                             GTK_WINDOW(this->control->getWindow()->getWindow()));
+									 GTK_WINDOW(this->control->getWindow()->getWindow()));
 		gtk_dialog_run(GTK_DIALOG(dialog));
 		gtk_widget_destroy(dialog);
 	}
@@ -221,10 +222,7 @@ void UndoRedoHandler::addUndoAction(UndoAction* action)
 {
 	XOJ_CHECK_TYPE(UndoRedoHandler);
 
-	if(action == NULL)
-	{
-		return;
-	}
+	if (action == NULL) return;
 
 	this->undoList = g_list_append(this->undoList, action);
 	clearRedo();
@@ -233,8 +231,7 @@ void UndoRedoHandler::addUndoAction(UndoAction* action)
 	PRINTCONTENTS();
 }
 
-void UndoRedoHandler::addUndoActionBefore(UndoAction* action,
-                                          UndoAction* before)
+void UndoRedoHandler::addUndoActionBefore(UndoAction* action, UndoAction* before)
 {
 	XOJ_CHECK_TYPE(UndoRedoHandler);
 
@@ -267,7 +264,7 @@ bool UndoRedoHandler::removeUndoAction(UndoAction* action)
 	return true;
 }
 
-String UndoRedoHandler::undoDescription()
+string UndoRedoHandler::undoDescription()
 {
 	XOJ_CHECK_TYPE(UndoRedoHandler);
 
@@ -275,9 +272,9 @@ String UndoRedoHandler::undoDescription()
 	{
 		GList* l = g_list_last(this->undoList);
 		UndoAction* a = (UndoAction*) l->data;
-		if (!a->getText().isEmpty())
+		if (!a->getText().empty())
 		{
-			String txt = _("Undo: ");
+			string txt = _("Undo: ");
 			txt += a->getText();
 			return txt;
 		}
@@ -285,7 +282,7 @@ String UndoRedoHandler::undoDescription()
 	return _("Undo");
 }
 
-String UndoRedoHandler::redoDescription()
+string UndoRedoHandler::redoDescription()
 {
 	XOJ_CHECK_TYPE(UndoRedoHandler);
 
@@ -293,9 +290,9 @@ String UndoRedoHandler::redoDescription()
 	{
 		GList* l = g_list_last(this->redoList);
 		UndoAction* a = (UndoAction*) l->data;
-		if (!a->getText().isEmpty())
+		if (!a->getText().empty())
 		{
-			String txt = _("Redo: ");
+			string txt = _("Redo: ");
 			txt += a->getText();
 
 			return txt;
@@ -334,8 +331,7 @@ bool UndoRedoHandler::isChanged()
 {
 	XOJ_CHECK_TYPE(UndoRedoHandler);
 
-	if(!this->undoList)
-		return this->savedUndo;
+	if (!this->undoList) return this->savedUndo;
 
 	return this->savedUndo != g_list_last(this->undoList)->data;
 }
@@ -344,8 +340,7 @@ bool UndoRedoHandler::isChangedAutosave()
 {
 	XOJ_CHECK_TYPE(UndoRedoHandler);
 
-	if(!this->undoList)
-		return this->autosavedUndo;
+	if (!this->undoList) return this->autosavedUndo;
 
 	return this->autosavedUndo != g_list_last(this->undoList)->data;
 }
@@ -354,7 +349,7 @@ void UndoRedoHandler::documentAutosaved()
 {
 	XOJ_CHECK_TYPE(UndoRedoHandler);
 
-	if(this->undoList)
+	if (this->undoList)
 	{
 		this->autosavedUndo = (UndoAction*) g_list_last(this->undoList)->data;
 	}
@@ -368,7 +363,7 @@ void UndoRedoHandler::documentSaved()
 {
 	XOJ_CHECK_TYPE(UndoRedoHandler);
 
-	if(this->undoList)
+	if (this->undoList)
 	{
 		this->savedUndo = (UndoAction*) g_list_last(this->undoList)->data;
 	}
@@ -386,7 +381,7 @@ const char* UndoRedoHandler::getUndoStackTopTypeName()
 		return NULL;
 	}
 
-	return ((UndoAction*)e->data)->getClassName();
+	return ((UndoAction*) e->data)->getClassName();
 }
 
 const char* UndoRedoHandler::getRedoStackTopTypeName()
@@ -397,6 +392,5 @@ const char* UndoRedoHandler::getRedoStackTopTypeName()
 		return NULL;
 	}
 
-	return ((UndoAction*)e->data)->getClassName();
+	return ((UndoAction*) e->data)->getClassName();
 }
-

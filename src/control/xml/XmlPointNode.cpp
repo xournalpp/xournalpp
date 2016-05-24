@@ -1,7 +1,6 @@
 #include "XmlPointNode.h"
 
-XmlPointNode::XmlPointNode(const char* tag) :
-	XmlNode(tag)
+XmlPointNode::XmlPointNode(const char* tag) : XmlNode(tag)
 {
 	XOJ_INIT_TYPE(XmlPointNode);
 
@@ -12,9 +11,9 @@ XmlPointNode::~XmlPointNode()
 {
 	XOJ_CHECK_TYPE(XmlPointNode);
 
-	for(GList* l = this->points; l != NULL; l = l->next)
+	for (GList* l = this->points; l != NULL; l = l->next)
 	{
-		Point* p = (Point*)l->data;
+		Point* p = (Point*) l->data;
 		delete p;
 	}
 	g_list_free(this->points);
@@ -40,9 +39,9 @@ void XmlPointNode::writeOut(OutputStream* out)
 
 	out->write(">");
 
-	for(GList* l = this->points; l != NULL; l = l->next)
+	for (GList* l = this->points; l != NULL; l = l->next)
 	{
-		Point* p = (Point*)l->data;
+		Point* p = (Point*) l->data;
 		if (l != this->points)
 		{
 			out->write(" ");

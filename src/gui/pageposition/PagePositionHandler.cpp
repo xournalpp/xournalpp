@@ -1,4 +1,5 @@
 #include "PagePositionHandler.h"
+
 #include "PagePosition.h"
 #include "PagePositionCache.h"
 #include "PageViewIndex.h"
@@ -39,8 +40,7 @@ void PagePositionHandler::freeData()
 	this->dataAllocSize = 0;
 }
 
-void PagePositionHandler::update(PageView** viewPages, int viewPagesLen,
-                                 int maxY)
+void PagePositionHandler::update(PageView** viewPages, int viewPagesLen, int maxY)
 {
 	XOJ_CHECK_TYPE(PagePositionHandler);
 
@@ -71,8 +71,7 @@ void PagePositionHandler::update(PageView** viewPages, int viewPagesLen,
 	addData(pp);
 }
 
-PageView* PagePositionHandler::getBestMatchingView(int x, int y, int width,
-                                                   int heigth)
+PageView* PagePositionHandler::getBestMatchingView(int x, int y, int width, int heigth)
 {
 	XOJ_CHECK_TYPE(PagePositionHandler);
 
@@ -84,8 +83,7 @@ PageView* PagePositionHandler::getBestMatchingView(int x, int y, int width,
 	int id = -1;
 	PagePosition* pp1 = binarySearch(this->data, 0, this->dataCount - 1, y, id);
 	id = -1;
-	PagePosition* pp2 = binarySearch(this->data, 0, this->dataCount - 1, y + heigth,
-	                                 id);
+	PagePosition* pp2 = binarySearch(this->data, 0, this->dataCount - 1, y + heigth, id);
 
 	PageViewIndex index(x, y, width, heigth);
 	if (pp1 != NULL)
@@ -101,8 +99,7 @@ PageView* PagePositionHandler::getBestMatchingView(int x, int y, int width,
 	return index.getHighestIntersects();
 }
 
-PageView* PagePositionHandler::getViewAt(int x, int y,
-                                         PagePositionCache* cache)
+PageView* PagePositionHandler::getViewAt(int x, int y, PagePositionCache* cache)
 {
 	XOJ_CHECK_TYPE(PagePositionHandler);
 
@@ -136,8 +133,7 @@ PageView* PagePositionHandler::getViewAt(int x, int y,
 	return pv;
 }
 
-PagePosition* PagePositionHandler::binarySearch(PagePosition** sortedArray,
-                                                int first, int last, int y, int& index)
+PagePosition* PagePositionHandler::binarySearch(PagePosition** sortedArray, int first, int last, int y, int& index)
 {
 	XOJ_CHECK_TYPE(PagePositionHandler);
 
@@ -177,6 +173,5 @@ void PagePositionHandler::allocDataSize(int size)
 	XOJ_CHECK_TYPE(PagePositionHandler);
 
 	this->dataAllocSize = size;
-	this->data = (PagePosition**) g_realloc(this->data,
-	                                        this->dataAllocSize * sizeof(PagePosition*));
+	this->data = (PagePosition**) g_realloc(this->data, this->dataAllocSize * sizeof(PagePosition*));
 }

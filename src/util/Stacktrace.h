@@ -3,16 +3,17 @@
  *
  * Prints a Stacktrace
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __STACKTRACE_H__
-#define __STACKTRACE_H__
+#pragma once
 
-#include <stdio.h>
+#include "StringUtils.h"
+
+#include <iostream>
 
 class Stacktrace
 {
@@ -21,10 +22,8 @@ private:
 	virtual ~Stacktrace();
 
 public:
-	static void setExename(const char* name);
+	static void setExename(string name);
 
 	static void printStracktrace();
-	static void printStracktrace(FILE* fp);
+	static void printStracktrace(std::ostream& stream);
 };
-
-#endif /* __STACKTRACE_H__ */

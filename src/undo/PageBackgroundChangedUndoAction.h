@@ -3,32 +3,31 @@
  *
  * Undo action for background change
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __PAGEBACKGROUNDCHANGEDUNDOACTION_H__
-#define __PAGEBACKGROUNDCHANGEDUNDOACTION_H__
+#pragma once
 
 #include "UndoAction.h"
-#include "../model/PageRef.h"
-#include "../model/BackgroundImage.h"
 
-class PageBackgroundChangedUndoAction: public UndoAction
+#include "model/BackgroundImage.h"
+#include "model/PageRef.h"
+
+class PageBackgroundChangedUndoAction : public UndoAction
 {
 public:
-	PageBackgroundChangedUndoAction(PageRef page, BackgroundType origType,
-	                                int origPdfPage,
-	                                BackgroundImage origBackgroundImage, double origW, double origH);
+	PageBackgroundChangedUndoAction(PageRef page, BackgroundType origType, int origPdfPage,
+									BackgroundImage origBackgroundImage, double origW, double origH);
 	virtual ~PageBackgroundChangedUndoAction();
 
 public:
 	virtual bool undo(Control* control);
 	virtual bool redo(Control* control);
 
-	virtual String getText();
+	virtual string getText();
 
 private:
 	XOJ_TYPE_ATTRIB;
@@ -45,5 +44,3 @@ private:
 	double newW;
 	double newH;
 };
-
-#endif /* __PAGEBACKGROUNDCHANGEDUNDOACTION_H__ */

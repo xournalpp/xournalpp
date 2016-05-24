@@ -3,20 +3,20 @@
  *
  * Serialized output stream
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __OBJECTOUTPUTSTREAM_H__
-#define __OBJECTOUTPUTSTREAM_H__
+#pragma once
 
-#include <String.h>
+#include <StringUtils.h>
+
 #include <gtk/gtk.h>
 
-class Serializeable;
 class ObjectEncoding;
+class Serializeable;
 
 class ObjectOutputStream
 {
@@ -31,12 +31,12 @@ public:
 	void writeInt(int i);
 	void writeDouble(double d);
 	void writeString(const char* str);
-	void writeString(const String& s);
+	void writeString(const string& s);
 
 	void writeData(const void* data, int len, int width);
 	void writeImage(cairo_surface_t* img);
 
-	ObjectOutputStream& operator <<(Serializeable* s);
+	ObjectOutputStream& operator<<(Serializeable* s);
 
 	GString* getStr();
 
@@ -45,5 +45,3 @@ private:
 
 	ObjectEncoding* encoder;
 };
-
-#endif /* __OBJECTOUTPUTSTREAM_H__ */

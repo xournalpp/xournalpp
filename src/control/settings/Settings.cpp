@@ -1,25 +1,28 @@
-#include <stdlib.h>
-#include <string.h>
 #include "Settings.h"
+
 #include "ButtonConfig.h"
 
 #include <config.h>
-#include <glib/gi18n-lib.h>
+#include <i18n.h>
+
+#include <boost/filesystem.hpp>
+
+#include <stdlib.h>
+#include <string.h>
 
 #define DEFAULT_FONT "Sans"
 #define DEFAULT_FONT_SIZE 12
 
 #define WRITE_BOOL_PROP(var) xmlNode = saveProperty((const char *)#var, var ? "true" : "false", root)
-#define WRITE_STRING_PROP(var) xmlNode = saveProperty((const char *)#var, var.isEmpty() ? "" : var.c_str(), root)
+#define WRITE_STRING_PROP(var) xmlNode = saveProperty((const char *)#var, var.empty() ? "" : var.c_str(), root)
 #define WRITE_INT_PROP(var) xmlNode = saveProperty((const char *)#var, var, root)
 #define WRITE_DOUBLE_PROP(var) xmlNode = savePropertyDouble((const char *)#var, var, root)
-#define WRITE_COMMENT(var) com = xmlNewComment((const xmlChar *)var); \
-	xmlAddPrevSibling(xmlNode, com);
+#define WRITE_COMMENT(var) com = xmlNewComment((const xmlChar *)var); xmlAddPrevSibling(xmlNode, com);
 
-const char* BUTTON_NAMES[] = { "middle", "right", "eraser", "touch", "default" };
+const char* BUTTON_NAMES[] = {"middle", "right", "eraser", "touch", "default"};
 const int BUTTON_COUNT = 5;
 
-Settings::Settings(String filename)
+Settings::Settings(path filename)
 {
 	XOJ_INIT_TYPE(Settings);
 
@@ -44,6 +47,7 @@ Settings::~Settings()
 	for (int i = 0; i < 5; i++)
 	{
 		delete this->buttonConfig[i];
+		this->buttonConfig[i] = NULL;
 	}
 
 	XOJ_RELEASE_TYPE(Settings);
@@ -99,23 +103,18 @@ void Settings::loadDefault()
 	this->defaultSaveName = _("%F-Note-%H-%M.xoj");
 
 	this->visiblePageFormats = GTK_PAPER_NAME_A4 "," GTK_PAPER_NAME_A5 ","
-	                           GTK_PAPER_NAME_LETTER ","GTK_PAPER_NAME_LEGAL;
+							   GTK_PAPER_NAME_LETTER "," GTK_PAPER_NAME_LEGAL;
 
 	// Eraser
-	this->buttonConfig[0] = new ButtonConfig(TOOL_ERASER, 0, TOOL_SIZE_NONE,
-	                                         DRAWING_TYPE_NONE, ERASER_TYPE_NONE);
+	this->buttonConfig[0] = new ButtonConfig(TOOL_ERASER, 0, TOOL_SIZE_NONE, DRAWING_TYPE_NONE, ERASER_TYPE_NONE);
 	// Middle button
-	this->buttonConfig[1] = new ButtonConfig(TOOL_NONE, 0, TOOL_SIZE_NONE,
-	                                         DRAWING_TYPE_NONE, ERASER_TYPE_NONE);
+	this->buttonConfig[1] = new ButtonConfig(TOOL_NONE, 0, TOOL_SIZE_NONE, DRAWING_TYPE_NONE, ERASER_TYPE_NONE);
 	// Right button
-	this->buttonConfig[2] = new ButtonConfig(TOOL_NONE, 0, TOOL_SIZE_NONE,
-	                                         DRAWING_TYPE_NONE, ERASER_TYPE_NONE);
+	this->buttonConfig[2] = new ButtonConfig(TOOL_NONE, 0, TOOL_SIZE_NONE, DRAWING_TYPE_NONE, ERASER_TYPE_NONE);
 	// Touch
-	this->buttonConfig[3] = new ButtonConfig(TOOL_NONE, 0, TOOL_SIZE_NONE,
-	                                         DRAWING_TYPE_NONE, ERASER_TYPE_NONE);
+	this->buttonConfig[3] = new ButtonConfig(TOOL_NONE, 0, TOOL_SIZE_NONE, DRAWING_TYPE_NONE, ERASER_TYPE_NONE);
 	// Default config
-	this->buttonConfig[4] = new ButtonConfig(TOOL_PEN, 0, TOOL_SIZE_FINE,
-	                                         DRAWING_TYPE_NONE, ERASER_TYPE_NONE);
+	this->buttonConfig[4] = new ButtonConfig(TOOL_PEN, 0, TOOL_SIZE_FINE, DRAWING_TYPE_NONE, ERASER_TYPE_NONE);
 
 	this->fullscreenHideElements = "mainMenubar";
 	this->presentationHideElements = "mainMenubar,sidebarContents";
@@ -146,19 +145,19 @@ void Settings::parseData(xmlNodePtr cur, SElement& elem)
 			xmlChar* value = xmlGetProp(x, (const xmlChar*) "value");
 			xmlChar* type = xmlGetProp(x, (const xmlChar*) "type");
 
-			String sType = (const char*) type;
+			string sType = (const char*) type;
 
-			if (sType.equals("int"))
+			if (sType == "int")
 			{
 				int i = atoi((const char*) value);
 				elem.setInt((const char*) name, i);
 			}
-			else if (sType.equals("double"))
+			else if (sType == "double")
 			{
 				double d = atof((const char*) value);
 				elem.setDouble((const char*) name, d);
 			}
-			else if (sType.equals("hex"))
+			else if (sType == "hex")
 			{
 				int i = 0;
 				if (sscanf((const char*) value, "%x", &i))
@@ -170,11 +169,11 @@ void Settings::parseData(xmlNodePtr cur, SElement& elem)
 					g_warning("Settings::Unknown hex value: %s:%s\n", name, value);
 				}
 			}
-			else if (sType.equals((const char*) "string"))
+			else if (sType == "string")
 			{
 				elem.setString((const char*) name, (const char*) value);
 			}
-			else if (sType.equals("boolean"))
+			else if (sType == "boolean")
 			{
 				elem.setBool((const char*) name, strcmp((const char*) value, "true") == 0);
 			}
@@ -281,8 +280,7 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur)
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "ignoreCoreEvents") == 0)
 	{
-		this->ignoreCoreEvents = xmlStrcmp(value,
-		                                   (const xmlChar*) "true") ? false : true;
+		this->ignoreCoreEvents = xmlStrcmp(value, (const xmlChar*) "true") ? false : true;
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "selectedToolbar") == 0)
 	{
@@ -334,8 +332,7 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur)
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "scrollbarOnLeft") == 0)
 	{
-		this->scrollbarOnLeft = xmlStrcmp(value,
-		                                  (const xmlChar*) "true") ? false : true;
+		this->scrollbarOnLeft = xmlStrcmp(value, (const xmlChar*) "true") ? false : true;
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "showTwoPages") == 0)
 	{
@@ -363,8 +360,7 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur)
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "autosaveEnabled") == 0)
 	{
-		this->autosaveEnabled = xmlStrcmp(value,
-		                                  (const xmlChar*) "true") ? false : true;
+		this->autosaveEnabled = xmlStrcmp(value, (const xmlChar*) "true") ? false : true;
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "autosaveTimeout") == 0)
 	{
@@ -396,13 +392,11 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur)
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "addVerticalSpace") == 0)
 	{
-		this->addVerticalSpace = xmlStrcmp(value,
-		                                   (const xmlChar*) "true") ? false : true;
+		this->addVerticalSpace = xmlStrcmp(value, (const xmlChar*) "true") ? false : true;
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "addHorizontalSpace") == 0)
 	{
-		this->addHorizontalSpace = xmlStrcmp(value,
-	                                       (const xmlChar*) "true") ? false : true;
+		this->addHorizontalSpace = xmlStrcmp(value, (const xmlChar*) "true") ? false : true;
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "fixXinput") == 0)
 	{
@@ -410,8 +404,7 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur)
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "enableLeafEnterWorkaround") == 0)
 	{
-		this->enableLeafEnterWorkaround = xmlStrcmp(value,
-		                                            (const xmlChar*) "true") ? false : true;
+		this->enableLeafEnterWorkaround = xmlStrcmp(value, (const xmlChar*) "true") ? false : true;
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "scrollbarHideType") == 0)
 	{
@@ -448,7 +441,7 @@ void Settings::loadButtonConfig()
 		SElement& e = s.child(BUTTON_NAMES[i]);
 		ButtonConfig* cfg = buttonConfig[i];
 
-		String sType;
+		string sType;
 		if (e.getString("tool", sType))
 		{
 			ToolType type = toolTypeFromString(sType);
@@ -501,7 +494,7 @@ void Settings::loadButtonConfig()
 					}
 				}
 
-				String sSize;
+				string sSize;
 				if (e.getString("size", sSize))
 				{
 					cfg->size = toolSizeFromString(sSize);
@@ -520,7 +513,7 @@ void Settings::loadButtonConfig()
 
 			if (type == TOOL_ERASER)
 			{
-				String sEraserMode;
+				string sEraserMode;
 				if (e.getString("eraserMode", sEraserMode))
 				{
 					cfg->eraserMode = eraserTypeFromString(sEraserMode);
@@ -542,7 +535,6 @@ void Settings::loadButtonConfig()
 
 				e.getBool("disableDrawing", cfg->disableDrawing);
 			}
-
 		}
 		else
 		{
@@ -557,7 +549,7 @@ bool Settings::load()
 
 	xmlKeepBlanksDefault(0);
 
-	if (!g_file_test(filename.c_str(), G_FILE_TEST_EXISTS))
+	if (!boost::filesystem::exists(filename))
 	{
 		g_warning("configfile does not exist %s\n", filename.c_str());
 		return false;
@@ -625,8 +617,7 @@ void Settings::saveTimeout()
 	this->timeoutId = g_timeout_add_seconds(2, (GSourceFunc) &saveCallback, this);
 }
 
-xmlNodePtr Settings::savePropertyDouble(const gchar* key, double value,
-                                        xmlNodePtr parent)
+xmlNodePtr Settings::savePropertyDouble(const gchar* key, double value, xmlNodePtr parent)
 {
 	XOJ_CHECK_TYPE(Settings);
 
@@ -636,8 +627,7 @@ xmlNodePtr Settings::savePropertyDouble(const gchar* key, double value,
 	return xmlNode;
 }
 
-xmlNodePtr Settings::saveProperty(const gchar* key, int value,
-                                  xmlNodePtr parent)
+xmlNodePtr Settings::saveProperty(const gchar* key, int value, xmlNodePtr parent)
 {
 	XOJ_CHECK_TYPE(Settings);
 
@@ -647,13 +637,11 @@ xmlNodePtr Settings::saveProperty(const gchar* key, int value,
 	return xmlNode;
 }
 
-xmlNodePtr Settings::saveProperty(const gchar* key, const gchar* value,
-                                  xmlNodePtr parent)
+xmlNodePtr Settings::saveProperty(const gchar* key, const gchar* value, xmlNodePtr parent)
 {
 	XOJ_CHECK_TYPE(Settings);
 
-	xmlNodePtr xmlNode = xmlNewChild(parent, NULL, (const xmlChar*) "property",
-	                                 NULL);
+	xmlNodePtr xmlNode = xmlNewChild(parent, NULL, (const xmlChar*) "property", NULL);
 
 	xmlSetProp(xmlNode, (const xmlChar*) "name", (const xmlChar*) key);
 
@@ -805,9 +793,9 @@ void Settings::save()
 	root = xmlNewDocNode(doc, NULL, (const xmlChar*) "settings", NULL);
 	xmlDocSetRootElement(doc, root);
 	xmlNodePtr com = xmlNewComment((const xmlChar*)
-	                               "The Xournal++ settings file. Do not edit this file! "
-	                               "The most settings are available in the Settings dialog, "
-	                               "the others are commented in this file, but handle with care!");
+								   "The Xournal++ settings file. Do not edit this file! "
+								   "The most settings are available in the Settings dialog, "
+								   "the others are commented in this file, but handle with care!");
 	xmlAddPrevSibling(root, com);
 
 	WRITE_BOOL_PROP(useXinput);
@@ -874,9 +862,10 @@ void Settings::save()
 	WRITE_BOOL_PROP(fixXinput);
 
 	WRITE_BOOL_PROP(enableLeafEnterWorkaround);
-	WRITE_COMMENT("If Xournal crashes if you e.g. unplug your mouse set this to true. If you have input problems, you can turn it of with false.");
+	WRITE_COMMENT("If Xournal crashes if you e.g. unplug your mouse set this to true. "
+				  "If you have input problems, you can turn it of with false.");
 
-	String pageInsertType = pageInsertTypeToString(this->pageInsertType);
+	string pageInsertType = pageInsertTypeToString(this->pageInsertType);
 	WRITE_STRING_PROP(pageInsertType);
 
 	WRITE_INT_PROP(pageBackgroundColor);
@@ -893,23 +882,21 @@ void Settings::save()
 	xmlNodePtr xmlFont;
 	xmlFont = xmlNewChild(root, NULL, (const xmlChar*) "property", NULL);
 	xmlSetProp(xmlFont, (const xmlChar*) "name", (const xmlChar*) "font");
-	xmlSetProp(xmlFont, (const xmlChar*) "font",
-	           (const xmlChar*) this->font.getName().c_str());
+	xmlSetProp(xmlFont, (const xmlChar*) "font", (const xmlChar*) this->font.getName().c_str());
 	gchar* sSize = g_strdup_printf("%0.1lf", this->font.getSize());
 	xmlSetProp(xmlFont, (const xmlChar*) "size", (const xmlChar*) sSize);
 	g_free(sSize);
 
-	std::map<String, SElement>::iterator it;
-	for (it = data.begin(); it != data.end(); it++)
+	for (std::map<string, SElement>::value_type p: data)
 	{
-		saveData(root, (*it).first, (*it).second);
+		saveData(root, p.first, p.second);
 	}
 
 	xmlSaveFormatFile(filename.c_str(), doc, 1);
 	xmlFreeDoc(doc);
 }
 
-void Settings::saveData(xmlNodePtr root, String name, SElement& elem)
+void Settings::saveData(xmlNodePtr root, string name, SElement& elem)
 {
 	XOJ_CHECK_TYPE(Settings);
 
@@ -917,16 +904,15 @@ void Settings::saveData(xmlNodePtr root, String name, SElement& elem)
 
 	xmlSetProp(xmlNode, (const xmlChar*) "name", (const xmlChar*) name.c_str());
 
-	std::map<String, SAttribute>::iterator it;
-	for (it = elem.attributes().begin(); it != elem.attributes().end(); it++)
+	for (std::map<string, SAttribute>::value_type p : elem.attributes())
 	{
-		String aname = (*it).first;
-		SAttribute& attrib = (*it).second;
+		string aname = p.first;
+		SAttribute& attrib = p.second;
 
 		XOJ_CHECK_TYPE_OBJ(&attrib, SAttribute);
 
-		String type;
-		String value;
+		string type;
+		string value;
 
 		if (attrib.type == ATTRIBUTE_TYPE_BOOLEAN)
 		{
@@ -983,17 +969,16 @@ void Settings::saveData(xmlNodePtr root, String name, SElement& elem)
 		xmlSetProp(at, (const xmlChar*) "type", (const xmlChar*) type.c_str());
 		xmlSetProp(at, (const xmlChar*) "value", (const xmlChar*) value.c_str());
 
-		if (!attrib.comment.isEmpty())
+		if (!attrib.comment.empty())
 		{
 			xmlNodePtr com = xmlNewComment((const xmlChar*) attrib.comment.c_str());
 			xmlAddPrevSibling(xmlNode, com);
 		}
 	}
 
-	std::map<String, SElement>::iterator i;
-	for (i = elem.children().begin(); i != elem.children().end(); i++)
+	for (std::map<string, SElement>::value_type p : elem.children())
 	{
-		saveData(xmlNode, (*i).first, (*i).second);
+		saveData(xmlNode, p.first, p.second);
 	}
 }
 
@@ -1023,7 +1008,7 @@ void Settings::setIgnoreCoreEvents(bool ignor)
 {
 	XOJ_CHECK_TYPE(Settings);
 
-	if(this->ignoreCoreEvents == ignor)
+	if (this->ignoreCoreEvents == ignor)
 	{
 		return;
 	}
@@ -1134,6 +1119,7 @@ bool Settings::getAddHorizontalSpace()
 
 	return this->addHorizontalSpace;
 }
+
 void Settings::setAddHorizontalSpace(bool space)
 {
 	XOJ_CHECK_TYPE(Settings);
@@ -1147,6 +1133,7 @@ bool Settings::getfixXinput()
 
 	return this->fixXinput;
 }
+
 void Settings::setfixXinput(bool fix)
 {
 	XOJ_CHECK_TYPE(Settings);
@@ -1230,14 +1217,14 @@ void Settings::setAutoloadPdfXoj(bool load)
 	saveTimeout();
 }
 
-String Settings::getDefaultSaveName()
+string Settings::getDefaultSaveName()
 {
 	XOJ_CHECK_TYPE(Settings);
 
 	return this->defaultSaveName;
 }
 
-void Settings::setDefaultSaveName(String name)
+void Settings::setDefaultSaveName(string name)
 {
 	XOJ_CHECK_TYPE(Settings);
 
@@ -1251,7 +1238,7 @@ void Settings::setDefaultSaveName(String name)
 	saveTimeout();
 }
 
-String Settings::getVisiblePageFormats()
+string Settings::getVisiblePageFormats()
 {
 	XOJ_CHECK_TYPE(Settings);
 
@@ -1331,22 +1318,22 @@ void Settings::setPresureSensitivity(gboolean presureSensitivity)
 	saveTimeout();
 }
 
-void Settings::setLastSavePath(String path)
+void Settings::setLastSavePath(path p)
 {
 	XOJ_CHECK_TYPE(Settings);
 
-	this->lastSavePath = path;
+	this->lastSavePath = p;
 	saveTimeout();
 }
 
-String Settings::getLastSavePath()
+path Settings::getLastSavePath()
 {
 	XOJ_CHECK_TYPE(Settings);
 
 	return this->lastSavePath;
 }
 
-void Settings::setLastImagePath(String path)
+void Settings::setLastImagePath(path path)
 {
 	XOJ_CHECK_TYPE(Settings);
 
@@ -1358,7 +1345,7 @@ void Settings::setLastImagePath(String path)
 	saveTimeout();
 }
 
-String Settings::getLastImagePath()
+path Settings::getLastImagePath()
 {
 	XOJ_CHECK_TYPE(Settings);
 
@@ -1400,7 +1387,7 @@ int Settings::getSidebarWidth()
 {
 	XOJ_CHECK_TYPE(Settings);
 
-	if(this->sidebarWidth < 50)
+	if (this->sidebarWidth < 50)
 	{
 		setSidebarWidth(150);
 	}
@@ -1433,7 +1420,7 @@ void Settings::checkCanXInput()
 		{
 
 			// get around a GDK bug: map the valuator range CORRECTLY to [0,1]
-			if(this->getfixXinput())
+			if (this->getfixXinput())
 			{
 				gdk_device_set_axis_use(device, 0, GDK_AXIS_IGNORE);
 				gdk_device_set_axis_use(device, 1, GDK_AXIS_IGNORE);
@@ -1515,7 +1502,7 @@ double Settings::getWidthMaximumMultiplier()
 	return this->widthMaximumMultiplier;
 }
 
-void Settings::setSelectedToolbar(String name)
+void Settings::setSelectedToolbar(string name)
 {
 	XOJ_CHECK_TYPE(Settings);
 
@@ -1527,14 +1514,14 @@ void Settings::setSelectedToolbar(String name)
 	saveTimeout();
 }
 
-String Settings::getSelectedToolbar()
+string Settings::getSelectedToolbar()
 {
 	XOJ_CHECK_TYPE(Settings);
 
 	return this->selectedToolbar;
 }
 
-SElement& Settings::getCustomElement(String name)
+SElement& Settings::getCustomElement(string name)
 {
 	XOJ_CHECK_TYPE(Settings);
 
@@ -1595,27 +1582,27 @@ ButtonConfig* Settings::getDefaultButtonConfig()
 	return this->buttonConfig[4];
 }
 
-String Settings::getFullscreenHideElements()
+string Settings::getFullscreenHideElements()
 {
 	XOJ_CHECK_TYPE(Settings);
 
 	return this->fullscreenHideElements;
 }
 
-void Settings::setFullscreenHideElements(String elements)
+void Settings::setFullscreenHideElements(string elements)
 {
 	this->fullscreenHideElements = elements;
 	saveTimeout();
 }
 
-String Settings::getPresentationHideElements()
+string Settings::getPresentationHideElements()
 {
 	XOJ_CHECK_TYPE(Settings);
 
 	return this->presentationHideElements;
 }
 
-void Settings::setPresentationHideElements(String elements)
+void Settings::setPresentationHideElements(string elements)
 {
 	XOJ_CHECK_TYPE(Settings);
 
@@ -1719,6 +1706,7 @@ SAttribute::SAttribute()
 {
 	XOJ_INIT_TYPE(SAttribute);
 
+	this->dValue = 0;
 	this->iValue = 0;
 	this->type = ATTRIBUTE_TYPE_NONE;
 }
@@ -1760,6 +1748,7 @@ void __RefSElement::ref()
 
 	this->refcount++;
 }
+
 void __RefSElement::unref()
 {
 	XOJ_CHECK_TYPE(__RefSElement);
@@ -1805,14 +1794,14 @@ void SElement::operator=(const SElement& elem)
 	this->element->ref();
 }
 
-std::map<String, SAttribute>& SElement::attributes()
+std::map<string, SAttribute>& SElement::attributes()
 {
 	XOJ_CHECK_TYPE(SElement);
 
 	return this->element->attributes;
 }
 
-std::map<String, SElement>& SElement::children()
+std::map<string, SElement>& SElement::children()
 {
 	XOJ_CHECK_TYPE(SElement);
 
@@ -1827,14 +1816,14 @@ void SElement::clear()
 	this->element->children.clear();
 }
 
-SElement& SElement::child(String name)
+SElement& SElement::child(string name)
 {
 	XOJ_CHECK_TYPE(SElement);
 
 	return this->element->children[name];
 }
 
-void SElement::setComment(const String name, const String comment)
+void SElement::setComment(const string name, const string comment)
 {
 	XOJ_CHECK_TYPE(SElement);
 
@@ -1845,7 +1834,7 @@ void SElement::setComment(const String name, const String comment)
 	attrib.comment = comment;
 }
 
-void SElement::setIntHex(const String name, const int value)
+void SElement::setIntHex(const string name, const int value)
 {
 	XOJ_CHECK_TYPE(SElement);
 
@@ -1857,7 +1846,7 @@ void SElement::setIntHex(const String name, const int value)
 	attrib.type = ATTRIBUTE_TYPE_INT_HEX;
 }
 
-void SElement::setInt(const String name, const int value)
+void SElement::setInt(const string name, const int value)
 {
 	XOJ_CHECK_TYPE(SElement);
 
@@ -1869,7 +1858,7 @@ void SElement::setInt(const String name, const int value)
 	attrib.type = ATTRIBUTE_TYPE_INT_HEX;
 }
 
-void SElement::setBool(const String name, const bool value)
+void SElement::setBool(const string name, const bool value)
 {
 	XOJ_CHECK_TYPE(SElement);
 
@@ -1881,7 +1870,7 @@ void SElement::setBool(const String name, const bool value)
 	attrib.type = ATTRIBUTE_TYPE_BOOLEAN;
 }
 
-void SElement::setString(const String name, const String value)
+void SElement::setString(const string name, const string value)
 {
 	XOJ_CHECK_TYPE(SElement);
 
@@ -1893,7 +1882,7 @@ void SElement::setString(const String name, const String value)
 	attrib.type = ATTRIBUTE_TYPE_STRING;
 }
 
-void SElement::setDouble(const String name, const double value)
+void SElement::setDouble(const string name, const double value)
 {
 	XOJ_CHECK_TYPE(SElement);
 
@@ -1905,7 +1894,7 @@ void SElement::setDouble(const String name, const double value)
 	attrib.type = ATTRIBUTE_TYPE_DOUBLE;
 }
 
-bool SElement::getDouble(const String name, double& value)
+bool SElement::getDouble(const string name, double& value)
 {
 	XOJ_CHECK_TYPE(SElement);
 
@@ -1929,7 +1918,7 @@ bool SElement::getDouble(const String name, double& value)
 	return true;
 }
 
-bool SElement::getInt(const String name, int& value)
+bool SElement::getInt(const string name, int& value)
 {
 	XOJ_CHECK_TYPE(SElement);
 
@@ -1953,7 +1942,7 @@ bool SElement::getInt(const String name, int& value)
 	return true;
 }
 
-bool SElement::getBool(const String name, bool& value)
+bool SElement::getBool(const string name, bool& value)
 {
 	XOJ_CHECK_TYPE(SElement);
 
@@ -1977,7 +1966,7 @@ bool SElement::getBool(const String name, bool& value)
 	return true;
 }
 
-bool SElement::getString(const String name, String& value)
+bool SElement::getString(const string name, string& value)
 {
 	XOJ_CHECK_TYPE(SElement);
 

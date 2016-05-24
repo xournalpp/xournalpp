@@ -3,14 +3,13 @@
  *
  * Xournal main entry, commandline parser
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __XOURNALMAIN_H__
-#define __XOURNALMAIN_H__
+#pragma once
 
 #include <config.h>
 #include <XournalType.h>
@@ -27,9 +26,7 @@ public:
 	int run(int argc, char* argv[]);
 
 private:
-#ifdef ENABLE_NLS
 	void initLocalisation();
-#endif
 
 	void checkForErrorlog();
 	void checkForEmergencySave();
@@ -41,5 +38,3 @@ private:
 	XOJ_TYPE_ATTRIB;
 
 };
-
-#endif /* __XOURNALMAIN_H__ */

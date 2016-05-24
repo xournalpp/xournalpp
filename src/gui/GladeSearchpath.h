@@ -1,15 +1,19 @@
 /*
- * GladeSearchpath.h
+ * Xournal++
  *
- *  Created on: 04.03.2011
- *      Author: andreas
+ * Search directory for icons and Glade files
+ *
+ * @author andreas
+ * https://github.com/xournalpp/xournalpp
+ *
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __GLADESEARCHPATH_H__
-#define __GLADESEARCHPATH_H__
+#pragma once
 
-#include <glib.h>
 #include <XournalType.h>
+
+#include <vector>
 
 class GladeSearchpath
 {
@@ -31,7 +35,5 @@ private:
 	/**
 	 * Search directory for icons and Glade files
 	 */
-	GList* directories;
+	std::vector<char*> directories;
 };
-
-#endif /* __GLADESEARCHPATH_H__ */

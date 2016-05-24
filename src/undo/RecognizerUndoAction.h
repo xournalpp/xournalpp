@@ -3,26 +3,26 @@
  *
  * Undo action for stroke recognizer
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __RECOGNIZERUNDOACTION_H__
-#define __RECOGNIZERUNDOACTION_H__
+#pragma once
 
 #include "UndoAction.h"
 
+#include <vector>
+
+class Layer;
 class Redrawable;
 class Stroke;
-class Layer;
 
-class RecognizerUndoAction: public UndoAction
+class RecognizerUndoAction : public UndoAction
 {
 public:
-	RecognizerUndoAction(PageRef page, Layer* layer,
-	                     Stroke* original, Stroke* recognized);
+	RecognizerUndoAction(PageRef page, Layer* layer, Stroke* original, Stroke* recognized);
 	virtual ~RecognizerUndoAction();
 
 public:
@@ -31,14 +31,12 @@ public:
 	virtual bool undo(Control* control);
 	virtual bool redo(Control* control);
 
-	virtual String getText();
+	virtual string getText();
 
 private:
 	XOJ_TYPE_ATTRIB;
 
 	Layer* layer;
 	Stroke* recognized;
-	GList* original;
+	std::vector<Stroke*> original;
 };
-
-#endif /* __RECOGNIZERUNDOACTION_H__ */

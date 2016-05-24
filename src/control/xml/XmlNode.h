@@ -3,18 +3,19 @@
  *
  * XML Writer helper class
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __XMLNODE_H__
-#define __XMLNODE_H__
+#pragma once
 
-#include <Util.h>
-#include <OutputStream.h>
 #include "Attribute.h"
+
+#include <OutputStream.h>
+#include <Util.h>
+
 #include <glib.h>
 
 class ProgressListener;
@@ -27,20 +28,20 @@ public:
 
 private:
 	XmlNode(const XmlNode& node);
-	void operator =(const XmlNode& node);
+	void operator=(const XmlNode& node);
 
 public:
 	void setAttrib(const char* attrib, const char* value);
 	void setAttrib(const char* attrib, double value);
 	void setAttrib(const char* attrib, int value);
+	void setAttrib(const char* attrib, size_t value);
 
 	/**
 	 * The double array is now owned by XmlNode and automatically deleted!
 	 */
 	void setAttrib(const char* attrib, double* value, int count);
 
-	void writeOut(OutputStream* out,
-	              ProgressListener* _listener);
+	void writeOut(OutputStream* out, ProgressListener* _listener);
 
 	virtual void writeOut(OutputStream* out)
 	{
@@ -50,7 +51,7 @@ public:
 	void addChild(XmlNode* node);
 
 protected:
-	void putAttrib(Attribute* a);
+	void putAttrib(XMLAttribute* a);
 	void writeAttributes(OutputStream* out);
 
 public:
@@ -62,5 +63,3 @@ protected:
 
 	char* tag;
 };
-
-#endif /* __XMLNODE_H__ */

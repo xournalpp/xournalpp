@@ -1,8 +1,9 @@
-#include "ScrollHandler.h"
 #include "Control.h"
-#include "../gui/XournalView.h"
-#include "../gui/widgets/SpinPageAdapter.h"
-#include "../gui/Layout.h"
+#include "ScrollHandler.h"
+
+#include "gui/Layout.h"
+#include "gui/widgets/SpinPageAdapter.h"
+#include "gui/XournalView.h"
 
 ScrollHandler::ScrollHandler(Control* control)
 {
@@ -24,13 +25,14 @@ void ScrollHandler::goToPreviousPage()
 	{
 		if (this->control->getSettings()->isPresentationMode())
 		{
-			PageView* view = this->control->getWindow()->getXournal()->getViewFor(this->control->getWindow()->getXournal()->getCurrentPage() - 1);
+			PageView* view = this->control->getWindow()->getXournal()->getViewFor(
+					this->control->getWindow()->getXournal()->getCurrentPage() - 1);
 			if (view)
 			{
 				double dHeight = view->getDisplayHeight();
 				double disHeight = this->control->getWindow()->getLayout()->getDisplayHeight();
-				double top = (dHeight - disHeight)/2.0 + 7.5;
-					//the magic 7.5 is from XOURNAL_PADDING_BETWEEN/2
+				double top = (dHeight - disHeight) / 2.0 + 7.5;
+				//the magic 7.5 is from XOURNAL_PADDING_BETWEEN/2
 				scrollToPage(this->control->getWindow()->getXournal()->getCurrentPage() - 1, top);
 			}
 		}
@@ -49,13 +51,14 @@ void ScrollHandler::goToNextPage()
 	{
 		if (this->control->getSettings()->isPresentationMode())
 		{
-			PageView* view = this->control->getWindow()->getXournal()->getViewFor(this->control->getWindow()->getXournal()->getCurrentPage() + 1);
+			PageView* view = this->control->getWindow()->getXournal()->getViewFor(
+					this->control->getWindow()->getXournal()->getCurrentPage() + 1);
 			if (view)
 			{
 				double dHeight = view->getDisplayHeight();
 				double disHeight = this->control->getWindow()->getLayout()->getDisplayHeight();
 				//this gets reversed when we are going down if the page is smaller than the display height
-				double top = (-dHeight + disHeight)/2.0 - 7.5;
+				double top = (-dHeight + disHeight) / 2.0 - 7.5;
 				//the magic 7.5 is from XOURNAL_PADDING_BETWEEN/2
 				scrollToPage(this->control->getWindow()->getXournal()->getCurrentPage() + 1, top);
 			}
@@ -103,7 +106,7 @@ void ScrollHandler::scrollToPage(PageRef page, double top)
 	}
 }
 
-void ScrollHandler::scrollToPage(int page, double top)
+void ScrollHandler::scrollToPage(size_t page, double top)
 {
 	XOJ_CHECK_TYPE(ScrollHandler);
 
@@ -139,20 +142,12 @@ void ScrollHandler::scrollToAnnotatedPage(bool next)
 		return;
 	}
 
-	int step;
-	if (next)
-	{
-		step = 1;
-	}
-	else
-	{
-		step = -1;
-	}
+	int step = next ? 1 : -1;
 
 	Document* doc = this->control->getDocument();
 
-	for (int i = this->control->getCurrentPageNo() + step; i >= 0 &&
-	     i < doc->getPageCount(); i += step)
+	for (size_t i = this->control->getCurrentPageNo() + step; i != size_t_npos && i < doc->getPageCount();
+		 i = ((i == 0 && step == -1) ? size_t_npos : i + step))
 	{
 		if (doc->getPage(i)->isAnnotated())
 		{
@@ -162,28 +157,25 @@ void ScrollHandler::scrollToAnnotatedPage(bool next)
 	}
 }
 
-bool ScrollHandler::isPageVisible(int page, int* visibleHeight)
+bool ScrollHandler::isPageVisible(size_t page, int* visibleHeight)
 {
 	XOJ_CHECK_TYPE(ScrollHandler);
 
 	if (!this->control->getWindow())
 	{
-		if(visibleHeight)
+		if (visibleHeight)
 		{
 			*visibleHeight = 0;
 		}
 		return false;
 	}
 
-	return this->control->getWindow()->getXournal()->isPageVisible(page,
-	                                                               visibleHeight);
+	return this->control->getWindow()->getXournal()->isPageVisible(page, visibleHeight);
 }
 
-void ScrollHandler::pageChanged(int page)
+void ScrollHandler::pageChanged(size_t page)
 {
 	XOJ_CHECK_TYPE(ScrollHandler);
 
 	scrollToSpinPange();
 }
-
-

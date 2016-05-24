@@ -3,24 +3,27 @@
  *
  * A job which handles preview repaint
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __PREVIEWJOB_H__
-#define __PREVIEWJOB_H__
+#pragma once
 
 #include "Job.h"
+
 #include <XournalType.h>
 
-class SidebarPreviewPage;
+#include <gtk/gtk.h>
+
+class SidebarPreviewBaseEntry;
+class Document;
 
 class PreviewJob : public Job
 {
 public:
-	PreviewJob(SidebarPreviewPage* sidebar);
+	PreviewJob(SidebarPreviewBaseEntry* sidebar);
 
 protected:
 	virtual ~PreviewJob();
@@ -33,9 +36,29 @@ public:
 	virtual JobType getType();
 
 private:
+	void initGraphics();
+	void drawBorder();
+	void finishPaint();
+	void drawBackgroundPdf(Document* doc);
+	void drawPage(int layer);
+
+private:
 	XOJ_TYPE_ATTRIB;
 
-	SidebarPreviewPage* sidebarPreview;
-};
+	/**
+	 * Graphics buffer
+	 */
+	cairo_surface_t* crBuffer;
 
-#endif /* __PREVIEWJOB_H__ */
+	/**
+	 * Graphics drawing
+	 */
+	cairo_t* cr2;
+
+	/**
+	 * Zoom factor
+	 */
+	double zoom;
+
+	SidebarPreviewBaseEntry* sidebarPreview;
+};

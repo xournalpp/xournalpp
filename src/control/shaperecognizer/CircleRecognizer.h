@@ -3,14 +3,13 @@
  *
  * Part of the Xournal shape recognizer
  *
- * @author Xournal Team
- * http://xournal.sf.net
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
  *
- * @license GPL
+ * @license GNU GPLv2 or later
  */
 
-#ifndef __CIRCLE_RECOGNIZER_H__
-#define __CIRCLE_RECOGNIZER_H__
+#pragma once
 
 class Stroke;
 class Inertia;
@@ -29,5 +28,3 @@ private:
 	static double scoreCircle(Stroke* s, Inertia& inertia);
 
 };
-
-#endif /* __CIRCLE_RECOGNIZER_H__ */
