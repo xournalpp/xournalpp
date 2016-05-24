@@ -23,6 +23,7 @@ MetadataManager::MetadataManager()
 	this->config = NULL;
 	this->timer = NULL;
 	this->thread = NULL;
+	this->paused = false;
 }
 
 MetadataManager::~MetadataManager()
@@ -47,7 +48,7 @@ void MetadataManager::setInt(path p, string name, int value)
 {
 	XOJ_CHECK_TYPE(MetadataManager);
 	
-	if (p.empty())
+	if (p.empty() || this->paused)
 	{
 		return;
 	}
@@ -55,6 +56,7 @@ void MetadataManager::setInt(path p, string name, int value)
 	loadConfigFile();
 	checkPath(p);
 	
+	std::cout << "Setting int " << value << " from file " << p.string() << std::endl;
 	try
 	{
 		config->get_child(getINIpathURI(p)).put(name, value);
@@ -71,7 +73,7 @@ void MetadataManager::setDouble(path p, string name, double value)
 {
 	XOJ_CHECK_TYPE(MetadataManager);
 
-	if (p.empty())
+	if (p.empty() || this->paused)
 	{
 		return;
 	}
@@ -94,7 +96,7 @@ void MetadataManager::setString(path p, string name, string value)
 {
 	XOJ_CHECK_TYPE(MetadataManager);
 
-	if (p.empty())
+	if (p.empty() || this->paused)
 	{
 		return;
 	}
@@ -140,7 +142,7 @@ void MetadataManager::updateAccessTime(path p)
 {
 	XOJ_CHECK_TYPE(MetadataManager);
 	
-	if (p.empty())
+	if (p.empty() || this->paused)
 	{
 		return;
 	}
@@ -351,6 +353,15 @@ bool MetadataManager::getString(path p, string name, string& value)
 path MetadataManager::getFilePath()
 {
 	return Util::getConfigFile(METADATA_FILE);
+}
+
+void MetadataManager::pause()
+{
+	this->paused = true;
+}
+void MetadataManager::resume()
+{
+	this->paused = false;
 }
 
 //kinda workaround for now – it probably wouldn't work on Windows

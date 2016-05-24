@@ -48,6 +48,9 @@ public:
 
 	void copy(path source, path target);
 
+	void pause();
+	void resume();
+
 	bool save();
 	static bool save(MetadataManager* man, basio::deadline_timer* t = NULL);
 
@@ -65,6 +68,8 @@ private:
 
 private:
 	XOJ_TYPE_ATTRIB;
+
+	bool paused;
 
 	boost::thread* thread;
 	basio::io_service io;

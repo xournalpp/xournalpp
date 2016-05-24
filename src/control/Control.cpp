@@ -2428,10 +2428,12 @@ bool Control::openFile(path filename, int scrollToPage)
 	}
 	else
 	{
+		this->metadata->pause();
 		this->doc->lock();
 		this->doc->clearDocument();
 		*this->doc = *tmp;
 		this->doc->unlock();
+		this->metadata->resume();
 	}
 
 	fileLoaded(scrollToPage);
