@@ -372,7 +372,7 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
 		newFile();
 		break;
 	case ACTION_OPEN:
-		clearSelectionEndText();
+		//clearSelectionEndText();
 		openFile();
 		break;
 	case ACTION_ANNOTATE_PDF:
@@ -2894,14 +2894,17 @@ bool Control::close(bool destroy)
 		}
 	}
 
-	undoRedo->clearContents();
+	if (destroy)
+	{
+		undoRedo->clearContents();
 
-	this->doc->lock();
-	this->doc->clearDocument(destroy);
-	this->doc->unlock();
+		this->doc->lock();
+		this->doc->clearDocument(destroy);
+		this->doc->unlock();
 
-	//updateWindowTitle();
-	undoRedoChanged();
+		//updateWindowTitle();
+		undoRedoChanged();
+	}
 	return true;
 }
 
