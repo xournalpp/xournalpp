@@ -2611,6 +2611,9 @@ bool Control::save(bool synchron)
 {
 	XOJ_CHECK_TYPE(Control);
 
+	//clear selection before saving
+	clearSelectionEndText();
+
 	this->doc->lock();
 	path filename = this->doc->getFilename();
 	this->doc->unlock();
