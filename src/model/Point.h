@@ -38,6 +38,6 @@ public:
 	double z;
 
 
-	static const double NO_PRESURE = -1;
+	static constexpr double NO_PRESURE = -1;
 };
 #endif /* __POINT_H__ */
