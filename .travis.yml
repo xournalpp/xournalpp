@@ -9,6 +9,7 @@ cache:
 - ccache
 
 os: linux
+dist: trusty
 
 sudo: false
 
