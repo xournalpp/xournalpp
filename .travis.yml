@@ -25,6 +25,7 @@ addons:
     - cmake
     - libboost1.55-all-dev
     - libcppunit-dev
+    - overlay-scrollbar
     - dvipng
     - texlive
     - liblcms2-dev
