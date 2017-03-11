@@ -928,6 +928,7 @@
                         <property name="label" translatable="yes">Select Object</property>
                         <property name="use_underline">True</property>
                         <property name="draw_as_radio">True</property>
+                        <accelerator key="O" signal="activate" modifiers="GDK_SHIFT_MASK | GDK_CONTROL_MASK"/>
                       </widget>
                     </child>
                     <child>

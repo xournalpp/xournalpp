@@ -33,6 +33,13 @@ Aside from legacy releases, this is currently the way to install Xournal++. For 
 There will be some binaries appearing in the future, so ideally you can make use of those as well.
 They'll be at [Xournal++ releases](https://github.com/xournalpp/xournalpp/releases).
 
+### Install dependencies
+For Fedora/CentOS/RHEL:
+````bash
+dnf groups install "C Development Tools and Libraries"
+dnf install cmake libglade2-devel texlive-scheme-basic texlive-dvipng glibmm24-devel gtk2-devel gtk+-devel boot boost-devel poppler-glib-devel
+````
+
 Basic steps are:
 ````bash
 git clone http://github.com/xournalpp/xournalpp.git

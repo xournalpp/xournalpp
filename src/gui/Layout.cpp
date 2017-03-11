@@ -63,12 +63,11 @@ void Layout::checkSelectedPage()
 
 	int viewHeight = allocation.height;
 	int viewWidth = allocation.width;
-	bool twoPages = control->getSettings()->isShowTwoPages();
+	bool twoPages = control->getSettings()->isShowTwoPages() && this->view->viewPagesLen > 1;
 
 	if (scrollY < 1)
 	{
-		if (twoPages && this->view->viewPagesLen > 1 &&
-			this->view->viewPages[1]->isSelected())
+		if (twoPages && this->view->viewPages[1]->isSelected())
 		{
 			// page 2 already selected
 		}
