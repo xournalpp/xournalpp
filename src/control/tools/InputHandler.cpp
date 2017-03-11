@@ -13,7 +13,8 @@
 #include "undo/RecognizerUndoAction.h"
 #include "view/DocumentView.h"
 
-#include <math.h>
+//#include <math.h>
+#include <cmath>
 
 #define PIXEL_MOTION_THRESHOLD 0.3
 

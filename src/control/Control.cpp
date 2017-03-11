@@ -178,13 +178,30 @@ void Control::renameLastAutosaveFile()
 		if (bf::exists(filename))
 		{
 			bf::remove(renamed);
-			bf::rename(filename, renamed);
+			try
+			{
+				bf::rename(filename, renamed);
+			}
+			catch(const bf::filesystem_error& e)
+			{
+				//Filesystem might be on a different partition
+				bf::copy(filename, renamed);
+			}
+
 		}
 		else
 		{
 			bf::remove(renamed);
 			this->save(false);
-			bf::rename(filename, renamed);
+			try
+			{
+				bf::rename(filename, renamed);
+			}
+			catch(const bf::filesystem_error& e)
+			{
+				//Filesystem might be on a different partition
+				bf::copy(filename, renamed);
+			}
 			bf::remove(filename);
 		}
 	}
