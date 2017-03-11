@@ -147,12 +147,11 @@ if (BUILD_POPPLER)
     libpoppler-glib.a
     
     ${OPENJPEG_LIBRARIES}
-    -lopenjpeg
     ${JPEG_LIBRARIES}
     ${PopplerLibs_LDFLAGS}
     ${lcms_LDFLAGS}
   )
-  # -lopenjpeg added as fallback
+  # -lopenjpeg can be added as fallback for systems where LOPENJPEG cannot be found
   
   set (POPPLER_INCLUDE_DIRS
     "${POPPLER_PREFIX}/src/poppler"

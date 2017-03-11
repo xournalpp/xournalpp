@@ -27,9 +27,7 @@ addons:
     - libcppunit-dev
     - dvipng
     - texlive
-    - liboverlay-scrollbar-0.2-dev
     - liblcms2-dev
-    - libopenjpeg-dev
     - libjpeg-dev
     - fontconfig
     - librsvg2-dev
