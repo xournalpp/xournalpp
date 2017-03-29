@@ -1620,18 +1620,22 @@ void Control::setPageBackground(ActionType type)
 
 	if (ACTION_SET_PAPER_BACKGROUND_PLAIN == type)
 	{
+		settings->setPageInsertType(PAGE_INSERT_TYPE_PLAIN);
 		page->setBackgroundType(BACKGROUND_TYPE_NONE);
 	}
 	else if (ACTION_SET_PAPER_BACKGROUND_LINED == type)
 	{
+		settings->setPageInsertType(PAGE_INSERT_TYPE_LINED);
 		page->setBackgroundType(BACKGROUND_TYPE_LINED);
 	}
 	else if (ACTION_SET_PAPER_BACKGROUND_RULED == type)
 	{
+		settings->setPageInsertType(PAGE_INSERT_TYPE_RULED);
 		page->setBackgroundType(BACKGROUND_TYPE_RULED);
 	}
 	else if (ACTION_SET_PAPER_BACKGROUND_GRAPH == type)
 	{
+		settings->setPageInsertType(PAGE_INSERT_TYPE_GRAPH);
 		page->setBackgroundType(BACKGROUND_TYPE_GRAPH);
 	}
 	else if (ACTION_SET_PAPER_BACKGROUND_IMAGE == type)
