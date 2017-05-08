@@ -37,7 +37,7 @@ They'll be at [Xournal++ releases](https://github.com/xournalpp/xournalpp/releas
 For Fedora/CentOS/RHEL:
 ````bash
 dnf groups install "C Development Tools and Libraries"
-dnf install cmake libglade2-devel texlive-scheme-basic texlive-dvipng glibmm24-devel gtk2-devel gtk+-devel boot boost-devel poppler-glib-devel
+dnf install cmake libglade2-devel texlive-scheme-basic texlive-dvipng glibmm24-devel gtk2-devel gtk+-devel boost boost-devel poppler-glib-devel
 ````
 
 Basic steps are:
