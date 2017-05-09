@@ -245,6 +245,8 @@ public:
 	ButtonConfig* getRightButtonConfig();
 	ButtonConfig* getTouchButtonConfig();
 	ButtonConfig* getDefaultButtonConfig();
+	ButtonConfig* getStylusButtonConfig();
+	ButtonConfig* getStylus2ButtonConfig();
 
 	String getFullscreenHideElements();
 	void setFullscreenHideElements(String elements);
@@ -429,7 +431,7 @@ private:
 	 * 3: touch screen
 	 * 4: default
 	 */
-	ButtonConfig* buttonConfig[5];
+	ButtonConfig* buttonConfig[7];
 
 	/**
 	 * Which gui elements are hidden if you are in Fullscreen mode, separated by a colon (,)

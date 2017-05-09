@@ -306,7 +306,18 @@ static bool change_tool(Settings* settings, GdkEventButton* event,
 	GdkEvent* rawEvent = (GdkEvent*) event;
 	GdkDevice* device = gdk_event_get_source_device(rawEvent);
 
-	if (event->button == 2)   // Middle Button
+	if (gdk_device_get_source(device) == GDK_SOURCE_PEN)
+	{
+		if (event->button == 2)
+		{
+			cfg = settings->getStylusButtonConfig();
+		}
+		else if (event->button == 3)
+		{
+			cfg = settings->getStylus2ButtonConfig();
+		}
+	}
+	 else if (event->button == 2)   // Middle Button
 	{
 		cfg = settings->getMiddleButtonConfig();
 	}

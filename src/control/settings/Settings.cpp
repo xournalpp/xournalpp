@@ -15,8 +15,8 @@
 #define WRITE_COMMENT(var) com = xmlNewComment((const xmlChar *)var); \
 	xmlAddPrevSibling(xmlNode, com);
 
-const char* BUTTON_NAMES[] = { "middle", "right", "eraser", "touch", "default" };
-const int BUTTON_COUNT = 5;
+const char* BUTTON_NAMES[] = { "eraser", "middle", "right", "touch", "default", "stylus", "stylus2" };
+const int BUTTON_COUNT = 7;
 
 Settings::Settings(String filename)
 {
@@ -106,6 +106,12 @@ void Settings::loadDefault()
 	                                         DRAWING_TYPE_NONE, ERASER_TYPE_NONE);
 	// Default config
 	this->buttonConfig[4] = new ButtonConfig(TOOL_PEN, 0, TOOL_SIZE_FINE,
+	                                         DRAWING_TYPE_NONE, ERASER_TYPE_NONE);
+	// Stylus button
+	this->buttonConfig[5] = new ButtonConfig(TOOL_NONE, 0, TOOL_SIZE_NONE,
+	                                         DRAWING_TYPE_NONE, ERASER_TYPE_NONE);
+	// Stylus2 button
+	this->buttonConfig[6] = new ButtonConfig(TOOL_NONE, 0, TOOL_SIZE_NONE,
 	                                         DRAWING_TYPE_NONE, ERASER_TYPE_NONE);
 
 	this->fullscreenHideElements = "mainMenubar";
@@ -1481,6 +1487,20 @@ ButtonConfig* Settings::getDefaultButtonConfig()
 	XOJ_CHECK_TYPE(Settings);
 
 	return this->buttonConfig[4];
+}
+
+ButtonConfig* Settings::getStylusButtonConfig()
+{
+	XOJ_CHECK_TYPE(Settings);
+
+	return this->buttonConfig[5];
+}
+
+ButtonConfig* Settings::getStylus2ButtonConfig()
+{
+	XOJ_CHECK_TYPE(Settings);
+
+	return this->buttonConfig[6];
 }
 
 String Settings::getFullscreenHideElements()
