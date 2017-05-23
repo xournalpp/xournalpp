@@ -882,7 +882,7 @@ void XournalView::setEventCompression(gboolean enable)
 
 	if(gtk_widget_get_realized(getWidget()))
 	gdk_window_set_event_compression(gtk_widget_get_window(getWidget()),
-	                                 enable);
+	                                 FALSE);
 }
 
 void XournalView::layoutPages()
