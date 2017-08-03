@@ -31,7 +31,8 @@ StringTokenizer::StringTokenizer(const string s, char token, bool returnToken)
 {
 	XOJ_INIT_TYPE(StringTokenizer);
 
-	this->str = const_cast<char*> (s.c_str());
+	this->str = (char*) g_malloc(s.length() + 1);
+	memcpy(this->str, s.c_str(), s.length() + 1);
 	this->token = token;
 	this->tokenStr[0] = token;
 	this->tokenStr[1] = 0;
@@ -45,7 +46,7 @@ StringTokenizer::~StringTokenizer()
 {
 	XOJ_CHECK_TYPE(StringTokenizer);
 
-	//g_free(this->str);
+	g_free(this->str);
 	this->str = NULL;
 
 	XOJ_RELEASE_TYPE(StringTokenizer);

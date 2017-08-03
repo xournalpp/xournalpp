@@ -247,45 +247,6 @@ string SettingsDialog::updateHideString(string hidden, bool hideMenubar, bool hi
 
 	string newHidden = "";
 
-	const char* element;
-	StringTokenizer token(hidden, ',');
-	element = token.next();
-	while (element)
-	{
-		if (!strcmp("mainMenubar", element))
-		{
-			if (hideMenubar)
-			{
-				hideMenubar = false;
-			}
-			else
-			{
-				element = token.next();
-				continue;
-			}
-		}
-		else if (!strcmp("sidebarContents", element))
-		{
-			if (hideSidebar)
-			{
-				hideSidebar = false;
-			}
-			else
-			{
-				element = token.next();
-				continue;
-			}
-		}
-
-		if (!newHidden.empty())
-		{
-			newHidden += ",";
-		}
-		newHidden += element;
-
-		element = token.next();
-	}
-
 	if (hideMenubar)
 	{
 		if (!newHidden.empty())
