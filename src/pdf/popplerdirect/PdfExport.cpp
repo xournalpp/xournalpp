@@ -284,8 +284,7 @@ void PdfExport::writeGzStream(Stream* str, GList* replacementList)
 {
 	XOJ_CHECK_TYPE(PdfExport);
 
-	Object obj1;
-	str->getDict()->lookup("Length", &obj1);
+	Object obj1 =  str->getDict()->lookup("Length");
 	if (!obj1.isInt())
 	{
 		g_error("PDFDoc::writeGzStream, no Length in stream dict");
@@ -293,7 +292,6 @@ void PdfExport::writeGzStream(Stream* str, GList* replacementList)
 	}
 
 	const int length = obj1.getInt();
-	obj1.free();
 
 	char* buffer = new char[length];
 
@@ -315,8 +313,7 @@ void PdfExport::writePlainStream(Stream* str, GList* replacementList)
 {
 	XOJ_CHECK_TYPE(PdfExport);
 
-	Object obj1;
-	str->getDict()->lookup("Length", &obj1);
+	Object obj1 = str->getDict()->lookup("Length");
 	if (!obj1.isInt())
 	{
 		g_error("PDFDoc::writePlainStream, no Length in stream dict");
@@ -324,7 +321,6 @@ void PdfExport::writePlainStream(Stream* str, GList* replacementList)
 	}
 
 	const int length = obj1.getInt();
-	obj1.free();
 
 	str->unfilteredReset();
 
@@ -475,15 +471,13 @@ bool PdfExport::addPopplerPage(XojPopplerPage* pdf, XojPopplerDocument doc)
 
 	}
 
-	Object* o = new Object();
-	page->getContents(o);
+	Object* o = new Object(page->getContents());
 
 	if (o->getType() == objStream)
 	{
 		Dict* dict = o->getStream()->getDict();
 
-		Object filter;
-		dict->lookup("Filter", &filter);
+		Object filter = dict->lookup("Filter");
 //		// this may would be better, but not working...:-/
 //		Object oDict;
 //		oDict.initDict(dict);
@@ -509,14 +503,12 @@ bool PdfExport::addPopplerPage(XojPopplerPage* pdf, XojPopplerDocument doc)
 		//g_warning("Array length is %i\n",arrLength); 
 		for (int i = 0; i < arrLength; i++)
 		{
-			Object* subObject = new Object;
-			o->arrayGet(i, subObject);
+			Object* subObject = new Object(o->arrayGet(i));
 			if (subObject->getType() == objStream)
 			{
 				Dict* dict = subObject->getStream()->getDict();
 
-				Object filter;
-				dict->lookup("Filter", &filter);
+				Object filter = dict->lookup("Filter");
 
 				if (filter.isNull())
 				{
@@ -535,7 +527,6 @@ bool PdfExport::addPopplerPage(XojPopplerPage* pdf, XojPopplerDocument doc)
 			{
 				g_warning("other poppler type: %i\n", subObject->getType());
 			}
-			subObject->free();
 			delete subObject;
 		}
 	}
@@ -551,7 +542,6 @@ bool PdfExport::addPopplerPage(XojPopplerPage* pdf, XojPopplerDocument doc)
 	}
 	g_list_free(replacementList);
 
-	o->free();
 	delete o;
 	this->resources = NULL;
 

@@ -103,8 +103,8 @@ void PdfObjectWriter::writeObject(Object* obj, XojPopplerDocument doc)
 		this->writer->write("[");
 		for (int i = 0; i < array->getLength(); i++)
 		{
-			writeObject(array->getNF(i, &obj1), doc);
-			obj1.free();
+			obj1 = array->getNF(i);
+			writeObject(&obj1, doc);
 		}
 		this->writer->write("] ");
 		break;
@@ -126,8 +126,7 @@ void PdfObjectWriter::writeObject(Object* obj, XojPopplerDocument doc)
 			{
 				tmp++;
 			}
-			obj1.initInt(tmp);
-			stream->getDict()->set("Length", &obj1);
+			stream->getDict()->set("Length", Object(tmp));
 
 			//Remove Stream encoding
 			stream->getDict()->remove("Filter");
@@ -135,7 +134,6 @@ void PdfObjectWriter::writeObject(Object* obj, XojPopplerDocument doc)
 
 			writeDictionnary(stream->getDict(), doc);
 			writeStream(stream);
-			obj1.free();
 		}
 		else
 		{
@@ -159,7 +157,7 @@ void PdfObjectWriter::writeObject(Object* obj, XojPopplerDocument doc)
 			this->xref->addXref(0);
 			this->writer->write(FORMAT("%i %i R ", uref->objectId, 0));
 
-			obj->fetch(doc.getDoc()->getXRef(), &uref->object);
+			uref->object = obj->fetch(doc.getDoc()->getXRef());
 
 			g_hash_table_insert(this->updatedReferenced, new UpdateRefKey(obj->getRef(), doc), uref);
 		}
@@ -187,8 +185,7 @@ void PdfObjectWriter::writeRawStream(Stream* str, XojPopplerDocument doc)
 {
 	XOJ_CHECK_TYPE(PdfObjectWriter);
 
-	Object obj1;
-	str->getDict()->lookup("Length", &obj1);
+	Object obj1 = str->getDict()->lookup("Length");
 	if (!obj1.isInt())
 	{
 		cout << "PDFDoc::writeRawStream, no Length in stream dict";
@@ -196,7 +193,6 @@ void PdfObjectWriter::writeRawStream(Stream* str, XojPopplerDocument doc)
 	}
 
 	const int length = obj1.getInt();
-	obj1.free();
 
 	this->writer->write("stream\r\n");
 	str->unfilteredReset();
@@ -230,7 +226,7 @@ void PdfObjectWriter::writeDictionnary(Dict* dict, XojPopplerDocument doc)
 {
 	XOJ_CHECK_TYPE(PdfObjectWriter);
 
-	Object obj1;
+	Object obj;
 	this->writer->write("<<");
 	for (int i = 0; i < dict->getLength(); i++)
 	{
@@ -238,8 +234,8 @@ void PdfObjectWriter::writeDictionnary(Dict* dict, XojPopplerDocument doc)
 		GooString* keyNameToPrint = keyName.sanitizedName(gFalse /* non ps mode */);
 		this->writer->write(FORMAT("/%s ", keyNameToPrint->getCString()));
 		delete keyNameToPrint;
-		writeObject(dict->getValNF(i, &obj1), doc);
-		obj1.free();
+		obj = Object(dict->getValNF(i));
+		writeObject(&obj, doc);
 	}
 	this->writer->write(">> ");
 }
