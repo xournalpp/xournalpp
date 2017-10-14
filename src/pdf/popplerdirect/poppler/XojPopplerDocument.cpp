@@ -259,10 +259,7 @@ void XojPopplerDocument::load(char* data, int length)
 		globalParams = new GlobalParams();
 	}
 
-	Object obj;
-	// create stream
-	obj.initNull();
-	MemStream* str = new MemStream(data, 0, length, &obj);
+	MemStream* str = new MemStream(data, 0, length, Object(objNull));
 
 	PDFDoc* newDoc = new PDFDoc(str, NULL, NULL);
 

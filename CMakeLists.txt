@@ -108,7 +108,7 @@ if (BUILD_POPPLER)
     GIT_REPOSITORY "git://git.freedesktop.org/git/poppler/poppler"
     PREFIX "${POPPLER_PREFIX}"
     
-    CONFIGURE_COMMAND cd "${POPPLER_PREFIX}/src/poppler" && ./autogen.sh --enable-poppler-glib --enable-poppler-cpp --enable-static --disable-poppler-qt4 --disable-poppler-qt5 --disable-utils --enable-zlib
+    CONFIGURE_COMMAND cd "${POPPLER_PREFIX}/src/poppler" && ${CMAKE_COMMAND} . -DBUILD_QT5_TESTS:BOOL="0" -DENABLE_QT4:BOOL="0" -DBUILD_QT4_TESTS:BOOL="0" -DENABLE_UTILS:BOOL="0" -DWITH_Qt4:BOOL="0" -DENABLE_QT5:BOOL="0"
     BUILD_COMMAND cd "${POPPLER_PREFIX}/src/poppler" && make
     INSTALL_COMMAND ""
   )

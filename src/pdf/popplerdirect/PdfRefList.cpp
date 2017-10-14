@@ -79,7 +79,6 @@ int PdfRefList::lookup(Ref ref, Object* object, XojPopplerDocument doc, PdfRefEn
 
 		if (p->equalsRef(ref))
 		{
-			object->free();
 			delete object;
 
 			refEntryRet = p;
@@ -101,8 +100,7 @@ void PdfRefList::parse(Dict* dict, int index, XojPopplerDocument doc, GList*& re
 {
 	XOJ_CHECK_TYPE(PdfRefList);
 
-	Object o;
-	dict->getVal(index, &o);
+	Object o = dict->getVal(index);
 
 	if (o.isArray() && strcmp("ProcSet", dict->getKey(index)) == 0)
 	{
@@ -118,12 +116,8 @@ void PdfRefList::parse(Dict* dict, int index, XojPopplerDocument doc, GList*& re
 	Dict* dataDict = o.getDict();
 	for (int u = 0; u < dataDict->getLength(); u++)
 	{
-		Object contentsObjectRef;
-		Object* contentsObject = new Object();
-
-		dataDict->getVal(u, contentsObject);
-		dataDict->getValNF(u, &contentsObjectRef);
-
+		Object contentsObjectRef = dataDict->getValNF(u);;
+		Object* contentsObject = new Object(dataDict->getVal(u));
 		if (contentsObjectRef.isRef())
 		{
 			PdfRefEntry* refEntry = NULL;
@@ -146,14 +140,9 @@ void PdfRefList::parse(Dict* dict, int index, XojPopplerDocument doc, GList*& re
 		{
 			g_warning("PdfRefList::parse type not handled, type ID = %i\n", contentsObjectRef.getType());
 
-			contentsObject->free();
 			delete contentsObject;
 		}
-
-		contentsObjectRef.free();
 	}
-
-	o.free();
 }
 
 void PdfRefList::writeRefList(const char* type)
