@@ -196,7 +196,7 @@ endif (ENABLE_CPPUNIT)
 # Overlay scrollbar
 option (ENABLE_OS "Overlay Scrollbar support" OFF)
 if (ENABLE_OS)
-  pkg_check_modules (OS REQUIRED "overlay-scrollbar-0.2")
+  pkg_check_modules (OS REQUIRED "overlay-scrollbar")
   add_includes_ldflags ("${OS_LDFLAGS}" "${OS_INCLUDE_DIRS}")
 endif (ENABLE_OS)
 
