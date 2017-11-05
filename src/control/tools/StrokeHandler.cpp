@@ -281,7 +281,7 @@ bool StrokeHandler::getPressureMultiplier(GdkEvent* event, double& pressure)
 	XOJ_CHECK_TYPE(StrokeHandler);
 
 	GdkDevice* device = gdk_event_get_device(event);
-	gdouble axes[GDK_AXIS_LAST];
+	gdouble* axes = event->button.axes;
 
 	pressure = 1.0;
 
