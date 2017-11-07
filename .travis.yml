@@ -26,7 +26,7 @@ addons:
     - libcppunit-dev
     - dvipng
     - texlive
-    - overlay-scrollbar-gtk2 
+#    - overlay-scrollbar-gtk2 
     - liblcms2-dev
     - libopenjpeg-dev
     - libjpeg-dev
@@ -45,7 +45,7 @@ addons:
       name: "MarPiRK/xournalpp"
       description: "Notetaking software designed around a tablet."
     notification_email: marek@pikula.co
-    build_command_prepend: "cmake .. -DBUILD_POPPLER=ON -DEXT_GLIBMM=ON -DENABLE_MATHTEX=ON -DENABLE_OS=ON -DENABLE_CPPUNIT=ON -DUNSTABLE_LAYERS_SIDEBAR=ON"
+    build_command_prepend: "cmake .. -DBUILD_POPPLER=ON -DEXT_GLIBMM=ON -DENABLE_MATHTEX=ON -DENABLE_CPPUNIT=ON -DUNSTABLE_LAYERS_SIDEBAR=ON"
     build_command: "make"
     branch_pattern: coverity_scan
 
