@@ -341,7 +341,7 @@ void MainWindow::updateScrollbarSidebarPosition()
 	// Turn on/off kinetic scrolling (in gnome 3.18 on by default)
 	// Kinetic scrolling works fine btw
 	// comment line to turn on
-	gtk_scrolled_window_set_kinetic_scrolling(scrolledWindow,false);
+	//gtk_scrolled_window_set_kinetic_scrolling(scrolledWindow,false);
 
 	bool scrollbarOnLeft = control->getSettings()->isScrollbarOnLeft();
 
