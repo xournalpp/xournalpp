@@ -1,10 +1,11 @@
 #include "XojPreviewExtractor.h"
 
+#include <glib.h>
+#include <glib/gstdio.h>
+
 #include <boost/iostreams/filter/gzip.hpp>
 #include <boost/iostreams/filtering_streambuf.hpp>
 namespace bio = boost::iostreams;
-
-#include <glibmm/base64.h>
 
 #include <string>
 using std::string;
@@ -12,6 +13,8 @@ using std::string;
 using std::istream;
 #include <fstream>
 using std::ifstream;
+#include <memory>
+using std::unique_ptr;
 
 #define TAG_PREVIEW_NAME "preview"
 #define TAG_PAGE_NAME "page"
@@ -112,8 +115,10 @@ PreviewExtractResult XojPreviewExtractor::readFile(std::string file)
 		{
 			if (inTag)
 			{
-				this->data = Glib::Base64::decode(preview);
-				
+				gsize size;
+				const auto buf = g_base64_decode(preview.c_str(), &size);
+				this->data = string(buf, buf + size);
+				g_free(buf);
 				CLOSE PREVIEW_RESULT_IMAGE_READ;
 			}
 			else

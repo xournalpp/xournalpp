@@ -22,11 +22,11 @@ addons:
   apt:
     packages:
     - cmake
-    - libboost1.55-all-dev
+    - libboost-all-dev
     - libcppunit-dev
     - dvipng
     - texlive
-    - liboverlay-scrollbar-0.2-dev
+#    - overlay-scrollbar-gtk2 
     - liblcms2-dev
     - libopenjpeg-dev
     - libjpeg-dev
@@ -34,18 +34,18 @@ addons:
     - librsvg2-dev
     - glade-gtk2
     - libglade2-dev
-#    - libpoppler-dev
-#    - libpoppler-cpp-dev
-#    - libpoppler-glib-dev
+    - libpoppler-dev
+    - libpoppler-cpp-dev
+    - libpoppler-glib-dev
     sources:
     - boost-latest
     - kalakris-cmake
   coverity_scan:
     project:
-      name: "MarPiRK/xournalpp"
+      name: "peetCreative/xournalpp"
       description: "Notetaking software designed around a tablet."
-    notification_email: marek@pikula.co
-    build_command_prepend: "cmake .. -DBUILD_POPPLER=ON -DEXT_GLIBMM=ON -DENABLE_MATHTEX=ON -DENABLE_OS=ON -DENABLE_CPPUNIT=ON -DUNSTABLE_LAYERS_SIDEBAR=ON"
+    notification_email: peter_klausing@wh2.tu-dresden.de
+    build_command_prepend: "cmake .. -DBUILD_POPPLER=ON -DENABLE_MATHTEX=ON -DENABLE_CPPUNIT=ON -DUNSTABLE_LAYERS_SIDEBAR=ON"
     build_command: "make"
     branch_pattern: coverity_scan
 
@@ -54,7 +54,7 @@ before_script:
   - "cd build"
 
 script:
-  - "cmake .. -DBUILD_POPPLER=ON -DEXT_GLIBMM=ON -DCMAKE_DEBUG_INCLUDES_LDFLAGS=ON -DENABLE_MATHTEX=ON -DENABLE_OS=ON -DENABLE_CPPUNIT=ON -DUNSTABLE_LAYERS_SIDEBAR=ON -DDEBUG_COMPILE=ON"
+  - "cmake .. -DCMAKE_DEBUG_INCLUDES_LDFLAGS=ON -DBUILD_POPPLER=ON -DENABLE_MATHTEX=ON -DENABLE_CPPUNIT=ON -DUNSTABLE_LAYERS_SIDEBAR=ON -DDEBUG_COMPILE=ON"
   - "make"
   - "ctest"
 
