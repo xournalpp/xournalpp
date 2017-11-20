@@ -40,8 +40,7 @@ if (BUILD_BOOST)
 
   include (ExternalProject)
   ExternalProject_Add (boost
-    SVN_REPOSITORY http://svn.boost.org/svn/boost/branches/release
-    LOG_DOWNLOAD 1
+    GIT_REPOSITORY https://github.com/boostorg/boost.git
     PREFIX "${BOOST_PREFIX}"
 
     CONFIGURE_COMMAND cd "${BOOST_PREFIX}/src/boost" && ./bootstrap.sh --prefix="${BOOST_PREFIX}"
@@ -135,16 +134,15 @@ if (BUILD_POPPLER)
   set (lcms_INCLUDE_DIRS "${lcms${lcms_VERSION}_INCLUDE_DIRS}")
   
   link_directories (
-    "${POPPLER_PREFIX}/src/poppler/poppler/.libs"
-    "${POPPLER_PREFIX}/src/poppler/glib/.libs"
-    "${POPPLER_PREFIX}/src/poppler/cpp/.libs"
-    "${POPPLER_PREFIX}/src/poppler/utils/.libs"
+    "${POPPLER_PREFIX}/src/poppler"
+    "${POPPLER_PREFIX}/src/poppler/glib"
+    "${POPPLER_PREFIX}/src/poppler/cpp"
+    "${POPPLER_PREFIX}/src/poppler/utils"
   )
   set (POPPLER_LIBRARIES
-    libpoppler.a
-    libpoppler-cairo.a
-    libpoppler-cpp.a
-    libpoppler-glib.a
+    libpoppler.so
+    libpoppler-cpp.so
+    libpoppler-glib.so
     
     ${OPENJPEG_LIBRARIES}
     -lopenjpeg
