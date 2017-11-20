@@ -85,17 +85,6 @@ add_includes_ldflags ("${Boost_LIBRARIES}" "${Boost_INCLUDE_DIRS}")
 pkg_check_modules (Gnome REQUIRED "gtk+-2.0 >= 2.18.3" "libglade-2.0 >= 2.6.4" "glib-2.0 >= 2.32.0" "gthread-2.0 >= 2.4.0")
 add_includes_ldflags ("${Gnome_LDFLAGS}" "${Gnome_INCLUDE_DIRS}")
 
-# Glibmm
-option (EXT_GLIBMM "Download external Glibmm library" OFF)
-if (EXT_GLIBMM)
-  include (ExternalDeb)
-  ExternalDeb_Add (Glibmm "http://ftp.de.debian.org/debian/pool/main/g/glibmm2.4/libglibmm-2.4-dev_2.42.0-1_%ARCH%.deb")
-  set (Glibmm_LDFLAGS ${Glibmm_SLIBRARIES})
-else (EXT_GLIBMM)
-  pkg_check_modules (Glibmm REQUIRED "glibmm-2.4 >= 2.38.0")
-endif (EXT_GLIBMM)
-add_includes_ldflags ("${Glibmm_LDFLAGS}" "${Glibmm_INCLUDE_DIRS}")
-
 # Poppler
 option (BUILD_POPPLER "Build the most recent version of Poppler" OFF)
 if (BUILD_POPPLER)
@@ -341,7 +330,6 @@ Unstable features:
 Static libraries:
 	Poppler:                    ${BUILD_POPPLER}
 	Boost:                      ${BUILD_BOOST}
-	Glibmm:                     ${EXT_GLIBMM}
 ")
 
 option (CMAKE_DEBUG_INCLUDES_LDFLAGS "List include dirs and ldflags for xournalpp target" OFF)
