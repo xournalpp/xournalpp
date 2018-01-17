@@ -642,7 +642,8 @@ void ToolHandler::copyCurrentConfig()
 {
 	XOJ_CHECK_TYPE(ToolHandler);
 
-	this->lastSelectedTool = this->current;
+	if (this->lastSelectedTool == NULL)
+		this->lastSelectedTool = this->current;
 }
 
 void ToolHandler::restoreLastConfig()
