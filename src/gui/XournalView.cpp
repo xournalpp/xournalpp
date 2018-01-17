@@ -246,12 +246,22 @@ bool XournalView::onKeyPressEvent(GdkEventKey* event)
 
 	if (event->keyval == GDK_Left)
 	{
+		if (control->getSettings()->isPresentationMode())
+		{
+			control->getScrollHandler()->goToPreviousPage();
+			return true;
+		}
 		layout->scrollRelativ(-scrollKeySize, 0);
 		return true;
 	}
 
 	if (event->keyval == GDK_Right)
 	{
+		if (control->getSettings()->isPresentationMode())
+		{
+			control->getScrollHandler()->goToNextPage();
+			return true;
+		}
 		layout->scrollRelativ(scrollKeySize, 0);
 		return true;
 	}
@@ -633,6 +643,18 @@ double XournalView::getZoom()
 {
 	XOJ_CHECK_TYPE(XournalView);
 
+	size_t p = getCurrentPage();
+	if (p != size_t_npos && p < viewPagesLen)
+	{
+		PageView* page = viewPages[p];
+		if (this->getControl()->getSettings()->isPresentationMode())
+		{
+			double heightZoom = this->getDisplayHeight() / page->getHeight();
+			double widthZoom = this->getDisplayWidth() / page->getWidth();
+			return (heightZoom < widthZoom) ? heightZoom : widthZoom;
+		}
+	}
+
 	return control->getZoomControl()->getZoom();
 }
 
@@ -756,6 +778,22 @@ void XournalView::layoutPages()
 
 	Layout* layout = gtk_xournal_get_layout(this->widget);
 	layout->layoutPages();
+}
+
+int XournalView::getDisplayHeight() const {
+	XOJ_CHECK_TYPE(XournalView);
+
+	GtkAllocation allocation = { 0 };
+	gtk_widget_get_allocation(this->widget, &allocation);
+	return allocation.height;
+}
+
+int XournalView::getDisplayWidth() const {
+	XOJ_CHECK_TYPE(XournalView);
+
+	GtkAllocation allocation = { 0 };
+	gtk_widget_get_allocation(this->widget, &allocation);
+	return allocation.width;
 }
 
 bool XournalView::isPageVisible(int page, int* visibleHeight)

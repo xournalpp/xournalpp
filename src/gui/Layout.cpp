@@ -179,8 +179,6 @@ void Layout::layoutPages()
 {
 	XOJ_CHECK_TYPE(Layout);
 
-	int y = 0;
-
 	int len = this->view->viewPagesLen;
 
 	Settings* settings = this->view->getControl()->getSettings();
@@ -188,6 +186,11 @@ void Layout::layoutPages()
 	bool horizontalSpace = settings->getAddHorizontalSpace();
 	bool dualPage = settings->isShowTwoPages();
 
+	int padding = XOURNAL_PADDING;
+
+	if (settings->isPresentationMode()) {
+		padding = 0;
+	}
 	int size[2] = { 0, 0 };
 
 	// we need at least 2 page for dual page view
@@ -218,25 +221,27 @@ void Layout::layoutPages()
 	int marginRight = 0;
 	int marginTop = 0;
 	int marginBottom = 0;
+	int width = padding + size[0];
+	int y = padding;
 
-	y += XOURNAL_PADDING;
-
-	int width = XOURNAL_PADDING + size[0];
 	if (dualPage)
 	{
-		width += XOURNAL_PADDING_BETWEEN + size[1] + XOURNAL_PADDING;
+		width += XOURNAL_PADDING_BETWEEN + size[1] + padding;
 	}
 	else
 	{
-		width += XOURNAL_PADDING;
+		width += padding;
 	}
 
 	GtkAllocation alloc;
 	gtk_widget_get_allocation(this->view->getWidget(), &alloc);
 
 	marginLeft = marginRight = (alloc.width - width) / 2;
-	marginLeft = MAX(marginLeft, 10);
-	marginRight = MAX(marginRight, 10);
+	int minMargin = 10;
+	if (settings->isPresentationMode())
+		minMargin = 0;
+	marginLeft = MAX(marginLeft, minMargin);
+	marginRight = MAX(marginRight, minMargin);
 
 	if (horizontalSpace)
 	{
@@ -277,7 +282,7 @@ void Layout::layoutPages()
 			 */
 			if (i == 0)
 			{
-				int x = XOURNAL_PADDING + size[0] + XOURNAL_PADDING_BETWEEN;
+				int x = padding + size[0] + XOURNAL_PADDING_BETWEEN;
 
 				v->layout.setX(x);
 				v->layout.setY(y);
@@ -303,7 +308,7 @@ void Layout::layoutPages()
 				}
 
 				// left page, align right
-				int x1 = XOURNAL_PADDING + (size[0] - v->getDisplayWidth());
+				int x1 = padding + (size[0] - v->getDisplayWidth());
 				v->layout.setX(x1);
 				v->layout.setY(y);
 				v->layout.setMarginLeft(marginLeft);
@@ -312,7 +317,7 @@ void Layout::layoutPages()
 				// if right page available, align left
 				if (v2 != NULL)
 				{
-					int x2 = XOURNAL_PADDING + size[0] + XOURNAL_PADDING_BETWEEN;
+					int x2 = padding + size[0] + XOURNAL_PADDING_BETWEEN;
 
 					v2->layout.setX(x2);
 					v2->layout.setY(y);
@@ -331,7 +336,7 @@ void Layout::layoutPages()
 			 * [===]
 			 *  [=]
 			 */
-			int x = (size[0] - v->getDisplayWidth()) / 2 + XOURNAL_PADDING;
+			int x = padding + (size[0] - v->getDisplayWidth()) / 2;
 
 			v->layout.setX(x);
 			v->layout.setY(y);
@@ -341,12 +346,10 @@ void Layout::layoutPages()
 			height = v->getDisplayHeight();
 		}
 
-		y += height;
-
-		y += XOURNAL_PADDING_BETWEEN + verticalSpaceBetweenSlides;
+		y += height + padding + verticalSpaceBetweenSlides;
 	}
 
-	int height = marginTop + XOURNAL_PADDING + y + XOURNAL_PADDING + marginBottom;
+	int height = marginTop + y + marginBottom + padding;
 
 	this->setLayoutSize(marginLeft + width + marginRight, height);
 	this->view->pagePosition->update(this->view->viewPages, len, height);
@@ -451,8 +454,14 @@ void Layout::ensureRectIsVisible(int x, int y, int width, int height)
 {
 	XOJ_CHECK_TYPE(Layout);
 
-	this->scrollHorizontal->ensureAreaIsVisible(x - 5, x + width + 10);
-	this->scrollVertical->ensureAreaIsVisible(y - 5, y + height + 10);
+	// Don't add extra room when presenting
+	if(this->view->getControl()->getSettings()->isPresentationMode()) {
+		this->scrollHorizontal->ensureAreaIsVisible(x, x + width);
+		this->scrollVertical->ensureAreaIsVisible(y, y + height);
+	} else {
+		this->scrollHorizontal->ensureAreaIsVisible(x - 5, x + width + 10);
+		this->scrollVertical->ensureAreaIsVisible(y - 5, y + height + 10);
+	}
 }
 
 bool Layout::scrollEvent(GdkEventScroll* event)
