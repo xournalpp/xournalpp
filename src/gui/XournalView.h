@@ -77,6 +77,9 @@ public:
 
 	void resetShapeRecognizer();
 
+	int getDisplayWidth() const;
+	int getDisplayHeight() const;
+
 	bool isPageVisible(int page, int* visibleHeight);
 
 	void ensureRectIsVisible(int x, int y, int width, int heigth);
