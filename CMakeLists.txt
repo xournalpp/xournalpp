@@ -94,10 +94,10 @@ if (BUILD_POPPLER)
   include (ExternalProject)
   ExternalProject_Add (poppler
     GIT_REPOSITORY "git://git.freedesktop.org/git/poppler/poppler"
+    GIT_TAG "poppler-0.61.1"
     PREFIX "${POPPLER_PREFIX}"
-    
-    CONFIGURE_COMMAND cd "${POPPLER_PREFIX}/src/poppler" && ${CMAKE_COMMAND} . -DBUILD_QT5_TESTS:BOOL="0" -DENABLE_QT4:BOOL="0" -DBUILD_QT4_TESTS:BOOL="0" -DENABLE_UTILS:BOOL="0" -DWITH_Qt4:BOOL="0" -DENABLE_QT5:BOOL="0"
-    BUILD_COMMAND cd "${POPPLER_PREFIX}/src/poppler" && make
+
+    CMAKE_ARGS -DBUILD_QT5_TESTS:BOOL="0" -DENABLE_QT4:BOOL="0" -DBUILD_QT4_TESTS:BOOL="0" -DENABLE_UTILS:BOOL="0" -DWITH_Qt4:BOOL="0" -DENABLE_QT5:BOOL="0"
     INSTALL_COMMAND ""
   )
   
@@ -123,10 +123,10 @@ if (BUILD_POPPLER)
   set (lcms_INCLUDE_DIRS "${lcms${lcms_VERSION}_INCLUDE_DIRS}")
   
   link_directories (
-    "${POPPLER_PREFIX}/src/poppler"
-    "${POPPLER_PREFIX}/src/poppler/glib"
-    "${POPPLER_PREFIX}/src/poppler/cpp"
-    "${POPPLER_PREFIX}/src/poppler/utils"
+    "${POPPLER_PREFIX}/src/poppler-build"
+    "${POPPLER_PREFIX}/src/poppler-build/glib"
+    "${POPPLER_PREFIX}/src/poppler-build/cpp"
+    "${POPPLER_PREFIX}/src/poppler-build/utils"
   )
   set (POPPLER_LIBRARIES
     libpoppler.so
@@ -142,10 +142,12 @@ if (BUILD_POPPLER)
   # -lopenjpeg added as fallback
   
   set (POPPLER_INCLUDE_DIRS
+    "${POPPLER_PREFIX}/src/poppler-build"
+    "${POPPLER_PREFIX}/src/poppler-build/poppler"
+    "${POPPLER_PREFIX}/src/poppler-build/glib"
+    "${POPPLER_PREFIX}/src/poppler-build/cpp"
+
     "${POPPLER_PREFIX}/src/poppler"
-    "${POPPLER_PREFIX}/src/poppler/poppler"
-    "${POPPLER_PREFIX}/src/poppler/glib"
-    "${POPPLER_PREFIX}/src/poppler/cpp"
     
     ${OPENJPEG_INCLUDE_DIRS}
     ${JPEG_INCLUDE_DIRS}
@@ -155,7 +157,7 @@ if (BUILD_POPPLER)
 
 else ()
 
-  find_package (Poppler)
+  find_package (Poppler 0.58.0)
   if (NOT POPPLER_FOUND)
     message (FATAL_ERROR "Poppler not found – you should enable BUILD_POPPLER CMake flag")
   endif (NOT POPPLER_FOUND)
