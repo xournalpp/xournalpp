@@ -40,6 +40,14 @@ dnf groups install "C Development Tools and Libraries"
 dnf install cmake libglade2-devel texlive-scheme-basic texlive-dvipng glibmm24-devel gtk2-devel gtk+-devel boost boost-devel poppler-glib-devel
 ````
 
+For Ubuntu/Debian:
+
+````bash
+sudo apt-get install cmake libboost-all-dev libcppunit-dev dvipng texlive
+liblcms2-dev libopenjpeg-dev libjpeg-dev fontconfig librsvg2-dev libglade2-dev
+libpoppler-dev libpoppler-cpp-dev libpoppler-glib-dev libpoppler-private-dev
+````
+
 Basic steps are:
 ````bash
 git clone http://github.com/xournalpp/xournalpp.git
@@ -50,8 +58,11 @@ cmake ..
 make
 ````
 
+On Ubuntu 16.04, you may need to configure cmake with `-DBUILD_POPPLER=ON` due
+to #234.
+
 If you'd like to enable mathtex support you should add `-DENABLE_MATHTEX=ON` to cmake command or use `cmake-gui ..`
-to see graphically all available options.
+to see graphically all available options. However, this should already be enabled by default.
 
 The binary executable will be in `build/src/` subdirectory.
 
