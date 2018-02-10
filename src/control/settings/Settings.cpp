@@ -892,7 +892,8 @@ void Settings::save()
 		saveData(root, p.first, p.second);
 	}
 
-	xmlSaveFormatFileEnc(filename.c_str(), doc, "ISO-8859-1", 1);
+	//xmlSaveFormatFileEnc(filename.c_str(), doc, "ISO-8859-1", 1);
+	xmlSaveFormatFileEnc(filename.c_str(), doc, "UTF-8", 1);
 	xmlFreeDoc(doc);
 }
 
