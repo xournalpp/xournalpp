@@ -144,7 +144,7 @@ msgstr "<b>扩展输入</b>"
 
 #: ../ui/settings.glade:1610
 msgid "<b>Fullscreen</b>"
-msgstr "<b>全屏</b>"
+msgstr "<b>全屏模式</b>"
 
 #: ../ui/settings.glade:789
 msgid "<b>Help</b> (Placeholders)"
@@ -176,7 +176,7 @@ msgstr "<b>预设颜色</b>"
 
 #: ../ui/settings.glade:1711
 msgid "<b>Presentation</b> Another Fullscreen Mode, <i>Start with F5</i>"
-msgstr "<b>演讲</b> (备选全屏模式 <i>使用F5激活</i>)"
+msgstr "<b>演讲模式</b> (备选全屏模式 <i>使用F5激活</i>)"
 
 #: ../ui/settings.glade:148
 msgid "<b>Pressure sensitivity</b>"
@@ -1434,7 +1434,7 @@ msgstr "最近的日志文件名：{1}"
 
 #: ../ui/settings.glade:1056
 msgid "The unit of the ruler is cm"
-msgstr ""
+msgstr "标尺的单位是厘米"
 
 #: ../src/control/XournalMain.cpp:86
 msgid ""
