@@ -612,7 +612,7 @@ msgstr "Eingabegerät"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:128
 msgid "Disable Ruler & Stroke Recognizer"
-msgstr "Maßtab und Figurenerkennung deaktivieren"
+msgstr "Maßstab und Figurenerkennung deaktivieren"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:62
 msgid "Disable drawing for this device"
@@ -818,7 +818,7 @@ msgstr "Schriftart"
 
 #: ../src/util/LatexAction.cpp:52
 msgid "Found mathtex in your path! TeX area is {1}"
-msgstr ""MathTeX wurde im Pfad gefunden! TeX-Feld ist %s"
+msgstr "MathTeX wurde im Pfad gefunden! TeX-Feld ist %s"
 
 #: ../ui/main.glade:315
 msgid "Fullscreen"
