@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Xournalpp 0.9\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-09-30 23:59+0200\n"
-"PO-Revision-Date: 2018-02-16 23:21+0100\n"
+"PO-Revision-Date: 2018-02-16 23:43+0100\n"
 "Last-Translator: Martin Putzlocher <mp@mint-oer.de>\n"
 "Language-Team: DE\n"
 "Language: de\n"
@@ -33,7 +33,7 @@ msgstr " LaTeX"
 #: ../src/gui/MainWindow.cpp:808
 msgctxt "Page {pagenumber} \"of {pagecount}\""
 msgid " of {1}{2}"
-msgstr " von %i %s"
+msgstr ""
 
 #: ../src/undo/DeleteUndoAction.cpp:124 ../src/undo/AddUndoAction.cpp:126
 msgid " stroke"
@@ -661,7 +661,6 @@ msgid "Draw stroke"
 msgstr "Linie zeichen"
 
 #: ../src/undo/TextBoxUndoAction.cpp:52
-#, fuzzy
 msgid "Edit text"
 msgstr "Text schreiben"
 
@@ -1314,7 +1313,7 @@ msgstr "Bereich auswählen"
 
 #: ../ui/settings.glade:1968
 msgid "Select the tool and Settings if you press the Default Button"
-msgstr "Wählen Sie die Werkzeuge und Einstellungen, die als Standardfestgelegt werden sollen."
+msgstr "Wählen Sie die Werkzeuge und Einstellungen, die als Standard festgelegt werden sollen."
 
 #: ../ui/settings.glade:1782
 msgid "Select toolbar:"
@@ -1399,7 +1398,7 @@ msgstr "Unterstützte Dateiformate"
 
 #: ../ui/main.glade:340
 msgid "T_oolbars"
-msgstr "Werkzeugleisten (o)"
+msgstr "Werkzeugleisten"
 
 #: ../ui/pagesize.glade:25
 msgid "Template:"
@@ -1681,7 +1680,7 @@ msgstr "Xournal++ Einstellungen"
 #: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:142
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:19
 msgid "Yellow"
-msgstr "Gelb"
+msgstr "gelb"
 
 #: ../src/control/Control.cpp:1488
 #, fuzzy
@@ -1693,12 +1692,11 @@ msgstr ""
 "Bitte wählen Sie einen anderen Hintergrundtyp: Menü \"Journal\" / \"Hintergrund neuer Seiten\"."
 
 #: ../src/control/Control.cpp:1687
-#, fuzzy
 msgid ""
 "You don't have any PDF pages to select from. Cancel operation.\n"
 "Please select another background type: Menu \"Journal\" → \"Insert Page Type\"."
 msgstr ""
-"Es gibt keine PDF Seiten zum auswählen. Abbruch.\n"
+"Es gibt keine PDF Seiten zum Auswählen. Abbruch.\n"
 "Bitte wählen Sie einen anderen Hintergrundtyp: Menü \"Journal\" / \"Hintergrund neuer Seiten\"."
 
 #: ../src/control/XournalMain.cpp:89
@@ -1827,7 +1825,7 @@ msgstr "_liniert mit Rand"
 
 #: ../ui/main.glade:357
 msgid "_Manage"
-msgstr "_Werkzeugleisten Verwalten"
+msgstr "_Werkzeugleisten verwalten"
 
 #: ../ui/main.glade:433
 msgid "_Navigation"
