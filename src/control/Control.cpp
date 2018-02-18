@@ -455,6 +455,26 @@ void Control::actionPerformed(ActionType type, ActionGroup group,
 	case ACTION_GOTO_LAST:
 		scrollHandler->scrollToPage(this->doc->getPageCount() - 1);
 		break;
+	case ACTION_GOTO_NEXT_LAYER:
+			/* //exact commands unclear
+		PageRef p = getCurrentPage();
+		if (p.isValid())
+		{
+			p->setSelectedLayerId(this->win->getCurrentLayer());
+			this->win->getXournal()->layerChanged(getCurrentPageNo());
+			this->win->updateLayerCombobox();
+
+			if (p.isValid())
+			{
+				int layer = p->getSelectedLayerId();
+				fireEnableAction(ACTION_DELETE_LAYER, layer > 0);
+			}
+		} */
+		break;
+	case ACTION_GOTO_BACK_LAYER:
+		break;
+	case ACTION_GOTO_TOP_LAYER:
+		break;
 	case ACTION_GOTO_NEXT_ANNOTATED_PAGE:
 		scrollHandler->scrollToAnnotatedPage(true);
 		break;
