@@ -87,8 +87,8 @@
                         <property name="can_focus">False</property>
                         <property name="use_underline">True</property>
                         <property name="use_stock">True</property>
-                        <accelerator key="s" signal="activate" modifiers="GDK_SHIFT_MASK | GDK_CONTROL_MASK"/>
                         <accelerator key="u" signal="activate" modifiers="GDK_CONTROL_MASK"/>
+                        <accelerator key="s" signal="activate" modifiers="GDK_SHIFT_MASK | GDK_CONTROL_MASK"/>
                       </object>
                     </child>
                     <child>
@@ -112,8 +112,8 @@
                         <property name="can_focus">False</property>
                         <property name="label" translatable="yes">Export as...</property>
                         <property name="use_underline">True</property>
-                        <accelerator key="e" signal="activate" modifiers="GDK_SHIFT_MASK | GDK_CONTROL_MASK"/>
                         <accelerator key="i" signal="activate" modifiers="GDK_CONTROL_MASK"/>
+                        <accelerator key="e" signal="activate" modifiers="GDK_SHIFT_MASK | GDK_CONTROL_MASK"/>
                       </object>
                     </child>
                     <child>
@@ -379,8 +379,8 @@
                         <property name="can_focus">False</property>
                         <property name="use_underline">True</property>
                         <property name="use_stock">True</property>
-                        <accelerator key="plus" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                         <accelerator key="KP_Add" signal="activate" modifiers="GDK_CONTROL_MASK"/>
+                        <accelerator key="plus" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                       </object>
                     </child>
                     <child>
@@ -390,8 +390,8 @@
                         <property name="can_focus">False</property>
                         <property name="use_underline">True</property>
                         <property name="use_stock">True</property>
-                        <accelerator key="minus" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                         <accelerator key="KP_Subtract" signal="activate" modifiers="GDK_CONTROL_MASK"/>
+                        <accelerator key="minus" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                       </object>
                     </child>
                     <child>
@@ -469,6 +469,38 @@
                         <property name="label" translatable="yes">_Last Page</property>
                         <property name="use_underline">True</property>
                         <accelerator key="End" signal="activate" modifiers="GDK_CONTROL_MASK"/>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkSeparatorMenuItem" id="separatormenuitem17">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkMenuItem" id="menuNavigationPreviousLayer">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="label" translatable="yes">_Previous Layer</property>
+                        <property name="use_underline">True</property>
+                        <accelerator key="Left" signal="activate" modifiers="GDK_SHIFT_MASK | GDK_CONTROL_MASK"/>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkMenuItem" id="menuNavigationNextLayer">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="label" translatable="yes">_Next Layer</property>
+                        <property name="use_underline">True</property>
+                        <accelerator key="Right" signal="activate" modifiers="GDK_SHIFT_MASK | GDK_CONTROL_MASK"/>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkMenuItem" id="menuNavigationTopLayer">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="label" translatable="yes">_Top Layer</property>
+                        <property name="use_underline">True</property>
                       </object>
                     </child>
                     <child>
@@ -1552,8 +1584,8 @@
                       <object class="GtkLabel" id="lbSearchState">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="xalign">0</property>
                         <property name="ellipsize">end</property>
+                        <property name="xalign">0</property>
                       </object>
                     </child>
                   </object>
