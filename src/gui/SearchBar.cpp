@@ -84,7 +84,7 @@ void SearchBar::search(const char* text)
 	}
 	else
 	{
-		searchTextonCurrentPage(NULL, NULL, NULL);
+		searchTextonCurrentPage("", NULL, NULL);
 		gtk_label_set_text(GTK_LABEL(lbSearchState), "");
 	}
 
