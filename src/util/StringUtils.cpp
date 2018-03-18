@@ -46,7 +46,7 @@ StringTokenizer::~StringTokenizer()
 {
 	XOJ_CHECK_TYPE(StringTokenizer);
 
-	//g_free(this->str);
+	g_free(this->str);
 	this->str = NULL;
 
 	XOJ_RELEASE_TYPE(StringTokenizer);
