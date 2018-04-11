@@ -55,6 +55,7 @@ XournalView::XournalView(GtkWidget* parent, Control* control)
 	gtk_widget_grab_focus(this->widget);
 
 	this->cleanupTimeout = g_timeout_add_seconds(5, (GSourceFunc) clearMemoryTimer, this);
+	g_signal_connect(this->widget, "size-allocate", G_CALLBACK(staticLayoutPages), this);
 }
 
 XournalView::~XournalView()
@@ -87,6 +88,13 @@ XournalView::~XournalView()
 gint pageViewCmpSize(PageView* a, PageView* b)
 {
 	return a->getLastVisibleTime() - b->getLastVisibleTime();
+}
+
+void XournalView::staticLayoutPages(GtkWidget *widget, GtkAllocation *allocation, void *data)
+{
+	XournalView *xv = (XournalView *)data;
+	XOJ_CHECK_TYPE_OBJ(xv, XournalView);
+	xv->layoutPages();
 }
 
 gboolean XournalView::clearMemoryTimer(XournalView* widget)
