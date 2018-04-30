@@ -94,7 +94,7 @@ if (BUILD_POPPLER)
   include (ExternalProject)
   ExternalProject_Add (poppler
     GIT_REPOSITORY "git://git.freedesktop.org/git/poppler/poppler"
-    GIT_TAG "poppler-0.61.1"
+    GIT_TAG "poppler-0.64.0"
     PREFIX "${POPPLER_PREFIX}"
 
     CMAKE_ARGS -DBUILD_QT5_TESTS:BOOL="0" -DENABLE_QT4:BOOL="0" -DBUILD_QT4_TESTS:BOOL="0" -DENABLE_UTILS:BOOL="0" -DWITH_Qt4:BOOL="0" -DENABLE_QT5:BOOL="0"
