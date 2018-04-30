@@ -20,7 +20,7 @@
 class XojPopplerAction
 {
 public:
-	XojPopplerAction(XojPopplerDocument doc, LinkAction* linkAction, string title);
+	XojPopplerAction(XojPopplerDocument doc, const LinkAction* linkAction, string title);
 	virtual ~XojPopplerAction();
 
 public:
@@ -28,12 +28,12 @@ public:
 	string getTitle();
 
 private:
-	void linkFromDest(LinkDestination* link, LinkDest* dest);
+	void linkFromDest(LinkDestination* link, const LinkDest* dest);
 
 private:
 	XOJ_TYPE_ATTRIB;
 
 	XojPopplerDocument doc;
-	LinkAction* linkAction;
+	const LinkAction* linkAction;
 	string title;
 };

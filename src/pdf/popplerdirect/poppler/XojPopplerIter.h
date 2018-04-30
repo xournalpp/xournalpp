@@ -19,7 +19,7 @@ class GooList;
 class XojPopplerIter
 {
 public:
-	XojPopplerIter(XojPopplerDocument doc, GooList* items);
+	XojPopplerIter(XojPopplerDocument doc, const GooList* items);
 	virtual ~XojPopplerIter();
 
 public:
@@ -29,12 +29,12 @@ public:
 	XojPopplerAction* getAction();
 
 private:
-	static string unicodeToChar(Unicode* unicode, int len);
+	static string unicodeToChar(const Unicode* unicode, int len);
 
 private:
 	XOJ_TYPE_ATTRIB;
 
 	XojPopplerDocument doc;
-	GooList* items;
+	const GooList* items;
 	int index;
 };

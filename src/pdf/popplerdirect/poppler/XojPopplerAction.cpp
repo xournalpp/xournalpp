@@ -1,7 +1,7 @@
 #include "XojPopplerAction.h"
 #include "XojPopplerDocument.h"
 
-XojPopplerAction::XojPopplerAction(XojPopplerDocument doc, LinkAction* linkAction, string title) : doc(doc), title(title)
+XojPopplerAction::XojPopplerAction(XojPopplerDocument doc, const LinkAction* linkAction, string title) : doc(doc), title(title)
 {
     XOJ_INIT_TYPE(XojPopplerAction);
 
@@ -13,7 +13,7 @@ XojPopplerAction::~XojPopplerAction()
     XOJ_RELEASE_TYPE(XojPopplerAction);
 }
 
-void XojPopplerAction::linkFromDest(LinkDestination* link, LinkDest* dest)
+void XojPopplerAction::linkFromDest(LinkDestination* link, const LinkDest* dest)
 {
     XOJ_CHECK_TYPE(XojPopplerAction);
 
@@ -110,10 +110,10 @@ XojLinkDest* XojPopplerAction::getDestination()
     // every other action is not supported in Xournal
     if (this->linkAction->getKind() == actionGoTo)
     {
-        LinkGoTo* link = dynamic_cast<LinkGoTo*> (this->linkAction);
+        const LinkGoTo* link = dynamic_cast<const LinkGoTo*> (this->linkAction);
 
-        GooString* namedDest = link->getNamedDest();
-        LinkDest* d = NULL;
+        const GooString* namedDest = link->getNamedDest();
+        const LinkDest* d = NULL;
         if (namedDest)
         {
             d = doc.getDoc()->findDest(namedDest);
