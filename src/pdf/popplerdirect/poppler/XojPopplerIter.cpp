@@ -5,7 +5,7 @@
 #include <poppler/UnicodeMap.h>
 #include "XojPopplerDocument.h"
 
-XojPopplerIter::XojPopplerIter(XojPopplerDocument doc, GooList* items)
+XojPopplerIter::XojPopplerIter(XojPopplerDocument doc, const GooList* items)
 {
     XOJ_INIT_TYPE(XojPopplerIter);
 
@@ -56,7 +56,7 @@ XojPopplerIter* XojPopplerIter::getChildIter()
     return child;
 }
 
-string XojPopplerIter::unicodeToChar(Unicode* unicode, int len)
+string XojPopplerIter::unicodeToChar(const Unicode* unicode, int len)
 {
     static UnicodeMap* uMap = NULL;
     if (uMap == NULL)
@@ -87,7 +87,7 @@ XojPopplerAction* XojPopplerIter::getAction()
     {
         return NULL;
     }
-    LinkAction* linkAction = item->getAction();
+    const LinkAction* linkAction = item->getAction();
 
     string title = unicodeToChar(item->getTitle(), item->getTitleLength());
 
