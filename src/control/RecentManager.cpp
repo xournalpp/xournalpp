@@ -180,7 +180,11 @@ GList* RecentManager::filterRecent(GList* items, bool xoj)
 		if (!ba::starts_with(uri, "file://")) continue;
 
 		using namespace boost::filesystem;
-		if (!exists(path(uri.substr(7)))) continue;	//substr is for removing uri's file://
+		try {
+			if (!exists(path(uri.substr(7)))) continue;	//substr is for removing uri's file://
+		} catch (boost::filesystem::filesystem_error) {
+			continue;
+		}
 
 		if (xoj && ba::ends_with(uri, ".xoj"))
 		{
