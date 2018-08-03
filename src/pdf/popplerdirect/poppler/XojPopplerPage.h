@@ -17,6 +17,7 @@
 #include <poppler/OptionalContent.h>
 #include <poppler/PDFDoc.h>
 #include <poppler/TextOutputDev.h>
+#include <poppler/CairoOutputDev.h>
 #include "pdf/popplerdirect/workaround/workaround.h"
 
 #include <StringUtils.h>

@@ -13,7 +13,7 @@ XojPopplerAction::~XojPopplerAction()
     XOJ_RELEASE_TYPE(XojPopplerAction);
 }
 
-void XojPopplerAction::linkFromDest(LinkDestination* link, LinkDest* dest)
+void XojPopplerAction::linkFromDest(LinkDestination* link, const LinkDest* dest)
 {
     XOJ_CHECK_TYPE(XojPopplerAction);
 
@@ -112,8 +112,8 @@ XojLinkDest* XojPopplerAction::getDestination()
     {
         LinkGoTo* link = dynamic_cast<LinkGoTo*> (this->linkAction);
 
-        GooString* namedDest = link->getNamedDest();
-        LinkDest* d = NULL;
+        const GooString* namedDest = link->getNamedDest();
+        const LinkDest* d = NULL;
         if (namedDest)
         {
             d = doc.getDoc()->findDest(namedDest);
