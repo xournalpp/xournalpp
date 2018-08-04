@@ -20,7 +20,7 @@
 class XojPopplerAction
 {
 public:
-	XojPopplerAction(XojPopplerDocument doc, LinkAction* linkAction, string title);
+	XojPopplerAction(XojPopplerDocument doc, const LinkAction* linkAction, string title);
 	virtual ~XojPopplerAction();
 
 public:
@@ -34,6 +34,6 @@ private:
 	XOJ_TYPE_ATTRIB;
 
 	XojPopplerDocument doc;
-	LinkAction* linkAction;
+	const LinkAction* linkAction;
 	string title;
 };
