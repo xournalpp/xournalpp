@@ -25,7 +25,7 @@ public:
 
 public:
 	void writeObject(Object* obj, XojPopplerDocument doc);
-	void writeString(GooString* s);
+	void writeString(const GooString* s);
 	void writeDictionnary(Dict* dict, XojPopplerDocument doc);
 	void writeRawStream(Stream* str, XojPopplerDocument doc);
 	void writeStream(Stream* str);

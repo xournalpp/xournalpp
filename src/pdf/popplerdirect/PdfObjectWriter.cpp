@@ -240,7 +240,7 @@ void PdfObjectWriter::writeDictionnary(Dict* dict, XojPopplerDocument doc)
 	this->writer->write(">> ");
 }
 
-void PdfObjectWriter::writeString(GooString* s)
+void PdfObjectWriter::writeString(const GooString* s)
 {
 	XOJ_CHECK_TYPE(PdfObjectWriter);
 
