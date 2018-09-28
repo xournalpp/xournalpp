@@ -48,13 +48,13 @@ liblcms2-dev libopenjpeg-dev libjpeg-dev fontconfig librsvg2-dev libglade2-dev
 libpoppler-dev libpoppler-cpp-dev libpoppler-glib-dev libpoppler-private-dev
 ````
 
-Basic steps are:
+Basic steps are: (need to compile with -fpermissive due to const library changes in poppler)
 ````bash
 git clone http://github.com/xournalpp/xournalpp.git
 cd xournalpp
 mkdir build
 cd build
-cmake ..
+cmake -DCMAKE_CXX_FLAGS="-fpermissive" ..
 make
 ````
 
