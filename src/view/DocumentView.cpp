@@ -372,7 +372,7 @@ void DocumentView::paintBackgroundGraph()
 {
 	XOJ_CHECK_TYPE(DocumentView);
 
-	applyColor(cr, 0x40A0FF);
+	applyColor(cr, 0xBDBDBD);	//maybe I should read settings like these from ini configs
 
 	gdk_threads_enter();
 	cairo_set_line_width(cr, 0.5);
