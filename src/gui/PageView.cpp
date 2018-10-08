@@ -691,6 +691,7 @@ void PageView::repaintArea(double x1, double y1, double x2, double y2)
 
 	double zoom = xournal->getZoom();
 	xournal->getRepaintHandler()->repaintPageArea(this, x1 * zoom - 10, y1 * zoom - 10, x2 * zoom + 20, y2 * zoom + 20);
+	//xournal->getRepaintHandler()->repaintPageArea(this, x1 * zoom - 10, y1 * zoom - 10, x2 * zoom + 90, y2 * zoom + 90);
 }
 
 Rectangle* PageView::rectOnWidget(double x, double y, double width, double height)
@@ -962,6 +963,7 @@ int PageView::getX()
 {
 	XOJ_CHECK_TYPE(PageView);
 
+	//std::cout<<"getX: "<<this->layout.getLayoutAbsoluteX();
 	return this->layout.getLayoutAbsoluteX();
 }
 
@@ -969,6 +971,7 @@ int PageView::getY()
 {
 	XOJ_CHECK_TYPE(PageView);
 
+	//std::cout<<"getY: "<<this->layout.getLayoutAbsoluteY();
 	return this->layout.getLayoutAbsoluteY();
 }
 

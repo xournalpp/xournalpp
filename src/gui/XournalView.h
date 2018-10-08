@@ -49,6 +49,8 @@ public:
 
 	void scrollTo(size_t pageNo, double y);
 
+	void scrollToXY(size_t pageNo, double x, double y);
+
 	size_t getCurrentPage();
 
 	void updateXEvents();
@@ -81,6 +83,8 @@ public:
 	int getDisplayHeight() const;
 
 	bool isPageVisible(int page, int* visibleHeight);
+
+	bool isPageVisibleXY(int page, double* x, double* y, double* visibleWidth, double* visibleHeight);
 
 	void ensureRectIsVisible(int x, int y, int width, int heigth);
 

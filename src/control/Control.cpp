@@ -2965,8 +2965,9 @@ void Control::clipboardPasteImage(GdkPixbuf* img)
 	int width = gdk_pixbuf_get_width(img);
 	int height = gdk_pixbuf_get_height(img);
 
-	image->setWidth(width);
-	image->setHeight(height);
+	//half the size is much more manageable
+	image->setWidth(width/2);
+	image->setHeight(height/2);
 
 	clipboardPaste(image);
 }
@@ -3014,7 +3015,8 @@ void Control::clipboardPaste(Element* e)
 	double height = e->getElementHeight();
 
 	e->setX(x - width / 2);
-	e->setY(y - height / 2);
+	//e->setY(y - height / 2);
+    e->setY(y);
 	layer->addElement(e);
 
 	this->doc->unlock();

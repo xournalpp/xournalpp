@@ -340,3 +340,5 @@ if (CMAKE_DEBUG_INCLUDES_LDFLAGS)
     message ("Include directories: ${xournalpp_INCLUDE_DIRS}")
     message ("LDFLAGS/LIBRARIES: ${xournalpp_LDFLAGS}")
 endif (CMAKE_DEBUG_INCLUDES_LDFLAGS)
+
+set(CMAKE_BUILD_TYPE Debug)
