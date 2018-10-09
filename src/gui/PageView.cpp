@@ -963,7 +963,6 @@ int PageView::getX()
 {
 	XOJ_CHECK_TYPE(PageView);
 
-	//std::cout<<"getX: "<<this->layout.getLayoutAbsoluteX();
 	return this->layout.getLayoutAbsoluteX();
 }
 
@@ -971,7 +970,6 @@ int PageView::getY()
 {
 	XOJ_CHECK_TYPE(PageView);
 
-	//std::cout<<"getY: "<<this->layout.getLayoutAbsoluteY();
 	return this->layout.getLayoutAbsoluteY();
 }
 

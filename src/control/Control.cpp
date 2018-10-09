@@ -3014,9 +3014,10 @@ void Control::clipboardPaste(Element* e)
 	double width = e->getElementWidth();
 	double height = e->getElementHeight();
 
+	std::cout<<"x: "<<x<<" y: "<<y<<"\n";
 	e->setX(x - width / 2);
 	//e->setY(y - height / 2);
-    e->setY(y);
+    	e->setY(y);
 	layer->addElement(e);
 
 	this->doc->unlock();

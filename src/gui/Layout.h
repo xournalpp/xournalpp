@@ -46,6 +46,13 @@ public:
 
 	void checkSelectedPage();
 
+
+	/**
+	 * The width and height of all our pages
+	 */
+	int layoutWidth;
+	int layoutHeight;
+
 private:
 	XOJ_TYPE_ATTRIB;
 
@@ -70,6 +77,6 @@ private:
 	/**
 	 * The width and height of all our pages
 	 */
-	int layoutWidth;
-	int layoutHeight;
+	//int layoutWidth;
+	//int layoutHeight;
 };

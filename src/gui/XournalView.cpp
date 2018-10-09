@@ -461,27 +461,44 @@ void XournalView::layerChanged(size_t page)
 
 void XournalView::getPasteTarget(double& x, double& y)
 {
-	XOJ_CHECK_TYPE(XournalView);
+    XOJ_CHECK_TYPE(XournalView);
+    
+    size_t pageNo = getCurrentPage();
+    if (pageNo == size_t_npos)
+    {
+    	return;
+    }
+    
+    Rectangle* rect = getVisibleRect(pageNo); //don't quite like it
+    
+    double pageX, pageY, pageW, pageH;
+    int currentPage = this->getCurrentPage();
+    XournalView::isPageVisibleXY(currentPage, &pageX, &pageY, &pageW, &pageH);
 
-	size_t pageNo = getCurrentPage();
-	if (pageNo == size_t_npos)
-	{
-		return;
-	}
 
-	//Rectangle* rect = getVisibleRect(pageNo); //don't quite like it
-
-	double pageW, pageH;
-    XournalView::isPageVisibleXY(currentPage, &x, &y, &pageW, &pageH);
-
-/*
     if (rect)
-	{
-		x = rect->width / 2;
-		y = rect->height / 2;
-		delete rect;
-	}
- */
+    {
+	Layout* layout = gtk_xournal_get_layout(this->widget);
+	double layoutHeight = layout->layoutHeight;
+	double visiblePageTop = layout->getVisiblePageTop(pageNo); //not sure if it's useful or not
+
+	double pageOffset = 848; 
+/*	if(pageNo==0)
+		pageOffset=0;
+	else
+		pageOffset=(layoutHeight/numPages); //numPages where do i find it?
+*/
+	x = rect->width / 2;
+	y = pageY - pageOffset*pageNo;
+	//y = rect->height / 2;
+	std::cout<<"pageNo:: "<<pageNo<<"\n";
+	std::cout<<"pageY:: "<<pageY<<"\n";
+	std::cout<<"visiblePageTop: "<<visiblePageTop<<"\n";;
+	std::cout<<"layoutHeight: "<<layoutHeight<<"\n";;
+	std::cout<<"pageOffset: "<<pageOffset<<"\n";;
+	delete rect;
+    }
+
 }
 
 /**
@@ -537,28 +554,28 @@ double getSign(double x)
 }
 void XournalView::zoomChanged(double lastZoom)
 {
-	XOJ_CHECK_TYPE(XournalView);
-
-	Layout* layout = gtk_xournal_get_layout(this->widget);
-	int currentPage = this->getCurrentPage();
-	//double pageTop = layout->getVisiblePageTop(currentPage);
-	double pageTop = 0.0;
-
-	layout->layoutPages();
-
-	double pageX, pageY;
-	double pageW, pageH;
-	XournalView::isPageVisibleXY(currentPage, &pageX, &pageY, &pageW, &pageH);
-	std::cout<<"currentZoom: "<<getZoom()<<"\nLast Zoom: "<<lastZoom<<"\n";
-	//pageX = (pageX/2) + (pageX*(getZoom());
-	//pageY = (pageY - 119 * (getZoom()/5) ) + getZoom()/(getZoom()-lastZoom);
-	//std::cout<<"new pageX: "<<pageX<<" new pageY: "<<pageY<<"\n";
-
-	double deltaZoom=(getZoom()-lastZoom);
-
-    std::cout<<"deltaZoom: "<<deltaZoom<<"\n";
-
-	//this->scrollTo(currentPage, pageTop);	//Don't qute like it
+    XOJ_CHECK_TYPE(XournalView);
+    
+    Layout* layout = gtk_xournal_get_layout(this->widget);
+    int currentPage = this->getCurrentPage();
+    //double pageTop = layout->getVisiblePageTop(currentPage);
+    double pageTop = 0.0;
+    
+    layout->layoutPages();
+    
+    double pageX, pageY;
+    double pageW, pageH;
+    XournalView::isPageVisibleXY(currentPage, &pageX, &pageY, &pageW, &pageH);
+    //std::cout<<"currentZoom: "<<getZoom()<<"\nLast Zoom: "<<lastZoom<<"\n";
+    //pageX = (pageX/2) + (pageX*(getZoom());
+    //pageY = (pageY - 119 * (getZoom()/5) ) + getZoom()/(getZoom()-lastZoom);
+    //std::cout<<"new pageX: "<<pageX<<" new pageY: "<<pageY<<"\n";
+    
+    double deltaZoom=(getZoom()-lastZoom);
+    
+    //std::cout<<"deltaZoom: "<<deltaZoom<<"\n";
+    
+    //this->scrollTo(currentPage, pageTop);	//Don't qute like it
 
     double wOffset = pageW * deltaZoom * 1.5;
     double hOffset = pageH * deltaZoom;
@@ -572,22 +589,22 @@ void XournalView::zoomChanged(double lastZoom)
         wOffset+=2;
     }
 
-	pageY = pageY * getZoom() + hOffset;
+    pageY = pageY * getZoom() + hOffset;
     pageX = pageX * getZoom() + wOffset; //(pageW*(deltaZoom*1.5));
 
-    std::cout<<"pageY: "<<pageY<<"\n";
-    std::cout<<"pageH: "<<pageH<<"\n";
+    //std::cout<<"pageY: "<<pageY<<"\n";
+    //std::cout<<"pageH: "<<pageH<<"\n";
 
-	this->scrollToXY(currentPage, pageX, pageY);
-
-	Document* doc = control->getDocument();
-	doc->lock();
-	path file = doc->getEvMetadataFilename();
-	doc->unlock();
-
-	control->getMetadataManager()->setDouble(file, "zoom", getZoom());
-
-	this->control->getScheduler()->blockRerenderZoom();
+    //this->scrollToXY(currentPage, pageX, pageY);	//don't quite like it ATM
+    
+    Document* doc = control->getDocument();
+    doc->lock();
+    path file = doc->getEvMetadataFilename();
+    doc->unlock();
+    
+    control->getMetadataManager()->setDouble(file, "zoom", getZoom());
+    
+    this->control->getScheduler()->blockRerenderZoom();
 }
 
 void XournalView::pageSizeChanged(size_t page)
