@@ -483,11 +483,13 @@ void XournalView::getPasteTarget(double& x, double& y)
 	double visiblePageTop = layout->getVisiblePageTop(pageNo); //not sure if it's useful or not
 
 	double pageOffset = 848; 
-/*	if(pageNo==0)
+	int numPages = control->getDocument()->getPageCount();
+
+	if(pageNo==0)
 		pageOffset=0;
 	else
-		pageOffset=(layoutHeight/numPages); //numPages where do i find it?
-*/
+		pageOffset=((layoutHeight/numPages)/getZoom());
+
 	x = rect->width / 2;
 	y = pageY - pageOffset*pageNo;
 	//y = rect->height / 2;
