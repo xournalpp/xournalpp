@@ -395,29 +395,45 @@ Control* XournalView::getControl()
 void XournalView::scrollToXY(size_t pageNo, double xDocument, double yDocument)
 {
 	XOJ_CHECK_TYPE(XournalView);
-	double xOffset, yOffset;
 
 	if (pageNo == size_t_npos || pageNo >= this->viewPagesLen)
 	{
 		return;
 	}
 
-	PageView* v = this->viewPages[pageNo];
-
 	Layout* layout = gtk_xournal_get_layout(this->widget);
 
+	double xOffset, yOffset;
+	yOffset = getPageOffsetY(pageNo);
+	xOffset = (layout->getLayoutWidth())/getZoom();
+
+	PageView* v = this->viewPages[pageNo];
+
 	double zoom = getZoom();
+	Rectangle* rect = getVisibleRect(pageNo);
+	double visibleHeight = (double)rect->height;
+	if(rect) delete rect;
 
+	double zoomOffset = yOffset*getZoom()- yOffset; //(visibleHeight*0.04);
+	yOffset += (visibleHeight/getZoom())*pageNo;
 
-	xOffset = v->layout.getLayoutAbsoluteX(); //+ xDocument;
-	yOffset = v->layout.getLayoutAbsoluteY() + yDocument;  //* zoom)/deltaZoom;
+	double layoutAbsX = v->layout.getLayoutAbsoluteX();
+	double layoutAbsY = v->layout.getLayoutAbsoluteY();
+	double displayWidth = v->getDisplayWidth();
+	double displayHeight = v->getDisplayHeight();
 
-//    xOffset = xDocument; // + (zoom/deltaZoom);
-//    yOffset = yDocument; // + (zoom/deltaZoom);
-//    std::cout<<"xDocument: "<<xDocument<<" yDocument: "<<yDocument<<"\n";
+	double scrollDownY = yDocument + yDocument*0.02;
 
-	layout->ensureRectIsVisible(xDocument, yOffset, v->getDisplayWidth(), v->getDisplayHeight());
+	std::cout<<"===XournalView::scrollToXY()===\n";
+	std::cout<<"Display Width: "<<displayWidth<<"\n";
+	std::cout<<"Display Height: "<<displayHeight<<"\n";
+	std::cout<<"Layout Abs X: "<<layoutAbsX<<"\n";
+	std::cout<<"Layout Abs Y: "<<layoutAbsY<<"\n";
+	std::cout<<"scrollDownY: "<<scrollDownY<<"\n";
+	std::cout<<"===============================\n\n";
 
+//	layout->ensureRectIsVisible(xDocument, yOffset, v->getDisplayWidth(), v->getDisplayHeight());
+	layout->ensureRectIsVisible(layoutAbsX, layoutAbsY+scrollDownY, displayWidth, displayHeight);
 }
 void XournalView::scrollTo(size_t pageNo, double yDocument)
 {
@@ -459,6 +475,37 @@ void XournalView::layerChanged(size_t page)
 	}
 }
 
+/** Returns the relative Y coordinate to the top of the visible area */
+double XournalView::getPageOffsetY(size_t pageNo)
+{
+    /** get the layout */
+    Layout* layout = gtk_xournal_get_layout(this->widget);
+
+    /** extract the layout height (sum of the heights from all the pages) */
+    double layoutHeight = layout->getLayoutHeight();
+
+    /** the number of pages will help to determine the height of a single page */
+    int numPages = control->getDocument()->getPageCount();
+
+    /** 
+     * this will get the starting coordinates of the visible area (left-upper corner)
+     * plus the width and Height of the visible area 
+     */
+    double pageX, pageY, pageW, pageH;
+    int currentPage = this->getCurrentPage();
+    XournalView::isPageVisibleXY(currentPage, &pageX, &pageY, &pageW, &pageH);
+
+    double pageOffset;
+
+    /** 
+     * compute the starting coordinates of the visible area 
+     * (taking zoom into account)
+     */
+    pageOffset=((layoutHeight/numPages)/getZoom());
+    
+    return pageY - pageOffset*pageNo;
+}
+
 void XournalView::getPasteTarget(double& x, double& y)
 {
     XOJ_CHECK_TYPE(XournalView);
@@ -471,37 +518,17 @@ void XournalView::getPasteTarget(double& x, double& y)
     
     Rectangle* rect = getVisibleRect(pageNo); //don't quite like it
     
-    double pageX, pageY, pageW, pageH;
-    int currentPage = this->getCurrentPage();
-    XournalView::isPageVisibleXY(currentPage, &pageX, &pageY, &pageW, &pageH);
-
 
     if (rect)
     {
-	Layout* layout = gtk_xournal_get_layout(this->widget);
-	double layoutHeight = layout->layoutHeight;
-	double visiblePageTop = layout->getVisiblePageTop(pageNo); //not sure if it's useful or not
-
-	double pageOffset = 848; 
-	int numPages = control->getDocument()->getPageCount();
-
-	if(pageNo==0)
-		pageOffset=0;
-	else
-		pageOffset=((layoutHeight/numPages)/getZoom());
-
 	x = rect->width / 2;
-	y = pageY - pageOffset*pageNo;
-	//y = rect->height / 2;
-	std::cout<<"pageNo:: "<<pageNo<<"\n";
-	std::cout<<"pageY:: "<<pageY<<"\n";
-	std::cout<<"visiblePageTop: "<<visiblePageTop<<"\n";;
-	std::cout<<"layoutHeight: "<<layoutHeight<<"\n";;
-	std::cout<<"pageOffset: "<<pageOffset<<"\n";;
+	y = getPageOffsetY(pageNo);
+	//y = pageY - getPageOffsetY()*pageNo;
 	delete rect;
     }
 
 }
+
 
 /**
  * Return the rectangle which is visible on screen, in document cooordinates
@@ -564,49 +591,31 @@ void XournalView::zoomChanged(double lastZoom)
     double pageTop = 0.0;
     
     layout->layoutPages();
-    
-    double pageX, pageY;
-    double pageW, pageH;
-    XournalView::isPageVisibleXY(currentPage, &pageX, &pageY, &pageW, &pageH);
-    //std::cout<<"currentZoom: "<<getZoom()<<"\nLast Zoom: "<<lastZoom<<"\n";
-    //pageX = (pageX/2) + (pageX*(getZoom());
-    //pageY = (pageY - 119 * (getZoom()/5) ) + getZoom()/(getZoom()-lastZoom);
-    //std::cout<<"new pageX: "<<pageX<<" new pageY: "<<pageY<<"\n";
-    
-    double deltaZoom=(getZoom()-lastZoom);
-    
-    //std::cout<<"deltaZoom: "<<deltaZoom<<"\n";
-    
-    //this->scrollTo(currentPage, pageTop);	//Don't qute like it
 
-    double wOffset = pageW * deltaZoom * 1.5;
-    double hOffset = pageH * deltaZoom;
-
-    //bias
-    if (getSign(deltaZoom) < 0 ){
-        hOffset-=8;
-        wOffset+=8;
-    }else{
-        hOffset-=2;
-        wOffset+=2;
-    }
-
-    pageY = pageY * getZoom() + hOffset;
-    pageX = pageX * getZoom() + wOffset; //(pageW*(deltaZoom*1.5));
-
-    //std::cout<<"pageY: "<<pageY<<"\n";
-    //std::cout<<"pageH: "<<pageH<<"\n";
-
-    //this->scrollToXY(currentPage, pageX, pageY);	//don't quite like it ATM
-    
+    /** apply the zoom */
     Document* doc = control->getDocument();
     doc->lock();
     path file = doc->getEvMetadataFilename();
     doc->unlock();
-    
     control->getMetadataManager()->setDouble(file, "zoom", getZoom());
-    
     this->control->getScheduler()->blockRerenderZoom();
+
+    double deltaZoom=(getZoom()-lastZoom);
+    if(deltaZoom == 0) return;
+    std::cout<<"===XournalView::zoomChanged()===\n";
+    std::cout<<"Zoom: "<<getZoom()<<" deltaZoom: "<<deltaZoom<<"\n";
+    std::cout<<"================================\n\n";
+
+    double pageX, pageY;
+    double pageW, pageH;
+    XournalView::isPageVisibleXY(currentPage, &pageX, &pageY, &pageW, &pageH);
+   
+    //pageY += getPageOffsetY(currentPage);	//get the y in a much reliable way
+    
+    //this->scrollTo(currentPage, pageTop);	//Don't qute like it
+
+    this->scrollToXY(currentPage, pageX, pageY);	//don't quite like it ATM
+    
 }
 
 void XournalView::pageSizeChanged(size_t page)
@@ -891,24 +900,19 @@ bool XournalView::isPageVisibleXY(int page, double* x, double* y, double* visibl
 	Rectangle* rect = getVisibleRect(page);
 	if (rect)
 	{
-		if (visibleHeight)
-		{
-			*visibleHeight = (double)rect->height;
-			*y = (double)rect->y;
-		}
+		*visibleHeight = (double)rect->height;
+		*y = (double)rect->y;
 
-		if (visibleWidth)
-		{
-			*visibleWidth = (double)rect->width;
-			*x = (double)rect->x;
-		}
+		*visibleWidth = (double)rect->width;
+		*x = (double)rect->x;
+
+		std::cout<<"===XournalView::isPageVisibleXY===\n";
+		std::cout<<"Visible x: "<<*x<<" Visible Width: "<<*visibleWidth<<"\n";
+		std::cout<<"Visible y: "<<*y<<" Visible Height: "<<*visibleHeight<<"\n";
+		std::cout<<"==================================\n\n";
 
 		delete rect;
 		return true;
-	}
-	if (visibleHeight)
-	{
-		*visibleHeight = 0;
 	}
 
 	return false;

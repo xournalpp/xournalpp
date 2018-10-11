@@ -116,6 +116,7 @@ public:
 	void pageInserted(size_t page);
 	void pageDeleted(size_t page);
 	void documentChanged(DocumentChangeType type);
+	double getPageOffsetY(size_t pageNo);
 
 public:
 	bool onKeyPressEvent(GdkEventKey* event);

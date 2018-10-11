@@ -390,6 +390,16 @@ void Layout::setLayoutSize(int width, int height)
 	this->scrollVertical->setPageSize(alloc.height);
 }
 
+double Layout::getLayoutWidth()
+{
+	return this->layoutWidth;
+}
+
+double Layout::getLayoutHeight()
+{
+	return this->layoutHeight;
+}
+
 GtkWidget* Layout::getScrollbarVertical()
 {
 	XOJ_CHECK_TYPE(Layout);

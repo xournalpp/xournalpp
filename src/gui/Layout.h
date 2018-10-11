@@ -32,6 +32,8 @@ public:
 	void ensureRectIsVisible(int x, int y, int width, int height);
 	double getVisiblePageTop(size_t page);
 	double getDisplayHeight();
+	double getLayoutHeight();
+	double getLayoutWidth();
 
 	void layoutPages();
 
@@ -45,13 +47,6 @@ public:
 	virtual void scrolled(Scrollbar* scrollbar);
 
 	void checkSelectedPage();
-
-
-	/**
-	 * The width and height of all our pages
-	 */
-	int layoutWidth;
-	int layoutHeight;
 
 private:
 	XOJ_TYPE_ATTRIB;
@@ -77,6 +72,6 @@ private:
 	/**
 	 * The width and height of all our pages
 	 */
-	//int layoutWidth;
-	//int layoutHeight;
+	int layoutWidth;
+	int layoutHeight;
 };
