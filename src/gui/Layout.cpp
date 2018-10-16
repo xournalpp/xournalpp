@@ -1,3 +1,4 @@
+#include <iostream>
 #include "Layout.h"
 
 #include "XournalView.h"
@@ -457,7 +458,14 @@ double Layout::getVisiblePageTop(size_t page)
 
 	double y = this->view->viewPages[page]->getY() + this->scrollVertical->getValue();
 
-	return y / this->view->getZoom();
+	y = y / this->view->getZoom();
+
+	std::cout<<"===XournalView::getVisiblePageTop()===\n";
+	std::cout<<"viewPages[page]->getY(): "<<this->view->viewPages[page]->getY()<<"\n";  //page abs. starting pos.
+	std::cout<<"scrollVertical->getValue(): "<<this->scrollVertical->getValue()<<"\n";  //scroll value within page
+	std::cout<<"================================\n\n";
+
+	return y;
 }
 
 void Layout::ensureRectIsVisible(int x, int y, int width, int height)

@@ -411,7 +411,10 @@ void XournalView::scrollToXY(size_t pageNo, double xDocument, double yDocument)
 
 	double zoom = getZoom();
 	Rectangle* rect = getVisibleRect(pageNo);
+	double visibleX = (double)rect->x;
+	double visibleY = (double)rect->y;
 	double visibleHeight = (double)rect->height;
+	double visibleWidth = (double)rect->width;
 	if(rect) delete rect;
 
 	double zoomOffset = yOffset*getZoom()- yOffset; //(visibleHeight*0.04);
@@ -422,7 +425,9 @@ void XournalView::scrollToXY(size_t pageNo, double xDocument, double yDocument)
 	double displayWidth = v->getDisplayWidth();
 	double displayHeight = v->getDisplayHeight();
 
-	double scrollDownY = yDocument + yDocument*0.02;
+	double scrollDownY = (displayHeight/2)-visibleHeight;	//scroll to center
+	double scrollDownX = 0; //(displayWidth/2)-visibleWidth;	//scroll to center
+	//double scrollDownX = (visibleX-308)*getZoom();
 
 	std::cout<<"===XournalView::scrollToXY()===\n";
 	std::cout<<"Display Width: "<<displayWidth<<"\n";
@@ -430,10 +435,11 @@ void XournalView::scrollToXY(size_t pageNo, double xDocument, double yDocument)
 	std::cout<<"Layout Abs X: "<<layoutAbsX<<"\n";
 	std::cout<<"Layout Abs Y: "<<layoutAbsY<<"\n";
 	std::cout<<"scrollDownY: "<<scrollDownY<<"\n";
+	std::cout<<"scrollDownX: "<<scrollDownX<<"\n";
 	std::cout<<"===============================\n\n";
 
 //	layout->ensureRectIsVisible(xDocument, yOffset, v->getDisplayWidth(), v->getDisplayHeight());
-	layout->ensureRectIsVisible(layoutAbsX, layoutAbsY+scrollDownY, displayWidth, displayHeight);
+	layout->ensureRectIsVisible(layoutAbsX+scrollDownX, layoutAbsY+scrollDownY, displayWidth, displayHeight);
 }
 void XournalView::scrollTo(size_t pageNo, double yDocument)
 {
@@ -587,8 +593,8 @@ void XournalView::zoomChanged(double lastZoom)
     
     Layout* layout = gtk_xournal_get_layout(this->widget);
     int currentPage = this->getCurrentPage();
-    //double pageTop = layout->getVisiblePageTop(currentPage);
-    double pageTop = 0.0;
+    double pageTop = layout->getVisiblePageTop(currentPage);
+    //double pageTop = 0.0;
     
     layout->layoutPages();
 
@@ -604,6 +610,7 @@ void XournalView::zoomChanged(double lastZoom)
     if(deltaZoom == 0) return;
     std::cout<<"===XournalView::zoomChanged()===\n";
     std::cout<<"Zoom: "<<getZoom()<<" deltaZoom: "<<deltaZoom<<"\n";
+    std::cout<<"VisiblePageTop: "<<pageTop<<"\n";
     std::cout<<"================================\n\n";
 
     double pageX, pageY;
@@ -612,9 +619,9 @@ void XournalView::zoomChanged(double lastZoom)
    
     //pageY += getPageOffsetY(currentPage);	//get the y in a much reliable way
     
-    //this->scrollTo(currentPage, pageTop);	//Don't qute like it
+    this->scrollTo(currentPage, pageTop);	//Don't qute like it
 
-    this->scrollToXY(currentPage, pageX, pageY);	//don't quite like it ATM
+    //this->scrollToXY(currentPage, pageX, pageY);	//don't quite like it ATM
     
 }
 
