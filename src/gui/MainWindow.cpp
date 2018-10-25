@@ -404,6 +404,7 @@ void MainWindow::buttonCloseSidebarClicked(GtkButton* button, MainWindow* win)
 
 bool MainWindow::onKeyPressCallback(GtkWidget* widget, GdkEventKey* event, MainWindow* win)
 {
+	
 	if (win->getXournal()->getSelection())
 	{
 		//something is selected - give that control
@@ -413,6 +414,17 @@ bool MainWindow::onKeyPressCallback(GtkWidget* widget, GdkEventKey* event, MainW
 	{
 		//editing text - give that control
 		return false;
+	}
+	else if (event-> state & GDK_CONTROL_MASK)
+	{
+		if(event-> keyval == GDK_Up){
+			win->getControl()->getScrollHandler()->goToPreviousPage();
+			return true;
+		}
+		if(event-> keyval == GDK_Down){
+			win->getControl()->getScrollHandler()->goToNextPage();
+			return true;
+		}
 	}
 	else if (event->keyval == GDK_Down)
 	{
