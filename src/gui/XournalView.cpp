@@ -593,8 +593,8 @@ void XournalView::zoomChanged(double lastZoom)
     
     Layout* layout = gtk_xournal_get_layout(this->widget);
     int currentPage = this->getCurrentPage();
-    double pageTop = layout->getVisiblePageTop(currentPage);
-    //double pageTop = 0.0;
+    //double pageTop = layout->getVisiblePageTop(currentPage);
+    double pageTop = 0.0;
     
     layout->layoutPages();
 
@@ -620,7 +620,7 @@ void XournalView::zoomChanged(double lastZoom)
     //pageY += getPageOffsetY(currentPage);	//get the y in a much reliable way
     
     this->scrollTo(currentPage, pageTop);	//Don't qute like it
-
+	
     //this->scrollToXY(currentPage, pageX, pageY);	//don't quite like it ATM
     
 }
