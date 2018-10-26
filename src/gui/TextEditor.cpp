@@ -341,6 +341,16 @@ bool TextEditor::onKeyPressEvent(GdkEventKey* event)
 			toggleBold();
 			return true;
 		}
+		// CTRL + Alt + Plus to increase text size
+		if(event->keyval == GDK_KEY_plus ){
+			incSize();
+			return true;
+		}
+		// Decrease text size
+		if(event->keyval == GDK_KEY_minus ){
+			decSize();
+			return true;
+		}
 	}
 	else if (event->keyval == GDK_Return || event->keyval == GDK_ISO_Enter || event->keyval == GDK_KP_Enter)
 	{
@@ -395,6 +405,28 @@ void TextEditor::toggleOverwrite()
 
 	this->cursorOverwrite = !this->cursorOverwrite;
 	repaintCursor();
+}
+
+/** 
+ * I know it's a bit rough and duplicated 
+ * Improve that later on... 
+ */
+void TextEditor::decSize()
+{
+	XojFont & font = text->getFont();
+	double fontSize = font.getSize();
+	fontSize--;
+	font.setSize(fontSize);
+	setFont(font);
+}
+
+void TextEditor::incSize()
+{
+	XojFont & font = text->getFont();
+	double fontSize = font.getSize();
+	fontSize++;
+	font.setSize(fontSize);
+	setFont(font);
 }
 
 void TextEditor::toggleBold()
