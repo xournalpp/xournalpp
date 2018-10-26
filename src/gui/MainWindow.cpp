@@ -415,16 +415,15 @@ bool MainWindow::onKeyPressCallback(GtkWidget* widget, GdkEventKey* event, MainW
 		//editing text - give that control
 		return false;
 	}
-	else if (event-> state & GDK_CONTROL_MASK)
+	else if (event-> state & GDK_CONTROL_MASK && event-> keyval == GDK_Up)
 	{
-		if(event-> keyval == GDK_Up){
 			win->getControl()->getScrollHandler()->goToPreviousPage();
 			return true;
-		}
-		if(event-> keyval == GDK_Down){
+	}
+	else if (event-> state & GDK_CONTROL_MASK && event-> keyval == GDK_Down)
+	{
 			win->getControl()->getScrollHandler()->goToNextPage();
 			return true;
-		}
 	}
 	else if (event->keyval == GDK_Down)
 	{
