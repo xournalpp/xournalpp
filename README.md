@@ -1,8 +1,15 @@
 # Xournal++
 
-[![Build Status](https://travis-ci.org/xournalpp/xournalpp.svg?branch=string_new)](https://travis-ci.org/xournalpp/xournalpp)
-[![Join the chat at https://gitter.im/xournalpp/xournalpp](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/xournalpp/xournalpp?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+This fork is intended to improve and customize xournalpp to my very own use cases and taste. 
 
+## Changes so far
+
+- [x] Improved pasting screenshots from clipboard (better image positioning an sizing)
+- [x] Changed "graph" journal style color form blue to grey 
+- [x] On the fly text size increasing/decreasing with CTRL + Alt + plus / minus
+- [x] On the fly text bold toggle with CTRL + b
+- [x] Go to next/prev. page with right/left arrows (instead of just pag. down / pag. up)
+- [ ] Zoom to the viewer's center (instead of top left corner of the page)
 
 ## Description
 
