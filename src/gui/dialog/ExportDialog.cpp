@@ -386,7 +386,7 @@ bool ExportDialog::fileTypeByExtension()
 
 			gtk_tree_model_get(GTK_TREE_MODEL(this->typesModel), &iter, COL_EXTENSION, &currentExtension, -1);
 
-			if (extension == currentExtension)
+			if (currentExtension && extension == currentExtension)
 			{
 				gtk_tree_model_get(GTK_TREE_MODEL(this->typesModel), &iter, COL_TYPE, &this->type, -1);
 
