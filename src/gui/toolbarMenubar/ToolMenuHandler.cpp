@@ -408,7 +408,7 @@ void ToolMenuHandler::initToolItems()
 	tbInsertNewPage->setPopupMenu(newPagePopup);
 
 	addToolItem(new ToolButton(listener, gui, "HILIGHTER", ACTION_TOOL_HILIGHTER, GROUP_TOOL, true,
-							   "tool_highlighter.png", _C("Hilighter"), gui->get("menuToolsHighlighter")));
+							   "tool_highlighter.svg", _C("Highlighter"), gui->get("menuToolsHighlighter")));
 	addToolItem(new ToolButton(listener, gui, "TEXT", ACTION_TOOL_TEXT, GROUP_TOOL, true,
 							   "tool_text.svg", _C("Text"), gui->get("menuToolsText")));
 	addToolItem(new ToolButton(listener, gui, "IMAGE", ACTION_TOOL_IMAGE, GROUP_TOOL, true,
