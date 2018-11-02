@@ -806,7 +806,6 @@ msgid "Highlighter opt_ions"
 msgstr "高亮选项(_i)"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:80
-#, fuzzy
 msgid "Hilighter"
 msgstr "高亮"
 

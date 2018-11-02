@@ -845,7 +845,6 @@ msgid "Highlighter opt_ions"
 msgstr "Volby _zvýrazňovače"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:80
-#, fuzzy
 msgid "Hilighter"
 msgstr "Zvýrazňovač"
 

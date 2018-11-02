@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Xournalpp 0.9\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-11-02 08:09+0100\n"
-"PO-Revision-Date: 2018-11-02 08:11+0100\n"
+"PO-Revision-Date: 2018-11-02 10:15+0100\n"
 "Last-Translator: Andreas Butti <andreasbutti at gmail dot com>\n"
 "Language-Team: DE\n"
 "Language: de\n"
@@ -854,7 +854,6 @@ msgid "Highlighter opt_ions"
 msgstr "Textmarker Optionen"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:80
-#, fuzzy
 msgid "Hilighter"
 msgstr "Textmarker"
 

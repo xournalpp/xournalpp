@@ -844,7 +844,6 @@ msgid "Highlighter opt_ions"
 msgstr "Opc_je zakreślacza"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:80
-#, fuzzy
 msgid "Hilighter"
 msgstr "Zakreślacz"
 
