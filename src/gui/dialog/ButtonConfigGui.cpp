@@ -77,7 +77,7 @@ ButtonConfigGui::ButtonConfigGui(SettingsDialog* dlg, GtkWidget* w,  Settings* s
 	ADD_TYPE_CB("empty.svg",			_C("Don't change"),		TOOL_NONE);
 	ADD_TYPE_CB("tool_pencil.svg",		_C("Pen"),				TOOL_PEN);
 	ADD_TYPE_CB("tool_eraser.svg",		_C("Eraser"),			TOOL_ERASER);
-	ADD_TYPE_CB("tool_highlighter.png",	_C("Hilighter"),			TOOL_HILIGHTER);
+	ADD_TYPE_CB("tool_highlighter.svg",	_C("Hilighter"),			TOOL_HILIGHTER);
 	ADD_TYPE_CB("tool_text.svg",		_C("Text"),				TOOL_TEXT);
 	ADD_TYPE_CB("tool_image.svg",		_C("Insert image"),		TOOL_IMAGE);
 	ADD_TYPE_CB("stretch.svg",			_C("Vertical space"),	TOOL_VERTICAL_SPACE);

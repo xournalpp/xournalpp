@@ -20,7 +20,7 @@ AboutDialog::AboutDialog(GladeSearchpath* gladeSearchPath) : GladeGui(gladeSearc
 
 	// Authors of the application
 	string authors("Denis Auroux, 2006-2010\n"
-				   "Andreas Butti, 2010-2015\n"
+				   "Andreas Butti, 2010-2018\n"
 				   "Wilson Brenna (tex support), 2012-2015\n"
 				   "Marek Pikuła, 2015\n");
 
