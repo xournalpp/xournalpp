@@ -854,6 +854,7 @@ msgid "Highlighter opt_ions"
 msgstr "Textmarker Optionen"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:80
+#, fuzzy
 msgid "Hilighter"
 msgstr "Textmarker"
 
