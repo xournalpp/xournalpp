@@ -74,18 +74,18 @@ ButtonConfigGui::ButtonConfigGui(SettingsDialog* dlg, GtkWidget* w,  Settings* s
 	GtkListStore* typeModel = gtk_list_store_new(3, GDK_TYPE_PIXBUF, G_TYPE_STRING, G_TYPE_INT);
 	GtkTreeIter iter;
 
-	ADD_TYPE_CB("empty.svg",			_C("Don't change"),		TOOL_NONE);
-	ADD_TYPE_CB("tool_pencil.svg",		_C("Pen"),				TOOL_PEN);
-	ADD_TYPE_CB("tool_eraser.svg",		_C("Eraser"),			TOOL_ERASER);
-	ADD_TYPE_CB("tool_highlighter.svg",	_C("Hilighter"),			TOOL_HILIGHTER);
-	ADD_TYPE_CB("tool_text.svg",		_C("Text"),				TOOL_TEXT);
-	ADD_TYPE_CB("tool_image.svg",		_C("Insert image"),		TOOL_IMAGE);
-	ADD_TYPE_CB("stretch.svg",			_C("Vertical space"),	TOOL_VERTICAL_SPACE);
-	ADD_TYPE_CB("lasso.svg",			_C("Select region"),		TOOL_SELECT_REGION);
-	ADD_TYPE_CB("rect-select.svg",		_C("Select rectangle"),	TOOL_SELECT_RECT);
-	//ADD_TYPE_CB("rect-draw.svg",		_C("Draw rectangle"),		TOOL_DRAW_RECT);
-	//ADD_TYPE_CB("circle-draw.svg",	_C("Draw circle"),		TOOL_DRAW_CIRCLE);
-	ADD_TYPE_CB("hand.svg",				_C("Hand"),				TOOL_HAND);
+	ADD_TYPE_CB("empty.svg",            _C("Don't change"),     TOOL_NONE);
+	ADD_TYPE_CB("tool_pencil.svg",      _C("Pen"),              TOOL_PEN);
+	ADD_TYPE_CB("tool_eraser.svg",      _C("Eraser"),           TOOL_ERASER);
+	ADD_TYPE_CB("tool_highlighter.svg", _C("Highlighter"),      TOOL_HILIGHTER);
+	ADD_TYPE_CB("tool_text.svg",        _C("Text"),             TOOL_TEXT);
+	ADD_TYPE_CB("tool_image.svg",       _C("Insert image"),     TOOL_IMAGE);
+	ADD_TYPE_CB("stretch.svg",          _C("Vertical space"),   TOOL_VERTICAL_SPACE);
+	ADD_TYPE_CB("lasso.svg",            _C("Select region"),    TOOL_SELECT_REGION);
+	ADD_TYPE_CB("rect-select.svg",      _C("Select rectangle"), TOOL_SELECT_RECT);
+	//ADD_TYPE_CB("rect-draw.svg",      _C("Draw rectangle"),   TOOL_DRAW_RECT);
+	//ADD_TYPE_CB("circle-draw.svg",    _C("Draw circle"),      TOOL_DRAW_CIRCLE);
+	ADD_TYPE_CB("hand.svg",             _C("Hand"),             TOOL_HAND);
 
 	GtkCellRenderer* renderer = NULL;
 

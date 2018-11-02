@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp 1.0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-09-30 23:59+0200\n"
+"POT-Creation-Date: 2018-11-02 08:09+0100\n"
 "PO-Revision-Date: 2018-02-07 00:00+200\n"
 "Last-Translator: Ruo Li <rli@math.pku.edu.cn>\n"
 "Language-Team: Xournal++ team\n"
@@ -300,7 +300,7 @@ msgstr "名为\"{1}\"的文件已经存在。您要覆盖它么？"
 msgid "About Xournal"
 msgstr "关于Xournal"
 
-#: ../ui/main.glade:1163
+#: ../ui/main.glade:1164
 msgid "Add/Edit Tex"
 msgstr "插入/编辑TeX"
 
@@ -312,8 +312,8 @@ msgstr "所有文件"
 msgid "All pages"
 msgstr "所有页面"
 
-#: ../src/control/stockdlg/XojOpenDlg.cpp:58
 #: ../src/control/stockdlg/ImageOpenDlg.cpp:28
+#: ../src/control/stockdlg/XojOpenDlg.cpp:58
 msgid "Attach file to the journal"
 msgstr "将文件附加到日记"
 
@@ -358,13 +358,13 @@ msgstr "背景"
 msgid "Big cursor for pen"
 msgstr "画笔使用大光标"
 
-#: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:133
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:10
+#: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:132
 msgid "Black"
 msgstr "黑色"
 
-#: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:137
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:14
+#: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:136
 msgid "Blue"
 msgstr "蓝色"
 
@@ -380,12 +380,12 @@ msgstr "当前页和选中项目的边界颜色"
 msgid "By extension"
 msgstr "延展"
 
-#: ../src/control/XournalMain.cpp:102 ../src/control/Control.cpp:2394
-#: ../src/control/Control.cpp:2831 ../src/control/Control.cpp:2868
+#: ../src/control/Control.cpp:2394 ../src/control/Control.cpp:2836
+#: ../src/control/Control.cpp:2873 ../src/control/XournalMain.cpp:102
 msgid "Cancel"
 msgstr "取消"
 
-#: ../src/control/settings/MetadataManager.cpp:226
+#: ../src/control/settings/MetadataManager.cpp:228
 msgid "Cannot copy metadata \"{1}\" to \"{2}\": {3}"
 msgstr "不能拷贝外来数据\"{1}\"到\"{2}\": {3}"
 
@@ -401,9 +401,13 @@ msgstr "改变字体"
 msgid "Change stroke width"
 msgstr "改变笔划粗细"
 
-#: ../ui/main.glade:1528
+#: ../ui/main.glade:1529
 msgid "Close"
 msgstr "关闭"
+
+#: ../ui/main.glade:1299
+msgid "Close Sidebar"
+msgstr "关闭侧边栏"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:120
 msgid "Color"
@@ -418,12 +422,12 @@ msgctxt "LaTeX comand"
 msgid "Command is being run."
 msgstr "命令正在运行。"
 
-#: ../src/gui/sidebar/indextree/SidebarIndexPage.cpp:272
+#: ../src/gui/sidebar/indextree/SidebarIndexPage.cpp:273
 msgid "Contents"
 msgstr "内容"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:306
 #: ../src/control/Control.cpp:1008 ../src/control/Control.cpp:1012
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:306
 msgid "Copy"
 msgstr "拷贝"
 
@@ -472,7 +476,7 @@ msgstr ""
 "未能重复操作\"{1}\"\n"
 "有错误发生***请提交一个错误报告***"
 
-#: ../src/control/Control.cpp:3294
+#: ../src/control/Control.cpp:3302
 msgid "Could not retrieve LaTeX image file: {1}"
 msgstr "未能提取LaTeX图像文件{1}"
 
@@ -492,7 +496,7 @@ msgstr "未能写上背景\"{1}\", {2}"
 msgid "Could not write background \"{1}\". Continuing anyway."
 msgstr "未能写上背景\"{1}\"，不管啦继续哦..."
 
-#: ../src/control/settings/MetadataManager.cpp:243
+#: ../src/control/settings/MetadataManager.cpp:245
 msgid "Could not write metadata file: {1} ({2})"
 msgstr "未能写入外来数据文件：{1} ({2})"
 
@@ -556,11 +560,11 @@ msgstr "取消标尺和笔划识别"
 msgid "Disable drawing for this device"
 msgstr "取消此设备绘制"
 
-#: ../src/control/Control.cpp:2830 ../src/control/Control.cpp:2867
+#: ../src/control/Control.cpp:2835 ../src/control/Control.cpp:2872
 msgid "Discard"
 msgstr "丢弃"
 
-#: ../src/control/Control.cpp:2864
+#: ../src/control/Control.cpp:2869
 msgid "Document file was removed."
 msgstr "文档已删除。"
 
@@ -579,7 +583,7 @@ msgstr "文档未加载！({1}), {2}"
 msgid "Don't change"
 msgstr "勿作修改"
 
-#: ../src/control/XournalMain.cpp:219
+#: ../src/control/XournalMain.cpp:218
 msgid "Don't compress PDF files (for debugging)"
 msgstr "勿压缩PDF文件(调试用)"
 
@@ -587,15 +591,15 @@ msgstr "勿压缩PDF文件(调试用)"
 msgid "Drag and drop Components fom here to the toolbars and back."
 msgstr "在这里和工具条之间可以来回拖动条目。"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:429
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:47
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:118
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:429
 msgid "Draw Arrow"
 msgstr "绘制箭头"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:425
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:40
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:111
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:425
 msgid "Draw Circle"
 msgstr "绘制圆形"
 
@@ -604,11 +608,11 @@ msgstr "绘制圆形"
 msgid "Draw Line"
 msgstr "绘制直线"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:427
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:10
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:33
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:104
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:151
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:427
 msgid "Draw Rectangle"
 msgstr "绘制矩形"
 
@@ -633,12 +637,12 @@ msgstr "激活笔划识别"
 msgid "Erase stroke"
 msgstr "擦除笔划"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:267
 #: ../src/gui/dialog/ButtonConfigGui.cpp:79
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:267
 msgid "Eraser"
 msgstr "橡皮"
 
-#: ../ui/main.glade:1030
+#: ../ui/main.glade:1031
 msgid "Eraser Optio_ns"
 msgstr "橡皮选项(_n)"
 
@@ -646,7 +650,7 @@ msgstr "橡皮选项(_n)"
 msgid "Eraser type"
 msgstr "橡皮类型"
 
-#: ../src/control/Control.cpp:2528
+#: ../src/control/Control.cpp:2530
 msgid ""
 "Error annotate PDF file \"{1}\"\n"
 "{2}"
@@ -722,7 +726,7 @@ msgstr "扩展"
 msgid "File Type"
 msgstr "文件类型"
 
-#: ../src/util/Util.cpp:193 ../src/util/Util.cpp:222
+#: ../src/util/Util.cpp:190 ../src/util/Util.cpp:219
 msgid ""
 "File couldn't be opened. You have to do it manually:\n"
 "URL: {1}"
@@ -762,22 +766,22 @@ msgstr "跳转到页面"
 msgid "Graph"
 msgstr "图形"
 
-#: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:138
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:15
+#: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:137
 msgid "Gray"
 msgstr "灰色"
 
-#: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:134
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:11
+#: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:133
 msgid "Green"
 msgstr "绿色"
 
-#: ../ui/main.glade:949
+#: ../ui/main.glade:950
 msgid "H_and Tool"
 msgstr "手形工具(_a)"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:433
 #: ../src/gui/dialog/ButtonConfigGui.cpp:88
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:433
 msgid "Hand"
 msgstr "手形工具"
 
@@ -793,20 +797,23 @@ msgstr "隐藏菜单条"
 msgid "Hide Sidebar"
 msgstr "隐藏侧边栏"
 
-#: ../ui/main.glade:1110
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:411
+msgid "Highlighter"
+msgstr "高亮"
+
+#: ../ui/main.glade:1111
 msgid "Highlighter opt_ions"
 msgstr "高亮选项(_i)"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:411
 #: ../src/gui/dialog/ButtonConfigGui.cpp:80
 msgid "Hilighter"
 msgstr "高亮"
 
-#: ../src/control/settings/MetadataManager.cpp:64
-#: ../src/control/settings/MetadataManager.cpp:87
-#: ../src/control/settings/MetadataManager.cpp:110
-#: ../src/control/settings/MetadataManager.cpp:156
-#: ../src/control/settings/MetadataManager.cpp:185
+#: ../src/control/settings/MetadataManager.cpp:66
+#: ../src/control/settings/MetadataManager.cpp:89
+#: ../src/control/settings/MetadataManager.cpp:112
+#: ../src/control/settings/MetadataManager.cpp:158
+#: ../src/control/settings/MetadataManager.cpp:187
 msgid "INI exception: {1}"
 msgstr "INI异常：{1}"
 
@@ -838,7 +845,7 @@ msgstr "插入页面风格"
 msgid "Insert elements"
 msgstr "插入元素"
 
-#: ../src/gui/dialog/ButtonConfigGui.cpp:82 ../src/undo/InsertUndoAction.cpp:47
+#: ../src/undo/InsertUndoAction.cpp:47 ../src/gui/dialog/ButtonConfigGui.cpp:82
 msgid "Insert image"
 msgstr "插入图片"
 
@@ -858,7 +865,7 @@ msgstr "插入页面"
 msgid "Invalid filename selected"
 msgstr "选择了无效文件名"
 
-#: ../src/control/XournalMain.cpp:221
+#: ../src/control/XournalMain.cpp:220
 msgid "Jump to Page (first Page: 1)"
 msgstr "跳到页面(第一页:1)"
 
@@ -886,13 +893,13 @@ msgstr "选择图层"
 msgid "Layer {1}"
 msgstr "{1}图层"
 
-#: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:135
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:12
+#: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:134
 msgid "Light Blue"
 msgstr "浅蓝"
 
-#: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:136
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:13
+#: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:135
 msgid "Light Green"
 msgstr "浅绿"
 
@@ -917,17 +924,17 @@ msgstr "加载中..."
 msgid "Manage Toolbar"
 msgstr "定制工具条"
 
-#: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:140
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:17
+#: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:139
 msgid "Mangenta"
 msgstr "品红"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:444
 #: ../src/gui/dialog/ButtonConfigGui.cpp:110
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:444
 msgid "Medium"
 msgstr "中"
 
-#: ../src/control/settings/MetadataManager.cpp:281
+#: ../src/control/settings/MetadataManager.cpp:283
 msgid "Metadata file \"{1}\" is invalid: {2}"
 msgstr "外来数据文件\"{1}\"无效：{2}"
 
@@ -1009,16 +1016,16 @@ msgstr "打开日志文件目录"
 msgid "Open URI: {1}"
 msgstr "打开URI: {1}"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:303
 #: ../src/control/stockdlg/XojOpenDlg.cpp:12
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:303
 msgid "Open file"
 msgstr "打开文件"
 
-#: ../src/control/jobs/SaveJob.cpp:160 ../src/control/jobs/SaveJob.cpp:179
+#: ../src/control/jobs/SaveJob.cpp:161 ../src/control/jobs/SaveJob.cpp:181
 msgid "Open file error: {1}"
 msgstr "打开文件出错：{1}"
 
-#: ../src/control/RecentManager.cpp:230
+#: ../src/control/RecentManager.cpp:234
 msgctxt "{1} is a URI"
 msgid "Open {1}"
 msgstr "打开{1}"
@@ -1027,8 +1034,8 @@ msgstr "打开{1}"
 msgid "Options"
 msgstr "选项"
 
-#: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:141
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:18
+#: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:140
 msgid "Orange"
 msgstr "橙色"
 
@@ -1053,7 +1060,7 @@ msgstr "PDF文件成功建立"
 msgid "PDF files"
 msgstr "PDF文件"
 
-#: ../src/control/XournalMain.cpp:220
+#: ../src/control/XournalMain.cpp:219
 msgid "PDF output filename"
 msgstr "PDF输出文件名"
 
@@ -1109,17 +1116,17 @@ msgstr "纸张样式(_F)"
 msgid "Paper b_ackground"
 msgstr "纸张背景(_a)"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:307
 #: ../src/undo/AddUndoAction.cpp:108
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:307
 msgid "Paste"
 msgstr "粘贴"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:350
 #: ../src/gui/dialog/ButtonConfigGui.cpp:78
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:350
 msgid "Pen"
 msgstr "画笔"
 
-#: ../ui/main.glade:966
+#: ../ui/main.glade:967
 msgid "Pen _Options"
 msgstr "画笔选项(_O)"
 
@@ -1152,13 +1159,13 @@ msgstr "最近文档(_D)"
 msgid "Recognize Lines"
 msgstr "识别直线"
 
-#: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:139
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:16
+#: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:138
 msgid "Red"
 msgstr "红色"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:312
 #: ../src/undo/UndoRedoHandler.cpp:301
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:312
 msgid "Redo"
 msgstr "重复"
 
@@ -1190,16 +1197,16 @@ msgstr "标尺"
 msgid "Ruler & Stroke Reco."
 msgstr "标尺与笔划识别"
 
+#: ../src/control/jobs/SaveJob.cpp:16 ../src/control/Control.cpp:2834
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:300
-#: ../src/control/Control.cpp:2829 ../src/control/jobs/SaveJob.cpp:16
 msgid "Save"
 msgstr "保存"
 
-#: ../src/control/Control.cpp:2866
+#: ../src/control/Control.cpp:2871
 msgid "Save As"
 msgstr "保存为"
 
-#: ../src/control/Control.cpp:2646
+#: ../src/control/Control.cpp:2651
 msgid "Save File"
 msgstr "保存文件"
 
@@ -1211,7 +1218,7 @@ msgstr "缩放"
 msgid "Search"
 msgstr "搜索"
 
-#: ../ui/main.glade:1430
+#: ../ui/main.glade:1431
 msgid "Search:"
 msgstr "搜索："
 
@@ -1259,9 +1266,9 @@ msgstr "选择矩形(_R)"
 msgid "Select another PDF"
 msgstr "选择其他PDF"
 
+#: ../src/gui/dialog/SelectBackgroundColorDialog.cpp:122
 #: ../src/gui/toolbarMenubar/ColorToolItem.cpp:47
 #: ../src/gui/toolbarMenubar/ColorToolItem.cpp:177
-#: ../src/gui/dialog/SelectBackgroundColorDialog.cpp:123
 msgid "Select color"
 msgstr "选色"
 
@@ -1319,7 +1326,7 @@ msgstr "侧边栏右置"
 msgid "Show vertical scrollbar on the left side"
 msgstr "垂直滚动条左置"
 
-#: ../src/control/XournalMain.cpp:273
+#: ../src/control/XournalMain.cpp:276
 msgid ""
 "Sorry, Xournal can only open one file from the command line.\n"
 "Others are ignored."
@@ -1327,7 +1334,7 @@ msgstr ""
 "Xournal只能打开一个命令行文件。\n"
 "其他的会被忽略。"
 
-#: ../src/control/XournalMain.cpp:296
+#: ../src/control/XournalMain.cpp:299
 msgid ""
 "Sorry, Xournal cannot open remote files at the moment.\n"
 "You have to copy the file to a local directory."
@@ -1339,7 +1346,7 @@ msgstr ""
 msgid "Standard"
 msgstr "标准"
 
-#: ../ui/main.glade:1586
+#: ../ui/main.glade:1587
 msgid "State PLACEHOLDER"
 msgstr ""
 
@@ -1363,8 +1370,8 @@ msgstr "工具条(_o)"
 msgid "Template:"
 msgstr "模板："
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:413
 #: ../src/gui/dialog/ButtonConfigGui.cpp:81
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:413
 msgid "Text"
 msgstr "文本"
 
@@ -1373,7 +1380,7 @@ msgstr "文本"
 msgid "Text %i times found on this page"
 msgstr "文本在本页面出现%i次"
 
-#: ../ui/main.glade:1154
+#: ../ui/main.glade:1155
 msgid "Text Font..."
 msgstr "文本字体..."
 
@@ -1458,8 +1465,8 @@ msgstr ""
 msgid "There was an error displaying help: {1}"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:446
 #: ../src/gui/dialog/ButtonConfigGui.cpp:111
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:446
 msgid "Thick"
 msgstr "粗"
 
@@ -1467,12 +1474,12 @@ msgstr "粗"
 msgid "Thickness"
 msgstr "粗细"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:442
 #: ../src/gui/dialog/ButtonConfigGui.cpp:109
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:442
 msgid "Thin"
 msgstr "细"
 
-#: ../src/control/Control.cpp:2827
+#: ../src/control/Control.cpp:2832
 msgid "This document is not saved yet."
 msgstr ""
 
@@ -1508,8 +1515,8 @@ msgstr ""
 msgid "Two pages"
 msgstr "双页"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:311
 #: ../src/undo/UndoRedoHandler.cpp:282
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:311
 msgid "Undo"
 msgstr "撤销"
 
@@ -1553,7 +1560,7 @@ msgstr ""
 msgid "Unknown stroke type: \"{1}\", assuming pen"
 msgstr ""
 
-#: ../src/control/Control.cpp:2724
+#: ../src/control/Control.cpp:2729
 msgid "Unsaved Document"
 msgstr "未保存文档"
 
@@ -1569,8 +1576,8 @@ msgstr "垂直间距"
 msgid "View"
 msgstr "视图"
 
-#: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:143
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:20
+#: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:142
 msgid "White"
 msgstr "白色"
 
@@ -1606,7 +1613,7 @@ msgstr ""
 msgid "XML Parser error: {1}"
 msgstr ""
 
-#: ../src/control/stockdlg/XojOpenDlg.cpp:23 ../src/control/Control.cpp:2653
+#: ../src/control/stockdlg/XojOpenDlg.cpp:23 ../src/control/Control.cpp:2658
 msgid "Xournal files"
 msgstr "Xournal文件"
 
@@ -1618,8 +1625,8 @@ msgstr ""
 msgid "Xournal++ Preferences"
 msgstr "Xournal++偏好设置"
 
-#: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:142
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:19
+#: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:141
 msgid "Yellow"
 msgstr "黄色"
 
@@ -1643,7 +1650,7 @@ msgid ""
 "issue tracker."
 msgstr ""
 
-#: ../src/gui/sidebar/indextree/SidebarIndexPage.cpp:79
+#: ../src/gui/sidebar/indextree/SidebarIndexPage.cpp:80
 msgid ""
 "Your current document does not contain PDF Page no {1}\n"
 "Would you like to insert this page?\n"
@@ -1732,7 +1739,7 @@ msgstr "页面跳转(_G)"
 msgid "_Graph"
 msgstr "图形(_G)"
 
-#: ../ui/main.glade:1177
+#: ../ui/main.glade:1178
 msgid "_Help"
 msgstr "帮助(_H)"
 
@@ -1804,7 +1811,7 @@ msgstr "工具(_T)"
 msgid "_Two Pages"
 msgstr "双页(_T)"
 
-#: ../ui/main.glade:938
+#: ../ui/main.glade:939
 msgid "_Vertical Space"
 msgstr "垂直间距(_V)"
 
@@ -1812,37 +1819,33 @@ msgstr "垂直间距(_V)"
 msgid "_View"
 msgstr "视图(_V)"
 
-#: ../ui/main.glade:1096
+#: ../ui/main.glade:1097
 msgid "_delete strokes"
 msgstr "删除笔划(_d)"
 
-#: ../ui/main.glade:986 ../ui/main.glade:1040 ../ui/main.glade:1120
+#: ../ui/main.glade:987 ../ui/main.glade:1041 ../ui/main.glade:1121
 msgid "_fine"
 msgstr "细(_f)"
 
-#: ../ui/main.glade:996 ../ui/main.glade:1050 ../ui/main.glade:1130
+#: ../ui/main.glade:997 ../ui/main.glade:1051 ../ui/main.glade:1131
 msgid "_medium"
 msgstr "中(_m)"
 
-#: ../ui/main.glade:1076
+#: ../ui/main.glade:1077
 msgid "_standard"
 msgstr "标准(_s)"
 
-#: ../ui/main.glade:1006 ../ui/main.glade:1060 ../ui/main.glade:1140
+#: ../ui/main.glade:1007 ../ui/main.glade:1061 ../ui/main.glade:1141
 msgid "_thick"
 msgstr "粗(_t)"
 
-#: ../ui/main.glade:976
+#: ../ui/main.glade:977
 msgid "_very fine"
 msgstr "极细(_v)"
 
-#: ../ui/main.glade:1086
+#: ../ui/main.glade:1087
 msgid "_whiteout"
 msgstr "涂白(_w)"
-
-#: ../src/model/FormatDefinitions.cpp:6
-msgid "cm"
-msgstr "厘米"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:50
 msgid "cursor"
@@ -1860,10 +1863,6 @@ msgstr ""
 msgid "eraser"
 msgstr "橡皮"
 
-#: ../src/model/FormatDefinitions.cpp:7
-msgid "in"
-msgstr "英寸"
-
 #: ../src/gui/dialog/ButtonConfigGui.cpp:38
 msgid "mouse"
 msgstr "鼠标"
@@ -1872,15 +1871,11 @@ msgstr "鼠标"
 msgid "pen"
 msgstr "画笔"
 
-#: ../src/model/FormatDefinitions.cpp:8
-msgid "points"
-msgstr "像素"
-
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:270
 msgid "standard"
 msgstr "标准"
 
-#: ../ui/main.glade:1016
+#: ../ui/main.glade:1017
 msgid "ver_y thick"
 msgstr "极粗(_y)"
 
@@ -1925,5 +1920,11 @@ msgstr ""
 msgid "xoj-preview-extractor: successfully extracted"
 msgstr ""
 
-#~ msgid "Close Sidebar"
-#~ msgstr "关闭侧边栏"
+#~ msgid "cm"
+#~ msgstr "厘米"
+
+#~ msgid "in"
+#~ msgstr "英寸"
+
+#~ msgid "points"
+#~ msgstr "像素"
