@@ -27,10 +27,13 @@ private:
 public:
 	void addPoint(const Point* point);
 
+	int XmlPointNode::getTimestamp();
+	void XmlPointNode::setTimestamp(int seconds);
 	virtual void writeOut(OutputStream* out);
 
 private:
 	XOJ_TYPE_ATTRIB;
 
 	GList* points;
+	int timestamp;
 };

@@ -101,6 +101,20 @@ void Stroke::readSerialized(ObjectInputStream& in) throw (InputStreamException)
 	in.endObject();
 }
 
+void Stroke::setTimestamp(int seconds)
+{
+	XOJ_CHECK_TYPE(Stroke);
+
+	this->timestamp = seconds;
+}
+
+int Stroke::getTimestamp() const
+{
+	XOJ_CHECK_TYPE(Stroke);
+
+	return this->timestamp;
+}
+
 void Stroke::setWidth(double width)
 {
 	XOJ_CHECK_TYPE(Stroke);

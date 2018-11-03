@@ -69,6 +69,7 @@ public:
 	string getLastError();
 	bool isAttachedPdfMissing();
 	string getMissingPdfFilename();
+	int loadedTimeStamp = 0;
 
 	void removePdfBackground();
 	void setPdfReplacement(string filename, bool attachToDocument);

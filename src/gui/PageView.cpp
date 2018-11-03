@@ -347,6 +347,11 @@ void PageView::selectObjectAt(double x, double y)
 					{
 						gap = tmpGap;
 						strokeMatch = s;
+						/**
+						 * Display the timestamp for the selected stroke 
+						 * To be replaced with a function call to an action
+						 */
+						printf("\nPageView::selectObjectAt TIMESTAMP: %d\n",s->getTimestamp());
 					}
 				}
 				else

@@ -36,6 +36,9 @@ public:
 	void setWidth(double width);
 	double getWidth() const;
 
+	void Stroke::setTimestamp(int seconds);
+	int Stroke::getTimestamp() const;
+
 	void addPoint(Point p);
 	void setLastPoint(double x, double y);
 	int getPointCount() const;
@@ -92,6 +95,9 @@ private:
 	Point* points;
 	int pointCount;
 	int pointAllocCount;
+
+	//stroke timestamp
+	int timestamp;
 
 	EraseableStroke* eraseable;
 };
