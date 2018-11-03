@@ -791,11 +791,7 @@ void XournalView::pageInserted(size_t page)
 	Layout* layout = gtk_xournal_get_layout(this->widget);
 	layout->layoutPages();
 
-#if GTK3_ENABLED
-	layout->updateCurrentPage();
-#else
 	layout->checkSelectedPage();
-#endif
 }
 
 double XournalView::getZoom()

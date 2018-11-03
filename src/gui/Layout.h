@@ -19,6 +19,12 @@
 class PageView;
 class XournalView;
 
+/**
+ * @brief The Layout manager for the XournalWidget
+ *
+ * This class manages the layout of the PageView%s contained
+ * in the XournalWidget
+ */
 class Layout : public ScrollbarListener
 {
 public:
@@ -26,10 +32,35 @@ public:
 	virtual ~Layout();
 
 public:
+	/**
+	 * Adjusts the layout size to the given values
+	 */
 	void setSize(int widgetWidth, int widgetHeight);
+
+	/**
+	 * Increases the adjustments by the given amounts
+	 */
 	void scrollRelativ(int x, int y);
+
+	/**
+	 * Changes the adjustments by absolute amounts (for pinch-to-zoom)
+	 */
+	void scrollAbs(int x, int y);
+
+	/**
+	 * Handle a scroll event
+	 */
 	bool scrollEvent(GdkEventScroll* event);
+
+	/**
+	 * Changes the adjustments in such a way as to make sure that
+	 * the given Rectangle is visible
+	 *
+	 * @remark If the given Rectangle won't fit into the scrolled window
+	 *         then only its top left corner will be visible
+	 */
 	void ensureRectIsVisible(int x, int y, int width, int height);
+
 	double getVisiblePageTop(size_t page);
 	double getDisplayHeight();
 

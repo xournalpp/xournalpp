@@ -436,6 +436,15 @@ void Layout::scrollRelativ(int x, int y)
 	this->scrollVertical->scroll(y);
 }
 
+void Layout::scrollAbs(int x, int y)
+{
+	XOJ_CHECK_TYPE(Layout);
+
+	// TODO Check if really working
+	this->scrollHorizontal->setValue(x);
+	this->scrollVertical->setValue(y);
+}
+
 double Layout::getVisiblePageTop(size_t page)
 {
 	XOJ_CHECK_TYPE(Layout);
