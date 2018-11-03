@@ -69,7 +69,7 @@ void XInputUtils::fixXInputCoords(GdkEvent* event, GtkWidget* widget)
 	// fix broken events with the core pointer's location
 	if (!finite(axes[0]) || !finite(axes[1]) || (axes[0] == 0. && axes[1] == 0.))
 	{
-		gdk_window_get_pointer(GTK_WIDGET(widget)->window, &ix, &iy, NULL);
+		gdk_window_get_pointer(gtk_widget_get_parent_window(GTK_WIDGET(widget)), &ix, &iy, NULL);
 		*px = ix;
 		*py = iy;
 	}
@@ -90,7 +90,7 @@ void XInputUtils::fixXInputCoords(GdkEvent* event, GtkWidget* widget)
 #else
 	if (!finite(*px) || !finite(*py) || (*px == 0. && *py == 0.))
 	{
-		gdk_window_get_pointer(GTK_WIDGET(widget)->window, &ix, &iy, NULL);
+		gdk_window_get_pointer(gtk_widget_get_parent_window(GTK_WIDGET(widget)), &ix, &iy, NULL);
 		*px = ix;
 		*py = iy;
 	}
@@ -100,7 +100,7 @@ void XInputUtils::fixXInputCoords(GdkEvent* event, GtkWidget* widget)
 		 GdkWindow isn't even the same for ButtonDown as for MotionNotify... */
 		if (gtk_major_version == 2 && gtk_minor_version == 17) // GTK+ 2.17 issues !!
 		{
-			gdk_window_get_position(GTK_WIDGET(widget)->window, &wx, &wy);
+			gdk_window_get_position(gtk_widget_get_parent_window(GTK_WIDGET(widget)), &wx, &wy);
 			*px += wx;
 			*py += wy;
 		}
@@ -147,6 +147,7 @@ void XInputUtils::handleScrollEvent(GdkEventButton* event, GtkWidget* widget)
 
 gboolean XInputUtils::onMouseEnterNotifyEvent(GtkWidget* widget, GdkEventCrossing* event)
 {
+#if !GTK3_ENABLED
 	if (!XInputUtils::enableLeafEnterWorkaround)
 	{
 		return FALSE;
@@ -168,11 +169,15 @@ gboolean XInputUtils::onMouseEnterNotifyEvent(GtkWidget* widget, GdkEventCrossin
 		gdk_flush();
 		gdk_error_trap_pop();
 	}
+
+#endif
 	return FALSE;
 }
 
 gboolean XInputUtils::onMouseLeaveNotifyEvent(GtkWidget* widget, GdkEventCrossing* event)
 {
+#if !GTK3_ENABLED
+
 	if (!XInputUtils::enableLeafEnterWorkaround)
 	{
 		return FALSE;
@@ -195,5 +200,7 @@ gboolean XInputUtils::onMouseLeaveNotifyEvent(GtkWidget* widget, GdkEventCrossin
 		gdk_flush();
 		gdk_error_trap_pop();
 	}
+
+#endif
 	return FALSE;
 }

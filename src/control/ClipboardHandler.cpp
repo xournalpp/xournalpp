@@ -340,7 +340,7 @@ void ClipboardHandler::pasteClipboardContents(GtkClipboard* clipboard, GtkSelect
 
 	ObjectInputStream in;
 
-	if (in.read((const char*) selectionData->data, selectionData->length))
+	if (in.read((const char*) gtk_selection_data_get_data(selectionData), gtk_selection_data_get_length(selectionData)))
 	{
 		handler->listener->clipboardPasteXournal(in);
 	}

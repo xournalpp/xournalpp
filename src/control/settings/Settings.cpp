@@ -1432,6 +1432,9 @@ void Settings::checkCanXInput()
 {
 	XOJ_CHECK_TYPE(Settings);
 
+#if GTK3_ENABLED
+	this->canXIput = TRUE;
+#else
 	this->canXIput = FALSE;
 	GList* devList = gdk_devices_list();
 
@@ -1456,6 +1459,7 @@ void Settings::checkCanXInput()
 		}
 		devList = devList->next;
 	}
+#endif
 }
 
 void Settings::setMainWndSize(int width, int height)

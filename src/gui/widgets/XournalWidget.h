@@ -29,6 +29,10 @@ class XournalView;
 typedef struct _GtkXournal GtkXournal;
 typedef struct _GtkXournalClass GtkXournalClass;
 
+#if GTK3_ENABLED
+#define GtkType GType
+#endif
+
 struct _GtkXournal
 {
 	GtkWidget widget;
