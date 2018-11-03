@@ -30,7 +30,7 @@ protected:
 	virtual ~ExportJob();
 
 public:
-	virtual void run();
+	virtual void run(bool noThreads);
 
 private:
 	bool createSurface(int id, double width, double height);

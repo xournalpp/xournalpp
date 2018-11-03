@@ -204,7 +204,7 @@ private:
 
 RepaintWidgetHandler* handler = NULL;
 
-void RenderJob::run()
+void RenderJob::run(bool noThreads)
 {
 	XOJ_CHECK_TYPE(RenderJob);
 

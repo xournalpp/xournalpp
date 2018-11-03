@@ -102,7 +102,7 @@ void PdfExportJob::afterRun()
 	}
 }
 
-void PdfExportJob::run()
+void PdfExportJob::run(bool noThreads)
 {
 	XOJ_CHECK_TYPE(PdfExportJob);
 

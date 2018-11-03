@@ -31,7 +31,7 @@ protected:
 public:
 	virtual void* getSource();
 
-	virtual void run();
+	virtual void run(bool noThreads);
 
 	virtual JobType getType();
 

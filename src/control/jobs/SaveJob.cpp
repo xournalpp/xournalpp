@@ -23,7 +23,7 @@ SaveJob::~SaveJob()
 	XOJ_RELEASE_TYPE(SaveJob);
 }
 
-void SaveJob::run()
+void SaveJob::run(bool noThreads)
 {
 	XOJ_CHECK_TYPE(SaveJob);
 

@@ -318,7 +318,7 @@ gpointer Scheduler::jobThreadCallback(Scheduler* scheduler)
 
 		g_mutex_lock(&scheduler->jobRunningMutex);
 
-		job->execute();
+		job->execute(false);
 
 		job->unref();
 		g_mutex_unlock(&scheduler->jobRunningMutex);

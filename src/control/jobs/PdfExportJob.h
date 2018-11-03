@@ -30,7 +30,7 @@ protected:
 	virtual ~PdfExportJob();
 
 public:
-	void run();
+	void run(bool noThreads);
 	virtual void afterRun();
 
 public:

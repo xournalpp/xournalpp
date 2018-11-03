@@ -29,7 +29,7 @@ void AutosaveJob::afterRun()
 	gtk_widget_destroy(dialog);
 }
 
-void AutosaveJob::run()
+void AutosaveJob::run(bool noThreads)
 {
 	XOJ_CHECK_TYPE(AutosaveJob);
 

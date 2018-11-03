@@ -25,7 +25,7 @@ protected:
 	virtual ~SaveJob();
 
 public:
-	virtual void run();
+	virtual void run(bool noThreads);
 
 	bool save();
 

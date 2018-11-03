@@ -214,5 +214,7 @@ XOJ_DECLARE_TYPE(SidebarPreviewPages, 202);
 XOJ_DECLARE_TYPE(SidebarPreviewLayers, 203);
 XOJ_DECLARE_TYPE(SidebarPreviewPageEntry, 204);
 XOJ_DECLARE_TYPE(SidebarPreviewLayerEntry, 205);
+XOJ_DECLARE_TYPE(GtkColorWrapper, 206);
+
 
 //XOJ_DECLARE_TYPE(XXXXXXXXXXXXXXXX, 206);

@@ -31,7 +31,7 @@ public:
 
 	void* getSource();
 
-	void run();
+	void run(bool noThreads);
 
 public:
 	static void rerenderRectangle(RenderJob* renderJob, Rectangle* rect);
