@@ -148,7 +148,8 @@ void SaveHandler::visitLayer(XmlNode* page, Layer* l)
 			{
 				stroke->setAttrib("tool", "pen");
 				/** set stroke timestamp value to the XmlPointNode */
-				stroke->setTimestamp(s->getTimestamp());		
+				stroke->setTimestamp(s->getTimestamp());	
+				stroke->setAudioFilename(s->getAudioFilename());	
 			}
 			else if (t == STROKE_TOOL_ERASER)
 			{

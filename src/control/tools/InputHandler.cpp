@@ -17,6 +17,7 @@
 
 #include "gui/MainWindow.h"
 extern int sttime;
+extern string audioFilename;
 
 #define PIXEL_MOTION_THRESHOLD 0.3
 
@@ -512,6 +513,7 @@ void InputHandler::startStroke(GdkEventButton* event, StrokeTool tool, double x,
 	
 	int seconds = ((g_get_monotonic_time()/1000000)-sttime);
 	tmpStroke->setTimestamp(seconds);
+	tmpStroke->setAudioFilename(audioFilename);
 	printf("%ds %G %G",seconds,x,y);
 }
 

@@ -29,6 +29,8 @@ public:
 
 	int XmlPointNode::getTimestamp();
 	void XmlPointNode::setTimestamp(int seconds);
+	string XmlPointNode::getAudioFilename();
+	void XmlPointNode::setAudioFilename(string filename);
 	virtual void writeOut(OutputStream* out);
 
 private:
@@ -36,4 +38,5 @@ private:
 
 	GList* points;
 	int timestamp;
+	string audioFilename="";
 };

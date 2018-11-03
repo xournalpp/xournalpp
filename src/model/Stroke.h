@@ -39,6 +39,9 @@ public:
 	void Stroke::setTimestamp(int seconds);
 	int Stroke::getTimestamp() const;
 
+	void Stroke::setAudioFilename(string fn);
+	string Stroke::getAudioFilename();
+
 	void addPoint(Point p);
 	void setLastPoint(double x, double y);
 	int getPointCount() const;
@@ -98,6 +101,7 @@ private:
 
 	//stroke timestamp
 	int timestamp;
+	string audioFilename;
 
 	EraseableStroke* eraseable;
 };
