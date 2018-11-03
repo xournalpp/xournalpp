@@ -38,7 +38,7 @@ GdkPixbuf* ToolbarDragDropHelper::getColorImage(int color)
 	selectcolor_set_size(icon, 16);
 	selectcolor_set_circle(icon, true);
 	GdkPixbuf* image = ToolbarUtil::newPixbufFromWidget(icon, 16);
-	gtk_widget_unref(icon);
+	g_object_unref(icon);
 
 	return image;
 }

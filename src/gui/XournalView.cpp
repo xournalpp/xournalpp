@@ -36,11 +36,7 @@ XournalView::XournalView(GtkWidget* parent, Control* control)
 	this->cache = new PdfCache(control->getSettings()->getPdfPageCacheSize());
 	registerListener(control);
 
-#if GTK3_ENABLED
-	this->widget = gtk_xournal_new(this, GTK_SCROLLABLE(parent));
-#else
 	this->widget = gtk_xournal_new(this);
-#endif
 
 	// we need to refer widget here, because we unref it somewhere twice!?
 	g_object_ref(this->widget);

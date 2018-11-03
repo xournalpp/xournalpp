@@ -13,6 +13,7 @@
 
 #include "widgets/Scrollbar.h" // because of extends ScrollbarListener
 #include <XournalType.h>
+#include <Rectangle.h>
 
 #include <gtk/gtk.h>
 
@@ -64,6 +65,14 @@ public:
 	double getVisiblePageTop(size_t page);
 	double getDisplayHeight();
 
+	/**
+	 * Returns the Rectangle which is currently visible
+	 */
+	Rectangle getVisibleRect();
+
+	/**
+	 * Performs a layout of the PageView's managed in this Layout
+	 */
 	void layoutPages();
 
 	GtkWidget* getScrollbarVertical();

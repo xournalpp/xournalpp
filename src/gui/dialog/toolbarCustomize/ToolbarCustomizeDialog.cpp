@@ -106,7 +106,7 @@ void ToolbarCustomizeDialog::toolitemDragBeginSeparator(GtkWidget* widget, GdkDr
 
 	GtkWidget* icon = ToolbarUtil::newSepeartorImage();
 	gtk_drag_set_icon_pixbuf(context, ToolbarDragDropHelper::getImagePixbuf(GTK_IMAGE(icon)), -2, -2);
-	gtk_widget_unref(icon);
+	g_object_unref(icon);
 }
 
 void ToolbarCustomizeDialog::toolitemDragEndSeparator(GtkWidget* widget, GdkDragContext* context, void* unused)

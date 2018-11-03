@@ -38,7 +38,7 @@ SidebarToolbar::~SidebarToolbar()
 {
 	XOJ_RELEASE_TYPE(SidebarToolbar);
 
-	gtk_widget_unref(GTK_WIDGET(this->toolbar));
+	g_object_unref(G_OBJECT(this->toolbar));
 	this->toolbar = NULL;
 
 	this->control = NULL;

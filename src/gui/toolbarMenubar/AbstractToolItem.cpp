@@ -167,7 +167,7 @@ GtkWidget* AbstractToolItem::getNewToolIcon()
 	if (!GTK_IS_IMAGE(icon))
 	{
 		GdkPixbuf* pixbuf = ToolbarUtil::newPixbufFromWidget(icon);
-		gtk_widget_unref(icon);
+		g_object_unref(icon);
 		icon = gtk_image_new_from_pixbuf(pixbuf);
 		g_object_unref(pixbuf);
 	}

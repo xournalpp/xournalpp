@@ -165,6 +165,14 @@ void Layout::checkSelectedPage()
 	}
 }
 
+Rectangle Layout::getVisibleRect()
+{
+	return Rectangle(this->scrollHorizontal->getValue(),
+					 this->scrollVertical->getValue(),
+					 this->scrollHorizontal->getPageSize(),
+					 this->scrollVertical->getPageSize());
+}
+
 /**
  * Padding outside the pages, including shadow
  */

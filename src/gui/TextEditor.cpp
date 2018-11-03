@@ -311,7 +311,7 @@ bool TextEditor::onKeyPressEvent(GdkEventKey* event)
 {
 	XOJ_CHECK_TYPE(TextEditor);
 
-	if (gtk_bindings_activate_event((GtkObject*) this->textWidget, event))
+	if (gtk_bindings_activate_event(GTK_OBJECT(this->textWidget), event))
 	{
 		return true;
 	}
@@ -333,7 +333,7 @@ bool TextEditor::onKeyPressEvent(GdkEventKey* event)
 		obscure = canInsert;
 		retval = true;
 	}
-	else if (event->keyval == GDK_Return || event->keyval == GDK_ISO_Enter || event->keyval == GDK_KP_Enter)
+	else if (event->keyval == GDK_KEY_Return || event->keyval == GDK_KEY_ISO_Enter || event->keyval == GDK_KEY_KP_Enter)
 	{
 		this->resetImContext();
 		iMCommitCallback(NULL, "\n", this);
@@ -342,7 +342,7 @@ bool TextEditor::onKeyPressEvent(GdkEventKey* event)
 		retval = true;
 	}
 		// Pass through Tab as literal tab, unless Control is held down
-	else if ((event->keyval == GDK_Tab || event->keyval == GDK_KP_Tab || event->keyval == GDK_ISO_Left_Tab)
+	else if ((event->keyval == GDK_KEY_Tab || event->keyval == GDK_KEY_KP_Tab || event->keyval == GDK_KEY_ISO_Left_Tab)
 			 && !(event->state & GDK_CONTROL_MASK))
 	{
 		resetImContext();

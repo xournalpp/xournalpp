@@ -171,7 +171,7 @@ void ToolbarAdapter::toolitemDragBegin(GtkWidget* widget, GdkDragContext* contex
 
 	gtk_drag_set_icon_pixbuf(context, ToolbarDragDropHelper::getImagePixbuf(GTK_IMAGE(icon)), -2, -2);
 
-	gtk_widget_unref(icon);
+	g_object_unref(icon);
 
 	gtk_widget_hide(widget);
 }
@@ -269,7 +269,7 @@ bool ToolbarAdapter::toolbarDragMotionCb(GtkToolbar* toolbar, GdkDragContext* co
 	gint ipos = gtk_toolbar_get_drop_index(toolbar, x, y);
 
 	GtkOrientation orientation = gtk_orientable_get_orientation(GTK_ORIENTABLE(toolbar));
-	gdk_drag_status(context, context->suggested_action, time);
+	gdk_drag_status(context, gdk_drag_context_get_suggested_action(context), time);
 
 	ToolItemDragDropData* d = ToolItemDragCurrentData::getData();
 
