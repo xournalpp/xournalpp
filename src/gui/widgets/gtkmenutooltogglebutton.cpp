@@ -72,18 +72,18 @@ static void gtk_menu_tool_toggle_button_construct_contents(GtkMenuToolToggleButt
 		gtk_arrow_set(GTK_ARROW(priv->arrow), GTK_ARROW_RIGHT, GTK_SHADOW_NONE);
 	}
 
-	if (priv->button && priv->button->parent)
+	if (priv->button && gtk_widget_get_parent(priv->button))
 	{
 		g_object_ref(priv->button);
-		gtk_container_remove(GTK_CONTAINER(priv->button->parent), priv->button);
+		gtk_container_remove(GTK_CONTAINER(gtk_widget_get_parent(priv->button)), priv->button);
 		gtk_container_add(GTK_CONTAINER(box), priv->button);
 		g_object_unref(priv->button);
 	}
 
-	if (priv->arrow_button && priv->arrow_button->parent)
+	if (priv->arrow_button && gtk_widget_get_parent(priv->arrow_button))
 	{
 		g_object_ref(priv->arrow_button);
-		gtk_container_remove(GTK_CONTAINER(priv->arrow_button->parent), priv->arrow_button);
+		gtk_container_remove(GTK_CONTAINER(gtk_widget_get_parent(priv->arrow_button)), priv->arrow_button);
 		gtk_box_pack_end(GTK_BOX(box), priv->arrow_button, FALSE, FALSE, 0);
 		g_object_unref(priv->arrow_button);
 	}
@@ -130,7 +130,7 @@ static void gtk_menu_tool_toggle_button_state_changed(GtkWidget* widget, GtkStat
 	GtkMenuToolToggleButton* button = GTK_MENU_TOOL_TOGGLE_BUTTON(widget);
 	GtkMenuToolToggleButtonPrivate* priv = button->priv;
 
-	if (!GTK_WIDGET_IS_SENSITIVE(widget) && priv->menu)
+	if (!gtk_widget_is_sensitive(widget) && priv->menu)
 	{
 		gtk_menu_shell_deactivate(GTK_MENU_SHELL(priv->menu));
 	}
