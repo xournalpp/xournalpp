@@ -143,7 +143,7 @@ void ToolbarAdapter::showToolbar()
 	this->spacerItem = it;
 	gtk_toolbar_insert(tb, it, 0);
 
-	GtkOrientation orientation = gtk_toolbar_get_orientation(tb);
+	GtkOrientation orientation = gtk_orientable_get_orientation(GTK_ORIENTABLE(tb));
 	if (orientation == GTK_ORIENTATION_HORIZONTAL)
 	{
 		GtkAllocation alloc = { 0, 0, 0, 20 };
@@ -267,7 +267,8 @@ bool ToolbarAdapter::toolbarDragMotionCb(GtkToolbar* toolbar, GdkDragContext* co
 	}
 
 	gint ipos = gtk_toolbar_get_drop_index(toolbar, x, y);
-	GtkOrientation orientation = gtk_toolbar_get_orientation(toolbar);
+
+	GtkOrientation orientation = gtk_orientable_get_orientation(GTK_ORIENTABLE(toolbar));
 	gdk_drag_status(context, context->suggested_action, time);
 
 	ToolItemDragDropData* d = ToolItemDragCurrentData::getData();
@@ -319,7 +320,7 @@ void ToolbarAdapter::toolbarDragDataReceivedCb(GtkToolbar* toolbar, GdkDragConte
 
 	if (d->type == TOOL_ITEM_ITEM)
 	{
-		bool horizontal = gtk_toolbar_get_orientation(toolbar) == GTK_ORIENTATION_HORIZONTAL;
+		bool horizontal = gtk_orientable_get_orientation(GTK_ORIENTABLE(toolbar)) == GTK_ORIENTATION_HORIZONTAL;
 		GtkToolItem* it = d->item->createItem(horizontal);
 
 		adapter->prepareToolItem(it);
@@ -341,7 +342,7 @@ void ToolbarAdapter::toolbarDragDataReceivedCb(GtkToolbar* toolbar, GdkDragConte
 												adapter->window->getControl()->getToolHandler(),
 												GTK_WINDOW(adapter->window->getWindow()), d->color);
 
-		bool horizontal = gtk_toolbar_get_orientation(toolbar) == GTK_ORIENTATION_HORIZONTAL;
+		bool horizontal = gtk_orientable_get_orientation(GTK_ORIENTABLE(toolbar)) == GTK_ORIENTATION_HORIZONTAL;
 		GtkToolItem* it = item->createItem(horizontal);
 
 		adapter->prepareToolItem(it);
