@@ -9,6 +9,8 @@ This fork is intended to improve and customize xournalpp to my very own use case
 - [x] On the fly text size increasing/decreasing with CTRL + Alt + plus / minus
 - [x] On the fly text bold toggle with CTRL + b
 - [x] Go to next/prev. page with right/left arrows (instead of just pag. down / pag. up)
+- [x] Save a timestamp for each stroke 
+- [ ] Record audio and have it play according to stroke timestamps   
 - [ ] Zoom to the viewer's center (instead of top left corner of the page)
 
 ## Description
