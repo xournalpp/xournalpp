@@ -72,6 +72,7 @@ GtkWidget* ToolitemDragDrop::getIcon(ToolItemDragDropData* data)
 	}
 	else if (data->type == TOOL_ITEM_SEPARATOR)
 	{
+		// Currently no image displayed for a separator
 		return ToolbarUtil::newSepeartorImage();
 	}
 

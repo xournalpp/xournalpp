@@ -495,8 +495,10 @@ private:
 	 * 2: right button
 	 * 3: touch screen
 	 * 4: default
+	 * 5: Stylus button
+	 * 6: Stylus2 button
 	 */
-	ButtonConfig* buttonConfig[5];
+	ButtonConfig* buttonConfig[7];
 
 	/**
 	 * Which gui elements are hidden if you are in Fullscreen mode,

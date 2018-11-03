@@ -6,12 +6,26 @@ ToolbarUtil::~ToolbarUtil() { }
 
 GtkWidget* ToolbarUtil::newSepeartorImage()
 {
-	GtkWidget* separator = gtk_vseparator_new();
-	GdkPixbuf* pixbuf = ToolbarUtil::newPixbufFromWidget(separator);
-	gtk_widget_unref(separator);
-	GtkWidget * w = gtk_image_new_from_pixbuf(pixbuf);
-	g_object_unref(pixbuf);
+#if GTK3_ENABLED
+	cairo_surface_t* crImage = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, 30, 30);
+	cairo_t* cr = cairo_create(crImage);
+
+	cairo_set_source_rgb(cr, 0, 0, 0);
+	cairo_set_line_width(cr, 5);
+	cairo_move_to(cr, 15, 0);
+	cairo_line_to(cr, 15, 30);
+
+	cairo_set_source_rgb(cr, 0, 0, 0);
+	cairo_destroy(cr);
+
+	GtkWidget* w = gtk_image_new_from_surface(crImage);
+	cairo_surface_destroy(crImage);
 	return w;
+#else
+	GdkPixbuf* pix = gdk_pixbuf_new (GDK_COLORSPACE_RGB,false, 8, 4, 30);
+	gdk_pixbuf_fill(pix, 0x000000);
+	return gtk_image_new_from_pixbuf(pix);
+#endif
 }
 
 void ToolbarUtil::fakeExposeWidget(GtkWidget* widget, GdkPixmap* pixmap)

@@ -51,7 +51,6 @@ ToolbarCustomizeDialog::ToolbarCustomizeDialog(GladeSearchpath* gladeSearchPath,
 	// init separator
 	GtkWidget* tbSeparator = get("tbSeparator");
 
-	GtkWidget* icon = ToolbarUtil::newSepeartorImage();
 	GtkWidget* box = gtk_vbox_new(false, 3);
 	gtk_widget_show(box);
 
@@ -63,9 +62,10 @@ ToolbarCustomizeDialog::ToolbarCustomizeDialog(GladeSearchpath* gladeSearchPath,
 	gtk_container_add(GTK_CONTAINER(ebox), box);
 	gtk_widget_show(ebox);
 
-	gtk_widget_show(icon);
-
-	gtk_box_pack_end(GTK_BOX(box), icon, false, false, 0);
+	GtkWidget* separator = gtk_vseparator_new();
+	gtk_widget_set_size_request(separator, 2, 22);
+	gtk_widget_show(separator);
+	gtk_box_pack_end(GTK_BOX(box), separator, false, false, 0);
 
 	// make ebox a drag source
 	gtk_drag_source_set(ebox, GDK_BUTTON1_MASK, &ToolbarDragDropHelper::dropTargetEntry, 1, GDK_ACTION_MOVE);
