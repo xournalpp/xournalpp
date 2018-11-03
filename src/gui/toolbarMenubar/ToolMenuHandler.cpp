@@ -104,7 +104,7 @@ void ToolMenuHandler::load(ToolbarData* d, GtkWidget* toolbar, const char* toolb
 	{
 		if (e->getName() == toolbarName)
 		{
-			for (ToolbarItem* dataItem : *e->getItems())
+			for (ToolbarItem* dataItem : e->getItems())
 			{
 				string name = dataItem->getName();
 

@@ -125,7 +125,7 @@ void ToolbarData::saveToKeyFile(GKeyFile* config)
 	{
 		string line = "";
 
-		for (ToolbarItem* it : *e->getItems())
+		for (ToolbarItem* it : e->getItems())
 		{
 			line += ",";
 			line += it->getName();

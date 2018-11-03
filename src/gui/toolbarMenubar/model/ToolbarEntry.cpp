@@ -21,7 +21,7 @@ void ToolbarEntry::operator=(const ToolbarEntry& e)
 
 	for (ToolbarItem* item : e.entries)
 	{
-		this->entries.push_back(new ToolbarItem(*item));
+		entries.push_back(new ToolbarItem(*item));
 	}
 }
 
@@ -36,12 +36,11 @@ ToolbarEntry::~ToolbarEntry()
 
 void ToolbarEntry::clearList()
 {
-	for (ToolbarItem* item : this->entries)
+	for (ToolbarItem* item : entries)
 	{
 		delete item;
-		item = NULL;
 	}
-	this->entries.clear();
+	entries.clear();
 }
 
 string ToolbarEntry::getName()
@@ -63,7 +62,7 @@ int ToolbarEntry::addItem(string item)
 	XOJ_CHECK_TYPE(ToolbarEntry);
 
 	ToolbarItem* it = new ToolbarItem(item);
-	this->entries.push_back(it);
+	entries.push_back(it);
 
 	return it->getId();
 }
@@ -77,8 +76,8 @@ bool ToolbarEntry::removeItemById(int id)
 		if (this->entries[i]->getId() == id)
 		{
 			delete this->entries[i];
-			this->entries[i] = NULL;
-			this->entries.erase(this->entries.begin() + i);
+			entries[i] = NULL;
+			entries.erase(entries.begin() + i);
 			return true;
 		}
 	}
@@ -90,14 +89,19 @@ int ToolbarEntry::insertItem(string item, int position)
 	XOJ_CHECK_TYPE(ToolbarEntry);
 
 	ToolbarItem* it = new ToolbarItem(item);
-	this->entries.insert(this->entries.begin() + position, it);
 
+	if (position >= entries.size()) {
+		entries.push_back(it);
+		return it->getId();
+	}
+
+	entries.insert(entries.begin() + position, it);
 	return it->getId();
 }
 
-ToolbarItemVector* ToolbarEntry::getItems()
+const ToolbarItemVector& ToolbarEntry::getItems() const
 {
 	XOJ_CHECK_TYPE(ToolbarEntry);
 
-	return &this->entries;
+	return entries;
 }
