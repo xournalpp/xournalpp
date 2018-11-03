@@ -24,7 +24,11 @@
 using std::cout;
 using std::endl;
 
-gint sttime;	//has to be moved somewhere else in the future
+//those two have to be moved somewhere else in the future
+gint sttime;	
+string audioFilename = "";
+string audioFolder = "";
+//gchar* audioFilename;
 
 MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control) :
 		GladeGui(gladeSearchPath, "main.glade", "mainWindow")
