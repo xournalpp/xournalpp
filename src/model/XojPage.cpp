@@ -28,6 +28,7 @@ XojPage::~XojPage()
 	{
 		delete l;
 	}
+	this->layer.clear();
 
 	XOJ_RELEASE_TYPE(XojPage);
 }

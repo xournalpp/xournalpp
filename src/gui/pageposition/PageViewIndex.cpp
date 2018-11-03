@@ -49,6 +49,7 @@ PageViewIndex::~PageViewIndex()
 	{
 		delete e;
 	}
+	this->data.clear();
 }
 
 void PageViewIndex::addView(PageView* v)

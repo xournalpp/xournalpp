@@ -111,6 +111,7 @@ SelectBackgroundColorDialog::~SelectBackgroundColorDialog()
 	{
 		delete e;
 	}
+	this->colors.clear();
 
 	XOJ_RELEASE_TYPE(SelectBackgroundColorDialog);
 }

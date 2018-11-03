@@ -219,6 +219,8 @@ void ExportDialog::fileTypeSelected(GtkTreeView* treeview, gpointer user_data)
 				}
 			}
 		}
+
+		g_object_unref(file);
 	}
 }
 
@@ -229,7 +231,11 @@ path ExportDialog::getFilePath()
 	GFile* file = gtk_file_chooser_get_file(GTK_FILE_CHOOSER(this->window));
 	if (file)
 	{
-		return path(g_file_get_path(file));
+		char* filePath = g_file_get_path(file);
+		path p(filePath);
+		g_free(filePath);
+		g_object_unref(file);
+		return p;
 	}
 	else
 	{
