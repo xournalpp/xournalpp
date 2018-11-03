@@ -1,6 +1,7 @@
 #include "Settings.h"
 
 #include "ButtonConfig.h"
+#include "util/DeviceListHelper.h"
 
 #include <config.h>
 #include <i18n.h>
@@ -1432,15 +1433,12 @@ void Settings::checkCanXInput()
 {
 	XOJ_CHECK_TYPE(Settings);
 
-#if GTK3_ENABLED
-	this->canXIput = TRUE;
-#else
 	this->canXIput = FALSE;
-	GList* devList = gdk_devices_list();
 
-	while (devList != NULL)
+	DeviceListHelper devList(NULL);
+	for (InputDevice& dev : devList.getDeviceList())
 	{
-		GdkDevice* device = (GdkDevice*) devList->data;
+		GdkDevice* device = dev.getDevice();
 		if (device != gdk_device_get_core_pointer())
 		{
 
@@ -1457,9 +1455,7 @@ void Settings::checkCanXInput()
 			}
 			canXIput = TRUE;
 		}
-		devList = devList->next;
 	}
-#endif
 }
 
 void Settings::setMainWndSize(int width, int height)

@@ -3,6 +3,7 @@
 #include "SettingsDialog.h"
 #include "control/settings/Settings.h"
 #include "control/settings/ButtonConfig.h"
+#include "util/DeviceListHelper.h"
 
 #include <config.h>
 #include <i18n.h>
@@ -27,32 +28,13 @@ ButtonConfigGui::ButtonConfigGui(SettingsDialog* dlg, GtkWidget* w,  Settings* s
 
 		gtk_combo_box_append_text(GTK_COMBO_BOX(this->cbDevice), _C("No device"));
 
-		GList* devices = gdk_devices_list();
-		for (GList* l = devices; l != NULL; l = l->next)
+		DeviceListHelper devList(w);
+		for (InputDevice& dev : devList.getDeviceList())
 		{
-			GdkDevice* dev = (GdkDevice*) l->data;
+			GdkDevice* device = dev.getDevice();
 
-			string devType = "";
-			if (dev->source == GDK_SOURCE_MOUSE)
-			{
-				devType = _("mouse");
-			}
-			else if (dev->source == GDK_SOURCE_PEN)
-			{
-				devType = _("pen");
-			}
-			else if (dev->source == GDK_SOURCE_ERASER)
-			{
-				devType = _("eraser");
-			}
-			else if (dev->source == GDK_SOURCE_CURSOR)
-			{
-				devType = _("cursor");
-			}
-
-			char* txt = g_strdup_printf("%s (%s)", dev->name, devType.c_str());
-			gtk_combo_box_append_text(GTK_COMBO_BOX(this->cbDevice), txt);
-			g_free(txt);
+			string txt = string(device->name)  + " (" + dev.getType() + ")";
+			gtk_combo_box_append_text(GTK_COMBO_BOX(this->cbDevice), txt.c_str());
 		}
 
 		gtk_table_attach(GTK_TABLE(table), newLabel(_C("Device")), 0, 1, 0, 1, GTK_FILL, GTK_FILL, 20, 0);
