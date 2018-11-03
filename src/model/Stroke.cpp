@@ -146,6 +146,11 @@ void Stroke::setLastPoint(double x, double y)
 	}
 }
 
+void Stroke::setLastPoint(Point p)
+{
+	setLastPoint(p.x, p.y);
+}
+
 void Stroke::addPoint(Point p)
 {
 	XOJ_CHECK_TYPE(Stroke);

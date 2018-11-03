@@ -12,6 +12,7 @@
 #pragma once
 
 #include <serializing/Serializeable.h>
+#include <Rectangle.h>
 #include <XournalType.h>
 
 #include <gtk/gtk.h>
@@ -53,6 +54,8 @@ public:
 
 	double getElementWidth();
 	double getElementHeight();
+
+	Rectangle boundingRect();
 
 	virtual bool intersectsArea(const GdkRectangle* src);
 	virtual bool intersectsArea(double x, double y, double width, double height);

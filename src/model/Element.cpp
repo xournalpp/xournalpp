@@ -99,6 +99,11 @@ double Element::getElementHeight()
 	return this->height;
 }
 
+Rectangle Element::boundingRect()
+{
+	return Rectangle(getX(), getY(), getElementWidth(), getElementHeight());
+}
+
 void Element::setColor(int color)
 {
 	XOJ_CHECK_TYPE(Element);
