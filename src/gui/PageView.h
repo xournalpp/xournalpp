@@ -78,7 +78,7 @@ public:
 	bool containsPoint(int x, int y, bool local = false);
 	bool containsY(int y);
 
-	GdkColor getSelectionColor();
+	GtkColorWrapper getSelectionColor() const;
 	int getBufferPixels();
 
 	/**
@@ -122,13 +122,13 @@ public:
 	 * Returns the x coordinate of this PageView with
 	 * respect to the display
 	 */
-	int getX();
+	int getX() const;
 
 	/**
 	 * Returns the y coordinate of this PageView with
 	 * respect to the display
 	 */
-	int getY();
+	int getY() const;
 
 	/**
 	 * Maps a Rectangle from display coordinates to local

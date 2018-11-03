@@ -33,13 +33,14 @@ public:
 	 */
 	void applyWithAlpha(cairo_t* cr, double alpha);
 
-private:
-	XOJ_TYPE_ATTRIB;
-
+public:
 	/**
 	 * Color values, 0-65535
 	 */
 	guint16 red;
 	guint16 green;
 	guint16 blue;
+
+private:
+	XOJ_TYPE_ATTRIB;
 };

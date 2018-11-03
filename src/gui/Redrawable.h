@@ -12,8 +12,8 @@
 #pragma once
 
 #include <Range.h>
+#include "util/GtkColorWrapper.h"
 
-#include <gdk/gdktypes.h>
 #include <gtk/gtk.h>
 
 class Element;
@@ -61,13 +61,13 @@ public:
 	/**
 	 * Return the GTK selection color
 	 */
-	virtual GdkColor getSelectionColor() = 0;
+	virtual GtkColorWrapper getSelectionColor() const = 0;
 
 
 	virtual void deleteViewBuffer() = 0;
 
-	virtual int getX() = 0;
-	virtual int getY() = 0;
+	virtual int getX() const = 0;
+	virtual int getY() const = 0;
 
 
 	virtual Rectangle* rectOnWidget(double x, double y, double width, double height) = 0;

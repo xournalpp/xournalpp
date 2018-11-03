@@ -6,18 +6,6 @@
 #include <Util.h>
 #include <pixbuf-utils.h>
 
-/************** drawing nice cursors *********/
-
-static unsigned char CURSOR_HIGLIGHTER_BITS[] = {
-	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf8, 0x0f, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08,
-	0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0xf8, 0x0f, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
-
-static unsigned char CURSOR_HILIGHTER_MASK[] = {
-	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf8, 0x0f, 0xf8, 0x0f, 0xf8, 0x0f, 0xf8, 0x0f, 0xf8, 0x0f,
-	0xf8, 0x0f, 0xf8, 0x0f, 0xf8, 0x0f, 0xf8, 0x0f, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
-
 Cursor::Cursor(Control* control)
 {
 	XOJ_INIT_TYPE(Cursor);
@@ -93,7 +81,7 @@ void Cursor::setCursorBusy(bool busy)
 			gdk_window_set_cursor(gtk_widget_get_window(win->getWindow()), cursor);
 		}
 
-		gdk_cursor_unref(cursor);
+		g_object_unref(cursor);
 	}
 	else
 	{
@@ -279,23 +267,11 @@ void Cursor::updateCursor()
 		}
 		else if (type == TOOL_ERASER)
 		{
-			GdkColor bg = { 0, 65535, 65535, 65535 };
-			GdkColor fg = { 0, 0, 0, 0 };
-			GdkPixmap* source = gdk_bitmap_create_from_data(NULL, (gchar*) CURSOR_HIGLIGHTER_BITS, 16, 16);
-			GdkPixmap* mask = gdk_bitmap_create_from_data(NULL, (gchar*) CURSOR_HILIGHTER_MASK, 16, 16);
-			cursor = gdk_cursor_new_from_pixmap(source, mask, &fg, &bg, 7, 7);
-			gdk_bitmap_unref(source);
-			gdk_bitmap_unref(mask);
+			cursor = eraserCursor();
 		}
 		else if (type == TOOL_HILIGHTER)
 		{
-			GdkColor fg = { 0, 0, 0, 0 };
-			GdkColor bg = handler->getGdkColor();
-			GdkPixmap* source = gdk_bitmap_create_from_data(NULL, (gchar*) CURSOR_HIGLIGHTER_BITS, 16, 16);
-			GdkPixmap* mask = gdk_bitmap_create_from_data(NULL, (gchar*) CURSOR_HILIGHTER_MASK, 16, 16);
-			cursor = gdk_cursor_new_from_pixmap(source, mask, &fg, &bg, 7, 7);
-			gdk_bitmap_unref(source);
-			gdk_bitmap_unref(mask);
+			cursor = highlighterCursor();
 		}
 		else if (type == TOOL_TEXT)
 		{
@@ -339,3 +315,124 @@ void Cursor::updateCursor()
 		gdk_cursor_unref(cursor);
 	}
 }
+
+#if GTK3_ENABLED
+
+GdkCursor* Cursor::eraserCursor()
+{
+	Tool& eraser = control->getToolHandler()->getTool(TOOL_ERASER);
+	GdkCursor* cursor = NULL;
+
+	const double cursorSize = 8;
+
+	cairo_surface_t* surface = cairo_image_surface_create(CAIRO_FORMAT_ARGB32,
+	                                                      cursorSize,
+	                                                      cursorSize);
+
+	cairo_t* cr = cairo_create(surface);
+
+	cairo_rectangle(cr, 0, 0, cursorSize, cursorSize);
+
+	cairo_set_source_rgb(cr, 1, 1, 1);
+	cairo_fill(cr);
+
+	cairo_rectangle(cr, 0, 0, cursorSize, cursorSize);
+
+	cairo_set_source_rgb(cr, 0, 0, 0);
+	cairo_stroke(cr);
+
+	cairo_destroy(cr);
+
+	cursor = gdk_cursor_new_from_surface(gdk_display_get_default(),
+	                                    surface,
+	                                    cursorSize/2.,
+	                                    cursorSize/2.);
+
+	cairo_surface_destroy(surface);
+
+	return cursor;
+}
+
+GdkCursor* Cursor::highlighterCursor()
+{
+	Tool& highlighter = control->getToolHandler()->getTool(TOOL_HILIGHTER);
+
+	const double cursorSize = 8;
+
+	GdkCursor* cursor = NULL;
+	int rgb = highlighter.getColor();
+
+	double r = ((rgb >> 16) & 0xff) / 255.0;
+	double g = ((rgb >> 8) & 0xff) / 255.0;
+	double b = (rgb & 0xff) / 255.0;
+
+	cairo_surface_t* surface = cairo_image_surface_create(CAIRO_FORMAT_ARGB32,
+	                                                      cursorSize,
+	                                                      cursorSize);
+
+	cairo_t* cr = cairo_create(surface);
+
+	cairo_rectangle(cr, 0, 0, cursorSize, cursorSize);
+	cairo_set_source_rgba(cr, 1, 1, 1, 0);
+	cairo_fill(cr);
+
+	cairo_arc(cr, cursorSize/2., cursorSize/2., cursorSize/2.-1, 0, 2*M_PI);
+
+	cairo_set_source_rgba(cr, r, g, b, 120/255.);
+
+	cairo_set_operator(cr, CAIRO_OPERATOR_OVER);
+
+	cairo_fill(cr);
+
+	cairo_destroy(cr);
+
+	cursor = gdk_cursor_new_from_surface(gdk_display_get_default(),
+	                                     surface,
+	                                     cursorSize/2.,
+	                                     cursorSize/2.);
+
+	cairo_surface_destroy(surface);
+
+	return cursor;
+}
+
+#else // GTK3_ENABLED
+static unsigned char CURSOR_HIGLIGHTER_BITS[] = {
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf8, 0x0f, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08,
+	0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0xf8, 0x0f, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+};
+
+static unsigned char CURSOR_HILIGHTER_MASK[] = {
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf8, 0x0f, 0xf8, 0x0f, 0xf8, 0x0f, 0xf8, 0x0f, 0xf8, 0x0f,
+	0xf8, 0x0f, 0xf8, 0x0f, 0xf8, 0x0f, 0xf8, 0x0f, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+};
+
+
+GdkCursor* Cursor::eraserCursor()
+{
+	GdkColor bg = { 0, 65535, 65535, 65535 };
+	GdkColor fg = { 0, 0, 0, 0 };
+	GdkPixmap* source = gdk_bitmap_create_from_data(NULL, (gchar*) CURSOR_HIGLIGHTER_BITS, 16, 16);
+	GdkPixmap* mask = gdk_bitmap_create_from_data(NULL, (gchar*) CURSOR_HILIGHTER_MASK, 16, 16);
+	GdkCursor* cursor = gdk_cursor_new_from_pixmap(source, mask, &fg, &bg, 7, 7);
+	gdk_bitmap_unref(source);
+	gdk_bitmap_unref(mask);
+
+	return cursor;
+}
+
+GdkCursor* Cursor::highlighterCursor()
+{
+	GdkColor fg = { 0, 0, 0, 0 };
+	ToolHandler* handler = control->getToolHandler();
+	GdkColor bg = handler->getGdkColor();
+	GdkPixmap* source = gdk_bitmap_create_from_data(NULL, (gchar*) CURSOR_HIGLIGHTER_BITS, 16, 16);
+	GdkPixmap* mask = gdk_bitmap_create_from_data(NULL, (gchar*) CURSOR_HILIGHTER_MASK, 16, 16);
+	GdkCursor* cursor = gdk_cursor_new_from_pixmap(source, mask, &fg, &bg, 7, 7);
+	gdk_bitmap_unref(source);
+	gdk_bitmap_unref(mask);
+
+	return cursor;
+}
+
+#endif

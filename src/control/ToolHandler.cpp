@@ -181,6 +181,11 @@ void ToolHandler::fireToolChanged()
 	}
 }
 
+Tool &ToolHandler::getTool(ToolType type)
+{
+	return *(this->tools[type - TOOL_PEN]);
+}
+
 ToolType ToolHandler::getToolType()
 {
 	XOJ_CHECK_TYPE(ToolHandler);

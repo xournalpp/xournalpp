@@ -1065,7 +1065,7 @@ void TextEditor::paint(cairo_t* cr, GdkRectangle* repaintRect, double zoom)
 {
 	XOJ_CHECK_TYPE(TextEditor);
 
-	GdkColor selectionColor = this->gui->getSelectionColor();
+	GtkColorWrapper selectionColor = this->gui->getSelectionColor();
 
 	cairo_save(cr);
 

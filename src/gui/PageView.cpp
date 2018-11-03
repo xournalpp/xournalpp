@@ -944,7 +944,7 @@ int PageView::getBufferPixels()
 	return 0;
 }
 
-GdkColor PageView::getSelectionColor()
+GtkColorWrapper PageView::getSelectionColor() const
 {
 	XOJ_CHECK_TYPE(PageView);
 
@@ -958,14 +958,14 @@ TextEditor* PageView::getTextEditor()
 	return textEditor;
 }
 
-int PageView::getX()
+int PageView::getX() const
 {
 	XOJ_CHECK_TYPE(PageView);
 
 	return this->layout.getLayoutAbsoluteX();
 }
 
-int PageView::getY()
+int PageView::getY() const
 {
 	XOJ_CHECK_TYPE(PageView);
 

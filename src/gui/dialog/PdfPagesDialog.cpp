@@ -448,7 +448,8 @@ void PdfPagesDialog::setBackgroundWhite()
 		return;
 	}
 	this->backgroundInitialized = true;
-	gdk_window_set_background(GTK_LAYOUT(this->widget)->bin_window, &this->widget->style->white);
+	gdk_window_set_background(gtk_layout_get_bin_window(GTK_LAYOUT(this->widget)),
+	                          &gtk_widget_get_style(widget)->white);
 }
 
 void PdfPagesDialog::setSelected(size_t selected)
