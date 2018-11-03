@@ -61,6 +61,7 @@ SizeUndoAction::~SizeUndoAction()
 	{
 		delete e;
 	}
+	this->data.clear();
 
 	XOJ_RELEASE_TYPE(SizeUndoAction);
 }

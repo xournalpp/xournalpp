@@ -48,6 +48,7 @@ PdfExport::~PdfExport()
 	{
 		delete doc;
 	}
+	documents.clear();
 
 	g_list_foreach(this->pageIds, (GFunc) g_free, NULL);
 	g_list_free(this->pageIds);

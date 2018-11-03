@@ -19,6 +19,7 @@ Layer::~Layer()
 	{
 		delete e;
 	}
+	this->elements.clear();
 
 	XOJ_RELEASE_TYPE(Layer);
 }

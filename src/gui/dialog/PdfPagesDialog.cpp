@@ -326,6 +326,7 @@ PdfPagesDialog::~PdfPagesDialog()
 	{
 		delete p;
 	}
+	this->pages.clear();
 
 	delete[] this->usedPages;
 	this->usedPages = NULL;
