@@ -40,9 +40,6 @@
 #include <stdlib.h>
 #include <math.h>
 
-string lastfn = "";
-extern string audioFolder;
-
 PageView::PageView(XournalView* xournal, PageRef page)
 {
 	XOJ_INIT_TYPE(PageView);
@@ -354,19 +351,7 @@ void PageView::selectObjectAt(double x, double y)
 						 * Display the timestamp for the selected stroke 
 						 * To be replaced with a function call to an action
 						 */
-						int ts = s->getTimestamp();
-						string fn = s->getAudioFilename();
-						if(fn != lastfn)
-						{
-							lastfn = fn;
-							system("killall vlc");
-							string command("vlc "+audioFolder+fn+"&");
-							system(command.c_str());
-						}
-						printf("\nPageView::selectObjectAt TIMESTAMP: %d\n",ts);
-						std::cout<<"AudioFileName: "<<fn<<"\n";
-						string command("curl -s -u \"\":\"password\" --url \"http://127.0.0.1:8080/requests/status.xml?command=seek&val="+std::to_string(ts)+"\" >/dev/null");
-						system(command.c_str());
+						printf("\nPageView::selectObjectAt TIMESTAMP: %d\n",s->getTimestamp());
 					}
 				}
 				else

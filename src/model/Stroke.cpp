@@ -101,16 +101,6 @@ void Stroke::readSerialized(ObjectInputStream& in) throw (InputStreamException)
 	in.endObject();
 }
 
-void Stroke::setAudioFilename(string fn)
-{
-	this->audioFilename = fn;
-}
-
-string Stroke::getAudioFilename()
-{
-	return this->audioFilename;
-}
-
 void Stroke::setTimestamp(int seconds)
 {
 	XOJ_CHECK_TYPE(Stroke);

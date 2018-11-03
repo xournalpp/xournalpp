@@ -24,16 +24,6 @@ XmlPointNode::~XmlPointNode()
 	XOJ_RELEASE_TYPE(XmlPointNode);
 }
 
-string XmlPointNode::getAudioFilename()
-{
-	return this->audioFilename;
-}
-
-void XmlPointNode::setAudioFilename(string filename)
-{
-	this->audioFilename = filename;
-}
-
 void XmlPointNode::setTimestamp(int seconds)
 {
 	this->timestamp = seconds;
@@ -66,9 +56,6 @@ void XmlPointNode::writeOut(OutputStream* out)
 	out->write("<timestamp ");
 	out->write("ts=\"");
 	out->write(std::to_string(this->timestamp));	//must be set via saveHandler
-	out->write("\"");
-	out->write("fn=\"");
-	out->write(this->audioFilename);
 	out->write("\"");
 	out->write("></timestamp>");
 

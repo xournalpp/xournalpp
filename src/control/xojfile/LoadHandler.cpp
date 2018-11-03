@@ -541,7 +541,6 @@ void LoadHandler::parseStroke()
 	 * we've read just before. 
 	 */
 	this->stroke->setTimestamp(loadedTimeStamp);
-	this->stroke->setAudioFilename(loadedFilename);
 	std::cout<<"Stroke With TS: "<<stroke->getTimestamp()<<"\n";
 }
 
@@ -621,7 +620,6 @@ void LoadHandler::parseLayer()
 	if (!strcmp(elementName, "timestamp")) 
 	{
 		loadedTimeStamp = LoadHandlerHelper::getAttribInt("ts", this);
-		loadedFilename = LoadHandlerHelper::getAttrib("fn", false, this);
 	}
 	if (!strcmp(elementName, "stroke")) // start of a stroke
 	{
