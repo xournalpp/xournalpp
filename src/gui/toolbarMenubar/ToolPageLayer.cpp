@@ -10,7 +10,7 @@ ToolPageLayer::ToolPageLayer(GladeGui* gui, ActionHandler* handler, string id, A
 {
 	XOJ_INIT_TYPE(ToolPageLayer);
 
-	this->layerComboBox = gtk_combo_box_new_text();
+	this->layerComboBox = gtk_combo_box_text_new();
 	this->layerCount = -5;
 	this->inCbUpdate = false;
 	this->gui = gui;
@@ -68,7 +68,7 @@ void ToolPageLayer::setLayerCount(int layer, int selected)
 		gtk_combo_box_remove_text(GTK_COMBO_BOX(this->layerComboBox), i);
 	}
 
-	gtk_combo_box_append_text(GTK_COMBO_BOX(this->layerComboBox), _C("Background"));
+	gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(this->layerComboBox), _C("Background"));
 	for (int i = 1; i <= layer; i++)
 	{
 		string text = FS(_F("Layer {1}") % i);

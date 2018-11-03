@@ -75,7 +75,7 @@ void XInputUtils::fixXInputCoords(GdkEvent* event, GtkWidget* widget)
 	}
 	else
 	{
-		gdk_window_get_origin(GTK_WIDGET(widget)->window, &wx, &wy);
+		gdk_window_get_origin(gtk_widget_get_window(GTK_WIDGET(widget)), &wx, &wy);
 		double axis_width = device->axes[0].max - device->axes[0].min;
 		if (axis_width > EPSILON)
 		{

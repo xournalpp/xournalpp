@@ -9,15 +9,14 @@ DeviceListHelper::DeviceListHelper(GtkWidget* widget)
 	GdkDisplay* display;
 	if (widget == NULL)
 	{
-		widget = gdk_display_get_default();
+		display = gdk_display_get_default();
 	}
 	else
 	{
 		display = gtk_widget_get_display(widget);
 	}
 
-	deviceManager = gdk_display_get_device_manager(display);
-	this->cbDevice = gtk_combo_box_text_new();
+	GdkDeviceManager* deviceManager = gdk_display_get_device_manager(display);
 	GList* devList = gdk_device_manager_list_devices(deviceManager, GDK_DEVICE_TYPE_SLAVE);
 #else
 	GList* devList = gdk_devices_list();
@@ -56,21 +55,27 @@ GdkDevice* InputDevice::getDevice()
 	return device;
 }
 
+string InputDevice::getName()
+{
+	return gdk_device_get_name(device);
+}
+
 string InputDevice::getType()
 {
-	if (device->source == GDK_SOURCE_MOUSE)
+	GdkInputSource source = gdk_device_get_source(device);
+	if (source == GDK_SOURCE_MOUSE)
 	{
 		return _("mouse");
 	}
-	else if (device->source == GDK_SOURCE_PEN)
+	else if (source == GDK_SOURCE_PEN)
 	{
 		return _("pen");
 	}
-	else if (device->source == GDK_SOURCE_ERASER)
+	else if (source == GDK_SOURCE_ERASER)
 	{
 		return _("eraser");
 	}
-	else if (device->source == GDK_SOURCE_CURSOR)
+	else if (source == GDK_SOURCE_CURSOR)
 	{
 		return _("cursor");
 	}

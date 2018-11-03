@@ -86,6 +86,16 @@ public:
 
 	void checkSelectedPage();
 
+	/**
+	 * Returns the height of the entire Layout
+	 */
+	double getLayoutHeight();
+
+	/**
+	 * Returns the width of the entire Layout
+	 */
+	double getLayoutWidth();
+
 private:
 	XOJ_TYPE_ATTRIB;
 

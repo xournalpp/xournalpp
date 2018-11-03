@@ -30,11 +30,23 @@ using std::endl;
 
 static void gtk_xournal_class_init(GtkXournalClass* klass);
 static void gtk_xournal_init(GtkXournal* xournal);
+static void gtk_xournal_get_preferred_width(GtkWidget *widget,
+                                            gint *minimal_width,
+                                            gint *natural_width);
+static void gtk_xournal_get_preferred_height(GtkWidget *widget,
+                                             gint *minimal_height,
+                                             gint *natural_height);
 static void gtk_xournal_size_request(GtkWidget* widget, GtkRequisition* requisition);
 static void gtk_xournal_size_allocate(GtkWidget* widget, GtkAllocation* allocation);
 static void gtk_xournal_realize(GtkWidget* widget);
-static gboolean gtk_xournal_expose(GtkWidget* widget, GdkEventExpose* event);
-static void gtk_xournal_destroy(GtkObject* object);
+
+#if GTK3_ENABLED
+	static gboolean gtk_xournal_draw(GtkWidget* widget, cairo_t* cr);
+#else
+	static gboolean gtk_xournal_expose(GtkWidget* widget, GdkEventExpose* event);
+#endif
+
+static void gtk_xournal_destroy(GtkWidget* object);
 static gboolean gtk_xournal_button_press_event(GtkWidget* widget, GdkEventButton* event);
 static gboolean gtk_xournal_button_release_event(GtkWidget* widget, GdkEventButton* event);
 static gboolean gtk_xournal_motion_notify_event(GtkWidget* widget, GdkEventMotion* event);
@@ -51,17 +63,45 @@ GtkType gtk_xournal_get_type(void)
 
 	if (!gtk_xournal_type)
 	{
-		static const GtkTypeInfo gtk_xournal_info = {
-			g_strdup("GtkXournal"),
-			sizeof(GtkXournal),
+//		static const GtkTypeInfo gtk_xournal_info = {
+//			g_strdup("GtkXournal"),
+//			sizeof(GtkXournal),
+//			sizeof(GtkXournalClass),
+//			(GtkClassInitFunc) gtk_xournal_class_init,
+//			(GtkObjectInitFunc) gtk_xournal_init,
+//			NULL,
+//			NULL,
+//			(GtkClassInitFunc) NULL
+//		};
+//		gtk_xournal_type = gtk_type_unique(GTK_TYPE_WIDGET, &gtk_xournal_info);
+
+		static const GTypeInfo gtk_xournal_info =
+		{
 			sizeof(GtkXournalClass),
-			(GtkClassInitFunc) gtk_xournal_class_init,
-			(GtkObjectInitFunc) gtk_xournal_init,
+			// base initialize
 			NULL,
+			// base finalize
 			NULL,
-			(GtkClassInitFunc) NULL
+			// class initialize
+			(GClassInitFunc) gtk_xournal_class_init,
+			// class finalize
+			NULL,
+			// class data,
+			NULL,
+			// instance size
+			sizeof(GtkXournal),
+			// n_preallocs
+			0,
+			// instance init
+			(GInstanceInitFunc) gtk_xournal_init,
+			// value table
+			(const GTypeValueTable*) NULL
 		};
-		gtk_xournal_type = gtk_type_unique(GTK_TYPE_WIDGET, &gtk_xournal_info);
+
+		gtk_xournal_type = g_type_register_static(GTK_TYPE_WIDGET,
+		                                          "GtkXournal",
+		                                          &gtk_xournal_info,
+		                                          (GTypeFlags) 0);
 	}
 
 	return gtk_xournal_type;
@@ -69,7 +109,7 @@ GtkType gtk_xournal_get_type(void)
 
 GtkWidget* gtk_xournal_new(XournalView* view)
 {
-	GtkXournal* xoj = GTK_XOURNAL(gtk_type_new(gtk_xournal_get_type()));
+	GtkXournal* xoj = GTK_XOURNAL(g_object_new(gtk_xournal_get_type(), NULL));
 	xoj->view = view;
 	xoj->scrollX = 0;
 	xoj->scrollY = 0;
@@ -92,14 +132,17 @@ GtkWidget* gtk_xournal_new(XournalView* view)
 
 static void gtk_xournal_class_init(GtkXournalClass* klass)
 {
-	GtkWidgetClass* widget_class;
-	GtkObjectClass* object_class;
-
-	widget_class = (GtkWidgetClass*) klass;
-	object_class = (GtkObjectClass*) klass;
+	GtkWidgetClass* widget_class = (GtkWidgetClass*) klass;
 
 	widget_class->realize = gtk_xournal_realize;
+
+#if GTK3_ENABLED
+	widget_class->get_preferred_width = gtk_xournal_get_preferred_width;
+	widget_class->get_preferred_height = gtk_xournal_get_preferred_height;
+#else
 	widget_class->size_request = gtk_xournal_size_request;
+#endif
+
 	widget_class->size_allocate = gtk_xournal_size_allocate;
 	widget_class->button_press_event = gtk_xournal_button_press_event;
 	widget_class->button_release_event = gtk_xournal_button_release_event;
@@ -111,9 +154,17 @@ static void gtk_xournal_class_init(GtkXournalClass* klass)
 	widget_class->key_press_event = gtk_xournal_key_press_event;
 	widget_class->key_release_event = gtk_xournal_key_release_event;
 
+#if GTK3_ENABLED
+	widget_class->draw = gtk_xournal_draw;
+	widget_class->destroy = gtk_xournal_destroy;
+#else
 	widget_class->expose_event = gtk_xournal_expose;
+	GtkObjectClass* object_class = (GtkObjectClass*) klass;
 
-	object_class->destroy = gtk_xournal_destroy;
+	typedef void (*DestroyFunc) (GtkObject *object);
+
+	object_class->destroy =  (DestroyFunc)gtk_xournal_destroy;
+#endif
 }
 
 static gboolean gtk_xournal_key_press_event(GtkWidget* widget, GdkEventKey* event)
@@ -295,19 +346,38 @@ static bool change_tool(Settings* settings, GdkEventButton* event, GtkXournal* x
 	ButtonConfig* cfgTouch = settings->getTouchButtonConfig();
 	ToolHandler* h = xournal->view->getControl()->getToolHandler();
 
-	if (event->button == 2) // Middle Button
+	GdkEvent* rawEvent = (GdkEvent*) event;
+#if GTK3_ENABLED
+	GdkDevice* device = gdk_event_get_source_device(rawEvent);
+#else
+	GdkDevice* device = event->device;
+#endif
+
+
+	if (gdk_device_get_source(device) == GDK_SOURCE_PEN)
+	{
+		if (event->button == 2)
+		{
+			cfg = settings->getStylusButtonConfig();
+		}
+		else if (event->button == 3)
+		{
+			cfg = settings->getStylus2ButtonConfig();
+		}
+	}
+	 else if (event->button == 2)   // Middle Button
 	{
 		cfg = settings->getMiddleButtonConfig();
 	}
-	else if (event->button == 3 && !xournal->selection) // Right Button
+	else if (event->button == 3 && !xournal->selection)     // Right Button
 	{
 		cfg = settings->getRightButtonConfig();
 	}
-	else if (event->device->source == GDK_SOURCE_ERASER)
+	else if (gdk_device_get_source(device) == GDK_SOURCE_ERASER)
 	{
 		cfg = settings->getEraserButtonConfig();
 	}
-	else if (cfgTouch->device == event->device->name)
+	else if (cfgTouch->device == gdk_device_get_name(device))
 	{
 		cfg = cfgTouch;
 
@@ -317,7 +387,7 @@ static bool change_tool(Settings* settings, GdkEventButton* event, GtkXournal* x
 			ToolType tool = h->getToolType();
 			if (tool == TOOL_PEN || tool == TOOL_ERASER || tool == TOOL_HILIGHTER)
 			{
-				cout << "ignore touchscreen for drawing!" << endl;
+				printf("ignore touchscreen for drawing!\n");
 				return true;
 			}
 		}
@@ -603,6 +673,26 @@ static void gtk_xournal_size_request(GtkWidget* widget, GtkRequisition* requisit
 	requisition->height = 200;
 }
 
+static void
+gtk_xournal_get_preferred_width(GtkWidget *widget,
+                                gint      *minimal_width,
+                                gint      *natural_width)
+{
+	GtkXournal* xournal = GTK_XOURNAL(widget);
+
+	*minimal_width = *natural_width = xournal->layout->getLayoutWidth();
+}
+
+static void
+gtk_xournal_get_preferred_height(GtkWidget *widget,
+                                 gint      *minimal_height,
+                                 gint      *natural_height)
+{
+	GtkXournal* xournal = GTK_XOURNAL(widget);
+
+	*minimal_height = *natural_height = xournal->layout->getLayoutHeight();
+}
+
 static void gtk_xournal_size_allocate(GtkWidget* widget, GtkAllocation* allocation)
 {
 	g_return_if_fail(widget != NULL);
@@ -727,7 +817,7 @@ cairo_t* gtk_xournal_create_cairo_for(GtkWidget* widget, PageView* view)
 
 	// TODO LOW PRIO: stroke draw to this cairo surface look a little different than rendererd to a cairo surface
 	gdk_threads_enter();
-	cairo_t* cr = gdk_cairo_create(GTK_WIDGET(widget)->window);
+	cairo_t* cr = gdk_cairo_create(gtk_widget_get_window(GTK_WIDGET(widget)));
 	int x = view->getX() - xournal->x;
 	int y = view->getY() - xournal->y;
 	cairo_translate(cr, x, y);
@@ -765,6 +855,16 @@ void gtk_xournal_repaint_area(GtkWidget* widget, int x1, int y1, int x2, int y2)
 	gtk_widget_queue_draw_area(widget, x1, y1, x2 - x1, y2 - y1);
 }
 
+#if GTK3_ENABLED
+static gboolean gtk_xournal_draw(GtkWidget* widget, cairo_t* cr)
+{
+	g_return_val_if_fail(widget != NULL, FALSE);
+	g_return_val_if_fail(GTK_IS_XOURNAL(widget), FALSE);
+
+	GtkXournal* xournal = GTK_XOURNAL(widget);
+
+#else
+
 static gboolean gtk_xournal_expose(GtkWidget* widget, GdkEventExpose* event)
 {
 	g_return_val_if_fail(widget != NULL, FALSE);
@@ -774,7 +874,9 @@ static gboolean gtk_xournal_expose(GtkWidget* widget, GdkEventExpose* event)
 	GtkXournal* xournal = GTK_XOURNAL(widget);
 
 	gdk_threads_enter();
-	cairo_t* cr = gdk_cairo_create(GTK_WIDGET(widget)->window);
+	cairo_t* cr = gdk_cairo_create(gtk_widget_get_window(GTK_WIDGET(widget)));
+#endif
+
 
 	ArrayIterator<PageView*> it = xournal->view->pageViewIterator();
 
@@ -823,11 +925,15 @@ static gboolean gtk_xournal_expose(GtkWidget* widget, GdkEventExpose* event)
 		cairo_save(cr);
 		cairo_translate(cr, x, y);
 
+#if GTK3_ENABLED
+		pv->paintPage(cr, NULL);
+#else
 		GdkRectangle rect = event->area;
 		rect.x -= x;
 		rect.y -= y;
 
 		pv->paintPage(cr, &rect);
+#endif
 		cairo_restore(cr);
 	}
 
@@ -870,13 +976,15 @@ static gboolean gtk_xournal_expose(GtkWidget* widget, GdkEventExpose* event)
 		}
 	}
 
+#if !GTK3_ENABLED
 	cairo_destroy(cr);
 	gdk_threads_leave();
+#endif
 
 	return true;
 }
 
-static void gtk_xournal_destroy(GtkObject* object)
+static void gtk_xournal_destroy(GtkWidget* object)
 {
 	g_return_if_fail(object != NULL);
 	g_return_if_fail(GTK_IS_XOURNAL(object));
@@ -890,11 +998,4 @@ static void gtk_xournal_destroy(GtkObject* object)
 
 	delete xournal->layout;
 	xournal->layout = NULL;
-
-	GtkXournalClass* klass = (GtkXournalClass*) gtk_type_class(gtk_widget_get_type());
-
-	if (GTK_OBJECT_CLASS(klass)->destroy)
-	{
-		(*GTK_OBJECT_CLASS(klass)->destroy)(object);
-	}
 }

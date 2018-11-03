@@ -60,6 +60,8 @@ GtkWidget* ToolbarUtil::newSepeartorImage()
 	return w;
 }
 
+#if !GTK3_ENABLED
+
 void ToolbarUtil::fakeExposeWidget(GtkWidget* widget, GdkPixmap* pixmap)
 {
 	GdkWindow* tmp_window;
@@ -143,3 +145,5 @@ GdkPixbuf* ToolbarUtil::newPixbufFromWidget(GtkWidget* widget, int iconSize)
 
 	return pixbuf;
 }
+
+#endif

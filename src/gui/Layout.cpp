@@ -174,6 +174,22 @@ Rectangle Layout::getVisibleRect()
 }
 
 /**
+ * Returns the height of the entire Layout
+ */
+double Layout::getLayoutHeight()
+{
+	return layoutHeight;
+}
+
+/**
+ * Returns the width of the entire Layout
+ */
+double Layout::getLayoutWidth()
+{
+	return layoutWidth;
+}
+
+/**
  * Padding outside the pages, including shadow
  */
 const int XOURNAL_PADDING = 10;

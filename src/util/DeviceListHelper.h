@@ -29,6 +29,7 @@ public:
 public:
 	GdkDevice* getDevice();
 	string getType();
+	string getName();
 
 private:
 	GdkDevice* device;

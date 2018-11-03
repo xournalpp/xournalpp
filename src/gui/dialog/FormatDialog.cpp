@@ -51,11 +51,7 @@ FormatDialog::FormatDialog(GladeSearchpath* gladeSearchPath, Settings* settings,
 
 	for (int i = 0; i < XOJ_UNIT_COUNT; i++)
 	{
-#if GTK3_ENABLED
-		gtk_combo_box_text_append_text(GTK_COMBO_BOX(cbUnit), XOJ_UNITS[i].name);
-#else
-		gtk_combo_box_append_text(GTK_COMBO_BOX(cbUnit), XOJ_UNITS[i].name);
-#endif
+		gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(cbUnit), XOJ_UNITS[i].name);
 	}
 	gtk_combo_box_set_active(GTK_COMBO_BOX(cbUnit), this->selectedScale);
 

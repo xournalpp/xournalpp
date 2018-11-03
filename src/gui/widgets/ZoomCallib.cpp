@@ -1,35 +1,23 @@
 #include "ZoomCallib.h"
 
-static void zoomcallib_class_init(ZoomCallibClass* klass);
-static void zoomcallib_init(ZoomCallib* callib);
+G_DEFINE_TYPE (ZoomCallib, zoomcallib, GTK_TYPE_WIDGET);
+
+static void
+zoomcallib_get_preferred_width(GtkWidget* widget,
+                               gint* minimal_width,
+                               gint* natural_width);
+static void
+zoomcallib_get_preferred_height(GtkWidget* widget,
+                                gint* minimal_height,
+                                gint* natural_height);
 static void zoomcallib_size_request(GtkWidget* widget, GtkRequisition* requisition);
-static void zoomcallib_size_allocate(GtkWidget* widget, GtkAllocation* allocation);
+
+static void zoomcallib_size_allocate(GtkWidget* widget,
+                                     GtkAllocation* allocation);
 static void zoomcallib_realize(GtkWidget* widget);
 static gboolean zoomcallib_expose(GtkWidget* widget, GdkEventExpose* event);
-static void zoomcallib_paint(GtkWidget* widget);
-static void zoomcallib_destroy(GtkObject* object);
-
-GtkType zoomcallib_get_type(void)
-{
-	static GtkType zoomcallib_type = 0;
-
-	if (!zoomcallib_type)
-	{
-		static const GtkTypeInfo zoomcallib_info = {
-			(gchar *)"ZoomCallib",
-			sizeof(ZoomCallib),
-			sizeof(ZoomCallibClass),
-			(GtkClassInitFunc) zoomcallib_class_init,
-			(GtkObjectInitFunc) zoomcallib_init,
-			NULL,
-			NULL,
-			(GtkClassInitFunc) NULL
-		};
-		zoomcallib_type = gtk_type_unique(GTK_TYPE_WIDGET, &zoomcallib_info);
-	}
-
-	return zoomcallib_type;
-}
+static gboolean zoomcallib_draw(GtkWidget* widget, cairo_t* cr);
+//static void zoomcallib_destroy(GtkObject* object);
 
 void zoomcallib_set_val(ZoomCallib* callib, gint val)
 {
@@ -37,34 +25,53 @@ void zoomcallib_set_val(ZoomCallib* callib, gint val)
 
 	if (gtk_widget_is_drawable(GTK_WIDGET(callib)))
 	{
-		zoomcallib_paint(GTK_WIDGET(callib));
+		gtk_widget_queue_draw(GTK_WIDGET(callib));
 	}
 }
 
 GtkWidget* zoomcallib_new()
 {
-	return GTK_WIDGET(gtk_type_new(zoomcallib_get_type()));
+	return GTK_WIDGET(g_object_new(zoomcallib_get_type(), NULL));
 }
 
 static void zoomcallib_class_init(ZoomCallibClass* klass)
 {
 	GtkWidgetClass* widget_class;
-	GtkObjectClass* object_class;
 
 	widget_class = (GtkWidgetClass*) klass;
-	object_class = (GtkObjectClass*) klass;
 
 	widget_class->realize = zoomcallib_realize;
-	widget_class->size_request = zoomcallib_size_request;
 	widget_class->size_allocate = zoomcallib_size_allocate;
-	widget_class->expose_event = zoomcallib_expose;
 
-	object_class->destroy = zoomcallib_destroy;
+#if GTK3_ENABLED
+	widget_class->draw = zoomcallib_draw;
+	widget_class->get_preferred_width = zoomcallib_get_preferred_width;
+	widget_class->get_preferred_height = zoomcallib_get_preferred_height;
+#else
+	widget_class->expose_event = zoomcallib_expose;
+	widget_class->size_request = zoomcallib_size_request;
+#endif
 }
 
 static void zoomcallib_init(ZoomCallib* zc)
 {
 	zc->val = 72;
+}
+
+static void
+zoomcallib_get_preferred_width(GtkWidget* widget,
+                               gint* minimal_width,
+                               gint* natural_width)
+{
+  *minimal_width = *natural_width = 200;
+}
+
+static void
+zoomcallib_get_preferred_height(GtkWidget* widget,
+                                gint* minimal_height,
+                                gint* natural_height)
+{
+  *minimal_height = *natural_height = 75;
 }
 
 static void zoomcallib_size_request(GtkWidget* widget, GtkRequisition* requisition)
@@ -77,17 +84,20 @@ static void zoomcallib_size_request(GtkWidget* widget, GtkRequisition* requisiti
 	requisition->height = 75;
 }
 
-static void zoomcallib_size_allocate(GtkWidget* widget, GtkAllocation* allocation)
+static void zoomcallib_size_allocate(GtkWidget* widget,
+                                     GtkAllocation* allocation)
 {
 	g_return_if_fail(widget != NULL);
 	g_return_if_fail(IS_ZOOM_CALLIB(widget));
 	g_return_if_fail(allocation != NULL);
 
-	widget->allocation = *allocation;
+	gtk_widget_set_allocation(widget, allocation);
 
-	if (GTK_WIDGET_REALIZED(widget))
+	if (gtk_widget_get_realized(widget))
 	{
-		gdk_window_move_resize(widget->window, allocation->x, allocation->y, allocation->width, allocation->height);
+		gdk_window_move_resize(gtk_widget_get_window(widget),
+		                       allocation->x, allocation->y,
+		                       allocation->width, allocation->height);
 	}
 }
 
@@ -95,29 +105,37 @@ static void zoomcallib_realize(GtkWidget* widget)
 {
 	GdkWindowAttr attributes;
 	guint attributes_mask;
+	GtkAllocation allocation;
 
 	g_return_if_fail(widget != NULL);
 	g_return_if_fail(IS_ZOOM_CALLIB(widget));
 
-	GTK_WIDGET_SET_FLAGS(widget, GTK_REALIZED);
+	gtk_widget_set_realized(widget, TRUE);
 
 	attributes.window_type = GDK_WINDOW_CHILD;
-	attributes.x = widget->allocation.x;
-	attributes.y = widget->allocation.y;
-	attributes.width = widget->allocation.width;
-	attributes.height = widget->allocation.height;
+
+	gtk_widget_get_allocation(widget, &allocation);
+
+	attributes.x = allocation.x;
+	attributes.y = allocation.y;
+	attributes.width = allocation.width;
+	attributes.height = allocation.height;
 
 	attributes.wclass = GDK_INPUT_OUTPUT;
 	attributes.event_mask = gtk_widget_get_events(widget) | GDK_EXPOSURE_MASK;
 
 	attributes_mask = GDK_WA_X | GDK_WA_Y;
 
-	widget->window = gdk_window_new(gtk_widget_get_parent_window(widget), &attributes, attributes_mask);
+	gtk_widget_set_window(widget, gdk_window_new(gtk_widget_get_parent_window(widget),
+	                                             &attributes, attributes_mask));
 
-	gdk_window_set_user_data(widget->window, widget);
+	gdk_window_set_user_data(gtk_widget_get_window(widget), widget);
 
-	widget->style = gtk_style_attach(widget->style, widget->window);
-	gtk_style_set_background(widget->style, widget->window, GTK_STATE_NORMAL);
+	gtk_widget_style_attach(widget);
+
+	gtk_style_set_background(gtk_widget_get_style(widget),
+	                         gtk_widget_get_window(widget),
+	                         GTK_STATE_NORMAL);
 }
 
 static gboolean zoomcallib_expose(GtkWidget* widget, GdkEventExpose* event)
@@ -126,36 +144,45 @@ static gboolean zoomcallib_expose(GtkWidget* widget, GdkEventExpose* event)
 	g_return_val_if_fail(IS_ZOOM_CALLIB(widget), FALSE);
 	g_return_val_if_fail(event != NULL, FALSE);
 
-	zoomcallib_paint(widget);
+	cairo_t* cr = gdk_cairo_create(widget->window);
+
+	zoomcallib_draw(widget, cr);
+	cairo_destroy(cr);
 
 	return FALSE;
 }
 
-static void zoomcallib_paint(GtkWidget* widget)
+static gboolean zoomcallib_draw(GtkWidget* widget, cairo_t* cr)
 {
-	cairo_t* cr;
-	cairo_text_extents_t extents;
+	if(!IS_ZOOM_CALLIB(widget))
+	{
+		g_message("zoomcallib_draw without a ZoomCallib");
+	}
 
-	cr = gdk_cairo_create(widget->window);
+	cairo_text_extents_t extents;
+	GtkAllocation allocation;
 
 	cairo_set_source_rgb(cr, 1, 1, 1);
 	cairo_paint(cr);
 
+	gtk_widget_get_allocation(widget, &allocation);
+
 	gdouble hafCm = (ZOOM_CALLIB(widget)->val / 2.54) / 2;
 
-	int h = widget->allocation.height;
+	int h = allocation.height;
 	int heigth = 50;
 	if (h < heigth)
 	{
-		heigth = widget->allocation.height - 10;
+		heigth = allocation.height - 10;
 	}
 
 	int i = 0;
 
-	cairo_select_font_face(cr, "Serif", CAIRO_FONT_SLANT_NORMAL, CAIRO_FONT_WEIGHT_BOLD);
+	cairo_select_font_face(cr, "Serif", CAIRO_FONT_SLANT_NORMAL,
+	                       CAIRO_FONT_WEIGHT_BOLD);
 	cairo_set_font_size(cr, 13);
 
-	for (gdouble x = 2; x < widget->allocation.width; x += hafCm, i++)
+	for (gdouble x = 2; x < allocation.width; x += hafCm, i++)
 	{
 		int y;
 		if (i % 2 == 0)
@@ -169,11 +196,11 @@ static void zoomcallib_paint(GtkWidget* widget)
 			y = heigth - 17;
 		}
 
-		cairo_rectangle(cr, x, 2 + h - y, 1, y);
+		cairo_rectangle(cr, x,  2 + h - y, 1, y);
 
 		cairo_fill(cr);
 
-		if (i % 2 == 0 && i != 0 && x < widget->allocation.width - 20)
+		if (i % 2 == 0 && i != 0 && x < allocation.width - 20)
 		{
 			cairo_set_source_rgb(cr, 0, 0, 0);
 
@@ -187,9 +214,11 @@ static void zoomcallib_paint(GtkWidget* widget)
 		}
 	}
 
-	cairo_destroy(cr);
+	return TRUE;
 }
 
+/*
+ * TODO: Do we need this?
 static void zoomcallib_destroy(GtkObject* object)
 {
 	ZoomCallib* callib;
@@ -207,3 +236,4 @@ static void zoomcallib_destroy(GtkObject* object)
 		(*GTK_OBJECT_CLASS(klass)->destroy)(object);
 	}
 }
+*/

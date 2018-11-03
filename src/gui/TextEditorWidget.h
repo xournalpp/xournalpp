@@ -446,7 +446,7 @@ static void gtk_xoj_int_txt_class_init(GtkXojIntTxtClass* klass)
 
 static void gtk_xoj_int_txt_init(GtkXojIntTxt* invisible)
 {
-	GTK_WIDGET_UNSET_FLAGS(invisible, GTK_NO_WINDOW);
+	gtk_widget_set_has_window(GTK_WIDGET(invisible), TRUE);
 }
 
 GtkWidget*
