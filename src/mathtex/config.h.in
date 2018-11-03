@@ -1,5 +1,0 @@
-/* Path to dvipng bin file */
-#cmakedefine DVIPNG "@PATH_DVIPNG@"
-
-/* Path to latex bin file */
-#cmakedefine LATEX "@PATH_LATEX@"
