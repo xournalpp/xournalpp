@@ -11,72 +11,80 @@
 
 #pragma once
 
-#include "control/shaperecognizer/ShapeRecognizer.h"
-#include "model/PageRef.h"
-#include "model/Stroke.h"
-
-#include <XournalType.h>
-
 #include <gtk/gtk.h>
+#include "model/Stroke.h"
+#include "model/PageRef.h"
+#include <XournalType.h>
+#include "control/shaperecognizer/ShapeRecognizer.h"
 
 class DocumentView;
 class XournalView;
 class PageView;
 
+/**
+ * @brief A base class to handle pointer input
+ * 
+ * The InputHandler receives various events from a PageView
+ * and updates the PageView to display strokes being
+ * drawn
+ * 
+ */
 class InputHandler
 {
 public:
-	InputHandler(XournalView* xournal, PageView* redrawable);
+	InputHandler(XournalView* xournal,
+	             PageView* redrawable,
+	             PageRef page);
 	virtual ~InputHandler();
 
 public:
-	void addPointToTmpStroke(GdkEventMotion* event);
-	void draw(cairo_t* cr, double zoom);
-	void onButtonReleaseEvent(GdkEventButton* event, PageRef page);
-	bool onMotionNotifyEvent(GdkEventMotion* event);
-	void startStroke(GdkEventButton* event, StrokeTool tool, double x, double y);
+	 /**
+	 * This method is called from the PageView to draw
+	 * overlays displaying the drawing process.
+	 * It is called from PageView::paintPage(cairo_t* cr, GdkRectangle* rect)
+	 * 
+	 * @remark The coordinate system is in PageView coordinates, scale
+	 *         it by the current zoom to change to Page coordinates
+	 */
 
-	Stroke* getTmpStroke();
+	virtual void draw(cairo_t* cr) = 0;
 
-	void resetShapeRecognizer();
-private:
-	bool getPressureMultiplier(GdkEvent* event, double& presure);
-	void drawTmpStroke(bool do_redraw = false);
-	double getZoomFactor(double zoom);
+	/**
+	 * This method is called from the PageView as soon
+	 * as the pointer is moved while this InputHandler
+	 * is active. It is used to update internal data
+	 * structures and queue repaints of the PageView
+	 * if necessary
+	 */
+	virtual bool onMotionNotifyEvent(GdkEventMotion* event) = 0;
+
+ 	/**
+	 * The current input device for stroken, do not react on other devices (linke mices)
+	 * This method is called from the PageView as soon
+	 * as the pointer is released.
+	 */
+	virtual void onButtonReleaseEvent(GdkEventButton* event) = 0;
+
+ 	/**
+	 * This method is called from the PageView as soon
+	 * as the pointer is pressed.
+	 */
+	virtual void onButtonPressEvent(GdkEventButton* event) = 0;
+
+	Stroke* getStroke();
+
+protected:
+
+	bool validMotion(Point p, Point q);
+
+	void createStroke(Point p);
+
+	XournalView* xournal;
+	PageView* redrawable;
+	PageRef page;
+	Stroke* stroke;
 
 private:
 	XOJ_TYPE_ATTRIB;
 
-
-	XournalView* xournal;
-
-	/**
-	 * If you are drawing on the document
-	 */
-	Stroke* tmpStroke;
-
-	/**
-	 * What has already be drawed, only draw the new part
-	 */
-	int tmpStrokeDrawElem;
-
-	/**
-	 * The current input device for stroken, do not react on other devices (linke mices)
-	 */
-	GdkDevice* currentInputDevice;
-
-	/**
-	 * The View to draw the stroke
-	 */
-	DocumentView* view;
-
-	/**
-	 * The view which should be refreshed
-	 */
-	PageView* redrawable;
-
-	/**
-	 * Xournal shape recognizer, one instance per page
-	 */
-	ShapeRecognizer* reco;
 };

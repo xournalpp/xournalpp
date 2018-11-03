@@ -33,7 +33,7 @@ void* RenderJob::getSource()
 	return this->view;
 }
 
-void RenderJob::rerenderRectangle(RenderJob* renderJob, Rectangle* rect)
+void RenderJob::rerenderRectangle(RenderJob* renderJob, Rectangle* rect, bool noThreads)
 {
 	XOJ_CHECK_TYPE_OBJ(renderJob, RenderJob);
 
@@ -41,12 +41,18 @@ void RenderJob::rerenderRectangle(RenderJob* renderJob, Rectangle* rect)
 	double zoom = view->xournal->getZoom();
 	Document* doc = view->xournal->getDocument();
 
-	doc->lock();
+	if (!noThreads)
+	{
+		doc->lock();
+	}
 
 	double pageWidth = view->page->getWidth();
 	double pageHeight = view->page->getHeight();
 
-	doc->unlock();
+	if (!noThreads)
+	{
+		doc->unlock();
+	}
 
 	int x = rect->x * zoom;
 	int y = rect->y * zoom;
@@ -69,13 +75,25 @@ void RenderJob::rerenderRectangle(RenderJob* renderJob, Rectangle* rect)
 		PdfView::drawPage(cache, popplerPage, crRect, zoom, pageWidth, pageHeight);
 	}
 
-	doc->lock();
+	if (!noThreads)
+	{
+		doc->lock();
+	}
+
 	v.drawPage(view->page, crRect, false);
-	doc->unlock();
+
+	if (!noThreads)
+	{
+		doc->unlock();
+	}
 
 	cairo_destroy(crRect);
 
-	g_mutex_lock(&view->drawingMutex);
+	if (!noThreads)
+	{
+		g_mutex_lock(&view->drawingMutex);
+	}
+
 	cairo_t * crPageBuffer = cairo_create(view->crBuffer);
 
 	cairo_set_operator(crPageBuffer, CAIRO_OPERATOR_SOURCE);
@@ -87,14 +105,17 @@ void RenderJob::rerenderRectangle(RenderJob* renderJob, Rectangle* rect)
 
 	cairo_surface_destroy(rectBuffer);
 
-	g_mutex_unlock(&view->drawingMutex);
+	if (!noThreads)
+	{
+		g_mutex_unlock(&view->drawingMutex);
+	}
 }
 
-void RenderJob::rerenderRectangle(Rectangle* rect)
+void RenderJob::rerenderRectangle(Rectangle* rect, bool noThreads)
 {
 	XOJ_CHECK_TYPE(RenderJob);
 
-	rerenderRectangle(this, rect);
+	rerenderRectangle(this, rect, noThreads);
 }
 
 class RepaintWidgetHandler
@@ -239,7 +260,10 @@ void RenderJob::run(bool noThreads)
 
 		XojPopplerPage* popplerPage = NULL;
 
-		doc->lock();
+		if (!noThreads)
+		{
+			doc->lock();
+		}
 
 		if (this->view->page->getBackgroundType() == BACKGROUND_TYPE_PDF)
 		{
@@ -255,7 +279,10 @@ void RenderJob::run(bool noThreads)
 		view.drawPage(this->view->page, cr2, false);
 
 		cairo_destroy(cr2);
-		g_mutex_lock(&this->view->drawingMutex);
+		if (!noThreads)
+		{
+			g_mutex_lock(&this->view->drawingMutex);
+		}
 
 		if (this->view->crBuffer)
 		{
@@ -263,8 +290,11 @@ void RenderJob::run(bool noThreads)
 		}
 		this->view->crBuffer = crBuffer;
 
-		g_mutex_unlock(&this->view->drawingMutex);
-		doc->unlock();
+		if (!noThreads)
+		{
+			g_mutex_unlock(&this->view->drawingMutex);
+			doc->unlock();
+		}
 
 		handler->repaintComplete();
 	}
@@ -272,7 +302,7 @@ void RenderJob::run(bool noThreads)
 	{
 		for (Rectangle* rect : rerenderRects)
 		{
-			rerenderRectangle(rect);
+			rerenderRectangle(rect, noThreads);
 
 			rect = this->view->rectOnWidget(rect->x, rect->y, rect->width, rect->height);
 			handler->repaintRects(rect);

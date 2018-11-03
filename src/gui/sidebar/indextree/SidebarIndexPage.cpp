@@ -67,8 +67,8 @@ SidebarIndexPage::~SidebarIndexPage()
 		this->searchTimeout = 0;
 	}
 
-	gtk_widget_unref(this->treeViewBookmarks);
-	gtk_widget_unref(this->scrollBookmarks);
+	g_object_unref(this->treeViewBookmarks);
+	g_object_unref(this->scrollBookmarks);
 }
 
 void SidebarIndexPage::askInsertPdfPage(size_t pdfPage)

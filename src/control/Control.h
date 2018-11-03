@@ -51,7 +51,7 @@ class Control : public ActionHandler,
 	public ProgressListener
 {
 public:
-	Control(GladeSearchpath* gladeSearchPath);
+	Control(GladeSearchpath* gladeSearchPath, bool noThreads = false);
 	virtual ~Control();
 
 	void initWindow(MainWindow* win);
@@ -192,6 +192,7 @@ public:
 	size_t getCurrentPageNo();
 	Cursor* getCursor();
 	Sidebar* getSidebar();
+	SearchBar* getSearchBar();
 
 	bool copy();
 	bool cut();

@@ -18,25 +18,41 @@
 #include <Rectangle.h>
 #include <Util.h>
 
-#include <gdk/gdkkeysyms.h>
+#include <gdk/gdk.h>
 
 #include <math.h>
+
+#if !GTK3_ENABLED
+#include <gdk/gdkkeysyms.h>
+#endif
 
 XournalView::XournalView(GtkWidget* parent, Control* control)
 {
 	XOJ_INIT_TYPE(XournalView);
 
+	this->parent = GTK_CONTAINER(parent);
+
 	this->control = control;
 	this->cache = new PdfCache(control->getSettings()->getPdfPageCacheSize());
 	registerListener(control);
 
+#if GTK3_ENABLED
+	this->widget = gtk_xournal_new(this, GTK_SCROLLABLE(parent));
+#else
 	this->widget = gtk_xournal_new(this);
+#endif
 
-	// we need to refer widget here, because wo unref it somwere twice!?
+	// we need to refer widget here, because we unref it somewhere twice!?
 	g_object_ref(this->widget);
 
+#if GTK3_ENABLED
 	gtk_table_attach_defaults(GTK_TABLE(parent), this->widget, 1, 2, 0, 1);
+#else
+	gtk_container_add(GTK_CONTAINER(parent), this->widget);
+#endif
 	gtk_widget_show(this->widget);
+
+	g_signal_connect(getWidget(), "realize", G_CALLBACK(onRealized), this);
 
 	this->repaintHandler = new RepaintHandler(this);
 	this->pagePosition = new PagePositionHandler();
@@ -55,7 +71,22 @@ XournalView::XournalView(GtkWidget* parent, Control* control)
 	gtk_widget_grab_focus(this->widget);
 
 	this->cleanupTimeout = g_timeout_add_seconds(5, (GSourceFunc) clearMemoryTimer, this);
+#if !GTK3_ENABLED
 	g_signal_connect(this->widget, "size-allocate", G_CALLBACK(staticLayoutPages), this);
+#endif
+	// pinch-to-zoom
+	this->zoom_gesture_active=false;
+
+	// use parent as the gestures widget and not this->widget as gesture gets
+	// buggy otherwise (scrolling interferes with gestures scale value)
+	this->zoom_gesture = gtk_gesture_zoom_new (parent);
+
+#if GTK3_ENABLED
+	gtk_event_controller_set_propagation_phase (GTK_EVENT_CONTROLLER (this->zoom_gesture), GTK_PHASE_CAPTURE);
+	g_signal_connect (this->zoom_gesture, "begin", G_CALLBACK (zoom_gesture_begin_cb), this);
+	g_signal_connect (this->zoom_gesture, "scale-changed", G_CALLBACK (zoom_gesture_scale_changed_cb), this);
+	g_signal_connect (this->zoom_gesture, "end", G_CALLBACK (zoom_gesture_end_cb), this);
+#endif
 }
 
 XournalView::~XournalView()
@@ -80,6 +111,7 @@ XournalView::~XournalView()
 	delete this->pagePosition;
 	this->pagePosition = NULL;
 
+	gtk_widget_destroy(this->widget);
 	this->widget = NULL;
 
 	XOJ_RELEASE_TYPE(XournalView);
@@ -169,7 +201,7 @@ bool XournalView::onKeyPressEvent(GdkEventKey* event)
 	}
 
 	// Esc leaves fullscreen mode
-	if (event->keyval == GDK_Escape || event->keyval == GDK_F11)
+	if (event->keyval == GDK_KEY_Escape || event->keyval == GDK_KEY_F11)
 	{
 		if (control->isFullscreen())
 		{
@@ -179,7 +211,7 @@ bool XournalView::onKeyPressEvent(GdkEventKey* event)
 	}
 
 	// F5 starts presentation modus
-	if (event->keyval == GDK_F5)
+	if (event->keyval == GDK_KEY_F5)
 	{
 		if (!control->isFullscreen())
 		{
@@ -198,12 +230,12 @@ bool XournalView::onKeyPressEvent(GdkEventKey* event)
 		gtk_widget_get_allocation(gtk_widget_get_parent(this->widget), &alloc);
 		int windowHeight = alloc.height - scrollKeySize;
 
-		if (event->keyval == GDK_Page_Down)
+		if (event->keyval == GDK_KEY_Page_Down)
 		{
 			layout->scrollRelativ(0, windowHeight);
 			return true;
 		}
-		if (event->keyval == GDK_Page_Up)
+		if (event->keyval == GDK_KEY_Page_Up)
 		{
 			layout->scrollRelativ(0, -windowHeight);
 			return true;
@@ -211,20 +243,28 @@ bool XournalView::onKeyPressEvent(GdkEventKey* event)
 	}
 	else
 	{
-		if (event->keyval == GDK_Page_Down)
+		if (event->keyval == GDK_KEY_Page_Down)
 		{
 			control->getScrollHandler()->goToNextPage();
 			return true;
 		}
-		if (event->keyval == GDK_Page_Up)
+		if (event->keyval == GDK_KEY_Page_Up)
 		{
 			control->getScrollHandler()->goToPreviousPage();
 			return true;
 		}
 	}
 
+	if (event->keyval == GDK_KEY_space) {
+		GtkAllocation alloc = { 0 };
+		gtk_widget_get_allocation(gtk_widget_get_parent(this->widget), &alloc);
+		int windowHeight = alloc.height - scrollKeySize;
 
-	if (event->keyval == GDK_Up)
+		layout->scrollRelativ(0, windowHeight);
+		return true;
+	}
+
+	if (event->keyval == GDK_KEY_Up)
 	{
 		if (control->getSettings()->isPresentationMode())
 		{
@@ -238,7 +278,7 @@ bool XournalView::onKeyPressEvent(GdkEventKey* event)
 		}
 	}
 
-	if (event->keyval == GDK_Down)
+	if (event->keyval == GDK_KEY_Down)
 	{
 		if (control->getSettings()->isPresentationMode())
 		{
@@ -252,7 +292,7 @@ bool XournalView::onKeyPressEvent(GdkEventKey* event)
 		}
 	}
 
-	if (event->keyval == GDK_Left)
+	if (event->keyval == GDK_KEY_Left)
 	{
 		if (control->getSettings()->isPresentationMode())
 		{
@@ -263,7 +303,7 @@ bool XournalView::onKeyPressEvent(GdkEventKey* event)
 		return true;
 	}
 
-	if (event->keyval == GDK_Right)
+	if (event->keyval == GDK_KEY_Right)
 	{
 		if (control->getSettings()->isPresentationMode())
 		{
@@ -274,13 +314,13 @@ bool XournalView::onKeyPressEvent(GdkEventKey* event)
 		return true;
 	}
 
-	if (event->keyval == GDK_End)
+	if (event->keyval == GDK_KEY_End)
 	{
 		control->getScrollHandler()->goToLastPage();
 		return true;
 	}
 
-	if (event->keyval == GDK_Home)
+	if (event->keyval == GDK_KEY_Home)
 	{
 		control->getScrollHandler()->goToFirstPage();
 		return true;
@@ -312,6 +352,48 @@ bool XournalView::onKeyReleaseEvent(GdkEventKey* event)
 
 	return false;
 }
+
+void XournalView::onRealized(GtkWidget* widget, XournalView* view)
+{
+	view->setEventCompression(view->getControl()->getSettings()->isEventCompression());
+}
+
+#if GTK3_ENABLED
+void XournalView::zoom_gesture_begin_cb(GtkGesture* gesture, GdkEventSequence* sequence, XournalView* view)
+{
+	Layout* layout = gtk_xournal_get_layout(view->widget);
+	//Save visible rectangle at beginning of gesture
+	view->visRect_gesture_begin = layout->getVisibleRect();
+
+	view->zoom_gesture_begin = view->getZoom();
+	view->zoom_gesture_active = true;
+
+	//get center of bounding box
+	ZoomControl* zoom = view->control->getZoomControl();
+	gtk_gesture_get_bounding_box_center(GTK_GESTURE(gesture), &zoom->zoom_center_x, &zoom->zoom_center_y);
+}
+
+void XournalView::zoom_gesture_end_cb(GtkGesture* gesture, GdkEventSequence* sequence, XournalView* view)
+{
+	ZoomControl* zoom = view->control->getZoomControl();
+	zoom->zoom_center_x = -1;
+	zoom->zoom_center_y = -1;
+	view->zoom_gesture_active = false;
+}
+
+void XournalView::zoom_gesture_scale_changed_cb(GtkGestureZoom* gesture, gdouble scale, XournalView* view)
+{
+	ZoomControl* zoom = view->control->getZoomControl();
+	view->setZoom(scale * view->zoom_gesture_begin);
+
+	//Alternative implementation: update bounding box center each time scale changes
+	//Not used at the moment as a single center set at the beginning of the gesture seems
+	//more robust
+	/*
+	gtk_gesture_get_bounding_box_center (GTK_GESTURE (gesture), &zoom->zoom_center_x, &zoom->zoom_center_y);
+	*/
+}
+#endif
 
 // send the focus back to the appropriate widget
 void XournalView::requestFocus()
@@ -475,7 +557,17 @@ Rectangle* XournalView::getVisibleRect(size_t page)
 	}
 	PageView* p = this->viewPages[page];
 
-	return gtk_xournal_get_visible_area(this->widget, p);
+	return getVisibleRect(p);
+}
+
+Rectangle* XournalView::getVisibleRect(PageView* redrawable)
+{
+	return gtk_xournal_get_visible_area(this->widget, redrawable);
+}
+
+GtkContainer* XournalView::getParent()
+{
+	return this->parent;
 }
 
 GtkWidget* XournalView::getWidget()
@@ -499,6 +591,12 @@ void XournalView::zoomOut()
 	control->getZoomControl()->zoomOut();
 }
 
+void XournalView::setZoom(gdouble scale)
+{
+	XOJ_CHECK_TYPE(XournalView);
+	control->getZoomControl()->setZoom(scale);
+}
+
 void XournalView::ensureRectIsVisible(int x, int y, int width, int heigth)
 {
 	XOJ_CHECK_TYPE(XournalView);
@@ -513,12 +611,56 @@ void XournalView::zoomChanged(double lastZoom)
 
 	Layout* layout = gtk_xournal_get_layout(this->widget);
 	int currentPage = this->getCurrentPage();
-	//double pageTop = layout->getVisiblePageTop(currentPage);
-	double pageTop = 0.0;
+	PageView* view = getViewFor(currentPage);
+	ZoomControl* zoom= control->getZoomControl();
+
+	if (!view)
+	{
+		return;
+	}
 
 	layout->layoutPages();
 
 	this->scrollTo(currentPage, pageTop);
+
+	double pageTop = view->getX();
+
+	//move this somewhere else maybe
+	layout->layoutPages();
+
+	// Keep zoom center at static position in current view
+	// by scrolling relative to counter motion induced by zoom
+	// in orignal version top left corner of first page static
+	// Pack into extra function later
+	double zoom_now=getZoom();
+	//relative scrolling
+	double zoom_eff=zoom_now/lastZoom;
+	int scroll_x;
+	int scroll_y;
+	//x,y position of visible rectangle for gesture scrolling
+	int vis_x;
+	int vis_y;
+	//get margins for relative scroll calculation
+	double marginLeft=(double)view->layout.getMarginLeft();
+	double marginTop=(double)view->layout.getMarginTop();
+
+	//Absolute centred scrolling used for gesture
+	if (this->zoom_gesture_active)
+	{
+		vis_x = (int) ((zoom->zoom_center_x - marginLeft) * (zoom_now / this->zoom_gesture_begin - 1));
+		vis_y = (int) ((zoom->zoom_center_y - marginTop) * (zoom_now / this->zoom_gesture_begin - 1));
+		layout->scrollAbs(this->visRect_gesture_begin.x + vis_x, this->visRect_gesture_begin.y + vis_y);
+	}
+
+	//Relative centered scrolling used for SHIFT-mousewheel
+	if (zoom_eff != 1 && zoom->zoom_center_x != -1 && this->zoom_gesture_active == false)
+	{
+		scroll_x = (int) ((zoom->zoom_center_x - marginLeft) * (zoom_eff - 1));
+		scroll_y = (int) ((zoom->zoom_center_y - marginTop) * (zoom_eff - 1));
+
+		// adjust view by scrolling
+		layout->scrollRelativ(scroll_x, scroll_y);
+	}
 
 	Document* doc = control->getDocument();
 	doc->lock();
@@ -644,7 +786,12 @@ void XournalView::pageInserted(size_t page)
 
 	Layout* layout = gtk_xournal_get_layout(this->widget);
 	layout->layoutPages();
+
+#if GTK3_ENABLED
+	layout->updateCurrentPage();
+#else
 	layout->checkSelectedPage();
+#endif
 }
 
 double XournalView::getZoom()
@@ -778,6 +925,17 @@ void XournalView::repaintSelection(bool evenWithoutSelection)
 
 	// TODO OPTIMIZE ?
 	gtk_widget_queue_draw(this->widget);
+}
+
+void XournalView::setEventCompression(gboolean enable)
+{
+#if GTK3_ENABLED
+	// Enable this when gdk is new enough for the compression feature.
+	if (gtk_widget_get_realized(getWidget()))
+	{
+		gdk_window_set_event_compression(gtk_widget_get_window(getWidget()), FALSE);
+	}
+#endif
 }
 
 void XournalView::layoutPages()

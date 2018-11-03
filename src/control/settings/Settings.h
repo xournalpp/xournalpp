@@ -33,12 +33,13 @@ enum AttributeType
 	ATTRIBUTE_TYPE_BOOLEAN,
 };
 
+// use this as a bit flag
 enum ScrollbarHideType
 {
-	SCROLLBAR_HIDE_NONE = 0,
-	SCROLLBAR_HIDE_HORIZONTAL = 1,
-	SCROLLBAR_HIDE_VERTICAL = 2,
-	SCROLLBAR_HIDE_BOTH = 3
+    SCROLLBAR_HIDE_NONE = 0,
+    SCROLLBAR_HIDE_HORIZONTAL = 1 << 1,
+    SCROLLBAR_HIDE_VERTICAL = 1 << 2,
+    SCROLLBAR_HIDE_BOTH = SCROLLBAR_HIDE_HORIZONTAL | SCROLLBAR_HIDE_VERTICAL
 };
 
 class ButtonConfig;
@@ -276,6 +277,8 @@ public:
 	ButtonConfig* getRightButtonConfig();
 	ButtonConfig* getTouchButtonConfig();
 	ButtonConfig* getDefaultButtonConfig();
+	ButtonConfig* getStylusButtonConfig();
+	ButtonConfig* getStylus2ButtonConfig();
 
 	string getFullscreenHideElements();
 	void setFullscreenHideElements(string elements);
@@ -296,6 +299,9 @@ public:
 	void setPdfPageCacheSize(int size);
 
 	string getVisiblePageFormats();
+
+	bool isEventCompression();
+	void setEventCompression(bool enabled);
 public:
 	// Custom settings
 	SElement& getCustomElement(string name);
@@ -525,4 +531,9 @@ private:
 	 * The page format which are visible
 	 */
 	string visiblePageFormats;
+
+	/**
+	 * Whether event compression should be enabled
+	 */
+	bool eventCompression;
 };

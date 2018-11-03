@@ -3,7 +3,7 @@
 #include "PreviewJob.h"
 #include "RenderJob.h"
 
-XournalScheduler::XournalScheduler()
+XournalScheduler::XournalScheduler(bool noThreads) : Scheduler(noThreads)
 {
 	XOJ_INIT_TYPE(XournalScheduler);
 

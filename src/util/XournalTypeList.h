@@ -205,7 +205,6 @@ XOJ_DECLARE_TYPE(AddUndoAction, 193);
 XOJ_DECLARE_TYPE(CopyUndoAction, 194);
 XOJ_DECLARE_TYPE(InsertsUndoAction, 195);
 XOJ_DECLARE_TYPE(SwapUndoAction, 196);
-
 XOJ_DECLARE_TYPE(PageHandler, 198);
 XOJ_DECLARE_TYPE(PageListener, 199);
 XOJ_DECLARE_TYPE(ToolDrawCombocontrol, 200);
@@ -215,6 +214,8 @@ XOJ_DECLARE_TYPE(SidebarPreviewLayers, 203);
 XOJ_DECLARE_TYPE(SidebarPreviewPageEntry, 204);
 XOJ_DECLARE_TYPE(SidebarPreviewLayerEntry, 205);
 XOJ_DECLARE_TYPE(GtkColorWrapper, 206);
+XOJ_DECLARE_TYPE(RulerHandler, 207);
+XOJ_DECLARE_TYPE(StrokeHandler, 208);
 
 
 //XOJ_DECLARE_TYPE(XXXXXXXXXXXXXXXX, 206);

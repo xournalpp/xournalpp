@@ -18,7 +18,10 @@
 #include <Util.h>
 #include <XInputUtils.h>
 
+#include <gdk/gdk.h>
+#if !GTK3_ENABLED
 #include <gdk/gdkkeysyms.h>
+#endif
 
 #include <math.h>
 #include <iostream>
@@ -138,22 +141,22 @@ static gboolean gtk_xournal_key_press_event(GtkWidget* widget, GdkEventKey* even
 			}
 		}
 
-		if (event->keyval == GDK_Left)
+		if (event->keyval == GDK_KEY_Left)
 		{
 			selection->moveSelection(d, 0);
 			return true;
 		}
-		else if (event->keyval == GDK_Up)
+		else if (event->keyval == GDK_KEY_Up)
 		{
 			selection->moveSelection(0, d);
 			return true;
 		}
-		else if (event->keyval == GDK_Right)
+		else if (event->keyval == GDK_KEY_Right)
 		{
 			selection->moveSelection(-d, 0);
 			return true;
 		}
-		else if (event->keyval == GDK_Down)
+		else if (event->keyval == GDK_KEY_Down)
 		{
 			selection->moveSelection(0, -d);
 			return true;

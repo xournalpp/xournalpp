@@ -24,11 +24,12 @@ public:
 
 #endif
 
-Scheduler::Scheduler()
+Scheduler::Scheduler(bool noThreads)
 {
 	XOJ_INIT_TYPE(Scheduler);
 
 	this->name = "Scheduler";
+	this->noThreads = noThreads;
 
 	// Thread
 	this->threadRunning = true;
@@ -87,26 +88,43 @@ Scheduler::~Scheduler()
 
 void Scheduler::start()
 {
+	SDEBUG("Starting scheduler");
 	g_return_if_fail(this->thread == NULL);
 
-	this->thread = g_thread_new(name, (GThreadFunc) jobThreadCallback, this);
+	if (!this->noThreads)
+	{
+		this->thread = g_thread_new(name, (GThreadFunc) jobThreadCallback, this);
+	}
 }
 
 void Scheduler::stop()
 {
+	SDEBUG("Stopping scheduler");
+
 	if (!this->threadRunning)
 	{
 		return;
 	}
 	this->threadRunning = false;
 	g_cond_broadcast(&this->jobQueueCond);
-	g_thread_join(this->thread);
+
+    if (this->thread)
+    {
+    	g_thread_join(this->thread);
+    }
 }
 
 void Scheduler::addJob(Job* job, JobPriority priority)
 {
 	XOJ_CHECK_TYPE(Scheduler);
+	SDEBUG("Adding job...");
 
+	if (this->noThreads)
+	{
+		SDEBUG("job is: {1}") % (long) job;
+		job->execute(true);
+		return;
+	}
 	g_mutex_lock(&this->jobQueueMutex);
 
 	job->ref();

@@ -63,7 +63,7 @@ using std::vector;
 
 // TODO Check for error log on startup, also check for emergency save document!
 
-Control::Control(GladeSearchpath* gladeSearchPath)
+Control::Control(GladeSearchpath* gladeSearchPath, bool noThreads)
 {
 	XOJ_INIT_TYPE(Control);
 
@@ -95,7 +95,7 @@ Control::Control(GladeSearchpath* gladeSearchPath)
 
 	this->scrollHandler = new ScrollHandler(this);
 
-	this->scheduler = new XournalScheduler();
+	this->scheduler = new XournalScheduler(noThreads);
 
 	this->hiddenFullscreenWidgets = NULL;
 	this->sidebarHidden = false;
@@ -451,6 +451,26 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
 		break;
 	case ACTION_GOTO_LAST:
 		scrollHandler->scrollToPage(this->doc->getPageCount() - 1);
+		break;
+	case ACTION_GOTO_NEXT_LAYER:
+			/*TODO  //exact commands unclear
+		PageRef p = getCurrentPage();
+		if (p.isValid())
+		{
+			p->setSelectedLayerId(this->win->getCurrentLayer());
+			this->win->getXournal()->layerChanged(getCurrentPageNo());
+			this->win->updateLayerCombobox();
+
+			if (p.isValid())
+			{
+				int layer = p->getSelectedLayerId();
+				fireEnableAction(ACTION_DELETE_LAYER, layer > 0);
+			}
+		} */
+		break;
+	case ACTION_GOTO_BACK_LAYER:
+		break;
+	case ACTION_GOTO_TOP_LAYER:
 		break;
 	case ACTION_GOTO_NEXT_ANNOTATED_PAGE:
 		scrollHandler->scrollToAnnotatedPage(true);
@@ -1960,6 +1980,8 @@ bool Control::invokeCallback(CallbackData* cb)
 	case ACTION_ZOOM_OUT:
 		zoom->zoomOut();
 		break;
+	default:
+		break;
 	}
 
 	delete cb;
@@ -2287,6 +2309,8 @@ void Control::showSettings()
 	win->updateScrollbarSidebarPosition();
 
 	enableAutosave(settings->isAutosaveEnabled());
+
+	getWindow()->getXournal()->setEventCompression(settings->isEventCompression());
 
 	this->zoom->setZoom100(settings->getDisplayDpi() / 72.0);
 	delete dlg;
@@ -3468,4 +3492,11 @@ Sidebar* Control::getSidebar()
 	XOJ_CHECK_TYPE(Control);
 
 	return this->sidebar;
+}
+
+SearchBar* Control::getSearchBar()
+{
+	XOJ_CHECK_TYPE(Control);
+
+	return this->searchBar;
 }

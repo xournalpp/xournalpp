@@ -18,7 +18,7 @@
 #include <config-features.h>
 #include <i18n.h>
 
-#include <gdk/gdkkeysyms.h>
+#include <gdk/gdk.h>
 
 #include <iostream>
 using std::cout;
@@ -414,7 +414,7 @@ bool MainWindow::onKeyPressCallback(GtkWidget* widget, GdkEventKey* event, MainW
 		//editing text - give that control
 		return false;
 	}
-	else if (event->keyval == GDK_Down)
+	else if (event->keyval == GDK_KEY_Down)
 	{
 		if (win->getControl()->getSettings()->isPresentationMode())
 		{
@@ -427,7 +427,7 @@ bool MainWindow::onKeyPressCallback(GtkWidget* widget, GdkEventKey* event, MainW
 			return true;
 		}
 	}
-	else if (event->keyval == GDK_Up)
+	else if (event->keyval == GDK_KEY_Up)
 	{
 		if (win->getControl()->getSettings()->isPresentationMode())
 		{
@@ -439,6 +439,11 @@ bool MainWindow::onKeyPressCallback(GtkWidget* widget, GdkEventKey* event, MainW
 			win->getLayout()->scrollRelativ(0, -30);
 			return true;
 		}
+	}
+	else if (event->keyval == GDK_KEY_Escape)
+	{
+		win->getControl()->getSearchBar()->showSearchBar(false);
+		return true;
 	}
 	else
 	{

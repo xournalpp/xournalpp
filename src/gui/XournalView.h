@@ -40,6 +40,7 @@ public:
 public:
 	void zoomIn();
 	void zoomOut();
+	void setZoom(gdouble scale);
 
 	bool paint(GtkWidget* widget, GdkEventExpose* event);
 
@@ -89,6 +90,8 @@ public:
 	void deleteSelection(EditSelection* sel = NULL);
 	void repaintSelection(bool evenWithoutSelection = false);
 
+	void setEventCompression(gboolean enable);
+
 	TextEditor* getTextEditor();
 	ArrayIterator<PageView*> pageViewIterator();
 	Control* getControl();
@@ -100,6 +103,10 @@ public:
 	GtkWidget* getWidget();
 	Cursor* getCursor();
 
+	Rectangle* getVisibleRect(int page);
+	Rectangle* getVisibleRect(PageView* redrawable);
+
+	GtkContainer* getParent();
 public:
 	//ZoomListener interface
 	void zoomChanged(double lastZoom);
@@ -117,6 +124,16 @@ public:
 	bool onKeyPressEvent(GdkEventKey* event);
 	bool onKeyReleaseEvent(GdkEventKey* event);
 
+	// TODO Private!, Naving conventions!
+	bool zoom_gesture_active;
+	static void onRealized(GtkWidget* widget, XournalView* view);
+
+#if GTK3_ENABLED
+	static void zoom_gesture_begin_cb(GtkGesture* gesture,GdkEventSequence* sequence,XournalView* view);
+	static void zoom_gesture_end_cb(GtkGesture* gesture,GdkEventSequence* sequence,XournalView* view);
+	static void zoom_gesture_scale_changed_cb(GtkGestureZoom* gesture,gdouble scale,XournalView* view);
+#endif
+
 private:
 
 	void fireZoomChanged();
@@ -132,6 +149,16 @@ private:
 private:
 	XOJ_TYPE_ATTRIB;
 
+#if GTK3_ENABLED
+	// Gestures
+	GtkGesture* zoom_gesture;
+	gdouble zoom_gesture_begin;
+	Rectangle visRect_gesture_begin;
+	//Problems with pinch to zoom:
+	//-keep view centered between pinching fingers
+	//-gtk_gesture_is_recognized not working (always false in XournalWidget.cpp code)
+#endif
+
 	GtkWidget* widget;
 	double margin;
 
@@ -139,6 +166,7 @@ private:
 	size_t viewPagesLen;
 
 	Control* control;
+	GtkContainer* parent;
 
 	size_t currentPage;
 	size_t lastSelectedPage;

@@ -35,7 +35,7 @@
 #include <Rectangle.h>
 
 #include <glib.h>
-#include <gdk/gdkkeysyms.h>
+#include <gdk/gdk.h>
 
 #include <stdlib.h>
 #include <math.h>
@@ -77,7 +77,7 @@ PageView::PageView(XournalView* xournal, PageRef page)
 	this->eraser = new EraseHandler(xournal->getControl()->getUndoRedoHandler(), xournal->getControl()->getDocument(),
 									this->page, xournal->getControl()->getToolHandler(), this);
 
-	this->inputHandler = new InputHandler(this->xournal, this);
+	this->inputHandler = NULL;
 }
 
 PageView::~PageView()
@@ -96,6 +96,12 @@ PageView::~PageView()
 
 	if (this->search) delete this->search;
 	this->search = NULL;
+
+	if (this->inputHandler)
+	{
+		delete this->inputHandler;
+		this->inputHandler = NULL;
+	}
 
 	XOJ_RELEASE_TYPE(PageView);
 }
@@ -421,33 +427,36 @@ bool PageView::onButtonPressEvent(GtkWidget* widget, GdkEventButton* event)
 	Cursor* cursor = xournal->getCursor();
 	cursor->setMouseDown(true);
 
-	if (h->getToolType() == TOOL_PEN)
+	if (h->getToolType() == TOOL_PEN || h->getToolType() == TOOL_HILIGHTER ||
+		(h->getToolType() == TOOL_ERASER && h->getEraserType() == ERASER_TYPE_WHITEOUT))
 	{
-		this->inputHandler->startStroke(event, STROKE_TOOL_PEN, x, y);
-	}
-	else if (h->getToolType() == TOOL_HILIGHTER)
-	{
-		this->inputHandler->startStroke(event, STROKE_TOOL_HIGHLIGHTER, x, y);
-	}
-	else if (h->getToolType() == TOOL_ERASER)
-	{
-		if (h->getEraserType() == ERASER_TYPE_WHITEOUT)
+		delete this->inputHandler;
+		this->inputHandler = NULL;
+
+		if(!h->isRuler())
 		{
-			this->inputHandler->startStroke(event, STROKE_TOOL_ERASER, x, y);
-			this->inputHandler->getTmpStroke()->setColor(0xffffff); // White
+			this->inputHandler = new StrokeHandler(this->xournal, this, getPage());
 		}
 		else
 		{
-			this->eraser->erase(x, y);
-			this->inEraser = true;
+			this->inputHandler = new RulerHandler(this->xournal, this, getPage());
 		}
+
+		this->inputHandler->onButtonPressEvent(event);
+	}
+	else if(h->getToolType() == TOOL_ERASER)
+	{
+		this->eraser->erase(x, y);
+		this->inEraser = true;
 	}
 	else if (h->getToolType() == TOOL_VERTICAL_SPACE)
 	{
 		this->verticalSpace = new VerticalToolHandler(this, this->page, y, zoom);
 	}
 	/*
-	else if (h->getToolType() == TOOL_DRAW_RECT || h->getToolType() == TOOL_DRAW_CIRCLE || h->getToolType() == TOOL_DRAW_ARROW)
+	else if (h->getToolType() == TOOL_DRAW_RECT ||
+	         h->getToolType() == TOOL_DRAW_CIRCLE ||
+	         h->getToolType() == TOOL_DRAW_ARROW)
 	{
 		if (h->getToolType() == TOOL_DRAW_RECT)
 		{
@@ -459,10 +468,10 @@ bool PageView::onButtonPressEvent(GtkWidget* widget, GdkEventButton* event)
 		{
 		}
 	}
-	 */
+	*/
 	else if (h->getToolType() == TOOL_SELECT_RECT ||
-			 h->getToolType() == TOOL_SELECT_REGION ||
-			 h->getToolType() == TOOL_SELECT_OBJECT)
+	         h->getToolType() == TOOL_SELECT_REGION ||
+	         h->getToolType() == TOOL_SELECT_OBJECT)
 	{
 		if (h->getToolType() == TOOL_SELECT_RECT)
 		{
@@ -520,6 +529,7 @@ bool PageView::onMotionNotifyEvent(GtkWidget* widget, GdkEventMotion* event)
 	ToolHandler* h = xournal->getControl()->getToolHandler();
 
 	if (containsPoint(x, y, true) &&
+		this->inputHandler &&
 		this->inputHandler->onMotionNotifyEvent(event))
 	{
 		//input	handler used this event
@@ -583,7 +593,12 @@ bool PageView::onButtonReleaseEvent(GtkWidget* widget, GdkEventButton* event)
 
 	Control* control = xournal->getControl();
 
-	this->inputHandler->onButtonReleaseEvent(event, this->page);
+	if (this->inputHandler)
+	{
+		this->inputHandler->onButtonReleaseEvent(event);
+		delete this->inputHandler;
+		this->inputHandler = NULL;
+	}
 
 	if (this->inEraser)
 	{
@@ -632,7 +647,11 @@ bool PageView::onKeyPressEvent(GdkEventKey* event)
 	XOJ_CHECK_TYPE(PageView);
 
 	// Esc leaves text edition
+#if GTK3_ENABLED
+	if (event->keyval == GDK_KEY_Escape)
+#else
 	if (event->keyval == GDK_Escape)
+#endif
 	{
 		if (this->textEditor)
 		{
@@ -895,22 +914,29 @@ bool PageView::paintPage(cairo_t* cr, GdkRectangle* rect)
 		this->verticalSpace->paint(cr, rect, zoom);
 	}
 
-	cairo_scale(cr, zoom, zoom);
 
 	if (this->textEditor)
 	{
+		cairo_scale(cr, zoom, zoom);
 		this->textEditor->paint(cr, rect, zoom);
 	}
 	if (this->selection)
 	{
+		cairo_scale(cr, zoom, zoom);
 		this->selection->paint(cr, rect, zoom);
 	}
 
 	if (this->search)
 	{
+		cairo_scale(cr, zoom, zoom);
 		this->search->paint(cr, rect, zoom, getSelectionColor());
 	}
-	this->inputHandler->draw(cr, zoom);
+
+	if(this->inputHandler)
+	{
+		this->inputHandler->draw(cr);
+	}
+
 	g_mutex_unlock(&this->drawingMutex);
 	return true;
 }
@@ -947,8 +973,32 @@ int PageView::getBufferPixels()
 GtkColorWrapper PageView::getSelectionColor() const
 {
 	XOJ_CHECK_TYPE(PageView);
+#if GTK3_ENABLED
+	GtkWidget* widget = getXournal()->getWidget();
 
+	GtkStyleContext *context = gtk_widget_get_style_context(widget);
+
+	gtk_style_context_save(context);
+	gtk_style_context_add_class(context, GTK_STYLE_CLASS_RUBBERBAND);
+
+	GdkRGBA col;
+	gtk_style_context_get_border_color(context,
+                                     gtk_widget_get_state_flags(widget),
+                                     &col);
+
+	// TODO: The correct border color is not sufficient,
+	//       we should also get the actual color and the GtkBorder
+	//       to draw the selection correctly
+
+	/*
+	gtk_style_context_get_border (context, state,
+	                              &border);
+	*/
+
+	gtk_style_context_restore(context);
+#else
 	return this->xournal->getWidget()->style->base[GTK_STATE_SELECTED];
+#endif
 }
 
 TextEditor* PageView::getTextEditor()
@@ -986,28 +1036,28 @@ XournalView* PageView::getXournal()
 	return this->xournal;
 }
 
-double PageView::getHeight()
+double PageView::getHeight() const
 {
 	XOJ_CHECK_TYPE(PageView);
 
 	return this->page->getHeight();
 }
 
-double PageView::getWidth()
+double PageView::getWidth() const
 {
 	XOJ_CHECK_TYPE(PageView);
 
 	return this->page->getWidth();
 }
 
-int PageView::getDisplayWidth()
+int PageView::getDisplayWidth() const
 {
 	XOJ_CHECK_TYPE(PageView);
 
 	return this->page->getWidth() * this->xournal->getZoom();
 }
 
-int PageView::getDisplayHeight()
+int PageView::getDisplayHeight() const
 {
 	XOJ_CHECK_TYPE(PageView);
 
@@ -1037,6 +1087,27 @@ TexImage* PageView::getSelectedTex()
 
 }
 
+Rectangle* PageView::getVisibleRect()
+{
+	Rectangle* rect = xournal->getVisibleRect(this);
+
+	if (!rect)
+	{
+		return NULL;
+	}
+
+	(*rect) *= xournal->getZoom();
+
+	(*rect) = rect->translated(-getX(), -getY());
+
+	return rect;
+}
+
+Rectangle PageView::getRect()
+{
+	return Rectangle(getX(), getY(), getDisplayWidth(), getDisplayHeight());
+}
+
 void PageView::rectChanged(Rectangle& rect)
 {
 	rerenderRect(rect.x, rect.y, rect.width, rect.height);
@@ -1054,5 +1125,20 @@ void PageView::pageChanged()
 
 void PageView::elementChanged(Element* elem)
 {
-	rerenderElement(elem);
+	if (this->inputHandler && elem == this->inputHandler->getStroke())
+	{
+		g_mutex_lock(&this->drawingMutex);
+
+		cairo_t* cr = cairo_create(this->crBuffer);
+
+		this->inputHandler->draw(cr);
+
+		cairo_destroy(cr);
+
+		g_mutex_unlock(&this->drawingMutex);
+	}
+	else
+	{
+		rerenderElement(elem);
+	}
 }
