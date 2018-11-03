@@ -49,9 +49,7 @@ ClipboardHandler::~ClipboardHandler()
 	XOJ_RELEASE_TYPE(ClipboardHandler);
 }
 
-static GdkAtom atomXournal =
-		gdk_atom_intern_static_string("application/xournal");
-static GdkAtom atomUtf8 = gdk_atom_intern_static_string("UTF8_STRING");
+static GdkAtom atomXournal = gdk_atom_intern_static_string("application/xournal");
 
 bool ClipboardHandler::paste()
 {
@@ -65,8 +63,8 @@ bool ClipboardHandler::paste()
 	}
 	else if (this->containsText)
 	{
-		gtk_clipboard_request_contents(this->clipboard, atomUtf8,
-									   (GtkClipboardReceivedFunc) pasteClipboardContents, this);
+		gtk_clipboard_request_text(this->clipboard,
+		                           (GtkClipboardTextReceivedFunc) pasteClipboardText, this);
 		return true;
 	}
 	else if (this->containsImage)
@@ -124,25 +122,26 @@ public:
 	static void getFunction(GtkClipboard* clipboard, GtkSelectionData* selection,
 							guint info, ClipboardContents* contents)
 	{
+		GdkAtom target = gtk_selection_data_get_target(selection);
 
-		if (selection->target == gdk_atom_intern_static_string("UTF8_STRING"))
+		if (target == gdk_atom_intern_static_string("UTF8_STRING"))
 		{
 			gtk_selection_data_set_text(selection, contents->text.c_str(), -1);
 		}
-		else if (selection->target == gdk_atom_intern_static_string("image/png")
-				 || selection->target == gdk_atom_intern_static_string("image/jpeg")
-				 || selection->target == gdk_atom_intern_static_string("image/gif"))
+		else if (target == gdk_atom_intern_static_string("image/png") ||
+				 target == gdk_atom_intern_static_string("image/jpeg") ||
+				 target == gdk_atom_intern_static_string("image/gif"))
 		{
 			gtk_selection_data_set_pixbuf(selection, contents->image);
 		}
-		else if (atomSvg1 == selection->target || atomSvg2 == selection->target)
+		else if (atomSvg1 == target || atomSvg2 == target)
 		{
-			gtk_selection_data_set(selection, selection->target, 8, (guchar*) contents->svg.c_str(),
+			gtk_selection_data_set(selection, target, 8, (guchar*) contents->svg.c_str(),
 								   contents->svg.length());
 		}
-		else if (atomXournal == selection->target)
+		else if (atomXournal == target)
 		{
-			gtk_selection_data_set(selection, selection->target, 8, (guchar*) contents->str->str, contents->str->len);
+			gtk_selection_data_set(selection, target, 8, (guchar*) contents->str->str, contents->str->len);
 		}
 	}
 
@@ -339,23 +338,20 @@ void ClipboardHandler::pasteClipboardContents(GtkClipboard* clipboard, GtkSelect
 {
 	XOJ_CHECK_TYPE_OBJ(handler, ClipboardHandler);
 
-	if (atomXournal == selectionData->target)
-	{
-		ObjectInputStream in;
+	ObjectInputStream in;
 
-		if (in.read((const char*) selectionData->data, selectionData->length))
-		{
-			handler->listener->clipboardPasteXournal(in);
-		}
-	}
-	else
+	if (in.read((const char*) selectionData->data, selectionData->length))
 	{
-		guchar* text = gtk_selection_data_get_text(selectionData);
-		if (text != NULL)
-		{
-			handler->listener->clipboardPasteText((const char*) text);
-			g_free(text);
-		}
+		handler->listener->clipboardPasteXournal(in);
+	}
+}
+
+void ClipboardHandler::pasteClipboardText(GtkClipboard* clipboard, const gchar* text,
+                                          ClipboardHandler* handler)
+{
+	if (text)
+	{
+		handler->listener->clipboardPasteText(text);
 	}
 }
 

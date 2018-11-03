@@ -11,6 +11,8 @@ ZoomControl::ZoomControl()
 	this->zoom100Value = 1.0;
 	this->zoomFitValue = 1.0;
 	this->zoomFitMode = true;
+	this->zoom_center_x = -1;
+	this->zoom_center_y = -1;
 }
 
 ZoomControl::~ZoomControl()
@@ -38,14 +40,14 @@ void ZoomControl::fireZoomChanged(double lastZoom)
 {
 	XOJ_CHECK_TYPE(ZoomControl);
 
-	if (this->zoom < 0.3)
+	if (this->zoom < MIN_ZOOM)
 	{
-		this->zoom = 0.3;
+		this->zoom = MIN_ZOOM;
 	}
 
-	if (this->zoom > 5)
+	if (this->zoom > MAX_ZOOM)
 	{
-		this->zoom = 5;
+		this->zoom = MAX_ZOOM;
 	}
 
 	for (ZoomListener* z : this->listener)
@@ -172,6 +174,10 @@ bool ZoomControl::onScrolledwindowMainScrollEvent(GtkWidget* widget, GdkEventScr
 
 	if (state & GDK_CONTROL_MASK)
 	{
+		//set zoom center (for shift centered scroll)
+		zoom->zoom_center_x = event->x;
+		zoom->zoom_center_y = event->y;
+
 		if (event->direction == GDK_SCROLL_UP || event->direction == GDK_SCROLL_LEFT)
 		{
 			zoom->zoomIn();
