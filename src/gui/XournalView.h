@@ -81,7 +81,7 @@ public:
 	int getDisplayWidth() const;
 	int getDisplayHeight() const;
 
-	bool isPageVisible(int page, int* visibleHeight);
+	bool isPageVisible(size_t page, int* visibleHeight);
 
 	void ensureRectIsVisible(int x, int y, int width, int heigth);
 

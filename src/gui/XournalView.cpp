@@ -75,13 +75,14 @@ XournalView::XournalView(GtkWidget* parent, Control* control)
 	g_signal_connect(this->widget, "size-allocate", G_CALLBACK(staticLayoutPages), this);
 #endif
 	// pinch-to-zoom
-	this->zoom_gesture_active=false;
+	this->zoom_gesture_active = false;
+
+#if GTK3_ENABLED
 
 	// use parent as the gestures widget and not this->widget as gesture gets
 	// buggy otherwise (scrolling interferes with gestures scale value)
 	this->zoom_gesture = gtk_gesture_zoom_new (parent);
 
-#if GTK3_ENABLED
 	gtk_event_controller_set_propagation_phase (GTK_EVENT_CONTROLLER (this->zoom_gesture), GTK_PHASE_CAPTURE);
 	g_signal_connect (this->zoom_gesture, "begin", G_CALLBACK (zoom_gesture_begin_cb), this);
 	g_signal_connect (this->zoom_gesture, "scale-changed", G_CALLBACK (zoom_gesture_scale_changed_cb), this);
@@ -609,6 +610,8 @@ void XournalView::zoomChanged(double lastZoom)
 {
 	XOJ_CHECK_TYPE(XournalView);
 
+	// TODO !!!!!!!!!!
+/*
 	Layout* layout = gtk_xournal_get_layout(this->widget);
 	int currentPage = this->getCurrentPage();
 	PageView* view = getViewFor(currentPage);
@@ -670,6 +673,7 @@ void XournalView::zoomChanged(double lastZoom)
 	control->getMetadataManager()->setDouble(file, "zoom", getZoom());
 
 	this->control->getScheduler()->blockRerenderZoom();
+	*/
 }
 
 void XournalView::pageSizeChanged(size_t page)
@@ -962,7 +966,7 @@ int XournalView::getDisplayWidth() const {
 	return allocation.width;
 }
 
-bool XournalView::isPageVisible(int page, int* visibleHeight)
+bool XournalView::isPageVisible(size_t page, int* visibleHeight)
 {
 	XOJ_CHECK_TYPE(XournalView);
 

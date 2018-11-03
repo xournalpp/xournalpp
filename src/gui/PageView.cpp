@@ -13,7 +13,9 @@
 #include "control/tools/EraseHandler.h"
 #include "control/tools/ImageHandler.h"
 #include "control/tools/InputHandler.h"
+#include "control/tools/RulerHandler.h"
 #include "control/tools/Selection.h"
+#include "control/tools/StrokeHandler.h"
 #include "control/tools/VerticalToolHandler.h"
 #include "model/Image.h"
 #include "model/Layer.h"
@@ -36,6 +38,9 @@
 
 #include <glib.h>
 #include <gdk/gdk.h>
+#if !GTK3_ENABLED
+#include <gdk/gdkkeysyms.h>
+#endif
 
 #include <stdlib.h>
 #include <math.h>
@@ -515,7 +520,8 @@ void PageView::resetShapeRecognizer()
 {
 	XOJ_CHECK_TYPE(PageView);
 
-	this->inputHandler->resetShapeRecognizer();
+	// TODO: implement this
+	//this->inputHandler->resetShapeRecognizer();
 }
 
 bool PageView::onMotionNotifyEvent(GtkWidget* widget, GdkEventMotion* event)
@@ -647,11 +653,7 @@ bool PageView::onKeyPressEvent(GdkEventKey* event)
 	XOJ_CHECK_TYPE(PageView);
 
 	// Esc leaves text edition
-#if GTK3_ENABLED
 	if (event->keyval == GDK_KEY_Escape)
-#else
-	if (event->keyval == GDK_Escape)
-#endif
 	{
 		if (this->textEditor)
 		{

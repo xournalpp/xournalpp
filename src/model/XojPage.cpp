@@ -164,14 +164,14 @@ void XojPage::setSize(double width, double height)
 	this->height = height;
 }
 
-double XojPage::getWidth()
+double XojPage::getWidth() const
 {
 	XOJ_CHECK_TYPE(XojPage);
 
 	return this->width;
 }
 
-double XojPage::getHeight()
+double XojPage::getHeight() const
 {
 	XOJ_CHECK_TYPE(XojPage);
 

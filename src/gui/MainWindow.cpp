@@ -19,6 +19,9 @@
 #include <i18n.h>
 
 #include <gdk/gdk.h>
+#if !GTK3_ENABLED
+#include <gdk/gdkkeysyms.h>
+#endif
 
 #include <iostream>
 using std::cout;
