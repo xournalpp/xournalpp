@@ -32,7 +32,7 @@ ToolbarData::~ToolbarData()
 	{
 		delete e;
 	}
-	this->contents.clear();
+	contents.clear();
 
 	XOJ_RELEASE_TYPE(ToolbarData);
 }
@@ -107,7 +107,7 @@ void ToolbarData::load(GKeyFile* config, const char* group)
 			e->addItem(ba::trim_copy(string(list[x])));
 		}
 
-		this->contents.push_back(e);
+		contents.push_back(e);
 
 		g_strfreev(list);
 	}
@@ -164,7 +164,7 @@ int ToolbarData::insertItem(string toolbar, string item, int position)
 	ToolbarEntry* newEntry = new ToolbarEntry();
 	newEntry->setName(toolbar);
 	int id = newEntry->addItem(item);
-	this->contents.push_back(newEntry);
+	contents.push_back(newEntry);
 
 	return id;
 }
@@ -175,7 +175,7 @@ bool ToolbarData::removeItemByID(string toolbar, int id)
 
 	g_return_val_if_fail(isPredefined() == false, false);
 
-	for (ToolbarEntry* e : this->contents)
+	for (ToolbarEntry* e : contents)
 	{
 		if (e->getName() == toolbar)
 		{

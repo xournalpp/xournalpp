@@ -984,8 +984,8 @@ void Control::manageToolbars()
 
 	this->win->updateToolbarMenu();
 
-	const char* file = Util::getConfigFile(TOOLBAR_CONFIG).c_str();
-	this->win->getToolbarModel()->save(file);
+	path file = Util::getConfigFile(TOOLBAR_CONFIG).c_str();
+	this->win->getToolbarModel()->save(file.c_str());
 }
 
 void Control::customizeToolbars()
