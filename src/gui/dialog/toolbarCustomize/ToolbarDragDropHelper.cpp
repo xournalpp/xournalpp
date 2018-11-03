@@ -1,8 +1,8 @@
 #include "ToolbarDragDropHelper.h"
 
+#include "gui/toolbarMenubar/ToolbarUtil.h"
 #include "gui/widgets/SelectColor.h"
 
-#include <Util.h>
 
 GdkAtom ToolbarDragDropHelper::atomToolItem = gdk_atom_intern_static_string("application/xournal-ToolbarItem");
 GtkTargetEntry ToolbarDragDropHelper::dropTargetEntry = { (gchar *)"move-buffer", GTK_TARGET_SAME_APP, 1 };
@@ -37,7 +37,7 @@ GdkPixbuf* ToolbarDragDropHelper::getColorImage(int color)
 	GtkWidget* icon = selectcolor_new(color);
 	selectcolor_set_size(icon, 16);
 	selectcolor_set_circle(icon, true);
-	GdkPixbuf* image = Util::newPixbufFromWidget(icon, 16);
+	GdkPixbuf* image = ToolbarUtil::newPixbufFromWidget(icon, 16);
 	gtk_widget_unref(icon);
 
 	return image;

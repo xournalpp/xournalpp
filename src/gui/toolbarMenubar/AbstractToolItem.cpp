@@ -1,6 +1,6 @@
 #include "AbstractToolItem.h"
+#include "gui/toolbarMenubar/ToolbarUtil.h"
 
-#include <Util.h>
 
 AbstractToolItem::AbstractToolItem(string id, ActionHandler* handler, ActionType type, GtkWidget* menuitem) :
 		AbstractItem(id, handler, type, menuitem)
@@ -166,7 +166,7 @@ GtkWidget* AbstractToolItem::getNewToolIcon()
 
 	if (!GTK_IS_IMAGE(icon))
 	{
-		GdkPixbuf* pixbuf = Util::newPixbufFromWidget(icon);
+		GdkPixbuf* pixbuf = ToolbarUtil::newPixbufFromWidget(icon);
 		gtk_widget_unref(icon);
 		icon = gtk_image_new_from_pixbuf(pixbuf);
 		g_object_unref(pixbuf);

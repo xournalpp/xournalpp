@@ -9,6 +9,7 @@
 #include "gui/toolbarMenubar/AbstractToolItem.h"
 #include "gui/toolbarMenubar/model/ToolbarData.h"
 #include "gui/toolbarMenubar/model/ToolbarModel.h"
+#include "gui/toolbarMenubar/ToolbarUtil.h"
 #include "gui/toolbarMenubar/ToolMenuHandler.h"
 #include "gui/widgets/SelectColor.h"
 
@@ -50,7 +51,7 @@ ToolbarCustomizeDialog::ToolbarCustomizeDialog(GladeSearchpath* gladeSearchPath,
 	// init separator
 	GtkWidget* tbSeparator = get("tbSeparator");
 
-	GtkWidget* icon = Util::newSepeartorImage();
+	GtkWidget* icon = ToolbarUtil::newSepeartorImage();
 	GtkWidget* box = gtk_vbox_new(false, 3);
 	gtk_widget_show(box);
 
@@ -103,7 +104,7 @@ void ToolbarCustomizeDialog::toolitemDragBeginSeparator(GtkWidget* widget, GdkDr
 {
 	ToolItemDragCurrentData::setData(TOOL_ITEM_SEPARATOR, -1, NULL);
 
-	GtkWidget* icon = Util::newSepeartorImage();
+	GtkWidget* icon = ToolbarUtil::newSepeartorImage();
 	gtk_drag_set_icon_pixbuf(context, ToolbarDragDropHelper::getImagePixbuf(GTK_IMAGE(icon)), -2, -2);
 	gtk_widget_unref(icon);
 }

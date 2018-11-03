@@ -34,10 +34,6 @@ public:
 
 	static int getPid();
 
-	static void fakeExposeWidget(GtkWidget* widget, GdkPixmap* pixmap);
-	static GdkPixbuf* newPixbufFromWidget(GtkWidget* widget, int iconSize = 24);
-	static GtkWidget* newSepeartorImage();
-
 	static void openFileWithDefaultApplicaion(path filename);
 	static void openFileWithFilebrowser(path filename);
 	
