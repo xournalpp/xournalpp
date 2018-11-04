@@ -38,6 +38,7 @@ public:
 	virtual ~InputHandler();
 
 public:
+
 	 /**
 	 * This method is called from the PageView to draw
 	 * overlays displaying the drawing process.
@@ -46,7 +47,6 @@ public:
 	 * @remark The coordinate system is in PageView coordinates, scale
 	 *         it by the current zoom to change to Page coordinates
 	 */
-
 	virtual void draw(cairo_t* cr) = 0;
 
 	/**
@@ -73,12 +73,20 @@ public:
 
 	Stroke* getStroke();
 
+	/**
+	 * Reset the shape recognizer, only implemented by drawing instances,
+	 * but needs to be in the base interface.
+	 */
+	virtual void resetShapeRecognizer();
+
+
 protected:
 
 	bool validMotion(Point p, Point q);
 
 	void createStroke(Point p);
 
+protected:
 	XournalView* xournal;
 	PageView* redrawable;
 	PageRef page;
@@ -86,5 +94,4 @@ protected:
 
 private:
 	XOJ_TYPE_ATTRIB;
-
 };

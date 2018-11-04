@@ -25,6 +25,7 @@ StrokeHandler::~StrokeHandler()
 
 	destroySurface();
 	delete reco;
+	reco = NULL;
 
 	XOJ_RELEASE_TYPE(StrokeHandler);
 }
@@ -162,7 +163,7 @@ void StrokeHandler::onButtonReleaseEvent(GdkEventButton* event)
 
 	if(h->isShapeRecognizer())
 	{
-		if (!reco)
+		if (reco == NULL)
 		{
 			reco = new ShapeRecognizer();
 		}
@@ -278,17 +279,18 @@ bool StrokeHandler::getPressureMultiplier(GdkEvent* event, double& pressure)
 {
 	XOJ_CHECK_TYPE(StrokeHandler);
 
-	// TODO !!!!!!!!!!!
-//	GdkDevice* device = gdk_event_get_device(event);
-//	gdouble* axes = event->button.axes;
-//
-//	pressure = 1.0;
-//
-//	gdk_device_get_state(device,
-//	                     gtk_widget_get_parent_window(xournal->getWidget()),
-//	                     axes, NULL);
-//
-//	if (!gdk_device_get_axis(device, axes, GDK_AXIS_PRESSURE, &pressure))
+#if GTK3_ENABLED
+
+	GdkDevice* device = gdk_event_get_device(event);
+	gdouble* axes = event->button.axes;
+
+	pressure = 1.0;
+
+	gdk_device_get_state(device,
+	                     gtk_widget_get_parent_window(xournal->getWidget()),
+	                     axes, NULL);
+
+	if(!gdk_device_get_axis(device, axes, GDK_AXIS_PRESSURE, &pressure))
 	{
 		pressure = 1.0;
 		return false;
@@ -299,13 +301,47 @@ bool StrokeHandler::getPressureMultiplier(GdkEvent* event, double& pressure)
 
 	Settings* settings = xournal->getControl()->getSettings();
 
-	if (!finite(pressure))
+	if(!finite(pressure))
 	{
 		pressure = 1.0;
 	}
 
 	pressure = ((1 - pressure) * settings->getWidthMinimumMultiplier() +
 	           pressure * settings->getWidthMaximumMultiplier());
+
+#else
+
+	double* axes = NULL;
+	GdkDevice* device = NULL;
+
+	if (event->type == GDK_MOTION_NOTIFY)
+	{
+		axes = event->motion.axes;
+		device = event->motion.device;
+	}
+	else
+	{
+		axes = event->button.axes;
+		device = event->button.device;
+	}
+
+	if (device == gdk_device_get_core_pointer() || device->num_axes <= 2)
+	{
+		pressure = 1.0;
+		return false;
+	}
+
+	double rawpressure = axes[2] / (device->axes[2].max - device->axes[2].min);
+	if (!finite(rawpressure))
+	{
+		pressure = 1.0;
+		return false;
+	}
+
+	Settings* settings = xournal->getControl()->getSettings();
+
+	pressure = ((1 - rawpressure) * settings->getWidthMinimumMultiplier() + rawpressure * settings->getWidthMaximumMultiplier());
+#endif
 
 	return true;
 }

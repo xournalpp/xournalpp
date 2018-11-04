@@ -129,7 +129,7 @@ GdkPixbuf* GladeGui::loadIconPixbuf(string filename)
 
 	if (pathname == "")
 	{
-		g_warning("GladeGui::get: Couldn't find pixmap file: %s", filename);
+		g_warning("GladeGui::get: Couldn't find pixmap file: %s", filename.c_str());
 		return NULL;
 	}
 

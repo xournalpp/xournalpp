@@ -100,12 +100,6 @@ PageView::~PageView()
 	if (this->search) delete this->search;
 	this->search = NULL;
 
-	if (this->inputHandler)
-	{
-		delete this->inputHandler;
-		this->inputHandler = NULL;
-	}
-
 	XOJ_RELEASE_TYPE(PageView);
 }
 
@@ -495,8 +489,10 @@ void PageView::resetShapeRecognizer()
 {
 	XOJ_CHECK_TYPE(PageView);
 
-	// TODO: implement this
-	//this->inputHandler->resetShapeRecognizer();
+	if (this->inputHandler != NULL)
+	{
+		this->inputHandler->resetShapeRecognizer();
+	}
 }
 
 bool PageView::onMotionNotifyEvent(GtkWidget* widget, GdkEventMotion* event)

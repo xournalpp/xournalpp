@@ -36,6 +36,15 @@ Stroke* InputHandler::getStroke()
 	return stroke;
 }
 
+/**
+ * Reset the shape recognizer, only implemented by drawing instances,
+ * but needs to be in the base interface.
+ */
+void InputHandler::resetShapeRecognizer()
+{
+	// Does nothing here. Implemented in the extending classes
+}
+
 void InputHandler::createStroke(Point p)
 {
 	XOJ_CHECK_TYPE(InputHandler);

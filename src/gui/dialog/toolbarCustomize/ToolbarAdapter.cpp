@@ -120,7 +120,7 @@ void ToolbarAdapter::prepareToolItem(GtkToolItem* it)
 	GdkScreen* screen = gtk_widget_get_screen(GTK_WIDGET(it));
 	GdkCursor* cursor = gdk_cursor_new_for_display(gdk_screen_get_display(screen), GDK_HAND2);
 	gdk_window_set_cursor(gtk_widget_get_window(GTK_WIDGET(it)), cursor);
-	g_object_unref(cursor);
+	gdk_cursor_unref(cursor);
 
 	gtk_drag_source_set(GTK_WIDGET(it), GDK_BUTTON1_MASK, &ToolbarDragDropHelper::dropTargetEntry, 1, GDK_ACTION_MOVE);
 	ToolbarDragDropHelper::dragSourceAddToolbar(GTK_WIDGET(it));

@@ -403,7 +403,7 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
 		// Menu Edit
 	case ACTION_UNDO:
 		this->clearSelection();
-		//Move out of text mode to allow textboxundo to work
+		// Move out of text mode to allow textboxundo to work
 		clearSelectionEndText();
 		undoRedo->undo();
 		this->resetShapeRecognizer();

@@ -40,7 +40,11 @@ public:
 	void onButtonReleaseEvent(GdkEventButton* event);
 	void onButtonPressEvent(GdkEventButton* event);
 
-	void resetShapeRecognizer();
+	/**
+	 * Reset the shape recognizer, only implemented by drawing instances,
+	 * but needs to be in the base interface.
+	 */
+	virtual void resetShapeRecognizer();
 
 private:
 	XOJ_TYPE_ATTRIB;
