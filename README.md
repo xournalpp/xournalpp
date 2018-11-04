@@ -13,6 +13,9 @@ This fork is intended to improve and customize xournalpp to my very own use case
 - [x] Record audio and have it play according to stroke timestamps (done via external sw for the moment)
 - [ ] Zoom to the viewer's center (instead of top left corner of the page)
 
+
+![UI](/doc/app/UI.png "UI")
+
 ## Description
 
 Xournal++ is not Xournal! It is a ground-up rewrite of Xournal in a different language (C++ instead of C). The purpose
