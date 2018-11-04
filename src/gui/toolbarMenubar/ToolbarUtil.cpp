@@ -27,11 +27,18 @@ GdkPixbuf* gdk_pixbuf_new_from_surface(cairo_surface_t* surface)
 		for (int x = 0; x < w; x++)
 		{
 			guchar * p = pixels + y * rowstride + x * n_channels;
+
+			// blue
+			p[2] = *sb++;
+
+			// green
+			p[1] = *sb++;
+
+			// red
+			p[0] = *sb++;
+
+			// alpha
 			p[3] = *sb++;
-			p[3] = 255; // TODO: Alpha
-			p[0] = 255 - *sb++;
-			p[1] = 255 - *sb++;
-			p[2] = 255 - *sb++;
 		}
 	}
 
@@ -83,7 +90,7 @@ cairo_surface_t* ToolbarUtil::newColorIconSurface(int color, int size, bool circ
 	int y = 0;
 	int width = size;
 
-	double radius = size - 2;
+	double radius = size / 2;
 
 	if (circle)
 	{
