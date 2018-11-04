@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<glade-interface>
-  <!-- interface-requires gtk+ 2.10 -->
-  <!-- interface-naming-policy toplevel-contextual -->
-  <widget class="GtkDialog" id="texDialog">
+<!-- Generated with glade 3.18.3 -->
+<interface>
+  <requires lib="gtk+" version="3.0"/>
+  <object class="GtkDialog" id="texDialog">
     <property name="width_request">320</property>
     <property name="can_focus">False</property>
     <property name="title" translatable="yes">Insert Latex</property>
@@ -11,24 +11,23 @@
     <property name="icon_name">dialog-information</property>
     <property name="type_hint">dialog</property>
     <child internal-child="vbox">
-      <widget class="GtkVBox" id="dialog-vbox2">
+      <object class="GtkBox" id="dialog-vbox2">
         <property name="visible">True</property>
         <property name="can_focus">False</property>
         <child internal-child="action_area">
-          <widget class="GtkHButtonBox" id="dialog-action_area2">
+          <object class="GtkButtonBox" id="dialog-action_area2">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="layout_style">end</property>
             <child>
-              <widget class="GtkButton" id="texcancelbutton">
+              <object class="GtkButton" id="texcancelbutton">
                 <property name="label">gtk-cancel</property>
-                <property name="response_id">2</property>
+                <property name="use_action_appearance">False</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">False</property>
-                <property name="use_action_appearance">False</property>
                 <property name="use_stock">True</property>
-              </widget>
+              </object>
               <packing>
                 <property name="expand">False</property>
                 <property name="fill">False</property>
@@ -36,24 +35,22 @@
               </packing>
             </child>
             <child>
-              <widget class="GtkButton" id="texokbutton">
+              <object class="GtkButton" id="texokbutton">
                 <property name="label">gtk-ok</property>
-		<property name="response_id">1</property>
+                <property name="use_action_appearance">False</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
-                <property name="use_action_appearance">False</property>
                 <property name="use_stock">True</property>
-		<accelerator key="Return" signal="activate"/>
-              </widget>
+                <accelerator key="Return" signal="activate"/>
+              </object>
               <packing>
                 <property name="expand">False</property>
                 <property name="fill">False</property>
                 <property name="position">1</property>
               </packing>
             </child>
-
-          </widget>
+          </object>
           <packing>
             <property name="expand">False</property>
             <property name="fill">True</property>
@@ -62,11 +59,11 @@
           </packing>
         </child>
         <child>
-          <widget class="GtkImage" id="XournalIcon">
+          <object class="GtkImage" id="XournalIcon">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="pixbuf">pixmaps/xournalpp.svg</property>
-          </widget>
+          </object>
           <packing>
             <property name="expand">True</property>
             <property name="fill">True</property>
@@ -75,14 +72,14 @@
           </packing>
         </child>
         <child>
-          <widget class="GtkLabel" id="labelTitle">
+          <object class="GtkLabel" id="labelTitle">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="label" translatable="yes">&lt;span size="xx-large" weight="bold"&gt;Xournal++&lt;/span&gt;
 &lt;i&gt;The next generation&lt;/i&gt;</property>
             <property name="use_markup">True</property>
             <property name="justify">center</property>
-          </widget>
+          </object>
           <packing>
             <property name="expand">False</property>
             <property name="fill">False</property>
@@ -91,19 +88,19 @@
           </packing>
         </child>
         <child>
-          <widget class="GtkVBox" id="texVBox">
+          <object class="GtkBox" id="texVbox">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
+            <property name="orientation">vertical</property>
             <child>
-              <widget class="GtkEntry" id="texEntry">
+              <object class="GtkEntry" id="texEntry">
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
-                <property name="editable">True</property>
-              </widget>
+              </object>
               <packing>
                 <property name="expand">False</property>
                 <property name="fill">True</property>
-                <property name="position">2</property>
+                <property name="position">0</property>
               </packing>
             </child>
             <child>
@@ -112,14 +109,18 @@
             <child>
               <placeholder/>
             </child>
-          </widget>
+          </object>
           <packing>
-            <property name="expand">True</property>
+            <property name="expand">False</property>
             <property name="fill">True</property>
-            <property name="position">4</property>
+            <property name="position">3</property>
           </packing>
         </child>
-      </widget>
+      </object>
     </child>
-  </widget>
-</glade-interface>
+    <action-widgets>
+      <action-widget response="2">texcancelbutton</action-widget>
+      <action-widget response="1">texokbutton</action-widget>
+    </action-widgets>
+  </object>
+</interface>

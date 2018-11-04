@@ -334,12 +334,7 @@ int XournalMain::run(int argc, char* argv[])
 	return 0;
 }
 
-#if GTK3_ENABLED
-#define GLADE_UI_PATH "ui/gtk3"
-#else
 #define GLADE_UI_PATH "ui"
-#endif
-
 
 /**
  * Path for glade files and Pixmaps, first searches in the home folder, so you can customize glade files

@@ -29,9 +29,9 @@ public:
 	void addSearchDirectory(string directory);
 
 	/**
-	 * Searches for a path, the returning string has to be freed
+	 * Searches for a path, return the path, an empty string if not found
 	 */
-	char* findFile(const char* subdir, const char* file);
+	string findFile(string subdir, string file);
 
 private:
 	XOJ_TYPE_ATTRIB;

@@ -19,12 +19,16 @@
 
 #include <XournalType.h>
 
+#include <string>
+
 class GladeSearchpath;
+
+using std::string;
 
 class GladeGui
 {
 public:
-	GladeGui(GladeSearchpath* gladeSearchPath, const char* glade, const char* mainWnd);
+	GladeGui(GladeSearchpath* gladeSearchPath, string glade, string mainWnd);
 	virtual ~GladeGui();
 
 	virtual void show(GtkWindow* parent) = 0;
@@ -32,9 +36,9 @@ public:
 	operator GtkWindow* ();
 	operator GdkWindow* ();
 
-	GtkWidget* get(const char* name);
-	GtkWidget* loadIcon(const char* name);
-	GdkPixbuf* loadIconPixbuf(const char* filename);
+	GtkWidget* get(string name);
+	GtkWidget* loadIcon(string name);
+	GdkPixbuf* loadIconPixbuf(string filename);
 
 	GtkWidget* getWindow();
 	GladeSearchpath* getGladeSearchPath();

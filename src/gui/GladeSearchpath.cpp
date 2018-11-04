@@ -1,5 +1,10 @@
 #include "GladeSearchpath.h"
 
+#include <boost/filesystem.hpp>
+#include <boost/filesystem/path.hpp>
+
+namespace bf = boost::filesystem;
+
 GladeSearchpath::GladeSearchpath()
 {
 	XOJ_INIT_TYPE(GladeSearchpath);
@@ -14,36 +19,32 @@ GladeSearchpath::~GladeSearchpath()
 	XOJ_RELEASE_TYPE(GladeSearchpath);
 }
 
-char* GladeSearchpath::findFile(const char* subdir, const char* file)
+string GladeSearchpath::findFile(string subdir, string file)
 {
 	XOJ_CHECK_TYPE(GladeSearchpath);
 
-	char* filename = NULL;
-	if (subdir == NULL)
+	string filename;
+	if (subdir == "")
 	{
-		filename = g_strdup(file);
+		filename = file;
 	}
 	else
 	{
-		filename = g_strdup_printf("%s%c%s", subdir, G_DIR_SEPARATOR, file);
+		filename = subdir + G_DIR_SEPARATOR_S + file;
 	}
 
 	// We step through each directory to find it.
-	for (string str : directories)
+	for (string dir : directories)
 	{
-		gchar* pathname = g_strdup_printf("%s%c%s", str.c_str(), G_DIR_SEPARATOR, filename);
+		string pathname = dir + G_DIR_SEPARATOR_S + filename;
 
-		if (g_file_test(pathname, G_FILE_TEST_EXISTS))
+		if (bf::exists(bf::path(pathname)))
 		{
-			g_free(filename);
 			return pathname;
 		}
-
-		g_free(pathname);
 	}
 
-	g_free(filename);
-	return NULL;
+	return "";
 }
 
 /*

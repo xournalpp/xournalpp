@@ -18,6 +18,9 @@
 #include <config-features.h>
 #include <i18n.h>
 
+#include <boost/filesystem.hpp>
+#include <boost/filesystem/path.hpp>
+
 #include <gdk/gdk.h>
 #if !GTK3_ENABLED
 #include <gdk/gdkkeysyms.h>
@@ -26,6 +29,7 @@
 #include <iostream>
 using std::cout;
 using std::endl;
+namespace bf = boost::filesystem;
 
 
 MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control) :
@@ -80,7 +84,7 @@ MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control) :
 	this->toolbar = new ToolMenuHandler(this->control, this->control->getZoomControl(), this,
 										this->control->getToolHandler(), GTK_WINDOW(getWindow()));
 
-	char* file = gladeSearchPath->findFile(NULL, "toolbar.ini");
+	string file = gladeSearchPath->findFile("", "toolbar.ini");
 
 	ToolbarModel* tbModel = this->toolbar->getModel();
 
@@ -97,10 +101,8 @@ MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control) :
 		gtk_widget_destroy(dlg);
 	}
 
-	g_free(file);
-
-	file = g_build_filename(g_get_home_dir(), G_DIR_SEPARATOR_S, CONFIG_DIR, G_DIR_SEPARATOR_S, TOOLBAR_CONFIG, NULL);
-	if (g_file_test(file, G_FILE_TEST_EXISTS))
+	file = string(g_get_home_dir()) + G_DIR_SEPARATOR_S + CONFIG_DIR + G_DIR_SEPARATOR_S + TOOLBAR_CONFIG;
+	if (bf::exists(bf::path(file)))
 	{
 		if (!tbModel->parse(file, false))
 		{
@@ -115,7 +117,6 @@ MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control) :
 			gtk_widget_destroy(dlg);
 		}
 	}
-	g_free(file);
 
 	createToolbarAndMenu(true);
 

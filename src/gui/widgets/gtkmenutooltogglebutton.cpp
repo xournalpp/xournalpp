@@ -321,7 +321,9 @@ static void popup_menu_under_arrow(GtkMenuToolToggleButton* button,
 	g_signal_emit(button, signals[SHOW_MENU], 0);
 
 	if (!priv->menu)
+	{
 		return;
+	}
 
 	gtk_menu_popup(priv->menu, NULL, NULL, (GtkMenuPositionFunc) menu_position_func,
 	               button, event ? event->button : 0,
@@ -334,7 +336,9 @@ static void arrow_button_toggled_cb(GtkToggleButton* togglebutton,
 	GtkMenuToolToggleButtonPrivate* priv = button->priv;
 
 	if (!priv->menu)
+	{
 		return;
+	}
 
 	if (gtk_toggle_button_get_active(togglebutton) &&
 	    gtk_widget_get_visible(GTK_WIDGET(priv->menu)))
@@ -530,7 +534,9 @@ void gtk_menu_tool_toggle_button_set_menu(GtkMenuToolToggleButton* button,
 	if (priv->menu != GTK_MENU (menu))
 	{
 		if (priv->menu && gtk_widget_get_visible(GTK_WIDGET(priv->menu)))
+		{
 			gtk_menu_shell_deactivate(GTK_MENU_SHELL (priv->menu));
+		}
 
 		if (priv->menu)
 		{
@@ -552,7 +558,9 @@ void gtk_menu_tool_toggle_button_set_menu(GtkMenuToolToggleButton* button,
 			                  G_CALLBACK (menu_deactivate_cb), button);
 		}
 		else
+		{
 			gtk_widget_set_sensitive(priv->arrow_button, FALSE);
+		}
 	}
 
 	g_object_notify(G_OBJECT (button), "menu");
