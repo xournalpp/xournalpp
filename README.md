@@ -14,7 +14,7 @@ This fork is intended to improve and customize xournalpp to my very own use case
 - [ ] Zoom to the viewer's center (instead of top left corner of the page)
 
 
-![UI](/doc/app/UI.png "UI")
+![UI](/doc/ui/main.png "UI")
 
 ## Description
 
