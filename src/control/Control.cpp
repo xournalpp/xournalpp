@@ -61,6 +61,8 @@ using std::endl;
 #include <vector>
 using std::vector;
 
+extern gint sttime;
+
 // TODO Check for error log on startup, also check for emergency save document!
 
 Control::Control(GladeSearchpath* gladeSearchPath)
@@ -612,6 +614,12 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
 			selectTool(TOOL_SELECT_OBJECT);
 		}
 		break;
+	case ACTION_TOOL_PLAY_OBJECT:
+		if (enabled)
+		{
+			selectTool(TOOL_PLAY_OBJECT);
+		}
+		break;
 	case ACTION_TOOL_VERTICAL_SPACE:
 		clearSelection();
 		if (enabled)
@@ -826,6 +834,10 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
 
 	case ACTION_FULLSCREEN:
 		enableFullscreen(enabled);
+		break;
+
+	case ACTION_RECSTOP:
+		recToggle();
 		break;
 
 		// Footer, not really an action, but need an identifier to
@@ -1154,6 +1166,53 @@ void Control::setShapeRecognizerEnabled(bool enabled)
 		this->toolHandler->setShapeRecognizer(true, true);
 		this->resetShapeRecognizer();
 	}
+}
+
+#include <iostream>
+#include<time.h>
+
+using namespace std;
+
+void Control::recStartStop(bool rec)
+{
+	string command = "";
+
+	if(rec){
+
+		char buffer [50];
+		time_t secs=time(0);
+		tm *t=localtime(&secs);
+		//This prints the date and time in ISO format.
+		sprintf(buffer, "%04d-%02d-%02d_%02d:%02d:%02d",
+		t->tm_year+1900,t->tm_mon+1,t->tm_mday,
+		t->tm_hour,t->tm_min,t->tm_sec);
+		string data(buffer);
+		data +=".mp3";
+
+		audioFilename = data;
+
+		printf("Start recording\n");
+		command="xopp-recording.sh start "+data;
+	}else{
+		printf("Stop recording\n");
+		command="xopp-recording.sh stop";
+	}
+	system(command.c_str());
+}
+
+void Control::recToggle()
+{
+	XOJ_CHECK_TYPE(Control);
+
+	if(!this->recording){
+		sttime = (g_get_monotonic_time()/1000000);
+		this->recording = true;
+		recStartStop(true);
+	}else{
+		this->recording = false;
+		recStartStop(false);
+	}
+
 }
 
 void Control::enableFullscreen(bool enabled, bool presentation)
@@ -2812,6 +2871,7 @@ void Control::quit()
 
 	this->scheduler->lock();
 
+	recStartStop(false);
 	settings->save();
 
 	this->scheduler->removeAllJobs();

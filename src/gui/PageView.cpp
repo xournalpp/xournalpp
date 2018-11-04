@@ -350,6 +350,60 @@ void PageView::selectObjectAt(double x, double y)
 					{
 						gap = tmpGap;
 						strokeMatch = s;
+					}
+				}
+				else
+				{
+					elementMatch = e;
+				}
+			}
+		}
+
+		selected--;
+	}
+
+	if (strokeMatch)
+	{
+		elementMatch = strokeMatch;
+	}
+
+	if (elementMatch)
+	{
+		xournal->setSelection(new EditSelection(xournal->getControl()->getUndoRedoHandler(), elementMatch, this, page));
+
+		repaintPage();
+	}
+}
+
+void PageView::playObjectAt(double x, double y)
+{
+	XOJ_CHECK_TYPE(PageView);
+
+	int selected = this->page->getSelectedLayerId();
+	GdkRectangle matchRect = { gint(x - 10), gint(y - 10), 20, 20 };
+
+	Stroke* strokeMatch = NULL;
+	double gap = 1000000000;
+
+	Element* elementMatch = NULL;
+
+	// clear old selection anyway
+	this->xournal->getControl()->clearSelection();
+
+	for (Layer* l : *this->page->getLayers())
+	{
+		for (Element* e : *l->getElements())
+		{
+			if (e->intersectsArea(&matchRect))
+			{
+				if (e->getType() == ELEMENT_STROKE)
+				{
+					Stroke* s = (Stroke*) e;
+					double tmpGap = 0;
+					if ((s->intersects(x, y, 5, &tmpGap)) && (gap > tmpGap))
+					{
+						gap = tmpGap;
+						strokeMatch = s;
 						/**
 						 * Display the timestamp for the selected stroke 
 						 * To be replaced with a function call to an action
@@ -482,7 +536,8 @@ bool PageView::onButtonPressEvent(GtkWidget* widget, GdkEventButton* event)
 	 */
 	else if (h->getToolType() == TOOL_SELECT_RECT ||
 			 h->getToolType() == TOOL_SELECT_REGION ||
-			 h->getToolType() == TOOL_SELECT_OBJECT)
+			 h->getToolType() == TOOL_SELECT_OBJECT || 
+			 h->getToolType() == TOOL_PLAY_OBJECT)
 	{
 		if (h->getToolType() == TOOL_SELECT_RECT)
 		{
@@ -507,6 +562,10 @@ bool PageView::onButtonPressEvent(GtkWidget* widget, GdkEventButton* event)
 		else if (h->getToolType() == TOOL_SELECT_OBJECT)
 		{
 			selectObjectAt(x, y);
+		}
+		else if (h->getToolType() == TOOL_PLAY_OBJECT)
+		{
+			playObjectAt(x, y);
 		}
 	}
 	else if (h->getToolType() == TOOL_TEXT)

@@ -25,7 +25,7 @@ using std::cout;
 using std::endl;
 
 //those two have to be moved somewhere else in the future
-gint sttime;	
+gint sttime = 0;	
 string audioFilename = "";
 string audioFolder = "";
 //gchar* audioFilename;
@@ -696,9 +696,6 @@ void tbSelectMenuitemActivated(GtkMenuItem* menuitem, MenuSelectToolbarData* dat
 void MainWindow::createToolbarAndMenu(bool initial)
 {
 	XOJ_CHECK_TYPE(MainWindow);
-
-	/** this will be moved to a "start" button */
-	sttime = (g_get_monotonic_time()/1000000);
 
 	GtkMenuShell* menubar = GTK_MENU_SHELL(get("menuViewToolbar"));
 	g_return_if_fail(menubar != NULL);

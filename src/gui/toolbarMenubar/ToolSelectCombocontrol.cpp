@@ -22,9 +22,11 @@ ToolSelectCombocontrol::ToolSelectCombocontrol(ToolMenuHandler* th, ActionHandle
 	this->iconSelectRect = gui->loadIconPixbuf("rect-select.svg");
 	this->iconSelectRgion = gui->loadIconPixbuf("lasso.svg");
 	this->iconSelectObject = gui->loadIconPixbuf("object-select.svg");
+	this->iconPlayObject = gui->loadIconPixbuf("object-play.svg");
 	g_object_ref(this->iconSelectRect);
 	g_object_ref(this->iconSelectRgion);
 	g_object_ref(this->iconSelectObject);
+	g_object_ref(this->iconPlayObject);
 
 	menuItem = gtk_image_menu_item_new_with_label(_C("Select Rectangle"));
 	gtk_container_add(GTK_CONTAINER(popup), menuItem);
@@ -47,6 +49,13 @@ ToolSelectCombocontrol::ToolSelectCombocontrol(ToolMenuHandler* th, ActionHandle
 	gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuItem), gui->loadIcon("object-select.svg"));
 	gtk_widget_show_all(menuItem);
 
+	menuItem = gtk_image_menu_item_new_with_label(_C("Play Object"));
+	gtk_container_add(GTK_CONTAINER(popup),menuItem);
+	th->registerMenupoint(menuItem,ACTION_TOOL_PLAY_OBJECT, GROUP_TOOL);
+	gtk_image_menu_item_set_always_show_image(GTK_IMAGE_MENU_ITEM(menuItem), true);
+	gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuItem), gui->loadIcon("object-play.svg"));
+	gtk_widget_show_all(menuItem);
+
 	setPopupMenu(popup);
 }
 
@@ -57,6 +66,7 @@ ToolSelectCombocontrol::~ToolSelectCombocontrol()
 	g_object_unref(this->iconSelectRect);
 	g_object_unref(this->iconSelectRgion);
 	g_object_unref(this->iconSelectObject);
+	g_object_unref(this->iconPlayObject);
 
 	XOJ_RELEASE_TYPE(ToolSelectCombocontrol);
 }
@@ -95,6 +105,13 @@ void ToolSelectCombocontrol::selected(ActionGroup group, ActionType action)
 			gtk_image_set_from_pixbuf(GTK_IMAGE(iconWidget), this->iconSelectObject);
 
 			description = _("Select Object");
+		}
+		else if (action == ACTION_TOOL_PLAY_OBJECT && this->action != ACTION_TOOL_PLAY_OBJECT)
+		{
+			this->action = ACTION_TOOL_PLAY_OBJECT;
+			gtk_image_set_from_pixbuf(GTK_IMAGE(iconWidget), this->iconPlayObject);
+
+			description = _("Play Object");
 		}
 		gtk_tool_item_set_tooltip_text(GTK_TOOL_ITEM(item), description.c_str());
 

@@ -345,6 +345,9 @@ void ToolMenuHandler::initToolItems()
 	addToolItem(new ToolButton(listener, gui, "FULLSCREEN", ACTION_FULLSCREEN, GROUP_FULLSCREEN, false,
 							   "fullscreen.svg", _C("Toggle fullscreen"), gui->get("menuViewFullScreen")));
 
+	addToolItem(new ToolButton(listener, gui, "RECSTOP", ACTION_RECSTOP, GROUP_FULLSCREEN, false,
+								"rec.svg", _C("Rec / Stop"), gui->get("menuRecStop")));
+
 	addToolItem(new ColorToolItem(listener, toolHandler, this->parent, 0xff0000, true));
 
 	addToolItem(new ToolButton(listener, gui, "PEN", ACTION_TOOL_PEN, GROUP_TOOL, true, "tool_pencil.svg", _C("Pen"),
@@ -420,6 +423,9 @@ void ToolMenuHandler::initToolItems()
 							   "rect-select.svg", _C("Select Rectangle"), gui->get("menuToolsSelectRectangle")));
 	addToolItem(new ToolButton(listener, gui, "SELECT_OBJECT", ACTION_TOOL_SELECT_OBJECT, GROUP_TOOL, true,
 							   "object-select.svg", _C("Select Object"), gui->get("menuToolsSelectObject")));
+
+	addToolItem(new ToolButton(listener, gui, "PLAY_OBJECT", ACTION_TOOL_PLAY_OBJECT, GROUP_TOOL, true,
+	"object-play.svg", _C("Play Object"), gui->get("menuToolsPlayObject")));
 
 	addToolItem(new ToolButton(listener, gui, "DRAW_CIRCLE", ACTION_TOOL_DRAW_CIRCLE, GROUP_RULER, false,
 							   "circle-draw.svg", _C("Draw Circle"), gui->get("menuToolsDrawCircle")));

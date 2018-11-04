@@ -33,6 +33,9 @@
 
 #include <vector>
 
+extern string audioFilename;
+extern string audioFolder;
+
 class Sidebar;
 class CallbackData;
 class PageView;
@@ -107,6 +110,8 @@ public:
 	void manageToolbars();
 	void customizeToolbars();
 	void enableFullscreen(bool enabled, bool presentation = false);
+	void recToggle();
+	void recStartStop(bool record);
 
 	void gotoPage();
 
@@ -315,6 +320,8 @@ private:
 	GladeSearchpath* gladeSearchPath;
 
 	MetadataManager* metadata;
+
+	bool recording = false;
 
 };
 
