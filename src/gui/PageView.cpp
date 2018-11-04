@@ -414,7 +414,7 @@ void PageView::playObjectAt(double x, double y)
 						{
 							lastfn = fn;
 							system("killall vlc");
-							string command("vlc "+audioFolder+fn+"&");
+							string command("vlc "+audioFolder+fn+"&>/dev/null &");
 							system(command.c_str());
 						}
 						printf("\nPageView::selectObjectAt TIMESTAMP: %d\n",ts);
@@ -432,7 +432,7 @@ void PageView::playObjectAt(double x, double y)
 
 		selected--;
 	}
-
+/*
 	if (strokeMatch)
 	{
 		elementMatch = strokeMatch;
@@ -444,6 +444,7 @@ void PageView::playObjectAt(double x, double y)
 
 		repaintPage();
 	}
+	*/
 }
 
 bool PageView::onButtonPressEvent(GtkWidget* widget, GdkEventButton* event)

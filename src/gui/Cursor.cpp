@@ -321,8 +321,12 @@ void Cursor::updateCursor()
 		}
 		else if (type != TOOL_SELECT_OBJECT) // other selections are handled before anyway, because you can move a selection with every tool
 		{
-			cursor = gdk_cursor_new(GDK_TCROSS);
+			if(type == TOOL_PLAY_OBJECT)
+				cursor = gdk_cursor_new(GDK_HAND2);
+			else
+				cursor = gdk_cursor_new(GDK_TCROSS);
 		}
+		
 	}
 
 	if (gtk_widget_get_window(xournal->getWidget()))
