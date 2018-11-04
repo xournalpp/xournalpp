@@ -61,7 +61,7 @@ public:
 	/**
 	 * Return the GTK selection color
 	 */
-	virtual GtkColorWrapper getSelectionColor() const = 0;
+	virtual GtkColorWrapper getSelectionColor() = 0;
 
 
 	virtual void deleteViewBuffer() = 0;

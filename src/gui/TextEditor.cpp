@@ -311,7 +311,11 @@ bool TextEditor::onKeyPressEvent(GdkEventKey* event)
 {
 	XOJ_CHECK_TYPE(TextEditor);
 
+#if GTK3_ENABLED
+	if (gtk_bindings_activate_event(G_OBJECT(this->textWidget), event))
+#else
 	if (gtk_bindings_activate_event(GTK_OBJECT(this->textWidget), event))
+#endif
 	{
 		return true;
 	}

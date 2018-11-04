@@ -144,7 +144,7 @@ static gboolean zoomcallib_expose(GtkWidget* widget, GdkEventExpose* event)
 	g_return_val_if_fail(IS_ZOOM_CALLIB(widget), FALSE);
 	g_return_val_if_fail(event != NULL, FALSE);
 
-	cairo_t* cr = gdk_cairo_create(widget->window);
+	cairo_t* cr = gdk_cairo_create(gtk_widget_get_window(widget));
 
 	zoomcallib_draw(widget, cr);
 	cairo_destroy(cr);

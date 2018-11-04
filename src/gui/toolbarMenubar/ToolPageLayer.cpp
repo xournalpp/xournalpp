@@ -65,14 +65,14 @@ void ToolPageLayer::setLayerCount(int layer, int selected)
 
 	for (int i = count - 1; i >= 0; i--)
 	{
-		gtk_combo_box_remove_text(GTK_COMBO_BOX(this->layerComboBox), i);
+		gtk_combo_box_text_remove(GTK_COMBO_BOX_TEXT(this->layerComboBox), i);
 	}
 
 	gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(this->layerComboBox), _C("Background"));
 	for (int i = 1; i <= layer; i++)
 	{
 		string text = FS(_F("Layer {1}") % i);
-		gtk_combo_box_prepend_text(GTK_COMBO_BOX(this->layerComboBox), text.c_str());
+		gtk_combo_box_text_prepend_text(GTK_COMBO_BOX_TEXT(this->layerComboBox), text.c_str());
 	}
 
 	setSelectedLayer(selected);

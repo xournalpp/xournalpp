@@ -809,13 +809,6 @@ double XournalView::getZoom()
 	return control->getZoomControl()->getZoom();
 }
 
-void XournalView::updateXEvents()
-{
-	XOJ_CHECK_TYPE(XournalView);
-
-	gtk_xournal_update_xevent(this->widget);
-}
-
 void XournalView::clearSelection()
 {
 	XOJ_CHECK_TYPE(XournalView);

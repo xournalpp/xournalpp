@@ -220,7 +220,7 @@ private:
 			cairo_destroy(cr2);
 		}
 
-		cairo_t* cr = gdk_cairo_create(widget->window);
+		cairo_t* cr = gdk_cairo_create(gtk_widget_get_window(widget));
 
 		double width = cairo_image_surface_get_width(crBuffer);
 		if (width != alloc.width)

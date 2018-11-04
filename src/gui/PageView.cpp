@@ -65,8 +65,6 @@ PageView::PageView(XournalView* xournal, PageRef page)
 
 	this->inEraser = false;
 
-	this->extendedWarningDisplayd = false;
-
 	this->verticalSpace = NULL;
 
 	this->selection = NULL;
@@ -401,29 +399,6 @@ bool PageView::onButtonPressEvent(GtkWidget* widget, GdkEventButton* event)
 
 	double x = event->x;
 	double y = event->y;
-
-	if ((x < 0 || y < 0) && !extendedWarningDisplayd &&
-		settings->isXinputEnabled())
-	{
-		GtkWidget* dialog = gtk_message_dialog_new((GtkWindow*) *xournal->getControl()->getWindow(),
-												   GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR, GTK_BUTTONS_NONE,
-												   "%s", _C("There was a wrong input event, input is not working.\n"
-															"Do you want to disable \"Extended Input\"?"));
-
-		gtk_dialog_add_button(GTK_DIALOG(dialog), "Disable \"Extended Input\"", 1);
-		gtk_dialog_add_button(GTK_DIALOG(dialog), "Cancel", 2);
-
-		this->extendedWarningDisplayd = true;
-
-		gtk_window_set_transient_for(GTK_WINDOW(dialog), GTK_WINDOW(this->xournal->getControl()->getWindow()->getWindow()));
-		if (gtk_dialog_run(GTK_DIALOG(dialog)) == 1)
-		{
-			settings->setXinputEnabled(false);
-			xournal->updateXEvents();
-		}
-		gtk_widget_destroy(dialog);
-		return true;
-	}
 
 	double zoom = xournal->getZoom();
 	x /= zoom;
@@ -972,7 +947,7 @@ int PageView::getBufferPixels()
 	return 0;
 }
 
-GtkColorWrapper PageView::getSelectionColor() const
+GtkColorWrapper PageView::getSelectionColor()
 {
 	XOJ_CHECK_TYPE(PageView);
 #if GTK3_ENABLED

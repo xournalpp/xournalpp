@@ -78,7 +78,7 @@ public:
 	bool containsPoint(int x, int y, bool local = false);
 	bool containsY(int y);
 
-	GtkColorWrapper getSelectionColor() const;
+	GtkColorWrapper getSelectionColor();
 	int getBufferPixels();
 
 	/**
@@ -198,8 +198,6 @@ private:
 	cairo_surface_t* crBuffer;
 
 	bool inEraser;
-
-	bool extendedWarningDisplayd;
 
 	// Vertical Space
 	VerticalToolHandler* verticalSpace;

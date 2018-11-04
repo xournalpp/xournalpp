@@ -135,40 +135,31 @@ void SettingsDialog::toolboxToggled()
 {
 	XOJ_CHECK_TYPE(SettingsDialog);
 
-	GtkToggleButton* cbSettingXinput = GTK_TOGGLE_BUTTON(get("cbSettingXinput"));
+	// TODO Remove GtkToggleButton* cbSettingXinput = GTK_TOGGLE_BUTTON(get("cbSettingXinput"));
 	GtkWidget* cbSettingPresureSensitivity = get("cbSettingPresureSensitivity");
 	GtkWidget* labePresureSensitivity = get("labePresureSensitivity");
 	GtkWidget* labeIgnorCoreEvents = get("labeIgnorCoreEvents");
 	GtkWidget* cbIgnorCoreEvents = get("cbIgnorCoreEvents");
 	GtkWidget* labeXInput = get("labeXInput");
 
-	gboolean xInputEnabled = gtk_toggle_button_get_active(cbSettingXinput);
-
-	if (!settings->isXInputAvailable())
-	{
-		xInputEnabled = false;
-
-		gtk_widget_set_sensitive(GTK_WIDGET(cbSettingXinput), xInputEnabled);
-		gtk_widget_set_sensitive(labeXInput, xInputEnabled);
-	}
-
 	GtkWidget* cbAutosave = get("cbAutosave");
 	bool autosaveEnabled = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(cbAutosave));
 	gtk_widget_set_sensitive(get("lbAutosaveTimeout"), autosaveEnabled);
 	gtk_widget_set_sensitive(get("spAutosaveTimeout"), autosaveEnabled);
 
-	gtk_widget_set_sensitive(cbSettingPresureSensitivity, xInputEnabled);
-	gtk_widget_set_sensitive(labePresureSensitivity, xInputEnabled);
-	gtk_widget_set_sensitive(labeIgnorCoreEvents, xInputEnabled);
-	gtk_widget_set_sensitive(cbIgnorCoreEvents, xInputEnabled);
+	// TODO set default correct and remove this lines
+	gtk_widget_set_sensitive(cbSettingPresureSensitivity, true);
+	gtk_widget_set_sensitive(labePresureSensitivity, true);
+	gtk_widget_set_sensitive(labeIgnorCoreEvents, true);
+	gtk_widget_set_sensitive(cbIgnorCoreEvents, true);
 }
 
 void SettingsDialog::load()
 {
 	XOJ_CHECK_TYPE(SettingsDialog);
 
-	loadCheckbox("cbSettingXinput", settings->isXinputEnabled());
-	loadCheckbox("cbIgnorCoreEvents", settings->isIgnoreCoreEvents());
+	// TODO Remove Checkbox loadCheckbox("cbSettingXinput", settings->isXinputEnabled());
+	// TODO Remove Checkbox loadCheckbox("cbIgnorCoreEvents", settings->isIgnoreCoreEvents());
 	loadCheckbox("cbSettingPresureSensitivity", settings->isPresureSensitivity());
 	loadCheckbox("cbShowSidebarRight", settings->isSidebarOnRight());
 	loadCheckbox("cbShowScrollbarLeft", settings->isScrollbarOnLeft());
@@ -311,9 +302,7 @@ void SettingsDialog::save()
 {
 	XOJ_CHECK_TYPE(SettingsDialog);
 
-	settings->setXinputEnabled(getCheckbox("cbSettingXinput"));
 	settings->setPresureSensitivity(getCheckbox("cbSettingPresureSensitivity"));
-	settings->setIgnoreCoreEvents(getCheckbox("cbIgnorCoreEvents"));
 	settings->setSidebarOnRight(getCheckbox("cbShowSidebarRight"));
 	settings->setScrollbarOnLeft(getCheckbox("cbShowScrollbarLeft"));
 	settings->setAutoloadPdfXoj(getCheckbox("cbAutoloadXoj"));

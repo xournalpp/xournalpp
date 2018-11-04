@@ -334,6 +334,13 @@ int XournalMain::run(int argc, char* argv[])
 	return 0;
 }
 
+#if GTK3_ENABLED
+#define GLADE_UI_PATH "ui/gtk3"
+#else
+#define GLADE_UI_PATH "ui"
+#endif
+
+
 /**
  * Path for glade files and Pixmaps, first searches in the home folder, so you can customize glade files
  */
@@ -358,11 +365,11 @@ GladeSearchpath* XournalMain::initPath(const char* argv0)
 	}
 
 	gchar* path = g_path_get_dirname(argv0);
-	gchar* searchPath = g_build_filename(path, "ui", NULL);
+	gchar* searchPath = g_build_filename(path, GLADE_UI_PATH, NULL);
 	gladePath->addSearchDirectory(searchPath);
 	g_free(searchPath);
 
-	searchPath = g_build_filename(path, "..", "ui", NULL);
+	searchPath = g_build_filename(path, "..", GLADE_UI_PATH, NULL);
 	gladePath->addSearchDirectory(searchPath);
 	g_free(searchPath);
 	g_free(path);
@@ -374,19 +381,19 @@ GladeSearchpath* XournalMain::initPath(const char* argv0)
 		return gladePath;
 	}
 
-	searchPath = g_build_filename(path, "ui", NULL);
+	searchPath = g_build_filename(path, GLADE_UI_PATH, NULL);
 	gladePath->addSearchDirectory(searchPath);
 	g_free(searchPath);
 
-	searchPath = g_build_filename(path, "..", "ui", NULL);
+	searchPath = g_build_filename(path, "..", GLADE_UI_PATH, NULL);
 	gladePath->addSearchDirectory(searchPath);
 	g_free(searchPath);
 	
-	searchPath = g_build_filename(PROJECT_SOURCE_DIR, "ui", NULL);
+	searchPath = g_build_filename(PROJECT_SOURCE_DIR, GLADE_UI_PATH, NULL);
 	gladePath->addSearchDirectory(searchPath);
 	g_free(searchPath);
 
-	searchPath = g_build_filename(PACKAGE_DATA_DIR, PROJECT_PACKAGE, "ui", NULL);
+	searchPath = g_build_filename(PACKAGE_DATA_DIR, PROJECT_PACKAGE, GLADE_UI_PATH, NULL);
 	gladePath->addSearchDirectory(searchPath);
 	g_free(searchPath);
 

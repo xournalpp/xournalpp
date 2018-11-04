@@ -19,7 +19,6 @@
 #include <config-features.h>
 #include <i18n.h>
 
-#include <glade/glade-xml.h>
 #include <glib.h>
 
 ToolMenuHandler::ToolMenuHandler(ActionHandler* listener, ZoomControl* zoom, GladeGui* gui, ToolHandler* toolHandler,

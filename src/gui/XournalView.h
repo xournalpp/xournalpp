@@ -52,8 +52,6 @@ public:
 
 	size_t getCurrentPage();
 
-	void updateXEvents();
-
 	void clearSelection();
 
 	void layerChanged(size_t page);

@@ -404,25 +404,14 @@ static bool change_tool(Settings* settings, GdkEventButton* event, GtkXournal* x
 
 gboolean gtk_xournal_button_press_event(GtkWidget* widget, GdkEventButton* event)
 {
-	/**
-	 * true: Core event, false: XInput event
-	 */
-	gboolean isCore = (event->device == gdk_device_get_core_pointer());
-
-	INPUTDBG("ButtonPress (%s) (x,y)=(%.2f,%.2f), button %d, modifier %x, isCore %i",
-			 gdk_device_get_name(event->device), event->x, event->y,
-			 event->button, event->state, isCore);
-
 	GtkXournal* xournal = GTK_XOURNAL(widget);
 	Settings* settings = xournal->view->getControl()->getSettings();
-
-	if (isCore && settings->isXinputEnabled() && settings->isIgnoreCoreEvents())
+	//gtk_gesture_is_recognized is always false (bug, programming error?)
+	//workaround with additional variable zoom_gesture_active
+	if (xournal->view->zoom_gesture_active)
 	{
-		INPUTDBG2("gtk_xournal_button_press_event return false (ignore core)");
-		return false;
+		return TRUE;
 	}
-
-	XInputUtils::fixXInputCoords((GdkEvent*) event, widget);
 
 	if (event->type != GDK_BUTTON_PRESS)
 	{
@@ -527,7 +516,6 @@ gboolean gtk_xournal_button_release_event(GtkWidget* widget, GdkEventButton* eve
 			 gdk_device_get_name(event->device), event->x, event->y,
 			 event->button, event->state, isCore);
 #endif
-	XInputUtils::fixXInputCoords((GdkEvent*) event, widget);
 
 	if (event->button > 3) // scroll wheel events
 	{
@@ -581,8 +569,6 @@ gboolean gtk_xournal_motion_notify_event(GtkWidget* widget, GdkEventMotion* even
 			 event->x, event->y,
 			 event->state);
 #endif
-
-	XInputUtils::fixXInputCoords((GdkEvent*) event, widget);
 
 	GtkXournal* xournal = GTK_XOURNAL(widget);
 	ToolHandler* h = xournal->view->getControl()->getToolHandler();
@@ -646,12 +632,17 @@ static void gtk_xournal_init(GtkXournal* xournal)
 {
 	GtkWidget* widget = GTK_WIDGET(xournal);
 
-	GTK_WIDGET_SET_FLAGS(widget, GTK_CAN_FOCUS);
+	gtk_widget_set_can_focus(widget, TRUE);
 
 	int events = GDK_EXPOSURE_MASK;
 	events |= GDK_POINTER_MOTION_MASK;
 	events |= GDK_EXPOSURE_MASK;
 	events |= GDK_BUTTON_MOTION_MASK;
+
+#if GTK3_ENABLED
+	// not sure if GDK_TOUCH_MASK is needed
+	events |= GDK_TOUCH_MASK;
+#endif
 	events |= GDK_BUTTON_PRESS_MASK;
 	events |= GDK_BUTTON_RELEASE_MASK;
 	events |= GDK_ENTER_NOTIFY_MASK;
@@ -699,11 +690,11 @@ static void gtk_xournal_size_allocate(GtkWidget* widget, GtkAllocation* allocati
 	g_return_if_fail(GTK_IS_XOURNAL(widget));
 	g_return_if_fail(allocation != NULL);
 
-	widget->allocation = *allocation;
+	gtk_widget_set_allocation(widget, allocation);
 
-	if (GTK_WIDGET_REALIZED(widget))
+	if (gtk_widget_get_realized(widget))
 	{
-		gdk_window_move_resize(widget->window, allocation->x, allocation->y, allocation->width, allocation->height);
+		gdk_window_move_resize(gtk_widget_get_window(widget), allocation->x, allocation->y, allocation->width, allocation->height);
 	}
 
 	GtkXournal* xournal = GTK_XOURNAL(widget);
@@ -719,63 +710,33 @@ static void gtk_xournal_realize(GtkWidget* widget)
 	g_return_if_fail(widget != NULL);
 	g_return_if_fail(GTK_IS_XOURNAL(widget));
 
-	GTK_WIDGET_SET_FLAGS(widget, GTK_REALIZED);
+	gtk_widget_set_realized(widget, TRUE);
 
+#if GTK3_ENABLED
+	gtk_widget_set_hexpand(widget, TRUE);
+	gtk_widget_set_vexpand(widget, TRUE);
+#endif
+
+	GtkAllocation allocation;
+	gtk_widget_get_allocation(widget, &allocation);
 	attributes.window_type = GDK_WINDOW_CHILD;
-	attributes.x = widget->allocation.x;
-	attributes.y = widget->allocation.y;
-	attributes.width = widget->allocation.width;
-	attributes.height = widget->allocation.height;
+	attributes.x = allocation.x;
+	attributes.y = allocation.y;
+	attributes.width = allocation.width;
+	attributes.height = allocation.height;
 
 	attributes.wclass = GDK_INPUT_OUTPUT;
 	attributes.event_mask = gtk_widget_get_events(widget) | GDK_EXPOSURE_MASK;
 
 	attributes_mask = GDK_WA_X | GDK_WA_Y;
 
-	widget->window = gdk_window_new(gtk_widget_get_parent_window(widget), &attributes, attributes_mask);
-	gtk_widget_modify_bg(widget, GTK_STATE_NORMAL, &widget->style->dark[GTK_STATE_NORMAL]);
+	gtk_widget_set_window(widget, gdk_window_new(gtk_widget_get_parent_window(widget), &attributes, attributes_mask));
+	gtk_widget_modify_bg(widget, GTK_STATE_NORMAL, &gtk_widget_get_style(widget)->dark[GTK_STATE_NORMAL]);
 
-	gdk_window_set_user_data(widget->window, widget);
+	gdk_window_set_user_data(gtk_widget_get_window(widget), widget);
 
-	widget->style = gtk_style_attach(widget->style, widget->window);
-	gtk_style_set_background(widget->style, widget->window, GTK_STATE_NORMAL);
-
-	gtk_xournal_update_xevent(widget);
-}
-
-/**
- * Change event handling between XInput and Core
- */
-void gtk_xournal_update_xevent(GtkWidget* widget)
-{
-	g_return_if_fail(widget != NULL);
-	g_return_if_fail(GTK_IS_XOURNAL(widget));
-
-	GtkXournal* xournal = GTK_XOURNAL(widget);
-
-	Settings* settings = xournal->view->getControl()->getSettings();
-
-	if (!gtk_check_version(2, 17, 0))
-	{
-		/* GTK+ 2.17 and later: everybody shares a single native window,
-		 so we'll never get any core events, and we might as well set
-		 extension events the way we're supposed to. Doing so helps solve
-		 crasher bugs in 2.17, and prevents us from losing two-button
-		 events in 2.18 */
-		gtk_widget_set_extension_events(widget,
-										settings->isUseXInput() ? GDK_EXTENSION_EVENTS_ALL : GDK_EXTENSION_EVENTS_NONE);
-	}
-	else
-	{
-		/* GTK+ 2.16 and earlier: we only activate extension events on the
-		 PageViews's parent GdkWindow. This allows us to keep receiving core
-		 events. */
-		gdk_input_set_extension_events(widget->window,
-									   GDK_POINTER_MOTION_MASK | GDK_BUTTON_MOTION_MASK | GDK_BUTTON_PRESS_MASK |
-									   GDK_BUTTON_RELEASE_MASK,
-									   settings->isUseXInput() ? GDK_EXTENSION_EVENTS_ALL : GDK_EXTENSION_EVENTS_NONE);
-	}
-
+	gtk_widget_style_attach(widget);
+	gtk_style_set_background(gtk_widget_get_style(widget), gtk_widget_get_window(widget), GTK_STATE_NORMAL);
 }
 
 static void gtk_xournal_draw_shadow(GtkXournal* xournal, cairo_t* cr, int left,

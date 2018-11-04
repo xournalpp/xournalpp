@@ -27,7 +27,8 @@ SearchBar::SearchBar(Control* control)
 	GtkWidget* searchTextField = win->get("searchTextField");
 	g_signal_connect(searchTextField, "changed", G_CALLBACK(searchTextChangedCallback), this);
 
-	defaultColor = searchTextField->style->base[GTK_STATE_NORMAL];
+
+	defaultColor = gtk_widget_get_style(searchTextField)->base[GTK_STATE_NORMAL];
 }
 
 SearchBar::~SearchBar()

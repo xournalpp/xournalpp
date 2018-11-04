@@ -21,11 +21,11 @@ AbstractToolItem::~AbstractToolItem()
 
 	if (this->item)
 	{
-		g_object_unref(GTK_OBJECT(this->item));
+		g_object_unref(G_OBJECT(this->item));
 	}
 	if (this->popupMenu)
 	{
-		g_object_unref(GTK_OBJECT(this->popupMenu));
+		g_object_unref(G_OBJECT(this->popupMenu));
 	}
 
 	XOJ_RELEASE_TYPE(AbstractToolItem);
@@ -164,13 +164,14 @@ GtkWidget* AbstractToolItem::getNewToolIcon()
 
 	GtkWidget* icon = this->getNewToolIconImpl();
 
+	/* TODO !!!!!!!!!!!!!!!!!
 	if (!GTK_IS_IMAGE(icon))
 	{
 		GdkPixbuf* pixbuf = ToolbarUtil::newPixbufFromWidget(icon);
 		g_object_unref(icon);
 		icon = gtk_image_new_from_pixbuf(pixbuf);
 		g_object_unref(pixbuf);
-	}
+	}*/
 
 	return icon;
 }

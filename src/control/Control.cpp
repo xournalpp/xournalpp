@@ -2275,7 +2275,6 @@ void Control::showSettings()
 {
 	XOJ_CHECK_TYPE(Control);
 
-	bool xeventEnabled = settings->isUseXInput();
 	int selectionColor = settings->getSelectionColor();
 	bool verticalSpace = settings->getAddVerticalSpace();
 	bool horizontalSpace = settings->getAddHorizontalSpace();
@@ -2283,11 +2282,6 @@ void Control::showSettings()
 
 	SettingsDialog* dlg = new SettingsDialog(this->gladeSearchPath, settings);
 	dlg->show(GTK_WINDOW(this->win->getWindow()));
-
-	if (xeventEnabled != settings->isUseXInput())
-	{
-		win->getXournal()->updateXEvents();
-	}
 
 	if (selectionColor != settings->getSelectionColor())
 	{

@@ -24,7 +24,7 @@ ButtonConfigGui::ButtonConfigGui(SettingsDialog* dlg, GtkWidget* w,  Settings* s
 
 	if (withDevice)
 	{
-		this->cbDevice = gtk_combo_box_new_text();
+		this->cbDevice = gtk_combo_box_text_new();
 
 		gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(this->cbDevice), _C("No device"));
 

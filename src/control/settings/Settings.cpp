@@ -1,7 +1,6 @@
 #include "Settings.h"
 
 #include "ButtonConfig.h"
-#include "util/DeviceListHelper.h"
 
 #include <config.h>
 #include <i18n.h>
@@ -32,8 +31,6 @@ Settings::Settings(path filename)
 	this->saved = true;
 
 	loadDefault();
-
-	checkCanXInput();
 }
 
 Settings::~Settings()
@@ -58,11 +55,8 @@ void Settings::loadDefault()
 {
 	XOJ_CHECK_TYPE(Settings);
 
-	this->useXinput = true;
 	this->presureSensitivity = true;
-	this->ignoreCoreEvents = false;
 	this->saved = true;
-	this->canXIput = false;
 
 	this->maximized = false;
 	this->showTwoPages = false;
@@ -279,15 +273,6 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur)
 	if (xmlStrcmp(name, (const xmlChar*) "presureSensitivity") == 0)
 	{
 		setPresureSensitivity(xmlStrcmp(value, (const xmlChar*) "true") ? false : true);
-	}
-	else if (xmlStrcmp(name, (const xmlChar*) "useXinput") == 0)
-	{
-		// Value is update from main after the window is created
-		this->useXinput = xmlStrcmp(value, (const xmlChar*) "true") ? false : true;
-	}
-	else if (xmlStrcmp(name, (const xmlChar*) "ignoreCoreEvents") == 0)
-	{
-		this->ignoreCoreEvents = xmlStrcmp(value, (const xmlChar*) "true") ? false : true;
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "selectedToolbar") == 0)
 	{
@@ -809,9 +794,7 @@ void Settings::save()
 								   "the others are commented in this file, but handle with care!");
 	xmlAddPrevSibling(root, com);
 
-	WRITE_BOOL_PROP(useXinput);
 	WRITE_BOOL_PROP(presureSensitivity);
-	WRITE_BOOL_PROP(ignoreCoreEvents);
 
 	WRITE_STRING_PROP(selectedToolbar);
 	WRITE_STRING_PROP(lastSavePath);
@@ -1001,33 +984,6 @@ bool Settings::isPresureSensitivity()
 	XOJ_CHECK_TYPE(Settings);
 
 	return this->presureSensitivity;
-}
-
-bool Settings::isXinputEnabled()
-{
-	XOJ_CHECK_TYPE(Settings);
-
-	return this->useXinput;
-}
-
-bool Settings::isIgnoreCoreEvents()
-{
-	XOJ_CHECK_TYPE(Settings);
-
-	return this->ignoreCoreEvents;
-}
-
-void Settings::setIgnoreCoreEvents(bool ignor)
-{
-	XOJ_CHECK_TYPE(Settings);
-
-	if (this->ignoreCoreEvents == ignor)
-	{
-		return;
-	}
-
-	this->ignoreCoreEvents = ignor;
-	saveTimeout();
 }
 
 bool Settings::isSidebarOnRight()
@@ -1308,26 +1264,6 @@ bool Settings::isPresentationMode()
 	return this->presentationMode;
 }
 
-/**
- * XInput is available
- */
-bool Settings::isXInputAvailable()
-{
-	XOJ_CHECK_TYPE(Settings);
-
-	return this->canXIput;
-}
-
-/**
- * XInput should be used in the application
- */
-bool Settings::isUseXInput()
-{
-	XOJ_CHECK_TYPE(Settings);
-
-	return this->useXinput && this->canXIput;
-}
-
 void Settings::setPresureSensitivity(gboolean presureSensitivity)
 {
 	XOJ_CHECK_TYPE(Settings);
@@ -1429,39 +1365,6 @@ void Settings::setSidebarWidth(int width)
 	saveTimeout();
 }
 
-void Settings::checkCanXInput()
-{
-	XOJ_CHECK_TYPE(Settings);
-
-#if GTK3_ENABLED
-	this->canXIput = TRUE;
-#else
-	this->canXIput = FALSE;
-
-	DeviceListHelper devList(NULL);
-	for (InputDevice& dev : devList.getDeviceList())
-	{
-		GdkDevice* device = dev.getDevice();
-		if (device != gdk_device_get_core_pointer())
-		{
-
-			// get around a GDK bug: map the valuator range CORRECTLY to [0,1]
-			if (this->getfixXinput())
-			{
-				gdk_device_set_axis_use(device, 0, GDK_AXIS_IGNORE);
-				gdk_device_set_axis_use(device, 1, GDK_AXIS_IGNORE);
-			}
-			gdk_device_set_mode(device, GDK_MODE_SCREEN);
-			if (g_str_has_suffix(device->name, "eraser"))
-			{
-				gdk_device_set_source(device, GDK_SOURCE_ERASER);
-			}
-			canXIput = TRUE;
-		}
-	}
-#endif
-}
-
 void Settings::setMainWndSize(int width, int height)
 {
 	XOJ_CHECK_TYPE(Settings);
@@ -1498,20 +1401,6 @@ void Settings::setMainWndMaximized(bool max)
 	XOJ_CHECK_TYPE(Settings);
 
 	this->maximized = max;
-}
-
-void Settings::setXinputEnabled(gboolean useXinput)
-{
-	XOJ_CHECK_TYPE(Settings);
-
-	if (this->useXinput == useXinput)
-	{
-		return;
-	}
-
-	this->useXinput = useXinput;
-
-	saveTimeout();
 }
 
 double Settings::getWidthMinimumMultiplier()
