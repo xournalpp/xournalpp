@@ -1,7 +1,7 @@
 #include "SelectBackgroundColorDialog.h"
 
 #include "control/Control.h"
-#include "gui/widgets/SelectColor.h"
+#include "gui/toolbarMenubar/ToolbarUtil.h"
 
 #include <config.h>
 #include <i18n.h>
@@ -51,9 +51,7 @@ SelectBackgroundColorDialog::SelectBackgroundColorDialog(GladeSearchpath* gladeS
 		ColorEntry* e = new ColorEntry(this, color, false);
 		this->colors.push_back(e);
 
-		GtkWidget* iconWidget = selectcolor_new(color);
-		selectcolor_set_size(iconWidget, 32);
-		selectcolor_set_circle(iconWidget, true);
+		GtkWidget* iconWidget = ToolbarUtil::newColorIcon(color, 32, true);
 		GtkToolItem* it = gtk_tool_button_new(iconWidget, "");
 		gtk_toolbar_insert(GTK_TOOLBAR(toolbar), GTK_TOOL_ITEM(it), -1);
 		g_signal_connect(it, "clicked", G_CALLBACK(&buttonSelectedCallback), e);
@@ -84,9 +82,7 @@ SelectBackgroundColorDialog::SelectBackgroundColorDialog(GladeSearchpath* gladeS
 		ColorEntry* e = new ColorEntry(this, color, true);
 		this->colors.push_back(e);
 
-		GtkWidget* iconWidget = selectcolor_new(color);
-		selectcolor_set_size(iconWidget, 32);
-		selectcolor_set_circle(iconWidget, true);
+		GtkWidget* iconWidget = ToolbarUtil::newColorIcon(color, 32, true);
 		GtkToolItem* it = gtk_tool_button_new(iconWidget, "");
 		gtk_toolbar_insert(GTK_TOOLBAR(toolbar), GTK_TOOL_ITEM(it), -1);
 		g_signal_connect(it, "clicked", G_CALLBACK(&buttonSelectedCallback), e);

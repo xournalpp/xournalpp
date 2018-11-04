@@ -11,7 +11,6 @@
 #include "gui/toolbarMenubar/model/ToolbarModel.h"
 #include "gui/toolbarMenubar/ToolbarUtil.h"
 #include "gui/toolbarMenubar/ToolMenuHandler.h"
-#include "gui/widgets/SelectColor.h"
 
 #include <config.h>
 #include <i18n.h>
@@ -178,7 +177,7 @@ void ToolbarCustomizeDialog::toolitemColorDragBegin(GtkWidget* widget, GdkDragCo
 	int color = GPOINTER_TO_INT(data);
 	ToolItemDragCurrentData::setDataColor(-1, color);
 
-	GdkPixbuf* image = ToolbarDragDropHelper::getColorImage(color);
+	GdkPixbuf* image = ToolbarUtil::newColorIconPixbuf(color, 32, true);
 
 	gtk_drag_set_icon_pixbuf(context, image, -2, -2);
 
@@ -373,9 +372,7 @@ void ToolbarCustomizeDialog::rebuildColorIcons()
 			continue;
 		}
 
-		GtkWidget* icon = selectcolor_new(color->getColor());
-		selectcolor_set_size(icon, 16);
-		selectcolor_set_circle(icon, true);
+		GtkWidget* icon = ToolbarUtil::newColorIcon(color->getColor(), 16, true);
 
 		GtkWidget* box = gtk_vbox_new(false, 3);
 		gtk_widget_show(box);

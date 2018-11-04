@@ -1,7 +1,7 @@
 #include "ColorToolItem.h"
 
 #include "model/ToolbarColorNames.h"
-#include "gui/widgets/SelectColor.h"
+#include "gui/toolbarMenubar/ToolbarUtil.h"
 
 #include <config.h>
 #include <i18n.h>
@@ -74,7 +74,7 @@ void ColorToolItem::enableColor(int color)
 
 	if (isSelector())
 	{
-		selectcolor_set_color(this->iconWidget, color);
+		gtk_image_set_from_pixbuf(GTK_IMAGE(this->iconWidget), ToolbarUtil::newColorIconPixbuf(this->color, 16, !isSelector()));
 		this->color = color;
 		if (GTK_IS_TOGGLE_BUTTON(this->item))
 		{
@@ -212,9 +212,7 @@ GtkToolItem* ColorToolItem::newItem()
 {
 	XOJ_CHECK_TYPE(ColorToolItem);
 
-	this->iconWidget = selectcolor_new(this->color);
-
-	selectcolor_set_circle(this->iconWidget, !isSelector());
+	this->iconWidget = ToolbarUtil::newColorIcon(this->color, 16, !isSelector());
 	GtkToolItem* it = gtk_toggle_tool_button_new();
 
 	const gchar* name = this->name.c_str();
@@ -237,8 +235,5 @@ GtkWidget* ColorToolItem::getNewToolIconImpl()
 {
 	XOJ_CHECK_TYPE(ColorToolItem);
 
-	GtkWidget* iconWidget = selectcolor_new(this->color);
-	selectcolor_set_circle(iconWidget, !isSelector());
-
-	return iconWidget;
+	return ToolbarUtil::newColorIcon(this->color, 16, !isSelector());
 }

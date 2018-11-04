@@ -11,7 +11,6 @@
 
 #include "control/Actions.h"
 #include "gui/ToolitemDragDrop.h"
-#include "gui/widgets/SelectColor.h"
 #include "model/ToolbarData.h"
 #include "model/ToolbarModel.h"
 

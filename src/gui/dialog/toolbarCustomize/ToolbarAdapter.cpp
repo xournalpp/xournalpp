@@ -6,8 +6,8 @@
 #include "gui/toolbarMenubar/AbstractToolItem.h"
 #include "gui/toolbarMenubar/ColorToolItem.h"
 #include "gui/toolbarMenubar/model/ToolbarData.h"
+#include "gui/toolbarMenubar/ToolbarUtil.h"
 #include "gui/ToolitemDragDrop.h"
-#include "gui/widgets/SelectColor.h"
 #include "ToolbarDragDropHelper.h"
 #include "ToolItemDragCurrentData.h"
 
@@ -287,9 +287,7 @@ bool ToolbarAdapter::toolbarDragMotionCb(GtkToolbar* toolbar, GdkDragContext* co
 	}
 	else if (d->type == TOOL_ITEM_COLOR)
 	{
-		GtkWidget* iconWidget = selectcolor_new(d->color);
-		selectcolor_set_size(iconWidget, 16);
-		selectcolor_set_circle(iconWidget, true);
+		GtkWidget* iconWidget = ToolbarUtil::newColorIcon(d->color, 16, true);
 		GtkToolItem* it = gtk_tool_button_new(iconWidget, "");
 		gtk_toolbar_set_drop_highlight_item(toolbar, it, ipos);
 	}
