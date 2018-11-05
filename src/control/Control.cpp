@@ -1178,6 +1178,7 @@ void Control::recStartStop(bool rec)
 	string command = "";
 
 	if(rec){
+		this->recording = true;
 
 		char buffer [50];
 		time_t secs=time(0);
@@ -1193,7 +1194,8 @@ void Control::recStartStop(bool rec)
 
 		printf("Start recording\n");
 		command="xopp-recording.sh start "+data;
-	}else{
+	}else if(this->recording){
+		this->recording = false;
 		printf("Stop recording\n");
 		command="xopp-recording.sh stop";
 	}
@@ -1206,10 +1208,8 @@ void Control::recToggle()
 
 	if(!this->recording){
 		sttime = (g_get_monotonic_time()/1000000);
-		this->recording = true;
 		recStartStop(true);
 	}else{
-		this->recording = false;
 		recStartStop(false);
 	}
 
