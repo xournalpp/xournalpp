@@ -984,7 +984,11 @@ void Control::manageToolbars()
 
 	this->win->updateToolbarMenu();
 
+<<<<<<< HEAD
 	path file = Util::getConfigFile(TOOLBAR_CONFIG).c_str();
+=======
+	path file = Util::getConfigFile(TOOLBAR_CONFIG);
+>>>>>>> branch 'master' of https://github.com/andreasb242/xournalpp.git
 	this->win->getToolbarModel()->save(file.c_str());
 }
 

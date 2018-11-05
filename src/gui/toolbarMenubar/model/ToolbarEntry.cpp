@@ -89,12 +89,23 @@ int ToolbarEntry::insertItem(string item, int position)
 	XOJ_CHECK_TYPE(ToolbarEntry);
 
 	ToolbarItem* it = new ToolbarItem(item);
+<<<<<<< HEAD
+=======
+	if (position >= entries.size())
+	{
+		entries.push_back(it);
+		return it->getId();
+	}
+>>>>>>> branch 'master' of https://github.com/andreasb242/xournalpp.git
 
+<<<<<<< HEAD
 	if (position >= entries.size()) {
 		entries.push_back(it);
 		return it->getId();
 	}
 
+=======
+>>>>>>> branch 'master' of https://github.com/andreasb242/xournalpp.git
 	entries.insert(entries.begin() + position, it);
 	return it->getId();
 }
