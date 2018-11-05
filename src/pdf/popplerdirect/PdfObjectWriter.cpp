@@ -90,7 +90,7 @@ void PdfObjectWriter::writeObject(Object* obj, XojPopplerDocument doc)
 	case objName:
 	{
 		GooString name(obj->getName());
-		GooString* nameToPrint = name.sanitizedName(gFalse /* non ps mode */);
+		GooString* nameToPrint = name.sanitizedName(false /* non ps mode */);
 		this->writer->write(FORMAT("/%s ", nameToPrint->getCString()));
 		delete nameToPrint;
 		break;
@@ -231,7 +231,8 @@ void PdfObjectWriter::writeDictionnary(Dict* dict, XojPopplerDocument doc)
 	for (int i = 0; i < dict->getLength(); i++)
 	{
 		GooString keyName(dict->getKey(i));
-		GooString* keyNameToPrint = keyName.sanitizedName(gFalse /* non ps mode */);
+		GooString* keyNameToPrint = keyName.sanitizedName(false /* non ps 
+mode */);
 		this->writer->write(FORMAT("/%s ", keyNameToPrint->getCString()));
 		delete keyNameToPrint;
 		obj = Object(dict->getValNF(i));

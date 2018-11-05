@@ -78,7 +78,7 @@ double XojPopplerPage::getHeight()
     }
 }
 
-static GBool poppler_print_annot_cb(Annot* annot, void* user_data)
+static bool poppler_print_annot_cb(Annot* annot, void* user_data)
 {
     if (annot->getFlags() & Annot::flagPrint)
     {
