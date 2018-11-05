@@ -1,3 +1,3 @@
 #!/bin/bash
 
-xournalpp -f /home/morro/Musica/recordings/
+xournalpp -f /home/morro/Musica/recordings/ "$1"
