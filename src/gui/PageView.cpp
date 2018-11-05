@@ -414,7 +414,7 @@ void PageView::playObjectAt(double x, double y)
 						{
 							lastfn = fn;
 							//system("killall vlc");	//not needed if we set "allow only one instance" from VLC settings
-							string command("vlc "+audioFolder+fn+"&>/dev/null &");
+							string command("vlc --qt-start-minimized "+audioFolder+fn+"&>/dev/null &");
 							system(command.c_str());
 						}
 						printf("\nPageView::selectObjectAt TIMESTAMP: %d\n",ts);
