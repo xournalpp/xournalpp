@@ -14,14 +14,12 @@
 #include <StringUtils.h>
 
 #include <glib.h>
-
 #include <boost/asio.hpp>
-
 #undef GOOLIKELY_H
 #undef likely
 #undef unlikely
 #include <boost/date_time/posix_time/posix_time.hpp>
-#include "../../pdf/popplerdirect/workaround/poppler-0.64.0/goo/GooLikely.h"
+#include <poppler/goo/GooLikely.h>
 
 #include <boost/filesystem/path.hpp>
 #include <boost/property_tree/ini_parser.hpp>
