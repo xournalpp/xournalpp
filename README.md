@@ -19,8 +19,9 @@ This fork is intended to improve and customize xournalpp to my very own use case
 ## How to use audio record and playback feature:
 
 - Install `vlc` and make sure `curl` and `arecord` are present on your system 
+- Copy the scripts under `launcher` folder to their corresponding absolute path
 - Under `vlc` settings, enable `http interface` (see [this](https://github.com/azrafe7/vlc4youtube/blob/master/instructions/how-to-enable-vlc-web-interface.md) ) with blank username and password "password"
-- Launch `xournalpp` passing the path where to store the recordings e.g:`-f $HOME/Music/recordings`
+- Launch `xournalpp` using the launcher I provided `xournalpp-ts-launcher.sh` with no params.
 
 You're ready to go! 
 Just press the red button to start/stop recording and use the `Play Object` tool to click on a stroke and listen to the corresponding audio
