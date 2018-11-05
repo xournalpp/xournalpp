@@ -5,7 +5,6 @@
 
 DeviceListHelper::DeviceListHelper(GtkWidget* widget)
 {
-#if GTK3_ENABLED
 	GdkDisplay* display;
 	if (widget == NULL)
 	{
@@ -18,9 +17,6 @@ DeviceListHelper::DeviceListHelper(GtkWidget* widget)
 
 	GdkDeviceManager* deviceManager = gdk_display_get_device_manager(display);
 	GList* devList = gdk_device_manager_list_devices(deviceManager, GDK_DEVICE_TYPE_SLAVE);
-#else
-	GList* devList = gdk_devices_list();
-#endif
 
 	while (devList != NULL)
 	{

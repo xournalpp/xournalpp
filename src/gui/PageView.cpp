@@ -38,9 +38,6 @@
 
 #include <glib.h>
 #include <gdk/gdk.h>
-#if !GTK3_ENABLED
-#include <gdk/gdkkeysyms.h>
-#endif
 
 #include <stdlib.h>
 #include <math.h>
@@ -946,7 +943,6 @@ int PageView::getBufferPixels()
 GtkColorWrapper PageView::getSelectionColor()
 {
 	XOJ_CHECK_TYPE(PageView);
-#if GTK3_ENABLED
 	GtkWidget* widget = getXournal()->getWidget();
 
 	GtkStyleContext *context = gtk_widget_get_style_context(widget);
@@ -969,9 +965,7 @@ GtkColorWrapper PageView::getSelectionColor()
 	*/
 
 	gtk_style_context_restore(context);
-#else
-	return this->xournal->getWidget()->style->base[GTK_STATE_SELECTED];
-#endif
+	return col;
 }
 
 TextEditor* PageView::getTextEditor()

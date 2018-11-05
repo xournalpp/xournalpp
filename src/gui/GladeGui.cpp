@@ -14,21 +14,7 @@ GladeGui::GladeGui(GladeSearchpath* gladeSearchPath, string glade, string mainWn
 	this->window = NULL;
 	this->gladeSearchPath = gladeSearchPath;
 
-
-#if !GTK3_ENABLED
-	// IF GTK2, load .xml files instead of .glade files
-
-	// about.glade => about.xml
-	if (glade.substr(glade.size() - 6) == ".glade")
-	{
-		glade = glade.substr(0, glade.size() - 6) + ".xml";
-	}
-
-#endif
-
 	string filename = this->gladeSearchPath->findFile("", glade);
-
-#if GTK3_ENABLED
 
 	GError* error = NULL;
 	builder = gtk_builder_new();
@@ -49,21 +35,6 @@ GladeGui::GladeGui(GladeSearchpath* gladeSearchPath, string glade, string mainWn
 		exit(-1);
 	}
 
-#else
-
-	this->xml = glade_xml_new(filename.c_str(), NULL, NULL);
-	if (!this->xml)
-	{
-		GtkWidget* dialog = gtk_message_dialog_new(NULL, GTK_DIALOG_DESTROY_WITH_PARENT,
-												   GTK_MESSAGE_ERROR, GTK_BUTTONS_CLOSE, "%s",
-												   FC(_F("Error loading glade file \"{1}\" (try to load \"{2}\")")
-															% glade % filename));
-		gtk_dialog_run(GTK_DIALOG(dialog));
-		gtk_widget_destroy(GTK_WIDGET(dialog));
-		exit(-1);
-	}
-#endif
-
 	this->window = get(mainWnd);
 }
 
@@ -71,14 +42,9 @@ GladeGui::~GladeGui()
 {
 	XOJ_CHECK_TYPE(GladeGui);
 
-#if GTK3_ENABLED
 	// TODO: this causes a segfault... do we need this?
 	//gtk_widget_destroy(this->window);
 	g_object_unref(builder);
-#else
-	gtk_widget_destroy(this->window);
-	g_object_unref(this->xml);
-#endif
 
 	XOJ_RELEASE_TYPE(GladeGui);
 }
@@ -87,11 +53,7 @@ GtkWidget* GladeGui::get(string name)
 {
 	XOJ_CHECK_TYPE(GladeGui);
 
-#if GTK3_ENABLED
 	GtkWidget* w = GTK_WIDGET(gtk_builder_get_object(builder, name.c_str()));
-#else
-	GtkWidget* w = glade_xml_get_widget(xml, name.c_str());
-#endif
 	if (w == NULL)
 	{
 		g_warning("GladeGui::get: Could not find glade Widget: \"%s\"", name);

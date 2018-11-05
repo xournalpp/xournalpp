@@ -197,17 +197,7 @@ static void gtk_menu_tool_toggle_button_class_init(GtkMenuToolToggleButtonClass*
 	widget_class->state_changed = gtk_menu_tool_toggle_button_state_changed;
 	toolitem_class->toolbar_reconfigured = gtk_menu_tool_toggle_button_toolbar_reconfigured;
 
-#if GTK3_ENABLED
 	widget_class->destroy = gtk_menu_tool_toggle_button_destroy;
-#else
-	GtkObjectClass* gtk_class;
-	gtk_class = (GtkObjectClass*) klass;
-
-	typedef void (*DestroyFunc) (GtkObject *object);
-
-	gtk_class->destroy =  (DestroyFunc)gtk_menu_tool_toggle_button_destroy;
-#endif
-
 
 	/**
 	 * GtkMenuToolButton::show-menu:

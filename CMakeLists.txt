@@ -81,26 +81,19 @@ else (BUILD_BOOST)
 endif (BUILD_BOOST)
 add_includes_ldflags ("${Boost_LIBRARIES}" "${Boost_INCLUDE_DIRS}")
 
-# GTK+/Glib etc.
-option (USE_GTK3 "Use GTK3 instead of GTK2" OFF)
-if (USE_GTK3)
-  pkg_check_modules (GTK REQUIRED "gtk+-3.0 >= 3.18.9")
-  add_includes_ldflags ("${GTK_LDFLAGS}" "${GTK_INCLUDE_DIRS}")
-else (USE_GTK3)
-# GTK2 Libs
-  pkg_check_modules (GTK REQUIRED "gtk+-2.0 >= 2.18.3")
-  add_includes_ldflags ("${GTK_LDFLAGS}" "${GTK_INCLUDE_DIRS}")
+# GTK+
+pkg_check_modules (GTK REQUIRED "gtk+-3.0 >= 3.18.9")
+add_includes_ldflags ("${GTK_LDFLAGS}" "${GTK_INCLUDE_DIRS}")
 
-  pkg_check_modules (Glade REQUIRED "libglade-2.0 >= 2.6.4")
-  add_includes_ldflags ("${Glade_LDFLAGS}" "${Glade_INCLUDE_DIRS}")
-endif (USE_GTK3)
-
+# GLIB
 pkg_check_modules (Glib REQUIRED "glib-2.0 >= 2.32.0")
 add_includes_ldflags ("${Glib_LDFLAGS}" "${Glib_INCLUDE_DIRS}")
 
+# GThread
 pkg_check_modules (GThread REQUIRED "gthread-2.0 >= 2.4.0")
 add_includes_ldflags ("${GThread_LDFLAGS}" "${GThread_INCLUDE_DIRS}")
 
+# LibXML
 pkg_check_modules (Libxml REQUIRED "libxml-2.0 >= 2.0.0")
 add_includes_ldflags ("${Libxml_LDFLAGS}" "${Libxml_INCLUDE_DIRS}")
 
@@ -259,11 +252,6 @@ option (DEV_CHECK_GTK3_COMPAT "Adds a few compiler flags to check basic GTK3 upg
 if (DEV_CHECK_GTK3_COMPAT)
     add_definitions (-DGTK_DISABLE_SINGLE_INCLUDES -DGDK_DISABLE_DEPRECATED -DGTK_DISABLE_DEPRECATED -DGSEAL_ENABLE)
 endif ()
-
-if (USE_GTK3)
-    add_definitions (-DGTK3_ENABLED=true)
-endif (USE_GTK3)
-
 
 mark_as_advanced (FORCE
   DEV_CONFIG_DIR DEV_TOOLBAR_CONFIG DEV_SETTINGS_XML_FILE DEV_PRINT_CONFIG_FILE DEV_METADATA_FILE DEV_METADATA_MAX_ITEMS

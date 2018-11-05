@@ -17,12 +17,7 @@ private:
 	virtual ~ToolbarUtil();
 
 public:
-#if !GTK3_ENABLED
-	static void fakeExposeWidget(GtkWidget* widget, GdkPixmap* pixmap);
-	static GdkPixbuf* newPixbufFromWidget(GtkWidget* widget, int iconSize = 24);
-#endif
 	static GtkWidget* newSepeartorImage();
-
 
 	/**
 	 * Create color for Background / Foreground color indicator / button

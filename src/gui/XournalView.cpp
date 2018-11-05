@@ -22,10 +22,6 @@
 
 #include <math.h>
 
-#if !GTK3_ENABLED
-#include <gdk/gdkkeysyms.h>
-#endif
-
 XournalView::XournalView(GtkWidget* parent, Control* control)
 {
 	XOJ_INIT_TYPE(XournalView);
@@ -41,11 +37,7 @@ XournalView::XournalView(GtkWidget* parent, Control* control)
 	// we need to refer widget here, because we unref it somewhere twice!?
 	g_object_ref(this->widget);
 
-#if GTK3_ENABLED
 	gtk_table_attach_defaults(GTK_TABLE(parent), this->widget, 1, 2, 0, 1);
-#else
-	gtk_container_add(GTK_CONTAINER(parent), this->widget);
-#endif
 	gtk_widget_show(this->widget);
 
 	g_signal_connect(getWidget(), "realize", G_CALLBACK(onRealized), this);
@@ -67,13 +59,9 @@ XournalView::XournalView(GtkWidget* parent, Control* control)
 	gtk_widget_grab_focus(this->widget);
 
 	this->cleanupTimeout = g_timeout_add_seconds(5, (GSourceFunc) clearMemoryTimer, this);
-#if !GTK3_ENABLED
-	g_signal_connect(this->widget, "size-allocate", G_CALLBACK(staticLayoutPages), this);
-#endif
 	// pinch-to-zoom
 	this->zoom_gesture_active = false;
 
-#if GTK3_ENABLED
 
 	// use parent as the gestures widget and not this->widget as gesture gets
 	// buggy otherwise (scrolling interferes with gestures scale value)
@@ -83,7 +71,6 @@ XournalView::XournalView(GtkWidget* parent, Control* control)
 	g_signal_connect (this->zoom_gesture, "begin", G_CALLBACK (zoom_gesture_begin_cb), this);
 	g_signal_connect (this->zoom_gesture, "scale-changed", G_CALLBACK (zoom_gesture_scale_changed_cb), this);
 	g_signal_connect (this->zoom_gesture, "end", G_CALLBACK (zoom_gesture_end_cb), this);
-#endif
 }
 
 XournalView::~XournalView()
@@ -355,7 +342,6 @@ void XournalView::onRealized(GtkWidget* widget, XournalView* view)
 	view->setEventCompression(view->getControl()->getSettings()->isEventCompression());
 }
 
-#if GTK3_ENABLED
 void XournalView::zoom_gesture_begin_cb(GtkGesture* gesture, GdkEventSequence* sequence, XournalView* view)
 {
 	Layout* layout = gtk_xournal_get_layout(view->widget);
@@ -390,7 +376,6 @@ void XournalView::zoom_gesture_scale_changed_cb(GtkGestureZoom* gesture, gdouble
 	gtk_gesture_get_bounding_box_center (GTK_GESTURE (gesture), &zoom->zoom_center_x, &zoom->zoom_center_y);
 	*/
 }
-#endif
 
 // send the focus back to the appropriate widget
 void XournalView::requestFocus()
@@ -918,13 +903,11 @@ void XournalView::repaintSelection(bool evenWithoutSelection)
 
 void XournalView::setEventCompression(gboolean enable)
 {
-#if GTK3_ENABLED
 	// Enable this when gdk is new enough for the compression feature.
 	if (gtk_widget_get_realized(getWidget()))
 	{
 		gdk_window_set_event_compression(gtk_widget_get_window(getWidget()), FALSE);
 	}
-#endif
 }
 
 void XournalView::layoutPages()

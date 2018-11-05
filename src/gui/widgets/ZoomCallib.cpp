@@ -10,12 +10,10 @@ static void
 zoomcallib_get_preferred_height(GtkWidget* widget,
                                 gint* minimal_height,
                                 gint* natural_height);
-static void zoomcallib_size_request(GtkWidget* widget, GtkRequisition* requisition);
 
 static void zoomcallib_size_allocate(GtkWidget* widget,
                                      GtkAllocation* allocation);
 static void zoomcallib_realize(GtkWidget* widget);
-static gboolean zoomcallib_expose(GtkWidget* widget, GdkEventExpose* event);
 static gboolean zoomcallib_draw(GtkWidget* widget, cairo_t* cr);
 //static void zoomcallib_destroy(GtkObject* object);
 
@@ -43,14 +41,9 @@ static void zoomcallib_class_init(ZoomCallibClass* klass)
 	widget_class->realize = zoomcallib_realize;
 	widget_class->size_allocate = zoomcallib_size_allocate;
 
-#if GTK3_ENABLED
 	widget_class->draw = zoomcallib_draw;
 	widget_class->get_preferred_width = zoomcallib_get_preferred_width;
 	widget_class->get_preferred_height = zoomcallib_get_preferred_height;
-#else
-	widget_class->expose_event = zoomcallib_expose;
-	widget_class->size_request = zoomcallib_size_request;
-#endif
 }
 
 static void zoomcallib_init(ZoomCallib* zc)
@@ -72,16 +65,6 @@ zoomcallib_get_preferred_height(GtkWidget* widget,
                                 gint* natural_height)
 {
   *minimal_height = *natural_height = 75;
-}
-
-static void zoomcallib_size_request(GtkWidget* widget, GtkRequisition* requisition)
-{
-	g_return_if_fail(widget != NULL);
-	g_return_if_fail(IS_ZOOM_CALLIB(widget));
-	g_return_if_fail(requisition != NULL);
-
-	requisition->width = 200;
-	requisition->height = 75;
 }
 
 static void zoomcallib_size_allocate(GtkWidget* widget,
@@ -136,20 +119,6 @@ static void zoomcallib_realize(GtkWidget* widget)
 	gtk_style_set_background(gtk_widget_get_style(widget),
 	                         gtk_widget_get_window(widget),
 	                         GTK_STATE_NORMAL);
-}
-
-static gboolean zoomcallib_expose(GtkWidget* widget, GdkEventExpose* event)
-{
-	g_return_val_if_fail(widget != NULL, FALSE);
-	g_return_val_if_fail(IS_ZOOM_CALLIB(widget), FALSE);
-	g_return_val_if_fail(event != NULL, FALSE);
-
-	cairo_t* cr = gdk_cairo_create(gtk_widget_get_window(widget));
-
-	zoomcallib_draw(widget, cr);
-	cairo_destroy(cr);
-
-	return FALSE;
 }
 
 static gboolean zoomcallib_draw(GtkWidget* widget, cairo_t* cr)

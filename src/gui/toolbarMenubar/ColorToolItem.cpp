@@ -154,7 +154,6 @@ bool ColorToolItem::colorEqualsMoreOreLess(int color)
  */
 void ColorToolItem::showColorchooser()
 {
-#if GTK3_ENABLED
 	GtkWidget* dialog = gtk_color_chooser_dialog_new(_C("Select color"), parent);
 	gtk_color_chooser_set_use_alpha(GTK_COLOR_CHOOSER(dialog), false);
 
@@ -167,18 +166,6 @@ void ColorToolItem::showColorchooser()
 				(((int)(color.green * 255)) & 0xff) << 8 |
 				(((int)(color.blue * 255)) & 0xff);
 	}
-#else
-	GtkWidget* dialog = gtk_color_selection_dialog_new(_C("Select color"));
-	int response = gtk_dialog_run(GTK_DIALOG(dialog));
-	if (response == GTK_RESPONSE_OK)
-	{
-		GtkWidget* cw = gtk_color_selection_dialog_get_color_selection(GTK_COLOR_SELECTION_DIALOG(dialog));
-		GdkColor color = { 0 };
-		gtk_color_selection_get_current_color(GTK_COLOR_SELECTION(cw), &color);
-
-		this->color = (color.red / 256) << 16 | (color.green / 256) << 8 | (color.blue / 256);
-	}
-#endif
 
 	gtk_widget_destroy(dialog);
 }

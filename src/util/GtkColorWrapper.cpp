@@ -10,6 +10,11 @@ GtkColorWrapper::GtkColorWrapper(const GdkColor& color) : red(color.red), green(
 	XOJ_INIT_TYPE(GtkColorWrapper);
 }
 
+GtkColorWrapper::GtkColorWrapper(const GdkRGBA& color) : red(color.red), green(color.green), blue(color.blue)
+{
+	XOJ_INIT_TYPE(GtkColorWrapper);
+}
+
 GtkColorWrapper::~GtkColorWrapper()
 {
 	XOJ_RELEASE_TYPE(GtkColorWrapper);

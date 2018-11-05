@@ -20,6 +20,7 @@ class GtkColorWrapper
 public:
 	GtkColorWrapper();
 	GtkColorWrapper(const GdkColor& color);
+	GtkColorWrapper(const GdkRGBA& color);
 	virtual ~GtkColorWrapper();
 
 public:

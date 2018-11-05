@@ -279,8 +279,6 @@ bool StrokeHandler::getPressureMultiplier(GdkEvent* event, double& pressure)
 {
 	XOJ_CHECK_TYPE(StrokeHandler);
 
-#if GTK3_ENABLED
-
 	GdkDevice* device = gdk_event_get_device(event);
 	gdouble* axes = event->button.axes;
 
@@ -308,40 +306,6 @@ bool StrokeHandler::getPressureMultiplier(GdkEvent* event, double& pressure)
 
 	pressure = ((1 - pressure) * settings->getWidthMinimumMultiplier() +
 	           pressure * settings->getWidthMaximumMultiplier());
-
-#else
-
-	double* axes = NULL;
-	GdkDevice* device = NULL;
-
-	if (event->type == GDK_MOTION_NOTIFY)
-	{
-		axes = event->motion.axes;
-		device = event->motion.device;
-	}
-	else
-	{
-		axes = event->button.axes;
-		device = event->button.device;
-	}
-
-	if (device == gdk_device_get_core_pointer() || device->num_axes <= 2)
-	{
-		pressure = 1.0;
-		return false;
-	}
-
-	double rawpressure = axes[2] / (device->axes[2].max - device->axes[2].min);
-	if (!finite(rawpressure))
-	{
-		pressure = 1.0;
-		return false;
-	}
-
-	Settings* settings = xournal->getControl()->getSettings();
-
-	pressure = ((1 - rawpressure) * settings->getWidthMinimumMultiplier() + rawpressure * settings->getWidthMaximumMultiplier());
-#endif
 
 	return true;
 }

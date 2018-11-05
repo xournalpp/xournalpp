@@ -316,8 +316,6 @@ void Cursor::updateCursor()
 	}
 }
 
-#if GTK3_ENABLED
-
 GdkCursor* Cursor::eraserCursor()
 {
 	Tool& eraser = control->getToolHandler()->getTool(TOOL_ERASER);
@@ -395,44 +393,3 @@ GdkCursor* Cursor::highlighterCursor()
 
 	return cursor;
 }
-
-#else // GTK3_ENABLED
-static unsigned char CURSOR_HIGLIGHTER_BITS[] = {
-	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf8, 0x0f, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08,
-	0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0xf8, 0x0f, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
-
-static unsigned char CURSOR_HILIGHTER_MASK[] = {
-	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf8, 0x0f, 0xf8, 0x0f, 0xf8, 0x0f, 0xf8, 0x0f, 0xf8, 0x0f,
-	0xf8, 0x0f, 0xf8, 0x0f, 0xf8, 0x0f, 0xf8, 0x0f, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
-
-
-GdkCursor* Cursor::eraserCursor()
-{
-	GdkColor bg = { 0, 65535, 65535, 65535 };
-	GdkColor fg = { 0, 0, 0, 0 };
-	GdkPixmap* source = gdk_bitmap_create_from_data(NULL, (gchar*) CURSOR_HIGLIGHTER_BITS, 16, 16);
-	GdkPixmap* mask = gdk_bitmap_create_from_data(NULL, (gchar*) CURSOR_HILIGHTER_MASK, 16, 16);
-	GdkCursor* cursor = gdk_cursor_new_from_pixmap(source, mask, &fg, &bg, 7, 7);
-	gdk_bitmap_unref(source);
-	gdk_bitmap_unref(mask);
-
-	return cursor;
-}
-
-GdkCursor* Cursor::highlighterCursor()
-{
-	GdkColor fg = { 0, 0, 0, 0 };
-	ToolHandler* handler = control->getToolHandler();
-	GdkColor bg = handler->getGdkColor();
-	GdkPixmap* source = gdk_bitmap_create_from_data(NULL, (gchar*) CURSOR_HIGLIGHTER_BITS, 16, 16);
-	GdkPixmap* mask = gdk_bitmap_create_from_data(NULL, (gchar*) CURSOR_HILIGHTER_MASK, 16, 16);
-	GdkCursor* cursor = gdk_cursor_new_from_pixmap(source, mask, &fg, &bg, 7, 7);
-	gdk_bitmap_unref(source);
-	gdk_bitmap_unref(mask);
-
-	return cursor;
-}
-
-#endif

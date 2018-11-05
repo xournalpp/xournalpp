@@ -103,15 +103,11 @@ void SidebarPreviewBase::setBackgroundWhite()
 	}
 	this->backgroundInitialized = true;
 
-#if GTK3_ENABLED
 	GdkRGBA white = {1, 1, 1, 1};
 
 	gtk_widget_override_background_color(this->iconViewPreview,
 	                                     GTK_STATE_FLAG_NORMAL,
 	                                     &white);
-#else
-	gdk_window_set_background(GTK_LAYOUT(this->iconViewPreview)->bin_window, &this->iconViewPreview->style->white);
-#endif
 }
 
 double SidebarPreviewBase::getZoom()

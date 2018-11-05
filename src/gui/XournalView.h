@@ -122,15 +122,13 @@ public:
 	bool onKeyPressEvent(GdkEventKey* event);
 	bool onKeyReleaseEvent(GdkEventKey* event);
 
-	// TODO Private!, Naving conventions!
+	// TODO Private!, Naming conventions!
 	bool zoom_gesture_active;
 	static void onRealized(GtkWidget* widget, XournalView* view);
 
-#if GTK3_ENABLED
 	static void zoom_gesture_begin_cb(GtkGesture* gesture,GdkEventSequence* sequence,XournalView* view);
 	static void zoom_gesture_end_cb(GtkGesture* gesture,GdkEventSequence* sequence,XournalView* view);
 	static void zoom_gesture_scale_changed_cb(GtkGestureZoom* gesture,gdouble scale,XournalView* view);
-#endif
 
 private:
 
@@ -147,7 +145,6 @@ private:
 private:
 	XOJ_TYPE_ATTRIB;
 
-#if GTK3_ENABLED
 	// Gestures
 	GtkGesture* zoom_gesture;
 	gdouble zoom_gesture_begin;
@@ -155,7 +152,6 @@ private:
 	//Problems with pinch to zoom:
 	//-keep view centered between pinching fingers
 	//-gtk_gesture_is_recognized not working (always false in XournalWidget.cpp code)
-#endif
 
 	GtkWidget* widget;
 	double margin;

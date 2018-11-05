@@ -29,10 +29,6 @@ class XournalView;
 typedef struct _GtkXournal GtkXournal;
 typedef struct _GtkXournalClass GtkXournalClass;
 
-#if GTK3_ENABLED
-#define GtkType GType
-#endif
-
 struct _GtkXournal
 {
 	GtkWidget widget;
@@ -76,7 +72,7 @@ struct _GtkXournalClass
 	GtkWidgetClass parent_class;
 };
 
-GtkType gtk_xournal_get_type(void);
+GType gtk_xournal_get_type();
 GtkWidget* gtk_xournal_new(XournalView* view);
 
 cairo_t* gtk_xournal_create_cairo_for(GtkWidget* widget, PageView* view);

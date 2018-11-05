@@ -11,10 +11,6 @@
 
 #pragma once
 
-#if !GTK3_ENABLED
-#include <glade/glade-xml.h>
-#endif
-
 #include <gtk/gtk.h>
 
 #include <XournalType.h>
@@ -49,11 +45,7 @@ private:
 	/**
 	 * The Glade resources
 	 */
-#if GTK3_ENABLED
 	GtkBuilder* builder;
-#else
-	GladeXML* xml;
-#endif
 
 	/**
 	 * Our search paths
