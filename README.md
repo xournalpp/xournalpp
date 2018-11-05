@@ -82,6 +82,10 @@ cmake -DCMAKE_CXX_FLAGS="-fpermissive" ..
 make
 ````
 
+PS: Build only tested for `poppler-0.67.0-1` and `poppler-glib-0.67.0-1`
+
+If you're on Arch and you're having issues getting it to compile, please try to downgrade those two packages with `downgrade` command.
+
 On Ubuntu 16.04, you may need to configure cmake with `-DBUILD_POPPLER=ON` due
 to #234.
 
