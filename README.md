@@ -20,7 +20,9 @@ This fork is intended to improve and customize xournalpp to my very own use case
 
 - Install `vlc` and make sure `curl` and `arecord` are present on your system 
 - Copy the scripts under `launcher` folder to their corresponding absolute path
-- Under `vlc` settings, enable `http interface` (see [this](https://github.com/azrafe7/vlc4youtube/blob/master/instructions/how-to-enable-vlc-web-interface.md) ) with blank username and password "password"
+- Under `vlc` settings: 
+- - enable `http interface` (see [this](https://github.com/azrafe7/vlc4youtube/blob/master/instructions/how-to-enable-vlc-web-interface.md) ) with blank username and password "password"
+- - tick `Allow only one instance` under `Interface -> Instance`
 - Launch `xournalpp` using the launcher I provided `xournalpp-ts-launcher.sh` with no params.
 
 You're ready to go! 

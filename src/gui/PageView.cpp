@@ -413,7 +413,7 @@ void PageView::playObjectAt(double x, double y)
 						if(fn != lastfn)
 						{
 							lastfn = fn;
-							system("killall vlc");
+							//system("killall vlc");	//not needed if we set "allow only one instance" from VLC settings
 							string command("vlc "+audioFolder+fn+"&>/dev/null &");
 							system(command.c_str());
 						}
