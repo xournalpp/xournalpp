@@ -9,7 +9,7 @@
 Xournal++ is not Xournal! It is a ground-up rewrite of Xournal in a different language (C++ instead of C). The purpose
 was to create a more flexible application that significantly extends the functionality of Xournal.
 
-At the moment, Xournal is very stable software while Xournal++ is not. If you want stability, you might be more
+At the moment, Xournal is very stable software while Xournal++ is not yet. If you want stability, you might be more
 interested in the original Xournal project, which you can find at [sourceforge](http://sourceforge.net/projects/xournal/)
 or, for some in-development features of Xournal, at [github.com/dmgerman/xournal](https://github.com/dmgerman/xournal).
 
@@ -79,7 +79,15 @@ make desktop-install
 
 ## Development
 
-For now branches aren't organized too well, but (currently) the most of development happens in `development`.
+For now branches aren't organized too well.
+
+For developping new features, write a Ticket, so others know what you are doing.
+For development create a fork, and use the master as base.
+
+Currently Xournal++ is based on GTK2, but will be moved forward soon to GTK3.
+In the near future a new branch master_gtk2_stable will be created, which will 
+be the current master, and the GTK3 branch will be merged into the master.
+See Tickets / Pull request for further information.
 
 See [GitHub:xournalpp](http://github.com/xournalpp/xournalpp) for current development. You can also join
 our Gitter channel via badge on top.
