@@ -37,6 +37,6 @@ private:
 	XOJ_TYPE_ATTRIB;
 
 	GList* points;
-	int timestamp;
+	int timestamp=0;
 	string audioFilename="";
 };

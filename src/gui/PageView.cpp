@@ -400,7 +400,7 @@ void PageView::playObjectAt(double x, double y)
 				{
 					Stroke* s = (Stroke*) e;
 					double tmpGap = 0;
-					if ((s->intersects(x, y, 5, &tmpGap)) && (gap > tmpGap))
+					if ((s->intersects(x, y, 15, &tmpGap)) && (gap > tmpGap))
 					{
 						gap = tmpGap;
 						strokeMatch = s;
@@ -416,10 +416,13 @@ void PageView::playObjectAt(double x, double y)
 						string fn = s->getAudioFilename();
 						if(fn != lastfn)
 						{
-							lastfn = fn;
-							//system("killall vlc");	//not needed if we set "allow only one instance" from VLC settings
-							string command("vlc --qt-start-minimized "+audioFolder+fn+" --start-time="+std::to_string(ts)+" &>/dev/null &");
-							system(command.c_str());
+							if(fn != "")
+							{
+								lastfn = fn;
+								//system("killall vlc");	//not needed if we set "allow only one instance" from VLC settings
+								string command("vlc --qt-start-minimized "+audioFolder+fn+" --start-time="+std::to_string(ts)+" &>/dev/null &");
+								system(command.c_str());
+							}
 						}
 						else
 						{

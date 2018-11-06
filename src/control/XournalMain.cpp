@@ -30,7 +30,6 @@ using std::endl;
 #include <vector>
 using std::vector;
 
-extern string audioFilename;
 extern string audioFolder;
 
 XournalMain::XournalMain()
@@ -216,17 +215,14 @@ int XournalMain::run(int argc, char* argv[])
 	bool optNoPdfCompress = false;
 	gchar** optFilename = NULL;
 	gchar* pdfFilename = NULL;
-	gchar* audioFilenameParam = NULL;
 	gchar* audioFolderParam = NULL;
 	int openAtPageNumber = -1;
 
 	string pdf_no_compress = _("Don't compress PDF files (for debugging)");
 	string create_pdf = _("PDF output filename");
 	string page_jump = _("Jump to Page (first Page: 1)");
-	string audio_filename = ("Name of the audio file being recorded for the current session");
 	string audio_folder = ("Absolute path for the audio files playback");
 	GOptionEntry options[] = {
-		{ "audio-file",		 'a', 0, G_OPTION_ARG_FILENAME,		  &audioFilenameParam,	 audio_filename.c_str(), NULL},
 		{ "audio-folder",	 'f', 0, G_OPTION_ARG_FILENAME,		  &audioFolderParam,	 audio_folder.c_str(), NULL},
 		{ "pdf-no-compress",   0, 0, G_OPTION_ARG_NONE,           &optNoPdfCompress, pdf_no_compress.c_str(), NULL },
 		{ "create-pdf",      'p', 0, G_OPTION_ARG_FILENAME,       &pdfFilename,      create_pdf.c_str(), NULL },
@@ -257,16 +253,6 @@ int XournalMain::run(int argc, char* argv[])
 	if (pdfFilename && optFilename && *optFilename)
 	{
 		return exportPdf(*optFilename, pdfFilename);
-	}
-
-	if (audioFilenameParam)
-	{
-		printf("\nAudio filename specified! %s\n",audioFilenameParam);
-		audioFilename = string(audioFilenameParam);
-		//cout<<audioFilename<<"\n";
-		//printf("\nAudio filename specified! %s\n",audioFilename);
-	}else{
-		audioFilename="";	
 	}
 
 	if (audioFolderParam)

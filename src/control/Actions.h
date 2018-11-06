@@ -182,6 +182,8 @@ enum ActionGroup
 
     GROUP_SHAPE_RECOGNIZER,
     GROUP_RULER,
+
+    GROUP_REC,
 };
 
 class ActionHandler;

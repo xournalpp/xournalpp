@@ -345,7 +345,7 @@ void ToolMenuHandler::initToolItems()
 	addToolItem(new ToolButton(listener, gui, "FULLSCREEN", ACTION_FULLSCREEN, GROUP_FULLSCREEN, false,
 							   "fullscreen.svg", _C("Toggle fullscreen"), gui->get("menuViewFullScreen")));
 
-	addToolItem(new ToolButton(listener, gui, "RECSTOP", ACTION_RECSTOP, GROUP_FULLSCREEN, false,
+	addToolItem(new ToolButton(listener, gui, "RECSTOP", ACTION_RECSTOP, GROUP_REC, false,
 								"rec.svg", _C("Rec / Stop"), gui->get("menuRecStop")));
 
 	addToolItem(new ColorToolItem(listener, toolHandler, this->parent, 0xff0000, true));
