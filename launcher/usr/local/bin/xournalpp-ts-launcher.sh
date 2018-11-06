@@ -1,3 +1,10 @@
 #!/bin/bash
 
-xournalpp -f /home/morro/Musica/recordings/ "$1"
+audiopath="$HOME/Musica/recordings/"
+
+if [[ $# -lt 1 ]]
+then
+	xournalpp -f $audiopath
+else
+	xournalpp -f $audiopath "$1"
+fi
