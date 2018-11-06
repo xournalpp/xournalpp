@@ -418,13 +418,15 @@ void PageView::playObjectAt(double x, double y)
 						{
 							lastfn = fn;
 							//system("killall vlc");	//not needed if we set "allow only one instance" from VLC settings
-							string command("vlc --qt-start-minimized "+audioFolder+fn+"&>/dev/null &");
+							string command("vlc --qt-start-minimized "+audioFolder+fn+" --start-time="+std::to_string(ts)+" &>/dev/null &");
 							system(command.c_str());
 						}
-						printf("\nPageView::selectObjectAt TIMESTAMP: %d\n",ts);
-						std::cout<<"AudioFileName: "<<fn<<"\n";
-						string command("curl -s -u \"\":\"password\" --url \"http://127.0.0.1:8080/requests/status.xml?command=seek&val="+std::to_string(ts)+"\" >/dev/null");
-						system(command.c_str());
+						else
+						{
+							string command("curl -s -u \"\":\"password\" --url \"http://127.0.0.1:8080/requests/status.xml?command=seek&val="+std::to_string(ts)+"\" >/dev/null");
+							system(command.c_str());
+						}
+
 					}
 				}
 				else
