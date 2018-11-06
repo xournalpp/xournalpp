@@ -23,7 +23,8 @@ This fork is intended to improve and customize xournalpp to my very own use case
 - Under `vlc` settings: 
 - - enable `http interface` (see [this](https://github.com/azrafe7/vlc4youtube/blob/master/instructions/how-to-enable-vlc-web-interface.md) ) with blank username and password "password"
 - - tick `Allow only one instance` under `Interface -> Instance`
-- Launch `xournalpp` using the launcher I provided `xournalpp-ts-launcher.sh` with no params.
+- Launch `xournalpp` using the launcher I provided `xournalpp-ts-launcher.sh` 
+- Choose `Toolbar Left` layout under `View->Toolbars->Toolbar Left`
 
 You're ready to go! 
 Just press the red button to start/stop recording and use the `Play Object` tool to click on a stroke and listen to the corresponding audio
