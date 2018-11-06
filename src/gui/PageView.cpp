@@ -409,6 +409,10 @@ void PageView::playObjectAt(double x, double y)
 						 * To be replaced with a function call to an action
 						 */
 						int ts = s->getTimestamp();
+
+						int buffer = 5;
+						if(ts >= buffer) ts-=buffer;
+
 						string fn = s->getAudioFilename();
 						if(fn != lastfn)
 						{
