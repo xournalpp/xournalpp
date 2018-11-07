@@ -10,6 +10,7 @@ AbstractItem::AbstractItem(string id, ActionHandler* handler, ActionType action,
 	this->menuSignalHandler = 0;
 	this->group = GROUP_NOGROUP;
 	this->enabled = true;
+	this->ignoreMenuCallback = false;
 
 	ActionEnabledListener::registerListener(handler);
 	ActionSelectionListener::registerListener(handler);
