@@ -82,7 +82,7 @@ void Layer::insertElement(Element* e, int pos)
 	}
 
 	if(pos == -1) pos=0; 	//otherwise it segfaults on the next step trying
-							//to access a negative index on the elements array 
+				//to access a negative index on the elements array 
 
 	this->elements.insert(this->elements.begin() + pos, e);
 }
