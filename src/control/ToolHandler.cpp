@@ -647,8 +647,11 @@ void ToolHandler::copyCurrentConfig()
 {
 	XOJ_CHECK_TYPE(ToolHandler);
 
+	// TODO Check if this nullcheck needs to be removed
 	if (this->lastSelectedTool == NULL)
+	{
 		this->lastSelectedTool = this->current;
+	}
 }
 
 void ToolHandler::restoreLastConfig()

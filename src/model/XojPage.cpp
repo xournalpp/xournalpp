@@ -81,6 +81,7 @@ void XojPage::insertLayer(Layer* layer, int index)
 {
 	XOJ_CHECK_TYPE(XojPage);
 
+	// TODO Check this method, maybe there should also be an append if the ID is to high!
 	this->layer.insert(this->layer.begin() + index, layer);
 	this->currentLayer = index + 1;
 }

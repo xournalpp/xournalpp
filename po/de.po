@@ -1548,7 +1548,7 @@ msgstr "dünn"
 
 #: ../src/control/Control.cpp:2832
 msgid "This document is not saved yet."
-msgstr "Dieses Dokument wurde noch nicht gespiechert."
+msgstr "Dieses Dokument wurde noch nicht gespeichert."
 
 #: ../src/control/tools/ImageHandler.cpp:57 ../src/control/Control.cpp:1656
 msgid "This image could not be loaded. Error message: {1}"

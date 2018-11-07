@@ -92,9 +92,12 @@ PageView::~PageView()
 	endText();
 	deleteViewBuffer();
 
-	for (Rectangle* rect : this->rerenderRects) delete rect;
+	for (Rectangle* rect : this->rerenderRects)
+	{
+		delete rect;
+	}
 
-	if (this->search) delete this->search;
+	delete this->search;
 	this->search = NULL;
 
 	XOJ_RELEASE_TYPE(PageView);
@@ -390,6 +393,11 @@ bool PageView::onButtonPressEvent(GtkWidget* widget, GdkEventButton* event)
 
 	double x = event->x;
 	double y = event->y;
+
+	if (x < 0 || y < 0)
+	{
+		return FALSE;
+	}
 
 	double zoom = xournal->getZoom();
 	x /= zoom;

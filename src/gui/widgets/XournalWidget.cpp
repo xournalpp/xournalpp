@@ -1,7 +1,5 @@
 #include "XournalWidget.h"
 
-#include "Scrollbar.h"
-
 #include "control/Control.h"
 #include "control/tools/EditSelection.h"
 #include "control/settings/ButtonConfig.h"
@@ -20,6 +18,7 @@
 
 #include <gdk/gdk.h>
 
+#include <gdk/gdkkeysyms.h>
 #include <math.h>
 #include <iostream>
 using std::cout;
@@ -33,19 +32,23 @@ static void gtk_xournal_get_preferred_width(GtkWidget *widget,
 static void gtk_xournal_get_preferred_height(GtkWidget *widget,
                                              gint *minimal_height,
                                              gint *natural_height);
-static void gtk_xournal_size_allocate(GtkWidget* widget, GtkAllocation* allocation);
+static void gtk_xournal_size_allocate(GtkWidget* widget,
+                                      GtkAllocation* allocation);
 static void gtk_xournal_realize(GtkWidget* widget);
-
 static gboolean gtk_xournal_draw(GtkWidget* widget, cairo_t* cr);
-
 static void gtk_xournal_destroy(GtkWidget* object);
-static gboolean gtk_xournal_button_press_event(GtkWidget* widget, GdkEventButton* event);
-static gboolean gtk_xournal_button_release_event(GtkWidget* widget, GdkEventButton* event);
-static gboolean gtk_xournal_motion_notify_event(GtkWidget* widget, GdkEventMotion* event);
-static gboolean gtk_xournal_key_press_event(GtkWidget* widget, GdkEventKey* event);
-static gboolean gtk_xournal_key_release_event(GtkWidget* widget, GdkEventKey* event);
-gboolean gtk_xournal_scroll_event(GtkWidget* widget, GdkEventScroll* event);
-static void gtk_xournal_scroll_mouse_event(GtkXournal* xournal, GdkEventMotion* event);
+static gboolean gtk_xournal_button_press_event(GtkWidget* widget,
+                                               GdkEventButton* event);
+static gboolean gtk_xournal_button_release_event(GtkWidget* widget,
+                                                 GdkEventButton* event);
+static gboolean gtk_xournal_motion_notify_event(GtkWidget* widget,
+                                                GdkEventMotion* event);
+static gboolean gtk_xournal_key_press_event(GtkWidget* widget,
+                                            GdkEventKey* event);
+static gboolean gtk_xournal_key_release_event(GtkWidget* widget,
+                                              GdkEventKey* event);
+static void gtk_xournal_scroll_mouse_event(GtkXournal* xournal,
+                                           GdkEventMotion* event);
 
 PageView *current_view;
 
@@ -53,20 +56,11 @@ GType gtk_xournal_get_type(void)
 {
 	static GType gtk_xournal_type = 0;
 
-	if (!gtk_xournal_type)
+	/*
+	 * TODO: check if this is correct
+	 */
+	if(!gtk_xournal_type)
 	{
-//		static const GtkTypeInfo gtk_xournal_info = {
-//			g_strdup("GtkXournal"),
-//			sizeof(GtkXournal),
-//			sizeof(GtkXournalClass),
-//			(GtkClassInitFunc) gtk_xournal_class_init,
-//			(GtkObjectInitFunc) gtk_xournal_init,
-//			NULL,
-//			NULL,
-//			(GtkClassInitFunc) NULL
-//		};
-//		gtk_xournal_type = gtk_type_unique(GTK_TYPE_WIDGET, &gtk_xournal_info);
-
 		static const GTypeInfo gtk_xournal_info =
 		{
 			sizeof(GtkXournalClass),
@@ -99,7 +93,7 @@ GType gtk_xournal_get_type(void)
 	return gtk_xournal_type;
 }
 
-GtkWidget* gtk_xournal_new(XournalView* view)
+GtkWidget* gtk_xournal_new(XournalView* view, GtkScrollable* parent)
 {
 	GtkXournal* xoj = GTK_XOURNAL(g_object_new(gtk_xournal_get_type(), NULL));
 	xoj->view = view;
@@ -107,7 +101,9 @@ GtkWidget* gtk_xournal_new(XournalView* view)
 	xoj->scrollY = 0;
 	xoj->x = 0;
 	xoj->y = 0;
-	xoj->layout = new Layout(view);
+	xoj->layout = new Layout(view,
+	                         gtk_scrollable_get_hadjustment(parent),
+	                         gtk_scrollable_get_vadjustment(parent));
 	xoj->currentInputPage = NULL;
 	xoj->pagePositionCache = new PagePositionCache();
 
@@ -124,32 +120,32 @@ GtkWidget* gtk_xournal_new(XournalView* view)
 
 static void gtk_xournal_class_init(GtkXournalClass* klass)
 {
-	GtkWidgetClass* widget_class = (GtkWidgetClass*) klass;
+	GtkWidgetClass* widget_class;
+
+	widget_class = (GtkWidgetClass*) klass;
 
 	widget_class->realize = gtk_xournal_realize;
-
 	widget_class->get_preferred_width = gtk_xournal_get_preferred_width;
 	widget_class->get_preferred_height = gtk_xournal_get_preferred_height;
 	widget_class->size_allocate = gtk_xournal_size_allocate;
 	widget_class->button_press_event = gtk_xournal_button_press_event;
 	widget_class->button_release_event = gtk_xournal_button_release_event;
 	widget_class->motion_notify_event = gtk_xournal_motion_notify_event;
-	widget_class->enter_notify_event = XInputUtils::onMouseEnterNotifyEvent;
-	widget_class->leave_notify_event = XInputUtils::onMouseLeaveNotifyEvent;
-	widget_class->scroll_event = gtk_xournal_scroll_event;
 
 	widget_class->key_press_event = gtk_xournal_key_press_event;
 	widget_class->key_release_event = gtk_xournal_key_release_event;
 
 	widget_class->draw = gtk_xournal_draw;
+
 	widget_class->destroy = gtk_xournal_destroy;
 }
 
-static gboolean gtk_xournal_key_press_event(GtkWidget* widget, GdkEventKey* event)
+static gboolean gtk_xournal_key_press_event(GtkWidget* widget,
+                                            GdkEventKey* event)
 {
-	g_return_val_if_fail(widget != NULL, false);
-	g_return_val_if_fail(GTK_IS_XOURNAL(widget), false);
-	g_return_val_if_fail(event != NULL, false);
+	g_return_val_if_fail(widget != NULL, FALSE);
+	g_return_val_if_fail(GTK_IS_XOURNAL(widget), FALSE);
+	g_return_val_if_fail(event != NULL, FALSE);
 
 	GtkXournal* xournal = GTK_XOURNAL(widget);
 
@@ -160,7 +156,7 @@ static gboolean gtk_xournal_key_press_event(GtkWidget* widget, GdkEventKey* even
 
 		if ((event->state & GDK_MOD1_MASK) || (event->state & GDK_SHIFT_MASK))
 		{
-			if (event->state & GDK_MOD1_MASK)
+			if ( event->state & GDK_MOD1_MASK )
 			{
 				d = 1;
 			}
@@ -204,24 +200,6 @@ static gboolean gtk_xournal_key_release_event(GtkWidget* widget, GdkEventKey* ev
 	GtkXournal* xournal = GTK_XOURNAL(widget);
 
 	return xournal->view->onKeyReleaseEvent(event);
-}
-
-gboolean gtk_xournal_scroll_event(GtkWidget* widget, GdkEventScroll* event)
-{
-#ifdef DEBUG_INPUT
-	// true: Core event, false: XInput event
-	gboolean isCore = (event->device == gdk_device_get_core_pointer());
-
-	INPUTDBG("Scroll (%s) (x,y)=(%.2f,%.2f), direction %d, modifier %x, isCore %i",
-			 gdk_device_get_name(event->device), event->x, event->y,
-			 event->direction, event->state, isCore);
-#endif
-
-	g_return_val_if_fail(GTK_XOURNAL(widget), FALSE);
-	g_return_val_if_fail(event != NULL, FALSE);
-
-	GtkXournal* xournal = GTK_XOURNAL(widget);
-	return xournal->layout->scrollEvent(event);
 }
 
 Rectangle* gtk_xournal_get_visible_area(GtkWidget* widget, PageView* p)
@@ -277,29 +255,35 @@ bool gtk_xournal_scroll_callback(GtkXournal* xournal)
 	return false;
 }
 
-static void gtk_xournal_scroll_mouse_event(GtkXournal* xournal, GdkEventMotion* event)
+static void gtk_xournal_scroll_mouse_event(GtkXournal* xournal,
+                                           GdkEventMotion* event)
 {
-	int x = event->x;
-	int y = event->y;
+  // use root coordinates as reference point because
+  //scrolling changes window relative coordinates
+  //see github Gnome/evince@1adce5486b10e763bed869
+  int x_root = event->x_root;
+  int y_root = event->y_root;
 
-	if (xournal->lastMousePositionX - x == 0 &&
-		xournal->lastMousePositionY - y == 0)
+	if (xournal->lastMousePositionX - x_root == 0 &&
+	    xournal->lastMousePositionY - y_root == 0)
 	{
 		return;
 	}
 
 	if (xournal->scrollOffsetX == 0 && xournal->scrollOffsetY == 0)
 	{
-		xournal->scrollOffsetX = xournal->lastMousePositionX - x;
-		xournal->scrollOffsetY = xournal->lastMousePositionY - y;
-		g_idle_add((GSourceFunc) gtk_xournal_scroll_callback, xournal);
+    xournal->scrollOffsetX = xournal->lastMousePositionX - x_root;
+    xournal->scrollOffsetY = xournal->lastMousePositionY - y_root;
 
-		xournal->lastMousePositionX = x;
-		xournal->lastMousePositionY = y;
+		g_idle_add((GSourceFunc) gtk_xournal_scroll_callback, xournal);
+		//gtk_xournal_scroll_callback(xournal);
+    xournal->lastMousePositionX = x_root;
+		xournal->lastMousePositionY = y_root;
 	}
 }
 
-PageView* gtk_xournal_get_page_view_for_pos_cached(GtkXournal* xournal, int x, int y)
+PageView* gtk_xournal_get_page_view_for_pos_cached(GtkXournal* xournal, int x,
+                                                   int y)
 {
 	x += xournal->x;
 	y += xournal->y;
@@ -379,24 +363,20 @@ gboolean gtk_xournal_button_press_event(GtkWidget* widget, GdkEventButton* event
 {
 	GtkXournal* xournal = GTK_XOURNAL(widget);
 	Settings* settings = xournal->view->getControl()->getSettings();
-	//gtk_gesture_is_recognized is always false (bug, programming error?)
-	//workaround with additional variable zoom_gesture_active
-	if (xournal->view->zoom_gesture_active)
-	{
-		return TRUE;
-	}
-
+   //gtk_gesture_is_recognized is always false (bug, programming error?)
+   //workaround with additional variable zoom_gesture_active 
+   if (xournal->view->zoom_gesture_active)
+	  {
+      return TRUE;
+    }
 	if (event->type != GDK_BUTTON_PRESS)
 	{
-		INPUTDBG2("gtk_xournal_button_press_event return false (event->type != GDK_BUTTON_PRESS)");
-		return false; // this event is not handled here
+		return FALSE; // this event is not handled here
 	}
 
-	if (event->button > 3) // scroll wheel events
+	if (event->button > 3)   // scroll wheel events
 	{
-		XInputUtils::handleScrollEvent(event, widget);
-		INPUTDBG2("gtk_xournal_button_press_event return true handled scroll event");
-		return true;
+		return FALSE;
 	}
 
 	gtk_widget_grab_focus(widget);
@@ -404,20 +384,17 @@ gboolean gtk_xournal_button_press_event(GtkWidget* widget, GdkEventButton* event
 	// none button release event was sent, send one now
 	if (xournal->currentInputPage)
 	{
-		INPUTDBG2("gtk_xournal_button_press_event (xournal->currentInputPage != NULL)");
-
 		GdkEventButton ev = *event;
-		xournal->currentInputPage->translateEvent((GdkEvent*) & ev, xournal->x, xournal->y);
+		xournal->currentInputPage->translateEvent((GdkEvent*) &ev, xournal->x,
+		                                          xournal->y);
 		xournal->currentInputPage->onButtonReleaseEvent(widget, &ev);
 	}
 
 	ToolHandler* h = xournal->view->getControl()->getToolHandler();
 
 	// Change the tool depending on the key or device
-	if (change_tool(settings, event, xournal))
-	{
-		return true;
-	}
+	if(change_tool(settings, event, xournal))
+		return TRUE;
 
 	// hand tool don't change the selection, so you can scroll e.g.
 	// with your touchscreen without remove the selection
@@ -425,13 +402,12 @@ gboolean gtk_xournal_button_press_event(GtkWidget* widget, GdkEventButton* event
 	{
 		Cursor* cursor = xournal->view->getCursor();
 		cursor->setMouseDown(true);
-		xournal->lastMousePositionX = 0;
-		xournal->lastMousePositionY = 0;
 		xournal->inScrolling = true;
-		gtk_widget_get_pointer(widget, &xournal->lastMousePositionX, &xournal->lastMousePositionY);
+    //set reference
+    xournal->lastMousePositionX=event->x_root;
+		xournal->lastMousePositionY=event->y_root;
 
-		INPUTDBG2("gtk_xournal_button_press_event (h->getToolType() == TOOL_HAND) return true");
-		return true;
+		return TRUE;
 	}
 	else if (xournal->selection)
 	{
@@ -440,30 +416,30 @@ gboolean gtk_xournal_button_press_event(GtkWidget* widget, GdkEventButton* event
 		PageView* view = selection->getView();
 		GdkEventButton ev = *event;
 		view->translateEvent((GdkEvent*) &ev, xournal->x, xournal->y);
-		CursorSelectionType selType = selection->getSelectionTypeForPos(ev.x, ev.y, xournal->view->getZoom());
+		CursorSelectionType selType = selection->getSelectionTypeForPos(ev.x, ev.y,
+		                                                                xournal->view->getZoom());
 		if (selType)
 		{
-			if (selType == CURSOR_SELECTION_MOVE && event->button == 3)
+
+			if(selType == CURSOR_SELECTION_MOVE && event->button == 3)
 			{
 				selection->copySelection();
 			}
 
 			xournal->view->getCursor()->setMouseDown(true);
 			xournal->selection->mouseDown(selType, ev.x, ev.y);
-			INPUTDBG2("gtk_xournal_button_press_event (selection) return true");
-			return true;
+			return TRUE;
 		}
 		else
 		{
 			xournal->view->clearSelection();
-			if (change_tool(settings, event, xournal))
-			{
-				return true;
-			}
+			if(change_tool(settings, event, xournal))
+				return TRUE;
 		}
 	}
 
-	PageView* pv = gtk_xournal_get_page_view_for_pos_cached(xournal, event->x, event->y);
+	PageView* pv = gtk_xournal_get_page_view_for_pos_cached(xournal, event->x,
+	                                                        event->y);
 
 	current_view = pv;
 
@@ -471,28 +447,20 @@ gboolean gtk_xournal_button_press_event(GtkWidget* widget, GdkEventButton* event
 	{
 		xournal->currentInputPage = pv;
 		pv->translateEvent((GdkEvent*) event, xournal->x, xournal->y);
-		INPUTDBG2("gtk_xournal_button_press_event (pv->onButtonPressEvent) return");
 
 		xournal->view->getDocument()->indexOf(pv->getPage());
 		return pv->onButtonPressEvent(widget, event);
 	}
 
-	INPUTDBG2("gtk_xournal_button_press_event (not handled) return false");
-	return false; // not handled
+	return FALSE; // not handled
 }
 
-gboolean gtk_xournal_button_release_event(GtkWidget* widget, GdkEventButton* event)
+gboolean gtk_xournal_button_release_event(GtkWidget* widget,
+                                          GdkEventButton* event)
 {
-#ifdef DEBUG_INPUT
-	gboolean isCore = (event->device == gdk_device_get_core_pointer());
-	INPUTDBG("ButtonRelease (%s) (x,y)=(%.2f,%.2f), button %d, modifier %x, isCore %i",
-			 gdk_device_get_name(event->device), event->x, event->y,
-			 event->button, event->state, isCore);
-#endif
-
-	if (event->button > 3) // scroll wheel events
+	if (event->button > 3)   // scroll wheel events
 	{
-		return true;
+		return TRUE;
 	}
 
 	current_view = NULL;
@@ -501,6 +469,11 @@ gboolean gtk_xournal_button_release_event(GtkWidget* widget, GdkEventButton* eve
 
 	Cursor* cursor = xournal->view->getCursor();
 	ToolHandler* h = xournal->view->getControl()->getToolHandler();
+  if (xournal->view->zoom_gesture_active)
+    {
+      return TRUE;
+    }
+
 	cursor->setMouseDown(false);
 
 	xournal->inScrolling = false;
@@ -514,7 +487,8 @@ gboolean gtk_xournal_button_release_event(GtkWidget* widget, GdkEventButton* eve
 	bool res = false;
 	if (xournal->currentInputPage)
 	{
-		xournal->currentInputPage->translateEvent((GdkEvent*) event, xournal->x, xournal->y);
+		xournal->currentInputPage->translateEvent((GdkEvent*) event, xournal->x,
+		                                          xournal->y);
 		res = xournal->currentInputPage->onButtonReleaseEvent(widget, event);
 		xournal->currentInputPage = NULL;
 	}
@@ -533,27 +507,26 @@ gboolean gtk_xournal_button_release_event(GtkWidget* widget, GdkEventButton* eve
 	return res;
 }
 
-gboolean gtk_xournal_motion_notify_event(GtkWidget* widget, GdkEventMotion* event)
+gboolean gtk_xournal_motion_notify_event(GtkWidget* widget,
+                                         GdkEventMotion* event)
 {
-#ifdef DEBUG_INPUT
-	bool is_core = (event->device == gdk_device_get_core_pointer());
-	INPUTDBG("MotionNotify (%s) (x,y)=(%.2f,%.2f), modifier %x",
-			 is_core ? "core" : "xinput",
-			 event->x, event->y,
-			 event->state);
-#endif
-
 	GtkXournal* xournal = GTK_XOURNAL(widget);
 	ToolHandler* h = xournal->view->getControl()->getToolHandler();
+
+  if (xournal->view->zoom_gesture_active)
+    {
+      return TRUE;
+    }
+
 
 	if (h->getToolType() == TOOL_HAND)
 	{
 		if (xournal->inScrolling)
 		{
 			gtk_xournal_scroll_mouse_event(xournal, event);
-			return true;
+			return TRUE;
 		}
-		return false;
+		return FALSE;
 	}
 	else if (xournal->selection)
 	{
@@ -569,7 +542,8 @@ gboolean gtk_xournal_motion_notify_event(GtkWidget* widget, GdkEventMotion* even
 		}
 		else
 		{
-			CursorSelectionType selType = selection->getSelectionTypeForPos(ev.x, ev.y, xournal->view->getZoom());
+			CursorSelectionType selType = selection->getSelectionTypeForPos(ev.x, ev.y,
+			                                                                xournal->view->getZoom());
 			xournal->view->getCursor()->setMouseSelectionType(selType);
 		}
 		return true;
@@ -618,6 +592,7 @@ static void gtk_xournal_init(GtkXournal* xournal)
 	events |= GDK_ENTER_NOTIFY_MASK;
 	events |= GDK_LEAVE_NOTIFY_MASK;
 	events |= GDK_KEY_PRESS_MASK;
+	events |= GDK_SCROLL_MASK;
 
 	gtk_widget_set_events(widget, events);
 }
@@ -696,7 +671,7 @@ static void gtk_xournal_realize(GtkWidget* widget)
 }
 
 static void gtk_xournal_draw_shadow(GtkXournal* xournal, cairo_t* cr, int left,
-									int top, int width, int height, bool selected)
+                                    int top, int width, int height, bool selected)
 {
 	if (selected)
 	{
@@ -724,27 +699,8 @@ static void gtk_xournal_draw_shadow(GtkXournal* xournal, cairo_t* cr, int left,
 	}
 }
 
-cairo_t* gtk_xournal_create_cairo_for(GtkWidget* widget, PageView* view)
-{
-	g_return_val_if_fail(widget != NULL, FALSE);
-	g_return_val_if_fail(GTK_IS_XOURNAL(widget), FALSE);
-
-	GtkXournal* xournal = GTK_XOURNAL(widget);
-	double zoom = xournal->view->getZoom();
-
-	// TODO LOW PRIO: stroke draw to this cairo surface look a little different than rendererd to a cairo surface
-	gdk_threads_enter();
-	cairo_t* cr = gdk_cairo_create(gtk_widget_get_window(GTK_WIDGET(widget)));
-	int x = view->getX() - xournal->x;
-	int y = view->getY() - xournal->y;
-	cairo_translate(cr, x, y);
-	cairo_scale(cr, zoom, zoom);
-	gdk_threads_leave();
-
-	return cr;
-}
-
-void gtk_xournal_repaint_area(GtkWidget* widget, int x1, int y1, int x2, int y2)
+void gtk_xournal_repaint_area(GtkWidget* widget, int x1, int y1, int x2,
+                              int y2)
 {
 	g_return_if_fail(widget != NULL);
 	g_return_if_fail(GTK_IS_XOURNAL(widget));
@@ -781,13 +737,14 @@ static gboolean gtk_xournal_draw(GtkWidget* widget, cairo_t* cr)
 
 	ArrayIterator<PageView*> it = xournal->view->pageViewIterator();
 
-	GtkAllocation alloc = { 0 };
-	gtk_widget_get_allocation(widget, &alloc);
-	int lastVisibleX = alloc.width + xournal->x + 10;
-	int lastVisibleY = alloc.height + xournal->y + 10; //+10 fix to draw the shadow
+	double x1, x2, y1, y2;
 
-	int firstVisibleX = xournal->x - 10;
-	int firstVisibleY = xournal->y - 10;
+	cairo_clip_extents(cr, &x1, &y1, &x2, &y2);
+
+	Rectangle clippingRect(x1 - 10,
+	                       y1 - 10,
+	                       x2 - x1 + 20,
+	                       y2 - y1 + 20);
 
 	while (it.hasNext())
 	{
@@ -798,78 +755,33 @@ static gboolean gtk_xournal_draw(GtkWidget* widget, cairo_t* cr)
 		int pw = pv->getDisplayWidth();
 		int ph = pv->getDisplayHeight();
 
-		// not visible, its on the right side of the visible area
-		if (px > lastVisibleX)
-		{
-			continue;
-		}
-		// not visible, its on the left side of the visible area
-		if (px + pw < firstVisibleX)
-		{
-			continue;
-		}
-		// not visible, its on the bottom side of the visible area
-		if (py > lastVisibleY)
-		{
-			continue;
-		}
-		// not visible, its on the top side of the visible area
-		if (py + ph < firstVisibleY)
+		if(!clippingRect.intersects(pv->getRect()))
 		{
 			continue;
 		}
 
-		int x = px - xournal->x;
-		int y = py - xournal->y;
+		gtk_xournal_draw_shadow(xournal, cr,
+		                        px, py, pw, ph,
+		                        pv->isSelected());
 
-		gtk_xournal_draw_shadow(xournal, cr, x, y, pw, ph, pv->isSelected());
 		cairo_save(cr);
-		cairo_translate(cr, x, y);
+		cairo_translate(cr, px, py);
 
 		pv->paintPage(cr, NULL);
 		cairo_restore(cr);
 	}
 
-	if (xournal->selection)
+	if(xournal->selection)
 	{
 		double zoom = xournal->view->getZoom();
 
-		int px = xournal->selection->getXOnView() * zoom;
-		int py = xournal->selection->getYOnView() * zoom;
-		//int pw = xournal->selection->getWidth() * zoom;
-		//int ph = xournal->selection->getHeight() * zoom;
+		Redrawable* red = xournal->selection->getView();
+		cairo_translate(cr, red->getX(), red->getY());
 
-		// not visible, its on the right side of the visible area
-		if (px > lastVisibleX)
-		{
-			cout << "Warning: object on right side of visible area." << endl;
-		}
-		else
-			// not visible, its on the left side of the visible area
-
-			// TODO LOW PRIO this is not working correct if the zoom is small, xournal->x is never smaller than 0
-			//		if (px + pw < firstVisibleX) {
-			//			printf("test2\n");
-			//		} else
-			// not visible, its on the bottom side of the visible area
-			if (py > lastVisibleY)
-		{
-			cout << "Warning: object below visible area." << endl;
-			//		} else
-			//		// not visible, its on the top side of the visible area
-			//		if (py + ph < firstVisibleY) {
-			//			printf("test4 %i:: %i\n", py + ph, firstVisibleY);
-		}
-		else
-		{
-			Redrawable* red = xournal->selection->getView();
-			cairo_translate(cr, red->getX() - xournal->x, red->getY() - xournal->y);
-
-			xournal->selection->paint(cr, zoom);
-		}
+		xournal->selection->paint(cr, zoom);
 	}
 
-	return true;
+	return TRUE;
 }
 
 static void gtk_xournal_destroy(GtkWidget* object)
@@ -886,4 +798,16 @@ static void gtk_xournal_destroy(GtkWidget* object)
 
 	delete xournal->layout;
 	xournal->layout = NULL;
+
+	/*
+	 * TODO: Do we need this?
+	GtkXournalClass* klass = (GtkXournalClass*) gtk_type_class(
+	                             gtk_widget_get_type());
+
+	if (GTK_OBJECT_CLASS(klass)->destroy)
+	{
+		(*GTK_OBJECT_CLASS(klass)->destroy)(object);
+	}
+	*/
 }
+

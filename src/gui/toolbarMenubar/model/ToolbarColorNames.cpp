@@ -73,7 +73,7 @@ void ToolbarColorNames::saveFile(const string file)
 	std::ofstream f(file, std::fstream::out);
 	f << data;
 	f.close();
-	
+
 	g_free(data);
 }
 

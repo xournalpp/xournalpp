@@ -43,7 +43,7 @@ private:
 	XOJ_TYPE_ATTRIB;
 
 	GtkWidget* slider;
-	GtkWidget* fixed;
 	ZoomControl* zoom;
 	bool horizontal;
 };
+

@@ -6,14 +6,14 @@
 #include "SidebarPreviewBaseEntry.h"
 #include "SidebarToolbar.h"
 
-SidebarPreviewBase::SidebarPreviewBase(Control* control) : AbstractSidebarPage(control)
+SidebarPreviewBase::SidebarPreviewBase(Control* control, GladeGui* gui) : AbstractSidebarPage(control)
 {
 	XOJ_INIT_TYPE(SidebarPreviewBase);
 
 	this->backgroundInitialized = false;
 
 	this->layoutmanager = new SidebarLayout();
-	this->toolbar = new SidebarToolbar(control);
+	this->toolbar = new SidebarToolbar(control, gui);
 
 	this->zoom = 0.15;
 
@@ -43,9 +43,10 @@ SidebarPreviewBase::SidebarPreviewBase(Control* control) : AbstractSidebarPage(c
 	g_object_ref(this->table);
 
 	gtk_table_attach(this->table, this->scrollPreview, 0, 1, 0, 1,
-					 (GtkAttachOptions) (GTK_FILL | GTK_EXPAND), (GtkAttachOptions) (GTK_FILL | GTK_EXPAND), 0, 0);
-	gtk_table_attach(this->table, this->toolbar->getWidget(), 0, 1, 1, 2,
-					 (GtkAttachOptions) (GTK_FILL | GTK_EXPAND), GTK_FILL, 0, 0);
+	                 (GtkAttachOptions) (GTK_FILL | GTK_EXPAND),
+	                 (GtkAttachOptions) (GTK_FILL | GTK_EXPAND), 0, 0);
+
+	gtk_widget_show_all(GTK_WIDGET(this->table));
 }
 
 SidebarPreviewBase::~SidebarPreviewBase()

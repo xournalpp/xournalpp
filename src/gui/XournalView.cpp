@@ -32,12 +32,11 @@ XournalView::XournalView(GtkWidget* parent, Control* control)
 	this->cache = new PdfCache(control->getSettings()->getPdfPageCacheSize());
 	registerListener(control);
 
-	this->widget = gtk_xournal_new(this);
-
+	this->widget = gtk_xournal_new(this, GTK_SCROLLABLE(parent));
 	// we need to refer widget here, because we unref it somewhere twice!?
 	g_object_ref(this->widget);
 
-	gtk_table_attach_defaults(GTK_TABLE(parent), this->widget, 1, 2, 0, 1);
+	gtk_container_add(GTK_CONTAINER(parent), this->widget);
 	gtk_widget_show(this->widget);
 
 	g_signal_connect(getWidget(), "realize", G_CALLBACK(onRealized), this);
@@ -210,16 +209,17 @@ bool XournalView::onKeyPressEvent(GdkEventKey* event)
 
 	if (state & GDK_SHIFT_MASK)
 	{
-		GtkAllocation alloc = { 0 };
+		GtkAllocation alloc =
+		{ 0 };
 		gtk_widget_get_allocation(gtk_widget_get_parent(this->widget), &alloc);
 		int windowHeight = alloc.height - scrollKeySize;
 
 		if (event->keyval == GDK_KEY_Page_Down)
 		{
 			layout->scrollRelativ(0, windowHeight);
-			return true;
+			return false;
 		}
-		if (event->keyval == GDK_KEY_Page_Up)
+		if (event->keyval == GDK_KEY_Page_Up || event->keyval == GDK_KEY_space)
 		{
 			layout->scrollRelativ(0, -windowHeight);
 			return true;
@@ -591,21 +591,13 @@ void XournalView::zoomChanged(double lastZoom)
 {
 	XOJ_CHECK_TYPE(XournalView);
 
-	// TODO !!!!!!!!!!
-/*
 	Layout* layout = gtk_xournal_get_layout(this->widget);
 	int currentPage = this->getCurrentPage();
 	PageView* view = getViewFor(currentPage);
-	ZoomControl* zoom= control->getZoomControl();
+	ZoomControl* zoom = control->getZoomControl();
 
 	if (!view)
-	{
 		return;
-	}
-
-	layout->layoutPages();
-
-	this->scrollTo(currentPage, pageTop);
 
 	double pageTop = view->getX();
 
@@ -616,17 +608,17 @@ void XournalView::zoomChanged(double lastZoom)
 	// by scrolling relative to counter motion induced by zoom
 	// in orignal version top left corner of first page static
 	// Pack into extra function later
-	double zoom_now=getZoom();
+	double zoom_now = getZoom();
 	//relative scrolling
-	double zoom_eff=zoom_now/lastZoom;
+	double zoom_eff = zoom_now / lastZoom;
 	int scroll_x;
 	int scroll_y;
 	//x,y position of visible rectangle for gesture scrolling
 	int vis_x;
 	int vis_y;
 	//get margins for relative scroll calculation
-	double marginLeft=(double)view->layout.getMarginLeft();
-	double marginTop=(double)view->layout.getMarginTop();
+	double marginLeft = (double) view->layout.getMarginLeft();
+	double marginTop = (double) view->layout.getMarginTop();
 
 	//Absolute centred scrolling used for gesture
 	if (this->zoom_gesture_active)
@@ -654,7 +646,6 @@ void XournalView::zoomChanged(double lastZoom)
 	control->getMetadataManager()->setDouble(file, "zoom", getZoom());
 
 	this->control->getScheduler()->blockRerenderZoom();
-	*/
 }
 
 void XournalView::pageSizeChanged(size_t page)
@@ -771,8 +762,7 @@ void XournalView::pageInserted(size_t page)
 
 	Layout* layout = gtk_xournal_get_layout(this->widget);
 	layout->layoutPages();
-
-	layout->checkSelectedPage();
+	layout->updateCurrentPage();
 }
 
 double XournalView::getZoom()

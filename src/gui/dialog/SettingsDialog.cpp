@@ -167,7 +167,6 @@ void SettingsDialog::load()
 	loadCheckbox("cbAutosave", settings->isAutosaveEnabled());
 	loadCheckbox("cbAddVerticalSpace", settings->getAddVerticalSpace());
 	loadCheckbox("cbAddHorizontalSpace", settings->getAddHorizontalSpace());
-	loadCheckbox("cbFixXinput", settings->getfixXinput());
 	loadCheckbox("cbBigCursor", settings->isShowBigCursor());
 
 	GtkWidget* txtDefaultSaveName = get("txtDefaultSaveName");
@@ -309,7 +308,6 @@ void SettingsDialog::save()
 	settings->setAutosaveEnabled(getCheckbox("cbAutosave"));
 	settings->setAddVerticalSpace(getCheckbox("cbAddVerticalSpace"));
 	settings->setAddHorizontalSpace(getCheckbox("cbAddHorizontalSpace"));
-	settings->setfixXinput(getCheckbox("cbFixXinput"));
 	settings->setShowBigCursor(getCheckbox("cbBigCursor"));
 
 	GtkWidget* colorBorder = get("colorBorder");

@@ -77,7 +77,7 @@ void ZoomControl::setZoom(double zoom)
 {
 	XOJ_CHECK_TYPE(ZoomControl);
 
-	double lastZoom = zoom;
+	double lastZoom = this->zoom;
 	this->zoom = zoom;
 	this->zoomFitMode = false;
 	fireZoomChanged(lastZoom);

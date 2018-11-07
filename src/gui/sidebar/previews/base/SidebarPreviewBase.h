@@ -11,6 +11,7 @@
 
 #pragma once
 
+#include "gui/GladeGui.h"
 #include "gui/sidebar/AbstractSidebarPage.h"
 #include <XournalType.h>
 
@@ -28,7 +29,7 @@ typedef std::vector<SidebarPreviewBaseEntry*> SidebarPreviewBaseEntryVector;
 class SidebarPreviewBase : public AbstractSidebarPage
 {
 public:
-	SidebarPreviewBase(Control* control);
+	SidebarPreviewBase(Control* control, GladeGui* gui);
 	virtual ~SidebarPreviewBase();
 
 public:

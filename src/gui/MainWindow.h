@@ -55,6 +55,8 @@ public:
 	void setFontButtonFont(XojFont& font);
 	XojFont getFontButtonFont();
 
+	void saveSidebarSize();
+
 	void setMaximized(bool maximized);
 	bool isMaximized();
 

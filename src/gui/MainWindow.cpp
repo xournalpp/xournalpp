@@ -54,18 +54,9 @@ MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control) :
 	gtk_widget_destroy(get("menuEditTex"));
 #endif
 
-	GtkWidget* tableXournal = get("tableXournal");
+	GtkWidget* vpXournal = get("vpXournal");
 
-	this->xournal = new XournalView(tableXournal, control);
-
-	ScrollbarHideType type = control->getSettings()->getScrollbarHideType();
-
-	if (type == SCROLLBAR_HIDE_NONE || type == SCROLLBAR_HIDE_VERTICAL)
-	{
-		Layout* layout = gtk_xournal_get_layout(this->xournal->getWidget());
-		gtk_table_attach(GTK_TABLE(tableXournal), layout->getScrollbarHorizontal(), 1, 2, 1, 2,
-						 (GtkAttachOptions) (GTK_EXPAND | GTK_FILL), GTK_FILL, 0, 0);
-	}
+	this->xournal = new XournalView(vpXournal, control);
 
 	setSidebarVisible(control->getSettings()->isSidebarVisible());
 
@@ -333,37 +324,40 @@ void MainWindow::updateScrollbarSidebarPosition()
 	XOJ_CHECK_TYPE(MainWindow);
 
 	GtkWidget* panelMainContents = get("panelMainContents");
-	GtkWidget* sidebarContents = get("sidebarContents");
-	GtkWidget* tableXournal = get("tableXournal");
+	GtkWidget* sidebar = get("sidebar");
+	GtkWidget* winXournal = get("winXournal");
+	GtkScrolledWindow* scrolledWindow = GTK_SCROLLED_WINDOW(winXournal);
+	// Turn on/off kinetic scrolling (in gnome 3.18 on by default)
+	// Kinetic scrolling works fine btw
+	// comment line to turn on
+	//gtk_scrolled_window_set_kinetic_scrolling(scrolledWindow,false);
 
 	bool scrollbarOnLeft = control->getSettings()->isScrollbarOnLeft();
 
-	Layout* layout = this->getLayout();
+	ScrollbarHideType type =
+	    this->getControl()->getSettings()->getScrollbarHideType();
 
-	GtkWidget* v = layout->getScrollbarVertical();
-
-	if (gtk_widget_get_parent(v) != NULL)
+	if (scrollbarOnLeft)
 	{
-		gtk_container_remove(GTK_CONTAINER(tableXournal), v);
+		gtk_scrolled_window_set_placement(scrolledWindow,
+		                                  GTK_CORNER_TOP_RIGHT);
+	}
+	else
+	{
+		gtk_scrolled_window_set_placement(scrolledWindow,
+		                                  GTK_CORNER_TOP_LEFT);
 	}
 
-	ScrollbarHideType type = this->getControl()->getSettings()->getScrollbarHideType();
+	gtk_widget_set_visible(gtk_scrolled_window_get_hscrollbar(scrolledWindow),
+	                       !(type & SCROLLBAR_HIDE_HORIZONTAL));
 
-	if (type == SCROLLBAR_HIDE_NONE || type == SCROLLBAR_HIDE_HORIZONTAL)
-	{
-		if (scrollbarOnLeft)
-		{
-			gtk_table_attach(GTK_TABLE(tableXournal), v, 0, 1, 0, 1, (GtkAttachOptions) 0, GTK_FILL, 0, 0);
-		}
-		else
-		{
-			gtk_table_attach(GTK_TABLE(tableXournal), v, 2, 3, 0, 1, (GtkAttachOptions) 0, GTK_FILL, 0, 0);
-		}
-	}
+	gtk_widget_set_visible(gtk_scrolled_window_get_vscrollbar(scrolledWindow),
+	                       !(type & SCROLLBAR_HIDE_VERTICAL));
 
 	int divider = gtk_paned_get_position(GTK_PANED(panelMainContents));
 	bool sidebarRight = control->getSettings()->isSidebarOnRight();
-	if (sidebarRight == (gtk_paned_get_child2(GTK_PANED(panelMainContents)) == sidebarContents))
+	if (sidebarRight == (gtk_paned_get_child2(GTK_PANED(panelMainContents)) ==
+	                     sidebar))
 	{
 		// Already correct
 		return;
@@ -375,25 +369,24 @@ void MainWindow::updateScrollbarSidebarPosition()
 		divider = allocation.width - divider;
 	}
 
-	g_object_ref(sidebarContents);
-	g_object_ref(tableXournal);
+	g_object_ref(sidebar);
 
-	gtk_container_remove(GTK_CONTAINER(panelMainContents), sidebarContents);
-	gtk_container_remove(GTK_CONTAINER(panelMainContents), tableXournal);
+	gtk_container_remove(GTK_CONTAINER(panelMainContents), sidebar);
+	gtk_container_remove(GTK_CONTAINER(panelMainContents), winXournal);
 
 	if (sidebarRight)
 	{
-		gtk_paned_pack1(GTK_PANED(panelMainContents), tableXournal, true, true);
-		gtk_paned_pack2(GTK_PANED(panelMainContents), sidebarContents, false, true);
+		gtk_paned_pack1(GTK_PANED(panelMainContents), winXournal, TRUE, FALSE);
+		gtk_paned_pack2(GTK_PANED(panelMainContents), sidebar, FALSE, FALSE);
 	}
 	else
 	{
-		gtk_paned_pack1(GTK_PANED(panelMainContents), sidebarContents, false, true);
-		gtk_paned_pack2(GTK_PANED(panelMainContents), tableXournal, true, true);
+		gtk_paned_pack1(GTK_PANED(panelMainContents), sidebar, FALSE, FALSE);
+		gtk_paned_pack2(GTK_PANED(panelMainContents), winXournal, TRUE, FALSE);
 	}
 
-	g_object_unref(sidebarContents);
-	g_object_unref(tableXournal);
+	gtk_paned_set_position(GTK_PANED(panelMainContents), divider);
+	g_object_unref(sidebar);
 }
 
 void MainWindow::buttonCloseSidebarClicked(GtkButton* button, MainWindow* win)
@@ -464,23 +457,31 @@ void MainWindow::setSidebarVisible(bool visible)
 	XOJ_CHECK_TYPE(MainWindow);
 
 	Settings* settings = control->getSettings();
+	GtkWidget* sidebar = get("sidebar");
+	GtkWidget* panel = get("panelMainContents");
 
-	if (!visible && (control->getSidebar() != NULL))
-	{
-		control->getSidebar()->saveSize();
-	}
-
-	GtkWidget* sidebar = get("sidebarContents");
 	gtk_widget_set_visible(sidebar, visible);
 	settings->setSidebarVisible(visible);
 
-	if (visible)
+	if(!visible && (control->getSidebar() != NULL))
 	{
-		gtk_widget_set_size_request(sidebar, settings->getSidebarWidth(), 100);
+		saveSidebarSize();
+	}
+
+	if(visible)
+	{
+		gtk_paned_set_position(GTK_PANED(panel), settings->getSidebarWidth());
 	}
 
 	GtkWidget* w = get("menuViewSidebarVisible");
 	gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(w), visible);
+}
+
+void MainWindow::saveSidebarSize()
+{
+	GtkWidget* panel = get("panelMainContents");
+
+	this->control->getSettings()->setSidebarWidth(gtk_paned_get_position(GTK_PANED(panel)));
 }
 
 void MainWindow::setMaximized(bool maximized)

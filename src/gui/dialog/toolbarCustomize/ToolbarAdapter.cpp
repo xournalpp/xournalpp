@@ -146,13 +146,11 @@ void ToolbarAdapter::showToolbar()
 	GtkOrientation orientation = gtk_orientable_get_orientation(GTK_ORIENTABLE(tb));
 	if (orientation == GTK_ORIENTATION_HORIZONTAL)
 	{
-		GtkAllocation alloc = { 0, 0, 0, 20 };
-		gtk_widget_set_allocation(GTK_WIDGET(it), &alloc);
+		gtk_widget_set_size_request(GTK_WIDGET(it), 0, 20);
 	}
 	else if (orientation == GTK_ORIENTATION_VERTICAL)
 	{
-		GtkAllocation alloc = { 0, 0, 20, 0 };
-		gtk_widget_set_allocation(GTK_WIDGET(it), &alloc);
+		gtk_widget_set_size_request(GTK_WIDGET(it), 20, 0);
 	}
 }
 

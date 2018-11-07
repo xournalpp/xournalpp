@@ -4,44 +4,29 @@
 #include "undo/CopyUndoAction.h"
 #include "undo/SwapUndoAction.h"
 
-SidebarToolbar::SidebarToolbar(Control* control)
+SidebarToolbar::SidebarToolbar(Control* control, GladeGui* gui)
 {
 	XOJ_INIT_TYPE(SidebarToolbar);
 
 	this->control = control;
-	this->toolbar = GTK_TOOLBAR(gtk_toolbar_new());
 
-	gtk_toolbar_set_icon_size(this->toolbar, GTK_ICON_SIZE_SMALL_TOOLBAR);
+	this->btUp = GTK_BUTTON(gui->get("btUp"));
+	this->btDown = GTK_BUTTON(gui->get("btDown"));
+	this->btCopy = GTK_BUTTON(gui->get("btCopy"));
+	this->btDelete = GTK_BUTTON(gui->get("btDelete"));
 
-	g_object_ref(this->toolbar);
-
-	this->btUp = gtk_tool_button_new_from_stock(GTK_STOCK_GO_UP);
-	gtk_toolbar_insert(this->toolbar, this->btUp, -1);
 	g_signal_connect(this->btUp, "clicked", G_CALLBACK(&btUpClicked), this);
-
-	this->btDown = gtk_tool_button_new_from_stock(GTK_STOCK_GO_DOWN);
-	gtk_toolbar_insert(this->toolbar, this->btDown, -1);
 	g_signal_connect(this->btDown, "clicked", G_CALLBACK(&btDownClicked), this);
-
-	this->btCopy = gtk_tool_button_new_from_stock(GTK_STOCK_COPY);
-	gtk_toolbar_insert(this->toolbar, this->btCopy, -1);
 	g_signal_connect(this->btCopy, "clicked", G_CALLBACK(&btCopyClicked), this);
-
-	this->btDelete = gtk_tool_button_new_from_stock(GTK_STOCK_DELETE);
-	gtk_toolbar_insert(this->toolbar, this->btDelete, -1);
 	g_signal_connect(this->btDelete, "clicked", G_CALLBACK(&btDeleteClicked), this);
-
-	gtk_widget_show_all(GTK_WIDGET(this->toolbar));
 }
 
 SidebarToolbar::~SidebarToolbar()
 {
-	XOJ_RELEASE_TYPE(SidebarToolbar);
-
-	g_object_unref(G_OBJECT(this->toolbar));
-	this->toolbar = NULL;
+	XOJ_CHECK_TYPE(SidebarToolbar);
 
 	this->control = NULL;
+	XOJ_RELEASE_TYPE(SidebarToolbar);
 }
 
 void SidebarToolbar::btUpClicked(GtkToolButton* toolbutton, SidebarToolbar* toolbar)
@@ -143,9 +128,3 @@ void SidebarToolbar::setButtonEnabled(bool enableUp, bool enableDown, bool enabl
 	this->currentPage = currentPage;
 }
 
-GtkWidget* SidebarToolbar::getWidget()
-{
-	XOJ_CHECK_TYPE(SidebarToolbar);
-
-	return GTK_WIDGET(this->toolbar);
-}

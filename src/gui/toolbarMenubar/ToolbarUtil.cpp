@@ -1,49 +1,12 @@
 #include "ToolbarUtil.h"
 
+#include <pixbuf-utils.h>
+
 #include <math.h>
 
 ToolbarUtil::ToolbarUtil() { }
 
 ToolbarUtil::~ToolbarUtil() { }
-
-
-GdkPixbuf* gdk_pixbuf_new_from_surface(cairo_surface_t* surface)
-{
-	int w = cairo_image_surface_get_width(surface);
-	int h = cairo_image_surface_get_height(surface);
-	GdkPixbuf* pixbuf = gdk_pixbuf_new(GDK_COLORSPACE_RGB, true, 8, w, h);
-	unsigned char* sb = cairo_image_surface_get_data(surface);
-
-	int n_channels = gdk_pixbuf_get_n_channels(pixbuf);
-	g_assert(gdk_pixbuf_get_colorspace(pixbuf) == GDK_COLORSPACE_RGB);
-	g_assert(gdk_pixbuf_get_bits_per_sample(pixbuf) == 8);
-	g_assert(gdk_pixbuf_get_has_alpha(pixbuf));
-	g_assert(n_channels == 4);
-	int rowstride = gdk_pixbuf_get_rowstride(pixbuf);
-	guchar* pixels = gdk_pixbuf_get_pixels(pixbuf);
-
-	for (int y = 0; y < h; y++)
-	{
-		for (int x = 0; x < w; x++)
-		{
-			guchar * p = pixels + y * rowstride + x * n_channels;
-
-			// blue
-			p[2] = *sb++;
-
-			// green
-			p[1] = *sb++;
-
-			// red
-			p[0] = *sb++;
-
-			// alpha
-			p[3] = *sb++;
-		}
-	}
-
-	return pixbuf;
-}
 
 /**
  * Create a new GtkImage with preview color
@@ -112,7 +75,7 @@ cairo_surface_t* ToolbarUtil::newColorIconSurface(int color, int size, bool circ
 GdkPixbuf* ToolbarUtil::newColorIconPixbuf(int color, int size, bool circle)
 {
 	cairo_surface_t* surface = newColorIconSurface(color, size, circle);
-	GdkPixbuf* pixbuf = gdk_pixbuf_new_from_surface(surface);
+	GdkPixbuf* pixbuf = xoj_pixbuf_get_from_surface(surface, 0, 0, cairo_image_surface_get_width(surface), cairo_image_surface_get_height(surface));
 	cairo_surface_destroy(surface);
 
 	return pixbuf;

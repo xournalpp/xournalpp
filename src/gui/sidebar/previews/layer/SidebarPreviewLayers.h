@@ -18,7 +18,7 @@
 class SidebarPreviewLayers : public SidebarPreviewBase
 {
 public:
-	SidebarPreviewLayers(Control* control);
+	SidebarPreviewLayers(Control* control, GladeGui* gui);
 	virtual ~SidebarPreviewLayers();
 
 public:
