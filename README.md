@@ -75,7 +75,7 @@ libpoppler-dev libpoppler-cpp-dev libpoppler-glib-dev libpoppler-private-dev
 
 Basic steps are: (need to compile with -fpermissive due to const library changes in poppler)
 ````bash
-git clone http://github.com/xournalpp/xournalpp.git
+git clone http://github.com/morrolinux/xournalpp.git
 cd xournalpp
 mkdir build
 cd build
@@ -86,6 +86,16 @@ make
 PS: Build only tested for `poppler-0.67.0-1` and `poppler-glib-0.67.0-1`
 
 If you're on Arch and you're having issues getting it to compile, please try to downgrade those two packages with `downgrade` command.
+
+### Non-Arch users
+
+If your build fails, try the following (I haven't tested it yet as I'm on Arch) (thanks to Gianluca Viganò)
+- Download and replace those two files from the upstream:
+- - xournalpp/src/config.h.in
+- - xournalpp/src/mathtex/config.h.in
+- Rename xournalpp/src/pdf/popplerdirect/workaround/poppler-0.62.0 to poppler-0.67.0 (should match your poppler version)
+- Edit `poppler-0.67.0` occurrences accordingly inside xournalpp/src/pdf/popplerdirect/workaround/workaround.h.in 
+- re-try from cmake command 
 
 On Ubuntu 16.04, you may need to configure cmake with `-DBUILD_POPPLER=ON` due
 to #234.
