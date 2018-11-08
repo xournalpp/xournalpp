@@ -168,7 +168,9 @@ private:
 	void addRerenderRect(double x, double y, double width, double height);
 
 public:
-	// position in the layout
+	/**
+	 * position in the layout
+	 */
 	LayoutData layout;
 
 private:
@@ -190,7 +192,9 @@ private:
 	 */
 	TextEditor* textEditor;
 
-	//For keeping old text changes to undo!
+	/**
+	 * For keeping old text changes to undo!
+	 */
 	Text* oldtext;
 
 	bool selected;
@@ -199,7 +203,9 @@ private:
 
 	bool inEraser;
 
-	// Vertical Space
+	/**
+	 * Vertical Space
+	 */
 	VerticalToolHandler* verticalSpace;
 
 	/**

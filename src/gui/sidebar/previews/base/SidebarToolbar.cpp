@@ -90,8 +90,6 @@ void SidebarToolbar::btCopyClicked(GtkToolButton* toolbutton, SidebarToolbar* to
 {
 	XOJ_CHECK_TYPE_OBJ(toolbar, SidebarToolbar);
 
-	printf("copy page this=%lx\n", toolbar);
-
 	Document* doc = toolbar->control->getDocument();
 	doc->lock();
 
@@ -133,11 +131,5 @@ void SidebarToolbar::setButtonEnabled(bool enableUp, bool enableDown, bool enabl
 	gtk_widget_set_sensitive(GTK_WIDGET(this->btDelete), enableDelete);
 
 	this->currentPage = currentPage;
-
-	Document* doc = control->getDocument();
-	doc->lock();
-	int page = doc->indexOf(currentPage);
-	doc->unlock();
-	printf("Current selected page is %i, this=%lx\n", page, this);
 }
 
