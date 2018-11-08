@@ -27,7 +27,7 @@ SidebarPreviewBaseEntry::SidebarPreviewBaseEntry(SidebarPreviewBase* sidebar, Pa
 	updateSize();
 	gtk_widget_set_events(widget, GDK_EXPOSURE_MASK | GDK_BUTTON_PRESS_MASK);
 
-	g_signal_connect(this->widget, "expose_event", G_CALLBACK(exposeEventCallback), this);
+	g_signal_connect(this->widget, "draw", G_CALLBACK(drawCallback), this);
 	g_signal_connect(this->widget, "button-press-event", G_CALLBACK(mouseButtonPressCallback), this);
 }
 
@@ -49,12 +49,12 @@ SidebarPreviewBaseEntry::~SidebarPreviewBaseEntry()
 	XOJ_RELEASE_TYPE(SidebarPreviewBaseEntry);
 }
 
-gboolean SidebarPreviewBaseEntry::exposeEventCallback(GtkWidget* widget, GdkEventExpose* event, SidebarPreviewBaseEntry* preview)
+gboolean SidebarPreviewBaseEntry::drawCallback(GtkWidget* widget, cairo_t* cr, SidebarPreviewBaseEntry* preview)
 {
 	XOJ_CHECK_TYPE_OBJ(preview, SidebarPreviewBaseEntry);
 
-	preview->paint();
-	return true;
+	preview->paint(cr);
+	return TRUE;
 }
 
 gboolean SidebarPreviewBaseEntry::mouseButtonPressCallback(GtkWidget* widget, GdkEventButton* event, SidebarPreviewBaseEntry* preview)
@@ -86,9 +86,11 @@ void SidebarPreviewBaseEntry::repaint()
 	sidebar->getControl()->getScheduler()->addRepaintSidebar(this);
 }
 
-void SidebarPreviewBaseEntry::paint()
+void SidebarPreviewBaseEntry::paint(cairo_t* cr)
 {
 	XOJ_CHECK_TYPE(SidebarPreviewBaseEntry);
+
+	bool doRepaint = false;
 
 	sidebar->setBackgroundWhite();
 
@@ -101,7 +103,8 @@ void SidebarPreviewBaseEntry::paint()
 
 		this->firstPainted = true;
 		gdk_threads_enter();
-		gdk_window_set_background(gtk_widget_get_window(widget), &gtk_widget_get_style(widget)->white);
+		gdk_window_set_background(gtk_widget_get_window(widget),
+		                          &gtk_widget_get_style(widget)->white);
 		gtk_widget_queue_draw(this->widget);
 		gdk_threads_leave();
 		return;
@@ -114,7 +117,8 @@ void SidebarPreviewBaseEntry::paint()
 
 	if (this->crBuffer == NULL)
 	{
-		this->crBuffer = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, alloc.width, alloc.height);
+		this->crBuffer = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, alloc.width,
+		                                            alloc.height);
 
 		double zoom = sidebar->getZoom();
 
@@ -122,28 +126,28 @@ void SidebarPreviewBaseEntry::paint()
 		cairo_matrix_t defaultMatrix = { 0 };
 		cairo_get_matrix(cr2, &defaultMatrix);
 
-		cairo_translate(cr2, Shadow::getShadowTopLeftSize() + 2, Shadow::getShadowTopLeftSize() + 2);
+		cairo_translate(cr2, Shadow::getShadowTopLeftSize() + 2,
+		                Shadow::getShadowTopLeftSize() + 2);
 
 		cairo_scale(cr2, zoom, zoom);
 
-		string txtLoading = _("Loading...");
+		const char* txtLoading = _C("Loading...");
 
 		cairo_text_extents_t ex;
 		cairo_set_source_rgb(cr2, 0.5, 0.5, 0.5);
-		cairo_select_font_face(cr2, "Sans", CAIRO_FONT_SLANT_NORMAL, CAIRO_FONT_WEIGHT_BOLD);
+		cairo_select_font_face(cr2, "Sans", CAIRO_FONT_SLANT_NORMAL,
+		                       CAIRO_FONT_WEIGHT_BOLD);
 		cairo_set_font_size(cr2, 70.0);
-		cairo_text_extents(cr2, txtLoading.c_str(), &ex);
+		cairo_text_extents(cr2, txtLoading, &ex);
 		cairo_move_to(cr2, (page->getWidth() - ex.width) / 2 - ex.x_bearing,
-					  (page->getHeight() - ex.height) / 2 - ex.y_bearing);
-		cairo_show_text(cr2, txtLoading.c_str());
+		              (page->getHeight() - ex.height) / 2 - ex.y_bearing);
+		cairo_show_text(cr2, txtLoading);
 
 		cairo_destroy(cr2);
 
-		repaint();
+		doRepaint = true;
 	}
 
-	gdk_threads_enter();
-	cairo_t* cr = gdk_cairo_create(gtk_widget_get_window(widget));
 	cairo_set_source_surface(cr, this->crBuffer, 0, 0);
 	cairo_paint(cr);
 
@@ -153,29 +157,34 @@ void SidebarPreviewBaseEntry::paint()
 	if (this->selected)
 	{
 		// Draw border
-		Util::cairo_set_source_rgbi(cr, sidebar->getControl()->getSettings()->getSelectionColor());
+		Util::cairo_set_source_rgbi(cr,
+		                            sidebar->getControl()->getSettings()->getSelectionColor());
 		cairo_set_line_width(cr, 2);
 		cairo_set_line_cap(cr, CAIRO_LINE_CAP_BUTT);
 		cairo_set_line_join(cr, CAIRO_LINE_JOIN_BEVEL);
 
 		cairo_rectangle(cr, Shadow::getShadowTopLeftSize() + 0.5,
-						Shadow::getShadowTopLeftSize() + 0.5, width + 3, height + 3);
+		                Shadow::getShadowTopLeftSize() + 0.5, width + 3, height + 3);
 
 		cairo_stroke(cr);
 
 		cairo_set_operator(cr, CAIRO_OPERATOR_ATOP);
-		Shadow::drawShadow(cr, Shadow::getShadowTopLeftSize(), Shadow::getShadowTopLeftSize(), width + 4, height + 4);
+		Shadow::drawShadow(cr, Shadow::getShadowTopLeftSize(),
+		                   Shadow::getShadowTopLeftSize(), width + 4, height + 4);
 	}
 	else
 	{
 		cairo_set_operator(cr, CAIRO_OPERATOR_ATOP);
-		Shadow::drawShadow(cr, Shadow::getShadowTopLeftSize() + 2, Shadow::getShadowTopLeftSize() + 2, width, height);
+		Shadow::drawShadow(cr, Shadow::getShadowTopLeftSize() + 2,
+		                   Shadow::getShadowTopLeftSize() + 2, width, height);
 	}
 
-	cairo_destroy(cr);
-	gdk_threads_leave();
-
 	g_mutex_unlock(&this->drawingMutex);
+
+	if (doRepaint)
+	{
+		repaint();
+	}
 }
 
 void SidebarPreviewBaseEntry::updateSize()
