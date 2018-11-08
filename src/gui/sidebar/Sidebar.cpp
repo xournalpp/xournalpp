@@ -36,7 +36,7 @@ void Sidebar::initPages(GtkWidget* sidebar, GladeGui* gui)
 	XOJ_CHECK_TYPE(Sidebar);
 
 	addPage(new SidebarIndexPage(this->control));
-	addPage(new SidebarPreviewPages(this->control, this->gui));
+	addPage(new SidebarPreviewPages(this->control, this->gui, &this->toolbar));
 #ifdef UNSTABLE_LAYERS_SIDEBAR
 	addPage(new SidebarPreviewLayers(this->control));
 #endif //UNSTABLE_LAYERS_SIDEBAR

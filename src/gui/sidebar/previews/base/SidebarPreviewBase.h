@@ -29,7 +29,7 @@ typedef std::vector<SidebarPreviewBaseEntry*> SidebarPreviewBaseEntryVector;
 class SidebarPreviewBase : public AbstractSidebarPage
 {
 public:
-	SidebarPreviewBase(Control* control, GladeGui* gui);
+	SidebarPreviewBase(Control* control, GladeGui* gui, SidebarToolbar* toolbar);
 	virtual ~SidebarPreviewBase();
 
 public:

@@ -6,14 +6,15 @@
 #include "SidebarPreviewBaseEntry.h"
 #include "SidebarToolbar.h"
 
-SidebarPreviewBase::SidebarPreviewBase(Control* control, GladeGui* gui) : AbstractSidebarPage(control)
+SidebarPreviewBase::SidebarPreviewBase(Control* control, GladeGui* gui, SidebarToolbar* toolbar)
+ : AbstractSidebarPage(control),
+   toolbar(toolbar)
 {
 	XOJ_INIT_TYPE(SidebarPreviewBase);
 
 	this->backgroundInitialized = false;
 
 	this->layoutmanager = new SidebarLayout();
-	this->toolbar = new SidebarToolbar(control, gui);
 
 	this->zoom = 0.15;
 
@@ -61,9 +62,6 @@ SidebarPreviewBase::~SidebarPreviewBase()
 
 	delete this->layoutmanager;
 	this->layoutmanager = NULL;
-
-	delete this->toolbar;
-	this->toolbar = NULL;
 
 	g_object_unref(this->table);
 

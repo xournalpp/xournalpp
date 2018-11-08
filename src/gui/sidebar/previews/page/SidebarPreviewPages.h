@@ -18,7 +18,7 @@
 class SidebarPreviewPages : public SidebarPreviewBase
 {
 public:
-	SidebarPreviewPages(Control* control, GladeGui* gui);
+	SidebarPreviewPages(Control* control, GladeGui* gui, SidebarToolbar* toolbar);
 	virtual ~SidebarPreviewPages();
 
 public:
