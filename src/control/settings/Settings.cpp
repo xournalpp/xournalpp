@@ -7,7 +7,6 @@
 
 #include <boost/filesystem.hpp>
 
-#include <stdlib.h>
 #include <string.h>
 
 #define DEFAULT_FONT "Sans"
@@ -19,16 +18,13 @@
 #define WRITE_DOUBLE_PROP(var) xmlNode = savePropertyDouble((const char *)#var, var, root)
 #define WRITE_COMMENT(var) com = xmlNewComment((const xmlChar *)var); xmlAddPrevSibling(xmlNode, com);
 
-const char* BUTTON_NAMES[] = {"middle", "right", "eraser", "touch", "default"};
-const int BUTTON_COUNT = 5;
+const char* BUTTON_NAMES[] = {"middle", "right", "eraser", "touch", "default", "stylus", "stylus2"};
 
 Settings::Settings(path filename)
 {
 	XOJ_INIT_TYPE(Settings);
 
 	this->filename = filename;
-	this->timeoutId = 0;
-	this->saved = true;
 
 	loadDefault();
 }
@@ -37,12 +33,7 @@ Settings::~Settings()
 {
 	XOJ_CHECK_TYPE(Settings);
 
-	if (this->timeoutId)
-	{
-		save();
-	}
-
-	for (int i = 0; i < 7; i++)
+	for (int i = 0; i < BUTTON_COUNT; i++)
 	{
 		delete this->buttonConfig[i];
 		this->buttonConfig[i] = NULL;
@@ -56,8 +47,6 @@ void Settings::loadDefault()
 	XOJ_CHECK_TYPE(Settings);
 
 	this->presureSensitivity = true;
-	this->saved = true;
-
 	this->maximized = false;
 	this->showTwoPages = false;
 	this->presentationMode = false;
@@ -587,26 +576,6 @@ bool Settings::load()
 	return true;
 }
 
-gboolean Settings::saveCallback(Settings* data)
-{
-	XOJ_CHECK_TYPE_OBJ(data, Settings);
-
-	((Settings*) data)->save();
-	return false;
-}
-
-void Settings::saveTimeout()
-{
-	XOJ_CHECK_TYPE(Settings);
-
-	if (this->timeoutId)
-	{
-		return;
-	}
-
-	this->timeoutId = g_timeout_add_seconds(2, (GSourceFunc) &saveCallback, this);
-}
-
 xmlNodePtr Settings::savePropertyDouble(const gchar* key, double value, xmlNodePtr parent)
 {
 	XOJ_CHECK_TYPE(Settings);
@@ -758,12 +727,6 @@ void Settings::saveButtonConfig()
 void Settings::save()
 {
 	XOJ_CHECK_TYPE(Settings);
-
-	if (this->timeoutId)
-	{
-		g_source_remove(this->timeoutId);
-		this->timeoutId = 0;
-	}
 
 	xmlDocPtr doc;
 	xmlNodePtr root;
@@ -996,7 +959,7 @@ void Settings::setSidebarOnRight(bool right)
 
 	this->sidebarOnRight = right;
 
-	saveTimeout();
+	save();
 }
 
 bool Settings::isScrollbarOnLeft()
@@ -1017,7 +980,7 @@ void Settings::setScrollbarOnLeft(bool right)
 
 	this->scrollbarOnLeft = right;
 
-	saveTimeout();
+	save();
 }
 
 int Settings::getAutosaveTimeout()
@@ -1036,7 +999,7 @@ void Settings::setAutosaveTimeout(int autosave)
 
 	this->autosaveTimeout = autosave;
 
-	saveTimeout();
+	save();
 }
 
 bool Settings::isAutosaveEnabled()
@@ -1057,7 +1020,7 @@ void Settings::setAutosaveEnabled(bool autosave)
 
 	this->autosaveEnabled = autosave;
 
-	saveTimeout();
+	save();
 }
 
 bool Settings::getAddVerticalSpace()
@@ -1101,7 +1064,7 @@ void Settings::setEnableLeafEnterWorkaround(bool enable)
 
 	this->enableLeafEnterWorkaround = enable;
 
-	saveTimeout();
+	save();
 }
 
 bool Settings::isShowBigCursor()
@@ -1121,7 +1084,7 @@ void Settings::setShowBigCursor(bool b)
 	}
 
 	this->showBigCursor = b;
-	saveTimeout();
+	save();
 }
 
 ScrollbarHideType Settings::getScrollbarHideType()
@@ -1142,7 +1105,7 @@ void Settings::setScrollbarHideType(ScrollbarHideType type)
 
 	this->scrollbarHideType = type;
 
-	saveTimeout();
+	save();
 }
 
 bool Settings::isAutloadPdfXoj()
@@ -1161,7 +1124,7 @@ void Settings::setAutoloadPdfXoj(bool load)
 		return;
 	}
 	this->autoloadPdfXoj = load;
-	saveTimeout();
+	save();
 }
 
 string Settings::getDefaultSaveName()
@@ -1182,7 +1145,7 @@ void Settings::setDefaultSaveName(string name)
 
 	this->defaultSaveName = name;
 
-	saveTimeout();
+	save();
 }
 
 string Settings::getVisiblePageFormats()
@@ -1212,7 +1175,7 @@ void Settings::setShowTwoPages(bool showTwoPages)
 	}
 
 	this->showTwoPages = showTwoPages;
-	saveTimeout();
+	save();
 }
 
 bool Settings::isShowTwoPages()
@@ -1232,7 +1195,7 @@ void Settings::setPresentationMode(bool presentationMode)
 	}
 
 	this->presentationMode = presentationMode;
-	saveTimeout();
+	save();
 }
 
 bool Settings::isPresentationMode()
@@ -1252,7 +1215,7 @@ void Settings::setPresureSensitivity(gboolean presureSensitivity)
 	}
 	this->presureSensitivity = presureSensitivity;
 
-	saveTimeout();
+	save();
 }
 
 void Settings::setLastSavePath(path p)
@@ -1260,7 +1223,7 @@ void Settings::setLastSavePath(path p)
 	XOJ_CHECK_TYPE(Settings);
 
 	this->lastSavePath = p;
-	saveTimeout();
+	save();
 }
 
 path Settings::getLastSavePath()
@@ -1279,7 +1242,7 @@ void Settings::setLastImagePath(path path)
 		return;
 	}
 	this->lastImagePath = path;
-	saveTimeout();
+	save();
 }
 
 path Settings::getLastImagePath()
@@ -1317,7 +1280,7 @@ void Settings::setSidebarVisible(bool visible)
 		return;
 	}
 	this->showSidebar = visible;
-	saveTimeout();
+	save();
 }
 
 int Settings::getSidebarWidth()
@@ -1340,7 +1303,7 @@ void Settings::setSidebarWidth(int width)
 		return;
 	}
 	this->sidebarWidth = width;
-	saveTimeout();
+	save();
 }
 
 void Settings::setMainWndSize(int width, int height)
@@ -1350,7 +1313,7 @@ void Settings::setMainWndSize(int width, int height)
 	this->mainWndWidth = width;
 	this->mainWndHeight = height;
 
-	saveTimeout();
+	save();
 }
 
 int Settings::getMainWndWidth()
@@ -1404,7 +1367,7 @@ void Settings::setSelectedToolbar(string name)
 		return;
 	}
 	this->selectedToolbar = name;
-	saveTimeout();
+	save();
 }
 
 string Settings::getSelectedToolbar()
@@ -1425,7 +1388,7 @@ void Settings::customSettingsChanged()
 {
 	XOJ_CHECK_TYPE(Settings);
 
-	saveTimeout();
+	save();
 }
 
 ButtonConfig* Settings::getButtonConfig(int id)
@@ -1499,7 +1462,7 @@ string Settings::getFullscreenHideElements()
 void Settings::setFullscreenHideElements(string elements)
 {
 	this->fullscreenHideElements = elements;
-	saveTimeout();
+	save();
 }
 
 string Settings::getPresentationHideElements()
@@ -1514,7 +1477,7 @@ void Settings::setPresentationHideElements(string elements)
 	XOJ_CHECK_TYPE(Settings);
 
 	this->presentationHideElements = elements;
-	saveTimeout();
+	save();
 }
 
 PageInsertType Settings::getPageInsertType()
@@ -1533,7 +1496,7 @@ void Settings::setPageInsertType(PageInsertType type)
 		return;
 	}
 	this->pageInsertType = type;
-	saveTimeout();
+	save();
 }
 
 int Settings::getPageBackgroundColor()
@@ -1552,7 +1515,7 @@ void Settings::setPageBackgroundColor(int color)
 		return;
 	}
 	this->pageBackgroundColor = color;
-	saveTimeout();
+	save();
 }
 
 int Settings::getSelectionColor()
@@ -1578,7 +1541,7 @@ void Settings::setPdfPageCacheSize(int size)
 		return;
 	}
 	this->pdfPageCacheSize = size;
-	saveTimeout();
+	save();
 }
 
 void Settings::setSelectionColor(int color)
@@ -1590,7 +1553,7 @@ void Settings::setSelectionColor(int color)
 		return;
 	}
 	this->selectionColor = color;
-	saveTimeout();
+	save();
 }
 
 XojFont& Settings::getFont()

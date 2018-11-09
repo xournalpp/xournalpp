@@ -19,7 +19,6 @@
 #include <boost/filesystem/path.hpp>
 using boost::filesystem::path;
 #include <libxml/xmlreader.h>
-#include <glib.h>
 
 #include <map>
 
@@ -43,6 +42,10 @@ enum ScrollbarHideType
 };
 
 class ButtonConfig;
+
+extern const char* BUTTON_NAMES[];
+const int BUTTON_COUNT = 7;
+
 
 class SAttribute
 {
@@ -136,9 +139,6 @@ public:
 
 private:
 	void loadDefault();
-	void saveTimeout();
-	static gboolean saveCallback(Settings* data);
-
 	void parseItem(xmlDocPtr doc, xmlNodePtr cur);
 
 	xmlNodePtr savePropertyDouble(const gchar* key, double value,
@@ -294,9 +294,6 @@ private:
 private:
 	XOJ_TYPE_ATTRIB;
 
-	bool saved;
-	gint timeoutId;
-
 	/**
 	 *  The config filename
 	 */
@@ -444,7 +441,7 @@ private:
 	 * 5: Stylus button
 	 * 6: Stylus2 button
 	 */
-	ButtonConfig* buttonConfig[7];
+	ButtonConfig* buttonConfig[BUTTON_COUNT];
 
 	/**
 	 * Which gui elements are hidden if you are in Fullscreen mode,

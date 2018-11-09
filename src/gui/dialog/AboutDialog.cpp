@@ -7,25 +7,13 @@ AboutDialog::AboutDialog(GladeSearchpath* gladeSearchPath) : GladeGui(gladeSearc
 {
 	XOJ_INIT_TYPE(AboutDialog);
 
-	GtkLabel* labelTitle = GTK_LABEL(get("labelTitle"));
-	gtk_label_set_markup(labelTitle,
-						 "<span size=\"xx-large\" weight=\"bold\">Xournal++ " PROJECT_VERSION "</span>\n"
-						 "<i>The next generation</i>\n"
-						 "Built on: " __DATE__ " at " __TIME__);
+	gtk_label_set_markup(GTK_LABEL(get("lbBuildDate")), __DATE__ ", " __TIME__);
+	gtk_label_set_markup(GTK_LABEL(get("lbVersion")), PROJECT_VERSION);
 
 	GtkWidget* w = get("vbox1");
 	GtkWidget* linkButton = gtk_link_button_new("http://github.com/xournalpp/xournalpp");
 	gtk_widget_show(linkButton);
 	gtk_box_pack_start(GTK_BOX(w), linkButton, TRUE, TRUE, 0);
-
-	// Authors of the application
-	string authors("Denis Auroux, 2006-2010\n"
-				   "Andreas Butti, 2010-2018\n"
-				   "Wilson Brenna (tex support), 2012-2015\n"
-				   "Marek Pikuła, 2015\n");
-
-	w = get("lbAuthors");
-	gtk_label_set_text(GTK_LABEL(w), authors.c_str());
 }
 
 AboutDialog::~AboutDialog()
