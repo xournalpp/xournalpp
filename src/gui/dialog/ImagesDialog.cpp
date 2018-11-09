@@ -29,6 +29,7 @@ public:
 
 		gtk_widget_set_events(widget, GDK_EXPOSURE_MASK | GDK_BUTTON_PRESS_MASK);
 
+		// TODO Draw!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 		g_signal_connect(this->widget, "expose_event", G_CALLBACK(exposeEventCallback), this);
 		g_signal_connect(this->widget, "button-press-event", G_CALLBACK(mouseButtonPressCallback), this);
 	}
@@ -248,8 +249,8 @@ private:
 //////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////
 
-ImagesDialog::ImagesDialog(GladeSearchpath* gladeSearchPath, Document* doc, Settings* settings) :
-	GladeGui(gladeSearchPath, "images.glade", "ImagesDialog")
+ImagesDialog::ImagesDialog(GladeSearchpath* gladeSearchPath, Document* doc, Settings* settings)
+ : GladeGui(gladeSearchPath, "images.glade", "ImagesDialog")
 {
 	XOJ_INIT_TYPE(ImagesDialog);
 
@@ -485,5 +486,4 @@ void ImagesDialog::layout()
 	}
 
 	gtk_layout_set_size(GTK_LAYOUT(this->widget), width, y);
-
 }

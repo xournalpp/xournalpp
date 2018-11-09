@@ -14,6 +14,7 @@
       <object class="GtkBox" id="dialog-vbox2">
         <property name="visible">True</property>
         <property name="can_focus">False</property>
+        <property name="orientation">vertical</property>
         <child internal-child="action_area">
           <object class="GtkButtonBox" id="dialog-action_area2">
             <property name="visible">True</property>
@@ -59,24 +60,10 @@
           </packing>
         </child>
         <child>
-          <object class="GtkImage" id="XournalIcon">
-            <property name="visible">True</property>
-            <property name="can_focus">False</property>
-            <property name="pixbuf">pixmaps/xournalpp.svg</property>
-          </object>
-          <packing>
-            <property name="expand">True</property>
-            <property name="fill">True</property>
-            <property name="padding">12</property>
-            <property name="position">2</property>
-          </packing>
-        </child>
-        <child>
           <object class="GtkLabel" id="labelTitle">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
-            <property name="label" translatable="yes">&lt;span size="xx-large" weight="bold"&gt;Xournal++&lt;/span&gt;
-&lt;i&gt;The next generation&lt;/i&gt;</property>
+            <property name="label" translatable="yes">Enter / edit LaTeX Text</property>
             <property name="use_markup">True</property>
             <property name="justify">center</property>
           </object>
@@ -84,31 +71,13 @@
             <property name="expand">False</property>
             <property name="fill">False</property>
             <property name="padding">9</property>
-            <property name="position">3</property>
+            <property name="position">0</property>
           </packing>
         </child>
         <child>
-          <object class="GtkBox" id="texVbox">
+          <object class="GtkEntry" id="texEntry">
             <property name="visible">True</property>
-            <property name="can_focus">False</property>
-            <property name="orientation">vertical</property>
-            <child>
-              <object class="GtkEntry" id="texEntry">
-                <property name="visible">True</property>
-                <property name="can_focus">True</property>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">True</property>
-                <property name="position">0</property>
-              </packing>
-            </child>
-            <child>
-              <placeholder/>
-            </child>
-            <child>
-              <placeholder/>
-            </child>
+            <property name="can_focus">True</property>
           </object>
           <packing>
             <property name="expand">False</property>

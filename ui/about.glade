@@ -8,6 +8,7 @@
     <property name="title" translatable="yes">About Xournal</property>
     <property name="resizable">False</property>
     <property name="window_position">center</property>
+    <property name="destroy_with_parent">True</property>
     <property name="icon_name">dialog-information</property>
     <property name="type_hint">dialog</property>
     <child internal-child="vbox">

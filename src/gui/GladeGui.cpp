@@ -42,8 +42,6 @@ GladeGui::~GladeGui()
 {
 	XOJ_CHECK_TYPE(GladeGui);
 
-	// TODO: this causes a segfault... do we need this?
-	//gtk_widget_destroy(this->window);
 	g_object_unref(builder);
 
 	XOJ_RELEASE_TYPE(GladeGui);
