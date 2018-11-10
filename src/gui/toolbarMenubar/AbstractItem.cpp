@@ -16,6 +16,7 @@ AbstractItem::AbstractItem(string id, ActionHandler* handler, ActionType action,
 
 	if (menuitem)
 	{
+		// Other signal available: "toggled", currently not sure, if this may fix some bugs or generate other...
 		menuSignalHandler = g_signal_connect(menuitem, "activate", G_CALLBACK(&menuCallback), this);
 		g_object_ref(G_OBJECT(menuitem));
 		this->menuitem = menuitem;
@@ -94,20 +95,15 @@ void AbstractItem::activated(GdkEvent* event, GtkMenuItem* menuitem, GtkToolButt
 
 	if (menuitem)
 	{
-		return;
-//		if (menuitem && GTK_IS_RADIO_MENU_ITEM(menuitem))
-//		{
-//			selected = gtk_check_menu_item_get_active(GTK_CHECK_MENU_ITEM(menuitem));
-//			if (!selected)
-//			{
-//				// Ignore radio unselect event
-//				return;
-//			}
-//		}
-//		else if (menuitem && GTK_IS_CHECK_MENU_ITEM(menuitem))
-//		{
-//			selected = gtk_check_menu_item_get_active(GTK_CHECK_MENU_ITEM(menuitem));
-//		}
+		if (GTK_IS_CHECK_MENU_ITEM(menuitem))
+		{
+			selected = gtk_check_menu_item_get_active(GTK_CHECK_MENU_ITEM(menuitem));
+			if (!selected && gtk_check_menu_item_get_draw_as_radio(GTK_CHECK_MENU_ITEM(menuitem)))
+			{
+				// Unselect radio menu item
+				return;
+			}
+		}
 	}
 	else if (toolbutton && GTK_IS_TOGGLE_TOOL_BUTTON(toolbutton))
 	{
