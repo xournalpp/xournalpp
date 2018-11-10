@@ -1,65 +1,70 @@
 #include "SelectBackgroundColorDialog.h"
 
 #include "control/Control.h"
-#include "gui/toolbarMenubar/ToolbarUtil.h"
 
 #include <config.h>
 #include <i18n.h>
 
-class ColorEntry
-{
-public:
-	ColorEntry(SelectBackgroundColorDialog* dlg, int color, bool custom)
-	{
-		XOJ_INIT_TYPE(ColorEntry);
-		this->dlg = dlg;
-		this->color = color;
-		this->custom = custom;
-	}
+#define RGBA_FROM_HEX(value) \
+		{.red = ((value >> 16) & 0xFF) / 255.0, .green = ((value >> 8) & 0xFF) / 255.0, .blue = (value & 0xFF) / 255.0, .alpha = 1.0}
 
-	~ColorEntry()
-	{
-		XOJ_RELEASE_TYPE(ColorEntry);
-	}
-
-	XOJ_TYPE_ATTRIB;
-
-	SelectBackgroundColorDialog* dlg;
-	int color;
-	bool custom;
+GdkRGBA background1[] = {
+		RGBA_FROM_HEX(0xfabebe),
+		RGBA_FROM_HEX(0xfee7c4),
+		RGBA_FROM_HEX(0xfef8c9),
+		RGBA_FROM_HEX(0xdcf6c1),
+		RGBA_FROM_HEX(0xd4e2f0),
+		RGBA_FROM_HEX(0xe6d8e4),
+		RGBA_FROM_HEX(0xf8ead3),
+		RGBA_FROM_HEX(0xdadcda),
+		RGBA_FROM_HEX(0xfafaf9)
 };
 
-SelectBackgroundColorDialog::SelectBackgroundColorDialog(GladeSearchpath* gladeSearchPath, Control* control) :
-		GladeGui(gladeSearchPath, "page-background-color.glade", "pageBgColorDialog")
-{
+const int background1Count = sizeof(background1) / sizeof(GdkRGBA);
 
+GdkRGBA backgroundXournal[] = {
+		RGBA_FROM_HEX(0xffffff),
+		RGBA_FROM_HEX(0xa0e8ff),
+		RGBA_FROM_HEX(0x80ffc0),
+		RGBA_FROM_HEX(0xffc0d4),
+		RGBA_FROM_HEX(0xffc080),
+		RGBA_FROM_HEX(0xffff80)
+};
+
+const int backgroundXournalCount = sizeof(backgroundXournal) / sizeof(GdkRGBA);
+
+void apply_rgb_togdkrgba(GdkRGBA& col, int color)
+{
+	col.red = ((color >> 16) & 0xFF) / 255.0;
+	col.green = ((color >> 8) & 0xFF) / 255.0;
+	col.blue = (color & 0xFF) / 255.0;
+	col.alpha = 1.0;
+}
+
+int gdkrgba_to_hex(GdkRGBA& color)
+{
+	return (((int)(color.red * 255)) & 0xff) << 16 |
+			(((int)(color.green * 255)) & 0xff) << 8 |
+			(((int)(color.blue * 255)) & 0xff);
+}
+
+SelectBackgroundColorDialog::SelectBackgroundColorDialog(Control* control)
+ : selected(-1),
+   control(control),
+   lastBackgroundColors({
+	RGBA_FROM_HEX(0xffffff),
+	RGBA_FROM_HEX(0xffffff),
+	RGBA_FROM_HEX(0xffffff),
+	RGBA_FROM_HEX(0xffffff),
+	RGBA_FROM_HEX(0xffffff),
+	RGBA_FROM_HEX(0xffffff),
+	RGBA_FROM_HEX(0xffffff),
+	RGBA_FROM_HEX(0xffffff),
+	RGBA_FROM_HEX(0xffffff)
+   })
+{
 	XOJ_INIT_TYPE(SelectBackgroundColorDialog);
 
-	this->control = control;
-	this->selected = -1;
-	this->colorDlg = NULL;
-
-	ColorEntry* e = new ColorEntry(this, -1, true);
-	this->colors.push_back(e);
-
-	int predef_bgcolors_rgba[] = { 0xffffff, 0xa0e8ff, 0x80ffc0, 0xffc0d4, 0xffc080, 0xffff80 };
-
-	GtkWidget* toolbar = get("tbPredefinedColors");
-
-	for (int color : predef_bgcolors_rgba)
-	{
-		ColorEntry* e = new ColorEntry(this, color, false);
-		this->colors.push_back(e);
-
-		GtkWidget* iconWidget = ToolbarUtil::newColorIcon(color, 32, true);
-		GtkToolItem* it = gtk_tool_button_new(iconWidget, "");
-		gtk_toolbar_insert(GTK_TOOLBAR(toolbar), GTK_TOOL_ITEM(it), -1);
-		g_signal_connect(it, "clicked", G_CALLBACK(&buttonSelectedCallback), e);
-	}
-
-	gtk_widget_show_all(toolbar);
-
-	toolbar = get("tbLastUsedColors");
 
 	Settings* settings = control->getSettings();
 	SElement& el = settings->getCustomElement("lastUsedPageBgColor");
@@ -67,7 +72,9 @@ SelectBackgroundColorDialog::SelectBackgroundColorDialog(GladeSearchpath* gladeS
 	int count = 0;
 	el.getInt("count", count);
 
-	for (int i = 0; i < count; i++)
+	int index = 0;
+
+	for (int i = 0; i < count && index < LAST_BACKGROUND_COLOR_COUNT; i++)
 	{
 		int color = -1;
 		char* settingName = g_strdup_printf("color%02i", i);
@@ -79,167 +86,61 @@ SelectBackgroundColorDialog::SelectBackgroundColorDialog(GladeSearchpath* gladeS
 			continue;
 		}
 
-		ColorEntry* e = new ColorEntry(this, color, true);
-		this->colors.push_back(e);
+		apply_rgb_togdkrgba(lastBackgroundColors[index], color);
 
-		GtkWidget* iconWidget = ToolbarUtil::newColorIcon(color, 32, true);
-		GtkToolItem* it = gtk_tool_button_new(iconWidget, "");
-		gtk_toolbar_insert(GTK_TOOLBAR(toolbar), GTK_TOOL_ITEM(it), -1);
-		g_signal_connect(it, "clicked", G_CALLBACK(&buttonSelectedCallback), e);
+		index++;
 	}
-	gtk_widget_show_all(toolbar);
-
-	if (count == 0)
-	{
-		// no colors => not title
-		GtkWidget* w = get("lbLastUsed");
-		gtk_widget_hide(w);
-	}
-
-	g_signal_connect(get("cbSelect"), "clicked", G_CALLBACK(&buttonCustomCallback), this);
 }
 
 SelectBackgroundColorDialog::~SelectBackgroundColorDialog()
 {
 	XOJ_CHECK_TYPE(SelectBackgroundColorDialog);
-
-	for (ColorEntry* e : this->colors)
-	{
-		delete e;
-	}
-	this->colors.clear();
-
 	XOJ_RELEASE_TYPE(SelectBackgroundColorDialog);
 }
 
-void SelectBackgroundColorDialog::showColorchooser()
-{
-	XOJ_CHECK_TYPE(SelectBackgroundColorDialog);
-
-	this->colorDlg = gtk_color_selection_dialog_new(_C("Select color"));
-	GValue value;
-	memset(&value, 0, sizeof(value));
-	g_object_get_property(G_OBJECT(this->colorDlg), "ok_button", &value);
-
-	g_signal_connect(G_OBJECT
-	                 (GTK_WIDGET(&value)),
-	                 "clicked", G_CALLBACK(&buttonSelectedCallback),
-					 this->colors.front()); // first entry
-
-	gtk_dialog_run(GTK_DIALOG(this->colorDlg));
-
-	gtk_widget_destroy(this->colorDlg);
-	this->colorDlg = NULL;
-}
-
-const int MAX_LAST_USED_COLORS = 8;
-
-void SelectBackgroundColorDialog::updateLastUsedColors()
+void SelectBackgroundColorDialog::storeLastUsedValuesInSettings()
 {
 	XOJ_CHECK_TYPE(SelectBackgroundColorDialog);
 
 	if (this->selected < 0)
 	{
+		// No color selected, do not save to list
 		return;
 	}
 
-	int lastUsedColors[MAX_LAST_USED_COLORS];
+	GdkRGBA newColor;
+	apply_rgb_togdkrgba(newColor, this->selected);
 
-	for (int i = 0; i < MAX_LAST_USED_COLORS; i++)
+	for (int i = 0; i < LAST_BACKGROUND_COLOR_COUNT; i++)
 	{
-		lastUsedColors[i] = -1;
+		if (gdk_rgba_equal(&lastBackgroundColors[i], &newColor))
+		{
+			// The new color is already in the list, do not save
+			return;
+		}
 	}
+
 
 	Settings* settings = control->getSettings();
 	SElement& el = settings->getCustomElement("lastUsedPageBgColor");
 
-	int count = 0;
-	el.getInt("count", count);
-
-	for (int i = 0; i < count && i < MAX_LAST_USED_COLORS; i++)
+	// Move all colors one step back
+	for (int i = LAST_BACKGROUND_COLOR_COUNT- 1; i > 0; i--)
 	{
-		int color = -1;
-		char* settingName = g_strdup_printf("color%02i", i);
-		bool read = el.getInt(settingName, color);
-		g_free(settingName);
-
-		if (read)
-		{
-			lastUsedColors[i] = color;
-		}
+		lastBackgroundColors[i] = lastBackgroundColors[i - 1];
 	}
 
-	int lastUsedColorsNew[MAX_LAST_USED_COLORS];
-	int id = 0;
+	lastBackgroundColors[0] = newColor;
 
-	lastUsedColorsNew[id++] = this->selected;
-
-	for (int i = 0; i < MAX_LAST_USED_COLORS && id < MAX_LAST_USED_COLORS; i++)
-	{
-		int c = lastUsedColors[i];
-		if (c < 0)
-		{
-			continue;
-		}
-		// do we already have this color in the list?
-
-		bool found = false;
-
-		for (int x = 0; x < id; x++)
-		{
-			if (lastUsedColorsNew[x] == c)
-			{
-				found = true;
-				break;
-			}
-		}
-		if (found)
-		{
-			continue;
-		}
-		lastUsedColorsNew[id++] = c;
-	}
-
-	el.setInt("count", id);
-	for (int i = 0; i < id; i++)
+	el.setInt("count", LAST_BACKGROUND_COLOR_COUNT);
+	for (int i = 0; i < LAST_BACKGROUND_COLOR_COUNT; i++)
 	{
 		char* settingName = g_strdup_printf("color%02i", i);
-		el.setIntHex(settingName, lastUsedColorsNew[i]);
+		el.setIntHex(settingName, gdkrgba_to_hex(lastBackgroundColors[i]));
 		g_free(settingName);
 	}
 
 	settings->customSettingsChanged();
-}
-
-void SelectBackgroundColorDialog::buttonCustomCallback(GtkButton* button, SelectBackgroundColorDialog* dlg)
-{
-	XOJ_CHECK_TYPE_OBJ(dlg, SelectBackgroundColorDialog);
-
-	dlg->selected = -2;
-	gtk_widget_hide(dlg->window);
-}
-
-void SelectBackgroundColorDialog::buttonSelectedCallback(GtkButton* button, ColorEntry* e)
-{
-	XOJ_CHECK_TYPE_OBJ(e, ColorEntry);
-
-	e->dlg->selected = e->color;
-	if (e->custom)
-	{
-		if (e->color == -1 && e->dlg->colorDlg)
-		{
-			GdkColor color = { 0 };
-
-			GtkWidget* cw = gtk_color_selection_dialog_get_color_selection(GTK_COLOR_SELECTION_DIALOG(e->dlg->colorDlg));
-			gtk_color_selection_get_current_color(GTK_COLOR_SELECTION(cw), &color);
-
-			e->dlg->selected = (color.red / 256) << 16 | (color.green / 256) << 8 | (color.blue / 256);
-		}
-
-		e->dlg->updateLastUsedColors();
-	}
-
-	gtk_widget_hide(e->dlg->window);
 }
 
 int SelectBackgroundColorDialog::getSelectedColor()
@@ -253,7 +154,30 @@ void SelectBackgroundColorDialog::show(GtkWindow* parent)
 {
 	XOJ_CHECK_TYPE(SelectBackgroundColorDialog);
 
-	gtk_window_set_transient_for(GTK_WINDOW(this->window), parent);
-	gtk_dialog_run(GTK_DIALOG(this->window));
-	gtk_widget_hide(this->window);
+	GtkWidget* dialog = gtk_color_chooser_dialog_new(_C("Select background color"), parent);
+	gtk_color_chooser_set_use_alpha(GTK_COLOR_CHOOSER(dialog), false);
+
+	gtk_color_chooser_add_palette(GTK_COLOR_CHOOSER(dialog), GTK_ORIENTATION_HORIZONTAL, 9,
+			background1Count, background1);
+
+	gtk_color_chooser_add_palette(GTK_COLOR_CHOOSER(dialog), GTK_ORIENTATION_HORIZONTAL, 9,
+			backgroundXournalCount, backgroundXournal);
+
+	// Last used colors (only by background, the general last used are shared with the
+	// pen and highlighter etc.)
+	gtk_color_chooser_add_palette(GTK_COLOR_CHOOSER(dialog), GTK_ORIENTATION_HORIZONTAL, 9,
+			LAST_BACKGROUND_COLOR_COUNT, lastBackgroundColors);
+
+
+	int response = gtk_dialog_run(GTK_DIALOG(dialog));
+	if (response == GTK_RESPONSE_OK)
+	{
+		GdkRGBA color;
+		gtk_color_chooser_get_rgba(GTK_COLOR_CHOOSER(dialog), &color);
+		this->selected = gdkrgba_to_hex(color);
+
+		storeLastUsedValuesInSettings();
+	}
+
+	gtk_widget_destroy(dialog);
 }

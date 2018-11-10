@@ -1847,15 +1847,9 @@ void Control::changePageBackgroundColor()
 		return;
 	}
 
-	SelectBackgroundColorDialog* dlg = new SelectBackgroundColorDialog(this->gladeSearchPath, this);
-	dlg->show(GTK_WINDOW(this->win->getWindow()));
-	int color = dlg->getSelectedColor();
-
-	if (color == -2)
-	{
-		dlg->showColorchooser();
-		color = dlg->getSelectedColor();
-	}
+	SelectBackgroundColorDialog dlg(this);
+	dlg.show(GTK_WINDOW(this->win->getWindow()));
+	int color = dlg.getSelectedColor();
 
 	if (color != -1)
 	{
@@ -1863,8 +1857,6 @@ void Control::changePageBackgroundColor()
 		firePageChanged(pNr);
 		settings->setPageBackgroundColor(color);
 	}
-
-	delete dlg;
 }
 
 void Control::deleteCurrentLayer()
