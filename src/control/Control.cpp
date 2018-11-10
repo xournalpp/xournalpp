@@ -453,24 +453,29 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
 		scrollHandler->scrollToPage(this->doc->getPageCount() - 1);
 		break;
 	case ACTION_GOTO_NEXT_LAYER:
-			/*TODO  //exact commands unclear
-		PageRef p = getCurrentPage();
-		if (p.isValid())
 		{
-			p->setSelectedLayerId(this->win->getCurrentLayer());
-			this->win->getXournal()->layerChanged(getCurrentPageNo());
-			this->win->updateLayerCombobox();
-
-			if (p.isValid())
+			int layer = this->win->getCurrentLayer();
+			PageRef p = getCurrentPage();
+			if (layer < p->getLayerCount())
 			{
-				int layer = p->getSelectedLayerId();
-				fireEnableAction(ACTION_DELETE_LAYER, layer > 0);
+				switchToLay(layer + 1);
 			}
-		} */
+		}
 		break;
-	case ACTION_GOTO_BACK_LAYER:
+	case ACTION_GOTO_PREVIOUS_LAYER:
+		{
+			int layer = this->win->getCurrentLayer();
+			if (layer > 0)
+			{
+				switchToLay(layer - 1);
+			}
+		}
 		break;
 	case ACTION_GOTO_TOP_LAYER:
+		{
+			PageRef p = getCurrentPage();
+			switchToLay(p->getLayerCount());
+		}
 		break;
 	case ACTION_GOTO_NEXT_ANNOTATED_PAGE:
 		scrollHandler->scrollToAnnotatedPage(true);
@@ -819,22 +824,7 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
 		break;
 
 	case ACTION_FOOTER_LAYER:
-	{
-		clearSelectionEndText();
-		PageRef p = getCurrentPage();
-		if (p.isValid())
-		{
-			p->setSelectedLayerId(this->win->getCurrentLayer());
-			this->win->getXournal()->layerChanged(getCurrentPageNo());
-			this->win->updateLayerCombobox();
-
-			if (p.isValid())
-			{
-				int layer = p->getSelectedLayerId();
-				fireEnableAction(ACTION_DELETE_LAYER, layer > 0);
-			}
-		}
-	}
+		switchToLay(this->win->getCurrentLayer());
 		break;
 
 	case ACTION_MANAGE_TOOLBAR:
@@ -1856,6 +1846,18 @@ void Control::changePageBackgroundColor()
 		p->setBackgroundColor(color);
 		firePageChanged(pNr);
 		settings->setPageBackgroundColor(color);
+	}
+}
+
+void Control::switchToLay(int layer)
+{
+	clearSelectionEndText();
+	PageRef p = getCurrentPage();
+	if (p.isValid())
+	{
+		p->setSelectedLayerId(layer);
+		this->win->getXournal()->layerChanged(getCurrentPageNo());
+		this->win->updateLayerCombobox();
 	}
 }
 

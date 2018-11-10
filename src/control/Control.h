@@ -118,6 +118,7 @@ public:
 
 	void addNewLayer();
 	void deleteCurrentLayer();
+	void switchToLay(int layer);
 
 	void paperFormat();
 	void changePageBackgroundColor();

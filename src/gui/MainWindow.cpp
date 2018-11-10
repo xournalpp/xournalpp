@@ -327,10 +327,6 @@ void MainWindow::updateScrollbarSidebarPosition()
 	GtkWidget* sidebar = get("sidebar");
 	GtkWidget* winXournal = get("winXournal");
 	GtkScrolledWindow* scrolledWindow = GTK_SCROLLED_WINDOW(winXournal);
-	// Turn on/off kinetic scrolling (in gnome 3.18 on by default)
-	// Kinetic scrolling works fine btw
-	// comment line to turn on
-	//gtk_scrolled_window_set_kinetic_scrolling(scrolledWindow,false);
 
 	bool scrollbarOnLeft = control->getSettings()->isScrollbarOnLeft();
 
@@ -339,13 +335,11 @@ void MainWindow::updateScrollbarSidebarPosition()
 
 	if (scrollbarOnLeft)
 	{
-		gtk_scrolled_window_set_placement(scrolledWindow,
-		                                  GTK_CORNER_TOP_RIGHT);
+		gtk_scrolled_window_set_placement(scrolledWindow, GTK_CORNER_TOP_RIGHT);
 	}
 	else
 	{
-		gtk_scrolled_window_set_placement(scrolledWindow,
-		                                  GTK_CORNER_TOP_LEFT);
+		gtk_scrolled_window_set_placement(scrolledWindow, GTK_CORNER_TOP_LEFT);
 	}
 
 	gtk_widget_set_visible(gtk_scrolled_window_get_hscrollbar(scrolledWindow),
@@ -824,11 +818,13 @@ void MainWindow::updateLayerCombobox()
 	PageRef p = control->getCurrentPage();
 
 	int layer = 0;
+	int maxLayer = 0;
 
 	if (p)
 	{
 		layer = p->getSelectedLayerId();
-		toolbar->setLayerCount(p->getLayerCount(), layer);
+		maxLayer = p->getLayerCount();
+		toolbar->setLayerCount(maxLayer, layer);
 	}
 	else
 	{
@@ -836,6 +832,9 @@ void MainWindow::updateLayerCombobox()
 	}
 
 	control->fireEnableAction(ACTION_DELETE_LAYER, layer > 0);
+	control->fireEnableAction(ACTION_GOTO_NEXT_LAYER, layer < maxLayer);
+	control->fireEnableAction(ACTION_GOTO_PREVIOUS_LAYER, layer > 0);
+	control->fireEnableAction(ACTION_GOTO_TOP_LAYER, layer < maxLayer);
 }
 
 void MainWindow::setRecentMenu(GtkWidget* submenu)

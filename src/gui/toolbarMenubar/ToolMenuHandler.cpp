@@ -327,6 +327,13 @@ void ToolMenuHandler::initToolItems()
 	addToolItem(new ToolButton(listener, "GOTO_LAST", ACTION_GOTO_LAST, GTK_STOCK_GOTO_LAST, _C("Go to last page"),
 							   gui->get("menuNavigationLastPage")));
 
+	addToolItem(new ToolButton(listener, "GOTO_PREVIOUS_LAYER", ACTION_GOTO_PREVIOUS_LAYER, GTK_STOCK_GO_BACK, _C("Go to previous layer"),
+							   gui->get("menuNavigationPreviousLayer")));
+	addToolItem(new ToolButton(listener, "GOTO_NEXT_LAYER", ACTION_GOTO_NEXT_LAYER, GTK_STOCK_GO_FORWARD, _C("Go to next layer"),
+							   gui->get("menuNavigationNextLayer")));
+	addToolItem(new ToolButton(listener, "GOTO_TOP_LAYER", ACTION_GOTO_TOP_LAYER, GTK_STOCK_GOTO_TOP, _C("Go to top layer"),
+							   gui->get("menuNavigationTopLayer")));
+
 	addToolItem(new ToolButton(listener, gui, "GOTO_NEXT_ANNOTATED_PAGE", ACTION_GOTO_NEXT_ANNOTATED_PAGE,
 							   "nextAnnotatedPage.svg", _C("Next annotated page"),
 							   gui->get("menuNavigationNextAnnotatedPage")));
