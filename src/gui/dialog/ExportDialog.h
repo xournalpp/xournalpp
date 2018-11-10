@@ -34,7 +34,7 @@ public:
 	int getPngDpi();
 	ExportFormtType getFormatType();
 
-	path getFilePath();
+	string getFilePath();
 
 private:
 	bool validate();

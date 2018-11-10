@@ -18,13 +18,10 @@
 #include <StringUtils.h>
 #include <XournalType.h>
 
-#include <boost/filesystem/path.hpp>
-using boost::filesystem::path;
-
 class ExportJob : public BlockingJob
 {
 public:
-	ExportJob(Control* control, PageRangeVector selected, ExportFormtType type, int dpi, path filepath);
+	ExportJob(Control* control, PageRangeVector selected, ExportFormtType type, int dpi, string filepath);
 
 protected:
 	virtual ~ExportJob();
@@ -36,6 +33,11 @@ private:
 	bool createSurface(int id, double width, double height);
 	bool freeSurface(int id);
 
+	/**
+	 * Get a filename with a numer, e.g. .../export-1.png, if the no is -1, return .../export.png
+	 */
+	string getFilenameWithNumber(int no);
+
 private:
 	XOJ_TYPE_ATTRIB;
 
@@ -46,6 +48,9 @@ private:
 
 	int dpi;
 	ExportFormtType type;
-	path filepath;
-	string front, back;
+
+	/**
+	 * Export path with filename
+	 */
+	string filepath;
 };

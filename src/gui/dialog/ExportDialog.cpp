@@ -139,7 +139,12 @@ void ExportDialog::handleData()
 
 	this->resolution = gtk_spin_button_get_value(GTK_SPIN_BUTTON(get("spPngResolution")));
 
-	this->settings->setLastSavePath(this->getFilePath().parent_path());
+	string path = this->getFilePath();
+	size_t separatorPos = path.find_last_of("/\\");
+	if (separatorPos != string::npos)
+	{
+		this->settings->setLastSavePath(path.substr(0, separatorPos));
+	}
 }
 
 ExportFormtType ExportDialog::getFormatType()
@@ -226,7 +231,7 @@ void ExportDialog::fileTypeSelected(GtkTreeView* treeview, gpointer user_data)
 	}
 }
 
-path ExportDialog::getFilePath()
+string ExportDialog::getFilePath()
 {
 	XOJ_CHECK_TYPE(ExportDialog);
 
@@ -234,14 +239,14 @@ path ExportDialog::getFilePath()
 	if (file)
 	{
 		char* filePath = g_file_get_path(file);
-		path p(filePath);
+		string p(filePath);
 		g_free(filePath);
 		g_object_unref(file);
 		return p;
 	}
 	else
 	{
-		return path("");
+		return "";
 	}
 }
 
