@@ -10,6 +10,7 @@ AbstractItem::AbstractItem(string id, ActionHandler* handler, ActionType action,
 	this->menuSignalHandler = 0;
 	this->group = GROUP_NOGROUP;
 	this->enabled = true;
+	this->itemActive = false;
 
 	ActionEnabledListener::registerListener(handler);
 	ActionSelectionListener::registerListener(handler);
@@ -51,12 +52,13 @@ void AbstractItem::actionSelected(ActionGroup group, ActionType action)
 		return;
 	}
 
+	itemActive = this->action == action;
+
 	if (this->menuitem && GTK_IS_CHECK_MENU_ITEM(this->menuitem))
 	{
-		bool selected = this->action == action;
-		if (gtk_check_menu_item_get_active(GTK_CHECK_MENU_ITEM(this->menuitem)) != selected)
+		if (gtk_check_menu_item_get_active(GTK_CHECK_MENU_ITEM(this->menuitem)) != itemActive)
 		{
-			gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(this->menuitem), selected);
+			gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(this->menuitem), itemActive);
 		}
 	}
 	selected(group, action);
@@ -98,10 +100,27 @@ void AbstractItem::activated(GdkEvent* event, GtkMenuItem* menuitem, GtkToolButt
 		if (GTK_IS_CHECK_MENU_ITEM(menuitem))
 		{
 			selected = gtk_check_menu_item_get_active(GTK_CHECK_MENU_ITEM(menuitem));
-			if (!selected && gtk_check_menu_item_get_draw_as_radio(GTK_CHECK_MENU_ITEM(menuitem)))
+
+			if (gtk_check_menu_item_get_draw_as_radio(GTK_CHECK_MENU_ITEM(menuitem)))
 			{
-				// Unselect radio menu item
-				return;
+				if (itemActive && !selected)
+				{
+					// Unselect radio menu item, select again
+					gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(this->menuitem), true);
+					return;
+				}
+
+				if (itemActive == selected)
+				{
+					// State not changed, this event is probably from GTK generated
+					return;
+				}
+
+				if (!selected)
+				{
+					// Unselect radio menu item
+					return;
+				}
 			}
 		}
 	}

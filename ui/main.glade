@@ -87,8 +87,8 @@
                         <property name="can_focus">False</property>
                         <property name="use_underline">True</property>
                         <property name="use_stock">True</property>
-                        <accelerator key="s" signal="activate" modifiers="GDK_SHIFT_MASK | GDK_CONTROL_MASK"/>
                         <accelerator key="u" signal="activate" modifiers="GDK_CONTROL_MASK"/>
+                        <accelerator key="s" signal="activate" modifiers="GDK_SHIFT_MASK | GDK_CONTROL_MASK"/>
                       </object>
                     </child>
                     <child>
@@ -112,8 +112,8 @@
                         <property name="can_focus">False</property>
                         <property name="label" translatable="yes">Export as...</property>
                         <property name="use_underline">True</property>
-                        <accelerator key="e" signal="activate" modifiers="GDK_SHIFT_MASK | GDK_CONTROL_MASK"/>
                         <accelerator key="i" signal="activate" modifiers="GDK_CONTROL_MASK"/>
+                        <accelerator key="e" signal="activate" modifiers="GDK_SHIFT_MASK | GDK_CONTROL_MASK"/>
                       </object>
                     </child>
                     <child>
@@ -354,8 +354,8 @@
                         <property name="can_focus">False</property>
                         <property name="use_underline">True</property>
                         <property name="use_stock">True</property>
-                        <accelerator key="plus" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                         <accelerator key="KP_Add" signal="activate" modifiers="GDK_CONTROL_MASK"/>
+                        <accelerator key="plus" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                       </object>
                     </child>
                     <child>
@@ -365,8 +365,8 @@
                         <property name="can_focus">False</property>
                         <property name="use_underline">True</property>
                         <property name="use_stock">True</property>
-                        <accelerator key="minus" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                         <accelerator key="KP_Subtract" signal="activate" modifiers="GDK_CONTROL_MASK"/>
+                        <accelerator key="minus" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                       </object>
                     </child>
                     <child>
@@ -858,7 +858,7 @@
                       </object>
                     </child>
                     <child>
-                      <object class="GtkRadioMenuItem" id="menuToolsSelectRegion">
+                      <object class="GtkCheckMenuItem" id="menuToolsSelectRegion">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="label" translatable="yes">Select Region</property>
@@ -868,45 +868,41 @@
                       </object>
                     </child>
                     <child>
-                      <object class="GtkRadioMenuItem" id="menuToolsSelectRectangle">
+                      <object class="GtkCheckMenuItem" id="menuToolsSelectRectangle">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="label" translatable="yes">Select Rectangle</property>
                         <property name="use_underline">True</property>
                         <property name="draw_as_radio">True</property>
-                        <property name="group">menuToolsSelectRegion</property>
                         <accelerator key="r" signal="activate" modifiers="GDK_SHIFT_MASK | GDK_CONTROL_MASK"/>
                       </object>
                     </child>
                     <child>
-                      <object class="GtkRadioMenuItem" id="menuToolsSelectObject">
+                      <object class="GtkCheckMenuItem" id="menuToolsSelectObject">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="label" translatable="yes">Select Object</property>
                         <property name="use_underline">True</property>
                         <property name="draw_as_radio">True</property>
-                        <property name="group">menuToolsSelectRegion</property>
                       </object>
                     </child>
                     <child>
-                      <object class="GtkRadioMenuItem" id="menuToolsVerticalSpace">
+                      <object class="GtkCheckMenuItem" id="menuToolsVerticalSpace">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="label" translatable="yes">_Vertical Space</property>
                         <property name="use_underline">True</property>
                         <property name="draw_as_radio">True</property>
-                        <property name="group">menuToolsSelectRegion</property>
                         <accelerator key="v" signal="activate" modifiers="GDK_SHIFT_MASK | GDK_CONTROL_MASK"/>
                       </object>
                     </child>
                     <child>
-                      <object class="GtkRadioMenuItem" id="menuToolsHand">
+                      <object class="GtkCheckMenuItem" id="menuToolsHand">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="label" translatable="yes">H_and Tool</property>
                         <property name="use_underline">True</property>
                         <property name="draw_as_radio">True</property>
-                        <property name="group">menuToolsSelectRegion</property>
                         <accelerator key="a" signal="activate" modifiers="GDK_SHIFT_MASK | GDK_CONTROL_MASK"/>
                       </object>
                     </child>
@@ -927,7 +923,7 @@
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
                             <child>
-                              <object class="GtkRadioMenuItem" id="penthicknessVeryFine">
+                              <object class="GtkCheckMenuItem" id="penthicknessVeryFine">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="label" translatable="yes">_very fine</property>
@@ -936,43 +932,39 @@
                               </object>
                             </child>
                             <child>
-                              <object class="GtkRadioMenuItem" id="penthicknessFine">
+                              <object class="GtkCheckMenuItem" id="penthicknessFine">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="label" translatable="yes">_fine</property>
                                 <property name="use_underline">True</property>
                                 <property name="draw_as_radio">True</property>
-                                <property name="group">penthicknessVeryFine</property>
                               </object>
                             </child>
                             <child>
-                              <object class="GtkRadioMenuItem" id="penthicknessMedium">
+                              <object class="GtkCheckMenuItem" id="penthicknessMedium">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="label" translatable="yes">_medium</property>
                                 <property name="use_underline">True</property>
                                 <property name="draw_as_radio">True</property>
-                                <property name="group">penthicknessVeryFine</property>
                               </object>
                             </child>
                             <child>
-                              <object class="GtkRadioMenuItem" id="penthicknessThick">
+                              <object class="GtkCheckMenuItem" id="penthicknessThick">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="label" translatable="yes">_thick</property>
                                 <property name="use_underline">True</property>
                                 <property name="draw_as_radio">True</property>
-                                <property name="group">penthicknessVeryFine</property>
                               </object>
                             </child>
                             <child>
-                              <object class="GtkRadioMenuItem" id="penthicknessVeryThick">
+                              <object class="GtkCheckMenuItem" id="penthicknessVeryThick">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="label" translatable="yes">ver_y thick</property>
                                 <property name="use_underline">True</property>
                                 <property name="draw_as_radio">True</property>
-                                <property name="group">penthicknessVeryFine</property>
                               </object>
                             </child>
                           </object>
@@ -990,7 +982,7 @@
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
                             <child>
-                              <object class="GtkRadioMenuItem" id="eraserFine">
+                              <object class="GtkCheckMenuItem" id="eraserFine">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="label" translatable="yes">_fine</property>
@@ -999,23 +991,21 @@
                               </object>
                             </child>
                             <child>
-                              <object class="GtkRadioMenuItem" id="eraserMedium">
+                              <object class="GtkCheckMenuItem" id="eraserMedium">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="label" translatable="yes">_medium</property>
                                 <property name="use_underline">True</property>
                                 <property name="draw_as_radio">True</property>
-                                <property name="group">eraserFine</property>
                               </object>
                             </child>
                             <child>
-                              <object class="GtkRadioMenuItem" id="eraserThick">
+                              <object class="GtkCheckMenuItem" id="eraserThick">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="label" translatable="yes">_thick</property>
                                 <property name="use_underline">True</property>
                                 <property name="draw_as_radio">True</property>
-                                <property name="group">eraserFine</property>
                               </object>
                             </child>
                             <child>
@@ -1025,7 +1015,7 @@
                               </object>
                             </child>
                             <child>
-                              <object class="GtkRadioMenuItem" id="eraserStandard">
+                              <object class="GtkCheckMenuItem" id="eraserStandard">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="label" translatable="yes">_standard</property>
@@ -1034,23 +1024,21 @@
                               </object>
                             </child>
                             <child>
-                              <object class="GtkRadioMenuItem" id="eraserWhiteout">
+                              <object class="GtkCheckMenuItem" id="eraserWhiteout">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="label" translatable="yes">_whiteout</property>
                                 <property name="use_underline">True</property>
                                 <property name="draw_as_radio">True</property>
-                                <property name="group">eraserStandard</property>
                               </object>
                             </child>
                             <child>
-                              <object class="GtkRadioMenuItem" id="eraserDeleteStrokes">
+                              <object class="GtkCheckMenuItem" id="eraserDeleteStrokes">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="label" translatable="yes">_delete strokes</property>
                                 <property name="use_underline">True</property>
                                 <property name="draw_as_radio">True</property>
-                                <property name="group">eraserStandard</property>
                               </object>
                             </child>
                           </object>
@@ -1068,7 +1056,7 @@
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
                             <child>
-                              <object class="GtkRadioMenuItem" id="highlighterFine">
+                              <object class="GtkCheckMenuItem" id="highlighterFine">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="label" translatable="yes">_fine</property>
@@ -1077,23 +1065,21 @@
                               </object>
                             </child>
                             <child>
-                              <object class="GtkRadioMenuItem" id="highlighterMedium">
+                              <object class="GtkCheckMenuItem" id="highlighterMedium">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="label" translatable="yes">_medium</property>
                                 <property name="use_underline">True</property>
                                 <property name="draw_as_radio">True</property>
-                                <property name="group">highlighterFine</property>
                               </object>
                             </child>
                             <child>
-                              <object class="GtkRadioMenuItem" id="highlighterThick">
+                              <object class="GtkCheckMenuItem" id="highlighterThick">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="label" translatable="yes">_thick</property>
                                 <property name="use_underline">True</property>
                                 <property name="draw_as_radio">True</property>
-                                <property name="group">highlighterFine</property>
                               </object>
                             </child>
                           </object>
