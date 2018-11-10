@@ -5,11 +5,11 @@
 
 #include "gui/Cursor.h"
 #include "gui/dialog/AboutDialog.h"
+#include "gui/dialog/backgroundSelect/ImagesDialog.h"
+#include "gui/dialog/backgroundSelect/PdfPagesDialog.h"
 #include "gui/dialog/GotoDialog.h"
 #include "gui/dialog/FormatDialog.h"
-#include "gui/dialog/ImagesDialog.h"
 #include "gui/dialog/SettingsDialog.h"
-#include "gui/dialog/PdfPagesDialog.h"
 #include "gui/dialog/SelectBackgroundColorDialog.h"
 #include "gui/dialog/toolbarCustomize/ToolbarDragDropHandler.h"
 #include "gui/dialog/ToolbarManageDialog.h"

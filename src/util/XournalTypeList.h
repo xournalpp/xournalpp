@@ -220,6 +220,10 @@ XOJ_DECLARE_TYPE(ArrowHandler, 209);
 XOJ_DECLARE_TYPE(CircleHandler, 210);
 XOJ_DECLARE_TYPE(RectangleHandler, 211);
 XOJ_DECLARE_TYPE(BaseStrokeHandler, 212);
+XOJ_DECLARE_TYPE(BackgroundSelectDialogBase, 213);
+XOJ_DECLARE_TYPE(BaseElementView, 214);
+XOJ_DECLARE_TYPE(ImageElementView, 215);
+XOJ_DECLARE_TYPE(PdfElementView, 216);
 
 
 //XOJ_DECLARE_TYPE(XXXXXXXXXXXXXXXX, 206);

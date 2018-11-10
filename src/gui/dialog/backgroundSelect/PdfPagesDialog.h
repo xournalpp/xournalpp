@@ -11,6 +11,7 @@
 
 #pragma once
 
+#include "BackgroundSelectDialogBase.h"
 #include "control/settings/Settings.h"
 #include "gui/GladeGui.h"
 #include "model/Document.h"
@@ -21,7 +22,7 @@
 
 class PdfPage;
 
-class PdfPagesDialog : public GladeGui
+class PdfPagesDialog : public BackgroundSelectDialogBase
 {
 public:
 	PdfPagesDialog(GladeSearchpath* gladeSearchPath, Document* doc, Settings* settings);

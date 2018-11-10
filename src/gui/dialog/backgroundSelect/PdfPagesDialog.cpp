@@ -267,7 +267,7 @@ private:
 //////////////////////////////////////////////////////////////////
 
 PdfPagesDialog::PdfPagesDialog(GladeSearchpath* gladeSearchPath, Document* doc, Settings* settings)
- : GladeGui(gladeSearchPath, "pdfpages.glade", "pdfPagesDialog")
+ : BackgroundSelectDialogBase(gladeSearchPath, doc, settings, "pdfpages.glade", "pdfPagesDialog")
 {
 	XOJ_INIT_TYPE(PdfPagesDialog);
 
