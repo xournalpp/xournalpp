@@ -117,7 +117,7 @@ static void crashHandler(int sig)
 	time_t curtime = time(0);
 	char stime[128];
 	strftime(stime, sizeof(stime), "%Y%m%d-%H%M%S", localtime(&curtime));
-	string filename = Util::getConfigFile(CONCAT("errorlog.", stime, ".log")).string();
+	string filename = Util::getConfigFile(std::string("errorlog.")  + stime + ".log").string();
 	ofstream fp(filename);
 	if (fp)
 	{

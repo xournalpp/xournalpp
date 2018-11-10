@@ -52,7 +52,7 @@ void AutosaveJob::run(bool noThreads)
 	{
 		string file = filename.filename().string();
 		filename.remove_filename();
-		filename /= CONCAT(".", file);
+		filename /= std::string(".") + file;
 		filename.replace_extension(".autosave.xoj");
 	}
 

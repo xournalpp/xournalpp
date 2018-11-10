@@ -2,8 +2,8 @@
 #include "gui/toolbarMenubar/ToolbarUtil.h"
 
 
-AbstractToolItem::AbstractToolItem(string id, ActionHandler* handler, ActionType type, GtkWidget* menuitem) :
-		AbstractItem(id, handler, type, menuitem)
+AbstractToolItem::AbstractToolItem(string id, ActionHandler* handler, ActionType type, GtkWidget* menuitem)
+ : AbstractItem(id, handler, type, menuitem)
 {
 	XOJ_INIT_TYPE(AbstractToolItem);
 
@@ -22,10 +22,12 @@ AbstractToolItem::~AbstractToolItem()
 	if (this->item)
 	{
 		g_object_unref(G_OBJECT(this->item));
+		this->item = NULL;
 	}
 	if (this->popupMenu)
 	{
 		g_object_unref(G_OBJECT(this->popupMenu));
+		this->popupMenu = NULL;
 	}
 
 	XOJ_RELEASE_TYPE(AbstractToolItem);
@@ -35,19 +37,21 @@ void AbstractToolItem::selected(ActionGroup group, ActionType action)
 {
 	XOJ_CHECK_TYPE(AbstractToolItem);
 
-	if (this->item)
+	if (this->item == NULL)
 	{
-		if (!GTK_IS_TOGGLE_TOOL_BUTTON(this->item))
-		{
-			g_warning("selected action %i which is not a toggle action!", action);
-			return;
-		}
+		return;
+	}
 
-		if (gtk_toggle_tool_button_get_active(GTK_TOGGLE_TOOL_BUTTON(this->item)) != (this->action == action))
-		{
-			this->toolToggleButtonActive = (this->action == action);
-			gtk_toggle_tool_button_set_active(GTK_TOGGLE_TOOL_BUTTON(this->item), this->toolToggleButtonActive);
-		}
+	if (!GTK_IS_TOGGLE_TOOL_BUTTON(this->item))
+	{
+		g_warning("selected action %i (group=%i) which is not a toggle action!", action, group);
+		return;
+	}
+
+	if (gtk_toggle_tool_button_get_active(GTK_TOGGLE_TOOL_BUTTON(this->item)) != (this->action == action))
+	{
+		this->toolToggleButtonActive = (this->action == action);
+		gtk_toggle_tool_button_set_active(GTK_TOGGLE_TOOL_BUTTON(this->item), this->toolToggleButtonActive);
 	}
 }
 

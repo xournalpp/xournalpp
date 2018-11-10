@@ -138,7 +138,7 @@ bool SaveJob::save()
 	if (doc->shouldCreateBackupOnSave())
 	{
 		path backup = filename.parent_path();
-		backup /= CONCAT(".", filename.filename().replace_extension(".xoj.bak").string());
+		backup /= std::string(".") + filename.filename().replace_extension(".xoj.bak").string();
 
 		using namespace boost::filesystem;
 		try

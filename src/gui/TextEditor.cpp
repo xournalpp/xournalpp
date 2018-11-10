@@ -1088,7 +1088,7 @@ void TextEditor::paint(cairo_t* cr, GdkRectangle* repaintRect, double zoom)
 	{
 		string text = this->text->getText();
 		int pos = gtk_text_iter_get_offset(&cursorIter);
-		string txt = CONCAT(text.substr(0, pos), preeditString, text.substr(pos));
+		string txt = text.substr(0, pos) + preeditString + text.substr(pos);
 
 		PangoAttribute* attrib = pango_attr_underline_new(PANGO_UNDERLINE_SINGLE);
 		PangoAttrList* list = pango_layout_get_attributes(this->layout);

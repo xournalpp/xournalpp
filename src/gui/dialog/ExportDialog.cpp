@@ -52,27 +52,27 @@ void ExportDialog::setupModel()
 
 	gtk_tree_view_set_model(this->typesView, GTK_TREE_MODEL(this->typesModel));
 
-	addFileType(_C("By extension"), NULL, 0, "All files", true);
+	addFileType(_C("By extension"), "", 0, "All files", true);
 	addFileType("Portable Document Format",  "pdf", EXPORT_FORMAT_PDF);
 	addFileType("Portable Network Graphics", "png", EXPORT_FORMAT_PNG);
 	addFileType("Scalable Vector Graphics",  "svg", EXPORT_FORMAT_SVG);
 	addFileType("Encapsulated PostScript",   "eps", EXPORT_FORMAT_EPS);
 }
 
-void ExportDialog::addFileType(const char* typeDesc, const char* pattern, gint type, const char* filterName, bool select)
+void ExportDialog::addFileType(string typeDesc, string pattern, gint type, string filterName, bool select)
 {
 	GtkFileFilter *filter = gtk_file_filter_new();
 	string fullName;
 
-	if (pattern)
+	if (!pattern.empty())
 	{
-		fullName = CONCAT(filterName ? filterName : typeDesc, " (*.", pattern, ")");
+		fullName = (!filterName.empty() ? filterName : typeDesc) + " (*." + pattern + ")";
 		gtk_file_filter_set_name(filter, fullName.c_str());
-		gtk_file_filter_add_pattern(filter, pattern);
+		gtk_file_filter_add_pattern(filter, pattern.c_str());
 	}
 	else
 	{
-		gtk_file_filter_set_name(filter, filterName ? filterName : typeDesc);
+		gtk_file_filter_set_name(filter, (!filterName.empty() ? filterName.c_str() : typeDesc.c_str()));
 		gtk_file_filter_add_pattern(filter, "*");
 	}
 
@@ -191,7 +191,8 @@ void ExportDialog::fileTypeSelected(GtkTreeView* treeview, gpointer user_data)
 			if (extension)
 			{
 				char* _baseName = g_file_get_basename(file);
-				string baseName = _baseName, newName;
+				string baseName = _baseName;
+				string newName;
 				bool changeName = true;
 
 				g_free(_baseName);
@@ -206,13 +207,13 @@ void ExportDialog::fileTypeSelected(GtkTreeView* treeview, gpointer user_data)
 
 				if (nameIndex == -1)
 				{
-					newName = CONCAT(baseName, '.', extension);
+					newName = baseName + '.' + extension;
 				}
 				else
 				{
 					if (extension != baseName.substr(nameIndex))
 					{
-						newName = CONCAT(baseName.substr(0, nameIndex), '.', extension);
+						newName = baseName.substr(0, nameIndex) + '.' + extension;
 					}
 					else
 					{

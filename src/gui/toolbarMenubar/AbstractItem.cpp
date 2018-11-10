@@ -10,7 +10,6 @@ AbstractItem::AbstractItem(string id, ActionHandler* handler, ActionType action,
 	this->menuSignalHandler = 0;
 	this->group = GROUP_NOGROUP;
 	this->enabled = true;
-	this->ignoreMenuCallback = false;
 
 	ActionEnabledListener::registerListener(handler);
 	ActionSelectionListener::registerListener(handler);
@@ -39,12 +38,6 @@ AbstractItem::~AbstractItem()
 void AbstractItem::menuCallback(GtkMenuItem* menuitem, AbstractItem* toolItem)
 {
 	XOJ_CHECK_TYPE_OBJ(toolItem, AbstractItem);
-
-	if (toolItem->ignoreMenuCallback)
-	{
-		return;
-	}
-
 	toolItem->activated(NULL, menuitem, NULL);
 }
 
@@ -52,22 +45,20 @@ void AbstractItem::actionSelected(ActionGroup group, ActionType action)
 {
 	XOJ_CHECK_TYPE(AbstractItem);
 
-	if (this->group == group)
+	if (this->group != group)
 	{
-
-		if (this->menuitem && GTK_IS_CHECK_MENU_ITEM(this->menuitem))
-		{
-			if (gtk_check_menu_item_get_active(GTK_CHECK_MENU_ITEM(this->menuitem)) != (this->action == action))
-			{
-				this->ignoreMenuCallback = true;
-
-				gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(this->menuitem), this->action == action);
-
-				this->ignoreMenuCallback = false;
-			}
-		}
-		selected(group, action);
+		return;
 	}
+
+	if (this->menuitem && GTK_IS_CHECK_MENU_ITEM(this->menuitem))
+	{
+		bool selected = this->action == action;
+		if (gtk_check_menu_item_get_active(GTK_CHECK_MENU_ITEM(this->menuitem)) != selected)
+		{
+			gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(this->menuitem), selected);
+		}
+	}
+	selected(group, action);
 }
 
 /**
@@ -76,21 +67,22 @@ void AbstractItem::actionSelected(ActionGroup group, ActionType action)
 void AbstractItem::selected(ActionGroup group, ActionType action)
 {
 	XOJ_CHECK_TYPE(AbstractItem);
-
 }
 
 void AbstractItem::actionEnabledAction(ActionType action, bool enabled)
 {
 	XOJ_CHECK_TYPE(AbstractItem);
 
-	if (this->action == action)
+	if (this->action != action)
 	{
-		this->enabled = enabled;
-		enable(enabled);
-		if (this->menuitem)
-		{
-			gtk_widget_set_sensitive(GTK_WIDGET(this->menuitem), enabled);
-		}
+		return;
+	}
+
+	this->enabled = enabled;
+	enable(enabled);
+	if (this->menuitem)
+	{
+		gtk_widget_set_sensitive(GTK_WIDGET(this->menuitem), enabled);
 	}
 }
 
@@ -100,9 +92,22 @@ void AbstractItem::activated(GdkEvent* event, GtkMenuItem* menuitem, GtkToolButt
 
 	bool selected = true;
 
-	if (menuitem && GTK_IS_CHECK_MENU_ITEM(menuitem))
+	if (menuitem)
 	{
-		selected = gtk_check_menu_item_get_active(GTK_CHECK_MENU_ITEM(menuitem));
+		return;
+//		if (menuitem && GTK_IS_RADIO_MENU_ITEM(menuitem))
+//		{
+//			selected = gtk_check_menu_item_get_active(GTK_CHECK_MENU_ITEM(menuitem));
+//			if (!selected)
+//			{
+//				// Ignore radio unselect event
+//				return;
+//			}
+//		}
+//		else if (menuitem && GTK_IS_CHECK_MENU_ITEM(menuitem))
+//		{
+//			selected = gtk_check_menu_item_get_active(GTK_CHECK_MENU_ITEM(menuitem));
+//		}
 	}
 	else if (toolbutton && GTK_IS_TOGGLE_TOOL_BUTTON(toolbutton))
 	{

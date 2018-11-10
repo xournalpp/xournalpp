@@ -1005,18 +1005,25 @@ void Control::customizeToolbars()
 
 				if (i != 0)
 				{
-					id += CONCAT(" ", i);
+					id += " ";
+					id += std::to_string(i);
 				}
 
 				if (!model->existsId(id))
 				{
 					if (i != 0)
 					{
-						data->setName(CONCAT(data->getName(), " ", _("Copy"), " ", i));
+						string filename = data->getName();
+						filename += " ";
+						filename += FS(_("Copy"));
+						filename += " ";
+						filename += std::to_string(i);
+
+						data->setName(filename);
 					}
 					else
 					{
-						data->setName(CONCAT(data->getName(), " ", _("Copy")));
+						data->setName(data->getName() + " " + FS(_("Copy")));
 					}
 					data->setId(id);
 					break;

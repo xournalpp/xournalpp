@@ -56,7 +56,6 @@ protected:
 	ActionHandler* handler;
 
 	bool enabled;
-	bool ignoreMenuCallback;
 
 private:
 	gulong menuSignalHandler;

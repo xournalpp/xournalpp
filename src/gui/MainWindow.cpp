@@ -804,7 +804,7 @@ void MainWindow::updatePageNumbers(size_t page, size_t pagecount, size_t pdfpage
 	string pdfText;
 	if (pdfpage != size_t_npos)
 	{
-		pdfText = CONCAT(", ", FS(_F("PDF Page {1}") % (pdfpage + 1)));
+		pdfText = string(", ") + FS(_F("PDF Page {1}") % (pdfpage + 1));
 	}
 	toolbar->setPageText(FS(C_F("Page {pagenumber} \"of {pagecount}\"", " of {1}{2}") % pagecount % pdfText));
 

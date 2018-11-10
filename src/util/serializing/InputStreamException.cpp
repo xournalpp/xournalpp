@@ -6,7 +6,7 @@ InputStreamException::InputStreamException(string message, string filename, int 
 {
 	XOJ_INIT_TYPE(InputStreamException);
 	
-	this->message = CONCAT(message, ", ", filename, ": ", line);
+	this->message = message + ", " + filename + ": " + std::to_string(line);
 }
 
 InputStreamException::~InputStreamException() throw ()

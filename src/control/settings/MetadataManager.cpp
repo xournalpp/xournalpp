@@ -372,7 +372,7 @@ bp::ptree::path_type MetadataManager::getINIpathURI(path p)
 	StringUtils::replace_all_chars(spath, {replace_pair('\\', "/")});
 	return getINIpath(CONCAT("file://", spath));
 #else
-	return getINIpath(CONCAT("file://", p.string()));
+	return getINIpath(std::string("file://") + p.string());
 #endif
 }
 
