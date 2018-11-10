@@ -391,9 +391,6 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
 	case ACTION_EXPORT_AS:
 		exportAs();
 		break;
-	case ACTION_DOCUMENT_PROPERTIES:
-		// TODO LOW PRIO: not implemented, but menupoint is hidden...
-		break;
 	case ACTION_PRINT:
 		print();
 		break;

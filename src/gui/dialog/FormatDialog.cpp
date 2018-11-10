@@ -5,10 +5,9 @@
 #include <config.h>
 #include <i18n.h>
 
-FormatDialog::FormatDialog(GladeSearchpath* gladeSearchPath, Settings* settings, double width, double heigth) :
-		GladeGui(gladeSearchPath, "pagesize.glade", "pagesizeDialog")
+FormatDialog::FormatDialog(GladeSearchpath* gladeSearchPath, Settings* settings, double width, double heigth)
+ : GladeGui(gladeSearchPath, "pagesize.glade", "pagesizeDialog")
 {
-
 	XOJ_INIT_TYPE(FormatDialog);
 
 	this->orientation = ORIENTATION_NOT_DEFINED;

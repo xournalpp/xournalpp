@@ -39,7 +39,6 @@ ExportJob::ExportJob(Control* control, PageRangeVector selected, ExportFormtType
 		front = filename.substr(0, index);
 		back = filename.substr(index + 1);
 	}
-
 }
 
 ExportJob::~ExportJob()

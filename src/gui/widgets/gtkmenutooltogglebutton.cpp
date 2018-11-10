@@ -65,12 +65,12 @@ static void gtk_menu_tool_toggle_button_construct_contents(
 
 	if (orientation == GTK_ORIENTATION_HORIZONTAL)
 	{
-		box = gtk_hbox_new(FALSE, 0);
+		box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
 		gtk_arrow_set(GTK_ARROW (priv->arrow), GTK_ARROW_DOWN, GTK_SHADOW_NONE);
 	}
 	else
 	{
-		box = gtk_vbox_new(FALSE, 0);
+		box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
 		gtk_arrow_set(GTK_ARROW (priv->arrow), GTK_ARROW_RIGHT, GTK_SHADOW_NONE);
 	}
 
@@ -359,25 +359,21 @@ static gboolean arrow_button_button_press_event_cb(GtkWidget* widget,
 
 static void gtk_menu_tool_toggle_button_init(GtkMenuToolToggleButton* button)
 {
-	GtkWidget* box;
-	GtkWidget* arrow;
-	GtkWidget* arrow_button;
-	GtkWidget* real_button;
 
 	button->priv = GTK_MENU_TOOL_TOGGLE_BUTTON_GET_PRIVATE(button);
 
 	gtk_tool_item_set_homogeneous(GTK_TOOL_ITEM (button), FALSE);
 
-	box = gtk_hbox_new(FALSE, 0);
+	GtkWidget* box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
 
-	real_button = gtk_bin_get_child(GTK_BIN(button));
+	GtkWidget* real_button = gtk_bin_get_child(GTK_BIN(button));
 	g_object_ref(real_button);
 	gtk_container_remove(GTK_CONTAINER (button), real_button);
 	gtk_container_add(GTK_CONTAINER (box), real_button);
 	g_object_unref(real_button);
 
-	arrow_button = gtk_toggle_button_new();
-	arrow = gtk_arrow_new(GTK_ARROW_DOWN, GTK_SHADOW_NONE);
+	GtkWidget* arrow_button = gtk_toggle_button_new();
+	GtkWidget* arrow = gtk_arrow_new(GTK_ARROW_DOWN, GTK_SHADOW_NONE);
 	gtk_container_add(GTK_CONTAINER (arrow_button), arrow);
 	gtk_box_pack_end(GTK_BOX (box), arrow_button, FALSE, FALSE, 0);
 

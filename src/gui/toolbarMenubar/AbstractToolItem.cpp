@@ -162,16 +162,5 @@ GtkWidget* AbstractToolItem::getNewToolIcon()
 {
 	XOJ_CHECK_TYPE(AbstractToolItem);
 
-	GtkWidget* icon = this->getNewToolIconImpl();
-
-	/* TODO !!!!!!!!!!!!!!!!!
-	if (!GTK_IS_IMAGE(icon))
-	{
-		GdkPixbuf* pixbuf = ToolbarUtil::newPixbufFromWidget(icon);
-		g_object_unref(icon);
-		icon = gtk_image_new_from_pixbuf(pixbuf);
-		g_object_unref(pixbuf);
-	}*/
-
-	return icon;
+	return this->getNewToolIconImpl();
 }

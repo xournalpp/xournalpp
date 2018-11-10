@@ -101,7 +101,7 @@ GtkToolItem* ToolPageLayer::newItem()
 
 	GtkToolItem* it = gtk_tool_item_new();
 
-	GtkWidget* hbox = gtk_hbox_new(false, 1);
+	GtkWidget* hbox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 1);
 	gtk_box_pack_start(GTK_BOX(hbox), gtk_label_new(_C("Layer")), false, false, 7);
 
 	gtk_box_pack_start(GTK_BOX(hbox), this->layerComboBox, false, false, 0);

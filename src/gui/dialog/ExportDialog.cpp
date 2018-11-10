@@ -4,10 +4,9 @@
 #include <i18n.h>
 #include <PageRange.h>
 
-ExportDialog::ExportDialog(GladeSearchpath* gladeSearchPath, Settings* settings, int pageCount, int currentPage) :
-		GladeGui(gladeSearchPath, "export.glade", "exportDialog")
+ExportDialog::ExportDialog(GladeSearchpath* gladeSearchPath, Settings* settings, int pageCount, int currentPage)
+ : GladeGui(gladeSearchPath, "export.glade", "exportDialog")
 {
-
 	XOJ_INIT_TYPE(ExportDialog);
 
 	this->pageCount = pageCount;
@@ -29,11 +28,12 @@ ExportDialog::ExportDialog(GladeSearchpath* gladeSearchPath, Settings* settings,
 	gtk_file_chooser_set_current_folder(GTK_FILE_CHOOSER(this->window), settings->getLastSavePath().c_str());
 
 	g_signal_connect(this->window, "selection-changed", G_CALLBACK(&selectionChanged), (gpointer) this);
-
 }
 
 void ExportDialog::setupModel()
 {
+	XOJ_CHECK_TYPE(ExportDialog);
+
 	GtkCellRenderer* renderer = gtk_cell_renderer_text_new();
 
 	gtk_tree_view_insert_column_with_attributes(this->typesView, -1, _C("File Type"), renderer, "text", 0, NULL);
@@ -106,6 +106,8 @@ PageRangeVector ExportDialog::getRange()
 void ExportDialog::selectionChanged(GtkFileChooser* chooser, gpointer user_data)
 {
 	ExportDialog* dlg = (ExportDialog*) user_data;
+
+	XOJ_CHECK_TYPE_OBJ(dlg, ExportDialog);
 
 	char* file = gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(dlg->window));
 

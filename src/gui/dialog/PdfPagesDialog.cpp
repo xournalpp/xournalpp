@@ -266,10 +266,9 @@ private:
 //////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////
 
-PdfPagesDialog::PdfPagesDialog(GladeSearchpath* gladeSearchPath, Document* doc, Settings* settings) :
-		GladeGui(gladeSearchPath, "pdfpages.glade", "pdfPagesDialog")
+PdfPagesDialog::PdfPagesDialog(GladeSearchpath* gladeSearchPath, Document* doc, Settings* settings)
+ : GladeGui(gladeSearchPath, "pdfpages.glade", "pdfPagesDialog")
 {
-
 	XOJ_INIT_TYPE(PdfPagesDialog);
 
 	this->settings = settings;
@@ -512,5 +511,4 @@ void PdfPagesDialog::layout()
 	}
 
 	gtk_layout_set_size(GTK_LAYOUT(this->widget), width, y);
-
 }

@@ -479,7 +479,6 @@ void ToolMenuHandler::initToolItems()
 	registerMenupoint(gui->get("menuFileExportPdf"), ACTION_EXPORT_AS_PDF);
 	registerMenupoint(gui->get("menuFileExportAs"), ACTION_EXPORT_AS);
 
-	registerMenupoint(gui->get("menuDocumentProperties"), ACTION_DOCUMENT_PROPERTIES);
 	registerMenupoint(gui->get("menuFilePrint"), ACTION_PRINT);
 
 	registerMenupoint(gui->get("menuFileQuit"), ACTION_QUIT);
