@@ -10,7 +10,7 @@
 
 #include <list>
 
-RenderJob::RenderJob(PageView* view)
+RenderJob::RenderJob(XojPageView* view)
 {
 	XOJ_INIT_TYPE(RenderJob);
 
@@ -37,7 +37,7 @@ void RenderJob::rerenderRectangle(RenderJob* renderJob, Rectangle* rect, bool no
 {
 	XOJ_CHECK_TYPE_OBJ(renderJob, RenderJob);
 
-	PageView* view = renderJob->view;
+	XojPageView* view = renderJob->view;
 	double zoom = view->xournal->getZoom();
 	Document* doc = view->xournal->getDocument();
 

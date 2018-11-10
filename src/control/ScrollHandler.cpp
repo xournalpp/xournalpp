@@ -25,7 +25,7 @@ void ScrollHandler::goToPreviousPage()
 	{
 		if (this->control->getSettings()->isPresentationMode())
 		{
-			PageView* view = this->control->getWindow()->getXournal()->getViewFor(this->control->getWindow()->getXournal()->getCurrentPage() - 1);
+			XojPageView* view = this->control->getWindow()->getXournal()->getViewFor(this->control->getWindow()->getXournal()->getCurrentPage() - 1);
 			if (view)
 			{
 				double dHeight = view->getDisplayHeight();
@@ -51,7 +51,7 @@ void ScrollHandler::goToNextPage()
 	{
 		if (this->control->getSettings()->isPresentationMode())
 		{
-			PageView* view = this->control->getWindow()->getXournal()->getViewFor(this->control->getWindow()->getXournal()->getCurrentPage() + 1);
+			XojPageView* view = this->control->getWindow()->getXournal()->getViewFor(this->control->getWindow()->getXournal()->getCurrentPage() + 1);
 			if (view)
 			{
 				double dHeight = view->getDisplayHeight();

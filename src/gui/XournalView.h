@@ -25,7 +25,7 @@ class Document;
 class EditSelection;
 class Layout;
 class PagePositionHandler;
-class PageView;
+class XojPageView;
 class PdfCache;
 class Rectangle;
 class RepaintHandler;
@@ -44,7 +44,7 @@ public:
 
 	bool paint(GtkWidget* widget, GdkEventExpose* event);
 
-	void requestPage(PageView* page);
+	void requestPage(XojPageView* page);
 
 	void layoutPages();
 
@@ -60,7 +60,7 @@ public:
 
 	void forceUpdatePagenumbers();
 
-	PageView* getViewFor(size_t pageNr);
+	XojPageView* getViewFor(size_t pageNr);
 
 	bool searchTextOnPage(string text, size_t p, int* occures, double* top);
 
@@ -72,7 +72,7 @@ public:
 
 	bool actionDelete();
 
-	void endTextAllPages(PageView* except = NULL);
+	void endTextAllPages(XojPageView* except = NULL);
 
 	void resetShapeRecognizer();
 
@@ -91,7 +91,7 @@ public:
 	void setEventCompression(gboolean enable);
 
 	TextEditor* getTextEditor();
-	ArrayIterator<PageView*> pageViewIterator();
+	ArrayIterator<XojPageView*> pageViewIterator();
 	Control* getControl();
 	double getZoom();
 	Document* getDocument();
@@ -102,7 +102,7 @@ public:
 	Cursor* getCursor();
 
 	Rectangle* getVisibleRect(int page);
-	Rectangle* getVisibleRect(PageView* redrawable);
+	Rectangle* getVisibleRect(XojPageView* redrawable);
 
 	GtkContainer* getParent();
 public:
@@ -156,7 +156,7 @@ private:
 	GtkWidget* widget;
 	double margin;
 
-	PageView** viewPages;
+	XojPageView** viewPages;
 	size_t viewPagesLen;
 
 	Control* control;

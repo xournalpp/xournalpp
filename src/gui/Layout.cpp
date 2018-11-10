@@ -59,7 +59,7 @@ void Layout::updateCurrentPage()
 
 	for (int page = 0; page < this->view->viewPagesLen; page++)
 	{
-		PageView* p = this->view->viewPages[page];
+		XojPageView* p = this->view->viewPages[page];
 
 		Rectangle currentRect = p->getRect();
 
@@ -165,7 +165,7 @@ void Layout::layoutPages()
 	// calculate maximum size
 	for (int i = 0; i < len; i++)
 	{
-		PageView* v = this->view->viewPages[i];
+		XojPageView* v = this->view->viewPages[i];
 
 		int rId = 0;
 		if (dualPage && i % 2 == 1)
@@ -214,7 +214,7 @@ void Layout::layoutPages()
 
 	for (int i = 0; i < len; i++)
 	{
-		PageView* v = this->view->viewPages[i];
+		XojPageView* v = this->view->viewPages[i];
 
 		int height = 0;
 
@@ -241,7 +241,7 @@ void Layout::layoutPages()
 			}
 			else
 			{
-				PageView* v2 = NULL;
+				XojPageView* v2 = NULL;
 				height = v->getDisplayHeight();
 
 				if (i + 1 < len)

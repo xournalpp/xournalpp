@@ -17,7 +17,7 @@
 
 // TODO LOW PRIO: implement drag & drop
 
-TextEditor::TextEditor(PageView* gui, GtkWidget* widget, Text* text, bool ownText)
+TextEditor::TextEditor(XojPageView* gui, GtkWidget* widget, Text* text, bool ownText)
 {
 	XOJ_INIT_TYPE(TextEditor);
 

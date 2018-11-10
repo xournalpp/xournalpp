@@ -16,12 +16,12 @@
 #include <XournalType.h>
 
 class Rectangle;
-class PageView;
+class XojPageView;
 
 class RenderJob : public Job
 {
 public:
-	RenderJob(PageView* view);
+	RenderJob(XojPageView* view);
 
 protected:
 	virtual ~RenderJob();
@@ -42,5 +42,5 @@ private:
 private:
 	XOJ_TYPE_ATTRIB;
 
-	PageView* view;
+	XojPageView* view;
 };

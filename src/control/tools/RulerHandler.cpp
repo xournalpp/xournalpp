@@ -4,7 +4,7 @@
 #include "control/Control.h"
 #include "undo/InsertUndoAction.h"
 
-RulerHandler::RulerHandler(XournalView* xournal, PageView* redrawable, PageRef page)
+RulerHandler::RulerHandler(XournalView* xournal, XojPageView* redrawable, PageRef page)
  : BaseStrokeHandler(xournal, redrawable, page)
 {
 	XOJ_INIT_TYPE(RulerHandler);

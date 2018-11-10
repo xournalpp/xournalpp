@@ -10,9 +10,7 @@
 #include <gdk/gdk.h>
 #include <math.h>
 
-StrokeHandler::StrokeHandler(XournalView* xournal,
-                             PageView* redrawable,
-                             PageRef page)
+StrokeHandler::StrokeHandler(XournalView* xournal, XojPageView* redrawable, PageRef page)
 	: InputHandler(xournal, redrawable, page),
 	  surfMask(NULL), crMask(NULL), reco(NULL)
 {

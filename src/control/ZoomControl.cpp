@@ -167,7 +167,7 @@ bool ZoomControl::onScrolledwindowMainScrollEvent(GtkWidget* widget, GdkEventScr
 	guint state = event->state & gtk_accelerator_get_default_mod_mask();
 
 	// do not handle e.g. ALT + Scroll (e.g. Compiz use this shortcut for setting transparency...)
-	if (state != 0 && state & ~(GDK_CONTROL_MASK | GDK_SHIFT_MASK))
+	if (state != 0 && (state & ~(GDK_CONTROL_MASK | GDK_SHIFT_MASK)))
 	{
 		return true;
 	}

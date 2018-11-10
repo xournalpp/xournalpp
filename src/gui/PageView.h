@@ -33,11 +33,11 @@ class TextEditor;
 class VerticalToolHandler;
 class XournalView;
 
-class PageView : public Redrawable, public PageListener
+class XojPageView : public Redrawable, public PageListener
 {
 public:
-	PageView(XournalView* xournal, PageRef page);
-	virtual ~PageView();
+	XojPageView(XournalView* xournal, PageRef page);
+	virtual ~XojPageView();
 
 public:
 	void updatePageSize(double width, double height);
@@ -103,29 +103,29 @@ public:
 	double getWidth() const;
 
 	/**
-	 * Returns the height of this PageView
+	 * Returns the height of this XojPageView
 	 */
 	double getHeight() const;
 
 	/**
-	 * Returns the width of this PageView as displayed
+	 * Returns the width of this XojPageView as displayed
 	 * on the display taking into account the current zoom
 	 */
 	int getDisplayWidth() const;
 	/**
-	 * Returns the height of this PageView as displayed
+	 * Returns the height of this XojPageView as displayed
 	 * on the display taking into account the current zoom
 	 */
 	int getDisplayHeight() const;
 
 	/**
-	 * Returns the x coordinate of this PageView with
+	 * Returns the x coordinate of this XojPageView with
 	 * respect to the display
 	 */
 	int getX() const;
 
 	/**
-	 * Returns the y coordinate of this PageView with
+	 * Returns the y coordinate of this XojPageView with
 	 * respect to the display
 	 */
 	int getY() const;
@@ -148,7 +148,7 @@ public: // event handler
 	void translateEvent(GdkEvent* event, int xOffset, int yOffset);
 
 	/**
-	 * This method actually repaints the PageView, triggering
+	 * This method actually repaints the XojPageView, triggering
 	 * a rerender call if necessary
 	 */
 	bool paintPage(cairo_t* cr, GdkRectangle* rect);

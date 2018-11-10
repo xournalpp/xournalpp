@@ -2,7 +2,7 @@
 
 #include "gui/PageView.h"
 
-PagePosition::PagePosition(PageView* pv)
+PagePosition::PagePosition(XojPageView* pv)
 {
 	XOJ_INIT_TYPE(PagePosition);
 
@@ -27,7 +27,7 @@ PagePosition::~PagePosition()
 	XOJ_RELEASE_TYPE(PagePosition);
 }
 
-bool PagePosition::add(PageView* pv)
+bool PagePosition::add(XojPageView* pv)
 {
 	XOJ_CHECK_TYPE(PagePosition);
 
@@ -47,11 +47,11 @@ bool PagePosition::add(PageView* pv)
 	return false;
 }
 
-PageView* PagePosition::getViewAt(int x, int y)
+XojPageView* PagePosition::getViewAt(int x, int y)
 {
 	XOJ_CHECK_TYPE(PagePosition);
 
-	for (PageView* v : this->views)
+	for (XojPageView* v : this->views)
 	{
 		if (v->containsPoint(x, y))
 		{

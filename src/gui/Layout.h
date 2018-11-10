@@ -16,13 +16,13 @@
 
 #include <gtk/gtk.h>
 
-class PageView;
+class XojPageView;
 class XournalView;
 
 /**
  * @brief The Layout manager for the XournalWidget
  *
- * This class manages the layout of the PageView%s contained
+ * This class manages the layout of the XojPageView's contained
  * in the XournalWidget
  */
 class Layout
@@ -79,13 +79,13 @@ public:
 	Rectangle getVisibleRect();
 
 	/**
-	 * Performs a layout of the PageView%s managed in this Layout
+	 * Performs a layout of the XojPageView's managed in this Layout
 	 */
 	void layoutPages();
 
 	/**
-	 * Updates the current PageView. The PageView is selected based on
-	 * the percentage of the visible area of the PageView relative
+	 * Updates the current XojPageView. The XojPageView is selected based on
+	 * the percentage of the visible area of the XojPageView relative
 	 * to its total area.
 	 */
 	void updateCurrentPage();
@@ -93,7 +93,7 @@ public:
 public:
 	/**
 	 * Callback for a changed value of one of the adjustments of
-	 * the scrolled window. It updates the current PageView
+	 * the scrolled window. It updates the current XojPageView
 	 * via Layout::updateCurrentPage()
 	 */
 	static void adjustmentValueChanged(GtkAdjustment* adjustment,

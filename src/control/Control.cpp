@@ -3015,7 +3015,8 @@ void Control::clipboardPaste(Element* e)
 	{
 		return;
 	}
-	PageView* view = win->getXournal()->getViewFor(pageNr);
+
+	XojPageView* view = win->getXournal()->getViewFor(pageNr);
 	if (view == NULL)
 	{
 		return;
@@ -3056,7 +3057,7 @@ void Control::clipboardPasteXournal(ObjectInputStream& in)
 	PageRef page = this->doc->getPage(pNr);
 	Layer* layer = page->getSelectedLayer();
 
-	PageView* view = win->getXournal()->getViewFor(pNr);
+	XojPageView* view = win->getXournal()->getViewFor(pNr);
 
 	if (!view || !page)
 	{
@@ -3243,7 +3244,7 @@ void Control::runLatex()
 	{
 		return;
 	}
-	PageView* view = win->getXournal()->getViewFor(pageNr);
+	XojPageView* view = win->getXournal()->getViewFor(pageNr);
 	if (view == NULL)
 	{
 		return;

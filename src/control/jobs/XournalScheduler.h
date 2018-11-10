@@ -30,7 +30,7 @@ public:
 	 * Remove source, e.g. if a page is removed they don't need to repaint
 	 */
 	void removeSidebar(SidebarPreviewBaseEntry* preview);
-	void removePage(PageView* view);
+	void removePage(XojPageView* view);
 
 	/**
 	 * Removes all PreviewJob%s / RenderJob%s scheduled to be run
@@ -38,7 +38,7 @@ public:
 	void removeAllJobs();
 
 	void addRepaintSidebar(SidebarPreviewBaseEntry* preview);
-	void addRerenderPage(PageView* view);
+	void addRerenderPage(XojPageView* view);
 
 	/**
 	 * Blocks until all currently running Job%s have been executed

@@ -16,7 +16,7 @@
 class RulerHandler : public BaseStrokeHandler
 {
 public:
-	RulerHandler(XournalView* xournal, PageView* redrawable, PageRef page);
+	RulerHandler(XournalView* xournal, XojPageView* redrawable, PageRef page);
 	virtual ~RulerHandler();
 
 private:

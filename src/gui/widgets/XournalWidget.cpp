@@ -50,7 +50,7 @@ static gboolean gtk_xournal_key_release_event(GtkWidget* widget,
 static void gtk_xournal_scroll_mouse_event(GtkXournal* xournal,
                                            GdkEventMotion* event);
 
-PageView *current_view;
+XojPageView *current_view;
 
 GType gtk_xournal_get_type(void)
 {
@@ -202,7 +202,7 @@ static gboolean gtk_xournal_key_release_event(GtkWidget* widget, GdkEventKey* ev
 	return xournal->view->onKeyReleaseEvent(event);
 }
 
-Rectangle* gtk_xournal_get_visible_area(GtkWidget* widget, PageView* p)
+Rectangle* gtk_xournal_get_visible_area(GtkWidget* widget, XojPageView* p)
 {
 	g_return_val_if_fail(widget != NULL, NULL);
 	g_return_val_if_fail(GTK_IS_XOURNAL(widget), NULL);
@@ -282,8 +282,7 @@ static void gtk_xournal_scroll_mouse_event(GtkXournal* xournal,
 	}
 }
 
-PageView* gtk_xournal_get_page_view_for_pos_cached(GtkXournal* xournal, int x,
-                                                   int y)
+XojPageView* gtk_xournal_get_page_view_for_pos_cached(GtkXournal* xournal, int x, int y)
 {
 	x += xournal->x;
 	y += xournal->y;
@@ -413,7 +412,7 @@ gboolean gtk_xournal_button_press_event(GtkWidget* widget, GdkEventButton* event
 	{
 		EditSelection* selection = xournal->selection;
 
-		PageView* view = selection->getView();
+		XojPageView* view = selection->getView();
 		GdkEventButton ev = *event;
 		view->translateEvent((GdkEvent*) &ev, xournal->x, xournal->y);
 		CursorSelectionType selType = selection->getSelectionTypeForPos(ev.x, ev.y,
@@ -438,7 +437,7 @@ gboolean gtk_xournal_button_press_event(GtkWidget* widget, GdkEventButton* event
 		}
 	}
 
-	PageView* pv = gtk_xournal_get_page_view_for_pos_cached(xournal, event->x,
+	XojPageView* pv = gtk_xournal_get_page_view_for_pos_cached(xournal, event->x,
 	                                                        event->y);
 
 	current_view = pv;
@@ -532,7 +531,7 @@ gboolean gtk_xournal_motion_notify_event(GtkWidget* widget,
 	{
 		EditSelection* selection = xournal->selection;
 
-		PageView* view = selection->getView();
+		XojPageView* view = selection->getView();
 		GdkEventMotion ev = *event;
 		view->translateEvent((GdkEvent*) &ev, xournal->x, xournal->y);
 
@@ -549,7 +548,7 @@ gboolean gtk_xournal_motion_notify_event(GtkWidget* widget,
 		return true;
 	}
 
-	PageView* pv = NULL;
+	XojPageView* pv = NULL;
 
 	if (current_view)
 	{
@@ -735,7 +734,7 @@ static gboolean gtk_xournal_draw(GtkWidget* widget, cairo_t* cr)
 
 	GtkXournal* xournal = GTK_XOURNAL(widget);
 
-	ArrayIterator<PageView*> it = xournal->view->pageViewIterator();
+	ArrayIterator<XojPageView*> it = xournal->view->pageViewIterator();
 
 	double x1, x2, y1, y2;
 
@@ -748,7 +747,7 @@ static gboolean gtk_xournal_draw(GtkWidget* widget, cairo_t* cr)
 
 	while (it.hasNext())
 	{
-		PageView* pv = it.next();
+		XojPageView* pv = it.next();
 
 		int px = pv->getX();
 		int py = pv->getY();

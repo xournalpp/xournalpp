@@ -153,7 +153,7 @@ XOJ_DECLARE_TYPE(PdfRefEntry, 141);
 XOJ_DECLARE_TYPE(RemoveLayerUndoAction, 142);
 XOJ_DECLARE_TYPE(RecognizerUndoAction, 143);
 XOJ_DECLARE_TYPE(UndoRedoHandler, 144);
-XOJ_DECLARE_TYPE(PageView, 145);
+XOJ_DECLARE_TYPE(XojPageView, 145);
 XOJ_DECLARE_TYPE(MainWindow, 146);
 XOJ_DECLARE_TYPE(MetadataManager, 147);
 XOJ_DECLARE_TYPE(MoveUndoAction, 148);

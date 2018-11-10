@@ -21,7 +21,7 @@ G_BEGIN_DECLS
 
 class EditSelection;
 class Layout;
-class PageView;
+class XojPageView;
 class PagePositionCache;
 class Rectangle;
 class XournalView;
@@ -49,7 +49,7 @@ struct _GtkXournal
 
 	Layout* layout;
 
-	PageView* currentInputPage;
+	XojPageView* currentInputPage;
 	PagePositionCache* pagePositionCache;
 
 	/**
@@ -82,6 +82,6 @@ void gtk_xournal_scroll_relative(GtkWidget* widget, double x, double y);
 
 void gtk_xournal_repaint_area(GtkWidget* widget, int x1, int y1, int x2, int y2);
 
-Rectangle* gtk_xournal_get_visible_area(GtkWidget* widget, PageView* p);
+Rectangle* gtk_xournal_get_visible_area(GtkWidget* widget, XojPageView* p);
 
 G_END_DECLS

@@ -18,20 +18,18 @@
 class ShapeRecognizer;
 
 /**
- * @brief The stroke handler draws a stroke on a PageView
+ * @brief The stroke handler draws a stroke on a XojPageView
  * 
  * The stroke is drawn using a cairo_surface_t* as a mask:
  * As the pointer moves on the canvas single segments are
  * drawn opaquely on the initially transparent masking
  * surface. The surface is used to mask the stroke
- * when drawing it to the PageView
+ * when drawing it to the XojPageView
  */
 class StrokeHandler : public InputHandler
 {
 public:
-	StrokeHandler(XournalView* xournal,
-	              PageView* redrawable,
-	              PageRef page);
+	StrokeHandler(XournalView* xournal, XojPageView* redrawable, PageRef page);
 	virtual ~StrokeHandler();
 
 	void draw(cairo_t* cr);

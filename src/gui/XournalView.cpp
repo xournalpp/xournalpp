@@ -100,7 +100,7 @@ XournalView::~XournalView()
 	XOJ_RELEASE_TYPE(XournalView);
 }
 
-gint pageViewCmpSize(PageView* a, PageView* b)
+gint pageViewCmpSize(XojPageView* a, XojPageView* b)
 {
 	return a->getLastVisibleTime() - b->getLastVisibleTime();
 }
@@ -120,7 +120,7 @@ gboolean XournalView::clearMemoryTimer(XournalView* widget)
 
 	for (size_t i = 0; i < widget->viewPagesLen; i++)
 	{
-		PageView* v = widget->viewPages[i];
+		XojPageView* v = widget->viewPages[i];
 		if (v->getLastVisibleTime() > 0)
 		{
 			list = g_list_insert_sorted(list, v, (GCompareFunc) pageViewCmpSize);
@@ -140,7 +140,7 @@ gboolean XournalView::clearMemoryTimer(XournalView* widget)
 		}
 		else
 		{
-			PageView* v = (PageView*) l->data;
+			XojPageView* v = (XojPageView*) l->data;
 
 			if (pixel <= 0)
 			{
@@ -176,7 +176,7 @@ bool XournalView::onKeyPressEvent(GdkEventKey* event)
 	size_t p = getCurrentPage();
 	if (p != size_t_npos && p < this->viewPagesLen)
 	{
-		PageView* v = this->viewPages[p];
+		XojPageView* v = this->viewPages[p];
 		if (v->onKeyPressEvent(event))
 		{
 			return true;
@@ -327,7 +327,7 @@ bool XournalView::onKeyReleaseEvent(GdkEventKey* event)
 	size_t p = getCurrentPage();
 	if (p != size_t_npos && p < this->viewPagesLen)
 	{
-		PageView* v = this->viewPages[p];
+		XojPageView* v = this->viewPages[p];
 		if (v->onKeyReleaseEvent(event))
 		{
 			return true;
@@ -393,7 +393,7 @@ bool XournalView::searchTextOnPage(string text, size_t p, int* occures, double* 
 	{
 		return false;
 	}
-	PageView* v = this->viewPages[p];
+	XojPageView* v = this->viewPages[p];
 
 	return v->searchTextOnPage(text, occures, top);
 }
@@ -408,7 +408,7 @@ void XournalView::forceUpdatePagenumbers()
 	control->firePageSelected(p);
 }
 
-PageView* XournalView::getViewFor(size_t pageNr)
+XojPageView* XournalView::getViewFor(size_t pageNr)
 {
 	XOJ_CHECK_TYPE(XournalView);
 
@@ -446,7 +446,7 @@ void XournalView::pageSelected(size_t page)
 
 	if (page != size_t_npos && page < viewPagesLen)
 	{
-		PageView* vp = viewPages[page];
+		XojPageView* vp = viewPages[page];
 		vp->setSelected(true);
 		lastSelectedPage = page;
 		pdfPage = vp->getPage()->getPdfPageNr();
@@ -473,20 +473,20 @@ void XournalView::scrollTo(size_t pageNo, double yDocument)
 		return;
 	}
 
-	PageView* v = this->viewPages[pageNo];
+	XojPageView* v = this->viewPages[pageNo];
 
 	Layout* layout = gtk_xournal_get_layout(this->widget);
 	layout->ensureRectIsVisible(v->layout.getLayoutAbsoluteX(), v->layout.getLayoutAbsoluteY() + yDocument,
 								v->getDisplayWidth(), v->getDisplayHeight());
 }
 
-void XournalView::endTextAllPages(PageView* except)
+void XournalView::endTextAllPages(XojPageView* except)
 {
 	XOJ_CHECK_TYPE(XournalView);
 
 	for (size_t i = 0; i < this->viewPagesLen; i++)
 	{
-		PageView* v = this->viewPages[i];
+		XojPageView* v = this->viewPages[i];
 		if (except != v)
 		{
 			v->endText();
@@ -537,12 +537,12 @@ Rectangle* XournalView::getVisibleRect(size_t page)
 	{
 		return NULL;
 	}
-	PageView* p = this->viewPages[page];
+	XojPageView* p = this->viewPages[page];
 
 	return getVisibleRect(p);
 }
 
-Rectangle* XournalView::getVisibleRect(PageView* redrawable)
+Rectangle* XournalView::getVisibleRect(XojPageView* redrawable)
 {
 	return gtk_xournal_get_visible_area(this->widget, redrawable);
 }
@@ -593,7 +593,7 @@ void XournalView::zoomChanged(double lastZoom)
 
 	Layout* layout = gtk_xournal_get_layout(this->widget);
 	int currentPage = this->getCurrentPage();
-	PageView* view = getViewFor(currentPage);
+	XojPageView* view = getViewFor(currentPage);
 	ZoomControl* zoom = control->getZoomControl();
 
 	if (!view)
@@ -695,7 +695,7 @@ TextEditor* XournalView::getTextEditor()
 
 	for (size_t i = 0; i < this->viewPagesLen; i++)
 	{
-		PageView* v = this->viewPages[i];
+		XojPageView* v = this->viewPages[i];
 		if (v->getTextEditor())
 		{
 			return v->getTextEditor();
@@ -711,7 +711,7 @@ void XournalView::resetShapeRecognizer()
 
 	for (size_t i = 0; i < this->viewPagesLen; i++)
 	{
-		PageView* v = this->viewPages[i];
+		XojPageView* v = this->viewPages[i];
 		v->resetShapeRecognizer();
 	}
 }
@@ -727,9 +727,9 @@ void XournalView::pageInserted(size_t page)
 {
 	XOJ_CHECK_TYPE(XournalView);
 
-	PageView** lastViewPages = this->viewPages;
+	XojPageView** lastViewPages = this->viewPages;
 
-	this->viewPages = new PageView *[this->viewPagesLen + 1];
+	this->viewPages = new XojPageView *[this->viewPagesLen + 1];
 
 	for (size_t i = 0; i < page; i++)
 	{
@@ -755,7 +755,7 @@ void XournalView::pageInserted(size_t page)
 
 	Document* doc = control->getDocument();
 	doc->lock();
-	PageView* pageView = new PageView(this, doc->getPage(page));
+	XojPageView* pageView = new XojPageView(this, doc->getPage(page));
 	doc->unlock();
 
 	this->viewPages[page] = pageView;
@@ -772,7 +772,7 @@ double XournalView::getZoom()
 	size_t p = getCurrentPage();
 	if (p != size_t_npos && p < viewPagesLen)
 	{
-		PageView* page = viewPages[p];
+		XojPageView* page = viewPages[p];
 		if (this->getControl()->getSettings()->isPresentationMode())
 		{
 			double heightZoom = this->getDisplayHeight() / page->getHeight();
@@ -809,7 +809,7 @@ void XournalView::deleteSelection(EditSelection* sel)
 
 	if (sel)
 	{
-		PageView* view = sel->getView();
+		XojPageView* view = sel->getView();
 		DeleteUndoAction* undo = new DeleteUndoAction(sel->getSourcePage(), false);
 		sel->fillUndoItem(undo);
 		control->getUndoRedoHandler()->addUndoAction(undo);
@@ -972,11 +972,11 @@ void XournalView::documentChanged(DocumentChangeType type)
 	doc->lock();
 
 	this->viewPagesLen = doc->getPageCount();
-	this->viewPages = new PageView*[viewPagesLen];
+	this->viewPages = new XojPageView*[viewPagesLen];
 
 	for (size_t i = 0; i < viewPagesLen; i++)
 	{
-		PageView* pageView = new PageView(this, doc->getPage(i));
+		XojPageView* pageView = new XojPageView(this, doc->getPage(i));
 		viewPages[i] = pageView;
 	}
 
@@ -998,7 +998,7 @@ bool XournalView::cut()
 		return false;
 	}
 
-	PageView* page = viewPages[p];
+	XojPageView* page = viewPages[p];
 	return page->cut();
 }
 
@@ -1012,7 +1012,7 @@ bool XournalView::copy()
 		return false;
 	}
 
-	PageView* page = viewPages[p];
+	XojPageView* page = viewPages[p];
 	return page->copy();
 }
 
@@ -1026,7 +1026,7 @@ bool XournalView::paste()
 		return false;
 	}
 
-	PageView* page = viewPages[p];
+	XojPageView* page = viewPages[p];
 	return page->paste();
 }
 
@@ -1040,7 +1040,7 @@ bool XournalView::actionDelete()
 		return false;
 	}
 
-	PageView* page = viewPages[p];
+	XojPageView* page = viewPages[p];
 	return page->actionDelete();
 }
 
@@ -1051,11 +1051,11 @@ Document* XournalView::getDocument()
 	return control->getDocument();
 }
 
-ArrayIterator<PageView*> XournalView::pageViewIterator()
+ArrayIterator<XojPageView*> XournalView::pageViewIterator()
 {
 	XOJ_CHECK_TYPE(XournalView);
 
-	return ArrayIterator<PageView*> (viewPages, viewPagesLen);
+	return ArrayIterator<XojPageView*> (viewPages, viewPagesLen);
 }
 
 PagePositionHandler* XournalView::getPagePositionHandler()

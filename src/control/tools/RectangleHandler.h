@@ -16,7 +16,7 @@
 class RectangleHandler : public BaseStrokeHandler
 {
 public:
-	RectangleHandler(XournalView* xournal, PageView* redrawable, PageRef page);
+	RectangleHandler(XournalView* xournal, XojPageView* redrawable, PageRef page);
 	virtual ~RectangleHandler();
 
 private:

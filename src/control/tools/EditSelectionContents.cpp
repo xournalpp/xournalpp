@@ -27,7 +27,7 @@
 #include <cmath>
 
 EditSelectionContents::EditSelectionContents(double x, double y, double width, double height,
-											 PageRef sourcePage, Layer* sourceLayer, PageView* sourceView)
+											 PageRef sourcePage, Layer* sourceLayer, XojPageView* sourceView)
 {
 	XOJ_INIT_TYPE(EditSelectionContents);
 
@@ -317,7 +317,7 @@ double EditSelectionContents::getOriginalHeight()
  * The contents of the selection
  */
 void EditSelectionContents::finalizeSelection(double x, double y, double width, double height, bool aspectRatio,
-											  Layer* layer, PageRef targetPage, PageView* targetView, UndoRedoHandler* undo)
+											  Layer* layer, PageRef targetPage, XojPageView* targetView, UndoRedoHandler* undo)
 {
 	double fx = width / this->originalWidth;
 	double fy = height / this->originalHeight;
@@ -351,7 +351,7 @@ void EditSelectionContents::finalizeSelection(double x, double y, double width, 
 }
 
 void EditSelectionContents::updateContent(double x, double y, double width, double height, bool aspectRatio,
-										  Layer* layer, PageRef targetPage, PageView* targetView,
+										  Layer* layer, PageRef targetPage, XojPageView* targetView,
 										  UndoRedoHandler* undo, CursorSelectionType type)
 {
 	double mx = x - this->lastX;
@@ -480,7 +480,7 @@ void EditSelectionContents::paint(cairo_t* cr, double x, double y, double width,
 	cairo_restore(cr);
 }
 
-UndoAction* EditSelectionContents::copySelection(PageRef page, PageView *view, double x, double y)
+UndoAction* EditSelectionContents::copySelection(PageRef page, XojPageView *view, double x, double y)
 {
 	Layer* layer = page->getSelectedLayer();
 

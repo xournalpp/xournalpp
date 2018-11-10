@@ -40,7 +40,7 @@ void PagePositionHandler::freeData()
 	this->dataAllocSize = 0;
 }
 
-void PagePositionHandler::update(PageView** viewPages, int viewPagesLen, int maxY)
+void PagePositionHandler::update(XojPageView** viewPages, int viewPagesLen, int maxY)
 {
 	XOJ_CHECK_TYPE(PagePositionHandler);
 
@@ -54,7 +54,7 @@ void PagePositionHandler::update(PageView** viewPages, int viewPagesLen, int max
 	for (int i = 0; i < viewPagesLen; i++)
 	{
 
-		PageView* pv = viewPages[i];
+		XojPageView* pv = viewPages[i];
 
 		if (!lastPp->add(pv))
 		{
@@ -71,7 +71,7 @@ void PagePositionHandler::update(PageView** viewPages, int viewPagesLen, int max
 	addData(pp);
 }
 
-PageView* PagePositionHandler::getBestMatchingView(int x, int y, int width, int heigth)
+XojPageView* PagePositionHandler::getBestMatchingView(int x, int y, int width, int heigth)
 {
 	XOJ_CHECK_TYPE(PagePositionHandler);
 
@@ -99,7 +99,7 @@ PageView* PagePositionHandler::getBestMatchingView(int x, int y, int width, int 
 	return index.getHighestIntersects();
 }
 
-PageView* PagePositionHandler::getViewAt(int x, int y, PagePositionCache* cache)
+XojPageView* PagePositionHandler::getViewAt(int x, int y, PagePositionCache* cache)
 {
 	XOJ_CHECK_TYPE(PagePositionHandler);
 
@@ -129,8 +129,7 @@ PageView* PagePositionHandler::getViewAt(int x, int y, PagePositionCache* cache)
 		return NULL;
 	}
 
-	PageView* pv = pp->getViewAt(x, y);
-	return pv;
+	return pp->getViewAt(x, y);
 }
 
 PagePosition* PagePositionHandler::binarySearch(PagePosition** sortedArray, int first, int last, int y, int& index)

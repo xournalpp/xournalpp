@@ -16,7 +16,7 @@
 class ArrowHandler : public BaseStrokeHandler
 {
 public:
-	ArrowHandler(XournalView* xournal, PageView* redrawable, PageRef page);
+	ArrowHandler(XournalView* xournal, XojPageView* redrawable, PageRef page);
 	virtual ~ArrowHandler();
 
 private:

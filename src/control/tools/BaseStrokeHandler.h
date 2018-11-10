@@ -19,7 +19,7 @@
 class BaseStrokeHandler : public InputHandler
 {
 public:
-	BaseStrokeHandler(XournalView* xournal, PageView* redrawable, PageRef page);
+	BaseStrokeHandler(XournalView* xournal, XojPageView* redrawable, PageRef page);
 
 	virtual ~BaseStrokeHandler();
 

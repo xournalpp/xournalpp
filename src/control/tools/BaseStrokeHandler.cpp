@@ -4,7 +4,7 @@
 #include "control/Control.h"
 #include "undo/InsertUndoAction.h"
 
-BaseStrokeHandler::BaseStrokeHandler(XournalView* xournal, PageView* redrawable, PageRef page)
+BaseStrokeHandler::BaseStrokeHandler(XournalView* xournal, XojPageView* redrawable, PageRef page)
  : InputHandler(xournal, redrawable, page)
 {
 	XOJ_INIT_TYPE(BaseStrokeHandler);

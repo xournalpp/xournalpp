@@ -35,7 +35,7 @@
 
 class Sidebar;
 class CallbackData;
-class PageView;
+class XojPageView;
 class SaveHandler;
 class GladeSearchpath;
 class MetadataManager;
