@@ -74,10 +74,19 @@ ToolDrawCombocontrol::~ToolDrawCombocontrol()
 	XOJ_CHECK_TYPE(ToolDrawCombocontrol);
 
 	g_object_unref(this->iconDrawRect);
+	this->iconDrawRect = NULL;
+
 	g_object_unref(this->iconDrawCirc);
+	this->iconDrawCirc = NULL;
+
 	g_object_unref(this->iconDrawArr);
+	this->iconDrawArr = NULL;
+
 	g_object_unref(this->iconDrawLine);
+	this->iconDrawLine = NULL;
+
 	g_object_unref(this->iconAutoDrawLine);
+	this->iconAutoDrawLine = NULL;
 
 	XOJ_RELEASE_TYPE(ToolDrawCombocontrol);
 }
@@ -86,59 +95,61 @@ void ToolDrawCombocontrol::selected(ActionGroup group, ActionType action)
 {
 	XOJ_CHECK_TYPE(ToolDrawCombocontrol);
 
-	if (this->item)
+	if (!this->item)
 	{
-		if (!GTK_IS_TOGGLE_TOOL_BUTTON(this->item))
-		{
-			g_warning("selected action %i which is not a toggle action! 2", action);
-			return;
-		}
+		return;
+	}
 
-		string description;
+	if (!GTK_IS_TOGGLE_TOOL_BUTTON(this->item))
+	{
+		g_warning("selected action %i which is not a toggle action! 2", action);
+		return;
+	}
 
-		if (action == ACTION_TOOL_DRAW_RECT && this->action != ACTION_TOOL_DRAW_RECT)
-		{
-			this->action = ACTION_TOOL_DRAW_RECT;
-			gtk_image_set_from_pixbuf(GTK_IMAGE(iconWidget), this->iconDrawRect);
+	string description;
 
-			description = _("Draw Rectangle");
-		}
-		else if (action == ACTION_TOOL_DRAW_CIRCLE && this->action != ACTION_TOOL_DRAW_CIRCLE)
-		{
-			this->action = ACTION_TOOL_DRAW_CIRCLE;
-			gtk_image_set_from_pixbuf(GTK_IMAGE(iconWidget), this->iconDrawCirc);
+	if (action == ACTION_TOOL_DRAW_RECT && this->action != ACTION_TOOL_DRAW_RECT)
+	{
+		this->action = ACTION_TOOL_DRAW_RECT;
+		gtk_image_set_from_pixbuf(GTK_IMAGE(iconWidget), this->iconDrawRect);
 
-			description = _("Draw Circle");
-		}
-		else if (action == ACTION_TOOL_DRAW_ARROW && this->action != ACTION_TOOL_DRAW_ARROW)
-		{
-			this->action = ACTION_TOOL_DRAW_ARROW;
-			gtk_image_set_from_pixbuf(GTK_IMAGE(iconWidget), this->iconDrawArr);
+		description = _("Draw Rectangle");
+	}
+	else if (action == ACTION_TOOL_DRAW_CIRCLE && this->action != ACTION_TOOL_DRAW_CIRCLE)
+	{
+		this->action = ACTION_TOOL_DRAW_CIRCLE;
+		gtk_image_set_from_pixbuf(GTK_IMAGE(iconWidget), this->iconDrawCirc);
 
-			description = _("Draw Arrow");
-		}
-		else if (action == ACTION_RULER && this->action != ACTION_RULER)
-		{
-			this->action = ACTION_RULER;
-			gtk_image_set_from_pixbuf(GTK_IMAGE(iconWidget), this->iconDrawLine);
+		description = _("Draw Circle");
+	}
+	else if (action == ACTION_TOOL_DRAW_ARROW && this->action != ACTION_TOOL_DRAW_ARROW)
+	{
+		this->action = ACTION_TOOL_DRAW_ARROW;
+		gtk_image_set_from_pixbuf(GTK_IMAGE(iconWidget), this->iconDrawArr);
 
-			description = _("Draw Line");
-		}
-		else if (action == ACTION_SHAPE_RECOGNIZER && this->action != ACTION_SHAPE_RECOGNIZER)
-		{
-			this->action = ACTION_SHAPE_RECOGNIZER;
-			gtk_image_set_from_pixbuf(GTK_IMAGE(iconWidget), this->iconAutoDrawLine);
+		description = _("Draw Arrow");
+	}
+	else if (action == ACTION_RULER && this->action != ACTION_RULER)
+	{
+		this->action = ACTION_RULER;
+		gtk_image_set_from_pixbuf(GTK_IMAGE(iconWidget), this->iconDrawLine);
 
-			description = _("Recognize Lines");
-		}
-		gtk_tool_item_set_tooltip_text(GTK_TOOL_ITEM(item), description.c_str());
+		description = _("Draw Line");
+	}
+	else if (action == ACTION_SHAPE_RECOGNIZER && this->action != ACTION_SHAPE_RECOGNIZER)
+	{
+		this->action = ACTION_SHAPE_RECOGNIZER;
+		gtk_image_set_from_pixbuf(GTK_IMAGE(iconWidget), this->iconAutoDrawLine);
+
+		description = _("Recognize Lines");
+	}
+	gtk_tool_item_set_tooltip_text(GTK_TOOL_ITEM(item), description.c_str());
 
 
-		if (gtk_toggle_tool_button_get_active(GTK_TOGGLE_TOOL_BUTTON(this->item)) != (this->action == action))
-		{
-			this->toolToggleButtonActive = (this->action == action);
-			gtk_toggle_tool_button_set_active(GTK_TOGGLE_TOOL_BUTTON(this->item), this->toolToggleButtonActive);
-		}
+	if (gtk_toggle_tool_button_get_active(GTK_TOGGLE_TOOL_BUTTON(this->item)) != (this->action == action))
+	{
+		this->toolToggleButtonActive = (this->action == action);
+		gtk_toggle_tool_button_set_active(GTK_TOGGLE_TOOL_BUTTON(this->item), this->toolToggleButtonActive);
 	}
 }
 

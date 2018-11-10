@@ -10,9 +10,12 @@
 #include "control/settings/ButtonConfig.h"
 #include "control/settings/Settings.h"
 #include "control/jobs/BlockingJob.h"
+#include "control/tools/ArrowHandler.h"
+#include "control/tools/CircleHandler.h"
 #include "control/tools/EraseHandler.h"
 #include "control/tools/ImageHandler.h"
 #include "control/tools/InputHandler.h"
+#include "control/tools/RectangleHandler.h"
 #include "control/tools/RulerHandler.h"
 #include "control/tools/Selection.h"
 #include "control/tools/StrokeHandler.h"
@@ -25,7 +28,6 @@
 #include "undo/DeleteUndoAction.h"
 #include "undo/InsertUndoAction.h"
 #include "undo/TextBoxUndoAction.h"
-//#include "undo/TextUndoAction.h"	//for the save file undo
 #include "view/TextView.h"
 #include "widgets/XournalWidget.h"
 
@@ -412,13 +414,25 @@ bool PageView::onButtonPressEvent(GtkWidget* widget, GdkEventButton* event)
 		delete this->inputHandler;
 		this->inputHandler = NULL;
 
-		if(!h->isRuler())
+		if (h->isRuler())
 		{
-			this->inputHandler = new StrokeHandler(this->xournal, this, getPage());
+			this->inputHandler = new RulerHandler(this->xournal, this, getPage());
+		}
+		else if (h->isRectangle())
+		{
+			this->inputHandler = new RectangleHandler(this->xournal, this, getPage());
+		}
+		else if (h->isCircle())
+		{
+			this->inputHandler = new CircleHandler(this->xournal, this, getPage());
+		}
+		else if (h->isArrow())
+		{
+			this->inputHandler = new ArrowHandler(this->xournal, this, getPage());
 		}
 		else
 		{
-			this->inputHandler = new RulerHandler(this->xournal, this, getPage());
+			this->inputHandler = new StrokeHandler(this->xournal, this, getPage());
 		}
 
 		this->inputHandler->onButtonPressEvent(event);
@@ -432,22 +446,6 @@ bool PageView::onButtonPressEvent(GtkWidget* widget, GdkEventButton* event)
 	{
 		this->verticalSpace = new VerticalToolHandler(this, this->page, y, zoom);
 	}
-	/*
-	else if (h->getToolType() == TOOL_DRAW_RECT ||
-	         h->getToolType() == TOOL_DRAW_CIRCLE ||
-	         h->getToolType() == TOOL_DRAW_ARROW)
-	{
-		if (h->getToolType() == TOOL_DRAW_RECT)
-		{
-		}
-		else if (h->getToolType() == TOOL_DRAW_CIRCLE)
-		{
-		}
-		else if (h->getToolType() == TOOL_DRAW_ARROW)
-		{
-		}
-	}
-	*/
 	else if (h->getToolType() == TOOL_SELECT_RECT ||
 	         h->getToolType() == TOOL_SELECT_REGION ||
 	         h->getToolType() == TOOL_SELECT_OBJECT)

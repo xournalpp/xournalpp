@@ -1,7 +1,7 @@
 /*
  * Xournal++
  *
- * Handles input of the ruler
+ * Handles input to draw circle
  *
  * @author Xournal++ Team
  * https://github.com/xournalpp/xournalpp
@@ -13,11 +13,11 @@
 
 #include "BaseStrokeHandler.h"
 
-class RulerHandler : public BaseStrokeHandler
+class CircleHandler : public BaseStrokeHandler
 {
 public:
-	RulerHandler(XournalView* xournal, PageView* redrawable, PageRef page);
-	virtual ~RulerHandler();
+	CircleHandler(XournalView* xournal, PageView* redrawable, PageRef page);
+	virtual ~CircleHandler();
 
 private:
 	virtual void drawShape(Point& currentPoint);

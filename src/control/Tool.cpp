@@ -212,11 +212,9 @@ string toolTypeToString(ToolType type)
 	case TOOL_SELECT_OBJECT:  return "selectObject";
 	case TOOL_VERTICAL_SPACE: return "verticalSpace";
 	case TOOL_HAND:			  return "hand";
-	/*
-	case TOOL_DRAW_RECT:		  return "drawRect";
+	case TOOL_DRAW_RECT:	  return "drawRect";
 	case TOOL_DRAW_CIRCLE:	  return "drawCircle";
 	case TOOL_DRAW_ARROW:	  return "drawArrow";
-	 */
 	default:				  return "";
 	}
 }
@@ -233,11 +231,9 @@ ToolType toolTypeFromString(string type)
 	else if (type == "selectObject")  return TOOL_SELECT_OBJECT;
 	else if (type == "verticalSpace") return TOOL_VERTICAL_SPACE;
 	else if (type == "hand")		  return TOOL_HAND;
-	/*
-	else if (type == "drawRect")		  return TOOL_DRAW_RECT;
+	else if (type == "drawRect")      return TOOL_DRAW_RECT;
 	else if (type == "drawCircle")	  return TOOL_DRAW_CIRCLE;
 	else if (type == "drawArrow")	  return TOOL_DRAW_ARROW;
-	*/
 	else							  return TOOL_NONE;
 }
 

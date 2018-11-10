@@ -1,7 +1,7 @@
 /*
  * Xournal++
  *
- * Handles input of the ruler
+ * Handles input to draw an arrow
  *
  * @author Xournal++ Team
  * https://github.com/xournalpp/xournalpp
@@ -13,11 +13,11 @@
 
 #include "BaseStrokeHandler.h"
 
-class RulerHandler : public BaseStrokeHandler
+class ArrowHandler : public BaseStrokeHandler
 {
 public:
-	RulerHandler(XournalView* xournal, PageView* redrawable, PageRef page);
-	virtual ~RulerHandler();
+	ArrowHandler(XournalView* xournal, PageView* redrawable, PageRef page);
+	virtual ~ArrowHandler();
 
 private:
 	virtual void drawShape(Point& currentPoint);

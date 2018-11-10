@@ -216,6 +216,10 @@ XOJ_DECLARE_TYPE(SidebarPreviewLayerEntry, 205);
 XOJ_DECLARE_TYPE(GtkColorWrapper, 206);
 XOJ_DECLARE_TYPE(RulerHandler, 207);
 XOJ_DECLARE_TYPE(StrokeHandler, 208);
+XOJ_DECLARE_TYPE(ArrowHandler, 209);
+XOJ_DECLARE_TYPE(CircleHandler, 210);
+XOJ_DECLARE_TYPE(RectangleHandler, 211);
+XOJ_DECLARE_TYPE(BaseStrokeHandler, 212);
 
 
 //XOJ_DECLARE_TYPE(XXXXXXXXXXXXXXXX, 206);

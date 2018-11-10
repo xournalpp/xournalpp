@@ -4,10 +4,8 @@
 #include "control/Control.h"
 #include "undo/InsertUndoAction.h"
 
-RulerHandler::RulerHandler(XournalView* xournal,
-                           PageView* redrawable,
-                           PageRef page)
-	: InputHandler(xournal, redrawable, page)
+RulerHandler::RulerHandler(XournalView* xournal, PageView* redrawable, PageRef page)
+ : BaseStrokeHandler(xournal, redrawable, page)
 {
 	XOJ_INIT_TYPE(RulerHandler);
 }
@@ -19,119 +17,63 @@ RulerHandler::~RulerHandler()
 	XOJ_RELEASE_TYPE(RulerHandler);
 }
 
-void RulerHandler::draw(cairo_t* cr)
+void RulerHandler::drawShape(Point& currentPoint)
 {
-	XOJ_CHECK_TYPE(RulerHandler);
+	int count = stroke->getPointCount();
 
-	double zoom = xournal->getZoom();
-	cairo_scale(cr, zoom, zoom);
-
-	view.drawStroke(cr, stroke, 0);
-}
-
-bool RulerHandler::onMotionNotifyEvent(GdkEventMotion* event)
-{
-	XOJ_CHECK_TYPE(RulerHandler);
-
-	if (!stroke)
-	{
-		return false;
-	}
-
-	double zoom = xournal->getZoom();
-	double x = event->x / zoom;
-	double y = event->y / zoom;
-	int pointCount = stroke->getPointCount();
-
-	Point currentPoint(x, y);
-	Rectangle rect = stroke->boundingRect();
-
-	if (pointCount > 0)
-	{
-		if(!validMotion(currentPoint, stroke->getPoint(pointCount - 1)))
-			return true;
-	}
-
-	if (pointCount < 2)
+	if (count < 2)
 	{
 		stroke->addPoint(currentPoint);
 	}
 	else
 	{
-		stroke->setLastPoint(currentPoint);
-	}
-	
-	rect.add(stroke->boundingRect());
-	double w = stroke->getWidth();
+		double x = currentPoint.x;
+		double y = currentPoint.y;
 
-	redrawable->repaintRect(rect.x - w, rect.y - w,
-	                        rect.width + 2*w,
-	                        rect.height + 2*w);
+		//snap to a grid - get the angle of the points
+		//if it's near 0, pi/4, 3pi/4, pi, or the negatives
+		//within epsilon, fix it to that value.
+		Point firstPoint = stroke->getPoint(0);
 
-	return true;
-}
-
-void RulerHandler::onButtonReleaseEvent(GdkEventButton* event)
-{
-	XOJ_CHECK_TYPE(RulerHandler);
-
-	if (!stroke)
-	{
-		return;
-	}
-
-	// Backward compatibility and also easier to handle for me;-)
-	// I cannot draw a line with one point, to draw a visible line I need two points,
-	// twice the same Point is also OK
-	if (stroke->getPointCount() == 1)
-	{
-		ArrayIterator<Point> it = stroke->pointIterator();
-		if (it.hasNext())
+		double dist = sqrt(pow(x - firstPoint.x, 2.0) + pow(y - firstPoint.y, 2.0));
+		double angle = atan2((y - firstPoint.y), (x - firstPoint.x));
+		double epsilon = 0.1;
+		if (std::abs(angle) < epsilon)
 		{
-			stroke->addPoint(it.next());
+			stroke->setLastPoint(dist + firstPoint.x, firstPoint.y);
 		}
-		// No pressure sensitivity
-		stroke->clearPressure();
-	}
-
-	stroke->freeUnusedPointItems();
-
-	if (page->getSelectedLayerId() < 1)
-	{
-		// This creates a layer if none exists
-		page->getSelectedLayer();
-		page->setSelectedLayerId(1);
-		xournal->getControl()->getWindow()->updateLayerCombobox();
-	}
-
-	Layer* layer = page->getSelectedLayer();
-
-	UndoRedoHandler* undo = xournal->getControl()->getUndoRedoHandler();
-
-	undo->addUndoAction(new InsertUndoAction(page,
-	                                         layer,
-	                                         stroke));
-
-	//TODO: Take care of the ShapeRecognizer
-
-	layer->addElement(stroke);
-	page->fireElementChanged(stroke);
-
-	stroke = NULL;
-
-	return;
-}
-
-void RulerHandler::onButtonPressEvent(GdkEventButton* event)
-{
-	XOJ_CHECK_TYPE(RulerHandler);
-
-	double zoom = xournal->getZoom();
-	double x = event->x / zoom;
-	double y = event->y / zoom;
-
-	if (!stroke)
-	{
-		createStroke(Point(x, y));
+		else if (std::abs(angle - M_PI / 4.0) < epsilon)
+		{
+			stroke->setLastPoint(dist / sqrt(2.0) + firstPoint.x, dist / sqrt(2.0) + firstPoint.y);
+		}
+		else if (std::abs(angle - 3.0 * M_PI / 4.0) < epsilon)
+		{
+			stroke->setLastPoint(-dist / sqrt(2.0) + firstPoint.x, dist / sqrt(2.0) + firstPoint.y);
+		}
+		else if (std::abs(angle + M_PI / 4.0) < epsilon)
+		{
+			stroke->setLastPoint(dist / sqrt(2.0) + firstPoint.x, -dist / sqrt(2.0) + firstPoint.y);
+		}
+		else if (std::abs(angle + 3.0 * M_PI / 4.0) < epsilon)
+		{
+			stroke->setLastPoint(-dist / sqrt(2.0) + firstPoint.x, -dist / sqrt(2.0) + firstPoint.y);
+		}
+		else if (std::abs(std::abs(angle) - M_PI) < epsilon)
+		{
+			stroke->setLastPoint(-dist + firstPoint.x, firstPoint.y);
+		}
+		else if (std::abs(angle - M_PI / 2.0) < epsilon)
+		{
+			stroke->setLastPoint(firstPoint.x, dist + firstPoint.y);
+		}
+		else if (std::abs(angle + M_PI / 2.0) < epsilon)
+		{
+			stroke->setLastPoint(firstPoint.x, -dist + firstPoint.y);
+		}
+		else
+		{
+			stroke->setLastPoint(x, y);
+		}
 	}
 }
+
