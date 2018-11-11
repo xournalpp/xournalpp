@@ -3,6 +3,11 @@
 [![Build Status](https://travis-ci.org/xournalpp/xournalpp.svg?branch=string_new)](https://travis-ci.org/xournalpp/xournalpp)
 [![Join the chat at https://gitter.im/xournalpp/xournalpp](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/xournalpp/xournalpp?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
+# GTK-3 branch merged
+Now the GTK-3 branch is merged, which really much changes.
+*A lot of bugs are fixed, but maybe there are new one.*
+The GTK-2 version is still available as master_gtk2_stable.
+
 
 ## Description
 
@@ -89,11 +94,6 @@ For now branches aren't organized too well.
 
 For developping new features, write a Ticket, so others know what you are doing.
 For development create a fork, and use the master as base.
-
-Currently Xournal++ is based on GTK2, but will be moved forward soon to GTK3.
-In the near future a new branch master_gtk2_stable will be created, which will 
-be the current master, and the GTK3 branch will be merged into the master.
-See Tickets / Pull request for further information.
 
 See [GitHub:xournalpp](http://github.com/xournalpp/xournalpp) for current development. You can also join
 our Gitter channel via badge on top.
