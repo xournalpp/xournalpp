@@ -26,6 +26,7 @@
 #include "jobs/ProgressListener.h"
 #include "jobs/XournalScheduler.h"
 #include "model/Document.h"
+#include "settings/MetadataManager.h"
 #include "settings/Settings.h"
 #include "undo/UndoRedoHandler.h"
 
@@ -41,6 +42,8 @@ class GladeSearchpath;
 class MetadataManager;
 class Cursor;
 class ToolbarDragDropHandler;
+class MetadataEntry;
+class MetadataCallbackData;
 
 class Control : public ActionHandler,
 	public ToolListener,
@@ -240,6 +243,12 @@ protected:
 	static bool autosaveCallback(Control* control);
 
 	void fontChanged();
+	/**
+	 * Load metadata later, md will be deleted
+	 */
+	void loadMetadata(MetadataEntry md);
+
+	static void loadMetadataCallback(MetadataCallbackData* data);
 
 private:
 	XOJ_TYPE_ATTRIB;

@@ -50,6 +50,11 @@ public:
 	 */
 	void storeMetadata(string file, int page, double zoom);
 
+	/**
+	 * Document was closed, a new document was opened etc.
+	 */
+	void documentChanged();
+
 private:
 	/**
 	 * Delete an old metadata file
@@ -61,6 +66,11 @@ private:
 	 */
 	MetadataEntry loadMetadataFile(string path, string file);
 
+	/**
+	 * Store metadata to file
+	 */
+	void storeMetadata(MetadataEntry* m);
+
 private:
 	/**
 	 * Load the metadata list (sorted)
@@ -70,4 +80,7 @@ private:
 
 private:
 	XOJ_TYPE_ATTRIB;
+
+	GMutex mutex;
+	MetadataEntry* metadata;
 };

@@ -599,8 +599,6 @@ void XournalView::zoomChanged(double lastZoom)
 	if (!view)
 		return;
 
-	double pageTop = view->getX();
-
 	//move this somewhere else maybe
 	layout->layoutPages();
 

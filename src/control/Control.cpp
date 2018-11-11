@@ -27,7 +27,6 @@
 #include "model/FormatDefinitions.h"
 #include "model/XojPage.h"
 #include "settings/ButtonConfig.h"
-#include "settings/MetadataManager.h"
 #include "stockdlg/ImageOpenDlg.h"
 #include "stockdlg/XojOpenDlg.h"
 #include "undo/AddUndoAction.h"
@@ -2443,25 +2442,18 @@ void Control::fileLoaded(int scrollToPage)
 	if (!file.empty())
 	{
 		MetadataEntry md = metadata->getForFile(file.c_str());
-		int scrollPageMetadata = -1;
-		if (md.valid)
+		if (!md.valid)
 		{
-			this->zoom->setZoom(md.zoom);
-			scrollPageMetadata = md.page;
-		}
-		else
-		{
-			this->zoom->zoomFit();
+			md.zoom = -1;
+			md.page = 0;
 		}
 
 		if (scrollToPage >= 0)
 		{
-			scrollHandler->scrollToPage(scrollToPage);
+			md.page = scrollToPage;
 		}
-		else if (scrollPageMetadata >= 0)
-		{
-			scrollHandler->scrollToPage(scrollPageMetadata);
-		}
+
+		loadMetadata(md);
 		recent->addRecentFileFilename(file);
 	}
 	else
@@ -2474,6 +2466,38 @@ void Control::fileLoaded(int scrollToPage)
 	win->getXournal()->forceUpdatePagenumbers();
 	getCursor()->updateCursor();
 	updateDeletePageButton();
+}
+
+class MetadataCallbackData {
+public:
+	Control* ctrl;
+	MetadataEntry md;
+};
+
+/**
+ * Load the data after processing the document...
+ */
+void Control::loadMetadataCallback(MetadataCallbackData* data)
+{
+	if (!data->md.valid)
+	{
+		delete data;
+		return;
+	}
+
+	data->ctrl->scrollHandler->scrollToPage(data->md.page);
+	data->ctrl->zoom->setZoom(data->md.zoom);
+
+	delete data;
+}
+
+void Control::loadMetadata(MetadataEntry md)
+{
+	MetadataCallbackData* data = new MetadataCallbackData();
+	data->md = md;
+	data->ctrl = this;
+
+	g_idle_add((GSourceFunc) loadMetadataCallback, data);
 }
 
 bool Control::annotatePdf(path filename, bool attachPdf, bool attachToDocument)
@@ -2500,19 +2524,13 @@ bool Control::annotatePdf(path filename, bool attachPdf, bool attachToDocument)
 
 	if (res)
 	{
-		int page = 0;
-
 		this->recent->addRecentFileFilename(filename.c_str());
 
 		this->doc->lock();
 		path file = this->doc->getEvMetadataFilename();
 		this->doc->unlock();
-
 		MetadataEntry md = metadata->getForFile(file.c_str());
-		if (md.valid)
-		{
-			this->scrollHandler->scrollToPage(md.page);
-		}
+		loadMetadata(md);
 	}
 	else
 	{
@@ -2531,6 +2549,7 @@ bool Control::annotatePdf(path filename, bool attachPdf, bool attachToDocument)
 	getCursor()->setCursorBusy(false);
 
 	fireDocumentChanged(DOCUMENT_CHANGE_COMPLETE);
+
 	getCursor()->updateCursor();
 
 	return true;
@@ -2818,6 +2837,7 @@ bool Control::close(bool destroy)
 	XOJ_CHECK_TYPE(Control);
 
 	clearSelectionEndText();
+	metadata->documentChanged();
 
 	if (undoRedo->isChanged())
 	{

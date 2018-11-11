@@ -21,14 +21,18 @@ MetadataEntry::MetadataEntry()
 
 
 MetadataManager::MetadataManager()
+ : metadata(NULL)
 {
 	XOJ_INIT_TYPE(MetadataManager);
+
+	g_mutex_init(&this->mutex);
 }
 
 MetadataManager::~MetadataManager()
 {
 	XOJ_CHECK_TYPE(MetadataManager);
 
+	documentChanged();
 
 	XOJ_RELEASE_TYPE(MetadataManager);
 }
@@ -38,11 +42,39 @@ MetadataManager::~MetadataManager()
  */
 void MetadataManager::deleteMetadataFile(string path)
 {
+	// be carefull, delete the Metadata file, NOT the Document!
+	if (path.substr(path.size() - 9) != ".metadata")
+	{
+		g_warning("Try to delete non-metadata file: %s", path.c_str());
+		return;
+	}
+
 	int result = g_unlink(path.c_str());
 	if (result != 0)
 	{
 		g_warning("Could not delete metadata file %s", path.c_str());
 	}
+}
+
+/**
+ * Document was closed, a new document was opened etc.
+ */
+void MetadataManager::documentChanged()
+{
+	XOJ_CHECK_TYPE(MetadataManager);
+
+	g_mutex_lock(&this->mutex);
+	MetadataEntry* m = metadata;
+	metadata = NULL;
+	g_mutex_unlock(&this->mutex);
+
+	if (m == NULL)
+	{
+		return;
+	}
+
+	storeMetadata(m);
+	delete m;
 }
 
 bool sortMetadata(MetadataEntry& a, MetadataEntry& b)
@@ -167,27 +199,56 @@ MetadataEntry MetadataManager::getForFile(string file)
 	XOJ_CHECK_TYPE(MetadataManager);
 
 	vector<MetadataEntry> files = loadList();
-	printf("===================\n");
+
+	MetadataEntry entry;
 	for (MetadataEntry e : files)
 	{
-		printf("->%ld\n", e.time);
+		if (e.path == file)
+		{
+			entry = e;
+			break;
+		}
 	}
 
 	for (int i = 20; i < files.size(); i++)
 	{
 		string path = files[i].metadataFile;
-
-		// be carefull, delete the Metadata file, NOT the Document!
-		if (path.substr(path.size() - 9) == ".metadata")
-		{
-			deleteMetadataFile(path);
-		}
+		deleteMetadataFile(path);
 	}
 
-	MetadataEntry entry;
 	return entry;
 }
 
+/**
+ * Store metadata to file
+ */
+void MetadataManager::storeMetadata(MetadataEntry* m)
+{
+	vector<MetadataEntry> files = loadList();
+	for (MetadataEntry e : files)
+	{
+		if (e.path == m->path)
+		{
+			// This is an old entry with the same path
+			deleteMetadataFile(e.metadataFile);
+		}
+	}
+
+	path folder = Util::getConfigSubfolder("metadata");
+	string path = folder.c_str();
+	path += "/";
+	gint64 time = g_get_real_time();
+	path += std::to_string(time);
+	path += ".metadata";
+
+	ofstream out;
+	out.open(path.c_str());
+	out << "XOJ-METADATA/1.0\n";
+	out << m->path << "\n";
+	out << "page=" << m->page << "\n";
+	out << "zoom=" << m->zoom << "\n";
+	out.close();
+}
 
 /**
  * Store the current data into metadata
@@ -201,18 +262,17 @@ void MetadataManager::storeMetadata(string file, int page, double zoom)
 		return;
 	}
 
-	path folder = Util::getConfigSubfolder("metadata");
-	string path = folder.c_str();
-	path += "/";
-	gint64 time = g_get_real_time();
-	path += std::to_string(time);
-	path += ".metadata";
+	g_mutex_lock(&this->mutex);
+	if (metadata == NULL)
+	{
+		metadata = new MetadataEntry();
+	}
 
-	ofstream out;
-	out.open(path.c_str());
-	out << "XOJ-METADATA/1.0\n";
-	out << file << "\n";
-	out << "page=" << page << "\n";
-	out << "zoom=" << zoom << "\n";
-	out.close();
+	metadata->metadataFile = "";
+	metadata->valid = true;
+	metadata->path = file;
+	metadata->zoom = zoom;
+	metadata->page = page;
+	metadata->time = g_get_real_time();
+	g_mutex_unlock(&this->mutex);
 }
