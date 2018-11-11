@@ -21,12 +21,12 @@
 class Control;
 class Layout;
 class MainWindow;
-class MenuSelectToolbarData;
 class SpinPageAdapter;
 class ToolMenuHandler;
 class ToolbarData;
 class ToolbarModel;
 class XournalView;
+class MainWindowToolbarMenu;
 
 class MainWindow : public GladeGui
 {
@@ -87,8 +87,7 @@ public:
 	Layout* getLayout();
 
 private:
-	void createToolbarAndMenu(bool initial);
-	void freeToolMenu();
+	void createToolbarAndMenu();
 
 	static void buttonCloseSidebarClicked(GtkButton* button, MainWindow* win);
 
@@ -127,14 +126,12 @@ private:
 
 	// Toolbars
 	ToolMenuHandler* toolbar;
-	GSList* toolbarGroup;
-	std::vector<MenuSelectToolbarData*> toolbarMenuData;
 	ToolbarData* selectedToolbar;
 	bool toolbarIntialized;
-
-	std::vector<GtkWidget*> toolbarMenuitems;
 
 	bool maximized;
 
 	GtkWidget** toolbarWidgets;
+
+	MainWindowToolbarMenu* toolbarSelectMenu;
 };

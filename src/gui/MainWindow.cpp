@@ -1,6 +1,7 @@
 #include "MainWindow.h"
 
 #include "Layout.h"
+#include "MainWindowToolbarMenu.h"
 #include "ToolitemDragDrop.h"
 #include "XournalView.h"
 
@@ -36,9 +37,9 @@ MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control) :
 
 	this->control = control;
 	this->toolbarIntialized = false;
-	this->toolbarGroup = NULL;
 	this->selectedToolbar = NULL;
 	this->toolbarWidgets = new GtkWidget*[TOOLBAR_DEFINITIONS_LEN];
+	this->toolbarSelectMenu = new MainWindowToolbarMenu(this);
 
 	for (int i = 0; i < TOOLBAR_DEFINITIONS_LEN; i++)
 	{
@@ -106,7 +107,7 @@ MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control) :
 		}
 	}
 
-	createToolbarAndMenu(true);
+	createToolbarAndMenu();
 
 	GtkWidget* menuViewSidebarVisible = get("menuViewSidebarVisible");
 	g_signal_connect(menuViewSidebarVisible, "toggled", (GCallback) viewShowSidebar, this);
@@ -136,29 +137,9 @@ MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control) :
 	gtk_drag_dest_add_text_targets(this->window);
 }
 
-class MenuSelectToolbarData
-{
-public:
-	MenuSelectToolbarData(MainWindow* win, GtkWidget* item, ToolbarData* d)
-	{
-		this->win = win;
-		this->item = item;
-		this->d = d;
-	}
-
-	MainWindow* win;
-	GtkWidget* item;
-	ToolbarData* d;
-};
-
 MainWindow::~MainWindow()
 {
 	XOJ_CHECK_TYPE(MainWindow);
-
-	for (MenuSelectToolbarData* data : this->toolbarMenuData)
-	{
-		delete data;
-	}
 
 	for (int i = 0; i < TOOLBAR_DEFINITIONS_LEN; i++)
 	{
@@ -167,6 +148,9 @@ MainWindow::~MainWindow()
 
 	delete[] this->toolbarWidgets;
 	this->toolbarWidgets = NULL;
+
+	delete this->toolbarSelectMenu;
+	this->toolbarSelectMenu = NULL;
 
 	delete this->xournal;
 	this->xournal = NULL;
@@ -620,11 +604,7 @@ void MainWindow::setControlTmpDisabled(bool disabled)
 	XOJ_CHECK_TYPE(MainWindow);
 
 	toolbar->setTmpDisabled(disabled);
-
-	for (MenuSelectToolbarData* data : this->toolbarMenuData)
-	{
-		gtk_widget_set_sensitive(data->item, !disabled);
-	}
+	toolbarSelectMenu->setTmpDisabled(disabled);
 
 	GtkWidget* menuFileRecent = get("menuFileRecent");
 	gtk_widget_set_sensitive(menuFileRecent, !disabled);
@@ -634,124 +614,23 @@ void MainWindow::updateToolbarMenu()
 {
 	XOJ_CHECK_TYPE(MainWindow);
 
-	GtkContainer* menubar = GTK_CONTAINER(get("menuViewToolbar"));
-	g_return_if_fail(menubar != NULL);
-
-	for (GtkWidget* w : this->toolbarMenuitems)
-	{
-		gtk_container_remove(menubar, w);
-	}
-	this->toolbarMenuitems.clear();
-
-	this->freeToolMenu();
-
-	g_slist_free(this->toolbarGroup);
-	this->toolbarGroup = NULL;
-
-	createToolbarAndMenu(false);
+	createToolbarAndMenu();
 }
 
-static void container_remove_foreach(GtkWidget* widget, GtkContainer* container)
-{
-	gtk_container_remove(container, widget);
-}
-
-void MainWindow::freeToolMenu()
-{
-	XOJ_CHECK_TYPE(MainWindow);
-
-	for (MenuSelectToolbarData* data : this->toolbarMenuData)
-	{
-		delete data;
-	}
-	this->toolbarMenuData.clear();
-
-	GtkMenuShell* menubar = GTK_MENU_SHELL(get("menuViewToolbar"));
-	g_return_if_fail(menubar != NULL);
-
-	gtk_container_forall(GTK_CONTAINER(menubar), (GtkCallback) container_remove_foreach, GTK_CONTAINER(menubar));
-
-}
-
-void tbSelectMenuitemActivated(GtkMenuItem* menuitem, MenuSelectToolbarData* data)
-{
-	data->win->toolbarSelected(data->d);
-}
-
-void MainWindow::createToolbarAndMenu(bool initial)
+void MainWindow::createToolbarAndMenu()
 {
 	XOJ_CHECK_TYPE(MainWindow);
 
 	GtkMenuShell* menubar = GTK_MENU_SHELL(get("menuViewToolbar"));
 	g_return_if_fail(menubar != NULL);
 
-	GtkWidget* item = NULL;
-	GtkWidget* selectedItem = NULL;
-	ToolbarData* selectedData = NULL;
+	toolbarSelectMenu->updateToolbarMenu(menubar, control->getSettings(), toolbar);
 
-	Settings* settings = control->getSettings();
-	string selectedId = settings->getSelectedToolbar();
-
-	bool predefined = true;
-	int menuPos = 0;
-
-	for (ToolbarData* d : *this->toolbar->getModel()->getToolbars())
+	ToolbarData* td = toolbarSelectMenu->getSelectedToolbar();
+	if (td)
 	{
-		if (selectedData == NULL)
-		{
-			selectedData = d;
-			selectedItem = item;
-		}
-
-		item = gtk_radio_menu_item_new_with_label(this->toolbarGroup, d->getName().c_str());
-		this->toolbarGroup = gtk_radio_menu_item_get_group(GTK_RADIO_MENU_ITEM(item));
-
-		gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(item), false);
-
-		MenuSelectToolbarData* data = new MenuSelectToolbarData(this, item, d);
-
-		this->toolbarMenuData.push_back(data);
-
-		if (selectedId == d->getId())
-		{
-			selectedData = d;
-			selectedItem = item;
-		}
-
-		g_signal_connect(item, "activate", G_CALLBACK(tbSelectMenuitemActivated), data);
-
-		gtk_widget_show(item);
-
-		if (predefined && !d->isPredefined())
-		{
-			GtkWidget* separator = gtk_separator_menu_item_new();
-			gtk_widget_show(separator);
-			gtk_menu_shell_insert(menubar, separator, menuPos++);
-
-			predefined = false;
-			this->toolbarMenuitems.push_back(separator);
-		}
-
-		gtk_menu_shell_insert(menubar, item, menuPos++);
-
-		this->toolbarMenuitems.push_back(item);
-	}
-
-	if (selectedData)
-	{
-		gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(selectedItem), TRUE);
 		this->toolbarIntialized = true;
-		toolbarSelected(selectedData);
-	}
-
-	if (!initial)
-	{
-		GtkWidget* separator = gtk_separator_menu_item_new();
-		gtk_widget_show(separator);
-
-		gtk_menu_shell_insert(menubar, separator, menuPos++);
-		gtk_menu_shell_insert(menubar, get("menuViewToolbarManage"), menuPos++);
-		gtk_menu_shell_insert(menubar, get("menuViewToolbarCustomize"), menuPos++);
+		toolbarSelected(td);
 	}
 
 	this->control->getScheduler()->unblockRerenderZoom();

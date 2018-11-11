@@ -224,6 +224,6 @@ XOJ_DECLARE_TYPE(BackgroundSelectDialogBase, 213);
 XOJ_DECLARE_TYPE(BaseElementView, 214);
 XOJ_DECLARE_TYPE(ImageElementView, 215);
 XOJ_DECLARE_TYPE(PdfElementView, 216);
-
+XOJ_DECLARE_TYPE(MainWindowToolbarMenu, 216);
 
 //XOJ_DECLARE_TYPE(XXXXXXXXXXXXXXXX, 206);
