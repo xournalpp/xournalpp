@@ -38,7 +38,7 @@ void Sidebar::initPages(GtkWidget* sidebar, GladeGui* gui)
 	addPage(new SidebarIndexPage(this->control));
 	addPage(new SidebarPreviewPages(this->control, this->gui, &this->toolbar));
 #ifdef UNSTABLE_LAYERS_SIDEBAR
-	addPage(new SidebarPreviewLayers(this->control));
+	addPage(new SidebarPreviewLayers(this->control, this->gui, &this->toolbar));
 #endif //UNSTABLE_LAYERS_SIDEBAR
 
 	// Init toolbar with icons
