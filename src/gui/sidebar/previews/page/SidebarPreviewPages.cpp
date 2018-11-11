@@ -7,7 +7,8 @@
 
 #include <i18n.h>
 
-SidebarPreviewPages::SidebarPreviewPages(Control* control) : SidebarPreviewBase(control)
+SidebarPreviewPages::SidebarPreviewPages(Control* control, GladeGui* gui, SidebarToolbar* toolbar)
+ : SidebarPreviewBase(control, gui, toolbar)
 {
 	XOJ_INIT_TYPE(SidebarPreviewPages);
 }

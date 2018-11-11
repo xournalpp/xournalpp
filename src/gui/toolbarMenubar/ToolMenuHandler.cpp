@@ -11,7 +11,6 @@
 
 #include "control/Actions.h"
 #include "gui/ToolitemDragDrop.h"
-#include "gui/widgets/SelectColor.h"
 #include "model/ToolbarData.h"
 #include "model/ToolbarModel.h"
 
@@ -19,7 +18,6 @@
 #include <config-features.h>
 #include <i18n.h>
 
-#include <glade/glade-xml.h>
 #include <glib.h>
 
 ToolMenuHandler::ToolMenuHandler(ActionHandler* listener, ZoomControl* zoom, GladeGui* gui, ToolHandler* toolHandler,
@@ -104,7 +102,7 @@ void ToolMenuHandler::load(ToolbarData* d, GtkWidget* toolbar, const char* toolb
 	{
 		if (e->getName() == toolbarName)
 		{
-			for (ToolbarItem* dataItem : *e->getItems())
+			for (ToolbarItem* dataItem : e->getItems())
 			{
 				string name = dataItem->getName();
 
@@ -329,6 +327,13 @@ void ToolMenuHandler::initToolItems()
 	addToolItem(new ToolButton(listener, "GOTO_LAST", ACTION_GOTO_LAST, GTK_STOCK_GOTO_LAST, _C("Go to last page"),
 							   gui->get("menuNavigationLastPage")));
 
+	addToolItem(new ToolButton(listener, "GOTO_PREVIOUS_LAYER", ACTION_GOTO_PREVIOUS_LAYER, GTK_STOCK_GO_BACK, _C("Go to previous layer"),
+							   gui->get("menuNavigationPreviousLayer")));
+	addToolItem(new ToolButton(listener, "GOTO_NEXT_LAYER", ACTION_GOTO_NEXT_LAYER, GTK_STOCK_GO_FORWARD, _C("Go to next layer"),
+							   gui->get("menuNavigationNextLayer")));
+	addToolItem(new ToolButton(listener, "GOTO_TOP_LAYER", ACTION_GOTO_TOP_LAYER, GTK_STOCK_GOTO_TOP, _C("Go to top layer"),
+							   gui->get("menuNavigationTopLayer")));
+
 	addToolItem(new ToolButton(listener, gui, "GOTO_NEXT_ANNOTATED_PAGE", ACTION_GOTO_NEXT_ANNOTATED_PAGE,
 							   "nextAnnotatedPage.svg", _C("Next annotated page"),
 							   gui->get("menuNavigationNextAnnotatedPage")));
@@ -474,7 +479,6 @@ void ToolMenuHandler::initToolItems()
 	registerMenupoint(gui->get("menuFileExportPdf"), ACTION_EXPORT_AS_PDF);
 	registerMenupoint(gui->get("menuFileExportAs"), ACTION_EXPORT_AS);
 
-	registerMenupoint(gui->get("menuDocumentProperties"), ACTION_DOCUMENT_PROPERTIES);
 	registerMenupoint(gui->get("menuFilePrint"), ACTION_PRINT);
 
 	registerMenupoint(gui->get("menuFileQuit"), ACTION_QUIT);

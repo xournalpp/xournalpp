@@ -49,7 +49,9 @@ private:
 	
 	static void printMemory()
 	{
-		system(CONCAT("bash -c \"cat /proc/", std::to_string(::getpid()), "/status | grep Vm\"").c_str());
+		string cmd = "bash -c \"cat /proc/";
+		cmd += std::to_string(::getpid()) + "/status | grep Vm\"";
+		system(cmd.c_str());
 	}
 	
 };

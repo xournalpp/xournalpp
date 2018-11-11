@@ -5,11 +5,11 @@
 
 #include "gui/Cursor.h"
 #include "gui/dialog/AboutDialog.h"
+#include "gui/dialog/backgroundSelect/ImagesDialog.h"
+#include "gui/dialog/backgroundSelect/PdfPagesDialog.h"
 #include "gui/dialog/GotoDialog.h"
 #include "gui/dialog/FormatDialog.h"
-#include "gui/dialog/ImagesDialog.h"
 #include "gui/dialog/SettingsDialog.h"
-#include "gui/dialog/PdfPagesDialog.h"
 #include "gui/dialog/SelectBackgroundColorDialog.h"
 #include "gui/dialog/toolbarCustomize/ToolbarDragDropHandler.h"
 #include "gui/dialog/ToolbarManageDialog.h"
@@ -27,7 +27,6 @@
 #include "model/FormatDefinitions.h"
 #include "model/XojPage.h"
 #include "settings/ButtonConfig.h"
-#include "settings/MetadataManager.h"
 #include "stockdlg/ImageOpenDlg.h"
 #include "stockdlg/XojOpenDlg.h"
 #include "undo/AddUndoAction.h"
@@ -63,7 +62,7 @@ using std::vector;
 
 // TODO Check for error log on startup, also check for emergency save document!
 
-Control::Control(GladeSearchpath* gladeSearchPath)
+Control::Control(GladeSearchpath* gladeSearchPath, bool noThreads)
 {
 	XOJ_INIT_TYPE(Control);
 
@@ -95,7 +94,7 @@ Control::Control(GladeSearchpath* gladeSearchPath)
 
 	this->scrollHandler = new ScrollHandler(this);
 
-	this->scheduler = new XournalScheduler();
+	this->scheduler = new XournalScheduler(noThreads);
 
 	this->hiddenFullscreenWidgets = NULL;
 	this->sidebarHidden = false;
@@ -343,7 +342,7 @@ void Control::updatePageNumbers(size_t page, size_t pdfPage)
 	this->win->updatePageNumbers(page, this->doc->getPageCount(), pdfPage);
 	this->sidebar->selectPageNr(page, pdfPage);
 
-	this->metadata->setInt(this->doc->getEvMetadataFilename(), "page", page);
+	this->metadata->storeMetadata(this->doc->getEvMetadataFilename().c_str(), page, getZoomControl()->getZoom());
 
 	int current = this->win->getXournal()->getCurrentPage();
 	int count = this->doc->getPageCount();
@@ -391,9 +390,6 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
 	case ACTION_EXPORT_AS:
 		exportAs();
 		break;
-	case ACTION_DOCUMENT_PROPERTIES:
-		// TODO LOW PRIO: not implemented, but menupoint is hidden...
-		break;
 	case ACTION_PRINT:
 		print();
 		break;
@@ -403,7 +399,7 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
 		// Menu Edit
 	case ACTION_UNDO:
 		this->clearSelection();
-		//Move out of text mode to allow textboxundo to work
+		// Move out of text mode to allow textboxundo to work
 		clearSelectionEndText();
 		undoRedo->undo();
 		this->resetShapeRecognizer();
@@ -451,6 +447,31 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
 		break;
 	case ACTION_GOTO_LAST:
 		scrollHandler->scrollToPage(this->doc->getPageCount() - 1);
+		break;
+	case ACTION_GOTO_NEXT_LAYER:
+		{
+			int layer = this->win->getCurrentLayer();
+			PageRef p = getCurrentPage();
+			if (layer < p->getLayerCount())
+			{
+				switchToLay(layer + 1);
+			}
+		}
+		break;
+	case ACTION_GOTO_PREVIOUS_LAYER:
+		{
+			int layer = this->win->getCurrentLayer();
+			if (layer > 0)
+			{
+				switchToLay(layer - 1);
+			}
+		}
+		break;
+	case ACTION_GOTO_TOP_LAYER:
+		{
+			PageRef p = getCurrentPage();
+			switchToLay(p->getLayerCount());
+		}
 		break;
 	case ACTION_GOTO_NEXT_ANNOTATED_PAGE:
 		scrollHandler->scrollToAnnotatedPage(true);
@@ -799,22 +820,7 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
 		break;
 
 	case ACTION_FOOTER_LAYER:
-	{
-		clearSelectionEndText();
-		PageRef p = getCurrentPage();
-		if (p.isValid())
-		{
-			p->setSelectedLayerId(this->win->getCurrentLayer());
-			this->win->getXournal()->layerChanged(getCurrentPageNo());
-			this->win->updateLayerCombobox();
-
-			if (p.isValid())
-			{
-				int layer = p->getSelectedLayerId();
-				fireEnableAction(ACTION_DELETE_LAYER, layer > 0);
-			}
-		}
-	}
+		switchToLay(this->win->getCurrentLayer());
 		break;
 
 	case ACTION_MANAGE_TOOLBAR:
@@ -998,18 +1004,25 @@ void Control::customizeToolbars()
 
 				if (i != 0)
 				{
-					id += CONCAT(" ", i);
+					id += " ";
+					id += std::to_string(i);
 				}
 
 				if (!model->existsId(id))
 				{
 					if (i != 0)
 					{
-						data->setName(CONCAT(data->getName(), " ", _("Copy"), " ", i));
+						string filename = data->getName();
+						filename += " ";
+						filename += FS(_("Copy"));
+						filename += " ";
+						filename += std::to_string(i);
+
+						data->setName(filename);
 					}
 					else
 					{
-						data->setName(CONCAT(data->getName(), " ", _("Copy")));
+						data->setName(data->getName() + " " + FS(_("Copy")));
 					}
 					data->setId(id);
 					break;
@@ -1498,31 +1511,21 @@ void Control::insertNewPage(size_t position)
 		{
 			this->doc->lock();
 			PdfPagesDialog* dlg = new PdfPagesDialog(this->gladeSearchPath, this->doc, this->settings);
-			for (size_t i = 0; i < doc->getPageCount(); i++)
-			{
-				PageRef p = doc->getPage(i);
-				if (p->getBackgroundType() == BACKGROUND_TYPE_PDF && p->getPdfPageNr() != size_t_npos)
-				{
-					dlg->setPageUsed(i);
-				}
-			}
 
 			dlg->show(GTK_WINDOW(this->win->getWindow()));
 
-			size_t selected = dlg->getSelectedPage();
+			int selected = dlg->getSelectedPage();
 			delete dlg;
 
-			if (selected == size_t_npos || selected >= doc->getPdfPageCount())
+			if (selected >= 0 && selected < doc->getPdfPageCount())
 			{
-				// page is automatically deleted
-				return;
+				// no need to set a type, if we set the page number the type is also set
+				page->setBackgroundPdfPageNr(selected);
+
+				XojPopplerPage* p = doc->getPdfPage(selected);
+				page->setSize(p->getWidth(), p->getHeight());
 			}
 
-			// no need to set a type, if we set the page number the type is also set
-			page->setBackgroundPdfPageNr(selected);
-
-			XojPopplerPage* p = doc->getPdfPage(selected);
-			page->setSize(p->getWidth(), p->getHeight());
 			this->doc->unlock();
 		}
 	}
@@ -1694,31 +1697,19 @@ void Control::setPageBackground(ActionType type)
 		else
 		{
 			this->doc->lock();
-
 			PdfPagesDialog* dlg = new PdfPagesDialog(this->gladeSearchPath, this->doc, this->settings);
-			for (size_t i = 0; i < doc->getPageCount(); i++)
-			{
-				PageRef p = doc->getPage(i);
-				if (p->getBackgroundType() == BACKGROUND_TYPE_PDF && p->getPdfPageNr() != size_t_npos)
-				{
-					dlg->setPageUsed(i);
-				}
-			}
-
 			this->doc->unlock();
 
 			dlg->show(GTK_WINDOW(this->win->getWindow()));
 
-			size_t selected = dlg->getSelectedPage();
+			int selected = dlg->getSelectedPage();
 			delete dlg;
 
-			if (selected == size_t_npos || selected >= doc->getPdfPageCount())
+			if (selected >= 0 && selected < doc->getPdfPageCount())
 			{
-				return;
+				// no need to set a type, if we set the page number the type is also set
+				page->setBackgroundPdfPageNr(selected);
 			}
-
-			// no need to set a type, if we set the page number the type is also set
-			page->setBackgroundPdfPageNr(selected);
 		}
 	}
 
@@ -1827,15 +1818,9 @@ void Control::changePageBackgroundColor()
 		return;
 	}
 
-	SelectBackgroundColorDialog* dlg = new SelectBackgroundColorDialog(this->gladeSearchPath, this);
-	dlg->show(GTK_WINDOW(this->win->getWindow()));
-	int color = dlg->getSelectedColor();
-
-	if (color == -2)
-	{
-		dlg->showColorchooser();
-		color = dlg->getSelectedColor();
-	}
+	SelectBackgroundColorDialog dlg(this);
+	dlg.show(GTK_WINDOW(this->win->getWindow()));
+	int color = dlg.getSelectedColor();
 
 	if (color != -1)
 	{
@@ -1843,8 +1828,18 @@ void Control::changePageBackgroundColor()
 		firePageChanged(pNr);
 		settings->setPageBackgroundColor(color);
 	}
+}
 
-	delete dlg;
+void Control::switchToLay(int layer)
+{
+	clearSelectionEndText();
+	PageRef p = getCurrentPage();
+	if (p.isValid())
+	{
+		p->setSelectedLayerId(layer);
+		this->win->getXournal()->layerChanged(getCurrentPageNo());
+		this->win->updateLayerCombobox();
+	}
 }
 
 void Control::deleteCurrentLayer()
@@ -1959,6 +1954,8 @@ bool Control::invokeCallback(CallbackData* cb)
 		break;
 	case ACTION_ZOOM_OUT:
 		zoom->zoomOut();
+		break;
+	default:
 		break;
 	}
 
@@ -2253,7 +2250,6 @@ void Control::showSettings()
 {
 	XOJ_CHECK_TYPE(Control);
 
-	bool xeventEnabled = settings->isUseXInput();
 	int selectionColor = settings->getSelectionColor();
 	bool verticalSpace = settings->getAddVerticalSpace();
 	bool horizontalSpace = settings->getAddHorizontalSpace();
@@ -2261,11 +2257,6 @@ void Control::showSettings()
 
 	SettingsDialog* dlg = new SettingsDialog(this->gladeSearchPath, settings);
 	dlg->show(GTK_WINDOW(this->win->getWindow()));
-
-	if (xeventEnabled != settings->isUseXInput())
-	{
-		win->getXournal()->updateXEvents();
-	}
 
 	if (selectionColor != settings->getSelectionColor())
 	{
@@ -2287,6 +2278,8 @@ void Control::showSettings()
 	win->updateScrollbarSidebarPosition();
 
 	enableAutosave(settings->isAutosaveEnabled());
+
+	getWindow()->getXournal()->setEventCompression(settings->isEventCompression());
 
 	this->zoom->setZoom100(settings->getDisplayDpi() / 72.0);
 	delete dlg;
@@ -2428,12 +2421,10 @@ bool Control::openFile(path filename, int scrollToPage)
 	}
 	else
 	{
-		this->metadata->pause();
 		this->doc->lock();
 		this->doc->clearDocument();
 		*this->doc = *tmp;
 		this->doc->unlock();
-		this->metadata->resume();
 	}
 
 	fileLoaded(scrollToPage);
@@ -2450,25 +2441,19 @@ void Control::fileLoaded(int scrollToPage)
 
 	if (!file.empty())
 	{
-		double zoom = 1;
-		if (this->metadata->getDouble(file, "zoom", zoom))
+		MetadataEntry md = metadata->getForFile(file.c_str());
+		if (!md.valid)
 		{
-			this->zoom->setZoom(zoom);
-		}
-		else
-		{
-			this->zoom->zoomFit();
+			md.zoom = -1;
+			md.page = 0;
 		}
 
-		int scrollPageMetadata = 0;
 		if (scrollToPage >= 0)
 		{
-			scrollHandler->scrollToPage(scrollToPage);
+			md.page = scrollToPage;
 		}
-		else if (this->metadata->getInt(file, "page", scrollPageMetadata))
-		{
-			scrollHandler->scrollToPage(scrollPageMetadata);
-		}
+
+		loadMetadata(md);
 		recent->addRecentFileFilename(file);
 	}
 	else
@@ -2481,6 +2466,38 @@ void Control::fileLoaded(int scrollToPage)
 	win->getXournal()->forceUpdatePagenumbers();
 	getCursor()->updateCursor();
 	updateDeletePageButton();
+}
+
+class MetadataCallbackData {
+public:
+	Control* ctrl;
+	MetadataEntry md;
+};
+
+/**
+ * Load the data after processing the document...
+ */
+void Control::loadMetadataCallback(MetadataCallbackData* data)
+{
+	if (!data->md.valid)
+	{
+		delete data;
+		return;
+	}
+
+	data->ctrl->scrollHandler->scrollToPage(data->md.page);
+	data->ctrl->zoom->setZoom(data->md.zoom);
+
+	delete data;
+}
+
+void Control::loadMetadata(MetadataEntry md)
+{
+	MetadataCallbackData* data = new MetadataCallbackData();
+	data->md = md;
+	data->ctrl = this;
+
+	g_idle_add((GSourceFunc) loadMetadataCallback, data);
 }
 
 bool Control::annotatePdf(path filename, bool attachPdf, bool attachToDocument)
@@ -2507,16 +2524,13 @@ bool Control::annotatePdf(path filename, bool attachPdf, bool attachToDocument)
 
 	if (res)
 	{
-		int page = 0;
-
 		this->recent->addRecentFileFilename(filename.c_str());
 
 		this->doc->lock();
 		path file = this->doc->getEvMetadataFilename();
 		this->doc->unlock();
-
-		this->metadata->getInt(file, "page", page);
-		this->scrollHandler->scrollToPage(page);
+		MetadataEntry md = metadata->getForFile(file.c_str());
+		loadMetadata(md);
 	}
 	else
 	{
@@ -2535,6 +2549,7 @@ bool Control::annotatePdf(path filename, bool attachPdf, bool attachToDocument)
 	getCursor()->setCursorBusy(false);
 
 	fireDocumentChanged(DOCUMENT_CHANGE_COMPLETE);
+
 	getCursor()->updateCursor();
 
 	return true;
@@ -2707,8 +2722,6 @@ bool Control::showSaveDialog()
 
 	this->doc->lock();
 
-	this->metadata->copy(this->doc->getFilename().string(), filename);
-	this->metadata->save();
 	this->doc->setFilename(path(filename));
 	this->doc->unlock();
 
@@ -2824,6 +2837,7 @@ bool Control::close(bool destroy)
 	XOJ_CHECK_TYPE(Control);
 
 	clearSelectionEndText();
+	metadata->documentChanged();
 
 	if (undoRedo->isChanged())
 	{
@@ -2999,7 +3013,8 @@ void Control::clipboardPaste(Element* e)
 	{
 		return;
 	}
-	PageView* view = win->getXournal()->getViewFor(pageNr);
+
+	XojPageView* view = win->getXournal()->getViewFor(pageNr);
 	if (view == NULL)
 	{
 		return;
@@ -3040,7 +3055,7 @@ void Control::clipboardPasteXournal(ObjectInputStream& in)
 	PageRef page = this->doc->getPage(pNr);
 	Layer* layer = page->getSelectedLayer();
 
-	PageView* view = win->getXournal()->getViewFor(pNr);
+	XojPageView* view = win->getXournal()->getViewFor(pNr);
 
 	if (!view || !page)
 	{
@@ -3227,7 +3242,7 @@ void Control::runLatex()
 	{
 		return;
 	}
-	PageView* view = win->getXournal()->getViewFor(pageNr);
+	XojPageView* view = win->getXournal()->getViewFor(pageNr);
 	if (view == NULL)
 	{
 		return;
@@ -3468,4 +3483,11 @@ Sidebar* Control::getSidebar()
 	XOJ_CHECK_TYPE(Control);
 
 	return this->sidebar;
+}
+
+SearchBar* Control::getSearchBar()
+{
+	XOJ_CHECK_TYPE(Control);
+
+	return this->searchBar;
 }

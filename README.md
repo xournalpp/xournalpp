@@ -3,6 +3,11 @@
 [![Build Status](https://travis-ci.org/xournalpp/xournalpp.svg?branch=string_new)](https://travis-ci.org/xournalpp/xournalpp)
 [![Join the chat at https://gitter.im/xournalpp/xournalpp](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/xournalpp/xournalpp?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
+# GTK-3 branch merged
+Now the GTK-3 branch is merged, with really much changes.
+**A lot of bugs are fixed, but maybe there are new one.**
+The GTK-2 version is still available as master_gtk2_stable.
+
 
 ## Description
 
@@ -34,17 +39,23 @@ There will be some binaries appearing in the future, so ideally you can make use
 They'll be at [Xournal++ releases](https://github.com/xournalpp/xournalpp/releases).
 
 ### Install dependencies
+```diff
+- Probably not correct for new GTK3 build, create a pull or a Ticket if you have the correct list
+```
 For Fedora/CentOS/RHEL:
 ````bash
 dnf groups install "C Development Tools and Libraries"
 dnf install cmake libglade2-devel texlive-scheme-basic texlive-dvipng glibmm24-devel gtk2-devel gtk+-devel boost boost-devel poppler-glib-devel
 ````
 
+```diff
+- Probably not correct for new GTK3 build, create a pull or a Ticket if you have the correct list
+```
 For Ubuntu/Debian:
 
 ````bash
 sudo apt-get install cmake libboost-all-dev libcppunit-dev dvipng texlive
-liblcms2-dev libopenjpeg-dev libjpeg-dev fontconfig librsvg2-dev libglade2-dev
+liblcms2-dev libopenjpeg-dev libjpeg-dev fontconfig librsvg2-dev libgtk-3-dev
 libpoppler-dev libpoppler-cpp-dev libpoppler-glib-dev libpoppler-private-dev
 ````
 

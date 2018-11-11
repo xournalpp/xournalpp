@@ -37,14 +37,15 @@ public:
 	void scrollToPage(PageRef page, double top = 0);
 	void scrollToPage(size_t page, double top = 0);
 
-	void scrollToSpinPange();
-
 	void scrollToAnnotatedPage(bool next);
 
 	bool isPageVisible(size_t page, int* visibleHeight = NULL);
 
 public:
 	virtual void pageChanged(size_t page);
+
+private:
+	void scrollToSpinPange();
 
 private:
 	XOJ_TYPE_ATTRIB;

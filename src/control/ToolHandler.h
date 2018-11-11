@@ -69,6 +69,8 @@ public:
 	ToolType getToolType();
 	void fireToolChanged();
 
+	Tool &getTool(ToolType type);
+
 	void setEraserType(EraserType eraserType);
 	EraserType getEraserType();
 	void eraserTypeChanged();

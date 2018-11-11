@@ -2,6 +2,7 @@
 
 #include "model/Layer.h"
 #include "undo/UndoRedoHandler.h"
+#include "util/GtkColorWrapper.h"
 #include "view/DocumentView.h"
 
 VerticalToolHandler::VerticalToolHandler(Redrawable* view, PageRef page, double y, double zoom)
@@ -65,12 +66,12 @@ void VerticalToolHandler::paint(cairo_t* cr, GdkRectangle* rect, double zoom)
 {
 	XOJ_CHECK_TYPE(VerticalToolHandler);
 
-	GdkColor selectionColor = view->getSelectionColor();
+	GtkColorWrapper selectionColor = view->getSelectionColor();
 
 	cairo_set_line_width(cr, 1);
 
 	gdk_threads_enter();
-	gdk_cairo_set_source_color(cr, &selectionColor);
+	selectionColor.apply(cr);
 
 	double y;
 	double height;
@@ -89,8 +90,7 @@ void VerticalToolHandler::paint(cairo_t* cr, GdkRectangle* rect, double zoom)
 	cairo_rectangle(cr, 0, y * zoom, this->page->getWidth() * zoom, height * zoom);
 
 	cairo_stroke_preserve(cr);
-	cairo_set_source_rgba(cr,selectionColor.red / 65536.0,
-	                      selectionColor.green / 65536.0, selectionColor.blue / 65536.0, 0.3);
+	selectionColor.applyWithAlpha(cr, 0.3);
 	cairo_fill(cr);
 
 	cairo_set_source_surface(cr, this->crBuffer, 0, this->endY * zoom);

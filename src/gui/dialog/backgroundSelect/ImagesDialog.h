@@ -12,57 +12,38 @@
 #pragma once
 
 #include "gui/GladeGui.h"
+#include "BackgroundSelectDialogBase.h"
 #include <XournalType.h>
 
 #include <vector>
 
 class BackgroundImage;
-class Document;
-class ImageView;
-class Settings;
-class BackgroundImage;
 
-typedef std::vector<ImageView*> ImageViewVector;
-
-class ImagesDialog : public GladeGui
+class ImagesDialog : public BackgroundSelectDialogBase
 {
 public:
 	ImagesDialog(GladeSearchpath* gladeSearchPath, Document* doc, Settings* settings);
 	virtual ~ImagesDialog();
 
 public:
-	virtual void show(GtkWindow* parent);
-
-	void setBackgroundWhite();
-
-	void setSelected(size_t selected);
-
 	BackgroundImage getSelectedImage();
 	bool shouldShowFilechooser();
+	virtual void show(GtkWindow* parent);
 
-	Settings* getSettings();
 private:
-	void layout();
-	void updateOkButton();
+	/**
+	 * Load all images form all pages
+	 */
+	void loadImagesFromPages();
 
-	static void sizeAllocate(GtkWidget* widget, GtkRequisition* requisition, ImagesDialog* dlg);
+	/**
+	 * Check if this image is already displayed
+	 */
+	bool isImageAlreadyInTheList(BackgroundImage& image);
+
 	static void okButtonCallback(GtkButton* button, ImagesDialog* dlg);
 	static void filechooserButtonCallback(GtkButton* button, ImagesDialog* dlg);
 
 private:
 	XOJ_TYPE_ATTRIB;
-
-	bool backgroundInitialized;
-
-	Settings* settings;
-
-	size_t selected;
-	int lastWidth;
-
-	int selectedPage;
-
-	ImageViewVector images;
-
-	GtkWidget* scrollPreview;
-	GtkWidget* widget;
 };

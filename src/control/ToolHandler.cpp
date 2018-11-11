@@ -82,7 +82,6 @@ void ToolHandler::initTools()
 	t = new Tool("hand", TOOL_HAND, 0x000000, false, false, false, false, false, false, false, NULL);
 	tools[TOOL_HAND - TOOL_PEN] = t;
 
-	/*
 	t = new Tool("drawRect", TOOL_DRAW_RECT, 0x000000, false, false, false, false, false, false, false, NULL);
 	tools[TOOL_DRAW_RECT - TOOL_PEN] = t;
 
@@ -91,8 +90,6 @@ void ToolHandler::initTools()
 
 	t = new Tool("drawArrow", TOOL_DRAW_ARROW, 0x000000, false, false, false, false, false, false, false, NULL);
 	tools[TOOL_DRAW_ARROW - TOOL_PEN] = t;
-	 */
-
 
 	selectTool(TOOL_PEN);
 }
@@ -179,6 +176,11 @@ void ToolHandler::fireToolChanged()
 	{
 		listener->toolChanged();
 	}
+}
+
+Tool &ToolHandler::getTool(ToolType type)
+{
+	return *(this->tools[type - TOOL_PEN]);
 }
 
 ToolType ToolHandler::getToolType()
@@ -642,8 +644,11 @@ void ToolHandler::copyCurrentConfig()
 {
 	XOJ_CHECK_TYPE(ToolHandler);
 
+	// TODO Check if this nullcheck needs to be removed
 	if (this->lastSelectedTool == NULL)
+	{
 		this->lastSelectedTool = this->current;
+	}
 }
 
 void ToolHandler::restoreLastConfig()

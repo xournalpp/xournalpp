@@ -25,7 +25,7 @@
 
 class UndoRedoHandler;
 class Layer;
-class PageView;
+class XojPageView;
 class Selection;
 class Element;
 class UndoAction;
@@ -36,7 +36,7 @@ class EditSelectionContents : public ElementContainer, public Serializeable
 {
 public:
 	EditSelectionContents(double x, double y, double width, double height,
-						  PageRef sourcePage, Layer* sourceLayer, PageView* sourceView);
+						  PageRef sourcePage, Layer* sourceLayer, XojPageView* sourceView);
 	virtual ~EditSelectionContents();
 
 public:
@@ -44,8 +44,8 @@ public:
 	 * Sets the tool size for pen or eraser, returs an undo action
 	 * (or NULL if nothing is done)
 	 */
-	UndoAction* setSize(ToolSize size,
-					    const double* thicknessPen, const double* thicknessHilighter, const double* thicknessEraser);
+	UndoAction* setSize(ToolSize size, const double* thicknessPen,
+						const double* thicknessHilighter, const double* thicknessEraser);
 
 	/**
 	 * Set the color of all elements, return an undo action
@@ -86,10 +86,10 @@ public:
 	 * Finish the editing
 	 */
 	void finalizeSelection(double x, double y, double width, double height, bool aspectRatio,
-						   Layer* layer, PageRef targetPage, PageView* targetView, UndoRedoHandler* undo);
+						   Layer* layer, PageRef targetPage, XojPageView* targetView, UndoRedoHandler* undo);
 
 	void updateContent(double x, double y, double width, double height, bool aspectRatio,
-					   Layer* layer, PageRef targetPage, PageView* targetView, UndoRedoHandler* undo,
+					   Layer* layer, PageRef targetPage, XojPageView* targetView, UndoRedoHandler* undo,
 					   CursorSelectionType type);
 
 private:
@@ -115,7 +115,7 @@ public:
 	 */
 	double getOriginalHeight();
 
-	UndoAction* copySelection(PageRef page, PageView *view, double x, double y);
+	UndoAction* copySelection(PageRef page, XojPageView *view, double x, double y);
 
 public:
 	// Serialize interface
@@ -171,5 +171,5 @@ private:
 	/**
 	 * Source View for Undo operations
 	 */
-	PageView* sourceView;
+	XojPageView* sourceView;
 };

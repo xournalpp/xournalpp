@@ -10,10 +10,15 @@
 #include "control/settings/ButtonConfig.h"
 #include "control/settings/Settings.h"
 #include "control/jobs/BlockingJob.h"
+#include "control/tools/ArrowHandler.h"
+#include "control/tools/CircleHandler.h"
 #include "control/tools/EraseHandler.h"
 #include "control/tools/ImageHandler.h"
 #include "control/tools/InputHandler.h"
+#include "control/tools/RectangleHandler.h"
+#include "control/tools/RulerHandler.h"
 #include "control/tools/Selection.h"
+#include "control/tools/StrokeHandler.h"
 #include "control/tools/VerticalToolHandler.h"
 #include "model/Image.h"
 #include "model/Layer.h"
@@ -23,7 +28,6 @@
 #include "undo/DeleteUndoAction.h"
 #include "undo/InsertUndoAction.h"
 #include "undo/TextBoxUndoAction.h"
-//#include "undo/TextUndoAction.h"	//for the save file undo
 #include "view/TextView.h"
 #include "widgets/XournalWidget.h"
 
@@ -35,14 +39,14 @@
 #include <Rectangle.h>
 
 #include <glib.h>
-#include <gdk/gdkkeysyms.h>
+#include <gdk/gdk.h>
 
 #include <stdlib.h>
 #include <math.h>
 
-PageView::PageView(XournalView* xournal, PageRef page)
+XojPageView::XojPageView(XournalView* xournal, PageRef page)
 {
-	XOJ_INIT_TYPE(PageView);
+	XOJ_INIT_TYPE(XojPageView);
 
 	this->page = page;
 	this->registerListener(this->page);
@@ -60,8 +64,6 @@ PageView::PageView(XournalView* xournal, PageRef page)
 
 	this->inEraser = false;
 
-	this->extendedWarningDisplayd = false;
-
 	this->verticalSpace = NULL;
 
 	this->selection = NULL;
@@ -77,12 +79,12 @@ PageView::PageView(XournalView* xournal, PageRef page)
 	this->eraser = new EraseHandler(xournal->getControl()->getUndoRedoHandler(), xournal->getControl()->getDocument(),
 									this->page, xournal->getControl()->getToolHandler(), this);
 
-	this->inputHandler = new InputHandler(this->xournal, this);
+	this->inputHandler = NULL;
 }
 
-PageView::~PageView()
+XojPageView::~XojPageView()
 {
-	XOJ_CHECK_TYPE(PageView);
+	XOJ_CHECK_TYPE(XojPageView);
 
 	this->xournal->getControl()->getScheduler()->removePage(this);
 	delete this->inputHandler;
@@ -92,17 +94,21 @@ PageView::~PageView()
 	endText();
 	deleteViewBuffer();
 
-	for (Rectangle* rect : this->rerenderRects) delete rect;
+	for (Rectangle* rect : this->rerenderRects)
+	{
+		delete rect;
+	}
+	this->rerenderRects.clear();
 
-	if (this->search) delete this->search;
+	delete this->search;
 	this->search = NULL;
 
-	XOJ_RELEASE_TYPE(PageView);
+	XOJ_RELEASE_TYPE(XojPageView);
 }
 
-void PageView::setIsVisible(bool visible)
+void XojPageView::setIsVisible(bool visible)
 {
-	XOJ_CHECK_TYPE(PageView);
+	XOJ_CHECK_TYPE(XojPageView);
 
 	if (visible)
 	{
@@ -116,9 +122,9 @@ void PageView::setIsVisible(bool visible)
 	}
 }
 
-int PageView::getLastVisibleTime()
+int XojPageView::getLastVisibleTime()
 {
-	XOJ_CHECK_TYPE(PageView);
+	XOJ_CHECK_TYPE(XojPageView);
 
 	if (this->crBuffer == NULL)
 	{
@@ -128,9 +134,9 @@ int PageView::getLastVisibleTime()
 	return this->lastVisibleTime;
 }
 
-void PageView::deleteViewBuffer()
+void XojPageView::deleteViewBuffer()
 {
-	XOJ_CHECK_TYPE(PageView);
+	XOJ_CHECK_TYPE(XojPageView);
 
 	g_mutex_lock(&this->drawingMutex);
 	if (this->crBuffer)
@@ -141,9 +147,9 @@ void PageView::deleteViewBuffer()
 	g_mutex_unlock(&this->drawingMutex);
 }
 
-bool PageView::containsPoint(int x, int y, bool local)
+bool XojPageView::containsPoint(int x, int y, bool local)
 {
-	XOJ_CHECK_TYPE(PageView);
+	XOJ_CHECK_TYPE(XojPageView);
 
 	if (!local)
 	{
@@ -160,9 +166,9 @@ bool PageView::containsPoint(int x, int y, bool local)
 	}
 }
 
-bool PageView::searchTextOnPage(string& text, int* occures, double* top)
+bool XojPageView::searchTextOnPage(string& text, int* occures, double* top)
 {
-	XOJ_CHECK_TYPE(PageView);
+	XOJ_CHECK_TYPE(XojPageView);
 
 	if (this->search == NULL)
 	{
@@ -188,9 +194,9 @@ bool PageView::searchTextOnPage(string& text, int* occures, double* top)
 	return found;
 }
 
-void PageView::endText()
+void XojPageView::endText()
 {
-	XOJ_CHECK_TYPE(PageView);
+	XOJ_CHECK_TYPE(XojPageView);
 
 	if (!this->textEditor)
 	{
@@ -238,9 +244,9 @@ void PageView::endText()
 	this->rerenderPage();
 }
 
-void PageView::startText(double x, double y)
+void XojPageView::startText(double x, double y)
 {
-	XOJ_CHECK_TYPE(PageView);
+	XOJ_CHECK_TYPE(XojPageView);
 
 	this->xournal->endTextAllPages(this);
 
@@ -318,9 +324,9 @@ void PageView::startText(double x, double y)
 	}
 }
 
-void PageView::selectObjectAt(double x, double y)
+void XojPageView::selectObjectAt(double x, double y)
 {
-	XOJ_CHECK_TYPE(PageView);
+	XOJ_CHECK_TYPE(XojPageView);
 
 	int selected = this->page->getSelectedLayerId();
 	GdkRectangle matchRect = { gint(x - 10), gint(y - 10), 20, 20 };
@@ -372,9 +378,9 @@ void PageView::selectObjectAt(double x, double y)
 	}
 }
 
-bool PageView::onButtonPressEvent(GtkWidget* widget, GdkEventButton* event)
+bool XojPageView::onButtonPressEvent(GtkWidget* widget, GdkEventButton* event)
 {
-	XOJ_CHECK_TYPE(PageView);
+	XOJ_CHECK_TYPE(XojPageView);
 
 	if ((event->state & (GDK_CONTROL_MASK | GDK_MOD1_MASK)) != 0)
 	{
@@ -391,27 +397,9 @@ bool PageView::onButtonPressEvent(GtkWidget* widget, GdkEventButton* event)
 	double x = event->x;
 	double y = event->y;
 
-	if ((x < 0 || y < 0) && !extendedWarningDisplayd &&
-		settings->isXinputEnabled())
+	if (x < 0 || y < 0)
 	{
-		GtkWidget* dialog = gtk_message_dialog_new((GtkWindow*) *xournal->getControl()->getWindow(),
-												   GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR, GTK_BUTTONS_NONE,
-												   "%s", _C("There was a wrong input event, input is not working.\n"
-															"Do you want to disable \"Extended Input\"?"));
-
-		gtk_dialog_add_button(GTK_DIALOG(dialog), "Disable \"Extended Input\"", 1);
-		gtk_dialog_add_button(GTK_DIALOG(dialog), "Cancel", 2);
-
-		this->extendedWarningDisplayd = true;
-
-		gtk_window_set_transient_for(GTK_WINDOW(dialog), GTK_WINDOW(this->xournal->getControl()->getWindow()->getWindow()));
-		if (gtk_dialog_run(GTK_DIALOG(dialog)) == 1)
-		{
-			settings->setXinputEnabled(false);
-			xournal->updateXEvents();
-		}
-		gtk_widget_destroy(dialog);
-		return true;
+		return FALSE;
 	}
 
 	double zoom = xournal->getZoom();
@@ -421,48 +409,47 @@ bool PageView::onButtonPressEvent(GtkWidget* widget, GdkEventButton* event)
 	Cursor* cursor = xournal->getCursor();
 	cursor->setMouseDown(true);
 
-	if (h->getToolType() == TOOL_PEN)
+	if (h->getToolType() == TOOL_PEN || h->getToolType() == TOOL_HILIGHTER ||
+		(h->getToolType() == TOOL_ERASER && h->getEraserType() == ERASER_TYPE_WHITEOUT))
 	{
-		this->inputHandler->startStroke(event, STROKE_TOOL_PEN, x, y);
-	}
-	else if (h->getToolType() == TOOL_HILIGHTER)
-	{
-		this->inputHandler->startStroke(event, STROKE_TOOL_HIGHLIGHTER, x, y);
-	}
-	else if (h->getToolType() == TOOL_ERASER)
-	{
-		if (h->getEraserType() == ERASER_TYPE_WHITEOUT)
+		delete this->inputHandler;
+		this->inputHandler = NULL;
+
+		if (h->isRuler())
 		{
-			this->inputHandler->startStroke(event, STROKE_TOOL_ERASER, x, y);
-			this->inputHandler->getTmpStroke()->setColor(0xffffff); // White
+			this->inputHandler = new RulerHandler(this->xournal, this, getPage());
+		}
+		else if (h->isRectangle())
+		{
+			this->inputHandler = new RectangleHandler(this->xournal, this, getPage());
+		}
+		else if (h->isCircle())
+		{
+			this->inputHandler = new CircleHandler(this->xournal, this, getPage());
+		}
+		else if (h->isArrow())
+		{
+			this->inputHandler = new ArrowHandler(this->xournal, this, getPage());
 		}
 		else
 		{
-			this->eraser->erase(x, y);
-			this->inEraser = true;
+			this->inputHandler = new StrokeHandler(this->xournal, this, getPage());
 		}
+
+		this->inputHandler->onButtonPressEvent(event);
+	}
+	else if(h->getToolType() == TOOL_ERASER)
+	{
+		this->eraser->erase(x, y);
+		this->inEraser = true;
 	}
 	else if (h->getToolType() == TOOL_VERTICAL_SPACE)
 	{
 		this->verticalSpace = new VerticalToolHandler(this, this->page, y, zoom);
 	}
-	/*
-	else if (h->getToolType() == TOOL_DRAW_RECT || h->getToolType() == TOOL_DRAW_CIRCLE || h->getToolType() == TOOL_DRAW_ARROW)
-	{
-		if (h->getToolType() == TOOL_DRAW_RECT)
-		{
-		}
-		else if (h->getToolType() == TOOL_DRAW_CIRCLE)
-		{
-		}
-		else if (h->getToolType() == TOOL_DRAW_ARROW)
-		{
-		}
-	}
-	 */
 	else if (h->getToolType() == TOOL_SELECT_RECT ||
-			 h->getToolType() == TOOL_SELECT_REGION ||
-			 h->getToolType() == TOOL_SELECT_OBJECT)
+	         h->getToolType() == TOOL_SELECT_REGION ||
+	         h->getToolType() == TOOL_SELECT_OBJECT)
 	{
 		if (h->getToolType() == TOOL_SELECT_RECT)
 		{
@@ -502,16 +489,19 @@ bool PageView::onButtonPressEvent(GtkWidget* widget, GdkEventButton* event)
 	return true;
 }
 
-void PageView::resetShapeRecognizer()
+void XojPageView::resetShapeRecognizer()
 {
-	XOJ_CHECK_TYPE(PageView);
+	XOJ_CHECK_TYPE(XojPageView);
 
-	this->inputHandler->resetShapeRecognizer();
+	if (this->inputHandler != NULL)
+	{
+		this->inputHandler->resetShapeRecognizer();
+	}
 }
 
-bool PageView::onMotionNotifyEvent(GtkWidget* widget, GdkEventMotion* event)
+bool XojPageView::onMotionNotifyEvent(GtkWidget* widget, GdkEventMotion* event)
 {
-	XOJ_CHECK_TYPE(PageView);
+	XOJ_CHECK_TYPE(XojPageView);
 
 	double zoom = xournal->getZoom();
 	double x = event->x / zoom;
@@ -520,6 +510,7 @@ bool PageView::onMotionNotifyEvent(GtkWidget* widget, GdkEventMotion* event)
 	ToolHandler* h = xournal->getControl()->getToolHandler();
 
 	if (containsPoint(x, y, true) &&
+		this->inputHandler &&
 		this->inputHandler->onMotionNotifyEvent(event))
 	{
 		//input	handler used this event
@@ -548,9 +539,9 @@ bool PageView::onMotionNotifyEvent(GtkWidget* widget, GdkEventMotion* event)
 	return false;
 }
 
-void PageView::translateEvent(GdkEvent* event, int xOffset, int yOffset)
+void XojPageView::translateEvent(GdkEvent* event, int xOffset, int yOffset)
 {
-	XOJ_CHECK_TYPE(PageView);
+	XOJ_CHECK_TYPE(XojPageView);
 
 	double* x = NULL;
 	double* y = NULL;
@@ -569,7 +560,7 @@ void PageView::translateEvent(GdkEvent* event, int xOffset, int yOffset)
 	}
 	else
 	{
-		g_warning("PageView::translateEvent unknown event type: %i", event->type);
+		g_warning("XojPageView::translateEvent unknown event type: %i", event->type);
 		return;
 	}
 
@@ -577,13 +568,18 @@ void PageView::translateEvent(GdkEvent* event, int xOffset, int yOffset)
 	*y -= this->getY() - yOffset;
 }
 
-bool PageView::onButtonReleaseEvent(GtkWidget* widget, GdkEventButton* event)
+bool XojPageView::onButtonReleaseEvent(GtkWidget* widget, GdkEventButton* event)
 {
-	XOJ_CHECK_TYPE(PageView);
+	XOJ_CHECK_TYPE(XojPageView);
 
 	Control* control = xournal->getControl();
 
-	this->inputHandler->onButtonReleaseEvent(event, this->page);
+	if (this->inputHandler)
+	{
+		this->inputHandler->onButtonReleaseEvent(event);
+		delete this->inputHandler;
+		this->inputHandler = NULL;
+	}
 
 	if (this->inEraser)
 	{
@@ -627,12 +623,12 @@ bool PageView::onButtonReleaseEvent(GtkWidget* widget, GdkEventButton* event)
 	return false;
 }
 
-bool PageView::onKeyPressEvent(GdkEventKey* event)
+bool XojPageView::onKeyPressEvent(GdkEventKey* event)
 {
-	XOJ_CHECK_TYPE(PageView);
+	XOJ_CHECK_TYPE(XojPageView);
 
 	// Esc leaves text edition
-	if (event->keyval == GDK_Escape)
+	if (event->keyval == GDK_KEY_Escape)
 	{
 		if (this->textEditor)
 		{
@@ -658,9 +654,9 @@ bool PageView::onKeyPressEvent(GdkEventKey* event)
 	return false;
 }
 
-bool PageView::onKeyReleaseEvent(GdkEventKey* event)
+bool XojPageView::onKeyReleaseEvent(GdkEventKey* event)
 {
-	XOJ_CHECK_TYPE(PageView);
+	XOJ_CHECK_TYPE(XojPageView);
 
 	if (this->textEditor && this->textEditor->onKeyReleaseEvent(event))
 	{
@@ -670,41 +666,41 @@ bool PageView::onKeyReleaseEvent(GdkEventKey* event)
 	return false;
 }
 
-void PageView::rerenderPage()
+void XojPageView::rerenderPage()
 {
-	XOJ_CHECK_TYPE(PageView);
+	XOJ_CHECK_TYPE(XojPageView);
 
 	this->rerenderComplete = true;
 	this->xournal->getControl()->getScheduler()->addRerenderPage(this);
 }
 
-void PageView::repaintPage()
+void XojPageView::repaintPage()
 {
-	XOJ_CHECK_TYPE(PageView);
+	XOJ_CHECK_TYPE(XojPageView);
 
 	xournal->getRepaintHandler()->repaintPage(this);
 }
 
-void PageView::repaintArea(double x1, double y1, double x2, double y2)
+void XojPageView::repaintArea(double x1, double y1, double x2, double y2)
 {
-	XOJ_CHECK_TYPE(PageView);
+	XOJ_CHECK_TYPE(XojPageView);
 
 	double zoom = xournal->getZoom();
 	xournal->getRepaintHandler()->repaintPageArea(this, x1 * zoom - 10, y1 * zoom - 10, x2 * zoom + 20, y2 * zoom + 20);
 }
 
-Rectangle* PageView::rectOnWidget(double x, double y, double width, double height)
+Rectangle* XojPageView::rectOnWidget(double x, double y, double width, double height)
 {
-	XOJ_CHECK_TYPE(PageView);
+	XOJ_CHECK_TYPE(XojPageView);
 
 	double zoom = xournal->getZoom();
 
 	return new Rectangle(x * zoom - 10, y * zoom - 10, width * zoom + 20, height * zoom + 20);
 }
 
-void PageView::rerenderRect(double x, double y, double width, double heigth)
+void XojPageView::rerenderRect(double x, double y, double width, double heigth)
 {
-	XOJ_CHECK_TYPE(PageView);
+	XOJ_CHECK_TYPE(XojPageView);
 
 	int rx = (int) MAX(x - 10, 0);
 	int ry = (int) MAX(y - 10, 0);
@@ -714,9 +710,9 @@ void PageView::rerenderRect(double x, double y, double width, double heigth)
 	addRerenderRect(rx, ry, rwidth, rheight);
 }
 
-void PageView::addRerenderRect(double x, double y, double width, double height)
+void XojPageView::addRerenderRect(double x, double y, double width, double height)
 {
-	XOJ_CHECK_TYPE(PageView);
+	XOJ_CHECK_TYPE(XojPageView);
 
 	if (this->rerenderComplete)
 	{
@@ -751,9 +747,9 @@ void PageView::addRerenderRect(double x, double y, double width, double height)
 	this->xournal->getControl()->getScheduler()->addRerenderPage(this);
 }
 
-void PageView::setSelected(bool selected)
+void XojPageView::setSelected(bool selected)
 {
-	XOJ_CHECK_TYPE(PageView);
+	XOJ_CHECK_TYPE(XojPageView);
 
 	this->selected = selected;
 
@@ -764,9 +760,9 @@ void PageView::setSelected(bool selected)
 	}
 }
 
-bool PageView::cut()
+bool XojPageView::cut()
 {
-	XOJ_CHECK_TYPE(PageView);
+	XOJ_CHECK_TYPE(XojPageView);
 
 	if (this->textEditor)
 	{
@@ -776,9 +772,9 @@ bool PageView::cut()
 	return false;
 }
 
-bool PageView::copy()
+bool XojPageView::copy()
 {
-	XOJ_CHECK_TYPE(PageView);
+	XOJ_CHECK_TYPE(XojPageView);
 
 	if (this->textEditor)
 	{
@@ -788,9 +784,9 @@ bool PageView::copy()
 	return false;
 }
 
-bool PageView::paste()
+bool XojPageView::paste()
 {
-	XOJ_CHECK_TYPE(PageView);
+	XOJ_CHECK_TYPE(XojPageView);
 
 	if (this->textEditor)
 	{
@@ -800,9 +796,9 @@ bool PageView::paste()
 	return false;
 }
 
-bool PageView::actionDelete()
+bool XojPageView::actionDelete()
 {
-	XOJ_CHECK_TYPE(PageView);
+	XOJ_CHECK_TYPE(XojPageView);
 
 	if (this->textEditor)
 	{
@@ -812,9 +808,9 @@ bool PageView::actionDelete()
 	return false;
 }
 
-bool PageView::paintPage(cairo_t* cr, GdkRectangle* rect)
+bool XojPageView::paintPage(cairo_t* cr, GdkRectangle* rect)
 {
-	XOJ_CHECK_TYPE(PageView);
+	XOJ_CHECK_TYPE(XojPageView);
 
 	static const char* txtLoading = _C("Loading...");
 
@@ -895,29 +891,36 @@ bool PageView::paintPage(cairo_t* cr, GdkRectangle* rect)
 		this->verticalSpace->paint(cr, rect, zoom);
 	}
 
-	cairo_scale(cr, zoom, zoom);
 
 	if (this->textEditor)
 	{
+		cairo_scale(cr, zoom, zoom);
 		this->textEditor->paint(cr, rect, zoom);
 	}
 	if (this->selection)
 	{
+		cairo_scale(cr, zoom, zoom);
 		this->selection->paint(cr, rect, zoom);
 	}
 
 	if (this->search)
 	{
+		cairo_scale(cr, zoom, zoom);
 		this->search->paint(cr, rect, zoom, getSelectionColor());
 	}
-	this->inputHandler->draw(cr, zoom);
+
+	if(this->inputHandler)
+	{
+		this->inputHandler->draw(cr);
+	}
+
 	g_mutex_unlock(&this->drawingMutex);
 	return true;
 }
 
-bool PageView::containsY(int y)
+bool XojPageView::containsY(int y)
 {
-	XOJ_CHECK_TYPE(PageView);
+	XOJ_CHECK_TYPE(XojPageView);
 
 	return (y >= this->getY() && y <= (this->getY() + this->getDisplayHeight()));
 }
@@ -926,16 +929,16 @@ bool PageView::containsY(int y)
  * GETTER / SETTER
  */
 
-bool PageView::isSelected()
+bool XojPageView::isSelected()
 {
-	XOJ_CHECK_TYPE(PageView);
+	XOJ_CHECK_TYPE(XojPageView);
 
 	return selected;
 }
 
-int PageView::getBufferPixels()
+int XojPageView::getBufferPixels()
 {
-	XOJ_CHECK_TYPE(PageView);
+	XOJ_CHECK_TYPE(XojPageView);
 
 	if (crBuffer)
 	{
@@ -944,79 +947,100 @@ int PageView::getBufferPixels()
 	return 0;
 }
 
-GdkColor PageView::getSelectionColor()
+GtkColorWrapper XojPageView::getSelectionColor()
 {
-	XOJ_CHECK_TYPE(PageView);
+	XOJ_CHECK_TYPE(XojPageView);
+	GtkWidget* widget = getXournal()->getWidget();
 
-	return this->xournal->getWidget()->style->base[GTK_STATE_SELECTED];
+	GtkStyleContext *context = gtk_widget_get_style_context(widget);
+
+	gtk_style_context_save(context);
+	gtk_style_context_add_class(context, GTK_STYLE_CLASS_RUBBERBAND);
+
+	GdkRGBA col;
+	gtk_style_context_get_border_color(context,
+                                     gtk_widget_get_state_flags(widget),
+                                     &col);
+
+	// TODO: The correct border color is not sufficient,
+	//       we should also get the actual color and the GtkBorder
+	//       to draw the selection correctly
+
+	/*
+	gtk_style_context_get_border (context, state,
+	                              &border);
+	*/
+
+	gtk_style_context_restore(context);
+	return col;
 }
 
-TextEditor* PageView::getTextEditor()
+TextEditor* XojPageView::getTextEditor()
 {
-	XOJ_CHECK_TYPE(PageView);
+	XOJ_CHECK_TYPE(XojPageView);
 
 	return textEditor;
 }
 
-int PageView::getX()
+int XojPageView::getX() const
 {
-	XOJ_CHECK_TYPE(PageView);
+	XOJ_CHECK_TYPE(XojPageView);
 
 	return this->layout.getLayoutAbsoluteX();
 }
 
-int PageView::getY()
+int XojPageView::getY() const
 {
-	XOJ_CHECK_TYPE(PageView);
+	XOJ_CHECK_TYPE(XojPageView);
 
 	return this->layout.getLayoutAbsoluteY();
 }
 
-PageRef PageView::getPage()
+PageRef XojPageView::getPage()
 {
-	XOJ_CHECK_TYPE(PageView);
+	XOJ_CHECK_TYPE(XojPageView);
 
 	return page;
 }
 
-XournalView* PageView::getXournal()
+XournalView* XojPageView::getXournal()
 {
-	XOJ_CHECK_TYPE(PageView);
+	XOJ_CHECK_TYPE(XojPageView);
 
 	return this->xournal;
 }
 
-double PageView::getHeight()
+double XojPageView::getHeight() const
 {
-	XOJ_CHECK_TYPE(PageView);
+	XOJ_CHECK_TYPE(XojPageView);
 
 	return this->page->getHeight();
 }
 
-double PageView::getWidth()
+double XojPageView::getWidth() const
 {
-	XOJ_CHECK_TYPE(PageView);
+	XOJ_CHECK_TYPE(XojPageView);
 
 	return this->page->getWidth();
 }
 
-int PageView::getDisplayWidth()
+int XojPageView::getDisplayWidth() const
 {
-	XOJ_CHECK_TYPE(PageView);
+	XOJ_CHECK_TYPE(XojPageView);
 
 	return this->page->getWidth() * this->xournal->getZoom();
 }
 
-int PageView::getDisplayHeight()
+int XojPageView::getDisplayHeight() const
 {
-	XOJ_CHECK_TYPE(PageView);
+	XOJ_CHECK_TYPE(XojPageView);
 
 	return this->page->getHeight() * this->xournal->getZoom();
 }
 
-TexImage* PageView::getSelectedTex()
+TexImage* XojPageView::getSelectedTex()
 {
-	XOJ_CHECK_TYPE(PageView);
+	XOJ_CHECK_TYPE(XojPageView);
 
 	EditSelection* theSelection = this->xournal->getSelection();
 	if (!theSelection)
@@ -1037,22 +1061,58 @@ TexImage* PageView::getSelectedTex()
 
 }
 
-void PageView::rectChanged(Rectangle& rect)
+Rectangle* XojPageView::getVisibleRect()
+{
+	Rectangle* rect = xournal->getVisibleRect(this);
+
+	if (!rect)
+	{
+		return NULL;
+	}
+
+	(*rect) *= xournal->getZoom();
+
+	(*rect) = rect->translated(-getX(), -getY());
+
+	return rect;
+}
+
+Rectangle XojPageView::getRect()
+{
+	return Rectangle(getX(), getY(), getDisplayWidth(), getDisplayHeight());
+}
+
+void XojPageView::rectChanged(Rectangle& rect)
 {
 	rerenderRect(rect.x, rect.y, rect.width, rect.height);
 }
 
-void PageView::rangeChanged(Range &range)
+void XojPageView::rangeChanged(Range &range)
 {
 	rerenderRange(range);
 }
 
-void PageView::pageChanged()
+void XojPageView::pageChanged()
 {
 	rerenderPage();
 }
 
-void PageView::elementChanged(Element* elem)
+void XojPageView::elementChanged(Element* elem)
 {
-	rerenderElement(elem);
+	if (this->inputHandler && elem == this->inputHandler->getStroke())
+	{
+		g_mutex_lock(&this->drawingMutex);
+
+		cairo_t* cr = cairo_create(this->crBuffer);
+
+		this->inputHandler->draw(cr);
+
+		cairo_destroy(cr);
+
+		g_mutex_unlock(&this->drawingMutex);
+	}
+	else
+	{
+		rerenderElement(elem);
+	}
 }

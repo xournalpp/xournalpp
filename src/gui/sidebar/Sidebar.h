@@ -13,6 +13,7 @@
 
 #include "model/DocumentChangeType.h"
 #include "model/DocumentListener.h"
+#include "gui/sidebar/previews/base/SidebarToolbar.h"
 
 #include <XournalType.h>
 
@@ -91,6 +92,8 @@ private:
 
 	Control* control;
 
+	GladeGui* gui;
+
 	/**
 	 * The sidebar pages
 	 */
@@ -115,6 +118,11 @@ private:
 	 * The sidebar widget
 	 */
 	GtkWidget* sidebar;
+
+	/**
+	 * Sidebar toolbar
+	 */
+	SidebarToolbar toolbar;
 };
 
 class SidebarPageButton

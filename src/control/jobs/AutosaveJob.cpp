@@ -29,7 +29,7 @@ void AutosaveJob::afterRun()
 	gtk_widget_destroy(dialog);
 }
 
-void AutosaveJob::run()
+void AutosaveJob::run(bool noThreads)
 {
 	XOJ_CHECK_TYPE(AutosaveJob);
 
@@ -52,7 +52,7 @@ void AutosaveJob::run()
 	{
 		string file = filename.filename().string();
 		filename.remove_filename();
-		filename /= CONCAT(".", file);
+		filename /= std::string(".") + file;
 		filename.replace_extension(".autosave.xoj");
 	}
 

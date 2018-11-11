@@ -25,7 +25,7 @@ class Document;
 class EditSelection;
 class Layout;
 class PagePositionHandler;
-class PageView;
+class XojPageView;
 class PdfCache;
 class Rectangle;
 class RepaintHandler;
@@ -40,18 +40,17 @@ public:
 public:
 	void zoomIn();
 	void zoomOut();
+	void setZoom(gdouble scale);
 
 	bool paint(GtkWidget* widget, GdkEventExpose* event);
 
-	void requestPage(PageView* page);
+	void requestPage(XojPageView* page);
 
 	void layoutPages();
 
 	void scrollTo(size_t pageNo, double y);
 
 	size_t getCurrentPage();
-
-	void updateXEvents();
 
 	void clearSelection();
 
@@ -61,7 +60,7 @@ public:
 
 	void forceUpdatePagenumbers();
 
-	PageView* getViewFor(size_t pageNr);
+	XojPageView* getViewFor(size_t pageNr);
 
 	bool searchTextOnPage(string text, size_t p, int* occures, double* top);
 
@@ -73,14 +72,14 @@ public:
 
 	bool actionDelete();
 
-	void endTextAllPages(PageView* except = NULL);
+	void endTextAllPages(XojPageView* except = NULL);
 
 	void resetShapeRecognizer();
 
 	int getDisplayWidth() const;
 	int getDisplayHeight() const;
 
-	bool isPageVisible(int page, int* visibleHeight);
+	bool isPageVisible(size_t page, int* visibleHeight);
 
 	void ensureRectIsVisible(int x, int y, int width, int heigth);
 
@@ -89,8 +88,10 @@ public:
 	void deleteSelection(EditSelection* sel = NULL);
 	void repaintSelection(bool evenWithoutSelection = false);
 
+	void setEventCompression(gboolean enable);
+
 	TextEditor* getTextEditor();
-	ArrayIterator<PageView*> pageViewIterator();
+	ArrayIterator<XojPageView*> pageViewIterator();
 	Control* getControl();
 	double getZoom();
 	Document* getDocument();
@@ -100,6 +101,10 @@ public:
 	GtkWidget* getWidget();
 	Cursor* getCursor();
 
+	Rectangle* getVisibleRect(int page);
+	Rectangle* getVisibleRect(XojPageView* redrawable);
+
+	GtkContainer* getParent();
 public:
 	//ZoomListener interface
 	void zoomChanged(double lastZoom);
@@ -117,6 +122,14 @@ public:
 	bool onKeyPressEvent(GdkEventKey* event);
 	bool onKeyReleaseEvent(GdkEventKey* event);
 
+	// TODO Private!, Naming conventions!
+	bool zoom_gesture_active;
+	static void onRealized(GtkWidget* widget, XournalView* view);
+
+	static void zoom_gesture_begin_cb(GtkGesture* gesture,GdkEventSequence* sequence,XournalView* view);
+	static void zoom_gesture_end_cb(GtkGesture* gesture,GdkEventSequence* sequence,XournalView* view);
+	static void zoom_gesture_scale_changed_cb(GtkGestureZoom* gesture,gdouble scale,XournalView* view);
+
 private:
 
 	void fireZoomChanged();
@@ -132,13 +145,22 @@ private:
 private:
 	XOJ_TYPE_ATTRIB;
 
+	// Gestures
+	GtkGesture* zoom_gesture;
+	gdouble zoom_gesture_begin;
+	Rectangle visRect_gesture_begin;
+	//Problems with pinch to zoom:
+	//-keep view centered between pinching fingers
+	//-gtk_gesture_is_recognized not working (always false in XournalWidget.cpp code)
+
 	GtkWidget* widget;
 	double margin;
 
-	PageView** viewPages;
+	XojPageView** viewPages;
 	size_t viewPagesLen;
 
 	Control* control;
+	GtkContainer* parent;
 
 	size_t currentPage;
 	size_t lastSelectedPage;

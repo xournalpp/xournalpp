@@ -9,7 +9,7 @@
 
 #include <i18n.h>
 
-ImageHandler::ImageHandler(Control* control, PageView* view)
+ImageHandler::ImageHandler(Control* control, XojPageView* view)
 {
 	XOJ_INIT_TYPE(ImageHandler);
 

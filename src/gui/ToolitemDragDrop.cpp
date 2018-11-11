@@ -2,6 +2,8 @@
 
 #include "dialog/toolbarCustomize/ToolbarAdapter.h"
 #include "dialog/toolbarCustomize/ToolbarDragDropHelper.h"
+#include "dialog/toolbarCustomize/ToolbarDragDropHelper.h"
+#include "toolbarMenubar/ToolbarUtil.h"
 
 #include <string.h>
 
@@ -57,20 +59,13 @@ void ToolitemDragDrop::attachMetadataColor(GtkWidget* w, int id, int color, Abst
 
 GtkWidget* ToolitemDragDrop::getIcon(ToolItemDragDropData* data)
 {
-	if (data->type == TOOL_ITEM_ITEM || (data->type == TOOL_ITEM_COLOR && data->item != NULL))
+	if (data->type == TOOL_ITEM_ITEM || data->type == TOOL_ITEM_COLOR)
 	{
 		return data->item->getNewToolIcon();
 	}
-	else if (data->type == TOOL_ITEM_COLOR)
-	{
-		GdkPixbuf * pixbuf = ToolbarDragDropHelper::getColorImage(data->color);
-		GtkWidget * w = gtk_image_new_from_pixbuf(pixbuf);
-		g_object_unref(pixbuf);
-		return w;
-	}
 	else if (data->type == TOOL_ITEM_SEPARATOR)
 	{
-		return Util::newSepeartorImage();
+		return ToolbarUtil::newSepeartorImage();
 	}
 
 	g_warning("ToolitemDragDrop::getIcon unhandled type: %i\n", data->type);

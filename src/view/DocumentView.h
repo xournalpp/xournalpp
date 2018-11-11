@@ -44,8 +44,10 @@ public:
 
 
 
-	void drawStroke(cairo_t* cr, Stroke* s, int startPoint = 0, double scaleFactor = 1);
+	void drawStroke(cairo_t* cr, Stroke* s, int startPoint = 0, double scaleFactor = 1, bool changeSource = true);
 	void drawEraseableStroke(cairo_t* cr, Stroke* s);
+
+	static void applyColor(cairo_t* cr, Stroke* s);
 	static void applyColor(cairo_t* cr, int c, int alpha = 255);
 	static void applyColor(cairo_t* cr, Element* e, int alpha = 255);
 

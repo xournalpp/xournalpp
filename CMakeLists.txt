@@ -1,7 +1,7 @@
 cmake_minimum_required (VERSION 2.8.8)
 
 project ("Xournal++" CXX C)
-set (PROJECT_VERSION "1.0.1")
+set (PROJECT_VERSION "1.0.2")
 set (PROJECT_PACKAGE "xournalpp")
 
 set (PROJECT_STRING "${PROJECT_NAME} ${PROJECT_VERSION}")
@@ -81,9 +81,21 @@ else (BUILD_BOOST)
 endif (BUILD_BOOST)
 add_includes_ldflags ("${Boost_LIBRARIES}" "${Boost_INCLUDE_DIRS}")
 
-# GTK+/Gnome
-pkg_check_modules (Gnome REQUIRED "gtk+-2.0 >= 2.18.3" "libglade-2.0 >= 2.6.4" "glib-2.0 >= 2.32.0" "gthread-2.0 >= 2.4.0")
-add_includes_ldflags ("${Gnome_LDFLAGS}" "${Gnome_INCLUDE_DIRS}")
+# GTK+
+pkg_check_modules (GTK REQUIRED "gtk+-3.0 >= 3.18.9")
+add_includes_ldflags ("${GTK_LDFLAGS}" "${GTK_INCLUDE_DIRS}")
+
+# GLIB
+pkg_check_modules (Glib REQUIRED "glib-2.0 >= 2.32.0")
+add_includes_ldflags ("${Glib_LDFLAGS}" "${Glib_INCLUDE_DIRS}")
+
+# GThread
+pkg_check_modules (GThread REQUIRED "gthread-2.0 >= 2.4.0")
+add_includes_ldflags ("${GThread_LDFLAGS}" "${GThread_INCLUDE_DIRS}")
+
+# LibXML
+pkg_check_modules (Libxml REQUIRED "libxml-2.0 >= 2.0.0")
+add_includes_ldflags ("${Libxml_LDFLAGS}" "${Libxml_INCLUDE_DIRS}")
 
 # Poppler
 option (BUILD_POPPLER "Build the most recent version of Poppler" OFF)

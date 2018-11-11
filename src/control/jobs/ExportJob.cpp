@@ -14,32 +14,16 @@
 #include <cairo-ps.h>
 #include <cairo-svg.h>
 
-ExportJob::ExportJob(Control* control, PageRangeVector selected, ExportFormtType type, int dpi, path filepath) :
-		BlockingJob(control, _("Export"))
+ExportJob::ExportJob(Control* control, PageRangeVector selected, ExportFormtType type, int dpi, string filepath)
+ : BlockingJob(control, _("Export")),
+   selected(selected),
+   surface(NULL),
+   cr(NULL),
+   type(type),
+   dpi(dpi),
+   filepath(filepath)
 {
 	XOJ_INIT_TYPE(ExportJob);
-
-	this->selected = selected;
-
-	this->surface = NULL;
-	this->cr = NULL;
-	this->type = type;
-	this->dpi = dpi;
-
-	this->filepath = filepath;
-
-	string filename = filepath.filename().string();
-	string::size_type index = filename.find_last_of(".");
-	if (index == 0 || index == string::npos)
-	{
-		front = filename;
-	}
-	else
-	{
-		front = filename.substr(0, index);
-		back = filename.substr(index + 1);
-	}
-
 }
 
 ExportJob::~ExportJob()
@@ -55,25 +39,35 @@ ExportJob::~ExportJob()
 	XOJ_RELEASE_TYPE(ExportJob);
 }
 
+
+/**
+ * Get a filename with a numer, e.g. .../export-1.png, if the no is -1, return .../export.png
+ */
+string ExportJob::getFilenameWithNumber(int no)
+{
+	if (no == -1)
+	{
+		// No number to add
+		return filepath;
+	}
+
+	size_t dotPos = filepath.find_last_of(".");
+	if (dotPos == string::npos)
+	{
+		// No file extension, add number
+		return filepath + "-" + std::to_string(no);
+	}
+
+	return filepath.substr(0, dotPos) + "-" + std::to_string(no) + filepath.substr(dotPos);
+}
+
 bool ExportJob::createSurface(int id, double width, double height)
 {
 	XOJ_CHECK_TYPE(ExportJob);
 
 	if (this->type == EXPORT_FORMAT_EPS)
 	{
-		path filepath;
-		if (id == -1)
-		{
-			filepath = this->filepath.parent_path();
-			filepath /= this->front;
-		}
-		else
-		{
-			filepath = this->filepath;
-			filepath += std::to_string(id);
-		}
-		filepath += '.' + this->back;
-
+		string filepath = getFilenameWithNumber(id);
 		this->surface = cairo_ps_surface_create(filepath.c_str(), width, height);
 
 		cairo_ps_surface_set_eps(this->surface, true);
@@ -91,14 +85,7 @@ bool ExportJob::createSurface(int id, double width, double height)
 	}
 	else if (this->type == EXPORT_FORMAT_SVG)
 	{
-		path filepath = this->filepath.parent_path();
-		filepath /= this->front;
-		if (id != -1)
-		{
-			filepath += std::to_string(id);
-		}
-		filepath += CONCAT('.', this->back);
-
+		string filepath = getFilenameWithNumber(id);
 		this->surface = cairo_svg_surface_create(filepath.c_str(), width, height);
 
 		this->cr = cairo_create(this->surface);
@@ -120,11 +107,7 @@ bool ExportJob::freeSurface(int id)
 
 	if (this->type == EXPORT_FORMAT_PNG)
 	{
-		path filepath = this->filepath;
-		filepath /= this->front;
-		if (id != -1) filepath += std::to_string(id);
-		filepath += CONCAT('.', this->back);
-
+		string filepath = getFilenameWithNumber(id);
 		cairo_status_t status = cairo_surface_write_to_png(surface, filepath.c_str());
 		cairo_surface_destroy(surface);
 
@@ -141,7 +124,7 @@ bool ExportJob::freeSurface(int id)
 	return true;
 }
 
-void ExportJob::run()
+void ExportJob::run(bool noThreads)
 {
 	XOJ_CHECK_TYPE(ExportJob);
 

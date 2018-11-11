@@ -5,10 +5,9 @@
 #include <config.h>
 #include <i18n.h>
 
-FormatDialog::FormatDialog(GladeSearchpath* gladeSearchPath, Settings* settings, double width, double heigth) :
-		GladeGui(gladeSearchPath, "pagesize.glade", "pagesizeDialog")
+FormatDialog::FormatDialog(GladeSearchpath* gladeSearchPath, Settings* settings, double width, double heigth)
+ : GladeGui(gladeSearchPath, "pagesize.glade", "pagesizeDialog")
 {
-
 	XOJ_INIT_TYPE(FormatDialog);
 
 	this->orientation = ORIENTATION_NOT_DEFINED;
@@ -51,7 +50,7 @@ FormatDialog::FormatDialog(GladeSearchpath* gladeSearchPath, Settings* settings,
 
 	for (int i = 0; i < XOJ_UNIT_COUNT; i++)
 	{
-		gtk_combo_box_append_text(GTK_COMBO_BOX(cbUnit), XOJ_UNITS[i].name);
+		gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(cbUnit), XOJ_UNITS[i].name);
 	}
 	gtk_combo_box_set_active(GTK_COMBO_BOX(cbUnit), this->selectedScale);
 

@@ -9,6 +9,7 @@ cache:
 - ccache
 
 os: linux
+dist: xenial
 
 sudo: false
 
@@ -26,14 +27,12 @@ addons:
     - libcppunit-dev
     - dvipng
     - texlive
-#    - overlay-scrollbar-gtk2 
     - liblcms2-dev
     - libopenjpeg-dev
     - libjpeg-dev
     - fontconfig
+    - libgtk-3-dev
     - librsvg2-dev
-    - glade-gtk2
-    - libglade2-dev
     - libpoppler-dev
     - libpoppler-cpp-dev
     - libpoppler-glib-dev

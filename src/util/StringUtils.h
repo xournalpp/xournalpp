@@ -24,8 +24,6 @@ using std::string;
 #include <vector>
 #include <utility>
 
-#define CONCAT StringUtils::concat
-
 typedef std::pair<char, string> replace_pair;
 
 class StringUtils
@@ -94,15 +92,6 @@ private:
 		addToString(str, a_args...);
 	}
 	
-public:
-	template<typename... Args>
-	static string concat(Args... a_args)
-	{
-		string s("");
-		addToString(s, a_args...);
-		return s;
-	}
-
 public:
 	static void replace_all_chars(string& input, const std::vector<replace_pair> replaces);
 };

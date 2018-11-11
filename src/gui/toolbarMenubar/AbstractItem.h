@@ -60,4 +60,9 @@ protected:
 private:
 	gulong menuSignalHandler;
 	GtkWidget* menuitem;
+
+	/**
+	 * Keep the state for toggle / radio menu handling
+	 */
+	bool itemActive;
 };

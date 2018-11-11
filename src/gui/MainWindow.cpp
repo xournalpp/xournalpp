@@ -1,6 +1,7 @@
 #include "MainWindow.h"
 
 #include "Layout.h"
+#include "MainWindowToolbarMenu.h"
 #include "ToolitemDragDrop.h"
 #include "XournalView.h"
 
@@ -18,11 +19,15 @@
 #include <config-features.h>
 #include <i18n.h>
 
-#include <gdk/gdkkeysyms.h>
+#include <boost/filesystem.hpp>
+#include <boost/filesystem/path.hpp>
+
+#include <gdk/gdk.h>
 
 #include <iostream>
 using std::cout;
 using std::endl;
+namespace bf = boost::filesystem;
 
 
 MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control) :
@@ -32,9 +37,9 @@ MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control) :
 
 	this->control = control;
 	this->toolbarIntialized = false;
-	this->toolbarGroup = NULL;
 	this->selectedToolbar = NULL;
 	this->toolbarWidgets = new GtkWidget*[TOOLBAR_DEFINITIONS_LEN];
+	this->toolbarSelectMenu = new MainWindowToolbarMenu(this);
 
 	for (int i = 0; i < TOOLBAR_DEFINITIONS_LEN; i++)
 	{
@@ -50,18 +55,9 @@ MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control) :
 	gtk_widget_destroy(get("menuEditTex"));
 #endif
 
-	GtkWidget* tableXournal = get("tableXournal");
+	GtkWidget* vpXournal = get("vpXournal");
 
-	this->xournal = new XournalView(tableXournal, control);
-
-	ScrollbarHideType type = control->getSettings()->getScrollbarHideType();
-
-	if (type == SCROLLBAR_HIDE_NONE || type == SCROLLBAR_HIDE_VERTICAL)
-	{
-		Layout* layout = gtk_xournal_get_layout(this->xournal->getWidget());
-		gtk_table_attach(GTK_TABLE(tableXournal), layout->getScrollbarHorizontal(), 1, 2, 1, 2,
-						 (GtkAttachOptions) (GTK_EXPAND | GTK_FILL), GTK_FILL, 0, 0);
-	}
+	this->xournal = new XournalView(vpXournal, control);
 
 	setSidebarVisible(control->getSettings()->isSidebarVisible());
 
@@ -77,7 +73,7 @@ MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control) :
 	this->toolbar = new ToolMenuHandler(this->control, this->control->getZoomControl(), this,
 										this->control->getToolHandler(), GTK_WINDOW(getWindow()));
 
-	char* file = gladeSearchPath->findFile(NULL, "toolbar.ini");
+	string file = gladeSearchPath->findFile("", "toolbar.ini");
 
 	ToolbarModel* tbModel = this->toolbar->getModel();
 
@@ -94,10 +90,8 @@ MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control) :
 		gtk_widget_destroy(dlg);
 	}
 
-	g_free(file);
-
-	file = g_build_filename(g_get_home_dir(), G_DIR_SEPARATOR_S, CONFIG_DIR, G_DIR_SEPARATOR_S, TOOLBAR_CONFIG, NULL);
-	if (g_file_test(file, G_FILE_TEST_EXISTS))
+	file = string(g_get_home_dir()) + G_DIR_SEPARATOR_S + CONFIG_DIR + G_DIR_SEPARATOR_S + TOOLBAR_CONFIG;
+	if (bf::exists(bf::path(file)))
 	{
 		if (!tbModel->parse(file, false))
 		{
@@ -112,9 +106,8 @@ MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control) :
 			gtk_widget_destroy(dlg);
 		}
 	}
-	g_free(file);
 
-	createToolbarAndMenu(true);
+	createToolbarAndMenu();
 
 	GtkWidget* menuViewSidebarVisible = get("menuViewSidebarVisible");
 	g_signal_connect(menuViewSidebarVisible, "toggled", (GCallback) viewShowSidebar, this);
@@ -144,29 +137,9 @@ MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control) :
 	gtk_drag_dest_add_text_targets(this->window);
 }
 
-class MenuSelectToolbarData
-{
-public:
-	MenuSelectToolbarData(MainWindow* win, GtkWidget* item, ToolbarData* d)
-	{
-		this->win = win;
-		this->item = item;
-		this->d = d;
-	}
-
-	MainWindow* win;
-	GtkWidget* item;
-	ToolbarData* d;
-};
-
 MainWindow::~MainWindow()
 {
 	XOJ_CHECK_TYPE(MainWindow);
-
-	for (MenuSelectToolbarData* data : this->toolbarMenuData)
-	{
-		delete data;
-	}
 
 	for (int i = 0; i < TOOLBAR_DEFINITIONS_LEN; i++)
 	{
@@ -175,6 +148,9 @@ MainWindow::~MainWindow()
 
 	delete[] this->toolbarWidgets;
 	this->toolbarWidgets = NULL;
+
+	delete this->toolbarSelectMenu;
+	this->toolbarSelectMenu = NULL;
 
 	delete this->xournal;
 	this->xournal = NULL;
@@ -332,37 +308,34 @@ void MainWindow::updateScrollbarSidebarPosition()
 	XOJ_CHECK_TYPE(MainWindow);
 
 	GtkWidget* panelMainContents = get("panelMainContents");
-	GtkWidget* sidebarContents = get("sidebarContents");
-	GtkWidget* tableXournal = get("tableXournal");
+	GtkWidget* sidebar = get("sidebar");
+	GtkWidget* winXournal = get("winXournal");
+	GtkScrolledWindow* scrolledWindow = GTK_SCROLLED_WINDOW(winXournal);
 
 	bool scrollbarOnLeft = control->getSettings()->isScrollbarOnLeft();
 
-	Layout* layout = this->getLayout();
+	ScrollbarHideType type =
+	    this->getControl()->getSettings()->getScrollbarHideType();
 
-	GtkWidget* v = layout->getScrollbarVertical();
-
-	if (gtk_widget_get_parent(v) != NULL)
+	if (scrollbarOnLeft)
 	{
-		gtk_container_remove(GTK_CONTAINER(tableXournal), v);
+		gtk_scrolled_window_set_placement(scrolledWindow, GTK_CORNER_TOP_RIGHT);
+	}
+	else
+	{
+		gtk_scrolled_window_set_placement(scrolledWindow, GTK_CORNER_TOP_LEFT);
 	}
 
-	ScrollbarHideType type = this->getControl()->getSettings()->getScrollbarHideType();
+	gtk_widget_set_visible(gtk_scrolled_window_get_hscrollbar(scrolledWindow),
+	                       !(type & SCROLLBAR_HIDE_HORIZONTAL));
 
-	if (type == SCROLLBAR_HIDE_NONE || type == SCROLLBAR_HIDE_HORIZONTAL)
-	{
-		if (scrollbarOnLeft)
-		{
-			gtk_table_attach(GTK_TABLE(tableXournal), v, 0, 1, 0, 1, (GtkAttachOptions) 0, GTK_FILL, 0, 0);
-		}
-		else
-		{
-			gtk_table_attach(GTK_TABLE(tableXournal), v, 2, 3, 0, 1, (GtkAttachOptions) 0, GTK_FILL, 0, 0);
-		}
-	}
+	gtk_widget_set_visible(gtk_scrolled_window_get_vscrollbar(scrolledWindow),
+	                       !(type & SCROLLBAR_HIDE_VERTICAL));
 
 	int divider = gtk_paned_get_position(GTK_PANED(panelMainContents));
 	bool sidebarRight = control->getSettings()->isSidebarOnRight();
-	if (sidebarRight == (gtk_paned_get_child2(GTK_PANED(panelMainContents)) == sidebarContents))
+	if (sidebarRight == (gtk_paned_get_child2(GTK_PANED(panelMainContents)) ==
+	                     sidebar))
 	{
 		// Already correct
 		return;
@@ -374,25 +347,24 @@ void MainWindow::updateScrollbarSidebarPosition()
 		divider = allocation.width - divider;
 	}
 
-	g_object_ref(sidebarContents);
-	g_object_ref(tableXournal);
+	g_object_ref(sidebar);
 
-	gtk_container_remove(GTK_CONTAINER(panelMainContents), sidebarContents);
-	gtk_container_remove(GTK_CONTAINER(panelMainContents), tableXournal);
+	gtk_container_remove(GTK_CONTAINER(panelMainContents), sidebar);
+	gtk_container_remove(GTK_CONTAINER(panelMainContents), winXournal);
 
 	if (sidebarRight)
 	{
-		gtk_paned_pack1(GTK_PANED(panelMainContents), tableXournal, true, true);
-		gtk_paned_pack2(GTK_PANED(panelMainContents), sidebarContents, false, true);
+		gtk_paned_pack1(GTK_PANED(panelMainContents), winXournal, TRUE, FALSE);
+		gtk_paned_pack2(GTK_PANED(panelMainContents), sidebar, FALSE, FALSE);
 	}
 	else
 	{
-		gtk_paned_pack1(GTK_PANED(panelMainContents), sidebarContents, false, true);
-		gtk_paned_pack2(GTK_PANED(panelMainContents), tableXournal, true, true);
+		gtk_paned_pack1(GTK_PANED(panelMainContents), sidebar, FALSE, FALSE);
+		gtk_paned_pack2(GTK_PANED(panelMainContents), winXournal, TRUE, FALSE);
 	}
 
-	g_object_unref(sidebarContents);
-	g_object_unref(tableXournal);
+	gtk_paned_set_position(GTK_PANED(panelMainContents), divider);
+	g_object_unref(sidebar);
 }
 
 void MainWindow::buttonCloseSidebarClicked(GtkButton* button, MainWindow* win)
@@ -414,7 +386,7 @@ bool MainWindow::onKeyPressCallback(GtkWidget* widget, GdkEventKey* event, MainW
 		//editing text - give that control
 		return false;
 	}
-	else if (event->keyval == GDK_Down)
+	else if (event->keyval == GDK_KEY_Down)
 	{
 		if (win->getControl()->getSettings()->isPresentationMode())
 		{
@@ -427,7 +399,7 @@ bool MainWindow::onKeyPressCallback(GtkWidget* widget, GdkEventKey* event, MainW
 			return true;
 		}
 	}
-	else if (event->keyval == GDK_Up)
+	else if (event->keyval == GDK_KEY_Up)
 	{
 		if (win->getControl()->getSettings()->isPresentationMode())
 		{
@@ -439,6 +411,11 @@ bool MainWindow::onKeyPressCallback(GtkWidget* widget, GdkEventKey* event, MainW
 			win->getLayout()->scrollRelativ(0, -30);
 			return true;
 		}
+	}
+	else if (event->keyval == GDK_KEY_Escape)
+	{
+		win->getControl()->getSearchBar()->showSearchBar(false);
+		return true;
 	}
 	else
 	{
@@ -458,23 +435,31 @@ void MainWindow::setSidebarVisible(bool visible)
 	XOJ_CHECK_TYPE(MainWindow);
 
 	Settings* settings = control->getSettings();
+	GtkWidget* sidebar = get("sidebar");
+	GtkWidget* panel = get("panelMainContents");
 
-	if (!visible && (control->getSidebar() != NULL))
-	{
-		control->getSidebar()->saveSize();
-	}
-
-	GtkWidget* sidebar = get("sidebarContents");
 	gtk_widget_set_visible(sidebar, visible);
 	settings->setSidebarVisible(visible);
 
-	if (visible)
+	if(!visible && (control->getSidebar() != NULL))
 	{
-		gtk_widget_set_size_request(sidebar, settings->getSidebarWidth(), 100);
+		saveSidebarSize();
+	}
+
+	if(visible)
+	{
+		gtk_paned_set_position(GTK_PANED(panel), settings->getSidebarWidth());
 	}
 
 	GtkWidget* w = get("menuViewSidebarVisible");
 	gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(w), visible);
+}
+
+void MainWindow::saveSidebarSize()
+{
+	GtkWidget* panel = get("panelMainContents");
+
+	this->control->getSettings()->setSidebarWidth(gtk_paned_get_position(GTK_PANED(panel)));
 }
 
 void MainWindow::setMaximized(bool maximized)
@@ -619,11 +604,7 @@ void MainWindow::setControlTmpDisabled(bool disabled)
 	XOJ_CHECK_TYPE(MainWindow);
 
 	toolbar->setTmpDisabled(disabled);
-
-	for (MenuSelectToolbarData* data : this->toolbarMenuData)
-	{
-		gtk_widget_set_sensitive(data->item, !disabled);
-	}
+	toolbarSelectMenu->setTmpDisabled(disabled);
 
 	GtkWidget* menuFileRecent = get("menuFileRecent");
 	gtk_widget_set_sensitive(menuFileRecent, !disabled);
@@ -633,124 +614,23 @@ void MainWindow::updateToolbarMenu()
 {
 	XOJ_CHECK_TYPE(MainWindow);
 
-	GtkContainer* menubar = GTK_CONTAINER(get("menuViewToolbar"));
-	g_return_if_fail(menubar != NULL);
-
-	for (GtkWidget* w : this->toolbarMenuitems)
-	{
-		gtk_container_remove(menubar, w);
-	}
-	this->toolbarMenuitems.clear();
-
-	this->freeToolMenu();
-
-	g_slist_free(this->toolbarGroup);
-	this->toolbarGroup = NULL;
-
-	createToolbarAndMenu(false);
+	createToolbarAndMenu();
 }
 
-static void container_remove_foreach(GtkWidget* widget, GtkContainer* container)
-{
-	gtk_container_remove(container, widget);
-}
-
-void MainWindow::freeToolMenu()
-{
-	XOJ_CHECK_TYPE(MainWindow);
-
-	for (MenuSelectToolbarData* data : this->toolbarMenuData)
-	{
-		delete data;
-	}
-	this->toolbarMenuData.clear();
-
-	GtkMenuShell* menubar = GTK_MENU_SHELL(get("menuViewToolbar"));
-	g_return_if_fail(menubar != NULL);
-
-	gtk_container_forall(GTK_CONTAINER(menubar), (GtkCallback) container_remove_foreach, GTK_CONTAINER(menubar));
-
-}
-
-void tbSelectMenuitemActivated(GtkMenuItem* menuitem, MenuSelectToolbarData* data)
-{
-	data->win->toolbarSelected(data->d);
-}
-
-void MainWindow::createToolbarAndMenu(bool initial)
+void MainWindow::createToolbarAndMenu()
 {
 	XOJ_CHECK_TYPE(MainWindow);
 
 	GtkMenuShell* menubar = GTK_MENU_SHELL(get("menuViewToolbar"));
 	g_return_if_fail(menubar != NULL);
 
-	GtkWidget* item = NULL;
-	GtkWidget* selectedItem = NULL;
-	ToolbarData* selectedData = NULL;
+	toolbarSelectMenu->updateToolbarMenu(menubar, control->getSettings(), toolbar);
 
-	Settings* settings = control->getSettings();
-	string selectedId = settings->getSelectedToolbar();
-
-	bool predefined = true;
-	int menuPos = 0;
-
-	for (ToolbarData* d : *this->toolbar->getModel()->getToolbars())
+	ToolbarData* td = toolbarSelectMenu->getSelectedToolbar();
+	if (td)
 	{
-		if (selectedData == NULL)
-		{
-			selectedData = d;
-			selectedItem = item;
-		}
-
-		item = gtk_radio_menu_item_new_with_label(this->toolbarGroup, d->getName().c_str());
-		this->toolbarGroup = gtk_radio_menu_item_get_group(GTK_RADIO_MENU_ITEM(item));
-
-		gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(item), false);
-
-		MenuSelectToolbarData* data = new MenuSelectToolbarData(this, item, d);
-
-		this->toolbarMenuData.push_back(data);
-
-		if (selectedId == d->getId())
-		{
-			selectedData = d;
-			selectedItem = item;
-		}
-
-		g_signal_connect(item, "activate", G_CALLBACK(tbSelectMenuitemActivated), data);
-
-		gtk_widget_show(item);
-
-		if (predefined && !d->isPredefined())
-		{
-			GtkWidget* separator = gtk_separator_menu_item_new();
-			gtk_widget_show(separator);
-			gtk_menu_shell_insert(menubar, separator, menuPos++);
-
-			predefined = false;
-			this->toolbarMenuitems.push_back(separator);
-		}
-
-		gtk_menu_shell_insert(menubar, item, menuPos++);
-
-		this->toolbarMenuitems.push_back(item);
-	}
-
-	if (selectedData)
-	{
-		gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(selectedItem), TRUE);
 		this->toolbarIntialized = true;
-		toolbarSelected(selectedData);
-	}
-
-	if (!initial)
-	{
-		GtkWidget* separator = gtk_separator_menu_item_new();
-		gtk_widget_show(separator);
-
-		gtk_menu_shell_insert(menubar, separator, menuPos++);
-		gtk_menu_shell_insert(menubar, get("menuViewToolbarManage"), menuPos++);
-		gtk_menu_shell_insert(menubar, get("menuViewToolbarCustomize"), menuPos++);
+		toolbarSelected(td);
 	}
 
 	this->control->getScheduler()->unblockRerenderZoom();
@@ -803,7 +683,7 @@ void MainWindow::updatePageNumbers(size_t page, size_t pagecount, size_t pdfpage
 	string pdfText;
 	if (pdfpage != size_t_npos)
 	{
-		pdfText = CONCAT(", ", FS(_F("PDF Page {1}") % (pdfpage + 1)));
+		pdfText = string(", ") + FS(_F("PDF Page {1}") % (pdfpage + 1));
 	}
 	toolbar->setPageText(FS(C_F("Page {pagenumber} \"of {pagecount}\"", " of {1}{2}") % pagecount % pdfText));
 
@@ -817,11 +697,13 @@ void MainWindow::updateLayerCombobox()
 	PageRef p = control->getCurrentPage();
 
 	int layer = 0;
+	int maxLayer = 0;
 
 	if (p)
 	{
 		layer = p->getSelectedLayerId();
-		toolbar->setLayerCount(p->getLayerCount(), layer);
+		maxLayer = p->getLayerCount();
+		toolbar->setLayerCount(maxLayer, layer);
 	}
 	else
 	{
@@ -829,6 +711,9 @@ void MainWindow::updateLayerCombobox()
 	}
 
 	control->fireEnableAction(ACTION_DELETE_LAYER, layer > 0);
+	control->fireEnableAction(ACTION_GOTO_NEXT_LAYER, layer < maxLayer);
+	control->fireEnableAction(ACTION_GOTO_PREVIOUS_LAYER, layer > 0);
+	control->fireEnableAction(ACTION_GOTO_TOP_LAYER, layer < maxLayer);
 }
 
 void MainWindow::setRecentMenu(GtkWidget* submenu)

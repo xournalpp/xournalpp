@@ -64,13 +64,21 @@ GtkToolItem* ToolPageSpinner::newItem()
 
 	GtkToolItem* it = gtk_tool_item_new();
 
-	GtkWidget* hbox = gtk_hbox_new(false, 1);
-	gtk_box_pack_start(GTK_BOX(hbox), gtk_label_new(_C("Page")), false, false, 7);
+	GtkWidget* hbox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 1);
 
-	gtk_box_pack_start(GTK_BOX(hbox), this->pageSpinner->getWidget(), false, false, 0);
+	GtkWidget* pageLabel = gtk_label_new(_C("Page"));
+	GtkWidget* spinner = this->pageSpinner->getWidget();
+
+	gtk_widget_set_valign(pageLabel, GTK_ALIGN_BASELINE);
+	gtk_box_pack_start(GTK_BOX(hbox), pageLabel, false, false, 7);
+
+	gtk_widget_set_valign(spinner, GTK_ALIGN_BASELINE);
+	gtk_box_pack_start(GTK_BOX(hbox), spinner, false, false,
+	                   0);
 
 	this->lbPageNo = gtk_label_new("");
-	gtk_box_pack_start(GTK_BOX(hbox), this->lbPageNo, false, false, 0);
+	gtk_widget_set_valign(this->lbPageNo, GTK_ALIGN_BASELINE);
+	gtk_box_pack_start(GTK_BOX(hbox), this->lbPageNo, false, false, 7);
 
 	gtk_container_add(GTK_CONTAINER(it), hbox);
 

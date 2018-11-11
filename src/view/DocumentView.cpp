@@ -42,6 +42,18 @@ DocumentView::~DocumentView()
 	XOJ_RELEASE_TYPE(DocumentView);
 }
 
+void DocumentView::applyColor(cairo_t* cr, Stroke* s)
+{
+	if (s->getToolType() == STROKE_TOOL_HIGHLIGHTER)
+	{
+		applyColor(cr, s, 120);
+	}
+	else
+	{
+		applyColor(cr, (Element*) s);
+	}
+}
+
 void DocumentView::applyColor(cairo_t* cr, Element* e, int alpha)
 {
 	applyColor(cr, e->getColor(), alpha);
@@ -65,7 +77,7 @@ void DocumentView::drawEraseableStroke(cairo_t* cr, Stroke* s)
 	e->draw(cr, this->lX, this->lY, this->width, this->height);
 }
 
-void DocumentView::drawStroke(cairo_t* cr, Stroke* s, int startPoint, double scaleFactor)
+void DocumentView::drawStroke(cairo_t* cr, Stroke* s, int startPoint, double scaleFactor, bool changeSource)
 {
 	XOJ_CHECK_TYPE(DocumentView);
 
@@ -79,17 +91,21 @@ void DocumentView::drawStroke(cairo_t* cr, Stroke* s, int startPoint, double sca
 	}
 
 	gdk_threads_enter();
-	if (s->getToolType() == STROKE_TOOL_HIGHLIGHTER)
+
+	if (changeSource)
 	{
-		cairo_set_operator(cr, CAIRO_OPERATOR_OVER);
-		// Set the color
-		applyColor(cr, s, 120);
-	}
-	else
-	{
-		cairo_set_operator(cr, CAIRO_OPERATOR_SOURCE);
-		// Set the color
-		applyColor(cr, s);
+		if (s->getToolType() == STROKE_TOOL_HIGHLIGHTER)
+		{
+			cairo_set_operator(cr, CAIRO_OPERATOR_OVER);
+			// Set the color
+			applyColor(cr, s, 120);
+		}
+		else
+		{
+			cairo_set_operator(cr, CAIRO_OPERATOR_SOURCE);
+			// Set the color
+			applyColor(cr, s);
+		}
 	}
 
 	cairo_set_line_join(cr, CAIRO_LINE_JOIN_ROUND);

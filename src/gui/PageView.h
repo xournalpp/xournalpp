@@ -33,11 +33,11 @@ class TextEditor;
 class VerticalToolHandler;
 class XournalView;
 
-class PageView : public Redrawable, public PageListener
+class XojPageView : public Redrawable, public PageListener
 {
 public:
-	PageView(XournalView* xournal, PageRef page);
-	virtual ~PageView();
+	XojPageView(XournalView* xournal, PageRef page);
+	virtual ~XojPageView();
 
 public:
 	void updatePageSize(double width, double height);
@@ -78,7 +78,7 @@ public:
 	bool containsPoint(int x, int y, bool local = false);
 	bool containsY(int y);
 
-	GdkColor getSelectionColor();
+	GtkColorWrapper getSelectionColor();
 	int getBufferPixels();
 
 	/**
@@ -100,35 +100,35 @@ public:
 	/**
 	 * Returns the width of this PageView
 	 */
-	double getWidth();
+	double getWidth() const;
 
 	/**
-	 * Returns the height of this PageView
+	 * Returns the height of this XojPageView
 	 */
-	double getHeight();
+	double getHeight() const;
 
 	/**
-	 * Returns the width of this PageView as displayed
+	 * Returns the width of this XojPageView as displayed
 	 * on the display taking into account the current zoom
 	 */
-	int getDisplayWidth();
+	int getDisplayWidth() const;
 	/**
-	 * Returns the height of this PageView as displayed
+	 * Returns the height of this XojPageView as displayed
 	 * on the display taking into account the current zoom
 	 */
-	int getDisplayHeight();
+	int getDisplayHeight() const;
 
 	/**
-	 * Returns the x coordinate of this PageView with
+	 * Returns the x coordinate of this XojPageView with
 	 * respect to the display
 	 */
-	int getX();
+	int getX() const;
 
 	/**
-	 * Returns the y coordinate of this PageView with
+	 * Returns the y coordinate of this XojPageView with
 	 * respect to the display
 	 */
-	int getY();
+	int getY() const;
 
 	/**
 	 * Maps a Rectangle from display coordinates to local
@@ -138,11 +138,19 @@ public:
 
 	TexImage* getSelectedTex();
 
+	Rectangle* getVisibleRect();
+	Rectangle getRect();
+
 public: // event handler
 	bool onButtonPressEvent(GtkWidget* widget, GdkEventButton* event);
 	bool onButtonReleaseEvent(GtkWidget* widget, GdkEventButton* event);
 	bool onMotionNotifyEvent(GtkWidget* widget, GdkEventMotion* event);
 	void translateEvent(GdkEvent* event, int xOffset, int yOffset);
+
+	/**
+	 * This method actually repaints the XojPageView, triggering
+	 * a rerender call if necessary
+	 */
 	bool paintPage(cairo_t* cr, GdkRectangle* rect);
 
 public: // listener
@@ -160,7 +168,9 @@ private:
 	void addRerenderRect(double x, double y, double width, double height);
 
 public:
-	// position in the layout
+	/**
+	 * position in the layout
+	 */
 	LayoutData layout;
 
 private:
@@ -182,7 +192,9 @@ private:
 	 */
 	TextEditor* textEditor;
 
-	//For keeping old text changes to undo!
+	/**
+	 * For keeping old text changes to undo!
+	 */
 	Text* oldtext;
 
 	bool selected;
@@ -191,9 +203,9 @@ private:
 
 	bool inEraser;
 
-	bool extendedWarningDisplayd;
-
-	// Vertical Space
+	/**
+	 * Vertical Space
+	 */
 	VerticalToolHandler* verticalSpace;
 
 	/**

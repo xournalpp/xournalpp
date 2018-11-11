@@ -25,15 +25,15 @@ void ScrollHandler::goToPreviousPage()
 	{
 		if (this->control->getSettings()->isPresentationMode())
 		{
-			PageView* view = this->control->getWindow()->getXournal()->getViewFor(
-					this->control->getWindow()->getXournal()->getCurrentPage() - 1);
+			XojPageView* view = this->control->getWindow()->getXournal()->getViewFor(this->control->getWindow()->getXournal()->getCurrentPage() - 1);
 			if (view)
 			{
 				double dHeight = view->getDisplayHeight();
-				double disHeight = this->control->getWindow()->getLayout()->getDisplayHeight();
-				double top = (dHeight - disHeight) / 2.0 + 7.5;
-				//the magic 7.5 is from XOURNAL_PADDING_BETWEEN/2
-				scrollToPage(this->control->getWindow()->getXournal()->getCurrentPage() - 1, 0);
+				double disHeight = 0;
+				double top = (dHeight - disHeight)/2.0 + 7.5;
+
+				// the magic 7.5 is from XOURNAL_PADDING_BETWEEN/2
+				scrollToPage(this->control->getWindow()->getXournal()->getCurrentPage() - 1, top);
 			}
 		}
 		else
@@ -51,16 +51,17 @@ void ScrollHandler::goToNextPage()
 	{
 		if (this->control->getSettings()->isPresentationMode())
 		{
-			PageView* view = this->control->getWindow()->getXournal()->getViewFor(
-					this->control->getWindow()->getXournal()->getCurrentPage() + 1);
+			XojPageView* view = this->control->getWindow()->getXournal()->getViewFor(this->control->getWindow()->getXournal()->getCurrentPage() + 1);
 			if (view)
 			{
 				double dHeight = view->getDisplayHeight();
-				double disHeight = this->control->getWindow()->getLayout()->getDisplayHeight();
-				//this gets reversed when we are going down if the page is smaller than the display height
-				double top = (-dHeight + disHeight) / 2.0 - 7.5;
-				//the magic 7.5 is from XOURNAL_PADDING_BETWEEN/2
-				scrollToPage(this->control->getWindow()->getXournal()->getCurrentPage() + 1, 0);
+				double disHeight = this->control->getWindow()->getLayout()->getLayoutHeight();
+
+				// this gets reversed when we are going down if the page is smaller than the display height
+				double top = (-dHeight + disHeight)/2.0 - 7.5;
+
+				// the magic 7.5 is from XOURNAL_PADDING_BETWEEN/2
+				scrollToPage(this->control->getWindow()->getXournal()->getCurrentPage() + 1, top);
 			}
 		}
 		else

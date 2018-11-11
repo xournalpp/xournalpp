@@ -18,7 +18,7 @@
 #include <Rectangle.h>
 #include <Util.h>
 
-#include <gdk/gdkkeysyms.h>
+#include <gdk/gdk.h>
 
 #include <math.h>
 
@@ -26,17 +26,20 @@ XournalView::XournalView(GtkWidget* parent, Control* control)
 {
 	XOJ_INIT_TYPE(XournalView);
 
+	this->parent = GTK_CONTAINER(parent);
+
 	this->control = control;
 	this->cache = new PdfCache(control->getSettings()->getPdfPageCacheSize());
 	registerListener(control);
 
-	this->widget = gtk_xournal_new(this);
-
-	// we need to refer widget here, because wo unref it somwere twice!?
+	this->widget = gtk_xournal_new(this, GTK_SCROLLABLE(parent));
+	// we need to refer widget here, because we unref it somewhere twice!?
 	g_object_ref(this->widget);
 
-	gtk_table_attach_defaults(GTK_TABLE(parent), this->widget, 1, 2, 0, 1);
+	gtk_container_add(GTK_CONTAINER(parent), this->widget);
 	gtk_widget_show(this->widget);
+
+	g_signal_connect(getWidget(), "realize", G_CALLBACK(onRealized), this);
 
 	this->repaintHandler = new RepaintHandler(this);
 	this->pagePosition = new PagePositionHandler();
@@ -55,7 +58,18 @@ XournalView::XournalView(GtkWidget* parent, Control* control)
 	gtk_widget_grab_focus(this->widget);
 
 	this->cleanupTimeout = g_timeout_add_seconds(5, (GSourceFunc) clearMemoryTimer, this);
-	g_signal_connect(this->widget, "size-allocate", G_CALLBACK(staticLayoutPages), this);
+	// pinch-to-zoom
+	this->zoom_gesture_active = false;
+
+
+	// use parent as the gestures widget and not this->widget as gesture gets
+	// buggy otherwise (scrolling interferes with gestures scale value)
+	this->zoom_gesture = gtk_gesture_zoom_new (parent);
+
+	gtk_event_controller_set_propagation_phase (GTK_EVENT_CONTROLLER (this->zoom_gesture), GTK_PHASE_CAPTURE);
+	g_signal_connect (this->zoom_gesture, "begin", G_CALLBACK (zoom_gesture_begin_cb), this);
+	g_signal_connect (this->zoom_gesture, "scale-changed", G_CALLBACK (zoom_gesture_scale_changed_cb), this);
+	g_signal_connect (this->zoom_gesture, "end", G_CALLBACK (zoom_gesture_end_cb), this);
 }
 
 XournalView::~XournalView()
@@ -80,12 +94,13 @@ XournalView::~XournalView()
 	delete this->pagePosition;
 	this->pagePosition = NULL;
 
+	gtk_widget_destroy(this->widget);
 	this->widget = NULL;
 
 	XOJ_RELEASE_TYPE(XournalView);
 }
 
-gint pageViewCmpSize(PageView* a, PageView* b)
+gint pageViewCmpSize(XojPageView* a, XojPageView* b)
 {
 	return a->getLastVisibleTime() - b->getLastVisibleTime();
 }
@@ -105,7 +120,7 @@ gboolean XournalView::clearMemoryTimer(XournalView* widget)
 
 	for (size_t i = 0; i < widget->viewPagesLen; i++)
 	{
-		PageView* v = widget->viewPages[i];
+		XojPageView* v = widget->viewPages[i];
 		if (v->getLastVisibleTime() > 0)
 		{
 			list = g_list_insert_sorted(list, v, (GCompareFunc) pageViewCmpSize);
@@ -125,7 +140,7 @@ gboolean XournalView::clearMemoryTimer(XournalView* widget)
 		}
 		else
 		{
-			PageView* v = (PageView*) l->data;
+			XojPageView* v = (XojPageView*) l->data;
 
 			if (pixel <= 0)
 			{
@@ -161,7 +176,7 @@ bool XournalView::onKeyPressEvent(GdkEventKey* event)
 	size_t p = getCurrentPage();
 	if (p != size_t_npos && p < this->viewPagesLen)
 	{
-		PageView* v = this->viewPages[p];
+		XojPageView* v = this->viewPages[p];
 		if (v->onKeyPressEvent(event))
 		{
 			return true;
@@ -169,7 +184,7 @@ bool XournalView::onKeyPressEvent(GdkEventKey* event)
 	}
 
 	// Esc leaves fullscreen mode
-	if (event->keyval == GDK_Escape || event->keyval == GDK_F11)
+	if (event->keyval == GDK_KEY_Escape || event->keyval == GDK_KEY_F11)
 	{
 		if (control->isFullscreen())
 		{
@@ -179,7 +194,7 @@ bool XournalView::onKeyPressEvent(GdkEventKey* event)
 	}
 
 	// F5 starts presentation modus
-	if (event->keyval == GDK_F5)
+	if (event->keyval == GDK_KEY_F5)
 	{
 		if (!control->isFullscreen())
 		{
@@ -194,16 +209,17 @@ bool XournalView::onKeyPressEvent(GdkEventKey* event)
 
 	if (state & GDK_SHIFT_MASK)
 	{
-		GtkAllocation alloc = { 0 };
+		GtkAllocation alloc =
+		{ 0 };
 		gtk_widget_get_allocation(gtk_widget_get_parent(this->widget), &alloc);
 		int windowHeight = alloc.height - scrollKeySize;
 
-		if (event->keyval == GDK_Page_Down)
+		if (event->keyval == GDK_KEY_Page_Down)
 		{
 			layout->scrollRelativ(0, windowHeight);
-			return true;
+			return false;
 		}
-		if (event->keyval == GDK_Page_Up)
+		if (event->keyval == GDK_KEY_Page_Up || event->keyval == GDK_KEY_space)
 		{
 			layout->scrollRelativ(0, -windowHeight);
 			return true;
@@ -211,20 +227,28 @@ bool XournalView::onKeyPressEvent(GdkEventKey* event)
 	}
 	else
 	{
-		if (event->keyval == GDK_Page_Down)
+		if (event->keyval == GDK_KEY_Page_Down)
 		{
 			control->getScrollHandler()->goToNextPage();
 			return true;
 		}
-		if (event->keyval == GDK_Page_Up)
+		if (event->keyval == GDK_KEY_Page_Up)
 		{
 			control->getScrollHandler()->goToPreviousPage();
 			return true;
 		}
 	}
 
+	if (event->keyval == GDK_KEY_space) {
+		GtkAllocation alloc = { 0 };
+		gtk_widget_get_allocation(gtk_widget_get_parent(this->widget), &alloc);
+		int windowHeight = alloc.height - scrollKeySize;
 
-	if (event->keyval == GDK_Up)
+		layout->scrollRelativ(0, windowHeight);
+		return true;
+	}
+
+	if (event->keyval == GDK_KEY_Up)
 	{
 		if (control->getSettings()->isPresentationMode())
 		{
@@ -238,7 +262,7 @@ bool XournalView::onKeyPressEvent(GdkEventKey* event)
 		}
 	}
 
-	if (event->keyval == GDK_Down)
+	if (event->keyval == GDK_KEY_Down)
 	{
 		if (control->getSettings()->isPresentationMode())
 		{
@@ -252,7 +276,7 @@ bool XournalView::onKeyPressEvent(GdkEventKey* event)
 		}
 	}
 
-	if (event->keyval == GDK_Left)
+	if (event->keyval == GDK_KEY_Left)
 	{
 		if (control->getSettings()->isPresentationMode())
 		{
@@ -263,7 +287,7 @@ bool XournalView::onKeyPressEvent(GdkEventKey* event)
 		return true;
 	}
 
-	if (event->keyval == GDK_Right)
+	if (event->keyval == GDK_KEY_Right)
 	{
 		if (control->getSettings()->isPresentationMode())
 		{
@@ -274,13 +298,13 @@ bool XournalView::onKeyPressEvent(GdkEventKey* event)
 		return true;
 	}
 
-	if (event->keyval == GDK_End)
+	if (event->keyval == GDK_KEY_End)
 	{
 		control->getScrollHandler()->goToLastPage();
 		return true;
 	}
 
-	if (event->keyval == GDK_Home)
+	if (event->keyval == GDK_KEY_Home)
 	{
 		control->getScrollHandler()->goToFirstPage();
 		return true;
@@ -303,7 +327,7 @@ bool XournalView::onKeyReleaseEvent(GdkEventKey* event)
 	size_t p = getCurrentPage();
 	if (p != size_t_npos && p < this->viewPagesLen)
 	{
-		PageView* v = this->viewPages[p];
+		XojPageView* v = this->viewPages[p];
 		if (v->onKeyReleaseEvent(event))
 		{
 			return true;
@@ -311,6 +335,46 @@ bool XournalView::onKeyReleaseEvent(GdkEventKey* event)
 	}
 
 	return false;
+}
+
+void XournalView::onRealized(GtkWidget* widget, XournalView* view)
+{
+	view->setEventCompression(view->getControl()->getSettings()->isEventCompression());
+}
+
+void XournalView::zoom_gesture_begin_cb(GtkGesture* gesture, GdkEventSequence* sequence, XournalView* view)
+{
+	Layout* layout = gtk_xournal_get_layout(view->widget);
+	//Save visible rectangle at beginning of gesture
+	view->visRect_gesture_begin = layout->getVisibleRect();
+
+	view->zoom_gesture_begin = view->getZoom();
+	view->zoom_gesture_active = true;
+
+	//get center of bounding box
+	ZoomControl* zoom = view->control->getZoomControl();
+	gtk_gesture_get_bounding_box_center(GTK_GESTURE(gesture), &zoom->zoom_center_x, &zoom->zoom_center_y);
+}
+
+void XournalView::zoom_gesture_end_cb(GtkGesture* gesture, GdkEventSequence* sequence, XournalView* view)
+{
+	ZoomControl* zoom = view->control->getZoomControl();
+	zoom->zoom_center_x = -1;
+	zoom->zoom_center_y = -1;
+	view->zoom_gesture_active = false;
+}
+
+void XournalView::zoom_gesture_scale_changed_cb(GtkGestureZoom* gesture, gdouble scale, XournalView* view)
+{
+	ZoomControl* zoom = view->control->getZoomControl();
+	view->setZoom(scale * view->zoom_gesture_begin);
+
+	//Alternative implementation: update bounding box center each time scale changes
+	//Not used at the moment as a single center set at the beginning of the gesture seems
+	//more robust
+	/*
+	gtk_gesture_get_bounding_box_center (GTK_GESTURE (gesture), &zoom->zoom_center_x, &zoom->zoom_center_y);
+	*/
 }
 
 // send the focus back to the appropriate widget
@@ -329,7 +393,7 @@ bool XournalView::searchTextOnPage(string text, size_t p, int* occures, double* 
 	{
 		return false;
 	}
-	PageView* v = this->viewPages[p];
+	XojPageView* v = this->viewPages[p];
 
 	return v->searchTextOnPage(text, occures, top);
 }
@@ -344,7 +408,7 @@ void XournalView::forceUpdatePagenumbers()
 	control->firePageSelected(p);
 }
 
-PageView* XournalView::getViewFor(size_t pageNr)
+XojPageView* XournalView::getViewFor(size_t pageNr)
 {
 	XOJ_CHECK_TYPE(XournalView);
 
@@ -369,7 +433,7 @@ void XournalView::pageSelected(size_t page)
 	path file = doc->getEvMetadataFilename();
 	doc->unlock();
 
-	control->getMetadataManager()->setInt(file, "page", page);
+	control->getMetadataManager()->storeMetadata(file.c_str(), page, getZoom());
 
 	if (this->lastSelectedPage != size_t_npos && this->lastSelectedPage < this->viewPagesLen)
 	{
@@ -382,7 +446,7 @@ void XournalView::pageSelected(size_t page)
 
 	if (page != size_t_npos && page < viewPagesLen)
 	{
-		PageView* vp = viewPages[page];
+		XojPageView* vp = viewPages[page];
 		vp->setSelected(true);
 		lastSelectedPage = page;
 		pdfPage = vp->getPage()->getPdfPageNr();
@@ -404,25 +468,25 @@ void XournalView::scrollTo(size_t pageNo, double yDocument)
 {
 	XOJ_CHECK_TYPE(XournalView);
 
-	if (pageNo == size_t_npos || pageNo >= this->viewPagesLen)
+	if (pageNo < 0 || pageNo >= this->viewPagesLen)
 	{
 		return;
 	}
 
-	PageView* v = this->viewPages[pageNo];
+	XojPageView* v = this->viewPages[pageNo];
 
 	Layout* layout = gtk_xournal_get_layout(this->widget);
 	layout->ensureRectIsVisible(v->layout.getLayoutAbsoluteX(), v->layout.getLayoutAbsoluteY() + yDocument,
 								v->getDisplayWidth(), v->getDisplayHeight());
 }
 
-void XournalView::endTextAllPages(PageView* except)
+void XournalView::endTextAllPages(XojPageView* except)
 {
 	XOJ_CHECK_TYPE(XournalView);
 
 	for (size_t i = 0; i < this->viewPagesLen; i++)
 	{
-		PageView* v = this->viewPages[i];
+		XojPageView* v = this->viewPages[i];
 		if (except != v)
 		{
 			v->endText();
@@ -473,9 +537,19 @@ Rectangle* XournalView::getVisibleRect(size_t page)
 	{
 		return NULL;
 	}
-	PageView* p = this->viewPages[page];
+	XojPageView* p = this->viewPages[page];
 
-	return gtk_xournal_get_visible_area(this->widget, p);
+	return getVisibleRect(p);
+}
+
+Rectangle* XournalView::getVisibleRect(XojPageView* redrawable)
+{
+	return gtk_xournal_get_visible_area(this->widget, redrawable);
+}
+
+GtkContainer* XournalView::getParent()
+{
+	return this->parent;
 }
 
 GtkWidget* XournalView::getWidget()
@@ -499,6 +573,12 @@ void XournalView::zoomOut()
 	control->getZoomControl()->zoomOut();
 }
 
+void XournalView::setZoom(gdouble scale)
+{
+	XOJ_CHECK_TYPE(XournalView);
+	control->getZoomControl()->setZoom(scale);
+}
+
 void XournalView::ensureRectIsVisible(int x, int y, int width, int heigth)
 {
 	XOJ_CHECK_TYPE(XournalView);
@@ -513,19 +593,55 @@ void XournalView::zoomChanged(double lastZoom)
 
 	Layout* layout = gtk_xournal_get_layout(this->widget);
 	int currentPage = this->getCurrentPage();
-	//double pageTop = layout->getVisiblePageTop(currentPage);
-	double pageTop = 0.0;
+	XojPageView* view = getViewFor(currentPage);
+	ZoomControl* zoom = control->getZoomControl();
 
+	if (!view)
+		return;
+
+	//move this somewhere else maybe
 	layout->layoutPages();
 
-	this->scrollTo(currentPage, pageTop);
+	// Keep zoom center at static position in current view
+	// by scrolling relative to counter motion induced by zoom
+	// in orignal version top left corner of first page static
+	// Pack into extra function later
+	double zoom_now = getZoom();
+	//relative scrolling
+	double zoom_eff = zoom_now / lastZoom;
+	int scroll_x;
+	int scroll_y;
+	//x,y position of visible rectangle for gesture scrolling
+	int vis_x;
+	int vis_y;
+	//get margins for relative scroll calculation
+	double marginLeft = (double) view->layout.getMarginLeft();
+	double marginTop = (double) view->layout.getMarginTop();
+
+	//Absolute centred scrolling used for gesture
+	if (this->zoom_gesture_active)
+	{
+		vis_x = (int) ((zoom->zoom_center_x - marginLeft) * (zoom_now / this->zoom_gesture_begin - 1));
+		vis_y = (int) ((zoom->zoom_center_y - marginTop) * (zoom_now / this->zoom_gesture_begin - 1));
+		layout->scrollAbs(this->visRect_gesture_begin.x + vis_x, this->visRect_gesture_begin.y + vis_y);
+	}
+
+	//Relative centered scrolling used for SHIFT-mousewheel
+	if (zoom_eff != 1 && zoom->zoom_center_x != -1 && this->zoom_gesture_active == false)
+	{
+		scroll_x = (int) ((zoom->zoom_center_x - marginLeft) * (zoom_eff - 1));
+		scroll_y = (int) ((zoom->zoom_center_y - marginTop) * (zoom_eff - 1));
+
+		// adjust view by scrolling
+		layout->scrollRelativ(scroll_x, scroll_y);
+	}
 
 	Document* doc = control->getDocument();
 	doc->lock();
 	path file = doc->getEvMetadataFilename();
 	doc->unlock();
 
-	control->getMetadataManager()->setDouble(file, "zoom", getZoom());
+	control->getMetadataManager()->storeMetadata(file.c_str(), getCurrentPage(), getZoom());
 
 	this->control->getScheduler()->blockRerenderZoom();
 }
@@ -577,7 +693,7 @@ TextEditor* XournalView::getTextEditor()
 
 	for (size_t i = 0; i < this->viewPagesLen; i++)
 	{
-		PageView* v = this->viewPages[i];
+		XojPageView* v = this->viewPages[i];
 		if (v->getTextEditor())
 		{
 			return v->getTextEditor();
@@ -593,7 +709,7 @@ void XournalView::resetShapeRecognizer()
 
 	for (size_t i = 0; i < this->viewPagesLen; i++)
 	{
-		PageView* v = this->viewPages[i];
+		XojPageView* v = this->viewPages[i];
 		v->resetShapeRecognizer();
 	}
 }
@@ -609,9 +725,9 @@ void XournalView::pageInserted(size_t page)
 {
 	XOJ_CHECK_TYPE(XournalView);
 
-	PageView** lastViewPages = this->viewPages;
+	XojPageView** lastViewPages = this->viewPages;
 
-	this->viewPages = new PageView *[this->viewPagesLen + 1];
+	this->viewPages = new XojPageView *[this->viewPagesLen + 1];
 
 	for (size_t i = 0; i < page; i++)
 	{
@@ -637,14 +753,14 @@ void XournalView::pageInserted(size_t page)
 
 	Document* doc = control->getDocument();
 	doc->lock();
-	PageView* pageView = new PageView(this, doc->getPage(page));
+	XojPageView* pageView = new XojPageView(this, doc->getPage(page));
 	doc->unlock();
 
 	this->viewPages[page] = pageView;
 
 	Layout* layout = gtk_xournal_get_layout(this->widget);
 	layout->layoutPages();
-	layout->checkSelectedPage();
+	layout->updateCurrentPage();
 }
 
 double XournalView::getZoom()
@@ -654,7 +770,7 @@ double XournalView::getZoom()
 	size_t p = getCurrentPage();
 	if (p != size_t_npos && p < viewPagesLen)
 	{
-		PageView* page = viewPages[p];
+		XojPageView* page = viewPages[p];
 		if (this->getControl()->getSettings()->isPresentationMode())
 		{
 			double heightZoom = this->getDisplayHeight() / page->getHeight();
@@ -664,13 +780,6 @@ double XournalView::getZoom()
 	}
 
 	return control->getZoomControl()->getZoom();
-}
-
-void XournalView::updateXEvents()
-{
-	XOJ_CHECK_TYPE(XournalView);
-
-	gtk_xournal_update_xevent(this->widget);
 }
 
 void XournalView::clearSelection()
@@ -698,7 +807,7 @@ void XournalView::deleteSelection(EditSelection* sel)
 
 	if (sel)
 	{
-		PageView* view = sel->getView();
+		XojPageView* view = sel->getView();
 		DeleteUndoAction* undo = new DeleteUndoAction(sel->getSourcePage(), false);
 		sel->fillUndoItem(undo);
 		control->getUndoRedoHandler()->addUndoAction(undo);
@@ -780,6 +889,15 @@ void XournalView::repaintSelection(bool evenWithoutSelection)
 	gtk_widget_queue_draw(this->widget);
 }
 
+void XournalView::setEventCompression(gboolean enable)
+{
+	// Enable this when gdk is new enough for the compression feature.
+	if (gtk_widget_get_realized(getWidget()))
+	{
+		gdk_window_set_event_compression(gtk_widget_get_window(getWidget()), FALSE);
+	}
+}
+
 void XournalView::layoutPages()
 {
 	XOJ_CHECK_TYPE(XournalView);
@@ -804,7 +922,7 @@ int XournalView::getDisplayWidth() const {
 	return allocation.width;
 }
 
-bool XournalView::isPageVisible(int page, int* visibleHeight)
+bool XournalView::isPageVisible(size_t page, int* visibleHeight)
 {
 	XOJ_CHECK_TYPE(XournalView);
 
@@ -852,11 +970,11 @@ void XournalView::documentChanged(DocumentChangeType type)
 	doc->lock();
 
 	this->viewPagesLen = doc->getPageCount();
-	this->viewPages = new PageView*[viewPagesLen];
+	this->viewPages = new XojPageView*[viewPagesLen];
 
 	for (size_t i = 0; i < viewPagesLen; i++)
 	{
-		PageView* pageView = new PageView(this, doc->getPage(i));
+		XojPageView* pageView = new XojPageView(this, doc->getPage(i));
 		viewPages[i] = pageView;
 	}
 
@@ -878,7 +996,7 @@ bool XournalView::cut()
 		return false;
 	}
 
-	PageView* page = viewPages[p];
+	XojPageView* page = viewPages[p];
 	return page->cut();
 }
 
@@ -892,7 +1010,7 @@ bool XournalView::copy()
 		return false;
 	}
 
-	PageView* page = viewPages[p];
+	XojPageView* page = viewPages[p];
 	return page->copy();
 }
 
@@ -906,7 +1024,7 @@ bool XournalView::paste()
 		return false;
 	}
 
-	PageView* page = viewPages[p];
+	XojPageView* page = viewPages[p];
 	return page->paste();
 }
 
@@ -920,7 +1038,7 @@ bool XournalView::actionDelete()
 		return false;
 	}
 
-	PageView* page = viewPages[p];
+	XojPageView* page = viewPages[p];
 	return page->actionDelete();
 }
 
@@ -931,11 +1049,11 @@ Document* XournalView::getDocument()
 	return control->getDocument();
 }
 
-ArrayIterator<PageView*> XournalView::pageViewIterator()
+ArrayIterator<XojPageView*> XournalView::pageViewIterator()
 {
 	XOJ_CHECK_TYPE(XournalView);
 
-	return ArrayIterator<PageView*> (viewPages, viewPagesLen);
+	return ArrayIterator<XojPageView*> (viewPages, viewPagesLen);
 }
 
 PagePositionHandler* XournalView::getPagePositionHandler()

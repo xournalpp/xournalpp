@@ -34,7 +34,7 @@ public:
 	int getPngDpi();
 	ExportFormtType getFormatType();
 
-	path getFilePath();
+	string getFilePath();
 
 private:
 	bool validate();
@@ -49,8 +49,8 @@ private:
 
 	static void fileTypeSelected(GtkTreeView* treeview, gpointer user_data);
 
-	void addFileType(const char* typeDesc, const char* pattern, gint type = 0,
-					 const char* filterName = NULL, bool select = false);
+	void addFileType(string typeDesc, string pattern, gint type = 0,
+					 string filterName = "", bool select = false);
 
 	void setupModel();
 

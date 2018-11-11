@@ -4,10 +4,9 @@
 #include <i18n.h>
 #include <PageRange.h>
 
-ExportDialog::ExportDialog(GladeSearchpath* gladeSearchPath, Settings* settings, int pageCount, int currentPage) :
-		GladeGui(gladeSearchPath, "export.glade", "exportDialog")
+ExportDialog::ExportDialog(GladeSearchpath* gladeSearchPath, Settings* settings, int pageCount, int currentPage)
+ : GladeGui(gladeSearchPath, "export.glade", "exportDialog")
 {
-
 	XOJ_INIT_TYPE(ExportDialog);
 
 	this->pageCount = pageCount;
@@ -29,11 +28,12 @@ ExportDialog::ExportDialog(GladeSearchpath* gladeSearchPath, Settings* settings,
 	gtk_file_chooser_set_current_folder(GTK_FILE_CHOOSER(this->window), settings->getLastSavePath().c_str());
 
 	g_signal_connect(this->window, "selection-changed", G_CALLBACK(&selectionChanged), (gpointer) this);
-
 }
 
 void ExportDialog::setupModel()
 {
+	XOJ_CHECK_TYPE(ExportDialog);
+
 	GtkCellRenderer* renderer = gtk_cell_renderer_text_new();
 
 	gtk_tree_view_insert_column_with_attributes(this->typesView, -1, _C("File Type"), renderer, "text", 0, NULL);
@@ -52,27 +52,27 @@ void ExportDialog::setupModel()
 
 	gtk_tree_view_set_model(this->typesView, GTK_TREE_MODEL(this->typesModel));
 
-	addFileType(_C("By extension"), NULL, 0, "All files", true);
+	addFileType(_C("By extension"), "", 0, "All files", true);
 	addFileType("Portable Document Format",  "pdf", EXPORT_FORMAT_PDF);
 	addFileType("Portable Network Graphics", "png", EXPORT_FORMAT_PNG);
 	addFileType("Scalable Vector Graphics",  "svg", EXPORT_FORMAT_SVG);
 	addFileType("Encapsulated PostScript",   "eps", EXPORT_FORMAT_EPS);
 }
 
-void ExportDialog::addFileType(const char* typeDesc, const char* pattern, gint type, const char* filterName, bool select)
+void ExportDialog::addFileType(string typeDesc, string pattern, gint type, string filterName, bool select)
 {
 	GtkFileFilter *filter = gtk_file_filter_new();
 	string fullName;
 
-	if (pattern)
+	if (!pattern.empty())
 	{
-		fullName = CONCAT(filterName ? filterName : typeDesc, " (*.", pattern, ")");
+		fullName = (!filterName.empty() ? filterName : typeDesc) + " (*." + pattern + ")";
 		gtk_file_filter_set_name(filter, fullName.c_str());
-		gtk_file_filter_add_pattern(filter, pattern);
+		gtk_file_filter_add_pattern(filter, pattern.c_str());
 	}
 	else
 	{
-		gtk_file_filter_set_name(filter, filterName ? filterName : typeDesc);
+		gtk_file_filter_set_name(filter, (!filterName.empty() ? filterName.c_str() : typeDesc.c_str()));
 		gtk_file_filter_add_pattern(filter, "*");
 	}
 
@@ -107,6 +107,8 @@ void ExportDialog::selectionChanged(GtkFileChooser* chooser, gpointer user_data)
 {
 	ExportDialog* dlg = (ExportDialog*) user_data;
 
+	XOJ_CHECK_TYPE_OBJ(dlg, ExportDialog);
+
 	char* file = gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(dlg->window));
 
 	gtk_widget_set_sensitive(GTK_WIDGET(dlg->get("btnExport")), !!file);
@@ -137,7 +139,12 @@ void ExportDialog::handleData()
 
 	this->resolution = gtk_spin_button_get_value(GTK_SPIN_BUTTON(get("spPngResolution")));
 
-	this->settings->setLastSavePath(this->getFilePath().parent_path());
+	string path = this->getFilePath();
+	size_t separatorPos = path.find_last_of("/\\");
+	if (separatorPos != string::npos)
+	{
+		this->settings->setLastSavePath(path.substr(0, separatorPos));
+	}
 }
 
 ExportFormtType ExportDialog::getFormatType()
@@ -184,7 +191,8 @@ void ExportDialog::fileTypeSelected(GtkTreeView* treeview, gpointer user_data)
 			if (extension)
 			{
 				char* _baseName = g_file_get_basename(file);
-				string baseName = _baseName, newName;
+				string baseName = _baseName;
+				string newName;
 				bool changeName = true;
 
 				g_free(_baseName);
@@ -199,13 +207,13 @@ void ExportDialog::fileTypeSelected(GtkTreeView* treeview, gpointer user_data)
 
 				if (nameIndex == -1)
 				{
-					newName = CONCAT(baseName, '.', extension);
+					newName = baseName + '.' + extension;
 				}
 				else
 				{
 					if (extension != baseName.substr(nameIndex))
 					{
-						newName = CONCAT(baseName.substr(0, nameIndex), '.', extension);
+						newName = baseName.substr(0, nameIndex) + '.' + extension;
 					}
 					else
 					{
@@ -224,7 +232,7 @@ void ExportDialog::fileTypeSelected(GtkTreeView* treeview, gpointer user_data)
 	}
 }
 
-path ExportDialog::getFilePath()
+string ExportDialog::getFilePath()
 {
 	XOJ_CHECK_TYPE(ExportDialog);
 
@@ -232,14 +240,14 @@ path ExportDialog::getFilePath()
 	if (file)
 	{
 		char* filePath = g_file_get_path(file);
-		path p(filePath);
+		string p(filePath);
 		g_free(filePath);
 		g_object_unref(file);
 		return p;
 	}
 	else
 	{
-		return path("");
+		return "";
 	}
 }
 

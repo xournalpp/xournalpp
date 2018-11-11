@@ -14,21 +14,19 @@
 #include <string.h>
 
 Sidebar::Sidebar(GladeGui* gui, Control* control)
+ : toolbar(control, gui)
 {
 	XOJ_INIT_TYPE(Sidebar);
 
 	this->control = control;
+	this->gui = gui;
 	this->tbSelectPage = GTK_TOOLBAR(gui->get("tbSelectSidebarPage"));
 	this->buttonCloseSidebar = gui->get("buttonCloseSidebar");
 	this->visiblePage = NULL;
 
 	this->sidebar = gui->get("sidebarContents");
 
-	gtk_widget_set_size_request(sidebar, control->getSettings()->getSidebarWidth(), 100);
-
 	this->initPages(sidebar, gui);
-
-	gtk_widget_set_visible(GTK_WIDGET(sidebar), control->getSettings()->isSidebarVisible());
 
 	registerListener(control);
 }
@@ -38,9 +36,9 @@ void Sidebar::initPages(GtkWidget* sidebar, GladeGui* gui)
 	XOJ_CHECK_TYPE(Sidebar);
 
 	addPage(new SidebarIndexPage(this->control));
-	addPage(new SidebarPreviewPages(this->control));
+	addPage(new SidebarPreviewPages(this->control, this->gui, &this->toolbar));
 #ifdef UNSTABLE_LAYERS_SIDEBAR
-	addPage(new SidebarPreviewLayers(this->control));
+	addPage(new SidebarPreviewLayers(this->control, this->gui, &this->toolbar));
 #endif //UNSTABLE_LAYERS_SIDEBAR
 
 	// Init toolbar with icons

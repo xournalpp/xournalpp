@@ -96,3 +96,36 @@ void Rectangle::add(const Rectangle &other)
 {
 	add(other.x, other.y, other.width, other.height);
 }
+
+Rectangle Rectangle::translated(double dx, double dy)
+{
+	return Rectangle(this->x + dx, this->y + dy,
+	                 this->width, this->height);
+}
+
+Rectangle Rectangle::intersect(const Rectangle &other)
+{
+	double x1 = MAX(this->x, other.x);
+	double y1 = MAX(this->y, other.y);
+
+	double x2 = MIN(this->x + this->width, other.x + other.width);
+	double y2 = MIN(this->y + this->height, other.y + other.height);
+
+	return Rectangle(x1, y1, x2 - x1, y2 - y1);
+}
+
+Rectangle& Rectangle::operator*=(double factor)
+{
+	x *= factor;
+	y *= factor;
+
+	width *= factor;
+	height *= factor;
+
+	return *this;
+}
+
+double Rectangle::area() const
+{
+	return width * height;
+}

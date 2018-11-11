@@ -17,7 +17,7 @@
 
 // TODO LOW PRIO: implement drag & drop
 
-TextEditor::TextEditor(PageView* gui, GtkWidget* widget, Text* text, bool ownText)
+TextEditor::TextEditor(XojPageView* gui, GtkWidget* widget, Text* text, bool ownText)
 {
 	XOJ_INIT_TYPE(TextEditor);
 
@@ -311,7 +311,7 @@ bool TextEditor::onKeyPressEvent(GdkEventKey* event)
 {
 	XOJ_CHECK_TYPE(TextEditor);
 
-	if (gtk_bindings_activate_event((GtkObject*) this->textWidget, event))
+	if (gtk_bindings_activate_event(G_OBJECT(this->textWidget), event))
 	{
 		return true;
 	}
@@ -333,7 +333,7 @@ bool TextEditor::onKeyPressEvent(GdkEventKey* event)
 		obscure = canInsert;
 		retval = true;
 	}
-	else if (event->keyval == GDK_Return || event->keyval == GDK_ISO_Enter || event->keyval == GDK_KP_Enter)
+	else if (event->keyval == GDK_KEY_Return || event->keyval == GDK_KEY_ISO_Enter || event->keyval == GDK_KEY_KP_Enter)
 	{
 		this->resetImContext();
 		iMCommitCallback(NULL, "\n", this);
@@ -342,7 +342,7 @@ bool TextEditor::onKeyPressEvent(GdkEventKey* event)
 		retval = true;
 	}
 		// Pass through Tab as literal tab, unless Control is held down
-	else if ((event->keyval == GDK_Tab || event->keyval == GDK_KP_Tab || event->keyval == GDK_ISO_Left_Tab)
+	else if ((event->keyval == GDK_KEY_Tab || event->keyval == GDK_KEY_KP_Tab || event->keyval == GDK_KEY_ISO_Left_Tab)
 			 && !(event->state & GDK_CONTROL_MASK))
 	{
 		resetImContext();
@@ -1065,7 +1065,7 @@ void TextEditor::paint(cairo_t* cr, GdkRectangle* repaintRect, double zoom)
 {
 	XOJ_CHECK_TYPE(TextEditor);
 
-	GdkColor selectionColor = this->gui->getSelectionColor();
+	GtkColorWrapper selectionColor = this->gui->getSelectionColor();
 
 	cairo_save(cr);
 
@@ -1088,7 +1088,7 @@ void TextEditor::paint(cairo_t* cr, GdkRectangle* repaintRect, double zoom)
 	{
 		string text = this->text->getText();
 		int pos = gtk_text_iter_get_offset(&cursorIter);
-		string txt = CONCAT(text.substr(0, pos), preeditString, text.substr(pos));
+		string txt = text.substr(0, pos) + preeditString + text.substr(pos);
 
 		PangoAttribute* attrib = pango_attr_underline_new(PANGO_UNDERLINE_SINGLE);
 		PangoAttrList* list = pango_layout_get_attributes(this->layout);

@@ -25,7 +25,6 @@ public:
 public:
     virtual void actionSelected(ActionGroup group, ActionType action);
     void enableColor(int color);
-    void selectColor();
     bool colorEqualsMoreOreLess(int color);
     virtual void activated(GdkEvent* event, GtkMenuItem* menuitem, GtkToolButton* toolbutton);
 
@@ -41,13 +40,17 @@ protected:
     void updateName();
     bool isSelector();
 
+    /**
+     * Show colochooser to select a custom color
+     */
+    void showColorchooser();
+
 private:
     XOJ_TYPE_ATTRIB;
 
     int color;
     string name;
     GtkWidget* iconWidget;
-    GtkWidget* colorDlg;
     GtkWindow* parent;
 
     ToolHandler* toolHandler;

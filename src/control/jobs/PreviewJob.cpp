@@ -129,7 +129,7 @@ void PreviewJob::drawPage(int layer)
 	cairo_destroy(cr2);
 }
 
-void PreviewJob::run()
+void PreviewJob::run(bool noThreads)
 {
 	XOJ_CHECK_TYPE(PreviewJob);
 
