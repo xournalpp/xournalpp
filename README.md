@@ -86,16 +86,8 @@ make desktop-install
 
 
 ## Development
-
-For now branches aren't organized too well.
-
 For developping new features, write a Ticket, so others know what you are doing.
 For development create a fork, and use the master as base.
-
-Currently Xournal++ is based on GTK2, but will be moved forward soon to GTK3.
-In the near future a new branch master_gtk2_stable will be created, which will 
-be the current master, and the GTK3 branch will be merged into the master.
-See Tickets / Pull request for further information.
 
 See [GitHub:xournalpp](http://github.com/xournalpp/xournalpp) for current development. You can also join
 our Gitter channel via badge on top.
