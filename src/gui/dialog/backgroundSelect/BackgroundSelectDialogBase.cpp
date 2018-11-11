@@ -4,21 +4,30 @@
 
 BackgroundSelectDialogBase::BackgroundSelectDialogBase(GladeSearchpath* gladeSearchPath, Document* doc, Settings* settings, string glade, string mainWnd)
  : GladeGui(gladeSearchPath, glade, mainWnd),
-   settings(settings)
+   settings(settings), lastWidth(0), selected(-1), doc(doc)
 {
 	XOJ_INIT_TYPE(BackgroundSelectDialogBase);
 
-	this->widget = gtk_layout_new(NULL, NULL);
-	gtk_widget_show(this->widget);
+	this->layoutContainer = gtk_layout_new(NULL, NULL);
+	gtk_widget_show(this->layoutContainer);
 	this->scrollPreview = get("scrollContens");
-	gtk_container_add(GTK_CONTAINER(scrollPreview), widget);
+	gtk_container_add(GTK_CONTAINER(scrollPreview), layoutContainer);
 
-//	gdk_window_set_background(gtk_layout_get_bin_window(GTK_LAYOUT(this->widget)), &gtk_widget_get_style(widget)->white);
+	gtk_widget_set_events(this->layoutContainer, GDK_EXPOSURE_MASK);
+	g_signal_connect(this->layoutContainer, "draw", G_CALLBACK(drawBackgroundCallback), this->layoutContainer);
 
-	// TODO Resize
-//	g_signal_connect(this->window, "size-allocate", G_CALLBACK(sizeAllocate), this);
+	g_signal_connect(this->window, "size-allocate", G_CALLBACK(sizeAllocate), this);
+	gtk_window_set_default_size(GTK_WINDOW(this->window), 800, 600);
+}
 
-	gtk_widget_set_size_request(this->window, 800, 600);
+gboolean BackgroundSelectDialogBase::drawBackgroundCallback(GtkWidget* widget, cairo_t* cr, GtkWidget* layoutContainer)
+{
+	GtkAllocation alloc;
+	gtk_widget_get_allocation(layoutContainer, &alloc);
+	cairo_set_source_rgb(cr, 1, 1, 1);
+	cairo_rectangle(cr, 0, 0, alloc.width, alloc.height);
+	cairo_fill(cr);
+	return false;
 }
 
 BackgroundSelectDialogBase::~BackgroundSelectDialogBase()
@@ -32,6 +41,20 @@ BackgroundSelectDialogBase::~BackgroundSelectDialogBase()
 	elements.clear();
 
 	XOJ_RELEASE_TYPE(BackgroundSelectDialogBase);
+}
+
+void BackgroundSelectDialogBase::sizeAllocate(GtkWidget* widget, GtkRequisition* requisition, BackgroundSelectDialogBase* dlg)
+{
+	XOJ_CHECK_TYPE_OBJ(dlg, BackgroundSelectDialogBase);
+
+	GtkAllocation alloc = { 0 };
+	gtk_widget_get_allocation(dlg->scrollPreview, &alloc);
+	if (dlg->lastWidth == alloc.width)
+	{
+		return;
+	}
+	dlg->lastWidth = alloc.width;
+	dlg->layout();
 }
 
 Settings* BackgroundSelectDialogBase::getSettings()
@@ -68,14 +91,14 @@ void BackgroundSelectDialogBase::layout()
 			height = 0;
 		}
 
-		gtk_layout_move(GTK_LAYOUT(this->widget), p->getWidget(), x, y);
+		gtk_layout_move(GTK_LAYOUT(this->layoutContainer), p->getWidget(), x, y);
 
 		height = MAX(height, p->getHeight());
 
 		x += p->getWidth();
 	}
 
-	gtk_layout_set_size(GTK_LAYOUT(this->widget), width, y);
+	gtk_layout_set_size(GTK_LAYOUT(this->layoutContainer), width, y);
 }
 
 void BackgroundSelectDialogBase::show(GtkWindow* parent)
@@ -84,12 +107,13 @@ void BackgroundSelectDialogBase::show(GtkWindow* parent)
 
 	for (BaseElementView* e : elements)
 	{
-//		GtkWidget* w = gtk_label_new("55555555");
-//		gtk_layout_put(GTK_LAYOUT(this->widget), w, 0, 0);
-//		gtk_widget_set_visible(w, true);
-		gtk_layout_put(GTK_LAYOUT(this->widget), e->getWidget(), 0, 0);
+		gtk_layout_put(GTK_LAYOUT(this->layoutContainer), e->getWidget(), 0, 0);
 	}
 
+	if (!elements.empty())
+	{
+		setSelected(0);
+	}
 
 	layout();
 
@@ -97,4 +121,27 @@ void BackgroundSelectDialogBase::show(GtkWindow* parent)
 	gtk_dialog_run(GTK_DIALOG(this->window));
 	gtk_widget_hide(this->window);
 }
+
+void BackgroundSelectDialogBase::setSelected(int selected)
+{
+	XOJ_CHECK_TYPE(BackgroundSelectDialogBase);
+
+	if (this->selected == selected)
+	{
+		return;
+	}
+
+	int lastSelected = this->selected;
+	if (lastSelected >= 0 && lastSelected < elements.size())
+	{
+		elements[lastSelected]->setSelected(false);
+	}
+
+	if (selected >= 0 && selected < elements.size())
+	{
+		elements[selected]->setSelected(true);
+		this->selected = selected;
+	}
+}
+
 

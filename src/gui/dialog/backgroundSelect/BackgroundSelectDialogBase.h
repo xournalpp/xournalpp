@@ -32,9 +32,14 @@ public:
 public:
 	Settings* getSettings();
 	virtual void show(GtkWindow* parent);
+	virtual void setSelected(int selected);
 
 protected:
 	void layout();
+
+private:
+	static void sizeAllocate(GtkWidget* widget, GtkRequisition* requisition, BackgroundSelectDialogBase* dlg);
+	static gboolean drawBackgroundCallback(GtkWidget* widget, cairo_t* cr, GtkWidget* layoutContainer);
 
 private:
 	XOJ_TYPE_ATTRIB;
@@ -42,7 +47,22 @@ private:
 protected:
 	Settings* settings;
 	GtkWidget* scrollPreview;
-	GtkWidget* widget;
+	GtkWidget* layoutContainer;
 
+	Document* doc;
+
+	/**
+	 * Selected image, none if negative
+	 */
+	int selected;
+
+	/**
+	 * To check if the size has real changed
+	 */
+	int lastWidth;
+
+	/**
+	 * Elements to display
+	 */
 	vector<BaseElementView*> elements;
 };

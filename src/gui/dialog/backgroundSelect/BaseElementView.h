@@ -15,10 +15,12 @@
 
 #include <gtk/gtk.h>
 
+class BackgroundSelectDialogBase;
+
 class BaseElementView
 {
 public:
-	BaseElementView();
+	BaseElementView(int id, BackgroundSelectDialogBase* dlg);
 	virtual ~BaseElementView();
 
 public:
@@ -26,15 +28,61 @@ public:
 	int getWidth();
 	int getHeight();
 
+	/**
+	 * Select / unselect this entry
+	 */
+	void setSelected(bool selected);
+
+	/**
+	 * Repaint this widget
+	 */
+	void repaint();
+
 protected:
+	/**
+	 * Apply the size to the Widget
+	 */
 	void updateSize();
+
+	/**
+	 * Paint the whole widget
+	 */
 	void paint(cairo_t* cr);
+
+	/**
+	 * Paint the contents (without border / selection)
+	 */
+	virtual void paintContents(cairo_t* cr) = 0;
+
+	/**
+	 * Get the width in pixel, without shadow / border
+	 */
+	virtual int getContentWidth() = 0;
+
+	/**
+	 * Get the height in pixel, without shadow / border
+	 */
+	virtual int getContentHeight() = 0;
+
+	/**
+	 * Will be called before getContentWidth() / getContentHeight(), can be overwritten
+	 */
+	virtual void calcSize();
 
 private:
 	static gboolean drawCallback(GtkWidget* widget, cairo_t* cr, BaseElementView* element);
+	static gboolean mouseButtonPressCallback(GtkWidget* widget, GdkEventButton* event, BaseElementView* element);
+
+protected:
+	BackgroundSelectDialogBase* dlg;
 
 private:
 	XOJ_TYPE_ATTRIB;
+
+	/**
+	 * Element ID, starting with 0
+	 */
+	int id;
 
 	bool selected;
 

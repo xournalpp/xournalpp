@@ -18,10 +18,6 @@
 #include <vector>
 
 class BackgroundImage;
-class ImageView;
-class BackgroundImage;
-
-typedef std::vector<ImageView*> ImageViewVector;
 
 class ImagesDialog : public BackgroundSelectDialogBase
 {
@@ -30,29 +26,29 @@ public:
 	virtual ~ImagesDialog();
 
 public:
-	void setBackgroundWhite();
-
-	void setSelected(size_t selected);
-
 	BackgroundImage getSelectedImage();
 	bool shouldShowFilechooser();
+	virtual void show(GtkWindow* parent);
 
 private:
-	void updateOkButton();
+	/**
+	 * Load all images form all pages
+	 */
+	void loadImagesFromPages();
 
-	static void sizeAllocate(GtkWidget* widget, GtkRequisition* requisition, ImagesDialog* dlg);
+	/**
+	 * Check if this image is already displayed
+	 */
+	bool isImageAlreadyInTheList(BackgroundImage& image);
+
 	static void okButtonCallback(GtkButton* button, ImagesDialog* dlg);
 	static void filechooserButtonCallback(GtkButton* button, ImagesDialog* dlg);
 
 private:
 	XOJ_TYPE_ATTRIB;
 
-	bool backgroundInitialized;
-
-	size_t selected;
-	int lastWidth;
-
-	int selectedPage;
-
-	ImageViewVector images;
+	/**
+	 * Selection confirmed
+	 */
+	bool confirmed;
 };
