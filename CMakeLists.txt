@@ -82,7 +82,7 @@ endif (BUILD_BOOST)
 add_includes_ldflags ("${Boost_LIBRARIES}" "${Boost_INCLUDE_DIRS}")
 
 # GTK+
-pkg_check_modules (GTK REQUIRED "gtk+-3.0 >= 3.18.9")
+pkg_check_modules (GTK REQUIRED "gtk+-3.0 >= 3.10.8")
 add_includes_ldflags ("${GTK_LDFLAGS}" "${GTK_INCLUDE_DIRS}")
 
 # GLIB
