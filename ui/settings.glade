@@ -83,9 +83,9 @@
                   <object class="GtkLabel" id="label27">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <property name="xalign">0</property>
                     <property name="label" translatable="yes">&lt;b&gt;Extended Input&lt;/b&gt;</property>
                     <property name="use_markup">True</property>
+                    <property name="xalign">0</property>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -106,9 +106,9 @@
                           <object class="GtkLabel" id="labeXInput">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
-                            <property name="xalign">0</property>
                             <property name="label" translatable="yes">&lt;i&gt;Select some advanced input options&lt;/i&gt;</property>
                             <property name="use_markup">True</property>
+                            <property name="xalign">0</property>
                           </object>
                           <packing>
                             <property name="expand">False</property>
@@ -142,9 +142,9 @@
                           <object class="GtkLabel" id="labePresureSensitivity">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
-                            <property name="xalign">0</property>
                             <property name="label" translatable="yes">&lt;i&gt;If you have a tablet pen you can get different line widths&lt;/i&gt;</property>
                             <property name="use_markup">True</property>
+                            <property name="xalign">0</property>
                           </object>
                           <packing>
                             <property name="expand">False</property>
@@ -178,10 +178,10 @@
                           <object class="GtkLabel" id="label123">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
-                            <property name="xalign">0</property>
                             <property name="label" translatable="yes">&lt;i&gt;Disable the event compression if strokes appear segmented
 when drawn too fast&lt;/i&gt;</property>
                             <property name="use_markup">True</property>
+                            <property name="xalign">0</property>
                           </object>
                           <packing>
                             <property name="expand">False</property>
@@ -209,13 +209,14 @@ when drawn too fast&lt;/i&gt;</property>
                   <object class="GtkLabel" id="label40">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <property name="xalign">0</property>
                     <property name="label" translatable="yes">&lt;b&gt;Scrolling outside the page&lt;/b&gt;</property>
                     <property name="use_markup">True</property>
+                    <property name="xalign">0</property>
                   </object>
                   <packing>
                     <property name="expand">False</property>
                     <property name="fill">True</property>
+                    <property name="padding">10</property>
                     <property name="position">2</property>
                   </packing>
                 </child>
@@ -232,11 +233,11 @@ when drawn too fast&lt;/i&gt;</property>
                           <object class="GtkLabel" id="label37">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
-                            <property name="xalign">0</property>
                             <property name="label" translatable="yes">&lt;i&gt;If you add &lt;b&gt;additional space&lt;/b&gt; beside the pages
 you can choose the area of the screen you would
 like to work on&lt;/i&gt;</property>
                             <property name="use_markup">True</property>
+                            <property name="xalign">0</property>
                           </object>
                           <packing>
                             <property name="expand">False</property>
@@ -428,13 +429,14 @@ It the file was not saved you can find it in your home folder, in
                   <object class="GtkLabel" id="label29">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <property name="xalign">0</property>
                     <property name="label" translatable="yes">&lt;b&gt;Default save name&lt;/b&gt;</property>
                     <property name="use_markup">True</property>
+                    <property name="xalign">0</property>
                   </object>
                   <packing>
                     <property name="expand">False</property>
                     <property name="fill">True</property>
+                    <property name="padding">10</property>
                     <property name="position">2</property>
                   </packing>
                 </child>
@@ -451,9 +453,9 @@ It the file was not saved you can find it in your home folder, in
                           <object class="GtkLabel" id="label30">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
-                            <property name="xalign">0</property>
                             <property name="label" translatable="yes">&lt;i&gt;This name will be proposed if you save a new document&lt;/i&gt;</property>
                             <property name="use_markup">True</property>
+                            <property name="xalign">0</property>
                           </object>
                           <packing>
                             <property name="expand">False</property>
@@ -516,7 +518,6 @@ It the file was not saved you can find it in your home folder, in
                               <object class="GtkLabel" id="label33">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
-                                <property name="xalign">0</property>
                                 <property name="label" translatable="yes">%a	Abbreviated weekday name 	(e.g. Thu)
 %A	Full weekday name (e.g. Thursday)
 %b	Abbreviated month name (e.g. Aug)
@@ -539,6 +540,7 @@ It the file was not saved you can find it in your home folder, in
 %Y	Year	(e.g. 2001)
 %Z	Timezone name or abbreviation (e.g. CDT
 %%	A % sign</property>
+                                <property name="xalign">0</property>
                               </object>
                             </child>
                             <child type="label">
@@ -576,6 +578,7 @@ It the file was not saved you can find it in your home folder, in
                           <packing>
                             <property name="expand">False</property>
                             <property name="fill">True</property>
+                            <property name="padding">10</property>
                             <property name="position">3</property>
                           </packing>
                         </child>
@@ -783,10 +786,13 @@ tool will be selected&lt;/i&gt;</property>
                     <property name="can_focus">False</property>
                     <property name="label" translatable="yes">&lt;b&gt;Middle Mouse Button&lt;/b&gt;</property>
                     <property name="use_markup">True</property>
+                    <property name="ellipsize">end</property>
+                    <property name="xalign">0</property>
                   </object>
                   <packing>
                     <property name="expand">False</property>
                     <property name="fill">True</property>
+                    <property name="padding">10</property>
                     <property name="position">1</property>
                   </packing>
                 </child>
@@ -813,10 +819,12 @@ tool will be selected&lt;/i&gt;</property>
                     <property name="can_focus">False</property>
                     <property name="label" translatable="yes">&lt;b&gt;Right Mouse Button&lt;/b&gt;</property>
                     <property name="use_markup">True</property>
+                    <property name="xalign">0</property>
                   </object>
                   <packing>
                     <property name="expand">False</property>
                     <property name="fill">True</property>
+                    <property name="padding">10</property>
                     <property name="position">3</property>
                   </packing>
                 </child>
@@ -880,13 +888,14 @@ Here you can disable your touchscreen.&lt;/i&gt;</property>
                   <object class="GtkLabel" id="label18">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <property name="xalign">0</property>
                     <property name="label" translatable="yes">&lt;b&gt;Eraser&lt;/b&gt;</property>
                     <property name="use_markup">True</property>
+                    <property name="xalign">0</property>
                   </object>
                   <packing>
                     <property name="expand">False</property>
                     <property name="fill">True</property>
+                    <property name="padding">10</property>
                     <property name="position">2</property>
                   </packing>
                 </child>
@@ -911,28 +920,15 @@ Here you can disable your touchscreen.&lt;/i&gt;</property>
                   <object class="GtkLabel" id="label19">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <property name="xalign">0</property>
                     <property name="label" translatable="yes">&lt;b&gt;Touch Screen&lt;/b&gt; &lt;i&gt;You can also configure other devices like mice&lt;/i&gt;</property>
                     <property name="use_markup">True</property>
-                  </object>
-                  <packing>
-                    <property name="expand">False</property>
-                    <property name="fill">True</property>
-                    <property name="position">4</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkLabel" id="label20">
-                    <property name="visible">True</property>
-                    <property name="can_focus">False</property>
                     <property name="xalign">0</property>
-                    <property name="label" translatable="yes">Notice: &lt;i&gt;You need to enable XInput (Page "Input") or else this won't work.&lt;/i&gt;</property>
-                    <property name="use_markup">True</property>
                   </object>
                   <packing>
                     <property name="expand">False</property>
                     <property name="fill">True</property>
-                    <property name="position">5</property>
+                    <property name="padding">10</property>
+                    <property name="position">4</property>
                   </packing>
                 </child>
                 <child>
@@ -977,13 +973,14 @@ Here you can disable your touchscreen.&lt;/i&gt;</property>
                   <object class="GtkLabel" id="label10">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <property name="xalign">0</property>
                     <property name="label" translatable="yes">&lt;b&gt;Left / Right&lt;/b&gt;</property>
                     <property name="use_markup">True</property>
+                    <property name="xalign">0</property>
                   </object>
                   <packing>
                     <property name="expand">False</property>
                     <property name="fill">True</property>
+                    <property name="padding">10</property>
                     <property name="position">0</property>
                   </packing>
                 </child>
@@ -1050,9 +1047,9 @@ Here you can disable your touchscreen.&lt;/i&gt;</property>
                       <object class="GtkLabel" id="label11">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="xalign">0</property>
                         <property name="label" translatable="yes">&lt;b&gt;Selection Border&lt;/b&gt;</property>
                         <property name="use_markup">True</property>
+                        <property name="xalign">0</property>
                       </object>
                       <packing>
                         <property name="expand">False</property>
@@ -1064,6 +1061,7 @@ Here you can disable your touchscreen.&lt;/i&gt;</property>
                   <packing>
                     <property name="expand">False</property>
                     <property name="fill">True</property>
+                    <property name="padding">10</property>
                     <property name="position">2</property>
                   </packing>
                 </child>
@@ -1085,9 +1083,11 @@ Here you can disable your touchscreen.&lt;/i&gt;</property>
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="label" translatable="yes">Border color for current page and other selections:</property>
+                                <property name="justify">right</property>
+                                <property name="xalign">0</property>
                               </object>
                               <packing>
-                                <property name="expand">False</property>
+                                <property name="expand">True</property>
                                 <property name="fill">True</property>
                                 <property name="position">0</property>
                               </packing>
@@ -1137,9 +1137,9 @@ Here you can disable your touchscreen.&lt;/i&gt;</property>
                       <object class="GtkLabel" id="label41">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="xalign">0</property>
                         <property name="label" translatable="yes">&lt;b&gt;Scrollbars&lt;/b&gt;</property>
                         <property name="use_markup">True</property>
+                        <property name="xalign">0</property>
                       </object>
                       <packing>
                         <property name="expand">False</property>
@@ -1151,6 +1151,7 @@ Here you can disable your touchscreen.&lt;/i&gt;</property>
                   <packing>
                     <property name="expand">False</property>
                     <property name="fill">True</property>
+                    <property name="padding">10</property>
                     <property name="position">4</property>
                   </packing>
                 </child>
@@ -1213,13 +1214,14 @@ Here you can disable your touchscreen.&lt;/i&gt;</property>
                   <object class="GtkLabel" id="label13">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <property name="xalign">0</property>
                     <property name="label" translatable="yes">&lt;b&gt;Fullscreen&lt;/b&gt;</property>
                     <property name="use_markup">True</property>
+                    <property name="xalign">0</property>
                   </object>
                   <packing>
                     <property name="expand">False</property>
                     <property name="fill">True</property>
+                    <property name="padding">10</property>
                     <property name="position">6</property>
                   </packing>
                 </child>
@@ -1285,13 +1287,14 @@ Here you can disable your touchscreen.&lt;/i&gt;</property>
                   <object class="GtkLabel" id="label14">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <property name="xalign">0</property>
                     <property name="label" translatable="yes">&lt;b&gt;Presentation&lt;/b&gt; Another Fullscreen Mode, &lt;i&gt;Start with F5&lt;/i&gt;</property>
                     <property name="use_markup">True</property>
+                    <property name="xalign">0</property>
                   </object>
                   <packing>
                     <property name="expand">False</property>
                     <property name="fill">True</property>
+                    <property name="padding">10</property>
                     <property name="position">8</property>
                   </packing>
                 </child>
@@ -1340,7 +1343,6 @@ Here you can disable your touchscreen.&lt;/i&gt;</property>
                             <property name="can_focus">False</property>
                             <child>
                               <object class="GtkLabel" id="label15">
-                                <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="label" translatable="yes">Select toolbar:</property>
                               </object>
@@ -1352,7 +1354,6 @@ Here you can disable your touchscreen.&lt;/i&gt;</property>
                             </child>
                             <child>
                               <object class="GtkComboBox" id="cbPresentationToolbar">
-                                <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                               </object>
                               <packing>
@@ -1389,13 +1390,14 @@ Here you can disable your touchscreen.&lt;/i&gt;</property>
                   <object class="GtkLabel" id="label16">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <property name="xalign">0</property>
                     <property name="label" translatable="yes">&lt;b&gt;Cursor&lt;/b&gt;</property>
                     <property name="use_markup">True</property>
+                    <property name="xalign">0</property>
                   </object>
                   <packing>
                     <property name="expand">False</property>
                     <property name="fill">True</property>
+                    <property name="padding">10</property>
                     <property name="position">10</property>
                   </packing>
                 </child>
@@ -1468,7 +1470,7 @@ Here you can disable your touchscreen.&lt;/i&gt;</property>
                       <object class="GtkImage" id="image2">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="pixbuf">pixmaps/default.png</property>
+                        <property name="pixbuf">pixmaps/default.svg</property>
                       </object>
                       <packing>
                         <property name="expand">False</property>
@@ -1501,8 +1503,8 @@ Here you can disable your touchscreen.&lt;/i&gt;</property>
                   <object class="GtkLabel" id="label9">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <property name="xalign">0</property>
                     <property name="label" translatable="yes">Select the tool and Settings if you press the Default Button</property>
+                    <property name="xalign">0</property>
                   </object>
                   <packing>
                     <property name="expand">False</property>
