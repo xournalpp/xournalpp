@@ -343,7 +343,7 @@ void Control::updatePageNumbers(size_t page, size_t pdfPage)
 	this->win->updatePageNumbers(page, this->doc->getPageCount(), pdfPage);
 	this->sidebar->selectPageNr(page, pdfPage);
 
-	this->metadata->setInt(this->doc->getEvMetadataFilename(), "page", page);
+	this->metadata->storeMetadata(this->doc->getEvMetadataFilename().c_str(), page, getZoomControl()->getZoom());
 
 	int current = this->win->getXournal()->getCurrentPage();
 	int count = this->doc->getPageCount();
@@ -2422,12 +2422,10 @@ bool Control::openFile(path filename, int scrollToPage)
 	}
 	else
 	{
-		this->metadata->pause();
 		this->doc->lock();
 		this->doc->clearDocument();
 		*this->doc = *tmp;
 		this->doc->unlock();
-		this->metadata->resume();
 	}
 
 	fileLoaded(scrollToPage);
@@ -2444,22 +2442,23 @@ void Control::fileLoaded(int scrollToPage)
 
 	if (!file.empty())
 	{
-		double zoom = 1;
-		if (this->metadata->getDouble(file, "zoom", zoom))
+		MetadataEntry md = metadata->getForFile(file.c_str());
+		int scrollPageMetadata = -1;
+		if (md.valid)
 		{
-			this->zoom->setZoom(zoom);
+			this->zoom->setZoom(md.zoom);
+			scrollPageMetadata = md.page;
 		}
 		else
 		{
 			this->zoom->zoomFit();
 		}
 
-		int scrollPageMetadata = 0;
 		if (scrollToPage >= 0)
 		{
 			scrollHandler->scrollToPage(scrollToPage);
 		}
-		else if (this->metadata->getInt(file, "page", scrollPageMetadata))
+		else if (scrollPageMetadata >= 0)
 		{
 			scrollHandler->scrollToPage(scrollPageMetadata);
 		}
@@ -2509,8 +2508,11 @@ bool Control::annotatePdf(path filename, bool attachPdf, bool attachToDocument)
 		path file = this->doc->getEvMetadataFilename();
 		this->doc->unlock();
 
-		this->metadata->getInt(file, "page", page);
-		this->scrollHandler->scrollToPage(page);
+		MetadataEntry md = metadata->getForFile(file.c_str());
+		if (md.valid)
+		{
+			this->scrollHandler->scrollToPage(md.page);
+		}
 	}
 	else
 	{
@@ -2701,8 +2703,6 @@ bool Control::showSaveDialog()
 
 	this->doc->lock();
 
-	this->metadata->copy(this->doc->getFilename().string(), filename);
-	this->metadata->save();
 	this->doc->setFilename(path(filename));
 	this->doc->unlock();
 

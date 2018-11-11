@@ -1,383 +1,218 @@
 #include "MetadataManager.h"
 
-#include <config-dev.h>
-#include <i18n.h>
 #include <Util.h>
 
-#include <exception>
-using std::exception;
-#include <iostream>
-using std::cout;
-using std::endl;
-using std::pair;
+#include <glib.h>
+#include <glib/gstdio.h>
+#include <fcntl.h>
+#include <sys/types.h>
+#include <sys/stat.h>
 
-#include <boost/filesystem.hpp>
-namespace bf = boost::filesystem;
 
-#define REFRESH_SEC 20
+#include <fstream>
+#include <sstream>
+
+using namespace std;
+
+MetadataEntry::MetadataEntry()
+ : valid(false), zoom(1), page(0), time(0)
+{
+}
+
 
 MetadataManager::MetadataManager()
 {
 	XOJ_INIT_TYPE(MetadataManager);
-
-	this->config = NULL;
-	this->timer = NULL;
-	this->thread = NULL;
-	this->paused = false;
 }
 
 MetadataManager::~MetadataManager()
 {
 	XOJ_CHECK_TYPE(MetadataManager);
 
-	io.stop();
-	
-	delete this->timer;
-	this->timer = NULL;
-	
-	delete this->thread;
-	this->thread = NULL;
-	
-	delete this->config;
-	this->config = NULL;
 
 	XOJ_RELEASE_TYPE(MetadataManager);
 }
 
-void MetadataManager::setInt(path p, string name, int value)
+/**
+ * Delete an old metadata file
+ */
+void MetadataManager::deleteMetadataFile(string path)
 {
-	XOJ_CHECK_TYPE(MetadataManager);
-	
-	if (p.empty() || this->paused)
+	int result = g_unlink(path.c_str());
+	if (result != 0)
 	{
-		return;
-	}
-
-	loadConfigFile();
-	checkPath(p);
-	
-	std::cout << "Setting int " << value << " from file " << p.string() << std::endl;
-	try
-	{
-		config->get_child(getINIpathURI(p)).put(name, value);
-	}
-	catch (exception& e)
-	{
-		cout << _F("INI exception: {1}") % e.what() << endl;
-	}
-
-	updateAccessTime(p);
-}
-
-void MetadataManager::setDouble(path p, string name, double value)
-{
-	XOJ_CHECK_TYPE(MetadataManager);
-
-	if (p.empty() || this->paused)
-	{
-		return;
-	}
-	loadConfigFile();
-	checkPath(p);
-
-	try
-	{
-		config->get_child(getINIpathURI(p)).put(name, value);
-	}
-	catch (exception& e)
-	{
-		cout << _F("INI exception: {1}") % e.what() << endl;
-	}
-
-	updateAccessTime(p);
-}
-
-void MetadataManager::setString(path p, string name, string value)
-{
-	XOJ_CHECK_TYPE(MetadataManager);
-
-	if (p.empty() || this->paused)
-	{
-		return;
-	}
-	loadConfigFile();
-	checkPath(p);
-
-	try
-	{
-		config->get_child(getINIpathURI(p)).put(name, value);
-	}
-	catch (exception& e)
-	{
-		cout << _F("INI exception: {1}") % e.what() << endl;
-	}
-
-	updateAccessTime(p);
-}
-
-bool MetadataManager::checkPath(path p)
-{
-	XOJ_CHECK_TYPE(MetadataManager);
-	
-	if (p.empty())
-	{
-		return false;
-	}
-
-	loadConfigFile();
-	
-	try
-	{
-		config->get_child(getINIpathURI(p));
-		return true;
-	}
-	catch (exception& e)
-	{
-		config->add_child(getINIpathURI(p), bp::ptree());
-		return false;
+		g_warning("Could not delete metadata file %s", path.c_str());
 	}
 }
 
-void MetadataManager::updateAccessTime(path p)
+bool sortMetadata(MetadataEntry& a, MetadataEntry& b)
 {
-	XOJ_CHECK_TYPE(MetadataManager);
-	
-	if (p.empty() || this->paused)
-	{
-		return;
-	}
-	loadConfigFile();
-	checkPath(p);
-
-	try
-	{
-		config->get_child(getINIpathURI(p)).put("atime", time(NULL));
-	}
-	catch (exception& e)
-	{
-		cout << _F("INI exception: {1}") % e.what() << endl;
-	}
-	
-	if (this->timer) return;
-	
-	this->timer = new basio::deadline_timer(io, boost::posix_time::seconds(REFRESH_SEC));
-	this->timer->async_wait(boost::bind(save, this, timer));
-	this->thread = new boost::thread(boost::bind(&basio::io_service::run, &this->io));
+	return a.time > b.time;
 }
 
-void MetadataManager::cleanupMetadata()
+/**
+ * Load the metadata list (sorted)
+ */
+vector<MetadataEntry> MetadataManager::loadList()
 {
 	XOJ_CHECK_TYPE(MetadataManager);
-	
-	loadConfigFile();
-	
-	std::vector<std::pair<string, int>> elements;
-	
-	for (bp::ptree::value_type p : *config)
+
+	path folder = Util::getConfigSubfolder("metadata");
+
+	vector<MetadataEntry> data;
+
+	GError* error = NULL;
+	GDir* home = g_dir_open(folder.c_str(), 0, &error);
+	const gchar* file;
+	while ((file = g_dir_read_name(home)) != NULL)
 	{
-		if (bf::exists(path(p.first.substr(7))))
+		string path = folder.c_str();
+		path += "/";
+		path += file;
+
+		MetadataEntry entry = loadMetadataFile(path, file);
+
+		if (entry.valid)
 		{
-			try
-			{
-				elements.push_back(std::pair<string, int>(p.first,
-								   config->get_child(getINIpath(p.first)).get<int>("atime")));
-			}
-			catch (exception& e)
-			{
-				cout << _F("INI exception: {1}") % e.what() << endl;
-			}
+			data.push_back(entry);
 		}
 	}
-	
-	std::sort(elements.begin(), elements.end(),
-		[](const std::pair<string, int> &left, const std::pair<string, int> &right) {
-			return left.second >= right.second;
-		});
-	
-	while (elements.size() > METADATA_MAX_ITEMS)
-	{
-		elements.pop_back();
-	}
+	g_dir_close(home);
 
-	bp::ptree* tmpTree = new bp::ptree();
-	for (std::pair<string, int> p : elements)
-	{
-		tmpTree->add_child(getINIpath(p.first), config->get_child(getINIpath(p.first)));
-	}
-	
-	delete config;
-	config = tmpTree;
-	tmpTree = NULL;
+	std::sort(data.begin(), data.end(), sortMetadata);
+
+	return data;
 }
 
-void MetadataManager::copy(path source, path target)
+/**
+ * Parse a single metadata file
+ */
+MetadataEntry MetadataManager::loadMetadataFile(string path, string file)
 {
 	XOJ_CHECK_TYPE(MetadataManager);
-	
-	if (source.empty() || target.empty())
+
+	MetadataEntry entry;
+	entry.metadataFile = path;
+
+	string line;
+	ifstream infile(path.c_str());
+
+	string time = file.substr(0, file.size() - 9);
+	entry.time = std::stol(time);
+
+	if (!getline(infile, line))
+	{
+		deleteMetadataFile(path);
+		// Not valid
+		return entry;
+	}
+
+	if (line != "XOJ-METADATA/1.0")
+	{
+		deleteMetadataFile(path);
+		// Not valid
+		return entry;
+	}
+
+	if (!getline(infile, line))
+	{
+		deleteMetadataFile(path);
+		// Not valid
+		return entry;
+	}
+
+	entry.path = line;
+
+
+	if (!getline(infile, line))
+	{
+		deleteMetadataFile(path);
+		// Not valid
+		return entry;
+	}
+
+	if (line.length() < 6 || line.substr(0, 5) != "page=")
+	{
+		deleteMetadataFile(path);
+		// Not valid
+		return entry;
+	}
+	entry.page = std::stoi(line.substr(5));
+
+	if (!getline(infile, line))
+	{
+		deleteMetadataFile(path);
+		// Not valid
+		return entry;
+	}
+
+	if (line.length() < 6 || line.substr(0, 5) != "zoom=")
+	{
+		deleteMetadataFile(path);
+		// Not valid
+		return entry;
+	}
+
+	entry.zoom = std::stod(line.substr(5));
+
+	entry.valid = true;
+	return entry;
+}
+
+/**
+ * Get the metadata for a file
+ */
+MetadataEntry MetadataManager::getForFile(string file)
+{
+	XOJ_CHECK_TYPE(MetadataManager);
+
+	vector<MetadataEntry> files = loadList();
+	printf("===================\n");
+	for (MetadataEntry e : files)
+	{
+		printf("->%ld\n", e.time);
+	}
+
+	for (int i = 20; i < files.size(); i++)
+	{
+		string path = files[i].metadataFile;
+
+		// be carefull, delete the Metadata file, NOT the Document!
+		if (path.substr(path.size() - 9) == ".metadata")
+		{
+			deleteMetadataFile(path);
+		}
+	}
+
+	MetadataEntry entry;
+	return entry;
+}
+
+
+/**
+ * Store the current data into metadata
+ */
+void MetadataManager::storeMetadata(string file, int page, double zoom)
+{
+	XOJ_CHECK_TYPE(MetadataManager);
+
+	if (file == "")
 	{
 		return;
 	}
-	
-	try
-	{
-		config->put_child(getINIpathURI(target), config->get_child(getINIpathURI(source)));
-	}
-	catch (exception& e)
-	{
-		cout << _F("Cannot copy metadata \"{1}\" to \"{2}\": {3}") % source.string() % target.string() % e.what() << endl;
-	}
-}
 
-bool MetadataManager::save()
-{
-	XOJ_CHECK_TYPE(MetadataManager);
+	path folder = Util::getConfigSubfolder("metadata");
+	string path = folder.c_str();
+	path += "/";
+	gint64 time = g_get_real_time();
+	path += std::to_string(time);
+	path += ".metadata";
 
-	this->cleanupMetadata();
-	
-	try
-	{
-		bp::ini_parser::write_ini(getFilePath().string(), *this->config);
-		return true;
-	}
-	catch (bp::ini_parser_error const& e)
-	{
-		cout << _F("Could not write metadata file: {1} ({2})") % getFilePath().string() % e.what() << endl;
-		return false;
-	}
-}
-
-bool MetadataManager::save(MetadataManager* man, basio::deadline_timer* t)
-{
-	XOJ_CHECK_TYPE_OBJ(man, MetadataManager);
-	
-	if (t != NULL)
-	{
-		t->expires_at(t->expires_at() + boost::posix_time::seconds(REFRESH_SEC));
-		t->async_wait(boost::bind(save, man, t));
-	}
-	
-	return man->save();
-}
-
-void MetadataManager::loadConfigFile()
-{
-	XOJ_CHECK_TYPE(MetadataManager);
-	
-	if (this->config)
-	{
-		return;
-	}
-	
-	config = new bp::ptree();
-	
-	path filepath = getFilePath();
-	if (bf::exists(filepath))
-	{
-		try
-		{
-			bp::ini_parser::read_ini(filepath.string(), *config);
-		}
-		catch (bp::ini_parser_error const& e)
-		{
-			cout << _F("Metadata file \"{1}\" is invalid: {2}") % filepath.string() % e.what() << endl;
-		}
-	}
-}
-
-bool MetadataManager::getInt(path p, string name, int& value)
-{
-	XOJ_CHECK_TYPE(MetadataManager);
-
-	if (p.empty())
-	{
-		return false;
-	}
-
-	loadConfigFile();
-
-	try
-	{
-		value = config->get_child(getINIpathURI(p)).get<int>(name);
-		return true;
-	}
-	catch (std::exception const& e)
-	{
-		return false;
-	}
-}
-
-bool MetadataManager::getDouble(path p, string name, double& value)
-{
-	XOJ_CHECK_TYPE(MetadataManager);
-
-	if (p.empty())
-	{
-		return false;
-	}
-	loadConfigFile();
-
-	try
-	{
-		value = config->get_child(getINIpathURI(p)).get<int>(name);
-		return true;
-	}
-	catch (std::exception const& e)
-	{
-		return false;
-	}
-}
-
-bool MetadataManager::getString(path p, string name, string& value)
-{
-	XOJ_CHECK_TYPE(MetadataManager);
-
-	if (p.empty())
-	{
-		return false;
-	}
-
-	loadConfigFile();
-
-	try
-	{
-		value = config->get_child(getINIpathURI(p)).get<string>(name);
-		return true;
-	}
-	catch (std::exception const& e)
-	{
-		return false;
-	}
-}
-
-path MetadataManager::getFilePath()
-{
-	return Util::getConfigFile(METADATA_FILE);
-}
-
-void MetadataManager::pause()
-{
-	this->paused = true;
-}
-void MetadataManager::resume()
-{
-	this->paused = false;
-}
-
-//kinda workaround for now – it probably wouldn't work on Windows
-bp::ptree::path_type MetadataManager::getINIpathURI(path p)
-{
-#ifdef _WIN32
-	string spath = p.string();
-	StringUtils::replace_all_chars(spath, {replace_pair('\\', "/")});
-	return getINIpath(CONCAT("file://", spath));
-#else
-	return getINIpath(std::string("file://") + p.string());
-#endif
-}
-
-
-bp::ptree::path_type MetadataManager::getINIpath(string s)
-{
-	return bp::ptree::path_type(s, '\n');
+	ofstream out;
+	out.open(path.c_str());
+	out << "XOJ-METADATA/1.0\n";
+	out << file << "\n";
+	out << "page=" << page << "\n";
+	out << "zoom=" << zoom << "\n";
+	out.close();
 }
