@@ -1512,31 +1512,21 @@ void Control::insertNewPage(size_t position)
 		{
 			this->doc->lock();
 			PdfPagesDialog* dlg = new PdfPagesDialog(this->gladeSearchPath, this->doc, this->settings);
-			for (size_t i = 0; i < doc->getPageCount(); i++)
-			{
-				PageRef p = doc->getPage(i);
-				if (p->getBackgroundType() == BACKGROUND_TYPE_PDF && p->getPdfPageNr() != size_t_npos)
-				{
-					dlg->setPageUsed(i);
-				}
-			}
 
 			dlg->show(GTK_WINDOW(this->win->getWindow()));
 
-			size_t selected = dlg->getSelectedPage();
+			int selected = dlg->getSelectedPage();
 			delete dlg;
 
-			if (selected == size_t_npos || selected >= doc->getPdfPageCount())
+			if (selected >= 0 && selected < doc->getPdfPageCount())
 			{
-				// page is automatically deleted
-				return;
+				// no need to set a type, if we set the page number the type is also set
+				page->setBackgroundPdfPageNr(selected);
+
+				XojPopplerPage* p = doc->getPdfPage(selected);
+				page->setSize(p->getWidth(), p->getHeight());
 			}
 
-			// no need to set a type, if we set the page number the type is also set
-			page->setBackgroundPdfPageNr(selected);
-
-			XojPopplerPage* p = doc->getPdfPage(selected);
-			page->setSize(p->getWidth(), p->getHeight());
 			this->doc->unlock();
 		}
 	}
@@ -1708,31 +1698,19 @@ void Control::setPageBackground(ActionType type)
 		else
 		{
 			this->doc->lock();
-
 			PdfPagesDialog* dlg = new PdfPagesDialog(this->gladeSearchPath, this->doc, this->settings);
-			for (size_t i = 0; i < doc->getPageCount(); i++)
-			{
-				PageRef p = doc->getPage(i);
-				if (p->getBackgroundType() == BACKGROUND_TYPE_PDF && p->getPdfPageNr() != size_t_npos)
-				{
-					dlg->setPageUsed(i);
-				}
-			}
-
 			this->doc->unlock();
 
 			dlg->show(GTK_WINDOW(this->win->getWindow()));
 
-			size_t selected = dlg->getSelectedPage();
+			int selected = dlg->getSelectedPage();
 			delete dlg;
 
-			if (selected == size_t_npos || selected >= doc->getPdfPageCount())
+			if (selected >= 0 && selected < doc->getPdfPageCount())
 			{
-				return;
+				// no need to set a type, if we set the page number the type is also set
+				page->setBackgroundPdfPageNr(selected);
 			}
-
-			// no need to set a type, if we set the page number the type is also set
-			page->setBackgroundPdfPageNr(selected);
 		}
 	}
 

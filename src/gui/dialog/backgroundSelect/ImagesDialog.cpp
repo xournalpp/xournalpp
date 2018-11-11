@@ -7,8 +7,7 @@
 
 
 ImagesDialog::ImagesDialog(GladeSearchpath* gladeSearchPath, Document* doc, Settings* settings)
- : BackgroundSelectDialogBase(gladeSearchPath, doc, settings, "images.glade", "ImagesDialog"),
-	confirmed(false)
+ : BackgroundSelectDialogBase(gladeSearchPath, doc, settings, "images.glade", "ImagesDialog")
 {
 	XOJ_INIT_TYPE(ImagesDialog);
 

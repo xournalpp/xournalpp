@@ -79,11 +79,23 @@ THIS TEXT IS A PLACEHOLDER!</property>
               </packing>
             </child>
             <child>
-              <placeholder/>
+              <object class="GtkScrolledWindow" id="scrollContents">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="shadow_type">in</property>
+                <child>
+                  <placeholder/>
+                </child>
+              </object>
+              <packing>
+                <property name="expand">True</property>
+                <property name="fill">True</property>
+                <property name="position">1</property>
+              </packing>
             </child>
           </object>
           <packing>
-            <property name="expand">False</property>
+            <property name="expand">True</property>
             <property name="fill">True</property>
             <property name="position">1</property>
           </packing>
@@ -91,8 +103,8 @@ THIS TEXT IS A PLACEHOLDER!</property>
       </object>
     </child>
     <action-widgets>
-      <action-widget response="cancel">buttonClose</action-widget>
-      <action-widget response="ok">buttonOk</action-widget>
+      <action-widget response="0">buttonClose</action-widget>
+      <action-widget response="0">buttonOk</action-widget>
     </action-widgets>
   </object>
 </interface>

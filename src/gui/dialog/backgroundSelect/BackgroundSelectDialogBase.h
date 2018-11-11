@@ -52,6 +52,11 @@ protected:
 	Document* doc;
 
 	/**
+	 * Selection confirmed
+	 */
+	bool confirmed;
+
+	/**
 	 * Selected image, none if negative
 	 */
 	int selected;

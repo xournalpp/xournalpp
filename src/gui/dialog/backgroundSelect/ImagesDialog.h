@@ -46,9 +46,4 @@ private:
 
 private:
 	XOJ_TYPE_ATTRIB;
-
-	/**
-	 * Selection confirmed
-	 */
-	bool confirmed;
 };

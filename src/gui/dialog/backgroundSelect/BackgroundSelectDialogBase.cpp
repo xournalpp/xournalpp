@@ -4,13 +4,13 @@
 
 BackgroundSelectDialogBase::BackgroundSelectDialogBase(GladeSearchpath* gladeSearchPath, Document* doc, Settings* settings, string glade, string mainWnd)
  : GladeGui(gladeSearchPath, glade, mainWnd),
-   settings(settings), lastWidth(0), selected(-1), doc(doc)
+   settings(settings), lastWidth(0), selected(-1), doc(doc), confirmed(false)
 {
 	XOJ_INIT_TYPE(BackgroundSelectDialogBase);
 
 	this->layoutContainer = gtk_layout_new(NULL, NULL);
 	gtk_widget_show(this->layoutContainer);
-	this->scrollPreview = get("scrollContens");
+	this->scrollPreview = get("scrollContents");
 	gtk_container_add(GTK_CONTAINER(scrollPreview), layoutContainer);
 
 	gtk_widget_set_events(this->layoutContainer, GDK_EXPOSURE_MASK);
