@@ -47,8 +47,11 @@ GFile* ImageOpenDlg::show(GtkWindow* win, Settings* settings, bool localOnly, bo
 	}
 
 	char* folder = gtk_file_chooser_get_current_folder_uri(GTK_FILE_CHOOSER(dialog));
-	settings->setLastImagePath(folder);
-	g_free(folder);
+	if (folder != NULL)
+	{
+		settings->setLastImagePath(folder);
+		g_free(folder);
+	}
 
 	gtk_widget_destroy(dialog);
 
