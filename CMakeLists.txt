@@ -146,7 +146,9 @@ if (BUILD_POPPLER)
     libpoppler-glib.so
     
     ${OPENJPEG_LIBRARIES}
-    -lopenjpeg
+# Comment out, seems to be a problem on Debian...
+# Do we need to detect something to enable / disable?
+#    -lopenjpeg
     ${JPEG_LIBRARIES}
     ${PopplerLibs_LDFLAGS}
     ${lcms_LDFLAGS}
