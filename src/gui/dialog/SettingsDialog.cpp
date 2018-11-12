@@ -24,7 +24,6 @@ SettingsDialog::SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* setti
 	g_return_if_fail(slider != NULL);
 	g_signal_connect(slider, "change-value", G_CALLBACK(&zoomcallibSliderChanged), this);
 
-	g_signal_connect(get("cbSettingXinput"), "toggled", G_CALLBACK(&toolboxToggledCallback), this);
 	g_signal_connect(get("cbSettingPresureSensitivity"), "toggled", G_CALLBACK(&toolboxToggledCallback), this);
 	g_signal_connect(get("cbAutosave"), "toggled", G_CALLBACK(&toolboxToggledCallback), this);
 
@@ -135,12 +134,8 @@ void SettingsDialog::toolboxToggled()
 {
 	XOJ_CHECK_TYPE(SettingsDialog);
 
-	// TODO Remove GtkToggleButton* cbSettingXinput = GTK_TOGGLE_BUTTON(get("cbSettingXinput"));
 	GtkWidget* cbSettingPresureSensitivity = get("cbSettingPresureSensitivity");
 	GtkWidget* labePresureSensitivity = get("labePresureSensitivity");
-	GtkWidget* labeIgnorCoreEvents = get("labeIgnorCoreEvents");
-	GtkWidget* cbIgnorCoreEvents = get("cbIgnorCoreEvents");
-	GtkWidget* labeXInput = get("labeXInput");
 
 	GtkWidget* cbAutosave = get("cbAutosave");
 	bool autosaveEnabled = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(cbAutosave));
@@ -150,16 +145,12 @@ void SettingsDialog::toolboxToggled()
 	// TODO set default correct and remove this lines
 	gtk_widget_set_sensitive(cbSettingPresureSensitivity, true);
 	gtk_widget_set_sensitive(labePresureSensitivity, true);
-	gtk_widget_set_sensitive(labeIgnorCoreEvents, true);
-	gtk_widget_set_sensitive(cbIgnorCoreEvents, true);
 }
 
 void SettingsDialog::load()
 {
 	XOJ_CHECK_TYPE(SettingsDialog);
 
-	// TODO Remove Checkbox loadCheckbox("cbSettingXinput", settings->isXinputEnabled());
-	// TODO Remove Checkbox loadCheckbox("cbIgnorCoreEvents", settings->isIgnoreCoreEvents());
 	loadCheckbox("cbSettingPresureSensitivity", settings->isPresureSensitivity());
 	loadCheckbox("cbShowSidebarRight", settings->isSidebarOnRight());
 	loadCheckbox("cbShowScrollbarLeft", settings->isScrollbarOnLeft());
