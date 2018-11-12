@@ -4,6 +4,8 @@
 #include "PrintHandler.h"
 
 #include "gui/Cursor.h"
+extern int currentToolType;
+
 #include "gui/dialog/AboutDialog.h"
 #include "gui/dialog/GotoDialog.h"
 #include "gui/dialog/FormatDialog.h"
@@ -2103,6 +2105,10 @@ void Control::selectTool(ToolType type)
 	XOJ_CHECK_TYPE(Control);
 
 	toolHandler->selectTool(type);
+	currentToolType = type;
+	if(win){
+		(win->getXournal()->getViewFor(getCurrentPageNo()))->rerenderPage();
+	}
 }
 
 void Control::selectDefaultTool()

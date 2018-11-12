@@ -2,6 +2,9 @@
 
 #include "TextView.h"
 
+#include "gui/Cursor.h"
+extern int currentToolType;
+
 #include "control/tools/EditSelection.h"
 #include "control/tools/Selection.h"
 #include "model/BackgroundImage.h"
@@ -89,7 +92,10 @@ void DocumentView::drawStroke(cairo_t* cr, Stroke* s, int startPoint, double sca
 	{
 		cairo_set_operator(cr, CAIRO_OPERATOR_SOURCE);
 		// Set the color
-		applyColor(cr, s);
+		if((s->getAudioFilename() == "") && (currentToolType == TOOL_PLAY_OBJECT))
+			applyColor(cr,s,100);
+		else
+			applyColor(cr,s);
 	}
 
 	cairo_set_line_join(cr, CAIRO_LINE_JOIN_ROUND);

@@ -6,6 +6,8 @@
 #include <Util.h>
 #include <pixbuf-utils.h>
 
+int currentToolType;
+
 /************** drawing nice cursors *********/
 
 static unsigned char CURSOR_HIGLIGHTER_BITS[] = {
@@ -227,7 +229,8 @@ void Cursor::updateCursor()
 	{
 		ToolHandler* handler = control->getToolHandler();
 		ToolType type = handler->getToolType();
-
+		currentToolType = type;
+		
 		if (type == TOOL_HAND)
 		{
 			if (this->mouseDown)
