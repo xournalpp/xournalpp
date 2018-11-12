@@ -3,6 +3,7 @@
 #include "gui/XournalView.h"
 #include "control/Control.h"
 #include "undo/InsertUndoAction.h"
+#include <cmath>
 
 RulerHandler::RulerHandler(XournalView* xournal, XojPageView* redrawable, PageRef page)
  : BaseStrokeHandler(xournal, redrawable, page)
