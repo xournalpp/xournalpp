@@ -5,6 +5,7 @@
 
 #include <Util.h>
 #include <pixbuf-utils.h>
+#include <cmath>
 
 Cursor::Cursor(Control* control)
 {
