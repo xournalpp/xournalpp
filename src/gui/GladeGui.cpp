@@ -54,7 +54,7 @@ GtkWidget* GladeGui::get(string name)
 	GtkWidget* w = GTK_WIDGET(gtk_builder_get_object(builder, name.c_str()));
 	if (w == NULL)
 	{
-		g_warning("GladeGui::get: Could not find glade Widget: \"%s\"", name);
+		g_warning("GladeGui::get: Could not find glade Widget: \"%s\"", name.c_str());
 	}
 	return w;
 }

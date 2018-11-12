@@ -39,6 +39,8 @@ private:
 	GdkCursor* eraserCursor();
 	GdkCursor* highlighterCursor();
 
+	GdkCursor* createHighlighterOrPenCursor(int size, double alpha);
+
 private:
 	XOJ_TYPE_ATTRIB;
 

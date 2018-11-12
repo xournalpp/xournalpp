@@ -124,71 +124,6 @@ void Cursor::setInvisible(bool invisible)
 	updateCursor();
 }
 
-GdkCursor* Cursor::getPenCursor()
-{
-	XOJ_CHECK_TYPE(Cursor);
-
-	ToolHandler* handler = control->getToolHandler();
-
-	bool big = control->getSettings()->isShowBigCursor();
-
-	int height = 3;
-	int width = 3;
-	if (big)
-	{
-		height = 22;
-		width = 15;
-	}
-
-	cairo_surface_t* crCursor = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, width, height);
-	cairo_t* cr = cairo_create(crCursor);
-
-	Util::cairo_set_source_rgbi(cr, handler->getColor());
-
-	if (big)
-	{
-		cairo_set_source_rgb(cr, 1, 1, 1);
-		cairo_set_line_width(cr, 1.2);
-		cairo_move_to(cr, 1.5, 1.5);
-		cairo_line_to(cr, 2, 19);
-		cairo_line_to(cr, 5.5, 15.5);
-		cairo_line_to(cr, 8.5, 20.5);
-		cairo_line_to(cr, 10.5, 19);
-		cairo_line_to(cr, 8.5, 14);
-		cairo_line_to(cr, 13, 14);
-		cairo_close_path(cr);
-		cairo_fill_preserve(cr);
-
-		cairo_set_source_rgb(cr, 0, 0, 0);
-		cairo_stroke(cr);
-
-		Util::cairo_set_source_rgbi(cr, handler->getColor());
-		cairo_rectangle(cr, 0, 0, 3, 3);
-		cairo_fill(cr);
-	}
-	else
-	{
-		cairo_rectangle(cr, 0, 0, 3, 3);
-		cairo_fill(cr);
-	}
-
-	cairo_destroy(cr);
-
-	GdkPixbuf* pixbuf = xoj_pixbuf_get_from_surface(crCursor, 0, 0, width, height);
-
-	//	cairo_surface_write_to_png(crCursor, "/home/andreas/xoj-cursor-orig.png");
-	//	gdk_pixbuf_save(pixbuf, "/home/andreas/xoj-cursor.png", "png", NULL, NULL);
-
-	cairo_surface_destroy(crCursor);
-
-	GdkCursor* cursor = gdk_cursor_new_from_pixbuf(
-			gtk_widget_get_display(control->getWindow()->getXournal()->getWidget()), pixbuf, 1, 1);
-
-	g_object_unref(pixbuf);
-
-	return cursor;
-}
-
 void Cursor::updateCursor()
 {
 	XOJ_CHECK_TYPE(Cursor);
@@ -318,9 +253,6 @@ void Cursor::updateCursor()
 
 GdkCursor* Cursor::eraserCursor()
 {
-	Tool& eraser = control->getToolHandler()->getTool(TOOL_ERASER);
-	GdkCursor* cursor = NULL;
-
 	const double cursorSize = 8;
 
 	cairo_surface_t* surface = cairo_image_surface_create(CAIRO_FORMAT_ARGB32,
@@ -341,10 +273,10 @@ GdkCursor* Cursor::eraserCursor()
 
 	cairo_destroy(cr);
 
-	cursor = gdk_cursor_new_from_surface(gdk_display_get_default(),
-	                                    surface,
-	                                    cursorSize/2.,
-	                                    cursorSize/2.);
+	GdkCursor* cursor = gdk_cursor_new_from_surface(gdk_display_get_default(),
+													surface,
+													cursorSize/2.,
+													cursorSize/2.);
 
 	cairo_surface_destroy(surface);
 
@@ -353,43 +285,77 @@ GdkCursor* Cursor::eraserCursor()
 
 GdkCursor* Cursor::highlighterCursor()
 {
-	Tool& highlighter = control->getToolHandler()->getTool(TOOL_HILIGHTER);
+	XOJ_CHECK_TYPE(Cursor);
 
-	const double cursorSize = 8;
+	return createHighlighterOrPenCursor(5, 120 / 255.0);
+}
 
-	GdkCursor* cursor = NULL;
-	int rgb = highlighter.getColor();
 
+GdkCursor* Cursor::getPenCursor()
+{
+	XOJ_CHECK_TYPE(Cursor);
+
+	return createHighlighterOrPenCursor(3, 1.0);
+}
+
+GdkCursor* Cursor::createHighlighterOrPenCursor(int size, double alpha)
+{
+	XOJ_CHECK_TYPE(Cursor);
+
+	int rgb = control->getToolHandler()->getColor();
 	double r = ((rgb >> 16) & 0xff) / 255.0;
 	double g = ((rgb >> 8) & 0xff) / 255.0;
 	double b = (rgb & 0xff) / 255.0;
 
-	cairo_surface_t* surface = cairo_image_surface_create(CAIRO_FORMAT_ARGB32,
-	                                                      cursorSize,
-	                                                      cursorSize);
+	bool big = control->getSettings()->isShowBigCursor();
 
-	cairo_t* cr = cairo_create(surface);
+	int height = size;
+	int width = size;
+	if (big)
+	{
+		height = 22;
+		width = 12;
+	}
 
-	cairo_rectangle(cr, 0, 0, cursorSize, cursorSize);
-	cairo_set_source_rgba(cr, 1, 1, 1, 0);
-	cairo_fill(cr);
+	cairo_surface_t* crCursor = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, width, height);
+	cairo_t* cr = cairo_create(crCursor);
 
-	cairo_arc(cr, cursorSize/2., cursorSize/2., cursorSize/2.-1, 0, 2*M_PI);
+	if (big)
+	{
+		cairo_set_source_rgb(cr, 1, 1, 1);
+		cairo_set_line_width(cr, 1.2);
+		cairo_move_to(cr, 1.5, 1.5);
+		cairo_line_to(cr, 2, 19);
+		cairo_line_to(cr, 5.5, 15.5);
+		cairo_line_to(cr, 8.5, 20.5);
+		cairo_line_to(cr, 10.5, 19);
+		cairo_line_to(cr, 8.5, 14);
+		cairo_line_to(cr, 13, 14);
+		cairo_close_path(cr);
+		cairo_fill_preserve(cr);
 
-	cairo_set_source_rgba(cr, r, g, b, 120/255.);
+		cairo_set_source_rgb(cr, 0, 0, 0);
+		cairo_stroke(cr);
+	}
 
-	cairo_set_operator(cr, CAIRO_OPERATOR_OVER);
-
+	cairo_set_source_rgba(cr, r, g, b, alpha);
+	cairo_rectangle(cr, 0, 0, size, size);
 	cairo_fill(cr);
 
 	cairo_destroy(cr);
 
-	cursor = gdk_cursor_new_from_surface(gdk_display_get_default(),
-	                                     surface,
-	                                     cursorSize/2.,
-	                                     cursorSize/2.);
+	GdkPixbuf* pixbuf = xoj_pixbuf_get_from_surface(crCursor, 0, 0, width, height);
 
-	cairo_surface_destroy(surface);
+	//	cairo_surface_write_to_png(crCursor, "/home/andreas/xoj-cursor-orig.png");
+	//	gdk_pixbuf_save(pixbuf, "/home/andreas/xoj-cursor.png", "png", NULL, NULL);
+
+	cairo_surface_destroy(crCursor);
+
+	GdkCursor* cursor = gdk_cursor_new_from_pixbuf(
+			gtk_widget_get_display(control->getWindow()->getXournal()->getWidget()), pixbuf, 1, 1);
+
+	g_object_unref(pixbuf);
 
 	return cursor;
 }
+
