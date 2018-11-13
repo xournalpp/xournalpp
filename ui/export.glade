@@ -94,7 +94,7 @@
                         <property name="can_focus">True</property>
                         <property name="tooltip_text" translatable="yes">This option only affects PNG output</property>
                         <property name="invisible_char">●</property>
-                        <property name="text" translatable="yes">300</property>
+                        <property name="text">300</property>
                         <property name="primary_icon_activatable">False</property>
                         <property name="secondary_icon_activatable">False</property>
                         <property name="adjustment">adjustment1</property>

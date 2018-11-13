@@ -104,7 +104,7 @@
                   <object class="GtkLabel" id="lbVersion">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <property name="label" translatable="yes">X.X.X</property>
+                    <property name="label">X.X.X</property>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -128,7 +128,7 @@
                   <object class="GtkLabel" id="lbBuildDate">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <property name="label" translatable="yes">DATE TIME</property>
+                    <property name="label">DATE TIME</property>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -164,7 +164,7 @@ Authors:</property>
               <object class="GtkLabel" id="lbAuthors">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="label" translatable="yes">Andreas Butti, 2010-2018
+                <property name="label">Andreas Butti, 2010-2018
 Wilson Brenna, 2012-2015 (tex support)
 Marek Pikuła, 2015</property>
                 <property name="use_markup">True</property>
