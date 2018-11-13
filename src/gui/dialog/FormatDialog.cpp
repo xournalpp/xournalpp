@@ -40,13 +40,6 @@ FormatDialog::FormatDialog(GladeSearchpath* gladeSearchPath, Settings* settings,
 	gtk_spin_button_set_value(GTK_SPIN_BUTTON(get("spinHeight")), this->origHeight / this->scale);
 
 	GtkWidget* cbUnit = get("cbUnit");
-	GtkListStore* store = gtk_list_store_new(1, G_TYPE_STRING);
-	gtk_combo_box_set_model(GTK_COMBO_BOX(cbUnit), GTK_TREE_MODEL(store));
-	g_object_unref(store);
-
-	GtkCellRenderer* cell = gtk_cell_renderer_text_new();
-	gtk_cell_layout_pack_start(GTK_CELL_LAYOUT(cbUnit), cell, TRUE);
-	gtk_cell_layout_set_attributes(GTK_CELL_LAYOUT(cbUnit), cell, "text", 0, NULL);
 
 	for (int i = 0; i < XOJ_UNIT_COUNT; i++)
 	{
@@ -55,11 +48,11 @@ FormatDialog::FormatDialog(GladeSearchpath* gladeSearchPath, Settings* settings,
 	gtk_combo_box_set_active(GTK_COMBO_BOX(cbUnit), this->selectedScale);
 
 	GtkWidget* cbTemplate = get("cbTemplate");
-	store = gtk_list_store_new(2, G_TYPE_STRING, G_TYPE_POINTER);
+	GtkListStore* store = gtk_list_store_new(2, G_TYPE_STRING, G_TYPE_POINTER);
 	gtk_combo_box_set_model(GTK_COMBO_BOX(cbTemplate), GTK_TREE_MODEL(store));
 	g_object_unref(store);
 
-	cell = gtk_cell_renderer_text_new();
+	GtkCellRenderer* cell = gtk_cell_renderer_text_new();
 	gtk_cell_layout_pack_start(GTK_CELL_LAYOUT(cbTemplate), cell, TRUE);
 	gtk_cell_layout_set_attributes(GTK_CELL_LAYOUT(cbTemplate), cell, "text", 0, NULL);
 
