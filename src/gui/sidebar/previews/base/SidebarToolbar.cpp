@@ -35,12 +35,11 @@ void SidebarToolbar::btUpClicked(GtkToolButton* toolbutton, SidebarToolbar* tool
 	XOJ_CHECK_TYPE_OBJ(toolbar, SidebarToolbar);
 
 	Document* doc = toolbar->control->getDocument();
-	PageRef swapped_page, other_page;
 	doc->lock();
 
 	size_t page = doc->indexOf(toolbar->currentPage);
-	swapped_page = toolbar->currentPage;
-	other_page = doc->getPage(page - 1);
+	PageRef swappedPage = toolbar->currentPage;
+	PageRef otherPage = doc->getPage(page - 1);
 	if (page != size_t_npos)
 	{
 		doc->deletePage(page);
@@ -49,7 +48,7 @@ void SidebarToolbar::btUpClicked(GtkToolButton* toolbutton, SidebarToolbar* tool
 	doc->unlock();
 
 	UndoRedoHandler* undo = toolbar->control->getUndoRedoHandler();
-	undo->addUndoAction(new SwapUndoAction(page - 1, true, swapped_page, other_page));
+	undo->addUndoAction(new SwapUndoAction(page - 1, true, swappedPage, otherPage));
 
 	toolbar->control->firePageDeleted(page);
 	toolbar->control->firePageInserted(page - 1);

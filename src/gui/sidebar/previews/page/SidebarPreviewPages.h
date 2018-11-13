@@ -48,6 +48,12 @@ public:
 	virtual void pageDeleted(size_t page);
 
 private:
+	/**
+	 * Unselect the last selected page, if any
+	 */
+	void unselectPage();
+
+private:
 	XOJ_TYPE_ATTRIB;
 
 };
