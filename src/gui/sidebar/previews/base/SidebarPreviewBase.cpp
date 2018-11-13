@@ -64,6 +64,7 @@ SidebarPreviewBase::~SidebarPreviewBase()
 	this->layoutmanager = NULL;
 
 	g_object_unref(this->table);
+	this->table = NULL;
 
 	for (SidebarPreviewBaseEntry* p : this->previews)
 	{

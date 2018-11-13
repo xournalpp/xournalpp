@@ -99,8 +99,16 @@ void SidebarPreviewPages::pageDeleted(size_t page)
 {
 	XOJ_CHECK_TYPE(SidebarPreviewPages);
 
-	delete this->previews[page];
-	this->previews.erase(this->previews.begin() + page);
+	if (page < 0 || page >= previews.size())
+	{
+		return;
+	}
+
+	delete previews[page];
+	previews.erase(previews.begin() + page);
+
+	// Unselect page, to prevent double selection displaying
+	unselectPage();
 
 	layout();
 }
@@ -120,7 +128,23 @@ void SidebarPreviewPages::pageInserted(size_t page)
 
 	gtk_layout_put(GTK_LAYOUT(this->iconViewPreview), p->getWidget(), 0, 0);
 
+	// Unselect page, to prevent double selection displaying
+	unselectPage();
+
 	layout();
+}
+
+/**
+ * Unselect the last selected page, if any
+ */
+void SidebarPreviewPages::unselectPage()
+{
+	XOJ_CHECK_TYPE(SidebarPreviewPages);
+
+	for (SidebarPreviewBaseEntry* p : this->previews)
+	{
+		p->setSelected(false);
+	}
 }
 
 void SidebarPreviewPages::pageSelected(size_t page)

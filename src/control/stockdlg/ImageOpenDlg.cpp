@@ -47,6 +47,9 @@ GFile* ImageOpenDlg::show(GtkWindow* win, Settings* settings, bool localOnly, bo
 	}
 
 	char* folder = gtk_file_chooser_get_current_folder_uri(GTK_FILE_CHOOSER(dialog));
+
+	// e.g. from last used files, there is no folder selected
+	// in this case do not store the folder
 	if (folder != NULL)
 	{
 		settings->setLastImagePath(folder);
