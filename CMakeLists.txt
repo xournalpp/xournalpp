@@ -98,20 +98,34 @@ pkg_check_modules (Libxml REQUIRED "libxml-2.0 >= 2.0.0")
 add_includes_ldflags ("${Libxml_LDFLAGS}" "${Libxml_INCLUDE_DIRS}")
 
 # Poppler
-option (BUILD_POPPLER "Build the most recent version of Poppler" OFF)
+option (BUILD_POPPLER "Build Poppler from git or other source" OFF)
+option (POPPLER_GIT_VER "Version of Poppler to build leaf blank for most recent" "poppler-0.61.1")
+option (POPPLER_GIT "Use git version of Poppler" ON)
+set(POPPLER_DIR "/path/to/poppler/source" CACHE STRING "Directory with poppler")
 if (BUILD_POPPLER)
 
-  set (POPPLER_PREFIX "${CMAKE_BINARY_DIR}/poppler-prefix")
-
   include (ExternalProject)
-  ExternalProject_Add (poppler
-    GIT_REPOSITORY "git://git.freedesktop.org/git/poppler/poppler"
-    GIT_TAG "poppler-0.61.1"
-    PREFIX "${POPPLER_PREFIX}"
+  set (POPPLER_PREFIX "${CMAKE_BINARY_DIR}/poppler-prefix")
+  set (POPPLER_CMAKE_ARGS "-DBUILD_QT5_TESTS:BOOL='0' -DBUILD_QT5:BOOL='0' -DENABLE_QT4:BOOL='0' -DBUILD_QT4_TESTS:BOOL='0' -DENABLE_UTILS:BOOL='0' -DWITH_Qt4:BOOL='0' -DENABLE_QT5:BOOL='0'")
+  if (POPPLER_GIT)
 
-    CMAKE_ARGS -DBUILD_QT5_TESTS:BOOL="0" -DENABLE_QT4:BOOL="0" -DBUILD_QT4_TESTS:BOOL="0" -DENABLE_UTILS:BOOL="0" -DWITH_Qt4:BOOL="0" -DENABLE_QT5:BOOL="0"
-    INSTALL_COMMAND ""
-  )
+    ExternalProject_Add (poppler
+        GIT_REPOSITORY "git://git.freedesktop.org/git/poppler/poppler"
+        GIT_TAG "${POPPLER_VER}"
+        PREFIX "${POPPLER_PREFIX}"
+
+        CMAKE_ARGS ${POPPLER_CMAKE_ARGS}
+        INSTALL_COMMAND ""
+    )
+  else ()
+     ExternalProject_Add (poppler
+        SOURCE_DIR "${POPPLER_DIR}"
+        PREFIX "${POPPLER_PREFIX}"
+
+        CMAKE_ARGS ${POPPLER_CMAKE_ARGS}
+        INSTALL_COMMAND ""
+    )
+  endif()
   
   # Additional packages required by Poppler
   find_package (OpenJPEG REQUIRED)
