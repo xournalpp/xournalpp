@@ -111,7 +111,7 @@ if (BUILD_POPPLER)
 
     ExternalProject_Add (poppler
         GIT_REPOSITORY "git://git.freedesktop.org/git/poppler/poppler"
-        GIT_TAG "${POPPLER_VER}"
+        GIT_TAG "${POPPLER_GIT_VER}"
         PREFIX "${POPPLER_PREFIX}"
 
         CMAKE_ARGS ${POPPLER_CMAKE_ARGS}
