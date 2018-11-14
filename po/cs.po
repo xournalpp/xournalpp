@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp 1.0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-11-12 21:32+0100\n"
+"POT-Creation-Date: 2018-11-14 19:55+0100\n"
 "PO-Revision-Date: 2017-09-18 09:58+0200\n"
 "Last-Translator: Jan Hrdina <jan.hrdka@gmail.com>\n"
 "Language-Team: čeština <>\n"
@@ -318,7 +318,7 @@ msgstr "Soubor s názvem „{1}“ již existuje. Chcete jej nahradit?"
 msgid "About Xournal"
 msgstr "O aplikaci Xournal"
 
-#: ../ui/main.glade:1102
+#: ../ui/main.glade:1103
 msgid "Add/Edit Tex"
 msgstr "Přidat/Upravit TeX"
 
@@ -520,7 +520,7 @@ msgstr "Nelze zapsat pozadí „{1}“. Přesto pokračujeme."
 msgid "Current page"
 msgstr "Aktuální stránka"
 
-#: ../src/gui/dialog/FormatDialog.cpp:119
+#: ../src/gui/dialog/FormatDialog.cpp:112
 msgid "Custom"
 msgstr "Vlastní"
 
@@ -544,7 +544,7 @@ msgstr "Výchozí"
 msgid "Delete"
 msgstr "Smazat"
 
-#: ../ui/main.glade:645
+#: ../ui/main.glade:646
 msgid "Delete Layer"
 msgstr "Smazat vrstvu"
 
@@ -564,7 +564,7 @@ msgstr "Smazat vrstvu"
 msgid "Delete stroke"
 msgstr "Odstranit čáru"
 
-#: ../ui/main.glade:1313
+#: ../ui/main.glade:1314
 #, fuzzy
 msgid "Delete this page"
 msgstr "Smazat aktuální stránku"
@@ -667,7 +667,7 @@ msgstr "Vymazat čáru"
 msgid "Eraser"
 msgstr "Guma"
 
-#: ../ui/main.glade:978
+#: ../ui/main.glade:979
 msgid "Eraser Optio_ns"
 msgstr "_Nastavení gumy"
 
@@ -763,11 +763,11 @@ msgstr ""
 msgid "Filename: {1}"
 msgstr "Název souboru: {1}"
 
-#: ../ui/main.glade:1508
+#: ../ui/main.glade:1509
 msgid "Find next occurrence of the search string"
 msgstr ""
 
-#: ../ui/main.glade:1487
+#: ../ui/main.glade:1488
 msgid "Find previous occurrence of the search string"
 msgstr ""
 
@@ -779,7 +779,7 @@ msgstr "Písmo"
 msgid "Found mathtex in your path! TeX area is {1}"
 msgstr "Mathtex nalezen ve vaší standardní cestě! TeX area je {1}"
 
-#: ../ui/main.glade:288
+#: ../ui/main.glade:289
 msgid "Fullscreen"
 msgstr "Celá obrazovka"
 
@@ -833,7 +833,7 @@ msgstr "Šedá"
 msgid "Green"
 msgstr "Zelená"
 
-#: ../ui/main.glade:903
+#: ../ui/main.glade:904
 msgid "H_and Tool"
 msgstr "_Nástroj prohlížení"
 
@@ -859,7 +859,7 @@ msgstr "Skrýt postranní panel"
 msgid "Highlighter"
 msgstr "Zvýrazňovač"
 
-#: ../ui/main.glade:1052
+#: ../ui/main.glade:1053
 #, fuzzy
 msgid "Highlighter Opti_ons"
 msgstr "Volby _zvýrazňovače"
@@ -884,11 +884,11 @@ msgstr "Vstupní zařízení"
 msgid "Insert Latex"
 msgstr "Vložit LaTeX"
 
-#: ../ui/main.glade:548
+#: ../ui/main.glade:549
 msgid "Insert Page Type"
 msgstr "Vkládat stránky typu"
 
-#: ../ui/main.glade:1293
+#: ../ui/main.glade:1294
 msgid "Insert a copy of the current page below"
 msgstr ""
 
@@ -1006,7 +1006,7 @@ msgstr "Přesunout stránku dolů"
 msgid "Move page upwards"
 msgstr "Přesunout stránku nahoru"
 
-#: ../ui/main.glade:491
+#: ../ui/main.glade:492
 msgid "N_ext annotated page"
 msgstr "_Další anotovaná stránka"
 
@@ -1014,15 +1014,15 @@ msgstr "_Další anotovaná stránka"
 msgid "New"
 msgstr "Nový"
 
-#: ../ui/main.glade:531
+#: ../ui/main.glade:532
 msgid "New Page _After"
 msgstr "Nová stránka _před"
 
-#: ../ui/main.glade:523
+#: ../ui/main.glade:524
 msgid "New Page _Before"
 msgstr "Nová stránka _za"
 
-#: ../ui/main.glade:540
+#: ../ui/main.glade:541
 msgid "New Page at _End"
 msgstr "Nová stránka na _konec"
 
@@ -1030,7 +1030,7 @@ msgstr "Nová stránka na _konec"
 msgid "New Xournal"
 msgstr "Nový Xournal"
 
-#: ../ui/main.glade:636
+#: ../ui/main.glade:637
 msgid "New _Layer"
 msgstr "_Nová vrstva"
 
@@ -1110,11 +1110,11 @@ msgstr "PDF soubory"
 msgid "PDF output filename"
 msgstr "Název výstupního PDF"
 
-#: ../ui/main.glade:726
+#: ../ui/main.glade:727
 msgid "P_DF Background"
 msgstr "P_DF pozadí"
 
-#: ../ui/main.glade:500
+#: ../ui/main.glade:501
 #, fuzzy
 msgid "P_revious annotated Page"
 msgstr "_Předchozí anotovaná stránka"
@@ -1151,15 +1151,15 @@ msgstr "Stránky:"
 msgid "Paper Format"
 msgstr "Formát papíru"
 
-#: ../ui/main.glade:668
+#: ../ui/main.glade:669
 msgid "Paper _Color"
 msgstr "_Barva papíru"
 
-#: ../ui/main.glade:660
+#: ../ui/main.glade:661
 msgid "Paper _Format"
 msgstr "_Formát papíru"
 
-#: ../ui/main.glade:676
+#: ../ui/main.glade:677
 msgid "Paper b_ackground"
 msgstr "Pozadí _papíru"
 
@@ -1179,7 +1179,7 @@ msgstr "Vložit"
 msgid "Pen"
 msgstr "Pero"
 
-#: ../ui/main.glade:919
+#: ../ui/main.glade:920
 msgid "Pen _Options"
 msgstr "N_astavení pera"
 
@@ -1191,7 +1191,7 @@ msgstr "Čistá"
 msgid "Predefined"
 msgstr "Předdefinované"
 
-#: ../ui/main.glade:250
+#: ../ui/main.glade:251
 msgid "Preferences"
 msgstr "Nastavení"
 
@@ -1242,7 +1242,7 @@ msgstr ""
 msgid "Resolution:"
 msgstr "Rozlišení:"
 
-#: ../ui/main.glade:849
+#: ../ui/main.glade:850
 msgid "Ru_ler"
 msgstr "Pr_avítko"
 
@@ -1369,7 +1369,7 @@ msgstr "Zobrazit pouze nevyužité stránky (jedna nevyužitá stránka)"
 msgid "Show only not used pages ({1} unused pages)"
 msgstr "Zobrazit pouze nevyužité stránky ({1} nevyužitých stránek)"
 
-#: ../ui/main.glade:297
+#: ../ui/main.glade:298
 msgid "Show sidebar"
 msgstr "Zobrazit postranní panel"
 
@@ -1404,7 +1404,7 @@ msgstr ""
 msgid "Standard"
 msgstr "Standardní"
 
-#: ../ui/main.glade:1626
+#: ../ui/main.glade:1627
 msgid "State PLACEHOLDER"
 msgstr "PROSTOR pro stav"
 
@@ -1420,15 +1420,15 @@ msgstr "Dokument úspěšně uložen do \"\""
 msgid "Supported files"
 msgstr "Podporované soubory"
 
-#: ../ui/main.glade:1252
+#: ../ui/main.glade:1253
 msgid "Swap the current page with the one above"
 msgstr ""
 
-#: ../ui/main.glade:1273
+#: ../ui/main.glade:1274
 msgid "Swap the current page with the one below"
 msgstr ""
 
-#: ../ui/main.glade:312
+#: ../ui/main.glade:313
 msgid "T_oolbars"
 msgstr "Ná_strojové lišty"
 
@@ -1446,7 +1446,7 @@ msgstr "Text"
 msgid "Text %i times found on this page"
 msgstr "Text %ikrát nalezen na této stránce"
 
-#: ../ui/main.glade:1093
+#: ../ui/main.glade:1094
 msgid "Text Font..."
 msgstr "Písmo textu..."
 
@@ -1761,16 +1761,16 @@ msgstr "Přiblížit na 100%"
 msgid "_Annotate PDF"
 msgstr "_Anotovat PDF"
 
-#: ../ui/main.glade:336
+#: ../ui/main.glade:337
 msgid "_Customize"
 msgstr "_Přizpůsobit"
 
-#: ../ui/main.glade:802
+#: ../ui/main.glade:803
 #, fuzzy
 msgid "_Default Tools"
 msgstr "_Výchozí nástroj"
 
-#: ../ui/main.glade:621
+#: ../ui/main.glade:622
 msgid "_Delete Page"
 msgstr "_Smazat stránku"
 
@@ -1778,7 +1778,7 @@ msgstr "_Smazat stránku"
 msgid "_Edit"
 msgstr "Ú_pravy"
 
-#: ../ui/main.glade:762
+#: ../ui/main.glade:763
 msgid "_Eraser"
 msgstr "_Guma"
 
@@ -1790,139 +1790,139 @@ msgstr "_Exportovat jako PDF"
 msgid "_File"
 msgstr "_Soubor"
 
-#: ../ui/main.glade:408
+#: ../ui/main.glade:409
 msgid "_First Page"
 msgstr "_První stránka"
 
-#: ../ui/main.glade:426
+#: ../ui/main.glade:427
 #, fuzzy
 msgid "_Goto Page"
 msgstr "Př_ejít na stránku…"
 
-#: ../ui/main.glade:710
+#: ../ui/main.glade:711
 msgid "_Graph"
 msgstr "Č_tverečkovaný"
 
-#: ../ui/main.glade:1115
+#: ../ui/main.glade:1116
 msgid "_Help"
 msgstr "_Nápověda"
 
-#: ../ui/main.glade:772
+#: ../ui/main.glade:773
 msgid "_Highlighter"
 msgstr "_Zvýrazňovač"
 
-#: ../ui/main.glade:718 ../ui/main.glade:792
+#: ../ui/main.glade:719 ../ui/main.glade:793
 msgid "_Image"
 msgstr "_Obrázek"
 
-#: ../ui/main.glade:513
+#: ../ui/main.glade:514
 msgid "_Journal"
 msgstr "_Zápisník"
 
-#: ../ui/main.glade:444
+#: ../ui/main.glade:445
 msgid "_Last Page"
 msgstr "Po_slední stránka"
 
-#: ../ui/main.glade:694
+#: ../ui/main.glade:695
 msgid "_Lined"
 msgstr "Linkovaný s _okrajem"
 
-#: ../ui/main.glade:328
+#: ../ui/main.glade:329
 msgid "_Manage"
 msgstr "_Spravovat"
 
-#: ../ui/main.glade:398
+#: ../ui/main.glade:399
 msgid "_Navigation"
 msgstr "_Navigace"
 
-#: ../ui/main.glade:468
+#: ../ui/main.glade:469
 #, fuzzy
 msgid "_Next Layer"
 msgstr "_Další stránka"
 
-#: ../ui/main.glade:435
+#: ../ui/main.glade:436
 msgid "_Next Page"
 msgstr "_Další stránka"
 
-#: ../ui/main.glade:752
+#: ../ui/main.glade:753
 msgid "_Pen"
 msgstr "_Pero"
 
-#: ../ui/main.glade:686
+#: ../ui/main.glade:687
 msgid "_Plain"
 msgstr "Či_stý"
 
-#: ../ui/main.glade:280
+#: ../ui/main.glade:281
 msgid "_Presentation Mode"
 msgstr "_Prezentace"
 
-#: ../ui/main.glade:459
+#: ../ui/main.glade:460
 #, fuzzy
 msgid "_Previous Layer"
 msgstr "_Předchozí stránka"
 
-#: ../ui/main.glade:417
+#: ../ui/main.glade:418
 msgid "_Previous Page"
 msgstr "_Předchozí stránka"
 
-#: ../ui/main.glade:702
+#: ../ui/main.glade:703
 msgid "_Ruled"
 msgstr "_Linkovaný"
 
-#: ../ui/main.glade:816
+#: ../ui/main.glade:817
 msgid "_Shape Recognizer"
 msgstr "_Rozpoznávání tvarů"
 
-#: ../ui/main.glade:782
+#: ../ui/main.glade:783
 msgid "_Text"
 msgstr "_Text"
 
-#: ../ui/main.glade:742
+#: ../ui/main.glade:743
 msgid "_Tools"
 msgstr "_Nástroje"
 
-#: ../ui/main.glade:477
+#: ../ui/main.glade:478
 #, fuzzy
 msgid "_Top Layer"
 msgstr "Vrstva"
 
-#: ../ui/main.glade:272
+#: ../ui/main.glade:273
 msgid "_Two Pages"
 msgstr "_Dvě stránky"
 
-#: ../ui/main.glade:893
+#: ../ui/main.glade:894
 msgid "_Vertical Space"
 msgstr "_Vertikální místo"
 
-#: ../ui/main.glade:262
+#: ../ui/main.glade:263
 msgid "_View"
 msgstr "_Zobrazení"
 
-#: ../ui/main.glade:1039
+#: ../ui/main.glade:1040
 msgid "_delete strokes"
 msgstr "_smazat čáry"
 
-#: ../ui/main.glade:938 ../ui/main.glade:988 ../ui/main.glade:1062
+#: ../ui/main.glade:939 ../ui/main.glade:989 ../ui/main.glade:1063
 msgid "_fine"
 msgstr "_tenká"
 
-#: ../ui/main.glade:947 ../ui/main.glade:997 ../ui/main.glade:1071
+#: ../ui/main.glade:948 ../ui/main.glade:998 ../ui/main.glade:1072
 msgid "_medium"
 msgstr "_střední"
 
-#: ../ui/main.glade:1021
+#: ../ui/main.glade:1022
 msgid "_standard"
 msgstr "_výchozí"
 
-#: ../ui/main.glade:956 ../ui/main.glade:1006 ../ui/main.glade:1080
+#: ../ui/main.glade:957 ../ui/main.glade:1007 ../ui/main.glade:1081
 msgid "_thick"
 msgstr "_tlustá"
 
-#: ../ui/main.glade:929
+#: ../ui/main.glade:930
 msgid "_very fine"
 msgstr "_velmi tenká"
 
-#: ../ui/main.glade:1030
+#: ../ui/main.glade:1031
 msgid "_whiteout"
 msgstr "_bělení"
 
@@ -1954,7 +1954,7 @@ msgstr "pero"
 msgid "standard"
 msgstr "standardní"
 
-#: ../ui/main.glade:965
+#: ../ui/main.glade:966
 msgid "ver_y thick"
 msgstr "vel_mi tlustá"
 

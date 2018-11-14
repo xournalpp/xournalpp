@@ -6,14 +6,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp 1.0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-11-12 21:32+0100\n"
-"PO-Revision-Date: 2018-02-07 00:00+200\n"
-"Last-Translator: Ruo Li <rli@math.pku.edu.cn>\n"
+"POT-Creation-Date: 2018-11-14 19:55+0100\n"
+"PO-Revision-Date: 2018-11-14 19:57+0100\n"
+"Last-Translator: Andreas Butti <andreasbutti at gmail dot com>\n"
 "Language-Team: Xournal++ team\n"
 "Language: zh\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.7.1\n"
 
 #: ../ui/about.glade:150
 #, fuzzy
@@ -153,7 +154,7 @@ msgstr "<b>擴展輸入</b>"
 
 #: ../ui/settings.glade:1136
 msgid "<b>Fullscreen</b>"
-msgstr "<b>全屏</b>"
+msgstr "<b>全屏模式</b>"
 
 #: ../ui/settings.glade:566
 msgid "<b>Help</b> (Placeholders)"
@@ -173,7 +174,7 @@ msgstr "<b>頁面尺寸</b>"
 
 #: ../ui/settings.glade:1206
 msgid "<b>Presentation</b> Another Fullscreen Mode, <i>Start with F5</i>"
-msgstr "<b>演講</b> (備選全屏模式 <i>使用F5激活</i>)"
+msgstr "<b>演講模式</b> (備選全屏模式 <i>使用F5激活</i>)"
 
 #: ../ui/settings.glade:130
 msgid "<b>Pressure sensitivity</b>"
@@ -283,7 +284,7 @@ msgstr "名為\"{1}\"的檔案已經存在。您要覆蓋它麼？"
 msgid "About Xournal"
 msgstr "關於Xournal"
 
-#: ../ui/main.glade:1102
+#: ../ui/main.glade:1103
 msgid "Add/Edit Tex"
 msgstr "插入/編輯TeX"
 
@@ -485,7 +486,7 @@ msgstr "未能寫上背景\"{1}\"，不管啦繼續哦..."
 msgid "Current page"
 msgstr "當前頁"
 
-#: ../src/gui/dialog/FormatDialog.cpp:119
+#: ../src/gui/dialog/FormatDialog.cpp:112
 msgid "Custom"
 msgstr "設置"
 
@@ -509,7 +510,7 @@ msgstr "預設"
 msgid "Delete"
 msgstr "刪除"
 
-#: ../ui/main.glade:645
+#: ../ui/main.glade:646
 msgid "Delete Layer"
 msgstr "刪除層"
 
@@ -529,10 +530,10 @@ msgstr "刪除層"
 msgid "Delete stroke"
 msgstr "刪除筆劃"
 
-#: ../ui/main.glade:1313
+#: ../ui/main.glade:1314
 #, fuzzy
 msgid "Delete this page"
-msgstr "刪除當前頁"
+msgstr "删除当前页"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:38
 msgid "Device"
@@ -632,7 +633,7 @@ msgstr "擦除筆劃"
 msgid "Eraser"
 msgstr "橡皮"
 
-#: ../ui/main.glade:978
+#: ../ui/main.glade:979
 msgid "Eraser Optio_ns"
 msgstr "橡皮選項(_n)"
 
@@ -728,11 +729,11 @@ msgstr ""
 msgid "Filename: {1}"
 msgstr "檔案名：{1}"
 
-#: ../ui/main.glade:1508
+#: ../ui/main.glade:1509
 msgid "Find next occurrence of the search string"
 msgstr ""
 
-#: ../ui/main.glade:1487
+#: ../ui/main.glade:1488
 msgid "Find previous occurrence of the search string"
 msgstr ""
 
@@ -744,7 +745,7 @@ msgstr "字型"
 msgid "Found mathtex in your path! TeX area is {1}"
 msgstr "在可執行路徑中找到了mathtex！TeX區域是{1}"
 
-#: ../ui/main.glade:288
+#: ../ui/main.glade:289
 msgid "Fullscreen"
 msgstr "全屏"
 
@@ -798,7 +799,7 @@ msgstr "灰色"
 msgid "Green"
 msgstr "綠色"
 
-#: ../ui/main.glade:903
+#: ../ui/main.glade:904
 msgid "H_and Tool"
 msgstr "手形工具(_a)"
 
@@ -824,7 +825,7 @@ msgstr "隱藏側邊欄"
 msgid "Highlighter"
 msgstr "高亮"
 
-#: ../ui/main.glade:1052
+#: ../ui/main.glade:1053
 #, fuzzy
 msgid "Highlighter Opti_ons"
 msgstr "高亮選項(_i)"
@@ -849,11 +850,11 @@ msgstr "輸入設備"
 msgid "Insert Latex"
 msgstr "插入LaTeX"
 
-#: ../ui/main.glade:548
+#: ../ui/main.glade:549
 msgid "Insert Page Type"
 msgstr "插入頁面風格"
 
-#: ../ui/main.glade:1293
+#: ../ui/main.glade:1294
 msgid "Insert a copy of the current page below"
 msgstr ""
 
@@ -970,7 +971,7 @@ msgstr "向後移動頁面"
 msgid "Move page upwards"
 msgstr "向前移動頁面"
 
-#: ../ui/main.glade:491
+#: ../ui/main.glade:492
 msgid "N_ext annotated page"
 msgstr "下一個標註頁(_e)"
 
@@ -978,15 +979,15 @@ msgstr "下一個標註頁(_e)"
 msgid "New"
 msgstr "新建"
 
-#: ../ui/main.glade:531
+#: ../ui/main.glade:532
 msgid "New Page _After"
 msgstr "新建後頁(_A)"
 
-#: ../ui/main.glade:523
+#: ../ui/main.glade:524
 msgid "New Page _Before"
 msgstr "新建前頁(_B)"
 
-#: ../ui/main.glade:540
+#: ../ui/main.glade:541
 msgid "New Page at _End"
 msgstr "新建尾頁(_E)"
 
@@ -994,7 +995,7 @@ msgstr "新建尾頁(_E)"
 msgid "New Xournal"
 msgstr "新建日記"
 
-#: ../ui/main.glade:636
+#: ../ui/main.glade:637
 msgid "New _Layer"
 msgstr "新建圖層(_L)"
 
@@ -1074,11 +1075,11 @@ msgstr "PDF檔案"
 msgid "PDF output filename"
 msgstr "PDF輸出檔案名"
 
-#: ../ui/main.glade:726
+#: ../ui/main.glade:727
 msgid "P_DF Background"
 msgstr "PDF背景(_D)"
 
-#: ../ui/main.glade:500
+#: ../ui/main.glade:501
 #, fuzzy
 msgid "P_revious annotated Page"
 msgstr "前一個標註頁(_r)"
@@ -1115,15 +1116,15 @@ msgstr "頁碼："
 msgid "Paper Format"
 msgstr "紙張樣式"
 
-#: ../ui/main.glade:668
+#: ../ui/main.glade:669
 msgid "Paper _Color"
 msgstr "紙張顏色(_C)"
 
-#: ../ui/main.glade:660
+#: ../ui/main.glade:661
 msgid "Paper _Format"
 msgstr "紙張樣式(_F)"
 
-#: ../ui/main.glade:676
+#: ../ui/main.glade:677
 msgid "Paper b_ackground"
 msgstr "紙張背景(_a)"
 
@@ -1143,7 +1144,7 @@ msgstr "粘貼"
 msgid "Pen"
 msgstr "畫筆"
 
-#: ../ui/main.glade:919
+#: ../ui/main.glade:920
 msgid "Pen _Options"
 msgstr "畫筆選項(_O)"
 
@@ -1155,7 +1156,7 @@ msgstr "空白"
 msgid "Predefined"
 msgstr "預定"
 
-#: ../ui/main.glade:250
+#: ../ui/main.glade:251
 msgid "Preferences"
 msgstr "偏好設置"
 
@@ -1206,7 +1207,7 @@ msgstr ""
 msgid "Resolution:"
 msgstr "解析度："
 
-#: ../ui/main.glade:849
+#: ../ui/main.glade:850
 msgid "Ru_ler"
 msgstr "標尺(_l)"
 
@@ -1331,7 +1332,7 @@ msgstr "只顯示未使用頁面(一個未使用頁面)"
 msgid "Show only not used pages ({1} unused pages)"
 msgstr "只顯示未使用頁面({1}個未使用頁面)"
 
-#: ../ui/main.glade:297
+#: ../ui/main.glade:298
 msgid "Show sidebar"
 msgstr "顯示側邊欄"
 
@@ -1365,7 +1366,7 @@ msgstr ""
 msgid "Standard"
 msgstr "標準"
 
-#: ../ui/main.glade:1626
+#: ../ui/main.glade:1627
 msgid "State PLACEHOLDER"
 msgstr ""
 
@@ -1381,15 +1382,15 @@ msgstr "文檔已經保存為\"{1}\""
 msgid "Supported files"
 msgstr "支撐檔案"
 
-#: ../ui/main.glade:1252
+#: ../ui/main.glade:1253
 msgid "Swap the current page with the one above"
 msgstr ""
 
-#: ../ui/main.glade:1273
+#: ../ui/main.glade:1274
 msgid "Swap the current page with the one below"
 msgstr ""
 
-#: ../ui/main.glade:312
+#: ../ui/main.glade:313
 msgid "T_oolbars"
 msgstr "工具條(_o)"
 
@@ -1407,7 +1408,7 @@ msgstr "文本"
 msgid "Text %i times found on this page"
 msgstr "文本在本頁面出現%i次"
 
-#: ../ui/main.glade:1093
+#: ../ui/main.glade:1094
 msgid "Text Font..."
 msgstr "文本字型..."
 
@@ -1468,7 +1469,7 @@ msgstr "最近的日誌檔案名：{1}"
 
 #: ../ui/settings.glade:739
 msgid "The unit of the ruler is cm"
-msgstr ""
+msgstr "標尺的單位是釐米"
 
 #: ../src/control/XournalMain.cpp:86
 msgid ""
@@ -1705,16 +1706,16 @@ msgstr "原始尺寸"
 msgid "_Annotate PDF"
 msgstr "標註PDF(_A)"
 
-#: ../ui/main.glade:336
+#: ../ui/main.glade:337
 msgid "_Customize"
 msgstr "設置(_C)"
 
-#: ../ui/main.glade:802
+#: ../ui/main.glade:803
 #, fuzzy
 msgid "_Default Tools"
-msgstr "預設工具(_D)"
+msgstr "<b>缺省工具</b>"
 
-#: ../ui/main.glade:621
+#: ../ui/main.glade:622
 msgid "_Delete Page"
 msgstr "刪除頁面(_D)"
 
@@ -1722,7 +1723,7 @@ msgstr "刪除頁面(_D)"
 msgid "_Edit"
 msgstr "編輯(_E)"
 
-#: ../ui/main.glade:762
+#: ../ui/main.glade:763
 msgid "_Eraser"
 msgstr "橡皮(_E)"
 
@@ -1734,139 +1735,139 @@ msgstr "輸出為PDF(_E)"
 msgid "_File"
 msgstr "檔案(_F)"
 
-#: ../ui/main.glade:408
+#: ../ui/main.glade:409
 msgid "_First Page"
 msgstr "首頁(_F)"
 
-#: ../ui/main.glade:426
+#: ../ui/main.glade:427
 #, fuzzy
 msgid "_Goto Page"
 msgstr "頁面跳轉(_G)"
 
-#: ../ui/main.glade:710
+#: ../ui/main.glade:711
 msgid "_Graph"
 msgstr "圖形(_G)"
 
-#: ../ui/main.glade:1115
+#: ../ui/main.glade:1116
 msgid "_Help"
 msgstr "幫助(_H)"
 
-#: ../ui/main.glade:772
+#: ../ui/main.glade:773
 msgid "_Highlighter"
 msgstr "高亮(_H)"
 
-#: ../ui/main.glade:718 ../ui/main.glade:792
+#: ../ui/main.glade:719 ../ui/main.glade:793
 msgid "_Image"
 msgstr "圖片(_I)"
 
-#: ../ui/main.glade:513
+#: ../ui/main.glade:514
 msgid "_Journal"
 msgstr "日誌(_J)"
 
-#: ../ui/main.glade:444
+#: ../ui/main.glade:445
 msgid "_Last Page"
 msgstr "末頁(_L)"
 
-#: ../ui/main.glade:694
+#: ../ui/main.glade:695
 msgid "_Lined"
 msgstr "單線(_L)"
 
-#: ../ui/main.glade:328
+#: ../ui/main.glade:329
 msgid "_Manage"
 msgstr "管理(_M)"
 
-#: ../ui/main.glade:398
+#: ../ui/main.glade:399
 msgid "_Navigation"
 msgstr "導航(_N)"
 
-#: ../ui/main.glade:468
+#: ../ui/main.glade:469
 #, fuzzy
 msgid "_Next Layer"
 msgstr "下一頁(_N)"
 
-#: ../ui/main.glade:435
+#: ../ui/main.glade:436
 msgid "_Next Page"
 msgstr "下一頁(_N)"
 
-#: ../ui/main.glade:752
+#: ../ui/main.glade:753
 msgid "_Pen"
 msgstr "畫筆(_P)"
 
-#: ../ui/main.glade:686
+#: ../ui/main.glade:687
 msgid "_Plain"
 msgstr "空白(_P)"
 
-#: ../ui/main.glade:280
+#: ../ui/main.glade:281
 msgid "_Presentation Mode"
 msgstr "演講模式(_P)"
 
-#: ../ui/main.glade:459
+#: ../ui/main.glade:460
 #, fuzzy
 msgid "_Previous Layer"
 msgstr "前一頁(_P)"
 
-#: ../ui/main.glade:417
+#: ../ui/main.glade:418
 msgid "_Previous Page"
 msgstr "前一頁(_P)"
 
-#: ../ui/main.glade:702
+#: ../ui/main.glade:703
 msgid "_Ruled"
 msgstr "標尺(_R)"
 
-#: ../ui/main.glade:816
+#: ../ui/main.glade:817
 msgid "_Shape Recognizer"
 msgstr "形狀識別(_S)"
 
-#: ../ui/main.glade:782
+#: ../ui/main.glade:783
 msgid "_Text"
 msgstr "文本(_T)"
 
-#: ../ui/main.glade:742
+#: ../ui/main.glade:743
 msgid "_Tools"
 msgstr "工具(_T)"
 
-#: ../ui/main.glade:477
+#: ../ui/main.glade:478
 #, fuzzy
 msgid "_Top Layer"
 msgstr "圖層"
 
-#: ../ui/main.glade:272
+#: ../ui/main.glade:273
 msgid "_Two Pages"
 msgstr "雙頁(_T)"
 
-#: ../ui/main.glade:893
+#: ../ui/main.glade:894
 msgid "_Vertical Space"
 msgstr "垂直間距(_V)"
 
-#: ../ui/main.glade:262
+#: ../ui/main.glade:263
 msgid "_View"
 msgstr "視圖(_V)"
 
-#: ../ui/main.glade:1039
+#: ../ui/main.glade:1040
 msgid "_delete strokes"
 msgstr "刪除筆劃(_d)"
 
-#: ../ui/main.glade:938 ../ui/main.glade:988 ../ui/main.glade:1062
+#: ../ui/main.glade:939 ../ui/main.glade:989 ../ui/main.glade:1063
 msgid "_fine"
 msgstr "細(_f)"
 
-#: ../ui/main.glade:947 ../ui/main.glade:997 ../ui/main.glade:1071
+#: ../ui/main.glade:948 ../ui/main.glade:998 ../ui/main.glade:1072
 msgid "_medium"
 msgstr "中(_m)"
 
-#: ../ui/main.glade:1021
+#: ../ui/main.glade:1022
 msgid "_standard"
 msgstr "標準(_s)"
 
-#: ../ui/main.glade:956 ../ui/main.glade:1006 ../ui/main.glade:1080
+#: ../ui/main.glade:957 ../ui/main.glade:1007 ../ui/main.glade:1081
 msgid "_thick"
 msgstr "粗(_t)"
 
-#: ../ui/main.glade:929
+#: ../ui/main.glade:930
 msgid "_very fine"
 msgstr "極細(_v)"
 
-#: ../ui/main.glade:1030
+#: ../ui/main.glade:1031
 msgid "_whiteout"
 msgstr "涂白(_w)"
 
@@ -1879,8 +1880,12 @@ msgid "delete stroke"
 msgstr "刪除筆劃"
 
 #: ../ui/export.glade:114
+#, fuzzy
 msgid "dpi"
 msgstr ""
+"<i>在屏幕上绘制标尺可对放大的程度进行校准。\n"
+"在Xournal++重启时将会发挥作用。\n"
+"标尺的长度单位是厘米，游标的单位是dpi。</i>"
 
 #: ../src/util/DeviceListHelper.cpp:72
 msgid "eraser"
@@ -1898,7 +1903,7 @@ msgstr "畫筆"
 msgid "standard"
 msgstr "標準"
 
-#: ../ui/main.glade:965
+#: ../ui/main.glade:966
 msgid "ver_y thick"
 msgstr "極粗(_y)"
 

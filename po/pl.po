@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp 1.0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-11-12 21:32+0100\n"
+"POT-Creation-Date: 2018-11-14 19:55+0100\n"
 "PO-Revision-Date: 2015-10-01 00:00+0200\n"
 "Last-Translator: Marek Pikuła <marek@pikula.co>\n"
 "Language-Team: Xournal++ team\n"
@@ -315,7 +315,7 @@ msgstr "Plik o nazwie \"{1}\" już istnieje. Czy chcesz go zastąpić?"
 msgid "About Xournal"
 msgstr "O programie Xournal++"
 
-#: ../ui/main.glade:1102
+#: ../ui/main.glade:1103
 msgid "Add/Edit Tex"
 msgstr "Dodaj/Edytuj Tex"
 
@@ -519,7 +519,7 @@ msgstr "Nie można zapisać tła \"{1}\". Kontynuuję mimo to."
 msgid "Current page"
 msgstr "Aktywna strona"
 
-#: ../src/gui/dialog/FormatDialog.cpp:119
+#: ../src/gui/dialog/FormatDialog.cpp:112
 msgid "Custom"
 msgstr "Niestandardowe"
 
@@ -543,7 +543,7 @@ msgstr "Domyślne"
 msgid "Delete"
 msgstr "Usuń"
 
-#: ../ui/main.glade:645
+#: ../ui/main.glade:646
 msgid "Delete Layer"
 msgstr "Usuń warstwę"
 
@@ -563,7 +563,7 @@ msgstr "Usuń warstwę"
 msgid "Delete stroke"
 msgstr "Usuń kreskę"
 
-#: ../ui/main.glade:1313
+#: ../ui/main.glade:1314
 #, fuzzy
 msgid "Delete this page"
 msgstr "Usuń aktywną stronę"
@@ -666,7 +666,7 @@ msgstr "Wymaż kreskę"
 msgid "Eraser"
 msgstr "Gumka"
 
-#: ../ui/main.glade:978
+#: ../ui/main.glade:979
 msgid "Eraser Optio_ns"
 msgstr "Op_cje gumki"
 
@@ -762,11 +762,11 @@ msgstr ""
 msgid "Filename: {1}"
 msgstr "Nazwa pliku: {1}"
 
-#: ../ui/main.glade:1508
+#: ../ui/main.glade:1509
 msgid "Find next occurrence of the search string"
 msgstr ""
 
-#: ../ui/main.glade:1487
+#: ../ui/main.glade:1488
 msgid "Find previous occurrence of the search string"
 msgstr ""
 
@@ -778,7 +778,7 @@ msgstr "Czcionka"
 msgid "Found mathtex in your path! TeX area is {1}"
 msgstr "Znaleziono mathtexa na komputerze! Przestrzeń TeXa to {1}"
 
-#: ../ui/main.glade:288
+#: ../ui/main.glade:289
 msgid "Fullscreen"
 msgstr "Pełny ekran"
 
@@ -832,7 +832,7 @@ msgstr "Szary"
 msgid "Green"
 msgstr "Zielony"
 
-#: ../ui/main.glade:903
+#: ../ui/main.glade:904
 msgid "H_and Tool"
 msgstr "N_arzędzie ręki"
 
@@ -858,7 +858,7 @@ msgstr "Ukryj pasek boczny"
 msgid "Highlighter"
 msgstr "Zakreślacz"
 
-#: ../ui/main.glade:1052
+#: ../ui/main.glade:1053
 #, fuzzy
 msgid "Highlighter Opti_ons"
 msgstr "Opc_je zakreślacza"
@@ -883,11 +883,11 @@ msgstr "Urządzenie wejściowe"
 msgid "Insert Latex"
 msgstr "Wstaw LaTeX"
 
-#: ../ui/main.glade:548
+#: ../ui/main.glade:549
 msgid "Insert Page Type"
 msgstr "Rodzaj wstawianej strony"
 
-#: ../ui/main.glade:1293
+#: ../ui/main.glade:1294
 msgid "Insert a copy of the current page below"
 msgstr ""
 
@@ -1005,7 +1005,7 @@ msgstr "Przenieś stronę niżej"
 msgid "Move page upwards"
 msgstr "Przenieś stronę wyżej"
 
-#: ../ui/main.glade:491
+#: ../ui/main.glade:492
 msgid "N_ext annotated page"
 msgstr "N_astępna adnotowana strona"
 
@@ -1013,15 +1013,15 @@ msgstr "N_astępna adnotowana strona"
 msgid "New"
 msgstr "Nowy"
 
-#: ../ui/main.glade:531
+#: ../ui/main.glade:532
 msgid "New Page _After"
 msgstr "Nowa strona _za"
 
-#: ../ui/main.glade:523
+#: ../ui/main.glade:524
 msgid "New Page _Before"
 msgstr "Nowa strona _przed"
 
-#: ../ui/main.glade:540
+#: ../ui/main.glade:541
 msgid "New Page at _End"
 msgstr "Nowa strona na _końcu"
 
@@ -1029,7 +1029,7 @@ msgstr "Nowa strona na _końcu"
 msgid "New Xournal"
 msgstr "Nowy Xournal"
 
-#: ../ui/main.glade:636
+#: ../ui/main.glade:637
 msgid "New _Layer"
 msgstr "Nowa _warstwa"
 
@@ -1109,11 +1109,11 @@ msgstr "Pliki PDF"
 msgid "PDF output filename"
 msgstr "Nazwa pliku PDF"
 
-#: ../ui/main.glade:726
+#: ../ui/main.glade:727
 msgid "P_DF Background"
 msgstr "P_DF w tle"
 
-#: ../ui/main.glade:500
+#: ../ui/main.glade:501
 #, fuzzy
 msgid "P_revious annotated Page"
 msgstr "P_oprzednia adnotowana strona"
@@ -1150,15 +1150,15 @@ msgstr "Stron:"
 msgid "Paper Format"
 msgstr "Format papieru"
 
-#: ../ui/main.glade:668
+#: ../ui/main.glade:669
 msgid "Paper _Color"
 msgstr "_Kolor papieru"
 
-#: ../ui/main.glade:660
+#: ../ui/main.glade:661
 msgid "Paper _Format"
 msgstr "_Format papieru"
 
-#: ../ui/main.glade:676
+#: ../ui/main.glade:677
 msgid "Paper b_ackground"
 msgstr "_Tło papieru"
 
@@ -1178,7 +1178,7 @@ msgstr "Wklej"
 msgid "Pen"
 msgstr "Pióro"
 
-#: ../ui/main.glade:919
+#: ../ui/main.glade:920
 msgid "Pen _Options"
 msgstr "_Opcje pióra"
 
@@ -1190,7 +1190,7 @@ msgstr "Bez tła"
 msgid "Predefined"
 msgstr "Predefiniowane"
 
-#: ../ui/main.glade:250
+#: ../ui/main.glade:251
 msgid "Preferences"
 msgstr "Preferencje"
 
@@ -1241,7 +1241,7 @@ msgstr ""
 msgid "Resolution:"
 msgstr "Rozdzielczość:"
 
-#: ../ui/main.glade:849
+#: ../ui/main.glade:850
 msgid "Ru_ler"
 msgstr "_Linijka"
 
@@ -1370,7 +1370,7 @@ msgstr "Pokaż tylko nieużywane strony (jedna nieużywana strona)"
 msgid "Show only not used pages ({1} unused pages)"
 msgstr "Pokaż tylko nieużywane strony ({1} nieużywanych stron)"
 
-#: ../ui/main.glade:297
+#: ../ui/main.glade:298
 msgid "Show sidebar"
 msgstr "Pokaż pasek narzędzi"
 
@@ -1405,7 +1405,7 @@ msgstr ""
 msgid "Standard"
 msgstr "Standardowe"
 
-#: ../ui/main.glade:1626
+#: ../ui/main.glade:1627
 msgid "State PLACEHOLDER"
 msgstr "Status SYMBOL ZASTĘPCZY"
 
@@ -1421,15 +1421,15 @@ msgstr "Zapisano dokument do \"{1}\""
 msgid "Supported files"
 msgstr "Wspierane pliki"
 
-#: ../ui/main.glade:1252
+#: ../ui/main.glade:1253
 msgid "Swap the current page with the one above"
 msgstr ""
 
-#: ../ui/main.glade:1273
+#: ../ui/main.glade:1274
 msgid "Swap the current page with the one below"
 msgstr ""
 
-#: ../ui/main.glade:312
+#: ../ui/main.glade:313
 msgid "T_oolbars"
 msgstr "_Paski narzędzi"
 
@@ -1447,7 +1447,7 @@ msgstr "Tekst"
 msgid "Text %i times found on this page"
 msgstr "Tekst został znaleziony %i razy na tej stronie"
 
-#: ../ui/main.glade:1093
+#: ../ui/main.glade:1094
 msgid "Text Font..."
 msgstr "Czcionka tekstu..."
 
@@ -1762,16 +1762,16 @@ msgstr "Powiększ do 100%"
 msgid "_Annotate PDF"
 msgstr "_Adnotuj PDF"
 
-#: ../ui/main.glade:336
+#: ../ui/main.glade:337
 msgid "_Customize"
 msgstr "_Personalizuj"
 
-#: ../ui/main.glade:802
+#: ../ui/main.glade:803
 #, fuzzy
 msgid "_Default Tools"
 msgstr "_Domyślne narzędzie"
 
-#: ../ui/main.glade:621
+#: ../ui/main.glade:622
 msgid "_Delete Page"
 msgstr "_Usuń stronę"
 
@@ -1779,7 +1779,7 @@ msgstr "_Usuń stronę"
 msgid "_Edit"
 msgstr "_Edycja"
 
-#: ../ui/main.glade:762
+#: ../ui/main.glade:763
 msgid "_Eraser"
 msgstr "_Gumka"
 
@@ -1791,139 +1791,139 @@ msgstr "_Eksportuj do PDF"
 msgid "_File"
 msgstr "_Plik"
 
-#: ../ui/main.glade:408
+#: ../ui/main.glade:409
 msgid "_First Page"
 msgstr "_Pierwsza strona"
 
-#: ../ui/main.glade:426
+#: ../ui/main.glade:427
 #, fuzzy
 msgid "_Goto Page"
 msgstr "_Idź do strony"
 
-#: ../ui/main.glade:710
+#: ../ui/main.glade:711
 msgid "_Graph"
 msgstr "_Kratka"
 
-#: ../ui/main.glade:1115
+#: ../ui/main.glade:1116
 msgid "_Help"
 msgstr "P_omoc"
 
-#: ../ui/main.glade:772
+#: ../ui/main.glade:773
 msgid "_Highlighter"
 msgstr "_Zakreślacz"
 
-#: ../ui/main.glade:718 ../ui/main.glade:792
+#: ../ui/main.glade:719 ../ui/main.glade:793
 msgid "_Image"
 msgstr "_Obraz"
 
-#: ../ui/main.glade:513
+#: ../ui/main.glade:514
 msgid "_Journal"
 msgstr "_Dziennik"
 
-#: ../ui/main.glade:444
+#: ../ui/main.glade:445
 msgid "_Last Page"
 msgstr "_Ostatnia strona"
 
-#: ../ui/main.glade:694
+#: ../ui/main.glade:695
 msgid "_Lined"
 msgstr "_Linie"
 
-#: ../ui/main.glade:328
+#: ../ui/main.glade:329
 msgid "_Manage"
 msgstr "_Zarządzaj"
 
-#: ../ui/main.glade:398
+#: ../ui/main.glade:399
 msgid "_Navigation"
 msgstr "_Nawigacja"
 
-#: ../ui/main.glade:468
+#: ../ui/main.glade:469
 #, fuzzy
 msgid "_Next Layer"
 msgstr "_Następna strona"
 
-#: ../ui/main.glade:435
+#: ../ui/main.glade:436
 msgid "_Next Page"
 msgstr "_Następna strona"
 
-#: ../ui/main.glade:752
+#: ../ui/main.glade:753
 msgid "_Pen"
 msgstr "_Pióro"
 
-#: ../ui/main.glade:686
+#: ../ui/main.glade:687
 msgid "_Plain"
 msgstr "_Bez tła"
 
-#: ../ui/main.glade:280
+#: ../ui/main.glade:281
 msgid "_Presentation Mode"
 msgstr "_Tryb prezentacji"
 
-#: ../ui/main.glade:459
+#: ../ui/main.glade:460
 #, fuzzy
 msgid "_Previous Layer"
 msgstr "_Poprzednia strona"
 
-#: ../ui/main.glade:417
+#: ../ui/main.glade:418
 msgid "_Previous Page"
 msgstr "_Poprzednia strona"
 
-#: ../ui/main.glade:702
+#: ../ui/main.glade:703
 msgid "_Ruled"
 msgstr "Linie z _marginesem"
 
-#: ../ui/main.glade:816
+#: ../ui/main.glade:817
 msgid "_Shape Recognizer"
 msgstr "_Rozpoznawanie kształtów"
 
-#: ../ui/main.glade:782
+#: ../ui/main.glade:783
 msgid "_Text"
 msgstr "_Tekst"
 
-#: ../ui/main.glade:742
+#: ../ui/main.glade:743
 msgid "_Tools"
 msgstr "_Narzędzia"
 
-#: ../ui/main.glade:477
+#: ../ui/main.glade:478
 #, fuzzy
 msgid "_Top Layer"
 msgstr "Warstwa"
 
-#: ../ui/main.glade:272
+#: ../ui/main.glade:273
 msgid "_Two Pages"
 msgstr "_Dwie strony"
 
-#: ../ui/main.glade:893
+#: ../ui/main.glade:894
 msgid "_Vertical Space"
 msgstr "Miejsce _pionowe"
 
-#: ../ui/main.glade:262
+#: ../ui/main.glade:263
 msgid "_View"
 msgstr "_Widok"
 
-#: ../ui/main.glade:1039
+#: ../ui/main.glade:1040
 msgid "_delete strokes"
 msgstr "_usuń kreski"
 
-#: ../ui/main.glade:938 ../ui/main.glade:988 ../ui/main.glade:1062
+#: ../ui/main.glade:939 ../ui/main.glade:989 ../ui/main.glade:1063
 msgid "_fine"
 msgstr "_cienkie"
 
-#: ../ui/main.glade:947 ../ui/main.glade:997 ../ui/main.glade:1071
+#: ../ui/main.glade:948 ../ui/main.glade:998 ../ui/main.glade:1072
 msgid "_medium"
 msgstr "_średnie"
 
-#: ../ui/main.glade:1021
+#: ../ui/main.glade:1022
 msgid "_standard"
 msgstr "_standardowy"
 
-#: ../ui/main.glade:956 ../ui/main.glade:1006 ../ui/main.glade:1080
+#: ../ui/main.glade:957 ../ui/main.glade:1007 ../ui/main.glade:1081
 msgid "_thick"
 msgstr "_grube"
 
-#: ../ui/main.glade:929
+#: ../ui/main.glade:930
 msgid "_very fine"
 msgstr "_bardzo cienkie"
 
-#: ../ui/main.glade:1030
+#: ../ui/main.glade:1031
 msgid "_whiteout"
 msgstr "_wybielanie"
 
@@ -1955,7 +1955,7 @@ msgstr "pióro"
 msgid "standard"
 msgstr "standardowa"
 
-#: ../ui/main.glade:965
+#: ../ui/main.glade:966
 msgid "ver_y thick"
 msgstr "bar_dzo grube"
 
