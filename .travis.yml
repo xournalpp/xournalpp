@@ -29,6 +29,7 @@ addons:
     - texlive
     - liblcms2-dev
     - libopenjpeg-dev
+    - libopenjp2-7-dev
     - libjpeg-dev
     - fontconfig
     - libgtk-3-dev
