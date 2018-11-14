@@ -99,7 +99,7 @@ add_includes_ldflags ("${Libxml_LDFLAGS}" "${Libxml_INCLUDE_DIRS}")
 
 # Poppler
 option (BUILD_POPPLER "Build Poppler from git or other source" OFF)
-option (POPPLER_GIT_VER "Version of Poppler to build leaf blank for most recent" "poppler-0.61.1")
+set (POPPLER_GIT_VER "0.61.1" CACHE STRING "Version of Poppler to build")
 option (POPPLER_GIT "Use git version of Poppler" ON)
 set(POPPLER_DIR "/path/to/poppler/source" CACHE STRING "Directory with poppler")
 if (BUILD_POPPLER)
@@ -111,7 +111,7 @@ if (BUILD_POPPLER)
 
     ExternalProject_Add (poppler
         GIT_REPOSITORY "git://git.freedesktop.org/git/poppler/poppler"
-        GIT_TAG "${POPPLER_GIT_VER}"
+        GIT_TAG "poppler-${POPPLER_GIT_VER}"
         PREFIX "${POPPLER_PREFIX}"
 
         CMAKE_ARGS ${POPPLER_CMAKE_ARGS}
