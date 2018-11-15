@@ -1179,7 +1179,8 @@ void Control::recStartStop(bool rec)
 {
 	string command = "";
 
-	if(rec){
+	if(rec)
+	{
 		this->recording = true;
 
 		char buffer [50];
@@ -1196,7 +1197,9 @@ void Control::recStartStop(bool rec)
 
 		printf("Start recording\n");
 		command="xopp-recording.sh start "+data;
-	}else if(this->recording){
+	}
+	else if(this->recording)
+	{
 		this->recording = false;
 		audioFilename = "";
 		command="xopp-recording.sh stop";
@@ -1208,10 +1211,13 @@ void Control::recToggle()
 {
 	XOJ_CHECK_TYPE(Control);
 
-	if(!this->recording){
+	if(!this->recording)
+	{
 		sttime = (g_get_monotonic_time()/1000000);
 		recStartStop(true);
-	}else{
+	}
+	else
+	{
 		recStartStop(false);
 	}
 
@@ -2106,7 +2112,8 @@ void Control::selectTool(ToolType type)
 
 	toolHandler->selectTool(type);
 	currentToolType = type;
-	if(win){
+	if(win)
+	{
 		(win->getXournal()->getViewFor(getCurrentPageNo()))->rerenderPage();
 	}
 }

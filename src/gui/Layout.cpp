@@ -189,7 +189,8 @@ void Layout::layoutPages()
 
 	int padding = XOURNAL_PADDING;
 
-	if (settings->isPresentationMode()) {
+	if (settings->isPresentationMode()) 
+	{
 		padding = 0;
 	}
 	int size[2] = { 0, 0 };
@@ -473,10 +474,13 @@ void Layout::ensureRectIsVisible(int x, int y, int width, int height)
 	XOJ_CHECK_TYPE(Layout);
 
 	// Don't add extra room when presenting
-	if(this->view->getControl()->getSettings()->isPresentationMode()) {
+	if(this->view->getControl()->getSettings()->isPresentationMode()) 
+	{
 		this->scrollHorizontal->ensureAreaIsVisible(x, x + width);
 		this->scrollVertical->ensureAreaIsVisible(y, y + height);
-	} else {
+	} 
+	else 
+	{
 		this->scrollHorizontal->ensureAreaIsVisible(x - 5, x + width + 10);
 		this->scrollVertical->ensureAreaIsVisible(y - 5, y + height + 10);
 	}

@@ -337,17 +337,20 @@ bool TextEditor::onKeyPressEvent(GdkEventKey* event)
 	}
 	else if (event-> state & GDK_CONTROL_MASK)
 	{
-		if(event-> keyval == GDK_b){
+		if(event-> keyval == GDK_b)
+		{
 			toggleBold();
 			return true;
 		}
 		// CTRL + Alt + Plus to increase text size
-		if(event->keyval == GDK_KEY_plus ){
+		if(event->keyval == GDK_KEY_plus )
+		{
 			incSize();
 			return true;
 		}
 		// Decrease text size
-		if(event->keyval == GDK_KEY_minus ){
+		if(event->keyval == GDK_KEY_minus )
+		{
 			decSize();
 			return true;
 		}
@@ -438,9 +441,12 @@ void TextEditor::toggleBold()
 	std::size_t found = fontName.find("Bold");
 
 	//toggle bold
-	if (found==std::string::npos){
+	if (found==std::string::npos)
+	{
 		fontName = fontName+" Bold";
-	}else{
+	}
+	else
+	{
 		fontName = fontName.substr(0,found-1);
 	}
 	
