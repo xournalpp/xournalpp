@@ -1198,7 +1198,7 @@ void Control::recStartStop(bool rec)
 		command="xopp-recording.sh start "+data;
 	}else if(this->recording){
 		this->recording = false;
-		printf("Stop recording\n");
+		audioFilename = "";
 		command="xopp-recording.sh stop";
 	}
 	system(command.c_str());
