@@ -903,10 +903,10 @@ Here you can disable your touchscreen.&lt;/i&gt;</property>
                               </packing>
                             </child>
                             <child>
-                              <object class="GtkLabel" id="label18">
+                              <object class="GtkLabel" id="label20">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
-                                <property name="label" translatable="yes">&lt;b&gt;Eraser&lt;/b&gt;</property>
+                                <property name="label" translatable="yes">&lt;b&gt;Stylus Button 1&lt;/b&gt; Action if the pen button is pressed</property>
                                 <property name="use_markup">True</property>
                                 <property name="xalign">0</property>
                               </object>
@@ -915,70 +915,6 @@ Here you can disable your touchscreen.&lt;/i&gt;</property>
                                 <property name="fill">True</property>
                                 <property name="padding">10</property>
                                 <property name="position">1</property>
-                              </packing>
-                            </child>
-                            <child>
-                              <object class="GtkBox" id="hboxEraser">
-                                <property name="visible">True</property>
-                                <property name="can_focus">False</property>
-                                <child>
-                                  <placeholder/>
-                                </child>
-                                <child>
-                                  <placeholder/>
-                                </child>
-                              </object>
-                              <packing>
-                                <property name="expand">True</property>
-                                <property name="fill">True</property>
-                                <property name="position">2</property>
-                              </packing>
-                            </child>
-                            <child>
-                              <object class="GtkLabel" id="label19">
-                                <property name="visible">True</property>
-                                <property name="can_focus">False</property>
-                                <property name="label" translatable="yes">&lt;b&gt;Touch Screen&lt;/b&gt; &lt;i&gt;You can also configure other devices like mice&lt;/i&gt;</property>
-                                <property name="use_markup">True</property>
-                                <property name="xalign">0</property>
-                              </object>
-                              <packing>
-                                <property name="expand">False</property>
-                                <property name="fill">True</property>
-                                <property name="padding">10</property>
-                                <property name="position">3</property>
-                              </packing>
-                            </child>
-                            <child>
-                              <object class="GtkBox" id="hboxTouch">
-                                <property name="visible">True</property>
-                                <property name="can_focus">False</property>
-                                <child>
-                                  <placeholder/>
-                                </child>
-                                <child>
-                                  <placeholder/>
-                                </child>
-                              </object>
-                              <packing>
-                                <property name="expand">True</property>
-                                <property name="fill">True</property>
-                                <property name="position">4</property>
-                              </packing>
-                            </child>
-                            <child>
-                              <object class="GtkLabel" id="label20">
-                                <property name="visible">True</property>
-                                <property name="can_focus">False</property>
-                                <property name="label" translatable="yes">&lt;b&gt;Pen Button 1&lt;/b&gt; Action if the pen button is pressed</property>
-                                <property name="use_markup">True</property>
-                                <property name="xalign">0</property>
-                              </object>
-                              <packing>
-                                <property name="expand">False</property>
-                                <property name="fill">True</property>
-                                <property name="padding">10</property>
-                                <property name="position">5</property>
                               </packing>
                             </child>
                             <child>
@@ -995,14 +931,78 @@ Here you can disable your touchscreen.&lt;/i&gt;</property>
                               <packing>
                                 <property name="expand">True</property>
                                 <property name="fill">True</property>
-                                <property name="position">6</property>
+                                <property name="position">2</property>
                               </packing>
                             </child>
                             <child>
                               <object class="GtkLabel" id="label42">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
-                                <property name="label" translatable="yes">&lt;b&gt;Pen Button 2&lt;/b&gt; Action if the pen button is pressed</property>
+                                <property name="label" translatable="yes">&lt;b&gt;Stylus Button 2&lt;/b&gt; Action if the pen button is pressed</property>
+                                <property name="use_markup">True</property>
+                                <property name="xalign">0</property>
+                              </object>
+                              <packing>
+                                <property name="expand">False</property>
+                                <property name="fill">True</property>
+                                <property name="padding">10</property>
+                                <property name="position">3</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkBox" id="hboxPenButton2">
+                                <property name="visible">True</property>
+                                <property name="can_focus">False</property>
+                                <child>
+                                  <placeholder/>
+                                </child>
+                                <child>
+                                  <placeholder/>
+                                </child>
+                              </object>
+                              <packing>
+                                <property name="expand">True</property>
+                                <property name="fill">True</property>
+                                <property name="position">4</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkLabel" id="label18">
+                                <property name="visible">True</property>
+                                <property name="can_focus">False</property>
+                                <property name="label" translatable="yes">&lt;b&gt;Eraser&lt;/b&gt;</property>
+                                <property name="use_markup">True</property>
+                                <property name="xalign">0</property>
+                              </object>
+                              <packing>
+                                <property name="expand">False</property>
+                                <property name="fill">True</property>
+                                <property name="padding">10</property>
+                                <property name="position">5</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkBox" id="hboxEraser">
+                                <property name="visible">True</property>
+                                <property name="can_focus">False</property>
+                                <child>
+                                  <placeholder/>
+                                </child>
+                                <child>
+                                  <placeholder/>
+                                </child>
+                              </object>
+                              <packing>
+                                <property name="expand">True</property>
+                                <property name="fill">True</property>
+                                <property name="position">6</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkLabel" id="label19">
+                                <property name="visible">True</property>
+                                <property name="can_focus">False</property>
+                                <property name="label" translatable="yes">&lt;b&gt;Touch Screen&lt;/b&gt; &lt;i&gt;You can also configure other devices like mice&lt;/i&gt;</property>
                                 <property name="use_markup">True</property>
                                 <property name="xalign">0</property>
                               </object>
@@ -1014,7 +1014,7 @@ Here you can disable your touchscreen.&lt;/i&gt;</property>
                               </packing>
                             </child>
                             <child>
-                              <object class="GtkBox" id="hboxPenButton2">
+                              <object class="GtkBox" id="hboxTouch">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <child>

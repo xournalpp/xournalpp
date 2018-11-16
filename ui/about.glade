@@ -147,8 +147,8 @@
               <object class="GtkLabel" id="label1">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="label" translatable="yes">
-Authors:</property>
+                <property name="margin_top">10</property>
+                <property name="label" translatable="yes">Authors:</property>
                 <property name="justify">center</property>
                 <attributes>
                   <attribute name="weight" value="bold"/>
@@ -164,6 +164,7 @@ Authors:</property>
               <object class="GtkLabel" id="lbAuthors">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
+                <property name="margin_top">5</property>
                 <property name="label">Andreas Butti, 2010-2018
 Wilson Brenna, 2012-2015 (tex support)
 Marek Pikuła, 2015</property>
@@ -180,9 +181,9 @@ Marek Pikuła, 2015</property>
               <object class="GtkLabel" id="lbComunity">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="label" translatable="yes">
-With help from the community
-</property>
+                <property name="margin_top">10</property>
+                <property name="margin_bottom">10</property>
+                <property name="label" translatable="yes">With help from the community</property>
                 <property name="use_markup">True</property>
                 <property name="justify">center</property>
               </object>
@@ -197,8 +198,7 @@ With help from the community
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="label" translatable="yes">Partial based on Xournal
-by Denis Auroux
-</property>
+by Denis Auroux</property>
                 <property name="use_markup">True</property>
               </object>
               <packing>
@@ -211,6 +211,8 @@ by Denis Auroux
               <object class="GtkLabel" id="lbLicense">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
+                <property name="margin_top">10</property>
+                <property name="margin_bottom">10</property>
                 <property name="label" translatable="yes">License</property>
                 <attributes>
                   <attribute name="weight" value="bold"/>
@@ -226,8 +228,8 @@ by Denis Auroux
               <object class="GtkLabel" id="label2">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="label" translatable="yes">GNU GPLv2 or later
-</property>
+                <property name="margin_bottom">10</property>
+                <property name="label" translatable="yes">GNU GPLv2 or later</property>
               </object>
               <packing>
                 <property name="expand">False</property>
