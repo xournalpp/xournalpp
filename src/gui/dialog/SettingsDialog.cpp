@@ -73,6 +73,8 @@ void SettingsDialog::initMouseButtonEvents()
 	initMouseButtonEvents("hboxRightMouse", 2);
 	initMouseButtonEvents("hboxEraser", 0);
 	initMouseButtonEvents("hboxTouch", 3, true);
+	initMouseButtonEvents("hboxCustom1", 5, true);
+	initMouseButtonEvents("hboxCustom2", 6, true);
 
 	initMouseButtonEvents("hboxDefault", 4);
 }
@@ -141,10 +143,6 @@ void SettingsDialog::toolboxToggled()
 	bool autosaveEnabled = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(cbAutosave));
 	gtk_widget_set_sensitive(get("lbAutosaveTimeout"), autosaveEnabled);
 	gtk_widget_set_sensitive(get("spAutosaveTimeout"), autosaveEnabled);
-
-	// TODO set default correct and remove this lines
-	gtk_widget_set_sensitive(cbSettingPresureSensitivity, true);
-	gtk_widget_set_sensitive(labePresureSensitivity, true);
 }
 
 void SettingsDialog::load()

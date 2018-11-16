@@ -46,5 +46,8 @@ public:
 	std::vector<InputDevice>& getDeviceList();
 
 private:
+	void addDevicesToList(GList* devList);
+
+private:
 	std::vector<InputDevice> deviceList;
 };

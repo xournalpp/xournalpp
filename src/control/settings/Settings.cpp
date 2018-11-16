@@ -18,7 +18,7 @@
 #define WRITE_DOUBLE_PROP(var) xmlNode = savePropertyDouble((const char *)#var, var, root)
 #define WRITE_COMMENT(var) com = xmlNewComment((const xmlChar *)var); xmlAddPrevSibling(xmlNode, com);
 
-const char* BUTTON_NAMES[] = {"middle", "right", "eraser", "touch", "default", "stylus", "stylus2"};
+const char* BUTTON_NAMES[] = {"middle", "right", "eraser", "touch", "default", "custom1", "custom2"};
 
 Settings::Settings(path filename)
 {
@@ -97,9 +97,9 @@ void Settings::loadDefault()
 	this->buttonConfig[3] = new ButtonConfig(TOOL_NONE, 0, TOOL_SIZE_NONE, DRAWING_TYPE_NONE, ERASER_TYPE_NONE);
 	// Default config
 	this->buttonConfig[4] = new ButtonConfig(TOOL_PEN, 0, TOOL_SIZE_FINE, DRAWING_TYPE_NONE, ERASER_TYPE_NONE);
-	// Stylus button
+	// Custom 1
 	this->buttonConfig[5] = new ButtonConfig(TOOL_NONE, 0, TOOL_SIZE_NONE, DRAWING_TYPE_NONE, ERASER_TYPE_NONE);
-	// Stylus2 button
+	// Custom 2
 	this->buttonConfig[6] = new ButtonConfig(TOOL_NONE, 0, TOOL_SIZE_NONE, DRAWING_TYPE_NONE, ERASER_TYPE_NONE);
 
 	this->fullscreenHideElements = "mainMenubar";
@@ -504,8 +504,8 @@ void Settings::loadButtonConfig()
 				}
 			}
 
-			// Touch device
-			if (i == 3)
+			// Touch device or Custom device
+			if (i == 3 || i >= 5)
 			{
 				if (!e.getString("device", cfg->device))
 				{
@@ -703,7 +703,7 @@ void Settings::saveButtonConfig()
 			e.setBool("arrow", arrow);
 			e.setBool("shapeRecognizer", shapeRecognizer);
 			e.setString("size", toolSizeToString(cfg->size));
-		} // end if pen or hilighter
+		} // end if pen or highlighter
 
 		if (type == TOOL_PEN || type == TOOL_HILIGHTER || type == TOOL_TEXT)
 		{
@@ -715,8 +715,8 @@ void Settings::saveButtonConfig()
 			e.setString("eraserMode", eraserTypeToString(cfg->eraserMode));
 		}
 
-		// Touch device
-		if (i == 3)
+		// Touch device or Custom device
+		if (i == 3 || i >= 5)
 		{
 			e.setString("device", cfg->device);
 			e.setBool("disableDrawing", cfg->disableDrawing);

@@ -299,7 +299,7 @@ void ButtonConfigGui::saveSettings()
 	{
 		DeviceListHelper devList(cbDevice);
 		std::vector<InputDevice>& devices = devList.getDeviceList();
-		int dev = gtk_combo_box_get_active(GTK_COMBO_BOX(cbDevice));
+		int dev = gtk_combo_box_get_active(GTK_COMBO_BOX(cbDevice)) - 1;
 
 		if (dev < 0 || devices.size() <= dev)
 		{

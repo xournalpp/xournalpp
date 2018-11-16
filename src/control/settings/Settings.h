@@ -438,8 +438,8 @@ private:
 	 * 2: right button
 	 * 3: touch screen
 	 * 4: default
-	 * 5: Stylus button
-	 * 6: Stylus2 button
+	 * 5: Custom1
+	 * 6: Custom2
 	 */
 	ButtonConfig* buttonConfig[BUTTON_COUNT];
 
