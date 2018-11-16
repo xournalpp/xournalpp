@@ -39,11 +39,14 @@ private:
 class DeviceListHelper
 {
 public:
-	DeviceListHelper(GtkWidget* widget);
+	DeviceListHelper();
 	virtual ~DeviceListHelper();
 
 public:
 	std::vector<InputDevice>& getDeviceList();
+
+private:
+	void addDevicesToList(GList* devList);
 
 private:
 	std::vector<InputDevice> deviceList;

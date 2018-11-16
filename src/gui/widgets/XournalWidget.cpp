@@ -314,11 +314,11 @@ static bool change_tool(Settings* settings, GdkEventButton* event, GtkXournal* x
 	{
 		if (event->button == 2)
 		{
-			cfg = settings->getStylusButtonConfig();
+			cfg = settings->getStylusButton1Config();
 		}
 		else if (event->button == 3)
 		{
-			cfg = settings->getStylus2ButtonConfig();
+			cfg = settings->getStylusButton2Config();
 		}
 	}
 	 else if (event->button == 2)   // Middle Button

@@ -243,8 +243,8 @@ public:
 	ButtonConfig* getRightButtonConfig();
 	ButtonConfig* getTouchButtonConfig();
 	ButtonConfig* getDefaultButtonConfig();
-	ButtonConfig* getStylusButtonConfig();
-	ButtonConfig* getStylus2ButtonConfig();
+	ButtonConfig* getStylusButton1Config();
+	ButtonConfig* getStylusButton2Config();
 
 	string getFullscreenHideElements();
 	void setFullscreenHideElements(string elements);
@@ -438,8 +438,8 @@ private:
 	 * 2: right button
 	 * 3: touch screen
 	 * 4: default
-	 * 5: Stylus button
-	 * 6: Stylus2 button
+	 * 5: Pen Button 1
+	 * 6: Pen Button 2
 	 */
 	ButtonConfig* buttonConfig[BUTTON_COUNT];
 

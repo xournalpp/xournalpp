@@ -1,4 +1,5 @@
 #include "Actions.h"
+#include "LastSelectedTool.h"
 #include "ToolHandler.h"
 #include <Util.h>
 
@@ -644,10 +645,11 @@ void ToolHandler::copyCurrentConfig()
 {
 	XOJ_CHECK_TYPE(ToolHandler);
 
-	// TODO Check if this nullcheck needs to be removed
+	// If there is no last config, create one, if there is already one
+	// do not overwrite this config!
 	if (this->lastSelectedTool == NULL)
 	{
-		this->lastSelectedTool = this->current;
+		this->lastSelectedTool = new LastSelectedTool(this->current);
 	}
 }
 
@@ -659,7 +661,9 @@ void ToolHandler::restoreLastConfig()
 	{
 		return;
 	}
-	this->current = this->lastSelectedTool;
+
+	this->current = this->lastSelectedTool->restoreAndGet();
+	delete this->lastSelectedTool;
 	this->lastSelectedTool = NULL;
 
 	this->listener->toolColorChanged();

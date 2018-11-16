@@ -97,9 +97,9 @@ void Settings::loadDefault()
 	this->buttonConfig[3] = new ButtonConfig(TOOL_NONE, 0, TOOL_SIZE_NONE, DRAWING_TYPE_NONE, ERASER_TYPE_NONE);
 	// Default config
 	this->buttonConfig[4] = new ButtonConfig(TOOL_PEN, 0, TOOL_SIZE_FINE, DRAWING_TYPE_NONE, ERASER_TYPE_NONE);
-	// Stylus button
+	// Pen button 1
 	this->buttonConfig[5] = new ButtonConfig(TOOL_NONE, 0, TOOL_SIZE_NONE, DRAWING_TYPE_NONE, ERASER_TYPE_NONE);
-	// Stylus2 button
+	// Pen button 2
 	this->buttonConfig[6] = new ButtonConfig(TOOL_NONE, 0, TOOL_SIZE_NONE, DRAWING_TYPE_NONE, ERASER_TYPE_NONE);
 
 	this->fullscreenHideElements = "mainMenubar";
@@ -703,7 +703,7 @@ void Settings::saveButtonConfig()
 			e.setBool("arrow", arrow);
 			e.setBool("shapeRecognizer", shapeRecognizer);
 			e.setString("size", toolSizeToString(cfg->size));
-		} // end if pen or hilighter
+		} // end if pen or highlighter
 
 		if (type == TOOL_PEN || type == TOOL_HILIGHTER || type == TOOL_TEXT)
 		{
@@ -1438,14 +1438,14 @@ ButtonConfig* Settings::getDefaultButtonConfig()
 	return this->buttonConfig[4];
 }
 
-ButtonConfig* Settings::getStylusButtonConfig()
+ButtonConfig* Settings::getStylusButton1Config()
 {
 	XOJ_CHECK_TYPE(Settings);
 
 	return this->buttonConfig[5];
 }
 
-ButtonConfig* Settings::getStylus2ButtonConfig()
+ButtonConfig* Settings::getStylusButton2Config()
 {
 	XOJ_CHECK_TYPE(Settings);
 

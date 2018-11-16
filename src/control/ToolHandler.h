@@ -17,6 +17,8 @@
 #include <Arrayiterator.h>
 #include <XournalType.h>
 
+class LastSelectedTool;
+
 class ToolListener
 {
 public:
@@ -103,7 +105,11 @@ private:
 
 	Tool* tools[TOOL_COUNT];
 	Tool* current;
-	Tool* lastSelectedTool;
+
+	/**
+	 * Last selected tool, reference with color values etc.
+	 */
+	LastSelectedTool* lastSelectedTool;
 
 	EraserType eraserType;
 
