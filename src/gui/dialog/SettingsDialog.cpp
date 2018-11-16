@@ -73,8 +73,8 @@ void SettingsDialog::initMouseButtonEvents()
 	initMouseButtonEvents("hboxRightMouse", 2);
 	initMouseButtonEvents("hboxEraser", 0);
 	initMouseButtonEvents("hboxTouch", 3, true);
-	initMouseButtonEvents("hboxCustom1", 5, true);
-	initMouseButtonEvents("hboxCustom2", 6, true);
+	initMouseButtonEvents("hboxPenButton1", 5);
+	initMouseButtonEvents("hboxPenButton2", 6);
 
 	initMouseButtonEvents("hboxDefault", 4);
 }

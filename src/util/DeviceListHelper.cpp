@@ -3,24 +3,19 @@
 #include <i18n.h>
 
 
-DeviceListHelper::DeviceListHelper(GtkWidget* widget)
+DeviceListHelper::DeviceListHelper()
 {
-	GdkDisplay* display;
-	if (widget == NULL)
-	{
-		display = gdk_display_get_default();
-	}
-	else
-	{
-		display = gtk_widget_get_display(widget);
-	}
-
 	// TODO For never GTK versions, see example here:
 	// https://cvs.gnucash.org/docs/MASTER/gnc-cell-renderer-popup_8c_source.html
 
-	GdkDeviceManager* deviceManager = gdk_display_get_device_manager(display);
+	GdkDeviceManager* deviceManager = gdk_display_get_device_manager(gdk_display_get_default());
 
-	addDevicesToList(gdk_device_manager_list_devices(deviceManager, GDK_DEVICE_TYPE_MASTER));
+	addDevicesToList(gdk_device_manager_list_devices(deviceManager, GDK_DEVICE_TYPE_SLAVE));
+
+	if (deviceList.size() == 0)
+	{
+		g_warning("No device found. Is Xournal++ running in debugger / Eclipse...?\nProbably this is the reason for not finding devices!\n");
+	}
 }
 
 DeviceListHelper::~DeviceListHelper()
@@ -29,16 +24,17 @@ DeviceListHelper::~DeviceListHelper()
 
 void DeviceListHelper::addDevicesToList(GList* devList)
 {
-//	gdk_device_get_associated_device();
-
-	// For events: gdk_event_get_source_device();
-
-
 	while (devList != NULL)
 	{
 		GdkDevice* dev = (GdkDevice*) devList->data;
+		if (GDK_SOURCE_KEYBOARD == gdk_device_get_source(dev))
+		{
+			// Skip keyboard
+			devList = devList->next;
+			continue;
+		}
+
 		deviceList.push_back(InputDevice(dev));
-		addDevicesToList(gdk_device_list_slave_devices(dev));
 		devList = devList->next;
 	}
 
@@ -49,8 +45,6 @@ std::vector<InputDevice>& DeviceListHelper::getDeviceList()
 {
 	return deviceList;
 }
-
-
 
 InputDevice::InputDevice(GdkDevice* device)
  : device(device)
@@ -93,6 +87,7 @@ string InputDevice::getType()
 	}
 	else if (source == GDK_SOURCE_KEYBOARD)
 	{
+		// not used: filtered above
 		return _("keyboard");
 	}
 	else if (source == GDK_SOURCE_TOUCHSCREEN)

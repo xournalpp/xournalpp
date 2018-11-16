@@ -1438,14 +1438,14 @@ ButtonConfig* Settings::getDefaultButtonConfig()
 	return this->buttonConfig[4];
 }
 
-ButtonConfig* Settings::getStylusButtonConfig()
+ButtonConfig* Settings::getStylusButton1Config()
 {
 	XOJ_CHECK_TYPE(Settings);
 
 	return this->buttonConfig[5];
 }
 
-ButtonConfig* Settings::getStylus2ButtonConfig()
+ButtonConfig* Settings::getStylusButton2Config()
 {
 	XOJ_CHECK_TYPE(Settings);
 

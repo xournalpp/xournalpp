@@ -39,7 +39,7 @@ private:
 class DeviceListHelper
 {
 public:
-	DeviceListHelper(GtkWidget* widget);
+	DeviceListHelper();
 	virtual ~DeviceListHelper();
 
 public:
