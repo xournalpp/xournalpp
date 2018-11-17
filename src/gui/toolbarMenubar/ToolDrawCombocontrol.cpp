@@ -68,13 +68,6 @@ void ToolDrawCombocontrol::createMenuItem(string name, string icon, ActionType t
 	gtk_widget_show_all(menuItem);
 }
 
-void ToolDrawCombocontrol::actionPerformed(ActionType action, ActionGroup group,
-								   GdkEvent* event, GtkMenuItem* menuitem,
-								   GtkToolButton* toolbutton, bool selected)
-{
-	handler->actionPerformed(action, group, event, menuitem, toolbutton, selected);
-}
-
 void ToolDrawCombocontrol::selected(ActionGroup group, ActionType action)
 {
 	XOJ_CHECK_TYPE(ToolDrawCombocontrol);

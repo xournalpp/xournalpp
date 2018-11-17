@@ -65,6 +65,11 @@ private:
 	GtkWidget* menuitem;
 
 	/**
+	 * This is a check menu item which is not displayed as radio
+	 */
+	bool checkMenuItem;
+
+	/**
 	 * Keep the state for toggle / radio menu handling
 	 */
 	bool itemActive;

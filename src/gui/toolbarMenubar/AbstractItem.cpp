@@ -7,6 +7,7 @@ AbstractItem::AbstractItem(string id, ActionHandler* handler, ActionType action,
 	this->handler = handler;
 	this->action = action;
 	this->menuitem = NULL;
+	this->checkMenuItem = false;
 	this->menuSignalHandler = 0;
 	this->group = GROUP_NOGROUP;
 	this->enabled = true;
@@ -27,6 +28,11 @@ AbstractItem::AbstractItem(string id, ActionHandler* handler, ActionType action,
 
 		g_object_ref(G_OBJECT(menuitem));
 		this->menuitem = menuitem;
+
+		if (GTK_IS_CHECK_MENU_ITEM(menuitem))
+		{
+			checkMenuItem = !gtk_check_menu_item_get_draw_as_radio(GTK_CHECK_MENU_ITEM(menuitem));
+		}
 	}
 }
 
@@ -136,6 +142,12 @@ void AbstractItem::actionPerformed(ActionType action, ActionGroup group,
 								   GdkEvent* event, GtkMenuItem* menuitem,
 								   GtkToolButton* toolbutton, bool selected)
 {
+	if (checkMenuItem)
+	{
+		printf("-->%i\n", selected);
+		return;
+	}
+
 	handler->actionPerformed(action, group, event, menuitem, toolbutton, selected);
 }
 
