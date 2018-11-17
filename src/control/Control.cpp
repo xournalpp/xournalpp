@@ -649,14 +649,11 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
 		break;
 
 	case ACTION_TOOL_DRAW_RECT:
-		setRectangleEnabled(enabled);
-		break;
 	case ACTION_TOOL_DRAW_CIRCLE:
-		setCircleEnabled(enabled);
-		break;
 	case ACTION_TOOL_DRAW_ARROW:
-		//		selectTool(TOOL_DRAW_ARROW);
-		setArrowEnabled(enabled);
+	case ACTION_RULER:
+	case ACTION_SHAPE_RECOGNIZER:
+		setShapeTool(type, enabled);
 		break;
 
 	case ACTION_TOOL_DEFAULT:
@@ -664,14 +661,6 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
 		{
 			selectDefaultTool();
 		}
-		break;
-
-	case ACTION_RULER:
-		setRulerEnabled(enabled);
-		break;
-
-	case ACTION_SHAPE_RECOGNIZER:
-		setShapeRecognizerEnabled(enabled);
 		break;
 
 	case ACTION_SIZE_VERY_THIN:
@@ -1082,91 +1071,63 @@ bool Control::isInDragAndDropToolbar()
 	return this->dragDropHandler->isInDragAndDrop();
 }
 
-void Control::setRulerEnabled(bool enabled)
+void Control::setShapeTool(ActionType type, bool enabled)
 {
 	XOJ_CHECK_TYPE(Control);
 
-	if (this->toolHandler->isRuler() == enabled)
+	if (enabled == false)
+	{
+		// Disable all entries
+		this->toolHandler->setRuler(false);
+		this->toolHandler->setRectangle(false);
+		this->toolHandler->setArrow(false);
+		this->toolHandler->setCircle(false);
+		this->toolHandler->setShapeRecognizer(false);
+
+		// fire disabled and return
+		fireActionSelected(GROUP_RULER, ACTION_NONE);
+		return;
+	}
+
+	// Check for nothing changed, and return in this case
+	if ((this->toolHandler->isRuler() && type == ACTION_RULER) ||
+		(this->toolHandler->isRectangle() && type == ACTION_TOOL_DRAW_RECT) ||
+		(this->toolHandler->isArrow() && type == ACTION_TOOL_DRAW_ARROW) ||
+		(this->toolHandler->isCircle() && type == ACTION_TOOL_DRAW_CIRCLE) ||
+		(this->toolHandler->isShapeRecognizer() && type == ACTION_SHAPE_RECOGNIZER))
 	{
 		return;
 	}
 
-	this->toolHandler->setRuler(enabled);
-	fireActionSelected(GROUP_RULER, enabled ? ACTION_RULER : ACTION_NONE);
-	if (enabled)
+	switch (type)
 	{
-		this->toolHandler->setRuler(true, true);
-	}
-}
-
-void Control::setRectangleEnabled(bool enabled)
-{
-	XOJ_CHECK_TYPE(Control);
-
-	if (this->toolHandler->isRectangle() == enabled)
-	{
-		return;
-	}
-
-	this->toolHandler->setRectangle(enabled);
-	fireActionSelected(GROUP_RULER, enabled ? ACTION_TOOL_DRAW_RECT : ACTION_NONE);
-	if (enabled)
-	{
+	case ACTION_TOOL_DRAW_RECT:
 		this->toolHandler->setRectangle(true, true);
-	}
-}
+		break;
 
-void Control::setArrowEnabled(bool enabled)
-{
-	XOJ_CHECK_TYPE(Control);
-
-	if (this->toolHandler->isArrow() == enabled)
-	{
-		return;
-	}
-
-	this->toolHandler->setArrow(enabled);
-	fireActionSelected(GROUP_RULER, enabled ? ACTION_TOOL_DRAW_ARROW : ACTION_NONE);
-	if (enabled)
-	{
-		this->toolHandler->setArrow(true, true);
-	}
-}
-
-void Control::setCircleEnabled(bool enabled)
-{
-	XOJ_CHECK_TYPE(Control);
-
-	if (this->toolHandler->isCircle() == enabled)
-	{
-		return;
-	}
-
-	this->toolHandler->setCircle(enabled);
-	fireActionSelected(GROUP_RULER, enabled ? ACTION_TOOL_DRAW_CIRCLE : ACTION_NONE);
-	if (enabled)
-	{
+	case ACTION_TOOL_DRAW_CIRCLE:
 		this->toolHandler->setCircle(true, true);
-	}
-}
+		break;
 
-void Control::setShapeRecognizerEnabled(bool enabled)
-{
-	XOJ_CHECK_TYPE(Control);
+	case ACTION_TOOL_DRAW_ARROW:
+		this->toolHandler->setArrow(true, true);
+		break;
 
-	if (this->toolHandler->isShapeRecognizer() == enabled)
-	{
-		return;
-	}
+	case ACTION_RULER:
+		this->toolHandler->setRuler(true, true);
+		break;
 
-	this->toolHandler->setShapeRecognizer(enabled);
-	fireActionSelected(GROUP_SHAPE_RECOGNIZER, enabled ? ACTION_SHAPE_RECOGNIZER : ACTION_NONE);
-
-	if (enabled)
-	{
+	case ACTION_SHAPE_RECOGNIZER:
 		this->toolHandler->setShapeRecognizer(true, true);
 		this->resetShapeRecognizer();
+		break;
+
+	default:
+		g_warning("Invalid type for setShapeTool: %i", type);
+		break;
 	}
+
+	fireActionSelected(GROUP_RULER, type);
 }
 
 void Control::enableFullscreen(bool enabled, bool presentation)
@@ -2090,16 +2051,29 @@ void Control::toolChanged()
 		toolColorChanged();
 	}
 
-	fireActionSelected(GROUP_SHAPE_RECOGNIZER,
-					   toolHandler->isShapeRecognizer() ? ACTION_SHAPE_RECOGNIZER : ACTION_NOT_SELECTED);
-	fireActionSelected(GROUP_RULER,
-					   toolHandler->isRuler() ? ACTION_RULER : ACTION_NOT_SELECTED);
-	fireActionSelected(GROUP_RULER,
-					   toolHandler->isRectangle() ? ACTION_TOOL_DRAW_RECT : ACTION_NOT_SELECTED);
-	fireActionSelected(GROUP_RULER,
-					   toolHandler->isCircle() ? ACTION_TOOL_DRAW_CIRCLE : ACTION_NOT_SELECTED);
-	fireActionSelected(GROUP_RULER,
-					   toolHandler->isArrow() ? ACTION_TOOL_DRAW_ARROW : ACTION_NOT_SELECTED);
+	ActionType rulerAction = ACTION_NOT_SELECTED;
+	if (toolHandler->isShapeRecognizer())
+	{
+		rulerAction = ACTION_SHAPE_RECOGNIZER;
+	}
+	else if (toolHandler->isRuler())
+	{
+		rulerAction = ACTION_RULER;
+	}
+	else if (toolHandler->isRectangle())
+	{
+		rulerAction = ACTION_TOOL_DRAW_RECT;
+	}
+	else if (toolHandler->isCircle())
+	{
+		rulerAction = ACTION_TOOL_DRAW_CIRCLE;
+	}
+	else if (toolHandler->isArrow())
+	{
+		rulerAction = ACTION_TOOL_DRAW_ARROW;
+	}
+
+	fireActionSelected(GROUP_RULER, rulerAction);
 
 	getCursor()->updateCursor();
 

@@ -11,6 +11,9 @@
 
 #include <list>
 
+RepaintWidgetHandler* RenderJob::repaintHandler = NULL;
+
+
 RenderJob::RenderJob(XojPageView* view)
 {
 	XOJ_INIT_TYPE(RenderJob);
@@ -25,6 +28,12 @@ RenderJob::~RenderJob()
 	this->view = NULL;
 
 	XOJ_RELEASE_TYPE(RenderJob);
+}
+
+void RenderJob::cleanupStatic()
+{
+	delete repaintHandler;
+	repaintHandler = NULL;
 }
 
 void* RenderJob::getSource()
@@ -119,15 +128,13 @@ void RenderJob::rerenderRectangle(Rectangle* rect, bool noThreads)
 	rerenderRectangle(this, rect, noThreads);
 }
 
-RepaintWidgetHandler* handler = NULL;
-
 void RenderJob::run(bool noThreads)
 {
 	XOJ_CHECK_TYPE(RenderJob);
 
-	if (handler == NULL)
+	if (repaintHandler == NULL)
 	{
-		handler = new RepaintWidgetHandler(this->view->getXournal()->getWidget());
+		repaintHandler = new RepaintWidgetHandler(this->view->getXournal()->getWidget());
 	}
 
 	double zoom = this->view->xournal->getZoom();
@@ -192,7 +199,7 @@ void RenderJob::run(bool noThreads)
 			doc->unlock();
 		}
 
-		handler->repaintComplete();
+		repaintHandler->repaintComplete();
 	}
 	else
 	{
@@ -201,7 +208,7 @@ void RenderJob::run(bool noThreads)
 			rerenderRectangle(rect, noThreads);
 
 			rect = this->view->rectOnWidget(rect->x, rect->y, rect->width, rect->height);
-			handler->repaintRects(rect);
+			repaintHandler->repaintRects(rect);
 		}
 	}
 

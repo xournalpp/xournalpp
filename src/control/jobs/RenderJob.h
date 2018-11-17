@@ -17,6 +17,7 @@
 
 class Rectangle;
 class XojPageView;
+class RepaintWidgetHandler;
 
 class RenderJob : public Job
 {
@@ -35,6 +36,7 @@ public:
 
 public:
 	static void rerenderRectangle(RenderJob* renderJob, Rectangle* rect, bool noThreads);
+	static void cleanupStatic();
 
 private:
 	void rerenderRectangle(Rectangle* rect, bool noThreads);
@@ -43,4 +45,6 @@ private:
 	XOJ_TYPE_ATTRIB;
 
 	XojPageView* view;
+
+	static RepaintWidgetHandler* repaintHandler;
 };

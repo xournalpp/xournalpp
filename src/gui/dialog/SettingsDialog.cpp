@@ -27,16 +27,14 @@ SettingsDialog::SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* setti
 		{
 			XOJ_CHECK_TYPE_OBJ(self, SettingsDialog);
 			self->setDpi((int) value);
-		}
-		), this);
+		}), this);
 
 	g_signal_connect(get("cbAutosave"), "toggled", G_CALLBACK(
 		+[](GtkToggleButton* togglebutton, SettingsDialog* self)
 		{
 			XOJ_CHECK_TYPE_OBJ(self, SettingsDialog);
 			self->autosaveToggled();
-		}
-		), this);
+		}), this);
 
 	gtk_box_pack_start(GTK_BOX(vbox), callib, false, true, 0);
 	gtk_widget_show(callib);

@@ -7,6 +7,8 @@ AbstractItem::AbstractItem(string id, ActionHandler* handler, ActionType action,
 	this->handler = handler;
 	this->action = action;
 	this->menuitem = NULL;
+	this->checkMenuItem = false;
+	this->ignoreNextCheckMenuEvent = false;
 	this->menuSignalHandler = 0;
 	this->group = GROUP_NOGROUP;
 	this->enabled = true;
@@ -18,9 +20,20 @@ AbstractItem::AbstractItem(string id, ActionHandler* handler, ActionType action,
 	if (menuitem)
 	{
 		// Other signal available: "toggled", currently not sure, if this may fix some bugs or generate other...
-		menuSignalHandler = g_signal_connect(menuitem, "activate", G_CALLBACK(&menuCallback), this);
+		menuSignalHandler = g_signal_connect(menuitem, "activate", G_CALLBACK(
+				+[](GtkMenuItem* menuitem, AbstractItem* self)
+				{
+					XOJ_CHECK_TYPE_OBJ(self, AbstractItem);
+					self->activated(NULL, menuitem, NULL);
+				}), this);
+
 		g_object_ref(G_OBJECT(menuitem));
 		this->menuitem = menuitem;
+
+		if (GTK_IS_CHECK_MENU_ITEM(menuitem))
+		{
+			checkMenuItem = !gtk_check_menu_item_get_draw_as_radio(GTK_CHECK_MENU_ITEM(menuitem));
+		}
 	}
 }
 
@@ -35,12 +48,6 @@ AbstractItem::~AbstractItem()
 	}
 
 	XOJ_RELEASE_TYPE(AbstractItem);
-}
-
-void AbstractItem::menuCallback(GtkMenuItem* menuitem, AbstractItem* toolItem)
-{
-	XOJ_CHECK_TYPE_OBJ(toolItem, AbstractItem);
-	toolItem->activated(NULL, menuitem, NULL);
 }
 
 void AbstractItem::actionSelected(ActionGroup group, ActionType action)
@@ -58,6 +65,10 @@ void AbstractItem::actionSelected(ActionGroup group, ActionType action)
 	{
 		if (gtk_check_menu_item_get_active(GTK_CHECK_MENU_ITEM(this->menuitem)) != itemActive)
 		{
+			if (checkMenuItem)
+			{
+				ignoreNextCheckMenuEvent = true;
+			}
 			gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(this->menuitem), itemActive);
 		}
 	}
@@ -129,7 +140,19 @@ void AbstractItem::activated(GdkEvent* event, GtkMenuItem* menuitem, GtkToolButt
 		selected = gtk_toggle_tool_button_get_active(GTK_TOGGLE_TOOL_BUTTON(toolbutton));
 	}
 
+	if (checkMenuItem && ignoreNextCheckMenuEvent)
+	{
+		ignoreNextCheckMenuEvent = false;
+		return;
+	}
 
+	actionPerformed(action, group, event, menuitem, toolbutton, selected);
+}
+
+void AbstractItem::actionPerformed(ActionType action, ActionGroup group,
+								   GdkEvent* event, GtkMenuItem* menuitem,
+								   GtkToolButton* toolbutton, bool selected)
+{
 	handler->actionPerformed(action, group, event, menuitem, toolbutton, selected);
 }
 

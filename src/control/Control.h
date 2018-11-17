@@ -113,11 +113,7 @@ public:
 
 	void gotoPage();
 
-	void setRulerEnabled(bool enabled);
-	void setRectangleEnabled(bool enabled);
-	void setCircleEnabled(bool enabled);
-	void setArrowEnabled(bool enabled);
-	void setShapeRecognizerEnabled(bool enabled);
+	void setShapeTool(ActionType type, bool enabled);
 
 	void addNewLayer();
 	void deleteCurrentLayer();
