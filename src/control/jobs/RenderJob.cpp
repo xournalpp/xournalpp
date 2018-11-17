@@ -1,4 +1,5 @@
 #include "RenderJob.h"
+#include "RepaintWidgetHandler.h"
 
 #include "gui/PageView.h"
 #include "gui/XournalView.h"
@@ -117,111 +118,6 @@ void RenderJob::rerenderRectangle(Rectangle* rect, bool noThreads)
 
 	rerenderRectangle(this, rect, noThreads);
 }
-
-class RepaintWidgetHandler
-{
-public:
-	RepaintWidgetHandler(GtkWidget * width)
-	{
-		g_mutex_init(&this->mutex);
-		this->widget = width;
-		this->complete = false;
-		this->rescaleId = 0;
-	}
-
-public:
-	void repaintComplete()
-	{
-		g_mutex_lock(&this->mutex);
-		this->complete = true;
-
-		for (Rectangle* r : this->rects)
-		{
-			delete r;
-			r = NULL;
-		}
-		this->rects.clear();
-
-		addRepaintCallback();
-
-		g_mutex_unlock(&this->mutex);
-	}
-
-	void repaintRects(Rectangle* rect)
-	{
-		g_mutex_lock(&this->mutex);
-		if (this->complete)
-		{
-			delete rect;
-			rect = NULL;
-		}
-		else
-		{
-			this->rects.push_front(rect);
-		}
-		addRepaintCallback();
-
-		g_mutex_unlock(&this->mutex);
-	}
-
-private:
-	static bool idleRepaint(RepaintWidgetHandler * data)
-	{
-		g_mutex_lock(&data->mutex);
-		bool complete = data->complete;
-		std::list<Rectangle*> rects = data->rects;
-
-		data->rects.clear();
-		data->complete = false;
-		data->rescaleId = 0;
-
-		g_mutex_unlock(&data->mutex);
-
-		gdk_threads_enter();
-
-		gtk_widget_queue_draw(data->widget);
-
-		if (complete)
-		{
-			//gtk_widget_queue_draw(data->widget);
-		}
-		else
-		{
-			for (Rectangle* r : rects)
-			{
-				delete r;
-				r = NULL;
-			}
-			rects.clear();
-		}
-
-		gdk_flush();
-
-		gdk_threads_leave();
-
-		// do not call again
-		return false;
-	}
-
-	void addRepaintCallback()
-	{
-		if (this->rescaleId)
-		{
-			return;
-		}
-
-		this->rescaleId = g_idle_add((GSourceFunc) idleRepaint, this);
-	}
-
-private:
-	GMutex mutex;
-
-	int rescaleId;
-
-	bool complete;
-	std::list<Rectangle*> rects;
-	GtkWidget* widget;
-};
 
 RepaintWidgetHandler* handler = NULL;
 

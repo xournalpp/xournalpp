@@ -1,50 +1,52 @@
 #include "Stacktrace.h"
 
-#include <execinfo.h>
 #include <iostream>
+
+#include <string.h>
+#include <backtrace.h>
+#include <cxxabi.h>
+
 using std::endl;
-
-/**
- * This code uses addr2line
- *
- * Another solution would be backtrace-symbols.c from cairo/util, but its really complicated
- */
-
-string exeName = "";
 
 Stacktrace::Stacktrace() { }
 
 Stacktrace::~Stacktrace() { }
 
-void Stacktrace::setExename(string name)
-{
-	exeName = name;
-}
-
 void Stacktrace::printStracktrace(std::ostream& stream)
 {
-	void* trace[32];
-	char** messages = (char**) NULL;
-	char buff[2048];
+	stream << "Backtrace: >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" << endl;
+	struct backtrace_state* lbstate = backtrace_create_state(nullptr, 1, (backtrace_error_callback)errorCallback, &stream);
+	backtrace_full(lbstate, 0, (backtrace_full_callback)fullCallback, (backtrace_error_callback)errorCallback, &stream);
+	stream << "Backtrace end <<<<<<<<<<<<<<<<<<<<<<<<<<<<<" << endl;
+}
 
-	int trace_size = backtrace(trace, 32);
-	messages = backtrace_symbols(trace, trace_size);
+int Stacktrace::fullCallback(std::ostream* stream, uintptr_t pc, const char* filename, int lineno, const char* function)
+{
+	int demangle_status = 0;
+	char *realname = abi::__cxa_demangle(function, 0, 0, &demangle_status);
 
-	// skip first stack frame (points here)
-	for (int i = 1; i < trace_size; ++i)
+	if (demangle_status != 0 && function != NULL)
 	{
-		stream << "[bt] #" << i << " " << messages[i] << endl;
-
-		char syscom[1024];
-
-		sprintf(syscom, "addr2line %p -e %s", trace[i], exeName.c_str());
-		FILE* fProc = popen(syscom, "r");
-		while (fgets(buff, sizeof(buff), fProc) != NULL)
-		{
-			stream << buff;
-		}
-		pclose(fProc);
+		realname = ::strdup(function);
 	}
+
+	*stream << "0x" << std::hex << (unsigned long) pc << "\t";
+	*stream << (realname == nullptr ? "???" : realname) << "\t";
+	*stream << (filename == nullptr ? "???" : filename) << ":";
+	*stream << std::dec << lineno << endl;
+
+	free(realname);
+
+	if (function == NULL)
+	{
+		return 0;
+	}
+	return strcmp(function, "main") == 0 ? 1 : 0;
+}
+
+void Stacktrace::errorCallback(std::ostream* stream, const char* msg, int errnum)
+{
+	*stream << "Something went wrong in libbacktrace: " << msg << endl;
 }
 
 void Stacktrace::printStracktrace()
