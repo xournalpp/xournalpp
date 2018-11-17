@@ -2982,8 +2982,39 @@ void Control::clipboardPasteImage(GdkPixbuf* img)
 	int width = gdk_pixbuf_get_width(img);
 	int height = gdk_pixbuf_get_height(img);
 
-	image->setWidth(width);
-	image->setHeight(height);
+	int pageNr = getCurrentPageNo();
+	if (pageNr == -1)
+	{
+		return;
+	}
+
+	this->doc->lock();
+	PageRef page = this->doc->getPage(pageNr);
+	int pageWidth = page->getWidth();
+	int pageHeigth = page->getHeight();
+	this->doc->unlock();
+
+	// Size: 3/4 of the page size
+	pageWidth = pageWidth * 3 / 4;
+	pageHeigth = pageHeigth * 3 / 4;
+
+	int scaledWidth = width;
+	int scaledHeight = height;
+
+	if (width > pageWidth)
+	{
+		scaledWidth = pageWidth;
+		scaledHeight = (scaledWidth * height) / width;
+	}
+
+	if (scaledHeight > pageHeigth)
+	{
+		scaledHeight = pageHeigth;
+		scaledWidth = (scaledHeight * width) / height;
+	}
+
+	image->setWidth(scaledWidth);
+	image->setHeight(scaledHeight);
 
 	clipboardPaste(image);
 }
