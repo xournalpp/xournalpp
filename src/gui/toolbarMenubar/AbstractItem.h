@@ -25,7 +25,6 @@ public:
 	virtual ~AbstractItem();
 
 public:
-	static void menuCallback(GtkMenuItem* menuitem, AbstractItem* toolItem);
 	virtual void actionSelected(ActionGroup group, ActionType action);
 
 	/**
@@ -43,6 +42,10 @@ public:
 
 protected:
 	virtual void enable(bool enabled);
+
+	virtual void actionPerformed(ActionType action, ActionGroup group,
+								 GdkEvent* event, GtkMenuItem* menuitem,
+								 GtkToolButton* toolbutton, bool selected);
 
 private:
 	XOJ_TYPE_ATTRIB;

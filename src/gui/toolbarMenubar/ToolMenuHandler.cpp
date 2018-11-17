@@ -417,22 +417,22 @@ void ToolMenuHandler::initToolItems()
 	addToolItem(new ToolButton(listener, gui, "SELECT_OBJECT", ACTION_TOOL_SELECT_OBJECT, GROUP_TOOL, true,
 							   "object-select.svg", _C("Select Object"), gui->get("menuToolsSelectObject")));
 
-	addToolItem(new ToolButton(listener, gui, "DRAW_CIRCLE", ACTION_TOOL_DRAW_CIRCLE, GROUP_RULER, false,
-							   "circle-draw.svg", _C("Draw Circle"), gui->get("menuToolsDrawCircle")));
-	addToolItem(new ToolButton(listener, gui, "DRAW_RECTANGLE", ACTION_TOOL_DRAW_RECT, GROUP_RULER, false,
-							   "rect-draw.svg", _C("Draw Rectangle"), gui->get("menuToolsDrawRect")));
-	addToolItem(new ToolButton(listener, gui, "DRAW_ARROW", ACTION_TOOL_DRAW_ARROW, GROUP_RULER, false,
-							   "arrow-draw.svg", _C("Draw Arrow"), gui->get("menuToolsDrawArrow")));
+//	addToolItem(new ToolButton(listener, gui, "DRAW_CIRCLE", ACTION_TOOL_DRAW_CIRCLE, GROUP_RULER, false,
+//							   "circle-draw.svg", _C("Draw Circle"), gui->get("menuToolsDrawCircle")));
+//	addToolItem(new ToolButton(listener, gui, "DRAW_RECTANGLE", ACTION_TOOL_DRAW_RECT, GROUP_RULER, false,
+//							   "rect-draw.svg", _C("Draw Rectangle"), gui->get("menuToolsDrawRect")));
+//	addToolItem(new ToolButton(listener, gui, "DRAW_ARROW", ACTION_TOOL_DRAW_ARROW, GROUP_RULER, false,
+//							   "arrow-draw.svg", _C("Draw Arrow"), gui->get("menuToolsDrawArrow")));
 
 	addToolItem(new ToolButton(listener, gui, "VERTICAL_SPACE", ACTION_TOOL_VERTICAL_SPACE, GROUP_TOOL, true,
 							   "stretch.svg", _C("Vertical Space"), gui->get("menuToolsVerticalSpace")));
 	addToolItem(new ToolButton(listener, gui, "HAND", ACTION_TOOL_HAND, GROUP_TOOL, true, "hand.svg", _C("Hand"),
 							   gui->get("menuToolsHand")));
 
-	addToolItem(new ToolButton(listener, gui, "SHAPE_RECOGNIZER", ACTION_SHAPE_RECOGNIZER, GROUP_RULER, false,
-							   "shape_recognizer.svg", _C("Shape Recognizer"), gui->get("menuToolsShapeRecognizer")));
-	addToolItem(new ToolButton(listener, gui, "RULER", ACTION_RULER, GROUP_RULER, false,
-							   "ruler.svg", _C("Ruler"), gui->get("menuToolsRuler")));
+//	addToolItem(new ToolButton(listener, gui, "SHAPE_RECOGNIZER", ACTION_SHAPE_RECOGNIZER, GROUP_RULER, false,
+//							   "shape_recognizer.svg", _C("Shape Recognizer"), gui->get("menuToolsShapeRecognizer")));
+//	addToolItem(new ToolButton(listener, gui, "RULER", ACTION_RULER, GROUP_RULER, false,
+//							   "ruler.svg", _C("Ruler"), gui->get("menuToolsRuler")));
 
 	addToolItem(new ToolButton(listener, gui, "FINE", ACTION_SIZE_FINE, GROUP_SIZE, true,
 							   "thickness_thin.svg", _C("Thin")));

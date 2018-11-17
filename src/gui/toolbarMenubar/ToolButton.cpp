@@ -114,7 +114,7 @@ GtkWidget* ToolButton::getNewToolIcon()
 
 	if (!stock.empty())
 	{
-		return gtk_image_new_from_stock(stock.c_str(), GTK_ICON_SIZE_SMALL_TOOLBAR);
+		return gtk_image_new_from_icon_name(stock.c_str(), GTK_ICON_SIZE_SMALL_TOOLBAR);
 	}
 	else if (this->gui != NULL)
 	{

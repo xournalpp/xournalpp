@@ -33,6 +33,10 @@ protected:
 	virtual GtkToolItem* newItem();
 	void createMenuItem(string name, string icon, ActionType type);
 
+	virtual void actionPerformed(ActionType type, ActionGroup group,
+	                             GdkEvent* event, GtkMenuItem* menuitem,
+	                             GtkToolButton* toolbutton, bool enabled);
+
 private:
 	XOJ_TYPE_ATTRIB;
 

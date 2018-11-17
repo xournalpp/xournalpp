@@ -13,9 +13,9 @@ struct ToolDrawType {
 };
 
 ToolDrawType types[ToolDrawCombocontrol_EntryCount] = {
-	{ .name = _("Draw Rectangle"),  .icon = "rect-draw.svg",        .type = ACTION_TOOL_DRAW_CIRCLE },
-	{ .name = _("Draw Circle"),     .icon = "circle-draw.svg",      .type = ACTION_TOOL_DRAW_ARROW  },
-	{ .name = _("Draw Arrow"),      .icon = "arrow-draw.svg",       .type = ACTION_TOOL_DRAW_RECT   },
+	{ .name = _("Draw Rectangle"),  .icon = "rect-draw.svg",        .type = ACTION_TOOL_DRAW_RECT   },
+	{ .name = _("Draw Circle"),     .icon = "circle-draw.svg",      .type = ACTION_TOOL_DRAW_CIRCLE },
+	{ .name = _("Draw Arrow"),      .icon = "arrow-draw.svg",       .type = ACTION_TOOL_DRAW_ARROW  },
 	{ .name = _("Draw Line"),       .icon = "ruler.svg",            .type = ACTION_RULER            },
 	{ .name = _("Recognize Lines"), .icon = "shape_recognizer.svg", .type = ACTION_SHAPE_RECOGNIZER }
 };
@@ -50,6 +50,8 @@ ToolDrawCombocontrol::~ToolDrawCombocontrol()
 		icons[i] = NULL;
 	}
 
+	this->toolMenuHandler = NULL;
+
 	XOJ_RELEASE_TYPE(ToolDrawCombocontrol);
 }
 
@@ -64,6 +66,13 @@ void ToolDrawCombocontrol::createMenuItem(string name, string icon, ActionType t
 	gtk_container_add(GTK_CONTAINER(popupMenu), menuItem);
 	toolMenuHandler->registerMenupoint(menuItem, type, GROUP_RULER);
 	gtk_widget_show_all(menuItem);
+}
+
+void ToolDrawCombocontrol::actionPerformed(ActionType action, ActionGroup group,
+								   GdkEvent* event, GtkMenuItem* menuitem,
+								   GtkToolButton* toolbutton, bool selected)
+{
+	handler->actionPerformed(action, group, event, menuitem, toolbutton, selected);
 }
 
 void ToolDrawCombocontrol::selected(ActionGroup group, ActionType action)
