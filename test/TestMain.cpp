@@ -14,6 +14,8 @@
 #include <CrashHandler.h>
 #include <Stacktrace.h>
 
+#include <XournalType.h>
+
 #include <cppunit/CompilerOutputter.h>
 #include <cppunit/extensions/TestFactoryRegistry.h>
 #include <cppunit/ui/text/TestRunner.h>
@@ -34,11 +36,6 @@ int main(int argc, char* argv[])
 
 	// init crash handler
 	installCrashHandlers();
-	if (argc)
-	{
-		// Filename is needed to get backtracke with filenumbers
-		Stacktrace::setExename(argv[0]);
-	}
 
 #ifdef DEV_CALL_LOG
 	Log::initlog();
