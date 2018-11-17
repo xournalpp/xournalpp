@@ -366,15 +366,7 @@ void XournalView::zoom_gesture_end_cb(GtkGesture* gesture, GdkEventSequence* seq
 
 void XournalView::zoom_gesture_scale_changed_cb(GtkGestureZoom* gesture, gdouble scale, XournalView* view)
 {
-	ZoomControl* zoom = view->control->getZoomControl();
 	view->setZoom(scale * view->zoom_gesture_begin);
-
-	//Alternative implementation: update bounding box center each time scale changes
-	//Not used at the moment as a single center set at the beginning of the gesture seems
-	//more robust
-	/*
-	gtk_gesture_get_bounding_box_center (GTK_GESTURE (gesture), &zoom->zoom_center_x, &zoom->zoom_center_y);
-	*/
 }
 
 // send the focus back to the appropriate widget

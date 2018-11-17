@@ -78,14 +78,15 @@ double XojPopplerPage::getHeight()
     }
 }
 
-static GBool poppler_print_annot_cb(Annot* annot, void* user_data)
-{
-    if (annot->getFlags() & Annot::flagPrint)
-    {
-        return true;
-    }
-    return (annot->getType() == Annot::typeWidget);
-}
+// Currently the call is also comment out
+//static GBool poppler_print_annot_cb(Annot* annot, void* user_data)
+//{
+//    if (annot->getFlags() & Annot::flagPrint)
+//    {
+//        return true;
+//    }
+//    return (annot->getType() == Annot::typeWidget);
+//}
 
 void XojPopplerPage::render(cairo_t* cr, bool forPrinting)
 {
