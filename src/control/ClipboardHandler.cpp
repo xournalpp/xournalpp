@@ -11,6 +11,9 @@
 #include <cairo-svg.h>
 #include <pixbuf-utils.h>
 
+ClipboardListener::~ClipboardListener() {
+}
+
 ClipboardHandler::ClipboardHandler(ClipboardListener* listener, GtkWidget* widget)
 {
 	XOJ_INIT_TYPE(ClipboardHandler);

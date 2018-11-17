@@ -29,6 +29,8 @@ public:
 	virtual void clipboardPasteImage(GdkPixbuf* img) = 0;
 	virtual void clipboardPasteXournal(ObjectInputStream& in) = 0;
 	virtual void deleteSelection() = 0;
+
+	virtual ~ClipboardListener();
 };
 
 class ClipboardHandler
