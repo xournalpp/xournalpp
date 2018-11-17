@@ -1,5 +1,7 @@
 #include "Stacktrace.h"
 
+#ifdef EXTENDED_STACKTRACE
+
 #include <iostream>
 
 #include <string.h>
@@ -53,3 +55,17 @@ void Stacktrace::printStracktrace()
 {
 	printStracktrace(std::cerr);
 }
+
+#else
+
+void Stacktrace::printStracktrace()
+{
+	// Does nothing
+}
+
+void Stacktrace::printStracktrace(std::ostream& stream)
+{
+	// Does nothing
+}
+
+#endif
