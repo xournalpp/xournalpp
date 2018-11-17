@@ -24,7 +24,7 @@ public:
 
 
 MainWindowToolbarMenu::MainWindowToolbarMenu(MainWindow* win)
- : selectedToolbar(NULL), inPredefinedSection(false), win(win)
+ : win(win), selectedToolbar(NULL), inPredefinedSection(false)
 {
 	XOJ_INIT_TYPE(MainWindowToolbarMenu);
 }
@@ -120,7 +120,7 @@ void MainWindowToolbarMenu::menuClicked(GtkCheckMenuItem* menuitem, MenuSelectTo
 
 	win->toolbarSelected(data->d);
 
-	for(int i = 0; i < this->toolbarMenuData.size(); i++)
+	for (int i = 0; i < (int)this->toolbarMenuData.size(); i++)
 	{
 		if (data->index == i)
 		{
