@@ -22,6 +22,8 @@ class Rectangle;
 class Redrawable
 {
 public:
+	virtual ~Redrawable();
+
 	/**
 	 * Call this if you only need to repaint the view, this means the buffer will be painted again,
 	 * and all selections, text edtiors etc. are drawed again, but the view buffer is not refreshed.

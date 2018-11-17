@@ -8,8 +8,9 @@
 GFile* ImageOpenDlg::show(GtkWindow* win, Settings* settings, bool localOnly, bool* attach)
 {
 	GtkWidget* dialog = gtk_file_chooser_dialog_new(_C("Open Image"), win,
-													GTK_FILE_CHOOSER_ACTION_OPEN, GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-													GTK_STOCK_OPEN, GTK_RESPONSE_OK, NULL);
+													GTK_FILE_CHOOSER_ACTION_OPEN, _C("_Cancel"), GTK_RESPONSE_CANCEL,
+													_C("_Open"), GTK_RESPONSE_OK, NULL);
+
 	gtk_file_chooser_set_local_only(GTK_FILE_CHOOSER(dialog), localOnly);
 
 	GtkFileFilter* filterSupported = gtk_file_filter_new();
@@ -99,7 +100,7 @@ void ImageOpenDlg::updatePreviewCallback(GtkFileChooser* fileChooser, void* user
 		}
 		else
 		{
-			gtk_image_set_from_stock(GTK_IMAGE(image), "gtk-dialog-question", GTK_ICON_SIZE_DIALOG);
+			gtk_image_set_from_icon_name(GTK_IMAGE(image), "dialog-question", GTK_ICON_SIZE_DIALOG);
 		}
 
 		g_free(filename);

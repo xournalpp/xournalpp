@@ -63,6 +63,9 @@
 	</storageModule>
 	<storageModule moduleId="org.eclipse.cdt.core.LanguageSettingsProviders"/>
 	<storageModule moduleId="refreshScope" versionNumber="2">
+		<configuration configurationName="Deprecation Disabled">
+			<resource resourceType="PROJECT" workspacePath="/xournalpp"/>
+		</configuration>
 		<configuration configurationName="Default">
 			<resource resourceType="PROJECT" workspacePath="/xournalpp"/>
 		</configuration>
