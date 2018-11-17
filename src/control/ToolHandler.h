@@ -26,6 +26,8 @@ public:
 	virtual void setCustomColorSelected() = 0;
 	virtual void toolSizeChanged() = 0;
 	virtual void toolChanged() = 0;
+
+	virtual ~ToolListener();
 };
 
 class ActionHandler;

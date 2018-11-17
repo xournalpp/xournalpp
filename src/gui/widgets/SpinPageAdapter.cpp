@@ -106,3 +106,6 @@ void SpinPageAdapter::firePageChanged()
 		listener->pageChanged(this->page);
 	}
 }
+
+SpinPageListener::~SpinPageListener() { }
+

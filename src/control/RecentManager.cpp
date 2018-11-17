@@ -16,6 +16,9 @@ using std::endl;
 #define MIME_PDF "application/x-pdf"
 #define GROUP "xournal++"
 
+RecentManagerListener::~RecentManagerListener() { }
+
+
 RecentManager::RecentManager()
 {
 	XOJ_INIT_TYPE(RecentManager);

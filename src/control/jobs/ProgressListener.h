@@ -16,4 +16,6 @@ class ProgressListener
 public:
 	virtual void setMaximumState(int max) = 0;
 	virtual void setCurrentState(int state) = 0;
+
+	virtual ~ProgressListener() { };
 };

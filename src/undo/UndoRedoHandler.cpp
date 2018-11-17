@@ -49,6 +49,8 @@ void printUndoList(GList* list)
 #define PRINTCONTENTS()
 #endif //UNDO_TRACE
 
+UndoRedoListener::~UndoRedoListener() { }
+
 UndoRedoHandler::UndoRedoHandler(Control* control)
 {
 	XOJ_INIT_TYPE(UndoRedoHandler);
