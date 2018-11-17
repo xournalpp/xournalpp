@@ -161,10 +161,3 @@ void AbstractToolItem::enable(bool enabled)
 		gtk_widget_set_sensitive(GTK_WIDGET(this->item), enabled);
 	}
 }
-
-GtkWidget* AbstractToolItem::getNewToolIcon()
-{
-	XOJ_CHECK_TYPE(AbstractToolItem);
-
-	return this->getNewToolIconImpl();
-}

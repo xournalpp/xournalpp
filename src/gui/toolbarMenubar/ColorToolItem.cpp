@@ -213,7 +213,7 @@ string ColorToolItem::getToolDisplayName()
 	return this->name;
 }
 
-GtkWidget* ColorToolItem::getNewToolIconImpl()
+GtkWidget* ColorToolItem::getNewToolIcon()
 {
 	XOJ_CHECK_TYPE(ColorToolItem);
 

@@ -88,7 +88,7 @@ string ToolPageLayer::getToolDisplayName()
 	return _("Layer selection");
 }
 
-GtkWidget* ToolPageLayer::getNewToolIconImpl()
+GtkWidget* ToolPageLayer::getNewToolIcon()
 {
 	XOJ_CHECK_TYPE(ToolPageLayer);
 
