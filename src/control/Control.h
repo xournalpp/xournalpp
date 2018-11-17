@@ -248,7 +248,7 @@ protected:
 	 */
 	void loadMetadata(MetadataEntry md);
 
-	static void loadMetadataCallback(MetadataCallbackData* data);
+	static bool loadMetadataCallback(MetadataCallbackData* data);
 
 private:
 	XOJ_TYPE_ATTRIB;

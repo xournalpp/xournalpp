@@ -77,12 +77,9 @@ void Cursor::setCursorBusy(bool busy)
 	if (busy)
 	{
 		GdkWindow* window = gtk_widget_get_window(win->getWindow());
-		if (window)
-		{
-			GdkCursor* cursor = gdk_cursor_new_for_display(gdk_window_get_display(window), GDK_WATCH);
-			gdk_window_set_cursor(window, cursor);
-			gdk_cursor_unref(cursor);
-		}
+		GdkCursor* cursor = gdk_cursor_new_for_display(gdk_window_get_display(window), GDK_WATCH);
+		gdk_window_set_cursor(window, cursor);
+		g_object_unref(cursor);
 	}
 	else
 	{
@@ -141,11 +138,13 @@ void Cursor::updateCursor()
 		return;
 	}
 
+	GdkWindow* window = gtk_widget_get_window(win->getWindow());
+
 	GdkCursor* cursor = NULL;
 
 	if (this->busy)
 	{
-		cursor = gdk_cursor_new(GDK_WATCH);
+		cursor = gdk_cursor_new_for_display(gdk_window_get_display(window), GDK_WATCH);
 	}
 	else
 	{
@@ -156,11 +155,11 @@ void Cursor::updateCursor()
 		{
 			if (this->mouseDown)
 			{
-				cursor = gdk_cursor_new(GDK_FLEUR);
+				cursor = gdk_cursor_new_for_display(gdk_window_get_display(window), GDK_FLEUR);
 			}
 			else
 			{
-				cursor = gdk_cursor_new(GDK_HAND1);
+				cursor = gdk_cursor_new_for_display(gdk_window_get_display(window), GDK_HAND1);
 			}
 		}
 		else if (!this->insidePage)
@@ -172,27 +171,27 @@ void Cursor::updateCursor()
 			switch (this->selectionType)
 			{
 			case CURSOR_SELECTION_MOVE:
-				cursor = gdk_cursor_new(GDK_FLEUR);
+				cursor = gdk_cursor_new_for_display(gdk_window_get_display(window), GDK_FLEUR);
 				break;
 			case CURSOR_SELECTION_TOP_LEFT:
-				cursor = gdk_cursor_new(GDK_TOP_LEFT_CORNER);
+				cursor = gdk_cursor_new_for_display(gdk_window_get_display(window), GDK_TOP_LEFT_CORNER);
 				break;
 			case CURSOR_SELECTION_TOP_RIGHT:
-				cursor = gdk_cursor_new(GDK_TOP_RIGHT_CORNER);
+				cursor = gdk_cursor_new_for_display(gdk_window_get_display(window), GDK_TOP_RIGHT_CORNER);
 				break;
 			case CURSOR_SELECTION_BOTTOM_LEFT:
-				cursor = gdk_cursor_new(GDK_BOTTOM_LEFT_CORNER);
+				cursor = gdk_cursor_new_for_display(gdk_window_get_display(window), GDK_BOTTOM_LEFT_CORNER);
 				break;
 			case CURSOR_SELECTION_BOTTOM_RIGHT:
-				cursor = gdk_cursor_new(GDK_BOTTOM_RIGHT_CORNER);
+				cursor = gdk_cursor_new_for_display(gdk_window_get_display(window), GDK_BOTTOM_RIGHT_CORNER);
 				break;
 			case CURSOR_SELECTION_LEFT:
 			case CURSOR_SELECTION_RIGHT:
-				cursor = gdk_cursor_new(GDK_SB_H_DOUBLE_ARROW);
+				cursor = gdk_cursor_new_for_display(gdk_window_get_display(window), GDK_SB_H_DOUBLE_ARROW);
 				break;
 			case CURSOR_SELECTION_TOP:
 			case CURSOR_SELECTION_BOTTOM:
-				cursor = gdk_cursor_new(GDK_SB_V_DOUBLE_ARROW);
+				cursor = gdk_cursor_new_for_display(gdk_window_get_display(window), GDK_SB_V_DOUBLE_ARROW);
 				break;
 			}
 		}
@@ -213,11 +212,11 @@ void Cursor::updateCursor()
 		{
 			if (this->invisible)
 			{
-				cursor = gdk_cursor_new(GDK_BLANK_CURSOR);
+				cursor = gdk_cursor_new_for_display(gdk_window_get_display(window), GDK_BLANK_CURSOR);
 			}
 			else
 			{
-				cursor = gdk_cursor_new(GDK_XTERM);
+				cursor = gdk_cursor_new_for_display(gdk_window_get_display(window), GDK_XTERM);
 			}
 		}
 		else if (type == TOOL_IMAGE)
@@ -228,12 +227,12 @@ void Cursor::updateCursor()
 		{
 			if (this->mouseDown)
 			{
-				cursor = gdk_cursor_new(GDK_SB_V_DOUBLE_ARROW);
+				cursor = gdk_cursor_new_for_display(gdk_window_get_display(window), GDK_SB_V_DOUBLE_ARROW);
 			}
 		}
 		else if (type != TOOL_SELECT_OBJECT) // other selections are handled before anyway, because you can move a selection with every tool
 		{
-			cursor = gdk_cursor_new(GDK_TCROSS);
+			cursor = gdk_cursor_new_for_display(gdk_window_get_display(window), GDK_TCROSS);
 		}
 	}
 
@@ -248,7 +247,7 @@ void Cursor::updateCursor()
 
 	if (cursor)
 	{
-		gdk_cursor_unref(cursor);
+		g_object_unref(cursor);
 	}
 }
 

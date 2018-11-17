@@ -2477,18 +2477,21 @@ public:
 /**
  * Load the data after processing the document...
  */
-void Control::loadMetadataCallback(MetadataCallbackData* data)
+bool Control::loadMetadataCallback(MetadataCallbackData* data)
 {
 	if (!data->md.valid)
 	{
 		delete data;
-		return;
+		return false;
 	}
 
 	data->ctrl->scrollHandler->scrollToPage(data->md.page);
 	data->ctrl->zoom->setZoom(data->md.zoom);
 
 	delete data;
+
+	// Do not call again!
+	return false;
 }
 
 void Control::loadMetadata(MetadataEntry md)
@@ -2663,10 +2666,10 @@ bool Control::showSaveDialog()
 {
 	XOJ_CHECK_TYPE(Control);
 
-	GtkWidget* dialog = gtk_file_chooser_dialog_new(_C("Save File"),
-													(GtkWindow*) *win, GTK_FILE_CHOOSER_ACTION_SAVE,
-													GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL, GTK_STOCK_SAVE,
-													GTK_RESPONSE_OK, NULL);
+	GtkWidget* dialog = gtk_file_chooser_dialog_new(_C("Save File"), (GtkWindow*) *win,
+													GTK_FILE_CHOOSER_ACTION_SAVE, _C("_Cancel"), GTK_RESPONSE_CANCEL,
+													_C("_Save"), GTK_RESPONSE_OK, NULL);
+
 	gtk_file_chooser_set_local_only(GTK_FILE_CHOOSER(dialog), true);
 
 	GtkFileFilter* filterXoj = gtk_file_filter_new();

@@ -177,12 +177,19 @@ GList* RecentManager::filterRecent(GList* items, bool xoj)
 		string uri(gtk_recent_info_get_uri(info));
 
 		// Skip remote files
-		if (!ba::starts_with(uri, "file://")) continue;
+		if (!ba::starts_with(uri, "file://"))
+		{
+			continue;
+		}
 
 		using namespace boost::filesystem;
 		try {
-			if (!exists(path(uri.substr(7)))) continue;	//substr is for removing uri's file://
-		} catch (boost::filesystem::filesystem_error) {
+			// substr is for removing uri's file://
+			if (!exists(path(uri.substr(7))))
+			{
+				continue;
+			}
+		} catch (boost::filesystem::filesystem_error&) {
 			continue;
 		}
 

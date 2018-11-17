@@ -62,12 +62,12 @@ GtkToolItem* ToolButton::newItem()
 	{
 		if (popupMenu)
 		{
-			it = gtk_menu_tool_button_new_from_stock(stock.c_str());
+			it = gtk_menu_tool_button_new(gtk_image_new_from_icon_name(stock.c_str(), GTK_ICON_SIZE_SMALL_TOOLBAR), description.c_str());
 			gtk_menu_tool_button_set_menu(GTK_MENU_TOOL_BUTTON(it), popupMenu);
 		}
 		else
 		{
-			it = gtk_tool_button_new_from_stock(stock.c_str());
+			it = gtk_tool_button_new(gtk_image_new_from_icon_name(stock.c_str(), GTK_ICON_SIZE_SMALL_TOOLBAR), description.c_str());
 		}
 	}
 	else if (group != GROUP_NOGROUP)
