@@ -21,7 +21,7 @@ class ToolMenuHandler;
 class ToolDrawCombocontrol : public ToolButton
 {
 public:
-	ToolDrawCombocontrol(ToolMenuHandler* th, ActionHandler* handler, GladeGui* gui, string id);
+	ToolDrawCombocontrol(ToolMenuHandler* toolMenuHandler, ActionHandler* handler, GladeGui* gui, string id);
 	virtual ~ToolDrawCombocontrol();
 
 public:
@@ -29,9 +29,12 @@ public:
 
 protected:
 	virtual GtkToolItem* newItem();
+	void createMenuItem(string name, string icon, ActionType type);
 
 private:
 	XOJ_TYPE_ATTRIB;
+
+	ToolMenuHandler* toolMenuHandler;
 
 	GtkWidget* iconWidget;
 	GtkWidget* labelWidget;

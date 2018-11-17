@@ -1160,7 +1160,7 @@ void Control::setShapeRecognizerEnabled(bool enabled)
 	}
 
 	this->toolHandler->setShapeRecognizer(enabled);
-	fireActionSelected(GROUP_SHAPE_RECOGNIZER, enabled ? ACTION_SHAPE_RECOGNIZER : ACTION_NONE);
+	fireActionSelected(GROUP_RULER, enabled ? ACTION_SHAPE_RECOGNIZER : ACTION_NONE);
 
 	if (enabled)
 	{
@@ -2090,16 +2090,29 @@ void Control::toolChanged()
 		toolColorChanged();
 	}
 
-	fireActionSelected(GROUP_SHAPE_RECOGNIZER,
-					   toolHandler->isShapeRecognizer() ? ACTION_SHAPE_RECOGNIZER : ACTION_NOT_SELECTED);
-	fireActionSelected(GROUP_RULER,
-					   toolHandler->isRuler() ? ACTION_RULER : ACTION_NOT_SELECTED);
-	fireActionSelected(GROUP_RULER,
-					   toolHandler->isRectangle() ? ACTION_TOOL_DRAW_RECT : ACTION_NOT_SELECTED);
-	fireActionSelected(GROUP_RULER,
-					   toolHandler->isCircle() ? ACTION_TOOL_DRAW_CIRCLE : ACTION_NOT_SELECTED);
-	fireActionSelected(GROUP_RULER,
-					   toolHandler->isArrow() ? ACTION_TOOL_DRAW_ARROW : ACTION_NOT_SELECTED);
+	ActionType rulerAction = ACTION_NOT_SELECTED;
+	if (toolHandler->isShapeRecognizer())
+	{
+		rulerAction = ACTION_SHAPE_RECOGNIZER;
+	}
+	else if (toolHandler->isRuler())
+	{
+		rulerAction = ACTION_RULER;
+	}
+	else if (toolHandler->isRectangle())
+	{
+		rulerAction = ACTION_TOOL_DRAW_RECT;
+	}
+	else if (toolHandler->isCircle())
+	{
+		rulerAction = ACTION_TOOL_DRAW_CIRCLE;
+	}
+	else if (toolHandler->isArrow())
+	{
+		rulerAction = ACTION_TOOL_DRAW_ARROW;
+	}
+
+	fireActionSelected(GROUP_RULER, rulerAction);
 
 	getCursor()->updateCursor();
 

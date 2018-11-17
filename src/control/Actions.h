@@ -177,7 +177,6 @@ enum ActionGroup
 
     GROUP_FULLSCREEN,
 
-    GROUP_SHAPE_RECOGNIZER,
     GROUP_RULER,
 };
 
