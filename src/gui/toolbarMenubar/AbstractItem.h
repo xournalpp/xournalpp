@@ -70,6 +70,11 @@ private:
 	bool checkMenuItem;
 
 	/**
+	 * ignore event if the menu is programmatically changed
+	 */
+	bool ignoreNextCheckMenuEvent;
+
+	/**
 	 * Keep the state for toggle / radio menu handling
 	 */
 	bool itemActive;
