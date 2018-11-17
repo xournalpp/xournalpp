@@ -71,7 +71,7 @@ string FontButton::getToolDisplayName()
 	return _("Font");
 }
 
-GtkWidget* FontButton::getNewToolIconImpl()
+GtkWidget* FontButton::getNewToolIcon()
 {
 	XOJ_CHECK_TYPE(FontButton);
 

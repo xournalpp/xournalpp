@@ -32,7 +32,7 @@ public:
 
 protected:
 	virtual GtkToolItem* newItem();
-	virtual GtkWidget* getNewToolIconImpl();
+	virtual GtkWidget* getNewToolIcon();
 
 private:
 	XOJ_TYPE_ATTRIB;

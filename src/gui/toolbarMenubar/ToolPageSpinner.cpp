@@ -51,7 +51,7 @@ string ToolPageSpinner::getToolDisplayName()
 	return _("Page number");
 }
 
-GtkWidget* ToolPageSpinner::getNewToolIconImpl()
+GtkWidget* ToolPageSpinner::getNewToolIcon()
 {
 	XOJ_CHECK_TYPE(ToolPageSpinner);
 

@@ -53,7 +53,7 @@ string ToolZoomSlider::getToolDisplayName()
 	return _("Zoom slider");
 }
 
-GtkWidget* ToolZoomSlider::getNewToolIconImpl()
+GtkWidget* ToolZoomSlider::getNewToolIcon()
 {
 	XOJ_CHECK_TYPE(ToolZoomSlider);
 
