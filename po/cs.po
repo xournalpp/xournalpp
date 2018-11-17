@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp 1.0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-11-14 19:55+0100\n"
+"POT-Creation-Date: 2018-11-16 22:39+0100\n"
 "PO-Revision-Date: 2017-09-18 09:58+0200\n"
 "Last-Translator: Jan Hrdina <jan.hrdka@gmail.com>\n"
 "Language-Team: čeština <>\n"
@@ -19,20 +19,6 @@ msgstr ""
 "X-Language: cs_CZ\n"
 "X-Source-Language: C\n"
 "X-Generator: Poedit 2.0.3\n"
-
-#: ../ui/about.glade:150
-#, fuzzy
-msgid ""
-"\n"
-"Authors:"
-msgstr "<b>Autoři:</b>"
-
-#: ../ui/about.glade:183
-#, fuzzy
-msgid ""
-"\n"
-"With help from the community\n"
-msgstr "S pomocí komunity\n"
 
 #: ../src/undo/DeleteUndoAction.cpp:117 ../src/undo/AddUndoAction.cpp:119
 msgid " elements"
@@ -63,7 +49,7 @@ msgstr " text"
 msgid "%F-Note-%H-%M.xoj"
 msgstr "%F-Poznámka-%H-%M.xoj"
 
-#: ../ui/settings.glade:521
+#: ../ui/settings.glade:526
 msgid ""
 "%a\tAbbreviated weekday name \t(e.g. Thu)\n"
 "%A\tFull weekday name (e.g. Thursday)\n"
@@ -115,19 +101,19 @@ msgstr ""
 msgid "<b>... or select already used Image:</b>"
 msgstr "<b>… nebo vyberte již použitý obrázek:</b>"
 
-#: ../ui/settings.glade:281
+#: ../ui/settings.glade:286
 msgid "<b>Add horizontal space</b>"
 msgstr "<b>Přidat horizontální místo</b>"
 
-#: ../ui/settings.glade:259
+#: ../ui/settings.glade:263
 msgid "<b>Add vertical space</b>"
 msgstr "<b>Přidat vertikální místo</b>"
 
-#: ../ui/settings.glade:612
+#: ../ui/settings.glade:617
 msgid "<b>Autoload .pdf.xoj</b>"
 msgstr "<b>Automaticky načíst .pdf.xoj</b>"
 
-#: ../ui/settings.glade:396
+#: ../ui/settings.glade:401
 msgid ""
 "<b>Autosave Folder</b>\n"
 "<i>If the document already was saved you can find it in the same folder\n"
@@ -141,7 +127,7 @@ msgstr ""
 "Pokud soubor nebyl uložen, najdete jej ve vašem domovském adresáři\n"
 "v ~/.xournalpp/autosave</i>"
 
-#: ../ui/settings.glade:336
+#: ../ui/settings.glade:341
 msgid "<b>Autosave</b>"
 msgstr "<b>Automatické ukládání</b>"
 
@@ -149,7 +135,7 @@ msgstr "<b>Automatické ukládání</b>"
 msgid "<b>Color</b>"
 msgstr "<b>Barva</b>"
 
-#: ../ui/settings.glade:1309
+#: ../ui/settings.glade:1484
 msgid "<b>Cursor</b>"
 msgstr "<b>Kurzor</b>"
 
@@ -157,43 +143,43 @@ msgstr "<b>Kurzor</b>"
 msgid "<b>Default Tools</b>"
 msgstr "<b>Výchozí nástroje</b>"
 
-#: ../ui/settings.glade:485
+#: ../ui/settings.glade:490
 msgid "<b>Default name:</b>"
 msgstr "<b>Výchozí název:</b>"
 
-#: ../ui/settings.glade:432
+#: ../ui/settings.glade:437
 msgid "<b>Default save name</b>"
 msgstr "<b>Výchozí název uložení</b>"
 
-#: ../ui/settings.glade:1401
+#: ../ui/settings.glade:1576
 msgid "<b>Default</b>"
 msgstr "<b>Výchozí</b>"
 
-#: ../ui/settings.glade:891
+#: ../ui/settings.glade:973
 msgid "<b>Eraser</b>"
 msgstr "<b>Guma</b>"
 
-#: ../ui/settings.glade:166
+#: ../ui/settings.glade:169
 msgid "<b>Event compression</b>"
 msgstr ""
 
-#: ../ui/settings.glade:86
+#: ../ui/settings.glade:87
 msgid "<b>Extended Input</b>"
 msgstr "<b>Rozšířený vstup</b>"
 
-#: ../ui/settings.glade:1136
+#: ../ui/settings.glade:1310
 msgid "<b>Fullscreen</b>"
 msgstr "<b>Celá obrazovka</b>"
 
-#: ../ui/settings.glade:566
+#: ../ui/settings.glade:571
 msgid "<b>Help</b> (Placeholders)"
 msgstr "<b>Nápověda</b> (zástupné symboly)"
 
-#: ../ui/settings.glade:976
+#: ../ui/settings.glade:1069
 msgid "<b>Left / Right</b>"
 msgstr "<b>Levá / Pravá</b>"
 
-#: ../ui/settings.glade:787
+#: ../ui/settings.glade:794
 msgid "<b>Middle Mouse Button</b>"
 msgstr "<b>Prostřední tlačítko myši</b>"
 
@@ -201,24 +187,29 @@ msgstr "<b>Prostřední tlačítko myši</b>"
 msgid "<b>Pagesize</b>"
 msgstr "<b>Velikost stránky</b>"
 
-#: ../ui/settings.glade:1206
+#: ../ui/settings.glade:1380
 msgid "<b>Presentation</b> Another Fullscreen Mode, <i>Start with F5</i>"
 msgstr ""
 "<b>Prezentace</b> Další režim pro celou obrazovku, <i>spusťte klávesou F5</i>"
 
-#: ../ui/settings.glade:130
+#: ../ui/settings.glade:132
 msgid "<b>Pressure sensitivity</b>"
 msgstr "<b>Citlivost na tlak</b>"
 
-#: ../ui/settings.glade:820
+#: ../ui/settings.glade:827
 msgid "<b>Right Mouse Button</b>"
 msgstr "<b>Pravé tlačítko myši</b>"
 
-#: ../ui/settings.glade:212
+#: ../ui/settings.glade:1233
+#, fuzzy
+msgid "<b>Scrollbars</b>"
+msgstr "<b>Barva</b>"
+
+#: ../ui/settings.glade:215
 msgid "<b>Scrolling outside the page</b>"
 msgstr "<b>Posouvání mimo stránku</b>"
 
-#: ../ui/settings.glade:1050
+#: ../ui/settings.glade:1143
 msgid "<b>Selection Border</b>"
 msgstr "<b>Okraje výběru</b>"
 
@@ -226,13 +217,21 @@ msgstr "<b>Okraje výběru</b>"
 msgid "<b>Separator</b>"
 msgstr "<b>Oddělovač</b>"
 
-#: ../ui/settings.glade:923
+#: ../ui/settings.glade:909
+msgid "<b>Stylus Button 1</b> Action if the pen button is pressed"
+msgstr ""
+
+#: ../ui/settings.glade:941
+msgid "<b>Stylus Button 2</b> Action if the pen button is pressed"
+msgstr ""
+
+#: ../ui/settings.glade:1005
 msgid ""
 "<b>Touch Screen</b> <i>You can also configure other devices like mice</i>"
 msgstr ""
 "<b>Dotyková obrazovka</b> <i>Můžete nastavit i jiná zařízení, např. myši</i>"
 
-#: ../ui/settings.glade:181
+#: ../ui/settings.glade:184
 msgid ""
 "<i>Disable the event compression if strokes appear segmented\n"
 "when drawn too fast</i>"
@@ -242,7 +241,7 @@ msgstr ""
 msgid "<i>Example:</i> 1-3 or 1,3,5-7 etc."
 msgstr "<i>Příklad:</i> 1-3 nebo 1,3,5-7 atd."
 
-#: ../ui/settings.glade:873
+#: ../ui/settings.glade:894
 msgid ""
 "<i>Here you can define which tools will be selected If you\n"
 "use the eraser or other device.\n"
@@ -252,7 +251,7 @@ msgstr ""
 "použijete gumu na vašem peru nebo jiné zařízení.\n"
 "Můžete zde také zakázat dotykovou obrazovku.</i>"
 
-#: ../ui/settings.glade:772
+#: ../ui/settings.glade:779
 msgid ""
 "<i>Here you can define which tools will be selected if you press\n"
 "a button; after you release the button the previously selected\n"
@@ -262,7 +261,7 @@ msgstr ""
 "jednotlivých tlačítek. Po uvolnění tlačítka bude vybrán\n"
 "nástroj předchozí.</i>"
 
-#: ../ui/settings.glade:236
+#: ../ui/settings.glade:239
 msgid ""
 "<i>If you add <b>additional space</b> beside the pages\n"
 "you can choose the area of the screen you would\n"
@@ -271,12 +270,12 @@ msgstr ""
 "<i>Když přidáte kolem stránky <b>místo navíc</b>,\n"
 "můžete si stránku posunout do jaké části obrazovky chcete.</i>"
 
-#: ../ui/settings.glade:145
+#: ../ui/settings.glade:147
 msgid "<i>If you have a tablet pen you can get different line widths</i>"
 msgstr ""
 "<i>Jestliže máte tabletové pero, můžete psát různými tloušťkami čar.</i>"
 
-#: ../ui/settings.glade:636
+#: ../ui/settings.glade:641
 msgid ""
 "<i>If you open a PDF and there is a\n"
 "Xournal file with the same name it will open the xoj file.</i>"
@@ -284,7 +283,7 @@ msgstr ""
 "<i>Když otevřete PDF a ve stejné složce již je soubor Xournalu\n"
 "se stejným jménem, automaticky se tento xoj soubor načte.</i>"
 
-#: ../ui/settings.glade:696
+#: ../ui/settings.glade:701
 msgid ""
 "<i>Put a ruler on your screen to calibrate the zoom level to fit your "
 "screen. Takes effect after restarting xournalpp.\n"
@@ -294,11 +293,11 @@ msgstr ""
 "obrazovky. Změna se projeví po restartu Xournal++.\n"
 "Jednotky jsou cm pro pravítko, dpi pro posuvník.</i>"
 
-#: ../ui/settings.glade:109
+#: ../ui/settings.glade:110
 msgid "<i>Select some advanced input options</i>"
 msgstr ""
 
-#: ../ui/settings.glade:456
+#: ../ui/settings.glade:461
 msgid "<i>This name will be proposed if you save a new document</i>"
 msgstr "<i>Tento název bude navržen, když uložíte nový dokument</i>"
 
@@ -355,7 +354,12 @@ msgstr "Atribut „{1}“ nemohl být načten jako int, hodnota je NULL"
 msgid "Attribute color not set!"
 msgstr "Atribut color není nastaven!"
 
-#: ../ui/settings.glade:364
+#: ../ui/about.glade:151
+#, fuzzy
+msgid "Authors:"
+msgstr "<b>Autoři:</b>"
+
+#: ../ui/settings.glade:369
 #, fuzzy
 msgid "Autosave every ... minutes:"
 msgstr "Automaticky ukládat každých ... minut:"
@@ -373,7 +377,7 @@ msgstr "Zpět"
 msgid "Background"
 msgstr "Pozadí"
 
-#: ../ui/settings.glade:1331
+#: ../ui/settings.glade:1506
 msgid "Big cursor for pen"
 msgstr "Velký kurzor pro pero"
 
@@ -387,11 +391,11 @@ msgstr "Černá"
 msgid "Blue"
 msgstr "Modrá"
 
-#: ../ui/settings.glade:1100
+#: ../ui/settings.glade:1193
 msgid "Border color"
 msgstr "Barva okraje"
 
-#: ../ui/settings.glade:1085
+#: ../ui/settings.glade:1178
 #, fuzzy
 msgid "Border color for current page and other selections:"
 msgstr "Barva okraje pro aktuální stránku a jiné výběry"
@@ -536,7 +540,7 @@ msgstr "Vyjmout"
 msgid "Default Tool"
 msgstr "Výchozí nástroj"
 
-#: ../ui/settings.glade:1458
+#: ../ui/settings.glade:1633
 msgid "Defaults"
 msgstr "Výchozí"
 
@@ -783,8 +787,8 @@ msgstr "Mathtex nalezen ve vaší standardní cestě! TeX area je {1}"
 msgid "Fullscreen"
 msgstr "Celá obrazovka"
 
-#: ../ui/about.glade:229
-msgid "GNU GPLv2 or later\n"
+#: ../ui/about.glade:232
+msgid "GNU GPLv2 or later"
 msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:314
@@ -846,13 +850,21 @@ msgstr "Ruka"
 msgid "Height:"
 msgstr "Výška:"
 
-#: ../ui/settings.glade:1158 ../ui/settings.glade:1228
+#: ../ui/settings.glade:1332 ../ui/settings.glade:1402
 msgid "Hide Menubar"
 msgstr "Skrýt lištu menu"
 
-#: ../ui/settings.glade:1173 ../ui/settings.glade:1243
+#: ../ui/settings.glade:1347 ../ui/settings.glade:1417
 msgid "Hide Sidebar"
 msgstr "Skrýt postranní panel"
+
+#: ../ui/settings.glade:1262
+msgid "Hide the horizontal scrollbar"
+msgstr ""
+
+#: ../ui/settings.glade:1277
+msgid "Hide the vertical scrollbar"
+msgstr ""
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:60
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:416
@@ -872,11 +884,11 @@ msgstr "Obrázek"
 msgid "Images"
 msgstr "Obrázky"
 
-#: ../ui/settings.glade:314
+#: ../ui/settings.glade:319
 msgid "Input"
 msgstr "Vstup"
 
-#: ../ui/settings.glade:960
+#: ../ui/settings.glade:1053
 msgid "Input Device"
 msgstr "Vstupní zařízení"
 
@@ -945,7 +957,7 @@ msgstr "Výběr vrstvy"
 msgid "Layer {1}"
 msgstr "Vrstva {1}"
 
-#: ../ui/about.glade:214
+#: ../ui/about.glade:216
 msgid "License"
 msgstr ""
 
@@ -963,7 +975,7 @@ msgstr "Světle zelená"
 msgid "Lined"
 msgstr "Linkovaný s okrajem"
 
-#: ../ui/settings.glade:680
+#: ../ui/settings.glade:685
 msgid "Load / Save"
 msgstr "Načítání / ukládání"
 
@@ -990,7 +1002,7 @@ msgstr "Purpurová"
 msgid "Medium"
 msgstr "Střední"
 
-#: ../ui/settings.glade:857
+#: ../ui/settings.glade:864
 msgid "Mouse Button"
 msgstr "Tlačítko myši"
 
@@ -1163,10 +1175,10 @@ msgstr "_Formát papíru"
 msgid "Paper b_ackground"
 msgstr "Pozadí _papíru"
 
-#: ../ui/about.glade:199
+#: ../ui/about.glade:200
 msgid ""
 "Partial based on Xournal\n"
-"by Denis Auroux\n"
+"by Denis Auroux"
 msgstr ""
 
 #: ../src/undo/AddUndoAction.cpp:108
@@ -1333,11 +1345,11 @@ msgstr "Obdélníkový výběr"
 msgid "Select region"
 msgstr "Výběr oblasti"
 
-#: ../ui/settings.glade:1422
+#: ../ui/settings.glade:1597
 msgid "Select the tool and Settings if you press the Default Button"
 msgstr "Vyberte nástroj a nastavení pro tlačítko \"Výchozí\""
 
-#: ../ui/settings.glade:1263
+#: ../ui/settings.glade:1438
 msgid "Select toolbar:"
 msgstr "Vyberte nástrojovou lištu:"
 
@@ -1373,11 +1385,11 @@ msgstr "Zobrazit pouze nevyužité stránky ({1} nevyužitých stránek)"
 msgid "Show sidebar"
 msgstr "Zobrazit postranní panel"
 
-#: ../ui/settings.glade:998
+#: ../ui/settings.glade:1091
 msgid "Show sidebar on the right side"
 msgstr "Zobrazit postranní panel na pravé straně"
 
-#: ../ui/settings.glade:1013
+#: ../ui/settings.glade:1106
 msgid "Show vertical scrollbar on the left side"
 msgstr "Zobrazit vertikální posuvník na levé straně"
 
@@ -1507,7 +1519,7 @@ msgstr ""
 msgid "The most recent log file name: {1}"
 msgstr "Název nejnovějšího souboru protokolu: {1}"
 
-#: ../ui/settings.glade:739
+#: ../ui/settings.glade:746
 msgid "The unit of the ruler is cm"
 msgstr "Jednotkou pravítka jsou cm"
 
@@ -1643,7 +1655,7 @@ msgstr "Vertikální mezera"
 msgid "Vertical space"
 msgstr "Vertikální mezera"
 
-#: ../ui/settings.glade:1369
+#: ../ui/settings.glade:1544
 msgid "View"
 msgstr "Zobrazení"
 
@@ -1663,6 +1675,11 @@ msgstr "Šířka:"
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:406
 msgid "With PDF background"
 msgstr "S PDF pozadím"
+
+#: ../ui/about.glade:186
+#, fuzzy
+msgid "With help from the community"
+msgstr "S pomocí komunity\n"
 
 #: ../src/undo/InsertUndoAction.cpp:43
 msgid "Write text"
@@ -1733,7 +1750,7 @@ msgstr ""
 "Tip: Můžete vybrat Zápisník → Pozadí papíru → PDF pozadí pro vložení stránky "
 "z PDF."
 
-#: ../ui/settings.glade:756
+#: ../ui/settings.glade:763
 msgid "Zoom"
 msgstr "Zvětšení"
 
@@ -1926,7 +1943,7 @@ msgstr "_velmi tenká"
 msgid "_whiteout"
 msgstr "_bělení"
 
-#: ../src/util/DeviceListHelper.cpp:76
+#: ../src/util/DeviceListHelper.cpp:86
 msgid "cursor"
 msgstr "kurzor"
 
@@ -1938,21 +1955,34 @@ msgstr "odstranit čáru"
 msgid "dpi"
 msgstr "dpi"
 
-#: ../src/util/DeviceListHelper.cpp:72
+#: ../src/util/DeviceListHelper.cpp:82
 msgid "eraser"
 msgstr "guma"
 
-#: ../src/util/DeviceListHelper.cpp:64
+#: ../src/util/DeviceListHelper.cpp:91
+msgid "keyboard"
+msgstr ""
+
+#: ../src/util/DeviceListHelper.cpp:74
 msgid "mouse"
 msgstr "myš"
 
-#: ../src/util/DeviceListHelper.cpp:68
+#: ../src/util/DeviceListHelper.cpp:78
 msgid "pen"
 msgstr "pero"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:268
 msgid "standard"
 msgstr "standardní"
+
+#: ../src/util/DeviceListHelper.cpp:99
+msgid "touchpad"
+msgstr ""
+
+#: ../src/util/DeviceListHelper.cpp:95
+#, fuzzy
+msgid "touchscreen"
+msgstr "Celá obrazovka"
 
 #: ../ui/main.glade:966
 msgid "ver_y thick"

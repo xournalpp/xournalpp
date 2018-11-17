@@ -210,13 +210,6 @@ if (ENABLE_CPPUNIT)
   enable_testing ()
 endif (ENABLE_CPPUNIT)
 
-# Overlay scrollbar
-option (ENABLE_OS "Overlay Scrollbar support" OFF)
-if (ENABLE_OS)
-  pkg_check_modules (OS REQUIRED "overlay-scrollbar")
-  add_includes_ldflags ("${OS_LDFLAGS}" "${OS_INCLUDE_DIRS}")
-endif (ENABLE_OS)
-
 # Mathtex
 option (ENABLE_MATHTEX "Mathtex support" ON)
 if (ENABLE_MATHTEX AND WIN32)
@@ -350,8 +343,7 @@ add_custom_target (desktop-uninstall
 message ("
 Configuration:
 	Compiler:                   ${CMAKE_CXX_COMPILER}
-	Overlay Scrollbar enabled:  ${ENABLE_OS}
-	Mathtex enabled:            ${ENABLE_MATHTEX}
+Z	Mathtex enabled:            ${ENABLE_MATHTEX}
 	CppUnit enabled:            ${ENABLE_CPPUNIT}
 
 Unstable features:
