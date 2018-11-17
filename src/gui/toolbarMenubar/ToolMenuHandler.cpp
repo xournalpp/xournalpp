@@ -295,56 +295,56 @@ void ToolMenuHandler::initToolItems()
 {
 	XOJ_CHECK_TYPE(ToolMenuHandler);
 
-	addToolItem(new ToolButton(listener, "SAVE", ACTION_SAVE, GTK_STOCK_SAVE, _C("Save"), gui->get("menuFileSave")));
-	addToolItem(new ToolButton(listener, "NEW", ACTION_NEW, GTK_STOCK_NEW, _C("New Xournal"), gui->get("menuFileNew")));
+	addToolItem(new ToolButton(listener, "SAVE", ACTION_SAVE, "document-save", _C("Save"), gui->get("menuFileSave")));
+	addToolItem(new ToolButton(listener, "NEW", ACTION_NEW, "document-new", _C("New Xournal"), gui->get("menuFileNew")));
 
-	addToolItem(new ToolButton(listener, "OPEN", ACTION_OPEN, GTK_STOCK_OPEN, _C("Open file"), gui->get("menuFileOpen")));
+	addToolItem(new ToolButton(listener, "OPEN", ACTION_OPEN, "document-open", _C("Open file"), gui->get("menuFileOpen")));
 
-	addToolItem(new ToolButton(listener, "CUT", ACTION_CUT, GTK_STOCK_CUT, _C("Cut"), gui->get("menuEditCut")));
-	addToolItem(new ToolButton(listener, "COPY", ACTION_COPY, GTK_STOCK_COPY, _C("Copy"), gui->get("menuEditCopy")));
-	addToolItem(new ToolButton(listener, "PASTE", ACTION_PASTE, GTK_STOCK_PASTE, _C("Paste"), gui->get("menuEditPaste")));
+	addToolItem(new ToolButton(listener, "CUT", ACTION_CUT, "edit-cut", _C("Cut"), gui->get("menuEditCut")));
+	addToolItem(new ToolButton(listener, "COPY", ACTION_COPY, "edit-copy", _C("Copy"), gui->get("menuEditCopy")));
+	addToolItem(new ToolButton(listener, "PASTE", ACTION_PASTE, "edit-paste", _C("Paste"), gui->get("menuEditPaste")));
 
-	addToolItem(new ToolButton(listener, "SEARCH", ACTION_SEARCH, GTK_STOCK_FIND, _C("Search"), gui->get("menuEditSearch")));
+	addToolItem(new ToolButton(listener, "SEARCH", ACTION_SEARCH, "edit-find", _C("Search"), gui->get("menuEditSearch")));
 
-	undoButton = new ToolButton(listener, "UNDO", ACTION_UNDO, GTK_STOCK_UNDO, _C("Undo"), gui->get("menuEditUndo"));
-	redoButton = new ToolButton(listener, "REDO", ACTION_REDO, GTK_STOCK_REDO, _C("Redo"), gui->get("menuEditRedo"));
+	undoButton = new ToolButton(listener, "UNDO", ACTION_UNDO, "edit-undo", _C("Undo"), gui->get("menuEditUndo"));
+	redoButton = new ToolButton(listener, "REDO", ACTION_REDO, "edit-redo", _C("Redo"), gui->get("menuEditRedo"));
 	addToolItem(undoButton);
 	addToolItem(redoButton);
 
-	addToolItem(new ToolButton(listener, "GOTO_FIRST", ACTION_GOTO_FIRST, GTK_STOCK_GOTO_FIRST, _C("Go to first page"),
+	addToolItem(new ToolButton(listener, "GOTO_FIRST", ACTION_GOTO_FIRST, "go-first", _C("Go to first page"),
 							   gui->get("menuViewFirstPage")));
-	addToolItem(new ToolButton(listener, "GOTO_BACK", ACTION_GOTO_BACK, GTK_STOCK_GO_BACK, _C("Back"),
+	addToolItem(new ToolButton(listener, "GOTO_BACK", ACTION_GOTO_BACK, "go-previous", _C("Back"),
 							   gui->get("menuNavigationPreviousPage")));
 
-	addToolItem(new ToolButton(listener, "GOTO_BACK", ACTION_GOTO_BACK, GTK_STOCK_GO_BACK, _C("Back"),
+	addToolItem(new ToolButton(listener, "GOTO_BACK", ACTION_GOTO_BACK, "go-previous", _C("Back"),
 							   gui->get("menuNavigationPreviousPage")));
 
 	addToolItem(new ToolButton(listener, gui, "GOTO_PAGE", ACTION_GOTO_PAGE, "goto.svg", _C("Go to page"),
 							   gui->get("menuNavigationGotoPage")));
 
-	addToolItem(new ToolButton(listener, "GOTO_NEXT", ACTION_GOTO_NEXT, GTK_STOCK_GO_FORWARD, _C("Next"),
+	addToolItem(new ToolButton(listener, "GOTO_NEXT", ACTION_GOTO_NEXT, "go-next", _C("Next"),
 							   gui->get("menuNavigationNextPage")));
-	addToolItem(new ToolButton(listener, "GOTO_LAST", ACTION_GOTO_LAST, GTK_STOCK_GOTO_LAST, _C("Go to last page"),
+	addToolItem(new ToolButton(listener, "GOTO_LAST", ACTION_GOTO_LAST, "go-last", _C("Go to last page"),
 							   gui->get("menuNavigationLastPage")));
 
-	addToolItem(new ToolButton(listener, "GOTO_PREVIOUS_LAYER", ACTION_GOTO_PREVIOUS_LAYER, GTK_STOCK_GO_BACK, _C("Go to previous layer"),
+	addToolItem(new ToolButton(listener, "GOTO_PREVIOUS_LAYER", ACTION_GOTO_PREVIOUS_LAYER, "go-previous", _C("Go to previous layer"),
 							   gui->get("menuNavigationPreviousLayer")));
-	addToolItem(new ToolButton(listener, "GOTO_NEXT_LAYER", ACTION_GOTO_NEXT_LAYER, GTK_STOCK_GO_FORWARD, _C("Go to next layer"),
+	addToolItem(new ToolButton(listener, "GOTO_NEXT_LAYER", ACTION_GOTO_NEXT_LAYER, "go-next", _C("Go to next layer"),
 							   gui->get("menuNavigationNextLayer")));
-	addToolItem(new ToolButton(listener, "GOTO_TOP_LAYER", ACTION_GOTO_TOP_LAYER, GTK_STOCK_GOTO_TOP, _C("Go to top layer"),
+	addToolItem(new ToolButton(listener, "GOTO_TOP_LAYER", ACTION_GOTO_TOP_LAYER, "go-top", _C("Go to top layer"),
 							   gui->get("menuNavigationTopLayer")));
 
 	addToolItem(new ToolButton(listener, gui, "GOTO_NEXT_ANNOTATED_PAGE", ACTION_GOTO_NEXT_ANNOTATED_PAGE,
 							   "nextAnnotatedPage.svg", _C("Next annotated page"),
 							   gui->get("menuNavigationNextAnnotatedPage")));
 
-	addToolItem(new ToolButton(listener, "ZOOM_OUT", ACTION_ZOOM_OUT, GTK_STOCK_ZOOM_OUT, _C("Zoom out"),
+	addToolItem(new ToolButton(listener, "ZOOM_OUT", ACTION_ZOOM_OUT, "zoom-out", _C("Zoom out"),
 							   gui->get("menuViewZoomOut")));
-	addToolItem(new ToolButton(listener, "ZOOM_IN", ACTION_ZOOM_IN, GTK_STOCK_ZOOM_IN, _C("Zoom in"),
+	addToolItem(new ToolButton(listener, "ZOOM_IN", ACTION_ZOOM_IN, "zoom-in", _C("Zoom in"),
 							   gui->get("menuViewZoomIn")));
-	addToolItem(new ToolButton(listener, "ZOOM_FIT", ACTION_ZOOM_FIT, GTK_STOCK_ZOOM_FIT, _C("Zoom fit to screen"),
+	addToolItem(new ToolButton(listener, "ZOOM_FIT", ACTION_ZOOM_FIT, "zoom-fit-best", _C("Zoom fit to screen"),
 							   gui->get("menuViewZoomFit")));
-	addToolItem(new ToolButton(listener, "ZOOM_100", ACTION_ZOOM_100, GTK_STOCK_ZOOM_100, _C("Zoom to 100%"),
+	addToolItem(new ToolButton(listener, "ZOOM_100", ACTION_ZOOM_100, "zoom-original", _C("Zoom to 100%"),
 							   gui->get("menuViewZoom100")));
 
 	addToolItem(new ToolButton(listener, gui, "FULLSCREEN", ACTION_FULLSCREEN, GROUP_FULLSCREEN, false,
