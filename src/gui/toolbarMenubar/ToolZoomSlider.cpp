@@ -4,8 +4,8 @@
 #include <i18n.h>
 #include <StringUtils.h>
 
-ToolZoomSlider::ToolZoomSlider(ActionHandler* handler, string id, ActionType type, ZoomControl* zoom) :
-		AbstractToolItem(id, handler, type, NULL)
+ToolZoomSlider::ToolZoomSlider(ActionHandler* handler, string id, ActionType type, ZoomControl* zoom)
+ : AbstractToolItem(id, handler, type, NULL)
 {
 	XOJ_INIT_TYPE(ToolZoomSlider);
 
@@ -57,7 +57,7 @@ GtkWidget* ToolZoomSlider::getNewToolIconImpl()
 {
 	XOJ_CHECK_TYPE(ToolZoomSlider);
 
-	return gtk_image_new_from_icon_name(GTK_STOCK_ZOOM_IN, GTK_ICON_SIZE_SMALL_TOOLBAR);
+	return gtk_image_new_from_icon_name("zoom-in" , GTK_ICON_SIZE_SMALL_TOOLBAR);
 }
 
 // Should be called when the window size changes
