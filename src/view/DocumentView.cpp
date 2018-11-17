@@ -456,14 +456,14 @@ void DocumentView::drawSelection(cairo_t* cr, ElementContainer* container)
 	}
 }
 
-void DocumentView::limitArea(double x, double y, double width, double heigth)
+void DocumentView::limitArea(double x, double y, double width, double height)
 {
 	XOJ_CHECK_TYPE(DocumentView);
 
 	this->lX = x;
 	this->lY = y;
 	this->lWidth = width;
-	this->lHeight = heigth;
+	this->lHeight = height;
 }
 
 /**

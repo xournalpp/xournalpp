@@ -57,7 +57,7 @@ public:
 	/**
 	 * This updated the view buffer and then rerender the the region, call this if you changed the document
 	 */
-	virtual void rerenderRect(double x, double y, double width, double heigth) = 0;
+	virtual void rerenderRect(double x, double y, double width, double height) = 0;
 	void rerenderArea(double x1, double y1, double x2, double y2);
 
 	/**

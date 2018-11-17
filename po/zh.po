@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp 1.0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-11-16 22:39+0100\n"
+"POT-Creation-Date: 2018-11-17 23:27+0100\n"
 "PO-Revision-Date: 2018-11-14 19:55+0100\n"
 "Last-Translator: Andreas Butti <andreasbutti at gmail dot com>\n"
 "Language-Team: Xournal++ team\n"
@@ -296,7 +296,7 @@ msgstr "所有文件"
 msgid "All pages"
 msgstr "所有页面"
 
-#: ../src/control/stockdlg/ImageOpenDlg.cpp:28
+#: ../src/control/stockdlg/ImageOpenDlg.cpp:29
 #: ../src/control/stockdlg/XojOpenDlg.cpp:58
 msgid "Attach file to the journal"
 msgstr "将文件附加到日记"
@@ -335,8 +335,8 @@ msgstr "自动保存间隔分钟数："
 msgid "Autosave: {1}"
 msgstr "自动保存：{1}"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:316
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:319
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:307
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:310
 msgid "Back"
 msgstr "后退"
 
@@ -375,8 +375,8 @@ msgstr ""
 msgid "By extension"
 msgstr "延展"
 
-#: ../src/control/Control.cpp:2387 ../src/control/Control.cpp:2850
-#: ../src/control/Control.cpp:2887 ../src/control/XournalMain.cpp:102
+#: ../src/control/Control.cpp:2399 ../src/control/Control.cpp:2865
+#: ../src/control/Control.cpp:2902 ../src/control/XournalMain.cpp:103
 msgid "Cancel"
 msgstr "取消"
 
@@ -409,12 +409,12 @@ msgstr "命令正在运行。"
 msgid "Contents"
 msgstr "内容"
 
-#: ../src/control/Control.cpp:1017 ../src/control/Control.cpp:1025
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:304
+#: ../src/control/Control.cpp:1009 ../src/control/Control.cpp:1017
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:295
 msgid "Copy"
 msgstr "拷贝"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:399
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:390
 msgid "Copy current"
 msgstr "拷贝选中内容"
 
@@ -451,7 +451,7 @@ msgstr ""
 msgid "Could not read image: {1}. Error message: {2}"
 msgstr "未能读入图像：{1}。错误提示为：{2}"
 
-#: ../src/undo/UndoRedoHandler.cpp:188
+#: ../src/undo/UndoRedoHandler.cpp:190
 msgid ""
 "Could not redo \"{1}\"\n"
 "Something went wrong… Please write a bug report…"
@@ -467,11 +467,11 @@ msgstr ""
 msgid "Could not remove tool item {1} from Toolbar {2} on position {3}"
 msgstr ""
 
-#: ../src/control/Control.cpp:3317
+#: ../src/control/Control.cpp:3363
 msgid "Could not retrieve LaTeX image file: {1}"
 msgstr "未能提取LaTeX图像文件{1}"
 
-#: ../src/undo/UndoRedoHandler.cpp:146
+#: ../src/undo/UndoRedoHandler.cpp:148
 msgid ""
 "Could not undo \"{1}\"\n"
 "Something went wrong… Please write a bug report…"
@@ -499,11 +499,11 @@ msgstr "设置"
 msgid "Customized"
 msgstr "设置过"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:303
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:294
 msgid "Cut"
 msgstr "剪切"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:454
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:445
 msgid "Default Tool"
 msgstr "缺省工具"
 
@@ -519,11 +519,11 @@ msgstr "删除"
 msgid "Delete Layer"
 msgstr "删除层"
 
-#: ../src/control/XournalMain.cpp:101
+#: ../src/control/XournalMain.cpp:102
 msgid "Delete Logfile"
 msgstr "删除日志文件"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:360
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:351
 msgid "Delete current page"
 msgstr "删除当前页"
 
@@ -552,11 +552,11 @@ msgstr "取消标尺和笔划识别"
 msgid "Disable drawing for this device"
 msgstr "取消此设备绘制"
 
-#: ../src/control/Control.cpp:2849 ../src/control/Control.cpp:2886
+#: ../src/control/Control.cpp:2864 ../src/control/Control.cpp:2901
 msgid "Discard"
 msgstr "丢弃"
 
-#: ../src/control/Control.cpp:2883
+#: ../src/control/Control.cpp:2898
 msgid "Document file was removed."
 msgstr "文档已删除。"
 
@@ -575,7 +575,7 @@ msgstr "文档未加载！({1}), {2}"
 msgid "Don't change"
 msgstr "勿作修改"
 
-#: ../src/control/XournalMain.cpp:218
+#: ../src/control/XournalMain.cpp:219
 msgid "Don't compress PDF files (for debugging)"
 msgstr "勿压缩PDF文件(调试用)"
 
@@ -583,28 +583,25 @@ msgstr "勿压缩PDF文件(调试用)"
 msgid "Drag and drop Components fom here to the toolbars and back."
 msgstr "在这里和工具条之间可以来回拖动条目。"
 
-#: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:47
-#: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:130
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:434
+#: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:18
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:425
 msgid "Draw Arrow"
 msgstr "绘制箭头"
 
-#: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:40
-#: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:123
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:430
+#: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:17
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:421
 msgid "Draw Circle"
 msgstr "绘制圆形"
 
-#: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:54
-#: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:137
+#: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:19
 msgid "Draw Line"
 msgstr "绘制直线"
 
-#: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:10
-#: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:33
+#: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:16
+#: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:24
+#: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:113
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:116
-#: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:162
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:432
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:423
 msgid "Draw Rectangle"
 msgstr "绘制矩形"
 
@@ -634,7 +631,7 @@ msgid "Erase stroke"
 msgstr "擦除笔划"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:59
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:265
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:256
 msgid "Eraser"
 msgstr "橡皮"
 
@@ -646,7 +643,7 @@ msgstr "橡皮选项(_n)"
 msgid "Eraser type"
 msgstr "橡皮类型"
 
-#: ../src/control/Control.cpp:2544
+#: ../src/control/Control.cpp:2559
 msgid ""
 "Error annotate PDF file \"{1}\"\n"
 "{2}"
@@ -658,7 +655,7 @@ msgstr ""
 msgid "Error loading glade file \"{1}\" (try to load \"{2}\")"
 msgstr "加载glade文件\"{1}\"出错(尝试加载\"{2}\")"
 
-#: ../src/control/Control.cpp:2414
+#: ../src/control/Control.cpp:2426
 msgid "Error opening file \"{1}\""
 msgstr "打开文件\"{1}\"出错"
 
@@ -690,7 +687,7 @@ msgstr "错误：找不到mathtex，略过啦..."
 msgid "Error: {1}"
 msgstr "错误：{1}"
 
-#: ../src/control/XournalMain.cpp:127
+#: ../src/control/XournalMain.cpp:128
 msgid ""
 "Errorlog cannot be deleted. You have to do it manually.\n"
 "Logfile: {1}"
@@ -730,7 +727,7 @@ msgstr ""
 "未能打开文件，请手动操作：\n"
 "URL: {1}"
 
-#: ../src/control/Control.cpp:2334
+#: ../src/control/Control.cpp:2346
 msgid "Filename: {1}"
 msgstr "文件名：{1}"
 
@@ -758,29 +755,29 @@ msgstr "全屏"
 msgid "GNU GPLv2 or later"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:314
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:305
 msgid "Go to first page"
 msgstr "首页"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:327
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:318
 msgid "Go to last page"
 msgstr "末页"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:332
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:323
 #, fuzzy
 msgid "Go to next layer"
 msgstr "末页"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:322
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:313
 msgid "Go to page"
 msgstr "跳转到页面"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:330
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:321
 #, fuzzy
 msgid "Go to previous layer"
 msgstr "首页"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:334
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:325
 #, fuzzy
 msgid "Go to top layer"
 msgstr "跳转到页面"
@@ -790,7 +787,7 @@ msgstr "跳转到页面"
 msgid "Goto Page"
 msgstr "頁面跳轉(_G)"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:392
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:383
 msgid "Graph"
 msgstr "图形"
 
@@ -809,7 +806,7 @@ msgid "H_and Tool"
 msgstr "手形工具(_a)"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:68
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:438
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:429
 msgid "Hand"
 msgstr "手形工具"
 
@@ -834,7 +831,7 @@ msgid "Hide the vertical scrollbar"
 msgstr ""
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:60
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:416
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:407
 msgid "Highlighter"
 msgstr "高亮"
 
@@ -843,11 +840,11 @@ msgstr "高亮"
 msgid "Highlighter Opti_ons"
 msgstr "高亮选项(_i)"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:420
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:411
 msgid "Image"
 msgstr "图片"
 
-#: ../src/control/stockdlg/ImageOpenDlg.cpp:16
+#: ../src/control/stockdlg/ImageOpenDlg.cpp:17
 msgid "Images"
 msgstr "图片"
 
@@ -887,7 +884,7 @@ msgstr "插入LaTeX"
 msgid "Insert layer"
 msgstr "插入层"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:367
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:358
 msgid "Insert page"
 msgstr "插入页面"
 
@@ -895,7 +892,7 @@ msgstr "插入页面"
 msgid "Invalid filename selected"
 msgstr "选择了无效文件名"
 
-#: ../src/control/XournalMain.cpp:220
+#: ../src/control/XournalMain.cpp:221
 msgid "Jump to Page (first Page: 1)"
 msgstr "跳到页面(第一页:1)"
 
@@ -937,7 +934,7 @@ msgstr "浅蓝"
 msgid "Light Green"
 msgstr "浅绿"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:378
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:369
 msgid "Lined"
 msgstr "画线的"
 
@@ -964,7 +961,7 @@ msgid "Mangenta"
 msgstr "品红"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:90
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:449
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:440
 msgid "Medium"
 msgstr "中"
 
@@ -1004,7 +1001,7 @@ msgstr "新建前页(_B)"
 msgid "New Page at _End"
 msgstr "新建尾页(_E)"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:299
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:290
 msgid "New Xournal"
 msgstr "新建日记"
 
@@ -1012,11 +1009,11 @@ msgstr "新建日记"
 msgid "New _Layer"
 msgstr "新建图层(_L)"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:325
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:316
 msgid "Next"
 msgstr "下一个"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:338
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:329
 msgid "Next annotated page"
 msgstr "下一个标注页面"
 
@@ -1028,11 +1025,11 @@ msgstr "没有设备"
 msgid "Open Image"
 msgstr "打开图片"
 
-#: ../src/control/XournalMain.cpp:99
+#: ../src/control/XournalMain.cpp:100
 msgid "Open Logfile"
 msgstr "打开日志文件"
 
-#: ../src/control/XournalMain.cpp:100
+#: ../src/control/XournalMain.cpp:101
 msgid "Open Logfile directory"
 msgstr "打开日志文件目录"
 
@@ -1041,7 +1038,7 @@ msgid "Open URI: {1}"
 msgstr "打开URI: {1}"
 
 #: ../src/control/stockdlg/XojOpenDlg.cpp:12
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:301
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:292
 msgid "Open file"
 msgstr "打开文件"
 
@@ -1049,7 +1046,7 @@ msgstr "打开文件"
 msgid "Open file error: {1}"
 msgstr "打开文件出错：{1}"
 
-#: ../src/control/RecentManager.cpp:234
+#: ../src/control/RecentManager.cpp:244
 msgctxt "{1} is a URI"
 msgid "Open {1}"
 msgstr "打开{1}"
@@ -1075,7 +1072,7 @@ msgstr "PDF页码{1}"
 msgid "PDF background missing"
 msgstr "PDF背景丢失"
 
-#: ../src/control/XournalMain.cpp:199
+#: ../src/control/XournalMain.cpp:200
 msgid "PDF file successfully created"
 msgstr "PDF文件成功建立"
 
@@ -1084,7 +1081,7 @@ msgstr "PDF文件成功建立"
 msgid "PDF files"
 msgstr "PDF文件"
 
-#: ../src/control/XournalMain.cpp:219
+#: ../src/control/XournalMain.cpp:220
 msgid "PDF output filename"
 msgstr "PDF输出文件名"
 
@@ -1148,12 +1145,12 @@ msgid ""
 msgstr ""
 
 #: ../src/undo/AddUndoAction.cpp:108
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:305
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:296
 msgid "Paste"
 msgstr "粘贴"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:58
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:355
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:346
 msgid "Pen"
 msgstr "画笔"
 
@@ -1161,7 +1158,7 @@ msgstr "画笔"
 msgid "Pen _Options"
 msgstr "画笔选项(_O)"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:371
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:362
 msgid "Plain"
 msgstr "空白"
 
@@ -1173,7 +1170,7 @@ msgstr "预定"
 msgid "Preferences"
 msgstr "偏好设置"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:470
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:461
 msgid "Presentation mode"
 msgstr "演讲模式"
 
@@ -1185,8 +1182,7 @@ msgstr "范围"
 msgid "Recent _Documents"
 msgstr "最近文档(_D)"
 
-#: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:61
-#: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:144
+#: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:20
 msgid "Recognize Lines"
 msgstr "识别直线"
 
@@ -1195,16 +1191,16 @@ msgstr "识别直线"
 msgid "Red"
 msgstr "红色"
 
-#: ../src/undo/UndoRedoHandler.cpp:301
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:310
+#: ../src/undo/UndoRedoHandler.cpp:303
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:301
 msgid "Redo"
 msgstr "重复"
 
-#: ../src/undo/UndoRedoHandler.cpp:295
+#: ../src/undo/UndoRedoHandler.cpp:297
 msgid "Redo: "
 msgstr "重复："
 
-#: ../src/control/Control.cpp:2386
+#: ../src/control/Control.cpp:2398
 msgid "Remove PDF Background"
 msgstr "去掉PDF背景"
 
@@ -1224,11 +1220,11 @@ msgstr "解析度："
 msgid "Ru_ler"
 msgstr "标尺(_l)"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:385
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:376
 msgid "Ruled"
 msgstr "定标"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:444
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:435
 msgid "Ruler"
 msgstr "标尺"
 
@@ -1236,16 +1232,16 @@ msgstr "标尺"
 msgid "Ruler & Stroke Reco."
 msgstr "标尺与笔划识别"
 
-#: ../src/control/jobs/SaveJob.cpp:16 ../src/control/Control.cpp:2848
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:298
+#: ../src/control/jobs/SaveJob.cpp:16 ../src/control/Control.cpp:2863
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:289
 msgid "Save"
 msgstr "保存"
 
-#: ../src/control/Control.cpp:2885
+#: ../src/control/Control.cpp:2900
 msgid "Save As"
 msgstr "保存为"
 
-#: ../src/control/Control.cpp:2666
+#: ../src/control/Control.cpp:2681
 msgid "Save File"
 msgstr "保存文件"
 
@@ -1253,11 +1249,11 @@ msgstr "保存文件"
 msgid "Scale"
 msgstr "缩放"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:307
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:298
 msgid "Search"
 msgstr "搜索"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:456
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:447
 msgid "Select Font"
 msgstr "选择字体"
 
@@ -1267,7 +1263,7 @@ msgstr "选择图片"
 
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:43
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:97
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:427
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:418
 msgid "Select Object"
 msgstr "选择对象"
 
@@ -1279,17 +1275,17 @@ msgstr "选择PDF页面"
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:29
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:83
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:116
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:425
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:416
 msgid "Select Rectangle"
 msgstr "选择矩形"
 
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:36
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:90
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:423
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:414
 msgid "Select Region"
 msgstr "选择区域"
 
-#: ../src/control/Control.cpp:2385
+#: ../src/control/Control.cpp:2397
 msgid "Select another PDF"
 msgstr "选择其他PDF"
 
@@ -1319,7 +1315,7 @@ msgstr "按下缺省按钮，此工具及其设置将会生效"
 msgid "Select toolbar:"
 msgstr "选择工具条："
 
-#: ../src/control/XournalMain.cpp:98
+#: ../src/control/XournalMain.cpp:99
 msgid "Send Bugreport"
 msgstr "选择错误报告"
 
@@ -1327,7 +1323,7 @@ msgstr "选择错误报告"
 msgid "Separator"
 msgstr "分割线"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:442
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:433
 msgid "Shape Recognizer"
 msgstr "识别形状"
 
@@ -1357,7 +1353,7 @@ msgstr "侧边栏右置"
 msgid "Show vertical scrollbar on the left side"
 msgstr "垂直滚动条左置"
 
-#: ../src/control/XournalMain.cpp:276
+#: ../src/control/XournalMain.cpp:277
 #, fuzzy
 msgid ""
 "Sorry, Xournal++ can only open one file from the command line.\n"
@@ -1366,7 +1362,7 @@ msgstr ""
 "Xournal只能打開一個命令行檔案。\n"
 "其他的會被忽略。"
 
-#: ../src/control/XournalMain.cpp:299
+#: ../src/control/XournalMain.cpp:300
 #, fuzzy
 msgid ""
 "Sorry, Xournal++ cannot open remote files at the moment.\n"
@@ -1412,7 +1408,7 @@ msgid "Template:"
 msgstr "模板："
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:61
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:418
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:409
 msgid "Text"
 msgstr "文本"
 
@@ -1449,17 +1445,17 @@ msgstr "文本未找到"
 msgid "Text not found, searched on all pages"
 msgstr "找遍所有页面未找到文本"
 
-#: ../src/control/Control.cpp:987
+#: ../src/control/Control.cpp:979
 msgid ""
 "The Toolbarconfiguration \"{1}\" is predefined, would you create a copy to "
 "edit?"
 msgstr "工具条配置\"{1}\"是预置的，要产生一个拷贝到编辑?"
 
-#: ../src/control/Control.cpp:2382
+#: ../src/control/Control.cpp:2394
 msgid "The attached background PDF could not be found."
 msgstr "附加的背景PDF未找到。"
 
-#: ../src/control/Control.cpp:2383
+#: ../src/control/Control.cpp:2395
 msgid "The background PDF could not be found."
 msgstr "背景PDF未找到。"
 
@@ -1476,7 +1472,7 @@ msgstr ""
 "给点的文件名没有已知的扩展名，请输入一个已知的扩展名或者从文件格式列表中选择"
 "选一个。"
 
-#: ../src/control/XournalMain.cpp:93
+#: ../src/control/XournalMain.cpp:94
 msgid "The most recent log file name: {1}"
 msgstr "最近的日志文件名：{1}"
 
@@ -1484,24 +1480,24 @@ msgstr "最近的日志文件名：{1}"
 msgid "The unit of the ruler is cm"
 msgstr "标尺的单位是厘米"
 
-#: ../src/control/XournalMain.cpp:86
+#: ../src/control/XournalMain.cpp:87
 msgid ""
 "There are errorlogfiles from Xournal++. Please send a Bugreport, so the bug "
 "may be fixed."
 msgstr "发现Xournal++的错误日志文件，请发送一个错误报告，将会被修正。"
 
-#: ../src/control/XournalMain.cpp:85
+#: ../src/control/XournalMain.cpp:86
 msgid ""
 "There is an errorlogfile from Xournal++. Please send a Bugreport, so the bug "
 "may be fixed."
 msgstr "发现Xournal++的错误日志文件，请发送一个错误报告，将会被修正。"
 
-#: ../src/control/Control.cpp:882
+#: ../src/control/Control.cpp:874
 msgid "There was an error displaying help: {1}"
 msgstr ""
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:91
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:451
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:442
 msgid "Thick"
 msgstr "粗"
 
@@ -1510,15 +1506,15 @@ msgid "Thickness"
 msgstr "粗细"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:89
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:447
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:438
 msgid "Thin"
 msgstr "细"
 
-#: ../src/control/Control.cpp:2846
+#: ../src/control/Control.cpp:2861
 msgid "This document is not saved yet."
 msgstr ""
 
-#: ../src/control/tools/ImageHandler.cpp:57 ../src/control/Control.cpp:1659
+#: ../src/control/tools/ImageHandler.cpp:57 ../src/control/Control.cpp:1658
 msgid "This image could not be loaded. Error message: {1}"
 msgstr ""
 
@@ -1526,7 +1522,7 @@ msgstr ""
 msgid "This option only affects PNG output"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:351
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:342
 msgid "Toggle fullscreen"
 msgstr "全屏"
 
@@ -1546,16 +1542,16 @@ msgstr "工具条"
 msgid "Trying to emergency save the current open document…"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:467
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:458
 msgid "Two pages"
 msgstr "双页"
 
-#: ../src/undo/UndoRedoHandler.cpp:282
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:309
+#: ../src/undo/UndoRedoHandler.cpp:284
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:300
 msgid "Undo"
 msgstr "撤销"
 
-#: ../src/undo/UndoRedoHandler.cpp:277
+#: ../src/undo/UndoRedoHandler.cpp:279
 msgid "Undo: "
 msgstr "撤销："
 
@@ -1595,7 +1591,7 @@ msgstr ""
 msgid "Unknown stroke type: \"{1}\", assuming pen"
 msgstr ""
 
-#: ../src/control/Control.cpp:2742
+#: ../src/control/Control.cpp:2757
 msgid "Unsaved Document"
 msgstr "未保存文档"
 
@@ -1604,7 +1600,7 @@ msgstr "未保存文档"
 msgid "Version"
 msgstr "扩展"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:437
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:428
 msgid "Vertical Space"
 msgstr "垂直间距"
 
@@ -1629,7 +1625,7 @@ msgstr "涂白"
 msgid "Width:"
 msgstr "宽度："
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:406
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:397
 msgid "With PDF background"
 msgstr "使用PDF背景"
 
@@ -1653,7 +1649,7 @@ msgstr ""
 msgid "XML Parser error: {1}"
 msgstr ""
 
-#: ../src/control/stockdlg/XojOpenDlg.cpp:23 ../src/control/Control.cpp:2673
+#: ../src/control/stockdlg/XojOpenDlg.cpp:23 ../src/control/Control.cpp:2688
 msgid "Xournal files"
 msgstr "Xournal文件"
 
@@ -1666,21 +1662,21 @@ msgstr "Xournal++偏好设置"
 msgid "Yellow"
 msgstr "黄色"
 
-#: ../src/control/Control.cpp:1501
+#: ../src/control/Control.cpp:1500
 msgid ""
 "You don't have any PDF pages to select from. Cancel operation.\n"
 "Please select another background type: Menu \"Journal\" / \"Insert Page Type"
 "\"."
 msgstr ""
 
-#: ../src/control/Control.cpp:1690
+#: ../src/control/Control.cpp:1689
 msgid ""
 "You don't have any PDF pages to select from. Cancel operation.\n"
 "Please select another background type: Menu \"Journal\" → \"Insert Page Type"
 "\"."
 msgstr ""
 
-#: ../src/control/XournalMain.cpp:89
+#: ../src/control/XournalMain.cpp:90
 msgid ""
 "You're using {1}/{2} branch. Send Bugreport will direct you to this repo's "
 "issue tracker."
@@ -1699,15 +1695,15 @@ msgstr ""
 msgid "Zoom"
 msgstr "缩放"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:345
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:336
 msgid "Zoom fit to screen"
 msgstr "适合屏幕"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:343
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:334
 msgid "Zoom in"
 msgstr "放大"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:341
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:332
 msgid "Zoom out"
 msgstr "缩小"
 
@@ -1715,13 +1711,20 @@ msgstr "缩小"
 msgid "Zoom slider"
 msgstr "缩放游标"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:347
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:338
 msgid "Zoom to 100%"
 msgstr "原始尺寸"
 
 #: ../ui/main.glade:69
 msgid "_Annotate PDF"
 msgstr "标注PDF(_A)"
+
+#: ../src/control/stockdlg/ImageOpenDlg.cpp:11
+#: ../src/control/stockdlg/XojOpenDlg.cpp:13
+#: ../src/control/jobs/PdfExportJob.cpp:29 ../src/control/Control.cpp:2682
+#, fuzzy
+msgid "_Cancel"
+msgstr "取消"
 
 #: ../ui/main.glade:337
 msgid "_Customize"
@@ -1806,6 +1809,12 @@ msgstr "下一页(_N)"
 msgid "_Next Page"
 msgstr "下一页(_N)"
 
+#: ../src/control/stockdlg/ImageOpenDlg.cpp:12
+#: ../src/control/stockdlg/XojOpenDlg.cpp:14
+#, fuzzy
+msgid "_Open"
+msgstr "打开{1}"
+
 #: ../ui/main.glade:753
 msgid "_Pen"
 msgstr "画笔(_P)"
@@ -1830,6 +1839,11 @@ msgstr "前一页(_P)"
 #: ../ui/main.glade:703
 msgid "_Ruled"
 msgstr "标尺(_R)"
+
+#: ../src/control/jobs/PdfExportJob.cpp:30 ../src/control/Control.cpp:2683
+#, fuzzy
+msgid "_Save"
+msgstr "保存"
 
 #: ../ui/main.glade:817
 msgid "_Shape Recognizer"
@@ -1892,7 +1906,7 @@ msgstr "涂白(_w)"
 msgid "cursor"
 msgstr "光标"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:282
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:273
 msgid "delete stroke"
 msgstr "删除笔划"
 
@@ -1916,7 +1930,7 @@ msgstr "鼠标"
 msgid "pen"
 msgstr "画笔"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:268
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:259
 msgid "standard"
 msgstr "标准"
 
@@ -1933,7 +1947,7 @@ msgstr "全屏"
 msgid "ver_y thick"
 msgstr "极粗(_y)"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:275
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:266
 msgid "whiteout"
 msgstr "涂白"
 
@@ -2023,6 +2037,10 @@ msgstr ""
 
 #~ msgid "INI exception: {1}"
 #~ msgstr "INI异常：{1}"
+
+#, fuzzy
+#~ msgid "Insert Page Format"
+#~ msgstr "插入页面风格"
 
 #~ msgid "Metadata file \"{1}\" is invalid: {2}"
 #~ msgstr "外来数据文件\"{1}\"无效：{2}"

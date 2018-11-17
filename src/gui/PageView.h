@@ -43,7 +43,7 @@ public:
 	void updatePageSize(double width, double height);
 
 	virtual void rerenderPage();
-	virtual void rerenderRect(double x, double y, double width, double heigth);
+	virtual void rerenderRect(double x, double y, double width, double height);
 
 	virtual void repaintPage();
 	virtual void repaintArea(double x1, double y1, double x2, double y2);

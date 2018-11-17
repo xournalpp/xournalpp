@@ -220,8 +220,8 @@ bool ClipboardHandler::copy()
 	double dpiFactor = 1.0 / 72.0 * 300.0;
 
 	int width = selection->getWidth() * dpiFactor;
-	int heigth = selection->getHeight() * dpiFactor;
-	cairo_surface_t* surfacePng = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, width, heigth);
+	int height = selection->getHeight() * dpiFactor;
+	cairo_surface_t* surfacePng = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, width, height);
 	cairo_t* crPng = cairo_create(surfacePng);
 	cairo_scale(crPng, dpiFactor, dpiFactor);
 
@@ -230,7 +230,7 @@ bool ClipboardHandler::copy()
 
 	cairo_destroy(crPng);
 
-	GdkPixbuf* image = xoj_pixbuf_get_from_surface(surfacePng, 0, 0, width, heigth);
+	GdkPixbuf* image = xoj_pixbuf_get_from_surface(surfacePng, 0, 0, width, height);
 
 	cairo_surface_destroy(surfacePng);
 

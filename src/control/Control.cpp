@@ -122,7 +122,7 @@ Control::Control(GladeSearchpath* gladeSearchPath, bool noThreads)
 	/**
 	 * This is needed to update the previews
 	 */
-	this->changeTimout = g_timeout_add_seconds(10, (GSourceFunc) checkChangedDocument, this);
+	this->changeTimout = g_timeout_add_seconds(5, (GSourceFunc) checkChangedDocument, this);
 	
 	this->clipboardHandler = NULL;
 
@@ -1207,11 +1207,11 @@ void Control::addDefaultPage()
 	PageInsertType type = settings->getPageInsertType();
 
 	double width = 0;
-	double heigth = 0;
+	double height = 0;
 
-	getDefaultPagesize(width, heigth);
+	getDefaultPagesize(width, height);
 
-	PageRef page = new XojPage(width, heigth);
+	PageRef page = new XojPage(width, height);
 	page->setBackgroundColor(settings->getPageBackgroundColor());
 
 	if (PAGE_INSERT_TYPE_PLAIN == type)
@@ -1236,6 +1236,27 @@ void Control::addDefaultPage()
 	this->doc->unlock();
 
 	updateDeletePageButton();
+}
+
+void Control::storeDefaultPageFormat(double width, double height)
+{
+	XOJ_CHECK_TYPE(Control);
+	if (width > 0)
+	{
+		// Load default again
+		this->defaultWidth = width;
+		this->defaultHeight = height;
+
+		SElement& format = settings->getCustomElement("format");
+		format.setComment("paperformat",
+						  "Available values are: system, A4, Letter, Custom: "
+						  "For custom you have to create the tags width and height.");
+		format.setString("paperformat", "Custom");
+		format.setDouble("width", width);
+		format.setDouble("height", height);
+
+		settings->customSettingsChanged();
+	}
 }
 
 void Control::getDefaultPagesize(double& width, double& height)
@@ -1751,6 +1772,8 @@ void Control::paperFormat()
 		this->doc->lock();
 		this->doc->setPageSize(page, width, height);
 		this->doc->unlock();
+
+		storeDefaultPageFormat(width, height);
 	}
 
 	delete dlg;
@@ -2965,12 +2988,12 @@ void Control::clipboardPasteImage(GdkPixbuf* img)
 	this->doc->lock();
 	PageRef page = this->doc->getPage(pageNr);
 	int pageWidth = page->getWidth();
-	int pageHeigth = page->getHeight();
+	int pageHeight = page->getHeight();
 	this->doc->unlock();
 
 	// Size: 3/4 of the page size
 	pageWidth = pageWidth * 3 / 4;
-	pageHeigth = pageHeigth * 3 / 4;
+	pageHeight = pageHeight * 3 / 4;
 
 	int scaledWidth = width;
 	int scaledHeight = height;
@@ -2981,9 +3004,9 @@ void Control::clipboardPasteImage(GdkPixbuf* img)
 		scaledHeight = (scaledWidth * height) / width;
 	}
 
-	if (scaledHeight > pageHeigth)
+	if (scaledHeight > pageHeight)
 	{
-		scaledHeight = pageHeigth;
+		scaledHeight = pageHeight;
 		scaledWidth = (scaledHeight * width) / height;
 	}
 

@@ -71,11 +71,11 @@ void PagePositionHandler::update(XojPageView** viewPages, int viewPagesLen, int 
 	addData(pp);
 }
 
-XojPageView* PagePositionHandler::getBestMatchingView(int x, int y, int width, int heigth)
+XojPageView* PagePositionHandler::getBestMatchingView(int x, int y, int width, int height)
 {
 	XOJ_CHECK_TYPE(PagePositionHandler);
 
-	if (y + heigth < 0 || y > this->maxY)
+	if (y + height < 0 || y > this->maxY)
 	{
 		return NULL;
 	}
@@ -83,9 +83,9 @@ XojPageView* PagePositionHandler::getBestMatchingView(int x, int y, int width, i
 	int id = -1;
 	PagePosition* pp1 = binarySearch(this->data, 0, this->dataCount - 1, y, id);
 	id = -1;
-	PagePosition* pp2 = binarySearch(this->data, 0, this->dataCount - 1, y + heigth, id);
+	PagePosition* pp2 = binarySearch(this->data, 0, this->dataCount - 1, y + height, id);
 
-	PageViewIndex index(x, y, width, heigth);
+	PageViewIndex index(x, y, width, height);
 	if (pp1 != NULL)
 	{
 		index.add(pp1, y);
@@ -93,7 +93,7 @@ XojPageView* PagePositionHandler::getBestMatchingView(int x, int y, int width, i
 
 	if (pp2 != NULL && pp1 != pp2)
 	{
-		index.add(pp2, y + heigth);
+		index.add(pp2, y + height);
 	}
 
 	return index.getHighestIntersects();

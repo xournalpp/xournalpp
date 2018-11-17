@@ -81,7 +81,7 @@ public:
 
 	bool isPageVisible(size_t page, int* visibleHeight);
 
-	void ensureRectIsVisible(int x, int y, int width, int heigth);
+	void ensureRectIsVisible(int x, int y, int width, int height);
 
 	void setSelection(EditSelection* selection);
 	EditSelection* getSelection();
