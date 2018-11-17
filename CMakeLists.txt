@@ -361,7 +361,7 @@ add_custom_target (desktop-uninstall
 message ("
 Configuration:
 	Compiler:                   ${CMAKE_CXX_COMPILER}
-Z	Mathtex enabled:            ${ENABLE_MATHTEX}
+	Mathtex enabled:            ${ENABLE_MATHTEX}
 	CppUnit enabled:            ${ENABLE_CPPUNIT}
 
 Unstable features:
