@@ -18,6 +18,8 @@
 
 class ToolMenuHandler;
 
+#define ToolDrawCombocontrol_EntryCount 5
+
 class ToolDrawCombocontrol : public ToolButton
 {
 public:
@@ -39,9 +41,5 @@ private:
 	GtkWidget* iconWidget;
 	GtkWidget* labelWidget;
 
-	GdkPixbuf* iconDrawRect;
-	GdkPixbuf* iconDrawCirc;
-	GdkPixbuf* iconDrawArr;
-	GdkPixbuf* iconDrawLine;
-	GdkPixbuf* iconAutoDrawLine;
+	GdkPixbuf* icons[ToolDrawCombocontrol_EntryCount];
 };

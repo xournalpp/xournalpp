@@ -241,20 +241,11 @@ void ToolMenuHandler::addToolItem(AbstractToolItem* it)
 	this->toolItems.push_back(it);
 }
 
-void ToolMenuHandler::registerMenupoint(GtkWidget* widget, ActionType type)
-{
-	XOJ_CHECK_TYPE(ToolMenuHandler);
-
-	MenuItem* it = new MenuItem(listener, widget, type);
-	this->menuItems.push_back(it);
-}
-
 void ToolMenuHandler::registerMenupoint(GtkWidget* widget, ActionType type, ActionGroup group)
 {
 	XOJ_CHECK_TYPE(ToolMenuHandler);
 
-	MenuItem* it = new MenuItem(listener, widget, type, group);
-	this->menuItems.push_back(it);
+	this->menuItems.push_back(new MenuItem(listener, widget, type, group));
 }
 
 void ToolMenuHandler::initEraserToolItem()
