@@ -113,6 +113,8 @@ void Settings::loadDefault()
 	this->selectionColor = 0xff0000;
 
 	this->eventCompression = true;
+
+	inTransaction = false;
 }
 
 void Settings::parseData(xmlNodePtr cur, SElement& elem)
@@ -724,9 +726,35 @@ void Settings::saveButtonConfig()
 	}
 }
 
+/**
+ * Do not save settings until transactionEnd() is called
+ */
+void Settings::transactionStart()
+{
+	XOJ_CHECK_TYPE(Settings);
+
+	inTransaction = true;
+}
+
+/**
+ * Stop transaction and save settings
+ */
+void Settings::transactionEnd()
+{
+	XOJ_CHECK_TYPE(Settings);
+
+	inTransaction = false;
+	save();
+}
+
 void Settings::save()
 {
 	XOJ_CHECK_TYPE(Settings);
+
+	if (inTransaction)
+	{
+		return;
+	}
 
 	xmlDocPtr doc;
 	xmlNodePtr root;

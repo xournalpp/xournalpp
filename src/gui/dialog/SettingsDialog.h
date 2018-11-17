@@ -33,7 +33,10 @@ public:
 
 	void setDpi(int dpi);
 
-	void toolboxToggled();
+	/**
+	 * Autosave was toggled, enable / disable autosave config
+	 */
+	void autosaveToggled();
 
 private:
 	void load();
@@ -44,10 +47,6 @@ private:
 
 	void initMouseButtonEvents();
 	void initMouseButtonEvents(const char* hbox, int button, bool withDevice = false);
-
-	static gboolean zoomcallibSliderChanged(GtkRange* range, GtkScrollType scroll, gdouble value, SettingsDialog* dlg);
-
-	static void toolboxToggledCallback(GtkToggleButton* togglebutton, SettingsDialog* sd);
 
 private:
 	XOJ_TYPE_ATTRIB;
