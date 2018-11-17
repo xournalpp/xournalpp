@@ -6,6 +6,9 @@
 #include <gtk/gtk.h>
 #include <stdio.h>
 
+ToolListener::~ToolListener() { }
+
+
 ToolHandler::ToolHandler(ToolListener* listener, ActionHandler* actionHandler, Settings* settings)
 {
 	XOJ_INIT_TYPE(ToolHandler);
