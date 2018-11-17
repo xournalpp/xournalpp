@@ -571,12 +571,12 @@ void XournalView::setZoom(gdouble scale)
 	control->getZoomControl()->setZoom(scale);
 }
 
-void XournalView::ensureRectIsVisible(int x, int y, int width, int heigth)
+void XournalView::ensureRectIsVisible(int x, int y, int width, int height)
 {
 	XOJ_CHECK_TYPE(XournalView);
 
 	Layout* layout = gtk_xournal_get_layout(this->widget);
-	layout->ensureRectIsVisible(x, y, width, heigth);
+	layout->ensureRectIsVisible(x, y, width, height);
 }
 
 void XournalView::zoomChanged(double lastZoom)

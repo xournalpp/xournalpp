@@ -24,7 +24,7 @@ enum Orientation
 class FormatDialog : public GladeGui
 {
 public:
-	FormatDialog(GladeSearchpath* gladeSearchPath, Settings* settings, double width, double heigth);
+	FormatDialog(GladeSearchpath* gladeSearchPath, Settings* settings, double width, double height);
 	virtual ~FormatDialog();
 
 public:

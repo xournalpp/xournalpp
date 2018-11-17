@@ -5,7 +5,7 @@
 
 #include <Util.h>
 
-XojPage::XojPage(double width, double heigth)
+XojPage::XojPage(double width, double height)
 {
 	XOJ_INIT_TYPE(XojPage);
 
@@ -14,7 +14,7 @@ XojPage::XojPage(double width, double heigth)
 	this->bgType = BACKGROUND_TYPE_LINED;
 
 	this->width = width;
-	this->height = heigth;
+	this->height = height;
 
 	this->ref = 0;
 	this->currentLayer = size_t_npos;

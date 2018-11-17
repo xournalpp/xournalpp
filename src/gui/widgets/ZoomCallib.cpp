@@ -139,10 +139,10 @@ static gboolean zoomcallib_draw(GtkWidget* widget, cairo_t* cr)
 	gdouble hafCm = (ZOOM_CALLIB(widget)->val / 2.54) / 2;
 
 	int h = allocation.height;
-	int heigth = 50;
-	if (h < heigth)
+	int height = 50;
+	if (h < height)
 	{
-		heigth = allocation.height - 10;
+		height = allocation.height - 10;
 	}
 
 	int i = 0;
@@ -157,12 +157,12 @@ static gboolean zoomcallib_draw(GtkWidget* widget, cairo_t* cr)
 		if (i % 2 == 0)
 		{
 			cairo_set_source_rgb(cr, 0, 0, 0);
-			y = heigth - 3;
+			y = height - 3;
 		}
 		else
 		{
 			cairo_set_source_rgb(cr, 0.5, 0.5, 0.5);
-			y = heigth - 17;
+			y = height - 17;
 		}
 
 		cairo_rectangle(cr, x,  2 + h - y, 1, y);

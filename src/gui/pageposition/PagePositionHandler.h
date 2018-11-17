@@ -38,7 +38,7 @@ public:
 	 * Returns the XojPageView with the given coordinates
 	 */
 	XojPageView* getViewAt(int x, int y, PagePositionCache* cache = NULL);
-	XojPageView* getBestMatchingView(int x, int y, int width, int heigth);
+	XojPageView* getBestMatchingView(int x, int y, int width, int height);
 
 private:
 	void addData(PagePosition* p);

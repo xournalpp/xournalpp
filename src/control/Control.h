@@ -246,6 +246,8 @@ protected:
 
 	static bool loadMetadataCallback(MetadataCallbackData* data);
 
+	void storeDefaultPageFormat(double width, double height);
+
 private:
 	XOJ_TYPE_ATTRIB;
 

@@ -22,7 +22,7 @@
 class XojPage : public PageHandler
 {
 public:
-	XojPage(double width, double heigth);
+	XojPage(double width, double height);
 	void reference();
 	void unreference();
 

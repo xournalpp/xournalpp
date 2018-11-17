@@ -5,7 +5,7 @@
 #include <config.h>
 #include <i18n.h>
 
-FormatDialog::FormatDialog(GladeSearchpath* gladeSearchPath, Settings* settings, double width, double heigth)
+FormatDialog::FormatDialog(GladeSearchpath* gladeSearchPath, Settings* settings, double width, double height)
  : GladeGui(gladeSearchPath, "pagesize.glade", "pagesizeDialog")
 {
 	XOJ_INIT_TYPE(FormatDialog);
@@ -30,7 +30,7 @@ FormatDialog::FormatDialog(GladeSearchpath* gladeSearchPath, Settings* settings,
 	}
 
 	this->scale = XOJ_UNITS[this->selectedScale].scale;
-	this->origHeight = heigth;
+	this->origHeight = height;
 	this->origWidth = width;
 
 	this->width = -1;
@@ -60,11 +60,11 @@ FormatDialog::FormatDialog(GladeSearchpath* gladeSearchPath, Settings* settings,
 
 	string formatlist = settings->getVisiblePageFormats();
 
-	if (heigth < width)
+	if (height < width)
 	{
 		double tmp = width;
-		width = heigth;
-		heigth = tmp;
+		width = height;
+		height = tmp;
 	}
 
 	this->list = gtk_paper_size_get_paper_sizes(false);
@@ -80,7 +80,7 @@ FormatDialog::FormatDialog(GladeSearchpath* gladeSearchPath, Settings* settings,
 
 		bool visible = false;
 
-		if (((int) (w - width) * 10) == 0 && ((int) (h - heigth) * 10) == 0)
+		if (((int) (w - width) * 10) == 0 && ((int) (h - height) * 10) == 0)
 		{
 			selectedFormat = i;
 			visible = true;

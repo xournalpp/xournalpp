@@ -698,14 +698,14 @@ Rectangle* XojPageView::rectOnWidget(double x, double y, double width, double he
 	return new Rectangle(x * zoom - 10, y * zoom - 10, width * zoom + 20, height * zoom + 20);
 }
 
-void XojPageView::rerenderRect(double x, double y, double width, double heigth)
+void XojPageView::rerenderRect(double x, double y, double width, double height)
 {
 	XOJ_CHECK_TYPE(XojPageView);
 
 	int rx = (int) MAX(x - 10, 0);
 	int ry = (int) MAX(y - 10, 0);
 	int rwidth = (int) (width + 20);
-	int rheight = (int) (heigth + 20);
+	int rheight = (int) (height + 20);
 
 	addRerenderRect(rx, ry, rwidth, rheight);
 }
