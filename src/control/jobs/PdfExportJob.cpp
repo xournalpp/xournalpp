@@ -25,10 +25,10 @@ bool PdfExportJob::showFilechooser()
 	Settings* settings = control->getSettings();
 	Document* doc = control->getDocument();
 
-	GtkWidget* dialog = gtk_file_chooser_dialog_new(_C("Export PDF"),
-													(GtkWindow*) *control->getWindow(), GTK_FILE_CHOOSER_ACTION_SAVE,
-													GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL, GTK_STOCK_SAVE,
-												    GTK_RESPONSE_OK, NULL);
+	GtkWidget* dialog = gtk_file_chooser_dialog_new(_C("Export PDF"), (GtkWindow*) *control->getWindow(), GTK_FILE_CHOOSER_ACTION_SAVE,
+													_C("_Cancel"), GTK_RESPONSE_CANCEL,
+													_C("_Save"), GTK_RESPONSE_OK, NULL);
+
 	gtk_file_chooser_set_local_only(GTK_FILE_CHOOSER(dialog), false);
 
 	GtkFileFilter* filterPdf = gtk_file_filter_new();

@@ -75,7 +75,7 @@ GtkWidget* FontButton::getNewToolIconImpl()
 {
 	XOJ_CHECK_TYPE(FontButton);
 
-	return gtk_image_new_from_stock(GTK_STOCK_SELECT_FONT, GTK_ICON_SIZE_SMALL_TOOLBAR);
+	return gtk_image_new_from_icon_name("font-x-generic" , GTK_ICON_SIZE_SMALL_TOOLBAR);
 }
 
 GtkToolItem* FontButton::createItem(bool horizontal)
