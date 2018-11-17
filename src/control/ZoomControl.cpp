@@ -2,6 +2,8 @@
 
 const double zoomStep = 0.04;
 
+ZoomListener::~ZoomListener() { }
+
 ZoomControl::ZoomControl()
 {
 	XOJ_INIT_TYPE(ZoomControl);
