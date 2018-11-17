@@ -277,6 +277,16 @@ public:
 	 */
 	void customSettingsChanged();
 
+	/**
+	 * Do not save settings until transactionEnd() is called
+	 */
+	void transactionStart();
+
+	/**
+	 * Stop transaction and save settings
+	 */
+	void transactionEnd();
+
 private:
 
 	/**
@@ -481,4 +491,10 @@ private:
 	 * Whether event compression should be enabled
 	 */
 	bool eventCompression;
+
+
+	/**
+	 * "Transaction" running, do not save until the end is reached
+	 */
+	bool inTransaction;
 };

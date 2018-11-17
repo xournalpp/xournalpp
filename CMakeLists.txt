@@ -97,8 +97,26 @@ add_includes_ldflags ("${GThread_LDFLAGS}" "${GThread_INCLUDE_DIRS}")
 pkg_check_modules (Libxml REQUIRED "libxml-2.0 >= 2.0.0")
 add_includes_ldflags ("${Libxml_LDFLAGS}" "${Libxml_INCLUDE_DIRS}")
 
+find_program(LSB_RELEASE_EXEC lsb_release)
+execute_process(COMMAND ${LSB_RELEASE_EXEC} -is
+  OUTPUT_VARIABLE LSB_RELEASE_ID_SHORT
+  OUTPUT_STRIP_TRAILING_WHITESPACE
+)
+find_program(LSB_RELEASE_EXEC lsb_release)
+execute_process(COMMAND ${LSB_RELEASE_EXEC} -rs
+  OUTPUT_VARIABLE LSB_RELEASE_NUMBER_SHORT
+  OUTPUT_STRIP_TRAILING_WHITESPACE
+)
+
 # Poppler
-option (BUILD_POPPLER "Build Poppler from git or other source" OFF)
+option (BUILD_POPPLER "Build Poppler from git or other source" DEFAULT_BUILD_POOPPLER)
+
+## Ubuntu 16.04 need a poppler build
+if (LSB_RELEASE_ID_SHORT STREQUAL "Ubuntu" AND LSB_RELEASE_NUMBER_SHORT STREQUAL "16.04")
+  set(BUILD_POPPLER ON)
+  message ("Automatically set BUILD_POPPLER ON on Ubuntu 16.04")
+endif()
+
 set (POPPLER_GIT_VER "0.61.1" CACHE STRING "Version of Poppler to build")
 option (POPPLER_GIT "Use git version of Poppler" ON)
 set(POPPLER_DIR "/path/to/poppler/source" CACHE STRING "Directory with poppler")
