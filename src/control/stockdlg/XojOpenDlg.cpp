@@ -9,9 +9,9 @@
 path XojOpenDlg::showOpenDialog(GtkWindow* win, Settings* settings, bool pdf, bool& attachPdf)
 {
 
-	GtkWidget* dialog = gtk_file_chooser_dialog_new(_C("Open file"), win,
-													GTK_FILE_CHOOSER_ACTION_OPEN, GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-													GTK_STOCK_OPEN, GTK_RESPONSE_OK, NULL);
+	GtkWidget* dialog = gtk_file_chooser_dialog_new(_C("Open file"), win, GTK_FILE_CHOOSER_ACTION_OPEN,
+													_C("_Cancel"), GTK_RESPONSE_CANCEL,
+													_C("_Open"), GTK_RESPONSE_OK, NULL);
 
 	gtk_file_chooser_set_local_only(GTK_FILE_CHOOSER(dialog), true);
 

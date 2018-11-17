@@ -7,8 +7,8 @@
 
 GFile* ImageOpenDlg::show(GtkWindow* win, Settings* settings, bool localOnly, bool* attach)
 {
-	GtkWidget* dialog = gtk_file_chooser_dialog_new(_C("Open Image"), win,
-													GTK_FILE_CHOOSER_ACTION_OPEN, _C("_Cancel"), GTK_RESPONSE_CANCEL,
+	GtkWidget* dialog = gtk_file_chooser_dialog_new(_C("Open Image"), win, GTK_FILE_CHOOSER_ACTION_OPEN,
+													_C("_Cancel"), GTK_RESPONSE_CANCEL,
 													_C("_Open"), GTK_RESPONSE_OK, NULL);
 
 	gtk_file_chooser_set_local_only(GTK_FILE_CHOOSER(dialog), localOnly);
