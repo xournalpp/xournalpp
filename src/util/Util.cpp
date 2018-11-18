@@ -36,6 +36,22 @@ void Util::cairo_set_source_rgbi(cairo_t* cr, int c)
 	cairo_set_source_rgb(cr, r, g, b);
 }
 
+
+void Util::apply_rgb_togdkrgba(GdkRGBA& col, int color)
+{
+	col.red = ((color >> 16) & 0xFF) / 255.0;
+	col.green = ((color >> 8) & 0xFF) / 255.0;
+	col.blue = (color & 0xFF) / 255.0;
+	col.alpha = 1.0;
+}
+
+int Util::gdkrgba_to_hex(GdkRGBA& color)
+{
+	return (((int)(color.red * 255)) & 0xff) << 16 |
+			(((int)(color.green * 255)) & 0xff) << 8 |
+			(((int)(color.blue * 255)) & 0xff);
+}
+
 int Util::getPid()
 {
 	pid_t pid = ::getpid();

@@ -119,6 +119,7 @@ public:
 	void deleteCurrentLayer();
 	void switchToLay(int layer);
 
+	void paperTemplate();
 	void paperFormat();
 	void changePageBackgroundColor();
 	void setPageBackground(ActionType type);

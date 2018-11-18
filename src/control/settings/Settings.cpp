@@ -114,6 +114,9 @@ void Settings::loadDefault()
 
 	this->eventCompression = true;
 
+	// TODO !!!!!!!!!!!!!!!!!!!!!
+	this->pageTemplate = "aaaaaaaaaaaaaaaaaaaaaaaaaaaa\nbbbbbbbbbbbbbbbbbbbbbbbbbbbb\n";
+
 	inTransaction = false;
 }
 
@@ -342,6 +345,10 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur)
 	else if (xmlStrcmp(name, (const xmlChar*) "visiblePageFormats") == 0)
 	{
 		this->visiblePageFormats = (const char*) value;
+	}
+	else if (xmlStrcmp(name, (const xmlChar*) "pageTemplate") == 0)
+	{
+		this->pageTemplate = (const char*) value;
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "autosaveEnabled") == 0)
 	{
@@ -858,6 +865,9 @@ void Settings::save()
 
 	WRITE_BOOL_PROP(eventCompression);
 
+	WRITE_COMMENT("Config for new pages");
+	WRITE_STRING_PROP(pageTemplate);
+
 	xmlNodePtr xmlFont;
 	xmlFont = xmlNewChild(root, NULL, (const xmlChar*) "property", NULL);
 	xmlSetProp(xmlFont, (const xmlChar*) "name", (const xmlChar*) "font");
@@ -1191,6 +1201,16 @@ bool Settings::isEventCompression()
 void Settings::setEventCompression(bool enabled)
 {
 	this->eventCompression = enabled;
+}
+
+string Settings::getPageTemplate()
+{
+	return this->pageTemplate;
+}
+
+void Settings::setPageTemplate(string pageTemplate)
+{
+	this->pageTemplate = pageTemplate;
 }
 
 void Settings::setShowTwoPages(bool showTwoPages)

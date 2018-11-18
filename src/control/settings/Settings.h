@@ -268,6 +268,9 @@ public:
 
 	bool isEventCompression();
 	void setEventCompression(bool enabled);
+
+	string getPageTemplate();
+	void setPageTemplate(string pageTemplate);
 public:
 	// Custom settings
 	SElement& getCustomElement(string name);
@@ -492,6 +495,10 @@ private:
 	 */
 	bool eventCompression;
 
+	/**
+	 * Page template String
+	 */
+	string pageTemplate;
 
 	/**
 	 * "Transaction" running, do not save until the end is reached

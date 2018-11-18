@@ -9,6 +9,7 @@
 #include "gui/dialog/backgroundSelect/PdfPagesDialog.h"
 #include "gui/dialog/GotoDialog.h"
 #include "gui/dialog/FormatDialog.h"
+#include "gui/dialog/PageTemplateDialog.h"
 #include "gui/dialog/SettingsDialog.h"
 #include "gui/dialog/SelectBackgroundColorDialog.h"
 #include "gui/dialog/toolbarCustomize/ToolbarDragDropHandler.h"
@@ -501,6 +502,9 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
 		break;
 	case ACTION_PAPER_FORMAT:
 		paperFormat();
+		break;
+	case ACTION_CONFIGURE_PAGE_TEMPLATE:
+		paperTemplate();
 		break;
 	case ACTION_PAPER_BACKGROUND_COLOR:
 		changePageBackgroundColor();
@@ -1748,6 +1752,15 @@ void Control::updateBackgroundSizeButton()
 
 	// PDF page size is defined, you cannot change it
 	gtk_widget_set_sensitive(pageSize, bg != BACKGROUND_TYPE_PDF);
+}
+
+void Control::paperTemplate()
+{
+	XOJ_CHECK_TYPE(Control);
+
+	PageTemplateDialog* dlg = new PageTemplateDialog(this->gladeSearchPath, settings);
+	dlg->show(GTK_WINDOW(this->win->getWindow()));
+	delete dlg;
 }
 
 void Control::paperFormat()

@@ -30,6 +30,9 @@ public:
 
 	static void cairo_set_source_rgbi(cairo_t* cr, int color);
 
+	static void apply_rgb_togdkrgba(GdkRGBA& col, int color);
+	static int gdkrgba_to_hex(GdkRGBA& color);
+
 	static path getAutosaveFilename();
 
 	static int getPid();
