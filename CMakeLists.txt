@@ -108,24 +108,6 @@ execute_process(COMMAND ${LSB_RELEASE_EXEC} -rs
   OUTPUT_STRIP_TRAILING_WHITESPACE
 )
 
-# Extended stacktrace enabled
-option (EXTENDED_STACKTRACE "Log extended stacktrace" OFF)
-
-## TODO check for dependency, not for distribution!
-#  find_package (????????????? 1.2.3)
-#  if (STACKTRACE_FOUND)
-#    set(EXTENDED_STACKTRACE ON)
-#  endif (NOT STACKTRACE_FOUND)
-
-if (LSB_RELEASE_ID_SHORT STREQUAL "Ubuntu")
-  set(EXTENDED_STACKTRACE ON)
-  message ("Automatically set EXTENDED_STACKTRACE ON on Ubuntu")
-endif()
-
-if (EXTENDED_STACKTRACE)
-	add_definitions (-DEXTENDED_STACKTRACE)
-endif()
-
 # Poppler
 option (BUILD_POPPLER "Build Poppler from git or other source" DEFAULT_BUILD_POOPPLER)
 
@@ -196,17 +178,14 @@ if (BUILD_POPPLER)
     libpoppler-glib.so
     
     ${OPENJPEG_LIBRARIES}
+# Comment out, seems to be a problem on Debian...
+# Do we need to detect something to enable / disable?
+#    -lopenjpeg
     ${JPEG_LIBRARIES}
     ${PopplerLibs_LDFLAGS}
     ${lcms_LDFLAGS}
   )
-  
-if (EXTENDED_STACKTRACE)
-  set (POPPLER_LIBRARIES
-    ${POPPLER_LIBRARIES}
-    -lbacktrace
-  )
-endif ()
+  # -lopenjpeg added as fallback
   
   set (POPPLER_INCLUDE_DIRS
     "${POPPLER_PREFIX}/src/poppler-build"
@@ -384,7 +363,6 @@ Configuration:
 	Compiler:                   ${CMAKE_CXX_COMPILER}
 	Mathtex enabled:            ${ENABLE_MATHTEX}
 	CppUnit enabled:            ${ENABLE_CPPUNIT}
-	Extended Stacktrace:        ${EXTENDED_STACKTRACE}
 
 Unstable features:
 	Layers sidebar:             ${UNSTABLE_LAYERS_SIDEBAR}
