@@ -92,14 +92,17 @@ int main(int argc, char* argv[])
 		return 5;
 	}
 	
-	ofstream ofile(argv[2], ofstream::out | ofstream::binary);
-	if (!ofile.is_open())
+	FILE* fp = fopen(argv[2], "wb");
+	if (!fp)
 	{
 		cerr << _F("xoj-preview-extractor: opening output file \"{1}\" failed") % argv[2] << endl;
 		return 6;
 	}
-	ofile << extractor.getData();
-	ofile.close();
+
+	gsize dataLen = 0;
+	unsigned char* imageData = extractor.getData(dataLen);
+	fwrite(imageData, dataLen, 1, fp);
+	fclose(fp);
 
 	cout << _("xoj-preview-extractor: successfully extracted") << endl;
 	return 0;

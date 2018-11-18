@@ -12,6 +12,8 @@
 
 #pragma once
 
+#include <gdk/gdk.h>
+
 #include <string>
 using std::string;
 
@@ -45,6 +47,10 @@ enum PreviewExtractResult {
 class XojPreviewExtractor
 {
 public:
+	XojPreviewExtractor();
+	~XojPreviewExtractor();
+
+public:
 
 	/**
 	 * Try to read the preview from file
@@ -56,7 +62,7 @@ public:
 	/**
 	 * @return The preview data, should be a binary PNG
 	 */
-	string getData() const;
+	unsigned char* getData(gsize& dataLen);
 
 	// Member
 private:
@@ -64,5 +70,6 @@ private:
 	/**
 	 * Preview data
 	 */
-	string data;
+	unsigned char* data;
+	gsize dataLen;
 };
