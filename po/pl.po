@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp 1.0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-11-18 10:31+0100\n"
+"POT-Creation-Date: 2018-11-18 19:31+0100\n"
 "PO-Revision-Date: 2015-10-01 00:00+0200\n"
 "Last-Translator: Marek Pikuła <marek@pikula.co>\n"
 "Language-Team: Xournal++ team\n"
@@ -41,7 +41,7 @@ msgstr "kreska"
 msgid " text"
 msgstr "tekst"
 
-#: ../src/control/settings/Settings.cpp:85
+#: ../src/control/settings/Settings.cpp:86
 msgid "%F-Note-%H-%M.xoj"
 msgstr "%F-Notatka-%H-%M.xoj"
 
@@ -127,12 +127,12 @@ msgstr ""
 msgid "<b>Autosave</b>"
 msgstr "<b>Autozapis</b>"
 
-#: ../ui/pageTemplate.glade:127
+#: ../ui/pageTemplate.glade:153
 #, fuzzy
 msgid "<b>Background Color</b>"
 msgstr "<b>Kolor</b>"
 
-#: ../ui/pageTemplate.glade:114
+#: ../ui/pageTemplate.glade:140
 #, fuzzy
 msgid "<b>Background</b>"
 msgstr "Tło"
@@ -141,13 +141,13 @@ msgstr "Tło"
 msgid "<b>Color</b>"
 msgstr "<b>Kolor</b>"
 
-#: ../ui/pageTemplate.glade:78
+#: ../ui/pageTemplate.glade:104
 msgid ""
 "<b>Configure Xournal++ Template Page</b>\n"
 "This settings will be used if you create a new document"
 msgstr ""
 
-#: ../ui/pageTemplate.glade:188
+#: ../ui/pageTemplate.glade:214
 msgid ""
 "<b>Copy last page</b>\n"
 "Use the settings above\n"
@@ -202,7 +202,7 @@ msgstr "<b>Lewo / Prawo</b>"
 msgid "<b>Middle Mouse Button</b>"
 msgstr "<b>Środkowy przycisk myszy</b>"
 
-#: ../ui/pageTemplate.glade:100
+#: ../ui/pageTemplate.glade:126
 #, fuzzy
 msgid "<b>Page size</b>"
 msgstr "<b>Rozmiar strony</b>"
@@ -433,8 +433,8 @@ msgstr ""
 msgid "By extension"
 msgstr "Rozszerzeniem"
 
-#: ../src/control/Control.cpp:2397 ../src/control/Control.cpp:2863
-#: ../src/control/Control.cpp:2900 ../src/control/XournalMain.cpp:103
+#: ../src/control/Control.cpp:2269 ../src/control/Control.cpp:2735
+#: ../src/control/Control.cpp:2772 ../src/control/XournalMain.cpp:103
 msgid "Cancel"
 msgstr "Anuluj"
 
@@ -471,7 +471,7 @@ msgstr ""
 msgid "Contents"
 msgstr "Zawartość"
 
-#: ../src/control/Control.cpp:1010 ../src/control/Control.cpp:1018
+#: ../src/control/Control.cpp:1004 ../src/control/Control.cpp:1012
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:295
 msgid "Copy"
 msgstr "Kopiuj"
@@ -480,7 +480,7 @@ msgstr "Kopiuj"
 msgid "Copy current"
 msgstr "Kopiuj aktywną"
 
-#: ../ui/pageTemplate.glade:201
+#: ../ui/pageTemplate.glade:227
 msgid "Copy last page settings"
 msgstr ""
 
@@ -535,7 +535,7 @@ msgstr ""
 msgid "Could not remove tool item {1} from Toolbar {2} on position {3}"
 msgstr ""
 
-#: ../src/control/Control.cpp:3361
+#: ../src/control/Control.cpp:3233
 msgid "Could not retrieve LaTeX image file: {1}"
 msgstr "Nie można wczytać obrazu LaTeXa: {1}"
 
@@ -559,7 +559,7 @@ msgstr "Nie można zapisać tła \"{1}\". Kontynuuję mimo to."
 msgid "Current page"
 msgstr "Aktywna strona"
 
-#: ../src/gui/dialog/FormatDialog.cpp:112
+#: ../src/gui/dialog/FormatDialog.cpp:98
 msgid "Custom"
 msgstr "Niestandardowe"
 
@@ -620,11 +620,11 @@ msgstr "Wyłącz linijkę i rozpoznawanie kształtów"
 msgid "Disable drawing for this device"
 msgstr "Wyłącz rysowanie przy użyciu tego urządzenia"
 
-#: ../src/control/Control.cpp:2862 ../src/control/Control.cpp:2899
+#: ../src/control/Control.cpp:2734 ../src/control/Control.cpp:2771
 msgid "Discard"
 msgstr "Odrzuć"
 
-#: ../src/control/Control.cpp:2896
+#: ../src/control/Control.cpp:2768
 msgid "Document file was removed."
 msgstr "Dokument został usunięty."
 
@@ -711,7 +711,7 @@ msgstr "Op_cje gumki"
 msgid "Eraser type"
 msgstr "Rodzaj gumki"
 
-#: ../src/control/Control.cpp:2557
+#: ../src/control/Control.cpp:2429
 msgid ""
 "Error annotate PDF file \"{1}\"\n"
 "{2}"
@@ -723,7 +723,7 @@ msgstr ""
 msgid "Error loading glade file \"{1}\" (try to load \"{2}\")"
 msgstr "Błąd przy otwieraniu pliku glade \"{1}\" (spróbuj załadować \"{2}\")"
 
-#: ../src/control/Control.cpp:2424
+#: ../src/control/Control.cpp:2296
 msgid "Error opening file \"{1}\""
 msgstr "Błąd przy otwieraniu pliku \"{1}\""
 
@@ -751,7 +751,7 @@ msgstr "Błąd podczas zapisywania danych: {1}"
 msgid "Error: problem finding mathtex. Doing nothing…"
 msgstr "Błąd: nie można znaleźć mathtexa. Nie robię nic…"
 
-#: ../src/util/CrashHandler.cpp:174 ../src/util/CrashHandler.cpp:184
+#: ../src/util/CrashHandler.cpp:149 ../src/util/CrashHandler.cpp:159
 msgid "Error: {1}"
 msgstr "Błąd: {1}"
 
@@ -787,7 +787,7 @@ msgstr "Rozszerzenie"
 msgid "File Type"
 msgstr "Typ pliku"
 
-#: ../src/util/Util.cpp:96 ../src/util/Util.cpp:125
+#: ../src/util/Util.cpp:112 ../src/util/Util.cpp:141
 msgid ""
 "File couldn't be opened. You have to do it manually:\n"
 "URL: {1}"
@@ -795,7 +795,7 @@ msgstr ""
 "Nie da się otworzyć dokumentu. Musisz to zrobić ręcznie:\n"
 "URL: {1}"
 
-#: ../src/control/Control.cpp:2344
+#: ../src/control/Control.cpp:2216
 msgid "Filename: {1}"
 msgstr "Nazwa pliku: {1}"
 
@@ -855,6 +855,7 @@ msgstr "Idź do strony"
 msgid "Goto Page"
 msgstr "_Idź do strony"
 
+#: ../src/gui/dialog/PageTemplateDialog.cpp:37
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:380
 msgid "Graph"
 msgstr "Kratka"
@@ -999,6 +1000,7 @@ msgstr "Jasnoniebieski"
 msgid "Light Green"
 msgstr "Jasnozielony"
 
+#: ../src/gui/dialog/PageTemplateDialog.cpp:35
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:368
 msgid "Lined"
 msgstr "Linie"
@@ -1228,6 +1230,7 @@ msgstr "Pióro"
 msgid "Pen _Options"
 msgstr "_Opcje pióra"
 
+#: ../src/gui/dialog/PageTemplateDialog.cpp:34
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:362
 msgid "Plain"
 msgstr "Bez tła"
@@ -1270,7 +1273,7 @@ msgstr "Powtórz"
 msgid "Redo: "
 msgstr "Powtórz: "
 
-#: ../src/control/Control.cpp:2396
+#: ../src/control/Control.cpp:2268
 msgid "Remove PDF Background"
 msgstr "Usuń PDF w tle"
 
@@ -1290,6 +1293,7 @@ msgstr "Rozdzielczość:"
 msgid "Ru_ler"
 msgstr "_Linijka"
 
+#: ../src/gui/dialog/PageTemplateDialog.cpp:36
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:374
 msgid "Ruled"
 msgstr "Linie z marginesem"
@@ -1302,16 +1306,16 @@ msgstr "Linijka"
 msgid "Ruler & Stroke Reco."
 msgstr "Linijka i rozpozn. kształtów"
 
-#: ../src/control/jobs/SaveJob.cpp:16 ../src/control/Control.cpp:2861
+#: ../src/control/jobs/SaveJob.cpp:16 ../src/control/Control.cpp:2733
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:289
 msgid "Save"
 msgstr "Zapisz"
 
-#: ../src/control/Control.cpp:2898
+#: ../src/control/Control.cpp:2770
 msgid "Save As"
 msgstr "Zapisz jako"
 
-#: ../src/control/Control.cpp:2679
+#: ../src/control/Control.cpp:2551
 msgid "Save File"
 msgstr "Zapisz plik"
 
@@ -1323,7 +1327,7 @@ msgstr "Skaluj"
 msgid "Search"
 msgstr "Wyszukaj"
 
-#: ../ui/pageTemplate.glade:176
+#: ../ui/pageTemplate.glade:202
 #, fuzzy
 msgid "Select Background Color"
 msgstr "Wybierz kolor"
@@ -1360,11 +1364,11 @@ msgstr "Wybierz prostokąt"
 msgid "Select Region"
 msgstr "Wybierz obszar"
 
-#: ../src/control/Control.cpp:2395
+#: ../src/control/Control.cpp:2267
 msgid "Select another PDF"
 msgstr "Wybierz inny PDF"
 
-#: ../src/gui/dialog/SelectBackgroundColorDialog.cpp:157
+#: ../src/gui/dialog/SelectBackgroundColorDialog.cpp:144
 #, fuzzy
 msgid "Select background color"
 msgstr "Wybierz kolor"
@@ -1463,7 +1467,7 @@ msgstr "Status SYMBOL ZASTĘPCZY"
 msgid "Stroke recognizer"
 msgstr "Rozpoznawanie kształtów"
 
-#: ../src/util/CrashHandler.cpp:188
+#: ../src/util/CrashHandler.cpp:163
 msgid "Successfully saved document to \"{1}\""
 msgstr "Zapisano dokument do \"{1}\""
 
@@ -1525,7 +1529,7 @@ msgstr "Tekst nie został znaleziony"
 msgid "Text not found, searched on all pages"
 msgstr "Tekst nie został znaleziony, szukano na wszystkich stronach"
 
-#: ../src/control/Control.cpp:980
+#: ../src/control/Control.cpp:974
 msgid ""
 "The Toolbarconfiguration \"{1}\" is predefined, would you create a copy to "
 "edit?"
@@ -1533,11 +1537,11 @@ msgstr ""
 "Konfiguracja paska narzędzi \"{1}\" jest predefiniowana. Czy stworzyć "
 "możliwą do edycji kopię?"
 
-#: ../src/control/Control.cpp:2392
+#: ../src/control/Control.cpp:2264
 msgid "The attached background PDF could not be found."
 msgstr "Załączony PDF w tle nie został znaleziony."
 
-#: ../src/control/Control.cpp:2393
+#: ../src/control/Control.cpp:2265
 msgid "The background PDF could not be found."
 msgstr "PDF w tle nie został znaleziony."
 
@@ -1578,7 +1582,7 @@ msgstr ""
 "Znaleziono raport błędu programu Xournal++. Prosimy o jego wysłanie, w celu "
 "umożliwienia naprawy."
 
-#: ../src/control/Control.cpp:875
+#: ../src/control/Control.cpp:869
 msgid "There was an error displaying help: {1}"
 msgstr "Błąd podczas wyświetlania pomocy: {1}"
 
@@ -1596,11 +1600,11 @@ msgstr "Grubość"
 msgid "Thin"
 msgstr "Cienki"
 
-#: ../src/control/Control.cpp:2859
+#: ../src/control/Control.cpp:2731
 msgid "This document is not saved yet."
 msgstr "Dokument nie został jeszcze zapisany."
 
-#: ../src/control/tools/ImageHandler.cpp:57 ../src/control/Control.cpp:1645
+#: ../src/control/tools/ImageHandler.cpp:57 ../src/control/Control.cpp:1520
 msgid "This image could not be loaded. Error message: {1}"
 msgstr "Nie można otworzyć obrazu. Wiadomość błędu: {1}"
 
@@ -1624,7 +1628,7 @@ msgstr "Znaleziono pasek narzędzi: {1}"
 msgid "Toolbars"
 msgstr "Paski narzędzi"
 
-#: ../src/util/CrashHandler.cpp:163
+#: ../src/util/CrashHandler.cpp:138
 msgid "Trying to emergency save the current open document…"
 msgstr "Próba awaryjnego zapisu aktualnie otwartego dokumentu…"
 
@@ -1677,7 +1681,7 @@ msgstr "Nieznany typ pixmap::domain: {1}"
 msgid "Unknown stroke type: \"{1}\", assuming pen"
 msgstr "Nieznany rodzaj kreski: \"{1}\", zakładam, że to pióro"
 
-#: ../src/control/Control.cpp:2755
+#: ../src/control/Control.cpp:2627
 msgid "Unsaved Document"
 msgstr "Niezapisany dokument"
 
@@ -1736,7 +1740,7 @@ msgstr "Nieprawidłowa liczba punktów: {1}, spodziewane {2}"
 msgid "XML Parser error: {1}"
 msgstr "Błąd parsera XML: {1}"
 
-#: ../src/control/stockdlg/XojOpenDlg.cpp:23 ../src/control/Control.cpp:2686
+#: ../src/control/stockdlg/XojOpenDlg.cpp:23 ../src/control/Control.cpp:2558
 msgid "Xournal files"
 msgstr "Pliki Xournala"
 
@@ -1749,7 +1753,7 @@ msgstr "Ustawienia Xournal++"
 msgid "Yellow"
 msgstr "Żółty"
 
-#: ../src/control/Control.cpp:1487
+#: ../src/control/Control.cpp:1362
 msgid ""
 "You don't have any PDF pages to select from. Cancel operation.\n"
 "Please select another background type: Menu \"Journal\" / \"Insert Page Type"
@@ -1758,7 +1762,7 @@ msgstr ""
 "Nie ma stron PDF do wyboru. Anuluj tą operację.\n"
 "Proszę wybrać inny rodzaj tła: Menu Dziennik → Tło papieru."
 
-#: ../src/control/Control.cpp:1676
+#: ../src/control/Control.cpp:1551
 msgid ""
 "You don't have any PDF pages to select from. Cancel operation.\n"
 "Please select another background type: Menu \"Journal\" → \"Insert Page Type"
@@ -1819,7 +1823,7 @@ msgstr "_Adnotuj PDF"
 
 #: ../src/control/stockdlg/ImageOpenDlg.cpp:11
 #: ../src/control/stockdlg/XojOpenDlg.cpp:13
-#: ../src/control/jobs/PdfExportJob.cpp:29 ../src/control/Control.cpp:2680
+#: ../src/control/jobs/PdfExportJob.cpp:29 ../src/control/Control.cpp:2552
 #, fuzzy
 msgid "_Cancel"
 msgstr "Anuluj"
@@ -1938,7 +1942,7 @@ msgstr "_Poprzednia strona"
 msgid "_Ruled"
 msgstr "Linie z _marginesem"
 
-#: ../src/control/jobs/PdfExportJob.cpp:30 ../src/control/Control.cpp:2681
+#: ../src/control/jobs/PdfExportJob.cpp:30 ../src/control/Control.cpp:2553
 #, fuzzy
 msgid "_Save"
 msgstr "Zapisz"
@@ -2000,7 +2004,7 @@ msgstr "_bardzo cienkie"
 msgid "_whiteout"
 msgstr "_wybielanie"
 
-#: ../ui/pageTemplate.glade:150
+#: ../ui/pageTemplate.glade:176
 #, fuzzy
 msgid "change"
 msgstr "Zakres"
@@ -2025,6 +2029,11 @@ msgstr "gumka"
 msgid "keyboard"
 msgstr ""
 
+#: ../ui/pageTemplate.glade:47
+#, fuzzy
+msgid "load from file"
+msgstr "Wczytaj plik"
+
 #: ../src/util/DeviceListHelper.cpp:74
 msgid "mouse"
 msgstr "myszka"
@@ -2032,6 +2041,11 @@ msgstr "myszka"
 #: ../src/util/DeviceListHelper.cpp:78
 msgid "pen"
 msgstr "pióro"
+
+#: ../ui/pageTemplate.glade:34
+#, fuzzy
+msgid "save to file"
+msgstr "Zapisz plik"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:259
 msgid "standard"

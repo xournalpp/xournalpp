@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp 1.0.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-11-18 10:31+0100\n"
+"POT-Creation-Date: 2018-11-18 19:31+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -42,7 +42,7 @@ msgstr ""
 msgid " text"
 msgstr ""
 
-#: ../src/control/settings/Settings.cpp:85
+#: ../src/control/settings/Settings.cpp:86
 msgid "%F-Note-%H-%M.xoj"
 msgstr ""
 
@@ -106,8 +106,8 @@ msgstr ""
 msgid "By extension"
 msgstr ""
 
-#: ../src/control/Control.cpp:2397 ../src/control/Control.cpp:2863
-#: ../src/control/Control.cpp:2900 ../src/control/XournalMain.cpp:103
+#: ../src/control/Control.cpp:2269 ../src/control/Control.cpp:2735
+#: ../src/control/Control.cpp:2772 ../src/control/XournalMain.cpp:103
 msgid "Cancel"
 msgstr ""
 
@@ -140,7 +140,7 @@ msgstr ""
 msgid "Contents"
 msgstr ""
 
-#: ../src/control/Control.cpp:1010 ../src/control/Control.cpp:1018
+#: ../src/control/Control.cpp:1004 ../src/control/Control.cpp:1012
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:295
 msgid "Copy"
 msgstr ""
@@ -192,7 +192,7 @@ msgstr ""
 msgid "Could not remove tool item {1} from Toolbar {2} on position {3}"
 msgstr ""
 
-#: ../src/control/Control.cpp:3361
+#: ../src/control/Control.cpp:3233
 msgid "Could not retrieve LaTeX image file: {1}"
 msgstr ""
 
@@ -210,7 +210,7 @@ msgstr ""
 msgid "Could not write background \"{1}\". Continuing anyway."
 msgstr ""
 
-#: ../src/gui/dialog/FormatDialog.cpp:112
+#: ../src/gui/dialog/FormatDialog.cpp:98
 msgid "Custom"
 msgstr ""
 
@@ -258,11 +258,11 @@ msgstr ""
 msgid "Disable drawing for this device"
 msgstr ""
 
-#: ../src/control/Control.cpp:2862 ../src/control/Control.cpp:2899
+#: ../src/control/Control.cpp:2734 ../src/control/Control.cpp:2771
 msgid "Discard"
 msgstr ""
 
-#: ../src/control/Control.cpp:2896
+#: ../src/control/Control.cpp:2768
 msgid "Document file was removed."
 msgstr ""
 
@@ -337,7 +337,7 @@ msgstr ""
 msgid "Eraser type"
 msgstr ""
 
-#: ../src/control/Control.cpp:2557
+#: ../src/control/Control.cpp:2429
 msgid ""
 "Error annotate PDF file \"{1}\"\n"
 "{2}"
@@ -347,7 +347,7 @@ msgstr ""
 msgid "Error loading glade file \"{1}\" (try to load \"{2}\")"
 msgstr ""
 
-#: ../src/control/Control.cpp:2424
+#: ../src/control/Control.cpp:2296
 msgid "Error opening file \"{1}\""
 msgstr ""
 
@@ -375,7 +375,7 @@ msgstr ""
 msgid "Error: problem finding mathtex. Doing nothing…"
 msgstr ""
 
-#: ../src/util/CrashHandler.cpp:174 ../src/util/CrashHandler.cpp:184
+#: ../src/util/CrashHandler.cpp:149 ../src/util/CrashHandler.cpp:159
 msgid "Error: {1}"
 msgstr ""
 
@@ -401,13 +401,13 @@ msgstr ""
 msgid "File Type"
 msgstr ""
 
-#: ../src/util/Util.cpp:96 ../src/util/Util.cpp:125
+#: ../src/util/Util.cpp:112 ../src/util/Util.cpp:141
 msgid ""
 "File couldn't be opened. You have to do it manually:\n"
 "URL: {1}"
 msgstr ""
 
-#: ../src/control/Control.cpp:2344
+#: ../src/control/Control.cpp:2216
 msgid "Filename: {1}"
 msgstr ""
 
@@ -443,6 +443,7 @@ msgstr ""
 msgid "Go to top layer"
 msgstr ""
 
+#: ../src/gui/dialog/PageTemplateDialog.cpp:37
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:380
 msgid "Graph"
 msgstr ""
@@ -537,6 +538,7 @@ msgstr ""
 msgid "Light Green"
 msgstr ""
 
+#: ../src/gui/dialog/PageTemplateDialog.cpp:35
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:368
 msgid "Lined"
 msgstr ""
@@ -682,6 +684,7 @@ msgstr ""
 msgid "Pen"
 msgstr ""
 
+#: ../src/gui/dialog/PageTemplateDialog.cpp:34
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:362
 msgid "Plain"
 msgstr ""
@@ -712,7 +715,7 @@ msgstr ""
 msgid "Redo: "
 msgstr ""
 
-#: ../src/control/Control.cpp:2396
+#: ../src/control/Control.cpp:2268
 msgid "Remove PDF Background"
 msgstr ""
 
@@ -724,6 +727,7 @@ msgstr ""
 msgid "Removed tool item {1} from Toolbar {2} ID {3}"
 msgstr ""
 
+#: ../src/gui/dialog/PageTemplateDialog.cpp:36
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:374
 msgid "Ruled"
 msgstr ""
@@ -736,16 +740,16 @@ msgstr ""
 msgid "Ruler & Stroke Reco."
 msgstr ""
 
-#: ../src/control/jobs/SaveJob.cpp:16 ../src/control/Control.cpp:2861
+#: ../src/control/jobs/SaveJob.cpp:16 ../src/control/Control.cpp:2733
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:289
 msgid "Save"
 msgstr ""
 
-#: ../src/control/Control.cpp:2898
+#: ../src/control/Control.cpp:2770
 msgid "Save As"
 msgstr ""
 
-#: ../src/control/Control.cpp:2679
+#: ../src/control/Control.cpp:2551
 msgid "Save File"
 msgstr ""
 
@@ -781,11 +785,11 @@ msgstr ""
 msgid "Select Region"
 msgstr ""
 
-#: ../src/control/Control.cpp:2395
+#: ../src/control/Control.cpp:2267
 msgid "Select another PDF"
 msgstr ""
 
-#: ../src/gui/dialog/SelectBackgroundColorDialog.cpp:157
+#: ../src/gui/dialog/SelectBackgroundColorDialog.cpp:144
 msgid "Select background color"
 msgstr ""
 
@@ -842,7 +846,7 @@ msgstr ""
 msgid "Stroke recognizer"
 msgstr ""
 
-#: ../src/util/CrashHandler.cpp:188
+#: ../src/util/CrashHandler.cpp:163
 msgid "Successfully saved document to \"{1}\""
 msgstr ""
 
@@ -884,17 +888,17 @@ msgstr ""
 msgid "Text not found, searched on all pages"
 msgstr ""
 
-#: ../src/control/Control.cpp:980
+#: ../src/control/Control.cpp:974
 msgid ""
 "The Toolbarconfiguration \"{1}\" is predefined, would you create a copy to "
 "edit?"
 msgstr ""
 
-#: ../src/control/Control.cpp:2392
+#: ../src/control/Control.cpp:2264
 msgid "The attached background PDF could not be found."
 msgstr ""
 
-#: ../src/control/Control.cpp:2393
+#: ../src/control/Control.cpp:2265
 msgid "The background PDF could not be found."
 msgstr ""
 
@@ -925,7 +929,7 @@ msgid ""
 "may be fixed."
 msgstr ""
 
-#: ../src/control/Control.cpp:875
+#: ../src/control/Control.cpp:869
 msgid "There was an error displaying help: {1}"
 msgstr ""
 
@@ -943,11 +947,11 @@ msgstr ""
 msgid "Thin"
 msgstr ""
 
-#: ../src/control/Control.cpp:2859
+#: ../src/control/Control.cpp:2731
 msgid "This document is not saved yet."
 msgstr ""
 
-#: ../src/control/tools/ImageHandler.cpp:57 ../src/control/Control.cpp:1645
+#: ../src/control/tools/ImageHandler.cpp:57 ../src/control/Control.cpp:1520
 msgid "This image could not be loaded. Error message: {1}"
 msgstr ""
 
@@ -967,7 +971,7 @@ msgstr ""
 msgid "Toolbars"
 msgstr ""
 
-#: ../src/util/CrashHandler.cpp:163
+#: ../src/util/CrashHandler.cpp:138
 msgid "Trying to emergency save the current open document…"
 msgstr ""
 
@@ -1020,7 +1024,7 @@ msgstr ""
 msgid "Unknown stroke type: \"{1}\", assuming pen"
 msgstr ""
 
-#: ../src/control/Control.cpp:2755
+#: ../src/control/Control.cpp:2627
 msgid "Unsaved Document"
 msgstr ""
 
@@ -1061,7 +1065,7 @@ msgstr ""
 msgid "XML Parser error: {1}"
 msgstr ""
 
-#: ../src/control/stockdlg/XojOpenDlg.cpp:23 ../src/control/Control.cpp:2686
+#: ../src/control/stockdlg/XojOpenDlg.cpp:23 ../src/control/Control.cpp:2558
 msgid "Xournal files"
 msgstr ""
 
@@ -1070,14 +1074,14 @@ msgstr ""
 msgid "Yellow"
 msgstr ""
 
-#: ../src/control/Control.cpp:1487
+#: ../src/control/Control.cpp:1362
 msgid ""
 "You don't have any PDF pages to select from. Cancel operation.\n"
 "Please select another background type: Menu \"Journal\" / \"Insert Page Type"
 "\"."
 msgstr ""
 
-#: ../src/control/Control.cpp:1676
+#: ../src/control/Control.cpp:1551
 msgid ""
 "You don't have any PDF pages to select from. Cancel operation.\n"
 "Please select another background type: Menu \"Journal\" → \"Insert Page Type"
@@ -1121,7 +1125,7 @@ msgstr ""
 
 #: ../src/control/stockdlg/ImageOpenDlg.cpp:11
 #: ../src/control/stockdlg/XojOpenDlg.cpp:13
-#: ../src/control/jobs/PdfExportJob.cpp:29 ../src/control/Control.cpp:2680
+#: ../src/control/jobs/PdfExportJob.cpp:29 ../src/control/Control.cpp:2552
 msgid "_Cancel"
 msgstr ""
 
@@ -1130,7 +1134,7 @@ msgstr ""
 msgid "_Open"
 msgstr ""
 
-#: ../src/control/jobs/PdfExportJob.cpp:30 ../src/control/Control.cpp:2681
+#: ../src/control/jobs/PdfExportJob.cpp:30 ../src/control/Control.cpp:2553
 msgid "_Save"
 msgstr ""
 
@@ -1266,11 +1270,11 @@ msgstr ""
 msgid "<b>Autosave</b>"
 msgstr ""
 
-#: ../ui/pageTemplate.glade:127
+#: ../ui/pageTemplate.glade:153
 msgid "<b>Background Color</b>"
 msgstr ""
 
-#: ../ui/pageTemplate.glade:114
+#: ../ui/pageTemplate.glade:140
 msgid "<b>Background</b>"
 msgstr ""
 
@@ -1278,13 +1282,13 @@ msgstr ""
 msgid "<b>Color</b>"
 msgstr ""
 
-#: ../ui/pageTemplate.glade:78
+#: ../ui/pageTemplate.glade:104
 msgid ""
 "<b>Configure Xournal++ Template Page</b>\n"
 "This settings will be used if you create a new document"
 msgstr ""
 
-#: ../ui/pageTemplate.glade:188
+#: ../ui/pageTemplate.glade:214
 msgid ""
 "<b>Copy last page</b>\n"
 "Use the settings above\n"
@@ -1339,7 +1343,7 @@ msgstr ""
 msgid "<b>Middle Mouse Button</b>"
 msgstr ""
 
-#: ../ui/pageTemplate.glade:100
+#: ../ui/pageTemplate.glade:126
 msgid "<b>Page size</b>"
 msgstr ""
 
@@ -1490,7 +1494,7 @@ msgstr ""
 msgid "Configure Page Template"
 msgstr ""
 
-#: ../ui/pageTemplate.glade:201
+#: ../ui/pageTemplate.glade:227
 msgid "Copy last page settings"
 msgstr ""
 
@@ -1700,7 +1704,7 @@ msgstr ""
 msgid "Ru_ler"
 msgstr ""
 
-#: ../ui/pageTemplate.glade:176
+#: ../ui/pageTemplate.glade:202
 msgid "Select Background Color"
 msgstr ""
 
@@ -1958,12 +1962,20 @@ msgstr ""
 msgid "_whiteout"
 msgstr ""
 
-#: ../ui/pageTemplate.glade:150
+#: ../ui/pageTemplate.glade:176
 msgid "change"
 msgstr ""
 
 #: ../ui/export.glade:114
 msgid "dpi"
+msgstr ""
+
+#: ../ui/pageTemplate.glade:47
+msgid "load from file"
+msgstr ""
+
+#: ../ui/pageTemplate.glade:34
+msgid "save to file"
 msgstr ""
 
 #: ../ui/main.glade:901
