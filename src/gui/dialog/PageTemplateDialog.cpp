@@ -10,7 +10,8 @@
 
 PageTemplateDialog::PageTemplateDialog(GladeSearchpath* gladeSearchPath, Settings* settings)
  : GladeGui(gladeSearchPath, "pageTemplate.glade", "templateDialog"),
-   settings(settings)
+   settings(settings),
+   saved(false)
 {
 	XOJ_INIT_TYPE(PageTemplateDialog);
 
@@ -41,6 +42,18 @@ PageTemplateDialog::PageTemplateDialog(GladeSearchpath* gladeSearchPath, Setting
 	{
 		gtk_combo_box_text_append_text(cbBg, format.name.c_str());
 	}
+
+	int activeFormat = 0;
+	for (int i = 0; i < formatList.size(); i++)
+	{
+		if (formatList[i].type == model.getBackgroundType())
+		{
+			activeFormat = i;
+			break;
+		}
+	}
+	gtk_combo_box_set_active(GTK_COMBO_BOX(cbBg), activeFormat);
+	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(get("cbCopyLastPage")), model.isCopyLastPageSettings());
 }
 
 PageTemplateDialog::~PageTemplateDialog()
@@ -54,17 +67,7 @@ void PageTemplateDialog::updatePageSize()
 {
 	XOJ_CHECK_TYPE(PageTemplateDialog);
 
-	string unit = model.getSizeUnit();
-
-	const FormatUnits* formatUnit = &XOJ_UNITS[0];
-	for (int i = 0; i < XOJ_UNIT_COUNT; i++)
-	{
-		if (unit == XOJ_UNITS[i].name)
-		{
-			formatUnit = &XOJ_UNITS[i];
-			break;
-		}
-	}
+	const FormatUnits* formatUnit = &XOJ_UNITS[settings->getSizeUnitIndex()];
 
 	char buffer[64];
 	sprintf(buffer, "%0.2lf", model.getPageWidth() / formatUnit->scale);
@@ -100,6 +103,16 @@ void PageTemplateDialog::showPageSizeDialog()
 	delete dlg;
 }
 
+/**
+ * The dialog was confirmed / saved
+ */
+bool PageTemplateDialog::isSaved()
+{
+	XOJ_CHECK_TYPE(PageTemplateDialog);
+
+	return saved;
+}
+
 void PageTemplateDialog::show(GtkWindow* parent)
 {
 	XOJ_CHECK_TYPE(PageTemplateDialog);
@@ -115,7 +128,11 @@ void PageTemplateDialog::show(GtkWindow* parent)
 		gtk_color_chooser_get_rgba(GTK_COLOR_CHOOSER(get("cbBackgroundButton")), &color);
 		model.setBackgroundColor(Util::gdkrgba_to_hex(color));
 
+		int activeIndex = gtk_combo_box_get_active(GTK_COMBO_BOX(get("cbBackgroundFormat")));
+		model.setBackgroundType(formatList[activeIndex].type);
+
 		settings->setPageTemplate(model.toString());
+		this->saved = true;
 	}
 
 	gtk_widget_hide(this->window);

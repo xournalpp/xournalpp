@@ -36,6 +36,11 @@ public:
 public:
 	virtual void show(GtkWindow* parent);
 
+	/**
+	 * The dialog was confirmed / saved
+	 */
+	bool isSaved();
+
 private:
 	void showPageSizeDialog();
 	void updatePageSize();
@@ -48,4 +53,9 @@ private:
 	PageTemplateSettings model;
 
 	vector<PageFormat> formatList;
+
+	/**
+	 * The dialog was confirmed / saved
+	 */
+	bool saved;
 };

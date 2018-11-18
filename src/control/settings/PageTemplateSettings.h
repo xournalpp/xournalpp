@@ -11,6 +11,9 @@
 
 #pragma once
 
+#include "control/Tool.h"
+#include "model/BackgroundType.h"
+
 #include <XournalType.h>
 
 #include <string>
@@ -39,17 +42,18 @@ public:
 	bool isCopyLastPageSettings();
 	void setCopyLastPageSettings(bool copyLastPageSettings);
 
-	int getPageWidth();
-	void setPageWidth(int pageWidth);
+	double getPageWidth();
+	void setPageWidth(double pageWidth);
 
-	int getPageHeight();
-	void setPageHeight(int pageHeight);
-
-	string getSizeUnit();
-	void setSizeUnit(string sizeUnit);
+	double getPageHeight();
+	void setPageHeight(double pageHeight);
 
 	int getBackgroundColor();
 	void setBackgroundColor(int backgroundColor);
+
+	BackgroundType getBackgroundType();
+	PageInsertType getPageInsertType();
+	void setBackgroundType(BackgroundType backgroundType);
 
 private:
 	XOJ_TYPE_ATTRIB;
@@ -59,8 +63,8 @@ private:
 	 */
 	bool copyLastPageSettings;
 
-	int pageWidth;
-	int pageHeight;
+	double pageWidth;
+	double pageHeight;
 
 	/**
 	 * Background color in RGB
@@ -68,7 +72,7 @@ private:
 	int backgroundColor;
 
 	/**
-	 * Unit, see XOJ_UNITS
+	 * Background type
 	 */
-	string sizeUnit;
+	BackgroundType backgroundType;
 };

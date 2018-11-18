@@ -1,6 +1,7 @@
 #include "Settings.h"
 
 #include "ButtonConfig.h"
+#include "model/FormatDefinitions.h"
 
 #include <config.h>
 #include <i18n.h>
@@ -105,17 +106,13 @@ void Settings::loadDefault()
 	this->fullscreenHideElements = "mainMenubar";
 	this->presentationHideElements = "mainMenubar,sidebarContents";
 
-	this->pageInsertType = PAGE_INSERT_TYPE_COPY;
-	this->pageBackgroundColor = 0xffffff; //white
-
 	this->pdfPageCacheSize = 10;
 
 	this->selectionColor = 0xff0000;
 
 	this->eventCompression = true;
 
-	// TODO !!!!!!!!!!!!!!!!!!!!!
-	this->pageTemplate = "aaaaaaaaaaaaaaaaaaaaaaaaaaaa\nbbbbbbbbbbbbbbbbbbbbbbbbbbbb\n";
+	this->pageTemplate = "xoj/template\ncopyLastPageSettings=true\nsize=595.275591x841.889764\nbackgroundType=lined\nbackgroundColor=#ffffff\n";
 
 	inTransaction = false;
 }
@@ -350,6 +347,10 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur)
 	{
 		this->pageTemplate = (const char*) value;
 	}
+	else if (xmlStrcmp(name, (const xmlChar*) "sizeUnit") == 0)
+	{
+		this->sizeUnit = (const char*) value;
+	}
 	else if (xmlStrcmp(name, (const xmlChar*) "autosaveEnabled") == 0)
 	{
 		this->autosaveEnabled = xmlStrcmp(value, (const xmlChar*) "true") ? false : true;
@@ -365,14 +366,6 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur)
 	else if (xmlStrcmp(name, (const xmlChar*) "presentationHideElements") == 0)
 	{
 		this->presentationHideElements = (const char*) value;
-	}
-	else if (xmlStrcmp(name, (const xmlChar*) "pageInsertType") == 0)
-	{
-		this->pageInsertType = pageInsertTypeFromString((const char*) value);
-	}
-	else if (xmlStrcmp(name, (const xmlChar*) "pageBackgroundColor") == 0)
-	{
-		this->pageBackgroundColor = g_ascii_strtoll((const char*) value, NULL, 10);
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "pdfPageCacheSize") == 0)
 	{
@@ -846,13 +839,9 @@ void Settings::save()
 	WRITE_BOOL_PROP(addVerticalSpace);
 
 	WRITE_BOOL_PROP(enableLeafEnterWorkaround);
-	WRITE_COMMENT("If Xournal crashes if you e.g. unplug your mouse set this to true. "
+	WRITE_COMMENT("If Xournal++ crashes if you e.g. unplug your mouse set this to true. "
 				  "If you have input problems, you can turn it of with false.");
 
-	string pageInsertType = pageInsertTypeToString(this->pageInsertType);
-	WRITE_STRING_PROP(pageInsertType);
-
-	WRITE_INT_PROP(pageBackgroundColor);
 	WRITE_INT_PROP(selectionColor);
 
 	WRITE_INT_PROP(pdfPageCacheSize);
@@ -867,6 +856,8 @@ void Settings::save()
 
 	WRITE_COMMENT("Config for new pages");
 	WRITE_STRING_PROP(pageTemplate);
+
+	WRITE_STRING_PROP(sizeUnit);
 
 	xmlNodePtr xmlFont;
 	xmlFont = xmlNewChild(root, NULL, (const xmlChar*) "property", NULL);
@@ -1195,22 +1186,100 @@ string Settings::getVisiblePageFormats()
 
 bool Settings::isEventCompression()
 {
+	XOJ_CHECK_TYPE(Settings);
+
 	return this->eventCompression;
 }
 
 void Settings::setEventCompression(bool enabled)
 {
+	XOJ_CHECK_TYPE(Settings);
+
+	if (this->eventCompression == enabled)
+	{
+		return;
+	}
+
 	this->eventCompression = enabled;
+
+	save();
 }
 
 string Settings::getPageTemplate()
 {
+	XOJ_CHECK_TYPE(Settings);
+
 	return this->pageTemplate;
 }
 
 void Settings::setPageTemplate(string pageTemplate)
 {
+	XOJ_CHECK_TYPE(Settings);
+
+	if (this->pageTemplate == pageTemplate)
+	{
+		return;
+	}
+
 	this->pageTemplate = pageTemplate;
+
+	save();
+}
+
+string Settings::getSizeUnit()
+{
+	XOJ_CHECK_TYPE(Settings);
+
+	return sizeUnit;
+}
+
+void Settings::setSizeUnit(string sizeUnit)
+{
+	XOJ_CHECK_TYPE(Settings);
+
+	if (this->sizeUnit == sizeUnit)
+	{
+		return;
+	}
+
+	this->sizeUnit = sizeUnit;
+
+	save();
+}
+
+/**
+ * Get size index in XOJ_UNITS
+ */
+int Settings::getSizeUnitIndex()
+{
+	XOJ_CHECK_TYPE(Settings);
+
+	string unit = getSizeUnit();
+
+	for (int i = 0; i < XOJ_UNIT_COUNT; i++)
+	{
+		if (unit == XOJ_UNITS[i].name)
+		{
+			return i;
+		}
+	}
+
+	return 0;
+}
+
+/**
+ * Set size index in XOJ_UNITS
+ */
+void Settings::setSizeUnitIndex(int sizeUnitId)
+{
+	XOJ_CHECK_TYPE(Settings);
+
+	if (sizeUnitId < 0 || sizeUnitId >= XOJ_UNIT_COUNT)
+	{
+		sizeUnitId = 0;
+	}
+
+	setSizeUnit(XOJ_UNITS[sizeUnitId].name);
 }
 
 void Settings::setShowTwoPages(bool showTwoPages)
@@ -1305,6 +1374,13 @@ void Settings::setDisplayDpi(int dpi)
 	XOJ_CHECK_TYPE(Settings);
 
 	this->displayDpi = dpi;
+
+	if (this->displayDpi == dpi)
+	{
+		return;
+	}
+	this->displayDpi = dpi;
+	save();
 }
 
 int Settings::getDisplayDpi()
@@ -1528,44 +1604,6 @@ void Settings::setPresentationHideElements(string elements)
 	save();
 }
 
-PageInsertType Settings::getPageInsertType()
-{
-	XOJ_CHECK_TYPE(Settings);
-
-	return this->pageInsertType;
-}
-
-void Settings::setPageInsertType(PageInsertType type)
-{
-	XOJ_CHECK_TYPE(Settings);
-
-	if (this->pageInsertType == type)
-	{
-		return;
-	}
-	this->pageInsertType = type;
-	save();
-}
-
-int Settings::getPageBackgroundColor()
-{
-	XOJ_CHECK_TYPE(Settings);
-
-	return this->pageBackgroundColor;
-}
-
-void Settings::setPageBackgroundColor(int color)
-{
-	XOJ_CHECK_TYPE(Settings);
-
-	if (this->pageBackgroundColor == color)
-	{
-		return;
-	}
-	this->pageBackgroundColor = color;
-	save();
-}
-
 int Settings::getSelectionColor()
 {
 	XOJ_CHECK_TYPE(Settings);
@@ -1616,6 +1654,7 @@ void Settings::setFont(const XojFont& font)
 	XOJ_CHECK_TYPE(Settings);
 
 	this->font = font;
+	save();
 }
 
 //////////////////////////////////////////////////

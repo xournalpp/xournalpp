@@ -283,27 +283,3 @@ EraserType eraserTypeFromString(string type)
 	else							 return ERASER_TYPE_NONE;
 }
 
-string pageInsertTypeToString(PageInsertType type)
-{
-	switch (type)
-	{
-	case PAGE_INSERT_TYPE_PLAIN:		  return "plain";
-	case PAGE_INSERT_TYPE_LINED:		  return "lined";
-	case PAGE_INSERT_TYPE_RULED:		  return "ruled";
-	case PAGE_INSERT_TYPE_GRAPH:		  return "graph";
-	case PAGE_INSERT_TYPE_COPY:			  return "copyPage";
-	case PAGE_INSERT_TYPE_PDF_BACKGROUND: return "pdfBackground";
-	default:							  return "";
-	}
-}
-
-PageInsertType pageInsertTypeFromString(string type)
-{
-	if (type == "plain")			  return PAGE_INSERT_TYPE_PLAIN;
-	else if (type == "lined")		  return PAGE_INSERT_TYPE_LINED;
-	else if (type == "ruled")		  return PAGE_INSERT_TYPE_RULED;
-	else if (type == "graph")		  return PAGE_INSERT_TYPE_GRAPH;
-	else if (type == "copyPage")	  return PAGE_INSERT_TYPE_COPY;
-	else if (type == "pdfBackground") return PAGE_INSERT_TYPE_PDF_BACKGROUND;
-	else							  return PAGE_INSERT_TYPE_COPY;
-}
