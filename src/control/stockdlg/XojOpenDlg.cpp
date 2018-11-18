@@ -117,13 +117,17 @@ path XojOpenDlg::showOpenDialog(bool pdf, bool& attachPdf)
 		GtkFileFilter* filterSupported = gtk_file_filter_new();
 		gtk_file_filter_set_name(filterSupported, _C("Supported files"));
 		gtk_file_filter_add_pattern(filterSupported, "*.xoj");
-		gtk_file_filter_add_pattern(filterSupported, "*.xojt");
+
+		// TODO: Implement template loading from file open
+		// gtk_file_filter_add_pattern(filterSupported, "*.xojt");
 		gtk_file_filter_add_pattern(filterSupported, "*.pdf");
 		gtk_file_filter_add_pattern(filterSupported, "*.PDF");
 		gtk_file_chooser_add_filter(GTK_FILE_CHOOSER(dialog), filterSupported);
 
 		addFilterXoj();
-		addFilterXojt();
+
+		// TODO: Implement template loading from file open
+		// addFilterXojt();
 	}
 
 	addFilterPdf();
