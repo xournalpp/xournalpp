@@ -227,5 +227,8 @@ XOJ_DECLARE_TYPE(PdfElementView, 216);
 XOJ_DECLARE_TYPE(MainWindowToolbarMenu, 216);
 XOJ_DECLARE_TYPE(LastSelectedTool, 217);
 XOJ_DECLARE_TYPE(RepaintWidgetHandler, 218);
+XOJ_DECLARE_TYPE(PageTemplateDialog, 219);
+XOJ_DECLARE_TYPE(PageTemplateSettings, 220);
+XOJ_DECLARE_TYPE(XojOpenDlg, 221);
 
 //XOJ_DECLARE_TYPE(XXXXXXXXXXXXXXXX, 206);

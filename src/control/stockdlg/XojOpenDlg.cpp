@@ -6,41 +6,18 @@
 
 #include <gio/gio.h>
 
-path XojOpenDlg::showOpenDialog(GtkWindow* win, Settings* settings, bool pdf, bool& attachPdf)
-{
 
-	GtkWidget* dialog = gtk_file_chooser_dialog_new(_C("Open file"), win, GTK_FILE_CHOOSER_ACTION_OPEN,
-													_C("_Cancel"), GTK_RESPONSE_CANCEL,
-													_C("_Open"), GTK_RESPONSE_OK, NULL);
+XojOpenDlg::XojOpenDlg(GtkWindow* win, Settings* settings)
+ : win(win),
+   settings(settings)
+{
+	XOJ_INIT_TYPE(XojOpenDlg);
+
+	dialog = gtk_file_chooser_dialog_new(_C("Open file"), win, GTK_FILE_CHOOSER_ACTION_OPEN,
+										 _C("_Cancel"), GTK_RESPONSE_CANCEL,
+										 _C("_Open"), GTK_RESPONSE_OK, NULL);
 
 	gtk_file_chooser_set_local_only(GTK_FILE_CHOOSER(dialog), true);
-
-	GtkFileFilter* filterAll = gtk_file_filter_new();
-	gtk_file_filter_set_name(filterAll, _C("All files"));
-	gtk_file_filter_add_pattern(filterAll, "*");
-
-	GtkFileFilter* filterXoj = gtk_file_filter_new();
-	gtk_file_filter_set_name(filterXoj, _C("Xournal files"));
-	gtk_file_filter_add_pattern(filterXoj, "*.xoj");
-
-	GtkFileFilter* filterPdf = gtk_file_filter_new();
-	gtk_file_filter_set_name(filterPdf, _C("PDF files"));
-	gtk_file_filter_add_pattern(filterPdf, "*.pdf");
-	gtk_file_filter_add_pattern(filterPdf, "*.PDF");
-
-	GtkFileFilter* filterSupported = gtk_file_filter_new();
-	gtk_file_filter_set_name(filterSupported, _C("Supported files"));
-	gtk_file_filter_add_pattern(filterSupported, "*.xoj");
-	gtk_file_filter_add_pattern(filterSupported, "*.pdf");
-	gtk_file_filter_add_pattern(filterSupported, "*.PDF");
-
-	if (!pdf)
-	{
-		gtk_file_chooser_add_filter(GTK_FILE_CHOOSER(dialog), filterSupported);
-		gtk_file_chooser_add_filter(GTK_FILE_CHOOSER(dialog), filterXoj);
-	}
-	gtk_file_chooser_add_filter(GTK_FILE_CHOOSER(dialog), filterPdf);
-	gtk_file_chooser_add_filter(GTK_FILE_CHOOSER(dialog), filterAll);
 
 	if (!settings->getLastSavePath().empty())
 	{
@@ -51,6 +28,110 @@ path XojOpenDlg::showOpenDialog(GtkWindow* win, Settings* settings, bool pdf, bo
 		g_warning("lastSavePath is not set!");
 		gtk_file_chooser_set_current_folder_uri(GTK_FILE_CHOOSER(dialog), g_get_home_dir());
 	}
+}
+
+XojOpenDlg::~XojOpenDlg()
+{
+	XOJ_CHECK_TYPE(XojOpenDlg);
+
+	gtk_widget_destroy(dialog);
+	dialog = NULL;
+
+	XOJ_RELEASE_TYPE(XojOpenDlg);
+}
+
+void XojOpenDlg::addFilterAllFiles()
+{
+	XOJ_CHECK_TYPE(XojOpenDlg);
+
+	GtkFileFilter* filterAll = gtk_file_filter_new();
+	gtk_file_filter_set_name(filterAll, _C("All files"));
+	gtk_file_filter_add_pattern(filterAll, "*");
+	gtk_file_chooser_add_filter(GTK_FILE_CHOOSER(dialog), filterAll);
+}
+
+void XojOpenDlg::addFilterPdf()
+{
+	XOJ_CHECK_TYPE(XojOpenDlg);
+
+	GtkFileFilter* filterPdf = gtk_file_filter_new();
+	gtk_file_filter_set_name(filterPdf, _C("PDF files"));
+	gtk_file_filter_add_pattern(filterPdf, "*.pdf");
+	gtk_file_filter_add_pattern(filterPdf, "*.PDF");
+	gtk_file_chooser_add_filter(GTK_FILE_CHOOSER(dialog), filterPdf);
+}
+
+void XojOpenDlg::addFilterXoj()
+{
+	XOJ_CHECK_TYPE(XojOpenDlg);
+
+	GtkFileFilter* filterXoj = gtk_file_filter_new();
+	gtk_file_filter_set_name(filterXoj, _C("Xournal files"));
+	gtk_file_filter_add_pattern(filterXoj, "*.xoj");
+	gtk_file_chooser_add_filter(GTK_FILE_CHOOSER(dialog), filterXoj);
+}
+
+void XojOpenDlg::addFilterXojt()
+{
+	XOJ_CHECK_TYPE(XojOpenDlg);
+
+	GtkFileFilter* filterXojt = gtk_file_filter_new();
+	gtk_file_filter_set_name(filterXojt, _C("Xournal++ template"));
+	gtk_file_filter_add_pattern(filterXojt, "*.xojt");
+	gtk_file_chooser_add_filter(GTK_FILE_CHOOSER(dialog), filterXojt);
+}
+
+path XojOpenDlg::runDialog()
+{
+	XOJ_CHECK_TYPE(XojOpenDlg);
+
+	gtk_window_set_transient_for(GTK_WINDOW(dialog), win);
+	if (gtk_dialog_run(GTK_DIALOG(dialog)) != GTK_RESPONSE_OK)
+	{
+		gtk_widget_destroy(dialog);
+		return path("");
+	}
+
+	path file(gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(dialog)));
+	settings->setLastSavePath(file.parent_path());
+
+	return file;
+}
+
+path XojOpenDlg::showOpenTemplateDialog()
+{
+	XOJ_CHECK_TYPE(XojOpenDlg);
+
+	addFilterAllFiles();
+	addFilterXojt();
+
+	return runDialog();
+}
+
+path XojOpenDlg::showOpenDialog(bool pdf, bool& attachPdf)
+{
+	XOJ_CHECK_TYPE(XojOpenDlg);
+
+	if (!pdf)
+	{
+		GtkFileFilter* filterSupported = gtk_file_filter_new();
+		gtk_file_filter_set_name(filterSupported, _C("Supported files"));
+		gtk_file_filter_add_pattern(filterSupported, "*.xoj");
+
+		// TODO: Implement template loading from file open
+		// gtk_file_filter_add_pattern(filterSupported, "*.xojt");
+		gtk_file_filter_add_pattern(filterSupported, "*.pdf");
+		gtk_file_filter_add_pattern(filterSupported, "*.PDF");
+		gtk_file_chooser_add_filter(GTK_FILE_CHOOSER(dialog), filterSupported);
+
+		addFilterXoj();
+
+		// TODO: Implement template loading from file open
+		// addFilterXojt();
+	}
+
+	addFilterPdf();
+	addFilterAllFiles();
 
 	GtkWidget* attachOpt = NULL;
 	if (pdf)
@@ -64,23 +145,12 @@ path XojOpenDlg::showOpenDialog(GtkWindow* win, Settings* settings, bool pdf, bo
 	gtk_file_chooser_set_preview_widget(GTK_FILE_CHOOSER(dialog), image);
 	g_signal_connect(dialog, "update-preview", G_CALLBACK(updatePreviewCallback), NULL);
 
-
-	gtk_window_set_transient_for(GTK_WINDOW(dialog), win);
-	if (gtk_dialog_run(GTK_DIALOG(dialog)) != GTK_RESPONSE_OK)
-	{
-		gtk_widget_destroy(dialog);
-		return path("");
-	}
-	path file(gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(dialog)));
+	path file = runDialog();
 
 	if (attachOpt)
 	{
 		attachPdf = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(attachOpt));
 	}
-	
-	settings->setLastSavePath(file.parent_path());
-
-	gtk_widget_destroy(dialog);
 
 	return file;
 }

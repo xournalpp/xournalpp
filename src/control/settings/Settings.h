@@ -151,6 +151,7 @@ private:
 
 	void saveButtonConfig();
 	void loadButtonConfig();
+
 public:
 	// Getter- / Setter
 	bool isPresureSensitivity();
@@ -252,12 +253,6 @@ public:
 	string getPresentationHideElements();
 	void setPresentationHideElements(string elements);
 
-	PageInsertType getPageInsertType();
-	void setPageInsertType(PageInsertType type);
-
-	int getPageBackgroundColor();
-	void setPageBackgroundColor(int color);
-
 	int getSelectionColor();
 	void setSelectionColor(int color);
 
@@ -268,6 +263,30 @@ public:
 
 	bool isEventCompression();
 	void setEventCompression(bool enabled);
+
+	string getPageTemplate();
+	void setPageTemplate(string pageTemplate);
+
+	/**
+	 * Get name, e.g. "cm"
+	 */
+	string getSizeUnit();
+
+	/**
+	 * Get size index in XOJ_UNITS
+	 */
+	int getSizeUnitIndex();
+
+	/**
+	 * Set Unit, e.g. "cm"
+	 */
+	void setSizeUnit(string sizeUnit);
+
+	/**
+	 * Set size index in XOJ_UNITS
+	 */
+	void setSizeUnitIndex(int sizeUnitId);
+
 public:
 	// Custom settings
 	SElement& getCustomElement(string name);
@@ -461,17 +480,6 @@ private:
 	string presentationHideElements;
 
 	/**
-	 * If you insert a page, which type will be selected?
-	 * Plain, Lined, Copy current page...
-	 */
-	PageInsertType pageInsertType;
-
-	/**
-	 * The background color of a new inserted page
-	 */
-	int pageBackgroundColor;
-
-	/**
 	 *  The count of pages which will be cached
 	 */
 	int pdfPageCacheSize;
@@ -492,6 +500,15 @@ private:
 	 */
 	bool eventCompression;
 
+	/**
+	 * Page template String
+	 */
+	string pageTemplate;
+
+	/**
+	 * Unit, see XOJ_UNITS
+	 */
+	string sizeUnit;
 
 	/**
 	 * "Transaction" running, do not save until the end is reached

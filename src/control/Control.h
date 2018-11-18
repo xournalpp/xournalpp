@@ -119,6 +119,7 @@ public:
 	void deleteCurrentLayer();
 	void switchToLay(int layer);
 
+	void paperTemplate();
 	void paperFormat();
 	void changePageBackgroundColor();
 	void setPageBackground(ActionType type);
@@ -156,8 +157,6 @@ public:
 	void setCopyPasteEnabled(bool enabled);
 
 	void enableAutosave(bool enable);
-
-	void getDefaultPagesize(double& width, double& height);
 
 	void clearSelectionEndText();
 
@@ -246,8 +245,6 @@ protected:
 
 	static bool loadMetadataCallback(MetadataCallbackData* data);
 
-	void storeDefaultPageFormat(double width, double height);
-
 private:
 	XOJ_TYPE_ATTRIB;
 
@@ -304,12 +301,6 @@ private:
 	int autosaveTimeout;
 	path lastAutosaveFilename;
 
-	/**
-	 * Default page size
-	 */
-	double defaultWidth;
-	double defaultHeight;
-
 	XournalScheduler* scheduler;
 
 	/**
@@ -325,6 +316,10 @@ private:
 
 	MetadataManager* metadata;
 
+	/**
+	 * Current page insert type, usually from default, but it can be changed from toolbar menu
+	 */
+	PageInsertType pageInserType;
 };
 
 class CallbackData

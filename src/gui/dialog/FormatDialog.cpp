@@ -11,23 +11,9 @@ FormatDialog::FormatDialog(GladeSearchpath* gladeSearchPath, Settings* settings,
 	XOJ_INIT_TYPE(FormatDialog);
 
 	this->orientation = ORIENTATION_NOT_DEFINED;
-	this->selectedScale = 0;
 	this->settings = settings;
 
-	SElement& format = settings->getCustomElement("format");
-	string unit;
-
-	if (format.getString("unit", unit))
-	{
-		for (int i = 0; i < XOJ_UNIT_COUNT; i++)
-		{
-			if (unit == XOJ_UNITS[i].name)
-			{
-				this->selectedScale = i;
-				break;
-			}
-		}
-	}
+	this->selectedScale = settings->getSizeUnitIndex();
 
 	this->scale = XOJ_UNITS[this->selectedScale].scale;
 	this->origHeight = height;
@@ -347,9 +333,7 @@ void FormatDialog::show(GtkWindow* parent)
 
 	if (ret == 1) //OK
 	{
-		SElement& format = settings->getCustomElement("format");
-		format.setString("unit", XOJ_UNITS[this->selectedScale].name);
-		settings->customSettingsChanged();
+		settings->setSizeUnitIndex(this->selectedScale);
 
 		this->width = gtk_spin_button_get_value(GTK_SPIN_BUTTON(get("spinWidth"))) * this->scale;
 		this->height = gtk_spin_button_get_value(GTK_SPIN_BUTTON(get("spinHeight"))) * this->scale;

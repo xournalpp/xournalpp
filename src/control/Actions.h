@@ -58,6 +58,8 @@ enum ActionType
     ACTION_NEW_PAGE_AFTER,
     ACTION_NEW_PAGE_AT_END,
 
+	ACTION_CONFIGURE_PAGE_TEMPLATE,
+
     // Has to be in the same order as in Tool.h: PageInsertType!
     ACTION_NEW_PAGE_PLAIN,
     ACTION_NEW_PAGE_LINED,

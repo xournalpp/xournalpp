@@ -9,6 +9,7 @@
 #include "gui/dialog/backgroundSelect/PdfPagesDialog.h"
 #include "gui/dialog/GotoDialog.h"
 #include "gui/dialog/FormatDialog.h"
+#include "gui/dialog/PageTemplateDialog.h"
 #include "gui/dialog/SettingsDialog.h"
 #include "gui/dialog/SelectBackgroundColorDialog.h"
 #include "gui/dialog/toolbarCustomize/ToolbarDragDropHandler.h"
@@ -75,6 +76,8 @@ Control::Control(GladeSearchpath* gladeSearchPath, bool noThreads)
 
 	this->gladeSearchPath = gladeSearchPath;
 
+	this->pageInserType = PAGE_INSERT_TYPE_LINED;
+
 	this->metadata = new MetadataManager();
 	this->cursor = new Cursor(this);
 
@@ -99,9 +102,6 @@ Control::Control(GladeSearchpath* gladeSearchPath, bool noThreads)
 	this->hiddenFullscreenWidgets = NULL;
 	this->sidebarHidden = false;
 	this->autosaveTimeout = 0;
-
-	this->defaultWidth = -1;
-	this->defaultHeight = -1;
 
 	this->statusbar = NULL;
 	this->lbState = NULL;
@@ -132,7 +132,6 @@ Control::Control(GladeSearchpath* gladeSearchPath, bool noThreads)
 Control::~Control()
 {
 	XOJ_CHECK_TYPE(Control);
-
 
 	g_source_remove(this->changeTimout);
 	this->enableAutosave(false);
@@ -274,7 +273,9 @@ void Control::initWindow(MainWindow* win)
 	setViewTwoPages(settings->isShowTwoPages());
 	setViewPresentationMode(settings->isPresentationMode());
 
-	setPageInsertType(settings->getPageInsertType());
+	PageTemplateSettings model;
+	model.parse(settings->getPageTemplate());
+ 	setPageInsertType(model.getPageInsertType());
 
 	penSizeChanged();
 	eraserSizeChanged();
@@ -297,7 +298,6 @@ bool Control::autosaveCallback(Control* control)
 
 	if (!control->undoRedo->isChangedAutosave())
 	{
-		//cout << "Info: autosave not necessary, nothing changed..." << endl;
 		// do nothing, nothing changed
 		return true;
 	}
@@ -501,6 +501,9 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
 		break;
 	case ACTION_PAPER_FORMAT:
 		paperFormat();
+		break;
+	case ACTION_CONFIGURE_PAGE_TEMPLATE:
+		paperTemplate();
 		break;
 	case ACTION_PAPER_BACKGROUND_COLOR:
 		changePageBackgroundColor();
@@ -852,12 +855,7 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
 	}
 }
 
-// TODO: create help for Xournal++
-#if OFFLINE_HELP_ENABLED
-#define XOJ_HELP "ghelp:xournalpp"
-#else
 #define XOJ_HELP "https://github.com/xournalpp/xournalpp/wiki/User-Manual"
-#endif
 
 void Control::help()
 {
@@ -1204,141 +1202,18 @@ void Control::addDefaultPage()
 {
 	XOJ_CHECK_TYPE(Control);
 
-	PageInsertType type = settings->getPageInsertType();
+	PageTemplateSettings model;
+	model.parse(settings->getPageTemplate());
 
-	double width = 0;
-	double height = 0;
-
-	getDefaultPagesize(width, height);
-
-	PageRef page = new XojPage(width, height);
-	page->setBackgroundColor(settings->getPageBackgroundColor());
-
-	if (PAGE_INSERT_TYPE_PLAIN == type)
-	{
-		page->setBackgroundType(BACKGROUND_TYPE_NONE);
-	}
-	else if (PAGE_INSERT_TYPE_RULED == type)
-	{
-		page->setBackgroundType(BACKGROUND_TYPE_RULED);
-	}
-	else if (PAGE_INSERT_TYPE_GRAPH == type)
-	{
-		page->setBackgroundType(BACKGROUND_TYPE_GRAPH);
-	}
-	else //PAGE_INSERT_TYPE_LINED or PDF or COPY
-	{
-		page->setBackgroundType(BACKGROUND_TYPE_LINED);
-	}
+	PageRef page = new XojPage(model.getPageWidth(), model.getPageHeight());
+	page->setBackgroundColor(model.getBackgroundColor());
+	page->setBackgroundType(model.getBackgroundType());
 
 	this->doc->lock();
 	this->doc->addPage(page);
 	this->doc->unlock();
 
 	updateDeletePageButton();
-}
-
-void Control::storeDefaultPageFormat(double width, double height)
-{
-	XOJ_CHECK_TYPE(Control);
-	if (width > 0)
-	{
-		// Load default again
-		this->defaultWidth = width;
-		this->defaultHeight = height;
-
-		SElement& format = settings->getCustomElement("format");
-		format.setComment("paperformat",
-						  "Available values are: system, A4, Letter, Custom: "
-						  "For custom you have to create the tags width and height.");
-		format.setString("paperformat", "Custom");
-		format.setDouble("width", width);
-		format.setDouble("height", height);
-
-		settings->customSettingsChanged();
-	}
-}
-
-void Control::getDefaultPagesize(double& width, double& height)
-{
-	XOJ_CHECK_TYPE(Control);
-
-	if (this->defaultHeight < 0)
-	{
-		SElement& format = settings->getCustomElement("format");
-		format.setComment("paperformat",
-						  "Available values are: system, A4, Letter, Custom: "
-						  "For custom you have to create the tags width and height.");
-		string settingsPaperFormat;
-
-		string paper;
-
-		if (format.getString("paperformat", settingsPaperFormat))
-		{
-			if (settingsPaperFormat == "system")
-			{
-				// nothing to do
-			}
-			else if (settingsPaperFormat == "Custom")
-			{
-				double w = 0;
-				double h = 0;
-				if (format.getDouble("width", w) && format.getDouble("height", h))
-				{
-					width = w;
-					height = h;
-					this->defaultHeight = h;
-					this->defaultWidth = w;
-					return;
-				}
-			}
-			else
-			{
-				paper = settingsPaperFormat;
-			}
-		}
-		else
-		{
-			format.setString("paperformat", "system");
-		}
-
-		GtkPaperSize* size = NULL;
-
-		if (!paper.empty())
-		{
-			GList* list = gtk_paper_size_get_paper_sizes(false);
-			for (GList* l = list; l != NULL; l = l->next)
-			{
-				GtkPaperSize* s = (GtkPaperSize*) l->data;
-
-				//it would be nice to make StringUtils method, but now I'm not in the mood - down there is basically compareIgnoreCase
-				if (std::use_facet<bl::collator<char>>(std::locale()).compare(bl::collator_base::secondary,
-						paper, gtk_paper_size_get_display_name(s)))
-				{
-					size = s;
-				}
-				else
-				{
-					gtk_paper_size_free(s);
-				}
-			}
-
-			g_list_free(list);
-		}
-
-		if (size == NULL)
-		{
-			size = gtk_paper_size_new(NULL);
-		}
-
-		this->defaultWidth = gtk_paper_size_get_width(size, GTK_UNIT_POINTS);
-		this->defaultHeight = gtk_paper_size_get_height(size, GTK_UNIT_POINTS);
-
-		gtk_paper_size_free(size);
-	}
-
-	width = this->defaultWidth;
-	height = this->defaultHeight;
 }
 
 void Control::updateDeletePageButton()
@@ -1398,7 +1273,6 @@ void Control::insertNewPage(size_t position)
 	XOJ_CHECK_TYPE(Control);
 
 	clearSelectionEndText();
-	PageInsertType type = settings->getPageInsertType();
 
 	if (position > doc->getPageCount())
 	{
@@ -1408,10 +1282,14 @@ void Control::insertNewPage(size_t position)
 	double width = 0;
 	double height = 0;
 
+	PageTemplateSettings model;
+	model.parse(settings->getPageTemplate());
+
 	int lastPage = position - 1;
-	if (lastPage < 0)
+	if (lastPage < 0 || !model.isCopyLastPageSettings())
 	{
-		getDefaultPagesize(width, height);
+		width = model.getPageWidth();
+		height = model.getPageHeight();
 	}
 	else
 	{
@@ -1424,30 +1302,31 @@ void Control::insertNewPage(size_t position)
 		}
 		else
 		{
-			getDefaultPagesize(width, height);
+			width = model.getPageWidth();
+			height = model.getPageHeight();
 		}
 	}
 
 	PageRef page = new XojPage(width, height);
-	page->setBackgroundColor(settings->getPageBackgroundColor());
+	page->setBackgroundColor(model.getBackgroundColor());
 
-	if (PAGE_INSERT_TYPE_PLAIN == type)
+	if (PAGE_INSERT_TYPE_PLAIN == this->pageInserType)
 	{
 		page->setBackgroundType(BACKGROUND_TYPE_NONE);
 	}
-	else if (PAGE_INSERT_TYPE_LINED == type)
+	else if (PAGE_INSERT_TYPE_LINED == this->pageInserType)
 	{
 		page->setBackgroundType(BACKGROUND_TYPE_LINED);
 	}
-	else if (PAGE_INSERT_TYPE_RULED == type)
+	else if (PAGE_INSERT_TYPE_RULED == this->pageInserType)
 	{
 		page->setBackgroundType(BACKGROUND_TYPE_RULED);
 	}
-	else if (PAGE_INSERT_TYPE_GRAPH == type)
+	else if (PAGE_INSERT_TYPE_GRAPH == this->pageInserType)
 	{
 		page->setBackgroundType(BACKGROUND_TYPE_GRAPH);
 	}
-	else if (PAGE_INSERT_TYPE_COPY == type)
+	else if (PAGE_INSERT_TYPE_COPY == this->pageInserType)
 	{
 		PageRef current = getCurrentPage();
 		if (!current.isValid()) // should not happen, but if you open an invalid file or something like this...
@@ -1474,7 +1353,7 @@ void Control::insertNewPage(size_t position)
 			page->setSize(current->getWidth(), current->getHeight());
 		}
 	}
-	else if (PAGE_INSERT_TYPE_PDF_BACKGROUND == type)
+	else if (PAGE_INSERT_TYPE_PDF_BACKGROUND == this->pageInserType)
 	{
 		if (this->doc->getPdfPageCount() == 0)
 		{
@@ -1750,6 +1629,23 @@ void Control::updateBackgroundSizeButton()
 	gtk_widget_set_sensitive(pageSize, bg != BACKGROUND_TYPE_PDF);
 }
 
+void Control::paperTemplate()
+{
+	XOJ_CHECK_TYPE(Control);
+
+	PageTemplateDialog* dlg = new PageTemplateDialog(this->gladeSearchPath, settings);
+	dlg->show(GTK_WINDOW(this->win->getWindow()));
+
+	if (dlg->isSaved())
+	{
+		PageTemplateSettings model;
+		model.parse(settings->getPageTemplate());
+	 	setPageInsertType(model.getPageInsertType());
+	}
+
+	delete dlg;
+}
+
 void Control::paperFormat()
 {
 	XOJ_CHECK_TYPE(Control);
@@ -1772,8 +1668,6 @@ void Control::paperFormat()
 		this->doc->lock();
 		this->doc->setPageSize(page, width, height);
 		this->doc->unlock();
-
-		storeDefaultPageFormat(width, height);
 	}
 
 	delete dlg;
@@ -1810,7 +1704,6 @@ void Control::changePageBackgroundColor()
 	{
 		p->setBackgroundColor(color);
 		firePageChanged(pNr);
-		settings->setPageBackgroundColor(color);
 	}
 }
 
@@ -1913,7 +1806,7 @@ void Control::setPageInsertType(PageInsertType type)
 {
 	XOJ_CHECK_TYPE(Control);
 
-	settings->setPageInsertType(type);
+	this->pageInserType = type;
 	fireActionSelected(GROUP_PAGE_INSERT_TYPE, (ActionType) (type - PAGE_INSERT_TYPE_PLAIN + ACTION_NEW_PAGE_PLAIN));
 }
 
@@ -2297,14 +2190,6 @@ bool Control::newFile()
 	*doc = newDoc;
 	this->doc->unlock();
 
-	//CPPCHECK what is type assigment for?
-	PageInsertType type = settings->getPageInsertType();
-	if (type != PAGE_INSERT_TYPE_PLAIN && type != PAGE_INSERT_TYPE_LINED &&
-		type != PAGE_INSERT_TYPE_RULED && type != PAGE_INSERT_TYPE_GRAPH)
-	{
-		type = PAGE_INSERT_TYPE_LINED;
-	}
-
 	addDefaultPage();
 
 	fireDocumentChanged(DOCUMENT_CHANGE_COMPLETE);
@@ -2326,7 +2211,8 @@ bool Control::openFile(path filename, int scrollToPage)
 	if (filename.empty())
 	{
 		bool attachPdf = false;
-		filename = XojOpenDlg::showOpenDialog((GtkWindow*) *win, this->settings, false, attachPdf);
+		XojOpenDlg dlg((GtkWindow*) *win, this->settings);
+		filename = dlg.showOpenDialog(false, attachPdf);
 
 		cout << _F("Filename: {1}") % filename.string() << endl;
 
@@ -2394,7 +2280,8 @@ bool Control::openFile(path filename, int scrollToPage)
 		else if (res == 1) // select another PDF background
 		{
 			bool attachToDocument = false;
-			path pdfFilename = XojOpenDlg::showOpenDialog((GtkWindow*) *win, this->settings, true, attachToDocument);
+			XojOpenDlg dlg((GtkWindow*) *win, this->settings);
+			path pdfFilename = dlg.showOpenDialog(true, attachToDocument);
 			if (!pdfFilename.empty())
 			{
 				h.setPdfReplacement(pdfFilename.string(), attachToDocument);
@@ -2511,7 +2398,8 @@ bool Control::annotatePdf(path filename, bool attachPdf, bool attachToDocument)
 
 	if (filename.empty())
 	{
-		filename = XojOpenDlg::showOpenDialog((GtkWindow*) *win, this->settings, true, attachToDocument);
+		XojOpenDlg dlg((GtkWindow*) *win, this->settings);
+		filename = dlg.showOpenDialog(true, attachToDocument);
 		if (filename.empty())
 		{
 			return false;

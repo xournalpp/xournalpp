@@ -2,6 +2,8 @@
 
 #include "control/Control.h"
 
+#include <Util.h>
+
 #include <config.h>
 #include <i18n.h>
 
@@ -32,21 +34,6 @@ GdkRGBA backgroundXournal[] = {
 };
 
 const int backgroundXournalCount = sizeof(backgroundXournal) / sizeof(GdkRGBA);
-
-void apply_rgb_togdkrgba(GdkRGBA& col, int color)
-{
-	col.red = ((color >> 16) & 0xFF) / 255.0;
-	col.green = ((color >> 8) & 0xFF) / 255.0;
-	col.blue = (color & 0xFF) / 255.0;
-	col.alpha = 1.0;
-}
-
-int gdkrgba_to_hex(GdkRGBA& color)
-{
-	return (((int)(color.red * 255)) & 0xff) << 16 |
-			(((int)(color.green * 255)) & 0xff) << 8 |
-			(((int)(color.blue * 255)) & 0xff);
-}
 
 SelectBackgroundColorDialog::SelectBackgroundColorDialog(Control* control)
  : selected(-1),
@@ -86,7 +73,7 @@ SelectBackgroundColorDialog::SelectBackgroundColorDialog(Control* control)
 			continue;
 		}
 
-		apply_rgb_togdkrgba(lastBackgroundColors[index], color);
+		Util::apply_rgb_togdkrgba(lastBackgroundColors[index], color);
 
 		index++;
 	}
@@ -109,7 +96,7 @@ void SelectBackgroundColorDialog::storeLastUsedValuesInSettings()
 	}
 
 	GdkRGBA newColor;
-	apply_rgb_togdkrgba(newColor, this->selected);
+	Util::apply_rgb_togdkrgba(newColor, this->selected);
 
 	for (int i = 0; i < LAST_BACKGROUND_COLOR_COUNT; i++)
 	{
@@ -136,7 +123,7 @@ void SelectBackgroundColorDialog::storeLastUsedValuesInSettings()
 	for (int i = 0; i < LAST_BACKGROUND_COLOR_COUNT; i++)
 	{
 		char* settingName = g_strdup_printf("color%02i", i);
-		el.setIntHex(settingName, gdkrgba_to_hex(lastBackgroundColors[i]));
+		el.setIntHex(settingName, Util::gdkrgba_to_hex(lastBackgroundColors[i]));
 		g_free(settingName);
 	}
 
@@ -174,7 +161,7 @@ void SelectBackgroundColorDialog::show(GtkWindow* parent)
 	{
 		GdkRGBA color;
 		gtk_color_chooser_get_rgba(GTK_COLOR_CHOOSER(dialog), &color);
-		this->selected = gdkrgba_to_hex(color);
+		this->selected = Util::gdkrgba_to_hex(color);
 
 		storeLastUsedValuesInSettings();
 	}

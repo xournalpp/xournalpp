@@ -364,42 +364,36 @@ void ToolMenuHandler::initToolItems()
 	gtk_container_add(GTK_CONTAINER(newPagePopup), newPagePopupPlain);
 	gtk_check_menu_item_set_draw_as_radio(GTK_CHECK_MENU_ITEM(newPagePopupPlain), true);
 	registerMenupoint(newPagePopupPlain, ACTION_NEW_PAGE_PLAIN, GROUP_PAGE_INSERT_TYPE);
-	registerMenupoint(gui->get("menuJournalNewPageAfterPlain"), ACTION_NEW_PAGE_PLAIN, GROUP_PAGE_INSERT_TYPE);
 
 	GtkWidget* newPagePopupLined = gtk_check_menu_item_new_with_label(_C("Lined"));
 	gtk_widget_show(newPagePopupLined);
 	gtk_container_add(GTK_CONTAINER(newPagePopup), newPagePopupLined);
 	gtk_check_menu_item_set_draw_as_radio(GTK_CHECK_MENU_ITEM(newPagePopupLined), true);
 	registerMenupoint(newPagePopupLined, ACTION_NEW_PAGE_LINED, GROUP_PAGE_INSERT_TYPE);
-	registerMenupoint(gui->get("menuJournalNewPageAfterLined"), ACTION_NEW_PAGE_LINED, GROUP_PAGE_INSERT_TYPE);
 
 	GtkWidget* newPagePopupRuled = gtk_check_menu_item_new_with_label(_C("Ruled"));
 	gtk_widget_show(newPagePopupRuled);
 	gtk_container_add(GTK_CONTAINER(newPagePopup), newPagePopupRuled);
 	gtk_check_menu_item_set_draw_as_radio(GTK_CHECK_MENU_ITEM(newPagePopupRuled), true);
 	registerMenupoint(newPagePopupRuled, ACTION_NEW_PAGE_RULED, GROUP_PAGE_INSERT_TYPE);
-	registerMenupoint(gui->get("menuJournalNewPageAfterRuled"), ACTION_NEW_PAGE_RULED, GROUP_PAGE_INSERT_TYPE);
 
 	GtkWidget* newPagePopupGraph = gtk_check_menu_item_new_with_label(_C("Graph"));
 	gtk_widget_show(newPagePopupGraph);
 	gtk_container_add(GTK_CONTAINER(newPagePopup), newPagePopupGraph);
 	gtk_check_menu_item_set_draw_as_radio(GTK_CHECK_MENU_ITEM(newPagePopupGraph), true);
 	registerMenupoint(newPagePopupGraph, ACTION_NEW_PAGE_GRAPH, GROUP_PAGE_INSERT_TYPE);
-	registerMenupoint(gui->get("menuJournalNewPageAfterGraph"), ACTION_NEW_PAGE_GRAPH, GROUP_PAGE_INSERT_TYPE);
 
 	GtkWidget* newPagePopupCopyCurrent = gtk_check_menu_item_new_with_label(_C("Copy current"));
 	gtk_widget_show(newPagePopupCopyCurrent);
 	gtk_container_add(GTK_CONTAINER(newPagePopup), newPagePopupCopyCurrent);
 	gtk_check_menu_item_set_draw_as_radio(GTK_CHECK_MENU_ITEM(newPagePopupCopyCurrent), true);
 	registerMenupoint(newPagePopupCopyCurrent, ACTION_NEW_PAGE_COPY, GROUP_PAGE_INSERT_TYPE);
-	registerMenupoint(gui->get("menuJournalNewPageAfterCopy"), ACTION_NEW_PAGE_COPY, GROUP_PAGE_INSERT_TYPE);
 
 	GtkWidget* newPagePopupWithPDFBackground = gtk_check_menu_item_new_with_label(_C("With PDF background"));
 	gtk_widget_show(newPagePopupWithPDFBackground);
 	gtk_container_add(GTK_CONTAINER(newPagePopup), newPagePopupWithPDFBackground);
 	gtk_check_menu_item_set_draw_as_radio(GTK_CHECK_MENU_ITEM(newPagePopupWithPDFBackground), true);
 	registerMenupoint(newPagePopupWithPDFBackground, ACTION_NEW_PAGE_PDF_BACKGROUND, GROUP_PAGE_INSERT_TYPE);
-	registerMenupoint(gui->get("menuJournalNewPageAfterWithPdf"), ACTION_NEW_PAGE_PDF_BACKGROUND, GROUP_PAGE_INSERT_TYPE);
 
 	tbInsertNewPage->setPopupMenu(newPagePopup);
 
@@ -479,6 +473,7 @@ void ToolMenuHandler::initToolItems()
 	registerMenupoint(gui->get("menuJournalNewPageBefore"), ACTION_NEW_PAGE_BEFORE);
 	registerMenupoint(gui->get("menuJournalNewPageAfter"), ACTION_NEW_PAGE_AFTER);
 	registerMenupoint(gui->get("menuJournalNewPageAtEnd"), ACTION_NEW_PAGE_AT_END);
+	registerMenupoint(gui->get("menuJournalTemplateConfig"), ACTION_CONFIGURE_PAGE_TEMPLATE);
 	registerMenupoint(gui->get("menuDeletePage"), ACTION_DELETE_PAGE);
 	registerMenupoint(gui->get("menuJournalPaperFormat"), ACTION_PAPER_FORMAT);
 	registerMenupoint(gui->get("menuJournalPaperColor"), ACTION_PAPER_BACKGROUND_COLOR);
