@@ -486,14 +486,7 @@ XournalView* MainWindow::getXournal()
 bool MainWindow::windowStateEventCallback(GtkWidget* window, GdkEventWindowState* event, MainWindow* win)
 {
 	XOJ_CHECK_TYPE_OBJ(win, MainWindow);
-
-	if (!(event->new_window_state & GDK_WINDOW_STATE_FULLSCREEN))
-	{
-		gboolean maximized;
-
-		maximized = event->new_window_state & GDK_WINDOW_STATE_MAXIMIZED;
-		win->setMaximized(maximized);
-	}
+	win->setMaximized(gtk_window_is_maximized(GTK_WINDOW(window)));
 
 	return false;
 }

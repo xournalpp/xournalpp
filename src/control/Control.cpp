@@ -2211,7 +2211,8 @@ bool Control::openFile(path filename, int scrollToPage)
 	if (filename.empty())
 	{
 		bool attachPdf = false;
-		filename = XojOpenDlg::showOpenDialog((GtkWindow*) *win, this->settings, false, attachPdf);
+		XojOpenDlg dlg((GtkWindow*) *win, this->settings);
+		filename = dlg.showOpenDialog(false, attachPdf);
 
 		cout << _F("Filename: {1}") % filename.string() << endl;
 
@@ -2279,7 +2280,8 @@ bool Control::openFile(path filename, int scrollToPage)
 		else if (res == 1) // select another PDF background
 		{
 			bool attachToDocument = false;
-			path pdfFilename = XojOpenDlg::showOpenDialog((GtkWindow*) *win, this->settings, true, attachToDocument);
+			XojOpenDlg dlg((GtkWindow*) *win, this->settings);
+			path pdfFilename = dlg.showOpenDialog(true, attachToDocument);
 			if (!pdfFilename.empty())
 			{
 				h.setPdfReplacement(pdfFilename.string(), attachToDocument);
@@ -2396,7 +2398,8 @@ bool Control::annotatePdf(path filename, bool attachPdf, bool attachToDocument)
 
 	if (filename.empty())
 	{
-		filename = XojOpenDlg::showOpenDialog((GtkWindow*) *win, this->settings, true, attachToDocument);
+		XojOpenDlg dlg((GtkWindow*) *win, this->settings);
+		filename = dlg.showOpenDialog(true, attachToDocument);
 		if (filename.empty())
 		{
 			return false;

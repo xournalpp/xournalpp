@@ -30,7 +30,7 @@
             <property name="can_focus">False</property>
             <property name="layout_style">end</property>
             <child>
-              <object class="GtkButton" id="btLoad">
+              <object class="GtkButton" id="btSave">
                 <property name="label" translatable="yes">save to file</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
@@ -43,7 +43,7 @@
               </packing>
             </child>
             <child>
-              <object class="GtkButton" id="btSave">
+              <object class="GtkButton" id="btLoad">
                 <property name="label" translatable="yes">load from file</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>

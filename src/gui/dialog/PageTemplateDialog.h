@@ -44,6 +44,10 @@ public:
 private:
 	void showPageSizeDialog();
 	void updatePageSize();
+	void saveToFile();
+	void loadFromFile();
+	void updateDataFromModel();
+	void saveToModel();
 
 private:
 	XOJ_TYPE_ATTRIB;
