@@ -39,11 +39,6 @@ void DeleteUndoAction::addElement(Layer* layer, Element* e, int pos)
 {
 	XOJ_CHECK_TYPE(DeleteUndoAction);
 
-	if (pos == -1)
-	{
-		printf("-1\n");
-	}
-
 	this->elements = g_list_insert_sorted(this->elements, new PageLayerPosEntry<Element> (layer, e, pos),
 										  (GCompareFunc) PageLayerPosEntry<Element>::cmp);
 }
