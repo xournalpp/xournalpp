@@ -50,6 +50,11 @@ void ExportDialog::removeDpiSelection()
 	gtk_widget_hide(get("lbResolution"));
 	gtk_widget_hide(get("spDpi"));
 	gtk_widget_hide(get("lbDpi"));
+
+	// TODO Enable PDF Part export
+	gtk_widget_set_sensitive(get("rdRangeCurrent"), false);
+	gtk_widget_set_sensitive(get("rdRangePages"), false);
+	gtk_widget_set_sensitive(get("txtPages"), false);
 }
 
 int ExportDialog::getPngDpi()

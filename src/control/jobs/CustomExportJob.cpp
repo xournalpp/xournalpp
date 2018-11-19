@@ -253,7 +253,11 @@ void CustomExportJob::run(bool noThreads)
 
 		PdfExport pdfe(doc, &pglistener);
 
-		if (!pdfe.createPdf(this->filename, exportRange))
+		// if (!pdfe.createPdf(this->filename, exportRange))
+
+		// TODO Currently export always the full PDF, the page by page routine
+		// is currently not working correct!
+		if (!pdfe.createPdf(this->filename))
 		{
 			this->errorMsg = pdfe.getLastError();
 		}
