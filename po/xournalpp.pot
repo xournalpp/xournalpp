@@ -1236,10 +1236,6 @@ msgid ""
 "%%\tA % sign"
 msgstr ""
 
-#: ../ui/exportSettings.glade:302
-msgid "0"
-msgstr ""
-
 #: ../ui/images.glade:82
 msgid "<b>... or select already used Image:</b>"
 msgstr ""
