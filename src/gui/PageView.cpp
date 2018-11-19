@@ -86,6 +86,9 @@ XojPageView::~XojPageView()
 {
 	XOJ_CHECK_TYPE(XojPageView);
 
+	// Unregister listener before destroying this handler
+	this->unregisterListener();
+
 	this->xournal->getControl()->getScheduler()->removePage(this);
 	delete this->inputHandler;
 	this->inputHandler = NULL;
