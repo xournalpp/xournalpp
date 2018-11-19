@@ -3,29 +3,24 @@
 [![Build Status](https://travis-ci.org/xournalpp/xournalpp.svg?branch=string_new)](https://travis-ci.org/xournalpp/xournalpp)
 [![Join the chat at https://gitter.im/xournalpp/xournalpp](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/xournalpp/xournalpp?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-# GTK-3 branch merged
-Now the GTK-3 branch is merged, with really much changes.
-**A lot of bugs are fixed, but maybe there are new one.**
-The GTK-2 version is still available as master_gtk2_stable.
-
-
 ## Description
 
-Xournal++ is not Xournal! It is a ground-up rewrite of Xournal in a different language (C++ instead of C). The purpose
-was to create a more flexible application that significantly extends the functionality of Xournal.
+Xournal++ is a hand note taking software written in C++ with the target of flexibility, functionality and speed.
+Stroke recognizer and other parts are based on Xournal Code, which you can find at [sourceforge](http://sourceforge.net/projects/xournal/)
 
-At the moment, Xournal is very stable software while Xournal++ is not yet. If you want stability, you might be more
-interested in the original Xournal project, which you can find at [sourceforge](http://sourceforge.net/projects/xournal/)
-or, for some in-development features of Xournal, at [github.com/dmgerman/xournal](https://github.com/dmgerman/xournal).
-
-New features in Xournal++ include:
-
+Xournal++ features:
+* Support for Pen preassure, e.g. Wacom Tablet
+* Support for annotating PDFs
+* Allow to map different tools / colors etc. to stylus buttons / mouse buttons
+* Sidebar with Page Previews with advanced page sorting, PDF Bookmarks and Layers (Layers currently not enabled by default)
 * enhanced support for image insertion
-* better eraser
-* significantly reduced memory usage and code to detect memory leaks
+* Eraser with multipe configurations
+* Significantly reduced memory usage and code to detect memory leaks compared to Xournal
 * LaTeX support (requires a working LaTeX install and ```-DENABLE_MATHTEX=ON``` flag when configuring)
-* advanced page sorting (a sidebar, page up/down, etc.)
 * bug reporting, autosave, and auto backup tools
+* Customizeable toolbar, with multiple configurations, e.g. to optimize toolbar for portrait / landscape
+* Page Template definitions
+* Shape drawing (line, arrow, circle, rect)
 
 Hopefully you'll enjoy it!
 
@@ -37,6 +32,10 @@ Aside from legacy releases, this is currently the way to install Xournal++. For 
 
 There will be some binaries appearing in the future, so ideally you can make use of those as well.
 They'll be at [Xournal++ releases](https://github.com/xournalpp/xournalpp/releases).
+
+Current releases are out of Date, we are searching for Maintainer for PPA etc.
+[Issue for Contact](https://github.com/xournalpp/xournalpp/issues/176)
+
 
 ### Install dependencies
 For Fedora/CentOS/RHEL:
@@ -67,8 +66,7 @@ cmake ..
 make
 ````
 
-On Ubuntu 16.04, you may need to configure cmake with `-DBUILD_POPPLER=ON` due
-to #234.
+On Ubuntu 16.04, `-DBUILD_POPPLER=ON` is automatically added due to #234.
 
 If you'd like to enable mathtex support you should add `-DENABLE_MATHTEX=ON` to cmake command or use `cmake-gui ..`
 to see graphically all available options. However, this should already be enabled by default.
@@ -85,10 +83,11 @@ If you want to install desktop file and thumbnailer execute:
 make desktop-install
 ```
 
-
 ## Development
 For developping new features, write a Ticket, so others know what you are doing.
-For development create a fork, and use the master as base.
+For development create a fork, and use the master as base. Create a Pull request for each fix.
+Do not create big pull requests, as long as you don't break anything features also can be
+merged, even if they are not 100% finished.
 
 See [GitHub:xournalpp](http://github.com/xournalpp/xournalpp) for current development. You can also join
 our Gitter channel via badge on top.
