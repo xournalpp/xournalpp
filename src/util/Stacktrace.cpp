@@ -10,15 +10,15 @@ using std::endl;
  * Another solution would be backtrace-symbols.c from cairo/util, but its really complicated
  */
 
-string exeName = "";
-
 Stacktrace::Stacktrace() { }
 
 Stacktrace::~Stacktrace() { }
 
-void Stacktrace::setExename(string name)
+std::string Stacktrace::getExePath()
 {
-	exeName = name;
+	char result[PATH_MAX];
+	ssize_t count = readlink("/proc/self/exe", result, PATH_MAX);
+	return std::string(result, (count > 0) ? count : 0);
 }
 
 void Stacktrace::printStracktrace(std::ostream& stream)
@@ -29,6 +29,8 @@ void Stacktrace::printStracktrace(std::ostream& stream)
 
 	int trace_size = backtrace(trace, 32);
 	messages = backtrace_symbols(trace, trace_size);
+
+	std::string exeName = getExePath();
 
 	// skip first stack frame (points here)
 	for (int i = 1; i < trace_size; ++i)

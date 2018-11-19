@@ -162,7 +162,7 @@ bool SidebarPreviewBase::scrollToPreview(SidebarPreviewBase* sidebar)
 	MainWindow* win = sidebar->control->getWindow();
 	if (win)
 	{
-		GtkWidget* w = win->get("sidebarContents");
+		GtkWidget* w = win->get("sidebar");
 		if (!gtk_widget_get_visible(w))
 		{
 			return false;
