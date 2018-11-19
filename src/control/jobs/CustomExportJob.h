@@ -33,7 +33,6 @@ public:
 
 protected:
 	virtual void addFilterToDialog();
-	virtual void addExtensionToFilePath();
 
 	/**
 	 * Export a single PNG page
@@ -48,11 +47,10 @@ protected:
 	void createSurface(double width, double height);
 	bool freeSurface(int id);
 	string getFilenameWithNumber(int no);
+	virtual bool isUriValid(string& uri);
 
 private:
 	XOJ_TYPE_ATTRIB;
-
-	GtkFileFilter* pdfFilter;
 
 	PageRangeVector exportRange;
 	int pngDpi;

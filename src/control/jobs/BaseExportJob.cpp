@@ -29,14 +29,12 @@ void BaseExportJob::initDialog()
 	gtk_file_chooser_set_local_only(GTK_FILE_CHOOSER(dialog), true);
 }
 
-GtkFileFilter* BaseExportJob::addFileFilterToDialog(string name, string pattern)
+void BaseExportJob::addFileFilterToDialog(string name, string pattern)
 {
 	GtkFileFilter* filter = gtk_file_filter_new();
 	gtk_file_filter_set_name(filter, name.c_str());
 	gtk_file_filter_add_pattern(filter, pattern.c_str());
 	gtk_file_chooser_add_filter(GTK_FILE_CHOOSER(dialog), filter);
-
-	return filter;
 }
 
 void BaseExportJob::prepareSavePath(path& path)
@@ -84,26 +82,47 @@ bool BaseExportJob::showFilechooser()
 	gtk_file_chooser_set_do_overwrite_confirmation(GTK_FILE_CHOOSER(dialog), true);
 
 	gtk_window_set_transient_for(GTK_WINDOW(dialog), GTK_WINDOW(this->control->getWindow()->getWindow()));
-	if (gtk_dialog_run(GTK_DIALOG(dialog)) != GTK_RESPONSE_OK)
+
+	while (true)
 	{
-		gtk_widget_destroy(dialog);
-		return false;
+		if (gtk_dialog_run(GTK_DIALOG(dialog)) != GTK_RESPONSE_OK)
+		{
+			gtk_widget_destroy(dialog);
+			return false;
+		}
+
+		string uri(gtk_file_chooser_get_uri(GTK_FILE_CHOOSER(dialog)));
+		this->filename = path(gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(dialog)));
+
+		if (isUriValid(uri))
+		{
+			break;
+		}
 	}
-
-	string uri(gtk_file_chooser_get_uri(GTK_FILE_CHOOSER(dialog)));
-	if (!ba::starts_with(uri, "file://"))
-	{
-		// ensure local file
-		return false;
-	}
-
-	this->filename = path(gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(dialog)));
-
-	addExtensionToFilePath();
 
 	settings->setLastSavePath(this->filename.parent_path());
 
 	gtk_widget_destroy(dialog);
+
+	return true;
+}
+
+bool BaseExportJob::isUriValid(string& uri)
+{
+	XOJ_CHECK_TYPE(BaseExportJob);
+
+	if (!ba::starts_with(uri, "file://"))
+	{
+		string msg = (_F("Only local files are supported\nPath: {1}") % uri).str();
+		GtkWindow* win = (GtkWindow*) *control->getWindow();
+		GtkWidget* dialog = gtk_message_dialog_new(win, GTK_DIALOG_DESTROY_WITH_PARENT,
+												   GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, "%s", msg.c_str());
+		gtk_window_set_transient_for(GTK_WINDOW(dialog), GTK_WINDOW(this->control->getWindow()->getWindow()));
+		gtk_dialog_run(GTK_DIALOG(dialog));
+		gtk_widget_destroy(dialog);
+
+		return false;
+	}
 
 	return true;
 }

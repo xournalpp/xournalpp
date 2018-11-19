@@ -26,8 +26,8 @@ public:
 
 protected:
 	virtual void addFilterToDialog();
-	virtual void addExtensionToFilePath();
 	virtual void prepareSavePath(path& path);
+	virtual bool isUriValid(string& uri);
 
 private:
 	XOJ_TYPE_ATTRIB;

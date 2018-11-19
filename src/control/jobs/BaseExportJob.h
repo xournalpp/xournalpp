@@ -38,9 +38,9 @@ public:
 protected:
 	void initDialog();
 	virtual void addFilterToDialog() = 0;
-	GtkFileFilter* addFileFilterToDialog(string name, string pattern);
-	virtual void addExtensionToFilePath() = 0;
+	void addFileFilterToDialog(string name, string pattern);
 	virtual void prepareSavePath(path& path);
+	virtual bool isUriValid(string& uri);
 
 private:
 	XOJ_TYPE_ATTRIB;

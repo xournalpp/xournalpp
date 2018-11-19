@@ -11,7 +11,6 @@
 
 CustomExportJob::CustomExportJob(Control* control)
  : BaseExportJob(control, _("Custom Export")),
-   pdfFilter(NULL),
    exportTypePdf(false),
    pngDpi(300),
    surface(NULL),
@@ -38,38 +37,34 @@ void CustomExportJob::addFilterToDialog()
 {
 	XOJ_CHECK_TYPE(CustomExportJob);
 
-	pdfFilter = addFileFilterToDialog(_C("PDF files"), "*.pdf");
+	addFileFilterToDialog(_C("PDF files"), "*.pdf");
 	addFileFilterToDialog(_C("PNG graphics"), "*.png");
 }
 
-void CustomExportJob::addExtensionToFilePath()
+bool CustomExportJob::isUriValid(string& uri)
 {
 	XOJ_CHECK_TYPE(CustomExportJob);
 
-	GtkFileFilter* selectedFilter = gtk_file_chooser_get_filter(GTK_FILE_CHOOSER(dialog));
+	if (!BaseExportJob::isUriValid(uri))
+	{
+		return false;
+	}
 
 	string ext = filename.extension().string();
-	if (ext == ".pdf" || ext == ".pdf")
+	if (ext != ".pdf" && ext != ".png")
 	{
-		// Extension already there, don't add
-		return;
+		string msg = _C("File name needs to end with .pdf or .png");
+		GtkWindow* win = (GtkWindow*) *control->getWindow();
+		GtkWidget* dialog = gtk_message_dialog_new(win, GTK_DIALOG_DESTROY_WITH_PARENT,
+												   GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, "%s", msg.c_str());
+		gtk_window_set_transient_for(GTK_WINDOW(dialog), GTK_WINDOW(this->control->getWindow()->getWindow()));
+		gtk_dialog_run(GTK_DIALOG(dialog));
+		gtk_widget_destroy(dialog);
+
+		return false;
 	}
 
-
-	if (pdfFilter == selectedFilter)
-	{
-	    if (filename.extension() != ".pdf")
-	    {
-	    	this->filename += ".pdf";
-	    }
-	}
-	else
-	{
-	    if (filename.extension() != ".png")
-	    {
-	    	this->filename += ".png";
-	    }
-	}
+	return true;
 }
 
 bool CustomExportJob::showFilechooser()
