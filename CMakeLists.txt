@@ -320,6 +320,15 @@ install (DIRECTORY ui
   COMPONENT xournalpp
 )
 
+if (BUILD_POPPLER)
+	# The Path /usr/lib is hardcoded, fix if there is a better solution
+	set(POPPLER_LIB ${CMAKE_INSTALL_PREFIX}/lib/libpoppler.so.72)
+
+	install(CODE "MESSAGE(\"Install Poppler workaround to ${POPPLER_LIB}\")")
+	install(CODE "configure_file(${CMAKE_CURRENT_BINARY_DIR}/poppler-prefix/src/poppler-build/libpoppler.so.72.0.0 ${POPPLER_LIB} COPYONLY)")
+	install(CODE "file(APPEND ${CMAKE_CURRENT_BINARY_DIR}/install_manifest_workaround.txt \"${POPPLER_LIB}\")")
+endif()
+
 # Uninstall target
 configure_file (
   cmake/cmake_uninstall.cmake.in
