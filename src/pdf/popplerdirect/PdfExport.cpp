@@ -650,7 +650,7 @@ bool PdfExport::createPdf(path file, PageRangeVector& range)
 	int count = 0;
 	for (PageRangeEntry* e : range)
 	{
-		count += e->getLast() - e->getFirst();
+		count += e->getLast() - e->getFirst() + 1;
 	}
 
 	if (this->progressListener)
@@ -661,9 +661,15 @@ bool PdfExport::createPdf(path file, PageRangeVector& range)
 	int c = 0;
 	for (PageRangeEntry* e : range)
 	{
-		for (int i = e->getFirst(); i < e->getLast(); i++)
+		for (int i = e->getFirst(); i <= e->getLast(); i++)
 		{
-			PageRef page = doc->getPage(i);
+			int p = i - 1;
+			if (p < 0 || p >= doc->getPageCount())
+			{
+				continue;
+			}
+
+			PageRef page = doc->getPage(p);
 			cPdf.drawPage(page);
 			if (this->progressListener)
 			{

@@ -93,7 +93,7 @@ void ExportDialog::show(GtkWindow* parent)
 {
 	XOJ_CHECK_TYPE(ExportDialog);
 
-	confirmed = true;
+	confirmed = false;
 
 	gtk_window_set_transient_for(GTK_WINDOW(this->window), parent);
 

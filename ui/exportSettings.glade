@@ -12,6 +12,13 @@
     <property name="step_increment">1</property>
     <property name="page_increment">10</property>
   </object>
+  <object class="GtkAdjustment" id="adjustmentDpi">
+    <property name="lower">72</property>
+    <property name="upper">1200</property>
+    <property name="value">300</property>
+    <property name="step_increment">10</property>
+    <property name="page_increment">10</property>
+  </object>
   <object class="GtkDialog" id="exportDialog">
     <property name="can_focus">False</property>
     <property name="title" translatable="yes">Export</property>
@@ -105,18 +112,6 @@ Select pages to export</property>
                   </object>
                   <packing>
                     <property name="left_attach">0</property>
-                    <property name="top_attach">0</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkSpinButton" id="spDpi">
-                    <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="climb_rate">10</property>
-                    <property name="value">300</property>
-                  </object>
-                  <packing>
-                    <property name="left_attach">1</property>
                     <property name="top_attach">0</property>
                   </packing>
                 </child>
@@ -255,6 +250,22 @@ Select pages to export</property>
                   </packing>
                 </child>
                 <child>
+                  <object class="GtkSpinButton" id="spDpi">
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="invisible_char">●</property>
+                    <property name="text">300</property>
+                    <property name="primary_icon_activatable">False</property>
+                    <property name="secondary_icon_activatable">False</property>
+                    <property name="adjustment">adjustmentDpi</property>
+                    <property name="value">300</property>
+                  </object>
+                  <packing>
+                    <property name="left_attach">1</property>
+                    <property name="top_attach">0</property>
+                  </packing>
+                </child>
+                <child>
                   <placeholder/>
                 </child>
                 <child>
@@ -286,5 +297,8 @@ Select pages to export</property>
       <action-widget response="2">btCancel</action-widget>
       <action-widget response="1">btOk</action-widget>
     </action-widgets>
+  </object>
+  <object class="GtkEntryBuffer" id="entrybuffer1">
+    <property name="text" translatable="yes">0</property>
   </object>
 </interface>
