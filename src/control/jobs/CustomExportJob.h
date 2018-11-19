@@ -1,7 +1,7 @@
 /*
  * Xournal++
  *
- * A job to export PDF
+ * A customized export
  *
  * @author Xournal++ Team
  * https://github.com/xournalpp/xournalpp
@@ -13,13 +13,13 @@
 
 #include "BaseExportJob.h"
 
-class PdfExportJob : public BaseExportJob
+class CustomExportJob : public BaseExportJob
 {
 public:
-	PdfExportJob(Control* control);
+	CustomExportJob(Control* control);
 
 protected:
-	virtual ~PdfExportJob();
+	virtual ~CustomExportJob();
 
 private:
 	XOJ_TYPE_ATTRIB;

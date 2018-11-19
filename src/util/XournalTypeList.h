@@ -26,7 +26,7 @@ XOJ_DECLARE_TYPE(ActionSelectionListener, 14);
 XOJ_DECLARE_TYPE(ActionHandler, 15);
 XOJ_DECLARE_TYPE(ClipboardHandler, 16);
 XOJ_DECLARE_TYPE(Control, 17);
-XOJ_DECLARE_TYPE(ExportHandler, 18);
+XOJ_DECLARE_TYPE(BaseExportJob, 18);
 XOJ_DECLARE_TYPE(AboutDialog, 19);
 XOJ_DECLARE_TYPE(ButtonConfigGui, 20);
 XOJ_DECLARE_TYPE(ExportDialog, 21);
@@ -230,5 +230,6 @@ XOJ_DECLARE_TYPE(RepaintWidgetHandler, 218);
 XOJ_DECLARE_TYPE(PageTemplateDialog, 219);
 XOJ_DECLARE_TYPE(PageTemplateSettings, 220);
 XOJ_DECLARE_TYPE(XojOpenDlg, 221);
+XOJ_DECLARE_TYPE(CustomExportJob, 222);
 
 //XOJ_DECLARE_TYPE(XXXXXXXXXXXXXXXX, 206);

@@ -21,13 +21,23 @@ ExportDialog::ExportDialog(GladeSearchpath* gladeSearchPath, Settings* settings,
 
 	gtk_spin_button_set_value(GTK_SPIN_BUTTON(get("spPngResolution")), 300);
 
-	g_signal_connect(get("txtPages"), "focus-in-event", G_CALLBACK(&rangeFocused), (gpointer) this);
+	g_signal_connect(get("txtPages"), "focus-in-event", G_CALLBACK(&rangeFocused), this);
 
-	g_signal_connect(G_OBJECT(this->typesView), "cursor-changed", G_CALLBACK(&fileTypeSelected), (gpointer) this);
+	g_signal_connect(G_OBJECT(this->typesView), "cursor-changed", G_CALLBACK(&fileTypeSelected), this);
 
 	gtk_file_chooser_set_current_folder(GTK_FILE_CHOOSER(this->window), settings->getLastSavePath().c_str());
 
-	g_signal_connect(this->window, "selection-changed", G_CALLBACK(&selectionChanged), (gpointer) this);
+	g_signal_connect(this->window, "selection-changed", G_CALLBACK(&selectionChanged), this);
+}
+
+ExportDialog::~ExportDialog()
+{
+	XOJ_CHECK_TYPE(ExportDialog);
+
+	g_object_unref(this->typesModel);
+	this->typesModel = NULL;
+
+	XOJ_RELEASE_TYPE(ExportDialog);
 }
 
 void ExportDialog::setupModel()
@@ -47,12 +57,12 @@ void ExportDialog::setupModel()
 
 	gtk_tree_view_column_set_expand(col, FALSE);
 
-	//use alternating colors
+	// use alternating colors
 	g_object_set(G_OBJECT(this->typesView), "rules-hint", TRUE, NULL);
 
 	gtk_tree_view_set_model(this->typesView, GTK_TREE_MODEL(this->typesModel));
 
-	addFileType(_C("By extension"), "", 0, "All files", true);
+	addFileType(_C("By extension"), "", 0, _C("All files"), true);
 	addFileType("Portable Document Format",  "pdf", EXPORT_FORMAT_PDF);
 	addFileType("Portable Network Graphics", "png", EXPORT_FORMAT_PNG);
 	addFileType("Scalable Vector Graphics",  "svg", EXPORT_FORMAT_SVG);
@@ -61,12 +71,13 @@ void ExportDialog::setupModel()
 
 void ExportDialog::addFileType(string typeDesc, string pattern, gint type, string filterName, bool select)
 {
+	XOJ_CHECK_TYPE(ExportDialog);
+
 	GtkFileFilter *filter = gtk_file_filter_new();
-	string fullName;
 
 	if (!pattern.empty())
 	{
-		fullName = (!filterName.empty() ? filterName : typeDesc) + " (*." + pattern + ")";
+		string fullName = (!filterName.empty() ? filterName : typeDesc) + " (*." + pattern + ")";
 		gtk_file_filter_set_name(filter, fullName.c_str());
 		gtk_file_filter_add_pattern(filter, pattern.c_str());
 	}
@@ -89,13 +100,6 @@ void ExportDialog::addFileType(string typeDesc, string pattern, gint type, strin
 	}
 }
 
-ExportDialog::~ExportDialog()
-{
-	XOJ_RELEASE_TYPE(ExportDialog);
-
-	g_object_unref(this->typesModel);
-}
-
 PageRangeVector ExportDialog::getRange()
 {
 	XOJ_CHECK_TYPE(ExportDialog);
@@ -103,10 +107,8 @@ PageRangeVector ExportDialog::getRange()
 	return this->range;
 }
 
-void ExportDialog::selectionChanged(GtkFileChooser* chooser, gpointer user_data)
+void ExportDialog::selectionChanged(GtkFileChooser* chooser, ExportDialog* dlg)
 {
-	ExportDialog* dlg = (ExportDialog*) user_data;
-
 	XOJ_CHECK_TYPE_OBJ(dlg, ExportDialog);
 
 	char* file = gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(dlg->window));
@@ -161,9 +163,9 @@ int ExportDialog::getPngDpi()
 	return this->resolution;
 }
 
-gboolean ExportDialog::rangeFocused(GtkWidget* widget, GdkEvent* event, gpointer user_data)
+gboolean ExportDialog::rangeFocused(GtkWidget* widget, GdkEvent* event, ExportDialog* dlg)
 {
-	ExportDialog* dlg = (ExportDialog*) user_data;
+	XOJ_CHECK_TYPE_OBJ(dlg, ExportDialog);
 
 	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(dlg->get("rdRangePages")), TRUE);
 
@@ -171,9 +173,9 @@ gboolean ExportDialog::rangeFocused(GtkWidget* widget, GdkEvent* event, gpointer
 	return FALSE;
 }
 
-void ExportDialog::fileTypeSelected(GtkTreeView* treeview, gpointer user_data)
+void ExportDialog::fileTypeSelected(GtkTreeView* treeview, ExportDialog* dlg)
 {
-	ExportDialog* dlg = (ExportDialog*) user_data;
+	XOJ_CHECK_TYPE_OBJ(dlg, ExportDialog);
 
 	GFile* file = gtk_file_chooser_get_file(GTK_FILE_CHOOSER(dlg->window));
 
@@ -422,22 +424,18 @@ void ExportDialog::show(GtkWindow* parent)
 {
 	XOJ_CHECK_TYPE(ExportDialog);
 
-	int res = 0;
-	do
+	while (true)
 	{
 		gtk_window_set_transient_for(GTK_WINDOW(this->window), parent);
-		res = gtk_dialog_run(GTK_DIALOG(this->window));
+		int res = gtk_dialog_run(GTK_DIALOG(this->window));
 
-		if (res == 2)
+		// Button 2 is save
+		if (res == 2 && validate())
 		{
-			if (validate())
-			{
-				handleData();
-				break;
-			}
+			handleData();
+			break;
 		}
 	}
-	while (res == 2);
 
 	gtk_widget_hide(this->window);
 }

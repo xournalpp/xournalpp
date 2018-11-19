@@ -43,11 +43,11 @@ private:
 	/**
 	 * Callback for a changed selection of an output file
 	 */
-	static void selectionChanged(GtkFileChooser* chooser, gpointer user_data);
+	static void selectionChanged(GtkFileChooser* chooser, ExportDialog* dlg);
 
-	static gboolean rangeFocused(GtkWidget* widget, GdkEvent* event, gpointer user_data);
+	static gboolean rangeFocused(GtkWidget* widget, GdkEvent* event, ExportDialog* dlg);
 
-	static void fileTypeSelected(GtkTreeView* treeview, gpointer user_data);
+	static void fileTypeSelected(GtkTreeView* treeview, ExportDialog* dlg);
 
 	void addFileType(string typeDesc, string pattern, gint type = 0,
 					 string filterName = "", bool select = false);

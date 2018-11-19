@@ -73,7 +73,7 @@
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <child>
-                  <object class="GtkHBox" id="hbox1">
+                  <object class="GtkBox" id="box1">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <child>
@@ -172,18 +172,12 @@
               <object class="GtkExpander" id="expander1">
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
+                <property name="hexpand">True</property>
                 <child>
-                  <object class="GtkTable" id="table1">
+                  <object class="GtkGrid" id="grid1">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <property name="n_rows">4</property>
-                    <property name="n_columns">2</property>
-                    <child>
-                      <placeholder/>
-                    </child>
-                    <child>
-                      <placeholder/>
-                    </child>
+                    <property name="hexpand">True</property>
                     <child>
                       <object class="GtkRadioButton" id="rdRangeAll">
                         <property name="label" translatable="yes">All pages</property>
@@ -194,6 +188,10 @@
                         <property name="active">True</property>
                         <property name="draw_indicator">True</property>
                       </object>
+                      <packing>
+                        <property name="left_attach">0</property>
+                        <property name="top_attach">0</property>
+                      </packing>
                     </child>
                     <child>
                       <object class="GtkRadioButton" id="rdRangeCurrent">
@@ -202,12 +200,12 @@
                         <property name="can_focus">True</property>
                         <property name="receives_default">False</property>
                         <property name="xalign">0</property>
+                        <property name="active">True</property>
                         <property name="draw_indicator">True</property>
-                        <property name="group">rdRangeAll</property>
                       </object>
                       <packing>
+                        <property name="left_attach">0</property>
                         <property name="top_attach">1</property>
-                        <property name="bottom_attach">2</property>
                       </packing>
                     </child>
                     <child>
@@ -217,12 +215,12 @@
                         <property name="can_focus">True</property>
                         <property name="receives_default">False</property>
                         <property name="xalign">0</property>
+                        <property name="active">True</property>
                         <property name="draw_indicator">True</property>
-                        <property name="group">rdRangeAll</property>
                       </object>
                       <packing>
+                        <property name="left_attach">0</property>
                         <property name="top_attach">2</property>
-                        <property name="bottom_attach">3</property>
                       </packing>
                     </child>
                     <child>
@@ -231,28 +229,32 @@
                         <property name="can_focus">False</property>
                         <property name="label" translatable="yes">&lt;i&gt;Example:&lt;/i&gt; 1-3 or 1,3,5-7 etc.</property>
                         <property name="use_markup">True</property>
+                        <property name="xalign">0</property>
                       </object>
                       <packing>
                         <property name="left_attach">1</property>
-                        <property name="right_attach">2</property>
                         <property name="top_attach">3</property>
-                        <property name="bottom_attach">4</property>
                       </packing>
                     </child>
                     <child>
                       <object class="GtkEntry" id="txtPages">
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
+                        <property name="hexpand">True</property>
                         <property name="invisible_char">●</property>
                         <property name="primary_icon_activatable">False</property>
                         <property name="secondary_icon_activatable">False</property>
                       </object>
                       <packing>
                         <property name="left_attach">1</property>
-                        <property name="right_attach">2</property>
                         <property name="top_attach">2</property>
-                        <property name="bottom_attach">3</property>
                       </packing>
+                    </child>
+                    <child>
+                      <placeholder/>
+                    </child>
+                    <child>
+                      <placeholder/>
                     </child>
                     <child>
                       <placeholder/>
@@ -284,6 +286,7 @@
       </object>
     </child>
     <action-widgets>
+      <action-widget response="0">btnClose</action-widget>
       <action-widget response="2">btnExport</action-widget>
     </action-widgets>
   </object>

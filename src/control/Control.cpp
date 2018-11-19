@@ -1,6 +1,5 @@
 #include "Control.h"
 
-#include "ExportHandler.h"
 #include "PrintHandler.h"
 
 #include "gui/Cursor.h"
@@ -21,6 +20,7 @@
 #include "gui/XournalView.h"
 #include "jobs/AutosaveJob.h"
 #include "jobs/BlockingJob.h"
+#include "jobs/CustomExportJob.h"
 #include "jobs/PdfExportJob.h"
 #include "jobs/SaveJob.h"
 #include "xojfile/LoadHandler.h"
@@ -2658,7 +2658,17 @@ void Control::exportAsPdf()
 {
 	XOJ_CHECK_TYPE(Control);
 
-	PdfExportJob* job = new PdfExportJob(this);
+	exportBase(new PdfExportJob(this));
+}
+
+void Control::exportAs()
+{
+	XOJ_CHECK_TYPE(Control);
+	exportBase(new CustomExportJob(this));
+}
+
+void Control::exportBase(BaseExportJob* job)
+{
 	if (job->showFilechooser())
 	{
 		this->scheduler->addJob(job, JOB_PRIORITY_NONE);
@@ -2669,15 +2679,6 @@ void Control::exportAsPdf()
 		unblock();
 	}
 	job->unref();
-}
-
-void Control::exportAs()
-{
-	XOJ_CHECK_TYPE(Control);
-
-	ExportHandler handler;
-
-	handler.runExportWithDialog(this->gladeSearchPath, this->settings, this->doc, this, getCurrentPageNo());
 }
 
 bool Control::saveAs()
