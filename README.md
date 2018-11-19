@@ -3,7 +3,7 @@
 [![Build Status](https://travis-ci.org/xournalpp/xournalpp.svg?branch=string_new)](https://travis-ci.org/xournalpp/xournalpp)
 [![Join the chat at https://gitter.im/xournalpp/xournalpp](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/xournalpp/xournalpp?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-## Description
+## Features
 
 Xournal++ is a hand note taking software written in C++ with the target of flexibility, functionality and speed.
 Stroke recognizer and other parts are based on Xournal Code, which you can find at [sourceforge](http://sourceforge.net/projects/xournal/)
@@ -21,6 +21,8 @@ Xournal++ features:
 * Customizeable toolbar, with multiple configurations, e.g. to optimize toolbar for portrait / landscape
 * Page Template definitions
 * Shape drawing (line, arrow, circle, rect)
+
+![Screenshot](readme/main.png?raw=true "Xournal++ Screenshot")
 
 Hopefully you'll enjoy it!
 
