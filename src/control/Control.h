@@ -44,6 +44,7 @@ class Cursor;
 class ToolbarDragDropHandler;
 class MetadataEntry;
 class MetadataCallbackData;
+class BaseExportJob;
 
 class Control : public ActionHandler,
 	public ToolListener,
@@ -66,6 +67,7 @@ public:
 	void print();
 	void exportAsPdf();
 	void exportAs();
+	void exportBase(BaseExportJob* job);
 	bool save(bool synchron = false);
 	bool saveAs();
 	void quit();

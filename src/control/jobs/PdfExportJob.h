@@ -11,17 +11,9 @@
 
 #pragma once
 
-#include "BlockingJob.h"
+#include "BaseExportJob.h"
 
-#include <StringUtils.h>
-#include <XournalType.h>
-
-#include <boost/filesystem/path.hpp>
-using boost::filesystem::path;
-
-class Control;
-
-class PdfExportJob : public BlockingJob
+class PdfExportJob : public BaseExportJob
 {
 public:
 	PdfExportJob(Control* control);
@@ -31,15 +23,12 @@ protected:
 
 public:
 	void run(bool noThreads);
-	virtual void afterRun();
 
-public:
-	bool showFilechooser();
+protected:
+	virtual void addFilterToDialog();
+	virtual void prepareSavePath(path& path);
+	virtual bool isUriValid(string& uri);
 
 private:
 	XOJ_TYPE_ATTRIB;
-
-	path filename;
-
-	string errorMsg;
 };
