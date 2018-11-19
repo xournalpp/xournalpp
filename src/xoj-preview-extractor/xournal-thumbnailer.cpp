@@ -10,7 +10,7 @@
  */
 
 // Set to true to write a log with errors and debug logs to /tmp/xojtmb.log
-#define DEBUG_THUMBNAILER true
+#define DEBUG_THUMBNAILER false
 
 
 #include <config.h>
