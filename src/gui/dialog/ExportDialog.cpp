@@ -5,19 +5,16 @@
 #include <PageRange.h>
 
 ExportDialog::ExportDialog(GladeSearchpath* gladeSearchPath, Settings* settings, int pageCount, int currentPage)
- : GladeGui(gladeSearchPath, "export.glade", "exportDialog")
+ : GladeGui(gladeSearchPath, "exportSettings.glade", "exportDialog")
 {
 	XOJ_INIT_TYPE(ExportDialog);
-
+/*
 	this->pageCount = pageCount;
 	this->currentPage = currentPage;
 	this->resolution = 72;
 	this->settings = settings;
 	this->type = EXPORT_FORMAT_PNG;
-	this->typesModel = gtk_list_store_new(3, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_INT);
 	this->typesView = GTK_TREE_VIEW(get("lstTypes"));
-
-	setupModel();
 
 	gtk_spin_button_set_value(GTK_SPIN_BUTTON(get("spPngResolution")), 300);
 
@@ -28,94 +25,21 @@ ExportDialog::ExportDialog(GladeSearchpath* gladeSearchPath, Settings* settings,
 	gtk_file_chooser_set_current_folder(GTK_FILE_CHOOSER(this->window), settings->getLastSavePath().c_str());
 
 	g_signal_connect(this->window, "selection-changed", G_CALLBACK(&selectionChanged), this);
+	*/
 }
 
 ExportDialog::~ExportDialog()
 {
 	XOJ_CHECK_TYPE(ExportDialog);
 
-	g_object_unref(this->typesModel);
-	this->typesModel = NULL;
-
 	XOJ_RELEASE_TYPE(ExportDialog);
 }
-
-void ExportDialog::setupModel()
-{
-	XOJ_CHECK_TYPE(ExportDialog);
-
-	GtkCellRenderer* renderer = gtk_cell_renderer_text_new();
-
-	gtk_tree_view_insert_column_with_attributes(this->typesView, -1, _C("File Type"), renderer, "text", 0, NULL);
-	gtk_tree_view_insert_column_with_attributes(this->typesView, -1, _C("Extension"), renderer, "text", 1, NULL);
-
-	GtkTreeViewColumn* col = gtk_tree_view_get_column(this->typesView, COL_FILEDESC);
-
-	gtk_tree_view_column_set_expand(col, TRUE);
-
-	col = gtk_tree_view_get_column(this->typesView, COL_EXTENSION);
-
-	gtk_tree_view_column_set_expand(col, FALSE);
-
-	// use alternating colors
-	g_object_set(G_OBJECT(this->typesView), "rules-hint", TRUE, NULL);
-
-	gtk_tree_view_set_model(this->typesView, GTK_TREE_MODEL(this->typesModel));
-
-	addFileType(_C("By extension"), "", 0, _C("All files"), true);
-	addFileType("Portable Document Format",  "pdf", EXPORT_FORMAT_PDF);
-	addFileType("Portable Network Graphics", "png", EXPORT_FORMAT_PNG);
-	addFileType("Scalable Vector Graphics",  "svg", EXPORT_FORMAT_SVG);
-	addFileType("Encapsulated PostScript",   "eps", EXPORT_FORMAT_EPS);
-}
-
-void ExportDialog::addFileType(string typeDesc, string pattern, gint type, string filterName, bool select)
-{
-	XOJ_CHECK_TYPE(ExportDialog);
-
-	GtkFileFilter *filter = gtk_file_filter_new();
-
-	if (!pattern.empty())
-	{
-		string fullName = (!filterName.empty() ? filterName : typeDesc) + " (*." + pattern + ")";
-		gtk_file_filter_set_name(filter, fullName.c_str());
-		gtk_file_filter_add_pattern(filter, pattern.c_str());
-	}
-	else
-	{
-		gtk_file_filter_set_name(filter, (!filterName.empty() ? filterName.c_str() : typeDesc.c_str()));
-		gtk_file_filter_add_pattern(filter, "*");
-	}
-
-	gtk_file_chooser_add_filter(GTK_FILE_CHOOSER(this->window), filter);
-
-	GtkTreeIter iter;
-	gtk_list_store_append(this->typesModel, &iter);
-
-	gtk_list_store_set(this->typesModel, &iter, COL_FILEDESC, typeDesc, COL_EXTENSION, pattern, COL_TYPE, type, -1);
-
-	if (select)
-	{
-		gtk_tree_selection_select_iter(gtk_tree_view_get_selection(this->typesView), &iter);
-	}
-}
-
+/*
 PageRangeVector ExportDialog::getRange()
 {
 	XOJ_CHECK_TYPE(ExportDialog);
 
 	return this->range;
-}
-
-void ExportDialog::selectionChanged(GtkFileChooser* chooser, ExportDialog* dlg)
-{
-	XOJ_CHECK_TYPE_OBJ(dlg, ExportDialog);
-
-	char* file = gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(dlg->window));
-
-	gtk_widget_set_sensitive(GTK_WIDGET(dlg->get("btnExport")), !!file);
-
-	if (file) g_free(file);
 }
 
 void ExportDialog::handleData()
@@ -419,7 +343,7 @@ bool ExportDialog::fileTypeByExtension()
 
 	return validExtension;
 }
-
+*/
 void ExportDialog::show(GtkWindow* parent)
 {
 	XOJ_CHECK_TYPE(ExportDialog);
@@ -430,12 +354,13 @@ void ExportDialog::show(GtkWindow* parent)
 		int res = gtk_dialog_run(GTK_DIALOG(this->window));
 
 		// Button 2 is save
-		if (res == 2 && validate())
+		if (res == 2 /*&& validate()*/)
 		{
-			handleData();
+			//handleData();
 			break;
 		}
 	}
 
 	gtk_widget_hide(this->window);
 }
+

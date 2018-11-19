@@ -30,14 +30,23 @@ protected:
 	virtual ~BaseExportJob();
 
 public:
-	void run(bool noThreads);
 	virtual void afterRun();
 
 public:
-	bool showFilechooser();
+	virtual bool showFilechooser();
+
+protected:
+	void initDialog();
+	virtual void addFilterToDialog() = 0;
+	GtkFileFilter* addFileFilterToDialog(string name, string pattern);
+	virtual void addExtensionToFilePath() = 0;
+	virtual void prepareSavePath(path& path);
 
 private:
 	XOJ_TYPE_ATTRIB;
+
+protected:
+	GtkWidget* dialog;
 
 	path filename;
 

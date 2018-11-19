@@ -1,44 +1,61 @@
 #include "BaseExportJob.h"
 
-#include "SynchronizedProgressListener.h"
 #include "control/Control.h"
-#include "pdf/popplerdirect/PdfExport.h"
 
 #include <i18n.h>
 
 #include <boost/algorithm/string/predicate.hpp>
 
 BaseExportJob::BaseExportJob(Control* control, string name)
- : BlockingJob(control, name)
+ : BlockingJob(control, name),
+   dialog(NULL)
 {
 	XOJ_INIT_TYPE(BaseExportJob);
 }
 
 BaseExportJob::~BaseExportJob()
 {
+	XOJ_CHECK_TYPE(BaseExportJob);
+
 	XOJ_RELEASE_TYPE(BaseExportJob);
+}
+
+void BaseExportJob::initDialog()
+{
+	dialog = gtk_file_chooser_dialog_new(_C("Export PDF"), (GtkWindow*) *control->getWindow(), GTK_FILE_CHOOSER_ACTION_SAVE,
+													_C("_Cancel"), GTK_RESPONSE_CANCEL,
+													_C("_Save"), GTK_RESPONSE_OK, NULL);
+
+	gtk_file_chooser_set_local_only(GTK_FILE_CHOOSER(dialog), true);
+}
+
+GtkFileFilter* BaseExportJob::addFileFilterToDialog(string name, string pattern)
+{
+	GtkFileFilter* filter = gtk_file_filter_new();
+	gtk_file_filter_set_name(filter, name.c_str());
+	gtk_file_filter_add_pattern(filter, pattern.c_str());
+	gtk_file_chooser_add_filter(GTK_FILE_CHOOSER(dialog), filter);
+
+	return filter;
+}
+
+void BaseExportJob::prepareSavePath(path& path)
+{
+	XOJ_CHECK_TYPE(BaseExportJob);
+	// Nothing to do here, but will be overwritten
 }
 
 bool BaseExportJob::showFilechooser()
 {
 	XOJ_CHECK_TYPE(BaseExportJob);
 
-	Settings* settings = control->getSettings();
-	Document* doc = control->getDocument();
-
-	GtkWidget* dialog = gtk_file_chooser_dialog_new(_C("Export PDF"), (GtkWindow*) *control->getWindow(), GTK_FILE_CHOOSER_ACTION_SAVE,
-													_C("_Cancel"), GTK_RESPONSE_CANCEL,
-													_C("_Save"), GTK_RESPONSE_OK, NULL);
-
-	gtk_file_chooser_set_local_only(GTK_FILE_CHOOSER(dialog), false);
-
-	GtkFileFilter* filterPdf = gtk_file_filter_new();
-	gtk_file_filter_set_name(filterPdf, _C("PDF files"));
-	gtk_file_filter_add_pattern(filterPdf, "*.pdf");
-	gtk_file_chooser_add_filter(GTK_FILE_CHOOSER(dialog), filterPdf);
+	initDialog();
+	addFilterToDialog();
 
 	path savePath;
 
+	Settings* settings = control->getSettings();
+	Document* doc = control->getDocument();
 	doc->lock();
 	if (!doc->getFilename().empty())
 	{
@@ -54,16 +71,11 @@ bool BaseExportJob::showFilechooser()
 		char stime[128];
 		strftime(stime, sizeof(stime), settings->getDefaultSaveName().c_str(), localtime(&curtime));
 		savePath /= stime;
-
-		if (savePath.extension() != ".xoj")
-		{
-			savePath += ".xoj";
-		}
 	}
 	doc->unlock();
 
-	savePath += ".pdf";
-		
+	prepareSavePath(savePath);
+
 	GFile* folder = g_file_new_for_path(savePath.parent_path().c_str());
 	gtk_file_chooser_set_current_folder_uri(GTK_FILE_CHOOSER(dialog), g_file_get_uri(folder));
 	g_object_unref(folder);
@@ -86,6 +98,9 @@ bool BaseExportJob::showFilechooser()
 	}
 
 	this->filename = path(gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(dialog)));
+
+	addExtensionToFilePath();
+
 	settings->setLastSavePath(this->filename.parent_path());
 
 	gtk_widget_destroy(dialog);
@@ -108,26 +123,3 @@ void BaseExportJob::afterRun()
 	}
 }
 
-void BaseExportJob::run(bool noThreads)
-{
-	XOJ_CHECK_TYPE(BaseExportJob);
-
-	SynchronizedProgressListener pglistener(this->control);
-
-	Document* doc = control->getDocument();
-	doc->lock();
-	PdfExport pdf(doc, &pglistener);
-	doc->unlock();
-
-	if (!pdf.createPdf(this->filename))
-	{
-		if (control->getWindow())
-		{
-			callAfterRun();
-		}
-		else
-		{
-			g_error("%s%s", "Create pdf failed: ", pdf.getLastError().c_str());
-		}
-	}
-}

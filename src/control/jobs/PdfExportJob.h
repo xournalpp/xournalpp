@@ -21,6 +21,14 @@ public:
 protected:
 	virtual ~PdfExportJob();
 
+public:
+	void run(bool noThreads);
+
+protected:
+	virtual void addFilterToDialog();
+	virtual void addExtensionToFilePath();
+	virtual void prepareSavePath(path& path);
+
 private:
 	XOJ_TYPE_ATTRIB;
 };

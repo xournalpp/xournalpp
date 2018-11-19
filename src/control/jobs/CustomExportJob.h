@@ -21,6 +21,16 @@ public:
 protected:
 	virtual ~CustomExportJob();
 
+public:
+	void run(bool noThreads);
+
+public:
+	virtual bool showFilechooser();
+
+protected:
+	virtual void addFilterToDialog();
+	virtual void addExtensionToFilePath();
+
 private:
 	XOJ_TYPE_ATTRIB;
 };

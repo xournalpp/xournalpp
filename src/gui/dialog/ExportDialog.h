@@ -40,19 +40,9 @@ private:
 	bool validate();
 	void handleData();
 
-	/**
-	 * Callback for a changed selection of an output file
-	 */
-	static void selectionChanged(GtkFileChooser* chooser, ExportDialog* dlg);
-
 	static gboolean rangeFocused(GtkWidget* widget, GdkEvent* event, ExportDialog* dlg);
 
 	static void fileTypeSelected(GtkTreeView* treeview, ExportDialog* dlg);
-
-	void addFileType(string typeDesc, string pattern, gint type = 0,
-					 string filterName = "", bool select = false);
-
-	void setupModel();
 
 	bool validFilename();
 	bool validExtension();
@@ -71,8 +61,6 @@ private:
 	PageRangeVector range;
 
 	Settings* settings;
-	GtkListStore* typesModel;
-	GtkTreeView* typesView;
 
 	enum ColIndex
 	{
