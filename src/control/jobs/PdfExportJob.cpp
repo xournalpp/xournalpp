@@ -1,8 +1,8 @@
 #include "PdfExportJob.h"
+#include "SynchronizedProgressListener.h"
 
 #include "control/Control.h"
 #include "pdf/popplerdirect/PdfExport.h"
-#include "SynchronizedProgressListener.h"
 
 #include <i18n.h>
 
@@ -64,7 +64,7 @@ void PdfExportJob::run(bool noThreads)
 		}
 		else
 		{
-			g_error("%s%s", "Create pdf failed: ", pdf.getLastError().c_str());
+			this->errorMsg = pdf.getLastError();
 		}
 	}
 }

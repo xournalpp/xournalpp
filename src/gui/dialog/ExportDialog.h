@@ -11,7 +11,6 @@
 
 #pragma once
 
-#include "control/jobs/ExportFormtType.h"
 #include "control/settings/Settings.h"
 #include "gui/GladeGui.h"
 
@@ -24,48 +23,22 @@ using boost::filesystem::path;
 class ExportDialog : public GladeGui
 {
 public:
-	ExportDialog(GladeSearchpath* gladeSearchPath, Settings* settings, int pageCount, int currentPage);
+	ExportDialog(GladeSearchpath* gladeSearchPath);
 	virtual ~ExportDialog();
 
 public:
 	virtual void show(GtkWindow* parent);
-
-	PageRangeVector getRange();
+	void removeDpiSelection();
+	void initPages(int current, int count);
 	int getPngDpi();
-	ExportFormtType getFormatType();
-
-	string getFilePath();
-
-private:
-	bool validate();
-	void handleData();
-
-	static gboolean rangeFocused(GtkWidget* widget, GdkEvent* event, ExportDialog* dlg);
-
-	static void fileTypeSelected(GtkTreeView* treeview, ExportDialog* dlg);
-
-	bool validFilename();
-	bool validExtension();
-
-	bool fileTypeByExtension();
+	bool isConfirmed();
+	PageRangeVector getRange();
 
 private:
 	XOJ_TYPE_ATTRIB;
 
-
-	int pageCount;
 	int currentPage;
-	int resolution;
-	ExportFormtType type;
+	int pageCount;
 
-	PageRangeVector range;
-
-	Settings* settings;
-
-	enum ColIndex
-	{
-		COL_FILEDESC = 0,
-		COL_EXTENSION = 1,
-		COL_TYPE = 2
-	};
+	bool confirmed;
 };
