@@ -253,6 +253,10 @@ void LatexController::insertTexImage()
 	doc->unlock();
 
 	control->getUndoRedoHandler()->addUndoAction(new InsertUndoAction(page, layer, img));
+
+	// Select element
+	EditSelection* selection = new EditSelection(control->getUndoRedoHandler(), img, view, page);
+	view->getXournal()->setSelection(selection);
 }
 
 void LatexController::run()
