@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp 1.0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-11-19 21:29+0100\n"
+"POT-Creation-Date: 2018-11-20 07:44+0100\n"
 "PO-Revision-Date: 2017-09-18 09:58+0200\n"
 "Last-Translator: Jan Hrdina <jan.hrdka@gmail.com>\n"
 "Language-Team: čeština <>\n"
@@ -434,8 +434,8 @@ msgstr "Barva okraje pro aktuální stránku a jiné výběry"
 msgid "Built on:"
 msgstr ""
 
-#: ../src/control/Control.cpp:2270 ../src/control/Control.cpp:2739
-#: ../src/control/Control.cpp:2776 ../src/control/XournalMain.cpp:103
+#: ../src/control/Control.cpp:2311 ../src/control/Control.cpp:2780
+#: ../src/control/Control.cpp:2817 ../src/control/XournalMain.cpp:103
 msgid "Cancel"
 msgstr "Zrušit"
 
@@ -472,7 +472,7 @@ msgstr ""
 msgid "Contents"
 msgstr "Obsah"
 
-#: ../src/control/Control.cpp:1004 ../src/control/Control.cpp:1012
+#: ../src/control/Control.cpp:1006 ../src/control/Control.cpp:1014
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:306
 msgid "Copy"
 msgstr "Kopírovat"
@@ -534,7 +534,7 @@ msgstr ""
 msgid "Could not remove tool item {1} from Toolbar {2} on position {3}"
 msgstr ""
 
-#: ../src/control/Control.cpp:3237
+#: ../src/control/Control.cpp:3278
 msgid "Could not retrieve LaTeX image file: {1}"
 msgstr "Nelze načíst soubor s LaTeX obrázkem: {1}"
 
@@ -624,11 +624,18 @@ msgstr "Zakázat pravítko a rozpoznávání tvarů"
 msgid "Disable drawing for this device"
 msgstr "Zakázat kreslení tímto zařízením"
 
-#: ../src/control/Control.cpp:2738 ../src/control/Control.cpp:2775
+#: ../src/control/Control.cpp:2779 ../src/control/Control.cpp:2816
 msgid "Discard"
 msgstr "Zahodit"
 
-#: ../src/control/Control.cpp:2772
+#: ../src/control/Control.cpp:2223
+msgid ""
+"Do not open Autosave files. They may will be overwritten!\n"
+"Copy the files to another folder.\n"
+"Files from Folder {1} cannot be opened."
+msgstr ""
+
+#: ../src/control/Control.cpp:2813
 msgid "Document file was removed."
 msgstr "Soubor s dokumentem byl odstraněn."
 
@@ -715,7 +722,7 @@ msgstr "_Nastavení gumy"
 msgid "Eraser type"
 msgstr "Typ gumy"
 
-#: ../src/control/Control.cpp:2432
+#: ../src/control/Control.cpp:2473
 msgid ""
 "Error annotate PDF file \"{1}\"\n"
 "{2}"
@@ -732,7 +739,7 @@ msgstr "Export PDF"
 msgid "Error loading glade file \"{1}\" (try to load \"{2}\")"
 msgstr "Chyba načítání glade souboru „{1}“ (zkuste načíst „{2}“)"
 
-#: ../src/control/Control.cpp:2298
+#: ../src/control/Control.cpp:2339
 msgid "Error opening file \"{1}\""
 msgstr "Chyba otevírání souboru „{1}“"
 
@@ -800,7 +807,7 @@ msgstr ""
 msgid "File name needs to end with .pdf or .png"
 msgstr ""
 
-#: ../src/control/Control.cpp:2217
+#: ../src/control/Control.cpp:2257
 msgid "Filename: {1}"
 msgstr "Název souboru: {1}"
 
@@ -1281,7 +1288,7 @@ msgstr "Znovu"
 msgid "Redo: "
 msgstr "Znovu: "
 
-#: ../src/control/Control.cpp:2269
+#: ../src/control/Control.cpp:2310
 msgid "Remove PDF Background"
 msgstr "Odstranit PDF pozadí"
 
@@ -1315,16 +1322,16 @@ msgstr "Pravítko"
 msgid "Ruler & Stroke Reco."
 msgstr "Pravítko a rozpoz. čáry"
 
-#: ../src/control/jobs/SaveJob.cpp:16 ../src/control/Control.cpp:2737
+#: ../src/control/jobs/SaveJob.cpp:16 ../src/control/Control.cpp:2778
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:300
 msgid "Save"
 msgstr "Uložit"
 
-#: ../src/control/Control.cpp:2774
+#: ../src/control/Control.cpp:2815
 msgid "Save As"
 msgstr "Uložit jako…"
 
-#: ../src/control/Control.cpp:2554 ../src/gui/dialog/PageTemplateDialog.cpp:116
+#: ../src/control/Control.cpp:2595 ../src/gui/dialog/PageTemplateDialog.cpp:116
 msgid "Save File"
 msgstr "Uložit soubor"
 
@@ -1373,7 +1380,7 @@ msgstr "Obdélníkový výběr"
 msgid "Select Region"
 msgstr "Výběr oblasti"
 
-#: ../src/control/Control.cpp:2268
+#: ../src/control/Control.cpp:2309
 msgid "Select another PDF"
 msgstr "Vybrat jiné PDF"
 
@@ -1536,7 +1543,7 @@ msgstr "Text nenalezen"
 msgid "Text not found, searched on all pages"
 msgstr "Text nenalezen, prohledány byly všechny stránky"
 
-#: ../src/control/Control.cpp:974
+#: ../src/control/Control.cpp:976
 msgid ""
 "The Toolbarconfiguration \"{1}\" is predefined, would you create a copy to "
 "edit?"
@@ -1544,11 +1551,11 @@ msgstr ""
 "Konfigurace nástrojové lišty „{1}“ je předdefinována. Přejete si vytvořit "
 "kopii pro úpravy?"
 
-#: ../src/control/Control.cpp:2265
+#: ../src/control/Control.cpp:2306
 msgid "The attached background PDF could not be found."
 msgstr "Přiložené PDF pozadí nebylo nalezeno."
 
-#: ../src/control/Control.cpp:2266
+#: ../src/control/Control.cpp:2307
 msgid "The background PDF could not be found."
 msgstr "PDF pozadí nebylo nalezeno."
 
@@ -1576,7 +1583,7 @@ msgstr ""
 "Xournal++ vytvořil soubor se záznamy o chybách. Zašlete prosím hlášení o "
 "chybě, abychom ji mohli opravit."
 
-#: ../src/control/Control.cpp:869
+#: ../src/control/Control.cpp:871
 msgid "There was an error displaying help: {1}"
 msgstr "Při zobrazování nápovědy došlo k chybě: {1}"
 
@@ -1594,11 +1601,11 @@ msgstr "Tloušťka"
 msgid "Thin"
 msgstr "Tenká"
 
-#: ../src/control/Control.cpp:2735
+#: ../src/control/Control.cpp:2776
 msgid "This document is not saved yet."
 msgstr "Tento dokument ještě nebyl uložen."
 
-#: ../src/control/tools/ImageHandler.cpp:57 ../src/control/Control.cpp:1520
+#: ../src/control/tools/ImageHandler.cpp:57 ../src/control/Control.cpp:1522
 msgid "This image could not be loaded. Error message: {1}"
 msgstr "Obrázek se nepodařilo načíst. Chybová zpráva: {1}"
 
@@ -1671,7 +1678,7 @@ msgstr "Neznámý typ pixmap::domain: {1}"
 msgid "Unknown stroke type: \"{1}\", assuming pen"
 msgstr "Neznámý typ čáry: „{1}“, bereme jej jako pero"
 
-#: ../src/control/Control.cpp:2630
+#: ../src/control/Control.cpp:2671
 msgid "Unsaved Document"
 msgstr "Neuložený dokument"
 
@@ -1730,7 +1737,7 @@ msgstr "Špatný počet bodů, obdrženo {1}, očekáváno {2}"
 msgid "XML Parser error: {1}"
 msgstr "Chyba načítání XML: {1}"
 
-#: ../src/control/stockdlg/XojOpenDlg.cpp:69 ../src/control/Control.cpp:2561
+#: ../src/control/stockdlg/XojOpenDlg.cpp:69 ../src/control/Control.cpp:2602
 msgid "Xournal files"
 msgstr "Soubory Xournalu"
 
@@ -1749,7 +1756,7 @@ msgstr "Xournal++"
 msgid "Yellow"
 msgstr "Žlutá"
 
-#: ../src/control/Control.cpp:1362
+#: ../src/control/Control.cpp:1364
 msgid ""
 "You don't have any PDF pages to select from. Cancel operation.\n"
 "Please select another background type: Menu \"Journal\" / \"Insert Page Type"
@@ -1758,7 +1765,7 @@ msgstr ""
 "Nemáte žádné PDF stránky pro výběr. Operace se ruší.\n"
 "Vyberte prosím jiný druh pozadí: Menu „Zápisník“ / „Vložit stránku typu“."
 
-#: ../src/control/Control.cpp:1551
+#: ../src/control/Control.cpp:1553
 msgid ""
 "You don't have any PDF pages to select from. Cancel operation.\n"
 "Please select another background type: Menu \"Journal\" → \"Insert Page Type"
@@ -1819,7 +1826,7 @@ msgstr "_Anotovat PDF"
 
 #: ../src/control/stockdlg/ImageOpenDlg.cpp:11
 #: ../src/control/stockdlg/XojOpenDlg.cpp:17
-#: ../src/control/jobs/BaseExportJob.cpp:26 ../src/control/Control.cpp:2555
+#: ../src/control/jobs/BaseExportJob.cpp:26 ../src/control/Control.cpp:2596
 #: ../src/gui/dialog/PageTemplateDialog.cpp:117
 #, fuzzy
 msgid "_Cancel"
@@ -1939,7 +1946,7 @@ msgstr "_Předchozí stránka"
 msgid "_Ruled"
 msgstr "_Linkovaný"
 
-#: ../src/control/jobs/BaseExportJob.cpp:27 ../src/control/Control.cpp:2556
+#: ../src/control/jobs/BaseExportJob.cpp:27 ../src/control/Control.cpp:2597
 #: ../src/gui/dialog/PageTemplateDialog.cpp:118
 #, fuzzy
 msgid "_Save"

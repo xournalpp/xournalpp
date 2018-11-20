@@ -953,6 +953,8 @@ int XojPageView::getBufferPixels()
 GtkColorWrapper XojPageView::getSelectionColor()
 {
 	XOJ_CHECK_TYPE(XojPageView);
+
+	XOJ_CHECK_TYPE(XojPageView);
 	GtkWidget* widget = getXournal()->getWidget();
 
 	GtkStyleContext *context = gtk_widget_get_style_context(widget);
@@ -1051,21 +1053,20 @@ TexImage* XojPageView::getSelectedTex()
 		return NULL;
 	}
 
-	TexImage* texMatch = NULL;
-
 	for (Element* e : *theSelection->getElements())
 	{
 		if (e->getType() == ELEMENT_TEXIMAGE)
 		{
-			texMatch = (TexImage*) e;
+			return (TexImage*) e;
 		}
 	}
-	return texMatch;
-
+	return NULL;
 }
 
 Rectangle* XojPageView::getVisibleRect()
 {
+	XOJ_CHECK_TYPE(XojPageView);
+
 	Rectangle* rect = xournal->getVisibleRect(this);
 
 	if (!rect)
@@ -1082,26 +1083,36 @@ Rectangle* XojPageView::getVisibleRect()
 
 Rectangle XojPageView::getRect()
 {
+	XOJ_CHECK_TYPE(XojPageView);
+
 	return Rectangle(getX(), getY(), getDisplayWidth(), getDisplayHeight());
 }
 
 void XojPageView::rectChanged(Rectangle& rect)
 {
+	XOJ_CHECK_TYPE(XojPageView);
+
 	rerenderRect(rect.x, rect.y, rect.width, rect.height);
 }
 
 void XojPageView::rangeChanged(Range &range)
 {
+	XOJ_CHECK_TYPE(XojPageView);
+
 	rerenderRange(range);
 }
 
 void XojPageView::pageChanged()
 {
+	XOJ_CHECK_TYPE(XojPageView);
+
 	rerenderPage();
 }
 
 void XojPageView::elementChanged(Element* elem)
 {
+	XOJ_CHECK_TYPE(XojPageView);
+
 	if (this->inputHandler && elem == this->inputHandler->getStroke())
 	{
 		g_mutex_lock(&this->drawingMutex);

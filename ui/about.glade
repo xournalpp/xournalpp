@@ -165,9 +165,9 @@
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="margin_top">5</property>
-                <property name="label">Andreas Butti, 2010-2018
-Wilson Brenna, 2012-2015 (tex support)
-Marek Pikuła, 2015</property>
+                <property name="label">Andreas Butti, 2010 - 2018
+Wilson Brenna, 2012 - 2015 (tex support)
+Marek Pikuła, 2015 - 2018</property>
                 <property name="use_markup">True</property>
                 <property name="justify">center</property>
               </object>

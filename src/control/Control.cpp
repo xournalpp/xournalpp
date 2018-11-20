@@ -1,6 +1,7 @@
 #include "Control.h"
 
 #include "PrintHandler.h"
+#include "LatexController.h"
 
 #include "gui/Cursor.h"
 #include "gui/dialog/AboutDialog.h"
@@ -242,7 +243,7 @@ void Control::saveSettings()
 
 	gint width = 0;
 	gint height = 0;
-	gtk_window_get_size((GtkWindow*) *this->win, &width, &height);
+	gtk_window_get_size(getGtkWindow(), &width, &height);
 
 	if (!this->win->isMaximized())
 	{
@@ -863,13 +864,13 @@ void Control::help()
 {
 	GError* error = NULL;
 
-	gtk_show_uri(gtk_window_get_screen(GTK_WINDOW(this->win->getWindow())), XOJ_HELP, gtk_get_current_event_time(), &error);
+	gtk_show_uri(gtk_window_get_screen(getGtkWindow()), XOJ_HELP, gtk_get_current_event_time(), &error);
 	if (error)
 	{
-		GtkWidget* dialog = gtk_message_dialog_new((GtkWindow*) getWindow(), GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR,
+		GtkWidget* dialog = gtk_message_dialog_new(getGtkWindow(), GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR,
 												   GTK_BUTTONS_OK, "%s",
 												   FC(_F("There was an error displaying help: {1}") % error->message));
-		gtk_window_set_transient_for(GTK_WINDOW(dialog), GTK_WINDOW(this->getWindow()->getWindow()));
+		gtk_window_set_transient_for(GTK_WINDOW(dialog), getGtkWindow());
 		gtk_dialog_run(GTK_DIALOG(dialog));
 		gtk_widget_destroy(dialog);
 
@@ -971,13 +972,13 @@ void Control::customizeToolbars()
 
 	if (this->win->getSelectedToolbar()->isPredefined())
 	{
-		GtkWidget* dialog = gtk_message_dialog_new((GtkWindow*) *this->win, GTK_DIALOG_DESTROY_WITH_PARENT,
+		GtkWidget* dialog = gtk_message_dialog_new(getGtkWindow(), GTK_DIALOG_DESTROY_WITH_PARENT,
 												   GTK_MESSAGE_QUESTION, GTK_BUTTONS_YES_NO, "%s",
 												   FC(_F("The Toolbarconfiguration \"{1}\" is predefined, "
 												   "would you create a copy to edit?")
 													% this->win->getSelectedToolbar()->getName()));
 
-		gtk_window_set_transient_for(GTK_WINDOW(dialog), GTK_WINDOW(this->getWindow()->getWindow()));
+		gtk_window_set_transient_for(GTK_WINDOW(dialog), getGtkWindow());
 		int res = gtk_dialog_run(GTK_DIALOG(dialog));
 		gtk_widget_destroy(dialog);
 
@@ -1359,12 +1360,12 @@ void Control::insertNewPage(size_t position)
 	{
 		if (this->doc->getPdfPageCount() == 0)
 		{
-			GtkWidget* dialog = gtk_message_dialog_new((GtkWindow*) *win,
+			GtkWidget* dialog = gtk_message_dialog_new(getGtkWindow(),
 													   GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
 													   "%s", _C("You don't have any PDF pages to select from. "
 																"Cancel operation.\nPlease select another background type: "
 																"Menu \"Journal\" / \"Insert Page Type\"."));
-			gtk_window_set_transient_for(GTK_WINDOW(dialog), GTK_WINDOW(this->getWindow()->getWindow()));
+			gtk_window_set_transient_for(GTK_WINDOW(dialog), getGtkWindow());
 			gtk_dialog_run(GTK_DIALOG(dialog));
 			gtk_widget_destroy(dialog);
 
@@ -1500,7 +1501,7 @@ void Control::setPageBackground(ActionType type)
 		{
 
 			bool attach = false;
-			GFile* file = ImageOpenDlg::show((GtkWindow*) *win, settings, true, &attach);
+			GFile* file = ImageOpenDlg::show(getGtkWindow(), settings, true, &attach);
 			if (file == NULL)
 			{
 				return;
@@ -1516,14 +1517,7 @@ void Control::setPageBackground(ActionType type)
 			newImg.setAttach(attach);
 			if (err)
 			{
-				GtkWidget* dialog = gtk_message_dialog_new((GtkWindow*) *win,
-														   GTK_DIALOG_DESTROY_WITH_PARENT,
-														   GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, "%s",
-														   FC(_F("This image could not be loaded. Error message: {1}")
-															% err->message));
-				gtk_window_set_transient_for(GTK_WINDOW(dialog), GTK_WINDOW(this->getWindow()->getWindow()));
-				gtk_dialog_run(GTK_DIALOG(dialog));
-				gtk_widget_destroy(dialog);
+				Util::showErrorToUser(getGtkWindow(), FS(_F("This image could not be loaded. Error message: {1}") % err->message));
 				g_error_free(err);
 				return;
 			}
@@ -1547,7 +1541,7 @@ void Control::setPageBackground(ActionType type)
 	{
 		if (doc->getPdfPageCount() == 0)
 		{
-			GtkWidget* dialog = gtk_message_dialog_new((GtkWindow*) *win,
+			GtkWidget* dialog = gtk_message_dialog_new(getGtkWindow(),
 													   GTK_DIALOG_DESTROY_WITH_PARENT,
 													   GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, "%s",
 													   _C("You don't have any PDF pages to select from. Cancel operation.\n"
@@ -2223,7 +2217,7 @@ bool Control::shouldFileOpen(string filename)
 		string msg = (_F("Do not open Autosave files. They may will be overwritten!\n"
 				"Copy the files to another folder.\n"
 				"Files from Folder {1} cannot be opened.") % basename).str();
-		GtkWidget* dialog = gtk_message_dialog_new(GTK_WINDOW((GtkWindow*) *win), GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR,
+		GtkWidget* dialog = gtk_message_dialog_new(getGtkWindow(), GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR,
 												   GTK_BUTTONS_OK, "%s", msg.c_str());
 		gtk_dialog_run(GTK_DIALOG(dialog));
 		gtk_widget_destroy(dialog);
@@ -2251,7 +2245,7 @@ bool Control::openFile(path filename, int scrollToPage)
 	if (filename.empty())
 	{
 		bool attachPdf = false;
-		XojOpenDlg dlg((GtkWindow*) *win, this->settings);
+		XojOpenDlg dlg(getGtkWindow(), this->settings);
 		filename = dlg.showOpenDialog(false, attachPdf);
 
 		cout << _F("Filename: {1}") % filename.string() << endl;
@@ -2299,7 +2293,7 @@ bool Control::openFile(path filename, int scrollToPage)
 		// give the user a second chance to select a new PDF file, or to discard the PDF
 
 
-		GtkWidget* dialog = gtk_message_dialog_new((GtkWindow*) *getWindow(),
+		GtkWidget* dialog = gtk_message_dialog_new(getGtkWindow(),
 												   GTK_DIALOG_DESTROY_WITH_PARENT,
 													   GTK_MESSAGE_QUESTION, GTK_BUTTONS_NONE, "%s",
 													   h.isAttachedPdfMissing()
@@ -2321,7 +2315,7 @@ bool Control::openFile(path filename, int scrollToPage)
 		else if (res == 1) // select another PDF background
 		{
 			bool attachToDocument = false;
-			XojOpenDlg dlg((GtkWindow*) *win, this->settings);
+			XojOpenDlg dlg(getGtkWindow(), this->settings);
 			path pdfFilename = dlg.showOpenDialog(true, attachToDocument);
 			if (!pdfFilename.empty())
 			{
@@ -2333,7 +2327,7 @@ bool Control::openFile(path filename, int scrollToPage)
 
 	if (!tmp)
 	{
-		GtkWidget* dialog = gtk_message_dialog_new((GtkWindow*) *win,
+		GtkWidget* dialog = gtk_message_dialog_new(getGtkWindow(),
 												   GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR,
 												   GTK_BUTTONS_OK, "%s\n%s",
 												   FC(_F("Error opening file \"{1}\"") % filename),
@@ -2439,7 +2433,7 @@ bool Control::annotatePdf(path filename, bool attachPdf, bool attachToDocument)
 
 	if (filename.empty())
 	{
-		XojOpenDlg dlg((GtkWindow*) *win, this->settings);
+		XojOpenDlg dlg(getGtkWindow(), this->settings);
 		filename = dlg.showOpenDialog(true, attachToDocument);
 		if (filename.empty())
 		{
@@ -2467,7 +2461,7 @@ bool Control::annotatePdf(path filename, bool attachPdf, bool attachToDocument)
 		string errMsg = doc->getLastErrorMsg();
 		this->doc->unlock();
 
-		GtkWidget* dialog = gtk_message_dialog_new((GtkWindow*) *win,
+		GtkWidget* dialog = gtk_message_dialog_new(getGtkWindow(),
 												   GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR,
 												   GTK_BUTTONS_OK, "%s",
 												   FC(_F("Error annotate PDF file \"{1}\"\n{2}") % filename % errMsg));
@@ -2592,7 +2586,7 @@ bool Control::showSaveDialog()
 {
 	XOJ_CHECK_TYPE(Control);
 
-	GtkWidget* dialog = gtk_file_chooser_dialog_new(_C("Save File"), (GtkWindow*) *win,
+	GtkWidget* dialog = gtk_file_chooser_dialog_new(_C("Save File"), getGtkWindow(),
 													GTK_FILE_CHOOSER_ACTION_SAVE, _C("_Cancel"), GTK_RESPONSE_CANCEL,
 													_C("_Save"), GTK_RESPONSE_OK, NULL);
 
@@ -2692,7 +2686,7 @@ void Control::updateWindowTitle()
 
 	title += " - Xournal++";
 
-	gtk_window_set_title((GtkWindow*) *win, title.c_str());
+	gtk_window_set_title(getGtkWindow(), title.c_str());
 }
 
 void Control::exportAsPdf()
@@ -2771,7 +2765,7 @@ bool Control::close(bool destroy)
 
 	if (undoRedo->isChanged())
 	{
-		GtkWidget* dialog = gtk_message_dialog_new((GtkWindow*) *getWindow(), GTK_DIALOG_DESTROY_WITH_PARENT,
+		GtkWidget* dialog = gtk_message_dialog_new(getGtkWindow(), GTK_DIALOG_DESTROY_WITH_PARENT,
 												   GTK_MESSAGE_WARNING, GTK_BUTTONS_NONE, "%s",
 												   _C("This document is not saved yet."));
 
@@ -2808,7 +2802,7 @@ bool Control::close(bool destroy)
 		namespace bf = boost::filesystem;
 		if (!bf::exists(this->doc->getFilename()))
 		{
-			GtkWidget* dialog = gtk_message_dialog_new((GtkWindow*) *getWindow(), GTK_DIALOG_DESTROY_WITH_PARENT,
+			GtkWidget* dialog = gtk_message_dialog_new(getGtkWindow(), GTK_DIALOG_DESTROY_WITH_PARENT,
 													   GTK_MESSAGE_WARNING, GTK_BUTTONS_NONE, "%s",
 													   _C("Document file was removed."));
 
@@ -3190,147 +3184,22 @@ void Control::fontChanged()
 	}
 }
 
-//The core handler for inserting latex
+/**
+ * The core handler for inserting latex
+ */
 void Control::runLatex()
 {
 	XOJ_CHECK_TYPE(Control);
 
 #ifdef ENABLE_MATHTEX
-	this->doc->lock();
+	LatexController latex(this);
+	latex.run();
 
-	int pageNr = getCurrentPageNo();
-	if (pageNr == -1)
-	{
-		return;
-	}
-	XojPageView* view = win->getXournal()->getViewFor(pageNr);
-	if (view == NULL)
-	{
-		return;
-	}
-	//we get the selection
-	PageRef page = this->doc->getPage(pageNr);
-	Layer* layer = page->getSelectedLayer();
-
-	TexImage* img = view->getSelectedTex();
-
-	double imgx = 10;
-	double imgy = 10;
-	double imgheight = 0;
-	double imgwidth = 0;
-	string imgTex;
-	if (img)
-	{
-		//this will get the position of the Latex properly
-		EditSelection* theSelection = win->getXournal()->getSelection();
-		//imgx = img->getX();
-		//imgy = img->getY();
-		imgx = theSelection->getXOnView();
-		imgy = theSelection->getYOnView();
-
-		imgheight = img->getElementHeight();
-		imgwidth = img->getElementWidth();
-		//fix this typecast:
-		imgTex = img->getText();
-	}
-
-	//now call the image handlers
-	this->doc->unlock();
-
-	//need to do this otherwise we can't remove the image for its replacement
-	clearSelectionEndText();
-
-	LatexGlade* mytex = new LatexGlade(this->gladeSearchPath);
-	//determine if we should set a specific string
-	mytex->setTex(imgTex);
-	mytex->show(GTK_WINDOW(this->win->getWindow()));
-	string tmp = mytex->getTex();
-	delete mytex;
-	cout << tmp << endl;
-
-	if (tmp.empty())
-	{
-		return;
-	}
-	if (img)
-	{
-		layer->removeElement((Element*) img, false);
-		view->rerenderElement(img);
-		delete img;
-		img = NULL;
-	}
-
-	//now do all the LatexAction stuff
-	LatexAction texAction(tmp, imgheight * imgwidth);
-	texAction.runCommand();
-
-	this->doc->lock();
-
-	GFile* mygfile = g_file_new_for_path(texAction.getFileName().c_str());
-	cout << "About to insert image...";
-	GError* err = NULL;
-	GFileInputStream* in = g_file_read(mygfile, NULL, &err);
-	g_object_unref(mygfile);
-	if (err)
-	{
-		this->doc->unlock();
-
-		cerr << _F("Could not retrieve LaTeX image file: {1}") % err->message << endl;
-
-		g_error_free(err);
-		return;
-	}
-
-	GdkPixbuf* pixbuf = NULL;
-	pixbuf = gdk_pixbuf_new_from_stream(G_INPUT_STREAM(in), NULL, &err);
-	g_input_stream_close(G_INPUT_STREAM(in), NULL, NULL);
-
-	img = new TexImage();
-	img->setX(imgx);
-	img->setY(imgy);
-	img->setImage(pixbuf);
-	img->setText(tmp);
-
-	if (imgheight)
-	{
-		double ratio = (gdouble) gdk_pixbuf_get_width(pixbuf) / gdk_pixbuf_get_height(pixbuf);
-		if (ratio == 0)
-		{
-			if (imgwidth == 0)
-			{
-				img->setWidth(10);
-			}
-			else
-			{
-				img->setWidth(imgwidth);
-			}
-		}
-		else
-		{
-			img->setWidth(imgheight * ratio);
-		}
-		img->setHeight(imgheight);
-	}
-	else
-	{
-		img->setWidth(gdk_pixbuf_get_width(pixbuf));
-		img->setHeight(gdk_pixbuf_get_height(pixbuf));
-	}
-
-	layer->addElement(img);
-	view->rerenderElement(img);
-
-
-	cout << "Image inserted!" << endl;
-
-	this->doc->unlock();
-
-	undoRedo->addUndoAction(new InsertUndoAction(page, layer, img));
 #else
+	// This should never occur, as the menupoint is also hidden.
 	cout << "Mathtex is disabled. Recompile with ./configure --enable-mathtex, "
 			"ensuring you have the mathtex command on your system." << endl;
 #endif // ENABLE_MATHTEX
-
 }
 
 /**
@@ -3391,6 +3260,13 @@ MainWindow* Control::getWindow()
 	XOJ_CHECK_TYPE(Control);
 
 	return this->win;
+}
+
+GtkWindow* Control::getGtkWindow()
+{
+	XOJ_CHECK_TYPE(Control);
+
+	return GTK_WINDOW(this->win->getWindow());
 }
 
 bool Control::isFullscreen()

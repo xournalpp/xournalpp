@@ -14,19 +14,14 @@
 #pragma once
 
 #include "gui/GladeGui.h"
-#include "model/LayerListener.h"
-#include "model/TexImage.h"
 
 #include <XournalType.h>
 
-#include <gtk/gtk.h>
-#include <glib/gstdio.h>
-
-class LatexGlade : public GladeGui
+class LatexDialog : public GladeGui
 {
 public:
-	LatexGlade(GladeSearchpath* gladeSearchPath);
-	virtual ~LatexGlade();
+	LatexDialog(GladeSearchpath* gladeSearchPath);
+	virtual ~LatexDialog();
 
 public:
 	virtual void show(GtkWindow* parent);

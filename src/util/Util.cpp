@@ -13,6 +13,16 @@
 using std::cout;
 using std::endl;
 
+void Util::showErrorToUser(GtkWindow* win, string msg)
+{
+	GtkWidget* dialog = gtk_message_dialog_new(win,
+											   GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, "%s",
+											   msg.c_str());
+	gtk_window_set_transient_for(GTK_WINDOW(dialog), win);
+	gtk_dialog_run(GTK_DIALOG(dialog));
+	gtk_widget_destroy(dialog);
+}
+
 GdkColor Util::intToGdkColor(int c)
 {
 	GdkColor color = { 0, 0, 0, 0 };

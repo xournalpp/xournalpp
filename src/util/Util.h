@@ -18,6 +18,9 @@ using boost::filesystem::path;
 
 #include <gtk/gtk.h>
 
+#include <string>
+using std::string;
+
 class Util
 {
 private:
@@ -25,6 +28,8 @@ private:
 	virtual ~Util();
 
 public:
+	static void showErrorToUser(GtkWindow* win, string msg);
+
 	static GdkColor intToGdkColor(int c);
 	static int gdkColorToInt(const GdkColor& c);
 

@@ -21,10 +21,10 @@ void AutosaveJob::afterRun()
 {
 	XOJ_CHECK_TYPE(AutosaveJob);
 
-	GtkWidget* dialog = gtk_message_dialog_new((GtkWindow*) control->getWindow(),
+	GtkWidget* dialog = gtk_message_dialog_new(control->getGtkWindow(),
 											   GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, "%s",
 											   FC(_F("Autosave: {1}") % this->error));
-	gtk_window_set_transient_for(GTK_WINDOW(dialog), GTK_WINDOW(this->control->getWindow()->getWindow()));
+	gtk_window_set_transient_for(GTK_WINDOW(dialog), control->getGtkWindow());
 	gtk_dialog_run(GTK_DIALOG(dialog));
 	gtk_widget_destroy(dialog);
 }
