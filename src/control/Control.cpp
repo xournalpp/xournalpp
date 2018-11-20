@@ -243,7 +243,7 @@ void Control::saveSettings()
 
 	gint width = 0;
 	gint height = 0;
-	gtk_window_get_size((GtkWindow*) *this->win, &width, &height);
+	gtk_window_get_size(getGtkWindow(), &width, &height);
 
 	if (!this->win->isMaximized())
 	{
@@ -864,13 +864,13 @@ void Control::help()
 {
 	GError* error = NULL;
 
-	gtk_show_uri(gtk_window_get_screen(GTK_WINDOW(this->win->getWindow())), XOJ_HELP, gtk_get_current_event_time(), &error);
+	gtk_show_uri(gtk_window_get_screen(getGtkWindow()), XOJ_HELP, gtk_get_current_event_time(), &error);
 	if (error)
 	{
-		GtkWidget* dialog = gtk_message_dialog_new((GtkWindow*) getWindow(), GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR,
+		GtkWidget* dialog = gtk_message_dialog_new(getGtkWindow(), GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR,
 												   GTK_BUTTONS_OK, "%s",
 												   FC(_F("There was an error displaying help: {1}") % error->message));
-		gtk_window_set_transient_for(GTK_WINDOW(dialog), GTK_WINDOW(this->getWindow()->getWindow()));
+		gtk_window_set_transient_for(GTK_WINDOW(dialog), getGtkWindow());
 		gtk_dialog_run(GTK_DIALOG(dialog));
 		gtk_widget_destroy(dialog);
 
@@ -972,13 +972,13 @@ void Control::customizeToolbars()
 
 	if (this->win->getSelectedToolbar()->isPredefined())
 	{
-		GtkWidget* dialog = gtk_message_dialog_new((GtkWindow*) *this->win, GTK_DIALOG_DESTROY_WITH_PARENT,
+		GtkWidget* dialog = gtk_message_dialog_new(getGtkWindow(), GTK_DIALOG_DESTROY_WITH_PARENT,
 												   GTK_MESSAGE_QUESTION, GTK_BUTTONS_YES_NO, "%s",
 												   FC(_F("The Toolbarconfiguration \"{1}\" is predefined, "
 												   "would you create a copy to edit?")
 													% this->win->getSelectedToolbar()->getName()));
 
-		gtk_window_set_transient_for(GTK_WINDOW(dialog), GTK_WINDOW(this->getWindow()->getWindow()));
+		gtk_window_set_transient_for(GTK_WINDOW(dialog), getGtkWindow());
 		int res = gtk_dialog_run(GTK_DIALOG(dialog));
 		gtk_widget_destroy(dialog);
 
@@ -1360,12 +1360,12 @@ void Control::insertNewPage(size_t position)
 	{
 		if (this->doc->getPdfPageCount() == 0)
 		{
-			GtkWidget* dialog = gtk_message_dialog_new((GtkWindow*) *win,
+			GtkWidget* dialog = gtk_message_dialog_new(getGtkWindow(),
 													   GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
 													   "%s", _C("You don't have any PDF pages to select from. "
 																"Cancel operation.\nPlease select another background type: "
 																"Menu \"Journal\" / \"Insert Page Type\"."));
-			gtk_window_set_transient_for(GTK_WINDOW(dialog), GTK_WINDOW(this->getWindow()->getWindow()));
+			gtk_window_set_transient_for(GTK_WINDOW(dialog), getGtkWindow());
 			gtk_dialog_run(GTK_DIALOG(dialog));
 			gtk_widget_destroy(dialog);
 
@@ -1501,7 +1501,7 @@ void Control::setPageBackground(ActionType type)
 		{
 
 			bool attach = false;
-			GFile* file = ImageOpenDlg::show((GtkWindow*) *win, settings, true, &attach);
+			GFile* file = ImageOpenDlg::show(getGtkWindow(), settings, true, &attach);
 			if (file == NULL)
 			{
 				return;
@@ -1517,12 +1517,12 @@ void Control::setPageBackground(ActionType type)
 			newImg.setAttach(attach);
 			if (err)
 			{
-				GtkWidget* dialog = gtk_message_dialog_new((GtkWindow*) *win,
+				GtkWidget* dialog = gtk_message_dialog_new(getGtkWindow(),
 														   GTK_DIALOG_DESTROY_WITH_PARENT,
 														   GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, "%s",
 														   FC(_F("This image could not be loaded. Error message: {1}")
 															% err->message));
-				gtk_window_set_transient_for(GTK_WINDOW(dialog), GTK_WINDOW(this->getWindow()->getWindow()));
+				gtk_window_set_transient_for(GTK_WINDOW(dialog), getGtkWindow());
 				gtk_dialog_run(GTK_DIALOG(dialog));
 				gtk_widget_destroy(dialog);
 				g_error_free(err);
@@ -1548,7 +1548,7 @@ void Control::setPageBackground(ActionType type)
 	{
 		if (doc->getPdfPageCount() == 0)
 		{
-			GtkWidget* dialog = gtk_message_dialog_new((GtkWindow*) *win,
+			GtkWidget* dialog = gtk_message_dialog_new(getGtkWindow(),
 													   GTK_DIALOG_DESTROY_WITH_PARENT,
 													   GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, "%s",
 													   _C("You don't have any PDF pages to select from. Cancel operation.\n"
@@ -2224,7 +2224,7 @@ bool Control::shouldFileOpen(string filename)
 		string msg = (_F("Do not open Autosave files. They may will be overwritten!\n"
 				"Copy the files to another folder.\n"
 				"Files from Folder {1} cannot be opened.") % basename).str();
-		GtkWidget* dialog = gtk_message_dialog_new(GTK_WINDOW((GtkWindow*) *win), GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR,
+		GtkWidget* dialog = gtk_message_dialog_new(getGtkWindow(), GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR,
 												   GTK_BUTTONS_OK, "%s", msg.c_str());
 		gtk_dialog_run(GTK_DIALOG(dialog));
 		gtk_widget_destroy(dialog);
@@ -2252,7 +2252,7 @@ bool Control::openFile(path filename, int scrollToPage)
 	if (filename.empty())
 	{
 		bool attachPdf = false;
-		XojOpenDlg dlg((GtkWindow*) *win, this->settings);
+		XojOpenDlg dlg(getGtkWindow(), this->settings);
 		filename = dlg.showOpenDialog(false, attachPdf);
 
 		cout << _F("Filename: {1}") % filename.string() << endl;
@@ -2300,7 +2300,7 @@ bool Control::openFile(path filename, int scrollToPage)
 		// give the user a second chance to select a new PDF file, or to discard the PDF
 
 
-		GtkWidget* dialog = gtk_message_dialog_new((GtkWindow*) *getWindow(),
+		GtkWidget* dialog = gtk_message_dialog_new(getGtkWindow(),
 												   GTK_DIALOG_DESTROY_WITH_PARENT,
 													   GTK_MESSAGE_QUESTION, GTK_BUTTONS_NONE, "%s",
 													   h.isAttachedPdfMissing()
@@ -2322,7 +2322,7 @@ bool Control::openFile(path filename, int scrollToPage)
 		else if (res == 1) // select another PDF background
 		{
 			bool attachToDocument = false;
-			XojOpenDlg dlg((GtkWindow*) *win, this->settings);
+			XojOpenDlg dlg(getGtkWindow(), this->settings);
 			path pdfFilename = dlg.showOpenDialog(true, attachToDocument);
 			if (!pdfFilename.empty())
 			{
@@ -2334,7 +2334,7 @@ bool Control::openFile(path filename, int scrollToPage)
 
 	if (!tmp)
 	{
-		GtkWidget* dialog = gtk_message_dialog_new((GtkWindow*) *win,
+		GtkWidget* dialog = gtk_message_dialog_new(getGtkWindow(),
 												   GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR,
 												   GTK_BUTTONS_OK, "%s\n%s",
 												   FC(_F("Error opening file \"{1}\"") % filename),
@@ -2440,7 +2440,7 @@ bool Control::annotatePdf(path filename, bool attachPdf, bool attachToDocument)
 
 	if (filename.empty())
 	{
-		XojOpenDlg dlg((GtkWindow*) *win, this->settings);
+		XojOpenDlg dlg(getGtkWindow(), this->settings);
 		filename = dlg.showOpenDialog(true, attachToDocument);
 		if (filename.empty())
 		{
@@ -2468,7 +2468,7 @@ bool Control::annotatePdf(path filename, bool attachPdf, bool attachToDocument)
 		string errMsg = doc->getLastErrorMsg();
 		this->doc->unlock();
 
-		GtkWidget* dialog = gtk_message_dialog_new((GtkWindow*) *win,
+		GtkWidget* dialog = gtk_message_dialog_new(getGtkWindow(),
 												   GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR,
 												   GTK_BUTTONS_OK, "%s",
 												   FC(_F("Error annotate PDF file \"{1}\"\n{2}") % filename % errMsg));
@@ -2593,7 +2593,7 @@ bool Control::showSaveDialog()
 {
 	XOJ_CHECK_TYPE(Control);
 
-	GtkWidget* dialog = gtk_file_chooser_dialog_new(_C("Save File"), (GtkWindow*) *win,
+	GtkWidget* dialog = gtk_file_chooser_dialog_new(_C("Save File"), getGtkWindow(),
 													GTK_FILE_CHOOSER_ACTION_SAVE, _C("_Cancel"), GTK_RESPONSE_CANCEL,
 													_C("_Save"), GTK_RESPONSE_OK, NULL);
 
@@ -2693,7 +2693,7 @@ void Control::updateWindowTitle()
 
 	title += " - Xournal++";
 
-	gtk_window_set_title((GtkWindow*) *win, title.c_str());
+	gtk_window_set_title(getGtkWindow(), title.c_str());
 }
 
 void Control::exportAsPdf()
@@ -2772,7 +2772,7 @@ bool Control::close(bool destroy)
 
 	if (undoRedo->isChanged())
 	{
-		GtkWidget* dialog = gtk_message_dialog_new((GtkWindow*) *getWindow(), GTK_DIALOG_DESTROY_WITH_PARENT,
+		GtkWidget* dialog = gtk_message_dialog_new(getGtkWindow(), GTK_DIALOG_DESTROY_WITH_PARENT,
 												   GTK_MESSAGE_WARNING, GTK_BUTTONS_NONE, "%s",
 												   _C("This document is not saved yet."));
 
@@ -2809,7 +2809,7 @@ bool Control::close(bool destroy)
 		namespace bf = boost::filesystem;
 		if (!bf::exists(this->doc->getFilename()))
 		{
-			GtkWidget* dialog = gtk_message_dialog_new((GtkWindow*) *getWindow(), GTK_DIALOG_DESTROY_WITH_PARENT,
+			GtkWidget* dialog = gtk_message_dialog_new(getGtkWindow(), GTK_DIALOG_DESTROY_WITH_PARENT,
 													   GTK_MESSAGE_WARNING, GTK_BUTTONS_NONE, "%s",
 													   _C("Document file was removed."));
 
@@ -3267,6 +3267,13 @@ MainWindow* Control::getWindow()
 	XOJ_CHECK_TYPE(Control);
 
 	return this->win;
+}
+
+GtkWindow* Control::getGtkWindow()
+{
+	XOJ_CHECK_TYPE(Control);
+
+	return GTK_WINDOW(this->win->getWindow());
 }
 
 bool Control::isFullscreen()

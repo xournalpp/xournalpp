@@ -198,7 +198,7 @@ XOJ_DECLARE_TYPE(SidebarToolbar, 186);
 XOJ_DECLARE_TYPE(SidebarPreviewBase, 187);
 XOJ_DECLARE_TYPE(AbstractSidebarPage, 188);
 XOJ_DECLARE_TYPE(TextBoxUndoAction, 189);
-XOJ_DECLARE_TYPE(LatexGlade, 190);
+XOJ_DECLARE_TYPE(LatexDialog, 190);
 XOJ_DECLARE_TYPE(TexImage, 191);
 XOJ_DECLARE_TYPE(XmlTexNode, 192);
 XOJ_DECLARE_TYPE(AddUndoAction, 193);

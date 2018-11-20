@@ -22,7 +22,7 @@ BaseExportJob::~BaseExportJob()
 
 void BaseExportJob::initDialog()
 {
-	dialog = gtk_file_chooser_dialog_new(_C("Export PDF"), (GtkWindow*) *control->getWindow(), GTK_FILE_CHOOSER_ACTION_SAVE,
+	dialog = gtk_file_chooser_dialog_new(_C("Export PDF"), control->getGtkWindow(), GTK_FILE_CHOOSER_ACTION_SAVE,
 													_C("_Cancel"), GTK_RESPONSE_CANCEL,
 													_C("_Save"), GTK_RESPONSE_OK, NULL);
 
@@ -114,10 +114,9 @@ bool BaseExportJob::isUriValid(string& uri)
 	if (!ba::starts_with(uri, "file://"))
 	{
 		string msg = (_F("Only local files are supported\nPath: {1}") % uri).str();
-		GtkWindow* win = (GtkWindow*) *control->getWindow();
-		GtkWidget* dialog = gtk_message_dialog_new(win, GTK_DIALOG_DESTROY_WITH_PARENT,
+		GtkWidget* dialog = gtk_message_dialog_new(control->getGtkWindow(), GTK_DIALOG_DESTROY_WITH_PARENT,
 												   GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, "%s", msg.c_str());
-		gtk_window_set_transient_for(GTK_WINDOW(dialog), GTK_WINDOW(this->control->getWindow()->getWindow()));
+		gtk_window_set_transient_for(GTK_WINDOW(dialog), control->getGtkWindow());
 		gtk_dialog_run(GTK_DIALOG(dialog));
 		gtk_widget_destroy(dialog);
 
@@ -133,10 +132,9 @@ void BaseExportJob::afterRun()
 
 	if (!this->errorMsg.empty())
 	{
-		GtkWindow* win = (GtkWindow*) *control->getWindow();
-		GtkWidget* dialog = gtk_message_dialog_new(win, GTK_DIALOG_DESTROY_WITH_PARENT,
+		GtkWidget* dialog = gtk_message_dialog_new(control->getGtkWindow(), GTK_DIALOG_DESTROY_WITH_PARENT,
 												   GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, "%s", this->errorMsg.c_str());
-		gtk_window_set_transient_for(GTK_WINDOW(dialog), GTK_WINDOW(this->control->getWindow()->getWindow()));
+		gtk_window_set_transient_for(GTK_WINDOW(dialog), control->getGtkWindow());
 		gtk_dialog_run(GTK_DIALOG(dialog));
 		gtk_widget_destroy(dialog);
 	}

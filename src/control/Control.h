@@ -186,6 +186,7 @@ public:
 	Document* getDocument();
 	UndoRedoHandler* getUndoRedoHandler();
 	MainWindow* getWindow();
+	GtkWindow* getGtkWindow();
 	RecentManager* getRecentManager();
 	ScrollHandler* getScrollHandler();
 	PageRef getCurrentPage();

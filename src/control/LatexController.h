@@ -28,11 +28,40 @@ public:
 	void run();
 
 private:
-	string deleteSelectedTexImag();
-	string showTexEditDialog(string tex);
+	/**
+	 * Find the tex executable, return false if not found
+	 */
+	bool findTexExecutable();
+
+	/**
+	 * Find a selected tex element, and load it
+	 */
+	void findSelectedTexElement();
+
+	/**
+	 * Run LaTeX Command
+	 */
+	void runCommand();
+
+	void showTexEditDialog();
 
 private:
 	XOJ_TYPE_ATTRIB;
 
 	Control* control;
+
+	/**
+	 * Tex binary full path
+	 */
+	string binTex;
+
+	/**
+	 * Orignal TeX, if editing
+	 */
+	string initalTex;
+
+	/**
+	 * Updated TeX string
+	 */
+	string currentTex;
 };

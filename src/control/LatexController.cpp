@@ -5,6 +5,8 @@
 #include "gui/XournalView.h"
 #include "gui/dialog/LatexDialog.h"
 
+#include <i18n.h>
+
 #include <iostream>
 using std::cout;
 using std::endl;
@@ -26,25 +28,110 @@ LatexController::~LatexController()
 }
 
 /**
- * Delete selected tex image and keep Tex data
+ * Find the tex executable, return false if not found
  */
-void LatexController::deleteSelectedTexImag()
+bool LatexController::findTexExecutable()
 {
+	XOJ_CHECK_TYPE(LatexController);
 
+	binTex = "mathtex/mathtex-xournalpp.cgi";
+
+	if (g_file_test(binTex.c_str(), G_FILE_TEST_EXISTS))
+	{
+		// Found binary in relative path
+		return true;
+	}
+
+	gchar* mathtex = g_find_program_in_path("mathtex-xournalpp.cgi");
+	if (!mathtex)
+	{
+		return false;
+	}
+
+	binTex = mathtex;
+	g_free(mathtex);
+
+	return true;
+}
+
+
+/**
+ * Run LaTeX Command
+ */
+void LatexController::runCommand()
+{
+	XOJ_CHECK_TYPE(LatexController);
+
+	/*
+	//can change font colour later with more features
+	string fontcolour = "black";
+	//dpi 300 is a good balance
+	string texres;
+	if (this->texArea < 1000)
+	{
+		texres = "300";
+	}
+	else if (this->texArea < 4000)
+	{
+		texres = "400";
+	}
+	else if (this->texArea < 8000)
+	{
+		texres = "500";
+	}
+	else if (this->texArea < 16000)
+	{
+		texres = "600";
+	}
+	else if (this->texArea < 32000)
+	{
+		texres = "800";
+	}
+	else
+	{
+		texres = "1000";
+	}
+	string command = FS(bl::format("{1} -m 0 \"\\png\\usepackage{{color}}\\color{{{2}}}\\dpi{{{3}}}\\normalsize {4}\" -o {5}")
+						% mtex % (fontcolour.length() ? fontcolour : "black") % texres
+						% g_strescape(this->theLatex.c_str(), NULL) % this->texfile);
+
+	gint rt = 0;
+	void(*texhandler)(int) = signal(SIGCHLD, SIG_DFL);
+	gboolean success = g_spawn_command_line_sync(command.c_str(), NULL, NULL, &rt, NULL);
+	signal(SIGCHLD, texhandler);
+	if (!success)
+	{
+		cout << _("LaTeX command execution failed.") << endl;
+		return;
+	}
+	cout << _F("LaTeX command: \"{1}\" executed successfully. Result saved to file {2}.") % this->theLatex % this->texfilefull << endl;
+
+	*/
+
+}
+
+/**
+ * Find a selected tex element, and load it
+ */
+void LatexController::findSelectedTexElement()
+{
+	XOJ_CHECK_TYPE(LatexController);
+
+	Document* doc = control->getDocument();
+	doc->lock();
 	int pageNr = control->getCurrentPageNo();
 	if (pageNr == -1)
 	{
+		doc->unlock();
 		return;
 	}
 	XojPageView* view = control->getWindow()->getXournal()->getViewFor(pageNr);
 	if (view == NULL)
 	{
+		doc->unlock();
 		return;
 	}
-
-	Document* doc = control->getDocument();
-
-	doc->lock();
+/*
 	// we get the selection
 	PageRef page = doc->getPage(pageNr);
 	Layer* layer = page->getSelectedLayer();
@@ -67,43 +154,50 @@ void LatexController::deleteSelectedTexImag()
 		imgwidth = img->getElementWidth();
 		imgTex = img->getText();
 	}
-
+*/
 	doc->unlock();
 
 	// need to do this otherwise we can't remove the image for its replacement
-	control->clearSelectionEndText();
-
-	return imgTex;
+//	control->clearSelectionEndText();
 }
 
-string LatexController::showTexEditDialog(string tex)
+void LatexController::showTexEditDialog()
 {
+	XOJ_CHECK_TYPE(LatexController);
+
 	LatexDialog* dlg = new LatexDialog(control->getGladeSearchPath());
-	// determine if we should set a specific string
-	dlg->setTex(texString);
+	dlg->setTex(initalTex);
 	dlg->show(GTK_WINDOW(control->getWindow()->getWindow()));
-	string tex = dlg->getTex();
+	currentTex = dlg->getTex();
 
 	delete dlg;
-
-	return tex;
 }
 
 void LatexController::run()
 {
-//	texString = "";
-//
-//	string imgTex = deleteSelectedTexImag();
-//
-//	string texString = showTexEditDialog(imgTex);
-//
-//	if (texString.empty())
-//	{
-//		// Nothing to insert
-//		// TODO Undo action!!!
-//		return;
-//	}
-//
+	XOJ_CHECK_TYPE(LatexController);
+
+	if (!findTexExecutable())
+	{
+		string msg = FS(_("Could not find Xournal++ LaTeX executable relative or in Path.\nSearched for: mathtex-xournalpp.cgi"));
+		GtkWidget* dialog = gtk_message_dialog_new(control->getGtkWindow(),
+												   GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, "%s",
+												   msg.c_str());
+		gtk_window_set_transient_for(GTK_WINDOW(dialog), control->getGtkWindow());
+		gtk_dialog_run(GTK_DIALOG(dialog));
+		gtk_widget_destroy(dialog);
+		return;
+	}
+
+	findSelectedTexElement();
+	showTexEditDialog();
+
+	if (currentTex.empty() || initalTex == currentTex)
+	{
+		// Nothing to insert / change
+		return;
+	}
+
 //	if (img)
 //	{
 //		layer->removeElement((Element*) img, false);
@@ -111,10 +205,9 @@ void LatexController::run()
 //		delete img;
 //		img = NULL;
 //	}
-//
-//	// now do all the LatexAction stuff
-//	LatexAction texAction(tmp, imgheight * imgwidth);
-//	texAction.runCommand();
+
+	// now do all the LatexAction stuff
+	runCommand();
 //
 //	doc->lock();
 //
@@ -227,65 +320,6 @@ void LatexController::run()
 //	this->texArea = tArea;
 //}
 //
-//void LatexAction::runCommand()
-//{
-//	/*
-//	 * at some point, I may need to sanitize theLatex
-//	 */
-//	cout << C_("LaTeX comand", "Command is being run.") << endl;
-//	const gchar* mtex = "mathtex-xournalpp.cgi";
-//	gchar* mathtex = g_find_program_in_path(mtex);
-//	if (!mathtex)
-//	{
-//		cerr << _("Error: problem finding mathtex. Doing nothing…") << endl;
-//		return;
-//	}
-//	cout << _F("Found mathtex in your path! TeX area is {1}") % this->texArea << endl;
-//	g_free(mathtex);
-//	//can change font colour later with more features
-//	string fontcolour = "black";
-//	//dpi 300 is a good balance
-//	string texres;
-//	if (this->texArea < 1000)
-//	{
-//		texres = "300";
-//	}
-//	else if (this->texArea < 4000)
-//	{
-//		texres = "400";
-//	}
-//	else if (this->texArea < 8000)
-//	{
-//		texres = "500";
-//	}
-//	else if (this->texArea < 16000)
-//	{
-//		texres = "600";
-//	}
-//	else if (this->texArea < 32000)
-//	{
-//		texres = "800";
-//	}
-//	else
-//	{
-//		texres = "1000";
-//	}
-//	string command = FS(bl::format("{1} -m 0 \"\\png\\usepackage{{color}}\\color{{{2}}}\\dpi{{{3}}}\\normalsize {4}\" -o {5}")
-//						% mtex % (fontcolour.length() ? fontcolour : "black") % texres
-//						% g_strescape(this->theLatex.c_str(), NULL) % this->texfile);
-//
-//	gint rt = 0;
-//	void(*texhandler)(int) = signal(SIGCHLD, SIG_DFL);
-//	gboolean success = g_spawn_command_line_sync(command.c_str(), NULL, NULL, &rt, NULL);
-//	signal(SIGCHLD, texhandler);
-//	if (!success)
-//	{
-//		cout << _("LaTeX command execution failed.") << endl;
-//		return;
-//	}
-//	cout << _F("LaTeX command: \"{1}\" executed successfully. Result saved to file {2}.") % this->theLatex % this->texfilefull << endl;
-//
-//}
 //
 //string LatexAction::getFileName()
 //{
