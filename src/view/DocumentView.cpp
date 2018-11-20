@@ -97,7 +97,8 @@ void DocumentView::drawStroke(cairo_t* cr, Stroke* s, int startPoint, double sca
 
 	if (changeSource)
 	{
-		if (s->getToolType() == STROKE_TOOL_HIGHLIGHTER)
+		if (s->getToolType() == STROKE_TOOL_HIGHLIGHTER ||
+			s->getAudioFilename().length()==0 && currentToolType == TOOL_PLAY_OBJECT )
 		{
 			cairo_set_operator(cr, CAIRO_OPERATOR_OVER);
 			// Set the color
@@ -107,14 +108,7 @@ void DocumentView::drawStroke(cairo_t* cr, Stroke* s, int startPoint, double sca
 		{
 			cairo_set_operator(cr, CAIRO_OPERATOR_SOURCE);
 			// Set the color
-			if((s->getAudioFilename() == "") && (currentToolType == TOOL_PLAY_OBJECT))
-			{
-				applyColor(cr,s,100);
-			}
-			else
-			{
-				applyColor(cr, s);
-			}
+			applyColor(cr, s);
 		}
 	}
 

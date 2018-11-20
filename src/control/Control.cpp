@@ -1982,8 +1982,9 @@ void Control::selectTool(ToolType type)
 {
 	XOJ_CHECK_TYPE(Control);
 
-	toolHandler->selectTool(type);
 	currentToolType = type;
+	toolHandler->selectTool(type);
+	
 	if(win)
 	{
 		(win->getXournal()->getViewFor(getCurrentPageNo()))->rerenderPage();
