@@ -27,10 +27,10 @@ private:
 public:
 	void addPoint(const Point* point);
 
-	int XmlPointNode::getTimestamp();
-	void XmlPointNode::setTimestamp(int seconds);
-	string XmlPointNode::getAudioFilename();
-	void XmlPointNode::setAudioFilename(string filename);
+	int getTimestamp();
+	void setTimestamp(int seconds);
+	string getAudioFilename();
+	void setAudioFilename(string filename);
 	virtual void writeOut(OutputStream* out);
 
 private:
