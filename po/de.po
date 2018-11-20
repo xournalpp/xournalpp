@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xournalpp 0.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-11-19 21:32+0100\n"
-"PO-Revision-Date: 2018-11-19 21:33+0100\n"
+"POT-Creation-Date: 2018-11-20 07:44+0100\n"
+"PO-Revision-Date: 2018-11-20 07:45+0100\n"
 "Last-Translator: Andreas Butti <andreasbutti at gmail dot com>\n"
 "Language-Team: DE\n"
 "Language: de\n"
@@ -107,8 +107,8 @@ msgstr "schwarz"
 msgid "Blue"
 msgstr "blau"
 
-#: ../src/control/Control.cpp:2270 ../src/control/Control.cpp:2739
-#: ../src/control/Control.cpp:2776 ../src/control/XournalMain.cpp:103
+#: ../src/control/Control.cpp:2311 ../src/control/Control.cpp:2780
+#: ../src/control/Control.cpp:2817 ../src/control/XournalMain.cpp:103
 msgid "Cancel"
 msgstr "Abbrechen"
 
@@ -141,7 +141,7 @@ msgstr "Befehl wird ausgeführt."
 msgid "Contents"
 msgstr "Inhalt"
 
-#: ../src/control/Control.cpp:1004 ../src/control/Control.cpp:1012
+#: ../src/control/Control.cpp:1006 ../src/control/Control.cpp:1014
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:306
 msgid "Copy"
 msgstr "Kopieren"
@@ -204,7 +204,7 @@ msgstr ""
 "Konnte Werkzeug von {1} von der Werkzeugleiste {2} Position {3} nicht "
 "entfernen"
 
-#: ../src/control/Control.cpp:3237
+#: ../src/control/Control.cpp:3278
 msgid "Could not retrieve LaTeX image file: {1}"
 msgstr "Die LaTeX-Bilddatei konnte nicht geladen werden: {1}"
 
@@ -276,11 +276,22 @@ msgstr "Maßstab und Figurenerkennung deaktivieren"
 msgid "Disable drawing for this device"
 msgstr "Deaktivieren des Zeichnens mit diesem Gerät"
 
-#: ../src/control/Control.cpp:2738 ../src/control/Control.cpp:2775
+#: ../src/control/Control.cpp:2779 ../src/control/Control.cpp:2816
 msgid "Discard"
 msgstr "Verwerfen"
 
-#: ../src/control/Control.cpp:2772
+#: ../src/control/Control.cpp:2223
+msgid ""
+"Do not open Autosave files. They may will be overwritten!\n"
+"Copy the files to another folder.\n"
+"Files from Folder {1} cannot be opened."
+msgstr ""
+"Öffnen sie keine automatisch gespeicherten Dateien. Diese werden ansonsten "
+"überschrieben!\n"
+"Kopieren Sie diese Dateien an einen anderen Ort.\n"
+"Dateien aus dem Ordner {1} können nicht geöffnet werden."
+
+#: ../src/control/Control.cpp:2813
 msgid "Document file was removed."
 msgstr "Datei des Dokuments wurde entfernt."
 
@@ -355,7 +366,7 @@ msgstr "Radierer"
 msgid "Eraser type"
 msgstr "Radierer type"
 
-#: ../src/control/Control.cpp:2432
+#: ../src/control/Control.cpp:2473
 msgid ""
 "Error annotate PDF file \"{1}\"\n"
 "{2}"
@@ -371,7 +382,7 @@ msgstr "Fehler beim Exportieren der PDF Seite"
 msgid "Error loading glade file \"{1}\" (try to load \"{2}\")"
 msgstr "Fehler beim Laden der Glade-Datei \"{1}\" (Datei \"{2}\")"
 
-#: ../src/control/Control.cpp:2298
+#: ../src/control/Control.cpp:2339
 msgid "Error opening file \"{1}\""
 msgstr "Fehler beim Öffnen der Datei '{1}'"
 
@@ -432,7 +443,7 @@ msgstr "Dateiname muss mit .pdf enden"
 msgid "File name needs to end with .pdf or .png"
 msgstr "Dateiname muss mit .pdf oder .png enden"
 
-#: ../src/control/Control.cpp:2217
+#: ../src/control/Control.cpp:2257
 msgid "Filename: {1}"
 msgstr "Dateiname: {1}"
 
@@ -751,7 +762,7 @@ msgstr "Wiederherstellen"
 msgid "Redo: "
 msgstr "Wiederherstellen: "
 
-#: ../src/control/Control.cpp:2269
+#: ../src/control/Control.cpp:2310
 msgid "Remove PDF Background"
 msgstr "PDF-Hintergrund entfernen"
 
@@ -776,16 +787,16 @@ msgstr "Lineal"
 msgid "Ruler & Stroke Reco."
 msgstr "Lineal und Figurenerkennung"
 
-#: ../src/control/jobs/SaveJob.cpp:16 ../src/control/Control.cpp:2737
+#: ../src/control/jobs/SaveJob.cpp:16 ../src/control/Control.cpp:2778
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:300
 msgid "Save"
 msgstr "Speichern"
 
-#: ../src/control/Control.cpp:2774
+#: ../src/control/Control.cpp:2815
 msgid "Save As"
 msgstr "Speichern als..."
 
-#: ../src/control/Control.cpp:2554 ../src/gui/dialog/PageTemplateDialog.cpp:116
+#: ../src/control/Control.cpp:2595 ../src/gui/dialog/PageTemplateDialog.cpp:116
 msgid "Save File"
 msgstr "Speichere Datei"
 
@@ -821,7 +832,7 @@ msgstr "Rechteck auswählen"
 msgid "Select Region"
 msgstr "Bereich auswählen"
 
-#: ../src/control/Control.cpp:2268
+#: ../src/control/Control.cpp:2309
 msgid "Select another PDF"
 msgstr "Andere PDF-Datei auswählen"
 
@@ -928,7 +939,7 @@ msgstr "Text nicht gefunden"
 msgid "Text not found, searched on all pages"
 msgstr "Text nicht gefunden, auf allen Seiten gesucht"
 
-#: ../src/control/Control.cpp:974
+#: ../src/control/Control.cpp:976
 msgid ""
 "The Toolbarconfiguration \"{1}\" is predefined, would you create a copy to "
 "edit?"
@@ -936,11 +947,11 @@ msgstr ""
 "Die Werkzeugleistenkonfiguration \"{1}\" ist vordefiniert, möchten Sie eine "
 "Kopie erstellen?"
 
-#: ../src/control/Control.cpp:2265
+#: ../src/control/Control.cpp:2306
 msgid "The attached background PDF could not be found."
 msgstr "Der angehängte PDF-Hintergrund konnte nicht gefunden werden."
 
-#: ../src/control/Control.cpp:2266
+#: ../src/control/Control.cpp:2307
 msgid "The background PDF could not be found."
 msgstr "Der PDF-Hintergrund konnte nicht gefunden werden."
 
@@ -966,7 +977,7 @@ msgstr ""
 "Fehlerbericht (auf Englisch wenn möglich), damit der Fehler korrigiert "
 "werden kann."
 
-#: ../src/control/Control.cpp:869
+#: ../src/control/Control.cpp:871
 msgid "There was an error displaying help: {1}"
 msgstr "Es ist ein Fehler aufgetreten beim Anzeigen der Hilfe: {1}"
 
@@ -984,11 +995,11 @@ msgstr "Dicke"
 msgid "Thin"
 msgstr "dünn"
 
-#: ../src/control/Control.cpp:2735
+#: ../src/control/Control.cpp:2776
 msgid "This document is not saved yet."
 msgstr "Dieses Dokument wurde noch nicht gespeichert."
 
-#: ../src/control/tools/ImageHandler.cpp:57 ../src/control/Control.cpp:1520
+#: ../src/control/tools/ImageHandler.cpp:57 ../src/control/Control.cpp:1522
 msgid "This image could not be loaded. Error message: {1}"
 msgstr "Das Bild konnte nicht geladen werden. Fehlermeldung: {1}"
 
@@ -1061,7 +1072,7 @@ msgstr "Unbekannter pixmap::domain Typ: {1}"
 msgid "Unknown stroke type: \"{1}\", assuming pen"
 msgstr "Unbekannter Linientyp: \"{1}\", verwende Stift"
 
-#: ../src/control/Control.cpp:2630
+#: ../src/control/Control.cpp:2671
 msgid "Unsaved Document"
 msgstr "Ungespeichertes Dokument"
 
@@ -1102,7 +1113,7 @@ msgstr "Falsche Punktzahl {1}, erwartet wurde {2}"
 msgid "XML Parser error: {1}"
 msgstr "XML Parser Fehler: {1}"
 
-#: ../src/control/stockdlg/XojOpenDlg.cpp:69 ../src/control/Control.cpp:2561
+#: ../src/control/stockdlg/XojOpenDlg.cpp:69 ../src/control/Control.cpp:2602
 msgid "Xournal files"
 msgstr "Xournal Dateien"
 
@@ -1116,7 +1127,7 @@ msgstr "Xournal++ Vorlage"
 msgid "Yellow"
 msgstr "gelb"
 
-#: ../src/control/Control.cpp:1362
+#: ../src/control/Control.cpp:1364
 msgid ""
 "You don't have any PDF pages to select from. Cancel operation.\n"
 "Please select another background type: Menu \"Journal\" / \"Insert Page Type"
@@ -1126,7 +1137,7 @@ msgstr ""
 "Bitte wählen Sie einen anderen Hintergrundtyp: Menü \"Journal\" / "
 "\"Hintergrund neuer Seiten\"."
 
-#: ../src/control/Control.cpp:1551
+#: ../src/control/Control.cpp:1553
 msgid ""
 "You don't have any PDF pages to select from. Cancel operation.\n"
 "Please select another background type: Menu \"Journal\" → \"Insert Page Type"
@@ -1180,7 +1191,7 @@ msgstr "Zoom auf 100%"
 
 #: ../src/control/stockdlg/ImageOpenDlg.cpp:11
 #: ../src/control/stockdlg/XojOpenDlg.cpp:17
-#: ../src/control/jobs/BaseExportJob.cpp:26 ../src/control/Control.cpp:2555
+#: ../src/control/jobs/BaseExportJob.cpp:26 ../src/control/Control.cpp:2596
 #: ../src/gui/dialog/PageTemplateDialog.cpp:117
 msgid "_Cancel"
 msgstr "_Abbrechen"
@@ -1190,7 +1201,7 @@ msgstr "_Abbrechen"
 msgid "_Open"
 msgstr "Ö_ffnen"
 
-#: ../src/control/jobs/BaseExportJob.cpp:27 ../src/control/Control.cpp:2556
+#: ../src/control/jobs/BaseExportJob.cpp:27 ../src/control/Control.cpp:2597
 #: ../src/gui/dialog/PageTemplateDialog.cpp:118
 msgid "_Save"
 msgstr "_Speichern"
@@ -2097,46 +2108,6 @@ msgstr "Speichere in Datei"
 msgid "ver_y thick"
 msgstr "sehr dick"
 
-#~ msgid "A file named \"{1}\" already exists. Do you want to replace it?"
-#~ msgstr "Die Datei \"{1}\" existiert bereits. Überschreiben?"
-
-#~ msgid "By extension"
-#~ msgstr "Nach Endung"
-
-#~ msgid "Export as"
-#~ msgstr "Exportieren als"
-
-#~ msgid "Extension"
-#~ msgstr "Erweiterung"
-
-#~ msgid "File Type"
-#~ msgstr "Dateityp"
-
-#~ msgid "Invalid filename selected"
-#~ msgstr "Ungültiger Dateiname gewählt"
-
-#~ msgid "Options"
-#~ msgstr "Optionen"
-
-#~ msgid ""
-#~ "The file already exists in \"{1}\". Replacing it will overwrite its "
-#~ "contents."
-#~ msgstr ""
-#~ "Die Datei existiert bereits in \"{1}\". Ersetzen überschreibt die Datei."
-
-#~ msgid ""
-#~ "The given filename does not have any known file extension. Please enter a "
-#~ "known file extension or select a file format from the file format list."
-#~ msgstr ""
-#~ "Der Dateiname ethält keine bekannte Endung, bitte geben Sie eine bekannte "
-#~ "Endung an, oder wählen Sie eine aus der Liste."
-
-#~ msgid "This option only affects PNG output"
-#~ msgstr "Diese Option beeinflusst nur den PNG-Export"
-
-#~ msgid "xoj-preview-extractor: file \"{1}\" is not .png file"
-#~ msgstr "xoj-Vorschau-Extraktor: Datei \"{1}\" ist keine PNG-Datei"
-
 #~ msgid "<b>Custom color</b>"
 #~ msgstr "<b>selbstdefinierte Farbe</b>"
 
@@ -2172,6 +2143,12 @@ msgstr "sehr dick"
 #~ "Deaktivieren Sie dies, wenn Sie die Maus oder ein Touchpad\n"
 #~ "benutzen und die Eingabe am falschen Ort erscheint.</i>"
 
+#~ msgid "A file named \"{1}\" already exists. Do you want to replace it?"
+#~ msgstr "Die Datei \"{1}\" existiert bereits. Überschreiben?"
+
+#~ msgid "By extension"
+#~ msgstr "Nach Endung"
+
 #~ msgid "Cannot copy metadata \"{1}\" to \"{2}\": {3}"
 #~ msgstr "Metadaten von \"{1}\" können nicht nach \"{2}\" kopiert werden: {3}"
 
@@ -2183,6 +2160,15 @@ msgstr "sehr dick"
 
 #~ msgid "Could not write metadata file: {1} ({2})"
 #~ msgstr "Konnte Hintergrund \"{1}\" nicht speichern, {2}"
+
+#~ msgid "Export as"
+#~ msgstr "Exportieren als"
+
+#~ msgid "Extension"
+#~ msgstr "Erweiterung"
+
+#~ msgid "File Type"
+#~ msgstr "Dateityp"
 
 #~ msgid "Hilighter"
 #~ msgstr "Textmarker"
@@ -2196,6 +2182,9 @@ msgstr "sehr dick"
 #~ msgid "Insert Page Type"
 #~ msgstr "Hintergrund neuer Seiten"
 
+#~ msgid "Invalid filename selected"
+#~ msgstr "Ungültiger Dateiname gewählt"
+
 #~ msgid "Metadata file \"{1}\" is invalid: {2}"
 #~ msgstr "Metadaten der Datei \"{1}\" sind ungültig: {2}"
 
@@ -2205,6 +2194,9 @@ msgstr "sehr dick"
 #~ msgstr ""
 #~ "Anmerkung: <i>Sie müssen XInput aktivieren (Tab \"Eingabe\") sonst "
 #~ "funktioniert es nicht.</i>"
+
+#~ msgid "Options"
+#~ msgstr "Optionen"
 
 #~ msgid "Search:"
 #~ msgstr "Suchen:"
@@ -2216,11 +2208,27 @@ msgstr "sehr dick"
 #~ msgstr "_Rechteck auswählen"
 
 #~ msgid ""
+#~ "The file already exists in \"{1}\". Replacing it will overwrite its "
+#~ "contents."
+#~ msgstr ""
+#~ "Die Datei existiert bereits in \"{1}\". Ersetzen überschreibt die Datei."
+
+#~ msgid ""
+#~ "The given filename does not have any known file extension. Please enter a "
+#~ "known file extension or select a file format from the file format list."
+#~ msgstr ""
+#~ "Der Dateiname ethält keine bekannte Endung, bitte geben Sie eine bekannte "
+#~ "Endung an, oder wählen Sie eine aus der Liste."
+
+#~ msgid ""
 #~ "There was a wrong input event, input is not working.\n"
 #~ "Do you want to disable \"Extended Input\"?"
 #~ msgstr ""
 #~ "Ungültiges Eingabeereignis, Zeichnen ist nicht möglich.\n"
 #~ "Möchten Sie \"Extended Input\" deaktivieren?"
+
+#~ msgid "This option only affects PNG output"
+#~ msgstr "Diese Option beeinflusst nur den PNG-Export"
 
 #~ msgid "_Draw Arrow"
 #~ msgstr "_Pfeil zeichnen"
@@ -2230,3 +2238,6 @@ msgstr "sehr dick"
 
 #~ msgid "_Draw Rectangle"
 #~ msgstr "_Rechteck zeichnen"
+
+#~ msgid "xoj-preview-extractor: file \"{1}\" is not .png file"
+#~ msgstr "xoj-Vorschau-Extraktor: Datei \"{1}\" ist keine PNG-Datei"

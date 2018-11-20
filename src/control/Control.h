@@ -247,6 +247,11 @@ protected:
 
 	static bool loadMetadataCallback(MetadataCallbackData* data);
 
+	/**
+	 * Check if this is an autosave file, return false in this case and display a user instruction
+	 */
+	bool shouldFileOpen(string filename);
+
 private:
 	XOJ_TYPE_ATTRIB;
 
