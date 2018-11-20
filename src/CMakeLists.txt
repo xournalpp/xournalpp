@@ -25,8 +25,6 @@ endif ()
 option (DEBUG_COMPILE "Pass -Wall to CXX_FLAGS" OFF)
 mark_as_advanced (FORCE DEBUG_COMPILE)
 
-set(CMAKE_CXX_FLAGS "-fpermissive")
-
 if (DEBUG_COMPILE)
   add_definitions (-Wall)
 endif (DEBUG_COMPILE)
