@@ -185,9 +185,9 @@ void LatexController::deleteOldImage()
 
 	if (selectedTexImage)
 	{
-		layer->removeElement(selectedTexImage, false);
-		view->rerenderElement(selectedTexImage);
-		delete selectedTexImage;
+		EditSelection* selection = new EditSelection(control->getUndoRedoHandler(), selectedTexImage, view, page);
+		view->getXournal()->deleteSelection(selection);
+		delete selection;
 		selectedTexImage = NULL;
 	}
 }
@@ -212,9 +212,6 @@ void LatexController::insertTexImage()
 
 	GdkPixbuf* pixbuf = gdk_pixbuf_new_from_stream(G_INPUT_STREAM(in), NULL, &err);
 	g_input_stream_close(G_INPUT_STREAM(in), NULL, NULL);
-
-
-	doc->lock();
 
 	deleteOldImage();
 
@@ -250,6 +247,7 @@ void LatexController::insertTexImage()
 		img->setHeight(gdk_pixbuf_get_height(pixbuf));
 	}
 
+	doc->lock();
 	layer->addElement(img);
 	view->rerenderElement(img);
 	doc->unlock();
