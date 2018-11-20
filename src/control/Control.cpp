@@ -63,6 +63,7 @@ using std::endl;
 #include <vector>
 using std::vector;
 
+#include <time.h>
 extern gint sttime;
 
 // TODO Check for error log on startup, also check for emergency save document!
@@ -1169,11 +1170,6 @@ void Control::setShapeRecognizerEnabled(bool enabled)
 		this->resetShapeRecognizer();
 	}
 }
-
-#include <iostream>
-#include<time.h>
-
-using namespace std;
 
 void Control::recStartStop(bool rec)
 {

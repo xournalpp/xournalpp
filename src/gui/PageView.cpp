@@ -404,29 +404,36 @@ void PageView::playObjectAt(double x, double y)
 					{
 						gap = tmpGap;
 						strokeMatch = s;
-						/**
-						 * Display the timestamp for the selected stroke 
-						 * To be replaced with a function call to an action
-						 */
-						int ts = s->getTimestamp();
 
+						int ts = s->getTimestamp();
 						int buffer = 5;
-						if(ts >= buffer) ts-=buffer;
+
+						if(ts >= buffer)
+						{
+							ts -= buffer;
+						}
+						else
+						{
+							ts = 0;
+						}
 
 						string fn = s->getAudioFilename();
+
 						if(fn != lastfn)
 						{
 							if(fn != "")
 							{
 								lastfn = fn;
-								//system("killall vlc");	//not needed if we set "allow only one instance" from VLC settings
-								string command("vlc --qt-start-minimized "+audioFolder+fn+" --start-time="+std::to_string(ts)+" &>/dev/null &");
+								string command("vlc --qt-start-minimized "+audioFolder+fn+" --start-time="+ \
+									std::to_string(ts)+" &>/dev/null &");
 								system(command.c_str());
 							}
 						}
 						else
 						{
-							string command("curl -s -u \"\":\"password\" --url \"http://127.0.0.1:8080/requests/status.xml?command=seek&val="+std::to_string(ts)+"\" >/dev/null");
+							string command("curl -s -u \"\":\"password\" \
+								--url \"http://127.0.0.1:8080/requests/status.xml?command=seek&val="+ \
+								std::to_string(ts)+"\" >/dev/null");
 							system(command.c_str());
 						}
 
