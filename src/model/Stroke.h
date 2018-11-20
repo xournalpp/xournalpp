@@ -36,11 +36,11 @@ public:
 	void setWidth(double width);
 	double getWidth() const;
 
-	void Stroke::setTimestamp(int seconds);
-	int Stroke::getTimestamp() const;
+	void setTimestamp(int seconds);
+	int getTimestamp() const;
 
-	void Stroke::setAudioFilename(string fn);
-	string Stroke::getAudioFilename();
+	void setAudioFilename(string fn);
+	string getAudioFilename();
 
 	void addPoint(Point p);
 	void setLastPoint(double x, double y);
