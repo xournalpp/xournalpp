@@ -1517,14 +1517,7 @@ void Control::setPageBackground(ActionType type)
 			newImg.setAttach(attach);
 			if (err)
 			{
-				GtkWidget* dialog = gtk_message_dialog_new(getGtkWindow(),
-														   GTK_DIALOG_DESTROY_WITH_PARENT,
-														   GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, "%s",
-														   FC(_F("This image could not be loaded. Error message: {1}")
-															% err->message));
-				gtk_window_set_transient_for(GTK_WINDOW(dialog), getGtkWindow());
-				gtk_dialog_run(GTK_DIALOG(dialog));
-				gtk_widget_destroy(dialog);
+				Util::showErrorToUser(getGtkWindow(), FS(_F("This image could not be loaded. Error message: {1}") % err->message));
 				g_error_free(err);
 				return;
 			}

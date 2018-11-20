@@ -52,12 +52,7 @@ bool ImageHandler::insertImage(GFile* file, double x, double y)
 	}
 	else
 	{
-		GtkWidget* dialog = gtk_message_dialog_new(control->getGtkWindow(),
-												   GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, "%s",
-												   FC(_F("This image could not be loaded. Error message: {1}") % err->message));
-		gtk_window_set_transient_for(GTK_WINDOW(dialog), control->getGtkWindow());
-		gtk_dialog_run(GTK_DIALOG(dialog));
-		gtk_widget_destroy(dialog);
+		Util::showErrorToUser(control->getGtkWindow(), FS(_F("This image could not be loaded. Error message: {1}") % err->message));
 		g_error_free(err);
 		return false;
 	}
