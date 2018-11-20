@@ -50,6 +50,7 @@
 
 #include <boost/locale.hpp>
 #include <boost/filesystem.hpp>
+#include <boost/algorithm/string.hpp>
 namespace bf = boost::filesystem;
 
 #include <gtk/gtk.h>
@@ -58,6 +59,7 @@ namespace bf = boost::filesystem;
 using std::cout;
 using std::cerr;
 using std::endl;
+
 #include <vector>
 using std::vector;
 
@@ -2199,9 +2201,47 @@ bool Control::newFile()
 	return true;
 }
 
+
+/**
+ * Check if this is an autosave file, return false in this case and display a user instruction
+ */
+bool Control::shouldFileOpen(string filename)
+{
+	// Compare case insensitive, just in case (Windows, FAT Filesystem etc.)
+	filename = boost::algorithm::to_lower_copy(filename);
+	string basename = boost::algorithm::to_lower_copy(Util::getConfigSubfolder("").string());
+
+	if (basename.size() > filename.size())
+	{
+		return true;
+	}
+
+	filename = filename.substr(0, basename.size());
+
+	if (filename == basename)
+	{
+		string msg = (_F("Do not open Autosave files. They may will be overwritten!\n"
+				"Copy the files to another folder.\n"
+				"Files from Folder {1} cannot be opened.") % basename).str();
+		GtkWidget* dialog = gtk_message_dialog_new(GTK_WINDOW((GtkWindow*) *win), GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR,
+												   GTK_BUTTONS_OK, "%s", msg.c_str());
+		gtk_dialog_run(GTK_DIALOG(dialog));
+		gtk_widget_destroy(dialog);
+
+		return false;
+	}
+
+	return true;
+}
+
 bool Control::openFile(path filename, int scrollToPage)
 {
 	XOJ_CHECK_TYPE(Control);
+
+	if (!shouldFileOpen(filename.string()))
+	{
+		return false;
+	}
 
 	if (!this->close())
 	{
@@ -2217,6 +2257,11 @@ bool Control::openFile(path filename, int scrollToPage)
 		cout << _F("Filename: {1}") % filename.string() << endl;
 
 		if (filename.empty())
+		{
+			return false;
+		}
+
+		if (!shouldFileOpen(filename.string()))
 		{
 			return false;
 		}
@@ -2241,10 +2286,6 @@ bool Control::openFile(path filename, int scrollToPage)
 				fileLoaded(scrollToPage);
 				return true;
 			}
-			//else
-			//{
-			//	return false;
-			//}
 		}
 
 		bool an = annotatePdf(filename, false, false);
