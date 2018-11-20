@@ -5,8 +5,12 @@
 #include <config.h>
 #include <i18n.h>
 
+#include <boost/algorithm/string/predicate.hpp>
+
 FormatDialog::FormatDialog(GladeSearchpath* gladeSearchPath, Settings* settings, double width, double height)
- : GladeGui(gladeSearchPath, "pagesize.glade", "pagesizeDialog")
+ : GladeGui(gladeSearchPath, "pagesize.glade", "pagesizeDialog"),
+   list(NULL),
+   ignoreSpinChange(false)
 {
 	XOJ_INIT_TYPE(FormatDialog);
 
@@ -22,8 +26,7 @@ FormatDialog::FormatDialog(GladeSearchpath* gladeSearchPath, Settings* settings,
 	this->width = -1;
 	this->height = -1;
 
-	gtk_spin_button_set_value(GTK_SPIN_BUTTON(get("spinWidth")), this->origWidth / this->scale);
-	gtk_spin_button_set_value(GTK_SPIN_BUTTON(get("spinHeight")), this->origHeight / this->scale);
+	setSpinValues(this->origWidth / this->scale, this->origHeight / this->scale);
 
 	GtkWidget* cbUnit = get("cbUnit");
 
@@ -44,8 +47,6 @@ FormatDialog::FormatDialog(GladeSearchpath* gladeSearchPath, Settings* settings,
 
 	int selectedFormat = -1;
 
-	string formatlist = settings->getVisiblePageFormats();
-
 	if (height < width)
 	{
 		double tmp = width;
@@ -53,44 +54,24 @@ FormatDialog::FormatDialog(GladeSearchpath* gladeSearchPath, Settings* settings,
 		height = tmp;
 	}
 
-	this->list = gtk_paper_size_get_paper_sizes(false);
+	loadPageFormats();
+
 	int i = 0;
-	GList* next = NULL;
-	for (GList* l = list; l != NULL; l = next)
+	for (GList* l = list; l != NULL; l = l->next)
 	{
 		GtkPaperSize* s = (GtkPaperSize*) l->data;
-		next = l->next;
 
-		double w = gtk_paper_size_get_width(s, GTK_UNIT_POINTS);
-		double h = gtk_paper_size_get_height(s, GTK_UNIT_POINTS);
-
-		bool visible = false;
-
-		if (((int) (w - width) * 10) == 0 && ((int) (h - height) * 10) == 0)
+		string displayName = gtk_paper_size_get_display_name(s);
+		if (boost::starts_with(displayName, "custom_"))
 		{
-			selectedFormat = i;
-			visible = true;
+			displayName = displayName.substr(7);
 		}
 
-		if (formatlist.find(gtk_paper_size_get_name(s)) != string::npos)
-		{
-			visible = true;
-		}
-
-		if (visible)
-		{
-			GtkTreeIter iter;
-			gtk_list_store_append(store, &iter);
-			gtk_list_store_set(store, &iter, 0, gtk_paper_size_get_display_name(s), -1);
-			gtk_list_store_set(store, &iter, 1, s, -1);
-			i++;
-		}
-		else
-		{
-			gtk_paper_size_free(s);
-			this->list = g_list_delete_link(this->list, l);
-
-		}
+		GtkTreeIter iter;
+		gtk_list_store_append(store, &iter);
+		gtk_list_store_set(store, &iter, 0, displayName.c_str(), -1);
+		gtk_list_store_set(store, &iter, 1, s, -1);
+		i++;
 	}
 
 	GtkTreeIter iter;
@@ -123,17 +104,48 @@ FormatDialog::~FormatDialog()
 
 	for (GList* l = this->list; l != NULL; l = l->next)
 	{
-		if (l->data)
-		{
-			GtkPaperSize* s = (GtkPaperSize*) l->data;
-			gtk_paper_size_free(s);
-		}
+		GtkPaperSize* s = (GtkPaperSize*) l->data;
+		gtk_paper_size_free(s);
 	}
 
 	g_list_free(this->list);
 	this->list = NULL;
 
 	XOJ_RELEASE_TYPE(FormatDialog);
+}
+
+#define ADD_FORMAT(format) this->list = g_list_append(this->list, gtk_paper_size_new(format))
+
+void FormatDialog::loadPageFormats()
+{
+	XOJ_CHECK_TYPE(FormatDialog);
+
+	this->list = gtk_paper_size_get_paper_sizes(false);
+
+	GList* next = NULL;
+	for (GList* l = list; l != NULL; l = next)
+	{
+		// Copy next here, because the entry may be deleted
+		next = l->next;
+		GtkPaperSize* s = (GtkPaperSize*) l->data;
+
+		string name = gtk_paper_size_get_name(s);
+		if (name == GTK_PAPER_NAME_A3 ||
+			name == GTK_PAPER_NAME_A4 ||
+			name == GTK_PAPER_NAME_A5 ||
+			name == GTK_PAPER_NAME_LETTER ||
+			name == GTK_PAPER_NAME_LEGAL)
+		{
+			continue;
+		}
+
+		gtk_paper_size_free(s);
+		this->list = g_list_delete_link(this->list, l);
+	}
+
+	// Name format: ftp://ftp.pwg.org/pub/pwg/candidates/cs-pwgmsn10-20020226-5101.1.pdf
+	ADD_FORMAT("custom_16x9_320x180mm");
+	ADD_FORMAT("custom_4x3_320x240mm");
 }
 
 double FormatDialog::getWidth()
@@ -170,6 +182,11 @@ void FormatDialog::setOrientation(Orientation orientation)
 void FormatDialog::spinValueChangedCb(GtkSpinButton* spinbutton, FormatDialog* dlg)
 {
 	XOJ_CHECK_TYPE_OBJ(dlg, FormatDialog);
+
+	if (dlg->ignoreSpinChange)
+	{
+		return;
+	}
 
 	double width = gtk_spin_button_get_value(GTK_SPIN_BUTTON(dlg->get("spinWidth"))) * dlg->scale;
 	double height = gtk_spin_button_get_value(GTK_SPIN_BUTTON(dlg->get("spinHeight"))) * dlg->scale;
@@ -224,8 +241,7 @@ void FormatDialog::cbUnitChanged(GtkComboBox* widget, FormatDialog* dlg)
 	dlg->selectedScale = selectd;
 	dlg->scale = XOJ_UNITS[dlg->selectedScale].scale;
 
-	gtk_spin_button_set_value(GTK_SPIN_BUTTON(dlg->get("spinWidth")), width / dlg->scale);
-	gtk_spin_button_set_value(GTK_SPIN_BUTTON(dlg->get("spinHeight")), height / dlg->scale);
+	dlg->setSpinValues(width / dlg->scale, height / dlg->scale);
 }
 
 void FormatDialog::cbFormatChangedCb(GtkComboBox* widget, FormatDialog* dlg)
@@ -234,40 +250,51 @@ void FormatDialog::cbFormatChangedCb(GtkComboBox* widget, FormatDialog* dlg)
 
 	GtkTreeIter iter;
 
-	if (gtk_combo_box_get_active_iter(widget, &iter))
+	if (!gtk_combo_box_get_active_iter(widget, &iter))
 	{
-		GtkTreeModel* model = gtk_combo_box_get_model(widget);
+		return;
+	}
+	GtkTreeModel* model = gtk_combo_box_get_model(widget);
 
-		GValue value = { 0 };
-		gtk_tree_model_get_value(model, &iter, 1, &value);
+	GValue value = { 0 };
+	gtk_tree_model_get_value(model, &iter, 1, &value);
 
-		if (G_VALUE_HOLDS_POINTER(&value))
+	if (!G_VALUE_HOLDS_POINTER(&value))
+	{
+		return;
+	}
+	GtkPaperSize* s = (GtkPaperSize*) g_value_get_pointer(&value);
+
+	if (s == NULL)
+	{
+		return;
+	}
+
+	double width = gtk_paper_size_get_width(s, GTK_UNIT_POINTS) / dlg->scale;
+	double height = gtk_paper_size_get_height(s, GTK_UNIT_POINTS) / dlg->scale;
+
+	if (dlg->orientation == ORIENTATION_LANDSCAPE)
+	{
+		if (width < height)
 		{
-			GtkPaperSize* s = (GtkPaperSize*) g_value_get_pointer(&value);
-
-			if (s == NULL)
-			{
-				return;
-			}
-
-			double width = gtk_paper_size_get_width(s, GTK_UNIT_POINTS) / dlg->scale;
-			double height = gtk_paper_size_get_height(s, GTK_UNIT_POINTS) / dlg->scale;
-
-			if (dlg->orientation == ORIENTATION_LANDSCAPE)
-			{
-				double tmp = width;
-				width = height;
-				height = tmp;
-			}
-			else
-			{
-				dlg->setOrientation(ORIENTATION_PORTRAIT);
-			}
-
-			gtk_spin_button_set_value(GTK_SPIN_BUTTON(dlg->get("spinWidth")), width);
-			gtk_spin_button_set_value(GTK_SPIN_BUTTON(dlg->get("spinHeight")), height);
+			double tmp = width;
+			width = height;
+			height = tmp;
 		}
 	}
+	else
+	{
+		if (width > height)
+		{
+			double tmp = width;
+			width = height;
+			height = tmp;
+		}
+
+		dlg->setOrientation(ORIENTATION_PORTRAIT);
+	}
+
+	dlg->setSpinValues(width, height);
 }
 
 void FormatDialog::portraitSelectedCb(GtkToggleToolButton* bt, FormatDialog* dlg)
@@ -286,8 +313,8 @@ void FormatDialog::portraitSelectedCb(GtkToggleToolButton* bt, FormatDialog* dlg
 
 		if (width > height)
 		{
-			gtk_spin_button_set_value(GTK_SPIN_BUTTON(dlg->get("spinWidth")), height);
-			gtk_spin_button_set_value(GTK_SPIN_BUTTON(dlg->get("spinHeight")), width);
+			// Exchange width and height
+			dlg->setSpinValues(height, width);
 		}
 	}
 }
@@ -308,10 +335,18 @@ void FormatDialog::landscapeSelectedCb(GtkToggleToolButton* bt, FormatDialog* dl
 
 		if (width < height)
 		{
-			gtk_spin_button_set_value(GTK_SPIN_BUTTON(dlg->get("spinWidth")), height);
-			gtk_spin_button_set_value(GTK_SPIN_BUTTON(dlg->get("spinHeight")), width);
+			// Exchange width and height
+			dlg->setSpinValues(height, width);
 		}
 	}
+}
+
+void FormatDialog::setSpinValues(double width, double heigth)
+{
+	ignoreSpinChange = true;
+	gtk_spin_button_set_value(GTK_SPIN_BUTTON(get("spinWidth")), width);
+	gtk_spin_button_set_value(GTK_SPIN_BUTTON(get("spinHeight")), heigth);
+	ignoreSpinChange = false;
 }
 
 void FormatDialog::show(GtkWindow* parent)
@@ -321,13 +356,11 @@ void FormatDialog::show(GtkWindow* parent)
 	int ret = 0;
 	while (ret == 0)
 	{
-
 		gtk_window_set_transient_for(GTK_WINDOW(this->window), parent);
 		ret = gtk_dialog_run(GTK_DIALOG(this->window));
 		if (ret == 0)
 		{
-			gtk_spin_button_set_value(GTK_SPIN_BUTTON(get("spinWidth")), this->origWidth / this->scale);
-			gtk_spin_button_set_value(GTK_SPIN_BUTTON(get("spinHeight")), this->origHeight / this->scale);
+			setSpinValues(this->origWidth / this->scale, this->origHeight / this->scale);
 		}
 	}
 

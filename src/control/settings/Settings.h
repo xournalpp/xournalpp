@@ -259,8 +259,6 @@ public:
 	int getPdfPageCacheSize();
 	void setPdfPageCacheSize(int size);
 
-	string getVisiblePageFormats();
-
 	bool isEventCompression();
 	void setEventCompression(bool enabled);
 
@@ -489,11 +487,6 @@ private:
 	 * (Page, insert image selection etc.)
 	 */
 	int selectionColor;
-
-	/**
-	 * The page format which are visible
-	 */
-	string visiblePageFormats;
 
 	/**
 	 * Whether event compression should be enabled

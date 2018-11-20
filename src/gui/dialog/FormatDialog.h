@@ -34,7 +34,9 @@ public:
 	double getHeight();
 
 private:
+	void loadPageFormats();
 	void setOrientation(Orientation portrait);
+	void setSpinValues(double width, double heigth);
 
 	static void portraitSelectedCb(GtkToggleToolButton* toggle_tool_button, FormatDialog* dlg);
 	static void landscapeSelectedCb(GtkToggleToolButton* toggle_tool_button, FormatDialog* dlg);
@@ -59,4 +61,6 @@ private:
 
 	double width;
 	double height;
+
+	double ignoreSpinChange;
 };
