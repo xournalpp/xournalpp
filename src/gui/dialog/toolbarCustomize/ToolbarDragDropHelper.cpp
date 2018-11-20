@@ -1,8 +1,7 @@
 #include "ToolbarDragDropHelper.h"
 
-#include "gui/widgets/SelectColor.h"
+#include "gui/toolbarMenubar/ToolbarUtil.h"
 
-#include <Util.h>
 
 GdkAtom ToolbarDragDropHelper::atomToolItem = gdk_atom_intern_static_string("application/xournal-ToolbarItem");
 GtkTargetEntry ToolbarDragDropHelper::dropTargetEntry = { (gchar *)"move-buffer", GTK_TARGET_SAME_APP, 1 };
@@ -16,31 +15,22 @@ ToolbarDragDropHelper::~ToolbarDragDropHelper() { }
  */
 GdkPixbuf* ToolbarDragDropHelper::getImagePixbuf(GtkImage* image)
 {
-	gchar* stock_id;
-	GtkIconSize size;
-
 	switch (gtk_image_get_storage_type(image))
 	{
 	case GTK_IMAGE_PIXBUF:
 		return (GdkPixbuf*) g_object_ref(gtk_image_get_pixbuf(image));
-	case GTK_IMAGE_STOCK:
-		gtk_image_get_stock(image, &stock_id, &size);
-		return gtk_widget_render_icon(GTK_WIDGET(image), stock_id, size, NULL);
+
+	case GTK_IMAGE_ICON_NAME:
+	{
+		const gchar* iconName = NULL;
+		gtk_image_get_icon_name(image, &iconName, NULL);
+		return gtk_icon_theme_load_icon(gtk_icon_theme_get_default(), iconName, 22, (GtkIconLookupFlags)0, NULL);
+	}
+
 	default:
 		g_warning("Image storage type %d not handled", gtk_image_get_storage_type(image));
 		return NULL;
 	}
-}
-
-GdkPixbuf* ToolbarDragDropHelper::getColorImage(int color)
-{
-	GtkWidget* icon = selectcolor_new(color);
-	selectcolor_set_size(icon, 16);
-	selectcolor_set_circle(icon, true);
-	GdkPixbuf* image = Util::newPixbufFromWidget(icon, 16);
-	gtk_widget_unref(icon);
-
-	return image;
 }
 
 void ToolbarDragDropHelper::dragDestAddToolbar(GtkWidget* target)

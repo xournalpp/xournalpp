@@ -30,7 +30,6 @@ private:
 	virtual ~XInputUtils();
 
 public:
-	static void fixXInputCoords(GdkEvent* event, GtkWidget* widget);
 	static void handleScrollEvent(GdkEventButton* event, GtkWidget* widget);
 
 	/**

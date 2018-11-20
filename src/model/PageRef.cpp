@@ -90,7 +90,14 @@ const XojPage* PageRef::operator->() const
 
 PageRef PageRef::clone()
 {
-	return PageRef(this->page->clone());
+	if (this->page == NULL)
+	{
+		return PageRef(NULL);
+	}
+	else
+	{
+		return PageRef(this->page->clone());
+	}
 }
 
 bool PageRef::isValid()

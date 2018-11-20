@@ -18,13 +18,30 @@
 
 class XojOpenDlg
 {
-private:
-	XojOpenDlg();
+public:
+	XojOpenDlg(GtkWindow* win, Settings* settings);
 	virtual ~XojOpenDlg();
 
 public:
-	static path showOpenDialog(GtkWindow* win, Settings* settings, bool pdf, bool& attachPdf);
+	path showOpenDialog(bool pdf, bool& attachPdf);
+	path showOpenTemplateDialog();
+
+protected:
+	void addFilterAllFiles();
+	void addFilterPdf();
+	void addFilterXoj();
+	void addFilterXojt();
+
+	path runDialog();
 
 private:
 	static void updatePreviewCallback(GtkFileChooser* fileChooser, void* userData);
+
+private:
+	XOJ_TYPE_ATTRIB;
+
+	GtkWidget* dialog;
+
+	GtkWindow* win;
+	Settings* settings;
 };

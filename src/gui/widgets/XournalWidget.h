@@ -15,13 +15,13 @@
 
 G_BEGIN_DECLS
 
-#define GTK_XOURNAL(obj) GTK_CHECK_CAST(obj, gtk_xournal_get_type (), GtkXournal)
+#define GTK_XOURNAL(obj) G_TYPE_CHECK_INSTANCE_CAST(obj, gtk_xournal_get_type (), GtkXournal)
 #define GTK_XOURNAL_CLASS(klass) GTK_CHECK_CLASS_CAST(klass, gtk_xournal_get_type(), GtkXournalClass)
-#define GTK_IS_XOURNAL(obj) GTK_CHECK_TYPE(obj, gtk_xournal_get_type())
+#define GTK_IS_XOURNAL(obj) G_TYPE_CHECK_INSTANCE_TYPE(obj, gtk_xournal_get_type())
 
 class EditSelection;
 class Layout;
-class PageView;
+class XojPageView;
 class PagePositionCache;
 class Rectangle;
 class XournalView;
@@ -49,7 +49,7 @@ struct _GtkXournal
 
 	Layout* layout;
 
-	PageView* currentInputPage;
+	XojPageView* currentInputPage;
 	PagePositionCache* pagePositionCache;
 
 	/**
@@ -72,12 +72,9 @@ struct _GtkXournalClass
 	GtkWidgetClass parent_class;
 };
 
-GtkType gtk_xournal_get_type(void);
-GtkWidget* gtk_xournal_new(XournalView* view);
+GType gtk_xournal_get_type();
 
-void gtk_xournal_update_xevent(GtkWidget* widget);
-
-cairo_t* gtk_xournal_create_cairo_for(GtkWidget* widget, PageView* view);
+GtkWidget* gtk_xournal_new(XournalView* view, GtkScrollable* parent);
 
 Layout* gtk_xournal_get_layout(GtkWidget* widget);
 
@@ -85,6 +82,6 @@ void gtk_xournal_scroll_relative(GtkWidget* widget, double x, double y);
 
 void gtk_xournal_repaint_area(GtkWidget* widget, int x1, int y1, int x2, int y2);
 
-Rectangle* gtk_xournal_get_visible_area(GtkWidget* widget, PageView* p);
+Rectangle* gtk_xournal_get_visible_area(GtkWidget* widget, XojPageView* p);
 
 G_END_DECLS

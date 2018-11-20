@@ -19,12 +19,12 @@
 #include <gtk/gtk.h>
 #include <vector>
 
-class PageView;
+class XojPageView;
 
 class TextEditor
 {
 public:
-	TextEditor(PageView* gui, GtkWidget* widget, Text* text, bool ownText);
+	TextEditor(XojPageView* gui, GtkWidget* widget, Text* text, bool ownText);
 	virtual ~TextEditor();
 
 	void paint(cairo_t* cr, GdkRectangle* rect, double zoom);
@@ -88,7 +88,7 @@ private:
 private:
 	XOJ_TYPE_ATTRIB;
 
-	PageView* gui;
+	XojPageView* gui;
 	GtkWidget* widget;
 
 	Text* text;

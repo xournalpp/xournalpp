@@ -13,13 +13,13 @@
 
 #include <iostream>
 
-#include <gtk/gtkimcontextsimple.h>
+#include <gtk/gtkimmulticontext.h>
 
 #include <string.h>
 
 // TODO LOW PRIO: implement drag & drop
 
-TextEditor::TextEditor(PageView* gui, GtkWidget* widget, Text* text, bool ownText)
+TextEditor::TextEditor(XojPageView* gui, GtkWidget* widget, Text* text, bool ownText)
 {
 	XOJ_INIT_TYPE(TextEditor);
 
@@ -54,7 +54,7 @@ TextEditor::TextEditor(PageView* gui, GtkWidget* widget, Text* text, bool ownTex
 	g_object_get(settings, "gtk-cursor-blink-time", &this->cursorBlinkTime, NULL);
 	g_object_get(settings, "gtk-cursor-blink-timeout", &this->cursorBlinkTimeout, NULL);
 
-	this->imContext = gtk_im_context_simple_new();
+	this->imContext = gtk_im_multicontext_new();
 	gtk_im_context_focus_in(this->imContext);
 
 	g_signal_connect(this->imContext, "commit", G_CALLBACK(iMCommitCallback), this);
@@ -313,7 +313,7 @@ bool TextEditor::onKeyPressEvent(GdkEventKey* event)
 {
 	XOJ_CHECK_TYPE(TextEditor);
 
-	if (gtk_bindings_activate_event((GtkObject*) this->textWidget, event))
+	if (gtk_bindings_activate_event(G_OBJECT(this->textWidget), event))
 	{
 		return true;
 	}
@@ -337,7 +337,7 @@ bool TextEditor::onKeyPressEvent(GdkEventKey* event)
 	}
 	else if (event-> state & GDK_CONTROL_MASK)
 	{
-		if(event-> keyval == GDK_b)
+		if(event-> keyval == GDK_KEY_b)
 		{
 			toggleBold();
 			return true;
@@ -355,7 +355,7 @@ bool TextEditor::onKeyPressEvent(GdkEventKey* event)
 			return true;
 		}
 	}
-	else if (event->keyval == GDK_Return || event->keyval == GDK_ISO_Enter || event->keyval == GDK_KP_Enter)
+	else if (event->keyval == GDK_KEY_Return || event->keyval == GDK_KEY_ISO_Enter || event->keyval == GDK_KEY_KP_Enter)
 	{
 		this->resetImContext();
 		iMCommitCallback(NULL, "\n", this);
@@ -364,7 +364,7 @@ bool TextEditor::onKeyPressEvent(GdkEventKey* event)
 		retval = true;
 	}
 		// Pass through Tab as literal tab, unless Control is held down
-	else if ((event->keyval == GDK_Tab || event->keyval == GDK_KP_Tab || event->keyval == GDK_ISO_Left_Tab)
+	else if ((event->keyval == GDK_KEY_Tab || event->keyval == GDK_KEY_KP_Tab || event->keyval == GDK_KEY_ISO_Left_Tab)
 			 && !(event->state & GDK_CONTROL_MASK))
 	{
 		resetImContext();
@@ -1078,10 +1078,10 @@ void TextEditor::repaintEditor()
 	//	double x = this->text->getX();
 	//	double y = this->text->getY();
 	//	double width = this->text->getElementWidth() + 10;
-	//	double heigth = this->text->getElementHeight() + 10;
+	//	double height = this->text->getElementHeight() + 10;
 	// TODO OPTIMIZE redraw if the filed is getting smaller (e.g. by pressing <ENTER>)
 	//       there is a repaint problem
-	//this->gui->repaintRect(x, y, width, heigth);
+	//this->gui->repaintRect(x, y, width, height);
 	this->gui->repaintPage();
 }
 
@@ -1134,7 +1134,7 @@ void TextEditor::paint(cairo_t* cr, GdkRectangle* repaintRect, double zoom)
 {
 	XOJ_CHECK_TYPE(TextEditor);
 
-	GdkColor selectionColor = this->gui->getSelectionColor();
+	GtkColorWrapper selectionColor = this->gui->getSelectionColor();
 
 	cairo_save(cr);
 
@@ -1157,7 +1157,7 @@ void TextEditor::paint(cairo_t* cr, GdkRectangle* repaintRect, double zoom)
 	{
 		string text = this->text->getText();
 		int pos = gtk_text_iter_get_offset(&cursorIter);
-		string txt = CONCAT(text.substr(0, pos), preeditString, text.substr(pos));
+		string txt = text.substr(0, pos) + preeditString + text.substr(pos);
 
 		PangoAttribute* attrib = pango_attr_underline_new(PANGO_UNDERLINE_SINGLE);
 		PangoAttrList* list = pango_layout_get_attributes(this->layout);

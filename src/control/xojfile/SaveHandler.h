@@ -31,9 +31,10 @@ public:
 	void saveTo(OutputStream* out, path filename, ProgressListener* listener = NULL);
 	string getErrorMessage();
 
+	static string getSolidBgStr(BackgroundType type);
+
 private:
 	void visitPage(XmlNode* root, PageRef p, Document* doc, int id);
-	static string getSolidBgStr(BackgroundType type);
 	static string getColorStr(int c, unsigned char alpha = 0xff);
 	void visitLayer(XmlNode* page, Layer* l);
 

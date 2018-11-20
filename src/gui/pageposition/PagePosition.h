@@ -15,26 +15,26 @@
 
 #include <vector>
 
-class PageView;
+class XojPageView;
 
 /**
- * @brief A set of PageView%s within an interval of y coordinates
+ * @brief A set of XojPageViews within an interval of y coordinates
  */
 class PagePosition
 {
 public:
 	PagePosition();
-	PagePosition(PageView* pv);
+	PagePosition(XojPageView* pv);
 	virtual ~PagePosition();
 
 public:
 	/**
-	 * Adds a PageView to this PagePosition provided that the
+	 * Adds a XojPageView to this PagePosition provided that the
 	 * y interval is not split up
 	 * 
-	 * @return whether or not the PageView was added
+	 * @return whether or not the XojPageView was added
 	 */
-	bool add(PageView* pv);
+	bool add(XojPageView* pv);
 
 	/**
 	 * Returns whether or not the given y value is in
@@ -55,10 +55,10 @@ public:
 	bool isYGraterThan(int y) const;
 
 	/**
-	 * Returns the PageView containing the given
+	 * Returns the XojPageView containing the given
 	 * point display point
 	 */
-	PageView* getViewAt(int x, int y);
+	XojPageView* getViewAt(int x, int y);
 
 private:
 	XOJ_TYPE_ATTRIB;
@@ -67,8 +67,8 @@ private:
 	int y1;
 	int y2;
 
-	// a list of PageViews 
-	std::vector<PageView*> views;
+	// a list of XojPageView
+	std::vector<XojPageView*> views;
 
 	friend class PagePositionHandler;
 };

@@ -39,7 +39,7 @@ protected:
 	GtkWidget* newFontButton();
 	static void setFontFontButton(GtkWidget* fontButton, XojFont& font);
 
-	virtual GtkWidget* getNewToolIconImpl();
+	virtual GtkWidget* getNewToolIcon();
 
 private:
 	XOJ_TYPE_ATTRIB;

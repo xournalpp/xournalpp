@@ -12,6 +12,7 @@
 #pragma once
 
 #include <serializing/Serializeable.h>
+#include <Rectangle.h>
 #include <XournalType.h>
 
 #include <gtk/gtk.h>
@@ -27,6 +28,8 @@ class ShapeContainer
 {
 public:
 	virtual bool contains(double x, double y) = 0;
+
+	virtual ~ShapeContainer() { }
 };
 
 class Element : public Serializeable
@@ -53,6 +56,8 @@ public:
 
 	double getElementWidth();
 	double getElementHeight();
+
+	Rectangle boundingRect();
 
 	virtual bool intersectsArea(const GdkRectangle* src);
 	virtual bool intersectsArea(double x, double y, double width, double height);

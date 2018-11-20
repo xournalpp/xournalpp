@@ -47,8 +47,7 @@ public:
 
 	void load(ToolbarData* d, GtkWidget* toolbar, const char* toolbarName, bool horizontal);
 
-	void registerMenupoint(GtkWidget* widget, ActionType type);
-	void registerMenupoint(GtkWidget* widget, ActionType type, ActionGroup group);
+	void registerMenupoint(GtkWidget* widget, ActionType type, ActionGroup group = GROUP_NOGROUP);
 
 	void initToolItems();
 

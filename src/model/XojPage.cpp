@@ -5,7 +5,7 @@
 
 #include <Util.h>
 
-XojPage::XojPage(double width, double heigth)
+XojPage::XojPage(double width, double height)
 {
 	XOJ_INIT_TYPE(XojPage);
 
@@ -14,7 +14,7 @@ XojPage::XojPage(double width, double heigth)
 	this->bgType = BACKGROUND_TYPE_LINED;
 
 	this->width = width;
-	this->height = heigth;
+	this->height = height;
 
 	this->ref = 0;
 	this->currentLayer = size_t_npos;
@@ -28,6 +28,7 @@ XojPage::~XojPage()
 	{
 		delete l;
 	}
+	this->layer.clear();
 
 	XOJ_RELEASE_TYPE(XojPage);
 }
@@ -80,6 +81,7 @@ void XojPage::insertLayer(Layer* layer, int index)
 {
 	XOJ_CHECK_TYPE(XojPage);
 
+	// TODO Check this method, maybe there should also be an append if the ID is to high!
 	this->layer.insert(this->layer.begin() + index, layer);
 	this->currentLayer = index + 1;
 }
@@ -163,14 +165,14 @@ void XojPage::setSize(double width, double height)
 	this->height = height;
 }
 
-double XojPage::getWidth()
+double XojPage::getWidth() const
 {
 	XOJ_CHECK_TYPE(XojPage);
 
 	return this->width;
 }
 
-double XojPage::getHeight()
+double XojPage::getHeight() const
 {
 	XOJ_CHECK_TYPE(XojPage);
 

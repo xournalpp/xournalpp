@@ -67,7 +67,6 @@ void AbstractSidebarPage::setTmpDisabled(bool disabled)
 	XOJ_CHECK_TYPE(AbstractSidebarPage);
 
 	GdkCursor* cursor = NULL;
-
 	if (disabled)
 	{
 		cursor = gdk_cursor_new(GDK_WATCH);
@@ -83,6 +82,6 @@ void AbstractSidebarPage::setTmpDisabled(bool disabled)
 
 	if (cursor)
 	{
-		gdk_cursor_unref(cursor);
+		g_object_unref(cursor);
 	}
 }

@@ -133,7 +133,7 @@ bool PdfWriter::writeTxt(string data)
 		replace_pair(')', "\\)"),
 		replace_pair('\r', "\\\r")
 	});
-	str = CONCAT("(", str, ")");
+	str = string("(") + str + ")";
 
 	return write(str);
 }

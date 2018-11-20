@@ -366,7 +366,7 @@ void SaveHandler::saveTo(OutputStream* out, path filename, ProgressListener* lis
 	{
 		BackgroundImage* img = (BackgroundImage*) l->data;
 
-		string tmpfn = CONCAT(filename.string(), ".", img->getFilename().string());
+		string tmpfn = filename.string() + "." + img->getFilename().string();
 		if (!gdk_pixbuf_save(img->getPixbuf(), tmpfn.c_str(), "png", NULL, NULL))
 		{
 			if (!this->errorMessage.empty())

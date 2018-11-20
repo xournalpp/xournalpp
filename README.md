@@ -29,23 +29,24 @@ This fork is intended to improve and customize xournalpp to my very own use case
 You're ready to go! 
 Just press the red button to start/stop recording and use the `Play Object` tool to click on a stroke and listen to the corresponding audio
 
-## Description
+Xournal++ is a hand note taking software written in C++ with the target of flexibility, functionality and speed.
+Stroke recognizer and other parts are based on Xournal Code, which you can find at [sourceforge](http://sourceforge.net/projects/xournal/)
 
-Xournal++ is not Xournal! It is a ground-up rewrite of Xournal in a different language (C++ instead of C). The purpose
-was to create a more flexible application that significantly extends the functionality of Xournal.
-
-At the moment, Xournal is very stable software while Xournal++ is not. If you want stability, you might be more
-interested in the original Xournal project, which you can find at [sourceforge](http://sourceforge.net/projects/xournal/)
-or, for some in-development features of Xournal, at [github.com/dmgerman/xournal](https://github.com/dmgerman/xournal).
-
-New features in Xournal++ include:
-
+Xournal++ features:
+* Support for Pen preassure, e.g. Wacom Tablet
+* Support for annotating PDFs
+* Allow to map different tools / colors etc. to stylus buttons / mouse buttons
+* Sidebar with Page Previews with advanced page sorting, PDF Bookmarks and Layers (Layers currently not enabled by default)
 * enhanced support for image insertion
-* better eraser
-* significantly reduced memory usage and code to detect memory leaks
+* Eraser with multipe configurations
+* Significantly reduced memory usage and code to detect memory leaks compared to Xournal
 * LaTeX support (requires a working LaTeX install and ```-DENABLE_MATHTEX=ON``` flag when configuring)
-* advanced page sorting (a sidebar, page up/down, etc.)
 * bug reporting, autosave, and auto backup tools
+* Customizeable toolbar, with multiple configurations, e.g. to optimize toolbar for portrait / landscape
+* Page Template definitions
+* Shape drawing (line, arrow, circle, rect)
+
+![Screenshot](readme/main.png?raw=true "Xournal++ Screenshot")
 
 Hopefully you'll enjoy it!
 
@@ -58,20 +59,28 @@ Aside from legacy releases, this is currently the way to install Xournal++. For 
 There will be some binaries appearing in the future, so ideally you can make use of those as well.
 They'll be at [Xournal++ releases](https://github.com/xournalpp/xournalpp/releases).
 
+Current releases are out of Date, we are searching for Maintainer for PPA etc.
+[Issue for Contact](https://github.com/xournalpp/xournalpp/issues/176)
+
+
 ### Install dependencies
 For Fedora/CentOS/RHEL:
+```diff
+- Probably not correct for new GTK3 build, create a pull or a Ticket if you have the correct list
+```
 ````bash
 dnf groups install "C Development Tools and Libraries"
 dnf install cmake libglade2-devel texlive-scheme-basic texlive-dvipng glibmm24-devel gtk2-devel gtk+-devel boost boost-devel poppler-glib-devel
 ````
 
 For Ubuntu/Debian:
-
 ````bash
-sudo apt-get install cmake libboost-all-dev libcppunit-dev dvipng texlive
-liblcms2-dev libopenjpeg-dev libjpeg-dev fontconfig librsvg2-dev libglade2-dev
-libpoppler-dev libpoppler-cpp-dev libpoppler-glib-dev libpoppler-private-dev
+sudo apt-get install cmake libboost-all-dev libcppunit-dev dvipng texlive \
+liblcms2-dev libjpeg-dev fontconfig librsvg2-dev libgtk-3-dev \
+libpoppler-dev libpoppler-cpp-dev libpoppler-glib-dev libpoppler-private-dev \
+libxml2-dev libopenjpeg-dev
 ````
+(On Ubuntu 18.04, remove the last `libopenjpeg-dev`, it's not in the repository any more).
 
 Basic steps are: (need to compile with -fpermissive due to const library changes in poppler)
 ````bash
@@ -82,8 +91,6 @@ cd build
 cmake -DCMAKE_CXX_FLAGS="-fpermissive" ..
 make
 ````
-
-PS: Build only tested for `poppler-0.67.0-1` and `poppler-glib-0.67.0-1`
 
 If you're on Arch and you're having issues getting it to compile, please try to downgrade those two packages with `downgrade` command.
 
@@ -99,7 +106,6 @@ If your build fails, try the following (I haven't tested it yet as I'm on Arch) 
 
 On Ubuntu 16.04, you may need to configure cmake with `-DBUILD_POPPLER=ON` due
 to #234.
-
 If you'd like to enable mathtex support you should add `-DENABLE_MATHTEX=ON` to cmake command or use `cmake-gui ..`
 to see graphically all available options. However, this should already be enabled by default.
 
@@ -115,10 +121,11 @@ If you want to install desktop file and thumbnailer execute:
 make desktop-install
 ```
 
-
 ## Development
-
-For now branches aren't organized too well, but (currently) the most of development happens in `development`.
+For developping new features, write a Ticket, so others know what you are doing.
+For development create a fork, and use the master as base. Create a Pull request for each fix.
+Do not create big pull requests, as long as you don't break anything features also can be
+merged, even if they are not 100% finished.
 
 See [GitHub:xournalpp](http://github.com/xournalpp/xournalpp) for current development. You can also join
 our Gitter channel via badge on top.

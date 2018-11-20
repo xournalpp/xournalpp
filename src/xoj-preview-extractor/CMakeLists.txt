@@ -9,7 +9,9 @@ target_link_libraries (xournal-thumbnailer
   ${Boost_LIBRARIES}
   ${Glibmm_LDFLAGS}
   ${ZLIB_LIBRARIES}
-  ${Gnome_LDFLAGS}
+  ${Glib_LDFLAGS}
+  ${GThread_LDFLAGS}
+  ${Libxml_LDFLAGS}
 )
 
 if (BUILD_BOOST)

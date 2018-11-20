@@ -38,6 +38,7 @@ FontUndoAction::~FontUndoAction()
 	{
 		delete e;
 	}
+	this->data.clear();
 
 	XOJ_RELEASE_TYPE(FontUndoAction);
 }

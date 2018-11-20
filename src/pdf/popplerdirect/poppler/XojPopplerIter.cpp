@@ -50,8 +50,8 @@ XojPopplerIter* XojPopplerIter::getChildIter()
     {
         return NULL;
     }
-
-    XojPopplerIter* child = new XojPopplerIter(doc, item->getKids());
+    GooList *tmp = const_cast<GooList *>(item->getKids());
+    XojPopplerIter* child = new XojPopplerIter(doc, tmp);
 
     return child;
 }
@@ -87,9 +87,9 @@ XojPopplerAction* XojPopplerIter::getAction()
     {
         return NULL;
     }
-    LinkAction* linkAction = item->getAction();
+    LinkAction* linkAction = const_cast<LinkAction *>(item->getAction());
 
-    string title = unicodeToChar(item->getTitle(), item->getTitleLength());
+    string title = unicodeToChar(const_cast<Unicode *>(item->getTitle()), item->getTitleLength());
 
     return new XojPopplerAction(this->doc, linkAction, title);
 }

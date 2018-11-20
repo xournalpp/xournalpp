@@ -18,7 +18,7 @@
 class SidebarPreviewPages : public SidebarPreviewBase
 {
 public:
-	SidebarPreviewPages(Control* control);
+	SidebarPreviewPages(Control* control, GladeGui* gui, SidebarToolbar* toolbar);
 	virtual ~SidebarPreviewPages();
 
 public:
@@ -46,6 +46,12 @@ public:
 	virtual void pageSelected(size_t page);
 	virtual void pageInserted(size_t page);
 	virtual void pageDeleted(size_t page);
+
+private:
+	/**
+	 * Unselect the last selected page, if any
+	 */
+	void unselectPage();
 
 private:
 	XOJ_TYPE_ATTRIB;

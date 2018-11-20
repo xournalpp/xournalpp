@@ -16,6 +16,7 @@
 #include "undo/FontUndoAction.h"
 #include "undo/SizeUndoAction.h"
 #include "undo/UndoRedoHandler.h"
+#include "util/GtkColorWrapper.h"
 #include "view/DocumentView.h"
 
 #include <serializing/ObjectOutputStream.h>
@@ -25,7 +26,7 @@
 using std::cout;
 using std::endl;
 
-EditSelection::EditSelection(UndoRedoHandler* undo, PageRef page, PageView* view)
+EditSelection::EditSelection(UndoRedoHandler* undo, PageRef page, XojPageView* view)
 {
 	XOJ_INIT_TYPE(EditSelection);
 
@@ -37,7 +38,7 @@ EditSelection::EditSelection(UndoRedoHandler* undo, PageRef page, PageView* view
 	contstruct(undo, view, page);
 }
 
-EditSelection::EditSelection(UndoRedoHandler* undo, Selection* selection, PageView* view)
+EditSelection::EditSelection(UndoRedoHandler* undo, Selection* selection, XojPageView* view)
 {
 	XOJ_INIT_TYPE(EditSelection);
 
@@ -54,7 +55,7 @@ EditSelection::EditSelection(UndoRedoHandler* undo, Selection* selection, PageVi
 	view->rerenderPage();
 }
 
-EditSelection::EditSelection(UndoRedoHandler* undo, Element* e, PageView* view, PageRef page)
+EditSelection::EditSelection(UndoRedoHandler* undo, Element* e, XojPageView* view, PageRef page)
 {
 	XOJ_INIT_TYPE(EditSelection);
 
@@ -74,7 +75,7 @@ EditSelection::EditSelection(UndoRedoHandler* undo, Element* e, PageView* view, 
 /**
  * Our internal constructor
  */
-void EditSelection::contstruct(UndoRedoHandler* undo, PageView* view, PageRef sourcePage)
+void EditSelection::contstruct(UndoRedoHandler* undo, XojPageView* view, PageRef sourcePage)
 {
 	XOJ_CHECK_TYPE(EditSelection);
 
@@ -119,7 +120,7 @@ void EditSelection::finalizeSelection()
 {
 	XOJ_CHECK_TYPE(EditSelection);
 
-	PageView* v = getBestMatchingPageView();
+	XojPageView* v = getBestMatchingPageView();
 	if (v == NULL)
 	{
 		this->view->getXournal()->deleteSelection(this);
@@ -455,7 +456,7 @@ void EditSelection::mouseMove(double x, double y)
 
 	this->view->getXournal()->repaintSelection();
 
-	PageView* v = getBestMatchingPageView();
+	XojPageView* v = getBestMatchingPageView();
 
 	if (v && v != this->view)
 	{
@@ -468,12 +469,12 @@ void EditSelection::mouseMove(double x, double y)
 	}
 }
 
-PageView* EditSelection::getBestMatchingPageView()
+XojPageView* EditSelection::getBestMatchingPageView()
 {
 	PagePositionHandler* pp = this->view->getXournal()->getPagePositionHandler();
 	int rx = this->getXOnViewAbsolute();
 	int ry = this->getYOnViewAbsolute();
-	PageView* v = pp->getBestMatchingView(rx, ry, this->getViewWidth(), this->getViewHeight());
+	XojPageView* v = pp->getBestMatchingView(rx, ry, this->getViewWidth(), this->getViewHeight());
 	return v;
 }
 
@@ -481,7 +482,7 @@ PageView* EditSelection::getBestMatchingPageView()
  * Translate all coordinates which are relative to the current view to the new view,
  * and set the attribute view to the new view
  */
-void EditSelection::translateToView(PageView* v)
+void EditSelection::translateToView(XojPageView* v)
 {
 	double zoom = view->getXournal()->getZoom();
 
@@ -544,8 +545,8 @@ void EditSelection::ensureWithinVisibleArea()
 	int viewx = this->view->getX();
 	int viewy = this->view->getY();
 	double zoom = this->view->getXournal()->getZoom();
-	//need to modify this to take into account the position
-	//of the object, plus typecast because PageView takes ints
+	// need to modify this to take into account the position
+	// of the object, plus typecast because XojPageView takes ints
 	this->view->getXournal()->ensureRectIsVisible((int) (viewx + this->x * zoom), (int) (viewy + this->y * zoom),
 												  (int) (this->width * zoom), (int) (this->height * zoom));
 }
@@ -637,19 +638,19 @@ void EditSelection::paint(cairo_t* cr, double zoom)
 
 	cairo_set_operator(cr, CAIRO_OPERATOR_OVER);
 
-	GdkColor selectionColor = view->getSelectionColor();
+	GtkColorWrapper selectionColor = view->getSelectionColor();
 
 	// set the line always the same size on display
 	cairo_set_line_width(cr, 1);
 
 	const double dashes[] = {10.0, 10.0};
 	cairo_set_dash(cr, dashes, sizeof(dashes) / sizeof(dashes[0]), 0);
-	cairo_set_source_rgb(cr, selectionColor.red / 65536.0, selectionColor.green / 65536.0, selectionColor.blue / 65536.0);
+	selectionColor.apply(cr);
 
 	cairo_rectangle(cr, x * zoom, y * zoom, width * zoom, height * zoom);
 
 	cairo_stroke_preserve(cr);
-	cairo_set_source_rgba(cr, selectionColor.red / 65536.0, selectionColor.green / 65536.0, selectionColor.blue / 65536.0, 0.3);
+	selectionColor.applyWithAlpha(cr, 0.3);
 	cairo_fill(cr);
 
 	cairo_set_dash(cr, NULL, 0, 0);
@@ -683,15 +684,15 @@ void EditSelection::drawAnchorRect(cairo_t* cr, double x, double y, double zoom)
 {
 	XOJ_CHECK_TYPE(EditSelection);
 
-	GdkColor selectionColor = view->getSelectionColor();
-	cairo_set_source_rgb(cr, selectionColor.red / 65536.0, selectionColor.green / 65536.0, selectionColor.blue / 65536.0);
+	GtkColorWrapper selectionColor = view->getSelectionColor();
+	selectionColor.apply(cr);
 	cairo_rectangle(cr, x * zoom - 4, y * zoom - 4, 8, 8);
 	cairo_stroke_preserve(cr);
 	cairo_set_source_rgb(cr, 1, 1, 1);
 	cairo_fill(cr);
 }
 
-PageView* EditSelection::getView()
+XojPageView* EditSelection::getView()
 {
 	XOJ_CHECK_TYPE(EditSelection);
 

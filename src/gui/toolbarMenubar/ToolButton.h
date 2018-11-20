@@ -33,7 +33,7 @@ public:
 protected:
 	virtual GtkToolItem* newItem();
 
-	virtual GtkWidget* getNewToolIconImpl();
+	virtual GtkWidget* getNewToolIcon();
 
 protected:
 	GladeGui* gui;

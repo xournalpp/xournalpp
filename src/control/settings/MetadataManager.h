@@ -11,24 +11,27 @@
 
 #pragma once
 
-#include <StringUtils.h>
+#include <XournalType.h>
 
-#include <glib.h>
+#include <string>
+#include <vector>
 
-#include <boost/asio.hpp>
-#undef GOOLIKELY_H
-#undef likely
-#undef unlikely
-#include <boost/date_time/posix_time/posix_time.hpp>
-#include "../src/pdf/popplerdirect/workaround/poppler-0.67.0/goo/GooLikely.h"
-#include <boost/filesystem/path.hpp>
-#include <boost/property_tree/ini_parser.hpp>
-#include <boost/property_tree/ptree.hpp>
-#include <boost/thread.hpp>
+using std::string;
+using std::vector;
 
-using boost::filesystem::path;
-namespace bp = boost::property_tree;
-namespace basio = boost::asio;
+class MetadataEntry
+{
+public:
+	MetadataEntry();
+
+public:
+	string metadataFile;
+	bool valid;
+	string path;
+	double zoom;
+	int page;
+	gint64 time;
+};
 
 class MetadataManager
 {
@@ -38,46 +41,46 @@ public:
 
 public:
 	/**
-	 * Setter / Getter: if path is empty the request will be ignored
+	 * Get the metadata for a file
 	 */
+	MetadataEntry getForFile(string file);
 
-	void setInt(path p, string name, int value);
-	void setDouble(path p, string name, double value);
-	void setString(path p, string name, string value);
+	/**
+	 * Store the current data into metadata
+	 */
+	void storeMetadata(string file, int page, double zoom);
 
-	bool getInt(path p, string name, int& value);
-	bool getDouble(path p, string name, double& value);
-
-	bool getString(path p, string name, string& value);
-
-	void copy(path source, path target);
-
-	void pause();
-	void resume();
-
-	bool save();
-	static bool save(MetadataManager* man, basio::deadline_timer* t = NULL);
+	/**
+	 * Document was closed, a new document was opened etc.
+	 */
+	void documentChanged();
 
 private:
-	bool checkPath(path p);
-	
-	void updateAccessTime(path p);
-	void loadConfigFile();
+	/**
+	 * Delete an old metadata file
+	 */
+	void deleteMetadataFile(string path);
 
-	void cleanupMetadata();
+	/**
+	 * Parse a single metadata file
+	 */
+	MetadataEntry loadMetadataFile(string path, string file);
 
-	static path getFilePath();
-	static bp::ptree::path_type getINIpathURI(path p);
-	static bp::ptree::path_type getINIpath(string s);
+	/**
+	 * Store metadata to file
+	 */
+	void storeMetadata(MetadataEntry* m);
+
+private:
+	/**
+	 * Load the metadata list (sorted)
+	 */
+	vector<MetadataEntry> loadList();
+
 
 private:
 	XOJ_TYPE_ATTRIB;
 
-	bool paused;
-
-	boost::thread* thread;
-	basio::io_service io;
-	basio::deadline_timer* timer;
-	
-	bp::ptree* config;
+	GMutex mutex;
+	MetadataEntry* metadata;
 };

@@ -16,7 +16,7 @@
 #include <vector>
 
 class PagePosition;
-class PageView;
+class XojPageView;
 class PageViewIndexEntry;
 
 class PageViewIndex
@@ -28,10 +28,10 @@ public:
 public:
 	void add(PagePosition* pp, int y);
 
-	PageView* getHighestIntersects();
+	XojPageView* getHighestIntersects();
 
 private:
-	void addView(PageView* v);
+	void addView(XojPageView* v);
 
 private:
 	XOJ_TYPE_ATTRIB;

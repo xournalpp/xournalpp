@@ -35,6 +35,7 @@ RecognizerUndoAction::~RecognizerUndoAction()
 		}
 	}
 	this->recognized = NULL;
+	this->original.clear();
 
 	XOJ_RELEASE_TYPE(RecognizerUndoAction);
 }

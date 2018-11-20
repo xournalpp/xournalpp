@@ -12,8 +12,8 @@
 #pragma once
 
 #include <Range.h>
+#include "util/GtkColorWrapper.h"
 
-#include <gdk/gdktypes.h>
 #include <gtk/gtk.h>
 
 class Element;
@@ -22,6 +22,8 @@ class Rectangle;
 class Redrawable
 {
 public:
+	virtual ~Redrawable();
+
 	/**
 	 * Call this if you only need to repaint the view, this means the buffer will be painted again,
 	 * and all selections, text edtiors etc. are drawed again, but the view buffer is not refreshed.
@@ -55,19 +57,19 @@ public:
 	/**
 	 * This updated the view buffer and then rerender the the region, call this if you changed the document
 	 */
-	virtual void rerenderRect(double x, double y, double width, double heigth) = 0;
+	virtual void rerenderRect(double x, double y, double width, double height) = 0;
 	void rerenderArea(double x1, double y1, double x2, double y2);
 
 	/**
 	 * Return the GTK selection color
 	 */
-	virtual GdkColor getSelectionColor() = 0;
+	virtual GtkColorWrapper getSelectionColor() = 0;
 
 
 	virtual void deleteViewBuffer() = 0;
 
-	virtual int getX() = 0;
-	virtual int getY() = 0;
+	virtual int getX() const = 0;
+	virtual int getY() const = 0;
 
 
 	virtual Rectangle* rectOnWidget(double x, double y, double width, double height) = 0;

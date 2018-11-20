@@ -1,7 +1,7 @@
 cmake_minimum_required (VERSION 2.8.8)
 
 project ("Xournal++" CXX C)
-set (PROJECT_VERSION "1.0.1")
+set (PROJECT_VERSION "1.0.2")
 set (PROJECT_PACKAGE "xournalpp")
 
 set (PROJECT_STRING "${PROJECT_NAME} ${PROJECT_VERSION}")
@@ -81,25 +81,69 @@ else (BUILD_BOOST)
 endif (BUILD_BOOST)
 add_includes_ldflags ("${Boost_LIBRARIES}" "${Boost_INCLUDE_DIRS}")
 
-# GTK+/Gnome
-pkg_check_modules (Gnome REQUIRED "gtk+-2.0 >= 2.18.3" "libglade-2.0 >= 2.6.4" "glib-2.0 >= 2.32.0" "gthread-2.0 >= 2.4.0")
-add_includes_ldflags ("${Gnome_LDFLAGS}" "${Gnome_INCLUDE_DIRS}")
+# GTK+
+pkg_check_modules (GTK REQUIRED "gtk+-3.0 >= 3.18.9")
+add_includes_ldflags ("${GTK_LDFLAGS}" "${GTK_INCLUDE_DIRS}")
+
+# GLIB
+pkg_check_modules (Glib REQUIRED "glib-2.0 >= 2.32.0")
+add_includes_ldflags ("${Glib_LDFLAGS}" "${Glib_INCLUDE_DIRS}")
+
+# GThread
+pkg_check_modules (GThread REQUIRED "gthread-2.0 >= 2.4.0")
+add_includes_ldflags ("${GThread_LDFLAGS}" "${GThread_INCLUDE_DIRS}")
+
+# LibXML
+pkg_check_modules (Libxml REQUIRED "libxml-2.0 >= 2.0.0")
+add_includes_ldflags ("${Libxml_LDFLAGS}" "${Libxml_INCLUDE_DIRS}")
+
+find_program(LSB_RELEASE_EXEC lsb_release)
+execute_process(COMMAND ${LSB_RELEASE_EXEC} -is
+  OUTPUT_VARIABLE LSB_RELEASE_ID_SHORT
+  OUTPUT_STRIP_TRAILING_WHITESPACE
+)
+find_program(LSB_RELEASE_EXEC lsb_release)
+execute_process(COMMAND ${LSB_RELEASE_EXEC} -rs
+  OUTPUT_VARIABLE LSB_RELEASE_NUMBER_SHORT
+  OUTPUT_STRIP_TRAILING_WHITESPACE
+)
 
 # Poppler
-option (BUILD_POPPLER "Build the most recent version of Poppler" OFF)
+option (BUILD_POPPLER "Build Poppler from git or other source" DEFAULT_BUILD_POOPPLER)
+
+## Ubuntu 16.04 need a poppler build
+if (LSB_RELEASE_ID_SHORT STREQUAL "Ubuntu" AND LSB_RELEASE_NUMBER_SHORT STREQUAL "16.04")
+  set(BUILD_POPPLER ON)
+  message ("Automatically set BUILD_POPPLER ON on Ubuntu 16.04")
+endif()
+
+set (POPPLER_GIT_VER "0.61.1" CACHE STRING "Version of Poppler to build")
+option (POPPLER_GIT "Use git version of Poppler" ON)
+set(POPPLER_DIR "/path/to/poppler/source" CACHE STRING "Directory with poppler")
 if (BUILD_POPPLER)
 
-  set (POPPLER_PREFIX "${CMAKE_BINARY_DIR}/poppler-prefix")
-
   include (ExternalProject)
-  ExternalProject_Add (poppler
-    GIT_REPOSITORY "git://git.freedesktop.org/git/poppler/poppler"
-    GIT_TAG "poppler-0.61.1"
-    PREFIX "${POPPLER_PREFIX}"
+  set (POPPLER_PREFIX "${CMAKE_BINARY_DIR}/poppler-prefix")
+  set (POPPLER_CMAKE_ARGS "-DBUILD_QT5_TESTS=OFF -DENABLE_UTILS=OFF -DENABLE_QT5=OFF -DENABLE_QT4=OFF -DBUILD_QT4_TESTS=OFF")
+  if (POPPLER_GIT)
 
-    CMAKE_ARGS -DBUILD_QT5_TESTS:BOOL="0" -DENABLE_QT4:BOOL="0" -DBUILD_QT4_TESTS:BOOL="0" -DENABLE_UTILS:BOOL="0" -DWITH_Qt4:BOOL="0" -DENABLE_QT5:BOOL="0"
-    INSTALL_COMMAND ""
-  )
+    ExternalProject_Add (poppler
+        GIT_REPOSITORY "git://git.freedesktop.org/git/poppler/poppler"
+        GIT_TAG "poppler-${POPPLER_GIT_VER}"
+        PREFIX "${POPPLER_PREFIX}"
+
+        CMAKE_ARGS ${POPPLER_CMAKE_ARGS}
+        INSTALL_COMMAND ""
+    )
+  else ()
+     ExternalProject_Add (poppler
+        SOURCE_DIR "${POPPLER_DIR}"
+        PREFIX "${POPPLER_PREFIX}"
+
+        CMAKE_ARGS ${POPPLER_CMAKE_ARGS}
+        INSTALL_COMMAND ""
+    )
+  endif()
   
   # Additional packages required by Poppler
   find_package (OpenJPEG REQUIRED)
@@ -134,7 +178,9 @@ if (BUILD_POPPLER)
     libpoppler-glib.so
     
     ${OPENJPEG_LIBRARIES}
-    -lopenjpeg
+# Comment out, seems to be a problem on Debian...
+# Do we need to detect something to enable / disable?
+#    -lopenjpeg
     ${JPEG_LIBRARIES}
     ${PopplerLibs_LDFLAGS}
     ${lcms_LDFLAGS}
@@ -181,13 +227,6 @@ if (ENABLE_CPPUNIT)
   pkg_check_modules (CppUnit REQUIRED "cppunit >= 1.12-0")
   enable_testing ()
 endif (ENABLE_CPPUNIT)
-
-# Overlay scrollbar
-option (ENABLE_OS "Overlay Scrollbar support" OFF)
-if (ENABLE_OS)
-  pkg_check_modules (OS REQUIRED "overlay-scrollbar")
-  add_includes_ldflags ("${OS_LDFLAGS}" "${OS_INCLUDE_DIRS}")
-endif (ENABLE_OS)
 
 # Mathtex
 option (ENABLE_MATHTEX "Mathtex support" ON)
@@ -281,6 +320,15 @@ install (DIRECTORY ui
   COMPONENT xournalpp
 )
 
+if (BUILD_POPPLER)
+	# The Path /usr/lib is hardcoded, fix if there is a better solution
+	set(POPPLER_LIB ${CMAKE_INSTALL_PREFIX}/lib/libpoppler.so.72)
+
+	install(CODE "MESSAGE(\"Install Poppler workaround to ${POPPLER_LIB}\")")
+	install(CODE "configure_file(${CMAKE_CURRENT_BINARY_DIR}/poppler-prefix/src/poppler-build/libpoppler.so.72.0.0 ${POPPLER_LIB} COPYONLY)")
+	install(CODE "file(APPEND ${CMAKE_CURRENT_BINARY_DIR}/install_manifest_workaround.txt \"${POPPLER_LIB}\")")
+endif()
+
 # Uninstall target
 configure_file (
   cmake/cmake_uninstall.cmake.in
@@ -322,7 +370,6 @@ add_custom_target (desktop-uninstall
 message ("
 Configuration:
 	Compiler:                   ${CMAKE_CXX_COMPILER}
-	Overlay Scrollbar enabled:  ${ENABLE_OS}
 	Mathtex enabled:            ${ENABLE_MATHTEX}
 	CppUnit enabled:            ${ENABLE_CPPUNIT}
 

@@ -27,7 +27,7 @@
 #include <cmath>
 
 EditSelectionContents::EditSelectionContents(double x, double y, double width, double height,
-											 PageRef sourcePage, Layer* sourceLayer, PageView* sourceView)
+											 PageRef sourcePage, Layer* sourceLayer, XojPageView* sourceView)
 {
 	XOJ_INIT_TYPE(EditSelectionContents);
 
@@ -250,15 +250,21 @@ UndoAction* EditSelectionContents::setColor(int color)
 }
 
 /**
- * Fills de undo item if the selection is deleted
+ * Fills the undo item if the selection is deleted
  * the selection is cleared after
  */
 void EditSelectionContents::fillUndoItem(DeleteUndoAction* undo)
 {
 	Layer* layer = this->sourceLayer;
+
+	// Always insert the elements on top
+	// Because the elements are already removed
+	// and owned by the selection, therefore the layer
+	// doesn't know the index anymore
+	int index = layer->getElements()->size();
 	for (Element* e : this->selected)
 	{
-		undo->addElement(layer, e, layer->indexOf(e));
+		undo->addElement(layer, e, index);
 	}
 
 	this->selected.clear();
@@ -317,7 +323,7 @@ double EditSelectionContents::getOriginalHeight()
  * The contents of the selection
  */
 void EditSelectionContents::finalizeSelection(double x, double y, double width, double height, bool aspectRatio,
-											  Layer* layer, PageRef targetPage, PageView* targetView, UndoRedoHandler* undo)
+											  Layer* layer, PageRef targetPage, XojPageView* targetView, UndoRedoHandler* undo)
 {
 	double fx = width / this->originalWidth;
 	double fy = height / this->originalHeight;
@@ -351,7 +357,7 @@ void EditSelectionContents::finalizeSelection(double x, double y, double width, 
 }
 
 void EditSelectionContents::updateContent(double x, double y, double width, double height, bool aspectRatio,
-										  Layer* layer, PageRef targetPage, PageView* targetView,
+										  Layer* layer, PageRef targetPage, XojPageView* targetView,
 										  UndoRedoHandler* undo, CursorSelectionType type)
 {
 	double mx = x - this->lastX;
@@ -480,7 +486,7 @@ void EditSelectionContents::paint(cairo_t* cr, double x, double y, double width,
 	cairo_restore(cr);
 }
 
-UndoAction* EditSelectionContents::copySelection(PageRef page, PageView *view, double x, double y)
+UndoAction* EditSelectionContents::copySelection(PageRef page, XojPageView *view, double x, double y)
 {
 	Layer* layer = page->getSelectedLayer();
 

@@ -13,7 +13,7 @@
 
 #include <XournalType.h>
 
-class PageView;
+class XojPageView;
 class XournalView;
 
 class RepaintHandler
@@ -26,17 +26,17 @@ public:
 	/**
 	 * Repaint a page
 	 */
-	void repaintPage(PageView* view);
+	void repaintPage(XojPageView* view);
 
 	/**
 	 * Repaint a page area, coordinates are in view coordinates
 	 */
-	void repaintPageArea(PageView* view, int x1, int y1, int x2, int y2);
+	void repaintPageArea(XojPageView* view, int x1, int y1, int x2, int y2);
 
 	/**
 	 * Repaints the page border (at least)
 	 */
-	void repaintPageBorder(PageView* view);
+	void repaintPageBorder(XojPageView* view);
 
 private:
 	XOJ_TYPE_ATTRIB;

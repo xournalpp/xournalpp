@@ -9,15 +9,14 @@
 using std::cout;
 using std::endl;
 
-LatexGlade::LatexGlade(GladeSearchpath* gladeSearchPath) : GladeGui(gladeSearchPath, "texdialog.glade", "texDialog")
+LatexGlade::LatexGlade(GladeSearchpath* gladeSearchPath)
+ : GladeGui(gladeSearchPath, "texdialog.glade", "texDialog")
 {
 	XOJ_INIT_TYPE(LatexGlade);
 
-	//GtkWidget * vbox = get("texVBox");
-	//g_return_if_fail(vbox != NULL);
 	this->texBox = get("texEntry");
-	//gtk_entry_set_max_length(GTK_ENTRY(this->texBox),50);
-	//increase the maximum length to something reasonable.
+
+	// increase the maximum length to something reasonable.
 	gtk_entry_set_max_length(GTK_ENTRY(this->texBox), 500);
 
 	gtk_widget_show(this->texBox);
@@ -49,15 +48,13 @@ void LatexGlade::save()
 void LatexGlade::load()
 {
 	XOJ_CHECK_TYPE(LatexGlade);
-	cout << "Latex::load()" << endl;
 
 	if (theLatex.empty())
 	{
 		theLatex = "x^2";
 	}
+
 	gtk_entry_set_text(GTK_ENTRY(this->texBox), this->theLatex.c_str());
-
-
 }
 
 void LatexGlade::show(GtkWindow* parent)
@@ -69,12 +66,12 @@ void LatexGlade::show(GtkWindow* parent)
 	int res = gtk_dialog_run(GTK_DIALOG(this->window));
 	if (res == 1)
 	{
-		//cout << "Checkbox OK-d." << endl;
 		this->save();
 	}
 	else
 	{
 		this->theLatex = "";
 	}
+
 	gtk_widget_hide(this->window);
 }

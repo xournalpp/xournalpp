@@ -26,6 +26,7 @@
 #include "jobs/ProgressListener.h"
 #include "jobs/XournalScheduler.h"
 #include "model/Document.h"
+#include "settings/MetadataManager.h"
 #include "settings/Settings.h"
 #include "undo/UndoRedoHandler.h"
 
@@ -38,12 +39,15 @@ extern string audioFolder;
 
 class Sidebar;
 class CallbackData;
-class PageView;
+class XojPageView;
 class SaveHandler;
 class GladeSearchpath;
 class MetadataManager;
 class Cursor;
 class ToolbarDragDropHandler;
+class MetadataEntry;
+class MetadataCallbackData;
+class BaseExportJob;
 
 class Control : public ActionHandler,
 	public ToolListener,
@@ -54,7 +58,7 @@ class Control : public ActionHandler,
 	public ProgressListener
 {
 public:
-	Control(GladeSearchpath* gladeSearchPath);
+	Control(GladeSearchpath* gladeSearchPath, bool noThreads = false);
 	virtual ~Control();
 
 	void initWindow(MainWindow* win);
@@ -66,6 +70,7 @@ public:
 	void print();
 	void exportAsPdf();
 	void exportAs();
+	void exportBase(BaseExportJob* job);
 	bool save(bool synchron = false);
 	bool saveAs();
 	void quit();
@@ -115,15 +120,13 @@ public:
 
 	void gotoPage();
 
-	void setRulerEnabled(bool enabled);
-	void setRectangleEnabled(bool enabled);
-	void setCircleEnabled(bool enabled);
-	void setArrowEnabled(bool enabled);
-	void setShapeRecognizerEnabled(bool enabled);
+	void setShapeTool(ActionType type, bool enabled);
 
 	void addNewLayer();
 	void deleteCurrentLayer();
+	void switchToLay(int layer);
 
+	void paperTemplate();
 	void paperFormat();
 	void changePageBackgroundColor();
 	void setPageBackground(ActionType type);
@@ -162,8 +165,6 @@ public:
 
 	void enableAutosave(bool enable);
 
-	void getDefaultPagesize(double& width, double& height);
-
 	void clearSelectionEndText();
 
 	void setToolSize(ToolSize size);
@@ -197,6 +198,7 @@ public:
 	size_t getCurrentPageNo();
 	Cursor* getCursor();
 	Sidebar* getSidebar();
+	SearchBar* getSearchBar();
 
 	bool copy();
 	bool cut();
@@ -243,6 +245,17 @@ protected:
 	static bool autosaveCallback(Control* control);
 
 	void fontChanged();
+	/**
+	 * Load metadata later, md will be deleted
+	 */
+	void loadMetadata(MetadataEntry md);
+
+	static bool loadMetadataCallback(MetadataCallbackData* data);
+
+	/**
+	 * Check if this is an autosave file, return false in this case and display a user instruction
+	 */
+	bool shouldFileOpen(string filename);
 
 private:
 	XOJ_TYPE_ATTRIB;
@@ -300,12 +313,6 @@ private:
 	int autosaveTimeout;
 	path lastAutosaveFilename;
 
-	/**
-	 * Default page size
-	 */
-	double defaultWidth;
-	double defaultHeight;
-
 	XournalScheduler* scheduler;
 
 	/**
@@ -323,6 +330,10 @@ private:
 
 	bool recording = false;
 
+	/**
+	 * Current page insert type, usually from default, but it can be changed from toolbar menu
+	 */
+	PageInsertType pageInserType;
 };
 
 class CallbackData

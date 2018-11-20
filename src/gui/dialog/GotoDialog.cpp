@@ -1,7 +1,7 @@
 #include "GotoDialog.h"
 
-GotoDialog::GotoDialog(GladeSearchpath* gladeSearchPath, int maxPage) :
-		GladeGui(gladeSearchPath, "goto.glade", "gotoDialog")
+GotoDialog::GotoDialog(GladeSearchpath* gladeSearchPath, int maxPage)
+ : GladeGui(gladeSearchPath, "goto.glade", "gotoDialog")
 {
 	XOJ_INIT_TYPE(GotoDialog);
 

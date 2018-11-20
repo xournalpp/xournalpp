@@ -5,33 +5,18 @@
 #include <config.h>
 #include <i18n.h>
 
-FormatDialog::FormatDialog(GladeSearchpath* gladeSearchPath, Settings* settings, double width, double heigth) :
-		GladeGui(gladeSearchPath, "pagesize.glade", "pagesizeDialog")
+FormatDialog::FormatDialog(GladeSearchpath* gladeSearchPath, Settings* settings, double width, double height)
+ : GladeGui(gladeSearchPath, "pagesize.glade", "pagesizeDialog")
 {
-
 	XOJ_INIT_TYPE(FormatDialog);
 
 	this->orientation = ORIENTATION_NOT_DEFINED;
-	this->selectedScale = 0;
 	this->settings = settings;
 
-	SElement& format = settings->getCustomElement("format");
-	string unit;
-
-	if (format.getString("unit", unit))
-	{
-		for (int i = 0; i < XOJ_UNIT_COUNT; i++)
-		{
-			if (unit == XOJ_UNITS[i].name)
-			{
-				this->selectedScale = i;
-				break;
-			}
-		}
-	}
+	this->selectedScale = settings->getSizeUnitIndex();
 
 	this->scale = XOJ_UNITS[this->selectedScale].scale;
-	this->origHeight = heigth;
+	this->origHeight = height;
 	this->origWidth = width;
 
 	this->width = -1;
@@ -41,26 +26,19 @@ FormatDialog::FormatDialog(GladeSearchpath* gladeSearchPath, Settings* settings,
 	gtk_spin_button_set_value(GTK_SPIN_BUTTON(get("spinHeight")), this->origHeight / this->scale);
 
 	GtkWidget* cbUnit = get("cbUnit");
-	GtkListStore* store = gtk_list_store_new(1, G_TYPE_STRING);
-	gtk_combo_box_set_model(GTK_COMBO_BOX(cbUnit), GTK_TREE_MODEL(store));
-	g_object_unref(store);
-
-	GtkCellRenderer* cell = gtk_cell_renderer_text_new();
-	gtk_cell_layout_pack_start(GTK_CELL_LAYOUT(cbUnit), cell, TRUE);
-	gtk_cell_layout_set_attributes(GTK_CELL_LAYOUT(cbUnit), cell, "text", 0, NULL);
 
 	for (int i = 0; i < XOJ_UNIT_COUNT; i++)
 	{
-		gtk_combo_box_append_text(GTK_COMBO_BOX(cbUnit), XOJ_UNITS[i].name);
+		gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(cbUnit), XOJ_UNITS[i].name);
 	}
 	gtk_combo_box_set_active(GTK_COMBO_BOX(cbUnit), this->selectedScale);
 
 	GtkWidget* cbTemplate = get("cbTemplate");
-	store = gtk_list_store_new(2, G_TYPE_STRING, G_TYPE_POINTER);
+	GtkListStore* store = gtk_list_store_new(2, G_TYPE_STRING, G_TYPE_POINTER);
 	gtk_combo_box_set_model(GTK_COMBO_BOX(cbTemplate), GTK_TREE_MODEL(store));
 	g_object_unref(store);
 
-	cell = gtk_cell_renderer_text_new();
+	GtkCellRenderer* cell = gtk_cell_renderer_text_new();
 	gtk_cell_layout_pack_start(GTK_CELL_LAYOUT(cbTemplate), cell, TRUE);
 	gtk_cell_layout_set_attributes(GTK_CELL_LAYOUT(cbTemplate), cell, "text", 0, NULL);
 
@@ -68,11 +46,11 @@ FormatDialog::FormatDialog(GladeSearchpath* gladeSearchPath, Settings* settings,
 
 	string formatlist = settings->getVisiblePageFormats();
 
-	if (heigth < width)
+	if (height < width)
 	{
 		double tmp = width;
-		width = heigth;
-		heigth = tmp;
+		width = height;
+		height = tmp;
 	}
 
 	this->list = gtk_paper_size_get_paper_sizes(false);
@@ -88,7 +66,7 @@ FormatDialog::FormatDialog(GladeSearchpath* gladeSearchPath, Settings* settings,
 
 		bool visible = false;
 
-		if (((int) (w - width) * 10) == 0 && ((int) (h - heigth) * 10) == 0)
+		if (((int) (w - width) * 10) == 0 && ((int) (h - height) * 10) == 0)
 		{
 			selectedFormat = i;
 			visible = true;
@@ -355,9 +333,7 @@ void FormatDialog::show(GtkWindow* parent)
 
 	if (ret == 1) //OK
 	{
-		SElement& format = settings->getCustomElement("format");
-		format.setString("unit", XOJ_UNITS[this->selectedScale].name);
-		settings->customSettingsChanged();
+		settings->setSizeUnitIndex(this->selectedScale);
 
 		this->width = gtk_spin_button_get_value(GTK_SPIN_BUTTON(get("spinWidth"))) * this->scale;
 		this->height = gtk_spin_button_get_value(GTK_SPIN_BUTTON(get("spinHeight"))) * this->scale;

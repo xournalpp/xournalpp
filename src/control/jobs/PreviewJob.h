@@ -20,6 +20,9 @@
 class SidebarPreviewBaseEntry;
 class Document;
 
+/**
+ * @brief A Job which renders a SidebarPreviewPage
+ */
 class PreviewJob : public Job
 {
 public:
@@ -31,7 +34,7 @@ protected:
 public:
 	virtual void* getSource();
 
-	virtual void run();
+	virtual void run(bool noThreads);
 
 	virtual JobType getType();
 

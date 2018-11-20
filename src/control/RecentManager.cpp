@@ -16,6 +16,9 @@ using std::endl;
 #define MIME_PDF "application/x-pdf"
 #define GROUP "xournal++"
 
+RecentManagerListener::~RecentManagerListener() { }
+
+
 RecentManager::RecentManager()
 {
 	XOJ_INIT_TYPE(RecentManager);
@@ -177,10 +180,21 @@ GList* RecentManager::filterRecent(GList* items, bool xoj)
 		string uri(gtk_recent_info_get_uri(info));
 
 		// Skip remote files
-		if (!ba::starts_with(uri, "file://")) continue;
+		if (!ba::starts_with(uri, "file://"))
+		{
+			continue;
+		}
 
 		using namespace boost::filesystem;
-		if (!exists(path(uri.substr(7)))) continue;	//substr is for removing uri's file://
+		try {
+			// substr is for removing uri's file://
+			if (!exists(path(uri.substr(7))))
+			{
+				continue;
+			}
+		} catch (boost::filesystem::filesystem_error&) {
+			continue;
+		}
 
 		if (xoj && ba::ends_with(uri, ".xoj"))
 		{

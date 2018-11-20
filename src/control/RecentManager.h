@@ -23,6 +23,8 @@ using boost::filesystem::path;
 class RecentManagerListener
 {
 public:
+	virtual ~RecentManagerListener();
+
 	/**
 	 * This function is called whenever some file
 	 * from the recent menu is opened

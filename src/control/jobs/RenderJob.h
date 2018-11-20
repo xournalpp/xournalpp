@@ -16,12 +16,13 @@
 #include <XournalType.h>
 
 class Rectangle;
-class PageView;
+class XojPageView;
+class RepaintWidgetHandler;
 
 class RenderJob : public Job
 {
 public:
-	RenderJob(PageView* view);
+	RenderJob(XojPageView* view);
 
 protected:
 	virtual ~RenderJob();
@@ -31,16 +32,19 @@ public:
 
 	void* getSource();
 
-	void run();
+	void run(bool noThreads);
 
 public:
-	static void rerenderRectangle(RenderJob* renderJob, Rectangle* rect);
+	static void rerenderRectangle(RenderJob* renderJob, Rectangle* rect, bool noThreads);
+	static void cleanupStatic();
 
 private:
-	void rerenderRectangle(Rectangle* rect);
+	void rerenderRectangle(Rectangle* rect, bool noThreads);
 
 private:
 	XOJ_TYPE_ATTRIB;
 
-	PageView* view;
+	XojPageView* view;
+
+	static RepaintWidgetHandler* repaintHandler;
 };

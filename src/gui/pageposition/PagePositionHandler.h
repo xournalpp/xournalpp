@@ -17,10 +17,10 @@
 
 class PagePosition;
 class PagePositionCache;
-class PageView;
+class XojPageView;
 
 /**
- * @brief Look up PageView%s from display coordinates
+ * @brief Look up XojPageView's from display coordinates
  * 
  * The PagePositionHandler maintains a set of PagePosition%s
  * sorted according to their respective intervals
@@ -32,13 +32,13 @@ public:
 	virtual ~PagePositionHandler();
 
 public:
-	void update(PageView** viewPages, int viewPagesLen, int maxY);
+	void update(XojPageView** viewPages, int viewPagesLen, int maxY);
 
 	/**
-	 * Returns the PageView with the given coordinates
+	 * Returns the XojPageView with the given coordinates
 	 */
-	PageView* getViewAt(int x, int y, PagePositionCache* cache = NULL);
-	PageView* getBestMatchingView(int x, int y, int width, int heigth);
+	XojPageView* getViewAt(int x, int y, PagePositionCache* cache = NULL);
+	XojPageView* getBestMatchingView(int x, int y, int width, int height);
 
 private:
 	void addData(PagePosition* p);

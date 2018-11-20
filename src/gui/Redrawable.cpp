@@ -2,6 +2,8 @@
 
 #include "model/Element.h"
 
+Redrawable::~Redrawable() { }
+
 void Redrawable::repaintRange(Range& r)
 {
 	repaintArea(r.getX(), r.getY(), r.getX2(), r.getY2());

@@ -1,13 +1,13 @@
 #include "Settings.h"
 
 #include "ButtonConfig.h"
+#include "model/FormatDefinitions.h"
 
 #include <config.h>
 #include <i18n.h>
 
 #include <boost/filesystem.hpp>
 
-#include <stdlib.h>
 #include <string.h>
 
 #define DEFAULT_FONT "Sans"
@@ -19,32 +19,22 @@
 #define WRITE_DOUBLE_PROP(var) xmlNode = savePropertyDouble((const char *)#var, var, root)
 #define WRITE_COMMENT(var) com = xmlNewComment((const xmlChar *)var); xmlAddPrevSibling(xmlNode, com);
 
-const char* BUTTON_NAMES[] = {"middle", "right", "eraser", "touch", "default"};
-const int BUTTON_COUNT = 5;
+const char* BUTTON_NAMES[] = {"middle", "right", "eraser", "touch", "default", "stylus", "stylus2"};
 
 Settings::Settings(path filename)
 {
 	XOJ_INIT_TYPE(Settings);
 
 	this->filename = filename;
-	this->timeoutId = 0;
-	this->saved = true;
 
 	loadDefault();
-
-	checkCanXInput();
 }
 
 Settings::~Settings()
 {
 	XOJ_CHECK_TYPE(Settings);
 
-	if (this->timeoutId)
-	{
-		save();
-	}
-
-	for (int i = 0; i < 5; i++)
+	for (int i = 0; i < BUTTON_COUNT; i++)
 	{
 		delete this->buttonConfig[i];
 		this->buttonConfig[i] = NULL;
@@ -57,12 +47,7 @@ void Settings::loadDefault()
 {
 	XOJ_CHECK_TYPE(Settings);
 
-	this->useXinput = true;
 	this->presureSensitivity = true;
-	this->ignoreCoreEvents = false;
-	this->saved = true;
-	this->canXIput = false;
-
 	this->maximized = false;
 	this->showTwoPages = false;
 	this->presentationMode = false;
@@ -96,8 +81,6 @@ void Settings::loadDefault()
 	this->addHorizontalSpace = false;
 	this->addVerticalSpace = false;
 
-	this->fixXinput = false;
-
 	this->enableLeafEnterWorkaround = true;
 
 	this->defaultSaveName = _("%F-Note-%H-%M.xoj");
@@ -115,16 +98,23 @@ void Settings::loadDefault()
 	this->buttonConfig[3] = new ButtonConfig(TOOL_NONE, 0, TOOL_SIZE_NONE, DRAWING_TYPE_NONE, ERASER_TYPE_NONE);
 	// Default config
 	this->buttonConfig[4] = new ButtonConfig(TOOL_PEN, 0, TOOL_SIZE_FINE, DRAWING_TYPE_NONE, ERASER_TYPE_NONE);
+	// Pen button 1
+	this->buttonConfig[5] = new ButtonConfig(TOOL_NONE, 0, TOOL_SIZE_NONE, DRAWING_TYPE_NONE, ERASER_TYPE_NONE);
+	// Pen button 2
+	this->buttonConfig[6] = new ButtonConfig(TOOL_NONE, 0, TOOL_SIZE_NONE, DRAWING_TYPE_NONE, ERASER_TYPE_NONE);
 
 	this->fullscreenHideElements = "mainMenubar";
 	this->presentationHideElements = "mainMenubar,sidebarContents";
 
-	this->pageInsertType = PAGE_INSERT_TYPE_COPY;
-	this->pageBackgroundColor = 0xffffff; //white
-
 	this->pdfPageCacheSize = 10;
 
 	this->selectionColor = 0xff0000;
+
+	this->eventCompression = true;
+
+	this->pageTemplate = "xoj/template\ncopyLastPageSettings=true\nsize=595.275591x841.889764\nbackgroundType=lined\nbackgroundColor=#ffffff\n";
+
+	inTransaction = false;
 }
 
 void Settings::parseData(xmlNodePtr cur, SElement& elem)
@@ -273,15 +263,6 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur)
 	{
 		setPresureSensitivity(xmlStrcmp(value, (const xmlChar*) "true") ? false : true);
 	}
-	else if (xmlStrcmp(name, (const xmlChar*) "useXinput") == 0)
-	{
-		// Value is update from main after the window is created
-		this->useXinput = xmlStrcmp(value, (const xmlChar*) "true") ? false : true;
-	}
-	else if (xmlStrcmp(name, (const xmlChar*) "ignoreCoreEvents") == 0)
-	{
-		this->ignoreCoreEvents = xmlStrcmp(value, (const xmlChar*) "true") ? false : true;
-	}
 	else if (xmlStrcmp(name, (const xmlChar*) "selectedToolbar") == 0)
 	{
 		this->selectedToolbar = (const char*) value;
@@ -326,6 +307,10 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur)
 	{
 		this->widthMaximumMultiplier = g_ascii_strtod((const char*) value, NULL);
 	}
+	else if (xmlStrcmp(name, (const xmlChar*) "eventCompression") == 0)
+	{
+		this->eventCompression = xmlStrcmp(value, (const xmlChar*) "true") ? false : true;
+	}
 	else if (xmlStrcmp(name, (const xmlChar*) "sidebarOnRight") == 0)
 	{
 		this->sidebarOnRight = xmlStrcmp(value, (const xmlChar*) "true") ? false : true;
@@ -358,6 +343,14 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur)
 	{
 		this->visiblePageFormats = (const char*) value;
 	}
+	else if (xmlStrcmp(name, (const xmlChar*) "pageTemplate") == 0)
+	{
+		this->pageTemplate = (const char*) value;
+	}
+	else if (xmlStrcmp(name, (const xmlChar*) "sizeUnit") == 0)
+	{
+		this->sizeUnit = (const char*) value;
+	}
 	else if (xmlStrcmp(name, (const xmlChar*) "autosaveEnabled") == 0)
 	{
 		this->autosaveEnabled = xmlStrcmp(value, (const xmlChar*) "true") ? false : true;
@@ -374,14 +367,6 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur)
 	{
 		this->presentationHideElements = (const char*) value;
 	}
-	else if (xmlStrcmp(name, (const xmlChar*) "pageInsertType") == 0)
-	{
-		this->pageInsertType = pageInsertTypeFromString((const char*) value);
-	}
-	else if (xmlStrcmp(name, (const xmlChar*) "pageBackgroundColor") == 0)
-	{
-		this->pageBackgroundColor = g_ascii_strtoll((const char*) value, NULL, 10);
-	}
 	else if (xmlStrcmp(name, (const xmlChar*) "pdfPageCacheSize") == 0)
 	{
 		this->pdfPageCacheSize = g_ascii_strtoll((const char*) value, NULL, 10);
@@ -397,10 +382,6 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur)
 	else if (xmlStrcmp(name, (const xmlChar*) "addHorizontalSpace") == 0)
 	{
 		this->addHorizontalSpace = xmlStrcmp(value, (const xmlChar*) "true") ? false : true;
-	}
-	else if (xmlStrcmp(name, (const xmlChar*) "fixXinput") == 0)
-	{
-		this->fixXinput = xmlStrcmp(value, (const xmlChar*) "true") ? false : true;
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "enableLeafEnterWorkaround") == 0)
 	{
@@ -597,26 +578,6 @@ bool Settings::load()
 	return true;
 }
 
-gboolean Settings::saveCallback(Settings* data)
-{
-	XOJ_CHECK_TYPE_OBJ(data, Settings);
-
-	((Settings*) data)->save();
-	return false;
-}
-
-void Settings::saveTimeout()
-{
-	XOJ_CHECK_TYPE(Settings);
-
-	if (this->timeoutId)
-	{
-		return;
-	}
-
-	this->timeoutId = g_timeout_add_seconds(2, (GSourceFunc) &saveCallback, this);
-}
-
 xmlNodePtr Settings::savePropertyDouble(const gchar* key, double value, xmlNodePtr parent)
 {
 	XOJ_CHECK_TYPE(Settings);
@@ -744,7 +705,7 @@ void Settings::saveButtonConfig()
 			e.setBool("arrow", arrow);
 			e.setBool("shapeRecognizer", shapeRecognizer);
 			e.setString("size", toolSizeToString(cfg->size));
-		} // end if pen or hilighter
+		} // end if pen or highlighter
 
 		if (type == TOOL_PEN || type == TOOL_HILIGHTER || type == TOOL_TEXT)
 		{
@@ -765,14 +726,34 @@ void Settings::saveButtonConfig()
 	}
 }
 
+/**
+ * Do not save settings until transactionEnd() is called
+ */
+void Settings::transactionStart()
+{
+	XOJ_CHECK_TYPE(Settings);
+
+	inTransaction = true;
+}
+
+/**
+ * Stop transaction and save settings
+ */
+void Settings::transactionEnd()
+{
+	XOJ_CHECK_TYPE(Settings);
+
+	inTransaction = false;
+	save();
+}
+
 void Settings::save()
 {
 	XOJ_CHECK_TYPE(Settings);
 
-	if (this->timeoutId)
+	if (inTransaction)
 	{
-		g_source_remove(this->timeoutId);
-		this->timeoutId = 0;
+		return;
 	}
 
 	xmlDocPtr doc;
@@ -798,9 +779,7 @@ void Settings::save()
 								   "the others are commented in this file, but handle with care!");
 	xmlAddPrevSibling(root, com);
 
-	WRITE_BOOL_PROP(useXinput);
 	WRITE_BOOL_PROP(presureSensitivity);
-	WRITE_BOOL_PROP(ignoreCoreEvents);
 
 	WRITE_STRING_PROP(selectedToolbar);
 	WRITE_STRING_PROP(lastSavePath);
@@ -859,16 +838,10 @@ void Settings::save()
 	WRITE_BOOL_PROP(addHorizontalSpace);
 	WRITE_BOOL_PROP(addVerticalSpace);
 
-	WRITE_BOOL_PROP(fixXinput);
-
 	WRITE_BOOL_PROP(enableLeafEnterWorkaround);
-	WRITE_COMMENT("If Xournal crashes if you e.g. unplug your mouse set this to true. "
+	WRITE_COMMENT("If Xournal++ crashes if you e.g. unplug your mouse set this to true. "
 				  "If you have input problems, you can turn it of with false.");
 
-	string pageInsertType = pageInsertTypeToString(this->pageInsertType);
-	WRITE_STRING_PROP(pageInsertType);
-
-	WRITE_INT_PROP(pageBackgroundColor);
 	WRITE_INT_PROP(selectionColor);
 
 	WRITE_INT_PROP(pdfPageCacheSize);
@@ -878,6 +851,13 @@ void Settings::save()
 	WRITE_COMMENT("The multiplier for the pressure sensitivity of the pen");
 	WRITE_DOUBLE_PROP(widthMaximumMultiplier);
 	WRITE_COMMENT("The multiplier for the pressure sensitivity of the pen");
+
+	WRITE_BOOL_PROP(eventCompression);
+
+	WRITE_COMMENT("Config for new pages");
+	WRITE_STRING_PROP(pageTemplate);
+
+	WRITE_STRING_PROP(sizeUnit);
 
 	xmlNodePtr xmlFont;
 	xmlFont = xmlNewChild(root, NULL, (const xmlChar*) "property", NULL);
@@ -990,33 +970,6 @@ bool Settings::isPresureSensitivity()
 	return this->presureSensitivity;
 }
 
-bool Settings::isXinputEnabled()
-{
-	XOJ_CHECK_TYPE(Settings);
-
-	return this->useXinput;
-}
-
-bool Settings::isIgnoreCoreEvents()
-{
-	XOJ_CHECK_TYPE(Settings);
-
-	return this->ignoreCoreEvents;
-}
-
-void Settings::setIgnoreCoreEvents(bool ignor)
-{
-	XOJ_CHECK_TYPE(Settings);
-
-	if (this->ignoreCoreEvents == ignor)
-	{
-		return;
-	}
-
-	this->ignoreCoreEvents = ignor;
-	saveTimeout();
-}
-
 bool Settings::isSidebarOnRight()
 {
 	XOJ_CHECK_TYPE(Settings);
@@ -1035,7 +988,7 @@ void Settings::setSidebarOnRight(bool right)
 
 	this->sidebarOnRight = right;
 
-	saveTimeout();
+	save();
 }
 
 bool Settings::isScrollbarOnLeft()
@@ -1056,7 +1009,7 @@ void Settings::setScrollbarOnLeft(bool right)
 
 	this->scrollbarOnLeft = right;
 
-	saveTimeout();
+	save();
 }
 
 int Settings::getAutosaveTimeout()
@@ -1075,7 +1028,7 @@ void Settings::setAutosaveTimeout(int autosave)
 
 	this->autosaveTimeout = autosave;
 
-	saveTimeout();
+	save();
 }
 
 bool Settings::isAutosaveEnabled()
@@ -1096,7 +1049,7 @@ void Settings::setAutosaveEnabled(bool autosave)
 
 	this->autosaveEnabled = autosave;
 
-	saveTimeout();
+	save();
 }
 
 bool Settings::getAddVerticalSpace()
@@ -1127,20 +1080,6 @@ void Settings::setAddHorizontalSpace(bool space)
 	this->addHorizontalSpace = space;
 }
 
-bool Settings::getfixXinput()
-{
-	XOJ_CHECK_TYPE(Settings);
-
-	return this->fixXinput;
-}
-
-void Settings::setfixXinput(bool fix)
-{
-	XOJ_CHECK_TYPE(Settings);
-
-	this->fixXinput = fix;
-}
-
 bool Settings::isEnableLeafEnterWorkaround()
 {
 	XOJ_CHECK_TYPE(Settings);
@@ -1154,7 +1093,7 @@ void Settings::setEnableLeafEnterWorkaround(bool enable)
 
 	this->enableLeafEnterWorkaround = enable;
 
-	saveTimeout();
+	save();
 }
 
 bool Settings::isShowBigCursor()
@@ -1174,7 +1113,7 @@ void Settings::setShowBigCursor(bool b)
 	}
 
 	this->showBigCursor = b;
-	saveTimeout();
+	save();
 }
 
 ScrollbarHideType Settings::getScrollbarHideType()
@@ -1195,7 +1134,7 @@ void Settings::setScrollbarHideType(ScrollbarHideType type)
 
 	this->scrollbarHideType = type;
 
-	saveTimeout();
+	save();
 }
 
 bool Settings::isAutloadPdfXoj()
@@ -1214,7 +1153,7 @@ void Settings::setAutoloadPdfXoj(bool load)
 		return;
 	}
 	this->autoloadPdfXoj = load;
-	saveTimeout();
+	save();
 }
 
 string Settings::getDefaultSaveName()
@@ -1235,7 +1174,7 @@ void Settings::setDefaultSaveName(string name)
 
 	this->defaultSaveName = name;
 
-	saveTimeout();
+	save();
 }
 
 string Settings::getVisiblePageFormats()
@@ -1243,6 +1182,104 @@ string Settings::getVisiblePageFormats()
 	XOJ_CHECK_TYPE(Settings);
 
 	return this->visiblePageFormats;
+}
+
+bool Settings::isEventCompression()
+{
+	XOJ_CHECK_TYPE(Settings);
+
+	return this->eventCompression;
+}
+
+void Settings::setEventCompression(bool enabled)
+{
+	XOJ_CHECK_TYPE(Settings);
+
+	if (this->eventCompression == enabled)
+	{
+		return;
+	}
+
+	this->eventCompression = enabled;
+
+	save();
+}
+
+string Settings::getPageTemplate()
+{
+	XOJ_CHECK_TYPE(Settings);
+
+	return this->pageTemplate;
+}
+
+void Settings::setPageTemplate(string pageTemplate)
+{
+	XOJ_CHECK_TYPE(Settings);
+
+	if (this->pageTemplate == pageTemplate)
+	{
+		return;
+	}
+
+	this->pageTemplate = pageTemplate;
+
+	save();
+}
+
+string Settings::getSizeUnit()
+{
+	XOJ_CHECK_TYPE(Settings);
+
+	return sizeUnit;
+}
+
+void Settings::setSizeUnit(string sizeUnit)
+{
+	XOJ_CHECK_TYPE(Settings);
+
+	if (this->sizeUnit == sizeUnit)
+	{
+		return;
+	}
+
+	this->sizeUnit = sizeUnit;
+
+	save();
+}
+
+/**
+ * Get size index in XOJ_UNITS
+ */
+int Settings::getSizeUnitIndex()
+{
+	XOJ_CHECK_TYPE(Settings);
+
+	string unit = getSizeUnit();
+
+	for (int i = 0; i < XOJ_UNIT_COUNT; i++)
+	{
+		if (unit == XOJ_UNITS[i].name)
+		{
+			return i;
+		}
+	}
+
+	return 0;
+}
+
+/**
+ * Set size index in XOJ_UNITS
+ */
+void Settings::setSizeUnitIndex(int sizeUnitId)
+{
+	XOJ_CHECK_TYPE(Settings);
+
+	if (sizeUnitId < 0 || sizeUnitId >= XOJ_UNIT_COUNT)
+	{
+		sizeUnitId = 0;
+	}
+
+	setSizeUnit(XOJ_UNITS[sizeUnitId].name);
 }
 
 void Settings::setShowTwoPages(bool showTwoPages)
@@ -1255,7 +1292,7 @@ void Settings::setShowTwoPages(bool showTwoPages)
 	}
 
 	this->showTwoPages = showTwoPages;
-	saveTimeout();
+	save();
 }
 
 bool Settings::isShowTwoPages()
@@ -1275,7 +1312,7 @@ void Settings::setPresentationMode(bool presentationMode)
 	}
 
 	this->presentationMode = presentationMode;
-	saveTimeout();
+	save();
 }
 
 bool Settings::isPresentationMode()
@@ -1283,26 +1320,6 @@ bool Settings::isPresentationMode()
 	XOJ_CHECK_TYPE(Settings);
 
 	return this->presentationMode;
-}
-
-/**
- * XInput is available
- */
-bool Settings::isXInputAvailable()
-{
-	XOJ_CHECK_TYPE(Settings);
-
-	return this->canXIput;
-}
-
-/**
- * XInput should be used in the application
- */
-bool Settings::isUseXInput()
-{
-	XOJ_CHECK_TYPE(Settings);
-
-	return this->useXinput && this->canXIput;
 }
 
 void Settings::setPresureSensitivity(gboolean presureSensitivity)
@@ -1315,7 +1332,7 @@ void Settings::setPresureSensitivity(gboolean presureSensitivity)
 	}
 	this->presureSensitivity = presureSensitivity;
 
-	saveTimeout();
+	save();
 }
 
 void Settings::setLastSavePath(path p)
@@ -1323,7 +1340,7 @@ void Settings::setLastSavePath(path p)
 	XOJ_CHECK_TYPE(Settings);
 
 	this->lastSavePath = p;
-	saveTimeout();
+	save();
 }
 
 path Settings::getLastSavePath()
@@ -1342,7 +1359,7 @@ void Settings::setLastImagePath(path path)
 		return;
 	}
 	this->lastImagePath = path;
-	saveTimeout();
+	save();
 }
 
 path Settings::getLastImagePath()
@@ -1357,6 +1374,13 @@ void Settings::setDisplayDpi(int dpi)
 	XOJ_CHECK_TYPE(Settings);
 
 	this->displayDpi = dpi;
+
+	if (this->displayDpi == dpi)
+	{
+		return;
+	}
+	this->displayDpi = dpi;
+	save();
 }
 
 int Settings::getDisplayDpi()
@@ -1380,7 +1404,7 @@ void Settings::setSidebarVisible(bool visible)
 		return;
 	}
 	this->showSidebar = visible;
-	saveTimeout();
+	save();
 }
 
 int Settings::getSidebarWidth()
@@ -1403,37 +1427,7 @@ void Settings::setSidebarWidth(int width)
 		return;
 	}
 	this->sidebarWidth = width;
-	saveTimeout();
-}
-
-void Settings::checkCanXInput()
-{
-	XOJ_CHECK_TYPE(Settings);
-
-	this->canXIput = FALSE;
-	GList* devList = gdk_devices_list();
-
-	while (devList != NULL)
-	{
-		GdkDevice* device = (GdkDevice*) devList->data;
-		if (device != gdk_device_get_core_pointer())
-		{
-
-			// get around a GDK bug: map the valuator range CORRECTLY to [0,1]
-			if (this->getfixXinput())
-			{
-				gdk_device_set_axis_use(device, 0, GDK_AXIS_IGNORE);
-				gdk_device_set_axis_use(device, 1, GDK_AXIS_IGNORE);
-			}
-			gdk_device_set_mode(device, GDK_MODE_SCREEN);
-			if (g_str_has_suffix(device->name, "eraser"))
-			{
-				gdk_device_set_source(device, GDK_SOURCE_ERASER);
-			}
-			canXIput = TRUE;
-		}
-		devList = devList->next;
-	}
+	save();
 }
 
 void Settings::setMainWndSize(int width, int height)
@@ -1443,7 +1437,7 @@ void Settings::setMainWndSize(int width, int height)
 	this->mainWndWidth = width;
 	this->mainWndHeight = height;
 
-	saveTimeout();
+	save();
 }
 
 int Settings::getMainWndWidth()
@@ -1474,20 +1468,6 @@ void Settings::setMainWndMaximized(bool max)
 	this->maximized = max;
 }
 
-void Settings::setXinputEnabled(gboolean useXinput)
-{
-	XOJ_CHECK_TYPE(Settings);
-
-	if (this->useXinput == useXinput)
-	{
-		return;
-	}
-
-	this->useXinput = useXinput;
-
-	saveTimeout();
-}
-
 double Settings::getWidthMinimumMultiplier()
 {
 	XOJ_CHECK_TYPE(Settings);
@@ -1511,7 +1491,7 @@ void Settings::setSelectedToolbar(string name)
 		return;
 	}
 	this->selectedToolbar = name;
-	saveTimeout();
+	save();
 }
 
 string Settings::getSelectedToolbar()
@@ -1532,7 +1512,7 @@ void Settings::customSettingsChanged()
 {
 	XOJ_CHECK_TYPE(Settings);
 
-	saveTimeout();
+	save();
 }
 
 ButtonConfig* Settings::getButtonConfig(int id)
@@ -1582,6 +1562,20 @@ ButtonConfig* Settings::getDefaultButtonConfig()
 	return this->buttonConfig[4];
 }
 
+ButtonConfig* Settings::getStylusButton1Config()
+{
+	XOJ_CHECK_TYPE(Settings);
+
+	return this->buttonConfig[5];
+}
+
+ButtonConfig* Settings::getStylusButton2Config()
+{
+	XOJ_CHECK_TYPE(Settings);
+
+	return this->buttonConfig[6];
+}
+
 string Settings::getFullscreenHideElements()
 {
 	XOJ_CHECK_TYPE(Settings);
@@ -1592,7 +1586,7 @@ string Settings::getFullscreenHideElements()
 void Settings::setFullscreenHideElements(string elements)
 {
 	this->fullscreenHideElements = elements;
-	saveTimeout();
+	save();
 }
 
 string Settings::getPresentationHideElements()
@@ -1607,45 +1601,7 @@ void Settings::setPresentationHideElements(string elements)
 	XOJ_CHECK_TYPE(Settings);
 
 	this->presentationHideElements = elements;
-	saveTimeout();
-}
-
-PageInsertType Settings::getPageInsertType()
-{
-	XOJ_CHECK_TYPE(Settings);
-
-	return this->pageInsertType;
-}
-
-void Settings::setPageInsertType(PageInsertType type)
-{
-	XOJ_CHECK_TYPE(Settings);
-
-	if (this->pageInsertType == type)
-	{
-		return;
-	}
-	this->pageInsertType = type;
-	saveTimeout();
-}
-
-int Settings::getPageBackgroundColor()
-{
-	XOJ_CHECK_TYPE(Settings);
-
-	return this->pageBackgroundColor;
-}
-
-void Settings::setPageBackgroundColor(int color)
-{
-	XOJ_CHECK_TYPE(Settings);
-
-	if (this->pageBackgroundColor == color)
-	{
-		return;
-	}
-	this->pageBackgroundColor = color;
-	saveTimeout();
+	save();
 }
 
 int Settings::getSelectionColor()
@@ -1671,7 +1627,7 @@ void Settings::setPdfPageCacheSize(int size)
 		return;
 	}
 	this->pdfPageCacheSize = size;
-	saveTimeout();
+	save();
 }
 
 void Settings::setSelectionColor(int color)
@@ -1683,7 +1639,7 @@ void Settings::setSelectionColor(int color)
 		return;
 	}
 	this->selectionColor = color;
-	saveTimeout();
+	save();
 }
 
 XojFont& Settings::getFont()
@@ -1698,6 +1654,7 @@ void Settings::setFont(const XojFont& font)
 	XOJ_CHECK_TYPE(Settings);
 
 	this->font = font;
+	save();
 }
 
 //////////////////////////////////////////////////

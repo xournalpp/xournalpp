@@ -6,7 +6,7 @@
 class PageViewIndexEntry
 {
 public:
-	PageViewIndexEntry(PageView* view, int area)
+	PageViewIndexEntry(XojPageView* view, int area)
 	{
 		XOJ_INIT_TYPE(PageViewIndexEntry);
 
@@ -27,7 +27,7 @@ public:
 public:
 	XOJ_TYPE_ATTRIB;
 
-	PageView* view;
+	XojPageView* view;
 	int area;
 };
 
@@ -49,9 +49,10 @@ PageViewIndex::~PageViewIndex()
 	{
 		delete e;
 	}
+	this->data.clear();
 }
 
-void PageViewIndex::addView(PageView* v)
+void PageViewIndex::addView(XojPageView* v)
 {
 	GdkRectangle r1;
 	GdkRectangle r2;
@@ -78,8 +79,8 @@ void PageViewIndex::add(PagePosition* pp, int y)
 {
 	XOJ_CHECK_TYPE(PageViewIndex);
 
-	PageView* v1 = pp->getViewAt(this->x, y);
-	PageView* v2 = pp->getViewAt(this->x + this->width, y);
+	XojPageView* v1 = pp->getViewAt(this->x, y);
+	XojPageView* v2 = pp->getViewAt(this->x + this->width, y);
 
 	if (v1 != NULL)
 	{
@@ -91,7 +92,7 @@ void PageViewIndex::add(PagePosition* pp, int y)
 	}
 }
 
-PageView* PageViewIndex::getHighestIntersects()
+XojPageView* PageViewIndex::getHighestIntersects()
 {
 	XOJ_CHECK_TYPE(PageViewIndex);
 

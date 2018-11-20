@@ -186,6 +186,11 @@ void Stroke::setLastPoint(double x, double y)
 	}
 }
 
+void Stroke::setLastPoint(Point p)
+{
+	setLastPoint(p.x, p.y);
+}
+
 void Stroke::addPoint(Point p)
 {
 	XOJ_CHECK_TYPE(Stroke);
@@ -242,11 +247,7 @@ void Stroke::deletePoint(int index)
 
 	for (int i = 0; i < this->pointCount; i++)
 	{
-		if (i < index)
-		{
-			this->points[i] = this->points[i];	//CPPCHECK what is it for?
-		}
-		else
+		if (i >= index)
 		{
 			this->points[i] = this->points[i + 1];
 		}

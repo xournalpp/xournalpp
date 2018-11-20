@@ -37,13 +37,13 @@ public:
 protected:
 	virtual void enable(bool enabled);
 	virtual GtkToolItem* newItem();
-	virtual GtkWidget* getNewToolIconImpl();
+	virtual GtkWidget* getNewToolIcon();
 
 private:
 	XOJ_TYPE_ATTRIB;
 
 	GtkWidget* slider;
-	GtkWidget* fixed;
 	ZoomControl* zoom;
 	bool horizontal;
 };
+
