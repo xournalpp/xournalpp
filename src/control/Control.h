@@ -13,13 +13,11 @@
 
 #include "Actions.h"
 #include "ClipboardHandler.h"
-#include "LatexAction.h"
 #include "RecentManager.h"
 #include "ScrollHandler.h"
 #include "ToolHandler.h"
 #include "ZoomControl.h"
 
-#include "gui/dialog/LatexGlade.h"
 #include "gui/MainWindow.h"
 #include "gui/SearchBar.h"
 #include "gui/sidebar/Sidebar.h"
@@ -33,6 +31,7 @@
 #include <XournalType.h>
 
 #include <vector>
+#include "../gui/dialog/LatexDialog.h"
 
 class Sidebar;
 class CallbackData;
@@ -78,7 +77,7 @@ public:
 	// Menu edit
 	void showSettings();
 
-	// Menu tools
+	// The core handler for inserting latex
 	void runLatex();
 
 	// Menu Help

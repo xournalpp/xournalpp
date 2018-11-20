@@ -1,18 +1,9 @@
-#include "LatexGlade.h"
+#include "LatexDialog.h"
 
-#include "LatexAction.h"
-
-#include "control/tools/ImageHandler.h"
-#include "model/TexImage.h"
-
-#include <iostream>
-using std::cout;
-using std::endl;
-
-LatexGlade::LatexGlade(GladeSearchpath* gladeSearchPath)
+LatexDialog::LatexDialog(GladeSearchpath* gladeSearchPath)
  : GladeGui(gladeSearchPath, "texdialog.glade", "texDialog")
 {
-	XOJ_INIT_TYPE(LatexGlade);
+	XOJ_INIT_TYPE(LatexDialog);
 
 	this->texBox = get("texEntry");
 
@@ -22,32 +13,32 @@ LatexGlade::LatexGlade(GladeSearchpath* gladeSearchPath)
 	gtk_widget_show(this->texBox);
 }
 
-LatexGlade::~LatexGlade()
+LatexDialog::~LatexDialog()
 {
-	XOJ_RELEASE_TYPE(LatexGlade);
+	XOJ_RELEASE_TYPE(LatexDialog);
 }
 
-void LatexGlade::setTex(string texString)
+void LatexDialog::setTex(string texString)
 {
-	XOJ_CHECK_TYPE(LatexGlade);
+	XOJ_CHECK_TYPE(LatexDialog);
 	this->theLatex = texString;
 }
 
-string LatexGlade::getTex()
+string LatexDialog::getTex()
 {
-	XOJ_CHECK_TYPE(LatexGlade);
+	XOJ_CHECK_TYPE(LatexDialog);
 	return this->theLatex;
 }
 
-void LatexGlade::save()
+void LatexDialog::save()
 {
-	XOJ_CHECK_TYPE(LatexGlade);
+	XOJ_CHECK_TYPE(LatexDialog);
 	this->theLatex = gtk_entry_get_text(GTK_ENTRY(this->texBox));
 }
 
-void LatexGlade::load()
+void LatexDialog::load()
 {
-	XOJ_CHECK_TYPE(LatexGlade);
+	XOJ_CHECK_TYPE(LatexDialog);
 
 	if (theLatex.empty())
 	{
@@ -57,9 +48,9 @@ void LatexGlade::load()
 	gtk_entry_set_text(GTK_ENTRY(this->texBox), this->theLatex.c_str());
 }
 
-void LatexGlade::show(GtkWindow* parent)
+void LatexDialog::show(GtkWindow* parent)
 {
-	XOJ_CHECK_TYPE(LatexGlade);
+	XOJ_CHECK_TYPE(LatexDialog);
 
 	this->load();
 	gtk_window_set_transient_for(GTK_WINDOW(this->window), parent);

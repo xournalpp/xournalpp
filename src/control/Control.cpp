@@ -1,6 +1,7 @@
 #include "Control.h"
 
 #include "PrintHandler.h"
+#include "LatexController.h"
 
 #include "gui/Cursor.h"
 #include "gui/dialog/AboutDialog.h"
@@ -3190,147 +3191,22 @@ void Control::fontChanged()
 	}
 }
 
-//The core handler for inserting latex
+/**
+ * The core handler for inserting latex
+ */
 void Control::runLatex()
 {
 	XOJ_CHECK_TYPE(Control);
 
 #ifdef ENABLE_MATHTEX
-	this->doc->lock();
+	LatexController latex(this);
+	latex.run();
 
-	int pageNr = getCurrentPageNo();
-	if (pageNr == -1)
-	{
-		return;
-	}
-	XojPageView* view = win->getXournal()->getViewFor(pageNr);
-	if (view == NULL)
-	{
-		return;
-	}
-	//we get the selection
-	PageRef page = this->doc->getPage(pageNr);
-	Layer* layer = page->getSelectedLayer();
-
-	TexImage* img = view->getSelectedTex();
-
-	double imgx = 10;
-	double imgy = 10;
-	double imgheight = 0;
-	double imgwidth = 0;
-	string imgTex;
-	if (img)
-	{
-		//this will get the position of the Latex properly
-		EditSelection* theSelection = win->getXournal()->getSelection();
-		//imgx = img->getX();
-		//imgy = img->getY();
-		imgx = theSelection->getXOnView();
-		imgy = theSelection->getYOnView();
-
-		imgheight = img->getElementHeight();
-		imgwidth = img->getElementWidth();
-		//fix this typecast:
-		imgTex = img->getText();
-	}
-
-	//now call the image handlers
-	this->doc->unlock();
-
-	//need to do this otherwise we can't remove the image for its replacement
-	clearSelectionEndText();
-
-	LatexGlade* mytex = new LatexGlade(this->gladeSearchPath);
-	//determine if we should set a specific string
-	mytex->setTex(imgTex);
-	mytex->show(GTK_WINDOW(this->win->getWindow()));
-	string tmp = mytex->getTex();
-	delete mytex;
-	cout << tmp << endl;
-
-	if (tmp.empty())
-	{
-		return;
-	}
-	if (img)
-	{
-		layer->removeElement((Element*) img, false);
-		view->rerenderElement(img);
-		delete img;
-		img = NULL;
-	}
-
-	//now do all the LatexAction stuff
-	LatexAction texAction(tmp, imgheight * imgwidth);
-	texAction.runCommand();
-
-	this->doc->lock();
-
-	GFile* mygfile = g_file_new_for_path(texAction.getFileName().c_str());
-	cout << "About to insert image...";
-	GError* err = NULL;
-	GFileInputStream* in = g_file_read(mygfile, NULL, &err);
-	g_object_unref(mygfile);
-	if (err)
-	{
-		this->doc->unlock();
-
-		cerr << _F("Could not retrieve LaTeX image file: {1}") % err->message << endl;
-
-		g_error_free(err);
-		return;
-	}
-
-	GdkPixbuf* pixbuf = NULL;
-	pixbuf = gdk_pixbuf_new_from_stream(G_INPUT_STREAM(in), NULL, &err);
-	g_input_stream_close(G_INPUT_STREAM(in), NULL, NULL);
-
-	img = new TexImage();
-	img->setX(imgx);
-	img->setY(imgy);
-	img->setImage(pixbuf);
-	img->setText(tmp);
-
-	if (imgheight)
-	{
-		double ratio = (gdouble) gdk_pixbuf_get_width(pixbuf) / gdk_pixbuf_get_height(pixbuf);
-		if (ratio == 0)
-		{
-			if (imgwidth == 0)
-			{
-				img->setWidth(10);
-			}
-			else
-			{
-				img->setWidth(imgwidth);
-			}
-		}
-		else
-		{
-			img->setWidth(imgheight * ratio);
-		}
-		img->setHeight(imgheight);
-	}
-	else
-	{
-		img->setWidth(gdk_pixbuf_get_width(pixbuf));
-		img->setHeight(gdk_pixbuf_get_height(pixbuf));
-	}
-
-	layer->addElement(img);
-	view->rerenderElement(img);
-
-
-	cout << "Image inserted!" << endl;
-
-	this->doc->unlock();
-
-	undoRedo->addUndoAction(new InsertUndoAction(page, layer, img));
 #else
+	// This should never occur, as the menupoint is also hidden.
 	cout << "Mathtex is disabled. Recompile with ./configure --enable-mathtex, "
 			"ensuring you have the mathtex command on your system." << endl;
 #endif // ENABLE_MATHTEX
-
 }
 
 /**

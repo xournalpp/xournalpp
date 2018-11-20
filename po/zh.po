@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp 1.0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-11-19 21:29+0100\n"
+"POT-Creation-Date: 2018-11-20 07:44+0100\n"
 "PO-Revision-Date: 2018-11-14 19:55+0100\n"
 "Last-Translator: Andreas Butti <andreasbutti at gmail dot com>\n"
 "Language-Team: Xournal++ team\n"
@@ -401,8 +401,8 @@ msgstr "當前頁和選中項目的邊界顏色"
 msgid "Built on:"
 msgstr ""
 
-#: ../src/control/Control.cpp:2270 ../src/control/Control.cpp:2739
-#: ../src/control/Control.cpp:2776 ../src/control/XournalMain.cpp:103
+#: ../src/control/Control.cpp:2311 ../src/control/Control.cpp:2780
+#: ../src/control/Control.cpp:2817 ../src/control/XournalMain.cpp:103
 msgid "Cancel"
 msgstr "取消"
 
@@ -439,7 +439,7 @@ msgstr ""
 msgid "Contents"
 msgstr "内容"
 
-#: ../src/control/Control.cpp:1004 ../src/control/Control.cpp:1012
+#: ../src/control/Control.cpp:1006 ../src/control/Control.cpp:1014
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:306
 msgid "Copy"
 msgstr "拷贝"
@@ -501,7 +501,7 @@ msgstr ""
 msgid "Could not remove tool item {1} from Toolbar {2} on position {3}"
 msgstr ""
 
-#: ../src/control/Control.cpp:3237
+#: ../src/control/Control.cpp:3278
 msgid "Could not retrieve LaTeX image file: {1}"
 msgstr "未能提取LaTeX图像文件{1}"
 
@@ -591,11 +591,18 @@ msgstr "取消标尺和笔划识别"
 msgid "Disable drawing for this device"
 msgstr "取消此设备绘制"
 
-#: ../src/control/Control.cpp:2738 ../src/control/Control.cpp:2775
+#: ../src/control/Control.cpp:2779 ../src/control/Control.cpp:2816
 msgid "Discard"
 msgstr "丢弃"
 
-#: ../src/control/Control.cpp:2772
+#: ../src/control/Control.cpp:2223
+msgid ""
+"Do not open Autosave files. They may will be overwritten!\n"
+"Copy the files to another folder.\n"
+"Files from Folder {1} cannot be opened."
+msgstr ""
+
+#: ../src/control/Control.cpp:2813
 msgid "Document file was removed."
 msgstr "文档已删除。"
 
@@ -682,7 +689,7 @@ msgstr "橡皮选项(_n)"
 msgid "Eraser type"
 msgstr "橡皮类型"
 
-#: ../src/control/Control.cpp:2432
+#: ../src/control/Control.cpp:2473
 msgid ""
 "Error annotate PDF file \"{1}\"\n"
 "{2}"
@@ -699,7 +706,7 @@ msgstr "输出为PDF"
 msgid "Error loading glade file \"{1}\" (try to load \"{2}\")"
 msgstr "加载glade文件\"{1}\"出错(尝试加载\"{2}\")"
 
-#: ../src/control/Control.cpp:2298
+#: ../src/control/Control.cpp:2339
 msgid "Error opening file \"{1}\""
 msgstr "打开文件\"{1}\"出错"
 
@@ -767,7 +774,7 @@ msgstr ""
 msgid "File name needs to end with .pdf or .png"
 msgstr ""
 
-#: ../src/control/Control.cpp:2217
+#: ../src/control/Control.cpp:2257
 msgid "Filename: {1}"
 msgstr "文件名：{1}"
 
@@ -1247,7 +1254,7 @@ msgstr "重复"
 msgid "Redo: "
 msgstr "重复："
 
-#: ../src/control/Control.cpp:2269
+#: ../src/control/Control.cpp:2310
 msgid "Remove PDF Background"
 msgstr "去掉PDF背景"
 
@@ -1281,16 +1288,16 @@ msgstr "标尺"
 msgid "Ruler & Stroke Reco."
 msgstr "标尺与笔划识别"
 
-#: ../src/control/jobs/SaveJob.cpp:16 ../src/control/Control.cpp:2737
+#: ../src/control/jobs/SaveJob.cpp:16 ../src/control/Control.cpp:2778
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:300
 msgid "Save"
 msgstr "保存"
 
-#: ../src/control/Control.cpp:2774
+#: ../src/control/Control.cpp:2815
 msgid "Save As"
 msgstr "保存为"
 
-#: ../src/control/Control.cpp:2554 ../src/gui/dialog/PageTemplateDialog.cpp:116
+#: ../src/control/Control.cpp:2595 ../src/gui/dialog/PageTemplateDialog.cpp:116
 msgid "Save File"
 msgstr "保存文件"
 
@@ -1339,7 +1346,7 @@ msgstr "选择矩形"
 msgid "Select Region"
 msgstr "选择区域"
 
-#: ../src/control/Control.cpp:2268
+#: ../src/control/Control.cpp:2309
 msgid "Select another PDF"
 msgstr "选择其他PDF"
 
@@ -1499,17 +1506,17 @@ msgstr "文本未找到"
 msgid "Text not found, searched on all pages"
 msgstr "找遍所有页面未找到文本"
 
-#: ../src/control/Control.cpp:974
+#: ../src/control/Control.cpp:976
 msgid ""
 "The Toolbarconfiguration \"{1}\" is predefined, would you create a copy to "
 "edit?"
 msgstr "工具条配置\"{1}\"是预置的，要产生一个拷贝到编辑?"
 
-#: ../src/control/Control.cpp:2265
+#: ../src/control/Control.cpp:2306
 msgid "The attached background PDF could not be found."
 msgstr "附加的背景PDF未找到。"
 
-#: ../src/control/Control.cpp:2266
+#: ../src/control/Control.cpp:2307
 msgid "The background PDF could not be found."
 msgstr "背景PDF未找到。"
 
@@ -1533,7 +1540,7 @@ msgid ""
 "may be fixed."
 msgstr "发现Xournal++的错误日志文件，请发送一个错误报告，将会被修正。"
 
-#: ../src/control/Control.cpp:869
+#: ../src/control/Control.cpp:871
 msgid "There was an error displaying help: {1}"
 msgstr ""
 
@@ -1551,11 +1558,11 @@ msgstr "粗细"
 msgid "Thin"
 msgstr "细"
 
-#: ../src/control/Control.cpp:2735
+#: ../src/control/Control.cpp:2776
 msgid "This document is not saved yet."
 msgstr ""
 
-#: ../src/control/tools/ImageHandler.cpp:57 ../src/control/Control.cpp:1520
+#: ../src/control/tools/ImageHandler.cpp:57 ../src/control/Control.cpp:1522
 msgid "This image could not be loaded. Error message: {1}"
 msgstr ""
 
@@ -1628,7 +1635,7 @@ msgstr ""
 msgid "Unknown stroke type: \"{1}\", assuming pen"
 msgstr ""
 
-#: ../src/control/Control.cpp:2630
+#: ../src/control/Control.cpp:2671
 msgid "Unsaved Document"
 msgstr "未保存文档"
 
@@ -1686,7 +1693,7 @@ msgstr ""
 msgid "XML Parser error: {1}"
 msgstr ""
 
-#: ../src/control/stockdlg/XojOpenDlg.cpp:69 ../src/control/Control.cpp:2561
+#: ../src/control/stockdlg/XojOpenDlg.cpp:69 ../src/control/Control.cpp:2602
 msgid "Xournal files"
 msgstr "Xournal文件"
 
@@ -1705,14 +1712,14 @@ msgstr "Xournal文件"
 msgid "Yellow"
 msgstr "黄色"
 
-#: ../src/control/Control.cpp:1362
+#: ../src/control/Control.cpp:1364
 msgid ""
 "You don't have any PDF pages to select from. Cancel operation.\n"
 "Please select another background type: Menu \"Journal\" / \"Insert Page Type"
 "\"."
 msgstr ""
 
-#: ../src/control/Control.cpp:1551
+#: ../src/control/Control.cpp:1553
 msgid ""
 "You don't have any PDF pages to select from. Cancel operation.\n"
 "Please select another background type: Menu \"Journal\" → \"Insert Page Type"
@@ -1764,7 +1771,7 @@ msgstr "标注PDF(_A)"
 
 #: ../src/control/stockdlg/ImageOpenDlg.cpp:11
 #: ../src/control/stockdlg/XojOpenDlg.cpp:17
-#: ../src/control/jobs/BaseExportJob.cpp:26 ../src/control/Control.cpp:2555
+#: ../src/control/jobs/BaseExportJob.cpp:26 ../src/control/Control.cpp:2596
 #: ../src/gui/dialog/PageTemplateDialog.cpp:117
 #, fuzzy
 msgid "_Cancel"
@@ -1884,7 +1891,7 @@ msgstr "前一页(_P)"
 msgid "_Ruled"
 msgstr "标尺(_R)"
 
-#: ../src/control/jobs/BaseExportJob.cpp:27 ../src/control/Control.cpp:2556
+#: ../src/control/jobs/BaseExportJob.cpp:27 ../src/control/Control.cpp:2597
 #: ../src/gui/dialog/PageTemplateDialog.cpp:118
 #, fuzzy
 msgid "_Save"
