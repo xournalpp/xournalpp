@@ -60,9 +60,13 @@ void InputHandler::createStroke(Point p)
 	if (h->getToolType() == TOOL_PEN)
 	{
 		stroke->setToolType(STROKE_TOOL_PEN);
-		int seconds = ((g_get_monotonic_time()/1000000)-sttime);
-		stroke->setTimestamp(seconds);
-		stroke->setAudioFilename(audioFilename);
+		
+		if (xournal->getControl()->isRecording())
+		{
+			int seconds = ((g_get_monotonic_time()/1000000)-sttime);
+			stroke->setTimestamp(seconds);
+			stroke->setAudioFilename(audioFilename);
+		}
 	}
 	else if (h->getToolType() == TOOL_HILIGHTER)
 	{

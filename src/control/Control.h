@@ -137,6 +137,7 @@ public:
 	bool isInDragAndDropToolbar();
 
 	bool isFullscreen();
+	bool isRecording();
 
 	bool searchTextOnPage(string text, int p, int* occures, double* top);
 

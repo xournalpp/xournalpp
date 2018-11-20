@@ -1152,7 +1152,8 @@ void Control::recStartStop(bool rec)
 	if(rec)
 	{
 		this->recording = true;
-
+		sttime = (g_get_monotonic_time()/1000000);
+		
 		char buffer [50];
 		time_t secs=time(0);
 		tm *t=localtime(&secs);
@@ -1183,7 +1184,6 @@ void Control::recToggle()
 
 	if(!this->recording)
 	{
-		sttime = (g_get_monotonic_time()/1000000);
 		recStartStop(true);
 	}
 	else
@@ -3470,6 +3470,13 @@ bool Control::isFullscreen()
 	XOJ_CHECK_TYPE(Control);
 
 	return this->fullscreen;
+}
+
+bool Control::isRecording()
+{
+	XOJ_CHECK_TYPE(Control);
+
+	return this->recording;
 }
 
 TextEditor* Control::getTextEditor()

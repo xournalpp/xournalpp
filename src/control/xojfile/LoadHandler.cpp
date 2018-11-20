@@ -539,10 +539,12 @@ void LoadHandler::parseStroke()
 	/**
 	 * For each stroke being read, set the timestamp value
 	 * we've read just before. 
+	 * Afterwards, clean the read timestamp data.
 	 */
 	this->stroke->setTimestamp(loadedTimeStamp);
 	this->stroke->setAudioFilename(loadedFilename);
-	std::cout<<"Stroke With TS: "<<stroke->getTimestamp()<<"\n";
+	loadedFilename = "";
+	loadedTimeStamp = 0;
 }
 
 void LoadHandler::parseText()
@@ -713,7 +715,6 @@ void LoadHandler::parserEndElement(GMarkupParseContext* context, const gchar* el
 	}
 	else if (handler->pos == PARSER_POS_IN_LAYER && strcmp(element_name, "timestamp") == 0)
 	{
-		printf("parserEndElement: timestamp reached - LEVEL: %d\n",handler->pos);
 		handler->pos = PARSER_POS_IN_LAYER;
 		handler->stroke = NULL;
 	}

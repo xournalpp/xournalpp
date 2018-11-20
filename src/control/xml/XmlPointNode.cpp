@@ -56,21 +56,24 @@ void XmlPointNode::writeOut(OutputStream* out)
 	XOJ_CHECK_TYPE(XmlPointNode);
 
 	/**
-	 * Write timestamp before each stroke.
+	 * Write timestamp (if present) before each stroke.
 	 * This way, when reading, we only need to store 
 	 * 1 timestamp value at a time 
 	 * and assign it to the consequent stroke.
 	 * By adding it this way we don't break 
 	 * xournal's fileformat backcompatibility
 	 */
-	out->write("<timestamp ");
-	out->write("ts=\"");
-	out->write(std::to_string(this->timestamp));	//must be set via saveHandler
-	out->write("\"");
-	out->write("fn=\"");
-	out->write(this->audioFilename);
-	out->write("\"");
-	out->write("></timestamp>");
+	if(this->audioFilename.length() != 0)
+	{
+		out->write("<timestamp ");
+		out->write("ts=\"");
+		out->write(std::to_string(this->timestamp));	//must be set via saveHandler
+		out->write("\"");
+		out->write("fn=\"");
+		out->write(this->audioFilename);
+		out->write("\"");
+		out->write("></timestamp>");
+	}
 
 	/** Write stroke and its attributes */
 	out->write("<");
