@@ -86,6 +86,9 @@ void ToolHandler::initTools()
 	t = new Tool("hand", TOOL_HAND, 0x000000, false, false, false, false, false, false, false, NULL);
 	tools[TOOL_HAND - TOOL_PEN] = t;
 
+	t = new Tool("playObject", TOOL_PLAY_OBJECT, 0x000000, false, false, false, false, false, false, false, NULL);
+	tools[TOOL_PLAY_OBJECT - TOOL_PEN] = t;
+	
 	t = new Tool("drawRect", TOOL_DRAW_RECT, 0x000000, false, false, false, false, false, false, false, NULL);
 	tools[TOOL_DRAW_RECT - TOOL_PEN] = t;
 
@@ -696,7 +699,8 @@ void ToolHandler::setSelectionEditTools(bool setColor, bool setSize)
 
 	if (this->current->type == TOOL_SELECT_RECT ||
 		this->current->type == TOOL_SELECT_REGION ||
-		this->current->type == TOOL_SELECT_OBJECT)
+		this->current->type == TOOL_SELECT_OBJECT ||
+		this->current->type == TOOL_PLAY_OBJECT)
 	{
 		this->listener->toolColorChanged();
 		this->listener->toolSizeChanged();

@@ -29,6 +29,10 @@ using std::cout;
 using std::endl;
 namespace bf = boost::filesystem;
 
+//TODO: to be moved somewhere else in the future
+string audioFilename = "";
+string audioFolder = "";
+gint sttime = 0;	
 
 MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control) :
 		GladeGui(gladeSearchPath, "main.glade", "mainWindow")
@@ -376,6 +380,7 @@ void MainWindow::buttonCloseSidebarClicked(GtkButton* button, MainWindow* win)
 
 bool MainWindow::onKeyPressCallback(GtkWidget* widget, GdkEventKey* event, MainWindow* win)
 {
+	
 	if (win->getXournal()->getSelection())
 	{
 		//something is selected - give that control

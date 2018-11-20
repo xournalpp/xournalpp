@@ -22,6 +22,9 @@ Stroke::Stroke() : Element(ELEMENT_STROKE)
 	this->points = NULL;
 	this->toolType = STROKE_TOOL_PEN;
 
+	this->audioFilename="";
+	this->timestamp=0;
+
 	this->eraseable = NULL;
 }
 
@@ -34,6 +37,9 @@ Stroke::~Stroke()
 	this->pointCount = 0;
 	this->pointAllocCount = 0;
 
+	this->audioFilename="";
+	this->timestamp=0;
+
 	XOJ_RELEASE_TYPE(Stroke);
 }
 
@@ -45,6 +51,8 @@ Stroke* Stroke::cloneStroke() const
 	s->setColor(this->getColor());
 	s->setToolType(this->getToolType());
 	s->setWidth(this->getWidth());
+	s->setAudioFilename(this->getAudioFilename());
+	s->setTimestamp(this->getTimestamp());
 
 	s->allocPointSize(this->pointCount);
 	memcpy(s->points, this->points, this->pointCount * sizeof(Point));
@@ -72,6 +80,10 @@ void Stroke::serialize(ObjectOutputStream& out)
 
 	out.writeInt(this->toolType);
 
+	out.writeString(this->audioFilename);
+
+	out.writeInt(this->timestamp);
+
 	out.writeData(this->points, this->pointCount, sizeof(Point));
 
 	out.endObject();
@@ -89,6 +101,10 @@ void Stroke::readSerialized(ObjectInputStream& in) throw (InputStreamException)
 
 	this->toolType = (StrokeTool) in.readInt();
 
+	this->audioFilename = in.readString();
+
+	this->timestamp = in.readInt();
+
 	if (this->points)
 	{
 		g_free(this->points);
@@ -99,6 +115,30 @@ void Stroke::readSerialized(ObjectInputStream& in) throw (InputStreamException)
 	in.readData((void**) &this->points, &this->pointCount);
 
 	in.endObject();
+}
+
+void Stroke::setAudioFilename(string fn)
+{
+	this->audioFilename = fn;
+}
+
+string Stroke::getAudioFilename() const
+{
+	return this->audioFilename;
+}
+
+void Stroke::setTimestamp(int seconds)
+{
+	XOJ_CHECK_TYPE(Stroke);
+
+	this->timestamp = seconds;
+}
+
+int Stroke::getTimestamp() const
+{
+	XOJ_CHECK_TYPE(Stroke);
+
+	return this->timestamp;
 }
 
 void Stroke::setWidth(double width)

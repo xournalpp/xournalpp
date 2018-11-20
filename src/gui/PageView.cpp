@@ -44,6 +44,8 @@
 #include <stdlib.h>
 #include <math.h>
 
+string lastfn = "";
+extern string audioFolder;
 XojPageView::XojPageView(XournalView* xournal, PageRef page)
 {
 	XOJ_INIT_TYPE(XojPageView);
@@ -327,6 +329,80 @@ void XojPageView::startText(double x, double y)
 	}
 }
 
+void XojPageView::playObjectAt(double x, double y)
+{
+	XOJ_CHECK_TYPE(XojPageView);
+
+	int selected = this->page->getSelectedLayerId();
+	GdkRectangle matchRect = { gint(x - 10), gint(y - 10), 20, 20 };
+
+	Stroke* strokeMatch = NULL;
+	double gap = 1000000000;
+
+	Element* elementMatch = NULL;
+
+	// clear old selection anyway
+	this->xournal->getControl()->clearSelection();
+
+	for (Layer* l : *this->page->getLayers())
+	{
+		for (Element* e : *l->getElements())
+		{
+			if (e->intersectsArea(&matchRect))
+			{
+				if (e->getType() == ELEMENT_STROKE)
+				{
+					Stroke* s = (Stroke*) e;
+					double tmpGap = 0;
+					if ((s->intersects(x, y, 15, &tmpGap)) && (gap > tmpGap))
+					{
+						gap = tmpGap;
+						strokeMatch = s;
+
+	                                        int ts = s->getTimestamp();
+	                                        int buffer = 5;
+
+                                                if(ts >= buffer)
+                                                {
+                                                        ts -= buffer;
+                                                }
+                                                else
+                                                {
+                                                        ts = 0;
+                                                }
+
+                                                string fn = s->getAudioFilename();
+
+                                                if(fn != lastfn)
+                                                {
+                                                        if(fn != "")
+                                                        {
+                                                                lastfn = fn;
+                                                                string command("vlc --qt-start-minimized "+audioFolder+fn+" --start-time="+ \
+                                                                        std::to_string(ts)+" &>/dev/null &");
+																std::cout<<"command: "<<command<<std::endl;
+                                                                system(command.c_str());
+                                                        }
+                                                }
+                                                else
+                                                {
+                                                        string command("curl -s -u \"\":\"password\" \
+                                                                --url \"http://127.0.0.1:8080/requests/status.xml?command=seek&val="+ \
+                                                                std::to_string(ts)+"\" >/dev/null");
+                                                        system(command.c_str());
+                                                }
+					}
+				}
+				else
+				{
+					elementMatch = e;
+				}
+			}
+		}
+		selected--;
+	}
+}
+
 void XojPageView::selectObjectAt(double x, double y)
 {
 	XOJ_CHECK_TYPE(XojPageView);
@@ -452,6 +528,7 @@ bool XojPageView::onButtonPressEvent(GtkWidget* widget, GdkEventButton* event)
 	}
 	else if (h->getToolType() == TOOL_SELECT_RECT ||
 	         h->getToolType() == TOOL_SELECT_REGION ||
+	         h->getToolType() == TOOL_PLAY_OBJECT ||
 	         h->getToolType() == TOOL_SELECT_OBJECT)
 	{
 		if (h->getToolType() == TOOL_SELECT_RECT)
@@ -477,6 +554,10 @@ bool XojPageView::onButtonPressEvent(GtkWidget* widget, GdkEventButton* event)
 		else if (h->getToolType() == TOOL_SELECT_OBJECT)
 		{
 			selectObjectAt(x, y);
+		}
+		else if (h->getToolType() == TOOL_PLAY_OBJECT)
+		{
+			playObjectAt(x, y);
 		}
 	}
 	else if (h->getToolType() == TOOL_TEXT)

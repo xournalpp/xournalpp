@@ -10,6 +10,10 @@
 #include "model/Layer.h"
 #include "util/Rectangle.h"
 
+#include "gui/MainWindow.h"
+extern int sttime;
+extern string audioFilename;
+
 #include <math.h>
 
 #define PIXEL_MOTION_THRESHOLD 0.3
@@ -56,6 +60,13 @@ void InputHandler::createStroke(Point p)
 	if (h->getToolType() == TOOL_PEN)
 	{
 		stroke->setToolType(STROKE_TOOL_PEN);
+		
+		if (xournal->getControl()->isRecording())
+		{
+			int seconds = ((g_get_monotonic_time()/1000000)-sttime);
+			stroke->setTimestamp(seconds);
+			stroke->setAudioFilename(audioFilename);
+		}
 	}
 	else if (h->getToolType() == TOOL_HILIGHTER)
 	{

@@ -39,4 +39,5 @@ private:
 	GdkPixbuf* iconSelectRect;
 	GdkPixbuf* iconSelectRgion;
 	GdkPixbuf* iconSelectObject;
+	GdkPixbuf* iconPlayObject;
 };

@@ -278,24 +278,24 @@ bool XournalView::onKeyPressEvent(GdkEventKey* event)
 
 	if (event->keyval == GDK_KEY_Left)
 	{
-		if (control->getSettings()->isPresentationMode())
-		{
+		//if (control->getSettings()->isPresentationMode())
+		//{
 			control->getScrollHandler()->goToPreviousPage();
 			return true;
-		}
-		layout->scrollRelativ(-scrollKeySize, 0);
-		return true;
+		//}
+		//layout->scrollRelativ(-scrollKeySize, 0);
+		//return true;
 	}
 
 	if (event->keyval == GDK_KEY_Right)
 	{
-		if (control->getSettings()->isPresentationMode())
-		{
+		//if (control->getSettings()->isPresentationMode())
+		//{
 			control->getScrollHandler()->goToNextPage();
 			return true;
-		}
-		layout->scrollRelativ(scrollKeySize, 0);
-		return true;
+		//}
+		//layout->scrollRelativ(scrollKeySize, 0);
+		//return true;
 	}
 
 	if (event->keyval == GDK_KEY_End)

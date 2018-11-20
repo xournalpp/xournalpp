@@ -34,6 +34,9 @@ public:
 
 	void toggleOverwrite();
 	void selectAll();
+	void toggleBold();
+	void incSize();
+	void decSize();
 	void moveCursor(GtkMovementStep step, int count, bool extendSelection);
 	void deleteFromCursor(GtkDeleteType type, int count);
 	void backspace();

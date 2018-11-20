@@ -33,6 +33,9 @@
 #include <vector>
 #include "../gui/dialog/LatexDialog.h"
 
+extern string audioFilename;
+extern string audioFolder;
+
 class Sidebar;
 class CallbackData;
 class XojPageView;
@@ -111,6 +114,8 @@ public:
 	void manageToolbars();
 	void customizeToolbars();
 	void enableFullscreen(bool enabled, bool presentation = false);
+	void recToggle();
+	void recStartStop(bool record);
 
 	void gotoPage();
 
@@ -131,6 +136,7 @@ public:
 	bool isInDragAndDropToolbar();
 
 	bool isFullscreen();
+	bool isRecording();
 
 	bool searchTextOnPage(string text, int p, int* occures, double* top);
 
@@ -322,6 +328,8 @@ private:
 	GladeSearchpath* gladeSearchPath;
 
 	MetadataManager* metadata;
+
+	bool recording = false;
 
 	/**
 	 * Current page insert type, usually from default, but it can be changed from toolbar menu

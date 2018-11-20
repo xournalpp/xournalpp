@@ -58,7 +58,7 @@ enum ActionType
     ACTION_NEW_PAGE_AFTER,
     ACTION_NEW_PAGE_AT_END,
 
-	ACTION_CONFIGURE_PAGE_TEMPLATE,
+    ACTION_CONFIGURE_PAGE_TEMPLATE,
 
     // Has to be in the same order as in Tool.h: PageInsertType!
     ACTION_NEW_PAGE_PLAIN,
@@ -91,6 +91,7 @@ enum ActionType
     ACTION_TOOL_SELECT_RECT,
     ACTION_TOOL_SELECT_REGION,
     ACTION_TOOL_SELECT_OBJECT,
+    ACTION_TOOL_PLAY_OBJECT,
     ACTION_TOOL_VERTICAL_SPACE,
     ACTION_TOOL_HAND,
     ACTION_TOOL_DEFAULT,
@@ -143,6 +144,7 @@ enum ActionType
     ACTION_VIEW_PRESENTATION_MODE,
     ACTION_MANAGE_TOOLBAR,
     ACTION_CUSTOMIZE_TOOLBAR,
+    ACTION_RECSTOP,
 
     // Menu Help
     ACTION_ABOUT = 800,
@@ -153,7 +155,6 @@ enum ActionType
     ACTION_FOOTER_PAGESPIN = 900,
     ACTION_FOOTER_ZOOM_SLIDER,
     ACTION_FOOTER_LAYER,
-
 
     // Used to select no item in a group...
     ACTION_NOT_SELECTED = 1
@@ -180,6 +181,8 @@ enum ActionGroup
     GROUP_FULLSCREEN,
 
     GROUP_RULER,
+
+    GROUP_REC,
 };
 
 class ActionHandler;

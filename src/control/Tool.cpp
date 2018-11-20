@@ -210,6 +210,7 @@ string toolTypeToString(ToolType type)
 	case TOOL_SELECT_RECT:	  return "selectRect";
 	case TOOL_SELECT_REGION:  return "selectRegion";
 	case TOOL_SELECT_OBJECT:  return "selectObject";
+	case TOOL_PLAY_OBJECT:	  return "PlayObject";
 	case TOOL_VERTICAL_SPACE: return "verticalSpace";
 	case TOOL_HAND:			  return "hand";
 	case TOOL_DRAW_RECT:	  return "drawRect";
@@ -229,6 +230,7 @@ ToolType toolTypeFromString(string type)
 	else if (type == "selectRect")	  return TOOL_SELECT_RECT;
 	else if (type == "selectRegion")  return TOOL_SELECT_REGION;
 	else if (type == "selectObject")  return TOOL_SELECT_OBJECT;
+	else if (type == "playObject")	  return TOOL_PLAY_OBJECT;
 	else if (type == "verticalSpace") return TOOL_VERTICAL_SPACE;
 	else if (type == "hand")		  return TOOL_HAND;
 	else if (type == "drawRect")      return TOOL_DRAW_RECT;

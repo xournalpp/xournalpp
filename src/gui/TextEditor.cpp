@@ -11,6 +11,8 @@
 #include "view/DocumentView.h"
 #include "view/TextView.h"
 
+#include <iostream>
+
 #include <gtk/gtkimmulticontext.h>
 
 #include <string.h>
@@ -333,6 +335,26 @@ bool TextEditor::onKeyPressEvent(GdkEventKey* event)
 		obscure = canInsert;
 		retval = true;
 	}
+	else if (event-> state & GDK_CONTROL_MASK)
+	{
+		if(event-> keyval == GDK_KEY_b)
+		{
+			toggleBold();
+			return true;
+		}
+		// CTRL + Alt + Plus to increase text size
+		if(event->keyval == GDK_KEY_plus )
+		{
+			incSize();
+			return true;
+		}
+		// Decrease text size
+		if(event->keyval == GDK_KEY_minus )
+		{
+			decSize();
+			return true;
+		}
+	}
 	else if (event->keyval == GDK_KEY_Return || event->keyval == GDK_KEY_ISO_Enter || event->keyval == GDK_KEY_KP_Enter)
 	{
 		this->resetImContext();
@@ -386,6 +408,53 @@ void TextEditor::toggleOverwrite()
 
 	this->cursorOverwrite = !this->cursorOverwrite;
 	repaintCursor();
+}
+
+/** 
+ * I know it's a bit rough and duplicated 
+ * Improve that later on... 
+ */
+void TextEditor::decSize()
+{
+	XojFont & font = text->getFont();
+	double fontSize = font.getSize();
+	fontSize--;
+	font.setSize(fontSize);
+	setFont(font);
+}
+
+void TextEditor::incSize()
+{
+	XojFont & font = text->getFont();
+	double fontSize = font.getSize();
+	fontSize++;
+	font.setSize(fontSize);
+	setFont(font);
+}
+
+void TextEditor::toggleBold()
+{
+	//get the current/used font 
+	XojFont & font = text->getFont();
+	string fontName = font.getName();
+
+	std::size_t found = fontName.find("Bold");
+
+	//toggle bold
+	if (found==std::string::npos)
+	{
+		fontName = fontName+" Bold";
+	}
+	else
+	{
+		fontName = fontName.substr(0,found-1);
+	}
+	
+	//commit changes
+	font.setName(fontName);
+	setFont(font);
+	
+	//this->repaintEditor();
 }
 
 void TextEditor::selectAll()

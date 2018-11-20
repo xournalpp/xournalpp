@@ -147,6 +147,9 @@ void SaveHandler::visitLayer(XmlNode* page, Layer* l)
 			if (t == STROKE_TOOL_PEN)
 			{
 				stroke->setAttrib("tool", "pen");
+				/** set stroke timestamp value to the XmlPointNode */
+				stroke->setTimestamp(s->getTimestamp());	
+				stroke->setAudioFilename(s->getAudioFilename());	
 			}
 			else if (t == STROKE_TOOL_ERASER)
 			{
@@ -188,7 +191,7 @@ void SaveHandler::visitLayer(XmlNode* page, Layer* l)
 			{
 				stroke->setAttrib("width", s->getWidth());
 			}
-
+			
 		}
 		else if (e->getType() == ELEMENT_TEXT)
 		{
@@ -346,7 +349,7 @@ void SaveHandler::visitPage(XmlNode* root, PageRef p, Document* doc, int id)
 }
 
 void SaveHandler::saveTo(OutputStream* out, path filename, ProgressListener* listener)
-{
+{	
 	XOJ_CHECK_TYPE(SaveHandler);
 
 	char* old_locale, *saved_locale;

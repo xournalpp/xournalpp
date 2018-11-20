@@ -4,6 +4,8 @@
 #include "LatexController.h"
 
 #include "gui/Cursor.h"
+extern int currentToolType;
+
 #include "gui/dialog/AboutDialog.h"
 #include "gui/dialog/backgroundSelect/ImagesDialog.h"
 #include "gui/dialog/backgroundSelect/PdfPagesDialog.h"
@@ -63,6 +65,9 @@ using std::endl;
 
 #include <vector>
 using std::vector;
+
+#include <time.h>
+extern gint sttime;
 
 // TODO Check for error log on startup, also check for emergency save document!
 
@@ -639,6 +644,12 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
 			selectTool(TOOL_SELECT_OBJECT);
 		}
 		break;
+	case ACTION_TOOL_PLAY_OBJECT:
+		if (enabled)
+		{
+			selectTool(TOOL_PLAY_OBJECT);
+		}
+		break;
 	case ACTION_TOOL_VERTICAL_SPACE:
 		clearSelection();
 		if (enabled)
@@ -827,6 +838,10 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
 
 	case ACTION_FULLSCREEN:
 		enableFullscreen(enabled);
+		break;
+
+	case ACTION_RECSTOP:
+		recToggle();
 		break;
 
 		// Footer, not really an action, but need an identifier to
@@ -1129,6 +1144,54 @@ void Control::setShapeTool(ActionType type, bool enabled)
 	}
 
 	fireActionSelected(GROUP_RULER, type);
+}
+
+void Control::recStartStop(bool rec)
+{
+	string command = "";
+
+	if(rec)
+	{
+		this->recording = true;
+		sttime = (g_get_monotonic_time()/1000000);
+		
+		char buffer [50];
+		time_t secs=time(0);
+		tm *t=localtime(&secs);
+		//This prints the date and time in ISO format.
+		sprintf(buffer, "%04d-%02d-%02d_%02d:%02d:%02d",
+		t->tm_year+1900,t->tm_mon+1,t->tm_mday,
+		t->tm_hour,t->tm_min,t->tm_sec);
+		string data(buffer);
+		data +=".mp3";
+
+		audioFilename = data;
+
+		printf("Start recording\n");
+		command="xopp-recording.sh start "+data;
+	}
+	else if(this->recording)
+	{
+		this->recording = false;
+		audioFilename = "";
+		command="xopp-recording.sh stop";
+	}
+	system(command.c_str());
+}
+
+void Control::recToggle()
+{
+	XOJ_CHECK_TYPE(Control);
+
+	if(!this->recording)
+	{
+		recStartStop(true);
+	}
+	else
+	{
+		recStartStop(false);
+	}
+
 }
 
 void Control::enableFullscreen(bool enabled, bool presentation)
@@ -1913,7 +1976,13 @@ void Control::selectTool(ToolType type)
 {
 	XOJ_CHECK_TYPE(Control);
 
+	currentToolType = type;
 	toolHandler->selectTool(type);
+	
+	if(win)
+	{
+		(win->getXournal()->getViewFor(getCurrentPageNo()))->rerenderPage();
+	}
 }
 
 void Control::selectDefaultTool()
@@ -2749,6 +2818,7 @@ void Control::quit()
 
 	this->scheduler->lock();
 
+	recStartStop(false);
 	settings->save();
 
 	this->scheduler->removeAllJobs();
@@ -2983,8 +3053,10 @@ void Control::clipboardPaste(Element* e)
 	double width = e->getElementWidth();
 	double height = e->getElementHeight();
 
+	std::cout<<"x: "<<x<<" y: "<<y<<"\n";
 	e->setX(x - width / 2);
-	e->setY(y - height / 2);
+	//e->setY(y - height / 2);
+    	e->setY(y);
 	layer->addElement(e);
 
 	this->doc->unlock();
@@ -3274,6 +3346,13 @@ bool Control::isFullscreen()
 	XOJ_CHECK_TYPE(Control);
 
 	return this->fullscreen;
+}
+
+bool Control::isRecording()
+{
+	XOJ_CHECK_TYPE(Control);
+
+	return this->recording;
 }
 
 TextEditor* Control::getTextEditor()

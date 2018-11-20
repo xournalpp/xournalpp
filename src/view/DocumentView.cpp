@@ -2,6 +2,9 @@
 
 #include "TextView.h"
 
+#include "gui/Cursor.h"
+extern int currentToolType;
+
 #include "control/tools/EditSelection.h"
 #include "control/tools/Selection.h"
 #include "model/BackgroundImage.h"
@@ -94,7 +97,8 @@ void DocumentView::drawStroke(cairo_t* cr, Stroke* s, int startPoint, double sca
 
 	if (changeSource)
 	{
-		if (s->getToolType() == STROKE_TOOL_HIGHLIGHTER)
+		if (s->getToolType() == STROKE_TOOL_HIGHLIGHTER ||
+			s->getAudioFilename().length()==0 && currentToolType == TOOL_PLAY_OBJECT )
 		{
 			cairo_set_operator(cr, CAIRO_OPERATOR_OVER);
 			// Set the color
@@ -388,7 +392,7 @@ void DocumentView::paintBackgroundGraph()
 {
 	XOJ_CHECK_TYPE(DocumentView);
 
-	applyColor(cr, 0x40A0FF);
+	applyColor(cr, 0xBDBDBD);	//maybe I should read settings like these from ini configs
 
 	gdk_threads_enter();
 	cairo_set_line_width(cr, 0.5);
