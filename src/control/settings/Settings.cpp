@@ -85,9 +85,6 @@ void Settings::loadDefault()
 
 	this->defaultSaveName = _("%F-Note-%H-%M.xoj");
 
-	this->visiblePageFormats = GTK_PAPER_NAME_A4 "," GTK_PAPER_NAME_A5 ","
-							   GTK_PAPER_NAME_LETTER "," GTK_PAPER_NAME_LEGAL;
-
 	// Eraser
 	this->buttonConfig[0] = new ButtonConfig(TOOL_ERASER, 0, TOOL_SIZE_NONE, DRAWING_TYPE_NONE, ERASER_TYPE_NONE);
 	// Middle button
@@ -338,10 +335,6 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur)
 	else if (xmlStrcmp(name, (const xmlChar*) "defaultSaveName") == 0)
 	{
 		this->defaultSaveName = (const char*) value;
-	}
-	else if (xmlStrcmp(name, (const xmlChar*) "visiblePageFormats") == 0)
-	{
-		this->visiblePageFormats = (const char*) value;
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "pageTemplate") == 0)
 	{
@@ -829,9 +822,6 @@ void Settings::save()
 
 	WRITE_STRING_PROP(defaultSaveName);
 
-	WRITE_STRING_PROP(visiblePageFormats);
-	WRITE_COMMENT("This paper format is visible in the paper format dialog, separated by a colon");
-
 	WRITE_BOOL_PROP(autosaveEnabled);
 	WRITE_INT_PROP(autosaveTimeout);
 
@@ -1175,13 +1165,6 @@ void Settings::setDefaultSaveName(string name)
 	this->defaultSaveName = name;
 
 	save();
-}
-
-string Settings::getVisiblePageFormats()
-{
-	XOJ_CHECK_TYPE(Settings);
-
-	return this->visiblePageFormats;
 }
 
 bool Settings::isEventCompression()
