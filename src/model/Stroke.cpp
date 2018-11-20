@@ -122,7 +122,7 @@ void Stroke::setAudioFilename(string fn)
 	this->audioFilename = fn;
 }
 
-string Stroke::getAudioFilename()
+string Stroke::getAudioFilename() const
 {
 	return this->audioFilename;
 }

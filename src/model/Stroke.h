@@ -40,7 +40,7 @@ public:
 	int getTimestamp() const;
 
 	void setAudioFilename(string fn);
-	string getAudioFilename();
+	string getAudioFilename() const;
 
 	void addPoint(Point p);
 	void setLastPoint(double x, double y);
