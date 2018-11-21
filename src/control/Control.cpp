@@ -1150,31 +1150,30 @@ void Control::recStartStop(bool rec)
 {
 	string command = "";
 
-	if(rec)
+	if (rec)
 	{
 		this->recording = true;
-		sttime = (g_get_monotonic_time()/1000000);
-		
-		char buffer [50];
-		time_t secs=time(0);
-		tm *t=localtime(&secs);
+		sttime = (g_get_monotonic_time() / 1000000);
+
+		char buffer[50];
+		time_t secs = time(0);
+		tm *t = localtime(&secs);
 		//This prints the date and time in ISO format.
-		sprintf(buffer, "%04d-%02d-%02d_%02d:%02d:%02d",
-		t->tm_year+1900,t->tm_mon+1,t->tm_mday,
-		t->tm_hour,t->tm_min,t->tm_sec);
+		sprintf(buffer, "%04d-%02d-%02d_%02d:%02d:%02d", t->tm_year + 1900, t->tm_mon + 1, t->tm_mday, t->tm_hour,
+				t->tm_min, t->tm_sec);
 		string data(buffer);
-		data +=".mp3";
+		data += ".mp3";
 
 		audioFilename = data;
 
 		printf("Start recording\n");
-		command="xopp-recording.sh start "+data;
+		command = "xopp-recording.sh start " + data;
 	}
-	else if(this->recording)
+	else if (this->recording)
 	{
 		this->recording = false;
 		audioFilename = "";
-		command="xopp-recording.sh stop";
+		command = "xopp-recording.sh stop";
 	}
 	system(command.c_str());
 }
@@ -1183,7 +1182,7 @@ void Control::recToggle()
 {
 	XOJ_CHECK_TYPE(Control);
 
-	if(!this->recording)
+	if (!this->recording)
 	{
 		recStartStop(true);
 	}
@@ -1978,8 +1977,8 @@ void Control::selectTool(ToolType type)
 
 	currentToolType = type;
 	toolHandler->selectTool(type);
-	
-	if(win)
+
+	if (win)
 	{
 		(win->getXournal()->getViewFor(getCurrentPageNo()))->rerenderPage();
 	}
@@ -3053,10 +3052,8 @@ void Control::clipboardPaste(Element* e)
 	double width = e->getElementWidth();
 	double height = e->getElementHeight();
 
-	std::cout<<"x: "<<x<<" y: "<<y<<"\n";
 	e->setX(x - width / 2);
-	//e->setY(y - height / 2);
-    	e->setY(y);
+	e->setY(y);
 	layer->addElement(e);
 
 	this->doc->unlock();
