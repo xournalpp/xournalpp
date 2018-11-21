@@ -332,11 +332,11 @@ if (BUILD_POPPLER)
 	install(DIRECTORY DESTINATION ${CMAKE_INSTALL_PREFIX})
 
 	set(POPPLER_LIB ${POPPLER_LIB_DIR}/libpoppler.so.72)
-	install(CODE "configure_file(${CMAKE_CURRENT_BINARY_DIR}/poppler-prefix/src/poppler-build/libpoppler.so.72.0.0 ${POPPLER_LIB} COPYONLY)")
+	install(FILES ${CMAKE_CURRENT_BINARY_DIR}/poppler-prefix/src/poppler-build/libpoppler.so.72.0.0 DESTINATION ${POPPLER_LIB_DIR} RENAME libpoppler.so.72)
 	install(CODE "file(APPEND ${CMAKE_CURRENT_BINARY_DIR}/install_manifest_workaround.txt \"${POPPLER_LIB}\")")
 
 	set(POPPLER_GLIB_LIB ${POPPLER_LIB_DIR}/libpoppler-glib.so.8)
-	install(CODE "configure_file(${CMAKE_CURRENT_BINARY_DIR}/poppler-prefix/src/poppler-build/glib/libpoppler-glib.so.8.9.0 ${POPPLER_GLIB_LIB} COPYONLY)")
+	install(FILES ${CMAKE_CURRENT_BINARY_DIR}/poppler-prefix/src/poppler-build/glib/libpoppler-glib.so.8.9.0 DESTINATION ${POPPLER_LIB_DIR} RENAME libpoppler-glib.so.8)
 	install(CODE "file(APPEND ${CMAKE_CURRENT_BINARY_DIR}/install_manifest_workaround.txt \"${POPPLER_GLIB_LIB}\")")
 endif()
 
