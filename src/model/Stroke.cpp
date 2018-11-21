@@ -11,7 +11,8 @@
 using std::cout;
 using std::endl;
 
-Stroke::Stroke() : Element(ELEMENT_STROKE)
+Stroke::Stroke()
+ : Element(ELEMENT_STROKE)
 {
 	XOJ_INIT_TYPE(Stroke);
 
@@ -22,8 +23,7 @@ Stroke::Stroke() : Element(ELEMENT_STROKE)
 	this->points = NULL;
 	this->toolType = STROKE_TOOL_PEN;
 
-	this->audioFilename="";
-	this->timestamp=0;
+	this->timestamp = 0;
 
 	this->eraseable = NULL;
 }
