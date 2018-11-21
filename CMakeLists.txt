@@ -121,6 +121,10 @@ set (POPPLER_GIT_VER "0.61.1" CACHE STRING "Version of Poppler to build")
 option (POPPLER_GIT "Use git version of Poppler" ON)
 set(POPPLER_DIR "/path/to/poppler/source" CACHE STRING "Directory with poppler")
 if (BUILD_POPPLER)
+  # For documentation see https://gitlab.kitware.com/cmake/community/wikis/doc/cmake/RPATH-handling
+  set(POPPLER_LIB_DIR ${CMAKE_INSTALL_PREFIX}/bin/xournalpplib)
+  # RPATH needs to be set *here*, it's set later in the script, it is not used!
+  SET(CMAKE_INSTALL_RPATH "${POPPLER_LIB_DIR}")
 
   include (ExternalProject)
   set (POPPLER_PREFIX "${CMAKE_BINARY_DIR}/poppler-prefix")
@@ -321,12 +325,19 @@ install (DIRECTORY ui
 )
 
 if (BUILD_POPPLER)
-	# The Path /usr/lib is hardcoded, fix if there is a better solution
-	set(POPPLER_LIB ${CMAKE_INSTALL_PREFIX}/lib/libpoppler.so.72)
+	# Manual install Poppler libs
+	# RPATH is set before, so they will be loaded
+	install(CODE "MESSAGE(\"Install Poppler workaround to ${CMAKE_INSTALL_PREFIX}\")")
 
-	install(CODE "MESSAGE(\"Install Poppler workaround to ${POPPLER_LIB}\")")
+	install(DIRECTORY DESTINATION ${CMAKE_INSTALL_PREFIX})
+
+	set(POPPLER_LIB ${POPPLER_LIB_DIR}/libpoppler.so.72)
 	install(CODE "configure_file(${CMAKE_CURRENT_BINARY_DIR}/poppler-prefix/src/poppler-build/libpoppler.so.72.0.0 ${POPPLER_LIB} COPYONLY)")
 	install(CODE "file(APPEND ${CMAKE_CURRENT_BINARY_DIR}/install_manifest_workaround.txt \"${POPPLER_LIB}\")")
+
+	set(POPPLER_GLIB_LIB ${POPPLER_LIB_DIR}/libpoppler-glib.so.8)
+	install(CODE "configure_file(${CMAKE_CURRENT_BINARY_DIR}/poppler-prefix/src/poppler-build/glib/libpoppler-glib.so.8.9.0 ${POPPLER_GLIB_LIB} COPYONLY)")
+	install(CODE "file(APPEND ${CMAKE_CURRENT_BINARY_DIR}/install_manifest_workaround.txt \"${POPPLER_GLIB_LIB}\")")
 endif()
 
 # Uninstall target
