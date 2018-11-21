@@ -6,18 +6,23 @@
 #include <config.h>
 #include <i18n.h>
 
-struct ToolDrawType {
+class ToolDrawType {
+public:
+	ToolDrawType(string name, string icon, ActionType type)
+	 : name(name), icon(icon), type(type), pixbuf(NULL)
+	{
+	}
+	~ToolDrawType()
+	{
+		g_object_unref(pixbuf);
+		pixbuf = NULL;
+	}
+
+public:
 	string name;
 	string icon;
 	ActionType type;
-};
-
-ToolDrawType types[ToolDrawCombocontrol_EntryCount] = {
-	{ .name = _("Draw Rectangle"),  .icon = "rect-draw.svg",        .type = ACTION_TOOL_DRAW_RECT   },
-	{ .name = _("Draw Circle"),     .icon = "circle-draw.svg",      .type = ACTION_TOOL_DRAW_CIRCLE },
-	{ .name = _("Draw Arrow"),      .icon = "arrow-draw.svg",       .type = ACTION_TOOL_DRAW_ARROW  },
-	{ .name = _("Draw Line"),       .icon = "ruler.svg",            .type = ACTION_RULER            },
-	{ .name = _("Recognize Lines"), .icon = "shape_recognizer.svg", .type = ACTION_SHAPE_RECOGNIZER }
+	GdkPixbuf* pixbuf;
 };
 
 ToolDrawCombocontrol::ToolDrawCombocontrol(ToolMenuHandler* toolMenuHandler, ActionHandler* handler, GladeGui* gui, string id)
@@ -30,13 +35,17 @@ ToolDrawCombocontrol::ToolDrawCombocontrol(ToolMenuHandler* toolMenuHandler, Act
 	this->iconWidget = NULL;
 	setPopupMenu(gtk_menu_new());
 
-	for (int i = 0; i < ToolDrawCombocontrol_EntryCount; i++)
-	{
-		ToolDrawType& t = types[i];
-		createMenuItem(t.name, t.icon, t.type);
+	drawTypes.push_back(new ToolDrawType(_("Draw Rectangle"),  "rect-draw.svg",        ACTION_TOOL_DRAW_RECT   ));
+	drawTypes.push_back(new ToolDrawType(_("Draw Circle"),     "circle-draw.svg",      ACTION_TOOL_DRAW_CIRCLE ));
+	drawTypes.push_back(new ToolDrawType(_("Draw Arrow"),      "arrow-draw.svg",       ACTION_TOOL_DRAW_ARROW  ));
+	drawTypes.push_back(new ToolDrawType(_("Draw Line"),       "ruler.svg",            ACTION_RULER            ));
+	drawTypes.push_back(new ToolDrawType(_("Recognize Lines"), "shape_recognizer.svg", ACTION_SHAPE_RECOGNIZER ));
 
-		this->icons[i] = gui->loadIconPixbuf(t.icon);
-		g_object_ref(this->icons[i]);
+	for (ToolDrawType* t : drawTypes)
+	{
+		createMenuItem(t->name, t->icon, t->type);
+		t->pixbuf = gui->loadIconPixbuf(t->icon);
+		g_object_ref(t->pixbuf);
 	}
 }
 
@@ -44,12 +53,11 @@ ToolDrawCombocontrol::~ToolDrawCombocontrol()
 {
 	XOJ_CHECK_TYPE(ToolDrawCombocontrol);
 
-	for (int i = 0; i < ToolDrawCombocontrol_EntryCount; i++)
+	for (ToolDrawType* t : drawTypes)
 	{
-		g_object_unref(icons[i]);
-		icons[i] = NULL;
+		delete t;
 	}
-
+	this->drawTypes.clear();
 	this->toolMenuHandler = NULL;
 
 	XOJ_RELEASE_TYPE(ToolDrawCombocontrol);
@@ -85,15 +93,13 @@ void ToolDrawCombocontrol::selected(ActionGroup group, ActionType action)
 
 	string description;
 
-	for (int i = 0; i < ToolDrawCombocontrol_EntryCount; i++)
+	for (ToolDrawType* t : drawTypes)
 	{
-		ToolDrawType& t = types[i];
-
-		if (action == t.type && this->action != t.type)
+		if (action == t->type && this->action != t->type)
 		{
-			this->action = t.type;
-			gtk_image_set_from_pixbuf(GTK_IMAGE(iconWidget), this->icons[i]);
-			description = t.name;
+			this->action = t->type;
+			gtk_image_set_from_pixbuf(GTK_IMAGE(iconWidget), t->pixbuf);
+			description = t->name;
 			break;
 		}
 	}
@@ -111,7 +117,7 @@ GtkToolItem* ToolDrawCombocontrol::newItem()
 	XOJ_CHECK_TYPE(ToolDrawCombocontrol);
 
 	labelWidget = gtk_label_new(_C("Draw Rectangle"));
-	iconWidget = gtk_image_new_from_pixbuf(this->icons[0]);
+	iconWidget = gtk_image_new_from_pixbuf(drawTypes[0]->pixbuf);
 
 	GtkToolItem* it = gtk_menu_tool_toggle_button_new(iconWidget, _C("Draw Rectangle"));
 	gtk_tool_button_set_label_widget(GTK_TOOL_BUTTON(it), labelWidget);
