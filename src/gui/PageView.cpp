@@ -496,7 +496,7 @@ bool XojPageView::onButtonPressEvent(GtkWidget* widget, GdkEventButton* event)
 		delete this->inputHandler;
 		this->inputHandler = NULL;
 
-		if (h->getDrawingType() == DRAWING_TYPE_RULER)
+		if (h->getDrawingType() == DRAWING_TYPE_LINE)
 		{
 			this->inputHandler = new RulerHandler(this->xournal, this, getPage());
 		}

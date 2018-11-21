@@ -1102,7 +1102,7 @@ void Control::setShapeTool(ActionType type, bool enabled)
 	}
 
 	// Check for nothing changed, and return in this case
-	if ((this->toolHandler->getDrawingType() == DRAWING_TYPE_RULER && type == ACTION_RULER) ||
+	if ((this->toolHandler->getDrawingType() == DRAWING_TYPE_LINE && type == ACTION_RULER) ||
 		(this->toolHandler->getDrawingType() == DRAWING_TYPE_RECTANGLE && type == ACTION_TOOL_DRAW_RECT) ||
 		(this->toolHandler->getDrawingType() == DRAWING_TYPE_ARROW && type == ACTION_TOOL_DRAW_ARROW) ||
 		(this->toolHandler->getDrawingType() == DRAWING_TYPE_CIRCLE && type == ACTION_TOOL_DRAW_CIRCLE) ||
@@ -1126,7 +1126,7 @@ void Control::setShapeTool(ActionType type, bool enabled)
 		break;
 
 	case ACTION_RULER:
-		this->toolHandler->setDrawingType(DRAWING_TYPE_RULER);
+		this->toolHandler->setDrawingType(DRAWING_TYPE_LINE);
 		break;
 
 	case ACTION_SHAPE_RECOGNIZER:
@@ -2032,7 +2032,7 @@ void Control::toolChanged()
 	{
 		rulerAction = ACTION_SHAPE_RECOGNIZER;
 	}
-	else if (toolHandler->getDrawingType() == DRAWING_TYPE_RULER)
+	else if (toolHandler->getDrawingType() == DRAWING_TYPE_LINE)
 	{
 		rulerAction = ACTION_RULER;
 	}

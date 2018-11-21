@@ -231,7 +231,7 @@ string drawingTypeToString(DrawingType type)
 	{
 	case DRAWING_TYPE_DONT_CHANGE:			return "dontChange";
 	case DRAWING_TYPE_DEFAULT:				return "default";
-	case DRAWING_TYPE_RULER:				return "ruler";
+	case DRAWING_TYPE_LINE:					return "line";
 	case DRAWING_TYPE_RECTANGLE:			return "rectangle";
 	case DRAWING_TYPE_CIRCLE:				return "circle";
 	case DRAWING_TYPE_ARROW:				return "arrow";
@@ -243,7 +243,7 @@ string drawingTypeToString(DrawingType type)
 DrawingType drawingTypeFromString(string type)
 {
 	if (type == "dontChange")				return DRAWING_TYPE_DONT_CHANGE;
-	else if (type == "ruler")				return DRAWING_TYPE_RULER;
+	else if (type == "line")				return DRAWING_TYPE_LINE;
 	else if (type == "rectangle")			return DRAWING_TYPE_RECTANGLE;
 	else if (type == "circle")				return DRAWING_TYPE_CIRCLE;
 	else if (type == "arrow")				return DRAWING_TYPE_ARROW;
