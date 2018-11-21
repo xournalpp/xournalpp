@@ -67,15 +67,15 @@ SidebarIndexPage::~SidebarIndexPage()
 		this->searchTimeout = 0;
 	}
 
-	gtk_widget_unref(this->treeViewBookmarks);
-	gtk_widget_unref(this->scrollBookmarks);
+	g_object_unref(this->treeViewBookmarks);
+	g_object_unref(this->scrollBookmarks);
 }
 
 void SidebarIndexPage::askInsertPdfPage(size_t pdfPage)
 {
 	XOJ_CHECK_TYPE(SidebarIndexPage);
 
-	GtkWidget* dialog = gtk_message_dialog_new((GtkWindow*) *control->getWindow(), GTK_DIALOG_DESTROY_WITH_PARENT,
+	GtkWidget* dialog = gtk_message_dialog_new(control->getGtkWindow(), GTK_DIALOG_DESTROY_WITH_PARENT,
 											   GTK_MESSAGE_QUESTION, GTK_BUTTONS_NONE, "%s",
 											   FC(_F("Your current document does not contain PDF Page no {1}\n"
 													 "Would you like to insert this page?\n\n"
@@ -86,7 +86,7 @@ void SidebarIndexPage::askInsertPdfPage(size_t pdfPage)
 	gtk_dialog_add_button(GTK_DIALOG(dialog), "Insert after", 2);
 	gtk_dialog_add_button(GTK_DIALOG(dialog), "Insert at end", 3);
 
-	gtk_window_set_transient_for(GTK_WINDOW(dialog), GTK_WINDOW(this->control->getWindow()->getWindow()));
+	gtk_window_set_transient_for(GTK_WINDOW(dialog), control->getGtkWindow());
 	int res = gtk_dialog_run(GTK_DIALOG(dialog));
 	gtk_widget_destroy(dialog);
 	if (res == 1)

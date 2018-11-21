@@ -27,8 +27,8 @@ CustomizeableColorList::~CustomizeableColorList()
 	for (XojColor* c : this->colors)
 	{
 		delete c;
-		c = NULL;
 	}
+	this->colors.clear();
 
 	XOJ_RELEASE_TYPE(CustomizeableColorList);
 }

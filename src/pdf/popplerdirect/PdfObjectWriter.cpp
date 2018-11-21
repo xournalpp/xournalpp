@@ -85,7 +85,7 @@ void PdfObjectWriter::writeObject(Object* obj, XojPopplerDocument doc)
 		this->writer->write(FORMAT("%g ", obj->getReal()));
 		break;
 	case objString:
-		this->writeString(obj->getString());
+		this->writeString(const_cast<GooString *>(obj->getString()));
 		break;
 	case objName:
 	{

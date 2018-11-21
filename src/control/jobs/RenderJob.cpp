@@ -1,4 +1,5 @@
 #include "RenderJob.h"
+#include "RepaintWidgetHandler.h"
 
 #include "gui/PageView.h"
 #include "gui/XournalView.h"
@@ -10,7 +11,10 @@
 
 #include <list>
 
-RenderJob::RenderJob(PageView* view)
+RepaintWidgetHandler* RenderJob::repaintHandler = NULL;
+
+
+RenderJob::RenderJob(XojPageView* view)
 {
 	XOJ_INIT_TYPE(RenderJob);
 
@@ -26,6 +30,12 @@ RenderJob::~RenderJob()
 	XOJ_RELEASE_TYPE(RenderJob);
 }
 
+void RenderJob::cleanupStatic()
+{
+	delete repaintHandler;
+	repaintHandler = NULL;
+}
+
 void* RenderJob::getSource()
 {
 	XOJ_CHECK_TYPE(RenderJob);
@@ -33,20 +43,26 @@ void* RenderJob::getSource()
 	return this->view;
 }
 
-void RenderJob::rerenderRectangle(RenderJob* renderJob, Rectangle* rect)
+void RenderJob::rerenderRectangle(RenderJob* renderJob, Rectangle* rect, bool noThreads)
 {
 	XOJ_CHECK_TYPE_OBJ(renderJob, RenderJob);
 
-	PageView* view = renderJob->view;
+	XojPageView* view = renderJob->view;
 	double zoom = view->xournal->getZoom();
 	Document* doc = view->xournal->getDocument();
 
-	doc->lock();
+	if (!noThreads)
+	{
+		doc->lock();
+	}
 
 	double pageWidth = view->page->getWidth();
 	double pageHeight = view->page->getHeight();
 
-	doc->unlock();
+	if (!noThreads)
+	{
+		doc->unlock();
+	}
 
 	int x = rect->x * zoom;
 	int y = rect->y * zoom;
@@ -69,13 +85,25 @@ void RenderJob::rerenderRectangle(RenderJob* renderJob, Rectangle* rect)
 		PdfView::drawPage(cache, popplerPage, crRect, zoom, pageWidth, pageHeight);
 	}
 
-	doc->lock();
+	if (!noThreads)
+	{
+		doc->lock();
+	}
+
 	v.drawPage(view->page, crRect, false);
-	doc->unlock();
+
+	if (!noThreads)
+	{
+		doc->unlock();
+	}
 
 	cairo_destroy(crRect);
 
-	g_mutex_lock(&view->drawingMutex);
+	if (!noThreads)
+	{
+		g_mutex_lock(&view->drawingMutex);
+	}
+
 	cairo_t * crPageBuffer = cairo_create(view->crBuffer);
 
 	cairo_set_operator(crPageBuffer, CAIRO_OPERATOR_SOURCE);
@@ -87,130 +115,26 @@ void RenderJob::rerenderRectangle(RenderJob* renderJob, Rectangle* rect)
 
 	cairo_surface_destroy(rectBuffer);
 
-	g_mutex_unlock(&view->drawingMutex);
+	if (!noThreads)
+	{
+		g_mutex_unlock(&view->drawingMutex);
+	}
 }
 
-void RenderJob::rerenderRectangle(Rectangle* rect)
+void RenderJob::rerenderRectangle(Rectangle* rect, bool noThreads)
 {
 	XOJ_CHECK_TYPE(RenderJob);
 
-	rerenderRectangle(this, rect);
+	rerenderRectangle(this, rect, noThreads);
 }
 
-class RepaintWidgetHandler
-{
-public:
-	RepaintWidgetHandler(GtkWidget * width)
-	{
-		g_mutex_init(&this->mutex);
-		this->widget = width;
-		this->complete = false;
-		this->rescaleId = 0;
-	}
-
-public:
-	void repaintComplete()
-	{
-		g_mutex_lock(&this->mutex);
-		this->complete = true;
-
-		for (Rectangle* r : this->rects)
-		{
-			delete r;
-			r = NULL;
-		}
-		this->rects.clear();
-
-		addRepaintCallback();
-
-		g_mutex_unlock(&this->mutex);
-	}
-
-	void repaintRects(Rectangle* rect)
-	{
-		g_mutex_lock(&this->mutex);
-		if (this->complete)
-		{
-			delete rect;
-			rect = NULL;
-		}
-		else
-		{
-			this->rects.push_front(rect);
-		}
-		addRepaintCallback();
-
-		g_mutex_unlock(&this->mutex);
-	}
-
-private:
-	static bool idleRepaint(RepaintWidgetHandler * data)
-	{
-		g_mutex_lock(&data->mutex);
-		bool complete = data->complete;
-		std::list<Rectangle*> rects = data->rects;
-
-		data->rects.clear();
-		data->complete = false;
-		data->rescaleId = 0;
-
-		g_mutex_unlock(&data->mutex);
-
-		gdk_threads_enter();
-
-		gtk_widget_queue_draw(data->widget);
-
-		if (complete)
-		{
-			//gtk_widget_queue_draw(data->widget);
-		}
-		else
-		{
-			for (Rectangle* r : rects)
-			{
-				delete r;
-				r = NULL;
-			}
-			rects.clear();
-		}
-
-		gdk_flush();
-
-		gdk_threads_leave();
-
-		// do not call again
-		return false;
-	}
-
-	void addRepaintCallback()
-	{
-		if (this->rescaleId)
-		{
-			return;
-		}
-
-		this->rescaleId = g_idle_add((GSourceFunc) idleRepaint, this);
-	}
-
-private:
-	GMutex mutex;
-
-	int rescaleId;
-
-	bool complete;
-	std::list<Rectangle*> rects;
-	GtkWidget* widget;
-};
-
-RepaintWidgetHandler* handler = NULL;
-
-void RenderJob::run()
+void RenderJob::run(bool noThreads)
 {
 	XOJ_CHECK_TYPE(RenderJob);
 
-	if (handler == NULL)
+	if (repaintHandler == NULL)
 	{
-		handler = new RepaintWidgetHandler(this->view->getXournal()->getWidget());
+		repaintHandler = new RepaintWidgetHandler(this->view->getXournal()->getWidget());
 	}
 
 	double zoom = this->view->xournal->getZoom();
@@ -239,7 +163,10 @@ void RenderJob::run()
 
 		XojPopplerPage* popplerPage = NULL;
 
-		doc->lock();
+		if (!noThreads)
+		{
+			doc->lock();
+		}
 
 		if (this->view->page->getBackgroundType() == BACKGROUND_TYPE_PDF)
 		{
@@ -255,7 +182,10 @@ void RenderJob::run()
 		view.drawPage(this->view->page, cr2, false);
 
 		cairo_destroy(cr2);
-		g_mutex_lock(&this->view->drawingMutex);
+		if (!noThreads)
+		{
+			g_mutex_lock(&this->view->drawingMutex);
+		}
 
 		if (this->view->crBuffer)
 		{
@@ -263,19 +193,22 @@ void RenderJob::run()
 		}
 		this->view->crBuffer = crBuffer;
 
-		g_mutex_unlock(&this->view->drawingMutex);
-		doc->unlock();
+		if (!noThreads)
+		{
+			g_mutex_unlock(&this->view->drawingMutex);
+			doc->unlock();
+		}
 
-		handler->repaintComplete();
+		repaintHandler->repaintComplete();
 	}
 	else
 	{
 		for (Rectangle* rect : rerenderRects)
 		{
-			rerenderRectangle(rect);
+			rerenderRectangle(rect, noThreads);
 
 			rect = this->view->rectOnWidget(rect->x, rect->y, rect->width, rect->height);
-			handler->repaintRects(rect);
+			repaintHandler->repaintRects(rect);
 		}
 	}
 

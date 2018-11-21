@@ -59,14 +59,14 @@ void LayoutData::setPageIndex(int pageIndex)
 	this->pageIndex = pageIndex;
 }
 
-int LayoutData::getLayoutAbsoluteX()
+int LayoutData::getLayoutAbsoluteX() const
 {
 	XOJ_CHECK_TYPE(LayoutData);
 
 	return this->x + this->marginLeft;
 }
 
-int LayoutData::getLayoutAbsoluteY()
+int LayoutData::getLayoutAbsoluteY() const
 {
 	XOJ_CHECK_TYPE(LayoutData);
 

@@ -48,6 +48,7 @@ PdfExport::~PdfExport()
 	{
 		delete doc;
 	}
+	documents.clear();
 
 	g_list_foreach(this->pageIds, (GFunc) g_free, NULL);
 	g_list_free(this->pageIds);
@@ -630,11 +631,11 @@ string PdfExport::getLastError()
 	return this->lastError;
 }
 
-bool PdfExport::createPdf(path file, GList* range)
+bool PdfExport::createPdf(path file, PageRangeVector& range)
 {
 	XOJ_CHECK_TYPE(PdfExport);
 
-	if (range == NULL)
+	if (range.size() == 0)
 	{
 		this->lastError = "No pages to export!";
 		return false;
@@ -647,10 +648,9 @@ bool PdfExport::createPdf(path file, GList* range)
 	this->writer->write("%PDF-1.4\n");
 
 	int count = 0;
-	for (GList* l = range; l != NULL; l = l->next)
+	for (PageRangeEntry* e : range)
 	{
-		PageRangeEntry* e = (PageRangeEntry*) l->data;
-		count += e->getLast() - e->getFirst();
+		count += e->getLast() - e->getFirst() + 1;
 	}
 
 	if (this->progressListener)
@@ -659,13 +659,17 @@ bool PdfExport::createPdf(path file, GList* range)
 	}
 
 	int c = 0;
-	for (GList* l = range; l != NULL; l = l->next)
+	for (PageRangeEntry* e : range)
 	{
-		PageRangeEntry* e = (PageRangeEntry*) l->data;
-
-		for (int i = e->getFirst(); i < e->getLast(); i++)
+		for (int i = e->getFirst(); i <= e->getLast(); i++)
 		{
-			PageRef page = doc->getPage(i);
+			int p = i - 1;
+			if (p < 0 || p >= doc->getPageCount())
+			{
+				continue;
+			}
+
+			PageRef page = doc->getPage(p);
 			cPdf.drawPage(page);
 			if (this->progressListener)
 			{

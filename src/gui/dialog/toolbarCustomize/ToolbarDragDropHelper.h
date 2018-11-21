@@ -24,7 +24,6 @@ public:
 	static void dragSourceAddToolbar(GtkWidget* widget);
 
 	static GdkPixbuf* getImagePixbuf(GtkImage* image);
-	static GdkPixbuf* getColorImage(int color);
 
 public:
 	static GdkAtom atomToolItem;

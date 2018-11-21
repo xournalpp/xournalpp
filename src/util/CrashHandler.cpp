@@ -66,32 +66,6 @@ void installCrashHandlers()
 
 static void emergencySave();
 
-/* 
- * Basicly it's really simple class and you have to know what you can and what
- * you can't do with it. So please don't touch anythink down there without
- * previous consultation.
- */
-class streamsplit : public std::stringstream
-{
-public:
-
-	streamsplit(std::ofstream* file)
-	{
-		f = file;
-	}
-
-	template<typename T>
-	std::ostream& operator<<(T const & rhs)
-	{
-		*f << rhs;
-		cerr << rhs;
-		return *f;
-	}
-
-private:
-	std::ofstream* f;
-};
-
 /**
  * Print crash log to config directory
  */
@@ -117,36 +91,37 @@ static void crashHandler(int sig)
 	time_t curtime = time(0);
 	char stime[128];
 	strftime(stime, sizeof(stime), "%Y%m%d-%H%M%S", localtime(&curtime));
-	string filename = Util::getConfigFile(CONCAT("errorlog.", stime, ".log")).string();
+	string filename = Util::getConfigFile(std::string("errorlogs/errorlog.")  + stime + ".log").string();
 	ofstream fp(filename);
 	if (fp)
 	{
 		cerr << bl::format("[Crash Handler] Wrote crash log to: {1}") % filename << endl;
 	}
 
-	streamsplit out(&fp);
-
 	lt = time(NULL);
 
-	out << bl::format("Date: {1}") % ctime(&lt);
-	out << bl::format("Error: signal {1}") % sig;
-	out << "\n";
+	fp << bl::format("Date: {1}") % ctime(&lt);
+	fp << bl::format("Error: signal {1}") % sig;
+	fp << "\n";
 
 	messages = backtrace_symbols(array, size);
 
 	for (size_t i = 0; i < size; i++)
 	{
-		out << bl::format("[bt]: ({1}) {2}") % i % messages[i];
-		out << "\n";
+		fp << bl::format("[bt]: ({1}) {2}") % i % messages[i];
+		fp << "\n";
 	}
 
 	free(messages);
 
-	out << "\n\nTry to get a better stracktrace...\n";
+	fp << "\n\nTry to get a better stracktrace...\n";
 
-	Stacktrace::printStracktrace(out);
+	Stacktrace::printStracktrace(fp);
 
-	if (fp) fp.close();
+	if (fp)
+	{
+		fp.close();
+	}
 
 	emergencySave();
 

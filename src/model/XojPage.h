@@ -22,7 +22,7 @@
 class XojPage : public PageHandler
 {
 public:
-	XojPage(double width, double heigth);
+	XojPage(double width, double height);
 	void reference();
 	void unreference();
 
@@ -43,8 +43,8 @@ public:
 	 */
 	void setSize(double width, double height);
 
-	double getWidth();
-	double getHeight();
+	double getWidth() const;
+	double getHeight() const;
 
 	void addLayer(Layer* layer);
 	void insertLayer(Layer* layer, int index);

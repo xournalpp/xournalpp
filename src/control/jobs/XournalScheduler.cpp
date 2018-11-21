@@ -3,7 +3,7 @@
 #include "PreviewJob.h"
 #include "RenderJob.h"
 
-XournalScheduler::XournalScheduler()
+XournalScheduler::XournalScheduler(bool noThreads) : Scheduler(noThreads)
 {
 	XOJ_INIT_TYPE(XournalScheduler);
 
@@ -22,7 +22,7 @@ void XournalScheduler::removeSidebar(SidebarPreviewBaseEntry* preview)
 	removeSource(preview, JOB_TYPE_PREVIEW, JOB_PRIORITY_HIGH);
 }
 
-void XournalScheduler::removePage(PageView* view)
+void XournalScheduler::removePage(XojPageView* view)
 {
 	XOJ_CHECK_TYPE(XournalScheduler);
 
@@ -135,7 +135,7 @@ void XournalScheduler::addRepaintSidebar(SidebarPreviewBaseEntry* preview)
 	job->unref();
 }
 
-void XournalScheduler::addRerenderPage(PageView* view)
+void XournalScheduler::addRerenderPage(XojPageView* view)
 {
 	XOJ_CHECK_TYPE(XournalScheduler);
 

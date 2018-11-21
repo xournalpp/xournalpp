@@ -43,9 +43,22 @@ public:
 	void add(double x, double y, double width, double height);
 
 	/**
+	 * Returns a new Rectangle with an offset specified
+	 * by the function arguments
+	 *
+	 */
+	Rectangle translated(double dx, double dy);
+
+	/**
 	 * Same as the above, provided for convenience
 	 */
 	void add(const Rectangle &other);
+
+	Rectangle intersect(const Rectangle &other);
+
+	Rectangle& operator*=(double factor);
+
+	double area() const;
 
 public:
 	XOJ_TYPE_ATTRIB;

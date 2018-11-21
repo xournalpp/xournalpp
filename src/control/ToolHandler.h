@@ -17,6 +17,8 @@
 #include <Arrayiterator.h>
 #include <XournalType.h>
 
+class LastSelectedTool;
+
 class ToolListener
 {
 public:
@@ -24,6 +26,8 @@ public:
 	virtual void setCustomColorSelected() = 0;
 	virtual void toolSizeChanged() = 0;
 	virtual void toolChanged() = 0;
+
+	virtual ~ToolListener();
 };
 
 class ActionHandler;
@@ -69,6 +73,8 @@ public:
 	ToolType getToolType();
 	void fireToolChanged();
 
+	Tool &getTool(ToolType type);
+
 	void setEraserType(EraserType eraserType);
 	EraserType getEraserType();
 	void eraserTypeChanged();
@@ -101,7 +107,11 @@ private:
 
 	Tool* tools[TOOL_COUNT];
 	Tool* current;
-	Tool* lastSelectedTool;
+
+	/**
+	 * Last selected tool, reference with color values etc.
+	 */
+	LastSelectedTool* lastSelectedTool;
 
 	EraserType eraserType;
 

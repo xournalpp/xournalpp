@@ -55,11 +55,11 @@ void Job::deleteJob()
 	}
 }
 
-void Job::execute()
+void Job::execute(bool noThreads)
 {
 	XOJ_CHECK_TYPE(Job);
 
-	this->run();
+	this->run(noThreads);
 }
 
 void* Job::getSource()

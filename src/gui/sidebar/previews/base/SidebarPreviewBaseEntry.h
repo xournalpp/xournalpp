@@ -54,10 +54,10 @@ public:
 	virtual PreviewRenderType getRenderType() = 0;
 
 private:
-	static gboolean exposeEventCallback(GtkWidget* widget, GdkEventExpose* event, SidebarPreviewBaseEntry* preview);
+	static gboolean drawCallback(GtkWidget* widget, cairo_t* cr, SidebarPreviewBaseEntry* preview);
 	static gboolean mouseButtonPressCallback(GtkWidget* widget, GdkEventButton* event, SidebarPreviewBaseEntry* preview);
 
-	void paint();
+	void paint(cairo_t* cr);
 
 private:
 	XOJ_TYPE_ATTRIB;

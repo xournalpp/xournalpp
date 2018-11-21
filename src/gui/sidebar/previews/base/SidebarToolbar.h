@@ -11,7 +11,9 @@
 
 #pragma once
 
+#include "gui/GladeGui.h"
 #include "model/PageRef.h"
+
 #include <XournalType.h>
 
 #include <gtk/gtk.h>
@@ -21,12 +23,10 @@ class Control;
 class SidebarToolbar
 {
 public:
-	SidebarToolbar(Control* control);
+	SidebarToolbar(Control* control, GladeGui* gui);
 	virtual ~SidebarToolbar();
 
 public:
-	GtkWidget* getWidget();
-
 	/**
 	 * Sets the button enabled / disabled
 	 */
@@ -54,27 +54,22 @@ private:
 	PageRef currentPage;
 
 	/**
-	 * The Toolbar
-	 */
-	GtkToolbar* toolbar;
-
-	/**
 	 * Button move Page up
 	 */
-	GtkToolItem* btUp;
+	GtkButton* btUp;
 
 	/**
 	 * Button move Page down
 	 */
-	GtkToolItem* btDown;
+	GtkButton* btDown;
 
 	/**
 	 * Button copy current page
 	 */
-	GtkToolItem* btCopy;
+	GtkButton* btCopy;
 
 	/**
 	 * Button delete page
 	 */
-	GtkToolItem* btDelete;
+	GtkButton* btDelete;
 };

@@ -49,6 +49,8 @@ void printUndoList(GList* list)
 #define PRINTCONTENTS()
 #endif //UNDO_TRACE
 
+UndoRedoListener::~UndoRedoListener() { }
+
 UndoRedoHandler::UndoRedoHandler(Control* control)
 {
 	XOJ_INIT_TYPE(UndoRedoHandler);
@@ -141,12 +143,12 @@ void UndoRedoHandler::undo()
 
 	if (!undoResult)
 	{
-		GtkWidget* dialog = gtk_message_dialog_new((GtkWindow*) *control->getWindow(),
+		GtkWidget* dialog = gtk_message_dialog_new(control->getGtkWindow(),
 												   GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, "%s",
 												   FC(_F("Could not undo \"{1}\"\n"
 														 "Something went wrong… Please write a bug report…")
 															% undo->getText()));
-		gtk_window_set_transient_for(GTK_WINDOW(dialog), GTK_WINDOW(this->control->getWindow()->getWindow()));
+		gtk_window_set_transient_for(GTK_WINDOW(dialog), control->getGtkWindow());
 		gtk_dialog_run(GTK_DIALOG(dialog));
 		gtk_widget_destroy(dialog);
 	}
@@ -183,13 +185,12 @@ void UndoRedoHandler::redo()
 
 	if (!redoResult)
 	{
-		GtkWidget* dialog = gtk_message_dialog_new((GtkWindow*) *control->getWindow(),
+		GtkWidget* dialog = gtk_message_dialog_new(control->getGtkWindow(),
 												   GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, "%s",
 												   FC(_F("Could not redo \"{1}\"\n"
 														 "Something went wrong… Please write a bug report…")
 															% redo->getText()));
-		gtk_window_set_transient_for(GTK_WINDOW(dialog),
-									 GTK_WINDOW(this->control->getWindow()->getWindow()));
+		gtk_window_set_transient_for(GTK_WINDOW(dialog), control->getGtkWindow());
 		gtk_dialog_run(GTK_DIALOG(dialog));
 		gtk_widget_destroy(dialog);
 	}

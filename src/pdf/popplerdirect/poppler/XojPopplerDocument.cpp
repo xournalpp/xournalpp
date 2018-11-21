@@ -210,7 +210,7 @@ XojPopplerIter* XojPopplerDocument::getContentsIter()
 		return NULL;
 	}
 
-	GooList* items = outline->getItems();
+	GooList* items = const_cast<GooList *>(outline->getItems());
 	if (items == NULL)
 	{
 		return NULL;

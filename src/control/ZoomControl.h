@@ -16,11 +16,18 @@
 #include <gtk/gtk.h>
 #include <vector>
 
+//Hardcode max and min zoom
+//this should probably be user-adjustable in future
+#define MAX_ZOOM 5
+#define MIN_ZOOM 0.3
+
 class ZoomListener
 {
 public:
 	virtual void zoomChanged(double lastZoom) = 0;
 	virtual void zoomRangeValuesChanged();
+
+	virtual ~ZoomListener();
 };
 
 class ZoomControl
@@ -47,6 +54,11 @@ public:
 	void addZoomListener(ZoomListener* listener);
 
 	void initZoomHandler(GtkWidget* widget);
+
+	// TODO: Naming and getter / setter!
+	// Current zoom center
+	gdouble zoom_center_x;
+	gdouble zoom_center_y;
 
 protected:
 	void fireZoomChanged(double lastZoom);

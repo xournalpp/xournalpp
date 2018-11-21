@@ -27,10 +27,16 @@ private:
 public:
 	void addPoint(const Point* point);
 
+	int getTimestamp();
+	void setTimestamp(int seconds);
+	string getAudioFilename();
+	void setAudioFilename(string filename);
 	virtual void writeOut(OutputStream* out);
 
 private:
 	XOJ_TYPE_ATTRIB;
 
 	GList* points;
+	int timestamp=0;
+	string audioFilename="";
 };

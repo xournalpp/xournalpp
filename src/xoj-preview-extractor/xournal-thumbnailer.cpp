@@ -9,18 +9,19 @@
  * @license GPL
  */
 
+// Set to true to write a log with errors and debug logs to /tmp/xojtmb.log
+#define DEBUG_THUMBNAILER false
+
+
 #include <config.h>
 #include <config-paths.h>
 #include <i18n.h>
 #include <XojPreviewExtractor.h>
 
-#include <boost/locale/format.hpp>
-#include <boost/locale/generator.hpp>
 namespace bl = boost::locale;
 
-#include <fstream>
-using std::ofstream;
 #include <iostream>
+#include <fstream>
 using std::cerr;
 using std::cout;
 using std::endl;
@@ -43,26 +44,45 @@ void initLocalisation()
 	std::cout.imbue(std::locale());
 }
 
+void logMessage(string msg, bool error)
+{
+	if (error)
+	{
+		cerr << msg << endl;
+	}
+	else
+	{
+		cout << msg << endl;
+	}
+
+#if DEBUG_THUMBNAILER
+	std::ofstream ofs;
+	ofs.open("/tmp/xojtmb.log", std::ofstream::out | std::ofstream::app);
+
+	if (error)
+	{
+		ofs << "E: ";
+	}
+	else
+	{
+		ofs << "I: ";
+	}
+
+	ofs << msg << endl;
+
+	ofs.close();
+#endif
+}
+
 int main(int argc, char* argv[])
 {
 	initLocalisation();
 
-	//check args count
+	// check args count
 	if (argc != 3)
 	{
-		cerr << _("xoj-preview-extractor: call with INPUT.xoj OUTPUT.png") << endl;
+		logMessage(_("xoj-preview-extractor: call with INPUT.xoj OUTPUT.png"), true);
 		return 1;
-	}
-	
-	//check output file extension
-	string ext = argv[2] + strlen(argv[2]) - 4; //last 4 chars
-	for (int i = 0; i < ext.length(); i++)
-	{
-		if (tolower(ext[i]) != ".png"[i])
-		{
-			cerr << _F("xoj-preview-extractor: file \"{1}\" is not .png file") % argv[2] << endl;
-			return 2;
-		}
 	}
 	
 	XojPreviewExtractor extractor;
@@ -75,32 +95,35 @@ int main(int argc, char* argv[])
 		break;
 		
 	case PREVIEW_RESULT_BAD_FILE_EXTENSION:
-		cerr << _F("xoj-preview-extractor: file \"{1}\" is not .xoj file") % argv[2] << endl;
+		logMessage((_F("xoj-preview-extractor: file \"{1}\" is not .xoj file") % argv[2]).str(), true);
 		return 2;
 
 	case PREVIEW_RESULT_COULD_NOT_OPEN_FILE:
-		cerr << _F("xoj-preview-extractor: opening input file \"{1}\" failed") % argv[1] << endl;
+		logMessage((_F("xoj-preview-extractor: opening input file \"{1}\" failed") % argv[1]).str(), true);
 		return 3;
 
 	case PREVIEW_RESULT_NO_PREVIEW:
-		cerr << _F("xoj-preview-extractor: file \"{1}\" contains no preview") % argv[1] << endl;
+		logMessage((_F("xoj-preview-extractor: file \"{1}\" contains no preview") % argv[1]).str(), true);
 		return 4;
 
 	case PREVIEW_RESULT_ERROR_READING_PREVIEW:
 	default:
-		cerr << _("xoj-preview-extractor: no preview and page found, maybe an invalid file?") << endl;
+		logMessage(_("xoj-preview-extractor: no preview and page found, maybe an invalid file?"), true);
 		return 5;
 	}
 	
-	ofstream ofile(argv[2], ofstream::out | ofstream::binary);
-	if (!ofile.is_open())
+	FILE* fp = fopen(argv[2], "wb");
+	if (!fp)
 	{
-		cerr << _F("xoj-preview-extractor: opening output file \"{1}\" failed") % argv[2] << endl;
+		logMessage((_F("xoj-preview-extractor: opening output file \"{1}\" failed") % argv[2]).str(), true);
 		return 6;
 	}
-	ofile << extractor.getData();
-	ofile.close();
 
-	cout << _("xoj-preview-extractor: successfully extracted") << endl;
+	gsize dataLen = 0;
+	unsigned char* imageData = extractor.getData(dataLen);
+	fwrite(imageData, dataLen, 1, fp);
+	fclose(fp);
+
+	logMessage(_("xoj-preview-extractor: successfully extracted"), false);
 	return 0;
 }

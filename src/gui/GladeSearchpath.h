@@ -14,6 +14,10 @@
 #include <XournalType.h>
 
 #include <vector>
+#include <string>
+
+using std::string;
+using std::vector;
 
 class GladeSearchpath
 {
@@ -22,12 +26,12 @@ public:
 	virtual ~GladeSearchpath();
 
 public:
-	void addSearchDirectory(const char* directory);
+	void addSearchDirectory(string directory);
 
 	/**
-	 * Searches for a path, the returning string has to be freed
+	 * Searches for a path, return the path, an empty string if not found
 	 */
-	char* findFile(const char* subdir, const char* file);
+	string findFile(string subdir, string file);
 
 private:
 	XOJ_TYPE_ATTRIB;
@@ -35,5 +39,5 @@ private:
 	/**
 	 * Search directory for icons and Glade files
 	 */
-	std::vector<char*> directories;
+	vector<string> directories;
 };

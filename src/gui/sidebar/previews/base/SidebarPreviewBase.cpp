@@ -6,14 +6,15 @@
 #include "SidebarPreviewBaseEntry.h"
 #include "SidebarToolbar.h"
 
-SidebarPreviewBase::SidebarPreviewBase(Control* control) : AbstractSidebarPage(control)
+SidebarPreviewBase::SidebarPreviewBase(Control* control, GladeGui* gui, SidebarToolbar* toolbar)
+ : AbstractSidebarPage(control),
+   toolbar(toolbar)
 {
 	XOJ_INIT_TYPE(SidebarPreviewBase);
 
 	this->backgroundInitialized = false;
 
 	this->layoutmanager = new SidebarLayout();
-	this->toolbar = new SidebarToolbar(control);
 
 	this->zoom = 0.15;
 
@@ -43,9 +44,10 @@ SidebarPreviewBase::SidebarPreviewBase(Control* control) : AbstractSidebarPage(c
 	g_object_ref(this->table);
 
 	gtk_table_attach(this->table, this->scrollPreview, 0, 1, 0, 1,
-					 (GtkAttachOptions) (GTK_FILL | GTK_EXPAND), (GtkAttachOptions) (GTK_FILL | GTK_EXPAND), 0, 0);
-	gtk_table_attach(this->table, this->toolbar->getWidget(), 0, 1, 1, 2,
-					 (GtkAttachOptions) (GTK_FILL | GTK_EXPAND), GTK_FILL, 0, 0);
+	                 (GtkAttachOptions) (GTK_FILL | GTK_EXPAND),
+	                 (GtkAttachOptions) (GTK_FILL | GTK_EXPAND), 0, 0);
+
+	gtk_widget_show_all(GTK_WIDGET(this->table));
 }
 
 SidebarPreviewBase::~SidebarPreviewBase()
@@ -61,10 +63,8 @@ SidebarPreviewBase::~SidebarPreviewBase()
 	delete this->layoutmanager;
 	this->layoutmanager = NULL;
 
-	delete this->toolbar;
-	this->toolbar = NULL;
-
 	g_object_unref(this->table);
+	this->table = NULL;
 
 	for (SidebarPreviewBaseEntry* p : this->previews)
 	{
@@ -103,7 +103,11 @@ void SidebarPreviewBase::setBackgroundWhite()
 	}
 	this->backgroundInitialized = true;
 
-	gdk_window_set_background(GTK_LAYOUT(this->iconViewPreview)->bin_window, &this->iconViewPreview->style->white);
+	GdkRGBA white = {1, 1, 1, 1};
+
+	gtk_widget_override_background_color(this->iconViewPreview,
+	                                     GTK_STATE_FLAG_NORMAL,
+	                                     &white);
 }
 
 double SidebarPreviewBase::getZoom()
@@ -158,7 +162,7 @@ bool SidebarPreviewBase::scrollToPreview(SidebarPreviewBase* sidebar)
 	MainWindow* win = sidebar->control->getWindow();
 	if (win)
 	{
-		GtkWidget* w = win->get("sidebarContents");
+		GtkWidget* w = win->get("sidebar");
 		if (!gtk_widget_get_visible(w))
 		{
 			return false;
@@ -175,8 +179,11 @@ bool SidebarPreviewBase::scrollToPreview(SidebarPreviewBase* sidebar)
 		GtkAdjustment* vadj = gtk_scrolled_window_get_vadjustment(GTK_SCROLLED_WINDOW(sidebar->scrollPreview));
 		GtkWidget* widget = p->getWidget();
 
-		int x = widget->allocation.x;
-		int y = widget->allocation.y;
+		GtkAllocation allocation;
+		gtk_widget_get_allocation(widget, &allocation);
+		int x = allocation.x;
+		int y = allocation.y;
+
 		gdk_threads_leave();
 
 		if (x == -1)
@@ -186,8 +193,8 @@ bool SidebarPreviewBase::scrollToPreview(SidebarPreviewBase* sidebar)
 		}
 
 		gdk_threads_enter();
-		gtk_adjustment_clamp_page(vadj, y, y + widget->allocation.height);
-		gtk_adjustment_clamp_page(hadj, x, x + widget->allocation.width);
+		gtk_adjustment_clamp_page(vadj, y, y + allocation.height);
+		gtk_adjustment_clamp_page(hadj, x, x + allocation.width);
 		gdk_threads_leave();
 	}
 	return false;

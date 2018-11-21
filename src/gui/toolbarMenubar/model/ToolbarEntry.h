@@ -43,7 +43,7 @@ public:
 	 */
 	int insertItem(string item, int position);
 
-	ToolbarItemVector* getItems();
+	const ToolbarItemVector& getItems() const;
 
 private:
 	XOJ_TYPE_ATTRIB;

@@ -8,25 +8,33 @@
 
 #include <string.h>
 
-SettingsDialog::SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* settings) :
-		GladeGui(gladeSearchPath, "settings.glade", "settingsDialog")
+SettingsDialog::SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* settings)
+ : GladeGui(gladeSearchPath, "settings.glade", "settingsDialog"),
+   settings(settings),
+   callib(zoomcallib_new()),
+   dpi(72)
 {
 	XOJ_INIT_TYPE(SettingsDialog);
-
-	this->settings = settings;
-	this->dpi = 72;
-	callib = zoomcallib_new();
 
 	GtkWidget* vbox = get("zoomVBox");
 	g_return_if_fail(vbox != NULL);
 
 	GtkWidget* slider = get("zoomCallibSlider");
 	g_return_if_fail(slider != NULL);
-	g_signal_connect(slider, "change-value", G_CALLBACK(&zoomcallibSliderChanged), this);
 
-	g_signal_connect(get("cbSettingXinput"), "toggled", G_CALLBACK(&toolboxToggledCallback), this);
-	g_signal_connect(get("cbSettingPresureSensitivity"), "toggled", G_CALLBACK(&toolboxToggledCallback), this);
-	g_signal_connect(get("cbAutosave"), "toggled", G_CALLBACK(&toolboxToggledCallback), this);
+	g_signal_connect(slider, "change-value", G_CALLBACK(
+		+[](GtkRange* range, GtkScrollType scroll, gdouble value, SettingsDialog* self)
+		{
+			XOJ_CHECK_TYPE_OBJ(self, SettingsDialog);
+			self->setDpi((int) value);
+		}), this);
+
+	g_signal_connect(get("cbAutosave"), "toggled", G_CALLBACK(
+		+[](GtkToggleButton* togglebutton, SettingsDialog* self)
+		{
+			XOJ_CHECK_TYPE_OBJ(self, SettingsDialog);
+			self->autosaveToggled();
+		}), this);
 
 	gtk_box_pack_start(GTK_BOX(vbox), callib, false, true, 0);
 	gtk_widget_show(callib);
@@ -49,16 +57,6 @@ SettingsDialog::~SettingsDialog()
 	XOJ_RELEASE_TYPE(SettingsDialog);
 }
 
-gboolean SettingsDialog::zoomcallibSliderChanged(GtkRange* range, GtkScrollType scroll,
-												 gdouble value, SettingsDialog* dlg)
-{
-	XOJ_CHECK_TYPE_OBJ(dlg, SettingsDialog);
-
-	dlg->setDpi((int) value);
-
-	return false;
-}
-
 void SettingsDialog::initMouseButtonEvents(const char* hbox, int button, bool withDevice)
 {
 	XOJ_CHECK_TYPE(SettingsDialog);
@@ -74,6 +72,8 @@ void SettingsDialog::initMouseButtonEvents()
 	initMouseButtonEvents("hboxRightMouse", 2);
 	initMouseButtonEvents("hboxEraser", 0);
 	initMouseButtonEvents("hboxTouch", 3, true);
+	initMouseButtonEvents("hboxPenButton1", 5);
+	initMouseButtonEvents("hboxPenButton2", 6);
 
 	initMouseButtonEvents("hboxDefault", 4);
 }
@@ -124,51 +124,23 @@ bool SettingsDialog::getCheckbox(const char* name)
 	return gtk_toggle_button_get_active(b);
 }
 
-void SettingsDialog::toolboxToggledCallback(GtkToggleButton* togglebutton, SettingsDialog* sd)
-{
-	XOJ_CHECK_TYPE_OBJ(sd, SettingsDialog);
-
-	sd->toolboxToggled();
-}
-
-void SettingsDialog::toolboxToggled()
+/**
+ * Autosave was toggled, enable / disable autosave config
+ */
+void SettingsDialog::autosaveToggled()
 {
 	XOJ_CHECK_TYPE(SettingsDialog);
-
-	GtkToggleButton* cbSettingXinput = GTK_TOGGLE_BUTTON(get("cbSettingXinput"));
-	GtkWidget* cbSettingPresureSensitivity = get("cbSettingPresureSensitivity");
-	GtkWidget* labePresureSensitivity = get("labePresureSensitivity");
-	GtkWidget* labeIgnorCoreEvents = get("labeIgnorCoreEvents");
-	GtkWidget* cbIgnorCoreEvents = get("cbIgnorCoreEvents");
-	GtkWidget* labeXInput = get("labeXInput");
-
-	gboolean xInputEnabled = gtk_toggle_button_get_active(cbSettingXinput);
-
-	if (!settings->isXInputAvailable())
-	{
-		xInputEnabled = false;
-
-		gtk_widget_set_sensitive(GTK_WIDGET(cbSettingXinput), xInputEnabled);
-		gtk_widget_set_sensitive(labeXInput, xInputEnabled);
-	}
 
 	GtkWidget* cbAutosave = get("cbAutosave");
 	bool autosaveEnabled = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(cbAutosave));
 	gtk_widget_set_sensitive(get("lbAutosaveTimeout"), autosaveEnabled);
 	gtk_widget_set_sensitive(get("spAutosaveTimeout"), autosaveEnabled);
-
-	gtk_widget_set_sensitive(cbSettingPresureSensitivity, xInputEnabled);
-	gtk_widget_set_sensitive(labePresureSensitivity, xInputEnabled);
-	gtk_widget_set_sensitive(labeIgnorCoreEvents, xInputEnabled);
-	gtk_widget_set_sensitive(cbIgnorCoreEvents, xInputEnabled);
 }
 
 void SettingsDialog::load()
 {
 	XOJ_CHECK_TYPE(SettingsDialog);
 
-	loadCheckbox("cbSettingXinput", settings->isXinputEnabled());
-	loadCheckbox("cbIgnorCoreEvents", settings->isIgnoreCoreEvents());
 	loadCheckbox("cbSettingPresureSensitivity", settings->isPresureSensitivity());
 	loadCheckbox("cbShowSidebarRight", settings->isSidebarOnRight());
 	loadCheckbox("cbShowScrollbarLeft", settings->isScrollbarOnLeft());
@@ -176,8 +148,9 @@ void SettingsDialog::load()
 	loadCheckbox("cbAutosave", settings->isAutosaveEnabled());
 	loadCheckbox("cbAddVerticalSpace", settings->getAddVerticalSpace());
 	loadCheckbox("cbAddHorizontalSpace", settings->getAddHorizontalSpace());
-	loadCheckbox("cbFixXinput", settings->getfixXinput());
 	loadCheckbox("cbBigCursor", settings->isShowBigCursor());
+	loadCheckbox("cbHideHorizontalScrollbar", settings->getScrollbarHideType() & SCROLLBAR_HIDE_HORIZONTAL);
+	loadCheckbox("cbHideVerticalScrollbar", settings->getScrollbarHideType() & SCROLLBAR_HIDE_VERTICAL);
 
 	GtkWidget* txtDefaultSaveName = get("txtDefaultSaveName");
 	string txt = settings->getDefaultSaveName();
@@ -238,7 +211,7 @@ void SettingsDialog::load()
 	loadCheckbox("cbHidePresentationMenubar", hidePresentationMenubar);
 	loadCheckbox("cbHidePresentationSidebar", hidePresentationSidebar);
 
-	toolboxToggled();
+	autosaveToggled();
 }
 
 string SettingsDialog::updateHideString(string hidden, bool hideMenubar, bool hideSidebar)
@@ -311,17 +284,27 @@ void SettingsDialog::save()
 {
 	XOJ_CHECK_TYPE(SettingsDialog);
 
-	settings->setXinputEnabled(getCheckbox("cbSettingXinput"));
+	settings->transactionStart();
+
 	settings->setPresureSensitivity(getCheckbox("cbSettingPresureSensitivity"));
-	settings->setIgnoreCoreEvents(getCheckbox("cbIgnorCoreEvents"));
 	settings->setSidebarOnRight(getCheckbox("cbShowSidebarRight"));
 	settings->setScrollbarOnLeft(getCheckbox("cbShowScrollbarLeft"));
 	settings->setAutoloadPdfXoj(getCheckbox("cbAutoloadXoj"));
 	settings->setAutosaveEnabled(getCheckbox("cbAutosave"));
 	settings->setAddVerticalSpace(getCheckbox("cbAddVerticalSpace"));
 	settings->setAddHorizontalSpace(getCheckbox("cbAddHorizontalSpace"));
-	settings->setfixXinput(getCheckbox("cbFixXinput"));
 	settings->setShowBigCursor(getCheckbox("cbBigCursor"));
+
+	int scrollbarHideType = SCROLLBAR_HIDE_NONE;
+	if (getCheckbox("cbHideHorizontalScrollbar"))
+	{
+		scrollbarHideType |= SCROLLBAR_HIDE_HORIZONTAL;
+	}
+	if (getCheckbox("cbHideVerticalScrollbar"))
+	{
+		scrollbarHideType |= SCROLLBAR_HIDE_VERTICAL;
+	}
+	settings->setScrollbarHideType((ScrollbarHideType)scrollbarHideType);
 
 	GtkWidget* colorBorder = get("colorBorder");
 	GdkColor color = { 0 };
@@ -332,18 +315,13 @@ void SettingsDialog::save()
 	bool hideFullscreenMenubar = getCheckbox("cbHideFullscreenMenubar");
 	bool hideFullscreenSidebar = getCheckbox("cbHideFullscreenSidebar");
 	settings->setFullscreenHideElements(
-						updateHideString(settings->getFullscreenHideElements(),
-										 hideFullscreenMenubar,
-										 hideFullscreenSidebar)
-						);
+			updateHideString(settings->getFullscreenHideElements(), hideFullscreenMenubar, hideFullscreenSidebar));
 
 	bool hidePresentationMenubar = getCheckbox("cbHidePresentationMenubar");
 	bool hidePresentationSidebar = getCheckbox("cbHidePresentationSidebar");
 	settings->setPresentationHideElements(
-						updateHideString(settings->getPresentationHideElements(),
-										 hidePresentationMenubar,
-										 hidePresentationSidebar)
-						);
+			updateHideString(settings->getPresentationHideElements(), hidePresentationMenubar,
+					hidePresentationSidebar));
 
 	GtkWidget* txtDefaultSaveName = get("txtDefaultSaveName");
 	const char* txt = gtk_entry_get_text(GTK_ENTRY(txtDefaultSaveName));
@@ -359,4 +337,6 @@ void SettingsDialog::save()
 	{
 		bcg->saveSettings();
 	}
+
+	settings->transactionEnd();
 }

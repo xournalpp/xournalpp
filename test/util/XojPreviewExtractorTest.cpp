@@ -68,7 +68,9 @@ public:
 
 		CPPUNIT_ASSERT_EQUAL(PREVIEW_RESULT_IMAGE_READ, result);
 		
-		CPPUNIT_ASSERT_EQUAL(string("CppUnitTestString"), string(extractor.getData()));
+		gsize dataLen = 0;
+		unsigned char* imageData = extractor.getData(dataLen);
+		CPPUNIT_ASSERT_EQUAL(string("CppUnitTestString"), string((char*)imageData, (size_t)dataLen));
 	}
 
 	void testLoadGzipped2()
@@ -78,7 +80,9 @@ public:
 
 		CPPUNIT_ASSERT_EQUAL(PREVIEW_RESULT_IMAGE_READ, result);
 
-		CPPUNIT_ASSERT_EQUAL((std::string::size_type) 2856, extractor.getData().length());
+		gsize dataLen = 0;
+		extractor.getData(dataLen);
+		CPPUNIT_ASSERT_EQUAL((std::string::size_type) 2856, dataLen);
 	}
 
 	void testLoad1Unzipped()
@@ -88,7 +92,9 @@ public:
 
 		CPPUNIT_ASSERT_EQUAL(PREVIEW_RESULT_IMAGE_READ, result);
 
-		CPPUNIT_ASSERT_EQUAL(string("CppUnitTestString"), string(extractor.getData()));
+		gsize dataLen = 0;
+		unsigned char* imageData = extractor.getData(dataLen);
+		CPPUNIT_ASSERT_EQUAL(string("CppUnitTestString"), string((char*)imageData, (size_t)dataLen));
 	}
 
 	void testNoPreview()

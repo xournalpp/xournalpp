@@ -40,7 +40,7 @@ void PagePositionHandler::freeData()
 	this->dataAllocSize = 0;
 }
 
-void PagePositionHandler::update(PageView** viewPages, int viewPagesLen, int maxY)
+void PagePositionHandler::update(XojPageView** viewPages, int viewPagesLen, int maxY)
 {
 	XOJ_CHECK_TYPE(PagePositionHandler);
 
@@ -54,7 +54,7 @@ void PagePositionHandler::update(PageView** viewPages, int viewPagesLen, int max
 	for (int i = 0; i < viewPagesLen; i++)
 	{
 
-		PageView* pv = viewPages[i];
+		XojPageView* pv = viewPages[i];
 
 		if (!lastPp->add(pv))
 		{
@@ -71,11 +71,11 @@ void PagePositionHandler::update(PageView** viewPages, int viewPagesLen, int max
 	addData(pp);
 }
 
-PageView* PagePositionHandler::getBestMatchingView(int x, int y, int width, int heigth)
+XojPageView* PagePositionHandler::getBestMatchingView(int x, int y, int width, int height)
 {
 	XOJ_CHECK_TYPE(PagePositionHandler);
 
-	if (y + heigth < 0 || y > this->maxY)
+	if (y + height < 0 || y > this->maxY)
 	{
 		return NULL;
 	}
@@ -83,9 +83,9 @@ PageView* PagePositionHandler::getBestMatchingView(int x, int y, int width, int 
 	int id = -1;
 	PagePosition* pp1 = binarySearch(this->data, 0, this->dataCount - 1, y, id);
 	id = -1;
-	PagePosition* pp2 = binarySearch(this->data, 0, this->dataCount - 1, y + heigth, id);
+	PagePosition* pp2 = binarySearch(this->data, 0, this->dataCount - 1, y + height, id);
 
-	PageViewIndex index(x, y, width, heigth);
+	PageViewIndex index(x, y, width, height);
 	if (pp1 != NULL)
 	{
 		index.add(pp1, y);
@@ -93,13 +93,13 @@ PageView* PagePositionHandler::getBestMatchingView(int x, int y, int width, int 
 
 	if (pp2 != NULL && pp1 != pp2)
 	{
-		index.add(pp2, y + heigth);
+		index.add(pp2, y + height);
 	}
 
 	return index.getHighestIntersects();
 }
 
-PageView* PagePositionHandler::getViewAt(int x, int y, PagePositionCache* cache)
+XojPageView* PagePositionHandler::getViewAt(int x, int y, PagePositionCache* cache)
 {
 	XOJ_CHECK_TYPE(PagePositionHandler);
 
@@ -129,8 +129,7 @@ PageView* PagePositionHandler::getViewAt(int x, int y, PagePositionCache* cache)
 		return NULL;
 	}
 
-	PageView* pv = pp->getViewAt(x, y);
-	return pv;
+	return pp->getViewAt(x, y);
 }
 
 PagePosition* PagePositionHandler::binarySearch(PagePosition** sortedArray, int first, int last, int y, int& index)

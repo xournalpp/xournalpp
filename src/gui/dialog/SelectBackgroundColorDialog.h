@@ -11,40 +11,50 @@
 
 #pragma once
 
-#include "gui/GladeGui.h"
+#include <XournalType.h>
 
+#include <gtk/gtk.h>
+#include <gdk/gdk.h>
 #include <vector>
 
-class ColorEntry;
 class Control;
 
-class SelectBackgroundColorDialog : public GladeGui
+
+/**
+ * Count of last background colors
+ */
+const int LAST_BACKGROUND_COLOR_COUNT = 9;
+
+
+class SelectBackgroundColorDialog
 {
 public:
-	SelectBackgroundColorDialog(GladeSearchpath* gladeSearchPath, Control* control);
+	SelectBackgroundColorDialog(Control* control);
 	virtual ~SelectBackgroundColorDialog();
 
 public:
-	virtual void show(GtkWindow* parent);
+	void show(GtkWindow* parent);
 
+	/**
+	 * Return the selected color as RGB, -1 if no color is selected
+	 */
 	int getSelectedColor();
 
-	void showColorchooser();
-
 private:
-	void updateLastUsedColors();
-
-	static void buttonSelectedCallback(GtkButton* button, ColorEntry* e);
-	static void buttonCustomCallback(GtkButton* button, SelectBackgroundColorDialog* dlg);
+	void storeLastUsedValuesInSettings();
 
 private:
 	XOJ_TYPE_ATTRIB;
 
 	Control* control;
 
+	/**
+	 * Last used background colors (stored in settings)
+	 */
+	GdkRGBA lastBackgroundColors[LAST_BACKGROUND_COLOR_COUNT];
+
+	/**
+	 * Selected color
+	 */
 	int selected;
-
-	std::vector<ColorEntry*> colors;
-
-	GtkWidget* colorDlg;
 };

@@ -5,18 +5,9 @@
 
 #include <Util.h>
 #include <pixbuf-utils.h>
+int currentToolType;
 
-/************** drawing nice cursors *********/
-
-static unsigned char CURSOR_HIGLIGHTER_BITS[] = {
-	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf8, 0x0f, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08,
-	0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0xf8, 0x0f, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
-
-static unsigned char CURSOR_HILIGHTER_MASK[] = {
-	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf8, 0x0f, 0xf8, 0x0f, 0xf8, 0x0f, 0xf8, 0x0f, 0xf8, 0x0f,
-	0xf8, 0x0f, 0xf8, 0x0f, 0xf8, 0x0f, 0xf8, 0x0f, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
+#include <cmath>
 
 Cursor::Cursor(Control* control)
 {
@@ -87,13 +78,10 @@ void Cursor::setCursorBusy(bool busy)
 
 	if (busy)
 	{
-		GdkCursor* cursor = gdk_cursor_new(GDK_WATCH);
-		if (gtk_widget_get_window(win->getWindow()))
-		{
-			gdk_window_set_cursor(gtk_widget_get_window(win->getWindow()), cursor);
-		}
-
-		gdk_cursor_unref(cursor);
+		GdkWindow* window = gtk_widget_get_window(win->getWindow());
+		GdkCursor* cursor = gdk_cursor_new_for_display(gdk_window_get_display(window), GDK_WATCH);
+		gdk_window_set_cursor(window, cursor);
+		g_object_unref(cursor);
 	}
 	else
 	{
@@ -136,26 +124,208 @@ void Cursor::setInvisible(bool invisible)
 	updateCursor();
 }
 
+void Cursor::updateCursor()
+{
+	XOJ_CHECK_TYPE(Cursor);
+
+	MainWindow* win = control->getWindow();
+	if (!win)
+	{
+		return;
+	}
+
+	XournalView* xournal = win->getXournal();
+	if (!xournal)
+	{
+		return;
+	}
+
+	GdkWindow* window = gtk_widget_get_window(win->getWindow());
+
+	GdkCursor* cursor = NULL;
+
+	if (this->busy)
+	{
+		cursor = gdk_cursor_new_for_display(gdk_window_get_display(window), GDK_WATCH);
+	}
+	else
+	{
+		ToolHandler* handler = control->getToolHandler();
+		ToolType type = handler->getToolType();
+		currentToolType = type;
+		
+		if (type == TOOL_HAND)
+		{
+			if (this->mouseDown)
+			{
+				cursor = gdk_cursor_new_for_display(gdk_window_get_display(window), GDK_FLEUR);
+			}
+			else
+			{
+				cursor = gdk_cursor_new_for_display(gdk_window_get_display(window), GDK_HAND1);
+			}
+		}
+		else if (!this->insidePage)
+		{
+			// not inside page: so use default cursor
+		}
+		else if (this->selectionType)
+		{
+			switch (this->selectionType)
+			{
+			case CURSOR_SELECTION_MOVE:
+				cursor = gdk_cursor_new_for_display(gdk_window_get_display(window), GDK_FLEUR);
+				break;
+			case CURSOR_SELECTION_TOP_LEFT:
+				cursor = gdk_cursor_new_for_display(gdk_window_get_display(window), GDK_TOP_LEFT_CORNER);
+				break;
+			case CURSOR_SELECTION_TOP_RIGHT:
+				cursor = gdk_cursor_new_for_display(gdk_window_get_display(window), GDK_TOP_RIGHT_CORNER);
+				break;
+			case CURSOR_SELECTION_BOTTOM_LEFT:
+				cursor = gdk_cursor_new_for_display(gdk_window_get_display(window), GDK_BOTTOM_LEFT_CORNER);
+				break;
+			case CURSOR_SELECTION_BOTTOM_RIGHT:
+				cursor = gdk_cursor_new_for_display(gdk_window_get_display(window), GDK_BOTTOM_RIGHT_CORNER);
+				break;
+			case CURSOR_SELECTION_LEFT:
+			case CURSOR_SELECTION_RIGHT:
+				cursor = gdk_cursor_new_for_display(gdk_window_get_display(window), GDK_SB_H_DOUBLE_ARROW);
+				break;
+			case CURSOR_SELECTION_TOP:
+			case CURSOR_SELECTION_BOTTOM:
+				cursor = gdk_cursor_new_for_display(gdk_window_get_display(window), GDK_SB_V_DOUBLE_ARROW);
+				break;
+			}
+		}
+		else if (type == TOOL_PEN)
+		{
+			cursor = getPenCursor();
+
+		}
+		else if (type == TOOL_ERASER)
+		{
+			cursor = eraserCursor();
+		}
+		else if (type == TOOL_HILIGHTER)
+		{
+			cursor = highlighterCursor();
+		}
+		else if (type == TOOL_TEXT)
+		{
+			if (this->invisible)
+			{
+				cursor = gdk_cursor_new_for_display(gdk_window_get_display(window), GDK_BLANK_CURSOR);
+			}
+			else
+			{
+				cursor = gdk_cursor_new_for_display(gdk_window_get_display(window), GDK_XTERM);
+			}
+		}
+		else if (type == TOOL_IMAGE)
+		{
+			// No special cursor needed
+		}
+		else if (type == TOOL_VERTICAL_SPACE)
+		{
+			if (this->mouseDown)
+			{
+				cursor = gdk_cursor_new_for_display(gdk_window_get_display(window), GDK_SB_V_DOUBLE_ARROW);
+			}
+		}
+		else if (type != TOOL_SELECT_OBJECT) // other selections are handled before anyway, because you can move a selection with every tool
+		{
+			if(type == TOOL_PLAY_OBJECT)
+				cursor = gdk_cursor_new_for_display(gdk_window_get_display(window), GDK_HAND2);
+			else
+				cursor = gdk_cursor_new_for_display(gdk_window_get_display(window), GDK_TCROSS);
+		}
+		
+	}
+
+	if (gtk_widget_get_window(xournal->getWidget()))
+	{
+		gdk_window_set_cursor(gtk_widget_get_window(xournal->getWidget()), cursor);
+
+		gtk_widget_set_sensitive(xournal->getWidget(), !this->busy);
+	}
+
+	gdk_display_sync(gdk_display_get_default());
+
+	if (cursor)
+	{
+		g_object_unref(cursor);
+	}
+}
+
+GdkCursor* Cursor::eraserCursor()
+{
+	const double cursorSize = 8;
+
+	cairo_surface_t* surface = cairo_image_surface_create(CAIRO_FORMAT_ARGB32,
+	                                                      cursorSize,
+	                                                      cursorSize);
+
+	cairo_t* cr = cairo_create(surface);
+
+	cairo_rectangle(cr, 0, 0, cursorSize, cursorSize);
+
+	cairo_set_source_rgb(cr, 1, 1, 1);
+	cairo_fill(cr);
+
+	cairo_rectangle(cr, 0, 0, cursorSize, cursorSize);
+
+	cairo_set_source_rgb(cr, 0, 0, 0);
+	cairo_stroke(cr);
+
+	cairo_destroy(cr);
+
+	GdkCursor* cursor = gdk_cursor_new_from_surface(gdk_display_get_default(),
+													surface,
+													cursorSize/2.,
+													cursorSize/2.);
+
+	cairo_surface_destroy(surface);
+
+	return cursor;
+}
+
+GdkCursor* Cursor::highlighterCursor()
+{
+	XOJ_CHECK_TYPE(Cursor);
+
+	return createHighlighterOrPenCursor(5, 120 / 255.0);
+}
+
+
 GdkCursor* Cursor::getPenCursor()
 {
 	XOJ_CHECK_TYPE(Cursor);
 
-	ToolHandler* handler = control->getToolHandler();
+	return createHighlighterOrPenCursor(3, 1.0);
+}
+
+GdkCursor* Cursor::createHighlighterOrPenCursor(int size, double alpha)
+{
+	XOJ_CHECK_TYPE(Cursor);
+
+	int rgb = control->getToolHandler()->getColor();
+	double r = ((rgb >> 16) & 0xff) / 255.0;
+	double g = ((rgb >> 8) & 0xff) / 255.0;
+	double b = (rgb & 0xff) / 255.0;
 
 	bool big = control->getSettings()->isShowBigCursor();
 
-	int height = 3;
-	int width = 3;
+	int height = size;
+	int width = size;
 	if (big)
 	{
 		height = 22;
-		width = 15;
+		width = 12;
 	}
 
 	cairo_surface_t* crCursor = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, width, height);
 	cairo_t* cr = cairo_create(crCursor);
-
-	Util::cairo_set_source_rgbi(cr, handler->getColor());
 
 	if (big)
 	{
@@ -173,16 +343,11 @@ GdkCursor* Cursor::getPenCursor()
 
 		cairo_set_source_rgb(cr, 0, 0, 0);
 		cairo_stroke(cr);
+	}
 
-		Util::cairo_set_source_rgbi(cr, handler->getColor());
-		cairo_rectangle(cr, 0, 0, 3, 3);
-		cairo_fill(cr);
-	}
-	else
-	{
-		cairo_rectangle(cr, 0, 0, 3, 3);
-		cairo_fill(cr);
-	}
+	cairo_set_source_rgba(cr, r, g, b, alpha);
+	cairo_rectangle(cr, 0, 0, size, size);
+	cairo_fill(cr);
 
 	cairo_destroy(cr);
 
@@ -201,141 +366,3 @@ GdkCursor* Cursor::getPenCursor()
 	return cursor;
 }
 
-void Cursor::updateCursor()
-{
-	XOJ_CHECK_TYPE(Cursor);
-
-	MainWindow* win = control->getWindow();
-	if (!win)
-	{
-		return;
-	}
-
-	XournalView* xournal = win->getXournal();
-	if (!xournal)
-	{
-		return;
-	}
-
-	GdkCursor* cursor = NULL;
-
-	if (this->busy)
-	{
-		cursor = gdk_cursor_new(GDK_WATCH);
-	}
-	else
-	{
-		ToolHandler* handler = control->getToolHandler();
-		ToolType type = handler->getToolType();
-
-		if (type == TOOL_HAND)
-		{
-			if (this->mouseDown)
-			{
-				cursor = gdk_cursor_new(GDK_FLEUR);
-			}
-			else
-			{
-				cursor = gdk_cursor_new(GDK_HAND1);
-			}
-		}
-		else if (!this->insidePage)
-		{
-			// not inside page: so use default cursor
-		}
-		else if (this->selectionType)
-		{
-			switch (this->selectionType)
-			{
-			case CURSOR_SELECTION_MOVE:
-				cursor = gdk_cursor_new(GDK_FLEUR);
-				break;
-			case CURSOR_SELECTION_TOP_LEFT:
-				cursor = gdk_cursor_new(GDK_TOP_LEFT_CORNER);
-				break;
-			case CURSOR_SELECTION_TOP_RIGHT:
-				cursor = gdk_cursor_new(GDK_TOP_RIGHT_CORNER);
-				break;
-			case CURSOR_SELECTION_BOTTOM_LEFT:
-				cursor = gdk_cursor_new(GDK_BOTTOM_LEFT_CORNER);
-				break;
-			case CURSOR_SELECTION_BOTTOM_RIGHT:
-				cursor = gdk_cursor_new(GDK_BOTTOM_RIGHT_CORNER);
-				break;
-			case CURSOR_SELECTION_LEFT:
-			case CURSOR_SELECTION_RIGHT:
-				cursor = gdk_cursor_new(GDK_SB_H_DOUBLE_ARROW);
-				break;
-			case CURSOR_SELECTION_TOP:
-			case CURSOR_SELECTION_BOTTOM:
-				cursor = gdk_cursor_new(GDK_SB_V_DOUBLE_ARROW);
-				break;
-			}
-		}
-		else if (type == TOOL_PEN)
-		{
-			cursor = getPenCursor();
-
-		}
-		else if (type == TOOL_ERASER)
-		{
-			GdkColor bg = { 0, 65535, 65535, 65535 };
-			GdkColor fg = { 0, 0, 0, 0 };
-			GdkPixmap* source = gdk_bitmap_create_from_data(NULL, (gchar*) CURSOR_HIGLIGHTER_BITS, 16, 16);
-			GdkPixmap* mask = gdk_bitmap_create_from_data(NULL, (gchar*) CURSOR_HILIGHTER_MASK, 16, 16);
-			cursor = gdk_cursor_new_from_pixmap(source, mask, &fg, &bg, 7, 7);
-			gdk_bitmap_unref(source);
-			gdk_bitmap_unref(mask);
-		}
-		else if (type == TOOL_HILIGHTER)
-		{
-			GdkColor fg = { 0, 0, 0, 0 };
-			GdkColor bg = handler->getGdkColor();
-			GdkPixmap* source = gdk_bitmap_create_from_data(NULL, (gchar*) CURSOR_HIGLIGHTER_BITS, 16, 16);
-			GdkPixmap* mask = gdk_bitmap_create_from_data(NULL, (gchar*) CURSOR_HILIGHTER_MASK, 16, 16);
-			cursor = gdk_cursor_new_from_pixmap(source, mask, &fg, &bg, 7, 7);
-			gdk_bitmap_unref(source);
-			gdk_bitmap_unref(mask);
-		}
-		else if (type == TOOL_TEXT)
-		{
-			if (this->invisible)
-			{
-				cursor = gdk_cursor_new(GDK_BLANK_CURSOR);
-			}
-			else
-			{
-				cursor = gdk_cursor_new(GDK_XTERM);
-			}
-		}
-		else if (type == TOOL_IMAGE)
-		{
-			// No special cursor needed
-		}
-		else if (type == TOOL_VERTICAL_SPACE)
-		{
-			if (this->mouseDown)
-			{
-				cursor = gdk_cursor_new(GDK_SB_V_DOUBLE_ARROW);
-			}
-		}
-		else if (type != TOOL_SELECT_OBJECT) // other selections are handled before anyway, because you can move a selection with every tool
-		{
-			cursor = gdk_cursor_new(GDK_TCROSS);
-		}
-	}
-
-	if (gtk_widget_get_window(xournal->getWidget()))
-	{
-		gdk_window_set_cursor(gtk_widget_get_window(xournal->getWidget()), cursor);
-
-		gtk_widget_set_sensitive(xournal->getWidget(), !this->busy);
-	}
-
-	gdk_display_sync(gdk_display_get_default());
-
-	if (cursor)
-	{
-		gdk_cursor_unref(cursor);
-	}
-}

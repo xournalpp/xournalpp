@@ -157,6 +157,11 @@ bool Tool::isArrow()
 	return this->arrow;
 }
 
+double Tool::getThickness(ToolSize size)
+{
+	return this->thickness[size - TOOL_SIZE_VERY_FINE];
+}
+
 void Tool::setShapeRecognizer(bool enabled)
 {
 	XOJ_CHECK_TYPE(Tool);
@@ -205,13 +210,12 @@ string toolTypeToString(ToolType type)
 	case TOOL_SELECT_RECT:	  return "selectRect";
 	case TOOL_SELECT_REGION:  return "selectRegion";
 	case TOOL_SELECT_OBJECT:  return "selectObject";
+	case TOOL_PLAY_OBJECT:	  return "PlayObject";
 	case TOOL_VERTICAL_SPACE: return "verticalSpace";
 	case TOOL_HAND:			  return "hand";
-	/*
-	case TOOL_DRAW_RECT:		  return "drawRect";
+	case TOOL_DRAW_RECT:	  return "drawRect";
 	case TOOL_DRAW_CIRCLE:	  return "drawCircle";
 	case TOOL_DRAW_ARROW:	  return "drawArrow";
-	 */
 	default:				  return "";
 	}
 }
@@ -226,13 +230,12 @@ ToolType toolTypeFromString(string type)
 	else if (type == "selectRect")	  return TOOL_SELECT_RECT;
 	else if (type == "selectRegion")  return TOOL_SELECT_REGION;
 	else if (type == "selectObject")  return TOOL_SELECT_OBJECT;
+	else if (type == "playObject")	  return TOOL_PLAY_OBJECT;
 	else if (type == "verticalSpace") return TOOL_VERTICAL_SPACE;
 	else if (type == "hand")		  return TOOL_HAND;
-	/*
-	else if (type == "drawRect")		  return TOOL_DRAW_RECT;
+	else if (type == "drawRect")      return TOOL_DRAW_RECT;
 	else if (type == "drawCircle")	  return TOOL_DRAW_CIRCLE;
 	else if (type == "drawArrow")	  return TOOL_DRAW_ARROW;
-	*/
 	else							  return TOOL_NONE;
 }
 
@@ -282,27 +285,3 @@ EraserType eraserTypeFromString(string type)
 	else							 return ERASER_TYPE_NONE;
 }
 
-string pageInsertTypeToString(PageInsertType type)
-{
-	switch (type)
-	{
-	case PAGE_INSERT_TYPE_PLAIN:		  return "plain";
-	case PAGE_INSERT_TYPE_LINED:		  return "lined";
-	case PAGE_INSERT_TYPE_RULED:		  return "ruled";
-	case PAGE_INSERT_TYPE_GRAPH:		  return "graph";
-	case PAGE_INSERT_TYPE_COPY:			  return "copyPage";
-	case PAGE_INSERT_TYPE_PDF_BACKGROUND: return "pdfBackground";
-	default:							  return "";
-	}
-}
-
-PageInsertType pageInsertTypeFromString(string type)
-{
-	if (type == "plain")			  return PAGE_INSERT_TYPE_PLAIN;
-	else if (type == "lined")		  return PAGE_INSERT_TYPE_LINED;
-	else if (type == "ruled")		  return PAGE_INSERT_TYPE_RULED;
-	else if (type == "graph")		  return PAGE_INSERT_TYPE_GRAPH;
-	else if (type == "copyPage")	  return PAGE_INSERT_TYPE_COPY;
-	else if (type == "pdfBackground") return PAGE_INSERT_TYPE_PDF_BACKGROUND;
-	else							  return PAGE_INSERT_TYPE_COPY;
-}

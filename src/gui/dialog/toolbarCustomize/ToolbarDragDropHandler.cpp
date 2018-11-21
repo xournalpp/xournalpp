@@ -77,8 +77,8 @@ void ToolbarDragDropHandler::toolbarConfigDialogClosed()
 
 	this->clearToolbarsFromDragAndDrop();
 
-	const char* file = Util::getConfigFile(TOOLBAR_CONFIG).c_str();
-	win->getToolbarModel()->save(file);
+	path file = Util::getConfigFile(TOOLBAR_CONFIG);
+	win->getToolbarModel()->save(file.c_str());
 }
 
 void ToolbarDragDropHandler::configure()

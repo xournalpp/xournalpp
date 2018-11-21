@@ -21,6 +21,7 @@
 #include "model/Document.h"
 #include "pdf/cairo/CairoPdf.h"
 
+#include <PageRange.h>
 #include <StringUtils.h>
 
 #include <glib.h>
@@ -34,7 +35,7 @@ public:
 
 public:
 	bool createPdf(path file);
-	bool createPdf(path file, GList* range);
+	bool createPdf(path file, PageRangeVector& range);
 	string getLastError();
 
 private:

@@ -483,7 +483,7 @@ void LoadHandler::parseStroke()
 {
 	XOJ_CHECK_TYPE(LoadHandler);
 
-	this->stroke = new Stroke();
+	this->stroke = new Stroke();	
 	this->layer->addElement(this->stroke);
 
 	const char* width = LoadHandlerHelper::getAttrib("width", false, this);
@@ -535,6 +535,16 @@ void LoadHandler::parseStroke()
 	{
 		g_warning("%s", FC(_F("Unknown stroke type: \"{1}\", assuming pen") % tool));
 	}
+
+	/**
+	 * For each stroke being read, set the timestamp value
+	 * we've read just before. 
+	 * Afterwards, clean the read timestamp data.
+	 */
+	this->stroke->setTimestamp(loadedTimeStamp);
+	this->stroke->setAudioFilename(loadedFilename);
+	loadedFilename = "";
+	loadedTimeStamp = 0;
 }
 
 void LoadHandler::parseText()
@@ -609,6 +619,12 @@ void LoadHandler::parseLayer()
 {
 	XOJ_CHECK_TYPE(LoadHandler);
 
+	/** read the timestamp before each stroke */
+	if (!strcmp(elementName, "timestamp")) 
+	{
+		loadedTimeStamp = LoadHandlerHelper::getAttribInt("ts", this);
+		loadedFilename = LoadHandlerHelper::getAttrib("fn", false, this);
+	}
 	if (!strcmp(elementName, "stroke")) // start of a stroke
 	{
 		this->pos = PARSER_POS_IN_STROKE;
@@ -696,6 +712,11 @@ void LoadHandler::parserEndElement(GMarkupParseContext* context, const gchar* el
 	{
 		handler->pos = PARSER_POS_IN_PAGE;
 		handler->layer = NULL;
+	}
+	else if (handler->pos == PARSER_POS_IN_LAYER && strcmp(element_name, "timestamp") == 0)
+	{
+		handler->pos = PARSER_POS_IN_LAYER;
+		handler->stroke = NULL;
 	}
 	else if (handler->pos == PARSER_POS_IN_STROKE && strcmp(element_name, "stroke") == 0)
 	{

@@ -19,7 +19,6 @@
 #include <boost/filesystem/path.hpp>
 using boost::filesystem::path;
 #include <libxml/xmlreader.h>
-#include <glib.h>
 
 #include <map>
 
@@ -33,15 +32,20 @@ enum AttributeType
 	ATTRIBUTE_TYPE_BOOLEAN,
 };
 
+// use this as a bit flag
 enum ScrollbarHideType
 {
-	SCROLLBAR_HIDE_NONE = 0,
-	SCROLLBAR_HIDE_HORIZONTAL = 1,
-	SCROLLBAR_HIDE_VERTICAL = 2,
-	SCROLLBAR_HIDE_BOTH = 3
+    SCROLLBAR_HIDE_NONE = 0,
+    SCROLLBAR_HIDE_HORIZONTAL = 1 << 1,
+    SCROLLBAR_HIDE_VERTICAL = 1 << 2,
+    SCROLLBAR_HIDE_BOTH = SCROLLBAR_HIDE_HORIZONTAL | SCROLLBAR_HIDE_VERTICAL
 };
 
 class ButtonConfig;
+
+extern const char* BUTTON_NAMES[];
+const int BUTTON_COUNT = 7;
+
 
 class SAttribute
 {
@@ -133,20 +137,8 @@ public:
 
 	void save();
 
-	/**
-	 * Check if there is an XInput device
-	 */
-	void checkCanXInput();
-
-	/**
-	 * Enables / disables extended events
-	 */
-	//	void updateXEvents();
 private:
 	void loadDefault();
-	void saveTimeout();
-	static gboolean saveCallback(Settings* data);
-
 	void parseItem(xmlDocPtr doc, xmlNodePtr cur);
 
 	xmlNodePtr savePropertyDouble(const gchar* key, double value,
@@ -159,32 +151,11 @@ private:
 
 	void saveButtonConfig();
 	void loadButtonConfig();
+
 public:
 	// Getter- / Setter
 	bool isPresureSensitivity();
 	void setPresureSensitivity(gboolean presureSensitivity);
-
-	/**
-	 * XInput is enabled by the user
-	 */
-	bool isXinputEnabled();
-	void setXinputEnabled(gboolean useXinput);
-
-	/**
-	 * Disable Core events if XInput is enabled
-	 */
-	bool isIgnoreCoreEvents();
-	void setIgnoreCoreEvents(bool ignor);
-
-	/**
-	 * XInput is available
-	 */
-	bool isXInputAvailable();
-
-	/**
-	 * XInput should be used in the application
-	 */
-	bool isUseXInput();
 
 	/**
 	 * The last used font
@@ -254,9 +225,6 @@ public:
 	bool getAddHorizontalSpace();
 	void setAddHorizontalSpace(bool space);
 
-	bool getfixXinput();
-	void setfixXinput(bool fix);
-
 	bool isEnableLeafEnterWorkaround();
 	void setEnableLeafEnterWorkaround(bool enable);
 
@@ -276,6 +244,8 @@ public:
 	ButtonConfig* getRightButtonConfig();
 	ButtonConfig* getTouchButtonConfig();
 	ButtonConfig* getDefaultButtonConfig();
+	ButtonConfig* getStylusButton1Config();
+	ButtonConfig* getStylusButton2Config();
 
 	string getFullscreenHideElements();
 	void setFullscreenHideElements(string elements);
@@ -283,19 +253,38 @@ public:
 	string getPresentationHideElements();
 	void setPresentationHideElements(string elements);
 
-	PageInsertType getPageInsertType();
-	void setPageInsertType(PageInsertType type);
-
-	int getPageBackgroundColor();
-	void setPageBackgroundColor(int color);
-
 	int getSelectionColor();
 	void setSelectionColor(int color);
 
 	int getPdfPageCacheSize();
 	void setPdfPageCacheSize(int size);
 
-	string getVisiblePageFormats();
+	bool isEventCompression();
+	void setEventCompression(bool enabled);
+
+	string getPageTemplate();
+	void setPageTemplate(string pageTemplate);
+
+	/**
+	 * Get name, e.g. "cm"
+	 */
+	string getSizeUnit();
+
+	/**
+	 * Get size index in XOJ_UNITS
+	 */
+	int getSizeUnitIndex();
+
+	/**
+	 * Set Unit, e.g. "cm"
+	 */
+	void setSizeUnit(string sizeUnit);
+
+	/**
+	 * Set size index in XOJ_UNITS
+	 */
+	void setSizeUnitIndex(int sizeUnitId);
+
 public:
 	// Custom settings
 	SElement& getCustomElement(string name);
@@ -304,6 +293,16 @@ public:
 	 * Call this after you have done all custom settings changes
 	 */
 	void customSettingsChanged();
+
+	/**
+	 * Do not save settings until transactionEnd() is called
+	 */
+	void transactionStart();
+
+	/**
+	 * Stop transaction and save settings
+	 */
+	void transactionEnd();
 
 private:
 
@@ -322,9 +321,6 @@ private:
 private:
 	XOJ_TYPE_ATTRIB;
 
-	bool saved;
-	gint timeoutId;
-
 	/**
 	 *  The config filename
 	 */
@@ -337,24 +333,9 @@ private:
 	std::map<string, SElement> data;
 
 	/**
-	 *  Use XInput
-	 */
-	bool useXinput;
-
-	/**
-	 *  If there is an XInput device available
-	 */
-	bool canXIput;
-
-	/**
 	 *  Use pen pressure to control stroke width?
 	 */
 	bool presureSensitivity;
-
-	/**
-	 *  Ignore core events if XInput is enabled
-	 */
-	bool ignoreCoreEvents;
 
 	/**
 	 *  If the sidebar is visible
@@ -467,11 +448,6 @@ private:
 	bool addHorizontalSpace, addVerticalSpace;
 
 	/**
-	 * Apply the xinput fix
-	 */
-	bool fixXinput;
-
-	/**
 	 * Enable Bugfix to prevent crash on GTK 2.18 etc
 	 */
 	bool enableLeafEnterWorkaround;
@@ -489,8 +465,10 @@ private:
 	 * 2: right button
 	 * 3: touch screen
 	 * 4: default
+	 * 5: Pen Button 1
+	 * 6: Pen Button 2
 	 */
-	ButtonConfig* buttonConfig[5];
+	ButtonConfig* buttonConfig[BUTTON_COUNT];
 
 	/**
 	 * Which gui elements are hidden if you are in Fullscreen mode,
@@ -498,17 +476,6 @@ private:
 	 */
 	string fullscreenHideElements;
 	string presentationHideElements;
-
-	/**
-	 * If you insert a page, which type will be selected?
-	 * Plain, Lined, Copy current page...
-	 */
-	PageInsertType pageInsertType;
-
-	/**
-	 * The background color of a new inserted page
-	 */
-	int pageBackgroundColor;
 
 	/**
 	 *  The count of pages which will be cached
@@ -522,7 +489,22 @@ private:
 	int selectionColor;
 
 	/**
-	 * The page format which are visible
+	 * Whether event compression should be enabled
 	 */
-	string visiblePageFormats;
+	bool eventCompression;
+
+	/**
+	 * Page template String
+	 */
+	string pageTemplate;
+
+	/**
+	 * Unit, see XOJ_UNITS
+	 */
+	string sizeUnit;
+
+	/**
+	 * "Transaction" running, do not save until the end is reached
+	 */
+	bool inTransaction;
 };

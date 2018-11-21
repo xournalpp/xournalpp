@@ -21,6 +21,8 @@ class UndoRedoListener
 public:
 	virtual void undoRedoChanged() = 0;
 	virtual void undoRedoPageChanged(PageRef page) = 0;
+
+	virtual ~UndoRedoListener();
 };
 
 class UndoRedoHandler

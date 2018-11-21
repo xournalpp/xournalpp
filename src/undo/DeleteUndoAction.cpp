@@ -32,8 +32,7 @@ DeleteUndoAction::~DeleteUndoAction()
 	}
 	g_list_free(this->elements);
 
-	XOJ_RELEASE_TYPE(DeleteUndoAction)
-			;
+	XOJ_RELEASE_TYPE(DeleteUndoAction);
 }
 
 void DeleteUndoAction::addElement(Layer* layer, Element* e, int pos)
@@ -95,47 +94,44 @@ string DeleteUndoAction::getText()
 {
 	XOJ_CHECK_TYPE(DeleteUndoAction);
 
-	string text;
-
 	if (eraser)
 	{
-		text = _("Erase stroke");
+		return _("Erase stroke");
 	}
-	else
+
+	string text = _("Delete");
+
+	if (this->elements != NULL)
 	{
-		text = _("Delete");
+		ElementType type = ((PageLayerPosEntry<Element>*) this->elements->data)->element->getType();
 
-		if (this->elements != NULL)
+		for (GList* l = this->elements->next; l != NULL; l = l->next)
 		{
-			ElementType type = ((PageLayerPosEntry<Element>*) this->elements->data)->element->getType();
-
-			for (GList* l = this->elements->next; l != NULL; l = l->next)
+			PageLayerPosEntry<Element>* e = (PageLayerPosEntry<Element>*) l->data;
+			if (type != e->element->getType())
 			{
-				PageLayerPosEntry<Element>* e = (PageLayerPosEntry<Element>*) l->data;
-				if (type != e->element->getType())
-				{
-					text += _(" elements");
-					return text;
-				}
-			}
-
-			if (type == ELEMENT_STROKE)
-			{
-				text += _(" stroke");
-			}
-			else if (type == ELEMENT_TEXT)
-			{
-				text += _(" text");
-			}
-			else if (type == ELEMENT_IMAGE)
-			{
-				text += _(" image");
-			}
-			else if (type == ELEMENT_TEXIMAGE)
-			{
-				text += _(" latex");
+				text += _(" elements");
+				return text;
 			}
 		}
+
+		if (type == ELEMENT_STROKE)
+		{
+			text += _(" stroke");
+		}
+		else if (type == ELEMENT_TEXT)
+		{
+			text += _(" text");
+		}
+		else if (type == ELEMENT_IMAGE)
+		{
+			text += _(" image");
+		}
+		else if (type == ELEMENT_TEXIMAGE)
+		{
+			text += _(" latex");
+		}
 	}
+
 	return text;
 }

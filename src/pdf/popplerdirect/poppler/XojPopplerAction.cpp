@@ -112,7 +112,7 @@ XojLinkDest* XojPopplerAction::getDestination()
     {
         LinkGoTo* link = dynamic_cast<LinkGoTo*> (this->linkAction);
 
-        GooString* namedDest = link->getNamedDest();
+        GooString* namedDest = const_cast<GooString *>(link->getNamedDest());
         LinkDest* d = NULL;
         if (namedDest)
         {
@@ -121,7 +121,7 @@ XojLinkDest* XojPopplerAction::getDestination()
 
         if (!d)
         {
-            d = link->getDest();
+            d = const_cast<LinkDest *>(link->getDest());
         }
 
         if (d)

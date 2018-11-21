@@ -20,11 +20,26 @@ using std::unique_ptr;
 #define TAG_PAGE_NAME "page"
 #define BUF_SIZE 8192
 
+XojPreviewExtractor::XojPreviewExtractor()
+ : data(NULL),
+   dataLen(0)
+{
+}
+
+XojPreviewExtractor::~XojPreviewExtractor()
+{
+	g_free(data);
+	data = NULL;
+	dataLen = 0;
+}
+
+
 /**
  * @return The preview data, should be a binary PNG
  */
-string XojPreviewExtractor::getData() const
+unsigned char* XojPreviewExtractor::getData(gsize& dataLen)
 {
+	dataLen = this->dataLen;
 	return this->data;
 }
 
@@ -116,9 +131,8 @@ PreviewExtractResult XojPreviewExtractor::readFile(std::string file)
 			if (inTag)
 			{
 				gsize size;
-				const auto buf = g_base64_decode(preview.c_str(), &size);
-				this->data = string(buf, buf + size);
-				g_free(buf);
+
+				this->data = g_base64_decode(preview.c_str(), &this->dataLen);
 				CLOSE PREVIEW_RESULT_IMAGE_READ;
 			}
 			else

@@ -19,12 +19,12 @@
 #include <gtk/gtk.h>
 #include <vector>
 
-class PageView;
+class XojPageView;
 
 class TextEditor
 {
 public:
-	TextEditor(PageView* gui, GtkWidget* widget, Text* text, bool ownText);
+	TextEditor(XojPageView* gui, GtkWidget* widget, Text* text, bool ownText);
 	virtual ~TextEditor();
 
 	void paint(cairo_t* cr, GdkRectangle* rect, double zoom);
@@ -34,6 +34,9 @@ public:
 
 	void toggleOverwrite();
 	void selectAll();
+	void toggleBold();
+	void incSize();
+	void decSize();
 	void moveCursor(GtkMovementStep step, int count, bool extendSelection);
 	void deleteFromCursor(GtkDeleteType type, int count);
 	void backspace();
@@ -85,7 +88,7 @@ private:
 private:
 	XOJ_TYPE_ATTRIB;
 
-	PageView* gui;
+	XojPageView* gui;
 	GtkWidget* widget;
 
 	Text* text;

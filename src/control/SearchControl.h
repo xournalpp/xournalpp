@@ -12,6 +12,7 @@
 #pragma once
 
 #include "model/PageRef.h"
+#include "util/GtkColorWrapper.h"
 #include "pdf/popplerdirect/poppler/XojPopplerPage.h"
 
 class SearchControl
@@ -21,7 +22,7 @@ public:
 	virtual ~SearchControl();
 
 	bool search(string text, int* occures, double* top);
-	void paint(cairo_t* cr, GdkRectangle* rect, double zoom, GdkColor color);
+	void paint(cairo_t* cr, GdkRectangle* rect, double zoom, GtkColorWrapper color);
 private:
 	void freeSearchResults();
 

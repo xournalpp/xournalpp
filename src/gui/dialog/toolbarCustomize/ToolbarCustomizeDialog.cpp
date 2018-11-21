@@ -9,8 +9,8 @@
 #include "gui/toolbarMenubar/AbstractToolItem.h"
 #include "gui/toolbarMenubar/model/ToolbarData.h"
 #include "gui/toolbarMenubar/model/ToolbarModel.h"
+#include "gui/toolbarMenubar/ToolbarUtil.h"
 #include "gui/toolbarMenubar/ToolMenuHandler.h"
-#include "gui/widgets/SelectColor.h"
 
 #include <config.h>
 #include <i18n.h>
@@ -27,8 +27,8 @@ struct _ToolItemDragData
 };
 
 ToolbarCustomizeDialog::ToolbarCustomizeDialog(GladeSearchpath* gladeSearchPath, MainWindow* win,
-											   ToolbarDragDropHandler* handler) :
-		GladeGui(gladeSearchPath, "toolbarCustomizeDialog.glade", "DialogCustomizeToolbar")
+											   ToolbarDragDropHandler* handler)
+ : GladeGui(gladeSearchPath, "toolbarCustomizeDialog.glade", "DialogCustomizeToolbar")
 {
 	XOJ_INIT_TYPE(ToolbarCustomizeDialog);
 
@@ -47,11 +47,7 @@ ToolbarCustomizeDialog::ToolbarCustomizeDialog(GladeSearchpath* gladeSearchPath,
 
 	g_signal_connect(target, "drag-data-received", G_CALLBACK(dragDataReceived), this);
 
-	// init separator
-	GtkWidget* tbSeparator = get("tbSeparator");
-
-	GtkWidget* icon = Util::newSepeartorImage();
-	GtkWidget* box = gtk_vbox_new(false, 3);
+	GtkWidget* box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 3);
 	gtk_widget_show(box);
 
 	GtkWidget* label = gtk_label_new(_C("Separator"));
@@ -62,9 +58,10 @@ ToolbarCustomizeDialog::ToolbarCustomizeDialog(GladeSearchpath* gladeSearchPath,
 	gtk_container_add(GTK_CONTAINER(ebox), box);
 	gtk_widget_show(ebox);
 
-	gtk_widget_show(icon);
-
-	gtk_box_pack_end(GTK_BOX(box), icon, false, false, 0);
+	GtkWidget* separator = gtk_separator_new(GTK_ORIENTATION_VERTICAL);
+	gtk_widget_set_size_request(separator, 2, 22);
+	gtk_widget_show(separator);
+	gtk_box_pack_end(GTK_BOX(box), separator, false, false, 0);
 
 	// make ebox a drag source
 	gtk_drag_source_set(ebox, GDK_BUTTON1_MASK, &ToolbarDragDropHelper::dropTargetEntry, 1, GDK_ACTION_MOVE);
@@ -75,7 +72,9 @@ ToolbarCustomizeDialog::ToolbarCustomizeDialog(GladeSearchpath* gladeSearchPath,
 
 	g_signal_connect(ebox, "drag-data-get", G_CALLBACK(toolitemDragDataGetSeparator), NULL);
 
-	gtk_table_attach(GTK_TABLE(tbSeparator), ebox, 0, 1, 0, 1, (GtkAttachOptions) 0, (GtkAttachOptions) 0, 5, 5);
+	// init separator
+	GtkWidget* tbSeparator = get("tbSeparator");
+	gtk_grid_attach (GTK_GRID(tbSeparator), ebox,0, 0, 1, 1);
 }
 
 ToolbarCustomizeDialog::~ToolbarCustomizeDialog()
@@ -103,9 +102,9 @@ void ToolbarCustomizeDialog::toolitemDragBeginSeparator(GtkWidget* widget, GdkDr
 {
 	ToolItemDragCurrentData::setData(TOOL_ITEM_SEPARATOR, -1, NULL);
 
-	GtkWidget* icon = Util::newSepeartorImage();
+	GtkWidget* icon = ToolbarUtil::newSepeartorImage();
 	gtk_drag_set_icon_pixbuf(context, ToolbarDragDropHelper::getImagePixbuf(GTK_IMAGE(icon)), -2, -2);
-	gtk_widget_unref(icon);
+	g_object_unref(icon);
 }
 
 void ToolbarCustomizeDialog::toolitemDragEndSeparator(GtkWidget* widget, GdkDragContext* context, void* unused)
@@ -154,7 +153,6 @@ void ToolbarCustomizeDialog::toolitemDragDataGet(GtkWidget* widget, GdkDragConte
 												 GtkSelectionData* selection_data, guint info, guint time,
 												 ToolItemDragData* data)
 {
-
 	g_return_if_fail(data != NULL);
 	g_return_if_fail(data->item != NULL);
 
@@ -177,7 +175,7 @@ void ToolbarCustomizeDialog::toolitemColorDragBegin(GtkWidget* widget, GdkDragCo
 	int color = GPOINTER_TO_INT(data);
 	ToolItemDragCurrentData::setDataColor(-1, color);
 
-	GdkPixbuf* image = ToolbarDragDropHelper::getColorImage(color);
+	GdkPixbuf* image = ToolbarUtil::newColorIconPixbuf(color, 32, true);
 
 	gtk_drag_set_icon_pixbuf(context, image, -2, -2);
 
@@ -261,7 +259,7 @@ void ToolbarCustomizeDialog::freeIconview()
 {
 	XOJ_CHECK_TYPE(ToolbarCustomizeDialog);
 
-	GtkTable* table = GTK_TABLE(get("tbDefaultTools"));
+	GtkGrid* table = GTK_GRID(get("tbDefaultTools"));
 
 	GList* children = gtk_container_get_children(GTK_CONTAINER(table));
 	for (GList* l = children; l != NULL; l = l->next)
@@ -282,7 +280,7 @@ void ToolbarCustomizeDialog::rebuildIconview()
 
 	freeIconview();
 
-	GtkTable* table = GTK_TABLE(get("tbDefaultTools"));
+	GtkGrid* table = GTK_GRID(get("tbDefaultTools"));
 
 	int i = 0;
 	for (AbstractToolItem* item : *this->win->getToolMenuHandler()->getToolItems())
@@ -296,7 +294,7 @@ void ToolbarCustomizeDialog::rebuildIconview()
 		GtkWidget* icon = item->getNewToolIcon();
 		g_return_if_fail(icon != NULL);
 
-		GtkWidget* box = gtk_vbox_new(false, 3);
+		GtkWidget* box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 3);
 		gtk_widget_show(box);
 
 		GtkWidget* label = gtk_label_new(name.c_str());
@@ -330,7 +328,7 @@ void ToolbarCustomizeDialog::rebuildIconview()
 
 		int x = i % 3;
 		int y = i / 3;
-		gtk_table_attach(table, ebox, x, x + 1, y, y + 1, (GtkAttachOptions) 0, (GtkAttachOptions) 0, 5, 5);
+		gtk_grid_attach(table, ebox, x, y, 1, 1);
 
 		i++;
 	}
@@ -343,7 +341,7 @@ void ToolbarCustomizeDialog::freeColorIconview()
 {
 	XOJ_CHECK_TYPE(ToolbarCustomizeDialog);
 
-	GtkTable* table = GTK_TABLE(get("tbColor"));
+	GtkGrid* table = GTK_GRID(get("tbColor"));
 
 	GList* children = gtk_container_get_children(GTK_CONTAINER(table));
 	for (GList* l = children; l != NULL; l = l->next)
@@ -357,7 +355,9 @@ void ToolbarCustomizeDialog::freeColorIconview()
 
 void ToolbarCustomizeDialog::rebuildColorIcons()
 {
-	GtkTable* table = GTK_TABLE(get("tbColor"));
+	XOJ_CHECK_TYPE(ToolbarCustomizeDialog);
+
+	GtkGrid* table = GTK_GRID(get("tbColor"));
 	g_return_if_fail(table != NULL);
 
 	freeColorIconview();
@@ -372,11 +372,9 @@ void ToolbarCustomizeDialog::rebuildColorIcons()
 			continue;
 		}
 
-		GtkWidget* icon = selectcolor_new(color->getColor());
-		selectcolor_set_size(icon, 16);
-		selectcolor_set_circle(icon, true);
+		GtkWidget* icon = ToolbarUtil::newColorIcon(color->getColor(), 16, true);
 
-		GtkWidget* box = gtk_vbox_new(false, 3);
+		GtkWidget* box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 3);
 		gtk_widget_show(box);
 
 		GtkWidget* label = gtk_label_new(color->getName().c_str());
@@ -402,7 +400,7 @@ void ToolbarCustomizeDialog::rebuildColorIcons()
 		int x = i % 5;
 		int y = i / 5;
 		i++;
-		gtk_table_attach(table, ebox, x, x + 1, y, y + 1, (GtkAttachOptions) 0, (GtkAttachOptions) 0, 5, 5);
+		gtk_grid_attach(table, ebox, x, y, 1, 1);
 	}
 
 	gtk_widget_show_all(GTK_WIDGET(table));

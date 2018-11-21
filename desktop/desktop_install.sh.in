@@ -11,14 +11,16 @@ if test "$1" = "install"; then
   mkdir -p /usr/share/mimelnk/application
 
   cp -f ${srcdir}/ui/pixmaps/xournalpp.svg ${desktopdir}/icons/hicolor/scalable/apps
-  cp -f ${srcdir}/ui/pixmaps/xoj.svg ${desktopdir}/icons/hicolor/scalable/mimetypes
+  cp -f ${srcdir}/ui/pixmaps/xoj.svg ${desktopdir}/icons/hicolor/scalable/mimetypes/application-x-xoj.svg
   if test ! -e ${desktopdir}/icons/hicolor/scalable/mimetypes/gnome-mime-application-x-xoj.svg; then
-    ln -s ${desktopdir}/icons/hicolor/scalable/mimetypes/xoj.svg ${desktopdir}/icons/hicolor/scalable/mimetypes/gnome-mime-application-x-xoj.svg
+    ln -s ${desktopdir}/icons/hicolor/scalable/mimetypes/application-x-xoj.svg ${desktopdir}/icons/hicolor/scalable/mimetypes/gnome-mime-application-x-xoj.svg
   fi
 
   cp -f ${srcdir}/desktop/xournal.xml ${desktopdir}/mime/packages
   cp -f ${srcdir}/desktop/xournalpp.desktop ${desktopdir}/applications
   cp -f ${srcdir}/desktop/x-xoj.desktop /usr/share/mimelnk/application
+  
+  cp -f ${srcdir}/desktop/xournalpp.thumbnailer /usr/share/thumbnailers
 else
   rm -f ${desktopdir}/icons/hicolor/scalable/apps/xournalpp.svg
   rm -f ${desktopdir}/icons/hicolor/scalable/mimetypes/xoj.svg
@@ -27,6 +29,7 @@ else
   rm -f ${desktopdir}/mime/packages/xournal.xml
   rm -f ${desktopdir}/applications/xournalpp.desktop
   rm -f /usr/share/mimelnk/application/x-xoj.desktop
+  rm -f /usr/share/thumbnailers/xournalpp.thumbnailer
 fi
 
 echo "Updating desktop, mime, and icon databases.";

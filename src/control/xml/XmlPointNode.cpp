@@ -5,6 +5,7 @@ XmlPointNode::XmlPointNode(const char* tag) : XmlNode(tag)
 	XOJ_INIT_TYPE(XmlPointNode);
 
 	this->points = NULL;
+	this->timestamp = 0;
 }
 
 XmlPointNode::~XmlPointNode()
@@ -18,8 +19,29 @@ XmlPointNode::~XmlPointNode()
 	}
 	g_list_free(this->points);
 	this->points = NULL;
+	this->timestamp = 0;
 
 	XOJ_RELEASE_TYPE(XmlPointNode);
+}
+
+string XmlPointNode::getAudioFilename()
+{
+	return this->audioFilename;
+}
+
+void XmlPointNode::setAudioFilename(string filename)
+{
+	this->audioFilename = filename;
+}
+
+void XmlPointNode::setTimestamp(int seconds)
+{
+	this->timestamp = seconds;
+}
+
+int XmlPointNode::getTimestamp()
+{
+	return this->timestamp;
 }
 
 void XmlPointNode::addPoint(const Point* point)
@@ -33,6 +55,27 @@ void XmlPointNode::writeOut(OutputStream* out)
 {
 	XOJ_CHECK_TYPE(XmlPointNode);
 
+	/**
+	 * Write timestamp (if present) before each stroke.
+	 * This way, when reading, we only need to store 
+	 * 1 timestamp value at a time 
+	 * and assign it to the consequent stroke.
+	 * By adding it this way we don't break 
+	 * xournal's fileformat backcompatibility
+	 */
+	if(this->audioFilename.length() != 0)
+	{
+		out->write("<timestamp ");
+		out->write("ts=\"");
+		out->write(std::to_string(this->timestamp));	//must be set via saveHandler
+		out->write("\"");
+		out->write("fn=\"");
+		out->write(this->audioFilename);
+		out->write("\"");
+		out->write("></timestamp>");
+	}
+
+	/** Write stroke and its attributes */
 	out->write("<");
 	out->write(tag);
 	writeAttributes(out);

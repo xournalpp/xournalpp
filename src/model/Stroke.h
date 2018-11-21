@@ -36,8 +36,15 @@ public:
 	void setWidth(double width);
 	double getWidth() const;
 
+	void setTimestamp(int seconds);
+	int getTimestamp() const;
+
+	void setAudioFilename(string fn);
+	string getAudioFilename() const;
+
 	void addPoint(Point p);
 	void setLastPoint(double x, double y);
+	void setLastPoint(Point p);
 	int getPointCount() const;
 	void freeUnusedPointItems();
 	ArrayIterator<Point> pointIterator() const;
@@ -92,6 +99,10 @@ private:
 	Point* points;
 	int pointCount;
 	int pointAllocCount;
+
+	//stroke timestamp
+	int timestamp=0;
+	string audioFilename="";
 
 	EraseableStroke* eraseable;
 };

@@ -30,5 +30,4 @@ private:
 	XOJ_TYPE_ATTRIB;
 
 	int selectedPage;
-
 };

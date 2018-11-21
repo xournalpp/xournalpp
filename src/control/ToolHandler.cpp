@@ -1,9 +1,13 @@
 #include "Actions.h"
+#include "LastSelectedTool.h"
 #include "ToolHandler.h"
 #include <Util.h>
 
 #include <gtk/gtk.h>
 #include <stdio.h>
+
+ToolListener::~ToolListener() { }
+
 
 ToolHandler::ToolHandler(ToolListener* listener, ActionHandler* actionHandler, Settings* settings)
 {
@@ -82,7 +86,9 @@ void ToolHandler::initTools()
 	t = new Tool("hand", TOOL_HAND, 0x000000, false, false, false, false, false, false, false, NULL);
 	tools[TOOL_HAND - TOOL_PEN] = t;
 
-	/*
+	t = new Tool("playObject", TOOL_PLAY_OBJECT, 0x000000, false, false, false, false, false, false, false, NULL);
+	tools[TOOL_PLAY_OBJECT - TOOL_PEN] = t;
+	
 	t = new Tool("drawRect", TOOL_DRAW_RECT, 0x000000, false, false, false, false, false, false, false, NULL);
 	tools[TOOL_DRAW_RECT - TOOL_PEN] = t;
 
@@ -91,8 +97,6 @@ void ToolHandler::initTools()
 
 	t = new Tool("drawArrow", TOOL_DRAW_ARROW, 0x000000, false, false, false, false, false, false, false, NULL);
 	tools[TOOL_DRAW_ARROW - TOOL_PEN] = t;
-	 */
-
 
 	selectTool(TOOL_PEN);
 }
@@ -179,6 +183,11 @@ void ToolHandler::fireToolChanged()
 	{
 		listener->toolChanged();
 	}
+}
+
+Tool &ToolHandler::getTool(ToolType type)
+{
+	return *(this->tools[type - TOOL_PEN]);
 }
 
 ToolType ToolHandler::getToolType()
@@ -642,8 +651,12 @@ void ToolHandler::copyCurrentConfig()
 {
 	XOJ_CHECK_TYPE(ToolHandler);
 
+	// If there is no last config, create one, if there is already one
+	// do not overwrite this config!
 	if (this->lastSelectedTool == NULL)
-		this->lastSelectedTool = this->current;
+	{
+		this->lastSelectedTool = new LastSelectedTool(this->current);
+	}
 }
 
 void ToolHandler::restoreLastConfig()
@@ -654,7 +667,9 @@ void ToolHandler::restoreLastConfig()
 	{
 		return;
 	}
-	this->current = this->lastSelectedTool;
+
+	this->current = this->lastSelectedTool->restoreAndGet();
+	delete this->lastSelectedTool;
 	this->lastSelectedTool = NULL;
 
 	this->listener->toolColorChanged();
@@ -684,7 +699,8 @@ void ToolHandler::setSelectionEditTools(bool setColor, bool setSize)
 
 	if (this->current->type == TOOL_SELECT_RECT ||
 		this->current->type == TOOL_SELECT_REGION ||
-		this->current->type == TOOL_SELECT_OBJECT)
+		this->current->type == TOOL_SELECT_OBJECT ||
+		this->current->type == TOOL_PLAY_OBJECT)
 	{
 		this->listener->toolColorChanged();
 		this->listener->toolSizeChanged();

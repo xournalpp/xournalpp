@@ -18,6 +18,9 @@ using boost::filesystem::path;
 
 #include <gtk/gtk.h>
 
+#include <string>
+using std::string;
+
 class Util
 {
 private:
@@ -25,18 +28,19 @@ private:
 	virtual ~Util();
 
 public:
+	static void showErrorToUser(GtkWindow* win, string msg);
+
 	static GdkColor intToGdkColor(int c);
 	static int gdkColorToInt(const GdkColor& c);
 
 	static void cairo_set_source_rgbi(cairo_t* cr, int color);
 
+	static void apply_rgb_togdkrgba(GdkRGBA& col, int color);
+	static int gdkrgba_to_hex(GdkRGBA& color);
+
 	static path getAutosaveFilename();
 
 	static int getPid();
-
-	static void fakeExposeWidget(GtkWidget* widget, GdkPixmap* pixmap);
-	static GdkPixbuf* newPixbufFromWidget(GtkWidget* widget, int iconSize = 24);
-	static GtkWidget* newSepeartorImage();
 
 	static void openFileWithDefaultApplicaion(path filename);
 	static void openFileWithFilebrowser(path filename);

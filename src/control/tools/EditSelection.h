@@ -23,7 +23,7 @@
 
 class UndoRedoHandler;
 class Layer;
-class PageView;
+class XojPageView;
 class Selection;
 class Element;
 class UndoAction;
@@ -33,16 +33,16 @@ class DeleteUndoAction;
 class EditSelection : public ElementContainer, public Serializeable
 {
 public:
-	EditSelection(UndoRedoHandler* undo, PageRef page, PageView* view);
-	EditSelection(UndoRedoHandler* undo, Selection* selection, PageView* view);
-	EditSelection(UndoRedoHandler* undo, Element* e, PageView* view, PageRef page);
+	EditSelection(UndoRedoHandler* undo, PageRef page, XojPageView* view);
+	EditSelection(UndoRedoHandler* undo, Selection* selection, XojPageView* view);
+	EditSelection(UndoRedoHandler* undo, Element* e, XojPageView* view, PageRef page);
 	virtual ~EditSelection();
 
 private:
 	/**
 	 * Our internal constructor
 	 */
-	void contstruct(UndoRedoHandler* undo, PageView* view, PageRef sourcePage);
+	void contstruct(UndoRedoHandler* undo, XojPageView* view, PageRef sourcePage);
 
 public:
 	/**
@@ -175,7 +175,7 @@ public:
 	void copySelection();
 
 public:
-	PageView* getView();
+	XojPageView* getView();
 
 public:
 	// Serialize interface
@@ -198,13 +198,13 @@ private:
 	/**
 	 * Gets the PageView where the selection is located on
 	 */
-	PageView* getBestMatchingPageView();
+	XojPageView* getBestMatchingPageView();
 
 	/**
 	 * Translate all coordinates which are relative to the current view to the new view,
 	 * and set the attribute view to the new view
 	 */
-	void translateToView(PageView* v);
+	void translateToView(XojPageView* v);
 
 private: // DATA
 	XOJ_TYPE_ATTRIB;
@@ -253,7 +253,7 @@ private: // HANDLER
 	/**
 	 * The page view for the anchor
 	 */
-	PageView* view;
+	XojPageView* view;
 
 	/**
 	 * Undo redo handler

@@ -19,6 +19,7 @@ Layer::~Layer()
 	{
 		delete e;
 	}
+	this->elements.clear();
 
 	XOJ_RELEASE_TYPE(Layer);
 }
@@ -81,7 +82,22 @@ void Layer::insertElement(Element* e, int pos)
 		}
 	}
 
-	this->elements.insert(this->elements.begin() + pos, e);
+	// prevent crash, even if this never should happen,
+	// but there was a bug before which cause this error
+	if (pos < 0)
+	{
+		pos = 0;
+	}
+
+	// If the element should be inserted at the top
+	if (pos >= this->elements.size())
+	{
+		this->elements.push_back(e);
+	}
+	else
+	{
+		this->elements.insert(this->elements.begin() + pos, e);
+	}
 }
 
 int Layer::indexOf(Element* e)
