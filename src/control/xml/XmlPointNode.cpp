@@ -1,11 +1,11 @@
 #include "XmlPointNode.h"
 
-XmlPointNode::XmlPointNode(const char* tag) : XmlNode(tag)
+XmlPointNode::XmlPointNode(const char* tag)
+ : XmlNode(tag),
+   points(NULL),
+   timestamp(0)
 {
 	XOJ_INIT_TYPE(XmlPointNode);
-
-	this->points = NULL;
-	this->timestamp = 0;
 }
 
 XmlPointNode::~XmlPointNode()
@@ -63,11 +63,11 @@ void XmlPointNode::writeOut(OutputStream* out)
 	 * By adding it this way we don't break 
 	 * xournal's fileformat backcompatibility
 	 */
-	if(this->audioFilename.length() != 0)
+	if (this->audioFilename.length() != 0)
 	{
 		out->write("<timestamp ");
 		out->write("ts=\"");
-		out->write(std::to_string(this->timestamp));	//must be set via saveHandler
+		out->write(std::to_string(this->timestamp)); // must be set via saveHandler
 		out->write("\"");
 		out->write("fn=\"");
 		out->write(this->audioFilename);

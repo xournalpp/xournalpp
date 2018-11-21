@@ -153,7 +153,7 @@ void Cursor::updateCursor()
 		ToolHandler* handler = control->getToolHandler();
 		ToolType type = handler->getToolType();
 		currentToolType = type;
-		
+
 		if (type == TOOL_HAND)
 		{
 			if (this->mouseDown)
@@ -235,12 +235,16 @@ void Cursor::updateCursor()
 		}
 		else if (type != TOOL_SELECT_OBJECT) // other selections are handled before anyway, because you can move a selection with every tool
 		{
-			if(type == TOOL_PLAY_OBJECT)
+			if (type == TOOL_PLAY_OBJECT)
+			{
 				cursor = gdk_cursor_new_for_display(gdk_window_get_display(window), GDK_HAND2);
+			}
 			else
+			{
 				cursor = gdk_cursor_new_for_display(gdk_window_get_display(window), GDK_TCROSS);
+			}
 		}
-		
+
 	}
 
 	if (gtk_widget_get_window(xournal->getWidget()))

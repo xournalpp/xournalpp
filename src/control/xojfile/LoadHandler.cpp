@@ -26,7 +26,9 @@
 		error = g_error_new(G_MARKUP_ERROR, G_MARKUP_ERROR_INVALID_CONTENT, __VA_ARGS__);	\
 	}
 
-LoadHandler::LoadHandler() : doc(&dHanlder)
+LoadHandler::LoadHandler()
+ : doc(&dHanlder),
+   loadedTimeStamp(0)
 {
 	XOJ_INIT_TYPE(LoadHandler);
 
@@ -133,7 +135,6 @@ bool LoadHandler::parseXml()
 	XOJ_CHECK_TYPE(LoadHandler);
 
 	const GMarkupParser parser = { LoadHandler::parserStartElement, LoadHandler::parserEndElement, LoadHandler::parserText, NULL, NULL };
-	GMarkupParseContext* context;
 	this->error = NULL;
 	gboolean valid = true;
 
@@ -141,14 +142,12 @@ bool LoadHandler::parseXml()
 	this->creator = "Unknown";
 	this->fileversion = 1;
 
-	char buffer[1024];
-	int len;
-
-	context = g_markup_parse_context_new(&parser, (GMarkupParseFlags) 0, this, NULL);
+	GMarkupParseContext* context = g_markup_parse_context_new(&parser, (GMarkupParseFlags) 0, this, NULL);
 
 	do
 	{
-		len = readFile(buffer, sizeof(buffer));
+		char buffer[1024];
+		int len = readFile(buffer, sizeof(buffer));
 		if (len > 0)
 		{
 			valid = g_markup_parse_context_parse(context, buffer, len, &error);
@@ -483,7 +482,7 @@ void LoadHandler::parseStroke()
 {
 	XOJ_CHECK_TYPE(LoadHandler);
 
-	this->stroke = new Stroke();	
+	this->stroke = new Stroke();
 	this->layer->addElement(this->stroke);
 
 	const char* width = LoadHandlerHelper::getAttrib("width", false, this);
@@ -620,7 +619,7 @@ void LoadHandler::parseLayer()
 	XOJ_CHECK_TYPE(LoadHandler);
 
 	/** read the timestamp before each stroke */
-	if (!strcmp(elementName, "timestamp")) 
+	if (!strcmp(elementName, "timestamp"))
 	{
 		loadedTimeStamp = LoadHandlerHelper::getAttribInt("ts", this);
 		loadedFilename = LoadHandlerHelper::getAttrib("fn", false, this);

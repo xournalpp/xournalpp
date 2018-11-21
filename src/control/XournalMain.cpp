@@ -224,11 +224,11 @@ int XournalMain::run(int argc, char* argv[])
 	string page_jump = _("Jump to Page (first Page: 1)");
 	string audio_folder = ("Absolute path for the audio files playback");
 	GOptionEntry options[] = {
-		{ "audio-folder",	 'f', 0, G_OPTION_ARG_FILENAME,		  &audioFolderParam,	 audio_folder.c_str(), NULL},
+		{ "audio-folder",	 'f', 0, G_OPTION_ARG_FILENAME,		  &audioFolderParam, audio_folder.c_str(), NULL },
 		{ "pdf-no-compress",   0, 0, G_OPTION_ARG_NONE,           &optNoPdfCompress, pdf_no_compress.c_str(), NULL },
 		{ "create-pdf",      'p', 0, G_OPTION_ARG_FILENAME,       &pdfFilename,      create_pdf.c_str(), NULL },
 		{ "page",            'n', 0, G_OPTION_ARG_INT,            &openAtPageNumber, page_jump.c_str(), "N" },
-		{G_OPTION_REMAINING,   0, 0, G_OPTION_ARG_FILENAME_ARRAY, &optFilename,      "<input>", NULL},
+		{G_OPTION_REMAINING,   0, 0, G_OPTION_ARG_FILENAME_ARRAY, &optFilename,      "<input>", NULL },
 		{NULL}
 	};
 
@@ -258,7 +258,7 @@ int XournalMain::run(int argc, char* argv[])
 
 	if (audioFolderParam)
 	{
-		printf("\nAudio folder specified! %s\n",audioFolderParam);
+		printf("\nAudio folder specified! %s\n", audioFolderParam);
 		audioFolder = string(audioFolderParam);
 	}
 

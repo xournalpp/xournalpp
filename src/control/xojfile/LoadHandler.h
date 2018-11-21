@@ -69,8 +69,6 @@ public:
 	string getLastError();
 	bool isAttachedPdfMissing();
 	string getMissingPdfFilename();
-	int loadedTimeStamp = 0;
-	string loadedFilename = "";
 
 	void removePdfBackground();
 	void setPdfReplacement(string filename, bool attachToDocument);
@@ -151,6 +149,9 @@ private:
 	const gchar** attributeNames;
 	const gchar** attributeValues;
 	const gchar* elementName;
+
+	int loadedTimeStamp;
+	string loadedFilename;
 
 	DocumentHandler dHanlder;
 	Document doc;
