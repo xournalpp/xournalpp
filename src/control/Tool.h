@@ -97,6 +97,8 @@ enum DrawingType
 	DRAWING_TYPE_ARROW,
 	DRAWING_TYPE_STROKE_RECOGNIZER
 };
+string drawingTypeToString(DrawingType type);
+DrawingType drawingTypeFromString(string type);
 
 string pageInsertTypeToString(PageInsertType type);
 PageInsertType pageInsertTypeFromString(string type);

@@ -423,49 +423,10 @@ void Settings::loadButtonConfig()
 
 			if (type == TOOL_PEN || type == TOOL_HILIGHTER)
 			{
-				bool change = false;
-				bool ruler = false;
-				bool rectangle = false;
-				bool circle = false;
-				bool arrow = false;
-				bool shapeRecognizer = false;
-				e.getBool("changeRulerShapeRecognizer", change);
-				e.getBool("ruler", ruler);
-				e.getBool("rectangle", rectangle);
-				e.getBool("circle", circle);
-				e.getBool("arrow", arrow);
-				e.getBool("shapeRecognizer", shapeRecognizer);
-
-				if (!change)
+				string drawingType;
+				if (e.getString("drawingType", drawingType))
 				{
-					cfg->drawingType = DRAWING_TYPE_DONT_CHANGE;
-				}
-				else
-				{
-					if (ruler)
-					{
-						cfg->drawingType = DRAWING_TYPE_RULER;
-					}
-					else if (rectangle)
-					{
-						cfg->drawingType = DRAWING_TYPE_RECTANGLE;
-					}
-					else if (circle)
-					{
-						cfg->drawingType = DRAWING_TYPE_CIRCLE;
-					}
-					else if (arrow)
-					{
-						cfg->drawingType = DRAWING_TYPE_ARROW;
-					}
-					else if (shapeRecognizer)
-					{
-						cfg->drawingType = DRAWING_TYPE_STROKE_RECOGNIZER;
-					}
-					else
-					{
-						cfg->drawingType = DRAWING_TYPE_DEFAULT;
-					}
+					cfg->drawingType = drawingTypeFromString(drawingType);
 				}
 
 				string sSize;
@@ -621,82 +582,7 @@ void Settings::saveButtonConfig()
 
 		if (type == TOOL_PEN || type == TOOL_HILIGHTER)
 		{
-			bool change = false;
-			bool ruler = false;
-			bool rectangle = false;
-			bool circle = false;
-			bool arrow = false;
-			bool shapeRecognizer = false;
-			if (cfg->drawingType == DRAWING_TYPE_DONT_CHANGE)
-			{
-				change = false;
-				ruler = false;
-				rectangle = false;
-				circle = false;
-				arrow = false;
-				shapeRecognizer = false;
-			}
-			else if (cfg->drawingType == DRAWING_TYPE_STROKE_RECOGNIZER)
-			{
-				change = true;
-				ruler = false;
-				rectangle = false;
-				circle = false;
-				arrow = false;
-				shapeRecognizer = true;
-			}
-			else if (cfg->drawingType == DRAWING_TYPE_RULER)
-			{
-				change = true;
-				ruler = true;
-				rectangle = false;
-				circle = false;
-				arrow = false;
-				shapeRecognizer = false;
-			}
-			else if (cfg->drawingType == DRAWING_TYPE_RECTANGLE)
-			{
-				change = true;
-				ruler = false;
-				rectangle = true;
-				circle = false;
-				arrow = false;
-				shapeRecognizer = false;
-			}
-			else if (cfg->drawingType == DRAWING_TYPE_CIRCLE)
-			{
-				change = true;
-				ruler = false;
-				rectangle = false;
-				circle = true;
-				arrow = false;
-				shapeRecognizer = false;
-			}
-			else if (cfg->drawingType == DRAWING_TYPE_ARROW)
-			{
-				change = true;
-				ruler = false;
-				rectangle = false;
-				circle = false;
-				arrow = true;
-				shapeRecognizer = false;
-			}
-			else if (cfg->drawingType == DRAWING_TYPE_DEFAULT)
-			{
-				change = true;
-				ruler = false;
-				rectangle = false;
-				circle = false;
-				arrow = false;
-				shapeRecognizer = false;
-			}
-
-			e.setBool("changeRulerShapeRecognizer", change);
-			e.setBool("ruler", ruler);
-			e.setBool("rectangle", rectangle);
-			e.setBool("circle", circle);
-			e.setBool("arrow", arrow);
-			e.setBool("shapeRecognizer", shapeRecognizer);
+			e.setString("drawingType", drawingTypeToString(cfg->drawingType));
 			e.setString("size", toolSizeToString(cfg->size));
 		} // end if pen or highlighter
 

@@ -225,3 +225,29 @@ EraserType eraserTypeFromString(string type)
 	else								return ERASER_TYPE_NONE;
 }
 
+string drawingTypeToString(DrawingType type)
+{
+	switch (type)
+	{
+	case DRAWING_TYPE_DONT_CHANGE:			return "dontChange";
+	case DRAWING_TYPE_DEFAULT:				return "default";
+	case DRAWING_TYPE_RULER:				return "ruler";
+	case DRAWING_TYPE_RECTANGLE:			return "rectangle";
+	case DRAWING_TYPE_CIRCLE:				return "circle";
+	case DRAWING_TYPE_ARROW:				return "arrow";
+	case DRAWING_TYPE_STROKE_RECOGNIZER:	return "strokeRecognizer";
+	default:								return "";
+	}
+}
+
+DrawingType drawingTypeFromString(string type)
+{
+	if (type == "dontChange")				return DRAWING_TYPE_DONT_CHANGE;
+	else if (type == "ruler")				return DRAWING_TYPE_RULER;
+	else if (type == "rectangle")			return DRAWING_TYPE_RECTANGLE;
+	else if (type == "circle")				return DRAWING_TYPE_CIRCLE;
+	else if (type == "arrow")				return DRAWING_TYPE_ARROW;
+	else if (type == "strokeRecognizer")	return DRAWING_TYPE_STROKE_RECOGNIZER;
+	else if (type == "default")				return DRAWING_TYPE_DEFAULT;
+	else									return DRAWING_TYPE_DEFAULT;
+}

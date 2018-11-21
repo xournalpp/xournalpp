@@ -416,30 +416,7 @@ void ToolHandler::saveSettings()
 			st.setIntHex("color", t->getColor());
 		}
 
-		/** !!!
-		 *  if there is an addtiional tool added, store it one field, but keep reading backward compatible!
-		 *  !!!
-		 */
-		if (t->isEnableRuler())
-		{
-			st.setBool("ruler", t->getDrawingType() == DRAWING_TYPE_RULER);
-		}
-		if (t->isEnableRectangle())
-		{
-			st.setBool("rectangle", t->getDrawingType() == DRAWING_TYPE_RECTANGLE);
-		}
-		if (t->isEnableCircle())
-		{
-			st.setBool("circle", t->getDrawingType() == DRAWING_TYPE_CIRCLE);
-		}
-		if (t->isEnableArrow())
-		{
-			st.setBool("arrow", t->getDrawingType() == DRAWING_TYPE_ARROW);
-		}
-		if (t->isEnableShapeRecognizer())
-		{
-			st.setBool("shapeRecognizer", t->getDrawingType() == DRAWING_TYPE_STROKE_RECOGNIZER);
-		}
+		st.setString("drawingType", drawingTypeToString(t->getDrawingType()));
 
 		if (t->isEnableSize())
 		{
@@ -515,26 +492,10 @@ void ToolHandler::loadSettings()
 				t->setColor(color);
 			}
 
-			bool enabled = false;
-			if (t->isEnableRuler() && st.getBool("ruler", enabled))
+			string drawingType;
+			if (st.getString("drawingType", drawingType))
 			{
-				t->setDrawingType(DRAWING_TYPE_RULER);
-			}
-			else if (t->isEnableRectangle() && st.getBool("rectangle", enabled))
-			{
-				t->setDrawingType(DRAWING_TYPE_RECTANGLE);
-			}
-			else if (t->isEnableCircle() && st.getBool("circle", enabled))
-			{
-				t->setDrawingType(DRAWING_TYPE_CIRCLE);
-			}
-			else if (t->isEnableArrow() && st.getBool("arrow", enabled))
-			{
-				t->setDrawingType(DRAWING_TYPE_ARROW);
-			}
-			else if (t->isEnableShapeRecognizer() && st.getBool("shapeRecognizer", enabled))
-			{
-				t->setDrawingType(DRAWING_TYPE_STROKE_RECOGNIZER);
+				t->setDrawingType(drawingTypeFromString(drawingType));
 			}
 
 			string value;
