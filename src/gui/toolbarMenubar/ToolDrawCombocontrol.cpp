@@ -35,11 +35,11 @@ ToolDrawCombocontrol::ToolDrawCombocontrol(ToolMenuHandler* toolMenuHandler, Act
 	this->iconWidget = NULL;
 	setPopupMenu(gtk_menu_new());
 
-	drawTypes.push_back(new ToolDrawType(_("Draw Rectangle"),  "rect-draw.svg",        ACTION_TOOL_DRAW_RECT   ));
-	drawTypes.push_back(new ToolDrawType(_("Draw Circle"),     "circle-draw.svg",      ACTION_TOOL_DRAW_CIRCLE ));
-	drawTypes.push_back(new ToolDrawType(_("Draw Arrow"),      "arrow-draw.svg",       ACTION_TOOL_DRAW_ARROW  ));
-	drawTypes.push_back(new ToolDrawType(_("Draw Line"),       "ruler.svg",            ACTION_RULER            ));
-	drawTypes.push_back(new ToolDrawType(_("Recognize Lines"), "shape_recognizer.svg", ACTION_SHAPE_RECOGNIZER ));
+	drawTypes.push_back(new ToolDrawType(_("Draw Rectangle"),		"rect-draw.svg",		ACTION_TOOL_DRAW_RECT   ));
+	drawTypes.push_back(new ToolDrawType(_("Draw Circle"),			"circle-draw.svg",		ACTION_TOOL_DRAW_CIRCLE ));
+	drawTypes.push_back(new ToolDrawType(_("Draw Arrow"),			"arrow-draw.svg",		ACTION_TOOL_DRAW_ARROW  ));
+	drawTypes.push_back(new ToolDrawType(_("Draw Line"),			"ruler.svg",			ACTION_RULER            ));
+	drawTypes.push_back(new ToolDrawType(_C("Stroke recognizer"),	"shape_recognizer.svg",	ACTION_SHAPE_RECOGNIZER ));
 
 	for (ToolDrawType* t : drawTypes)
 	{
