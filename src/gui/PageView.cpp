@@ -496,19 +496,19 @@ bool XojPageView::onButtonPressEvent(GtkWidget* widget, GdkEventButton* event)
 		delete this->inputHandler;
 		this->inputHandler = NULL;
 
-		if (h->isRuler())
+		if (h->getDrawingType() == DRAWING_TYPE_RULER)
 		{
 			this->inputHandler = new RulerHandler(this->xournal, this, getPage());
 		}
-		else if (h->isRectangle())
+		else if (h->getDrawingType() == DRAWING_TYPE_RECTANGLE)
 		{
 			this->inputHandler = new RectangleHandler(this->xournal, this, getPage());
 		}
-		else if (h->isCircle())
+		else if (h->getDrawingType() == DRAWING_TYPE_CIRCLE)
 		{
 			this->inputHandler = new CircleHandler(this->xournal, this, getPage());
 		}
-		else if (h->isArrow())
+		else if (h->getDrawingType() == DRAWING_TYPE_ARROW)
 		{
 			this->inputHandler = new ArrowHandler(this->xournal, this, getPage());
 		}

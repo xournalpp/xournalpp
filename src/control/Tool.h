@@ -80,6 +80,24 @@ enum PageInsertType
 	PAGE_INSERT_TYPE_PDF_BACKGROUND
 };
 
+enum DrawingType
+{
+	/**
+	 * For config entry, don't change value
+	 */
+	DRAWING_TYPE_DONT_CHANGE = 0,
+
+	/**
+	 * Default drawing, nothing special
+	 */
+	DRAWING_TYPE_DEFAULT,
+	DRAWING_TYPE_RULER,
+	DRAWING_TYPE_RECTANGLE,
+	DRAWING_TYPE_CIRCLE,
+	DRAWING_TYPE_ARROW,
+	DRAWING_TYPE_STROKE_RECOGNIZER
+};
+
 string pageInsertTypeToString(PageInsertType type);
 PageInsertType pageInsertTypeFromString(string type);
 
@@ -99,16 +117,8 @@ public:
 	ToolSize getSize();
 	void setSize(ToolSize size);
 
-	bool isShapeRecognizer();
-	void setShapeRecognizer(bool enabled);
-	bool isRuler();
-	bool isRectangle();
-	bool isCircle();
-	bool isArrow();
-	void setRuler(bool enabled);
-	void setRectangle(bool enabled);
-	void setCircle(bool enabled);
-	void setArrow(bool enabled);
+	DrawingType getDrawingType();
+	void setDrawingType(DrawingType drawingType);
 
 	bool isEnableColor();
 	bool isEnableSize();
@@ -134,11 +144,7 @@ private:
 	ToolSize size;
 	double* thickness;
 
-	bool shapeRecognizer;
-	bool ruler;
-	bool rectangle;
-	bool circle;
-	bool arrow;
+	DrawingType drawingType;
 
 	bool enableColor;
 	bool enableSize;

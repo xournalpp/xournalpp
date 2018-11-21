@@ -1094,11 +1094,7 @@ void Control::setShapeTool(ActionType type, bool enabled)
 	if (enabled == false)
 	{
 		// Disable all entries
-		this->toolHandler->setRuler(false);
-		this->toolHandler->setRectangle(false);
-		this->toolHandler->setArrow(false);
-		this->toolHandler->setCircle(false);
-		this->toolHandler->setShapeRecognizer(false);
+		this->toolHandler->setDrawingType(DRAWING_TYPE_DEFAULT);
 
 		// fire disabled and return
 		fireActionSelected(GROUP_RULER, ACTION_NONE);
@@ -1106,11 +1102,11 @@ void Control::setShapeTool(ActionType type, bool enabled)
 	}
 
 	// Check for nothing changed, and return in this case
-	if ((this->toolHandler->isRuler() && type == ACTION_RULER) ||
-		(this->toolHandler->isRectangle() && type == ACTION_TOOL_DRAW_RECT) ||
-		(this->toolHandler->isArrow() && type == ACTION_TOOL_DRAW_ARROW) ||
-		(this->toolHandler->isCircle() && type == ACTION_TOOL_DRAW_CIRCLE) ||
-		(this->toolHandler->isShapeRecognizer() && type == ACTION_SHAPE_RECOGNIZER))
+	if ((this->toolHandler->getDrawingType() == DRAWING_TYPE_RULER && type == ACTION_RULER) ||
+		(this->toolHandler->getDrawingType() == DRAWING_TYPE_RECTANGLE && type == ACTION_TOOL_DRAW_RECT) ||
+		(this->toolHandler->getDrawingType() == DRAWING_TYPE_ARROW && type == ACTION_TOOL_DRAW_ARROW) ||
+		(this->toolHandler->getDrawingType() == DRAWING_TYPE_CIRCLE && type == ACTION_TOOL_DRAW_CIRCLE) ||
+		(this->toolHandler->getDrawingType() == DRAWING_TYPE_STROKE_RECOGNIZER && type == ACTION_SHAPE_RECOGNIZER))
 	{
 		return;
 	}
@@ -1118,23 +1114,23 @@ void Control::setShapeTool(ActionType type, bool enabled)
 	switch (type)
 	{
 	case ACTION_TOOL_DRAW_RECT:
-		this->toolHandler->setRectangle(true, true);
+		this->toolHandler->setDrawingType(DRAWING_TYPE_RECTANGLE);
 		break;
 
 	case ACTION_TOOL_DRAW_CIRCLE:
-		this->toolHandler->setCircle(true, true);
+		this->toolHandler->setDrawingType(DRAWING_TYPE_CIRCLE);
 		break;
 
 	case ACTION_TOOL_DRAW_ARROW:
-		this->toolHandler->setArrow(true, true);
+		this->toolHandler->setDrawingType(DRAWING_TYPE_ARROW);
 		break;
 
 	case ACTION_RULER:
-		this->toolHandler->setRuler(true, true);
+		this->toolHandler->setDrawingType(DRAWING_TYPE_RULER);
 		break;
 
 	case ACTION_SHAPE_RECOGNIZER:
-		this->toolHandler->setShapeRecognizer(true, true);
+		this->toolHandler->setDrawingType(DRAWING_TYPE_STROKE_RECOGNIZER);
 		this->resetShapeRecognizer();
 		break;
 
@@ -2032,23 +2028,23 @@ void Control::toolChanged()
 	}
 
 	ActionType rulerAction = ACTION_NOT_SELECTED;
-	if (toolHandler->isShapeRecognizer())
+	if (toolHandler->getDrawingType() == DRAWING_TYPE_STROKE_RECOGNIZER)
 	{
 		rulerAction = ACTION_SHAPE_RECOGNIZER;
 	}
-	else if (toolHandler->isRuler())
+	else if (toolHandler->getDrawingType() == DRAWING_TYPE_RULER)
 	{
 		rulerAction = ACTION_RULER;
 	}
-	else if (toolHandler->isRectangle())
+	else if (toolHandler->getDrawingType() == DRAWING_TYPE_RECTANGLE)
 	{
 		rulerAction = ACTION_TOOL_DRAW_RECT;
 	}
-	else if (toolHandler->isCircle())
+	else if (toolHandler->getDrawingType() == DRAWING_TYPE_CIRCLE)
 	{
 		rulerAction = ACTION_TOOL_DRAW_CIRCLE;
 	}
-	else if (toolHandler->isArrow())
+	else if (toolHandler->getDrawingType() == DRAWING_TYPE_ARROW)
 	{
 		rulerAction = ACTION_TOOL_DRAW_ARROW;
 	}

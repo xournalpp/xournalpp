@@ -16,17 +16,6 @@
 #include <StringUtils.h>
 #include <XournalType.h>
 
-enum DrawingType
-{
-	DRAWING_TYPE_DONT_CHANGE = 0,
-	DRAWING_TYPE_RULER,
-	DRAWING_TYPE_RECTANGLE,
-	DRAWING_TYPE_CIRCLE,
-	DRAWING_TYPE_ARROW,
-	DRAWING_TYPE_STROKE_RECOGNIZER,
-	DRAWING_TYPE_NONE
-};
-
 class ToolHandler;
 
 class ButtonConfig

@@ -86,19 +86,19 @@ void Settings::loadDefault()
 	this->defaultSaveName = _("%F-Note-%H-%M.xoj");
 
 	// Eraser
-	this->buttonConfig[0] = new ButtonConfig(TOOL_ERASER, 0, TOOL_SIZE_NONE, DRAWING_TYPE_NONE, ERASER_TYPE_NONE);
+	this->buttonConfig[0] = new ButtonConfig(TOOL_ERASER, 0, TOOL_SIZE_NONE, DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
 	// Middle button
-	this->buttonConfig[1] = new ButtonConfig(TOOL_NONE, 0, TOOL_SIZE_NONE, DRAWING_TYPE_NONE, ERASER_TYPE_NONE);
+	this->buttonConfig[1] = new ButtonConfig(TOOL_NONE, 0, TOOL_SIZE_NONE, DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
 	// Right button
-	this->buttonConfig[2] = new ButtonConfig(TOOL_NONE, 0, TOOL_SIZE_NONE, DRAWING_TYPE_NONE, ERASER_TYPE_NONE);
+	this->buttonConfig[2] = new ButtonConfig(TOOL_NONE, 0, TOOL_SIZE_NONE, DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
 	// Touch
-	this->buttonConfig[3] = new ButtonConfig(TOOL_NONE, 0, TOOL_SIZE_NONE, DRAWING_TYPE_NONE, ERASER_TYPE_NONE);
+	this->buttonConfig[3] = new ButtonConfig(TOOL_NONE, 0, TOOL_SIZE_NONE, DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
 	// Default config
-	this->buttonConfig[4] = new ButtonConfig(TOOL_PEN, 0, TOOL_SIZE_FINE, DRAWING_TYPE_NONE, ERASER_TYPE_NONE);
+	this->buttonConfig[4] = new ButtonConfig(TOOL_PEN, 0, TOOL_SIZE_FINE, DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
 	// Pen button 1
-	this->buttonConfig[5] = new ButtonConfig(TOOL_NONE, 0, TOOL_SIZE_NONE, DRAWING_TYPE_NONE, ERASER_TYPE_NONE);
+	this->buttonConfig[5] = new ButtonConfig(TOOL_NONE, 0, TOOL_SIZE_NONE, DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
 	// Pen button 2
-	this->buttonConfig[6] = new ButtonConfig(TOOL_NONE, 0, TOOL_SIZE_NONE, DRAWING_TYPE_NONE, ERASER_TYPE_NONE);
+	this->buttonConfig[6] = new ButtonConfig(TOOL_NONE, 0, TOOL_SIZE_NONE, DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
 
 	this->fullscreenHideElements = "mainMenubar";
 	this->presentationHideElements = "mainMenubar,sidebarContents";
@@ -464,7 +464,7 @@ void Settings::loadButtonConfig()
 					}
 					else
 					{
-						cfg->drawingType = DRAWING_TYPE_NONE;
+						cfg->drawingType = DRAWING_TYPE_DEFAULT;
 					}
 				}
 
@@ -681,7 +681,7 @@ void Settings::saveButtonConfig()
 				arrow = true;
 				shapeRecognizer = false;
 			}
-			else if (cfg->drawingType == DRAWING_TYPE_NONE)
+			else if (cfg->drawingType == DRAWING_TYPE_DEFAULT)
 			{
 				change = true;
 				ruler = false;
