@@ -51,33 +51,9 @@ void ButtonConfig::acceptActions(ToolHandler* toolHandler)
 		if (this->action == TOOL_PEN || this->action == TOOL_HILIGHTER)
 		{
 
-			if (this->drawingType == DRAWING_TYPE_DONT_CHANGE)
+			if (this->drawingType != DRAWING_TYPE_DONT_CHANGE)
 			{
-				// nothing to do
-			}
-			else if (this->drawingType == DRAWING_TYPE_STROKE_RECOGNIZER)
-			{
-				toolHandler->setShapeRecognizer(true, true);
-			}
-			else if (this->drawingType == DRAWING_TYPE_RULER)
-			{
-				toolHandler->setRuler(true, true);
-			}
-			else if (this->drawingType == DRAWING_TYPE_RECTANGLE)
-			{
-				toolHandler->setRectangle(true, true);
-			}
-			else if (this->drawingType == DRAWING_TYPE_CIRCLE)
-			{
-				toolHandler->setCircle(true, true);
-			}
-			else if (this->drawingType == DRAWING_TYPE_ARROW)
-			{
-				toolHandler->setArrow(true, true);
-			}
-			else if (this->drawingType == DRAWING_TYPE_NONE)
-			{
-				toolHandler->setAll(false);
+				toolHandler->setDrawingType(this->drawingType);
 			}
 
 			if (this->size != TOOL_SIZE_NONE)

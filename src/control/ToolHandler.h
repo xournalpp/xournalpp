@@ -42,18 +42,8 @@ public:
 	int getColor();
 	GdkColor getGdkColor();
 
-	void setAll(bool set);
-	void setRuler(bool ruler, bool disableOthers = false);
-	void setRectangle(bool rectangle, bool disableOthers = false);
-	void setCircle(bool circle, bool disableOthers = false);
-	void setArrow(bool arrow, bool disableOthers = false);
-	bool isRuler();
-	bool isRectangle();
-	bool isCircle();
-	bool isArrow();
-
-	void setShapeRecognizer(bool reco, bool disableOthers = false);
-	bool isShapeRecognizer();
+	DrawingType getDrawingType();
+	void setDrawingType(DrawingType drawingType);
 
 	void setColorFound();
 

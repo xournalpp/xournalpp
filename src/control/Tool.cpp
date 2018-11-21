@@ -18,11 +18,7 @@ Tool::Tool(string name, ToolType type, int color, bool enableColor, bool enableS
 	this->enableCircle = enableCircle;
 	this->enableArrow = enableArrow;
 
-	this->ruler = false;
-	this->rectangle = false;
-	this->circle = false;
-	this->arrow = false;
-	this->shapeRecognizer = false;
+	this->drawingType = DRAWING_TYPE_DEFAULT;
 
 	this->color = color;
 	this->size = TOOL_SIZE_MEDIUM;
@@ -122,79 +118,23 @@ bool Tool::isEnableShapeRecognizer()
 	return this->enableShapeRecognizer;
 }
 
-bool Tool::isShapeRecognizer()
+DrawingType Tool::getDrawingType()
 {
 	XOJ_CHECK_TYPE(Tool);
 
-	return this->shapeRecognizer;
+	return this->drawingType;
 }
 
-bool Tool::isRuler()
+void Tool::setDrawingType(DrawingType drawingType)
 {
 	XOJ_CHECK_TYPE(Tool);
 
-	return this->ruler;
-}
-
-bool Tool::isRectangle()
-{
-	XOJ_CHECK_TYPE(Tool);
-
-	return this->rectangle;
-}
-
-bool Tool::isCircle()
-{
-	XOJ_CHECK_TYPE(Tool);
-
-	return this->circle;
-}
-
-bool Tool::isArrow()
-{
-	XOJ_CHECK_TYPE(Tool);
-
-	return this->arrow;
+	this->drawingType = drawingType;
 }
 
 double Tool::getThickness(ToolSize size)
 {
 	return this->thickness[size - TOOL_SIZE_VERY_FINE];
-}
-
-void Tool::setShapeRecognizer(bool enabled)
-{
-	XOJ_CHECK_TYPE(Tool);
-
-	this->shapeRecognizer = enabled;
-}
-
-void Tool::setRuler(bool enabled)
-{
-	XOJ_CHECK_TYPE(Tool);
-
-	this->ruler = enabled;
-}
-
-void Tool::setRectangle(bool enabled)
-{
-	XOJ_CHECK_TYPE(Tool);
-
-	this->rectangle = enabled;
-}
-
-void Tool::setCircle(bool enabled)
-{
-	XOJ_CHECK_TYPE(Tool);
-
-	this->circle = enabled;
-}
-
-void Tool::setArrow(bool enabled)
-{
-	XOJ_CHECK_TYPE(Tool);
-
-	this->arrow = enabled;
 }
 
 string toolTypeToString(ToolType type)

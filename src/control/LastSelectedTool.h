@@ -40,4 +40,5 @@ private:
 
 	int color;
 	ToolSize size;
+	DrawingType drawingType;
 };
