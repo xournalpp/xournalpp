@@ -102,12 +102,23 @@ ButtonConfigGui::ButtonConfigGui(SettingsDialog* dlg, GtkWidget* w,  Settings* s
 					 (GtkAttachOptions) (GTK_EXPAND | GTK_FILL), (GtkAttachOptions) (GTK_FILL), 0, 0);
 
 	this->cbDrawingType = gtk_combo_box_text_new();
+	// DRAWING_TYPE_DONT_CHANGE
 	gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(this->cbDrawingType), _C("Don't change"));
-	gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(this->cbDrawingType), _C("Enable Ruler"));
-	gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(this->cbDrawingType), _C("Enable Stroke Recognizer"));
-	gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(this->cbDrawingType), _C("Disable Ruler & Stroke Recognizer"));
+	// DRAWING_TYPE_DEFAULT
+	gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(this->cbDrawingType), _C("Normal drawing"));
+	// DRAWING_TYPE_RULER
+	gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(this->cbDrawingType), _C("Draw Line"));
+	// DRAWING_TYPE_RECTANGLE
+	gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(this->cbDrawingType), _C("Draw Rectangle"));
+	// DRAWING_TYPE_CIRCLE
+	gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(this->cbDrawingType), _C("Draw Circle"));
+	// DRAWING_TYPE_ARROW
+	gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(this->cbDrawingType), _C("Draw Arrow"));
+	// DRAWING_TYPE_STROKE_RECOGNIZER
+	gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(this->cbDrawingType), _C("Stroke recognizer"));
 
-	gtk_table_attach(GTK_TABLE(table), newLabel(_C("Ruler & Stroke Reco.")), 0, 1, 5, 6, GTK_FILL, GTK_FILL, 20, 0);
+
+	gtk_table_attach(GTK_TABLE(table), newLabel(_C("Drawing type")), 0, 1, 5, 6, GTK_FILL, GTK_FILL, 20, 0);
 	gtk_table_attach(GTK_TABLE(table), this->cbDrawingType, 1, 2, 5, 6,
 					 (GtkAttachOptions) (GTK_EXPAND | GTK_FILL), (GtkAttachOptions) (GTK_FILL), 0, 0);
 

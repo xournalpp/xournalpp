@@ -91,12 +91,14 @@ enum DrawingType
 	 * Default drawing, nothing special
 	 */
 	DRAWING_TYPE_DEFAULT,
-	DRAWING_TYPE_RULER,
+	DRAWING_TYPE_LINE,
 	DRAWING_TYPE_RECTANGLE,
 	DRAWING_TYPE_CIRCLE,
 	DRAWING_TYPE_ARROW,
 	DRAWING_TYPE_STROKE_RECOGNIZER
 };
+string drawingTypeToString(DrawingType type);
+DrawingType drawingTypeFromString(string type);
 
 string pageInsertTypeToString(PageInsertType type);
 PageInsertType pageInsertTypeFromString(string type);
