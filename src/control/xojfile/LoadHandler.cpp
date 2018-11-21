@@ -144,10 +144,11 @@ bool LoadHandler::parseXml()
 
 	GMarkupParseContext* context = g_markup_parse_context_new(&parser, (GMarkupParseFlags) 0, this, NULL);
 
+	int len = 0;
 	do
 	{
 		char buffer[1024];
-		int len = readFile(buffer, sizeof(buffer));
+		len = readFile(buffer, sizeof(buffer));
 		if (len > 0)
 		{
 			valid = g_markup_parse_context_parse(context, buffer, len, &error);
