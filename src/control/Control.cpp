@@ -2553,9 +2553,9 @@ void Control::setCurrentState(int state)
 {
 	XOJ_CHECK_TYPE(Control);
 
-	gdk_threads_enter();
-	gtk_progress_bar_set_fraction(this->pgState, gdouble(state) / this->maxState);
-	gdk_threads_leave();
+	Util::execInUiThread([=]() {
+		gtk_progress_bar_set_fraction(this->pgState, gdouble(state) / this->maxState);
+	});
 }
 
 bool Control::save(bool synchron)

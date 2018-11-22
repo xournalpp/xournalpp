@@ -13,6 +13,38 @@
 using std::cout;
 using std::endl;
 
+class CallbackUiData {
+public:
+	CallbackUiData(std::function<void()> callback)
+	 : callback(callback)
+	{
+	}
+	std::function<void()> callback;
+};
+
+/**
+ * This method is called in the GTK UI Thread
+ */
+static bool execInUiThreadCallback(CallbackUiData* cb)
+{
+	cb->callback();
+
+	delete cb;
+
+	// Do not call again
+	return false;
+}
+
+/**
+ * Execute the callback in the UI Thread.
+ *
+ * Make sure the container class is not deleted before the UI stuff is finished!
+ */
+void Util::execInUiThread(std::function<void()> callback)
+{
+	gdk_threads_add_idle((GSourceFunc) execInUiThreadCallback, new CallbackUiData(callback));
+}
+
 void Util::showErrorToUser(GtkWindow* win, string msg)
 {
 	GtkWidget* dialog = gtk_message_dialog_new(win,
