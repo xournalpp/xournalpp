@@ -20,8 +20,6 @@ if (PKG_CONFIG_FOUND)
     )
 endif (PKG_CONFIG_FOUND)
 
-find_package(GTK2)
-
 pkg_check_modules(POPPLER_PKG poppler poppler-glib)
 
 # Paths
