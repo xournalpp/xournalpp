@@ -147,7 +147,7 @@ void PreviewJob::run(bool noThreads)
 		layer = ((SidebarPreviewLayerEntry*)this->sidebarPreview)->getLayer();
 	}
 
-	if (this->sidebarPreview->page->getBackgroundType() == BACKGROUND_TYPE_PDF)
+	if (this->sidebarPreview->page->getBackgroundType().isPdfPage())
 	{
 		drawBackgroundPdf(doc);
 	}

@@ -18,6 +18,9 @@
 
 #include <glib.h>
 
+#include <string>
+using std::string;
+
 class ProgressListener;
 
 class XmlNode
@@ -31,6 +34,7 @@ private:
 	void operator=(const XmlNode& node);
 
 public:
+	void setAttrib(const char* attrib, string value);
 	void setAttrib(const char* attrib, const char* value);
 	void setAttrib(const char* attrib, double value);
 	void setAttrib(const char* attrib, int value);

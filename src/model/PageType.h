@@ -17,8 +17,32 @@
 
 using std::string;
 
-struct PageType
+class PageType
 {
+public:
+	PageType();
+	~PageType();
+
+private:
+	XOJ_TYPE_ATTRIB;
+
+public:
+	/**
+	 * PDF background
+	 */
+	bool isPdfPage();
+
+	/**
+	 * Image Background
+	 */
+	bool isImagePage();
+
+	/**
+	 * Special background
+	 */
+	bool isSpecial();
+
+public:
 	/**
 	 * Base format
 	 */

@@ -41,7 +41,7 @@ void PrintHandler::drawPage(GtkPrintOperation* operation, GtkPrintContext* conte
 		cairo_translate(cr, 0, -height);
 	}
 
-	if (page->getBackgroundType() == BACKGROUND_TYPE_PDF)
+	if (page->getBackgroundType().isPdfPage())
 	{
 		int pgNo = page->getPdfPageNr();
 		XojPopplerPage* popplerPage = handler->doc->getPdfPage(pgNo);

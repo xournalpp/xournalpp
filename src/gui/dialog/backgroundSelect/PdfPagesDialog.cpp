@@ -29,7 +29,7 @@ PdfPagesDialog::PdfPagesDialog(GladeSearchpath* gladeSearchPath, Document* doc, 
 	{
 		PageRef p = doc->getPage(i);
 
-		if (p->getBackgroundType() == BACKGROUND_TYPE_PDF)
+		if (p->getBackgroundType().isPdfPage())
 		{
 			int pdfPage = p->getPdfPageNr();
 			if (pdfPage >= 0 && pdfPage < elements.size())

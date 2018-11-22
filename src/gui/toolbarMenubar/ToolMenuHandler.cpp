@@ -21,7 +21,7 @@
 
 #include <glib.h>
 
-ToolMenuHandler::ToolMenuHandler(ActionHandler* listener, PageTypeHandler* types, ZoomControl* zoom, GladeGui* gui, ToolHandler* toolHandler,
+ToolMenuHandler::ToolMenuHandler(ActionHandler* listener, PageTypeMenu* typeMenu, ZoomControl* zoom, GladeGui* gui, ToolHandler* toolHandler,
 								 GtkWindow* parent)
 {
 	XOJ_INIT_TYPE(ToolMenuHandler);
@@ -36,7 +36,7 @@ ToolMenuHandler::ToolMenuHandler(ActionHandler* listener, PageTypeHandler* types
 	this->toolPageSpinner = NULL;
 	this->toolPageLayer = NULL;
 	this->tbModel = new ToolbarModel();
-	this->typeMenu = new PageTypeMenu(types);
+	this->typeMenu = typeMenu;
 
 	initToolItems();
 }
@@ -47,7 +47,8 @@ ToolMenuHandler::~ToolMenuHandler()
 
 	delete this->tbModel;
 	this->tbModel = NULL;
-	delete this->typeMenu;
+
+	// Owned by control
 	this->typeMenu = NULL;
 
 	for (MenuItem* it : this->menuItems)

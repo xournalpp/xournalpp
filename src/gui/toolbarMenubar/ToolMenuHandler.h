@@ -31,7 +31,6 @@ class ToolButton;
 class ToolHandler;
 class ToolPageLayer;
 class ToolPageSpinner;
-class PageTypeHandler;
 class PageTypeMenu;
 class SpinPageAdapter;
 class XojFont;
@@ -40,7 +39,7 @@ class ZoomControl;
 class ToolMenuHandler
 {
 public:
-	ToolMenuHandler(ActionHandler* listener, PageTypeHandler* types, ZoomControl* zoom, GladeGui* gui, ToolHandler* toolHandler, GtkWindow* parent);
+	ToolMenuHandler(ActionHandler* listener, PageTypeMenu* typeMenu, ZoomControl* zoom, GladeGui* gui, ToolHandler* toolHandler, GtkWindow* parent);
 	virtual ~ToolMenuHandler();
 
 public:

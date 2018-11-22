@@ -56,6 +56,13 @@ void XmlNode::setAttrib(const char* attrib, const char* value)
 	putAttrib(new TextAttribute(attrib, value));
 }
 
+void XmlNode::setAttrib(const char* attrib, string value)
+{
+	XOJ_CHECK_TYPE(XmlNode);
+
+	putAttrib(new TextAttribute(attrib, value));
+}
+
 void XmlNode::setAttrib(const char* attrib, double value)
 {
 	XOJ_CHECK_TYPE(XmlNode);
@@ -141,7 +148,7 @@ void XmlNode::putAttrib(XMLAttribute* a)
 	{
 		XMLAttribute* attrib = (XMLAttribute*) l->data;
 
-		if (strcmp(attrib->getName(), a->getName()) == 0)
+		if (attrib->getName() == a->getName())
 		{
 			delete attrib;
 			l->data = a;

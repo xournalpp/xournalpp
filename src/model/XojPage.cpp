@@ -11,7 +11,7 @@ XojPage::XojPage(double width, double height)
 
 	this->pdfBackgroundPage = size_t_npos;
 	this->backgroundColor = 0xffffff;
-	this->bgType = BACKGROUND_TYPE_LINED;
+	this->bgType.format = "lined";
 
 	this->width = width;
 	this->height = height;
@@ -140,7 +140,8 @@ void XojPage::setBackgroundPdfPageNr(size_t page)
 	XOJ_CHECK_TYPE(XojPage);
 
 	this->pdfBackgroundPage = page;
-	this->bgType = BACKGROUND_TYPE_PDF;
+	this->bgType.format = ":pdf";
+	this->bgType.config = "";
 }
 
 void XojPage::setBackgroundColor(int color)
@@ -200,23 +201,23 @@ bool XojPage::isAnnotated()
 	return false;
 }
 
-void XojPage::setBackgroundType(BackgroundType bgType)
+void XojPage::setBackgroundType(PageType bgType)
 {
 	XOJ_CHECK_TYPE(XojPage);
 
 	this->bgType = bgType;
 
-	if (bgType != BACKGROUND_TYPE_PDF)
+	if (!bgType.isPdfPage())
 	{
 		this->pdfBackgroundPage = size_t_npos;
 	}
-	if (bgType != BACKGROUND_TYPE_IMAGE)
+	if (!bgType.isImagePage())
 	{
 		this->backgroundImage.free();
 	}
 }
 
-BackgroundType XojPage::getBackgroundType()
+PageType XojPage::getBackgroundType()
 {
 	XOJ_CHECK_TYPE(XojPage);
 
