@@ -71,10 +71,10 @@ MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control) :
 
 	g_signal_connect(get("buttonCloseSidebar"), "clicked", G_CALLBACK(buttonCloseSidebarClicked), this);
 
-	//"watch over" all events
+	// "watch over" all events
 	g_signal_connect(this->window, "key-press-event", (GCallback) & onKeyPressCallback, this);
 
-	this->toolbar = new ToolMenuHandler(this->control, this->control->getZoomControl(), this,
+	this->toolbar = new ToolMenuHandler(this->control, this->control->getPageTypes() ,this->control->getZoomControl(), this,
 										this->control->getToolHandler(), GTK_WINDOW(getWindow()));
 
 	string file = gladeSearchPath->findFile("", "toolbar.ini");

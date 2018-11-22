@@ -1,5 +1,6 @@
 #include "PageTemplateSettings.h"
 
+#include "control/pagetype/PageType.h"
 #include "control/xojfile/SaveHandler.h"
 
 #include <sstream>
@@ -85,30 +86,34 @@ BackgroundType PageTemplateSettings::getBackgroundType()
 	return backgroundType;
 }
 
-PageInsertType PageTemplateSettings::getPageInsertType()
+// TODO !!!!!!!
+PageType PageTemplateSettings::getPageInsertType()
 {
 	XOJ_CHECK_TYPE(PageTemplateSettings);
+//
+//	if (copyLastPageSettings)
+//	{
+//		return PAGE_INSERT_TYPE_COPY;
+//	}
+//
+//	switch (backgroundType)
+//	{
+//	case BACKGROUND_TYPE_NONE:
+//		return PAGE_INSERT_TYPE_PLAIN;
+//	case BACKGROUND_TYPE_PDF:
+//		return PAGE_INSERT_TYPE_PDF_BACKGROUND;
+//	case BACKGROUND_TYPE_LINED:
+//		return PAGE_INSERT_TYPE_LINED;
+//	case BACKGROUND_TYPE_RULED:
+//		return PAGE_INSERT_TYPE_RULED;
+//	case BACKGROUND_TYPE_GRAPH:
+//		return PAGE_INSERT_TYPE_GRAPH;
+//	default:
+//		return PAGE_INSERT_TYPE_PLAIN;
+//	}
 
-	if (copyLastPageSettings)
-	{
-		return PAGE_INSERT_TYPE_COPY;
-	}
-
-	switch (backgroundType)
-	{
-	case BACKGROUND_TYPE_NONE:
-		return PAGE_INSERT_TYPE_PLAIN;
-	case BACKGROUND_TYPE_PDF:
-		return PAGE_INSERT_TYPE_PDF_BACKGROUND;
-	case BACKGROUND_TYPE_LINED:
-		return PAGE_INSERT_TYPE_LINED;
-	case BACKGROUND_TYPE_RULED:
-		return PAGE_INSERT_TYPE_RULED;
-	case BACKGROUND_TYPE_GRAPH:
-		return PAGE_INSERT_TYPE_GRAPH;
-	default:
-		return PAGE_INSERT_TYPE_PLAIN;
-	}
+	PageType pt;
+	return pt;
 }
 
 void PageTemplateSettings::setBackgroundType(BackgroundType backgroundType)

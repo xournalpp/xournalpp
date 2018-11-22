@@ -24,6 +24,7 @@
 #include "jobs/ProgressListener.h"
 #include "jobs/XournalScheduler.h"
 #include "model/Document.h"
+#include "pagetype/PageType.h"
 #include "settings/MetadataManager.h"
 #include "settings/Settings.h"
 #include "undo/UndoRedoHandler.h"
@@ -46,6 +47,7 @@ class Cursor;
 class ToolbarDragDropHandler;
 class MetadataEntry;
 class MetadataCallbackData;
+class PageTypeHandler;
 class BaseExportJob;
 
 class Control : public ActionHandler,
@@ -110,7 +112,7 @@ public:
 	void calcZoomFitSize();
 	void setViewTwoPages(bool continous);
 	void setViewPresentationMode(bool continous);
-	void setPageInsertType(PageInsertType type);
+	void setPageInsertType(PageType type);
 	void manageToolbars();
 	void customizeToolbars();
 	void enableFullscreen(bool enabled, bool presentation = false);
@@ -200,6 +202,7 @@ public:
 	Cursor* getCursor();
 	Sidebar* getSidebar();
 	SearchBar* getSearchBar();
+	PageTypeHandler* getPageTypes();
 
 	bool copy();
 	bool cut();
@@ -331,10 +334,12 @@ private:
 
 	bool recording = false;
 
+	PageTypeHandler* pageTypes;
+
 	/**
 	 * Current page insert type, usually from default, but it can be changed from toolbar menu
 	 */
-	PageInsertType pageInserType;
+	PageType pageInserType;
 };
 
 class CallbackData

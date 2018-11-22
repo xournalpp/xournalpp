@@ -70,16 +70,6 @@ enum EraserType
 string eraserTypeToString(EraserType type);
 EraserType eraserTypeFromString(string type);
 
-enum PageInsertType
-{
-	PAGE_INSERT_TYPE_PLAIN = 1,
-	PAGE_INSERT_TYPE_LINED,
-	PAGE_INSERT_TYPE_RULED,
-	PAGE_INSERT_TYPE_GRAPH,
-	PAGE_INSERT_TYPE_COPY,
-	PAGE_INSERT_TYPE_PDF_BACKGROUND
-};
-
 enum DrawingType
 {
 	/**
@@ -99,9 +89,6 @@ enum DrawingType
 };
 string drawingTypeToString(DrawingType type);
 DrawingType drawingTypeFromString(string type);
-
-string pageInsertTypeToString(PageInsertType type);
-PageInsertType pageInsertTypeFromString(string type);
 
 class Tool
 {

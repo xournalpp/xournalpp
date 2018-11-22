@@ -30,6 +30,7 @@ extern int currentToolType;
 #include "model/BackgroundImage.h"
 #include "model/FormatDefinitions.h"
 #include "model/XojPage.h"
+#include "pagetype/PageTypeHandler.h"
 #include "settings/ButtonConfig.h"
 #include "stockdlg/ImageOpenDlg.h"
 #include "stockdlg/XojOpenDlg.h"
@@ -84,7 +85,9 @@ Control::Control(GladeSearchpath* gladeSearchPath, bool noThreads)
 
 	this->gladeSearchPath = gladeSearchPath;
 
-	this->pageInserType = PAGE_INSERT_TYPE_LINED;
+	this->pageTypes = new PageTypeHandler();
+
+	this->pageInserType.format = "lined";
 
 	this->metadata = new MetadataManager();
 	this->cursor = new Cursor(this);
@@ -154,19 +157,35 @@ Control::~Control()
 	}
 
 	delete this->clipboardHandler;
+	this->clipboardHandler = NULL;
 	delete this->recent;
+	this->recent = NULL;
 	delete this->undoRedo;
+	this->undoRedo = NULL;
 	delete this->settings;
+	this->settings = NULL;
 	delete this->toolHandler;
+	this->toolHandler = NULL;
 	delete this->sidebar;
+	this->sidebar = NULL;
 	delete this->doc;
+	this->doc = NULL;
 	delete this->searchBar;
+	this->searchBar = NULL;
 	delete this->scrollHandler;
+	this->scrollHandler = NULL;
+	delete this->pageTypes;
+	this->pageTypes = NULL;
 	delete this->metadata;
+	this->metadata = NULL;
 	delete this->cursor;
+	this->cursor = NULL;
 	delete this->zoom;
+	this->zoom = NULL;
 	delete this->scheduler;
+	this->scheduler = NULL;
 	delete this->dragDropHandler;
+	this->dragDropHandler = NULL;
 
 	XOJ_RELEASE_TYPE(Control);
 }
@@ -527,48 +546,49 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
 		setPageBackground(type);
 		break;
 
-	case ACTION_NEW_PAGE_PLAIN:
-		clearSelectionEndText();
-		if (enabled)
-		{
-			setPageInsertType(PAGE_INSERT_TYPE_PLAIN);
-		}
-		break;
-	case ACTION_NEW_PAGE_LINED:
-		clearSelectionEndText();
-		if (enabled)
-		{
-			setPageInsertType(PAGE_INSERT_TYPE_LINED);
-		}
-		break;
-	case ACTION_NEW_PAGE_RULED:
-		clearSelectionEndText();
-		if (enabled)
-		{
-			setPageInsertType(PAGE_INSERT_TYPE_RULED);
-		}
-		break;
-	case ACTION_NEW_PAGE_GRAPH:
-		clearSelectionEndText();
-		if (enabled)
-		{
-			setPageInsertType(PAGE_INSERT_TYPE_GRAPH);
-		}
-		break;
-	case ACTION_NEW_PAGE_COPY:
-		clearSelectionEndText();
-		if (enabled)
-		{
-			setPageInsertType(PAGE_INSERT_TYPE_COPY);
-		}
-		break;
-	case ACTION_NEW_PAGE_PDF_BACKGROUND:
-		clearSelectionEndText();
-		if (enabled)
-		{
-			setPageInsertType(PAGE_INSERT_TYPE_PDF_BACKGROUND);
-		}
-		break;
+		// TODO !!!!!!!!!!!!!
+//	case ACTION_NEW_PAGE_PLAIN:
+//		clearSelectionEndText();
+//		if (enabled)
+//		{
+//			setPageInsertType(PAGE_INSERT_TYPE_PLAIN);
+//		}
+//		break;
+//	case ACTION_NEW_PAGE_LINED:
+//		clearSelectionEndText();
+//		if (enabled)
+//		{
+//			setPageInsertType(PAGE_INSERT_TYPE_LINED);
+//		}
+//		break;
+//	case ACTION_NEW_PAGE_RULED:
+//		clearSelectionEndText();
+//		if (enabled)
+//		{
+//			setPageInsertType(PAGE_INSERT_TYPE_RULED);
+//		}
+//		break;
+//	case ACTION_NEW_PAGE_GRAPH:
+//		clearSelectionEndText();
+//		if (enabled)
+//		{
+//			setPageInsertType(PAGE_INSERT_TYPE_GRAPH);
+//		}
+//		break;
+//	case ACTION_NEW_PAGE_COPY:
+//		clearSelectionEndText();
+//		if (enabled)
+//		{
+//			setPageInsertType(PAGE_INSERT_TYPE_COPY);
+//		}
+//		break;
+//	case ACTION_NEW_PAGE_PDF_BACKGROUND:
+//		clearSelectionEndText();
+//		if (enabled)
+//		{
+//			setPageInsertType(PAGE_INSERT_TYPE_PDF_BACKGROUND);
+//		}
+//		break;
 
 		// Menu Tools
 	case ACTION_TOOL_PEN:
@@ -1331,128 +1351,129 @@ void Control::deletePage()
 
 void Control::insertNewPage(size_t position)
 {
-	XOJ_CHECK_TYPE(Control);
-
-	clearSelectionEndText();
-
-	if (position > doc->getPageCount())
-	{
-		position = doc->getPageCount();
-	}
-
-	double width = 0;
-	double height = 0;
-
-	PageTemplateSettings model;
-	model.parse(settings->getPageTemplate());
-
-	int lastPage = position - 1;
-	if (lastPage < 0 || !model.isCopyLastPageSettings())
-	{
-		width = model.getPageWidth();
-		height = model.getPageHeight();
-	}
-	else
-	{
-		PageRef page = doc->getPage(lastPage);
-
-		if (page.isValid())
-		{
-			width = page->getWidth();
-			height = page->getHeight();
-		}
-		else
-		{
-			width = model.getPageWidth();
-			height = model.getPageHeight();
-		}
-	}
-
-	PageRef page = new XojPage(width, height);
-	page->setBackgroundColor(model.getBackgroundColor());
-
-	if (PAGE_INSERT_TYPE_PLAIN == this->pageInserType)
-	{
-		page->setBackgroundType(BACKGROUND_TYPE_NONE);
-	}
-	else if (PAGE_INSERT_TYPE_LINED == this->pageInserType)
-	{
-		page->setBackgroundType(BACKGROUND_TYPE_LINED);
-	}
-	else if (PAGE_INSERT_TYPE_RULED == this->pageInserType)
-	{
-		page->setBackgroundType(BACKGROUND_TYPE_RULED);
-	}
-	else if (PAGE_INSERT_TYPE_GRAPH == this->pageInserType)
-	{
-		page->setBackgroundType(BACKGROUND_TYPE_GRAPH);
-	}
-	else if (PAGE_INSERT_TYPE_COPY == this->pageInserType)
-	{
-		PageRef current = getCurrentPage();
-		if (!current.isValid()) // should not happen, but if you open an invalid file or something like this...
-		{
-			page->setBackgroundType(BACKGROUND_TYPE_LINED);
-		}
-		else
-		{
-			BackgroundType bg = current->getBackgroundType();
-			page->setBackgroundType(bg);
-			if (bg == BACKGROUND_TYPE_PDF)
-			{
-				page->setBackgroundPdfPageNr(current->getPdfPageNr());
-			}
-			else if (bg == BACKGROUND_TYPE_IMAGE)
-			{
-				page->setBackgroundImage(current->getBackgroundImage());
-			}
-			else
-			{
-				page->setBackgroundColor(current->getBackgroundColor());
-			}
-
-			page->setSize(current->getWidth(), current->getHeight());
-		}
-	}
-	else if (PAGE_INSERT_TYPE_PDF_BACKGROUND == this->pageInserType)
-	{
-		if (this->doc->getPdfPageCount() == 0)
-		{
-			GtkWidget* dialog = gtk_message_dialog_new(getGtkWindow(),
-													   GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
-													   "%s", _C("You don't have any PDF pages to select from. "
-																"Cancel operation.\nPlease select another background type: "
-																"Menu \"Journal\" / \"Insert Page Type\"."));
-			gtk_window_set_transient_for(GTK_WINDOW(dialog), getGtkWindow());
-			gtk_dialog_run(GTK_DIALOG(dialog));
-			gtk_widget_destroy(dialog);
-
-			return;
-		}
-		else
-		{
-			this->doc->lock();
-			PdfPagesDialog* dlg = new PdfPagesDialog(this->gladeSearchPath, this->doc, this->settings);
-
-			dlg->show(GTK_WINDOW(this->win->getWindow()));
-
-			int selected = dlg->getSelectedPage();
-			delete dlg;
-
-			if (selected >= 0 && selected < doc->getPdfPageCount())
-			{
-				// no need to set a type, if we set the page number the type is also set
-				page->setBackgroundPdfPageNr(selected);
-
-				XojPopplerPage* p = doc->getPdfPage(selected);
-				page->setSize(p->getWidth(), p->getHeight());
-			}
-
-			this->doc->unlock();
-		}
-	}
-
-	insertPage(page, position);
+	// TODO !!!!!!!!!!!!!!
+//	XOJ_CHECK_TYPE(Control);
+//
+//	clearSelectionEndText();
+//
+//	if (position > doc->getPageCount())
+//	{
+//		position = doc->getPageCount();
+//	}
+//
+//	double width = 0;
+//	double height = 0;
+//
+//	PageTemplateSettings model;
+//	model.parse(settings->getPageTemplate());
+//
+//	int lastPage = position - 1;
+//	if (lastPage < 0 || !model.isCopyLastPageSettings())
+//	{
+//		width = model.getPageWidth();
+//		height = model.getPageHeight();
+//	}
+//	else
+//	{
+//		PageRef page = doc->getPage(lastPage);
+//
+//		if (page.isValid())
+//		{
+//			width = page->getWidth();
+//			height = page->getHeight();
+//		}
+//		else
+//		{
+//			width = model.getPageWidth();
+//			height = model.getPageHeight();
+//		}
+//	}
+//
+//	PageRef page = new XojPage(width, height);
+//	page->setBackgroundColor(model.getBackgroundColor());
+//
+//	if (PAGE_INSERT_TYPE_PLAIN == this->pageInserType)
+//	{
+//		page->setBackgroundType(BACKGROUND_TYPE_NONE);
+//	}
+//	else if (PAGE_INSERT_TYPE_LINED == this->pageInserType)
+//	{
+//		page->setBackgroundType(BACKGROUND_TYPE_LINED);
+//	}
+//	else if (PAGE_INSERT_TYPE_RULED == this->pageInserType)
+//	{
+//		page->setBackgroundType(BACKGROUND_TYPE_RULED);
+//	}
+//	else if (PAGE_INSERT_TYPE_GRAPH == this->pageInserType)
+//	{
+//		page->setBackgroundType(BACKGROUND_TYPE_GRAPH);
+//	}
+//	else if (PAGE_INSERT_TYPE_COPY == this->pageInserType)
+//	{
+//		PageRef current = getCurrentPage();
+//		if (!current.isValid()) // should not happen, but if you open an invalid file or something like this...
+//		{
+//			page->setBackgroundType(BACKGROUND_TYPE_LINED);
+//		}
+//		else
+//		{
+//			BackgroundType bg = current->getBackgroundType();
+//			page->setBackgroundType(bg);
+//			if (bg == BACKGROUND_TYPE_PDF)
+//			{
+//				page->setBackgroundPdfPageNr(current->getPdfPageNr());
+//			}
+//			else if (bg == BACKGROUND_TYPE_IMAGE)
+//			{
+//				page->setBackgroundImage(current->getBackgroundImage());
+//			}
+//			else
+//			{
+//				page->setBackgroundColor(current->getBackgroundColor());
+//			}
+//
+//			page->setSize(current->getWidth(), current->getHeight());
+//		}
+//	}
+//	else if (PAGE_INSERT_TYPE_PDF_BACKGROUND == this->pageInserType)
+//	{
+//		if (this->doc->getPdfPageCount() == 0)
+//		{
+//			GtkWidget* dialog = gtk_message_dialog_new(getGtkWindow(),
+//													   GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
+//													   "%s", _C("You don't have any PDF pages to select from. "
+//																"Cancel operation.\nPlease select another background type: "
+//																"Menu \"Journal\" / \"Insert Page Type\"."));
+//			gtk_window_set_transient_for(GTK_WINDOW(dialog), getGtkWindow());
+//			gtk_dialog_run(GTK_DIALOG(dialog));
+//			gtk_widget_destroy(dialog);
+//
+//			return;
+//		}
+//		else
+//		{
+//			this->doc->lock();
+//			PdfPagesDialog* dlg = new PdfPagesDialog(this->gladeSearchPath, this->doc, this->settings);
+//
+//			dlg->show(GTK_WINDOW(this->win->getWindow()));
+//
+//			int selected = dlg->getSelectedPage();
+//			delete dlg;
+//
+//			if (selected >= 0 && selected < doc->getPdfPageCount())
+//			{
+//				// no need to set a type, if we set the page number the type is also set
+//				page->setBackgroundPdfPageNr(selected);
+//
+//				XojPopplerPage* p = doc->getPdfPage(selected);
+//				page->setSize(p->getWidth(), p->getHeight());
+//			}
+//
+//			this->doc->unlock();
+//		}
+//	}
+//
+//	insertPage(page, position);
 }
 
 void Control::insertPage(PageRef page, size_t position)
@@ -1856,12 +1877,12 @@ void Control::setViewPresentationMode(bool presentationMode)
 	scrollHandler->scrollToPage(currentPage);
 }
 
-void Control::setPageInsertType(PageInsertType type)
+void Control::setPageInsertType(PageType type)
 {
 	XOJ_CHECK_TYPE(Control);
 
 	this->pageInserType = type;
-	fireActionSelected(GROUP_PAGE_INSERT_TYPE, (ActionType) (type - PAGE_INSERT_TYPE_PLAIN + ACTION_NEW_PAGE_PLAIN));
+	//TODO fireActionSelected(GROUP_PAGE_INSERT_TYPE, (ActionType) (type - PAGE_INSERT_TYPE_PLAIN + ACTION_NEW_PAGE_PLAIN));
 }
 
 bool Control::invokeCallback(CallbackData* cb)
@@ -3046,7 +3067,6 @@ void Control::clipboardPaste(Element* e)
 	win->getXournal()->getPasteTarget(x, y);
 
 	double width = e->getElementWidth();
-	double height = e->getElementHeight();
 
 	e->setX(x - width / 2);
 	e->setY(y);
@@ -3399,4 +3419,11 @@ SearchBar* Control::getSearchBar()
 	XOJ_CHECK_TYPE(Control);
 
 	return this->searchBar;
+}
+
+PageTypeHandler* Control::getPageTypes()
+{
+	XOJ_CHECK_TYPE(Control);
+
+	return this->pageTypes;
 }

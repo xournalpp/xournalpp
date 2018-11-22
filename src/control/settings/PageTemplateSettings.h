@@ -20,6 +20,8 @@
 
 using std::string;
 
+class PageType;
+
 class PageTemplateSettings
 {
 public:
@@ -52,7 +54,7 @@ public:
 	void setBackgroundColor(int backgroundColor);
 
 	BackgroundType getBackgroundType();
-	PageInsertType getPageInsertType();
+	PageType getPageInsertType();
 	void setBackgroundType(BackgroundType backgroundType);
 
 private:
