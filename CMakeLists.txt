@@ -109,7 +109,7 @@ execute_process(COMMAND ${LSB_RELEASE_EXEC} -rs
 )
 
 # Poppler
-option (BUILD_POPPLER "Build Poppler from git or other source" DEFAULT_BUILD_POOPPLER)
+option (BUILD_POPPLER "Build Poppler from git or other source" DEFAULT_BUILD_POPPLER)
 
 ## Ubuntu 16.04 need a poppler build
 if (LSB_RELEASE_ID_SHORT STREQUAL "Ubuntu" AND LSB_RELEASE_NUMBER_SHORT STREQUAL "16.04")
