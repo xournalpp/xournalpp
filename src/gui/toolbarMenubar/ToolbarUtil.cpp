@@ -39,7 +39,7 @@ cairo_surface_t* ToolbarUtil::newColorIconSurface(int color, int size, bool circ
 	int y = 0;
 	int width = size;
 
-	double radius = size / 2;
+	double radius = size / 2.0;
 
 	if (circle)
 	{

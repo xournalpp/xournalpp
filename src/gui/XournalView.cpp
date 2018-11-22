@@ -460,7 +460,7 @@ void XournalView::scrollTo(size_t pageNo, double yDocument)
 {
 	XOJ_CHECK_TYPE(XournalView);
 
-	if (pageNo < 0 || pageNo >= this->viewPagesLen)
+	if (pageNo >= this->viewPagesLen)
 	{
 		return;
 	}

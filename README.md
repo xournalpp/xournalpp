@@ -2,6 +2,12 @@
 
 [![Build Status](https://travis-ci.org/xournalpp/xournalpp.svg?branch=string_new)](https://travis-ci.org/xournalpp/xournalpp)
 [![Join the chat at https://gitter.im/xournalpp/xournalpp](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/xournalpp/xournalpp?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+<a href="https://scan.coverity.com/projects/xournal">
+  <img alt="Coverity Scan Build Status"
+       src="https://scan.coverity.com/projects/17046/badge.svg"/>
+</a>
+(Currently run manually)
+
 
 ## Features
 
