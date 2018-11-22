@@ -203,7 +203,7 @@ size_t Document::findPdfPage(size_t pdfPage)
 	for (size_t i = 0; i < getPageCount(); i++)
 	{
 		PageRef p = this->pages[i];
-		if (p->getBackgroundType() == BACKGROUND_TYPE_PDF)
+		if (p->getBackgroundType().isPdfPage())
 		{
 			if (p->getPdfPageNr() == pdfPage)
 			{

@@ -11,7 +11,7 @@
 
 #pragma once
 
-#include "PageType.h"
+#include "model/PageType.h"
 
 #include <XournalType.h>
 

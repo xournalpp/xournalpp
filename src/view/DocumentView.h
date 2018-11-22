@@ -93,6 +93,7 @@ private:
 	void paintBackgroundColor();
 	void paintBackgroundGraph();
 	void paintBackgroundRuled();
+	void paintBackgroundDotted();
 	void paintBackgroundLined();
 
 private:

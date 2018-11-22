@@ -416,6 +416,31 @@ void DocumentView::paintBackgroundGraph()
 
 const double roulingSize = 24;
 
+void DocumentView::paintBackgroundDotted()
+{
+	XOJ_CHECK_TYPE(DocumentView);
+
+	applyColor(cr, 0x40A0FF);
+
+	gdk_threads_enter();
+	cairo_set_line_width(cr, 0.5);
+
+	cairo_set_line_width(cr, 1.5);
+	cairo_set_line_cap(cr, CAIRO_LINE_CAP_ROUND);
+
+	for (double x = graphSize; x < width; x += graphSize)
+	{
+		for (double y = graphSize; y < height; y += graphSize)
+		{
+			cairo_move_to(cr, x, y);
+			cairo_line_to(cr, x, y);
+		}
+	}
+
+	cairo_stroke(cr);
+	gdk_threads_leave();
+}
+
 void DocumentView::paintBackgroundRuled()
 {
 	XOJ_CHECK_TYPE(DocumentView);
@@ -524,31 +549,37 @@ void DocumentView::finializeDrawing()
  */
 void DocumentView::drawBackground()
 {
-	if (page->getBackgroundType() == BACKGROUND_TYPE_PDF)
+	PageType pt = page->getBackgroundType();
+	if (pt.isPdfPage())
 	{
 		// Handled in PdfView
 	}
-	else if (page->getBackgroundType() == BACKGROUND_TYPE_IMAGE)
+	else if (pt.isImagePage())
 	{
 		paintBackgroundImage();
 	}
-	else if (page->getBackgroundType() == BACKGROUND_TYPE_GRAPH)
+	else if (pt.format == "graph")
 	{
 		paintBackgroundColor();
 		paintBackgroundGraph();
 	}
-	else if (page->getBackgroundType() == BACKGROUND_TYPE_LINED)
+	else if (pt.format == "lined")
 	{
 		paintBackgroundColor();
 		paintBackgroundRuled();
 		paintBackgroundLined();
 	}
-	else if (page->getBackgroundType() == BACKGROUND_TYPE_RULED)
+	else if (pt.format == "ruled")
 	{
 		paintBackgroundColor();
 		paintBackgroundRuled();
 	}
-	else if (page->getBackgroundType() == BACKGROUND_TYPE_NONE)
+	else if (pt.format == "dotted")
+	{
+		paintBackgroundColor();
+		paintBackgroundDotted();
+	}
+	else // if (pt.format == "plain")
 	{
 		paintBackgroundColor();
 	}

@@ -74,7 +74,7 @@ MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control) :
 	// "watch over" all events
 	g_signal_connect(this->window, "key-press-event", (GCallback) & onKeyPressCallback, this);
 
-	this->toolbar = new ToolMenuHandler(this->control, this->control->getPageTypes() ,this->control->getZoomControl(), this,
+	this->toolbar = new ToolMenuHandler(this->control, this->control->getPageTypeMenu() ,this->control->getZoomControl(), this,
 										this->control->getToolHandler(), GTK_WINDOW(getWindow()));
 
 	string file = gladeSearchPath->findFile("", "toolbar.ini");
