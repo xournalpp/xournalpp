@@ -22,7 +22,7 @@ Xournal++ features:
 * enhanced support for image insertion
 * Eraser with multipe configurations
 * Significantly reduced memory usage and code to detect memory leaks compared to Xournal
-* LaTeX support (requires a working LaTeX install and ```-DENABLE_MATHTEX=ON``` flag when configuring)
+* LaTeX support (requires a working LaTeX install)
 * bug reporting, autosave, and auto backup tools
 * Customizeable toolbar, with multiple configurations, e.g. to optimize toolbar for portrait / landscape
 * Page Template definitions
@@ -88,8 +88,7 @@ make
 
 On Ubuntu 16.04, `-DBUILD_POPPLER=ON` is automatically added due to #234.
 
-If you'd like to enable mathtex support you should add `-DENABLE_MATHTEX=ON` to cmake command or use `cmake-gui ..`
-to see graphically all available options. However, this should already be enabled by default.
+Use `cmake-gui ..` to see graphically all available options.
 
 The binary executable will be in `build/src/` subdirectory.
 
