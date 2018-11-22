@@ -1,6 +1,4 @@
 #include "PdfExportJob.h"
-#include "SynchronizedProgressListener.h"
-
 #include "control/Control.h"
 #include "pdf/popplerdirect/PdfExport.h"
 
@@ -64,11 +62,9 @@ void PdfExportJob::run(bool noThreads)
 {
 	XOJ_CHECK_TYPE(PdfExportJob);
 
-	SynchronizedProgressListener pglistener(this->control);
-
 	Document* doc = control->getDocument();
 	doc->lock();
-	PdfExport pdf(doc, &pglistener);
+	PdfExport pdf(doc, control);
 	doc->unlock();
 
 	if (!pdf.createPdf(this->filename))

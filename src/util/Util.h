@@ -21,6 +21,8 @@ using boost::filesystem::path;
 #include <string>
 using std::string;
 
+#include <functional>
+
 class Util
 {
 private:
@@ -48,6 +50,12 @@ public:
 	static path getConfigSubfolder(path subfolder = "");
 	static path getConfigFile(path relativeFileName = "");
 
+	/**
+	 * Execute the callback in the UI Thread.
+	 *
+	 * Make sure the container class is not deleted before the UI stuff is finished!
+	 */
+	static void execInUiThread(std::function<void()> callback);
 };
 
 static const size_t size_t_npos = static_cast<size_t>(-1);

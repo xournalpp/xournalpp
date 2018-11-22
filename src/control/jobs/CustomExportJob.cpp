@@ -1,6 +1,4 @@
 #include "CustomExportJob.h"
-#include "SynchronizedProgressListener.h"
-
 #include "control/Control.h"
 #include "gui/dialog/ExportDialog.h"
 #include "pdf/popplerdirect/PdfExport.h"
@@ -192,7 +190,6 @@ void CustomExportJob::exportPng()
 {
 	XOJ_CHECK_TYPE(CustomExportJob);
 
-	SynchronizedProgressListener pglistener(this->control);
 	// don't lock the page here for the whole flow, else we get a dead lock...
 	// the ui is blocked, so there should be no changes...
 	Document* doc = control->getDocument();
@@ -216,7 +213,7 @@ void CustomExportJob::exportPng()
 		}
 	}
 
-	pglistener.setMaximumState(selectedCount);
+	this->control->setMaximumState(selectedCount);
 
 	DocumentView view;
 	double zoom = this->pngDpi / 72.0;
@@ -232,7 +229,7 @@ void CustomExportJob::exportPng()
 
 		if (selectedPages[i])
 		{
-			pglistener.setCurrentState(current++);
+			this->control->setCurrentState(current++);
 			exportPngPage(i, id, zoom, view);
 		}
 	}
@@ -245,12 +242,11 @@ void CustomExportJob::run(bool noThreads)
 	// pdf, supports multiple Pages per document, all other formats don't
 	if (exportTypePdf)
 	{
-		SynchronizedProgressListener pglistener(this->control);
 		// don't lock the page here for the whole flow, else we get a dead lock...
 		// the ui is blocked, so there should be no changes...
 		Document* doc = control->getDocument();
 
-		PdfExport pdfe(doc, &pglistener);
+		PdfExport pdfe(doc, control);
 
 		// if (!pdfe.createPdf(this->filename, exportRange))
 
