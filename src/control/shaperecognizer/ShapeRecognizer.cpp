@@ -602,7 +602,6 @@ ShapeRecognizerResult* ShapeRecognizer::recognizePatterns(Stroke* stroke)
 			rs[i].calcSegmentGeometry(stroke->getPoints(), brk[i], brk[i + 1], ss + i);
 		}
 
-		/*
 		Stroke* tmp = NULL;
 
 		if ((tmp = tryRectangle()) != NULL)
@@ -612,7 +611,7 @@ ShapeRecognizerResult* ShapeRecognizer::recognizePatterns(Stroke* stroke)
 			RDEBUG("return tryRectangle()");
 			return result;
 		}
-
+/*
 		if ((tmp = tryArrow()) != NULL)
 		{
 			ShapeRecognizerResult* result = new ShapeRecognizerResult(tmp, this);
@@ -638,7 +637,7 @@ ShapeRecognizerResult* ShapeRecognizer::recognizePatterns(Stroke* stroke)
 		}
 		 */
 
-		//Removed complicated recognition
+		// Removed complicated recognition
 
 		if (n == 1) // current stroke is a line
 		{
@@ -667,9 +666,6 @@ ShapeRecognizerResult* ShapeRecognizer::recognizePatterns(Stroke* stroke)
 		}
 	}
 
-	/*
-	 * Removed more complicated recognition
-
 	// not a polygon: maybe a circle ?
 	Stroke* s = CircleRecognizer::recognize(stroke);
 	if (s)
@@ -678,6 +674,5 @@ ShapeRecognizerResult* ShapeRecognizer::recognizePatterns(Stroke* stroke)
 		return new ShapeRecognizerResult(s);
 	}
 
-	 */
 	return NULL;
 }

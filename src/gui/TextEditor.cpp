@@ -255,7 +255,14 @@ void TextEditor::iMPreeditChangedCallback(GtkIMContext* context, TextEditor* te)
 		goto out;
 	}
 
-	te->preeditString = str;
+	if (str != NULL)
+	{
+		te->preeditString = str;
+	}
+	else
+	{
+		te->preeditString = "";
+	}
 	te->repaintEditor();
 	te->contentsChanged();
 
