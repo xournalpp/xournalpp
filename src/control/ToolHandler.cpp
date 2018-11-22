@@ -246,107 +246,6 @@ bool ToolHandler::isEnableShapreRecognizer()
 	return current->enableShapeRecognizer;
 }
 
-void ToolHandler::setAll(bool set)
-{
-	this->setArrow(false);
-	this->setCircle(false);
-	this->setRectangle(false);
-	this->setRuler(false);
-	this->setShapeRecognizer(false);
-}
-
-void ToolHandler::setRuler(bool ruler, bool disableOthers)
-{
-	XOJ_CHECK_TYPE(ToolHandler);
-
-	if (ruler && disableOthers)
-	{
-		setAll(false);
-	}
-
-
-	this->current->ruler = ruler;
-}
-
-void ToolHandler::setRectangle(bool rectangle, bool disableOthers)
-{
-	XOJ_CHECK_TYPE(ToolHandler);
-
-	if (rectangle && disableOthers)
-	{
-		setAll(false);
-	}
-
-	this->current->rectangle = rectangle;
-}
-
-void ToolHandler::setCircle(bool circle, bool disableOthers)
-{
-	XOJ_CHECK_TYPE(ToolHandler);
-
-	if (circle && disableOthers)
-	{
-		setAll(false);
-	}
-
-	this->current->circle = circle;
-}
-
-void ToolHandler::setArrow(bool arrow, bool disableOthers)
-{
-	XOJ_CHECK_TYPE(ToolHandler);
-
-	if (arrow && disableOthers)
-	{
-		setAll(false);
-	}
-
-	this->current->arrow = arrow;
-}
-
-bool ToolHandler::isRuler()
-{
-	XOJ_CHECK_TYPE(ToolHandler);
-
-	return this->current->ruler;
-}
-
-bool ToolHandler::isRectangle()
-{
-	XOJ_CHECK_TYPE(ToolHandler);
-
-	return this->current->rectangle;
-}
-
-bool ToolHandler::isCircle()
-{
-	XOJ_CHECK_TYPE(ToolHandler);
-
-	return this->current->circle;
-}
-
-bool ToolHandler::isArrow()
-{
-	XOJ_CHECK_TYPE(ToolHandler);
-
-	return this->current->arrow;
-}
-
-void ToolHandler::setShapeRecognizer(bool reco, bool disableOthers)
-{
-	XOJ_CHECK_TYPE(ToolHandler);
-
-	if (reco && disableOthers) setAll(false);
-	this->current->shapeRecognizer = reco;
-}
-
-bool ToolHandler::isShapeRecognizer()
-{
-	XOJ_CHECK_TYPE(ToolHandler);
-
-	return this->current->shapeRecognizer;
-}
-
 ToolSize ToolHandler::getSize()
 {
 	XOJ_CHECK_TYPE(ToolHandler);
@@ -469,6 +368,20 @@ GdkColor ToolHandler::getGdkColor()
 	return Util::intToGdkColor(this->current->color);
 }
 
+DrawingType ToolHandler::getDrawingType()
+{
+	XOJ_CHECK_TYPE(ToolHandler);
+
+	return current->getDrawingType();
+}
+
+void ToolHandler::setDrawingType(DrawingType drawingType)
+{
+	XOJ_CHECK_TYPE(ToolHandler);
+
+	current->setDrawingType(drawingType);
+}
+
 void ToolHandler::setColorFound()
 {
 	XOJ_CHECK_TYPE(ToolHandler);
@@ -502,26 +415,8 @@ void ToolHandler::saveSettings()
 		{
 			st.setIntHex("color", t->getColor());
 		}
-		if (t->isEnableRuler())
-		{
-			st.setBool("ruler", t->isRuler());
-		}
-		if (t->isEnableRectangle())
-		{
-			st.setBool("rectangle", t->isRectangle());
-		}
-		if (t->isEnableCircle())
-		{
-			st.setBool("circle", t->isCircle());
-		}
-		if (t->isEnableArrow())
-		{
-			st.setBool("arrow", t->isArrow());
-		}
-		if (t->isEnableShapeRecognizer())
-		{
-			st.setBool("shapeRecognizer", t->isShapeRecognizer());
-		}
+
+		st.setString("drawingType", drawingTypeToString(t->getDrawingType()));
 
 		if (t->isEnableSize())
 		{
@@ -597,26 +492,10 @@ void ToolHandler::loadSettings()
 				t->setColor(color);
 			}
 
-			bool enabled = false;
-			if (t->isEnableRuler() && st.getBool("ruler", enabled))
+			string drawingType;
+			if (st.getString("drawingType", drawingType))
 			{
-				t->setRuler(enabled);
-			}
-			if (t->isEnableRectangle() && st.getBool("rectangle", enabled))
-			{
-				t->setRectangle(enabled);
-			}
-			if (t->isEnableCircle() && st.getBool("circle", enabled))
-			{
-				t->setCircle(enabled);
-			}
-			if (t->isEnableArrow() && st.getBool("arrow", enabled))
-			{
-				t->setArrow(enabled);
-			}
-			if (t->isEnableShapeRecognizer() && st.getBool("shapeRecognizer", enabled))
-			{
-				t->setShapeRecognizer(enabled);
+				t->setDrawingType(drawingTypeFromString(drawingType));
 			}
 
 			string value;

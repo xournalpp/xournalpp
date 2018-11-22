@@ -82,8 +82,8 @@ void XmlNode::setAttrib(const char* attrib, size_t  value)
  */
 void XmlNode::setAttrib(const char* attrib, double* value, int count)
 {
-	XOJ_CHECK_TYPE(XmlNode);	
-	
+	XOJ_CHECK_TYPE(XmlNode);
+
 	putAttrib(new DoubleArrayAttribute(attrib, value, count));
 }
 

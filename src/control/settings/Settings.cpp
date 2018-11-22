@@ -86,19 +86,19 @@ void Settings::loadDefault()
 	this->defaultSaveName = _("%F-Note-%H-%M.xoj");
 
 	// Eraser
-	this->buttonConfig[0] = new ButtonConfig(TOOL_ERASER, 0, TOOL_SIZE_NONE, DRAWING_TYPE_NONE, ERASER_TYPE_NONE);
+	this->buttonConfig[0] = new ButtonConfig(TOOL_ERASER, 0, TOOL_SIZE_NONE, DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
 	// Middle button
-	this->buttonConfig[1] = new ButtonConfig(TOOL_NONE, 0, TOOL_SIZE_NONE, DRAWING_TYPE_NONE, ERASER_TYPE_NONE);
+	this->buttonConfig[1] = new ButtonConfig(TOOL_NONE, 0, TOOL_SIZE_NONE, DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
 	// Right button
-	this->buttonConfig[2] = new ButtonConfig(TOOL_NONE, 0, TOOL_SIZE_NONE, DRAWING_TYPE_NONE, ERASER_TYPE_NONE);
+	this->buttonConfig[2] = new ButtonConfig(TOOL_NONE, 0, TOOL_SIZE_NONE, DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
 	// Touch
-	this->buttonConfig[3] = new ButtonConfig(TOOL_NONE, 0, TOOL_SIZE_NONE, DRAWING_TYPE_NONE, ERASER_TYPE_NONE);
+	this->buttonConfig[3] = new ButtonConfig(TOOL_NONE, 0, TOOL_SIZE_NONE, DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
 	// Default config
-	this->buttonConfig[4] = new ButtonConfig(TOOL_PEN, 0, TOOL_SIZE_FINE, DRAWING_TYPE_NONE, ERASER_TYPE_NONE);
+	this->buttonConfig[4] = new ButtonConfig(TOOL_PEN, 0, TOOL_SIZE_FINE, DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
 	// Pen button 1
-	this->buttonConfig[5] = new ButtonConfig(TOOL_NONE, 0, TOOL_SIZE_NONE, DRAWING_TYPE_NONE, ERASER_TYPE_NONE);
+	this->buttonConfig[5] = new ButtonConfig(TOOL_NONE, 0, TOOL_SIZE_NONE, DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
 	// Pen button 2
-	this->buttonConfig[6] = new ButtonConfig(TOOL_NONE, 0, TOOL_SIZE_NONE, DRAWING_TYPE_NONE, ERASER_TYPE_NONE);
+	this->buttonConfig[6] = new ButtonConfig(TOOL_NONE, 0, TOOL_SIZE_NONE, DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
 
 	this->fullscreenHideElements = "mainMenubar";
 	this->presentationHideElements = "mainMenubar,sidebarContents";
@@ -423,49 +423,10 @@ void Settings::loadButtonConfig()
 
 			if (type == TOOL_PEN || type == TOOL_HILIGHTER)
 			{
-				bool change = false;
-				bool ruler = false;
-				bool rectangle = false;
-				bool circle = false;
-				bool arrow = false;
-				bool shapeRecognizer = false;
-				e.getBool("changeRulerShapeRecognizer", change);
-				e.getBool("ruler", ruler);
-				e.getBool("rectangle", rectangle);
-				e.getBool("circle", circle);
-				e.getBool("arrow", arrow);
-				e.getBool("shapeRecognizer", shapeRecognizer);
-
-				if (!change)
+				string drawingType;
+				if (e.getString("drawingType", drawingType))
 				{
-					cfg->drawingType = DRAWING_TYPE_DONT_CHANGE;
-				}
-				else
-				{
-					if (ruler)
-					{
-						cfg->drawingType = DRAWING_TYPE_RULER;
-					}
-					else if (rectangle)
-					{
-						cfg->drawingType = DRAWING_TYPE_RECTANGLE;
-					}
-					else if (circle)
-					{
-						cfg->drawingType = DRAWING_TYPE_CIRCLE;
-					}
-					else if (arrow)
-					{
-						cfg->drawingType = DRAWING_TYPE_ARROW;
-					}
-					else if (shapeRecognizer)
-					{
-						cfg->drawingType = DRAWING_TYPE_STROKE_RECOGNIZER;
-					}
-					else
-					{
-						cfg->drawingType = DRAWING_TYPE_NONE;
-					}
+					cfg->drawingType = drawingTypeFromString(drawingType);
 				}
 
 				string sSize;
@@ -621,82 +582,7 @@ void Settings::saveButtonConfig()
 
 		if (type == TOOL_PEN || type == TOOL_HILIGHTER)
 		{
-			bool change = false;
-			bool ruler = false;
-			bool rectangle = false;
-			bool circle = false;
-			bool arrow = false;
-			bool shapeRecognizer = false;
-			if (cfg->drawingType == DRAWING_TYPE_DONT_CHANGE)
-			{
-				change = false;
-				ruler = false;
-				rectangle = false;
-				circle = false;
-				arrow = false;
-				shapeRecognizer = false;
-			}
-			else if (cfg->drawingType == DRAWING_TYPE_STROKE_RECOGNIZER)
-			{
-				change = true;
-				ruler = false;
-				rectangle = false;
-				circle = false;
-				arrow = false;
-				shapeRecognizer = true;
-			}
-			else if (cfg->drawingType == DRAWING_TYPE_RULER)
-			{
-				change = true;
-				ruler = true;
-				rectangle = false;
-				circle = false;
-				arrow = false;
-				shapeRecognizer = false;
-			}
-			else if (cfg->drawingType == DRAWING_TYPE_RECTANGLE)
-			{
-				change = true;
-				ruler = false;
-				rectangle = true;
-				circle = false;
-				arrow = false;
-				shapeRecognizer = false;
-			}
-			else if (cfg->drawingType == DRAWING_TYPE_CIRCLE)
-			{
-				change = true;
-				ruler = false;
-				rectangle = false;
-				circle = true;
-				arrow = false;
-				shapeRecognizer = false;
-			}
-			else if (cfg->drawingType == DRAWING_TYPE_ARROW)
-			{
-				change = true;
-				ruler = false;
-				rectangle = false;
-				circle = false;
-				arrow = true;
-				shapeRecognizer = false;
-			}
-			else if (cfg->drawingType == DRAWING_TYPE_NONE)
-			{
-				change = true;
-				ruler = false;
-				rectangle = false;
-				circle = false;
-				arrow = false;
-				shapeRecognizer = false;
-			}
-
-			e.setBool("changeRulerShapeRecognizer", change);
-			e.setBool("ruler", ruler);
-			e.setBool("rectangle", rectangle);
-			e.setBool("circle", circle);
-			e.setBool("arrow", arrow);
-			e.setBool("shapeRecognizer", shapeRecognizer);
+			e.setString("drawingType", drawingTypeToString(cfg->drawingType));
 			e.setString("size", toolSizeToString(cfg->size));
 		} // end if pen or highlighter
 

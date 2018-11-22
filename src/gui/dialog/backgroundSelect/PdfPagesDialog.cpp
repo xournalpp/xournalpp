@@ -14,8 +14,6 @@ PdfPagesDialog::PdfPagesDialog(GladeSearchpath* gladeSearchPath, Document* doc, 
 {
 	XOJ_INIT_TYPE(PdfPagesDialog);
 
-	printf("pdfpages: %i\n", doc->getPdfPageCount());
-
 	for (size_t i = 0; i < doc->getPdfPageCount(); i++)
 	{
 		XojPopplerPage* p = doc->getPdfPage(i);

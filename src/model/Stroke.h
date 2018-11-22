@@ -100,9 +100,9 @@ private:
 	int pointCount;
 	int pointAllocCount;
 
-	//stroke timestamp
-	int timestamp=0;
-	string audioFilename="";
+	// Stroke timestamp, to match it to the audio stream
+	int timestamp;
+	string audioFilename;
 
 	EraseableStroke* eraseable;
 };

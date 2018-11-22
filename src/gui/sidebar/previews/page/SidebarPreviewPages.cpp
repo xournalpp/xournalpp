@@ -99,7 +99,7 @@ void SidebarPreviewPages::pageDeleted(size_t page)
 {
 	XOJ_CHECK_TYPE(SidebarPreviewPages);
 
-	if (page < 0 || page >= previews.size())
+	if (page >= previews.size())
 	{
 		return;
 	}

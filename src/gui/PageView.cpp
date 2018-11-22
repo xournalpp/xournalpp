@@ -334,7 +334,8 @@ void XojPageView::playObjectAt(double x, double y)
 	XOJ_CHECK_TYPE(XojPageView);
 
 	int selected = this->page->getSelectedLayerId();
-	GdkRectangle matchRect = { gint(x - 10), gint(y - 10), 20, 20 };
+	GdkRectangle matchRect =
+	{ gint(x - 10), gint(y - 10), 20, 20 };
 
 	Stroke* strokeMatch = NULL;
 	double gap = 1000000000;
@@ -359,38 +360,39 @@ void XojPageView::playObjectAt(double x, double y)
 						gap = tmpGap;
 						strokeMatch = s;
 
-	                                        int ts = s->getTimestamp();
-	                                        int buffer = 5;
+						int ts = s->getTimestamp();
+						int buffer = 5;
 
-                                                if(ts >= buffer)
-                                                {
-                                                        ts -= buffer;
-                                                }
-                                                else
-                                                {
-                                                        ts = 0;
-                                                }
+						if (ts >= buffer)
+						{
+							ts -= buffer;
+						}
+						else
+						{
+							ts = 0;
+						}
 
-                                                string fn = s->getAudioFilename();
+						string fn = s->getAudioFilename();
 
-                                                if(fn != lastfn)
-                                                {
-                                                        if(fn != "")
-                                                        {
-                                                                lastfn = fn;
-                                                                string command("vlc --qt-start-minimized "+audioFolder+fn+" --start-time="+ \
-                                                                        std::to_string(ts)+" &>/dev/null &");
-																std::cout<<"command: "<<command<<std::endl;
-                                                                system(command.c_str());
-                                                        }
-                                                }
-                                                else
-                                                {
-                                                        string command("curl -s -u \"\":\"password\" \
-                                                                --url \"http://127.0.0.1:8080/requests/status.xml?command=seek&val="+ \
-                                                                std::to_string(ts)+"\" >/dev/null");
-                                                        system(command.c_str());
-                                                }
+						if (fn != lastfn)
+						{
+							if (fn != "")
+							{
+								lastfn = fn;
+								string command(
+										"vlc --qt-start-minimized " + audioFolder + fn + " --start-time="
+												+ std::to_string(ts) + " &>/dev/null &");
+								std::cout << "command: " << command << std::endl;
+								system(command.c_str());
+							}
+						}
+						else
+						{
+							string command(
+									"curl -s -u \"\":\"password\" --url \"http://127.0.0.1:8080/requests/status.xml?command=seek&val="
+											+ std::to_string(ts) + "\" >/dev/null");
+							system(command.c_str());
+						}
 					}
 				}
 				else
@@ -494,19 +496,19 @@ bool XojPageView::onButtonPressEvent(GtkWidget* widget, GdkEventButton* event)
 		delete this->inputHandler;
 		this->inputHandler = NULL;
 
-		if (h->isRuler())
+		if (h->getDrawingType() == DRAWING_TYPE_LINE)
 		{
 			this->inputHandler = new RulerHandler(this->xournal, this, getPage());
 		}
-		else if (h->isRectangle())
+		else if (h->getDrawingType() == DRAWING_TYPE_RECTANGLE)
 		{
 			this->inputHandler = new RectangleHandler(this->xournal, this, getPage());
 		}
-		else if (h->isCircle())
+		else if (h->getDrawingType() == DRAWING_TYPE_CIRCLE)
 		{
 			this->inputHandler = new CircleHandler(this->xournal, this, getPage());
 		}
-		else if (h->isArrow())
+		else if (h->getDrawingType() == DRAWING_TYPE_ARROW)
 		{
 			this->inputHandler = new ArrowHandler(this->xournal, this, getPage());
 		}

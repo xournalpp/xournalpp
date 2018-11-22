@@ -159,7 +159,7 @@ void StrokeHandler::onButtonReleaseEvent(GdkEventButton* event)
 
 	ToolHandler* h = xournal->getControl()->getToolHandler();
 
-	if(h->isShapeRecognizer())
+	if (h->getDrawingType() == DRAWING_TYPE_STROKE_RECOGNIZER)
 	{
 		if (reco == NULL)
 		{

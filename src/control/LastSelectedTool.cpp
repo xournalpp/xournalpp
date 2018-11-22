@@ -8,6 +8,7 @@ LastSelectedTool::LastSelectedTool(Tool* tool)
 
 	this->color = tool->getColor();
 	this->size = tool->getSize();
+	this->drawingType = tool->getDrawingType();
 }
 
 LastSelectedTool::~LastSelectedTool()
@@ -26,6 +27,7 @@ Tool* LastSelectedTool::restoreAndGet()
 
 	tool->setColor(this->color);
 	tool->setSize(this->size);
+	tool->setDrawingType(this->drawingType);
 
 	return tool;
 }

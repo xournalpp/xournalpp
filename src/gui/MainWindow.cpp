@@ -380,7 +380,7 @@ void MainWindow::buttonCloseSidebarClicked(GtkButton* button, MainWindow* win)
 
 bool MainWindow::onKeyPressCallback(GtkWidget* widget, GdkEventKey* event, MainWindow* win)
 {
-	
+
 	if (win->getXournal()->getSelection())
 	{
 		//something is selected - give that control

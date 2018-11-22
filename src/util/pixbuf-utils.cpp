@@ -54,8 +54,6 @@ cairo_surface_t*
 f_image_surface_create(cairo_format_t format, int width, int height)
 {
 	int size;
-	cairo_surface_t* surface;
-	unsigned char* pixels;
 
 	switch (format)
 	{
@@ -71,8 +69,8 @@ f_image_surface_create(cairo_format_t format, int width, int height)
 		break;
 	}
 
-	pixels = (unsigned char*) g_malloc(width * height * size);
-	surface = cairo_image_surface_create_for_data(pixels, format, width, height, width * size);
+	unsigned char* pixels = (unsigned char*) g_malloc(width * height * size);
+	cairo_surface_t* surface = cairo_image_surface_create_for_data(pixels, format, width, height, width * size);
 
 	cairo_surface_set_user_data(surface, &pixel_key, pixels, g_free);
 	cairo_surface_set_user_data(surface, &format_key, GINT_TO_POINTER(format), NULL);
@@ -111,11 +109,8 @@ f_pixbuf_to_cairo_surface(GdkPixbuf* pixbuf)
 	guchar* gdk_pixels = gdk_pixbuf_get_pixels(pixbuf);
 	int gdk_rowstride = gdk_pixbuf_get_rowstride(pixbuf);
 	int n_channels = gdk_pixbuf_get_n_channels(pixbuf);
-	guchar* cairo_pixels;
-	cairo_format_t format;
-	cairo_surface_t* surface;
-	int j;
 
+	cairo_format_t format;
 	if (n_channels == 3)
 	{
 		format = CAIRO_FORMAT_RGB24;
@@ -125,10 +120,10 @@ f_pixbuf_to_cairo_surface(GdkPixbuf* pixbuf)
 		format = CAIRO_FORMAT_ARGB32;
 	}
 
-	surface = f_image_surface_create(format, width, height);
-	cairo_pixels = (guchar*) f_image_surface_get_data(surface);
+	cairo_surface_t* surface = f_image_surface_create(format, width, height);
+	guchar* cairo_pixels = (guchar*) f_image_surface_get_data(surface);
 
-	for (j = height; j; j--)
+	for (int j = height; j; j--)
 	{
 		guchar* p = gdk_pixels;
 		guchar* q = cairo_pixels;
@@ -209,12 +204,9 @@ static cairo_surface_t*
 gdk_cairo_surface_coerce_to_image(cairo_surface_t* surface, cairo_content_t content,
 								  int src_x, int src_y, int width, int height)
 {
-	cairo_surface_t* copy;
-	cairo_t* cr;
+	cairo_surface_t* copy = cairo_image_surface_create(gdk_cairo_format_for_content(content), width, height);
 
-	copy = cairo_image_surface_create(gdk_cairo_format_for_content(content), width, height);
-
-	cr = cairo_create(copy);
+	cairo_t* cr = cairo_create(copy);
 	cairo_set_operator(cr, CAIRO_OPERATOR_SOURCE);
 	cairo_set_source_surface(cr, surface, -src_x, -src_y);
 	cairo_paint(cr);
@@ -227,15 +219,13 @@ static void
 convert_alpha(guchar* dest_data, int dest_stride, guchar* src_data, int src_stride,
 			  int src_x, int src_y, int width, int height)
 {
-	int x, y;
-
 	src_data += src_stride * src_y + src_x * 4;
 
-	for (y = 0; y < height; y++)
+	for (int y = 0; y < height; y++)
 	{
 		guint32* src = (guint32*) src_data;
 
-		for (x = 0; x < width; x++)
+		for (int x = 0; x < width; x++)
 		{
 			guint alpha = src[x] >> 24;
 
@@ -263,15 +253,13 @@ static void
 convert_no_alpha(guchar* dest_data, int dest_stride, guchar* src_data, int src_stride,
 				 int src_x, int src_y, int width, int height)
 {
-	int x, y;
-
 	src_data += src_stride * src_y + src_x * 4;
 
-	for (y = 0; y < height; y++)
+	for (int y = 0; y < height; y++)
 	{
 		guint32* src = (guint32*) src_data;
 
-		for (x = 0; x < width; x++)
+		for (int x = 0; x < width; x++)
 		{
 			dest_data[x * 3 + 0] = src[x] >> 16;
 			dest_data[x * 3 + 1] = src[x] >>  8;
@@ -305,15 +293,12 @@ convert_no_alpha(guchar* dest_data, int dest_stride, guchar* src_data, int src_s
 GdkPixbuf*
 xoj_pixbuf_get_from_surface(cairo_surface_t* surface, gint src_x, gint src_y, gint width, gint height)
 {
-	cairo_content_t content;
-	GdkPixbuf* dest;
-
 	/* General sanity checks */
 	g_return_val_if_fail(surface != NULL, NULL);
 	g_return_val_if_fail(width > 0 && height > 0, NULL);
 
-	content = (cairo_content_t) (cairo_surface_get_content(surface) | CAIRO_CONTENT_COLOR);
-	dest = gdk_pixbuf_new(GDK_COLORSPACE_RGB, !!(content & CAIRO_CONTENT_ALPHA), 8, width, height);
+	cairo_content_t content = (cairo_content_t) (cairo_surface_get_content(surface) | CAIRO_CONTENT_COLOR);
+	GdkPixbuf* dest = gdk_pixbuf_new(GDK_COLORSPACE_RGB, !!(content & CAIRO_CONTENT_ALPHA), 8, width, height);
 
 	surface = gdk_cairo_surface_coerce_to_image(surface, content, src_x, src_y, width, height);
 	cairo_surface_flush(surface);

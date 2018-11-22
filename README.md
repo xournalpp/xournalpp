@@ -2,6 +2,12 @@
 
 [![Build Status](https://travis-ci.org/xournalpp/xournalpp.svg?branch=string_new)](https://travis-ci.org/xournalpp/xournalpp)
 [![Join the chat at https://gitter.im/xournalpp/xournalpp](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/xournalpp/xournalpp?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+<a href="https://scan.coverity.com/projects/xournal">
+  <img alt="Coverity Scan Build Status"
+       src="https://scan.coverity.com/projects/17046/badge.svg"/>
+</a>
+(Currently run manually)
+
 
 ## Features
 
@@ -16,7 +22,7 @@ Xournal++ features:
 * enhanced support for image insertion
 * Eraser with multipe configurations
 * Significantly reduced memory usage and code to detect memory leaks compared to Xournal
-* LaTeX support (requires a working LaTeX install and ```-DENABLE_MATHTEX=ON``` flag when configuring)
+* LaTeX support (requires a working LaTeX install)
 * bug reporting, autosave, and auto backup tools
 * Customizeable toolbar, with multiple configurations, e.g. to optimize toolbar for portrait / landscape
 * Page Template definitions
@@ -82,8 +88,7 @@ make
 
 On Ubuntu 16.04, `-DBUILD_POPPLER=ON` is automatically added due to #234.
 
-If you'd like to enable mathtex support you should add `-DENABLE_MATHTEX=ON` to cmake command or use `cmake-gui ..`
-to see graphically all available options. However, this should already be enabled by default.
+Use `cmake-gui ..` to see graphically all available options.
 
 The binary executable will be in `build/src/` subdirectory.
 

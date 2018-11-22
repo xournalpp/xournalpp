@@ -16,9 +16,12 @@
 
 #include <XournalType.h>
 
-class ToolMenuHandler;
+#include <vector>
 
-#define ToolDrawCombocontrol_EntryCount 5
+using std::vector;
+
+class ToolMenuHandler;
+class ToolDrawType;
 
 class ToolDrawCombocontrol : public ToolButton
 {
@@ -41,5 +44,5 @@ private:
 	GtkWidget* iconWidget;
 	GtkWidget* labelWidget;
 
-	GdkPixbuf* icons[ToolDrawCombocontrol_EntryCount];
+	vector<ToolDrawType *> drawTypes;
 };
