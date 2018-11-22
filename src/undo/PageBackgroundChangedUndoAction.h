@@ -16,10 +16,11 @@
 #include "model/BackgroundImage.h"
 #include "model/PageRef.h"
 
+
 class PageBackgroundChangedUndoAction : public UndoAction
 {
 public:
-	PageBackgroundChangedUndoAction(PageRef page, BackgroundType origType, int origPdfPage,
+	PageBackgroundChangedUndoAction(PageRef page, PageType origType, int origPdfPage,
 									BackgroundImage origBackgroundImage, double origW, double origH);
 	virtual ~PageBackgroundChangedUndoAction();
 
@@ -32,13 +33,13 @@ public:
 private:
 	XOJ_TYPE_ATTRIB;
 
-	BackgroundType origType;
+	PageType origType;
 	int origPdfPage;
 	BackgroundImage origBackgroundImage;
 	double origW;
 	double origH;
 
-	BackgroundType newType;
+	PageType newType;
 	int newPdfPage;
 	BackgroundImage newBackgroundImage;
 	double newW;

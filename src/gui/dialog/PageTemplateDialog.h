@@ -13,24 +13,16 @@
 
 #include "control/settings/Settings.h"
 #include "gui/GladeGui.h"
-#include "model/BackgroundType.h"
 #include "control/settings/PageTemplateSettings.h"
 
 #include <XournalType.h>
 
-#include <vector>
-
-using std::vector;
-
-typedef struct {
-	string name;
-	BackgroundType type;
-} PageFormat;
+class PageTypeHandler;
 
 class PageTemplateDialog : public GladeGui
 {
 public:
-	PageTemplateDialog(GladeSearchpath* gladeSearchPath, Settings* settings);
+	PageTemplateDialog(GladeSearchpath* gladeSearchPath, Settings* settings, PageTypeHandler* types);
 	virtual ~PageTemplateDialog();
 
 public:
@@ -55,8 +47,6 @@ private:
 	Settings* settings;
 
 	PageTemplateSettings model;
-
-	vector<PageFormat> formatList;
 
 	/**
 	 * The dialog was confirmed / saved

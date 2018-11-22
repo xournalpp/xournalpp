@@ -262,31 +262,20 @@ void LoadHandler::parseBgSolid()
 {
 	XOJ_CHECK_TYPE(LoadHandler);
 
+	PageType bg;
 	const char* style = LoadHandlerHelper::getAttrib("style", false, this);
-
-	if (strcmp("plain", style) == 0)
+	if (style != NULL)
 	{
-		this->page->setBackgroundType(BACKGROUND_TYPE_NONE);
-	}
-	else if (strcmp("lined", style) == 0)
-	{
-		this->page->setBackgroundType(BACKGROUND_TYPE_LINED);
-	}
-	else if (strcmp("ruled", style) == 0)
-	{
-		this->page->setBackgroundType(BACKGROUND_TYPE_RULED);
-	}
-	else if (strcmp("graph", style) == 0)
-	{
-		this->page->setBackgroundType(BACKGROUND_TYPE_GRAPH);
-	}
-	else
-	{
-		this->page->setBackgroundType(BACKGROUND_TYPE_NONE);
-		error("%s", FC(_F("Unknown background type parsed: \"{1}\"") % style));
+		bg.format = style;
 	}
 
+	const char* config = LoadHandlerHelper::getAttrib("config", false, this);
+	if (config != NULL)
+	{
+		bg.config = config;
+	}
 
+	this->page->setBackgroundType(bg);
 
 	int color = LoadHandlerHelper::parseBackgroundColor(this);
 	this->page->setBackgroundColor(color);
@@ -342,7 +331,11 @@ void LoadHandler::parseBgPixmap()
 	{
 		error("%s", FC(_F("Unknown pixmap::domain type: {1}") % domain));
 	}
-	this->page->setBackgroundType(BACKGROUND_TYPE_IMAGE);
+
+	PageType bg;
+	bg.format = ":image";
+
+	this->page->setBackgroundType(bg);
 }
 
 void LoadHandler::parseBgPdf()
@@ -459,7 +452,9 @@ void LoadHandler::parsePage()
 		{
 			if (this->removePdfBackgroundFlag)
 			{
-				this->page->setBackgroundType(BACKGROUND_TYPE_NONE);
+				PageType bg;
+				bg.format = "plain";
+				this->page->setBackgroundType(bg);
 				this->page->setBackgroundColor(0xffffff);
 			}
 			else

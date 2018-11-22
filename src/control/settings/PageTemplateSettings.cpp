@@ -1,6 +1,5 @@
 #include "PageTemplateSettings.h"
 
-#include "control/pagetype/PageType.h"
 #include "control/xojfile/SaveHandler.h"
 
 #include <sstream>
@@ -11,10 +10,11 @@ PageTemplateSettings::PageTemplateSettings()
  : copyLastPageSettings(true),
    pageWidth(595.275591),
    pageHeight(841.889764),
-   backgroundColor(0xffffff),
-   backgroundType(BACKGROUND_TYPE_LINED)
+   backgroundColor(0xffffff)
 {
 	XOJ_INIT_TYPE(PageTemplateSettings);
+
+	backgroundType.format = "lined";
 }
 
 PageTemplateSettings::~PageTemplateSettings()
@@ -79,44 +79,28 @@ void PageTemplateSettings::setBackgroundColor(int backgroundColor)
 	this->backgroundColor = backgroundColor;
 }
 
-BackgroundType PageTemplateSettings::getBackgroundType()
+PageType PageTemplateSettings::getBackgroundType()
 {
 	XOJ_CHECK_TYPE(PageTemplateSettings);
 
 	return backgroundType;
 }
 
-// TODO !!!!!!!
 PageType PageTemplateSettings::getPageInsertType()
 {
 	XOJ_CHECK_TYPE(PageTemplateSettings);
-//
-//	if (copyLastPageSettings)
-//	{
-//		return PAGE_INSERT_TYPE_COPY;
-//	}
-//
-//	switch (backgroundType)
-//	{
-//	case BACKGROUND_TYPE_NONE:
-//		return PAGE_INSERT_TYPE_PLAIN;
-//	case BACKGROUND_TYPE_PDF:
-//		return PAGE_INSERT_TYPE_PDF_BACKGROUND;
-//	case BACKGROUND_TYPE_LINED:
-//		return PAGE_INSERT_TYPE_LINED;
-//	case BACKGROUND_TYPE_RULED:
-//		return PAGE_INSERT_TYPE_RULED;
-//	case BACKGROUND_TYPE_GRAPH:
-//		return PAGE_INSERT_TYPE_GRAPH;
-//	default:
-//		return PAGE_INSERT_TYPE_PLAIN;
-//	}
 
-	PageType pt;
-	return pt;
+	if (copyLastPageSettings)
+	{
+		PageType pt;
+		pt.format = ":copy";
+		return pt;
+	}
+
+	return backgroundType;
 }
 
-void PageTemplateSettings::setBackgroundType(BackgroundType backgroundType)
+void PageTemplateSettings::setBackgroundType(PageType backgroundType)
 {
 	XOJ_CHECK_TYPE(PageTemplateSettings);
 
@@ -172,22 +156,11 @@ bool PageTemplateSettings::parse(string tpl)
 		}
 		else if (key == "backgroundType")
 		{
-			if (value == "plain")
-			{
-				backgroundType = BACKGROUND_TYPE_NONE;
-			}
-			else if (value == "lined")
-			{
-				backgroundType = BACKGROUND_TYPE_LINED;
-			}
-			else if (value == "ruled")
-			{
-				backgroundType = BACKGROUND_TYPE_RULED;
-			}
-			else if (value == "graph")
-			{
-				backgroundType = BACKGROUND_TYPE_GRAPH;
-			}
+			this->backgroundType.format = value;
+		}
+		else if (key == "backgroundTypeConfig")
+		{
+			this->backgroundType.config = value;
 		}
 	}
 
@@ -205,7 +178,8 @@ string PageTemplateSettings::toString()
 
 	str += string("copyLastPageSettings=") + (copyLastPageSettings ? "true" : "false") + "\n";
 	str += string("size=") + std::to_string(pageWidth) + "x" + std::to_string(pageHeight) + "\n";
-	str += string("backgroundType=") + SaveHandler::getSolidBgStr(backgroundType) + "\n";
+	str += string("backgroundType=") + backgroundType.format + "\n";
+	str += string("backgroundTypeConfig=") + backgroundType.config + "\n";
 
 	char buffer[64];
 	sprintf(buffer, "#%06x", this->backgroundColor);

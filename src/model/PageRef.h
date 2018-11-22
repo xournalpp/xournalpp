@@ -11,7 +11,6 @@
 
 #pragma once
 
-#include "BackgroundType.h"
 #include "XojPage.h"
 
 #include <XournalType.h>

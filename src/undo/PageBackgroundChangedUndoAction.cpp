@@ -5,10 +5,10 @@
 
 #include <i18n.h>
 
-PageBackgroundChangedUndoAction::PageBackgroundChangedUndoAction(PageRef page, BackgroundType origType, int origPdfPage,
+PageBackgroundChangedUndoAction::PageBackgroundChangedUndoAction(PageRef page, PageType origType, int origPdfPage,
 																 BackgroundImage origBackgroundImage,
 																 double origW, double origH)
-		: UndoAction("PageBackgroundChangedUndoAction")
+ : UndoAction("PageBackgroundChangedUndoAction")
 {
 	XOJ_INIT_TYPE(PageBackgroundChangedUndoAction);
 
@@ -21,7 +21,7 @@ PageBackgroundChangedUndoAction::PageBackgroundChangedUndoAction(PageRef page, B
 	this->newW = 0;
 	this->newH = 0;
 	this->newPdfPage = -1;
-	this->newType = BACKGROUND_TYPE_NONE;
+	this->newType.format = "plain";
 }
 
 PageBackgroundChangedUndoAction::~PageBackgroundChangedUndoAction()
@@ -53,11 +53,11 @@ bool PageBackgroundChangedUndoAction::undo(Control* control)
 	}
 
 	this->page->setBackgroundType(this->origType);
-	if (this->origType == BACKGROUND_TYPE_PDF)
+	if (this->origType.isPdfPage())
 	{
 		this->page->setBackgroundPdfPageNr(this->origPdfPage);
 	}
-	else if (this->origType == BACKGROUND_TYPE_IMAGE)
+	else if (this->origType.isImagePage())
 	{
 		this->page->setBackgroundImage(this->origBackgroundImage);
 	}
@@ -87,11 +87,11 @@ bool PageBackgroundChangedUndoAction::redo(Control* control)
 	}
 
 	this->page->setBackgroundType(this->newType);
-	if (this->newType == BACKGROUND_TYPE_PDF)
+	if (this->newType.isPdfPage())
 	{
 		this->page->setBackgroundPdfPageNr(this->newPdfPage);
 	}
-	else if (this->newType == BACKGROUND_TYPE_IMAGE)
+	else if (this->newType.isImagePage())
 	{
 		this->page->setBackgroundImage(this->newBackgroundImage);
 	}

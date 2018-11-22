@@ -131,13 +131,6 @@ void AbstractToolItem::setPopupMenu(GtkWidget* popupMenu)
 	this->popupMenu = popupMenu;
 }
 
-GtkWidget* AbstractToolItem::getPopupMenu()
-{
-	XOJ_CHECK_TYPE(AbstractToolItem);
-
-	return this->popupMenu;
-}
-
 bool AbstractToolItem::isUsed()
 {
 	XOJ_CHECK_TYPE(AbstractToolItem);
