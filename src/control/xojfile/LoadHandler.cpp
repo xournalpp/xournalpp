@@ -28,13 +28,14 @@
 
 LoadHandler::LoadHandler()
  : doc(&dHanlder),
-   loadedTimeStamp(0)
+   loadedTimeStamp(0),
+   pos(PARSER_POS_NOT_STARTED),
+   removePdfBackgroundFlag(false),
+   pdfReplacementAttach(false)
 {
 	XOJ_INIT_TYPE(LoadHandler);
 
 	initAttributes();
-	this->removePdfBackgroundFlag = false;
-	this->pdfReplacementAttach = false;
 }
 
 LoadHandler::~LoadHandler()
