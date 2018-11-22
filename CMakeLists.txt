@@ -331,13 +331,15 @@ if (BUILD_POPPLER)
 
 	install(DIRECTORY DESTINATION ${CMAKE_INSTALL_PREFIX})
 
-	set(POPPLER_LIB ${POPPLER_LIB_DIR}/libpoppler.so.72)
-	install(FILES ${CMAKE_CURRENT_BINARY_DIR}/poppler-prefix/src/poppler-build/libpoppler.so.72.0.0 DESTINATION ${POPPLER_LIB_DIR} RENAME libpoppler.so.72)
-	install(CODE "file(APPEND ${CMAKE_CURRENT_BINARY_DIR}/install_manifest_workaround.txt \"${POPPLER_LIB}\")")
+	install(
+	  CODE "file(GLOB POPPLER_LIBS LIST_DIRECTORIES false \"\${CMAKE_CURRENT_BINARY_DIR}/poppler-prefix/src/poppler-build/libpoppler.so.*\")"
+	  CODE "file(INSTALL \${POPPLER_LIBS} DESTINATION ${POPPLER_LIB_DIR})"
+	)
 
-	set(POPPLER_GLIB_LIB ${POPPLER_LIB_DIR}/libpoppler-glib.so.8)
-	install(FILES ${CMAKE_CURRENT_BINARY_DIR}/poppler-prefix/src/poppler-build/glib/libpoppler-glib.so.8.9.0 DESTINATION ${POPPLER_LIB_DIR} RENAME libpoppler-glib.so.8)
-	install(CODE "file(APPEND ${CMAKE_CURRENT_BINARY_DIR}/install_manifest_workaround.txt \"${POPPLER_GLIB_LIB}\")")
+	install(
+	  CODE "file(GLOB POPPLER_GLIB_LIBS LIST_DIRECTORIES false \"\${CMAKE_CURRENT_BINARY_DIR}/poppler-prefix/src/poppler-build/glib/libpoppler-glib.so.*\")"
+	  CODE "file(INSTALL \${POPPLER_GLIB_LIBS} DESTINATION ${POPPLER_LIB_DIR})"
+	)
 endif()
 
 # Uninstall target
