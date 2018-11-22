@@ -125,12 +125,9 @@ void XournalMain::checkForErrorlog()
 		{
 			if (!bf::remove(errorlogPath))
 			{
-				GtkWidget* dlgError = gtk_message_dialog_new(NULL, GTK_DIALOG_MODAL,
-					GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, "%s",
-					FC(_F("Errorlog cannot be deleted. You have to do it manually.\nLogfile: {1}")
-						% errorlogPath.string()));
-				gtk_dialog_run(GTK_DIALOG(dlgError));
-				gtk_widget_destroy(dlgError);
+				string msg = FS(_F("Errorlog cannot be deleted. You have to do it manually.\nLogfile: {1}")
+						% errorlogPath.string());
+				Util::showErrorToUser(NULL, msg);
 			}
 		}
 		else if (res == 5) // Cancel
@@ -283,13 +280,9 @@ int XournalMain::run(int argc, char* argv[])
 	{
 		if (g_strv_length(optFilename) != 1)
 		{
-			GtkWidget* dialog = gtk_message_dialog_new((GtkWindow*) *win,
-													GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
-													"%s", _C("Sorry, Xournal++ can only open one file from the command line.\n"
-															 "Others are ignored."));
-			gtk_window_set_transient_for(GTK_WINDOW(dialog), GTK_WINDOW(win->getWindow()));
-			gtk_dialog_run(GTK_DIALOG(dialog));
-			gtk_widget_destroy(dialog);
+			string msg = FC(_("Sorry, Xournal++ can only open one file from the command line.\n"
+					 "Others are ignored."));
+			Util::showErrorToUser((GtkWindow*) *win, msg);
 		}
 
 		GFile* file = g_file_new_for_commandline_arg(optFilename[0]);
@@ -306,13 +299,9 @@ int XournalMain::run(int argc, char* argv[])
 		}
 		else
 		{
-			GtkWidget* dialog = gtk_message_dialog_new((GtkWindow*) *win,
-													   GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
-													   "%s", _C("Sorry, Xournal++ cannot open remote files at the moment.\n"
-																"You have to copy the file to a local directory."));
-			gtk_window_set_transient_for(GTK_WINDOW(dialog), GTK_WINDOW(win->getWindow()));
-			gtk_dialog_run(GTK_DIALOG(dialog));
-			gtk_widget_destroy(dialog);
+			string msg = FC(_("Sorry, Xournal++ cannot open remote files at the moment.\n"
+					"You have to copy the file to a local directory."));
+			Util::showErrorToUser((GtkWindow*) *win, msg);
 		}
 	}
 

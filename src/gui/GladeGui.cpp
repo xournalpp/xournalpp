@@ -4,6 +4,7 @@
 
 #include <config.h>
 #include <i18n.h>
+#include <Util.h>
 
 #include <stdlib.h>
 
@@ -21,14 +22,8 @@ GladeGui::GladeGui(GladeSearchpath* gladeSearchPath, string glade, string mainWn
 
 	if (!gtk_builder_add_from_file(builder, filename.c_str(), &error))
 	{
-		g_warning("Couldn't load builder file: %s", error->message);
-		GtkWidget* dialog = gtk_message_dialog_new(NULL, GTK_DIALOG_DESTROY_WITH_PARENT,
-												   GTK_MESSAGE_ERROR, GTK_BUTTONS_CLOSE, "%s",
-												   FC(_F("Error loading glade file \"{1}\" (try to load \"{2}\")")
-															% glade % filename));
-
-		gtk_dialog_run(GTK_DIALOG(dialog));
-		gtk_widget_destroy(GTK_WIDGET(dialog));
+		string msg = FS(_F("Error loading glade file \"{1}\" (try to load \"{2}\")") % glade % filename);
+		Util::showErrorToUser(NULL, msg);
 
 		g_error_free(error);
 
