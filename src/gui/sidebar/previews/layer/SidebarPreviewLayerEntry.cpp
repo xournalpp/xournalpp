@@ -1,7 +1,7 @@
 #include "SidebarPreviewLayerEntry.h"
 
-SidebarPreviewLayerEntry::SidebarPreviewLayerEntry(SidebarPreviewBase* sidebar, PageRef page, int layer) :
-		SidebarPreviewBaseEntry(sidebar, page)
+SidebarPreviewLayerEntry::SidebarPreviewLayerEntry(SidebarPreviewBase* sidebar, PageRef page, int layer)
+ : SidebarPreviewBaseEntry(sidebar, page)
 {
 	XOJ_INIT_TYPE(SidebarPreviewLayerEntry);
 	this->layer = layer;
