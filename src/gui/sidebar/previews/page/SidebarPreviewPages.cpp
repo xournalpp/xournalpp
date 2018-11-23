@@ -65,7 +65,6 @@ void SidebarPreviewPages::updatePreviews()
 	doc->unlock();
 }
 
-
 void SidebarPreviewPages::pageSizeChanged(size_t page)
 {
 	XOJ_CHECK_TYPE(SidebarPreviewPages);
@@ -93,7 +92,6 @@ void SidebarPreviewPages::pageChanged(size_t page)
 	SidebarPreviewBaseEntry* p = this->previews[page];
 	p->repaint();
 }
-
 
 void SidebarPreviewPages::pageDeleted(size_t page)
 {
