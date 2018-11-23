@@ -61,7 +61,7 @@ void SettingsDialog::initMouseButtonEvents(const char* hbox, int button, bool wi
 {
 	XOJ_CHECK_TYPE(SettingsDialog);
 
-	this->buttonConfigs.push_back(new ButtonConfigGui(this, get(hbox),settings, button, withDevice));
+	this->buttonConfigs.push_back(new ButtonConfigGui(this, getGladeSearchPath(), get(hbox),settings, button, withDevice));
 }
 
 void SettingsDialog::initMouseButtonEvents()
@@ -164,9 +164,9 @@ void SettingsDialog::load()
 	this->setDpi(settings->getDisplayDpi());
 	gtk_range_set_value(GTK_RANGE(slider), dpi);
 
-	GtkWidget* colorBorder = get("colorBorder");
-	GdkColor color = Util::intToGdkColor(settings->getSelectionColor());
-	gtk_color_button_set_color(GTK_COLOR_BUTTON(colorBorder), &color);
+	GdkRGBA color;
+	Util::apply_rgb_togdkrgba(color, settings->getSelectionColor());
+	gtk_color_chooser_set_rgba(GTK_COLOR_CHOOSER(get("colorBorder")), &color);
 
 	bool hideFullscreenMenubar = false;
 	bool hideFullscreenSidebar = false;
@@ -307,9 +307,11 @@ void SettingsDialog::save()
 	settings->setScrollbarHideType((ScrollbarHideType)scrollbarHideType);
 
 	GtkWidget* colorBorder = get("colorBorder");
-	GdkColor color = { 0 };
-	gtk_color_button_get_color(GTK_COLOR_BUTTON(colorBorder), &color);
-	int selectionColor = Util::gdkColorToInt(color);
+
+	GdkRGBA color;
+	gtk_color_chooser_get_rgba(GTK_COLOR_CHOOSER(colorBorder), &color);
+	int selectionColor = Util::gdkrgba_to_hex(color);
+
 	settings->setSelectionColor(selectionColor);
 
 	bool hideFullscreenMenubar = getCheckbox("cbHideFullscreenMenubar");

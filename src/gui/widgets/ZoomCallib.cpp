@@ -1,6 +1,6 @@
 #include "ZoomCallib.h"
 
-G_DEFINE_TYPE (ZoomCallib, zoomcallib, GTK_TYPE_WIDGET);
+G_DEFINE_TYPE (ZoomCallib, zoomcallib, GTK_TYPE_WIDGET); // @suppress("Unused static function")
 
 static void
 zoomcallib_get_preferred_width(GtkWidget* widget,
@@ -113,12 +113,6 @@ static void zoomcallib_realize(GtkWidget* widget)
 	                                             &attributes, attributes_mask));
 
 	gdk_window_set_user_data(gtk_widget_get_window(widget), widget);
-
-	gtk_widget_style_attach(widget);
-
-	gtk_style_set_background(gtk_widget_get_style(widget),
-	                         gtk_widget_get_window(widget),
-	                         GTK_STATE_NORMAL);
 }
 
 static gboolean zoomcallib_draw(GtkWidget* widget, cairo_t* cr)

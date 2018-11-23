@@ -21,7 +21,7 @@ class ToolMenuHandler;
 class ToolSelectCombocontrol : public ToolButton
 {
 public:
-	ToolSelectCombocontrol(ToolMenuHandler* th, ActionHandler* handler, GladeGui* gui, string id);
+	ToolSelectCombocontrol(ToolMenuHandler* toolMenuHandler, ActionHandler* handler, GladeGui* gui, string id);
 	virtual ~ToolSelectCombocontrol();
 
 public:
@@ -29,9 +29,13 @@ public:
 
 protected:
 	virtual GtkToolItem* newItem();
+	void addMenuitem(string text, string icon, ActionType type, ActionGroup group);
 
 private:
 	XOJ_TYPE_ATTRIB;
+
+	ToolMenuHandler* toolMenuHandler;
+	GtkWidget* popup;
 
 	GtkWidget* iconWidget;
 	GtkWidget* labelWidget;

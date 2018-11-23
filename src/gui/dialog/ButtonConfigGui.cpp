@@ -12,7 +12,8 @@
 	gtk_list_store_append(typeModel, &iter); \
 	gtk_list_store_set(typeModel, &iter, 0, dlg->loadIconPixbuf(icon), 1, name, 2, action, -1);
 
-ButtonConfigGui::ButtonConfigGui(SettingsDialog* dlg, GtkWidget* w,  Settings* settings, int button, bool withDevice)
+ButtonConfigGui::ButtonConfigGui(SettingsDialog* dlg, GladeSearchpath* gladeSearchPath, GtkWidget* w,  Settings* settings, int button, bool withDevice)
+ : GladeGui(gladeSearchPath, "settingsButtonConfig.glade", "offscreenwindow")
 {
 	XOJ_INIT_TYPE(ButtonConfigGui);
 
@@ -20,12 +21,16 @@ ButtonConfigGui::ButtonConfigGui(SettingsDialog* dlg, GtkWidget* w,  Settings* s
 	this->button = button;
 	this->withDevice = withDevice;
 
-	GtkWidget* table = gtk_table_new(8, 2, false);
+	GtkWidget* mainGrid = get("mainGrid");
+	gtk_container_remove(GTK_CONTAINER(getWindow()), mainGrid);
+	gtk_container_add(GTK_CONTAINER(w), mainGrid);
+	gtk_widget_show_all(mainGrid);
+
+	this->cbDevice = get("cbDevice");
+	this->cbDisableDrawing = get("cbDisableDrawing");
 
 	if (withDevice)
 	{
-		this->cbDevice = gtk_combo_box_text_new();
-
 		gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(this->cbDevice), _C("No device"));
 
 		DeviceListHelper devList;
@@ -34,21 +39,12 @@ ButtonConfigGui::ButtonConfigGui(SettingsDialog* dlg, GtkWidget* w,  Settings* s
 			string txt = dev.getName()  + " (" + dev.getType() + ")";
 			gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(this->cbDevice), txt.c_str());
 		}
-
-		gtk_table_attach(GTK_TABLE(table), newLabel(_C("Device")), 0, 1, 0, 1, GTK_FILL, GTK_FILL, 20, 0);
-		gtk_table_attach(GTK_TABLE(table), this->cbDevice, 1, 2, 0, 1,
-						 (GtkAttachOptions) (GTK_EXPAND | GTK_FILL), (GtkAttachOptions) (GTK_FILL), 0, 0);
-
-		cbDisableDrawing = gtk_check_button_new_with_label(_C("Disable drawing for this device"));
-
-		gtk_table_attach(GTK_TABLE(table), cbDisableDrawing, 1, 2, 1, 2,
-						 (GtkAttachOptions) (GTK_EXPAND | GTK_FILL), (GtkAttachOptions) (GTK_FILL), 0, 0);
-
 	}
 	else
 	{
-		this->cbDevice = NULL;
-		this->cbDisableDrawing = NULL;
+		gtk_widget_hide(get("lbDevice"));
+		gtk_widget_hide(this->cbDevice);
+		gtk_widget_hide(this->cbDisableDrawing);
 	}
 
 	GtkListStore* typeModel = gtk_list_store_new(3, GDK_TYPE_PIXBUF, G_TYPE_STRING, G_TYPE_INT);
@@ -67,12 +63,12 @@ ButtonConfigGui::ButtonConfigGui(SettingsDialog* dlg, GtkWidget* w,  Settings* s
 	//ADD_TYPE_CB("circle-draw.svg",    _C("Draw circle"),      TOOL_DRAW_CIRCLE);
 	ADD_TYPE_CB("hand.svg",             _C("Hand"),             TOOL_HAND);
 
-	GtkCellRenderer* renderer = NULL;
 
-	this->cbTool = gtk_combo_box_new_with_model(GTK_TREE_MODEL(typeModel));
+	this->cbTool = get("cbTool");
+	gtk_combo_box_set_model(GTK_COMBO_BOX(this->cbTool), GTK_TREE_MODEL(typeModel));
 	g_signal_connect(cbTool, "changed", G_CALLBACK(&cbSelectCallback), this);
 
-	renderer = gtk_cell_renderer_pixbuf_new();
+	GtkCellRenderer* renderer = gtk_cell_renderer_pixbuf_new();
 	gtk_cell_layout_pack_start(GTK_CELL_LAYOUT(this->cbTool), renderer, false);
 	gtk_cell_layout_set_attributes(GTK_CELL_LAYOUT(this->cbTool), renderer, "pixbuf", 0, NULL);
 
@@ -80,28 +76,16 @@ ButtonConfigGui::ButtonConfigGui(SettingsDialog* dlg, GtkWidget* w,  Settings* s
 	gtk_cell_layout_pack_start(GTK_CELL_LAYOUT(this->cbTool), renderer, true);
 	gtk_cell_layout_set_attributes(GTK_CELL_LAYOUT(this->cbTool), renderer, "text", 1, NULL);
 
-	gtk_table_attach(GTK_TABLE(table), newLabel(_C("Tool")), 0, 1, 2, 3, GTK_FILL, GTK_FILL, 20, 0);
-	gtk_table_attach(GTK_TABLE(table), cbTool, 1, 2, 2, 3,
-					 (GtkAttachOptions) (GTK_EXPAND | GTK_FILL), (GtkAttachOptions) (GTK_FILL), 0, 0);
-
-	this->cbThickness = gtk_combo_box_text_new();
+	this->cbThickness = get("cbThickness");
 	gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(cbThickness), _C("Don't change"));
 	gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(cbThickness), _C("Thin"));
 	gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(cbThickness), _C("Medium"));
 	gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(cbThickness), _C("Thick"));
 	gtk_combo_box_set_active(GTK_COMBO_BOX(cbThickness), 0);
 
-	gtk_table_attach(GTK_TABLE(table), newLabel(_C("Thickness")), 0, 1, 3, 4,
-					GTK_FILL, GTK_FILL, 20, 0);
-	gtk_table_attach(GTK_TABLE(table), this->cbThickness, 1, 2, 3, 4,
-					 (GtkAttachOptions) (GTK_EXPAND | GTK_FILL), (GtkAttachOptions) (GTK_FILL), 0, 0);
+	this->colorButton = get("colorButton");
 
-	this->colorButton = gtk_color_button_new();
-	gtk_table_attach(GTK_TABLE(table), newLabel(_C("Color")), 0, 1, 4, 5, GTK_FILL, GTK_FILL, 20, 0);
-	gtk_table_attach(GTK_TABLE(table), colorButton, 1, 2, 4, 5,
-					 (GtkAttachOptions) (GTK_EXPAND | GTK_FILL), (GtkAttachOptions) (GTK_FILL), 0, 0);
-
-	this->cbDrawingType = gtk_combo_box_text_new();
+	this->cbDrawingType = get("cbDrawingType");
 	// DRAWING_TYPE_DONT_CHANGE
 	gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(this->cbDrawingType), _C("Don't change"));
 	// DRAWING_TYPE_DEFAULT
@@ -118,22 +102,8 @@ ButtonConfigGui::ButtonConfigGui(SettingsDialog* dlg, GtkWidget* w,  Settings* s
 	gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(this->cbDrawingType), _C("Stroke recognizer"));
 
 
-	gtk_table_attach(GTK_TABLE(table), newLabel(_C("Drawing type")), 0, 1, 5, 6, GTK_FILL, GTK_FILL, 20, 0);
-	gtk_table_attach(GTK_TABLE(table), this->cbDrawingType, 1, 2, 5, 6,
-					 (GtkAttachOptions) (GTK_EXPAND | GTK_FILL), (GtkAttachOptions) (GTK_FILL), 0, 0);
-
-	this->cbEraserType = gtk_combo_box_text_new();
-	gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(this->cbEraserType), _C("Don't change"));
-	gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(this->cbEraserType), _C("Standard"));
-	gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(this->cbEraserType), _C("Whiteout"));
-	gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(this->cbEraserType), _C("Delete stroke"));
-
-	gtk_table_attach(GTK_TABLE(table), newLabel(_C("Eraser type")), 0, 1, 8, 9, GTK_FILL, GTK_FILL, 20, 0);
-	gtk_table_attach(GTK_TABLE(table), this->cbEraserType, 1, 2, 8, 9,
-					 (GtkAttachOptions) (GTK_EXPAND | GTK_FILL), (GtkAttachOptions) (GTK_FILL), 0, 0);
-
-	gtk_container_add(GTK_CONTAINER(w), table);
-	gtk_widget_show_all(table);
+	// Values in glade GUI!
+	this->cbEraserType = get("cbEraserType");
 
 	loadSettings();
 }
@@ -243,6 +213,11 @@ void ButtonConfigGui::loadSettings()
 	}
 }
 
+// Not implemented! This is not a dialog!
+void ButtonConfigGui::show(GtkWindow* parent)
+{
+}
+
 void ButtonConfigGui::saveSettings()
 {
 	XOJ_CHECK_TYPE(ButtonConfigGui);
@@ -325,13 +300,6 @@ void ButtonConfigGui::saveSettings()
 	}
 
 	settings->customSettingsChanged();
-}
-
-GtkWidget* ButtonConfigGui::newLabel(const char* text)
-{
-	GtkWidget* label = gtk_label_new(text);
-	gtk_misc_set_alignment(GTK_MISC(label), 0.0, 0.5);
-	return label;
 }
 
 void ButtonConfigGui::cbSelectCallback(GtkComboBox* widget, ButtonConfigGui* gui)

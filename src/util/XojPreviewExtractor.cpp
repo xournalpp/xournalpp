@@ -130,8 +130,6 @@ PreviewExtractResult XojPreviewExtractor::readFile(std::string file)
 		{
 			if (inTag)
 			{
-				gsize size;
-
 				this->data = g_base64_decode(preview.c_str(), &this->dataLen);
 				CLOSE PREVIEW_RESULT_IMAGE_READ;
 			}

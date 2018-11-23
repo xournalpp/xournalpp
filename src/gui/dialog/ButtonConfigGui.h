@@ -12,6 +12,8 @@
 #pragma once
 
 #include "control/Actions.h"
+#include "gui/GladeGui.h"
+
 #include <XournalType.h>
 
 #include <gdk/gdk.h>
@@ -19,18 +21,20 @@
 class Settings;
 class SettingsDialog;
 
-class ButtonConfigGui
+class ButtonConfigGui : public GladeGui
 {
 public:
-	ButtonConfigGui(SettingsDialog* dlg, GtkWidget* w, Settings* settings, int button, bool withDevice);
+	ButtonConfigGui(SettingsDialog* dlg, GladeSearchpath* gladeSearchPath, GtkWidget* w, Settings* settings, int button, bool withDevice);
 	virtual ~ButtonConfigGui();
 
 public:
 	void loadSettings();
 	void saveSettings();
 
+	// Not implemented! This is not a dialog!
+	virtual void show(GtkWindow* parent);
+
 private:
-	static GtkWidget* newLabel(const char* text);
 	static void cbSelectCallback(GtkComboBox* widget, ButtonConfigGui* gui);
 	void enableDisableTools();
 

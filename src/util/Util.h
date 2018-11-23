@@ -32,9 +32,6 @@ private:
 public:
 	static void showErrorToUser(GtkWindow* win, string msg);
 
-	static GdkColor intToGdkColor(int c);
-	static int gdkColorToInt(const GdkColor& c);
-
 	static void cairo_set_source_rgbi(cairo_t* cr, int color);
 
 	static void apply_rgb_togdkrgba(GdkRGBA& col, int color);
