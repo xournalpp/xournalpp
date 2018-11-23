@@ -1070,9 +1070,7 @@ gint TextEditor::blinkCallback(TextEditor* te)
 
 	te->cursorVisible = !te->cursorVisible;
 
-	gdk_threads_enter();
 	te->repaintCursor();
-	gdk_threads_leave();
 
 	// Remove ourselves
 	return false;

@@ -242,15 +242,11 @@ Rectangle* gtk_xournal_get_visible_area(GtkWidget* widget, XojPageView* p)
 
 bool gtk_xournal_scroll_callback(GtkXournal* xournal)
 {
-	gdk_threads_enter();
-
 	xournal->layout->scrollRelativ(xournal->scrollOffsetX, xournal->scrollOffsetY);
 
 	// Scrolling done, so reset our counters
 	xournal->scrollOffsetX = 0;
 	xournal->scrollOffsetY = 0;
-
-	gdk_threads_leave();
 
 	return false;
 }

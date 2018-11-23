@@ -171,7 +171,6 @@ bool SidebarPreviewBase::scrollToPreview(SidebarPreviewBase* sidebar)
 
 	if (sidebar->selectedEntry != size_t_npos && sidebar->selectedEntry < sidebar->previews.size())
 	{
-		gdk_threads_enter();
 		SidebarPreviewBaseEntry* p = sidebar->previews[sidebar->selectedEntry];
 
 		// scroll to preview
@@ -184,18 +183,14 @@ bool SidebarPreviewBase::scrollToPreview(SidebarPreviewBase* sidebar)
 		int x = allocation.x;
 		int y = allocation.y;
 
-		gdk_threads_leave();
-
 		if (x == -1)
 		{
 			g_idle_add((GSourceFunc) scrollToPreview, sidebar);
 			return false;
 		}
 
-		gdk_threads_enter();
 		gtk_adjustment_clamp_page(vadj, y, y + allocation.height);
 		gtk_adjustment_clamp_page(hadj, x, x + allocation.width);
-		gdk_threads_leave();
 	}
 	return false;
 }
