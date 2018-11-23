@@ -18,6 +18,7 @@
 using std::string;
 
 enum PreviewExtractResult {
+
 	/**
 	 * Successfully read an image from file
 	 */

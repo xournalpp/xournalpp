@@ -5,6 +5,7 @@
 #include <XojPreviewExtractor.h>
 
 #include <gio/gio.h>
+#include <boost/algorithm/string.hpp>
 
 
 XojOpenDlg::XojOpenDlg(GtkWindow* win, Settings* settings)
@@ -71,6 +72,16 @@ void XojOpenDlg::addFilterXoj()
 	gtk_file_chooser_add_filter(GTK_FILE_CHOOSER(dialog), filterXoj);
 }
 
+void XojOpenDlg::addFilterXopp()
+{
+	XOJ_CHECK_TYPE(XojOpenDlg);
+
+	GtkFileFilter* filterXopp = gtk_file_filter_new();
+	gtk_file_filter_set_name(filterXopp, _C("Xournal++ files"));
+	gtk_file_filter_add_pattern(filterXopp, "*.xopp");
+	gtk_file_chooser_add_filter(GTK_FILE_CHOOSER(dialog), filterXopp);
+}
+
 void XojOpenDlg::addFilterXopt()
 {
 	XOJ_CHECK_TYPE(XojOpenDlg);
@@ -117,17 +128,15 @@ path XojOpenDlg::showOpenDialog(bool pdf, bool& attachPdf)
 		GtkFileFilter* filterSupported = gtk_file_filter_new();
 		gtk_file_filter_set_name(filterSupported, _C("Supported files"));
 		gtk_file_filter_add_pattern(filterSupported, "*.xoj");
-
-		// TODO: Implement template loading from file open
-		// gtk_file_filter_add_pattern(filterSupported, "*.xopt");
+		gtk_file_filter_add_pattern(filterSupported, "*.xopp");
+		gtk_file_filter_add_pattern(filterSupported, "*.xopt");
 		gtk_file_filter_add_pattern(filterSupported, "*.pdf");
 		gtk_file_filter_add_pattern(filterSupported, "*.PDF");
 		gtk_file_chooser_add_filter(GTK_FILE_CHOOSER(dialog), filterSupported);
 
 		addFilterXoj();
-
-		// TODO: Implement template loading from file open
-		// addFilterXopt();
+		addFilterXopt();
+		addFilterXopp();
 	}
 
 	addFilterPdf();
@@ -169,7 +178,15 @@ void XojOpenDlg::updatePreviewCallback(GtkFileChooser* fileChooser, void* userDa
 	g_free(filename);
 	filename = NULL;
 
-	if (filepath.size() <= 4 || filepath.substr(filepath.size() - 4) != ".xoj")
+	string ext = "";
+	size_t dotPos = filepath.find_last_of(".");
+	if (dotPos != string::npos)
+	{
+		ext = filepath.substr(dotPos);
+		boost::algorithm::to_lower(ext);
+	}
+
+	if (!(ext == ".xoj" || ext == ".xopp"))
 	{
 		gtk_file_chooser_set_preview_widget_active(fileChooser, false);
 		return;
