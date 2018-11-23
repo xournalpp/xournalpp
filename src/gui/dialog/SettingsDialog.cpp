@@ -169,6 +169,9 @@ void SettingsDialog::load()
 	GdkRGBA color;
 	Util::apply_rgb_togdkrgba(color, settings->getSelectionColor());
 	gtk_color_chooser_set_rgba(GTK_COLOR_CHOOSER(get("colorBorder")), &color);
+	Util::apply_rgb_togdkrgba(color, settings->getBackgroundColor());
+	gtk_color_chooser_set_rgba(GTK_COLOR_CHOOSER(get("colorBackground")), &color);
+
 
 	bool hideFullscreenMenubar = false;
 	bool hideFullscreenSidebar = false;
@@ -308,13 +311,13 @@ void SettingsDialog::save()
 	}
 	settings->setScrollbarHideType((ScrollbarHideType)scrollbarHideType);
 
-	GtkWidget* colorBorder = get("colorBorder");
-
 	GdkRGBA color;
-	gtk_color_chooser_get_rgba(GTK_COLOR_CHOOSER(colorBorder), &color);
-	int selectionColor = Util::gdkrgba_to_hex(color);
+	gtk_color_chooser_get_rgba(GTK_COLOR_CHOOSER(get("colorBorder")), &color);
+	settings->setSelectionColor(Util::gdkrgba_to_hex(color));
 
-	settings->setSelectionColor(selectionColor);
+	gtk_color_chooser_get_rgba(GTK_COLOR_CHOOSER(get("colorBackground")), &color);
+	settings->setBackgroundColor(Util::gdkrgba_to_hex(color));
+
 
 	bool hideFullscreenMenubar = getCheckbox("cbHideFullscreenMenubar");
 	bool hideFullscreenSidebar = getCheckbox("cbHideFullscreenSidebar");

@@ -256,6 +256,9 @@ public:
 	int getSelectionColor();
 	void setSelectionColor(int color);
 
+	int getBackgroundColor();
+	void setBackgroundColor(int color);
+
 	int getPdfPageCacheSize();
 	void setPdfPageCacheSize(int size);
 
@@ -490,6 +493,11 @@ private:
 	 * (Page, insert image selection etc.)
 	 */
 	int selectionColor;
+
+	/**
+	 * The color for Xournal page background
+	 */
+	int backgroundColor;
 
 	/**
 	 * Whether event compression should be enabled

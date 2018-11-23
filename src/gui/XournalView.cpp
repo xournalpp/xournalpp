@@ -866,18 +866,7 @@ void XournalView::repaintSelection(bool evenWithoutSelection)
 		return;
 	}
 
-	//	Redrawable * red = selection->getView();
-	//	double zoom = getZoom();
-	//	int x0 = red->getX();
-	//	int y0 = red->getY();
-	//	int x = selection->getX() * zoom;
-	//	int y = selection->getY() * zoom;
-	//	int w = selection->getWidth() * zoom;
-	//	int h = selection->getHeight() * zoom;
-	//
-	//	gtk_xournal_repaint_area(this->widget, x0 + x - 10, y0 + y - 10, w + 20, h + 20);
-
-	// TODO OPTIMIZE ?
+	// repaint always the whole widget
 	gtk_widget_queue_draw(this->widget);
 }
 
