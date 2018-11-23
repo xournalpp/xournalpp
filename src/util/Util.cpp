@@ -57,20 +57,6 @@ void Util::showErrorToUser(GtkWindow* win, string msg)
 	gtk_widget_destroy(dialog);
 }
 
-GdkColor Util::intToGdkColor(int c)
-{
-	GdkColor color = { 0, 0, 0, 0 };
-	color.red = (c >> 8) & 0xff00;
-	color.green = (c >> 0) & 0xff00;
-	color.blue = (c << 8) & 0xff00;
-	return color;
-}
-
-int Util::gdkColorToInt(const GdkColor& c)
-{
-	return (c.red >> 8) << 16 | (c.green >> 8) << 8 | (c.blue >> 8);
-}
-
 void Util::cairo_set_source_rgbi(cairo_t* cr, int c)
 {
 	double r = ((c >> 16) & 0xff) / 255.0;

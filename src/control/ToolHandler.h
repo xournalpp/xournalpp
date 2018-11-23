@@ -40,7 +40,6 @@ public:
 
 	void setColor(int color);
 	int getColor();
-	GdkColor getGdkColor();
 
 	DrawingType getDrawingType();
 	void setDrawingType(DrawingType drawingType);
