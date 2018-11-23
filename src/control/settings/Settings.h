@@ -265,6 +265,9 @@ public:
 	string getPageTemplate();
 	void setPageTemplate(string pageTemplate);
 
+	string getAudioFolder();
+	void setAudioFolder(string audioFolder);
+
 	/**
 	 * Get name, e.g. "cm"
 	 */
@@ -502,6 +505,11 @@ private:
 	 * Unit, see XOJ_UNITS
 	 */
 	string sizeUnit;
+
+	/**
+	 * Audio folder for audio recording
+	 */
+	string audioFolder;
 
 	/**
 	 * "Transaction" running, do not save until the end is reached
