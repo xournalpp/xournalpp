@@ -61,7 +61,7 @@ void SettingsDialog::initMouseButtonEvents(const char* hbox, int button, bool wi
 {
 	XOJ_CHECK_TYPE(SettingsDialog);
 
-	this->buttonConfigs.push_back(new ButtonConfigGui(this, get(hbox),settings, button, withDevice));
+	this->buttonConfigs.push_back(new ButtonConfigGui(this, getGladeSearchPath(), get(hbox),settings, button, withDevice));
 }
 
 void SettingsDialog::initMouseButtonEvents()
