@@ -356,18 +356,15 @@ gtk_xoj_int_txt_new(TextEditor* te)
 
 static void gtk_invisible_realize(GtkWidget* widget)
 {
-	GdkWindow* parent;
-	GdkWindowAttr attributes;
-	gint attributes_mask;
-
 	gtk_widget_set_realized(widget, TRUE);
 
-	parent = gtk_widget_get_parent_window(widget);
+	GdkWindow* parent = gtk_widget_get_parent_window(widget);
 	if (parent == NULL)
 	{
 		parent = gtk_widget_get_root_window(widget);
 	}
 
+	GdkWindowAttr attributes;
 	attributes.x = -100;
 	attributes.y = -100;
 	attributes.width = 0;
@@ -377,7 +374,7 @@ static void gtk_invisible_realize(GtkWidget* widget)
 	attributes.override_redirect = TRUE;
 	attributes.event_mask = gtk_widget_get_events(widget);
 
-	attributes_mask = GDK_WA_X | GDK_WA_Y | GDK_WA_NOREDIR;
+	gint attributes_mask = GDK_WA_X | GDK_WA_Y | GDK_WA_NOREDIR;
 
 	gtk_widget_set_window(widget, gdk_window_new(parent, &attributes, attributes_mask));
 
