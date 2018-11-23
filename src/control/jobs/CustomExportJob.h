@@ -26,7 +26,7 @@ protected:
 	virtual ~CustomExportJob();
 
 public:
-	void run(bool noThreads);
+	void run();
 
 public:
 	virtual bool showFilechooser();

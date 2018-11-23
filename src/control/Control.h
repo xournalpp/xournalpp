@@ -33,11 +33,7 @@
 #include <vector>
 #include "../gui/dialog/LatexDialog.h"
 
-extern string audioFilename;
-extern string audioFolder;
-
 class Sidebar;
-class CallbackData;
 class XojPageView;
 class SaveHandler;
 class GladeSearchpath;
@@ -59,13 +55,13 @@ class Control : public ActionHandler,
 	public ProgressListener
 {
 public:
-	Control(GladeSearchpath* gladeSearchPath, bool noThreads = false);
+	Control(GladeSearchpath* gladeSearchPath);
 	virtual ~Control();
 
 	void initWindow(MainWindow* win);
 public:
 	// Menu File
-	bool newFile();
+	bool newFile(string pageTemplate = "");
 	bool openFile(path filename = "", int scrollToPage = -1);
 	bool annotatePdf(path filename, bool attachPdf, bool attachToDocument);
 	void print();
@@ -115,8 +111,6 @@ public:
 	void manageToolbars();
 	void customizeToolbars();
 	void enableFullscreen(bool enabled, bool presentation = false);
-	void recToggle();
-	void recStartStop(bool record);
 
 	void gotoPage();
 
@@ -137,7 +131,6 @@ public:
 	bool isInDragAndDropToolbar();
 
 	bool isFullscreen();
-	bool isRecording();
 
 	bool searchTextOnPage(string text, int p, int* occures, double* top);
 
@@ -149,7 +142,7 @@ public:
 	size_t firePageSelected(PageRef page);
 	void firePageSelected(size_t page);
 
-	void addDefaultPage();
+	void addDefaultPage(string pageTemplate);
 	void insertNewPage(size_t position);
 	void insertPage(PageRef page, size_t position);
 	void deletePage();
@@ -201,6 +194,7 @@ public:
 	Cursor* getCursor();
 	Sidebar* getSidebar();
 	SearchBar* getSearchBar();
+	AudioController* getAudioController();
 	PageTypeHandler* getPageTypes();
 	PageTypeMenu* getPageTypeMenu();
 
@@ -233,8 +227,12 @@ public:
 	void clipboardPaste(Element* e);
 
 protected:
-	static bool invokeCallback(CallbackData* cb);
-	void invokeLater(ActionType type);
+	/**
+	 * This callback is used by used to be called later in the UI Thread
+	 * On slower machine this feels more fluent, therefore this will not
+	 * be removed
+	 */
+	void zoomCallback(ActionType type);
 	void zoomFit();
 
 	bool showSaveDialog();
@@ -289,6 +287,8 @@ private:
 
 	ScrollHandler* scrollHandler;
 
+	AudioController* audioController;
+
 	ToolbarDragDropHandler* dragDropHandler;
 
 	/**
@@ -332,21 +332,6 @@ private:
 
 	MetadataManager* metadata;
 
-	bool recording = false;
-
 	PageTypeHandler* pageTypes;
 	PageTypeMenu* pageTypeMenu;
-};
-
-class CallbackData
-{
-public:
-	CallbackData(Control* control, ActionType type)
-	{
-		this->control = control;
-		this->type = type;
-	}
-
-	ActionType type;
-	Control* control;
 };

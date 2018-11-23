@@ -24,7 +24,7 @@ public:
 
 public:
 	/**
-	 * @return What should be renderered
+	 * @return What should be rendered
 	 * @override
 	 */
 	virtual PreviewRenderType getRenderType();

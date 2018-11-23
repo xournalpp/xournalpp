@@ -107,6 +107,8 @@ void Settings::loadDefault()
 
 	this->selectionColor = 0xff0000;
 
+	this->backgroundColor = 0xDCDAD5;
+
 	this->eventCompression = true;
 
 	this->pageTemplate = "xoj/template\ncopyLastPageSettings=true\nsize=595.275591x841.889764\nbackgroundType=lined\nbackgroundColor=#ffffff\n";
@@ -344,6 +346,10 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur)
 	{
 		this->sizeUnit = (const char*) value;
 	}
+	else if (xmlStrcmp(name, (const xmlChar*) "audioFolder") == 0)
+	{
+		this->audioFolder = (const char*) value;
+	}
 	else if (xmlStrcmp(name, (const xmlChar*) "autosaveEnabled") == 0)
 	{
 		this->autosaveEnabled = xmlStrcmp(value, (const xmlChar*) "true") ? false : true;
@@ -367,6 +373,10 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur)
 	else if (xmlStrcmp(name, (const xmlChar*) "selectionColor") == 0)
 	{
 		this->selectionColor = g_ascii_strtoll((const char*) value, NULL, 10);
+	}
+	else if (xmlStrcmp(name, (const xmlChar*) "backgroundColor") == 0)
+	{
+		this->backgroundColor = g_ascii_strtoll((const char*) value, NULL, 10);
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "addVerticalSpace") == 0)
 	{
@@ -719,6 +729,7 @@ void Settings::save()
 				  "If you have input problems, you can turn it of with false.");
 
 	WRITE_INT_PROP(selectionColor);
+	WRITE_INT_PROP(backgroundColor);
 
 	WRITE_INT_PROP(pdfPageCacheSize);
 	WRITE_COMMENT("The count of rendered PDF pages which will be cached.");
@@ -734,6 +745,8 @@ void Settings::save()
 	WRITE_STRING_PROP(pageTemplate);
 
 	WRITE_STRING_PROP(sizeUnit);
+
+	WRITE_STRING_PROP(audioFolder);
 
 	xmlNodePtr xmlFont;
 	xmlFont = xmlNewChild(root, NULL, (const xmlChar*) "property", NULL);
@@ -1091,6 +1104,27 @@ void Settings::setPageTemplate(string pageTemplate)
 	}
 
 	this->pageTemplate = pageTemplate;
+
+	save();
+}
+
+string Settings::getAudioFolder()
+{
+	XOJ_CHECK_TYPE(Settings);
+
+	return this->audioFolder;
+}
+
+void Settings::setAudioFolder(string audioFolder)
+{
+	XOJ_CHECK_TYPE(Settings);
+
+	if (this->audioFolder == audioFolder)
+	{
+		return;
+	}
+
+	this->audioFolder = audioFolder;
 
 	save();
 }
@@ -1473,13 +1507,6 @@ void Settings::setPresentationHideElements(string elements)
 	save();
 }
 
-int Settings::getSelectionColor()
-{
-	XOJ_CHECK_TYPE(Settings);
-
-	return this->selectionColor;
-}
-
 int Settings::getPdfPageCacheSize()
 {
 	XOJ_CHECK_TYPE(Settings);
@@ -1499,6 +1526,13 @@ void Settings::setPdfPageCacheSize(int size)
 	save();
 }
 
+int Settings::getSelectionColor()
+{
+	XOJ_CHECK_TYPE(Settings);
+
+	return this->selectionColor;
+}
+
 void Settings::setSelectionColor(int color)
 {
 	XOJ_CHECK_TYPE(Settings);
@@ -1508,6 +1542,25 @@ void Settings::setSelectionColor(int color)
 		return;
 	}
 	this->selectionColor = color;
+	save();
+}
+
+int Settings::getBackgroundColor()
+{
+	XOJ_CHECK_TYPE(Settings);
+
+	return this->backgroundColor;
+}
+
+void Settings::setBackgroundColor(int color)
+{
+	XOJ_CHECK_TYPE(Settings);
+
+	if (this->backgroundColor == color)
+	{
+		return;
+	}
+	this->backgroundColor = color;
 	save();
 }
 

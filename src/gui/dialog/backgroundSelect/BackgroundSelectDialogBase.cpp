@@ -2,6 +2,9 @@
 
 #include "BaseElementView.h"
 
+#include <Util.h>
+
+
 BackgroundSelectDialogBase::BackgroundSelectDialogBase(GladeSearchpath* gladeSearchPath, Document* doc, Settings* settings, string glade, string mainWnd)
  : GladeGui(gladeSearchPath, glade, mainWnd),
    settings(settings), lastWidth(0), selected(-1), doc(doc), confirmed(false)
@@ -14,20 +17,10 @@ BackgroundSelectDialogBase::BackgroundSelectDialogBase(GladeSearchpath* gladeSea
 	gtk_container_add(GTK_CONTAINER(scrollPreview), layoutContainer);
 
 	gtk_widget_set_events(this->layoutContainer, GDK_EXPOSURE_MASK);
-	g_signal_connect(this->layoutContainer, "draw", G_CALLBACK(drawBackgroundCallback), this->layoutContainer);
+	g_signal_connect(this->layoutContainer, "draw", G_CALLBACK(Util::paintBackgroundWhite), NULL);
 
 	g_signal_connect(this->window, "size-allocate", G_CALLBACK(sizeAllocate), this);
 	gtk_window_set_default_size(GTK_WINDOW(this->window), 800, 600);
-}
-
-gboolean BackgroundSelectDialogBase::drawBackgroundCallback(GtkWidget* widget, cairo_t* cr, GtkWidget* layoutContainer)
-{
-	GtkAllocation alloc;
-	gtk_widget_get_allocation(layoutContainer, &alloc);
-	cairo_set_source_rgb(cr, 1, 1, 1);
-	cairo_rectangle(cr, 0, 0, alloc.width, alloc.height);
-	cairo_fill(cr);
-	return false;
 }
 
 BackgroundSelectDialogBase::~BackgroundSelectDialogBase()

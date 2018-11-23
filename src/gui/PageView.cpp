@@ -45,7 +45,7 @@
 #include <math.h>
 
 string lastfn = "";
-extern string audioFolder;
+
 XojPageView::XojPageView(XournalView* xournal, PageRef page)
 {
 	XOJ_INIT_TYPE(XojPageView);
@@ -380,17 +380,19 @@ void XojPageView::playObjectAt(double x, double y)
 							{
 								lastfn = fn;
 								string command(
-										"vlc --qt-start-minimized " + audioFolder + fn + " --start-time="
+										"vlc --qt-start-minimized " + settings->getAudioFolder() + "/" + fn + " --start-time="
 												+ std::to_string(ts) + " &>/dev/null &");
-								std::cout << "command: " << command << std::endl;
 								system(command.c_str());
 							}
 						}
 						else
-						{
+						{	
+							//TODO: substitute system(..) with some c++ curl library
+							string psw("password");
 							string command(
-									"curl -s -u \"\":\"password\" --url \"http://127.0.0.1:8080/requests/status.xml?command=seek&val="
-											+ std::to_string(ts) + "\" >/dev/null");
+									"curl -s -u \"\":\""+psw+"\" --url \"http://127.0.0.1:8080/requests/status.xml?command=seek&val="
+											+ std::to_string(ts) + "\" >/dev/null"
+											+ "&& curl -s -u \"\":\""+psw+"\" --url \"http://127.0.0.1:8080/requests/status.xml?command=pl_play\" >/dev/null");
 							system(command.c_str());
 						}
 					}
@@ -773,15 +775,6 @@ void XojPageView::repaintArea(double x1, double y1, double x2, double y2)
 
 	double zoom = xournal->getZoom();
 	xournal->getRepaintHandler()->repaintPageArea(this, x1 * zoom - 10, y1 * zoom - 10, x2 * zoom + 20, y2 * zoom + 20);
-}
-
-Rectangle* XojPageView::rectOnWidget(double x, double y, double width, double height)
-{
-	XOJ_CHECK_TYPE(XojPageView);
-
-	double zoom = xournal->getZoom();
-
-	return new Rectangle(x * zoom - 10, y * zoom - 10, width * zoom + 20, height * zoom + 20);
 }
 
 void XojPageView::rerenderRect(double x, double y, double width, double height)

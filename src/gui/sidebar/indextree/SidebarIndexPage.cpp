@@ -75,7 +75,7 @@ void SidebarIndexPage::askInsertPdfPage(size_t pdfPage)
 {
 	XOJ_CHECK_TYPE(SidebarIndexPage);
 
-	GtkWidget* dialog = gtk_message_dialog_new(control->getGtkWindow(), GTK_DIALOG_DESTROY_WITH_PARENT,
+	GtkWidget* dialog = gtk_message_dialog_new(control->getGtkWindow(), GTK_DIALOG_MODAL,
 											   GTK_MESSAGE_QUESTION, GTK_BUTTONS_NONE, "%s",
 											   FC(_F("Your current document does not contain PDF Page no {1}\n"
 													 "Would you like to insert this page?\n\n"

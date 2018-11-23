@@ -11,8 +11,6 @@
 #include "util/Rectangle.h"
 
 #include "gui/MainWindow.h"
-extern int sttime;
-extern string audioFilename;
 
 #include <math.h>
 
@@ -61,8 +59,11 @@ void InputHandler::createStroke(Point p)
 	{
 		stroke->setToolType(STROKE_TOOL_PEN);
 
-		if (xournal->getControl()->isRecording())
+		if (xournal->getControl()->getAudioController()->isRecording())
 		{
+			//TODO: move this logic inside AudioController
+			string audioFilename = xournal->getControl()->getAudioController()->getAudioFilename();
+			gint sttime = xournal->getControl()->getAudioController()->getStartTime();
 			int seconds = ((g_get_monotonic_time() / 1000000) - sttime);
 			stroke->setTimestamp(seconds);
 			stroke->setAudioFilename(audioFilename);

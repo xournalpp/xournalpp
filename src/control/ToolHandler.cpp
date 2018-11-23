@@ -361,13 +361,6 @@ int ToolHandler::getColor()
 	return current->color;
 }
 
-GdkColor ToolHandler::getGdkColor()
-{
-	XOJ_CHECK_TYPE(ToolHandler);
-
-	return Util::intToGdkColor(this->current->color);
-}
-
 DrawingType ToolHandler::getDrawingType()
 {
 	XOJ_CHECK_TYPE(ToolHandler);

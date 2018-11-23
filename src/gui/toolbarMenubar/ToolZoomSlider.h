@@ -30,7 +30,6 @@ public:
 
 	// Should be called when the window size changes
 	void updateScaleMarks();
-	virtual void setHorizontal(bool horizontal);
 	virtual GtkToolItem* createItem(bool horizontal);
 	virtual GtkToolItem* createTmpItem(bool horizontal);
 

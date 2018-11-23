@@ -130,12 +130,6 @@ public:
 	 */
 	int getY() const;
 
-	/**
-	 * Maps a Rectangle from display coordinates to local
-	 * coordinates
-	 */
-	virtual Rectangle* rectOnWidget(double x, double y, double width, double height);
-
 	TexImage* getSelectedTex();
 
 	Rectangle* getVisibleRect();

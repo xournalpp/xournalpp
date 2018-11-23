@@ -47,26 +47,14 @@ void Util::execInUiThread(std::function<void()> callback)
 
 void Util::showErrorToUser(GtkWindow* win, string msg)
 {
-	GtkWidget* dialog = gtk_message_dialog_new(win,
-											   GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, "%s",
-											   msg.c_str());
-	gtk_window_set_transient_for(GTK_WINDOW(dialog), win);
+	GtkWidget* dialog = gtk_message_dialog_new(win, GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
+											   "%s", msg.c_str());
+	if (win != NULL)
+	{
+		gtk_window_set_transient_for(GTK_WINDOW(dialog), win);
+	}
 	gtk_dialog_run(GTK_DIALOG(dialog));
 	gtk_widget_destroy(dialog);
-}
-
-GdkColor Util::intToGdkColor(int c)
-{
-	GdkColor color = { 0, 0, 0, 0 };
-	color.red = (c >> 8) & 0xff00;
-	color.green = (c >> 0) & 0xff00;
-	color.blue = (c << 8) & 0xff00;
-	return color;
-}
-
-int Util::gdkColorToInt(const GdkColor& c)
-{
-	return (c.red >> 8) << 16 | (c.green >> 8) << 8 | (c.blue >> 8);
 }
 
 void Util::cairo_set_source_rgbi(cairo_t* cr, int c)
@@ -150,10 +138,8 @@ void Util::openFileWithDefaultApplicaion(path filename)
 	cout << bl::format("XPP Execute command: «{1}»") % command << endl;
 	if (system(command.c_str()) != 0)
 	{
-		GtkWidget* dlgError = gtk_message_dialog_new(NULL, GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, "%s",
-													 FC(_F("File couldn't be opened. You have to do it manually:\n"
-														   "URL: {1}") % filename));
-		gtk_dialog_run(GTK_DIALOG(dlgError));
+		string msg = FS(_F("File couldn't be opened. You have to do it manually:\n" "URL: {1}") % filename);
+		showErrorToUser(NULL, msg);
 	}
 }
 
@@ -179,9 +165,18 @@ void Util::openFileWithFilebrowser(path filename)
 	cout << bl::format("XPP show file in filebrowser command: «{1}»") % command << endl;
 	if (system(command.c_str()) != 0)
 	{
-		GtkWidget* dlgError = gtk_message_dialog_new(NULL, GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, "%s",
-													 FC(_F("File couldn't be opened. You have to do it manually:\n"
-														   "URL: {1}") % filename));
-		gtk_dialog_run(GTK_DIALOG(dlgError));
+		string msg = FS(_F("File couldn't be opened. You have to do it manually:\n" "URL: {1}") % filename);
+		showErrorToUser(NULL, msg);
 	}
 }
+
+gboolean Util::paintBackgroundWhite(GtkWidget* widget, cairo_t* cr, void* unused)
+{
+	GtkAllocation alloc;
+	gtk_widget_get_allocation(widget, &alloc);
+	cairo_set_source_rgb(cr, 1, 1, 1);
+	cairo_rectangle(cr, 0, 0, alloc.width, alloc.height);
+	cairo_fill(cr);
+	return false;
+}
+

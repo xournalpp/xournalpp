@@ -232,6 +232,8 @@ XOJ_DECLARE_TYPE(PageTemplateSettings, 220);
 XOJ_DECLARE_TYPE(XojOpenDlg, 221);
 XOJ_DECLARE_TYPE(CustomExportJob, 222);
 XOJ_DECLARE_TYPE(LatexController, 223);
-XOJ_DECLARE_TYPE(PageTypeHandler, 224);
-XOJ_DECLARE_TYPE(PageTypeMenu, 225);
-XOJ_DECLARE_TYPE(PageType, 226);
+XOJ_DECLARE_TYPE(AudioController, 224);
+XOJ_DECLARE_TYPE(PageTypeHandler, 225);
+XOJ_DECLARE_TYPE(PageTypeMenu, 226);
+XOJ_DECLARE_TYPE(PageType, 227);
+

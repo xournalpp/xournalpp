@@ -102,6 +102,19 @@ If you want to install desktop file and thumbnailer execute:
 make desktop-install
 ```
 
+## Fileformat
+** Currently there is work in Progress, *.xopp is not yet available **
+The fileformat *.xopp is an XML which is .gz compressed. PDFs are not embedded
+into the file, so if the PDF is deleted, the background is lost.
+*.xopp is basically the same fileformat as *.xoj, which is used by Xournal.
+Therefor Xournal++ reads *.xoj files, and can also export *.xoj.
+On exporting to *.xoj all Xournal++ specific Extension are lost, like addtional
+Background types.
+*.xopp can theretically be read by Xournal, as long as you do not use any new
+feature, Xournal does not open files at all if there are new attributes or
+unknown values, because of this Xournal++ will add the extension .xopp to all
+saved files.
+
 ## Development
 For developping new features, write a Ticket, so others know what you are doing.
 For development create a fork, and use the master as base. Create a Pull request for each fix.

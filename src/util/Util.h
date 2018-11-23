@@ -32,9 +32,6 @@ private:
 public:
 	static void showErrorToUser(GtkWindow* win, string msg);
 
-	static GdkColor intToGdkColor(int c);
-	static int gdkColorToInt(const GdkColor& c);
-
 	static void cairo_set_source_rgbi(cairo_t* cr, int color);
 
 	static void apply_rgb_togdkrgba(GdkRGBA& col, int color);
@@ -56,6 +53,9 @@ public:
 	 * Make sure the container class is not deleted before the UI stuff is finished!
 	 */
 	static void execInUiThread(std::function<void()> callback);
+
+	static gboolean paintBackgroundWhite(GtkWidget* widget, cairo_t* cr, void* unused);
+
 };
 
 static const size_t size_t_npos = static_cast<size_t>(-1);

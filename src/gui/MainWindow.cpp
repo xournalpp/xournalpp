@@ -29,11 +29,6 @@ using std::cout;
 using std::endl;
 namespace bf = boost::filesystem;
 
-//TODO: to be moved somewhere else in the future
-string audioFilename = "";
-string audioFolder = "";
-gint sttime = 0;	
-
 MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control) :
 		GladeGui(gladeSearchPath, "main.glade", "mainWindow")
 {
@@ -83,15 +78,10 @@ MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control) :
 
 	if (!tbModel->parse(file, true))
 	{
-		GtkWidget* dlg = gtk_message_dialog_new(GTK_WINDOW(this->window),
-												GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, "%s",
-												FC(_F("Could not parse general toolbar.ini file: {1}\n"
-													  "No Toolbars will be available") % file));
 
-		gtk_window_set_transient_for(GTK_WINDOW(dlg), GTK_WINDOW(getWindow()));
-		gtk_dialog_run(GTK_DIALOG(dlg));
-		gtk_widget_hide(dlg);
-		gtk_widget_destroy(dlg);
+		string msg = FS(_F("Could not parse general toolbar.ini file: {1}\n"
+						   "No Toolbars will be available") % file);
+		Util::showErrorToUser(control->getGtkWindow(), msg);
 	}
 
 	file = string(g_get_home_dir()) + G_DIR_SEPARATOR_S + CONFIG_DIR + G_DIR_SEPARATOR_S + TOOLBAR_CONFIG;
@@ -99,15 +89,9 @@ MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control) :
 	{
 		if (!tbModel->parse(file, false))
 		{
-			GtkWidget* dlg = gtk_message_dialog_new(GTK_WINDOW(this->window),
-													GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, "%s",
-													FC(_F("Could not parse custom toolbar.ini file: {1}\n"
-														  "Toolbars will not be available") % file));
-
-			gtk_window_set_transient_for(GTK_WINDOW(dlg), GTK_WINDOW(this->control->getWindow()->getWindow()));
-			gtk_dialog_run(GTK_DIALOG(dlg));
-			gtk_widget_hide(dlg);
-			gtk_widget_destroy(dlg);
+			string msg = FS(_F("Could not parse custom toolbar.ini file: {1}\n"
+							   "Toolbars will not be available") % file);
+			Util::showErrorToUser(control->getGtkWindow(), msg);
 		}
 	}
 

@@ -1,5 +1,5 @@
 #include "RenderJob.h"
-#include "RepaintWidgetHandler.h"
+#include "RenderJob.h"
 
 #include "gui/PageView.h"
 #include "gui/XournalView.h"
@@ -8,11 +8,9 @@
 #include "view/PdfView.h"
 
 #include <Rectangle.h>
+#include <Util.h>
 
 #include <list>
-
-RepaintWidgetHandler* RenderJob::repaintHandler = NULL;
-
 
 RenderJob::RenderJob(XojPageView* view)
 {
@@ -30,12 +28,6 @@ RenderJob::~RenderJob()
 	XOJ_RELEASE_TYPE(RenderJob);
 }
 
-void RenderJob::cleanupStatic()
-{
-	delete repaintHandler;
-	repaintHandler = NULL;
-}
-
 void* RenderJob::getSource()
 {
 	XOJ_CHECK_TYPE(RenderJob);
@@ -43,26 +35,17 @@ void* RenderJob::getSource()
 	return this->view;
 }
 
-void RenderJob::rerenderRectangle(RenderJob* renderJob, Rectangle* rect, bool noThreads)
+void RenderJob::rerenderRectangle(Rectangle* rect)
 {
-	XOJ_CHECK_TYPE_OBJ(renderJob, RenderJob);
+	XOJ_CHECK_TYPE(RenderJob);
 
-	XojPageView* view = renderJob->view;
 	double zoom = view->xournal->getZoom();
 	Document* doc = view->xournal->getDocument();
 
-	if (!noThreads)
-	{
-		doc->lock();
-	}
-
+	doc->lock();
 	double pageWidth = view->page->getWidth();
 	double pageHeight = view->page->getHeight();
-
-	if (!noThreads)
-	{
-		doc->unlock();
-	}
+	doc->unlock();
 
 	int x = rect->x * zoom;
 	int y = rect->y * zoom;
@@ -85,24 +68,13 @@ void RenderJob::rerenderRectangle(RenderJob* renderJob, Rectangle* rect, bool no
 		PdfView::drawPage(cache, popplerPage, crRect, zoom, pageWidth, pageHeight);
 	}
 
-	if (!noThreads)
-	{
-		doc->lock();
-	}
-
+	doc->lock();
 	v.drawPage(view->page, crRect, false);
-
-	if (!noThreads)
-	{
-		doc->unlock();
-	}
+	doc->unlock();
 
 	cairo_destroy(crRect);
 
-	if (!noThreads)
-	{
-		g_mutex_lock(&view->drawingMutex);
-	}
+	g_mutex_lock(&view->drawingMutex);
 
 	cairo_t * crPageBuffer = cairo_create(view->crBuffer);
 
@@ -115,27 +87,12 @@ void RenderJob::rerenderRectangle(RenderJob* renderJob, Rectangle* rect, bool no
 
 	cairo_surface_destroy(rectBuffer);
 
-	if (!noThreads)
-	{
-		g_mutex_unlock(&view->drawingMutex);
-	}
+	g_mutex_unlock(&view->drawingMutex);
 }
 
-void RenderJob::rerenderRectangle(Rectangle* rect, bool noThreads)
+void RenderJob::run()
 {
 	XOJ_CHECK_TYPE(RenderJob);
-
-	rerenderRectangle(this, rect, noThreads);
-}
-
-void RenderJob::run(bool noThreads)
-{
-	XOJ_CHECK_TYPE(RenderJob);
-
-	if (repaintHandler == NULL)
-	{
-		repaintHandler = new RepaintWidgetHandler(this->view->getXournal()->getWidget());
-	}
 
 	double zoom = this->view->xournal->getZoom();
 
@@ -148,7 +105,6 @@ void RenderJob::run(bool noThreads)
 	this->view->rerenderComplete = false;
 
 	g_mutex_unlock(&this->view->repaintRectMutex);
-
 
 	if (rerenderComplete)
 	{
@@ -163,10 +119,7 @@ void RenderJob::run(bool noThreads)
 
 		XojPopplerPage* popplerPage = NULL;
 
-		if (!noThreads)
-		{
-			doc->lock();
-		}
+		doc->lock();
 
 		if (this->view->page->getBackgroundType().isPdfPage())
 		{
@@ -182,10 +135,8 @@ void RenderJob::run(bool noThreads)
 		view.drawPage(this->view->page, cr2, false);
 
 		cairo_destroy(cr2);
-		if (!noThreads)
-		{
-			g_mutex_lock(&this->view->drawingMutex);
-		}
+
+		g_mutex_lock(&this->view->drawingMutex);
 
 		if (this->view->crBuffer)
 		{
@@ -193,32 +144,39 @@ void RenderJob::run(bool noThreads)
 		}
 		this->view->crBuffer = crBuffer;
 
-		if (!noThreads)
-		{
-			g_mutex_unlock(&this->view->drawingMutex);
-			doc->unlock();
-		}
-
-		repaintHandler->repaintComplete();
+		g_mutex_unlock(&this->view->drawingMutex);
+		doc->unlock();
 	}
 	else
 	{
 		for (Rectangle* rect : rerenderRects)
 		{
-			rerenderRectangle(rect, noThreads);
-
-			rect = this->view->rectOnWidget(rect->x, rect->y, rect->width, rect->height);
-			repaintHandler->repaintRects(rect);
+			rerenderRectangle(rect);
 		}
 	}
 
+	// Schedule a repaint of the widget
+	repaintWidget(this->view->getXournal()->getWidget());
 
 	// delete all rectangles
 	for (Rectangle* rect : rerenderRects)
 	{
 		delete rect;
-		rect = NULL;
 	}
+	rerenderRects.clear();
+}
+
+/**
+ * Repaint the widget in UI Thread
+ */
+void RenderJob::repaintWidget(GtkWidget* widget)
+{
+	// "this" is not needed, "widget" is in
+	// the closure, therefore no sync needed
+	// Because of this the argument "widget" is needed
+	Util::execInUiThread([=]() {
+		gtk_widget_queue_draw(widget);
+	});
 }
 
 JobType RenderJob::getType()

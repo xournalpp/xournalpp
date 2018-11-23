@@ -6,13 +6,12 @@
 #include "SidebarPreviewBaseEntry.h"
 #include "SidebarToolbar.h"
 
+
 SidebarPreviewBase::SidebarPreviewBase(Control* control, GladeGui* gui, SidebarToolbar* toolbar)
  : AbstractSidebarPage(control),
    toolbar(toolbar)
 {
 	XOJ_INIT_TYPE(SidebarPreviewBase);
-
-	this->backgroundInitialized = false;
 
 	this->layoutmanager = new SidebarLayout();
 
@@ -40,14 +39,9 @@ SidebarPreviewBase::SidebarPreviewBase(Control* control, GladeGui* gui, SidebarT
 
 	g_signal_connect(this->scrollPreview, "size-allocate", G_CALLBACK(sizeChanged), this);
 
-	this->table = GTK_TABLE(gtk_table_new(2, 1, false));
-	g_object_ref(this->table);
+	gtk_widget_show_all(this->scrollPreview);
 
-	gtk_table_attach(this->table, this->scrollPreview, 0, 1, 0, 1,
-	                 (GtkAttachOptions) (GTK_FILL | GTK_EXPAND),
-	                 (GtkAttachOptions) (GTK_FILL | GTK_EXPAND), 0, 0);
-
-	gtk_widget_show_all(GTK_WIDGET(this->table));
+	g_signal_connect(this->iconViewPreview, "draw", G_CALLBACK(Util::paintBackgroundWhite), NULL);
 }
 
 SidebarPreviewBase::~SidebarPreviewBase()
@@ -63,8 +57,7 @@ SidebarPreviewBase::~SidebarPreviewBase()
 	delete this->layoutmanager;
 	this->layoutmanager = NULL;
 
-	g_object_unref(this->table);
-	this->table = NULL;
+	this->scrollPreview = NULL;
 
 	for (SidebarPreviewBaseEntry* p : this->previews)
 	{
@@ -91,23 +84,6 @@ void SidebarPreviewBase::sizeChanged(GtkWidget* widget, GtkAllocation* allocatio
 		sidebar->layout();
 		lastWidth = allocation->width;
 	}
-}
-
-void SidebarPreviewBase::setBackgroundWhite()
-{
-	XOJ_CHECK_TYPE(SidebarPreviewBase);
-
-	if (this->backgroundInitialized)
-	{
-		return;
-	}
-	this->backgroundInitialized = true;
-
-	GdkRGBA white = {1, 1, 1, 1};
-
-	gtk_widget_override_background_color(this->iconViewPreview,
-	                                     GTK_STATE_FLAG_NORMAL,
-	                                     &white);
 }
 
 double SidebarPreviewBase::getZoom()
@@ -142,7 +118,7 @@ GtkWidget* SidebarPreviewBase::getWidget()
 {
 	XOJ_CHECK_TYPE(SidebarPreviewBase);
 
-	return GTK_WIDGET(this->table);
+	return this->scrollPreview;
 }
 
 void SidebarPreviewBase::documentChanged(DocumentChangeType type)
@@ -171,7 +147,6 @@ bool SidebarPreviewBase::scrollToPreview(SidebarPreviewBase* sidebar)
 
 	if (sidebar->selectedEntry != size_t_npos && sidebar->selectedEntry < sidebar->previews.size())
 	{
-		gdk_threads_enter();
 		SidebarPreviewBaseEntry* p = sidebar->previews[sidebar->selectedEntry];
 
 		// scroll to preview
@@ -184,18 +159,14 @@ bool SidebarPreviewBase::scrollToPreview(SidebarPreviewBase* sidebar)
 		int x = allocation.x;
 		int y = allocation.y;
 
-		gdk_threads_leave();
-
 		if (x == -1)
 		{
 			g_idle_add((GSourceFunc) scrollToPreview, sidebar);
 			return false;
 		}
 
-		gdk_threads_enter();
 		gtk_adjustment_clamp_page(vadj, y, y + allocation.height);
 		gtk_adjustment_clamp_page(hadj, x, x + allocation.width);
-		gdk_threads_leave();
 	}
 	return false;
 }

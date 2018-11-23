@@ -265,13 +265,9 @@ void LatexController::run()
 
 	if (!findTexExecutable())
 	{
+
 		string msg = FS(_("Could not find Xournal++ LaTeX executable relative or in Path.\nSearched for: mathtex-xournalpp.cgi"));
-		GtkWidget* dialog = gtk_message_dialog_new(control->getGtkWindow(),
-												   GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, "%s",
-												   msg.c_str());
-		gtk_window_set_transient_for(GTK_WINDOW(dialog), control->getGtkWindow());
-		gtk_dialog_run(GTK_DIALOG(dialog));
-		gtk_widget_destroy(dialog);
+		Util::showErrorToUser(control->getGtkWindow(), msg);
 		return;
 	}
 
@@ -287,13 +283,9 @@ void LatexController::run()
 	// now do all the LatexAction stuff
 	if (!runCommand())
 	{
+
 		string msg = FS(_("Failed to generate LaTeX image!"));
-		GtkWidget* dialog = gtk_message_dialog_new(control->getGtkWindow(),
-												   GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, "%s",
-												   msg.c_str());
-		gtk_window_set_transient_for(GTK_WINDOW(dialog), control->getGtkWindow());
-		gtk_dialog_run(GTK_DIALOG(dialog));
-		gtk_widget_destroy(dialog);
+		Util::showErrorToUser(control->getGtkWindow(), msg);
 		return;
 	}
 

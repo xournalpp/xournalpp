@@ -256,6 +256,9 @@ public:
 	int getSelectionColor();
 	void setSelectionColor(int color);
 
+	int getBackgroundColor();
+	void setBackgroundColor(int color);
+
 	int getPdfPageCacheSize();
 	void setPdfPageCacheSize(int size);
 
@@ -264,6 +267,9 @@ public:
 
 	string getPageTemplate();
 	void setPageTemplate(string pageTemplate);
+
+	string getAudioFolder();
+	void setAudioFolder(string audioFolder);
 
 	/**
 	 * Get name, e.g. "cm"
@@ -489,6 +495,11 @@ private:
 	int selectionColor;
 
 	/**
+	 * The color for Xournal page background
+	 */
+	int backgroundColor;
+
+	/**
 	 * Whether event compression should be enabled
 	 */
 	bool eventCompression;
@@ -502,6 +513,11 @@ private:
 	 * Unit, see XOJ_UNITS
 	 */
 	string sizeUnit;
+
+	/**
+	 * Audio folder for audio recording
+	 */
+	string audioFolder;
 
 	/**
 	 * "Transaction" running, do not save until the end is reached

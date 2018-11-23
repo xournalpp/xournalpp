@@ -11,10 +11,13 @@ if test "$1" = "install"; then
   mkdir -p /usr/share/mimelnk/application
 
   cp -f ${srcdir}/ui/pixmaps/xournalpp.svg ${desktopdir}/icons/hicolor/scalable/apps
-  cp -f ${srcdir}/ui/pixmaps/xoj.svg ${desktopdir}/icons/hicolor/scalable/mimetypes/application-x-xoj.svg
+  cp -f ${srcdir}/ui/pixmaps/xopp.svg ${desktopdir}/icons/hicolor/scalable/mimetypes/application-x-xopp.svg
+  cp -f ${srcdir}/ui/pixmaps/xopt.svg ${desktopdir}/icons/hicolor/scalable/mimetypes/application-x-xopt.svg
   if test ! -e ${desktopdir}/icons/hicolor/scalable/mimetypes/gnome-mime-application-x-xoj.svg; then
-    ln -s ${desktopdir}/icons/hicolor/scalable/mimetypes/application-x-xoj.svg ${desktopdir}/icons/hicolor/scalable/mimetypes/gnome-mime-application-x-xoj.svg
+    ln -s ${desktopdir}/icons/hicolor/scalable/mimetypes/application-x-xopp.svg ${desktopdir}/icons/hicolor/scalable/mimetypes/gnome-mime-application-x-xoj.svg
   fi
+  ln -s ${desktopdir}/icons/hicolor/scalable/mimetypes/application-x-xopp.svg ${desktopdir}/icons/hicolor/scalable/mimetypes/gnome-mime-application-x-xopp.svg
+  ln -s ${desktopdir}/icons/hicolor/scalable/mimetypes/application-x-xopt.svg ${desktopdir}/icons/hicolor/scalable/mimetypes/gnome-mime-application-x-xopt.svg
 
   cp -f ${srcdir}/desktop/xournal.xml ${desktopdir}/mime/packages
   cp -f ${srcdir}/desktop/xournalpp.desktop ${desktopdir}/applications
@@ -24,7 +27,11 @@ if test "$1" = "install"; then
 else
   rm -f ${desktopdir}/icons/hicolor/scalable/apps/xournalpp.svg
   rm -f ${desktopdir}/icons/hicolor/scalable/mimetypes/xoj.svg
+  rm -f ${desktopdir}/icons/hicolor/scalable/mimetypes/xopp.svg
+  rm -f ${desktopdir}/icons/hicolor/scalable/mimetypes/xopt.svg
   rm -f ${desktopdir}/icons/hicolor/scalable/mimetypes/gnome-mime-application-x-xoj.svg
+  rm -f ${desktopdir}/icons/hicolor/scalable/mimetypes/gnome-mime-application-x-xopp.svg
+  rm -f ${desktopdir}/icons/hicolor/scalable/mimetypes/gnome-mime-application-x-xopt.svg
   
   rm -f ${desktopdir}/mime/packages/xournal.xml
   rm -f ${desktopdir}/applications/xournalpp.desktop

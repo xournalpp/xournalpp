@@ -55,11 +55,11 @@ void Job::deleteJob()
 	}
 }
 
-void Job::execute(bool noThreads)
+void Job::execute()
 {
 	XOJ_CHECK_TYPE(Job);
 
-	this->run(noThreads);
+	this->run();
 }
 
 void* Job::getSource()
@@ -73,10 +73,7 @@ bool Job::callAfterCallback(Job* job)
 {
 	XOJ_CHECK_TYPE_OBJ(job, Job);
 
-	gdk_threads_enter();
-
 	job->afterRun();
-	gdk_threads_leave();
 
 	job->afterRunId = 0;
 	job->unref();
@@ -94,9 +91,14 @@ void Job::callAfterRun()
 
 	this->ref();
 
-	this->afterRunId = g_idle_add((GSourceFunc) Job::callAfterCallback, this);
+	this->afterRunId = gdk_threads_add_idle((GSourceFunc) Job::callAfterCallback, this);
 }
 
+/**
+ * After run will be called from UI Thread after the Job is finished
+ *
+ * All UI Stuff should happen here
+ */
 void Job::afterRun()
 {
 }

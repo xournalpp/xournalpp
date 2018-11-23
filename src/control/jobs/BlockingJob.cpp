@@ -20,20 +20,22 @@ BlockingJob::~BlockingJob()
 	XOJ_RELEASE_TYPE(BlockingJob);
 }
 
-void BlockingJob::execute(bool noThreads)
+void BlockingJob::execute()
 {
 	XOJ_CHECK_TYPE(BlockingJob);
 
-	this->run(false);
+	this->run();
 
 	g_idle_add((GSourceFunc) finished, this->control);
 }
 
 bool BlockingJob::finished(Control* control)
 {
-	gdk_threads_enter();
-	control->unblock();
-	gdk_threads_leave();
+	// "this" is not needed, "control" is in
+	// the closure, therefore no sync needed
+	Util::execInUiThread([=]() {
+		control->unblock();
+	});
 
 	// do not call again
 	return false;

@@ -1,0 +1,10 @@
+[Desktop Entry]
+Encoding=UTF-8
+Type=MimeType
+MimeType=application/x-xopt
+Icon=xopt
+Patterns=*.xopt;
+
+Comment=Xournal++ template file
+Comment[de]=Xournal++ Vorlage
+

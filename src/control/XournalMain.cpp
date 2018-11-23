@@ -2,7 +2,6 @@
 
 #include "Control.h"
 
-#include "control/jobs/RenderJob.h"
 #include "gui/GladeSearchpath.h"
 #include "gui/MainWindow.h"
 #include "gui/toolbarMenubar/model/ToolbarColorNames.h"
@@ -30,8 +29,6 @@ using std::cerr;
 using std::endl;
 #include <vector>
 using std::vector;
-
-extern string audioFolder;
 
 XournalMain::XournalMain()
 {
@@ -125,12 +122,9 @@ void XournalMain::checkForErrorlog()
 		{
 			if (!bf::remove(errorlogPath))
 			{
-				GtkWidget* dlgError = gtk_message_dialog_new(NULL, GTK_DIALOG_MODAL,
-					GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, "%s",
-					FC(_F("Errorlog cannot be deleted. You have to do it manually.\nLogfile: {1}")
-						% errorlogPath.string()));
-				gtk_dialog_run(GTK_DIALOG(dlgError));
-				gtk_widget_destroy(dlgError);
+				string msg = FS(_F("Errorlog cannot be deleted. You have to do it manually.\nLogfile: {1}")
+						% errorlogPath.string());
+				Util::showErrorToUser(NULL, msg);
 			}
 		}
 		else if (res == 5) // Cancel
@@ -216,7 +210,6 @@ int XournalMain::run(int argc, char* argv[])
 	bool optNoPdfCompress = false;
 	gchar** optFilename = NULL;
 	gchar* pdfFilename = NULL;
-	gchar* audioFolderParam = NULL;
 	int openAtPageNumber = -1;
 
 	string pdf_no_compress = _("Don't compress PDF files (for debugging)");
@@ -224,7 +217,6 @@ int XournalMain::run(int argc, char* argv[])
 	string page_jump = _("Jump to Page (first Page: 1)");
 	string audio_folder = _("Absolute path for the audio files playback");
 	GOptionEntry options[] = {
-		{ "audio-folder",	 'f', 0, G_OPTION_ARG_FILENAME,		  &audioFolderParam, audio_folder.c_str(), NULL },
 		{ "pdf-no-compress",   0, 0, G_OPTION_ARG_NONE,           &optNoPdfCompress, pdf_no_compress.c_str(), NULL },
 		{ "create-pdf",      'p', 0, G_OPTION_ARG_FILENAME,       &pdfFilename,      create_pdf.c_str(), NULL },
 		{ "page",            'n', 0, G_OPTION_ARG_INT,            &openAtPageNumber, page_jump.c_str(), "N" },
@@ -256,12 +248,6 @@ int XournalMain::run(int argc, char* argv[])
 		return exportPdf(*optFilename, pdfFilename);
 	}
 
-	if (audioFolderParam)
-	{
-		printf("\nAudio folder specified! %s\n", audioFolderParam);
-		audioFolder = string(audioFolderParam);
-	}
-
 	// Init GTK Display
 	gdk_display_open_default_libgtk_only();
 
@@ -283,13 +269,9 @@ int XournalMain::run(int argc, char* argv[])
 	{
 		if (g_strv_length(optFilename) != 1)
 		{
-			GtkWidget* dialog = gtk_message_dialog_new((GtkWindow*) *win,
-													GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
-													"%s", _C("Sorry, Xournal++ can only open one file from the command line.\n"
-															 "Others are ignored."));
-			gtk_window_set_transient_for(GTK_WINDOW(dialog), GTK_WINDOW(win->getWindow()));
-			gtk_dialog_run(GTK_DIALOG(dialog));
-			gtk_widget_destroy(dialog);
+			string msg = FC(_("Sorry, Xournal++ can only open one file from the command line.\n"
+					 "Others are ignored."));
+			Util::showErrorToUser((GtkWindow*) *win, msg);
 		}
 
 		GFile* file = g_file_new_for_commandline_arg(optFilename[0]);
@@ -306,13 +288,9 @@ int XournalMain::run(int argc, char* argv[])
 		}
 		else
 		{
-			GtkWidget* dialog = gtk_message_dialog_new((GtkWindow*) *win,
-													   GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
-													   "%s", _C("Sorry, Xournal++ cannot open remote files at the moment.\n"
-																"You have to copy the file to a local directory."));
-			gtk_window_set_transient_for(GTK_WINDOW(dialog), GTK_WINDOW(win->getWindow()));
-			gtk_dialog_run(GTK_DIALOG(dialog));
-			gtk_widget_destroy(dialog);
+			string msg = FC(_("Sorry, Xournal++ cannot open remote files at the moment.\n"
+					"You have to copy the file to a local directory."));
+			Util::showErrorToUser((GtkWindow*) *win, msg);
 		}
 	}
 
@@ -326,9 +304,7 @@ int XournalMain::run(int argc, char* argv[])
 	checkForErrorlog();
 	checkForEmergencySave();
 
-	gdk_threads_enter();
 	gtk_main();
-	gdk_threads_leave();
 
 	control->saveSettings();
 
@@ -339,8 +315,6 @@ int XournalMain::run(int argc, char* argv[])
 	delete win;
 	delete control;
 	delete gladePath;
-
-	RenderJob::cleanupStatic();
 
 	ToolbarColorNames::getInstance().saveFile(colorNameFile);
 	ToolbarColorNames::freeInstance();

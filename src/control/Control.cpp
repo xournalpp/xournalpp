@@ -63,19 +63,18 @@ namespace bf = boost::filesystem;
 #include <gtk/gtk.h>
 
 #include <iostream>
+#include <fstream>
 using std::cout;
 using std::cerr;
 using std::endl;
-
-#include <vector>
-using std::vector;
+using std::ifstream;
 
 #include <time.h>
 extern gint sttime;
 
 // TODO Check for error log on startup, also check for emergency save document!
 
-Control::Control(GladeSearchpath* gladeSearchPath, bool noThreads)
+Control::Control(GladeSearchpath* gladeSearchPath)
 {
 	XOJ_INIT_TYPE(Control);
 
@@ -107,10 +106,12 @@ Control::Control(GladeSearchpath* gladeSearchPath, bool noThreads)
 
 	this->sidebar = NULL;
 	this->searchBar = NULL;
+	
+	this->audioController = new AudioController(this->settings);
 
 	this->scrollHandler = new ScrollHandler(this);
 
-	this->scheduler = new XournalScheduler(noThreads);
+	this->scheduler = new XournalScheduler();
 
 	this->hiddenFullscreenWidgets = NULL;
 	this->sidebarHidden = false;
@@ -190,6 +191,8 @@ Control::~Control()
 	this->scheduler = NULL;
 	delete this->dragDropHandler;
 	this->dragDropHandler = NULL;
+	delete this->audioController;
+	this->audioController = NULL;
 
 	XOJ_RELEASE_TYPE(Control);
 }
@@ -790,7 +793,9 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
 	case ACTION_ZOOM_FIT:
 	case ACTION_ZOOM_IN:
 	case ACTION_ZOOM_OUT:
-		invokeLater(type);
+		Util::execInUiThread([=]() {
+			zoomCallback(type);
+		});
 		break;
 
 	case ACTION_VIEW_TWO_PAGES:
@@ -858,12 +863,9 @@ void Control::help()
 	gtk_show_uri(gtk_window_get_screen(getGtkWindow()), XOJ_HELP, gtk_get_current_event_time(), &error);
 	if (error)
 	{
-		GtkWidget* dialog = gtk_message_dialog_new(getGtkWindow(), GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR,
-												   GTK_BUTTONS_OK, "%s",
-												   FC(_F("There was an error displaying help: {1}") % error->message));
-		gtk_window_set_transient_for(GTK_WINDOW(dialog), getGtkWindow());
-		gtk_dialog_run(GTK_DIALOG(dialog));
-		gtk_widget_destroy(dialog);
+
+		string msg = FS(_F("There was an error displaying help: {1}") % error->message);
+		Util::showErrorToUser(getGtkWindow(), msg);
 
 		g_error_free(error);
 	}
@@ -905,13 +907,6 @@ void Control::clearSelectionEndText()
 	{
 		win->getXournal()->endTextAllPages();
 	}
-}
-
-void Control::invokeLater(ActionType type)
-{
-	XOJ_CHECK_TYPE(Control);
-
-	g_idle_add((GSourceFunc) &invokeCallback, new CallbackData(this, type));
 }
 
 /**
@@ -963,7 +958,7 @@ void Control::customizeToolbars()
 
 	if (this->win->getSelectedToolbar()->isPredefined())
 	{
-		GtkWidget* dialog = gtk_message_dialog_new(getGtkWindow(), GTK_DIALOG_DESTROY_WITH_PARENT,
+		GtkWidget* dialog = gtk_message_dialog_new(getGtkWindow(), GTK_DIALOG_MODAL,
 												   GTK_MESSAGE_QUESTION, GTK_BUTTONS_YES_NO, "%s",
 												   FC(_F("The Toolbarconfiguration \"{1}\" is predefined, "
 												   "would you create a copy to edit?")
@@ -1118,53 +1113,6 @@ void Control::setShapeTool(ActionType type, bool enabled)
 	fireActionSelected(GROUP_RULER, type);
 }
 
-void Control::recStartStop(bool rec)
-{
-	string command = "";
-
-	if (rec)
-	{
-		this->recording = true;
-		sttime = (g_get_monotonic_time() / 1000000);
-
-		char buffer[50];
-		time_t secs = time(0);
-		tm *t = localtime(&secs);
-		//This prints the date and time in ISO format.
-		sprintf(buffer, "%04d-%02d-%02d_%02d:%02d:%02d", t->tm_year + 1900, t->tm_mon + 1, t->tm_mday, t->tm_hour,
-				t->tm_min, t->tm_sec);
-		string data(buffer);
-		data += ".mp3";
-
-		audioFilename = data;
-
-		printf("Start recording\n");
-		command = "xopp-recording.sh start " + data;
-	}
-	else if (this->recording)
-	{
-		this->recording = false;
-		audioFilename = "";
-		command = "xopp-recording.sh stop";
-	}
-	system(command.c_str());
-}
-
-void Control::recToggle()
-{
-	XOJ_CHECK_TYPE(Control);
-
-	if (!this->recording)
-	{
-		recStartStop(true);
-	}
-	else
-	{
-		recStartStop(false);
-	}
-
-}
-
 void Control::enableFullscreen(bool enabled, bool presentation)
 {
 	XOJ_CHECK_TYPE(Control);
@@ -1235,12 +1183,17 @@ void Control::disableSidebarTmp(bool disabled)
 	this->sidebar->setTmpDisabled(disabled);
 }
 
-void Control::addDefaultPage()
+void Control::addDefaultPage(string pageTemplate)
 {
 	XOJ_CHECK_TYPE(Control);
 
+	if (pageTemplate == "")
+	{
+		pageTemplate = settings->getPageTemplate();
+	}
+
 	PageTemplateSettings model;
-	model.parse(settings->getPageTemplate());
+	model.parse(pageTemplate);
 
 	PageRef page = new XojPage(model.getPageWidth(), model.getPageHeight());
 	page->setBackgroundColor(model.getBackgroundColor());
@@ -1380,15 +1333,11 @@ void Control::insertNewPage(size_t position)
 	{
 		if (this->doc->getPdfPageCount() == 0)
 		{
-			GtkWidget* dialog = gtk_message_dialog_new(getGtkWindow(),
-													   GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
-													   "%s", _C("You don't have any PDF pages to select from. "
+
+			string msg = FS(_("You don't have any PDF pages to select from. "
 																"Cancel operation.\nPlease select another background type: "
 																"Menu \"Journal\" / \"Insert Page Type\"."));
-			gtk_window_set_transient_for(GTK_WINDOW(dialog), getGtkWindow());
-			gtk_dialog_run(GTK_DIALOG(dialog));
-			gtk_widget_destroy(dialog);
-
+			Util::showErrorToUser(getGtkWindow(), msg);
 			return;
 		}
 		else
@@ -1478,127 +1427,123 @@ void Control::setPageBackground(ActionType type)
 		return;
 	}
 
-//	this->doc->lock();
-//	size_t pageNr = this->doc->indexOf(page);
-//	this->doc->unlock();
-//	if (pageNr == size_t_npos)
-//	{
-//		return; // should not happen...
-//	}
-//
-//	int origPdfPage = page->getPdfPageNr();
-//	BackgroundType origType = page->getBackgroundType();
-//	BackgroundImage origBackgroundImage = page->getBackgroundImage();
-//	double origW = page->getWidth();
-//	double origH = page->getHeight();
-//
-//	if (ACTION_SET_PAPER_BACKGROUND_PLAIN == type)
-//	{
-//		page->setBackgroundType(BACKGROUND_TYPE_NONE);
-//	}
-//	else if (ACTION_SET_PAPER_BACKGROUND_LINED == type)
-//	{
-//		page->setBackgroundType(BACKGROUND_TYPE_LINED);
-//	}
-//	else if (ACTION_SET_PAPER_BACKGROUND_RULED == type)
-//	{
-//		page->setBackgroundType(BACKGROUND_TYPE_RULED);
-//	}
-//	else if (ACTION_SET_PAPER_BACKGROUND_GRAPH == type)
-//	{
-//		page->setBackgroundType(BACKGROUND_TYPE_GRAPH);
-//	}
-//	else if (ACTION_SET_PAPER_BACKGROUND_IMAGE == type)
-//	{
-//		this->doc->lock();
-//		ImagesDialog* dlg = new ImagesDialog(this->gladeSearchPath, this->doc, this->settings);
-//		this->doc->unlock();
-//
-//		dlg->show(GTK_WINDOW(this->win->getWindow()));
-//		BackgroundImage img = dlg->getSelectedImage();
-//		if (!img.isEmpty())
-//		{
-//			page->setBackgroundImage(img);
-//			page->setBackgroundType(BACKGROUND_TYPE_IMAGE);
-//		}
-//		else if (dlg->shouldShowFilechooser())
-//		{
-//
-//			bool attach = false;
-//			GFile* file = ImageOpenDlg::show(getGtkWindow(), settings, true, &attach);
-//			if (file == NULL)
-//			{
-//				return;
-//			}
-//			char* name = g_file_get_path(file);
-//			string filename = name;
-//			g_free(name);
-//			g_object_unref(file);
-//
-//			BackgroundImage newImg;
-//			GError* err = NULL;
-//			newImg.loadFile(filename, &err);
-//			newImg.setAttach(attach);
-//			if (err)
-//			{
-//				Util::showErrorToUser(getGtkWindow(), FS(_F("This image could not be loaded. Error message: {1}") % err->message));
-//				g_error_free(err);
-//				return;
-//			}
-//			else
-//			{
-//				page->setBackgroundImage(newImg);
-//				page->setBackgroundType(BACKGROUND_TYPE_IMAGE);
-//			}
-//		}
-//
-//		GdkPixbuf* pixbuf = page->getBackgroundImage().getPixbuf();
-//		if (pixbuf)
-//		{
-//			page->setSize(gdk_pixbuf_get_width(pixbuf), gdk_pixbuf_get_height(pixbuf));
-//			firePageSizeChanged(pageNr);
-//		}
-//
-//		delete dlg;
-//	}
-//	else if (ACTION_SET_PAPER_BACKGROUND_PDF == type)
-//	{
-//		if (doc->getPdfPageCount() == 0)
-//		{
-//			GtkWidget* dialog = gtk_message_dialog_new(getGtkWindow(),
-//													   GTK_DIALOG_DESTROY_WITH_PARENT,
-//													   GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, "%s",
-//													   _C("You don't have any PDF pages to select from. Cancel operation.\n"
-//														  "Please select another background type: Menu \"Journal\" → \"Insert Page Type\"."));
-//			gtk_window_set_transient_for(GTK_WINDOW(dialog), GTK_WINDOW(this->getWindow()->getWindow()));
-//			gtk_dialog_run(GTK_DIALOG(dialog));
-//			gtk_widget_destroy(dialog);
-//			return;
-//		}
-//		else
-//		{
-//			this->doc->lock();
-//			PdfPagesDialog* dlg = new PdfPagesDialog(this->gladeSearchPath, this->doc, this->settings);
-//			this->doc->unlock();
-//
-//			dlg->show(GTK_WINDOW(this->win->getWindow()));
-//
-//			int selected = dlg->getSelectedPage();
-//			delete dlg;
-//
-//			if (selected >= 0 && selected < doc->getPdfPageCount())
-//			{
-//				// no need to set a type, if we set the page number the type is also set
-//				page->setBackgroundPdfPageNr(selected);
-//			}
-//		}
-//	}
-//
-//	firePageChanged(pageNr);
-//	updateBackgroundSizeButton();
-//
-//	this->undoRedo->addUndoAction(
-//		new PageBackgroundChangedUndoAction(page, origType, origPdfPage, origBackgroundImage, origW, origH));
+	this->doc->lock();
+	size_t pageNr = this->doc->indexOf(page);
+	this->doc->unlock();
+	if (pageNr == size_t_npos)
+	{
+		return; // should not happen...
+	}
+
+	int origPdfPage = page->getPdfPageNr();
+	BackgroundType origType = page->getBackgroundType();
+	BackgroundImage origBackgroundImage = page->getBackgroundImage();
+	double origW = page->getWidth();
+	double origH = page->getHeight();
+
+	if (ACTION_SET_PAPER_BACKGROUND_PLAIN == type)
+	{
+		page->setBackgroundType(BACKGROUND_TYPE_NONE);
+	}
+	else if (ACTION_SET_PAPER_BACKGROUND_LINED == type)
+	{
+		page->setBackgroundType(BACKGROUND_TYPE_LINED);
+	}
+	else if (ACTION_SET_PAPER_BACKGROUND_RULED == type)
+	{
+		page->setBackgroundType(BACKGROUND_TYPE_RULED);
+	}
+	else if (ACTION_SET_PAPER_BACKGROUND_GRAPH == type)
+	{
+		page->setBackgroundType(BACKGROUND_TYPE_GRAPH);
+	}
+	else if (ACTION_SET_PAPER_BACKGROUND_IMAGE == type)
+	{
+		this->doc->lock();
+		ImagesDialog* dlg = new ImagesDialog(this->gladeSearchPath, this->doc, this->settings);
+		this->doc->unlock();
+
+		dlg->show(GTK_WINDOW(this->win->getWindow()));
+		BackgroundImage img = dlg->getSelectedImage();
+		if (!img.isEmpty())
+		{
+			page->setBackgroundImage(img);
+			page->setBackgroundType(BACKGROUND_TYPE_IMAGE);
+		}
+		else if (dlg->shouldShowFilechooser())
+		{
+
+			bool attach = false;
+			GFile* file = ImageOpenDlg::show(getGtkWindow(), settings, true, &attach);
+			if (file == NULL)
+			{
+				return;
+			}
+			char* name = g_file_get_path(file);
+			string filename = name;
+			g_free(name);
+			g_object_unref(file);
+
+			BackgroundImage newImg;
+			GError* err = NULL;
+			newImg.loadFile(filename, &err);
+			newImg.setAttach(attach);
+			if (err)
+			{
+				Util::showErrorToUser(getGtkWindow(), FS(_F("This image could not be loaded. Error message: {1}") % err->message));
+				g_error_free(err);
+				return;
+			}
+			else
+			{
+				page->setBackgroundImage(newImg);
+				page->setBackgroundType(BACKGROUND_TYPE_IMAGE);
+			}
+		}
+
+		GdkPixbuf* pixbuf = page->getBackgroundImage().getPixbuf();
+		if (pixbuf)
+		{
+			page->setSize(gdk_pixbuf_get_width(pixbuf), gdk_pixbuf_get_height(pixbuf));
+			firePageSizeChanged(pageNr);
+		}
+
+		delete dlg;
+	}
+	else if (ACTION_SET_PAPER_BACKGROUND_PDF == type)
+	{
+		if (doc->getPdfPageCount() == 0)
+		{
+
+			string msg = FS(_("You don't have any PDF pages to select from. Cancel operation.\n"
+					  "Please select another background type: Menu \"Journal\" → \"Insert Page Type\"."));
+			Util::showErrorToUser(getGtkWindow(), msg);
+			return;
+		}
+		else
+		{
+			this->doc->lock();
+			PdfPagesDialog* dlg = new PdfPagesDialog(this->gladeSearchPath, this->doc, this->settings);
+			this->doc->unlock();
+
+			dlg->show(GTK_WINDOW(this->win->getWindow()));
+
+			int selected = dlg->getSelectedPage();
+			delete dlg;
+
+			if (selected >= 0 && selected < doc->getPdfPageCount())
+			{
+				// no need to set a type, if we set the page number the type is also set
+				page->setBackgroundPdfPageNr(selected);
+			}
+		}
+	}
+
+	firePageChanged(pageNr);
+	updateBackgroundSizeButton();
+
+	this->undoRedo->addUndoAction(
+		new PageBackgroundChangedUndoAction(page, origType, origPdfPage, origBackgroundImage, origW, origH));
 }
 
 void Control::gotoPage()
@@ -1811,21 +1756,22 @@ void Control::setViewPresentationMode(bool presentationMode)
 	scrollHandler->scrollToPage(currentPage);
 }
 
-bool Control::invokeCallback(CallbackData* cb)
+/**
+ * This callback is used by used to be called later in the UI Thread
+ * On slower machine this feels more fluent, therefore this will not
+ * be removed
+ */
+void Control::zoomCallback(ActionType type)
 {
-	gdk_threads_enter();
+	XOJ_CHECK_TYPE(Control);
 
-	XOJ_CHECK_TYPE_OBJ(cb->control, Control);
-
-	ZoomControl* zoom = cb->control->getZoomControl();
-
-	switch (cb->type)
+	switch (type)
 	{
 	case ACTION_ZOOM_100:
 		zoom->zoom100();
 		break;
 	case ACTION_ZOOM_FIT:
-		cb->control->zoomFit();
+		zoomFit();
 		break;
 	case ACTION_ZOOM_IN:
 		zoom->zoomIn();
@@ -1836,12 +1782,6 @@ bool Control::invokeCallback(CallbackData* cb)
 	default:
 		break;
 	}
-
-	delete cb;
-
-	gdk_threads_leave();
-
-	return false;
 }
 
 size_t Control::getCurrentPageNo()
@@ -2182,7 +2122,7 @@ void Control::showSettings()
 	delete dlg;
 }
 
-bool Control::newFile()
+bool Control::newFile(string pageTemplate)
 {
 	XOJ_CHECK_TYPE(Control);
 
@@ -2197,7 +2137,7 @@ bool Control::newFile()
 	*doc = newDoc;
 	this->doc->unlock();
 
-	addDefaultPage();
+	addDefaultPage(pageTemplate);
 
 	fireDocumentChanged(DOCUMENT_CHANGE_COMPLETE);
 
@@ -2225,14 +2165,11 @@ bool Control::shouldFileOpen(string filename)
 
 	if (filename == basename)
 	{
-		string msg = (_F("Do not open Autosave files. They may will be overwritten!\n"
-				"Copy the files to another folder.\n"
-				"Files from Folder {1} cannot be opened.") % basename).str();
-		GtkWidget* dialog = gtk_message_dialog_new(getGtkWindow(), GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR,
-												   GTK_BUTTONS_OK, "%s", msg.c_str());
-		gtk_dialog_run(GTK_DIALOG(dialog));
-		gtk_widget_destroy(dialog);
 
+		string msg = FS(_F("Do not open Autosave files. They may will be overwritten!\n"
+				"Copy the files to another folder.\n"
+				"Files from Folder {1} cannot be opened.") % basename);
+		Util::showErrorToUser(getGtkWindow(), msg);
 		return false;
 	}
 
@@ -2272,14 +2209,29 @@ bool Control::openFile(path filename, int scrollToPage)
 		}
 	}
 
-	LoadHandler h;
+	LoadHandler loadHandler;
+
+	// Read template file
+	if (filename.extension() == ".xopt")
+	{
+		ifstream in(filename.c_str());
+		if (!in.is_open())
+		{
+			return false;
+		}
+		std::stringstream sstr;
+		sstr << in.rdbuf();
+		in.close();
+		newFile(sstr.str());
+		return true;
+	}
 
 	if (filename.extension() == ".pdf")
 	{
 		if (settings->isAutloadPdfXoj())
 		{
 			path f = path(filename).replace_extension(".pdf.xoj");
-			Document* tmp = h.loadDocument(f.string());
+			Document* tmp = loadHandler.loadDocument(f.string());
 			if (tmp)
 			{
 
@@ -2298,16 +2250,16 @@ bool Control::openFile(path filename, int scrollToPage)
 		return an;
 	}
 
-	Document* tmp = h.loadDocument(filename.string());
-	if ((tmp != NULL && h.isAttachedPdfMissing()) || !h.getMissingPdfFilename().empty())
+	Document* loadedDocument = loadHandler.loadDocument(filename.string());
+	if ((loadedDocument != NULL && loadHandler.isAttachedPdfMissing()) || !loadHandler.getMissingPdfFilename().empty())
 	{
 		// give the user a second chance to select a new PDF file, or to discard the PDF
 
 
 		GtkWidget* dialog = gtk_message_dialog_new(getGtkWindow(),
-												   GTK_DIALOG_DESTROY_WITH_PARENT,
+												   GTK_DIALOG_MODAL,
 													   GTK_MESSAGE_QUESTION, GTK_BUTTONS_NONE, "%s",
-													   h.isAttachedPdfMissing()
+													   loadHandler.isAttachedPdfMissing()
 															? _C("The attached background PDF could not be found.")
 															: _C("The background PDF could not be found."));
 
@@ -2320,8 +2272,8 @@ bool Control::openFile(path filename, int scrollToPage)
 
 		if (res == 2) // remove PDF background
 		{
-			h.removePdfBackground();
-			tmp = h.loadDocument(filename.string());
+			loadHandler.removePdfBackground();
+			loadedDocument = loadHandler.loadDocument(filename.string());
 		}
 		else if (res == 1) // select another PDF background
 		{
@@ -2330,22 +2282,17 @@ bool Control::openFile(path filename, int scrollToPage)
 			path pdfFilename = dlg.showOpenDialog(true, attachToDocument);
 			if (!pdfFilename.empty())
 			{
-				h.setPdfReplacement(pdfFilename.string(), attachToDocument);
-				tmp = h.loadDocument(filename.string());
+				loadHandler.setPdfReplacement(pdfFilename.string(), attachToDocument);
+				loadedDocument = loadHandler.loadDocument(filename.string());
 			}
 		}
 	}
 
-	if (!tmp)
+	if (!loadedDocument)
 	{
-		GtkWidget* dialog = gtk_message_dialog_new(getGtkWindow(),
-												   GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR,
-												   GTK_BUTTONS_OK, "%s\n%s",
-												   FC(_F("Error opening file \"{1}\"") % filename),
-												   h.getLastError().c_str());
-		gtk_window_set_transient_for(GTK_WINDOW(dialog), GTK_WINDOW(this->getWindow()->getWindow()));
-		gtk_dialog_run(GTK_DIALOG(dialog));
-		gtk_widget_destroy(dialog);
+		string msg = FS(_F("Error opening file \"{1}\"") % filename) + "\n" + loadHandler.getLastError();
+		Util::showErrorToUser(getGtkWindow(), msg);
+
 		fileLoaded(scrollToPage);
 		return false;
 	}
@@ -2353,7 +2300,7 @@ bool Control::openFile(path filename, int scrollToPage)
 	{
 		this->doc->lock();
 		this->doc->clearDocument();
-		*this->doc = *tmp;
+		*this->doc = *loadedDocument;
 		this->doc->unlock();
 	}
 
@@ -2472,13 +2419,8 @@ bool Control::annotatePdf(path filename, bool attachPdf, bool attachToDocument)
 		string errMsg = doc->getLastErrorMsg();
 		this->doc->unlock();
 
-		GtkWidget* dialog = gtk_message_dialog_new(getGtkWindow(),
-												   GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR,
-												   GTK_BUTTONS_OK, "%s",
-												   FC(_F("Error annotate PDF file \"{1}\"\n{2}") % filename % errMsg));
-		gtk_window_set_transient_for(GTK_WINDOW(dialog), GTK_WINDOW(this->getWindow()->getWindow()));
-		gtk_dialog_run(GTK_DIALOG(dialog));
-		gtk_widget_destroy(dialog);
+		string msg = FS(_F("Error annotate PDF file \"{1}\"\n{2}") % filename % errMsg);
+		Util::showErrorToUser(getGtkWindow(), msg);
 	}
 	getCursor()->setCursorBusy(false);
 
@@ -2760,7 +2702,7 @@ void Control::quit()
 
 	this->scheduler->lock();
 
-	recStartStop(false);
+	audioController->recStartStop(false);
 	settings->save();
 
 	this->scheduler->removeAllJobs();
@@ -2777,7 +2719,7 @@ bool Control::close(bool destroy)
 
 	if (undoRedo->isChanged())
 	{
-		GtkWidget* dialog = gtk_message_dialog_new(getGtkWindow(), GTK_DIALOG_DESTROY_WITH_PARENT,
+		GtkWidget* dialog = gtk_message_dialog_new(getGtkWindow(), GTK_DIALOG_MODAL,
 												   GTK_MESSAGE_WARNING, GTK_BUTTONS_NONE, "%s",
 												   _C("This document is not saved yet."));
 
@@ -2814,7 +2756,7 @@ bool Control::close(bool destroy)
 		namespace bf = boost::filesystem;
 		if (!bf::exists(this->doc->getFilename()))
 		{
-			GtkWidget* dialog = gtk_message_dialog_new(getGtkWindow(), GTK_DIALOG_DESTROY_WITH_PARENT,
+			GtkWidget* dialog = gtk_message_dialog_new(getGtkWindow(), GTK_DIALOG_MODAL,
 													   GTK_MESSAGE_WARNING, GTK_BUTTONS_NONE, "%s",
 													   _C("Document file was removed."));
 
@@ -3287,13 +3229,6 @@ bool Control::isFullscreen()
 	return this->fullscreen;
 }
 
-bool Control::isRecording()
-{
-	XOJ_CHECK_TYPE(Control);
-
-	return this->recording;
-}
-
 TextEditor* Control::getTextEditor()
 {
 	XOJ_CHECK_TYPE(Control);
@@ -3346,18 +3281,3 @@ SearchBar* Control::getSearchBar()
 
 	return this->searchBar;
 }
-
-PageTypeHandler* Control::getPageTypes()
-{
-	XOJ_CHECK_TYPE(Control);
-
-	return this->pageTypes;
-}
-
-PageTypeMenu* Control::getPageTypeMenu()
-{
-	XOJ_CHECK_TYPE(Control);
-
-	return this->pageTypeMenu;
-}
-

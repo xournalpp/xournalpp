@@ -70,8 +70,4 @@ public:
 
 	virtual int getX() const = 0;
 	virtual int getY() const = 0;
-
-
-	virtual Rectangle* rectOnWidget(double x, double y, double width, double height) = 0;
-
 };

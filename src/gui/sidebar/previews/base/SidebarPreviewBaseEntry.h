@@ -68,11 +68,6 @@ private:
 	bool selected;
 
 	/**
-	 * If this preview is painted once
-	 */
-	bool firstPainted;
-
-	/**
 	 * The sidebar which displays the previews
 	 */
 	SidebarPreviewBase* sidebar;

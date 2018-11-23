@@ -8,19 +8,18 @@
 
 
 Layout::Layout(XournalView* _view,
-               GtkAdjustment* _adjHorizontal,
-	             GtkAdjustment* _adjVertical)
-	: view(_view),
-	  adjHorizontal(_adjHorizontal),
-	  adjVertical(_adjVertical),
-	  lastWidgetWidth(0),
-	  layoutWidth(0),
-	  layoutHeight(0)
+               GtkAdjustment* adjHorizontal,
+	           GtkAdjustment* adjVertical)
+ : view(_view),
+   adjHorizontal(adjHorizontal),
+   adjVertical(adjVertical),
+   lastWidgetWidth(0),
+   layoutWidth(0),
+   layoutHeight(0)
 {
 	XOJ_INIT_TYPE(Layout);
 
 	g_signal_connect(adjHorizontal, "value-changed", G_CALLBACK(adjustmentValueChanged), this);
-
 	g_signal_connect(adjVertical, "value-changed", G_CALLBACK(adjustmentValueChanged), this);
 }
 
@@ -132,6 +131,22 @@ Rectangle Layout::getVisibleRect()
 }
 
 /**
+ * Returns the height of the entire Layout
+ */
+double Layout::getLayoutHeight()
+{
+	return layoutHeight;
+}
+
+/**
+ * Returns the width of the entire Layout
+ */
+double Layout::getLayoutWidth()
+{
+	return layoutWidth;
+}
+
+/**
  * Padding outside the pages, including shadow
  */
 const int XOURNAL_PADDING = 10;
@@ -150,8 +165,8 @@ void Layout::layoutPages()
 	int len = this->view->viewPagesLen;
 
 	Settings* settings = this->view->getControl()->getSettings();
-	bool verticalSpace = settings->getAddVerticalSpace(),
-	     horizontalSpace = settings->getAddHorizontalSpace();
+	bool verticalSpace = settings->getAddVerticalSpace();
+	bool horizontalSpace = settings->getAddHorizontalSpace();
 	bool dualPage = settings->isShowTwoPages();
 
 	int size[2] = { 0, 0 };
