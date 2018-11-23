@@ -47,10 +47,12 @@ void Util::execInUiThread(std::function<void()> callback)
 
 void Util::showErrorToUser(GtkWindow* win, string msg)
 {
-	GtkWidget* dialog = gtk_message_dialog_new(win,
-											   GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, "%s",
-											   msg.c_str());
-	gtk_window_set_transient_for(GTK_WINDOW(dialog), win);
+	GtkWidget* dialog = gtk_message_dialog_new(win, GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
+											   "%s", msg.c_str());
+	if (win != NULL)
+	{
+		gtk_window_set_transient_for(GTK_WINDOW(dialog), win);
+	}
 	gtk_dialog_run(GTK_DIALOG(dialog));
 	gtk_widget_destroy(dialog);
 }
@@ -150,10 +152,8 @@ void Util::openFileWithDefaultApplicaion(path filename)
 	cout << bl::format("XPP Execute command: «{1}»") % command << endl;
 	if (system(command.c_str()) != 0)
 	{
-		GtkWidget* dlgError = gtk_message_dialog_new(NULL, GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, "%s",
-													 FC(_F("File couldn't be opened. You have to do it manually:\n"
-														   "URL: {1}") % filename));
-		gtk_dialog_run(GTK_DIALOG(dlgError));
+		string msg = FS(_F("File couldn't be opened. You have to do it manually:\n" "URL: {1}") % filename);
+		showErrorToUser(NULL, msg);
 	}
 }
 
@@ -179,9 +179,7 @@ void Util::openFileWithFilebrowser(path filename)
 	cout << bl::format("XPP show file in filebrowser command: «{1}»") % command << endl;
 	if (system(command.c_str()) != 0)
 	{
-		GtkWidget* dlgError = gtk_message_dialog_new(NULL, GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, "%s",
-													 FC(_F("File couldn't be opened. You have to do it manually:\n"
-														   "URL: {1}") % filename));
-		gtk_dialog_run(GTK_DIALOG(dlgError));
+		string msg = FS(_F("File couldn't be opened. You have to do it manually:\n" "URL: {1}") % filename);
+		showErrorToUser(NULL, msg);
 	}
 }
