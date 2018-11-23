@@ -382,15 +382,17 @@ void XojPageView::playObjectAt(double x, double y)
 								string command(
 										"vlc --qt-start-minimized " + audioFolder + fn + " --start-time="
 												+ std::to_string(ts) + " &>/dev/null &");
-								std::cout << "command: " << command << std::endl;
 								system(command.c_str());
 							}
 						}
 						else
-						{
+						{	
+							//TODO: substitute system(..) with some c++ curl library
+							string psw("password");
 							string command(
-									"curl -s -u \"\":\"password\" --url \"http://127.0.0.1:8080/requests/status.xml?command=seek&val="
-											+ std::to_string(ts) + "\" >/dev/null");
+									"curl -s -u \"\":\""+psw+"\" --url \"http://127.0.0.1:8080/requests/status.xml?command=seek&val="
+											+ std::to_string(ts) + "\" >/dev/null"
+											+ "&& curl -s -u \"\":\""+psw+"\" --url \"http://127.0.0.1:8080/requests/status.xml?command=pl_play\" >/dev/null");
 							system(command.c_str());
 						}
 					}
