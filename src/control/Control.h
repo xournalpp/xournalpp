@@ -17,6 +17,7 @@
 #include "ScrollHandler.h"
 #include "ToolHandler.h"
 #include "ZoomControl.h"
+#include "AudioController.h"
 
 #include "gui/MainWindow.h"
 #include "gui/SearchBar.h"
