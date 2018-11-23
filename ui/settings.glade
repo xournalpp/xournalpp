@@ -1145,7 +1145,7 @@ Here you can disable your touchscreen.&lt;/i&gt;</property>
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <child>
-                      <object class="GtkGrid" id="grid1">
+                      <object class="GtkGrid" id="grid2">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <child>
@@ -1688,7 +1688,7 @@ The Audio track is recorded to a separate folder, and liked to there.&lt;/i&gt;<
               </packing>
             </child>
             <child type="tab">
-              <object class="GtkLabel" id="label44">
+              <object class="GtkLabel" id="label144">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="label" translatable="yes">Audio Recording</property>
