@@ -37,7 +37,6 @@ extern string audioFilename;
 extern string audioFolder;
 
 class Sidebar;
-class CallbackData;
 class XojPageView;
 class SaveHandler;
 class GladeSearchpath;
@@ -230,8 +229,12 @@ public:
 	void clipboardPaste(Element* e);
 
 protected:
-	static bool invokeCallback(CallbackData* cb);
-	void invokeLater(ActionType type);
+	/**
+	 * This callback is used by used to be called later in the UI Thread
+	 * On slower machine this feels more fluent, therefore this will not
+	 * be removed
+	 */
+	void zoomCallback(ActionType type);
 	void zoomFit();
 
 	bool showSaveDialog();
@@ -337,15 +340,3 @@ private:
 	PageInsertType pageInserType;
 };
 
-class CallbackData
-{
-public:
-	CallbackData(Control* control, ActionType type)
-	{
-		this->control = control;
-		this->type = type;
-	}
-
-	ActionType type;
-	Control* control;
-};

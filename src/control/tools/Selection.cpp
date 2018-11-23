@@ -147,10 +147,7 @@ void RectSelection::paint(cairo_t* cr, GdkRectangle* rect, double zoom)
 
 	// set the line always the same size on display
 	cairo_set_line_width(cr, 1 / zoom);
-	gdk_threads_enter();
 	selectionColor.apply(cr);
-	gdk_threads_leave();
-
 
 	int aX = MIN(this->sx, this->ex);
 	int bX = MAX(this->sx, this->ex);

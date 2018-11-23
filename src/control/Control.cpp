@@ -815,7 +815,9 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
 	case ACTION_ZOOM_FIT:
 	case ACTION_ZOOM_IN:
 	case ACTION_ZOOM_OUT:
-		invokeLater(type);
+		Util::execInUiThread([=]() {
+			zoomCallback(type);
+		});
 		break;
 
 	case ACTION_VIEW_TWO_PAGES:
@@ -927,13 +929,6 @@ void Control::clearSelectionEndText()
 	{
 		win->getXournal()->endTextAllPages();
 	}
-}
-
-void Control::invokeLater(ActionType type)
-{
-	XOJ_CHECK_TYPE(Control);
-
-	g_idle_add((GSourceFunc) &invokeCallback, new CallbackData(this, type));
 }
 
 /**
@@ -1854,21 +1849,22 @@ void Control::setPageInsertType(PageInsertType type)
 	fireActionSelected(GROUP_PAGE_INSERT_TYPE, (ActionType) (type - PAGE_INSERT_TYPE_PLAIN + ACTION_NEW_PAGE_PLAIN));
 }
 
-bool Control::invokeCallback(CallbackData* cb)
+/**
+ * This callback is used by used to be called later in the UI Thread
+ * On slower machine this feels more fluent, therefore this will not
+ * be removed
+ */
+void Control::zoomCallback(ActionType type)
 {
-	gdk_threads_enter();
+	XOJ_CHECK_TYPE(Control);
 
-	XOJ_CHECK_TYPE_OBJ(cb->control, Control);
-
-	ZoomControl* zoom = cb->control->getZoomControl();
-
-	switch (cb->type)
+	switch (type)
 	{
 	case ACTION_ZOOM_100:
 		zoom->zoom100();
 		break;
 	case ACTION_ZOOM_FIT:
-		cb->control->zoomFit();
+		zoomFit();
 		break;
 	case ACTION_ZOOM_IN:
 		zoom->zoomIn();
@@ -1879,12 +1875,6 @@ bool Control::invokeCallback(CallbackData* cb)
 	default:
 		break;
 	}
-
-	delete cb;
-
-	gdk_threads_leave();
-
-	return false;
 }
 
 size_t Control::getCurrentPageNo()
