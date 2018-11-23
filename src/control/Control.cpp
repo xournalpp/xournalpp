@@ -70,7 +70,6 @@ using std::endl;
 using std::ifstream;
 
 #include <time.h>
-extern gint sttime;
 
 // TODO Check for error log on startup, also check for emergency save document!
 
@@ -1427,123 +1426,123 @@ void Control::setPageBackground(ActionType type)
 		return;
 	}
 
-//	this->doc->lock();
-//	size_t pageNr = this->doc->indexOf(page);
-//	this->doc->unlock();
-//	if (pageNr == size_t_npos)
-//	{
-//		return; // should not happen...
-//	}
-//
-//	int origPdfPage = page->getPdfPageNr();
-//	BackgroundType origType = page->getBackgroundType();
-//	BackgroundImage origBackgroundImage = page->getBackgroundImage();
-//	double origW = page->getWidth();
-//	double origH = page->getHeight();
-//
-//	if (ACTION_SET_PAPER_BACKGROUND_PLAIN == type)
-//	{
-//		page->setBackgroundType(BACKGROUND_TYPE_NONE);
-//	}
-//	else if (ACTION_SET_PAPER_BACKGROUND_LINED == type)
-//	{
-//		page->setBackgroundType(BACKGROUND_TYPE_LINED);
-//	}
-//	else if (ACTION_SET_PAPER_BACKGROUND_RULED == type)
-//	{
-//		page->setBackgroundType(BACKGROUND_TYPE_RULED);
-//	}
-//	else if (ACTION_SET_PAPER_BACKGROUND_GRAPH == type)
-//	{
-//		page->setBackgroundType(BACKGROUND_TYPE_GRAPH);
-//	}
-//	else if (ACTION_SET_PAPER_BACKGROUND_IMAGE == type)
-//	{
-//		this->doc->lock();
-//		ImagesDialog* dlg = new ImagesDialog(this->gladeSearchPath, this->doc, this->settings);
-//		this->doc->unlock();
-//
-//		dlg->show(GTK_WINDOW(this->win->getWindow()));
-//		BackgroundImage img = dlg->getSelectedImage();
-//		if (!img.isEmpty())
-//		{
-//			page->setBackgroundImage(img);
-//			page->setBackgroundType(BACKGROUND_TYPE_IMAGE);
-//		}
-//		else if (dlg->shouldShowFilechooser())
-//		{
-//
-//			bool attach = false;
-//			GFile* file = ImageOpenDlg::show(getGtkWindow(), settings, true, &attach);
-//			if (file == NULL)
-//			{
-//				return;
-//			}
-//			char* name = g_file_get_path(file);
-//			string filename = name;
-//			g_free(name);
-//			g_object_unref(file);
-//
-//			BackgroundImage newImg;
-//			GError* err = NULL;
-//			newImg.loadFile(filename, &err);
-//			newImg.setAttach(attach);
-//			if (err)
-//			{
-//				Util::showErrorToUser(getGtkWindow(), FS(_F("This image could not be loaded. Error message: {1}") % err->message));
-//				g_error_free(err);
-//				return;
-//			}
-//			else
-//			{
-//				page->setBackgroundImage(newImg);
-//				page->setBackgroundType(BACKGROUND_TYPE_IMAGE);
-//			}
-//		}
-//
-//		GdkPixbuf* pixbuf = page->getBackgroundImage().getPixbuf();
-//		if (pixbuf)
-//		{
-//			page->setSize(gdk_pixbuf_get_width(pixbuf), gdk_pixbuf_get_height(pixbuf));
-//			firePageSizeChanged(pageNr);
-//		}
-//
-//		delete dlg;
-//	}
-//	else if (ACTION_SET_PAPER_BACKGROUND_PDF == type)
-//	{
-//		if (doc->getPdfPageCount() == 0)
-//		{
-//
-//			string msg = FS(_("You don't have any PDF pages to select from. Cancel operation.\n"
-//					  "Please select another background type: Menu \"Journal\" → \"Insert Page Type\"."));
-//			Util::showErrorToUser(getGtkWindow(), msg);
-//			return;
-//		}
-//		else
-//		{
-//			this->doc->lock();
-//			PdfPagesDialog* dlg = new PdfPagesDialog(this->gladeSearchPath, this->doc, this->settings);
-//			this->doc->unlock();
-//
-//			dlg->show(GTK_WINDOW(this->win->getWindow()));
-//
-//			int selected = dlg->getSelectedPage();
-//			delete dlg;
-//
-//			if (selected >= 0 && selected < doc->getPdfPageCount())
-//			{
-//				// no need to set a type, if we set the page number the type is also set
-//				page->setBackgroundPdfPageNr(selected);
-//			}
-//		}
-//	}
-//
-//	firePageChanged(pageNr);
-//	updateBackgroundSizeButton();
-//
-//	this->undoRedo->addUndoAction(
-//		new PageBackgroundChangedUndoAction(page, origType, origPdfPage, origBackgroundImage, origW, origH));
+	this->doc->lock();
+	size_t pageNr = this->doc->indexOf(page);
+	this->doc->unlock();
+	if (pageNr == size_t_npos)
+	{
+		return; // should not happen...
+	}
+
+	int origPdfPage = page->getPdfPageNr();
+	PageType origType = page->getBackgroundType();
+	BackgroundImage origBackgroundImage = page->getBackgroundImage();
+	double origW = page->getWidth();
+	double origH = page->getHeight();
+
+	if (ACTION_SET_PAPER_BACKGROUND_PLAIN == type)
+	{
+		page->setBackgroundType(PageType("plain"));
+	}
+	else if (ACTION_SET_PAPER_BACKGROUND_LINED == type)
+	{
+		page->setBackgroundType(PageType("lined"));
+	}
+	else if (ACTION_SET_PAPER_BACKGROUND_RULED == type)
+	{
+		page->setBackgroundType(PageType("ruled"));
+	}
+	else if (ACTION_SET_PAPER_BACKGROUND_GRAPH == type)
+	{
+		page->setBackgroundType(PageType("graph"));
+	}
+	else if (ACTION_SET_PAPER_BACKGROUND_IMAGE == type)
+	{
+		this->doc->lock();
+		ImagesDialog* dlg = new ImagesDialog(this->gladeSearchPath, this->doc, this->settings);
+		this->doc->unlock();
+
+		dlg->show(GTK_WINDOW(this->win->getWindow()));
+		BackgroundImage img = dlg->getSelectedImage();
+		if (!img.isEmpty())
+		{
+			page->setBackgroundImage(img);
+			page->setBackgroundType(PageType(":image"));
+		}
+		else if (dlg->shouldShowFilechooser())
+		{
+
+			bool attach = false;
+			GFile* file = ImageOpenDlg::show(getGtkWindow(), settings, true, &attach);
+			if (file == NULL)
+			{
+				return;
+			}
+			char* name = g_file_get_path(file);
+			string filename = name;
+			g_free(name);
+			g_object_unref(file);
+
+			BackgroundImage newImg;
+			GError* err = NULL;
+			newImg.loadFile(filename, &err);
+			newImg.setAttach(attach);
+			if (err)
+			{
+				Util::showErrorToUser(getGtkWindow(), FS(_F("This image could not be loaded. Error message: {1}") % err->message));
+				g_error_free(err);
+				return;
+			}
+			else
+			{
+				page->setBackgroundImage(newImg);
+				page->setBackgroundType(PageType(":image"));
+			}
+		}
+
+		GdkPixbuf* pixbuf = page->getBackgroundImage().getPixbuf();
+		if (pixbuf)
+		{
+			page->setSize(gdk_pixbuf_get_width(pixbuf), gdk_pixbuf_get_height(pixbuf));
+			firePageSizeChanged(pageNr);
+		}
+
+		delete dlg;
+	}
+	else if (ACTION_SET_PAPER_BACKGROUND_PDF == type)
+	{
+		if (doc->getPdfPageCount() == 0)
+		{
+
+			string msg = FS(_("You don't have any PDF pages to select from. Cancel operation.\n"
+					  "Please select another background type: Menu \"Journal\" → \"Insert Page Type\"."));
+			Util::showErrorToUser(getGtkWindow(), msg);
+			return;
+		}
+		else
+		{
+			this->doc->lock();
+			PdfPagesDialog* dlg = new PdfPagesDialog(this->gladeSearchPath, this->doc, this->settings);
+			this->doc->unlock();
+
+			dlg->show(GTK_WINDOW(this->win->getWindow()));
+
+			int selected = dlg->getSelectedPage();
+			delete dlg;
+
+			if (selected >= 0 && selected < doc->getPdfPageCount())
+			{
+				// no need to set a type, if we set the page number the type is also set
+				page->setBackgroundPdfPageNr(selected);
+			}
+		}
+	}
+
+	firePageChanged(pageNr);
+	updateBackgroundSizeButton();
+
+	this->undoRedo->addUndoAction(
+		new PageBackgroundChangedUndoAction(page, origType, origPdfPage, origBackgroundImage, origW, origH));
 }
 
 void Control::gotoPage()

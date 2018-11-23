@@ -332,10 +332,7 @@ void LoadHandler::parseBgPixmap()
 		error("%s", FC(_F("Unknown pixmap::domain type: {1}") % domain));
 	}
 
-	PageType bg;
-	bg.format = ":image";
-
-	this->page->setBackgroundType(bg);
+	this->page->setBackgroundType(PageType(":image"));
 }
 
 void LoadHandler::parseBgPdf()
@@ -452,9 +449,7 @@ void LoadHandler::parsePage()
 		{
 			if (this->removePdfBackgroundFlag)
 			{
-				PageType bg;
-				bg.format = "plain";
-				this->page->setBackgroundType(bg);
+				this->page->setBackgroundType(PageType("plain"));
 				this->page->setBackgroundColor(0xffffff);
 			}
 			else

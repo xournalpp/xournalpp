@@ -92,9 +92,7 @@ PageType PageTemplateSettings::getPageInsertType()
 
 	if (copyLastPageSettings)
 	{
-		PageType pt;
-		pt.format = ":copy";
-		return pt;
+		return PageType(":copy");
 	}
 
 	return backgroundType;

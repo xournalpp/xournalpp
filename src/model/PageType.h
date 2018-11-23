@@ -21,6 +21,7 @@ class PageType
 {
 public:
 	PageType();
+	PageType(string format);
 	PageType(const PageType& other);
 	~PageType();
 

@@ -5,6 +5,12 @@ PageType::PageType()
 	XOJ_INIT_TYPE(PageType);
 }
 
+PageType::PageType(string format)
+ : format(format)
+{
+	XOJ_INIT_TYPE(PageType);
+}
+
 PageType::PageType(const PageType& other)
 {
 	XOJ_INIT_TYPE(PageType);

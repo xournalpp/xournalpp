@@ -11,7 +11,9 @@ PageTypeHandler::PageTypeHandler()
 	addPageTypeInfo(_C("Lined"), "lined", "");
 	addPageTypeInfo(_C("Ruled"), "ruled", "");
 	addPageTypeInfo(_C("Graph"), "graph", "");
-	addPageTypeInfo(_C("Dotted"), "dotted", "");
+
+	// Disable for the moment
+	// addPageTypeInfo(_C("Dotted"), "dotted", "");
 
 	// Special types
 	addPageTypeInfo(_C("Copy current"), ":copy", "");
