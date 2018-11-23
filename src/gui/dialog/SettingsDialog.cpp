@@ -332,8 +332,11 @@ void SettingsDialog::save()
 
 	settings->setDefaultSaveName(gtk_entry_get_text(GTK_ENTRY(get("txtDefaultSaveName"))));
 	char* uri = gtk_file_chooser_get_uri(GTK_FILE_CHOOSER(get("fcAudioPath")));
-	settings->setAudioFolder(uri);
-	g_free(uri);
+	if (uri != NULL)
+	{
+		settings->setAudioFolder(uri);
+		g_free(uri);
+	}
 
 	GtkWidget* spAutosaveTimeout = get("spAutosaveTimeout");
 	int autosaveTimeout = gtk_spin_button_get_value(GTK_SPIN_BUTTON(spAutosaveTimeout));
