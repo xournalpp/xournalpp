@@ -52,7 +52,7 @@ public:
 	/**
 	 * this method is called
 	 */
-	virtual void execute(bool noThreads);
+	virtual void execute();
 
 	virtual void* getSource();
 
@@ -60,7 +60,7 @@ protected:
 	/**
 	 * override this method
 	 */
-	virtual void run(bool noThreads) = 0;
+	virtual void run() = 0;
 
 	/**
 	 * This method should be called as _last_ operation in run
@@ -70,7 +70,9 @@ protected:
 	void callAfterRun();
 
 	/**
-	 * override this method
+	 * After run will be called from UI Thread after the Job is finished
+	 *
+	 * All UI Stuff should happen here
 	 */
 	virtual void afterRun();
 

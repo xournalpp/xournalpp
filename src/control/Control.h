@@ -57,7 +57,7 @@ class Control : public ActionHandler,
 	public ProgressListener
 {
 public:
-	Control(GladeSearchpath* gladeSearchPath, bool noThreads = false);
+	Control(GladeSearchpath* gladeSearchPath);
 	virtual ~Control();
 
 	void initWindow(MainWindow* win);

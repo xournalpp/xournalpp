@@ -67,11 +67,12 @@ using std::endl;
 using std::vector;
 
 #include <time.h>
+// TODO Remove
 extern gint sttime;
 
 // TODO Check for error log on startup, also check for emergency save document!
 
-Control::Control(GladeSearchpath* gladeSearchPath, bool noThreads)
+Control::Control(GladeSearchpath* gladeSearchPath)
 {
 	XOJ_INIT_TYPE(Control);
 
@@ -105,7 +106,7 @@ Control::Control(GladeSearchpath* gladeSearchPath, bool noThreads)
 
 	this->scrollHandler = new ScrollHandler(this);
 
-	this->scheduler = new XournalScheduler(noThreads);
+	this->scheduler = new XournalScheduler();
 
 	this->hiddenFullscreenWidgets = NULL;
 	this->sidebarHidden = false;

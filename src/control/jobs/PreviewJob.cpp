@@ -67,9 +67,16 @@ void PreviewJob::finishPaint()
 	}
 	this->sidebarPreview->crBuffer = crBuffer;
 
-	gdk_threads_enter();
-	gtk_widget_queue_draw(this->sidebarPreview->widget);
-	gdk_threads_leave();
+	// Make sure the Job does not get deleted until the
+	// Repaint is also finished in UI Thread
+	ref();
+
+	Util::execInUiThread([=]() {
+		gtk_widget_queue_draw(this->sidebarPreview->widget);
+
+		// After the UI job is also done, it can be unreferenced
+		unref();
+	});
 
 	g_mutex_unlock(&this->sidebarPreview->drawingMutex);
 }
@@ -129,7 +136,7 @@ void PreviewJob::drawPage(int layer)
 	cairo_destroy(cr2);
 }
 
-void PreviewJob::run(bool noThreads)
+void PreviewJob::run()
 {
 	XOJ_CHECK_TYPE(PreviewJob);
 

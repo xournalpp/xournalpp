@@ -18,6 +18,9 @@
 
 #include <glib.h>
 
+#include <string>
+using std::string;
+
 
 /** @file Scheduler.h
     @brief A file containing the defintion of the Scheduler
@@ -42,7 +45,7 @@ enum JobPriority
 class Scheduler
 {
 public:
-	Scheduler(bool noThreads = false);
+	Scheduler();
 	virtual ~Scheduler();
 
 public:
@@ -111,9 +114,8 @@ protected:
 
 	GQueue* jobQueue[JOB_N_PRIORITIES];
 
-	GTimeVal * blockRenderZoomTime;
+	GTimeVal* blockRenderZoomTime;
 	GMutex blockRenderMutex;
 
-	const char *name;
-	bool noThreads;
+	string name;
 };

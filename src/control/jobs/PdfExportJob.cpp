@@ -60,7 +60,7 @@ bool PdfExportJob::isUriValid(string& uri)
 	return true;
 }
 
-void PdfExportJob::run(bool noThreads)
+void PdfExportJob::run()
 {
 	XOJ_CHECK_TYPE(PdfExportJob);
 
