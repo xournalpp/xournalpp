@@ -314,9 +314,7 @@ int XournalMain::run(int argc, char* argv[])
 	checkForErrorlog();
 	checkForEmergencySave();
 
-	gdk_threads_enter();
 	gtk_main();
-	gdk_threads_leave();
 
 	control->saveSettings();
 

@@ -18,7 +18,6 @@ using std::endl;
 
 RecentManagerListener::~RecentManagerListener() { }
 
-
 RecentManager::RecentManager()
 {
 	XOJ_INIT_TYPE(RecentManager);
@@ -29,9 +28,7 @@ RecentManager::RecentManager()
 	GtkRecentManager* recentManager = gtk_recent_manager_get_default();
 	this->recentHandlerId = g_signal_connect(recentManager, "changed", G_CALLBACK(recentManagerChangedCallback), this);
 
-	gdk_threads_enter();
 	updateMenu();
-	gdk_threads_leave();
 }
 
 RecentManager::~RecentManager()
