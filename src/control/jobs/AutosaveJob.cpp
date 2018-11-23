@@ -25,7 +25,7 @@ void AutosaveJob::afterRun()
 	Util::showErrorToUser(control->getGtkWindow(), msg);
 }
 
-void AutosaveJob::run(bool noThreads)
+void AutosaveJob::run()
 {
 	XOJ_CHECK_TYPE(AutosaveJob);
 

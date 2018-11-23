@@ -32,14 +32,14 @@ public:
 
 	void* getSource();
 
-	void run(bool noThreads);
+	void run();
 
 public:
-	static void rerenderRectangle(RenderJob* renderJob, Rectangle* rect, bool noThreads);
+	static void rerenderRectangle(RenderJob* renderJob, Rectangle* rect);
 	static void cleanupStatic();
 
 private:
-	void rerenderRectangle(Rectangle* rect, bool noThreads);
+	void rerenderRectangle(Rectangle* rect);
 
 private:
 	XOJ_TYPE_ATTRIB;

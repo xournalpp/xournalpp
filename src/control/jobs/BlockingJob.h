@@ -29,7 +29,7 @@ protected:
 	virtual ~BlockingJob();
 
 public:
-	void execute(bool noThreads);
+	void execute();
 
 	virtual JobType getType();
 

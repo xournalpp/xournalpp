@@ -230,7 +230,7 @@ void CustomExportJob::exportPng()
 	}
 }
 
-void CustomExportJob::run(bool noThreads)
+void CustomExportJob::run()
 {
 	XOJ_CHECK_TYPE(CustomExportJob);
 

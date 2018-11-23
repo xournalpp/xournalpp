@@ -22,7 +22,7 @@ protected:
 	virtual ~PdfExportJob();
 
 public:
-	void run(bool noThreads);
+	void run();
 
 protected:
 	virtual void addFilterToDialog();

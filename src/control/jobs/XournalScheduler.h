@@ -22,7 +22,7 @@
 class XournalScheduler : public Scheduler
 {
 public:
-	XournalScheduler(bool noThreads = false);
+	XournalScheduler();
 	virtual ~XournalScheduler();
 
 public:
