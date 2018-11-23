@@ -5,10 +5,9 @@
 
 #include <boost/iostreams/filter/gzip.hpp>
 #include <boost/iostreams/filtering_streambuf.hpp>
+#include <boost/algorithm/string.hpp>
 namespace bio = boost::iostreams;
 
-#include <string>
-using std::string;
 #include <iostream>
 using std::istream;
 #include <fstream>
@@ -56,19 +55,23 @@ unsigned char* XojPreviewExtractor::getData(gsize& dataLen)
  * @param file .xoj File
  * @return true if a preview was read, false if not
  */
-PreviewExtractResult XojPreviewExtractor::readFile(std::string file)
+PreviewExtractResult XojPreviewExtractor::readFile(string file)
 {
-	//check file extensions
-	string ext = file.substr(file.length() - 4, file.length());
-	for (string::size_type i = 0; i < ext.length(); i++)
+	// check file extensions
+	string ext = "";
+	size_t dotPos = file.find_last_of(".");
+	if (dotPos != string::npos)
 	{
-		if (tolower(ext[i]) != ".xoj"[i])
-		{
-			return PREVIEW_RESULT_BAD_FILE_EXTENSION;
-		}
+		ext = file.substr(dotPos);
+		boost::algorithm::to_lower(ext);
 	}
 
-	//open input file
+	if (!(ext == ".xoj" || ext == ".xopp"))
+	{
+		return PREVIEW_RESULT_BAD_FILE_EXTENSION;
+	}
+
+	// open input file
 	ifstream ifile(file, ifstream::in | ifstream::binary);
 	if (!ifile.is_open())
 	{
@@ -79,7 +82,7 @@ PreviewExtractResult XojPreviewExtractor::readFile(std::string file)
 	bio::filtering_istreambuf inbuf;
 	bool gzip;
 	
-	//check for gzip magic header
+	// check for gzip magic header
 	if (ifile.get() == 0x1F && ifile.get() == 0x8B)
 	{
 		gzip = true;

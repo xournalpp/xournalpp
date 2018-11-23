@@ -39,12 +39,6 @@ private:
 public:
 
 	/**
-	 * Initialize the background to white, need to be done after the widget is
-	 * added to the main window, else it's not working
-	 */
-	void setBackgroundWhite();
-
-	/**
 	 * A page was selected, so also select this page in the sidebar
 	 */
 	void selectPageNr(size_t page, size_t pdfPage);

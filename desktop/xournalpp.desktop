@@ -18,6 +18,6 @@ Comment[pl]=Notatki odręczne
 Exec=xournalpp %f
 Terminal=false
 StartupNotify=true
-MimeType=application/x-xoj;application/pdf;
+MimeType=application/x-xoj;application/x-xopp;application/x-xopt;application/pdf;
 Icon=xournalpp
 Categories=GNOME;GTK;Utility;TextEditor;

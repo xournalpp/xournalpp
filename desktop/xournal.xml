@@ -4,4 +4,13 @@
 		<comment>Xournal note file</comment>
 		<glob pattern="*.xoj"/>
 	</mime-type>
+	<mime-type type="application/x-xopp">
+		<comment>Xournal++ note file</comment>
+		<glob pattern="*.xopp"/>
+	</mime-type>
+	<mime-type type="application/x-xopt">
+		<comment>Xournal++ note file</comment>
+		<glob pattern="*.xopt"/>
+	</mime-type>
 </mime-info>
+

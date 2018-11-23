@@ -116,23 +116,6 @@ void PreviewJob::drawPage(int layer)
 		view.finializeDrawing();
 	}
 
-	cairo_matrix_t defaultMatrix = {0};
-	cairo_get_matrix(cr2, &defaultMatrix);
-	cairo_set_matrix(cr2, &defaultMatrix);
-
-	cairo_set_operator(cr2, CAIRO_OPERATOR_SOURCE);
-
-	cairo_set_source_rgb(cr2, 1, 1, 1);
-	cairo_rectangle(cr2, 0, 0, Shadow::getShadowTopLeftSize() + 2, cairo_image_surface_get_width(crBuffer));
-	cairo_rectangle(cr2, 0, 0, cairo_image_surface_get_height(crBuffer), Shadow::getShadowTopLeftSize() + 2);
-
-	cairo_rectangle(cr2, cairo_image_surface_get_width(crBuffer) - Shadow::getShadowBottomRightSize() - 2, 0,
-					Shadow::getShadowBottomRightSize() + 2, cairo_image_surface_get_height(crBuffer));
-	cairo_rectangle(cr2, 0, cairo_image_surface_get_height(crBuffer)- Shadow::getShadowBottomRightSize() - 2,
-			cairo_image_surface_get_width(crBuffer), Shadow::getShadowBottomRightSize() + 2);
-
-	cairo_fill(cr2);
-
 	cairo_destroy(cr2);
 }
 

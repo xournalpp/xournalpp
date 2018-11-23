@@ -2,7 +2,7 @@
 Encoding=UTF-8
 Type=MimeType
 MimeType=application/x-xoj
-Icon=xoj
+Icon=xopp
 Patterns=*.xoj;*.XOJ;*.Xoj;
 
 Comment=Xournal note file

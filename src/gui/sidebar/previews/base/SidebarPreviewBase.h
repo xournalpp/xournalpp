@@ -55,11 +55,6 @@ public:
 	virtual GtkWidget* getWidget();
 
 	/**
-	 * Setts the Background of the panel white, before the first draw
-	 */
-	void setBackgroundWhite();
-
-	/**
 	 * Gets the zoom factor for the previews
 	 */
 	double getZoom();
@@ -95,19 +90,9 @@ private:
 	GtkWidget* scrollPreview;
 
 	/**
-	 * The Table with the Toolbar and the Scrollbar
-	 */
-	GtkTable* table;
-
-	/**
 	 * The Zoom of the previews
 	 */
 	double zoom;
-
-	/**
-	 * Only once, see setBackgroundWhite()
-	 */
-	bool backgroundInitialized;
 
 	/**
 	 * For preview rendering
