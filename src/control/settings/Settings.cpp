@@ -344,6 +344,10 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur)
 	{
 		this->sizeUnit = (const char*) value;
 	}
+	else if (xmlStrcmp(name, (const xmlChar*) "audioFolder") == 0)
+	{
+		this->audioFolder = (const char*) value;
+	}
 	else if (xmlStrcmp(name, (const xmlChar*) "autosaveEnabled") == 0)
 	{
 		this->autosaveEnabled = xmlStrcmp(value, (const xmlChar*) "true") ? false : true;
@@ -735,6 +739,8 @@ void Settings::save()
 
 	WRITE_STRING_PROP(sizeUnit);
 
+	WRITE_STRING_PROP(audioFolder);
+
 	xmlNodePtr xmlFont;
 	xmlFont = xmlNewChild(root, NULL, (const xmlChar*) "property", NULL);
 	xmlSetProp(xmlFont, (const xmlChar*) "name", (const xmlChar*) "font");
@@ -1091,6 +1097,27 @@ void Settings::setPageTemplate(string pageTemplate)
 	}
 
 	this->pageTemplate = pageTemplate;
+
+	save();
+}
+
+string Settings::getAudioFolder()
+{
+	XOJ_CHECK_TYPE(Settings);
+
+	return this->audioFolder;
+}
+
+void Settings::setAudioFolder(string audioFolder)
+{
+	XOJ_CHECK_TYPE(Settings);
+
+	if (this->audioFolder == audioFolder)
+	{
+		return;
+	}
+
+	this->audioFolder = audioFolder;
 
 	save();
 }
