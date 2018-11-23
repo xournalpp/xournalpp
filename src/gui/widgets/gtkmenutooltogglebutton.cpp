@@ -51,7 +51,7 @@ enum
 
 static gint signals[LAST_SIGNAL];
 
-G_DEFINE_TYPE (GtkMenuToolToggleButton, gtk_menu_tool_toggle_button,
+G_DEFINE_TYPE (GtkMenuToolToggleButton, gtk_menu_tool_toggle_button, // @suppress("Unused static function")
                GTK_TYPE_TOGGLE_TOOL_BUTTON)
 
 static void gtk_menu_tool_toggle_button_construct_contents(

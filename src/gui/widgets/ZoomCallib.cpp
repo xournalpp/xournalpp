@@ -1,6 +1,6 @@
 #include "ZoomCallib.h"
 
-G_DEFINE_TYPE (ZoomCallib, zoomcallib, GTK_TYPE_WIDGET);
+G_DEFINE_TYPE (ZoomCallib, zoomcallib, GTK_TYPE_WIDGET); // @suppress("Unused static function")
 
 static void
 zoomcallib_get_preferred_width(GtkWidget* widget,

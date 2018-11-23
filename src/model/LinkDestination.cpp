@@ -7,7 +7,7 @@ struct _LinkDestClass
 	GObjectClass base_class;
 };
 
-G_DEFINE_TYPE(XojLinkDest, link_dest, G_TYPE_OBJECT)
+G_DEFINE_TYPE(XojLinkDest, link_dest, G_TYPE_OBJECT) // @suppress("Unused static function")
 
 static void link_dest_init(XojLinkDest* linkAction)
 {
