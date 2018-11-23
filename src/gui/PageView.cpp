@@ -45,7 +45,7 @@
 #include <math.h>
 
 string lastfn = "";
-extern string audioFolder;
+
 XojPageView::XojPageView(XournalView* xournal, PageRef page)
 {
 	XOJ_INIT_TYPE(XojPageView);
@@ -380,7 +380,7 @@ void XojPageView::playObjectAt(double x, double y)
 							{
 								lastfn = fn;
 								string command(
-										"vlc --qt-start-minimized " + audioFolder + fn + " --start-time="
+										"vlc --qt-start-minimized " + settings->getAudioFolder() + "/" + fn + " --start-time="
 												+ std::to_string(ts) + " &>/dev/null &");
 								system(command.c_str());
 							}

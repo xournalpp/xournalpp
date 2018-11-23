@@ -66,8 +66,6 @@ using std::endl;
 using std::ifstream;
 
 #include <time.h>
-// TODO Remove
-extern gint sttime;
 
 // TODO Check for error log on startup, also check for emergency save document!
 
@@ -102,6 +100,8 @@ Control::Control(GladeSearchpath* gladeSearchPath)
 
 	this->sidebar = NULL;
 	this->searchBar = NULL;
+	
+	this->audioController = new AudioController(this->settings);
 
 	this->scrollHandler = new ScrollHandler(this);
 
@@ -167,6 +167,7 @@ Control::~Control()
 	delete this->zoom;
 	delete this->scheduler;
 	delete this->dragDropHandler;
+	delete this->audioController;
 
 	XOJ_RELEASE_TYPE(Control);
 }
@@ -843,7 +844,7 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
 		break;
 
 	case ACTION_RECSTOP:
-		recToggle();
+		audioController->recToggle();
 		break;
 
 		// Footer, not really an action, but need an identifier to
@@ -1132,53 +1133,6 @@ void Control::setShapeTool(ActionType type, bool enabled)
 	}
 
 	fireActionSelected(GROUP_RULER, type);
-}
-
-void Control::recStartStop(bool rec)
-{
-	string command = "";
-
-	if (rec)
-	{
-		this->recording = true;
-		sttime = (g_get_monotonic_time() / 1000000);
-
-		char buffer[50];
-		time_t secs = time(0);
-		tm *t = localtime(&secs);
-		//This prints the date and time in ISO format.
-		sprintf(buffer, "%04d-%02d-%02d_%02d:%02d:%02d", t->tm_year + 1900, t->tm_mon + 1, t->tm_mday, t->tm_hour,
-				t->tm_min, t->tm_sec);
-		string data(buffer);
-		data += ".mp3";
-
-		audioFilename = data;
-
-		printf("Start recording\n");
-		command = "xopp-recording.sh start " + data;
-	}
-	else if (this->recording)
-	{
-		this->recording = false;
-		audioFilename = "";
-		command = "xopp-recording.sh stop";
-	}
-	system(command.c_str());
-}
-
-void Control::recToggle()
-{
-	XOJ_CHECK_TYPE(Control);
-
-	if (!this->recording)
-	{
-		recStartStop(true);
-	}
-	else
-	{
-		recStartStop(false);
-	}
-
 }
 
 void Control::enableFullscreen(bool enabled, bool presentation)
@@ -2799,7 +2753,7 @@ void Control::quit()
 
 	this->scheduler->lock();
 
-	recStartStop(false);
+	audioController->recStartStop(false);
 	settings->save();
 
 	this->scheduler->removeAllJobs();
@@ -3326,13 +3280,6 @@ bool Control::isFullscreen()
 	return this->fullscreen;
 }
 
-bool Control::isRecording()
-{
-	XOJ_CHECK_TYPE(Control);
-
-	return this->recording;
-}
-
 TextEditor* Control::getTextEditor()
 {
 	XOJ_CHECK_TYPE(Control);
@@ -3384,4 +3331,11 @@ SearchBar* Control::getSearchBar()
 	XOJ_CHECK_TYPE(Control);
 
 	return this->searchBar;
+}
+
+AudioController* Control::getAudioController()
+{
+	XOJ_CHECK_TYPE(Control);
+
+	return this->audioController;
 }
