@@ -17,6 +17,7 @@
 #include "ScrollHandler.h"
 #include "ToolHandler.h"
 #include "ZoomControl.h"
+#include "AudioController.h"
 
 #include "gui/MainWindow.h"
 #include "gui/SearchBar.h"
@@ -32,9 +33,6 @@
 
 #include <vector>
 #include "../gui/dialog/LatexDialog.h"
-
-extern string audioFilename;
-extern string audioFolder;
 
 class Sidebar;
 class XojPageView;
@@ -113,8 +111,6 @@ public:
 	void manageToolbars();
 	void customizeToolbars();
 	void enableFullscreen(bool enabled, bool presentation = false);
-	void recToggle();
-	void recStartStop(bool record);
 
 	void gotoPage();
 
@@ -135,7 +131,6 @@ public:
 	bool isInDragAndDropToolbar();
 
 	bool isFullscreen();
-	bool isRecording();
 
 	bool searchTextOnPage(string text, int p, int* occures, double* top);
 
@@ -199,6 +194,7 @@ public:
 	Cursor* getCursor();
 	Sidebar* getSidebar();
 	SearchBar* getSearchBar();
+	AudioController* getAudioController();
 
 	bool copy();
 	bool cut();
@@ -289,6 +285,8 @@ private:
 
 	ScrollHandler* scrollHandler;
 
+	AudioController* audioController;
+
 	ToolbarDragDropHandler* dragDropHandler;
 
 	/**
@@ -332,7 +330,7 @@ private:
 
 	MetadataManager* metadata;
 
-	bool recording = false;
+//	bool recording = false;
 
 	/**
 	 * Current page insert type, usually from default, but it can be changed from toolbar menu
