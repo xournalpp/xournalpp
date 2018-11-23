@@ -35,11 +35,11 @@ Hopefully you'll enjoy it!
 ## How to use audio record and playback feature:
 
 - Install `vlc` and make sure `curl` and `arecord` are present on your system 
-- Copy the scripts under `launcher` folder to their corresponding absolute path
+- Copy the script under `utility` folder to its corresponding absolute path
 - Under `vlc` settings: 
 - - enable `http interface` (see [this](https://github.com/azrafe7/vlc4youtube/blob/master/instructions/how-to-enable-vlc-web-interface.md) ) with blank username and password "password"
 - - tick `Allow only one instance` under `Interface -> Instance`
-- Launch `xournalpp` using the launcher I provided `xournalpp-ts-launcher.sh` 
+- set the folder where do you want to store audio recordings under settings -> `audio recording`
 - Choose `Toolbar Left` layout under `View->Toolbars->Toolbar Left`
 
 You're ready to go! 
