@@ -39,7 +39,6 @@ protected:
 
 private:
 	static void sizeAllocate(GtkWidget* widget, GtkRequisition* requisition, BackgroundSelectDialogBase* dlg);
-	static gboolean drawBackgroundCallback(GtkWidget* widget, cairo_t* cr, GtkWidget* layoutContainer);
 
 private:
 	XOJ_TYPE_ATTRIB;

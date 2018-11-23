@@ -6,13 +6,12 @@
 #include "SidebarPreviewBaseEntry.h"
 #include "SidebarToolbar.h"
 
+
 SidebarPreviewBase::SidebarPreviewBase(Control* control, GladeGui* gui, SidebarToolbar* toolbar)
  : AbstractSidebarPage(control),
    toolbar(toolbar)
 {
 	XOJ_INIT_TYPE(SidebarPreviewBase);
-
-	this->backgroundInitialized = false;
 
 	this->layoutmanager = new SidebarLayout();
 
@@ -41,6 +40,8 @@ SidebarPreviewBase::SidebarPreviewBase(Control* control, GladeGui* gui, SidebarT
 	g_signal_connect(this->scrollPreview, "size-allocate", G_CALLBACK(sizeChanged), this);
 
 	gtk_widget_show_all(this->scrollPreview);
+
+	g_signal_connect(this->iconViewPreview, "draw", G_CALLBACK(Util::paintBackgroundWhite), NULL);
 }
 
 SidebarPreviewBase::~SidebarPreviewBase()
@@ -83,23 +84,6 @@ void SidebarPreviewBase::sizeChanged(GtkWidget* widget, GtkAllocation* allocatio
 		sidebar->layout();
 		lastWidth = allocation->width;
 	}
-}
-
-void SidebarPreviewBase::setBackgroundWhite()
-{
-	XOJ_CHECK_TYPE(SidebarPreviewBase);
-
-	if (this->backgroundInitialized)
-	{
-		return;
-	}
-	this->backgroundInitialized = true;
-
-	GdkRGBA white = {1, 1, 1, 1};
-
-	gtk_widget_override_background_color(this->iconViewPreview,
-	                                     GTK_STATE_FLAG_NORMAL,
-	                                     &white);
 }
 
 double SidebarPreviewBase::getZoom()

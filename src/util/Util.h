@@ -53,6 +53,9 @@ public:
 	 * Make sure the container class is not deleted before the UI stuff is finished!
 	 */
 	static void execInUiThread(std::function<void()> callback);
+
+	static gboolean paintBackgroundWhite(GtkWidget* widget, cairo_t* cr, void* unused);
+
 };
 
 static const size_t size_t_npos = static_cast<size_t>(-1);

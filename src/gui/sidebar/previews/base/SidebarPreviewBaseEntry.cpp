@@ -91,8 +91,6 @@ void SidebarPreviewBaseEntry::paint(cairo_t* cr)
 
 	bool doRepaint = false;
 
-	sidebar->setBackgroundWhite();
-
 	GtkAllocation alloc;
 	gtk_widget_get_allocation(widget, &alloc);
 
