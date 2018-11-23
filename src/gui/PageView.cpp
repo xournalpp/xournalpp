@@ -775,15 +775,6 @@ void XojPageView::repaintArea(double x1, double y1, double x2, double y2)
 	xournal->getRepaintHandler()->repaintPageArea(this, x1 * zoom - 10, y1 * zoom - 10, x2 * zoom + 20, y2 * zoom + 20);
 }
 
-Rectangle* XojPageView::rectOnWidget(double x, double y, double width, double height)
-{
-	XOJ_CHECK_TYPE(XojPageView);
-
-	double zoom = xournal->getZoom();
-
-	return new Rectangle(x * zoom - 10, y * zoom - 10, width * zoom + 20, height * zoom + 20);
-}
-
 void XojPageView::rerenderRect(double x, double y, double width, double height)
 {
 	XOJ_CHECK_TYPE(XojPageView);

@@ -2,7 +2,6 @@
 
 #include "Control.h"
 
-#include "control/jobs/RenderJob.h"
 #include "gui/GladeSearchpath.h"
 #include "gui/MainWindow.h"
 #include "gui/toolbarMenubar/model/ToolbarColorNames.h"
@@ -328,8 +327,6 @@ int XournalMain::run(int argc, char* argv[])
 	delete win;
 	delete control;
 	delete gladePath;
-
-	RenderJob::cleanupStatic();
 
 	ToolbarColorNames::getInstance().saveFile(colorNameFile);
 	ToolbarColorNames::freeInstance();

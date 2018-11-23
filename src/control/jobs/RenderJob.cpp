@@ -1,5 +1,5 @@
 #include "RenderJob.h"
-#include "RepaintWidgetHandler.h"
+#include "RenderJob.h"
 
 #include "gui/PageView.h"
 #include "gui/XournalView.h"
@@ -8,11 +8,9 @@
 #include "view/PdfView.h"
 
 #include <Rectangle.h>
+#include <Util.h>
 
 #include <list>
-
-RepaintWidgetHandler* RenderJob::repaintHandler = NULL;
-
 
 RenderJob::RenderJob(XojPageView* view)
 {
@@ -30,12 +28,6 @@ RenderJob::~RenderJob()
 	XOJ_RELEASE_TYPE(RenderJob);
 }
 
-void RenderJob::cleanupStatic()
-{
-	delete repaintHandler;
-	repaintHandler = NULL;
-}
-
 void* RenderJob::getSource()
 {
 	XOJ_CHECK_TYPE(RenderJob);
@@ -43,11 +35,10 @@ void* RenderJob::getSource()
 	return this->view;
 }
 
-void RenderJob::rerenderRectangle(RenderJob* renderJob, Rectangle* rect)
+void RenderJob::rerenderRectangle(Rectangle* rect)
 {
-	XOJ_CHECK_TYPE_OBJ(renderJob, RenderJob);
+	XOJ_CHECK_TYPE(RenderJob);
 
-	XojPageView* view = renderJob->view;
 	double zoom = view->xournal->getZoom();
 	Document* doc = view->xournal->getDocument();
 
@@ -99,21 +90,9 @@ void RenderJob::rerenderRectangle(RenderJob* renderJob, Rectangle* rect)
 	g_mutex_unlock(&view->drawingMutex);
 }
 
-void RenderJob::rerenderRectangle(Rectangle* rect)
-{
-	XOJ_CHECK_TYPE(RenderJob);
-
-	rerenderRectangle(this, rect);
-}
-
 void RenderJob::run()
 {
 	XOJ_CHECK_TYPE(RenderJob);
-
-	if (repaintHandler == NULL)
-	{
-		repaintHandler = new RepaintWidgetHandler(this->view->getXournal()->getWidget());
-	}
 
 	double zoom = this->view->xournal->getZoom();
 
@@ -167,19 +146,17 @@ void RenderJob::run()
 
 		g_mutex_unlock(&this->view->drawingMutex);
 		doc->unlock();
-
-		repaintHandler->repaintComplete();
 	}
 	else
 	{
 		for (Rectangle* rect : rerenderRects)
 		{
 			rerenderRectangle(rect);
-
-			rect = this->view->rectOnWidget(rect->x, rect->y, rect->width, rect->height);
-			repaintHandler->repaintRects(rect);
 		}
 	}
+
+	// Schedule a repaint of the widget
+	repaintWidget(this->view->getXournal()->getWidget());
 
 	// delete all rectangles
 	for (Rectangle* rect : rerenderRects)
@@ -187,6 +164,19 @@ void RenderJob::run()
 		delete rect;
 	}
 	rerenderRects.clear();
+}
+
+/**
+ * Repaint the widget in UI Thread
+ */
+void RenderJob::repaintWidget(GtkWidget* widget)
+{
+	// "this" is not needed, "widget" is in
+	// the closure, therefore no sync needed
+	// Because of this the argument "widget" is needed
+	Util::execInUiThread([=]() {
+		gtk_widget_queue_draw(widget);
+	});
 }
 
 JobType RenderJob::getType()

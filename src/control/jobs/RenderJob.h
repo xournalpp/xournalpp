@@ -15,9 +15,10 @@
 
 #include <XournalType.h>
 
+#include <gtk/gtk.h>
+
 class Rectangle;
 class XojPageView;
-class RepaintWidgetHandler;
 
 class RenderJob : public Job
 {
@@ -34,17 +35,16 @@ public:
 
 	void run();
 
-public:
-	static void rerenderRectangle(RenderJob* renderJob, Rectangle* rect);
-	static void cleanupStatic();
-
 private:
+	/**
+	 * Repaint the widget in UI Thread
+	 */
+	void repaintWidget(GtkWidget* widget);
+
 	void rerenderRectangle(Rectangle* rect);
 
 private:
 	XOJ_TYPE_ATTRIB;
 
 	XojPageView* view;
-
-	static RepaintWidgetHandler* repaintHandler;
 };
