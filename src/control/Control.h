@@ -62,7 +62,7 @@ public:
 	void initWindow(MainWindow* win);
 public:
 	// Menu File
-	bool newFile();
+	bool newFile(string pageTemplate = "");
 	bool openFile(path filename = "", int scrollToPage = -1);
 	bool annotatePdf(path filename, bool attachPdf, bool attachToDocument);
 	void print();
@@ -147,7 +147,7 @@ public:
 	size_t firePageSelected(PageRef page);
 	void firePageSelected(size_t page);
 
-	void addDefaultPage();
+	void addDefaultPage(string pageTemplate);
 	void insertNewPage(size_t position);
 	void insertPage(PageRef page, size_t position);
 	void deletePage();

@@ -59,12 +59,11 @@ namespace bf = boost::filesystem;
 #include <gtk/gtk.h>
 
 #include <iostream>
+#include <fstream>
 using std::cout;
 using std::cerr;
 using std::endl;
-
-#include <vector>
-using std::vector;
+using std::ifstream;
 
 #include <time.h>
 // TODO Remove
@@ -1252,12 +1251,17 @@ void Control::disableSidebarTmp(bool disabled)
 	this->sidebar->setTmpDisabled(disabled);
 }
 
-void Control::addDefaultPage()
+void Control::addDefaultPage(string pageTemplate)
 {
 	XOJ_CHECK_TYPE(Control);
 
+	if (pageTemplate == "")
+	{
+		pageTemplate = settings->getPageTemplate();
+	}
+
 	PageTemplateSettings model;
-	model.parse(settings->getPageTemplate());
+	model.parse(pageTemplate);
 
 	PageRef page = new XojPage(model.getPageWidth(), model.getPageHeight());
 	page->setBackgroundColor(model.getBackgroundColor());
@@ -2215,7 +2219,7 @@ void Control::showSettings()
 	delete dlg;
 }
 
-bool Control::newFile()
+bool Control::newFile(string pageTemplate)
 {
 	XOJ_CHECK_TYPE(Control);
 
@@ -2230,7 +2234,7 @@ bool Control::newFile()
 	*doc = newDoc;
 	this->doc->unlock();
 
-	addDefaultPage();
+	addDefaultPage(pageTemplate);
 
 	fireDocumentChanged(DOCUMENT_CHANGE_COMPLETE);
 
@@ -2302,14 +2306,29 @@ bool Control::openFile(path filename, int scrollToPage)
 		}
 	}
 
-	LoadHandler h;
+	LoadHandler loadHandler;
+
+	// Read template file
+	if (filename.extension() == ".xopt")
+	{
+		ifstream in(filename.c_str());
+		if (!in.is_open())
+		{
+			return false;
+		}
+		std::stringstream sstr;
+		sstr << in.rdbuf();
+		in.close();
+		newFile(sstr.str());
+		return true;
+	}
 
 	if (filename.extension() == ".pdf")
 	{
 		if (settings->isAutloadPdfXoj())
 		{
 			path f = path(filename).replace_extension(".pdf.xoj");
-			Document* tmp = h.loadDocument(f.string());
+			Document* tmp = loadHandler.loadDocument(f.string());
 			if (tmp)
 			{
 
@@ -2328,8 +2347,8 @@ bool Control::openFile(path filename, int scrollToPage)
 		return an;
 	}
 
-	Document* tmp = h.loadDocument(filename.string());
-	if ((tmp != NULL && h.isAttachedPdfMissing()) || !h.getMissingPdfFilename().empty())
+	Document* loadedDocument = loadHandler.loadDocument(filename.string());
+	if ((loadedDocument != NULL && loadHandler.isAttachedPdfMissing()) || !loadHandler.getMissingPdfFilename().empty())
 	{
 		// give the user a second chance to select a new PDF file, or to discard the PDF
 
@@ -2337,7 +2356,7 @@ bool Control::openFile(path filename, int scrollToPage)
 		GtkWidget* dialog = gtk_message_dialog_new(getGtkWindow(),
 												   GTK_DIALOG_MODAL,
 													   GTK_MESSAGE_QUESTION, GTK_BUTTONS_NONE, "%s",
-													   h.isAttachedPdfMissing()
+													   loadHandler.isAttachedPdfMissing()
 															? _C("The attached background PDF could not be found.")
 															: _C("The background PDF could not be found."));
 
@@ -2350,8 +2369,8 @@ bool Control::openFile(path filename, int scrollToPage)
 
 		if (res == 2) // remove PDF background
 		{
-			h.removePdfBackground();
-			tmp = h.loadDocument(filename.string());
+			loadHandler.removePdfBackground();
+			loadedDocument = loadHandler.loadDocument(filename.string());
 		}
 		else if (res == 1) // select another PDF background
 		{
@@ -2360,15 +2379,15 @@ bool Control::openFile(path filename, int scrollToPage)
 			path pdfFilename = dlg.showOpenDialog(true, attachToDocument);
 			if (!pdfFilename.empty())
 			{
-				h.setPdfReplacement(pdfFilename.string(), attachToDocument);
-				tmp = h.loadDocument(filename.string());
+				loadHandler.setPdfReplacement(pdfFilename.string(), attachToDocument);
+				loadedDocument = loadHandler.loadDocument(filename.string());
 			}
 		}
 	}
 
-	if (!tmp)
+	if (!loadedDocument)
 	{
-		string msg = FS(_F("Error opening file \"{1}\"") % filename) + "\n" + h.getLastError();
+		string msg = FS(_F("Error opening file \"{1}\"") % filename) + "\n" + loadHandler.getLastError();
 		Util::showErrorToUser(getGtkWindow(), msg);
 
 		fileLoaded(scrollToPage);
@@ -2378,7 +2397,7 @@ bool Control::openFile(path filename, int scrollToPage)
 	{
 		this->doc->lock();
 		this->doc->clearDocument();
-		*this->doc = *tmp;
+		*this->doc = *loadedDocument;
 		this->doc->unlock();
 	}
 
