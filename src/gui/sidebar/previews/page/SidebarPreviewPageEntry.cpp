@@ -1,7 +1,7 @@
 #include "SidebarPreviewPageEntry.h"
 
-SidebarPreviewPageEntry::SidebarPreviewPageEntry(SidebarPreviewBase* sidebar, PageRef page) :
-		SidebarPreviewBaseEntry(sidebar, page)
+SidebarPreviewPageEntry::SidebarPreviewPageEntry(SidebarPreviewBase* sidebar, PageRef page)
+ : SidebarPreviewBaseEntry(sidebar, page)
 {
 	XOJ_INIT_TYPE(SidebarPreviewPageEntry);
 }
