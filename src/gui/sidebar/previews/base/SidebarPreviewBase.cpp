@@ -40,14 +40,7 @@ SidebarPreviewBase::SidebarPreviewBase(Control* control, GladeGui* gui, SidebarT
 
 	g_signal_connect(this->scrollPreview, "size-allocate", G_CALLBACK(sizeChanged), this);
 
-	this->table = GTK_TABLE(gtk_table_new(2, 1, false));
-	g_object_ref(this->table);
-
-	gtk_table_attach(this->table, this->scrollPreview, 0, 1, 0, 1,
-	                 (GtkAttachOptions) (GTK_FILL | GTK_EXPAND),
-	                 (GtkAttachOptions) (GTK_FILL | GTK_EXPAND), 0, 0);
-
-	gtk_widget_show_all(GTK_WIDGET(this->table));
+	gtk_widget_show_all(this->scrollPreview);
 }
 
 SidebarPreviewBase::~SidebarPreviewBase()
@@ -63,8 +56,7 @@ SidebarPreviewBase::~SidebarPreviewBase()
 	delete this->layoutmanager;
 	this->layoutmanager = NULL;
 
-	g_object_unref(this->table);
-	this->table = NULL;
+	this->scrollPreview = NULL;
 
 	for (SidebarPreviewBaseEntry* p : this->previews)
 	{
@@ -142,7 +134,7 @@ GtkWidget* SidebarPreviewBase::getWidget()
 {
 	XOJ_CHECK_TYPE(SidebarPreviewBase);
 
-	return GTK_WIDGET(this->table);
+	return this->scrollPreview;
 }
 
 void SidebarPreviewBase::documentChanged(DocumentChangeType type)

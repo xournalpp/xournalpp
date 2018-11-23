@@ -95,11 +95,6 @@ private:
 	GtkWidget* scrollPreview;
 
 	/**
-	 * The Table with the Toolbar and the Scrollbar
-	 */
-	GtkTable* table;
-
-	/**
 	 * The Zoom of the previews
 	 */
 	double zoom;
