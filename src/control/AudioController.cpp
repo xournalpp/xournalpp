@@ -24,6 +24,8 @@ bool AudioController::isRecording()
 
 void AudioController::recStartStop(bool rec)
 {
+	XOJ_CHECK_TYPE(AudioController);
+
 	string command;
 
 	if (rec)
@@ -44,13 +46,13 @@ void AudioController::recStartStop(bool rec)
 
 		printf("Start recording\n");
 		command = "xopp-recording.sh start " + getAudioFolder() + "/" + data;
-        std::cout<<"COMMAND: "<<command<<"\n";
+		std::cout<<"COMMAND: "<<command<<"\n";
 	}
 	else if (this->recording)
 	{
 		this->recording = false;
 		audioFilename = "";
-        sttime = 0;
+		sttime = 0;
 		command = "xopp-recording.sh stop";
 	}
 	system(command.c_str());
@@ -73,17 +75,23 @@ void AudioController::recToggle()
 
 string AudioController::getAudioFilename()
 {
-    return this->audioFilename;
+	XOJ_CHECK_TYPE(AudioController);
+
+	return this->audioFilename;
 }
 
 string AudioController::getAudioFolder()
 {
-    string af = this->settings->getAudioFolder();
-    af.erase(af.begin(),af.begin()+7);
+	XOJ_CHECK_TYPE(AudioController);
+
+	string af = this->settings->getAudioFolder();
+	af.erase(af.begin(),af.begin()+7);
 	return af;
 }
 
 gint AudioController::getStartTime()
 {
-    return this->sttime;
+	XOJ_CHECK_TYPE(AudioController);
+
+	return this->sttime;
 }

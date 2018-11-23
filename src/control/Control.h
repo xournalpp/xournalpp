@@ -330,8 +330,6 @@ private:
 
 	MetadataManager* metadata;
 
-//	bool recording = false;
-
 	/**
 	 * Current page insert type, usually from default, but it can be changed from toolbar menu
 	 */
