@@ -37,7 +37,6 @@ Stroke::~Stroke()
 	this->pointCount = 0;
 	this->pointAllocCount = 0;
 
-	this->audioFilename="";
 	this->timestamp=0;
 
 	XOJ_RELEASE_TYPE(Stroke);

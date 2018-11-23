@@ -29,11 +29,6 @@ using std::cout;
 using std::endl;
 namespace bf = boost::filesystem;
 
-//TODO: to be moved somewhere else in the future
-string audioFilename = "";
-string audioFolder = "";
-gint sttime = 0;	
-
 MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control) :
 		GladeGui(gladeSearchPath, "main.glade", "mainWindow")
 {
