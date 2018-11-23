@@ -30,7 +30,7 @@ protected:
 	void addFilterAllFiles();
 	void addFilterPdf();
 	void addFilterXoj();
-	void addFilterXojt();
+	void addFilterXopt();
 
 	path runDialog();
 

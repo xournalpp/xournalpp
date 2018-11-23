@@ -71,14 +71,14 @@ void XojOpenDlg::addFilterXoj()
 	gtk_file_chooser_add_filter(GTK_FILE_CHOOSER(dialog), filterXoj);
 }
 
-void XojOpenDlg::addFilterXojt()
+void XojOpenDlg::addFilterXopt()
 {
 	XOJ_CHECK_TYPE(XojOpenDlg);
 
-	GtkFileFilter* filterXojt = gtk_file_filter_new();
-	gtk_file_filter_set_name(filterXojt, _C("Xournal++ template"));
-	gtk_file_filter_add_pattern(filterXojt, "*.xojt");
-	gtk_file_chooser_add_filter(GTK_FILE_CHOOSER(dialog), filterXojt);
+	GtkFileFilter* filterXopt = gtk_file_filter_new();
+	gtk_file_filter_set_name(filterXopt, _C("Xournal++ template"));
+	gtk_file_filter_add_pattern(filterXopt, "*.xopt");
+	gtk_file_chooser_add_filter(GTK_FILE_CHOOSER(dialog), filterXopt);
 }
 
 path XojOpenDlg::runDialog()
@@ -103,7 +103,7 @@ path XojOpenDlg::showOpenTemplateDialog()
 	XOJ_CHECK_TYPE(XojOpenDlg);
 
 	addFilterAllFiles();
-	addFilterXojt();
+	addFilterXopt();
 
 	return runDialog();
 }
@@ -119,7 +119,7 @@ path XojOpenDlg::showOpenDialog(bool pdf, bool& attachPdf)
 		gtk_file_filter_add_pattern(filterSupported, "*.xoj");
 
 		// TODO: Implement template loading from file open
-		// gtk_file_filter_add_pattern(filterSupported, "*.xojt");
+		// gtk_file_filter_add_pattern(filterSupported, "*.xopt");
 		gtk_file_filter_add_pattern(filterSupported, "*.pdf");
 		gtk_file_filter_add_pattern(filterSupported, "*.PDF");
 		gtk_file_chooser_add_filter(GTK_FILE_CHOOSER(dialog), filterSupported);
@@ -127,7 +127,7 @@ path XojOpenDlg::showOpenDialog(bool pdf, bool& attachPdf)
 		addFilterXoj();
 
 		// TODO: Implement template loading from file open
-		// addFilterXojt();
+		// addFilterXopt();
 	}
 
 	addFilterPdf();

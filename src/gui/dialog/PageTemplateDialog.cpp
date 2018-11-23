@@ -103,8 +103,6 @@ void PageTemplateDialog::saveToModel()
 
 	int activeIndex = gtk_combo_box_get_active(GTK_COMBO_BOX(get("cbBackgroundFormat")));
 	model.setBackgroundType(formatList[activeIndex].type);
-
-	settings->setPageTemplate(model.toString());
 }
 
 void PageTemplateDialog::saveToFile()
@@ -121,7 +119,7 @@ void PageTemplateDialog::saveToFile()
 
 	GtkFileFilter* filterXoj = gtk_file_filter_new();
 	gtk_file_filter_set_name(filterXoj, _C("Xournal++ template"));
-	gtk_file_filter_add_pattern(filterXoj, "*.xojt");
+	gtk_file_filter_add_pattern(filterXoj, "*.xopt");
 	gtk_file_chooser_add_filter(GTK_FILE_CHOOSER(dialog), filterXoj);
 
 	if (!settings->getLastSavePath().empty())
@@ -132,7 +130,7 @@ void PageTemplateDialog::saveToFile()
 
 	time_t curtime = time(NULL);
 	char stime[128];
-	strftime(stime, sizeof(stime), "%F-Template-%H-%M.xojt", localtime(&curtime));
+	strftime(stime, sizeof(stime), "%F-Template-%H-%M.xopt", localtime(&curtime));
 	string saveFilename = stime;
 
 	gtk_file_chooser_set_current_name(GTK_FILE_CHOOSER(dialog), saveFilename.c_str());
@@ -238,6 +236,8 @@ void PageTemplateDialog::show(GtkWindow* parent)
 	if (ret == 1) // OK
 	{
 		saveToModel();
+		settings->setPageTemplate(model.toString());
+
 		this->saved = true;
 	}
 
