@@ -190,7 +190,7 @@ bool LoadHandler::parseXml()
 		return false;
 	}
 
-	doc.setCreateBackupOnSave(this->fileversion >= 2);
+	doc.setCreateBackupOnSave(this->fileversion >= 3);
 
 	return valid;
 }
@@ -269,7 +269,7 @@ void LoadHandler::parseBgSolid()
 		bg.format = style;
 	}
 
-	const char* config = LoadHandlerHelper::getAttrib("config", false, this);
+	const char* config = LoadHandlerHelper::getAttrib("config", true, this);
 	if (config != NULL)
 	{
 		bg.config = config;
@@ -874,7 +874,21 @@ Document* LoadHandler::loadDocument(string filename)
 		closeFile();
 		return NULL;
 	}
-	doc.setFilename(filename.c_str());
+
+	if (fileversion == 1)
+	{
+		// This is a Xournal document, not a Xournal++
+		// Even if the new fileextension is .xopp, allow to
+		// overwrite .xoj files which are created by Xournal++
+		// Force the user to save is a bad idea, this will annoy the user
+		// Rename files is also not that user friendly.
+
+		doc.setFilename("");
+	}
+	else
+	{
+		doc.setFilename(filename.c_str());
+	}
 
 	closeFile();
 

@@ -40,6 +40,7 @@ void XojExportHandler::writeHeader()
 	XOJ_CHECK_TYPE(XojExportHandler);
 
 	this->root->setAttrib("creator", PROJECT_STRING);
+	// Keept this version on 2, as this is anyway not read by Xournal
 	this->root->setAttrib("fileversion", "2");
 	this->root->addChild(new XmlTextNode("title", "Xournal document (Compatibility) - see " PROJECT_URL));
 }
