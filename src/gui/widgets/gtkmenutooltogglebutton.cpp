@@ -58,11 +58,10 @@ static void gtk_menu_tool_toggle_button_construct_contents(
     GtkMenuToolToggleButton* button)
 {
 	GtkMenuToolToggleButtonPrivate* priv = button->priv;
+
+	GtkOrientation orientation = gtk_tool_item_get_orientation(GTK_TOOL_ITEM (button));
+
 	GtkWidget* box;
-	GtkOrientation orientation;
-
-	orientation = gtk_tool_item_get_orientation(GTK_TOOL_ITEM (button));
-
 	if (orientation == GTK_ORIENTATION_HORIZONTAL)
 	{
 		box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
@@ -122,15 +121,13 @@ static void gtk_menu_tool_toggle_button_construct_contents(
 	gtk_widget_queue_resize(GTK_WIDGET (button));
 }
 
-static void gtk_menu_tool_toggle_button_toolbar_reconfigured(
-    GtkToolItem* toolitem)
+static void gtk_menu_tool_toggle_button_toolbar_reconfigured(GtkToolItem* toolitem)
 {
-	gtk_menu_tool_toggle_button_construct_contents(GTK_MENU_TOOL_TOGGLE_BUTTON(
-	                                                   toolitem));
+	gtk_menu_tool_toggle_button_construct_contents(GTK_MENU_TOOL_TOGGLE_BUTTON(toolitem));
 
 	/* chain up */
 	GTK_TOOL_ITEM_CLASS (
-	    gtk_menu_tool_toggle_button_parent_class)->toolbar_reconfigured(toolitem);
+			gtk_menu_tool_toggle_button_parent_class)->toolbar_reconfigured(toolitem);
 }
 
 static void gtk_menu_tool_toggle_button_state_changed(GtkWidget* widget,
@@ -184,13 +181,9 @@ static void gtk_menu_tool_toggle_button_get_property(GObject* object,
 static void gtk_menu_tool_toggle_button_class_init(GtkMenuToolToggleButtonClass*
                                                    klass)
 {
-	GObjectClass* object_class;
-	GtkWidgetClass* widget_class;
-	GtkToolItemClass* toolitem_class;
-
-	object_class = (GObjectClass*) klass;
-	widget_class = (GtkWidgetClass*) klass;
-	toolitem_class = (GtkToolItemClass*) klass;
+	GObjectClass* object_class = (GObjectClass*) klass;
+	GtkWidgetClass* widget_class = (GtkWidgetClass*) klass;
+	GtkToolItemClass* toolitem_class = (GtkToolItemClass*) klass;
 
 	object_class->set_property = gtk_menu_tool_toggle_button_set_property;
 	object_class->get_property = gtk_menu_tool_toggle_button_get_property;
@@ -231,30 +224,28 @@ static void menu_position_func(GtkMenu* menu, int* x, int* y, gboolean* push_in,
                                GtkMenuToolToggleButton* button)
 {
 	GtkMenuToolToggleButtonPrivate* priv = button->priv;
-	GtkWidget* widget = GTK_WIDGET (button);
-	GtkRequisition req;
+	GtkWidget* widget = GTK_WIDGET(button);
+
+	GtkRequisition minimum_size;
 	GtkRequisition menu_req;
-	GtkOrientation orientation;
-	GtkTextDirection direction;
-	GdkRectangle monitor;
-	gint monitor_num;
-	GdkScreen* screen;
-	GtkAllocation arrow_allocation;
+	gtk_widget_get_preferred_size(GTK_WIDGET(priv->menu), &minimum_size, &menu_req);
 
-	gtk_widget_size_request(GTK_WIDGET (priv->menu), &menu_req);
+	GtkOrientation orientation = gtk_tool_item_get_orientation(GTK_TOOL_ITEM (button));
+	GtkTextDirection direction = gtk_widget_get_direction(widget);
 
-	orientation = gtk_tool_item_get_orientation(GTK_TOOL_ITEM (button));
-	direction = gtk_widget_get_direction(widget);
+	GdkScreen* screen = gtk_widget_get_screen(GTK_WIDGET (menu));
 
-	screen = gtk_widget_get_screen(GTK_WIDGET (menu));
-
-	monitor_num = gdk_screen_get_monitor_at_window(screen,
+	gint monitor_num = gdk_screen_get_monitor_at_window(screen,
 	                                               gtk_widget_get_window(widget));
 
 	if (monitor_num < 0)
+	{
 		monitor_num = 0;
+	}
+	GdkRectangle monitor;
 	gdk_screen_get_monitor_geometry(screen, monitor_num, &monitor);
 
+	GtkAllocation arrow_allocation;
 	gtk_widget_get_allocation(priv->arrow_button, &arrow_allocation);
 
 	if (orientation == GTK_ORIENTATION_HORIZONTAL)
@@ -267,37 +258,53 @@ static void menu_position_func(GtkMenu* menu, int* x, int* y, gboolean* push_in,
 		*y += allocation.y;
 
 		if (direction == GTK_TEXT_DIR_LTR)
-			*x += MAX (allocation.width - menu_req.width, 0);
+		{
+			*x += MAX(allocation.width - menu_req.width, 0);
+		}
 		else if (menu_req.width > allocation.width)
+		{
 			*x -= menu_req.width - allocation.width;
+		}
 
-		if ((*y + arrow_allocation.height + menu_req.height) <= monitor.y
-		    + monitor.height)
+		if ((*y + arrow_allocation.height + menu_req.height) <= monitor.y + monitor.height)
+		{
 			*y += arrow_allocation.height;
+		}
 		else if ((*y - menu_req.height) >= monitor.y)
+		{
 			*y -= menu_req.height;
-		else if (monitor.y + monitor.height - (*y +
-		                                       arrow_allocation.height) > *y)
+		}
+		else if (monitor.y + monitor.height - (*y + arrow_allocation.height) > *y)
+		{
 			*y += arrow_allocation.height;
+		}
 		else
+		{
 			*y -= menu_req.height;
+		}
 	}
 	else
 	{
-		gdk_window_get_origin(gtk_button_get_event_window(GTK_BUTTON(priv->arrow_button)),
-		                                                  x, y);
+		gdk_window_get_origin(gtk_button_get_event_window(GTK_BUTTON(priv->arrow_button)), x, y);
 
+		GtkRequisition req;
 		gtk_widget_size_request(priv->arrow_button, &req);
 
 		if (direction == GTK_TEXT_DIR_LTR)
+		{
 			*x += arrow_allocation.width;
+		}
 		else
+		{
 			*x -= menu_req.width;
+		}
 
 		if (*y + menu_req.height > monitor.y + monitor.height &&
 		    *y + arrow_allocation.height - monitor.y
 		    > monitor.y + monitor.height - *y)
+		{
 			*y += arrow_allocation.height - menu_req.height;
+		}
 	}
 
 	*push_in = FALSE;
@@ -532,7 +539,7 @@ void gtk_menu_tool_toggle_button_set_menu(GtkMenuToolToggleButton* button,
 			gtk_menu_detach(priv->menu);
 		}
 
-		priv->menu = GTK_MENU (menu);
+		priv->menu = GTK_MENU(menu);
 
 		if (priv->menu)
 		{
