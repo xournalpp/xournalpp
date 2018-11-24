@@ -1,10 +1,15 @@
 #include "MainBackgroundPainter.h"
 
+#include "BackgroundConfig.h"
 #include "BaseBackgroundPainter.h"
 #include "DottedBackgroundPainter.h"
 #include "GraphBackgroundPainter.h"
 #include "LineBackgroundPainter.h"
 
+#include <boost/algorithm/string.hpp>
+
+#include <vector>
+using std::vector;
 using std::pair;
 
 MainBackgroundPainter::MainBackgroundPainter()
@@ -13,10 +18,10 @@ MainBackgroundPainter::MainBackgroundPainter()
 
 	defaultPainter = new BaseBackgroundPainter();
 
-	painter.insert(pair<string, BaseBackgroundPainter*>("lined", new LineBackgroundPainter(false)));
-	painter.insert(pair<string, BaseBackgroundPainter*>("ruled", new LineBackgroundPainter(true)));
-	painter.insert(pair<string, BaseBackgroundPainter*>("graph", new GraphBackgroundPainter()));
-	painter.insert(pair<string, BaseBackgroundPainter*>("dotted", new DottedBackgroundPainter()));
+	painter["lined"] = new LineBackgroundPainter(false);
+	painter["ruled"] = new LineBackgroundPainter(true);
+	painter["graph"] = new GraphBackgroundPainter();
+	painter["dotted"] = new DottedBackgroundPainter();
 }
 
 MainBackgroundPainter::~MainBackgroundPainter()
@@ -47,8 +52,8 @@ void MainBackgroundPainter::paint(PageType pt, cairo_t* cr, PageRef page)
 		painter = it->second;
 	}
 
-	map<string, string> config;
-	// TODO Parse config
+	BackgroundConfig config(pt.config);
 
-	painter->paint(cr, page, config);
+	painter->resetConfig();
+	painter->paint(cr, page, &config);
 }

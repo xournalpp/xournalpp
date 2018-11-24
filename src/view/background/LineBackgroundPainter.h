@@ -23,6 +23,13 @@ public:
 
 public:
 	virtual void paint();
+
+	/**
+	 * Reset all used configuration values
+	 */
+	virtual void resetConfig();
+
+
 	void paintBackgroundRuled();
 	void paintBackgroundLined();
 

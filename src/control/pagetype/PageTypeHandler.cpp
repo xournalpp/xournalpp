@@ -14,6 +14,7 @@ PageTypeHandler::PageTypeHandler()
 
 	// Disable for the moment
 	addPageTypeInfo(_C("Dotted"), "dotted", "");
+	//addPageTypeInfo("Test", "lined", "b1=00FF00,b2=FF0000");
 
 	// Special types
 	addPageTypeInfo(_C("Copy current"), ":copy", "");
