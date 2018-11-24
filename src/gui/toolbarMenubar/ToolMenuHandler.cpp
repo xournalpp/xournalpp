@@ -8,6 +8,7 @@
 #include "ToolPageSpinner.h"
 #include "ToolSelectCombocontrol.h"
 #include "ToolZoomSlider.h"
+#include "control/pagetype/PageTypeMenu.h"
 
 #include "control/Actions.h"
 #include "gui/ToolitemDragDrop.h"
@@ -20,7 +21,7 @@
 
 #include <glib.h>
 
-ToolMenuHandler::ToolMenuHandler(ActionHandler* listener, ZoomControl* zoom, GladeGui* gui, ToolHandler* toolHandler,
+ToolMenuHandler::ToolMenuHandler(ActionHandler* listener, PageTypeMenu* typeMenu, ZoomControl* zoom, GladeGui* gui, ToolHandler* toolHandler,
 								 GtkWindow* parent)
 {
 	XOJ_INIT_TYPE(ToolMenuHandler);
@@ -35,6 +36,7 @@ ToolMenuHandler::ToolMenuHandler(ActionHandler* listener, ZoomControl* zoom, Gla
 	this->toolPageSpinner = NULL;
 	this->toolPageLayer = NULL;
 	this->tbModel = new ToolbarModel();
+	this->typeMenu = typeMenu;
 
 	initToolItems();
 }
@@ -45,6 +47,9 @@ ToolMenuHandler::~ToolMenuHandler()
 
 	delete this->tbModel;
 	this->tbModel = NULL;
+
+	// Owned by control
+	this->typeMenu = NULL;
 
 	for (MenuItem* it : this->menuItems)
 	{
@@ -371,45 +376,7 @@ void ToolMenuHandler::initToolItems()
 	ToolButton* tbInsertNewPage = new ToolButton(listener, gui, "INSERT_NEW_PAGE", ACTION_NEW_PAGE_AFTER,
 												 "addPage.svg", _C("Insert page"));
 	addToolItem(tbInsertNewPage);
-	GtkWidget* newPagePopup = gtk_menu_new();
-
-	GtkWidget* newPagePopupPlain = gtk_check_menu_item_new_with_label(_C("Plain"));
-	gtk_widget_show(newPagePopupPlain);
-	gtk_container_add(GTK_CONTAINER(newPagePopup), newPagePopupPlain);
-	gtk_check_menu_item_set_draw_as_radio(GTK_CHECK_MENU_ITEM(newPagePopupPlain), true);
-	registerMenupoint(newPagePopupPlain, ACTION_NEW_PAGE_PLAIN, GROUP_PAGE_INSERT_TYPE);
-
-	GtkWidget* newPagePopupLined = gtk_check_menu_item_new_with_label(_C("Lined"));
-	gtk_widget_show(newPagePopupLined);
-	gtk_container_add(GTK_CONTAINER(newPagePopup), newPagePopupLined);
-	gtk_check_menu_item_set_draw_as_radio(GTK_CHECK_MENU_ITEM(newPagePopupLined), true);
-	registerMenupoint(newPagePopupLined, ACTION_NEW_PAGE_LINED, GROUP_PAGE_INSERT_TYPE);
-
-	GtkWidget* newPagePopupRuled = gtk_check_menu_item_new_with_label(_C("Ruled"));
-	gtk_widget_show(newPagePopupRuled);
-	gtk_container_add(GTK_CONTAINER(newPagePopup), newPagePopupRuled);
-	gtk_check_menu_item_set_draw_as_radio(GTK_CHECK_MENU_ITEM(newPagePopupRuled), true);
-	registerMenupoint(newPagePopupRuled, ACTION_NEW_PAGE_RULED, GROUP_PAGE_INSERT_TYPE);
-
-	GtkWidget* newPagePopupGraph = gtk_check_menu_item_new_with_label(_C("Graph"));
-	gtk_widget_show(newPagePopupGraph);
-	gtk_container_add(GTK_CONTAINER(newPagePopup), newPagePopupGraph);
-	gtk_check_menu_item_set_draw_as_radio(GTK_CHECK_MENU_ITEM(newPagePopupGraph), true);
-	registerMenupoint(newPagePopupGraph, ACTION_NEW_PAGE_GRAPH, GROUP_PAGE_INSERT_TYPE);
-
-	GtkWidget* newPagePopupCopyCurrent = gtk_check_menu_item_new_with_label(_C("Copy current"));
-	gtk_widget_show(newPagePopupCopyCurrent);
-	gtk_container_add(GTK_CONTAINER(newPagePopup), newPagePopupCopyCurrent);
-	gtk_check_menu_item_set_draw_as_radio(GTK_CHECK_MENU_ITEM(newPagePopupCopyCurrent), true);
-	registerMenupoint(newPagePopupCopyCurrent, ACTION_NEW_PAGE_COPY, GROUP_PAGE_INSERT_TYPE);
-
-	GtkWidget* newPagePopupWithPDFBackground = gtk_check_menu_item_new_with_label(_C("With PDF background"));
-	gtk_widget_show(newPagePopupWithPDFBackground);
-	gtk_container_add(GTK_CONTAINER(newPagePopup), newPagePopupWithPDFBackground);
-	gtk_check_menu_item_set_draw_as_radio(GTK_CHECK_MENU_ITEM(newPagePopupWithPDFBackground), true);
-	registerMenupoint(newPagePopupWithPDFBackground, ACTION_NEW_PAGE_PDF_BACKGROUND, GROUP_PAGE_INSERT_TYPE);
-
-	tbInsertNewPage->setPopupMenu(newPagePopup);
+	tbInsertNewPage->setPopupMenu(this->typeMenu->getMenu());
 
 	addToolItem(new ToolButton(listener, gui, "HILIGHTER", ACTION_TOOL_HILIGHTER, GROUP_TOOL, true,
 							   "tool_highlighter.svg", _C("Highlighter"), gui->get("menuToolsHighlighter")));

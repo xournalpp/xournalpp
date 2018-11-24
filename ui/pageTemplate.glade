@@ -184,17 +184,6 @@ This settings will be used if you create a new document</property>
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkComboBoxText" id="cbBackgroundFormat">
-                    <property name="visible">True</property>
-                    <property name="can_focus">False</property>
-                  </object>
-                  <packing>
-                    <property name="left_attach">1</property>
-                    <property name="top_attach">1</property>
-                    <property name="width">2</property>
-                  </packing>
-                </child>
-                <child>
                   <object class="GtkColorButton" id="cbBackgroundButton">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
@@ -234,6 +223,43 @@ for the fist Page</property>
                   <packing>
                     <property name="left_attach">1</property>
                     <property name="top_attach">3</property>
+                    <property name="width">2</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkBox" id="box1">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <child>
+                      <object class="GtkLabel" id="lbBackgroundType">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="label">BACKGROUND_TYPE</property>
+                        <property name="xalign">0</property>
+                      </object>
+                      <packing>
+                        <property name="expand">True</property>
+                        <property name="fill">True</property>
+                        <property name="position">0</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkButton" id="btBackgroundDropdown">
+                        <property name="label">⌄</property>
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="receives_default">True</property>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">1</property>
+                      </packing>
+                    </child>
+                  </object>
+                  <packing>
+                    <property name="left_attach">1</property>
+                    <property name="top_attach">1</property>
                     <property name="width">2</property>
                   </packing>
                 </child>

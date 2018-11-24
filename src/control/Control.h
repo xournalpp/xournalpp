@@ -43,6 +43,8 @@ class Cursor;
 class ToolbarDragDropHandler;
 class MetadataEntry;
 class MetadataCallbackData;
+class PageTypeHandler;
+class PageTypeMenu;
 class BaseExportJob;
 
 class Control : public ActionHandler,
@@ -107,7 +109,6 @@ public:
 	void calcZoomFitSize();
 	void setViewTwoPages(bool continous);
 	void setViewPresentationMode(bool continous);
-	void setPageInsertType(PageInsertType type);
 	void manageToolbars();
 	void customizeToolbars();
 	void enableFullscreen(bool enabled, bool presentation = false);
@@ -195,6 +196,8 @@ public:
 	Sidebar* getSidebar();
 	SearchBar* getSearchBar();
 	AudioController* getAudioController();
+	PageTypeHandler* getPageTypes();
+	PageTypeMenu* getPageTypeMenu();
 
 	bool copy();
 	bool cut();
@@ -330,9 +333,6 @@ private:
 
 	MetadataManager* metadata;
 
-	/**
-	 * Current page insert type, usually from default, but it can be changed from toolbar menu
-	 */
-	PageInsertType pageInserType;
+	PageTypeHandler* pageTypes;
+	PageTypeMenu* pageTypeMenu;
 };
-

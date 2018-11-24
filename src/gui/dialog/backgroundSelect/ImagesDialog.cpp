@@ -30,7 +30,7 @@ void ImagesDialog::loadImagesFromPages()
 	{
 		PageRef p = doc->getPage(i);
 
-		if (p->getBackgroundType() != BACKGROUND_TYPE_IMAGE)
+		if (!p->getBackgroundType().isImagePage())
 		{
 			continue;
 		}

@@ -108,12 +108,12 @@ public:
 		CPPUNIT_ASSERT_EQUAL(5UL, doc->getPageCount());
 	}
 
-	void checkPageType(Document* doc, int pageIndex, string expectedText, BackgroundType expectedBgType)
+	void checkPageType(Document* doc, int pageIndex, string expectedText, PageType expectedBgType)
 	{
 		PageRef page = doc->getPage(pageIndex);
 
-		BackgroundType bgType = page->getBackgroundType();
-		CPPUNIT_ASSERT_EQUAL(expectedBgType, bgType);
+		PageType bgType = page->getBackgroundType();
+		CPPUNIT_ASSERT(expectedBgType == bgType);
 
 		CPPUNIT_ASSERT_EQUAL(1UL, (*page).getLayerCount());
 		Layer* layer = (*(*page).getLayers())[0];
@@ -131,11 +131,11 @@ public:
 		Document* doc = handler.loadDocument(GET_TESTFILE("load/pages.xoj"));
 
 		CPPUNIT_ASSERT_EQUAL(5UL, doc->getPageCount());
-		checkPageType(doc, 0, "p1", BACKGROUND_TYPE_NONE);
-		checkPageType(doc, 1, "p2", BACKGROUND_TYPE_LINED);
-		checkPageType(doc, 2, "p3", BACKGROUND_TYPE_RULED);
-		checkPageType(doc, 3, "p4", BACKGROUND_TYPE_GRAPH);
-		checkPageType(doc, 4, "p5", BACKGROUND_TYPE_IMAGE);
+		checkPageType(doc, 0, "p1", PageType("plain"));
+		checkPageType(doc, 1, "p2", PageType("lined"));
+		checkPageType(doc, 2, "p3", PageType("ruled"));
+		checkPageType(doc, 3, "p4", PageType("graph"));
+		checkPageType(doc, 4, "p5", PageType(":image"));
 
 		// TODO: PDF not tested yet
 		// BACKGROUND_TYPE_PDF

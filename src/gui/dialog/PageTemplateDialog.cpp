@@ -3,6 +3,7 @@
 #include "control/stockdlg/XojOpenDlg.h"
 #include "gui/dialog/FormatDialog.h"
 #include "model/FormatDefinitions.h"
+#include "control/pagetype/PageTypeHandler.h"
 
 #include <Util.h>
 
@@ -13,14 +14,17 @@
 using std::ofstream;
 
 
-PageTemplateDialog::PageTemplateDialog(GladeSearchpath* gladeSearchPath, Settings* settings)
+PageTemplateDialog::PageTemplateDialog(GladeSearchpath* gladeSearchPath, Settings* settings, PageTypeHandler* types)
  : GladeGui(gladeSearchPath, "pageTemplate.glade", "templateDialog"),
    settings(settings),
+   pageMenu(new PageTypeMenu(types, settings, false)),
    saved(false)
 {
 	XOJ_INIT_TYPE(PageTemplateDialog);
 
 	model.parse(settings->getPageTemplate());
+
+	pageMenu->setListener(this);
 
 	g_signal_connect(get("btChangePaperSize"), "clicked", G_CALLBACK(
 		+[](GtkToggleButton* togglebutton, PageTemplateDialog* self)
@@ -43,18 +47,17 @@ PageTemplateDialog::PageTemplateDialog(GladeSearchpath* gladeSearchPath, Setting
 			self->saveToFile();
 		}), this);
 
-
-	formatList.push_back({ .name = _("Plain"), .type = BACKGROUND_TYPE_NONE });
-	formatList.push_back({ .name = _("Lined"), .type = BACKGROUND_TYPE_LINED });
-	formatList.push_back({ .name = _("Ruled"), .type = BACKGROUND_TYPE_RULED });
-	formatList.push_back({ .name = _("Graph"), .type = BACKGROUND_TYPE_GRAPH });
-
-	GtkComboBoxText* cbBg = GTK_COMBO_BOX_TEXT(get("cbBackgroundFormat"));
-
-	for (PageFormat& format: formatList)
+	g_signal_connect(get("btBackgroundDropdown"), "clicked", G_CALLBACK(
+		+[](GtkButton* button, PageTemplateDialog* self)
 	{
-		gtk_combo_box_text_append_text(cbBg, format.name.c_str());
-	}
+			XOJ_CHECK_TYPE_OBJ(self, PageTemplateDialog);
+			GtkWidget* menu = self->pageMenu->getMenu();
+
+			gtk_menu_popup(GTK_MENU(menu), NULL, NULL, NULL, NULL, 0, gtk_get_current_event_time());
+
+			// GTK 3.22: gtk_menu_popup_at_widget(menu, button, GDK_GRAVITY_SOUTH_WEST, GDK_GRAVITY_NORTH_WEST, NULL);
+
+		}), this);
 
 	updateDataFromModel();
 }
@@ -62,6 +65,9 @@ PageTemplateDialog::PageTemplateDialog(GladeSearchpath* gladeSearchPath, Setting
 PageTemplateDialog::~PageTemplateDialog()
 {
 	XOJ_CHECK_TYPE(PageTemplateDialog);
+
+	delete pageMenu;
+	pageMenu = NULL;
 
 	XOJ_RELEASE_TYPE(PageTemplateDialog);
 }
@@ -76,19 +82,18 @@ void PageTemplateDialog::updateDataFromModel()
 
 	updatePageSize();
 
-	int activeFormat = 0;
-	for (int i = 0; i < formatList.size(); i++)
-	{
-		if (formatList[i].type == model.getBackgroundType())
-		{
-			activeFormat = i;
-			break;
-		}
-	}
+	pageMenu->setSelected(model.getBackgroundType());
 
-	GtkComboBoxText* cbBg = GTK_COMBO_BOX_TEXT(get("cbBackgroundFormat"));
-	gtk_combo_box_set_active(GTK_COMBO_BOX(cbBg), activeFormat);
 	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(get("cbCopyLastPage")), model.isCopyLastPageSettings());
+}
+
+void PageTemplateDialog::pageSelected(PageTypeInfo* info)
+{
+	XOJ_CHECK_TYPE(PageTemplateDialog);
+
+	model.setBackgroundType(info->page);
+
+	gtk_label_set_text(GTK_LABEL(get("lbBackgroundType")), info->name.c_str());
 }
 
 void PageTemplateDialog::saveToModel()
@@ -100,9 +105,6 @@ void PageTemplateDialog::saveToModel()
 	GdkRGBA color;
 	gtk_color_chooser_get_rgba(GTK_COLOR_CHOOSER(get("cbBackgroundButton")), &color);
 	model.setBackgroundColor(Util::gdkrgba_to_hex(color));
-
-	int activeIndex = gtk_combo_box_get_active(GTK_COMBO_BOX(get("cbBackgroundFormat")));
-	model.setBackgroundType(formatList[activeIndex].type);
 }
 
 void PageTemplateDialog::saveToFile()

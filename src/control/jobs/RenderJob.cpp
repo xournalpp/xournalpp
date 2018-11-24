@@ -60,7 +60,7 @@ void RenderJob::rerenderRectangle(Rectangle* rect)
 	DocumentView v;
 	v.limitArea(rect->x, rect->y, rect->width, rect->height);
 
-	if (view->page->getBackgroundType() == BACKGROUND_TYPE_PDF)
+	if (view->page->getBackgroundType().isPdfPage())
 	{
 		int pgNo = view->page->getPdfPageNr();
 		XojPopplerPage* popplerPage = doc->getPdfPage(pgNo);
@@ -121,7 +121,7 @@ void RenderJob::run()
 
 		doc->lock();
 
-		if (this->view->page->getBackgroundType() == BACKGROUND_TYPE_PDF)
+		if (this->view->page->getBackgroundType().isPdfPage())
 		{
 			int pgNo = this->view->page->getPdfPageNr();
 			popplerPage = doc->getPdfPage(pgNo);

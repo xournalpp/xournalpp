@@ -4,6 +4,8 @@
 #include "LatexController.h"
 
 #include "gui/Cursor.h"
+
+// TODO Remove
 extern int currentToolType;
 
 #include "gui/dialog/AboutDialog.h"
@@ -30,6 +32,8 @@ extern int currentToolType;
 #include "model/BackgroundImage.h"
 #include "model/FormatDefinitions.h"
 #include "model/XojPage.h"
+#include "pagetype/PageTypeHandler.h"
+#include "pagetype/PageTypeMenu.h"
 #include "settings/ButtonConfig.h"
 #include "stockdlg/ImageOpenDlg.h"
 #include "stockdlg/XojOpenDlg.h"
@@ -82,8 +86,6 @@ Control::Control(GladeSearchpath* gladeSearchPath)
 
 	this->gladeSearchPath = gladeSearchPath;
 
-	this->pageInserType = PAGE_INSERT_TYPE_LINED;
-
 	this->metadata = new MetadataManager();
 	this->cursor = new Cursor(this);
 
@@ -97,6 +99,9 @@ Control::Control(GladeSearchpath* gladeSearchPath)
 	name /= SETTINGS_XML_FILE;
 	this->settings = new Settings(name);
 	this->settings->load();
+
+	this->pageTypes = new PageTypeHandler();
+	this->pageTypeMenu = new PageTypeMenu(this->pageTypes, settings);
 
 	this->sidebar = NULL;
 	this->searchBar = NULL;
@@ -154,20 +159,39 @@ Control::~Control()
 	}
 
 	delete this->clipboardHandler;
+	this->clipboardHandler = NULL;
 	delete this->recent;
+	this->recent = NULL;
 	delete this->undoRedo;
+	this->undoRedo = NULL;
 	delete this->settings;
+	this->settings = NULL;
 	delete this->toolHandler;
+	this->toolHandler = NULL;
 	delete this->sidebar;
+	this->sidebar = NULL;
 	delete this->doc;
+	this->doc = NULL;
 	delete this->searchBar;
+	this->searchBar = NULL;
 	delete this->scrollHandler;
+	this->scrollHandler = NULL;
+	delete this->pageTypeMenu;
+	this->pageTypeMenu = NULL;
+	delete this->pageTypes;
+	this->pageTypes = NULL;
 	delete this->metadata;
+	this->metadata = NULL;
 	delete this->cursor;
+	this->cursor = NULL;
 	delete this->zoom;
+	this->zoom = NULL;
 	delete this->scheduler;
+	this->scheduler = NULL;
 	delete this->dragDropHandler;
+	this->dragDropHandler = NULL;
 	delete this->audioController;
+	this->audioController = NULL;
 
 	XOJ_RELEASE_TYPE(Control);
 }
@@ -281,10 +305,6 @@ void Control::initWindow(MainWindow* win)
 
 	setViewTwoPages(settings->isShowTwoPages());
 	setViewPresentationMode(settings->isPresentationMode());
-
-	PageTemplateSettings model;
-	model.parse(settings->getPageTemplate());
- 	setPageInsertType(model.getPageInsertType());
 
 	penSizeChanged();
 	eraserSizeChanged();
@@ -526,49 +546,6 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
 	case ACTION_SET_PAPER_BACKGROUND_PDF:
 		clearSelectionEndText();
 		setPageBackground(type);
-		break;
-
-	case ACTION_NEW_PAGE_PLAIN:
-		clearSelectionEndText();
-		if (enabled)
-		{
-			setPageInsertType(PAGE_INSERT_TYPE_PLAIN);
-		}
-		break;
-	case ACTION_NEW_PAGE_LINED:
-		clearSelectionEndText();
-		if (enabled)
-		{
-			setPageInsertType(PAGE_INSERT_TYPE_LINED);
-		}
-		break;
-	case ACTION_NEW_PAGE_RULED:
-		clearSelectionEndText();
-		if (enabled)
-		{
-			setPageInsertType(PAGE_INSERT_TYPE_RULED);
-		}
-		break;
-	case ACTION_NEW_PAGE_GRAPH:
-		clearSelectionEndText();
-		if (enabled)
-		{
-			setPageInsertType(PAGE_INSERT_TYPE_GRAPH);
-		}
-		break;
-	case ACTION_NEW_PAGE_COPY:
-		clearSelectionEndText();
-		if (enabled)
-		{
-			setPageInsertType(PAGE_INSERT_TYPE_COPY);
-		}
-		break;
-	case ACTION_NEW_PAGE_PDF_BACKGROUND:
-		clearSelectionEndText();
-		if (enabled)
-		{
-			setPageInsertType(PAGE_INSERT_TYPE_PDF_BACKGROUND);
-		}
 		break;
 
 		// Menu Tools
@@ -1322,38 +1299,24 @@ void Control::insertNewPage(size_t position)
 	PageRef page = new XojPage(width, height);
 	page->setBackgroundColor(model.getBackgroundColor());
 
-	if (PAGE_INSERT_TYPE_PLAIN == this->pageInserType)
-	{
-		page->setBackgroundType(BACKGROUND_TYPE_NONE);
-	}
-	else if (PAGE_INSERT_TYPE_LINED == this->pageInserType)
-	{
-		page->setBackgroundType(BACKGROUND_TYPE_LINED);
-	}
-	else if (PAGE_INSERT_TYPE_RULED == this->pageInserType)
-	{
-		page->setBackgroundType(BACKGROUND_TYPE_RULED);
-	}
-	else if (PAGE_INSERT_TYPE_GRAPH == this->pageInserType)
-	{
-		page->setBackgroundType(BACKGROUND_TYPE_GRAPH);
-	}
-	else if (PAGE_INSERT_TYPE_COPY == this->pageInserType)
+	PageType pt = pageTypeMenu->getSelected();
+
+	if (pt.format == ":copy")
 	{
 		PageRef current = getCurrentPage();
 		if (!current.isValid()) // should not happen, but if you open an invalid file or something like this...
 		{
-			page->setBackgroundType(BACKGROUND_TYPE_LINED);
+			page->setBackgroundType(pt);
 		}
 		else
 		{
-			BackgroundType bg = current->getBackgroundType();
+			PageType bg = current->getBackgroundType();
 			page->setBackgroundType(bg);
-			if (bg == BACKGROUND_TYPE_PDF)
+			if (bg.isPdfPage())
 			{
 				page->setBackgroundPdfPageNr(current->getPdfPageNr());
 			}
-			else if (bg == BACKGROUND_TYPE_IMAGE)
+			else if (bg.isImagePage())
 			{
 				page->setBackgroundImage(current->getBackgroundImage());
 			}
@@ -1365,14 +1328,14 @@ void Control::insertNewPage(size_t position)
 			page->setSize(current->getWidth(), current->getHeight());
 		}
 	}
-	else if (PAGE_INSERT_TYPE_PDF_BACKGROUND == this->pageInserType)
+	else if (pt.isPdfPage())
 	{
 		if (this->doc->getPdfPageCount() == 0)
 		{
 
 			string msg = FS(_("You don't have any PDF pages to select from. "
-					"Cancel operation.\nPlease select another background type: "
-					"Menu \"Journal\" / \"Insert Page Type\"."));
+																"Cancel operation.\nPlease select another background type: "
+																"Menu \"Journal\" / \"Insert Page Type\"."));
 			Util::showErrorToUser(getGtkWindow(), msg);
 			return;
 		}
@@ -1386,7 +1349,7 @@ void Control::insertNewPage(size_t position)
 			int selected = dlg->getSelectedPage();
 			delete dlg;
 
-			if (selected >= 0 && selected < doc->getPdfPageCount())
+			if (selected >= 0 && selected < (int)doc->getPdfPageCount())
 			{
 				// no need to set a type, if we set the page number the type is also set
 				page->setBackgroundPdfPageNr(selected);
@@ -1397,6 +1360,10 @@ void Control::insertNewPage(size_t position)
 
 			this->doc->unlock();
 		}
+	}
+	else
+	{
+		page->setBackgroundType(pt);
 	}
 
 	insertPage(page, position);
@@ -1468,26 +1435,26 @@ void Control::setPageBackground(ActionType type)
 	}
 
 	int origPdfPage = page->getPdfPageNr();
-	BackgroundType origType = page->getBackgroundType();
+	PageType origType = page->getBackgroundType();
 	BackgroundImage origBackgroundImage = page->getBackgroundImage();
 	double origW = page->getWidth();
 	double origH = page->getHeight();
 
 	if (ACTION_SET_PAPER_BACKGROUND_PLAIN == type)
 	{
-		page->setBackgroundType(BACKGROUND_TYPE_NONE);
+		page->setBackgroundType(PageType("plain"));
 	}
 	else if (ACTION_SET_PAPER_BACKGROUND_LINED == type)
 	{
-		page->setBackgroundType(BACKGROUND_TYPE_LINED);
+		page->setBackgroundType(PageType("lined"));
 	}
 	else if (ACTION_SET_PAPER_BACKGROUND_RULED == type)
 	{
-		page->setBackgroundType(BACKGROUND_TYPE_RULED);
+		page->setBackgroundType(PageType("ruled"));
 	}
 	else if (ACTION_SET_PAPER_BACKGROUND_GRAPH == type)
 	{
-		page->setBackgroundType(BACKGROUND_TYPE_GRAPH);
+		page->setBackgroundType(PageType("graph"));
 	}
 	else if (ACTION_SET_PAPER_BACKGROUND_IMAGE == type)
 	{
@@ -1500,7 +1467,7 @@ void Control::setPageBackground(ActionType type)
 		if (!img.isEmpty())
 		{
 			page->setBackgroundImage(img);
-			page->setBackgroundType(BACKGROUND_TYPE_IMAGE);
+			page->setBackgroundType(PageType(":image"));
 		}
 		else if (dlg->shouldShowFilechooser())
 		{
@@ -1529,7 +1496,7 @@ void Control::setPageBackground(ActionType type)
 			else
 			{
 				page->setBackgroundImage(newImg);
-				page->setBackgroundType(BACKGROUND_TYPE_IMAGE);
+				page->setBackgroundType(PageType(":image"));
 			}
 		}
 
@@ -1563,7 +1530,7 @@ void Control::setPageBackground(ActionType type)
 			int selected = dlg->getSelectedPage();
 			delete dlg;
 
-			if (selected >= 0 && selected < doc->getPdfPageCount())
+			if (selected >= 0 && selected < (int)doc->getPdfPageCount())
 			{
 				// no need to set a type, if we set the page number the type is also set
 				page->setBackgroundPdfPageNr(selected);
@@ -1608,36 +1575,26 @@ void Control::updateBackgroundSizeButton()
 	{
 		return;
 	}
-	BackgroundType bg = p->getBackgroundType();
 	GtkWidget* paperColor = win->get("menuJournalPaperColor");
 	GtkWidget* pageSize = win->get("menuJournalPaperFormat");
 
-	if (BACKGROUND_TYPE_NONE != bg && BACKGROUND_TYPE_LINED != bg &&
-		BACKGROUND_TYPE_RULED != bg && BACKGROUND_TYPE_GRAPH != bg)
-	{
-		gtk_widget_set_sensitive(paperColor, false);
-	}
-	else
-	{
-		gtk_widget_set_sensitive(paperColor, true);
-	}
+	PageType bg = p->getBackgroundType();
+	gtk_widget_set_sensitive(paperColor, !bg.isSpecial());
 
 	// PDF page size is defined, you cannot change it
-	gtk_widget_set_sensitive(pageSize, bg != BACKGROUND_TYPE_PDF);
+	gtk_widget_set_sensitive(pageSize, !bg.isPdfPage());
 }
 
 void Control::paperTemplate()
 {
 	XOJ_CHECK_TYPE(Control);
 
-	PageTemplateDialog* dlg = new PageTemplateDialog(this->gladeSearchPath, settings);
+	PageTemplateDialog* dlg = new PageTemplateDialog(this->gladeSearchPath, settings, pageTypes);
 	dlg->show(GTK_WINDOW(this->win->getWindow()));
 
 	if (dlg->isSaved())
 	{
-		PageTemplateSettings model;
-		model.parse(settings->getPageTemplate());
-	 	setPageInsertType(model.getPageInsertType());
+		pageTypeMenu->loadDefaultPage();
 	}
 
 	delete dlg;
@@ -1648,7 +1605,7 @@ void Control::paperFormat()
 	XOJ_CHECK_TYPE(Control);
 
 	PageRef page = getCurrentPage();
-	if (!page.isValid() || page->getBackgroundType() == BACKGROUND_TYPE_PDF)
+	if (!page.isValid() || page->getBackgroundType().isPdfPage())
 	{
 		return;
 	}
@@ -1686,9 +1643,8 @@ void Control::changePageBackgroundColor()
 
 	clearSelectionEndText();
 
-	BackgroundType bg = p->getBackgroundType();
-	if (BACKGROUND_TYPE_NONE != bg && BACKGROUND_TYPE_LINED != bg &&
-		BACKGROUND_TYPE_RULED != bg && BACKGROUND_TYPE_GRAPH != bg)
+	PageType bg = p->getBackgroundType();
+	if (!bg.isSpecial())
 	{
 		return;
 	}
@@ -1797,14 +1753,6 @@ void Control::setViewPresentationMode(bool presentationMode)
 	int currentPage = getCurrentPageNo();
 	win->getXournal()->layoutPages();
 	scrollHandler->scrollToPage(currentPage);
-}
-
-void Control::setPageInsertType(PageInsertType type)
-{
-	XOJ_CHECK_TYPE(Control);
-
-	this->pageInserType = type;
-	fireActionSelected(GROUP_PAGE_INSERT_TYPE, (ActionType) (type - PAGE_INSERT_TYPE_PLAIN + ACTION_NEW_PAGE_PLAIN));
 }
 
 /**
@@ -2015,6 +1963,9 @@ void Control::eraserSizeChanged()
 	case TOOL_SIZE_THICK:
 		fireActionSelected(GROUP_ERASER_SIZE, ACTION_TOOL_ERASER_SIZE_THICK);
 		break;
+	default:
+		// TODO add very fine and very thick
+		break;
 	}
 }
 
@@ -2039,6 +1990,8 @@ void Control::penSizeChanged()
 	case TOOL_SIZE_VERY_THICK:
 		fireActionSelected(GROUP_PEN_SIZE, ACTION_TOOL_PEN_SIZE_VERY_THICK);
 		break;
+	default:
+		break;
 	}
 }
 
@@ -2056,6 +2009,9 @@ void Control::hilighterSizeChanged()
 		break;
 	case TOOL_SIZE_THICK:
 		fireActionSelected(GROUP_HILIGHTER_SIZE, ACTION_TOOL_HILIGHTER_SIZE_THICK);
+		break;
+	default:
+		// TODO add very fine and very thick!
 		break;
 	}
 }
@@ -3339,3 +3295,18 @@ AudioController* Control::getAudioController()
 
 	return this->audioController;
 }
+
+PageTypeHandler* Control::getPageTypes()
+{
+	XOJ_CHECK_TYPE(Control);
+
+	return this->pageTypes;
+}
+
+PageTypeMenu* Control::getPageTypeMenu()
+{
+	XOJ_CHECK_TYPE(Control);
+
+	return this->pageTypeMenu;
+}
+

@@ -160,7 +160,7 @@ void CustomExportJob::exportPngPage(int pageId, int id, double zoom, DocumentVie
 
 	createSurface(page->getWidth(), page->getHeight());
 
-	if (page->getBackgroundType() == BACKGROUND_TYPE_PDF)
+	if (page->getBackgroundType().isPdfPage())
 	{
 		int pgNo = page->getPdfPageNr();
 		XojPopplerPage* popplerPage = doc->getPdfPage(pgNo);

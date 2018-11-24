@@ -115,18 +115,6 @@ string SaveHandler::getColorStr(int c, unsigned char alpha)
 	return color;
 }
 
-string SaveHandler::getSolidBgStr(BackgroundType type)
-{
-	switch (type)
-	{
-	case BACKGROUND_TYPE_NONE:  return "plain";
-	case BACKGROUND_TYPE_LINED: return "lined";
-	case BACKGROUND_TYPE_RULED: return "ruled";
-	case BACKGROUND_TYPE_GRAPH: return "graph";
-	default:					return "plain";
-	}
-}
-
 void SaveHandler::visitLayer(XmlNode* page, Layer* l)
 {
 	XOJ_CHECK_TYPE(SaveHandler);
@@ -250,10 +238,8 @@ void SaveHandler::visitPage(XmlNode* root, PageRef p, Document* doc, int id)
 	XmlNode* background = new XmlNode("background");
 	page->addChild(background);
 
-	switch (p->getBackgroundType())
+	if (p->getBackgroundType().isPdfPage())
 	{
-	case BACKGROUND_TYPE_PDF:
-
 		/**
 		 * ATTENTION! The original xournal can only read the XML if the attributes are in the right order!
 		 * DO NOT CHANGE THE ORDER OF THE ATTRIBUTES!
@@ -292,16 +278,9 @@ void SaveHandler::visitPage(XmlNode* root, PageRef p, Document* doc, int id)
 			}
 		}
 		background->setAttrib("pageno", p->getPdfPageNr() + 1);
-		break;
-	case BACKGROUND_TYPE_NONE:
-	case BACKGROUND_TYPE_LINED:
-	case BACKGROUND_TYPE_RULED:
-	case BACKGROUND_TYPE_GRAPH:
-		background->setAttrib("type", "solid");
-		background->setAttrib("color", getColorStr(p->getBackgroundColor()).c_str());
-		background->setAttrib("style", getSolidBgStr(p->getBackgroundType()).c_str());
-		break;
-	case BACKGROUND_TYPE_IMAGE:
+	}
+	else if (p->getBackgroundType().isImagePage())
+	{
 		background->setAttrib("type", "pixmap");
 
 		int cloneId = p->getBackgroundImage().getCloneId();
@@ -329,11 +308,23 @@ void SaveHandler::visitPage(XmlNode* root, PageRef p, Document* doc, int id)
 		else
 		{
 			background->setAttrib("domain", "absolute");
-			background->setAttrib("filename", p->getBackgroundImage().getFilename().c_str());
+			background->setAttrib("filename", p->getBackgroundImage().getFilename().string());
 			p->getBackgroundImage().setCloneId(id);
 		}
+	}
+	else
+	{
+		background->setAttrib("type", "solid");
+		background->setAttrib("color", getColorStr(p->getBackgroundColor()));
 
-		break;
+		background->setAttrib("style", p->getBackgroundType().format);
+
+		// Not compatible with Xournal, so the background needs
+		// to be changed to a basic one!
+		if (p->getBackgroundType().config != "")
+		{
+			background->setAttrib("config", p->getBackgroundType().config);
+		}
 	}
 
 	// no layer, but we need to write one layer, else the old Xournal cannot read the file

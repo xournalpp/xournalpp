@@ -12,9 +12,9 @@
 #pragma once
 
 #include "BackgroundImage.h"
-#include "BackgroundType.h"
 #include "Layer.h"
 #include "PageHandler.h"
+#include "PageType.h"
 
 #include <StringUtils.h>
 #include <XournalType.h>
@@ -35,8 +35,8 @@ public:
 	// Also set the size over doc->setPageSize!
 	void setBackgroundPdfPageNr(size_t page);
 
-	void setBackgroundType(BackgroundType bgType);
-	BackgroundType getBackgroundType();
+	void setBackgroundType(PageType bgType);
+	PageType getBackgroundType();
 
 	/**
 	 * Do not call this, cal doc->setPageSize(Page * p, double width, double height);
@@ -104,7 +104,7 @@ private:
 	/**
 	 * The Background Type of the page
 	 */
-	BackgroundType bgType;
+	PageType bgType;
 
 	/**
 	 * If the page has a PDF background, the page number of the PDF Page

@@ -12,12 +12,11 @@
 #pragma once
 
 #include "control/Tool.h"
-#include "model/BackgroundType.h"
+#include "model/PageType.h"
 
 #include <XournalType.h>
 
 #include <string>
-
 using std::string;
 
 class PageTemplateSettings
@@ -51,9 +50,9 @@ public:
 	int getBackgroundColor();
 	void setBackgroundColor(int backgroundColor);
 
-	BackgroundType getBackgroundType();
-	PageInsertType getPageInsertType();
-	void setBackgroundType(BackgroundType backgroundType);
+	PageType getBackgroundType();
+	PageType getPageInsertType();
+	void setBackgroundType(PageType backgroundType);
 
 private:
 	XOJ_TYPE_ATTRIB;
@@ -74,5 +73,5 @@ private:
 	/**
 	 * Background type
 	 */
-	BackgroundType backgroundType;
+	PageType backgroundType;
 };
