@@ -17,7 +17,7 @@ static void menu_detacher(GtkWidget* widget, GtkMenu* menu)
 {
 	// Nothing to do
 }
-
+// See gtkmenutooltogglebutton.cpp
 static void menu_position_func(GtkMenu* menu, int* x, int* y, gboolean* push_in, GtkWidget* widget)
 {
 	GtkRequisition minimum_size;
@@ -115,11 +115,10 @@ PageTemplateDialog::PageTemplateDialog(GladeSearchpath* gladeSearchPath, Setting
 			XOJ_CHECK_TYPE_OBJ(self, PageTemplateDialog);
 			GtkWidget* menu = self->pageMenu->getMenu();
 
-			gtk_menu_popup(GTK_MENU(menu), NULL, NULL, NULL, NULL, 0, gtk_get_current_event_time());
-
 			gtk_menu_popup(GTK_MENU(menu), NULL, NULL, (GtkMenuPositionFunc) menu_position_func,
 			               button, 0, gtk_get_current_event_time());
 
+			gtk_menu_shell_select_first(GTK_MENU_SHELL(menu), FALSE);
 
 			// GTK 3.22: gtk_menu_popup_at_widget(menu, button, GDK_GRAVITY_SOUTH_WEST, GDK_GRAVITY_NORTH_WEST, NULL);
 
