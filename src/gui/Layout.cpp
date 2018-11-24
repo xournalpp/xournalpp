@@ -53,10 +53,10 @@ void Layout::updateCurrentPage()
 		return;
 	}
 
-	int mostPageNr = 0;
+	size_t mostPageNr = 0;
 	double mostPagePercent = 0;
 
-	for (int page = 0; page < this->view->viewPagesLen; page++)
+	for (size_t page = 0; page < this->view->viewPagesLen; page++)
 	{
 		XojPageView* p = this->view->viewPages[page];
 

@@ -49,6 +49,7 @@ public:
 	void loadDefaultPage();
 	void setSelected(PageType selected);
 	void setListener(PageTypeMenuChangeListener* listener);
+	void hideCopyPage();
 
 private:
 	void initDefaultMenu();

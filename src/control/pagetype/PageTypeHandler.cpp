@@ -18,6 +18,7 @@ PageTypeHandler::PageTypeHandler()
 	// Special types
 	addPageTypeInfo(_C("Copy current"), ":copy", "");
 	addPageTypeInfo(_C("With PDF background"), ":pdf", "");
+	addPageTypeInfo(_C("Image"), ":image", "");
 }
 
 PageTypeHandler::~PageTypeHandler()

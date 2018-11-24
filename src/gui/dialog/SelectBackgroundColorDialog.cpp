@@ -36,8 +36,7 @@ GdkRGBA backgroundXournal[] = {
 const int backgroundXournalCount = sizeof(backgroundXournal) / sizeof(GdkRGBA);
 
 SelectBackgroundColorDialog::SelectBackgroundColorDialog(Control* control)
- : selected(-1),
-   control(control),
+ : control(control),
    lastBackgroundColors({
 	RGBA_FROM_HEX(0xffffff),
 	RGBA_FROM_HEX(0xffffff),
@@ -48,7 +47,8 @@ SelectBackgroundColorDialog::SelectBackgroundColorDialog(Control* control)
 	RGBA_FROM_HEX(0xffffff),
 	RGBA_FROM_HEX(0xffffff),
 	RGBA_FROM_HEX(0xffffff)
-   })
+   }),
+   selected(-1)
 {
 	XOJ_INIT_TYPE(SelectBackgroundColorDialog);
 

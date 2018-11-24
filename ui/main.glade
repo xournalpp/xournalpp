@@ -87,8 +87,8 @@
                         <property name="can_focus">False</property>
                         <property name="use_underline">True</property>
                         <property name="use_stock">True</property>
-                        <accelerator key="s" signal="activate" modifiers="GDK_SHIFT_MASK | GDK_CONTROL_MASK"/>
                         <accelerator key="u" signal="activate" modifiers="GDK_CONTROL_MASK"/>
+                        <accelerator key="s" signal="activate" modifiers="GDK_SHIFT_MASK | GDK_CONTROL_MASK"/>
                       </object>
                     </child>
                     <child>
@@ -112,8 +112,8 @@
                         <property name="can_focus">False</property>
                         <property name="label" translatable="yes">Export as...</property>
                         <property name="use_underline">True</property>
-                        <accelerator key="e" signal="activate" modifiers="GDK_SHIFT_MASK | GDK_CONTROL_MASK"/>
                         <accelerator key="i" signal="activate" modifiers="GDK_CONTROL_MASK"/>
+                        <accelerator key="e" signal="activate" modifiers="GDK_SHIFT_MASK | GDK_CONTROL_MASK"/>
                       </object>
                     </child>
                     <child>
@@ -363,8 +363,8 @@
                         <property name="can_focus">False</property>
                         <property name="use_underline">True</property>
                         <property name="use_stock">True</property>
-                        <accelerator key="plus" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                         <accelerator key="KP_Add" signal="activate" modifiers="GDK_CONTROL_MASK"/>
+                        <accelerator key="plus" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                       </object>
                     </child>
                     <child>
@@ -374,8 +374,8 @@
                         <property name="can_focus">False</property>
                         <property name="use_underline">True</property>
                         <property name="use_stock">True</property>
-                        <accelerator key="minus" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                         <accelerator key="KP_Subtract" signal="activate" modifiers="GDK_CONTROL_MASK"/>
+                        <accelerator key="minus" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                       </object>
                     </child>
                     <child>
@@ -619,60 +619,6 @@
                         <property name="can_focus">False</property>
                         <property name="label" translatable="yes">Paper b_ackground</property>
                         <property name="use_underline">True</property>
-                        <child type="submenu">
-                          <object class="GtkMenu" id="menu9">
-                            <property name="visible">True</property>
-                            <property name="can_focus">False</property>
-                            <child>
-                              <object class="GtkMenuItem" id="menuJournalPaperPlain">
-                                <property name="visible">True</property>
-                                <property name="can_focus">False</property>
-                                <property name="label" translatable="yes">_Plain</property>
-                                <property name="use_underline">True</property>
-                              </object>
-                            </child>
-                            <child>
-                              <object class="GtkMenuItem" id="menuJournalPaperBackgroundLined">
-                                <property name="visible">True</property>
-                                <property name="can_focus">False</property>
-                                <property name="label" translatable="yes">_Lined</property>
-                                <property name="use_underline">True</property>
-                              </object>
-                            </child>
-                            <child>
-                              <object class="GtkMenuItem" id="menuJournalPaperRuled">
-                                <property name="visible">True</property>
-                                <property name="can_focus">False</property>
-                                <property name="label" translatable="yes">_Ruled</property>
-                                <property name="use_underline">True</property>
-                              </object>
-                            </child>
-                            <child>
-                              <object class="GtkMenuItem" id="menuJournalPaperGraph">
-                                <property name="visible">True</property>
-                                <property name="can_focus">False</property>
-                                <property name="label" translatable="yes">_Graph</property>
-                                <property name="use_underline">True</property>
-                              </object>
-                            </child>
-                            <child>
-                              <object class="GtkMenuItem" id="menuJournalPaperImage">
-                                <property name="visible">True</property>
-                                <property name="can_focus">False</property>
-                                <property name="label" translatable="yes">_Image</property>
-                                <property name="use_underline">True</property>
-                              </object>
-                            </child>
-                            <child>
-                              <object class="GtkMenuItem" id="menuJournalPaperPdf">
-                                <property name="visible">True</property>
-                                <property name="can_focus">False</property>
-                                <property name="label" translatable="yes">P_DF Background</property>
-                                <property name="use_underline">True</property>
-                              </object>
-                            </child>
-                          </object>
-                        </child>
                       </object>
                     </child>
                   </object>
