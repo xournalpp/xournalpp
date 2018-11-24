@@ -13,7 +13,8 @@
 
 #include <boost/filesystem/operations.hpp>
 
-SaveJob::SaveJob(Control* control) : BlockingJob(control, _("Save"))
+SaveJob::SaveJob(Control* control)
+ : BlockingJob(control, _("Save"))
 {
 	XOJ_INIT_TYPE(SaveJob);
 }
@@ -57,13 +58,11 @@ void SaveJob::afterRun()
 	}
 }
 
-void SaveJob::updatePreview()
+void SaveJob::updatePreview(Control* control)
 {
-	XOJ_CHECK_TYPE(SaveJob);
-
 	const int previewSize = 128;
 
-	Document* doc = this->control->getDocument();
+	Document* doc = control->getDocument();
 
 	doc->lock();
 
@@ -120,7 +119,7 @@ bool SaveJob::save()
 {
 	XOJ_CHECK_TYPE(SaveJob);
 
-	updatePreview();
+	updatePreview(control);
 	Document* doc = this->control->getDocument();
 
 	SaveHandler h;
@@ -133,7 +132,7 @@ bool SaveJob::save()
 	if (doc->shouldCreateBackupOnSave())
 	{
 		path backup = filename.parent_path();
-		backup /= std::string(".") + filename.filename().replace_extension(".xoj.bak").string();
+		backup /= std::string(".") + filename.filename().replace_extension(".xopp.bak").string();
 
 		using namespace boost::filesystem;
 		try
@@ -149,43 +148,21 @@ bool SaveJob::save()
 	}
 
 	doc->lock();
-	GzOutputStream* out = new GzOutputStream(filename);
 
-	if (!out->getLastError().empty())
-	{
-		string e = FS(_F("Open file error: {1}") % out->getLastError());
-		if (!control->getWindow())
-		{
-			g_error("%s", e.c_str());
-			return false;
-		}
-
-		this->lastError = e;
-
-		delete out;
-		out = NULL;
-		return false;
-	}
-
-	h.saveTo(out, filename, this->control);
-	out->close();
+	h.saveTo(filename, this->control);
 	doc->unlock();
 
-	if (!out->getLastError().empty())
+	if (!h.getErrorMessage().empty())
 	{
-		this->lastError = FS(_F("Open file error: {1}") % out->getLastError());
+		this->lastError = FS(_F("Save file error: {1}") % h.getErrorMessage());
 		if (!control->getWindow())
 		{
 			g_error("%s", this->lastError.c_str());
 			return false;
 		}
 
-		delete out;
-		out = NULL;
 		return false;
 	}
 
-	delete out;
-	out = NULL;
 	return true;
 }

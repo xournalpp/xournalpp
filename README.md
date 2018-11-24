@@ -103,7 +103,6 @@ make desktop-install
 ```
 
 ## Fileformat
-** Currently there is work in Progress, *.xopp is not yet available **
 The fileformat *.xopp is an XML which is .gz compressed. PDFs are not embedded
 into the file, so if the PDF is deleted, the background is lost.
 *.xopp is basically the same fileformat as *.xoj, which is used by Xournal.
@@ -114,6 +113,10 @@ Background types.
 feature, Xournal does not open files at all if there are new attributes or
 unknown values, because of this Xournal++ will add the extension .xopp to all
 saved files.
+All new files will be saved as *.xopp, if an *.xoj file is opened which was
+created by Xournal, the Save-As dialog will be displayed on save. If the *.xoj
+file was by Xournal++ created, Xournal++ overwrite the file on save, and does
+not change the extension.
 
 ## Development
 For developping new features, write a Ticket, so others know what you are doing.

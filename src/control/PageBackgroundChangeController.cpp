@@ -175,7 +175,7 @@ bool PageBackgroundChangeController::applyPdfBackground(PageRef page)
 	{
 
 		string msg = FS(_("You don't have any PDF pages to select from. Cancel operation.\n"
-						  "Please select another background type: Menu \"_Journal\" → \"Configure Page Template\"."));
+						  "Please select another background type: Menu \"Journal\" → \"Configure Page Template\"."));
 		Util::showErrorToUser(control->getGtkWindow(), msg);
 		return false;
 	}

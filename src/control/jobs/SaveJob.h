@@ -29,8 +29,9 @@ public:
 
 	bool save();
 
-private:
-	void updatePreview();
+	static void updatePreview(Control* control);
+
+protected:
 	virtual void afterRun();
 
 private:

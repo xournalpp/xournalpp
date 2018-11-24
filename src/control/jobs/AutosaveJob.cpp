@@ -49,15 +49,12 @@ void AutosaveJob::run()
 		string file = filename.filename().string();
 		filename.remove_filename();
 		filename /= std::string(".") + file;
-		filename.replace_extension(".autosave.xoj");
+		filename.replace_extension(".autosave.xopp");
 	}
 
 	control->renameLastAutosaveFile();
 
-	GzOutputStream* out = new GzOutputStream(filename);
-	handler.saveTo(out, filename);
-	delete out;
-	out = NULL;
+	handler.saveTo(filename);
 
 	this->error = handler.getErrorMessage();
 	if (!this->error.empty())

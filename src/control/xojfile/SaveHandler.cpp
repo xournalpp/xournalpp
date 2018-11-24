@@ -1,14 +1,3 @@
-/*
- * Xournal++
- *
- * Saves a document
- *
- * @author Xournal Team
- * http://xournal.sf.net
- *
- * @license GPL
- */
-
 #include "SaveHandler.h"
 
 #include "control/jobs/ProgressListener.h"
@@ -82,10 +71,9 @@ void SaveHandler::prepareSave(Document* doc)
 	this->attachBgId = 1;
 
 	this->root = new XmlNode("xournal");
-	this->root->setAttrib("creator", PROJECT_STRING);
-	this->root->setAttrib("fileversion", "2");
 
-	this->root->addChild(new XmlTextNode("title", "Xournal document - see " PROJECT_URL));
+	writeHeader();
+
 	cairo_surface_t* preview = doc->getPreview();
 	if (preview)
 	{
@@ -105,6 +93,13 @@ void SaveHandler::prepareSave(Document* doc)
 		PageRef p = doc->getPage(i);
 		visitPage(this->root, p, doc, i);
 	}
+}
+
+void SaveHandler::writeHeader()
+{
+	this->root->setAttrib("creator", PROJECT_STRING);
+	this->root->setAttrib("fileversion", "3");
+	this->root->addChild(new XmlTextNode("title", "Xournal++ document - see " PROJECT_URL));
 }
 
 string SaveHandler::getColorStr(int c, unsigned char alpha)
@@ -314,17 +309,7 @@ void SaveHandler::visitPage(XmlNode* root, PageRef p, Document* doc, int id)
 	}
 	else
 	{
-		background->setAttrib("type", "solid");
-		background->setAttrib("color", getColorStr(p->getBackgroundColor()));
-
-		background->setAttrib("style", p->getBackgroundType().format);
-
-		// Not compatible with Xournal, so the background needs
-		// to be changed to a basic one!
-		if (p->getBackgroundType().config != "")
-		{
-			background->setAttrib("config", p->getBackgroundType().config);
-		}
+		writeSolidBackground(background, p);
 	}
 
 	// no layer, but we need to write one layer, else the old Xournal cannot read the file
@@ -337,6 +322,41 @@ void SaveHandler::visitPage(XmlNode* root, PageRef p, Document* doc, int id)
 	for (Layer* l : *p->getLayers())
 	{
 		visitLayer(page, l);
+	}
+}
+
+void SaveHandler::writeSolidBackground(XmlNode* background, PageRef p)
+{
+	background->setAttrib("type", "solid");
+	background->setAttrib("color", getColorStr(p->getBackgroundColor()));
+
+	background->setAttrib("style", p->getBackgroundType().format);
+
+	// Not compatible with Xournal, so the background needs
+	// to be changed to a basic one!
+	if (p->getBackgroundType().config != "")
+	{
+		background->setAttrib("config", p->getBackgroundType().config);
+	}
+}
+
+void SaveHandler::saveTo(path filename, ProgressListener* listener)
+{
+	GzOutputStream out(filename);
+
+	if (!out.getLastError().empty())
+	{
+		this->errorMessage = out.getLastError();
+		return;
+	}
+
+	saveTo(&out, filename, listener);
+
+	out.close();
+
+	if (this->errorMessage.empty())
+	{
+		this->errorMessage = out.getLastError();
 	}
 }
 

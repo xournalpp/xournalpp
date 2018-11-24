@@ -237,4 +237,6 @@ XOJ_DECLARE_TYPE(PageTypeHandler, 225);
 XOJ_DECLARE_TYPE(PageTypeMenu, 226);
 XOJ_DECLARE_TYPE(PageType, 227);
 XOJ_DECLARE_TYPE(PageBackgroundChangeController, 228);
+XOJ_DECLARE_TYPE(XojExportHandler, 229);
+
 

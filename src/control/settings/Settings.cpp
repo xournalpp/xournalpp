@@ -83,7 +83,7 @@ void Settings::loadDefault()
 
 	this->enableLeafEnterWorkaround = true;
 
-	this->defaultSaveName = _("%F-Note-%H-%M.xoj");
+	this->defaultSaveName = _("%F-Note-%H-%M.xopp");
 
 	// Eraser
 	this->buttonConfig[0] = new ButtonConfig(TOOL_ERASER, 0, TOOL_SIZE_NONE, DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
@@ -1048,6 +1048,12 @@ void Settings::setAutoloadPdfXoj(bool load)
 string Settings::getDefaultSaveName()
 {
 	XOJ_CHECK_TYPE(Settings);
+
+	if (boost::algorithm::ends_with(defaultSaveName, ".xoj"))
+	{
+		defaultSaveName = defaultSaveName.substr(0, defaultSaveName.size() - 4);
+		defaultSaveName += ".xopp";
+	}
 
 	return this->defaultSaveName;
 }

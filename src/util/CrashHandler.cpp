@@ -137,31 +137,18 @@ static void emergencySave()
 
 	cerr << endl << _("Trying to emergency save the current open document…") << endl;
 
+	path filename = Util::getConfigFile("emergencysave.xopp");
+
 	SaveHandler handler;
 	handler.prepareSave(document);
+	handler.saveTo(filename);
 
-	path filename = Util::getConfigFile("emergencysave.xoj");
-
-	GzOutputStream* out = new GzOutputStream(filename);
-
-	if (!out->getLastError().empty())
+	if (!handler.getErrorMessage().empty())
 	{
-		cerr << _F("Error: {1}") % out->getLastError() << endl;
-		delete out;
-		return;
-	}
-
-	handler.saveTo(out, filename);
-	out->close();
-
-	if (!out->getLastError().empty())
-	{
-		cerr << _F("Error: {1}") % out->getLastError() << endl;
+		cerr << _F("Error: {1}") % handler.getErrorMessage() << endl;
 	}
 	else
 	{
 		cerr << _F("Successfully saved document to \"{1}\"") % filename.string() << endl;
 	}
-
-	delete out;
 }

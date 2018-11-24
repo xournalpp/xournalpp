@@ -32,6 +32,8 @@ public:
 	virtual bool showFilechooser();
 
 protected:
+	virtual void afterRun();
+
 	virtual void addFilterToDialog();
 
 	/**
@@ -62,4 +64,11 @@ private:
 	 * PDF Export, else PNG Export
 	 */
 	bool exportTypePdf;
+
+	/**
+	 * XOJ Export, else PNG Export
+	 */
+	bool exportTypeXoj;
+
+	string lastError;
 };

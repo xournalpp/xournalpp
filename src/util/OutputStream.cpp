@@ -48,6 +48,7 @@ GzOutputStream::~GzOutputStream()
 	{
 		close();
 	}
+	this->fp = NULL;
 
 	XOJ_RELEASE_TYPE(GzOutputStream);
 }
