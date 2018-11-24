@@ -103,7 +103,6 @@ make desktop-install
 ```
 
 ## Fileformat
-** Currently there is work in Progress, *.xopp is not yet available **
 The fileformat *.xopp is an XML which is .gz compressed. PDFs are not embedded
 into the file, so if the PDF is deleted, the background is lost.
 *.xopp is basically the same fileformat as *.xoj, which is used by Xournal.

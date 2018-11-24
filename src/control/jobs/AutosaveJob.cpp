@@ -54,10 +54,7 @@ void AutosaveJob::run()
 
 	control->renameLastAutosaveFile();
 
-	GzOutputStream* out = new GzOutputStream(filename);
-	handler.saveTo(out, filename);
-	delete out;
-	out = NULL;
+	handler.saveTo(filename);
 
 	this->error = handler.getErrorMessage();
 	if (!this->error.empty())

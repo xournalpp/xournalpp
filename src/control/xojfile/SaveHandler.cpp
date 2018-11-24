@@ -340,6 +340,26 @@ void SaveHandler::writeSolidBackground(XmlNode* background, PageRef p)
 	}
 }
 
+void SaveHandler::saveTo(path filename, ProgressListener* listener)
+{
+	GzOutputStream out(filename);
+
+	if (!out.getLastError().empty())
+	{
+		this->errorMessage = out.getLastError();
+		return;
+	}
+
+	saveTo(&out, filename, listener);
+
+	out.close();
+
+	if (this->errorMessage.empty())
+	{
+		this->errorMessage = out.getLastError();
+	}
+}
+
 void SaveHandler::saveTo(OutputStream* out, path filename, ProgressListener* listener)
 {
 	XOJ_CHECK_TYPE(SaveHandler);

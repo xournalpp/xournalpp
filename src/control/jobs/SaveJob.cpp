@@ -150,42 +150,21 @@ bool SaveJob::save()
 	}
 
 	doc->lock();
-	GzOutputStream* out = new GzOutputStream(filename);
 
-	if (!out->getLastError().empty())
-	{
-		string e = FS(_F("Open file error: {1}") % out->getLastError());
-		if (!control->getWindow())
-		{
-			g_error("%s", e.c_str());
-			return false;
-		}
-
-		this->lastError = e;
-
-		delete out;
-		out = NULL;
-		return false;
-	}
-
-	h.saveTo(out, filename, this->control);
-	out->close();
+	h.saveTo(filename, this->control);
 	doc->unlock();
 
-	if (!out->getLastError().empty())
+	if (!h.getErrorMessage().empty())
 	{
-		this->lastError = FS(_F("Open file error: {1}") % out->getLastError());
+		this->lastError = FS(_F("Save file error: {1}") % h.getErrorMessage());
 		if (!control->getWindow())
 		{
 			g_error("%s", this->lastError.c_str());
 			return false;
 		}
 
-		delete out;
-		out = NULL;
 		return false;
 	}
 
-	delete out;
 	return true;
 }
