@@ -140,7 +140,7 @@ static void emergencySave()
 	SaveHandler handler;
 	handler.prepareSave(document);
 
-	path filename = Util::getConfigFile("emergencysave.xoj");
+	path filename = Util::getConfigFile("emergencysave.xopp");
 
 	GzOutputStream* out = new GzOutputStream(filename);
 

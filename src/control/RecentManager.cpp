@@ -193,7 +193,7 @@ GList* RecentManager::filterRecent(GList* items, bool xoj)
 			continue;
 		}
 
-		if (xoj && ba::ends_with(uri, ".xoj"))
+		if (xoj && (ba::ends_with(uri, ".xoj") || ba::ends_with(uri, ".xopp")))
 		{
 			filteredItems = g_list_prepend(filteredItems, info);
 		}

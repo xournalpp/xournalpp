@@ -62,4 +62,9 @@ private:
 	 * PDF Export, else PNG Export
 	 */
 	bool exportTypePdf;
+
+	/**
+	 * XOJ Export, else PNG Export
+	 */
+	bool exportTypeXoj;
 };

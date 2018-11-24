@@ -31,12 +31,15 @@ public:
 	void saveTo(OutputStream* out, path filename, ProgressListener* listener = NULL);
 	string getErrorMessage();
 
-private:
+protected:
 	void visitPage(XmlNode* root, PageRef p, Document* doc, int id);
 	static string getColorStr(int c, unsigned char alpha = 0xff);
 	void visitLayer(XmlNode* page, Layer* l);
 
-private:
+	virtual void writeHeader();
+	virtual void writeSolidBackground(XmlNode* background, PageRef p);
+
+protected:
 	XOJ_TYPE_ATTRIB;
 
 	XmlNode* root;

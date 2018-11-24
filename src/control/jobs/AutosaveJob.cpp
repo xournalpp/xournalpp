@@ -49,7 +49,7 @@ void AutosaveJob::run()
 		string file = filename.filename().string();
 		filename.remove_filename();
 		filename /= std::string(".") + file;
-		filename.replace_extension(".autosave.xoj");
+		filename.replace_extension(".autosave.xopp");
 	}
 
 	control->renameLastAutosaveFile();

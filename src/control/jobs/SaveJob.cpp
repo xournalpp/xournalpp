@@ -13,7 +13,8 @@
 
 #include <boost/filesystem/operations.hpp>
 
-SaveJob::SaveJob(Control* control) : BlockingJob(control, _("Save"))
+SaveJob::SaveJob(Control* control)
+ : BlockingJob(control, _("Save"))
 {
 	XOJ_INIT_TYPE(SaveJob);
 }
@@ -133,7 +134,7 @@ bool SaveJob::save()
 	if (doc->shouldCreateBackupOnSave())
 	{
 		path backup = filename.parent_path();
-		backup /= std::string(".") + filename.filename().replace_extension(".xoj.bak").string();
+		backup /= std::string(".") + filename.filename().replace_extension(".xopp.bak").string();
 
 		using namespace boost::filesystem;
 		try
@@ -186,6 +187,5 @@ bool SaveJob::save()
 	}
 
 	delete out;
-	out = NULL;
 	return true;
 }

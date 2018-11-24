@@ -1972,47 +1972,18 @@ bool Control::openFile(path filename, int scrollToPage)
 		}
 	}
 
-	LoadHandler loadHandler;
-
 	// Read template file
 	if (filename.extension() == ".xopt")
 	{
-		ifstream in(filename.c_str());
-		if (!in.is_open())
-		{
-			return false;
-		}
-		std::stringstream sstr;
-		sstr << in.rdbuf();
-		in.close();
-		newFile(sstr.str());
-		return true;
+		return loadXoptTemplate(filename);
 	}
 
 	if (filename.extension() == ".pdf")
 	{
-		if (settings->isAutloadPdfXoj())
-		{
-			path f = path(filename).replace_extension(".pdf.xoj");
-			Document* tmp = loadHandler.loadDocument(f.string());
-			if (tmp)
-			{
-
-				this->doc->lock();
-				this->doc->clearDocument();
-				*this->doc = *tmp;
-				this->doc->unlock();
-
-				fileLoaded(scrollToPage);
-				return true;
-			}
-		}
-
-		bool an = annotatePdf(filename, false, false);
-		fileLoaded(scrollToPage);
-		return an;
+		return loadPdf(filename, scrollToPage);
 	}
 
+	LoadHandler loadHandler;
 	Document* loadedDocument = loadHandler.loadDocument(filename.string());
 	if ((loadedDocument != NULL && loadHandler.isAttachedPdfMissing()) || !loadHandler.getMissingPdfFilename().empty())
 	{
@@ -2029,7 +2000,7 @@ bool Control::openFile(path filename, int scrollToPage)
 		gtk_dialog_add_button(GTK_DIALOG(dialog), _C("Select another PDF"), 1);
 		gtk_dialog_add_button(GTK_DIALOG(dialog), _C("Remove PDF Background"), 2);
 		gtk_dialog_add_button(GTK_DIALOG(dialog), _C("Cancel"), 3);
-			gtk_window_set_transient_for(GTK_WINDOW(dialog), GTK_WINDOW(this->getWindow()->getWindow()));
+		gtk_window_set_transient_for(GTK_WINDOW(dialog), GTK_WINDOW(this->getWindow()->getWindow()));
 		int res = gtk_dialog_run(GTK_DIALOG(dialog));
 		gtk_widget_destroy(dialog);
 
@@ -2068,6 +2039,56 @@ bool Control::openFile(path filename, int scrollToPage)
 	}
 
 	fileLoaded(scrollToPage);
+	return true;
+}
+
+bool Control::loadPdf(path filename, int scrollToPage)
+{
+	XOJ_CHECK_TYPE(Control);
+
+	LoadHandler loadHandler;
+
+	if (settings->isAutloadPdfXoj())
+	{
+		path f = path(filename).replace_extension(".pdf.xopp");
+		Document* tmp = loadHandler.loadDocument(f.string());
+
+		if (tmp == NULL)
+		{
+			f = path(filename).replace_extension(".pdf.xoj");
+			tmp = loadHandler.loadDocument(f.string());
+		}
+
+		if (tmp)
+		{
+			this->doc->lock();
+			this->doc->clearDocument();
+			*this->doc = *tmp;
+			this->doc->unlock();
+
+			fileLoaded(scrollToPage);
+			return true;
+		}
+	}
+
+	bool an = annotatePdf(filename, false, false);
+	fileLoaded(scrollToPage);
+	return an;
+}
+
+bool Control::loadXoptTemplate(path filename)
+{
+	XOJ_CHECK_TYPE(Control);
+
+	ifstream in(filename.c_str());
+	if (!in.is_open())
+	{
+		return false;
+	}
+	std::stringstream sstr;
+	sstr << in.rdbuf();
+	in.close();
+	newFile(sstr.str());
 	return true;
 }
 
@@ -2309,8 +2330,8 @@ bool Control::showSaveDialog()
 	gtk_file_chooser_set_local_only(GTK_FILE_CHOOSER(dialog), true);
 
 	GtkFileFilter* filterXoj = gtk_file_filter_new();
-	gtk_file_filter_set_name(filterXoj, _C("Xournal files"));
-	gtk_file_filter_add_pattern(filterXoj, "*.xoj");
+	gtk_file_filter_set_name(filterXoj, _C("Xournal++ files"));
+	gtk_file_filter_add_pattern(filterXoj, "*.xopp");
 	gtk_file_chooser_add_filter(GTK_FILE_CHOOSER(dialog), filterXoj);
 
 	if (!settings->getLastSavePath().empty())
@@ -2327,7 +2348,7 @@ bool Control::showSaveDialog()
 	}
 	else if (!doc->getPdfFilename().empty())
 	{
-		saveFilename = doc->getPdfFilename().filename().replace_extension(".pdf.xoj").string();
+		saveFilename = doc->getPdfFilename().filename().replace_extension(".pdf.xopp").string();
 	}
 	else
 	{

@@ -91,7 +91,7 @@ int Util::getPid()
 path Util::getAutosaveFilename()
 {
 	path p(getConfigSubfolder("autosave"));
-	p /= std::to_string(getPid()) + ".xoj";
+	p /= std::to_string(getPid()) + ".xopp";
 	return p;
 }
 

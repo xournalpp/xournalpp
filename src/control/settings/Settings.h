@@ -424,7 +424,7 @@ private:
 	bool presentationMode;
 
 	/**
-	 * Automatically load filename.pdf.xoj instead of filename.pdf (true/false)
+	 * Automatically load filename.pdf.xoj / .pdf.xopp instead of filename.pdf (true/false)
 	 */
 	bool autoloadPdfXoj;
 

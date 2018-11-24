@@ -13,7 +13,7 @@ PageTypeHandler::PageTypeHandler()
 	addPageTypeInfo(_C("Graph"), "graph", "");
 
 	// Disable for the moment
-	// addPageTypeInfo(_C("Dotted"), "dotted", "");
+	addPageTypeInfo(_C("Dotted"), "dotted", "");
 
 	// Special types
 	addPageTypeInfo(_C("Copy current"), ":copy", "");

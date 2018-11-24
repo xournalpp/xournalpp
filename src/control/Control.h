@@ -262,6 +262,9 @@ protected:
 	 */
 	bool shouldFileOpen(string filename);
 
+	bool loadXoptTemplate(path filename);
+	bool loadPdf(path filename, int scrollToPage);
+
 private:
 	XOJ_TYPE_ATTRIB;
 
