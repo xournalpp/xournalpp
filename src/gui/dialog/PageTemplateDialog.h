@@ -13,14 +13,16 @@
 
 #include "control/settings/Settings.h"
 #include "gui/GladeGui.h"
+#include "control/pagetype/PageTypeMenu.h"
 #include "control/settings/PageTemplateSettings.h"
 
 #include <XournalType.h>
 
 class PageTypeHandler;
 class PageTypeMenu;
+class PageTypeInfo;
 
-class PageTemplateDialog : public GladeGui
+class PageTemplateDialog : public GladeGui, public PageTypeMenuChangeListener
 {
 public:
 	PageTemplateDialog(GladeSearchpath* gladeSearchPath, Settings* settings, PageTypeHandler* types);
@@ -33,6 +35,8 @@ public:
 	 * The dialog was confirmed / saved
 	 */
 	bool isSaved();
+
+	void pageSelected(PageTypeInfo* info);
 
 private:
 	void showPageSizeDialog();

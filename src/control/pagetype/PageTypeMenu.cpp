@@ -7,13 +7,16 @@
 
 #include <i18n.h>
 
+PageTypeMenuChangeListener::~PageTypeMenuChangeListener() {}
+
 
 PageTypeMenu::PageTypeMenu(PageTypeHandler* types, Settings* settings, bool showSpecial)
  : showSpecial(showSpecial),
    menu(gtk_menu_new()),
    types(types),
    settings(settings),
-   ignoreEvents(false)
+   ignoreEvents(false),
+   listener(NULL)
 {
 	XOJ_INIT_TYPE(PageTypeMenu);
 
@@ -109,6 +112,32 @@ void PageTypeMenu::entrySelected(PageTypeInfo* t)
 	ignoreEvents = false;
 
 	selected = t->page;
+
+	if (listener != NULL)
+	{
+		listener->pageSelected(t);
+	}
+}
+
+void PageTypeMenu::setSelected(PageType selected)
+{
+	XOJ_CHECK_TYPE(PageTypeMenu);
+
+	for (MenuCallbackInfo& info : menuInfos)
+	{
+		if (info.info->page == selected)
+		{
+			entrySelected(info.info);
+			break;
+		}
+	}
+}
+
+void PageTypeMenu::setListener(PageTypeMenuChangeListener* listener)
+{
+	XOJ_CHECK_TYPE(PageTypeMenu);
+
+	this->listener = listener;
 }
 
 void PageTypeMenu::initDefaultMenu()

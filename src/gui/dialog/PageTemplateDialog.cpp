@@ -4,7 +4,6 @@
 #include "gui/dialog/FormatDialog.h"
 #include "model/FormatDefinitions.h"
 #include "control/pagetype/PageTypeHandler.h"
-#include "control/pagetype/PageTypeMenu.h"
 
 #include <Util.h>
 
@@ -24,6 +23,8 @@ PageTemplateDialog::PageTemplateDialog(GladeSearchpath* gladeSearchPath, Setting
 	XOJ_INIT_TYPE(PageTemplateDialog);
 
 	model.parse(settings->getPageTemplate());
+
+	pageMenu->setListener(this);
 
 	g_signal_connect(get("btChangePaperSize"), "clicked", G_CALLBACK(
 		+[](GtkToggleButton* togglebutton, PageTemplateDialog* self)
@@ -81,20 +82,18 @@ void PageTemplateDialog::updateDataFromModel()
 
 	updatePageSize();
 
-	// TODO !!!!!!!!!!!
-//	int activeFormat = 0;
-//	for (int i = 0; i < formatList.size(); i++)
-//	{
-//		if (formatList[i].type == model.getBackgroundType())
-//		{
-//			activeFormat = i;
-//			break;
-//		}
-//	}
+	pageMenu->setSelected(model.getBackgroundType());
 
-	//GtkComboBoxText* cbBg = GTK_COMBO_BOX_TEXT(get("cbBackgroundFormat"));
-	// TODO gtk_combo_box_set_active(GTK_COMBO_BOX(cbBg), activeFormat);
 	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(get("cbCopyLastPage")), model.isCopyLastPageSettings());
+}
+
+void PageTemplateDialog::pageSelected(PageTypeInfo* info)
+{
+	XOJ_CHECK_TYPE(PageTemplateDialog);
+
+	model.setBackgroundType(info->page);
+
+	gtk_label_set_text(GTK_LABEL(get("lbBackgroundType")), info->name.c_str());
 }
 
 void PageTemplateDialog::saveToModel()
@@ -106,9 +105,6 @@ void PageTemplateDialog::saveToModel()
 	GdkRGBA color;
 	gtk_color_chooser_get_rgba(GTK_COLOR_CHOOSER(get("cbBackgroundButton")), &color);
 	model.setBackgroundColor(Util::gdkrgba_to_hex(color));
-
-	int activeIndex = gtk_combo_box_get_active(GTK_COMBO_BOX(get("cbBackgroundFormat")));
-	//TODO model.setBackgroundType(formatList[activeIndex].type);
 }
 
 void PageTemplateDialog::saveToFile()

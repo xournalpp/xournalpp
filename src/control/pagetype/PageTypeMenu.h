@@ -30,6 +30,13 @@ typedef struct {
 	PageTypeInfo* info;
 } MenuCallbackInfo;
 
+class PageTypeMenuChangeListener
+{
+public:
+	virtual void pageSelected(PageTypeInfo* info) = 0;
+	virtual ~PageTypeMenuChangeListener();
+};
+
 class PageTypeMenu
 {
 public:
@@ -40,6 +47,8 @@ public:
 	GtkWidget* getMenu();
 	PageType getSelected();
 	void loadDefaultPage();
+	void setSelected(PageType selected);
+	void setListener(PageTypeMenuChangeListener* listener);
 
 private:
 	void initDefaultMenu();
@@ -60,4 +69,6 @@ private:
 	PageType selected;
 
 	bool ignoreEvents;
+
+	PageTypeMenuChangeListener* listener;
 };
