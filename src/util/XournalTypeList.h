@@ -238,5 +238,10 @@ XOJ_DECLARE_TYPE(PageTypeMenu, 226);
 XOJ_DECLARE_TYPE(PageType, 227);
 XOJ_DECLARE_TYPE(PageBackgroundChangeController, 228);
 XOJ_DECLARE_TYPE(XojExportHandler, 229);
+XOJ_DECLARE_TYPE(MainBackgroundPainter, 230);
+XOJ_DECLARE_TYPE(LineBackgroundPainter, 231);
+XOJ_DECLARE_TYPE(GraphBackgroundPainter, 232);
+XOJ_DECLARE_TYPE(DottedBackgroundPainter, 233);
+XOJ_DECLARE_TYPE(BaseBackgroundPainter, 234);
 
 

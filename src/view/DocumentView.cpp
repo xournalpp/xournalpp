@@ -5,6 +5,7 @@
 #include "gui/Cursor.h"
 extern int currentToolType;
 
+#include "background/MainBackgroundPainter.h"
 #include "control/tools/EditSelection.h"
 #include "control/tools/Selection.h"
 #include "model/BackgroundImage.h"
@@ -38,10 +39,14 @@ DocumentView::DocumentView()
 	this->height = 0;
 
 	this->dontRenderEditingStroke = 0;
+	this->backgroundPainter = new MainBackgroundPainter();
 }
 
 DocumentView::~DocumentView()
 {
+	delete this->backgroundPainter;
+	this->backgroundPainter = NULL;
+
 	XOJ_RELEASE_TYPE(DocumentView);
 }
 
@@ -359,100 +364,6 @@ void DocumentView::paintBackgroundImage()
 	}
 }
 
-void DocumentView::paintBackgroundColor()
-{
-	XOJ_CHECK_TYPE(DocumentView);
-
-	applyColor(cr, page->getBackgroundColor());
-
-	cairo_rectangle(cr, 0, 0, width, height);
-	cairo_fill(cr);
-}
-
-const double graphSize = 14.17;
-
-void DocumentView::paintBackgroundGraph()
-{
-	XOJ_CHECK_TYPE(DocumentView);
-
-	// Original Xournal Color: applyColor(cr, 0x40A0FF);
-	applyColor(cr, 0xBDBDBD); // maybe I should read settings like these from ini configs
-
-	cairo_set_line_width(cr, 0.5);
-
-	for (double x = graphSize; x < width; x += graphSize)
-	{
-		cairo_move_to(cr, x, 0);
-		cairo_line_to(cr, x, height);
-	}
-
-	for (double y = graphSize; y < height; y += graphSize)
-	{
-		cairo_move_to(cr, 0, y);
-		cairo_line_to(cr, width, y);
-	}
-
-	cairo_stroke(cr);
-}
-
-const double roulingSize = 24;
-
-void DocumentView::paintBackgroundDotted()
-{
-	XOJ_CHECK_TYPE(DocumentView);
-
-	applyColor(cr, 0x40A0FF);
-
-	gdk_threads_enter();
-	cairo_set_line_width(cr, 0.5);
-
-	cairo_set_line_width(cr, 1.5);
-	cairo_set_line_cap(cr, CAIRO_LINE_CAP_ROUND);
-
-	for (double x = graphSize; x < width; x += graphSize)
-	{
-		for (double y = graphSize; y < height; y += graphSize)
-		{
-			cairo_move_to(cr, x, y);
-			cairo_line_to(cr, x, y);
-		}
-	}
-
-	cairo_stroke(cr);
-	gdk_threads_leave();
-}
-
-void DocumentView::paintBackgroundRuled()
-{
-	XOJ_CHECK_TYPE(DocumentView);
-
-	applyColor(cr, 0x40A0FF);
-
-	cairo_set_line_width(cr, 0.5);
-
-	for (double y = 80; y < height; y += roulingSize)
-	{
-		cairo_move_to(cr, 0, y);
-		cairo_line_to(cr, width, y);
-	}
-
-	cairo_stroke(cr);
-}
-
-void DocumentView::paintBackgroundLined()
-{
-	XOJ_CHECK_TYPE(DocumentView);
-
-	applyColor(cr, 0x40A0FF);
-
-	cairo_set_line_width(cr, 0.5);
-
-	applyColor(cr, 0xFF0080);
-	cairo_move_to(cr, 72, 0);
-	cairo_line_to(cr, 72, height);
-	cairo_stroke(cr);
-}
-
 void DocumentView::drawSelection(cairo_t* cr, ElementContainer* container)
 {
 	XOJ_CHECK_TYPE(DocumentView);
@@ -535,30 +446,9 @@ void DocumentView::drawBackground()
 	{
 		paintBackgroundImage();
 	}
-	else if (pt.format == "graph")
+	else
 	{
-		paintBackgroundColor();
-		paintBackgroundGraph();
-	}
-	else if (pt.format == "lined")
-	{
-		paintBackgroundColor();
-		paintBackgroundRuled();
-		paintBackgroundLined();
-	}
-	else if (pt.format == "ruled")
-	{
-		paintBackgroundColor();
-		paintBackgroundRuled();
-	}
-	else if (pt.format == "dotted")
-	{
-		paintBackgroundColor();
-		paintBackgroundDotted();
-	}
-	else // if (pt.format == "plain")
-	{
-		paintBackgroundColor();
+		backgroundPainter->paint(pt, cr, page);
 	}
 }
 
