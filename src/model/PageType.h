@@ -30,6 +30,11 @@ private:
 
 public:
 	/**
+	 * Compare Operator
+	 */
+	bool operator ==(const PageType& other) const;
+
+	/**
 	 * PDF background
 	 */
 	bool isPdfPage();

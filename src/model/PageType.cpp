@@ -24,6 +24,14 @@ PageType::~PageType()
 }
 
 /**
+ * Compare Operator
+ */
+bool PageType::operator ==(const PageType& other) const
+{
+	return this->config == other.config && this->format == other.format;
+}
+
+/**
  * PDF background
  */
 bool PageType::isPdfPage()
