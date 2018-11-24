@@ -58,13 +58,11 @@ void SaveJob::afterRun()
 	}
 }
 
-void SaveJob::updatePreview()
+void SaveJob::updatePreview(Control* control)
 {
-	XOJ_CHECK_TYPE(SaveJob);
-
 	const int previewSize = 128;
 
-	Document* doc = this->control->getDocument();
+	Document* doc = control->getDocument();
 
 	doc->lock();
 
@@ -121,7 +119,7 @@ bool SaveJob::save()
 {
 	XOJ_CHECK_TYPE(SaveJob);
 
-	updatePreview();
+	updatePreview(control);
 	Document* doc = this->control->getDocument();
 
 	SaveHandler h;

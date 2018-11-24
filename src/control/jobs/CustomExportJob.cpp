@@ -1,5 +1,8 @@
 #include "CustomExportJob.h"
+#include "SaveJob.h"
+
 #include "control/Control.h"
+#include "control/xojfile/XojExportHandler.h"
 #include "gui/dialog/ExportDialog.h"
 #include "pdf/popplerdirect/PdfExport.h"
 #include "view/PdfView.h"
@@ -9,9 +12,9 @@
 
 CustomExportJob::CustomExportJob(Control* control)
  : BaseExportJob(control, _("Custom Export")),
+   pngDpi(300),
    exportTypePdf(false),
    exportTypeXoj(false),
-   pngDpi(300),
    surface(NULL),
    cr(NULL)
 {
@@ -242,7 +245,21 @@ void CustomExportJob::run()
 
 	if (exportTypeXoj)
 	{
+		SaveJob::updatePreview(control);
+		Document* doc = this->control->getDocument();
 
+		XojExportHandler h;
+		doc->lock();
+		h.prepareSave(doc);
+		h.saveTo(filename, this->control);
+		doc->unlock();
+
+		if (!h.getErrorMessage().empty())
+		{
+			this->lastError = FS(_F("Save file error: {1}") % h.getErrorMessage());
+
+			callAfterRun();
+		}
 	}
 	else if (exportTypePdf)
 	{
@@ -266,3 +283,14 @@ void CustomExportJob::run()
 		exportPng();
 	}
 }
+
+void CustomExportJob::afterRun()
+{
+	XOJ_CHECK_TYPE(CustomExportJob);
+
+	if (!this->lastError.empty())
+	{
+		Util::showErrorToUser(control->getGtkWindow(), this->lastError);
+	}
+}
+
