@@ -20,8 +20,8 @@ PageTypeMenu::PageTypeMenu(PageTypeHandler* types, Settings* settings, bool show
 {
 	XOJ_INIT_TYPE(PageTypeMenu);
 
-	loadDefaultPage();
 	initDefaultMenu();
+	loadDefaultPage();
 }
 
 PageTypeMenu::~PageTypeMenu()
@@ -43,26 +43,7 @@ void PageTypeMenu::loadDefaultPage()
 
 	PageTemplateSettings model;
 	model.parse(settings->getPageTemplate());
-	selected = model.getPageInsertType();
-
-	PageTypeInfo* baseMatch = this->types->getPageTypes()[0];
-	for (PageTypeInfo* t : this->types->getPageTypes())
-	{
-		if (t->page.format == selected.format)
-		{
-			if (t->page.config == selected.config)
-			{
-				// 100% match
-				entrySelected(t);
-				return;
-			}
-
-			baseMatch = t;
-		}
-	}
-
-	// None matched 100%
-	entrySelected(baseMatch);
+	setSelected(model.getPageInsertType());
 }
 
 void PageTypeMenu::addMenuEntry(PageTypeInfo* t)
