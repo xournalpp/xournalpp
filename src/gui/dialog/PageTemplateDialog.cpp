@@ -4,7 +4,8 @@
 #include "gui/dialog/FormatDialog.h"
 #include "model/FormatDefinitions.h"
 #include "control/pagetype/PageTypeHandler.h"
-	
+#include "control/pagetype/PageTypeMenu.h"
+
 #include <Util.h>
 
 #include <config.h>
@@ -17,6 +18,7 @@ using std::ofstream;
 PageTemplateDialog::PageTemplateDialog(GladeSearchpath* gladeSearchPath, Settings* settings, PageTypeHandler* types)
  : GladeGui(gladeSearchPath, "pageTemplate.glade", "templateDialog"),
    settings(settings),
+   pageMenu(new PageTypeMenu(types, settings, false)),
    saved(false)
 {
 	XOJ_INIT_TYPE(PageTemplateDialog);
@@ -48,7 +50,12 @@ PageTemplateDialog::PageTemplateDialog(GladeSearchpath* gladeSearchPath, Setting
 		+[](GtkButton* button, PageTemplateDialog* self)
 	{
 			XOJ_CHECK_TYPE_OBJ(self, PageTemplateDialog);
-// TODO SHOW POPUP
+			GtkWidget* menu = self->pageMenu->getMenu();
+
+			gtk_menu_popup(GTK_MENU(menu), NULL, NULL, NULL, NULL, 0, gtk_get_current_event_time());
+
+			// GTK 3.22: gtk_menu_popup_at_widget(menu, button, GDK_GRAVITY_SOUTH_WEST, GDK_GRAVITY_NORTH_WEST, NULL);
+
 		}), this);
 
 	updateDataFromModel();
@@ -57,6 +64,9 @@ PageTemplateDialog::PageTemplateDialog(GladeSearchpath* gladeSearchPath, Setting
 PageTemplateDialog::~PageTemplateDialog()
 {
 	XOJ_CHECK_TYPE(PageTemplateDialog);
+
+	delete pageMenu;
+	pageMenu = NULL;
 
 	XOJ_RELEASE_TYPE(PageTemplateDialog);
 }
@@ -82,7 +92,7 @@ void PageTemplateDialog::updateDataFromModel()
 //		}
 //	}
 
-	GtkComboBoxText* cbBg = GTK_COMBO_BOX_TEXT(get("cbBackgroundFormat"));
+	//GtkComboBoxText* cbBg = GTK_COMBO_BOX_TEXT(get("cbBackgroundFormat"));
 	// TODO gtk_combo_box_set_active(GTK_COMBO_BOX(cbBg), activeFormat);
 	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(get("cbCopyLastPage")), model.isCopyLastPageSettings());
 }

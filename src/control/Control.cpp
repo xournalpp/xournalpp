@@ -1349,7 +1349,7 @@ void Control::insertNewPage(size_t position)
 			int selected = dlg->getSelectedPage();
 			delete dlg;
 
-			if (selected >= 0 && selected < doc->getPdfPageCount())
+			if (selected >= 0 && selected < (int)doc->getPdfPageCount())
 			{
 				// no need to set a type, if we set the page number the type is also set
 				page->setBackgroundPdfPageNr(selected);
@@ -1530,7 +1530,7 @@ void Control::setPageBackground(ActionType type)
 			int selected = dlg->getSelectedPage();
 			delete dlg;
 
-			if (selected >= 0 && selected < doc->getPdfPageCount())
+			if (selected >= 0 && selected < (int)doc->getPdfPageCount())
 			{
 				// no need to set a type, if we set the page number the type is also set
 				page->setBackgroundPdfPageNr(selected);
@@ -1963,6 +1963,9 @@ void Control::eraserSizeChanged()
 	case TOOL_SIZE_THICK:
 		fireActionSelected(GROUP_ERASER_SIZE, ACTION_TOOL_ERASER_SIZE_THICK);
 		break;
+	default:
+		// TODO add very fine and very thick
+		break;
 	}
 }
 
@@ -1987,6 +1990,8 @@ void Control::penSizeChanged()
 	case TOOL_SIZE_VERY_THICK:
 		fireActionSelected(GROUP_PEN_SIZE, ACTION_TOOL_PEN_SIZE_VERY_THICK);
 		break;
+	default:
+		break;
 	}
 }
 
@@ -2004,6 +2009,9 @@ void Control::hilighterSizeChanged()
 		break;
 	case TOOL_SIZE_THICK:
 		fireActionSelected(GROUP_HILIGHTER_SIZE, ACTION_TOOL_HILIGHTER_SIZE_THICK);
+		break;
+	default:
+		// TODO add very fine and very thick!
 		break;
 	}
 }

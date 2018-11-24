@@ -18,6 +18,7 @@
 #include <XournalType.h>
 
 class PageTypeHandler;
+class PageTypeMenu;
 
 class PageTemplateDialog : public GladeGui
 {
@@ -47,6 +48,8 @@ private:
 	Settings* settings;
 
 	PageTemplateSettings model;
+
+	PageTypeMenu* pageMenu;
 
 	/**
 	 * The dialog was confirmed / saved

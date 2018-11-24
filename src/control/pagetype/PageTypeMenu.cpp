@@ -8,8 +8,9 @@
 #include <i18n.h>
 
 
-PageTypeMenu::PageTypeMenu(PageTypeHandler* types, Settings* settings)
- : menu(gtk_menu_new()),
+PageTypeMenu::PageTypeMenu(PageTypeHandler* types, Settings* settings, bool showSpecial)
+ : showSpecial(showSpecial),
+   menu(gtk_menu_new()),
    types(types),
    settings(settings),
    ignoreEvents(false)
@@ -117,6 +118,11 @@ void PageTypeMenu::initDefaultMenu()
 	bool special = false;
 	for (PageTypeInfo* t : this->types->getPageTypes())
 	{
+		if (!showSpecial && t->page.isSpecial())
+		{
+			continue;
+		}
+
 		if (!special && t->page.isSpecial())
 		{
 			special = true;

@@ -33,7 +33,7 @@ typedef struct {
 class PageTypeMenu
 {
 public:
-	PageTypeMenu(PageTypeHandler* types, Settings* settings);
+	PageTypeMenu(PageTypeHandler* types, Settings* settings, bool showSpecial = true);
 	virtual ~PageTypeMenu();
 
 public:
@@ -48,6 +48,8 @@ private:
 
 private:
 	XOJ_TYPE_ATTRIB;
+
+	bool showSpecial;
 
 	GtkWidget* menu;
 	PageTypeHandler* types;

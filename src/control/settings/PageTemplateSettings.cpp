@@ -177,7 +177,11 @@ string PageTemplateSettings::toString()
 	str += string("copyLastPageSettings=") + (copyLastPageSettings ? "true" : "false") + "\n";
 	str += string("size=") + std::to_string(pageWidth) + "x" + std::to_string(pageHeight) + "\n";
 	str += string("backgroundType=") + backgroundType.format + "\n";
-	str += string("backgroundTypeConfig=") + backgroundType.config + "\n";
+
+	if (backgroundType.config != "")
+	{
+		str += string("backgroundTypeConfig=") + backgroundType.config + "\n";
+	}
 
 	char buffer[64];
 	sprintf(buffer, "#%06x", this->backgroundColor);
