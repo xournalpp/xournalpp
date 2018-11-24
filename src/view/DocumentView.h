@@ -25,6 +25,7 @@
 #include <gtk/gtk.h>
 
 class EditSelection;
+class MainBackgroundPainter;
 
 class DocumentView
 {
@@ -90,11 +91,6 @@ private:
 	void drawElement(cairo_t* cr, Element* e);
 
 	void paintBackgroundImage();
-	void paintBackgroundColor();
-	void paintBackgroundGraph();
-	void paintBackgroundRuled();
-	void paintBackgroundDotted();
-	void paintBackgroundLined();
 
 private:
 	XOJ_TYPE_ATTRIB;
@@ -109,4 +105,6 @@ private:
 	double lY;
 	double lWidth;
 	double lHeight;
+
+	MainBackgroundPainter* backgroundPainter;
 };
