@@ -121,6 +121,20 @@ void PageTypeMenu::setListener(PageTypeMenuChangeListener* listener)
 	this->listener = listener;
 }
 
+void PageTypeMenu::hideCopyPage()
+{
+	XOJ_CHECK_TYPE(PageTypeMenu);
+
+	for (MenuCallbackInfo& info : menuInfos)
+	{
+		if (info.info->page.format == ":copy")
+		{
+			gtk_widget_hide(info.entry);
+			break;
+		}
+	}
+}
+
 void PageTypeMenu::initDefaultMenu()
 {
 	XOJ_CHECK_TYPE(PageTypeMenu);

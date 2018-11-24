@@ -8,9 +8,11 @@
 #include "ToolPageSpinner.h"
 #include "ToolSelectCombocontrol.h"
 #include "ToolZoomSlider.h"
-#include "control/pagetype/PageTypeMenu.h"
 
 #include "control/Actions.h"
+#include "control/Control.h"
+#include "control/pagetype/PageTypeMenu.h"
+#include "control/PageBackgroundChangeController.h"
 #include "gui/ToolitemDragDrop.h"
 #include "model/ToolbarData.h"
 #include "model/ToolbarModel.h"
@@ -21,22 +23,26 @@
 
 #include <glib.h>
 
-ToolMenuHandler::ToolMenuHandler(ActionHandler* listener, PageTypeMenu* typeMenu, ZoomControl* zoom, GladeGui* gui, ToolHandler* toolHandler,
-								 GtkWindow* parent)
+ToolMenuHandler::ToolMenuHandler(Control* control, GladeGui* gui, GtkWindow* parent)
 {
 	XOJ_INIT_TYPE(ToolMenuHandler);
 
 	this->parent = parent;
-	this->listener = listener;
-	this->zoom = zoom;
+	this->listener = control;
+	this->zoom = control->getZoomControl();
 	this->gui = gui;
-	this->toolHandler = toolHandler;
+	this->toolHandler = control->getToolHandler();
 	this->undoButton = NULL;
 	this->redoButton = NULL;
 	this->toolPageSpinner = NULL;
 	this->toolPageLayer = NULL;
 	this->tbModel = new ToolbarModel();
-	this->typeMenu = typeMenu;
+
+	// still owned by Control
+	this->newPageType = control->getNewPageType();
+
+	// still owned by Control
+	this->pageBackgroundChangeController = control->getPageBackgroundChangeController();
 
 	initToolItems();
 }
@@ -49,7 +55,10 @@ ToolMenuHandler::~ToolMenuHandler()
 	this->tbModel = NULL;
 
 	// Owned by control
-	this->typeMenu = NULL;
+	this->pageBackgroundChangeController = NULL;
+
+	// Owned by control
+	this->newPageType = NULL;
 
 	for (MenuItem* it : this->menuItems)
 	{
@@ -376,7 +385,7 @@ void ToolMenuHandler::initToolItems()
 	ToolButton* tbInsertNewPage = new ToolButton(listener, gui, "INSERT_NEW_PAGE", ACTION_NEW_PAGE_AFTER,
 												 "addPage.svg", _C("Insert page"));
 	addToolItem(tbInsertNewPage);
-	tbInsertNewPage->setPopupMenu(this->typeMenu->getMenu());
+	tbInsertNewPage->setPopupMenu(this->newPageType->getMenu());
 
 	addToolItem(new ToolButton(listener, gui, "HILIGHTER", ACTION_TOOL_HILIGHTER, GROUP_TOOL, true,
 							   "tool_highlighter.svg", _C("Highlighter"), gui->get("menuToolsHighlighter")));
@@ -393,7 +402,7 @@ void ToolMenuHandler::initToolItems()
 							   "object-select.svg", _C("Select Object"), gui->get("menuToolsSelectObject")));
 
 	addToolItem(new ToolButton(listener, gui, "PLAY_OBJECT", ACTION_TOOL_PLAY_OBJECT, GROUP_TOOL, true,
-	"object-play.svg", _C("Play Object"), gui->get("menuToolsPlayObject")));
+							   "object-play.svg", _C("Play Object"), gui->get("menuToolsPlayObject")));
 
 	addToolItem(new ToolButton(listener, gui, "DRAW_CIRCLE", ACTION_TOOL_DRAW_CIRCLE, GROUP_RULER, false,
 							   "circle-draw.svg", _C("Draw Circle"), gui->get("menuToolsDrawCircle")));
@@ -462,12 +471,7 @@ void ToolMenuHandler::initToolItems()
 	registerMenupoint(gui->get("menuJournalPaperFormat"), ACTION_PAPER_FORMAT);
 	registerMenupoint(gui->get("menuJournalPaperColor"), ACTION_PAPER_BACKGROUND_COLOR);
 
-	registerMenupoint(gui->get("menuJournalPaperPlain"), ACTION_SET_PAPER_BACKGROUND_PLAIN);
-	registerMenupoint(gui->get("menuJournalPaperBackgroundLined"), ACTION_SET_PAPER_BACKGROUND_LINED);
-	registerMenupoint(gui->get("menuJournalPaperRuled"), ACTION_SET_PAPER_BACKGROUND_RULED);
-	registerMenupoint(gui->get("menuJournalPaperGraph"), ACTION_SET_PAPER_BACKGROUND_GRAPH);
-	registerMenupoint(gui->get("menuJournalPaperImage"), ACTION_SET_PAPER_BACKGROUND_IMAGE);
-	registerMenupoint(gui->get("menuJournalPaperPdf"), ACTION_SET_PAPER_BACKGROUND_PDF);
+	gtk_menu_item_set_submenu(GTK_MENU_ITEM(gui->get("menuJournalPaperBackground")), pageBackgroundChangeController->getMenu());
 
 	registerMenupoint(gui->get("menuEditDelete"), ACTION_DELETE);
 

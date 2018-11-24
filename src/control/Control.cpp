@@ -2,6 +2,7 @@
 
 #include "PrintHandler.h"
 #include "LatexController.h"
+#include "PageBackgroundChangeController.h"
 
 #include "gui/Cursor.h"
 
@@ -9,8 +10,6 @@
 extern int currentToolType;
 
 #include "gui/dialog/AboutDialog.h"
-#include "gui/dialog/backgroundSelect/ImagesDialog.h"
-#include "gui/dialog/backgroundSelect/PdfPagesDialog.h"
 #include "gui/dialog/GotoDialog.h"
 #include "gui/dialog/FormatDialog.h"
 #include "gui/dialog/PageTemplateDialog.h"
@@ -35,14 +34,12 @@ extern int currentToolType;
 #include "pagetype/PageTypeHandler.h"
 #include "pagetype/PageTypeMenu.h"
 #include "settings/ButtonConfig.h"
-#include "stockdlg/ImageOpenDlg.h"
 #include "stockdlg/XojOpenDlg.h"
 #include "undo/AddUndoAction.h"
 #include "undo/DeleteUndoAction.h"
 #include "undo/InsertDeletePageUndoAction.h"
 #include "undo/InsertLayerUndoAction.h"
 #include "undo/InsertUndoAction.h"
-#include "undo/PageBackgroundChangedUndoAction.h"
 #include "undo/RemoveLayerUndoAction.h"
 #include "view/DocumentView.h"
 
@@ -101,7 +98,7 @@ Control::Control(GladeSearchpath* gladeSearchPath)
 	this->settings->load();
 
 	this->pageTypes = new PageTypeHandler();
-	this->pageTypeMenu = new PageTypeMenu(this->pageTypes, settings);
+	this->newPageType = new PageTypeMenu(this->pageTypes, settings);
 
 	this->sidebar = NULL;
 	this->searchBar = NULL;
@@ -140,6 +137,8 @@ Control::Control(GladeSearchpath* gladeSearchPath)
 	this->clipboardHandler = NULL;
 
 	this->dragDropHandler = NULL;
+
+	this->pageBackgroundChangeController = new PageBackgroundChangeController(this);
 }
 
 Control::~Control()
@@ -176,8 +175,8 @@ Control::~Control()
 	this->searchBar = NULL;
 	delete this->scrollHandler;
 	this->scrollHandler = NULL;
-	delete this->pageTypeMenu;
-	this->pageTypeMenu = NULL;
+	delete this->newPageType;
+	this->newPageType = NULL;
 	delete this->pageTypes;
 	this->pageTypes = NULL;
 	delete this->metadata;
@@ -192,6 +191,8 @@ Control::~Control()
 	this->dragDropHandler = NULL;
 	delete this->audioController;
 	this->audioController = NULL;
+	delete this->pageBackgroundChangeController;
+	this->pageBackgroundChangeController = NULL;
 
 	XOJ_RELEASE_TYPE(Control);
 }
@@ -481,7 +482,7 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
 		{
 			int layer = this->win->getCurrentLayer();
 			PageRef p = getCurrentPage();
-			if (layer < p->getLayerCount())
+			if (layer < (int)p->getLayerCount())
 			{
 				switchToLay(layer + 1);
 			}
@@ -536,16 +537,6 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
 		break;
 	case ACTION_PAPER_BACKGROUND_COLOR:
 		changePageBackgroundColor();
-		break;
-
-	case ACTION_SET_PAPER_BACKGROUND_PLAIN:
-	case ACTION_SET_PAPER_BACKGROUND_LINED:
-	case ACTION_SET_PAPER_BACKGROUND_RULED:
-	case ACTION_SET_PAPER_BACKGROUND_GRAPH:
-	case ACTION_SET_PAPER_BACKGROUND_IMAGE:
-	case ACTION_SET_PAPER_BACKGROUND_PDF:
-		clearSelectionEndText();
-		setPageBackground(type);
 		break;
 
 		// Menu Tools
@@ -1261,112 +1252,7 @@ void Control::insertNewPage(size_t position)
 {
 	XOJ_CHECK_TYPE(Control);
 
-	clearSelectionEndText();
-
-	if (position > doc->getPageCount())
-	{
-		position = doc->getPageCount();
-	}
-
-	double width = 0;
-	double height = 0;
-
-	PageTemplateSettings model;
-	model.parse(settings->getPageTemplate());
-
-	int lastPage = position - 1;
-	if (lastPage < 0 || !model.isCopyLastPageSettings())
-	{
-		width = model.getPageWidth();
-		height = model.getPageHeight();
-	}
-	else
-	{
-		PageRef page = doc->getPage(lastPage);
-
-		if (page.isValid())
-		{
-			width = page->getWidth();
-			height = page->getHeight();
-		}
-		else
-		{
-			width = model.getPageWidth();
-			height = model.getPageHeight();
-		}
-	}
-
-	PageRef page = new XojPage(width, height);
-	page->setBackgroundColor(model.getBackgroundColor());
-
-	PageType pt = pageTypeMenu->getSelected();
-
-	if (pt.format == ":copy")
-	{
-		PageRef current = getCurrentPage();
-		if (!current.isValid()) // should not happen, but if you open an invalid file or something like this...
-		{
-			page->setBackgroundType(pt);
-		}
-		else
-		{
-			PageType bg = current->getBackgroundType();
-			page->setBackgroundType(bg);
-			if (bg.isPdfPage())
-			{
-				page->setBackgroundPdfPageNr(current->getPdfPageNr());
-			}
-			else if (bg.isImagePage())
-			{
-				page->setBackgroundImage(current->getBackgroundImage());
-			}
-			else
-			{
-				page->setBackgroundColor(current->getBackgroundColor());
-			}
-
-			page->setSize(current->getWidth(), current->getHeight());
-		}
-	}
-	else if (pt.isPdfPage())
-	{
-		if (this->doc->getPdfPageCount() == 0)
-		{
-
-			string msg = FS(_("You don't have any PDF pages to select from. "
-																"Cancel operation.\nPlease select another background type: "
-																"Menu \"Journal\" / \"Insert Page Type\"."));
-			Util::showErrorToUser(getGtkWindow(), msg);
-			return;
-		}
-		else
-		{
-			this->doc->lock();
-			PdfPagesDialog* dlg = new PdfPagesDialog(this->gladeSearchPath, this->doc, this->settings);
-
-			dlg->show(GTK_WINDOW(this->win->getWindow()));
-
-			int selected = dlg->getSelectedPage();
-			delete dlg;
-
-			if (selected >= 0 && selected < (int)doc->getPdfPageCount())
-			{
-				// no need to set a type, if we set the page number the type is also set
-				page->setBackgroundPdfPageNr(selected);
-
-				XojPopplerPage* p = doc->getPdfPage(selected);
-				page->setSize(p->getWidth(), p->getHeight());
-			}
-
-			this->doc->unlock();
-		}
-	}
-	else
-	{
-		page->setBackgroundType(pt);
-	}
-
-	insertPage(page, position);
+	pageBackgroundChangeController->insertNewPage(position);
 }
 
 void Control::insertPage(PageRef page, size_t position)
@@ -1413,136 +1299,6 @@ void Control::addNewLayer()
 	}
 
 	undoRedo->addUndoAction(new InsertLayerUndoAction(p, l));
-}
-
-void Control::setPageBackground(ActionType type)
-{
-	XOJ_CHECK_TYPE(Control);
-
-	PageRef page = getCurrentPage();
-
-	if (!page.isValid())
-	{
-		return;
-	}
-
-	this->doc->lock();
-	size_t pageNr = this->doc->indexOf(page);
-	this->doc->unlock();
-	if (pageNr == size_t_npos)
-	{
-		return; // should not happen...
-	}
-
-	int origPdfPage = page->getPdfPageNr();
-	PageType origType = page->getBackgroundType();
-	BackgroundImage origBackgroundImage = page->getBackgroundImage();
-	double origW = page->getWidth();
-	double origH = page->getHeight();
-
-	if (ACTION_SET_PAPER_BACKGROUND_PLAIN == type)
-	{
-		page->setBackgroundType(PageType("plain"));
-	}
-	else if (ACTION_SET_PAPER_BACKGROUND_LINED == type)
-	{
-		page->setBackgroundType(PageType("lined"));
-	}
-	else if (ACTION_SET_PAPER_BACKGROUND_RULED == type)
-	{
-		page->setBackgroundType(PageType("ruled"));
-	}
-	else if (ACTION_SET_PAPER_BACKGROUND_GRAPH == type)
-	{
-		page->setBackgroundType(PageType("graph"));
-	}
-	else if (ACTION_SET_PAPER_BACKGROUND_IMAGE == type)
-	{
-		this->doc->lock();
-		ImagesDialog* dlg = new ImagesDialog(this->gladeSearchPath, this->doc, this->settings);
-		this->doc->unlock();
-
-		dlg->show(GTK_WINDOW(this->win->getWindow()));
-		BackgroundImage img = dlg->getSelectedImage();
-		if (!img.isEmpty())
-		{
-			page->setBackgroundImage(img);
-			page->setBackgroundType(PageType(":image"));
-		}
-		else if (dlg->shouldShowFilechooser())
-		{
-
-			bool attach = false;
-			GFile* file = ImageOpenDlg::show(getGtkWindow(), settings, true, &attach);
-			if (file == NULL)
-			{
-				return;
-			}
-			char* name = g_file_get_path(file);
-			string filename = name;
-			g_free(name);
-			g_object_unref(file);
-
-			BackgroundImage newImg;
-			GError* err = NULL;
-			newImg.loadFile(filename, &err);
-			newImg.setAttach(attach);
-			if (err)
-			{
-				Util::showErrorToUser(getGtkWindow(), FS(_F("This image could not be loaded. Error message: {1}") % err->message));
-				g_error_free(err);
-				return;
-			}
-			else
-			{
-				page->setBackgroundImage(newImg);
-				page->setBackgroundType(PageType(":image"));
-			}
-		}
-
-		GdkPixbuf* pixbuf = page->getBackgroundImage().getPixbuf();
-		if (pixbuf)
-		{
-			page->setSize(gdk_pixbuf_get_width(pixbuf), gdk_pixbuf_get_height(pixbuf));
-			firePageSizeChanged(pageNr);
-		}
-
-		delete dlg;
-	}
-	else if (ACTION_SET_PAPER_BACKGROUND_PDF == type)
-	{
-		if (doc->getPdfPageCount() == 0)
-		{
-
-			string msg = FS(_("You don't have any PDF pages to select from. Cancel operation.\n"
-					  "Please select another background type: Menu \"Journal\" → \"Insert Page Type\"."));
-			Util::showErrorToUser(getGtkWindow(), msg);
-			return;
-		}
-		else
-		{
-			this->doc->lock();
-			PdfPagesDialog* dlg = new PdfPagesDialog(this->gladeSearchPath, this->doc, this->settings);
-			this->doc->unlock();
-
-			dlg->show(GTK_WINDOW(this->win->getWindow()));
-
-			int selected = dlg->getSelectedPage();
-			delete dlg;
-
-			if (selected >= 0 && selected < (int)doc->getPdfPageCount())
-			{
-				// no need to set a type, if we set the page number the type is also set
-				page->setBackgroundPdfPageNr(selected);
-			}
-		}
-	}
-
-	firePageChanged(pageNr);
-	updateBackgroundSizeButton();
-
-	this->undoRedo->addUndoAction(
-		new PageBackgroundChangedUndoAction(page, origType, origPdfPage, origBackgroundImage, origW, origH));
 }
 
 void Control::gotoPage()
@@ -1594,7 +1350,7 @@ void Control::paperTemplate()
 
 	if (dlg->isSaved())
 	{
-		pageTypeMenu->loadDefaultPage();
+		newPageType->loadDefaultPage();
 	}
 
 	delete dlg;
@@ -3303,10 +3059,17 @@ PageTypeHandler* Control::getPageTypes()
 	return this->pageTypes;
 }
 
-PageTypeMenu* Control::getPageTypeMenu()
+PageTypeMenu* Control::getNewPageType()
 {
 	XOJ_CHECK_TYPE(Control);
 
-	return this->pageTypeMenu;
+	return this->newPageType;
+}
+
+PageBackgroundChangeController* Control::getPageBackgroundChangeController()
+{
+	XOJ_CHECK_TYPE(Control);
+
+	return this->pageBackgroundChangeController;
 }
 

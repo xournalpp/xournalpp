@@ -35,11 +35,13 @@ class PageTypeMenu;
 class SpinPageAdapter;
 class XojFont;
 class ZoomControl;
+class Control;
+class PageBackgroundChangeController;
 
 class ToolMenuHandler
 {
 public:
-	ToolMenuHandler(ActionHandler* listener, PageTypeMenu* typeMenu, ZoomControl* zoom, GladeGui* gui, ToolHandler* toolHandler, GtkWindow* parent);
+	ToolMenuHandler(Control* control, GladeGui* gui, GtkWindow* parent);
 	virtual ~ToolMenuHandler();
 
 public:
@@ -105,5 +107,6 @@ private:
 
 	ToolbarModel* tbModel;
 
-	PageTypeMenu* typeMenu;
+	PageTypeMenu* newPageType;
+	PageBackgroundChangeController* pageBackgroundChangeController;
 };

@@ -20,16 +20,16 @@ using std::endl;
 LatexController::LatexController(Control* control)
  : control(control),
    texArea(0),
-   // .png will be appended automatically => tex.png
-   texImage(Util::getConfigFile("tex").string()),
-   selectedTexImage(NULL),
    posx(0),
    posy(0),
    imgwidth(0),
    imgheight(0),
    doc(control->getDocument()),
    view(NULL),
-   layer(NULL)
+   layer(NULL),
+   // .png will be appended automatically => tex.png
+   texImage(Util::getConfigFile("tex").string()),
+   selectedTexImage(NULL)
 {
 	XOJ_INIT_TYPE(LatexController);
 }

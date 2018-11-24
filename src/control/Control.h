@@ -43,6 +43,7 @@ class Cursor;
 class ToolbarDragDropHandler;
 class MetadataEntry;
 class MetadataCallbackData;
+class PageBackgroundChangeController;
 class PageTypeHandler;
 class PageTypeMenu;
 class BaseExportJob;
@@ -124,7 +125,6 @@ public:
 	void paperTemplate();
 	void paperFormat();
 	void changePageBackgroundColor();
-	void setPageBackground(ActionType type);
 	void updateBackgroundSizeButton();
 
 	void endDragDropToolbar();
@@ -197,7 +197,9 @@ public:
 	SearchBar* getSearchBar();
 	AudioController* getAudioController();
 	PageTypeHandler* getPageTypes();
-	PageTypeMenu* getPageTypeMenu();
+	PageTypeMenu* getNewPageType();
+	PageBackgroundChangeController* getPageBackgroundChangeController();
+
 
 	bool copy();
 	bool cut();
@@ -334,5 +336,7 @@ private:
 	MetadataManager* metadata;
 
 	PageTypeHandler* pageTypes;
-	PageTypeMenu* pageTypeMenu;
+	PageTypeMenu* newPageType;
+
+	PageBackgroundChangeController* pageBackgroundChangeController;
 };
