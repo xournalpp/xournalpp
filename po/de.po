@@ -711,7 +711,7 @@ msgstr "PDF-Datei nicht komprimieren (zur Fehlersuche)"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:16
 msgid "Dotted"
-msgstr "gepunktet"
+msgstr "Gepunktet"
 
 #: ../ui/toolbarCustomizeDialog.glade:55
 msgid "Drag and drop Components fom here to the toolbars and back."
@@ -920,7 +920,7 @@ msgstr "_Gehe zur Seite"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:13
 msgid "Graph"
-msgstr "kariert"
+msgstr "Kariert"
 
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:15
 #: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:137
@@ -1051,7 +1051,7 @@ msgstr "hellgrün"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:11
 msgid "Lined"
-msgstr "liniert mit Rand"
+msgstr "Liniert mit Rand"
 
 #: ../ui/settings.glade:685
 msgid "Load / Save"
@@ -1353,7 +1353,7 @@ msgstr "Auflösung"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:12
 msgid "Ruled"
-msgstr "liniert"
+msgstr "Liniert"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:422
 msgid "Ruler"

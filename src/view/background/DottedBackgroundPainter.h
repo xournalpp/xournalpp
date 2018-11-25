@@ -24,6 +24,7 @@ public:
 public:
 	virtual void paint();
 	void paintBackgroundDotted();
+	void resetConfig();
 
 private:
 	XOJ_TYPE_ATTRIB;

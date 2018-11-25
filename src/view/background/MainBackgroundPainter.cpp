@@ -40,6 +40,19 @@ MainBackgroundPainter::~MainBackgroundPainter()
 	XOJ_RELEASE_TYPE(MainBackgroundPainter);
 }
 
+/**
+ * Set a factor to draw the lines bolder, for previews
+ */
+void MainBackgroundPainter::setLineWidthFactor(double factor)
+{
+	XOJ_CHECK_TYPE(MainBackgroundPainter);
+
+	for (auto& e : painter)
+	{
+		e.second->setLineWidthFactor(factor);
+	}
+}
+
 void MainBackgroundPainter::paint(PageType pt, cairo_t* cr, PageRef page)
 {
 	XOJ_CHECK_TYPE(MainBackgroundPainter);

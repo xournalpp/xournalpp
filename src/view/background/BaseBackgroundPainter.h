@@ -37,6 +37,11 @@ public:
 	 */
 	virtual void resetConfig();
 
+	/**
+	 * Set a factor to draw the lines bolder, for previews
+	 */
+	void setLineWidthFactor(double factor);
+
 protected:
 	void paintBackgroundColor();
 
@@ -55,15 +60,24 @@ protected:
 	// ParserKey=Value
 protected:
 	/**
-	 * b1=XXXXXX
+	 * c1=XXXXXX
 	 * e.g. FF0000 for Red
 	 */
-	int backgroundColor1;
+	int foregroundColor1;
 
 	/**
-	 * b2=XXXXXX
+	 * c2=XXXXXX
 	 * e.g. FF0000 for Red
 	 */
-	int backgroundColor2;
+	int foregroundColor2;
 
+	/**
+	 * lw=1.23
+	 */
+	double lineWidth;
+
+	/**
+	 * Line width factor, to use to draw Previews
+	 */
+	double lineWidthFactor;
 };

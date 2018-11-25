@@ -87,7 +87,13 @@ void PageTypeMenu::addMenuEntry(PageTypeInfo* t)
 		cairo_surface_t* img = createPreviewImage(t->page);
 		GtkWidget* preview = gtk_image_new_from_surface(img);
 		entry = gtk_check_menu_item_new();
-		gtk_container_add(GTK_CONTAINER(entry), preview);
+
+		GtkWidget* box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 6);
+
+		gtk_container_add(GTK_CONTAINER(box), preview);
+		gtk_container_add(GTK_CONTAINER(box), gtk_label_new(t->name.c_str()));
+
+		gtk_container_add(GTK_CONTAINER(entry), box);
 		gtk_widget_show_all(entry);
 	}
 	else
@@ -213,6 +219,7 @@ void PageTypeMenu::initDefaultMenu()
 	XOJ_CHECK_TYPE(PageTypeMenu);
 
 	this->backgroundPainter = new MainBackgroundPainter();
+	this->backgroundPainter->setLineWidthFactor(2);
 
 	bool special = false;
 	for (PageTypeInfo* t : this->types->getPageTypes())
