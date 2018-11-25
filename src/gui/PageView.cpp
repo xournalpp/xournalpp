@@ -887,11 +887,11 @@ bool XojPageView::actionDelete()
 	return false;
 }
 
-bool XojPageView::paintPage(cairo_t* cr, GdkRectangle* rect)
+bool XojPageView::paintPage(cairo_t* cr, GdkRectangle* rect, double scalingFactor)
 {
 	XOJ_CHECK_TYPE(XojPageView);
 
-	static const char* txtLoading = _C("Loading...");
+	static const string txtLoading = _("Loading...");
 
 	double zoom = xournal->getZoom();
 
@@ -914,10 +914,10 @@ bool XojPageView::paintPage(cairo_t* cr, GdkRectangle* rect)
 		cairo_set_source_rgb(cr2, 0.5, 0.5, 0.5);
 		cairo_select_font_face(cr2, "Sans", CAIRO_FONT_SLANT_NORMAL, CAIRO_FONT_WEIGHT_BOLD);
 		cairo_set_font_size(cr2, 32.0);
-		cairo_text_extents(cr2, txtLoading, &ex);
+		cairo_text_extents(cr2, txtLoading.c_str(), &ex);
 		cairo_move_to(cr2, (page->getWidth() - ex.width) / 2 - ex.x_bearing,
 						   (page->getHeight() - ex.height) / 2 - ex.y_bearing);
-		cairo_show_text(cr2, txtLoading);
+		cairo_show_text(cr2, txtLoading.c_str());
 
 		cairo_destroy(cr2);
 		rerenderPage();
