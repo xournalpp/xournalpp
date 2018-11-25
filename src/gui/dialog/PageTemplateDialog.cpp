@@ -79,7 +79,7 @@ static void menu_position_func(GtkMenu* menu, int* x, int* y, gboolean* push_in,
 PageTemplateDialog::PageTemplateDialog(GladeSearchpath* gladeSearchPath, Settings* settings, PageTypeHandler* types)
  : GladeGui(gladeSearchPath, "pageTemplate.glade", "templateDialog"),
    settings(settings),
-   pageMenu(new PageTypeMenu(types, settings, false)),
+   pageMenu(new PageTypeMenu(types, settings, false, false)),
    saved(false)
 {
 	XOJ_INIT_TYPE(PageTemplateDialog);

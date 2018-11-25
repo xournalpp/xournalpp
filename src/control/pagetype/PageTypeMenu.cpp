@@ -14,7 +14,7 @@ PageTypeMenuChangeListener::~PageTypeMenuChangeListener() {}
 #define PREVIEW_COLUMNS 3
 
 
-PageTypeMenu::PageTypeMenu(PageTypeHandler* types, bool showPreview, Settings* settings, bool showSpecial)
+PageTypeMenu::PageTypeMenu(PageTypeHandler* types, Settings* settings, bool showPreview, bool showSpecial)
  : showSpecial(showSpecial),
    menu(gtk_menu_new()),
    types(types),
