@@ -1400,7 +1400,7 @@ void Control::changePageBackgroundColor()
 	clearSelectionEndText();
 
 	PageType bg = p->getBackgroundType();
-	if (!bg.isSpecial())
+	if (bg.isSpecial())
 	{
 		return;
 	}
