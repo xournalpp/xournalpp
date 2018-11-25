@@ -60,3 +60,8 @@ void XojExportHandler::writeSolidBackground(XmlNode* background, PageRef p)
 	background->setAttrib("style", format);
 }
 
+void XojExportHandler::writeTimestamp(Stroke* s, XmlPointNode* stroke)
+{
+	XOJ_CHECK_TYPE(XojExportHandler);	
+	//Do nothing since timestamp are not supported by Xournal
+}
