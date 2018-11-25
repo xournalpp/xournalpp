@@ -15,6 +15,14 @@ GraphBackgroundPainter::~GraphBackgroundPainter()
 	XOJ_RELEASE_TYPE(GraphBackgroundPainter);
 }
 
+void GraphBackgroundPainter::resetConfig()
+{
+	XOJ_CHECK_TYPE(GraphBackgroundPainter);
+
+	this->foregroundColor1 = 0xBDBDBD;
+	this->lineWidth = 0.5;
+}
+
 void GraphBackgroundPainter::paint()
 {
 	XOJ_CHECK_TYPE(GraphBackgroundPainter);
@@ -29,10 +37,9 @@ void GraphBackgroundPainter::paintBackgroundGraph()
 {
 	XOJ_CHECK_TYPE(GraphBackgroundPainter);
 
-	// Original Xournal Color: applyColor(cr, 0x40A0FF);
-	Util::cairo_set_source_rgbi(cr, 0xBDBDBD); // maybe I should read settings like these from ini configs
+	Util::cairo_set_source_rgbi(cr, this->foregroundColor1);
 
-	cairo_set_line_width(cr, 0.5);
+	cairo_set_line_width(cr, lineWidth * lineWidthFactor);
 
 	for (double x = graphSize; x < width; x += graphSize)
 	{
