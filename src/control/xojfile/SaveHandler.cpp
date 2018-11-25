@@ -110,6 +110,15 @@ string SaveHandler::getColorStr(int c, unsigned char alpha)
 	return color;
 }
 
+void SaveHandler::writeTimestamp(Stroke* s, XmlPointNode* stroke)
+{
+	XOJ_CHECK_TYPE(SaveHandler);
+
+	/** set stroke timestamp value to the XmlPointNode */
+	stroke->setAttrib("ts",s->getTimestamp());
+	stroke->setAttrib("fn",s->getAudioFilename());
+}
+
 void SaveHandler::visitLayer(XmlNode* page, Layer* l)
 {
 	XOJ_CHECK_TYPE(SaveHandler);
@@ -131,9 +140,7 @@ void SaveHandler::visitLayer(XmlNode* page, Layer* l)
 			if (t == STROKE_TOOL_PEN)
 			{
 				stroke->setAttrib("tool", "pen");
-				/** set stroke timestamp value to the XmlPointNode */
-				stroke->setTimestamp(s->getTimestamp());
-				stroke->setAudioFilename(s->getAudioFilename());
+				writeTimestamp(s,stroke);
 			}
 			else if (t == STROKE_TOOL_ERASER)
 			{

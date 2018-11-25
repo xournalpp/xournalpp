@@ -28,4 +28,5 @@ public:
 	static const char* getAttrib(const char* name, bool optional, LoadHandler* loadHandler);
 	static double getAttribDouble(const char* name, LoadHandler* loadHandler);
 	static int getAttribInt(const char* name, LoadHandler* loadHandler);
+	static bool getAttribInt(const char* name, bool optional, LoadHandler* loadHandler, int& rValue);
 };

@@ -13,11 +13,13 @@
 
 #include "model/Document.h"
 #include "model/PageRef.h"
+#include "model/Stroke.h"
 
 #include <OutputStream.h>
 #include <XournalType.h>
 
 class XmlNode;
+class XmlPointNode;
 class ProgressListener;
 
 class SaveHandler
@@ -39,6 +41,7 @@ protected:
 
 	virtual void writeHeader();
 	virtual void writeSolidBackground(XmlNode* background, PageRef p);
+	virtual void writeTimestamp(Stroke* s, XmlPointNode* stroke);
 
 protected:
 	XOJ_TYPE_ATTRIB;

@@ -508,6 +508,18 @@ void LoadHandler::parseStroke()
 	}
 	stroke->setColor(color);
 
+	/** read stroke timestamps (xopp fileformat) */
+	const char* fn = LoadHandlerHelper::getAttrib("fn",true,this);
+	int ts;
+	if (fn != NULL)
+	{
+		stroke->setAudioFilename(fn);
+	}
+	if (LoadHandlerHelper::getAttribInt("ts",true,this,ts))
+	{
+		stroke->setTimestamp(ts);
+	}
+
 	const char* tool = LoadHandlerHelper::getAttrib("tool", false, this);
 
 	if (strcmp("eraser", tool) == 0)
@@ -532,10 +544,13 @@ void LoadHandler::parseStroke()
 	 * we've read just before. 
 	 * Afterwards, clean the read timestamp data.
 	 */
-	this->stroke->setTimestamp(loadedTimeStamp);
-	this->stroke->setAudioFilename(loadedFilename);
-	loadedFilename = "";
-	loadedTimeStamp = 0;
+	if(loadedFilename.length() != 0)
+	{
+		this->stroke->setTimestamp(loadedTimeStamp);
+		this->stroke->setAudioFilename(loadedFilename);
+		loadedFilename = "";
+		loadedTimeStamp = 0;
+	}
 }
 
 void LoadHandler::parseText()
@@ -610,7 +625,11 @@ void LoadHandler::parseLayer()
 {
 	XOJ_CHECK_TYPE(LoadHandler);
 
-	/** read the timestamp before each stroke */
+	/** 
+	 * read the timestamp before each stroke. 
+	 * Used for backwards compatibility 
+	 * against xoj files with timestamps) 
+	 **/
 	if (!strcmp(elementName, "timestamp"))
 	{
 		loadedTimeStamp = LoadHandlerHelper::getAttribInt("ts", this);
@@ -706,6 +725,7 @@ void LoadHandler::parserEndElement(GMarkupParseContext* context, const gchar* el
 	}
 	else if (handler->pos == PARSER_POS_IN_LAYER && strcmp(element_name, "timestamp") == 0)
 	{
+		/** Used for backwards compatibility against xoj files with timestamps) */
 		handler->pos = PARSER_POS_IN_LAYER;
 		handler->stroke = NULL;
 	}

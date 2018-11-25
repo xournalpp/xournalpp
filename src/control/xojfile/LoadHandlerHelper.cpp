@@ -163,3 +163,27 @@ int LoadHandlerHelper::getAttribInt(const char* name, LoadHandler* loadHandler)
 	return val;
 }
 
+bool LoadHandlerHelper::getAttribInt(const char* name, bool optional, LoadHandler* loadHandler, int& rValue)
+{
+	const char* attrib = getAttrib(name, optional, loadHandler);
+
+	if (attrib == NULL)
+	{
+		if (!optional)
+		{
+			g_warning("Parser: attribute %s not found!", name);
+		}
+		return false;
+	}
+
+	char* ptr = NULL;
+	int val = strtol(attrib, &ptr, 10);
+	if (ptr == attrib)
+	{
+		error("%s", FC(_F("Attribute \"{1}\" could not be parsed as int, the value is \"{2}\"") % name % attrib));
+	}
+
+	rValue = val;
+
+	return true;
+}
