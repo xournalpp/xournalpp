@@ -1,6 +1,7 @@
 #include "GraphBackgroundPainter.h"
 
 #include <Util.h>
+#include <cmath>
 
 GraphBackgroundPainter::GraphBackgroundPainter()
 {
