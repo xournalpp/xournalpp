@@ -41,7 +41,7 @@ public:
 class PageTypeMenu
 {
 public:
-	PageTypeMenu(PageTypeHandler* types, bool showPreview, Settings* settings, bool showSpecial = true);
+	PageTypeMenu(PageTypeHandler* types, Settings* settings, bool showPreview, bool showSpecial);
 	virtual ~PageTypeMenu();
 
 public:
