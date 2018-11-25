@@ -5,9 +5,13 @@
 BaseBackgroundPainter::BaseBackgroundPainter()
  : cr(NULL),
    width(0),
-   height(0)
+   height(0),
+   backgroundColor1(0),
+   backgroundColor2(0)
 {
 	XOJ_INIT_TYPE(BaseBackgroundPainter);
+
+	resetConfig();
 }
 
 BaseBackgroundPainter::~BaseBackgroundPainter()
@@ -17,7 +21,12 @@ BaseBackgroundPainter::~BaseBackgroundPainter()
 	XOJ_RELEASE_TYPE(BaseBackgroundPainter);
 }
 
-void BaseBackgroundPainter::paint(cairo_t* cr, PageRef page, map<string, string>& config)
+void BaseBackgroundPainter::resetConfig()
+{
+	XOJ_CHECK_TYPE(BaseBackgroundPainter);
+}
+
+void BaseBackgroundPainter::paint(cairo_t* cr, PageRef page, BackgroundConfig* config)
 {
 	XOJ_CHECK_TYPE(BaseBackgroundPainter);
 
@@ -28,9 +37,13 @@ void BaseBackgroundPainter::paint(cairo_t* cr, PageRef page, map<string, string>
 	this->width = page->getWidth();
 	this->height = page->getHeight();
 
+	this->config->loadValueHex("b1", this->backgroundColor1);
+	this->config->loadValueHex("b2", this->backgroundColor2);
+
 	paint();
 
 	this->cr = NULL;
+	this->config = NULL;
 }
 
 void BaseBackgroundPainter::paint()

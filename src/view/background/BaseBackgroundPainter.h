@@ -11,15 +11,15 @@
 
 #pragma once
 
+#include "BackgroundConfig.h"
+
 #include "model/PageRef.h"
 
 #include <XournalType.h>
 
 #include <gtk/gtk.h>
 
-#include <map>
 #include <string>
-using std::map;
 using std::string;
 
 class BaseBackgroundPainter
@@ -29,8 +29,13 @@ public:
 	virtual ~BaseBackgroundPainter();
 
 public:
-	virtual void paint(cairo_t* cr, PageRef page, map<string, string>& config);
+	virtual void paint(cairo_t* cr, PageRef page, BackgroundConfig* config);
 	virtual void paint();
+
+	/**
+	 * Reset all used configuration values
+	 */
+	virtual void resetConfig();
 
 protected:
 	void paintBackgroundColor();
@@ -39,10 +44,26 @@ private:
 	XOJ_TYPE_ATTRIB;
 
 protected:
-	map<string, string> config;
+	BackgroundConfig* config;
 	PageRef page;
 	cairo_t* cr;
 
 	double width;
 	double height;
+
+	// Drawing attributes
+	// ParserKey=Value
+protected:
+	/**
+	 * b1=XXXXXX
+	 * e.g. FF0000 for Red
+	 */
+	int backgroundColor1;
+
+	/**
+	 * b2=XXXXXX
+	 * e.g. FF0000 for Red
+	 */
+	int backgroundColor2;
+
 };
