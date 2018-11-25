@@ -77,6 +77,23 @@ protected:
 	double lineWidth;
 
 	/**
+	 * r1=1.23
+	 */
+	double drawRaster1;
+
+	/**
+	 * m1=40
+	 */
+	double margin1;
+
+	/**
+	 * rm=1
+	 * Round margin = 0 => No rounding
+	 * Round margin = 1 => Round to next grid etc.
+	 */
+	int roundMargin;
+
+	/**
 	 * Line width factor, to use to draw Previews
 	 */
 	double lineWidthFactor;

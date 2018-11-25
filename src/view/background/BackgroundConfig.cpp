@@ -60,6 +60,20 @@ bool BackgroundConfig::loadValue(string key, int& value)
 	return false;
 }
 
+bool BackgroundConfig::loadValue(string key, double& value)
+{
+	XOJ_CHECK_TYPE(BackgroundConfig);
+
+	string str;
+	if (loadValue(key, str))
+	{
+		value = std::stoul(str, nullptr, 10);
+		return true;
+	}
+
+	return false;
+}
+
 bool BackgroundConfig::loadValueHex(string key, int& value)
 {
 	XOJ_CHECK_TYPE(BackgroundConfig);

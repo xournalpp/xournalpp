@@ -27,6 +27,7 @@ public:
 public:
 	bool loadValue(string key, string& value);
 	bool loadValue(string key, int& value);
+	bool loadValue(string key, double& value);
 	bool loadValueHex(string key, int& value);
 
 private:
