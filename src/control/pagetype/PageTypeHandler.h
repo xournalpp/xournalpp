@@ -27,10 +27,12 @@ public:
 	string name;
 };
 
+class GladeSearchpath;
+
 class PageTypeHandler
 {
 public:
-	PageTypeHandler();
+	PageTypeHandler(GladeSearchpath* gladeSearchPath);
 	virtual ~PageTypeHandler();
 
 public:
@@ -38,6 +40,8 @@ public:
 
 private:
 	void addPageTypeInfo(string name, string format, string config);
+	bool parseIni(string filename);
+	void loadFormat(GKeyFile* config, const char* group);
 
 private:
 	XOJ_TYPE_ATTRIB;

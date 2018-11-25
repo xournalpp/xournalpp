@@ -19,8 +19,9 @@ void LineBackgroundPainter::resetConfig()
 {
 	XOJ_CHECK_TYPE(LineBackgroundPainter);
 
-	this->backgroundColor1 = 0x40A0FF;
-	this->backgroundColor2 = 0xFF0080;
+	this->foregroundColor1 = 0x40A0FF;
+	this->foregroundColor2 = 0xFF0080;
+	this->lineWidth = 0.5;
 }
 
 void LineBackgroundPainter::paint()
@@ -43,8 +44,8 @@ void LineBackgroundPainter::paintBackgroundRuled()
 {
 	XOJ_CHECK_TYPE(LineBackgroundPainter);
 
-	Util::cairo_set_source_rgbi(cr, this->backgroundColor1);
-	cairo_set_line_width(cr, 0.5);
+	Util::cairo_set_source_rgbi(cr, this->foregroundColor1);
+	cairo_set_line_width(cr, lineWidth * lineWidthFactor);
 
 	for (double y = 80; y < height; y += roulingSize)
 	{
@@ -59,8 +60,8 @@ void LineBackgroundPainter::paintBackgroundLined()
 {
 	XOJ_CHECK_TYPE(LineBackgroundPainter);
 
-	Util::cairo_set_source_rgbi(cr, this->backgroundColor2);
-	cairo_set_line_width(cr, 0.5);
+	Util::cairo_set_source_rgbi(cr, this->foregroundColor2);
+	cairo_set_line_width(cr, lineWidth * lineWidthFactor);
 
 	cairo_move_to(cr, 72, 0);
 	cairo_line_to(cr, 72, height);

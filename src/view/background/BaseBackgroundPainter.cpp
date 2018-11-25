@@ -6,8 +6,10 @@ BaseBackgroundPainter::BaseBackgroundPainter()
  : cr(NULL),
    width(0),
    height(0),
-   backgroundColor1(0),
-   backgroundColor2(0)
+   foregroundColor1(0),
+   foregroundColor2(0),
+   lineWidth(0),
+   lineWidthFactor(1)
 {
 	XOJ_INIT_TYPE(BaseBackgroundPainter);
 
@@ -21,9 +23,20 @@ BaseBackgroundPainter::~BaseBackgroundPainter()
 	XOJ_RELEASE_TYPE(BaseBackgroundPainter);
 }
 
+/**
+ * Set a factor to draw the lines bolder, for previews
+ */
+void BaseBackgroundPainter::setLineWidthFactor(double factor)
+{
+	XOJ_CHECK_TYPE(BaseBackgroundPainter);
+
+	this->lineWidthFactor = factor;
+}
+
 void BaseBackgroundPainter::resetConfig()
 {
 	XOJ_CHECK_TYPE(BaseBackgroundPainter);
+	// Overwritten from the subclasses
 }
 
 void BaseBackgroundPainter::paint(cairo_t* cr, PageRef page, BackgroundConfig* config)
@@ -37,8 +50,8 @@ void BaseBackgroundPainter::paint(cairo_t* cr, PageRef page, BackgroundConfig* c
 	this->width = page->getWidth();
 	this->height = page->getHeight();
 
-	this->config->loadValueHex("b1", this->backgroundColor1);
-	this->config->loadValueHex("b2", this->backgroundColor2);
+	this->config->loadValueHex("f1", this->foregroundColor1);
+	this->config->loadValueHex("f2", this->foregroundColor2);
 
 	paint();
 

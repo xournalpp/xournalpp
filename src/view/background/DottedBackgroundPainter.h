@@ -25,6 +25,11 @@ public:
 	virtual void paint();
 	void paintBackgroundDotted();
 
+	/**
+	 * Reset all used configuration values
+	 */
+	virtual void resetConfig();
+
 private:
 	XOJ_TYPE_ATTRIB;
 };

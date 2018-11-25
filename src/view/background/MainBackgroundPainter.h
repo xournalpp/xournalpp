@@ -33,6 +33,11 @@ public:
 public:
 	virtual void paint(PageType pt, cairo_t* cr, PageRef page);
 
+	/**
+	 * Set a factor to draw the lines bolder, for previews
+	 */
+	void setLineWidthFactor(double factor);
+
 private:
 	XOJ_TYPE_ATTRIB;
 
