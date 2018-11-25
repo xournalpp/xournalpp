@@ -22,6 +22,7 @@ if test "$1" = "install"; then
   cp -f ${srcdir}/desktop/xournal.xml ${desktopdir}/mime/packages
   cp -f ${srcdir}/desktop/xournalpp.desktop ${desktopdir}/applications
   cp -f ${srcdir}/desktop/x-xoj.desktop /usr/share/mimelnk/application
+  cp -f ${srcdir}/desktop/x-xopp.desktop /usr/share/mimelnk/application
   
   cp -f ${srcdir}/desktop/xournalpp.thumbnailer /usr/share/thumbnailers
 else
