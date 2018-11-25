@@ -738,6 +738,11 @@ static gboolean gtk_xournal_draw(GtkWidget* widget, cairo_t* cr)
 
 	Rectangle clippingRect(x1 - 10, y1 - 10, x2 - x1 + 20, y2 - y1 + 20);
 
+	// This scaling factor is an int, but e.g. Ubuntu allow to configure
+	// float values in the settings, may this settings can be used
+	// but probably reported by another function
+	double scalingFactor = gtk_widget_get_scale_factor(widget);
+
 	while (it.hasNext())
 	{
 		XojPageView* pv = it.next();
@@ -757,7 +762,7 @@ static gboolean gtk_xournal_draw(GtkWidget* widget, cairo_t* cr)
 		cairo_save(cr);
 		cairo_translate(cr, px, py);
 
-		pv->paintPage(cr, NULL);
+		pv->paintPage(cr, NULL, scalingFactor);
 		cairo_restore(cr);
 	}
 
