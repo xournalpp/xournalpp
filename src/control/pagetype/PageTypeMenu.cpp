@@ -70,6 +70,17 @@ cairo_surface_t* PageTypeMenu::createPreviewImage(PageType pt)
 
 	backgroundPainter->paint(pt, cr, page);
 
+	cairo_identity_matrix(cr);
+
+	cairo_set_line_width(cr, 2);
+	cairo_set_source_rgb(cr, 0.8, 0.8, 0.8);
+	cairo_move_to(cr, 0, 0);
+	cairo_line_to(cr, previewWidth, 0);
+	cairo_line_to(cr, previewWidth, previewHeight);
+	cairo_line_to(cr, 0, previewHeight);
+	cairo_line_to(cr, 0, 0);
+	cairo_stroke(cr);
+
 	cairo_destroy(cr);
 	return surface;
 }
