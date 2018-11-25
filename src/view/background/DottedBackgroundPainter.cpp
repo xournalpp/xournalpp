@@ -21,6 +21,7 @@ void DottedBackgroundPainter::resetConfig()
 
 	this->foregroundColor1 = 0xBDBDBD;
 	this->lineWidth = 1.5;
+	this->drawRaster1 = 14.17;
 }
 
 void DottedBackgroundPainter::paint()
@@ -31,8 +32,6 @@ void DottedBackgroundPainter::paint()
 	paintBackgroundDotted();
 }
 
-const double graphSize = 14.17;
-
 void DottedBackgroundPainter::paintBackgroundDotted()
 {
 	XOJ_CHECK_TYPE(DottedBackgroundPainter);
@@ -42,9 +41,9 @@ void DottedBackgroundPainter::paintBackgroundDotted()
 	cairo_set_line_width(cr, lineWidth * lineWidthFactor);
 	cairo_set_line_cap(cr, CAIRO_LINE_CAP_ROUND);
 
-	for (double x = graphSize; x < width; x += graphSize)
+	for (double x = drawRaster1; x < width; x += drawRaster1)
 	{
-		for (double y = graphSize; y < height; y += graphSize)
+		for (double y = drawRaster1; y < height; y += drawRaster1)
 		{
 			cairo_move_to(cr, x, y);
 			cairo_line_to(cr, x, y);

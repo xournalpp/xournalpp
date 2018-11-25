@@ -9,6 +9,9 @@ BaseBackgroundPainter::BaseBackgroundPainter()
    foregroundColor1(0),
    foregroundColor2(0),
    lineWidth(0),
+   drawRaster1(1),
+   margin1(0),
+   roundMargin(0),
    lineWidthFactor(1)
 {
 	XOJ_INIT_TYPE(BaseBackgroundPainter);
@@ -52,6 +55,18 @@ void BaseBackgroundPainter::paint(cairo_t* cr, PageRef page, BackgroundConfig* c
 
 	this->config->loadValueHex("f1", this->foregroundColor1);
 	this->config->loadValueHex("f2", this->foregroundColor2);
+
+	this->config->loadValue("lw", this->lineWidth);
+	this->config->loadValue("r1", this->drawRaster1);
+
+	this->config->loadValue("m1", this->margin1);
+	this->config->loadValue("rm", this->roundMargin);
+
+	// If the raster is two small, we get an andless loop....
+	if (drawRaster1 < 1)
+	{
+		drawRaster1 = 1;
+	}
 
 	paint();
 
