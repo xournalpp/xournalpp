@@ -98,7 +98,7 @@ Control::Control(GladeSearchpath* gladeSearchPath)
 	this->settings->load();
 
 	this->pageTypes = new PageTypeHandler();
-	this->newPageType = new PageTypeMenu(this->pageTypes, settings);
+	this->newPageType = new PageTypeMenu(this->pageTypes, true, settings);
 
 	this->sidebar = NULL;
 	this->searchBar = NULL;

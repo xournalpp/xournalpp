@@ -24,6 +24,7 @@ class PageTypeHandler;
 class PageTypeHandler;
 class PageTypeInfo;
 class Settings;
+class MainBackgroundPainter;
 
 typedef struct {
 	GtkWidget* entry;
@@ -40,7 +41,7 @@ public:
 class PageTypeMenu
 {
 public:
-	PageTypeMenu(PageTypeHandler* types, Settings* settings, bool showSpecial = true);
+	PageTypeMenu(PageTypeHandler* types, bool showPreview, Settings* settings, bool showSpecial = true);
 	virtual ~PageTypeMenu();
 
 public:
@@ -55,6 +56,7 @@ private:
 	void initDefaultMenu();
 	void addMenuEntry(PageTypeInfo* t);
 	void entrySelected(PageTypeInfo* t);
+	cairo_surface_t* createPreviewImage(PageType pt);
 
 private:
 	XOJ_TYPE_ATTRIB;
@@ -72,4 +74,11 @@ private:
 	bool ignoreEvents;
 
 	PageTypeMenuChangeListener* listener;
+
+	int menuX;
+	int menuY;
+
+	MainBackgroundPainter* backgroundPainter;
+
+	bool showPreview;
 };

@@ -4,19 +4,27 @@
 
 #include "control/settings/PageTemplateSettings.h"
 #include "control/settings/Settings.h"
+#include "view/background/MainBackgroundPainter.h"
 
 #include <i18n.h>
 
 PageTypeMenuChangeListener::~PageTypeMenuChangeListener() {}
 
 
-PageTypeMenu::PageTypeMenu(PageTypeHandler* types, Settings* settings, bool showSpecial)
+#define PREVIEW_COLUMNS 3
+
+
+PageTypeMenu::PageTypeMenu(PageTypeHandler* types, bool showPreview, Settings* settings, bool showSpecial)
  : showSpecial(showSpecial),
    menu(gtk_menu_new()),
    types(types),
    settings(settings),
    ignoreEvents(false),
-   listener(NULL)
+   listener(NULL),
+   menuX(0),
+   menuY(0),
+   backgroundPainter(NULL),
+   showPreview(showPreview)
 {
 	XOJ_INIT_TYPE(PageTypeMenu);
 
@@ -46,13 +54,78 @@ void PageTypeMenu::loadDefaultPage()
 	setSelected(model.getPageInsertType());
 }
 
+cairo_surface_t* PageTypeMenu::createPreviewImage(PageType pt)
+{
+	XOJ_CHECK_TYPE(PageTypeMenu);
+
+	int previewWidth = 100;
+	int previewHeight = 141;
+	double zoom = 0.5;
+
+	PageRef page = new XojPage(previewWidth / zoom, previewHeight / zoom);
+
+	cairo_surface_t* surface = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, previewWidth, previewHeight);
+	cairo_t* cr = cairo_create(surface);
+	cairo_scale(cr, zoom, zoom);
+
+	backgroundPainter->paint(pt, cr, page);
+
+	cairo_destroy(cr);
+	return surface;
+}
+
 void PageTypeMenu::addMenuEntry(PageTypeInfo* t)
 {
 	XOJ_CHECK_TYPE(PageTypeMenu);
 
-	GtkWidget* entry = gtk_check_menu_item_new_with_label(t->name.c_str());
-	gtk_widget_show(entry);
-	gtk_container_add(GTK_CONTAINER(menu), entry);
+	bool special = t->page.isSpecial();
+	bool showImg = !special && showPreview;
+
+	GtkWidget* entry = NULL;
+	if (showImg)
+	{
+		cairo_surface_t* img = createPreviewImage(t->page);
+		GtkWidget* preview = gtk_image_new_from_surface(img);
+		entry = gtk_check_menu_item_new();
+		gtk_container_add(GTK_CONTAINER(entry), preview);
+		gtk_widget_show_all(entry);
+	}
+	else
+	{
+		entry = gtk_check_menu_item_new_with_label(t->name.c_str());
+		gtk_widget_show(entry);
+		gtk_check_menu_item_set_draw_as_radio(GTK_CHECK_MENU_ITEM(entry), true);
+	}
+
+	if (showPreview)
+	{
+		if (special)
+		{
+			if (menuX != 0)
+			{
+				menuX = 0;
+				menuY++;
+			}
+
+			gtk_menu_attach(GTK_MENU(menu), entry, menuX, menuX + PREVIEW_COLUMNS, menuY, menuY + 1);
+			menuY++;
+		}
+		else
+		{
+			gtk_menu_attach(GTK_MENU(menu), entry, menuX, menuX + 1, menuY, menuY + 1);
+			menuX++;
+			if (menuX >= PREVIEW_COLUMNS)
+			{
+				menuX = 0;
+				menuY++;
+			}
+		}
+	}
+	else
+	{
+		gtk_container_add(GTK_CONTAINER(menu), entry);
+	}
+
 	gtk_check_menu_item_set_draw_as_radio(GTK_CHECK_MENU_ITEM(entry), true);
 
 	MenuCallbackInfo info;
@@ -139,6 +212,8 @@ void PageTypeMenu::initDefaultMenu()
 {
 	XOJ_CHECK_TYPE(PageTypeMenu);
 
+	this->backgroundPainter = new MainBackgroundPainter();
+
 	bool special = false;
 	for (PageTypeInfo* t : this->types->getPageTypes())
 	{
@@ -152,10 +227,28 @@ void PageTypeMenu::initDefaultMenu()
 			special = true;
 			GtkWidget* separator = gtk_separator_menu_item_new();
 			gtk_widget_show(separator);
-			gtk_container_add(GTK_CONTAINER(menu), separator);
+
+			if (showPreview)
+			{
+				if (menuX != 0)
+				{
+					menuX = 0;
+					menuY++;
+				}
+
+				gtk_menu_attach(GTK_MENU(menu), separator, menuX, menuX + PREVIEW_COLUMNS, menuY, menuY + 1);
+				menuY++;
+			}
+			else
+			{
+				gtk_container_add(GTK_CONTAINER(menu), separator);
+			}
 		}
 		addMenuEntry(t);
 	}
+
+	delete this->backgroundPainter;
+	this->backgroundPainter = NULL;
 }
 
 GtkWidget* PageTypeMenu::getMenu()
