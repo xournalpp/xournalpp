@@ -131,6 +131,7 @@ public:
 	int getY() const;
 
 	TexImage* getSelectedTex();
+	Text* getSelectedText();
 
 	Rectangle* getVisibleRect();
 	Rectangle getRect();

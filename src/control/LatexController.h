@@ -15,6 +15,7 @@
 #pragma once
 
 #include "model/PageRef.h"
+#include "model/Text.h"
 
 #include <XournalType.h>
 
@@ -23,6 +24,7 @@ using std::string;
 
 class Control;
 class TexImage;
+class Text;
 class Document;
 class XojPageView;
 class Layer;
@@ -127,4 +129,5 @@ private:
 	string texImage;
 
 	TexImage* selectedTexImage;
+	Text* selectedText;
 };

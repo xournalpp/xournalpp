@@ -46,7 +46,7 @@ void AudioController::recStartStop(bool rec)
 
 		printf("Start recording\n");
 		command = "xopp-recording.sh start " + getAudioFolder() + "/" + data;
-		std::cout<<"COMMAND: "<<command<<"\n";
+		//std::cout<<"COMMAND: "<<command<<"\n";
 	}
 	else if (this->recording)
 	{
