@@ -35,7 +35,7 @@ Hopefully you'll enjoy it!
 ## How to use audio record and playback feature:
 
 - Install `vlc` and make sure `curl` and `arecord` are present on your system 
-- Copy the script under `utility` folder to its corresponding absolute path
+- Make sure you installed xournalpp with `desktop-install` command (see install steps)
 - Under `vlc` settings: 
 - - enable `http interface` (see [this](https://github.com/azrafe7/vlc4youtube/blob/master/instructions/how-to-enable-vlc-web-interface.md) ) with blank username and password "password"
 - - tick `Allow only one instance` under `Interface -> Instance`
@@ -43,7 +43,9 @@ Hopefully you'll enjoy it!
 - Choose `Toolbar Left` layout under `View->Toolbars->Toolbar Left`
 
 You're ready to go! 
-Just press the red button to start/stop recording and use the `Play Object` tool to click on a stroke and listen to the corresponding audio
+Just press the red button to start/stop recording and use the `Play Object` tool to click on a stroke and listen to the corresponding audio.
+
+If you need to, you can edit the recording audio gain in the script under `/usr/local/bin/xopp-recording.sh` (an option for this will be availabe through xournalpp's settings in the future)
 
 ## Building
 
