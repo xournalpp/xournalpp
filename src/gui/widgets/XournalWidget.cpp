@@ -56,9 +56,6 @@ GType gtk_xournal_get_type(void)
 {
 	static GType gtk_xournal_type = 0;
 
-	/*
-	 * TODO: check if this is correct
-	 */
 	if(!gtk_xournal_type)
 	{
 		static const GTypeInfo gtk_xournal_info =
