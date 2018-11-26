@@ -345,13 +345,13 @@ void XournalView::onRealized(GtkWidget* widget, XournalView* view)
 void XournalView::zoom_gesture_begin_cb(GtkGesture* gesture, GdkEventSequence* sequence, XournalView* view)
 {
 	Layout* layout = gtk_xournal_get_layout(view->widget);
-	//Save visible rectangle at beginning of gesture
+	// Save visible rectangle at beginning of gesture
 	view->visRect_gesture_begin = layout->getVisibleRect();
 
 	view->zoom_gesture_begin = view->getZoom();
 	view->zoom_gesture_active = true;
 
-	//get center of bounding box
+	// get center of bounding box
 	ZoomControl* zoom = view->control->getZoomControl();
 	gtk_gesture_get_bounding_box_center(GTK_GESTURE(gesture), &zoom->zoom_center_x, &zoom->zoom_center_y);
 }
@@ -589,7 +589,9 @@ void XournalView::zoomChanged(double lastZoom)
 	ZoomControl* zoom = control->getZoomControl();
 
 	if (!view)
+	{
 		return;
+	}
 
 	//move this somewhere else maybe
 	layout->layoutPages();

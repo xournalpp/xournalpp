@@ -1080,13 +1080,6 @@ void TextEditor::repaintEditor()
 {
 	XOJ_CHECK_TYPE(TextEditor);
 
-	//	double x = this->text->getX();
-	//	double y = this->text->getY();
-	//	double width = this->text->getElementWidth() + 10;
-	//	double height = this->text->getElementHeight() + 10;
-	// TODO OPTIMIZE redraw if the filed is getting smaller (e.g. by pressing <ENTER>)
-	//       there is a repaint problem
-	//this->gui->repaintRect(x, y, width, height);
 	this->gui->repaintPage();
 }
 

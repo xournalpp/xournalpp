@@ -179,9 +179,8 @@ void SettingsDialog::load()
 	bool hidePresentationSidebar = false;
 
 	string hidden = settings->getFullscreenHideElements();
-	const char* element;
 	StringTokenizer tokenF(hidden, ',');
-	element = tokenF.next();
+	const char* element = tokenF.next();
 	while (element)
 	{
 		if (!strcmp("mainMenubar", element))

@@ -104,9 +104,7 @@ void BaseStrokeHandler::onButtonReleaseEvent(GdkEventButton* event)
 
 	UndoRedoHandler* undo = xournal->getControl()->getUndoRedoHandler();
 
-	undo->addUndoAction(new InsertUndoAction(page,
-	                                         layer,
-	                                         stroke));
+	undo->addUndoAction(new InsertUndoAction(page, layer, stroke));
 
 	//TODO: Take care of the ShapeRecognizer
 

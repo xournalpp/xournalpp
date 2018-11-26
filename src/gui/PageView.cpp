@@ -72,8 +72,8 @@ XojPageView::XojPageView(XournalView* xournal, PageRef page)
 
 	this->textEditor = NULL;
 
-	//this does not have to be deleted afterwards:
-	//(we need it for undo commands)
+	// this does not have to be deleted afterwards:
+	// (we need it for undo commands)
 	this->oldtext = NULL;
 
 	this->search = NULL;
@@ -887,7 +887,7 @@ bool XojPageView::actionDelete()
 	return false;
 }
 
-bool XojPageView::paintPage(cairo_t* cr, GdkRectangle* rect, double scalingFactor)
+bool XojPageView::paintPage(cairo_t* cr, GdkRectangle* rect)
 {
 	XOJ_CHECK_TYPE(XojPageView);
 

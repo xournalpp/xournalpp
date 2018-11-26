@@ -286,8 +286,8 @@ GdkCursor* Cursor::eraserCursor()
 
 	GdkCursor* cursor = gdk_cursor_new_from_surface(gdk_display_get_default(),
 													surface,
-													cursorSize/2.,
-													cursorSize/2.);
+													cursorSize / 2.0,
+													cursorSize / 2.0);
 
 	cairo_surface_destroy(surface);
 

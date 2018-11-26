@@ -179,24 +179,3 @@ static gboolean zoomcallib_draw(GtkWidget* widget, cairo_t* cr)
 
 	return TRUE;
 }
-
-/*
- * TODO: Do we need this?
-static void zoomcallib_destroy(GtkObject* object)
-{
-	ZoomCallib* callib;
-	ZoomCallibClass* klass;
-
-	g_return_if_fail(object != NULL);
-	g_return_if_fail(IS_ZOOM_CALLIB(object));
-
-	callib = ZOOM_CALLIB(object);
-
-	klass = (ZoomCallibClass*) gtk_type_class(gtk_widget_get_type());
-
-	if (GTK_OBJECT_CLASS(klass)->destroy)
-	{
-		(*GTK_OBJECT_CLASS(klass)->destroy)(object);
-	}
-}
-*/
