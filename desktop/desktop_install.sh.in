@@ -25,6 +25,7 @@ if test "$1" = "install"; then
   cp -f ${srcdir}/desktop/x-xopp.desktop /usr/share/mimelnk/application
   
   cp -f ${srcdir}/desktop/xournalpp.thumbnailer /usr/share/thumbnailers
+  cp -f ${srcdir}/utility/usr/local/bin/xopp-recording.sh /usr/local/bin/
 else
   rm -f ${desktopdir}/icons/hicolor/scalable/apps/xournalpp.svg
   rm -f ${desktopdir}/icons/hicolor/scalable/mimetypes/xoj.svg
@@ -38,6 +39,7 @@ else
   rm -f ${desktopdir}/applications/xournalpp.desktop
   rm -f /usr/share/mimelnk/application/x-xoj.desktop
   rm -f /usr/share/thumbnailers/xournalpp.thumbnailer
+  rm -f /usr/local/bin/xopp-recording.sh 
 fi
 
 echo "Updating desktop, mime, and icon databases.";
