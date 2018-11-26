@@ -1139,6 +1139,26 @@ TexImage* XojPageView::getSelectedTex()
 	return NULL;
 }
 
+Text* XojPageView::getSelectedText()
+{
+	XOJ_CHECK_TYPE(XojPageView);
+
+	EditSelection* theSelection = this->xournal->getSelection();
+	if (!theSelection)
+	{
+		return NULL;
+	}
+
+	for (Element* e : *theSelection->getElements())
+	{
+		if (e->getType() == ELEMENT_TEXT)
+		{
+			return (Text*) e;
+		}
+	}
+	return NULL;
+}
+
 Rectangle* XojPageView::getVisibleRect()
 {
 	XOJ_CHECK_TYPE(XojPageView);

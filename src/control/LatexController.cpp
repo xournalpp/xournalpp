@@ -29,7 +29,8 @@ LatexController::LatexController(Control* control)
    layer(NULL),
    // .png will be appended automatically => tex.png
    texImage(Util::getConfigFile("tex").string()),
-   selectedTexImage(NULL)
+   selectedTexImage(NULL),
+   selectedText(NULL)
 {
 	XOJ_INIT_TYPE(LatexController);
 }
@@ -146,19 +147,31 @@ void LatexController::findSelectedTexElement()
 	layer = page->getSelectedLayer();
 
 	selectedTexImage = view->getSelectedTex();
+	selectedText = view->getSelectedText();
 
-	if (selectedTexImage)
+	if (selectedTexImage || selectedText)
 	{
 		// this will get the position of the Latex properly
 		EditSelection* theSelection = control->getWindow()->getXournal()->getSelection();
 		posx = theSelection->getXOnView();
 		posy = theSelection->getYOnView();
 
-		imgwidth = selectedTexImage->getElementWidth();
-		imgheight = selectedTexImage->getElementHeight();
+		if (selectedTexImage)
+		{
+			initalTex = selectedTexImage->getText();
+			imgwidth = selectedTexImage->getElementWidth();
+			imgheight = selectedTexImage->getElementHeight();
+		}
+		else
+		{
+			initalTex += "\\text{";
+			initalTex += selectedText->getText();
+			initalTex += "}";
+			imgwidth = selectedText->getElementWidth();
+			imgheight = selectedText->getElementHeight();
+		}
 
 		texArea = imgwidth * imgheight;
-		initalTex = selectedTexImage->getText();
 	}
 
 	doc->unlock();
@@ -175,6 +188,7 @@ void LatexController::showTexEditDialog()
 	dlg->setTex(initalTex);
 	dlg->show(GTK_WINDOW(control->getWindow()->getWindow()));
 	currentTex = dlg->getTex();
+	currentTex += " ";
 
 	delete dlg;
 }
@@ -189,6 +203,13 @@ void LatexController::deleteOldImage()
 		view->getXournal()->deleteSelection(selection);
 		delete selection;
 		selectedTexImage = NULL;
+	}
+	else if (selectedText)
+	{
+		EditSelection* selection = new EditSelection(control->getUndoRedoHandler(), selectedText, view, page);
+		view->getXournal()->deleteSelection(selection);
+		delete selection;
+		selectedText = NULL;
 	}
 }
 
