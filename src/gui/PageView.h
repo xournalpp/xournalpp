@@ -219,7 +219,6 @@ private:
 
 	GMutex drawingMutex;
 
-	friend class InsertImageRunnable;
 	friend class RenderJob;
 	friend class InputHandler;
 };
