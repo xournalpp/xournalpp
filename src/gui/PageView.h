@@ -148,6 +148,11 @@ public: // event handler
 	 */
 	bool paintPage(cairo_t* cr, GdkRectangle* rect);
 
+	/**
+	 * Does the painting, called in synchronized block
+	 */
+	void paintPageSync(cairo_t* cr, GdkRectangle* rect);
+
 public: // listener
 	void rectChanged(Rectangle& rect);
 	void rangeChanged(Range &range);
@@ -162,6 +167,8 @@ private:
 	void playObjectAt(double x, double y);
 
 	void addRerenderRect(double x, double y, double width, double height);
+
+	void drawLoadingPage();
 
 public:
 	/**
