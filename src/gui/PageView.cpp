@@ -800,8 +800,6 @@ void XojPageView::addRerenderRect(double x, double y, double width, double heigh
 
 	Rectangle* rect = new Rectangle(x, y, width, height);
 
-	Rectangle dest;
-
 	g_mutex_lock(&this->repaintRectMutex);
 
 	for (Rectangle* r : this->rerenderRects)
@@ -887,41 +885,51 @@ bool XojPageView::actionDelete()
 	return false;
 }
 
-bool XojPageView::paintPage(cairo_t* cr, GdkRectangle* rect)
+void XojPageView::drawLoadingPage()
 {
 	XOJ_CHECK_TYPE(XojPageView);
 
 	static const string txtLoading = _("Loading...");
 
 	double zoom = xournal->getZoom();
-
-	g_mutex_lock(&this->drawingMutex);
-
 	int dispWidth = getDisplayWidth();
 	int dispHeight = getDisplayHeight();
 
+	this->crBuffer = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, dispWidth, dispHeight);
+	cairo_t* cr2 = cairo_create(this->crBuffer);
+	cairo_set_source_rgb(cr2, 1, 1, 1);
+	cairo_rectangle(cr2, 0, 0, dispWidth, dispHeight);
+	cairo_fill(cr2);
+
+	cairo_scale(cr2, zoom, zoom);
+
+	cairo_text_extents_t ex;
+	cairo_set_source_rgb(cr2, 0.5, 0.5, 0.5);
+	cairo_select_font_face(cr2, "Sans", CAIRO_FONT_SLANT_NORMAL, CAIRO_FONT_WEIGHT_BOLD);
+	cairo_set_font_size(cr2, 32.0);
+	cairo_text_extents(cr2, txtLoading.c_str(), &ex);
+	cairo_move_to(cr2, (page->getWidth() - ex.width) / 2 - ex.x_bearing,
+					   (page->getHeight() - ex.height) / 2 - ex.y_bearing);
+	cairo_show_text(cr2, txtLoading.c_str());
+
+	cairo_destroy(cr2);
+	rerenderPage();
+}
+
+/**
+ * Does the painting, called in synchronized block
+ */
+void XojPageView::paintPageSync(cairo_t* cr, GdkRectangle* rect)
+{
+	XOJ_CHECK_TYPE(XojPageView);
+
 	if (this->crBuffer == NULL)
 	{
-		this->crBuffer = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, dispWidth, dispHeight);
-		cairo_t* cr2 = cairo_create(this->crBuffer);
-		cairo_set_source_rgb(cr2, 1, 1, 1);
-		cairo_rectangle(cr2, 0, 0, dispWidth, dispHeight);
-		cairo_fill(cr2);
-
-		cairo_scale(cr2, zoom, zoom);
-
-		cairo_text_extents_t ex;
-		cairo_set_source_rgb(cr2, 0.5, 0.5, 0.5);
-		cairo_select_font_face(cr2, "Sans", CAIRO_FONT_SLANT_NORMAL, CAIRO_FONT_WEIGHT_BOLD);
-		cairo_set_font_size(cr2, 32.0);
-		cairo_text_extents(cr2, txtLoading.c_str(), &ex);
-		cairo_move_to(cr2, (page->getWidth() - ex.width) / 2 - ex.x_bearing,
-						   (page->getHeight() - ex.height) / 2 - ex.y_bearing);
-		cairo_show_text(cr2, txtLoading.c_str());
-
-		cairo_destroy(cr2);
-		rerenderPage();
+		drawLoadingPage();
 	}
+
+	double zoom = xournal->getZoom();
+	int dispWidth = getDisplayWidth();
 
 	cairo_save(cr);
 
@@ -970,7 +978,6 @@ bool XojPageView::paintPage(cairo_t* cr, GdkRectangle* rect)
 		this->verticalSpace->paint(cr, rect, zoom);
 	}
 
-
 	if (this->textEditor)
 	{
 		cairo_scale(cr, zoom, zoom);
@@ -988,10 +995,19 @@ bool XojPageView::paintPage(cairo_t* cr, GdkRectangle* rect)
 		this->search->paint(cr, rect, zoom, getSelectionColor());
 	}
 
-	if(this->inputHandler)
+	if (this->inputHandler)
 	{
 		this->inputHandler->draw(cr);
 	}
+}
+
+bool XojPageView::paintPage(cairo_t* cr, GdkRectangle* rect)
+{
+	XOJ_CHECK_TYPE(XojPageView);
+
+	g_mutex_lock(&this->drawingMutex);
+
+	paintPageSync(cr, rect);
 
 	g_mutex_unlock(&this->drawingMutex);
 	return true;
