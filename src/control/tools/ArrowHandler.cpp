@@ -18,7 +18,7 @@ ArrowHandler::~ArrowHandler()
 	XOJ_RELEASE_TYPE(ArrowHandler);
 }
 
-void ArrowHandler::drawShape(Point& c)
+void ArrowHandler::drawShape(Point& c, bool shiftDown)
 {
 	int count = stroke->getPointCount();
 

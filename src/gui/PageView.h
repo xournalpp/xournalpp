@@ -139,7 +139,7 @@ public:
 public: // event handler
 	bool onButtonPressEvent(GtkWidget* widget, GdkEventButton* event);
 	bool onButtonReleaseEvent(GtkWidget* widget, GdkEventButton* event);
-	bool onMotionNotifyEvent(GtkWidget* widget, GdkEventMotion* event);
+	bool onMotionNotifyEvent(GtkWidget* widget, GdkEventMotion* event, bool shiftDown);
 	void translateEvent(GdkEvent* event, int xOffset, int yOffset);
 
 	/**

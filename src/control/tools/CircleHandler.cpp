@@ -18,7 +18,7 @@ CircleHandler::~CircleHandler()
 	XOJ_RELEASE_TYPE(CircleHandler);
 }
 
-void CircleHandler::drawShape(Point& c)
+void CircleHandler::drawShape(Point& c, bool shiftDown)
 {
 	int count = stroke->getPointCount();
 

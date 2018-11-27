@@ -17,7 +17,7 @@ RectangleHandler::~RectangleHandler()
 	XOJ_RELEASE_TYPE(RectangleHandler);
 }
 
-void RectangleHandler::drawShape(Point& c)
+void RectangleHandler::drawShape(Point& c, bool shiftDown)
 {
 	int count = stroke->getPointCount();
 

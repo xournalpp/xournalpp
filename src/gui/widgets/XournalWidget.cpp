@@ -111,6 +111,7 @@ GtkWidget* gtk_xournal_new(XournalView* view, GtkScrollable* parent)
 	xoj->inScrolling = false;
 
 	xoj->selection = NULL;
+	xoj->shiftDown = false;
 
 	return GTK_WIDGET(xoj);
 }
@@ -137,14 +138,19 @@ static void gtk_xournal_class_init(GtkXournalClass* klass)
 	widget_class->destroy = gtk_xournal_destroy;
 }
 
-static gboolean gtk_xournal_key_press_event(GtkWidget* widget,
-                                            GdkEventKey* event)
+static gboolean gtk_xournal_key_press_event(GtkWidget* widget, GdkEventKey* event)
 {
 	g_return_val_if_fail(widget != NULL, FALSE);
 	g_return_val_if_fail(GTK_IS_XOURNAL(widget), FALSE);
 	g_return_val_if_fail(event != NULL, FALSE);
 
 	GtkXournal* xournal = GTK_XOURNAL(widget);
+
+	// Shift alone pressed. Is there a constant?
+	if (event->is_modifier && (event->keyval == 0xFFE1))
+	{
+		xournal->shiftDown = true;
+	}
 
 	EditSelection* selection = xournal->selection;
 	if (selection)
@@ -153,7 +159,7 @@ static gboolean gtk_xournal_key_press_event(GtkWidget* widget,
 
 		if ((event->state & GDK_MOD1_MASK) || (event->state & GDK_SHIFT_MASK))
 		{
-			if ( event->state & GDK_MOD1_MASK )
+			if (event->state & GDK_MOD1_MASK)
 			{
 				d = 1;
 			}
@@ -195,6 +201,11 @@ static gboolean gtk_xournal_key_release_event(GtkWidget* widget, GdkEventKey* ev
 	g_return_val_if_fail(event != NULL, false);
 
 	GtkXournal* xournal = GTK_XOURNAL(widget);
+
+	if (event->is_modifier && (event->state & GDK_SHIFT_MASK))
+	{
+		xournal->shiftDown = false;
+	}
 
 	return xournal->view->onKeyReleaseEvent(event);
 }
@@ -248,8 +259,7 @@ bool gtk_xournal_scroll_callback(GtkXournal* xournal)
 	return false;
 }
 
-static void gtk_xournal_scroll_mouse_event(GtkXournal* xournal,
-                                           GdkEventMotion* event)
+static void gtk_xournal_scroll_mouse_event(GtkXournal* xournal, GdkEventMotion* event)
 {
   // use root coordinates as reference point because
   //scrolling changes window relative coordinates
@@ -498,17 +508,15 @@ gboolean gtk_xournal_button_release_event(GtkWidget* widget, GdkEventButton* eve
 	return res;
 }
 
-gboolean gtk_xournal_motion_notify_event(GtkWidget* widget,
-                                         GdkEventMotion* event)
+gboolean gtk_xournal_motion_notify_event(GtkWidget* widget, GdkEventMotion* event)
 {
 	GtkXournal* xournal = GTK_XOURNAL(widget);
 	ToolHandler* h = xournal->view->getControl()->getToolHandler();
 
-  if (xournal->view->zoom_gesture_active)
-    {
-      return TRUE;
-    }
-
+	if (xournal->view->zoom_gesture_active)
+	{
+		return TRUE;
+	}
 
 	if (h->getToolType() == TOOL_HAND)
 	{
@@ -533,8 +541,7 @@ gboolean gtk_xournal_motion_notify_event(GtkWidget* widget,
 		}
 		else
 		{
-			CursorSelectionType selType = selection->getSelectionTypeForPos(ev.x, ev.y,
-			                                                                xournal->view->getZoom());
+			CursorSelectionType selType = selection->getSelectionTypeForPos(ev.x, ev.y, xournal->view->getZoom());
 			xournal->view->getCursor()->setMouseSelectionType(selType);
 		}
 		return true;
@@ -559,7 +566,7 @@ gboolean gtk_xournal_motion_notify_event(GtkWidget* widget,
 		if (xournal->currentInputPage == NULL || pv == xournal->currentInputPage)
 		{
 			pv->translateEvent((GdkEvent*) event, xournal->x, xournal->y);
-			return pv->onMotionNotifyEvent(widget, event);
+			return pv->onMotionNotifyEvent(widget, event, xournal->shiftDown);
 		}
 	}
 

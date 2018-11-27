@@ -18,13 +18,17 @@ RulerHandler::~RulerHandler()
 	XOJ_RELEASE_TYPE(RulerHandler);
 }
 
-void RulerHandler::drawShape(Point& currentPoint)
+void RulerHandler::drawShape(Point& currentPoint, bool shiftDown)
 {
 	int count = stroke->getPointCount();
 
 	if (count < 2)
 	{
 		stroke->addPoint(currentPoint);
+	}
+	else if (shiftDown)
+	{
+		stroke->setLastPoint(currentPoint.x, currentPoint.y);
 	}
 	else
 	{

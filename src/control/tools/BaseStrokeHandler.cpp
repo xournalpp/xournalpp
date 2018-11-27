@@ -27,7 +27,7 @@ void BaseStrokeHandler::draw(cairo_t* cr)
 	view.drawStroke(cr, stroke, 0);
 }
 
-bool BaseStrokeHandler::onMotionNotifyEvent(GdkEventMotion* event)
+bool BaseStrokeHandler::onMotionNotifyEvent(GdkEventMotion* event, bool shiftDown)
 {
 	XOJ_CHECK_TYPE(BaseStrokeHandler);
 
@@ -55,7 +55,7 @@ bool BaseStrokeHandler::onMotionNotifyEvent(GdkEventMotion* event)
 	this->redrawable->repaintRect(stroke->getX(), stroke->getY(),
 			stroke->getElementWidth(), stroke->getElementHeight());
 
-	drawShape(currentPoint);
+	drawShape(currentPoint, shiftDown);
 	
 	rect.add(stroke->boundingRect());
 	double w = stroke->getWidth();
