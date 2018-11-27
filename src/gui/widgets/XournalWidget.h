@@ -65,6 +65,11 @@ struct _GtkXournal
 	 * Selected content, if any
 	 */
 	EditSelection* selection;
+
+	/**
+	 * Shift is currently pressed
+	 */
+	bool shiftDown;
 };
 
 struct _GtkXournalClass

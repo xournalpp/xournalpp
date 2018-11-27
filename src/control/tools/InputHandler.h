@@ -53,7 +53,7 @@ public:
 	 * structures and queue repaints of the XojPageView
 	 * if necessary
 	 */
-	virtual bool onMotionNotifyEvent(GdkEventMotion* event) = 0;
+	virtual bool onMotionNotifyEvent(GdkEventMotion* event, bool shiftDown) = 0;
 
  	/**
 	 * The current input device for stroken, do not react on other devices (linke mices)

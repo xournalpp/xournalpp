@@ -20,7 +20,7 @@ public:
 	virtual ~ArrowHandler();
 
 private:
-	virtual void drawShape(Point& currentPoint);
+	virtual void drawShape(Point& currentPoint, bool shiftDown);
 
 private:
 	XOJ_TYPE_ATTRIB;

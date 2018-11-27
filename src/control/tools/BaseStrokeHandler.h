@@ -25,12 +25,12 @@ public:
 
 	void draw(cairo_t* cr);
 
-	bool onMotionNotifyEvent(GdkEventMotion* event);
+	bool onMotionNotifyEvent(GdkEventMotion* event, bool shiftDown);
 	void onButtonReleaseEvent(GdkEventButton* event);
 	void onButtonPressEvent(GdkEventButton* event);
 
 private:
-	virtual void drawShape(Point& currentPoint) = 0;
+	virtual void drawShape(Point& currentPoint, bool shiftDown) = 0;
 
 protected:
 	XOJ_TYPE_ATTRIB;

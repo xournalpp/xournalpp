@@ -42,7 +42,7 @@ void StrokeHandler::draw(cairo_t* cr)
 	cairo_mask_surface(cr, surfMask, visRect.x, visRect.y);
 }
 
-bool StrokeHandler::onMotionNotifyEvent(GdkEventMotion* event)
+bool StrokeHandler::onMotionNotifyEvent(GdkEventMotion* event, bool shiftDown)
 {
 	XOJ_CHECK_TYPE(StrokeHandler);
 

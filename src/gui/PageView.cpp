@@ -587,7 +587,7 @@ void XojPageView::resetShapeRecognizer()
 	}
 }
 
-bool XojPageView::onMotionNotifyEvent(GtkWidget* widget, GdkEventMotion* event)
+bool XojPageView::onMotionNotifyEvent(GtkWidget* widget, GdkEventMotion* event, bool shiftDown)
 {
 	XOJ_CHECK_TYPE(XojPageView);
 
@@ -599,7 +599,7 @@ bool XojPageView::onMotionNotifyEvent(GtkWidget* widget, GdkEventMotion* event)
 
 	if (containsPoint(x, y, true) &&
 		this->inputHandler &&
-		this->inputHandler->onMotionNotifyEvent(event))
+		this->inputHandler->onMotionNotifyEvent(event, shiftDown))
 	{
 		//input	handler used this event
 	}
