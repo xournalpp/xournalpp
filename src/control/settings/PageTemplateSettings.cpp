@@ -8,6 +8,7 @@ using std::stringstream;
 
 PageTemplateSettings::PageTemplateSettings()
  : copyLastPageSettings(true),
+   copyLastPageSize(false),
    pageWidth(595.275591),
    pageHeight(841.889764),
    backgroundColor(0xffffff)
@@ -36,6 +37,19 @@ void PageTemplateSettings::setCopyLastPageSettings(bool copyLastPageSettings)
 	this->copyLastPageSettings = copyLastPageSettings;
 }
 
+bool PageTemplateSettings::isCopyLastPageSize()
+{
+	XOJ_CHECK_TYPE(PageTemplateSettings);
+
+	return this->copyLastPageSize;
+}
+
+void PageTemplateSettings::setCopyLastPageSize(bool copyLastPageSize)
+{
+	XOJ_CHECK_TYPE(PageTemplateSettings);
+
+	this->copyLastPageSize = copyLastPageSize;
+}
 
 double PageTemplateSettings::getPageWidth()
 {
@@ -142,6 +156,10 @@ bool PageTemplateSettings::parse(string tpl)
 		{
 			copyLastPageSettings = value == "true";
 		}
+		else if (key == "copyLastPageSize")
+		{
+			copyLastPageSize = value == "true";
+		}
 		else if (key == "size")
 		{
 			pos = value.find("x");
@@ -174,6 +192,7 @@ string PageTemplateSettings::toString()
 
 	string str = "xoj/template\n";
 
+	str += string("copyLastPageSize=") + (copyLastPageSize ? "true" : "false") + "\n";
 	str += string("copyLastPageSettings=") + (copyLastPageSettings ? "true" : "false") + "\n";
 	str += string("size=") + std::to_string(pageWidth) + "x" + std::to_string(pageHeight) + "\n";
 	str += string("backgroundType=") + backgroundType.format + "\n";

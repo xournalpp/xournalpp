@@ -41,6 +41,9 @@ public:
 	bool isCopyLastPageSettings();
 	void setCopyLastPageSettings(bool copyLastPageSettings);
 
+	bool isCopyLastPageSize();
+	void setCopyLastPageSize(bool copyLastPageSize);
+
 	double getPageWidth();
 	void setPageWidth(double pageWidth);
 
@@ -61,6 +64,11 @@ private:
 	 * Copy the settings from the last page
 	 */
 	bool copyLastPageSettings;
+
+	/**
+	 * Copy the last page size
+	 */
+	bool copyLastPageSize;
 
 	double pageWidth;
 	double pageHeight;
