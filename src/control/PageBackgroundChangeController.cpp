@@ -292,6 +292,11 @@ void PageBackgroundChangeController::insertNewPage(size_t position)
 
 		// Set background Color
 		page->setBackgroundColor(model.getBackgroundColor());
+
+		if (model.isCopyLastPageSize() && current.isValid())
+		{
+			page->setSize(current->getWidth(), current->getHeight());
+		}
 	}
 
 	control->insertPage(page, position);

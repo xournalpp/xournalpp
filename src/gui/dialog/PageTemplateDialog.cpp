@@ -152,6 +152,7 @@ void PageTemplateDialog::updateDataFromModel()
 	pageMenu->setSelected(model.getBackgroundType());
 
 	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(get("cbCopyLastPage")), model.isCopyLastPageSettings());
+	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(get("cbCopyLastPageSize")), model.isCopyLastPageSize());
 }
 
 void PageTemplateDialog::pageSelected(PageTypeInfo* info)
@@ -168,6 +169,7 @@ void PageTemplateDialog::saveToModel()
 	XOJ_CHECK_TYPE(PageTemplateDialog);
 
 	model.setCopyLastPageSettings(gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(get("cbCopyLastPage"))));
+	model.setCopyLastPageSize(gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(get("cbCopyLastPageSize"))));
 
 	GdkRGBA color;
 	gtk_color_chooser_get_rgba(GTK_COLOR_CHOOSER(get("cbBackgroundButton")), &color);
