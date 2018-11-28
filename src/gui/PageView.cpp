@@ -885,7 +885,7 @@ bool XojPageView::actionDelete()
 	return false;
 }
 
-void XojPageView::drawLoadingPage()
+void XojPageView::drawLoadingPage(cairo_t* cr)
 {
 	XOJ_CHECK_TYPE(XojPageView);
 
@@ -895,24 +895,21 @@ void XojPageView::drawLoadingPage()
 	int dispWidth = getDisplayWidth();
 	int dispHeight = getDisplayHeight();
 
-	this->crBuffer = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, dispWidth, dispHeight);
-	cairo_t* cr2 = cairo_create(this->crBuffer);
-	cairo_set_source_rgb(cr2, 1, 1, 1);
-	cairo_rectangle(cr2, 0, 0, dispWidth, dispHeight);
-	cairo_fill(cr2);
+	cairo_set_source_rgb(cr, 1, 1, 1);
+	cairo_rectangle(cr, 0, 0, dispWidth, dispHeight);
+	cairo_fill(cr);
 
-	cairo_scale(cr2, zoom, zoom);
+	cairo_scale(cr, zoom, zoom);
 
+	cairo_set_source_rgb(cr, 0.5, 0.5, 0.5);
+	cairo_select_font_face(cr, "Sans", CAIRO_FONT_SLANT_NORMAL, CAIRO_FONT_WEIGHT_BOLD);
+	cairo_set_font_size(cr, 32.0);
 	cairo_text_extents_t ex;
-	cairo_set_source_rgb(cr2, 0.5, 0.5, 0.5);
-	cairo_select_font_face(cr2, "Sans", CAIRO_FONT_SLANT_NORMAL, CAIRO_FONT_WEIGHT_BOLD);
-	cairo_set_font_size(cr2, 32.0);
-	cairo_text_extents(cr2, txtLoading.c_str(), &ex);
-	cairo_move_to(cr2, (page->getWidth() - ex.width) / 2 - ex.x_bearing,
-					   (page->getHeight() - ex.height) / 2 - ex.y_bearing);
-	cairo_show_text(cr2, txtLoading.c_str());
+	cairo_text_extents(cr, txtLoading.c_str(), &ex);
+	cairo_move_to(cr, (page->getWidth() - ex.width) / 2 - ex.x_bearing,
+					  (page->getHeight() - ex.height) / 2 - ex.y_bearing);
+	cairo_show_text(cr, txtLoading.c_str());
 
-	cairo_destroy(cr2);
 	rerenderPage();
 }
 
@@ -925,7 +922,8 @@ void XojPageView::paintPageSync(cairo_t* cr, GdkRectangle* rect)
 
 	if (this->crBuffer == NULL)
 	{
-		drawLoadingPage();
+		drawLoadingPage(cr);
+		return;
 	}
 
 	double zoom = xournal->getZoom();
