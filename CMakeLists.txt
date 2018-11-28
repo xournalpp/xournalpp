@@ -117,9 +117,13 @@ if (LSB_RELEASE_ID_SHORT STREQUAL "Ubuntu" AND LSB_RELEASE_NUMBER_SHORT STREQUAL
   message ("Automatically set BUILD_POPPLER ON on Ubuntu 16.04")
 endif()
 
+set (POPPLER_MIN_VER "0.58")
+set (POPPLER_MAX_VER  "0.68")
+set (POPPLER_BUILD_FROM "git" CACHE STRING "Source to build poppler from: git (default), tarball, sourcefolder")
 set (POPPLER_GIT_VER "0.61.1" CACHE STRING "Version of Poppler to build")
-option (POPPLER_GIT "Use git version of Poppler" ON)
-set(POPPLER_DIR "/path/to/poppler/source" CACHE STRING "Directory with poppler")
+set (POPPLER_SRC_DIR "/path/to/poppler/source" CACHE STRING "Directory with poppler source")
+set (POPPLER_SRC_TARXZ "/path/to/poppler.tar.xz" CACHE STRING "Tarball file location")
+
 if (BUILD_POPPLER)
   # For documentation see https://gitlab.kitware.com/cmake/community/wikis/doc/cmake/RPATH-handling
   set(POPPLER_LIB_DIR ${CMAKE_INSTALL_PREFIX}/bin/xournalpplib)
@@ -129,8 +133,7 @@ if (BUILD_POPPLER)
   include (ExternalProject)
   set (POPPLER_PREFIX "${CMAKE_BINARY_DIR}/poppler-prefix")
   set (POPPLER_CMAKE_ARGS "-DBUILD_QT5_TESTS=OFF -DENABLE_UTILS=OFF -DENABLE_QT5=OFF -DENABLE_QT4=OFF -DBUILD_QT4_TESTS=OFF")
-  if (POPPLER_GIT)
-
+  if (POPPLER_BUILD_FROM STREQUAL "git")
     ExternalProject_Add (poppler
         GIT_REPOSITORY "git://git.freedesktop.org/git/poppler/poppler"
         GIT_TAG "poppler-${POPPLER_GIT_VER}"
@@ -139,14 +142,24 @@ if (BUILD_POPPLER)
         CMAKE_ARGS ${POPPLER_CMAKE_ARGS}
         INSTALL_COMMAND ""
     )
-  else ()
-     ExternalProject_Add (poppler
-        SOURCE_DIR "${POPPLER_DIR}"
+  elseif (POPPLER_BUILD_FROM STREQUAL "sourcefolder")
+    ExternalProject_Add (poppler
+        SOURCE_DIR "${POPPLER_SRC_DIR}"
         PREFIX "${POPPLER_PREFIX}"
 
         CMAKE_ARGS ${POPPLER_CMAKE_ARGS}
         INSTALL_COMMAND ""
     )
+  elseif (POPPLER_BUILD_FROM STREQUAL "tarball")
+	ExternalProject_Add (poppler
+        URL "${POPPLER_SRC_TARXZ}"
+        PREFIX "${POPPLER_PREFIX}"
+
+        CMAKE_ARGS ${POPPLER_CMAKE_ARGS}
+		INSTALL_COMMAND ""
+    )
+  else ()
+    message (FATAL_ERROR "Source to build poppler from must be: git (default), sourcefolder or tarball")
   endif()
   
   # Additional packages required by Poppler
@@ -207,9 +220,13 @@ if (BUILD_POPPLER)
 
 else ()
 
-  find_package (Poppler 0.58.0)
+  find_package (Poppler)
   if (NOT POPPLER_FOUND)
     message (FATAL_ERROR "Poppler not found – you should enable BUILD_POPPLER CMake flag")
+  elseif (POPPLER_VERSION VERSION_LESS ${POPPLER_MIN_VER})
+    message (FATAL_ERROR "Poppler too old - you should enable BUILD_POPPLER CMake flag")
+  elseif (POPPLER_VERSION VERSION_GREATER ${POPPLER_MAX_VER})
+    message (FATAL_ERROR "Poppler too new, Xournalpp has not been adapted jet - you should enable BUILD_POPPLER CMake flag")
   endif (NOT POPPLER_FOUND)
 
 endif ()
