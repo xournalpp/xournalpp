@@ -17,7 +17,7 @@ env:
   global:
    # The next declaration is the encrypted COVERITY_SCAN_TOKEN, created
    #   via the "travis encrypt" command using the project repo's public key
-   - secure: "DxwzqXcJV/9qPwUCi7DQrqzeU73ACRhS0i8suV9tYpUDJ7ZuwwSK/GMVt2jMTNjZbJwKFv8ELLu0MIdTfX3UvG+++lfxLx4yldEwl4CtjPJaClB2rTou2SAiZPMBMyX6eHKfx0XB4xtsqwtKRIvF47tB9i3w+aPcb8C4DE6hXmU="
+   - secure: "gbpO001CnG6qPdcDr3t9SYL/C9DnxJZBeaAt+jKrd7SJ3Db0cKfVJRs9BTVrpznuoMNpb3T8R6gludUGNgxn2OkASHrlPBoK6xp4Npo4LVfbA6LVQsXr7znQnBueOQ//5WUhYoKGrbaeuxGAAcCxVNnCwmwp+nACPMobYUcGvlXc0Qx3Ao1PTKnk0lYCnkWlHxBcSZoUDjOCmanEvavNxapq29bnouO6EWEpu1tp0UngG0rA6irMOcSMmg7GtxJpk0uJ4JQm0GHWI2swU5VptKdS3cJ1o04+l9sfvElv2ekgNKlp1tqsJJpzg6VHwtt5kOkfzD8MfV0CY6084LEGAKz92uIHFdDI9jOlGJ0idjQyumWV59yVXw0a6visBzHzwEKxh4OgMS2GIdIfkzD1ipDz0Oq6bPaW6ueJ8fkQIaenwGqSiCyyfA9ULyqz/erSrV6rYBtBcgmer661RmVeEfZoa6O5TETEzRIMowJnOuU9PTrkoPmsSyfTXloeWpD3gkk7+2W7mLm/HXlKV1NJnT3fnq3lmgEmd2yoGB49aWTa3cf0xa0lnXlHqXAAmdvduebKN10byf3wcaDkb5ZzcF7iWYqYtUgiWGDX2lnN7kSFtjfF2+MkpfDQrKQyzxeIIzyjxFQ05ooZwcTW0R6X3EKGtwH8nUxSoMIsVUEGpGM="
 
 addons:
   apt:
@@ -42,7 +42,7 @@ addons:
     - kalakris-cmake
   coverity_scan:
     project:
-      name: "peetCreative/xournalpp"
+      name: "xournalpp/xournalpp"
       description: "Notetaking software designed around a tablet."
     notification_email: peter_klausing@wh2.tu-dresden.de
     build_command_prepend: "cmake .. -DBUILD_POPPLER=ON -DENABLE_MATHTEX=ON -DENABLE_CPPUNIT=ON -DUNSTABLE_LAYERS_SIDEBAR=ON"
