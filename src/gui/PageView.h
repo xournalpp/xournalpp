@@ -168,7 +168,7 @@ private:
 
 	void addRerenderRect(double x, double y, double width, double height);
 
-	void drawLoadingPage();
+	void drawLoadingPage(cairo_t* cr);
 
 public:
 	/**
