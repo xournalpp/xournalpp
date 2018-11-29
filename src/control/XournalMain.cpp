@@ -19,6 +19,7 @@
 #include <boost/algorithm/string/predicate.hpp>
 #include <boost/filesystem.hpp>
 #include <boost/locale.hpp>
+#undef ENABLE_NLS
 namespace bf = boost::filesystem;
 
 #include <string>
