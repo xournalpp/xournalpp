@@ -22,6 +22,13 @@ include (GitRepo)
 include (C++11)
 CheckCXX11 (FATAL_ERROR)
 
+## os specific library ending ##
+if (CMAKE_SYSTEM_NAME STREQUAL "Darwin")
+    set(LIB_ENDING "dylib")
+else ()
+    set(LIB_ENDING "so")
+endif ()
+
 ## Libraries ##
 
 macro (add_includes_ldflags LDFLAGS INCLUDES)
@@ -116,6 +123,11 @@ if (LSB_RELEASE_ID_SHORT STREQUAL "Ubuntu" AND LSB_RELEASE_NUMBER_SHORT STREQUAL
   set(BUILD_POPPLER ON)
   message ("Automatically set BUILD_POPPLER ON on Ubuntu 16.04")
 endif()
+## Mac OS X too
+if (CMAKE_SYSTEM_NAME STREQUAL "Darwin")
+  set(BUILD_POPPLER ON)
+  message ("Automatically set BUILD_POPPLER ON on Mac OS")
+endif ()
 
 set (POPPLER_MIN_VER "0.58")
 set (POPPLER_MAX_VER  "0.68")
@@ -190,10 +202,10 @@ if (BUILD_POPPLER)
     "${POPPLER_PREFIX}/src/poppler-build/utils"
   )
   set (POPPLER_LIBRARIES
-    libpoppler.so
-    libpoppler-cpp.so
-    libpoppler-glib.so
-    
+    "libpoppler.${LIB_ENDING}"
+    "libpoppler-cpp.${LIB_ENDING}"
+    "libpoppler-glib.${LIB_ENDING}"
+
     ${OPENJPEG_LIBRARIES}
 # Comment out, seems to be a problem on Debian...
 # Do we need to detect something to enable / disable?

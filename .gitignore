@@ -32,3 +32,8 @@ src/pdf/popplerdirect/workaround/workaround.sh
 
 # NetBeans
 nbproject/
+
+#CLion
+.idea
+cmake-build-debug
+cmake-build-release
