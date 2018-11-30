@@ -103,7 +103,8 @@ static void gtk_xournal_init_touch_handling(GtkXournal* xournal)
 			if (cfg->device == dev.getName())
 			{
 				printf("Disable device for drawing: %s\n", dev.getName().c_str());
-				gtk_widget_set_device_enabled(GTK_WIDGET(xournal), dev.getDevice(), false);
+//				gtk_widget_set_device_enabled(GTK_WIDGET(xournal), dev.getDevice(), false);
+				gtk_widget_set_device_events(GTK_WIDGET(xournal), dev.getDevice(), (GdkEventMask) 0);
 				return;
 			}
 		}
