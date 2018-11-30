@@ -19,7 +19,11 @@
 #include <boost/algorithm/string/predicate.hpp>
 #include <boost/filesystem.hpp>
 #include <boost/locale.hpp>
+
+#ifdef __APPLE__
 #undef ENABLE_NLS
+#endif
+
 namespace bf = boost::filesystem;
 
 #include <string>
