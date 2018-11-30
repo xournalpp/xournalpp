@@ -19,7 +19,7 @@
 #include <XojPreviewExtractor.h>
 
 namespace bl = boost::locale;
-
+#undef ENABLE_NLS
 #include <iostream>
 #include <fstream>
 using std::cerr;
