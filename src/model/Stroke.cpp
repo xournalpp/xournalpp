@@ -322,21 +322,15 @@ void Stroke::rotate(double x0, double y0, double th)
 
 		printf("BEFORE: x: %f y: %f\n",p.x,p.y);
 
-		/**
-		 * I must be overlooking something as this distorces the proportions:
-		 * 1) draw a circle
-		 * 2) resize it (this function will be called)
-		 * 3) the circle is misplaced and distorted
-		 */
-		
-		p.x -= x0;
-		double x1 = p.x * cos(th) - p.y * sin(th); 	//p.x *= fx;
-		p.x -= x1;
-		p.x += x0;
-
+		p.x -= x0;	//remove the position
 		p.y -= y0;
+
+		double x1 = p.x * cos(th) - p.y * sin(th); 	//p.x *= fx;
 		double y1 = p.y * cos(th) + p.x * sin(th);	//p.y *= fy;
-		p.y -= y1;
+		p.x = x1;
+		p.y = y1;
+
+		p.x += x0;	//restore the position
 		p.y += y0;
 
 		printf("AFTER: x: %f y: %f\n",p.x,p.y);
@@ -344,6 +338,7 @@ void Stroke::rotate(double x0, double y0, double th)
 	}
 	//Width and Height will likely be changed after this operation
 	calcSize();
+	//this->sizeCalculated = false;
 }
 
 void Stroke::scale(double x0, double y0, double fx, double fy)
@@ -359,12 +354,13 @@ void Stroke::scale(double x0, double y0, double fx, double fy)
 	for (int i = 0; i < this->pointCount; i++)
 	{
 		Point& p = this->points[i];
-
+		
 		p.x -= x0;
 		p.x *= fx;
 		p.x += x0;
 
 		p.y -= y0;
+		p.y *= fy;
 		p.y += y0;
 
 		if (p.z != Point::NO_PRESURE)
