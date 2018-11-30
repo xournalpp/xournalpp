@@ -320,10 +320,13 @@ void Stroke::rotate(double x0, double y0, double th)
 	{
 		Point& p = this->points[i];
 
+		printf("x0: %f y0: %f\n",x0,y0);
 		printf("BEFORE: x: %f y: %f\n",p.x,p.y);
 
-		p.x -= x0;	//remove the position
+		p.x -= x0;	//move to origin
 		p.y -= y0;
+
+		printf("Moving to origin... x: %f y: %f\n",p.x,p.y);
 
 		double x1 = p.x * cos(th) - p.y * sin(th); 	//p.x *= fx;
 		double y1 = p.y * cos(th) + p.x * sin(th);	//p.y *= fy;
@@ -346,7 +349,7 @@ void Stroke::scale(double x0, double y0, double fx, double fy)
 	XOJ_CHECK_TYPE(Stroke);
 
 	//ATM Just taking advantage of the scale action to inject and test
-	rotate(x0,y0,30);
+	rotate(x0,y0,0.785398);
 	return;
 
 	double fz = sqrt(fx * fy);
