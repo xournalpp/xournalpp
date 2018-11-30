@@ -10,6 +10,7 @@
 #include "gui/pageposition/PagePositionHandler.h"
 #include "gui/Shadow.h"
 #include "gui/XournalView.h"
+#include "util/DeviceListHelper.h"
 
 #include <config-debug.h>
 #include <Rectangle.h>
@@ -609,6 +610,25 @@ static void gtk_xournal_init(GtkXournal* xournal)
 	events |= GDK_SCROLL_MASK;
 
 	gtk_widget_set_events(widget, events);
+
+	Settings* settings = xournal->view->getControl()->getSettings();
+	ButtonConfig* cfg = settings->getTouchButtonConfig();
+
+	if (cfg->getDisableDrawing())
+	{
+		DeviceListHelper devList;
+		for (InputDevice& dev : devList.getDeviceList())
+		{
+			if (cfg->device == dev.getName())
+			{
+				printf("Disable device for drawing: %s\n", dev.getName().c_str());
+				gtk_widget_set_device_enabled(widget, dev.getDevice(), false);
+				return;
+			}
+		}
+
+		printf("Could NOT disable device for drawing!\n");
+	}
 }
 
 static void
