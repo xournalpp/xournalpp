@@ -90,6 +90,28 @@ GType gtk_xournal_get_type(void)
 	return gtk_xournal_type;
 }
 
+static void gtk_xournal_init_touch_handling(GtkXournal* xournal)
+{
+	Settings* settings = xournal->view->getControl()->getSettings();
+	ButtonConfig* cfg = settings->getTouchButtonConfig();
+
+	if (cfg->getDisableDrawing())
+	{
+		DeviceListHelper devList;
+		for (InputDevice& dev : devList.getDeviceList())
+		{
+			if (cfg->device == dev.getName())
+			{
+				printf("Disable device for drawing: %s\n", dev.getName().c_str());
+				gtk_widget_set_device_enabled(GTK_WIDGET(xournal), dev.getDevice(), false);
+				return;
+			}
+		}
+
+		printf("Could NOT disable device for drawing!\n");
+	}
+}
+
 GtkWidget* gtk_xournal_new(XournalView* view, GtkScrollable* parent)
 {
 	GtkXournal* xoj = GTK_XOURNAL(g_object_new(gtk_xournal_get_type(), NULL));
@@ -112,6 +134,8 @@ GtkWidget* gtk_xournal_new(XournalView* view, GtkScrollable* parent)
 
 	xoj->selection = NULL;
 	xoj->shiftDown = false;
+
+	gtk_xournal_init_touch_handling(xoj);
 
 	return GTK_WIDGET(xoj);
 }
@@ -581,9 +605,8 @@ gboolean gtk_xournal_touch_event(GtkWidget* widget, GdkEventTouch* event)
 	g_return_val_if_fail(GTK_IS_XOURNAL(widget), FALSE);
 	g_return_val_if_fail(event != NULL, FALSE);
 
-	//GtkXournal* xournal = GTK_XOURNAL(widget);
-
-	printf("Touch event!\n");
+	// GtkXournal* xournal = GTK_XOURNAL(widget);
+	// printf("Touch event!\n");
 
 	// Consume event
 	return true;
@@ -610,25 +633,6 @@ static void gtk_xournal_init(GtkXournal* xournal)
 	events |= GDK_SCROLL_MASK;
 
 	gtk_widget_set_events(widget, events);
-
-	Settings* settings = xournal->view->getControl()->getSettings();
-	ButtonConfig* cfg = settings->getTouchButtonConfig();
-
-	if (cfg->getDisableDrawing())
-	{
-		DeviceListHelper devList;
-		for (InputDevice& dev : devList.getDeviceList())
-		{
-			if (cfg->device == dev.getName())
-			{
-				printf("Disable device for drawing: %s\n", dev.getName().c_str());
-				gtk_widget_set_device_enabled(widget, dev.getDevice(), false);
-				return;
-			}
-		}
-
-		printf("Could NOT disable device for drawing!\n");
-	}
 }
 
 static void
