@@ -37,18 +37,17 @@ static void gtk_xournal_size_allocate(GtkWidget* widget,
 static void gtk_xournal_realize(GtkWidget* widget);
 static gboolean gtk_xournal_draw(GtkWidget* widget, cairo_t* cr);
 static void gtk_xournal_destroy(GtkWidget* object);
-static gboolean gtk_xournal_button_press_event(GtkWidget* widget,
-                                               GdkEventButton* event);
-static gboolean gtk_xournal_button_release_event(GtkWidget* widget,
-                                                 GdkEventButton* event);
-static gboolean gtk_xournal_motion_notify_event(GtkWidget* widget,
-                                                GdkEventMotion* event);
-static gboolean gtk_xournal_key_press_event(GtkWidget* widget,
-                                            GdkEventKey* event);
-static gboolean gtk_xournal_key_release_event(GtkWidget* widget,
-                                              GdkEventKey* event);
-static void gtk_xournal_scroll_mouse_event(GtkXournal* xournal,
-                                           GdkEventMotion* event);
+
+static gboolean gtk_xournal_button_press_event(GtkWidget* widget, GdkEventButton* event);
+static gboolean gtk_xournal_button_release_event(GtkWidget* widget, GdkEventButton* event);
+static gboolean gtk_xournal_motion_notify_event(GtkWidget* widget, GdkEventMotion* event);
+
+static gboolean gtk_xournal_touch_event(GtkWidget* widget, GdkEventTouch* event);
+
+static gboolean gtk_xournal_key_press_event(GtkWidget* widget, GdkEventKey* event);
+static gboolean gtk_xournal_key_release_event(GtkWidget* widget, GdkEventKey* event);
+
+static void gtk_xournal_scroll_mouse_event(GtkXournal* xournal, GdkEventMotion* event);
 
 XojPageView *current_view;
 
@@ -126,9 +125,12 @@ static void gtk_xournal_class_init(GtkXournalClass* klass)
 	widget_class->get_preferred_width = gtk_xournal_get_preferred_width;
 	widget_class->get_preferred_height = gtk_xournal_get_preferred_height;
 	widget_class->size_allocate = gtk_xournal_size_allocate;
+
 	widget_class->button_press_event = gtk_xournal_button_press_event;
 	widget_class->button_release_event = gtk_xournal_button_release_event;
 	widget_class->motion_notify_event = gtk_xournal_motion_notify_event;
+
+	widget_class->touch_event = gtk_xournal_touch_event;
 
 	widget_class->key_press_event = gtk_xournal_key_press_event;
 	widget_class->key_release_event = gtk_xournal_key_release_event;
@@ -261,26 +263,25 @@ bool gtk_xournal_scroll_callback(GtkXournal* xournal)
 
 static void gtk_xournal_scroll_mouse_event(GtkXournal* xournal, GdkEventMotion* event)
 {
-  // use root coordinates as reference point because
-  //scrolling changes window relative coordinates
-  //see github Gnome/evince@1adce5486b10e763bed869
-  int x_root = event->x_root;
-  int y_root = event->y_root;
+	// use root coordinates as reference point because
+	// scrolling changes window relative coordinates
+	// see github Gnome/evince@1adce5486b10e763bed869
+	int x_root = event->x_root;
+	int y_root = event->y_root;
 
-	if (xournal->lastMousePositionX - x_root == 0 &&
-	    xournal->lastMousePositionY - y_root == 0)
+	if (xournal->lastMousePositionX - x_root == 0 && xournal->lastMousePositionY - y_root == 0)
 	{
 		return;
 	}
 
 	if (xournal->scrollOffsetX == 0 && xournal->scrollOffsetY == 0)
 	{
-    xournal->scrollOffsetX = xournal->lastMousePositionX - x_root;
-    xournal->scrollOffsetY = xournal->lastMousePositionY - y_root;
+		xournal->scrollOffsetX = xournal->lastMousePositionX - x_root;
+		xournal->scrollOffsetY = xournal->lastMousePositionY - y_root;
 
 		g_idle_add((GSourceFunc) gtk_xournal_scroll_callback, xournal);
 		//gtk_xournal_scroll_callback(xournal);
-    xournal->lastMousePositionX = x_root;
+		xournal->lastMousePositionX = x_root;
 		xournal->lastMousePositionY = y_root;
 	}
 }
@@ -573,6 +574,20 @@ gboolean gtk_xournal_motion_notify_event(GtkWidget* widget, GdkEventMotion* even
 	return false;
 }
 
+gboolean gtk_xournal_touch_event(GtkWidget* widget, GdkEventTouch* event)
+{
+	g_return_val_if_fail(widget != NULL, FALSE);
+	g_return_val_if_fail(GTK_IS_XOURNAL(widget), FALSE);
+	g_return_val_if_fail(event != NULL, FALSE);
+
+	GtkXournal* xournal = GTK_XOURNAL(widget);
+
+	printf("Touch event!\n");
+
+	// Consume event
+	return true;
+}
+
 static void gtk_xournal_init(GtkXournal* xournal)
 {
 	GtkWidget* widget = GTK_WIDGET(xournal);
@@ -583,7 +598,8 @@ static void gtk_xournal_init(GtkXournal* xournal)
 	events |= GDK_POINTER_MOTION_MASK;
 	events |= GDK_EXPOSURE_MASK;
 	events |= GDK_BUTTON_MOTION_MASK;
-	// not sure if GDK_TOUCH_MASK is needed
+
+	// See documentation: https://developer.gnome.org/gtk3/stable/chap-input-handling.html
 	events |= GDK_TOUCH_MASK;
 	events |= GDK_BUTTON_PRESS_MASK;
 	events |= GDK_BUTTON_RELEASE_MASK;
