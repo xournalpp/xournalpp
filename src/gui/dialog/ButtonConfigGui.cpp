@@ -206,6 +206,8 @@ void ButtonConfigGui::loadSettings()
 				gtk_combo_box_set_active(GTK_COMBO_BOX(cbDevice), i + 1);
 				break;
 			}
+
+			i++;
 		}
 
 		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(cbDisableDrawing), cfg->disableDrawing);
