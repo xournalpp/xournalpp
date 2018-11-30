@@ -22,11 +22,11 @@
 class LatexDialog : public GladeGui
 {
   public:
-	LatexDialog(GladeSearchpath *gladeSearchPath);
+	LatexDialog(GladeSearchpath* gladeSearchPath);
 	virtual ~LatexDialog();
 
   public:
-	virtual void show(GtkWindow *parent);
+	virtual void show(GtkWindow* parent);
 	void save();
 	void load();
 
@@ -35,8 +35,8 @@ class LatexDialog : public GladeGui
 	string getTex();
 	
 	//Set and retrieve temporary Tex render
-	void setTempRender(cairo_surface_t *cairoTexTempRender);
-	cairo_surface_t *getTempRender();
+	void setTempRender(cairo_surface_t* cairoTexTempRender);
+	cairo_surface_t* getTempRender();
 
 	//Necessary for the controller in order to connect the 'text-changed'
 	//signal handler
@@ -46,10 +46,10 @@ class LatexDialog : public GladeGui
 	XOJ_TYPE_ATTRIB;
 	
 	//Temporary render
-	GtkWidget *texTempRender;
-	cairo_surface_t *cairoTexTempRender;
+	GtkWidget* texTempRender;
+	cairo_surface_t* cairoTexTempRender;
 	
 	//Text field
-	GtkWidget *texBox;
+	GtkWidget* texBox;
 	string theLatex;
 };

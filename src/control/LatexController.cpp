@@ -17,7 +17,7 @@
 using std::cout;
 using std::endl;
 
-LatexController::LatexController(Control *control)
+LatexController::LatexController(Control* control)
 	: control(control),
 	  texArea(0),
 	  posx(0),
@@ -60,7 +60,7 @@ bool LatexController::findTexExecutable()
 		return true;
 	}
 
-	gchar *mathtex = g_find_program_in_path("mathtex-xournalpp.cgi");
+	gchar* mathtex = g_find_program_in_path("mathtex-xournalpp.cgi");
 	if (!mathtex)
 	{
 		return false;
@@ -209,7 +209,9 @@ void LatexController::showTexEditDialog()
  */
 void LatexController::handleTexChanged(GtkWidget *widget, gpointer data)
 {
-	LatexController *thisContr = ((LatexController *)data);
+	XOJ_CHECK_TYPE_OBJ(LatexController, data);
+
+	LatexController* thisContr = ((LatexController *)data);
 
 	thisContr->setCurrentTex(gtk_entry_get_text(GTK_ENTRY(widget)));
 	thisContr->deletePreviousRender();
@@ -218,22 +220,27 @@ void LatexController::handleTexChanged(GtkWidget *widget, gpointer data)
 	thisContr->setImageInDialog(thisContr->getTemporaryRender()->getImage());
 }
 
-TexImage* LatexController::getTemporaryRender(){
+TexImage* LatexController::getTemporaryRender()
+{
+	XOJ_CHECK_TYPE(LatexController);
 	return this->temporaryRender;
 }
 
-void LatexController::setImageInDialog(cairo_surface_t *image)
+void LatexController::setImageInDialog(cairo_surface_t* image)
 {
+	XOJ_CHECK_TYPE(LatexController);
 	dlg->setTempRender(image);
 }
 
 void LatexController::deletePreviousRender()
 {
+	XOJ_CHECK_TYPE(LatexController);
 	delete temporaryRender;
 }
 
 void LatexController::setCurrentTex(string currentTex)
 {
+	XOJ_CHECK_TYPE(LatexController);
 	this->currentTex = currentTex;
 }
 
@@ -243,14 +250,14 @@ void LatexController::deleteOldImage()
 
 	if (selectedTexImage)
 	{
-		EditSelection *selection = new EditSelection(control->getUndoRedoHandler(), selectedTexImage, view, page);
+		EditSelection* selection = new EditSelection(control->getUndoRedoHandler(), selectedTexImage, view, page);
 		view->getXournal()->deleteSelection(selection);
 		delete selection;
 		selectedTexImage = NULL;
 	}
 	else if (selectedText)
 	{
-		EditSelection *selection = new EditSelection(control->getUndoRedoHandler(), selectedText, view, page);
+		EditSelection* selection = new EditSelection(control->getUndoRedoHandler(), selectedText, view, page);
 		view->getXournal()->deleteSelection(selection);
 		delete selection;
 		selectedText = NULL;
@@ -262,9 +269,9 @@ void LatexController::insertTexImage(bool forTemporaryRender)
 	XOJ_CHECK_TYPE(LatexController);
 
 	string imgPath = texImage + ".png";
-	GFile *mygfile = g_file_new_for_path(imgPath.c_str());
-	GError *err = NULL;
-	GFileInputStream *in = g_file_read(mygfile, NULL, &err);
+	GFile* mygfile = g_file_new_for_path(imgPath.c_str());
+	GError* err = NULL;
+	GFileInputStream* in = g_file_read(mygfile, NULL, &err);
 	g_object_unref(mygfile);
 
 	if (err)
@@ -274,12 +281,12 @@ void LatexController::insertTexImage(bool forTemporaryRender)
 		return;
 	}
 
-	GdkPixbuf *pixbuf = gdk_pixbuf_new_from_stream(G_INPUT_STREAM(in), NULL, &err);
+	GdkPixbuf* pixbuf = gdk_pixbuf_new_from_stream(G_INPUT_STREAM(in), NULL, &err);
 	g_input_stream_close(G_INPUT_STREAM(in), NULL, NULL);
 
 	deleteOldImage();
 
-	TexImage *img = new TexImage();
+	TexImage* img = new TexImage();
 	img->setX(posx);
 	img->setY(posy);
 	img->setImage(pixbuf);
@@ -327,9 +334,9 @@ void LatexController::insertTexImage(bool forTemporaryRender)
 	control->getUndoRedoHandler()->addUndoAction(new InsertUndoAction(page, layer, img));
 
 	// Select element
-	EditSelection *selection = new EditSelection(control->getUndoRedoHandler(), img, view, page);
+	EditSelection* selection = new EditSelection(control->getUndoRedoHandler(), img, view, page);
 	view->getXournal()->setSelection(selection);
-	
+
 	return;
 }
 

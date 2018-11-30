@@ -44,13 +44,13 @@ void LatexDialog::setTempRender(cairo_surface_t *cairoTexTempRender)
 	gtk_image_set_from_surface(GTK_IMAGE(this->texTempRender), this->cairoTexTempRender);
 }
 
-cairo_surface_t *LatexDialog::getTempRender()
+cairo_surface_t* LatexDialog::getTempRender()
 {
 	XOJ_CHECK_TYPE(LatexDialog);
 	return this->cairoTexTempRender;
 }
 
-GtkWidget *LatexDialog::getTexBox()
+GtkWidget* LatexDialog::getTexBox()
 {
 	XOJ_CHECK_TYPE(LatexDialog);
 	return this->texBox;
