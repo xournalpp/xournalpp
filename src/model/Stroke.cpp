@@ -312,9 +312,47 @@ void Stroke::move(double dx, double dy)
 	this->sizeCalculated = false;
 }
 
+void Stroke::rotate(double x0, double y0, double th)
+{
+	XOJ_CHECK_TYPE(Stroke);
+
+	for (int i = 0; i < this->pointCount; i++)
+	{
+		Point& p = this->points[i];
+
+		printf("BEFORE: x: %f y: %f\n",p.x,p.y);
+
+		/**
+		 * I must be overlooking something as this distorces the proportions:
+		 * 1) draw a circle
+		 * 2) resize it (this function will be called)
+		 * 3) the circle is misplaced and distorted
+		 */
+		
+		p.x -= x0;
+		double x1 = p.x * cos(th) - p.y * sin(th); 	//p.x *= fx;
+		p.x -= x1;
+		p.x += x0;
+
+		p.y -= y0;
+		double y1 = p.y * cos(th) + p.x * sin(th);	//p.y *= fy;
+		p.y -= y1;
+		p.y += y0;
+
+		printf("AFTER: x: %f y: %f\n",p.x,p.y);
+		
+	}
+	//Width and Height will likely be changed after this operation
+	calcSize();
+}
+
 void Stroke::scale(double x0, double y0, double fx, double fy)
 {
 	XOJ_CHECK_TYPE(Stroke);
+
+	//ATM Just taking advantage of the scale action to inject and test
+	rotate(x0,y0,30);
+	return;
 
 	double fz = sqrt(fx * fy);
 
@@ -327,7 +365,6 @@ void Stroke::scale(double x0, double y0, double fx, double fy)
 		p.x += x0;
 
 		p.y -= y0;
-		p.y *= fy;
 		p.y += y0;
 
 		if (p.z != Point::NO_PRESURE)
