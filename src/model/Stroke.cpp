@@ -320,9 +320,6 @@ void Stroke::rotate(double x0, double y0, double th)
 	{
 		Point& p = this->points[i];
 
-		printf("x0: %f y0: %f\n",x0,y0);
-		printf("BEFORE: x: %f y: %f\n",p.x,p.y);
-
 		p.x -= x0;	//move to origin
 		p.y -= y0;
 
@@ -341,6 +338,8 @@ void Stroke::rotate(double x0, double y0, double th)
 	}
 	//Width and Height will likely be changed after this operation
 	calcSize();
+	//TODO: center the rotation
+
 	//this->sizeCalculated = false;
 }
 
