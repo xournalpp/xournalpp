@@ -7,6 +7,7 @@
 
 #include <config.h>
 #include <i18n.h>
+#include <Util.h>
 
 #define	ADD_TYPE_CB(icon, name, action) \
 	gtk_list_store_append(typeModel, &iter); \
@@ -166,12 +167,10 @@ void ButtonConfigGui::loadSettings()
 		gtk_combo_box_set_active(GTK_COMBO_BOX(cbThickness), 0);
 	}
 
-	GdkColor color = {0, 0, 0, 0};
-	color.red = (cfg->color >> 8) & 0xff00;
-	color.green = (cfg->color >> 0) & 0xff00;
-	color.blue = (cfg->color << 8) & 0xff00;
 
-	gtk_color_button_set_color(GTK_COLOR_BUTTON(colorButton), &color);
+	GdkRGBA color;
+	Util::apply_rgb_togdkrgba(color, cfg->color);
+	gtk_color_chooser_set_rgba(GTK_COLOR_CHOOSER(colorButton), &color);
 
 	gtk_combo_box_set_active(GTK_COMBO_BOX(this->cbDrawingType), cfg->drawingType);
 
@@ -255,10 +254,9 @@ void ButtonConfigGui::saveSettings()
 		cfg->size = TOOL_SIZE_NONE;
 	}
 
-	GdkColor color = {0, 0, 0, 0};
-	gtk_color_button_get_color(GTK_COLOR_BUTTON(colorButton), &color);
-
-	cfg->color = (color.red / 256) << 16 | (color.green / 256) << 8 | (color.blue / 256);
+	GdkRGBA color;
+	gtk_color_chooser_get_rgba(GTK_COLOR_CHOOSER(colorButton), &color);
+	cfg->color = Util::gdkrgba_to_hex(color);
 
 	cfg->drawingType = (DrawingType) gtk_combo_box_get_active(GTK_COMBO_BOX(this->cbDrawingType));
 
