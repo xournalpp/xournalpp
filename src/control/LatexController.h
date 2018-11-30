@@ -18,7 +18,7 @@
 #include "model/Text.h"
 
 #include <XournalType.h>
-
+#include "gui/dialog/LatexDialog.h"
 #include <string>
 using std::string;
 
@@ -50,13 +50,44 @@ private:
 	void findSelectedTexElement();
 
 	/**
+	 * If a previous image/text is selected, delete it 
+	 */
+	void deleteOldImage();
+
+	/**
 	 * Run LaTeX Command
 	 */
 	bool runCommand();
 
+	/**
+	 * Show the LaTex Editor dialog
+	 */
 	void showTexEditDialog();
-	void insertTexImage();
-	void deleteOldImage();
+
+	/**
+	 * Signal handler, updates the rendered image when the text in the editor changes
+	 */
+	static void handleTexChanged(GtkWidget* widget, gpointer data);
+
+	/*******/
+	//Wrappers for signal handler who can't access non-static fields 
+	//(see implementation for further explanation)
+	TexImage* getTemporaryRender();
+	void setImageInDialog(cairo_surface_t* image);
+	void deletePreviousRender();
+	void setCurrentTex(string currentTex);
+	/*******/
+
+	/**
+	 * Actual image creation, if 'forTemporaryRender' is true, it does not
+	 * add the image to the doc because it means that it has been called
+	 * during the render in the Editor dialog
+	 */
+	void insertTexImage(bool forTemporaryRender);
+	
+	
+	
+	
 
 private:
 	XOJ_TYPE_ATTRIB;
@@ -128,6 +159,21 @@ private:
 	 */
 	string texImage;
 
+	/**
+	 * Previously existin TexImage
+	 */
 	TexImage* selectedTexImage;
+
 	Text* selectedText;
+
+	/**
+	 * LaTex editor dialog
+	 */
+	LatexDialog* dlg;
+
+	/**
+	 * The controller holds the 'on-the-go' render in order
+	 * to be able to delete it when a new render is created
+	 */
+	TexImage* temporaryRender;
 };

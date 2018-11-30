@@ -11,26 +11,26 @@
 #include <Stacktrace.h>
 
 #include <boost/filesystem.hpp>
+#include "pixbuf-utils.h"
 
 #include <iostream>
 using std::cout;
 using std::endl;
 
-
-LatexController::LatexController(Control* control)
- : control(control),
-   texArea(0),
-   posx(0),
-   posy(0),
-   imgwidth(0),
-   imgheight(0),
-   doc(control->getDocument()),
-   view(NULL),
-   layer(NULL),
-   // .png will be appended automatically => tex.png
-   texImage(Util::getConfigFile("tex").string()),
-   selectedTexImage(NULL),
-   selectedText(NULL)
+LatexController::LatexController(Control *control)
+	: control(control),
+	  texArea(0),
+	  posx(0),
+	  posy(0),
+	  imgwidth(0),
+	  imgheight(0),
+	  doc(control->getDocument()),
+	  view(NULL),
+	  layer(NULL),
+	  // .png will be appended automatically => tex.png
+	  texImage(Util::getConfigFile("tex").string()),
+	  selectedTexImage(NULL),
+	  selectedText(NULL)
 {
 	XOJ_INIT_TYPE(LatexController);
 }
@@ -60,7 +60,7 @@ bool LatexController::findTexExecutable()
 		return true;
 	}
 
-	gchar* mathtex = g_find_program_in_path("mathtex-xournalpp.cgi");
+	gchar *mathtex = g_find_program_in_path("mathtex-xournalpp.cgi");
 	if (!mathtex)
 	{
 		return false;
@@ -71,7 +71,6 @@ bool LatexController::findTexExecutable()
 
 	return true;
 }
-
 
 /**
  * Run LaTeX Command
@@ -108,13 +107,10 @@ bool LatexController::runCommand()
 	{
 		texres = "1000";
 	}
-
-	string command = FS(bl::format("{1} -m 0 \"\\png\\usepackage{{color}}\\color{{{2}}}\\dpi{{{3}}}\\normalsize {4}\" -o {5}")
-						% binTex % "black" % texres
-						% g_strescape(currentTex.c_str(), NULL) % texImage);
+	string command = FS(bl::format("{1} -m 0 \"\\png\\usepackage{{color}}\\color{{{2}}}\\dpi{{{3}}}\\normalsize {4}\" -o {5}") % binTex % fontcolour % texres % g_strescape(currentTex.c_str(), NULL) % texImage);
 
 	gint rt = 0;
-	void(*texhandler)(int) = signal(SIGCHLD, SIG_DFL);
+	void (*texhandler)(int) = signal(SIGCHLD, SIG_DFL);
 	gboolean success = g_spawn_command_line_sync(command.c_str(), NULL, NULL, &rt, NULL);
 	signal(SIGCHLD, texhandler);
 
@@ -152,7 +148,7 @@ void LatexController::findSelectedTexElement()
 	if (selectedTexImage || selectedText)
 	{
 		// this will get the position of the Latex properly
-		EditSelection* theSelection = control->getWindow()->getXournal()->getSelection();
+		EditSelection *theSelection = control->getWindow()->getXournal()->getSelection();
 		posx = theSelection->getXOnView();
 		posy = theSelection->getYOnView();
 
@@ -173,7 +169,11 @@ void LatexController::findSelectedTexElement()
 
 		texArea = imgwidth * imgheight;
 	}
-
+	if (initalTex.empty())
+	{
+		initalTex = "x^2";
+	}
+	currentTex = initalTex;
 	doc->unlock();
 
 	// need to do this otherwise we can't remove the image for its replacement
@@ -184,13 +184,57 @@ void LatexController::showTexEditDialog()
 {
 	XOJ_CHECK_TYPE(LatexController);
 
-	LatexDialog* dlg = new LatexDialog(control->getGladeSearchPath());
+	dlg = new LatexDialog(control->getGladeSearchPath());
+	//For 'real time' LaTex rendering in the dialog
+	g_signal_connect(dlg->getTexBox(), "changed", G_CALLBACK(this->handleTexChanged), gpointer(this));
 	dlg->setTex(initalTex);
+	//The controller owns the tempRender because, on signal changed, he has to handle the old/new renders
+	insertTexImage(true);
+	dlg->setTempRender(temporaryRender->getImage());
 	dlg->show(GTK_WINDOW(control->getWindow()->getWindow()));
+	deletePreviousRender();
 	currentTex = dlg->getTex();
 	currentTex += " ";
 
 	delete dlg;
+}
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * Text-changed handler: when the Entry in the dialog changes,
+ * this handler updates currentTex, removes the previous existing render and creates
+ * a new one. We need to do it through 'thisContr' because signal handlers
+ * cannot directly access non-static methods and non-static fields such as
+ * 'dlg' so we need to wrap all the dlg method inside small methods in 'thisContr'
+ * 
+ */
+void LatexController::handleTexChanged(GtkWidget *widget, gpointer data)
+{
+	LatexController *thisContr = ((LatexController *)data);
+
+	thisContr->setCurrentTex(gtk_entry_get_text(GTK_ENTRY(widget)));
+	thisContr->deletePreviousRender();
+	thisContr->runCommand();
+	thisContr->insertTexImage(true);
+	thisContr->setImageInDialog(thisContr->getTemporaryRender()->getImage());
+}
+
+TexImage* LatexController::getTemporaryRender(){
+	return this->temporaryRender;
+}
+
+void LatexController::setImageInDialog(cairo_surface_t *image)
+{
+	dlg->setTempRender(image);
+}
+
+void LatexController::deletePreviousRender()
+{
+	delete temporaryRender;
+}
+
+void LatexController::setCurrentTex(string currentTex)
+{
+	this->currentTex = currentTex;
 }
 
 void LatexController::deleteOldImage()
@@ -199,29 +243,28 @@ void LatexController::deleteOldImage()
 
 	if (selectedTexImage)
 	{
-		EditSelection* selection = new EditSelection(control->getUndoRedoHandler(), selectedTexImage, view, page);
+		EditSelection *selection = new EditSelection(control->getUndoRedoHandler(), selectedTexImage, view, page);
 		view->getXournal()->deleteSelection(selection);
 		delete selection;
 		selectedTexImage = NULL;
 	}
 	else if (selectedText)
 	{
-		EditSelection* selection = new EditSelection(control->getUndoRedoHandler(), selectedText, view, page);
+		EditSelection *selection = new EditSelection(control->getUndoRedoHandler(), selectedText, view, page);
 		view->getXournal()->deleteSelection(selection);
 		delete selection;
 		selectedText = NULL;
 	}
 }
 
-void LatexController::insertTexImage()
+void LatexController::insertTexImage(bool forTemporaryRender)
 {
 	XOJ_CHECK_TYPE(LatexController);
 
 	string imgPath = texImage + ".png";
-
-	GFile* mygfile = g_file_new_for_path(imgPath.c_str());
-	GError* err = NULL;
-	GFileInputStream* in = g_file_read(mygfile, NULL, &err);
+	GFile *mygfile = g_file_new_for_path(imgPath.c_str());
+	GError *err = NULL;
+	GFileInputStream *in = g_file_read(mygfile, NULL, &err);
 	g_object_unref(mygfile);
 
 	if (err)
@@ -231,12 +274,12 @@ void LatexController::insertTexImage()
 		return;
 	}
 
-	GdkPixbuf* pixbuf = gdk_pixbuf_new_from_stream(G_INPUT_STREAM(in), NULL, &err);
+	GdkPixbuf *pixbuf = gdk_pixbuf_new_from_stream(G_INPUT_STREAM(in), NULL, &err);
 	g_input_stream_close(G_INPUT_STREAM(in), NULL, NULL);
 
 	deleteOldImage();
 
-	TexImage* img = new TexImage();
+	TexImage *img = new TexImage();
 	img->setX(posx);
 	img->setY(posy);
 	img->setImage(pixbuf);
@@ -244,7 +287,7 @@ void LatexController::insertTexImage()
 
 	if (imgheight)
 	{
-		double ratio = (gdouble) gdk_pixbuf_get_width(pixbuf) / gdk_pixbuf_get_height(pixbuf);
+		double ratio = (gdouble)gdk_pixbuf_get_width(pixbuf) / gdk_pixbuf_get_height(pixbuf);
 		if (ratio == 0)
 		{
 			if (imgwidth == 0)
@@ -268,6 +311,14 @@ void LatexController::insertTexImage()
 		img->setHeight(gdk_pixbuf_get_height(pixbuf));
 	}
 
+	//Calling this function for 'on-the-go' LaTex render too, so
+	//if this is that case, return to the caller at this point
+	if (forTemporaryRender)
+	{
+		this->temporaryRender = img;
+		return;
+	}
+
 	doc->lock();
 	layer->addElement(img);
 	view->rerenderElement(img);
@@ -276,8 +327,10 @@ void LatexController::insertTexImage()
 	control->getUndoRedoHandler()->addUndoAction(new InsertUndoAction(page, layer, img));
 
 	// Select element
-	EditSelection* selection = new EditSelection(control->getUndoRedoHandler(), img, view, page);
+	EditSelection *selection = new EditSelection(control->getUndoRedoHandler(), img, view, page);
 	view->getXournal()->setSelection(selection);
+	
+	return;
 }
 
 void LatexController::run()
@@ -310,6 +363,7 @@ void LatexController::run()
 		return;
 	}
 
-	insertTexImage();
+	//False, because it's not for temporary render but this time
+	//we add it to the document
+	insertTexImage(false);
 }
-
