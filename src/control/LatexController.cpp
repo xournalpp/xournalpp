@@ -209,7 +209,7 @@ void LatexController::showTexEditDialog()
  */
 void LatexController::handleTexChanged(GtkWidget *widget, gpointer data)
 {
-	XOJ_CHECK_TYPE_OBJ(LatexController, data);
+	XOJ_CHECK_TYPE_OBJ(data, LatexController);
 
 	LatexController* thisContr = ((LatexController *)data);
 
