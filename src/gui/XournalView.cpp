@@ -61,15 +61,14 @@ XournalView::XournalView(GtkWidget* parent, Control* control)
 	// pinch-to-zoom
 	this->zoom_gesture_active = false;
 
-
 	// use parent as the gestures widget and not this->widget as gesture gets
 	// buggy otherwise (scrolling interferes with gestures scale value)
-	this->zoom_gesture = gtk_gesture_zoom_new (parent);
+	this->zoom_gesture = gtk_gesture_zoom_new(parent);
 
-	gtk_event_controller_set_propagation_phase (GTK_EVENT_CONTROLLER (this->zoom_gesture), GTK_PHASE_CAPTURE);
-	g_signal_connect (this->zoom_gesture, "begin", G_CALLBACK (zoom_gesture_begin_cb), this);
-	g_signal_connect (this->zoom_gesture, "scale-changed", G_CALLBACK (zoom_gesture_scale_changed_cb), this);
-	g_signal_connect (this->zoom_gesture, "end", G_CALLBACK (zoom_gesture_end_cb), this);
+	gtk_event_controller_set_propagation_phase(GTK_EVENT_CONTROLLER(this->zoom_gesture), GTK_PHASE_CAPTURE);
+	g_signal_connect(this->zoom_gesture, "begin", G_CALLBACK (zoom_gesture_begin_cb), this);
+	g_signal_connect(this->zoom_gesture, "scale-changed", G_CALLBACK (zoom_gesture_scale_changed_cb), this);
+	g_signal_connect(this->zoom_gesture, "end", G_CALLBACK (zoom_gesture_end_cb), this);
 }
 
 XournalView::~XournalView()

@@ -580,7 +580,7 @@ gboolean gtk_xournal_touch_event(GtkWidget* widget, GdkEventTouch* event)
 	g_return_val_if_fail(GTK_IS_XOURNAL(widget), FALSE);
 	g_return_val_if_fail(event != NULL, FALSE);
 
-	GtkXournal* xournal = GTK_XOURNAL(widget);
+	//GtkXournal* xournal = GTK_XOURNAL(widget);
 
 	printf("Touch event!\n");
 
