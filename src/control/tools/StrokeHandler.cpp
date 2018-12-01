@@ -285,38 +285,39 @@ bool StrokeHandler::getPressureMultiplier(GdkEvent* event, double& pressure)
 		return false;
 	}
 
-	gdouble* axes = event->button.axes;
-	try
+	// This causes some memory corruption
+//	gdouble* axes = event->button.axes;
+//	gdk_device_get_state(device,
+//						 gtk_widget_get_parent_window(xournal->getWidget()),
+//						 axes, NULL);
+//
+//	if (!gdk_device_get_axis(device, axes, GDK_AXIS_PRESSURE, &pressure))
+//	{
+//		pressure = 1.0;
+//		return false;
+//	}
+
+	double* axes;
+	if (event->type == GDK_MOTION_NOTIFY)
 	{
-		gdk_device_get_state(device,
-							 gtk_widget_get_parent_window(xournal->getWidget()),
-							 axes, NULL);
+		axes = event->motion.axes;
 	}
-	catch(...)
+	else
 	{
-		g_warning("Could not get pressure!");
-		pressure = 1.0;
-		return false;
+		axes = event->button.axes;
 	}
 
-	if (!gdk_device_get_axis(device, axes, GDK_AXIS_PRESSURE, &pressure))
-	{
-		pressure = 1.0;
-		return false;
-	}
-
-	// from the documentation:
-	// "The pressure field is a a double value ranging from 0.0 to 1.0"
-
+	pressure = axes[2];
 	Settings* settings = xournal->getControl()->getSettings();
 
-	if(!finite(pressure))
+	if (!finite(pressure))
 	{
 		pressure = 1.0;
+		return false;
 	}
 
-	pressure = ((1 - pressure) * settings->getWidthMinimumMultiplier() +
-	           pressure * settings->getWidthMaximumMultiplier());
+	pressure = ((1 - pressure) * settings->getWidthMinimumMultiplier()
+			+ pressure * settings->getWidthMaximumMultiplier());
 
 	return true;
 }
