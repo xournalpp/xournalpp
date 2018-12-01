@@ -338,7 +338,7 @@ void Stroke::rotate(double x0, double y0, double xo, double yo, double th)
 		p.x += x0;	//restore the position
 		p.y += y0;
 
-		p.x += xo-1;
+		p.x += xo-1;	//center it
 		p.y += yo-1;
 
 		printf("AFTER: x: %f y: %f\n",p.x,p.y);
