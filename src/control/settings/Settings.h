@@ -449,9 +449,14 @@ private:
 	bool autosaveEnabled;
 
 	/**
-	 * Allow scroll outside the page
+	 * Allow scroll outside the page (horizontal)
 	 */
-	bool addHorizontalSpace, addVerticalSpace;
+	bool addHorizontalSpace;
+
+	/**
+	 * Allow scroll outside the page (vertical)
+	 */
+	bool addVerticalSpace;
 
 	/**
 	 * Enable Bugfix to prevent crash on GTK 2.18 etc
@@ -461,7 +466,7 @@ private:
 	/**
 	 * Default name if you save a new document
 	 */
-	string defaultSaveName; //should be string - don't change to path
+	string defaultSaveName; // should be string - don't change to path
 
 	/**
 	 * The button config

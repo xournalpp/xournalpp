@@ -314,9 +314,9 @@ void Layout::layoutPages()
 		y += XOURNAL_PADDING_BETWEEN + verticalSpaceBetweenSlides;
 	}
 
-	int height = 2*marginTop + XOURNAL_PADDING + y + XOURNAL_PADDING;
+	int height = 2 * marginTop + XOURNAL_PADDING + y + XOURNAL_PADDING;
 
-	width += 2*marginLeft;
+	width += 2 * marginLeft;
 
 	this->setLayoutSize(width, height);
 	this->view->pagePosition->update(this->view->viewPages, len, height);
