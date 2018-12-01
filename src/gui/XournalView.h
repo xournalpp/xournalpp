@@ -106,11 +106,11 @@ public:
 
 	GtkContainer* getParent();
 public:
-	//ZoomListener interface
+	// ZoomListener interface
 	void zoomChanged(double lastZoom);
 
 public:
-	//DocumentListener interface
+	// DocumentListener interface
 	void pageSelected(size_t page);
 	void pageSizeChanged(size_t page);
 	void pageChanged(size_t page);

@@ -614,7 +614,7 @@ void XournalView::zoomChanged(double lastZoom)
 		return;
 	}
 
-	//move this somewhere else maybe
+	// move this somewhere else maybe
 	layout->layoutPages();
 
 	// Keep zoom center at static position in current view
@@ -622,18 +622,18 @@ void XournalView::zoomChanged(double lastZoom)
 	// in orignal version top left corner of first page static
 	// Pack into extra function later
 	double zoom_now = getZoom();
-	//relative scrolling
+	// relative scrolling
 	double zoom_eff = zoom_now / lastZoom;
 	int scroll_x;
 	int scroll_y;
-	//x,y position of visible rectangle for gesture scrolling
+	// x,y position of visible rectangle for gesture scrolling
 	int vis_x;
 	int vis_y;
-	//get margins for relative scroll calculation
+	// get margins for relative scroll calculation
 	double marginLeft = (double) view->layout.getMarginLeft();
 	double marginTop = (double) view->layout.getMarginTop();
 
-	//Absolute centred scrolling used for gesture
+	// Absolute centred scrolling used for gesture
 	if (this->zoom_gesture_active)
 	{
 		vis_x = (int) ((zoom->zoom_center_x - marginLeft) * (zoom_now / this->zoom_gesture_begin - 1));
@@ -641,7 +641,7 @@ void XournalView::zoomChanged(double lastZoom)
 		layout->scrollAbs(this->visRect_gesture_begin.x + vis_x, this->visRect_gesture_begin.y + vis_y);
 	}
 
-	//Relative centered scrolling used for SHIFT-mousewheel
+	// Relative centered scrolling used for SHIFT-mousewheel
 	if (zoom_eff != 1 && zoom->zoom_center_x != -1 && this->zoom_gesture_active == false)
 	{
 		scroll_x = (int) ((zoom->zoom_center_x - marginLeft) * (zoom_eff - 1));
