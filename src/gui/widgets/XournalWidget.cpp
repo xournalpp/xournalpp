@@ -92,26 +92,25 @@ GType gtk_xournal_get_type(void)
 
 static void gtk_xournal_init_touch_handling(GtkXournal* xournal)
 {
-// Currently does not work, needs further testing
-//	Settings* settings = xournal->view->getControl()->getSettings();
-//	ButtonConfig* cfg = settings->getTouchButtonConfig();
-//
-//	if (cfg->getDisableDrawing())
-//	{
-//		DeviceListHelper devList;
-//		for (InputDevice& dev : devList.getDeviceList())
-//		{
-//			if (cfg->device == dev.getName())
-//			{
-//				printf("Disable device for drawing: %s\n", dev.getName().c_str());
-////				gtk_widget_set_device_enabled(GTK_WIDGET(xournal), dev.getDevice(), false);
-//				gtk_widget_set_device_events(GTK_WIDGET(xournal), dev.getDevice(), (GdkEventMask) 0);
-//				return;
-//			}
-//		}
-//
-//		printf("Could NOT disable device for drawing!\n");
-//	}
+	// Currently does not work, needs further testing
+	Settings* settings = xournal->view->getControl()->getSettings();
+	ButtonConfig* cfg = settings->getTouchButtonConfig();
+
+	if (cfg->getDisableDrawing())
+	{
+		DeviceListHelper devList;
+		for (InputDevice& dev : devList.getDeviceList())
+		{
+			if (cfg->device == dev.getName())
+			{
+				printf("Disable device for drawing: %s\n", dev.getName().c_str());
+				gtk_widget_set_device_enabled(GTK_WIDGET(xournal), dev.getDevice(), false);
+				return;
+			}
+		}
+
+		printf("Could NOT disable device for drawing!\n");
+	}
 }
 
 GtkWidget* gtk_xournal_new(XournalView* view, GtkScrollable* parent)
