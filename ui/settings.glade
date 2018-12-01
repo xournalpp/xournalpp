@@ -999,6 +999,20 @@ Here you can disable your touchscreen.&lt;/i&gt;</property>
                               </packing>
                             </child>
                             <child>
+                              <object class="GtkLabel" id="label47">
+                                <property name="visible">True</property>
+                                <property name="can_focus">False</property>
+                                <property name="label" translatable="yes">Touch Screens which are detected by GTK are handled specially, and don't need to be configured here.</property>
+                                <property name="xalign">0</property>
+                              </object>
+                              <packing>
+                                <property name="expand">False</property>
+                                <property name="fill">True</property>
+                                <property name="padding">5</property>
+                                <property name="position">8</property>
+                              </packing>
+                            </child>
+                            <child>
                               <object class="GtkBox" id="hboxTouch">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
@@ -1009,7 +1023,7 @@ Here you can disable your touchscreen.&lt;/i&gt;</property>
                               <packing>
                                 <property name="expand">True</property>
                                 <property name="fill">True</property>
-                                <property name="position">8</property>
+                                <property name="position">9</property>
                               </packing>
                             </child>
                           </object>
