@@ -74,7 +74,7 @@ void ColorToolItem::enableColor(int color)
 
 	if (isSelector())
 	{
-		gtk_image_set_from_pixbuf(GTK_IMAGE(this->iconWidget), ToolbarUtil::newColorIconPixbuf(this->color, 16, !isSelector()));
+		gtk_image_set_from_pixbuf(GTK_IMAGE(this->iconWidget), ToolbarUtil::newColorIconPixbuf(color, 16, !isSelector()));
 		this->color = color;
 		if (GTK_IS_TOGGLE_BUTTON(this->item))
 		{
