@@ -535,8 +535,6 @@ gboolean gtk_xournal_button_release_event(GtkWidget* widget, GdkEventButton* eve
 	return res;
 }
 
-int dummyCounter = 0;
-
 gboolean gtk_xournal_motion_notify_event(GtkWidget* widget, GdkEventMotion* event)
 {
 	GtkXournal* xournal = GTK_XOURNAL(widget);
