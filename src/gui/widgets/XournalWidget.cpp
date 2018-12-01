@@ -540,6 +540,14 @@ gboolean gtk_xournal_motion_notify_event(GtkWidget* widget, GdkEventMotion* even
 	GtkXournal* xournal = GTK_XOURNAL(widget);
 	ToolHandler* h = xournal->view->getControl()->getToolHandler();
 
+	// Workaround to detect if the pen is there
+	GdkDevice* device = gdk_event_get_device((GdkEvent*)event);
+	int axesCount = gdk_device_get_n_axes(device);
+	if (axesCount >= 6)
+	{
+		xournal->view->penActionDetected();
+	}
+
 	if (xournal->view->zoom_gesture_active)
 	{
 		return TRUE;
@@ -606,11 +614,9 @@ gboolean gtk_xournal_touch_event(GtkWidget* widget, GdkEventTouch* event)
 	g_return_val_if_fail(GTK_IS_XOURNAL(widget), FALSE);
 	g_return_val_if_fail(event != NULL, FALSE);
 
-	// GtkXournal* xournal = GTK_XOURNAL(widget);
-	// printf("Touch event!\n");
-	// Currently does not really work
-	// It's getting called, but the events
-	// are not consumed!
+	// This handler consume some touch events
+	// Not fully working, but fixes some touch
+	// issues
 
 	// Consume event
 	return true;
@@ -635,6 +641,12 @@ static void gtk_xournal_init(GtkXournal* xournal)
 	events |= GDK_LEAVE_NOTIFY_MASK;
 	events |= GDK_KEY_PRESS_MASK;
 	events |= GDK_SCROLL_MASK;
+
+	// NOT Working with GTK3, only with GTK2
+	// Therefore listening for mouse move events
+	// of the pen, and add a timeout
+	//	events |= GDK_PROXIMITY_IN_MASK;
+	//	events |= GDK_PROXIMITY_OUT_MASK;
 
 	gtk_widget_set_events(widget, events);
 }

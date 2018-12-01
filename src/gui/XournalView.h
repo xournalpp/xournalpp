@@ -105,6 +105,18 @@ public:
 	Rectangle* getVisibleRect(XojPageView* redrawable);
 
 	GtkContainer* getParent();
+
+	/**
+	 * A pen action was detected now, therefore ignore touch events
+	 * for a short time
+	 */
+	void penActionDetected();
+
+	/**
+	 * If the pen was active a short time before, ignore touch events
+	 */
+	bool shouldIgnoreTouchEvents();
+
 public:
 	// ZoomListener interface
 	void zoomChanged(double lastZoom);
@@ -181,6 +193,11 @@ private:
 	 * Memory cleanup timeout
 	 */
 	int cleanupTimeout;
+
+	/**
+	 * Last Pen action, to ignore touch events within a time frame
+	 */
+	gint64 lastPenAction;
 
 	friend class Layout;
 };
