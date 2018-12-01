@@ -309,6 +309,28 @@ bool XournalView::onKeyPressEvent(GdkEventKey* event)
 		return true;
 	}
 
+	// vim like scrolling
+	if (event->keyval == GDK_KEY_j)
+	{
+		layout->scrollRelativ(0, 60);
+		return true;
+	}
+	if (event->keyval == GDK_KEY_k)
+	{
+		layout->scrollRelativ(0, -60);
+		return true;
+	}
+	if (event->keyval == GDK_KEY_h)
+	{
+		layout->scrollRelativ(-60, 0);
+		return true;
+	}
+	if (event->keyval == GDK_KEY_l)
+	{
+		layout->scrollRelativ(60, 0);
+		return true;
+	}
+
 	return false;
 }
 
