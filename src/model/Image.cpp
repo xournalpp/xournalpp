@@ -133,6 +133,11 @@ void Image::scale(double x0, double y0, double fx, double fy)
 	this->height *= fy;
 }
 
+void Image::rotate(double x0, double y0, double xo, double yo, double th)
+{
+	XOJ_CHECK_TYPE(Image);
+}
+
 void Image::serialize(ObjectOutputStream& out)
 {
 	XOJ_CHECK_TYPE(Image);

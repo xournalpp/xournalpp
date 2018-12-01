@@ -347,7 +347,8 @@ void EditSelectionContents::finalizeSelection(double x, double y, double width, 
 		}
 		if (scale)
 		{
-			e->scale(x, y, fx, fy);
+			//e->scale(x, y, fx, fy);	//QUI DEVO CHIAMARA LA ROTATE
+			e->rotate(x,y,this->originalWidth/2,this->originalHeight/2,0.785398);
 		}
 		layer->addElement(e);
 	}

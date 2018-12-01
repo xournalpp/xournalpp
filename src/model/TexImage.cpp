@@ -145,6 +145,11 @@ void TexImage::scale(double x0, double y0, double fx, double fy)
     this->height *= fy;
 }
 
+void TexImage::rotate(double x0, double y0, double xo, double yo, double th)
+{
+	XOJ_CHECK_TYPE(TexImage);
+}
+
 void TexImage::serialize(ObjectOutputStream& out)
 {
     XOJ_CHECK_TYPE(TexImage);

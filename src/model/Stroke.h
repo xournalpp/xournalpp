@@ -70,7 +70,7 @@ public:
 
 	virtual void move(double dx, double dy);
 	virtual void scale(double x0, double y0, double fx, double fy);
-	void rotate(double x0, double y0, double th);
+	virtual void rotate(double x0, double y0, double xo, double yo, double th);
 
 	virtual bool isInSelection(ShapeContainer* container);
 

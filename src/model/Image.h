@@ -33,6 +33,7 @@ public:
 	cairo_surface_t* getImage();
 
 	virtual void scale(double x0, double y0, double fx, double fy);
+	virtual void rotate(double x0, double y0, double xo, double yo, double th);
 
 	/**
 	 * @overwrite
