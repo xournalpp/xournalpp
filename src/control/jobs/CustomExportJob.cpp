@@ -56,7 +56,7 @@ bool CustomExportJob::isUriValid(string& uri)
 	string ext = filename.extension().string();
 	if (ext != ".pdf" && ext != ".png" && ext != ".xoj")
 	{
-		string msg = _C("File name needs to end with .pdf, .png or .xoj");
+		string msg = _("File name needs to end with .pdf, .png or .xoj");
 		Util::showErrorToUser(control->getGtkWindow(), msg);
 		return false;
 	}
