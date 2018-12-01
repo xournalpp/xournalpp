@@ -14,6 +14,9 @@
 #include <config.h>
 #include <XournalType.h>
 
+#include <string>
+using std::string;
+
 class GladeSearchpath;
 
 class XournalMain
@@ -32,7 +35,9 @@ private:
 	void checkForEmergencySave();
 
 	int exportPdf(const char* input, const char* output);
-	GladeSearchpath* initPath(const char* argv0);
+	void initSettingsPath();
+	void initResourcePath(GladeSearchpath* gladePath);
+	string findResourcePath(string searchFile);
 
 private:
 	XOJ_TYPE_ATTRIB;
