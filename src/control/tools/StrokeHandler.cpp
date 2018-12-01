@@ -286,9 +286,18 @@ bool StrokeHandler::getPressureMultiplier(GdkEvent* event, double& pressure)
 	}
 
 	gdouble* axes = event->button.axes;
-	gdk_device_get_state(device,
-	                     gtk_widget_get_parent_window(xournal->getWidget()),
-	                     axes, NULL);
+	try
+	{
+		gdk_device_get_state(device,
+							 gtk_widget_get_parent_window(xournal->getWidget()),
+							 axes, NULL);
+	}
+	catch(...)
+	{
+		g_warning("Could not get pressure!");
+		pressure = 1.0;
+		return false;
+	}
 
 	if (!gdk_device_get_axis(device, axes, GDK_AXIS_PRESSURE, &pressure))
 	{
