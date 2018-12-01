@@ -5,7 +5,7 @@ set (PROJECT_VERSION "1.0.2")
 set (PROJECT_PACKAGE "xournalpp")
 
 set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Xournal++: Notetaking software designed around a tablet")
-string(TIMESTAMP CPACK_PACKAGE_VERSION "nightly-build-%Y-%m-%dT%H:%M:%S")
+string(TIMESTAMP CPACK_PACKAGE_VERSION "nightly build-%Y-%m-%dT%H:%M:%S")
 set(CPACK_GENERATOR "DEB")
 set(CPACK_DEBIAN_PACKAGE_MAINTAINER "Xournal++ Team")
 
@@ -360,6 +360,52 @@ install (DIRECTORY ui
   COMPONENT xournalpp
 )
 
+# Install desktop shortcuts for Linux
+if (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
+	message ("Installing desktop files")
+	# Install desktop entry
+	#install(FILES data/albert.desktop DESTINATION /share/applications )
+
+	# Install icons
+	install(FILES ui/pixmaps/xournalpp.svg
+			DESTINATION ${CMAKE_INSTALL_PREFIX}/share/icons/hicolor/scalable/apps)
+	
+	# Symlink are not easy to use with CMake, therefor simple install a copy...
+	install(FILES ui/pixmaps/application-x-xopp.svg
+			DESTINATION ${CMAKE_INSTALL_PREFIX}/share/icons/hicolor/scalable/mimetypes/)
+	install(FILES ui/pixmaps/application-x-xopt.svg
+			DESTINATION ${CMAKE_INSTALL_PREFIX}/share/icons/hicolor/scalable/mimetypes/)
+	install(FILES ui/pixmaps/application-x-xoj.svg
+			DESTINATION ${CMAKE_INSTALL_PREFIX}/share/icons/hicolor/scalable/mimetypes/)
+
+	install(FILES ui/pixmaps/gnome-mime-application-x-xopp.svg
+			DESTINATION ${CMAKE_INSTALL_PREFIX}/share/icons/hicolor/scalable/mimetypes/)
+	install(FILES ui/pixmaps/application-x-xopt.svg
+			DESTINATION ${CMAKE_INSTALL_PREFIX}/share/icons/hicolor/scalable/mimetypes/)
+
+	install(FILES desktop/xournal.xml
+			DESTINATION ${CMAKE_INSTALL_PREFIX}/share/mime/packages)
+	install(FILES desktop/xournalpp.desktop
+			DESTINATION ${CMAKE_INSTALL_PREFIX}/share/applications)
+	install(FILES desktop/x-xoj.desktop
+			DESTINATION /usr/share/mimelnk/application)
+	install(FILES desktop/x-xopp.desktop
+			DESTINATION /usr/share/mimelnk/application)
+	
+	install(FILES desktop/xournalpp.thumbnailer
+			DESTINATION /usr/share/thumbnailers)
+	install(FILES utility/usr/local/bin/xopp-recording.sh
+			DESTINATION /usr/local/bin/)
+
+
+	install(CODE "
+		execute_process(COMMAND update-desktop-database)
+		execute_process(COMMAND update-mime-database ${CMAKE_INSTALL_PREFIX}/share/mime)
+		execute_process(COMMAND gtk-update-icon-cache -f -t ${CMAKE_INSTALL_PREFIX}/share/icons/hicolor)"
+	  )
+
+endif ()
+
 if (BUILD_POPPLER)
 	# Manual install Poppler libs
 	# RPATH is set before, so they will be loaded
@@ -387,33 +433,8 @@ configure_file (
 
 add_custom_target (uninstall
   COMMAND ${CMAKE_COMMAND} -P ${CMAKE_CURRENT_BINARY_DIR}/cmake/cmake_uninstall.cmake
-  DEPENDS desktop-uninstall
 
-  COMMENT "Uninstall entire xournalpp"
-)
-
-# Install desktop target
-configure_file (desktop/desktop_install.sh.in desktop/desktop_install.sh @ONLY)
-
-add_custom_target (desktop-install-xournalpp
-  COMMAND desktop/desktop_install.sh install
-
-  COMMENT "Install xournalpp desktop files"
-)
-
-add_custom_target (desktop-install
-  DEPENDS desktop-install-xournalpp desktop-install-thumbnailer
-)
-
-# Uninstall desktop target
-add_custom_target (desktop-uninstall-xournalpp
-  COMMAND desktop/desktop_install.sh uninstall
-
-  COMMENT "Uninstall xournalpp desktop files"
-)
-
-add_custom_target (desktop-uninstall
-  DEPENDS desktop-uninstall-xournalpp desktop-uninstall-thumbnailer
+  COMMENT "Uninstall entire Xournal++"
 )
 
 message ("
