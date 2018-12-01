@@ -286,6 +286,9 @@ bool StrokeHandler::getPressureMultiplier(GdkEvent* event, double& pressure)
 	}
 
 	// This causes some memory corruption
+	// If touch and pen is active at the same time
+	// Here are random crashes. It cannot be reproduced
+	// without touch and pen at the same time
 //	gdouble* axes = event->button.axes;
 //	gdk_device_get_state(device,
 //						 gtk_widget_get_parent_window(xournal->getWidget()),

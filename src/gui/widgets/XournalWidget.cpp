@@ -535,10 +535,20 @@ gboolean gtk_xournal_button_release_event(GtkWidget* widget, GdkEventButton* eve
 	return res;
 }
 
+int dummyCounter = 0;
+
 gboolean gtk_xournal_motion_notify_event(GtkWidget* widget, GdkEventMotion* event)
 {
 	GtkXournal* xournal = GTK_XOURNAL(widget);
 	ToolHandler* h = xournal->view->getControl()->getToolHandler();
+
+	// Workaround to detect if the pen is there
+	GdkDevice* device = gdk_event_get_device((GdkEvent*)event);
+	int axesCount = gdk_device_get_n_axes(device);
+	if (axesCount >= 6)
+	{
+		xournal->view->penActionDetected();
+	}
 
 	if (xournal->view->zoom_gesture_active)
 	{
@@ -595,14 +605,6 @@ gboolean gtk_xournal_motion_notify_event(GtkWidget* widget, GdkEventMotion* even
 			pv->translateEvent((GdkEvent*) event, xournal->x, xournal->y);
 			return pv->onMotionNotifyEvent(widget, event, xournal->shiftDown);
 		}
-	}
-
-	// Workaround to detect if the pen is there
-	GdkDevice* device = gdk_event_get_device((GdkEvent*)event);
-	GdkInputSource deviceType = gdk_device_get_source(device);
-	if (deviceType == GDK_SOURCE_PEN || deviceType == GDK_SOURCE_ERASER)
-	{
-		printf("pen active\n");
 	}
 
 	return false;
