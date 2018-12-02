@@ -850,7 +850,6 @@ double XournalView::getZoom()
 int XournalView::getDpiScaleFactor()
 {
 	XOJ_CHECK_TYPE(XournalView);
-
 	return gtk_widget_get_scale_factor(widget);
 }
 
