@@ -5,8 +5,8 @@ set (PROJECT_VERSION "1.0.2")
 set (PROJECT_PACKAGE "xournalpp")
 
 set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Xournal++: Notetaking software designed around a tablet")
-string(TIMESTAMP CPACK_PACKAGE_VERSION "nightly build-%Y-%m-%dT%H:%M:%S")
-set(CPACK_GENERATOR "DEB")
+string(TIMESTAMP CPACK_PACKAGE_VERSION "nightly-build-%Y-%m-%dT%H%M%SZ")
+set(CPACK_GENERATOR "DEB"  CACHE STRING "Alternativelly generate RPM. Needs rpmbuild.")
 set(CPACK_DEBIAN_PACKAGE_MAINTAINER "Xournal++ Team")
 
 include(CPack)
