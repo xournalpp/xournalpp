@@ -84,24 +84,20 @@ public:
 	 */
 	void updateCurrentPage();
 
-public:
-	/**
-	 * Callback for a changed value of one of the adjustments of
-	 * the scrolled window. It updates the current XojPageView
-	 * via Layout::updateCurrentPage()
-	 */
-	static void adjustmentValueChanged(GtkAdjustment* adjustment,
-	                                   Layout* layout);
-
 private:
+	void checkScroll(GtkAdjustment* adjustment, double& lastScroll);
 	void setLayoutSize(int width, int height);
 
+private:
 	XOJ_TYPE_ATTRIB;
 
 	XournalView* view;
 
 	GtkAdjustment* adjHorizontal;
 	GtkAdjustment* adjVertical;
+
+	double lastScrollHorizontal;
+	double lastScrollVertical;
 
 	/**
 	 * The last width of the widget

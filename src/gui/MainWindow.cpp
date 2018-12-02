@@ -29,8 +29,8 @@ using std::cout;
 using std::endl;
 namespace bf = boost::filesystem;
 
-MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control) :
-		GladeGui(gladeSearchPath, "main.glade", "mainWindow")
+MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control)
+ : GladeGui(gladeSearchPath, "main.glade", "mainWindow")
 {
 	XOJ_INIT_TYPE(MainWindow);
 
@@ -61,13 +61,13 @@ MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control) :
 	setSidebarVisible(control->getSettings()->isSidebarVisible());
 
 	// Window handler
-	g_signal_connect(this->window, "delete-event", (GCallback) & deleteEventCallback, this->control);
-	g_signal_connect(this->window, "window_state_event", G_CALLBACK(&windowStateEventCallback), this);
+	g_signal_connect(this->window, "delete-event", G_CALLBACK(deleteEventCallback), this->control);
+	g_signal_connect(this->window, "window_state_event", G_CALLBACK(windowStateEventCallback), this);
 
 	g_signal_connect(get("buttonCloseSidebar"), "clicked", G_CALLBACK(buttonCloseSidebarClicked), this);
 
 	// "watch over" all events
-	g_signal_connect(this->window, "key-press-event", (GCallback) & onKeyPressCallback, this);
+	g_signal_connect(this->window, "key-press-event", G_CALLBACK(onKeyPressCallback), this);
 
 	this->toolbar = new ToolMenuHandler(this->control, this, GTK_WINDOW(getWindow()));
 
@@ -97,7 +97,7 @@ MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control) :
 	createToolbarAndMenu();
 
 	GtkWidget* menuViewSidebarVisible = get("menuViewSidebarVisible");
-	g_signal_connect(menuViewSidebarVisible, "toggled", (GCallback) viewShowSidebar, this);
+	g_signal_connect(menuViewSidebarVisible, "toggled", G_CALLBACK(viewShowSidebar), this);
 
 	updateScrollbarSidebarPosition();
 
