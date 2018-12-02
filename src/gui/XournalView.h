@@ -94,6 +94,7 @@ public:
 	ArrayIterator<XojPageView*> pageViewIterator();
 	Control* getControl();
 	double getZoom();
+	int getDpiScaleFactor();
 	Document* getDocument();
 	PagePositionHandler* getPagePositionHandler();
 	PdfCache* getCache();
