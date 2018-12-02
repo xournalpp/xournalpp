@@ -11,8 +11,10 @@
 #include <math.h>
 
 StrokeHandler::StrokeHandler(XournalView* xournal, XojPageView* redrawable, PageRef page)
-	: InputHandler(xournal, redrawable, page),
-	  surfMask(NULL), crMask(NULL), reco(NULL)
+ : InputHandler(xournal, redrawable, page),
+   surfMask(NULL),
+   crMask(NULL),
+   reco(NULL)
 {
 	XOJ_INIT_TYPE(StrokeHandler);
 }
@@ -279,7 +281,7 @@ bool StrokeHandler::getPressureMultiplier(GdkEvent* event, double& pressure)
 
 	GdkDevice* device = gdk_event_get_device(event);
 	int axesCount = gdk_device_get_n_axes(device);
-	if (axesCount <= 2)
+	if (axesCount <= 4)
 	{
 		pressure = 1.0;
 		return false;
