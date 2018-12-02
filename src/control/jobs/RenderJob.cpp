@@ -39,6 +39,15 @@ void RenderJob::rerenderRectangle(Rectangle* rect)
 {
 	XOJ_CHECK_TYPE(RenderJob);
 
+#ifdef UNSTABLE_HIGHDPI_FIXES
+	int dpiScaleFactor = this->view->xournal->getDpiScaleFactor();
+	if (dpiScaleFactor > 1)
+	{
+		run();
+		return;
+	}
+#endif
+
 	double zoom = view->xournal->getZoom();
 	Document* doc = view->xournal->getDocument();
 
@@ -94,7 +103,12 @@ void RenderJob::run()
 {
 	XOJ_CHECK_TYPE(RenderJob);
 
+#ifdef UNSTABLE_HIGHDPI_FIXES
+	int dpiScaleFactor = this->view->xournal->getDpiScaleFactor();
+	double zoom = this->view->xournal->getZoom() * dpiScaleFactor;
+#else
 	double zoom = this->view->xournal->getZoom();
+#endif
 
 	g_mutex_lock(&this->view->repaintRectMutex);
 
@@ -106,15 +120,32 @@ void RenderJob::run()
 
 	g_mutex_unlock(&this->view->repaintRectMutex);
 
+#ifdef UNSTABLE_HIGHDPI_FIXES
+	if (dpiScaleFactor > 1)
+	{
+		// On high DPI Devices render always the full page
+		// This newer devices should have enough CPU Power
+		// The rect rendering currently is not prepared for
+		// high DPI
+		rerenderComplete = true;
+	}
+#endif
+
 	if (rerenderComplete)
 	{
 		Document* doc = this->view->xournal->getDocument();
 
-		int dispWidth = this->view->getDisplayWidth();
-		int dispHeight = this->view->getDisplayHeight();
+		int bufferWidth = this->view->getDisplayWidth();
+		int bufferHeight = this->view->getDisplayHeight();
 
-		cairo_surface_t* crBuffer = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, dispWidth, dispHeight);
+#ifdef UNSTABLE_HIGHDPI_FIXES
+		bufferWidth *= dpiScaleFactor;
+		bufferHeight *= dpiScaleFactor;
+#endif
+
+		cairo_surface_t* crBuffer = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, bufferWidth, bufferHeight);
 		cairo_t* cr2 = cairo_create(crBuffer);
+
 		cairo_scale(cr2, zoom, zoom);
 
 		XojPopplerPage* popplerPage = NULL;
