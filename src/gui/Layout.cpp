@@ -7,20 +7,38 @@
 #include "widgets/XournalWidget.h"
 
 
-Layout::Layout(XournalView* _view,
+Layout::Layout(XournalView* view,
                GtkAdjustment* adjHorizontal,
 	           GtkAdjustment* adjVertical)
- : view(_view),
+ : view(view),
    adjHorizontal(adjHorizontal),
    adjVertical(adjVertical),
+   lastScrollHorizontal(-1),
+   lastScrollVertical(-1),
    lastWidgetWidth(0),
    layoutWidth(0),
    layoutHeight(0)
 {
 	XOJ_INIT_TYPE(Layout);
 
-	g_signal_connect(adjHorizontal, "value-changed", G_CALLBACK(adjustmentValueChanged), this);
-	g_signal_connect(adjVertical, "value-changed", G_CALLBACK(adjustmentValueChanged), this);
+	g_signal_connect(adjHorizontal, "value-changed", G_CALLBACK(
+		+[](GtkAdjustment* adjustment, Layout* layout)
+		{
+			XOJ_CHECK_TYPE_OBJ(layout, Layout);
+			layout->checkScroll(adjustment, layout->lastScrollHorizontal);
+			layout->updateCurrentPage();
+		}), this);
+
+	g_signal_connect(adjVertical, "value-changed", G_CALLBACK(
+		+[](GtkAdjustment* adjustment, Layout* layout)
+		{
+			XOJ_CHECK_TYPE_OBJ(layout, Layout);
+			layout->checkScroll(adjustment, layout->lastScrollVertical);
+			layout->updateCurrentPage();
+		}), this);
+
+	lastScrollHorizontal = gtk_adjustment_get_value(adjHorizontal);
+	lastScrollVertical = gtk_adjustment_get_value(adjVertical);
 }
 
 Layout::~Layout()
@@ -28,11 +46,26 @@ Layout::~Layout()
 	XOJ_RELEASE_TYPE(Layout);
 }
 
+void Layout::checkScroll(GtkAdjustment* adjustment, double& lastScroll)
+{
+	XOJ_CHECK_TYPE(Layout);
+
+	if (!view->shouldIgnoreTouchEvents())
+	{
+		lastScroll = gtk_adjustment_get_value(adjustment);
+		return;
+	}
+
+	gtk_adjustment_set_value(adjustment, lastScroll);
+}
+
 /**
  * Check which page should be selected
  */
 void Layout::updateCurrentPage()
 {
+	XOJ_CHECK_TYPE(Layout);
+
 	Rectangle visRect = getVisibleRect();
 
 	Control* control = this->view->getControl();
@@ -116,14 +149,10 @@ void Layout::updateCurrentPage()
 	}
 }
 
-void Layout::adjustmentValueChanged(GtkAdjustment* adjustment,
-                                    Layout* layout)
-{
-	layout->updateCurrentPage();
-}
-
 Rectangle Layout::getVisibleRect()
 {
+	XOJ_CHECK_TYPE(Layout);
+
 	return Rectangle(gtk_adjustment_get_value(adjHorizontal),
 	                 gtk_adjustment_get_value(adjVertical),
 	                 gtk_adjustment_get_page_size(adjHorizontal),
@@ -135,6 +164,8 @@ Rectangle Layout::getVisibleRect()
  */
 double Layout::getLayoutHeight()
 {
+	XOJ_CHECK_TYPE(Layout);
+
 	return layoutHeight;
 }
 
@@ -143,6 +174,8 @@ double Layout::getLayoutHeight()
  */
 double Layout::getLayoutWidth()
 {
+	XOJ_CHECK_TYPE(Layout);
+
 	return layoutWidth;
 }
 
