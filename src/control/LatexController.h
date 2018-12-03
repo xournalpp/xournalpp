@@ -67,7 +67,7 @@ private:
 	/**
 	 * Signal handler, updates the rendered image when the text in the editor changes
 	 */
-	static void handleTexChanged(GtkWidget* widget, gpointer data);
+	static void handleTexChanged(GtkWidget* widget, LatexController* self);
 
 	/*******/
 	//Wrappers for signal handler who can't access non-static fields 

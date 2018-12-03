@@ -30,26 +30,24 @@ class LatexDialog : public GladeGui
 	void save();
 	void load();
 
-	//Set and retrieve text from text box
+	// Set and retrieve text from text box
 	void setTex(string texString);
 	string getTex();
 	
 	//Set and retrieve temporary Tex render
 	void setTempRender(cairo_surface_t* cairoTexTempRender);
-	cairo_surface_t* getTempRender();
 
-	//Necessary for the controller in order to connect the 'text-changed'
-	//signal handler
+	// Necessary for the controller in order to connect the 'text-changed'
+	// signal handler
 	GtkWidget* getTexBox();
 
   private:
 	XOJ_TYPE_ATTRIB;
 	
-	//Temporary render
+	// Temporary render
 	GtkWidget* texTempRender;
-	cairo_surface_t* cairoTexTempRender;
 	
-	//Text field
+	// Text field
 	GtkWidget* texBox;
 	string theLatex;
 };
