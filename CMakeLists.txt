@@ -392,6 +392,8 @@ if (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
 			DESTINATION ${CMAKE_INSTALL_PREFIX}/share/mimelnk/application)
 	install(FILES desktop/x-xopp.desktop
 			DESTINATION ${CMAKE_INSTALL_PREFIX}/share/mimelnk/application)
+	install(FILES desktop/x-xopt.desktop
+			DESTINATION ${CMAKE_INSTALL_PREFIX}/share/mimelnk/application)
 	
 	install(FILES desktop/xournalpp.thumbnailer
 			DESTINATION ${CMAKE_INSTALL_PREFIX}/share/thumbnailers)
