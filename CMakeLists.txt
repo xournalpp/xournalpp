@@ -381,7 +381,7 @@ if (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
 
 	install(FILES ui/pixmaps/gnome-mime-application-x-xopp.svg
 			DESTINATION ${CMAKE_INSTALL_PREFIX}/share/icons/hicolor/scalable/mimetypes/)
-	install(FILES ui/pixmaps/application-x-xopt.svg
+	install(FILES ui/pixmaps/gnome-mime-application-x-xopt.svg
 			DESTINATION ${CMAKE_INSTALL_PREFIX}/share/icons/hicolor/scalable/mimetypes/)
 
 	install(FILES desktop/xournal.xml
@@ -389,14 +389,16 @@ if (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
 	install(FILES desktop/xournalpp.desktop
 			DESTINATION ${CMAKE_INSTALL_PREFIX}/share/applications)
 	install(FILES desktop/x-xoj.desktop
-			DESTINATION /usr/share/mimelnk/application)
+			DESTINATION ${CMAKE_INSTALL_PREFIX}/share/mimelnk/application)
 	install(FILES desktop/x-xopp.desktop
-			DESTINATION /usr/share/mimelnk/application)
+			DESTINATION ${CMAKE_INSTALL_PREFIX}/share/mimelnk/application)
+	install(FILES desktop/x-xopt.desktop
+			DESTINATION ${CMAKE_INSTALL_PREFIX}/share/mimelnk/application)
 	
 	install(FILES desktop/xournalpp.thumbnailer
-			DESTINATION /usr/share/thumbnailers)
+			DESTINATION ${CMAKE_INSTALL_PREFIX}/share/thumbnailers)
 	install(FILES utility/usr/local/bin/xopp-recording.sh
-			DESTINATION /usr/local/bin/
+			DESTINATION ${CMAKE_INSTALL_PREFIX}/local/bin/
 			PERMISSIONS OWNER_EXECUTE GROUP_EXECUTE WORLD_EXECUTE)
 
 
