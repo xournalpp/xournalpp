@@ -39,6 +39,7 @@ EditSelectionContents::EditSelectionContents(double x, double y, double width, d
 	this->lastHeight = this->originalHeight = height;
 	this->relativeX = -9999999999;
 	this->relativeY = -9999999999;
+	this->rotation = 0;
 
 	this->lastX = this->originalX = x;
 	this->lastY = this->originalY = y;
@@ -334,6 +335,8 @@ void EditSelectionContents::finalizeSelection(double x, double y, double width, 
 	bool scale =
 			(width != this->originalWidth || height != this->originalHeight);
 
+	bool rotate = (abs(this->rotation) > __DBL_EPSILON__);
+
 	double mx = x - this->originalX;
 	double my = y - this->originalY;
 
@@ -347,11 +350,16 @@ void EditSelectionContents::finalizeSelection(double x, double y, double width, 
 		}
 		if (scale)
 		{
-			//e->scale(x, y, fx, fy);	//QUI DEVO CHIAMARE LA ROTATE
-			e->rotate(x,y,this->originalWidth/2,this->originalHeight/2,0.785398);
+			e->scale(x, y, fx, fy);		
+		}
+		if (rotate)
+		{
+			e->rotate(x,y,this->originalWidth/2,this->originalHeight/2,this->rotation);
 		}
 		layer->addElement(e);
 	}
+
+	this->rotation = 0;	//reset rotation for next usage
 }
 
 void EditSelectionContents::updateContent(double x, double y, double width, double height, bool aspectRatio,
@@ -426,11 +434,11 @@ void EditSelectionContents::updateContent(double x, double y, double width, doub
 /**
  * paints the selection
  */
-void EditSelectionContents::paint(cairo_t* cr, double x, double y, double width, double height, double zoom)
+void EditSelectionContents::paint(cairo_t* cr, double x, double y, double width, double height, double zoom, double rotation)
 {
 	double fx = width / this->originalWidth;
 	double fy = height / this->originalHeight;
-
+		
 	if (this->relativeX == -9999999999)
 	{
 		this->relativeX = x;
@@ -445,17 +453,15 @@ void EditSelectionContents::paint(cairo_t* cr, double x, double y, double width,
 		int dx = (int) (this->relativeX * zoom);
 		int dy = (int) (this->relativeY * zoom);
 
-		printf("X: %f Y: %f\n",x,y);
-		printf("Width: %f Height: %f\n",width,height);
-
-		double xOff=-width;
-		double yOff=-height; 
-		printf("xOff: %f yOff: %f\n",xOff,yOff);
-
-		cairo_translate(cr2,-xOff,-yOff);
-		cairo_rotate(cr2,0.261799);	//15 GRADI
-//		cairo_scale(cr2, 2, 2);
-		cairo_translate(cr2,xOff,yOff);
+		if (abs(rotation) > __DBL_EPSILON__)
+		{
+			//double xOff=-width;
+			//double yOff=-height; 
+			this->rotation = rotation;
+			cairo_translate(cr2,width,height);
+			cairo_rotate(cr2,this->rotation);
+			cairo_translate(cr2,-width,-height);
+		}
 
 		cairo_scale(cr2, fx, fy);
 		cairo_translate(cr2, -dx, -dy);
@@ -477,7 +483,7 @@ void EditSelectionContents::paint(cairo_t* cr, double x, double y, double width,
 	double sx = (double) wTarget / wImg;
 	double sy = (double) hTarget / hImg;
 
-	if (wTarget != wImg || hTarget != hImg)
+	if (wTarget != wImg || hTarget != hImg || abs(rotation) > __DBL_EPSILON__)
 	{
 		if (!this->rescaleId)
 		{

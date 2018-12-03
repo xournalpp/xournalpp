@@ -210,10 +210,11 @@ private: // DATA
 	XOJ_TYPE_ATTRIB;
 
 	/**
-	 * The position relative to the current view
+	 * The position (and rotation) relative to the current view
 	 */
 	double x;
 	double y;
+	double rotation;
 
 	/**
 	 * The size

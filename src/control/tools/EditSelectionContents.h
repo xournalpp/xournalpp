@@ -80,7 +80,7 @@ public:
 	/**
 	 * paints the selection
 	 */
-	void paint(cairo_t* cr, double x, double y, double width, double height, double zoom);
+	void paint(cairo_t* cr, double x, double y, double width, double height, double zoom, double rotation=0);
 
 	/**
 	 * Finish the editing
@@ -136,6 +136,11 @@ private:
 	 */
 	double originalX, originalY;
 	double lastX, lastY;
+
+	/**
+	 * The given rotation. Original rotation should always be zero (double)
+	 */
+	double rotation;
 
 	/**
 	 * The offset to the original selection

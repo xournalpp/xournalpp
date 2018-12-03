@@ -32,6 +32,7 @@ EditSelection::EditSelection(UndoRedoHandler* undo, PageRef page, XojPageView* v
 
 	this->x = 0;
 	this->y = 0;
+	this->rotation = 0;
 	this->width = 0;
 	this->height = 0;
 
@@ -374,29 +375,28 @@ void EditSelection::mouseMove(double x, double y)
 		this->x += oldW - this->width;
 		this->y += oldH - this->height;
 	}
-	else if (this->mouseDownType == CURSOR_SELECTION_TOP_RIGHT)
+	else if (this->mouseDownType == CURSOR_SELECTION_TOP_RIGHT)	//catch rotation here
 	{
 		double dx = x - this->x - this->width;
 		double dy = y - this->y;
+
+		this->rotation = (dx+dy)/10;
 		
-		//double x1 = p.x * cos(th) - p.y * sin(th); 	
-		//double y1 = p.y * cos(th) + p.x * sin(th);	
-
-		double f;
-		if (ABS(dy) < ABS(dx))
-		{
-			f = this->height / (this->height + dy);
-		}
-		else
-		{
-			f = (this->width + dx) / this->width;
-		}
-
-		double oldH = this->height;
-		this->width *= f;
-		this->height *= f;
-
-		this->y += oldH - this->height;
+		//double f;
+		//if (ABS(dy) < ABS(dx))
+		//{
+		//	f = this->height / (this->height + dy);
+		//}
+		//else
+		//{
+		//	f = (this->width + dx) / this->width;
+		//}
+		//
+		//double oldH = this->height;
+		//this->width *= f;
+		//this->height *= f;
+		//
+		//this->y += oldH - this->height;
 	}
 	else if (this->mouseDownType == CURSOR_SELECTION_BOTTOM_LEFT)
 	{
@@ -637,8 +637,8 @@ void EditSelection::paint(cairo_t* cr, double zoom)
 
 	double x = this->x;
 	double y = this->y;
-
-	this->contents->paint(cr, x, y, this->width, this->height, zoom);
+	
+	this->contents->paint(cr, x, y, this->width, this->height, zoom, this->rotation);
 
 	cairo_set_operator(cr, CAIRO_OPERATOR_OVER);
 
