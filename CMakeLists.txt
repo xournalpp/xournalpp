@@ -381,7 +381,7 @@ if (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
 
 	install(FILES ui/pixmaps/gnome-mime-application-x-xopp.svg
 			DESTINATION ${CMAKE_INSTALL_PREFIX}/share/icons/hicolor/scalable/mimetypes/)
-	install(FILES ui/pixmaps/application-x-xopt.svg
+	install(FILES ui/pixmaps/gnome-mime-application-x-xopt.svg
 			DESTINATION ${CMAKE_INSTALL_PREFIX}/share/icons/hicolor/scalable/mimetypes/)
 
 	install(FILES desktop/xournal.xml
