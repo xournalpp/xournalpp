@@ -445,6 +445,18 @@ void EditSelectionContents::paint(cairo_t* cr, double x, double y, double width,
 		int dx = (int) (this->relativeX * zoom);
 		int dy = (int) (this->relativeY * zoom);
 
+		printf("X: %f Y: %f\n",x,y);
+		printf("Width: %f Height: %f\n",width,height);
+
+		double xOff=-width;
+		double yOff=-height; 
+		printf("xOff: %f yOff: %f\n",xOff,yOff);
+
+		cairo_translate(cr2,-xOff,-yOff);
+		cairo_rotate(cr2,0.261799);	//15 GRADI
+//		cairo_scale(cr2, 2, 2);
+		cairo_translate(cr2,xOff,yOff);
+
 		cairo_scale(cr2, fx, fy);
 		cairo_translate(cr2, -dx, -dy);
 		cairo_scale(cr2, zoom, zoom);

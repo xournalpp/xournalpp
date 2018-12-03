@@ -378,6 +378,10 @@ void EditSelection::mouseMove(double x, double y)
 	{
 		double dx = x - this->x - this->width;
 		double dy = y - this->y;
+		
+		//double x1 = p.x * cos(th) - p.y * sin(th); 	
+		//double y1 = p.y * cos(th) + p.x * sin(th);	
+
 		double f;
 		if (ABS(dy) < ABS(dx))
 		{

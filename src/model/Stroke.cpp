@@ -316,8 +316,6 @@ void Stroke::rotate(double x0, double y0, double xo, double yo, double th)
 {
 	XOJ_CHECK_TYPE(Stroke);
 	
-	printf("Object size BEFORE rotation: %f * %f\n",Element::width,Element::height);
-
 	for (int i = 0; i < this->pointCount; i++)
 	{
 		Point& p = this->points[i];
@@ -328,10 +326,8 @@ void Stroke::rotate(double x0, double y0, double xo, double yo, double th)
 		p.x -= xo-1;	//center to origin
 		p.y -= yo-1;
 
-		printf("Moving to origin... x: %f y: %f\n",p.x,p.y);
-
-		double x1 = p.x * cos(th) - p.y * sin(th); 	//p.x *= fx;
-		double y1 = p.y * cos(th) + p.x * sin(th);	//p.y *= fy;
+		double x1 = p.x * cos(th) - p.y * sin(th); 	
+		double y1 = p.y * cos(th) + p.x * sin(th);	
 		p.x = x1;
 		p.y = y1;
 
@@ -339,29 +335,15 @@ void Stroke::rotate(double x0, double y0, double xo, double yo, double th)
 		p.y += y0;
 
 		p.x += xo-1;	//center it
-		p.y += yo-1;
-
-		printf("AFTER: x: %f y: %f\n",p.x,p.y);
-		
+		p.y += yo-1;		
 	}
 	//Width and Height will likely be changed after this operation
 	calcSize();
-	printf("Object size AFTER rotation: %f * %f\n",this->width,this->height);
-
-	//move(this->width/2,-this->height/2);
-
-	//TODO: center the rotation
-
-	//this->sizeCalculated = false;
 }
 
 void Stroke::scale(double x0, double y0, double fx, double fy)
 {
 	XOJ_CHECK_TYPE(Stroke);
-
-	//ATM Just taking advantage of the scale action to inject and test
-	//rotate(x0,y0,0.785398);
-	//return;
 
 	double fz = sqrt(fx * fy);
 
