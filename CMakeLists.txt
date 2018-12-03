@@ -277,7 +277,6 @@ endif (ENABLE_MATHTEX AND WIN32)
 # Unstable features
 
 option (UNSTABLE_LAYERS_SIDEBAR "Layers sidebar (unstable)" OFF)
-option (UNSTABLE_HIGHDPI_FIXES "HighDPI Fixes (unstable)" OFF)
 
 configure_file (
   src/config-features.h.in
@@ -396,7 +395,8 @@ if (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
 	install(FILES desktop/xournalpp.thumbnailer
 			DESTINATION /usr/share/thumbnailers)
 	install(FILES utility/usr/local/bin/xopp-recording.sh
-			DESTINATION /usr/local/bin/)
+			DESTINATION /usr/local/bin/
+			PERMISSIONS OWNER_EXECUTE GROUP_EXECUTE WORLD_EXECUTE)
 
 
 	install(CODE "
@@ -446,7 +446,6 @@ Configuration:
 
 Unstable features:
 	Layers sidebar:             ${UNSTABLE_LAYERS_SIDEBAR}
-	HighDPI Fixes:              ${UNSTABLE_HIGHDPI_FIXES}
 
 Static libraries:
 	Poppler:                    ${BUILD_POPPLER}
