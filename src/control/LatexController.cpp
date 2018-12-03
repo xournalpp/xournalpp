@@ -30,7 +30,9 @@ LatexController::LatexController(Control* control)
 	  // .png will be appended automatically => tex.png
 	  texImage(Util::getConfigFile("tex").string()),
 	  selectedTexImage(NULL),
-	  selectedText(NULL)
+	  selectedText(NULL),
+	  dlg(NULL),
+	  temporaryRender(NULL)
 {
 	XOJ_INIT_TYPE(LatexController);
 }
@@ -185,13 +187,21 @@ void LatexController::showTexEditDialog()
 	XOJ_CHECK_TYPE(LatexController);
 
 	dlg = new LatexDialog(control->getGladeSearchPath());
-	//For 'real time' LaTex rendering in the dialog
-	g_signal_connect(dlg->getTexBox(), "changed", G_CALLBACK(this->handleTexChanged), gpointer(this));
+
+	// For 'real time' LaTex rendering in the dialog
+	g_signal_connect(dlg->getTexBox(), "changed", G_CALLBACK(handleTexChanged), this);
 	dlg->setTex(initalTex);
-	//The controller owns the tempRender because, on signal changed, he has to handle the old/new renders
+
+	// The controller owns the tempRender because, on signal changed, he has to handle the old/new renders
 	insertTexImage(true);
-	dlg->setTempRender(temporaryRender->getImage());
+
+	if (temporaryRender != NULL)
+	{
+		dlg->setTempRender(temporaryRender->getImage());
+	}
+
 	dlg->show(GTK_WINDOW(control->getWindow()->getWindow()));
+
 	deletePreviousRender();
 	currentTex = dlg->getTex();
 	currentTex += " ";
@@ -199,25 +209,26 @@ void LatexController::showTexEditDialog()
 	delete dlg;
 }
 
-/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+/**
  * Text-changed handler: when the Entry in the dialog changes,
  * this handler updates currentTex, removes the previous existing render and creates
  * a new one. We need to do it through 'thisContr' because signal handlers
  * cannot directly access non-static methods and non-static fields such as
  * 'dlg' so we need to wrap all the dlg method inside small methods in 'thisContr'
- * 
  */
-void LatexController::handleTexChanged(GtkWidget *widget, gpointer data)
+void LatexController::handleTexChanged(GtkWidget* widget, LatexController* self)
 {
-	XOJ_CHECK_TYPE_OBJ(data, LatexController);
+	XOJ_CHECK_TYPE_OBJ(self, LatexController);
 
-	LatexController* thisContr = ((LatexController *)data);
+	self->setCurrentTex(gtk_entry_get_text(GTK_ENTRY(widget)));
+	self->deletePreviousRender();
+	self->runCommand();
+	self->insertTexImage(true);
 
-	thisContr->setCurrentTex(gtk_entry_get_text(GTK_ENTRY(widget)));
-	thisContr->deletePreviousRender();
-	thisContr->runCommand();
-	thisContr->insertTexImage(true);
-	thisContr->setImageInDialog(thisContr->getTemporaryRender()->getImage());
+	if (self->getTemporaryRender() != NULL)
+	{
+		self->setImageInDialog(self->getTemporaryRender()->getImage());
+	}
 }
 
 TexImage* LatexController::getTemporaryRender()
@@ -236,6 +247,7 @@ void LatexController::deletePreviousRender()
 {
 	XOJ_CHECK_TYPE(LatexController);
 	delete temporaryRender;
+	temporaryRender = NULL;
 }
 
 void LatexController::setCurrentTex(string currentTex)

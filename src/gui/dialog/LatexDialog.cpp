@@ -1,7 +1,7 @@
 #include "LatexDialog.h"
 
 LatexDialog::LatexDialog(GladeSearchpath *gladeSearchPath)
-	: GladeGui(gladeSearchPath, "texdialog.glade", "texDialog")
+ : GladeGui(gladeSearchPath, "texdialog.glade", "texDialog")
 {
 	XOJ_INIT_TYPE(LatexDialog);
 
@@ -11,8 +11,8 @@ LatexDialog::LatexDialog(GladeSearchpath *gladeSearchPath)
 	// increase the maximum length to something reasonable.
 	gtk_entry_set_max_length(GTK_ENTRY(this->texBox), 500);
 
-	//Background color for the temporary render, default is white because
-	//on dark themed DE the LaTex is hard to read
+	// Background color for the temporary render, default is white because
+	// on dark themed DE the LaTex is hard to read
 	GtkCssProvider* cssProvider = gtk_css_provider_new();
 	gtk_css_provider_load_from_data(cssProvider, "*{background-color:white;padding:10px;}", -1, NULL);
 	gtk_style_context_add_provider(gtk_widget_get_style_context(this->texTempRender), GTK_STYLE_PROVIDER(cssProvider), GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
@@ -35,19 +35,12 @@ string LatexDialog::getTex()
 	return this->theLatex;
 }
 
-void LatexDialog::setTempRender(cairo_surface_t *cairoTexTempRender)
+void LatexDialog::setTempRender(cairo_surface_t* cairoTexTempRender)
 {
 	XOJ_CHECK_TYPE(LatexDialog);
-	this->cairoTexTempRender = cairoTexTempRender;
-	//Every time the controller updates the temporary render, we update
-	//our corresponding GtkWidget
-	gtk_image_set_from_surface(GTK_IMAGE(this->texTempRender), this->cairoTexTempRender);
-}
-
-cairo_surface_t* LatexDialog::getTempRender()
-{
-	XOJ_CHECK_TYPE(LatexDialog);
-	return this->cairoTexTempRender;
+	// Every time the controller updates the temporary render, we update
+	// our corresponding GtkWidget
+	gtk_image_set_from_surface(GTK_IMAGE(this->texTempRender), cairoTexTempRender);
 }
 
 GtkWidget* LatexDialog::getTexBox()
