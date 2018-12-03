@@ -21,6 +21,10 @@
 #include <boost/locale.hpp>
 namespace bf = boost::filesystem;
 
+#if __linux__
+#include <libgen.h>
+#endif
+
 #ifdef __APPLE__
 #undef ENABLE_NLS
 #endif
@@ -353,13 +357,13 @@ string XournalMain::findResourcePath(string searchFile)
 {
 	XOJ_CHECK_TYPE(XournalMain);
 
-	// First check if the files are available relative to the executable
+	// First check if the files are available relative to the path
 	// So a "portable" installation will be possible
 	path relative1 = searchFile;
 
 	if (bf::exists(relative1))
 	{
-		return relative1.parent_path().string();
+		return relative1.parent_path().normalize().string();
 	}
 
 	// -----------------------------------------------------------------------
@@ -371,24 +375,50 @@ string XournalMain::findResourcePath(string searchFile)
 
 	if (bf::exists(relative2))
 	{
-		return relative2.string();
+		return relative2.parent_path().normalize().string();
 	}
 
 	// -----------------------------------------------------------------------
 
-	// Check if the files are in the current working directory
-	char buffer[512] = { 0 };
-	char* workingDir = getcwd(buffer, sizeof(buffer));
-	if (workingDir != NULL)
-	{
-		path relative3 = workingDir;
-		relative3 /= searchFile;
+#if __linux__
 
-		if (bf::exists(relative3))
-		{
-			return relative3.string();
-		}
+	char result[PATH_MAX];
+	ssize_t count = readlink("/proc/self/exe", result, PATH_MAX);
+	const char* executableDir = NULL;
+	if (count != -1)
+	{
+		executableDir = dirname(result);
 	}
+	else
+	{
+		// Not found
+		return "";
+	}
+
+	// First check if the files are available relative to the executable
+	// So a "portable" installation will be possible
+	path relative3 = executableDir;
+	relative3 /= searchFile;
+
+	if (bf::exists(relative3))
+	{
+		return relative3.parent_path().normalize().string();
+	}
+
+	// -----------------------------------------------------------------------
+
+	// Check if we are in the "build" directory, and therefore the resources
+	// are installed two folders back
+	path relative4 = executableDir;
+	relative4 /= "../..";
+	relative4 /= searchFile;
+
+	if (bf::exists(relative4))
+	{
+		return relative4.parent_path().normalize().string();
+	}
+
+#endif
 
 	// Not found
 	return "";
