@@ -648,9 +648,20 @@ void EditSelection::paint(cairo_t* cr, double zoom)
 	if (abs(rotation) > __DBL_EPSILON__)
 	{
 		this->rotation = rotation;
-		cairo_translate(cr, width / 2, height / 2);
+
+		double rx = x + width / 2;
+		double ry = y + height / 2;
+
+		cairo_translate(cr, rx, ry);
 		cairo_rotate(cr, this->rotation);
-		cairo_translate(cr, -width / 2, -height / 2);
+
+		// Draw the rotation point for debugging
+		cairo_set_source_rgb(cr, 0, 1, 0);
+		cairo_rectangle(cr, 0, 0, 10, 10);
+		cairo_stroke(cr);
+
+
+		cairo_translate(cr, -rx, -ry);
 	}
 	this->contents->paint(cr, x, y, this->width, this->height, zoom, this->rotation);
 
