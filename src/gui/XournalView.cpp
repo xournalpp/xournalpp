@@ -49,6 +49,7 @@ XournalView::XournalView(GtkWidget* parent, Control* control)
 	this->margin = 75;
 	this->currentPage = 0;
 	this->lastSelectedPage = -1;
+	this->lastPenAction = 0;
 
 	control->getZoomControl()->addZoomListener(this);
 
@@ -61,15 +62,14 @@ XournalView::XournalView(GtkWidget* parent, Control* control)
 	// pinch-to-zoom
 	this->zoom_gesture_active = false;
 
-
 	// use parent as the gestures widget and not this->widget as gesture gets
 	// buggy otherwise (scrolling interferes with gestures scale value)
-	this->zoom_gesture = gtk_gesture_zoom_new (parent);
+	this->zoom_gesture = gtk_gesture_zoom_new(parent);
 
-	gtk_event_controller_set_propagation_phase (GTK_EVENT_CONTROLLER (this->zoom_gesture), GTK_PHASE_CAPTURE);
-	g_signal_connect (this->zoom_gesture, "begin", G_CALLBACK (zoom_gesture_begin_cb), this);
-	g_signal_connect (this->zoom_gesture, "scale-changed", G_CALLBACK (zoom_gesture_scale_changed_cb), this);
-	g_signal_connect (this->zoom_gesture, "end", G_CALLBACK (zoom_gesture_end_cb), this);
+	gtk_event_controller_set_propagation_phase(GTK_EVENT_CONTROLLER(this->zoom_gesture), GTK_PHASE_CAPTURE);
+	g_signal_connect(this->zoom_gesture, "begin", G_CALLBACK (zoom_gesture_begin_cb), this);
+	g_signal_connect(this->zoom_gesture, "scale-changed", G_CALLBACK (zoom_gesture_scale_changed_cb), this);
+	g_signal_connect(this->zoom_gesture, "end", G_CALLBACK (zoom_gesture_end_cb), this);
 }
 
 XournalView::~XournalView()
@@ -310,6 +310,28 @@ bool XournalView::onKeyPressEvent(GdkEventKey* event)
 		return true;
 	}
 
+	// vim like scrolling
+	if (event->keyval == GDK_KEY_j)
+	{
+		layout->scrollRelativ(0, 60);
+		return true;
+	}
+	if (event->keyval == GDK_KEY_k)
+	{
+		layout->scrollRelativ(0, -60);
+		return true;
+	}
+	if (event->keyval == GDK_KEY_h)
+	{
+		layout->scrollRelativ(-60, 0);
+		return true;
+	}
+	if (event->keyval == GDK_KEY_l)
+	{
+		layout->scrollRelativ(60, 0);
+		return true;
+	}
+
 	return false;
 }
 
@@ -339,11 +361,20 @@ bool XournalView::onKeyReleaseEvent(GdkEventKey* event)
 
 void XournalView::onRealized(GtkWidget* widget, XournalView* view)
 {
+	XOJ_CHECK_TYPE_OBJ(view, XournalView);
+
 	view->setEventCompression(view->getControl()->getSettings()->isEventCompression());
 }
 
 void XournalView::zoom_gesture_begin_cb(GtkGesture* gesture, GdkEventSequence* sequence, XournalView* view)
 {
+	XOJ_CHECK_TYPE_OBJ(view, XournalView);
+
+	if (view->shouldIgnoreTouchEvents())
+	{
+		return;
+	}
+
 	Layout* layout = gtk_xournal_get_layout(view->widget);
 	// Save visible rectangle at beginning of gesture
 	view->visRect_gesture_begin = layout->getVisibleRect();
@@ -358,6 +389,8 @@ void XournalView::zoom_gesture_begin_cb(GtkGesture* gesture, GdkEventSequence* s
 
 void XournalView::zoom_gesture_end_cb(GtkGesture* gesture, GdkEventSequence* sequence, XournalView* view)
 {
+	XOJ_CHECK_TYPE_OBJ(view, XournalView);
+
 	ZoomControl* zoom = view->control->getZoomControl();
 	zoom->zoom_center_x = -1;
 	zoom->zoom_center_y = -1;
@@ -366,6 +399,13 @@ void XournalView::zoom_gesture_end_cb(GtkGesture* gesture, GdkEventSequence* seq
 
 void XournalView::zoom_gesture_scale_changed_cb(GtkGestureZoom* gesture, gdouble scale, XournalView* view)
 {
+	XOJ_CHECK_TYPE_OBJ(view, XournalView);
+
+	if (view->shouldIgnoreTouchEvents())
+	{
+		return;
+	}
+
 	view->setZoom(scale * view->zoom_gesture_begin);
 }
 
@@ -536,12 +576,43 @@ Rectangle* XournalView::getVisibleRect(size_t page)
 
 Rectangle* XournalView::getVisibleRect(XojPageView* redrawable)
 {
+	XOJ_CHECK_TYPE(XournalView);
+
 	return gtk_xournal_get_visible_area(this->widget, redrawable);
 }
 
 GtkContainer* XournalView::getParent()
 {
+	XOJ_CHECK_TYPE(XournalView);
+
 	return this->parent;
+}
+
+/**
+ * A pen action was detected now, therefore ignore touch events
+ * for a short time
+ */
+void XournalView::penActionDetected()
+{
+	XOJ_CHECK_TYPE(XournalView);
+
+	this->lastPenAction = g_get_monotonic_time() / 1000;
+}
+
+/**
+ * If the pen was active a short time before, ignore touch events
+ */
+bool XournalView::shouldIgnoreTouchEvents()
+{
+	XOJ_CHECK_TYPE(XournalView);
+
+	if ((g_get_monotonic_time() / 1000 - this->lastPenAction) < 1000)
+	{
+		// printf("Ignore touch, pen was active\n");
+		return true;
+	}
+
+	return false;
 }
 
 GtkWidget* XournalView::getWidget()
@@ -593,7 +664,7 @@ void XournalView::zoomChanged(double lastZoom)
 		return;
 	}
 
-	//move this somewhere else maybe
+	// move this somewhere else maybe
 	layout->layoutPages();
 
 	// Keep zoom center at static position in current view
@@ -601,18 +672,18 @@ void XournalView::zoomChanged(double lastZoom)
 	// in orignal version top left corner of first page static
 	// Pack into extra function later
 	double zoom_now = getZoom();
-	//relative scrolling
+	// relative scrolling
 	double zoom_eff = zoom_now / lastZoom;
 	int scroll_x;
 	int scroll_y;
-	//x,y position of visible rectangle for gesture scrolling
+	// x,y position of visible rectangle for gesture scrolling
 	int vis_x;
 	int vis_y;
-	//get margins for relative scroll calculation
+	// get margins for relative scroll calculation
 	double marginLeft = (double) view->layout.getMarginLeft();
 	double marginTop = (double) view->layout.getMarginTop();
 
-	//Absolute centred scrolling used for gesture
+	// Absolute centred scrolling used for gesture
 	if (this->zoom_gesture_active)
 	{
 		vis_x = (int) ((zoom->zoom_center_x - marginLeft) * (zoom_now / this->zoom_gesture_begin - 1));
@@ -620,7 +691,7 @@ void XournalView::zoomChanged(double lastZoom)
 		layout->scrollAbs(this->visRect_gesture_begin.x + vis_x, this->visRect_gesture_begin.y + vis_y);
 	}
 
-	//Relative centered scrolling used for SHIFT-mousewheel
+	// Relative centered scrolling used for SHIFT-mousewheel
 	if (zoom_eff != 1 && zoom->zoom_center_x != -1 && this->zoom_gesture_active == false)
 	{
 		scroll_x = (int) ((zoom->zoom_center_x - marginLeft) * (zoom_eff - 1));
@@ -774,6 +845,12 @@ double XournalView::getZoom()
 	}
 
 	return control->getZoomControl()->getZoom();
+}
+
+int XournalView::getDpiScaleFactor()
+{
+	XOJ_CHECK_TYPE(XournalView);
+	return gtk_widget_get_scale_factor(widget);
 }
 
 void XournalView::clearSelection()

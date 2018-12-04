@@ -83,6 +83,19 @@
             <property name="expand">False</property>
             <property name="fill">True</property>
             <property name="position">3</property>
+
+          </packing>
+        </child>
+        <child>
+          <object class="GtkImage" id="texImage">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+          </object>
+          <packing>
+            <property name="expand">True</property>
+            <property name="fill">True</property>
+            <property name="padding">12</property>
+            <property name="position">2</property>
           </packing>
         </child>
       </object>

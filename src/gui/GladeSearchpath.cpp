@@ -47,7 +47,7 @@ string GladeSearchpath::findFile(string subdir, string file)
 	return "";
 }
 
-/*
+/**
  * Use this function to set the directory containing installed pixmaps and Glade XML files.
  */
 void GladeSearchpath::addSearchDirectory(string directory)

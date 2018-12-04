@@ -21,8 +21,16 @@
 #include <boost/locale.hpp>
 namespace bf = boost::filesystem;
 
-#include <string>
-using std::string;
+#if __linux__
+#include <libgen.h>
+#endif
+
+#ifdef __APPLE__
+#undef ENABLE_NLS
+#endif
+
+namespace bf = boost::filesystem;
+
 #include <iostream>
 using std::cout;
 using std::cerr;
@@ -40,7 +48,7 @@ XournalMain::~XournalMain()
 	XOJ_RELEASE_TYPE(XournalMain);
 }
 
-//it HAS to be done – otherwise such things like boost::algorithm::to_lower wont work, throwing casting exceptions
+// it HAS to be done – otherwise such things like boost::algorithm::to_lower wont work, throwing casting exceptions
 void XournalMain::initLocalisation()
 {
 	XOJ_CHECK_TYPE(XournalMain);
@@ -55,7 +63,7 @@ void XournalMain::initLocalisation()
 	textdomain(GETTEXT_PACKAGE);
 #endif //ENABLE_NLS
 
-	std::locale::global(gen("")); //"" - system default locale
+	std::locale::global(gen("")); // "" - system default locale
 	std::cout.imbue(std::locale());
 }
 
@@ -251,7 +259,10 @@ int XournalMain::run(int argc, char* argv[])
 	// Init GTK Display
 	gdk_display_open_default_libgtk_only();
 
-	GladeSearchpath* gladePath = initPath(argv[0]);
+	initSettingsPath();
+
+	GladeSearchpath* gladePath = new GladeSearchpath();
+	initResourcePath(gladePath);
 
 	// init singleton
 	string colorNameFile = Util::getConfigFile("colornames.ini").string();
@@ -304,6 +315,12 @@ int XournalMain::run(int argc, char* argv[])
 	checkForErrorlog();
 	checkForEmergencySave();
 
+	// There is a timing issue with the layout
+	// This fixes it, see #405
+	Util::execInUiThread([=]() {
+		control->getWindow()->getXournal()->layoutPages();
+	});
+
 	gtk_main();
 
 	control->saveSettings();
@@ -322,63 +339,118 @@ int XournalMain::run(int argc, char* argv[])
 	return 0;
 }
 
-#define GLADE_UI_PATH "ui"
-
-/**
- * Path for glade files and Pixmaps, first searches in the home folder, so you can customize glade files
- */
-GladeSearchpath* XournalMain::initPath(const char* argv0)
+void XournalMain::initSettingsPath()
 {
 	XOJ_CHECK_TYPE(XournalMain);
-
-	GladeSearchpath* gladePath = new GladeSearchpath();
 
 	// Create config directory if not exists
 	path file = Util::getConfigSubfolder("");
 	bf::create_directories(file);
 	bf::permissions(file, bf::perms::owner_all);
+}
 
-	// Add first home dir to search path, to add custom glade XMLs
+/**
+ * Find a file in a resource folder, and return the resource folder path
+ * Return an empty string, if the folder was not found
+ */
+string XournalMain::findResourcePath(string searchFile)
+{
+	XOJ_CHECK_TYPE(XournalMain);
+
+	// First check if the files are available relative to the path
+	// So a "portable" installation will be possible
+	path relative1 = searchFile;
+
+	if (bf::exists(relative1))
 	{
-		path searchPath = Util::getConfigSubfolder("ui");
-		if (bf::exists(searchPath) && bf::is_directory(searchPath))
-		{
-			gladePath->addSearchDirectory(searchPath.c_str());
-		}
+		return relative1.parent_path().normalize().string();
 	}
 
-	gchar* path = g_path_get_dirname(argv0);
-	gchar* searchPath = g_build_filename(path, GLADE_UI_PATH, NULL);
-	gladePath->addSearchDirectory(searchPath);
-	g_free(searchPath);
+	// -----------------------------------------------------------------------
 
-	searchPath = g_build_filename(path, "..", GLADE_UI_PATH, NULL);
-	gladePath->addSearchDirectory(searchPath);
-	g_free(searchPath);
-	g_free(path);
+	// Check if we are in the "build" directory, and therefore the resources
+	// are installed two folders back
+	path relative2 = "../..";
+	relative2 /= searchFile;
 
-	char buffer[512] = { 0 };
-	path = getcwd(buffer, sizeof(buffer));
-	if (path == NULL)
+	if (bf::exists(relative2))
 	{
-		return gladePath;
+		return relative2.parent_path().normalize().string();
 	}
 
-	searchPath = g_build_filename(path, GLADE_UI_PATH, NULL);
-	gladePath->addSearchDirectory(searchPath);
-	g_free(searchPath);
+	// -----------------------------------------------------------------------
 
-	searchPath = g_build_filename(path, "..", GLADE_UI_PATH, NULL);
-	gladePath->addSearchDirectory(searchPath);
-	g_free(searchPath);
-	
-	searchPath = g_build_filename(PROJECT_SOURCE_DIR, GLADE_UI_PATH, NULL);
-	gladePath->addSearchDirectory(searchPath);
-	g_free(searchPath);
+#if __linux__
 
-	searchPath = g_build_filename(PACKAGE_DATA_DIR, PROJECT_PACKAGE, GLADE_UI_PATH, NULL);
-	gladePath->addSearchDirectory(searchPath);
-	g_free(searchPath);
+	char result[PATH_MAX];
+	ssize_t count = readlink("/proc/self/exe", result, PATH_MAX);
+	const char* executableDir = NULL;
+	if (count != -1)
+	{
+		executableDir = dirname(result);
+	}
+	else
+	{
+		// Not found
+		return "";
+	}
 
-	return gladePath;
+	// First check if the files are available relative to the executable
+	// So a "portable" installation will be possible
+	path relative3 = executableDir;
+	relative3 /= searchFile;
+
+	if (bf::exists(relative3))
+	{
+		return relative3.parent_path().normalize().string();
+	}
+
+	// -----------------------------------------------------------------------
+
+	// Check if we are in the "build" directory, and therefore the resources
+	// are installed two folders back
+	path relative4 = executableDir;
+	relative4 /= "../..";
+	relative4 /= searchFile;
+
+	if (bf::exists(relative4))
+	{
+		return relative4.parent_path().normalize().string();
+	}
+
+#endif
+
+	// Not found
+	return "";
+}
+
+void XournalMain::initResourcePath(GladeSearchpath* gladePath)
+{
+	XOJ_CHECK_TYPE(XournalMain);
+
+	string uiPath = findResourcePath("ui/about.glade");
+
+	if (uiPath != "")
+	{
+		gladePath->addSearchDirectory(uiPath);
+		return;
+	}
+
+	// -----------------------------------------------------------------------
+
+	// Check at the target installation directory
+	path absolute = PACKAGE_DATA_DIR;
+	absolute /= PROJECT_PACKAGE;
+	absolute /= "ui/about.glade";
+
+	if (bf::exists(absolute))
+	{
+		gladePath->addSearchDirectory(absolute.parent_path().string());
+		return;
+	}
+
+	string msg = _("Missing the needed UI file, could not find them at any location.\nNot relative\nNot in the Working Path\nNot in " PACKAGE_DATA_DIR);
+	Util::showErrorToUser(NULL, msg.c_str());
+
+	exit(12);
 }

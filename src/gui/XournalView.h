@@ -94,6 +94,7 @@ public:
 	ArrayIterator<XojPageView*> pageViewIterator();
 	Control* getControl();
 	double getZoom();
+	int getDpiScaleFactor();
 	Document* getDocument();
 	PagePositionHandler* getPagePositionHandler();
 	PdfCache* getCache();
@@ -105,12 +106,24 @@ public:
 	Rectangle* getVisibleRect(XojPageView* redrawable);
 
 	GtkContainer* getParent();
+
+	/**
+	 * A pen action was detected now, therefore ignore touch events
+	 * for a short time
+	 */
+	void penActionDetected();
+
+	/**
+	 * If the pen was active a short time before, ignore touch events
+	 */
+	bool shouldIgnoreTouchEvents();
+
 public:
-	//ZoomListener interface
+	// ZoomListener interface
 	void zoomChanged(double lastZoom);
 
 public:
-	//DocumentListener interface
+	// DocumentListener interface
 	void pageSelected(size_t page);
 	void pageSizeChanged(size_t page);
 	void pageChanged(size_t page);
@@ -181,6 +194,11 @@ private:
 	 * Memory cleanup timeout
 	 */
 	int cleanupTimeout;
+
+	/**
+	 * Last Pen action, to ignore touch events within a time frame
+	 */
+	gint64 lastPenAction;
 
 	friend class Layout;
 };

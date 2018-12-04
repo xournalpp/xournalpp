@@ -15,24 +15,39 @@
 
 #include "gui/GladeGui.h"
 
+#include "model/TexImage.h"
+
 #include <XournalType.h>
 
 class LatexDialog : public GladeGui
 {
-public:
+  public:
 	LatexDialog(GladeSearchpath* gladeSearchPath);
 	virtual ~LatexDialog();
 
-public:
+  public:
 	virtual void show(GtkWindow* parent);
 	void save();
 	void load();
+
+	// Set and retrieve text from text box
 	void setTex(string texString);
 	string getTex();
+	
+	//Set and retrieve temporary Tex render
+	void setTempRender(cairo_surface_t* cairoTexTempRender);
 
+	// Necessary for the controller in order to connect the 'text-changed'
+	// signal handler
+	GtkWidget* getTexBox();
 
-private:
+  private:
 	XOJ_TYPE_ATTRIB;
+	
+	// Temporary render
+	GtkWidget* texTempRender;
+	
+	// Text field
 	GtkWidget* texBox;
 	string theLatex;
 };

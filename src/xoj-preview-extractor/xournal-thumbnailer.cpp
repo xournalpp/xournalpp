@@ -20,6 +20,10 @@
 
 namespace bl = boost::locale;
 
+#ifdef __APPLE__
+#undef ENABLE_NLS
+#endif
+
 #include <iostream>
 #include <fstream>
 using std::cerr;

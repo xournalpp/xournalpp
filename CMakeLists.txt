@@ -3,15 +3,34 @@ cmake_minimum_required (VERSION 2.8.8)
 project ("Xournal++" CXX C)
 set (PROJECT_VERSION "1.0.2")
 set (PROJECT_PACKAGE "xournalpp")
-
 set (PROJECT_STRING "${PROJECT_NAME} ${PROJECT_VERSION}")
 set (PROJECT_URL "https://github.com/xournalpp/xournalpp")
 
-include (FindPkgConfig)
 set (CMAKE_MODULE_PATH
     "${PROJECT_SOURCE_DIR}/cmake/find"
     "${PROJECT_SOURCE_DIR}/cmake/include"
 )
+
+# package version
+include (Version)
+core_find_git_rev(RELEASE_IDENTIFIER)
+string(TIMESTAMP PACKAGE_TIMESTAMP "%Y%m%d.%H%M" UTC)
+set(CPACK_PACKAGE_VERSION ${PROJECT_VERSION}~git${PACKAGE_TIMESTAMP}-${RELEASE_IDENTIFIER}-${DISTRO_CODENAME})
+
+set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Xournal++: Notetaking software designed around a tablet")
+set(CPACK_GENERATOR "DEB"  CACHE STRING "Alternativelly generate RPM. Needs rpmbuild.")
+set(CPACK_DEBIAN_PACKAGE_MAINTAINER "Xournal++ Team")
+set(CPACK_DEBIAN_PACKAGE_CONTROL_EXTRA "${CMAKE_CURRENT_BINARY_DIR}/cmake/postinst")
+
+configure_file (
+    cmake/postinst.in
+    cmake/postinst
+    @ONLY
+)
+
+include(CPack)
+
+include (FindPkgConfig)
 
 set (PACKAGE_DATA_DIR "${CMAKE_INSTALL_PREFIX}/share")
 
@@ -21,6 +40,13 @@ include (GitRepo)
 ## C++11 ##
 include (C++11)
 CheckCXX11 (FATAL_ERROR)
+
+## os specific library ending ##
+if (CMAKE_SYSTEM_NAME STREQUAL "Darwin")
+    set(LIB_ENDING "dylib")
+else ()
+    set(LIB_ENDING "so")
+endif ()
 
 ## Libraries ##
 
@@ -116,10 +142,19 @@ if (LSB_RELEASE_ID_SHORT STREQUAL "Ubuntu" AND LSB_RELEASE_NUMBER_SHORT STREQUAL
   set(BUILD_POPPLER ON)
   message ("Automatically set BUILD_POPPLER ON on Ubuntu 16.04")
 endif()
+## Mac OS X too
+if (CMAKE_SYSTEM_NAME STREQUAL "Darwin")
+  set(BUILD_POPPLER ON)
+  message ("Automatically set BUILD_POPPLER ON on Mac OS")
+endif ()
 
+set (POPPLER_MIN_VER "0.58")
+set (POPPLER_MAX_VER  "0.69")
+set (POPPLER_BUILD_FROM "git" CACHE STRING "Source to build poppler from: git (default), tarball, sourcefolder")
 set (POPPLER_GIT_VER "0.61.1" CACHE STRING "Version of Poppler to build")
-option (POPPLER_GIT "Use git version of Poppler" ON)
-set(POPPLER_DIR "/path/to/poppler/source" CACHE STRING "Directory with poppler")
+set (POPPLER_SRC_DIR "/path/to/poppler/source" CACHE STRING "Directory with poppler source")
+set (POPPLER_SRC_TARXZ "/path/to/poppler.tar.xz" CACHE STRING "Tarball file location")
+
 if (BUILD_POPPLER)
   # For documentation see https://gitlab.kitware.com/cmake/community/wikis/doc/cmake/RPATH-handling
   set(POPPLER_LIB_DIR ${CMAKE_INSTALL_PREFIX}/bin/xournalpplib)
@@ -129,8 +164,7 @@ if (BUILD_POPPLER)
   include (ExternalProject)
   set (POPPLER_PREFIX "${CMAKE_BINARY_DIR}/poppler-prefix")
   set (POPPLER_CMAKE_ARGS "-DBUILD_QT5_TESTS=OFF -DENABLE_UTILS=OFF -DENABLE_QT5=OFF -DENABLE_QT4=OFF -DBUILD_QT4_TESTS=OFF")
-  if (POPPLER_GIT)
-
+  if (POPPLER_BUILD_FROM STREQUAL "git")
     ExternalProject_Add (poppler
         GIT_REPOSITORY "git://git.freedesktop.org/git/poppler/poppler"
         GIT_TAG "poppler-${POPPLER_GIT_VER}"
@@ -139,14 +173,24 @@ if (BUILD_POPPLER)
         CMAKE_ARGS ${POPPLER_CMAKE_ARGS}
         INSTALL_COMMAND ""
     )
-  else ()
-     ExternalProject_Add (poppler
-        SOURCE_DIR "${POPPLER_DIR}"
+  elseif (POPPLER_BUILD_FROM STREQUAL "sourcefolder")
+    ExternalProject_Add (poppler
+        SOURCE_DIR "${POPPLER_SRC_DIR}"
         PREFIX "${POPPLER_PREFIX}"
 
         CMAKE_ARGS ${POPPLER_CMAKE_ARGS}
         INSTALL_COMMAND ""
     )
+  elseif (POPPLER_BUILD_FROM STREQUAL "tarball")
+	ExternalProject_Add (poppler
+        URL "${POPPLER_SRC_TARXZ}"
+        PREFIX "${POPPLER_PREFIX}"
+
+        CMAKE_ARGS ${POPPLER_CMAKE_ARGS}
+		INSTALL_COMMAND ""
+    )
+  else ()
+    message (FATAL_ERROR "Source to build poppler from must be: git (default), sourcefolder or tarball")
   endif()
   
   # Additional packages required by Poppler
@@ -177,10 +221,10 @@ if (BUILD_POPPLER)
     "${POPPLER_PREFIX}/src/poppler-build/utils"
   )
   set (POPPLER_LIBRARIES
-    libpoppler.so
-    libpoppler-cpp.so
-    libpoppler-glib.so
-    
+    "libpoppler.${LIB_ENDING}"
+    "libpoppler-cpp.${LIB_ENDING}"
+    "libpoppler-glib.${LIB_ENDING}"
+
     ${OPENJPEG_LIBRARIES}
 # Comment out, seems to be a problem on Debian...
 # Do we need to detect something to enable / disable?
@@ -207,9 +251,13 @@ if (BUILD_POPPLER)
 
 else ()
 
-  find_package (Poppler 0.58.0)
+  find_package (Poppler)
   if (NOT POPPLER_FOUND)
     message (FATAL_ERROR "Poppler not found – you should enable BUILD_POPPLER CMake flag")
+  elseif (POPPLER_VERSION VERSION_LESS ${POPPLER_MIN_VER})
+    message (FATAL_ERROR "Poppler too old - you should enable BUILD_POPPLER CMake flag")
+  elseif (POPPLER_VERSION VERSION_GREATER ${POPPLER_MAX_VER})
+    message (FATAL_ERROR "Poppler too new, Xournalpp has not been adapted jet - you should enable BUILD_POPPLER CMake flag")
   endif (NOT POPPLER_FOUND)
 
 endif ()
@@ -241,6 +289,7 @@ endif (ENABLE_MATHTEX AND WIN32)
 # Unstable features
 
 option (UNSTABLE_LAYERS_SIDEBAR "Layers sidebar (unstable)" OFF)
+option (UNSTABLE_HIGHDPI_FIXES "HighDPI Fixes (unstable)" OFF)
 
 configure_file (
   src/config-features.h.in
@@ -324,6 +373,49 @@ install (DIRECTORY ui
   COMPONENT xournalpp
 )
 
+# Install desktop shortcuts for Linux
+if (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
+	message ("Installing desktop files")
+	# Install desktop entry
+	#install(FILES data/albert.desktop DESTINATION /share/applications )
+
+	# Install icons
+	install(FILES ui/pixmaps/xournalpp.svg
+			DESTINATION ${CMAKE_INSTALL_PREFIX}/share/icons/hicolor/scalable/apps)
+	
+	# Symlink are not easy to use with CMake, therefor simple install a copy...
+	install(FILES ui/pixmaps/application-x-xopp.svg
+			DESTINATION ${CMAKE_INSTALL_PREFIX}/share/icons/hicolor/scalable/mimetypes/)
+	install(FILES ui/pixmaps/application-x-xopt.svg
+			DESTINATION ${CMAKE_INSTALL_PREFIX}/share/icons/hicolor/scalable/mimetypes/)
+	install(FILES ui/pixmaps/application-x-xoj.svg
+			DESTINATION ${CMAKE_INSTALL_PREFIX}/share/icons/hicolor/scalable/mimetypes/)
+
+	install(FILES ui/pixmaps/gnome-mime-application-x-xopp.svg
+			DESTINATION ${CMAKE_INSTALL_PREFIX}/share/icons/hicolor/scalable/mimetypes/)
+	install(FILES ui/pixmaps/gnome-mime-application-x-xopt.svg
+			DESTINATION ${CMAKE_INSTALL_PREFIX}/share/icons/hicolor/scalable/mimetypes/)
+
+	install(FILES desktop/xournal.xml
+			DESTINATION ${CMAKE_INSTALL_PREFIX}/share/mime/packages)
+	install(FILES desktop/xournalpp.desktop
+			DESTINATION ${CMAKE_INSTALL_PREFIX}/share/applications)
+	install(FILES desktop/x-xoj.desktop
+			DESTINATION ${CMAKE_INSTALL_PREFIX}/share/mimelnk/application)
+	install(FILES desktop/x-xopp.desktop
+			DESTINATION ${CMAKE_INSTALL_PREFIX}/share/mimelnk/application)
+	install(FILES desktop/x-xopt.desktop
+			DESTINATION ${CMAKE_INSTALL_PREFIX}/share/mimelnk/application)
+	
+	install(FILES desktop/xournalpp.thumbnailer
+			DESTINATION ${CMAKE_INSTALL_PREFIX}/share/thumbnailers)
+	install(PROGRAMS utility/usr/local/bin/xopp-recording.sh
+			DESTINATION ${CMAKE_INSTALL_PREFIX}/local/bin/)
+
+	install(CODE "execute_process(COMMAND ${CMAKE_CURRENT_BINARY_DIR}/cmake/postinst configure)")
+
+endif ()
+
 if (BUILD_POPPLER)
 	# Manual install Poppler libs
 	# RPATH is set before, so they will be loaded
@@ -346,38 +438,13 @@ endif()
 configure_file (
   cmake/cmake_uninstall.cmake.in
   cmake/cmake_uninstall.cmake
-  IMMEDIATE @ONLY
+  @ONLY
 )
 
 add_custom_target (uninstall
   COMMAND ${CMAKE_COMMAND} -P ${CMAKE_CURRENT_BINARY_DIR}/cmake/cmake_uninstall.cmake
-  DEPENDS desktop-uninstall
 
-  COMMENT "Uninstall entire xournalpp"
-)
-
-# Install desktop target
-configure_file (desktop/desktop_install.sh.in desktop/desktop_install.sh @ONLY)
-
-add_custom_target (desktop-install-xournalpp
-  COMMAND desktop/desktop_install.sh install
-
-  COMMENT "Install xournalpp desktop files"
-)
-
-add_custom_target (desktop-install
-  DEPENDS desktop-install-xournalpp desktop-install-thumbnailer
-)
-
-# Uninstall desktop target
-add_custom_target (desktop-uninstall-xournalpp
-  COMMAND desktop/desktop_install.sh uninstall
-
-  COMMENT "Uninstall xournalpp desktop files"
-)
-
-add_custom_target (desktop-uninstall
-  DEPENDS desktop-uninstall-xournalpp desktop-uninstall-thumbnailer
+  COMMENT "Uninstall entire Xournal++"
 )
 
 message ("
@@ -388,6 +455,7 @@ Configuration:
 
 Unstable features:
 	Layers sidebar:             ${UNSTABLE_LAYERS_SIDEBAR}
+	HighDPI Fixes:              ${UNSTABLE_HIGHDPI_FIXES}
 
 Static libraries:
 	Poppler:                    ${BUILD_POPPLER}

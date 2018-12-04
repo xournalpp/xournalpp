@@ -11,8 +11,10 @@
 #include <math.h>
 
 StrokeHandler::StrokeHandler(XournalView* xournal, XojPageView* redrawable, PageRef page)
-	: InputHandler(xournal, redrawable, page),
-	  surfMask(NULL), crMask(NULL), reco(NULL)
+ : InputHandler(xournal, redrawable, page),
+   surfMask(NULL),
+   crMask(NULL),
+   reco(NULL)
 {
 	XOJ_INIT_TYPE(StrokeHandler);
 }
@@ -278,32 +280,49 @@ bool StrokeHandler::getPressureMultiplier(GdkEvent* event, double& pressure)
 	XOJ_CHECK_TYPE(StrokeHandler);
 
 	GdkDevice* device = gdk_event_get_device(event);
-	gdouble* axes = event->button.axes;
-
-	pressure = 1.0;
-
-	gdk_device_get_state(device,
-	                     gtk_widget_get_parent_window(xournal->getWidget()),
-	                     axes, NULL);
-
-	if(!gdk_device_get_axis(device, axes, GDK_AXIS_PRESSURE, &pressure))
+	int axesCount = gdk_device_get_n_axes(device);
+	if (axesCount <= 4)
 	{
 		pressure = 1.0;
 		return false;
 	}
 
-	// from the documentation:
-	// "The pressure field is a a double value ranging from 0.0 to 1.0"
+	// This causes some memory corruption
+	// If touch and pen is active at the same time
+	// Here are random crashes. It cannot be reproduced
+	// without touch and pen at the same time
+//	gdouble* axes = event->button.axes;
+//	gdk_device_get_state(device,
+//						 gtk_widget_get_parent_window(xournal->getWidget()),
+//						 axes, NULL);
+//
+//	if (!gdk_device_get_axis(device, axes, GDK_AXIS_PRESSURE, &pressure))
+//	{
+//		pressure = 1.0;
+//		return false;
+//	}
 
-	Settings* settings = xournal->getControl()->getSettings();
-
-	if(!finite(pressure))
+	double* axes;
+	if (event->type == GDK_MOTION_NOTIFY)
 	{
-		pressure = 1.0;
+		axes = event->motion.axes;
+	}
+	else
+	{
+		axes = event->button.axes;
 	}
 
-	pressure = ((1 - pressure) * settings->getWidthMinimumMultiplier() +
-	           pressure * settings->getWidthMaximumMultiplier());
+	pressure = axes[2];
+	Settings* settings = xournal->getControl()->getSettings();
+
+	if (!finite(pressure))
+	{
+		pressure = 1.0;
+		return false;
+	}
+
+	pressure = ((1 - pressure) * settings->getWidthMinimumMultiplier()
+			+ pressure * settings->getWidthMaximumMultiplier());
 
 	return true;
 }
