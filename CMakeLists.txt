@@ -3,22 +3,34 @@ cmake_minimum_required (VERSION 2.8.8)
 project ("Xournal++" CXX C)
 set (PROJECT_VERSION "1.0.2")
 set (PROJECT_PACKAGE "xournalpp")
-
-set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Xournal++: Notetaking software designed around a tablet")
-string(TIMESTAMP CPACK_PACKAGE_VERSION "nightly-build-%Y-%m-%dT%H%M%SZ")
-set(CPACK_GENERATOR "DEB"  CACHE STRING "Alternativelly generate RPM. Needs rpmbuild.")
-set(CPACK_DEBIAN_PACKAGE_MAINTAINER "Xournal++ Team")
-
-include(CPack)
-
 set (PROJECT_STRING "${PROJECT_NAME} ${PROJECT_VERSION}")
 set (PROJECT_URL "https://github.com/xournalpp/xournalpp")
 
-include (FindPkgConfig)
 set (CMAKE_MODULE_PATH
     "${PROJECT_SOURCE_DIR}/cmake/find"
     "${PROJECT_SOURCE_DIR}/cmake/include"
 )
+
+# package version
+include (Version)
+core_find_git_rev(RELEASE_IDENTIFIER)
+string(TIMESTAMP PACKAGE_TIMESTAMP "%Y%m%d.%H%M" UTC)
+set(CPACK_PACKAGE_VERSION ${PROJECT_VERSION}~git${PACKAGE_TIMESTAMP}-${RELEASE_IDENTIFIER}-${DISTRO_CODENAME})
+
+set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Xournal++: Notetaking software designed around a tablet")
+set(CPACK_GENERATOR "DEB"  CACHE STRING "Alternativelly generate RPM. Needs rpmbuild.")
+set(CPACK_DEBIAN_PACKAGE_MAINTAINER "Xournal++ Team")
+set(CPACK_DEBIAN_PACKAGE_CONTROL_EXTRA "${CMAKE_CURRENT_BINARY_DIR}/cmake/postinst")
+
+configure_file (
+    cmake/postinst.in
+    cmake/postinst
+    @ONLY
+)
+
+include(CPack)
+
+include (FindPkgConfig)
 
 set (PACKAGE_DATA_DIR "${CMAKE_INSTALL_PREFIX}/share")
 
@@ -397,16 +409,10 @@ if (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
 	
 	install(FILES desktop/xournalpp.thumbnailer
 			DESTINATION ${CMAKE_INSTALL_PREFIX}/share/thumbnailers)
-	install(FILES utility/usr/local/bin/xopp-recording.sh
-			DESTINATION ${CMAKE_INSTALL_PREFIX}/local/bin/
-			PERMISSIONS OWNER_EXECUTE GROUP_EXECUTE WORLD_EXECUTE)
+	install(PROGRAMS utility/usr/local/bin/xopp-recording.sh
+			DESTINATION ${CMAKE_INSTALL_PREFIX}/local/bin/)
 
-
-	install(CODE "
-		execute_process(COMMAND update-desktop-database)
-		execute_process(COMMAND update-mime-database ${CMAKE_INSTALL_PREFIX}/share/mime)
-		execute_process(COMMAND gtk-update-icon-cache -f -t ${CMAKE_INSTALL_PREFIX}/share/icons/hicolor)"
-	  )
+	install(CODE "execute_process(COMMAND ${CMAKE_CURRENT_BINARY_DIR}/cmake/postinst configure)")
 
 endif ()
 
@@ -432,7 +438,7 @@ endif()
 configure_file (
   cmake/cmake_uninstall.cmake.in
   cmake/cmake_uninstall.cmake
-  IMMEDIATE @ONLY
+  @ONLY
 )
 
 add_custom_target (uninstall
