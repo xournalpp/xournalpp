@@ -452,6 +452,11 @@ void EditSelectionContents::paint(cairo_t* cr, double x, double y, double width,
 		this->relativeY = y;
 	}
 
+	if (abs(rotation) > __DBL_EPSILON__)	
+	{	
+		this->rotation = rotation;
+	}
+
 	if (this->crBuffer == NULL)
 	{
 		this->crBuffer = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, width * zoom, height * zoom);
