@@ -193,8 +193,6 @@ void LatexController::showTexEditDialog()
 	dlg->setTex(initalTex);
 
 	// The controller owns the tempRender because, on signal changed, he has to handle the old/new renders
-	insertTexImage(true);
-
 	if (temporaryRender != NULL)
 	{
 		dlg->setTempRender(temporaryRender->getImage());

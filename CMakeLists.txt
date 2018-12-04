@@ -149,7 +149,7 @@ if (CMAKE_SYSTEM_NAME STREQUAL "Darwin")
 endif ()
 
 set (POPPLER_MIN_VER "0.58")
-set (POPPLER_MAX_VER  "0.68")
+set (POPPLER_MAX_VER  "0.69")
 set (POPPLER_BUILD_FROM "git" CACHE STRING "Source to build poppler from: git (default), tarball, sourcefolder")
 set (POPPLER_GIT_VER "0.61.1" CACHE STRING "Version of Poppler to build")
 set (POPPLER_SRC_DIR "/path/to/poppler/source" CACHE STRING "Directory with poppler source")
