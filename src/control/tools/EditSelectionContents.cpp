@@ -19,6 +19,7 @@
 #include "undo/UndoRedoHandler.h"
 #include "undo/SizeUndoAction.h"
 #include "undo/ScaleUndoAction.h"
+#include "undo/RotateUndoAction.h"
 #include "view/DocumentView.h"
 
 #include <serializing/ObjectOutputStream.h>
@@ -335,7 +336,8 @@ void EditSelectionContents::finalizeSelection(double x, double y, double width, 
 	bool scale =
 			(width != this->originalWidth || height != this->originalHeight);
 
-	bool rotate = (abs(this->rotation) > __DBL_EPSILON__);
+	bool rotate = 
+			(abs(this->rotation) > __DBL_EPSILON__);
 
 	double mx = x - this->originalX;
 	double my = y - this->originalY;
@@ -380,6 +382,9 @@ void EditSelectionContents::updateContent(double x, double y, double width, doub
 	}
 	bool scale =
 			(width != this->lastWidth || height != this->lastHeight);
+	
+	bool rotate = 
+		(abs(this->rotation) > __DBL_EPSILON__);
 
 	if (type == CURSOR_SELECTION_MOVE)
 	{
@@ -388,6 +393,11 @@ void EditSelectionContents::updateContent(double x, double y, double width, doub
 
 		undo->addUndoAction(moveUndo);
 
+	}
+	else if (rotate)
+	{
+		RotateUndoAction* rotateUndo = new RotateUndoAction(this->sourcePage, &this->selected, this->lastX, this->lastY, rotation);
+		undo->addUndoAction(rotateUndo);
 	}
 	else if (scale)
 	{
@@ -455,8 +465,6 @@ void EditSelectionContents::paint(cairo_t* cr, double x, double y, double width,
 
 		if (abs(rotation) > __DBL_EPSILON__)
 		{
-			//double xOff=-width;
-			//double yOff=-height; 
 			this->rotation = rotation;
 			cairo_translate(cr2,width,height);
 			cairo_rotate(cr2,this->rotation);
@@ -489,7 +497,6 @@ void EditSelectionContents::paint(cairo_t* cr, double x, double y, double width,
 		{
 			this->rescaleId = g_idle_add((GSourceFunc) repaintSelection, this);
 		}
-
 		cairo_scale(cr, sx, sy);
 	}
 

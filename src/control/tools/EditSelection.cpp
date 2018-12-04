@@ -674,11 +674,23 @@ void EditSelection::paint(cairo_t* cr, double zoom)
 	// top left
 	drawAnchorRect(cr, x, y, zoom);
 	// top right
-	drawAnchorRect(cr, x + width, y, zoom);
+	drawAnchorRotation(cr, x + width, y, zoom);
 	// bottom left
 	drawAnchorRect(cr, x, y + height, zoom);
 	// bottom right
 	drawAnchorRect(cr, x + width, y + height, zoom);
+}
+
+void EditSelection::drawAnchorRotation(cairo_t* cr, double x, double y, double zoom)
+{
+	XOJ_CHECK_TYPE(EditSelection);
+
+	GtkColorWrapper selectionColor = view->getSelectionColor();
+	selectionColor.apply(cr);
+	cairo_rectangle(cr, x * zoom - 4, y * zoom - 4, 8, 8);
+	cairo_stroke_preserve(cr);
+	cairo_set_source_rgb(cr, 1, 0, 0);
+	cairo_fill(cr);	
 }
 
 /**
