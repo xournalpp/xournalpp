@@ -11,6 +11,7 @@
 #include <Stacktrace.h>
 
 #include <boost/filesystem.hpp>
+#include <boost/algorithm/string.hpp>
 #include "pixbuf-utils.h"
 
 #include <iostream>
@@ -365,7 +366,7 @@ void LatexController::run()
 	findSelectedTexElement();
 	showTexEditDialog();
 
-	if (currentTex.empty() || initalTex == currentTex)
+	if (boost::algorithm::trim_copy(currentTex).empty() || initalTex == currentTex)
 	{
 		// Nothing to insert / change
 		return;
@@ -374,7 +375,6 @@ void LatexController::run()
 	// now do all the LatexAction stuff
 	if (!runCommand())
 	{
-
 		string msg = FS(_("Failed to generate LaTeX image!"));
 		Util::showErrorToUser(control->getGtkWindow(), msg);
 		return;
