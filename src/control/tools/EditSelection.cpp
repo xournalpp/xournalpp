@@ -380,7 +380,13 @@ void EditSelection::mouseMove(double x, double y)
 		double dx = x - this->x - this->width;
 		double dy = y - this->y;
 
-		this->rotation = (dx+dy)/10;
+		/** 
+		 * smaller values result in a not accurate rotation restore
+		 * when doing CTRL+Z, because the undo action for it is created 
+		 * on mouse release and BEFORE the finalize()?!
+		 * So the mouse delta within that time is not registered for CTRL+Z
+		 */
+		this->rotation = (dx+dy)/100;	
 		
 		//double f;
 		//if (ABS(dy) < ABS(dx))

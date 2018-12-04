@@ -6,7 +6,7 @@
 #include <i18n.h>
 #include <Range.h>
 
-RotateUndoAction::RotateUndoAction(PageRef page, ElementVector* elements, double x0, double y0, double rotation) :
+RotateUndoAction::RotateUndoAction(PageRef page, ElementVector* elements, double x0, double y0, double xo, double yo, double rotation) :
 		UndoAction("RotateUndoAction")
 {
 	XOJ_INIT_TYPE(RotateUndoAction);
@@ -15,6 +15,8 @@ RotateUndoAction::RotateUndoAction(PageRef page, ElementVector* elements, double
 	this->elements = *elements;
 	this->x0 = x0;
 	this->y0 = y0;
+	this->xo = xo;
+	this->yo = yo;
 	this->rotation = rotation;
 }
 
@@ -57,7 +59,8 @@ void RotateUndoAction::applyRotation(double rotation)
 	{
 		r.addPoint(e->getX(), e->getY());
 		r.addPoint(e->getX() + e->getElementWidth(), e->getY() + e->getElementHeight());
-		e->rotate(this->x0, this->y0, e->getElementWidth()/2, e->getElementHeight()/2,rotation);
+		printf("RotateUndoAction::applyRotation - Getting %f rotation rads...\n",rotation);
+		e->rotate(this->x0, this->y0, this->xo, this->yo,rotation);
 		r.addPoint(e->getX(), e->getY());
 		r.addPoint(e->getX() + e->getElementWidth(), e->getY() + e->getElementHeight());
 	}

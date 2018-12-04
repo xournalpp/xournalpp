@@ -361,7 +361,6 @@ void EditSelectionContents::finalizeSelection(double x, double y, double width, 
 		layer->addElement(e);
 	}
 
-	this->rotation = 0;	//reset rotation for next usage
 }
 
 void EditSelectionContents::updateContent(double x, double y, double width, double height, bool aspectRatio,
@@ -396,10 +395,13 @@ void EditSelectionContents::updateContent(double x, double y, double width, doub
 	}
 	else if (rotate)
 	{
-		RotateUndoAction* rotateUndo = new RotateUndoAction(this->sourcePage, &this->selected, this->lastX, this->lastY, rotation);
+		printf("Adding a rotation undo action for %f radiants..\n",this->rotation);
+		RotateUndoAction* rotateUndo = new RotateUndoAction(this->sourcePage, &this->selected, x, 
+								y, width/2, height/2, this->rotation);
 		undo->addUndoAction(rotateUndo);
+		this->rotation = 0;	//reset rotation for next usage
 	}
-	else if (scale)
+	if (scale)
 	{
 		// The coordinates which are the center of the scaling
 		// operation. Their coordinates depend on the scaling
@@ -421,14 +423,14 @@ void EditSelectionContents::updateContent(double x, double y, double width, doub
 		switch (type)
 		{
 		case CURSOR_SELECTION_TOP_LEFT:
-		case CURSOR_SELECTION_TOP_RIGHT:
+		//case CURSOR_SELECTION_TOP_RIGHT:	//now reserved for rotation
 		case CURSOR_SELECTION_TOP:
 			py = (this->lastHeight + this->lastY);
 			break;
 		default:
 			break;
 		}
-
+		printf("adding ScaleUndoAction for object\n");
 		ScaleUndoAction* scaleUndo = new ScaleUndoAction(this->sourcePage, &this->selected, px, py, fx, fy);
 		undo->addUndoAction(scaleUndo);
 

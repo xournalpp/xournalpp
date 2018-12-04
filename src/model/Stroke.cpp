@@ -315,6 +315,8 @@ void Stroke::move(double dx, double dy)
 void Stroke::rotate(double x0, double y0, double xo, double yo, double th)
 {
 	XOJ_CHECK_TYPE(Stroke);
+
+	printf("rotating object %f radiants\n",th);
 	
 	for (int i = 0; i < this->pointCount; i++)
 	{
@@ -322,9 +324,9 @@ void Stroke::rotate(double x0, double y0, double xo, double yo, double th)
 
 		p.x -= x0;	//move to origin
 		p.y -= y0;
-		
-		p.x -= xo-1;	//center to origin
-		p.y -= yo-1;
+		double offset = 0; // __DBL_EPSILON__;
+		p.x -= xo-offset;	//center to origin
+		p.y -= yo-offset;
 
 		double x1 = p.x * cos(th) - p.y * sin(th); 	
 		double y1 = p.y * cos(th) + p.x * sin(th);	
@@ -334,8 +336,8 @@ void Stroke::rotate(double x0, double y0, double xo, double yo, double th)
 		p.x += x0;	//restore the position
 		p.y += y0;
 
-		p.x += xo-1;	//center it
-		p.y += yo-1;		
+		p.x += xo-offset;	//center it
+		p.y += yo-offset;		
 	}
 	//Width and Height will likely be changed after this operation
 	calcSize();
