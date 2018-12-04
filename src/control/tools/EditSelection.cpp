@@ -649,8 +649,8 @@ void EditSelection::paint(cairo_t* cr, double zoom)
 	{
 		this->rotation = rotation;
 
-		double rx = x + width / 2;
-		double ry = y + height / 2;
+		double rx = (x + width / 2) * zoom;
+		double ry = (y + height / 2) * zoom;
 
 		cairo_translate(cr, rx, ry);
 		cairo_rotate(cr, this->rotation);
