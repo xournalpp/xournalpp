@@ -333,11 +333,8 @@ void EditSelectionContents::finalizeSelection(double x, double y, double width, 
 		fx = f;
 		fy = f;
 	}
-	bool scale =
-			(width != this->originalWidth || height != this->originalHeight);
-
-	bool rotate = 
-			(abs(this->rotation) > __DBL_EPSILON__);
+	bool scale = (width != this->originalWidth || height != this->originalHeight);
+	bool rotate = (abs(this->rotation) > __DBL_EPSILON__);
 
 	double mx = x - this->originalX;
 	double my = y - this->originalY;
@@ -356,7 +353,7 @@ void EditSelectionContents::finalizeSelection(double x, double y, double width, 
 		}
 		if (rotate)
 		{
-			e->rotate(x,y,this->originalWidth/2,this->originalHeight/2,this->rotation);
+			e->rotate(x, y, this->originalWidth / 2, this->originalHeight / 2, this->rotation);
 		}
 		layer->addElement(e);
 	}
@@ -379,11 +376,9 @@ void EditSelectionContents::updateContent(double x, double y, double width, doub
 		fx = f;
 		fy = f;
 	}
-	bool scale =
-			(width != this->lastWidth || height != this->lastHeight);
-	
-	bool rotate = 
-		(abs(this->rotation) > __DBL_EPSILON__);
+
+	bool scale = (width != this->lastWidth || height != this->lastHeight);
+	bool rotate = (abs(this->rotation) > __DBL_EPSILON__);
 
 	if (type == CURSOR_SELECTION_MOVE)
 	{
@@ -395,9 +390,9 @@ void EditSelectionContents::updateContent(double x, double y, double width, doub
 	}
 	else if (rotate)
 	{
-		printf("Adding a rotation undo action for %f radiants..\n",this->rotation);
-		RotateUndoAction* rotateUndo = new RotateUndoAction(this->sourcePage, &this->selected, x, 
-								y, width/2, height/2, this->rotation);
+		printf("Adding a rotation undo action for %f radiants..\n", this->rotation);
+		RotateUndoAction* rotateUndo = new RotateUndoAction(this->sourcePage, &this->selected, x,
+															y, width / 2, height / 2, this->rotation);
 		undo->addUndoAction(rotateUndo);
 		this->rotation = 0;	//reset rotation for next usage
 	}
@@ -464,14 +459,6 @@ void EditSelectionContents::paint(cairo_t* cr, double x, double y, double width,
 
 		int dx = (int) (this->relativeX * zoom);
 		int dy = (int) (this->relativeY * zoom);
-
-		if (abs(rotation) > __DBL_EPSILON__)
-		{
-			this->rotation = rotation;
-			cairo_translate(cr2,width,height);
-			cairo_rotate(cr2,this->rotation);
-			cairo_translate(cr2,-width,-height);
-		}
 
 		cairo_scale(cr2, fx, fy);
 		cairo_translate(cr2, -dx, -dy);

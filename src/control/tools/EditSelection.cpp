@@ -644,6 +644,14 @@ void EditSelection::paint(cairo_t* cr, double zoom)
 	double x = this->x;
 	double y = this->y;
 	
+
+	if (abs(rotation) > __DBL_EPSILON__)
+	{
+		this->rotation = rotation;
+		cairo_translate(cr, width / 2, height / 2);
+		cairo_rotate(cr, this->rotation);
+		cairo_translate(cr, -width / 2, -height / 2);
+	}
 	this->contents->paint(cr, x, y, this->width, this->height, zoom, this->rotation);
 
 	cairo_set_operator(cr, CAIRO_OPERATOR_OVER);
