@@ -700,7 +700,7 @@ void EditSelection::paint(cairo_t* cr, double zoom)
 		// right
 		drawAnchorRect(cr, x + width, y + height / 2, zoom);
 		// rotation handle
-		drawAnchorRotation(cr, x + width +8, y + height / 2, zoom);
+		drawAnchorRotation(cr, x + width +12/zoom, y + height / 2, zoom);
 	}
 
 	// top left
