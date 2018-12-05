@@ -450,16 +450,19 @@ void EditSelection::mouseMove(double x, double y)
 		this->width -= dx;
 		this->x += dx;
 	}
-	else if (this->mouseDownType == CURSOR_SELECTION_RIGHT)	//catch rotation here
+	else if (this->mouseDownType == CURSOR_SELECTION_RIGHT)	
 	{
-		//double dx = x - this->x - this->width;
-		//this->width += dx;
+		double dx = x - this->x - this->width;
+		this->width += dx;
+		
+	}
+	else if (this->mouseDownType == CURSOR_SELECTION_ROTATE)  //catch rotation here
+	{
 		double dx = x - this->x - this->width/2;
 		double dy = y - this->y - this->height/2;
 
 		double angle = atan2(dy,dx);
 		this->rotation = angle;
-
 	}
 
 	this->view->getXournal()->repaintSelection();
@@ -620,6 +623,11 @@ CursorSelectionType EditSelection::getSelectionTypeForPos(double x, double y, do
 			{
 				return CURSOR_SELECTION_RIGHT;
 			}
+
+			if (x2+16 - BORDER_PADDING <= x && x <= x2+16 + BORDER_PADDING)
+			{
+				return CURSOR_SELECTION_ROTATE;
+			}
 		}
 	}
 
@@ -691,7 +699,9 @@ void EditSelection::paint(cairo_t* cr, double zoom)
 		// left
 		drawAnchorRect(cr, x, y + height / 2, zoom);
 		// right
-		drawAnchorRotation(cr, x + width, y + height / 2, zoom);
+		drawAnchorRect(cr, x + width, y + height / 2, zoom);
+		// rotation handle
+		drawAnchorRotation(cr, x + width +8, y + height / 2, zoom);
 	}
 
 	// top left
