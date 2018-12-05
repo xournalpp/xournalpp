@@ -104,12 +104,14 @@ If you want to install desktop file and thumbnailer execute:
 make desktop-install
 ```
 
-## API documentation
+## Code documentation
 
-The code documentation is generated using Doxygen. In order to generate the documentation
-yourself, first install Doxygen and graphviz, i.e.
+The code documentation is generated using Doxygen.
 
-```sudo apt install doxygen
+In order to generate the documentation yourself, first install Doxygen and graphviz, i.e.
+
+```bash
+sudo apt install doxygen
 sudo apt install graphviz
 ```
 
