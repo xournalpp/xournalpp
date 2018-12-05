@@ -104,6 +104,23 @@ If you want to install desktop file and thumbnailer execute:
 make desktop-install
 ```
 
+## API documentation
+
+The code documentation is generated using Doxygen. In order to generate the documentation
+yourself, first install Doxygen and graphviz, i.e.
+
+```sudo apt install doxygen
+sudo apt install graphviz
+```
+
+on Debian or Ubuntu. Finally, type in `doxygen` in the root directory of the repository.
+The documentation can be found in `doc/html` and `doc/latex`. Conveniently display the
+documentation with `python3 -m http.server 8000` and visit the shown URL to view the
+documentation.
+
+The website https://cypax.net/tutorials/doxygen/ provides a good introduction to Doxygen
+and how to document code with it.
+
 ## Fileformat
 The fileformat *.xopp is an XML which is .gz compressed. PDFs are not embedded
 into the file, so if the PDF is deleted, the background is lost.
