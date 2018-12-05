@@ -375,34 +375,26 @@ void EditSelection::mouseMove(double x, double y)
 		this->x += oldW - this->width;
 		this->y += oldH - this->height;
 	}
-	else if (this->mouseDownType == CURSOR_SELECTION_TOP_RIGHT)	//catch rotation here
+	else if (this->mouseDownType == CURSOR_SELECTION_TOP_RIGHT)
 	{
 		double dx = x - this->x - this->width;
 		double dy = y - this->y;
 
-		/** 
-		 * smaller values result in a not accurate rotation restore
-		 * when doing CTRL+Z, because the undo action for it is created 
-		 * on mouse release and BEFORE the finalize()?!
-		 * So the mouse delta within that time is not registered for CTRL+Z
-		 */
-		this->rotation = (dx+dy)/100;	
+		double f;
+		if (ABS(dy) < ABS(dx))
+		{
+			f = this->height / (this->height + dy);
+		}
+		else
+		{
+			f = (this->width + dx) / this->width;
+		}
 		
-		//double f;
-		//if (ABS(dy) < ABS(dx))
-		//{
-		//	f = this->height / (this->height + dy);
-		//}
-		//else
-		//{
-		//	f = (this->width + dx) / this->width;
-		//}
-		//
-		//double oldH = this->height;
-		//this->width *= f;
-		//this->height *= f;
-		//
-		//this->y += oldH - this->height;
+		double oldH = this->height;
+		this->width *= f;
+		this->height *= f;
+		
+		this->y += oldH - this->height;
 	}
 	else if (this->mouseDownType == CURSOR_SELECTION_BOTTOM_LEFT)
 	{
@@ -458,10 +450,16 @@ void EditSelection::mouseMove(double x, double y)
 		this->width -= dx;
 		this->x += dx;
 	}
-	else if (this->mouseDownType == CURSOR_SELECTION_RIGHT)
+	else if (this->mouseDownType == CURSOR_SELECTION_RIGHT)	//catch rotation here
 	{
-		double dx = x - this->x - this->width;
-		this->width += dx;
+		//double dx = x - this->x - this->width;
+		//this->width += dx;
+		double dx = x - this->x - this->width/2;
+		double dy = y - this->y - this->height/2;
+
+		double angle = atan2(dy,dx);
+		this->rotation = angle;
+
 	}
 
 	this->view->getXournal()->repaintSelection();
@@ -693,13 +691,13 @@ void EditSelection::paint(cairo_t* cr, double zoom)
 		// left
 		drawAnchorRect(cr, x, y + height / 2, zoom);
 		// right
-		drawAnchorRect(cr, x + width, y + height / 2, zoom);
+		drawAnchorRotation(cr, x + width, y + height / 2, zoom);
 	}
 
 	// top left
 	drawAnchorRect(cr, x, y, zoom);
 	// top right
-	drawAnchorRotation(cr, x + width, y, zoom);
+	drawAnchorRect(cr, x + width, y, zoom);
 	// bottom left
 	drawAnchorRect(cr, x, y + height, zoom);
 	// bottom right

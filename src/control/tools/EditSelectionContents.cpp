@@ -408,7 +408,7 @@ void EditSelectionContents::updateContent(double x, double y, double width, doub
 		{
 		case CURSOR_SELECTION_TOP_LEFT:
 		case CURSOR_SELECTION_BOTTOM_LEFT:
-		case CURSOR_SELECTION_LEFT:
+		//case CURSOR_SELECTION_LEFT://now reserved for rotation
 			px = (this->lastWidth + this->lastX);
 			break;
 		default:
@@ -418,7 +418,7 @@ void EditSelectionContents::updateContent(double x, double y, double width, doub
 		switch (type)
 		{
 		case CURSOR_SELECTION_TOP_LEFT:
-		//case CURSOR_SELECTION_TOP_RIGHT:	//now reserved for rotation
+		case CURSOR_SELECTION_TOP_RIGHT:	
 		case CURSOR_SELECTION_TOP:
 			py = (this->lastHeight + this->lastY);
 			break;
