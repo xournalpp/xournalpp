@@ -60,6 +60,8 @@ void Settings::loadDefault()
 	this->mainWndWidth = 800;
 	this->mainWndHeight = 600;
 
+	this->showToolbar = true;
+
 	this->showSidebar = true;
 	this->sidebarWidth = 150;
 
@@ -289,6 +291,10 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur)
 	else if (xmlStrcmp(name, (const xmlChar*) "maximized") == 0)
 	{
 		this->maximized = xmlStrcmp(value, (const xmlChar*) "true") ? false : true;
+	}
+	else if (xmlStrcmp(name, (const xmlChar*) "showToolbar") == 0)
+	{
+		this->showToolbar = xmlStrcmp(value, (const xmlChar*) "true") ? false : true;
 	}
 	else if (xmlStrcmp(name, (const xmlChar*) "showSidebar") == 0)
 	{
@@ -678,6 +684,8 @@ void Settings::save()
 	WRITE_INT_PROP(mainWndWidth);
 	WRITE_INT_PROP(mainWndHeight);
 	WRITE_BOOL_PROP(maximized);
+
+	WRITE_BOOL_PROP(showToolbar);
 
 	WRITE_BOOL_PROP(showSidebar);
 	WRITE_INT_PROP(sidebarWidth);
@@ -1295,6 +1303,25 @@ void Settings::setDisplayDpi(int dpi)
 int Settings::getDisplayDpi()
 {
 	return this->displayDpi;
+}
+
+bool Settings::isToolbarVisible()
+{
+	XOJ_CHECK_TYPE(Settings);
+
+	return this->showToolbar;
+}
+
+void Settings::setToolbarVisible(bool visible)
+{
+	XOJ_CHECK_TYPE(Settings);
+
+	if (this->showToolbar == visible)
+	{
+		return;
+	}
+	this->showToolbar = visible;
+	save();
 }
 
 bool Settings::isSidebarVisible()

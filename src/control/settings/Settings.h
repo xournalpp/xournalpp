@@ -190,6 +190,9 @@ public:
 	int getMainWndHeight();
 	bool isMainWndMaximized();
 
+	bool isToolbarVisible();
+	void setToolbarVisible(bool visible);
+
 	bool isSidebarVisible();
 	void setSidebarVisible(bool visible);
 
@@ -342,6 +345,11 @@ private:
 	 *  Use pen pressure to control stroke width?
 	 */
 	bool presureSensitivity;
+
+	/**
+	 *  If the toolbar is visible
+	 */
+	bool showToolbar;
 
 	/**
 	 *  If the sidebar is visible

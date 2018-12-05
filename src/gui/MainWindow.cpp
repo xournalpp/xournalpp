@@ -59,6 +59,7 @@ MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control)
 	this->xournal = new XournalView(vpXournal, control);
 
 	setSidebarVisible(control->getSettings()->isSidebarVisible());
+	setToolbarVisible(control->getSettings()->isToolbarVisible());
 
 	// Window handler
 	g_signal_connect(this->window, "delete-event", G_CALLBACK(deleteEventCallback), this->control);
@@ -95,6 +96,9 @@ MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control)
 	}
 
 	createToolbarAndMenu();
+
+	GtkWidget* menuViewToolbarVisible = get("menuViewToolbarVisible");
+	g_signal_connect(menuViewToolbarVisible, "toggled", G_CALLBACK(viewShowToolbar), this);
 
 	GtkWidget* menuViewSidebarVisible = get("menuViewSidebarVisible");
 	g_signal_connect(menuViewSidebarVisible, "toggled", G_CALLBACK(viewShowSidebar), this);
@@ -283,6 +287,19 @@ void MainWindow::viewShowSidebar(GtkCheckMenuItem* checkmenuitem, MainWindow* wi
 	win->setSidebarVisible(a);
 }
 
+void MainWindow::viewShowToolbar(GtkCheckMenuItem* checkmenuitem, MainWindow* win){
+	XOJ_CHECK_TYPE_OBJ(win, MainWindow);
+
+	//Gets the status of the toggled button
+	bool a = gtk_check_menu_item_get_active(checkmenuitem);
+	if (win->control->getSettings()->isToolbarVisible() == a)
+	{
+		return;
+	}
+	//Updates the MainWindow with the new status
+	win->setToolbarVisible(a);
+}
+
 Control* MainWindow::getControl()
 {
 	XOJ_CHECK_TYPE(MainWindow);
@@ -441,6 +458,26 @@ void MainWindow::setSidebarVisible(bool visible)
 
 	GtkWidget* w = get("menuViewSidebarVisible");
 	gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(w), visible);
+}
+
+void MainWindow::setToolbarVisible(bool visible)
+{
+
+	XOJ_CHECK_TYPE(MainWindow);
+
+	Settings* settings = control->getSettings();
+
+	//Saves the visible state to the settings and hide/shows the toolbar
+	settings->setToolbarVisible(visible);
+	for (int i = 0; i < TOOLBAR_DEFINITIONS_LEN; i++)
+	{
+		gtk_widget_set_visible(this->toolbarWidgets[i], visible);
+	}
+
+	GtkWidget* w = get("menuViewToolbarVisible");
+	gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(w), visible);
+	
+	gtk_widget_show(GTK_WIDGET(this->xournal->getWidget()));
 }
 
 void MainWindow::saveSidebarSize()
