@@ -324,7 +324,6 @@ double EditSelectionContents::getOriginalHeight()
 void EditSelectionContents::finalizeSelection(double x, double y, double width, double height, bool aspectRatio,
 											  Layer* layer, PageRef targetPage, XojPageView* targetView, UndoRedoHandler* undo)
 {
-	printf("EditSelectionContents::finalizeSelection\n");
 	double fx = width / this->originalWidth;
 	double fy = height / this->originalHeight;
 
@@ -361,12 +360,13 @@ void EditSelectionContents::finalizeSelection(double x, double y, double width, 
 
 }
 
-void EditSelectionContents::updateContent(double x, double y, double width, double height, bool aspectRatio,
+void EditSelectionContents::updateContent(double x, double y, double rotation, double width, double height, bool aspectRatio,
 										  Layer* layer, PageRef targetPage, XojPageView* targetView,
 										  UndoRedoHandler* undo, CursorSelectionType type)
 {
 	double mx = x - this->lastX;
 	double my = y - this->lastY;
+	this->rotation = rotation;
 
 	double fx = width / this->lastWidth;
 	double fy = height / this->lastHeight;
@@ -391,7 +391,6 @@ void EditSelectionContents::updateContent(double x, double y, double width, doub
 	}
 	else if (rotate)
 	{
-		printf("Adding a rotation undo action for %f radiants..\n", this->rotation);
 		RotateUndoAction* rotateUndo = new RotateUndoAction(this->sourcePage, &this->selected, x,
 															y, width / 2, height / 2, this->rotation);
 		undo->addUndoAction(rotateUndo);
@@ -442,7 +441,7 @@ void EditSelectionContents::updateContent(double x, double y, double width, doub
 /**
  * paints the selection
  */
-void EditSelectionContents::paint(cairo_t* cr, double x, double y, double width, double height, double zoom, double rotation)
+void EditSelectionContents::paint(cairo_t* cr, double x, double y, double rotation, double width, double height, double zoom)
 {
 	double fx = width / this->originalWidth;
 	double fy = height / this->originalHeight;

@@ -315,8 +315,6 @@ void Stroke::move(double dx, double dy)
 void Stroke::rotate(double x0, double y0, double xo, double yo, double th)
 {
 	XOJ_CHECK_TYPE(Stroke);
-
-	printf("rotating object %f radiants\n",th);
 	
 	for (int i = 0; i < this->pointCount; i++)
 	{

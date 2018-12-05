@@ -319,9 +319,7 @@ void EditSelection::mouseUp()
 	PageRef page = this->view->getPage();
 	Layer* layer = page->getSelectedLayer();
 
-	printf("EditSelection::mouseUp\n");
-
-	this->contents->updateContent(this->x, this->y, this->width, this->height, this->aspectRatio,
+	this->contents->updateContent(this->x, this->y, this->rotation, this->width, this->height, this->aspectRatio,
 								  layer, page, this->view, this->undo, this->mouseDownType);
 
 	this->mouseDownType = CURSOR_SELECTION_NONE;
@@ -653,10 +651,9 @@ void EditSelection::paint(cairo_t* cr, double zoom)
 	double y = this->y;
 	
 
-	if (abs(rotation) > __DBL_EPSILON__)
+	if (abs(this->rotation) > __DBL_EPSILON__)
 	{
-		this->rotation = rotation;
-
+		
 		double rx = (x + width / 2) * zoom;
 		double ry = (y + height / 2) * zoom;
 
@@ -671,7 +668,7 @@ void EditSelection::paint(cairo_t* cr, double zoom)
 
 		cairo_translate(cr, -rx, -ry);
 	}
-	this->contents->paint(cr, x, y, this->width, this->height, zoom, this->rotation);
+	this->contents->paint(cr, x, y, this->rotation, this->width, this->height, zoom);
 
 	cairo_set_operator(cr, CAIRO_OPERATOR_OVER);
 

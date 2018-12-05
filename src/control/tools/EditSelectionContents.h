@@ -80,7 +80,7 @@ public:
 	/**
 	 * paints the selection
 	 */
-	void paint(cairo_t* cr, double x, double y, double width, double height, double zoom, double rotation=0);
+	void paint(cairo_t* cr, double x, double y, double rotation, double width, double height, double zoom);
 
 	/**
 	 * Finish the editing
@@ -88,7 +88,7 @@ public:
 	void finalizeSelection(double x, double y, double width, double height, bool aspectRatio,
 						   Layer* layer, PageRef targetPage, XojPageView* targetView, UndoRedoHandler* undo);
 
-	void updateContent(double x, double y, double width, double height, bool aspectRatio,
+	void updateContent(double x, double y, double rotation, double width, double height, bool aspectRatio,
 					   Layer* layer, PageRef targetPage, XojPageView* targetView, UndoRedoHandler* undo,
 					   CursorSelectionType type);
 

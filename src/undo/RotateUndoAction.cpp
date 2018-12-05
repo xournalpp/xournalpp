@@ -59,7 +59,6 @@ void RotateUndoAction::applyRotation(double rotation)
 	{
 		r.addPoint(e->getX(), e->getY());
 		r.addPoint(e->getX() + e->getElementWidth(), e->getY() + e->getElementHeight());
-		printf("RotateUndoAction::applyRotation - Getting %f rotation rads...\n",rotation);
 		e->rotate(this->x0, this->y0, this->xo, this->yo,rotation);
 		r.addPoint(e->getX(), e->getY());
 		r.addPoint(e->getX() + e->getElementWidth(), e->getY() + e->getElementHeight());
