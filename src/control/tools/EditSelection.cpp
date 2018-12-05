@@ -32,6 +32,7 @@ EditSelection::EditSelection(UndoRedoHandler* undo, PageRef page, XojPageView* v
 
 	this->x = 0;
 	this->y = 0;
+	this->rotation = 0;
 	this->width = 0;
 	this->height = 0;
 
@@ -318,7 +319,7 @@ void EditSelection::mouseUp()
 	PageRef page = this->view->getPage();
 	Layer* layer = page->getSelectedLayer();
 
-	this->contents->updateContent(this->x, this->y, this->width, this->height, this->aspectRatio,
+	this->contents->updateContent(this->x, this->y, this->rotation, this->width, this->height, this->aspectRatio,
 								  layer, page, this->view, this->undo, this->mouseDownType);
 
 	this->mouseDownType = CURSOR_SELECTION_NONE;
@@ -378,6 +379,7 @@ void EditSelection::mouseMove(double x, double y)
 	{
 		double dx = x - this->x - this->width;
 		double dy = y - this->y;
+
 		double f;
 		if (ABS(dy) < ABS(dx))
 		{
@@ -387,11 +389,11 @@ void EditSelection::mouseMove(double x, double y)
 		{
 			f = (this->width + dx) / this->width;
 		}
-
+		
 		double oldH = this->height;
 		this->width *= f;
 		this->height *= f;
-
+		
 		this->y += oldH - this->height;
 	}
 	else if (this->mouseDownType == CURSOR_SELECTION_BOTTOM_LEFT)
@@ -448,10 +450,19 @@ void EditSelection::mouseMove(double x, double y)
 		this->width -= dx;
 		this->x += dx;
 	}
-	else if (this->mouseDownType == CURSOR_SELECTION_RIGHT)
+	else if (this->mouseDownType == CURSOR_SELECTION_RIGHT)	
 	{
 		double dx = x - this->x - this->width;
 		this->width += dx;
+		
+	}
+	else if (this->mouseDownType == CURSOR_SELECTION_ROTATE)  //catch rotation here
+	{
+		double dx = x - this->x - this->width/2;
+		double dy = y - this->y - this->height/2;
+
+		double angle = atan2(dy,dx);
+		this->rotation = angle;
 	}
 
 	this->view->getXournal()->repaintSelection();
@@ -586,6 +597,11 @@ CursorSelectionType EditSelection::getSelectionTypeForPos(double x, double y, do
 		return CURSOR_SELECTION_BOTTOM_RIGHT;
 	}
 
+	if (x2 + BORDER_PADDING + 8 <= x && x <= x2 + BORDER_PADDING + 16 && (y2 + y1)/2 - 4 <= y && (y2 + y1)/2 + 4 >= y )
+	{
+		return CURSOR_SELECTION_ROTATE;
+	}
+
 	if (!this->aspectRatio)
 	{
 		if (x1 <= x && x2 >= x)
@@ -633,8 +649,26 @@ void EditSelection::paint(cairo_t* cr, double zoom)
 
 	double x = this->x;
 	double y = this->y;
+	
 
-	this->contents->paint(cr, x, y, this->width, this->height, zoom);
+	if (abs(this->rotation) > __DBL_EPSILON__)
+	{
+		
+		double rx = (x + width / 2) * zoom;
+		double ry = (y + height / 2) * zoom;
+
+		cairo_translate(cr, rx, ry);
+		cairo_rotate(cr, this->rotation);
+
+		// Draw the rotation point for debugging
+		cairo_set_source_rgb(cr, 0, 1, 0);
+		cairo_rectangle(cr, 0, 0, 10, 10);
+		cairo_stroke(cr);
+
+
+		cairo_translate(cr, -rx, -ry);
+	}
+	this->contents->paint(cr, x, y, this->rotation, this->width, this->height, zoom);
 
 	cairo_set_operator(cr, CAIRO_OPERATOR_OVER);
 
@@ -665,6 +699,8 @@ void EditSelection::paint(cairo_t* cr, double zoom)
 		drawAnchorRect(cr, x, y + height / 2, zoom);
 		// right
 		drawAnchorRect(cr, x + width, y + height / 2, zoom);
+		// rotation handle
+		drawAnchorRotation(cr, x + width +8, y + height / 2, zoom);
 	}
 
 	// top left
@@ -675,6 +711,18 @@ void EditSelection::paint(cairo_t* cr, double zoom)
 	drawAnchorRect(cr, x, y + height, zoom);
 	// bottom right
 	drawAnchorRect(cr, x + width, y + height, zoom);
+}
+
+void EditSelection::drawAnchorRotation(cairo_t* cr, double x, double y, double zoom)
+{
+	XOJ_CHECK_TYPE(EditSelection);
+
+	GtkColorWrapper selectionColor = view->getSelectionColor();
+	selectionColor.apply(cr);
+	cairo_rectangle(cr, x * zoom - 4, y * zoom - 4, 8, 8);
+	cairo_stroke_preserve(cr);
+	cairo_set_source_rgb(cr, 1, 0, 0);
+	cairo_fill(cr);	
 }
 
 /**

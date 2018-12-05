@@ -244,5 +244,4 @@ XOJ_DECLARE_TYPE(GraphBackgroundPainter, 232);
 XOJ_DECLARE_TYPE(DottedBackgroundPainter, 233);
 XOJ_DECLARE_TYPE(BaseBackgroundPainter, 234);
 XOJ_DECLARE_TYPE(BackgroundConfig, 235);
-
-
+XOJ_DECLARE_TYPE(RotateUndoAction, 236);

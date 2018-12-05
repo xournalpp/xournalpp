@@ -50,6 +50,7 @@ public:
 
 	virtual void move(double dx, double dy);
 	virtual void scale(double x0, double y0, double fx, double fy) = 0;
+	virtual void rotate(double x0, double y0, double xo, double yo, double th) = 0;
 
 	void setColor(int color);
 	int getColor() const;

@@ -116,6 +116,11 @@ void Text::scale(double x0, double y0, double fx, double fy)
     this->sizeCalculated = false;
 }
 
+void Text::rotate(double x0, double y0, double xo, double yo, double th)
+{
+	XOJ_CHECK_TYPE(Text);
+}
+
 bool Text::isInEditing()
 {
     XOJ_CHECK_TYPE(Text);

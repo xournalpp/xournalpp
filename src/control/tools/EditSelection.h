@@ -190,6 +190,11 @@ private:
 	void drawAnchorRect(cairo_t* cr, double x, double y, double zoom);
 
 	/**
+	 * Draws an indicator where you can rotate the selection
+	 */
+	void drawAnchorRotation(cairo_t* cr, double x, double y, double zoom);
+
+	/**
 	 * Finishes all pending changes, move the elements, scale the elements and add
 	 * them to new layer if any or to the old if no new layer
 	 */
@@ -210,10 +215,11 @@ private: // DATA
 	XOJ_TYPE_ATTRIB;
 
 	/**
-	 * The position relative to the current view
+	 * The position (and rotation) relative to the current view
 	 */
 	double x;
 	double y;
+	double rotation;
 
 	/**
 	 * The size
