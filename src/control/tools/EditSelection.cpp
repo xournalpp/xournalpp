@@ -319,6 +319,8 @@ void EditSelection::mouseUp()
 	PageRef page = this->view->getPage();
 	Layer* layer = page->getSelectedLayer();
 
+	printf("EditSelection::mouseUp\n");
+
 	this->contents->updateContent(this->x, this->y, this->width, this->height, this->aspectRatio,
 								  layer, page, this->view, this->undo, this->mouseDownType);
 
@@ -597,6 +599,11 @@ CursorSelectionType EditSelection::getSelectionTypeForPos(double x, double y, do
 		return CURSOR_SELECTION_BOTTOM_RIGHT;
 	}
 
+	if (x2 + BORDER_PADDING + 8 <= x && x <= x2 + BORDER_PADDING + 16 && (y2 + y1)/2 - 4 <= y && (y2 + y1)/2 + 4 >= y )
+	{
+		return CURSOR_SELECTION_ROTATE;
+	}
+
 	if (!this->aspectRatio)
 	{
 		if (x1 <= x && x2 >= x)
@@ -622,11 +629,6 @@ CursorSelectionType EditSelection::getSelectionTypeForPos(double x, double y, do
 			if (x2 - BORDER_PADDING <= x && x <= x2 + BORDER_PADDING)
 			{
 				return CURSOR_SELECTION_RIGHT;
-			}
-
-			if (x2+16 - BORDER_PADDING <= x && x <= x2+16 + BORDER_PADDING)
-			{
-				return CURSOR_SELECTION_ROTATE;
 			}
 		}
 	}

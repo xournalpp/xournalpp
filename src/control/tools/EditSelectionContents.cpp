@@ -324,6 +324,7 @@ double EditSelectionContents::getOriginalHeight()
 void EditSelectionContents::finalizeSelection(double x, double y, double width, double height, bool aspectRatio,
 											  Layer* layer, PageRef targetPage, XojPageView* targetView, UndoRedoHandler* undo)
 {
+	printf("EditSelectionContents::finalizeSelection\n");
 	double fx = width / this->originalWidth;
 	double fy = height / this->originalHeight;
 
@@ -353,7 +354,7 @@ void EditSelectionContents::finalizeSelection(double x, double y, double width, 
 		}
 		if (rotate)
 		{
-			e->rotate(x, y, this->originalWidth / 2, this->originalHeight / 2, this->rotation);
+			e->rotate(x, y, this->lastWidth / 2, this->lastHeight / 2, this->rotation);
 		}
 		layer->addElement(e);
 	}
@@ -425,7 +426,7 @@ void EditSelectionContents::updateContent(double x, double y, double width, doub
 		default:
 			break;
 		}
-		printf("adding ScaleUndoAction for object\n");
+		printf("EditSelectionContents::updateContent - adding ScaleUndoAction for object\n");
 		ScaleUndoAction* scaleUndo = new ScaleUndoAction(this->sourcePage, &this->selected, px, py, fx, fy);
 		undo->addUndoAction(scaleUndo);
 
