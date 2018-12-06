@@ -68,19 +68,19 @@ void ArrowHandler::drawShape(Point& c, bool shiftDown)
 				stroke->addPoint(Point(c.x, p.y));
 				stroke->addPoint(Point(c.x - dist * cos(angle - delta), p.y - dist * sin(angle - delta)));
 			}		
-			//else if (std::abs(angle - M_PI / 4.0) < epsilon)
+			//else if (std::abs(angle - M_PI / 4.0) < epsilon)			//45
 			//{
 			//	//stroke->setLastPoint(dist / sqrt(2.0) + firstPoint.x, dist / sqrt(2.0) + firstPoint.y);
 			//}
-			//else if (std::abs(angle - 3.0 * M_PI / 4.0) < epsilon)
+			//else if (std::abs(angle - 3.0 * M_PI / 4.0) < epsilon)	//135
 			//{
 			//	//stroke->setLastPoint(-dist / sqrt(2.0) + firstPoint.x, dist / sqrt(2.0) + firstPoint.y);
 			//}
-			//else if (std::abs(angle + M_PI / 4.0) < epsilon)
+			//else if (std::abs(angle + M_PI / 4.0) < epsilon)			//210
 			//{
 			//	//stroke->setLastPoint(dist / sqrt(2.0) + firstPoint.x, -dist / sqrt(2.0) + firstPoint.y);
 			//}
-			//else if (std::abs(angle + 3.0 * M_PI / 4.0) < epsilon)
+			//else if (std::abs(angle + 3.0 * M_PI / 4.0) < epsilon)	//315
 			//{
 			//	//stroke->setLastPoint(-dist / sqrt(2.0) + firstPoint.x, -dist / sqrt(2.0) + firstPoint.y);
 			//}
