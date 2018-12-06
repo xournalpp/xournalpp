@@ -26,10 +26,11 @@ void ArrowHandler::drawShape(Point& c, bool shiftDown)
 	{
 		stroke->addPoint(c);
 	}
-	else
+	else 
 	{
 		Point p = stroke->getPoint(0);
 
+		//disable this to see such a cool "serrate brush" effect
 		if (count > 4)
 		{
 			// remove previous points
@@ -48,10 +49,72 @@ void ArrowHandler::drawShape(Point& c, bool shiftDown)
 		double angle = atan2((c.y - p.y), (c.x - p.x));
 		// an appropriate delta is Pi/3 radians for an arrow shape
 		double delta = M_PI / 6.0;
-
-		stroke->addPoint(c);
-		stroke->addPoint(Point(c.x - dist * cos(angle + delta), c.y - dist * sin(angle + delta)));
-		stroke->addPoint(c);
-		stroke->addPoint(Point(c.x - dist * cos(angle - delta), c.y - dist * sin(angle - delta)));
+		
+		if (shiftDown)
+		{		
+			stroke->addPoint(c);
+			stroke->addPoint(Point(c.x - dist * cos(angle + delta), c.y - dist * sin(angle + delta)));
+			stroke->addPoint(c);
+			stroke->addPoint(Point(c.x - dist * cos(angle - delta), c.y - dist * sin(angle - delta)));
+		}
+		else
+		{
+			double epsilon = 0.1;
+			if (std::abs(angle) < epsilon)	//0
+			{
+				angle = 0;
+				stroke->addPoint(Point(c.x, p.y));
+				stroke->addPoint(Point(c.x - dist * cos(angle + delta), p.y - dist * sin(angle + delta)));
+				stroke->addPoint(Point(c.x, p.y));
+				stroke->addPoint(Point(c.x - dist * cos(angle - delta), p.y - dist * sin(angle - delta)));
+			}		
+			//else if (std::abs(angle - M_PI / 4.0) < epsilon)
+			//{
+			//	//stroke->setLastPoint(dist / sqrt(2.0) + firstPoint.x, dist / sqrt(2.0) + firstPoint.y);
+			//}
+			//else if (std::abs(angle - 3.0 * M_PI / 4.0) < epsilon)
+			//{
+			//	//stroke->setLastPoint(-dist / sqrt(2.0) + firstPoint.x, dist / sqrt(2.0) + firstPoint.y);
+			//}
+			//else if (std::abs(angle + M_PI / 4.0) < epsilon)
+			//{
+			//	//stroke->setLastPoint(dist / sqrt(2.0) + firstPoint.x, -dist / sqrt(2.0) + firstPoint.y);
+			//}
+			//else if (std::abs(angle + 3.0 * M_PI / 4.0) < epsilon)
+			//{
+			//	//stroke->setLastPoint(-dist / sqrt(2.0) + firstPoint.x, -dist / sqrt(2.0) + firstPoint.y);
+			//}
+			else if (std::abs(std::abs(angle) - M_PI) < epsilon)	//180
+			{
+				angle = - M_PI;
+				stroke->addPoint(Point(c.x, p.y));
+				stroke->addPoint(Point(c.x - dist * cos(angle + delta), p.y - dist * sin(angle + delta)));
+				stroke->addPoint(Point(c.x, p.y));
+				stroke->addPoint(Point(c.x - dist * cos(angle - delta), p.y - dist * sin(angle - delta)));
+			}
+			else if (std::abs(angle - M_PI / 2.0) < epsilon)	//270
+			{
+				angle = M_PI / 2.0;
+				stroke->addPoint(Point(p.x, c.y));
+				stroke->addPoint(Point(p.x - dist * cos(angle + delta), c.y - dist * sin(angle + delta)));
+				stroke->addPoint(Point(p.x, c.y));
+				stroke->addPoint(Point(p.x - dist * cos(angle - delta), c.y - dist * sin(angle - delta)));
+			}
+			else if (std::abs(angle + M_PI / 2.0) < epsilon)	//90
+			{
+				angle = - M_PI / 2.0;
+				stroke->addPoint(Point(p.x, c.y));
+				stroke->addPoint(Point(p.x - dist * cos(angle + delta), c.y - dist * sin(angle + delta)));
+				stroke->addPoint(Point(p.x, c.y));
+				stroke->addPoint(Point(p.x - dist * cos(angle - delta), c.y - dist * sin(angle - delta)));
+			}
+			else	//otherwise
+			{
+				stroke->addPoint(c);
+				stroke->addPoint(Point(c.x - dist * cos(angle + delta), c.y - dist * sin(angle + delta)));
+				stroke->addPoint(c);
+				stroke->addPoint(Point(c.x - dist * cos(angle - delta), c.y - dist * sin(angle - delta)));
+			}
+		}
 	}
 }
