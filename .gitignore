@@ -40,3 +40,7 @@ nbproject/
 .idea
 cmake-build-debug
 cmake-build-release
+
+# API Documentation
+doc/html
+doc/latex
