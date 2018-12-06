@@ -644,37 +644,15 @@ CursorSelectionType EditSelection::getSelectionTypeForPos(double x, double y, do
 void EditSelection::snapRotation()
 {
 	double epsilon = 0.1;
-	if(std::abs(this->rotation) < epsilon)
+	const double ROTATION_LOCK[8] = {0, M_PI / 2.0, M_PI, M_PI / 4.0, 3.0 * M_PI / 4.0,
+									- M_PI / 4.0, - 3.0 * M_PI / 4.0, - M_PI / 2.0};
+
+	for ( int i = 0; i < sizeof(ROTATION_LOCK) / sizeof(ROTATION_LOCK[0]); i++ )
 	{
-		this->rotation = 0;
-	}
-	else if (std::abs(this->rotation - M_PI / 2.0) < epsilon)
-	{
-		this->rotation = M_PI / 2.0;
-	}
-	else if (std::abs(this->rotation - M_PI) < epsilon)
-	{
-		this->rotation = M_PI;
-	}
-	else if (std::abs(this->rotation - M_PI / 4.0) < epsilon)	
-	{
-		this->rotation = M_PI / 4.0;
-	}
-	else if (std::abs(this->rotation - 3.0 * M_PI / 4.0) < epsilon)
-	{
-		this->rotation = 3.0 * M_PI / 4.0;
-	}
-	else if (std::abs(this->rotation + M_PI / 4.0) < epsilon)
-	{
-		this->rotation = - (M_PI / 4.0);
-	}
-	else if (std::abs(this->rotation + 3.0 * M_PI / 4.0) < epsilon)
-	{
-		this->rotation = - (3.0 * M_PI / 4.0);
-	}
-	else if (std::abs(this->rotation + M_PI / 2.0) < epsilon)
-	{
-		this->rotation = - (M_PI / 2.0);
+		if (std::abs(this->rotation - ROTATION_LOCK[i]) < epsilon)
+		{
+			this->rotation = ROTATION_LOCK[i];
+		}
 	}
 }
 
@@ -692,7 +670,6 @@ void EditSelection::paint(cairo_t* cr, double zoom)
 
 	if (abs(this->rotation) > __DBL_EPSILON__)
 	{
-		
 		snapRotation();
 
 		double rx = (x + width / 2) * zoom;
