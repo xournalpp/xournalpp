@@ -17,7 +17,9 @@
 #include <poppler/OptionalContent.h>
 #include <poppler/PDFDoc.h>
 #include <poppler/TextOutputDev.h>
+
 #include "pdf/popplerdirect/workaround/workaround.h"
+#include "pdf/base/XojPdfPage.h"
 
 #include <StringUtils.h>
 #include <XournalType.h>
@@ -29,7 +31,7 @@ class TextPage;
 class Annots;
 class XojPopplerImage;
 
-class XojPopplerPage
+class XojPopplerPage : public XojPdfPage
 {
 private:
 	XojPopplerPage(PDFDoc* doc, GMutex* docMutex, CairoOutputDev* outputDev, Page* page, int index);

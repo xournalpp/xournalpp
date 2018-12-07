@@ -15,13 +15,13 @@
 
 #include <XournalType.h>
 
-class XojPopplerPage;
+class XojPdfPage;
 class PdfPagesDialog;
 
 class PdfElementView : public BaseElementView
 {
 public:
-	PdfElementView(int id, XojPopplerPage* page, PdfPagesDialog* dlg);
+	PdfElementView(int id, XojPdfPage* page, PdfPagesDialog* dlg);
 	~PdfElementView();
 
 protected:
@@ -49,7 +49,7 @@ public:
 private:
 	XOJ_TYPE_ATTRIB;
 
-	XojPopplerPage* page;
+	XojPdfPage* page;
 
 	/**
 	 * This page is already used as background
