@@ -333,6 +333,8 @@ bool Document::readPdf(path filename, bool initPages, bool attachToDocument)
 	{
 		lastError = FS(_F("Document not loaded! ({1}), {2}") % filename % popplerError->message);
 		g_error_free(popplerError);
+		unlock();
+
 		return false;
 	}
 

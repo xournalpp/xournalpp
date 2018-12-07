@@ -60,13 +60,18 @@ bool PopplerGlibDocument::save(path filename, GError** error)
 {
 	XOJ_CHECK_TYPE(PopplerGlibDocument);
 
-	return poppler_document_save(document, filename.c_str(), error);
+	string uri = "file://";
+	uri += filename.string();
+	return poppler_document_save(document, uri.c_str(), error);
 }
 
 bool PopplerGlibDocument::load(path filename, string password, GError** error)
 {
 	XOJ_CHECK_TYPE(PopplerGlibDocument);
-	this->document = poppler_document_new_from_file(filename.c_str(), password.c_str(), error);
+
+	string uri = "file://";
+	uri += filename.string();
+	this->document = poppler_document_new_from_file(uri.c_str(), password.c_str(), error);
 
 	return this->document != NULL;
 }
