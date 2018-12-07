@@ -64,7 +64,7 @@ file (GLOB xournalpp_SOURCES
 set (xournalpp_SOURCES ${xournalpp_SOURCES_RECURSE} ${xournalpp_SOURCES})
 unset (xournalpp_SOURCES_RECURSE)
 
-if (ADVANCE_PDF_EXPORT_POPPLER)
+if (ADVANCED_PDF_EXPORT_POPPLER)
   file (GLOB xournalpp_SOURCES_RECURSE
     pdf/popplerdirect/*.cpp
     pdf/popplerdirect/cairo/*.cpp
