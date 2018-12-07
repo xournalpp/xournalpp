@@ -17,10 +17,9 @@
 #include "LinkDestination.h"
 #include "PageRef.h"
 
-#include "pdf/popplerdirect/poppler/XojPopplerDocument.h"
+#include "pdf/base/XojPdfDocument.h"
 #include "pdf/base/XojPdfPage.h"
-#include "pdf/popplerdirect/poppler/XojPopplerIter.h"
-#include "pdf/popplerdirect/poppler/XojPopplerAction.h"
+#include "pdf/base/XojPdfBookmarkIterator.h"
 
 #include <StringUtils.h>
 #include <XournalType.h>
@@ -42,7 +41,7 @@ public:
 	size_t getPageCount();
 	size_t getPdfPageCount();
 	XojPdfPage* getPdfPage(size_t page);
-	XojPopplerDocument& getPdfDocument();
+	XojPdfDocument& getPdfDocument();
 
 	void insertPage(PageRef p, size_t position);
 	void addPage(PageRef p);
@@ -84,7 +83,7 @@ public:
 
 private:
 	void buildContentsModel();
-	void buildTreeContentsModel(GtkTreeIter* parent, XojPopplerIter* iter);
+	void buildTreeContentsModel(GtkTreeIter* parent, XojPdfBookmarkIterator* iter);
 	void updateIndexPageNumbers();
 	static bool fillPageLabels(GtkTreeModel* tree_model, GtkTreePath* path, GtkTreeIter* iter, Document* doc);
 
@@ -94,7 +93,7 @@ private:
 
 	DocumentHandler* handler;
 
-	XojPopplerDocument pdfDocument;
+	XojPdfDocument pdfDocument;
 
 	path filename;
 	path pdfFilename;

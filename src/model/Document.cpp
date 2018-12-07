@@ -1,5 +1,7 @@
 #include "Document.h"
 
+#include "pdf/base/XojPdfAction.h"
+
 #include "LinkDestination.h"
 #include "XojPage.h"
 
@@ -164,7 +166,6 @@ void Document::setPreview(cairo_surface_t* preview)
 	{
 		this->preview = NULL;
 	}
-
 }
 
 path Document::getEvMetadataFilename()
@@ -214,7 +215,7 @@ size_t Document::findPdfPage(size_t pdfPage)
 	return -1;
 }
 
-void Document::buildTreeContentsModel(GtkTreeIter* parent, XojPopplerIter* iter)
+void Document::buildTreeContentsModel(GtkTreeIter* parent, XojPdfBookmarkIterator* iter)
 {
 	XOJ_CHECK_TYPE(Document);
 
@@ -222,7 +223,7 @@ void Document::buildTreeContentsModel(GtkTreeIter* parent, XojPopplerIter* iter)
 	{
 		GtkTreeIter treeIter = { 0 };
 
-		XojPopplerAction* action = iter->getAction();
+		XojPdfAction* action = iter->getAction();
 		XojLinkDest* link = action->getDestination();
 
 		if (action->getTitle().empty())
@@ -243,7 +244,7 @@ void Document::buildTreeContentsModel(GtkTreeIter* parent, XojPopplerIter* iter)
 		g_free(titleMarkup);
 		g_object_unref(link);
 
-		XojPopplerIter* child = iter->getChildIter();
+		XojPdfBookmarkIterator* child = iter->getChildIter();
 		if (child)
 		{
 			buildTreeContentsModel(&treeIter, child);
@@ -266,7 +267,7 @@ void Document::buildContentsModel()
 		this->contentsModel = NULL;
 	}
 
-	XojPopplerIter* iter = pdfDocument.getContentsIter();
+	XojPdfBookmarkIterator* iter = pdfDocument.getContentsIter();
 	if (iter == NULL)
 	{
 		// No Bookmarks
@@ -457,7 +458,7 @@ XojPdfPage* Document::getPdfPage(size_t page)
 	return this->pdfDocument.getPage(page);
 }
 
-XojPopplerDocument& Document::getPdfDocument()
+XojPdfDocument& Document::getPdfDocument()
 {
 	XOJ_CHECK_TYPE(Document);
 
@@ -470,6 +471,7 @@ void Document::operator=(Document& doc)
 
 	clearDocument();
 
+	// Copy PDF Document
 	this->pdfDocument = doc.pdfDocument;
 
 	this->password = doc.password;

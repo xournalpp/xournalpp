@@ -12,12 +12,14 @@
 #pragma once
 
 #include "model/LinkDestination.h"
+#include "pdf/base/XojPdfAction.h"
+
 #include <poppler/Link.h>
 #include "XojPopplerDocument.h"
 
 #include <StringUtils.h>
 
-class XojPopplerAction
+class XojPopplerAction : public XojPdfAction
 {
 public:
 	XojPopplerAction(XojPopplerDocument doc, LinkAction* linkAction, string title);

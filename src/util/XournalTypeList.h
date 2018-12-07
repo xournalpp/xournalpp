@@ -246,7 +246,11 @@ XOJ_DECLARE_TYPE(BaseBackgroundPainter, 234);
 XOJ_DECLARE_TYPE(BackgroundConfig, 235);
 XOJ_DECLARE_TYPE(RotateUndoAction, 236);
 XOJ_DECLARE_TYPE(XojPdfPage, 237);
-
+XOJ_DECLARE_TYPE(XojPdfBookmarkIterator, 238);
+XOJ_DECLARE_TYPE(XojPdfDocument, 239);
+XOJ_DECLARE_TYPE(XojPdfAction, 240);
+XOJ_DECLARE_TYPE(XojPdfExport, 241);
+XOJ_DECLARE_TYPE(XojPdfExportFactory, 242);
 
 
 
