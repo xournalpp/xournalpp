@@ -7,89 +7,89 @@
 
 XojPopplerIter::XojPopplerIter(XojPopplerDocument doc, GooList* items)
 {
-    XOJ_INIT_TYPE(XojPopplerIter);
+	XOJ_INIT_TYPE(XojPopplerIter);
 
-    this->doc = doc;
-    this->items = items;
-    this->index = 0;
+	this->doc = doc;
+	this->items = items;
+	this->index = 0;
 }
 
 XojPopplerIter::~XojPopplerIter()
 {
-    XOJ_RELEASE_TYPE(XojPopplerIter);
+	XOJ_RELEASE_TYPE(XojPopplerIter);
 }
 
 bool XojPopplerIter::next()
 {
-    XOJ_CHECK_TYPE(XojPopplerIter);
+	XOJ_CHECK_TYPE(XojPopplerIter);
 
-    this->index++;
-    if (this->index >= this->items->getLength())
-    {
-        return false;
-    }
+	this->index++;
+	if (this->index >= this->items->getLength())
+	{
+		return false;
+	}
 
-    return true;
+	return true;
 }
 
 bool XojPopplerIter::isOpen()
 {
-    XOJ_CHECK_TYPE(XojPopplerIter);
+	XOJ_CHECK_TYPE(XojPopplerIter);
 
-    OutlineItem* item = (OutlineItem*) this->items->get(this->index);
-    return item->isOpen();
+	OutlineItem* item = (OutlineItem*) this->items->get(this->index);
+	return item->isOpen();
 }
 
 XojPopplerIter* XojPopplerIter::getChildIter()
 {
-    XOJ_CHECK_TYPE(XojPopplerIter);
+	XOJ_CHECK_TYPE(XojPopplerIter);
 
-    OutlineItem* item = (OutlineItem*) this->items->get(this->index);
-    item->open();
-    if (!(item->hasKids() && item->getKids()))
-    {
-        return NULL;
-    }
-    GooList *tmp = const_cast<GooList *>(item->getKids());
-    XojPopplerIter* child = new XojPopplerIter(doc, tmp);
+	OutlineItem* item = (OutlineItem*) this->items->get(this->index);
+	item->open();
+	if (!(item->hasKids() && item->getKids()))
+	{
+		return NULL;
+	}
+	GooList *tmp = const_cast<GooList *>(item->getKids());
+	XojPopplerIter* child = new XojPopplerIter(doc, tmp);
 
-    return child;
+	return child;
 }
 
 string XojPopplerIter::unicodeToChar(Unicode* unicode, int len)
 {
-    static UnicodeMap* uMap = NULL;
-    if (uMap == NULL)
-    {
-        GooString* enc = new GooString("UTF-8");
-        uMap = globalParams->getUnicodeMap(enc);
-        uMap->incRefCnt();
-        delete enc;
-    }
+	static UnicodeMap* uMap = NULL;
+	if (uMap == NULL)
+	{
+		GooString* enc = new GooString("UTF-8");
+		uMap = globalParams->getUnicodeMap(enc);
+		uMap->incRefCnt();
+		delete enc;
+	}
 
-    GooString gstr;
-    gchar buf[8]; /* 8 is enough for mapping an unicode char to a string */
-    for (int i = 0; i < len; ++i)
-    {
-        int n = uMap->mapUnicode(unicode[i], buf, sizeof(buf));
-        gstr.append(buf, n);
-    }
+	GooString gstr;
+	gchar buf[8]; /* 8 is enough for mapping an unicode char to a string */
+	for (int i = 0; i < len; ++i)
+	{
+		int n = uMap->mapUnicode(unicode[i], buf, sizeof(buf));
+		gstr.append(buf, n);
+	}
 
-    return string(gstr.getCString());
+	return string(gstr.getCString());
 }
 
 XojPopplerAction* XojPopplerIter::getAction()
 {
-    XOJ_CHECK_TYPE(XojPopplerIter);
+	XOJ_CHECK_TYPE(XojPopplerIter);
 
-    OutlineItem* item = (OutlineItem*) this->items->get(this->index);
-    if (item == NULL)
-    {
-        return NULL;
-    }
-    LinkAction* linkAction = const_cast<LinkAction *>(item->getAction());
+	OutlineItem* item = (OutlineItem*) this->items->get(this->index);
+	if (item == NULL)
+	{
+		return NULL;
+	}
+	LinkAction* linkAction = const_cast<LinkAction *>(item->getAction());
 
-    string title = unicodeToChar(const_cast<Unicode *>(item->getTitle()), item->getTitleLength());
+	string title = unicodeToChar(const_cast<Unicode *>(item->getTitle()), item->getTitleLength());
 
-    return new XojPopplerAction(this->doc, linkAction, title);
+	return new XojPopplerAction(this->doc, linkAction, title);
 }
