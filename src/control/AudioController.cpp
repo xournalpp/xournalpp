@@ -1,11 +1,12 @@
 #include "AudioController.h"
+#include "Util.h"
 #include <iostream>
 
-
-AudioController::AudioController(Settings* settings)
+AudioController::AudioController(Settings* settings, Control* control)
 {
 	XOJ_INIT_TYPE(AudioController);
 	this->settings = settings;
+	this->control = control;
 }
 
 AudioController::~AudioController()
@@ -30,6 +31,11 @@ void AudioController::recStartStop(bool rec)
 
 	if (rec)
 	{
+		if (getAudioFolder() == "")
+		{
+			return;
+		}
+
 		this->recording = true;
 		sttime = (g_get_monotonic_time() / 1000000);
 
@@ -37,7 +43,7 @@ void AudioController::recStartStop(bool rec)
 		time_t secs = time(0);
 		tm *t = localtime(&secs);
 		//This prints the date and time in ISO format.
-		sprintf(buffer, "%04d-%02d-%02d_%02d:%02d:%02d", t->tm_year + 1900, t->tm_mon + 1, t->tm_mday, t->tm_hour,
+		sprintf(buffer, "%04d-%02d-%02d_%02d-%02d-%02d", t->tm_year + 1900, t->tm_mon + 1, t->tm_mday, t->tm_hour,
 				t->tm_min, t->tm_sec);
 		string data(buffer);
 		data += ".mp3";
@@ -85,6 +91,16 @@ string AudioController::getAudioFolder()
 	XOJ_CHECK_TYPE(AudioController);
 
 	string af = this->settings->getAudioFolder();
+
+	if (af.length() < 8)
+	{
+		string msg ="Audio folder not set! Recording won't work!\nPlase set the "\
+					"recording folder under \"Preferences > Audio recording\"";
+		g_warning(msg.c_str());
+		Util::showErrorToUser(this->control->getGtkWindow(), msg);
+		return "";
+	}
+
 	af.erase(af.begin(),af.begin()+7);
 	return af;
 }

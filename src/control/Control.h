@@ -34,6 +34,7 @@
 #include <vector>
 #include "../gui/dialog/LatexDialog.h"
 
+class AudioController;
 class Sidebar;
 class XojPageView;
 class SaveHandler;

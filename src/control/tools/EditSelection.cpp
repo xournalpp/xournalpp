@@ -320,6 +320,8 @@ void EditSelection::mouseUp()
 	PageRef page = this->view->getPage();
 	Layer* layer = page->getSelectedLayer();
 
+	snapRotation();
+
 	this->contents->updateContent(this->x, this->y, this->rotation, this->width, this->height, this->aspectRatio,
 								  layer, page, this->view, this->undo, this->mouseDownType);
 
@@ -640,6 +642,21 @@ CursorSelectionType EditSelection::getSelectionTypeForPos(double x, double y, do
 	return CURSOR_SELECTION_NONE;
 }
 
+void EditSelection::snapRotation()
+{
+	double epsilon = 0.1;
+	const double ROTATION_LOCK[8] = {0, M_PI / 2.0, M_PI, M_PI / 4.0, 3.0 * M_PI / 4.0,
+									- M_PI / 4.0, - 3.0 * M_PI / 4.0, - M_PI / 2.0};
+
+	for ( int i = 0; i < sizeof(ROTATION_LOCK) / sizeof(ROTATION_LOCK[0]); i++ )
+	{
+		if (std::abs(this->rotation - ROTATION_LOCK[i]) < epsilon)
+		{
+			this->rotation = ROTATION_LOCK[i];
+		}
+	}
+}
+
 /**
  * Paints the selection to cr, with the given zoom factor. The coordinates of cr
  * should be relative to the provideded view by getView() (use translateEvent())
@@ -654,7 +671,8 @@ void EditSelection::paint(cairo_t* cr, double zoom)
 
 	if (abs(this->rotation) > __DBL_EPSILON__)
 	{
-		
+		snapRotation();
+
 		double rx = (x + width / 2) * zoom;
 		double ry = (y + height / 2) * zoom;
 
