@@ -12,6 +12,7 @@
 #pragma once
 
 #include "XojPopplerPage.h"
+#include "pdf/base/XojPdfDocumentInterface.h"
 
 #include <StringUtils.h>
 
@@ -32,7 +33,7 @@ public:
 	void operator=(XojPopplerDocument& doc);
 	bool operator==(XojPopplerDocument& doc);
 
-	XojPopplerIter* getContentsIter();
+	XojPdfBookmarkIterator* getContentsIter();
 
 	XojPopplerPage* getPage(size_t page);
 

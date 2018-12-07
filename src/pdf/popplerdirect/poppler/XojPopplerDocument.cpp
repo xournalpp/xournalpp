@@ -195,7 +195,7 @@ void XojPopplerDocument::operator=(XojPopplerDocument& doc)
 	}
 }
 
-XojPopplerIter* XojPopplerDocument::getContentsIter()
+XojPdfBookmarkIterator* XojPopplerDocument::getContentsIter()
 {
 	XOJ_CHECK_TYPE(XojPopplerDocument);
 
