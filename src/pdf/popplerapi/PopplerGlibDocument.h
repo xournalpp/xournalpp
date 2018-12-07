@@ -1,7 +1,7 @@
 /*
  * Xournal++
  *
- * Custom Poppler access library
+ * Poppler GLib Implementation
  *
  * @author Xournal++ Team
  * https://github.com/xournalpp/xournalpp

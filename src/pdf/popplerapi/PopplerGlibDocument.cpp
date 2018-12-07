@@ -1,4 +1,6 @@
 #include "PopplerGlibDocument.h"
+#include "PopplerGlibPage.h"
+
 
 PopplerGlibDocument::PopplerGlibDocument()
  : document(NULL)
@@ -22,7 +24,11 @@ PopplerGlibDocument::~PopplerGlibDocument()
 {
 	XOJ_CHECK_TYPE(PopplerGlibDocument);
 
-    g_object_unref(document);
+	if (document)
+	{
+		g_object_unref(document);
+	    document = NULL;
+	}
 
 	XOJ_RELEASE_TYPE(PopplerGlibDocument);
 }
@@ -78,7 +84,7 @@ XojPdfPage* PopplerGlibDocument::getPage(size_t page)
 
 	PopplerPage* pg = poppler_document_get_page(document, page);
 
-	return NULL;
+	return new PopplerGlibPage(pg);
 }
 
 size_t PopplerGlibDocument::getPageCount()

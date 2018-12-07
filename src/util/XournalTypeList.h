@@ -253,6 +253,7 @@ XOJ_DECLARE_TYPE(XojPdfExport, 241);
 XOJ_DECLARE_TYPE(XojPdfExportFactory, 242);
 XOJ_DECLARE_TYPE(XojPdfDocumentInterface, 243);
 XOJ_DECLARE_TYPE(PopplerGlibDocument, 244);
+XOJ_DECLARE_TYPE(PopplerGlibPage, 245);
 
 
 
