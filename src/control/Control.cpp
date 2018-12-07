@@ -103,7 +103,7 @@ Control::Control(GladeSearchpath* gladeSearchPath)
 	this->sidebar = NULL;
 	this->searchBar = NULL;
 	
-	this->audioController = new AudioController(this->settings);
+	this->audioController = new AudioController(this->settings,this);
 
 	this->scrollHandler = new ScrollHandler(this);
 
