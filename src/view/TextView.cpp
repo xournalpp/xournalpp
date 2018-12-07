@@ -2,7 +2,7 @@
 
 #include "control/settings/Settings.h"
 #include "model/Text.h"
-#include "pdf/popplerdirect/poppler/XojPopplerPage.h"
+#include "pdf/base/XojPdfPage.h"
 
 #include <Util.h>
 
@@ -67,12 +67,10 @@ void TextView::drawText(cairo_t* cr, Text* t)
 	cairo_restore(cr);
 }
 
-GList* TextView::findText(Text* t, string& search)
+vector<XojPdfRectangle> TextView::findText(Text* t, string& search)
 {
 	cairo_surface_t* surface = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, 1, 1);
 	cairo_t* cr = cairo_create(surface);
-
-	GList* list = NULL;
 
 	PangoLayout* layout = initPango(cr, t);
 	string str = t->getText();
@@ -84,22 +82,23 @@ GList* TextView::findText(Text* t, string& search)
 
 	string srch = bl::to_lower(search);
 
+	vector<XojPdfRectangle> list;
 	do
 	{
 		pos = bl::to_lower(text).find(srch, pos + 1);
 		if (pos != -1)
 		{
-			XojPopplerRectangle* mark = new XojPopplerRectangle();
+			XojPdfRectangle mark;
 			PangoRectangle rect = { 0 };
 			pango_layout_index_to_pos(layout, pos, &rect);
-			mark->x1 = ((double) rect.x) / PANGO_SCALE + t->getX();
-			mark->y1 = ((double) rect.y) / PANGO_SCALE + t->getY();
+			mark.x1 = ((double) rect.x) / PANGO_SCALE + t->getX();
+			mark.y1 = ((double) rect.y) / PANGO_SCALE + t->getY();
 
 			pango_layout_index_to_pos(layout, pos + srch.length(), &rect);
-			mark->x2 = ((double) rect.x + rect.width) / PANGO_SCALE + t->getX();
-			mark->y2 = ((double) rect.y + rect.height) / PANGO_SCALE + t->getY();
+			mark.x2 = ((double) rect.x + rect.width) / PANGO_SCALE + t->getX();
+			mark.y2 = ((double) rect.y + rect.height) / PANGO_SCALE + t->getY();
 
-			list = g_list_append(list, mark);
+			list.push_back(mark);
 		}
 	}
 	while (pos != -1);

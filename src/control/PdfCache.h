@@ -11,7 +11,7 @@
 
 #pragma once
 
-#include "pdf/popplerdirect/poppler/XojPopplerPage.h"
+#include "pdf/base/XojPdfPage.h"
 #include <XournalType.h>
 
 #include <cairo/cairo.h>
@@ -31,13 +31,13 @@ private:
 	void operator=(const PdfCache& cache);
 
 public:
-	void render(cairo_t* cr, XojPopplerPage* popplerPage, double zoom);
+	void render(cairo_t* cr, XojPdfPage* popplerPage, double zoom);
 
 private:
 	void setZoom(double zoom);
 	void clearCache();
-	cairo_surface_t* lookup(XojPopplerPage* popplerPage);
-	void cache(XojPopplerPage* popplerPage, cairo_surface_t* img);
+	cairo_surface_t* lookup(XojPdfPage* popplerPage);
+	void cache(XojPdfPage* popplerPage, cairo_surface_t* img);
 
 private:
 	XOJ_TYPE_ATTRIB;

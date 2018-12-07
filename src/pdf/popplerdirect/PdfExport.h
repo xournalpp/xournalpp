@@ -19,7 +19,7 @@
 
 #include "control/jobs/ProgressListener.h"
 #include "model/Document.h"
-#include "pdf/cairo/CairoPdf.h"
+#include "cairo/CairoPdf.h"
 
 #include <PageRange.h>
 #include <StringUtils.h>

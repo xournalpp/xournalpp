@@ -17,7 +17,9 @@
 #include <poppler/OptionalContent.h>
 #include <poppler/PDFDoc.h>
 #include <poppler/TextOutputDev.h>
+
 #include "pdf/popplerdirect/workaround/workaround.h"
+#include "pdf/base/XojPdfPage.h"
 
 #include <StringUtils.h>
 #include <XournalType.h>
@@ -29,7 +31,7 @@ class TextPage;
 class Annots;
 class XojPopplerImage;
 
-class XojPopplerPage
+class XojPopplerPage : public XojPdfPage
 {
 private:
 	XojPopplerPage(PDFDoc* doc, GMutex* docMutex, CairoOutputDev* outputDev, Page* page, int index);
@@ -40,7 +42,7 @@ public:
 
 	void render(cairo_t* cr, bool forPrinting = false);
 
-	GList* findText(string& text);
+	vector<XojPdfRectangle> findText(string& text);
 
 	Page* getPage();
 
@@ -62,16 +64,4 @@ private:
 	Annots* annots;
 
 	friend class _IntPopplerDocument;
-};
-
-class XojPopplerRectangle
-{
-public:
-	XojPopplerRectangle();
-
-public:
-	double x1;
-	double y1;
-	double x2;
-	double y2;
 };

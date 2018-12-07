@@ -12,7 +12,7 @@
 #pragma once
 
 #include "control/PdfCache.h"
-#include "pdf/popplerdirect/poppler/XojPopplerPage.h"
+#include "pdf/base/XojPdfPage.h"
 
 #include <cairo/cairo.h>
 
@@ -23,6 +23,6 @@ private:
 	virtual ~PdfView();
 
 public:
-	static void drawPage(PdfCache* cache, XojPopplerPage* popplerPage, cairo_t* cr,
+	static void drawPage(PdfCache* cache, XojPdfPage* popplerPage, cairo_t* cr,
 						 double zoom, double width, double height, bool forPrinting = false);
 };

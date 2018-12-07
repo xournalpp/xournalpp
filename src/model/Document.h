@@ -18,7 +18,7 @@
 #include "PageRef.h"
 
 #include "pdf/popplerdirect/poppler/XojPopplerDocument.h"
-#include "pdf/popplerdirect/poppler/XojPopplerPage.h"
+#include "pdf/base/XojPdfPage.h"
 #include "pdf/popplerdirect/poppler/XojPopplerIter.h"
 #include "pdf/popplerdirect/poppler/XojPopplerAction.h"
 
@@ -41,7 +41,7 @@ public:
 
 	size_t getPageCount();
 	size_t getPdfPageCount();
-	XojPopplerPage* getPdfPage(size_t page);
+	XojPdfPage* getPdfPage(size_t page);
 	XojPopplerDocument& getPdfDocument();
 
 	void insertPage(PageRef p, size_t position);

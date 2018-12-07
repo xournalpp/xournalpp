@@ -180,7 +180,7 @@ bool XojPageView::searchTextOnPage(string& text, int* occures, double* top)
 		if (text.empty()) return true;
 
 		int pNr = this->page->getPdfPageNr();
-		XojPopplerPage* pdf = NULL;
+		XojPdfPage* pdf = NULL;
 		if (pNr != -1)
 		{
 			Document* doc = xournal->getControl()->getDocument();

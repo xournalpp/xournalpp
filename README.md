@@ -98,12 +98,6 @@ To install all needed files execute:
 ```bash
 make install
 ```
-
-If you want to install desktop file and thumbnailer execute:
-```bash
-make desktop-install
-```
-
 ## Code documentation
 
 The code documentation is generated using Doxygen.
@@ -119,9 +113,6 @@ on Debian or Ubuntu. Finally, type in `doxygen` in the root directory of the rep
 The documentation can be found in `doc/html` and `doc/latex`. Conveniently display the
 documentation with `python3 -m http.server 8000` and visit the shown URL to view the
 documentation.
-
-The website https://cypax.net/tutorials/doxygen/ provides a good introduction to Doxygen
-and how to document code with it.
 
 ## Fileformat
 The fileformat *.xopp is an XML which is .gz compressed. PDFs are not embedded
