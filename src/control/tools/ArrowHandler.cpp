@@ -54,9 +54,9 @@ void ArrowHandler::drawShape(Point& c, bool shiftDown)
 		if (shiftDown || !xournal->getControl()->isRotationSnapping())
 		{		
 			stroke->addPoint(c);
-			stroke->addPoint(Point(c.x - dist * cos(angle + delta), c.y - dist * sin(angle + delta)));
+			stroke->addPoint(Point(c.x - arrowDist * cos(angle + delta), c.y - arrowDist * sin(angle + delta)));
 			stroke->addPoint(c);
-			stroke->addPoint(Point(c.x - dist * cos(angle - delta), c.y - dist * sin(angle - delta)));
+			stroke->addPoint(Point(c.x - arrowDist * cos(angle - delta), c.y - arrowDist * sin(angle - delta)));
 		}
 		else
 		{
