@@ -162,23 +162,20 @@ Page* XojPopplerPage::getPage()
     return this->page;
 }
 
-GList* XojPopplerPage::findText(string& text)
+vector<XojPdfRectangle> XojPopplerPage::findText(string& text)
 {
     XOJ_CHECK_TYPE(XojPopplerPage);
 
-    XojPopplerRectangle* match;
-    GList* matches;
-    double xMin, yMin, xMax, yMax;
-    gunichar* ucs4;
-    glong ucs4_len;
-
     initTextPage();
 
-    ucs4 = g_utf8_to_ucs4_fast(text.c_str(), -1, &ucs4_len);
+    glong ucs4_len = 0;
+    gunichar* ucs4 = g_utf8_to_ucs4_fast(text.c_str(), -1, &ucs4_len);
 
-    matches = NULL;
-    xMin = 0;
-    yMin = 0;
+
+    double xMin = 0;
+    double yMin = 0;
+	double xMax = 0;
+    double yMax = 0;
 
 //	  // Find a string.  If <startAtTop> is true, starts looking at the
 //	  // top of the page; else if <startAtLast> is true, starts looking
@@ -196,30 +193,26 @@ GList* XojPopplerPage::findText(string& text)
 
     bool atTop = true;
 
+    vector<XojPdfRectangle> results;
+
     while (this->text->findText(ucs4, ucs4_len,
 								atTop, true,  !atTop, false, // startAtTop, stopAtBottom, startAtLast, stopAtLast
                                 false, false, false,		 // caseSensitive, backwards, GBool wholeWord
                                 &xMin, &yMin, &xMax, &yMax))
     {
 
-        match = new XojPopplerRectangle();
-        match->x1 = xMin;
-        match->y1 = yMax;
-        match->x2 = xMax;
-        match->y2 = yMin;
-        matches = g_list_prepend(matches, match);
+    	XojPdfRectangle match;
+        match.x1 = xMin;
+        match.y1 = yMax;
+        match.x2 = xMax;
+        match.y2 = yMin;
+
+        results.push_back(match);
+
         atTop = false;
     }
 
     g_free(ucs4);
 
-    return g_list_reverse(matches);
-}
-
-XojPopplerRectangle::XojPopplerRectangle()
-{
-    this->x1 = -1;
-    this->x2 = -1;
-    this->y1 = -1;
-    this->y2 = -1;
+    return results;
 }

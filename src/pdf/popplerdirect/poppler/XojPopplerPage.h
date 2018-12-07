@@ -42,7 +42,7 @@ public:
 
 	void render(cairo_t* cr, bool forPrinting = false);
 
-	GList* findText(string& text);
+	vector<XojPdfRectangle> findText(string& text);
 
 	Page* getPage();
 
@@ -64,16 +64,4 @@ private:
 	Annots* annots;
 
 	friend class _IntPopplerDocument;
-};
-
-class XojPopplerRectangle
-{
-public:
-	XojPopplerRectangle();
-
-public:
-	double x1;
-	double y1;
-	double x2;
-	double y2;
 };

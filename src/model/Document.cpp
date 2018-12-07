@@ -351,7 +351,7 @@ bool Document::readPdf(path filename, bool initPages, bool attachToDocument)
 	{
 		for (size_t i = 0; i < pdfDocument.getPageCount(); i++)
 		{
-			XojPopplerPage* page = pdfDocument.getPage(i);
+			XojPdfPage* page = pdfDocument.getPage(i);
 			PageRef p = new XojPage(page->getWidth(), page->getHeight());
 			p->setBackgroundPdfPageNr(i);
 			addPage(p);
@@ -450,7 +450,7 @@ PageRef Document::getPage(size_t page)
 	return this->pages[page];
 }
 
-XojPopplerPage* Document::getPdfPage(size_t page)
+XojPdfPage* Document::getPdfPage(size_t page)
 {
 	XOJ_CHECK_TYPE(Document);
 

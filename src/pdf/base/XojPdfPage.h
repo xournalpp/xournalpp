@@ -15,6 +15,23 @@
 
 #include <cairo/cairo.h>
 
+#include <vector>
+using std::vector;
+#include <string>
+using std::string;
+
+class XojPdfRectangle
+{
+public:
+	XojPdfRectangle();
+
+public:
+	double x1;
+	double y1;
+	double x2;
+	double y2;
+};
+
 class XojPdfPage
 {
 public:
@@ -27,6 +44,9 @@ public:
 
 	virtual void render(cairo_t* cr, bool forPrinting = false) = 0;
 
+	virtual vector<XojPdfRectangle> findText(string& text) = 0;
+
 private:
 	XOJ_TYPE_ATTRIB;
 };
+

@@ -4,13 +4,12 @@
 #include "model/Layer.h"
 #include "view/TextView.h"
 
-SearchControl::SearchControl(PageRef page, XojPopplerPage* pdf)
+SearchControl::SearchControl(PageRef page, XojPdfPage* pdf)
 {
 	XOJ_INIT_TYPE(SearchControl);
 
 	this->page = page;
 	this->pdf = pdf;
-	this->results = NULL;
 }
 
 SearchControl::~SearchControl()
@@ -26,15 +25,7 @@ void SearchControl::freeSearchResults()
 {
 	XOJ_CHECK_TYPE(SearchControl);
 
-	if (this->results)
-	{
-		for (GList* l = this->results; l != NULL; l = l->next)
-		{
-			delete (XojPopplerRectangle*) l->data;
-		}
-		g_list_free(this->results);
-		this->results = NULL;
-	}
+	this->results.clear();
 }
 
 void SearchControl::paint(cairo_t* cr, GdkRectangle* rect, double zoom, GtkColorWrapper color)
@@ -44,10 +35,9 @@ void SearchControl::paint(cairo_t* cr, GdkRectangle* rect, double zoom, GtkColor
 	// set the line always the same size on display
 	cairo_set_line_width(cr, 1 / zoom);
 
-	for (GList* l = this->results; l != NULL; l = l->next)
+	for (XojPdfRectangle rect : this->results)
 	{
-		XojPopplerRectangle* rect = (XojPopplerRectangle*) l->data;
-		cairo_rectangle(cr, rect->x1, rect->y1, rect->x2 - rect->x1, rect->y2 - rect->y1);
+		cairo_rectangle(cr, rect.x1, rect.y1, rect.x2 - rect.x1, rect.y2 - rect.y1);
 		color.apply(cr);
 		cairo_stroke_preserve(cr);
 		color.applyWithAlpha(cr, 0.3);
@@ -80,8 +70,9 @@ bool SearchControl::search(string text, int* occures, double* top)
 			{
 				Text* t = (Text*) e;
 
-				GList* textResult = TextView::findText(t, text);
-				this->results = g_list_concat(this->results, textResult);
+				vector<XojPdfRectangle> textResult = TextView::findText(t, text);
+
+				this->results.insert(this->results.end(), textResult.begin(), textResult.end());
 			}
 		}
 
@@ -90,27 +81,29 @@ bool SearchControl::search(string text, int* occures, double* top)
 
 	if (occures)
 	{
-		*occures = g_list_length(this->results);
+		*occures = this->results.size();
 	}
+
 	if (top)
 	{
-		if (this->results == NULL)
+		if (this->results.size() == 0)
 		{
 			*top = 0;
 		}
 		else
 		{
 
-			double min = ((XojPopplerRectangle*) this->results->data)->y1;
-			for (GList* l = this->results->next; l != NULL; l = l->next)
+			XojPdfRectangle first = this->results[0];
+
+			double min = first.y1;
+			for (XojPdfRectangle rect : this->results)
 			{
-				XojPopplerRectangle* rect = (XojPopplerRectangle*) l->data;
-				min = MIN(min, rect->y1);
+				min = MIN(min, rect.y1);
 			}
 
 			*top = min;
 		}
 	}
 
-	return this->results != NULL;
+	return this->results.size() > 0;
 }

@@ -600,8 +600,8 @@ bool PdfExport::writePage(int pageNr)
 
 	if (page->getBackgroundType().isPdfPage())
 	{
-		XojPopplerPage* pdf = doc->getPdfPage(page->getPdfPageNr());
-		if (!addPopplerPage(pdf, currentPdfDoc))
+		XojPopplerPage* pdf = dynamic_cast<XojPopplerPage*>(doc->getPdfPage(page->getPdfPageNr()));
+		if (pdf != NULL && !addPopplerPage(pdf, currentPdfDoc))
 		{
 			return false;
 		}
