@@ -13,14 +13,15 @@
 
 #include "XojPdfPage.h"
 #include "XojPdfBookmarkIterator.h"
+#include "XojPdfDocumentInterface.h"
 
-#include "pdf/popplerdirect/poppler/XojPopplerDocument.h"
+#include "pdf/base/XojPdfDocumentInterface.h"
 
 #include <XournalType.h>
 
 #include <glib.h>
 
-class XojPdfDocument
+class XojPdfDocument : XojPdfDocumentInterface
 {
 public:
 	XojPdfDocument();
@@ -30,6 +31,8 @@ public:
 public:
 	void operator=(XojPdfDocument& doc);
 	bool operator==(XojPdfDocument& doc);
+	void assign(XojPdfDocumentInterface* doc);
+	bool equals(XojPdfDocumentInterface* doc);
 
 public:
 	bool save(path filename, GError** error);
@@ -41,12 +44,13 @@ public:
 	XojPdfBookmarkIterator* getContentsIter();
 
 public:
-	// This method will later be enabled / disabled by precompiler macros
+#ifdef ADVANCED_PDF_EXPORT_POPPLER
 	XojPopplerDocument& getPopplerDocument();
+#endif
 
 private:
 	XOJ_TYPE_ATTRIB;
 
-	XojPopplerDocument doc;
+	XojPdfDocumentInterface* doc;
 };
 

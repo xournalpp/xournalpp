@@ -21,7 +21,7 @@ using boost::filesystem::path;
 class _IntPopplerDocument;
 class XojPopplerIter;
 
-class XojPopplerDocument
+class XojPopplerDocument : public XojPdfDocumentInterface
 {
 public:
 	XojPopplerDocument();
