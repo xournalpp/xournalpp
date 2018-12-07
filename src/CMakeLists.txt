@@ -58,7 +58,6 @@ file (GLOB_RECURSE xournalpp_SOURCES_RECURSE
 unset (xournalpp_SOURCES)
 file (GLOB xournalpp_SOURCES
   pdf/base/*.cpp
-  pdf/cairo/*.cpp
 )
 
 # Concatenate SOURCES lists
@@ -68,6 +67,7 @@ unset (xournalpp_SOURCES_RECURSE)
 if (ADVANCE_PDF_EXPORT_POPPLER)
   file (GLOB xournalpp_SOURCES_RECURSE
     pdf/popplerdirect/*.cpp
+    pdf/popplerdirect/cairo/*.cpp
     pdf/popplerdirect/poppler/*.cpp
   )
 
