@@ -814,6 +814,10 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
 	case ACTION_RECSTOP:
 		audioController->recToggle();
 		break;
+	
+	case ACTION_ROTATION_SNAPPING:
+		rotationSnappingToggle();
+		break;
 
 		// Footer, not really an action, but need an identifier to
 	case ACTION_FOOTER_PAGESPIN:
@@ -3025,6 +3029,27 @@ bool Control::isFullscreen()
 	XOJ_CHECK_TYPE(Control);
 
 	return this->fullscreen;
+}
+
+bool Control::isRotationSnapping()
+{
+	XOJ_CHECK_TYPE(Control);
+	return this->snapRotation;
+}
+
+void Control::rotationSnappingToggle()
+{
+	XOJ_CHECK_TYPE(Control);
+
+	if (!this->snapRotation)
+	{
+		this->snapRotation = true;
+	}
+	else
+	{
+		this->snapRotation = false;
+	}
+
 }
 
 TextEditor* Control::getTextEditor()
