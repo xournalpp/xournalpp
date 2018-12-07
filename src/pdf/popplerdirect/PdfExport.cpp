@@ -595,8 +595,8 @@ bool PdfExport::writePage(int pageNr)
 
 	this->writer->startStream();
 
-	addPopplerDocument(doc->getPdfDocument());
-	currentPdfDoc = doc->getPdfDocument();
+	addPopplerDocument(doc->getPdfDocument().getPopplerDocument());
+	currentPdfDoc = doc->getPdfDocument().getPopplerDocument();
 
 	if (page->getBackgroundType().isPdfPage())
 	{

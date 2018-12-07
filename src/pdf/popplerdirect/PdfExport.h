@@ -17,17 +17,17 @@
 #include "PdfWriter.h"
 #include "PdfXRef.h"
 
+#include "pdf/base/XojPdfExport.h"
+
 #include "control/jobs/ProgressListener.h"
 #include "model/Document.h"
 #include "cairo/CairoPdf.h"
 
-#include <PageRange.h>
 #include <StringUtils.h>
 
 #include <glib.h>
-#include <vector>
 
-class PdfExport
+class PdfExport : public XojPdfExport
 {
 public:
 	PdfExport(Document* doc, ProgressListener* progressListener);

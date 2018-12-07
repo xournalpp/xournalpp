@@ -4,7 +4,8 @@
 #include "control/Control.h"
 #include "control/xojfile/XojExportHandler.h"
 #include "gui/dialog/ExportDialog.h"
-#include "pdf/popplerdirect/PdfExport.h"
+#include "pdf/base/XojPdfExport.h"
+#include "pdf/base/XojPdfExportFactory.h"
 #include "view/PdfView.h"
 
 #include <i18n.h>
@@ -267,16 +268,18 @@ void CustomExportJob::run()
 		// the ui is blocked, so there should be no changes...
 		Document* doc = control->getDocument();
 
-		PdfExport pdfe(doc, control);
+		XojPdfExport* pdfe = XojPdfExportFactory::createExport(doc, control);
 
 		// if (!pdfe.createPdf(this->filename, exportRange))
 
 		// TODO Currently export always the full PDF, the page by page routine
 		// is currently not working correct!
-		if (!pdfe.createPdf(this->filename))
+		if (!pdfe->createPdf(this->filename))
 		{
-			this->errorMsg = pdfe.getLastError();
+			this->errorMsg = pdfe->getLastError();
 		}
+
+		delete pdfe;
 	}
 	else
 	{

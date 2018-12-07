@@ -6,7 +6,8 @@
 #include "gui/MainWindow.h"
 #include "gui/toolbarMenubar/model/ToolbarColorNames.h"
 #include "gui/XournalView.h"
-#include "pdf/popplerdirect/PdfExport.h"
+#include "pdf/base/XojPdfExport.h"
+#include "pdf/base/XojPdfExportFactory.h"
 #include "xojfile/LoadHandler.h"
 
 #include <config.h>
@@ -190,14 +191,16 @@ int XournalMain::exportPdf(const char* input, const char* output)
 
 	GFile* file = g_file_new_for_commandline_arg(output);
 
-	PdfExport pdf(doc, NULL);
-	if (!pdf.createPdf(g_file_get_path(file)))
+	XojPdfExport* pdfe = XojPdfExportFactory::createExport(doc, NULL);
+	if (!pdfe->createPdf(g_file_get_path(file)))
 	{
-		cerr << pdf.getLastError() << endl;
+		cerr << pdfe->getLastError() << endl;
 
 		g_object_unref(file);
+		delete pdfe;
 		return -3;
 	}
+	delete pdfe;
 
 	g_object_unref(file);
 
@@ -248,7 +251,7 @@ int XournalMain::run(int argc, char* argv[])
 
 	if (optNoPdfCompress)
 	{
-		PdfWriter::setCompressPdfOutput(false);
+		XojPdfExportFactory::setCompressPdfOutput(false);
 	}
 
 	if (pdfFilename && optFilename && *optFilename)
