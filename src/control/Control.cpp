@@ -320,6 +320,9 @@ void Control::initWindow(MainWindow* win)
 
 	XInputUtils::initUtils(win->getWindow());
 	XInputUtils::setLeafEnterWorkaroundEnabled(settings->isEnableLeafEnterWorkaround());
+
+	//rotation snapping enabled by default
+	fireActionSelected(GROUP_SNAPPING,ACTION_ROTATION_SNAPPING);
 }
 
 bool Control::autosaveCallback(Control* control)

@@ -276,8 +276,8 @@ private:
 	RecentManager* recent;
 	UndoRedoHandler* undoRedo;
 	ZoomControl* zoom;
-	bool fullscreen;
-	bool snapRotation = false;
+	bool fullscreen = false;
+	bool snapRotation = true;	//rotation snapping enabled by default
 
 	Settings* settings;
 	MainWindow* win;
