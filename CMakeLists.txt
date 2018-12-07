@@ -138,7 +138,7 @@ execute_process(COMMAND ${LSB_RELEASE_EXEC} -rs
 option (BUILD_POPPLER "Build Poppler from git or other source" DEFAULT_BUILD_POPPLER)
 
 ## Ubuntu 16.04 need a poppler build
-if (LSB_RELEASE_ID_SHORT STREQUAL "Ubuntu" AND LSB_RELEASE_NUMBER_SHORT STREQUAL "16.04")
+if (ADVANCE_PDF_EXPORT_POPPLER AND LSB_RELEASE_ID_SHORT STREQUAL "Ubuntu" AND LSB_RELEASE_NUMBER_SHORT STREQUAL "16.04")
   set(BUILD_POPPLER ON)
   message ("Automatically set BUILD_POPPLER ON on Ubuntu 16.04")
 endif()
@@ -254,21 +254,22 @@ else ()
   find_package (Poppler)
   if (NOT POPPLER_FOUND)
     message (FATAL_ERROR "Poppler not found – you should enable BUILD_POPPLER CMake flag")
-  elseif (POPPLER_VERSION VERSION_LESS ${POPPLER_MIN_VER})
-    message (FATAL_ERROR "Poppler too old - you should enable BUILD_POPPLER CMake flag")
-  elseif (POPPLER_VERSION VERSION_GREATER ${POPPLER_MAX_VER})
-    message (FATAL_ERROR "Poppler too new, Xournalpp has not been adapted jet - you should enable BUILD_POPPLER CMake flag")
+  elseif (ADVANCE_PDF_EXPORT_POPPLER)
+    if (POPPLER_VERSION VERSION_LESS ${POPPLER_MIN_VER})
+	  message (FATAL_ERROR "Poppler too old - you should enable BUILD_POPPLER CMake flag")
+    elseif (POPPLER_VERSION VERSION_GREATER ${POPPLER_MAX_VER})
+      message (FATAL_ERROR "Poppler too new, Xournalpp has not been adapted jet - you should enable BUILD_POPPLER CMake flag")
+    endif ()
   endif (NOT POPPLER_FOUND)
-
 endif ()
 add_includes_ldflags ("${POPPLER_LIBRARIES}" "${POPPLER_INCLUDE_DIRS}")
 
 # zlib
-find_package (ZLIB REQUIRED)    # zlib
+find_package (ZLIB REQUIRED)
 add_includes_ldflags ("${ZLIB_LIBRARIES}" "${ZLIB_INCLUDE_DIRS}")
 
 # pthreads
-find_package (Threads REQUIRED) # pthreads
+find_package (Threads REQUIRED)
 set (xournalpp_LDFLAGS ${xournalpp_LDFLAGS} ${CMAKE_THREAD_LIBS_INIT})
 
 ## Additional features ##
@@ -290,6 +291,7 @@ endif (ENABLE_MATHTEX AND WIN32)
 
 option (UNSTABLE_LAYERS_SIDEBAR "Layers sidebar (unstable)" OFF)
 option (UNSTABLE_HIGHDPI_FIXES "HighDPI Fixes (unstable)" OFF)
+option (ADVANCE_PDF_EXPORT_POPPLER "Export PDF with private Poppler API" ON)
 
 configure_file (
   src/config-features.h.in
@@ -452,6 +454,8 @@ Configuration:
 	Compiler:                   ${CMAKE_CXX_COMPILER}
 	Mathtex enabled:            ${ENABLE_MATHTEX}
 	CppUnit enabled:            ${ENABLE_CPPUNIT}
+	Advanced PDF Export         ${ADVANCE_PDF_EXPORT_POPPLER}
+	(private Poppler API)
 
 Unstable features:
 	Layers sidebar:             ${UNSTABLE_LAYERS_SIDEBAR}

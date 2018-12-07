@@ -57,13 +57,25 @@ file (GLOB_RECURSE xournalpp_SOURCES_RECURSE
 # Here GLOB_RECURSE wouldn't be safe
 unset (xournalpp_SOURCES)
 file (GLOB xournalpp_SOURCES
+  pdf/base/*.cpp
   pdf/cairo/*.cpp
-  pdf/popplerdirect/*.cpp
-  pdf/popplerdirect/poppler/*.cpp
 )
 
 # Concatenate SOURCES lists
 set (xournalpp_SOURCES ${xournalpp_SOURCES_RECURSE} ${xournalpp_SOURCES})
+unset (xournalpp_SOURCES_RECURSE)
+
+if (ADVANCE_PDF_EXPORT_POPPLER)
+  file (GLOB xournalpp_SOURCES_RECURSE
+    pdf/popplerdirect/*.cpp
+    pdf/popplerdirect/poppler/*.cpp
+  )
+
+  # Concatenate SOURCES lists
+  set (xournalpp_SOURCES ${xournalpp_SOURCES_RECURSE} ${xournalpp_SOURCES})
+  unset (xournalpp_SOURCES_RECURSE)
+endif ()
+
 list (REMOVE_ITEM xournalpp_SOURCES ${PROJECT_SOURCE_DIR}/src/model/LayerListener.cpp) # TOCHECK
 
 ## Core library ##
