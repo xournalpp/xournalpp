@@ -2339,41 +2339,15 @@ bool Control::showSaveDialog()
 	gtk_file_filter_add_pattern(filterXoj, "*.xopp");
 	gtk_file_chooser_add_filter(GTK_FILE_CHOOSER(dialog), filterXoj);
 
-	path lastSavePath = settings->getLastSavePath();
-
 	this->doc->lock();
-
-	if (!doc->getFilename().empty())
-	{
-		string saveFilename = doc->getFilename().filename().string();
-		string folder = doc->getFilename().parent_path().string();
-
-		gtk_file_chooser_set_current_folder(GTK_FILE_CHOOSER(dialog), folder.c_str());
-		gtk_file_chooser_set_current_name(GTK_FILE_CHOOSER(dialog), saveFilename.c_str());
-	}
-	else if (!doc->getPdfFilename().empty())
-	{
-		string folder = doc->getPdfFilename().parent_path().string();
-		string saveFilename = doc->getPdfFilename().filename().replace_extension(".pdf.xopp").string();
-
-		gtk_file_chooser_set_current_folder(GTK_FILE_CHOOSER(dialog), folder.c_str());
-		gtk_file_chooser_set_current_name(GTK_FILE_CHOOSER(dialog), saveFilename.c_str());
-	}
-	else
-	{
-		time_t curtime = time(NULL);
-		char stime[128];
-		strftime(stime, sizeof(stime), settings->getDefaultSaveName().c_str(), localtime(&curtime));
-
-		// Try to set the folder, the GTK Filechooser is not working that good...
-		gtk_file_chooser_set_current_folder(GTK_FILE_CHOOSER(dialog), settings->getLastSavePath().c_str());
-
-		// According to the GTK3 Documentation this is the right way for saving a new file
-		// on GTK2 Xournal++ Controls everything, but don't seem to work with GTK3
-		// so hopefully this will work
-		gtk_file_chooser_set_current_name(GTK_FILE_CHOOSER(dialog), stime);
-	}
+	path suggested_folder = this->doc->createSaveFolder(this->settings->getLastSavePath());
+	path suggested_name = this->doc->createSaveFilename(Document::XOPP, this->settings->getDefaultSaveName());
 	this->doc->unlock();
+
+	gtk_file_chooser_set_current_folder(GTK_FILE_CHOOSER(dialog),
+										suggested_folder.c_str());
+	gtk_file_chooser_set_current_name(GTK_FILE_CHOOSER(dialog),
+										suggested_name.c_str());
 
 	gtk_file_chooser_set_do_overwrite_confirmation(GTK_FILE_CHOOSER(dialog), true);
 

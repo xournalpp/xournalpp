@@ -83,7 +83,7 @@ void Settings::loadDefault()
 
 	this->enableLeafEnterWorkaround = true;
 
-	this->defaultSaveName = _("%F-Note-%H-%M.xopp");
+	this->defaultSaveName = _("%F-Note-%H-%M");
 
 	// Eraser
 	this->buttonConfig[0] = new ButtonConfig(TOOL_ERASER, 0, TOOL_SIZE_NONE, DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
