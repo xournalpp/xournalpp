@@ -133,6 +133,7 @@ public:
 	bool isInDragAndDropToolbar();
 
 	bool isFullscreen();
+	bool isRotationSnapping();
 
 	bool searchTextOnPage(string text, int p, int* occures, double* top);
 
@@ -239,6 +240,8 @@ protected:
 	void zoomCallback(ActionType type);
 	void zoomFit();
 
+	void rotationSnappingToggle();
+
 	bool showSaveDialog();
 
 	void fileLoaded(int scrollToPage = -1);
@@ -274,6 +277,7 @@ private:
 	UndoRedoHandler* undoRedo;
 	ZoomControl* zoom;
 	bool fullscreen;
+	bool snapRotation = false;
 
 	Settings* settings;
 	MainWindow* win;

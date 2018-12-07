@@ -26,7 +26,7 @@ void RulerHandler::drawShape(Point& currentPoint, bool shiftDown)
 	{
 		stroke->addPoint(currentPoint);
 	}
-	else if (shiftDown)
+	else if (shiftDown || !xournal->getControl()->isRotationSnapping())
 	{
 		stroke->setLastPoint(currentPoint.x, currentPoint.y);
 	}
