@@ -89,6 +89,8 @@ XojPdfPage* PopplerGlibDocument::getPage(size_t page)
 
 	PopplerPage* pg = poppler_document_get_page(document, page);
 
+	// TODO The page will not be freed!
+
 	return new PopplerGlibPage(pg);
 }
 
@@ -103,7 +105,7 @@ XojPdfBookmarkIterator* PopplerGlibDocument::getContentsIter()
 {
 	XOJ_CHECK_TYPE(PopplerGlibDocument);
 
-	// TODO !!!!!!!!!
+	// TODO Implement
 	return NULL;
 }
 
