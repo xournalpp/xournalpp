@@ -50,6 +50,8 @@ endif ()
 
 ## Libraries ##
 
+option (ADVANCED_PDF_EXPORT_POPPLER "Export PDF with private Poppler API" ON)
+
 macro (add_includes_ldflags LDFLAGS INCLUDES)
     set (xournalpp_LDFLAGS ${xournalpp_LDFLAGS} ${LDFLAGS})
     set (xournalpp_INCLUDE_DIRS ${xournalpp_INCLUDE_DIRS} ${INCLUDES})
@@ -291,7 +293,6 @@ endif (ENABLE_MATHTEX AND WIN32)
 
 option (UNSTABLE_LAYERS_SIDEBAR "Layers sidebar (unstable)" OFF)
 option (UNSTABLE_HIGHDPI_FIXES "HighDPI Fixes (unstable)" OFF)
-option (ADVANCED_PDF_EXPORT_POPPLER "Export PDF with private Poppler API" ON)
 
 configure_file (
   src/config-features.h.in
