@@ -276,7 +276,7 @@ private:
 	UndoRedoHandler* undoRedo;
 	ZoomControl* zoom;
 	bool fullscreen;
-	bool snapRotation;
+	bool snapRotation = false;
 
 	Settings* settings;
 	MainWindow* win;
