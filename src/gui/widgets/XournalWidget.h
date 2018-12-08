@@ -69,7 +69,7 @@ struct _GtkXournal
 	/**
 	 * Shift is currently pressed
 	 */
-	bool shiftDown;
+	bool shiftDown = false;
 };
 
 struct _GtkXournalClass
