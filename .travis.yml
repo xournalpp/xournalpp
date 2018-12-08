@@ -24,18 +24,16 @@ addons:
     packages:
     - cmake
 
-    - libboost-system-dev
     - libboost-filesystem-dev
     - libboost-locale-dev
     - libboost-iostreams-dev
 
     - libcppunit-dev
 
-## Needed for mathtex
+# Needed for mathtex
     - dvipng
     - texlive
-#    - liblcms2-dev
-#    - fontconfig
+
     - libgtk-3-dev
     - libpoppler-glib-dev
 
