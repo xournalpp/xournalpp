@@ -1,5 +1,8 @@
 #include "XojPdfDocument.h"
 
+#include <config-features.h>
+
+
 #ifdef ADVANCED_PDF_EXPORT_POPPLER
 #include "pdf/popplerdirect/poppler/XojPopplerIter.h"
 #else
@@ -99,14 +102,12 @@ size_t XojPdfDocument::getPageCount()
 	return doc->getPageCount();
 }
 
-#ifdef ADVANCED_PDF_EXPORT_POPPLER
-XojPopplerDocument& XojPdfDocument::getPopplerDocument()
+XojPdfDocumentInterface* XojPdfDocument::getDocumentInterface()
 {
 	XOJ_CHECK_TYPE(XojPdfDocument);
 
-	return *doc;
+	return doc;
 }
-#endif
 
 XojPdfBookmarkIterator* XojPdfDocument::getContentsIter()
 {

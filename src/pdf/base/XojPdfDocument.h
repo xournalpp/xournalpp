@@ -44,9 +44,7 @@ public:
 	XojPdfBookmarkIterator* getContentsIter();
 
 public:
-#ifdef ADVANCED_PDF_EXPORT_POPPLER
-	XojPopplerDocument& getPopplerDocument();
-#endif
+	XojPdfDocumentInterface* getDocumentInterface();
 
 private:
 	XOJ_TYPE_ATTRIB;

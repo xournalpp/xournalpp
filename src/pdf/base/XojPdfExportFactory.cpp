@@ -1,5 +1,7 @@
 #include "XojPdfExportFactory.h"
 
+#include <config-features.h>
+
 #ifdef ADVANCED_PDF_EXPORT_POPPLER
 #include "pdf/popplerdirect/PdfExport.h"
 #include "pdf/popplerdirect/PdfWriter.h"

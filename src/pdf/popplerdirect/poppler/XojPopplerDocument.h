@@ -32,6 +32,8 @@ public:
 public:
 	void operator=(XojPopplerDocument& doc);
 	bool operator==(XojPopplerDocument& doc);
+	void assign(XojPdfDocumentInterface* doc);
+	bool equals(XojPdfDocumentInterface* doc);
 
 	XojPdfBookmarkIterator* getContentsIter();
 

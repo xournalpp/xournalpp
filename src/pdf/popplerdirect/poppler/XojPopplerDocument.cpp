@@ -182,17 +182,31 @@ void XojPopplerDocument::operator=(XojPopplerDocument& doc)
 {
 	XOJ_CHECK_TYPE(XojPopplerDocument);
 
+	this->assign(&doc);
+}
+
+void XojPopplerDocument::assign(XojPdfDocumentInterface* doc)
+{
+	XOJ_CHECK_TYPE(XojPopplerDocument);
+
 	if (this->data)
 	{
 		this->data->unreference();
 	}
 
-	this->data = doc.data;
+	this->data = ((XojPopplerDocument*)doc)->data;
 
 	if (this->data)
 	{
 		this->data->reference();
 	}
+}
+
+bool XojPopplerDocument::equals(XojPdfDocumentInterface* doc)
+{
+	XOJ_CHECK_TYPE(XojPopplerDocument);
+
+	return this->data == ((XojPopplerDocument*)doc)->data;
 }
 
 XojPdfBookmarkIterator* XojPopplerDocument::getContentsIter()
