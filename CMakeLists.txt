@@ -92,7 +92,6 @@ if (BUILD_BOOST)
     boost_filesystem
     boost_locale
     boost_iostreams
-    boost_thread
     boost_system
     ${ICU_LIBRARIES}
   )
@@ -101,7 +100,7 @@ if (BUILD_BOOST)
 else (BUILD_BOOST)
 
   set (Boost_USE_MULTITHREADED ON)
-  find_package (Boost 1.54 COMPONENTS system filesystem locale iostreams thread)
+  find_package (Boost 1.54 COMPONENTS system filesystem locale iostreams)
   if (Boost_VERSION VERSION_LESS 1.54)
     message (FATAL_ERROR "Boost 1.54 or newer not found – you should enable BUILD_BOOST CMake flag")
   endif (Boost_VERSION VERSION_LESS 1.54)
