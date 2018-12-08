@@ -37,7 +37,7 @@ public:
 
 	XojPdfBookmarkIterator* getContentsIter();
 
-	XojPopplerPage* getPage(size_t page);
+	XojPdfPageSPtr getPage(size_t page);
 
 	bool isLoaded();
 

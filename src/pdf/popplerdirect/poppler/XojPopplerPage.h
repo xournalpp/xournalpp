@@ -33,9 +33,10 @@ class XojPopplerImage;
 
 class XojPopplerPage : public XojPdfPage
 {
-private:
+public:
 	XojPopplerPage(PDFDoc* doc, GMutex* docMutex, CairoOutputDev* outputDev, Page* page, int index);
 	virtual ~XojPopplerPage();
+
 public:
 	double getWidth();
 	double getHeight();

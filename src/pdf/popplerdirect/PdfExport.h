@@ -41,7 +41,7 @@ public:
 private:
 	void addPopplerDocument(XojPopplerDocument doc);
 
-	bool addPopplerPage(XojPopplerPage* pdf, XojPopplerDocument doc);
+	bool addPopplerPage(XojPdfPageSPtr pdf, XojPopplerDocument doc);
 	bool writePage(int page);
 
 	void writeGzStream(Stream* str, GList* replacementList);

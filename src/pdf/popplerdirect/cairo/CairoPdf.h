@@ -26,7 +26,7 @@ public:
 
 public:
 	void drawPage(PageRef page);
-	XojPopplerPage* getPage(int page);
+	XojPdfPageSPtr getPage(int page);
 	XojPopplerDocument& getDocument();
 
 	void finalize();

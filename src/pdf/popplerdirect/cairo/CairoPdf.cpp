@@ -62,7 +62,7 @@ void CairoPdf::finalize()
 	this->data->len = 0;
 }
 
-XojPopplerPage* CairoPdf::getPage(int page)
+XojPdfPageSPtr CairoPdf::getPage(int page)
 {
 	XOJ_CHECK_TYPE(CairoPdf);
 

@@ -421,11 +421,17 @@ void PdfExport::addPopplerDocument(XojPopplerDocument doc)
 	this->documents.push_back(d);
 }
 
-bool PdfExport::addPopplerPage(XojPopplerPage* pdf, XojPopplerDocument doc)
+bool PdfExport::addPopplerPage(XojPdfPageSPtr pdf, XojPopplerDocument doc)
 {
 	XOJ_CHECK_TYPE(PdfExport);
 
-	Page* page = pdf->getPage();
+	XojPopplerPage* pdfPage = dynamic_cast<XojPopplerPage*>(pdf.get());
+	if (pdfPage == NULL)
+	{
+		return false;
+	}
+
+	Page* page = pdfPage->getPage();
 	static int otherObjectId = 1;
 
 	this->resources = page->getResourceDict();
@@ -600,8 +606,8 @@ bool PdfExport::writePage(int pageNr)
 
 	if (page->getBackgroundType().isPdfPage())
 	{
-		XojPopplerPage* pdf = dynamic_cast<XojPopplerPage*>(doc->getPdfPage(page->getPdfPageNr()));
-		if (pdf != NULL && !addPopplerPage(pdf, currentPdfDoc))
+		XojPdfPageSPtr pdfPage = doc->getPdfPage(page->getPdfPageNr());
+		if (!addPopplerPage(pdfPage, currentPdfDoc))
 		{
 			return false;
 		}
