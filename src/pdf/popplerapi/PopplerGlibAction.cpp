@@ -1,9 +1,11 @@
 #include "PopplerGlibAction.h"
 
-PopplerGlibAction::PopplerGlibAction(PopplerAction* action)
- : action(action)
+PopplerGlibAction::PopplerGlibAction(PopplerAction* action, PopplerDocument* document)
+ : action(action),
+   document(document)
 {
     XOJ_INIT_TYPE(PopplerGlibAction);
+   	g_object_ref(document);
 }
 
 PopplerGlibAction::~PopplerGlibAction()
@@ -12,6 +14,12 @@ PopplerGlibAction::~PopplerGlibAction()
 
 	poppler_action_free(action);
 	action = NULL;
+
+	if (document)
+	{
+		g_object_unref(document);
+	    document = NULL;
+	}
 
     XOJ_RELEASE_TYPE(PopplerGlibAction);
 }
@@ -48,62 +56,84 @@ void PopplerGlibAction::linkFromDest(LinkDestination* link, PopplerDest* pDest)
 	switch(pDest->type)
 	{
 	case POPPLER_DEST_UNKNOWN:
+		g_warning("PDF Contains unknown link destination");
 		break;
 	case POPPLER_DEST_XYZ:
 		{
-//			int page_num;
-//			double left;
-//			double bottom;
-//			double right;
-//			double top;
-//			double zoom;
-//
-//
-//			XojPopplerPage* popplerPage = doc.getPage(MAX(0, pageNum));
-//			if (!popplerPage)
-//			{
-//				return;
-//			}
-//			double height = popplerPage->getHeight();
-//
-//			if (dest->getChangeLeft())
-//			{
-//				link->setChangeLeft(dest->getLeft());
-//			}
-//
-//			if (dest->getChangeTop())
-//			{
-//				link->setChangeTop(height - MIN(height, dest->getTop()));
-//			}
-//
-//			if (dest->getChangeZoom())
-//			{
-//				link->setChangeZoom(dest->getZoom());
-//			}
+			PopplerPage* page = poppler_document_get_page(document, pDest->page_num);
+			if (page == NULL)
+			{
+				return;
+			}
+
+			double pageWidth = 0;
+			double pageHeight = 0;
+			poppler_page_get_size(page, &pageWidth, &pageHeight);
+
+			if (pDest->left)
+			{
+				link->setChangeLeft(pDest->left);
+			}
+			else if (pDest->right)
+			{
+				link->setChangeLeft(pageWidth - pDest->right);
+			}
+
+			if (pDest->top)
+			{
+				link->setChangeTop(pDest->top);
+			}
+			else if (pDest->bottom)
+			{
+				link->setChangeTop(pageHeight - pDest->bottom);
+			}
+
+			if (pDest->zoom != 0)
+			{
+				link->setChangeZoom(pDest->zoom);
+			}
+
+			g_object_unref(page);
 		}
 		break;
 	case POPPLER_DEST_FIT:
+		g_warning("Unimplemented link type: POPPLER_DEST_FIT");
 		break;
 	case POPPLER_DEST_FITH:
+		g_warning("Unimplemented link type: POPPLER_DEST_FITH");
 		break;
 	case POPPLER_DEST_FITV:
+		g_warning("Unimplemented link type: POPPLER_DEST_FITV");
 		break;
 	case POPPLER_DEST_FITR:
+		g_warning("Unimplemented link type: POPPLER_DEST_FITR");
 		break;
 	case POPPLER_DEST_FITB:
+		g_warning("Unimplemented link type: POPPLER_DEST_FITB");
 		break;
 	case POPPLER_DEST_FITBH:
+		g_warning("Unimplemented link type: POPPLER_DEST_FITBH");
 		break;
 	case POPPLER_DEST_FITBV:
+		g_warning("Unimplemented link type: POPPLER_DEST_FITBV");
 		break;
 	case POPPLER_DEST_NAMED:
+		{
+			PopplerDest* pDest2 = poppler_document_find_dest(document, pDest->named_dest);
+			if (pDest2 != NULL)
+			{
+				linkFromDest(link, pDest2);
+				poppler_dest_free(pDest2);
+				return;
+			}
+		}
 		break;
 
 	default:
 		break;
 	}
 
-	link->setPdfPage(pDest->page_num);
+	link->setPdfPage(pDest->page_num - 1);
 }
 
 string PopplerGlibAction::getTitle()

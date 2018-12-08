@@ -353,6 +353,7 @@ bool SidebarIndexPage::selectPageNr(size_t page, size_t pdfPage, GtkTreeIter* pa
 		doc->unlock();
 		return false;
 	}
+
 	g_object_ref(model);
 	doc->unlock();
 
@@ -378,7 +379,7 @@ bool SidebarIndexPage::selectPageNr(size_t page, size_t pdfPage, GtkTreeIter* pa
 					g_object_unref(model);
 					g_object_unref(link);
 
-					// already bookmak from this page selected
+					// already a bookmark from this page selected
 					return true;
 				}
 			}

@@ -22,7 +22,7 @@
 class PopplerGlibPageBookmarkIterator : public XojPdfBookmarkIterator
 {
 public:
-	PopplerGlibPageBookmarkIterator(PopplerIndexIter* iter);
+	PopplerGlibPageBookmarkIterator(PopplerIndexIter* iter,	PopplerDocument* document);
 	virtual ~PopplerGlibPageBookmarkIterator();
 
 public:
@@ -35,5 +35,6 @@ private:
 	XOJ_TYPE_ATTRIB;
 
 	PopplerIndexIter* iter;
+	PopplerDocument* document;
 };
 

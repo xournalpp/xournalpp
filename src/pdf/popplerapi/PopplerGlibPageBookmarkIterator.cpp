@@ -1,9 +1,11 @@
 #include "PopplerGlibPageBookmarkIterator.h"
 
-PopplerGlibPageBookmarkIterator::PopplerGlibPageBookmarkIterator(PopplerIndexIter* iter)
- : iter(iter)
+PopplerGlibPageBookmarkIterator::PopplerGlibPageBookmarkIterator(PopplerIndexIter* iter, PopplerDocument* document)
+ : iter(iter),
+   document(document)
 {
     XOJ_INIT_TYPE(PopplerGlibPageBookmarkIterator);
+   	g_object_ref(document);
 }
 
 PopplerGlibPageBookmarkIterator::~PopplerGlibPageBookmarkIterator()
@@ -12,6 +14,12 @@ PopplerGlibPageBookmarkIterator::~PopplerGlibPageBookmarkIterator()
 
 	poppler_index_iter_free(iter);
 	iter = NULL;
+
+	if (document)
+	{
+		g_object_unref(document);
+	    document = NULL;
+	}
 
     XOJ_RELEASE_TYPE(PopplerGlibPageBookmarkIterator);
 }
@@ -40,7 +48,7 @@ XojPdfBookmarkIterator* PopplerGlibPageBookmarkIterator::getChildIter()
 		return NULL;
 	}
 
-	return new PopplerGlibPageBookmarkIterator(child);
+	return new PopplerGlibPageBookmarkIterator(child, document);
 }
 
 XojPdfAction* PopplerGlibPageBookmarkIterator::getAction()
@@ -54,5 +62,5 @@ XojPdfAction* PopplerGlibPageBookmarkIterator::getAction()
 		return NULL;
 	}
 
-	return new PopplerGlibAction(action);
+	return new PopplerGlibAction(action, document);
 }
