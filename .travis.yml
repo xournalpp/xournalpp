@@ -23,15 +23,17 @@ addons:
   apt:
     packages:
     - cmake
+
     - libboost-system-dev
     - libboost-filesystem-dev
     - libboost-locale-dev
     - libboost-iostreams-dev
     - libcppunit-dev
-    - dvipng
-    - texlive
-    - liblcms2-dev
-    - fontconfig
+
+#    - dvipng
+#    - texlive
+#    - liblcms2-dev
+#    - fontconfig
     - libgtk-3-dev
     - libpoppler-glib-dev
 
