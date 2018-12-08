@@ -27,8 +27,8 @@ SearchBar::SearchBar(Control* control)
 	GtkWidget* searchTextField = win->get("searchTextField");
 	g_signal_connect(searchTextField, "changed", G_CALLBACK(searchTextChangedCallback), this);
 
-
-	defaultColor = gtk_widget_get_style(searchTextField)->base[GTK_STATE_NORMAL];
+	cssTextFild = gtk_css_provider_new();
+	gtk_style_context_add_provider(gtk_widget_get_style_context(win->get("searchTextField")), GTK_STYLE_PROVIDER(cssTextFild), GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
 }
 
 SearchBar::~SearchBar()
@@ -54,9 +54,6 @@ void SearchBar::search(const char* text)
 	XOJ_CHECK_TYPE(SearchBar);
 
 	MainWindow* win = control->getWindow();
-	GdkColor color = { 0, 0xff00, 0xc000, 0xc000 };
-	GtkWidget* searchTextField = win->get("searchTextField");
-
 	GtkWidget* lbSearchState = win->get("lbSearchState");
 
 	bool found = true;
@@ -91,11 +88,11 @@ void SearchBar::search(const char* text)
 
 	if (found)
 	{
-		gtk_widget_modify_base(searchTextField, GTK_STATE_NORMAL, &defaultColor);
+		gtk_css_provider_load_from_data(cssTextFild, "GtkSearchEntry {}", -1, NULL);
 	}
 	else
 	{
-		gtk_widget_modify_base(searchTextField, GTK_STATE_NORMAL, &color);
+		gtk_css_provider_load_from_data(cssTextFild, "GtkSearchEntry { color: #ff0000; }", -1, NULL);
 	}
 }
 

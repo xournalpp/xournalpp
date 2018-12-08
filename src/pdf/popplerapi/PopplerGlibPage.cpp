@@ -55,7 +55,19 @@ vector<XojPdfRectangle> PopplerGlibPage::findText(string& text)
 	XOJ_CHECK_TYPE(PopplerGlibPage);
 
 	vector<XojPdfRectangle> findings;
-	// TODO Implement search
-	// poppler_page_find_text
+
+	double height = getHeight();
+	GList* matches = poppler_page_find_text(page, text.c_str());
+
+	for (GList* l = matches; l && l->data; l = g_list_next(l))
+	{
+		PopplerRectangle* rect = (PopplerRectangle*) l->data;
+
+		findings.push_back(XojPdfRectangle(rect->x1, height - rect->y1, rect->x2, height - rect->y2));
+
+		poppler_rectangle_free(rect);
+	}
+	g_list_free(matches);
+
 	return findings;
 }

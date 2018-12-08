@@ -260,7 +260,7 @@ int XournalMain::run(int argc, char* argv[])
 	}
 
 	// Init GTK Display
-	gdk_display_open_default_libgtk_only();
+	gtk_init(&argc, &argv);
 
 	initSettingsPath();
 
