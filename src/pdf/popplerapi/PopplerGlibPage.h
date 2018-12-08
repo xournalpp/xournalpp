@@ -1,0 +1,38 @@
+/*
+ * Xournal++
+ *
+ * PDF Page GLib Implementation
+ *
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
+ *
+ * @license GNU GPLv2 or later
+ */
+
+#pragma once
+
+#include "pdf/base/XojPdfPage.h"
+
+#include <poppler.h>
+
+
+class PopplerGlibPage : public XojPdfPage
+{
+public:
+	PopplerGlibPage(PopplerPage* page);
+	virtual ~PopplerGlibPage();
+
+public:
+	virtual double getWidth();
+	virtual double getHeight();
+
+	virtual void render(cairo_t* cr, bool forPrinting = false);
+
+	virtual vector<XojPdfRectangle> findText(string& text);
+
+private:
+	XOJ_TYPE_ATTRIB;
+
+	PopplerPage* page;
+};
+

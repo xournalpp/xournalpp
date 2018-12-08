@@ -1,6 +1,8 @@
 ## Build poppler ##
 
-add_subdirectory ("pdf/popplerdirect/workaround")
+if (ADVANCED_PDF_EXPORT_POPPLER)
+  add_subdirectory ("pdf/popplerdirect/workaround")
+endif ()
 
 ## Basic variables ##
 
@@ -69,6 +71,14 @@ if (ADVANCED_PDF_EXPORT_POPPLER)
     pdf/popplerdirect/*.cpp
     pdf/popplerdirect/cairo/*.cpp
     pdf/popplerdirect/poppler/*.cpp
+  )
+
+  # Concatenate SOURCES lists
+  set (xournalpp_SOURCES ${xournalpp_SOURCES_RECURSE} ${xournalpp_SOURCES})
+  unset (xournalpp_SOURCES_RECURSE)
+else ()
+  file (GLOB xournalpp_SOURCES_RECURSE
+    pdf/popplerapi/*.cpp
   )
 
   # Concatenate SOURCES lists

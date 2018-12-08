@@ -12,6 +12,7 @@
 #pragma once
 
 #include "XojPopplerPage.h"
+#include "pdf/base/XojPdfDocumentInterface.h"
 
 #include <StringUtils.h>
 
@@ -21,7 +22,7 @@ using boost::filesystem::path;
 class _IntPopplerDocument;
 class XojPopplerIter;
 
-class XojPopplerDocument
+class XojPopplerDocument : public XojPdfDocumentInterface
 {
 public:
 	XojPopplerDocument();
@@ -31,8 +32,10 @@ public:
 public:
 	void operator=(XojPopplerDocument& doc);
 	bool operator==(XojPopplerDocument& doc);
+	void assign(XojPdfDocumentInterface* doc);
+	bool equals(XojPdfDocumentInterface* doc);
 
-	XojPopplerIter* getContentsIter();
+	XojPdfBookmarkIterator* getContentsIter();
 
 	XojPopplerPage* getPage(size_t page);
 
