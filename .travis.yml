@@ -23,21 +23,26 @@ addons:
   apt:
     packages:
     - cmake
+
     - libboost-system-dev
     - libboost-filesystem-dev
     - libboost-locale-dev
     - libboost-iostreams-dev
+
     - libcppunit-dev
+
+## Needed for mathtex
     - dvipng
     - texlive
-    - liblcms2-dev
-    - fontconfig
+#    - liblcms2-dev
+#    - fontconfig
     - libgtk-3-dev
     - libpoppler-glib-dev
 
-    sources:
-    - boost-latest
-    - kalakris-cmake
+# Do not use PPAs, use standard Ubuntu Sources
+#    sources:
+#    - boost-latest
+#    - kalakris-cmake
 
   coverity_scan:
     project:

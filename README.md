@@ -71,12 +71,10 @@ dnf install cmake libglade2-devel texlive-scheme-basic texlive-dvipng glibmm24-d
 
 For Ubuntu/Debian:
 ````bash
-sudo apt-get install cmake libboost-all-dev libcppunit-dev dvipng texlive \
-liblcms2-dev libjpeg-dev fontconfig librsvg2-dev libgtk-3-dev \
-libpoppler-dev libpoppler-cpp-dev libpoppler-glib-dev libpoppler-private-dev \
-libxml2-dev libopenjpeg-dev
+sudo apt-get install cmake libboost-system-dev libboost-filesystem-dev \
+libboost-locale-dev libboost-iostreams-dev libcppunit-dev dvipng texlive \
+liblcms2-dev fontconfig libgtk-3-dev libpoppler-glib-dev libxml2-dev
 ````
-(On Ubuntu 18.04, remove the last `libopenjpeg-dev`, it's not in the repository any more).
 
 Basic steps are:
 ````bash
