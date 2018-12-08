@@ -71,9 +71,9 @@ dnf install cmake libglade2-devel texlive-scheme-basic texlive-dvipng glibmm24-d
 
 For Ubuntu/Debian:
 ````bash
-sudo apt-get install cmake libboost-system-dev libboost-filesystem-dev \
-libboost-locale-dev libboost-iostreams-dev libcppunit-dev dvipng texlive \
-liblcms2-dev fontconfig libgtk-3-dev libpoppler-glib-dev libxml2-dev
+sudo apt-get install cmake libgtk-3-dev libpoppler-glib-dev \
+libboost-filesystem-dev libboost-locale-dev libboost-iostreams-dev \
+libcppunit-dev dvipng texlive 
 ````
 
 Basic steps are:
