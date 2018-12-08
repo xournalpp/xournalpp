@@ -5,6 +5,10 @@
 #  POPPLER_INCLUDE_DIRS - the include directories for Poppler and Poppler-glib headers
 #  POPPLER_LIBRARIES - link these to use Poppler and Poppler-glib
 
+if (NOT ADVANCED_PDF_EXPORT_POPPLER)
+   return()
+endif ()
+
 if (POPPLER_LIBRARIES)
    # in cache already
    SET(POPPLER_FIND_QUIETLY TRUE)
