@@ -28,9 +28,11 @@ addons:
     - libboost-filesystem-dev
     - libboost-locale-dev
     - libboost-iostreams-dev
+
     - libcppunit-dev
 
-#    - dvipng
+## Needed for mathtex
+    - dvipng
     - texlive
 #    - liblcms2-dev
 #    - fontconfig
