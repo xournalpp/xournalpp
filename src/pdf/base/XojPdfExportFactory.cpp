@@ -6,7 +6,7 @@
 #include "pdf/popplerdirect/PdfExport.h"
 #include "pdf/popplerdirect/PdfWriter.h"
 #else
-// TODO Implement
+#include "XojCairoPdfExport.h"
 #endif
 
 XojPdfExportFactory::XojPdfExportFactory()
@@ -24,8 +24,7 @@ XojPdfExport* XojPdfExportFactory::createExport(Document* doc, ProgressListener*
 #ifdef ADVANCED_PDF_EXPORT_POPPLER
 	return new PdfExport(doc, listener);
 #else
-// TODO Implement
-	return NULL;
+	return new XojCairoPdfExport(doc, listener);
 #endif
 }
 
@@ -34,6 +33,6 @@ void XojPdfExportFactory::setCompressPdfOutput(bool compress)
 #ifdef ADVANCED_PDF_EXPORT_POPPLER
 	PdfWriter::setCompressPdfOutput(compress);
 #else
-	// TODO Implement
+	// Currently not supported for Cairo export
 #endif
 }

@@ -9,6 +9,7 @@
 #include "view/PdfView.h"
 
 #include <i18n.h>
+#include <config-features.h>
 
 
 CustomExportJob::CustomExportJob(Control* control)
@@ -270,11 +271,13 @@ void CustomExportJob::run()
 
 		XojPdfExport* pdfe = XojPdfExportFactory::createExport(doc, control);
 
-		// if (!pdfe.createPdf(this->filename, exportRange))
 
-		// TODO Currently export always the full PDF, the page by page routine
-		// is currently not working correct!
+#ifdef ADVANCED_PDF_EXPORT_POPPLER
+		// Not working with ADVANCED_PDF_EXPORT_POPPLER
 		if (!pdfe->createPdf(this->filename))
+#else
+		if (!pdfe->createPdf(this->filename, exportRange))
+#endif
 		{
 			this->errorMsg = pdfe->getLastError();
 		}
