@@ -17,7 +17,6 @@ PopplerGlibDocument::PopplerGlibDocument(const PopplerGlibDocument& doc)
 	if (document)
 	{
 		g_object_ref(document);
-		document = NULL;
 	}
 }
 
@@ -133,7 +132,7 @@ XojPdfBookmarkIterator* PopplerGlibDocument::getContentsIter()
 		return NULL;
 	}
 
-	return new PopplerGlibPageBookmarkIterator(iter);
+	return new PopplerGlibPageBookmarkIterator(iter, document);
 }
 
 

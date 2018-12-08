@@ -27,7 +27,7 @@ class LinkDestination;
 class PopplerGlibAction : public XojPdfAction
 {
 public:
-	PopplerGlibAction(PopplerAction* action);
+	PopplerGlibAction(PopplerAction* action, PopplerDocument* document);
 	virtual ~PopplerGlibAction();
 
 public:
@@ -41,5 +41,6 @@ private:
 	XOJ_TYPE_ATTRIB;
 
 	PopplerAction* action;
+	PopplerDocument* document;
 };
 
