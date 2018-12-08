@@ -35,9 +35,10 @@ addons:
     - libgtk-3-dev
     - libpoppler-glib-dev
 
-    sources:
-    - boost-latest
-    - kalakris-cmake
+# Do not use PPAs, use standard Ubuntu Sources
+#    sources:
+#    - boost-latest
+#    - kalakris-cmake
 
   coverity_scan:
     project:
