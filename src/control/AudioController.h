@@ -12,6 +12,7 @@ public:
 	AudioController(Settings* settings, Control* control);
 	virtual ~AudioController();
 
+public:
 	bool isRecording();
 	void recToggle();
 	void recStartStop(bool record);

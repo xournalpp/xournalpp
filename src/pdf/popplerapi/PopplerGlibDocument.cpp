@@ -1,5 +1,6 @@
 #include "PopplerGlibDocument.h"
 #include "PopplerGlibPage.h"
+#include "PopplerGlibPageBookmarkIterator.h"
 
 
 PopplerGlibDocument::PopplerGlibDocument()
@@ -60,6 +61,11 @@ bool PopplerGlibDocument::save(path filename, GError** error)
 {
 	XOJ_CHECK_TYPE(PopplerGlibDocument);
 
+	if (document == NULL)
+	{
+		return false;
+	}
+
 	string uri = "file://";
 	uri += filename.string();
 	return poppler_document_save(document, uri.c_str(), error);
@@ -87,6 +93,11 @@ XojPdfPage* PopplerGlibDocument::getPage(size_t page)
 {
 	XOJ_CHECK_TYPE(PopplerGlibDocument);
 
+	if (document == NULL)
+	{
+		return NULL;
+	}
+
 	PopplerPage* pg = poppler_document_get_page(document, page);
 
 	// TODO The page will not be freed!
@@ -98,6 +109,11 @@ size_t PopplerGlibDocument::getPageCount()
 {
 	XOJ_CHECK_TYPE(PopplerGlibDocument);
 
+	if (document == NULL)
+	{
+		return 0;
+	}
+
 	return poppler_document_get_n_pages(document);
 }
 
@@ -105,7 +121,20 @@ XojPdfBookmarkIterator* PopplerGlibDocument::getContentsIter()
 {
 	XOJ_CHECK_TYPE(PopplerGlibDocument);
 
-	// TODO Implement
-	return NULL;
+	if (document == NULL)
+	{
+		return NULL;
+	}
+
+	PopplerIndexIter* iter = poppler_index_iter_new(document);
+
+	if (iter == NULL)
+	{
+		return NULL;
+	}
+
+	return new PopplerGlibPageBookmarkIterator(iter);
 }
+
+
 
