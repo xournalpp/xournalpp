@@ -5,8 +5,9 @@ language:
 # clang is not supported for poppler
 compiler: gcc
 
-cache:
-- ccache
+# Try what speed the cache brings
+#cache:
+#- ccache
 
 os: linux
 dist: xenial
