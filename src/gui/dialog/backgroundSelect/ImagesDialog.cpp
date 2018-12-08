@@ -94,7 +94,7 @@ BackgroundImage ImagesDialog::getSelectedImage()
 {
 	XOJ_CHECK_TYPE(ImagesDialog);
 
-	if (confirmed && selected >= 0 && selected < elements.size())
+	if (confirmed && selected >= 0 && selected < (int)elements.size())
 	{
 		return ((ImageElementView*)elements[selected])->backgroundImage;
 	}

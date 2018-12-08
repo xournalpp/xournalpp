@@ -210,7 +210,7 @@ MetadataEntry MetadataManager::getForFile(string file)
 		}
 	}
 
-	for (int i = 20; i < files.size(); i++)
+	for (int i = 20; i < (int)files.size(); i++)
 	{
 		string path = files[i].metadataFile;
 		deleteMetadataFile(path);

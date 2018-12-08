@@ -7,7 +7,11 @@
 #include <Util.h>
 
 BaseElementView::BaseElementView(int id, BackgroundSelectDialogBase* dlg)
- : crBuffer(NULL), selected(false), dlg(dlg), id(id)
+ : dlg(dlg),
+   id(id),
+   selected(false),
+   widget(NULL),
+   crBuffer(NULL)
 {
 	XOJ_INIT_TYPE(BaseElementView);
 

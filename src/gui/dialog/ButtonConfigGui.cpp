@@ -287,7 +287,7 @@ void ButtonConfigGui::saveSettings()
 		std::vector<InputDevice>& devices = devList.getDeviceList();
 		int dev = gtk_combo_box_get_active(GTK_COMBO_BOX(cbDevice)) - 1;
 
-		if (dev < 0 || devices.size() <= dev)
+		if (dev < 0 || (int)devices.size() <= dev)
 		{
 			cfg->device = "";
 		}
@@ -359,6 +359,8 @@ void ButtonConfigGui::enableDisableTools()
 		gtk_widget_set_sensitive(colorButton, false);
 		gtk_widget_set_sensitive(cbDrawingType, false);
 		gtk_widget_set_sensitive(cbEraserType, false);
+		break;
+	default:
 		break;
 	}
 }

@@ -199,6 +199,8 @@ void Cursor::updateCursor()
 			case CURSOR_SELECTION_BOTTOM:
 				cursor = gdk_cursor_new_for_display(gdk_window_get_display(window), GDK_SB_V_DOUBLE_ARROW);
 				break;
+			default:
+				break;
 			}
 		}
 		else if (type == TOOL_PEN)
@@ -252,7 +254,10 @@ void Cursor::updateCursor()
 
 	if (gtk_widget_get_window(xournal->getWidget()))
 	{
-		gdk_window_set_cursor(gtk_widget_get_window(xournal->getWidget()), cursor);
+		if (cursor != NULL)
+		{
+			gdk_window_set_cursor(gtk_widget_get_window(xournal->getWidget()), cursor);
+		}
 
 		gtk_widget_set_sensitive(xournal->getWidget(), !this->busy);
 	}
