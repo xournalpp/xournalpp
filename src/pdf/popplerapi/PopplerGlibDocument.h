@@ -34,7 +34,7 @@ public:
 	virtual bool load(path filename, string password, GError** error);
 	virtual bool isLoaded();
 
-	virtual XojPdfPage* getPage(size_t page);
+	virtual XojPdfPageSPtr getPage(size_t page);
 	virtual size_t getPageCount();
 	virtual XojPdfBookmarkIterator* getContentsIter();
 

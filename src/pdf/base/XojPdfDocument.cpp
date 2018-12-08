@@ -88,7 +88,7 @@ bool XojPdfDocument::isLoaded()
 	return doc->isLoaded();
 }
 
-XojPdfPage* XojPdfDocument::getPage(size_t page)
+XojPdfPageSPtr XojPdfDocument::getPage(size_t page)
 {
 	XOJ_CHECK_TYPE(XojPdfDocument);
 

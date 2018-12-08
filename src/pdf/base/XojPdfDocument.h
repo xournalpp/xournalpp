@@ -39,7 +39,7 @@ public:
 	bool load(path filename, string password, GError** error);
 	bool isLoaded();
 
-	XojPdfPage* getPage(size_t page);
+	XojPdfPageSPtr getPage(size_t page);
 	size_t getPageCount();
 	XojPdfBookmarkIterator* getContentsIter();
 

@@ -5,7 +5,7 @@
 class PdfCacheEntry
 {
 public:
-	PdfCacheEntry(XojPdfPage* popplerPage, cairo_surface_t* img)
+	PdfCacheEntry(XojPdfPageSPtr popplerPage, cairo_surface_t* img)
 	{
 		XOJ_INIT_TYPE(PdfCacheEntry);
 
@@ -26,7 +26,7 @@ public:
 
 	XOJ_TYPE_ATTRIB;
 
-	XojPdfPage* popplerPage;
+	XojPdfPageSPtr popplerPage;
 	cairo_surface_t* rendered;
 };
 
@@ -74,7 +74,7 @@ void PdfCache::clearCache()
 	this->data.clear();
 }
 
-cairo_surface_t* PdfCache::lookup(XojPdfPage* popplerPage)
+cairo_surface_t* PdfCache::lookup(XojPdfPageSPtr popplerPage)
 {
 	XOJ_CHECK_TYPE(PdfCache);
 
@@ -90,7 +90,7 @@ cairo_surface_t* PdfCache::lookup(XojPdfPage* popplerPage)
 	return NULL;
 }
 
-void PdfCache::cache(XojPdfPage* popplerPage, cairo_surface_t* img)
+void PdfCache::cache(XojPdfPageSPtr popplerPage, cairo_surface_t* img)
 {
 	XOJ_CHECK_TYPE(PdfCache);
 
@@ -104,7 +104,7 @@ void PdfCache::cache(XojPdfPage* popplerPage, cairo_surface_t* img)
 	}
 }
 
-void PdfCache::render(cairo_t* cr, XojPdfPage* popplerPage, double zoom)
+void PdfCache::render(cairo_t* cr, XojPdfPageSPtr popplerPage, double zoom)
 {
 	XOJ_CHECK_TYPE(PdfCache);
 

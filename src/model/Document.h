@@ -40,7 +40,7 @@ public:
 
 	size_t getPageCount();
 	size_t getPdfPageCount();
-	XojPdfPage* getPdfPage(size_t page);
+	XojPdfPageSPtr getPdfPage(size_t page);
 	XojPdfDocument& getPdfDocument();
 
 	void insertPage(PageRef p, size_t position);
@@ -83,6 +83,9 @@ public:
 
 private:
 	void buildContentsModel();
+	void freeTreeContentModel();
+	static bool freeTreeContentEntry(GtkTreeModel* treeModel, GtkTreePath* path, GtkTreeIter* iter, Document* doc);
+
 	void buildTreeContentsModel(GtkTreeIter* parent, XojPdfBookmarkIterator* iter);
 	void updateIndexPageNumbers();
 	static bool fillPageLabels(GtkTreeModel* tree_model, GtkTreePath* path, GtkTreeIter* iter, Document* doc);

@@ -33,6 +33,11 @@ bool XojCairoPdfExport::startPdf(path file)
 	this->surface = cairo_pdf_surface_create(file.c_str(), 0, 0);
 	this->cr = cairo_create(surface);
 
+	// Require Cairo 1.16
+#ifdef CAIRO_PDF_METADATA_TITLE
+//	cairo_pdf_surface_set_metadata(surface, CAIRO_PDF_METADATA_TITLE, doc->getFilename().c_str());
+#endif
+
 	return true;
 }
 
@@ -59,7 +64,7 @@ void XojCairoPdfExport::exportPage(size_t page)
 	if (p->getBackgroundType().isPdfPage())
 	{
 		int pgNo = p->getPdfPageNr();
-		XojPdfPage* popplerPage = doc->getPdfPage(pgNo);
+		XojPdfPageSPtr popplerPage = doc->getPdfPage(pgNo);
 
 		popplerPage->render(cr, true);
 	}

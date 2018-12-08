@@ -4,7 +4,7 @@
 #include "model/Layer.h"
 #include "view/TextView.h"
 
-SearchControl::SearchControl(PageRef page, XojPdfPage* pdf)
+SearchControl::SearchControl(PageRef page, XojPdfPageSPtr pdf)
 {
 	XOJ_INIT_TYPE(SearchControl);
 

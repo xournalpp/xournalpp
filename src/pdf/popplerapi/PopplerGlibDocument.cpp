@@ -2,6 +2,8 @@
 #include "PopplerGlibPage.h"
 #include "PopplerGlibPageBookmarkIterator.h"
 
+#include <memory>
+
 
 PopplerGlibDocument::PopplerGlibDocument()
  : document(NULL)
@@ -88,7 +90,7 @@ bool PopplerGlibDocument::isLoaded()
 	return this->document != NULL;
 }
 
-XojPdfPage* PopplerGlibDocument::getPage(size_t page)
+XojPdfPageSPtr PopplerGlibDocument::getPage(size_t page)
 {
 	XOJ_CHECK_TYPE(PopplerGlibDocument);
 
@@ -99,9 +101,7 @@ XojPdfPage* PopplerGlibDocument::getPage(size_t page)
 
 	PopplerPage* pg = poppler_document_get_page(document, page);
 
-	// TODO The page will not be freed!
-
-	return new PopplerGlibPage(pg);
+	return std::make_shared<PopplerGlibPage>(pg);
 }
 
 size_t PopplerGlibDocument::getPageCount()

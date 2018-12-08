@@ -35,14 +35,39 @@ Document::~Document()
 	XOJ_CHECK_TYPE(Document);
 
 	clearDocument(true);
+	freeTreeContentModel();
+
+	XOJ_RELEASE_TYPE(Document);
+}
+
+void Document::freeTreeContentModel()
+{
+	XOJ_CHECK_TYPE(Document);
 
 	if (this->contentsModel)
 	{
+		gtk_tree_model_foreach(this->contentsModel, (GtkTreeModelForeachFunc) freeTreeContentEntry, this);
+
 		g_object_unref(this->contentsModel);
 		this->contentsModel = NULL;
 	}
+}
 
-	XOJ_RELEASE_TYPE(Document);
+bool Document::freeTreeContentEntry(GtkTreeModel* treeModel, GtkTreePath* path, GtkTreeIter* iter, Document* doc)
+{
+	XojLinkDest* link = NULL;
+	gtk_tree_model_get(treeModel, iter, DOCUMENT_LINKS_COLUMN_LINK, &link, -1);
+
+	if (link == NULL)
+	{
+		return false;
+	}
+
+	// The dispose function of XojLinkDest is not called, this workaround fixes the Memory Leak
+	delete link->dest;
+	link->dest = NULL;
+
+	return false;
 }
 
 void Document::lock()
@@ -100,6 +125,7 @@ void Document::clearDocument(bool destroy)
 	}
 
 	this->pages.clear();
+	freeTreeContentModel();
 
 	this->filename = "";
 	this->pdfFilename = "";
@@ -261,11 +287,7 @@ void Document::buildContentsModel()
 {
 	XOJ_CHECK_TYPE(Document);
 
-	if (this->contentsModel)
-	{
-		g_object_unref(this->contentsModel);
-		this->contentsModel = NULL;
-	}
+	freeTreeContentModel();
 
 	XojPdfBookmarkIterator* iter = pdfDocument.getContentsIter();
 	if (iter == NULL)
@@ -289,7 +311,6 @@ GtkTreeModel* Document::getContentsModel()
 bool Document::fillPageLabels(GtkTreeModel* treeModel, GtkTreePath* path, GtkTreeIter* iter, Document* doc)
 {
 	XojLinkDest* link = NULL;
-
 	gtk_tree_model_get(treeModel, iter, DOCUMENT_LINKS_COLUMN_LINK, &link, -1);
 
 	if (link == NULL)
@@ -354,7 +375,7 @@ bool Document::readPdf(path filename, bool initPages, bool attachToDocument)
 	{
 		for (size_t i = 0; i < pdfDocument.getPageCount(); i++)
 		{
-			XojPdfPage* page = pdfDocument.getPage(i);
+			XojPdfPageSPtr page = pdfDocument.getPage(i);
 			PageRef p = new XojPage(page->getWidth(), page->getHeight());
 			p->setBackgroundPdfPageNr(i);
 			addPage(p);
@@ -453,7 +474,7 @@ PageRef Document::getPage(size_t page)
 	return this->pages[page];
 }
 
-XojPdfPage* Document::getPdfPage(size_t page)
+XojPdfPageSPtr Document::getPdfPage(size_t page)
 {
 	XOJ_CHECK_TYPE(Document);
 

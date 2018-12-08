@@ -174,7 +174,7 @@ void CustomExportJob::exportPngPage(int pageId, int id, double zoom, DocumentVie
 	if (page->getBackgroundType().isPdfPage())
 	{
 		int pgNo = page->getPdfPageNr();
-		XojPdfPage* popplerPage = doc->getPdfPage(pgNo);
+		XojPdfPageSPtr popplerPage = doc->getPdfPage(pgNo);
 
 		PdfView::drawPage(NULL, popplerPage, cr, zoom, page->getWidth(), page->getHeight());
 	}
