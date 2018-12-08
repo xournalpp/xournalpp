@@ -35,7 +35,7 @@ void XojPopplerAction::linkFromDest(LinkDestination* link, LinkDest* dest)
 	{
 	case destXYZ:
 	{
-		XojPopplerPage* popplerPage = doc.getPage(MAX(0, pageNum));
+		XojPdfPageSPtr popplerPage = doc.getPage(MAX(0, pageNum));
 		if (!popplerPage)
 		{
 			return;

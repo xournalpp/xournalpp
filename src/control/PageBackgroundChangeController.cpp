@@ -194,7 +194,7 @@ bool PageBackgroundChangeController::applyPdfBackground(PageRef page)
 		// no need to set a type, if we set the page number the type is also set
 		page->setBackgroundPdfPageNr(selected);
 
-		XojPdfPage* p = doc->getPdfPage(selected);
+		XojPdfPageSPtr p = doc->getPdfPage(selected);
 		page->setSize(p->getWidth(), p->getHeight());
 	}
 

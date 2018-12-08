@@ -5,7 +5,7 @@
 #include "pdf/base/XojPdfPage.h"
 
 
-PdfElementView::PdfElementView(int id, XojPdfPage* page, PdfPagesDialog* dlg)
+PdfElementView::PdfElementView(int id, XojPdfPageSPtr page, PdfPagesDialog* dlg)
  : BaseElementView(id, dlg),
    page(page),
    used(false)

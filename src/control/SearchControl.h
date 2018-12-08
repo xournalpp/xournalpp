@@ -18,7 +18,7 @@
 class SearchControl
 {
 public:
-	SearchControl(PageRef page, XojPdfPage* pdf);
+	SearchControl(PageRef page, XojPdfPageSPtr pdf);
 	virtual ~SearchControl();
 
 	bool search(string text, int* occures, double* top);
@@ -30,7 +30,7 @@ private:
 	XOJ_TYPE_ATTRIB;
 
 	PageRef page;
-	XojPdfPage* pdf;
+	XojPdfPageSPtr pdf;
 
 	vector<XojPdfRectangle> results;
 };

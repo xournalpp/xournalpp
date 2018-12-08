@@ -16,7 +16,7 @@ PdfPagesDialog::PdfPagesDialog(GladeSearchpath* gladeSearchPath, Document* doc, 
 
 	for (size_t i = 0; i < doc->getPdfPageCount(); i++)
 	{
-		XojPdfPage* p = doc->getPdfPage(i);
+		XojPdfPageSPtr p = doc->getPdfPage(i);
 		PdfElementView* pv = new PdfElementView(elements.size(), p, this);
 		elements.push_back(pv);
 	}

@@ -12,16 +12,16 @@
 #pragma once
 
 #include "BaseElementView.h"
+#include "pdf/base/XojPdfPage.h"
 
 #include <XournalType.h>
 
-class XojPdfPage;
 class PdfPagesDialog;
 
 class PdfElementView : public BaseElementView
 {
 public:
-	PdfElementView(int id, XojPdfPage* page, PdfPagesDialog* dlg);
+	PdfElementView(int id, XojPdfPageSPtr page, PdfPagesDialog* dlg);
 	~PdfElementView();
 
 protected:
@@ -49,7 +49,7 @@ public:
 private:
 	XOJ_TYPE_ATTRIB;
 
-	XojPdfPage* page;
+	XojPdfPageSPtr page;
 
 	/**
 	 * This page is already used as background

@@ -108,7 +108,7 @@ void SidebarIndexPage::askInsertPdfPage(size_t pdfPage)
 	}
 
 	doc->lock();
-	XojPdfPage* pdf = doc->getPdfPage(pdfPage);
+	XojPdfPageSPtr pdf = doc->getPdfPage(pdfPage);
 	doc->unlock();
 
 	if (pdf)

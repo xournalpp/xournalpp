@@ -20,6 +20,8 @@ using std::vector;
 #include <string>
 using std::string;
 
+#include <memory>
+
 class XojPdfRectangle
 {
 public:
@@ -49,4 +51,6 @@ public:
 private:
 	XOJ_TYPE_ATTRIB;
 };
+
+typedef std::shared_ptr<XojPdfPage> XojPdfPageSPtr;
 

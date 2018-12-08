@@ -34,12 +34,11 @@ addons:
     - fontconfig
     - libgtk-3-dev
     - librsvg2-dev
-    - libpoppler-dev
-    - libpoppler-cpp-dev
     - libpoppler-glib-dev
     sources:
     - boost-latest
     - kalakris-cmake
+
   coverity_scan:
     project:
       name: "xournalpp/xournalpp"
@@ -54,7 +53,7 @@ before_script:
   - "cd build"
 
 script:
-  - "cmake .. -DCMAKE_DEBUG_INCLUDES_LDFLAGS=ON -DBUILD_POPPLER=ON -DENABLE_MATHTEX=ON -DENABLE_CPPUNIT=ON -DUNSTABLE_LAYERS_SIDEBAR=ON -DDEBUG_COMPILE=ON"
+  - "cmake .. -DCMAKE_DEBUG_INCLUDES_LDFLAGS=ON -DENABLE_MATHTEX=ON -DENABLE_CPPUNIT=ON -DUNSTABLE_LAYERS_SIDEBAR=ON -DDEBUG_COMPILE=ON"
   - "make"
   - "ctest"
 

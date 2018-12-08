@@ -44,7 +44,7 @@ void PrintHandler::drawPage(GtkPrintOperation* operation, GtkPrintContext* conte
 	if (page->getBackgroundType().isPdfPage())
 	{
 		int pgNo = page->getPdfPageNr();
-		XojPdfPage* popplerPage = handler->doc->getPdfPage(pgNo);
+		XojPdfPageSPtr popplerPage = handler->doc->getPdfPage(pgNo);
 		if (popplerPage)
 		{
 			popplerPage->render(cr, true);
